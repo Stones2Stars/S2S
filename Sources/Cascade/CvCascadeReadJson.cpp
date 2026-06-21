@@ -439,11 +439,16 @@ bool cascadeReadJsonAvailability(const char* szTypeKey, CvEntityAvailability& kO
 
 namespace
 {
-	// PILOT yield families (lowercase JSON key -> YieldTypes). Taxonomy widens (commerce-split, health/happiness,
-	// PROPERTY_*, unit stats) in later sub-passes.
+	// ALL modifier families (lowercase JSON key -> ModifierFamily id; the first three == YieldTypes by value, so the
+	// yield-pilot deposit ids are unchanged). The shadow now covers every channel -- readJson tags each family's deposits
+	// with its id, the cascade folds them generically, and /diagnostic/modifierSweep diffs them via the family registry
+	// (CvCascadeModifier.h). PROPERTY_* / unit-plane stats widen the same way as their data lands.
 	struct RjModFamily { const char* sz; int iFamily; };
 	const RjModFamily RJ_MOD_FAMILIES[] = {
-		{ "food", YIELD_FOOD }, { "production", YIELD_PRODUCTION }, { "commerce", YIELD_COMMERCE }
+		{ "food", MODFAM_FOOD }, { "production", MODFAM_PRODUCTION }, { "commerce", MODFAM_COMMERCE },
+		{ "gold", MODFAM_GOLD }, { "research", MODFAM_RESEARCH }, { "culture", MODFAM_CULTURE }, { "espionage", MODFAM_ESPIONAGE },
+		{ "health", MODFAM_HEALTH }, { "happiness", MODFAM_HAPPINESS }, { "defense", MODFAM_DEFENSE },
+		{ "maintenance", MODFAM_MAINTENANCE }, { "greatPeopleRate", MODFAM_GREATPEOPLE }
 	};
 	const int RJ_NUM_MOD_FAMILIES = (int)(sizeof(RJ_MOD_FAMILIES) / sizeof(RJ_MOD_FAMILIES[0]));
 
@@ -520,6 +525,20 @@ namespace
 				picojson::object::const_iterator itPct = oSc.find("percent");
 				if (itPct != oSc.end())
 					rjEmitModDeposits(itPct->second, RJ_MOD_FAMILIES[f].iFamily, RJ_MOD_SCOPES[s].iScope, MODUNIT_PERCENT, kOut, iSup, iSkip, sNotes);
+				// GROUPED families (`<family>.<scope>.<member>.<unit>` -- defense.amount, maintenance.distance, the
+				// espionage insidiousness/investigation sub-stats, ...) are NOT folded into the family slot: a member maps
+				// to its OWN realized value (defense.amount -> getDefenseModifier, but bombardDefense/adjacentDamage are
+				// SEPARATE stats; insidiousness != espionage-commerce), so folding them all into one slot and diffing vs
+				// one legacy getter is semantically wrong (it over-counts -- e.g. it polluted the espionage shadow). The
+				// correct structure is a PER-MEMBER shadow (each member diffed vs its own getter); that needs the member->
+				// getter map identified per family (not invented). Until then grouped families show honest missingDeposit
+				// (the parity work the owner verdicts). Tagged pending so the gap is visible, not silently dropped.
+				for (picojson::object::const_iterator itM = oSc.begin(); itM != oSc.end(); ++itM)
+				{
+					const std::string& sMember = itM->first;
+					if (sMember == "flat" || sMember == "percent") continue;
+					if (itM->second.is<picojson::object>()) { ++iSkip; rjAppendNote(sNotes, "mod:member:" + sMember); }
+				}
 				if (oSc.find("perPopulation") != oSc.end()) { ++iSkip; rjAppendNote(sNotes, "mod:perPopulation"); }
 				if (oSc.find("improvements") != oSc.end() || oSc.find("buildings") != oSc.end() || oSc.find("specialists") != oSc.end())
 					{ ++iSkip; rjAppendNote(sNotes, "mod:subScope"); }

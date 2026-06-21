@@ -106,6 +106,19 @@ extern const bool cascadeModifierParityMode;
 // YieldTypes for the pilot. PILOT; widens to plot + trait/tech/building-empire sources + other families later.
 void cascadeModifierCitySlot(int iFamily, const CvCascadeContext& kCtx, CvModifierSlot& slotOut);
 
+// PER-SOURCE decomposition of the city slot (the observability twin of cascadeModifierCitySlot): runs the SAME
+// active-building (city) + active-civic (empire) loops, but captures each contributing entity's own slot separately,
+// so the diagnostic dump can set the cascade's deposits source-by-source against the legacy per-source decomposition
+// ("know what we mirror before extending the cascade" -- owner ruling 2026-06-20). Only non-identity contributors are
+// returned. bCivic distinguishes the entity id (BuildingTypes when false, CivicTypes when true).
+struct CvModifierSourceContribution
+{
+	int iEntity;
+	bool bCivic;
+	CvModifierSlot slot;
+};
+void cascadeModifierCitySources(int iFamily, const CvCascadeContext& kCtx, std::vector<CvModifierSourceContribution>& out);
+
 // The pre-modifier BASE the cascade applies the city slot to: legacy getYieldRate100 multiplies (getBaseYieldRate +
 // getSpecialistYieldTotal) by the modifier (CvCity.cpp:11253 -- specialist yield gets the city modifier like worked
 // tiles), so the cascade base matches that pair. Shadow stand-in (the eventual model computes specialist output from
@@ -138,6 +151,40 @@ int cascadeModifierApply(const CvModifierSlot& slot, int iBase);
 // The effective city-scope value for (family, ctx): cascadeModifierApply(citySlot, getBaseYieldRate). PILOT scope =
 // MODSCOPE_CITY (other scopes return 0 for now). The single read the shadow + the per-entity endpoint use.
 int cascadeModifierEffective(int iFamily, int iScope, const CvCascadeContext& kCtx);
+
+// ===================== the MODIFIER-FAMILY registry (ALL channels) =====================
+// Every modifier family the cascade + shadow cover (modifier-spec §2.1 / data-model §4 / legacy-value-calc-map). A
+// deposit's iFamily is one of these. The first three == YieldTypes (food/production/commerce) by VALUE, so the yield
+// pilot ids are UNCHANGED. This is the structure that makes "all channels" first-class -- the engine is no longer
+// yield-only; readJson tags every family, the sweep iterates every family, each via its combine mode below.
+enum ModifierFamily
+{
+	MODFAM_FOOD = 0, MODFAM_PRODUCTION = 1, MODFAM_COMMERCE = 2, // == YIELD_FOOD/PRODUCTION/COMMERCE (the yield triple)
+	MODFAM_GOLD, MODFAM_RESEARCH, MODFAM_CULTURE, MODFAM_ESPIONAGE, // the commerce split (data-model §4)
+	MODFAM_HEALTH, MODFAM_HAPPINESS, MODFAM_DEFENSE, MODFAM_MAINTENANCE, MODFAM_GREATPEOPLE,
+	NUM_MODIFIER_FAMILIES
+};
+
+// How a family's deposits fold onto its base (modifier-spec §7 -- combine is family metadata, not the per-value unit):
+enum ModifierCombine
+{
+	MODCOMBINE_YIELD = 0, // base × (100+Σ%)/100 + Σflat (legacy-flat-outside) -- the 3 yields
+	MODCOMBINE_ADDITIVE,  // Σflat (signed) -- the additive ledgers (commerce-split base, health/happiness/defense)
+	MODCOMBINE_BASExMOD,  // base × (100+Σ%)/100 -- great-people (base × totalModifier/100)
+	MODCOMBINE_COST       // cost-asymmetric -- maintenance/upkeep (the getModifiedIntValue hub)
+};
+
+// A registry row: the family's JSON key + its combine mode. Out-of-range -> a {"?", additive} sentinel.
+struct ModifierFamilyInfo { const char* szKey; ModifierCombine eCombine; };
+const ModifierFamilyInfo& cascadeModifierFamilyInfo(int iFamily);
+
+// The ALL-CHANNEL SHADOW entry: for (city, family) at city scope, build the cascade slot from the migrated deposits,
+// resolve the family's pre-modifier base, apply its combine mode -> iCascade, and read the legacy REALIZED value ->
+// iLegacy (both same x1 scale). ONE definition the sweep + the per-city endpoint share so they can't drift. A family
+// with no migrated deposits reconstructs to its base only -> the divergence is the map-before-delete "missingDeposit"
+// signal (DEC-map-before-delete), the expected parity work the owner adjudicates -- never a fabricated clean.
+void cascadeModifierFamilyShadow(const CvCity* pCity, const CvCascadeContext& kCtx, int iFamily,
+	CvModifierSlot& slotOut, int& iBaseOut, int& iCascadeOut, int& iLegacyOut);
 
 // ===================== the SHADOW classifier (cause-tag + care level) =====================
 

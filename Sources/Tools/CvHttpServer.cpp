@@ -991,10 +991,9 @@ namespace
 		if (strcmp(szAction, "modifierSweep") == 0)
 		{
 			const bool bFull = (strcmp(szType, "full") == 0);
-			const int aFam[3] = { YIELD_FOOD, YIELD_PRODUCTION, YIELD_COMMERCE };
-			const char* aFamName[3] = { "food", "production", "commerce" };
-			int iOnly = -1; // channel scoping: type=food|production|commerce -> just that family
-			for (int f = 0; f < 3; ++f) if (strcmp(szType, aFamName[f]) == 0) iOnly = f;
+			int iOnly = -1; // channel scoping: type=<familyKey> (food|production|commerce|gold|...|greatPeople) -> just that family
+			for (int f = 0; f < NUM_MODIFIER_FAMILIES; ++f)
+				if (strcmp(szType, cascadeModifierFamilyInfo(f).szKey) == 0) iOnly = f;
 
 			int iCities = 0, iCells = 0, iAgree = 0, iDiv = 0;
 			int aCare[NUM_MODIFIER_CARE_LEVELS] = { 0 };
@@ -1005,15 +1004,13 @@ namespace
 			{
 				++iCities;
 				CvCascadeContext kCtx(iPlayer, pCity->getID());
-				for (int f = 0; f < 3; ++f)
+				for (int f = 0; f < NUM_MODIFIER_FAMILIES; ++f)
 				{
 					if (iOnly >= 0 && f != iOnly) continue;
 					++iCells;
 					CvModifierSlot slot;
-					cascadeModifierCitySlot(aFam[f], kCtx, slot);
-					const int iBase = cascadeModifierCityBase(pCity, aFam[f]); // base + specialist (legacy parity, CvCity.cpp:11253)
-					const int iCascade = cascadeModifierApply(slot, iBase);
-					const int iLegacy = pCity->getYieldRate100((YieldTypes)aFam[f]) / 100;
+					int iBase = 0, iCascade = 0, iLegacy = 0;
+					cascadeModifierFamilyShadow(pCity, kCtx, f, slot, iBase, iCascade, iLegacy); // all-channel shadow (registry combine)
 					int iCare = 0;
 					const char* szCause = cascadeModifierClassify(iCascade, iLegacy, slot, iCare);
 					if (iCare >= 0 && iCare < NUM_MODIFIER_CARE_LEVELS) ++aCare[iCare];
@@ -1024,14 +1021,13 @@ namespace
 					{
 						picojson::value::object c;
 						c["city"]      = picojson::value((double)pCity->getID());
-						c["channel"]   = picojson::value(std::string(aFamName[f]));
+						c["channel"]   = picojson::value(std::string(cascadeModifierFamilyInfo(f).szKey));
 						c["base"]      = picojson::value((double)iBase);
 						c["flat"]      = picojson::value((double)slot.iFlat);
 						c["percent"]   = picojson::value((double)slot.iPercent);
 						c["mult100"]   = picojson::value((double)slot.iMultiplierX100);
 						c["cascade"]   = picojson::value((double)iCascade);
 						c["legacy"]    = picojson::value((double)iLegacy);
-						c["legacy100"] = picojson::value((double)pCity->getYieldRate100((YieldTypes)aFam[f]));
 						c["delta"]     = picojson::value((double)(iCascade - iLegacy));
 						c["cause"]     = picojson::value(std::string(szCause));
 						c["care"]      = picojson::value((double)iCare);
@@ -1042,7 +1038,7 @@ namespace
 					{
 						picojson::value::object e;
 						e["city"]     = picojson::value((double)pCity->getID());
-						e["channel"]  = picojson::value(std::string(aFamName[f]));
+						e["channel"]  = picojson::value(std::string(cascadeModifierFamilyInfo(f).szKey));
 						e["base"]     = picojson::value((double)iBase);
 						e["flat"]     = picojson::value((double)slot.iFlat);
 						e["percent"]  = picojson::value((double)slot.iPercent);
@@ -1059,7 +1055,7 @@ namespace
 			}
 			o["parityMode"] = picojson::value(cascadeModifierParityMode);
 			o["calcFlow"]   = picojson::value((double)cascadeModifierCalcFlow);
-			o["channel"]    = picojson::value(std::string(iOnly >= 0 ? aFamName[iOnly] : "all"));
+			o["channel"]    = picojson::value(std::string(iOnly >= 0 ? cascadeModifierFamilyInfo(iOnly).szKey : "all"));
 			o["cities"]     = picojson::value((double)iCities);
 			o["cells"]      = picojson::value((double)iCells);
 			o["agree"]      = picojson::value((double)iAgree);
@@ -1473,9 +1469,43 @@ namespace
 				pl["yieldFood"]       = picojson::value((double)pPlot->getYield(YIELD_FOOD));
 				pl["yieldProduction"] = picojson::value((double)pPlot->getYield(YIELD_PRODUCTION));
 				pl["yieldCommerce"]   = picojson::value((double)pPlot->getYield(YIELD_COMMERCE));
+				// per-plot legacy yield DECOMPOSITION (each cascade plot-component validates in isolation; no-guessing):
+				// nature / improvement(base+riverside+irrigated+route+tech) / workingCity(buildings) / player terrainYieldChange + plot STATE.
+				{
+					const PlayerTypes ePlayerBY = pCity->getOwner();
+					const CvCity* pWorkBY = pPlot->getWorkingCity();
+					const char* aYN[3]={"natF","natP","natC"}; const char* aYI[3]={"impF","impP","impC"};
+					const char* aYW[3]={"wcF","wcP","wcC"};    const char* aYT[3]={"terF","terP","terC"};
+					for (int yy=0; yy<3; ++yy)
+					{
+						const YieldTypes eYY=(YieldTypes)yy;
+						const int nat=pPlot->calculateNatureYield(eYY,(TeamTypes)iTeam);
+						const int imp=(eI!=NO_IMPROVEMENT)?pPlot->calculateImprovementYieldChange(eI,eYY,ePlayerBY):0;
+						const int wcy=(pWorkBY!=NULL)?pWorkBY->getYieldChangeAt(pPlot,eYY):0;
+						const int ter=(ePlayerBY!=NO_PLAYER&&eT!=NO_TERRAIN)?GET_PLAYER(ePlayerBY).getTerrainYieldChange(eT,eYY):0;
+						if(nat) pl[aYN[yy]]=picojson::value((double)nat);
+						if(imp) pl[aYI[yy]]=picojson::value((double)imp);
+						if(wcy) pl[aYW[yy]]=picojson::value((double)wcy);
+						if(ter) pl[aYT[yy]]=picojson::value((double)ter);
+					}
+					if(pPlot->isIrrigationAvailable()) pl["irrig"]=picojson::value(true);
+					if(pPlot->isRiverSide())          pl["riverside"]=picojson::value(true);
+					if(pPlot->isHills())              pl["hills"]=picojson::value(true);
+					if(pPlot->isPeak()||pPlot->isAsPeak()) pl["peak"]=picojson::value(true);
+				}
 				kPlots.push_back(picojson::value(pl));
 			}
 			o["plots"] = picojson::value(kPlots);
+			// specialist ASSIGNMENT counts (engine state; cascade computes specialist yields = JSON values x these counts)
+			{
+				picojson::value::object specs;
+				for (int s=0; s<GC.getNumSpecialistInfos(); ++s)
+				{
+					const int cnt=pCity->getSpecialistCount((SpecialistTypes)s)+pCity->getFreeSpecialistCount((SpecialistTypes)s);
+					if(cnt>0) specs[GC.getSpecialistInfo((SpecialistTypes)s).getType()]=picojson::value((double)cnt);
+				}
+				o["specialists"]=picojson::value(specs);
+			}
 
 			CvCascadeContext kCtx(iPlayer, iCityId);
 			const int aFam[3] = { YIELD_FOOD, YIELD_PRODUCTION, YIELD_COMMERCE };
@@ -1505,6 +1535,14 @@ namespace
 				e["modCapital"]  = picojson::value((double)(pCity->isCapital() ? kPlayer.getCapitalYieldRateModifier(eY) : 0));
 				e["extraYield"]    = picojson::value((double)pCity->getExtraYield(eY));    // x1 TRUNCATED -- the term the formula uses
 				e["extraYield100"] = picojson::value((double)pCity->getExtraYield100(eY)); // untruncated, for decompose
+				// BASE decomposition (getBaseYieldRate, CvCity.cpp:22906) -- the additive base's named sub-sources:
+				e["basePlotYield"]      = picojson::value((double)pCity->getPlotYield(eY));        // summed worked-plot yields
+				e["baseTradeYield"]     = picojson::value((double)pCity->getTradeYield(eY));       // trade-route yield
+				e["baseFreeCityYield"]  = picojson::value((double)kPlayer.getFreeCityYield(eY));   // player free-city yield
+				e["baseGoldenAgeYield"] = picojson::value((double)(kPlayer.isGoldenAge() ? kPlayer.getGoldenAgeYield(eY) : 0)); // golden-age yield
+				// EXTRA-bucket decomposition (getExtraYield100, CvCity.cpp:11323) -- flatExtra = extraYield100 - building - perPop×pop:
+				e["extraBuildingYield100"] = picojson::value((double)pCity->getBuildingExtraYield100(eY)); // per-building flat ×100
+				e["extraPerPopRate"]       = picojson::value((double)pCity->getBaseYieldPerPopRate(eY));   // per-pop rate (×pop in the bucket)
 				e["legacy100"]     = picojson::value((double)pCity->getYieldRate100(eY));  // ground truth (x100)
 				// CASCADE seed (the current calc-flow, cascadeModifierApply):
 				e["cascadeFlat"]    = picojson::value((double)slot.iFlat);
@@ -1555,6 +1593,13 @@ namespace
 					const int pct = bi.getCommerceModifier(eC);
 					if (flat) { e[aCK[c][0]] = picojson::value((double)flat); bAny = true; }
 					if (pct)  { e[aCK[c][1]] = picojson::value((double)pct);  bAny = true; }
+					// RAW per-building commerce (no modifier) -- directly JSON-comparable; mirrors the per-building yield raw.
+					const int rawc = (bi.getCommerceChange(eC) + pCity->getBuildingCommerceChange((BuildingTypes)b, eC)) * 100
+					               + bi.getCommercePerPopChange(eC) * iPopBY
+					               + GET_TEAM(eTeamBY).getBuildingCommerceTechChange(eC, (BuildingTypes)b)
+					               + pCity->getBonusCommercePercentChanges(eC, (BuildingTypes)b);
+					static const char* aCKraw[4] = { "goldRaw100", "resRaw100", "culRaw100", "espRaw100" };
+					if (rawc) { e[aCKraw[c]] = picojson::value((double)rawc); bAny = true; }
 				}
 				// HEALTH / HAPPINESS (realized per-building contribution) + FREE-XP
 				const int iHe = pCity->getBuildingHealth((BuildingTypes)b);
@@ -1599,13 +1644,73 @@ namespace
 				picojson::value::object e;
 				e["family"]         = picojson::value(std::string(aComName[c]));
 				e["slider"]         = picojson::value((double)kPlayer.getCommercePercent(eC));       // player slider %
-				e["baseExtra100"]   = picojson::value((double)pCity->getBaseCommerceRateExtra(eC));  // x100 base extras
-				e["totalModifier"]  = picojson::value((double)pCity->getTotalCommerceRateModifier(eC)); // base 100
-				e["prodToCommerce"] = picojson::value((double)pCity->getProductionToCommerceModifier(eC));
-				e["realized100"]    = picojson::value((double)pCity->getCommerceRateTimes100(eC));   // ground truth (x100)
+				// BASE-EXTRA decomposition (getBaseCommerceRateExtra, x100; §2) -- the named components, at STRUCTURAL
+				// PARITY with the 3 base yields (the per-source breakdown the thin slider/total/realized triple lacked).
+				e["baseExtra100"]            = picojson::value((double)pCity->getBaseCommerceRateExtra(eC));  // realized x100
+				e["specialistCommerce"]      = picojson::value((double)pCity->getSpecialistCommerce(eC));       // x1
+				e["extraSpecialistCommerce"] = picojson::value((double)pCity->getExtraSpecialistCommerceTotal(eC)); // x1
+				e["religionCommerce"]        = picojson::value((double)pCity->getReligionCommerce(eC));         // x1
+				e["corporationCommerce"]     = picojson::value((double)pCity->getCorporationCommerce(eC));      // x1
+				e["buildingCommerce100"]     = picojson::value((double)pCity->getBuildingCommerce100(eC));      // x100 (aggregate; 4-way split below)
+				// buildingCommerce100 4-way decomposition (getBuildingCommerce100, CvCity.cpp:12131) -- so the missing
+				// building-commerce sub-source names itself (e.g. the espionage -80 = a bonus/tech/perPop sub-source):
+				e["bldgCommercePure100"]   = picojson::value((double)(100 * pCity->getBuildingCommerce(eC)));    // pure per-building flat ×100
+				e["bldgCommerceBonus100"]  = picojson::value((double)pCity->getBonusCommercePercentChanges(eC)); // bonus-gated building commerce ×100
+				e["bldgCommerceTech100"]   = picojson::value((double)pCity->getBuildingCommerceTechChange(eC));  // tech-gated building commerce ×100
+				e["bldgCommercePerPop100"] = picojson::value((double)(pCity->getCommercePerPopFromBuildings(eC) * pCity->getPopulation())); // per-pop building commerce ×100
+				e["mintedCommerce100"]     = picojson::value((double)(eC == COMMERCE_GOLD ? pCity->getMintedCommerceTimes100() : 0)); // gold only ×100
+				e["goldenAgeCommerce"]     = picojson::value((double)(kPlayer.isGoldenAge() ? kPlayer.getGoldenAgeCommerce(eC) : 0));  // x1, golden-age base commerce
+				e["stateReligionBuildingCommerce"] = picojson::value((double)kPlayer.getStateReligionBuildingCommerce(eC)); // x1
+				e["playerExtraCommerce100"]  = picojson::value((double)kPlayer.getExtraCommerce100(eC));        // x100
+				// MODIFIER decomposition (getTotalCommerceRateModifier, base 100; §2 -- event/from-buildings are added
+				// then subtracted into modPlayer, the double-count the emulator must mirror) -- at parity with the yield mods:
+				e["totalModifier"]   = picojson::value((double)pCity->getTotalCommerceRateModifier(eC)); // realized base 100
+				e["modBonus"]        = picojson::value((double)pCity->getBonusCommerceRateModifier(eC)); // city, bonus-sourced
+				e["modBuilding"]     = picojson::value((double)pCity->getBuildingCommerceModifier(eC));  // city, building-sourced
+				e["modCity"]         = picojson::value((double)pCity->getCommerceRateModifier(eC));      // city own
+				e["modPlayer"]       = picojson::value((double)kPlayer.getCommerceRateModifier(eC));     // player (incl. the - subtractions)
+				e["modEvent"]        = picojson::value((double)kPlayer.getCommerceRateModifierfromEvents(eC));    // player, event
+				e["modFromBuildings"]= picojson::value((double)kPlayer.getCommerceRateModifierfromBuildings(eC)); // player, from-buildings
+				e["modCapital"]      = picojson::value((double)(pCity->isCapital() ? kPlayer.getCapitalCommerceRateModifier(eC) : 0));
+				e["prodToCommerce"]  = picojson::value((double)pCity->getProductionToCommerceModifier(eC));
+				e["realized100"]     = picojson::value((double)pCity->getCommerceRateTimes100(eC));   // ground truth (x100)
+				// per-BONUS decomposition (audit): modBonus aggregates getBonusCommerceModifier(bonus,eC) over the city's
+				// bonuses; mintedCommerce100 (gold) aggregates count×getBonusMintedPercent(bonus). Emit the per-bonus split:
+				{
+					picojson::value::object kBonusMod, kBonusMint;
+					for (int bz = 0; bz < GC.getNumBonusInfos(); ++bz)
+					{
+						const int cnt = pCity->getNumBonuses((BonusTypes)bz);
+						if (cnt <= 0) continue;
+						const char* bn = GC.getBonusInfo((BonusTypes)bz).getType();
+						const int bm = kPlayer.getBonusCommerceModifier((BonusTypes)bz, eC);
+						if (bm) kBonusMod[bn] = picojson::value((double)bm);
+						if (eC == COMMERCE_GOLD)
+						{
+							const int mp = kPlayer.getBonusMintedPercent((BonusTypes)bz);
+							if (mp) kBonusMint[bn] = picojson::value((double)(cnt * mp));
+						}
+					}
+					if (!kBonusMod.empty())  e["bonusCommerceModByBonus"] = picojson::value(kBonusMod);
+					if (!kBonusMint.empty()) e["mintedByBonus"]           = picojson::value(kBonusMint);
+				}
 				kCommerce.push_back(picojson::value(e));
 			}
 			o["commerce"] = picojson::value(kCommerce);
+
+			// per-religion city count (countReligionLevels) -- the global count a SHRINE building scales its commerce
+			// by: religion.shrine.{commerce} x countReligionLevels(religion) at world scope (the #430 shrine assembly).
+			// Emitted so the offline emulator can reconstruct shrine commerce (the count is engine state, not in JSON).
+			{
+				picojson::value::object kRel;
+				for (int r = 0; r < GC.getNumReligionInfos(); ++r)
+				{
+					const int iLevels = GC.getGame().countReligionLevels((ReligionTypes)r);
+					if (iLevels != 0)
+						kRel[GC.getReligionInfo((ReligionTypes)r).getType()] = picojson::value((double)iLevels);
+				}
+				o["religionLevels"] = picojson::value(kRel);
+			}
 
 			// ---- CH.4 DEFENSE (legacy-value-calc-map §4): max(building,natural)+playerMod+bonus, then damage-decay floored at extraMin ----
 			{
@@ -1614,11 +1719,27 @@ namespace
 				d["defenseModifier"]           = picojson::value((double)pCity->getDefenseModifier(false)); // realized
 				d["buildingDefense"]           = picojson::value((double)pCity->getBuildingDefense());
 				d["naturalDefense"]            = picojson::value((double)pCity->getNaturalDefense());
-				d["playerCityDefenseModifier"] = picojson::value((double)kPlayer.getCityDefenseModifier());
-				d["bonusDefense"]              = picojson::value((double)pCity->calculateBonusDefense());
+				d["playerCityDefenseModifier"] = picojson::value((double)kPlayer.getCityDefenseModifier()); // aggregate (split below)
+				d["playerExtraCityDefense"]    = picojson::value((double)kPlayer.getExtraCityDefense());      // leaf of getCityDefenseModifier
+				d["playerTraitExtraCityDefense"]= picojson::value((double)kPlayer.getTraitExtraCityDefense()); // leaf of getCityDefenseModifier
+				d["bonusDefense"]              = picojson::value((double)pCity->calculateBonusDefense()); // aggregate (per-bonus below)
+				{
+					picojson::value::object kBD;
+					for (int bz = 0; bz < GC.getNumBonusInfos(); ++bz)
+					{
+						if (pCity->getNumBonuses((BonusTypes)bz) <= 0) continue;
+						const int bd = pCity->getBonusDefenseChanges((BonusTypes)bz);
+						if (bd) kBD[GC.getBonusInfo((BonusTypes)bz).getType()] = picojson::value((double)bd);
+					}
+					if (!kBD.empty()) d["bonusDefenseByBonus"] = picojson::value(kBD);
+				}
 				d["defenseDamage"]             = picojson::value((double)pCity->getDefenseDamage());
 				d["maxDefenseDamage"]          = picojson::value((double)GC.getMAX_CITY_DEFENSE_DAMAGE());
 				d["extraMinDefense"]           = picojson::value((double)pCity->getExtraMinDefense());
+				d["minimumDefenseLevel"]       = picojson::value((double)pCity->getMinimumDefenseLevel()); // REALISTIC_SIEGE-gated floor (§4)
+				d["minimumDefenseLevelRaw"]    = picojson::value((double)pCity->getMinimumDefenseLevelRaw()); // ungated raw m_iMinimumDefenseLevel
+				d["cultureLevel"]              = picojson::value((double)pCity->getCultureLevel());     // naturalDefense picks this level's cityDefenseModifier
+				d["realisticSiege"]            = picojson::value(GC.getGame().isOption(GAMEOPTION_COMBAT_REALISTIC_SIEGE)); // gates minimumDefenseLevel
 				d["isOccupation"]              = picojson::value(pCity->isOccupation());
 				o["defense"] = picojson::value(d);
 			}
@@ -1634,7 +1755,87 @@ namespace
 				m["numCitiesMaint100"]   = picojson::value((double)pCity->calculateNumCitiesMaintenanceTimes100());
 				m["colonyMaint100"]      = picojson::value((double)pCity->calculateColonyMaintenanceTimes100());
 				m["corporationMaint100"] = picojson::value((double)pCity->calculateCorporationMaintenanceTimes100());
-				m["effectiveModifier"]   = picojson::value((double)pCity->getEffectiveMaintenanceModifier());
+				m["effectiveModifier"]   = picojson::value((double)pCity->getEffectiveMaintenanceModifier()); // aggregate (split below)
+				// effectiveModifier split (getEffectiveMaintenanceModifier, CvCity.cpp:7590): city + player + area + connected:
+				m["maintModCity"]      = picojson::value((double)pCity->getMaintenanceModifier());
+				m["maintModPlayer"]    = picojson::value((double)kPlayer.getMaintenanceModifier());
+				m["maintModArea"]      = picojson::value((double)(pCity->area() != NULL ? pCity->area()->getTotalAreaMaintenanceModifier(pCity->getOwner()) : 0));
+				m["maintModConnected"] = picojson::value((double)((pCity->isConnectedToCapital() && !pCity->isCapital()) ? kPlayer.getConnectedCityMaintenanceModifier() : 0));
+				// the embedded modifiers/gates/scalers INSIDE the calculate*MaintenanceTimes100 base components
+				// (audit found these hidden in the base totals -- emit so each base component is reproducible):
+				m["maintModifierApplied"] = picojson::value(!(pCity->isDisorder() || pCity->getPopulation() == 0)); // gate: else base stays era-only
+				m["isRebel"]              = picojson::value(kPlayer.isRebel());          // halves distance/numCities/colony/corp bases
+				m["isCoastalMaint"]       = picojson::value(pCity->isCoastal(GC.getWorldInfo(GC.getMap().getWorldSize()).getOceanMinAreaSize())); // distance coastal mod gate
+				m["playerDistanceMaintMod"]= picojson::value((double)kPlayer.getDistanceMaintenanceModifier());
+				m["playerCoastalDistanceMaintMod"] = picojson::value((double)kPlayer.getCoastalDistanceMaintenanceModifier());
+				m["playerNumCitiesMaintMod"]= picojson::value((double)kPlayer.getNumCitiesMaintenanceModifier());
+				m["playerCorpMaintMod"]   = picojson::value((double)kPlayer.getCorporationMaintenanceModifier());
+				m["teamCorpMaintMod"]     = picojson::value((double)GET_TEAM(pCity->getTeam()).getCorporationMaintenanceModifier());
+				m["playerHomeAreaMaintMod"]= picojson::value((double)kPlayer.getHomeAreaMaintenanceModifier());
+				m["playerOtherAreaMaintMod"]= picojson::value((double)kPlayer.getOtherAreaMaintenanceModifier());
+				m["areaIsHomeArea"]       = picojson::value(pCity->area() != NULL && pCity->area()->isHomeArea(pCity->getOwner())); // home vs other area path
+				m["areaMaintenanceModifier"]= picojson::value((double)(pCity->area() != NULL ? pCity->area()->getMaintenanceModifier(pCity->getOwner()) : 0)); // area base mod
+				m["worldDistanceMaintPct"]= picojson::value((double)GC.getWorldInfo(GC.getMap().getWorldSize()).getDistanceMaintenancePercent());
+				m["worldColonyMaintPct"]  = picojson::value((double)GC.getWorldInfo(GC.getMap().getWorldSize()).getColonyMaintenancePercent());
+				m["worldCorpMaintPct"]    = picojson::value((double)GC.getWorldInfo(GC.getMap().getWorldSize()).getCorporationMaintenancePercent());
+				m["handicapDistanceMaintPct"]= picojson::value((double)GC.getHandicapInfo(pCity->getHandicapType()).getDistanceMaintenancePercent());
+				m["handicapNumCitiesMaintPct"]= picojson::value((double)GC.getHandicapInfo(pCity->getHandicapType()).getNumCitiesMaintenancePercent());
+				m["handicapColonyMaintPct"]= picojson::value((double)GC.getHandicapInfo(pCity->getHandicapType()).getColonyMaintenancePercent());
+				m["handicapCorpMaintPct"] = picojson::value((double)GC.getHandicapInfo(pCity->getHandicapType()).getCorporationMaintenancePercent());
+				// deeper calculate*MaintenanceTimes100 internals (audit batch-2):
+				m["treatNegativeGoldAsMaintenance"] = picojson::value(GC.getTREAT_NEGATIVE_GOLD_AS_MAINTENANCE() != 0); // building-maint gate
+				m["baseDistanceMaintPer100Plots"]   = picojson::value((double)GC.getBASE_DISTANCE_MAINTENANCE_PER_100_PLOTS()); // distance coefficient
+				m["isGovernmentCenter"]   = picojson::value(pCity->isGovernmentCenter());
+				m["optNoVassalStates"]    = picojson::value(GC.getGame().isOption(GAMEOPTION_NO_VASSAL_STATES));         // gates colony maint
+				m["optAdvancedRealisticCorporations"] = picojson::value(GC.getGame().isOption(GAMEOPTION_ADVANCED_REALISTIC_CORPORATIONS)); // corp handicap squaring
+				m["citiesPerPlayerInArea"]= picojson::value((double)(pCity->area() != NULL ? pCity->area()->getCitiesPerPlayer(pCity->getOwner()) : 0)); // colony maint multiplier
+				m["playerNumCities"]      = picojson::value((double)kPlayer.getNumCities());                 // numCities maint input (iCities = numCities - 1)
+				m["handicapMaxColonyMaintenance"] = picojson::value((double)GC.getHandicapInfo(pCity->getHandicapType()).getMaxColonyMaintenance()); // colony maint cap
+				{
+					const CvCity* pCap = kPlayer.getCapitalCity();
+					m["distanceToCapital"] = picojson::value((double)(pCap != NULL ? plotDistance(pCity->getX(), pCity->getY(), pCap->getX(), pCap->getY()) : 0));
+					m["capitalInSameArea"] = picojson::value(pCap != NULL && pCap->area() == pCity->area());
+				}
+				// vassal numCities-maintenance inputs (per-vassal getNumCities + distinct vassal count):
+				{
+					int iVassalCities = 0, iDistinctVassals = 0;
+					for (int vt = 0; vt < MAX_PC_TEAMS; ++vt)
+					{
+						if (vt == pCity->getTeam()) continue;
+						if (GET_TEAM((TeamTypes)vt).isAlive() && GET_TEAM((TeamTypes)vt).isVassal(pCity->getTeam()))
+						{
+							++iDistinctVassals;
+							for (int pl = 0; pl < MAX_PC_PLAYERS; ++pl)
+								if (GET_PLAYER((PlayerTypes)pl).isAlive() && GET_PLAYER((PlayerTypes)pl).getTeam() == (TeamTypes)vt)
+									iVassalCities += GET_PLAYER((PlayerTypes)pl).getNumCities();
+						}
+					}
+					m["vassalCityCount"]  = picojson::value((double)iVassalCities);
+					m["distinctVassals"]  = picojson::value((double)iDistinctVassals);
+				}
+				// per-corporation maintenance internals (HQ commerce + prereq bonuses × city bonus counts):
+				{
+					picojson::value::array kCorp;
+					for (int cp = 0; cp < GC.getNumCorporationInfos(); ++cp)
+					{
+						if (!pCity->isActiveCorporation((CorporationTypes)cp)) continue;
+						const CvCorporationInfo& kC = GC.getCorporationInfo((CorporationTypes)cp);
+						picojson::value::object co;
+						co["corp"] = picojson::value(std::string(kC.getType()));
+						int iHq = 0;
+						for (int cm = 0; cm < NUM_COMMERCE_TYPES; ++cm) iHq += kC.getHeadquarterCommerce(cm);
+						co["hqCommerce"] = picojson::value((double)iHq);
+						co["baseMaintenance"] = picojson::value((double)kC.getMaintenance()); // per-prereq-bonus base maint
+						picojson::value::object kpb;
+						const std::vector<BonusTypes>& vpb = kC.getPrereqBonuses();
+						for (size_t i = 0; i < vpb.size(); ++i)
+							if (vpb[i] != NO_BONUS)
+								kpb[GC.getBonusInfo(vpb[i]).getType()] = picojson::value((double)pCity->getNumBonuses(vpb[i]));
+						if (!kpb.empty()) co["prereqBonusCounts"] = picojson::value(kpb);
+						kCorp.push_back(picojson::value(co));
+					}
+					if (!kCorp.empty()) m["corporations"] = picojson::value(kCorp);
+				}
 				m["isWeLoveTheKingDay"]  = picojson::value(pCity->isWeLoveTheKingDay());
 				o["maintenance"] = picojson::value(m);
 				o["civicUpkeep"]     = picojson::value((double)kPlayer.getCivicUpkeep(false));            // player upkeep (x1)
@@ -1654,6 +1855,28 @@ namespace
 				g["foodKeptPercent"]       = picojson::value((double)pCity->getFoodKeptPercent());
 				g["foodKept"]              = picojson::value((double)pCity->getFoodKept());
 				g["isHominid"]             = picojson::value(pCity->isHominid());
+				g["foodWastage"]           = picojson::value((double)pCity->foodWastage());              // surplus waste in foodConsumption
+				g["foodConsumedByPopulation"] = picojson::value((double)pCity->getFoodConsumedByPopulation()); // to reverse foodConsumption
+				g["isDisorder"]            = picojson::value(pCity->isDisorder());          // foodDifference early-returns 0
+				g["isFoodProduction"]      = picojson::value(pCity->isFoodProduction());    // foodDifference uses min(0,·) branch
+				g["healthRateForFood"]     = picojson::value((double)pCity->healthRate());  // feeds foodConsumption
+				// food-consumption intermediates + the growth/wastage DEFINES (the leaf constants behind the formulas):
+				g["populationPlusProgress100"] = picojson::value((double)pCity->getPopulationPlusProgress100(0));
+				g["foodConsumedPerPopulation100"] = picojson::value((double)pCity->getFoodConsumedPerPopulation100(0));
+				g["foodConsumptionPerPopulation"] = picojson::value((double)GC.getFOOD_CONSUMPTION_PER_POPULATION());
+				g["foodConsumptionPerPopulationPercent"] = picojson::value((double)GC.getFOOD_CONSUMPTION_PER_POPULATION_PERCENT());
+				g["baseCityGrowthThreshold"] = picojson::value((double)GC.getDefineINT("BASE_CITY_GROWTH_THRESHOLD"));
+				g["cityGrowthMultiplier"]    = picojson::value((double)GC.getDefineINT("CITY_GROWTH_MULTIPLIER"));
+				g["eraGrowthPercent"]        = picojson::value((double)GC.getEraInfo(kPlayer.getCurrentEra()).getGrowthPercent());
+				g["handicapAIGrowthPercent"] = picojson::value((double)GC.getHandicapInfo(kPlayer.getHandicapType()).getAIGrowthPercent());
+				g["goldenAgePercentLessFoodForGrowth"] = picojson::value((double)GC.getDefineINT("GOLDEN_AGE_PERCENT_LESS_FOOD_FOR_GROWTH"));
+				g["wastageStartConsumptionPercent"] = picojson::value((double)GC.getWASTAGE_START_CONSUMPTION_PERCENT());
+				g["wastageGrowthFactor"]     = picojson::value((double)GC.getWASTAGE_GROWTH_FACTOR());
+				g["gameSpeedGrowthPercent"]  = picojson::value((double)GC.getGameSpeedInfo(GC.getGame().getGameSpeedType()).getSpeedPercent()); // growth-threshold scaler
+				g["isNormalAI"]              = picojson::value(kPlayer.isNormalAI());        // gates AI growth modifier
+				g["aiPerEraModifier"]        = picojson::value((double)GC.getHandicapInfo(GC.getGame().getHandicapType()).getAIPerEraModifier()); // AI per-era growth penalty
+				g["currentEra"]              = picojson::value((double)kPlayer.getCurrentEra());   // scales aiPerEraModifier
+				g["isGoldenAge"]             = picojson::value(kPlayer.isGoldenAge());       // gates golden-age growth bonus
 				o["growth"] = picojson::value(g);
 			}
 
@@ -1668,8 +1891,19 @@ namespace
 				h["featureBadHealth"]        = picojson::value((double)pCity->getFeatureBadHealth());
 				h["bonusGoodHealth"]         = picojson::value((double)pCity->getBonusGoodHealth());
 				h["bonusBadHealth"]          = picojson::value((double)pCity->getBonusBadHealth());
-				h["totalGoodBuildingHealth"] = picojson::value((double)pCity->totalGoodBuildingHealth());
-				h["totalBadBuildingHealth"]  = picojson::value((double)pCity->totalBadBuildingHealth());
+				h["totalGoodBuildingHealth"] = picojson::value((double)pCity->totalGoodBuildingHealth()); // aggregate (city+area+player)
+				h["totalBadBuildingHealth"]  = picojson::value((double)pCity->totalBadBuildingHealth());  // aggregate
+				// building-health SCOPE split (§7 parallel city/area/player accumulators):
+				h["cityBuildingGoodHealth"]   = picojson::value((double)pCity->getBuildingGoodHealth());
+				h["cityBuildingBadHealth"]    = picojson::value((double)pCity->getBuildingBadHealth());
+				h["areaBuildingGoodHealth"]   = picojson::value((double)(pCity->area() != NULL ? pCity->area()->getBuildingGoodHealth(pCity->getOwner()) : 0));
+				h["areaBuildingBadHealth"]    = picojson::value((double)(pCity->area() != NULL ? pCity->area()->getBuildingBadHealth(pCity->getOwner()) : 0));
+				h["playerBuildingGoodHealth"] = picojson::value((double)kPlayer.getBuildingGoodHealth());
+				h["playerBuildingBadHealth"]  = picojson::value((double)kPlayer.getBuildingBadHealth());
+				h["extraBuildingGoodHealth"]  = picojson::value((double)pCity->getExtraBuildingGoodHealth()); // in totalGoodBuildingHealth aggregate
+				h["extraBuildingBadHealth"]   = picojson::value((double)pCity->getExtraBuildingBadHealth());  // in totalBadBuildingHealth aggregate
+				h["isBuildingOnlyHealthy"]    = picojson::value(pCity->isBuildingOnlyHealthy());    // gates totalBadBuildingHealth to 0
+				h["isNoUnhealthyPopulation"]  = picojson::value(pCity->isNoUnhealthyPopulation());  // gates unhealthyPopulation to 0
 				h["extraHealth"]             = picojson::value((double)pCity->getExtraHealth());
 				h["improvementGoodHealth"]   = picojson::value((double)pCity->getImprovementGoodHealth());
 				h["improvementBadHealth"]    = picojson::value((double)pCity->getImprovementBadHealth());
@@ -1679,6 +1913,7 @@ namespace
 				h["extraTechHealth"]         = picojson::value((double)pCity->getExtraTechHealthTotal());
 				h["espionageHealthCounter"]  = picojson::value((double)pCity->getEspionageHealthCounter());
 				h["unhealthyPopulation"]     = picojson::value((double)pCity->unhealthyPopulation());
+				h["populationHealth"]        = picojson::value((double)pCity->calculatePopulationHealth()); // per-pop health component (in good/bad)
 				// omitted-bucket sources (signed; the goodHealth/badHealth residual closers):
 				h["handicapHealth"]          = picojson::value((double)GC.getHandicapInfo(pCity->getHandicapType()).getHealthBonus());
 				h["playerExtraHealth"]       = picojson::value((double)kPlayer.getExtraHealth());
@@ -1704,6 +1939,7 @@ namespace
 				hp["religionGoodHappiness"] = picojson::value((double)pCity->getReligionGoodHappiness());
 				hp["religionBadHappiness"]  = picojson::value((double)pCity->getReligionBadHappiness());
 				hp["militaryHappiness"]     = picojson::value((double)pCity->getMilitaryHappiness());
+				hp["celebrityHappiness"]    = picojson::value((double)pCity->getCelebrityHappiness()); // unit-derived (§10.4 "must be dumped")
 				hp["commerceHappiness"]     = picojson::value((double)pCity->getCommerceHappiness());
 				hp["stateReligionHappiness"]= picojson::value((double)pCity->getCurrentStateReligionHappiness());
 				hp["specialistHappiness"]   = picojson::value((double)pCity->getSpecialistHappiness());
@@ -1736,25 +1972,144 @@ namespace
 				hp["extraTechHappiness"]        = picojson::value((double)pCity->getExtraTechHappinessTotal());
 				hp["happinessTimer"]            = picojson::value((double)pCity->getHappinessTimer());
 				hp["tempHappy"]                 = picojson::value((double)GC.getTEMP_HAPPY());
+				// the REMAINING anger-percent sources (legacy-value-calc-map §12 add-list -- the unhappyLevel residual
+				// closers that make the percent-anger sum fully reproducible): the per-civic anger sum (the big one),
+				// defy/revRequest/event timers, tax-rate + foreign culture unhappiness, landmark anger, city-over-limit.
+				int iCivicAnger = 0;
+				for (int co = 0; co < GC.getNumCivicOptionInfos(); ++co)
+				{
+					const CivicTypes eCivicA = kPlayer.getCivics((CivicOptionTypes)co);
+					if (eCivicA != NO_CIVIC) iCivicAnger += kPlayer.getCivicPercentAnger(eCivicA);
+				}
+				hp["civicAnger"]            = picojson::value((double)iCivicAnger);
+				hp["defyResolutionAnger"]   = picojson::value((double)pCity->getDefyResolutionPercentAnger());
+				hp["revRequestAnger"]       = picojson::value((double)pCity->getRevRequestPercentAnger());
+				hp["eventAnger"]            = picojson::value((double)pCity->getEventAnger());
+				hp["taxRateUnhappiness"]    = picojson::value((double)kPlayer.calculateTaxRateUnhappiness());
+				hp["foreignUnhappyPercent"] = picojson::value((double)kPlayer.getForeignUnhappyPercent());
+				hp["landmarkAnger"]         = picojson::value((double)pCity->getLandmarkAnger());
+				hp["cityOverLimitUnhappy"]  = picojson::value((double)kPlayer.getCityOverLimitUnhappy());
+				hp["playerLandmarkHappiness"] = picojson::value((double)kPlayer.getLandmarkHappiness()); // MAP_PERSONALIZED, both good+bad side
+				hp["plotCulturePercent"]    = picojson::value((double)pCity->plot()->calculateCulturePercent(pCity->getOwner())); // foreign-unhappy operand (100 - this)
+				hp["playerNumCities"]       = picojson::value((double)kPlayer.getNumCities());      // city-over-limit calc
+				hp["playerCityLimit"]       = picojson::value((double)kPlayer.getCityLimit());      // city-over-limit gate + calc
+				hp["espionageHappinessCounter"] = picojson::value((double)pCity->getEspionageHappinessCounter());
+				hp["vassalUnhappiness"]     = picojson::value((double)pCity->getVassalUnhappiness());
+				// the zero-out GATE FLAGS (a true flag short-circuits the whole ledger -- the emulator must honour them):
+				hp["isNoUnhappiness"]        = picojson::value(pCity->isNoUnhappiness());
+				hp["isNoUnhealthyPopulation"]= picojson::value(pCity->isNoUnhealthyPopulation());
+				hp["isBuildingOnlyHealthy"]  = picojson::value(pCity->isBuildingOnlyHealthy());
+				hp["playerNoCapitalUnhappiness"] = picojson::value(kPlayer.isNoCapitalUnhappiness());
+				// anger TIMERS + modifiers + indices + counts feeding the get*PercentAnger calcs (audit: timer-driven, not derivable):
+				hp["hurryAngerTimer"]       = picojson::value((double)pCity->getHurryAngerTimer());
+				hp["conscriptAngerTimer"]   = picojson::value((double)pCity->getConscriptAngerTimer());
+				hp["defyResolutionAngerTimer"] = picojson::value((double)pCity->getDefyResolutionAngerTimer());
+				hp["revRequestAngerTimer"]  = picojson::value((double)pCity->getRevRequestAngerTimer());
+				hp["warWearinessTimer"]     = picojson::value((double)pCity->getWarWearinessTimer());
+				hp["landmarkAngerTimer"]    = picojson::value((double)pCity->getLandmarkAngerTimer());
+				hp["cityWarWearinessModifier"] = picojson::value((double)pCity->getWarWearinessModifier());
+				hp["hurryAngerModifier"]    = picojson::value((double)pCity->getHurryAngerModifier());
+				hp["localRevIndex"]         = picojson::value((double)pCity->getLocalRevIndex());
+				hp["revolutionIndex"]       = picojson::value((double)pCity->getRevolutionIndex());
+				hp["militaryHappinessUnits"]= picojson::value((double)pCity->getMilitaryHappinessUnits());
+				hp["religionCount"]         = picojson::value((double)pCity->getReligionCount());
+				hp["playerWarWearinessPercentAnger"] = picojson::value((double)kPlayer.getWarWearinessPercentAnger());
+				hp["playerWarWearinessModifier"]     = picojson::value((double)kPlayer.getWarWearinessModifier());
+				{
+					picojson::value::object kCH;
+					for (int cc = 0; cc < NUM_COMMERCE_TYPES; ++cc)
+						kCH[GC.getCommerceInfo((CommerceTypes)cc).getType()] = picojson::value((double)pCity->getCommerceHappinessPer((CommerceTypes)cc));
+					hp["commerceHappinessPer"] = picojson::value(kCH);
+				}
+				hp["playerNoLandmarkAnger"] = picojson::value(kPlayer.isNoLandmarkAnger());                 // gates landmark anger
+				hp["optMapPersonalized"]    = picojson::value(GC.getGame().isOption(GAMEOPTION_MAP_PERSONALIZED)); // gates landmark happy+anger
+				hp["isCapital"]             = picojson::value(pCity->isCapital());                          // capital unhappiness-exemption gate
+				hp["flatHurryAngerLength"]  = picojson::value((double)pCity->flatHurryAngerLength());        // hurry-anger divisor
+				hp["flatConscriptAngerLength"] = picojson::value((double)pCity->flatConscriptAngerLength()); // conscript-anger divisor
+				hp["flatDefyResolutionAngerLength"] = picojson::value((double)pCity->flatDefyResolutionAngerLength()); // defy-anger divisor
 				o["happiness"] = picojson::value(hp);
+
+				// ---- CH HURRY (legacy-value-calc-map §9.4 / §12): per-hurry gold + population COSTS (the dump gap --
+				// only hurryAnger was emitted before). hurryCost() is the city's current production-cost basis; the
+				// per-hurry getHurryGold/getHurryPopulation are pure const calcs (no canHurry gate needed for the dump). ----
+				{
+					picojson::value::object hu;
+					hu["hurryCost"]   = picojson::value((double)pCity->hurryCost());
+					hu["hurryAngerTimer"] = picojson::value((double)pCity->getHurryAngerTimer());
+					picojson::value::array kHurry;
+					for (int h = 0; h < GC.getNumHurryInfos(); ++h)
+					{
+						const HurryTypes eH = (HurryTypes)h;
+						picojson::value::object e;
+						e["type"]       = picojson::value(std::string(GC.getHurryInfo(eH).getType()));
+						e["gold"]       = picojson::value((double)(int)pCity->getHurryGold(eH));
+						e["population"] = picojson::value((double)pCity->getHurryPopulation(eH, pCity->hurryCost()));
+						kHurry.push_back(picojson::value(e));
+					}
+					hu["byType"] = picojson::value(kHurry);
+					o["hurry"] = picojson::value(hu);
+				}
+
+				// ---- CH buildRate building/project (legacy-value-calc-map §9.5 / §12: only the UNIT overload was
+				// dumped, behind ?type=UNIT_). getProductionModifier(eItem) is the signed-% DISCOUNT on the item's cost.
+				// Emit when ?type=BUILDING_X or PROJECT_X is supplied (the unit case stays in the unitBuild block below). ----
+				if (strncmp(szType, "BUILDING_", 9) == 0)
+				{
+					const int iB = GC.getInfoTypeForString(szType, true);
+					if (iB >= 0)
+					{
+						picojson::value::object br;
+						br["type"]      = picojson::value(std::string(szType));
+						br["buildRate"] = picojson::value((double)pCity->getProductionModifier((BuildingTypes)iB));
+						o["buildRate"] = picojson::value(br);
+					}
+				}
+				else if (strncmp(szType, "PROJECT_", 8) == 0)
+				{
+					const int iPr = GC.getInfoTypeForString(szType, true);
+					if (iPr >= 0)
+					{
+						picojson::value::object br;
+						br["type"]      = picojson::value(std::string(szType));
+						br["buildRate"] = picojson::value((double)pCity->getProductionModifier((ProjectTypes)iPr));
+						o["buildRate"] = picojson::value(br);
+					}
+				}
 			}
 
 			// ---- CH greatPeople (legacy-value-calc-map §9.5): base x modifier/100 (disorder -> 0) ----
 			{
 				picojson::value::object gp;
 				gp["greatPeopleRate"]     = picojson::value((double)pCity->getGreatPeopleRate()); // realized
-				gp["baseGreatPeopleRate"] = picojson::value((double)pCity->getBaseGreatPeopleRate());
-				gp["totalGPRateModifier"] = picojson::value((double)pCity->getTotalGreatPeopleRateModifier());
+				gp["baseGreatPeopleRate"] = picojson::value((double)pCity->getBaseGreatPeopleRate()); // aggregate (city base + national)
+				gp["totalGPRateModifier"] = picojson::value((double)pCity->getTotalGreatPeopleRateModifier()); // aggregate (split below)
 				gp["greatPeopleProgress"] = picojson::value((double)pCity->getGreatPeopleProgress());
 				gp["threshold"]           = picojson::value((double)kPlayer.greatPeopleThresholdNonMilitary());
+				// base split (getBaseGreatPeopleRate, CvCity.cpp): max(0,m_iBaseGreatPeopleRate) + national; city base = base - national.
+				gp["nationalGreatPeopleRate"] = picojson::value((double)kPlayer.getNationalGreatPeopleRate());
+				gp["baseGreatPeopleRateRaw"] = picojson::value((double)pCity->getBaseGreatPeopleRateRaw()); // raw m_iBaseGreatPeopleRate (pre-max/national)
+				// modifier split (getTotalGreatPeopleRateModifier): 100 + city + player + (stateReligion) + (goldenAge):
+				gp["cityGPRateModifier"]   = picojson::value((double)pCity->getGreatPeopleRateModifier());
+				gp["playerGPRateModifier"] = picojson::value((double)kPlayer.getGreatPeopleRateModifier());
+				gp["stateReligionGPRateModifier"] = picojson::value((double)((kPlayer.getStateReligion() != NO_RELIGION && pCity->isHasReligion(kPlayer.getStateReligion())) ? kPlayer.getStateReligionGreatPeopleRateModifier() : 0));
+				gp["goldenAgeGPRateModifier"] = picojson::value((double)(kPlayer.isGoldenAge() ? GC.getGOLDEN_AGE_GREAT_PEOPLE_MODIFIER() : 0));
+				gp["isDisorder"]          = picojson::value(pCity->isDisorder()); // disorder -> rate forced 0 (distinguish from zero-base)
 				o["greatPeople"] = picojson::value(gp);
 			}
 
 			// ---- CH tradeRoutes (legacy-value-calc-map §9.5): count + realized trade yields (per-partner profit not reproduced offline) ----
 			{
 				picojson::value::object tr;
-				tr["tradeRoutes"]          = picojson::value((double)pCity->getTradeRoutes());
+				tr["tradeRoutes"]          = picojson::value((double)pCity->getTradeRoutes()); // realized count (clamped)
 				tr["maxTradeRoutes"]       = picojson::value((double)pCity->getMaxTradeRoutes());
+				// count components (getTradeRoutes, CvCity.cpp): game + player + (coastal) + extra, clamped [0,max]:
+				tr["gameTradeRoutes"]      = picojson::value((double)GC.getGame().getTradeRoutes());
+				tr["playerTradeRoutes"]    = picojson::value((double)kPlayer.getTradeRoutes());
+				tr["coastalTradeRoutes"]   = picojson::value((double)kPlayer.getCoastalTradeRoutes());
+				tr["extraTradeRoutes"]     = picojson::value((double)pCity->getExtraTradeRoutes());
+				tr["maxTradeRoutesAdjustment"] = picojson::value((double)kPlayer.getMaxTradeRoutesAdjustment());
+				tr["maxTradeRoutesConst"]  = picojson::value((double)GC.getMAX_TRADE_ROUTES());          // base max (before player adj)
+				tr["isCoastalForTrade"]    = picojson::value(pCity->isCoastal(GC.getWorldInfo(GC.getMap().getWorldSize()).getOceanMinAreaSize())); // gates coastalTradeRoutes inclusion
 				tr["tradeYieldFood"]       = picojson::value((double)pCity->getTradeYield(YIELD_FOOD));
 				tr["tradeYieldProduction"] = picojson::value((double)pCity->getTradeYield(YIELD_PRODUCTION));
 				tr["tradeYieldCommerce"]   = picojson::value((double)pCity->getTradeYield(YIELD_COMMERCE));
@@ -1769,8 +2124,19 @@ namespace
 				bl["nationalCaptureProbability"] = picojson::value((double)kPlayer.getExtraNationalCaptureProbabilityModifier());
 				bl["nationalCaptureResistance"]  = picojson::value((double)kPlayer.getExtraNationalCaptureResistanceModifier());
 				bl["occupationTimer"]            = picojson::value((double)pCity->getOccupationTimer());
-				bl["espionageDefenseModifier"]   = picojson::value((double)pCity->getEspionageDefenseModifier());
+				bl["espionageDefenseModifier"]   = picojson::value((double)pCity->getEspionageDefenseModifier()); // aggregate (city + national)
+				bl["nationalEspionageDefense"]   = picojson::value((double)kPlayer.getNationalEspionageDefense()); // city part = modifier - this
 				bl["healRate"]                   = picojson::value((double)pCity->getHealRate());
+				// heal-per-unitcombat (getHealUnitCombatTypeTotal, building HealUnitCombatType array) -- non-zero only:
+				{
+					picojson::value::object kHeal;
+					for (int uc = 0; uc < GC.getNumUnitCombatInfos(); ++uc)
+					{
+						const int iHv = pCity->getHealUnitCombatTypeTotal((UnitCombatTypes)uc);
+						if (iHv != 0) kHeal[GC.getUnitCombatInfo((UnitCombatTypes)uc).getType()] = picojson::value((double)iHv);
+					}
+					if (!kHeal.empty()) bl["healByUnitCombat"] = picojson::value(kHeal);
+				}
 				o["buildingLevel"] = picojson::value(bl);
 			}
 
@@ -1831,22 +2197,42 @@ namespace
 				return CvString(picojson::value(o).serialize().c_str());
 			}
 			CvCascadeContext kCtx(iPlayer, iCityId);
-			const int aFam[3] = { YIELD_FOOD, YIELD_PRODUCTION, YIELD_COMMERCE };
-			const char* aFamName[3] = { "food", "production", "commerce" };
+			// ALL families + the cascade's PER-SOURCE decomposition (owner ruling 2026-06-20: to extend the cascade we
+			// must know what we mirror -- set the cascade's deposits source-by-source against the legacy per-source dump).
+			// optional ?type=<familyKey> scopes to one family; else all NUM_MODIFIER_FAMILIES.
 			picojson::value::array kFam;
-			for (int f = 0; f < 3; ++f)
+			for (int f = 0; f < NUM_MODIFIER_FAMILIES; ++f)
 			{
-				CvModifierSlot slot;
-				cascadeModifierCitySlot(aFam[f], kCtx, slot);
-				const int iBase = cascadeModifierCityBase(pCity, aFam[f]); // base + specialist (legacy parity, CvCity.cpp:11253)
+				const char* szKey = cascadeModifierFamilyInfo(f).szKey;
+				if (szType[0] != '\0' && strcmp(szType, szKey) != 0) continue;
+				CvModifierSlot slot; int iBase = 0, iCascade = 0, iLegacy = 0;
+				cascadeModifierFamilyShadow(pCity, kCtx, f, slot, iBase, iCascade, iLegacy);
 				picojson::value::object e;
-				e["family"]    = picojson::value(std::string(aFamName[f]));
+				e["family"]    = picojson::value(std::string(szKey));
 				e["base"]      = picojson::value((double)iBase);
 				e["flat"]      = picojson::value((double)slot.iFlat);
 				e["percent"]   = picojson::value((double)slot.iPercent);
 				e["mult100"]   = picojson::value((double)slot.iMultiplierX100);
-				e["cascade"]   = picojson::value((double)cascadeModifierApply(slot, iBase)); // active calc-flow (legacy-flat-outside)
-				e["legacy100"] = picojson::value((double)pCity->getYieldRate100((YieldTypes)aFam[f]));
+				e["cascade"]   = picojson::value((double)iCascade);
+				e["legacy"]    = picojson::value((double)iLegacy);
+				// PER-SOURCE: each active building (city) / civic (empire) deposit feeding this family's slot, so the
+				// cascade total is attributable source-by-source (the legacy per-source lives in cityInput.buildingYields).
+				std::vector<CvModifierSourceContribution> srcs;
+				cascadeModifierCitySources(f, kCtx, srcs);
+				picojson::value::array kSrc;
+				for (size_t s = 0; s < srcs.size(); ++s)
+				{
+					picojson::value::object se;
+					se["source"] = picojson::value(std::string(srcs[s].bCivic
+						? GC.getCivicInfo((CivicTypes)srcs[s].iEntity).getType()
+						: GC.getBuildingInfo((BuildingTypes)srcs[s].iEntity).getType()));
+					se["scope"]   = picojson::value(std::string(srcs[s].bCivic ? "empire" : "city"));
+					se["flat"]    = picojson::value((double)srcs[s].slot.iFlat);
+					se["percent"] = picojson::value((double)srcs[s].slot.iPercent);
+					se["mult100"] = picojson::value((double)srcs[s].slot.iMultiplierX100);
+					kSrc.push_back(picojson::value(se));
+				}
+				e["sources"] = picojson::value(kSrc);
 				kFam.push_back(picojson::value(e));
 			}
 			o["families"] = picojson::value(kFam);
@@ -1868,6 +2254,21 @@ namespace
 			g["inflationMod10000"] = picojson::value((double)kPlayer.getInflationMod10000());
 			g["treasury"]          = picojson::value((double)(int)kPlayer.getGold());
 			g["totalMaintenance"]  = picojson::value((double)kPlayer.getTotalMaintenance());
+			// preInflatedCosts split (§11.1 = treasuryUpkeep + totalMaintenance + civicUpkeep + finalUnitUpkeep
+			// + unitSupply + corpMaint); unitSupply/corpMaint/treasuryUpkeep weren't individually emitted:
+			g["treasuryUpkeep"]       = picojson::value((double)(int)kPlayer.getTreasuryUpkeep());
+			g["unitSupply"]           = picojson::value((double)kPlayer.calculateUnitSupply());
+			g["corporateMaintenance"] = picojson::value((double)(int)kPlayer.getCorporateMaintenance());
+			// embedded scalers in treasuryUpkeep / calculateUnitSupply (audit):
+			g["gameSpeedPercent"]     = picojson::value((double)GC.getGameSpeedInfo(GC.getGame().getGameSpeedType()).getSpeedPercent()); // treasury scaling
+			g["numOutsideUnits"]      = picojson::value((double)kPlayer.getNumOutsideUnits());  // unitSupply paid-unit count
+			g["isResearchFlexible"]   = picojson::value(kPlayer.isCommerceFlexible(COMMERCE_RESEARCH)); // gold-rate path gate
+			g["distantUnitSupportCostModifier"] = picojson::value((double)kPlayer.getDistantUnitSupportCostModifier());
+			g["isNPC"]                = picojson::value(kPlayer.isNPC());                       // unitSupply 0 for NPC
+			g["handicapAIUnitSupplyPercent"] = picojson::value((double)GC.getHandicapInfo(GC.getGame().getHandicapType()).getAIUnitSupplyPercent());
+			g["initialFreeOutsideUnits"]     = picojson::value((double)GC.getDefineINT("INITIAL_FREE_OUTSIDE_UNITS"));        // unitSupply paid-unit offset
+			g["initialOutsideUnitGoldPercent"]= picojson::value((double)GC.getDefineINT("INITIAL_OUTSIDE_UNIT_GOLD_PERCENT")); // unitSupply per-unit cost
+			g["currentEra"]           = picojson::value((double)kPlayer.getCurrentEra());       // unitSupply era multiplier
 			o["gold"] = picojson::value(g);
 			picojson::value::object s;
 			const TechTypes eCur = kPlayer.getCurrentResearch();
@@ -1890,6 +2291,297 @@ namespace
 			dm["totalLandScored"]  = picojson::value((double)kPlayer.getTotalLandScored());
 			dm["numMilitaryUnits"] = picojson::value((double)kPlayer.getNumMilitaryUnits());
 			o["demographics"] = picojson::value(dm);
+
+			// ---- INFLATION source breakdown (legacy-value-calc-map §9.4 / §12 add-list): the per-source inputs to
+			// getInflationMod10000 (only the realized mod + preInflatedCosts were dumped). hurriedCount drives the base;
+			// the four source getters + handicap modify it. So the emulator reproduces the multiplier, not just reads it. ----
+			{
+				picojson::value::object inf;
+				inf["inflationMod10000"] = picojson::value((double)kPlayer.getInflationMod10000());
+				inf["hurriedCount"]      = picojson::value((double)kPlayer.getHurriedCount());
+				inf["civicInflation"]    = picojson::value((double)kPlayer.getCivicInflation());
+				inf["projectInflation"]  = picojson::value((double)kPlayer.getProjectInflation());
+				inf["techInflation"]     = picojson::value((double)kPlayer.getTechInflation());
+				inf["buildingInflation"] = picojson::value((double)kPlayer.getBuildingInflation());
+				inf["handicapInflationPercent"] = picojson::value((double)GC.getHandicapInfo(kPlayer.getHandicapType()).getInflationPercent());
+				// the remaining iMod sources (getInflationMod10000, CvPlayer.cpp): m_iInflationModifier + (−100×isRebel)
+				// + the isNormalAI handicap AI-inflation/per-era ramp -- so the full multiplier is reproducible:
+				inf["inflationModifier"] = picojson::value((double)kPlayer.getInflationModifier());
+				inf["isRebel"]           = picojson::value(kPlayer.isRebel());
+				inf["isNormalAI"]        = picojson::value(kPlayer.isNormalAI());
+				inf["aiInflationPercent"]= picojson::value((double)GC.getHandicapInfo(GC.getGame().getHandicapType()).getAIInflationPercent());
+				inf["aiPerEraModifier"]  = picojson::value((double)GC.getHandicapInfo(GC.getGame().getHandicapType()).getAIPerEraModifier());
+				inf["currentEra"]        = picojson::value((double)kPlayer.getCurrentEra()); // scales aiPerEraModifier
+				o["inflation"] = picojson::value(inf);
+			}
+
+			// ---- UPKEEP decomposition (legacy-value-calc-map §5 / §12: only the realized civic+unit totals were dumped).
+			// The civilian/military gross-100 + net split + free allowances feed getFinalUnitUpkeep; the civic total feeds
+			// the maintenance ledger. (Per-unit calcUpkeep100 is the unitInput channel.) ----
+			{
+				picojson::value::object up;
+				up["finalUnitUpkeep"]        = picojson::value((double)(int)kPlayer.getFinalUnitUpkeep());
+				up["unitUpkeepCivilian100"]  = picojson::value((double)(int)kPlayer.getUnitUpkeepCivilian100());
+				up["unitUpkeepCivilianNet"]  = picojson::value((double)(int)kPlayer.getUnitUpkeepCivilianNet());
+				up["unitUpkeepMilitary100"]  = picojson::value((double)(int)kPlayer.getUnitUpkeepMilitary100());
+				up["unitUpkeepMilitaryNet"]  = picojson::value((double)(int)kPlayer.getUnitUpkeepMilitaryNet());
+				up["freeUnitUpkeepCivilian"] = picojson::value((double)kPlayer.getFreeUnitUpkeepCivilian());
+				up["freeUnitUpkeepMilitary"] = picojson::value((double)kPlayer.getFreeUnitUpkeepMilitary());
+				up["civicUpkeep"]            = picojson::value((double)kPlayer.getCivicUpkeep(false));
+				// the embedded upkeep/free/AI internals (audit: hidden in getFinalUnitUpkeep / getCivicUpkeep / free getters):
+				up["civilianUnitUpkeepMod"]  = picojson::value((double)kPlayer.getCivilianUnitUpkeepMod());
+				up["militaryUnitUpkeepMod"]  = picojson::value((double)kPlayer.getMilitaryUnitUpkeepMod());
+				up["baseFreeUnitUpkeepCivilian"] = picojson::value((double)kPlayer.getBaseFreeUnitUpkeepCivilian());
+				up["baseFreeUnitUpkeepMilitary"] = picojson::value((double)kPlayer.getBaseFreeUnitUpkeepMilitary());
+				up["freeUnitUpkeepCivilianPopPercent"] = picojson::value((double)kPlayer.getFreeUnitUpkeepCivilianPopPercent());
+				up["freeUnitUpkeepMilitaryPopPercent"] = picojson::value((double)kPlayer.getFreeUnitUpkeepMilitaryPopPercent());
+				up["numCities"]              = picojson::value((double)kPlayer.getNumCities());        // civic-upkeep per-city basis
+				up["playerUpkeepModifier"]   = picojson::value((double)kPlayer.getUpkeepModifier());   // applied to civic upkeep
+				up["isNormalAI"]             = picojson::value(kPlayer.isNormalAI());                  // gates AI handicap mults
+				up["isHumanPlayer"]          = picojson::value(kPlayer.isHumanPlayer());
+				up["aiPerEraModifier"]       = picojson::value((double)GC.getHandicapInfo(GC.getGame().getHandicapType()).getAIPerEraModifier()); // AI per-era upkeep ramp
+				up["isNPC"]                  = picojson::value(kPlayer.isNPC());                       // gates getFinalUnitUpkeep to 0
+				up["handicapAICivicUpkeepPercent"] = picojson::value((double)GC.getHandicapInfo(GC.getGame().getHandicapType()).getAICivicUpkeepPercent());
+				up["handicapAIUnitUpkeepPercent"]  = picojson::value((double)GC.getHandicapInfo(GC.getGame().getHandicapType()).getAIUnitUpkeepPercent());
+				// civic-upkeep internals (getSingleCivicUpkeep / getCivicUpkeep, CvPlayer.cpp):
+				up["totalPopulation"]    = picojson::value((double)kPlayer.getTotalPopulation());
+				up["currentEra"]         = picojson::value((double)kPlayer.getCurrentEra());
+				up["isRebel"]            = picojson::value(kPlayer.isRebel());            // halves civic upkeep
+				up["isAnarchy"]          = picojson::value(kPlayer.isAnarchy());          // gates civic upkeep to 0
+				up["upkeepPopulationOffset"] = picojson::value((double)GC.getDefineINT("UPKEEP_POPULATION_OFFSET"));
+				up["upkeepCityOffset"]   = picojson::value((double)GC.getDefineINT("UPKEEP_CITY_OFFSET"));
+				// per-civic upkeep type details (getSingleCivicUpkeep per active civic):
+				{
+					picojson::value::array kCivics;
+					for (int co = 0; co < GC.getNumCivicOptionInfos(); ++co)
+					{
+						const CivicTypes eCv = kPlayer.getCivics((CivicOptionTypes)co);
+						if (eCv == NO_CIVIC) continue;
+						picojson::value::object cu;
+						cu["civic"]          = picojson::value(std::string(GC.getCivicInfo(eCv).getType()));
+						cu["isNoCivicUpkeep"]= picojson::value(kPlayer.isNoCivicUpkeep((CivicOptionTypes)co));
+						const int eUp = GC.getCivicInfo(eCv).getUpkeep();
+						if (eUp != NO_UPKEEP)
+						{
+							cu["populationPercent"] = picojson::value((double)GC.getUpkeepInfo((UpkeepTypes)eUp).getPopulationPercent());
+							cu["cityPercent"]       = picojson::value((double)GC.getUpkeepInfo((UpkeepTypes)eUp).getCityPercent());
+						}
+						kCivics.push_back(picojson::value(cu));
+					}
+					up["civics"] = picojson::value(kCivics);
+				}
+				up["handicapUnitUpkeepPercent"]  = picojson::value((double)GC.getHandicapInfo(kPlayer.getHandicapType()).getUnitUpkeepPercent());
+				up["handicapCivicUpkeepPercent"] = picojson::value((double)GC.getHandicapInfo(kPlayer.getHandicapType()).getCivicUpkeepPercent());
+				o["upkeep"] = picojson::value(up);
+			}
+
+			// ---- PLAYER WELLBEING aggregates (health-happiness / war-weariness per-system maps): the empire-scope
+			// happiness/health sources + the war-weariness percent-anger that feeds every city's anger ledger. ----
+			{
+				picojson::value::object wb;
+				wb["warWearinessPercentAnger"] = picojson::value((double)kPlayer.getWarWearinessPercentAnger());
+				wb["buildingHappiness"]   = picojson::value((double)kPlayer.getBuildingHappiness());
+				wb["extraHappiness"]      = picojson::value((double)kPlayer.getExtraHappiness());
+				wb["worldHappiness"]      = picojson::value((double)kPlayer.getWorldHappiness());
+				wb["buildingGoodHealth"]  = picojson::value((double)kPlayer.getBuildingGoodHealth());
+				wb["buildingBadHealth"]   = picojson::value((double)kPlayer.getBuildingBadHealth());
+				wb["noCapitalUnhappiness"]= picojson::value(kPlayer.isNoCapitalUnhappiness());
+				o["wellbeing"] = picojson::value(wb);
+			}
+			return CvString(picojson::value(o).serialize().c_str());
+		}
+
+		// ---- UNIT-INPUT (legacy-value-calc-map §6 / §11.4 / §12 "ENTIRELY ABSENT") -- the unit-plane combat-stat
+		// decomposition, the one whole channel with NO endpoint. Per the player's units: baseCombat + the aggregate
+		// getExtra* stat set (CvUnit exposes AGGREGATE only -- per-source attribution is the promotion/unitcombat lists
+		// the emulator sums from the Info JSON, §11.4 "CRITICAL build constraint") + HP + the promotion/unitcombat
+		// membership. maxCombatStr is context-dependent (~730-line situational calc) -> NOT reproduced offline; the
+		// dump emits the offline-reproducible baseCombatStrPreCheck + the extras (§11.4). Detail-capped like the sweeps;
+		// the movement/range half lives in /diagnostic/movementSweep. ----
+		if (strcmp(szAction, "unitInput") == 0)
+		{
+			const bool bFull = (strcmp(szType, "full") == 0);
+			const int iCap = bFull ? 100000 : 400;
+			picojson::value::array kUnits;
+			int iUnits = 0;
+			foreach_(const CvUnit* pUnit, kPlayer.units())
+			{
+				++iUnits;
+				if ((int)kUnits.size() >= iCap) continue;
+				const UnitTypes eUT = pUnit->getUnitType();
+				picojson::value::object u;
+				u["id"]   = picojson::value((double)pUnit->getID());
+				u["type"] = picojson::value(std::string(eUT != NO_UNIT ? GC.getUnitInfo(eUT).getType() : "NO_UNIT"));
+				u["x"]    = picojson::value((double)pUnit->getX());
+				u["y"]    = picojson::value((double)pUnit->getY());
+				u["level"] = picojson::value((double)pUnit->getLevel());
+				u["experience"] = picojson::value((double)pUnit->getExperience());
+				// combat strength (the offline-reproducible base; maxCombatStr is situational -> not dumped):
+				u["baseCombatStr"]         = picojson::value((double)pUnit->baseCombatStr());
+				u["baseCombatStrPreCheck"] = picojson::value((double)pUnit->baseCombatStrPreCheck());
+				u["baseCombat"]            = picojson::value((double)pUnit->getBaseCombat()); // raw m_iBaseCombat (lossy in PreCheck)
+				u["damage"]                = picojson::value((double)pUnit->getDamage());    // HP = maxHP - damage
+				u["hp"]    = picojson::value((double)pUnit->getHP());
+				u["maxHP"] = picojson::value((double)pUnit->getMaxHP());
+				// the aggregate getExtra* stat set (the §11.4 dumpable set; per-source via the promo/combat lists below):
+				picojson::value::object ex;
+				ex["strength"]           = picojson::value((double)pUnit->getExtraStrength());
+				ex["strengthModifier"]   = picojson::value((double)pUnit->getExtraStrengthModifier());
+				ex["combatPercent"]      = picojson::value((double)pUnit->getExtraCombatPercent());
+				ex["cityAttackPercent"]  = picojson::value((double)pUnit->getExtraCityAttackPercent());
+				ex["cityDefensePercent"] = picojson::value((double)pUnit->getExtraCityDefensePercent());
+				ex["withdrawal"]         = picojson::value((double)pUnit->getExtraWithdrawal());
+				ex["collateralDamage"]   = picojson::value((double)pUnit->getExtraCollateralDamage());
+				ex["bombardRate"]        = picojson::value((double)pUnit->getExtraBombardRate());
+				ex["firstStrikes"]       = picojson::value((double)pUnit->getExtraFirstStrikes());
+				ex["chanceFirstStrikes"] = picojson::value((double)pUnit->getExtraChanceFirstStrikes());
+				ex["enemyHeal"]          = picojson::value((double)pUnit->getExtraEnemyHeal());
+				ex["neutralHeal"]        = picojson::value((double)pUnit->getExtraNeutralHeal());
+				ex["friendlyHeal"]       = picojson::value((double)pUnit->getExtraFriendlyHeal());
+				ex["visibilityRange"]    = picojson::value((double)pUnit->getExtraVisibilityRange());
+				ex["moves"]              = picojson::value((double)pUnit->getExtraMoves());
+				ex["moveDiscount"]       = picojson::value((double)pUnit->getExtraMoveDiscount());
+				// the REMAINING aggregate getExtra* set (CvUnit.h enumeration -- emit ALL, owner ruling 2026-06-20):
+				ex["noDefensiveBonus"]      = picojson::value((double)pUnit->getExtraNoDefensiveBonusCount());
+				ex["dropRange"]             = picojson::value((double)pUnit->getExtraDropRange());
+				ex["airRange"]              = picojson::value((double)pUnit->getExtraAirRange());
+				ex["intercept"]             = picojson::value((double)pUnit->getExtraIntercept());
+				ex["evasion"]               = picojson::value((double)pUnit->getExtraEvasion());
+				ex["religiousCombatMod"]    = picojson::value((double)pUnit->getExtraReligiousCombatModifier());
+				ex["extraUpkeep100"]        = picojson::value((double)pUnit->getExtraUpkeep100());
+				ex["hillsAttack"]           = picojson::value((double)pUnit->getExtraHillsAttackPercent());
+				ex["hillsDefense"]          = picojson::value((double)pUnit->getExtraHillsDefensePercent());
+				ex["combatModPerSizeMore"]  = picojson::value((double)pUnit->getExtraCombatModifierPerSizeMore());
+				ex["combatModPerSizeLess"]  = picojson::value((double)pUnit->getExtraCombatModifierPerSizeLess());
+				ex["combatModPerVolumeMore"]= picojson::value((double)pUnit->getExtraCombatModifierPerVolumeMore());
+				ex["combatModPerVolumeLess"]= picojson::value((double)pUnit->getExtraCombatModifierPerVolumeLess());
+				ex["maxHPExtra"]            = picojson::value((double)pUnit->getExtraMaxHP());
+				ex["quality"]               = picojson::value((double)pUnit->getExtraQuality());
+				ex["group"]                 = picojson::value((double)pUnit->getExtraGroup());
+				ex["size"]                  = picojson::value((double)pUnit->getExtraSize());
+				ex["cargoVolume"]           = picojson::value((double)pUnit->getExtraCargoVolume());
+				ex["rBombardDamage"]        = picojson::value((double)pUnit->getExtraRBombardDamage());
+				ex["rBombardDamageLimit"]   = picojson::value((double)pUnit->getExtraRBombardDamageLimit());
+				ex["rBombardDamageMaxUnits"]= picojson::value((double)pUnit->getExtraRBombardDamageMaxUnits());
+				ex["dcmBombRange"]          = picojson::value((double)pUnit->getExtraDCMBombRange());
+				ex["dcmBombAccuracy"]       = picojson::value((double)pUnit->getExtraDCMBombAccuracy());
+				ex["stealthStrikes"]        = picojson::value((double)pUnit->getExtraStealthStrikes());
+				ex["stealthCombatMod"]      = picojson::value((double)pUnit->getExtraStealthCombatModifier());
+				ex["trapDamageMax"]         = picojson::value((double)pUnit->getExtraTrapDamageMax());
+				ex["trapDamageMin"]         = picojson::value((double)pUnit->getExtraTrapDamageMin());
+				ex["trapComplexity"]        = picojson::value((double)pUnit->getExtraTrapComplexity());
+				ex["numTriggers"]           = picojson::value((double)pUnit->getExtraNumTriggers());
+				ex["gatherHerdCount"]       = picojson::value((double)pUnit->getExtraGatherHerdCount());
+				ex["attackCombatMod"]       = picojson::value((double)pUnit->getExtraAttackCombatModifier());
+				ex["defenseCombatMod"]      = picojson::value((double)pUnit->getExtraDefenseCombatModifier());
+				ex["vsBarbs"]               = picojson::value((double)pUnit->getExtraVSBarbs());
+				ex["damageModifier"]        = picojson::value((double)pUnit->getExtraDamageModifier());
+				ex["unnerve"]               = picojson::value((double)pUnit->getExtraUnnerve());
+				ex["enclose"]               = picojson::value((double)pUnit->getExtraEnclose());
+				ex["lunge"]                 = picojson::value((double)pUnit->getExtraLunge());
+				ex["dynamicDefense"]        = picojson::value((double)pUnit->getExtraDynamicDefense());
+				ex["endurance"]             = picojson::value((double)pUnit->getExtraEndurance());
+				ex["poisonProbabilityMod"]  = picojson::value((double)pUnit->getExtraPoisonProbabilityModifier());
+				u["extra"] = picojson::value(ex);
+				// per-unit upkeep: getUpkeep100 is the realized STORED x100 (calcUpkeep100 maintains it on init + every
+				// source mutation + recalculateUnitUpkeep -> event-driven FRESH, not stale). The calcUpkeep100 FORMULA
+				// sources (CvUnit.cpp): 100×baseUpkeep + extraUpkeep100, then ×upkeepModifier, then ×upkeepMultiplierSM; NPC skipped.
+				u["upkeep100"]          = picojson::value((double)pUnit->getUpkeep100());
+				u["baseUpkeep"]         = picojson::value((double)(eUT != NO_UNIT ? GC.getUnitInfo(eUT).getBaseUpkeep() : 0));
+				u["upkeepModifier"]     = picojson::value((double)pUnit->getUpkeepModifier());
+				u["upkeepMultiplierSM"] = picojson::value((double)pUnit->getUpkeepMultiplierSM());
+				u["isNPC"]              = picojson::value(pUnit->isNPC());
+				// per-KEYED getExtra* maps (non-zero only) -- the vs-keyed attribution the aggregate hides:
+				{
+					picojson::value::object kUC, kDom, kTerA, kTerD, kTerW, kFeaA, kFeaD, kFeaW, kFlank,
+					                        kTrapDis, kTrapAvoid, kTrapTrig, kInvVis, kInvInvis, kInvVisR, kBuildWork;
+					for (int uc = 0; uc < GC.getNumUnitCombatInfos(); ++uc)
+					{
+						const char* nm = GC.getUnitCombatInfo((UnitCombatTypes)uc).getType();
+						const int m = pUnit->getExtraUnitCombatModifier((UnitCombatTypes)uc);
+						const int fl = pUnit->getExtraFlankingStrengthbyUnitCombatType((UnitCombatTypes)uc);
+						const int td = pUnit->getExtraTrapDisableUnitCombatType((UnitCombatTypes)uc);
+						const int ta = pUnit->getExtraTrapAvoidanceUnitCombatType((UnitCombatTypes)uc);
+						const int tt = pUnit->getExtraTrapTriggerUnitCombatType((UnitCombatTypes)uc);
+						if (m)  kUC[nm]    = picojson::value((double)m);
+						if (fl) kFlank[nm] = picojson::value((double)fl);
+						if (td) kTrapDis[nm]   = picojson::value((double)td);
+						if (ta) kTrapAvoid[nm] = picojson::value((double)ta);
+						if (tt) kTrapTrig[nm]  = picojson::value((double)tt);
+					}
+					for (int dm = 0; dm < NUM_DOMAIN_TYPES; ++dm)
+					{
+						const int m = pUnit->getExtraDomainModifier((DomainTypes)dm);
+						if (m) kDom[GC.getDomainInfo((DomainTypes)dm).getType()] = picojson::value((double)m);
+					}
+					for (int t = 0; t < GC.getNumTerrainInfos(); ++t)
+					{
+						const char* nm = GC.getTerrainInfo((TerrainTypes)t).getType();
+						const int a = pUnit->getExtraTerrainAttackPercent((TerrainTypes)t);
+						const int d = pUnit->getExtraTerrainDefensePercent((TerrainTypes)t);
+						const int w = pUnit->getExtraTerrainWorkPercent((TerrainTypes)t);
+						if (a) kTerA[nm] = picojson::value((double)a);
+						if (d) kTerD[nm] = picojson::value((double)d);
+						if (w) kTerW[nm] = picojson::value((double)w);
+					}
+					for (int fe = 0; fe < GC.getNumFeatureInfos(); ++fe)
+					{
+						const char* nm = GC.getFeatureInfo((FeatureTypes)fe).getType();
+						const int a = pUnit->getExtraFeatureAttackPercent((FeatureTypes)fe);
+						const int d = pUnit->getExtraFeatureDefensePercent((FeatureTypes)fe);
+						const int w = pUnit->getExtraFeatureWorkPercent((FeatureTypes)fe);
+						if (a) kFeaA[nm] = picojson::value((double)a);
+						if (d) kFeaD[nm] = picojson::value((double)d);
+						if (w) kFeaW[nm] = picojson::value((double)w);
+					}
+					for (int iv = 0; iv < GC.getNumInvisibleInfos(); ++iv)
+					{
+						const char* nm = GC.getInvisibleInfo((InvisibleTypes)iv).getType();
+						const int vi = pUnit->getExtraVisibilityIntensityType((InvisibleTypes)iv);
+						const int ii = pUnit->getExtraInvisibilityIntensityType((InvisibleTypes)iv);
+						const int vr = pUnit->getExtraVisibilityIntensityRangeType((InvisibleTypes)iv);
+						if (vi) kInvVis[nm]   = picojson::value((double)vi);
+						if (ii) kInvInvis[nm] = picojson::value((double)ii);
+						if (vr) kInvVisR[nm]  = picojson::value((double)vr);
+					}
+					for (int bu = 0; bu < GC.getNumBuildInfos(); ++bu)
+					{
+						const int w = pUnit->getExtraWorkModForBuild((BuildTypes)bu);
+						if (w) kBuildWork[GC.getBuildInfo((BuildTypes)bu).getType()] = picojson::value((double)w);
+					}
+					if (!kUC.empty())   u["extraUnitCombatModifier"] = picojson::value(kUC);
+					if (!kFlank.empty())u["extraFlankingByUnitCombat"]= picojson::value(kFlank);
+					if (!kTrapDis.empty())   u["extraTrapDisableByUnitCombat"]   = picojson::value(kTrapDis);
+					if (!kTrapAvoid.empty()) u["extraTrapAvoidanceByUnitCombat"] = picojson::value(kTrapAvoid);
+					if (!kTrapTrig.empty())  u["extraTrapTriggerByUnitCombat"]   = picojson::value(kTrapTrig);
+					if (!kDom.empty())  u["extraDomainModifier"]     = picojson::value(kDom);
+					if (!kTerA.empty()) u["extraTerrainAttack"]      = picojson::value(kTerA);
+					if (!kTerD.empty()) u["extraTerrainDefense"]     = picojson::value(kTerD);
+					if (!kTerW.empty()) u["extraTerrainWork"]        = picojson::value(kTerW);
+					if (!kFeaA.empty()) u["extraFeatureAttack"]      = picojson::value(kFeaA);
+					if (!kFeaD.empty()) u["extraFeatureDefense"]     = picojson::value(kFeaD);
+					if (!kFeaW.empty()) u["extraFeatureWork"]        = picojson::value(kFeaW);
+					if (!kInvVis.empty())  u["extraVisibilityIntensity"]      = picojson::value(kInvVis);
+					if (!kInvInvis.empty())u["extraInvisibilityIntensity"]    = picojson::value(kInvInvis);
+					if (!kInvVisR.empty()) u["extraVisibilityIntensityRange"] = picojson::value(kInvVisR);
+					if (!kBuildWork.empty())u["extraWorkModForBuild"]         = picojson::value(kBuildWork);
+				}
+				// MEMBERSHIP (the per-source attribution axis -- the emulator sums each promotion/unitcombat's bundle
+				// from the Info JSON, since CvUnit exposes only the aggregate above, §11.4):
+				picojson::value::array kPromos;
+				for (int p = 0; p < GC.getNumPromotionInfos(); ++p)
+					if (pUnit->isHasPromotion((PromotionTypes)p))
+						kPromos.push_back(picojson::value(std::string(GC.getPromotionInfo((PromotionTypes)p).getType())));
+				u["promotions"] = picojson::value(kPromos);
+				picojson::value::array kCombats;
+				for (int c = 0; c < GC.getNumUnitCombatInfos(); ++c)
+					if (pUnit->isHasUnitCombat((UnitCombatTypes)c))
+						kCombats.push_back(picojson::value(std::string(GC.getUnitCombatInfo((UnitCombatTypes)c).getType())));
+				u["unitCombats"] = picojson::value(kCombats);
+				kUnits.push_back(picojson::value(u));
+			}
+			o["units"] = picojson::value((double)iUnits);
+			o["unitsDetailed"] = picojson::value(kUnits);
 			return CvString(picojson::value(o).serialize().c_str());
 		}
 
