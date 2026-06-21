@@ -282,6 +282,47 @@ re-sweep, try another) is the anti-pattern this rule kills: build the complete m
   the code; a guess that "looks obvious" has repeatedly produced regressions (and a whole-database
   clobber when a tool's real behaviour wasn't checked first). Verify before you build on it, and
   say what you verified it against.
+- **⛔ DO NOT GUESS, DO NOT INFER, DO NOT ASSUME — an assumption IS a shortcut (owner ruling 2026-06-20).**
+  This is the conduct twin of trust-but-verify and THE NO-GUESSING RULE: where those say CONFIRM every claim and MAP
+  every divergence, this says NEVER fill a gap with inference. An assumption is a shortcut, and shortcuts "bring the
+  entire demonclown circus of this codebase on your head." It applies to EVERYTHING, not just modifier divergences:
+  do not infer a CAUSE you have not mapped; do not assume an earlier verification still holds (re-verify); and — the
+  one that bit repeatedly — **do not infer an ANSWER or PERMISSION the owner has not given.** "Keep going" authorizes
+  work; it is NEVER a vote on a specific open decision. **A question you have posed to the owner is a HARD STOP: do
+  not act past it — not the "obviously correct" part, not the "settled content" part — until they answer.** When you
+  reach a gap, the only moves are VERIFY it against ground truth, or ASK; inventing the answer is the banned move.
+  Minions carry the same rule in their base brief (`.claude/agents/data-reader.md`), and every minion you spawn must
+  be told it explicitly. Ledgered as [DEC-no-guessing](docs/dev/architecture/decisions.md#dec-no-guessing).
+- **"ALL" means EXHAUSTIVE — locust mode, not judgment-filtered (owner ruling 2026-06-20).** When the owner says do
+  ALL of something (every source, every field, every call site), it means *"run over the codebase like locusts in a
+  cornfield"*: enumerate EVERY item mechanically, **recursing into every aggregate down to its leaf sources**, and
+  emit/handle each — NEVER filtering by a judgment call ("is this needed / dead / python-only / private / probably
+  fine"). **That judgment IS the bug:** a single agent's "do I need this?" is *systematically biased toward dropping
+  items*, so a self-certified "exhaustive" pass is not exhaustive — a careful solo pass on the diagnostic dump still
+  missed **77** sources, found only by a mechanical recurse-everything plus an **adversarial re-check** (a second
+  pass that ASSUMES incompleteness and hunts for a miss; in this codebase, fan it out — one minion per channel/area).
+  Two operational consequences: **(1)** go exhaustive **immediately** — partial passes / per-item asking / "do this
+  subsection first" is the *"untold hours of infinite and endless wrangling"* anti-pattern the owner called out and
+  is far slower than the sweep; **(2)** prove completeness **adversarially**, never by self-assertion. *Why it is
+  load-bearing:* on the live-shadow parity path (the offline emulator was dropped) a single un-emitted source hides
+  inside an aggregate → the divergence is unattributable → the guess/despair spiral. (Scoping is never a reason to
+  skip a source: promote a private getter to public — there is zero sensitive data in a game mod.) Ledgered as
+  [DEC-all-means-all](docs/dev/architecture/decisions.md#dec-all-means-all).
+- **⛔ THE KRAKEN RULE — the OVERALL ruling these all serve (owner ruling 2026-06-20).** Skipping something,
+  assuming something, guessing something, taking a shortcut, or in general **"perceived laziness" is the cardinal
+  sin here, and the consequence is literal: the despair index.** *Why, stated plainly by the owner:* "this codebase
+  is the kraken that will eat your ship, spit you out and crush you. It is **legendary in its lack of standard,
+  coherence, or any reasonable consideration to common sense.** So we act accordingly." That is the WHY behind every
+  rigor rule above — [[DEC-no-guessing]] (assumption = shortcut), [[DEC-all-means-all]] (more is always better than
+  less), "nothing is ever just a one-liner", the total-observability ("Orwell") bar, the read-gates. In a coherent
+  codebase a small assumption is usually harmless; in THIS one it is the move that gets your ship eaten, because there
+  is no underlying standard to make the assumption safe. So the operating posture is **maximal rigor by default**:
+  verify everything, enumerate exhaustively, take zero shortcuts, and treat any pull toward "this is probably fine /
+  I don't need that / good enough" as the kraken's bait. **This is the STANDING default, not a phase of this task
+  (owner ruling 2026-06-20):** the *earliest* the absolute completeness could relax is **AFTER a complete refactor
+  has literally dropped ~half the existing lines** — and per the owner, *"honestly, maybe not even then."* Until the
+  owner **explicitly declares otherwise** (same shape as the read-gate's "all docs every session until the codebase
+  is under control"), maximal rigor stands by default. Ledgered as [DEC-kraken](docs/dev/architecture/decisions.md#dec-kraken).
 - **When documentation is lacking or wrong, FIX IT NOW — it is required, not a note-for-later
   (owner ruling 2026-06-17).** If you hit a gap, an ambiguity, or a misleading line in the docs
   (a runner not documented, a footgun undocumented, a stale description), writing/correcting that
