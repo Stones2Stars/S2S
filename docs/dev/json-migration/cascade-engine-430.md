@@ -3,7 +3,7 @@
 > ## ⛔ RESUMING AFTER A CONTEXT COMPACTION? RE-READ EVERYTHING FIRST.
 >
 > If your context was just compacted mid-session, do NOT act from the summary. Re-read the full spec set (the
-> machine specs + `event-spine-spec.md` + this doc + `migration-renames.md` + `migration-entity-ranking.md`) and the
+> machine specs + `event-spine-spec.md` + this doc + `migration-renames.md`) and the
 > live code in `Sources/Cascade/` before touching anything — compaction has poisoned context before; a stale line
 > loses to a later owner ruling. (Owner 2026-06-17; this gate is being deliberately tested.)
 

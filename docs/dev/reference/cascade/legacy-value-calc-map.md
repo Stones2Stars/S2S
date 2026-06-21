@@ -4,8 +4,17 @@
 > `CvGameCoreDLL.cpp`, `CvProperties*.cpp`, `Assets/Python/Revolution/` — 2026-06-19 parallel agent sweep
 > (waves 1–4).
 > **Grounding:** every formula below was read at its named getter. **Line numbers DRIFT — confirm against
-> the named function, not the integer** (and verify a getter's VISIBILITY before calling it from
-> `CvHttpServer.cpp`).
+> the named function, not the integer.** **Getter VISIBILITY is NOT a reason to skip a source (owner ruling
+> 2026-06-20):** if a getter the dump needs is `private`/`protected`, **PROMOTE it to `public`** — there is zero
+> sensitive data in a game mod, so encapsulation never justifies leaving a calc source un-emitted. Never let
+> "it's private, meh, don't need it" drop a source.
+> **A realized getter may return a STORED value, not a live calc (owner ruling 2026-06-20):** distinguish
+> `calcX()` (computes the value) from `getX()` (fetches the last-stored). For a stored/cached getter you MUST
+> (a) emit the calc's INTERNAL sources so the value is REPRODUCIBLE, not merely read, and (b) confirm **WHEN**
+> the store is set (its freshness) — a `getX()` read of a stale store is a silent wrong value. *Example:* per-unit
+> `getUpkeep100()` is the store; `calcUpkeep100()` = `100×unitInfo.getBaseUpkeep() + extraUpkeep100`, then
+> `×upkeepModifier`, then `×upkeepMultiplierSM` (NPC skipped) — maintained fresh on unit init + every source
+> mutation + `recalculateUnitUpkeep` (so the store is current). Dump BOTH the store and the four calc sources.
 >
 > This is the **per-calc DESTROY-pass map**: for each per-turn value the engine realizes, *which legacy
 > getter computes it, what components feed it, the x1/x100 + clamp gotchas, and what the diagnostic dump
@@ -37,11 +46,57 @@ populationGrowthRate; nonexistent → `byCargo`; dead → `pillageGold` (buildin
 
 ---
 
-## 1. City YIELDS — `CvCity::getYieldRate100` ✅ BUILT (cityInput)
+## 1. City CORE YIELDS — food / production / commerce (the full pipeline) ✅ BUILT (cityInput)
 
-`getYieldRate100(y) = min(CITY_MAX_YIELD_RATE, max(100, (getBaseYieldRate + getSpecialistYieldTotal) * getBaseYieldRateModifier + 100 * getExtraYield))` (`CvCity.cpp` ~11246). `getBaseYieldRateModifier` = full % (`100 + Σ%`); `getExtraYield` = **x1 TRUNCATED** flat-outside (`getExtraYield100/100` — sub-100 precision lost before ×100). Result x100. (The `× 100` on `getExtraYield` is the evidence the extra bucket is human-scale — see [scale registry §3](fixed-point-and-scales.md#3-how-to-figure-a-fields-scale-the-method--do-not-eyeball-the-name).)
+> **The emulation-grade trace** (owner ruling 2026-06-20: the core-yield calc is foundational to the outside legacy
+> emulation and to parity — map it THOROUGHLY, every source/scale/clamp/order, not a one-liner). All values verified
+> at the named getter in `CvCity.cpp`. Line numbers DRIFT — trust the function name. Four stages, in order:
 
-**Dump:** base, specialist (`getSpecialistYieldTotal`), modifier (`getBaseYieldRateModifier`), extraYield (x1), extraYield100, legacy100, cap. **DONE + verified live** (London 3/3). Live dump also emits the full 7-way modifier breakdown `modBonus/modBuilding/modPlayer/modEvent/modPower/modArea/modCapital` (see §12).
+### 1.0 Plot → city base (the worked-tile sum)
+`CvCity::updateYield()` (`:1577`) just runs `CvPlot::updateYield` over `plots()`; each worked plot deposits its
+`CvPlot::calculateYield` into the city accumulator `m_aiBaseYieldRate[y]` (via `changePlotYield`), read back as
+`getPlotYield(y) = m_aiBaseYieldRate[y]` (`:11257`). The plot-level yield itself (nature = terrain+feature+river+
+hills/peak + bonus; + improvement + route + cityChange + popChange + terrain/seaPlot/workingCity changes + landmark +
+goldenAge; `max(0,·)`, city plots `max(getMinCityYield,·)`) is decomposed in **§10.1** — the §1 `base` bottoms out there.
+
+### 1.1 `getBaseYieldRate(y)` (`:22906`) — the additive base [x1]
+`= getPlotYield(y) + getTradeYield(y) + player.getFreeCityYield(y) + (player.isGoldenAge() && goldenAgeYield(y)>0 ? goldenAgeYield(y) : 0)`.
+The worked-tile sum + trade-route yield + player free-city yield + golden-age yield, BEFORE specialists and modifiers.
+
+### 1.2 `getYieldRate100(y)` (`:11246`) — the realized city yield [x100]
+```
+getYieldRate100(y) = min(CITY_MAX_YIELD_RATE, max(100,
+        (getBaseYieldRate(y) + getSpecialistYieldTotal(y)) * getBaseYieldRateModifier(y)   // (base+specialist)[x1] × %[100+Σ] → x100
+      +  100 * getExtraYield(y)))                                                           // extra[x1] re-scaled → x100
+```
+- The modified core `(base + specialist) × modifier` produces the x100 scale (modifier carries the ×100 because it is `100+Σ%`).
+- Clamps: `max(100, ·)` floors at 1.00; `min(CITY_MAX_YIELD_RATE, ·)` caps. `getYieldRate(y) = getYieldRate100(y)/100` (the x1 twin, §7).
+- **Why specialist is INSIDE the `×modifier` term but extra is OUTSIDE:** specialist yields take the city modifier exactly like worked tiles (#317); the extra bucket (corp/per-building-flat/per-pop) does not.
+
+### 1.3 `getBaseYieldRateModifier(y, iExtra=0)` (`:11217`) — the 7-way % stack [base 100]
+`= max(0, 100 + iExtra + bonus + building + event(city) + player + power? + area? + capital?)`, where:
+| term | getter | dump key |
+|---|---|---|
+| bonus | `getBonusYieldRateModifier(y)` | `modBonus` |
+| building | `getBuildingYieldModifier(y)` (`m_buildingYieldMod`) | `modBuilding` |
+| event (city) | `getYieldRateModifier(y)` | `modEvent` |
+| player | `player.getYieldRateModifier(y)` | `modPlayer` |
+| power | `getPowerYieldRateModifier(y)` — **only if `isPower()`** | `modPower` |
+| area | `area()->getYieldRateModifier(owner, y)` — only if `area()!=NULL` | `modArea` |
+| capital | `player.getCapitalYieldRateModifier(y)` — **only if `isCapital()`** | `modCapital` |
+
+`max(0, ·)` floors the WHOLE stack (a net-negative modifier becomes 0, not negative).
+
+### 1.4 `getExtraYield(y)` — the unmodified flat bucket [x1, ⚠ truncated]
+`getExtraYield100(y)` (`:11323`) `= m_aiExtraYield[y]*100 + getBuildingExtraYield100(y) + getBaseYieldPerPopRate(y)*getPopulation()`.
+`getExtraYield(y) = getExtraYield100(y)/100` — ⚠ **truncated to x1 BEFORE the `×100` re-scale in 1.2**, so sub-unit
+precision is lost (the documented x1-truncation gotcha; the `×100` is the proof the bucket is human-scale —
+[scale registry §3](fixed-point-and-scales.md#3-how-to-figure-a-fields-scale-the-method--do-not-eyeball-the-name)).
+Sources: flat extra-yield, per-building extra yields (already ×100), per-pop yields × population.
+
+### 1.5 `getSpecialistYieldTotal(y)` (`:11351`) = `m_aiSpecialistYieldTotal[y]` — a maintained accumulator of specialist yields (city-modified, see 1.2).
+
+**Dump:** base, specialist, modifier + the full 7-way breakdown (`modBonus/modBuilding/modPlayer/modEvent/modPower/modArea/modCapital`), extraYield (x1), extraYield100, legacy100, cap. **DONE + verified live** (London 3/3).
 
 ## 2. COMMERCE split — `CvCity::getCommerceRateTimes100`
 

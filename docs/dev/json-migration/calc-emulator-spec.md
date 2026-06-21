@@ -212,6 +212,34 @@ produced the data + model to build the real DLL cascade. Carry these forward (du
 - **Loadout completeness so far:** techs/civics/buildings/`resources`(available bonuses)/plots(+river)/`state`
   (isPowered/isCapital/isGoldenAge). Known still-missing inputs surface as `cascade_sim` "unevaluable" atoms.
 
+### 2a.2 ⛔ ZERO YIELD RIDE-IN — compute EVERY part from JSON + STATE, validate each part in ISOLATION (owner ruling 2026-06-20)
+
+The whole point is to EMULATE the legacy outcome using the **new JSON structure**, so the calc must **COMPUTE every
+value from JSON + game STATE — it may NOT ride in a legacy-COMPUTED value.** Riding in a legacy number (a) never
+validates the new JSON for that part, and (b) collapses at the atomic cutover when the legacy reads are deleted. *"The
+very second you ride in any kind of yield, that is when we are royally fucked."*
+
+- **The ONLY number taken raw from the dump is `distance-from-capital maintenance`** — it is map-derived, not JSON, and
+  not otherwise reconstructable. (Even numCities/colony maintenance are computable from the city count; building
+  maintenance is the negative-gold cost in JSON. Distance-to-capital is the lone exception.)
+- **Everything else is computed:**
+  - **Per-worked-plot yields:** for each worked plot, sum terrain + feature + improvement + bonus + route + river
+    (+ hills/peak) from the JSON, evaluated against the plot's contents + state; sum worked plots → the city base
+    yield. NOT the dump's `yieldFood/Production/Commerce` (legacy reads, gone at cutover).
+  - **Specialists:** JSON specialist values × the city's assignment counts (state).
+  - **Commerce split:** computed commerce yield × slider + per-commerce JSON deposits (building/civic/trait/shrine/
+    per-pop); the modifier from JSON.
+- **STATE the calc may read** (inputs, not legacy-computed values): tech set/count, city count, city population, which
+  plots are worked + what's on them (terrain/feature/improvement/bonus/route/river), specialist assignment, slider,
+  property values, building age, tally counts. **Full vicinity** is used for bonus-gated effects (net positive).
+- **Methodology — ISOLATION, not aggregate-diff:** validate each part on its own (a single plot's yield, one
+  specialist, one building's commerce) against the known/legacy value, driven to **no diff per part**; the aggregate
+  is then diff-free by construction. Aggregate-diff-chasing is the **ghost-hunt** — e.g. the per-building
+  `getBaseCommerceRateFromBuilding100` is engine-MODIFIER-inclusive (a ghost, not a JSON-comparable value); the
+  JSON-comparable per-building raw is the new `*Raw100` dump field. **Build DRY-FIRST:** compute a *fictitious* plot /
+  synthetic loadout in isolation and verify the arithmetic before wiring to live dumps.
+- Ledgered: [DEC-calc-zero-ride-in](../architecture/decisions.md#dec-calc-zero-ride-in).
+
 ---
 
 ## 3. The validation credential — TWO comparisons, do not conflate them

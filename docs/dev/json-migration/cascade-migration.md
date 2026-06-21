@@ -3,7 +3,7 @@
 > **Status:** plan   ·   **Verified against:** the old `docs/dev/plans/` spec set as of 2026-06-19 (the
 > consolidated sources are cited per-section), NOT re-verified against live `Sources/Cascade/` for this rebuild.
 > **Grounding:** `cascade-engine-430.md` (the implementation status table + build order),
-> `migration-entity-ranking.md` (the entity order + per-entity state), `building-cascade-conversion.md`
+> `migration-entity-ranking.md` (the entity order + per-entity state — **archived** to `old-docs/json-migration/`, migration complete), `building-cascade-conversion.md`
 > (building-pass status), `cascade-mapping-inventory.md` §14/§B (the maintainer demolition list),
 > `cascade-known-discrepancies.md` + `modifier-cascade-known-discrepancies.md` (the open divergences).
 > One-paragraph orientation: this is the **roadmap/status** for the #428/#430 cascade rework — *where the
@@ -117,7 +117,7 @@ metric — the cascade is *expected* to correct latent legacy bugs ([DEC-parity-
 
 ## 2. Entity migration order + status (XML → JSON)
 
-Source: `migration-entity-ranking.md`. The order is a **topological sort**: config/sources first, the
+Source: `migration-entity-ranking.md` (archived, `old-docs/json-migration/` — migration complete). The order is a **topological sort**: config/sources first, the
 most-targeted "monsters" last, so every edge a target consumes is already authored on its source (the
 edge is authored **once**, on the source/conditioner). The curators live in `Tools/Migration/`; the data lands
 in `Assets/Data/**`.

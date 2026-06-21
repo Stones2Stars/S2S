@@ -114,6 +114,15 @@ the cascade against the live engine, turn over turn, until clean — *then* the 
 **Orwellian** total-observability surface ([DEC-obs-scale](../architecture/decisions.md#dec-obs-scale);
 [`../reference/observability/README.md`](../reference/observability/README.md)).
 
+**The per-source attribution is DUAL-PURPOSE — dev parity AND a player-facing feature (owner ruling 2026-06-20).**
+The same per-source decomposition the shadow needs (each building/civic/source's flat/percent/mult contribution to a
+yield/commerce/happiness/… — cascade side via `/diagnostic/modifier`'s `sources[]`, legacy side via
+`cityInput.buildingYields`) is exactly the data a **player-facing "where does this come from?" breakdown screen**
+consumes. Players routinely ask the community "how does this number work?"; an explicit, complete source list lets the
+game answer that **live, in-game**. So the per-source model is built clean and queryable for BOTH consumers — it is not
+dev-only plumbing, and that is a further reason completeness ([DEC-all-means-all](../architecture/decisions.md#dec-all-means-all))
+is load-bearing: a breakdown screen that silently omits a source is as wrong to a player as a hidden aggregate is to the shadow.
+
 ## See also
 - [`../architecture/north-star.md`](../architecture/north-star.md) — the front-and-center summary this expands.
 - [`../reference/cascade/fixed-point-and-scales.md`](../reference/cascade/fixed-point-and-scales.md) — the scale registry.

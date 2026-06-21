@@ -18,7 +18,7 @@ and mass-migration are NOT how we proceed).
 
 > This doc is **not** the resume entry point. Resume via the [`docs/dev/README.md`](../README.md) "re-read after
 > a compaction" banner + the **#428/#430 spec cluster** it lists (data-model / enabler / modifier / tally /
-> event-spine specs, cascade-engine-430, migration-renames, migration-entity-ranking) — read those first, then
+> event-spine specs, cascade-engine-430, migration-renames) — read those first, then
 > work this doc top-down.
 
 **State:** branch **`json-data-migration`** (~19 commits off `origin/main`, working tree clean). The #421/#423

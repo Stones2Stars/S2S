@@ -82,6 +82,19 @@ do not replicate legacy's per-case calc quirks.**
 
 ## 4. The CARE SCALE — Fine → Meltdown (the disposition axis)
 
+> **⛔ OWNER RULING (2026-06-20) — the care scale is the OWNER'S acceptance vocabulary for the validation stage, NOT
+> the agent's "this is OK / this is a Bug" auto-classifier.** It was written so the owner has a common vocabulary to
+> tell the agent whether a divergence is acceptable — it is read by the owner, applied by the owner. The shadow's job
+> is to SURFACE each divergence with its factual attribution (the cause-tag + the cascade/legacy/delta numbers), not to
+> pre-judge acceptability. So `cascadeModifierClassify` auto-assigns ONLY the two safe-factual low rungs (exact
+> `match`→Fine, within-tolerance→Rounding) plus the documented capability win (`multiplierComposition`→Better), and
+> routes **every** real divergence to **`Weird` — the "surface it, the owner verdicts" bucket**. It deliberately
+> **never self-asserts `Bug` or `Meltdown`** (those are verdicts), and never flags a legitimate value (e.g. a net-
+> negative gold/health) as garbage. The scale had drifted into an agent auto-verdict (auto-`Bug` on the expected
+> un-wired-source parity work, auto-`Meltdown` on valid negatives); this realigns it. *(This ruling was meant to be
+> captured at the prior handover and was not — recorded here now; nothing durable may hinge on a handover,*
+> [DEC-WF-rulings-to-repo](../../architecture/decisions.md#dec-wf-rulings-to-repo).*)*
+
 Every surviving Mode-B divergence is dispositioned on a six-rung **composure-collapse** scale — the seriousness axis
 that decides whether a divergence blocks cutover or is an accepted win. It is the magnitude analogue of the enabler's
 "UI-acceptable" classification. **One word per rung**, chosen so the name alone conveys both severity and the implied
@@ -122,9 +135,13 @@ anyone guesses. Each divergence carries a machine-determinable **cause-tag**, wh
 | `rounding` | within int-rounding tolerance / sum-order noise | 1 — Rounding |
 | `multiplierComposition` | diff explained by ×product vs legacy additive (Mode B only) | 2 — Better |
 | `knownLegacyBug` | matches a catalogued fragmented-legacy quirk | 2 — Better |
-| `missingDeposit` / `extraDeposit` / `wrongScope` / `baseMismatch` | a deposit landed wrong (in Mode A ⇒ wiring bug) | 4 — Bug |
-| `overflow` / `channelGarbage` / `nan` | systemic | 5 — Meltdown |
+| `missingDeposit` (cascade < legacy) / `extraDeposit` (cascade > legacy) | a real divergence — typically un-wired sources (cascade undershoots) or dormant/over-counted deposits (overshoots) | **3 — Weird → ask owner** (NOT auto-Bug: the agent surfaces, the owner verdicts §4) |
 | `unexplained` | cause not identified | 3 — Weird → **ask owner** |
+
+> **`Bug` (4) and `Meltdown` (5) are OWNER VERDICTS, not auto-tags (§4).** The classifier never emits them — a confirmed
+> wiring bug or a systemic meltdown is a conclusion the owner draws from the surfaced divergence + numbers, then states
+> back to the agent. (Legitimate net-negative values are NOT garbage; the old auto-`channelGarbage`→Meltdown rule was the
+> drift this removes.)
 
 The cause-tagger and the rung-name lookup live ONCE in `Sources/Cascade/CvCascadeModifier.*`
 (`cascadeModifierClassify` / `cascadeModifierCareName`), so the per-turn line, the endpoints, and the offline tester

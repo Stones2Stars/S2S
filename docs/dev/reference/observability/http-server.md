@@ -28,7 +28,7 @@ read-only JSON snapshots + an SSE stream, so external tooling watches a running 
 | Endpoint | Returns |
 |---|---|
 | `GET /` | `hello world` (smoke test) |
-| `GET /units` `[?id=N\|?playerNumber=N]` | every unit: id, owner, x/y, group, `missionAI`, activity, damage, level, `type`, `unitAI` |
+| `GET /units` `[?id=N\|?playerNumber=N]` | every unit: id, owner, x/y, group, `missionAI`, activity, damage, level, `type`, `unitAI`, and the **movement/range** fields `baseMoves`/`maxMoves`(×100 budget)/`movesLeft`/`moveDiscount`/`range`(air-only)/`domain` (the #430 movement "observe" surface) |
 | `GET /players` `[?playerNumber=N]` | every alive player: score, era, tech count, research, cities, population, units, gold (+rate), science rate, production, civ, name, handicap |
 | `GET /cities` `[?id=N\|?playerNumber=N]` | every city: position, name, population, food/production/commerce rates, production head (+turns left), building count, culture level, capital flag, and the live properties **crime / education / disease** |
 | `GET /events` | Server-Sent-Events stream (never ends; ≤8 concurrent) — see below |

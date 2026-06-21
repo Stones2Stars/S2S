@@ -82,6 +82,51 @@ iMod = city.maintenanceModifier + player.maintenanceModifier
      + (connected && !capital ? player.connectedCityMaintenanceModifier : 0)
 ```
 
+### 1-D.1 Cascade maintenance channel — separate bookkeeping, reverse-engineered (owner ruling 2026-06-20)
+
+**Maintenance (and inflation) are SEPARATE BOOKKEEPING channels, computed OUTSIDE the commerce chain** — added on
+top of the bottom line like any accounting entry, **never** folded into the gold-commerce family
+([DEC-maintenance-bookkeeping](../../architecture/decisions.md#dec-maintenance-bookkeeping)). `maintenance` is its
+own JSON family at **city + empire** scope (the modifier half) plus an engine-fetched base.
+
+**The JSON is only the STATIC truth; the engine adds the rest — which is *why* every source had to be mapped.** The
+calc-emulator reverse-engineers the FULL legacy calc by **fetching the engine-only inputs from the live dump** and
+**computing only the JSON-owned parts**; a single unmapped source would make a discrepancy unattributable (this is the
+load-bearing reason behind [DEC-all-means-all](../../architecture/decisions.md#dec-all-means-all) + the Orwell bar).
+Three source classes:
+
+| Class | Sources | Where it comes from |
+|---|---|---|
+| **Engine hard deductors** | distance-from-capital · numCities · colony · corporation | engine-computed (map / city-count / corp); **NOT in JSON** — FETCHED FROM THE LIVE DUMP, treated as a given base |
+| **JSON building gold COST** | a building's gold upkeep (legacy `TREAT_NEGATIVE_GOLD_AS_MAINTENANCE` → `calculateBuildingMaintenanceTimes100`) | JSON — but **currently MIS-HOMED as negative `gold.flat`** (prison −100, labs/hospital/…); must move to the `maintenance` family (a cost member), out of the commerce chain |
+| **JSON maintenance MODIFIERS** | building effects that raise/lower maintenance, city + empire | `maintenance.{city,empire}.percent` — EXISTS today |
+
+**Verified legacy formula (`cascade_sim`, +0 on London):**
+`baseMaint100 = building + distance + numCities + colony + corp`; `realized100 = baseMaint100 × (100 + effectiveModifier)/100`.
+**`cascade_sim` channel-5 result (London):** building gold-cost cascade 69100 vs legacy 69600 (−500), city modifier
+−13 vs −13 (+0), engine deductors from the dump, **realized −0.4%** — near parity; the only residual is a tiny
+building-cost reconstruction gap.
+
+**Inflation** is a related pseudo-mechanic but is **ENTIRELY OUT OF CITY SCOPE (owner 2026-06-20)**: it is
+**player-level**, sourced only from **civics (and maybe traits)**, and does **not touch these city calculators at all
+— except hurry building cost**. So it is NOT a city bookkeeping channel and must NOT be modelled in the city
+maintenance/commerce calcs; it rides at the player level (poorly coded — a side issue). The only place it intersects
+this work is the hurry-cost path.
+
+**DONE (data):** the curator (`curate_building._gold_cost_to_maintenance`) routes a building's unconditional negative
+`CommerceChanges(GOLD)` into the `maintenance` family as a flat cost (prison `maintenance.city.flat:100`), not `gold`
+— so the commerce chain carries no building upkeep (this alone moved the gold-commerce divergence from −44.6% to the
+genuine positive-gold residual, and brought maintenance to **+0.0%** on the capital + non-capitals).
+
+**Scope ruling (owner 2026-06-20): keep the BLANKET (all negative building gold → maintenance) FOR PARITY NOW — do
+not pollute the data with semantic distinctions; decide for real AFTER the cutover.** A scan of all 481 negative-gold
+buildings found them uniformly upkeep/cost-natured (labs, institutions, infrastructure, power plants); the only
+semantic edge is the `CRIME_*`/`ORDINANCE_*` pseudobuildings (a gold-drain that is arguably *income loss* rather than
+*upkeep*), but legacy (`TREAT_NEGATIVE_GOLD_AS_MAINTENANCE` ON) lumps those as maintenance too, so the blanket matches.
+**Deferred to post-switch:** (a) whether crime/ordinance gold-drains should be modelled as negative commerce vs
+maintenance; (b) option-independence — the curator currently BAKES `TREAT_NEGATIVE_GOLD_AS_MAINTENANCE`; the
+override-by-design alternative (keep `gold.flat`, engine applies the option) is revisited once the cascade is live.
+
 ### 1-E. Civic upkeep — `getCivicUpkeep` (`CvPlayer.cpp`, ~14260)
 Sum over civic-option slots of `getSingleCivicUpkeep(currentCivic)`:
 ```

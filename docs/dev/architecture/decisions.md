@@ -22,8 +22,13 @@
 | [DEC-per100-closed-set](#dec-per100-closed-set) | The legacy per-100 fields are a CLOSED set of exactly 6 `…100()` accessors | `reference/cascade/fixed-point-and-scales.md` §4b |
 | [DEC-curator-owns-descale](#dec-curator-owns-descale) | The curator absorbs all per-100 ambiguity once; JSON is uniformly human; readJson re-applies ×100 | `reference/cascade/fixed-point-and-scales.md` §1 |
 | [DEC-deliveryguy](#dec-deliveryguy) | A cross-entity modifier lives on whoever DELIVERS it (the deliveryguy), keyed by the target — by semantic sense, not inversion | `reference/cascade/modifier.md` §6 |
+| [DEC-vicinity](#dec-vicinity) | Vicinity = a city's working-range plots (permissive radius scan); ALL special vicinity variants fold to ONE standard vicinity; duplicate same-target folds `combine:max`, never summed | `reference/cascade/enabler.md` §8 |
 | [DEC-cascade-bidirectional](#dec-cascade-bidirectional) | The cascade is bidirectional (enabler `require` callback UP the chain); down-only was tried and fails AND-modeling + dumps maintenance on modders | `architecture/north-star.md` §2 |
-| [DEC-no-guessing](#dec-no-guessing) | Never hypothesize a divergence cause; map it to a named source — emit the data first if missing | `AGENTS.md` |
+| [DEC-no-guessing](#dec-no-guessing) | Do not guess/infer/assume ANYWHERE — an assumption IS a shortcut; map divergences to named sources, never infer a cause/answer/permission (binds agents + minions) | `AGENTS.md` |
+| [DEC-all-means-all](#dec-all-means-all) | "ALL" = exhaustive/locust mode: recurse every aggregate to leaves, no judgment-filter; go exhaustive immediately (don't piecemeal); prove completeness adversarially | `AGENTS.md` |
+| [DEC-maintenance-bookkeeping](#dec-maintenance-bookkeeping) | Maintenance & inflation are separate bookkeeping channels OUTSIDE the commerce chain; engine hard-deductors (distance/numCities/colony/corp) fetched from the live dump, JSON computes building-cost + modifiers | `reference/observability/gold-maintenance-inflation.md` §1-D.1 |
+| [DEC-calc-zero-ride-in](#dec-calc-zero-ride-in) | The cascade calc computes EVERY value from JSON + game state; the ONLY raw dump ride-in is distance-from-capital maintenance; validate each part in ISOLATION (no aggregate-diff-chasing); build dry-first | `json-migration/calc-emulator-spec.md` §2a.2 |
+| [DEC-kraken](#dec-kraken) | The OVERALL ruling: skipping/assuming/guessing/shortcuts/"perceived laziness" is the cardinal sin (despair index) — the codebase is a standardless kraken, so maximal rigor by default. The WHY behind every rigor rule | `AGENTS.md` |
 | [DEC-map-before-delete](#dec-map-before-delete) | You cannot delete a maintainer you cannot fully observe; shadow it until clean, then cut | `AGENTS.md`; old `cascade-mapping-inventory.md` §A |
 | [DEC-parity-not-goal](#dec-parity-not-goal) | Parity is not the goal; ±10% is NOT "parity-adjacent" — sharper than legacy | [`reference/cascade/shadow.md` §3](../reference/cascade/shadow.md) |
 | [DEC-tally-serializes-nothing](#dec-tally-serializes-nothing) | Tally + scope accumulators serialize NOTHING — rebuilt from loaded objects on load | [`reference/cascade/tally.md` §4](../reference/cascade/tally.md) |
@@ -86,6 +91,19 @@ transform, never a data shape (the reason the derived-data repository was retire
 decides every case (permissive but restrictive). Movement & range are two separate defined families
 (`movement`+`moveCost` vs `range`). **Home:** [`reference/cascade/modifier.md` §6.5/§6.6](../reference/cascade/modifier.md#65-the-home-rule--own-output-vs-governing-deliverer-owner-refinements-2026-06-20) (owner refinements 2026-06-20).
 
+### DEC-vicinity
+**Vicinity is ONE simplified mechanic: the plots in a city's CURRENT working range** (a radius scan that grows
+with culture), evaluated with **no ownership/worked filter** — deliberately more permissive than the legacy
+semantics it subsumes (`isValidTerrainForBuildings`, `GOM_TERRAIN`, `hasVicinityBonus`, `hasRawVicinityBonus`).
+Owner-accepted tradeoff: **two cities overlapping a bonus plot BOTH qualify** (only one *works* it).
+**ALL "special" vicinity variants fold into this one standard vicinity** (`connection: vicinity`) — raw-vicinity,
+the `PrereqOrTerrain/Feature/Improvement` plot prereqs, etc.; there is **NO** separate raw/valid handling. When the
+same target arrives via multiple vicinity types, **fold to one and take the HIGHEST value (`combine: max`), never
+summed**. **Established 2026-06-16, before the JSON pass.** This DEC exists because successive agents repeatedly
+forgot/misinterpreted the ruling (it sat buried in enabler §8, its `max` half split into modifier §7, and absent
+from this ledger) — **grep here first.** **Home:** [`reference/cascade/enabler.md` §8](../reference/cascade/enabler.md)
+(+ [`reference/cascade/modifier.md` §7](../reference/cascade/modifier.md) for the `combine: max` fold).
+
 ### DEC-cascade-bidirectional
 The cascade is **bidirectional**, not down-only: the enabler resolves its `requires` by a `require` callback
 **UP** the scope chain. `requires` is precisely the **AND** mechanism — it is **mapped on the subset of data
@@ -97,9 +115,87 @@ callback is **load-bearing, not optional**; do not "simplify" back to down-only.
 [`../architecture/north-star.md` §2](north-star.md) (owner ruling 2026-06).
 
 ### DEC-no-guessing
+**GENERAL CONDUCT (owner ruling 2026-06-20): do not guess, do not infer, do not assume — an assumption IS a shortcut**,
+binding every agent AND every spawned minion, not just modifier work. Never infer a CAUSE you have not mapped, never
+assume an earlier verification still holds, and never infer an ANSWER or PERMISSION the owner has not given ("keep going"
+authorizes work, never a specific open decision; a question you posed is a HARD STOP until answered). The only moves at a
+gap are VERIFY against ground truth, or ASK. The original instances below are applications of this.
 Do not hypothesize a divergence's cause and try a fix; emit the full legacy decomposition via the dump and
 attribute the divergence to a named source with numbers. If the data isn't emitted, emit it first.
-**Home:** [`AGENTS.md`](../../../AGENTS.md) — "THE NO-GUESSING RULE".
+**The same rule binds the data classification/curator** (owner ruling 2026-06-20): the `classify-building` workflow
+NEVER invents/best-fits/"SHOEHORN?"s a home — a home is assigned ONLY from a VERIFIED live consumer; anything
+ambiguous is emitted as `needsRuling` / `home:"NEEDS_OWNER_RULING"` for the owner to rule (the old `creativeMechanic`
+/ `shoehornRisk` guess flags were ripped out). A guessed home is the 30-hours-of-guessed-XML failure this prevents.
+**Home:** [`AGENTS.md`](../../../AGENTS.md) — the Conventions bullet "DO NOT GUESS, DO NOT INFER, DO NOT ASSUME — an assumption IS a shortcut" (general conduct) + "THE NO-GUESSING RULE" (divergence mapping); minion brief `.claude/agents/data-reader.md`; workflow `Tools/Migration/workflows/classify-building.js`.
+
+### DEC-all-means-all
+When the owner says do **ALL** of something, it means **EXHAUSTIVE — "run over the codebase like locusts in a
+cornfield"**: enumerate every item mechanically, **recursing into every aggregate down to its leaf sources**, handling
+each — never filtered by a judgment call ("needed / dead / python-only / private / probably fine"). That judgment is
+the bug: a single agent's "do I need this?" is *systematically biased toward dropping items*, so a self-certified
+"exhaustive" pass is NOT exhaustive — a careful solo pass on the diagnostic dump still missed **77** sources, caught
+only by mechanical recurse-everything + an **adversarial re-check** (a second pass that assumes incompleteness and
+hunts for a miss; fan it out, one minion per area). Operational: **(1)** go exhaustive *immediately* — partial
+passes / per-item asking is the "untold hours of endless wrangling" anti-pattern and is slower; **(2)** prove
+completeness adversarially, never by self-assertion. Load-bearing because on the live-shadow parity path (the offline
+emulator was dropped) a single un-emitted source hides in an aggregate → the divergence is unattributable → the
+guess/despair spiral. **Worked example:** the espionage commerce cascade ran −80 below legacy for every city and
+stayed an unattributable mystery for hours; the instant `buildingCommerce100` was split into its four sub-sources
+(pure/bonus/tech/perPop — a split that "probably didn't need" decomposing) the −80 named itself: per-pop building
+commerce (78) + specialist (1) + playerExtra (1). The aggregate hid it; the exhaustive split named it.
+**This is the operational form of the total-observability ("Orwell") bar** (AGENTS.md) and [[DEC-map-before-delete]]:
+you cannot delete a legacy maintainer you cannot *fully* observe, and an aggregate that hides one source is a blind
+spot in that surveillance — so "more is always better than less" is not a vibe, it is the parity prerequisite.
+Sibling of [[DEC-no-guessing]] and [[DEC-proper-once]]; scoping never skips a source (promote
+private getters — zero sensitive data in a game mod). **Home:** [`AGENTS.md`](../../../AGENTS.md) Conventions
+("'ALL' means EXHAUSTIVE — locust mode"); the reusable audit is the `dump-completeness-audit` adversarial workflow.
+
+### DEC-maintenance-bookkeeping
+**Maintenance (and inflation) are SEPARATE BOOKKEEPING channels, computed OUTSIDE the commerce chain (owner ruling
+2026-06-20)** — added on top of the bottom line like any accounting entry, NEVER folded into the gold-commerce family.
+`maintenance` is its own JSON family (city + empire). Three source classes, and the split is *why* every source had to
+be mapped ([[DEC-all-means-all]]): **(1) engine hard deductors** — distance-from-capital / numCities / colony /
+corporation — engine-computed, NOT in JSON, so the calc-emulator FETCHES them from the live dump as a given base;
+**(2) JSON building gold COST** — a building's gold upkeep (legacy `TREAT_NEGATIVE_GOLD_AS_MAINTENANCE`), currently
+MIS-HOMED as negative `gold.flat` and to be moved to the `maintenance` family (curator follow-up; routing it out
+dropped the gold-commerce divergence from −44.6% to single digits); **(3) JSON maintenance MODIFIERS**
+(`maintenance.{city,empire}.percent`, exists). The JSON is only the STATIC truth; the engine adds the rest, so the full
+calc is reverse-engineered as JSON-computed parts + engine-fetched parts. `cascade_sim` verified
+`baseMaint100 = building+distance+numCities+colony+corp`, `realized = baseMaint100×(100+effectiveModifier)/100`: −0.4%
+(capital) and −0.6…−1.9% (non-capitals, distance deductor nonzero). **Home:**
+[`reference/observability/gold-maintenance-inflation.md`](../reference/observability/gold-maintenance-inflation.md)
+§1-D.1. Sibling of [[DEC-all-means-all]].
+
+### DEC-calc-zero-ride-in
+**The cascade calc EMULATES legacy by computing every value from the NEW JSON + game STATE — ZERO legacy-computed
+ride-in (owner ruling 2026-06-20).** Riding in a legacy number never validates the new JSON for that part AND collapses
+at the atomic cutover when legacy reads are deleted ("the second you ride in any yield, we are royally fucked"). The
+**only** raw number taken from the dump is **distance-from-capital maintenance** (map-derived, not JSON, not
+reconstructable; even numCities/colony are computable from the city count). Everything else is computed: per-worked-plot
+yields (terrain+feature+improvement+bonus+route+river from JSON × the plot's contents) summed up; specialists (JSON
+values × assignment counts); commerce (computed yield × slider + JSON deposits); the modifier (JSON). State the calc
+*reads* (inputs, not legacy values): tech/city counts, population, worked plots + their contents, specialist
+assignment, slider, property values, building age, tally counts; full vicinity for bonus-gates. **Methodology:**
+validate each part in **ISOLATION** (one plot, one specialist, one building) to no-diff — the aggregate is then
+diff-free by construction; aggregate-diff-chasing is the ghost-hunt (e.g. `getBaseCommerceRateFromBuilding100` is
+engine-modifier-inclusive, not JSON-comparable; the `*Raw100` dump field is). **Build DRY-FIRST** — fictitious
+plot/loadout in isolation, verify the arithmetic, before wiring to live dumps. **Home:**
+[`json-migration/calc-emulator-spec.md`](../json-migration/calc-emulator-spec.md) §2a.2. Sibling of [[DEC-all-means-all]].
+
+### DEC-kraken
+**The OVERALL ruling these all serve (owner ruling 2026-06-20).** Skipping something, assuming something, guessing
+something, taking a shortcut, or in general **"perceived laziness" is the cardinal sin — punishable, literally, by
+the despair index.** *Why (owner, verbatim):* "this codebase is the kraken that will eat your ship, spit you out and
+crush you. It is legendary in its lack of standard, coherence, or any reasonable consideration to common sense. So we
+act accordingly." In a coherent codebase a small assumption is usually harmless; in THIS one there is no underlying
+standard to make it safe, so every shortcut is the move that gets the ship eaten. Operating posture: **maximal rigor
+by default** — verify everything, enumerate exhaustively, zero shortcuts; treat any pull toward "probably fine / don't
+need it / good enough" as the kraken's bait. **Standing default, not a phase (owner ruling 2026-06-20):** the earliest
+this absolute completeness could relax is AFTER a complete refactor has dropped ~half the existing lines — and per the
+owner, "honestly, maybe not even then." Until the owner *explicitly declares otherwise* (same shape as the read-gate's
+"all docs until the codebase is under control"), maximal rigor is the default posture. This is the umbrella WHY behind [[DEC-no-guessing]], [[DEC-all-means-all]],
+[[DEC-map-before-delete]], the total-observability ("Orwell") bar, the read-gates, and "nothing is ever just a
+one-liner". **Home:** [`AGENTS.md`](../../../AGENTS.md) Conventions ("THE KRAKEN RULE").
 
 ### DEC-map-before-delete
 You cannot safely delete a maintainer you cannot fully observe; every state behaviour gets a shadow diffing
