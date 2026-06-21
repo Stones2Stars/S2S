@@ -95,3 +95,4 @@ Tools/ReadJson/readjson.exe
 Tools/ReadJson/testOutput/
 Tools/ReadJson/_conformance.txt
 Tools/ReadJson/_render.txt
+Sources/sweep_tmp
