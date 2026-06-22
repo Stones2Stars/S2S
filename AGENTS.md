@@ -346,6 +346,16 @@ re-sweep, try another) is the anti-pattern this rule kills: build the complete m
   `isValidTerrainForBuildings` and proposed to match it — when `enabler-cascade-spec` §8 had already defined a
   *different, deliberately-more-permissive* vicinity model that should have been read first. Twice in one session
   the design was in the docs and I worked from code/memory instead.)
+- **⛔ "FAST IS SLOW, SLOW IS FAST" — read the docs FULLY; skimming is NEVER faster (owner ruling 2026-06-21, GLOBAL).**
+  If you think reading a doc partially — or only the section you *assume* is relevant, or grepping a keyword instead of
+  reading it end-to-end — is faster, **you are wrong.** The 5% "saved" by skimming routinely costs far more downstream:
+  re-derivation, wrong fixes built on a misread, and burned context. *Instance that prompted it:* skimming this very
+  file's read-gate doc `migration-renames.md` on the simple/complex **trait split** led to **five** rounds of
+  reverse-engineering a procedure that was already fully documented and "nailed" — ~half a context window wasted to save
+  a few minutes of reading; the moment it was read in full the fix was obvious and landed at once. So **read each
+  gated/subsystem doc IN FULL before acting.** This is the conduct twin of the read-gate (which only proves a doc was
+  *opened*) and a sibling of THE KRAKEN RULE / no-guessing (skimming is a shortcut; a misread becomes an assumption).
+  Ledgered as [DEC-fast-is-slow](docs/dev/architecture/decisions.md#dec-fast-is-slow).
 - **Nothing here is ever "just a one-liner" — expect hidden consequences.** This is a
   large, tightly-coupled Civ4/C2C codebase with non-obvious cross-cutting wiring (combat
   math shared across UI/AI/resolution, name-tagged save serialization, dual Python-enum
@@ -419,6 +429,15 @@ re-sweep, try another) is the anti-pattern this rule kills: build the complete m
   `git checkout`-ing away silently removes the changes from their build. **Never switch
   branches while the user may be mid-build.** (Read-only git — `status`/`log`/`diff` — is
   always fine.)
+- **The info JSONs (`Assets/Data/**`) are a DERIVED artifact — regenerate and commit them
+  FREELY, never ask (owner ruling 2026-06-22).** They are curator OUTPUT, **never hand-edited**,
+  so **right-or-wrong lives in the CURATOR, never in the JSON** — a stale-vs-curator JSON is not
+  a risk, only out-of-sync, fixed by `python curate_<x>.py --write`. Therefore: (a) **regenerating
+  the JSON is a just-do-it operation — never prompt for it**; (b) **commit the JSONs routinely**,
+  even mid-migration / "half done" (leaving the hundreds of modified JSONs uncommitted just bloats
+  the working tree; committing the current regen state keeps it sane). This does NOT loosen "commit
+  only on explicit ask" for gameplay CODE — it means the derived JSONs ride along when you commit,
+  and a regen never needs a prompt.
 - **Docs-only changes may be committed and pushed straight to `main`** (owner ruling
   2026-06-12): the indexes (`docs/indexes/DESPAIR_INDEX.*`, `docs/indexes/REALISM_INDEX.*`), player docs,
   `docs/dev/` notes, AGENTS.md — provided NOTHING else rides in the commit. Anything
