@@ -19,7 +19,7 @@
        "TERRAIN_JAGGED"
       ]
      },
-     "IS_HILLS",
+     "HAS_HILLS",
      {
       "bonus": [
        "BONUS_STONE",

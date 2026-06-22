@@ -17,11 +17,6 @@
   "build": {
    "all": [
     {
-     "type": "BONUS_STEEL_WARES",
-     "scope": "city",
-     "connection": "trade|vicinity"
-    },
-    {
      "type": "TECH_BARBED_WIRE",
      "scope": "team"
     }
@@ -33,6 +28,15 @@
       "scope": "plot"
      }
     ]
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_STEEL_WARES",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    }
    ]
   }
  },

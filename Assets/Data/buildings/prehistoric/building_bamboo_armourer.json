@@ -11,11 +11,6 @@
   "build": {
    "all": [
     {
-     "type": "BONUS_BAMBOO",
-     "scope": "city",
-     "connection": "trade|vicinity"
-    },
-    {
      "type": "TECH_CARPENTRY",
      "scope": "team"
     },
@@ -50,7 +45,22 @@
       "type": "MAPCATEGORY_EARTH",
       "scope": "plot"
      }
+    ],
+    [
+     {
+      "type": "CIVILIZATION_NPC_NEANDERTHAL",
+      "scope": "empire"
+     }
     ]
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_BAMBOO",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    }
    ]
   }
  },

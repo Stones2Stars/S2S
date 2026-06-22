@@ -12,11 +12,6 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BONUS_HUMAN_MOD_NOVEL_SENSES",
-     "scope": "city",
-     "connection": "trade|vicinity"
-    },
     "HAS_POWER",
     {
      "type": "BUILDING_VIRTUAL_WORLD_DATA_ANALYSIS",
@@ -34,6 +29,15 @@
       "scope": "plot"
      }
     ]
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_HUMAN_MOD_NOVEL_SENSES",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    }
    ]
   }
  },

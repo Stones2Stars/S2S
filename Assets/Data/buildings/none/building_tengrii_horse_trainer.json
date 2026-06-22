@@ -11,11 +11,6 @@
   "build": {
    "all": [
     {
-     "type": "BONUS_HORSE",
-     "scope": "city",
-     "connection": "trade|vicinity"
-    },
-    {
      "STATE_RELIGION": "RELIGION_TENGRIISM"
     }
    ],
@@ -30,6 +25,11 @@
   },
   "operate": {
    "all": [
+    {
+     "type": "BONUS_HORSE",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
     {
      "type": "RELIGION_TENGRIISM",
      "scope": "city"

@@ -6,11 +6,6 @@
   "build": {
    "all": [
     {
-     "type": "BONUS_ROCKET_FUEL",
-     "scope": "city",
-     "connection": "trade|vicinity"
-    },
-    {
      "type": "POPULATION",
      "scope": "city",
      "min": 7
@@ -37,6 +32,15 @@
       "scope": "plot"
      }
     ]
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_ROCKET_FUEL",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    }
    ]
   }
  },

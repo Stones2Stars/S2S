@@ -6,11 +6,6 @@
   "build": {
    "all": [
     {
-     "type": "BONUS_BRONZE_WARES",
-     "scope": "city",
-     "connection": "trade|vicinity"
-    },
-    {
      "type": "POPULATION",
      "scope": "city",
      "min": 3
@@ -41,6 +36,15 @@
       "scope": "plot"
      }
     ]
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_BRONZE_WARES",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    }
    ]
   }
  },

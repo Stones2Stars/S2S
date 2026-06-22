@@ -23,11 +23,6 @@
   "build": {
    "all": [
     {
-     "type": "BONUS_PIG",
-     "scope": "city",
-     "connection": "vicinity"
-    },
-    {
      "type": "BUILDING_ZOO",
      "scope": "city"
     },
@@ -39,15 +34,26 @@
    "any": [
     [
      {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
+    ]
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_PIG",
+     "scope": "city",
+     "connection": "vicinity"
+    }
+   ],
+   "any": [
+    [
+     {
       "type": "BONUS_ELEPHANTS",
       "scope": "city",
       "connection": "vicinity"
-     }
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
      }
     ]
    ]

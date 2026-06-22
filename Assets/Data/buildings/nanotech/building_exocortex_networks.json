@@ -27,11 +27,6 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BONUS_NEUROIMPLANTS",
-     "scope": "city",
-     "connection": "trade|vicinity"
-    },
     "HAS_POWER",
     {
      "type": "BUILDING_ENCRYPTED_FIREWALL",
@@ -53,6 +48,15 @@
       "scope": "plot"
      }
     ]
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_NEUROIMPLANTS",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    }
    ]
   }
  },

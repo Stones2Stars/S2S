@@ -6,13 +6,25 @@
   "build": {
    "all": [
     {
+     "type": "TECH_SYNTHETIC_SYNESTHESIA",
+     "scope": "team"
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
+    ]
+   ]
+  },
+  "operate": {
+   "all": [
+    {
      "type": "BONUS_HUMAN_MOD_COGNITIVE_ENHANCEMENT",
      "scope": "city",
      "connection": "trade|vicinity"
-    },
-    {
-     "type": "TECH_SYNTHETIC_SYNESTHESIA",
-     "scope": "team"
     }
    ],
    "any": [
@@ -21,12 +33,6 @@
       "type": "BONUS_NEUROIMPLANTS",
       "scope": "city",
       "connection": "trade|vicinity"
-     }
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
      }
     ]
    ]

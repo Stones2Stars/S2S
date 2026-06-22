@@ -17,11 +17,6 @@
   "build": {
    "all": [
     {
-     "type": "BONUS_WOOD",
-     "scope": "city",
-     "connection": "trade|vicinity"
-    },
-    {
      "type": "TECH_SIMPLE_WOOD_WORKING",
      "scope": "team"
     },
@@ -31,13 +26,6 @@
     }
    ],
    "any": [
-    [
-     {
-      "type": "BONUS_RAW_MEAT",
-      "scope": "city",
-      "connection": "trade|vicinity"
-     }
-    ],
     [
      {
       "type": "BUILDING_STORAGE_PIT",
@@ -68,6 +56,24 @@
      {
       "type": "MAPCATEGORY_EARTH",
       "scope": "plot"
+     }
+    ]
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_WOOD",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "BONUS_RAW_MEAT",
+      "scope": "city",
+      "connection": "trade|vicinity"
      }
     ]
    ]

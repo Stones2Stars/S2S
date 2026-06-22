@@ -31,11 +31,6 @@
   "build": {
    "all": [
     {
-     "type": "BONUS_SADDLES",
-     "scope": "city",
-     "connection": "trade|vicinity"
-    },
-    {
      "type": "TECH_CAVALRY_TACTICS",
      "scope": "team"
     }
@@ -69,6 +64,15 @@
       "scope": "plot"
      }
     ]
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_SADDLES",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    }
    ]
   }
  },

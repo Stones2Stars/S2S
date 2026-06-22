@@ -20,11 +20,6 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BONUS_BEAVERS",
-     "scope": "city",
-     "connection": "vicinity"
-    },
     "HAS_RIVER",
     {
      "type": "BUILDING_ZOO",
@@ -38,15 +33,26 @@
    "any": [
     [
      {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
+    ]
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_BEAVERS",
+     "scope": "city",
+     "connection": "vicinity"
+    }
+   ],
+   "any": [
+    [
+     {
       "type": "BONUS_SHEEP",
       "scope": "city",
       "connection": "vicinity"
-     }
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
      }
     ]
    ]

@@ -18,18 +18,6 @@
    "any": [
     [
      {
-      "type": "BONUS_FINE_CLAY",
-      "scope": "city",
-      "connection": "trade|vicinity"
-     },
-     {
-      "type": "BONUS_CLAY",
-      "scope": "city",
-      "connection": "trade|vicinity"
-     }
-    ],
-    [
-     {
       "type": "BUILDING_HEALERS_HUT",
       "scope": "city"
      },
@@ -58,6 +46,22 @@
      {
       "type": "MAPCATEGORY_EARTH",
       "scope": "plot"
+     }
+    ]
+   ]
+  },
+  "operate": {
+   "any": [
+    [
+     {
+      "type": "BONUS_FINE_CLAY",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     },
+     {
+      "type": "BONUS_CLAY",
+      "scope": "city",
+      "connection": "trade|vicinity"
      }
     ]
    ]

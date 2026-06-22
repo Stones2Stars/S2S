@@ -16,11 +16,6 @@
   "build": {
    "all": [
     {
-     "type": "BONUS_PELTS",
-     "scope": "city",
-     "connection": "trade|vicinity"
-    },
-    {
      "type": "TECH_SKINNING",
      "scope": "team"
     }
@@ -32,6 +27,15 @@
       "scope": "plot"
      }
     ]
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_PELTS",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    }
    ]
   }
  },

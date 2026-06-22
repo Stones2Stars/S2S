@@ -11,11 +11,6 @@
   "build": {
    "all": [
     {
-     "type": "BONUS_AUTOMOBILES",
-     "scope": "city",
-     "connection": "trade|vicinity"
-    },
-    {
      "type": "POPULATION",
      "scope": "city",
      "min": 7
@@ -23,6 +18,23 @@
     {
      "type": "TECH_MOTORIZED_TRANSPORTATION",
      "scope": "team"
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
+    ]
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_AUTOMOBILES",
+     "scope": "city",
+     "connection": "trade|vicinity"
     }
    ],
    "any": [
@@ -36,12 +48,6 @@
       "type": "BONUS_BIOFUEL",
       "scope": "city",
       "connection": "trade|vicinity"
-     }
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
      }
     ]
    ]

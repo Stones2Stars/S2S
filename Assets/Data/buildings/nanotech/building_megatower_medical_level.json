@@ -16,11 +16,6 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BONUS_METAMATERIALS",
-     "scope": "city",
-     "connection": "trade|vicinity"
-    },
     "HAS_POWER",
     {
      "type": "BUILDING_MEGATOWER",
@@ -57,6 +52,15 @@
       "scope": "plot"
      }
     ]
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_METAMATERIALS",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    }
    ]
   }
  },

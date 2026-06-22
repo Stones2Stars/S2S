@@ -11,13 +11,25 @@
   "build": {
    "all": [
     {
+     "type": "TECH_DIPLOMACY",
+     "scope": "team"
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
+    ]
+   ]
+  },
+  "operate": {
+   "all": [
+    {
      "type": "BONUS_BRICKS",
      "scope": "city",
      "connection": "trade|vicinity"
-    },
-    {
-     "type": "TECH_DIPLOMACY",
-     "scope": "team"
     }
    ],
    "any": [
@@ -41,12 +53,6 @@
       "type": "BONUS_BOOKS",
       "scope": "city",
       "connection": "trade|vicinity"
-     }
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
      }
     ]
    ]

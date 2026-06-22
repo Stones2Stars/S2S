@@ -21,11 +21,6 @@
   "build": {
    "all": [
     {
-     "type": "BONUS_ALCOHOL",
-     "scope": "city",
-     "connection": "trade|vicinity"
-    },
-    {
      "type": "TECH_GUILDS",
      "scope": "team"
     }
@@ -47,6 +42,15 @@
       "scope": "plot"
      }
     ]
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_ALCOHOL",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    }
    ]
   }
  },

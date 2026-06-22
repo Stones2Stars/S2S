@@ -12,13 +12,25 @@
   "build": {
    "all": [
     {
+     "type": "TECH_MATCHLOCK",
+     "scope": "team"
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
+    ]
+   ]
+  },
+  "operate": {
+   "all": [
+    {
      "type": "BONUS_HORSE",
      "scope": "city",
      "connection": "trade|vicinity"
-    },
-    {
-     "type": "TECH_MATCHLOCK",
-     "scope": "team"
     }
    ],
    "any": [
@@ -29,16 +41,6 @@
       "connection": "trade|vicinity"
      }
     ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
-   ]
-  },
-  "operate": {
-   "any": [
     [
      {
       "type": "CIVIC_DESPOTISM",

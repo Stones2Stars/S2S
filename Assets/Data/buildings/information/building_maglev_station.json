@@ -16,15 +16,27 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BONUS_CEMENT",
-     "scope": "city",
-     "connection": "trade|vicinity"
-    },
     "HAS_POWER",
     {
      "type": "TECH_MAGNETIC_LEVITATION",
      "scope": "team"
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
+    ]
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_CEMENT",
+     "scope": "city",
+     "connection": "trade|vicinity"
     }
    ],
    "any": [
@@ -38,12 +50,6 @@
       "type": "BONUS_NANOTUBES",
       "scope": "city",
       "connection": "trade|vicinity"
-     }
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
      }
     ]
    ]

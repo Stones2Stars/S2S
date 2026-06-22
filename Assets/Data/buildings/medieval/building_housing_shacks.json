@@ -15,12 +15,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BONUS_WOOD",
-     "scope": "city",
-     "connection": "trade|vicinity"
-    },
-    "IS_FRESHWATER",
+    "HAS_FRESHWATER",
     {
      "type": "TECH_SURVEYING",
      "scope": "team"
@@ -33,6 +28,15 @@
       "scope": "plot"
      }
     ]
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_WOOD",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    }
    ]
   }
  },

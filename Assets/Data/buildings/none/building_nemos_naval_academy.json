@@ -10,12 +10,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BONUS_STEAMPUNK",
-     "scope": "city",
-     "connection": "trade|vicinity"
-    },
-    "IS_COASTAL",
+    "HAS_COAST",
     {
      "type": "POPULATION",
      "scope": "city",
@@ -42,6 +37,15 @@
       "scope": "plot"
      }
     ]
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_STEAMPUNK",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    }
    ]
   }
  },

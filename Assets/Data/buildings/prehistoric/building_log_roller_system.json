@@ -6,28 +6,11 @@
   "build": {
    "all": [
     {
-     "type": "BONUS_ROPE",
-     "scope": "city",
-     "connection": "trade|vicinity"
-    },
-    {
      "type": "TECH_MEGALITH_CONSTRUCTION",
      "scope": "team"
     }
    ],
    "any": [
-    [
-     {
-      "type": "BONUS_WOOD",
-      "scope": "city",
-      "connection": "trade|vicinity"
-     },
-     {
-      "type": "BONUS_PRIME_TIMBER",
-      "scope": "city",
-      "connection": "trade|vicinity"
-     }
-    ],
     [
      {
       "type": "FEATURE_FOREST_YOUNG",
@@ -50,6 +33,29 @@
      {
       "type": "MAPCATEGORY_EARTH",
       "scope": "plot"
+     }
+    ]
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_ROPE",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "BONUS_WOOD",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     },
+     {
+      "type": "BONUS_PRIME_TIMBER",
+      "scope": "city",
+      "connection": "trade|vicinity"
      }
     ]
    ]

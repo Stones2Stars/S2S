@@ -12,7 +12,7 @@
  "requires": {
   "build": {
    "all": [
-    "IS_COASTAL",
+    "HAS_COAST",
     {
      "latitude": {
       "max": 70

@@ -24,11 +24,6 @@
   "build": {
    "all": [
     {
-     "type": "BONUS_MEGASTRONG_ALLOYS",
-     "scope": "city",
-     "connection": "trade|vicinity"
-    },
-    {
      "type": "TECH_MEGASTRONG_ALLOYS",
      "scope": "team"
     }
@@ -40,6 +35,15 @@
       "scope": "plot"
      }
     ]
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_MEGASTRONG_ALLOYS",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    }
    ]
   }
  },

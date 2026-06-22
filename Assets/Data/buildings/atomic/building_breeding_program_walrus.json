@@ -22,11 +22,6 @@
   "build": {
    "all": [
     {
-     "type": "BONUS_WALRUS",
-     "scope": "city",
-     "connection": "vicinity"
-    },
-    {
      "latitude": {
       "min": 40
      }
@@ -47,6 +42,15 @@
       "scope": "plot"
      }
     ]
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_WALRUS",
+     "scope": "city",
+     "connection": "vicinity"
+    }
    ]
   }
  },

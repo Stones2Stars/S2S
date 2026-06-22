@@ -11,16 +11,28 @@
   "build": {
    "all": [
     {
-     "type": "BONUS_BRICKS",
-     "scope": "city",
-     "connection": "trade|vicinity"
-    },
-    {
      "type": "TECH_MODERN_HEALTH_CARE",
      "scope": "team"
     },
     {
      "type": "BONUS_FURNITURE",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
+    ]
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_BRICKS",
      "scope": "city",
      "connection": "trade|vicinity"
     }
@@ -36,12 +48,6 @@
       "type": "BONUS_ALCOHOL",
       "scope": "city",
       "connection": "trade|vicinity"
-     }
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
      }
     ]
    ]

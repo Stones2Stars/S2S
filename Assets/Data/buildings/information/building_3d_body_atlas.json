@@ -12,11 +12,6 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BONUS_COMPUTERS",
-     "scope": "city",
-     "connection": "trade|vicinity"
-    },
     "HAS_POWER",
     {
      "type": "BUILDING_SYSTEMS_BIOLOGY_SIMULATOR",
@@ -38,6 +33,15 @@
       "scope": "plot"
      }
     ]
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_COMPUTERS",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    }
    ]
   }
  },

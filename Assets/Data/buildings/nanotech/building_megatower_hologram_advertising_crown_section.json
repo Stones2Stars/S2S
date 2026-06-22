@@ -5,11 +5,6 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BONUS_METAMATERIALS",
-     "scope": "city",
-     "connection": "trade|vicinity"
-    },
     "HAS_POWER",
     {
      "type": "BUILDING_MEGATOWER",
@@ -27,13 +22,6 @@
    "any": [
     [
      {
-      "type": "BONUS_HOLOGRAPHIC_PROJECTORS",
-      "scope": "city",
-      "connection": "trade|vicinity"
-     }
-    ],
-    [
-     {
       "type": "BUILDING_HOLOGRAPHIC_NETWORKS",
       "scope": "city"
      },
@@ -46,6 +34,24 @@
      {
       "type": "MAPCATEGORY_EARTH",
       "scope": "plot"
+     }
+    ]
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_METAMATERIALS",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "BONUS_HOLOGRAPHIC_PROJECTORS",
+      "scope": "city",
+      "connection": "trade|vicinity"
      }
     ]
    ]

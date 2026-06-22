@@ -31,13 +31,25 @@
   "build": {
    "all": [
     {
+     "type": "TECH_GUNPOWDER",
+     "scope": "team"
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
+    ]
+   ]
+  },
+  "operate": {
+   "all": [
+    {
      "type": "BONUS_IRON_WARES",
      "scope": "city",
      "connection": "trade|vicinity"
-    },
-    {
-     "type": "TECH_GUNPOWDER",
-     "scope": "team"
     }
    ],
    "any": [
@@ -46,12 +58,6 @@
       "type": "BONUS_SULPHUR",
       "scope": "city",
       "connection": "trade|vicinity"
-     }
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
      }
     ]
    ]

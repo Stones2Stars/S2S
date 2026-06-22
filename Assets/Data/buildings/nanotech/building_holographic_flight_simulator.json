@@ -10,11 +10,6 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BONUS_HOLOGRAPHIC_PROJECTORS",
-     "scope": "city",
-     "connection": "trade|vicinity"
-    },
     "HAS_POWER",
     {
      "type": "TECH_HOLOGRAPHICS",
@@ -42,6 +37,15 @@
       "scope": "plot"
      }
     ]
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_HOLOGRAPHIC_PROJECTORS",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    }
    ]
   }
  },

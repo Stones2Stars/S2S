@@ -21,6 +21,36 @@
    "any": [
     [
      {
+      "type": "BUILDING_CHILDCARE_HUT",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_DAY_CARE_CENTER",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_HIGH_TECH_CULTURAL_ENRICHMENT",
+      "scope": "city"
+     }
+    ],
+    [
+     {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
+    ],
+    [
+     {
+      "type": "CIVILIZATION_NPC_NEANDERTHAL",
+      "scope": "empire"
+     }
+    ]
+   ]
+  },
+  "operate": {
+   "any": [
+    [
+     {
       "type": "BONUS_RAW_FISH",
       "scope": "city",
       "connection": "trade|vicinity"
@@ -51,30 +81,6 @@
       "connection": "trade|vicinity"
      }
     ],
-    [
-     {
-      "type": "BUILDING_CHILDCARE_HUT",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_DAY_CARE_CENTER",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_HIGH_TECH_CULTURAL_ENRICHMENT",
-      "scope": "city"
-     }
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
-   ]
-  },
-  "operate": {
-   "any": [
     [
      {
       "type": "CIVIC_COMMUNAL",

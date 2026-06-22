@@ -32,11 +32,6 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BONUS_STEEL_WARES",
-     "scope": "city",
-     "connection": "trade|vicinity"
-    },
     "HAS_RIVER",
     {
      "type": "TECH_HIGHWAY_SYSTEMS",
@@ -60,6 +55,15 @@
       "scope": "plot"
      }
     ]
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_STEEL_WARES",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    }
    ]
   }
  },

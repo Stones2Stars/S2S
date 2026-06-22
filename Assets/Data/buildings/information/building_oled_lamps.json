@@ -13,11 +13,6 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BONUS_ORGANIC_PHOTONIC_CELLS",
-     "scope": "city",
-     "connection": "trade|vicinity"
-    },
     "HAS_POWER",
     {
      "type": "TECH_ORGANIC_PHOTONICS",
@@ -31,6 +26,15 @@
       "scope": "plot"
      }
     ]
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_ORGANIC_PHOTONIC_CELLS",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    }
    ]
   }
  },

@@ -11,28 +11,11 @@
   "build": {
    "all": [
     {
-     "type": "BONUS_LYE",
-     "scope": "city",
-     "connection": "trade|vicinity"
-    },
-    {
      "type": "TECH_SOAP_MAKING",
      "scope": "team"
     }
    ],
    "any": [
-    [
-     {
-      "type": "BONUS_OLIVE_OIL",
-      "scope": "city",
-      "connection": "trade|vicinity"
-     },
-     {
-      "type": "BONUS_LARD",
-      "scope": "city",
-      "connection": "trade|vicinity"
-     }
-    ],
     [
      {
       "type": "BUILDING_TRADING_POST",
@@ -47,6 +30,29 @@
      {
       "type": "MAPCATEGORY_EARTH",
       "scope": "plot"
+     }
+    ]
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_LYE",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "BONUS_OLIVE_OIL",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     },
+     {
+      "type": "BONUS_LARD",
+      "scope": "city",
+      "connection": "trade|vicinity"
      }
     ]
    ]

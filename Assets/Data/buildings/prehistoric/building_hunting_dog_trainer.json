@@ -6,11 +6,6 @@
   "build": {
    "all": [
     {
-     "type": "BONUS_DOG",
-     "scope": "city",
-     "connection": "trade|vicinity"
-    },
-    {
      "type": "TECH_CANINE_DOMESTICATION",
      "scope": "team"
     }
@@ -43,7 +38,22 @@
       "type": "MAPCATEGORY_EARTH",
       "scope": "plot"
      }
+    ],
+    [
+     {
+      "type": "CIVILIZATION_NPC_NEANDERTHAL",
+      "scope": "empire"
+     }
     ]
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_DOG",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    }
    ]
   }
  },

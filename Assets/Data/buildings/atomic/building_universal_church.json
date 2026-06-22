@@ -6,13 +6,29 @@
   "build": {
    "all": [
     {
+     "type": "TECH_GLOBALIZATION",
+     "scope": "team"
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
+    ]
+   ]
+  },
+  "operate": {
+   "all": [
+    {
      "type": "BONUS_FURNITURE",
      "scope": "city",
      "connection": "trade|vicinity"
     },
     {
-     "type": "TECH_GLOBALIZATION",
-     "scope": "team"
+     "type": "CIVIC_SECULARISM",
+     "scope": "empire"
     }
    ],
    "any": [
@@ -27,21 +43,7 @@
       "scope": "city",
       "connection": "trade|vicinity"
      }
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
     ]
-   ]
-  },
-  "operate": {
-   "all": [
-    {
-     "type": "CIVIC_SECULARISM",
-     "scope": "empire"
-    }
    ]
   }
  },

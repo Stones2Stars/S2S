@@ -6,11 +6,6 @@
   "build": {
    "all": [
     {
-     "type": "BONUS_HUMAN_MOD_ROBOTIC_BODY",
-     "scope": "city",
-     "connection": "trade|vicinity"
-    },
-    {
      "type": "TECH_THERMAL_NEGATION",
      "scope": "team"
     }
@@ -22,6 +17,15 @@
       "scope": "plot"
      }
     ]
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_HUMAN_MOD_ROBOTIC_BODY",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    }
    ]
   }
  },

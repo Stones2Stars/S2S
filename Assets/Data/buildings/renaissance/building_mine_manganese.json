@@ -11,11 +11,6 @@
   "build": {
    "all": [
     {
-     "type": "BONUS_LEAD_ORE",
-     "scope": "city",
-     "connection": "vicinity"
-    },
-    {
      "type": "BUILDING_MINING_CAMP",
      "scope": "city"
     },
@@ -27,15 +22,26 @@
    "any": [
     [
      {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
+    ]
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_LEAD_ORE",
+     "scope": "city",
+     "connection": "vicinity"
+    }
+   ],
+   "any": [
+    [
+     {
       "type": "BONUS_IRON_ORE",
       "scope": "city",
       "connection": "vicinity"
-     }
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
      }
     ]
    ]

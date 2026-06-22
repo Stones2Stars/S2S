@@ -21,11 +21,6 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BONUS_GRAINS",
-     "scope": "city",
-     "connection": "trade|vicinity"
-    },
     "HAS_RIVER",
     {
      "type": "TECH_WATERWHEELS",
@@ -49,6 +44,15 @@
       "scope": "plot"
      }
     ]
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_GRAINS",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    }
    ]
   }
  },

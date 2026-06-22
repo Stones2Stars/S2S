@@ -26,6 +26,14 @@
      "type": "TECH_HARPOON_MAKING",
      "scope": "team"
     }
+   ],
+   "any": [
+    [
+     {
+      "type": "CIVILIZATION_NPC_NEANDERTHAL",
+      "scope": "empire"
+     }
+    ]
    ]
   }
  },

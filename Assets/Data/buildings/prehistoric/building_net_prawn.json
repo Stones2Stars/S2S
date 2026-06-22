@@ -16,11 +16,6 @@
   "build": {
    "all": [
     {
-     "type": "BONUS_LOBSTER",
-     "scope": "city",
-     "connection": "vicinity"
-    },
-    {
      "type": "BUILDING_FISH_TRAPS",
      "scope": "city"
     },
@@ -31,20 +26,31 @@
    ],
    "any": [
     [
-     {
-      "type": "BONUS_SHRIMP",
-      "scope": "city",
-      "connection": "vicinity"
-     }
-    ],
-    [
-     "IS_COASTAL",
+     "HAS_COAST",
      "HAS_RIVER"
     ],
     [
      {
       "type": "MAPCATEGORY_EARTH",
       "scope": "plot"
+     }
+    ]
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_LOBSTER",
+     "scope": "city",
+     "connection": "vicinity"
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "BONUS_SHRIMP",
+      "scope": "city",
+      "connection": "vicinity"
      }
     ]
    ]

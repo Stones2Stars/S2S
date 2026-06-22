@@ -6,13 +6,29 @@
   "build": {
    "all": [
     {
+     "type": "TECH_SOCIAL_CONTRACT",
+     "scope": "team"
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
+    ]
+   ]
+  },
+  "operate": {
+   "all": [
+    {
      "type": "BONUS_FURNITURE",
      "scope": "city",
      "connection": "trade|vicinity"
     },
     {
-     "type": "TECH_SOCIAL_CONTRACT",
-     "scope": "team"
+     "type": "CIVIC_PUBLIC_WORKS",
+     "scope": "empire"
     }
    ],
    "any": [
@@ -32,21 +48,7 @@
       "scope": "city",
       "connection": "trade|vicinity"
      }
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
     ]
-   ]
-  },
-  "operate": {
-   "all": [
-    {
-     "type": "CIVIC_PUBLIC_WORKS",
-     "scope": "empire"
-    }
    ]
   }
  },

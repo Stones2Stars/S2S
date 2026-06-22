@@ -23,11 +23,6 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BONUS_MARTIAN_ELECTRONICS",
-     "scope": "city",
-     "connection": "trade|vicinity"
-    },
     "HAS_POWER",
     {
      "type": "BUILDING_SPACE_COLONY_MARTIAN",
@@ -41,15 +36,26 @@
    "any": [
     [
      {
+      "type": "MAPCATEGORY_MARTIAN",
+      "scope": "plot"
+     }
+    ]
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_MARTIAN_ELECTRONICS",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    }
+   ],
+   "any": [
+    [
+     {
       "type": "BONUS_MARTIAN_ALGAE",
       "scope": "city",
       "connection": "trade|vicinity"
-     }
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_MARTIAN",
-      "scope": "plot"
      }
     ]
    ]

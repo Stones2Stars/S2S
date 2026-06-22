@@ -35,7 +35,7 @@
  "requires": {
   "build": {
    "all": [
-    "IS_COASTAL",
+    "HAS_COAST",
     {
      "type": "BUILDING_OCEAN_ARCOLOGY",
      "scope": "city"
@@ -70,22 +70,26 @@
     "TERRAIN_LAKE_SHORE": {
      "flat": 5
     }
-   }
-  },
-  "plot": {
-   "plotTypes": {
-    "PLOT_OCEAN": {
-     "flat": 3
-    }
+   },
+   "plots": {
+    "flat": [
+     {
+      "value": 3,
+      "enabled": "IS_WATER"
+     }
+    ]
    }
   }
  },
  "production": {
-  "plot": {
-   "plotTypes": {
-    "PLOT_OCEAN": {
-     "flat": 5
-    }
+  "city": {
+   "plots": {
+    "flat": [
+     {
+      "value": 5,
+      "enabled": "IS_WATER"
+     }
+    ]
    }
   }
  },
@@ -102,13 +106,14 @@
     "TERRAIN_COAST_TROPICAL": {
      "flat": 5
     }
-   }
-  },
-  "plot": {
-   "plotTypes": {
-    "PLOT_OCEAN": {
-     "flat": 1
-    }
+   },
+   "plots": {
+    "flat": [
+     {
+      "value": 1,
+      "enabled": "IS_WATER"
+     }
+    ]
    }
   }
  },

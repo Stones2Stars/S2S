@@ -6,11 +6,6 @@
   "build": {
    "all": [
     {
-     "type": "BONUS_WHALE",
-     "scope": "city",
-     "connection": "vicinity"
-    },
-    {
      "type": "TECH_SPECIES_UPLIFTING",
      "scope": "team"
     }
@@ -22,6 +17,15 @@
       "scope": "plot"
      }
     ]
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_WHALE",
+     "scope": "city",
+     "connection": "vicinity"
+    }
    ]
   }
  },

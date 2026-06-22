@@ -14,11 +14,6 @@
   "build": {
    "all": [
     {
-     "type": "BONUS_MARTIAN_MANUFACTURED_GOODS",
-     "scope": "city",
-     "connection": "trade|vicinity"
-    },
-    {
      "type": "BUILDING_MARTIAN_FACTORY",
      "scope": "city"
     },
@@ -34,6 +29,15 @@
       "scope": "plot"
      }
     ]
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_MARTIAN_MANUFACTURED_GOODS",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    }
    ]
   }
  },

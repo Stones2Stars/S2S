@@ -5,7 +5,7 @@
  "requires": {
   "build": {
    "all": [
-    "IS_COASTAL",
+    "HAS_COAST",
     {
      "type": "POPULATION",
      "scope": "city",
@@ -34,11 +34,14 @@
   "world": 1
  },
  "commerce": {
-  "plot": {
-   "plotTypes": {
-    "PLOT_OCEAN": {
-     "flat": 1
-    }
+  "city": {
+   "plots": {
+    "flat": [
+     {
+      "value": 1,
+      "enabled": "IS_WATER"
+     }
+    ]
    }
   }
  },

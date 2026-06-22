@@ -10,7 +10,7 @@
  "requires": {
   "build": {
    "all": [
-    "IS_COASTAL",
+    "HAS_COAST",
     "HAS_POWER",
     {
      "type": "BUILDING_HOTEL",

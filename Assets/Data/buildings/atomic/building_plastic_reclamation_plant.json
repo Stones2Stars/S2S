@@ -28,6 +28,16 @@
    "any": [
     [
      {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
+    ]
+   ]
+  },
+  "operate": {
+   "any": [
+    [
+     {
       "type": "BONUS_BLENDER",
       "scope": "city",
       "connection": "trade|vicinity"
@@ -106,12 +116,6 @@
       "type": "BONUS_WATER_BOTTLES",
       "scope": "city",
       "connection": "trade|vicinity"
-     }
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
      }
     ]
    ]

@@ -21,11 +21,6 @@
   "build": {
    "all": [
     {
-     "type": "BONUS_SUPERSOLID_MATERIAL",
-     "scope": "city",
-     "connection": "trade|vicinity"
-    },
-    {
      "type": "BUILDING_POWER_LINES",
      "scope": "city"
     },
@@ -41,6 +36,15 @@
       "scope": "plot"
      }
     ]
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_SUPERSOLID_MATERIAL",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    }
    ]
   }
  },

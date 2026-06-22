@@ -24,7 +24,7 @@
        "TERRAIN_TAIGA"
       ]
      },
-     "IS_FRESHWATER",
+     "HAS_FRESHWATER",
      {
       "bonus": [
        "BONUS_CORN",

@@ -59,13 +59,25 @@
   "build": {
    "all": [
     {
+     "type": "TECH_ZOOLOGY",
+     "scope": "team"
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
+    ]
+   ]
+  },
+  "operate": {
+   "all": [
+    {
      "type": "BONUS_CEMENT",
      "scope": "city",
      "connection": "trade|vicinity"
-    },
-    {
-     "type": "TECH_ZOOLOGY",
-     "scope": "team"
     }
    ],
    "any": [
@@ -84,12 +96,6 @@
       "type": "BONUS_FIBERGLASS",
       "scope": "city",
       "connection": "trade|vicinity"
-     }
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
      }
     ]
    ]

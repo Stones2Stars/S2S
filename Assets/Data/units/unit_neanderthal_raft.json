@@ -45,6 +45,12 @@
       "scope": "city",
       "connection": "trade|vicinity"
      }
+    ],
+    [
+     {
+      "type": "CIVILIZATION_NPC_NEANDERTHAL",
+      "scope": "empire"
+     }
     ]
    ]
   }

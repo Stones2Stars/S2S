@@ -16,11 +16,6 @@
   "build": {
    "all": [
     {
-     "type": "BONUS_COPPER_ORE",
-     "scope": "city",
-     "connection": "vicinity"
-    },
-    {
      "type": "BUILDING_MINING_CAMP",
      "scope": "city"
     },
@@ -36,6 +31,15 @@
       "scope": "plot"
      }
     ]
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_COPPER_ORE",
+     "scope": "city",
+     "connection": "vicinity"
+    }
    ]
   }
  },

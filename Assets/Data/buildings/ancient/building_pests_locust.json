@@ -6,11 +6,6 @@
   "build": {
    "all": [
     {
-     "type": "BONUS_GRAINS",
-     "scope": "city",
-     "connection": "vicinity"
-    },
-    {
      "type": "POPULATION",
      "scope": "city",
      "min": 4
@@ -27,6 +22,15 @@
       "scope": "plot"
      }
     ]
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_GRAINS",
+     "scope": "city",
+     "connection": "vicinity"
+    }
    ]
   }
  },

@@ -28,6 +28,12 @@
       "type": "BUILDING_ANCIENT_CUSTOMS",
       "scope": "city"
      }
+    ],
+    [
+     {
+      "type": "CIVILIZATION_NPC_NEANDERTHAL",
+      "scope": "empire"
+     }
     ]
    ]
   }

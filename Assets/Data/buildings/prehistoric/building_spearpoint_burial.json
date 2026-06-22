@@ -13,13 +13,6 @@
    "any": [
     [
      {
-      "type": "BONUS_FLINT",
-      "scope": "city",
-      "connection": "trade|vicinity"
-     }
-    ],
-    [
-     {
       "type": "MAPCATEGORY_EARTH",
       "scope": "plot"
      }
@@ -28,6 +21,17 @@
      {
       "type": "HERITAGE_FOLKLORE_MAMMOTH",
       "scope": "empire"
+     }
+    ]
+   ]
+  },
+  "operate": {
+   "any": [
+    [
+     {
+      "type": "BONUS_FLINT",
+      "scope": "city",
+      "connection": "trade|vicinity"
      }
     ]
    ]

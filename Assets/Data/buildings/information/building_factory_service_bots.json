@@ -10,11 +10,6 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BONUS_COMPUTERS",
-     "scope": "city",
-     "connection": "trade|vicinity"
-    },
     "HAS_POWER",
     {
      "type": "BUILDING_EPSILON_ASSEMBLER",
@@ -28,6 +23,23 @@
    "any": [
     [
      {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
+    ]
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_COMPUTERS",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    }
+   ],
+   "any": [
+    [
+     {
       "type": "BONUS_PLASTIC",
       "scope": "city",
       "connection": "trade|vicinity"
@@ -36,12 +48,6 @@
       "type": "BONUS_BIOPOLYMERS",
       "scope": "city",
       "connection": "trade|vicinity"
-     }
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
      }
     ]
    ]

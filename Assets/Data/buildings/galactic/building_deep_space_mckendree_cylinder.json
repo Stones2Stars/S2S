@@ -17,11 +17,6 @@
   "build": {
    "all": [
     {
-     "type": "BONUS_NANOMORPHIC_HABITATS",
-     "scope": "city",
-     "connection": "trade|vicinity"
-    },
-    {
      "type": "BUILDING_DEEP_SPACE_BISHOP_RING",
      "scope": "city"
     },
@@ -33,15 +28,26 @@
    "any": [
     [
      {
+      "type": "MAPCATEGORY_SOLAR_SYSTEM",
+      "scope": "plot"
+     }
+    ]
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_NANOMORPHIC_HABITATS",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    }
+   ],
+   "any": [
+    [
+     {
       "type": "BONUS_ADVANCED_REPLICATORS",
       "scope": "city",
       "connection": "trade|vicinity"
-     }
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_SOLAR_SYSTEM",
-      "scope": "plot"
      }
     ]
    ]

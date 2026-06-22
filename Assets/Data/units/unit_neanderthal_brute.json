@@ -13,6 +13,14 @@
      "type": "BUILDING_C_L_NEANDERTHAL",
      "scope": "city"
     }
+   ],
+   "any": [
+    [
+     {
+      "type": "CIVILIZATION_NPC_NEANDERTHAL",
+      "scope": "empire"
+     }
+    ]
    ]
   }
  },

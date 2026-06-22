@@ -27,12 +27,26 @@
      "min": -2000000,
      "max": -7500
     }
-   ]
+   ],
+   "disabled": {
+    "all": [
+     {
+      "type": "PROPERTY_EDUCATION",
+      "scope": "city",
+      "min": -2000000,
+      "max": -10000
+     },
+     {
+      "type": "BUILDING_EDUCATION_BLISSFUL_IGNORANCE_8",
+      "scope": "city"
+     }
+    ]
+   }
   }
  },
  "anarchy": {
   "city": {
-   "percent": -5
+   "percent": -35
   }
  },
  "world": {

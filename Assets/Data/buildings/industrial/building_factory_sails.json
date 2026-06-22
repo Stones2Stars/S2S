@@ -15,7 +15,7 @@
  "requires": {
   "build": {
    "all": [
-    "IS_COASTAL",
+    "HAS_COAST",
     "HAS_POWER",
     {
      "type": "BUILDING_FACTORY",
@@ -29,6 +29,16 @@
    "any": [
     [
      {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
+    ]
+   ]
+  },
+  "operate": {
+   "any": [
+    [
+     {
       "type": "BONUS_LEATHER",
       "scope": "city",
       "connection": "trade|vicinity"
@@ -37,12 +47,6 @@
       "type": "BONUS_CLOTH",
       "scope": "city",
       "connection": "trade|vicinity"
-     }
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
      }
     ]
    ]

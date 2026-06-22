@@ -11,23 +11,11 @@
   "build": {
    "all": [
     {
-     "type": "BONUS_COPPER_INGOTS",
-     "scope": "city",
-     "connection": "trade|vicinity"
-    },
-    {
      "type": "TECH_BRONZE_WORKING",
      "scope": "team"
     }
    ],
    "any": [
-    [
-     {
-      "type": "BONUS_TIN_INGOTS",
-      "scope": "city",
-      "connection": "trade|vicinity"
-     }
-    ],
     [
      {
       "type": "BUILDING_FORGE",
@@ -42,6 +30,24 @@
      {
       "type": "MAPCATEGORY_EARTH",
       "scope": "plot"
+     }
+    ]
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_COPPER_INGOTS",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "BONUS_TIN_INGOTS",
+      "scope": "city",
+      "connection": "trade|vicinity"
      }
     ]
    ]

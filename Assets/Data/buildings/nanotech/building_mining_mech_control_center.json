@@ -10,11 +10,6 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BONUS_MECHS",
-     "scope": "city",
-     "connection": "trade|vicinity"
-    },
     "HAS_POWER",
     {
      "type": "BUILDING_MINING_BOT_CONTROL_CENTER",
@@ -40,6 +35,15 @@
       "scope": "plot"
      }
     ]
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_MECHS",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    }
    ]
   }
  },

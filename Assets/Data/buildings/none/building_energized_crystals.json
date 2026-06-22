@@ -5,11 +5,6 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BONUS_CRYSTALPUNK",
-     "scope": "city",
-     "connection": "trade|vicinity"
-    },
     "HAS_POWER",
     {
      "type": "BUILDING_CRYSTAL_JEWELLER",
@@ -27,6 +22,15 @@
       "scope": "plot"
      }
     ]
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_CRYSTALPUNK",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    }
    ]
   }
  },

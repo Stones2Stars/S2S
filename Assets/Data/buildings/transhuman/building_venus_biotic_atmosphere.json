@@ -6,11 +6,6 @@
   "build": {
    "all": [
     {
-     "type": "BONUS_NOVUS_CHEMICALS",
-     "scope": "city",
-     "connection": "trade|vicinity"
-    },
-    {
      "type": "BUILDING_VENUS_ECOSYSTEM",
      "scope": "city"
     },
@@ -39,6 +34,15 @@
       "scope": "plot"
      }
     ]
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_NOVUS_CHEMICALS",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    }
    ]
   }
  },

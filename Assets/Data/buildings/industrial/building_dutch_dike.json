@@ -6,11 +6,6 @@
   "build": {
    "all": [
     {
-     "type": "BONUS_DUTCH",
-     "scope": "city",
-     "connection": "trade|vicinity"
-    },
-    {
      "type": "POPULATION",
      "scope": "city",
      "min": 3
@@ -18,6 +13,27 @@
     {
      "type": "TECH_STEAM_POWER",
      "scope": "team"
+    }
+   ],
+   "any": [
+    [
+     "HAS_COAST",
+     "HAS_RIVER"
+    ],
+    [
+     {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
+    ]
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_DUTCH",
+     "scope": "city",
+     "connection": "trade|vicinity"
     }
    ],
    "any": [
@@ -32,16 +48,6 @@
       "scope": "city",
       "connection": "trade|vicinity"
      }
-    ],
-    [
-     "IS_COASTAL",
-     "HAS_RIVER"
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
     ]
    ]
   }
@@ -50,9 +56,14 @@
   "empire": 1
  },
  "production": {
-  "plot": {
-   "river": {
-    "flat": 1
+  "city": {
+   "plots": {
+    "flat": [
+     {
+      "value": 1,
+      "enabled": "HAS_RIVER"
+     }
+    ]
    }
   }
  },

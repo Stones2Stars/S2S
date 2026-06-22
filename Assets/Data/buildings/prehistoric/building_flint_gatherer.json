@@ -101,6 +101,12 @@
      {
       "HAS_FEATURE": "FEATURE_ROCK_FORM4"
      }
+    ],
+    [
+     {
+      "type": "CIVILIZATION_NPC_NEANDERTHAL",
+      "scope": "empire"
+     }
     ]
    ]
   }

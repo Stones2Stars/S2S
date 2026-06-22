@@ -6,11 +6,6 @@
   "build": {
    "all": [
     {
-     "type": "BONUS_BRICKS",
-     "scope": "city",
-     "connection": "trade|vicinity"
-    },
-    {
      "type": "TECH_MASONRY",
      "scope": "team"
     }
@@ -60,6 +55,15 @@
       "scope": "plot"
      }
     ]
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_BRICKS",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    }
    ]
   }
  },

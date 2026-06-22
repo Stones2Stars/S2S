@@ -22,11 +22,6 @@
   "build": {
    "all": [
     {
-     "type": "BONUS_BISON",
-     "scope": "city",
-     "connection": "vicinity"
-    },
-    {
      "latitude": {
       "min": 40
      }
@@ -41,13 +36,6 @@
     }
    ],
    "any": [
-    [
-     {
-      "type": "BONUS_SHEEP",
-      "scope": "city",
-      "connection": "vicinity"
-     }
-    ],
     [
      {
       "type": "TERRAIN_TAIGA",
@@ -66,6 +54,24 @@
      {
       "type": "MAPCATEGORY_EARTH",
       "scope": "plot"
+     }
+    ]
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_BISON",
+     "scope": "city",
+     "connection": "vicinity"
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "BONUS_SHEEP",
+      "scope": "city",
+      "connection": "vicinity"
      }
     ]
    ]

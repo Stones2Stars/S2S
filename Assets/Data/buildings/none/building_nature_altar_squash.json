@@ -6,11 +6,6 @@
   "build": {
    "all": [
     {
-     "type": "BONUS_SQUASH",
-     "scope": "city",
-     "connection": "vicinity"
-    },
-    {
      "type": "BUILDING_NATURE_ALTAR",
      "scope": "city"
     }
@@ -26,6 +21,11 @@
   },
   "operate": {
    "all": [
+    {
+     "type": "BONUS_SQUASH",
+     "scope": "city",
+     "connection": "vicinity"
+    },
     {
      "type": "RELIGION_DRUIDIC_TRADITIONS",
      "scope": "city"

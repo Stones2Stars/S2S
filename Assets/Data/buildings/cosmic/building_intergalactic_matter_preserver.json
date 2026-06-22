@@ -11,11 +11,6 @@
   "build": {
    "all": [
     {
-     "type": "BONUS_CHRONOTON",
-     "scope": "city",
-     "connection": "trade|vicinity"
-    },
-    {
      "type": "BUILDING_INTERGALACTIC_MECHANOSYNTHESIS_FACTORIES",
      "scope": "city"
     },
@@ -31,6 +26,15 @@
       "scope": "plot"
      }
     ]
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_CHRONOTON",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    }
    ]
   }
  },

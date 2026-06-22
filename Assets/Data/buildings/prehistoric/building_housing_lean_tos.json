@@ -12,11 +12,6 @@
   "build": {
    "all": [
     {
-     "type": "BONUS_WOOD",
-     "scope": "city",
-     "connection": "trade|vicinity"
-    },
-    {
      "type": "TECH_SHELTER_BUILDING",
      "scope": "team"
     }
@@ -28,6 +23,15 @@
       "scope": "plot"
      }
     ]
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_WOOD",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    }
    ]
   }
  },

@@ -13,11 +13,6 @@
   "build": {
    "all": [
     {
-     "type": "BONUS_SADDLES",
-     "scope": "city",
-     "connection": "trade|vicinity"
-    },
-    {
      "type": "BUILDING_MERCENARY_CAMP",
      "scope": "city"
     },
@@ -41,6 +36,15 @@
       "scope": "plot"
      }
     ]
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_SADDLES",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    }
    ]
   }
  },

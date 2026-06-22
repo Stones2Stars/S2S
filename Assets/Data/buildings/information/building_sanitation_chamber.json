@@ -13,12 +13,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BONUS_COMPUTERS",
-     "scope": "city",
-     "connection": "trade|vicinity"
-    },
-    "IS_FRESHWATER",
+    "HAS_FRESHWATER",
     "HAS_POWER",
     {
      "type": "BUILDING_SEWER_SYSTEM",
@@ -44,6 +39,15 @@
       "scope": "plot"
      }
     ]
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_COMPUTERS",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    }
    ]
   }
  },

@@ -16,13 +16,25 @@
   "build": {
    "all": [
     {
+     "type": "TECH_PALEONTOLOGY",
+     "scope": "team"
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
+    ]
+   ]
+  },
+  "operate": {
+   "all": [
+    {
      "type": "BONUS_POULTRY",
      "scope": "city",
      "connection": "vicinity"
-    },
-    {
-     "type": "TECH_PALEONTOLOGY",
-     "scope": "team"
     }
    ],
    "any": [
@@ -31,12 +43,6 @@
       "type": "BONUS_FOSSIL_BEDS",
       "scope": "city",
       "connection": "vicinity"
-     }
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
      }
     ]
    ]

@@ -16,11 +16,6 @@
   "build": {
    "all": [
     {
-     "type": "BONUS_AIRCRAFT",
-     "scope": "city",
-     "connection": "trade|vicinity"
-    },
-    {
      "type": "BUILDING_MODERN_WAREHOUSE",
      "scope": "city"
     },
@@ -46,6 +41,15 @@
       "scope": "plot"
      }
     ]
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_AIRCRAFT",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    }
    ]
   }
  },

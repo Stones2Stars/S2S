@@ -22,11 +22,6 @@
   "build": {
    "all": [
     {
-     "type": "BONUS_ROCKET_FUEL",
-     "scope": "city",
-     "connection": "trade|vicinity"
-    },
-    {
      "type": "TECH_MILITARY_ROBOTICS",
      "scope": "team"
     },
@@ -36,13 +31,6 @@
     }
    ],
    "any": [
-    [
-     {
-      "type": "BONUS_NANOTUBES",
-      "scope": "city",
-      "connection": "trade|vicinity"
-     }
-    ],
     [
      {
       "type": "BUILDING_MILITARY_AIRBASE",
@@ -57,6 +45,24 @@
      {
       "type": "MAPCATEGORY_EARTH",
       "scope": "plot"
+     }
+    ]
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_ROCKET_FUEL",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "BONUS_NANOTUBES",
+      "scope": "city",
+      "connection": "trade|vicinity"
      }
     ]
    ]

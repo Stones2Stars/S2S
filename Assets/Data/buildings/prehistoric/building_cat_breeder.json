@@ -25,6 +25,16 @@
    "any": [
     [
      {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
+    ]
+   ]
+  },
+  "operate": {
+   "any": [
+    [
+     {
       "type": "BONUS_RAW_FISH",
       "scope": "city",
       "connection": "trade|vicinity"
@@ -33,12 +43,6 @@
       "type": "BONUS_RAW_MEAT",
       "scope": "city",
       "connection": "trade|vicinity"
-     }
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
      }
     ]
    ]

@@ -6,11 +6,6 @@
   "build": {
    "all": [
     {
-     "type": "BONUS_HUMAN_MOD_DESIGNER_BABIES",
-     "scope": "city",
-     "connection": "trade|vicinity"
-    },
-    {
      "type": "TECH_NEURON_ENGINEERING",
      "scope": "team"
     }
@@ -22,6 +17,15 @@
       "scope": "plot"
      }
     ]
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_HUMAN_MOD_DESIGNER_BABIES",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    }
    ]
   }
  },

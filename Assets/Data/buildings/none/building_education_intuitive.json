@@ -21,7 +21,21 @@
      "min": 100,
      "max": 2000000
     }
-   ]
+   ],
+   "disabled": {
+    "all": [
+     {
+      "type": "PROPERTY_EDUCATION",
+      "scope": "city",
+      "min": 250,
+      "max": 2000000
+     },
+     {
+      "type": "BUILDING_EDUCATION_BRILLIANT",
+      "scope": "city"
+     }
+    ]
+   }
   }
  },
  "production": {

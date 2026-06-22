@@ -49,18 +49,6 @@
    "any": [
     [
      {
-      "type": "BONUS_CHARCOAL",
-      "scope": "city",
-      "connection": "trade|vicinity"
-     },
-     {
-      "type": "BONUS_COAL",
-      "scope": "city",
-      "connection": "trade|vicinity"
-     }
-    ],
-    [
-     {
       "type": "MAPCATEGORY_EARTH",
       "scope": "plot"
      }
@@ -123,6 +111,22 @@
      },
      {
       "type": "BONUS_ALUMINUM_INGOTS",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     }
+    ]
+   ]
+  },
+  "operate": {
+   "any": [
+    [
+     {
+      "type": "BONUS_CHARCOAL",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     },
+     {
+      "type": "BONUS_COAL",
       "scope": "city",
       "connection": "trade|vicinity"
      }

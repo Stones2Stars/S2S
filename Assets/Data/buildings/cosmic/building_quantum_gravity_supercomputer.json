@@ -17,11 +17,6 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BONUS_QUANTUM_DOTS",
-     "scope": "city",
-     "connection": "trade|vicinity"
-    },
     "HAS_POWER",
     {
      "type": "BUILDING_OPTRONIC_SUPERCOMPUTER",
@@ -39,6 +34,15 @@
       "scope": "plot"
      }
     ]
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_QUANTUM_DOTS",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    }
    ]
   }
  },

@@ -6,11 +6,6 @@
   "build": {
    "all": [
     {
-     "type": "BONUS_GOLD_WARES",
-     "scope": "city",
-     "connection": "trade|vicinity"
-    },
-    {
      "type": "POPULATION",
      "scope": "city",
      "min": 7
@@ -27,13 +22,6 @@
    "any": [
     [
      {
-      "type": "BONUS_TERRACOTTA",
-      "scope": "city",
-      "connection": "trade|vicinity"
-     }
-    ],
-    [
-     {
       "type": "MAPCATEGORY_EARTH",
       "scope": "plot"
      }
@@ -43,9 +31,23 @@
   "operate": {
    "all": [
     {
+     "type": "BONUS_GOLD_WARES",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    {
      "type": "CIVIC_VASSALAGE",
      "scope": "empire"
     }
+   ],
+   "any": [
+    [
+     {
+      "type": "BONUS_TERRACOTTA",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     }
+    ]
    ]
   }
  },

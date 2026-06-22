@@ -22,11 +22,6 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BONUS_SUPERSOLID_MATERIAL",
-     "scope": "city",
-     "connection": "trade|vicinity"
-    },
     "HAS_POWER",
     {
      "type": "BUILDING_STRATOSPHERIC_TOWER",
@@ -44,6 +39,15 @@
       "scope": "plot"
      }
     ]
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_SUPERSOLID_MATERIAL",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    }
    ]
   }
  },

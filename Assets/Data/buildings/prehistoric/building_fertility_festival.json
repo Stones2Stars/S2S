@@ -13,18 +13,6 @@
    "any": [
     [
      {
-      "type": "BONUS_FUR",
-      "scope": "city",
-      "connection": "trade|vicinity"
-     },
-     {
-      "type": "BONUS_BASKETS",
-      "scope": "city",
-      "connection": "trade|vicinity"
-     }
-    ],
-    [
-     {
       "type": "BUILDING_FERTILITY_DANCE",
       "scope": "city"
      },
@@ -37,6 +25,22 @@
      {
       "type": "MAPCATEGORY_EARTH",
       "scope": "plot"
+     }
+    ]
+   ]
+  },
+  "operate": {
+   "any": [
+    [
+     {
+      "type": "BONUS_FUR",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     },
+     {
+      "type": "BONUS_BASKETS",
+      "scope": "city",
+      "connection": "trade|vicinity"
      }
     ]
    ]

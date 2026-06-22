@@ -6,11 +6,6 @@
   "build": {
    "all": [
     {
-     "type": "BONUS_CAT",
-     "scope": "city",
-     "connection": "trade|vicinity"
-    },
-    {
      "type": "TECH_FELINE_DOMESTICATION",
      "scope": "team"
     }
@@ -26,6 +21,11 @@
   },
   "operate": {
    "all": [
+    {
+     "type": "BONUS_CAT",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
     {
      "type": "RELIGION_KEMETISM",
      "scope": "city"

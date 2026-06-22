@@ -5,12 +5,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BONUS_OPIUM",
-     "scope": "city",
-     "connection": "vicinity"
-    },
-    "IS_COASTAL",
+    "HAS_COAST",
     {
      "type": "BUILDING_C_AC_MIDDLE_EASTERN",
      "scope": "city"
@@ -31,6 +26,15 @@
       "scope": "plot"
      }
     ]
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_OPIUM",
+     "scope": "city",
+     "connection": "vicinity"
+    }
    ]
   }
  },

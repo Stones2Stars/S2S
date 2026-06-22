@@ -5,7 +5,7 @@
  "requires": {
   "build": {
    "all": [
-    "IS_FRESHWATER",
+    "HAS_FRESHWATER",
     {
      "type": "TECH_FLIGHT",
      "scope": "team"

@@ -10,11 +10,6 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BONUS_PARTS",
-     "scope": "city",
-     "connection": "trade|vicinity"
-    },
     "HAS_POWER",
     {
      "type": "BUILDING_FACTORY",
@@ -28,6 +23,23 @@
    "any": [
     [
      {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
+    ]
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_PARTS",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    }
+   ],
+   "any": [
+    [
+     {
       "type": "BONUS_GLASSWARE",
       "scope": "city",
       "connection": "trade|vicinity"
@@ -36,12 +48,6 @@
       "type": "BONUS_PLASTIC",
       "scope": "city",
       "connection": "trade|vicinity"
-     }
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
      }
     ]
    ]

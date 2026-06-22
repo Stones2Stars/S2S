@@ -11,13 +11,25 @@
   "build": {
    "all": [
     {
+     "type": "TECH_FUNGICULTURE",
+     "scope": "team"
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
+    ]
+   ]
+  },
+  "operate": {
+   "all": [
+    {
      "type": "BONUS_MUSHROOMS",
      "scope": "city",
      "connection": "vicinity"
-    },
-    {
-     "type": "TECH_FUNGICULTURE",
-     "scope": "team"
     }
    ],
    "any": [
@@ -26,12 +38,6 @@
       "type": "BONUS_PRIME_TIMBER",
       "scope": "city",
       "connection": "vicinity"
-     }
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
      }
     ]
    ]

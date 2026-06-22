@@ -16,11 +16,6 @@
   "build": {
    "all": [
     {
-     "type": "BONUS_LEAD_ORE",
-     "scope": "city",
-     "connection": "trade|vicinity"
-    },
-    {
      "type": "TECH_LEAD_WORKING",
      "scope": "team"
     }
@@ -42,6 +37,15 @@
       "scope": "plot"
      }
     ]
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_LEAD_ORE",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    }
    ]
   }
  },

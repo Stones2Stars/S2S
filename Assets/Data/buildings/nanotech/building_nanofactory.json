@@ -16,11 +16,6 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BONUS_NANOGENERATORS",
-     "scope": "city",
-     "connection": "trade|vicinity"
-    },
     "HAS_POWER",
     {
      "type": "BUILDING_NANITE_LAB",
@@ -42,6 +37,15 @@
       "scope": "plot"
      }
     ]
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_NANOGENERATORS",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    }
    ]
   }
  },

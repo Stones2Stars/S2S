@@ -10,7 +10,7 @@
  "requires": {
   "build": {
    "all": [
-    "IS_FRESHWATER",
+    "HAS_FRESHWATER",
     "HAS_POWER",
     {
      "type": "BUILDING_FACTORY",
@@ -30,18 +30,6 @@
     }
    ],
    "any": [
-    [
-     {
-      "type": "BONUS_TITANIUM_WARES",
-      "scope": "city",
-      "connection": "trade|vicinity"
-     },
-     {
-      "type": "BONUS_STEEL_WARES",
-      "scope": "city",
-      "connection": "trade|vicinity"
-     }
-    ],
     [
      {
       "type": "TERRAIN_DESERT",
@@ -64,6 +52,22 @@
      {
       "type": "MAPCATEGORY_EARTH",
       "scope": "plot"
+     }
+    ]
+   ]
+  },
+  "operate": {
+   "any": [
+    [
+     {
+      "type": "BONUS_TITANIUM_WARES",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     },
+     {
+      "type": "BONUS_STEEL_WARES",
+      "scope": "city",
+      "connection": "trade|vicinity"
      }
     ]
    ]

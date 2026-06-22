@@ -17,13 +17,25 @@
   "build": {
    "all": [
     {
+     "type": "TECH_SERICULTURE",
+     "scope": "team"
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
+    ]
+   ]
+  },
+  "operate": {
+   "all": [
+    {
      "type": "BONUS_SILK",
      "scope": "city",
      "connection": "vicinity"
-    },
-    {
-     "type": "TECH_SERICULTURE",
-     "scope": "team"
     }
    ],
    "any": [
@@ -32,12 +44,6 @@
       "type": "BONUS_COCOA",
       "scope": "city",
       "connection": "vicinity"
-     }
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
      }
     ]
    ]

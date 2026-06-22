@@ -17,11 +17,6 @@
   "build": {
    "all": [
     {
-     "type": "BONUS_PLASTEEL",
-     "scope": "city",
-     "connection": "trade|vicinity"
-    },
-    {
      "type": "BUILDING_VENUS_CITY",
      "scope": "city"
     },
@@ -37,6 +32,15 @@
       "scope": "plot"
      }
     ]
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_PLASTEEL",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    }
    ]
   }
  },

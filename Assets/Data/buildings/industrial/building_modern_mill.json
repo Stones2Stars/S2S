@@ -25,11 +25,6 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BONUS_GRAINS",
-     "scope": "city",
-     "connection": "trade|vicinity"
-    },
     "HAS_POWER",
     {
      "type": "BUILDING_MODERN_GRANARY",
@@ -51,6 +46,15 @@
       "scope": "plot"
      }
     ]
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_GRAINS",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    }
    ]
   }
  },

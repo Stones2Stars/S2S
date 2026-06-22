@@ -13,6 +13,16 @@
    "any": [
     [
      {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
+    ]
+   ]
+  },
+  "operate": {
+   "any": [
+    [
+     {
       "type": "BONUS_POULTRY",
       "scope": "city",
       "connection": "trade|vicinity"
@@ -22,16 +32,8 @@
       "scope": "city",
       "connection": "trade|vicinity"
      }
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
     ]
-   ]
-  },
-  "operate": {
+   ],
    "all": [
     {
      "type": "PROPERTY_DISEASE",

@@ -13,12 +13,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BONUS_WOOD",
-     "scope": "city",
-     "connection": "trade|vicinity"
-    },
-    "IS_FRESHWATER",
+    "HAS_FRESHWATER",
     {
      "type": "TECH_SANITATION",
      "scope": "team"
@@ -27,15 +22,26 @@
    "any": [
     [
      {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
+    ]
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_WOOD",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    }
+   ],
+   "any": [
+    [
+     {
       "type": "BONUS_BRICKS",
       "scope": "city",
       "connection": "trade|vicinity"
-     }
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
      }
     ]
    ]

@@ -88,11 +88,6 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BONUS_NANOTUBES",
-     "scope": "city",
-     "connection": "trade|vicinity"
-    },
     "HAS_POWER",
     {
      "type": "TECH_INTERSTELLAR_COLONIZATION",
@@ -106,6 +101,15 @@
       "scope": "plot"
      }
     ]
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_NANOTUBES",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    }
    ]
   }
  },

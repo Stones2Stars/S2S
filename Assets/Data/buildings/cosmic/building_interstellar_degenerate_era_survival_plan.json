@@ -6,11 +6,6 @@
   "build": {
    "all": [
     {
-     "type": "BONUS_TIME_CRYSTALS",
-     "scope": "city",
-     "connection": "trade|vicinity"
-    },
-    {
      "type": "BUILDING_INTERSTELLAR_ARTIFICIAL_PLANET",
      "scope": "city"
     },
@@ -34,6 +29,15 @@
       "scope": "plot"
      }
     ]
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_TIME_CRYSTALS",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    }
    ]
   }
  },

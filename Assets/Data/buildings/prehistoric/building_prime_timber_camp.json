@@ -6,11 +6,6 @@
   "build": {
    "all": [
     {
-     "type": "BONUS_PRIME_TIMBER",
-     "scope": "city",
-     "connection": "vicinity"
-    },
-    {
      "type": "TECH_SIMPLE_WOOD_WORKING",
      "scope": "team"
     }
@@ -21,7 +16,22 @@
       "type": "MAPCATEGORY_EARTH",
       "scope": "plot"
      }
+    ],
+    [
+     {
+      "type": "CIVILIZATION_NPC_NEANDERTHAL",
+      "scope": "empire"
+     }
     ]
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_PRIME_TIMBER",
+     "scope": "city",
+     "connection": "vicinity"
+    }
    ]
   }
  },

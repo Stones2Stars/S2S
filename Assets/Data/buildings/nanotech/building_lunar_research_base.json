@@ -5,11 +5,6 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BONUS_CHEMICALS",
-     "scope": "city",
-     "connection": "trade|vicinity"
-    },
     "HAS_POWER",
     {
      "type": "TECH_LUNAR_MANUFACTURING",
@@ -17,13 +12,6 @@
     }
    ],
    "any": [
-    [
-     {
-      "type": "BONUS_CEMENT",
-      "scope": "city",
-      "connection": "trade|vicinity"
-     }
-    ],
     [
      {
       "type": "BUILDING_LUNAR_ALGAE_LAB",
@@ -38,6 +26,24 @@
      {
       "type": "MAPCATEGORY_LUNAR",
       "scope": "plot"
+     }
+    ]
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_CHEMICALS",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "BONUS_CEMENT",
+      "scope": "city",
+      "connection": "trade|vicinity"
      }
     ]
    ]

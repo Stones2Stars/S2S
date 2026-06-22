@@ -14,11 +14,25 @@
  },
  "requires": {
   "build": {
+   "any": [
+    [
+     {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
+    ]
+   ]
+  },
+  "operate": {
    "all": [
     {
      "type": "BONUS_BRICKS",
      "scope": "city",
      "connection": "trade|vicinity"
+    },
+    {
+     "type": "RELIGION_SIKHISM",
+     "scope": "city"
     }
    ],
    "any": [
@@ -43,21 +57,7 @@
       "scope": "city",
       "connection": "trade|vicinity"
      }
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
     ]
-   ]
-  },
-  "operate": {
-   "all": [
-    {
-     "type": "RELIGION_SIKHISM",
-     "scope": "city"
-    }
    ]
   }
  },

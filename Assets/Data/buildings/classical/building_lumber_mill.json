@@ -16,13 +16,31 @@
   "build": {
    "all": [
     {
+     "type": "TECH_MACHINERY",
+     "scope": "team"
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "BUILDING_LUMBER_CAMP",
+      "scope": "city"
+     }
+    ],
+    [
+     {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
+    ]
+   ]
+  },
+  "operate": {
+   "all": [
+    {
      "type": "BONUS_WOOD",
      "scope": "city",
      "connection": "trade|vicinity"
-    },
-    {
-     "type": "TECH_MACHINERY",
-     "scope": "team"
     }
    ],
    "any": [
@@ -51,18 +69,6 @@
       "type": "BONUS_TITANIUM_WARES",
       "scope": "city",
       "connection": "trade|vicinity"
-     }
-    ],
-    [
-     {
-      "type": "BUILDING_LUMBER_CAMP",
-      "scope": "city"
-     }
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
      }
     ]
    ]

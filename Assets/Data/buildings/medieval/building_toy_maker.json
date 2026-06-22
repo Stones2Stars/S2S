@@ -23,6 +23,26 @@
    "any": [
     [
      {
+      "type": "BUILDING_TRADING_POST",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_SHOPPING_DISTRICT",
+      "scope": "city"
+     }
+    ],
+    [
+     {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
+    ]
+   ]
+  },
+  "operate": {
+   "any": [
+    [
+     {
       "type": "BONUS_FINE_CLAY",
       "scope": "city",
       "connection": "trade|vicinity"
@@ -46,22 +66,6 @@
       "type": "BONUS_TIN_WARES",
       "scope": "city",
       "connection": "trade|vicinity"
-     }
-    ],
-    [
-     {
-      "type": "BUILDING_TRADING_POST",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_SHOPPING_DISTRICT",
-      "scope": "city"
-     }
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
      }
     ]
    ]

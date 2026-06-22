@@ -6,11 +6,6 @@
   "build": {
    "all": [
     {
-     "type": "BONUS_YGGDRASIL_SEEDS",
-     "scope": "city",
-     "connection": "trade|vicinity"
-    },
-    {
      "type": "BUILDING_INTERSTELLAR_SPHEREWORLD",
      "scope": "city"
     },
@@ -30,6 +25,15 @@
       "scope": "plot"
      }
     ]
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_YGGDRASIL_SEEDS",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    }
    ]
   }
  },

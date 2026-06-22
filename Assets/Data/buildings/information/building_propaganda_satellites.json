@@ -11,23 +11,11 @@
   "build": {
    "all": [
     {
-     "type": "BONUS_COMPUTERS",
-     "scope": "city",
-     "connection": "trade|vicinity"
-    },
-    {
      "type": "TECH_CYBERWARFARE",
      "scope": "team"
     }
    ],
    "any": [
-    [
-     {
-      "type": "BONUS_NANOTUBES",
-      "scope": "city",
-      "connection": "trade|vicinity"
-     }
-    ],
     [
      {
       "type": "BUILDING_EFFECT_LAUNCH_SITE",
@@ -51,7 +39,21 @@
    ]
   },
   "operate": {
+   "all": [
+    {
+     "type": "BONUS_COMPUTERS",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    }
+   ],
    "any": [
+    [
+     {
+      "type": "BONUS_NANOTUBES",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     }
+    ],
     [
      {
       "type": "CIVIC_STATE_CHURCH",

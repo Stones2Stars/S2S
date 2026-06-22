@@ -11,11 +11,6 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BONUS_STIM_PACKS",
-     "scope": "city",
-     "connection": "trade|vicinity"
-    },
     "HAS_POWER",
     {
      "type": "BUILDING_NEURON_REGENERATOR_LAB",
@@ -33,6 +28,15 @@
       "scope": "plot"
      }
     ]
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_STIM_PACKS",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    }
    ]
   }
  },

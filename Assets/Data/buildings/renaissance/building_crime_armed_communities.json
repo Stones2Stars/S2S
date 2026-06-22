@@ -6,11 +6,6 @@
   "build": {
    "all": [
     {
-     "type": "BONUS_FIREARMS",
-     "scope": "city",
-     "connection": "trade|vicinity"
-    },
-    {
      "type": "TECH_MATCHLOCK",
      "scope": "team"
     }
@@ -26,6 +21,11 @@
   },
   "operate": {
    "all": [
+    {
+     "type": "BONUS_FIREARMS",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
     {
      "type": "PROPERTY_CRIME",
      "scope": "city",

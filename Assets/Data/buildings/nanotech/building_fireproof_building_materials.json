@@ -5,11 +5,6 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BONUS_NOVUS_CHEMICALS",
-     "scope": "city",
-     "connection": "trade|vicinity"
-    },
     "HAS_POWER",
     {
      "type": "BUILDING_MEGATOWER_FIRE_STATION_LEVEL",
@@ -27,6 +22,15 @@
       "scope": "plot"
      }
     ]
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_NOVUS_CHEMICALS",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    }
    ]
   }
  },

@@ -16,11 +16,6 @@
   "build": {
    "all": [
     {
-     "type": "BONUS_AUTOMOBILES",
-     "scope": "city",
-     "connection": "trade|vicinity"
-    },
-    {
      "type": "BUILDING_MODERN_WAREHOUSE",
      "scope": "city"
     },
@@ -36,6 +31,15 @@
       "scope": "plot"
      }
     ]
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_AUTOMOBILES",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    }
    ]
   }
  },

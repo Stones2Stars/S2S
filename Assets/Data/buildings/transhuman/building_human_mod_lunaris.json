@@ -6,11 +6,6 @@
   "build": {
    "all": [
     {
-     "type": "BONUS_HUMAN_MOD_NOVEL_SENSES",
-     "scope": "city",
-     "connection": "trade|vicinity"
-    },
-    {
      "type": "BUILDING_SPACE_COLONY_LUNAR_BASE",
      "scope": "empire",
      "min": 1
@@ -27,6 +22,15 @@
       "scope": "plot"
      }
     ]
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_HUMAN_MOD_NOVEL_SENSES",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    }
    ]
   }
  },

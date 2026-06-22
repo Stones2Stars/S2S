@@ -19,6 +19,22 @@
    "any": [
     [
      {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
+    ]
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "RELIGION_ASATRU",
+     "scope": "city"
+    }
+   ],
+   "any": [
+    [
+     {
       "type": "BONUS_BRICKS",
       "scope": "city",
       "connection": "trade|vicinity"
@@ -33,21 +49,7 @@
       "scope": "city",
       "connection": "trade|vicinity"
      }
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
     ]
-   ]
-  },
-  "operate": {
-   "all": [
-    {
-     "type": "RELIGION_ASATRU",
-     "scope": "city"
-    }
    ]
   }
  },

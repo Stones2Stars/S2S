@@ -6,11 +6,6 @@
   "build": {
    "all": [
     {
-     "type": "BONUS_ALUMINUM_WARES",
-     "scope": "city",
-     "connection": "trade|vicinity"
-    },
-    {
      "type": "POPULATION",
      "scope": "city",
      "min": 3
@@ -32,6 +27,23 @@
    "any": [
     [
      {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
+    ]
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_ALUMINUM_WARES",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    }
+   ],
+   "any": [
+    [
+     {
       "type": "BONUS_COPPER_WIRES",
       "scope": "city",
       "connection": "trade|vicinity"
@@ -40,12 +52,6 @@
       "type": "BONUS_FIBER_OPTIC_CABLES",
       "scope": "city",
       "connection": "trade|vicinity"
-     }
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
      }
     ]
    ]

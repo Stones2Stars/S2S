@@ -6,13 +6,25 @@
   "build": {
    "all": [
     {
+     "type": "TECH_FISSION",
+     "scope": "team"
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
+    ]
+   ]
+  },
+  "operate": {
+   "all": [
+    {
      "type": "BONUS_CEMENT",
      "scope": "city",
      "connection": "trade|vicinity"
-    },
-    {
-     "type": "TECH_FISSION",
-     "scope": "team"
     }
    ],
    "any": [
@@ -31,12 +43,6 @@
       "type": "BONUS_TITANIUM_WARES",
       "scope": "city",
       "connection": "trade|vicinity"
-     }
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
      }
     ]
    ]

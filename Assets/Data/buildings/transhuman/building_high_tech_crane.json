@@ -18,11 +18,6 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BONUS_NANOTUBES",
-     "scope": "city",
-     "connection": "trade|vicinity"
-    },
     "HAS_POWER",
     {
      "type": "BUILDING_CONSTRUCTION_FIRM",
@@ -36,6 +31,23 @@
    "any": [
     [
      {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
+    ]
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_NANOTUBES",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    }
+   ],
+   "any": [
+    [
+     {
       "type": "BONUS_PETROLEUM_PRODUCTS",
       "scope": "city",
       "connection": "trade|vicinity"
@@ -44,12 +56,6 @@
       "type": "BONUS_BIOFUEL",
       "scope": "city",
       "connection": "trade|vicinity"
-     }
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
      }
     ]
    ]

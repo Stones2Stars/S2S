@@ -23,11 +23,6 @@
   "build": {
    "all": [
     {
-     "type": "BONUS_HENNA",
-     "scope": "city",
-     "connection": "vicinity"
-    },
-    {
      "type": "TECH_FLORISTRY",
      "scope": "team"
     }
@@ -39,6 +34,15 @@
       "scope": "plot"
      }
     ]
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_HENNA",
+     "scope": "city",
+     "connection": "vicinity"
+    }
    ]
   }
  },

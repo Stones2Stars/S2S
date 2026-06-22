@@ -7,13 +7,25 @@
   "build": {
    "all": [
     {
+     "type": "TECH_HIGHWAY_SYSTEMS",
+     "scope": "team"
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
+    ]
+   ]
+  },
+  "operate": {
+   "all": [
+    {
      "type": "BONUS_CEMENT",
      "scope": "city",
      "connection": "trade|vicinity"
-    },
-    {
-     "type": "TECH_HIGHWAY_SYSTEMS",
-     "scope": "team"
     }
    ],
    "any": [
@@ -27,12 +39,6 @@
       "type": "BONUS_TAR",
       "scope": "city",
       "connection": "trade|vicinity"
-     }
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
      }
     ]
    ]

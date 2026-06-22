@@ -6,13 +6,25 @@
   "build": {
    "all": [
     {
+     "type": "TECH_ZOOLOGY",
+     "scope": "team"
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
+    ]
+   ]
+  },
+  "operate": {
+   "all": [
+    {
      "type": "BONUS_CHEMICALS",
      "scope": "city",
      "connection": "trade|vicinity"
-    },
-    {
-     "type": "TECH_ZOOLOGY",
-     "scope": "team"
     }
    ],
    "any": [
@@ -21,12 +33,6 @@
       "type": "BONUS_CARCASS",
       "scope": "city",
       "connection": "trade|vicinity"
-     }
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
      }
     ]
    ]

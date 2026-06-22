@@ -6,11 +6,6 @@
   "build": {
    "all": [
     {
-     "type": "BONUS_CHRONOTON",
-     "scope": "city",
-     "connection": "trade|vicinity"
-    },
-    {
      "type": "BUILDING_INTERGALACTIC_ASTROPOLIS",
      "scope": "city"
     },
@@ -30,6 +25,15 @@
       "scope": "plot"
      }
     ]
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_CHRONOTON",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    }
    ]
   }
  },

@@ -6,11 +6,6 @@
   "build": {
    "all": [
     {
-     "type": "BONUS_FURNITURE",
-     "scope": "city",
-     "connection": "trade|vicinity"
-    },
-    {
      "type": "POPULATION",
      "scope": "city",
      "min": 7
@@ -21,18 +16,6 @@
     }
    ],
    "any": [
-    [
-     {
-      "type": "BONUS_FIBERGLASS",
-      "scope": "city",
-      "connection": "trade|vicinity"
-     },
-     {
-      "type": "BONUS_GLASSWARE",
-      "scope": "city",
-      "connection": "trade|vicinity"
-     }
-    ],
     [
      {
       "type": "MAPCATEGORY_EARTH",
@@ -57,9 +40,28 @@
   "operate": {
    "all": [
     {
+     "type": "BONUS_FURNITURE",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    {
      "type": "CIVIC_LEGISLATURE",
      "scope": "empire"
     }
+   ],
+   "any": [
+    [
+     {
+      "type": "BONUS_FIBERGLASS",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     },
+     {
+      "type": "BONUS_GLASSWARE",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     }
+    ]
    ]
   }
  },

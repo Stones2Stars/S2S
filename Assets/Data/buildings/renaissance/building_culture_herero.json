@@ -6,11 +6,6 @@
   "build": {
    "all": [
     {
-     "type": "BONUS_BISON",
-     "scope": "city",
-     "connection": "vicinity"
-    },
-    {
      "type": "BUILDING_C_AC_AFRICAN",
      "scope": "city"
     },
@@ -36,6 +31,15 @@
       "scope": "plot"
      }
     ]
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_BISON",
+     "scope": "city",
+     "connection": "vicinity"
+    }
    ]
   }
  },

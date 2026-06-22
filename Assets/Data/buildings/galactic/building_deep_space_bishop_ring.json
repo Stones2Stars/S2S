@@ -26,11 +26,6 @@
   "build": {
    "all": [
     {
-     "type": "BONUS_NANOTUBES",
-     "scope": "city",
-     "connection": "trade|vicinity"
-    },
-    {
      "type": "BUILDING_DEEP_SPACE_ONEILL_CYLINDER",
      "scope": "city"
     },
@@ -61,6 +56,15 @@
       "scope": "plot"
      }
     ]
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_NANOTUBES",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    }
    ]
   }
  },

@@ -16,13 +16,25 @@
   "build": {
    "all": [
     {
+     "type": "TECH_CONCRETE",
+     "scope": "team"
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
+    ]
+   ]
+  },
+  "operate": {
+   "all": [
+    {
      "type": "BONUS_SAND",
      "scope": "city",
      "connection": "trade|vicinity"
-    },
-    {
-     "type": "TECH_CONCRETE",
-     "scope": "team"
     }
    ],
    "any": [
@@ -31,12 +43,6 @@
       "type": "BONUS_STONE",
       "scope": "city",
       "connection": "trade|vicinity"
-     }
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
      }
     ]
    ]

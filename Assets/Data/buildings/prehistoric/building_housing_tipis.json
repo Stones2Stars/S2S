@@ -12,33 +12,11 @@
   "build": {
    "all": [
     {
-     "type": "BONUS_WOOD",
-     "scope": "city",
-     "connection": "trade|vicinity"
-    },
-    {
-     "type": "BONUS_BISON",
-     "scope": "city",
-     "connection": "vicinity"
-    },
-    {
      "type": "TECH_PORTABLE_SHELTERS",
      "scope": "team"
     }
    ],
    "any": [
-    [
-     {
-      "type": "BONUS_HIDE",
-      "scope": "city",
-      "connection": "trade|vicinity"
-     },
-     {
-      "type": "BONUS_LEATHER",
-      "scope": "city",
-      "connection": "trade|vicinity"
-     }
-    ],
     [
      {
       "type": "TERRAIN_GRASSLAND",
@@ -53,6 +31,34 @@
      {
       "type": "MAPCATEGORY_EARTH",
       "scope": "plot"
+     }
+    ]
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_WOOD",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    {
+     "type": "BONUS_BISON",
+     "scope": "city",
+     "connection": "vicinity"
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "BONUS_HIDE",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     },
+     {
+      "type": "BONUS_LEATHER",
+      "scope": "city",
+      "connection": "trade|vicinity"
      }
     ]
    ]

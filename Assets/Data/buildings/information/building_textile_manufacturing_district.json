@@ -33,11 +33,6 @@
   "build": {
    "all": [
     {
-     "type": "BONUS_PLASTIC",
-     "scope": "city",
-     "connection": "trade|vicinity"
-    },
-    {
      "type": "BUILDING_MANUFACTURING_DISTRICT",
      "scope": "city"
     },
@@ -53,6 +48,15 @@
       "scope": "plot"
      }
     ]
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_PLASTIC",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    }
    ]
   }
  },

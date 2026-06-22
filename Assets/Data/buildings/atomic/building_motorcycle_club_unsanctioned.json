@@ -6,13 +6,31 @@
   "build": {
    "all": [
     {
+     "type": "TECH_MASS_MEDIA",
+     "scope": "team"
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
+    ]
+   ]
+  },
+  "operate": {
+   "all": [
+    {
      "type": "BONUS_AUTOMOBILES",
      "scope": "city",
      "connection": "trade|vicinity"
     },
     {
-     "type": "TECH_MASS_MEDIA",
-     "scope": "team"
+     "type": "PROPERTY_CRIME",
+     "scope": "city",
+     "min": 2000,
+     "max": 100000
     }
    ],
    "any": [
@@ -37,23 +55,7 @@
       "scope": "city",
       "connection": "trade|vicinity"
      }
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
     ]
-   ]
-  },
-  "operate": {
-   "all": [
-    {
-     "type": "PROPERTY_CRIME",
-     "scope": "city",
-     "min": 2000,
-     "max": 100000
-    }
    ]
   }
  },

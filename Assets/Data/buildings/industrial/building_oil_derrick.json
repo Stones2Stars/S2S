@@ -11,13 +11,25 @@
   "build": {
    "all": [
     {
+     "type": "TECH_REFINING",
+     "scope": "team"
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
+    ]
+   ]
+  },
+  "operate": {
+   "all": [
+    {
      "type": "BONUS_OIL",
      "scope": "city",
      "connection": "vicinity"
-    },
-    {
-     "type": "TECH_REFINING",
-     "scope": "team"
     }
    ],
    "any": [
@@ -36,12 +48,6 @@
       "type": "BONUS_NANOTUBES",
       "scope": "city",
       "connection": "trade|vicinity"
-     }
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
      }
     ]
    ]

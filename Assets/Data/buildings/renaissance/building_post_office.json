@@ -17,11 +17,6 @@
   "build": {
    "all": [
     {
-     "type": "BONUS_PAPER",
-     "scope": "city",
-     "connection": "trade|vicinity"
-    },
-    {
      "type": "TECH_SOCIAL_CONTRACT",
      "scope": "team"
     }
@@ -47,6 +42,15 @@
       "scope": "plot"
      }
     ]
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_PAPER",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    }
    ]
   }
  },

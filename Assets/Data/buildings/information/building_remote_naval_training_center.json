@@ -12,12 +12,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BONUS_COMPUTERS",
-     "scope": "city",
-     "connection": "trade|vicinity"
-    },
-    "IS_COASTAL",
+    "HAS_COAST",
     {
      "type": "TECH_UNMANNED_NAVAL_VEHICLES",
      "scope": "team"
@@ -48,6 +43,15 @@
       "scope": "plot"
      }
     ]
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_COMPUTERS",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    }
    ]
   }
  },

@@ -10,7 +10,7 @@
  "requires": {
   "build": {
    "all": [
-    "IS_COASTAL",
+    "HAS_COAST",
     {
      "type": "BUILDING_BURIAL_TRADITION_SEA",
      "scope": "city"

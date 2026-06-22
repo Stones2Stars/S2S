@@ -5,12 +5,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BONUS_ATOMPUNK",
-     "scope": "city",
-     "connection": "trade|vicinity"
-    },
-    "IS_FRESHWATER",
+    "HAS_FRESHWATER",
     "HAS_POWER",
     {
      "type": "POPULATION",
@@ -51,6 +46,15 @@
       "scope": "plot"
      }
     ]
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_ATOMPUNK",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    }
    ]
   }
  },

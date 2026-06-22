@@ -12,11 +12,6 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BONUS_ANDROIDS",
-     "scope": "city",
-     "connection": "trade|vicinity"
-    },
     "HAS_POWER",
     {
      "type": "TECH_PERSONAL_ROBOTS",
@@ -44,6 +39,15 @@
       "scope": "plot"
      }
     ]
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_ANDROIDS",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    }
    ]
   }
  },

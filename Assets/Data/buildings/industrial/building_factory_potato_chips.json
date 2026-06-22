@@ -11,17 +11,29 @@
   "build": {
    "all": [
     {
-     "type": "BONUS_POTATOES",
-     "scope": "city",
-     "connection": "trade|vicinity"
-    },
-    {
      "type": "BUILDING_FACTORY",
      "scope": "city"
     },
     {
      "type": "TECH_ASSEMBLY_LINE",
      "scope": "team"
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
+    ]
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_POTATOES",
+     "scope": "city",
+     "connection": "trade|vicinity"
     }
    ],
    "any": [
@@ -35,12 +47,6 @@
       "type": "BONUS_PAPER",
       "scope": "city",
       "connection": "trade|vicinity"
-     }
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
      }
     ]
    ]

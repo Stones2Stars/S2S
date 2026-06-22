@@ -17,6 +17,14 @@
      "type": "TECH_FISHING",
      "scope": "team"
     }
+   ],
+   "any": [
+    [
+     {
+      "type": "CIVILIZATION_NPC_NEANDERTHAL",
+      "scope": "empire"
+     }
+    ]
    ]
   }
  },

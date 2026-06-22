@@ -11,17 +11,39 @@
   "build": {
    "all": [
     {
-     "type": "BONUS_WHALE",
-     "scope": "city",
-     "connection": "trade|vicinity"
-    },
-    {
      "type": "BUILDING_WHALERS_DOCK",
      "scope": "city"
     },
     {
      "type": "TECH_COMMERCIAL_WHALING",
      "scope": "team"
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "BUILDING_TRADING_POST",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_SHOPPING_DISTRICT",
+      "scope": "city"
+     }
+    ],
+    [
+     {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
+    ]
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_WHALE",
+     "scope": "city",
+     "connection": "trade|vicinity"
     }
    ],
    "any": [
@@ -40,22 +62,6 @@
       "type": "BONUS_BARRELS",
       "scope": "city",
       "connection": "trade|vicinity"
-     }
-    ],
-    [
-     {
-      "type": "BUILDING_TRADING_POST",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_SHOPPING_DISTRICT",
-      "scope": "city"
-     }
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
      }
     ]
    ]

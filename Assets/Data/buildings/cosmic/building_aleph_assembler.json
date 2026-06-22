@@ -17,11 +17,6 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BONUS_MEGASTRONG_ALLOYS",
-     "scope": "city",
-     "connection": "trade|vicinity"
-    },
     "HAS_POWER",
     {
      "type": "BUILDING_OMEGA_ASSEMBLER",
@@ -43,6 +38,15 @@
       "scope": "plot"
      }
     ]
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_MEGASTRONG_ALLOYS",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    }
    ]
   }
  },

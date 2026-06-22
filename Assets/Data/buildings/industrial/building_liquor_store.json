@@ -11,11 +11,6 @@
   "build": {
    "all": [
     {
-     "type": "BONUS_ALCOHOL",
-     "scope": "city",
-     "connection": "trade|vicinity"
-    },
-    {
      "type": "TECH_REFRIGERATION",
      "scope": "team"
     }
@@ -37,6 +32,15 @@
       "scope": "plot"
      }
     ]
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_ALCOHOL",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    }
    ]
   }
  },

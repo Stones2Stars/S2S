@@ -6,11 +6,6 @@
   "build": {
    "all": [
     {
-     "type": "BONUS_BUGS",
-     "scope": "city",
-     "connection": "trade|vicinity"
-    },
-    {
      "type": "BUILDING_BIOLOGY_LAB",
      "scope": "city"
     },
@@ -30,6 +25,15 @@
       "scope": "plot"
      }
     ]
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_BUGS",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    }
    ]
   }
  },

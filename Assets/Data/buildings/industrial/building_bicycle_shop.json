@@ -11,13 +11,25 @@
   "build": {
    "all": [
     {
+     "type": "TECH_BICYCLES",
+     "scope": "team"
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
+    ]
+   ]
+  },
+  "operate": {
+   "all": [
+    {
      "type": "BONUS_RUBBER",
      "scope": "city",
      "connection": "trade|vicinity"
-    },
-    {
-     "type": "TECH_BICYCLES",
-     "scope": "team"
     }
    ],
    "any": [
@@ -46,12 +58,6 @@
       "type": "BONUS_TITANIUM_WARES",
       "scope": "city",
       "connection": "trade|vicinity"
-     }
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
      }
     ]
    ]

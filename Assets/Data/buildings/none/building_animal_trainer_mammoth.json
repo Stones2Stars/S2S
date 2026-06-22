@@ -19,11 +19,6 @@
   "build": {
    "all": [
     {
-     "type": "BONUS_MAMMOTH",
-     "scope": "city",
-     "connection": "trade|vicinity"
-    },
-    {
      "latitude": {
       "min": 40
      }
@@ -66,6 +61,15 @@
       "scope": "plot"
      }
     ]
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_MAMMOTH",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    }
    ]
   }
  },

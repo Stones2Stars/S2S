@@ -16,11 +16,6 @@
   "build": {
    "all": [
     {
-     "type": "BONUS_SHRIMP",
-     "scope": "city",
-     "connection": "vicinity"
-    },
-    {
      "type": "BUILDING_FISH_TRAPS",
      "scope": "city"
     },
@@ -31,7 +26,7 @@
    ],
    "any": [
     [
-     "IS_COASTAL",
+     "HAS_COAST",
      "HAS_RIVER"
     ],
     [
@@ -40,6 +35,15 @@
       "scope": "plot"
      }
     ]
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_SHRIMP",
+     "scope": "city",
+     "connection": "vicinity"
+    }
    ]
   }
  },

@@ -6,11 +6,6 @@
   "build": {
    "all": [
     {
-     "type": "BONUS_NANOTRUSSES",
-     "scope": "city",
-     "connection": "trade|vicinity"
-    },
-    {
      "type": "BUILDING_CONTROL_CENTER",
      "scope": "city"
     },
@@ -36,6 +31,15 @@
       "scope": "plot"
      }
     ]
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_NANOTRUSSES",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    }
    ]
   }
  },

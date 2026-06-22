@@ -21,11 +21,6 @@
   "build": {
    "all": [
     {
-     "type": "BONUS_GRAINS",
-     "scope": "city",
-     "connection": "trade|vicinity"
-    },
-    {
      "type": "TECH_WINDMILLS",
      "scope": "team"
     }
@@ -53,6 +48,15 @@
       "scope": "plot"
      }
     ]
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_GRAINS",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    }
    ]
   }
  },

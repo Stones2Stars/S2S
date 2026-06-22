@@ -6,11 +6,6 @@
   "build": {
    "all": [
     {
-     "type": "BONUS_STONE",
-     "scope": "city",
-     "connection": "trade|vicinity"
-    },
-    {
      "type": "TECH_DIVINE_RIGHT",
      "scope": "team"
     },
@@ -28,6 +23,11 @@
   },
   "operate": {
    "all": [
+    {
+     "type": "BONUS_STONE",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
     {
      "type": "CIVIC_DIVINE_RIGHT",
      "scope": "empire"

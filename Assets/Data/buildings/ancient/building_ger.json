@@ -6,11 +6,6 @@
   "build": {
    "all": [
     {
-     "type": "BONUS_HORSE",
-     "scope": "city",
-     "connection": "trade|vicinity"
-    },
-    {
      "type": "TECH_ANIMAL_RIDING",
      "scope": "team"
     }
@@ -40,6 +35,11 @@
   },
   "operate": {
    "all": [
+    {
+     "type": "BONUS_HORSE",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
     {
      "type": "RELIGION_TENGRIISM",
      "scope": "city"

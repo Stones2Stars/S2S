@@ -10,7 +10,7 @@
  "requires": {
   "build": {
    "all": [
-    "IS_FRESHWATER",
+    "HAS_FRESHWATER",
     {
      "type": "BUILDING_FACTORY",
      "scope": "city"
@@ -23,6 +23,16 @@
    "any": [
     [
      {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
+    ]
+   ]
+  },
+  "operate": {
+   "any": [
+    [
+     {
       "type": "BONUS_GLASSWARE",
       "scope": "city",
       "connection": "trade|vicinity"
@@ -31,12 +41,6 @@
       "type": "BONUS_PLASTIC",
       "scope": "city",
       "connection": "trade|vicinity"
-     }
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
      }
     ]
    ]

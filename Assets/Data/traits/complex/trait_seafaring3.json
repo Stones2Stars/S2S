@@ -40,8 +40,13 @@
      "flat": -1
     }
    },
-   "seaPlot": {
-    "flat": 1
+   "plots": {
+    "flat": [
+     {
+      "value": 1,
+      "enabled": "IS_WATER"
+     }
+    ]
    }
   }
  },

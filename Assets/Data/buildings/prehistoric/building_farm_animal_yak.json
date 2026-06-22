@@ -24,13 +24,6 @@
    "any": [
     [
      {
-      "type": "BONUS_COW",
-      "scope": "city",
-      "connection": "vicinity"
-     }
-    ],
-    [
-     {
       "type": "TERRAIN_PEAK",
       "scope": "plot"
      }
@@ -39,6 +32,23 @@
      {
       "type": "MAPCATEGORY_EARTH",
       "scope": "plot"
+     }
+    ],
+    [
+     {
+      "type": "CIVILIZATION_NPC_NEANDERTHAL",
+      "scope": "empire"
+     }
+    ]
+   ]
+  },
+  "operate": {
+   "any": [
+    [
+     {
+      "type": "BONUS_COW",
+      "scope": "city",
+      "connection": "vicinity"
      }
     ]
    ]

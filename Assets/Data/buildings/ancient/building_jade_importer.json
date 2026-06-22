@@ -14,11 +14,6 @@
   "build": {
    "all": [
     {
-     "type": "BONUS_JADE",
-     "scope": "city",
-     "connection": "trade|vicinity"
-    },
-    {
      "type": "BUILDING_JADE_CARVER",
      "scope": "empire",
      "min": 1
@@ -49,6 +44,15 @@
       "scope": "plot"
      }
     ]
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_JADE",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    }
    ]
   }
  },

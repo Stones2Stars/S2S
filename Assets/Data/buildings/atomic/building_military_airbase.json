@@ -36,11 +36,6 @@
   "build": {
    "all": [
     {
-     "type": "BONUS_AIRCRAFT",
-     "scope": "city",
-     "connection": "trade|vicinity"
-    },
-    {
      "type": "TECH_AVIATION",
      "scope": "team"
     }
@@ -52,6 +47,15 @@
       "scope": "plot"
      }
     ]
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_AIRCRAFT",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    }
    ]
   }
  },

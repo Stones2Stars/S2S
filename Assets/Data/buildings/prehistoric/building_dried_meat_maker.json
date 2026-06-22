@@ -11,11 +11,6 @@
   "build": {
    "all": [
     {
-     "type": "BONUS_RAW_MEAT",
-     "scope": "city",
-     "connection": "trade|vicinity"
-    },
-    {
      "type": "TECH_DRYING",
      "scope": "team"
     }
@@ -45,6 +40,15 @@
       "scope": "plot"
      }
     ]
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_RAW_MEAT",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    }
    ]
   }
  },

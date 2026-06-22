@@ -13,11 +13,6 @@
   "build": {
    "all": [
     {
-     "type": "BONUS_BRICKS",
-     "scope": "city",
-     "connection": "trade|vicinity"
-    },
-    {
      "type": "BUILDING_GOVERNORS_PETS",
      "scope": "city"
     },
@@ -33,6 +28,15 @@
       "scope": "plot"
      }
     ]
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_BRICKS",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    }
    ]
   }
  },

@@ -16,13 +16,25 @@
   "build": {
    "all": [
     {
+     "type": "TECH_MASS_TRANSIT",
+     "scope": "team"
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
+    ]
+   ]
+  },
+  "operate": {
+   "all": [
+    {
      "type": "BONUS_AUTOMOBILES",
      "scope": "city",
      "connection": "trade|vicinity"
-    },
-    {
-     "type": "TECH_MASS_TRANSIT",
-     "scope": "team"
     }
    ],
    "any": [
@@ -36,12 +48,6 @@
       "type": "BONUS_BIOFUEL",
       "scope": "city",
       "connection": "trade|vicinity"
-     }
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
      }
     ]
    ]

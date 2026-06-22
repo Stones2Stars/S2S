@@ -15,11 +15,6 @@
   "build": {
    "all": [
     {
-     "type": "BONUS_BISON",
-     "scope": "city",
-     "connection": "trade|vicinity"
-    },
-    {
      "type": "TECH_MEGAFAUNA_DOMESTICATION",
      "scope": "team"
     }
@@ -77,6 +72,15 @@
       "scope": "plot"
      }
     ]
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_BISON",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    }
    ]
   }
  },

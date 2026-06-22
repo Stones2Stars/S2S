@@ -7,11 +7,6 @@
   "build": {
    "all": [
     {
-     "type": "BONUS_DOG",
-     "scope": "city",
-     "connection": "trade|vicinity"
-    },
-    {
      "type": "BUILDING_MILITARY_STANDARD_ANIMAL_MASCOT",
      "scope": "city"
     },
@@ -65,6 +60,15 @@
       "scope": "empire"
      }
     ]
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_DOG",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    }
    ]
   }
  },

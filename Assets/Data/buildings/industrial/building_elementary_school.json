@@ -33,16 +33,28 @@
   "build": {
    "all": [
     {
-     "type": "BONUS_BOOKS",
-     "scope": "city",
-     "connection": "trade|vicinity"
-    },
-    {
      "type": "TECH_COMPULSORY_EDUCATION",
      "scope": "team"
     },
     {
      "type": "BONUS_FURNITURE",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
+    ]
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_BOOKS",
      "scope": "city",
      "connection": "trade|vicinity"
     }
@@ -63,12 +75,6 @@
       "type": "BONUS_PRIME_TIMBER",
       "scope": "city",
       "connection": "trade|vicinity"
-     }
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
      }
     ]
    ]

@@ -11,7 +11,7 @@
   "build": {
    "all": [
     "HAS_RIVER",
-    "IS_FRESHWATER",
+    "HAS_FRESHWATER",
     "HAS_POWER",
     {
      "type": "BUILDING_HYDROGEN_GENERATOR",

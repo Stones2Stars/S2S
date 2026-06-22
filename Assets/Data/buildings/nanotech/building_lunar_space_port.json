@@ -12,11 +12,6 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BONUS_SYNTHETIC_RUBBER",
-     "scope": "city",
-     "connection": "trade|vicinity"
-    },
     "HAS_POWER",
     {
      "type": "BUILDING_LUNAR_LAUNCH_SITE",
@@ -40,6 +35,23 @@
    "any": [
     [
      {
+      "type": "MAPCATEGORY_LUNAR",
+      "scope": "plot"
+     }
+    ]
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_SYNTHETIC_RUBBER",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    }
+   ],
+   "any": [
+    [
+     {
       "type": "BONUS_STEEL_WARES",
       "scope": "city",
       "connection": "trade|vicinity"
@@ -53,12 +65,6 @@
       "type": "BONUS_ALUMINUM_WARES",
       "scope": "city",
       "connection": "trade|vicinity"
-     }
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_LUNAR",
-      "scope": "plot"
      }
     ]
    ]

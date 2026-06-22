@@ -33,6 +33,12 @@
       "type": "BUILDING_REPET",
       "scope": "city"
      }
+    ],
+    [
+     {
+      "type": "CIVILIZATION_NPC_NEANDERTHAL",
+      "scope": "empire"
+     }
     ]
    ]
   }

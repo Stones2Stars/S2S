@@ -16,13 +16,25 @@
   "build": {
    "all": [
     {
+     "type": "TECH_ORCHARDS",
+     "scope": "team"
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
+    ]
+   ]
+  },
+  "operate": {
+   "all": [
+    {
      "type": "BONUS_APPLE",
      "scope": "city",
      "connection": "vicinity"
-    },
-    {
-     "type": "TECH_ORCHARDS",
-     "scope": "team"
     }
    ],
    "any": [
@@ -31,12 +43,6 @@
       "type": "BONUS_TOBACCO",
       "scope": "city",
       "connection": "vicinity"
-     }
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
      }
     ]
    ]

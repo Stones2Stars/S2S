@@ -6,23 +6,11 @@
   "build": {
    "all": [
     {
-     "type": "BONUS_BRICKS",
-     "scope": "city",
-     "connection": "trade|vicinity"
-    },
-    {
      "type": "TECH_MONARCHY",
      "scope": "team"
     }
    ],
    "any": [
-    [
-     {
-      "type": "BONUS_MARBLE",
-      "scope": "city",
-      "connection": "trade|vicinity"
-     }
-    ],
     [
      {
       "type": "MAPCATEGORY_EARTH",
@@ -34,9 +22,23 @@
   "operate": {
    "all": [
     {
+     "type": "BONUS_BRICKS",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    {
      "type": "CIVIC_MONARCHY",
      "scope": "empire"
     }
+   ],
+   "any": [
+    [
+     {
+      "type": "BONUS_MARBLE",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     }
+    ]
    ]
   }
  },

@@ -6,23 +6,11 @@
   "build": {
    "all": [
     {
-     "type": "BONUS_JADE",
-     "scope": "city",
-     "connection": "trade|vicinity"
-    },
-    {
      "type": "TECH_SACRIFICE_CULT",
      "scope": "team"
     }
    ],
    "any": [
-    [
-     {
-      "type": "BONUS_SHANG",
-      "scope": "city",
-      "connection": "trade|vicinity"
-     }
-    ],
     [
      {
       "type": "BUILDING_JADE_IMPORTER",
@@ -37,6 +25,24 @@
      {
       "type": "MAPCATEGORY_EARTH",
       "scope": "plot"
+     }
+    ]
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_JADE",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "BONUS_SHANG",
+      "scope": "city",
+      "connection": "trade|vicinity"
      }
     ]
    ]

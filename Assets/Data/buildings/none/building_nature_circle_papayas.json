@@ -6,11 +6,6 @@
   "build": {
    "all": [
     {
-     "type": "BONUS_PAPAYA",
-     "scope": "city",
-     "connection": "vicinity"
-    },
-    {
      "type": "BUILDING_NATURE_CIRCLE_OF_POWER",
      "scope": "city"
     },
@@ -29,6 +24,11 @@
   },
   "operate": {
    "all": [
+    {
+     "type": "BONUS_PAPAYA",
+     "scope": "city",
+     "connection": "vicinity"
+    },
     {
      "type": "RELIGION_DRUIDIC_TRADITIONS",
      "scope": "city"

@@ -17,11 +17,6 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BONUS_STEEL_INGOTS",
-     "scope": "city",
-     "connection": "trade|vicinity"
-    },
     "HAS_RIVER",
     {
      "type": "BUILDING_COURTHOUSE",
@@ -30,6 +25,23 @@
     {
      "type": "TECH_COAST_GUARD",
      "scope": "team"
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
+    ]
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_STEEL_INGOTS",
+     "scope": "city",
+     "connection": "trade|vicinity"
     }
    ],
    "any": [
@@ -44,20 +56,19 @@
       "scope": "city",
       "connection": "trade|vicinity"
      }
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
     ]
    ]
   }
  },
  "commerce": {
-  "plot": {
-   "river": {
-    "flat": 4
+  "city": {
+   "plots": {
+    "flat": [
+     {
+      "value": 4,
+      "enabled": "HAS_RIVER"
+     }
+    ]
    }
   }
  },

@@ -16,11 +16,6 @@
   "build": {
    "all": [
     {
-     "type": "BONUS_SEA_LION_AND_SEAL",
-     "scope": "city",
-     "connection": "vicinity"
-    },
-    {
      "latitude": {
       "min": 40
      }
@@ -47,6 +42,15 @@
       "scope": "plot"
      }
     ]
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_SEA_LION_AND_SEAL",
+     "scope": "city",
+     "connection": "vicinity"
+    }
    ]
   }
  },

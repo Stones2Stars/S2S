@@ -22,11 +22,6 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BONUS_IRON_WARES",
-     "scope": "city",
-     "connection": "trade|vicinity"
-    },
     "HAS_RIVER",
     {
      "type": "TECH_PHYSICS",
@@ -34,18 +29,6 @@
     }
    ],
    "any": [
-    [
-     {
-      "type": "BONUS_WOOD",
-      "scope": "city",
-      "connection": "trade|vicinity"
-     },
-     {
-      "type": "BONUS_PRIME_TIMBER",
-      "scope": "city",
-      "connection": "trade|vicinity"
-     }
-    ],
     [
      {
       "type": "BUILDING_ROADS",
@@ -68,6 +51,29 @@
      {
       "type": "MAPCATEGORY_EARTH",
       "scope": "plot"
+     }
+    ]
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_IRON_WARES",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "BONUS_WOOD",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     },
+     {
+      "type": "BONUS_PRIME_TIMBER",
+      "scope": "city",
+      "connection": "trade|vicinity"
      }
     ]
    ]

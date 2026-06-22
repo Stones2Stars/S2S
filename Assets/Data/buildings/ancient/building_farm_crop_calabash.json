@@ -16,13 +16,25 @@
   "build": {
    "all": [
     {
+     "type": "TECH_IRRIGATION",
+     "scope": "team"
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
+    ]
+   ]
+  },
+  "operate": {
+   "all": [
+    {
      "type": "BONUS_SQUASH",
      "scope": "city",
      "connection": "vicinity"
-    },
-    {
-     "type": "TECH_IRRIGATION",
-     "scope": "team"
     }
    ],
    "any": [
@@ -31,12 +43,6 @@
       "type": "BONUS_MELONS",
       "scope": "city",
       "connection": "vicinity"
-     }
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
      }
     ]
    ]

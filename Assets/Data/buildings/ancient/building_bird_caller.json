@@ -6,17 +6,29 @@
   "build": {
    "all": [
     {
-     "type": "BONUS_WOODWIND_INSTRUMENTS",
-     "scope": "city",
-     "connection": "trade|vicinity"
-    },
-    {
      "type": "BUILDING_HUNTERS_CAMP",
      "scope": "city"
     },
     {
      "type": "TECH_POULTRY_DOMESTICATION",
      "scope": "team"
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
+    ]
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_WOODWIND_INSTRUMENTS",
+     "scope": "city",
+     "connection": "trade|vicinity"
     }
    ],
    "any": [
@@ -30,12 +42,6 @@
       "type": "BONUS_PARROTS",
       "scope": "city",
       "connection": "trade|vicinity"
-     }
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
      }
     ]
    ]

@@ -23,13 +23,6 @@
    "any": [
     [
      {
-      "type": "BONUS_SHEEP",
-      "scope": "city",
-      "connection": "vicinity"
-     }
-    ],
-    [
-     {
       "type": "BUILDING_FARM_ANIMAL_GOAT",
       "scope": "city"
      },
@@ -42,6 +35,17 @@
      {
       "type": "MAPCATEGORY_EARTH",
       "scope": "plot"
+     }
+    ]
+   ]
+  },
+  "operate": {
+   "any": [
+    [
+     {
+      "type": "BONUS_SHEEP",
+      "scope": "city",
+      "connection": "vicinity"
      }
     ]
    ]

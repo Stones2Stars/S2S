@@ -20,12 +20,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BONUS_WHALE",
-     "scope": "city",
-     "connection": "vicinity"
-    },
-    "IS_COASTAL",
+    "HAS_COAST",
     {
      "latitude": {
       "min": 40
@@ -43,13 +38,6 @@
    "any": [
     [
      {
-      "type": "BONUS_SEA_LION_AND_SEAL",
-      "scope": "city",
-      "connection": "vicinity"
-     }
-    ],
-    [
-     {
       "type": "TERRAIN_ICE",
       "scope": "plot"
      }
@@ -58,6 +46,24 @@
      {
       "type": "MAPCATEGORY_EARTH",
       "scope": "plot"
+     }
+    ]
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_WHALE",
+     "scope": "city",
+     "connection": "vicinity"
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "BONUS_SEA_LION_AND_SEAL",
+      "scope": "city",
+      "connection": "vicinity"
      }
     ]
    ]

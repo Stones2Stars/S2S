@@ -13,11 +13,6 @@
   "build": {
    "all": [
     {
-     "type": "BONUS_MAMMOTH",
-     "scope": "city",
-     "connection": "vicinity"
-    },
-    {
      "type": "TECH_TRACKING",
      "scope": "team"
     }
@@ -44,7 +39,22 @@
       "type": "MAPCATEGORY_EARTH",
       "scope": "plot"
      }
+    ],
+    [
+     {
+      "type": "CIVILIZATION_NPC_NEANDERTHAL",
+      "scope": "empire"
+     }
     ]
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_MAMMOTH",
+     "scope": "city",
+     "connection": "vicinity"
+    }
    ]
   }
  },

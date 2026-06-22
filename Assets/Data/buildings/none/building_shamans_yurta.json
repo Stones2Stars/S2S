@@ -14,11 +14,25 @@
  },
  "requires": {
   "build": {
+   "any": [
+    [
+     {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
+    ]
+   ]
+  },
+  "operate": {
    "all": [
     {
      "type": "BONUS_LEATHER",
      "scope": "city",
      "connection": "trade|vicinity"
+    },
+    {
+     "type": "RELIGION_TENGRIISM",
+     "scope": "city"
     }
    ],
    "any": [
@@ -33,21 +47,7 @@
       "scope": "city",
       "connection": "trade|vicinity"
      }
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
     ]
-   ]
-  },
-  "operate": {
-   "all": [
-    {
-     "type": "RELIGION_TENGRIISM",
-     "scope": "city"
-    }
    ]
   }
  },

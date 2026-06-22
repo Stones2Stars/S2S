@@ -16,12 +16,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BONUS_NANOTUBES",
-     "scope": "city",
-     "connection": "trade|vicinity"
-    },
-    "IS_COASTAL",
+    "HAS_COAST",
     "HAS_POWER",
     {
      "type": "BUILDING_FACTORY",
@@ -49,6 +44,15 @@
       "scope": "plot"
      }
     ]
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_NANOTUBES",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    }
    ]
   }
  },

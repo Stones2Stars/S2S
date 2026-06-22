@@ -7,11 +7,6 @@
   "build": {
    "all": [
     {
-     "type": "BONUS_STONE",
-     "scope": "city",
-     "connection": "trade|vicinity"
-    },
-    {
      "type": "POPULATION",
      "scope": "city",
      "min": 3
@@ -46,6 +41,15 @@
       "scope": "plot"
      }
     ]
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_STONE",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    }
    ]
   }
  },

@@ -6,11 +6,6 @@
   "build": {
    "all": [
     {
-     "type": "BONUS_LARD",
-     "scope": "city",
-     "connection": "trade|vicinity"
-    },
-    {
      "type": "BUILDING_LICHEN_GATHERER",
      "scope": "city"
     },
@@ -40,6 +35,15 @@
       "scope": "plot"
      }
     ]
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_LARD",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    }
    ]
   }
  },

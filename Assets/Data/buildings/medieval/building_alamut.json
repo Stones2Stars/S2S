@@ -24,18 +24,6 @@
    "any": [
     [
      {
-      "type": "BONUS_BRICKS",
-      "scope": "city",
-      "connection": "trade|vicinity"
-     },
-     {
-      "type": "BONUS_STONE",
-      "scope": "city",
-      "connection": "trade|vicinity"
-     }
-    ],
-    [
-     {
       "type": "TERRAIN_PEAK",
       "scope": "plot"
      }
@@ -50,6 +38,18 @@
   },
   "operate": {
    "any": [
+    [
+     {
+      "type": "BONUS_BRICKS",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     },
+     {
+      "type": "BONUS_STONE",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     }
+    ],
     [
      {
       "type": "CIVIC_DIVINE_CULT",

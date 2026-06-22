@@ -6,11 +6,6 @@
   "build": {
    "all": [
     {
-     "type": "BONUS_REFRIGERATORS",
-     "scope": "city",
-     "connection": "trade|vicinity"
-    },
-    {
      "latitude": {
       "min": 50
      }
@@ -41,6 +36,15 @@
       "scope": "plot"
      }
     ]
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_REFRIGERATORS",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    }
    ]
   }
  },

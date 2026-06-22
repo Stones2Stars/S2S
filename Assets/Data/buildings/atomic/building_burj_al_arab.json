@@ -29,11 +29,14 @@
   "world": 1
  },
  "commerce": {
-  "plot": {
-   "plotTypes": {
-    "PLOT_OCEAN": {
-     "flat": 2
-    }
+  "city": {
+   "plots": {
+    "flat": [
+     {
+      "value": 2,
+      "enabled": "IS_WATER"
+     }
+    ]
    }
   }
  },

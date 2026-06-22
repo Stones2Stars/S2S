@@ -20,11 +20,6 @@
   "build": {
    "all": [
     {
-     "type": "BONUS_CHEMICALS",
-     "scope": "city",
-     "connection": "trade|vicinity"
-    },
-    {
      "type": "BUILDING_COURTHOUSE",
      "scope": "city"
     },
@@ -44,6 +39,15 @@
       "scope": "plot"
      }
     ]
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_CHEMICALS",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    }
    ]
   }
  },

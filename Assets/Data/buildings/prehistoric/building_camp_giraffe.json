@@ -17,23 +17,11 @@
   "build": {
    "all": [
     {
-     "type": "BONUS_ELEPHANTS",
-     "scope": "city",
-     "connection": "vicinity"
-    },
-    {
      "type": "TECH_TRACKING",
      "scope": "team"
     }
    ],
    "any": [
-    [
-     {
-      "type": "BONUS_DEER",
-      "scope": "city",
-      "connection": "vicinity"
-     }
-    ],
     [
      {
       "type": "BUILDING_HUNTERS_CAMP",
@@ -48,6 +36,24 @@
      {
       "type": "MAPCATEGORY_EARTH",
       "scope": "plot"
+     }
+    ]
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_ELEPHANTS",
+     "scope": "city",
+     "connection": "vicinity"
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "BONUS_DEER",
+      "scope": "city",
+      "connection": "vicinity"
      }
     ]
    ]

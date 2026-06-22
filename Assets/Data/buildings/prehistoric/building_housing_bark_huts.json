@@ -14,11 +14,6 @@
   "build": {
    "all": [
     {
-     "type": "BONUS_BARK",
-     "scope": "city",
-     "connection": "trade|vicinity"
-    },
-    {
      "type": "TECH_BARK_WORKING",
      "scope": "team"
     }
@@ -48,6 +43,15 @@
       "scope": "plot"
      }
     ]
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_BARK",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    }
    ]
   }
  },

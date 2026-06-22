@@ -6,11 +6,6 @@
   "build": {
    "all": [
     {
-     "type": "BONUS_COW",
-     "scope": "city",
-     "connection": "vicinity"
-    },
-    {
      "type": "BUILDING_C_AC_NORTH_AMERICAN",
      "scope": "city"
     },
@@ -38,6 +33,11 @@
   },
   "operate": {
    "all": [
+    {
+     "type": "BONUS_COW",
+     "scope": "city",
+     "connection": "vicinity"
+    },
     {
      "type": "CIVIC_DEMOCRACY",
      "scope": "empire"

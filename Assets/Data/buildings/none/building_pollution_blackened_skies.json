@@ -54,13 +54,14 @@
  },
  "food": {
   "city": {
-   "flat": -20
-  },
-  "plot": {
-   "plotTypes": {
-    "PLOT_OCEAN": {
-     "flat": -10
-    }
+   "flat": -20,
+   "plots": {
+    "flat": [
+     {
+      "value": -10,
+      "enabled": "IS_WATER"
+     }
+    ]
    }
   }
  },

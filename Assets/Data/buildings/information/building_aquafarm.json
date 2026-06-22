@@ -48,7 +48,7 @@
  "requires": {
   "build": {
    "all": [
-    "IS_COASTAL",
+    "HAS_COAST",
     {
      "type": "TECH_AQUACULTURE",
      "scope": "team"
@@ -166,13 +166,14 @@
     "TERRAIN_LAKE_SHORE": {
      "flat": 2
     }
-   }
-  },
-  "plot": {
-   "plotTypes": {
-    "PLOT_OCEAN": {
-     "flat": 2
-    }
+   },
+   "plots": {
+    "flat": [
+     {
+      "value": 2,
+      "enabled": "IS_WATER"
+     }
+    ]
    }
   }
  },

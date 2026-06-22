@@ -22,7 +22,7 @@
        "TERRAIN_GREEN_MOON"
       ]
      },
-     "IS_HILLS",
+     "HAS_HILLS",
      {
       "bonus": [
        "BONUS_CARBON_DIOXIDE_ICE",

@@ -28,6 +28,12 @@
       "type": "BUILDING_AGROFOREST",
       "scope": "city"
      }
+    ],
+    [
+     {
+      "type": "CIVILIZATION_NPC_NEANDERTHAL",
+      "scope": "empire"
+     }
     ]
    ]
   }

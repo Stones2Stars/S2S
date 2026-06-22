@@ -6,11 +6,6 @@
   "build": {
    "all": [
     {
-     "type": "BONUS_SILVER_WARES",
-     "scope": "city",
-     "connection": "trade|vicinity"
-    },
-    {
      "type": "POPULATION",
      "scope": "city",
      "min": 7
@@ -35,6 +30,11 @@
   },
   "operate": {
    "all": [
+    {
+     "type": "BONUS_SILVER_WARES",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
     {
      "type": "CIVIC_VASSALAGE",
      "scope": "empire"

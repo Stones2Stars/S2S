@@ -18,11 +18,6 @@
   "build": {
    "all": [
     {
-     "type": "BONUS_GLASSWARE",
-     "scope": "city",
-     "connection": "trade|vicinity"
-    },
-    {
      "type": "TECH_MARINE_BIOLOGY",
      "scope": "team"
     }
@@ -34,6 +29,15 @@
       "scope": "plot"
      }
     ]
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_GLASSWARE",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    }
    ]
   }
  },

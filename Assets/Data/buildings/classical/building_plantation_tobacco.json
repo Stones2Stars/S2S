@@ -17,11 +17,6 @@
   "build": {
    "all": [
     {
-     "type": "BONUS_TOBACCO",
-     "scope": "city",
-     "connection": "vicinity"
-    },
-    {
      "type": "TECH_DRUG_TRADE",
      "scope": "team"
     }
@@ -33,6 +28,15 @@
       "scope": "plot"
      }
     ]
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_TOBACCO",
+     "scope": "city",
+     "connection": "vicinity"
+    }
    ]
   }
  },

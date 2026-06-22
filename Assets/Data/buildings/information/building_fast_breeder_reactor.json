@@ -15,11 +15,6 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BONUS_URANIUM",
-     "scope": "city",
-     "connection": "trade|vicinity"
-    },
     "HAS_RIVER",
     "HAS_POWER",
     {
@@ -34,15 +29,26 @@
    "any": [
     [
      {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
+    ]
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_URANIUM",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    }
+   ],
+   "any": [
+    [
+     {
       "type": "BONUS_HEAVY_WATER",
       "scope": "city",
       "connection": "trade|vicinity"
-     }
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
      }
     ]
    ]

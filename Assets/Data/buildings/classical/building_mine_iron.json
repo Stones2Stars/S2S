@@ -17,11 +17,6 @@
   "build": {
    "all": [
     {
-     "type": "BONUS_IRON_ORE",
-     "scope": "city",
-     "connection": "vicinity"
-    },
-    {
      "type": "BUILDING_MINING_CAMP",
      "scope": "city"
     },
@@ -37,6 +32,15 @@
       "scope": "plot"
      }
     ]
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_IRON_ORE",
+     "scope": "city",
+     "connection": "vicinity"
+    }
    ]
   }
  },

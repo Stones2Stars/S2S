@@ -6,13 +6,25 @@
   "build": {
    "all": [
     {
+     "type": "TECH_FASCISM",
+     "scope": "team"
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
+    ]
+   ]
+  },
+  "operate": {
+   "all": [
+    {
      "type": "BONUS_FURNITURE",
      "scope": "city",
      "connection": "trade|vicinity"
-    },
-    {
-     "type": "TECH_FASCISM",
-     "scope": "team"
     }
    ],
    "any": [
@@ -28,16 +40,6 @@
       "connection": "trade|vicinity"
      }
     ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
-   ]
-  },
-  "operate": {
-   "any": [
     [
      {
       "type": "CIVIC_JUNTA",

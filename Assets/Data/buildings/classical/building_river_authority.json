@@ -40,9 +40,14 @@
   }
  },
  "commerce": {
-  "plot": {
-   "river": {
-    "flat": 2
+  "city": {
+   "plots": {
+    "flat": [
+     {
+      "value": 2,
+      "enabled": "HAS_RIVER"
+     }
+    ]
    }
   }
  },

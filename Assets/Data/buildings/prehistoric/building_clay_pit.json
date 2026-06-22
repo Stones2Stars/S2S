@@ -15,7 +15,7 @@
  "requires": {
   "build": {
    "all": [
-    "IS_FRESHWATER",
+    "HAS_FRESHWATER",
     {
      "type": "TECH_NATURAL_PIGMENTS",
      "scope": "team"
@@ -34,6 +34,12 @@
      },
      {
       "HAS_FEATURE": "FEATURE_FLOOD_PLAINS"
+     }
+    ],
+    [
+     {
+      "type": "CIVILIZATION_NPC_NEANDERTHAL",
+      "scope": "empire"
      }
     ]
    ]

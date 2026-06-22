@@ -27,60 +27,84 @@
      "min": 25000,
      "max": 2000000
     }
-   ]
+   ],
+   "disabled": {
+    "all": [
+     {
+      "type": "PROPERTY_EDUCATION",
+      "scope": "city",
+      "min": 30000,
+      "max": 2000000
+     },
+     {
+      "type": "BUILDING_EDUCATION_WISE",
+      "scope": "city"
+     }
+    ]
+   }
   }
  },
  "production": {
   "city": {
-   "percent": 5
+   "percent": 55
   }
  },
  "commerce": {
   "city": {
-   "percent": 5
+   "percent": 55
   }
  },
  "research": {
   "city": {
-   "flat": 6,
-   "percent": 5
+   "flat": 36,
+   "percent": 55
+  }
+ },
+ "freeSpecialists": {
+  "city": {
+   "any": 5
   }
  },
  "greatPeopleRate": {
   "city": {
-   "percent": 21
+   "percent": 121
+  }
+ },
+ "greatGeneralRate": {
+  "city": {
+   "percent": 5
   }
  },
  "warWeariness": {
   "city": {
-   "percent": 12
+   "percent": 62
   }
  },
  "tradeRoutes": {
   "city": {
    "modifier": {
-    "percent": 11
+    "percent": 66
    }
   }
  },
  "populationGrowthRate": {
   "city": {
-   "percent": 10
+   "percent": 110
   }
  },
  "PROPERTY_FLAMMABILITY": {
   "city": {
-   "flat": -6
+   "flat": -36
   }
  },
  "PROPERTY_CRIME": {
   "city": {
-   "flat": -11
+   "flat": -66
   }
  },
  "PROPERTY_DISEASE": {
   "city": {
-   "flat": -11
+   "flat": -66
   }
  },
  "world": {

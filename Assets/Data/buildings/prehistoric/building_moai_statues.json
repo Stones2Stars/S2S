@@ -5,12 +5,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BONUS_STONE",
-     "scope": "city",
-     "connection": "trade|vicinity"
-    },
-    "IS_COASTAL",
+    "HAS_COAST",
     {
      "type": "TECH_MEGALITH_CONSTRUCTION",
      "scope": "team"
@@ -24,17 +19,29 @@
      }
     ]
    ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_STONE",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    }
+   ]
   }
  },
  "allowed": {
   "world": 1
  },
  "production": {
-  "plot": {
-   "plotTypes": {
-    "PLOT_OCEAN": {
-     "flat": 1
-    }
+  "city": {
+   "plots": {
+    "flat": [
+     {
+      "value": 1,
+      "enabled": "IS_WATER"
+     }
+    ]
    }
   }
  },

@@ -6,11 +6,6 @@
   "build": {
    "all": [
     {
-     "type": "BONUS_MARBLE",
-     "scope": "city",
-     "connection": "trade|vicinity"
-    },
-    {
      "type": "BUILDING_HELLENIC_PANTHEON",
      "scope": "city"
     },
@@ -38,6 +33,11 @@
   },
   "operate": {
    "all": [
+    {
+     "type": "BONUS_MARBLE",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
     {
      "type": "RELIGION_HELLENISM",
      "scope": "city"

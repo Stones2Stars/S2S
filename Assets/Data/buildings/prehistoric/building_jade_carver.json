@@ -12,11 +12,6 @@
   "build": {
    "all": [
     {
-     "type": "BONUS_JADE",
-     "scope": "city",
-     "connection": "vicinity"
-    },
-    {
      "type": "TECH_CARVING",
      "scope": "team"
     }
@@ -28,6 +23,15 @@
       "scope": "plot"
      }
     ]
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_JADE",
+     "scope": "city",
+     "connection": "vicinity"
+    }
    ]
   }
  },

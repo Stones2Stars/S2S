@@ -50,12 +50,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BONUS_ROPE",
-     "scope": "city",
-     "connection": "trade|vicinity"
-    },
-    "IS_COASTAL",
+    "HAS_COAST",
     {
      "type": "BUILDING_CARPENTER",
      "scope": "city"
@@ -68,15 +63,32 @@
    "any": [
     [
      {
-      "type": "BONUS_SAILS",
-      "scope": "city",
-      "connection": "trade|vicinity"
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
      }
     ],
     [
      {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
+      "type": "CIVILIZATION_NPC_NEANDERTHAL",
+      "scope": "empire"
+     }
+    ]
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_ROPE",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "BONUS_SAILS",
+      "scope": "city",
+      "connection": "trade|vicinity"
      }
     ]
    ]

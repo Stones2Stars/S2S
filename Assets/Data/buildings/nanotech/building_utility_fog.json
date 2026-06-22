@@ -12,11 +12,6 @@
   "build": {
    "all": [
     {
-     "type": "BONUS_NANOBOTS",
-     "scope": "city",
-     "connection": "trade|vicinity"
-    },
-    {
      "type": "TECH_NANOROBOTICS",
      "scope": "team"
     }
@@ -28,6 +23,15 @@
       "scope": "plot"
      }
     ]
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_NANOBOTS",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    }
    ]
   }
  },

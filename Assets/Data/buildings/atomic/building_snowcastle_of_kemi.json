@@ -6,11 +6,6 @@
   "build": {
    "all": [
     {
-     "type": "BONUS_FURNITURE",
-     "scope": "city",
-     "connection": "trade|vicinity"
-    },
-    {
      "latitude": {
       "min": 55
      }
@@ -37,6 +32,15 @@
       "scope": "plot"
      }
     ]
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_FURNITURE",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    }
    ]
   }
  },

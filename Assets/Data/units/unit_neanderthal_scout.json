@@ -17,6 +17,14 @@
      "type": "TECH_TRAILS",
      "scope": "team"
     }
+   ],
+   "any": [
+    [
+     {
+      "type": "CIVILIZATION_NPC_NEANDERTHAL",
+      "scope": "empire"
+     }
+    ]
    ]
   }
  },

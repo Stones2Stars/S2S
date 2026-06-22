@@ -6,11 +6,6 @@
   "build": {
    "all": [
     {
-     "type": "BONUS_HUMAN_MOD_INFORMATION_BASED",
-     "scope": "city",
-     "connection": "trade|vicinity"
-    },
-    {
      "type": "TECH_LUMINAL_BEINGS",
      "scope": "team"
     }
@@ -22,6 +17,15 @@
       "scope": "plot"
      }
     ]
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_HUMAN_MOD_INFORMATION_BASED",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    }
    ]
   }
  },

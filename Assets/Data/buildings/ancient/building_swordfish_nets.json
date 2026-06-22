@@ -16,6 +16,22 @@
   "build": {
    "all": [
     {
+     "type": "TECH_SAILING",
+     "scope": "team"
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
+    ]
+   ]
+  },
+  "operate": {
+   "all": [
+    {
      "type": "BONUS_FISHING_NETS",
      "scope": "city",
      "connection": "trade|vicinity"
@@ -24,10 +40,6 @@
      "type": "BONUS_WHALE",
      "scope": "city",
      "connection": "vicinity"
-    },
-    {
-     "type": "TECH_SAILING",
-     "scope": "team"
     }
    ],
    "any": [
@@ -36,12 +48,6 @@
       "type": "BONUS_LOBSTER",
       "scope": "city",
       "connection": "vicinity"
-     }
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
      }
     ]
    ]

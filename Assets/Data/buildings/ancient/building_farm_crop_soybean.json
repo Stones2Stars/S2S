@@ -11,13 +11,25 @@
   "build": {
    "all": [
     {
+     "type": "TECH_AGRICULTURE",
+     "scope": "team"
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
+    ]
+   ]
+  },
+  "operate": {
+   "all": [
+    {
      "type": "BONUS_WHEAT",
      "scope": "city",
      "connection": "vicinity"
-    },
-    {
-     "type": "TECH_AGRICULTURE",
-     "scope": "team"
     }
    ],
    "any": [
@@ -26,12 +38,6 @@
       "type": "BONUS_RICE",
       "scope": "city",
       "connection": "vicinity"
-     }
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
      }
     ]
    ]

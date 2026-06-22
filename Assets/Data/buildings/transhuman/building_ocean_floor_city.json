@@ -10,12 +10,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BONUS_SUPERSTRONG_ALLOYS",
-     "scope": "city",
-     "connection": "trade|vicinity"
-    },
-    "IS_COASTAL",
+    "HAS_COAST",
     {
      "type": "TECH_ABYSS_COLONIZATION",
      "scope": "team"
@@ -28,6 +23,15 @@
       "scope": "plot"
      }
     ]
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_SUPERSTRONG_ALLOYS",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    }
    ]
   }
  },

@@ -16,23 +16,11 @@
   "build": {
    "all": [
     {
-     "type": "BONUS_DYE",
-     "scope": "city",
-     "connection": "trade|vicinity"
-    },
-    {
      "type": "TECH_TATTOOS",
      "scope": "team"
     }
    ],
    "any": [
-    [
-     {
-      "type": "BONUS_BONE",
-      "scope": "city",
-      "connection": "trade|vicinity"
-     }
-    ],
     [
      {
       "type": "BUILDING_STORAGE_PIT",
@@ -63,6 +51,30 @@
      {
       "type": "MAPCATEGORY_EARTH",
       "scope": "plot"
+     }
+    ],
+    [
+     {
+      "type": "CIVILIZATION_NPC_NEANDERTHAL",
+      "scope": "empire"
+     }
+    ]
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_DYE",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "BONUS_BONE",
+      "scope": "city",
+      "connection": "trade|vicinity"
      }
     ]
    ]

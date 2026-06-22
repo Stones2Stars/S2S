@@ -6,28 +6,11 @@
   "build": {
    "all": [
     {
-     "type": "BONUS_BASKETS",
-     "scope": "city",
-     "connection": "trade|vicinity"
-    },
-    {
      "type": "TECH_ARITHMETIC",
      "scope": "team"
     }
    ],
    "any": [
-    [
-     {
-      "type": "BONUS_ROPE",
-      "scope": "city",
-      "connection": "trade|vicinity"
-     },
-     {
-      "type": "BONUS_VINES",
-      "scope": "city",
-      "connection": "trade|vicinity"
-     }
-    ],
     [
      {
       "type": "BUILDING_TRAVOIS_MAKER",
@@ -60,6 +43,29 @@
      {
       "type": "MAPCATEGORY_EARTH",
       "scope": "plot"
+     }
+    ]
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_BASKETS",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "BONUS_ROPE",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     },
+     {
+      "type": "BONUS_VINES",
+      "scope": "city",
+      "connection": "trade|vicinity"
      }
     ]
    ]

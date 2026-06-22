@@ -6,13 +6,25 @@
   "build": {
    "all": [
     {
+     "type": "TECH_IMMORTALITY",
+     "scope": "team"
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
+    ]
+   ]
+  },
+  "operate": {
+   "all": [
+    {
      "type": "BONUS_HUMAN_MOD_TRANSAPIENT",
      "scope": "city",
      "connection": "trade|vicinity"
-    },
-    {
-     "type": "TECH_IMMORTALITY",
-     "scope": "team"
     }
    ],
    "any": [
@@ -21,12 +33,6 @@
       "type": "BONUS_HUMAN_MOD_INDEFINITE_LIFESPAN",
       "scope": "city",
       "connection": "trade|vicinity"
-     }
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
      }
     ]
    ]

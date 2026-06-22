@@ -6,11 +6,6 @@
   "build": {
    "all": [
     {
-     "type": "BONUS_QUANTUM_DOTS",
-     "scope": "city",
-     "connection": "trade|vicinity"
-    },
-    {
      "type": "TECH_ORGANIC_PHOTONICS",
      "scope": "team"
     }
@@ -40,6 +35,15 @@
       "scope": "plot"
      }
     ]
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_QUANTUM_DOTS",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    }
    ]
   }
  },

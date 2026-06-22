@@ -6,11 +6,6 @@
   "build": {
    "all": [
     {
-     "type": "BONUS_CONSCIOUS_MATERIALS",
-     "scope": "city",
-     "connection": "trade|vicinity"
-    },
-    {
      "type": "BUILDING_INTERSTELLAR_DYSON_SPHERE",
      "scope": "city"
     },
@@ -34,6 +29,15 @@
       "scope": "plot"
      }
     ]
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_CONSCIOUS_MATERIALS",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    }
    ]
   }
  },

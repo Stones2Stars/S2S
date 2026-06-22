@@ -17,11 +17,6 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BONUS_ATOMICALLY_PRECISE_ALLOYS",
-     "scope": "city",
-     "connection": "trade|vicinity"
-    },
     "HAS_POWER",
     {
      "type": "BUILDING_STRATOSPHERIC_TOWER",
@@ -39,6 +34,15 @@
       "scope": "plot"
      }
     ]
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_ATOMICALLY_PRECISE_ALLOYS",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    }
    ]
   }
  },

@@ -6,15 +6,27 @@
   "build": {
    "all": [
     {
-     "type": "BONUS_FURNITURE",
-     "scope": "city",
-     "connection": "trade|vicinity"
-    },
-    {
      "type": "TECH_THEOLOGY",
      "scope": "team"
     },
     "STATE_RELIGION_IN_CITY"
+   ],
+   "any": [
+    [
+     {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
+    ]
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_FURNITURE",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    }
    ],
    "any": [
     [
@@ -34,16 +46,6 @@
       "connection": "trade|vicinity"
      }
     ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
-   ]
-  },
-  "operate": {
-   "any": [
     [
      {
       "type": "CIVIC_STATE_CHURCH",

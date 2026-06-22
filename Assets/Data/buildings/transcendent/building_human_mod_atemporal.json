@@ -6,11 +6,6 @@
   "build": {
    "all": [
     {
-     "type": "BONUS_HUMAN_MOD_HIGH_DIMENSIONAL",
-     "scope": "city",
-     "connection": "trade|vicinity"
-    },
-    {
      "type": "TECH_ATEMPORAL_BEINGS",
      "scope": "team"
     }
@@ -22,6 +17,15 @@
       "scope": "plot"
      }
     ]
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_HUMAN_MOD_HIGH_DIMENSIONAL",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    }
    ]
   }
  },

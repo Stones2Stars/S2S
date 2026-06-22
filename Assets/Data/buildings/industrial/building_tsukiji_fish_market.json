@@ -6,7 +6,7 @@
  "requires": {
   "build": {
    "all": [
-    "IS_COASTAL",
+    "HAS_COAST",
     {
      "type": "TECH_REFRIGERATION",
      "scope": "team"

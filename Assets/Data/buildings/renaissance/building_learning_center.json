@@ -6,11 +6,6 @@
   "build": {
    "all": [
     {
-     "type": "BONUS_BOOKS",
-     "scope": "city",
-     "connection": "trade|vicinity"
-    },
-    {
      "type": "TECH_CORPORATION",
      "scope": "team"
     }
@@ -40,6 +35,11 @@
   },
   "operate": {
    "all": [
+    {
+     "type": "BONUS_BOOKS",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
     {
      "type": "CIVIC_CORPORATE",
      "scope": "empire"

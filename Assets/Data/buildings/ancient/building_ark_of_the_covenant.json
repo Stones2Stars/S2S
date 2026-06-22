@@ -6,11 +6,6 @@
   "build": {
    "all": [
     {
-     "type": "BONUS_GOLD_WARES",
-     "scope": "city",
-     "connection": "trade|vicinity"
-    },
-    {
      "type": "TECH_PRIESTHOOD",
      "scope": "team"
     },
@@ -22,13 +17,6 @@
    "any": [
     [
      {
-      "type": "BONUS_PRIME_TIMBER",
-      "scope": "city",
-      "connection": "trade|vicinity"
-     }
-    ],
-    [
-     {
       "type": "MAPCATEGORY_EARTH",
       "scope": "plot"
      }
@@ -38,9 +26,23 @@
   "operate": {
    "all": [
     {
+     "type": "BONUS_GOLD_WARES",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    {
      "type": "RELIGION_JUDAISM",
      "scope": "city"
     }
+   ],
+   "any": [
+    [
+     {
+      "type": "BONUS_PRIME_TIMBER",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     }
+    ]
    ]
   }
  },

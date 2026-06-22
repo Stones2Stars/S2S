@@ -11,13 +11,43 @@
   "build": {
    "all": [
     {
+     "type": "TECH_MUMMIFICATION",
+     "scope": "team"
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "BUILDING_BURIAL_TRADITION_CAVE",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_BURIAL_TRADITION_EARTH",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_BURIAL_TRADITION_SKY",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_BURIAL_TRADITION_SEA",
+      "scope": "city"
+     }
+    ],
+    [
+     {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
+    ]
+   ]
+  },
+  "operate": {
+   "all": [
+    {
      "type": "BONUS_CLOTH",
      "scope": "city",
      "connection": "trade|vicinity"
-    },
-    {
-     "type": "TECH_MUMMIFICATION",
-     "scope": "team"
     }
    ],
    "any": [
@@ -46,30 +76,6 @@
       "type": "BONUS_INCENSE",
       "scope": "city",
       "connection": "trade|vicinity"
-     }
-    ],
-    [
-     {
-      "type": "BUILDING_BURIAL_TRADITION_CAVE",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_BURIAL_TRADITION_EARTH",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_BURIAL_TRADITION_SKY",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_BURIAL_TRADITION_SEA",
-      "scope": "city"
-     }
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
      }
     ]
    ]

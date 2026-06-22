@@ -21,15 +21,19 @@
    "any": [
     [
      {
+      "type": "MAPCATEGORY_INTERSTELLAR",
+      "scope": "plot"
+     }
+    ]
+   ]
+  },
+  "operate": {
+   "any": [
+    [
+     {
       "type": "BONUS_SPACEPUNK",
       "scope": "city",
       "connection": "trade|vicinity"
-     }
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_INTERSTELLAR",
-      "scope": "plot"
      }
     ]
    ]

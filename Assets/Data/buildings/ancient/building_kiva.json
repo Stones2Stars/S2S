@@ -6,23 +6,11 @@
   "build": {
    "all": [
     {
-     "type": "BONUS_STONE",
-     "scope": "city",
-     "connection": "trade|vicinity"
-    },
-    {
      "type": "TECH_MASONRY",
      "scope": "team"
     }
    ],
    "any": [
-    [
-     {
-      "type": "BONUS_BRICKS",
-      "scope": "city",
-      "connection": "trade|vicinity"
-     }
-    ],
     [
      {
       "type": "BUILDING_HOUSING_PUEBLOS",
@@ -86,9 +74,23 @@
   "operate": {
    "all": [
     {
+     "type": "BONUS_STONE",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    {
      "type": "CIVIC_FOLKLORE",
      "scope": "empire"
     }
+   ],
+   "any": [
+    [
+     {
+      "type": "BONUS_BRICKS",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     }
+    ]
    ]
   }
  },

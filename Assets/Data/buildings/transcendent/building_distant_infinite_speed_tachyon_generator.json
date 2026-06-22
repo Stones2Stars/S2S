@@ -12,11 +12,6 @@
   "build": {
    "all": [
     {
-     "type": "BONUS_CHRONOTON",
-     "scope": "city",
-     "connection": "trade|vicinity"
-    },
-    {
      "type": "BUILDING_DISTANT_COMPUTRONIUM_FILAMENT",
      "scope": "city"
     },
@@ -32,6 +27,15 @@
       "scope": "plot"
      }
     ]
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_CHRONOTON",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    }
    ]
   }
  },

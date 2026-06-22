@@ -17,11 +17,6 @@
   "build": {
    "all": [
     {
-     "type": "BONUS_COPPER_WARES",
-     "scope": "city",
-     "connection": "trade|vicinity"
-    },
-    {
      "type": "TECH_TELEGRAPH",
      "scope": "team"
     }
@@ -47,6 +42,15 @@
       "scope": "plot"
      }
     ]
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_COPPER_WARES",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    }
    ]
   }
  },

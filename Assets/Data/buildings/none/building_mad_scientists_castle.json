@@ -6,11 +6,6 @@
   "build": {
    "all": [
     {
-     "type": "BONUS_STEAMPUNK",
-     "scope": "city",
-     "connection": "trade|vicinity"
-    },
-    {
      "type": "POPULATION",
      "scope": "city",
      "min": 3
@@ -18,6 +13,23 @@
     {
      "type": "TECH_STEAMPUNK",
      "scope": "team"
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
+    ]
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_STEAMPUNK",
+     "scope": "city",
+     "connection": "trade|vicinity"
     }
    ],
    "any": [
@@ -33,16 +45,6 @@
       "connection": "trade|vicinity"
      }
     ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
-   ]
-  },
-  "operate": {
-   "any": [
     [
      {
       "type": "CIVIC_DESPOTISM",

@@ -40,6 +40,12 @@
       "type": "BUILDING_HEALTHCARE_MEGACOMPLEX",
       "scope": "city"
      }
+    ],
+    [
+     {
+      "type": "CIVILIZATION_NPC_NEANDERTHAL",
+      "scope": "empire"
+     }
     ]
    ]
   }

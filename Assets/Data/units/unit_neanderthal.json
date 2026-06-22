@@ -17,6 +17,14 @@
      "type": "TECH_HARD_HAMMER_PERCUSSION",
      "scope": "team"
     }
+   ],
+   "any": [
+    [
+     {
+      "type": "CIVILIZATION_NPC_NEANDERTHAL",
+      "scope": "empire"
+     }
+    ]
    ]
   }
  },

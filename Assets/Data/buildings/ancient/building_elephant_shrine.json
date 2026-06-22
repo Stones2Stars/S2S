@@ -6,11 +6,6 @@
   "build": {
    "all": [
     {
-     "type": "BONUS_ELEPHANTS",
-     "scope": "city",
-     "connection": "trade|vicinity"
-    },
-    {
      "type": "TECH_REINCARNATION",
      "scope": "team"
     },
@@ -30,6 +25,11 @@
   },
   "operate": {
    "all": [
+    {
+     "type": "BONUS_ELEPHANTS",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
     {
      "type": "RELIGION_HINDUISM",
      "scope": "city"

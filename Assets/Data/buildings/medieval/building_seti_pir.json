@@ -6,11 +6,6 @@
   "build": {
    "all": [
     {
-     "type": "BONUS_BRICKS",
-     "scope": "city",
-     "connection": "trade|vicinity"
-    },
-    {
      "type": "TECH_FEUDALISM",
      "scope": "team"
     },
@@ -29,6 +24,11 @@
   },
   "operate": {
    "all": [
+    {
+     "type": "BONUS_BRICKS",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
     {
      "type": "RELIGION_ZOROASTRIANISM",
      "scope": "city"

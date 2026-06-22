@@ -6,11 +6,6 @@
   "build": {
    "all": [
     {
-     "type": "BONUS_CHEMICALS",
-     "scope": "city",
-     "connection": "trade|vicinity"
-    },
-    {
      "type": "BUILDING_INDUSTRIAL_PARK",
      "scope": "city"
     },
@@ -26,6 +21,15 @@
       "scope": "plot"
      }
     ]
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_CHEMICALS",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    }
    ]
   }
  },

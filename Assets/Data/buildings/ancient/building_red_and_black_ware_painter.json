@@ -6,11 +6,6 @@
   "build": {
    "all": [
     {
-     "type": "BONUS_FINE_CLAY",
-     "scope": "city",
-     "connection": "vicinity"
-    },
-    {
      "type": "BUILDING_C_L_EUROPEAN",
      "scope": "city"
     },
@@ -48,6 +43,15 @@
       "scope": "plot"
      }
     ]
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_FINE_CLAY",
+     "scope": "city",
+     "connection": "vicinity"
+    }
    ]
   }
  },

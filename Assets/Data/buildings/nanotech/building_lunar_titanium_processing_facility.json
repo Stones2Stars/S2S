@@ -5,16 +5,6 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BONUS_CEMENT",
-     "scope": "city",
-     "connection": "trade|vicinity"
-    },
-    {
-     "type": "BONUS_TITANIUM_ORE",
-     "scope": "city",
-     "connection": "vicinity"
-    },
     "HAS_POWER",
     {
      "type": "BUILDING_LUNAR_ROCK_QUARRY",
@@ -32,6 +22,20 @@
       "scope": "plot"
      }
     ]
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_CEMENT",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    {
+     "type": "BONUS_TITANIUM_ORE",
+     "scope": "city",
+     "connection": "vicinity"
+    }
    ]
   }
  },

@@ -16,11 +16,6 @@
   "build": {
    "all": [
     {
-     "type": "BONUS_CARCASS",
-     "scope": "city",
-     "connection": "trade|vicinity"
-    },
-    {
      "type": "BUILDING_SLAUGHTERHOUSE",
      "scope": "city"
     },
@@ -50,6 +45,15 @@
       "scope": "plot"
      }
     ]
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_CARCASS",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    }
    ]
   }
  },

@@ -22,13 +22,35 @@
   "build": {
    "all": [
     {
+     "type": "TECH_MILITARY_TRADITION",
+     "scope": "team"
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "BUILDING_TRADING_POST",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_SHOPPING_DISTRICT",
+      "scope": "city"
+     }
+    ],
+    [
+     {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
+    ]
+   ]
+  },
+  "operate": {
+   "all": [
+    {
      "type": "BONUS_DYE",
      "scope": "city",
      "connection": "trade|vicinity"
-    },
-    {
-     "type": "TECH_MILITARY_TRADITION",
-     "scope": "team"
     }
    ],
    "any": [
@@ -47,22 +69,6 @@
       "type": "BONUS_ALUMINUM_WARES",
       "scope": "city",
       "connection": "trade|vicinity"
-     }
-    ],
-    [
-     {
-      "type": "BUILDING_TRADING_POST",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_SHOPPING_DISTRICT",
-      "scope": "city"
-     }
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
      }
     ]
    ]

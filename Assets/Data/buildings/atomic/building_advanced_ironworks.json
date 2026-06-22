@@ -27,11 +27,6 @@
   "build": {
    "all": [
     {
-     "type": "BONUS_IRON_ORE",
-     "scope": "city",
-     "connection": "trade|vicinity"
-    },
-    {
      "type": "BUILDING_ASSEMBLY_PLANT",
      "scope": "city"
     },
@@ -47,6 +42,15 @@
       "scope": "plot"
      }
     ]
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_IRON_ORE",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    }
    ]
   }
  },

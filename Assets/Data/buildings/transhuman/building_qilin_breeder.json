@@ -6,11 +6,6 @@
   "build": {
    "all": [
     {
-     "type": "BONUS_ORGANIC_COMPUTERS",
-     "scope": "city",
-     "connection": "trade|vicinity"
-    },
-    {
      "type": "POPULATION",
      "scope": "city",
      "min": 12
@@ -56,6 +51,15 @@
     {
      "type": "BUILDING_RAINBOW_SERPENT_BREEDER",
      "scope": "city"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_ORGANIC_COMPUTERS",
+     "scope": "city",
+     "connection": "trade|vicinity"
     }
    ]
   }

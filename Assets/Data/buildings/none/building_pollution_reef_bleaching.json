@@ -25,11 +25,14 @@
   }
  },
  "food": {
-  "plot": {
-   "plotTypes": {
-    "PLOT_OCEAN": {
-     "flat": -5
-    }
+  "city": {
+   "plots": {
+    "flat": [
+     {
+      "value": -5,
+      "enabled": "IS_WATER"
+     }
+    ]
    }
   }
  },

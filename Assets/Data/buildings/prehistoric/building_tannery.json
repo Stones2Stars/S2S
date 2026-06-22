@@ -16,23 +16,11 @@
   "build": {
    "all": [
     {
-     "type": "BONUS_HIDE",
-     "scope": "city",
-     "connection": "trade|vicinity"
-    },
-    {
      "type": "TECH_TANNING",
      "scope": "team"
     }
    ],
    "any": [
-    [
-     {
-      "type": "BONUS_TANNIN",
-      "scope": "city",
-      "connection": "trade|vicinity"
-     }
-    ],
     [
      {
       "type": "BUILDING_DRYING_FRAME",
@@ -47,6 +35,30 @@
      {
       "type": "MAPCATEGORY_EARTH",
       "scope": "plot"
+     }
+    ],
+    [
+     {
+      "type": "CIVILIZATION_NPC_NEANDERTHAL",
+      "scope": "empire"
+     }
+    ]
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_HIDE",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "BONUS_TANNIN",
+      "scope": "city",
+      "connection": "trade|vicinity"
      }
     ]
    ]

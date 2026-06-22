@@ -13,13 +13,6 @@
    "any": [
     [
      {
-      "type": "BONUS_AUTOMOBILES",
-      "scope": "city",
-      "connection": "trade|vicinity"
-     }
-    ],
-    [
-     {
       "type": "MAPCATEGORY_EARTH",
       "scope": "plot"
      }
@@ -27,6 +20,15 @@
    ]
   },
   "operate": {
+   "any": [
+    [
+     {
+      "type": "BONUS_AUTOMOBILES",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     }
+    ]
+   ],
    "all": [
     {
      "type": "PROPERTY_CRIME",

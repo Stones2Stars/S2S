@@ -32,9 +32,14 @@
   }
  },
  "food": {
-  "plot": {
-   "river": {
-    "flat": 1
+  "city": {
+   "plots": {
+    "flat": [
+     {
+      "value": 1,
+      "enabled": "HAS_RIVER"
+     }
+    ]
    }
   }
  },

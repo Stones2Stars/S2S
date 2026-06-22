@@ -18,11 +18,6 @@
   "build": {
    "all": [
     {
-     "type": "BONUS_MUREX",
-     "scope": "city",
-     "connection": "vicinity"
-    },
-    {
      "type": "TECH_TRAP_FISHING",
      "scope": "team"
     }
@@ -34,6 +29,15 @@
       "scope": "plot"
      }
     ]
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_MUREX",
+     "scope": "city",
+     "connection": "vicinity"
+    }
    ]
   }
  },

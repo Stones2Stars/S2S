@@ -18,7 +18,7 @@
  "requires": {
   "build": {
    "all": [
-    "IS_COASTAL",
+    "HAS_COAST",
     {
      "type": "BUILDING_FOLKLORE_E_SEA",
      "scope": "city"

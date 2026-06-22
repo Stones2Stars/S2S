@@ -10,7 +10,7 @@
  "requires": {
   "build": {
    "all": [
-    "IS_COASTAL",
+    "HAS_COAST",
     {
      "type": "BUILDING_SHOPPING_DISTRICT",
      "scope": "city"

@@ -43,6 +43,12 @@
       "type": "HERITAGE_FOLKLORE_VIPER_PIT",
       "scope": "empire"
      }
+    ],
+    [
+     {
+      "type": "CIVILIZATION_NPC_NEANDERTHAL",
+      "scope": "empire"
+     }
     ]
    ]
   }

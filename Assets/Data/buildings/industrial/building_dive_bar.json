@@ -26,11 +26,6 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BONUS_ALCOHOL",
-     "scope": "city",
-     "connection": "trade|vicinity"
-    },
     "HAS_POWER",
     {
      "type": "TECH_REFRIGERATION",
@@ -54,6 +49,15 @@
       "scope": "plot"
      }
     ]
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_ALCOHOL",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    }
    ]
   }
  },

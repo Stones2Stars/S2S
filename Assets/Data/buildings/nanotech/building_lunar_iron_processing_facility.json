@@ -5,16 +5,6 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BONUS_CEMENT",
-     "scope": "city",
-     "connection": "trade|vicinity"
-    },
-    {
-     "type": "BONUS_IRON_ORE",
-     "scope": "city",
-     "connection": "vicinity"
-    },
     "HAS_POWER",
     {
      "type": "BUILDING_LUNAR_ROCK_QUARRY",
@@ -28,15 +18,31 @@
    "any": [
     [
      {
+      "type": "MAPCATEGORY_LUNAR",
+      "scope": "plot"
+     }
+    ]
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_CEMENT",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    {
+     "type": "BONUS_IRON_ORE",
+     "scope": "city",
+     "connection": "vicinity"
+    }
+   ],
+   "any": [
+    [
+     {
       "type": "BONUS_ALGAE",
       "scope": "city",
       "connection": "trade|vicinity"
-     }
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_LUNAR",
-      "scope": "plot"
      }
     ]
    ]

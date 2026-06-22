@@ -18,6 +18,16 @@
    "any": [
     [
      {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
+    ]
+   ]
+  },
+  "operate": {
+   "any": [
+    [
+     {
       "type": "BONUS_PUNCH_CARDS",
       "scope": "city",
       "connection": "trade|vicinity"
@@ -31,12 +41,6 @@
       "type": "BONUS_FLASH_MEMORY_DEVICES",
       "scope": "city",
       "connection": "trade|vicinity"
-     }
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
      }
     ]
    ]

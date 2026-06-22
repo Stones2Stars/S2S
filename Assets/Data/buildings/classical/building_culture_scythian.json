@@ -6,11 +6,6 @@
   "build": {
    "all": [
     {
-     "type": "BONUS_SILVER_ORE",
-     "scope": "city",
-     "connection": "vicinity"
-    },
-    {
      "type": "BUILDING_C_AC_MIDDLE_EASTERN",
      "scope": "city"
     },
@@ -34,6 +29,15 @@
       "scope": "plot"
      }
     ]
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_SILVER_ORE",
+     "scope": "city",
+     "connection": "vicinity"
+    }
    ]
   }
  },

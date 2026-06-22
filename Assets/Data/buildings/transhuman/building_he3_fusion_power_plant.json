@@ -39,11 +39,6 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BONUS_SUPERSTRONG_ALLOYS",
-     "scope": "city",
-     "connection": "trade|vicinity"
-    },
     "HAS_POWER",
     {
      "type": "BUILDING_POWER_LINES",
@@ -65,6 +60,15 @@
       "scope": "plot"
      }
     ]
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_SUPERSTRONG_ALLOYS",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    }
    ]
   }
  },

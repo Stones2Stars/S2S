@@ -24,13 +24,6 @@
    "any": [
     [
      {
-      "type": "BONUS_RICE",
-      "scope": "city",
-      "connection": "vicinity"
-     }
-    ],
-    [
-     {
       "type": "BUILDING_RICE_PADDY",
       "scope": "city"
      }
@@ -45,6 +38,17 @@
      {
       "type": "MAPCATEGORY_EARTH",
       "scope": "plot"
+     }
+    ]
+   ]
+  },
+  "operate": {
+   "any": [
+    [
+     {
+      "type": "BONUS_RICE",
+      "scope": "city",
+      "connection": "vicinity"
      }
     ]
    ]

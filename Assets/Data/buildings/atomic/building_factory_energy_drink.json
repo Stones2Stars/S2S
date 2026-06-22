@@ -10,12 +10,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BONUS_PLASTIC",
-     "scope": "city",
-     "connection": "trade|vicinity"
-    },
-    "IS_FRESHWATER",
+    "HAS_FRESHWATER",
     "HAS_POWER",
     {
      "type": "BUILDING_FACTORY",
@@ -29,15 +24,26 @@
    "any": [
     [
      {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
+    ]
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_PLASTIC",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    }
+   ],
+   "any": [
+    [
+     {
       "type": "BONUS_SUGAR",
       "scope": "city",
       "connection": "trade|vicinity"
-     }
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
      }
     ]
    ]

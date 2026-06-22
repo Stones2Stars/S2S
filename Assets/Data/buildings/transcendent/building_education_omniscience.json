@@ -32,55 +32,65 @@
  },
  "production": {
   "city": {
-   "percent": 5
+   "percent": 65
   }
  },
  "commerce": {
   "city": {
-   "percent": 5
+   "percent": 65
   }
  },
  "research": {
   "city": {
-   "flat": 7,
-   "percent": 5
+   "flat": 49,
+   "percent": 65
+  }
+ },
+ "freeSpecialists": {
+  "city": {
+   "any": 6
   }
  },
  "greatPeopleRate": {
   "city": {
-   "percent": 30
+   "percent": 176
+  }
+ },
+ "greatGeneralRate": {
+  "city": {
+   "percent": 6
   }
  },
  "warWeariness": {
   "city": {
-   "percent": 20
+   "percent": 97
   }
  },
  "tradeRoutes": {
   "city": {
    "modifier": {
-    "percent": 13
+    "percent": 91
    }
   }
  },
  "populationGrowthRate": {
   "city": {
-   "percent": 10
+   "percent": 130
   }
  },
  "PROPERTY_FLAMMABILITY": {
   "city": {
-   "flat": -7
+   "flat": -49
   }
  },
  "PROPERTY_CRIME": {
   "city": {
-   "flat": -13
+   "flat": -91
   }
  },
  "PROPERTY_DISEASE": {
   "city": {
-   "flat": -13
+   "flat": -91
   }
  },
  "world": {

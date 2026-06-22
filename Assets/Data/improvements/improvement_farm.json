@@ -29,7 +29,7 @@
        "TERRAIN_MUDDY"
       ]
      },
-     "IS_FRESHWATER",
+     "HAS_FRESHWATER",
      {
       "bonus": [
        "BONUS_CORN",

@@ -41,13 +41,25 @@
   "build": {
    "all": [
     {
+     "type": "TECH_CODE_OF_LAWS",
+     "scope": "team"
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
+    ]
+   ]
+  },
+  "operate": {
+   "all": [
+    {
      "type": "BONUS_FURNITURE",
      "scope": "city",
      "connection": "trade|vicinity"
-    },
-    {
-     "type": "TECH_CODE_OF_LAWS",
-     "scope": "team"
     }
    ],
    "any": [
@@ -81,12 +93,6 @@
       "type": "BONUS_MARBLE",
       "scope": "city",
       "connection": "trade|vicinity"
-     }
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
      }
     ]
    ]

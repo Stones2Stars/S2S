@@ -20,11 +20,6 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BONUS_MARTIAN_FRUIT",
-     "scope": "city",
-     "connection": "trade|vicinity"
-    },
     "HAS_POWER",
     {
      "type": "BUILDING_MARTIAN_METROPOLIS",
@@ -42,6 +37,15 @@
       "scope": "plot"
      }
     ]
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_MARTIAN_FRUIT",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    }
    ]
   }
  },

@@ -21,7 +21,21 @@
      "min": -2000000,
      "max": -100
     }
-   ]
+   ],
+   "disabled": {
+    "all": [
+     {
+      "type": "PROPERTY_EDUCATION",
+      "scope": "city",
+      "min": -2000000,
+      "max": -250
+     },
+     {
+      "type": "BUILDING_EDUCATION_FOOLISH",
+      "scope": "city"
+     }
+    ]
+   }
   }
  },
  "production": {

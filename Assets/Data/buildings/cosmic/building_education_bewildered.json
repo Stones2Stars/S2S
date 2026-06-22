@@ -27,70 +27,84 @@
      "min": -2000000,
      "max": -30000
     }
-   ]
+   ],
+   "disabled": {
+    "all": [
+     {
+      "type": "PROPERTY_EDUCATION",
+      "scope": "city",
+      "min": -2000000,
+      "max": -35000
+     },
+     {
+      "type": "BUILDING_EDUCATION_MINDLESS",
+      "scope": "city"
+     }
+    ]
+   }
   }
  },
  "production": {
   "city": {
-   "percent": -5
+   "percent": -60
   }
  },
  "commerce": {
   "city": {
-   "percent": -5
+   "percent": -60
   }
  },
  "research": {
   "city": {
-   "flat": -6,
-   "percent": -5
+   "flat": -42,
+   "percent": -60
   }
  },
  "freeSpecialists": {
   "city": {
-   "any": -1
+   "any": -6
   }
  },
  "greatPeopleRate": {
   "city": {
-   "percent": -25
+   "percent": -146
   }
  },
  "greatGeneralRate": {
   "city": {
-   "percent": -1
+   "percent": -6
   }
  },
  "warWeariness": {
   "city": {
-   "percent": -15
+   "percent": -77
   }
  },
  "tradeRoutes": {
   "city": {
    "modifier": {
-    "percent": -12
+    "percent": -78
    }
   }
  },
  "populationGrowthRate": {
   "city": {
-   "percent": -10
+   "percent": -120
   }
  },
  "PROPERTY_FLAMMABILITY": {
   "city": {
-   "flat": 6
+   "flat": 42
   }
  },
  "PROPERTY_CRIME": {
   "city": {
-   "flat": 12
+   "flat": 78
   }
  },
  "PROPERTY_DISEASE": {
   "city": {
-   "flat": 12
+   "flat": 78
   }
  },
  "world": {

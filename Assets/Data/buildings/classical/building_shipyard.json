@@ -17,7 +17,7 @@
  "requires": {
   "build": {
    "all": [
-    "IS_COASTAL",
+    "HAS_COAST",
     {
      "type": "BUILDING_SHIPWRIGHT",
      "scope": "city"

@@ -15,7 +15,7 @@
  "requires": {
   "build": {
    "all": [
-    "IS_COASTAL",
+    "HAS_COAST",
     {
      "type": "TECH_NATURAL_PIGMENTS",
      "scope": "team"

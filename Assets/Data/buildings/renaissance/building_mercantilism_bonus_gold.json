@@ -13,13 +13,6 @@
    "any": [
     [
      {
-      "type": "BONUS_GOLD_ORE",
-      "scope": "city",
-      "connection": "trade|vicinity"
-     }
-    ],
-    [
-     {
       "type": "MAPCATEGORY_EARTH",
       "scope": "plot"
      }
@@ -32,6 +25,15 @@
      "type": "CIVIC_MERCANTILISM",
      "scope": "empire"
     }
+   ],
+   "any": [
+    [
+     {
+      "type": "BONUS_GOLD_ORE",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     }
+    ]
    ]
   }
  },

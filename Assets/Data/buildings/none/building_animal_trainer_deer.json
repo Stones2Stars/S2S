@@ -17,11 +17,6 @@
   "build": {
    "all": [
     {
-     "type": "BONUS_DEER",
-     "scope": "city",
-     "connection": "trade|vicinity"
-    },
-    {
      "latitude": {
       "min": 45
      }
@@ -76,6 +71,15 @@
       "scope": "plot"
      }
     ]
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_DEER",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    }
    ]
   }
  },

@@ -68,7 +68,7 @@
     "building": "BUILDING_FISHERMANS_HUT",
     "enabled": {
      "all": [
-      "IS_COASTAL",
+      "HAS_COAST",
       {
        "type": "TECH_COLONIALISM",
        "scope": "team"
@@ -108,7 +108,7 @@
     "building": "BUILDING_HARBOR",
     "enabled": {
      "all": [
-      "IS_COASTAL",
+      "HAS_COAST",
       {
        "type": "TECH_COLONIALISM",
        "scope": "team"
@@ -127,7 +127,7 @@
     "building": "BUILDING_LIGHTHOUSE",
     "enabled": {
      "all": [
-      "IS_COASTAL",
+      "HAS_COAST",
       {
        "type": "TECH_COLONIALISM",
        "scope": "team"
@@ -146,7 +146,7 @@
     "building": "BUILDING_PORT",
     "enabled": {
      "all": [
-      "IS_COASTAL",
+      "HAS_COAST",
       {
        "type": "TECH_STEAM_POWER",
        "scope": "team"

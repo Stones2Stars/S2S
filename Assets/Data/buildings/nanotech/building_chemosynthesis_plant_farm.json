@@ -11,11 +11,6 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BONUS_NOVUS_CHEMICALS",
-     "scope": "city",
-     "connection": "trade|vicinity"
-    },
     "HAS_POWER",
     {
      "type": "BUILDING_WATER_TREATMENT_PLANT",
@@ -56,6 +51,15 @@
       "scope": "plot"
      }
     ]
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_NOVUS_CHEMICALS",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    }
    ]
   }
  },

@@ -11,11 +11,6 @@
   "build": {
    "all": [
     {
-     "type": "BONUS_MUSHROOMS",
-     "scope": "city",
-     "connection": "vicinity"
-    },
-    {
      "type": "TECH_FUNGICULTURE",
      "scope": "team"
     }
@@ -27,6 +22,15 @@
       "scope": "plot"
      }
     ]
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_MUSHROOMS",
+     "scope": "city",
+     "connection": "vicinity"
+    }
    ]
   }
  },

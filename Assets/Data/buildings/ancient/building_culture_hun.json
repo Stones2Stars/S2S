@@ -6,11 +6,6 @@
   "build": {
    "all": [
     {
-     "type": "BONUS_HORSE",
-     "scope": "city",
-     "connection": "vicinity"
-    },
-    {
      "type": "BUILDING_C_AC_EUROPEAN",
      "scope": "city"
     },
@@ -40,6 +35,15 @@
       "scope": "plot"
      }
     ]
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_HORSE",
+     "scope": "city",
+     "connection": "vicinity"
+    }
    ]
   }
  },

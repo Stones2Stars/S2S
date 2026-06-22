@@ -13,13 +13,6 @@
    "any": [
     [
      {
-      "type": "BONUS_WHALE",
-      "scope": "city",
-      "connection": "vicinity"
-     }
-    ],
-    [
-     {
       "type": "MAPCATEGORY_EARTH",
       "scope": "plot"
      }
@@ -32,6 +25,15 @@
      "type": "CIVIC_FOLKLORE",
      "scope": "empire"
     }
+   ],
+   "any": [
+    [
+     {
+      "type": "BONUS_WHALE",
+      "scope": "city",
+      "connection": "vicinity"
+     }
+    ]
    ]
   }
  },

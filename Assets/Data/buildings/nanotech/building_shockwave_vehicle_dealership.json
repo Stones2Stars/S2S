@@ -16,11 +16,6 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BONUS_AUTOMOBILES",
-     "scope": "city",
-     "connection": "trade|vicinity"
-    },
     "HAS_POWER",
     {
      "type": "BUILDING_SHOPPING_DISTRICT",
@@ -71,6 +66,15 @@
       "scope": "plot"
      }
     ]
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_AUTOMOBILES",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    }
    ]
   }
  },

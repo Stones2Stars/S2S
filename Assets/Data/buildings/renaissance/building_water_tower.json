@@ -11,7 +11,7 @@
  "requires": {
   "build": {
    "all": [
-    "IS_FRESHWATER",
+    "HAS_FRESHWATER",
     {
      "type": "BUILDING_WATER_PIPES",
      "scope": "city"

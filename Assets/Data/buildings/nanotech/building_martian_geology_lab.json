@@ -6,11 +6,6 @@
   "build": {
    "all": [
     {
-     "type": "BONUS_MARTIAN_ROCKS",
-     "scope": "city",
-     "connection": "trade|vicinity"
-    },
-    {
      "type": "TECH_PLANETARY_EXTRACTION",
      "scope": "team"
     }
@@ -22,6 +17,15 @@
       "scope": "plot"
      }
     ]
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_MARTIAN_ROCKS",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    }
    ]
   }
  },

@@ -20,11 +20,6 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BONUS_MICROCHIPS",
-     "scope": "city",
-     "connection": "trade|vicinity"
-    },
     "HAS_POWER",
     {
      "type": "TECH_ROBOTICS",
@@ -48,6 +43,15 @@
       "scope": "plot"
      }
     ]
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_MICROCHIPS",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    }
    ]
   }
  },

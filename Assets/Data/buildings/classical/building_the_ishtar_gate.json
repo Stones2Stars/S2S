@@ -21,13 +21,6 @@
    "any": [
     [
      {
-      "type": "BONUS_GLASSWARE",
-      "scope": "city",
-      "connection": "trade|vicinity"
-     }
-    ],
-    [
-     {
       "type": "BUILDING_WALLS",
       "scope": "city"
      },
@@ -70,6 +63,15 @@
      "type": "RELIGION_MESOPOTAMISM",
      "scope": "city"
     }
+   ],
+   "any": [
+    [
+     {
+      "type": "BONUS_GLASSWARE",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     }
+    ]
    ]
   }
  },

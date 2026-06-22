@@ -16,7 +16,7 @@
  "requires": {
   "build": {
    "all": [
-    "IS_COASTAL",
+    "HAS_COAST",
     {
      "type": "TECH_MASONRY",
      "scope": "team"
@@ -26,6 +26,16 @@
      "scope": "team"
     }
    ],
+   "any": [
+    [
+     {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
+    ]
+   ]
+  },
+  "operate": {
    "any": [
     [
      {
@@ -48,31 +58,31 @@
       "scope": "city",
       "connection": "trade|vicinity"
      }
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
     ]
    ]
   }
  },
  "food": {
-  "plot": {
-   "plotTypes": {
-    "PLOT_OCEAN": {
-     "flat": 1
-    }
+  "city": {
+   "plots": {
+    "flat": [
+     {
+      "value": 1,
+      "enabled": "IS_WATER"
+     }
+    ]
    }
   }
  },
  "commerce": {
-  "plot": {
-   "plotTypes": {
-    "PLOT_OCEAN": {
-     "flat": 1
-    }
+  "city": {
+   "plots": {
+    "flat": [
+     {
+      "value": 1,
+      "enabled": "IS_WATER"
+     }
+    ]
    }
   }
  },

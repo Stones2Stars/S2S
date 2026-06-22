@@ -21,13 +21,6 @@
    "any": [
     [
      {
-      "type": "BONUS_CORN",
-      "scope": "city",
-      "connection": "vicinity"
-     }
-    ],
-    [
-     {
       "type": "MAPCATEGORY_EARTH",
       "scope": "plot"
      }
@@ -40,6 +33,15 @@
      "type": "RELIGION_MESOPOTAMISM",
      "scope": "city"
     }
+   ],
+   "any": [
+    [
+     {
+      "type": "BONUS_CORN",
+      "scope": "city",
+      "connection": "vicinity"
+     }
+    ]
    ]
   }
  },

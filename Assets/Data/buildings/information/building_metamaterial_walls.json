@@ -27,11 +27,6 @@
   "build": {
    "all": [
     {
-     "type": "BONUS_METAMATERIALS",
-     "scope": "city",
-     "connection": "trade|vicinity"
-    },
-    {
      "type": "TECH_METAMATERIALS",
      "scope": "team"
     }
@@ -43,6 +38,15 @@
       "scope": "plot"
      }
     ]
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_METAMATERIALS",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    }
    ]
   }
  },

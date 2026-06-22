@@ -6,11 +6,6 @@
   "build": {
    "all": [
     {
-     "type": "BONUS_GOLD_WARES",
-     "scope": "city",
-     "connection": "trade|vicinity"
-    },
-    {
      "type": "TECH_GUILDS",
      "scope": "team"
     }
@@ -40,6 +35,11 @@
   },
   "operate": {
    "all": [
+    {
+     "type": "BONUS_GOLD_WARES",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
     {
      "type": "CIVIC_GUILDS",
      "scope": "empire"

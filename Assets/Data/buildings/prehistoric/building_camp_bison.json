@@ -20,11 +20,6 @@
   "build": {
    "all": [
     {
-     "type": "BONUS_BISON",
-     "scope": "city",
-     "connection": "vicinity"
-    },
-    {
      "type": "TECH_TRACKING",
      "scope": "team"
     }
@@ -46,6 +41,15 @@
       "scope": "plot"
      }
     ]
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_BISON",
+     "scope": "city",
+     "connection": "vicinity"
+    }
    ]
   }
  },

@@ -23,6 +23,22 @@
    "any": [
     [
      {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
+    ]
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "RELIGION_TAOISM",
+     "scope": "city"
+    }
+   ],
+   "any": [
+    [
+     {
       "type": "BONUS_BOOKS",
       "scope": "city",
       "connection": "trade|vicinity"
@@ -42,21 +58,7 @@
       "scope": "city",
       "connection": "trade|vicinity"
      }
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
     ]
-   ]
-  },
-  "operate": {
-   "all": [
-    {
-     "type": "RELIGION_TAOISM",
-     "scope": "city"
-    }
    ]
   }
  },

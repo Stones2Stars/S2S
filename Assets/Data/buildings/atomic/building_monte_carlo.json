@@ -19,6 +19,22 @@
    "any": [
     [
      {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
+    ]
+   ],
+   "noneOf": [
+    {
+     "type": "BUILDING_LAS_VEGAS_STRIP",
+     "scope": "city"
+    }
+   ]
+  },
+  "operate": {
+   "any": [
+    [
+     {
       "type": "BONUS_CEMENT",
       "scope": "city",
       "connection": "trade|vicinity"
@@ -33,19 +49,7 @@
       "scope": "city",
       "connection": "trade|vicinity"
      }
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
     ]
-   ],
-   "noneOf": [
-    {
-     "type": "BUILDING_LAS_VEGAS_STRIP",
-     "scope": "city"
-    }
    ]
   }
  },

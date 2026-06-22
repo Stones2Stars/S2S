@@ -6,11 +6,6 @@
   "build": {
    "all": [
     {
-     "type": "BONUS_BISON",
-     "scope": "city",
-     "connection": "trade|vicinity"
-    },
-    {
      "type": "TECH_HUNTING",
      "scope": "team"
     }
@@ -58,6 +53,15 @@
       "scope": "plot"
      }
     ]
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_BISON",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    }
    ]
   }
  },

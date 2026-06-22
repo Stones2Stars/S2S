@@ -17,13 +17,25 @@
   "build": {
    "all": [
     {
+     "type": "TECH_STEAM_POWER",
+     "scope": "team"
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
+    ]
+   ]
+  },
+  "operate": {
+   "all": [
+    {
      "type": "BONUS_STEEL_WARES",
      "scope": "city",
      "connection": "trade|vicinity"
-    },
-    {
-     "type": "TECH_STEAM_POWER",
-     "scope": "team"
     }
    ],
    "any": [
@@ -32,12 +44,6 @@
       "type": "BONUS_COAL",
       "scope": "city",
       "connection": "trade|vicinity"
-     }
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
      }
     ]
    ]

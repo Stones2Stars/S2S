@@ -18,11 +18,6 @@
   "build": {
    "all": [
     {
-     "type": "BONUS_FLOUR",
-     "scope": "city",
-     "connection": "trade|vicinity"
-    },
-    {
      "type": "TECH_BREAD_MAKING",
      "scope": "team"
     }
@@ -48,6 +43,15 @@
       "scope": "plot"
      }
     ]
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_FLOUR",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    }
    ]
   }
  },

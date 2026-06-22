@@ -16,11 +16,6 @@
   "build": {
    "all": [
     {
-     "type": "BONUS_TIN_ORE",
-     "scope": "city",
-     "connection": "trade|vicinity"
-    },
-    {
      "type": "TECH_BRONZE_WORKING",
      "scope": "team"
     }
@@ -42,6 +37,15 @@
       "scope": "plot"
      }
     ]
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_TIN_ORE",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    }
    ]
   }
  },

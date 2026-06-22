@@ -20,15 +20,53 @@
  "requires": {
   "build": {
    "all": [
+    "HAS_COAST",
+    {
+     "type": "TECH_TRAP_FISHING",
+     "scope": "team"
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "BUILDING_STORAGE_PIT",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_GRANARY",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_MODERN_GRANARY",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_BARTER_POST",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_TRADING_POST",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_SHOPPING_DISTRICT",
+      "scope": "city"
+     }
+    ],
+    [
+     {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
+    ]
+   ]
+  },
+  "operate": {
+   "all": [
     {
      "type": "BONUS_ROPE",
      "scope": "city",
      "connection": "trade|vicinity"
-    },
-    "IS_COASTAL",
-    {
-     "type": "TECH_TRAP_FISHING",
-     "scope": "team"
     }
    ],
    "any": [
@@ -63,38 +101,6 @@
       "scope": "city",
       "connection": "vicinity"
      }
-    ],
-    [
-     {
-      "type": "BUILDING_STORAGE_PIT",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_GRANARY",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_MODERN_GRANARY",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_BARTER_POST",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_TRADING_POST",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_SHOPPING_DISTRICT",
-      "scope": "city"
-     }
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
     ]
    ]
   }
@@ -117,13 +123,14 @@
       "scope": "team"
      }
     }
-   ]
-  },
-  "plot": {
-   "plotTypes": {
-    "PLOT_OCEAN": {
-     "flat": 1
-    }
+   ],
+   "plots": {
+    "flat": [
+     {
+      "value": 1,
+      "enabled": "IS_WATER"
+     }
+    ]
    }
   }
  },

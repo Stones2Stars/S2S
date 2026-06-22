@@ -13,11 +13,6 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BONUS_HUMAN_MOD_DIGITAL_LIFESTYLE",
-     "scope": "city",
-     "connection": "trade|vicinity"
-    },
     "HAS_POWER",
     {
      "type": "BUILDING_CLOUD_SERVER",
@@ -35,6 +30,15 @@
       "scope": "plot"
      }
     ]
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_HUMAN_MOD_DIGITAL_LIFESTYLE",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    }
    ]
   }
  },

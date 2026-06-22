@@ -11,13 +11,29 @@
   "build": {
    "all": [
     {
+     "type": "TECH_COMBAT_SPORTS",
+     "scope": "team"
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
+    ]
+   ]
+  },
+  "operate": {
+   "all": [
+    {
      "type": "BONUS_STONE",
      "scope": "city",
      "connection": "trade|vicinity"
     },
     {
-     "type": "TECH_COMBAT_SPORTS",
-     "scope": "team"
+     "type": "RELIGION_NAGHUALISM",
+     "scope": "city"
     }
    ],
    "any": [
@@ -42,21 +58,7 @@
       "scope": "city",
       "connection": "trade|vicinity"
      }
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
     ]
-   ]
-  },
-  "operate": {
-   "all": [
-    {
-     "type": "RELIGION_NAGHUALISM",
-     "scope": "city"
-    }
    ]
   }
  },

@@ -9,11 +9,11 @@
      "type": "TECH_MOUNTAINEERING",
      "scope": "team"
     },
-    "IS_PEAK"
+    "HAS_PEAK"
    ],
    "any": [
     [
-     "IS_PEAK"
+     "HAS_PEAK"
     ]
    ]
   }

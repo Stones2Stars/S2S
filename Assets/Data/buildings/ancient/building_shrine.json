@@ -13,6 +13,16 @@
    "any": [
     [
      {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
+    ]
+   ]
+  },
+  "operate": {
+   "any": [
+    [
+     {
       "type": "BONUS_STONE",
       "scope": "city",
       "connection": "trade|vicinity"
@@ -23,16 +33,6 @@
       "connection": "trade|vicinity"
      }
     ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
-   ]
-  },
-  "operate": {
-   "any": [
     [
      {
       "type": "CIVIC_FOLKLORE",
