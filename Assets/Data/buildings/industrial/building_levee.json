@@ -26,6 +26,13 @@
    ]
   }
  },
+ "production": {
+  "plot": {
+   "river": {
+    "flat": 1
+   }
+  }
+ },
  "hurryCost": {
   "city": {
    "percent": 100

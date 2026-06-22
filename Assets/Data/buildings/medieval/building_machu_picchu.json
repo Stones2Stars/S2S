@@ -9,6 +9,10 @@
     {
      "type": "TECH_MOUNTAINEERING",
      "scope": "team"
+    },
+    "STATE_RELIGION_IN_CITY",
+    {
+     "STATE_RELIGION": "RELIGION_ANDEANISM"
     }
    ],
    "any": [
@@ -28,10 +32,6 @@
   },
   "operate": {
    "all": [
-    "STATE_RELIGION_IN_CITY",
-    {
-     "STATE_RELIGION": "RELIGION_ANDEANISM"
-    },
     {
      "type": "RELIGION_ANDEANISM",
      "scope": "city"

@@ -25,7 +25,9 @@
  },
  "culture": {
   "empire": {
-   "flat": 1
+   "specialist": {
+    "perSpecialist": 1
+   }
   }
  },
  "health": {

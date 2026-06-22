@@ -55,7 +55,9 @@
    ]
   },
   "empire": {
-   "flat": 2
+   "specialist": {
+    "perSpecialist": 2
+   }
   }
  },
  "happiness": {

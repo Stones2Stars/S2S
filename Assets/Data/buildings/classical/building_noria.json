@@ -52,6 +52,13 @@
    ]
   }
  },
+ "food": {
+  "plot": {
+   "river": {
+    "flat": 1
+   }
+  }
+ },
  "health": {
   "city": {
    "flat": 1

@@ -31,6 +31,10 @@
     {
      "type": "TECH_COMMUNITY",
      "scope": "team"
+    },
+    {
+     "type": "CULTURELEVEL_DEVELOPING",
+     "scope": "city"
     }
    ],
    "any": [
@@ -57,14 +61,6 @@
       "scope": "plot"
      }
     ]
-   ]
-  },
-  "operate": {
-   "all": [
-    {
-     "type": "CULTURELEVEL_DEVELOPING",
-     "scope": "city"
-    }
    ]
   }
  },

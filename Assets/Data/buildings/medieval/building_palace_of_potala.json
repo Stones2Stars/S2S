@@ -13,6 +13,10 @@
     {
      "type": "TECH_EDUCATION",
      "scope": "team"
+    },
+    "STATE_RELIGION_IN_CITY",
+    {
+     "STATE_RELIGION": "RELIGION_BUDDHISM"
     }
    ],
    "any": [
@@ -26,10 +30,6 @@
   },
   "operate": {
    "all": [
-    "STATE_RELIGION_IN_CITY",
-    {
-     "STATE_RELIGION": "RELIGION_BUDDHISM"
-    },
     {
      "type": "RELIGION_BUDDHISM",
      "scope": "city"

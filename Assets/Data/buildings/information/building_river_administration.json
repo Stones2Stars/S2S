@@ -38,6 +38,27 @@
    ]
   }
  },
+ "food": {
+  "plot": {
+   "river": {
+    "flat": 3
+   }
+  }
+ },
+ "production": {
+  "plot": {
+   "river": {
+    "flat": 2
+   }
+  }
+ },
+ "commerce": {
+  "plot": {
+   "river": {
+    "flat": 5
+   }
+  }
+ },
  "health": {
   "city": {
    "flat": 1

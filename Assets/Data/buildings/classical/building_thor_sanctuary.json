@@ -8,6 +8,10 @@
     {
      "type": "TECH_SHIP_BUILDING",
      "scope": "team"
+    },
+    "STATE_RELIGION_IN_CITY",
+    {
+     "STATE_RELIGION": "RELIGION_ASATRU"
     }
    ],
    "any": [
@@ -21,10 +25,6 @@
   },
   "operate": {
    "all": [
-    "STATE_RELIGION_IN_CITY",
-    {
-     "STATE_RELIGION": "RELIGION_ASATRU"
-    },
     {
      "type": "RELIGION_ASATRU",
      "scope": "city"

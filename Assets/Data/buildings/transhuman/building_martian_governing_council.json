@@ -13,6 +13,10 @@
     {
      "type": "TECH_BINARY_LEGISLATION",
      "scope": "team"
+    },
+    {
+     "type": "CULTURELEVEL_ELEGANT",
+     "scope": "city"
     }
    ],
    "any": [
@@ -22,14 +26,6 @@
       "scope": "plot"
      }
     ]
-   ]
-  },
-  "operate": {
-   "all": [
-    {
-     "type": "CULTURELEVEL_ELEGANT",
-     "scope": "city"
-    }
    ]
   }
  },

@@ -27,6 +27,27 @@
    ]
   }
  },
+ "food": {
+  "plot": {
+   "river": {
+    "flat": -3
+   }
+  }
+ },
+ "production": {
+  "plot": {
+   "river": {
+    "flat": -1
+   }
+  }
+ },
+ "commerce": {
+  "plot": {
+   "river": {
+    "flat": -3
+   }
+  }
+ },
  "happiness": {
   "city": {
    "flat": -5

@@ -13,6 +13,9 @@
     {
      "type": "TECH_GLASS_BLOWING",
      "scope": "team"
+    },
+    {
+     "STATE_RELIGION": "RELIGION_MESOPOTAMISM"
     }
    ],
    "any": [
@@ -63,9 +66,6 @@
   },
   "operate": {
    "all": [
-    {
-     "STATE_RELIGION": "RELIGION_MESOPOTAMISM"
-    },
     {
      "type": "RELIGION_MESOPOTAMISM",
      "scope": "city"

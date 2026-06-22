@@ -22,6 +22,10 @@
     {
      "type": "TECH_SCULPTURE",
      "scope": "team"
+    },
+    "STATE_RELIGION_IN_CITY",
+    {
+     "STATE_RELIGION": "RELIGION_ZOROASTRIANISM"
     }
    ],
    "any": [
@@ -36,10 +40,6 @@
   },
   "operate": {
    "all": [
-    "STATE_RELIGION_IN_CITY",
-    {
-     "STATE_RELIGION": "RELIGION_ZOROASTRIANISM"
-    },
     {
      "type": "RELIGION_ZOROASTRIANISM",
      "scope": "city"

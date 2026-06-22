@@ -8,6 +8,9 @@
     {
      "type": "BUILDING_NATURE_CIRCLE_OF_POWER",
      "scope": "city"
+    },
+    {
+     "STATE_RELIGION": "RELIGION_DRUIDIC_TRADITIONS"
     }
    ],
    "any": [
@@ -28,9 +31,6 @@
   },
   "operate": {
    "all": [
-    {
-     "STATE_RELIGION": "RELIGION_DRUIDIC_TRADITIONS"
-    },
     {
      "type": "RELIGION_DRUIDIC_TRADITIONS",
      "scope": "city"

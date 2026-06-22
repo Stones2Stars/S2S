@@ -25,7 +25,9 @@
  },
  "gold": {
   "empire": {
-   "flat": 1
+   "specialist": {
+    "perSpecialist": 1
+   }
   }
  },
  "greatPeopleRate": {

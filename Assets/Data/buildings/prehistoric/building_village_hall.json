@@ -13,6 +13,10 @@
     {
      "type": "TECH_TRIBALISM",
      "scope": "team"
+    },
+    {
+     "type": "CULTURELEVEL_FLEDGLING",
+     "scope": "city"
     }
    ],
    "any": [
@@ -39,14 +43,6 @@
       "scope": "plot"
      }
     ]
-   ]
-  },
-  "operate": {
-   "all": [
-    {
-     "type": "CULTURELEVEL_FLEDGLING",
-     "scope": "city"
-    }
    ]
   }
  },

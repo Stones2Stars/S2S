@@ -13,7 +13,8 @@
     {
      "type": "TECH_DIVINE_RIGHT",
      "scope": "team"
-    }
+    },
+    "STATE_RELIGION_IN_CITY"
    ],
    "any": [
     [
@@ -30,8 +31,7 @@
     {
      "type": "CIVIC_DIVINE_RIGHT",
      "scope": "empire"
-    },
-    "STATE_RELIGION_IN_CITY"
+    }
    ]
   }
  },

@@ -8,6 +8,9 @@
     {
      "type": "BUILDING_SHAMANS_YURTA",
      "scope": "city"
+    },
+    {
+     "STATE_RELIGION": "RELIGION_TENGRIISM"
     }
    ],
    "any": [
@@ -21,9 +24,6 @@
   },
   "operate": {
    "all": [
-    {
-     "STATE_RELIGION": "RELIGION_TENGRIISM"
-    },
     {
      "type": "RELIGION_TENGRIISM",
      "scope": "city"

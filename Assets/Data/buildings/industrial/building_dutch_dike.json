@@ -49,6 +49,13 @@
  "allowed": {
   "empire": 1
  },
+ "production": {
+  "plot": {
+   "river": {
+    "flat": 1
+   }
+  }
+ },
  "greatPeopleRate": {
   "city": {
    "flat": 2

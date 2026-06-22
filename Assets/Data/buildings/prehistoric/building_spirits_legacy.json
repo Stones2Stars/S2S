@@ -17,6 +17,10 @@
     {
      "type": "TECH_MEGALITH_CONSTRUCTION",
      "scope": "team"
+    },
+    "STATE_RELIGION_IN_CITY",
+    {
+     "STATE_RELIGION": "RELIGION_SHAMANISM"
     }
    ],
    "any": [
@@ -30,10 +34,6 @@
   },
   "operate": {
    "all": [
-    "STATE_RELIGION_IN_CITY",
-    {
-     "STATE_RELIGION": "RELIGION_SHAMANISM"
-    },
     {
      "type": "RELIGION_SHAMANISM",
      "scope": "city"

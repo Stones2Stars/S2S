@@ -13,7 +13,8 @@
     {
      "type": "TECH_ALGEBRA",
      "scope": "team"
-    }
+    },
+    "STATE_RELIGION_IN_CITY"
    ],
    "any": [
     [
@@ -32,11 +33,6 @@
       "scope": "plot"
      }
     ]
-   ]
-  },
-  "operate": {
-   "all": [
-    "STATE_RELIGION_IN_CITY"
    ]
   }
  },

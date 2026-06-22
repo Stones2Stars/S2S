@@ -56,6 +56,10 @@
     {
      "type": "TECH_CITY_PLANNING",
      "scope": "team"
+    },
+    {
+     "type": "CULTURELEVEL_REFINED",
+     "scope": "city"
     }
    ],
    "any": [
@@ -77,14 +81,6 @@
       "scope": "plot"
      }
     ]
-   ]
-  },
-  "operate": {
-   "all": [
-    {
-     "type": "CULTURELEVEL_REFINED",
-     "scope": "city"
-    }
    ]
   }
  },

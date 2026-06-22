@@ -12,6 +12,10 @@
     {
      "type": "TECH_THEOLOGY",
      "scope": "team"
+    },
+    "STATE_RELIGION_IN_CITY",
+    {
+     "STATE_RELIGION": "RELIGION_CHRISTIANITY"
     }
    ],
    "any": [
@@ -25,10 +29,6 @@
   },
   "operate": {
    "all": [
-    "STATE_RELIGION_IN_CITY",
-    {
-     "STATE_RELIGION": "RELIGION_CHRISTIANITY"
-    },
     {
      "type": "RELIGION_CHRISTIANITY",
      "scope": "city"

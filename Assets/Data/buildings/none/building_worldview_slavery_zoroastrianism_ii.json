@@ -8,6 +8,9 @@
     {
      "type": "BUILDING_WORLDVIEW_SLAVERY_ACTIVE",
      "scope": "city"
+    },
+    {
+     "STATE_RELIGION": "RELIGION_ZOROASTRIANISM"
     }
    ],
    "any": [
@@ -17,13 +20,6 @@
       "scope": "plot"
      }
     ]
-   ]
-  },
-  "operate": {
-   "all": [
-    {
-     "STATE_RELIGION": "RELIGION_ZOROASTRIANISM"
-    }
    ]
   }
  },

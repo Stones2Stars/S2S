@@ -8,6 +8,10 @@
     {
      "type": "BUILDING_TAOIST_MONASTERY",
      "scope": "city"
+    },
+    "STATE_RELIGION_IN_CITY",
+    {
+     "STATE_RELIGION": "RELIGION_TAOISM"
     }
    ],
    "any": [
@@ -21,10 +25,6 @@
   },
   "operate": {
    "all": [
-    "STATE_RELIGION_IN_CITY",
-    {
-     "STATE_RELIGION": "RELIGION_TAOISM"
-    },
     {
      "type": "RELIGION_TAOISM",
      "scope": "city"

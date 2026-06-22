@@ -8,6 +8,9 @@
     {
      "type": "BUILDING_INVOCATION_HUT",
      "scope": "city"
+    },
+    {
+     "STATE_RELIGION": "RELIGION_SHAMANISM"
     }
    ],
    "any": [
@@ -28,9 +31,6 @@
   },
   "operate": {
    "all": [
-    {
-     "STATE_RELIGION": "RELIGION_SHAMANISM"
-    },
     {
      "type": "RELIGION_SHAMANISM",
      "scope": "city"

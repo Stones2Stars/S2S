@@ -13,6 +13,10 @@
     {
      "type": "TECH_FUNDAMENTALISM",
      "scope": "team"
+    },
+    "STATE_RELIGION_IN_CITY",
+    {
+     "STATE_RELIGION": "RELIGION_VOODOO"
     }
    ],
    "any": [
@@ -32,10 +36,6 @@
   },
   "operate": {
    "all": [
-    "STATE_RELIGION_IN_CITY",
-    {
-     "STATE_RELIGION": "RELIGION_VOODOO"
-    },
     {
      "type": "RELIGION_VOODOO",
      "scope": "city"

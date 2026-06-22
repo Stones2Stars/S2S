@@ -59,6 +59,10 @@
     {
      "type": "TECH_SOCIAL_CONTRACT",
      "scope": "team"
+    },
+    {
+     "type": "CULTURELEVEL_INFLUENTIAL",
+     "scope": "city"
     }
    ],
    "any": [
@@ -80,14 +84,6 @@
       "scope": "plot"
      }
     ]
-   ]
-  },
-  "operate": {
-   "all": [
-    {
-     "type": "CULTURELEVEL_INFLUENTIAL",
-     "scope": "city"
-    }
    ]
   }
  },

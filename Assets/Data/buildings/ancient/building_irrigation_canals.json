@@ -31,6 +31,13 @@
    ]
   }
  },
+ "food": {
+  "plot": {
+   "river": {
+    "flat": 1
+   }
+  }
+ },
  "maintenance": {
   "city": {
    "flat": 2

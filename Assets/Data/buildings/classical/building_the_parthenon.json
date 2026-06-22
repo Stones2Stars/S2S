@@ -21,6 +21,10 @@
     {
      "type": "TECH_CONSTRUCTION",
      "scope": "team"
+    },
+    "STATE_RELIGION_IN_CITY",
+    {
+     "STATE_RELIGION": "RELIGION_HELLENISM"
     }
    ],
    "any": [
@@ -34,10 +38,6 @@
   },
   "operate": {
    "all": [
-    "STATE_RELIGION_IN_CITY",
-    {
-     "STATE_RELIGION": "RELIGION_HELLENISM"
-    },
     {
      "type": "RELIGION_HELLENISM",
      "scope": "city"

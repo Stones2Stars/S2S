@@ -18,6 +18,10 @@
     {
      "type": "TECH_EDUCATION",
      "scope": "team"
+    },
+    "STATE_RELIGION_IN_CITY",
+    {
+     "STATE_RELIGION": "RELIGION_CONFUCIANISM"
     }
    ],
    "any": [
@@ -31,10 +35,6 @@
   },
   "operate": {
    "all": [
-    "STATE_RELIGION_IN_CITY",
-    {
-     "STATE_RELIGION": "RELIGION_CONFUCIANISM"
-    },
     {
      "type": "RELIGION_CONFUCIANISM",
      "scope": "city"

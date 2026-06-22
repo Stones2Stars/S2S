@@ -54,6 +54,13 @@
    ]
   }
  },
+ "commerce": {
+  "plot": {
+   "river": {
+    "flat": 4
+   }
+  }
+ },
  "hurryCost": {
   "city": {
    "percent": 100

@@ -21,6 +21,9 @@
     {
      "type": "TECH_AESTHETICS",
      "scope": "team"
+    },
+    {
+     "STATE_RELIGION": "RELIGION_ZOROASTRIANISM"
     }
    ],
    "any": [
@@ -34,9 +37,6 @@
   },
   "operate": {
    "all": [
-    {
-     "STATE_RELIGION": "RELIGION_ZOROASTRIANISM"
-    },
     {
      "type": "RELIGION_ZOROASTRIANISM",
      "scope": "city"

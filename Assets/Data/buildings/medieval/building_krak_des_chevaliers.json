@@ -22,7 +22,8 @@
     {
      "type": "TECH_THEOLOGY",
      "scope": "team"
-    }
+    },
+    "STATE_RELIGION_IN_CITY"
    ],
    "any": [
     [
@@ -57,11 +58,6 @@
       "scope": "plot"
      }
     ]
-   ]
-  },
-  "operate": {
-   "all": [
-    "STATE_RELIGION_IN_CITY"
    ]
   }
  },

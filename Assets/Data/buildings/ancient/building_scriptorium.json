@@ -8,7 +8,8 @@
     {
      "type": "TECH_SCRIPTURES",
      "scope": "team"
-    }
+    },
+    "STATE_RELIGION_IN_CITY"
    ],
    "any": [
     [
@@ -42,9 +43,6 @@
    ]
   },
   "operate": {
-   "all": [
-    "STATE_RELIGION_IN_CITY"
-   ],
    "any": [
     [
      {

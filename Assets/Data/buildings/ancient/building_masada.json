@@ -13,6 +13,10 @@
     {
      "type": "TECH_MONOTHEISM",
      "scope": "team"
+    },
+    "STATE_RELIGION_IN_CITY",
+    {
+     "STATE_RELIGION": "RELIGION_JUDAISM"
     }
    ],
    "any": [
@@ -26,10 +30,6 @@
   },
   "operate": {
    "all": [
-    "STATE_RELIGION_IN_CITY",
-    {
-     "STATE_RELIGION": "RELIGION_JUDAISM"
-    },
     {
      "type": "RELIGION_JUDAISM",
      "scope": "city"
