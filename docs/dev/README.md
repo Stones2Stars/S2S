@@ -9,8 +9,8 @@
 > before a change. Complete understanding should **just happen** from reading the docs — unbidden, by
 > default. Policing context is an inefficiency this doc set exists to abolish. So reading and understanding
 > must become the *same act*: every doc is grounded (no assumption to trip on — [`_meta/CONVENTIONS.md`](_meta/CONVENTIONS.md)),
-> consolidated (one home per concept, not spread thin), and mapped (this file is the reading path). The
-> read-gate forces the read; these docs are what make a forced read *deliver* the full model. When that bar
+> consolidated (one home per concept, not spread thin), and mapped (this file is the reading path). These
+> docs are what make the read *deliver* the full model. When that bar
 > is met, the question never needs asking.
 >
 > **Status:** `docs2/` is the rebuilt, grounded doc set (see [`_meta/CONVENTIONS.md`](_meta/CONVENTIONS.md)
@@ -44,8 +44,7 @@ These are not style preferences. Each one has drawn blood. Internalise them befo
   deterministic lockstep; CPU-dependent float math desyncs. The cascade's fixed-point (×100) exists for
   this. → [DEC-fixedpoint-x100](architecture/decisions.md#dec-fixedpoint-x100).
 - **Nothing is "just a one-liner."** Tightly-coupled BTS/C2C wiring with non-obvious cross-cutting
-  ripples. Read the subsystem's doc, trace every caller/consumer, before you touch it. The read is
-  mechanically gated for exactly this reason → [DEC-WF-read-gate](architecture/decisions.md#dec-wf-read-gate).
+  ripples. Read the subsystem's doc, trace every caller/consumer, before you touch it.
 - **Shell:** `pwsh` good, `powershell.exe` (5.1) bad; Git Bash fine. **Git:** edit the working tree only
   unless the work is tied to an active issue; never switch branches mid-build (the owner builds from the
   working tree) → [DEC-WF-no-commit-unmandated](architecture/decisions.md#dec-wf-no-commit-unmandated).

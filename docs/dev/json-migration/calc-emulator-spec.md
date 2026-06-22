@@ -219,6 +219,37 @@ value from JSON + game STATE — it may NOT ride in a legacy-COMPUTED value.** R
 validates the new JSON for that part, and (b) collapses at the atomic cutover when the legacy reads are deleted. *"The
 very second you ride in any kind of yield, that is when we are royally fucked."*
 
+> **⛔⛔ v3 HARD RULE — ZERO legacy-CALCULATED values EVER, enforced BY CONSTRUCTION (owner ruling 2026-06-22).**
+> *"0 calculated values from legacy shall EVER find its way into the new dry_calc."* This was the **v1 mistake** (the
+> ride-in door was a `ScopeContext` group-(2) "derived test scaffolding" dict + a `counts` map carrying
+> numCities/colony maintenance, naturalDefense, anger%, trade/free-city yield as fake "state", plus a loader that took
+> `buildings = present − engine.dormantBuildings`). v2 patched around it; **v3 removes the door entirely** — the input
+> model is **raw observed facts ONLY** (+ the lone `distanceFromCapital` map coordinate), and there is **no field that
+> can hold a computed value.** Every previously-rid-in quantity (numCities/colony/distance maintenance, naturalDefense,
+> anger%, trade yield, free-city yield, **building dormancy/active-set**) is **COMPUTED** by its mechanic from raw
+> facts + the JSON deposits. The engine's emitted values (incl. `dormantBuildings`) are **comparison targets only** —
+> they live in the verify harness, **never** in any calculator's input path. Three more v3 rulings ride with it:
+> **(1) build the individual mechanical calculators INDIVIDUALLY, with the JSON infos as the base** — per-mechanic, not
+> a monolith; **(2) NO self-tests in the calc** — *"they are just self-fulfilling prophecies you end up leaning on"*;
+> the catalog ALWAYS backs onto real `Assets/Data`, no fabricated `expect` fixtures; **(3) each calculator must be
+> ISOLABLE and VERIFIED AGAINST ITS LEGACY COUNTERPART** — diffed per-city, leaf-by-leaf, against the engine's emitted
+> `/diagnostic/cityInput` field ([DEC-per-mechanic-parity], never an average). Home of the rebuilt calc:
+> `Tools/ModifierCalc/drycalc/` (the v3 package). Ledgered under
+> [DEC-calc-zero-ride-in](../architecture/decisions.md#dec-calc-zero-ride-in) (this is its by-construction hardening).
+>
+> **⛔ v3 BUILD ORDER — the ENABLER / ACTIVE-SET machine FIRST, number calculators ONLY after (owner ruling
+> 2026-06-22).** *"The only thing you get from the game is state, nothing else. You have to make sure that enabled,
+> disabled, obsoleted, and replaced is properly calculated, and you have to make sure that requires, dormancy, etc.
+> work properly, THEN we start caring about actual number-generating calculators."* A building's deposit is
+> meaningless until the calc has correctly determined the building is ACTIVE, so the foundation is the
+> enabler/active-set machine — computed PURELY from raw state + the JSON enabler edges
+> (`enables`/`obsoletes`/`replaces`/`disables`/`requires`/`allowed`), verified against the engine's emitted
+> dormancy/`canConstruct` verdict — and only once that is sound do the number-generating modifier calculators get
+> built on top of it. **Reuse the previous `dry_calc`'s engine-grounded dormancy/active documentation** (the
+> `isActiveBuilding`/`isDisabledBuilding` map with `CvCity.cpp` refs) — with the v3 correction that **obsolescence is
+> now COMPUTED** (the previous calc assumed the engine pre-removed obsolete buildings from `hasBuilding`; v3 takes the
+> RAW CONSTRUCTED set as state and derives obsolete/replaced/disabled/dormant itself, so no engine verdict rides in).
+
 - **The ONLY number taken raw from the dump is `distance-from-capital maintenance`** — it is map-derived, not JSON, and
   not otherwise reconstructable. (Even numCities/colony maintenance are computable from the city count; building
   maintenance is the negative-gold cost in JSON. Distance-to-capital is the lone exception.)

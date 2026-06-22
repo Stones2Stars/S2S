@@ -33,6 +33,7 @@ read-only JSON snapshots + an SSE stream, so external tooling watches a running 
 | `GET /cities` `[?id=N\|?playerNumber=N]` | every city: position, name, population, food/production/commerce rates, production head (+turns left), building count, culture level, capital flag, and the live properties **crime / education / disease** |
 | `GET /events` | Server-Sent-Events stream (never ends; ≤8 concurrent) — see below |
 | `GET /diagnostic` `/diagnostic/<gate>?type=PREFIX_NAME&player=N` | evaluate an engine gate (+ the cascade verdict where wired) on the current state, computed on the game thread via the **mailbox** |
+| `GET /extractor` `/extractor/gamestate[?player=N]` | the **RAW game-state** as ONE document along the scope spine `world→teams→empires→areas→cities→plots` — raw facts only, NO calculated values ([DEC-calc-zero-ride-in](../../architecture/decisions.md#dec-calc-zero-ride-in)); the lone map-number is `distanceFromCapital`. Game-thread via the **mailbox**. The dedicated extraction surface (read it, feed `Tools/ModifierCalc/dry_calc.py`, or build features on it). Schema: [`Tools/ModifierCalc/README.md`](../../../../Tools/ModifierCalc/README.md) |
 
 `gameId` (on `/units` + `/players`) is the persistent playtest identity, so tooling detects a reload / new
 game mid-session.

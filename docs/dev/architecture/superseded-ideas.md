@@ -63,10 +63,13 @@ change ([DEC-keep-unkilled-ideas](decisions.md#dec-keep-unkilled-ideas) — an *
 - **Why it's semi-retired (owner 2026-06-20):** it proved **easier to dump the individual calculations from
   the game itself** (the `/diagnostic/cityInput` etc. surface — [`../reference/cascade/legacy-value-calc-map.md`](../reference/cascade/legacy-value-calc-map.md)
   §12) than to re-implement the legacy gatherers offline. So the *full-pipeline* emulator is dead.
-- **What survives:** the **cascade calc emulator** — `Tools/ModifierCalc/cascade_sim.py`, the *combine-only*
-  comparator (legacy combine vs cascade combine on the same input vector) — **is still used** and is the live
-  doc'd tool in [`../reference/cascade/shadow.md`](../reference/cascade/shadow.md) §7. Don't confuse the two:
-  the legacy-pipeline emulation is dead; the combine comparator lives.
+- **What survives:** the **offline calculators** in `Tools/ModifierCalc/` — **`dry_calc.py`** (the primary
+  zero-ride-in full per-scope calc: computes every economic channel from the JSON + fictitious state, validated
+  in isolation; [DEC-calc-zero-ride-in](decisions.md#dec-calc-zero-ride-in)) and **`cascade_sim.py`** (the
+  same-input-vector *combine-only* comparator, which rides in base+engine values from dump fixtures). Both are
+  doc'd live in [`../reference/cascade/shadow.md`](../reference/cascade/shadow.md) §7. Don't confuse any of them
+  with the dead idea: the legacy-*pipeline* offline emulation (re-implementing the legacy gatherers) is dead;
+  the per-scope calc + the combine comparator live.
 - **Grounding:** `json-migration/calc-emulator-spec.md` (the retired ambition, archived with the migration);
   `shadow.md` §7 (the surviving tool).
 

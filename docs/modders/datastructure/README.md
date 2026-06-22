@@ -92,6 +92,13 @@ world → team → empire → area → city → plot{improvement|feature|terrain
 `empire` = the player (all their cities). A `unit`-scope effect is a **self-accumulator** (it lands on the unit
 itself). A scope says *where* something applies or *where* a count is taken.
 
+**Scope (singular) vs target (plural) — the differentiator is grammatical NUMBER.** A scope is always **singular**
+(the *reach*: `world`/`team`/`empire`/`area`/`city`/`plot`). Separately, a deposit may name a **target** — *what kind
+of object* receives it — and a **target is always PLURAL**: `plots` · `units` · `cities` · `areas` · `empires` (§6).
+So `empire` (singular) is unmistakably the reach and `plots`/`units`/`cities` (plural) unmistakably the receivers,
+even though a root is shared. A plural target means **all objects of that kind in the scope**, filtered by an optional
+predicate. This keeps "how far" (scope) cleanly separate from "what kind of object" (target) — see §6.
+
 ### 3.3 Conditions — `all` / `any` / `noneOf`
 
 A bounded boolean tree, used identically wherever a condition is needed (`requires`, and the `enabled`/`disabled` on a
@@ -123,14 +130,26 @@ and `scope`; the engine never infers them from context.
 ### 3.4 Predicates — a system's runtime-state query
 
 A predicate asks the game state a yes/no question a static file can't hold ("is this the capital? is there a river?").
+A predicate is **evaluated against whatever the deposit's target is** — a `plots` deposit (§6) evaluates it once per plot, a `units` deposit once per unit. So a predicate carries **no type suffix**: the target supplies the context. `IS_WATER` on `plots` means "a water tile"; the same `IS_WATER` on `units` means "a sea-domain unit."
 
-- **bare** (parameter-free) — written as a plain string:
-  `IS_WATER` · `IS_FRESHWATER` · `IS_FLATLANDS` · `IS_HILLS` · `IS_PEAK` · `HAS_RIVER` · `HAS_IRRIGATION` ·
-  `IS_COASTAL` · `IS_CAPITAL` · `HAS_POWER` · `HAS_STATE_RELIGION` · `STATE_RELIGION_IN_CITY` · `HAS_FEATURE` ("has *any* feature").
+- **bare** (parameter-free) — a plain string. Three groups:
+  - **environment** — `IS_<where>`, **target-relative** (the *same* predicate works on a `plots` *or* a `units` deposit, §6):
+    `IS_WATER` · `IS_LAND` · `IS_SPACE` · `IS_LUNAR` · `IS_MARS` (extensible). `plots {IS_WATER}` = a water tile,
+    `units {IS_WATER}` = a sea unit; `plots {IS_MARS}` = a Mars tile, `units {IS_MARS}` = a Mars unit.
+  - **plot attributes** — `HAS_<attribute>`, relief & adjacency a plot carries, **orthogonal to environment so they
+    compose**: `HAS_PEAK` · `HAS_HILLS` · `HAS_COAST` (adjacent to water — true for both a coastal land tile and a
+    coastal water tile) · `HAS_RIVER` · `HAS_FRESHWATER` · `HAS_IRRIGATION` · `HAS_FEATURE` ("has *any* feature").
+    Composition is the win: a **Martian peak** is `{all:["IS_MARS","HAS_PEAK"]}`; **coastal land** `{all:["IS_LAND","HAS_COAST"]}`;
+    **flat land** = `IS_LAND` with no `HAS_HILLS`/`HAS_PEAK`. No bespoke "mars-peak" or "coastal-land" type. A *specific*
+    feature/terrain/bonus is the parameterized `{HAS_FEATURE: FEATURE_FOREST}` / `{HAS_TERRAIN: …}` / `{HAS_BONUS: …}`
+    (below) — the same "what the plot HAS" idea, naming the thing.
+  - **plot city-relative state** (nested: `VICINITY` ⊇ `WORKABLE` ⊇ `IS_WORKED`): `VICINITY` (in this city's workable
+    radius) · `WORKABLE` (in radius **and** eligible to be worked — owned, reachable) · `IS_WORKED` (a citizen works it this turn).
+  - **city / player:** `IS_CAPITAL` · `HAS_POWER` · `HAS_STATE_RELIGION` · `STATE_RELIGION_IN_CITY`.
 - **parameterized** — written as `{ PREDICATE: parameter }`:
   `{HAS_FEATURE: FEATURE_X}` · `{HAS_TERRAIN: TERRAIN_X}` · `{HAS_BONUS: BONUS_X}` · `{HAS_RELIGION: RELIGION_X}` ·
   `{STATE_RELIGION: RELIGION_X}` · `{HOLY_CITY: RELIGION_X}` · `{HAS_CORPORATION: CORPORATION_X}` ·
-  `{latitude: {min, max}}` · `{workedBy: SELF}` · `{existedFor: {min: N}}` (turns since built).
+  `{latitude: {min, max}}` · `{existedFor: {min: N}}` (turns since built). *(The old `{workedBy: SELF}` is now the bare `IS_WORKED`.)*
 - **membership sugar** — `{ terrain|feature|bonus: [TYPE, …] }` = "the plot's terrain/feature/bonus is one of these"
   (a compact form for placement sets). Equivalent to an `any` of the matching `HAS_*` predicate.
 - **negation** uses the `disabled` twin (§3.8) or a `noneOf` container — never a `false` value.
@@ -303,8 +322,21 @@ A modifier family is a per-turn effect this entity deposits. It is addressed:
 - **Split families** — one concept per key: yields are `food`/`production`/`commerce`; commerce splits into
   `gold`/`research`/`culture`/`espionage`; each property is its own family (`PROPERTY_CRIME`, `PROPERTY_EDUCATION`, …).
 - **Grouped families** keep `<member>` parts (`maintenance`, `defense`, …).
-- **Targeted deposits** key by `<targetType>.{TARGET}` (e.g. a building boosting one improvement's food) and stay on
-  the source.
+- **Object TARGETS (plural) — *what kind of object* the deposit lands on, distinct from scope.** A plural target =
+  **all objects of that kind in the scope**; the value applies to **each** matching one. Targets: **`plots`** and
+  **`units`** (usable now), with `cities` · `areas` · `empires` reserved for future per-object channels. A bare deposit
+  with **no** plural target = the city itself (the common case). Filter the target by a **fact** predicate (§3.4):
+  - `"production": { "empire": { "plots": { "flat": { "value": 1, "enabled": "IS_WATER" } } } }` — +1 production
+    to **every water plot** worked anywhere in the empire (an empire-wide sea-tile buff).
+  - `"food": { "city": { "plots": { "flat": { "value": 1, "enabled": { "all": ["VICINITY", "IS_WORKED"] } } } } }` —
+    +1 food to the city's worked radius plots.
+  - `"movement": { "empire": { "units": { "flat": { "value": 1, "enabled": "IS_WATER" } } } }` — +1 move to every
+    naval unit.
+- **Named-entity targets** still key by `<targetType>.{TARGET}` and stay on the source — `improvements.{IMPROVEMENT_FARM}`,
+  `terrains.{TERRAIN_GRASSLAND}`, `features.{…}`, `bonus.{…}`, `buildings.{…}`.
+  **The rule:** a plot **fact** (water, river, worked, hills) → a **`plots`-target predicate**; a **named entity** (a
+  farm, grassland) → its **entity-key**. *(There is no `plotTypes` key — a water plot is `plots {IS_WATER}`, a hill
+  `plots {HAS_HILLS}`.)*
 - The **unit plane** has its own family set (`strength`, `withdrawal`, `firstStrike`, `bombard`, `collateral`, `air`,
   `heal`, `movement`, `experience`, `workRate`, `cargo`, `vision`, `capture`, …).
 

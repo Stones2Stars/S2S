@@ -341,5 +341,5 @@ once" rationale behind not bending the cascade to absorb the misfits is [DEC-pro
 - [Decisions ledger](../../architecture/decisions.md) — [DEC-proper-once](../../architecture/decisions.md#dec-proper-once)
   is the ruling behind not bending the cascade to absorb the handicap's setup/world-rule fields.
 - [Docs map](../../README.md) — the overview-of-overviews; engine-core state classes the rework touches.
-- [Root `AGENTS.md`](../../../../AGENTS.md) — the trust-but-verify and read-gate conventions these citations
+- [Root `AGENTS.md`](../../../../AGENTS.md) — the trust-but-verify conventions these citations
   are written under.

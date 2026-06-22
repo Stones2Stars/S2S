@@ -1,5 +1,23 @@
 # Decisions ledger — the canonical, ID'd home for cross-cutting rulings
 
+> # ⛔ EVERY `DEC-*` IS A HARD RULE — BINDING, NON-NEGOTIABLE, NOT A SUGGESTION.
+> A `DEC` in this ledger is a **rule you MUST obey by default** — never advice to weigh, a "convention" to bend, or
+> a "decision" you can re-open on your own judgement. The words *decision / ruling / convention* in this repo all
+> mean **RULE**. None of these was invented for tidiness: **each was paid for by an agent before you** charging
+> ahead and having its context **eaten by the kraken** — the standardless tangle this codebase is. Reading and
+> obeying them up front is *far cheaper* than re-learning them by slamming into them (**"fast is slow, slow is
+> fast"** — [DEC-fast-is-slow](#dec-fast-is-slow)).
+>
+> Operating posture (the **standing default**, not a phase): **maximal rigor** — verify everything against ground
+> truth, enumerate exhaustively, take zero shortcuts; treat any pull toward *"this is just guidance / probably fine
+> / I'll infer it"* as the bait that sinks the ship ([DEC-kraken](#dec-kraken), [DEC-no-guessing](#dec-no-guessing),
+> [DEC-all-means-all](#dec-all-means-all)). **The ONLY thing that relaxes any of this is the OWNER explicitly saying
+> so — never an agent's read of the situation.** A question you have posed to the owner is a HARD STOP until answered.
+>
+> *(Owner ruling 2026-06-22: the decisions are hard rules, not suggestions — learned by multiple agents before, gobbled
+> by the kraken; and **if a decision doc leaves the binding nature in any way unclear, the phrasing is wrong and gets
+> redone.** This banner is that fix.)*
+
 > **What this is.** An **index, not a re-statement**: one stable `DEC-id` per cross-cutting ruling, a
 > one-line summary, and a pointer to its authoritative home. It exists to break the duplication loop —
 > rulings kept getting re-stated doc-after-doc because there was no discoverable canonical home, so agents
@@ -29,6 +47,7 @@
 | [DEC-maintenance-bookkeeping](#dec-maintenance-bookkeeping) | Maintenance & inflation are separate bookkeeping channels OUTSIDE the commerce chain; engine hard-deductors (distance/numCities/colony/corp) fetched from the live dump, JSON computes building-cost + modifiers | `reference/observability/gold-maintenance-inflation.md` §1-D.1 |
 | [DEC-calc-zero-ride-in](#dec-calc-zero-ride-in) | The cascade calc computes EVERY value from JSON + game state; the ONLY raw dump ride-in is distance-from-capital maintenance; validate each part in ISOLATION (no aggregate-diff-chasing); build dry-first | `json-migration/calc-emulator-spec.md` §2a.2 |
 | [DEC-kraken](#dec-kraken) | The OVERALL ruling: skipping/assuming/guessing/shortcuts/"perceived laziness" is the cardinal sin (despair index) — the codebase is a standardless kraken, so maximal rigor by default. The WHY behind every rigor rule | `AGENTS.md` |
+| [DEC-fast-is-slow](#dec-fast-is-slow) | "Fast is slow, slow is fast" — reading the docs FULLY/completely is never the slower path; skimming to save 5% routinely costs far more downstream (re-derivation, wrong fixes, wasted context). Read gated/subsystem docs in full before acting | `AGENTS.md` |
 | [DEC-map-before-delete](#dec-map-before-delete) | You cannot delete a maintainer you cannot fully observe; shadow it until clean, then cut | `AGENTS.md`; old `cascade-mapping-inventory.md` §A |
 | [DEC-parity-not-goal](#dec-parity-not-goal) | Parity is not the goal; ±10% is NOT "parity-adjacent" — sharper than legacy | [`reference/cascade/shadow.md` §3](../reference/cascade/shadow.md) |
 | [DEC-tally-serializes-nothing](#dec-tally-serializes-nothing) | Tally + scope accumulators serialize NOTHING — rebuilt from loaded objects on load | [`reference/cascade/tally.md` §4](../reference/cascade/tally.md) |
@@ -39,11 +58,12 @@
 | [DEC-interface-contracts](#dec-interface-contracts) | C++03 Clean-Architecture contracts: pure-virtual bases, MI = implements, poor-man's-DI at a composition root | `AGENTS.md` |
 | [DEC-proper-once](#dec-proper-once) | Build the proper structure once — reject transitional shims | `AGENTS.md` |
 | [DEC-keep-unkilled-ideas](#dec-keep-unkilled-ideas) | Retire only code-reconstructible-stale or explicitly-killed docs; an un-killed idea is kept (out-of-scope ≠ retire) | `_meta/CONVENTIONS.md` §7 |
-| [DEC-WF-read-gate](#dec-wf-read-gate) | The doc-read before touching a subsystem is mechanically gated, not exhorted | `AGENTS.md` |
 | [DEC-WF-rulings-to-repo](#dec-wf-rulings-to-repo) | Every owner ruling → repo docs immediately, unprompted, same work item | `AGENTS.md` |
 | [DEC-WF-no-commit-unmandated](#dec-wf-no-commit-unmandated) | Edit working tree only unless tied to an issue; never switch branches mid-build | `AGENTS.md` |
 | [DEC-WF-surface-sprawl](#dec-wf-surface-sprawl) | Surface "getting out of hand"/undefined-structure to the owner instead of overcompensating with serial partial fixes; don't make the owner restate; optimise for efficiency | `AGENTS.md` |
 | [DEC-ephemeral-project-folder](#dec-ephemeral-project-folder) | A massive one-time project gets a dedicated, explicitly-named, front-and-center folder, not held to the durable bar, deleted wholesale when done (durable knowledge extracted first) | `_meta/CONVENTIONS.md` §9 |
+| [DEC-represent-dont-fit](#dec-represent-dont-fit) | A calc divergence means the EMULATOR is missing a mechanic — trace it to its named engine source(s) and represent it; NEVER skip/drop/invent a mechanic to fit the data. Changing the math = changing a game mechanic: allowed only for a bug proven beyond reasonable doubt, as a deliberate surfaced decision (not a quiet gap-closer) | [`reference/cascade/shadow.md` §5a](../reference/cascade/shadow.md) |
+| [DEC-per-mechanic-parity](#dec-per-mechanic-parity) | Parity is verified MECHANIC-BY-MECHANIC against the engine's emitted per-mechanic value — NEVER by comparing or averaging aggregate/realized outputs. An averaged or whole-output gap hides offsetting per-mechanic errors (the kraken's cancellation trap: a wrong calc reads "≈0"). A channel is parity ONLY when every individual mechanic feeding it matches the engine exactly | [`reference/cascade/shadow.md` §5b](../reference/cascade/shadow.md) |
 
 ---
 
@@ -192,10 +212,21 @@ standard to make it safe, so every shortcut is the move that gets the ship eaten
 by default** — verify everything, enumerate exhaustively, zero shortcuts; treat any pull toward "probably fine / don't
 need it / good enough" as the kraken's bait. **Standing default, not a phase (owner ruling 2026-06-20):** the earliest
 this absolute completeness could relax is AFTER a complete refactor has dropped ~half the existing lines — and per the
-owner, "honestly, maybe not even then." Until the owner *explicitly declares otherwise* (same shape as the read-gate's
-"all docs until the codebase is under control"), maximal rigor is the default posture. This is the umbrella WHY behind [[DEC-no-guessing]], [[DEC-all-means-all]],
-[[DEC-map-before-delete]], the total-observability ("Orwell") bar, the read-gates, and "nothing is ever just a
+owner, "honestly, maybe not even then." Until the owner *explicitly declares otherwise*, maximal rigor is the default posture. This is the umbrella WHY behind [[DEC-no-guessing]], [[DEC-all-means-all]],
+[[DEC-map-before-delete]], the total-observability ("Orwell") bar, and "nothing is ever just a
 one-liner". **Home:** [`AGENTS.md`](../../../AGENTS.md) Conventions ("THE KRAKEN RULE").
+
+### DEC-fast-is-slow
+**"Fast is slow, slow is fast" (owner ruling 2026-06-21, GLOBAL).** Reading the docs FULLY and completely is **never**
+the slower path. If you think skimming a doc — or reading only the section you assume is relevant — is faster, you are
+**wrong**: in this codebase the 5% "saved" by skimming routinely costs far more downstream in re-derivation, wrong
+fixes built on a misread, and burned context. *Why it is load-bearing (the instance that prompted it):* on the
+#428/#430 cascade calc, skimming `migration-renames.md` on the simple/complex **trait split** led
+to **five** rounds of reverse-engineering a procedure that was already "clearly laid out, clearly documented, procedure
+already nailed" — wasting ~half a context window to save a few minutes of reading. The moment the doc was read in full,
+the fix (a `rid→base` translation table) was obvious and landed immediately. So: **read each subsystem doc in
+full BEFORE acting**, not the grep-the-keyword shortcut — slow is fast. Sibling of [[DEC-kraken]] / [[DEC-no-guessing]] (skimming
+is a shortcut; a misread becomes an assumption). **Home:** [`AGENTS.md`](../../../AGENTS.md) Conventions.
 
 ### DEC-map-before-delete
 You cannot safely delete a maintainer you cannot fully observe; every state behaviour gets a shadow diffing
@@ -247,11 +278,6 @@ Retire a doc ONLY if it is reconstructible-from-code-and-unneeded, or an explici
 design intent that has not been killed is **kept** (partitioned if out of active scope) — it is not
 reconstructible from code and exists nowhere else; out-of-scope is never a reason to retire. Losing
 un-killed intent is the one unrecoverable deletion. **Home:** [`_meta/CONVENTIONS.md` §7](../_meta/CONVENTIONS.md) (owner ruling 2026-06-19).
-
-### DEC-WF-read-gate
-The doc-read before touching a subsystem is mechanically enforced (SessionStart re-inject + PreToolUse deny
-across edit/subagent/write-Bash), not exhorted; reading means reading in full. **Home:**
-[`AGENTS.md`](../../../AGENTS.md) Conventions.
 
 ### DEC-WF-rulings-to-repo
 Every owner ruling → the right repo home immediately and unprompted, same work item; memory-only is

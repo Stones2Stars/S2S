@@ -20,6 +20,7 @@ done.
 | [`TO-BE-MADE-DURABLE.md`](TO-BE-MADE-DURABLE.md) | **the archive gate** — the running checklist of durable knowledge in this folder that must be lifted into the durable set (`reference/`/`explanation/`/ledger) before this folder is archived out. Append a pointer row as-you-go; the folder is archived only when this is empty. |
 | [`cascade-migration.md`](cascade-migration.md) | the migration roadmap / index — engine build status, entity order, demolition map |
 | [`migration-renames.md`](migration-renames.md) | **the rename registry** — the exhaustive old-XML-tag → new-JSON-key map per entity. The lookup surface `readJson` + modders consult; the durable docs that say "the rename registry (plans)" point HERE. |
+| [`infotype-translation.md`](infotype-translation.md) | **the four-layer Rosetta** ("the real takeback") — per legacy field, the map across old XML · legacy-C++ MEANS · new JSON key/predicate/target · consuming cascade machine. The durable scope-limiter for curator/readJson/cascade work; seeded from the rename registry's predicate-rewiring section. **Drafted across all 33 entities** (~1367 rows; Section 1 plot-substrate + Sections 2–6 by tier) with a **needs-owner-ruling appendix** (machine-label calls, stale-doc drifts, real un-migrated gaps). |
 | `migration-entity-ranking.md` — **ARCHIVED** (→ `old-docs/json-migration/`, 2026-06-20) | the XML→JSON entity migration ORDER + per-entity curation decisions. The migration is **complete**, so this is a done record; its durable substance lives in `Tools/Migration/classifications/*.json` + `store.py` + the specs (`cascade-migration` / `cascade-engine-430`). Archived out of active scope (consult-by-need). |
 | [`building-cascade-conversion.md`](building-cascade-conversion.md) | the per-building conversion map (the CREST / deliveryguy decisions resolved during curation) |
 | [`cascade-engine-430.md`](cascade-engine-430.md) | the #430 engine build plan (build order, slices, the BoolExpr-reuse + CvDerivedData-skeleton-deferral decisions, the readJson `--render` tool leg) |
@@ -28,7 +29,10 @@ done.
 ## Tools (the corresponding migration tools live under `Tools/`)
 
 - **`Tools/Migration/`** — the XML→JSON **curators** (`curate_<entity>.py`, `store.py`, `engine.py`). Operational runner reference: [`../../../Tools/Migration/README.md`](../../../Tools/Migration/README.md).
-- **`Tools/ModifierCalc/`** — `cascade_sim.py`, the cascade calc comparator (the surviving "calc emulator", above).
+- **`Tools/ModifierCalc/`** — the offline calculators: **`dry_calc.py`** (the primary zero-ride-in full
+  per-scope calc — every economic channel from JSON + fictitious state, validated in isolation;
+  [DEC-calc-zero-ride-in](../architecture/decisions.md#dec-calc-zero-ride-in)) and **`cascade_sim.py`** (the
+  same-input-vector combine comparator). Both doc'd live in [`../reference/cascade/shadow.md`](../reference/cascade/shadow.md) §7.
 - **`Tools/ReadJson/`** — **`readJson`**, the tool that outputs a human-readable summary of any item defined in the JSON. It is a **TOOL**, slated to be standardized as a **modding tool** so a user can see, out-of-game, what their changes actually do (owner 2026-06-20). Not migration-specific — it outlives the migration.
 
 ## See also

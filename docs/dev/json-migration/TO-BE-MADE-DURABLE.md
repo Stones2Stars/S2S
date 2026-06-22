@@ -19,5 +19,6 @@
 | **BoolExpr-reuse** decision — JSON `requires`/`enabled`/`disabled` → a runtime `BoolExpr` tree; the offline harness renders cleartext as a substitute | `cascade-engine-430.md` | decisions ledger (`DEC-boolexpr-reuse`) | ☐ pending |
 | **CvDerivedData-skeleton deferral** — the derived-data repository skeleton stays live through shadow, removed only at the atomic cutover; the cascade accumulators do NOT borrow its staleness machinery | `cascade-engine-430.md` | decisions ledger, or `reference/engine/save-load-format.md` | ☐ pending |
 | **readJson is a (future modding) TOOL** — the `--render` readable-item-summary surface; out-of-game "what do my changes do" | `cascade-engine-430.md` + this folder's `README.md` | a `Tools/ReadJson/` README / modding-tools doc | ☐ pending |
+| **Per-infotype JSON↔cascade map** — the durable cols 3+4 (new JSON key/predicate/target ↔ consuming cascade machine) of the four-layer Rosetta; cols 1+2 (old XML ↔ legacy C++) are migration-transient and evaporate at cutover | `infotype-translation.md` | `reference/cascade/` (a per-infotype JSON↔machine reference) | ☐ pending — doc DRAFTED (all 33 entities, ~1367 rows); resolve the needs-ruling appendix, then lift cols 3+4 |
 
 *(Empty table ⇒ nothing left to extract ⇒ safe to archive. Seeded 2026-06-20 from the docs-parity pass; add rows as more durable knowledge lands here.)*

@@ -89,6 +89,15 @@ pluggable behind it (`Sources/Cascade/`). → [DEC-interface-contracts](decision
 
 - **Dissolve `CvCityAI` / `CvUnitAI` into interface-bounded composition** (the AI side; "shrink the god
   classes") — the graft-onto-derived lane (`patterns/composability.md`) is the mechanism.
+  - **The data side's predicate/target/count vocabulary is the SUBSTRATE for this.** The same
+    `target { predicate }` + count grammar that addresses modifier deposits and `requires`
+    ([`../reference/cascade/data-model.md`](../reference/cascade/data-model.md) §3/§6, authored in
+    [`docs/modders/datastructure/`](../../modders/datastructure/README.md)) later expresses **declarative AI
+    rules** — e.g. `count( city.plots within radius(N) where HAS_ENEMIES ) ⋛ threshold → posture` — replacing
+    the hardcoded `Cv*AI` situational scans with composable predicate rules. Predicates are **target-relative**
+    (`IS_WATER` = water tile on `plots`, sea unit on `units`), so one vocabulary serves both halves. The
+    geometric `radius(N)` queries ride the **sideways/spatial graph (#429)**, not the containment spine, and are
+    where caching earns its keep — the opposite of the cheap O(1) data-cascade reads.
 - A **pluggable external AI backend** — the dream the contracts eventually enable.
 - **Retire the `CvInfos.h` umbrella** — include the specific `CvXInfo.h` directly.
 - Continue converting imperative maintainers into top-down, interface-bounded machines (the cascade is the

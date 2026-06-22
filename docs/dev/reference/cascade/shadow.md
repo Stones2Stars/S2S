@@ -156,6 +156,41 @@ numbers, fixed by re-authoring the bands as INCREMENTAL deltas (a data fix, not 
 attributed largely to **corporations** (excluded from the modifier cascade by design — a `Better`, not a bug). No step
 was a hypothesis; each was a mapped source.
 
+### 5a. Represent the mechanic — never skip one to fit the data ([DEC-represent-dont-fit](../../architecture/decisions.md#dec-represent-dont-fit))
+
+**This doc is the canonical home of [DEC-represent-dont-fit](../../architecture/decisions.md#dec-represent-dont-fit) (owner ruling 2026-06-21).**
+The default reading of a divergence is **the emulator is missing a mechanic** — trace it to its named engine source(s)
+and *represent* it. The cardinal sin (the recurring bait failure) is **skipping, dropping, or inventing a mechanic to
+make the number fit** — "the dormant set still yields," "exclude it wholesale," folding a value into the wrong term
+because the total lands closer. A gap is a lead to a real game mechanic not yet represented, **until proven otherwise**:
+
+- **Trace to the leaf, exhaustively.** `getExtraYield100 = m_aiExtraYield×100 + m_buildingExtraYield100`; the non-building
+  part (`m_aiExtraYield`) is fed *only* by its `changeExtraYield` callers — **corporation yield** (`setCorporationYield`/
+  `updateCorporationYield`) and **`BuildingYieldChange`** (`setBuildingYieldChange`, gated on `hasFullyActiveBuilding`).
+  Enumerate every caller; do not stop at the first plausible source (the "specialists bake into `m_aiExtraYield`" line is
+  an *old-save* comment — current code routes corp + building-yield-changes, not specialists).
+- **Changing the math = changing a game mechanic.** That is permitted ONLY for a bug **verified beyond reasonable doubt**,
+  and even then as a **deliberate, surfaced** decision (the owner's `Bug` verdict, §4) — never a quiet gap-closer. This
+  mod's 25-year damage came from unprincipled "balance"/"fun" edits with no grasp of consequences; the rework's whole
+  point is a system understood and reliable end-to-end (also the precondition for trustworthy AI work). A divergence you
+  cannot yet attribute is surfaced (`Weird → ask owner`), not patched.
+
+### 5b. Verify MECHANIC-BY-MECHANIC; never trust an averaged or aggregate output ([DEC-per-mechanic-parity](../../architecture/decisions.md#dec-per-mechanic-parity))
+
+**This doc is the canonical home of [DEC-per-mechanic-parity](../../architecture/decisions.md#dec-per-mechanic-parity) (owner ruling 2026-06-22).**
+Parity is established by checking that **each individual mechanic** computes the engine's value — the per-mechanic
+quantities the dump already emits (`basePlotYield`, `baseTradeYield`, `specialist`, `modBuilding`/`modBonus`/
+`modPlayer`/`modPower`/`modArea`/`modCapital`/`modEvent`, `extraBuildingYield100`, `buildingYieldChange`,
+`corporationYield`, …). dry's per-mechanic computation must equal the engine's, **per scope-instance, exactly.**
+
+**⛔ NEVER compare or AVERAGE aggregate/realized outputs** — a realized-yield gap, and *especially* an empire-
+or world-AVERAGED gap, **hides offsetting per-mechanic errors**: a `modifier −47pp` cancels a compensating term
+and the average reads "≈0" while the calc is wrong everywhere. That cancellation is the kraken's trap (it is how
+a wrong calc reads "so close"). **Strip every empire/world average from the metrics.** The only sound metric is
+per-mechanic, per-instance: *which mechanics match the engine, and for the ones that don't, which instances
+diverge and by how much* — never a mean. A channel is parity **only** when every feeding mechanic matches
+exactly across all instances; an aggregate that nets to zero proves nothing.
+
 ## 6. The shadow surfaces (where the diff is read)
 
 Three live surfaces, all built for the pilot. The mechanics and gating of these hook *shapes* are the
@@ -184,19 +219,51 @@ AI-player sweep is a *purer* cascade-vs-engine comparison, free of human-UI arti
 > Delegate the bulk read to the cheap `data-reader` sub-agent; never pull raw endpoint/log dumps into an expensive
 > context. Full surface: [observability](../observability/README.md).
 
-## 7. The offline formula sandbox — `cascade_sim.py`
+## 7. The offline calculators — two legs (`dry_calc.py` + `cascade_sim.py`)
 
-The in-game shadow measures real game state; its offline twin is the **formula comparator**
-`Tools/ModifierCalc/cascade_sim.py`. It implements BOTH the legacy combine and the cascade calc-flows and, fed the
-**same input vector** (base + the flat/percent source lists, identical on both sides, read from the migrated
-`Assets/Data` JSON), computes both + their delta — so the delta is **purely formula-attributable** (it is not a
-game-state simulator; it isolates the combination logic, the only thing that differs). It exists to:
+The in-game shadow measures real game state; offline there are **two complementary Python calculators** in
+`Tools/ModifierCalc/`, validating different things — keep them distinct:
+
+- **`dry_calc.py` — the PRIMARY zero-ride-in full calc (per scope).** Ports every economic per-turn channel
+  (city yields, commerce split, health/happiness, defense, maintenance/upkeep, growth, greatPeopleRate,
+  tradeRoutes, inflation, property ±rates, empire roll-ups) and computes **every value from the JSON deposits +
+  fictitious game STATE — ZERO legacy ride-in** ([DEC-calc-zero-ride-in](../../architecture/decisions.md#dec-calc-zero-ride-in)).
+  It mirrors the in-game modifier engine: a `ModifierSlot` (== `CvModifierSlot`) combine with the swappable
+  calc-flow, and a **scope walker** that accumulates deposits DOWN the spine into one slot. It validates each
+  channel **in ISOLATION** on hand-built fabricated input (exact arithmetic; `python dry_calc.py` runs the
+  self-tests) — it does **not** read live data / dumps / `samples/*.json`. (The unit-plane combat stats are
+  out — last/largest surface.) This is the offline birthplace of the calc that ports to the DLL.
+- **`cascade_sim.py` — the same-input-vector COMBINE comparator.** It implements BOTH the legacy combine and
+  the cascade calc-flows and, fed the **same input vector** (base + the flat/percent source lists, identical on
+  both sides, read from the migrated `Assets/Data` JSON), computes both + their delta — so the delta is **purely
+  formula-attributable** (it is not a game-state simulator; it isolates the combination logic, the only thing
+  that differs). Unlike `dry_calc.py` it **rides in** the base + engine-state values from the dump fixtures (its
+  job is the formula, not the data→value derivation). It exists to:
 
 1. **tune toward parity-adjacency fast** — sweep a large source-mix space and see where/how-much the two diverge;
 2. **prototype new calc-flows** before wiring them into the DLL;
 3. **serve as the map-before-delete map** — extracting + emulating every legacy calc is required anyway to safely
    delete it, so the same artifact is also the demolition map. It is the de-facto **test harness** for a closed-EXE
    game that cannot carry real unit tests.
+
+**What FULL value-parity testing actually requires — three SEPARABLE pieces (owner clarification 2026-06-21).**
+The thing that was unclear (and cost real churn) is that parity cannot be reached by *riding in* legacy
+numbers; it needs the calc's input to **provably match what the game sees**, which factors into three clean
+pieces, each buildable on its own:
+1. **the pure CALC** — `dry_calc.py`, a function of `(raw-state input model + Assets/Data JSON)` only, zero
+   ride-in ([DEC-calc-zero-ride-in](../../architecture/decisions.md#dec-calc-zero-ride-in));
+2. **the full game-state JSON SPEC** — the raw state of the game as ONE document along the scope spine
+   (`world→teams→empires→areas→cities→plots`), **raw observed facts only** (no calculated value; the lone
+   map-number is distance-from-capital). Spec + worked example: `Tools/ModifierCalc/README.md` +
+   `raw_state.example.json` (this spec did not exist before 2026-06-21 — it was the missing piece);
+3. **the separate EXTRACTOR** — an app that produces that game-state JSON from the **live** game, which is
+   exactly what the Orwellian observability bar ([DEC-obs-scale](../../architecture/decisions.md#dec-obs-scale))
+   is for (every spec field must be readable from the wire, never the screen).
+
+Parity then = run the calc on the live-derived document, read the game's realized values alongside, diff
+per channel. Because the inputs are provably identical (same raw facts), every divergence is attributable to a
+named source — not a ghost hunt. `dry_calc.py` (piece 1) + the spec (piece 2) are built; the extractor (piece
+3) is the next, separate app.
 
 **Verified pilot results (6-city sweep, 2026-06-19):** after the x100 de-scale fix and the incremental-band curation,
 production reached near-parity, commerce landed at mean |gap| 8.8% (5/6 within ±10%) — which, per §3, is

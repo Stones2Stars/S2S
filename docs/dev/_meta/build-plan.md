@@ -102,13 +102,11 @@ ledger.
 2. Validate: every doc grounded + cited; the comprehension map resolves; no dangling links. ✅ (the
    non-parked rebuilt set is link-clean; remaining broken links live only in `plans/parked/` — un-rebuilt,
    carried-as-is material, see §2a-bis.)
-3. Promote `docs2/` → `docs/dev/` and repoint the read-gate manifest
-   (`.claude/read-gates/cascade.json` `docsDirs`) to the new set. ✅
+3. Promote `docs2/` → `docs/dev/`. ✅
 4. **The old set was kept INSIDE the repo as `old-docs/` at the repo root** — NOT archived to a sibling
    folder (the earlier plan). This was deliberate: the old set is the source material for the **adversarial
    parity-validation pass** (diff `old-docs/` against `docs/dev/`: is anything still-current and load-bearing
-   missing from the rebuild?). `old-docs/` is **NOT authoritative** and must not be read as truth — the
-   read-gate dirs exclude it, so it is never force-read. **Once parity is confirmed, the OWNER removes
+   missing from the rebuild?). `old-docs/` is **NOT authoritative** and must not be read as truth. **Once parity is confirmed, the OWNER removes
    `old-docs/` — moving it OUT of the repo (owner ruling 2026-06-20), not an agent `rm`.** Do not delete it.
 
 Until the owner moves `old-docs/` out (parity confirmed first), the old set stays in-repo as diff source;

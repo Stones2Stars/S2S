@@ -11,6 +11,7 @@
 > designed, which is somehow worse.
 >
 > This document is not holy writ. It is an outlet. No process shall ever cite it.
+> Names stay out of it — we ridicule the code, never the author or the module it came from.
 
 ---
 
@@ -263,12 +264,26 @@ despair is that "what traits does this leader have" has no answer until you *als
 option, a separate templated class, and a type that was never really there.
 
 *Status: untangled (#428) — and then the verdict came back harsher: it was never one trait wearing a
-disguise, it was **two completely different traits hacked on top of each other** (in true TB fashion).
+disguise, it was **two completely different traits hacked on top of each other**.
 So they are now split into **two separate sets** — `Assets/Data/traits/simple/` (88) and `…/complex/` (302,
-the entire complex system, which turns out to be one module: Thunderbrd) — the `replacedBy` cross-link is
+the entire complex system, which turns out to be a single content module) — the `replacedBy` cross-link is
 **dropped** (you don't get "replaced by" a stranger), and complex traits are slated to become their **own
 Info type behind a shared interface** in the coding pass. The store stopped marrying strangers; the divorce
 is now finalized in two separate filing cabinets.*
+
+*Later chapter (the divorce backfires) — earning its keep on the live-parity pass:* with the link **dropped**,
+the offline value-calc — fed the actual running game to find where its numbers diverge — had no way to know
+that a leader's held `TRAIT_INDUSTRIOUS1` should read the *simple* sheet (`+30%` production trade) or the
+*complex* one (`+0%`). It took several reload-and-compare rounds to rediscover, from first principles, the very
+fact that had been thrown away: under one game option the engine simply **overwrites the base trait wholesale
+with its replacement** — the exact roundabout the divorce was meant to escape, now re-derived by hand because
+the only record of it had been shredded. All hail the gift for inventing endlessly convoluted ways to
+not follow any kind of common sense. The resolution keeps them **fully apart, properly this
+time**: the complex set is made *self-complete* — each complex trait folds in its own override (the base sheet
+overwritten by the replacement, blanks filled from the base) and is filed under the held type — so the calc
+reads exactly one clean definition per game-option and **neither set depends on the other at runtime**. The exes
+do not reconcile; each simply keeps a complete copy of the shared records instead of one quietly reaching into
+the other's filing cabinet mid-sentence.*
 
 ---
 

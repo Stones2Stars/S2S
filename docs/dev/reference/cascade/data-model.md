@@ -3,6 +3,8 @@
 > **Status:** reference   ·   **Verified against:** old `docs/dev/plans/data-model-spec.md` (the **v3-LOCKED** consolidated spec, 2026-06-16) reconciled with the source sub-specs (`modifier-cascade-spec` §1–4, `enabler-cascade-spec` §3/§5/§6, `tally-cascade-spec`); re-confirm against those specs and the live `readJson` parser before relying on a detail.
 > **Grounding:** the spec citations carry `spec §N` references; the few engine facts carry `file:line` to the **live source** (`CvCity.cpp`, `CvGameCoreUtils.cpp`, `CvBuildingInfo.cpp`, `CvPlayer.cpp`). Line numbers **drift** — confirm the named function, not the integer.
 > This is the **authoring surface**: the JSON vocabulary a modder writes — the reserved sections, the modifier families, the shared atom/condition/count vocabulary, the scopes, and the human-readable value convention. It is the data *shape*; the machines that **consume** it (enabler / modifier / tally) are [`../../explanation/cascade-architecture.md`](../../explanation/cascade-architecture.md), not re-explained here.
+>
+> **⛔ AUTHORING AUTHORITY ⇄ this doc — keep in LOCKSTEP.** The MODDER-facing [`docs/modders/datastructure/README.md`](../../../modders/datastructure/README.md) is the **canonical authoring reference** (what a modder writes against, so they don't break things); THIS doc is its **engine-rationale companion**. Any change to the scope / target / predicate / family vocabulary lands in **BOTH** — they must never drift.
 
 **BLUF.** Every game entity (a building, unit, tech, civic, …) is **one JSON object** whose top-level keys are a fixed set of **reserved sections** (`enables`/`obsoletes`/`replaces`/`disables`/`requires`/`allowed`/`grants`/`identity`/…) plus flat **modifier families** (`food`, `production`, `happiness`, one per `PROPERTY_*`, …). One shared **vocabulary** of atoms, conditions, scopes, and counts composes `requires`, the `enabled`/`disabled` conditions, the `per` count-scalers, and `grants` — they are not separate shapes. Values are **human-readable** (`7`, `25`, `1.5`); the ×100 conversion happens once at load, never in the JSON. The **cold-modder rule** is the bar: the JSON must read correctly to a modder with zero codebase knowledge.
 
@@ -59,8 +61,7 @@ A bounded boolean tree: **`{ all:[…], any:[[…]], noneOf:[…] }`** (AND of c
 
 ### 2.5 Predicates — each a system's isolated query-surface
 
-- **bare** (parameter-free, desugars to `{PRED:true}`): `IS_WATER` · `IS_FRESHWATER` · `IS_FLATLANDS` · `IS_HILLS` · `IS_PEAK` · `HAS_RIVER` · `HAS_IRRIGATION` · `COASTAL_LAND` · `IS_COASTAL` · `IS_CAPITAL` · `HAS_POWER` · `HAS_STATE_RELIGION` · `STATE_RELIGION_IN_CITY`.
-- **parameterized** `{PRED: param}`: `{HAS_FEATURE:FEATURE_X}` · `{HAS_TERRAIN:TERRAIN_X}` · `{HAS_IMPROVEMENT:IMPROVEMENT_X}` · `{HAS_BONUS:BONUS_X}` · `{HAS_MAP_CATEGORY:MAPCATEGORY_X}` · `{HAS_RELIGION:RELIGION_X}` · `{STATE_RELIGION:RELIGION_X}` · `{HOLY_CITY:RELIGION_X}` · `{HAS_CORPORATION:CORP_X}` · `{latitude:{min,max}}` · `{natureYield:{…}}` · `{workedBy:SELF}`.
+- **The canonical predicate vocabulary lives in the authoring authority, NOT here (owner ruling 2026-06-22 — reference, don't mirror, so it can't drift):** the bare facts (environment `IS_*` target-relative, plot attributes `HAS_*`, city-relative `VICINITY ⊇ WORKABLE ⊇ IS_WORKED`, city/player) and the parameterized predicates are enumerated in **[modder `datastructure/README.md` §3.4](../../../modders/datastructure/README.md#34-predicates--a-systems-runtime-state-query)**. This section keeps only the engine-side semantic RULES the authoring doc doesn't carry:
 - **membership SUGAR** `{terrain|feature|bonus:[Type,…]}` — the compact "the plot's terrain/feature/bonus is ONE OF these" form. **Desugars to `any`-of the canonical single-valued predicate** (`{terrain:[A,B]}` ≡ `any:[{HAS_TERRAIN:A},{HAS_TERRAIN:B}]`). `HAS_TERRAIN`/`HAS_FEATURE`/`HAS_BONUS` is canonical; the list is bounded sugar. Bare `HAS_FEATURE` ("has ANY feature") coexists, complementary to the list ("has one of THESE").
 - **SCOPE of the plot-substrate predicates:** `HAS_TERRAIN`/`HAS_FEATURE`/`HAS_IMPROVEMENT` are **VICINITY** (the city's current workable radius, enabler-spec §8). `HAS_MAP_CATEGORY` is **CENTER-plot** (the city's own plot, legacy `isMapCategory`) and treats an **uncategorized plot as valid**.
 - **negation** = the `disabled` twin / `noneOf` container — never a `false` value. A **missing/unknown predicate is IGNORED, not false** (a retired system's references go quiet, never spuriously disable — enabler-spec §3).
@@ -156,6 +157,31 @@ The ceiling on **how many may exist** — distinct from `requires` ("what I NEED
 - **SPLIT families**: `yield`→`food`/`production`/`commerce`; `commerce`→`gold`/`research`/`culture`/`espionage`; `property`→ one family per `PROPERTY_*`. **GROUPED families** keep members (`maintenance`/`defense`/…). Entity-targeted deposits stay **keep-on-source** keyed by `targetType.{TARGET}`.
 - The **unit plane** adds its own family set (`strength`/`withdrawal`/`firstStrike`/`bombard`/`collateral`/`air`/`heal`/`movement`/`experience`/`workRate`/`cargo`/`vision`/`capture`/…). Families are **extensible** (one per concept), so this doc gives the *kinds*, not a frozen enumeration; the exhaustive per-entity list lives in the [migration rename registry](../../json-migration/migration-renames.md).
 - **Ownership** of a cross-entity (entity-keyed) modifier is by **semantic sense** — it lives on whoever DELIVERS it (the *deliveryguy*), keyed by the target, not inverted onto the target — [DEC-deliveryguy](../../architecture/decisions.md#dec-deliveryguy). How deposits flow, combine, and condition (`enabled`/`disabled`/`per`) is the **modifier machine's** job — [`cascade-architecture.md` §3](../../explanation/cascade-architecture.md).
+
+### 4.1 Deposit-key vocabulary (the FULL set)
+
+A deposit path is `<family>.<scope:singular>[.<target:plural> | .<targetType>.{TYPE} | .<subScope>][.<member>].<unit>`. The **scope-singular / target-plural rule** and the **full key vocabulary** (object targets + entity-keys + predicates) are the authoring authority's — [modder `datastructure/README.md` §6](../../../modders/datastructure/README.md#6-effects--modifier-families) — **not restated here (reference, don't mirror)**. This section keeps only the engine-side combine/scale detail the authoring doc omits:
+
+**Units (the leaf — how the value combines into the slot):**
+- `flat` — additive (Σflat). `percent` — additive percent (Σ, ÷100). `multiplier` — multiplicative (Π, ×100 fixed-point).
+- `perPopulation` — flat × city population (`YieldPerPopChanges`/`CommercePerPopChanges`).
+- `perSpecialist` — flat × the city's TOTAL specialist count, under `.specialist[.{SPECIALIST_*}]` (legacy `getExtraSpecialistCommerce` all-type; building instances STACK empire-wide — see [tally](tally.md) / `compute_player_specialist_commerce`).
+
+**Deposit TARGETS + entity-keys → the authoring authority (reference, NOT mirrored — owner ruling 2026-06-22):**
+the deposit-target axis (the plural object targets `plots`/`units`/`cities`/`areas`/`empires`, filtered by a fact
+predicate) and the named-entity keys (`improvements`/`terrains`/`features`/`bonus`/`buildings.{TYPE}`), plus the rule
+that chooses between them — **a plot/unit FACT → a `plots`/`units`-target predicate; a NAMED entity → its
+entity-key** — are enumerated in **[modder `datastructure/README.md` §6](../../../modders/datastructure/README.md#6-effects--modifier-families)**.
+`plotTypes` folds into the `IS_*`/`HAS_*` plot predicates and the bespoke `seaPlot` is removed. **Engine-side
+implementation note (this doc's job):** a `plots`-target deposit is realized by evaluating its predicate(s) against
+**every plot in scope** and depositing onto each match (the per-worked-plot delivery) — one uniform mechanism, no
+per-mechanic special path (it retires `getSeaPlotYield`/`getYieldChangeAt`/the per-plot-type accumulators).
+
+**Sub-scopes (a conditioned slice of a scope):** `capital` (capital-only, `<c>.empire.capital`), `goldenAge` (while `IS_GOLDEN_AGE`), `tradeRoute` (trade-route yield modifier, `<c>.<scope>.tradeRoute.percent`).
+
+**State value-tables (keyed by a game STATE, summed by threshold/membership):**
+- `byEra.{C2C_ERA_*}` — **CUMULATIVE by threshold**: every band whose era ≤ current era applies (heritage `EraCommerceChanges`; legacy `processHeritage` sums each band where `currentEra >= band`). Needs the ordered era list (`world.eras`).
+- `byTech.{TECH_*}` — per-tech value. ⚠ Semantics under review: a naive sum over every tech held explodes (+600% research), so it is **not** currently folded — its real legacy meaning must be confirmed before modelling.
 
 ---
 

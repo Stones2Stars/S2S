@@ -177,7 +177,39 @@ extraction) → Tier 2 audits. Small per-category PRs.
 
 ---
 
-## 4. Medium holes (fold into the campaign or the fix-now list)
+## 4. `CvHttpServer.cpp` — internal-structure pass (NEW, owner ruling 2026-06-21)
+
+`Sources/Tools/CvHttpServer.cpp` started as a **POC** and its structure was **never specced** after; it has
+since grown to **thousands of lines** by endless bolt-on (every new endpoint / dump / shadow appended in
+place). It now reads as one long file: a giant `evaluateGate` switch (~2000 lines of `if (strcmp(szAction,
+…))` branches, each its own inline game-object walk + picojson emit), a separate snapshot/publish path
+(`renderPlayers`/`renderCities`/`renderUnits`), the SSE `/events` path, the mailbox plumbing, and the
+top-level routing — all interleaved with no shared section boundaries or reusable emit helpers. The new
+`/extractor` endpoint (2026-06-21) is itself another bolt-on onto this; **we are paying for the missing
+structure now** (hard to read, hard to find, hard to reuse — every endpoint re-hand-rolls the same
+player/city/plot iteration + picojson patterns).
+
+**The task (a SEPARATE, dedicated pass — [DEC-proper-once](../architecture/decisions.md#dec-proper-once), not
+another bolt-on):** spec the structure, then reorganize for **readability + reusable sections**. Likely shape
+(to be refined at the pass):
+
+- **Split the concerns into sections/units:** routing · snapshot-publish (`/players`/`/cities`/`/units`) ·
+  SSE (`/events`) · the mailbox (`evalRequestBlocking`/`serviceEvalMailbox`) · the `/diagnostic` gate/sweep
+  family · the `/extractor` family. (A file split is on the table, but first establish clean internal
+  sections + a shared helper layer.)
+- **Factor the repeated game-object walks** — one reusable "for each alive player → team/cities/plots"
+  traversal the endpoints share, instead of each branch re-writing it.
+- **Factor the picojson emit boilerplate** — small helpers for the `o[k]=picojson::value((double)…)` /
+  type-name / array-of-types patterns repeated hundreds of times.
+- **Break up `evaluateGate`** — one handler per action (table-dispatched), not a 2000-line switch.
+
+**Constraints:** C++03/VC7.1; the mailbox snapshot-isolation contract (server thread NEVER touches game
+objects — game-thread-only via the mailbox) must be preserved exactly; behaviour-preserving (the wire output
++ gates stay identical — it is a routing/structure change, not a content change, mirroring the logging
+consolidation's "lines are stable, structure evolves" posture). Verify by Assert build + an endpoint-by-endpoint
+output diff before/after. Tracked here; pick it up as its own pass.
+
+## 5. Medium holes (fold into the campaign or the fix-now list)
 
 - **Dormancy shadow uncached per-turn JSON IO** — `cascadeDormancyShadow` calls the uncached
   `cascadeReadJsonAvailability` (ifstream + `FindFirstFile` dir scan) per distinct built building per turn when
