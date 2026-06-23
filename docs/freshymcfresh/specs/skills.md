@@ -26,8 +26,9 @@ The catalogue of a unit's **innate boolean abilities** — the `blitz`/`amphibio
 > **`skills`**, to avoid colliding with the **empire-level `capabilities`** (a deliberate judgement call). The
 > migrated **data has not caught up** — it still authors these under a `capabilities` block on units / promotions
 > / unit-combats (82 distinct keys under `capabilities`, 0 under `skills`). So renaming the unit block
-> `capabilities` → `skills` is a **curator fold**. The separate **empire `capabilities`** abilities get their
-> **own glossary** — not here.
+> `capabilities` → `skills` is a **curator fold**. **Authoring today:** the data + curator still emit `capabilities`
+> for unit abilities until the fold runs, so new units/promotions use that live key for now. The separate
+> **empire `capabilities`** abilities get their **own glossary** — not here.
 
 **Grounding:** entries come from the curator capability tables (`CAP_BOOL`/`CAP_PAIR`/`CAP_COUNT`/`CAP_LIST` in
 `curate_promotion.py`/`curate_unit.py`/`curate_unitcombat.py`) and owner rulings. Meanings are **not** asserted

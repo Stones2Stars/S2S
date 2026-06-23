@@ -155,7 +155,8 @@ A magnitude names the **nature** of the value, not how the engine combines it (�
 - **`percent`** — additive percent delta (`+50%` = `50`).
 - **`multiplier`** — true ×factor, identity `100` (`×2` = `200`).
 
-(Plus rare `postMultiplier` / `rawPercent` — engine detail, seldom authored.)
+(Plus `postMultiplier` / `rawPercent` — rare **engine-internal** units, **not for normal authoring**; ignore them
+unless porting a specific engine quirk.)
 
 > **Values are human-readable. Always.** `7`, `25`, `1.5` — never ×100. **Rule (fixed-point):** all engine math
 > is integer fixed-point ×100 (no float — Civ4 MP is deterministic lockstep and float desyncs), but the single

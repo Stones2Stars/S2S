@@ -135,7 +135,7 @@ the unit may use the **load/unload** action is `is_cargo_vessel`, and the attack
 `defend_only` (both skills, [json](json.md) §8). The *amounts* live in the **`cargo`** modifier family (a unit
 self-accumulator, set on the unit or a promotion), with two complementary members:
 - **`cargo.space`** — how much the unit **carries** *and what*: `cargo.space.{unit: IS_<domain>, flat: N}` — a
-  carrier is `cargo.space.{unit: IS_AIR, flat}` (*you can't transport a plane on a landing craft*); an
+  carrier is `cargo.space.{unit: IS_AIR, flat: N}` (*you can't transport a plane on a landing craft*); an
   unrestricted hold is just `cargo.space.flat`. (From legacy `iCargo` + `DomainCargo`.)
 - **`cargo.size`** — the unit's cargo **footprint** (room it occupies when loaded), **defaulting to 1** if unset.
   (SizeMatters extends cargo via `smSpace`/`volume`/`volumeModifier` — a separate rework.)

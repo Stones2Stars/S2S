@@ -55,8 +55,9 @@ calculator is checked against).
 > is the machine firehose.
 
 > **`/state` is a real API — two consumers.** Hand-building the validator doubles as building the **frontend's**
-> game-state API: `/state` serves both the **validator** (the calculator's input) *and* the **frontend** (a clean,
-> comprehensible state API for the UI). So it is held to **API standards** — stable, legible, comprehensible — not
+> game-state API: `/state` serves both the **validator** (the calculator's input) *and* the **frontend** — the
+> game's UI / display client (the thing that *shows* state, distinct from the engine that computes it) — as a
+> clean, comprehensible state API. So it is held to **API standards** — stable, legible, comprehensible — not
 > throwaway diagnostic output. (`/extractor`, `/shadow`, `/decompose` are the throwaway/verification surfaces.)
 
 Shape: **`/state/<entity>/<id>/<slice>`**.

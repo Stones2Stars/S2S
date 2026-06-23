@@ -105,7 +105,8 @@ cutover, never piecemeal.
   decomposition both sides); if the data to attribute it isn't emitted, the first step is to emit it.
 - **The bar is parity-*adjacent*, not parity.** The cascade deliberately corrects latent legacy bugs, so the end
   state is "close, same ballpark," not byte-identical — and ±10% is **not** "adjacent," the bar is sharper. A
-  six-rung **care scale** (Fine · Rounding · Better · Weird · Bug · Meltdown) dispositions each surviving
+  six-rung **care scale** — Fine · Rounding · Better · Weird · Bug · Meltdown (escalating: the first three are
+  acceptable as-is, the last three want a fix) — dispositions each surviving
   divergence; the **owner** assigns the verdict — the shadow surfaces facts, it does not self-judge.
 
 ---
