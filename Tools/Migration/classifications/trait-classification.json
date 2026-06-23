@@ -5271,7 +5271,7 @@
      "xmlTag": "TechResearchModifiers",
      "confidence": "high",
      "evidence": "CvPlayer.cpp:8215 — getNationalTechResearchModifier(eTech)+calculateResearchModifier(eTech) modifies research rate ONLY while researching that tech; the tech is a conditioner/unlocker, not a per-turn-effect producer",
-     "openQuestion": "HANDOFF RULING (building-cascade-conversion.md): STAYS trait-side; surfaces on a tech only as a derived boostedBy reverse-index. CONFIRMED no double-author: curate_tech.py TECH_BOOSTS has NO TraitInfo row (folds only Building/Specialist/Improvement/Route tech-conditioner boosts). Two conventions: (a) keep-on-trait research.byTech.{TECH} [HANDOFF default], vs (b) fold-onto-tech keyed-by-trait. PROPOSE keep-on-trait per HANDOFF; final CREST resolution deferred (tech may behave differently from bonus). NO COMMITMENT."
+     "openQuestion": "HANDOFF RULING (modifier.md, keep-on-source rule): STAYS trait-side; surfaces on a tech only as a derived boostedBy reverse-index. CONFIRMED no double-author: curate_tech.py TECH_BOOSTS has NO TraitInfo row (folds only Building/Specialist/Improvement/Route tech-conditioner boosts). Two conventions: (a) keep-on-trait research.byTech.{TECH} [HANDOFF default], vs (b) fold-onto-tech keyed-by-trait. PROPOSE keep-on-trait per HANDOFF; final CREST resolution deferred (tech may behave differently from bonus). NO COMMITMENT."
     },
     {
      "field": "BuildingProductionModifiers",

@@ -2,15 +2,15 @@
 """Curate Bonus to the top-down model (#428) — thin config over curate_common (the shared core).
 
 A bonus (resource) is a pure SOURCE / CONDITIONER, positioned ABOVE plot/feature/improvement/building in the
-containment spine (building-cascade-conversion.md:281 `… resource → bonus → plot → feature → improvement →
-building → unit`). It cascades DOWN; it is NEVER a target ("the coal test", §0: sources/enablers are never
-targets). So the bonus carries ONLY:
+containment spine (enabler.md: `… resource → bonus → plot → feature → improvement → building → unit`). It cascades
+DOWN; it is NEVER a target ("the coal test": sources/enablers are never targets, modifier.md). So the bonus carries
+ONLY:
   - its OWN amplification deposits:
       * `YieldChanges` -> `yield` (food/production/commerce) at **plot** scope — the on-map resource buffs the
         TILE it sits on, downward (owner 2026-06-15: "the actual map bonus buffs the plot downwards").
       * `iHealth`/`iHappiness` -> health/happiness at **empire** scope — the trade-connected resource benefits
-        the player's cities (a connected bonus enables/amplifies empire-wide; building-cascade-conversion.md
-        :1205-1207 trade-connected = player/empire scope).
+        the player's cities (a connected bonus enables/amplifies empire-wide; modifier.md: trade-connected =
+        player/empire scope).
   - `enables` — the buildings/units/routes that REQUIRE the bonus (PrereqAndBonus / PrereqOrBonuses / vicinity,
     store-indexed): the bonus is the CONDITIONER, so those targets surface ON it as the `enables` edge. The
     Culture chain (a Culture national wonder GRANTS a BONUS_* that gates the punk buildings) appears here.

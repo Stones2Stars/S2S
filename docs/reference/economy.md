@@ -64,7 +64,7 @@ supply + corporate maintenance.
 - **Global Warming is compiled OUT** (`// #define GLOBAL_WARMING`, `CvGameCoreDLL.h:232`) — `doGlobalWarming`,
   `getWarmingDefense`/`getNukesExploded`, all `GLOBAL_WARMING_*` defines are **dead vestiges** (the Pedia even shows a
   zero-effect stat). Removal is tracked (the old global-warming-mod plan).
-- **Pollution is LIVE** via the [property solver](engine.md#properties) (propagators → interactions → sources).
+- **Pollution is LIVE** via the [property solver](engine.md#properties--the-generic-attribute-bag--its-legacy-auto-placement) (propagators → interactions → sources).
   Rates (`CIV4PropertyInfos.xml`): city decay ~6%/turn + 1/pop/turn; city→plot ~5%, plot→city ~12%, plot→plot ~4%;
   target 0. **24 band buildings** (12 air, `POLLUTION_LIGHT_SMOG`@≥400 … `BLACKENED_SKIES`@≥1950; 12 water …
   `TOXIC_HYDROSPHERE`@≥1800), placed/removed by `checkPropertyBuildings` — a property-band maintainer the cascade replaces.

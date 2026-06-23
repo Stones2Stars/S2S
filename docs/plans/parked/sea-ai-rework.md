@@ -2,8 +2,7 @@
 
 Naval AI is a known weak area in this codebase and is slated for a broader rework.
 This file captures the starting point, the bug that kicked it off, and the logging
-now in place to drive a data-driven improvement (see
-[`../reference/ai-logging-reference.md`](../reference/ai-logging-reference.md)).
+now in place to drive a data-driven improvement (the tagged AI logs).
 
 ## The trigger bug
 

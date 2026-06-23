@@ -2,7 +2,7 @@
 """Curate LeaderHead (#428, Tier D #30) — the AI PERSONALITY entity: ~90 AI/diplomacy/strategy params that
 define how an AI player behaves all game. NOT a cascade source/target (zero per-turn-effect fields) — virtually
 everything lands in the unified `ai` group, subgrouped (this is the densest `ai` entity, so it shapes the `ai`
-sub-group vocabulary; building-cascade-conversion §2). 119 records, base only. EXE-link: 1 DllExport (getArtInfo
+sub-group vocabulary; the authored-object `ai` group, json.md). 119 records, base only. EXE-link: 1 DllExport (getArtInfo
 -> ArtDefineTag is EXE-bound; all else unconstrained). Bespoke curator.
 
 `ai` subgroups (owner 2026-06-16: keep granular — a big ai block is expected for the AI-behaviour entity):

@@ -6,7 +6,7 @@ merges module overlays by Type (preservation invariant: module data is BAKED INT
 and exposes per-entity tables plus a generic ENABLER reverse-index (who-enables-what), built by
 inverting the prereq references. The top-down curators query this; they never re-walk the XML.
 
-See docs/dev/plans/building-cascade-conversion.md -> "THE MODEL (locked 2026-06-14)".
+See docs/specs/enabler.md (the top-down enabler topology this reverse-index realizes).
 
   python3 store.py            # load + print coverage/module stats
   python3 store.py --enables TECH_LANGUAGE   # show what a type enables

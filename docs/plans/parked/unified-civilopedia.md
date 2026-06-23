@@ -25,11 +25,11 @@ the upstream half: the data model and its loading. Nothing about the website liv
 > from it. No hand-maintained duplicate that can drift.**
 
 This C2C-derived codebase is "in this mess" precisely because the same fact lives in several
-hand-maintained places that fall out of sync — the premise of
-[`dead-code-xml-pass.md`](dead-code-xml-pass.md) (zombie data, orphan `<Type>`s, dead
+hand-maintained places that fall out of sync — the premise of the
+dead-code / dead-XML pass (zombie data, orphan `<Type>`s, dead
 `TXT_KEY_*`), and the very pattern the declarative-loading work *deleted* inside the DLL: the
 four hand-written methods (`read`/`copyNonDefaults`/`getCheckSum`/ctor) that "all had to agree
-field-for-field" ([`declarative-info-loading.md`](../reference/declarative-info-loading.md)).
+field-for-field" (see [`json.md`](../../specs/json.md)).
 Every game-content duplicate is a future drift bug. So the game-side goal is a data model where
 **a fact is authored once and loaded uniformly** — and the cleanup + loading work below is how
 we get there.
@@ -50,7 +50,7 @@ Three kinds of game content, each with exactly one authoritative home. (Develope
 
 **The cross-cutting join.** Entities and concepts carry only `TXT_KEY_*` references; the strings
 live separately. The audit lever: a key referenced by an entity with no GameText entry is a
-content bug (Tier-3 `TXT_KEY` audit, [`dead-code-xml-pass.md`](dead-code-xml-pass.md) §3.3).
+content bug (Tier-3 `TXT_KEY` audit, the dead-code / dead-XML pass).
 
 **Not a content kind here:** live game state / telemetry (`CvHttpServer`, GameTracker,
 `Benchmarks/`) — internal dev tooling for monitoring AI behaviour, nothing to do with content.
@@ -66,17 +66,17 @@ a clean, minimal, uniform model first; never bless the current haphazard XML as-
 - **Finish the `#196` declarative migration.** Hybrid/un-migrated classes (`CvBuildingInfo`,
   `CvUnitInfo`, `CvPromotionInfo`, `CvTraitInfo`, `CvImprovementInfo`, `CvCivicInfo`) still carry
   hand-written remnants alongside `getDataMembers`
-  ([`declarative-info-loading.md`](../reference/declarative-info-loading.md) status §). Every
+  (see [`json.md`](../../specs/json.md)). Every
   field pulled into the declarative registry is one fewer hand-maintained agreement that can
   drift — and one field that becomes uniformly loadable/inspectable. The "not yet supported"
   wrappers (2D arrays, pair-vectors, delayed-resolution vectors, non-info enums) are the
   remaining infra gap to close.
 - **Run the dead-XML pass.** Orphan `<Type>` entries, dead schema tags, dead `TXT_KEY_*`
-  ([`dead-code-xml-pass.md`](dead-code-xml-pass.md) Tier 3). Dead data is drift waiting to
+  (Tier 3). Dead data is drift waiting to
   happen and noise in every surface.
 - **De-duplicate authored prose against the data.** Where a player doc restates numbers that
-  live authoritatively in XML/`CvCity.cpp`/concept text (e.g.
-  [`docs/players/mechanics/conscription.md`](../../../docs/players/mechanics/conscription.md) re-typing
+  live authoritatively in XML/`CvCity.cpp`/concept text (e.g. a player mechanics doc such as the
+  conscription page re-typing
   cost/requirement values), retrofit the doc to **link/transclude the governing concept**, not
   re-edit a copy whenever the source moves.
 

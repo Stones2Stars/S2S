@@ -39,7 +39,7 @@ populationGrowthRate; nonexistent → `byCargo`; dead → `pillageGold` (buildin
 **The calc map is COMPLETE; the dump is NOT.** §12 is the actionable add-list.
 
 > **Scales.** Every ×100 / per-100 / human / multiplier claim in this doc is governed by the
-> [scale registry](fixed-point-and-scales.md) — that is the single source of truth for scales
+> [scale registry](../../specs/curators/fixed-point-and-scales.md) — that is the single source of truth for scales
 > ([DEC-fixedpoint-x100](../../architecture/decisions.md#dec-fixedpoint-x100)). Where a getter name ends in
 > `…100` or `…Times100`, the result is ×100 fixed-point; this doc names the scale per calc but does not
 > restate the rules.
@@ -91,7 +91,7 @@ getYieldRate100(y) = min(CITY_MAX_YIELD_RATE, max(100,
 `getExtraYield100(y)` (`:11323`) `= m_aiExtraYield[y]*100 + getBuildingExtraYield100(y) + getBaseYieldPerPopRate(y)*getPopulation()`.
 `getExtraYield(y) = getExtraYield100(y)/100` — ⚠ **truncated to x1 BEFORE the `×100` re-scale in 1.2**, so sub-unit
 precision is lost (the documented x1-truncation gotcha; the `×100` is the proof the bucket is human-scale —
-[scale registry §3](fixed-point-and-scales.md#3-how-to-figure-a-fields-scale-the-method--do-not-eyeball-the-name)).
+[scale registry §3](../../specs/curators/fixed-point-and-scales.md#3-how-to-figure-a-fields-scale-the-method--do-not-eyeball-the-name)).
 Sources: flat extra-yield, per-building extra yields (already ×100), per-pop yields × population.
 
 ### 1.5 `getSpecialistYieldTotal(y)` (`:11351`) = `m_aiSpecialistYieldTotal[y]` — a maintained accumulator of specialist yields (city-modified, see 1.2).
@@ -127,7 +127,7 @@ return min(CITY_MAX_YIELD_RATE, iRate)
 
 `happyLevel()` (~5689) = Σ `max(0, source)` over ~22 sources (revSuccess, largestCity, military, stateReligion, building good, feature/bonus good, religion good, commerce, area/player building, extra, handicap, vassal, civic, specialist/100, world, project, corporation, celebrity, techHappiness, +temp). `unhappyLevel()` (~5606) = `(Σ anger% × (pop+extra) / PERCENT_ANGER_DIVISOR) − Σ min(0, good source) + Σ bad source`; gated 0 by `isNoUnhappiness`/no-capital-unhappiness. anger% = overcrowding+noMilitary+culture+religion+hurry+conscript+defy+warWeariness+revRequest+revIndex+Σcivic.
 
-**Gotchas:** specialist/improvement health & happiness are **/100** (the legacy latent /100 — see [scale registry §4c](fixed-point-and-scales.md#4c-the-100-space-addends-that-lack-a-100-getter--the-heuristics-blind-spot)); espionage counters clamped to 8; flags `isNoUnhappiness`/`isNoUnhealthyPopulation`/`isBuildingOnlyHealthy` zero-out; per-pop via `calculatePopulationHealth/Happiness`.
+**Gotchas:** specialist/improvement health & happiness are **/100** (the legacy latent /100 — see [scale registry §4c](../../specs/curators/fixed-point-and-scales.md#4c-the-100-space-addends-that-lack-a-100-getter--the-heuristics-blind-spot)); espionage counters clamped to 8; flags `isNoUnhappiness`/`isNoUnhealthyPopulation`/`isBuildingOnlyHealthy` zero-out; per-pop via `calculatePopulationHealth/Happiness`.
 
 **Dump:** realized `goodHealth`/`badHealth`/`healthRate` + `happyLevel`/`unhappyLevel`/`angryPopulation`; for fidelity-reproduction dump the component buckets (building good/bad, bonus, feature, specialist/100, extra, per-pop, civic/trait/player, corporation, tech) + the anger%-sum + pop + the gate flags. (Many components — itemize the buckets the maps list. **§12: happiness dump has REAL GAPS** — anger% sources, several happy/unhappy terms, and gate flags are missing.)
 
@@ -144,7 +144,7 @@ return min(CITY_MAX_YIELD_RATE, iRate)
 `getModifiedIntValue(v, mod)` (`CvGameCoreDLL.cpp:689`) = `mod>0 ? v*(100+mod)/100 : mod<0 ? v*100/(100−mod) : v` — the shared **cost-asymmetric** combiner (the §7 hub).
 - CITY maintenance `getMaintenanceTimes100` (`CvCity.cpp` ~7579, x100): `era.getInitialCityMaintenancePercent() + getModifiedIntValue(calculateBaseMaintenanceTimes100(), getEffectiveMaintenanceModifier())` (skipped if disorder/WeLoveTheKing/pop 0). Base = Σ building+distance+numCities+colony+corporation (each `…Times100`). EffectiveModifier = city `getMaintenanceModifier` + player + `area()->getTotalAreaMaintenanceModifier` (+ connected-to-capital). Caps: numCities ≤ 2,000,000; colony capped; rebels ×50%.
 - CIVIC upkeep `getSingleCivicUpkeep`/`getCivicUpkeep` (`CvPlayer.cpp` ~14219): `(max(0,(pop+OFFSET)*UpkeepInfo.populationPercent/100) + max(0,(cities+OFFSET)*cityPercent/100))` → getModifiedIntValue(upkeepModifier) → ×handicap.civicUpkeep% → (AI) ×AI mods; `max(1,·)`; rebels halve total.
-- UNIT upkeep `getFinalUnitUpkeep` (`CvPlayer.cpp` ~10327): `(civilianNet + militaryNet) × handicap.unitUpkeep%/100 × (AI) aiUnitUpkeep%/100 × (100+aiPerEra×era)/100`. Per-unit `calcUpkeep100` (`CvUnit.cpp` ~15798, x100): `(100×baseUpkeep + extraUpkeep100)` → getModifiedIntValue(upkeepModifier) → getModifiedIntValue(upkeepMultiplierSM). (`iExtraUpkeep100` is one of the 6 closed per-100 fields — [scale registry §4b](fixed-point-and-scales.md#4b-the-closed-per-100-set--100-to-humanize).)
+- UNIT upkeep `getFinalUnitUpkeep` (`CvPlayer.cpp` ~10327): `(civilianNet + militaryNet) × handicap.unitUpkeep%/100 × (AI) aiUnitUpkeep%/100 × (100+aiPerEra×era)/100`. Per-unit `calcUpkeep100` (`CvUnit.cpp` ~15798, x100): `(100×baseUpkeep + extraUpkeep100)` → getModifiedIntValue(upkeepModifier) → getModifiedIntValue(upkeepMultiplierSM). (`iExtraUpkeep100` is one of the 6 closed per-100 fields — [scale registry §4b](../../specs/curators/fixed-point-and-scales.md#4b-the-closed-per-100-set--100-to-humanize).)
 
 **Dump:** city — eraInitialPercent, the 5 base components (×100), effectiveMaintenanceModifier, realized getMaintenanceTimes100, disorder/WLTK flags. player — civicUpkeep, finalUnitUpkeep. **§12: only the realized totals are dumped — NO decomposition** (the "+ the handicap/AI/era mults as inputs" claim is FALSE today).
 
@@ -325,15 +325,16 @@ then the in-flight + unmapped families as they land. Each channel gets a modcalc
 compile, one live verify across all.
 
 ## See also
-- [fixed-point & the scale registry](fixed-point-and-scales.md) — the single source of truth for every
+- [fixed-point & the scale registry](../../specs/curators/fixed-point-and-scales.md) — the single source of truth for every
   ×100 / per-100 / human scale this map names; consult it before de-scaling any field cited here.
 - [decisions ledger](../../architecture/decisions.md) — the cross-cutting rulings this map operates under:
   [DEC-map-before-delete](../../architecture/decisions.md#dec-map-before-delete) (why this map must be
   complete before a legacy calc is cut), [DEC-no-guessing](../../architecture/decisions.md#dec-no-guessing)
   (a divergence is attributed to a named source via the dump, never hypothesized),
-  [DEC-parity-not-goal](../../architecture/decisions.md#dec-parity-not-goal) (the fidelity bar).
-- [cascade architecture](../../explanation/cascade-architecture.md) — the design these accumulators replace;
+  [DEC-parity](../../architecture/decisions.md#dec-parity) (exact parity is the bar — a divergence is a
+  data-collection gap, never a formula difference).
+- [enabler](../../specs/enabler.md) / [modifier](../../specs/modifier.md) — the cascade design these accumulators replace;
   this map is the legacy side those summed accumulators are shadowed against.
-- [observability surface](../observability/README.md) — the `/diagnostic/cityInput` / `playerInput`
+- [observability surface](../../reference/observability.md) — the `/diagnostic/cityInput` / `playerInput`
   endpoints this dump spec extends, and how the shadow guards read them.
 - [comprehension map](../../README.md) — the docs2 overview-of-overviews that orients this reference.

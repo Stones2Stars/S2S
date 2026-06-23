@@ -26,10 +26,13 @@ The mechanical de-Hungarianization (`iX` → `x`) lives in `engine.py`; the per-
 curator's docstring + body. To read the map for an entity, **read its curator.**
 
 ## Contents
-- **building-cascade-conversion.md** — the locked cascade ontology model + the per-entity curator decisions
-  (stay-vs-invert, sources-never-targets, deferred edges, the post-migration purge backlog).
 - **fixed-point-and-scales.md** — the curator de-scale registry: which Info fields are ×100 vs ×1 (the closed set of
   `…100()` accessors + the blind-spot fields). The fixed-point *model* lives in [json.md §3.6](../json.md).
+
+The cascade ontology model (one cascade, every per-turn-effect producer is a target, sources/enablers are never
+targets, the stay-vs-invert rule) is **durable** and lives in the specs — [modifier.md](../modifier.md) (the
+deliveryguy/inversion rules) and [enabler.md](../enabler.md) (the enabler topology). The per-entity curator
+decisions live in each `curate_<entity>.py` docstring (the old→new map *is* the curator, see above).
 
 ## See also
 - [../json.md](../json.md) — the durable JSON shape this produces. [../validation.md](../validation.md) — proves the

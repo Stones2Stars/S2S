@@ -96,7 +96,7 @@ The "`*100` getters mark the scaled fields" rule is INCOMPLETE: some fields are 
 The owner cannot eyeball thousands of JSONs; the offline tester (`Tools/ModifierCalc/cascade_sim.py`)
 imports the human JSON (human→×100 per §2), computes the effective value, and compares against the live
 legacy `getYieldRate100`. **Residual divergence localises the next mis-scaled field** → fix the curator →
-regenerate → re-run. Parity-adjacent is the bar, not byte-parity ([DEC-parity-not-goal](../../architecture/decisions.md#dec-parity-not-goal)).
+regenerate → re-run. Exact parity is the bar — 0 in-scope mismatches; a residual divergence is a data-collection gap (a still-mis-scaled field), never a formula difference ([DEC-parity](../../architecture/decisions.md#dec-parity)).
 
 ## See also
 - [decisions ledger](../../architecture/decisions.md) — `DEC-fixedpoint-x100`, `DEC-per100-closed-set`,

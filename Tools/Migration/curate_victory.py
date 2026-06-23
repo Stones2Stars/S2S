@@ -18,6 +18,14 @@ Quirks (faithful): `getTotalCultureRatio()` has a live getter but NO XML record 
 it is never emitted (dormant mechanic). VICTORY_SCIENTIFIC carries no condition fields at all (its trigger lives
 elsewhere — hardcoded / space-race adjacent).
 
+DEFERRED to the Building/WONDER pass (VICTORY_DIPLOMATIC <-> the United Nations wonder): the enabler is owned by
+the SOURCE, never the victory. The UN wonder is enabled by EITHER the diplomatic victory being ACTIVE OR the
+"United Nations without Diplomatic Victory" game option (2 enable paths, both WORLD-scope, an OR composition ->
+a building-side BoolExpr). The UN then creates the `DIPLOVOTE_UN` VoteSource that hosts the diplomatic-victory
+resolution. So an active victory is itself a world-scope ENABLER of the UN wonder (distinct from its non-enabler
+condition). Wire it at Buildings/Wonders (+ VoteSource), NOT here. (VICTORY_SPACE_RACE is already source-captured
+on the space Projects' `victory` section — see curate_project.py.)
+
   python3 curate_victory.py --sample VICTORY_DOMINATION VICTORY_TOTAL VICTORY_CULTURAL VICTORY_SCORE
   python3 curate_victory.py --write
 """

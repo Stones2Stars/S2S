@@ -8,7 +8,8 @@ named keys (food/gold) are members; entity-targeted "boosts" fold into the SAME 
 `<targetType>.<TARGET>`. Plus an `ai` group (flavours + behaviour), `grants`, clean de-Hungarian names,
 boolean flags, the `worth`/`{field}Worth` naming, named yield/commerce keys, and faithful x100 (#432).
 Per-entity specifics come from mapping/<Entity>.json + the config.
-See docs/dev/plans/building-cascade-conversion.md -> "THE MODEL (locked 2026-06-14)".
+See docs/specs/modifier.md (the flat-family modifier model + deliveryguy/inversion) and docs/specs/json.md
+(the JSON shapes this produces).
 """
 import argparse
 import json

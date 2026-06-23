@@ -3,7 +3,7 @@
 **Status:** Measured; **#1 hotspot FIXED.** The CABV PreLoop (was ~30% of the whole late-game
 turn) is gone: within-turn memoization (3.6× CABV) + the load-time **static enabler
 reverse-index** (#195 Phase 1, PR #314 — PreLoop ~390×, ~11.7 s/turn → ~0.05 s, set-identical
-shadow-verified). See [`unified-prerequisites-and-constructibility.md`](unified-prerequisites-and-constructibility.md).
+shadow-verified).
 **Every whole-turn number below predates #314** — treat the measurement sections as the
 historical record that located the cost, and the "Current state & next levers" section as the
 live plan.
@@ -35,8 +35,7 @@ decomposition + phase tree; per-turn, all AI players):
 - Tail: `recalculateAllResourceConsumption` ~2.8 s/turn, `doTurnUnits` ~1.4, `pre.AI_doCivics`
   ~1.2, `game.autoSave` ~1.1 (cosmetic).
 
-Ranked levers (the repository migration steps — authoritative sequence in
-[`derived-data-repository.md`](derived-data-repository.md) §6):
+Ranked levers (the repository migration steps):
 
 1. **Building-value retention — SHIPPED + MEASURED (2026-06-10).** Staggered periodic refresh
    (period 4, offset by city id) replacing the per-turn flush; `setHasBuilding` event flush
@@ -229,8 +228,7 @@ fully rebuilt every turn, but its output barely changes — measured per-city `s
 That flatness is the proof the rebuild is redundant: constructibility only changes on
 discrete events (tech, building completed, civic, bonus). Retaining the set across turns with
 **event-driven invalidation** plausibly removes most of the 11.2 s/turn (~25–30% off the
-whole turn). **This is exactly step 1 of the derived-data repository** — see
-[`derived-data-repository.md`](derived-data-repository.md) §6.1. Second lever: a Game-level
+whole turn). **This is exactly step 1 of the derived-data repository.** Second lever: a Game-level
 reverse-index ("which buildings' construct-conditions reference building X") to prune the
 quadratic enabler loop (repository §6.3).
 
@@ -439,8 +437,7 @@ fallback for drilling deeper.
   stickytape, suspect #1), `CvPlayer::doTurn` (per-player via `owner=`),
   `CvPlayer::doTurnUnits`, `AI_doDiplo`, `CvPropertySolver::doTurn`,
   `recalculateAllResourceConsumption`, `updateTradeRoutes`.
-- **Analyze:** see the `[PERF]` grep/awk recipes in
-  [`../reference/ai-logging-reference.md`](../reference/ai-logging-reference.md) §4 (total ms
+- **Analyze:** use the `[PERF]` grep/awk recipes (total ms
   per phase, stickytape cost/turn, slowest empire). Sum across late-game turns to rank the
   suspects in real ms before optimizing.
 - **Next:** add `PERF_SCOPE` around the unit/pathfinding cascade (suspect #3) if the headline
@@ -628,8 +625,7 @@ The repo also ships a complete sampling profiler.
 This section's ranking is done: step 1's *within-turn* form shipped (memoization, 3.6×), and
 step 2 — the static enabler reverse-index — shipped as #195 Phase 1 (PR #314, ~390× on the
 PreLoop) and turned out to be the decisive fix, not the fallback. The live lever ranking is
-maintained in **"Current state & next levers (post PR #314)"** at the top of this doc, and the
-authoritative migration sequence in [`derived-data-repository.md`](derived-data-repository.md) §6.
+maintained in **"Current state & next levers (post PR #314)"** at the top of this doc.
 
 ## City & Unit AI loop hot-paths (structural; confirm with `[PERF]`/FProfiler)
 

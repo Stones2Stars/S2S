@@ -28,8 +28,11 @@ feed. Call-site census exists (WAI 43 sites, HAI 54, CTB 66, …). Dead sinks: `
 - `gameId` on `/units` + `/players` = the persistent playtest identity (detects reload / new-game mid-session).
 - Live `/units` movement fields: `baseMoves`/`maxMoves`(×100 budget)/`movesLeft`/`moveDiscount`/`range`(air)/`domain`;
   `/cities` carries live crime/education/disease + `corporations`/`presentCorporations`.
-- `/extractor` = **raw game state only, no calculated values** (the lone map number is `distanceFromCapital`); schema
-  at `Tools/ModifierCalc/README.md`. This is the [validation](../specs/validation.md) "calc-zero-ride-in" guardrail.
+- `/state` = **raw inputs only, no computed outputs** (the lone map number is `distanceFromCapital`); schema at
+  `Tools/RawStateExtractor/README.md`. This is the [validation](../specs/validation.md) "calc-zero-ride-in" guardrail —
+  the calculator's input side. `/extractor` is the opposite surface: the **yield-loaded COMPUTED state** (the game's
+  actual yields/outputs — the verification oracle the calculator is checked against), per
+  [http-endpoints](../specs/http-endpoints.md).
 
 ## The field census (event-spine migration input)
 The exhaustive raw-field census: ~196 gated log templates across 10 domains, each field's name + cType + a sample

@@ -90,7 +90,7 @@ and `ambiguous` (#68, #139).
 - Finish the Python sweep: `Screens/*` (Worldbuilder, Pedia, CvMainInterface),
   autolog, Platyping/Sparth, RevUtils/RevEvents remainder.
 - Sea / naval AI rework — see [`sea-ai-rework.md`](sea-ai-rework.md).
-- Dead-code / dead-XML pass — see [`dead-code-xml-pass.md`](dead-code-xml-pass.md).
+- Dead-code / dead-XML pass.
 - Python-specific smells to watch: bare `except:`, `==` vs `is`, mutable default
   arguments, wrong indentation under `if`/`for`, missing `self.`, wrong argument
   count, off-by-one `range()`, integer-vs-float division. (Runtime is **Python
@@ -98,6 +98,5 @@ and `ambiguous` (#68, #139).
 
 ## See also
 
-- [`../reference/ai-logging-reference.md`](../reference/ai-logging-reference.md) — the tagged AI logs are the
-  complementary, data-driven way to surface AI bugs.
+- The tagged AI logs are the complementary, data-driven way to surface AI bugs.
 - Build / compile-check: `Tools/_Build.ps1 Assert build` from `Sources/`.

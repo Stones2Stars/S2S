@@ -13,6 +13,17 @@ hurry's intrinsic mechanic parameters:
 - `bAnger` -> `causesAnger` (using this hurry inflicts temporary hurry-anger; CvCity.cpp:6144).
 `Button` -> art.icon; Type/Description standard. (HurryInfo dropped from curate_pocos.POCOS — it was mis-curated.)
 
+DEFERRED source-side GRANT edges (author at the SOURCE pass, NOT here — a hurry is granted by others):
+- Civics grant HURRY_GOLD (all 20 hurry-granting civics across Currency/Economy/Power -> enables.hurries).
+- HURRY_POPULATION comes ONLY from a Slavery special-building via BuildingInfo.isHurry (CvPlayer.cpp:7503); the
+  grantor is BUILDING_WORLDVIEW_SLAVERY. More of the SLAVERY "system" clusters around the WORLDVIEW buildings —
+  sleeping dog: wire BuildingInfo -> enables.hurries AND map the rest of the slavery system at the Building pass.
+
+DO NOT CONFLATE with the unit "hurry": two distinct mechanics share the verb. (1) THIS entity = CvHurryInfo /
+HurryTypes, the gold/pop city-rush. (2) UnitInfo.iBaseHurry/iHurryMultiplier = great-engineer "Extra
+Construction" (consume the unit in a city to add production), via CvUnit::getHurryProduction / CvUnit::canHurry —
+an entirely separate data + code path, carried at the Unit pass (see curate_unit.py GP_ACTIONS["hurry"]).
+
   python3 curate_hurry.py --sample HURRY_GOLD HURRY_POPULATION
   python3 curate_hurry.py --write
 """

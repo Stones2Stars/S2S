@@ -3,13 +3,13 @@
 > ## ⛔ RESUMING AFTER A CONTEXT COMPACTION? RE-READ EVERYTHING FIRST.
 >
 > If your context was just compacted mid-session, do NOT act from the summary. Re-read the full spec set (the
-> machine specs + `event-spine-spec.md` + this doc + `migration-renames.md`) and the
+> machine specs + `event-spine.md` + this doc + `json.md`) and the
 > live code in `Sources/Cascade/` before touching anything — compaction has poisoned context before; a stale line
 > loses to a later owner ruling. (Owner 2026-06-17; this gate is being deliberately tested.)
 
 **Status: implementation IN PROGRESS (see the status table below).** The DESIGN lives in the
-machine specs — `enabler-cascade-spec.md` (v0.3) + `modifier-cascade-spec.md` (v3) + `tally-cascade-spec.md` (the count
-machine, consolidated 2026-06-16) — one per machine, plus **`event-spine-spec.md`** (the front-door event system the tally /
+machine specs — `enabler.md` (v0.3) + `modifier.md` (v3) + `tally.md` (the count
+machine, consolidated 2026-06-16) — one per machine, plus **`event-spine.md`** (the front-door event system the tally /
 `grants` / logging all consume — design session 2026-06-17). This is the IMPLEMENTATION roadmap — the runtime engine that
 consumes the #428 JSON and replaces ~7–8k lines of scattered availability + modifier machinery. Read the specs first; this
 doc is the build plan + the validated load/demolition map, not a re-derivation of the model.
@@ -27,7 +27,7 @@ doc is the build plan + the validated load/demolition map, not a re-derivation o
 | **Substrate** (spine + accumulator) | ✅ **BUILT** | `CvEventSpine` + `CvScopedAccumulator`; logging + tally consumers registered (`cascadeRegisterConsumers`). |
 | **Tally** | ⚠ **PARTIAL** (model decided) | **Player-leaf model ACCEPTED (owner 2026-06-19)** — the shipped per-player tally is the design now (tally-spec rewritten to match; CITY/PLOT read direct, widening to city-leaf later is a contained no-save-break change). Wired + load-bearing for **buildings + units ONLY** (2 of the ~6 count domains §7 needs; tech/civic/religion/bonus/project/specialist absent → atoms over those silently read 0 — the remaining build item). §9 save handling (rebuild-on-load) DONE, hooked at `onFinalInitialized`. |
 | **Enabler** | ◐ **GATE built, GENERATOR inert** | `cascadeBuildable = requiresBuild ∧ requiresOperate ∧ allowed-cap` + `cascadeOperational` (dormancy) mature; allowed-cap enforced via tally. BUT the `enables`-family **CAN-GET generator is not built** (`cascadeTechReachable` dead, no frontier producer); **`disables` unparsed**; `notConstructible` parsed but never consumed. |
-| **Modifier** | ◐ **PILOT BUILT + SHADOWED** (city-yields) | Increments 1–3 of [`modifier-cascade-shadow-spec.md`](../reference/cascade/shadow.md) DONE (`23245bcd2`/`3f1abc344`/`9536c0552` + increment-3 shadow): `CvModifierSlot` combine + the data-driven deposit-flow (`cascadeModifierCitySlot`/`cascadeModifierEffective`, parity-mode + swappable `cascadeModifierApply`/`ModifierCalcFlow`=legacy-flat-outside) for **food/production/commerce**, with sources wired incrementally (R-M1): city-scope **BUILDING** deposits; the base now includes **specialist** yield (legacy `getYieldRate100` parity); the player's active **CIVICS'** empire-scope deposits (empire→city roll-down). Plus the shadow surface (`cascadeModifierShadow` → per-turn `[MODSHADOW]`, `GET /diagnostic/modifierSweep` + `/diagnostic/modifier`, cause-tags + the Fine→Meltdown care scale). **Remaining sources** (the residual `missingDeposit`): TRAIT/TECH/BONUS/AREA/POWER/CAPITAL + building-empire deposits, civic sub-scopes, the clamp; **then** PLOT + other scopes; the commerce-split / health-happiness / defense / maintenance / unit-plane channels (§2.2); the multiplier-capability flip (Mode B). |
+| **Modifier** | ◐ **PILOT BUILT + SHADOWED** (city-yields) | Increments 1–3 of the modifier-cascade shadow plan ([validation](../../specs/validation.md)) DONE (`23245bcd2`/`3f1abc344`/`9536c0552` + increment-3 shadow): `CvModifierSlot` combine + the data-driven deposit-flow (`cascadeModifierCitySlot`/`cascadeModifierEffective`, parity-mode + swappable `cascadeModifierApply`/`ModifierCalcFlow`=legacy-flat-outside) for **food/production/commerce**, with sources wired incrementally (R-M1): city-scope **BUILDING** deposits; the base now includes **specialist** yield (legacy `getYieldRate100` parity); the player's active **CIVICS'** empire-scope deposits (empire→city roll-down). Plus the shadow surface (`cascadeModifierShadow` → per-turn `[MODSHADOW]`, `GET /diagnostic/modifierSweep` + `/diagnostic/modifier`, cause-tags + the Fine→Meltdown care scale). **Remaining sources** (the residual `missingDeposit`): TRAIT/TECH/BONUS/AREA/POWER/CAPITAL + building-empire deposits, civic sub-scopes, the clamp; **then** PLOT + other scopes; the commerce-split / health-happiness / defense / maintenance / unit-plane channels (§2.2); the multiplier-capability flip (Mode B). |
 | **Grants** | ❌ **ABSENT** | No `grants` consumer registered (the spine diagram lists it; not built). |
 | **readJson** | ◐ **gate-surface + PILOT modifier feed** | Parses `requires.build/operate`, `allowed`, `identity.{spawnOnly,notConstructible,autoBuild}` + four ad-hoc reverse-index scans (tech/group/replace/upgrade) AND the PILOT modifier families (`cascadeReadJsonModifiers`: food/production/commerce flat/percent at city scope, with `enabled`/`disabled`). Does **not** yet parse the other modifier scopes/channels or `grants`. Header marks it TEMPORARY. |
 
@@ -37,7 +37,7 @@ shadowed); the `grants` consumer; tally **domain coverage** (the player-leaf-vs-
 — player-leaf accepted 2026-06-19); the enabler **`enables`-family generator** + **`disables`** parsing. **Smaller gaps the
 sweep found:** `ATOMDOMAIN_HERITAGE` implemented-but-undocumented (data-model §2.1); `workedBy`/`natureYield` predicates
 specced-but-unparsed; `CvCascadeReadJson.cpp` still `#include "CvInfos.h"` (contradicts the retire-umbrella ruling — folded
-into [`sources-structural-cleanup.md`](../plans/structural-cleanup.md) 1B).
+into [`structural-cleanup.md`](structural-cleanup.md) §2 (1B).
 
 ---
 
@@ -52,13 +52,13 @@ tangles — they are three instantiations of one primitive, which is what makes 
 - **Additive accumulator:** deposit → O(1) summed read, parameterized by what it sums. One primitive, three instances. The
   enabler additionally walks the SIDEWAYS/progression axis (tech tree, build chain — enabler-spec §9); modifiers are
   containment-only. (Implemented: `Sources/Cascade/CvScopedAccumulator`.)
-- **Event spine — the dispatch FRONT DOOR (added 2026-06-17; full design: `event-spine-spec.md`).** `emit(KIND,type,payload)`
+- **Event spine — the dispatch FRONT DOOR (added 2026-06-17; full design: `event-spine.md`).** `emit(KIND,type,payload)`
   → consumers read the kinds they care about. The tally, `grants`, and logging are all CONSUMERS of it; the spine sits IN
   FRONT OF the tally (the tally never reaches into game state — domain events come to it). So the build order below reads
   "tally" as *the first COUNTING machine*, but **the event spine + accumulator (the substrate) come before it**, and the
   tally is the spine's first authoritative consumer. (Implemented: `Sources/Cascade/CvEventSpine`.)
 
-### 1. Tally — counts, roll UP  *(build FIRST; spec: `tally-cascade-spec.md`)*
+### 1. Tally — counts, roll UP  *(build FIRST; spec: `tally.md`)*
 
 Per-type had-counts, additive roll-up the spine. Serves three readers: `requires` count-thresholds (`min(BUILDING_X,12)`,
 empire/team) + the **higher-scope HAS sets** (the empire/team/world HAS *is* the tally), the modifier's cross-city `per`
@@ -79,10 +79,11 @@ gather **HAS** (reads the tally for higher scopes) → generate **CAN GET** (the
 ### 4. readJson — the DATA INPUT *(owner 2026-06-16: "we HAVE to do this before we go anywhere")*
 
 Extend `readJson` to implement **all** the new JSON-based logic — parse the full new vocabulary (`enables`/`obsoletes`/
-`replaces`/`requires` trees, the modifier families `<family>.<scope>[.<member>].<unit>`, `grants`/`grants.repeatable`, the
+`requires` trees — plus `replaces`, a **defined-but-UNUSED** reserved edge: replacement is modeled as
+`requires.operate.dormant`, not `replaces` (enabler §2) — the modifier families `<family>.<scope>[.<member>].<unit>`, `grants`/`grants.repeatable`, the
 predicate tokens, count atoms, scopes) into the runtime structures the three machines consume. It is the **data-feed
 prerequisite**: the machines operate on the NEW vocabulary, not the old XML fields, so nothing computes until `readJson`
-populates them. `readJson` is a pure CONSUMER — it loads the modder-authored JSON *shape* (defined by `data-model-spec.md`,
+populates them. `readJson` is a pure CONSUMER — it loads the modder-authored JSON *shape* (defined by `json.md`,
 NOT by `readJson`) into in-memory structures of that same shape; the machines read those. One shape, consumed here, read by
 the three. Runs as its own load path IN ADDITION to the XML load during shadow (§2/§3).
 
@@ -108,8 +109,12 @@ SHADOW** alongside the existing XML-driven machinery, behind **gated logging** (
   "populates the same `CvInfoUtil` wrappers" — that CONTRADICTS §2b/§3, which is the governing ruling: build FRESH,
   actively AVOID `CvInfoUtil`/the old `read()` path. `readJson` is its own fresh reader; at cutover the fresh structures
   serve the EXE-bound accessor surface (§3), they do NOT repopulate `CvInfoUtil`.)**
-- **Parity is NOT the success metric** (the cascade is *expected* to correct latent bugs). The shadow log surfaces
-  DIVERGENCES for triage — bug-in-old vs bug-in-new — never byte-parity enforcement.
+- **Exact parity IS the success metric** ([DEC-parity](../../architecture/decisions.md#dec-parity) /
+  [DEC-mirror-then-redesign](../../architecture/decisions.md#dec-mirror-then-redesign)): the migration MIRRORS the
+  engine exactly, so the shadow log must drive to 0 in-scope divergences. A surviving divergence is a data-collection
+  gap (or a new-side bug), triaged and closed — never tolerated as a formula difference. Correcting a latent bug in
+  the OLD calculation is a deliberate POST-migration decision, made on its own footing, never an in-migration excuse
+  to skip parity.
 - **The readJson cleartext RENDER is the JSON-INTENT surface, cross-checked against the shadow LOGS (owner 2026-06-17).**
   `readjson.exe --render TYPE` (→ `Tools/ReadJson/testOutput/`) states in plain English what an entity's JSON *says* it does
   ("Versailles: allowed 1 world; builds faster with marble; +10 culture, doubled after 1000 turns"). That is the **intent**;
@@ -128,8 +133,10 @@ SHADOW** alongside the existing XML-driven machinery, behind **gated logging** (
   current mod happens to work. **Two guardrails keep this honest:** (a) **PRESERVE SAVES** where possible (the name-tagged
   soft save-format; `@SAVEBREAK` only when genuinely unavoidable); (b) **PRESERVE HOW THE GAME WORKS** — the *intended*
   gameplay / player experience stays recognizable. (a)+(b) bound the rewrite: structure & internals are free, the played
-  game is not. *(This sharpens §2's "parity isn't the goal": we don't preserve the old IMPLEMENTATION's buggy numeric
-  outputs — the cascade corrects those — but we DO preserve the intended design the game is supposed to express.)*
+  game is not. *(This dovetails with §2's exact-parity bar: the migration MIRRORS the old IMPLEMENTATION exactly —
+  including its buggy numeric outputs ([DEC-mirror-then-redesign](../../architecture/decisions.md#dec-mirror-then-redesign));
+  correcting those is a deliberate POST-migration decision, never an in-migration change — while (a)+(b) bound the eventual
+  redesign so the intended design the game is supposed to express stays preserved.)*
 - **Build the 4 components FROM SCRATCH.** `readJson` + tally + modifier + enabler are written fresh, interface-bounded.
 - **External libraries OK where they make sense** — use **`picojson`** (header-only) for JSON parsing, rather than bending
   the existing `CvXMLLoadUtility` XML machinery to JSON. **Already vendored and proven** under the VC7.1/C++03 toolchain — it
@@ -198,7 +205,7 @@ demographics/score scans become reads of the one tally.
 - **Save format** — name-tagged (`CvTaggedSaveFormatWrapper`); removing a serialized member is soft; intentional breaks →
   `@SAVEBREAK`. Derived/accumulator state serializes nothing (recomputed on load).
 - **OOS / lockstep determinism** — integer math only; synced Soren RNG. `readJson` converts readable→`int×100` ONCE at load
-  (deterministic; #432 owns de-scaling). No runtime float introduced. Canonical: [DEC-fixedpoint-x100](../architecture/decisions.md#dec-fixedpoint-x100).
+  (deterministic; #432 owns de-scaling). No runtime float introduced. Canonical: [DEC-fixedpoint-x100](../../architecture/decisions.md#dec-fixedpoint-x100).
 - **Toolchain** — C++03, 32-bit/x86, vendored VC7.1, Python 2.4, Boost 1.32/1.55, raw Win32 (no `std::thread`/C++11+).
 
 ---

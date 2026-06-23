@@ -1,10 +1,9 @@
 # S2S #428 — JSON Data-Model Design Handoff
 
-**Status: model LOCKED 2026-06-14 — the authoritative spec + the live RESUME POINT now live in
-`docs/dev/plans/building-cascade-conversion.md`. Read its "⇒ CHECKPOINT & RESUME (2026-06-14)" section
-FIRST (it has the current state, what's done, what's next, and the resume checklist), then "THE MODEL
-(locked 2026-06-14)" below it.** This handoff is kept for history; where it differs, the locked model wins.
-(The prior conversation contained an abandoned mass-migration detour — do not re-load it.)
+**Status: model LOCKED 2026-06-14 — the authoritative spec now lives in the `docs/specs/` cascade cluster
+(`json`, `enabler`, `modifier`, `tally`, `naming`); read those FIRST.** This handoff is kept for history;
+where it differs, the durable specs win. (The prior conversation contained an abandoned mass-migration
+detour — do not re-load it.)
 
 **Checkpoint snapshot (2026-06-14):** branch `json-data-migration`, ~19 commits off main, tree clean.
 **18 entities curated+written:** Tech/Bonus/Handicap/GameSpeed/Era/Process (gameplay) +
@@ -148,8 +147,8 @@ An enabler Info additionally carries (NO prereqs):
 - `Tools/Migration/map_workflow.js` → the classification workflow (chunked to dodge rate limits). Reference.
 - `Assets/Data/*/` → generic database DRAFT (loose plural, **uncommitted scratch** — fine to delete/regen).
 - `Assets/Data/handicaps/` → hand-built **prototype** = the format reference (committed).
-- `docs/dev/plans/building-cascade-conversion.md` → design spec (committed; conventions, prune principle).
-- `docs/dev/plans/cross-entity-inversion-blueprint.md` → cross-entity reference inventory (committed).
+- `docs/specs/` cascade cluster (`json`/`enabler`/`modifier`/`tally`/`naming`) → the durable design spec
+  (conventions, prune principle, inversion rules).
 
 ## Git state (branch `buildings-json`)
 
@@ -163,5 +162,5 @@ An enabler Info additionally carries (NO prereqs):
 3. Settle `modifiers` end-to-end — including the properties fold and the relation qualifier (Q4).
 4. Stand up the queryable XML store (XML-as-DB: tables + FK/reverse-lookup indexes).
 5. Define ONE Info top-down (Tech), fully, as the new template — then the next.
-6. Once the model is locked, fold these rulings into `building-cascade-conversion.md` (permanent home);
-   this handoff is temporary scaffolding.
+6. Once the model is locked, fold these rulings into the durable `docs/specs/` cascade cluster (permanent
+   home); this handoff is temporary scaffolding.

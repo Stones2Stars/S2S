@@ -2,9 +2,8 @@
 
 Offline Python that converts the legacy `Assets/XML/` gameplay data into the top-down
 cascade JSON under **`Assets/Data/`**. The JSON is the migration target for #428/#430
-(see the spec cluster in `docs/dev/plans/`: `data-model-spec`, `enabler-cascade-spec`,
-`modifier-cascade-spec`, `tally-cascade-spec`, `building-cascade-conversion`,
-`migration-renames`). This README is the **operational runner reference** — *which script
+(see the spec cluster in `docs/specs/`: `json`, `enabler`, `modifier`, `tally`,
+`naming`). This README is the **operational runner reference** — *which script
 to run, what it writes, and the footguns*. The model/shape lives in the specs above.
 
 ---
@@ -17,6 +16,12 @@ The authoritative pipeline is **one hand-written curator per entity**:
 python Tools/Migration/curate_<entity>.py --sample <TYPE>   # print converted record(s), write NOTHING
 python Tools/Migration/curate_<entity>.py --write           # regenerate that entity's whole folder
 ```
+
+> **⛔ RULE — edit a curator, regenerate its data in the SAME change (owner ruling 2026-06-21).** A modified
+> `curate_<entity>.py` whose `Assets/Data/<entity>/` has NOT been re-`--write`n is a **curator/data mismatch**:
+> the curator claims one shape, the data on disk is another, and every downstream consumer (the dry-calc, the
+> shadow, the DLL reader) silently trusts the stale data. Always run `--write` immediately after touching a
+> curator and commit the regenerated JSON alongside it. Never leave a curator edit uncommitted-and-unregenerated.
 
 `--write` regenerates the **entire** entity (e.g. `curate_unit.py --write` rewrites all
 ~2073 unit files under `Assets/Data/units/`). Output goes to `Assets/Data/<entity>/`
@@ -79,8 +84,7 @@ core. Coverage (run the matching script to re-export):
 
 `curate_pocos.py` — batch curator for verified data-holder entities (text/identity only).
 Note the owner ruling "**no entity is truly a POCO**": a 0-channel classification is a
-hypothesis to disprove against the live C++ consumer, not a fast path
-(`building-cascade-conversion.md` §0).
+hypothesis to disprove against the live C++ consumer, not a fast path.
 
 ### Shared modules (imported, NOT run standalone for the curated pipeline)
 - **`store.py`** — XML-as-DB. Loads every gameplay Info from base XML + `Assets/Modules`

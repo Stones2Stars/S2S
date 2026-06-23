@@ -14,7 +14,7 @@
 The §1A logging-tag collision-proofing is **also done** (uniform `<DOMAIN>F_` prefixes + shared tag headers).
 What **remains**: (1) the `CvInfos.h` umbrella retirement + include-what-you-use sweep (still pending, one
 scripted attempt reverted); (2) the dead-code / dead-XML removal pass (candidates generated, no removals).
-Per [DEC-proper-once](../architecture/decisions.md#dec-proper-once) the remaining work is done properly once,
+Per [DEC-proper-once](../../architecture/decisions.md#dec-proper-once) the remaining work is done properly once,
 not via a session-tail script.
 
 ---
@@ -86,7 +86,7 @@ The `CvInfos.h` umbrella aggregator is **still present** (`Sources/Infos/CvInfos
 `CvXInfo.h` it actually uses — plus a full include-what-you-use sweep is the remaining structural work. It is
 flagged for retirement in the root `AGENTS.md` Conventions ("Import Info headers DIRECTLY").
 
-This is a **dedicated, hand-careful pass**, NOT a session-tail script run ([DEC-proper-once](../architecture/decisions.md#dec-proper-once)).
+This is a **dedicated, hand-careful pass**, NOT a session-tail script run ([DEC-proper-once](../../architecture/decisions.md#dec-proper-once)).
 A scripted attempt on 2026-06-19 was reverted to green (it built down to a fragile tail). Hard-won lessons to
 carry into the redo:
 
@@ -126,8 +126,8 @@ after XML/Python changes.
 
 > The detection tooling here (enumerate every tag the DLL reads, every `<Type>`, every `TXT_KEY_*`, every
 > define) doubles as the data-model extractor the XML→JSON migration needs — build it reusably. **Note:** the
-> JSON migration the old plan framed as "deferred north-star" is now the **active** work (see
-> [cascade-migration.md](../json-migration/cascade-migration.md) / [cascade-architecture.md](../explanation/cascade-architecture.md)),
+> JSON migration the old plan framed as "deferred north-star" is now the **active** work (see the
+> [enabler](../../specs/enabler.md) / [modifier](../../specs/modifier.md) cascade specs),
 > so the dead-data pass feeds the live migration rather than a hypothetical future one.
 
 ### Tier 1 — high-confidence (verified 2026-06-11, no removals yet)
@@ -189,7 +189,7 @@ top-level routing — all interleaved with no shared section boundaries or reusa
 structure now** (hard to read, hard to find, hard to reuse — every endpoint re-hand-rolls the same
 player/city/plot iteration + picojson patterns).
 
-**The task (a SEPARATE, dedicated pass — [DEC-proper-once](../architecture/decisions.md#dec-proper-once), not
+**The task (a SEPARATE, dedicated pass — [DEC-proper-once](../../architecture/decisions.md#dec-proper-once), not
 another bolt-on):** spec the structure, then reorganize for **readability + reusable sections**. Likely shape
 (to be refined at the pass):
 
@@ -223,7 +223,7 @@ output diff before/after. Tracked here; pick it up as its own pass.
 ---
 
 ## See also
-- [decisions.md](../architecture/decisions.md) — the ID'd ruling home; [DEC-proper-once](../architecture/decisions.md#dec-proper-once) governs the umbrella-retirement-as-careful-pass and the no-throwaway-shim posture for both cleanups.
-- [cascade-architecture.md](../explanation/cascade-architecture.md) — the #428/#430 design the dead-data pass feeds (the XML→JSON migration is now active, not deferred).
-- [README.md](../README.md) — the comprehension map / overview-of-overviews.
+- [decisions.md](../../architecture/decisions.md) — the ID'd ruling home; [DEC-proper-once](../../architecture/decisions.md#dec-proper-once) governs the umbrella-retirement-as-careful-pass and the no-throwaway-shim posture for both cleanups.
+- [enabler](../../specs/enabler.md) / [modifier](../../specs/modifier.md) — the #428/#430 cascade design the dead-data pass feeds (the XML→JSON migration is now active, not deferred).
+- [README.md](../../README.md) — the comprehension map / overview-of-overviews.
 - root `AGENTS.md` Conventions — "Import Info headers DIRECTLY" (the umbrella-retirement directive) and "Adding a new source subdirectory" (the recursive-glob / `.vcxproj`-is-IDE-only build facts).

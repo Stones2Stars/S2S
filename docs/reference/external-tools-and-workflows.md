@@ -12,7 +12,7 @@
 
 This doc is deliberately narrow. It catalogues the things you reach for *outside* the normal
 edit→`Assert build`→validate→playtest loop. Anything that loop already covers lives where it is owned, not
-here (single-source — [`_meta/CONVENTIONS.md` §2](../../AGENTS.md)).
+here (single-source — [`AGENTS.md`](../../AGENTS.md)).
 
 ## Crash-dump analysis (offline)
 
@@ -117,9 +117,9 @@ The in-tree tooling this doc deliberately does **not** restate — go to its own
 - [`../../Tools/Migration/README.md`](../../Tools/Migration/README.md) — **the XML→JSON curators**
   (`curate_<entity>.py --write`, `store.py`, `engine.py` and its ⛔ `--write` clobber footgun). The
   operational runner reference; the model lives in the cascade specs.
-- [`../specs/curators/fixed-point-and-scales.md`](../specs/curators/fixed-point-and-scales.md) — references the **offline cascade
-  tester** `Tools/ModifierCalc/cascade_sim.py` (imports the human JSON, applies the ×100 conversion, diffs
-  the effective value against the live engine) → [DEC-fixedpoint-x100](../architecture/decisions.md#dec-fixedpoint-x100).
+- [`../specs/curators/fixed-point-and-scales.md`](../specs/curators/fixed-point-and-scales.md) — the ×100 fixed-point
+  conversion and how the effective value is diffed against the live engine →
+  [DEC-fixedpoint-x100](../architecture/decisions.md#dec-fixedpoint-x100).
   The `readjson` harness (`Tools/ReadJson/`) is the in-DLL JSON loader's offline driver, exercised by the
   same value-verification flow.
 - [`observability.md`](observability.md) — **the live surveillance surface** the crash/known-

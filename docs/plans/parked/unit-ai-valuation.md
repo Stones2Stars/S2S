@@ -73,7 +73,7 @@ capacity never fell. Benchmark consequence: census *count* series can't distingu
 from attrition (observed 2026-06-11 game: hunters 120→111 across t340–348 during prey
 collapse — either reading fits). Any fix to A1/A3 should target hunting *capacity*
 (count weighted by merged size/strength), not raw unit count. **→ Now owner-ruled and
-scoped in [`size-matters-ai.md`](size-matters-ai.md) (#395):** strength-weighted effective
+scoped (#395):** strength-weighted effective
 counts (×1.5/rank), hunters keep merging, `AI_neededHunters` goes capacity-based.
 
 **Net:** the AI targets ~`sqrt(cities)` hunters per landmass for the whole game regardless of
@@ -100,8 +100,7 @@ if (kUnitInfo.canMergeSplit() && GC.getGame().isOption(GAMEOPTION_COMBAT_SIZE_MA
 ```
 
 Was applied in UNITAI_ATTACK, ATTACK_CITY, COUNTER, CITY_DEFENSE, ESCORT — gated on
-`kUnitInfo.canMergeSplit()`. **Deleted by the #395 mix-sanity pass**
-([`size-matters-ai.md`](size-matters-ai.md)): it biased the unit mix toward mergeable
+`kUnitInfo.canMergeSplit()`. **Deleted by the #395 mix-sanity pass:** it biased the unit mix toward mergeable
 types while the accounting treated every body the same; with strength-weighted force
 ledgers and need-driven merges the thumb on the scale is gone. (B2/B3 below remain
 relevant as history: the factor never applied to dogs.)
@@ -233,8 +232,7 @@ Per [[ai-logging-before-bug-audit]], before fixing, instrument and watch:
 - **A/B:** add an era/obsolescence decay to cheap-unit `AI_unitValue` so dogs/hunters lose
   value as better units unlock — independent of the merge boost.
 - **B:** ~~reconsider the flat `EVAL_MERGE_FACTOR=2` (or offset it in needed-counts) so merge
-  potential isn't double-counted.~~ **DONE (#395):** retired outright; see
-  [`size-matters-ai.md`](size-matters-ai.md).
+  potential isn't double-counted.~~ **DONE (#395):** retired outright.
 - **C:** in the hunter explore/safety fallback, prefer own/neutral territory and avoid
   resting inside foreign cities even under open borders; or reduce the idle-hunter explore
   fallback once exploration is complete.

@@ -390,7 +390,10 @@ VISION_STRUCTS = {
     "InvisibleTerrainChanges": ("invisibleTerrain", ["InvisibleType", "TerrainType", "iIntensity"]),
     "InvisibleFeatureChanges": ("invisibleFeature", ["InvisibleType", "FeatureType", "iIntensity"]),
 }
-# GP-action magnitudes -> grants (one-time great-person actions; base + multiplier)
+# GP-action magnitudes -> grants (one-time great-person actions; base + multiplier).
+# NB the "hurry" here (iBaseHurry/iHurryMultiplier = great-engineer "Extra Construction", CvUnit::getHurryProduction
+# / CvUnit::canHurry) is a DIFFERENT mechanic from CvHurryInfo / HurryTypes (the gold/pop city-rush curated in
+# curate_hurry.py) — two mechanics share the verb "hurry"; do NOT conflate. See curate_hurry.py.
 GP_ACTIONS = {
     "discover": ("iBaseDiscover", "iDiscoverMultiplier"), "hurry": ("iBaseHurry", "iHurryMultiplier"),
     "trade": ("iBaseTrade", "iTradeMultiplier"), "greatWork": ("iGreatWorkCulture", None),
