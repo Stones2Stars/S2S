@@ -13,6 +13,10 @@ calculator is checked against).
 > (the calculator can never read the game's own answer). `/state` doubles as the human surface — one readable
 > question, one readable answer.
 
+> **⏳ The spec is the target, not the current server.** Mapping the live HTTP server to this structure — real
+> route structure, DRY, the buckets below — is its **own dedicated session**; today's `/diagnostic/*` server does
+> not yet match this spec.
+
 ---
 
 ## The buckets
@@ -33,7 +37,7 @@ calculator is checked against).
 
 - **`/`** — liveness ("hello world"); an 11-byte smoke check.
 - **`/events`** — the gated `[TAG]` SSE stream, live. The per-turn shadow lines burst at the **top of `doTurn`**,
-  so **connect before the turn ticks** (connect-then-end-turn). [orwellian-logging](orwellian-logging.md) §5.
+  so **connect before the turn ticks** (connect-then-end-turn). [logging](logging.md) §5.
 
 ## `/state/*` — the human surface
 
@@ -91,14 +95,14 @@ maintainer is cut, its sweep goes. `/extractor` is the durable shadow that remai
 ## `/decompose/*` — modifier source breakdown
 
 `/decompose/modifier` — a modifier value's **named-source decomposition** (every component attributed to a named
-source with numbers — the map-everything / no-guessing surface, [orwellian-logging](orwellian-logging.md) §6).
+source with numbers — the map-everything / no-guessing surface, [logging](logging.md) §6).
 NB the old `/diagnostic/cityInput` (pre-computed city yields) is **superseded by raw `/state/city/<id>/plots`**,
 per the raw-inputs principle above.
 
 ---
 
 ## See also
-- [orwellian-logging.md](orwellian-logging.md) — the observability bar, the three hook shapes, and the read rules
+- [logging.md](logging.md) — the observability bar, the three hook shapes, and the read rules
   this surface serves (the `/diagnostic`→`/shadow` mailbox pattern, `/events` timing, the `data-reader` minion).
 - [enabler.md](enabler.md) — the "can I?" machine behind `/can/*`.
 - [modifier.md](modifier.md) — the magnitudes that `/decompose/modifier` attributes.

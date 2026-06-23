@@ -1,4 +1,7 @@
-# Orwellian observability — the surveillance surface
+# Logging — the observability surface
+
+> The **goal** is *Orwellian* total-surveillance observability (§1); the doc is just **logging** now (all the old
+> logging is already nuked, so there is only one logging system to name).
 
 The **verification substrate** for the whole rework. The load-bearing rule is **map-before-delete**: you cannot
 safely delete a legacy maintainer you cannot fully observe, so every behaviour is **shadowed** against the live

@@ -30,7 +30,7 @@
 | `enabler.md` | "can I?" — GENERATE-then-GATE; the `enables`/`disables`/`replaces`/`obsoletes` chain is the **authority on the tree**, `requires` only gates **attainability** (can't remove from the tree); pass 1 completes before pass 2; bidirectional `require` callback UP | ✓ passes |
 | `modifier.md` | "how much?" — deposit DOWN / accumulate / combine; **a modifier = a `requires`-shaped gate + an output** (same vocabulary, SEPARATE fields, output can buff **or** nerf); deliveryguy ownership; `perUnit:<predicate>`; unit-plane self-accumulator; cargo split | ✓ passes |
 | `tally.md` | "how many?" — count substrate (sibling of modifier, rolls UP), player-leaf store, serializes-nothing/rebuild-on-load | ✓ passes |
-| `orwellian-logging.md` | observability — the Orwell reconstruction bar, the 0–5 scale, the 3 hook shapes, the event spine + `IEventConsumer` + the `DOMAIN`/`DIAGNOSTIC`/`TRACE` KIND firewall, read rules, the shadow | ◐ partial (only because `http-endpoints` is unwritten) |
+| `logging.md` | observability — the Orwell reconstruction bar, the 0–5 scale, the 3 hook shapes, the event spine + `IEventConsumer` + the `DOMAIN`/`DIAGNOSTIC`/`TRACE` KIND firewall, read rules, the shadow | ✓ (http link now resolves) |
 | `skills.md` | unit-skill glossary — §1 Validated (~56), §2 ⚠ Needs validation (~23), §3 Not-skills-relocate (3) | glossary (not cold-tested) |
 
 ## 3. The unit-classification model + the revised curator plan (this session's main outcome)
