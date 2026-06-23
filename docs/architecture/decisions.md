@@ -27,7 +27,7 @@
 >
 > **Transition note (2026-06-19):** the rulings are being carried from the old `docs/decisions.md`
 > into this docs2 set. Until each subsystem's home is rebuilt (tracked in
-> [`_meta/build-plan.md`](../_meta/build-plan.md)), an entry's **full text** may still live in the old set;
+> [`_meta/build-plan.md`](../../AGENTS.md)), an entry's **full text** may still live in the old set;
 > the one-line + home below is authoritative for *what the ruling is and where to read it*.
 
 ---
@@ -52,10 +52,10 @@
 | [DEC-parity](#dec-parity) | **Parity is the ONLY goal** (reversed 2026-06-23) — exact match; no "adjacent"/tolerance/care-scale; a divergence is a data-collection gap, not a math difference | [`specs/validation.md`](../specs/validation.md) |
 | [DEC-no-parity-results-in-docs](#dec-no-parity-results-in-docs) | Parity-pass results (divergence counts, checklists, pilot numbers) stay OUT of the docs — stale results poison contexts | [`specs/validation.md`](../specs/validation.md) |
 | [DEC-tally-serializes-nothing](#dec-tally-serializes-nothing) | Tally + scope accumulators serialize NOTHING — rebuilt from loaded objects on load | [`specs/tally.md` §4](../specs/tally.md) |
-| [DEC-save-remove-is-soft](#dec-save-remove-is-soft) | Removing a serialized field/Type is SOFT in the name-keyed format; only 4 cases are HARD | [`reference/engine/save-load-format.md`](../reference/engine/save-load-format.md) |
-| [DEC-derived-never-trusted](#dec-derived-never-trusted) | Derived data is never trusted from a save; reset() marks dirty and recomputes | [`reference/engine/save-load-format.md`](../reference/engine/save-load-format.md) |
-| [DEC-obs-scale](#dec-obs-scale) | The Observability Scale (0 Oblivious … 5 Meta) + the reconstruct-from-API "Orwell" bar | [`reference/observability/README.md`](../reference/observability/README.md) |
-| [DEC-obs-hook-shapes](#dec-obs-hook-shapes) | The 3 canonical observability hook shapes (snapshot field / gated `[TAG]` log / mailbox `/diagnostic`) | [`reference/observability/README.md`](../reference/observability/README.md) |
+| [DEC-save-remove-is-soft](#dec-save-remove-is-soft) | Removing a serialized field/Type is SOFT in the name-keyed format; only 4 cases are HARD | [`reference/engine/save-load-format.md`](../reference/engine.md) |
+| [DEC-derived-never-trusted](#dec-derived-never-trusted) | Derived data is never trusted from a save; reset() marks dirty and recomputes | [`reference/engine/save-load-format.md`](../reference/engine.md) |
+| [DEC-obs-scale](#dec-obs-scale) | The Observability Scale (0 Oblivious … 5 Meta) + the reconstruct-from-API "Orwell" bar | [`reference/observability/README.md`](../reference/observability.md) |
+| [DEC-obs-hook-shapes](#dec-obs-hook-shapes) | The 3 canonical observability hook shapes (snapshot field / gated `[TAG]` log / mailbox `/diagnostic`) | [`reference/observability/README.md`](../reference/observability.md) |
 | [DEC-interface-contracts](#dec-interface-contracts) | C++03 Clean-Architecture contracts: pure-virtual bases, MI = implements, poor-man's-DI at a composition root | `AGENTS.md` |
 | [DEC-proper-once](#dec-proper-once) | Build the proper structure once — reject transitional shims | `AGENTS.md` |
 | [DEC-keep-unkilled-ideas](#dec-keep-unkilled-ideas) | Retire only code-reconstructible-stale or explicitly-killed docs; an un-killed idea is kept (out-of-scope ≠ retire) | `_meta/CONVENTIONS.md` §7 |
@@ -184,7 +184,7 @@ dropped the gold-commerce divergence from −44.6% to single digits); **(3) JSON
 calc is reverse-engineered as JSON-computed parts + engine-fetched parts. `cascade_sim` verified
 `baseMaint100 = building+distance+numCities+colony+corp`, `realized = baseMaint100×(100+effectiveModifier)/100`: −0.4%
 (capital) and −0.6…−1.9% (non-capitals, distance deductor nonzero). **Home:**
-[`reference/observability/gold-maintenance-inflation.md`](../reference/observability/gold-maintenance-inflation.md)
+[`reference/observability/gold-maintenance-inflation.md`](../reference/economy.md)
 §1-D.1. Sibling of [[DEC-all-means-all]].
 
 ### DEC-calc-zero-ride-in
@@ -201,7 +201,7 @@ validate each part in **ISOLATION** (one plot, one specialist, one building) to 
 diff-free by construction; aggregate-diff-chasing is the ghost-hunt (e.g. `getBaseCommerceRateFromBuilding100` is
 engine-modifier-inclusive, not JSON-comparable; the `*Raw100` dump field is). **Build DRY-FIRST** — fictitious
 plot/loadout in isolation, verify the arithmetic, before wiring to live dumps. **Home:**
-[`json-migration/calc-emulator-spec.md`](../json-migration/calc-emulator-spec.md) §2a.2. Sibling of [[DEC-all-means-all]].
+[`json-migration/calc-emulator-spec.md`](../architecture/superseded-ideas.md) §2a.2. Sibling of [[DEC-all-means-all]].
 
 ### DEC-kraken
 **The OVERALL ruling these all serve (owner ruling 2026-06-20).** Skipping something, assuming something, guessing
@@ -259,23 +259,23 @@ historical counters live on their owning object. **Home:**
 
 ### DEC-save-remove-is-soft
 The name-keyed save format makes removing a plain member SOFT; Type/XML churn is free for class
-enums/arrays; only 4 cases are HARD. **Home:** [`reference/engine/save-load-format.md`](../reference/engine/save-load-format.md).
+enums/arrays; only 4 cases are HARD. **Home:** [`reference/engine/save-load-format.md`](../reference/engine.md).
 
 ### DEC-derived-never-trusted
 Derived data is never trusted from a save: `reset()` marks it dirty on load and recomputes from live state.
-**Home:** [`reference/engine/save-load-format.md`](../reference/engine/save-load-format.md) (the
+**Home:** [`reference/engine/save-load-format.md`](../reference/engine.md) (the
 recompute-on-load model; the repository it came from is superseded — see
 [`superseded-ideas.md`](superseded-ideas.md)). Related: [[DEC-tally-serializes-nothing]].
 
 ### DEC-obs-scale
 Observability Scale: 0 Oblivious · 1 Telescreen · 2 Informant · 3 Big Brother · 4 Thought Police · 5 Meta.
 Reconstruction bar: rebuild game state from HTTP + `/events` + gated logs, never the screen. **Home:**
-[`reference/observability/README.md`](../reference/observability/README.md).
+[`reference/observability/README.md`](../reference/observability.md).
 
 ### DEC-obs-hook-shapes
 Three canonical hook shapes: (1) a snapshot field on `/players`|`/cities`|`/units`; (2) a gated `[TAG]` log
 teed to `/events` via `streamLogTee`; (3) a mailbox `/diagnostic/*` endpoint. **Home:**
-[`reference/observability/README.md`](../reference/observability/README.md).
+[`reference/observability/README.md`](../reference/observability.md).
 
 ### DEC-interface-contracts
 Depend on interfaces, not concretions. C++03 interface = abstract base, pure-virtuals, no data members; MI
@@ -290,7 +290,7 @@ components behind interface-bounded surfaces. **Home:** [`AGENTS.md`](../../AGEN
 Retire a doc ONLY if it is reconstructible-from-code-and-unneeded, or an explicitly KILLED idea. Forward
 design intent that has not been killed is **kept** (partitioned if out of active scope) — it is not
 reconstructible from code and exists nowhere else; out-of-scope is never a reason to retire. Losing
-un-killed intent is the one unrecoverable deletion. **Home:** [`_meta/CONVENTIONS.md` §7](../_meta/CONVENTIONS.md) (owner ruling 2026-06-19).
+un-killed intent is the one unrecoverable deletion. **Home:** [`_meta/CONVENTIONS.md` §7](../../AGENTS.md) (owner ruling 2026-06-19).
 
 ### DEC-WF-rulings-to-repo
 Every owner ruling → the right repo home immediately and unprompted, same work item; memory-only is
@@ -320,4 +320,4 @@ referenceable later) — after any durable references are repointed into the dur
 archiving is gated on working that index to empty. Distinct from
 `plans/parked/` (un-killed intent, kept) and `reference/` (durable, permanent): a one-time-project folder is
 *active now, archived out when done*. **Home:**
-[`_meta/CONVENTIONS.md` §9](../_meta/CONVENTIONS.md) (owner ruling 2026-06-20). Related: [[DEC-keep-unkilled-ideas]].
+[`_meta/CONVENTIONS.md` §9](../../AGENTS.md) (owner ruling 2026-06-20). Related: [[DEC-keep-unkilled-ideas]].

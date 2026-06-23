@@ -12,7 +12,7 @@
 
 This doc is deliberately narrow. It catalogues the things you reach for *outside* the normal
 edit→`Assert build`→validate→playtest loop. Anything that loop already covers lives where it is owned, not
-here (single-source — [`_meta/CONVENTIONS.md` §2](../_meta/CONVENTIONS.md)).
+here (single-source — [`_meta/CONVENTIONS.md` §2](../../AGENTS.md)).
 
 ## Crash-dump analysis (offline)
 
