@@ -7,20 +7,18 @@
    "BUILDING_BED_N_BREAKFAST"
   ]
  },
- "obsoletes": {
+ "obsoletedBy": {
   "buildings": [
    "BUILDING_HOUSING_COLONY_ARCOLOGY"
+  ],
+  "techs": [
+   "TECH_INTERSTELLAR_COLONIZATION"
   ]
  },
- "replaces": {
+ "replacedBy": {
   "buildings": [
-   "BUILDING_HOUSING_BONE_HUTS",
-   "BUILDING_HOUSING_COTTAGES",
-   "BUILDING_HOUSING_DOMUS",
-   "BUILDING_HOUSING_HOMELESS",
-   "BUILDING_HOUSING_MUD_HUTS",
-   "BUILDING_HOUSING_STONE_HUTS",
-   "BUILDING_HOUSING_SUBURBS"
+   "BUILDING_HOUSING_COLONY_ARCOLOGY",
+   "BUILDING_LAUNCH_ARCOLOGY"
   ]
  },
  "requires": {

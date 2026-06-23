@@ -2,7 +2,15 @@
  "type": "BUILDING_FACTORY_NYLON",
  "description": "TXT_KEY_BUILDING_FACTORY_NYLON",
  "civilopedia": "TXT_KEY_BUILDING_FACTORY_NYLON_PEDIA",
- "obsoletes": {
+ "obsoletedBy": {
+  "buildings": [
+   "BUILDING_MATERIALS_CONGLOMERATE"
+  ],
+  "techs": [
+   "TECH_SMART_DUST"
+  ]
+ },
+ "replacedBy": {
   "buildings": [
    "BUILDING_MATERIALS_CONGLOMERATE"
   ]

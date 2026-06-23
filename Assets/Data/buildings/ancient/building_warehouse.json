@@ -8,7 +8,15 @@
    "BUILDING_NAVAL_SHIPPING_WAREHOUSE"
   ]
  },
- "obsoletes": {
+ "obsoletedBy": {
+  "buildings": [
+   "BUILDING_MODERN_WAREHOUSE"
+  ],
+  "techs": [
+   "TECH_REFRIGERATION"
+  ]
+ },
+ "replacedBy": {
   "buildings": [
    "BUILDING_MODERN_WAREHOUSE"
   ]

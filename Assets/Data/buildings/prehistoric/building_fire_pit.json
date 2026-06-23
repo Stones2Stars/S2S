@@ -12,6 +12,18 @@
    "BUILDING_SMOKE_SIGNALS"
   ]
  },
+ "obsoletedBy": {
+  "techs": [
+   "TECH_METAL_CASTING"
+  ]
+ },
+ "replacedBy": {
+  "buildings": [
+   "BUILDING_IMU",
+   "BUILDING_BONFIRE",
+   "BUILDING_CHARCOAL_BURNER"
+  ]
+ },
  "requires": {
   "build": {
    "all": [

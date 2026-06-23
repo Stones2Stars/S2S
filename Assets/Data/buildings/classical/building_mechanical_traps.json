@@ -2,15 +2,23 @@
  "type": "BUILDING_MECHANICAL_TRAPS",
  "description": "TXT_KEY_BUILDING_MECHANICAL_TRAPS",
  "civilopedia": "TXT_KEY_BUILDING_MECHANICAL_TRAPS_PEDIA",
- "obsoletes": {
+ "obsoletedBy": {
   "buildings": [
    "BUILDING_LANDMINES"
+  ],
+  "techs": [
+   "TECH_GUERRILLA_WARFARE"
   ]
  },
- "replaces": {
+ "replacedBy": {
   "buildings": [
-   "BUILDING_PIT_TRAPS",
-   "BUILDING_SPIKED_PIT_TRAPS"
+   "BUILDING_LANDMINES",
+   "BUILDING_BOOBY_TRAPS",
+   "BUILDING_ROBOTIC_TRAPS",
+   "BUILDING_GERM_TRAPS",
+   "BUILDING_EMP_TRAPS",
+   "BUILDING_NANOBOT_TRAPS",
+   "BUILDING_GRAVITY_TRAPS"
   ]
  },
  "requires": {

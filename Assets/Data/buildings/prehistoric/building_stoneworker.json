@@ -2,6 +2,11 @@
  "type": "BUILDING_STONEWORKER",
  "description": "TXT_KEY_BUILDING_STONEWORKER",
  "civilopedia": "TXT_KEY_BUILDING_STONEWORKER_PEDIA",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_CITY_PLANNING"
+  ]
+ },
  "requires": {
   "build": {
    "all": [

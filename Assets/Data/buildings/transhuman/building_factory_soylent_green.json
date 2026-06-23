@@ -2,7 +2,15 @@
  "type": "BUILDING_FACTORY_SOYLENT_GREEN",
  "description": "TXT_KEY_BUILDING_FACTORY_SOYLENT_GREEN",
  "civilopedia": "TXT_KEY_BUILDING_FACTORY_SOYLENT_GREEN_PEDIA",
- "obsoletes": {
+ "obsoletedBy": {
+  "buildings": [
+   "BUILDING_MATERIALIZATION_COMPLEX"
+  ],
+  "techs": [
+   "TECH_OMEGA_POINT"
+  ]
+ },
+ "replacedBy": {
   "buildings": [
    "BUILDING_MATERIALIZATION_COMPLEX"
   ]

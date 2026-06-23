@@ -2,7 +2,15 @@
  "type": "BUILDING_AERODROME",
  "description": "TXT_KEY_BUILDING_AERODROME",
  "civilopedia": "TXT_KEY_BUILDING_AERODROME_PEDIA",
- "obsoletes": {
+ "obsoletedBy": {
+  "buildings": [
+   "BUILDING_GRAND_AERODROME"
+  ],
+  "techs": [
+   "TECH_HYPERSONIC_FLIGHT"
+  ]
+ },
+ "replacedBy": {
   "buildings": [
    "BUILDING_GRAND_AERODROME"
   ]

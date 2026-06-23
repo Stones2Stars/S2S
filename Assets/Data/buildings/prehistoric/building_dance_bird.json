@@ -2,6 +2,11 @@
  "type": "BUILDING_DANCE_BIRD",
  "description": "TXT_KEY_BUILDING_DANCE_BIRD",
  "civilopedia": "TXT_KEY_BUILDING_DANCE_BIRD_PEDIA",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_MIND_UPLOADING"
+  ]
+ },
  "requires": {
   "build": {
    "all": [

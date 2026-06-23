@@ -2,7 +2,15 @@
  "type": "BUILDING_MARTIAN_CAVE_DWELLING",
  "description": "TXT_KEY_BUILDING_MARTIAN_CAVE_DWELLING",
  "civilopedia": "TXT_KEY_BUILDING_MARTIAN_CAVE_DWELLING_PEDIA",
- "obsoletes": {
+ "obsoletedBy": {
+  "buildings": [
+   "BUILDING_MARTIAN_SKYSCRAPER"
+  ],
+  "techs": [
+   "TECH_NANOSHIELDING"
+  ]
+ },
+ "replacedBy": {
   "buildings": [
    "BUILDING_MARTIAN_SKYSCRAPER"
   ]

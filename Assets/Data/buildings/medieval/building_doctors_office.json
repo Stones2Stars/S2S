@@ -19,14 +19,19 @@
    "UNIT_TLATILCO_WAR_PRIEST"
   ]
  },
- "obsoletes": {
+ "obsoletedBy": {
   "buildings": [
    "BUILDING_SURGEONS_OFFICE"
+  ],
+  "techs": [
+   "TECH_MODERN_HEALTH_CARE"
   ]
  },
- "replaces": {
+ "replacedBy": {
   "buildings": [
-   "BUILDING_HEALERS_HUT"
+   "BUILDING_SURGEONS_OFFICE",
+   "BUILDING_MEDICAL_CLINIC",
+   "BUILDING_HEALTHCARE_MEGACOMPLEX"
   ]
  },
  "requires": {

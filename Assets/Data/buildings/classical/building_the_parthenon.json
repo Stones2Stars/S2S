@@ -2,6 +2,11 @@
  "type": "BUILDING_THE_PARTHENON",
  "description": "TXT_KEY_BUILDING_THE_PARTHENON",
  "civilopedia": "TXT_KEY_BUILDING_THE_PARTHENON_PEDIA",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_SCIENTIFIC_METHOD"
+  ]
+ },
  "requires": {
   "build": {
    "all": [

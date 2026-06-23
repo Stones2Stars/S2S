@@ -2,7 +2,15 @@
  "type": "BUILDING_ANIMATRONICS_WORKSHOP",
  "description": "TXT_KEY_BUILDING_ANIMATRONICS_WORKSHOP",
  "civilopedia": "TXT_KEY_BUILDING_ANIMATRONICS_WORKSHOP_PEDIA",
- "obsoletes": {
+ "obsoletedBy": {
+  "buildings": [
+   "BUILDING_HIGH_TECH_CULTURAL_ENRICHMENT"
+  ],
+  "techs": [
+   "TECH_CULTURAL_EVOLUTION"
+  ]
+ },
+ "replacedBy": {
   "buildings": [
    "BUILDING_HIGH_TECH_CULTURAL_ENRICHMENT"
   ]

@@ -2,7 +2,15 @@
  "type": "BUILDING_ROCK_GARDEN",
  "description": "TXT_KEY_BUILDING_ROCK_GARDEN",
  "civilopedia": "TXT_KEY_BUILDING_ROCK_GARDEN_PEDIA",
- "obsoletes": {
+ "obsoletedBy": {
+  "buildings": [
+   "BUILDING_CITY_PARK"
+  ],
+  "techs": [
+   "TECH_ECOLOGY"
+  ]
+ },
+ "replacedBy": {
   "buildings": [
    "BUILDING_CITY_PARK"
   ]

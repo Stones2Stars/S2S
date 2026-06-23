@@ -2,6 +2,11 @@
  "type": "BUILDING_ASTROLOGICAL_INFLUENCE_OF_SAGITTARIUS",
  "description": "TXT_KEY_BUILDING_ASTROLOGICAL_INFLUENCE_OF_SAGITTARIUS",
  "civilopedia": "TXT_KEY_BUILDING_ASTROLOGICAL_INFLUENCE_OF_SAGITTARIUS_PEDIA",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_MEDIEVAL_LIFESTYLE"
+  ]
+ },
  "requires": {
   "build": {
    "all": [

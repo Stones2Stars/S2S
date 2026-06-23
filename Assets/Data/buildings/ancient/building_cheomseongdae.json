@@ -2,9 +2,12 @@
  "type": "BUILDING_CHEOMSEONGDAE",
  "description": "TXT_KEY_BUILDING_CHEOMSEONGDAE",
  "civilopedia": "TXT_KEY_BUILDING_CHEOMSEONGDAE_PEDIA",
- "obsoletes": {
+ "obsoletedBy": {
   "buildings": [
    "BUILDING_RELIC_CHEOMSEONGDAE"
+  ],
+  "techs": [
+   "TECH_SATELLITES"
   ]
  },
  "requires": {

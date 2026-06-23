@@ -2,9 +2,18 @@
  "type": "BUILDING_BALL_COURT",
  "description": "TXT_KEY_BUILDING_BALL_COURT",
  "civilopedia": "TXT_KEY_BUILDING_BALL_COURT_PEDIA",
- "obsoletes": {
+ "obsoletedBy": {
   "buildings": [
    "BUILDING_MINOR_LEAGUE_STADIUM"
+  ],
+  "techs": [
+   "TECH_MODERN_SPORTS"
+  ]
+ },
+ "replacedBy": {
+  "buildings": [
+   "BUILDING_MINOR_LEAGUE_STADIUM",
+   "BUILDING_MAJOR_LEAGUE_STADIUM"
   ]
  },
  "requires": {

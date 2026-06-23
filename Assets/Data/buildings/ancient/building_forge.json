@@ -25,9 +25,18 @@
    "BUILDING_TOWNCLOCK"
   ]
  },
- "obsoletes": {
+ "obsoletedBy": {
   "buildings": [
    "BUILDING_FOUNDRY"
+  ],
+  "techs": [
+   "TECH_NANOMINING"
+  ]
+ },
+ "replacedBy": {
+  "buildings": [
+   "BUILDING_FOUNDRY",
+   "BUILDING_METALS_MEGACOMPLEX"
   ]
  },
  "requires": {

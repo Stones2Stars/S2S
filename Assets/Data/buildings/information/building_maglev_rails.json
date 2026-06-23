@@ -9,9 +9,18 @@
    "BUILDING_TRANSATLANTIC_TUNNEL"
   ]
  },
- "obsoletes": {
+ "obsoletedBy": {
   "buildings": [
    "BUILDING_VACTRAIN_TERMINAL"
+  ],
+  "techs": [
+   "TECH_FRICTIONLESS_FLIGHT"
+  ]
+ },
+ "replacedBy": {
+  "buildings": [
+   "BUILDING_VACTRAIN_TERMINAL",
+   "BUILDING_GRAVITY_TRAIN"
   ]
  },
  "requires": {

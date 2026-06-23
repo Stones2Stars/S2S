@@ -2,7 +2,15 @@
  "type": "BUILDING_COMBAT_SIMULATOR",
  "description": "TXT_KEY_BUILDING_COMBAT_SIMULATOR",
  "civilopedia": "TXT_KEY_BUILDING_COMBAT_SIMULATOR_PEDIA",
- "obsoletes": {
+ "obsoletedBy": {
+  "buildings": [
+   "BUILDING_HOLOGRAPHIC_COMBAT_SIMULATOR"
+  ],
+  "techs": [
+   "TECH_SIMULATED_REALITY"
+  ]
+ },
+ "replacedBy": {
   "buildings": [
    "BUILDING_HOLOGRAPHIC_COMBAT_SIMULATOR"
   ]

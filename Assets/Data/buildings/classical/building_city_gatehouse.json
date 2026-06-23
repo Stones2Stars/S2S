@@ -7,7 +7,15 @@
    "BUILDING_CITY_GATE"
   ]
  },
- "obsoletes": {
+ "obsoletedBy": {
+  "buildings": [
+   "BUILDING_IMPERIAL_FORTRESS"
+  ],
+  "techs": [
+   "TECH_TRENCH_WARFARE"
+  ]
+ },
+ "replacedBy": {
   "buildings": [
    "BUILDING_IMPERIAL_FORTRESS"
   ]

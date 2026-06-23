@@ -7,14 +7,17 @@
    "BUILDING_SUPERCRITICAL_CO2_TURBINE"
   ]
  },
- "obsoletes": {
+ "obsoletedBy": {
   "buildings": [
    "BUILDING_RENEWABLE_MEGACOMPLEX"
+  ],
+  "techs": [
+   "TECH_FEMTOTECHNOLOGY"
   ]
  },
- "replaces": {
+ "replacedBy": {
   "buildings": [
-   "BUILDING_GEOTHERMAL_POWER_PLANT"
+   "BUILDING_RENEWABLE_MEGACOMPLEX"
   ]
  },
  "requires": {

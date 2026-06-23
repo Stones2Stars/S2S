@@ -17,9 +17,18 @@
    "BUILDING_X_SEED_4000"
   ]
  },
- "obsoletes": {
+ "obsoletedBy": {
   "buildings": [
    "BUILDING_HOUSING_COLONY_ARCOLOGY"
+  ],
+  "techs": [
+   "TECH_INTERSTELLAR_COLONIZATION"
+  ]
+ },
+ "replacedBy": {
+  "buildings": [
+   "BUILDING_HOUSING_COLONY_ARCOLOGY",
+   "BUILDING_LAUNCH_ARCOLOGY"
   ]
  },
  "requires": {

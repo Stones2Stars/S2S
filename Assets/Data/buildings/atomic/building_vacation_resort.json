@@ -2,7 +2,15 @@
  "type": "BUILDING_VACATION_RESORT",
  "description": "TXT_KEY_BUILDING_VACATION_RESORT",
  "civilopedia": "TXT_KEY_BUILDING_VACATION_RESORT_PEDIA",
- "obsoletes": {
+ "obsoletedBy": {
+  "buildings": [
+   "BUILDING_TOURISM_MEGACOMPLEX"
+  ],
+  "techs": [
+   "TECH_FUSION_SPACECRAFT"
+  ]
+ },
+ "replacedBy": {
   "buildings": [
    "BUILDING_TOURISM_MEGACOMPLEX"
   ]

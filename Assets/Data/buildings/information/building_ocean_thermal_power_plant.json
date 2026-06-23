@@ -8,7 +8,15 @@
    "BUILDING_SEASTEAD"
   ]
  },
- "obsoletes": {
+ "obsoletedBy": {
+  "buildings": [
+   "BUILDING_RENEWABLE_MEGACOMPLEX"
+  ],
+  "techs": [
+   "TECH_FEMTOTECHNOLOGY"
+  ]
+ },
+ "replacedBy": {
   "buildings": [
    "BUILDING_RENEWABLE_MEGACOMPLEX"
   ]

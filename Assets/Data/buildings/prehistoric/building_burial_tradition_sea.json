@@ -10,9 +10,18 @@
    "BUILDING_WATER_BURIALS"
   ]
  },
- "obsoletes": {
+ "obsoletedBy": {
   "buildings": [
    "BUILDING_FUNERARY_SERVICES"
+  ],
+  "techs": [
+   "TECH_TRANSHUMANISM"
+  ]
+ },
+ "replacedBy": {
+  "buildings": [
+   "BUILDING_FUNERARY_SERVICES",
+   "BUILDING_HIGH_TECH_CULTURAL_ENRICHMENT"
   ]
  },
  "requires": {

@@ -2,7 +2,15 @@
  "type": "BUILDING_COTTAGE_INDUSTRY",
  "description": "TXT_KEY_BUILDING_COTTAGE_INDUSTRY",
  "civilopedia": "TXT_KEY_BUILDING_COTTAGE_INDUSTRY_PEDIA",
- "obsoletes": {
+ "obsoletedBy": {
+  "buildings": [
+   "BUILDING_MANUFACTURING_PLANT"
+  ],
+  "techs": [
+   "TECH_NANOTECHNOLOGY"
+  ]
+ },
+ "replacedBy": {
   "buildings": [
    "BUILDING_MANUFACTURING_PLANT"
   ]

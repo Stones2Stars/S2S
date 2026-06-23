@@ -2,14 +2,18 @@
  "type": "BUILDING_AUTOMATED_VEHICLE_DEALERSHIP",
  "description": "TXT_KEY_BUILDING_AUTOMATED_VEHICLE_DEALERSHIP",
  "civilopedia": "TXT_KEY_BUILDING_AUTOMATED_VEHICLE_DEALERSHIP_PEDIA",
- "obsoletes": {
+ "obsoletedBy": {
   "buildings": [
    "BUILDING_SHOCKWAVE_VEHICLE_DEALERSHIP"
+  ],
+  "techs": [
+   "TECH_LEVITATION"
   ]
  },
- "replaces": {
+ "replacedBy": {
   "buildings": [
-   "BUILDING_AUTOMOBILE_DEALERSHIP"
+   "BUILDING_SHOCKWAVE_VEHICLE_DEALERSHIP",
+   "BUILDING_ANTIGRAV_VEHICLE_DEALERSHIP"
   ]
  },
  "requires": {

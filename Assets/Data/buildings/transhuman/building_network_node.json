@@ -18,12 +18,6 @@
    "BUILDING_WIRELESS_NETWORKS"
   ]
  },
- "replaces": {
-  "buildings": [
-   "BUILDING_BROADCAST_TOWER",
-   "BUILDING_COMMUNICATION_TOWER"
-  ]
- },
  "requires": {
   "build": {
    "all": [

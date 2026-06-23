@@ -15,11 +15,6 @@
    "BUILDING_PLASMA_ARC_RECYCLING"
   ]
  },
- "replaces": {
-  "buildings": [
-   "BUILDING_COTTAGE_INDUSTRY"
-  ]
- },
  "requires": {
   "build": {
    "all": [

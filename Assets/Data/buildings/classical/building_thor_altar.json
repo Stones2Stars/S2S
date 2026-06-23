@@ -2,6 +2,11 @@
  "type": "BUILDING_THOR_ALTAR",
  "description": "TXT_KEY_BUILDING_THOR_ALTAR",
  "civilopedia": "TXT_KEY_BUILDING_THOR_ALTAR_PEDIA",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_HUMANISM"
+  ]
+ },
  "requires": {
   "build": {
    "all": [

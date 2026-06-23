@@ -2,7 +2,15 @@
  "type": "BUILDING_LAUNDRY_HUT",
  "description": "TXT_KEY_BUILDING_LAUNDRY_HUT",
  "civilopedia": "TXT_KEY_BUILDING_LAUNDRY_HUT_PEDIA",
- "obsoletes": {
+ "obsoletedBy": {
+  "buildings": [
+   "BUILDING_HYPERMARKET"
+  ],
+  "techs": [
+   "TECH_SMART_DUST"
+  ]
+ },
+ "replacedBy": {
   "buildings": [
    "BUILDING_HYPERMARKET"
   ]

@@ -7,6 +7,11 @@
    "BUILDING_GRAND_EARTH_FESTIVAL"
   ]
  },
+ "obsoletedBy": {
+  "techs": [
+   "TECH_MUSICAL_NOTATION"
+  ]
+ },
  "requires": {
   "build": {
    "all": [

@@ -2,7 +2,15 @@
  "type": "BUILDING_TIDAL_FARM",
  "description": "TXT_KEY_BUILDING_TIDAL_FARM",
  "civilopedia": "TXT_KEY_BUILDING_TIDAL_FARM_PEDIA",
- "obsoletes": {
+ "obsoletedBy": {
+  "buildings": [
+   "BUILDING_RENEWABLE_MEGACOMPLEX"
+  ],
+  "techs": [
+   "TECH_FEMTOTECHNOLOGY"
+  ]
+ },
+ "replacedBy": {
   "buildings": [
    "BUILDING_RENEWABLE_MEGACOMPLEX"
   ]

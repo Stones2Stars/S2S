@@ -2,7 +2,15 @@
  "type": "BUILDING_DRIED_MEAT_MAKER",
  "description": "TXT_KEY_BUILDING_DRIED_MEAT_MAKER",
  "civilopedia": "TXT_KEY_BUILDING_DRIED_MEAT_MAKER_PEDIA",
- "obsoletes": {
+ "obsoletedBy": {
+  "buildings": [
+   "BUILDING_FOOD_MANUFACTURING_DISTRICT"
+  ],
+  "techs": [
+   "TECH_MIND_UPLOADING"
+  ]
+ },
+ "replacedBy": {
   "buildings": [
    "BUILDING_FOOD_MANUFACTURING_DISTRICT"
   ]

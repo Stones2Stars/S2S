@@ -2,9 +2,18 @@
  "type": "BUILDING_WOOD_FIRED_DYNAMO",
  "description": "TXT_KEY_BUILDING_WOOD_FIRED_DYNAMO",
  "civilopedia": "TXT_KEY_BUILDING_WOOD_FIRED_DYNAMO_PEDIA",
- "obsoletes": {
+ "obsoletedBy": {
   "buildings": [
    "BUILDING_BIOFUEL_POWER_PLANT"
+  ],
+  "techs": [
+   "TECH_ATOMIC_SCALE_ENGINEERING"
+  ]
+ },
+ "replacedBy": {
+  "buildings": [
+   "BUILDING_BIOFUEL_POWER_PLANT",
+   "BUILDING_RENEWABLE_MEGACOMPLEX"
   ]
  },
  "requires": {

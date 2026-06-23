@@ -7,7 +7,15 @@
    "BUILDING_ROCKET_FUEL_REFINERY"
   ]
  },
- "obsoletes": {
+ "obsoletedBy": {
+  "buildings": [
+   "BUILDING_CHEMICALS_DISTRICT"
+  ],
+  "techs": [
+   "TECH_ANIMAMATERIALS"
+  ]
+ },
+ "replacedBy": {
   "buildings": [
    "BUILDING_CHEMICALS_DISTRICT"
   ]

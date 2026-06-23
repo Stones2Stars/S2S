@@ -2,9 +2,18 @@
  "type": "BUILDING_SMOKE_SIGNALS",
  "description": "TXT_KEY_BUILDING_SMOKE_SIGNALS",
  "civilopedia": "TXT_KEY_BUILDING_SMOKE_SIGNALS_PEDIA",
- "obsoletes": {
+ "obsoletedBy": {
   "buildings": [
    "BUILDING_SEAL_MAKER"
+  ],
+  "techs": [
+   "TECH_PLASTIC_ELECTRONICS"
+  ]
+ },
+ "replacedBy": {
+  "buildings": [
+   "BUILDING_SEAL_MAKER",
+   "BUILDING_HYPERMARKET"
   ]
  },
  "requires": {

@@ -2,6 +2,11 @@
  "type": "BUILDING_SVALBARD_GLOBAL_SEED_VAULT",
  "description": "TXT_KEY_BUILDING_SVALBARD_GLOBAL_SEED_VAULT",
  "civilopedia": "TXT_KEY_BUILDING_SVALBARD_GLOBAL_SEED_VAULT_PEDIA",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_EXTRATERRESTRIAL_AGRICULTURE"
+  ]
+ },
  "requires": {
   "build": {
    "all": [

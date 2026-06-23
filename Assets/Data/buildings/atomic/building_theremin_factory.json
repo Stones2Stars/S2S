@@ -2,7 +2,15 @@
  "type": "BUILDING_THEREMIN_FACTORY",
  "description": "TXT_KEY_BUILDING_THEREMIN_FACTORY",
  "civilopedia": "TXT_KEY_BUILDING_THEREMIN_FACTORY_PEDIA",
- "obsoletes": {
+ "obsoletedBy": {
+  "buildings": [
+   "BUILDING_ELECTRONICS_MANUFACTURING_DISTRICT"
+  ],
+  "techs": [
+   "TECH_NANOELECTRONICS"
+  ]
+ },
+ "replacedBy": {
   "buildings": [
    "BUILDING_ELECTRONICS_MANUFACTURING_DISTRICT"
   ]

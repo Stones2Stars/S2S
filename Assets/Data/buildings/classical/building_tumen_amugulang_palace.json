@@ -2,6 +2,11 @@
  "type": "BUILDING_TUMEN_AMUGULANG_PALACE",
  "description": "TXT_KEY_BUILDING_TUMEN_AMUGULANG_PALACE",
  "civilopedia": "TXT_KEY_BUILDING_TUMEN_AMUGULANG_PALACE_PEDIA",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_VIRTUAL_SOCIETY"
+  ]
+ },
  "requires": {
   "build": {
    "all": [

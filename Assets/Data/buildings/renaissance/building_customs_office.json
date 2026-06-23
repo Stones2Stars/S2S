@@ -7,11 +7,6 @@
    "BUILDING_FEITORIA"
   ]
  },
- "replaces": {
-  "buildings": [
-   "BUILDING_TOLL_HOUSE"
-  ]
- },
  "requires": {
   "build": {
    "all": [

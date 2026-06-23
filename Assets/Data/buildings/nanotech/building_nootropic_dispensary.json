@@ -2,7 +2,15 @@
  "type": "BUILDING_NOOTROPIC_DISPENSARY",
  "description": "TXT_KEY_BUILDING_NOOTROPIC_DISPENSARY",
  "civilopedia": "TXT_KEY_BUILDING_NOOTROPIC_DISPENSARY_PEDIA",
- "obsoletes": {
+ "obsoletedBy": {
+  "buildings": [
+   "BUILDING_HIGH_TECH_CULTURAL_ENRICHMENT"
+  ],
+  "techs": [
+   "TECH_CULTURAL_EVOLUTION"
+  ]
+ },
+ "replacedBy": {
   "buildings": [
    "BUILDING_HIGH_TECH_CULTURAL_ENRICHMENT"
   ]

@@ -2,14 +2,17 @@
  "type": "BUILDING_SCARECROWS",
  "description": "TXT_KEY_BUILDING_SCARECROWS",
  "civilopedia": "TXT_KEY_BUILDING_SCARECROWS_PEDIA",
- "obsoletes": {
+ "obsoletedBy": {
   "buildings": [
    "BUILDING_FARMSCRAPER_I"
+  ],
+  "techs": [
+   "TECH_GAIA_ECOLOGY"
   ]
  },
- "replaces": {
+ "replacedBy": {
   "buildings": [
-   "BUILDING_PESTS_CROWS"
+   "BUILDING_FARMSCRAPER_I"
   ]
  },
  "requires": {

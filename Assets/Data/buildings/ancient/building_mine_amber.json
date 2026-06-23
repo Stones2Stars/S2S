@@ -7,14 +7,17 @@
    "BUILDING_RESOURCES_GEMSTONE"
   ]
  },
- "obsoletes": {
+ "obsoletedBy": {
   "buildings": [
    "BUILDING_CORE_MINE"
+  ],
+  "techs": [
+   "TECH_ATOMIC_SCALE_ENGINEERING"
   ]
  },
- "replaces": {
+ "replacedBy": {
   "buildings": [
-   "BUILDING_AMBER_GATHERER"
+   "BUILDING_CORE_MINE"
   ]
  },
  "requires": {

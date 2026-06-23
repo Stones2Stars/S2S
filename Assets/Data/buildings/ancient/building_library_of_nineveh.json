@@ -2,6 +2,11 @@
  "type": "BUILDING_LIBRARY_OF_NINEVEH",
  "description": "TXT_KEY_BUILDING_LIBRARY_OF_NINEVEH",
  "civilopedia": "TXT_KEY_BUILDING_LIBRARY_OF_NINEVEH_PEDIA",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_INDUSTRIALISM"
+  ]
+ },
  "requires": {
   "build": {
    "all": [

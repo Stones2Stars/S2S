@@ -21,15 +21,6 @@
    "UNIT_TRAINEDDOG"
   ]
  },
- "replaces": {
-  "buildings": [
-   "BUILDING_CAT_BREEDER",
-   "BUILDING_DOG_BREEDER",
-   "BUILDING_LIZARD_HUNTERS_CAMP",
-   "BUILDING_PET_SHOP",
-   "BUILDING_RESOURCES_LIZARDS"
-  ]
- },
  "requires": {
   "build": {
    "all": [

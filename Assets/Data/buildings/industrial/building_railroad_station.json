@@ -9,7 +9,15 @@
    "BUILDING_RAIL_SHIPPING_WAREHOUSE"
   ]
  },
- "obsoletes": {
+ "obsoletedBy": {
+  "buildings": [
+   "BUILDING_TELEPORT_BOOTH"
+  ],
+  "techs": [
+   "TECH_WORMHOLE_HIVEMIND"
+  ]
+ },
+ "replacedBy": {
   "buildings": [
    "BUILDING_TELEPORT_BOOTH"
   ]

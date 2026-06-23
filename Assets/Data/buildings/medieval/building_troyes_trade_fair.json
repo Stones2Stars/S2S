@@ -2,6 +2,11 @@
  "type": "BUILDING_TROYES_TRADE_FAIR",
  "description": "TXT_KEY_BUILDING_TROYES_TRADE_FAIR",
  "civilopedia": "TXT_KEY_BUILDING_TROYES_TRADE_FAIR_PEDIA",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_RAILROAD"
+  ]
+ },
  "requires": {
   "build": {
    "all": [

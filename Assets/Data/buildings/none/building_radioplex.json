@@ -2,6 +2,11 @@
  "type": "BUILDING_RADIOPLEX",
  "description": "TXT_KEY_BUILDING_RADIOPLEX",
  "civilopedia": "TXT_KEY_BUILDING_RADIOPLEX_PEDIA",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_BINARY_SUBCONSCIOUSNESS"
+  ]
+ },
  "requires": {
   "build": {
    "all": [

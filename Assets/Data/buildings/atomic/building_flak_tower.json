@@ -2,6 +2,11 @@
  "type": "BUILDING_FLAK_TOWER",
  "description": "TXT_KEY_BUILDING_FLAK_TOWER",
  "civilopedia": "TXT_KEY_BUILDING_FLAK_TOWER_PEDIA",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_GUIDED_WEAPONS"
+  ]
+ },
  "requires": {
   "build": {
    "all": [

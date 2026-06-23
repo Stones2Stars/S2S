@@ -2,9 +2,18 @@
  "type": "BUILDING_CARPET_MAKER",
  "description": "TXT_KEY_BUILDING_CARPET_MAKER",
  "civilopedia": "TXT_KEY_BUILDING_CARPET_MAKER_PEDIA",
- "obsoletes": {
+ "obsoletedBy": {
   "buildings": [
    "BUILDING_FACTORY_CARPETS"
+  ],
+  "techs": [
+   "TECH_RAPID_PROTOTYPING"
+  ]
+ },
+ "replacedBy": {
+  "buildings": [
+   "BUILDING_FACTORY_CARPETS",
+   "BUILDING_TEXTILE_MANUFACTURING_DISTRICT"
   ]
  },
  "requires": {

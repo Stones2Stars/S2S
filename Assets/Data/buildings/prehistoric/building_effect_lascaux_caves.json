@@ -7,6 +7,11 @@
    "BUILDING_FRESCO_MURAL"
   ]
  },
+ "obsoletedBy": {
+  "techs": [
+   "TECH_MASS_MEDIA"
+  ]
+ },
  "requires": {
   "build": {
    "all": [

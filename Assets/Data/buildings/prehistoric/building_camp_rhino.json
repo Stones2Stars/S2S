@@ -9,9 +9,18 @@
    "BUILDING_RESOURCES_IVORY"
   ]
  },
- "obsoletes": {
+ "obsoletedBy": {
   "buildings": [
    "BUILDING_BREEDING_PROGRAM_RHINO"
+  ],
+  "techs": [
+   "TECH_PLANETARY_ECONOMICS"
+  ]
+ },
+ "replacedBy": {
+  "buildings": [
+   "BUILDING_BREEDING_PROGRAM_RHINO",
+   "BUILDING_ANIMAL_PRESERVE"
   ]
  },
  "requires": {

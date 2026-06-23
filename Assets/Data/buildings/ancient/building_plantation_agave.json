@@ -2,7 +2,15 @@
  "type": "BUILDING_PLANTATION_AGAVE",
  "description": "TXT_KEY_BUILDING_PLANTATION_AGAVE",
  "civilopedia": "TXT_KEY_BUILDING_PLANTATION_AGAVE_PEDIA",
- "obsoletes": {
+ "obsoletedBy": {
+  "buildings": [
+   "BUILDING_FOOD_MANUFACTURING_DISTRICT"
+  ],
+  "techs": [
+   "TECH_MIND_UPLOADING"
+  ]
+ },
+ "replacedBy": {
   "buildings": [
    "BUILDING_FOOD_MANUFACTURING_DISTRICT"
   ]

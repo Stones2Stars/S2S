@@ -2,7 +2,15 @@
  "type": "BUILDING_PERCUSSION_INSTRUMENT_MAKER",
  "description": "TXT_KEY_BUILDING_PERCUSSION_INSTRUMENT_MAKER",
  "civilopedia": "TXT_KEY_BUILDING_PERCUSSION_INSTRUMENT_MAKER_PEDIA",
- "obsoletes": {
+ "obsoletedBy": {
+  "buildings": [
+   "BUILDING_MUSIC_FACTORY"
+  ],
+  "techs": [
+   "TECH_COMPOSITES"
+  ]
+ },
+ "replacedBy": {
   "buildings": [
    "BUILDING_MUSIC_FACTORY"
   ]

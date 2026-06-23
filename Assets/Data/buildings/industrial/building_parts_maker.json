@@ -7,9 +7,23 @@
    "UNIT_MACHINIST"
   ]
  },
- "obsoletes": {
+ "obsoletedBy": {
   "buildings": [
    "BUILDING_PARTS_PLANT"
+  ],
+  "techs": [
+   "TECH_3D_PRINTING"
+  ]
+ },
+ "replacedBy": {
+  "buildings": [
+   "BUILDING_MOLECULAR_ASSEMBLER",
+   "BUILDING_ATOMIC_ASSEMBLER",
+   "BUILDING_QUANTUM_ASSEMBLER",
+   "BUILDING_MATERIALIZER",
+   "BUILDING_PARTS_PLANT",
+   "BUILDING_3D_PRINTING_MILL",
+   "BUILDING_NANOBOTIC_PRINTING_MILL"
   ]
  },
  "requires": {

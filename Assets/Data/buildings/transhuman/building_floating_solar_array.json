@@ -2,7 +2,15 @@
  "type": "BUILDING_FLOATING_SOLAR_ARRAY",
  "description": "TXT_KEY_BUILDING_FLOATING_SOLAR_ARRAY",
  "civilopedia": "TXT_KEY_BUILDING_FLOATING_SOLAR_ARRAY_PEDIA",
- "obsoletes": {
+ "obsoletedBy": {
+  "buildings": [
+   "BUILDING_RENEWABLE_MEGACOMPLEX"
+  ],
+  "techs": [
+   "TECH_FEMTOTECHNOLOGY"
+  ]
+ },
+ "replacedBy": {
   "buildings": [
    "BUILDING_RENEWABLE_MEGACOMPLEX"
   ]

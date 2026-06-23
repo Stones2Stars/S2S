@@ -7,6 +7,16 @@
    "BUILDING_GREAT_HOLMEGAARD_HUNT"
   ]
  },
+ "obsoletedBy": {
+  "techs": [
+   "TECH_SEMI_AUTOMATIC_WEAPONS"
+  ]
+ },
+ "replacedBy": {
+  "buildings": [
+   "BUILDING_MASTER_HUNTER_TRADITION"
+  ]
+ },
  "requires": {
   "build": {
    "all": [

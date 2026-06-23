@@ -2,6 +2,11 @@
  "type": "BUILDING_MORSE_CODE",
  "description": "TXT_KEY_BUILDING_MORSE_CODE",
  "civilopedia": "TXT_KEY_BUILDING_MORSE_CODE_PEDIA",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_DIRECT_MERCHANDISING"
+  ]
+ },
  "requires": {
   "build": {
    "all": [

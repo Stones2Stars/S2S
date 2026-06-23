@@ -8,6 +8,19 @@
    "BUILDING_MESA_VERDE"
   ]
  },
+ "obsoletedBy": {
+  "techs": [
+   "TECH_RAPID_PROTOTYPING"
+  ]
+ },
+ "replacedBy": {
+  "buildings": [
+   "BUILDING_HOUSING_HIGHRISES",
+   "BUILDING_HOUSING_HIGH_TECH_HIGHRISES",
+   "BUILDING_HOUSING_COLONY_ARCOLOGY",
+   "BUILDING_LAUNCH_ARCOLOGY"
+  ]
+ },
  "requires": {
   "build": {
    "all": [

@@ -12,6 +12,11 @@
    "UNIT_THIEF"
   ]
  },
+ "obsoletedBy": {
+  "techs": [
+   "TECH_RIFLING"
+  ]
+ },
  "requires": {
   "build": {
    "all": [

@@ -2,6 +2,11 @@
  "type": "BUILDING_SCARBOROUGH_FAIR",
  "description": "TXT_KEY_BUILDING_SCARBOROUGH_FAIR",
  "civilopedia": "TXT_KEY_BUILDING_SCARBOROUGH_FAIR_PEDIA",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_RAILROAD"
+  ]
+ },
  "requires": {
   "build": {
    "all": [

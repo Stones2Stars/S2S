@@ -2,7 +2,15 @@
  "type": "BUILDING_THE_RACK",
  "description": "TXT_KEY_BUILDING_THE_RACK",
  "civilopedia": "TXT_KEY_BUILDING_THE_RACK_PEDIA",
- "obsoletes": {
+ "obsoletedBy": {
+  "buildings": [
+   "BUILDING_JAIL"
+  ],
+  "techs": [
+   "TECH_PSYCHOLOGY"
+  ]
+ },
+ "replacedBy": {
   "buildings": [
    "BUILDING_JAIL"
   ]

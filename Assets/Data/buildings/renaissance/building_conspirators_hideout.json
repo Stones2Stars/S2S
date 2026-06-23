@@ -8,6 +8,11 @@
    "UNIT_SCOUNDREL"
   ]
  },
+ "obsoletedBy": {
+  "techs": [
+   "TECH_FASCISM"
+  ]
+ },
  "requires": {
   "build": {
    "all": [

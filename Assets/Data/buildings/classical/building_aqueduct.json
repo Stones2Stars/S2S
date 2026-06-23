@@ -13,7 +13,15 @@
    "BUILDING_WATERCLOCK"
   ]
  },
- "obsoletes": {
+ "obsoletedBy": {
+  "buildings": [
+   "BUILDING_MODERN_WATERWORKS"
+  ],
+  "techs": [
+   "TECH_MEGACITIES"
+  ]
+ },
+ "replacedBy": {
   "buildings": [
    "BUILDING_MODERN_WATERWORKS"
   ]

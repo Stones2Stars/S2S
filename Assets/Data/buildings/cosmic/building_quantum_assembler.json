@@ -11,20 +11,17 @@
    "UNIT_REPLICATION_MECHANIC"
   ]
  },
- "obsoletes": {
+ "obsoletedBy": {
   "buildings": [
    "BUILDING_MATERIALIZER"
+  ],
+  "techs": [
+   "TECH_OMEGA_POINT"
   ]
  },
- "replaces": {
+ "replacedBy": {
   "buildings": [
-   "BUILDING_3D_PRINTING_MILL",
-   "BUILDING_ATOMIC_ASSEMBLER",
-   "BUILDING_MOLECULAR_ASSEMBLER",
-   "BUILDING_NANOBOTIC_PRINTING_MILL",
-   "BUILDING_PARTS_MAKER",
-   "BUILDING_PARTS_PLANT",
-   "BUILDING_REPLICATOR_PLANT"
+   "BUILDING_MATERIALIZER"
   ]
  },
  "requires": {

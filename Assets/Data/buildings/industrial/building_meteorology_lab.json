@@ -7,12 +7,6 @@
    "BUILDING_CLIMATOLOGY_LAB"
   ]
  },
- "replaces": {
-  "buildings": [
-   "BUILDING_CLOUD_OBSERVERS_HUT",
-   "BUILDING_WEATHER_VANES"
-  ]
- },
  "requires": {
   "build": {
    "all": [

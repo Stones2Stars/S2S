@@ -2,9 +2,18 @@
  "type": "BUILDING_CANDLEMAKERS_SHOP",
  "description": "TXT_KEY_BUILDING_CANDLEMAKERS_SHOP",
  "civilopedia": "TXT_KEY_BUILDING_CANDLEMAKERS_SHOP_PEDIA",
- "obsoletes": {
+ "obsoletedBy": {
   "buildings": [
    "BUILDING_FACTORY_CANDLES"
+  ],
+  "techs": [
+   "TECH_RAPID_PROTOTYPING"
+  ]
+ },
+ "replacedBy": {
+  "buildings": [
+   "BUILDING_FACTORY_CANDLES",
+   "BUILDING_MANUFACTURING_DISTRICT"
   ]
  },
  "requires": {

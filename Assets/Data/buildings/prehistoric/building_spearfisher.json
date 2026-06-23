@@ -2,9 +2,21 @@
  "type": "BUILDING_SPEARFISHER",
  "description": "TXT_KEY_BUILDING_SPEARFISHER",
  "civilopedia": "TXT_KEY_BUILDING_SPEARFISHER_PEDIA",
- "obsoletes": {
+ "obsoletedBy": {
   "buildings": [
    "BUILDING_HARBOR"
+  ],
+  "techs": [
+   "TECH_CITY_PLANNING"
+  ]
+ },
+ "replacedBy": {
+  "buildings": [
+   "BUILDING_HARBOR",
+   "BUILDING_PORT",
+   "BUILDING_COMMERCIAL_PORT",
+   "BUILDING_INTERNATIONAL_PORT",
+   "BUILDING_OCEAN_ADMINISTRATION"
   ]
  },
  "requires": {

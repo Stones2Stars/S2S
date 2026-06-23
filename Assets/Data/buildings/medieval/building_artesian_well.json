@@ -2,14 +2,17 @@
  "type": "BUILDING_ARTESIAN_WELL",
  "description": "TXT_KEY_BUILDING_ARTESIAN_WELL",
  "civilopedia": "TXT_KEY_BUILDING_ARTESIAN_WELL_PEDIA",
- "obsoletes": {
+ "obsoletedBy": {
   "buildings": [
    "BUILDING_MODERN_WATERWORKS"
+  ],
+  "techs": [
+   "TECH_MEGACITIES"
   ]
  },
- "replaces": {
+ "replacedBy": {
   "buildings": [
-   "BUILDING_TOWN_WELL"
+   "BUILDING_MODERN_WATERWORKS"
   ]
  },
  "requires": {

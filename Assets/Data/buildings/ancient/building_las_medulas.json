@@ -2,6 +2,11 @@
  "type": "BUILDING_LAS_MEDULAS",
  "description": "TXT_KEY_BUILDING_LAS_MEDULAS",
  "civilopedia": "TXT_KEY_BUILDING_LAS_MEDULAS_PEDIA",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_NITROGLYCERIN"
+  ]
+ },
  "requires": {
   "build": {
    "all": [

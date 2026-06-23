@@ -8,7 +8,15 @@
    "BUILDING_MINING_BOT_CONTROL_CENTER"
   ]
  },
- "obsoletes": {
+ "obsoletedBy": {
+  "buildings": [
+   "BUILDING_NANOTECH_COMPLEX"
+  ],
+  "techs": [
+   "TECH_FEMTOTECHNOLOGY"
+  ]
+ },
+ "replacedBy": {
   "buildings": [
    "BUILDING_NANOTECH_COMPLEX"
   ]

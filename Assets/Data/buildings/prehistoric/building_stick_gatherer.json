@@ -9,6 +9,11 @@
    "BUILDING_STICK_COMBAT"
   ]
  },
+ "obsoletedBy": {
+  "techs": [
+   "TECH_CITY_PLANNING"
+  ]
+ },
  "requires": {
   "build": {
    "all": [

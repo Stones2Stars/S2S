@@ -2,6 +2,11 @@
  "type": "BUILDING_MATSUMOTO_CASTLE",
  "description": "TXT_KEY_BUILDING_MATSUMOTO_CASTLE",
  "civilopedia": "TXT_KEY_BUILDING_MATSUMOTO_CASTLE_PEDIA",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_COMMUNISM"
+  ]
+ },
  "requires": {
   "build": {
    "all": [

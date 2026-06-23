@@ -2,9 +2,19 @@
  "type": "BUILDING_CAD_STUDIO",
  "description": "TXT_KEY_BUILDING_CAD_STUDIO",
  "civilopedia": "TXT_KEY_BUILDING_CAD_STUDIO_PEDIA",
- "obsoletes": {
+ "obsoletedBy": {
   "buildings": [
    "BUILDING_MODULAR_CONSTRUCTION_FIRM"
+  ],
+  "techs": [
+   "TECH_AUTOMATED_URBANIZATION"
+  ]
+ },
+ "replacedBy": {
+  "buildings": [
+   "BUILDING_MODULAR_CONSTRUCTION_FIRM",
+   "BUILDING_SELF_CONSTRUCTION_FIRM",
+   "BUILDING_INTERTEMPORAL_CONSTRUCTION_FIRM"
   ]
  },
  "requires": {

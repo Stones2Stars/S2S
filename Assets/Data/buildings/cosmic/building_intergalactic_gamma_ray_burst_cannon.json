@@ -2,7 +2,15 @@
  "type": "BUILDING_INTERGALACTIC_GAMMA_RAY_BURST_CANNON",
  "description": "TXT_KEY_BUILDING_INTERGALACTIC_GAMMA_RAY_BURST_CANNON",
  "civilopedia": "TXT_KEY_BUILDING_INTERGALACTIC_GAMMA_RAY_BURST_CANNON_PEDIA",
- "obsoletes": {
+ "obsoletedBy": {
+  "buildings": [
+   "BUILDING_INTERGALACTIC_STAR_CANNON"
+  ],
+  "techs": [
+   "TECH_REALITY_REPROGRAMMING"
+  ]
+ },
+ "replacedBy": {
   "buildings": [
    "BUILDING_INTERGALACTIC_STAR_CANNON"
   ]

@@ -2,7 +2,15 @@
  "type": "BUILDING_TACO_HUT",
  "description": "TXT_KEY_BUILDING_TACO_HUT",
  "civilopedia": "TXT_KEY_BUILDING_TACO_HUT_PEDIA",
- "obsoletes": {
+ "obsoletedBy": {
+  "buildings": [
+   "BUILDING_UNIVERSAL_RESTAURANT"
+  ],
+  "techs": [
+   "TECH_MIND_UPLOADING"
+  ]
+ },
+ "replacedBy": {
   "buildings": [
    "BUILDING_UNIVERSAL_RESTAURANT"
   ]

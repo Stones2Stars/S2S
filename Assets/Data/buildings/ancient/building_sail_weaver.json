@@ -2,9 +2,18 @@
  "type": "BUILDING_SAIL_WEAVER",
  "description": "TXT_KEY_BUILDING_SAIL_WEAVER",
  "civilopedia": "TXT_KEY_BUILDING_SAIL_WEAVER_PEDIA",
- "obsoletes": {
+ "obsoletedBy": {
   "buildings": [
    "BUILDING_FACTORY_SAILS"
+  ],
+  "techs": [
+   "TECH_RAPID_PROTOTYPING"
+  ]
+ },
+ "replacedBy": {
+  "buildings": [
+   "BUILDING_FACTORY_SAILS",
+   "BUILDING_MANUFACTURING_DISTRICT"
   ]
  },
  "requires": {

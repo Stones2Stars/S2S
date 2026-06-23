@@ -2,9 +2,20 @@
  "type": "BUILDING_ARCHERY_RANGE",
  "description": "TXT_KEY_BUILDING_ARCHERY_RANGE",
  "civilopedia": "TXT_KEY_BUILDING_ARCHERY_RANGE_PEDIA",
- "obsoletes": {
+ "obsoletedBy": {
   "buildings": [
    "BUILDING_SHOOTING_CLUB"
+  ],
+  "techs": [
+   "TECH_MILITARY_TRADITION"
+  ]
+ },
+ "replacedBy": {
+  "buildings": [
+   "BUILDING_SHOOTING_CLUB",
+   "BUILDING_FIRING_RANGE",
+   "BUILDING_AUTOMATED_FIRING_RANGE",
+   "BUILDING_ORBITAL_TARGETS"
   ]
  },
  "requires": {

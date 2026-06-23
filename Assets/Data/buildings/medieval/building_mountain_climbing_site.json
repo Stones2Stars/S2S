@@ -2,7 +2,15 @@
  "type": "BUILDING_MOUNTAIN_CLIMBING_SITE",
  "description": "TXT_KEY_BUILDING_MOUNTAIN_CLIMBING_SITE",
  "civilopedia": "TXT_KEY_BUILDING_MOUNTAIN_CLIMBING_SITE_PEDIA",
- "obsoletes": {
+ "obsoletedBy": {
+  "buildings": [
+   "BUILDING_ATHLETIC_MEGACOMPLEX"
+  ],
+  "techs": [
+   "TECH_WEATHER_CONTROL"
+  ]
+ },
+ "replacedBy": {
   "buildings": [
    "BUILDING_ATHLETIC_MEGACOMPLEX"
   ]

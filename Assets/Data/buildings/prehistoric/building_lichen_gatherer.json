@@ -7,6 +7,11 @@
    "BUILDING_LICHEN_BURNER"
   ]
  },
+ "obsoletedBy": {
+  "techs": [
+   "TECH_CITY_PLANNING"
+  ]
+ },
  "requires": {
   "build": {
    "all": [

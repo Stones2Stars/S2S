@@ -14,14 +14,17 @@
    "UNIT_HOSPITAL_SHIP"
   ]
  },
- "obsoletes": {
+ "obsoletedBy": {
   "buildings": [
    "BUILDING_NAVAL_YARD"
+  ],
+  "techs": [
+   "TECH_MILITARY_ROBOTICS"
   ]
  },
- "replaces": {
+ "replacedBy": {
   "buildings": [
-   "BUILDING_SHIPYARD"
+   "BUILDING_NAVAL_YARD"
   ]
  },
  "requires": {

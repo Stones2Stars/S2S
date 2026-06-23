@@ -2,9 +2,18 @@
  "type": "BUILDING_BARK_GATHERER",
  "description": "TXT_KEY_BUILDING_BARK_GATHERER",
  "civilopedia": "TXT_KEY_BUILDING_BARK_GATHERER_PEDIA",
- "obsoletes": {
+ "obsoletedBy": {
   "buildings": [
    "BUILDING_LUMBER_MILL"
+  ],
+  "techs": [
+   "TECH_ENVIRONMENTAL_ECONOMICS"
+  ]
+ },
+ "replacedBy": {
+  "buildings": [
+   "BUILDING_LUMBER_MILL",
+   "BUILDING_AGROFOREST"
   ]
  },
  "requires": {

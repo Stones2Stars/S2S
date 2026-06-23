@@ -2,14 +2,17 @@
  "type": "BUILDING_FACTORY_BARRELS",
  "description": "TXT_KEY_BUILDING_FACTORY_BARRELS",
  "civilopedia": "TXT_KEY_BUILDING_FACTORY_BARRELS_PEDIA",
- "obsoletes": {
+ "obsoletedBy": {
   "buildings": [
    "BUILDING_MANUFACTURING_DISTRICT"
+  ],
+  "techs": [
+   "TECH_NANOROBOTICS"
   ]
  },
- "replaces": {
+ "replacedBy": {
   "buildings": [
-   "BUILDING_COOPER"
+   "BUILDING_MANUFACTURING_DISTRICT"
   ]
  },
  "requires": {

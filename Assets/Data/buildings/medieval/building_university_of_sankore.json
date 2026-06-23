@@ -2,6 +2,11 @@
  "type": "BUILDING_UNIVERSITY_OF_SANKORE",
  "description": "TXT_KEY_BUILDING_UNIVERSITY_OF_SANKORE",
  "civilopedia": "TXT_KEY_BUILDING_UNIVERSITY_OF_SANKORE_PEDIA",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_PERSONAL_COMPUTERS"
+  ]
+ },
  "requires": {
   "build": {
    "all": [

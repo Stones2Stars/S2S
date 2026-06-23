@@ -2,6 +2,11 @@
  "type": "BUILDING_SPIRAL_MINARET",
  "description": "TXT_KEY_BUILDING_SPIRAL_MINARET",
  "civilopedia": "TXT_KEY_BUILDING_SPIRAL_MINARET_PEDIA",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_PERSONAL_COMPUTERS"
+  ]
+ },
  "requires": {
   "build": {
    "all": [

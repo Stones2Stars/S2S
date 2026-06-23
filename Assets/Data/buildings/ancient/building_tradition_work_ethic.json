@@ -2,6 +2,11 @@
  "type": "BUILDING_TRADITION_WORK_ETHIC",
  "description": "TXT_KEY_BUILDING_TRADITION_WORK_ETHIC",
  "civilopedia": "TXT_KEY_BUILDING_TRADITION_WORK_ETHIC_PEDIA",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_MOTORIZED_TRANSPORTATION"
+  ]
+ },
  "requires": {
   "build": {
    "all": [

@@ -2,7 +2,7 @@
  "type": "BUILDING_WATER_TROUGH",
  "description": "TXT_KEY_BUILDING_WATER_TROUGH",
  "civilopedia": "TXT_KEY_BUILDING_WATER_TROUGH_PEDIA",
- "obsoletes": {
+ "obsoletedBy": {
   "buildings": [
    "BUILDING_ARTESIAN_WELL"
   ]

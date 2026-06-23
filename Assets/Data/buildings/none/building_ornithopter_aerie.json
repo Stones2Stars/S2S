@@ -2,9 +2,18 @@
  "type": "BUILDING_ORNITHOPTER_AERIE",
  "description": "TXT_KEY_BUILDING_ORNITHOPTER_AERIE",
  "civilopedia": "TXT_KEY_BUILDING_ORNITHOPTER_AERIE_PEDIA",
- "obsoletes": {
+ "obsoletedBy": {
   "buildings": [
    "BUILDING_AIRPORT"
+  ],
+  "techs": [
+   "TECH_ADVANCED_AVIATION"
+  ]
+ },
+ "replacedBy": {
+  "buildings": [
+   "BUILDING_AIRPORT",
+   "BUILDING_COMMERCIAL_AIRPORT"
   ]
  },
  "requires": {

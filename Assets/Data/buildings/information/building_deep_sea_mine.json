@@ -2,7 +2,15 @@
  "type": "BUILDING_DEEP_SEA_MINE",
  "description": "TXT_KEY_BUILDING_DEEP_SEA_MINE",
  "civilopedia": "TXT_KEY_BUILDING_DEEP_SEA_MINE_PEDIA",
- "obsoletes": {
+ "obsoletedBy": {
+  "buildings": [
+   "BUILDING_OCEAN_ADMINISTRATION"
+  ],
+  "techs": [
+   "TECH_LAUNCH_ARCOLOGY"
+  ]
+ },
+ "replacedBy": {
   "buildings": [
    "BUILDING_OCEAN_ADMINISTRATION"
   ]

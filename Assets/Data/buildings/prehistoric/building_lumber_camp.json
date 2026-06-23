@@ -16,15 +16,17 @@
    "UNIT_NEANDERTHAL_LOG_RAM"
   ]
  },
- "obsoletes": {
+ "obsoletedBy": {
   "buildings": [
    "BUILDING_AGROFOREST"
+  ],
+  "techs": [
+   "TECH_SENTIENT_EARTH"
   ]
  },
- "replaces": {
+ "replacedBy": {
   "buildings": [
-   "BUILDING_DRIFTWOOD_GATHERER",
-   "BUILDING_LUMBER_GATHERER"
+   "BUILDING_AGROFOREST"
   ]
  },
  "requires": {

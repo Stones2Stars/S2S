@@ -2,6 +2,11 @@
  "type": "BUILDING_SOLAR_UPDRAFT_TOWER",
  "description": "TXT_KEY_BUILDING_SOLAR_UPDRAFT_TOWER",
  "civilopedia": "TXT_KEY_BUILDING_SOLAR_UPDRAFT_TOWER_PEDIA",
+ "replacedBy": {
+  "buildings": [
+   "BUILDING_POLLUTION_BLACKENED_SKIES"
+  ]
+ },
  "requires": {
   "build": {
    "all": [

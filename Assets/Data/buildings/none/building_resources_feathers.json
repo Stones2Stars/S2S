@@ -2,9 +2,18 @@
  "type": "BUILDING_RESOURCES_FEATHERS",
  "description": "TXT_KEY_BUILDING_RESOURCES_FEATHERS",
  "civilopedia": "TXT_KEY_BUILDING_RESOURCE_PROVIDER_PEDIA",
- "obsoletes": {
+ "obsoletedBy": {
   "buildings": [
    "BUILDING_INDUSTRIAL_FARMS"
+  ],
+  "techs": [
+   "TECH_REPLACEMENT_ORGANS"
+  ]
+ },
+ "replacedBy": {
+  "buildings": [
+   "BUILDING_INDUSTRIAL_FARMS",
+   "BUILDING_MEAT_INDUSTRY_CONGLOMERATE"
   ]
  },
  "requires": {

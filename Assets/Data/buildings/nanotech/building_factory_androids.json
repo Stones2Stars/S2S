@@ -10,7 +10,15 @@
    "UNIT_WORKER_ANDROID"
   ]
  },
- "obsoletes": {
+ "obsoletedBy": {
+  "buildings": [
+   "BUILDING_NANOTECH_COMPLEX"
+  ],
+  "techs": [
+   "TECH_FEMTOTECHNOLOGY"
+  ]
+ },
+ "replacedBy": {
   "buildings": [
    "BUILDING_NANOTECH_COMPLEX"
   ]

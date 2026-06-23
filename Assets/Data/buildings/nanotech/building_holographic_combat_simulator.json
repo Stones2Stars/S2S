@@ -2,11 +2,6 @@
  "type": "BUILDING_HOLOGRAPHIC_COMBAT_SIMULATOR",
  "description": "TXT_KEY_BUILDING_HOLOGRAPHIC_COMBAT_SIMULATOR",
  "civilopedia": "TXT_KEY_BUILDING_HOLOGRAPHIC_COMBAT_SIMULATOR_PEDIA",
- "replaces": {
-  "buildings": [
-   "BUILDING_COMBAT_SIMULATOR"
-  ]
- },
  "requires": {
   "build": {
    "all": [

@@ -2,7 +2,15 @@
  "type": "BUILDING_TRAFFIC_ENGINEERING_AGENCY",
  "description": "TXT_KEY_BUILDING_TRAFFIC_ENGINEERING_AGENCY",
  "civilopedia": "TXT_KEY_BUILDING_TRAFFIC_ENGINEERING_AGENCY_PEDIA",
- "obsoletes": {
+ "obsoletedBy": {
+  "buildings": [
+   "BUILDING_TELEPORT_BOOTH"
+  ],
+  "techs": [
+   "TECH_WORMHOLE_HIVEMIND"
+  ]
+ },
+ "replacedBy": {
   "buildings": [
    "BUILDING_TELEPORT_BOOTH"
   ]

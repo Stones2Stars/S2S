@@ -2,6 +2,11 @@
  "type": "BUILDING_POLLUTION_MAJOR_OZONE_DEPLETION",
  "description": "TXT_KEY_BUILDING_POLLUTION_MAJOR_OZONE_DEPLETION",
  "civilopedia": "TXT_KEY_BUILDING_AIR_POLLUTION_PEDIA",
+ "replacedBy": {
+  "buildings": [
+   "BUILDING_OZONE_GENERATOR"
+  ]
+ },
  "requires": {
   "build": {
    "any": [

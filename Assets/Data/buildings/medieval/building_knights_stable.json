@@ -21,14 +21,17 @@
    "UNIT_TAMED_MAMMOTH"
   ]
  },
- "obsoletes": {
+ "obsoletedBy": {
   "buildings": [
    "BUILDING_MODERN_STABLE"
+  ],
+  "techs": [
+   "TECH_VERTICAL_FLIGHT"
   ]
  },
- "replaces": {
+ "replacedBy": {
   "buildings": [
-   "BUILDING_STABLE"
+   "BUILDING_MODERN_STABLE"
   ]
  },
  "requires": {

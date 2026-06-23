@@ -9,9 +9,18 @@
    "BUILDING_RESOURCES_WOOD"
   ]
  },
- "obsoletes": {
+ "obsoletedBy": {
   "buildings": [
    "BUILDING_LUMBER_CAMP"
+  ],
+  "techs": [
+   "TECH_ENVIRONMENTAL_ECONOMICS"
+  ]
+ },
+ "replacedBy": {
+  "buildings": [
+   "BUILDING_LUMBER_CAMP",
+   "BUILDING_AGROFOREST"
   ]
  },
  "requires": {

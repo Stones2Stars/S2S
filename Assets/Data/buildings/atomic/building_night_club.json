@@ -21,12 +21,6 @@
    "BUILDING_WAR_DANCE"
   ]
  },
- "replaces": {
-  "buildings": [
-   "BUILDING_DANCE_HALL",
-   "BUILDING_DANCE_HUT"
-  ]
- },
  "requires": {
   "build": {
    "all": [

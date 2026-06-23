@@ -2,6 +2,11 @@
  "type": "BUILDING_EDUCATION_WISE",
  "description": "TXT_KEY_BUILDING_EDUCATION_WISE",
  "civilopedia": "TXT_KEY_BUILDING_EQ_PEDIA",
+ "replacedBy": {
+  "buildings": [
+   "BUILDING_EDUCATION_OMNISCIENCE"
+  ]
+ },
  "requires": {
   "build": {
    "all": [
@@ -27,21 +32,7 @@
      "min": 30000,
      "max": 2000000
     }
-   ],
-   "disabled": {
-    "all": [
-     {
-      "type": "PROPERTY_EDUCATION",
-      "scope": "city",
-      "min": 35000,
-      "max": 2000000
-     },
-     {
-      "type": "BUILDING_EDUCATION_OMNISCIENCE",
-      "scope": "city"
-     }
-    ]
-   }
+   ]
   }
  },
  "production": {

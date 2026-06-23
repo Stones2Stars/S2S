@@ -9,6 +9,11 @@
    "BUILDING_RESOURCES_CARCASS"
   ]
  },
+ "obsoletedBy": {
+  "techs": [
+   "TECH_SEDENTARY_LIFESTYLE"
+  ]
+ },
  "requires": {
   "build": {
    "all": [

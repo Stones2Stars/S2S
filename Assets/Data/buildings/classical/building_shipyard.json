@@ -9,9 +9,18 @@
    "BUILDING_VENETIAN_ARSENAL"
   ]
  },
- "obsoletes": {
+ "obsoletedBy": {
   "buildings": [
    "BUILDING_DRYDOCK"
+  ],
+  "techs": [
+   "TECH_GLOBALIZATION"
+  ]
+ },
+ "replacedBy": {
+  "buildings": [
+   "BUILDING_DRYDOCK",
+   "BUILDING_NAVAL_YARD"
   ]
  },
  "requires": {

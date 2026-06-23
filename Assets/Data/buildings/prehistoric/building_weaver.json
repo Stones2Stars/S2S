@@ -2,9 +2,18 @@
  "type": "BUILDING_WEAVER",
  "description": "TXT_KEY_BUILDING_WEAVER",
  "civilopedia": "TXT_KEY_BUILDING_WEAVER_PEDIA",
- "obsoletes": {
+ "obsoletedBy": {
   "buildings": [
    "BUILDING_FACTORY_CLOTH"
+  ],
+  "techs": [
+   "TECH_RAPID_PROTOTYPING"
+  ]
+ },
+ "replacedBy": {
+  "buildings": [
+   "BUILDING_FACTORY_CLOTH",
+   "BUILDING_TEXTILE_MANUFACTURING_DISTRICT"
   ]
  },
  "requires": {

@@ -56,13 +56,6 @@
    "BUILDING_WOODWIND_INSTRUMENT_MAKER"
   ]
  },
- "replaces": {
-  "buildings": [
-   "BUILDING_CELLAR",
-   "BUILDING_GRANARY",
-   "BUILDING_STORAGE_PIT"
-  ]
- },
  "requires": {
   "build": {
    "all": [

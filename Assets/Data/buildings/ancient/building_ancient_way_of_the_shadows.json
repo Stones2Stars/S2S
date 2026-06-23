@@ -2,6 +2,11 @@
  "type": "BUILDING_ANCIENT_WAY_OF_THE_SHADOWS",
  "description": "TXT_KEY_BUILDING_ANCIENT_WAY_OF_THE_SHADOWS",
  "civilopedia": "TXT_KEY_BUILDING_ANCIENT_WAY_OF_THE_SHADOWS_PEDIA",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_CLASSICAL_LIFESTYLE"
+  ]
+ },
  "requires": {
   "build": {
    "all": [

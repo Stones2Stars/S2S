@@ -52,16 +52,6 @@
    "UNIT_NEANDERTHAL_WISE_WOMAN"
   ]
  },
- "replaces": {
-  "buildings": [
-   "BUILDING_ANIMAL_SNARE_TRAPS",
-   "BUILDING_CHILDBIRTH_HUT",
-   "BUILDING_DRYING_FRAME",
-   "BUILDING_HUNTERS_CAMP",
-   "BUILDING_ROCK_ART",
-   "BUILDING_TUMULUS"
-  ]
- },
  "requires": {
   "build": {
    "all": [

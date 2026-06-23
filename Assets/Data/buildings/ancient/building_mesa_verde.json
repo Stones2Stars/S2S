@@ -2,6 +2,11 @@
  "type": "BUILDING_MESA_VERDE",
  "description": "TXT_KEY_BUILDING_MESA_VERDE",
  "civilopedia": "TXT_KEY_BUILDING_MESA_VERDE_PEDIA",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_CIVIL_ENGINEERING"
+  ]
+ },
  "requires": {
   "build": {
    "all": [

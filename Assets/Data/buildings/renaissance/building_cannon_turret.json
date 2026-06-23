@@ -2,14 +2,17 @@
  "type": "BUILDING_CANNON_TURRET",
  "description": "TXT_KEY_BUILDING_CANNON_TURRET",
  "civilopedia": "TXT_KEY_BUILDING_CANNON_TURRET_PEDIA",
- "obsoletes": {
+ "obsoletedBy": {
   "buildings": [
    "BUILDING_IMPERIAL_FORTRESS"
+  ],
+  "techs": [
+   "TECH_TRENCH_WARFARE"
   ]
  },
- "replaces": {
+ "replacedBy": {
   "buildings": [
-   "BUILDING_BALLISTA_TURRET"
+   "BUILDING_IMPERIAL_FORTRESS"
   ]
  },
  "requires": {

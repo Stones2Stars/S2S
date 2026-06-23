@@ -2,14 +2,17 @@
  "type": "BUILDING_LUMBER_MILL",
  "description": "TXT_KEY_BUILDING_LUMBER_MILL",
  "civilopedia": "TXT_KEY_BUILDING_LUMBER_MILL_PEDIA",
- "obsoletes": {
+ "obsoletedBy": {
   "buildings": [
    "BUILDING_AGROFOREST"
+  ],
+  "techs": [
+   "TECH_SENTIENT_EARTH"
   ]
  },
- "replaces": {
+ "replacedBy": {
   "buildings": [
-   "BUILDING_BARK_GATHERER"
+   "BUILDING_AGROFOREST"
   ]
  },
  "requires": {

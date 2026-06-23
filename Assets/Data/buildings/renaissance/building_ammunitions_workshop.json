@@ -15,9 +15,18 @@
    "UNIT_SAM_INFANTRY"
   ]
  },
- "obsoletes": {
+ "obsoletedBy": {
   "buildings": [
    "BUILDING_FACTORY_AMMUNITION"
+  ],
+  "techs": [
+   "TECH_MILITARY_ROBOTICS"
+  ]
+ },
+ "replacedBy": {
+  "buildings": [
+   "BUILDING_FACTORY_AMMUNITION",
+   "BUILDING_MILITARY_INDUSTRIAL_COMPLEX"
   ]
  },
  "requires": {

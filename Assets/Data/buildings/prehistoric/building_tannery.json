@@ -7,9 +7,18 @@
    "BUILDING_BAMBOO_ARMOURER"
   ]
  },
- "obsoletes": {
+ "obsoletedBy": {
   "buildings": [
    "BUILDING_FACTORY_LEATHER"
+  ],
+  "techs": [
+   "TECH_REPLACEMENT_ORGANS"
+  ]
+ },
+ "replacedBy": {
+  "buildings": [
+   "BUILDING_FACTORY_LEATHER",
+   "BUILDING_MEAT_INDUSTRY_CONGLOMERATE"
   ]
  },
  "requires": {

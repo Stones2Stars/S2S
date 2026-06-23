@@ -7,11 +7,6 @@
    "BUILDING_CAPTURE_THE_FLAG"
   ]
  },
- "replaces": {
-  "buildings": [
-   "BUILDING_PLAYING_FIELDS"
-  ]
- },
  "requires": {
   "build": {
    "all": [

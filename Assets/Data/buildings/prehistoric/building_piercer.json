@@ -2,9 +2,18 @@
  "type": "BUILDING_PIERCER",
  "description": "TXT_KEY_BUILDING_PIERCER",
  "civilopedia": "TXT_KEY_BUILDING_PIERCER_PEDIA",
- "obsoletes": {
+ "obsoletedBy": {
   "buildings": [
    "BUILDING_PIERCING_SHOP"
+  ],
+  "techs": [
+   "TECH_TRANSHUMANISM"
+  ]
+ },
+ "replacedBy": {
+  "buildings": [
+   "BUILDING_PIERCING_SHOP",
+   "BUILDING_HIGH_TECH_CULTURAL_ENRICHMENT"
   ]
  },
  "requires": {

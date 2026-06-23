@@ -2,7 +2,15 @@
  "type": "BUILDING_TREE_NURSERY",
  "description": "TXT_KEY_BUILDING_TREE_NURSERY",
  "civilopedia": "TXT_KEY_BUILDING_TREE_NURSERY_PEDIA",
- "obsoletes": {
+ "obsoletedBy": {
+  "buildings": [
+   "BUILDING_AGROFOREST"
+  ],
+  "techs": [
+   "TECH_SENTIENT_EARTH"
+  ]
+ },
+ "replacedBy": {
   "buildings": [
    "BUILDING_AGROFOREST"
   ]

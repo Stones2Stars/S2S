@@ -2,6 +2,11 @@
  "type": "BUILDING_COPERNICUS_OBSERVATORY",
  "description": "TXT_KEY_BUILDING_COPERNICUS_OBSERVATORY",
  "civilopedia": "TXT_KEY_BUILDING_COPERNICUS_OBSERVATORY_PEDIA",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_RADAR"
+  ]
+ },
  "requires": {
   "build": {
    "all": [

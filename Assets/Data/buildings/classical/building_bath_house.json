@@ -2,11 +2,6 @@
  "type": "BUILDING_BATH_HOUSE",
  "description": "TXT_KEY_BUILDING_BATH_HOUSE",
  "civilopedia": "TXT_KEY_BUILDING_BATH_HOUSE_PEDIA",
- "replaces": {
-  "buildings": [
-   "BUILDING_BATHING_RITUAL"
-  ]
- },
  "requires": {
   "build": {
    "all": [

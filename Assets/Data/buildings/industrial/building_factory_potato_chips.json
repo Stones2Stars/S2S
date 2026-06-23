@@ -2,7 +2,15 @@
  "type": "BUILDING_FACTORY_POTATO_CHIPS",
  "description": "TXT_KEY_BUILDING_FACTORY_POTATO_CHIPS",
  "civilopedia": "TXT_KEY_BUILDING_FACTORY_POTATO_CHIPS_PEDIA",
- "obsoletes": {
+ "obsoletedBy": {
+  "buildings": [
+   "BUILDING_FOOD_MANUFACTURING_DISTRICT"
+  ],
+  "techs": [
+   "TECH_MIND_UPLOADING"
+  ]
+ },
+ "replacedBy": {
   "buildings": [
    "BUILDING_FOOD_MANUFACTURING_DISTRICT"
   ]

@@ -17,14 +17,17 @@
    "UNIT_WARCAT"
   ]
  },
- "obsoletes": {
+ "obsoletedBy": {
   "buildings": [
    "BUILDING_MILITARY_BASE"
+  ],
+  "techs": [
+   "TECH_MILITARY_ROBOTICS"
   ]
  },
- "replaces": {
+ "replacedBy": {
   "buildings": [
-   "BUILDING_BARRACKS"
+   "BUILDING_MILITARY_BASE"
   ]
  },
  "requires": {

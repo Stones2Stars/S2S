@@ -8,6 +8,11 @@
    "UNIT_VOODOO_MISSIONARY"
   ]
  },
+ "obsoletedBy": {
+  "techs": [
+   "TECH_MODERN_PHYSICS"
+  ]
+ },
  "requires": {
   "build": {
    "all": [

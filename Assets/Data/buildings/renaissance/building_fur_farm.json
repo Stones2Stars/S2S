@@ -2,6 +2,11 @@
  "type": "BUILDING_FUR_FARM",
  "description": "TXT_KEY_BUILDING_FUR_FARM",
  "civilopedia": "TXT_KEY_BUILDING_FUR_FARM_PEDIA",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_VERTICAL_FLIGHT"
+  ]
+ },
  "requires": {
   "build": {
    "all": [

@@ -18,12 +18,6 @@
    "BUILDING_SOCIAL_MEDIA_SURVEILLANCE"
   ]
  },
- "replaces": {
-  "buildings": [
-   "BUILDING_HOLOGRAPHIC_NETWORKS",
-   "BUILDING_SOCIAL_NETWORKS"
-  ]
- },
  "requires": {
   "build": {
    "all": [

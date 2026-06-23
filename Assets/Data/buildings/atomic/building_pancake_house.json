@@ -2,7 +2,15 @@
  "type": "BUILDING_PANCAKE_HOUSE",
  "description": "TXT_KEY_BUILDING_PANCAKE_HOUSE",
  "civilopedia": "TXT_KEY_BUILDING_PANCAKE_HOUSE_PEDIA",
- "obsoletes": {
+ "obsoletedBy": {
+  "buildings": [
+   "BUILDING_UNIVERSAL_RESTAURANT"
+  ],
+  "techs": [
+   "TECH_MIND_UPLOADING"
+  ]
+ },
+ "replacedBy": {
   "buildings": [
    "BUILDING_UNIVERSAL_RESTAURANT"
   ]

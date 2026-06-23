@@ -2,7 +2,15 @@
  "type": "BUILDING_CITY_GATE",
  "description": "TXT_KEY_BUILDING_CITY_GATE",
  "civilopedia": "TXT_KEY_BUILDING_CITY_GATE_PEDIA",
- "obsoletes": {
+ "obsoletedBy": {
+  "buildings": [
+   "BUILDING_IMPERIAL_FORTRESS"
+  ],
+  "techs": [
+   "TECH_TRENCH_WARFARE"
+  ]
+ },
+ "replacedBy": {
   "buildings": [
    "BUILDING_IMPERIAL_FORTRESS"
   ]

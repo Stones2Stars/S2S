@@ -15,14 +15,17 @@
    "BUILDING_SOCIAL_MEDIA_SURVEILLANCE"
   ]
  },
- "obsoletes": {
+ "obsoletedBy": {
   "buildings": [
    "BUILDING_EXOCORTEX_NETWORKS"
+  ],
+  "techs": [
+   "TECH_TERRA_COMPUTER"
   ]
  },
- "replaces": {
+ "replacedBy": {
   "buildings": [
-   "BUILDING_SOCIAL_NETWORKS"
+   "BUILDING_EXOCORTEX_NETWORKS"
   ]
  },
  "requires": {

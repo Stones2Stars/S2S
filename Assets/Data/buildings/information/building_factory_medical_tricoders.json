@@ -2,7 +2,15 @@
  "type": "BUILDING_FACTORY_MEDICAL_TRICODERS",
  "description": "TXT_KEY_BUILDING_FACTORY_MEDICAL_TRICODERS",
  "civilopedia": "TXT_KEY_BUILDING_FACTORY_MEDICAL_TRICODERS_PEDIA",
- "obsoletes": {
+ "obsoletedBy": {
+  "buildings": [
+   "BUILDING_MEDICAL_MEGACOMPLEX"
+  ],
+  "techs": [
+   "TECH_POSTHUMANISM"
+  ]
+ },
+ "replacedBy": {
   "buildings": [
    "BUILDING_MEDICAL_MEGACOMPLEX"
   ]

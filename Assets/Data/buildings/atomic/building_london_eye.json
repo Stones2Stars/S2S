@@ -2,6 +2,11 @@
  "type": "BUILDING_LONDON_EYE",
  "description": "TXT_KEY_BUILDING_LONDON_EYE",
  "civilopedia": "TXT_KEY_BUILDING_LONDON_EYE_PEDIA",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_MEGASTRUCTURE_ENGINEERING"
+  ]
+ },
  "requires": {
   "build": {
    "all": [

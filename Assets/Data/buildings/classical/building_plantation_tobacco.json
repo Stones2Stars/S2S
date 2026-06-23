@@ -8,7 +8,15 @@
    "BUILDING_RESOURCES_DRUGS"
   ]
  },
- "obsoletes": {
+ "obsoletedBy": {
+  "buildings": [
+   "BUILDING_FARMSCRAPER_I"
+  ],
+  "techs": [
+   "TECH_GAIA_ECOLOGY"
+  ]
+ },
+ "replacedBy": {
   "buildings": [
    "BUILDING_FARMSCRAPER_I"
   ]

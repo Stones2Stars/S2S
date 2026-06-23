@@ -7,7 +7,15 @@
    "BUILDING_ANIMAL_TESTING_LAB"
   ]
  },
- "obsoletes": {
+ "obsoletedBy": {
+  "buildings": [
+   "BUILDING_REPET"
+  ],
+  "techs": [
+   "TECH_ARTIFICIAL_LIFE"
+  ]
+ },
+ "replacedBy": {
   "buildings": [
    "BUILDING_REPET"
   ]

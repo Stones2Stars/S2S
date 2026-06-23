@@ -2,6 +2,11 @@
  "type": "BUILDING_GER",
  "description": "TXT_KEY_BUILDING_GER",
  "civilopedia": "TXT_KEY_BUILDING_GER_PEDIA",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_CITY_PLANNING"
+  ]
+ },
  "requires": {
   "build": {
    "all": [

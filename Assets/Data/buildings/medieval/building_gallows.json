@@ -7,15 +7,19 @@
    "BUILDING_DEBTORS_PRISON"
   ]
  },
- "obsoletes": {
+ "obsoletedBy": {
   "buildings": [
    "BUILDING_GUILLOTINE"
+  ],
+  "techs": [
+   "TECH_CRIMINOLOGY"
   ]
  },
- "replaces": {
+ "replacedBy": {
   "buildings": [
-   "BUILDING_CRUCIFIXION_CROSSES",
-   "BUILDING_PUBLIC_STONING"
+   "BUILDING_GUILLOTINE",
+   "BUILDING_ELECTRIC_CHAIR",
+   "BUILDING_LETHAL_INJECTION"
   ]
  },
  "requires": {

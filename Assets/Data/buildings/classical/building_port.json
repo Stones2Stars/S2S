@@ -11,15 +11,19 @@
    "BUILDING_REMOTE_NAVAL_TRAINING_CENTER"
   ]
  },
- "obsoletes": {
+ "obsoletedBy": {
   "buildings": [
    "BUILDING_COMMERCIAL_PORT"
+  ],
+  "techs": [
+   "TECH_LOGISTICS"
   ]
  },
- "replaces": {
+ "replacedBy": {
   "buildings": [
-   "BUILDING_HARBOR",
-   "BUILDING_SPEARFISHER"
+   "BUILDING_COMMERCIAL_PORT",
+   "BUILDING_INTERNATIONAL_PORT",
+   "BUILDING_OCEAN_ADMINISTRATION"
   ]
  },
  "requires": {

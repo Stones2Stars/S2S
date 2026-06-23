@@ -7,7 +7,15 @@
    "BUILDING_LASCAUX_PAINTS"
   ]
  },
- "obsoletes": {
+ "obsoletedBy": {
+  "buildings": [
+   "BUILDING_FRESCO_MURAL"
+  ],
+  "techs": [
+   "TECH_LITERATURE"
+  ]
+ },
+ "replacedBy": {
   "buildings": [
    "BUILDING_FRESCO_MURAL"
   ]

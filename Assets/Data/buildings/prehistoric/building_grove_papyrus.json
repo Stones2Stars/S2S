@@ -2,7 +2,15 @@
  "type": "BUILDING_GROVE_PAPYRUS",
  "description": "TXT_KEY_BUILDING_GROVE_PAPYRUS",
  "civilopedia": "TXT_KEY_BUILDING_GROVE_PAPYRUS_PEDIA",
- "obsoletes": {
+ "obsoletedBy": {
+  "buildings": [
+   "BUILDING_AGROFOREST"
+  ],
+  "techs": [
+   "TECH_SENTIENT_EARTH"
+  ]
+ },
+ "replacedBy": {
   "buildings": [
    "BUILDING_AGROFOREST"
   ]

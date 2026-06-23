@@ -2,7 +2,15 @@
  "type": "BUILDING_HEMP_FARM",
  "description": "TXT_KEY_BUILDING_HEMP_FARM",
  "civilopedia": "TXT_KEY_BUILDING_HEMP_FARM_PEDIA",
- "obsoletes": {
+ "obsoletedBy": {
+  "buildings": [
+   "BUILDING_TEXTILE_MANUFACTURING_DISTRICT"
+  ],
+  "techs": [
+   "TECH_NANOROBOTICS"
+  ]
+ },
+ "replacedBy": {
   "buildings": [
    "BUILDING_TEXTILE_MANUFACTURING_DISTRICT"
   ]

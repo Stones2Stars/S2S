@@ -9,14 +9,19 @@
    "BUILDING_STATUE_OF_CHAMPION"
   ]
  },
- "obsoletes": {
+ "obsoletedBy": {
   "buildings": [
    "BUILDING_COLOSSEUM"
+  ],
+  "techs": [
+   "TECH_TEAM_SPORTS"
   ]
  },
- "replaces": {
+ "replacedBy": {
   "buildings": [
-   "BUILDING_FIGHTING_PIT"
+   "BUILDING_COLOSSEUM",
+   "BUILDING_MINOR_LEAGUE_STADIUM",
+   "BUILDING_MAJOR_LEAGUE_STADIUM"
   ]
  },
  "requires": {

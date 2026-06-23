@@ -2,7 +2,15 @@
  "type": "BUILDING_FACTORY_HOLOGRAPHIC_PROJECTORS",
  "description": "TXT_KEY_BUILDING_FACTORY_HOLOGRAPHIC_PROJECTORS",
  "civilopedia": "TXT_KEY_BUILDING_FACTORY_HOLOGRAPHIC_PROJECTORS_PEDIA",
- "obsoletes": {
+ "obsoletedBy": {
+  "buildings": [
+   "BUILDING_NANOTECH_COMPLEX"
+  ],
+  "techs": [
+   "TECH_FEMTOTECHNOLOGY"
+  ]
+ },
+ "replacedBy": {
   "buildings": [
    "BUILDING_NANOTECH_COMPLEX"
   ]

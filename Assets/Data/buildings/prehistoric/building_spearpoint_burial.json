@@ -2,6 +2,11 @@
  "type": "BUILDING_SPEARPOINT_BURIAL",
  "description": "TXT_KEY_BUILDING_SPEARPOINT_BURIAL",
  "civilopedia": "TXT_KEY_BUILDING_SPEARPOINT_BURIAL_PEDIA",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_CITY_PLANNING"
+  ]
+ },
  "requires": {
   "build": {
    "all": [

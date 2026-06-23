@@ -11,9 +11,18 @@
    "BUILDING_SOCIAL_MEDIA_SURVEILLANCE"
   ]
  },
- "obsoletes": {
+ "obsoletedBy": {
   "buildings": [
    "BUILDING_HOLOGRAPHIC_NETWORKS"
+  ],
+  "techs": [
+   "TECH_EXOCORTEX_NETWORKS"
+  ]
+ },
+ "replacedBy": {
+  "buildings": [
+   "BUILDING_HOLOGRAPHIC_NETWORKS",
+   "BUILDING_EXOCORTEX_NETWORKS"
   ]
  },
  "requires": {

@@ -2,7 +2,15 @@
  "type": "BUILDING_E_CLOTHING_OUTFITTER",
  "description": "TXT_KEY_BUILDING_E_CLOTHING_OUTFITTER",
  "civilopedia": "TXT_KEY_BUILDING_E_CLOTHING_OUTFITTER_PEDIA",
- "obsoletes": {
+ "obsoletedBy": {
+  "buildings": [
+   "BUILDING_NANOTECH_CLOTHING_OUTFITTER"
+  ],
+  "techs": [
+   "TECH_ATOMIC_SCALE_ENGINEERING"
+  ]
+ },
+ "replacedBy": {
   "buildings": [
    "BUILDING_NANOTECH_CLOTHING_OUTFITTER"
   ]

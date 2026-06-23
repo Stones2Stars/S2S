@@ -2,6 +2,11 @@
  "type": "BUILDING_BULL_LEAPING",
  "description": "TXT_KEY_BUILDING_BULL_LEAPING",
  "civilopedia": "TXT_KEY_BUILDING_BULL_LEAPING_PEDIA",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_COMBAT_SPORTS"
+  ]
+ },
  "requires": {
   "build": {
    "all": [

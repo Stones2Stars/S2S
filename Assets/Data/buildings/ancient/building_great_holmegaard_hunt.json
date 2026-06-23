@@ -2,6 +2,11 @@
  "type": "BUILDING_GREAT_HOLMEGAARD_HUNT",
  "description": "TXT_KEY_BUILDING_GREAT_HOLMEGAARD_HUNT",
  "civilopedia": "TXT_KEY_BUILDING_GREAT_HOLMEGAARD_HUNT_PEDIA",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_RIFLING"
+  ]
+ },
  "requires": {
   "build": {
    "all": [

@@ -2,7 +2,15 @@
  "type": "BUILDING_ICEHOUSE",
  "description": "TXT_KEY_BUILDING_ICEHOUSE",
  "civilopedia": "TXT_KEY_BUILDING_ICEHOUSE_PEDIA",
- "obsoletes": {
+ "obsoletedBy": {
+  "buildings": [
+   "BUILDING_MODERN_WAREHOUSE"
+  ],
+  "techs": [
+   "TECH_REFRIGERATION"
+  ]
+ },
+ "replacedBy": {
   "buildings": [
    "BUILDING_MODERN_WAREHOUSE"
   ]

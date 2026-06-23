@@ -2,7 +2,15 @@
  "type": "BUILDING_SMITH_ELECTRUM",
  "description": "TXT_KEY_BUILDING_SMITH_ELECTRUM",
  "civilopedia": "TXT_KEY_BUILDING_SMITH_ELECTRUM_PEDIA",
- "obsoletes": {
+ "obsoletedBy": {
+  "buildings": [
+   "BUILDING_METALS_MEGACOMPLEX"
+  ],
+  "techs": [
+   "TECH_ATOMIC_SCALE_ENGINEERING"
+  ]
+ },
+ "replacedBy": {
   "buildings": [
    "BUILDING_METALS_MEGACOMPLEX"
   ]

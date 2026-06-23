@@ -15,9 +15,18 @@
    "UNIT_MONK"
   ]
  },
- "obsoletes": {
+ "obsoletedBy": {
   "buildings": [
    "BUILDING_PHARMACY"
+  ],
+  "techs": [
+   "TECH_NANOTROIDS"
+  ]
+ },
+ "replacedBy": {
+  "buildings": [
+   "BUILDING_PHARMACY",
+   "BUILDING_HEALTHCARE_MEGACOMPLEX"
   ]
  },
  "requires": {

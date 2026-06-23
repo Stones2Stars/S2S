@@ -14,6 +14,11 @@
    "BUILDING_SLAVE_COMPOUND_SANITATION"
   ]
  },
+ "replacedBy": {
+  "buildings": [
+   "BUILDING_EFFECT_EMANCIPATION_PROCLAMATION"
+  ]
+ },
  "requires": {
   "build": {
    "all": [

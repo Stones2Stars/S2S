@@ -14,7 +14,12 @@
    "BUILDING_TRAP_SEA_OTTER"
   ]
  },
- "obsoletes": {
+ "obsoletedBy": {
+  "buildings": [
+   "BUILDING_ANCIENT_CUSTOMS"
+  ]
+ },
+ "replacedBy": {
   "buildings": [
    "BUILDING_ANCIENT_CUSTOMS"
   ]

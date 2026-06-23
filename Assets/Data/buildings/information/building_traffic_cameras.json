@@ -2,7 +2,15 @@
  "type": "BUILDING_TRAFFIC_CAMERAS",
  "description": "TXT_KEY_BUILDING_TRAFFIC_CAMERAS",
  "civilopedia": "TXT_KEY_BUILDING_TRAFFIC_CAMERAS_PEDIA",
- "obsoletes": {
+ "obsoletedBy": {
+  "buildings": [
+   "BUILDING_TELEPORT_BOOTH"
+  ],
+  "techs": [
+   "TECH_WORMHOLE_HIVEMIND"
+  ]
+ },
+ "replacedBy": {
   "buildings": [
    "BUILDING_TELEPORT_BOOTH"
   ]

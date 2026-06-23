@@ -2,9 +2,19 @@
  "type": "BUILDING_BURIAL_GROUND",
  "description": "TXT_KEY_BUILDING_BURIAL_GROUND",
  "civilopedia": "TXT_KEY_BUILDING_BURIAL_GROUND_PEDIA",
- "obsoletes": {
+ "obsoletedBy": {
   "buildings": [
    "BUILDING_GRAVEYARD"
+  ],
+  "techs": [
+   "TECH_MODERN_SANITATION"
+  ]
+ },
+ "replacedBy": {
+  "buildings": [
+   "BUILDING_GRAVEYARD",
+   "BUILDING_FUNERARY_SERVICES",
+   "BUILDING_HIGH_TECH_CULTURAL_ENRICHMENT"
   ]
  },
  "requires": {

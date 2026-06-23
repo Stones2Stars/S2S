@@ -7,6 +7,21 @@
    "BUILDING_RESOURCES_FLOUR"
   ]
  },
+ "obsoletedBy": {
+  "techs": [
+   "TECH_REFRIGERATION"
+  ]
+ },
+ "replacedBy": {
+  "buildings": [
+   "BUILDING_WATERMILL",
+   "BUILDING_WINDMILL",
+   "BUILDING_DONKEY_MILL",
+   "BUILDING_OXEN_MILL",
+   "BUILDING_MODERN_MILL",
+   "BUILDING_FOOD_MANUFACTURING_DISTRICT"
+  ]
+ },
  "requires": {
   "build": {
    "all": [

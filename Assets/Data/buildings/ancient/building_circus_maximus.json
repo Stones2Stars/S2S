@@ -2,6 +2,11 @@
  "type": "BUILDING_CIRCUS_MAXIMUS",
  "description": "TXT_KEY_BUILDING_CIRCUS_MAXIMUS",
  "civilopedia": "TXT_KEY_BUILDING_CIRCUS_MAXIMUS_PEDIA",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_TOURNAMENTS"
+  ]
+ },
  "requires": {
   "build": {
    "all": [

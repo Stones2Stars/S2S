@@ -2,6 +2,11 @@
  "type": "BUILDING_TRAVEL_AGENCY",
  "description": "TXT_KEY_BUILDING_TRAVEL_AGENCY",
  "civilopedia": "TXT_KEY_BUILDING_TRAVEL_AGENCY_PEDIA",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_SPACE_TOURISM"
+  ]
+ },
  "requires": {
   "build": {
    "all": [

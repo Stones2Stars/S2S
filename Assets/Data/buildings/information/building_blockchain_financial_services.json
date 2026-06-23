@@ -7,14 +7,6 @@
    "BUILDING_TRANSAMERICA_TOWER"
   ]
  },
- "replaces": {
-  "buildings": [
-   "BUILDING_AUCTION_HOUSE",
-   "BUILDING_CREDIT_UNION",
-   "BUILDING_INSURANCE_OFFICE",
-   "BUILDING_LOAN_SHARK"
-  ]
- },
  "requires": {
   "build": {
    "all": [

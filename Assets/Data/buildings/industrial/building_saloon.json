@@ -8,6 +8,11 @@
    "UNIT_OUTLAW"
   ]
  },
+ "replacedBy": {
+  "buildings": [
+   "BUILDING_ORDINANCE_ALCOHOL_PROHIBITION"
+  ]
+ },
  "requires": {
   "build": {
    "all": [

@@ -7,15 +7,17 @@
    "BUILDING_RESOURCES_COPPER_INGOTS"
   ]
  },
- "obsoletes": {
+ "obsoletedBy": {
   "buildings": [
    "BUILDING_METALS_MEGACOMPLEX"
+  ],
+  "techs": [
+   "TECH_ATOMIC_SCALE_ENGINEERING"
   ]
  },
- "replaces": {
+ "replacedBy": {
   "buildings": [
-   "BUILDING_SMELTER_COPPER",
-   "BUILDING_SMITH_COPPER"
+   "BUILDING_METALS_MEGACOMPLEX"
   ]
  },
  "requires": {

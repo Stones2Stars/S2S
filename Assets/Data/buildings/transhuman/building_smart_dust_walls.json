@@ -2,11 +2,6 @@
  "type": "BUILDING_SMART_DUST_WALLS",
  "description": "TXT_KEY_BUILDING_SMART_DUST_WALLS",
  "civilopedia": "TXT_KEY_BUILDING_SMART_DUST_WALLS_PEDIA",
- "replaces": {
-  "buildings": [
-   "BUILDING_NANOBOT_WALLS"
-  ]
- },
  "requires": {
   "build": {
    "all": [

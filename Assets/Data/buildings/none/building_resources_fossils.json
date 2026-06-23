@@ -2,7 +2,15 @@
  "type": "BUILDING_RESOURCES_FOSSILS",
  "description": "TXT_KEY_BUILDING_RESOURCES_FOSSILS",
  "civilopedia": "TXT_KEY_BUILDING_RESOURCE_PROVIDER_PEDIA",
- "obsoletes": {
+ "obsoletedBy": {
+  "buildings": [
+   "BUILDING_MODERN_EARTHWORKS"
+  ],
+  "techs": [
+   "TECH_RAPID_PROTOTYPING"
+  ]
+ },
+ "replacedBy": {
   "buildings": [
    "BUILDING_MODERN_EARTHWORKS"
   ]

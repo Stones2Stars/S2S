@@ -2,7 +2,15 @@
  "type": "BUILDING_PLANETARY_IMMIGRATION_OFFICE",
  "description": "TXT_KEY_BUILDING_PLANETARY_IMMIGRATION_OFFICE",
  "civilopedia": "TXT_KEY_BUILDING_PLANETARY_IMMIGRATION_OFFICE_PEDIA",
- "obsoletes": {
+ "obsoletedBy": {
+  "buildings": [
+   "BUILDING_INTERSTELLAR_IMMIGRATION_OFFICE"
+  ],
+  "techs": [
+   "TECH_TACHYON_COMMUNICATIONS"
+  ]
+ },
+ "replacedBy": {
   "buildings": [
    "BUILDING_INTERSTELLAR_IMMIGRATION_OFFICE"
   ]

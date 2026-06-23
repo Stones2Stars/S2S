@@ -2,9 +2,20 @@
  "type": "BUILDING_OIL_POWER_PLANT",
  "description": "TXT_KEY_BUILDING_OIL_POWER_PLANT",
  "civilopedia": "TXT_KEY_BUILDING_OIL_POWER_PLANT_PEDIA",
- "obsoletes": {
+ "obsoletedBy": {
   "buildings": [
    "BUILDING_METHANE_POWER_PLANT"
+  ],
+  "techs": [
+   "TECH_ARTIFICIAL_NUCLEOSYNTHESIS"
+  ]
+ },
+ "replacedBy": {
+  "buildings": [
+   "BUILDING_METHANE_POWER_PLANT",
+   "BUILDING_HE3_FUSION_POWER_PLANT",
+   "BUILDING_ANTIMATTER_INITIATED_FUSION_PLANT",
+   "BUILDING_QUANTUM_VACUUM_POWER_PLANT"
   ]
  },
  "requires": {

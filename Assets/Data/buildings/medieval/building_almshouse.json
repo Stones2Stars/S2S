@@ -2,9 +2,18 @@
  "type": "BUILDING_ALMSHOUSE",
  "description": "TXT_KEY_BUILDING_ALMSHOUSE",
  "civilopedia": "TXT_KEY_BUILDING_ALMSHOUSE_PEDIA",
- "obsoletes": {
+ "obsoletedBy": {
   "buildings": [
    "BUILDING_RETIREMENT_HOME"
+  ],
+  "techs": [
+   "TECH_TRANSHUMANISM"
+  ]
+ },
+ "replacedBy": {
+  "buildings": [
+   "BUILDING_RETIREMENT_HOME",
+   "BUILDING_HIGH_TECH_CULTURAL_ENRICHMENT"
   ]
  },
  "requires": {

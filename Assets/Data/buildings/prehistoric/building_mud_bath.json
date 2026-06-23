@@ -2,9 +2,18 @@
  "type": "BUILDING_MUD_BATH",
  "description": "TXT_KEY_BUILDING_MUD_BATH",
  "civilopedia": "TXT_KEY_BUILDING_MUD_BATH_PEDIA",
- "obsoletes": {
+ "obsoletedBy": {
   "buildings": [
    "BUILDING_HEALTH_SPA"
+  ],
+  "techs": [
+   "TECH_NANOTROIDS"
+  ]
+ },
+ "replacedBy": {
+  "buildings": [
+   "BUILDING_HEALTH_SPA",
+   "BUILDING_HEALTHCARE_MEGACOMPLEX"
   ]
  },
  "requires": {

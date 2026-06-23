@@ -2,9 +2,18 @@
  "type": "BUILDING_COOPER",
  "description": "TXT_KEY_BUILDING_COOPER",
  "civilopedia": "TXT_KEY_BUILDING_COOPER_PEDIA",
- "obsoletes": {
+ "obsoletedBy": {
   "buildings": [
    "BUILDING_FACTORY_BARRELS"
+  ],
+  "techs": [
+   "TECH_RAPID_PROTOTYPING"
+  ]
+ },
+ "replacedBy": {
+  "buildings": [
+   "BUILDING_FACTORY_BARRELS",
+   "BUILDING_MANUFACTURING_DISTRICT"
   ]
  },
  "requires": {

@@ -2,7 +2,15 @@
  "type": "BUILDING_MEGATOWER_SOLAR_POWER_CROWN_SECTION",
  "description": "TXT_KEY_BUILDING_MEGATOWER_SOLAR_POWER_CROWN_SECTION",
  "civilopedia": "TXT_KEY_BUILDING_MEGATOWER_SOLAR_POWER_CROWN_SECTION_PEDIA",
- "obsoletes": {
+ "obsoletedBy": {
+  "buildings": [
+   "BUILDING_RENEWABLE_MEGACOMPLEX"
+  ],
+  "techs": [
+   "TECH_FEMTOTECHNOLOGY"
+  ]
+ },
+ "replacedBy": {
   "buildings": [
    "BUILDING_RENEWABLE_MEGACOMPLEX"
   ]

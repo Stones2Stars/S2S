@@ -7,12 +7,6 @@
    "BUILDING_RESOURCES_FEATHERS"
   ]
  },
- "replaces": {
-  "buildings": [
-   "BUILDING_FALCONER",
-   "BUILDING_HOMING_PIGEON_COOP"
-  ]
- },
  "requires": {
   "build": {
    "all": [

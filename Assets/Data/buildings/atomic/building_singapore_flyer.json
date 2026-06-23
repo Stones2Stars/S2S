@@ -2,6 +2,11 @@
  "type": "BUILDING_SINGAPORE_FLYER",
  "description": "TXT_KEY_BUILDING_SINGAPORE_FLYER",
  "civilopedia": "TXT_KEY_BUILDING_SINGAPORE_FLYER_PEDIA",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_MEGASTRUCTURE_ENGINEERING"
+  ]
+ },
  "requires": {
   "build": {
    "all": [

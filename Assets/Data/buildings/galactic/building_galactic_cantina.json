@@ -14,13 +14,6 @@
    "BUILDING_VIP_CLUB"
   ]
  },
- "replaces": {
-  "buildings": [
-   "BUILDING_DIVE_BAR",
-   "BUILDING_PUB",
-   "BUILDING_TAVERN"
-  ]
- },
  "requires": {
   "build": {
    "all": [

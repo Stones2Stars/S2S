@@ -2,6 +2,11 @@
  "type": "BUILDING_CABARET_VOLTAIRE",
  "description": "TXT_KEY_BUILDING_CABARET_VOLTAIRE",
  "civilopedia": "TXT_KEY_BUILDING_CABARET_VOLTAIRE_PEDIA",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_COMMUNICATION_NETWORKS"
+  ]
+ },
  "requires": {
   "build": {
    "all": [

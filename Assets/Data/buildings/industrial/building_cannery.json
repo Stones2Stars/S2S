@@ -7,7 +7,15 @@
    "BUILDING_PUSHBUTTON_AUTOMAT"
   ]
  },
- "obsoletes": {
+ "obsoletedBy": {
+  "buildings": [
+   "BUILDING_FARMSCRAPER_II"
+  ],
+  "techs": [
+   "TECH_GAIA_ECOLOGY"
+  ]
+ },
+ "replacedBy": {
   "buildings": [
    "BUILDING_FARMSCRAPER_II"
   ]

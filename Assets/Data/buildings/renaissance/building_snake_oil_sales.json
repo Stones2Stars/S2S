@@ -2,9 +2,18 @@
  "type": "BUILDING_SNAKE_OIL_SALES",
  "description": "TXT_KEY_BUILDING_SNAKE_OIL_SALES",
  "civilopedia": "TXT_KEY_BUILDING_SNAKE_OIL_SALES_PEDIA",
- "obsoletes": {
+ "obsoletedBy": {
   "buildings": [
    "BUILDING_ALTERNATIVE_MEDICINE"
+  ],
+  "techs": [
+   "TECH_NANOTROIDS"
+  ]
+ },
+ "replacedBy": {
+  "buildings": [
+   "BUILDING_ALTERNATIVE_MEDICINE",
+   "BUILDING_HEALTHCARE_MEGACOMPLEX"
   ]
  },
  "requires": {

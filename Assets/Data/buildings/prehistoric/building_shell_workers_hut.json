@@ -2,6 +2,11 @@
  "type": "BUILDING_SHELL_WORKERS_HUT",
  "description": "TXT_KEY_BUILDING_SHELL_WORKERS_HUT",
  "civilopedia": "TXT_KEY_BUILDING_SHELL_WORKERS_HUT_PEDIA",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_PLASTICS"
+  ]
+ },
  "requires": {
   "build": {
    "all": [

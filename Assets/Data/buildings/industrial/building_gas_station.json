@@ -7,7 +7,15 @@
    "BUILDING_AON_CENTER"
   ]
  },
- "obsoletes": {
+ "obsoletedBy": {
+  "buildings": [
+   "BUILDING_TELEPORT_BOOTH"
+  ],
+  "techs": [
+   "TECH_WORMHOLE_HIVEMIND"
+  ]
+ },
+ "replacedBy": {
   "buildings": [
    "BUILDING_TELEPORT_BOOTH"
   ]

@@ -2,9 +2,18 @@
  "type": "BUILDING_ANTI_MISSILE_BATTERIES",
  "description": "TXT_KEY_BUILDING_ANTI_MISSILE_BATTERIES",
  "civilopedia": "TXT_KEY_BUILDING_ANTI_MISSILE_BATTERIES_PEDIA",
- "obsoletes": {
+ "obsoletedBy": {
   "buildings": [
    "BUILDING_ARCOLOGY_SHIELDING"
+  ],
+  "techs": [
+   "TECH_ADVANCED_SHIELDING"
+  ]
+ },
+ "replacedBy": {
+  "buildings": [
+   "BUILDING_ARCOLOGY_SHIELDING",
+   "BUILDING_ADVANCED_SHIELDING"
   ]
  },
  "requires": {

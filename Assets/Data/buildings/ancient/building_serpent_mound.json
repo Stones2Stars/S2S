@@ -2,6 +2,11 @@
  "type": "BUILDING_SERPENT_MOUND",
  "description": "TXT_KEY_BUILDING_SERPENT_MOUND",
  "civilopedia": "TXT_KEY_BUILDING_SERPENT_MOUND_PEDIA",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_THEOLOGY"
+  ]
+ },
  "requires": {
   "build": {
    "all": [

@@ -2,11 +2,6 @@
  "type": "BUILDING_HOLOGRAPHIC_FLIGHT_SIMULATOR",
  "description": "TXT_KEY_BUILDING_HOLOGRAPHIC_FLIGHT_SIMULATOR",
  "civilopedia": "TXT_KEY_BUILDING_HOLOGRAPHIC_FLIGHT_SIMULATOR_PEDIA",
- "replaces": {
-  "buildings": [
-   "BUILDING_FLIGHT_SIMULATOR"
-  ]
- },
  "requires": {
   "build": {
    "all": [

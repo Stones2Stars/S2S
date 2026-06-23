@@ -2,6 +2,11 @@
  "type": "BUILDING_WILLOW_RUN",
  "description": "TXT_KEY_BUILDING_WILLOW_RUN",
  "civilopedia": "TXT_KEY_BUILDING_WILLOW_RUN_PEDIA",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_LUNAR_MANUFACTURING"
+  ]
+ },
  "requires": {
   "build": {
    "all": [

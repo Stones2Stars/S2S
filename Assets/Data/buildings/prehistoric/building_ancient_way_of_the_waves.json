@@ -2,6 +2,11 @@
  "type": "BUILDING_ANCIENT_WAY_OF_THE_WAVES",
  "description": "TXT_KEY_BUILDING_ANCIENT_WAY_OF_THE_WAVES",
  "civilopedia": "TXT_KEY_BUILDING_ANCIENT_WAY_OF_THE_WAVES_PEDIA",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_CLASSICAL_LIFESTYLE"
+  ]
+ },
  "requires": {
   "build": {
    "all": [

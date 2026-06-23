@@ -2,6 +2,11 @@
  "type": "BUILDING_MOTORCYCLE_CLUB_UNSANCTIONED",
  "description": "TXT_KEY_BUILDING_MOTORCYCLE_CLUB_UNSANCTIONED",
  "civilopedia": "TXT_KEY_BUILDING_MOTORCYCLE_CLUB_PEDIA",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_COMPREHENSIVE_CYBERNETICS"
+  ]
+ },
  "requires": {
   "build": {
    "all": [

@@ -7,9 +7,18 @@
    "UNIT_VET"
   ]
  },
- "obsoletes": {
+ "obsoletedBy": {
   "buildings": [
    "BUILDING_VETERINARIAN"
+  ],
+  "techs": [
+   "TECH_NANOTROIDS"
+  ]
+ },
+ "replacedBy": {
+  "buildings": [
+   "BUILDING_VETERINARIAN",
+   "BUILDING_HEALTHCARE_MEGACOMPLEX"
   ]
  },
  "requires": {

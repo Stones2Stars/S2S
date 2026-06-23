@@ -2,16 +2,17 @@
  "type": "BUILDING_FERRY_TERMINAL",
  "description": "TXT_KEY_BUILDING_FERRY_TERMINAL",
  "civilopedia": "TXT_KEY_BUILDING_FERRY_TERMINAL_PEDIA",
- "obsoletes": {
+ "obsoletedBy": {
   "buildings": [
    "BUILDING_RIVER_ADMINISTRATION"
+  ],
+  "techs": [
+   "TECH_ENVIRONMENTAL_ECONOMICS"
   ]
  },
- "replaces": {
+ "replacedBy": {
   "buildings": [
-   "BUILDING_RIVER_AUTHORITY",
-   "BUILDING_RIVER_PORT",
-   "BUILDING_STEAMBOAT_PORT"
+   "BUILDING_RIVER_ADMINISTRATION"
   ]
  },
  "requires": {

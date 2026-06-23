@@ -2,7 +2,15 @@
  "type": "BUILDING_NEGOTIATORS_HUT",
  "description": "TXT_KEY_BUILDING_NEGOTIATORS_HUT",
  "civilopedia": "TXT_KEY_BUILDING_NEGOTIATORS_HUT_PEDIA",
- "obsoletes": {
+ "obsoletedBy": {
+  "buildings": [
+   "BUILDING_AMBASSADORS_HOUSE"
+  ],
+  "techs": [
+   "TECH_FOREIGN_POLICY"
+  ]
+ },
+ "replacedBy": {
   "buildings": [
    "BUILDING_AMBASSADORS_HOUSE"
   ]

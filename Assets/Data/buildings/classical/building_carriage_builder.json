@@ -11,15 +11,18 @@
    "UNIT_CARTWRIGHT"
   ]
  },
- "obsoletes": {
+ "obsoletedBy": {
   "buildings": [
    "BUILDING_FACTORY_AUTOMOBILES"
+  ],
+  "techs": [
+   "TECH_SYNERGETICS"
   ]
  },
- "replaces": {
+ "replacedBy": {
   "buildings": [
-   "BUILDING_TRAVOIS_MAKER",
-   "BUILDING_WHEELWRIGHT"
+   "BUILDING_FACTORY_AUTOMOBILES",
+   "BUILDING_SELF_ASSEMBLY_FACTORY"
   ]
  },
  "requires": {

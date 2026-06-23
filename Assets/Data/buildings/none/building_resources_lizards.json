@@ -2,7 +2,15 @@
  "type": "BUILDING_RESOURCES_LIZARDS",
  "description": "TXT_KEY_BUILDING_RESOURCES_LIZARDS",
  "civilopedia": "TXT_KEY_BUILDING_RESOURCE_PROVIDER_PEDIA",
- "obsoletes": {
+ "obsoletedBy": {
+  "buildings": [
+   "BUILDING_REPET"
+  ],
+  "techs": [
+   "TECH_ARTIFICIAL_LIFE"
+  ]
+ },
+ "replacedBy": {
   "buildings": [
    "BUILDING_REPET"
   ]

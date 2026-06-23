@@ -2,9 +2,20 @@
  "type": "BUILDING_FIGHTING_PIT",
  "description": "TXT_KEY_BUILDING_FIGHTING_PIT",
  "civilopedia": "TXT_KEY_BUILDING_FIGHTING_PIT_PEDIA",
- "obsoletes": {
+ "obsoletedBy": {
   "buildings": [
    "BUILDING_ARENA"
+  ],
+  "techs": [
+   "TECH_COMBAT_SPORTS"
+  ]
+ },
+ "replacedBy": {
+  "buildings": [
+   "BUILDING_ARENA",
+   "BUILDING_COLOSSEUM",
+   "BUILDING_MINOR_LEAGUE_STADIUM",
+   "BUILDING_MAJOR_LEAGUE_STADIUM"
   ]
  },
  "requires": {

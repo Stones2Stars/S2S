@@ -2,14 +2,22 @@
  "type": "BUILDING_FAST_BREEDER_REACTOR",
  "description": "TXT_KEY_BUILDING_FAST_BREEDER_REACTOR",
  "civilopedia": "TXT_KEY_BUILDING_FAST_BREEDER_REACTOR_PEDIA",
- "obsoletes": {
+ "obsoletedBy": {
   "buildings": [
    "BUILDING_GENERATION_IV_REACTOR"
+  ],
+  "techs": [
+   "TECH_FUSION"
   ]
  },
- "replaces": {
+ "replacedBy": {
   "buildings": [
-   "BUILDING_NUCLEAR_PLANT"
+   "BUILDING_GENERATION_IV_REACTOR",
+   "BUILDING_D_T_FUSION_POWER_PLANT",
+   "BUILDING_D_HE3_FUSION_PLANT",
+   "BUILDING_HE3_FUSION_POWER_PLANT",
+   "BUILDING_ANTIMATTER_INITIATED_FUSION_PLANT",
+   "BUILDING_QUANTUM_VACUUM_POWER_PLANT"
   ]
  },
  "requires": {

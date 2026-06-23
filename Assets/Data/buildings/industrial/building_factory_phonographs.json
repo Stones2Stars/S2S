@@ -2,7 +2,15 @@
  "type": "BUILDING_FACTORY_PHONOGRAPHS",
  "description": "TXT_KEY_BUILDING_FACTORY_PHONOGRAPHS",
  "civilopedia": "TXT_KEY_BUILDING_FACTORY_PHONOGRAPHS_PEDIA",
- "obsoletes": {
+ "obsoletedBy": {
+  "buildings": [
+   "BUILDING_MANUFACTURING_DISTRICT"
+  ],
+  "techs": [
+   "TECH_NANOROBOTICS"
+  ]
+ },
+ "replacedBy": {
   "buildings": [
    "BUILDING_MANUFACTURING_DISTRICT"
   ]

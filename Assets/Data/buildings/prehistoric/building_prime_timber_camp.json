@@ -2,6 +2,16 @@
  "type": "BUILDING_PRIME_TIMBER_CAMP",
  "description": "TXT_KEY_BUILDING_PRIME_TIMBER_CAMP",
  "civilopedia": "TXT_KEY_BUILDING_PRIME_TIMBER_CAMP_PEDIA",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_ENVIRONMENTAL_ECONOMICS"
+  ]
+ },
+ "replacedBy": {
+  "buildings": [
+   "BUILDING_AGROFOREST"
+  ]
+ },
  "requires": {
   "build": {
    "all": [

@@ -2,6 +2,11 @@
  "type": "BUILDING_HOUSE_OF_WISDOM",
  "description": "TXT_KEY_BUILDING_HOUSE_OF_WISDOM",
  "civilopedia": "TXT_KEY_BUILDING_HOUSE_OF_WISDOM_PEDIA",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_SCIENTIFIC_METHOD"
+  ]
+ },
  "requires": {
   "build": {
    "all": [

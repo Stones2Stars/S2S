@@ -2,6 +2,11 @@
  "type": "BUILDING_MUNICIPAL_COMPUTING_ENGINE",
  "description": "TXT_KEY_BUILDING_MUNICIPAL_COMPUTING_ENGINE",
  "civilopedia": "TXT_KEY_BUILDING_MUNICIPAL_COMPUTING_ENGINE_PEDIA",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_COMPUTER_NETWORKS"
+  ]
+ },
  "requires": {
   "build": {
    "all": [

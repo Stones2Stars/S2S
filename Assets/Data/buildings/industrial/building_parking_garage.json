@@ -2,9 +2,18 @@
  "type": "BUILDING_PARKING_GARAGE",
  "description": "TXT_KEY_BUILDING_PARKING_GARAGE",
  "civilopedia": "TXT_KEY_BUILDING_PARKING_GARAGE_PEDIA",
- "obsoletes": {
+ "obsoletedBy": {
   "buildings": [
    "BUILDING_AUTOMATED_PARKING_GARAGE"
+  ],
+  "techs": [
+   "TECH_TELEPORTATION"
+  ]
+ },
+ "replacedBy": {
+  "buildings": [
+   "BUILDING_AUTOMATED_PARKING_GARAGE",
+   "BUILDING_TELEPORT_BOOTH"
   ]
  },
  "requires": {

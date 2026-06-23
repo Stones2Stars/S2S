@@ -2,7 +2,15 @@
  "type": "BUILDING_JAI_ALAI_COURT",
  "description": "TXT_KEY_BUILDING_JAI_ALAI_COURT",
  "civilopedia": "TXT_KEY_BUILDING_JAI_ALAI_COURT_PEDIA",
- "obsoletes": {
+ "obsoletedBy": {
+  "buildings": [
+   "BUILDING_ATHLETIC_MEGACOMPLEX"
+  ],
+  "techs": [
+   "TECH_WEATHER_CONTROL"
+  ]
+ },
+ "replacedBy": {
   "buildings": [
    "BUILDING_ATHLETIC_MEGACOMPLEX"
   ]

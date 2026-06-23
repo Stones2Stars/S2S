@@ -7,7 +7,15 @@
    "BUILDING_MEGATOWER_WIND_POWER_CROWN_SECTION"
   ]
  },
- "obsoletes": {
+ "obsoletedBy": {
+  "buildings": [
+   "BUILDING_RENEWABLE_MEGACOMPLEX"
+  ],
+  "techs": [
+   "TECH_FEMTOTECHNOLOGY"
+  ]
+ },
+ "replacedBy": {
   "buildings": [
    "BUILDING_RENEWABLE_MEGACOMPLEX"
   ]

@@ -2,7 +2,15 @@
  "type": "BUILDING_FACTORY_UNMANNED_AIRCRAFTS",
  "description": "TXT_KEY_BUILDING_FACTORY_UNMANNED_AIRCRAFTS",
  "civilopedia": "TXT_KEY_BUILDING_FACTORY_UNMANNED_AIRCRAFTS_PEDIA",
- "obsoletes": {
+ "obsoletedBy": {
+  "buildings": [
+   "BUILDING_MILITARY_INDUSTRIAL_COMPLEX"
+  ],
+  "techs": [
+   "TECH_ORBITAL_FLIGHT"
+  ]
+ },
+ "replacedBy": {
   "buildings": [
    "BUILDING_MILITARY_INDUSTRIAL_COMPLEX"
   ]

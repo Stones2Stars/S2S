@@ -2,9 +2,18 @@
  "type": "BUILDING_TANNIN_MAKER",
  "description": "TXT_KEY_BUILDING_TANNIN_MAKER",
  "civilopedia": "TXT_KEY_BUILDING_TANNIN_MAKER_PEDIA",
- "obsoletes": {
+ "obsoletedBy": {
   "buildings": [
    "BUILDING_FACTORY_TANNIN"
+  ],
+  "techs": [
+   "TECH_NOVUS_CHEMISTRY"
+  ]
+ },
+ "replacedBy": {
+  "buildings": [
+   "BUILDING_FACTORY_TANNIN",
+   "BUILDING_CHEMICALS_DISTRICT"
   ]
  },
  "requires": {

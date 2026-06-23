@@ -8,6 +8,11 @@
    "UNIT_WISE_WOMAN"
   ]
  },
+ "obsoletedBy": {
+  "techs": [
+   "TECH_CITY_PLANNING"
+  ]
+ },
  "requires": {
   "build": {
    "all": [

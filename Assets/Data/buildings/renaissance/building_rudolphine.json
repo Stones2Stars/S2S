@@ -2,6 +2,16 @@
  "type": "BUILDING_RUDOLPHINE",
  "description": "TXT_KEY_BUILDING_RUDOLPHINE",
  "civilopedia": "TXT_KEY_BUILDING_RUDOLPHINE_PEDIA",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_RADAR"
+  ]
+ },
+ "replacedBy": {
+  "buildings": [
+   "BUILDING_POLLUTION_BLACKENED_SKIES"
+  ]
+ },
  "requires": {
   "build": {
    "all": [

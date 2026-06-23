@@ -2,7 +2,15 @@
  "type": "BUILDING_MASTERS_DOJO",
  "description": "TXT_KEY_BUILDING_MASTERS_DOJO",
  "civilopedia": "TXT_KEY_BUILDING_TRAINING_DOJO_PEDIA",
- "obsoletes": {
+ "obsoletedBy": {
+  "buildings": [
+   "BUILDING_ATHLETIC_MEGACOMPLEX"
+  ],
+  "techs": [
+   "TECH_WEATHER_CONTROL"
+  ]
+ },
+ "replacedBy": {
   "buildings": [
    "BUILDING_ATHLETIC_MEGACOMPLEX"
   ]

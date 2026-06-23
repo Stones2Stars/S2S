@@ -2,9 +2,20 @@
  "type": "BUILDING_TORCHES",
  "description": "TXT_KEY_BUILDING_TORCHES",
  "civilopedia": "TXT_KEY_BUILDING_TORCHES_PEDIA",
- "obsoletes": {
+ "obsoletedBy": {
   "buildings": [
    "BUILDING_OIL_LAMPS"
+  ],
+  "techs": [
+   "TECH_GAS_LIGHTING"
+  ]
+ },
+ "replacedBy": {
+  "buildings": [
+   "BUILDING_OIL_LAMPS",
+   "BUILDING_GAS_LAMPS",
+   "BUILDING_ELECTRIC_LAMPS",
+   "BUILDING_OLED_LAMPS"
   ]
  },
  "requires": {

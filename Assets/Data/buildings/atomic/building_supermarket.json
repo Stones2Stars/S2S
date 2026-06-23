@@ -10,15 +10,17 @@
    "BUILDING_UNMANNED_MARKET"
   ]
  },
- "obsoletes": {
+ "obsoletedBy": {
   "buildings": [
    "BUILDING_HYPERMARKET"
+  ],
+  "techs": [
+   "TECH_SMART_DUST"
   ]
  },
- "replaces": {
+ "replacedBy": {
   "buildings": [
-   "BUILDING_GROCER",
-   "BUILDING_MARKET"
+   "BUILDING_HYPERMARKET"
   ]
  },
  "requires": {

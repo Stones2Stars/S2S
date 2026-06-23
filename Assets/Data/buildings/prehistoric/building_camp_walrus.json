@@ -8,9 +8,18 @@
    "BUILDING_RESOURCES_IVORY"
   ]
  },
- "obsoletes": {
+ "obsoletedBy": {
   "buildings": [
    "BUILDING_BREEDING_PROGRAM_WALRUS"
+  ],
+  "techs": [
+   "TECH_PLANETARY_ECONOMICS"
+  ]
+ },
+ "replacedBy": {
+  "buildings": [
+   "BUILDING_BREEDING_PROGRAM_WALRUS",
+   "BUILDING_ANIMAL_PRESERVE"
   ]
  },
  "requires": {

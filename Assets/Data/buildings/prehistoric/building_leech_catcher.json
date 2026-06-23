@@ -2,9 +2,18 @@
  "type": "BUILDING_LEECH_CATCHER",
  "description": "TXT_KEY_BUILDING_LEECH_CATCHER",
  "civilopedia": "TXT_KEY_BUILDING_LEECH_CATCHER_PEDIA",
- "obsoletes": {
+ "obsoletedBy": {
   "buildings": [
    "BUILDING_ALTERNATIVE_MEDICINE"
+  ],
+  "techs": [
+   "TECH_NANOTROIDS"
+  ]
+ },
+ "replacedBy": {
+  "buildings": [
+   "BUILDING_ALTERNATIVE_MEDICINE",
+   "BUILDING_HEALTHCARE_MEGACOMPLEX"
   ]
  },
  "requires": {

@@ -2,7 +2,15 @@
  "type": "BUILDING_VIBRANIUM_MINE",
  "description": "TXT_KEY_BUILDING_VIBRANIUM_MINE",
  "civilopedia": "TXT_KEY_BUILDING_VIBRANIUM_MINE_PEDIA",
- "obsoletes": {
+ "obsoletedBy": {
+  "buildings": [
+   "BUILDING_MATERIALIZATION_COMPLEX"
+  ],
+  "techs": [
+   "TECH_OMEGA_POINT"
+  ]
+ },
+ "replacedBy": {
   "buildings": [
    "BUILDING_MATERIALIZATION_COMPLEX"
   ]

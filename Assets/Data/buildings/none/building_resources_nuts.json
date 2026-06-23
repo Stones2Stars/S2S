@@ -2,7 +2,15 @@
  "type": "BUILDING_RESOURCES_NUTS",
  "description": "TXT_KEY_BUILDING_RESOURCES_NUTS",
  "civilopedia": "TXT_KEY_BUILDING_RESOURCE_PROVIDER_PEDIA",
- "obsoletes": {
+ "obsoletedBy": {
+  "buildings": [
+   "BUILDING_FARMSCRAPER_II"
+  ],
+  "techs": [
+   "TECH_GAIA_ECOLOGY"
+  ]
+ },
+ "replacedBy": {
   "buildings": [
    "BUILDING_FARMSCRAPER_II"
   ]

@@ -2,7 +2,15 @@
  "type": "BUILDING_COMPUTRONIUM_MAKER",
  "description": "TXT_KEY_BUILDING_COMPUTRONIUM_MAKER",
  "civilopedia": "TXT_KEY_BUILDING_COMPUTRONIUM_MAKER_PEDIA",
- "obsoletes": {
+ "obsoletedBy": {
+  "buildings": [
+   "BUILDING_MATERIALIZATION_COMPLEX"
+  ],
+  "techs": [
+   "TECH_OMEGA_POINT"
+  ]
+ },
+ "replacedBy": {
   "buildings": [
    "BUILDING_MATERIALIZATION_COMPLEX"
   ]

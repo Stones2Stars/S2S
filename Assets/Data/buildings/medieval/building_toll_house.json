@@ -2,7 +2,15 @@
  "type": "BUILDING_TOLL_HOUSE",
  "description": "TXT_KEY_BUILDING_TOLL_HOUSE",
  "civilopedia": "TXT_KEY_BUILDING_TOLL_HOUSE_PEDIA",
- "obsoletes": {
+ "obsoletedBy": {
+  "buildings": [
+   "BUILDING_CUSTOMS_OFFICE"
+  ],
+  "techs": [
+   "TECH_APPLIED_ECONOMICS"
+  ]
+ },
+ "replacedBy": {
   "buildings": [
    "BUILDING_CUSTOMS_OFFICE"
   ]

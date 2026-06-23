@@ -2,7 +2,15 @@
  "type": "BUILDING_REED_GATHERER",
  "description": "TXT_KEY_BUILDING_REED_GATHERER",
  "civilopedia": "TXT_KEY_BUILDING_REED_GATHERER_PEDIA",
- "obsoletes": {
+ "obsoletedBy": {
+  "buildings": [
+   "BUILDING_AGROFOREST"
+  ],
+  "techs": [
+   "TECH_SENTIENT_EARTH"
+  ]
+ },
+ "replacedBy": {
   "buildings": [
    "BUILDING_AGROFOREST"
   ]

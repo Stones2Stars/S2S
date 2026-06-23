@@ -13,7 +13,15 @@
    "BUILDING_THUMBSCREW"
   ]
  },
- "obsoletes": {
+ "obsoletedBy": {
+  "buildings": [
+   "BUILDING_JAIL"
+  ],
+  "techs": [
+   "TECH_PSYCHOLOGY"
+  ]
+ },
+ "replacedBy": {
   "buildings": [
    "BUILDING_JAIL"
   ]

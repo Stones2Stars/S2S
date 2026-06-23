@@ -2,16 +2,18 @@
  "type": "BUILDING_HOUSING_ARCOLOGY_SLUMS",
  "description": "TXT_KEY_BUILDING_HOUSING_ARCOLOGY_SLUMS",
  "civilopedia": "TXT_KEY_BUILDING_HOUSING_ARCOLOGY_SLUMS_PEDIA",
- "obsoletes": {
+ "obsoletedBy": {
   "buildings": [
    "BUILDING_HOUSING_COLONY_ARCOLOGY"
+  ],
+  "techs": [
+   "TECH_INTERSTELLAR_COLONIZATION"
   ]
  },
- "replaces": {
+ "replacedBy": {
   "buildings": [
-   "BUILDING_HOUSING_FRATERNITY_HOUSE",
-   "BUILDING_HOUSING_SORORITY_HOUSE",
-   "BUILDING_HOUSING_TRAILER_PARK"
+   "BUILDING_HOUSING_COLONY_ARCOLOGY",
+   "BUILDING_LAUNCH_ARCOLOGY"
   ]
  },
  "requires": {

@@ -2,7 +2,15 @@
  "type": "BUILDING_MINE_MAGNESIUM",
  "description": "TXT_KEY_BUILDING_MINE_MAGNESIUM",
  "civilopedia": "TXT_KEY_BUILDING_MINE_MAGNESIUM_PEDIA",
- "obsoletes": {
+ "obsoletedBy": {
+  "buildings": [
+   "BUILDING_CORE_MINE"
+  ],
+  "techs": [
+   "TECH_ATOMIC_SCALE_ENGINEERING"
+  ]
+ },
+ "replacedBy": {
   "buildings": [
    "BUILDING_CORE_MINE"
   ]

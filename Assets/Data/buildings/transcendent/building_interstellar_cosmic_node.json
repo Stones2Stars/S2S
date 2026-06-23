@@ -2,11 +2,6 @@
  "type": "BUILDING_INTERSTELLAR_COSMIC_NODE",
  "description": "TXT_KEY_BUILDING_INTERSTELLAR_COSMIC_NODE",
  "civilopedia": "TXT_KEY_BUILDING_INTERSTELLAR_COSMIC_NODE_PEDIA",
- "replaces": {
-  "buildings": [
-   "BUILDING_INTERSTELLAR_NETWORK_NODE"
-  ]
- },
  "requires": {
   "build": {
    "all": [

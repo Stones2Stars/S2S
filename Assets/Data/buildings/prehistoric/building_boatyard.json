@@ -2,7 +2,15 @@
  "type": "BUILDING_BOATYARD",
  "description": "TXT_KEY_BUILDING_BOATYARD",
  "civilopedia": "TXT_KEY_BUILDING_BOATYARD_PEDIA",
- "obsoletes": {
+ "obsoletedBy": {
+  "buildings": [
+   "BUILDING_MARINA"
+  ],
+  "techs": [
+   "TECH_MANUFACTURING"
+  ]
+ },
+ "replacedBy": {
   "buildings": [
    "BUILDING_MARINA"
   ]

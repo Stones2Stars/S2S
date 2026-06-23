@@ -2,6 +2,11 @@
  "type": "BUILDING_PLATOS_ACADEMY",
  "description": "TXT_KEY_BUILDING_PLATOS_ACADEMY",
  "civilopedia": "TXT_KEY_BUILDING_PLATOS_ACADEMY_PEDIA",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_JOURNALISM"
+  ]
+ },
  "requires": {
   "build": {
    "all": [

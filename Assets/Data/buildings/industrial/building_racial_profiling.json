@@ -2,7 +2,15 @@
  "type": "BUILDING_RACIAL_PROFILING",
  "description": "TXT_KEY_BUILDING_RACIAL_PROFILING",
  "civilopedia": "TXT_KEY_BUILDING_RACIAL_PROFILING_PEDIA",
- "obsoletes": {
+ "obsoletedBy": {
+  "buildings": [
+   "BUILDING_GENETIC_PROFILING"
+  ],
+  "techs": [
+   "TECH_SOCIAL_CALCULUS"
+  ]
+ },
+ "replacedBy": {
   "buildings": [
    "BUILDING_GENETIC_PROFILING"
   ]

@@ -2,7 +2,15 @@
  "type": "BUILDING_FACTORY_CELLULASE_CAPSULES",
  "description": "TXT_KEY_BUILDING_FACTORY_CELLULASE_CAPSULES",
  "civilopedia": "TXT_KEY_BUILDING_FACTORY_CELLULASE_CAPSULES_PEDIA",
- "obsoletes": {
+ "obsoletedBy": {
+  "buildings": [
+   "BUILDING_MEDICAL_MEGACOMPLEX"
+  ],
+  "techs": [
+   "TECH_POSTHUMANISM"
+  ]
+ },
+ "replacedBy": {
   "buildings": [
    "BUILDING_MEDICAL_MEGACOMPLEX"
   ]

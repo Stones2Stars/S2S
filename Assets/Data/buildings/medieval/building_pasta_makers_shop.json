@@ -2,8 +2,17 @@
  "type": "BUILDING_PASTA_MAKERS_SHOP",
  "description": "TXT_KEY_BUILDING_PASTA_MAKERS_SHOP",
  "civilopedia": "TXT_KEY_BUILDING_PASTA_MAKERS_SHOP_PEDIA",
- "obsoletes": {
+ "obsoletedBy": {
   "buildings": [
+   "BUILDING_FACTORY_PASTA"
+  ],
+  "techs": [
+   "TECH_AUGMENTED_CONSUMABLES"
+  ]
+ },
+ "replacedBy": {
+  "buildings": [
+   "BUILDING_FOOD_MANUFACTURING_DISTRICT",
    "BUILDING_FACTORY_PASTA"
   ]
  },

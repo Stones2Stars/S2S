@@ -2,7 +2,15 @@
  "type": "BUILDING_OBSIDIAN_GATHERER",
  "description": "TXT_KEY_BUILDING_OBSIDIAN_GATHERER",
  "civilopedia": "TXT_KEY_BUILDING_LAVA_ROCK_GATHERER_PEDIA",
- "obsoletes": {
+ "obsoletedBy": {
+  "buildings": [
+   "BUILDING_OBSIDIAN_QUARRY"
+  ],
+  "techs": [
+   "TECH_RAPID_PROTOTYPING"
+  ]
+ },
+ "replacedBy": {
   "buildings": [
    "BUILDING_OBSIDIAN_QUARRY"
   ]

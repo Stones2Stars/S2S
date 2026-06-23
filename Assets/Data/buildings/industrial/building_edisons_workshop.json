@@ -2,6 +2,11 @@
  "type": "BUILDING_EDISONS_WORKSHOP",
  "description": "TXT_KEY_BUILDING_EDISONS_WORKSHOP",
  "civilopedia": "TXT_KEY_BUILDING_EDISONS_WORKSHOP_PEDIA",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_MAGNETIC_LEVITATION"
+  ]
+ },
  "requires": {
   "build": {
    "all": [

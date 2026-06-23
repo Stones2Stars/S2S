@@ -7,9 +7,18 @@
    "BUILDING_RESOURCES_CARCASS"
   ]
  },
- "obsoletes": {
+ "obsoletedBy": {
   "buildings": [
    "BUILDING_BREEDING_PROGRAM_KANGAROO"
+  ],
+  "techs": [
+   "TECH_PLANETARY_ECONOMICS"
+  ]
+ },
+ "replacedBy": {
+  "buildings": [
+   "BUILDING_BREEDING_PROGRAM_KANGAROO",
+   "BUILDING_ANIMAL_PRESERVE"
   ]
  },
  "requires": {

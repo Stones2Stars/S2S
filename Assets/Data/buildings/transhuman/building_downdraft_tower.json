@@ -2,7 +2,15 @@
  "type": "BUILDING_DOWNDRAFT_TOWER",
  "description": "TXT_KEY_BUILDING_DOWNDRAFT_TOWER",
  "civilopedia": "TXT_KEY_BUILDING_DOWNDRAFT_TOWER_PEDIA",
- "obsoletes": {
+ "obsoletedBy": {
+  "buildings": [
+   "BUILDING_RENEWABLE_MEGACOMPLEX"
+  ],
+  "techs": [
+   "TECH_FEMTOTECHNOLOGY"
+  ]
+ },
+ "replacedBy": {
   "buildings": [
    "BUILDING_RENEWABLE_MEGACOMPLEX"
   ]

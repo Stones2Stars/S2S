@@ -2,6 +2,11 @@
  "type": "BUILDING_THE_KREMLIN",
  "description": "TXT_KEY_BUILDING_THE_KREMLIN",
  "civilopedia": "TXT_KEY_BUILDING_THE_KREMLIN_PEDIA",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_FIBER_OPTICS"
+  ]
+ },
  "requires": {
   "build": {
    "all": [

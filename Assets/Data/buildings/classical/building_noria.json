@@ -2,7 +2,15 @@
  "type": "BUILDING_NORIA",
  "description": "TXT_KEY_BUILDING_NORIA",
  "civilopedia": "TXT_KEY_BUILDING_NORIA_PEDIA",
- "obsoletes": {
+ "obsoletedBy": {
+  "buildings": [
+   "BUILDING_RIVER_ADMINISTRATION"
+  ],
+  "techs": [
+   "TECH_ENVIRONMENTAL_ECONOMICS"
+  ]
+ },
+ "replacedBy": {
   "buildings": [
    "BUILDING_RIVER_ADMINISTRATION"
   ]

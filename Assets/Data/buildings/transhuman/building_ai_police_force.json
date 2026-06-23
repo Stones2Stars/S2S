@@ -8,12 +8,6 @@
    "BUILDING_GRAVITY_CROWD_CONTROL"
   ]
  },
- "replaces": {
-  "buildings": [
-   "BUILDING_COAST_GUARD_STATION",
-   "BUILDING_POLICE_DRONE_CONTROL_CENTER"
-  ]
- },
  "requires": {
   "build": {
    "all": [

@@ -2,7 +2,15 @@
  "type": "BUILDING_POLICE_BOX",
  "description": "TXT_KEY_BUILDING_POLICE_BOX",
  "civilopedia": "TXT_KEY_BUILDING_POLICE_BOX_PEDIA",
- "obsoletes": {
+ "obsoletedBy": {
+  "buildings": [
+   "BUILDING_POLICE_PRECINCT"
+  ],
+  "techs": [
+   "TECH_BINARY_LEGISLATION"
+  ]
+ },
+ "replacedBy": {
   "buildings": [
    "BUILDING_POLICE_PRECINCT"
   ]

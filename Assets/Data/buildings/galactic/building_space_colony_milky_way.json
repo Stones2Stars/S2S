@@ -24,12 +24,6 @@
    "BUILDING_MANDATE"
   ]
  },
- "replaces": {
-  "buildings": [
-   "BUILDING_INTERSTELLAR_ASTEROID_MINING_SYSTEM",
-   "BUILDING_INTERSTELLAR_COMET_DUST_COLLECTION"
-  ]
- },
  "requires": {
   "build": {
    "all": [

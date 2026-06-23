@@ -9,14 +9,18 @@
    "BUILDING_WORLD_ELECTRIC_GRID"
   ]
  },
- "obsoletes": {
+ "obsoletedBy": {
   "buildings": [
    "BUILDING_EMP_GRID"
+  ],
+  "techs": [
+   "TECH_FRICTIONLESS_FLIGHT"
   ]
  },
- "replaces": {
+ "replacedBy": {
   "buildings": [
-   "BUILDING_SMART_GRID"
+   "BUILDING_EMP_GRID",
+   "BUILDING_SUPERCONDUCTING_GRID"
   ]
  },
  "requires": {

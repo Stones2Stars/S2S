@@ -2,9 +2,18 @@
  "type": "BUILDING_ACTIVE_DENIAL_SYSTEM",
  "description": "TXT_KEY_BUILDING_ACTIVE_DENIAL_SYSTEM",
  "civilopedia": "TXT_KEY_BUILDING_ACTIVE_DENIAL_SYSTEM_PEDIA",
- "obsoletes": {
+ "obsoletedBy": {
   "buildings": [
    "BUILDING_ACOUSTIC_CROWD_CONTROL"
+  ],
+  "techs": [
+   "TECH_WEAPONIZED_GRAVITY_FIELDS"
+  ]
+ },
+ "replacedBy": {
+  "buildings": [
+   "BUILDING_ACOUSTIC_CROWD_CONTROL",
+   "BUILDING_GRAVITY_CROWD_CONTROL"
   ]
  },
  "requires": {

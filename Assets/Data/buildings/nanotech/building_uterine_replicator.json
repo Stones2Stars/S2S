@@ -8,7 +8,15 @@
    "BUILDING_RESURRECTION_HUB"
   ]
  },
- "obsoletes": {
+ "obsoletedBy": {
+  "buildings": [
+   "BUILDING_NANOMORPHIC_REPLICATOR"
+  ],
+  "techs": [
+   "TECH_ASTROANTHROPOLOGY"
+  ]
+ },
+ "replacedBy": {
   "buildings": [
    "BUILDING_NANOMORPHIC_REPLICATOR"
   ]

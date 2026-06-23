@@ -15,12 +15,6 @@
    "BUILDING_TRUCK_SHIPPING_WAREHOUSE"
   ]
  },
- "replaces": {
-  "buildings": [
-   "BUILDING_ICEHOUSE",
-   "BUILDING_WAREHOUSE"
-  ]
- },
  "requires": {
   "build": {
    "all": [

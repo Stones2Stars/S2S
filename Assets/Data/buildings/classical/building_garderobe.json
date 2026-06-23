@@ -2,15 +2,18 @@
  "type": "BUILDING_GARDEROBE",
  "description": "TXT_KEY_BUILDING_GARDEROBE",
  "civilopedia": "TXT_KEY_BUILDING_GARDEROBE_PEDIA",
- "obsoletes": {
+ "obsoletedBy": {
   "buildings": [
    "BUILDING_PUBLIC_RESTROOMS"
+  ],
+  "techs": [
+   "TECH_VIRTUAL_SOCIETY"
   ]
  },
- "replaces": {
+ "replacedBy": {
   "buildings": [
-   "BUILDING_EXCREMENT_HOLES",
-   "BUILDING_OUTHOUSE"
+   "BUILDING_PUBLIC_RESTROOMS",
+   "BUILDING_SANITATION_CHAMBER"
   ]
  },
  "requires": {

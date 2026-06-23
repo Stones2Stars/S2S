@@ -10,9 +10,19 @@
    "BUILDING_TERRA_SIGILLATA_WORKSHOP"
   ]
  },
- "obsoletes": {
+ "obsoletedBy": {
   "buildings": [
    "BUILDING_POTTERS_WORKSHOP"
+  ],
+  "techs": [
+   "TECH_ASSEMBLY_LINE"
+  ]
+ },
+ "replacedBy": {
+  "buildings": [
+   "BUILDING_MANUFACTURING_DISTRICT",
+   "BUILDING_POTTERS_WORKSHOP",
+   "BUILDING_FACTORY_POTTERY"
   ]
  },
  "requires": {

@@ -7,14 +7,17 @@
    "BUILDING_BAMBOO_ARMOURER"
   ]
  },
- "obsoletes": {
+ "obsoletedBy": {
   "buildings": [
    "BUILDING_MEAT_INDUSTRY_CONGLOMERATE"
+  ],
+  "techs": [
+   "TECH_PLANETARY_ECONOMICS"
   ]
  },
- "replaces": {
+ "replacedBy": {
   "buildings": [
-   "BUILDING_TANNERY"
+   "BUILDING_MEAT_INDUSTRY_CONGLOMERATE"
   ]
  },
  "requires": {

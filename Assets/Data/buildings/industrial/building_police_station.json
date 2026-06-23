@@ -44,21 +44,17 @@
    "UNIT_WATCHER"
   ]
  },
- "obsoletes": {
+ "obsoletedBy": {
   "buildings": [
    "BUILDING_POLICE_PRECINCT"
+  ],
+  "techs": [
+   "TECH_BINARY_LEGISLATION"
   ]
  },
- "replaces": {
+ "replacedBy": {
   "buildings": [
-   "BUILDING_BAILIWICK",
-   "BUILDING_GUARDHOUSE",
-   "BUILDING_GUARD_STATION",
-   "BUILDING_LOOKOUT_POST",
-   "BUILDING_SENTRY_POST",
-   "BUILDING_SHERIFFS_OFFICE",
-   "BUILDING_TOWN_PATROL",
-   "BUILDING_TOWN_WATCH"
+   "BUILDING_POLICE_PRECINCT"
   ]
  },
  "requires": {

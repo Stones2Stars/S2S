@@ -2,18 +2,6 @@
  "type": "BUILDING_UNIVERSAL_RESTAURANT",
  "description": "TXT_KEY_BUILDING_UNIVERSAL_RESTAURANT",
  "civilopedia": "TXT_KEY_BUILDING_UNIVERSAL_RESTAURANT_PEDIA",
- "replaces": {
-  "buildings": [
-   "BUILDING_BURGER_JOINT",
-   "BUILDING_CAFE",
-   "BUILDING_CITY_BISTRO",
-   "BUILDING_DELI",
-   "BUILDING_DINER",
-   "BUILDING_PANCAKE_HOUSE",
-   "BUILDING_PIZZA_PARLOR",
-   "BUILDING_TACO_HUT"
-  ]
- },
  "requires": {
   "build": {
    "all": [

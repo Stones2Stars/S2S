@@ -3,6 +3,11 @@
  "description": "TXT_KEY_BUILDING_GREAT_ZIMBABWE",
  "civilopedia": "TXT_KEY_BUILDING_GREAT_ZIMBABWE_PEDIA",
  "help": "TXT_KEY_BUILDING_GREAT_ZIMBABWE_HELP",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_IMPERIALISM"
+  ]
+ },
  "requires": {
   "build": {
    "all": [

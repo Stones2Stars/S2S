@@ -2,14 +2,6 @@
  "type": "BUILDING_OLED_LAMPS",
  "description": "TXT_KEY_BUILDING_OLED_LAMPS",
  "civilopedia": "TXT_KEY_BUILDING_OLED_LAMPS_PEDIA",
- "replaces": {
-  "buildings": [
-   "BUILDING_ELECTRIC_LAMPS",
-   "BUILDING_GAS_LAMPS",
-   "BUILDING_OIL_LAMPS",
-   "BUILDING_TORCHES"
-  ]
- },
  "requires": {
   "build": {
    "all": [

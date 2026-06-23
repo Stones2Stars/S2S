@@ -9,6 +9,11 @@
    "BUILDING_STONE_TOOL_MAKER"
   ]
  },
+ "obsoletedBy": {
+  "techs": [
+   "TECH_CITY_PLANNING"
+  ]
+ },
  "requires": {
   "build": {
    "all": [

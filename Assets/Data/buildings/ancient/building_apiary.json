@@ -22,7 +22,15 @@
    "BUILDING_FARM_FLOWER_VIOLET"
   ]
  },
- "obsoletes": {
+ "obsoletedBy": {
+  "buildings": [
+   "BUILDING_FOOD_MANUFACTURING_DISTRICT"
+  ],
+  "techs": [
+   "TECH_MIND_UPLOADING"
+  ]
+ },
+ "replacedBy": {
   "buildings": [
    "BUILDING_FOOD_MANUFACTURING_DISTRICT"
   ]

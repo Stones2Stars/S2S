@@ -2,8 +2,17 @@
  "type": "BUILDING_FURNITURE_MAKER",
  "description": "TXT_KEY_BUILDING_FURNITURE_MAKER",
  "civilopedia": "TXT_KEY_BUILDING_FURNITURE_MAKER_PEDIA",
- "obsoletes": {
+ "obsoletedBy": {
   "buildings": [
+   "BUILDING_FACTORY_FURNITURE"
+  ],
+  "techs": [
+   "TECH_RAPID_PROTOTYPING"
+  ]
+ },
+ "replacedBy": {
+  "buildings": [
+   "BUILDING_MANUFACTURING_DISTRICT",
    "BUILDING_FACTORY_FURNITURE"
   ]
  },

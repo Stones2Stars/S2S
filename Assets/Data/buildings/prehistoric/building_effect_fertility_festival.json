@@ -7,9 +7,9 @@
    "BUILDING_FERTILITY_FESTIVAL"
   ]
  },
- "replaces": {
-  "buildings": [
-   "BUILDING_FERTILITY_DANCE"
+ "obsoletedBy": {
+  "techs": [
+   "TECH_WOMENS_SUFFRAGE"
   ]
  },
  "requires": {

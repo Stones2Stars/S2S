@@ -40,14 +40,17 @@
    "BUILDING_ULTIMATE_SOLDIERS_TRAINER"
   ]
  },
- "obsoletes": {
+ "obsoletedBy": {
   "buildings": [
    "BUILDING_MODERN_OFFICES"
+  ],
+  "techs": [
+   "TECH_PERSONAL_COMPUTERS"
   ]
  },
- "replaces": {
+ "replacedBy": {
   "buildings": [
-   "BUILDING_TAXPERSON"
+   "BUILDING_MODERN_OFFICES"
   ]
  },
  "requires": {

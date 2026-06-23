@@ -2,6 +2,11 @@
  "type": "BUILDING_EAST_INDIA_COMPANY",
  "description": "TXT_KEY_BUILDING_EAST_INDIA_COMPANY",
  "civilopedia": "TXT_KEY_BUILDING_EAST_INDIA_COMPANY_PEDIA",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_LOGISTICS"
+  ]
+ },
  "requires": {
   "build": {
    "all": [

@@ -2,7 +2,15 @@
  "type": "BUILDING_NANOBOT_WALLS",
  "description": "TXT_KEY_BUILDING_NANOBOT_WALLS",
  "civilopedia": "TXT_KEY_BUILDING_NANOBOT_WALLS_PEDIA",
- "obsoletes": {
+ "obsoletedBy": {
+  "buildings": [
+   "BUILDING_SMART_DUST_WALLS"
+  ],
+  "techs": [
+   "TECH_ATOMIZATION_FIELD"
+  ]
+ },
+ "replacedBy": {
   "buildings": [
    "BUILDING_SMART_DUST_WALLS"
   ]

@@ -2,7 +2,15 @@
  "type": "BUILDING_MARBLE_QUARRY",
  "description": "TXT_KEY_BUILDING_MARBLE_QUARRY",
  "civilopedia": "TXT_KEY_BUILDING_MARBLE_QUARRY_PEDIA",
- "obsoletes": {
+ "obsoletedBy": {
+  "buildings": [
+   "BUILDING_MODERN_EARTHWORKS"
+  ],
+  "techs": [
+   "TECH_RAPID_PROTOTYPING"
+  ]
+ },
+ "replacedBy": {
   "buildings": [
    "BUILDING_MODERN_EARTHWORKS"
   ]

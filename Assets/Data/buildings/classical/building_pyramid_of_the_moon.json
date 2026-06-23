@@ -2,6 +2,11 @@
  "type": "BUILDING_PYRAMID_OF_THE_MOON",
  "description": "TXT_KEY_BUILDING_PYRAMID_OF_THE_MOON",
  "civilopedia": "TXT_KEY_BUILDING_PYRAMID_OF_THE_MOON_PEDIA",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_HUMANISM"
+  ]
+ },
  "requires": {
   "build": {
    "all": [

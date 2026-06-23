@@ -2,17 +2,21 @@
  "type": "BUILDING_BOOBY_TRAPS",
  "description": "TXT_KEY_BUILDING_BOOBY_TRAPS",
  "civilopedia": "TXT_KEY_BUILDING_BOOBY_TRAPS_PEDIA",
- "obsoletes": {
+ "obsoletedBy": {
   "buildings": [
    "BUILDING_GERM_TRAPS"
+  ],
+  "techs": [
+   "TECH_ROBOTICS"
   ]
  },
- "replaces": {
+ "replacedBy": {
   "buildings": [
-   "BUILDING_LANDMINES",
-   "BUILDING_MECHANICAL_TRAPS",
-   "BUILDING_PIT_TRAPS",
-   "BUILDING_SPIKED_PIT_TRAPS"
+   "BUILDING_GERM_TRAPS",
+   "BUILDING_ROBOTIC_TRAPS",
+   "BUILDING_EMP_TRAPS",
+   "BUILDING_NANOBOT_TRAPS",
+   "BUILDING_GRAVITY_TRAPS"
   ]
  },
  "requires": {

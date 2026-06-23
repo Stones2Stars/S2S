@@ -7,7 +7,15 @@
    "BUILDING_ONLINE_SHIPPING_WAREHOUSE"
   ]
  },
- "obsoletes": {
+ "obsoletedBy": {
+  "buildings": [
+   "BUILDING_TELEPORT_SHIPPING_WAREHOUSE"
+  ],
+  "techs": [
+   "TECH_WORMHOLE_HIVEMIND"
+  ]
+ },
+ "replacedBy": {
   "buildings": [
    "BUILDING_TELEPORT_SHIPPING_WAREHOUSE"
   ]

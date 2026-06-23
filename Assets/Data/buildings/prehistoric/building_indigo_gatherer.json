@@ -7,9 +7,18 @@
    "BUILDING_DYE_MAKER"
   ]
  },
- "obsoletes": {
+ "obsoletedBy": {
   "buildings": [
    "BUILDING_FARM_FLOWER_INDIGO"
+  ],
+  "techs": [
+   "TECH_AGRICULTURAL_ENGINEERING"
+  ]
+ },
+ "replacedBy": {
+  "buildings": [
+   "BUILDING_FARM_FLOWER_INDIGO",
+   "BUILDING_GREENHOUSE"
   ]
  },
  "requires": {

@@ -2,6 +2,11 @@
  "type": "BUILDING_DISEASE_SCURVY",
  "description": "TXT_KEY_BUILDING_DISEASE_SCURVY",
  "civilopedia": "TXT_KEY_BUILDING_DISEASE_PEDIA",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_MODERN_HEALTH_CARE"
+  ]
+ },
  "requires": {
   "build": {
    "all": [

@@ -2,9 +2,18 @@
  "type": "BUILDING_PORTRAIT_PAINTER",
  "description": "TXT_KEY_BUILDING_PORTRAIT_PAINTER",
  "civilopedia": "TXT_KEY_BUILDING_PORTRAIT_PAINTER_PEDIA",
- "obsoletes": {
+ "obsoletedBy": {
   "buildings": [
    "BUILDING_PHOTOGRAPHY_STUDIO"
+  ],
+  "techs": [
+   "TECH_PLASTIC_ELECTRONICS"
+  ]
+ },
+ "replacedBy": {
+  "buildings": [
+   "BUILDING_PHOTOGRAPHY_STUDIO",
+   "BUILDING_HYPERMARKET"
   ]
  },
  "requires": {

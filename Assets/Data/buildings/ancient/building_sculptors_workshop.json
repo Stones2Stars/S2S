@@ -7,9 +7,18 @@
    "BUILDING_PHIDIAS_STATUE_WORKSHOP"
   ]
  },
- "obsoletes": {
+ "obsoletedBy": {
   "buildings": [
    "BUILDING_FACTORY_SCULPTURES"
+  ],
+  "techs": [
+   "TECH_RAPID_PROTOTYPING"
+  ]
+ },
+ "replacedBy": {
+  "buildings": [
+   "BUILDING_FACTORY_SCULPTURES",
+   "BUILDING_MANUFACTURING_DISTRICT"
   ]
  },
  "requires": {

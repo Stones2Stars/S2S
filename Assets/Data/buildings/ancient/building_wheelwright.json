@@ -11,14 +11,19 @@
    "UNIT_CARTWRIGHT"
   ]
  },
- "obsoletes": {
+ "obsoletedBy": {
   "buildings": [
    "BUILDING_CARRIAGE_BUILDER"
+  ],
+  "techs": [
+   "TECH_MOTORIZED_TRANSPORTATION"
   ]
  },
- "replaces": {
+ "replacedBy": {
   "buildings": [
-   "BUILDING_TRAVOIS_MAKER"
+   "BUILDING_CARRIAGE_BUILDER",
+   "BUILDING_FACTORY_AUTOMOBILES",
+   "BUILDING_SELF_ASSEMBLY_FACTORY"
   ]
  },
  "requires": {

@@ -2,14 +2,17 @@
  "type": "BUILDING_FACTORY_ROASTED_COFFEE",
  "description": "TXT_KEY_BUILDING_FACTORY_ROASTED_COFFEE",
  "civilopedia": "TXT_KEY_BUILDING_FACTORY_ROASTED_COFFEE_PEDIA",
- "obsoletes": {
+ "obsoletedBy": {
   "buildings": [
    "BUILDING_FOOD_MANUFACTURING_DISTRICT"
+  ],
+  "techs": [
+   "TECH_MIND_UPLOADING"
   ]
  },
- "replaces": {
+ "replacedBy": {
   "buildings": [
-   "BUILDING_ROASTING_HOUSE"
+   "BUILDING_FOOD_MANUFACTURING_DISTRICT"
   ]
  },
  "requires": {

@@ -7,9 +7,18 @@
    "BUILDING_RESOURCES_GEMSTONE"
   ]
  },
- "obsoletes": {
+ "obsoletedBy": {
   "buildings": [
    "BUILDING_MINE_AMBER"
+  ],
+  "techs": [
+   "TECH_NANOMINING"
+  ]
+ },
+ "replacedBy": {
+  "buildings": [
+   "BUILDING_MINE_AMBER",
+   "BUILDING_CORE_MINE"
   ]
  },
  "requires": {

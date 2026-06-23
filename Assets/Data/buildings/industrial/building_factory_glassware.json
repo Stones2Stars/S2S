@@ -8,14 +8,17 @@
    "BUILDING_RESOURCES_GLASSWARE"
   ]
  },
- "obsoletes": {
+ "obsoletedBy": {
   "buildings": [
    "BUILDING_MANUFACTURING_DISTRICT"
+  ],
+  "techs": [
+   "TECH_NANOROBOTICS"
   ]
  },
- "replaces": {
+ "replacedBy": {
   "buildings": [
-   "BUILDING_GLASSBLOWERS_WORKSHOP"
+   "BUILDING_MANUFACTURING_DISTRICT"
   ]
  },
  "requires": {

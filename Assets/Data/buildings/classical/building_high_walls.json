@@ -12,16 +12,12 @@
    "BUILDING_THE_ISHTAR_GATE"
   ]
  },
- "obsoletes": {
+ "obsoletedBy": {
   "buildings": [
    "BUILDING_RELIC_OLD_CITY_WALLS"
-  ]
- },
- "replaces": {
-  "buildings": [
-   "BUILDING_EARTH_WALL",
-   "BUILDING_PALISADE",
-   "BUILDING_WALLS"
+  ],
+  "techs": [
+   "TECH_RIFLING"
   ]
  },
  "requires": {

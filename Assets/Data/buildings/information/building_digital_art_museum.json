@@ -2,7 +2,15 @@
  "type": "BUILDING_DIGITAL_ART_MUSEUM",
  "description": "TXT_KEY_BUILDING_DIGITAL_ART_MUSEUM",
  "civilopedia": "TXT_KEY_BUILDING_DIGITAL_ART_MUSEUM_PEDIA",
- "obsoletes": {
+ "obsoletedBy": {
+  "buildings": [
+   "BUILDING_HIGH_TECH_CULTURAL_ENRICHMENT"
+  ],
+  "techs": [
+   "TECH_CULTURAL_EVOLUTION"
+  ]
+ },
+ "replacedBy": {
   "buildings": [
    "BUILDING_HIGH_TECH_CULTURAL_ENRICHMENT"
   ]

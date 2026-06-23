@@ -2,6 +2,11 @@
  "type": "BUILDING_LOG_ROLLER_SYSTEM",
  "description": "TXT_KEY_BUILDING_LOG_ROLLER_SYSTEM",
  "civilopedia": "TXT_KEY_BUILDING_LOG_ROLLER_SYSTEM_PEDIA",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_ENGINEERING"
+  ]
+ },
  "requires": {
   "build": {
    "all": [

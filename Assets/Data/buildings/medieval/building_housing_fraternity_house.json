@@ -2,6 +2,18 @@
  "type": "BUILDING_HOUSING_FRATERNITY_HOUSE",
  "description": "TXT_KEY_BUILDING_HOUSING_FRATERNITY_HOUSE",
  "civilopedia": "TXT_KEY_BUILDING_HOUSING_FRATERNITY_HOUSE_PEDIA",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_COLONY_ARCOLOGY"
+  ]
+ },
+ "replacedBy": {
+  "buildings": [
+   "BUILDING_HOUSING_ARCOLOGY_SLUMS",
+   "BUILDING_HOUSING_COLONY_ARCOLOGY",
+   "BUILDING_LAUNCH_ARCOLOGY"
+  ]
+ },
  "requires": {
   "build": {
    "all": [

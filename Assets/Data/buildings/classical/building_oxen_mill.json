@@ -7,14 +7,18 @@
    "BUILDING_RESOURCES_FLOUR"
   ]
  },
- "obsoletes": {
+ "obsoletedBy": {
   "buildings": [
    "BUILDING_MODERN_MILL"
+  ],
+  "techs": [
+   "TECH_AUGMENTED_CONSUMABLES"
   ]
  },
- "replaces": {
+ "replacedBy": {
   "buildings": [
-   "BUILDING_QUERN"
+   "BUILDING_FOOD_MANUFACTURING_DISTRICT",
+   "BUILDING_MODERN_MILL"
   ]
  },
  "requires": {

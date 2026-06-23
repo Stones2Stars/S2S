@@ -2,7 +2,15 @@
  "type": "BUILDING_ROCKET_FUEL_REFINERY",
  "description": "TXT_KEY_BUILDING_ROCKET_FUEL_REFINERY",
  "civilopedia": "TXT_KEY_BUILDING_ROCKET_FUEL_REFINERY_PEDIA",
- "obsoletes": {
+ "obsoletedBy": {
+  "buildings": [
+   "BUILDING_CHEMICALS_DISTRICT"
+  ],
+  "techs": [
+   "TECH_ANIMAMATERIALS"
+  ]
+ },
+ "replacedBy": {
   "buildings": [
    "BUILDING_CHEMICALS_DISTRICT"
   ]

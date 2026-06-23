@@ -16,10 +16,9 @@
    "BUILDING_VIP_CLUB"
   ]
  },
- "replaces": {
+ "replacedBy": {
   "buildings": [
-   "BUILDING_GAMBLING_DEN",
-   "BUILDING_GAMBLING_HALL"
+   "BUILDING_ORDINANCE_GAMBLING_BAN"
   ]
  },
  "requires": {

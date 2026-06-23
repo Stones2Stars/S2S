@@ -2,9 +2,18 @@
  "type": "BUILDING_DAIRY_BARN",
  "description": "TXT_KEY_BUILDING_DAIRY_BARN",
  "civilopedia": "TXT_KEY_BUILDING_DAIRY_BARN_PEDIA",
- "obsoletes": {
+ "obsoletedBy": {
   "buildings": [
    "BUILDING_INDUSTRIAL_FARMS"
+  ],
+  "techs": [
+   "TECH_REPLACEMENT_ORGANS"
+  ]
+ },
+ "replacedBy": {
+  "buildings": [
+   "BUILDING_INDUSTRIAL_FARMS",
+   "BUILDING_MEAT_INDUSTRY_CONGLOMERATE"
   ]
  },
  "requires": {

@@ -2,9 +2,18 @@
  "type": "BUILDING_TAXPERSON",
  "description": "TXT_KEY_BUILDING_TAXPERSON",
  "civilopedia": "TXT_KEY_BUILDING_TAXPERSON_PEDIA",
- "obsoletes": {
+ "obsoletedBy": {
   "buildings": [
    "BUILDING_OFFICIUM"
+  ],
+  "techs": [
+   "TECH_CIVIL_ENGINEERING"
+  ]
+ },
+ "replacedBy": {
+  "buildings": [
+   "BUILDING_OFFICIUM",
+   "BUILDING_MODERN_OFFICES"
   ]
  },
  "requires": {

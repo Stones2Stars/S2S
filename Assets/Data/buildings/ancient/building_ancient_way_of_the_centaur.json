@@ -2,6 +2,11 @@
  "type": "BUILDING_ANCIENT_WAY_OF_THE_CENTAUR",
  "description": "TXT_KEY_BUILDING_ANCIENT_WAY_OF_THE_CENTAUR",
  "civilopedia": "TXT_KEY_BUILDING_ANCIENT_WAY_OF_THE_CENTAUR_PEDIA",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_CLASSICAL_LIFESTYLE"
+  ]
+ },
  "requires": {
   "build": {
    "all": [

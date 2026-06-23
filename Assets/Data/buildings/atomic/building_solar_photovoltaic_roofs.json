@@ -7,9 +7,18 @@
    "BUILDING_MEGATOWER_SOLAR_POWER_CROWN_SECTION"
   ]
  },
- "obsoletes": {
+ "obsoletedBy": {
   "buildings": [
    "BUILDING_RENEWABLE_MEGACOMPLEX"
+  ],
+  "techs": [
+   "TECH_FEMTOTECHNOLOGY"
+  ]
+ },
+ "replacedBy": {
+  "buildings": [
+   "BUILDING_RENEWABLE_MEGACOMPLEX",
+   "BUILDING_POLLUTION_BLACKENED_SKIES"
   ]
  },
  "requires": {

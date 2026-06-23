@@ -2,6 +2,11 @@
  "type": "BUILDING_BONEMARROWER",
  "description": "TXT_KEY_BUILDING_BONEMARROWER",
  "civilopedia": "TXT_KEY_BUILDING_BONEMARROWER_PEDIA",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_CITY_PLANNING"
+  ]
+ },
  "requires": {
   "build": {
    "all": [

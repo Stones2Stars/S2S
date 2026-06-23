@@ -7,9 +7,18 @@
    "BUILDING_RESOURCES_PELTS"
   ]
  },
- "obsoletes": {
+ "obsoletedBy": {
   "buildings": [
    "BUILDING_BREEDING_PROGRAM_CHINCHILLA"
+  ],
+  "techs": [
+   "TECH_PLANETARY_ECONOMICS"
+  ]
+ },
+ "replacedBy": {
+  "buildings": [
+   "BUILDING_BREEDING_PROGRAM_CHINCHILLA",
+   "BUILDING_ANIMAL_PRESERVE"
   ]
  },
  "requires": {

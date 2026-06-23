@@ -2,7 +2,15 @@
  "type": "BUILDING_MOBILE_BODEGA",
  "description": "TXT_KEY_BUILDING_MOBILE_BODEGA",
  "civilopedia": "TXT_KEY_BUILDING_MOBILE_BODEGA_PEDIA",
- "obsoletes": {
+ "obsoletedBy": {
+  "buildings": [
+   "BUILDING_TELEPORT_BOOTH"
+  ],
+  "techs": [
+   "TECH_WORMHOLE_HIVEMIND"
+  ]
+ },
+ "replacedBy": {
   "buildings": [
    "BUILDING_TELEPORT_BOOTH"
   ]

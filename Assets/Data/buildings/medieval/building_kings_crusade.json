@@ -3,6 +3,11 @@
  "description": "TXT_KEY_BUILDING_KINGS_CRUSADE",
  "civilopedia": "TXT_KEY_BUILDING_KINGS_CRUSADE_PEDIA",
  "help": "TXT_KEY_BUILDING_KINGS_CRUSADE_HELP",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_HUMANISM"
+  ]
+ },
  "requires": {
   "build": {
    "all": [

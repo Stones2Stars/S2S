@@ -2,9 +2,18 @@
  "type": "BUILDING_GHEE_MAKER",
  "description": "TXT_KEY_BUILDING_GHEE_MAKER",
  "civilopedia": "TXT_KEY_BUILDING_GHEE_MAKER_PEDIA",
- "obsoletes": {
+ "obsoletedBy": {
   "buildings": [
    "BUILDING_FACTORY_GHEE_OIL"
+  ],
+  "techs": [
+   "TECH_REPLACEMENT_ORGANS"
+  ]
+ },
+ "replacedBy": {
+  "buildings": [
+   "BUILDING_FACTORY_GHEE_OIL",
+   "BUILDING_MEAT_INDUSTRY_CONGLOMERATE"
   ]
  },
  "requires": {

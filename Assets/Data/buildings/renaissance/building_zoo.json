@@ -50,11 +50,6 @@
    "BUILDING_PETTING_ZOO"
   ]
  },
- "replaces": {
-  "buildings": [
-   "BUILDING_GOVERNORS_MENAGERIE"
-  ]
- },
  "requires": {
   "build": {
    "all": [

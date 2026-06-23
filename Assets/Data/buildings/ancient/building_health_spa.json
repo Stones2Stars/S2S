@@ -2,14 +2,17 @@
  "type": "BUILDING_HEALTH_SPA",
  "description": "TXT_KEY_BUILDING_HEALTH_SPA",
  "civilopedia": "TXT_KEY_BUILDING_HEALTH_SPA_PEDIA",
- "obsoletes": {
+ "obsoletedBy": {
   "buildings": [
    "BUILDING_HEALTHCARE_MEGACOMPLEX"
+  ],
+  "techs": [
+   "TECH_PICOTECHNOLOGY"
   ]
  },
- "replaces": {
+ "replacedBy": {
   "buildings": [
-   "BUILDING_MUD_BATH"
+   "BUILDING_HEALTHCARE_MEGACOMPLEX"
   ]
  },
  "requires": {

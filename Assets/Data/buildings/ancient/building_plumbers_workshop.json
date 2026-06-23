@@ -2,7 +2,15 @@
  "type": "BUILDING_PLUMBERS_WORKSHOP",
  "description": "TXT_KEY_BUILDING_PLUMBERS_WORKSHOP",
  "civilopedia": "TXT_KEY_BUILDING_PLUMBERS_WORKSHOP_PEDIA",
- "obsoletes": {
+ "obsoletedBy": {
+  "buildings": [
+   "BUILDING_HYPERMARKET"
+  ],
+  "techs": [
+   "TECH_SMART_DUST"
+  ]
+ },
+ "replacedBy": {
   "buildings": [
    "BUILDING_HYPERMARKET"
   ]

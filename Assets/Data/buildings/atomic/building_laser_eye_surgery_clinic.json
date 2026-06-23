@@ -2,7 +2,15 @@
  "type": "BUILDING_LASER_EYE_SURGERY_CLINIC",
  "description": "TXT_KEY_BUILDING_LASER_EYE_SURGERY_CLINIC",
  "civilopedia": "TXT_KEY_BUILDING_LASER_EYE_SURGERY_CLINIC_PEDIA",
- "obsoletes": {
+ "obsoletedBy": {
+  "buildings": [
+   "BUILDING_HEALTHCARE_MEGACOMPLEX"
+  ],
+  "techs": [
+   "TECH_PICOTECHNOLOGY"
+  ]
+ },
+ "replacedBy": {
   "buildings": [
    "BUILDING_HEALTHCARE_MEGACOMPLEX"
   ]

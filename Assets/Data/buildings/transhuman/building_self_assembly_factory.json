@@ -13,14 +13,6 @@
    "UNIT_CARTWRIGHT"
   ]
  },
- "replaces": {
-  "buildings": [
-   "BUILDING_CARRIAGE_BUILDER",
-   "BUILDING_FACTORY_AUTOMOBILES",
-   "BUILDING_TRAVOIS_MAKER",
-   "BUILDING_WHEELWRIGHT"
-  ]
- },
  "requires": {
   "build": {
    "all": [

@@ -7,7 +7,15 @@
    "BUILDING_TORTURE_CHAMBER"
   ]
  },
- "obsoletes": {
+ "obsoletedBy": {
+  "buildings": [
+   "BUILDING_JAIL"
+  ],
+  "techs": [
+   "TECH_PSYCHOLOGY"
+  ]
+ },
+ "replacedBy": {
   "buildings": [
    "BUILDING_JAIL"
   ]

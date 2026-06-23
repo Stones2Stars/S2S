@@ -7,14 +7,22 @@
    "UNIT_MACHINIST"
   ]
  },
- "obsoletes": {
+ "obsoletedBy": {
   "buildings": [
    "BUILDING_3D_PRINTING_MILL"
+  ],
+  "techs": [
+   "TECH_NANOROBOTICS"
   ]
  },
- "replaces": {
+ "replacedBy": {
   "buildings": [
-   "BUILDING_PARTS_MAKER"
+   "BUILDING_MOLECULAR_ASSEMBLER",
+   "BUILDING_ATOMIC_ASSEMBLER",
+   "BUILDING_QUANTUM_ASSEMBLER",
+   "BUILDING_MATERIALIZER",
+   "BUILDING_3D_PRINTING_MILL",
+   "BUILDING_NANOBOTIC_PRINTING_MILL"
   ]
  },
  "requires": {

@@ -7,7 +7,15 @@
    "BUILDING_TRANSAMERICA_TOWER"
   ]
  },
- "obsoletes": {
+ "obsoletedBy": {
+  "buildings": [
+   "BUILDING_BLOCKCHAIN_FINANCIAL_SERVICES"
+  ],
+  "techs": [
+   "TECH_CYBERSOCIAL_INTEGRATION"
+  ]
+ },
+ "replacedBy": {
   "buildings": [
    "BUILDING_BLOCKCHAIN_FINANCIAL_SERVICES"
   ]

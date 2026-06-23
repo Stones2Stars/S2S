@@ -2,14 +2,19 @@
  "type": "BUILDING_BROTHEL",
  "description": "TXT_KEY_BUILDING_BROTHEL",
  "civilopedia": "TXT_KEY_BUILDING_BROTHEL_PEDIA",
- "obsoletes": {
+ "obsoletedBy": {
   "buildings": [
    "BUILDING_GENTLEMANS_CLUB"
+  ],
+  "techs": [
+   "TECH_PERSONAL_ROBOTS"
   ]
  },
- "replaces": {
+ "replacedBy": {
   "buildings": [
-   "BUILDING_HAREMS"
+   "BUILDING_GENTLEMANS_CLUB",
+   "BUILDING_ANDROID_BROTHEL",
+   "BUILDING_ORDINANCE_PROSTITUTION_BAN"
   ]
  },
  "requires": {

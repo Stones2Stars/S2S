@@ -2,7 +2,15 @@
  "type": "BUILDING_RESOURCES_LARD",
  "description": "TXT_KEY_BUILDING_RESOURCES_LARD",
  "civilopedia": "TXT_KEY_BUILDING_RESOURCE_PROVIDER_PEDIA",
- "obsoletes": {
+ "obsoletedBy": {
+  "buildings": [
+   "BUILDING_MEAT_INDUSTRY_CONGLOMERATE"
+  ],
+  "techs": [
+   "TECH_PLANETARY_ECONOMICS"
+  ]
+ },
+ "replacedBy": {
   "buildings": [
    "BUILDING_MEAT_INDUSTRY_CONGLOMERATE"
   ]

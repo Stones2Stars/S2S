@@ -2,9 +2,19 @@
  "type": "BUILDING_TALLY_STONE",
  "description": "TXT_KEY_BUILDING_TALLY_STONE",
  "civilopedia": "TXT_KEY_BUILDING_TALLY_STONE_PEDIA",
- "obsoletes": {
+ "obsoletedBy": {
   "buildings": [
    "BUILDING_LYCEUM"
+  ],
+  "techs": [
+   "TECH_COMPULSORY_EDUCATION"
+  ]
+ },
+ "replacedBy": {
+  "buildings": [
+   "BUILDING_LYCEUM",
+   "BUILDING_ELEMENTARY_SCHOOL",
+   "BUILDING_HOLOGRAPHIC_SCHOOL"
   ]
  },
  "requires": {

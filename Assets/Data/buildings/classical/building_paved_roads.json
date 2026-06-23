@@ -22,15 +22,19 @@
    "BUILDING_VIA_APPIA"
   ]
  },
- "obsoletes": {
+ "obsoletedBy": {
   "buildings": [
    "BUILDING_ASPHALT_ROADS"
+  ],
+  "techs": [
+   "TECH_SKYROADS"
   ]
  },
- "replaces": {
+ "replacedBy": {
   "buildings": [
-   "BUILDING_ROADS",
-   "BUILDING_TRAILS"
+   "BUILDING_ASPHALT_ROADS",
+   "BUILDING_SKYROAD_CONTROL_TOWER",
+   "BUILDING_TELEPORT_BOOTH"
   ]
  },
  "requires": {

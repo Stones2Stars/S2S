@@ -2,7 +2,15 @@
  "type": "BUILDING_RAT_BREEDER",
  "description": "TXT_KEY_BUILDING_RAT_BREEDER",
  "civilopedia": "TXT_KEY_BUILDING_RAT_BREEDER_PEDIA",
- "obsoletes": {
+ "obsoletedBy": {
+  "buildings": [
+   "BUILDING_MEAT_INDUSTRY_CONGLOMERATE"
+  ],
+  "techs": [
+   "TECH_PLANETARY_ECONOMICS"
+  ]
+ },
+ "replacedBy": {
   "buildings": [
    "BUILDING_MEAT_INDUSTRY_CONGLOMERATE"
   ]

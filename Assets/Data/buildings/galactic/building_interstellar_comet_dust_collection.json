@@ -8,6 +8,11 @@
    "BUILDING_INTERSTELLAR_TERRAFORMED_PLANET"
   ]
  },
+ "replacedBy": {
+  "buildings": [
+   "BUILDING_SPACE_COLONY_MILKY_WAY"
+  ]
+ },
  "requires": {
   "build": {
    "all": [

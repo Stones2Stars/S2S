@@ -2,6 +2,11 @@
  "type": "BUILDING_BRAZEN_BULL",
  "description": "TXT_KEY_BUILDING_BRAZEN_BULL",
  "civilopedia": "TXT_KEY_BUILDING_BRAZEN_BULL_PEDIA",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_TORTURE"
+  ]
+ },
  "requires": {
   "build": {
    "all": [

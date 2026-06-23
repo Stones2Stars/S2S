@@ -21,16 +21,21 @@
    "UNIT_WATCHER"
   ]
  },
- "obsoletes": {
+ "obsoletedBy": {
   "buildings": [
    "BUILDING_GUARDHOUSE"
+  ],
+  "techs": [
+   "TECH_FLINTLOCK"
   ]
  },
- "replaces": {
+ "replacedBy": {
   "buildings": [
-   "BUILDING_LOOKOUT_POST",
-   "BUILDING_SENTRY_POST",
-   "BUILDING_TOWN_WATCH"
+   "BUILDING_GUARDHOUSE",
+   "BUILDING_GUARD_STATION",
+   "BUILDING_SHERIFFS_OFFICE",
+   "BUILDING_POLICE_STATION",
+   "BUILDING_POLICE_PRECINCT"
   ]
  },
  "requires": {

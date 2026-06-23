@@ -2,7 +2,15 @@
  "type": "BUILDING_SKATE_PARK",
  "description": "TXT_KEY_BUILDING_SKATE_PARK",
  "civilopedia": "TXT_KEY_BUILDING_SKATE_PARK_PEDIA",
- "obsoletes": {
+ "obsoletedBy": {
+  "buildings": [
+   "BUILDING_ATHLETIC_MEGACOMPLEX"
+  ],
+  "techs": [
+   "TECH_WEATHER_CONTROL"
+  ]
+ },
+ "replacedBy": {
   "buildings": [
    "BUILDING_ATHLETIC_MEGACOMPLEX"
   ]

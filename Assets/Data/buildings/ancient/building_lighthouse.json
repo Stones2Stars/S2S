@@ -8,7 +8,15 @@
    "BUILDING_THE_GREAT_LIGHTHOUSE"
   ]
  },
- "obsoletes": {
+ "obsoletedBy": {
+  "buildings": [
+   "BUILDING_OCEAN_ADMINISTRATION"
+  ],
+  "techs": [
+   "TECH_LAUNCH_ARCOLOGY"
+  ]
+ },
+ "replacedBy": {
   "buildings": [
    "BUILDING_OCEAN_ADMINISTRATION"
   ]

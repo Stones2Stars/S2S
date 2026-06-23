@@ -2,6 +2,11 @@
  "type": "BUILDING_GLADIATORIAL_SCHOOL",
  "description": "TXT_KEY_BUILDING_GLADIATORIAL_SCHOOL",
  "civilopedia": "TXT_KEY_BUILDING_GLADIATORIAL_SCHOOL_PEDIA",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_SOCIAL_CONTRACT"
+  ]
+ },
  "requires": {
   "build": {
    "all": [

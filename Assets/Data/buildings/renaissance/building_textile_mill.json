@@ -8,14 +8,18 @@
    "BUILDING_QUILT_MAKER"
   ]
  },
- "obsoletes": {
+ "obsoletedBy": {
   "buildings": [
    "BUILDING_FACTORY_CLOTHING"
+  ],
+  "techs": [
+   "TECH_RAPID_PROTOTYPING"
   ]
  },
- "replaces": {
+ "replacedBy": {
   "buildings": [
-   "BUILDING_SEAMSTRESS"
+   "BUILDING_FACTORY_CLOTHING",
+   "BUILDING_TEXTILE_MANUFACTURING_DISTRICT"
   ]
  },
  "requires": {

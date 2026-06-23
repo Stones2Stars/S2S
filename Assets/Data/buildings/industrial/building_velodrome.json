@@ -2,7 +2,15 @@
  "type": "BUILDING_VELODROME",
  "description": "TXT_KEY_BUILDING_VELODROME",
  "civilopedia": "TXT_KEY_BUILDING_VELODROME_PEDIA",
- "obsoletes": {
+ "obsoletedBy": {
+  "buildings": [
+   "BUILDING_ATHLETIC_MEGACOMPLEX"
+  ],
+  "techs": [
+   "TECH_WEATHER_CONTROL"
+  ]
+ },
+ "replacedBy": {
   "buildings": [
    "BUILDING_ATHLETIC_MEGACOMPLEX"
   ]

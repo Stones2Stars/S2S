@@ -7,7 +7,15 @@
    "UNIT_TAMED_DONKEY_PAIR"
   ]
  },
- "obsoletes": {
+ "obsoletedBy": {
+  "buildings": [
+   "BUILDING_ANIMAL_TAMER_COMPLEX"
+  ],
+  "techs": [
+   "TECH_GENE_MANIPULATION"
+  ]
+ },
+ "replacedBy": {
   "buildings": [
    "BUILDING_ANIMAL_TAMER_COMPLEX"
   ]

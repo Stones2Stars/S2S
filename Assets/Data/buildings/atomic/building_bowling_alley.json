@@ -2,7 +2,15 @@
  "type": "BUILDING_BOWLING_ALLEY",
  "description": "TXT_KEY_BUILDING_BOWLING_ALLEY",
  "civilopedia": "TXT_KEY_BUILDING_BOWLING_ALLEY_PEDIA",
- "obsoletes": {
+ "obsoletedBy": {
+  "buildings": [
+   "BUILDING_ATHLETIC_MEGACOMPLEX"
+  ],
+  "techs": [
+   "TECH_WEATHER_CONTROL"
+  ]
+ },
+ "replacedBy": {
   "buildings": [
    "BUILDING_ATHLETIC_MEGACOMPLEX"
   ]

@@ -7,7 +7,15 @@
    "BUILDING_SMELTER_LEAD"
   ]
  },
- "obsoletes": {
+ "obsoletedBy": {
+  "buildings": [
+   "BUILDING_CORE_MINE"
+  ],
+  "techs": [
+   "TECH_ATOMIC_SCALE_ENGINEERING"
+  ]
+ },
+ "replacedBy": {
   "buildings": [
    "BUILDING_CORE_MINE"
   ]

@@ -2,6 +2,11 @@
  "type": "BUILDING_MICROLITH_WORKSHOP",
  "description": "TXT_KEY_BUILDING_MICROLITH_WORKSHOP",
  "civilopedia": "TXT_KEY_BUILDING_MICROLITH_WORKSHOP_PEDIA",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_IRON_WORKING"
+  ]
+ },
  "requires": {
   "build": {
    "all": [

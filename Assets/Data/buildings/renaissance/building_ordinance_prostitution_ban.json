@@ -2,14 +2,6 @@
  "type": "BUILDING_ORDINANCE_PROSTITUTION_BAN",
  "description": "TXT_KEY_BUILDING_ORDINANCE_PROSTITUTION_BAN",
  "civilopedia": "TXT_KEY_BUILDING_ORDINANCE_PROSTITUTION_BAN_PEDIA",
- "replaces": {
-  "buildings": [
-   "BUILDING_ANDROID_BROTHEL",
-   "BUILDING_BROTHEL",
-   "BUILDING_GENTLEMANS_CLUB",
-   "BUILDING_HAREMS"
-  ]
- },
  "requires": {
   "build": {
    "all": [

@@ -2,9 +2,19 @@
  "type": "BUILDING_PESTS_APHIDS",
  "description": "TXT_KEY_BUILDING_PESTS_APHIDS",
  "civilopedia": "TXT_KEY_BUILDING_PESTS_PEDIA",
- "obsoletes": {
+ "obsoletedBy": {
   "buildings": [
    "BUILDING_LADYBUG_SANCTUARY"
+  ],
+  "techs": [
+   "TECH_BOTANY"
+  ]
+ },
+ "replacedBy": {
+  "buildings": [
+   "BUILDING_LADYBUG_SANCTUARY",
+   "BUILDING_ARBORETUM",
+   "BUILDING_AGROFOREST"
   ]
  },
  "requires": {

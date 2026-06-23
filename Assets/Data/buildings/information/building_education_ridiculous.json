@@ -2,6 +2,15 @@
  "type": "BUILDING_EDUCATION_RIDICULOUS",
  "description": "TXT_KEY_BUILDING_EDUCATION_RIDICULOUS",
  "civilopedia": "TXT_KEY_BUILDING_EQ_PEDIA",
+ "replacedBy": {
+  "buildings": [
+   "BUILDING_EDUCATION_PREPOSTEROUS",
+   "BUILDING_EDUCATION_IDIOCRACY",
+   "BUILDING_EDUCATION_IGNORANCE",
+   "BUILDING_EDUCATION_BEWILDERED",
+   "BUILDING_EDUCATION_MINDLESS"
+  ]
+ },
  "requires": {
   "build": {
    "all": [
@@ -27,21 +36,7 @@
      "min": -2000000,
      "max": -10000
     }
-   ],
-   "disabled": {
-    "all": [
-     {
-      "type": "PROPERTY_EDUCATION",
-      "scope": "city",
-      "min": -2000000,
-      "max": -15000
-     },
-     {
-      "type": "BUILDING_EDUCATION_PREPOSTEROUS",
-      "scope": "city"
-     }
-    ]
-   }
+   ]
   }
  },
  "production": {

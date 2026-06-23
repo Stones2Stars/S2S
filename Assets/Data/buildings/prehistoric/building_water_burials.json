@@ -2,9 +2,18 @@
  "type": "BUILDING_WATER_BURIALS",
  "description": "TXT_KEY_BUILDING_WATER_BURIALS",
  "civilopedia": "TXT_KEY_BUILDING_WATER_BURIALS_PEDIA",
- "obsoletes": {
+ "obsoletedBy": {
   "buildings": [
    "BUILDING_FUNERARY_SERVICES"
+  ],
+  "techs": [
+   "TECH_TRANSHUMANISM"
+  ]
+ },
+ "replacedBy": {
+  "buildings": [
+   "BUILDING_FUNERARY_SERVICES",
+   "BUILDING_HIGH_TECH_CULTURAL_ENRICHMENT"
   ]
  },
  "requires": {

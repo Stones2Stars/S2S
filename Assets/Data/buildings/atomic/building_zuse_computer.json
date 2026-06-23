@@ -2,6 +2,11 @@
  "type": "BUILDING_ZUSE_COMPUTER",
  "description": "TXT_KEY_BUILDING_ZUSE_COMPUTER",
  "civilopedia": "TXT_KEY_BUILDING_ZUSE_COMPUTER_PEDIA",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_COMMUNICATION_NETWORKS"
+  ]
+ },
  "requires": {
   "build": {
    "all": [

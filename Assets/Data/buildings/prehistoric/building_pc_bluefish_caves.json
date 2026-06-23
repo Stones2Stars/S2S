@@ -2,9 +2,9 @@
  "type": "BUILDING_PC_BLUEFISH_CAVES",
  "description": "TXT_KEY_BUILDING_PC_BLUEFISH_CAVES",
  "civilopedia": "TXT_KEY_BUILDING_PC_BLUEFISH_CAVES_PEDIA",
- "replaces": {
-  "buildings": [
-   "BUILDING_CAVE_SHELTER"
+ "obsoletedBy": {
+  "techs": [
+   "TECH_SEDENTARY_LIFESTYLE"
   ]
  },
  "requires": {

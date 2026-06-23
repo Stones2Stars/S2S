@@ -2,7 +2,15 @@
  "type": "BUILDING_FACTORY_GRAVITY_GENERATORS",
  "description": "TXT_KEY_BUILDING_FACTORY_GRAVITY_GENERATORS",
  "civilopedia": "TXT_KEY_BUILDING_FACTORY_GRAVITY_GENERATORS_PEDIA",
- "obsoletes": {
+ "obsoletedBy": {
+  "buildings": [
+   "BUILDING_MATERIALIZATION_COMPLEX"
+  ],
+  "techs": [
+   "TECH_OMEGA_POINT"
+  ]
+ },
+ "replacedBy": {
   "buildings": [
    "BUILDING_MATERIALIZATION_COMPLEX"
   ]

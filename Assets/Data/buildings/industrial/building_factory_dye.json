@@ -2,14 +2,17 @@
  "type": "BUILDING_FACTORY_DYE",
  "description": "TXT_KEY_BUILDING_FACTORY_DYE",
  "civilopedia": "TXT_KEY_BUILDING_FACTORY_DYE_PEDIA",
- "obsoletes": {
+ "obsoletedBy": {
   "buildings": [
    "BUILDING_CHEMICALS_DISTRICT"
+  ],
+  "techs": [
+   "TECH_ANIMAMATERIALS"
   ]
  },
- "replaces": {
+ "replacedBy": {
   "buildings": [
-   "BUILDING_DYE_MAKER"
+   "BUILDING_CHEMICALS_DISTRICT"
   ]
  },
  "requires": {

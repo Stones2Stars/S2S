@@ -7,7 +7,15 @@
    "BUILDING_RESOURCES_FISH"
   ]
  },
- "obsoletes": {
+ "obsoletedBy": {
+  "buildings": [
+   "BUILDING_AQUAFARM"
+  ],
+  "techs": [
+   "TECH_AUTOMATED_URBANIZATION"
+  ]
+ },
+ "replacedBy": {
   "buildings": [
    "BUILDING_AQUAFARM"
   ]

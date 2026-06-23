@@ -2,7 +2,15 @@
  "type": "BUILDING_FARM_CROP_SNOW_FUNGUS",
  "description": "TXT_KEY_BUILDING_FARM_CROP_SNOW_FUNGUS",
  "civilopedia": "TXT_KEY_BUILDING_FARM_CROP_SNOW_FUNGUS_PEDIA",
- "obsoletes": {
+ "obsoletedBy": {
+  "buildings": [
+   "BUILDING_FARMSCRAPER_I"
+  ],
+  "techs": [
+   "TECH_GAIA_ECOLOGY"
+  ]
+ },
+ "replacedBy": {
   "buildings": [
    "BUILDING_FARMSCRAPER_I"
   ]

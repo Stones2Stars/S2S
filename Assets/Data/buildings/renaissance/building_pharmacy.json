@@ -15,14 +15,17 @@
    "UNIT_MONK"
   ]
  },
- "obsoletes": {
+ "obsoletedBy": {
   "buildings": [
    "BUILDING_HEALTHCARE_MEGACOMPLEX"
+  ],
+  "techs": [
+   "TECH_PICOTECHNOLOGY"
   ]
  },
- "replaces": {
+ "replacedBy": {
   "buildings": [
-   "BUILDING_APOTHECARY_SHOP"
+   "BUILDING_HEALTHCARE_MEGACOMPLEX"
   ]
  },
  "requires": {

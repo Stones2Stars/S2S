@@ -7,14 +7,17 @@
    "BUILDING_GRAND_MARINE_FESTIVAL"
   ]
  },
- "obsoletes": {
+ "obsoletedBy": {
   "buildings": [
    "BUILDING_AQUAFARM"
+  ],
+  "techs": [
+   "TECH_AUTOMATED_URBANIZATION"
   ]
  },
- "replaces": {
+ "replacedBy": {
   "buildings": [
-   "BUILDING_TIDEPOOL_SCAVENGER"
+   "BUILDING_AQUAFARM"
   ]
  },
  "requires": {

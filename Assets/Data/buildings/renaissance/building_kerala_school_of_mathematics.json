@@ -2,6 +2,11 @@
  "type": "BUILDING_KERALA_SCHOOL_OF_MATHEMATICS",
  "description": "TXT_KEY_BUILDING_KERALA_SCHOOL_OF_MATHEMATICS",
  "civilopedia": "TXT_KEY_BUILDING_KERALA_SCHOOL_OF_MATHEMATICS_PEDIA",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_COMPUTER_NETWORKS"
+  ]
+ },
  "requires": {
   "build": {
    "all": [

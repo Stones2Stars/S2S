@@ -50,9 +50,18 @@
    "BUILDING_WOODWIND_INSTRUMENT_MAKER"
   ]
  },
- "obsoletes": {
+ "obsoletedBy": {
   "buildings": [
    "BUILDING_GRANARY"
+  ],
+  "techs": [
+   "TECH_AGRICULTURAL_ENGINEERING"
+  ]
+ },
+ "replacedBy": {
+  "buildings": [
+   "BUILDING_GRANARY",
+   "BUILDING_MODERN_GRANARY"
   ]
  },
  "requires": {

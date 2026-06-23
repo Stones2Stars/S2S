@@ -8,9 +8,19 @@
    "BUILDING_VIBRO_WIND_GENERATORS"
   ]
  },
- "obsoletes": {
+ "obsoletedBy": {
   "buildings": [
    "BUILDING_WIRELESS_GRID"
+  ],
+  "techs": [
+   "TECH_ELECTROMAGNETIC_VOLTAGE"
+  ]
+ },
+ "replacedBy": {
+  "buildings": [
+   "BUILDING_WIRELESS_GRID",
+   "BUILDING_EMP_GRID",
+   "BUILDING_SUPERCONDUCTING_GRID"
   ]
  },
  "requires": {

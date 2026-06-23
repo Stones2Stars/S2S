@@ -2,7 +2,15 @@
  "type": "BUILDING_OIL_DERRICK",
  "description": "TXT_KEY_BUILDING_OIL_DERRICK",
  "civilopedia": "TXT_KEY_BUILDING_OIL_DERRICK_PEDIA",
- "obsoletes": {
+ "obsoletedBy": {
+  "buildings": [
+   "BUILDING_ULTRAFUEL_REFINERY"
+  ],
+  "techs": [
+   "TECH_BOTANICAL_ALCHEMY"
+  ]
+ },
+ "replacedBy": {
   "buildings": [
    "BUILDING_ULTRAFUEL_REFINERY"
   ]

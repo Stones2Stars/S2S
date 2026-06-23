@@ -2,7 +2,15 @@
  "type": "BUILDING_DEBTORS_PRISON",
  "description": "TXT_KEY_BUILDING_DEBTORS_PRISON",
  "civilopedia": "TXT_KEY_BUILDING_DEBTORS_PRISON_PEDIA",
- "obsoletes": {
+ "obsoletedBy": {
+  "buildings": [
+   "BUILDING_JAIL"
+  ],
+  "techs": [
+   "TECH_PSYCHOLOGY"
+  ]
+ },
+ "replacedBy": {
   "buildings": [
    "BUILDING_JAIL"
   ]

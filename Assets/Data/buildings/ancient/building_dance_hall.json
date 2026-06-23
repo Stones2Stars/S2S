@@ -15,14 +15,17 @@
    "BUILDING_WAR_DANCE"
   ]
  },
- "obsoletes": {
+ "obsoletedBy": {
   "buildings": [
    "BUILDING_NIGHT_CLUB"
+  ],
+  "techs": [
+   "TECH_ONLINE_COMMUNITY"
   ]
  },
- "replaces": {
+ "replacedBy": {
   "buildings": [
-   "BUILDING_DANCE_HUT"
+   "BUILDING_NIGHT_CLUB"
   ]
  },
  "requires": {

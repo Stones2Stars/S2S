@@ -3,6 +3,11 @@
  "description": "TXT_KEY_BUILDING_MILITARY_STANDARD_WORKERS",
  "civilopedia": "TXT_KEY_BUILDING_MILITARY_STANDARD_ANIMAL_MASCOT_PEDIA",
  "help": "TXT_KEY_BUILDING_MILITARY_STANDARD_WORKERS_HELP",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_AVIATION"
+  ]
+ },
  "requires": {
   "build": {
    "all": [

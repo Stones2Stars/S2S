@@ -2,14 +2,17 @@
  "type": "BUILDING_WEATHER_VANES",
  "description": "TXT_KEY_BUILDING_WEATHER_VANES",
  "civilopedia": "TXT_KEY_BUILDING_WEATHER_VANES_PEDIA",
- "obsoletes": {
+ "obsoletedBy": {
   "buildings": [
    "BUILDING_METEOROLOGY_LAB"
+  ],
+  "techs": [
+   "TECH_CLIMATE_MODELS"
   ]
  },
- "replaces": {
+ "replacedBy": {
   "buildings": [
-   "BUILDING_CLOUD_OBSERVERS_HUT"
+   "BUILDING_METEOROLOGY_LAB"
   ]
  },
  "requires": {

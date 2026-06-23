@@ -2,11 +2,6 @@
  "type": "BUILDING_GRAND_AERODROME",
  "description": "TXT_KEY_BUILDING_GRAND_AERODROME",
  "civilopedia": "TXT_KEY_BUILDING_GRAND_AERODROME_PEDIA",
- "replaces": {
-  "buildings": [
-   "BUILDING_AERODROME"
-  ]
- },
  "requires": {
   "build": {
    "all": [

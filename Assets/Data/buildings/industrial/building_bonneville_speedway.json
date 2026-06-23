@@ -2,6 +2,11 @@
  "type": "BUILDING_BONNEVILLE_SPEEDWAY",
  "description": "TXT_KEY_BUILDING_BONNEVILLE_SPEEDWAY",
  "civilopedia": "TXT_KEY_BUILDING_BONNEVILLE_SPEEDWAY_PEDIA",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_TELEPORTATION"
+  ]
+ },
  "requires": {
   "build": {
    "all": [

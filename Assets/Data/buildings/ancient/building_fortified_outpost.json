@@ -2,14 +2,26 @@
  "type": "BUILDING_FORTIFIED_OUTPOST",
  "description": "TXT_KEY_BUILDING_FORTIFIED_OUTPOST",
  "civilopedia": "TXT_KEY_BUILDING_FORTIFIED_OUTPOST_PEDIA",
- "obsoletes": {
+ "obsoletedBy": {
   "buildings": [
    "BUILDING_WATCH_TOWER"
+  ],
+  "techs": [
+   "TECH_SIEGE_WARFARE"
   ]
  },
- "replaces": {
+ "replacedBy": {
   "buildings": [
-   "BUILDING_FRONTIER_OUTPOST"
+   "BUILDING_WATCH_TOWER",
+   "BUILDING_GUARD_TOWER",
+   "BUILDING_KEEP_TOWER",
+   "BUILDING_BOMBARD_TOWER",
+   "BUILDING_ARTILLERY_BATTERY",
+   "BUILDING_AUTO_CANNON_BATTERY",
+   "BUILDING_MISSILE_BATTERY",
+   "BUILDING_RAILGUN_BATTERY",
+   "BUILDING_LASER_BATTERY",
+   "BUILDING_ANTI_MATTER_BATTERY"
   ]
  },
  "requires": {

@@ -2,15 +2,17 @@
  "type": "BUILDING_FACTORY_TOYS",
  "description": "TXT_KEY_BUILDING_FACTORY_TOYS",
  "civilopedia": "TXT_KEY_BUILDING_FACTORY_TOYS_PEDIA",
- "obsoletes": {
+ "obsoletedBy": {
   "buildings": [
    "BUILDING_MANUFACTURING_DISTRICT"
+  ],
+  "techs": [
+   "TECH_NANOROBOTICS"
   ]
  },
- "replaces": {
+ "replacedBy": {
   "buildings": [
-   "BUILDING_TOY_CARVER",
-   "BUILDING_TOY_MAKER"
+   "BUILDING_MANUFACTURING_DISTRICT"
   ]
  },
  "requires": {

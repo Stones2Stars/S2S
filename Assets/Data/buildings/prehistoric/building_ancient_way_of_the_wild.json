@@ -2,6 +2,11 @@
  "type": "BUILDING_ANCIENT_WAY_OF_THE_WILD",
  "description": "TXT_KEY_BUILDING_ANCIENT_WAY_OF_THE_WILD",
  "civilopedia": "TXT_KEY_BUILDING_ANCIENT_WAY_OF_THE_WILD_PEDIA",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_CLASSICAL_LIFESTYLE"
+  ]
+ },
  "requires": {
   "build": {
    "all": [

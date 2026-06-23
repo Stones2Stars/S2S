@@ -2,11 +2,6 @@
  "type": "BUILDING_ECOSYSTEM_SERVICES_MARKET",
  "description": "TXT_KEY_BUILDING_ECOSYSTEM_SERVICES_MARKET",
  "civilopedia": "TXT_KEY_BUILDING_ECOSYSTEM_SERVICES_MARKET_PEDIA",
- "replaces": {
-  "buildings": [
-   "BUILDING_CARBON_EXCHANGE"
-  ]
- },
  "requires": {
   "build": {
    "all": [

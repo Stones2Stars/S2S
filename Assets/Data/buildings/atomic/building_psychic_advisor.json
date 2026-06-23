@@ -2,14 +2,17 @@
  "type": "BUILDING_PSYCHIC_ADVISOR",
  "description": "TXT_KEY_BUILDING_PSYCHIC_ADVISOR",
  "civilopedia": "TXT_KEY_BUILDING_PSYCHIC_ADVISOR_PEDIA",
- "obsoletes": {
+ "obsoletedBy": {
   "buildings": [
    "BUILDING_HIGH_TECH_CULTURAL_ENRICHMENT"
+  ],
+  "techs": [
+   "TECH_CULTURAL_EVOLUTION"
   ]
  },
- "replaces": {
+ "replacedBy": {
   "buildings": [
-   "BUILDING_FORTUNE_TELLER"
+   "BUILDING_HIGH_TECH_CULTURAL_ENRICHMENT"
   ]
  },
  "requires": {

@@ -2,7 +2,15 @@
  "type": "BUILDING_EXECUTIONER",
  "description": "TXT_KEY_BUILDING_EXECUTIONER",
  "civilopedia": "TXT_KEY_BUILDING_EXECUTIONER_PEDIA",
- "obsoletes": {
+ "obsoletedBy": {
+  "buildings": [
+   "BUILDING_JAIL"
+  ],
+  "techs": [
+   "TECH_PSYCHOLOGY"
+  ]
+ },
+ "replacedBy": {
   "buildings": [
    "BUILDING_JAIL"
   ]

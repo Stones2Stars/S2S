@@ -2,9 +2,12 @@
  "type": "BUILDING_CHICHEN_ITZA",
  "description": "TXT_KEY_BUILDING_CHICHEN_ITZA",
  "civilopedia": "TXT_KEY_BUILDING_CHICHEN_ITZA_PEDIA",
- "obsoletes": {
+ "obsoletedBy": {
   "buildings": [
    "BUILDING_RELIC_CHICHEN_ITZA"
+  ],
+  "techs": [
+   "TECH_DIVINE_RIGHT"
   ]
  },
  "requires": {

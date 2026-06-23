@@ -2,6 +2,11 @@
  "type": "BUILDING_DW_VINTAGE_RED",
  "description": "TXT_KEY_BUILDING_DW_VINTAGE_RED",
  "civilopedia": "TXT_KEY_BUILDING_VINTAGE_WINERY_PEDIA",
+ "replacedBy": {
+  "buildings": [
+   "BUILDING_ORDINANCE_ALCOHOL_PROHIBITION"
+  ]
+ },
  "requires": {
   "build": {
    "all": [

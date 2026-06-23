@@ -2,7 +2,15 @@
  "type": "BUILDING_SUPERSOLID_HELIUM_PLANT",
  "description": "TXT_KEY_BUILDING_SUPERSOLID_HELIUM_PLANT",
  "civilopedia": "TXT_KEY_BUILDING_SUPERSOLID_HELIUM_PLANT_PEDIA",
- "obsoletes": {
+ "obsoletedBy": {
+  "buildings": [
+   "BUILDING_PICOTECH_COMPLEX"
+  ],
+  "techs": [
+   "TECH_ELECTROWEAK_MATTER"
+  ]
+ },
+ "replacedBy": {
   "buildings": [
    "BUILDING_PICOTECH_COMPLEX"
   ]

@@ -2,14 +2,17 @@
  "type": "BUILDING_RAT_CATCHER",
  "description": "TXT_KEY_BUILDING_RAT_CATCHER",
  "civilopedia": "TXT_KEY_BUILDING_RAT_CATCHER_PEDIA",
- "obsoletes": {
+ "obsoletedBy": {
   "buildings": [
    "BUILDING_AGROFOREST"
+  ],
+  "techs": [
+   "TECH_SENTIENT_EARTH"
   ]
  },
- "replaces": {
+ "replacedBy": {
   "buildings": [
-   "BUILDING_PESTS_RATS"
+   "BUILDING_AGROFOREST"
   ]
  },
  "requires": {

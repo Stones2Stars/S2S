@@ -2,7 +2,15 @@
  "type": "BUILDING_THRONE_ROOM",
  "description": "TXT_KEY_BUILDING_THRONE_ROOM",
  "civilopedia": "TXT_KEY_BUILDING_THRONE_ROOM_PEDIA",
- "obsoletes": {
+ "obsoletedBy": {
+  "buildings": [
+   "BUILDING_IMPERIAL_FORTRESS"
+  ],
+  "techs": [
+   "TECH_TRENCH_WARFARE"
+  ]
+ },
+ "replacedBy": {
   "buildings": [
    "BUILDING_IMPERIAL_FORTRESS"
   ]

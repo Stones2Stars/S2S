@@ -2,9 +2,19 @@
  "type": "BUILDING_GAMBLING_DEN",
  "description": "TXT_KEY_BUILDING_GAMBLING_DEN",
  "civilopedia": "TXT_KEY_BUILDING_GAMBLING_DEN_PEDIA",
- "obsoletes": {
+ "obsoletedBy": {
   "buildings": [
    "BUILDING_GAMBLING_HALL"
+  ],
+  "techs": [
+   "TECH_LEGALIZED_GAMBLING"
+  ]
+ },
+ "replacedBy": {
+  "buildings": [
+   "BUILDING_GAMBLING_HALL",
+   "BUILDING_CASINO",
+   "BUILDING_ORDINANCE_GAMBLING_BAN"
   ]
  },
  "requires": {

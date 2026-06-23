@@ -2,16 +2,17 @@
  "type": "BUILDING_BIOFUEL_POWER_PLANT",
  "description": "TXT_KEY_BUILDING_BIOFUEL_POWER_PLANT",
  "civilopedia": "TXT_KEY_BUILDING_BIOFUEL_POWER_PLANT_PEDIA",
- "obsoletes": {
+ "obsoletedBy": {
   "buildings": [
    "BUILDING_RENEWABLE_MEGACOMPLEX"
+  ],
+  "techs": [
+   "TECH_FEMTOTECHNOLOGY"
   ]
  },
- "replaces": {
+ "replacedBy": {
   "buildings": [
-   "BUILDING_BIOMASS_POWER_PLANT",
-   "BUILDING_PEAT_FIRED_DYNAMO",
-   "BUILDING_WOOD_FIRED_DYNAMO"
+   "BUILDING_RENEWABLE_MEGACOMPLEX"
   ]
  },
  "requires": {

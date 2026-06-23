@@ -2,14 +2,19 @@
  "type": "BUILDING_OUTHOUSE",
  "description": "TXT_KEY_BUILDING_OUTHOUSE",
  "civilopedia": "TXT_KEY_BUILDING_OUTHOUSE_PEDIA",
- "obsoletes": {
+ "obsoletedBy": {
   "buildings": [
    "BUILDING_GARDEROBE"
+  ],
+  "techs": [
+   "TECH_MODERN_SANITATION"
   ]
  },
- "replaces": {
+ "replacedBy": {
   "buildings": [
-   "BUILDING_EXCREMENT_HOLES"
+   "BUILDING_GARDEROBE",
+   "BUILDING_PUBLIC_RESTROOMS",
+   "BUILDING_SANITATION_CHAMBER"
   ]
  },
  "requires": {

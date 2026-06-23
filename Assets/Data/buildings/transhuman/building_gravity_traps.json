@@ -2,19 +2,6 @@
  "type": "BUILDING_GRAVITY_TRAPS",
  "description": "TXT_KEY_BUILDING_GRAVITY_TRAPS",
  "civilopedia": "TXT_KEY_BUILDING_GRAVITY_TRAPS_PEDIA",
- "replaces": {
-  "buildings": [
-   "BUILDING_BOOBY_TRAPS",
-   "BUILDING_EMP_TRAPS",
-   "BUILDING_GERM_TRAPS",
-   "BUILDING_LANDMINES",
-   "BUILDING_MECHANICAL_TRAPS",
-   "BUILDING_NANOBOT_TRAPS",
-   "BUILDING_PIT_TRAPS",
-   "BUILDING_ROBOTIC_TRAPS",
-   "BUILDING_SPIKED_PIT_TRAPS"
-  ]
- },
  "requires": {
   "build": {
    "all": [

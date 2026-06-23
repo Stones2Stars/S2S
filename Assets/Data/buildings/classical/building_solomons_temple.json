@@ -2,6 +2,11 @@
  "type": "BUILDING_SOLOMONS_TEMPLE",
  "description": "TXT_KEY_BUILDING_SOLOMONS_TEMPLE",
  "civilopedia": "TXT_KEY_BUILDING_SOLOMONS_TEMPLE_PEDIA",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_HUMANISM"
+  ]
+ },
  "requires": {
   "build": {
    "all": [

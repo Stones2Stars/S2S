@@ -2,9 +2,18 @@
  "type": "BUILDING_SEAWALLS",
  "description": "TXT_KEY_BUILDING_SEAWALLS",
  "civilopedia": "TXT_KEY_BUILDING_SEAWALLS_PEDIA",
- "obsoletes": {
+ "obsoletedBy": {
   "buildings": [
    "BUILDING_ADVANCED_FLOODWALL"
+  ],
+  "techs": [
+   "TECH_ABYSS_COLONIZATION"
+  ]
+ },
+ "replacedBy": {
+  "buildings": [
+   "BUILDING_ADVANCED_FLOODWALL",
+   "BUILDING_OCEAN_ADMINISTRATION"
   ]
  },
  "requires": {

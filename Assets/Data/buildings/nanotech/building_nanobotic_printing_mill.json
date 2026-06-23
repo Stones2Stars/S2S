@@ -11,16 +11,20 @@
    "UNIT_REPLICATION_MECHANIC"
   ]
  },
- "obsoletes": {
+ "obsoletedBy": {
   "buildings": [
    "BUILDING_MOLECULAR_ASSEMBLER"
+  ],
+  "techs": [
+   "TECH_GRAVITRONICS"
   ]
  },
- "replaces": {
+ "replacedBy": {
   "buildings": [
-   "BUILDING_3D_PRINTING_MILL",
-   "BUILDING_PARTS_MAKER",
-   "BUILDING_PARTS_PLANT"
+   "BUILDING_MOLECULAR_ASSEMBLER",
+   "BUILDING_ATOMIC_ASSEMBLER",
+   "BUILDING_QUANTUM_ASSEMBLER",
+   "BUILDING_MATERIALIZER"
   ]
  },
  "requires": {

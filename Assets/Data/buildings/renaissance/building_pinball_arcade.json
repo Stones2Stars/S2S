@@ -2,7 +2,15 @@
  "type": "BUILDING_PINBALL_ARCADE",
  "description": "TXT_KEY_BUILDING_PINBALL_ARCADE",
  "civilopedia": "TXT_KEY_BUILDING_PINBALL_ARCADE_PEDIA",
- "obsoletes": {
+ "obsoletedBy": {
+  "buildings": [
+   "BUILDING_VIDEO_GAME_ARCADE"
+  ],
+  "techs": [
+   "TECH_VIRTUAL_SOCIETY"
+  ]
+ },
+ "replacedBy": {
   "buildings": [
    "BUILDING_VIDEO_GAME_ARCADE"
   ]

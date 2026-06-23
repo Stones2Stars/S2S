@@ -7,9 +7,23 @@
    "BUILDING_HIGH_ENERGY_LAB"
   ]
  },
- "obsoletes": {
+ "obsoletedBy": {
   "buildings": [
    "BUILDING_HI_TECH_NUCLEAR_REACTOR"
+  ],
+  "techs": [
+   "TECH_INDUSTRIAL_ECOLOGY"
+  ]
+ },
+ "replacedBy": {
+  "buildings": [
+   "BUILDING_HI_TECH_NUCLEAR_REACTOR",
+   "BUILDING_GENERATION_IV_REACTOR",
+   "BUILDING_D_T_FUSION_POWER_PLANT",
+   "BUILDING_D_HE3_FUSION_PLANT",
+   "BUILDING_HE3_FUSION_POWER_PLANT",
+   "BUILDING_ANTIMATTER_INITIATED_FUSION_PLANT",
+   "BUILDING_QUANTUM_VACUUM_POWER_PLANT"
   ]
  },
  "requires": {

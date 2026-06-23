@@ -2,9 +2,20 @@
  "type": "BUILDING_EXCREMENT_HOLES",
  "description": "TXT_KEY_BUILDING_EXCREMENT_HOLES",
  "civilopedia": "TXT_KEY_BUILDING_EXCREMENT_HOLES_PEDIA",
- "obsoletes": {
+ "obsoletedBy": {
   "buildings": [
    "BUILDING_OUTHOUSE"
+  ],
+  "techs": [
+   "TECH_SANITATION"
+  ]
+ },
+ "replacedBy": {
+  "buildings": [
+   "BUILDING_OUTHOUSE",
+   "BUILDING_GARDEROBE",
+   "BUILDING_PUBLIC_RESTROOMS",
+   "BUILDING_SANITATION_CHAMBER"
   ]
  },
  "requires": {

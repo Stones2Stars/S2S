@@ -2,7 +2,15 @@
  "type": "BUILDING_PARKING_METERS",
  "description": "TXT_KEY_BUILDING_PARKING_METERS",
  "civilopedia": "TXT_KEY_BUILDING_PARKING_METERS_PEDIA",
- "obsoletes": {
+ "obsoletedBy": {
+  "buildings": [
+   "BUILDING_TELEPORT_BOOTH"
+  ],
+  "techs": [
+   "TECH_WORMHOLE_HIVEMIND"
+  ]
+ },
+ "replacedBy": {
   "buildings": [
    "BUILDING_TELEPORT_BOOTH"
   ]

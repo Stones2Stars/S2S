@@ -2,9 +2,9 @@
  "type": "BUILDING_PC_BLOMBOS_CAVE",
  "description": "TXT_KEY_BUILDING_PC_BLOMBOS_CAVE",
  "civilopedia": "TXT_KEY_BUILDING_PC_BLOMBOS_CAVE_PEDIA",
- "replaces": {
-  "buildings": [
-   "BUILDING_CAVE_SHELTER"
+ "obsoletedBy": {
+  "techs": [
+   "TECH_SEDENTARY_LIFESTYLE"
   ]
  },
  "requires": {

@@ -9,7 +9,15 @@
    "BUILDING_RESOURCES_IVORY"
   ]
  },
- "obsoletes": {
+ "obsoletedBy": {
+  "buildings": [
+   "BUILDING_ANIMAL_PRESERVE"
+  ],
+  "techs": [
+   "TECH_SENTIENT_EARTH"
+  ]
+ },
+ "replacedBy": {
   "buildings": [
    "BUILDING_ANIMAL_PRESERVE"
   ]

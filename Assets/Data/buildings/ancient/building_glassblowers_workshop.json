@@ -8,8 +8,17 @@
    "BUILDING_RESOURCES_GLASSWARE"
   ]
  },
- "obsoletes": {
+ "obsoletedBy": {
   "buildings": [
+   "BUILDING_FACTORY_GLASSWARE"
+  ],
+  "techs": [
+   "TECH_RAPID_PROTOTYPING"
+  ]
+ },
+ "replacedBy": {
+  "buildings": [
+   "BUILDING_MANUFACTURING_DISTRICT",
    "BUILDING_FACTORY_GLASSWARE"
   ]
  },

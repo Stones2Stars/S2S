@@ -14,11 +14,6 @@
    "BUILDING_HILBERTS_PROBLEMS"
   ]
  },
- "replaces": {
-  "buildings": [
-   "BUILDING_MATHEMATICS_ACADEMY"
-  ]
- },
  "requires": {
   "build": {
    "all": [

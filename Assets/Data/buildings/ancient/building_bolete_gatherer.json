@@ -2,7 +2,15 @@
  "type": "BUILDING_BOLETE_GATHERER",
  "description": "TXT_KEY_BUILDING_BOLETE_GATHERER",
  "civilopedia": "TXT_KEY_BUILDING_BOLETE_GATHERER_PEDIA",
- "obsoletes": {
+ "obsoletedBy": {
+  "buildings": [
+   "BUILDING_FARMSCRAPER_I"
+  ],
+  "techs": [
+   "TECH_GAIA_ECOLOGY"
+  ]
+ },
+ "replacedBy": {
   "buildings": [
    "BUILDING_FARMSCRAPER_I"
   ]

@@ -14,14 +14,17 @@
    "BUILDING_WIRELESS_NETWORKS"
   ]
  },
- "obsoletes": {
+ "obsoletedBy": {
   "buildings": [
    "BUILDING_NETWORK_NODE"
+  ],
+  "techs": [
+   "TECH_DATA_ARCHIVAL"
   ]
  },
- "replaces": {
+ "replacedBy": {
   "buildings": [
-   "BUILDING_BROADCAST_TOWER"
+   "BUILDING_NETWORK_NODE"
   ]
  },
  "requires": {

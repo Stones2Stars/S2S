@@ -2,9 +2,19 @@
  "type": "BUILDING_JAZZ_CLUB",
  "description": "TXT_KEY_BUILDING_JAZZ_CLUB",
  "civilopedia": "TXT_KEY_BUILDING_JAZZ_CLUB_PEDIA",
- "obsoletes": {
+ "obsoletedBy": {
   "buildings": [
    "BUILDING_HIGH_TECH_CULTURAL_ENRICHMENT"
+  ],
+  "techs": [
+   "TECH_CULTURAL_EVOLUTION"
+  ]
+ },
+ "replacedBy": {
+  "buildings": [
+   "BUILDING_HIGH_TECH_CULTURAL_ENRICHMENT",
+   "BUILDING_ORDINANCE_GAMBLING_BAN",
+   "BUILDING_ORDINANCE_ALCOHOL_PROHIBITION"
   ]
  },
  "requires": {

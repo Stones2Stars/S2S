@@ -7,9 +7,18 @@
    "BUILDING_GUILD_ARTISANS"
   ]
  },
- "obsoletes": {
+ "obsoletedBy": {
   "buildings": [
    "BUILDING_MALL"
+  ],
+  "techs": [
+   "TECH_PLASTIC_ELECTRONICS"
+  ]
+ },
+ "replacedBy": {
+  "buildings": [
+   "BUILDING_MALL",
+   "BUILDING_HYPERMARKET"
   ]
  },
  "requires": {

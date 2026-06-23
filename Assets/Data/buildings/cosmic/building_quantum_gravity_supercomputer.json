@@ -8,12 +8,6 @@
    "BUILDING_HUMAN_MOD_ARCHAILECT"
   ]
  },
- "replaces": {
-  "buildings": [
-   "BUILDING_EXPERIMENTAL_QUANTUM_COMPUTER",
-   "BUILDING_QUANTUM_SUPERCOMPUTER"
-  ]
- },
  "requires": {
   "build": {
    "all": [

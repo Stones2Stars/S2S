@@ -10,6 +10,11 @@
    "UNIT_TAMED_HORSE_PAIR"
   ]
  },
+ "obsoletedBy": {
+  "techs": [
+   "TECH_VERTICAL_FLIGHT"
+  ]
+ },
  "requires": {
   "build": {
    "all": [

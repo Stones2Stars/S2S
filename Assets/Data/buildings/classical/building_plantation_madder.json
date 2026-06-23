@@ -9,7 +9,15 @@
    "BUILDING_RESOURCES_FLOWERS"
   ]
  },
- "obsoletes": {
+ "obsoletedBy": {
+  "buildings": [
+   "BUILDING_GREENHOUSE"
+  ],
+  "techs": [
+   "TECH_INDUSTRIAL_ECOLOGY"
+  ]
+ },
+ "replacedBy": {
   "buildings": [
    "BUILDING_GREENHOUSE"
   ]

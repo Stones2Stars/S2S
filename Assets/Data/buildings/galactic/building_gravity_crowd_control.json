@@ -2,12 +2,6 @@
  "type": "BUILDING_GRAVITY_CROWD_CONTROL",
  "description": "TXT_KEY_BUILDING_GRAVITY_CROWD_CONTROL",
  "civilopedia": "TXT_KEY_BUILDING_GRAVITY_CROWD_CONTROL_PEDIA",
- "replaces": {
-  "buildings": [
-   "BUILDING_ACOUSTIC_CROWD_CONTROL",
-   "BUILDING_ACTIVE_DENIAL_SYSTEM"
-  ]
- },
  "requires": {
   "build": {
    "all": [

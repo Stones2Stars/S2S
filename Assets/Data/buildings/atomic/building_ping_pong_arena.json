@@ -2,7 +2,15 @@
  "type": "BUILDING_PING_PONG_ARENA",
  "description": "TXT_KEY_BUILDING_PING_PONG_ARENA",
  "civilopedia": "TXT_KEY_BUILDING_PING_PONG_ARENA_PEDIA",
- "obsoletes": {
+ "obsoletedBy": {
+  "buildings": [
+   "BUILDING_ATHLETIC_MEGACOMPLEX"
+  ],
+  "techs": [
+   "TECH_WEATHER_CONTROL"
+  ]
+ },
+ "replacedBy": {
   "buildings": [
    "BUILDING_ATHLETIC_MEGACOMPLEX"
   ]

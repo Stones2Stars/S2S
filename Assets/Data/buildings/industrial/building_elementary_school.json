@@ -11,22 +11,17 @@
    "BUILDING_SCHOOL_BUS_STATION"
   ]
  },
- "obsoletes": {
+ "obsoletedBy": {
   "buildings": [
    "BUILDING_HOLOGRAPHIC_SCHOOL"
+  ],
+  "techs": [
+   "TECH_MIND_UPLOADING"
   ]
  },
- "replaces": {
+ "replacedBy": {
   "buildings": [
-   "BUILDING_CALLIGRAPHY_SCHOOL",
-   "BUILDING_COUNTING_STICKS",
-   "BUILDING_ELDER_COUNCIL",
-   "BUILDING_GRAMMATICUS",
-   "BUILDING_KNOWLEDGE_INHERITANCE",
-   "BUILDING_LYCEUM",
-   "BUILDING_SAND_PAINTINGS",
-   "BUILDING_SCHOOL_OF_RHETORIC",
-   "BUILDING_TALLY_STONE"
+   "BUILDING_HOLOGRAPHIC_SCHOOL"
   ]
  },
  "requires": {

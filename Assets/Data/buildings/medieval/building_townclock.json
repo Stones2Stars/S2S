@@ -10,12 +10,6 @@
    "BUILDING_SU_SONGS_WORKSHOP"
   ]
  },
- "replaces": {
-  "buildings": [
-   "BUILDING_SUNDIAL",
-   "BUILDING_WATERCLOCK"
-  ]
- },
  "requires": {
   "build": {
    "all": [

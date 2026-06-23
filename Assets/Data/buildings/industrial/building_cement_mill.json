@@ -7,14 +7,17 @@
    "BUILDING_WATERPROOF_CEMENT_MAKER"
   ]
  },
- "obsoletes": {
+ "obsoletedBy": {
   "buildings": [
    "BUILDING_MODERN_EARTHWORKS"
+  ],
+  "techs": [
+   "TECH_RAPID_PROTOTYPING"
   ]
  },
- "replaces": {
+ "replacedBy": {
   "buildings": [
-   "BUILDING_CONCRETE_MASON"
+   "BUILDING_MODERN_EARTHWORKS"
   ]
  },
  "requires": {

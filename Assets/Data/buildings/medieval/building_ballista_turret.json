@@ -2,9 +2,18 @@
  "type": "BUILDING_BALLISTA_TURRET",
  "description": "TXT_KEY_BUILDING_BALLISTA_TURRET",
  "civilopedia": "TXT_KEY_BUILDING_BALLISTA_TURRET_PEDIA",
- "obsoletes": {
+ "obsoletedBy": {
   "buildings": [
    "BUILDING_CANNON_TURRET"
+  ],
+  "techs": [
+   "TECH_ROMANTICISM"
+  ]
+ },
+ "replacedBy": {
+  "buildings": [
+   "BUILDING_CANNON_TURRET",
+   "BUILDING_IMPERIAL_FORTRESS"
   ]
  },
  "requires": {

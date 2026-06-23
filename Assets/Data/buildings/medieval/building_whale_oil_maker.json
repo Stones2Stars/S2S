@@ -2,9 +2,18 @@
  "type": "BUILDING_WHALE_OIL_MAKER",
  "description": "TXT_KEY_BUILDING_WHALE_OIL_MAKER",
  "civilopedia": "TXT_KEY_BUILDING_WHALE_OIL_MAKER_PEDIA",
- "obsoletes": {
+ "obsoletedBy": {
   "buildings": [
    "BUILDING_INDUSTRIAL_FARMS"
+  ],
+  "techs": [
+   "TECH_REPLACEMENT_ORGANS"
+  ]
+ },
+ "replacedBy": {
+  "buildings": [
+   "BUILDING_INDUSTRIAL_FARMS",
+   "BUILDING_MEAT_INDUSTRY_CONGLOMERATE"
   ]
  },
  "requires": {

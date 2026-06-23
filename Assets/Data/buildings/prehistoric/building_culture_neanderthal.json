@@ -3,6 +3,11 @@
  "description": "TXT_KEY_BUILDING_CULTURE_NEANDERTHAL",
  "civilopedia": "TXT_KEY_BUILDING_CULTURE_NEANDERTHAL_PEDIA",
  "help": "TXT_KEY_BUILDING_CULTURE_NEANDERTHAL_HELP",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_SEDENTARY_LIFESTYLE"
+  ]
+ },
  "requires": {
   "build": {
    "all": [

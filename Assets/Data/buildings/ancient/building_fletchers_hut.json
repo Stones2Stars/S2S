@@ -9,6 +9,16 @@
    "BUILDING_TRADITION_ARCHERY"
   ]
  },
+ "obsoletedBy": {
+  "techs": [
+   "TECH_MILITARY_TRADITION"
+  ]
+ },
+ "replacedBy": {
+  "buildings": [
+   "BUILDING_EFFECT_TRADITION_ARCHERY"
+  ]
+ },
  "requires": {
   "build": {
    "all": [

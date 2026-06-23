@@ -30,12 +30,6 @@
    "UNIT_P51_MUSTANG"
   ]
  },
- "replaces": {
-  "buildings": [
-   "BUILDING_AIRFIELD",
-   "BUILDING_MILITARY_AIRBASE"
-  ]
- },
  "requires": {
   "build": {
    "all": [

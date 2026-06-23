@@ -2,7 +2,15 @@
  "type": "BUILDING_ORDINANCE_EFFECT_COMMUTER_SHUTTLE_SERVICE",
  "description": "TXT_KEY_BUILDING_ORDINANCE_EFFECT_COMMUTER_SHUTTLE_SERVICE",
  "civilopedia": "TXT_KEY_BUILDING_ORDINANCE_EFFECT_COMMUTER_SHUTTLE_SERVICE_PEDIA",
- "obsoletes": {
+ "obsoletedBy": {
+  "buildings": [
+   "BUILDING_TELEPORT_BOOTH"
+  ],
+  "techs": [
+   "TECH_WORMHOLE_HIVEMIND"
+  ]
+ },
+ "replacedBy": {
   "buildings": [
    "BUILDING_TELEPORT_BOOTH"
   ]

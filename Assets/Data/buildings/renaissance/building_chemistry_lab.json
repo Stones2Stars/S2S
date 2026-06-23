@@ -10,18 +10,17 @@
    "BUILDING_RESOURCES_CHEMICALS"
   ]
  },
- "obsoletes": {
+ "obsoletedBy": {
   "buildings": [
    "BUILDING_CHEMICALS_DISTRICT"
+  ],
+  "techs": [
+   "TECH_ANIMAMATERIALS"
   ]
  },
- "replaces": {
+ "replacedBy": {
   "buildings": [
-   "BUILDING_ALCHEMISTS_LAB",
-   "BUILDING_BELLADONNA",
-   "BUILDING_CURARE",
-   "BUILDING_DEATH_CAP_MUSHROOM",
-   "BUILDING_RESOURCES_POISON"
+   "BUILDING_CHEMICALS_DISTRICT"
   ]
  },
  "requires": {

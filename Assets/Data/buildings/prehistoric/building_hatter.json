@@ -2,9 +2,18 @@
  "type": "BUILDING_HATTER",
  "description": "TXT_KEY_BUILDING_HATTER",
  "civilopedia": "TXT_KEY_BUILDING_HATTER_PEDIA",
- "obsoletes": {
+ "obsoletedBy": {
   "buildings": [
    "BUILDING_FACTORY_HATS"
+  ],
+  "techs": [
+   "TECH_RAPID_PROTOTYPING"
+  ]
+ },
+ "replacedBy": {
+  "buildings": [
+   "BUILDING_FACTORY_HATS",
+   "BUILDING_TEXTILE_MANUFACTURING_DISTRICT"
   ]
  },
  "requires": {

@@ -2,13 +2,6 @@
  "type": "BUILDING_AI_LEGAL_SYSTEM",
  "description": "TXT_KEY_BUILDING_AI_LEGAL_SYSTEM",
  "civilopedia": "TXT_KEY_BUILDING_AI_LEGAL_SYSTEM_PEDIA",
- "replaces": {
-  "buildings": [
-   "BUILDING_LAW_FIRM",
-   "BUILDING_LAW_SCHOOL",
-   "BUILDING_LOCAL_COURTHOUSE"
-  ]
- },
  "requires": {
   "build": {
    "all": [

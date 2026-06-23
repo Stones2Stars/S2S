@@ -2,9 +2,18 @@
  "type": "BUILDING_RESOURCES_FLOUR",
  "description": "TXT_KEY_BUILDING_RESOURCES_FLOUR",
  "civilopedia": "TXT_KEY_BUILDING_RESOURCE_PROVIDER_PEDIA",
- "obsoletes": {
+ "obsoletedBy": {
   "buildings": [
    "BUILDING_MODERN_MILL"
+  ],
+  "techs": [
+   "TECH_AUGMENTED_CONSUMABLES"
+  ]
+ },
+ "replacedBy": {
+  "buildings": [
+   "BUILDING_MODERN_MILL",
+   "BUILDING_FOOD_MANUFACTURING_DISTRICT"
   ]
  },
  "requires": {

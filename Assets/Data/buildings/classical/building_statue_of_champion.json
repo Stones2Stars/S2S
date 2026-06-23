@@ -2,6 +2,11 @@
  "type": "BUILDING_STATUE_OF_CHAMPION",
  "description": "TXT_KEY_BUILDING_STATUE_OF_CHAMPION",
  "civilopedia": "TXT_KEY_BUILDING_STATUE_OF_CHAMPION_PEDIA",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_BINARY_PSYCHOKINESIS"
+  ]
+ },
  "requires": {
   "build": {
    "all": [

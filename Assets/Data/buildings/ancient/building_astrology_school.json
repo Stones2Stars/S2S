@@ -19,9 +19,18 @@
    "BUILDING_ASTROLOGICAL_INFLUENCE_OF_VIRGO"
   ]
  },
- "obsoletes": {
+ "obsoletedBy": {
   "buildings": [
    "BUILDING_OBSERVATORY"
+  ],
+  "techs": [
+   "TECH_COMPULSORY_EDUCATION"
+  ]
+ },
+ "replacedBy": {
+  "buildings": [
+   "BUILDING_OBSERVATORY",
+   "BUILDING_POLLUTION_BLACKENED_SKIES"
   ]
  },
  "requires": {

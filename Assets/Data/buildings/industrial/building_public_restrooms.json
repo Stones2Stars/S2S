@@ -2,16 +2,17 @@
  "type": "BUILDING_PUBLIC_RESTROOMS",
  "description": "TXT_KEY_BUILDING_PUBLIC_RESTROOMS",
  "civilopedia": "TXT_KEY_BUILDING_PUBLIC_RESTROOMS_PEDIA",
- "obsoletes": {
+ "obsoletedBy": {
   "buildings": [
    "BUILDING_SANITATION_CHAMBER"
+  ],
+  "techs": [
+   "TECH_HOMO_SUPERIOR"
   ]
  },
- "replaces": {
+ "replacedBy": {
   "buildings": [
-   "BUILDING_EXCREMENT_HOLES",
-   "BUILDING_GARDEROBE",
-   "BUILDING_OUTHOUSE"
+   "BUILDING_SANITATION_CHAMBER"
   ]
  },
  "requires": {

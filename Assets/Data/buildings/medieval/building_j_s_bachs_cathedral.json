@@ -2,6 +2,11 @@
  "type": "BUILDING_J_S_BACHS_CATHEDRAL",
  "description": "TXT_KEY_BUILDING_J_S_BACHS_CATHEDRAL",
  "civilopedia": "TXT_KEY_BUILDING_J_S_BACHS_CATHEDRAL_PEDIA",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_AUTOMATIC_WEAPONS"
+  ]
+ },
  "requires": {
   "build": {
    "all": [

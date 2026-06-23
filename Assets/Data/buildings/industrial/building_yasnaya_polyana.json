@@ -2,6 +2,11 @@
  "type": "BUILDING_YASNAYA_POLYANA",
  "description": "TXT_KEY_BUILDING_YASNAYA_POLYANA",
  "civilopedia": "TXT_KEY_BUILDING_YASNAYA_POLYANA_PEDIA",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_VERTICAL_FARMING"
+  ]
+ },
  "requires": {
   "build": {
    "all": [

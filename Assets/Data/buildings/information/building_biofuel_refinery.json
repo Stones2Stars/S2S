@@ -2,7 +2,15 @@
  "type": "BUILDING_BIOFUEL_REFINERY",
  "description": "TXT_KEY_BUILDING_BIOFUEL_REFINERY",
  "civilopedia": "TXT_KEY_BUILDING_BIOFUEL_REFINERY_PEDIA",
- "obsoletes": {
+ "obsoletedBy": {
+  "buildings": [
+   "BUILDING_ULTRAFUEL_REFINERY"
+  ],
+  "techs": [
+   "TECH_BOTANICAL_ALCHEMY"
+  ]
+ },
+ "replacedBy": {
   "buildings": [
    "BUILDING_ULTRAFUEL_REFINERY"
   ]

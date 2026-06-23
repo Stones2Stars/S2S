@@ -7,7 +7,15 @@
    "BUILDING_RESOURCES_PAPER"
   ]
  },
- "obsoletes": {
+ "obsoletedBy": {
+  "buildings": [
+   "BUILDING_ELECTRONIC_PAPER_MAKER"
+  ],
+  "techs": [
+   "TECH_ANIMAMATERIALS"
+  ]
+ },
+ "replacedBy": {
   "buildings": [
    "BUILDING_ELECTRONIC_PAPER_MAKER"
   ]

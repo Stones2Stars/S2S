@@ -2,9 +2,12 @@
  "type": "BUILDING_ALHAMBRA",
  "description": "TXT_KEY_BUILDING_ALHAMBRA",
  "civilopedia": "TXT_KEY_BUILDING_ALHAMBRA_PEDIA",
- "obsoletes": {
+ "obsoletedBy": {
   "buildings": [
    "BUILDING_RELIC_ALHAMBRA"
+  ],
+  "techs": [
+   "TECH_IMPERIALISM"
   ]
  },
  "requires": {

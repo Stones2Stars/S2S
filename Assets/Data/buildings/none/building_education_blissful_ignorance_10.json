@@ -2,6 +2,13 @@
  "type": "BUILDING_EDUCATION_BLISSFUL_IGNORANCE_10",
  "description": "TXT_KEY_BUILDING_EDUCATION_BLISSFUL_IGNORANCE_10",
  "civilopedia": "TXT_KEY_BUILDING_EQ_PEDIA",
+ "replacedBy": {
+  "buildings": [
+   "BUILDING_EDUCATION_BLISSFUL_IGNORANCE_11",
+   "BUILDING_EDUCATION_BLISSFUL_IGNORANCE_12",
+   "BUILDING_EDUCATION_BLISSFUL_IGNORANCE_13"
+  ]
+ },
  "requires": {
   "build": {
    "all": [
@@ -27,21 +34,7 @@
      "min": -2000000,
      "max": -20000
     }
-   ],
-   "disabled": {
-    "all": [
-     {
-      "type": "PROPERTY_EDUCATION",
-      "scope": "city",
-      "min": -2000000,
-      "max": -25000
-     },
-     {
-      "type": "BUILDING_EDUCATION_BLISSFUL_IGNORANCE_11",
-      "scope": "city"
-     }
-    ]
-   }
+   ]
   }
  },
  "anarchy": {

@@ -2,9 +2,18 @@
  "type": "BUILDING_FARM_ANIMAL_OSTRICH",
  "description": "TXT_KEY_BUILDING_FARM_ANIMAL_OSTRICH",
  "civilopedia": "TXT_KEY_BUILDING_FARM_ANIMAL_OSTRICH_PEDIA",
- "obsoletes": {
+ "obsoletedBy": {
   "buildings": [
    "BUILDING_INDUSTRIAL_FARMS"
+  ],
+  "techs": [
+   "TECH_REPLACEMENT_ORGANS"
+  ]
+ },
+ "replacedBy": {
+  "buildings": [
+   "BUILDING_INDUSTRIAL_FARMS",
+   "BUILDING_MEAT_INDUSTRY_CONGLOMERATE"
   ]
  },
  "requires": {

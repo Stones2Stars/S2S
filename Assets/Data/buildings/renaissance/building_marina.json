@@ -7,11 +7,6 @@
    "BUILDING_YACHT_CLUB"
   ]
  },
- "replaces": {
-  "buildings": [
-   "BUILDING_BOATYARD"
-  ]
- },
  "requires": {
   "build": {
    "all": [

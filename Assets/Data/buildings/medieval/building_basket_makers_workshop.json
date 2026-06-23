@@ -2,14 +2,18 @@
  "type": "BUILDING_BASKET_MAKERS_WORKSHOP",
  "description": "TXT_KEY_BUILDING_BASKET_MAKERS_WORKSHOP",
  "civilopedia": "TXT_KEY_BUILDING_BASKET_MAKERS_WORKSHOP_PEDIA",
- "obsoletes": {
+ "obsoletedBy": {
   "buildings": [
    "BUILDING_FACTORY_BASKETS"
+  ],
+  "techs": [
+   "TECH_RAPID_PROTOTYPING"
   ]
  },
- "replaces": {
+ "replacedBy": {
   "buildings": [
-   "BUILDING_BASKETMAKER"
+   "BUILDING_MANUFACTURING_DISTRICT",
+   "BUILDING_FACTORY_BASKETS"
   ]
  },
  "requires": {

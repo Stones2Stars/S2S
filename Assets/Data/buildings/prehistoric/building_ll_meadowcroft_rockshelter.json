@@ -2,6 +2,11 @@
  "type": "BUILDING_LL_MEADOWCROFT_ROCKSHELTER",
  "description": "TXT_KEY_BUILDING_LL_MEADOWCROFT_ROCKSHELTER",
  "civilopedia": "TXT_KEY_BUILDING_LL_MEADOWCROFT_ROCKSHELTER_PEDIA",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_MINING"
+  ]
+ },
  "requires": {
   "build": {
    "all": [

@@ -27,7 +27,15 @@
    "UNIT_P51_MUSTANG"
   ]
  },
- "obsoletes": {
+ "obsoletedBy": {
+  "buildings": [
+   "BUILDING_AEROSPACE_COMPLEX"
+  ],
+  "techs": [
+   "TECH_PLANETARY_DEFENSES"
+  ]
+ },
+ "replacedBy": {
   "buildings": [
    "BUILDING_AEROSPACE_COMPLEX"
   ]

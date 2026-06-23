@@ -2,7 +2,15 @@
  "type": "BUILDING_SURVEYORS_OFFICE",
  "description": "TXT_KEY_BUILDING_SURVEYORS_OFFICE",
  "civilopedia": "TXT_KEY_BUILDING_SURVEYORS_OFFICE_PEDIA",
- "obsoletes": {
+ "obsoletedBy": {
+  "buildings": [
+   "BUILDING_CONSTRUCTION_FIRM"
+  ],
+  "techs": [
+   "TECH_SATELLITES"
+  ]
+ },
+ "replacedBy": {
   "buildings": [
    "BUILDING_CONSTRUCTION_FIRM"
   ]

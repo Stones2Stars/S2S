@@ -2,6 +2,11 @@
  "type": "BUILDING_GUILD_ARTISTS",
  "description": "TXT_KEY_BUILDING_GUILD_ARTISTS",
  "civilopedia": "TXT_KEY_BUILDING_GUILDS_PEDIA",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_MASS_MEDIA"
+  ]
+ },
  "requires": {
   "build": {
    "all": [

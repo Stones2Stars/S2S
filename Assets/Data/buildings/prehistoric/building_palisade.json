@@ -2,9 +2,19 @@
  "type": "BUILDING_PALISADE",
  "description": "TXT_KEY_BUILDING_PALISADE",
  "civilopedia": "TXT_KEY_BUILDING_PALISADE_PEDIA",
- "obsoletes": {
+ "obsoletedBy": {
   "buildings": [
    "BUILDING_EARTH_WALL"
+  ],
+  "techs": [
+   "TECH_MASONRY"
+  ]
+ },
+ "replacedBy": {
+  "buildings": [
+   "BUILDING_EARTH_WALL",
+   "BUILDING_WALLS",
+   "BUILDING_HIGH_WALLS"
   ]
  },
  "requires": {

@@ -7,7 +7,15 @@
    "BUILDING_CAPTURE_THE_FLAG"
   ]
  },
- "obsoletes": {
+ "obsoletedBy": {
+  "buildings": [
+   "BUILDING_ATHLETIC_FIELDS"
+  ],
+  "techs": [
+   "TECH_TEAM_SPORTS"
+  ]
+ },
+ "replacedBy": {
   "buildings": [
    "BUILDING_ATHLETIC_FIELDS"
   ]

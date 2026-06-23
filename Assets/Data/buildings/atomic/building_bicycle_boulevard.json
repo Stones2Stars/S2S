@@ -2,7 +2,15 @@
  "type": "BUILDING_BICYCLE_BOULEVARD",
  "description": "TXT_KEY_BUILDING_BICYCLE_BOULEVARD",
  "civilopedia": "TXT_KEY_BUILDING_BICYCLE_BOULEVARD_PEDIA",
- "obsoletes": {
+ "obsoletedBy": {
+  "buildings": [
+   "BUILDING_ELEVATED_BICYCLE_TRACK"
+  ],
+  "techs": [
+   "TECH_EVOLVED_CONSTRUCTION"
+  ]
+ },
+ "replacedBy": {
   "buildings": [
    "BUILDING_ELEVATED_BICYCLE_TRACK"
   ]

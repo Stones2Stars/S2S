@@ -2,7 +2,15 @@
  "type": "BUILDING_SOCCER_FIELD",
  "description": "TXT_KEY_BUILDING_SOCCER_FIELD",
  "civilopedia": "TXT_KEY_BUILDING_SOCCER_FIELD_PEDIA",
- "obsoletes": {
+ "obsoletedBy": {
+  "buildings": [
+   "BUILDING_ATHLETIC_MEGACOMPLEX"
+  ],
+  "techs": [
+   "TECH_WEATHER_CONTROL"
+  ]
+ },
+ "replacedBy": {
   "buildings": [
    "BUILDING_ATHLETIC_MEGACOMPLEX"
   ]

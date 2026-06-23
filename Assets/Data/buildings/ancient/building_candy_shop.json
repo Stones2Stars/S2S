@@ -7,7 +7,15 @@
    "BUILDING_WONKA_CONFECTIONERIES_SHOP"
   ]
  },
- "obsoletes": {
+ "obsoletedBy": {
+  "buildings": [
+   "BUILDING_FOOD_MANUFACTURING_DISTRICT"
+  ],
+  "techs": [
+   "TECH_MIND_UPLOADING"
+  ]
+ },
+ "replacedBy": {
   "buildings": [
    "BUILDING_FOOD_MANUFACTURING_DISTRICT"
   ]

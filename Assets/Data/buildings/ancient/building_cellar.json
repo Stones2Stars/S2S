@@ -2,7 +2,15 @@
  "type": "BUILDING_CELLAR",
  "description": "TXT_KEY_BUILDING_CELLAR",
  "civilopedia": "TXT_KEY_BUILDING_CELLAR_PEDIA",
- "obsoletes": {
+ "obsoletedBy": {
+  "buildings": [
+   "BUILDING_MODERN_GRANARY"
+  ],
+  "techs": [
+   "TECH_GLOBALIZATION"
+  ]
+ },
+ "replacedBy": {
   "buildings": [
    "BUILDING_MODERN_GRANARY"
   ]

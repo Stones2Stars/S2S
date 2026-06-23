@@ -2,7 +2,15 @@
  "type": "BUILDING_LAW_FIRM",
  "description": "TXT_KEY_BUILDING_LAW_FIRM",
  "civilopedia": "TXT_KEY_BUILDING_LAW_FIRM_PEDIA",
- "obsoletes": {
+ "obsoletedBy": {
+  "buildings": [
+   "BUILDING_AI_LEGAL_SYSTEM"
+  ],
+  "techs": [
+   "TECH_NANOTROIDS"
+  ]
+ },
+ "replacedBy": {
   "buildings": [
    "BUILDING_AI_LEGAL_SYSTEM"
   ]

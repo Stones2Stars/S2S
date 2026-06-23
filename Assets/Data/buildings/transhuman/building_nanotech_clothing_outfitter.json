@@ -2,11 +2,6 @@
  "type": "BUILDING_NANOTECH_CLOTHING_OUTFITTER",
  "description": "TXT_KEY_BUILDING_NANOTECH_CLOTHING_OUTFITTER",
  "civilopedia": "TXT_KEY_BUILDING_NANOTECH_CLOTHING_OUTFITTER_PEDIA",
- "replaces": {
-  "buildings": [
-   "BUILDING_E_CLOTHING_OUTFITTER"
-  ]
- },
  "requires": {
   "build": {
    "all": [

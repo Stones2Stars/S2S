@@ -15,9 +15,18 @@
    "BUILDING_WAR_DANCE"
   ]
  },
- "obsoletes": {
+ "obsoletedBy": {
   "buildings": [
    "BUILDING_DANCE_HALL"
+  ],
+  "techs": [
+   "TECH_ELECTRONICS"
+  ]
+ },
+ "replacedBy": {
+  "buildings": [
+   "BUILDING_DANCE_HALL",
+   "BUILDING_NIGHT_CLUB"
   ]
  },
  "requires": {

@@ -2,7 +2,15 @@
  "type": "BUILDING_RESOURCES_PLASTIC",
  "description": "TXT_KEY_BUILDING_RESOURCES_PLASTIC",
  "civilopedia": "TXT_KEY_BUILDING_RESOURCE_PROVIDER_PEDIA",
- "obsoletes": {
+ "obsoletedBy": {
+  "buildings": [
+   "BUILDING_MATERIALS_CONGLOMERATE"
+  ],
+  "techs": [
+   "TECH_SMART_DUST"
+  ]
+ },
+ "replacedBy": {
   "buildings": [
    "BUILDING_MATERIALS_CONGLOMERATE"
   ]

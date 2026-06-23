@@ -8,9 +8,18 @@
    "BUILDING_RESOURCES_PAPER"
   ]
  },
- "obsoletes": {
+ "obsoletedBy": {
   "buildings": [
    "BUILDING_FACTORY_PAPER"
+  ],
+  "techs": [
+   "TECH_PLASTIC_ELECTRONICS"
+  ]
+ },
+ "replacedBy": {
+  "buildings": [
+   "BUILDING_FACTORY_PAPER",
+   "BUILDING_ELECTRONIC_PAPER_MAKER"
   ]
  },
  "requires": {

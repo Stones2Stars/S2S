@@ -2,9 +2,18 @@
  "type": "BUILDING_SMITH_STEEL",
  "description": "TXT_KEY_BUILDING_SMITH_STEEL",
  "civilopedia": "TXT_KEY_BUILDING_SMITH_STEEL_PEDIA",
- "obsoletes": {
+ "obsoletedBy": {
   "buildings": [
    "BUILDING_ADVANCED_IRONWORKS"
+  ],
+  "techs": [
+   "TECH_NANOMINING"
+  ]
+ },
+ "replacedBy": {
+  "buildings": [
+   "BUILDING_ADVANCED_IRONWORKS",
+   "BUILDING_METALS_MEGACOMPLEX"
   ]
  },
  "requires": {

@@ -2,14 +2,18 @@
  "type": "BUILDING_MODERN_EMBALMER",
  "description": "TXT_KEY_BUILDING_MODERN_EMBALMER",
  "civilopedia": "TXT_KEY_BUILDING_MODERN_EMBALMER_PEDIA",
- "obsoletes": {
+ "obsoletedBy": {
   "buildings": [
    "BUILDING_FUNERARY_SERVICES"
+  ],
+  "techs": [
+   "TECH_TRANSHUMANISM"
   ]
  },
- "replaces": {
+ "replacedBy": {
   "buildings": [
-   "BUILDING_ANCIENT_EMBALMER"
+   "BUILDING_FUNERARY_SERVICES",
+   "BUILDING_HIGH_TECH_CULTURAL_ENRICHMENT"
   ]
  },
  "requires": {

@@ -34,11 +34,6 @@
    "BUILDING_VIDEOPHONE_NETWORK"
   ]
  },
- "replaces": {
-  "buildings": [
-   "BUILDING_TELEGRAPH_STATION"
-  ]
- },
  "requires": {
   "build": {
    "all": [

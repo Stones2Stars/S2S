@@ -2,9 +2,18 @@
  "type": "BUILDING_SOLAR_HIGHWAY",
  "description": "TXT_KEY_BUILDING_SOLAR_HIGHWAY",
  "civilopedia": "TXT_KEY_BUILDING_SOLAR_HIGHWAY_PEDIA",
- "obsoletes": {
+ "obsoletedBy": {
   "buildings": [
    "BUILDING_RENEWABLE_MEGACOMPLEX"
+  ],
+  "techs": [
+   "TECH_FEMTOTECHNOLOGY"
+  ]
+ },
+ "replacedBy": {
+  "buildings": [
+   "BUILDING_RENEWABLE_MEGACOMPLEX",
+   "BUILDING_POLLUTION_BLACKENED_SKIES"
   ]
  },
  "requires": {

@@ -2,7 +2,15 @@
  "type": "BUILDING_PIER",
  "description": "TXT_KEY_BUILDING_PIER",
  "civilopedia": "TXT_KEY_BUILDING_PIER_PEDIA",
- "obsoletes": {
+ "obsoletedBy": {
+  "buildings": [
+   "BUILDING_OCEAN_ADMINISTRATION"
+  ],
+  "techs": [
+   "TECH_LAUNCH_ARCOLOGY"
+  ]
+ },
+ "replacedBy": {
   "buildings": [
    "BUILDING_OCEAN_ADMINISTRATION"
   ]

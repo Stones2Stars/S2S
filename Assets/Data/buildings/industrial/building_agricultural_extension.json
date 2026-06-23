@@ -2,7 +2,15 @@
  "type": "BUILDING_AGRICULTURAL_EXTENSION",
  "description": "TXT_KEY_BUILDING_AGRICULTURAL_EXTENSION",
  "civilopedia": "TXT_KEY_BUILDING_AGRICULTURAL_EXTENSION_PEDIA",
- "obsoletes": {
+ "obsoletedBy": {
+  "buildings": [
+   "BUILDING_FARMSCRAPER_I"
+  ],
+  "techs": [
+   "TECH_GAIA_ECOLOGY"
+  ]
+ },
+ "replacedBy": {
   "buildings": [
    "BUILDING_FARMSCRAPER_I"
   ]

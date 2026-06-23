@@ -7,14 +7,18 @@
    "BUILDING_HARAPPAN_FAKE_GEMS"
   ]
  },
- "obsoletes": {
+ "obsoletedBy": {
   "buildings": [
    "BUILDING_FACTORY_BEADS"
+  ],
+  "techs": [
+   "TECH_RAPID_PROTOTYPING"
   ]
  },
- "replaces": {
+ "replacedBy": {
   "buildings": [
-   "BUILDING_BEADWORKER"
+   "BUILDING_MANUFACTURING_DISTRICT",
+   "BUILDING_FACTORY_BEADS"
   ]
  },
  "requires": {

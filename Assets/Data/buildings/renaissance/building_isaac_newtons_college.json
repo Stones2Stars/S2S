@@ -2,6 +2,11 @@
  "type": "BUILDING_ISAAC_NEWTONS_COLLEGE",
  "description": "TXT_KEY_BUILDING_ISAAC_NEWTONS_COLLEGE",
  "civilopedia": "TXT_KEY_BUILDING_ISAAC_NEWTONS_COLLEGE_PEDIA",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_QUANTUM_PHYSICS"
+  ]
+ },
  "requires": {
   "build": {
    "all": [

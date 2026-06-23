@@ -2,9 +2,18 @@
  "type": "BUILDING_PESTS_CROWS",
  "description": "TXT_KEY_BUILDING_PESTS_CROWS",
  "civilopedia": "TXT_KEY_BUILDING_PESTS_PEDIA",
- "obsoletes": {
+ "obsoletedBy": {
   "buildings": [
    "BUILDING_SCARECROWS"
+  ],
+  "techs": [
+   "TECH_VERTICAL_FARMING"
+  ]
+ },
+ "replacedBy": {
+  "buildings": [
+   "BUILDING_SCARECROWS",
+   "BUILDING_FARMSCRAPER_I"
   ]
  },
  "requires": {

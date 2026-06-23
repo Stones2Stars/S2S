@@ -2,7 +2,15 @@
  "type": "BUILDING_TEA_HOUSE",
  "description": "TXT_KEY_BUILDING_TEA_HOUSE",
  "civilopedia": "TXT_KEY_BUILDING_TEA_HOUSE_PEDIA",
- "obsoletes": {
+ "obsoletedBy": {
+  "buildings": [
+   "BUILDING_HYPERMARKET"
+  ],
+  "techs": [
+   "TECH_SMART_DUST"
+  ]
+ },
+ "replacedBy": {
   "buildings": [
    "BUILDING_HYPERMARKET"
   ]

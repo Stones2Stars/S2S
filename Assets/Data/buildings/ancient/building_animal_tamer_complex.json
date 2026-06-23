@@ -50,12 +50,6 @@
    "UNIT_TAMED_WOLF"
   ]
  },
- "replaces": {
-  "buildings": [
-   "BUILDING_DONKEY_BREEDER",
-   "BUILDING_HORSE_BREEDER"
-  ]
- },
  "requires": {
   "build": {
    "all": [

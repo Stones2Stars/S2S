@@ -9,12 +9,6 @@
    "BUILDING_TRADITION_HUNTER"
   ]
  },
- "replaces": {
-  "buildings": [
-   "BUILDING_HUNTING_INSTRUCTIONS",
-   "BUILDING_MASTER_HUNTER"
-  ]
- },
  "requires": {
   "build": {
    "all": [

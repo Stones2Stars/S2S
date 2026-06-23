@@ -28,10 +28,9 @@
    "BUILDING_SLOAN_DIGITAL_SKY_SURVEY"
   ]
  },
- "replaces": {
+ "replacedBy": {
   "buildings": [
-   "BUILDING_ASTROLOGY_SCHOOL",
-   "BUILDING_STARGAZERS_HUT"
+   "BUILDING_POLLUTION_BLACKENED_SKIES"
   ]
  },
  "requires": {

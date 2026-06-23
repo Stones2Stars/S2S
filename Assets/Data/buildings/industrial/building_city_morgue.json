@@ -2,7 +2,15 @@
  "type": "BUILDING_CITY_MORGUE",
  "description": "TXT_KEY_BUILDING_CITY_MORGUE",
  "civilopedia": "TXT_KEY_BUILDING_CITY_MORGUE_PEDIA",
- "obsoletes": {
+ "obsoletedBy": {
+  "buildings": [
+   "BUILDING_HIGH_TECH_CULTURAL_ENRICHMENT"
+  ],
+  "techs": [
+   "TECH_CULTURAL_EVOLUTION"
+  ]
+ },
+ "replacedBy": {
   "buildings": [
    "BUILDING_HIGH_TECH_CULTURAL_ENRICHMENT"
   ]

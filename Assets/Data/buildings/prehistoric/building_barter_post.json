@@ -72,9 +72,18 @@
    "BUILDING_WOODWIND_INSTRUMENT_MAKER"
   ]
  },
- "obsoletes": {
+ "obsoletedBy": {
   "buildings": [
    "BUILDING_TRADING_POST"
+  ],
+  "techs": [
+   "TECH_CONSUMERISM"
+  ]
+ },
+ "replacedBy": {
+  "buildings": [
+   "BUILDING_TRADING_POST",
+   "BUILDING_SHOPPING_DISTRICT"
   ]
  },
  "requires": {

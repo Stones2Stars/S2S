@@ -12,9 +12,18 @@
    "BUILDING_WEATHER_STATION"
   ]
  },
- "obsoletes": {
+ "obsoletedBy": {
   "buildings": [
    "BUILDING_COMMUNICATION_TOWER"
+  ],
+  "techs": [
+   "TECH_TERRA_COMPUTER"
+  ]
+ },
+ "replacedBy": {
+  "buildings": [
+   "BUILDING_COMMUNICATION_TOWER",
+   "BUILDING_NETWORK_NODE"
   ]
  },
  "requires": {

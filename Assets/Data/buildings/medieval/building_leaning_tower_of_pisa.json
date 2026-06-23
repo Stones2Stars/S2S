@@ -2,6 +2,11 @@
  "type": "BUILDING_LEANING_TOWER_OF_PISA",
  "description": "TXT_KEY_BUILDING_LEANING_TOWER_OF_PISA",
  "civilopedia": "TXT_KEY_BUILDING_LEANING_TOWER_OF_PISA_PEDIA",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_CIVIL_ENGINEERING"
+  ]
+ },
  "requires": {
   "build": {
    "all": [

@@ -2,14 +2,17 @@
  "type": "BUILDING_ACOUSTIC_CROWD_CONTROL",
  "description": "TXT_KEY_BUILDING_ACOUSTIC_CROWD_CONTROL",
  "civilopedia": "TXT_KEY_BUILDING_ACOUSTIC_CROWD_CONTROL_PEDIA",
- "obsoletes": {
+ "obsoletedBy": {
   "buildings": [
    "BUILDING_GRAVITY_CROWD_CONTROL"
+  ],
+  "techs": [
+   "TECH_ZERO_POINT_ENERGY"
   ]
  },
- "replaces": {
+ "replacedBy": {
   "buildings": [
-   "BUILDING_ACTIVE_DENIAL_SYSTEM"
+   "BUILDING_GRAVITY_CROWD_CONTROL"
   ]
  },
  "requires": {

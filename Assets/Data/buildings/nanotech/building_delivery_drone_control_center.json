@@ -2,7 +2,15 @@
  "type": "BUILDING_DELIVERY_DRONE_CONTROL_CENTER",
  "description": "TXT_KEY_BUILDING_DELIVERY_DRONE_CONTROL_CENTER",
  "civilopedia": "TXT_KEY_BUILDING_DELIVERY_DRONE_CONTROL_CENTER_PEDIA",
- "obsoletes": {
+ "obsoletedBy": {
+  "buildings": [
+   "BUILDING_TELEPORT_BOOTH"
+  ],
+  "techs": [
+   "TECH_WORMHOLE_HIVEMIND"
+  ]
+ },
+ "replacedBy": {
   "buildings": [
    "BUILDING_TELEPORT_BOOTH"
   ]

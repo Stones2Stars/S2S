@@ -2,9 +2,18 @@
  "type": "BUILDING_CONFECTIONERS_WORKSHOP",
  "description": "TXT_KEY_BUILDING_CONFECTIONERS_WORKSHOP",
  "civilopedia": "TXT_KEY_BUILDING_CONFECTIONERS_WORKSHOP_PEDIA",
- "obsoletes": {
+ "obsoletedBy": {
   "buildings": [
    "BUILDING_FACTORY_MARZIPAN"
+  ],
+  "techs": [
+   "TECH_AUGMENTED_CONSUMABLES"
+  ]
+ },
+ "replacedBy": {
+  "buildings": [
+   "BUILDING_FACTORY_MARZIPAN",
+   "BUILDING_FOOD_MANUFACTURING_DISTRICT"
   ]
  },
  "requires": {

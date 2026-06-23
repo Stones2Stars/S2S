@@ -40,7 +40,15 @@
    "BUILDING_STICK_COMBAT"
   ]
  },
- "obsoletes": {
+ "obsoletedBy": {
+  "buildings": [
+   "BUILDING_ANCIENT_CUSTOMS"
+  ],
+  "techs": [
+   "TECH_CITY_PLANNING"
+  ]
+ },
+ "replacedBy": {
   "buildings": [
    "BUILDING_ANCIENT_CUSTOMS"
   ]

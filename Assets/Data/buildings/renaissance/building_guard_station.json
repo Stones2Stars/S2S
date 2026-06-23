@@ -23,18 +23,19 @@
    "UNIT_WATCHER"
   ]
  },
- "obsoletes": {
+ "obsoletedBy": {
   "buildings": [
    "BUILDING_SHERIFFS_OFFICE"
+  ],
+  "techs": [
+   "TECH_CRIMINOLOGY"
   ]
  },
- "replaces": {
+ "replacedBy": {
   "buildings": [
-   "BUILDING_GUARDHOUSE",
-   "BUILDING_LOOKOUT_POST",
-   "BUILDING_SENTRY_POST",
-   "BUILDING_TOWN_PATROL",
-   "BUILDING_TOWN_WATCH"
+   "BUILDING_SHERIFFS_OFFICE",
+   "BUILDING_POLICE_STATION",
+   "BUILDING_POLICE_PRECINCT"
   ]
  },
  "requires": {

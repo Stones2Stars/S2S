@@ -12,14 +12,17 @@
    "BUILDING_SMOKE_SIGNALS"
   ]
  },
- "obsoletes": {
+ "obsoletedBy": {
   "buildings": [
    "BUILDING_CHARCOAL_BURNER"
+  ],
+  "techs": [
+   "TECH_FIRE_BRIGADES"
   ]
  },
- "replaces": {
+ "replacedBy": {
   "buildings": [
-   "BUILDING_FIRE_PIT"
+   "BUILDING_CHARCOAL_BURNER"
   ]
  },
  "requires": {

@@ -2,11 +2,6 @@
  "type": "BUILDING_ARMOURER",
  "description": "TXT_KEY_BUILDING_ARMOURER",
  "civilopedia": "TXT_KEY_BUILDING_ARMOURER_PEDIA",
- "replaces": {
-  "buildings": [
-   "BUILDING_BAMBOO_ARMOURER"
-  ]
- },
  "requires": {
   "build": {
    "all": [

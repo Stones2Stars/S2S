@@ -10,17 +10,17 @@
    "BUILDING_STATUE_OF_LIBERTY"
   ]
  },
- "obsoletes": {
+ "obsoletedBy": {
   "buildings": [
    "BUILDING_METALS_MEGACOMPLEX"
+  ],
+  "techs": [
+   "TECH_ATOMIC_SCALE_ENGINEERING"
   ]
  },
- "replaces": {
+ "replacedBy": {
   "buildings": [
-   "BUILDING_SMELTER_IRON",
-   "BUILDING_SMELTER_STEEL",
-   "BUILDING_SMITH_IRON",
-   "BUILDING_SMITH_STEEL"
+   "BUILDING_METALS_MEGACOMPLEX"
   ]
  },
  "requires": {

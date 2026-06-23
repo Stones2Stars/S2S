@@ -2,7 +2,15 @@
  "type": "BUILDING_FLIGHT_SIMULATOR",
  "description": "TXT_KEY_BUILDING_FLIGHT_SIMULATOR",
  "civilopedia": "TXT_KEY_BUILDING_FLIGHT_SIMULATOR_PEDIA",
- "obsoletes": {
+ "obsoletedBy": {
+  "buildings": [
+   "BUILDING_HOLOGRAPHIC_FLIGHT_SIMULATOR"
+  ],
+  "techs": [
+   "TECH_ASTROGATION_CONSTELLATION"
+  ]
+ },
+ "replacedBy": {
   "buildings": [
    "BUILDING_HOLOGRAPHIC_FLIGHT_SIMULATOR"
   ]

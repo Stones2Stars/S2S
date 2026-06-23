@@ -2,7 +2,15 @@
  "type": "BUILDING_LUXURY_FURNITURE_WORKSHOP",
  "description": "TXT_KEY_BUILDING_LUXURY_FURNITURE_WORKSHOP",
  "civilopedia": "TXT_KEY_BUILDING_LUXURY_FURNITURE_WORKSHOP_PEDIA",
- "obsoletes": {
+ "obsoletedBy": {
+  "buildings": [
+   "BUILDING_HYPERMARKET"
+  ],
+  "techs": [
+   "TECH_SMART_DUST"
+  ]
+ },
+ "replacedBy": {
   "buildings": [
    "BUILDING_HYPERMARKET"
   ]

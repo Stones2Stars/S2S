@@ -10,13 +10,16 @@
    "BUILDING_MAUSOLEUM"
   ]
  },
- "replaces": {
+ "obsoletedBy": {
+  "techs": [
+   "TECH_COLONY_ARCOLOGY"
+  ]
+ },
+ "replacedBy": {
   "buildings": [
-   "BUILDING_HOUSING_ANIMAL_HIDE_TENTS",
-   "BUILDING_HOUSING_HOMELESS",
-   "BUILDING_HOUSING_MANORS",
-   "BUILDING_HOUSING_TIPIS",
-   "BUILDING_HOUSING_VILLAS"
+   "BUILDING_HOUSING_CHATEAU",
+   "BUILDING_HOUSING_COLONY_ARCOLOGY",
+   "BUILDING_LAUNCH_ARCOLOGY"
   ]
  },
  "requires": {

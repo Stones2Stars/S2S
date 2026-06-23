@@ -18,14 +18,20 @@
    "BUILDING_VIADUCT"
   ]
  },
- "obsoletes": {
+ "obsoletedBy": {
   "buildings": [
    "BUILDING_PAVED_ROADS"
+  ],
+  "techs": [
+   "TECH_MOTORIZED_TRANSPORTATION"
   ]
  },
- "replaces": {
+ "replacedBy": {
   "buildings": [
-   "BUILDING_TRAILS"
+   "BUILDING_PAVED_ROADS",
+   "BUILDING_ASPHALT_ROADS",
+   "BUILDING_SKYROAD_CONTROL_TOWER",
+   "BUILDING_TELEPORT_BOOTH"
   ]
  },
  "requires": {

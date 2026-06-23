@@ -2,14 +2,17 @@
  "type": "BUILDING_QUANTUM_SUPERCOMPUTER",
  "description": "TXT_KEY_BUILDING_QUANTUM_SUPERCOMPUTER",
  "civilopedia": "TXT_KEY_BUILDING_QUANTUM_SUPERCOMPUTER_PEDIA",
- "obsoletes": {
+ "obsoletedBy": {
   "buildings": [
    "BUILDING_QUANTUM_GRAVITY_SUPERCOMPUTER"
+  ],
+  "techs": [
+   "TECH_STRING_MANIPULATION"
   ]
  },
- "replaces": {
+ "replacedBy": {
   "buildings": [
-   "BUILDING_EXPERIMENTAL_QUANTUM_COMPUTER"
+   "BUILDING_QUANTUM_GRAVITY_SUPERCOMPUTER"
   ]
  },
  "requires": {

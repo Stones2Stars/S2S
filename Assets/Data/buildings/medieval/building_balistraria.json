@@ -2,7 +2,15 @@
  "type": "BUILDING_BALISTRARIA",
  "description": "TXT_KEY_BUILDING_BALISTRARIA",
  "civilopedia": "TXT_KEY_BUILDING_BALISTRARIA_PEDIA",
- "obsoletes": {
+ "obsoletedBy": {
+  "buildings": [
+   "BUILDING_IMPERIAL_FORTRESS"
+  ],
+  "techs": [
+   "TECH_TRENCH_WARFARE"
+  ]
+ },
+ "replacedBy": {
   "buildings": [
    "BUILDING_IMPERIAL_FORTRESS"
   ]

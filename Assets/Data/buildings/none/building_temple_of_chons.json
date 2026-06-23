@@ -9,6 +9,11 @@
    "UNIT_RA_KNIGHT"
   ]
  },
+ "obsoletedBy": {
+  "techs": [
+   "TECH_MODERN_PHYSICS"
+  ]
+ },
  "requires": {
   "build": {
    "all": [

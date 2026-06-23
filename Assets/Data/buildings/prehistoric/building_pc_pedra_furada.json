@@ -2,9 +2,9 @@
  "type": "BUILDING_PC_PEDRA_FURADA",
  "description": "TXT_KEY_BUILDING_PC_PEDRA_FURADA",
  "civilopedia": "TXT_KEY_BUILDING_PC_PEDRA_FURADA_PEDIA",
- "replaces": {
-  "buildings": [
-   "BUILDING_CAVE_SHELTER"
+ "obsoletedBy": {
+  "techs": [
+   "TECH_SEDENTARY_LIFESTYLE"
   ]
  },
  "requires": {

@@ -8,9 +8,18 @@
    "BUILDING_SLAVE_COMPOUND_ENTERTAINMENT"
   ]
  },
- "obsoletes": {
+ "obsoletedBy": {
   "buildings": [
    "BUILDING_SCHOOL_OF_SCRIBES"
+  ],
+  "techs": [
+   "TECH_LITERATURE"
+  ]
+ },
+ "replacedBy": {
+  "buildings": [
+   "BUILDING_SCHOOL_OF_SCRIBES",
+   "BUILDING_LIBRARY"
   ]
  },
  "requires": {

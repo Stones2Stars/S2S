@@ -7,7 +7,15 @@
    "BUILDING_TUMEN_AMUGULANG_PALACE"
   ]
  },
- "obsoletes": {
+ "obsoletedBy": {
+  "buildings": [
+   "BUILDING_CITY_PARK"
+  ],
+  "techs": [
+   "TECH_ECOLOGY"
+  ]
+ },
+ "replacedBy": {
   "buildings": [
    "BUILDING_CITY_PARK"
   ]

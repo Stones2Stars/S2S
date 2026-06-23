@@ -9,14 +9,18 @@
    "BUILDING_RESOURCES_FEATHERS"
   ]
  },
- "obsoletes": {
+ "obsoletedBy": {
   "buildings": [
    "BUILDING_INDUSTRIAL_FARMS"
+  ],
+  "techs": [
+   "TECH_REPLACEMENT_ORGANS"
   ]
  },
- "replaces": {
+ "replacedBy": {
   "buildings": [
-   "BUILDING_NEST_THIEF"
+   "BUILDING_INDUSTRIAL_FARMS",
+   "BUILDING_MEAT_INDUSTRY_CONGLOMERATE"
   ]
  },
  "requires": {

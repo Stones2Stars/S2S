@@ -11,6 +11,11 @@
    "UNIT_MAPINGUARI_WOODEN"
   ]
  },
+ "replacedBy": {
+  "buildings": [
+   "BUILDING_MAPINGUARI_CHANGING_OF_THE_GUARD_CEREMONY"
+  ]
+ },
  "requires": {
   "build": {
    "all": [

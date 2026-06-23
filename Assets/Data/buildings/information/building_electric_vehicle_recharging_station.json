@@ -2,9 +2,18 @@
  "type": "BUILDING_ELECTRIC_VEHICLE_RECHARGING_STATION",
  "description": "TXT_KEY_BUILDING_ELECTRIC_VEHICLE_RECHARGING_STATION",
  "civilopedia": "TXT_KEY_BUILDING_ELECTRIC_VEHICLE_RECHARGING_STATION_PEDIA",
- "obsoletes": {
+ "obsoletedBy": {
   "buildings": [
    "BUILDING_WIRELESS_EV_CHARGING"
+  ],
+  "techs": [
+   "TECH_TELEPORTATION"
+  ]
+ },
+ "replacedBy": {
+  "buildings": [
+   "BUILDING_WIRELESS_EV_CHARGING",
+   "BUILDING_TELEPORT_BOOTH"
   ]
  },
  "requires": {

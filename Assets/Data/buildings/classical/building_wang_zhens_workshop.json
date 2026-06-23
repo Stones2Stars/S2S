@@ -2,6 +2,11 @@
  "type": "BUILDING_WANG_ZHENS_WORKSHOP",
  "description": "TXT_KEY_BUILDING_WANG_ZHENS_WORKSHOP",
  "civilopedia": "TXT_KEY_BUILDING_WANG_ZHENS_WORKSHOP_PEDIA",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_STEAM_POWER"
+  ]
+ },
  "requires": {
   "build": {
    "all": [

@@ -13,9 +13,18 @@
    "UNIT_WARCAT"
   ]
  },
- "obsoletes": {
+ "obsoletedBy": {
   "buildings": [
    "BUILDING_GARRISON"
+  ],
+  "techs": [
+   "TECH_LOGISTICS"
+  ]
+ },
+ "replacedBy": {
+  "buildings": [
+   "BUILDING_GARRISON",
+   "BUILDING_MILITARY_BASE"
   ]
  },
  "requires": {

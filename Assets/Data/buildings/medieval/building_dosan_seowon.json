@@ -2,6 +2,11 @@
  "type": "BUILDING_DOSAN_SEOWON",
  "description": "TXT_KEY_BUILDING_DOSAN_SEOWON",
  "civilopedia": "TXT_KEY_BUILDING_DOSAN_SEOWON_PEDIA",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_COMPULSORY_EDUCATION"
+  ]
+ },
  "requires": {
   "build": {
    "all": [

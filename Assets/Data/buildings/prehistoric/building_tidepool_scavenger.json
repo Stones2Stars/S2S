@@ -2,9 +2,18 @@
  "type": "BUILDING_TIDEPOOL_SCAVENGER",
  "description": "TXT_KEY_BUILDING_TIDEPOOL_SCAVENGER",
  "civilopedia": "TXT_KEY_BUILDING_TIDEPOOL_SCAVENGER_PEDIA",
- "obsoletes": {
+ "obsoletedBy": {
   "buildings": [
    "BUILDING_FISHERMANS_HUT"
+  ],
+  "techs": [
+   "TECH_AQUACULTURE"
+  ]
+ },
+ "replacedBy": {
+  "buildings": [
+   "BUILDING_FISHERMANS_HUT",
+   "BUILDING_AQUAFARM"
   ]
  },
  "requires": {

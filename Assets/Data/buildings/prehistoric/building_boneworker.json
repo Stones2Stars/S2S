@@ -2,6 +2,11 @@
  "type": "BUILDING_BONEWORKER",
  "description": "TXT_KEY_BUILDING_BONEWORKER",
  "civilopedia": "TXT_KEY_BUILDING_BONEWORKER_PEDIA",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_CITY_PLANNING"
+  ]
+ },
  "requires": {
   "build": {
    "all": [

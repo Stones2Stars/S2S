@@ -2,6 +2,11 @@
  "type": "BUILDING_SAFETY_MAXIMUM_SECURITY_PRISON",
  "description": "TXT_KEY_BUILDING_SAFETY_MAXIMUM_SECURITY_PRISON",
  "civilopedia": "TXT_KEY_BUILDING_SAFETY_MAXIMUM_SECURITY_PRISON_PEDIA",
+ "replacedBy": {
+  "buildings": [
+   "BUILDING_SAFETY_ORBITAL_PRISON"
+  ]
+ },
  "requires": {
   "build": {
    "all": [

@@ -2,6 +2,11 @@
  "type": "BUILDING_PANOPTICON_PRISON",
  "description": "TXT_KEY_BUILDING_PANOPTICON_PRISON",
  "civilopedia": "TXT_KEY_BUILDING_PANOPTICON_PRISON_PEDIA",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_CRYONICS"
+  ]
+ },
  "requires": {
   "build": {
    "all": [

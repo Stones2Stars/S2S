@@ -10,14 +10,17 @@
    "UNIT_KARAI_PYHARE"
   ]
  },
- "obsoletes": {
+ "obsoletedBy": {
   "buildings": [
    "BUILDING_BIOMETRIC_SECURITY_SYSTEM"
+  ],
+  "techs": [
+   "TECH_BINARY_LEGISLATION"
   ]
  },
- "replaces": {
+ "replacedBy": {
   "buildings": [
-   "BUILDING_LOCKSMITH"
+   "BUILDING_BIOMETRIC_SECURITY_SYSTEM"
   ]
  },
  "requires": {

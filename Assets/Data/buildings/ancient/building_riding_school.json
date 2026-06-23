@@ -2,7 +2,15 @@
  "type": "BUILDING_RIDING_SCHOOL",
  "description": "TXT_KEY_BUILDING_RIDING_SCHOOL",
  "civilopedia": "TXT_KEY_BUILDING_RIDING_SCHOOL_PEDIA",
- "obsoletes": {
+ "obsoletedBy": {
+  "buildings": [
+   "BUILDING_HOLOGRAPHIC_SCHOOL"
+  ],
+  "techs": [
+   "TECH_MIND_UPLOADING"
+  ]
+ },
+ "replacedBy": {
   "buildings": [
    "BUILDING_HOLOGRAPHIC_SCHOOL"
   ]

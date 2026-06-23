@@ -9,6 +9,11 @@
    "BUILDING_INTERSTELLAR_DYSON_SWARM"
   ]
  },
+ "replacedBy": {
+  "buildings": [
+   "BUILDING_SPACE_COLONY_MILKY_WAY"
+  ]
+ },
  "requires": {
   "build": {
    "all": [

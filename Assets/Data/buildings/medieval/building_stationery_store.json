@@ -2,7 +2,15 @@
  "type": "BUILDING_STATIONERY_STORE",
  "description": "TXT_KEY_BUILDING_STATIONERY_STORE",
  "civilopedia": "TXT_KEY_BUILDING_STATIONERY_STORE_PEDIA",
- "obsoletes": {
+ "obsoletedBy": {
+  "buildings": [
+   "BUILDING_HYPERMARKET"
+  ],
+  "techs": [
+   "TECH_SMART_DUST"
+  ]
+ },
+ "replacedBy": {
   "buildings": [
    "BUILDING_HYPERMARKET"
   ]

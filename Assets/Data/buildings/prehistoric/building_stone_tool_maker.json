@@ -7,7 +7,15 @@
    "BUILDING_FLINT_KNAPPER"
   ]
  },
- "obsoletes": {
+ "obsoletedBy": {
+  "buildings": [
+   "BUILDING_ANTIQUE_SHOP"
+  ],
+  "techs": [
+   "TECH_INDUSTRIALISM"
+  ]
+ },
+ "replacedBy": {
   "buildings": [
    "BUILDING_ANTIQUE_SHOP"
   ]

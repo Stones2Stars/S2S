@@ -2,9 +2,18 @@
  "type": "BUILDING_RESOURCES_BUGS",
  "description": "TXT_KEY_BUILDING_RESOURCES_BUGS",
  "civilopedia": "TXT_KEY_BUILDING_RESOURCE_PROVIDER_PEDIA",
- "obsoletes": {
+ "obsoletedBy": {
   "buildings": [
    "BUILDING_ARBORETUM"
+  ],
+  "techs": [
+   "TECH_ENVIRONMENTAL_ECONOMICS"
+  ]
+ },
+ "replacedBy": {
+  "buildings": [
+   "BUILDING_ARBORETUM",
+   "BUILDING_AGROFOREST"
   ]
  },
  "requires": {

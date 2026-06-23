@@ -2,6 +2,11 @@
  "type": "BUILDING_TREE_PLATFORMS",
  "description": "TXT_KEY_BUILDING_TREE_PLATFORMS",
  "civilopedia": "TXT_KEY_BUILDING_TREE_PLATFORMS_PEDIA",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_CITY_PLANNING"
+  ]
+ },
  "requires": {
   "build": {
    "all": [

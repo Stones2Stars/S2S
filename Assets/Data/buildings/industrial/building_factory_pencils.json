@@ -2,7 +2,15 @@
  "type": "BUILDING_FACTORY_PENCILS",
  "description": "TXT_KEY_BUILDING_FACTORY_PENCILS",
  "civilopedia": "TXT_KEY_BUILDING_FACTORY_PENCILS_PEDIA",
- "obsoletes": {
+ "obsoletedBy": {
+  "buildings": [
+   "BUILDING_MANUFACTURING_DISTRICT"
+  ],
+  "techs": [
+   "TECH_NANOROBOTICS"
+  ]
+ },
+ "replacedBy": {
   "buildings": [
    "BUILDING_MANUFACTURING_DISTRICT"
   ]

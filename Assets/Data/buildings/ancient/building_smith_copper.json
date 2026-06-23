@@ -2,9 +2,18 @@
  "type": "BUILDING_SMITH_COPPER",
  "description": "TXT_KEY_BUILDING_SMITH_COPPER",
  "civilopedia": "TXT_KEY_BUILDING_SMITH_COPPER_PEDIA",
- "obsoletes": {
+ "obsoletedBy": {
   "buildings": [
    "BUILDING_ADVANCED_COPPERWORKS"
+  ],
+  "techs": [
+   "TECH_NANOMINING"
+  ]
+ },
+ "replacedBy": {
+  "buildings": [
+   "BUILDING_ADVANCED_COPPERWORKS",
+   "BUILDING_METALS_MEGACOMPLEX"
   ]
  },
  "requires": {

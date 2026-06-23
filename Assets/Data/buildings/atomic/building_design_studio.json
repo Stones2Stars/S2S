@@ -15,7 +15,15 @@
    "UNIT_SOFTWARE_DEVELOPER"
   ]
  },
- "obsoletes": {
+ "obsoletedBy": {
+  "buildings": [
+   "BUILDING_ELECTRONICS_MANUFACTURING_DISTRICT"
+  ],
+  "techs": [
+   "TECH_NANOELECTRONICS"
+  ]
+ },
+ "replacedBy": {
   "buildings": [
    "BUILDING_ELECTRONICS_MANUFACTURING_DISTRICT"
   ]

@@ -9,6 +9,11 @@
    "BUILDING_ENCLOSURE_WOLF"
   ]
  },
+ "replacedBy": {
+  "buildings": [
+   "BUILDING_ZOO"
+  ]
+ },
  "requires": {
   "build": {
    "all": [

@@ -2,7 +2,15 @@
  "type": "BUILDING_OSMOTIC_POWER_PLANT",
  "description": "TXT_KEY_BUILDING_OSMOTIC_POWER_PLANT",
  "civilopedia": "TXT_KEY_BUILDING_OSMOTIC_POWER_PLANT_PEDIA",
- "obsoletes": {
+ "obsoletedBy": {
+  "buildings": [
+   "BUILDING_RENEWABLE_MEGACOMPLEX"
+  ],
+  "techs": [
+   "TECH_FEMTOTECHNOLOGY"
+  ]
+ },
+ "replacedBy": {
   "buildings": [
    "BUILDING_RENEWABLE_MEGACOMPLEX"
   ]

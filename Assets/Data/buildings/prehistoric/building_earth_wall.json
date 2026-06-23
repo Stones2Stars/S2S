@@ -2,14 +2,18 @@
  "type": "BUILDING_EARTH_WALL",
  "description": "TXT_KEY_BUILDING_EARTH_WALL",
  "civilopedia": "TXT_KEY_BUILDING_EARTH_WALL_PEDIA",
- "obsoletes": {
+ "obsoletedBy": {
   "buildings": [
    "BUILDING_WALLS"
+  ],
+  "techs": [
+   "TECH_SIEGE_WARFARE"
   ]
  },
- "replaces": {
+ "replacedBy": {
   "buildings": [
-   "BUILDING_PALISADE"
+   "BUILDING_WALLS",
+   "BUILDING_HIGH_WALLS"
   ]
  },
  "requires": {

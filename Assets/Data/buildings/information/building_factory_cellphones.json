@@ -8,7 +8,15 @@
    "BUILDING_TABLET_MANUFACTURER"
   ]
  },
- "obsoletes": {
+ "obsoletedBy": {
+  "buildings": [
+   "BUILDING_ELECTRONICS_MANUFACTURING_DISTRICT"
+  ],
+  "techs": [
+   "TECH_NANOELECTRONICS"
+  ]
+ },
+ "replacedBy": {
   "buildings": [
    "BUILDING_ELECTRONICS_MANUFACTURING_DISTRICT"
   ]

@@ -14,15 +14,6 @@
    "BUILDING_WEMBLEY_STADIUM"
   ]
  },
- "replaces": {
-  "buildings": [
-   "BUILDING_ARENA",
-   "BUILDING_BALL_COURT",
-   "BUILDING_COLOSSEUM",
-   "BUILDING_FIGHTING_PIT",
-   "BUILDING_MINOR_LEAGUE_STADIUM"
-  ]
- },
  "requires": {
   "build": {
    "all": [

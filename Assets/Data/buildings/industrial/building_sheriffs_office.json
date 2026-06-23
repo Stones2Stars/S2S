@@ -25,20 +25,18 @@
    "UNIT_WATCHER"
   ]
  },
- "obsoletes": {
+ "obsoletedBy": {
   "buildings": [
    "BUILDING_POLICE_STATION"
+  ],
+  "techs": [
+   "TECH_FORENSICS"
   ]
  },
- "replaces": {
+ "replacedBy": {
   "buildings": [
-   "BUILDING_BAILIWICK",
-   "BUILDING_GUARDHOUSE",
-   "BUILDING_GUARD_STATION",
-   "BUILDING_LOOKOUT_POST",
-   "BUILDING_SENTRY_POST",
-   "BUILDING_TOWN_PATROL",
-   "BUILDING_TOWN_WATCH"
+   "BUILDING_POLICE_STATION",
+   "BUILDING_POLICE_PRECINCT"
   ]
  },
  "requires": {

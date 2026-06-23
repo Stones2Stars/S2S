@@ -2,7 +2,15 @@
  "type": "BUILDING_CAR_WASH",
  "description": "TXT_KEY_BUILDING_CAR_WASH",
  "civilopedia": "TXT_KEY_BUILDING_CAR_WASH_PEDIA",
- "obsoletes": {
+ "obsoletedBy": {
+  "buildings": [
+   "BUILDING_HYPERMARKET"
+  ],
+  "techs": [
+   "TECH_SMART_DUST"
+  ]
+ },
+ "replacedBy": {
   "buildings": [
    "BUILDING_HYPERMARKET"
   ]

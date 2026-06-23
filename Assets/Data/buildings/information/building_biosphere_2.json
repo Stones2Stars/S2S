@@ -2,6 +2,11 @@
  "type": "BUILDING_BIOSPHERE_2",
  "description": "TXT_KEY_BUILDING_BIOSPHERE_2",
  "civilopedia": "TXT_KEY_BUILDING_BIOSPHERE_2_PEDIA",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_WEATHER_CONTROL"
+  ]
+ },
  "requires": {
   "build": {
    "all": [

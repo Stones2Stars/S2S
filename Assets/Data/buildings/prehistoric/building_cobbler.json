@@ -2,9 +2,18 @@
  "type": "BUILDING_COBBLER",
  "description": "TXT_KEY_BUILDING_COBBLER",
  "civilopedia": "TXT_KEY_BUILDING_COBBLER_PEDIA",
- "obsoletes": {
+ "obsoletedBy": {
   "buildings": [
    "BUILDING_FACTORY_SHOES"
+  ],
+  "techs": [
+   "TECH_RAPID_PROTOTYPING"
+  ]
+ },
+ "replacedBy": {
+  "buildings": [
+   "BUILDING_FACTORY_SHOES",
+   "BUILDING_TEXTILE_MANUFACTURING_DISTRICT"
   ]
  },
  "requires": {

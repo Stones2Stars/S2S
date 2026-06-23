@@ -2,6 +2,11 @@
  "type": "BUILDING_DANCE_FOX",
  "description": "TXT_KEY_BUILDING_DANCE_FOX",
  "civilopedia": "TXT_KEY_BUILDING_DANCE_FOX_PEDIA",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_MIND_UPLOADING"
+  ]
+ },
  "requires": {
   "build": {
    "all": [

@@ -2,9 +2,18 @@
  "type": "BUILDING_PRINTERS_WORKSHOP",
  "description": "TXT_KEY_BUILDING_PRINTERS_WORKSHOP",
  "civilopedia": "TXT_KEY_BUILDING_PRINTERS_WORKSHOP_PEDIA",
- "obsoletes": {
+ "obsoletedBy": {
   "buildings": [
    "BUILDING_FACTORY_BOOKS"
+  ],
+  "techs": [
+   "TECH_RAPID_PROTOTYPING"
+  ]
+ },
+ "replacedBy": {
+  "buildings": [
+   "BUILDING_FACTORY_BOOKS",
+   "BUILDING_MANUFACTURING_DISTRICT"
   ]
  },
  "requires": {

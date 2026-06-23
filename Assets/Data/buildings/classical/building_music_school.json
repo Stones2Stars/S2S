@@ -7,11 +7,6 @@
    "BUILDING_SLAVE_COMPOUND_ENTERTAINMENT"
   ]
  },
- "replaces": {
-  "buildings": [
-   "BUILDING_MUSIC_HUT"
-  ]
- },
  "requires": {
   "build": {
    "all": [

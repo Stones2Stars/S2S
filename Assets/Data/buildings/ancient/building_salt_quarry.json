@@ -2,7 +2,15 @@
  "type": "BUILDING_SALT_QUARRY",
  "description": "TXT_KEY_BUILDING_SALT_QUARRY",
  "civilopedia": "TXT_KEY_BUILDING_SALT_QUARRY_PEDIA",
- "obsoletes": {
+ "obsoletedBy": {
+  "buildings": [
+   "BUILDING_MATERIALS_CONGLOMERATE"
+  ],
+  "techs": [
+   "TECH_SMART_DUST"
+  ]
+ },
+ "replacedBy": {
   "buildings": [
    "BUILDING_MATERIALS_CONGLOMERATE"
   ]

@@ -2,7 +2,15 @@
  "type": "BUILDING_THUMBSCREW",
  "description": "TXT_KEY_BUILDING_THUMBSCREW",
  "civilopedia": "TXT_KEY_BUILDING_THUMBSCREW_PEDIA",
- "obsoletes": {
+ "obsoletedBy": {
+  "buildings": [
+   "BUILDING_JAIL"
+  ],
+  "techs": [
+   "TECH_PSYCHOLOGY"
+  ]
+ },
+ "replacedBy": {
   "buildings": [
    "BUILDING_JAIL"
   ]

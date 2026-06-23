@@ -2,7 +2,15 @@
  "type": "BUILDING_DRIED_FRUIT_MAKER",
  "description": "TXT_KEY_BUILDING_DRIED_FRUIT_MAKER",
  "civilopedia": "TXT_KEY_BUILDING_DRIED_FRUIT_MAKER_PEDIA",
- "obsoletes": {
+ "obsoletedBy": {
+  "buildings": [
+   "BUILDING_FARMSCRAPER_III"
+  ],
+  "techs": [
+   "TECH_GAIA_ECOLOGY"
+  ]
+ },
+ "replacedBy": {
   "buildings": [
    "BUILDING_FARMSCRAPER_III"
   ]

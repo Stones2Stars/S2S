@@ -2,9 +2,19 @@
  "type": "BUILDING_MONUMENT",
  "description": "TXT_KEY_BUILDING_MONUMENT",
  "civilopedia": "TXT_KEY_BUILDING_MONUMENT_PEDIA",
- "obsoletes": {
+ "obsoletedBy": {
   "buildings": [
    "BUILDING_STELE"
+  ],
+  "techs": [
+   "TECH_MODERN_SANITATION"
+  ]
+ },
+ "replacedBy": {
+  "buildings": [
+   "BUILDING_STELE",
+   "BUILDING_FUNERARY_SERVICES",
+   "BUILDING_HIGH_TECH_CULTURAL_ENRICHMENT"
   ]
  },
  "requires": {

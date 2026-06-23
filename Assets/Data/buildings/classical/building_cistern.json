@@ -2,9 +2,18 @@
  "type": "BUILDING_CISTERN",
  "description": "TXT_KEY_BUILDING_CISTERN",
  "civilopedia": "TXT_KEY_BUILDING_CISTERN_PEDIA",
- "obsoletes": {
+ "obsoletedBy": {
   "buildings": [
    "BUILDING_RESERVOIR"
+  ],
+  "techs": [
+   "TECH_NEW_URBANISM"
+  ]
+ },
+ "replacedBy": {
+  "buildings": [
+   "BUILDING_RESERVOIR",
+   "BUILDING_MODERN_WATERWORKS"
   ]
  },
  "requires": {

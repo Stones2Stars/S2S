@@ -56,11 +56,6 @@
    "BUILDING_WIKIA"
   ]
  },
- "replaces": {
-  "buildings": [
-   "BUILDING_VIDEOPHONE_NETWORK"
-  ]
- },
  "requires": {
   "build": {
    "all": [

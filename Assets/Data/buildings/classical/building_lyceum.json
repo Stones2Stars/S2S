@@ -2,19 +2,18 @@
  "type": "BUILDING_LYCEUM",
  "description": "TXT_KEY_BUILDING_LYCEUM",
  "civilopedia": "TXT_KEY_BUILDING_LYCEUM_PEDIA",
- "obsoletes": {
+ "obsoletedBy": {
   "buildings": [
    "BUILDING_ELEMENTARY_SCHOOL"
+  ],
+  "techs": [
+   "TECH_HOLOGRAPHICS"
   ]
  },
- "replaces": {
+ "replacedBy": {
   "buildings": [
-   "BUILDING_COUNTING_STICKS",
-   "BUILDING_ELDER_COUNCIL",
-   "BUILDING_KNOWLEDGE_INHERITANCE",
-   "BUILDING_SAND_PAINTINGS",
-   "BUILDING_SCHOOL_OF_RHETORIC",
-   "BUILDING_TALLY_STONE"
+   "BUILDING_ELEMENTARY_SCHOOL",
+   "BUILDING_HOLOGRAPHIC_SCHOOL"
   ]
  },
  "requires": {

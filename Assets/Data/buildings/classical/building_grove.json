@@ -2,9 +2,18 @@
  "type": "BUILDING_GROVE",
  "description": "TXT_KEY_BUILDING_GROVE",
  "civilopedia": "TXT_KEY_BUILDING_GROVE_PEDIA",
- "obsoletes": {
+ "obsoletedBy": {
   "buildings": [
    "BUILDING_CASTLE_GARDEN"
+  ],
+  "techs": [
+   "TECH_CIVIL_ENGINEERING"
+  ]
+ },
+ "replacedBy": {
+  "buildings": [
+   "BUILDING_CASTLE_GARDEN",
+   "BUILDING_CITY_PARK"
   ]
  },
  "requires": {

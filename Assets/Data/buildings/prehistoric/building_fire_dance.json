@@ -7,6 +7,11 @@
    "BUILDING_GRAND_FIRE_FESTIVAL"
   ]
  },
+ "obsoletedBy": {
+  "techs": [
+   "TECH_FOLK_DANCE"
+  ]
+ },
  "requires": {
   "build": {
    "all": [

@@ -2,11 +2,6 @@
  "type": "BUILDING_SPONGE_FARM",
  "description": "TXT_KEY_BUILDING_SPONGE_FARM",
  "civilopedia": "TXT_KEY_BUILDING_SPONGE_FARM_PEDIA",
- "replaces": {
-  "buildings": [
-   "BUILDING_SPONGE_GATHERER"
-  ]
- },
  "requires": {
   "build": {
    "all": [

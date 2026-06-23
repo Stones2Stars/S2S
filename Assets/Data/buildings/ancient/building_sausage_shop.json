@@ -2,9 +2,18 @@
  "type": "BUILDING_SAUSAGE_SHOP",
  "description": "TXT_KEY_BUILDING_SAUSAGE_SHOP",
  "civilopedia": "TXT_KEY_BUILDING_SAUSAGE_SHOP_PEDIA",
- "obsoletes": {
+ "obsoletedBy": {
   "buildings": [
    "BUILDING_FACTORY_SAUSAGE"
+  ],
+  "techs": [
+   "TECH_AUGMENTED_CONSUMABLES"
+  ]
+ },
+ "replacedBy": {
+  "buildings": [
+   "BUILDING_FACTORY_SAUSAGE",
+   "BUILDING_FOOD_MANUFACTURING_DISTRICT"
   ]
  },
  "requires": {

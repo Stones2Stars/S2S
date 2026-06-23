@@ -2,9 +2,19 @@
  "type": "BUILDING_ANCIENT_EMBALMER",
  "description": "TXT_KEY_BUILDING_ANCIENT_EMBALMER",
  "civilopedia": "TXT_KEY_BUILDING_ANCIENT_EMBALMER_PEDIA",
- "obsoletes": {
+ "obsoletedBy": {
   "buildings": [
    "BUILDING_MODERN_EMBALMER"
+  ],
+  "techs": [
+   "TECH_MODERN_SANITATION"
+  ]
+ },
+ "replacedBy": {
+  "buildings": [
+   "BUILDING_FUNERARY_SERVICES",
+   "BUILDING_MODERN_EMBALMER",
+   "BUILDING_HIGH_TECH_CULTURAL_ENRICHMENT"
   ]
  },
  "requires": {

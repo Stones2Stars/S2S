@@ -12,16 +12,18 @@
    "BUILDING_SPICE_VOYAGE"
   ]
  },
- "obsoletes": {
+ "obsoletedBy": {
   "buildings": [
    "BUILDING_INTERNATIONAL_PORT"
+  ],
+  "techs": [
+   "TECH_ABYSS_COLONIZATION"
   ]
  },
- "replaces": {
+ "replacedBy": {
   "buildings": [
-   "BUILDING_HARBOR",
-   "BUILDING_PORT",
-   "BUILDING_SPEARFISHER"
+   "BUILDING_INTERNATIONAL_PORT",
+   "BUILDING_OCEAN_ADMINISTRATION"
   ]
  },
  "requires": {

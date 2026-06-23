@@ -2,11 +2,6 @@
  "type": "BUILDING_DEACIDIFICATION_STATION",
  "description": "TXT_KEY_BUILDING_DEACIDIFICATION_STATION",
  "civilopedia": "TXT_KEY_BUILDING_DEACIDIFICATION_STATION_PEDIA",
- "replaces": {
-  "buildings": [
-   "BUILDING_POLLUTION_ACID_RAIN"
-  ]
- },
  "requires": {
   "build": {
    "all": [

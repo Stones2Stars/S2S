@@ -28,14 +28,17 @@
    "BUILDING_TOWNCLOCK"
   ]
  },
- "obsoletes": {
+ "obsoletedBy": {
   "buildings": [
    "BUILDING_METALS_MEGACOMPLEX"
+  ],
+  "techs": [
+   "TECH_ATOMIC_SCALE_ENGINEERING"
   ]
  },
- "replaces": {
+ "replacedBy": {
   "buildings": [
-   "BUILDING_FORGE"
+   "BUILDING_METALS_MEGACOMPLEX"
   ]
  },
  "requires": {

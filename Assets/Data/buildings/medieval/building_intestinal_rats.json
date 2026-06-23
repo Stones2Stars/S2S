@@ -2,7 +2,15 @@
  "type": "BUILDING_INTESTINAL_RATS",
  "description": "TXT_KEY_BUILDING_INTESTINAL_RATS",
  "civilopedia": "TXT_KEY_BUILDING_INTESTINAL_RATS_PEDIA",
- "obsoletes": {
+ "obsoletedBy": {
+  "buildings": [
+   "BUILDING_JAIL"
+  ],
+  "techs": [
+   "TECH_PSYCHOLOGY"
+  ]
+ },
+ "replacedBy": {
   "buildings": [
    "BUILDING_JAIL"
   ]

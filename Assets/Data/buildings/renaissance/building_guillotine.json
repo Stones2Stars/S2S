@@ -7,16 +7,18 @@
    "BUILDING_DEBTORS_PRISON"
   ]
  },
- "obsoletes": {
+ "obsoletedBy": {
   "buildings": [
    "BUILDING_ELECTRIC_CHAIR"
+  ],
+  "techs": [
+   "TECH_MODERN_HEALTH_CARE"
   ]
  },
- "replaces": {
+ "replacedBy": {
   "buildings": [
-   "BUILDING_CRUCIFIXION_CROSSES",
-   "BUILDING_GALLOWS",
-   "BUILDING_PUBLIC_STONING"
+   "BUILDING_ELECTRIC_CHAIR",
+   "BUILDING_LETHAL_INJECTION"
   ]
  },
  "requires": {

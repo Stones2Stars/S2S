@@ -2,7 +2,15 @@
  "type": "BUILDING_LOCAL_COURTHOUSE",
  "description": "TXT_KEY_BUILDING_LOCAL_COURTHOUSE",
  "civilopedia": "TXT_KEY_BUILDING_LOCAL_COURTHOUSE_PEDIA",
- "obsoletes": {
+ "obsoletedBy": {
+  "buildings": [
+   "BUILDING_AI_LEGAL_SYSTEM"
+  ],
+  "techs": [
+   "TECH_NANOTROIDS"
+  ]
+ },
+ "replacedBy": {
   "buildings": [
    "BUILDING_AI_LEGAL_SYSTEM"
   ]

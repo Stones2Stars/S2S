@@ -10,12 +10,6 @@
    "UNIT_KARAI_PYHARE"
   ]
  },
- "replaces": {
-  "buildings": [
-   "BUILDING_ELECTRONIC_SECURITY_SYSTEM",
-   "BUILDING_LOCKSMITH"
-  ]
- },
  "requires": {
   "build": {
    "all": [

@@ -19,8 +19,17 @@
    "UNIT_TAMED_MAMMOTH"
   ]
  },
- "obsoletes": {
+ "obsoletedBy": {
   "buildings": [
+   "BUILDING_KNIGHTS_STABLE"
+  ],
+  "techs": [
+   "TECH_CAVALRY_TACTICS"
+  ]
+ },
+ "replacedBy": {
+  "buildings": [
+   "BUILDING_MODERN_STABLE",
    "BUILDING_KNIGHTS_STABLE"
   ]
  },

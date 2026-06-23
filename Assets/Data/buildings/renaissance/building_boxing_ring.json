@@ -2,7 +2,15 @@
  "type": "BUILDING_BOXING_RING",
  "description": "TXT_KEY_BUILDING_BOXING_RING",
  "civilopedia": "TXT_KEY_BUILDING_BOXING_RING_PEDIA",
- "obsoletes": {
+ "obsoletedBy": {
+  "buildings": [
+   "BUILDING_ATHLETIC_MEGACOMPLEX"
+  ],
+  "techs": [
+   "TECH_WEATHER_CONTROL"
+  ]
+ },
+ "replacedBy": {
   "buildings": [
    "BUILDING_ATHLETIC_MEGACOMPLEX"
   ]

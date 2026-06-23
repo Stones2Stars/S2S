@@ -2,7 +2,15 @@
  "type": "BUILDING_HEDGE_FUND",
  "description": "TXT_KEY_BUILDING_HEDGE_FUND",
  "civilopedia": "TXT_KEY_BUILDING_HEDGE_FUND_PEDIA",
- "obsoletes": {
+ "obsoletedBy": {
+  "buildings": [
+   "BUILDING_INTERTEMPORAL_STOCK_MARKET"
+  ],
+  "techs": [
+   "TECH_ATEMPORAL_BEINGS"
+  ]
+ },
+ "replacedBy": {
   "buildings": [
    "BUILDING_INTERTEMPORAL_STOCK_MARKET"
   ]

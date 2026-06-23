@@ -2,6 +2,11 @@
  "type": "BUILDING_MUIDERSLOT_CASTLE",
  "description": "TXT_KEY_BUILDING_MUIDERSLOT_CASTLE",
  "civilopedia": "TXT_KEY_BUILDING_MUIDERSLOT_CASTLE_PEDIA",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_NATIONALISM"
+  ]
+ },
  "requires": {
   "build": {
    "all": [

@@ -2,11 +2,6 @@
  "type": "BUILDING_BATTLEMECH_ARENA",
  "description": "TXT_KEY_BUILDING_BATTLEMECH_ARENA",
  "civilopedia": "TXT_KEY_BUILDING_BATTLEMECH_ARENA_PEDIA",
- "replaces": {
-  "buildings": [
-   "BUILDING_BATTLEBOT_ARENA"
-  ]
- },
  "requires": {
   "build": {
    "all": [

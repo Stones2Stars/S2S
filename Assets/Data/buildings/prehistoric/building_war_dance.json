@@ -7,6 +7,11 @@
    "BUILDING_DANCE_HAKA"
   ]
  },
+ "obsoletedBy": {
+  "techs": [
+   "TECH_MILITARY_SCIENCE"
+  ]
+ },
  "requires": {
   "build": {
    "all": [

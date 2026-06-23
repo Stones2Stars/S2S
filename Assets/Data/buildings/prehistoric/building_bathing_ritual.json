@@ -2,7 +2,15 @@
  "type": "BUILDING_BATHING_RITUAL",
  "description": "TXT_KEY_BUILDING_BATHING_RITUAL",
  "civilopedia": "TXT_KEY_BUILDING_BATHING_RITUAL_PEDIA",
- "obsoletes": {
+ "obsoletedBy": {
+  "buildings": [
+   "BUILDING_BATH_HOUSE"
+  ],
+  "techs": [
+   "TECH_MEDICINE"
+  ]
+ },
+ "replacedBy": {
   "buildings": [
    "BUILDING_BATH_HOUSE"
   ]

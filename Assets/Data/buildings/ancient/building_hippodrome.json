@@ -7,9 +7,18 @@
    "BUILDING_CIRCUS_MAXIMUS"
   ]
  },
- "obsoletes": {
+ "obsoletedBy": {
   "buildings": [
    "BUILDING_ROYAL_TOURNAMENT"
+  ],
+  "techs": [
+   "TECH_MOTORSPORTS"
+  ]
+ },
+ "replacedBy": {
+  "buildings": [
+   "BUILDING_ROYAL_TOURNAMENT",
+   "BUILDING_SPEEDWAY"
   ]
  },
  "requires": {

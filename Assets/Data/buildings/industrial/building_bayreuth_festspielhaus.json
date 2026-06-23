@@ -2,6 +2,11 @@
  "type": "BUILDING_BAYREUTH_FESTSPIELHAUS",
  "description": "TXT_KEY_BUILDING_BAYREUTH_FESTSPIELHAUS",
  "civilopedia": "TXT_KEY_BUILDING_BAYREUTH_FESTSPIELHAUS_PEDIA",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_VIRTUAL_REALITY"
+  ]
+ },
  "requires": {
   "build": {
    "all": [

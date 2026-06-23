@@ -2,7 +2,15 @@
  "type": "BUILDING_MATHEMATICS_ACADEMY",
  "description": "TXT_KEY_BUILDING_MATHEMATICS_ACADEMY",
  "civilopedia": "TXT_KEY_BUILDING_MATHEMATICS_ACADEMY_PEDIA",
- "obsoletes": {
+ "obsoletedBy": {
+  "buildings": [
+   "BUILDING_MATHEMATICS_DEPARTMENT"
+  ],
+  "techs": [
+   "TECH_COMPUTER_NETWORKS"
+  ]
+ },
+ "replacedBy": {
   "buildings": [
    "BUILDING_MATHEMATICS_DEPARTMENT"
   ]

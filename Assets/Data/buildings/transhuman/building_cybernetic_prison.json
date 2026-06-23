@@ -2,11 +2,6 @@
  "type": "BUILDING_CYBERNETIC_PRISON",
  "description": "TXT_KEY_BUILDING_CYBERNETIC_PRISON",
  "civilopedia": "TXT_KEY_BUILDING_CYBERNETIC_PRISON_PEDIA",
- "replaces": {
-  "buildings": [
-   "BUILDING_REEDUCATION_CENTER"
-  ]
- },
  "requires": {
   "build": {
    "all": [

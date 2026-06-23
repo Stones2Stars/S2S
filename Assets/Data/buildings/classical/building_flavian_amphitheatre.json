@@ -7,6 +7,11 @@
    "BUILDING_STATUE_OF_CHAMPION"
   ]
  },
+ "obsoletedBy": {
+  "techs": [
+   "TECH_MODERN_SPORTS"
+  ]
+ },
  "requires": {
   "build": {
    "all": [

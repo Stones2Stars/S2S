@@ -8,6 +8,11 @@
    "BUILDING_LAS_VEGAS_STRIP"
   ]
  },
+ "replacedBy": {
+  "buildings": [
+   "BUILDING_ORDINANCE_GAMBLING_BAN"
+  ]
+ },
  "requires": {
   "build": {
    "all": [

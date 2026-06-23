@@ -2,6 +2,11 @@
  "type": "BUILDING_TRADITION_SEA_HUNTING",
  "description": "TXT_KEY_BUILDING_TRADITION_SEA_HUNTING",
  "civilopedia": "TXT_KEY_BUILDING_MASTER_SEA_HUNTER_PEDIA",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_SATELLITES"
+  ]
+ },
  "requires": {
   "build": {
    "all": [

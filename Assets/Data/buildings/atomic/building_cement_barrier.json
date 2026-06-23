@@ -12,14 +12,19 @@
    "BUILDING_THE_ISHTAR_GATE"
   ]
  },
- "obsoletes": {
+ "obsoletedBy": {
   "buildings": [
    "BUILDING_METAMATERIAL_WALLS"
+  ],
+  "techs": [
+   "TECH_SUPERSTRONG_ALLOYS"
   ]
  },
- "replaces": {
+ "replacedBy": {
   "buildings": [
-   "BUILDING_BARRICADES"
+   "BUILDING_METAMATERIAL_WALLS",
+   "BUILDING_SUPERSTRONG_ALLOY_WALLS",
+   "BUILDING_MEGASTRONG_ALLOY_WALLS"
   ]
  },
  "requires": {

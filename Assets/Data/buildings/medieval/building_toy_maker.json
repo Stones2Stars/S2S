@@ -2,14 +2,18 @@
  "type": "BUILDING_TOY_MAKER",
  "description": "TXT_KEY_BUILDING_TOY_MAKER",
  "civilopedia": "TXT_KEY_BUILDING_TOY_MAKER_PEDIA",
- "obsoletes": {
+ "obsoletedBy": {
   "buildings": [
    "BUILDING_FACTORY_TOYS"
+  ],
+  "techs": [
+   "TECH_RAPID_PROTOTYPING"
   ]
  },
- "replaces": {
+ "replacedBy": {
   "buildings": [
-   "BUILDING_TOY_CARVER"
+   "BUILDING_MANUFACTURING_DISTRICT",
+   "BUILDING_FACTORY_TOYS"
   ]
  },
  "requires": {

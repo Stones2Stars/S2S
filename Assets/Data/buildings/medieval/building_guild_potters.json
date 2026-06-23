@@ -2,6 +2,11 @@
  "type": "BUILDING_GUILD_POTTERS",
  "description": "TXT_KEY_BUILDING_GUILD_POTTERS",
  "civilopedia": "TXT_KEY_BUILDING_GUILDS_PEDIA",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_ASSEMBLY_LINE"
+  ]
+ },
  "requires": {
   "build": {
    "all": [

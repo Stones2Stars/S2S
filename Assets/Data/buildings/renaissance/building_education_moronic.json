@@ -2,6 +2,18 @@
  "type": "BUILDING_EDUCATION_MORONIC",
  "description": "TXT_KEY_BUILDING_EDUCATION_MORONIC",
  "civilopedia": "TXT_KEY_BUILDING_EQ_PEDIA",
+ "replacedBy": {
+  "buildings": [
+   "BUILDING_EDUCATION_FARCICAL",
+   "BUILDING_EDUCATION_DIMWITTED",
+   "BUILDING_EDUCATION_RIDICULOUS",
+   "BUILDING_EDUCATION_PREPOSTEROUS",
+   "BUILDING_EDUCATION_IDIOCRACY",
+   "BUILDING_EDUCATION_IGNORANCE",
+   "BUILDING_EDUCATION_BEWILDERED",
+   "BUILDING_EDUCATION_MINDLESS"
+  ]
+ },
  "requires": {
   "build": {
    "all": [
@@ -27,21 +39,7 @@
      "min": -2000000,
      "max": -2500
     }
-   ],
-   "disabled": {
-    "all": [
-     {
-      "type": "PROPERTY_EDUCATION",
-      "scope": "city",
-      "min": -2000000,
-      "max": -5000
-     },
-     {
-      "type": "BUILDING_EDUCATION_FARCICAL",
-      "scope": "city"
-     }
-    ]
-   }
+   ]
   }
  },
  "production": {

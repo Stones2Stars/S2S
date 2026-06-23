@@ -2,6 +2,11 @@
  "type": "BUILDING_BUFFALO_JUMP",
  "description": "TXT_KEY_BUILDING_BUFFALO_JUMP",
  "civilopedia": "TXT_KEY_BUILDING_BUFFALO_JUMP_PEDIA",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_CITY_PLANNING"
+  ]
+ },
  "requires": {
   "build": {
    "all": [

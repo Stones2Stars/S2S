@@ -9,7 +9,15 @@
    "BUILDING_FLIGHT_SCHOOL"
   ]
  },
- "obsoletes": {
+ "obsoletedBy": {
+  "buildings": [
+   "BUILDING_AEROSPACE_COMPLEX"
+  ],
+  "techs": [
+   "TECH_PLANETARY_DEFENSES"
+  ]
+ },
+ "replacedBy": {
   "buildings": [
    "BUILDING_AEROSPACE_COMPLEX"
   ]

@@ -2,7 +2,15 @@
  "type": "BUILDING_PIZZA_PARLOR",
  "description": "TXT_KEY_BUILDING_PIZZA_PARLOR",
  "civilopedia": "TXT_KEY_BUILDING_PIZZA_PARLOR_PEDIA",
- "obsoletes": {
+ "obsoletedBy": {
+  "buildings": [
+   "BUILDING_UNIVERSAL_RESTAURANT"
+  ],
+  "techs": [
+   "TECH_MIND_UPLOADING"
+  ]
+ },
+ "replacedBy": {
   "buildings": [
    "BUILDING_UNIVERSAL_RESTAURANT"
   ]

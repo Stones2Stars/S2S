@@ -2,6 +2,11 @@
  "type": "BUILDING_SLOAN_DIGITAL_SKY_SURVEY",
  "description": "TXT_KEY_BUILDING_SLOAN_DIGITAL_SKY_SURVEY",
  "civilopedia": "TXT_KEY_BUILDING_SLOAN_DIGITAL_SKY_SURVEY_PEDIA",
+ "replacedBy": {
+  "buildings": [
+   "BUILDING_POLLUTION_BLACKENED_SKIES"
+  ]
+ },
  "requires": {
   "build": {
    "all": [

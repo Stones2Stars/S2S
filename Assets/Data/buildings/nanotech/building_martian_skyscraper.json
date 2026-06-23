@@ -2,12 +2,6 @@
  "type": "BUILDING_MARTIAN_SKYSCRAPER",
  "description": "TXT_KEY_BUILDING_MARTIAN_SKYSCRAPER",
  "civilopedia": "TXT_KEY_BUILDING_MARTIAN_SKYSCRAPER_PEDIA",
- "replaces": {
-  "buildings": [
-   "BUILDING_MARTIAN_CAVE_DWELLING",
-   "BUILDING_MARTIAN_EXPANDED_HABITAT"
-  ]
- },
  "requires": {
   "build": {
    "all": [

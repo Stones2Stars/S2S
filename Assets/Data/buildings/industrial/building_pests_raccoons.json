@@ -2,6 +2,11 @@
  "type": "BUILDING_PESTS_RACCOONS",
  "description": "TXT_KEY_BUILDING_PESTS_RACCOONS",
  "civilopedia": "TXT_KEY_BUILDING_PESTS_PEDIA",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_ENVIRONMENTAL_ECONOMICS"
+  ]
+ },
  "requires": {
   "build": {
    "all": [

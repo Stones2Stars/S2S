@@ -2,6 +2,11 @@
  "type": "BUILDING_SU_SONGS_WORKSHOP",
  "description": "TXT_KEY_BUILDING_SU_SONGS_WORKSHOP",
  "civilopedia": "TXT_KEY_BUILDING_SU_SONGS_WORKSHOP_PEDIA",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_ELECTRONICS"
+  ]
+ },
  "requires": {
   "build": {
    "all": [

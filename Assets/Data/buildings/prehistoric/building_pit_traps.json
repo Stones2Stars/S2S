@@ -2,9 +2,25 @@
  "type": "BUILDING_PIT_TRAPS",
  "description": "TXT_KEY_BUILDING_PIT_TRAPS",
  "civilopedia": "TXT_KEY_BUILDING_PIT_TRAPS_PEDIA",
- "obsoletes": {
+ "obsoletedBy": {
   "buildings": [
    "BUILDING_SPIKED_PIT_TRAPS"
+  ],
+  "techs": [
+   "TECH_MACHINERY"
+  ]
+ },
+ "replacedBy": {
+  "buildings": [
+   "BUILDING_SPIKED_PIT_TRAPS",
+   "BUILDING_MECHANICAL_TRAPS",
+   "BUILDING_LANDMINES",
+   "BUILDING_BOOBY_TRAPS",
+   "BUILDING_ROBOTIC_TRAPS",
+   "BUILDING_GERM_TRAPS",
+   "BUILDING_EMP_TRAPS",
+   "BUILDING_NANOBOT_TRAPS",
+   "BUILDING_GRAVITY_TRAPS"
   ]
  },
  "requires": {

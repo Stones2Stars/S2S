@@ -2,7 +2,15 @@
  "type": "BUILDING_MEME_GENERATOR",
  "description": "TXT_KEY_BUILDING_MEME_GENERATOR",
  "civilopedia": "TXT_KEY_BUILDING_MEME_GENERATOR_PEDIA",
- "obsoletes": {
+ "obsoletedBy": {
+  "buildings": [
+   "BUILDING_HIGH_TECH_CULTURAL_ENRICHMENT"
+  ],
+  "techs": [
+   "TECH_CULTURAL_EVOLUTION"
+  ]
+ },
+ "replacedBy": {
   "buildings": [
    "BUILDING_HIGH_TECH_CULTURAL_ENRICHMENT"
   ]

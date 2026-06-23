@@ -7,9 +7,18 @@
    "BUILDING_RESOURCES_COPPER_INGOTS"
   ]
  },
- "obsoletes": {
+ "obsoletedBy": {
   "buildings": [
    "BUILDING_ADVANCED_COPPERWORKS"
+  ],
+  "techs": [
+   "TECH_NANOMINING"
+  ]
+ },
+ "replacedBy": {
+  "buildings": [
+   "BUILDING_ADVANCED_COPPERWORKS",
+   "BUILDING_METALS_MEGACOMPLEX"
   ]
  },
  "requires": {

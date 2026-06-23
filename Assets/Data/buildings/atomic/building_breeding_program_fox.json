@@ -7,14 +7,17 @@
    "BUILDING_RESOURCES_PELTS"
   ]
  },
- "obsoletes": {
+ "obsoletedBy": {
   "buildings": [
    "BUILDING_ANIMAL_PRESERVE"
+  ],
+  "techs": [
+   "TECH_SENTIENT_EARTH"
   ]
  },
- "replaces": {
+ "replacedBy": {
   "buildings": [
-   "BUILDING_TRAP_FOX"
+   "BUILDING_ANIMAL_PRESERVE"
   ]
  },
  "requires": {

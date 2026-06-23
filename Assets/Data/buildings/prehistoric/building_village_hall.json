@@ -2,9 +2,19 @@
  "type": "BUILDING_VILLAGE_HALL",
  "description": "TXT_KEY_BUILDING_VILLAGE_HALL",
  "civilopedia": "TXT_KEY_BUILDING_VILLAGE_HALL_PEDIA",
- "obsoletes": {
+ "obsoletedBy": {
   "buildings": [
    "BUILDING_TOWN_HALL"
+  ],
+  "techs": [
+   "TECH_CITY_PLANNING"
+  ]
+ },
+ "replacedBy": {
+  "buildings": [
+   "BUILDING_TOWN_HALL",
+   "BUILDING_CITY_COUNCIL",
+   "BUILDING_METROPOLITAN_ADMINISTRATION"
   ]
  },
  "requires": {

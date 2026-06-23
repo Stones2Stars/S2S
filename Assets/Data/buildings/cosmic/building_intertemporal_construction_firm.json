@@ -7,13 +7,6 @@
    "BUILDING_NEOM"
   ]
  },
- "replaces": {
-  "buildings": [
-   "BUILDING_CAD_STUDIO",
-   "BUILDING_MODULAR_CONSTRUCTION_FIRM",
-   "BUILDING_SELF_CONSTRUCTION_FIRM"
-  ]
- },
  "requires": {
   "build": {
    "all": [

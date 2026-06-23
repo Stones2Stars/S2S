@@ -2,6 +2,11 @@
  "type": "BUILDING_PESTS_PIGEONS",
  "description": "TXT_KEY_BUILDING_PESTS_PIGEONS",
  "civilopedia": "TXT_KEY_BUILDING_PESTS_PEDIA",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_ENVIRONMENTAL_ECONOMICS"
+  ]
+ },
  "requires": {
   "build": {
    "all": [

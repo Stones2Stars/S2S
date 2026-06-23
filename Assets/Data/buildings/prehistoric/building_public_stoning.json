@@ -2,9 +2,21 @@
  "type": "BUILDING_PUBLIC_STONING",
  "description": "TXT_KEY_BUILDING_PUBLIC_STONING",
  "civilopedia": "TXT_KEY_BUILDING_PUBLIC_STONING_PEDIA",
- "obsoletes": {
+ "obsoletedBy": {
   "buildings": [
    "BUILDING_CRUCIFIXION_CROSSES"
+  ],
+  "techs": [
+   "TECH_EXECUTIONS"
+  ]
+ },
+ "replacedBy": {
+  "buildings": [
+   "BUILDING_CRUCIFIXION_CROSSES",
+   "BUILDING_GALLOWS",
+   "BUILDING_GUILLOTINE",
+   "BUILDING_ELECTRIC_CHAIR",
+   "BUILDING_LETHAL_INJECTION"
   ]
  },
  "requires": {

@@ -2,6 +2,11 @@
  "type": "BUILDING_ODEON",
  "description": "TXT_KEY_BUILDING_ODEON",
  "civilopedia": "TXT_KEY_BUILDING_ODEON_PEDIA",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_REALISM"
+  ]
+ },
  "requires": {
   "build": {
    "all": [

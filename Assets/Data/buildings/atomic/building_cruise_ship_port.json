@@ -2,7 +2,15 @@
  "type": "BUILDING_CRUISE_SHIP_PORT",
  "description": "TXT_KEY_BUILDING_CRUISE_SHIP_PORT",
  "civilopedia": "TXT_KEY_BUILDING_CRUISE_SHIP_PORT_PEDIA",
- "obsoletes": {
+ "obsoletedBy": {
+  "buildings": [
+   "BUILDING_TELEPORT_BOOTH"
+  ],
+  "techs": [
+   "TECH_WORMHOLE_HIVEMIND"
+  ]
+ },
+ "replacedBy": {
   "buildings": [
    "BUILDING_TELEPORT_BOOTH"
   ]

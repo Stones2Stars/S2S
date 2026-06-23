@@ -2,6 +2,11 @@
  "type": "BUILDING_STICK_COMBAT",
  "description": "TXT_KEY_BUILDING_STICK_COMBAT",
  "civilopedia": "TXT_KEY_BUILDING_STICK_COMBAT_PEDIA",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_CITY_PLANNING"
+  ]
+ },
  "requires": {
   "build": {
    "all": [

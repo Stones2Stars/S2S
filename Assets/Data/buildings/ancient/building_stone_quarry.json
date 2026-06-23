@@ -7,7 +7,15 @@
    "BUILDING_GRAND_EARTH_FESTIVAL"
   ]
  },
- "obsoletes": {
+ "obsoletedBy": {
+  "buildings": [
+   "BUILDING_MODERN_EARTHWORKS"
+  ],
+  "techs": [
+   "TECH_RAPID_PROTOTYPING"
+  ]
+ },
+ "replacedBy": {
   "buildings": [
    "BUILDING_MODERN_EARTHWORKS"
   ]

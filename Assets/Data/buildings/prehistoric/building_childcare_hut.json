@@ -7,9 +7,18 @@
    "BUILDING_CHILD_LABOR_CREW"
   ]
  },
- "obsoletes": {
+ "obsoletedBy": {
   "buildings": [
    "BUILDING_DAY_CARE_CENTER"
+  ],
+  "techs": [
+   "TECH_TRANSHUMANISM"
+  ]
+ },
+ "replacedBy": {
+  "buildings": [
+   "BUILDING_DAY_CARE_CENTER",
+   "BUILDING_HIGH_TECH_CULTURAL_ENRICHMENT"
   ]
  },
  "requires": {

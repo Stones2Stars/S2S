@@ -47,6 +47,11 @@
    "UNIT_NEANDERTHAL_WORKBOAT"
   ]
  },
+ "obsoletedBy": {
+  "techs": [
+   "TECH_SEDENTARY_LIFESTYLE"
+  ]
+ },
  "requires": {
   "build": {
    "any": [

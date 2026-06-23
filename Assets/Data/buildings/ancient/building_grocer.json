@@ -7,9 +7,18 @@
    "BUILDING_GUILD_GROCERS"
   ]
  },
- "obsoletes": {
+ "obsoletedBy": {
   "buildings": [
    "BUILDING_SUPERMARKET"
+  ],
+  "techs": [
+   "TECH_PLASTIC_ELECTRONICS"
+  ]
+ },
+ "replacedBy": {
+  "buildings": [
+   "BUILDING_SUPERMARKET",
+   "BUILDING_HYPERMARKET"
   ]
  },
  "requires": {

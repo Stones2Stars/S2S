@@ -11,14 +11,17 @@
    "BUILDING_TRANSATLANTIC_TUNNEL"
   ]
  },
- "obsoletes": {
+ "obsoletedBy": {
   "buildings": [
    "BUILDING_GRAVITY_TRAIN"
+  ],
+  "techs": [
+   "TECH_ATOMIC_SCALE_ENGINEERING"
   ]
  },
- "replaces": {
+ "replacedBy": {
   "buildings": [
-   "BUILDING_MAGLEV_RAILS"
+   "BUILDING_GRAVITY_TRAIN"
   ]
  },
  "requires": {

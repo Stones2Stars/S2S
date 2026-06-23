@@ -2,7 +2,15 @@
  "type": "BUILDING_SCAVENGERS_DAUGHTER",
  "description": "TXT_KEY_BUILDING_SCAVENGERS_DAUGHTER",
  "civilopedia": "TXT_KEY_BUILDING_SCAVENGERS_DAUGHTER_PEDIA",
- "obsoletes": {
+ "obsoletedBy": {
+  "buildings": [
+   "BUILDING_JAIL"
+  ],
+  "techs": [
+   "TECH_PSYCHOLOGY"
+  ]
+ },
+ "replacedBy": {
   "buildings": [
    "BUILDING_JAIL"
   ]

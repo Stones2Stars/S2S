@@ -7,7 +7,15 @@
    "BUILDING_RESOURCES_FEATHERS"
   ]
  },
- "obsoletes": {
+ "obsoletedBy": {
+  "buildings": [
+   "BUILDING_FALCONRY_SCHOOL"
+  ],
+  "techs": [
+   "TECH_ENVIRONMENTAL_ECONOMICS"
+  ]
+ },
+ "replacedBy": {
   "buildings": [
    "BUILDING_FALCONRY_SCHOOL"
   ]

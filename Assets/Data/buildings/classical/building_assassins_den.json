@@ -7,6 +7,11 @@
    "UNIT_ASSASSIN"
   ]
  },
+ "obsoletedBy": {
+  "techs": [
+   "TECH_MATCHLOCK"
+  ]
+ },
  "requires": {
   "build": {
    "all": [

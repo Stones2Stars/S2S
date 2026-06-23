@@ -2,7 +2,15 @@
  "type": "BUILDING_OUTBACK_HOTEL",
  "description": "TXT_KEY_BUILDING_OUTBACK_HOTEL",
  "civilopedia": "TXT_KEY_BUILDING_OUTBACK_HOTEL_PEDIA",
- "obsoletes": {
+ "obsoletedBy": {
+  "buildings": [
+   "BUILDING_TOURISM_MEGACOMPLEX"
+  ],
+  "techs": [
+   "TECH_FUSION_SPACECRAFT"
+  ]
+ },
+ "replacedBy": {
   "buildings": [
    "BUILDING_TOURISM_MEGACOMPLEX"
   ]

@@ -2,8 +2,17 @@
  "type": "BUILDING_TERRACOTTA_WORKSHOP",
  "description": "TXT_KEY_BUILDING_TERRACOTTA_WORKSHOP",
  "civilopedia": "TXT_KEY_BUILDING_TERRACOTTA_WORKSHOP_PEDIA",
- "obsoletes": {
+ "obsoletedBy": {
   "buildings": [
+   "BUILDING_FACTORY_TERRACOTTA_WARES"
+  ],
+  "techs": [
+   "TECH_RAPID_PROTOTYPING"
+  ]
+ },
+ "replacedBy": {
+  "buildings": [
+   "BUILDING_MANUFACTURING_DISTRICT",
    "BUILDING_FACTORY_TERRACOTTA_WARES"
   ]
  },

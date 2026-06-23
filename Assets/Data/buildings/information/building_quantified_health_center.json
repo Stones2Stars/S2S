@@ -2,7 +2,15 @@
  "type": "BUILDING_QUANTIFIED_HEALTH_CENTER",
  "description": "TXT_KEY_BUILDING_QUANTIFIED_HEALTH_CENTER",
  "civilopedia": "TXT_KEY_BUILDING_QUANTIFIED_HEALTH_CENTER_PEDIA",
- "obsoletes": {
+ "obsoletedBy": {
+  "buildings": [
+   "BUILDING_HEALTHCARE_MEGACOMPLEX"
+  ],
+  "techs": [
+   "TECH_PICOTECHNOLOGY"
+  ]
+ },
+ "replacedBy": {
   "buildings": [
    "BUILDING_HEALTHCARE_MEGACOMPLEX"
   ]

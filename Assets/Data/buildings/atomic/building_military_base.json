@@ -24,12 +24,6 @@
    "UNIT_WARCAT"
   ]
  },
- "replaces": {
-  "buildings": [
-   "BUILDING_BARRACKS",
-   "BUILDING_GARRISON"
-  ]
- },
  "requires": {
   "build": {
    "all": [

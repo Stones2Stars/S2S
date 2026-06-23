@@ -7,14 +7,6 @@
    "BUILDING_BUNGEE_JUMPING_SITE"
   ]
  },
- "replaces": {
-  "buildings": [
-   "BUILDING_MODERN_CRANE",
-   "BUILDING_PULLEY_WHEEL",
-   "BUILDING_STEAM_CRANE",
-   "BUILDING_TREADMILL_CRANE"
-  ]
- },
  "requires": {
   "build": {
    "all": [

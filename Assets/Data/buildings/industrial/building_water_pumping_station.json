@@ -8,12 +8,6 @@
    "BUILDING_FIRE_HYDRANTS"
   ]
  },
- "replaces": {
-  "buildings": [
-   "BUILDING_HAND_WATER_PUMP",
-   "BUILDING_WIND_WATER_PUMP"
-  ]
- },
  "requires": {
   "build": {
    "all": [

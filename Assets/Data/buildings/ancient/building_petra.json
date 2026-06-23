@@ -2,6 +2,11 @@
  "type": "BUILDING_PETRA",
  "description": "TXT_KEY_BUILDING_PETRA",
  "civilopedia": "TXT_KEY_BUILDING_PETRA_PEDIA",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_ECONOMICS"
+  ]
+ },
  "requires": {
   "build": {
    "all": [

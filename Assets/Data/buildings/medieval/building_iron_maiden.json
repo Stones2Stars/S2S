@@ -2,7 +2,15 @@
  "type": "BUILDING_IRON_MAIDEN",
  "description": "TXT_KEY_BUILDING_IRON_MAIDEN",
  "civilopedia": "TXT_KEY_BUILDING_IRON_MAIDEN_PEDIA",
- "obsoletes": {
+ "obsoletedBy": {
+  "buildings": [
+   "BUILDING_JAIL"
+  ],
+  "techs": [
+   "TECH_PSYCHOLOGY"
+  ]
+ },
+ "replacedBy": {
   "buildings": [
    "BUILDING_JAIL"
   ]

@@ -9,14 +9,6 @@
    "BUILDING_TUMEN_AMUGULANG_PALACE"
   ]
  },
- "replaces": {
-  "buildings": [
-   "BUILDING_CASTLE_GARDEN",
-   "BUILDING_FOUNTAIN",
-   "BUILDING_GROVE",
-   "BUILDING_ROCK_GARDEN"
-  ]
- },
  "requires": {
   "build": {
    "all": [

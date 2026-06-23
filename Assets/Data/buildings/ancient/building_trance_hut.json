@@ -2,9 +2,18 @@
  "type": "BUILDING_TRANCE_HUT",
  "description": "TXT_KEY_BUILDING_TRANCE_HUT",
  "civilopedia": "TXT_KEY_BUILDING_TRANCE_HUT_PEDIA",
- "obsoletes": {
+ "obsoletedBy": {
   "buildings": [
    "BUILDING_ALTERNATIVE_MEDICINE"
+  ],
+  "techs": [
+   "TECH_NANOTROIDS"
+  ]
+ },
+ "replacedBy": {
+  "buildings": [
+   "BUILDING_ALTERNATIVE_MEDICINE",
+   "BUILDING_HEALTHCARE_MEGACOMPLEX"
   ]
  },
  "requires": {

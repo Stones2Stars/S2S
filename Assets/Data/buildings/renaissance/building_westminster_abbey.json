@@ -2,6 +2,11 @@
  "type": "BUILDING_WESTMINSTER_ABBEY",
  "description": "TXT_KEY_BUILDING_WESTMINSTER_ABBEY",
  "civilopedia": "TXT_KEY_BUILDING_WESTMINSTER_ABBEY_PEDIA",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_VIRTUAL_REALITY"
+  ]
+ },
  "requires": {
   "build": {
    "all": [

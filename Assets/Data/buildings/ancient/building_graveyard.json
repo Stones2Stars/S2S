@@ -7,14 +7,18 @@
    "BUILDING_MAUSOLEUM"
   ]
  },
- "obsoletes": {
+ "obsoletedBy": {
   "buildings": [
    "BUILDING_FUNERARY_SERVICES"
+  ],
+  "techs": [
+   "TECH_TRANSHUMANISM"
   ]
  },
- "replaces": {
+ "replacedBy": {
   "buildings": [
-   "BUILDING_BURIAL_GROUND"
+   "BUILDING_FUNERARY_SERVICES",
+   "BUILDING_HIGH_TECH_CULTURAL_ENRICHMENT"
   ]
  },
  "requires": {

@@ -2,14 +2,17 @@
  "type": "BUILDING_WIND_WATER_PUMP",
  "description": "TXT_KEY_BUILDING_WIND_WATER_PUMP",
  "civilopedia": "TXT_KEY_BUILDING_WIND_WATER_PUMP_PEDIA",
- "obsoletes": {
+ "obsoletedBy": {
   "buildings": [
    "BUILDING_WATER_PUMPING_STATION"
+  ],
+  "techs": [
+   "TECH_MANUFACTURING"
   ]
  },
- "replaces": {
+ "replacedBy": {
   "buildings": [
-   "BUILDING_HAND_WATER_PUMP"
+   "BUILDING_WATER_PUMPING_STATION"
   ]
  },
  "requires": {

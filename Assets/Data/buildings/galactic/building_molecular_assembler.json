@@ -11,18 +11,19 @@
    "UNIT_REPLICATION_MECHANIC"
   ]
  },
- "obsoletes": {
+ "obsoletedBy": {
   "buildings": [
    "BUILDING_ATOMIC_ASSEMBLER"
+  ],
+  "techs": [
+   "TECH_MACROSCOPIC_SUPERPOSITION"
   ]
  },
- "replaces": {
+ "replacedBy": {
   "buildings": [
-   "BUILDING_3D_PRINTING_MILL",
-   "BUILDING_NANOBOTIC_PRINTING_MILL",
-   "BUILDING_PARTS_MAKER",
-   "BUILDING_PARTS_PLANT",
-   "BUILDING_REPLICATOR_PLANT"
+   "BUILDING_ATOMIC_ASSEMBLER",
+   "BUILDING_QUANTUM_ASSEMBLER",
+   "BUILDING_MATERIALIZER"
   ]
  },
  "requires": {

@@ -7,11 +7,6 @@
    "BUILDING_DIGITAL_GLOBE"
   ]
  },
- "replaces": {
-  "buildings": [
-   "BUILDING_CARTOGRAPHERS_SHOP"
-  ]
- },
  "requires": {
   "build": {
    "all": [

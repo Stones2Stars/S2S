@@ -2,6 +2,11 @@
  "type": "BUILDING_DISEASE_COMMON_COLD",
  "description": "TXT_KEY_BUILDING_DISEASE_COMMON_COLD",
  "civilopedia": "TXT_KEY_BUILDING_DISEASE_PEDIA",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_SMART_DRUGS"
+  ]
+ },
  "requires": {
   "build": {
    "any": [

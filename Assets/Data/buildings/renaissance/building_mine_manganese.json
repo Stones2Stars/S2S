@@ -2,7 +2,15 @@
  "type": "BUILDING_MINE_MANGANESE",
  "description": "TXT_KEY_BUILDING_MINE_MANGANESE",
  "civilopedia": "TXT_KEY_BUILDING_MINE_MANGANESE_PEDIA",
- "obsoletes": {
+ "obsoletedBy": {
+  "buildings": [
+   "BUILDING_CORE_MINE"
+  ],
+  "techs": [
+   "TECH_ATOMIC_SCALE_ENGINEERING"
+  ]
+ },
+ "replacedBy": {
   "buildings": [
    "BUILDING_CORE_MINE"
   ]

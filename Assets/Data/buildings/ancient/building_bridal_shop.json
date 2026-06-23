@@ -2,9 +2,18 @@
  "type": "BUILDING_BRIDAL_SHOP",
  "description": "TXT_KEY_BUILDING_BRIDAL_SHOP",
  "civilopedia": "TXT_KEY_BUILDING_BRIDAL_SHOP_PEDIA",
- "obsoletes": {
+ "obsoletedBy": {
   "buildings": [
    "BUILDING_MALL"
+  ],
+  "techs": [
+   "TECH_PLASTIC_ELECTRONICS"
+  ]
+ },
+ "replacedBy": {
+  "buildings": [
+   "BUILDING_MALL",
+   "BUILDING_HYPERMARKET"
   ]
  },
  "requires": {

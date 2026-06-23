@@ -8,9 +8,18 @@
    "BUILDING_WEAVING_SPIDER_SANCTUARY"
   ]
  },
- "obsoletes": {
+ "obsoletedBy": {
   "buildings": [
    "BUILDING_ARBORETUM"
+  ],
+  "techs": [
+   "TECH_ENVIRONMENTAL_ECONOMICS"
+  ]
+ },
+ "replacedBy": {
+  "buildings": [
+   "BUILDING_ARBORETUM",
+   "BUILDING_AGROFOREST"
   ]
  },
  "requires": {

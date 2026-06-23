@@ -2,7 +2,15 @@
  "type": "BUILDING_FACTORY_PERSONAL_ELECTRONICS",
  "description": "TXT_KEY_BUILDING_FACTORY_PERSONAL_ELECTRONICS",
  "civilopedia": "TXT_KEY_BUILDING_FACTORY_PERSONAL_ELECTRONICS_PEDIA",
- "obsoletes": {
+ "obsoletedBy": {
+  "buildings": [
+   "BUILDING_ELECTRONICS_MANUFACTURING_DISTRICT"
+  ],
+  "techs": [
+   "TECH_NANOELECTRONICS"
+  ]
+ },
+ "replacedBy": {
   "buildings": [
    "BUILDING_ELECTRONICS_MANUFACTURING_DISTRICT"
   ]

@@ -8,7 +8,15 @@
    "BUILDING_MORSE_CODE"
   ]
  },
- "obsoletes": {
+ "obsoletedBy": {
+  "buildings": [
+   "BUILDING_TELEPHONE_NETWORK"
+  ],
+  "techs": [
+   "TECH_COMPUTER_NETWORKS"
+  ]
+ },
+ "replacedBy": {
   "buildings": [
    "BUILDING_TELEPHONE_NETWORK"
   ]

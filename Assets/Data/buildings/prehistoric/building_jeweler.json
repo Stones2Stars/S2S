@@ -7,7 +7,15 @@
    "BUILDING_GUILD_GOLDSMITHS"
   ]
  },
- "obsoletes": {
+ "obsoletedBy": {
+  "buildings": [
+   "BUILDING_MANUFACTURING_DISTRICT"
+  ],
+  "techs": [
+   "TECH_NANOROBOTICS"
+  ]
+ },
+ "replacedBy": {
   "buildings": [
    "BUILDING_MANUFACTURING_DISTRICT"
   ]

@@ -2,6 +2,11 @@
  "type": "BUILDING_TEMPLE_OF_ARTEMIS",
  "description": "TXT_KEY_BUILDING_TEMPLE_OF_ARTEMIS",
  "civilopedia": "TXT_KEY_BUILDING_TEMPLE_OF_ARTEMIS_PEDIA",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_EDUCATION"
+  ]
+ },
  "requires": {
   "build": {
    "all": [

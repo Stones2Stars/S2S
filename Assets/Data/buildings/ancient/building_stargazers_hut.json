@@ -8,9 +8,18 @@
    "BUILDING_GRAND_SKY_FESTIVAL"
   ]
  },
- "obsoletes": {
+ "obsoletedBy": {
   "buildings": [
    "BUILDING_OBSERVATORY"
+  ],
+  "techs": [
+   "TECH_COMPULSORY_EDUCATION"
+  ]
+ },
+ "replacedBy": {
+  "buildings": [
+   "BUILDING_OBSERVATORY",
+   "BUILDING_POLLUTION_BLACKENED_SKIES"
   ]
  },
  "requires": {

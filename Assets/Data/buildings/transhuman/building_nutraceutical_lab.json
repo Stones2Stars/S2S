@@ -7,7 +7,15 @@
    "BUILDING_RESOURCES_SMART_MEDICINE"
   ]
  },
- "obsoletes": {
+ "obsoletedBy": {
+  "buildings": [
+   "BUILDING_MEDICAL_MEGACOMPLEX"
+  ],
+  "techs": [
+   "TECH_POSTHUMANISM"
+  ]
+ },
+ "replacedBy": {
   "buildings": [
    "BUILDING_MEDICAL_MEGACOMPLEX"
   ]

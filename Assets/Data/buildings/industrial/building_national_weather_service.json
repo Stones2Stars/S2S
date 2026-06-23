@@ -2,6 +2,11 @@
  "type": "BUILDING_NATIONAL_WEATHER_SERVICE",
  "description": "TXT_KEY_BUILDING_NATIONAL_WEATHER_SERVICE",
  "civilopedia": "TXT_KEY_BUILDING_NATIONAL_WEATHER_SERVICE_PEDIA",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_WEATHER_CONTROL"
+  ]
+ },
  "requires": {
   "build": {
    "all": [

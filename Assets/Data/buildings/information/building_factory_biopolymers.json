@@ -2,7 +2,15 @@
  "type": "BUILDING_FACTORY_BIOPOLYMERS",
  "description": "TXT_KEY_BUILDING_FACTORY_BIOPOLYMERS",
  "civilopedia": "TXT_KEY_BUILDING_FACTORY_BIOPOLYMERS_PEDIA",
- "obsoletes": {
+ "obsoletedBy": {
+  "buildings": [
+   "BUILDING_CHEMICALS_DISTRICT"
+  ],
+  "techs": [
+   "TECH_ANIMAMATERIALS"
+  ]
+ },
+ "replacedBy": {
   "buildings": [
    "BUILDING_CHEMICALS_DISTRICT"
   ]

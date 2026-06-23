@@ -12,15 +12,18 @@
    "BUILDING_VIP_CLUB"
   ]
  },
- "obsoletes": {
+ "obsoletedBy": {
   "buildings": [
    "BUILDING_GALACTIC_CANTINA"
+  ],
+  "techs": [
+   "TECH_PURE_INFORMATION_SOCIETY"
   ]
  },
- "replaces": {
+ "replacedBy": {
   "buildings": [
-   "BUILDING_PUB",
-   "BUILDING_TAVERN"
+   "BUILDING_GALACTIC_CANTINA",
+   "BUILDING_ORDINANCE_ALCOHOL_PROHIBITION"
   ]
  },
  "requires": {

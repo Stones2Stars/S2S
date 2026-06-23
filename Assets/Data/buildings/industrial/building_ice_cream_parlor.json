@@ -2,7 +2,15 @@
  "type": "BUILDING_ICE_CREAM_PARLOR",
  "description": "TXT_KEY_BUILDING_ICE_CREAM_PARLOR",
  "civilopedia": "TXT_KEY_BUILDING_ICE_CREAM_PARLOR_PEDIA",
- "obsoletes": {
+ "obsoletedBy": {
+  "buildings": [
+   "BUILDING_FOOD_MANUFACTURING_DISTRICT"
+  ],
+  "techs": [
+   "TECH_MIND_UPLOADING"
+  ]
+ },
+ "replacedBy": {
   "buildings": [
    "BUILDING_FOOD_MANUFACTURING_DISTRICT"
   ]

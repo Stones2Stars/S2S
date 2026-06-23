@@ -3,6 +3,11 @@
  "description": "TXT_KEY_BUILDING_GOLDEN_SPIKE",
  "civilopedia": "TXT_KEY_BUILDING_GOLDEN_SPIKE_PEDIA",
  "help": "TXT_KEY_BUILDING_GOLDEN_SPIKE_HELP",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_MAGNETIC_LEVITATION"
+  ]
+ },
  "requires": {
   "build": {
    "all": [

@@ -26,9 +26,18 @@
    "UNIT_FOOD_SUPPLY_TRAIN"
   ]
  },
- "obsoletes": {
+ "obsoletedBy": {
   "buildings": [
    "BUILDING_STAR_FORT"
+  ],
+  "techs": [
+   "TECH_ROMANTICISM"
+  ]
+ },
+ "replacedBy": {
+  "buildings": [
+   "BUILDING_STAR_FORT",
+   "BUILDING_IMPERIAL_FORTRESS"
   ]
  },
  "requires": {

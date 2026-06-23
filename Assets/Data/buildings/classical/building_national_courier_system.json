@@ -2,6 +2,11 @@
  "type": "BUILDING_NATIONAL_COURIER_SYSTEM",
  "description": "TXT_KEY_BUILDING_NATIONAL_COURIER_SYSTEM",
  "civilopedia": "TXT_KEY_BUILDING_NATIONAL_COURIER_SYSTEM_PEDIA",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_COMBUSTION"
+  ]
+ },
  "requires": {
   "build": {
    "all": [

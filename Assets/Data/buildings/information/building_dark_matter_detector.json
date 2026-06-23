@@ -2,6 +2,11 @@
  "type": "BUILDING_DARK_MATTER_DETECTOR",
  "description": "TXT_KEY_BUILDING_DARK_MATTER_DETECTOR",
  "civilopedia": "TXT_KEY_BUILDING_DARK_MATTER_DETECTOR_PEDIA",
+ "replacedBy": {
+  "buildings": [
+   "BUILDING_POLLUTION_BLACKENED_SKIES"
+  ]
+ },
  "requires": {
   "build": {
    "all": [

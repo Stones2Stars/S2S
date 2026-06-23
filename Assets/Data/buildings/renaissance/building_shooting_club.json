@@ -9,14 +9,19 @@
    "UNIT_SHARPSHOOTER"
   ]
  },
- "obsoletes": {
+ "obsoletedBy": {
   "buildings": [
    "BUILDING_FIRING_RANGE"
+  ],
+  "techs": [
+   "TECH_MECHANIZED_WARFARE"
   ]
  },
- "replaces": {
+ "replacedBy": {
   "buildings": [
-   "BUILDING_ARCHERY_RANGE"
+   "BUILDING_FIRING_RANGE",
+   "BUILDING_AUTOMATED_FIRING_RANGE",
+   "BUILDING_ORBITAL_TARGETS"
   ]
  },
  "requires": {

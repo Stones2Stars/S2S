@@ -2,6 +2,11 @@
  "type": "BUILDING_THOR_SANCTUARY",
  "description": "TXT_KEY_BUILDING_THOR_SANCTUARY",
  "civilopedia": "TXT_KEY_BUILDING_THOR_SANCTUARY_PEDIA",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_HUMANISM"
+  ]
+ },
  "requires": {
   "build": {
    "all": [

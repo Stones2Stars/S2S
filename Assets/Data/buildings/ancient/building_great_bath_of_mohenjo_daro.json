@@ -3,6 +3,11 @@
  "description": "TXT_KEY_BUILDING_GREAT_BATH_OF_MOHENJO_DARO",
  "civilopedia": "TXT_KEY_BUILDING_GREAT_BATH_OF_MOHENJO_DARO_PEDIA",
  "help": "TXT_KEY_BUILDING_GREAT_BATH_OF_MOHENJO_DARO_HELP",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_CIVIL_SERVICE"
+  ]
+ },
  "requires": {
   "build": {
    "all": [

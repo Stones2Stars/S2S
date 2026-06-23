@@ -2,6 +2,11 @@
  "type": "BUILDING_STEP_RECKONER_MANUFACTURE",
  "description": "TXT_KEY_BUILDING_STEP_RECKONER_MANUFACTURE",
  "civilopedia": "TXT_KEY_BUILDING_STEP_RECKONER_MANUFACTURE_PEDIA",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_PERSONAL_COMPUTERS"
+  ]
+ },
  "requires": {
   "build": {
    "all": [

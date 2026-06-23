@@ -2,9 +2,18 @@
  "type": "BUILDING_BURIAL_TRADITION_MUMMY",
  "description": "TXT_KEY_BUILDING_BURIAL_TRADITION_MUMMY",
  "civilopedia": "TXT_KEY_BUILDING_BURIAL_TRADITION_MUMMY_PEDIA",
- "obsoletes": {
+ "obsoletedBy": {
   "buildings": [
    "BUILDING_FUNERARY_SERVICES"
+  ],
+  "techs": [
+   "TECH_TRANSHUMANISM"
+  ]
+ },
+ "replacedBy": {
+  "buildings": [
+   "BUILDING_FUNERARY_SERVICES",
+   "BUILDING_HIGH_TECH_CULTURAL_ENRICHMENT"
   ]
  },
  "requires": {

@@ -16,17 +16,17 @@
    "BUILDING_SPICE_VOYAGE"
   ]
  },
- "obsoletes": {
+ "obsoletedBy": {
   "buildings": [
    "BUILDING_OCEAN_ADMINISTRATION"
+  ],
+  "techs": [
+   "TECH_LAUNCH_ARCOLOGY"
   ]
  },
- "replaces": {
+ "replacedBy": {
   "buildings": [
-   "BUILDING_COMMERCIAL_PORT",
-   "BUILDING_HARBOR",
-   "BUILDING_PORT",
-   "BUILDING_SPEARFISHER"
+   "BUILDING_OCEAN_ADMINISTRATION"
   ]
  },
  "requires": {

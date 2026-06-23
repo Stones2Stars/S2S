@@ -27,16 +27,18 @@
    "BUILDING_VIA_APPIA"
   ]
  },
- "obsoletes": {
+ "obsoletedBy": {
   "buildings": [
    "BUILDING_SKYROAD_CONTROL_TOWER"
+  ],
+  "techs": [
+   "TECH_TELEPORTATION"
   ]
  },
- "replaces": {
+ "replacedBy": {
   "buildings": [
-   "BUILDING_PAVED_ROADS",
-   "BUILDING_ROADS",
-   "BUILDING_TRAILS"
+   "BUILDING_SKYROAD_CONTROL_TOWER",
+   "BUILDING_TELEPORT_BOOTH"
   ]
  },
  "requires": {

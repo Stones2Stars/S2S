@@ -10,15 +10,17 @@
    "BUILDING_WORLD_ELECTRIC_GRID"
   ]
  },
- "obsoletes": {
+ "obsoletedBy": {
   "buildings": [
    "BUILDING_SUPERCONDUCTING_GRID"
+  ],
+  "techs": [
+   "TECH_ATOMIC_SCALE_ENGINEERING"
   ]
  },
- "replaces": {
+ "replacedBy": {
   "buildings": [
-   "BUILDING_SMART_GRID",
-   "BUILDING_WIRELESS_GRID"
+   "BUILDING_SUPERCONDUCTING_GRID"
   ]
  },
  "requires": {

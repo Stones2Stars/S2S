@@ -2,7 +2,15 @@
  "type": "BUILDING_SPONGE_GATHERER",
  "description": "TXT_KEY_BUILDING_SPONGE_GATHERER",
  "civilopedia": "TXT_KEY_BUILDING_SPONGE_GATHERER_PEDIA",
- "obsoletes": {
+ "obsoletedBy": {
+  "buildings": [
+   "BUILDING_SPONGE_FARM"
+  ],
+  "techs": [
+   "TECH_ABYSS_COLONIZATION"
+  ]
+ },
+ "replacedBy": {
   "buildings": [
    "BUILDING_SPONGE_FARM"
   ]

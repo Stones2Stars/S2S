@@ -11,16 +11,17 @@
    "UNIT_CARTWRIGHT"
   ]
  },
- "obsoletes": {
+ "obsoletedBy": {
   "buildings": [
    "BUILDING_SELF_ASSEMBLY_FACTORY"
+  ],
+  "techs": [
+   "TECH_ATOMIC_SCALE_ENGINEERING"
   ]
  },
- "replaces": {
+ "replacedBy": {
   "buildings": [
-   "BUILDING_CARRIAGE_BUILDER",
-   "BUILDING_TRAVOIS_MAKER",
-   "BUILDING_WHEELWRIGHT"
+   "BUILDING_SELF_ASSEMBLY_FACTORY"
   ]
  },
  "requires": {

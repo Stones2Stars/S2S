@@ -2,7 +2,15 @@
  "type": "BUILDING_HOLOGRAPHIC_SOLAR_SYSTEM",
  "description": "TXT_KEY_BUILDING_HOLOGRAPHIC_SOLAR_SYSTEM",
  "civilopedia": "TXT_KEY_BUILDING_HOLOGRAPHIC_SOLAR_SYSTEM_PEDIA",
- "obsoletes": {
+ "obsoletedBy": {
+  "buildings": [
+   "BUILDING_HIGH_TECH_CULTURAL_ENRICHMENT"
+  ],
+  "techs": [
+   "TECH_CULTURAL_EVOLUTION"
+  ]
+ },
+ "replacedBy": {
   "buildings": [
    "BUILDING_HIGH_TECH_CULTURAL_ENRICHMENT"
   ]

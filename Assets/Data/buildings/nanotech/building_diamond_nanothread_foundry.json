@@ -2,7 +2,15 @@
  "type": "BUILDING_DIAMOND_NANOTHREAD_FOUNDRY",
  "description": "TXT_KEY_BUILDING_DIAMOND_NANOTHREAD_FOUNDRY",
  "civilopedia": "TXT_KEY_BUILDING_DIAMOND_NANOTHREAD_FOUNDRY_PEDIA",
- "obsoletes": {
+ "obsoletedBy": {
+  "buildings": [
+   "BUILDING_PICOTECH_COMPLEX"
+  ],
+  "techs": [
+   "TECH_ELECTROWEAK_MATTER"
+  ]
+ },
+ "replacedBy": {
   "buildings": [
    "BUILDING_PICOTECH_COMPLEX"
   ]

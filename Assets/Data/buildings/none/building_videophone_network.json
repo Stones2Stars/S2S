@@ -7,7 +7,15 @@
    "BUILDING_HOUSING_MID_CLASS_SKYPAD_APARTMENTS"
   ]
  },
- "obsoletes": {
+ "obsoletedBy": {
+  "buildings": [
+   "BUILDING_COMPUTER_NETWORK"
+  ],
+  "techs": [
+   "TECH_VIRTUAL_SOCIETY"
+  ]
+ },
+ "replacedBy": {
   "buildings": [
    "BUILDING_COMPUTER_NETWORK"
   ]

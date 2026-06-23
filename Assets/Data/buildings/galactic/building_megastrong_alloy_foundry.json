@@ -2,7 +2,15 @@
  "type": "BUILDING_MEGASTRONG_ALLOY_FOUNDRY",
  "description": "TXT_KEY_BUILDING_MEGASTRONG_ALLOY_FOUNDRY",
  "civilopedia": "TXT_KEY_BUILDING_MEGASTRONG_ALLOY_FOUNDRY_PEDIA",
- "obsoletes": {
+ "obsoletedBy": {
+  "buildings": [
+   "BUILDING_MATERIALIZATION_COMPLEX"
+  ],
+  "techs": [
+   "TECH_OMEGA_POINT"
+  ]
+ },
+ "replacedBy": {
   "buildings": [
    "BUILDING_MATERIALIZATION_COMPLEX"
   ]

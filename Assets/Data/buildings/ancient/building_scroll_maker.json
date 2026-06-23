@@ -2,7 +2,15 @@
  "type": "BUILDING_SCROLL_MAKER",
  "description": "TXT_KEY_BUILDING_SCROLL_MAKER",
  "civilopedia": "TXT_KEY_BUILDING_SCROLL_MAKER_PEDIA",
- "obsoletes": {
+ "obsoletedBy": {
+  "buildings": [
+   "BUILDING_ANTIQUE_SHOP"
+  ],
+  "techs": [
+   "TECH_INDUSTRIALISM"
+  ]
+ },
+ "replacedBy": {
   "buildings": [
    "BUILDING_ANTIQUE_SHOP"
   ]

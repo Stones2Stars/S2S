@@ -2,7 +2,15 @@
  "type": "BUILDING_FACTORY_NANOACTUATORS",
  "description": "TXT_KEY_BUILDING_FACTORY_NANOACTUATORS",
  "civilopedia": "TXT_KEY_BUILDING_FACTORY_NANOACTUATORS_PEDIA",
- "obsoletes": {
+ "obsoletedBy": {
+  "buildings": [
+   "BUILDING_NANOTECH_COMPLEX"
+  ],
+  "techs": [
+   "TECH_FEMTOTECHNOLOGY"
+  ]
+ },
+ "replacedBy": {
   "buildings": [
    "BUILDING_NANOTECH_COMPLEX"
   ]

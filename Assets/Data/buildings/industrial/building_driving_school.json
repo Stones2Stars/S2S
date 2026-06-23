@@ -2,7 +2,15 @@
  "type": "BUILDING_DRIVING_SCHOOL",
  "description": "TXT_KEY_BUILDING_DRIVING_SCHOOL",
  "civilopedia": "TXT_KEY_BUILDING_DRIVING_SCHOOL_PEDIA",
- "obsoletes": {
+ "obsoletedBy": {
+  "buildings": [
+   "BUILDING_HOLOGRAPHIC_SCHOOL"
+  ],
+  "techs": [
+   "TECH_MIND_UPLOADING"
+  ]
+ },
+ "replacedBy": {
   "buildings": [
    "BUILDING_HOLOGRAPHIC_SCHOOL"
   ]

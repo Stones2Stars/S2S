@@ -2,6 +2,11 @@
  "type": "BUILDING_CAPTURE_THE_FLAG",
  "description": "TXT_KEY_BUILDING_CAPTURE_THE_FLAG",
  "civilopedia": "TXT_KEY_BUILDING_CAPTURE_THE_FLAG_PEDIA",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_CITY_PLANNING"
+  ]
+ },
  "requires": {
   "build": {
    "all": [

@@ -2,7 +2,15 @@
  "type": "BUILDING_FACTORY_COPPER_WIRES",
  "description": "TXT_KEY_BUILDING_FACTORY_COPPER_WIRES",
  "civilopedia": "TXT_KEY_BUILDING_FACTORY_COPPER_WIRES_PEDIA",
- "obsoletes": {
+ "obsoletedBy": {
+  "buildings": [
+   "BUILDING_ELECTRONICS_MANUFACTURING_DISTRICT"
+  ],
+  "techs": [
+   "TECH_NANOELECTRONICS"
+  ]
+ },
+ "replacedBy": {
   "buildings": [
    "BUILDING_ELECTRONICS_MANUFACTURING_DISTRICT"
   ]

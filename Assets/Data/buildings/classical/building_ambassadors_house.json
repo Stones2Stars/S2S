@@ -2,11 +2,6 @@
  "type": "BUILDING_AMBASSADORS_HOUSE",
  "description": "TXT_KEY_BUILDING_AMBASSADORS_HOUSE",
  "civilopedia": "TXT_KEY_BUILDING_AMBASSADORS_HOUSE_PEDIA",
- "replaces": {
-  "buildings": [
-   "BUILDING_NEGOTIATORS_HUT"
-  ]
- },
  "requires": {
   "build": {
    "all": [

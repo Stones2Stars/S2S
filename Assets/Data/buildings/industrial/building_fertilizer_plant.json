@@ -2,7 +2,15 @@
  "type": "BUILDING_FERTILIZER_PLANT",
  "description": "TXT_KEY_BUILDING_FERTILIZER_PLANT",
  "civilopedia": "TXT_KEY_BUILDING_FERTILIZER_PLANT_PEDIA",
- "obsoletes": {
+ "obsoletedBy": {
+  "buildings": [
+   "BUILDING_MATERIALS_CONGLOMERATE"
+  ],
+  "techs": [
+   "TECH_SMART_DUST"
+  ]
+ },
+ "replacedBy": {
   "buildings": [
    "BUILDING_MATERIALS_CONGLOMERATE"
   ]

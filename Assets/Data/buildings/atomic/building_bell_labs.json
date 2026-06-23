@@ -2,6 +2,11 @@
  "type": "BUILDING_BELL_LABS",
  "description": "TXT_KEY_BUILDING_BELL_LABS",
  "civilopedia": "TXT_KEY_BUILDING_BELL_LABS_PEDIA",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_EXOCORTEX_NETWORKS"
+  ]
+ },
  "requires": {
   "build": {
    "all": [

@@ -2,8 +2,17 @@
  "type": "BUILDING_ROPER",
  "description": "TXT_KEY_BUILDING_ROPER",
  "civilopedia": "TXT_KEY_BUILDING_ROPER_PEDIA",
- "obsoletes": {
+ "obsoletedBy": {
   "buildings": [
+   "BUILDING_FACTORY_ROPE"
+  ],
+  "techs": [
+   "TECH_RAPID_PROTOTYPING"
+  ]
+ },
+ "replacedBy": {
+  "buildings": [
+   "BUILDING_MANUFACTURING_DISTRICT",
    "BUILDING_FACTORY_ROPE"
   ]
  },

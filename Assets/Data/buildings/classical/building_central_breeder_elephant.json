@@ -7,6 +7,11 @@
    "BUILDING_ANIMAL_TRAINER_ELEPHANT"
   ]
  },
+ "obsoletedBy": {
+  "techs": [
+   "TECH_VERTICAL_FLIGHT"
+  ]
+ },
  "requires": {
   "build": {
    "all": [

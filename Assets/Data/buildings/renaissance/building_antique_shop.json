@@ -8,13 +8,6 @@
    "BUILDING_LIBRARY_OF_NINEVEH"
   ]
  },
- "replaces": {
-  "buildings": [
-   "BUILDING_SCROLL_MAKER",
-   "BUILDING_STONE_TOOL_MAKER",
-   "BUILDING_TABLET_MAKER"
-  ]
- },
  "requires": {
   "build": {
    "all": [

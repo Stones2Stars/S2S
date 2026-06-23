@@ -2,7 +2,15 @@
  "type": "BUILDING_PEAT_GATHERER",
  "description": "TXT_KEY_BUILDING_PEAT_GATHERER",
  "civilopedia": "TXT_KEY_BUILDING_PEAT_GATHERER_PEDIA",
- "obsoletes": {
+ "obsoletedBy": {
+  "buildings": [
+   "BUILDING_MODERN_EARTHWORKS"
+  ],
+  "techs": [
+   "TECH_RAPID_PROTOTYPING"
+  ]
+ },
+ "replacedBy": {
   "buildings": [
    "BUILDING_MODERN_EARTHWORKS"
   ]

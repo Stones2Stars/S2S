@@ -2,7 +2,15 @@
  "type": "BUILDING_CIGAR_ROLLERS_SHOP",
  "description": "TXT_KEY_BUILDING_CIGAR_ROLLERS_SHOP",
  "civilopedia": "TXT_KEY_BUILDING_CIGAR_ROLLERS_SHOP_PEDIA",
- "obsoletes": {
+ "obsoletedBy": {
+  "buildings": [
+   "BUILDING_HYPERMARKET"
+  ],
+  "techs": [
+   "TECH_SMART_DUST"
+  ]
+ },
+ "replacedBy": {
   "buildings": [
    "BUILDING_HYPERMARKET"
   ]

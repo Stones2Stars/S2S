@@ -12,7 +12,15 @@
    "BUILDING_NET_SHRIMP"
   ]
  },
- "obsoletes": {
+ "obsoletedBy": {
+  "buildings": [
+   "BUILDING_AQUAFARM"
+  ],
+  "techs": [
+   "TECH_AUTOMATED_URBANIZATION"
+  ]
+ },
+ "replacedBy": {
   "buildings": [
    "BUILDING_AQUAFARM"
   ]

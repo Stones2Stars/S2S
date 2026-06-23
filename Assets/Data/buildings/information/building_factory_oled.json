@@ -2,7 +2,15 @@
  "type": "BUILDING_FACTORY_OLED",
  "description": "TXT_KEY_BUILDING_FACTORY_OLED",
  "civilopedia": "TXT_KEY_BUILDING_FACTORY_OLED_PEDIA",
- "obsoletes": {
+ "obsoletedBy": {
+  "buildings": [
+   "BUILDING_CHEMICALS_DISTRICT"
+  ],
+  "techs": [
+   "TECH_ANIMAMATERIALS"
+  ]
+ },
+ "replacedBy": {
   "buildings": [
    "BUILDING_CHEMICALS_DISTRICT"
   ]

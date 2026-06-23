@@ -2,14 +2,17 @@
  "type": "BUILDING_ADVANCED_FLOODWALL",
  "description": "TXT_KEY_BUILDING_ADVANCED_FLOODWALL",
  "civilopedia": "TXT_KEY_BUILDING_ADVANCED_FLOODWALL_PEDIA",
- "obsoletes": {
+ "obsoletedBy": {
   "buildings": [
    "BUILDING_OCEAN_ADMINISTRATION"
+  ],
+  "techs": [
+   "TECH_LAUNCH_ARCOLOGY"
   ]
  },
- "replaces": {
+ "replacedBy": {
   "buildings": [
-   "BUILDING_SEAWALLS"
+   "BUILDING_OCEAN_ADMINISTRATION"
   ]
  },
  "requires": {

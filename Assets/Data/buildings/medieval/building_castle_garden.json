@@ -2,14 +2,17 @@
  "type": "BUILDING_CASTLE_GARDEN",
  "description": "TXT_KEY_BUILDING_CASTLE_GARDEN",
  "civilopedia": "TXT_KEY_BUILDING_CASTLE_GARDEN_PEDIA",
- "obsoletes": {
+ "obsoletedBy": {
   "buildings": [
    "BUILDING_CITY_PARK"
+  ],
+  "techs": [
+   "TECH_ECOLOGY"
   ]
  },
- "replaces": {
+ "replacedBy": {
   "buildings": [
-   "BUILDING_GROVE"
+   "BUILDING_CITY_PARK"
   ]
  },
  "requires": {

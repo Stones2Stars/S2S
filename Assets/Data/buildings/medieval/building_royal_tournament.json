@@ -7,14 +7,17 @@
    "BUILDING_CIRCUS_MAXIMUS"
   ]
  },
- "obsoletes": {
+ "obsoletedBy": {
   "buildings": [
    "BUILDING_SPEEDWAY"
+  ],
+  "techs": [
+   "TECH_COUNTERCULTURE"
   ]
  },
- "replaces": {
+ "replacedBy": {
   "buildings": [
-   "BUILDING_HIPPODROME"
+   "BUILDING_SPEEDWAY"
   ]
  },
  "requires": {

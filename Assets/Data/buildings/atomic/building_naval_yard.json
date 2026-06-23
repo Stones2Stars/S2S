@@ -15,12 +15,6 @@
    "UNIT_HOSPITAL_SHIP_2"
   ]
  },
- "replaces": {
-  "buildings": [
-   "BUILDING_DRYDOCK",
-   "BUILDING_SHIPYARD"
-  ]
- },
  "requires": {
   "build": {
    "all": [

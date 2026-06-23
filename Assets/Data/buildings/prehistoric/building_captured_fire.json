@@ -2,6 +2,11 @@
  "type": "BUILDING_CAPTURED_FIRE",
  "description": "TXT_KEY_BUILDING_CAPTURED_FIRE",
  "civilopedia": "TXT_KEY_BUILDING_CAPTURED_FIRE_PEDIA",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_EARTH_OVEN"
+  ]
+ },
  "requires": {
   "build": {
    "all": [

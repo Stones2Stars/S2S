@@ -2,7 +2,15 @@
  "type": "BUILDING_FARM_CROP_ALGAE",
  "description": "TXT_KEY_BUILDING_FARM_CROP_ALGAE",
  "civilopedia": "TXT_KEY_BUILDING_FARM_CROP_ALGAE_PEDIA",
- "obsoletes": {
+ "obsoletedBy": {
+  "buildings": [
+   "BUILDING_FARMSCRAPER_I"
+  ],
+  "techs": [
+   "TECH_GAIA_ECOLOGY"
+  ]
+ },
+ "replacedBy": {
   "buildings": [
    "BUILDING_FARMSCRAPER_I"
   ]

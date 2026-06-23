@@ -8,14 +8,20 @@
    "BUILDING_HARBORMASTERS_OFFICE"
   ]
  },
- "obsoletes": {
+ "obsoletedBy": {
   "buildings": [
    "BUILDING_PORT"
+  ],
+  "techs": [
+   "TECH_COMPASS"
   ]
  },
- "replaces": {
+ "replacedBy": {
   "buildings": [
-   "BUILDING_SPEARFISHER"
+   "BUILDING_PORT",
+   "BUILDING_COMMERCIAL_PORT",
+   "BUILDING_INTERNATIONAL_PORT",
+   "BUILDING_OCEAN_ADMINISTRATION"
   ]
  },
  "requires": {

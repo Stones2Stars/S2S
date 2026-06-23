@@ -53,14 +53,17 @@
    "BUILDING_WOODWIND_INSTRUMENT_MAKER"
   ]
  },
- "obsoletes": {
+ "obsoletedBy": {
   "buildings": [
    "BUILDING_MODERN_GRANARY"
+  ],
+  "techs": [
+   "TECH_GLOBALIZATION"
   ]
  },
- "replaces": {
+ "replacedBy": {
   "buildings": [
-   "BUILDING_STORAGE_PIT"
+   "BUILDING_MODERN_GRANARY"
   ]
  },
  "requires": {

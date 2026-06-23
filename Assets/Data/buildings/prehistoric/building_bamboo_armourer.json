@@ -2,7 +2,15 @@
  "type": "BUILDING_BAMBOO_ARMOURER",
  "description": "TXT_KEY_BUILDING_BAMBOO_ARMOURER",
  "civilopedia": "TXT_KEY_BUILDING_BAMBOO_ARMOURER_PEDIA",
- "obsoletes": {
+ "obsoletedBy": {
+  "buildings": [
+   "BUILDING_ARMOURER"
+  ],
+  "techs": [
+   "TECH_ARTILLERY"
+  ]
+ },
+ "replacedBy": {
   "buildings": [
    "BUILDING_ARMOURER"
   ]

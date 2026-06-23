@@ -2,6 +2,11 @@
  "type": "BUILDING_DINING_HALL",
  "description": "TXT_KEY_BUILDING_DINING_HALL",
  "civilopedia": "TXT_KEY_BUILDING_DINING_HALL_PEDIA",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_CITY_PLANNING"
+  ]
+ },
  "requires": {
   "build": {
    "all": [

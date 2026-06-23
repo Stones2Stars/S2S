@@ -2,9 +2,18 @@
  "type": "BUILDING_PESTS_RATS",
  "description": "TXT_KEY_BUILDING_PESTS_RATS",
  "civilopedia": "TXT_KEY_BUILDING_PESTS_PEDIA",
- "obsoletes": {
+ "obsoletedBy": {
   "buildings": [
    "BUILDING_RAT_CATCHER"
+  ],
+  "techs": [
+   "TECH_ENVIRONMENTAL_ECONOMICS"
+  ]
+ },
+ "replacedBy": {
+  "buildings": [
+   "BUILDING_RAT_CATCHER",
+   "BUILDING_AGROFOREST"
   ]
  },
  "requires": {

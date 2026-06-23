@@ -7,6 +7,16 @@
    "BUILDING_FERTILITY_FESTIVAL"
   ]
  },
+ "obsoletedBy": {
+  "techs": [
+   "TECH_WOMENS_SUFFRAGE"
+  ]
+ },
+ "replacedBy": {
+  "buildings": [
+   "BUILDING_EFFECT_FERTILITY_FESTIVAL"
+  ]
+ },
  "requires": {
   "build": {
    "all": [

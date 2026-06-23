@@ -2,9 +2,18 @@
  "type": "BUILDING_EXPRESSWAY",
  "description": "TXT_KEY_BUILDING_EXPRESSWAY",
  "civilopedia": "TXT_KEY_BUILDING_EXPRESSWAY_PEDIA",
- "obsoletes": {
+ "obsoletedBy": {
   "buildings": [
    "BUILDING_SKYROAD_CONTROL_TOWER"
+  ],
+  "techs": [
+   "TECH_TELEPORTATION"
+  ]
+ },
+ "replacedBy": {
+  "buildings": [
+   "BUILDING_SKYROAD_CONTROL_TOWER",
+   "BUILDING_TELEPORT_BOOTH"
   ]
  },
  "requires": {

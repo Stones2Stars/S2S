@@ -2,6 +2,11 @@
  "type": "BUILDING_EKAL_MASHARTI",
  "description": "TXT_KEY_BUILDING_EKAL_MASHARTI",
  "civilopedia": "TXT_KEY_BUILDING_EKAL_MASHARTI_PEDIA",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_LOGISTICS"
+  ]
+ },
  "requires": {
   "build": {
    "all": [

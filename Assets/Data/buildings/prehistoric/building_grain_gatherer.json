@@ -2,6 +2,11 @@
  "type": "BUILDING_GRAIN_GATHERER",
  "description": "TXT_KEY_BUILDING_GRAIN_GATHERER",
  "civilopedia": "TXT_KEY_BUILDING_GRAIN_GATHERER_PEDIA",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_CITY_PLANNING"
+  ]
+ },
  "requires": {
   "build": {
    "all": [

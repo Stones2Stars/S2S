@@ -8,15 +8,18 @@
    "BUILDING_MESA_VERDE"
   ]
  },
- "obsoletes": {
+ "obsoletedBy": {
   "buildings": [
    "BUILDING_HOUSING_COLONY_ARCOLOGY"
+  ],
+  "techs": [
+   "TECH_INTERSTELLAR_COLONIZATION"
   ]
  },
- "replaces": {
+ "replacedBy": {
   "buildings": [
-   "BUILDING_HOUSING_CLIFF_DWELLING",
-   "BUILDING_HOUSING_HIGHRISES"
+   "BUILDING_HOUSING_COLONY_ARCOLOGY",
+   "BUILDING_LAUNCH_ARCOLOGY"
   ]
  },
  "requires": {

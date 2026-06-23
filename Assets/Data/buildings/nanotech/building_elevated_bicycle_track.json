@@ -2,11 +2,6 @@
  "type": "BUILDING_ELEVATED_BICYCLE_TRACK",
  "description": "TXT_KEY_BUILDING_ELEVATED_BICYCLE_TRACK",
  "civilopedia": "TXT_KEY_BUILDING_ELEVATED_BICYCLE_TRACK_PEDIA",
- "replaces": {
-  "buildings": [
-   "BUILDING_BICYCLE_BOULEVARD"
-  ]
- },
  "requires": {
   "build": {
    "all": [

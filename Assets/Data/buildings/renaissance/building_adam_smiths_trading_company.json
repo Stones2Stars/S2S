@@ -2,6 +2,11 @@
  "type": "BUILDING_ADAM_SMITHS_TRADING_COMPANY",
  "description": "TXT_KEY_BUILDING_ADAM_SMITHS_TRADING_COMPANY",
  "civilopedia": "TXT_KEY_BUILDING_ADAM_SMITHS_TRADING_COMPANY_PEDIA",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_MICROPROCESSOR"
+  ]
+ },
  "requires": {
   "build": {
    "all": [

@@ -21,15 +21,18 @@
    "UNIT_TLATILCO_WAR_PRIEST"
   ]
  },
- "obsoletes": {
+ "obsoletedBy": {
   "buildings": [
    "BUILDING_MEDICAL_CLINIC"
+  ],
+  "techs": [
+   "TECH_NANOTROIDS"
   ]
  },
- "replaces": {
+ "replacedBy": {
   "buildings": [
-   "BUILDING_DOCTORS_OFFICE",
-   "BUILDING_HEALERS_HUT"
+   "BUILDING_MEDICAL_CLINIC",
+   "BUILDING_HEALTHCARE_MEGACOMPLEX"
   ]
  },
  "requires": {

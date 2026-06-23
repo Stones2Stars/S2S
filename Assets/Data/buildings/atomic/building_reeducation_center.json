@@ -2,7 +2,15 @@
  "type": "BUILDING_REEDUCATION_CENTER",
  "description": "TXT_KEY_BUILDING_REEDUCATION_CENTER",
  "civilopedia": "TXT_KEY_BUILDING_REEDUCATION_CENTER_PEDIA",
- "obsoletes": {
+ "obsoletedBy": {
+  "buildings": [
+   "BUILDING_CYBERNETIC_PRISON"
+  ],
+  "techs": [
+   "TECH_COLONY_ARCOLOGY"
+  ]
+ },
+ "replacedBy": {
   "buildings": [
    "BUILDING_CYBERNETIC_PRISON"
   ]

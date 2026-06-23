@@ -9,12 +9,17 @@
    "BUILDING_MAUSOLEUM"
   ]
  },
- "replaces": {
+ "obsoletedBy": {
+  "techs": [
+   "TECH_RAPID_PROTOTYPING"
+  ]
+ },
+ "replacedBy": {
   "buildings": [
-   "BUILDING_HOUSING_ANIMAL_HIDE_TENTS",
-   "BUILDING_HOUSING_HOMELESS",
-   "BUILDING_HOUSING_TIPIS",
-   "BUILDING_HOUSING_VILLAS"
+   "BUILDING_HOUSING_MANSIONS",
+   "BUILDING_HOUSING_CHATEAU",
+   "BUILDING_HOUSING_COLONY_ARCOLOGY",
+   "BUILDING_LAUNCH_ARCOLOGY"
   ]
  },
  "requires": {

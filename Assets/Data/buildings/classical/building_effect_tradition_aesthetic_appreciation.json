@@ -2,6 +2,11 @@
  "type": "BUILDING_EFFECT_TRADITION_AESTHETIC_APPRECIATION",
  "description": "TXT_KEY_BUILDING_EFFECT_TRADITION_AESTHETIC_APPRECIATION",
  "civilopedia": "TXT_KEY_BUILDING_TRADITION_AESTHETIC_APPRECIATION_PEDIA",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_CIVIL_ENGINEERING"
+  ]
+ },
  "requires": {
   "build": {
    "all": [

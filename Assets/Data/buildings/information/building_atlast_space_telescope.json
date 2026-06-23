@@ -2,6 +2,11 @@
  "type": "BUILDING_ATLAST_SPACE_TELESCOPE",
  "description": "TXT_KEY_BUILDING_ATLAST_SPACE_TELESCOPE",
  "civilopedia": "TXT_KEY_BUILDING_ATLAST_SPACE_TELESCOPE_PEDIA",
+ "replacedBy": {
+  "buildings": [
+   "BUILDING_POLLUTION_BLACKENED_SKIES"
+  ]
+ },
  "requires": {
   "build": {
    "all": [

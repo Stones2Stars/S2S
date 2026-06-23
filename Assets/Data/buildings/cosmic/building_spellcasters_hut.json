@@ -2,7 +2,15 @@
  "type": "BUILDING_SPELLCASTERS_HUT",
  "description": "TXT_KEY_BUILDING_SPELLCASTERS_HUT",
  "civilopedia": "TXT_KEY_BUILDING_SPELLCASTERS_HUT_PEDIA",
- "obsoletes": {
+ "obsoletedBy": {
+  "buildings": [
+   "BUILDING_MATERIALIZATION_COMPLEX"
+  ],
+  "techs": [
+   "TECH_OMEGA_POINT"
+  ]
+ },
+ "replacedBy": {
   "buildings": [
    "BUILDING_MATERIALIZATION_COMPLEX"
   ]

@@ -7,17 +7,17 @@
    "BUILDING_DEBTORS_PRISON"
   ]
  },
- "obsoletes": {
+ "obsoletedBy": {
   "buildings": [
    "BUILDING_LETHAL_INJECTION"
+  ],
+  "techs": [
+   "TECH_CRYONICS"
   ]
  },
- "replaces": {
+ "replacedBy": {
   "buildings": [
-   "BUILDING_CRUCIFIXION_CROSSES",
-   "BUILDING_GALLOWS",
-   "BUILDING_GUILLOTINE",
-   "BUILDING_PUBLIC_STONING"
+   "BUILDING_LETHAL_INJECTION"
   ]
  },
  "requires": {

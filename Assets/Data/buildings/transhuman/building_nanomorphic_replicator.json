@@ -14,14 +14,6 @@
    "UNIT_CHROME_INFANTRY"
   ]
  },
- "replaces": {
-  "buildings": [
-   "BUILDING_FERTILITY_CLINIC",
-   "BUILDING_GESTATION_TANKS",
-   "BUILDING_RESURRECTION_HUB",
-   "BUILDING_UTERINE_REPLICATOR"
-  ]
- },
  "requires": {
   "build": {
    "all": [

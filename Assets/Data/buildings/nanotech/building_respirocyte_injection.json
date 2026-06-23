@@ -2,7 +2,15 @@
  "type": "BUILDING_RESPIROCYTE_INJECTION",
  "description": "TXT_KEY_BUILDING_RESPIROCYTE_INJECTION",
  "civilopedia": "TXT_KEY_BUILDING_RESPIROCYTE_INJECTION_PEDIA",
- "obsoletes": {
+ "obsoletedBy": {
+  "buildings": [
+   "BUILDING_HEALTHCARE_MEGACOMPLEX"
+  ],
+  "techs": [
+   "TECH_PICOTECHNOLOGY"
+  ]
+ },
+ "replacedBy": {
   "buildings": [
    "BUILDING_HEALTHCARE_MEGACOMPLEX"
   ]

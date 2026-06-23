@@ -2,7 +2,15 @@
  "type": "BUILDING_SCHOOL_BUS_STATION",
  "description": "TXT_KEY_BUILDING_SCHOOL_BUS_STATION",
  "civilopedia": "TXT_KEY_BUILDING_SCHOOL_BUS_STATION_PEDIA",
- "obsoletes": {
+ "obsoletedBy": {
+  "buildings": [
+   "BUILDING_HOLOGRAPHIC_SCHOOL"
+  ],
+  "techs": [
+   "TECH_MIND_UPLOADING"
+  ]
+ },
+ "replacedBy": {
   "buildings": [
    "BUILDING_HOLOGRAPHIC_SCHOOL"
   ]

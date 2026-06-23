@@ -7,14 +7,19 @@
    "BUILDING_GUILD_VICTUALLERS"
   ]
  },
- "obsoletes": {
+ "obsoletedBy": {
   "buildings": [
    "BUILDING_DIVE_BAR"
+  ],
+  "techs": [
+   "TECH_ASTROANTHROPOLOGY"
   ]
  },
- "replaces": {
+ "replacedBy": {
   "buildings": [
-   "BUILDING_TAVERN"
+   "BUILDING_DIVE_BAR",
+   "BUILDING_GALACTIC_CANTINA",
+   "BUILDING_ORDINANCE_ALCOHOL_PROHIBITION"
   ]
  },
  "requires": {

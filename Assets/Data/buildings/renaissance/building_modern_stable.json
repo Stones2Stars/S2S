@@ -21,12 +21,6 @@
    "UNIT_TAMED_MAMMOTH"
   ]
  },
- "replaces": {
-  "buildings": [
-   "BUILDING_KNIGHTS_STABLE",
-   "BUILDING_STABLE"
-  ]
- },
  "requires": {
   "build": {
    "all": [

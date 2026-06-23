@@ -2,7 +2,15 @@
  "type": "BUILDING_RESOURCES_PETROLEUM_PRODUCTS",
  "description": "TXT_KEY_BUILDING_RESOURCES_PETROLEUM_PRODUCTS",
  "civilopedia": "TXT_KEY_BUILDING_RESOURCE_PROVIDER_PEDIA",
- "obsoletes": {
+ "obsoletedBy": {
+  "buildings": [
+   "BUILDING_ULTRAFUEL_REFINERY"
+  ],
+  "techs": [
+   "TECH_BOTANICAL_ALCHEMY"
+  ]
+ },
+ "replacedBy": {
   "buildings": [
    "BUILDING_ULTRAFUEL_REFINERY"
   ]

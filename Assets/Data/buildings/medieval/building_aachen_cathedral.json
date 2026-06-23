@@ -2,6 +2,11 @@
  "type": "BUILDING_AACHEN_CATHEDRAL",
  "description": "TXT_KEY_BUILDING_AACHEN_CATHEDRAL",
  "civilopedia": "TXT_KEY_BUILDING_AACHEN_CATHEDRAL_PEDIA",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_NATIONALISM"
+  ]
+ },
  "requires": {
   "build": {
    "all": [

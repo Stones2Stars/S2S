@@ -2,8 +2,18 @@
  "type": "BUILDING_TOY_CARVER",
  "description": "TXT_KEY_BUILDING_TOY_CARVER",
  "civilopedia": "TXT_KEY_BUILDING_TOY_CARVER_PEDIA",
- "obsoletes": {
+ "obsoletedBy": {
   "buildings": [
+   "BUILDING_TOY_MAKER"
+  ],
+  "techs": [
+   "TECH_PLASTICS"
+  ]
+ },
+ "replacedBy": {
+  "buildings": [
+   "BUILDING_FACTORY_TOYS",
+   "BUILDING_MANUFACTURING_DISTRICT",
    "BUILDING_TOY_MAKER"
   ]
  },

@@ -2,16 +2,17 @@
  "type": "BUILDING_ELECTRIC_LAMPS",
  "description": "TXT_KEY_BUILDING_ELECTRIC_LAMPS",
  "civilopedia": "TXT_KEY_BUILDING_ELECTRIC_LAMPS_PEDIA",
- "obsoletes": {
+ "obsoletedBy": {
   "buildings": [
    "BUILDING_OLED_LAMPS"
+  ],
+  "techs": [
+   "TECH_PHOTON_THERMODYNAMICS"
   ]
  },
- "replaces": {
+ "replacedBy": {
   "buildings": [
-   "BUILDING_GAS_LAMPS",
-   "BUILDING_OIL_LAMPS",
-   "BUILDING_TORCHES"
+   "BUILDING_OLED_LAMPS"
   ]
  },
  "requires": {

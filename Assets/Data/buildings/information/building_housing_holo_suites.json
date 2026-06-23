@@ -2,14 +2,18 @@
  "type": "BUILDING_HOUSING_HOLO_SUITES",
  "description": "TXT_KEY_BUILDING_HOUSING_HOLO_SUITES",
  "civilopedia": "TXT_KEY_BUILDING_HOUSING_HOLO_SUITES_PEDIA",
- "obsoletes": {
+ "obsoletedBy": {
   "buildings": [
    "BUILDING_HOUSING_COLONY_ARCOLOGY"
+  ],
+  "techs": [
+   "TECH_INTERSTELLAR_COLONIZATION"
   ]
  },
- "replaces": {
+ "replacedBy": {
   "buildings": [
-   "BUILDING_HOUSING_PENTHOUSE_SUITES"
+   "BUILDING_HOUSING_COLONY_ARCOLOGY",
+   "BUILDING_LAUNCH_ARCOLOGY"
   ]
  },
  "requires": {

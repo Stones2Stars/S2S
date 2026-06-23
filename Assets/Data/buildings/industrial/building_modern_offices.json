@@ -96,12 +96,6 @@
    "BUILDING_WELFARE_OFFICE"
   ]
  },
- "replaces": {
-  "buildings": [
-   "BUILDING_OFFICIUM",
-   "BUILDING_TAXPERSON"
-  ]
- },
  "requires": {
   "build": {
    "all": [

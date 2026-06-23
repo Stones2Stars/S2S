@@ -2,7 +2,15 @@
  "type": "BUILDING_MINE_PYRITE",
  "description": "TXT_KEY_BUILDING_MINE_PYRITE",
  "civilopedia": "TXT_KEY_BUILDING_MINE_PYRITE_PEDIA",
- "obsoletes": {
+ "obsoletedBy": {
+  "buildings": [
+   "BUILDING_MODERN_EARTHWORKS"
+  ],
+  "techs": [
+   "TECH_RAPID_PROTOTYPING"
+  ]
+ },
+ "replacedBy": {
   "buildings": [
    "BUILDING_MODERN_EARTHWORKS"
   ]

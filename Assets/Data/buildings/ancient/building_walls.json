@@ -8,15 +8,17 @@
    "BUILDING_THE_ISHTAR_GATE"
   ]
  },
- "obsoletes": {
+ "obsoletedBy": {
   "buildings": [
    "BUILDING_HIGH_WALLS"
+  ],
+  "techs": [
+   "TECH_GUNPOWDER"
   ]
  },
- "replaces": {
+ "replacedBy": {
   "buildings": [
-   "BUILDING_EARTH_WALL",
-   "BUILDING_PALISADE"
+   "BUILDING_HIGH_WALLS"
   ]
  },
  "requires": {

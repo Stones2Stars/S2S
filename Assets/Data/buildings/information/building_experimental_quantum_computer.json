@@ -2,9 +2,18 @@
  "type": "BUILDING_EXPERIMENTAL_QUANTUM_COMPUTER",
  "description": "TXT_KEY_BUILDING_EXPERIMENTAL_QUANTUM_COMPUTER",
  "civilopedia": "TXT_KEY_BUILDING_EXPERIMENTAL_QUANTUM_COMPUTER_PEDIA",
- "obsoletes": {
+ "obsoletedBy": {
   "buildings": [
    "BUILDING_QUANTUM_SUPERCOMPUTER"
+  ],
+  "techs": [
+   "TECH_GRAVITRONICS"
+  ]
+ },
+ "replacedBy": {
+  "buildings": [
+   "BUILDING_QUANTUM_SUPERCOMPUTER",
+   "BUILDING_QUANTUM_GRAVITY_SUPERCOMPUTER"
   ]
  },
  "requires": {

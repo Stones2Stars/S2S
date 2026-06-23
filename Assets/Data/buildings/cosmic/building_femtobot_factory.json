@@ -2,7 +2,15 @@
  "type": "BUILDING_FEMTOBOT_FACTORY",
  "description": "TXT_KEY_BUILDING_FEMTOBOT_FACTORY",
  "civilopedia": "TXT_KEY_BUILDING_FEMTOBOT_FACTORY_PEDIA",
- "obsoletes": {
+ "obsoletedBy": {
+  "buildings": [
+   "BUILDING_MATERIALIZATION_COMPLEX"
+  ],
+  "techs": [
+   "TECH_OMEGA_POINT"
+  ]
+ },
+ "replacedBy": {
   "buildings": [
    "BUILDING_MATERIALIZATION_COMPLEX"
   ]

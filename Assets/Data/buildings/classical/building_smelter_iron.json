@@ -7,9 +7,18 @@
    "BUILDING_RESOURCES_IRON_INGOTS"
   ]
  },
- "obsoletes": {
+ "obsoletedBy": {
   "buildings": [
    "BUILDING_ADVANCED_IRONWORKS"
+  ],
+  "techs": [
+   "TECH_NANOMINING"
+  ]
+ },
+ "replacedBy": {
+  "buildings": [
+   "BUILDING_ADVANCED_IRONWORKS",
+   "BUILDING_METALS_MEGACOMPLEX"
   ]
  },
  "requires": {

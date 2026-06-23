@@ -8,14 +8,17 @@
    "BUILDING_RESOURCES_LARD"
   ]
  },
- "obsoletes": {
+ "obsoletedBy": {
   "buildings": [
    "BUILDING_MEAT_INDUSTRY_CONGLOMERATE"
+  ],
+  "techs": [
+   "TECH_PLANETARY_ECONOMICS"
   ]
  },
- "replaces": {
+ "replacedBy": {
   "buildings": [
-   "BUILDING_BUTCHERY"
+   "BUILDING_MEAT_INDUSTRY_CONGLOMERATE"
   ]
  },
  "requires": {

@@ -2,6 +2,11 @@
  "type": "BUILDING_GIVERNY",
  "description": "TXT_KEY_BUILDING_GIVERNY",
  "civilopedia": "TXT_KEY_BUILDING_GIVERNY_PEDIA",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_HYDROPONICS"
+  ]
+ },
  "requires": {
   "build": {
    "all": [

@@ -16,15 +16,22 @@
    "UNIT_WATCHER"
   ]
  },
- "obsoletes": {
+ "obsoletedBy": {
   "buildings": [
    "BUILDING_TOWN_PATROL"
+  ],
+  "techs": [
+   "TECH_WARRANTS_AND_DECREES"
   ]
  },
- "replaces": {
+ "replacedBy": {
   "buildings": [
-   "BUILDING_LOOKOUT_POST",
-   "BUILDING_SENTRY_POST"
+   "BUILDING_TOWN_PATROL",
+   "BUILDING_GUARDHOUSE",
+   "BUILDING_GUARD_STATION",
+   "BUILDING_SHERIFFS_OFFICE",
+   "BUILDING_POLICE_STATION",
+   "BUILDING_POLICE_PRECINCT"
   ]
  },
  "requires": {

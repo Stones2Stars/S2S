@@ -2,7 +2,15 @@
  "type": "BUILDING_ANTIMATTER_HARVESTER",
  "description": "TXT_KEY_BUILDING_ANTIMATTER_HARVESTER",
  "civilopedia": "TXT_KEY_BUILDING_ANTIMATTER_HARVESTER_PEDIA",
- "obsoletes": {
+ "obsoletedBy": {
+  "buildings": [
+   "BUILDING_MATERIALIZATION_COMPLEX"
+  ],
+  "techs": [
+   "TECH_OMEGA_POINT"
+  ]
+ },
+ "replacedBy": {
   "buildings": [
    "BUILDING_MATERIALIZATION_COMPLEX"
   ]

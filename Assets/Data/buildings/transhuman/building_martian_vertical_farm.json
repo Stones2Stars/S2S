@@ -2,12 +2,6 @@
  "type": "BUILDING_MARTIAN_VERTICAL_FARM",
  "description": "TXT_KEY_BUILDING_MARTIAN_VERTICAL_FARM",
  "civilopedia": "TXT_KEY_BUILDING_MARTIAN_VERTICAL_FARM_PEDIA",
- "replaces": {
-  "buildings": [
-   "BUILDING_MARTIAN_HYDROPONICS_ARRAY",
-   "BUILDING_MARTIAN_HYDROPONICS_COMPLEX"
-  ]
- },
  "requires": {
   "build": {
    "all": [

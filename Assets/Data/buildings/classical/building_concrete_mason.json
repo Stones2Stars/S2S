@@ -7,8 +7,17 @@
    "BUILDING_WATERPROOF_CEMENT_MAKER"
   ]
  },
- "obsoletes": {
+ "obsoletedBy": {
   "buildings": [
+   "BUILDING_CEMENT_MILL"
+  ],
+  "techs": [
+   "TECH_MODERN_SEISMOLOGY"
+  ]
+ },
+ "replacedBy": {
+  "buildings": [
+   "BUILDING_MODERN_EARTHWORKS",
    "BUILDING_CEMENT_MILL"
   ]
  },

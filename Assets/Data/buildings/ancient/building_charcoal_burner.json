@@ -13,14 +13,6 @@
    "BUILDING_SMOKE_SIGNALS"
   ]
  },
- "replaces": {
-  "buildings": [
-   "BUILDING_BONFIRE",
-   "BUILDING_FIRE_PIT",
-   "BUILDING_IMU",
-   "BUILDING_RESOURCES_CHARCOAL"
-  ]
- },
  "requires": {
   "build": {
    "all": [

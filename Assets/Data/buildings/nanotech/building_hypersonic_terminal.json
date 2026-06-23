@@ -2,7 +2,15 @@
  "type": "BUILDING_HYPERSONIC_TERMINAL",
  "description": "TXT_KEY_BUILDING_HYPERSONIC_TERMINAL",
  "civilopedia": "TXT_KEY_BUILDING_HYPERSONIC_TERMINAL_PEDIA",
- "obsoletes": {
+ "obsoletedBy": {
+  "buildings": [
+   "BUILDING_TELEPORT_BOOTH"
+  ],
+  "techs": [
+   "TECH_WORMHOLE_HIVEMIND"
+  ]
+ },
+ "replacedBy": {
   "buildings": [
    "BUILDING_TELEPORT_BOOTH"
   ]

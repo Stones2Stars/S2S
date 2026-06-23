@@ -7,9 +7,18 @@
    "BUILDING_RESOURCES_CARCASS"
   ]
  },
- "obsoletes": {
+ "obsoletedBy": {
   "buildings": [
    "BUILDING_BREEDING_PROGRAM_MOOSE"
+  ],
+  "techs": [
+   "TECH_PLANETARY_ECONOMICS"
+  ]
+ },
+ "replacedBy": {
+  "buildings": [
+   "BUILDING_BREEDING_PROGRAM_MOOSE",
+   "BUILDING_ANIMAL_PRESERVE"
   ]
  },
  "requires": {

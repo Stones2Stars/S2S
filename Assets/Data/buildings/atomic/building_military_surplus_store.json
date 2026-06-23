@@ -2,7 +2,15 @@
  "type": "BUILDING_MILITARY_SURPLUS_STORE",
  "description": "TXT_KEY_BUILDING_MILITARY_SURPLUS_STORE",
  "civilopedia": "TXT_KEY_BUILDING_MILITARY_SURPLUS_STORE_PEDIA",
- "obsoletes": {
+ "obsoletedBy": {
+  "buildings": [
+   "BUILDING_HYPERMARKET"
+  ],
+  "techs": [
+   "TECH_SMART_DUST"
+  ]
+ },
+ "replacedBy": {
   "buildings": [
    "BUILDING_HYPERMARKET"
   ]

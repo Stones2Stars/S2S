@@ -2,6 +2,11 @@
  "type": "BUILDING_PORCELAIN_TOWER",
  "description": "TXT_KEY_BUILDING_PORCELAIN_TOWER",
  "civilopedia": "TXT_KEY_BUILDING_PORCELAIN_TOWER_PEDIA",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_NATIONALISM"
+  ]
+ },
  "requires": {
   "build": {
    "all": [

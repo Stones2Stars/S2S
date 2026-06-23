@@ -2,6 +2,11 @@
  "type": "BUILDING_DIRIGIBLE_TERMINAL",
  "description": "TXT_KEY_BUILDING_DIRIGIBLE_TERMINAL",
  "civilopedia": "TXT_KEY_BUILDING_DIRIGIBLE_TERMINAL_PEDIA",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_SKYROADS"
+  ]
+ },
  "requires": {
   "build": {
    "all": [

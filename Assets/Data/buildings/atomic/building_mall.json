@@ -14,18 +14,17 @@
    "BUILDING_UNMANNED_MARKET"
   ]
  },
- "obsoletes": {
+ "obsoletedBy": {
   "buildings": [
    "BUILDING_HYPERMARKET"
+  ],
+  "techs": [
+   "TECH_SMART_DUST"
   ]
  },
- "replaces": {
+ "replacedBy": {
   "buildings": [
-   "BUILDING_BAZAAR",
-   "BUILDING_BRIDAL_SHOP",
-   "BUILDING_COSTUME_SHOP",
-   "BUILDING_CRAFTS_HUT",
-   "BUILDING_WIG_SHOP"
+   "BUILDING_HYPERMARKET"
   ]
  },
  "requires": {

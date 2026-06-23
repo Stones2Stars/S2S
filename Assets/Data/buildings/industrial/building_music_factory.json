@@ -2,14 +2,6 @@
  "type": "BUILDING_MUSIC_FACTORY",
  "description": "TXT_KEY_BUILDING_MUSIC_FACTORY",
  "civilopedia": "TXT_KEY_BUILDING_MUSIC_FACTORY_PEDIA",
- "replaces": {
-  "buildings": [
-   "BUILDING_BRASS_INSTRUMENT_MAKER",
-   "BUILDING_PERCUSSION_INSTRUMENT_MAKER",
-   "BUILDING_STRING_INSTRUMENT_MAKER",
-   "BUILDING_WOODWIND_INSTRUMENT_MAKER"
-  ]
- },
  "requires": {
   "build": {
    "all": [

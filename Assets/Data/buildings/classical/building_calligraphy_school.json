@@ -2,9 +2,18 @@
  "type": "BUILDING_CALLIGRAPHY_SCHOOL",
  "description": "TXT_KEY_BUILDING_CALLIGRAPHY_SCHOOL",
  "civilopedia": "TXT_KEY_BUILDING_CALLIGRAPHY_SCHOOL_PEDIA",
- "obsoletes": {
+ "obsoletedBy": {
   "buildings": [
    "BUILDING_ELEMENTARY_SCHOOL"
+  ],
+  "techs": [
+   "TECH_HOLOGRAPHICS"
+  ]
+ },
+ "replacedBy": {
+  "buildings": [
+   "BUILDING_ELEMENTARY_SCHOOL",
+   "BUILDING_HOLOGRAPHIC_SCHOOL"
   ]
  },
  "requires": {

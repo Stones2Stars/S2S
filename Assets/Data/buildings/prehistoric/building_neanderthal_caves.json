@@ -2,6 +2,11 @@
  "type": "BUILDING_NEANDERTHAL_CAVES",
  "description": "TXT_KEY_BUILDING_NEANDERTHAL_CAVES",
  "civilopedia": "TXT_KEY_BUILDING_NEANDERTHAL_CAVES_PEDIA",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_SEDENTARY_LIFESTYLE"
+  ]
+ },
  "requires": {
   "build": {
    "all": [

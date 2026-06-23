@@ -7,14 +7,17 @@
    "BUILDING_AUTOMATED_TAXI_SERVICE"
   ]
  },
- "obsoletes": {
+ "obsoletedBy": {
   "buildings": [
    "BUILDING_TELEPORT_BOOTH"
+  ],
+  "techs": [
+   "TECH_WORMHOLE_HIVEMIND"
   ]
  },
- "replaces": {
+ "replacedBy": {
   "buildings": [
-   "BUILDING_PARKING_GARAGE"
+   "BUILDING_TELEPORT_BOOTH"
   ]
  },
  "requires": {

@@ -7,7 +7,15 @@
    "BUILDING_SU_SONGS_WORKSHOP"
   ]
  },
- "obsoletes": {
+ "obsoletedBy": {
+  "buildings": [
+   "BUILDING_TOWNCLOCK"
+  ],
+  "techs": [
+   "TECH_MANAGEMENT"
+  ]
+ },
+ "replacedBy": {
   "buildings": [
    "BUILDING_TOWNCLOCK"
   ]

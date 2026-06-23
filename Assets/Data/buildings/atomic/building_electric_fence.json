@@ -2,16 +2,19 @@
  "type": "BUILDING_ELECTRIC_FENCE",
  "description": "TXT_KEY_BUILDING_ELECTRIC_FENCE",
  "civilopedia": "TXT_KEY_BUILDING_ELECTRIC_FENCE_PEDIA",
- "obsoletes": {
+ "obsoletedBy": {
   "buildings": [
    "BUILDING_WIRELESS_ELECTRIC_FENCE"
+  ],
+  "techs": [
+   "TECH_SHIELDING"
   ]
  },
- "replaces": {
+ "replacedBy": {
   "buildings": [
-   "BUILDING_ABATIS",
-   "BUILDING_BARBWIRE_FENCE",
-   "BUILDING_FIRE_ABATIS"
+   "BUILDING_WIRELESS_ELECTRIC_FENCE",
+   "BUILDING_ARCOLOGY_SHIELDING",
+   "BUILDING_ADVANCED_SHIELDING"
   ]
  },
  "requires": {

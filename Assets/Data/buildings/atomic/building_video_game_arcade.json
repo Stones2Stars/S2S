@@ -7,11 +7,6 @@
    "BUILDING_PACHINKO_ARCADE"
   ]
  },
- "replaces": {
-  "buildings": [
-   "BUILDING_PINBALL_ARCADE"
-  ]
- },
  "requires": {
   "build": {
    "all": [

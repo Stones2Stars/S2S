@@ -2,15 +2,18 @@
  "type": "BUILDING_STEAM_CRANE",
  "description": "TXT_KEY_BUILDING_STEAM_CRANE",
  "civilopedia": "TXT_KEY_BUILDING_STEAM_CRANE_PEDIA",
- "obsoletes": {
+ "obsoletedBy": {
   "buildings": [
    "BUILDING_MODERN_CRANE"
+  ],
+  "techs": [
+   "TECH_MEGASTRUCTURE_ENGINEERING"
   ]
  },
- "replaces": {
+ "replacedBy": {
   "buildings": [
-   "BUILDING_PULLEY_WHEEL",
-   "BUILDING_TREADMILL_CRANE"
+   "BUILDING_MODERN_CRANE",
+   "BUILDING_HIGH_TECH_CRANE"
   ]
  },
  "requires": {

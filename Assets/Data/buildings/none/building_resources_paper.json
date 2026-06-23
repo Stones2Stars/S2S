@@ -2,7 +2,15 @@
  "type": "BUILDING_RESOURCES_PAPER",
  "description": "TXT_KEY_BUILDING_RESOURCES_PAPER",
  "civilopedia": "TXT_KEY_BUILDING_RESOURCE_PROVIDER_PEDIA",
- "obsoletes": {
+ "obsoletedBy": {
+  "buildings": [
+   "BUILDING_ELECTRONIC_PAPER_MAKER"
+  ],
+  "techs": [
+   "TECH_ANIMAMATERIALS"
+  ]
+ },
+ "replacedBy": {
   "buildings": [
    "BUILDING_ELECTRONIC_PAPER_MAKER"
   ]

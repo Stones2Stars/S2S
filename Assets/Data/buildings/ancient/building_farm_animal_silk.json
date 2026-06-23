@@ -2,7 +2,15 @@
  "type": "BUILDING_FARM_ANIMAL_SILK",
  "description": "TXT_KEY_BUILDING_FARM_ANIMAL_SILK",
  "civilopedia": "TXT_KEY_BUILDING_FARM_ANIMAL_SILK_PEDIA",
- "obsoletes": {
+ "obsoletedBy": {
+  "buildings": [
+   "BUILDING_TEXTILE_MANUFACTURING_DISTRICT"
+  ],
+  "techs": [
+   "TECH_NANOROBOTICS"
+  ]
+ },
+ "replacedBy": {
   "buildings": [
    "BUILDING_TEXTILE_MANUFACTURING_DISTRICT"
   ]

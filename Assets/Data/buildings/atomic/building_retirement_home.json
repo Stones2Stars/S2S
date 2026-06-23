@@ -2,14 +2,17 @@
  "type": "BUILDING_RETIREMENT_HOME",
  "description": "TXT_KEY_BUILDING_RETIREMENT_HOME",
  "civilopedia": "TXT_KEY_BUILDING_RETIREMENT_HOME_PEDIA",
- "obsoletes": {
+ "obsoletedBy": {
   "buildings": [
    "BUILDING_HIGH_TECH_CULTURAL_ENRICHMENT"
+  ],
+  "techs": [
+   "TECH_CULTURAL_EVOLUTION"
   ]
  },
- "replaces": {
+ "replacedBy": {
   "buildings": [
-   "BUILDING_ALMSHOUSE"
+   "BUILDING_HIGH_TECH_CULTURAL_ENRICHMENT"
   ]
  },
  "requires": {

@@ -7,14 +7,17 @@
    "BUILDING_RESOURCES_GRAINS"
   ]
  },
- "obsoletes": {
+ "obsoletedBy": {
   "buildings": [
    "BUILDING_FARMSCRAPER_III"
+  ],
+  "techs": [
+   "TECH_GAIA_ECOLOGY"
   ]
  },
- "replaces": {
+ "replacedBy": {
   "buildings": [
-   "BUILDING_CORN_GATHERER"
+   "BUILDING_FARMSCRAPER_III"
   ]
  },
  "requires": {

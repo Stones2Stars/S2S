@@ -7,9 +7,18 @@
    "BUILDING_LYCEUM"
   ]
  },
- "obsoletes": {
+ "obsoletedBy": {
   "buildings": [
    "BUILDING_ELEMENTARY_SCHOOL"
+  ],
+  "techs": [
+   "TECH_HOLOGRAPHICS"
+  ]
+ },
+ "replacedBy": {
+  "buildings": [
+   "BUILDING_ELEMENTARY_SCHOOL",
+   "BUILDING_HOLOGRAPHIC_SCHOOL"
   ]
  },
  "requires": {

@@ -7,16 +7,17 @@
    "BUILDING_BUNGEE_JUMPING_SITE"
   ]
  },
- "obsoletes": {
+ "obsoletedBy": {
   "buildings": [
    "BUILDING_HIGH_TECH_CRANE"
+  ],
+  "techs": [
+   "TECH_ATOMIC_SCALE_ENGINEERING"
   ]
  },
- "replaces": {
+ "replacedBy": {
   "buildings": [
-   "BUILDING_PULLEY_WHEEL",
-   "BUILDING_STEAM_CRANE",
-   "BUILDING_TREADMILL_CRANE"
+   "BUILDING_HIGH_TECH_CRANE"
   ]
  },
  "requires": {

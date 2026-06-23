@@ -7,15 +7,6 @@
    "BUILDING_DEBTORS_PRISON"
   ]
  },
- "replaces": {
-  "buildings": [
-   "BUILDING_CRUCIFIXION_CROSSES",
-   "BUILDING_ELECTRIC_CHAIR",
-   "BUILDING_GALLOWS",
-   "BUILDING_GUILLOTINE",
-   "BUILDING_PUBLIC_STONING"
-  ]
- },
  "requires": {
   "build": {
    "all": [

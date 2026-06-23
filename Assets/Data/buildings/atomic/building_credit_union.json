@@ -2,7 +2,15 @@
  "type": "BUILDING_CREDIT_UNION",
  "description": "TXT_KEY_BUILDING_CREDIT_UNION",
  "civilopedia": "TXT_KEY_BUILDING_CREDIT_UNION_PEDIA",
- "obsoletes": {
+ "obsoletedBy": {
+  "buildings": [
+   "BUILDING_BLOCKCHAIN_FINANCIAL_SERVICES"
+  ],
+  "techs": [
+   "TECH_CYBERSOCIAL_INTEGRATION"
+  ]
+ },
+ "replacedBy": {
   "buildings": [
    "BUILDING_BLOCKCHAIN_FINANCIAL_SERVICES"
   ]

@@ -7,15 +7,17 @@
    "BUILDING_NEOM"
   ]
  },
- "obsoletes": {
+ "obsoletedBy": {
   "buildings": [
    "BUILDING_INTERTEMPORAL_CONSTRUCTION_FIRM"
+  ],
+  "techs": [
+   "TECH_REALITY_REPROGRAMMING"
   ]
  },
- "replaces": {
+ "replacedBy": {
   "buildings": [
-   "BUILDING_CAD_STUDIO",
-   "BUILDING_MODULAR_CONSTRUCTION_FIRM"
+   "BUILDING_INTERTEMPORAL_CONSTRUCTION_FIRM"
   ]
  },
  "requires": {

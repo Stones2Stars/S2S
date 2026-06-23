@@ -2,9 +2,18 @@
  "type": "BUILDING_FORTUNE_TELLER",
  "description": "TXT_KEY_BUILDING_FORTUNE_TELLER",
  "civilopedia": "TXT_KEY_BUILDING_FORTUNE_TELLER_PEDIA",
- "obsoletes": {
+ "obsoletedBy": {
   "buildings": [
    "BUILDING_PSYCHIC_ADVISOR"
+  ],
+  "techs": [
+   "TECH_TRANSHUMANISM"
+  ]
+ },
+ "replacedBy": {
+  "buildings": [
+   "BUILDING_PSYCHIC_ADVISOR",
+   "BUILDING_HIGH_TECH_CULTURAL_ENRICHMENT"
   ]
  },
  "requires": {

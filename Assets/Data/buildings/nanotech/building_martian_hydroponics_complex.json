@@ -2,14 +2,17 @@
  "type": "BUILDING_MARTIAN_HYDROPONICS_COMPLEX",
  "description": "TXT_KEY_BUILDING_MARTIAN_HYDROPONICS_COMPLEX",
  "civilopedia": "TXT_KEY_BUILDING_MARTIAN_HYDROPONICS_COMPLEX_PEDIA",
- "obsoletes": {
+ "obsoletedBy": {
   "buildings": [
    "BUILDING_MARTIAN_VERTICAL_FARM"
+  ],
+  "techs": [
+   "TECH_ASTROECOLOGY"
   ]
  },
- "replaces": {
+ "replacedBy": {
   "buildings": [
-   "BUILDING_MARTIAN_HYDROPONICS_ARRAY"
+   "BUILDING_MARTIAN_VERTICAL_FARM"
   ]
  },
  "requires": {

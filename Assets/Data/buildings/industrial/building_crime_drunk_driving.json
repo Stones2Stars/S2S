@@ -2,6 +2,11 @@
  "type": "BUILDING_CRIME_DRUNK_DRIVING",
  "description": "TXT_KEY_BUILDING_CRIME_DRUNK_DRIVING",
  "civilopedia": "TXT_KEY_BUILDING_CRIME_DRUNK_DRIVING_PEDIA",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_TELEPORTATION"
+  ]
+ },
  "requires": {
   "build": {
    "all": [

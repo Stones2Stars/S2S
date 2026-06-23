@@ -7,8 +7,17 @@
    "BUILDING_MING_VASE_WORKSHOP"
   ]
  },
- "obsoletes": {
+ "obsoletedBy": {
   "buildings": [
+   "BUILDING_FACTORY_PORCELAIN_WARES"
+  ],
+  "techs": [
+   "TECH_RAPID_PROTOTYPING"
+  ]
+ },
+ "replacedBy": {
+  "buildings": [
+   "BUILDING_MANUFACTURING_DISTRICT",
    "BUILDING_FACTORY_PORCELAIN_WARES"
   ]
  },

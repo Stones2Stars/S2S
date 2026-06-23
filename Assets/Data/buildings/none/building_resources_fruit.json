@@ -2,7 +2,15 @@
  "type": "BUILDING_RESOURCES_FRUIT",
  "description": "TXT_KEY_BUILDING_RESOURCES_FRUIT",
  "civilopedia": "TXT_KEY_BUILDING_RESOURCE_PROVIDER_PEDIA",
- "obsoletes": {
+ "obsoletedBy": {
+  "buildings": [
+   "BUILDING_FARMSCRAPER_III"
+  ],
+  "techs": [
+   "TECH_GAIA_ECOLOGY"
+  ]
+ },
+ "replacedBy": {
   "buildings": [
    "BUILDING_FARMSCRAPER_III"
   ]

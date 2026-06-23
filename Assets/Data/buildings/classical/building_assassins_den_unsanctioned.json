@@ -2,6 +2,11 @@
  "type": "BUILDING_ASSASSINS_DEN_UNSANCTIONED",
  "description": "TXT_KEY_BUILDING_ASSASSINS_DEN_UNSANCTIONED",
  "civilopedia": "TXT_KEY_BUILDING_ASSASSINS_DEN_PEDIA",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_MATCHLOCK"
+  ]
+ },
  "requires": {
   "build": {
    "all": [

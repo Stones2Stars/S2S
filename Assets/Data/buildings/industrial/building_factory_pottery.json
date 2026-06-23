@@ -11,15 +11,17 @@
    "BUILDING_TERRA_SIGILLATA_WORKSHOP"
   ]
  },
- "obsoletes": {
+ "obsoletedBy": {
   "buildings": [
    "BUILDING_MANUFACTURING_DISTRICT"
+  ],
+  "techs": [
+   "TECH_NANOROBOTICS"
   ]
  },
- "replaces": {
+ "replacedBy": {
   "buildings": [
-   "BUILDING_POTTERS_HUT",
-   "BUILDING_POTTERS_WORKSHOP"
+   "BUILDING_MANUFACTURING_DISTRICT"
   ]
  },
  "requires": {

@@ -13,15 +13,18 @@
    "UNIT_TARKKA_AMPUJA"
   ]
  },
- "obsoletes": {
+ "obsoletedBy": {
   "buildings": [
    "BUILDING_AUTOMATED_FIRING_RANGE"
+  ],
+  "techs": [
+   "TECH_WEAPONIZED_LASERS"
   ]
  },
- "replaces": {
+ "replacedBy": {
   "buildings": [
-   "BUILDING_ARCHERY_RANGE",
-   "BUILDING_SHOOTING_CLUB"
+   "BUILDING_AUTOMATED_FIRING_RANGE",
+   "BUILDING_ORBITAL_TARGETS"
   ]
  },
  "requires": {

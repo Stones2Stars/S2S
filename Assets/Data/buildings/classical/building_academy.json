@@ -2,6 +2,11 @@
  "type": "BUILDING_ACADEMY",
  "description": "TXT_KEY_BUILDING_ACADEMY",
  "civilopedia": "TXT_KEY_BUILDING_ACADEMY_PEDIA",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_PERSONAL_COMPUTERS"
+  ]
+ },
  "requires": {
   "build": {
    "all": [

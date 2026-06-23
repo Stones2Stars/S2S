@@ -7,9 +7,19 @@
    "BUILDING_ELDER_COUNCIL"
   ]
  },
- "obsoletes": {
+ "obsoletedBy": {
   "buildings": [
    "BUILDING_LYCEUM"
+  ],
+  "techs": [
+   "TECH_COMPULSORY_EDUCATION"
+  ]
+ },
+ "replacedBy": {
+  "buildings": [
+   "BUILDING_LYCEUM",
+   "BUILDING_ELEMENTARY_SCHOOL",
+   "BUILDING_HOLOGRAPHIC_SCHOOL"
   ]
  },
  "requires": {

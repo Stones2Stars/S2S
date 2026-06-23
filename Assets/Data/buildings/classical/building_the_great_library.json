@@ -2,6 +2,11 @@
  "type": "BUILDING_THE_GREAT_LIBRARY",
  "description": "TXT_KEY_BUILDING_THE_GREAT_LIBRARY",
  "civilopedia": "TXT_KEY_BUILDING_THE_GREAT_LIBRARY_PEDIA",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_SCIENTIFIC_METHOD"
+  ]
+ },
  "requires": {
   "build": {
    "all": [

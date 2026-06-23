@@ -2,6 +2,18 @@
  "type": "BUILDING_HOUSING_PROJECTS",
  "description": "TXT_KEY_BUILDING_HOUSING_PROJECTS",
  "civilopedia": "TXT_KEY_BUILDING_HOUSING_PROJECTS_PEDIA",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_COLONY_ARCOLOGY"
+  ]
+ },
+ "replacedBy": {
+  "buildings": [
+   "BUILDING_HOUSING_HABITATION_PODS",
+   "BUILDING_HOUSING_COLONY_ARCOLOGY",
+   "BUILDING_LAUNCH_ARCOLOGY"
+  ]
+ },
  "requires": {
   "build": {
    "all": [

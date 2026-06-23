@@ -2,7 +2,15 @@
  "type": "BUILDING_OLIVE_PRESS",
  "description": "TXT_KEY_BUILDING_OLIVE_PRESS",
  "civilopedia": "TXT_KEY_BUILDING_OLIVE_PRESS_PEDIA",
- "obsoletes": {
+ "obsoletedBy": {
+  "buildings": [
+   "BUILDING_AGROFOREST"
+  ],
+  "techs": [
+   "TECH_SENTIENT_EARTH"
+  ]
+ },
+ "replacedBy": {
   "buildings": [
    "BUILDING_AGROFOREST"
   ]

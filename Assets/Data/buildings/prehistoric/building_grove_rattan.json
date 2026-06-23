@@ -2,7 +2,15 @@
  "type": "BUILDING_GROVE_RATTAN",
  "description": "TXT_KEY_BUILDING_GROVE_RATTAN",
  "civilopedia": "TXT_KEY_BUILDING_GROVE_RATTAN_PEDIA",
- "obsoletes": {
+ "obsoletedBy": {
+  "buildings": [
+   "BUILDING_AGROFOREST"
+  ],
+  "techs": [
+   "TECH_SENTIENT_EARTH"
+  ]
+ },
+ "replacedBy": {
   "buildings": [
    "BUILDING_AGROFOREST"
   ]

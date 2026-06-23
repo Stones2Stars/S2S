@@ -2,6 +2,11 @@
  "type": "BUILDING_GUILD_GROCERS",
  "description": "TXT_KEY_BUILDING_GUILD_GROCERS",
  "civilopedia": "TXT_KEY_BUILDING_GUILDS_PEDIA",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_GLOBALIZATION"
+  ]
+ },
  "requires": {
   "build": {
    "all": [

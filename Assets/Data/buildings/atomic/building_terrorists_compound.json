@@ -2,6 +2,11 @@
  "type": "BUILDING_TERRORISTS_COMPOUND",
  "description": "TXT_KEY_BUILDING_TERRORISTS_COMPOUND",
  "civilopedia": "TXT_KEY_BUILDING_TERRORISTS_COMPOUND_PEDIA",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_MASS_SURVEILLANCE"
+  ]
+ },
  "requires": {
   "build": {
    "all": [

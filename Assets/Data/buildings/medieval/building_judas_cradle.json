@@ -2,7 +2,15 @@
  "type": "BUILDING_JUDAS_CRADLE",
  "description": "TXT_KEY_BUILDING_JUDAS_CRADLE",
  "civilopedia": "TXT_KEY_BUILDING_JUDAS_CRADLE_PEDIA",
- "obsoletes": {
+ "obsoletedBy": {
+  "buildings": [
+   "BUILDING_JAIL"
+  ],
+  "techs": [
+   "TECH_PSYCHOLOGY"
+  ]
+ },
+ "replacedBy": {
   "buildings": [
    "BUILDING_JAIL"
   ]

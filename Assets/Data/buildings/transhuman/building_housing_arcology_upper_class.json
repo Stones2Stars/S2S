@@ -2,9 +2,18 @@
  "type": "BUILDING_HOUSING_ARCOLOGY_UPPER_CLASS",
  "description": "TXT_KEY_BUILDING_HOUSING_ARCOLOGY_UPPER_CLASS",
  "civilopedia": "TXT_KEY_BUILDING_HOUSING_ARCOLOGY_UPPER_CLASS_PEDIA",
- "obsoletes": {
+ "obsoletedBy": {
   "buildings": [
    "BUILDING_HOUSING_COLONY_ARCOLOGY"
+  ],
+  "techs": [
+   "TECH_INTERSTELLAR_COLONIZATION"
+  ]
+ },
+ "replacedBy": {
+  "buildings": [
+   "BUILDING_HOUSING_COLONY_ARCOLOGY",
+   "BUILDING_LAUNCH_ARCOLOGY"
   ]
  },
  "requires": {

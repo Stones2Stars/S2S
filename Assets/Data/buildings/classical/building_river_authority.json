@@ -2,14 +2,19 @@
  "type": "BUILDING_RIVER_AUTHORITY",
  "description": "TXT_KEY_BUILDING_RIVER_AUTHORITY",
  "civilopedia": "TXT_KEY_BUILDING_RIVER_AUTHORITY_PEDIA",
- "obsoletes": {
+ "obsoletedBy": {
   "buildings": [
    "BUILDING_STEAMBOAT_PORT"
+  ],
+  "techs": [
+   "TECH_COAST_GUARD"
   ]
  },
- "replaces": {
+ "replacedBy": {
   "buildings": [
-   "BUILDING_RIVER_PORT"
+   "BUILDING_STEAMBOAT_PORT",
+   "BUILDING_FERRY_TERMINAL",
+   "BUILDING_RIVER_ADMINISTRATION"
   ]
  },
  "requires": {

@@ -2,6 +2,21 @@
  "type": "BUILDING_CAVE_SHELTER",
  "description": "TXT_KEY_BUILDING_CAVE_SHELTER",
  "civilopedia": "TXT_KEY_BUILDING_CAVE_SHELTER_PEDIA",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_SEDENTARY_LIFESTYLE"
+  ]
+ },
+ "replacedBy": {
+  "buildings": [
+   "BUILDING_PC_BLUEFISH_CAVES",
+   "BUILDING_PC_KLASIES_RIVER_CAVES",
+   "BUILDING_PC_CAVE_OF_ALTAMIRA",
+   "BUILDING_PC_BLOMBOS_CAVE",
+   "BUILDING_PC_CHARLIE_LAKE_CAVE",
+   "BUILDING_PC_PEDRA_FURADA"
+  ]
+ },
  "requires": {
   "build": {
    "all": [

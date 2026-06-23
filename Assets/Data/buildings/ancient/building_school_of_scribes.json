@@ -11,14 +11,17 @@
    "BUILDING_SLAVE_COMPOUND_ENTERTAINMENT"
   ]
  },
- "obsoletes": {
+ "obsoletedBy": {
   "buildings": [
    "BUILDING_LIBRARY"
+  ],
+  "techs": [
+   "TECH_EDUCATION"
   ]
  },
- "replaces": {
+ "replacedBy": {
   "buildings": [
-   "BUILDING_STORYTELLER"
+   "BUILDING_LIBRARY"
   ]
  },
  "requires": {

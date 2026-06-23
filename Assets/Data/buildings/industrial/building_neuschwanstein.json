@@ -2,6 +2,11 @@
  "type": "BUILDING_NEUSCHWANSTEIN",
  "description": "TXT_KEY_BUILDING_NEUSCHWANSTEIN",
  "civilopedia": "TXT_KEY_BUILDING_NEUSCHWANSTEIN_PEDIA",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_MEGASTRUCTURE_ENGINEERING"
+  ]
+ },
  "requires": {
   "build": {
    "all": [

@@ -2,7 +2,15 @@
  "type": "BUILDING_DINER",
  "description": "TXT_KEY_BUILDING_DINER",
  "civilopedia": "TXT_KEY_BUILDING_DINER_PEDIA",
- "obsoletes": {
+ "obsoletedBy": {
+  "buildings": [
+   "BUILDING_UNIVERSAL_RESTAURANT"
+  ],
+  "techs": [
+   "TECH_MIND_UPLOADING"
+  ]
+ },
+ "replacedBy": {
   "buildings": [
    "BUILDING_UNIVERSAL_RESTAURANT"
   ]

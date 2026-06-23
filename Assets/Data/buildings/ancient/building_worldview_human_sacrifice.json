@@ -3,6 +3,11 @@
  "description": "TXT_KEY_BUILDING_WORLDVIEW_HUMAN_SACRIFICE",
  "civilopedia": "TXT_KEY_BUILDING_WORLDVIEW_HUMAN_SACRIFICE_PEDIA",
  "help": "TXT_KEY_BUILDING_WORLDVIEW_HUMAN_SACRIFICE_HELP",
+ "replacedBy": {
+  "buildings": [
+   "BUILDING_EFFECT_EMANCIPATION_PROCLAMATION"
+  ]
+ },
  "requires": {
   "build": {
    "all": [

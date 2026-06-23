@@ -2,7 +2,15 @@
  "type": "BUILDING_GROVE_BAMBOO",
  "description": "TXT_KEY_BUILDING_GROVE_BAMBOO",
  "civilopedia": "TXT_KEY_BUILDING_GROVE_BAMBOO_PEDIA",
- "obsoletes": {
+ "obsoletedBy": {
+  "buildings": [
+   "BUILDING_AGROFOREST"
+  ],
+  "techs": [
+   "TECH_SENTIENT_EARTH"
+  ]
+ },
+ "replacedBy": {
   "buildings": [
    "BUILDING_AGROFOREST"
   ]

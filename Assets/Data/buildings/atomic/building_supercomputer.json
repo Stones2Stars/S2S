@@ -2,7 +2,15 @@
  "type": "BUILDING_SUPERCOMPUTER",
  "description": "TXT_KEY_BUILDING_SUPERCOMPUTER",
  "civilopedia": "TXT_KEY_BUILDING_SUPERCOMPUTER_PEDIA",
- "obsoletes": {
+ "obsoletedBy": {
+  "buildings": [
+   "BUILDING_OPTRONIC_SUPERCOMPUTER"
+  ],
+  "techs": [
+   "TECH_DATA_ARCHIVAL"
+  ]
+ },
+ "replacedBy": {
   "buildings": [
    "BUILDING_OPTRONIC_SUPERCOMPUTER"
   ]

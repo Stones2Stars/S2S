@@ -13,12 +13,6 @@
    "BUILDING_TRANSATLANTIC_TUNNEL"
   ]
  },
- "replaces": {
-  "buildings": [
-   "BUILDING_MAGLEV_RAILS",
-   "BUILDING_VACTRAIN_TERMINAL"
-  ]
- },
  "requires": {
   "build": {
    "all": [

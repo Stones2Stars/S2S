@@ -2,6 +2,16 @@
  "type": "BUILDING_GUILD_VICTUALLERS",
  "description": "TXT_KEY_BUILDING_GUILD_VICTUALLERS",
  "civilopedia": "TXT_KEY_BUILDING_GUILDS_PEDIA",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_GLOBALIZATION"
+  ]
+ },
+ "replacedBy": {
+  "buildings": [
+   "BUILDING_ORDINANCE_ALCOHOL_PROHIBITION"
+  ]
+ },
  "requires": {
   "build": {
    "all": [

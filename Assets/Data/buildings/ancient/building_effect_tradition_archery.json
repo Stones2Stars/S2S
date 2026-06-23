@@ -9,9 +9,9 @@
    "BUILDING_TRADITION_ARCHERY"
   ]
  },
- "replaces": {
-  "buildings": [
-   "BUILDING_FLETCHERS_HUT"
+ "obsoletedBy": {
+  "techs": [
+   "TECH_MILITARY_TRADITION"
   ]
  },
  "requires": {

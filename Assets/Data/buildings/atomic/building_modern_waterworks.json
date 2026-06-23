@@ -13,15 +13,6 @@
    "BUILDING_WATERCLOCK"
   ]
  },
- "replaces": {
-  "buildings": [
-   "BUILDING_AQUEDUCT",
-   "BUILDING_ARTESIAN_WELL",
-   "BUILDING_CISTERN",
-   "BUILDING_RESERVOIR",
-   "BUILDING_TOWN_WELL"
-  ]
- },
  "requires": {
   "build": {
    "all": [

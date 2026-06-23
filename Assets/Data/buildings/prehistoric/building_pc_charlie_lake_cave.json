@@ -2,9 +2,9 @@
  "type": "BUILDING_PC_CHARLIE_LAKE_CAVE",
  "description": "TXT_KEY_BUILDING_PC_CHARLIE_LAKE_CAVE",
  "civilopedia": "TXT_KEY_BUILDING_PC_CHARLIE_LAKE_CAVE_PEDIA",
- "replaces": {
-  "buildings": [
-   "BUILDING_CAVE_SHELTER"
+ "obsoletedBy": {
+  "techs": [
+   "TECH_SEDENTARY_LIFESTYLE"
   ]
  },
  "requires": {

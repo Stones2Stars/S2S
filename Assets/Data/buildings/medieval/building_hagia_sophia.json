@@ -2,6 +2,11 @@
  "type": "BUILDING_HAGIA_SOPHIA",
  "description": "TXT_KEY_BUILDING_HAGIA_SOPHIA",
  "civilopedia": "TXT_KEY_BUILDING_HAGIA_SOPHIA_PEDIA",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_STEAM_POWER"
+  ]
+ },
  "requires": {
   "build": {
    "all": [

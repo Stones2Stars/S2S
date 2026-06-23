@@ -2,7 +2,15 @@
  "type": "BUILDING_LEVEE",
  "description": "TXT_KEY_BUILDING_LEVEE",
  "civilopedia": "TXT_KEY_BUILDING_LEVEE_PEDIA",
- "obsoletes": {
+ "obsoletedBy": {
+  "buildings": [
+   "BUILDING_RIVER_ADMINISTRATION"
+  ],
+  "techs": [
+   "TECH_ENVIRONMENTAL_ECONOMICS"
+  ]
+ },
+ "replacedBy": {
   "buildings": [
    "BUILDING_RIVER_ADMINISTRATION"
   ]

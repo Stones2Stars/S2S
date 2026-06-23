@@ -10,11 +10,6 @@
    "BUILDING_WORLD_TOWER"
   ]
  },
- "replaces": {
-  "buildings": [
-   "BUILDING_SURVEYORS_OFFICE"
-  ]
- },
  "requires": {
   "build": {
    "all": [

@@ -2,14 +2,17 @@
  "type": "BUILDING_FACTORY_ANTI_GRAVITY_FIELD_GENERATORS",
  "description": "TXT_KEY_BUILDING_FACTORY_ANTI_GRAVITY_FIELD_GENERATORS",
  "civilopedia": "TXT_KEY_BUILDING_FACTORY_ANTI_GRAVITY_FIELD_GENERATORS_PEDIA",
- "obsoletes": {
+ "obsoletedBy": {
   "buildings": [
    "BUILDING_NANOTECH_COMPLEX"
+  ],
+  "techs": [
+   "TECH_FEMTOTECHNOLOGY"
   ]
  },
- "replaces": {
+ "replacedBy": {
   "buildings": [
-   "BUILDING_FACTORY_LEVITATION_GENERATORS"
+   "BUILDING_NANOTECH_COMPLEX"
   ]
  },
  "requires": {

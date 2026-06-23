@@ -26,14 +26,17 @@
    "UNIT_FOOD_SUPPLY_TRAIN"
   ]
  },
- "obsoletes": {
+ "obsoletedBy": {
   "buildings": [
    "BUILDING_IMPERIAL_FORTRESS"
+  ],
+  "techs": [
+   "TECH_TRENCH_WARFARE"
   ]
  },
- "replaces": {
+ "replacedBy": {
   "buildings": [
-   "BUILDING_CASTLE"
+   "BUILDING_IMPERIAL_FORTRESS"
   ]
  },
  "requires": {

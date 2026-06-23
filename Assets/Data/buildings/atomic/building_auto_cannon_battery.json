@@ -7,20 +7,20 @@
    "BUILDING_SLAVE_COMPOUND_CRIME_PREVENTION"
   ]
  },
- "obsoletes": {
+ "obsoletedBy": {
   "buildings": [
    "BUILDING_MISSILE_BATTERY"
+  ],
+  "techs": [
+   "TECH_RAILGUN"
   ]
  },
- "replaces": {
+ "replacedBy": {
   "buildings": [
-   "BUILDING_ARTILLERY_BATTERY",
-   "BUILDING_BOMBARD_TOWER",
-   "BUILDING_FORTIFIED_OUTPOST",
-   "BUILDING_FRONTIER_OUTPOST",
-   "BUILDING_GUARD_TOWER",
-   "BUILDING_KEEP_TOWER",
-   "BUILDING_WATCH_TOWER"
+   "BUILDING_MISSILE_BATTERY",
+   "BUILDING_RAILGUN_BATTERY",
+   "BUILDING_LASER_BATTERY",
+   "BUILDING_ANTI_MATTER_BATTERY"
   ]
  },
  "requires": {

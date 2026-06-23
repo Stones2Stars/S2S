@@ -2,14 +2,17 @@
  "type": "BUILDING_WIRELESS_EV_CHARGING",
  "description": "TXT_KEY_BUILDING_WIRELESS_EV_CHARGING",
  "civilopedia": "TXT_KEY_BUILDING_WIRELESS_EV_CHARGING_PEDIA",
- "obsoletes": {
+ "obsoletedBy": {
   "buildings": [
    "BUILDING_TELEPORT_BOOTH"
+  ],
+  "techs": [
+   "TECH_WORMHOLE_HIVEMIND"
   ]
  },
- "replaces": {
+ "replacedBy": {
   "buildings": [
-   "BUILDING_ELECTRIC_VEHICLE_RECHARGING_STATION"
+   "BUILDING_TELEPORT_BOOTH"
   ]
  },
  "requires": {

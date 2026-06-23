@@ -2,7 +2,15 @@
  "type": "BUILDING_SPELUNKING_CAVES",
  "description": "TXT_KEY_BUILDING_SPELUNKING_CAVES",
  "civilopedia": "TXT_KEY_BUILDING_SPELUNKING_CAVES_PEDIA",
- "obsoletes": {
+ "obsoletedBy": {
+  "buildings": [
+   "BUILDING_TOURISM_MEGACOMPLEX"
+  ],
+  "techs": [
+   "TECH_FUSION_SPACECRAFT"
+  ]
+ },
+ "replacedBy": {
   "buildings": [
    "BUILDING_TOURISM_MEGACOMPLEX"
   ]

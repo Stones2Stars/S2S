@@ -2,6 +2,11 @@
  "type": "BUILDING_COIT_TOWER",
  "description": "TXT_KEY_BUILDING_COIT_TOWER",
  "civilopedia": "TXT_KEY_BUILDING_COIT_TOWER_PEDIA",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_MEGASTRUCTURE_ENGINEERING"
+  ]
+ },
  "requires": {
   "build": {
    "all": [

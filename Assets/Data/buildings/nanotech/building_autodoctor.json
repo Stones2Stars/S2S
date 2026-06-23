@@ -8,7 +8,15 @@
    "BUILDING_NEUROINDUCTION_FIELD"
   ]
  },
- "obsoletes": {
+ "obsoletedBy": {
+  "buildings": [
+   "BUILDING_HEALTHCARE_MEGACOMPLEX"
+  ],
+  "techs": [
+   "TECH_PICOTECHNOLOGY"
+  ]
+ },
+ "replacedBy": {
   "buildings": [
    "BUILDING_HEALTHCARE_MEGACOMPLEX"
   ]

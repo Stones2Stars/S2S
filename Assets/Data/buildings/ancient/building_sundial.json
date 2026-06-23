@@ -7,9 +7,18 @@
    "BUILDING_GATE_OF_THE_SUN"
   ]
  },
- "obsoletes": {
+ "obsoletedBy": {
   "buildings": [
    "BUILDING_TOWNCLOCK"
+  ],
+  "techs": [
+   "TECH_MANAGEMENT"
+  ]
+ },
+ "replacedBy": {
+  "buildings": [
+   "BUILDING_TOWNCLOCK",
+   "BUILDING_POLLUTION_BLACKENED_SKIES"
   ]
  },
  "requires": {

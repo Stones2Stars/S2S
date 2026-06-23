@@ -2,6 +2,11 @@
  "type": "BUILDING_MADRASSA",
  "description": "TXT_KEY_BUILDING_MADRASSA",
  "civilopedia": "TXT_KEY_BUILDING_MADRASSA_PEDIA",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_COMPULSORY_EDUCATION"
+  ]
+ },
  "requires": {
   "build": {
    "all": [

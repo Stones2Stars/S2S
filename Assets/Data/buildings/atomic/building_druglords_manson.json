@@ -2,6 +2,11 @@
  "type": "BUILDING_DRUGLORDS_MANSON",
  "description": "TXT_KEY_BUILDING_DRUGLORDS_MANSON",
  "civilopedia": "TXT_KEY_BUILDING_DRUGLORDS_MANSON_PEDIA",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_SMART_DRUGS"
+  ]
+ },
  "requires": {
   "build": {
    "all": [

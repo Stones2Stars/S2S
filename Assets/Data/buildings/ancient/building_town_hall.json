@@ -10,14 +10,18 @@
    "BUILDING_ZOROASTRIAN_PANTHEON"
   ]
  },
- "obsoletes": {
+ "obsoletedBy": {
   "buildings": [
    "BUILDING_CITY_COUNCIL"
+  ],
+  "techs": [
+   "TECH_SOCIAL_CONTRACT"
   ]
  },
- "replaces": {
+ "replacedBy": {
   "buildings": [
-   "BUILDING_VILLAGE_HALL"
+   "BUILDING_CITY_COUNCIL",
+   "BUILDING_METROPOLITAN_ADMINISTRATION"
   ]
  },
  "requires": {

@@ -9,11 +9,6 @@
    "BUILDING_MEGATOWER_FIRE_STATION_LEVEL"
   ]
  },
- "replaces": {
-  "buildings": [
-   "BUILDING_FIRE_BRIGADE"
-  ]
- },
  "requires": {
   "build": {
    "all": [

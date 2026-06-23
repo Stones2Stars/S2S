@@ -18,14 +18,6 @@
    "UNIT_TARKKA_AMPUJA"
   ]
  },
- "replaces": {
-  "buildings": [
-   "BUILDING_ARCHERY_RANGE",
-   "BUILDING_AUTOMATED_FIRING_RANGE",
-   "BUILDING_FIRING_RANGE",
-   "BUILDING_SHOOTING_CLUB"
-  ]
- },
  "requires": {
   "build": {
    "all": [

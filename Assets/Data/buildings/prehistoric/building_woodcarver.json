@@ -7,6 +7,11 @@
    "BUILDING_TOTEM_POLE"
   ]
  },
+ "obsoletedBy": {
+  "techs": [
+   "TECH_CITY_PLANNING"
+  ]
+ },
  "requires": {
   "build": {
    "all": [

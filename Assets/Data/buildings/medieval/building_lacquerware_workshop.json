@@ -2,14 +2,18 @@
  "type": "BUILDING_LACQUERWARE_WORKSHOP",
  "description": "TXT_KEY_BUILDING_LACQUERWARE_WORKSHOP",
  "civilopedia": "TXT_KEY_BUILDING_LACQUERWARE_WORKSHOP_PEDIA",
- "obsoletes": {
+ "obsoletedBy": {
   "buildings": [
    "BUILDING_FACTORY_LACQUERWARE"
+  ],
+  "techs": [
+   "TECH_RAPID_PROTOTYPING"
   ]
  },
- "replaces": {
+ "replacedBy": {
   "buildings": [
-   "BUILDING_LACQUERWARE_MAKER"
+   "BUILDING_MANUFACTURING_DISTRICT",
+   "BUILDING_FACTORY_LACQUERWARE"
   ]
  },
  "requires": {

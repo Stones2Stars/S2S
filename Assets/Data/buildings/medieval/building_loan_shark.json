@@ -2,7 +2,15 @@
  "type": "BUILDING_LOAN_SHARK",
  "description": "TXT_KEY_BUILDING_LOAN_SHARK",
  "civilopedia": "TXT_KEY_BUILDING_LOAN_SHARK_PEDIA",
- "obsoletes": {
+ "obsoletedBy": {
+  "buildings": [
+   "BUILDING_BLOCKCHAIN_FINANCIAL_SERVICES"
+  ],
+  "techs": [
+   "TECH_CYBERSOCIAL_INTEGRATION"
+  ]
+ },
+ "replacedBy": {
   "buildings": [
    "BUILDING_BLOCKCHAIN_FINANCIAL_SERVICES"
   ]

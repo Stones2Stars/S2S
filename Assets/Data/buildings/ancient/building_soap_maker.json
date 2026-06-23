@@ -2,9 +2,18 @@
  "type": "BUILDING_SOAP_MAKER",
  "description": "TXT_KEY_BUILDING_SOAP_MAKER",
  "civilopedia": "TXT_KEY_BUILDING_SOAP_MAKER_PEDIA",
- "obsoletes": {
+ "obsoletedBy": {
   "buildings": [
    "BUILDING_FACTORY_SOAP"
+  ],
+  "techs": [
+   "TECH_NOVUS_CHEMISTRY"
+  ]
+ },
+ "replacedBy": {
+  "buildings": [
+   "BUILDING_FACTORY_SOAP",
+   "BUILDING_CHEMICALS_DISTRICT"
   ]
  },
  "requires": {

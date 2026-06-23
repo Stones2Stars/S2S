@@ -2,14 +2,18 @@
  "type": "BUILDING_MODULAR_CONSTRUCTION_FIRM",
  "description": "TXT_KEY_BUILDING_MODULAR_CONSTRUCTION_FIRM",
  "civilopedia": "TXT_KEY_BUILDING_MODULAR_CONSTRUCTION_FIRM_PEDIA",
- "obsoletes": {
+ "obsoletedBy": {
   "buildings": [
    "BUILDING_SELF_CONSTRUCTION_FIRM"
+  ],
+  "techs": [
+   "TECH_STABLE_TIME_LOOPS"
   ]
  },
- "replaces": {
+ "replacedBy": {
   "buildings": [
-   "BUILDING_CAD_STUDIO"
+   "BUILDING_SELF_CONSTRUCTION_FIRM",
+   "BUILDING_INTERTEMPORAL_CONSTRUCTION_FIRM"
   ]
  },
  "requires": {

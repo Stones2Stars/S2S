@@ -2,7 +2,15 @@
  "type": "BUILDING_INTERROGATION_CHAIR",
  "description": "TXT_KEY_BUILDING_INTERROGATION_CHAIR",
  "civilopedia": "TXT_KEY_BUILDING_INTERROGATION_CHAIR_PEDIA",
- "obsoletes": {
+ "obsoletedBy": {
+  "buildings": [
+   "BUILDING_JAIL"
+  ],
+  "techs": [
+   "TECH_PSYCHOLOGY"
+  ]
+ },
+ "replacedBy": {
   "buildings": [
    "BUILDING_JAIL"
   ]

@@ -2,6 +2,19 @@
  "type": "BUILDING_HOUSING_IGLOOS",
  "description": "TXT_KEY_BUILDING_HOUSING_IGLOOS",
  "civilopedia": "TXT_KEY_BUILDING_HOUSING_IGLOOS_PEDIA",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_RAPID_PROTOTYPING"
+  ]
+ },
+ "replacedBy": {
+  "buildings": [
+   "BUILDING_HOUSING_BOONDOCKS",
+   "BUILDING_HOUSING_DUGOUTS",
+   "BUILDING_HOUSING_COLONY_ARCOLOGY",
+   "BUILDING_LAUNCH_ARCOLOGY"
+  ]
+ },
  "requires": {
   "build": {
    "all": [

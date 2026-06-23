@@ -213,14 +213,17 @@
    "UNIT_ZENU_GOLDSMITHS"
   ]
  },
- "obsoletes": {
+ "obsoletedBy": {
   "buildings": [
    "BUILDING_SHOPPING_DISTRICT"
+  ],
+  "techs": [
+   "TECH_COMMUNICATION_NETWORKS"
   ]
  },
- "replaces": {
+ "replacedBy": {
   "buildings": [
-   "BUILDING_BARTER_POST"
+   "BUILDING_SHOPPING_DISTRICT"
   ]
  },
  "requires": {

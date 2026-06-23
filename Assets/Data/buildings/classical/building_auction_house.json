@@ -2,7 +2,15 @@
  "type": "BUILDING_AUCTION_HOUSE",
  "description": "TXT_KEY_BUILDING_AUCTION_HOUSE",
  "civilopedia": "TXT_KEY_BUILDING_AUCTION_HOUSE_PEDIA",
- "obsoletes": {
+ "obsoletedBy": {
+  "buildings": [
+   "BUILDING_BLOCKCHAIN_FINANCIAL_SERVICES"
+  ],
+  "techs": [
+   "TECH_CYBERSOCIAL_INTEGRATION"
+  ]
+ },
+ "replacedBy": {
   "buildings": [
    "BUILDING_BLOCKCHAIN_FINANCIAL_SERVICES"
   ]

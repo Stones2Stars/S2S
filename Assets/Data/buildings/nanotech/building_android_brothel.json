@@ -2,11 +2,9 @@
  "type": "BUILDING_ANDROID_BROTHEL",
  "description": "TXT_KEY_BUILDING_ANDROID_BROTHEL",
  "civilopedia": "TXT_KEY_BUILDING_ANDROID_BROTHEL_PEDIA",
- "replaces": {
+ "replacedBy": {
   "buildings": [
-   "BUILDING_BROTHEL",
-   "BUILDING_GENTLEMANS_CLUB",
-   "BUILDING_HAREMS"
+   "BUILDING_ORDINANCE_PROSTITUTION_BAN"
   ]
  },
  "requires": {

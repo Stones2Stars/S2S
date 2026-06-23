@@ -11,11 +11,6 @@
    "UNIT_MAPINGUARI_WOODEN"
   ]
  },
- "replaces": {
-  "buildings": [
-   "BUILDING_MAPINGUARI_COMPOUND"
-  ]
- },
  "requires": {
   "build": {
    "all": [

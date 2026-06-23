@@ -2,9 +2,20 @@
  "type": "BUILDING_TAVERN",
  "description": "TXT_KEY_BUILDING_TAVERN",
  "civilopedia": "TXT_KEY_BUILDING_TAVERN_PEDIA",
- "obsoletes": {
+ "obsoletedBy": {
   "buildings": [
    "BUILDING_PUB"
+  ],
+  "techs": [
+   "TECH_REFRIGERATION"
+  ]
+ },
+ "replacedBy": {
+  "buildings": [
+   "BUILDING_PUB",
+   "BUILDING_DIVE_BAR",
+   "BUILDING_GALACTIC_CANTINA",
+   "BUILDING_ORDINANCE_ALCOHOL_PROHIBITION"
   ]
  },
  "requires": {

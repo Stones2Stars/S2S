@@ -243,12 +243,6 @@
    "UNIT_ZENU_GOLDSMITHS"
   ]
  },
- "replaces": {
-  "buildings": [
-   "BUILDING_BARTER_POST",
-   "BUILDING_TRADING_POST"
-  ]
- },
  "requires": {
   "build": {
    "all": [

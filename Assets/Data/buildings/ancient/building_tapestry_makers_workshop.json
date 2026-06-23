@@ -2,7 +2,15 @@
  "type": "BUILDING_TAPESTRY_MAKERS_WORKSHOP",
  "description": "TXT_KEY_BUILDING_TAPESTRY_MAKERS_WORKSHOP",
  "civilopedia": "TXT_KEY_BUILDING_TAPESTRY_MAKERS_WORKSHOP_PEDIA",
- "obsoletes": {
+ "obsoletedBy": {
+  "buildings": [
+   "BUILDING_TEXTILE_MANUFACTURING_DISTRICT"
+  ],
+  "techs": [
+   "TECH_NANOROBOTICS"
+  ]
+ },
+ "replacedBy": {
   "buildings": [
    "BUILDING_TEXTILE_MANUFACTURING_DISTRICT"
   ]

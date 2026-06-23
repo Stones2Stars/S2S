@@ -7,7 +7,15 @@
    "BUILDING_INTERSTELLAR_BANKS_ORBITAL"
   ]
  },
- "obsoletes": {
+ "obsoletedBy": {
+  "buildings": [
+   "BUILDING_INTERSTELLAR_DYSON_SPHERE"
+  ],
+  "techs": [
+   "TECH_ZERO_POINT_ENERGY"
+  ]
+ },
+ "replacedBy": {
   "buildings": [
    "BUILDING_INTERSTELLAR_DYSON_SPHERE"
   ]

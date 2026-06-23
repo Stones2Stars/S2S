@@ -2,9 +2,19 @@
  "type": "BUILDING_BAILIWICK",
  "description": "TXT_KEY_BUILDING_BAILIWICK",
  "civilopedia": "TXT_KEY_BUILDING_BAILIWICK_PEDIA",
- "obsoletes": {
+ "obsoletedBy": {
   "buildings": [
    "BUILDING_SHERIFFS_OFFICE"
+  ],
+  "techs": [
+   "TECH_CRIMINOLOGY"
+  ]
+ },
+ "replacedBy": {
+  "buildings": [
+   "BUILDING_SHERIFFS_OFFICE",
+   "BUILDING_POLICE_STATION",
+   "BUILDING_POLICE_PRECINCT"
   ]
  },
  "requires": {

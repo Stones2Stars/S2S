@@ -2,11 +2,6 @@
  "type": "BUILDING_INTERSTELLAR_IMMIGRATION_OFFICE",
  "description": "TXT_KEY_BUILDING_INTERSTELLAR_IMMIGRATION_OFFICE",
  "civilopedia": "TXT_KEY_BUILDING_INTERSTELLAR_IMMIGRATION_OFFICE_PEDIA",
- "replaces": {
-  "buildings": [
-   "BUILDING_PLANETARY_IMMIGRATION_OFFICE"
-  ]
- },
  "requires": {
   "build": {
    "all": [

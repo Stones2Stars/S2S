@@ -2,11 +2,6 @@
  "type": "BUILDING_INTERGALACTIC_STAR_CANNON",
  "description": "TXT_KEY_BUILDING_INTERGALACTIC_STAR_CANNON",
  "civilopedia": "TXT_KEY_BUILDING_INTERGALACTIC_STAR_CANNON_PEDIA",
- "replaces": {
-  "buildings": [
-   "BUILDING_INTERGALACTIC_GAMMA_RAY_BURST_CANNON"
-  ]
- },
  "requires": {
   "build": {
    "all": [

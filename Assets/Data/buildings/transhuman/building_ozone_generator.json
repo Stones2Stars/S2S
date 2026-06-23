@@ -2,13 +2,6 @@
  "type": "BUILDING_OZONE_GENERATOR",
  "description": "TXT_KEY_BUILDING_OZONE_GENERATOR",
  "civilopedia": "TXT_KEY_BUILDING_OZONE_GENERATOR_PEDIA",
- "replaces": {
-  "buildings": [
-   "BUILDING_POLLUTION_MAJOR_OZONE_DEPLETION",
-   "BUILDING_POLLUTION_MINOR_OZONE_DEPLETION",
-   "BUILDING_POLLUTION_MODERATE_OZONE_DEPLETION"
-  ]
- },
  "requires": {
   "build": {
    "all": [

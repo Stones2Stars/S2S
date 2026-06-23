@@ -7,9 +7,18 @@
    "BUILDING_RESOURCES_GRAINS"
   ]
  },
- "obsoletes": {
+ "obsoletedBy": {
   "buildings": [
    "BUILDING_FARM_CROP_CORN"
+  ],
+  "techs": [
+   "TECH_VERTICAL_FARMING"
+  ]
+ },
+ "replacedBy": {
+  "buildings": [
+   "BUILDING_FARM_CROP_CORN",
+   "BUILDING_FARMSCRAPER_III"
   ]
  },
  "requires": {

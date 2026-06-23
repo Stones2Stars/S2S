@@ -7,9 +7,18 @@
    "BUILDING_DYE_MAKER"
   ]
  },
- "obsoletes": {
+ "obsoletedBy": {
   "buildings": [
    "BUILDING_PLANTATION_HENNA"
+  ],
+  "techs": [
+   "TECH_AGRICULTURAL_ENGINEERING"
+  ]
+ },
+ "replacedBy": {
+  "buildings": [
+   "BUILDING_PLANTATION_HENNA",
+   "BUILDING_GREENHOUSE"
   ]
  },
  "requires": {

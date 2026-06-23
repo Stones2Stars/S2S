@@ -29,15 +29,17 @@
    "BUILDING_ZOROASTRIAN_PANTHEON"
   ]
  },
- "obsoletes": {
+ "obsoletedBy": {
   "buildings": [
    "BUILDING_METROPOLITAN_ADMINISTRATION"
+  ],
+  "techs": [
+   "TECH_MOTORIZED_TRANSPORTATION"
   ]
  },
- "replaces": {
+ "replacedBy": {
   "buildings": [
-   "BUILDING_TOWN_HALL",
-   "BUILDING_VILLAGE_HALL"
+   "BUILDING_METROPOLITAN_ADMINISTRATION"
   ]
  },
  "requires": {

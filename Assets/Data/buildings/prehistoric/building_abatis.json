@@ -2,9 +2,22 @@
  "type": "BUILDING_ABATIS",
  "description": "TXT_KEY_BUILDING_ABATIS",
  "civilopedia": "TXT_KEY_BUILDING_ABATIS_PEDIA",
- "obsoletes": {
+ "obsoletedBy": {
   "buildings": [
    "BUILDING_FIRE_ABATIS"
+  ],
+  "techs": [
+   "TECH_BARBED_WIRE"
+  ]
+ },
+ "replacedBy": {
+  "buildings": [
+   "BUILDING_FIRE_ABATIS",
+   "BUILDING_BARBWIRE_FENCE",
+   "BUILDING_ELECTRIC_FENCE",
+   "BUILDING_WIRELESS_ELECTRIC_FENCE",
+   "BUILDING_ARCOLOGY_SHIELDING",
+   "BUILDING_ADVANCED_SHIELDING"
   ]
  },
  "requires": {

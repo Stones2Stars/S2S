@@ -2,7 +2,15 @@
  "type": "BUILDING_ETHANOL_STATION",
  "description": "TXT_KEY_BUILDING_ETHANOL_STATION",
  "civilopedia": "TXT_KEY_BUILDING_ETHANOL_STATION_PEDIA",
- "obsoletes": {
+ "obsoletedBy": {
+  "buildings": [
+   "BUILDING_TELEPORT_BOOTH"
+  ],
+  "techs": [
+   "TECH_WORMHOLE_HIVEMIND"
+  ]
+ },
+ "replacedBy": {
   "buildings": [
    "BUILDING_TELEPORT_BOOTH"
   ]

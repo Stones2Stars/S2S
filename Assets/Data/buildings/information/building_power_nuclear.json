@@ -2,6 +2,11 @@
  "type": "BUILDING_POWER_NUCLEAR",
  "description": "TXT_KEY_BUILDING_POWER_NUCLEAR",
  "civilopedia": "TXT_KEY_BUILDING_POWER_NUCLEAR_PEDIA",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_ARTIFICIAL_NUCLEOSYNTHESIS"
+  ]
+ },
  "requires": {
   "build": {
    "all": [

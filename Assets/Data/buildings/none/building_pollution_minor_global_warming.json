@@ -2,6 +2,11 @@
  "type": "BUILDING_POLLUTION_MINOR_GLOBAL_WARMING",
  "description": "TXT_KEY_BUILDING_POLLUTION_MINOR_GLOBAL_WARMING",
  "civilopedia": "TXT_KEY_BUILDING_AIR_POLLUTION_PEDIA",
+ "replacedBy": {
+  "buildings": [
+   "BUILDING_CLIMATE_GEOENGINEERING"
+  ]
+ },
  "requires": {
   "build": {
    "any": [

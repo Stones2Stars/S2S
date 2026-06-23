@@ -20,11 +20,6 @@
    "BUILDING_INTERSTELLAR_WORMHOLE_BEACON"
   ]
  },
- "replaces": {
-  "buildings": [
-   "BUILDING_INTERSTELLAR_DYSON_SWARM"
-  ]
- },
  "requires": {
   "build": {
    "all": [

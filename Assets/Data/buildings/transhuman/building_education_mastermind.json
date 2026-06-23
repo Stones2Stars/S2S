@@ -2,6 +2,13 @@
  "type": "BUILDING_EDUCATION_MASTERMIND",
  "description": "TXT_KEY_BUILDING_EDUCATION_MASTERMIND",
  "civilopedia": "TXT_KEY_BUILDING_EQ_PEDIA",
+ "replacedBy": {
+  "buildings": [
+   "BUILDING_EDUCATION_GENIUS",
+   "BUILDING_EDUCATION_WISE",
+   "BUILDING_EDUCATION_OMNISCIENCE"
+  ]
+ },
  "requires": {
   "build": {
    "all": [
@@ -27,21 +34,7 @@
      "min": 20000,
      "max": 2000000
     }
-   ],
-   "disabled": {
-    "all": [
-     {
-      "type": "PROPERTY_EDUCATION",
-      "scope": "city",
-      "min": 25000,
-      "max": 2000000
-     },
-     {
-      "type": "BUILDING_EDUCATION_GENIUS",
-      "scope": "city"
-     }
-    ]
-   }
+   ]
   }
  },
  "production": {

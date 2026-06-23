@@ -2,6 +2,11 @@
  "type": "BUILDING_STONEHENGE",
  "description": "TXT_KEY_BUILDING_STONEHENGE",
  "civilopedia": "TXT_KEY_BUILDING_STONEHENGE_PEDIA",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_MODERN_SANITATION"
+  ]
+ },
  "requires": {
   "build": {
    "all": [

@@ -2,7 +2,15 @@
  "type": "BUILDING_BATTLEBOT_ARENA",
  "description": "TXT_KEY_BUILDING_BATTLEBOT_ARENA",
  "civilopedia": "TXT_KEY_BUILDING_BATTLEBOT_ARENA_PEDIA",
- "obsoletes": {
+ "obsoletedBy": {
+  "buildings": [
+   "BUILDING_BATTLEMECH_ARENA"
+  ],
+  "techs": [
+   "TECH_NANO_DISASSEMBLY"
+  ]
+ },
+ "replacedBy": {
   "buildings": [
    "BUILDING_BATTLEMECH_ARENA"
   ]

@@ -9,12 +9,16 @@
    "BUILDING_MAUSOLEUM"
   ]
  },
- "replaces": {
+ "obsoletedBy": {
+  "techs": [
+   "TECH_COLONY_ARCOLOGY"
+  ]
+ },
+ "replacedBy": {
   "buildings": [
-   "BUILDING_HOUSING_ESTATES",
-   "BUILDING_HOUSING_HOMELESS",
-   "BUILDING_HOUSING_PALACES",
-   "BUILDING_HOUSING_YURTS"
+   "BUILDING_HOUSING_HIGH_TECH_CONDOMINIUMS",
+   "BUILDING_HOUSING_COLONY_ARCOLOGY",
+   "BUILDING_LAUNCH_ARCOLOGY"
   ]
  },
  "requires": {

@@ -2,6 +2,22 @@
  "type": "BUILDING_EDUCATION_INTUITIVE",
  "description": "TXT_KEY_BUILDING_EDUCATION_INTUITIVE",
  "civilopedia": "TXT_KEY_BUILDING_EQ_PEDIA",
+ "replacedBy": {
+  "buildings": [
+   "BUILDING_EDUCATION_BRILLIANT",
+   "BUILDING_EDUCATION_CULTIVATED",
+   "BUILDING_EDUCATION_KNOWLEDGEABLE",
+   "BUILDING_EDUCATION_ACUMEN",
+   "BUILDING_EDUCATION_SCHOLARLY",
+   "BUILDING_EDUCATION_ENLIGHTENED",
+   "BUILDING_EDUCATION_COSMOPOLITAN",
+   "BUILDING_EDUCATION_WUNDERKIND",
+   "BUILDING_EDUCATION_MASTERMIND",
+   "BUILDING_EDUCATION_GENIUS",
+   "BUILDING_EDUCATION_WISE",
+   "BUILDING_EDUCATION_OMNISCIENCE"
+  ]
+ },
  "requires": {
   "build": {
    "any": [
@@ -21,21 +37,7 @@
      "min": 100,
      "max": 2000000
     }
-   ],
-   "disabled": {
-    "all": [
-     {
-      "type": "PROPERTY_EDUCATION",
-      "scope": "city",
-      "min": 250,
-      "max": 2000000
-     },
-     {
-      "type": "BUILDING_EDUCATION_BRILLIANT",
-      "scope": "city"
-     }
-    ]
-   }
+   ]
   }
  },
  "production": {

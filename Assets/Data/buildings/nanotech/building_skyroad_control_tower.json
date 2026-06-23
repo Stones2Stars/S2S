@@ -30,19 +30,17 @@
    "BUILDING_WIND_TURBINE_HIGHWAY"
   ]
  },
- "obsoletes": {
+ "obsoletedBy": {
   "buildings": [
    "BUILDING_TELEPORT_BOOTH"
+  ],
+  "techs": [
+   "TECH_WORMHOLE_HIVEMIND"
   ]
  },
- "replaces": {
+ "replacedBy": {
   "buildings": [
-   "BUILDING_ASPHALT_ROADS",
-   "BUILDING_EXPRESSWAY",
-   "BUILDING_HIGHWAY",
-   "BUILDING_PAVED_ROADS",
-   "BUILDING_ROADS",
-   "BUILDING_TRAILS"
+   "BUILDING_TELEPORT_BOOTH"
   ]
  },
  "requires": {

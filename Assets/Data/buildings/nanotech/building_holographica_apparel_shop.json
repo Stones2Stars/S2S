@@ -2,7 +2,15 @@
  "type": "BUILDING_HOLOGRAPHICA_APPAREL_SHOP",
  "description": "TXT_KEY_BUILDING_HOLOGRAPHICA_APPAREL_SHOP",
  "civilopedia": "TXT_KEY_BUILDING_HOLOGRAPHICA_APPAREL_SHOP_PEDIA",
- "obsoletes": {
+ "obsoletedBy": {
+  "buildings": [
+   "BUILDING_HIGH_TECH_CULTURAL_ENRICHMENT"
+  ],
+  "techs": [
+   "TECH_CULTURAL_EVOLUTION"
+  ]
+ },
+ "replacedBy": {
   "buildings": [
    "BUILDING_HIGH_TECH_CULTURAL_ENRICHMENT"
   ]

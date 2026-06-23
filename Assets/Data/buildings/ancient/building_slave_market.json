@@ -3,6 +3,11 @@
  "description": "TXT_KEY_BUILDING_SLAVE_MARKET",
  "civilopedia": "TXT_KEY_BUILDING_SLAVE_MARKET_PEDIA",
  "help": "TXT_KEY_BUILDING_SLAVE_MARKET_HELP",
+ "replacedBy": {
+  "buildings": [
+   "BUILDING_EFFECT_EMANCIPATION_PROCLAMATION"
+  ]
+ },
  "requires": {
   "build": {
    "all": [

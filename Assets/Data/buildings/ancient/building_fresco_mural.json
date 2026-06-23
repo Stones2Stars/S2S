@@ -7,11 +7,6 @@
    "BUILDING_LASCAUX_PAINTS"
   ]
  },
- "replaces": {
-  "buildings": [
-   "BUILDING_CAVE_PAINTINGS"
-  ]
- },
  "requires": {
   "build": {
    "all": [

@@ -11,7 +11,15 @@
    "UNIT_FLIGHT_TECHNICIAN"
   ]
  },
- "obsoletes": {
+ "obsoletedBy": {
+  "buildings": [
+   "BUILDING_MILITARY_INDUSTRIAL_COMPLEX"
+  ],
+  "techs": [
+   "TECH_ORBITAL_FLIGHT"
+  ]
+ },
+ "replacedBy": {
   "buildings": [
    "BUILDING_MILITARY_INDUSTRIAL_COMPLEX"
   ]

@@ -10,13 +10,6 @@
    "BUILDING_WORLD_ELECTRIC_GRID"
   ]
  },
- "replaces": {
-  "buildings": [
-   "BUILDING_EMP_GRID",
-   "BUILDING_SMART_GRID",
-   "BUILDING_WIRELESS_GRID"
-  ]
- },
  "requires": {
   "build": {
    "all": [

@@ -11,14 +11,17 @@
    "BUILDING_GRAND_AERODROME"
   ]
  },
- "obsoletes": {
+ "obsoletedBy": {
   "buildings": [
    "BUILDING_COMMERCIAL_AIRPORT"
+  ],
+  "techs": [
+   "TECH_HYPERSONIC_FLIGHT"
   ]
  },
- "replaces": {
+ "replacedBy": {
   "buildings": [
-   "BUILDING_ORNITHOPTER_AERIE"
+   "BUILDING_COMMERCIAL_AIRPORT"
   ]
  },
  "requires": {

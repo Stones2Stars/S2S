@@ -2,11 +2,6 @@
  "type": "BUILDING_INTERSTELLAR_FUSION_ENGINE",
  "description": "TXT_KEY_BUILDING_INTERSTELLAR_FUSION_ENGINE",
  "civilopedia": "TXT_KEY_BUILDING_INTERSTELLAR_FUSION_ENGINE_PEDIA",
- "replaces": {
-  "buildings": [
-   "BUILDING_INTERSTELLAR_ADVANCED_NUCLEAR_ENGINE"
-  ]
- },
  "requires": {
   "build": {
    "all": [

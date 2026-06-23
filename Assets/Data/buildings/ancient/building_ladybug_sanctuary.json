@@ -7,14 +7,18 @@
    "BUILDING_RESOURCES_BUGS"
   ]
  },
- "obsoletes": {
+ "obsoletedBy": {
   "buildings": [
    "BUILDING_ARBORETUM"
+  ],
+  "techs": [
+   "TECH_ENVIRONMENTAL_ECONOMICS"
   ]
  },
- "replaces": {
+ "replacedBy": {
   "buildings": [
-   "BUILDING_PESTS_APHIDS"
+   "BUILDING_ARBORETUM",
+   "BUILDING_AGROFOREST"
   ]
  },
  "requires": {

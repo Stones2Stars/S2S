@@ -2,6 +2,11 @@
  "type": "BUILDING_ALMAGEST",
  "description": "TXT_KEY_BUILDING_ALMAGEST",
  "civilopedia": "TXT_KEY_BUILDING_ALMAGEST_PEDIA",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_HELIOCENTRISM"
+  ]
+ },
  "requires": {
   "build": {
    "all": [

@@ -2,6 +2,11 @@
  "type": "BUILDING_HOLY_SEE_LIBRARY",
  "description": "TXT_KEY_BUILDING_HOLY_SEE_LIBRARY",
  "civilopedia": "TXT_KEY_BUILDING_HOLY_SEE_LIBRARY_PEDIA",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_MASS_MEDIA"
+  ]
+ },
  "requires": {
   "build": {
    "all": [

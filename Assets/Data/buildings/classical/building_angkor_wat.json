@@ -2,9 +2,12 @@
  "type": "BUILDING_ANGKOR_WAT",
  "description": "TXT_KEY_BUILDING_ANGKOR_WAT",
  "civilopedia": "TXT_KEY_BUILDING_ANGKOR_WAT_PEDIA",
- "obsoletes": {
+ "obsoletedBy": {
   "buildings": [
    "BUILDING_RELIC_ANGKOR_WAT"
+  ],
+  "techs": [
+   "TECH_PERSONAL_COMPUTERS"
   ]
  },
  "requires": {

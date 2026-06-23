@@ -2,7 +2,15 @@
  "type": "BUILDING_MEGATOWER_THEME_PARK_CROWN_SECTION",
  "description": "TXT_KEY_BUILDING_MEGATOWER_THEME_PARK_CROWN_SECTION",
  "civilopedia": "TXT_KEY_BUILDING_MEGATOWER_THEME_PARK_CROWN_SECTION_PEDIA",
- "obsoletes": {
+ "obsoletedBy": {
+  "buildings": [
+   "BUILDING_HIGH_TECH_CULTURAL_ENRICHMENT"
+  ],
+  "techs": [
+   "TECH_CULTURAL_EVOLUTION"
+  ]
+ },
+ "replacedBy": {
   "buildings": [
    "BUILDING_HIGH_TECH_CULTURAL_ENRICHMENT"
   ]

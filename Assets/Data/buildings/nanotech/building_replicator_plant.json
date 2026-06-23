@@ -2,9 +2,20 @@
  "type": "BUILDING_REPLICATOR_PLANT",
  "description": "TXT_KEY_BUILDING_REPLICATOR_PLANT",
  "civilopedia": "TXT_KEY_BUILDING_REPLICATOR_PLANT_PEDIA",
- "obsoletes": {
+ "obsoletedBy": {
   "buildings": [
    "BUILDING_MOLECULAR_ASSEMBLER"
+  ],
+  "techs": [
+   "TECH_GRAVITRONICS"
+  ]
+ },
+ "replacedBy": {
+  "buildings": [
+   "BUILDING_MOLECULAR_ASSEMBLER",
+   "BUILDING_ATOMIC_ASSEMBLER",
+   "BUILDING_QUANTUM_ASSEMBLER",
+   "BUILDING_MATERIALIZER"
   ]
  },
  "requires": {

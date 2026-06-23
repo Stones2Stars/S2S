@@ -2,14 +2,17 @@
  "type": "BUILDING_FACTORY_SAILS",
  "description": "TXT_KEY_BUILDING_FACTORY_SAILS",
  "civilopedia": "TXT_KEY_BUILDING_FACTORY_SAILS_PEDIA",
- "obsoletes": {
+ "obsoletedBy": {
   "buildings": [
    "BUILDING_MANUFACTURING_DISTRICT"
+  ],
+  "techs": [
+   "TECH_NANOROBOTICS"
   ]
  },
- "replaces": {
+ "replacedBy": {
   "buildings": [
-   "BUILDING_SAIL_WEAVER"
+   "BUILDING_MANUFACTURING_DISTRICT"
   ]
  },
  "requires": {

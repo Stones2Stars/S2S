@@ -19,12 +19,6 @@
    "UNIT_AIRSETTLER"
   ]
  },
- "replaces": {
-  "buildings": [
-   "BUILDING_AIRPORT",
-   "BUILDING_ORNITHOPTER_AERIE"
-  ]
- },
  "requires": {
   "build": {
    "all": [

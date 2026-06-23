@@ -2,6 +2,11 @@
  "type": "BUILDING_ALTAR_FOR_HUMAN_SACRIFICE",
  "description": "TXT_KEY_BUILDING_ALTAR_FOR_HUMAN_SACRIFICE",
  "civilopedia": "TXT_KEY_BUILDING_ALTAR_FOR_HUMAN_SACRIFICE_PEDIA",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_HUMANISM"
+  ]
+ },
  "requires": {
   "build": {
    "all": [

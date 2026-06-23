@@ -2,6 +2,11 @@
  "type": "BUILDING_GOBEKLI_TEPE",
  "description": "TXT_KEY_BUILDING_GOBEKLI_TEPE",
  "civilopedia": "TXT_KEY_BUILDING_GOBEKLI_TEPE_PEDIA",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_MEDICINE"
+  ]
+ },
  "requires": {
   "build": {
    "all": [

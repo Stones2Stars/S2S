@@ -16,6 +16,11 @@
    "BUILDING_TRADITION_MILITARY_STANDARD_MASCOT"
   ]
  },
+ "obsoletedBy": {
+  "techs": [
+   "TECH_AVIATION"
+  ]
+ },
  "requires": {
   "build": {
    "all": [

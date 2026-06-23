@@ -2,6 +2,11 @@
  "type": "BUILDING_LL_CACTUS_HILL",
  "description": "TXT_KEY_BUILDING_LL_CACTUS_HILL",
  "civilopedia": "TXT_KEY_BUILDING_LL_CACTUS_HILL_PEDIA",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_POTTERY"
+  ]
+ },
  "requires": {
   "build": {
    "all": [

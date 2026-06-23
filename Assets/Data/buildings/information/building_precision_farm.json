@@ -2,7 +2,15 @@
  "type": "BUILDING_PRECISION_FARM",
  "description": "TXT_KEY_BUILDING_PRECISION_FARM",
  "civilopedia": "TXT_KEY_BUILDING_PRECISION_FARM_PEDIA",
- "obsoletes": {
+ "obsoletedBy": {
+  "buildings": [
+   "BUILDING_FARMSCRAPER_I"
+  ],
+  "techs": [
+   "TECH_GAIA_ECOLOGY"
+  ]
+ },
+ "replacedBy": {
   "buildings": [
    "BUILDING_FARMSCRAPER_I"
   ]

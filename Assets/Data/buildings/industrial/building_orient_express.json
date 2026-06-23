@@ -2,6 +2,11 @@
  "type": "BUILDING_ORIENT_EXPRESS",
  "description": "TXT_KEY_BUILDING_ORIENT_EXPRESS",
  "civilopedia": "TXT_KEY_BUILDING_ORIENT_EXPRESS_PEDIA",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_MAGNETIC_LEVITATION"
+  ]
+ },
  "requires": {
   "build": {
    "all": [

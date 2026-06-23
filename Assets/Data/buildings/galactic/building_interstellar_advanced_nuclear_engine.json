@@ -2,7 +2,15 @@
  "type": "BUILDING_INTERSTELLAR_ADVANCED_NUCLEAR_ENGINE",
  "description": "TXT_KEY_BUILDING_INTERSTELLAR_ADVANCED_NUCLEAR_ENGINE",
  "civilopedia": "TXT_KEY_BUILDING_INTERSTELLAR_ADVANCED_NUCLEAR_ENGINE_PEDIA",
- "obsoletes": {
+ "obsoletedBy": {
+  "buildings": [
+   "BUILDING_INTERSTELLAR_FUSION_ENGINE"
+  ],
+  "techs": [
+   "TECH_SPACE_CREASING"
+  ]
+ },
+ "replacedBy": {
   "buildings": [
    "BUILDING_INTERSTELLAR_FUSION_ENGINE"
   ]

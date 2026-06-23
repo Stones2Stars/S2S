@@ -8,14 +8,17 @@
    "BUILDING_RICE_TERRACE"
   ]
  },
- "obsoletes": {
+ "obsoletedBy": {
   "buildings": [
    "BUILDING_FARMSCRAPER_III"
+  ],
+  "techs": [
+   "TECH_GAIA_ECOLOGY"
   ]
  },
- "replaces": {
+ "replacedBy": {
   "buildings": [
-   "BUILDING_RICE_GATHERER"
+   "BUILDING_FARMSCRAPER_III"
   ]
  },
  "requires": {

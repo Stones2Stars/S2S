@@ -7,15 +7,21 @@
    "BUILDING_SUPERCRITICAL_CO2_TURBINE"
   ]
  },
- "obsoletes": {
+ "obsoletedBy": {
   "buildings": [
    "BUILDING_D_T_FUSION_POWER_PLANT"
+  ],
+  "techs": [
+   "TECH_ELECTROMAGNETIC_VOLTAGE"
   ]
  },
- "replaces": {
+ "replacedBy": {
   "buildings": [
-   "BUILDING_COAL_FIRED_DYNAMO",
-   "BUILDING_COAL_PLANT"
+   "BUILDING_D_T_FUSION_POWER_PLANT",
+   "BUILDING_D_HE3_FUSION_PLANT",
+   "BUILDING_HE3_FUSION_POWER_PLANT",
+   "BUILDING_ANTIMATTER_INITIATED_FUSION_PLANT",
+   "BUILDING_QUANTUM_VACUUM_POWER_PLANT"
   ]
  },
  "requires": {

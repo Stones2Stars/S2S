@@ -2,7 +2,15 @@
  "type": "BUILDING_FIRE_BRIGADE",
  "description": "TXT_KEY_BUILDING_FIRE_BRIGADE",
  "civilopedia": "TXT_KEY_BUILDING_FIRE_BRIGADE_PEDIA",
- "obsoletes": {
+ "obsoletedBy": {
+  "buildings": [
+   "BUILDING_FIRE_STATION"
+  ],
+  "techs": [
+   "TECH_FIRE_SUPPRESSION"
+  ]
+ },
+ "replacedBy": {
   "buildings": [
    "BUILDING_FIRE_STATION"
   ]

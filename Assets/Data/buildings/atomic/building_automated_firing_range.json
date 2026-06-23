@@ -17,16 +17,17 @@
    "UNIT_TARKKA_AMPUJA"
   ]
  },
- "obsoletes": {
+ "obsoletedBy": {
   "buildings": [
    "BUILDING_ORBITAL_TARGETS"
+  ],
+  "techs": [
+   "TECH_BATTLEFIELD_SPORTS"
   ]
  },
- "replaces": {
+ "replacedBy": {
   "buildings": [
-   "BUILDING_ARCHERY_RANGE",
-   "BUILDING_FIRING_RANGE",
-   "BUILDING_SHOOTING_CLUB"
+   "BUILDING_ORBITAL_TARGETS"
   ]
  },
  "requires": {

@@ -2,6 +2,11 @@
  "type": "BUILDING_BAHAI_MONASTERY",
  "description": "TXT_KEY_BUILDING_BAHAI_MONASTERY",
  "civilopedia": "TXT_KEY_BUILDING_BAHAI_MONASTERY_PEDIA",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_MODERN_PHYSICS"
+  ]
+ },
  "requires": {
   "build": {
    "all": [

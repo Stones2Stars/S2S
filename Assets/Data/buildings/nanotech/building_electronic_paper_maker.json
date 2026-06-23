@@ -7,14 +7,6 @@
    "BUILDING_GUILD_PRINTERS"
   ]
  },
- "replaces": {
-  "buildings": [
-   "BUILDING_FACTORY_PAPER",
-   "BUILDING_PAPER_MAKER",
-   "BUILDING_PAPER_RECLAMATION_PLANT",
-   "BUILDING_RESOURCES_PAPER"
-  ]
- },
  "requires": {
   "build": {
    "all": [

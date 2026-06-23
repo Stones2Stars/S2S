@@ -2,9 +2,18 @@
  "type": "BUILDING_CLOUD_OBSERVERS_HUT",
  "description": "TXT_KEY_BUILDING_CLOUD_OBSERVERS_HUT",
  "civilopedia": "TXT_KEY_BUILDING_CLOUD_OBSERVERS_HUT_PEDIA",
- "obsoletes": {
+ "obsoletedBy": {
   "buildings": [
    "BUILDING_WEATHER_VANES"
+  ],
+  "techs": [
+   "TECH_METEOROLOGY"
+  ]
+ },
+ "replacedBy": {
+  "buildings": [
+   "BUILDING_WEATHER_VANES",
+   "BUILDING_METEOROLOGY_LAB"
   ]
  },
  "requires": {

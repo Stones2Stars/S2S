@@ -2,16 +2,22 @@
  "type": "BUILDING_LANDMINES",
  "description": "TXT_KEY_BUILDING_LANDMINES",
  "civilopedia": "TXT_KEY_BUILDING_LANDMINES_PEDIA",
- "obsoletes": {
+ "obsoletedBy": {
   "buildings": [
    "BUILDING_BOOBY_TRAPS"
+  ],
+  "techs": [
+   "TECH_BIOLOGICAL_WARFARE"
   ]
  },
- "replaces": {
+ "replacedBy": {
   "buildings": [
-   "BUILDING_MECHANICAL_TRAPS",
-   "BUILDING_PIT_TRAPS",
-   "BUILDING_SPIKED_PIT_TRAPS"
+   "BUILDING_BOOBY_TRAPS",
+   "BUILDING_ROBOTIC_TRAPS",
+   "BUILDING_GERM_TRAPS",
+   "BUILDING_EMP_TRAPS",
+   "BUILDING_NANOBOT_TRAPS",
+   "BUILDING_GRAVITY_TRAPS"
   ]
  },
  "requires": {

@@ -7,9 +7,20 @@
    "BUILDING_AERIAL_BASKET_ROPEWAYS"
   ]
  },
- "obsoletes": {
+ "obsoletedBy": {
   "buildings": [
    "BUILDING_WHEELWRIGHT"
+  ],
+  "techs": [
+   "TECH_MACHINERY"
+  ]
+ },
+ "replacedBy": {
+  "buildings": [
+   "BUILDING_WHEELWRIGHT",
+   "BUILDING_CARRIAGE_BUILDER",
+   "BUILDING_FACTORY_AUTOMOBILES",
+   "BUILDING_SELF_ASSEMBLY_FACTORY"
   ]
  },
  "requires": {

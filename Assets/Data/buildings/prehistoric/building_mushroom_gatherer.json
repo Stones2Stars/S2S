@@ -2,6 +2,11 @@
  "type": "BUILDING_MUSHROOM_GATHERER",
  "description": "TXT_KEY_BUILDING_MUSHROOM_GATHERER",
  "civilopedia": "TXT_KEY_BUILDING_MUSHROOM_GATHERER_PEDIA",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_CITY_PLANNING"
+  ]
+ },
  "requires": {
   "build": {
    "all": [

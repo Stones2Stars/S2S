@@ -8,8 +8,17 @@
    "BUILDING_RESOURCES_LARD"
   ]
  },
- "obsoletes": {
+ "obsoletedBy": {
   "buildings": [
+   "BUILDING_MEAT_PACKING_PLANT"
+  ],
+  "techs": [
+   "TECH_REPLACEMENT_ORGANS"
+  ]
+ },
+ "replacedBy": {
+  "buildings": [
+   "BUILDING_MEAT_INDUSTRY_CONGLOMERATE",
    "BUILDING_MEAT_PACKING_PLANT"
   ]
  },

@@ -2,14 +2,18 @@
  "type": "BUILDING_HOUSING_HABITATION_PODS",
  "description": "TXT_KEY_BUILDING_HOUSING_HABITATION_PODS",
  "civilopedia": "TXT_KEY_BUILDING_HOUSING_HABITATION_PODS_PEDIA",
- "obsoletes": {
+ "obsoletedBy": {
   "buildings": [
    "BUILDING_HOUSING_COLONY_ARCOLOGY"
+  ],
+  "techs": [
+   "TECH_INTERSTELLAR_COLONIZATION"
   ]
  },
- "replaces": {
+ "replacedBy": {
   "buildings": [
-   "BUILDING_HOUSING_PROJECTS"
+   "BUILDING_HOUSING_COLONY_ARCOLOGY",
+   "BUILDING_LAUNCH_ARCOLOGY"
   ]
  },
  "requires": {

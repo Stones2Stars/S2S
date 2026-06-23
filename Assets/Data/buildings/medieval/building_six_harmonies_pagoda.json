@@ -2,6 +2,11 @@
  "type": "BUILDING_SIX_HARMONIES_PAGODA",
  "description": "TXT_KEY_BUILDING_SIX_HARMONIES_PAGODA",
  "civilopedia": "TXT_KEY_BUILDING_SIX_HARMONIES_PAGODA_PEDIA",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_ARCHEOLOGY"
+  ]
+ },
  "requires": {
   "build": {
    "all": [

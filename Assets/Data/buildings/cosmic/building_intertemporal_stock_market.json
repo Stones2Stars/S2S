@@ -2,11 +2,6 @@
  "type": "BUILDING_INTERTEMPORAL_STOCK_MARKET",
  "description": "TXT_KEY_BUILDING_INTERTEMPORAL_STOCK_MARKET",
  "civilopedia": "TXT_KEY_BUILDING_INTERTEMPORAL_STOCK_MARKET_PEDIA",
- "replaces": {
-  "buildings": [
-   "BUILDING_HEDGE_FUND"
-  ]
- },
  "requires": {
   "build": {
    "all": [

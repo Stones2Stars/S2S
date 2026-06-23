@@ -11,9 +11,21 @@
    "BUILDING_STONE_BRIDGE"
   ]
  },
- "obsoletes": {
+ "obsoletedBy": {
   "buildings": [
    "BUILDING_ROADS"
+  ],
+  "techs": [
+   "TECH_PAVED_ROADS"
+  ]
+ },
+ "replacedBy": {
+  "buildings": [
+   "BUILDING_ROADS",
+   "BUILDING_PAVED_ROADS",
+   "BUILDING_ASPHALT_ROADS",
+   "BUILDING_SKYROAD_CONTROL_TOWER",
+   "BUILDING_TELEPORT_BOOTH"
   ]
  },
  "requires": {

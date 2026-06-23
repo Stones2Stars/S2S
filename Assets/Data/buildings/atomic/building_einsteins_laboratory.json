@@ -2,6 +2,11 @@
  "type": "BUILDING_EINSTEINS_LABORATORY",
  "description": "TXT_KEY_BUILDING_EINSTEINS_LABORATORY",
  "civilopedia": "TXT_KEY_BUILDING_EINSTEINS_LABORATORY_PEDIA",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_SUPERSTRING_THEORY"
+  ]
+ },
  "requires": {
   "build": {
    "all": [

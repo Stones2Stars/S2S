@@ -2,6 +2,11 @@
  "type": "BUILDING_CITADEL",
  "description": "TXT_KEY_BUILDING_CITADEL",
  "civilopedia": "TXT_KEY_BUILDING_CITADEL_PEDIA",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_ARTILLERY"
+  ]
+ },
  "requires": {
   "build": {
    "all": [

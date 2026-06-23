@@ -8,11 +8,6 @@
    "BUILDING_QUANTUM_GRAVITY_SUPERCOMPUTER"
   ]
  },
- "replaces": {
-  "buildings": [
-   "BUILDING_SUPERCOMPUTER"
-  ]
- },
  "requires": {
   "build": {
    "all": [

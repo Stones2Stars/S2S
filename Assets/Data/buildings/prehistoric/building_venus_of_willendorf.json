@@ -2,6 +2,11 @@
  "type": "BUILDING_VENUS_OF_WILLENDORF",
  "description": "TXT_KEY_BUILDING_VENUS_OF_WILLENDORF",
  "civilopedia": "TXT_KEY_BUILDING_VENUS_OF_WILLENDORF_PEDIA",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_SCULPTURE"
+  ]
+ },
  "requires": {
   "build": {
    "all": [

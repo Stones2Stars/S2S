@@ -8,14 +8,18 @@
    "BUILDING_WANG_ZHENS_WORKSHOP"
   ]
  },
- "obsoletes": {
+ "obsoletedBy": {
   "buildings": [
    "BUILDING_MODERN_MILL"
+  ],
+  "techs": [
+   "TECH_AUGMENTED_CONSUMABLES"
   ]
  },
- "replaces": {
+ "replacedBy": {
   "buildings": [
-   "BUILDING_QUERN"
+   "BUILDING_MODERN_MILL",
+   "BUILDING_FOOD_MANUFACTURING_DISTRICT"
   ]
  },
  "requires": {

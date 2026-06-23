@@ -2,7 +2,15 @@
  "type": "BUILDING_MAIL_ORDER_CATALOGUE",
  "description": "TXT_KEY_BUILDING_MAIL_ORDER_CATALOGUE",
  "civilopedia": "TXT_KEY_BUILDING_MAIL_ORDER_CATALOGUE_PEDIA",
- "obsoletes": {
+ "obsoletedBy": {
+  "buildings": [
+   "BUILDING_HYPERMARKET"
+  ],
+  "techs": [
+   "TECH_SMART_DUST"
+  ]
+ },
+ "replacedBy": {
   "buildings": [
    "BUILDING_HYPERMARKET"
   ]

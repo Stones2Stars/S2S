@@ -2,14 +2,6 @@
  "type": "BUILDING_SANITATION_CHAMBER",
  "description": "TXT_KEY_BUILDING_SANITATION_CHAMBER",
  "civilopedia": "TXT_KEY_BUILDING_SANITATION_CHAMBER_PEDIA",
- "replaces": {
-  "buildings": [
-   "BUILDING_EXCREMENT_HOLES",
-   "BUILDING_GARDEROBE",
-   "BUILDING_OUTHOUSE",
-   "BUILDING_PUBLIC_RESTROOMS"
-  ]
- },
  "requires": {
   "build": {
    "all": [

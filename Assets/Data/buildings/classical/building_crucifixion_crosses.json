@@ -2,14 +2,20 @@
  "type": "BUILDING_CRUCIFIXION_CROSSES",
  "description": "TXT_KEY_BUILDING_CRUCIFIXION_CROSSES",
  "civilopedia": "TXT_KEY_BUILDING_CRUCIFIXION_CROSSES_PEDIA",
- "obsoletes": {
+ "obsoletedBy": {
   "buildings": [
    "BUILDING_GALLOWS"
+  ],
+  "techs": [
+   "TECH_JURISPRUDENCE"
   ]
  },
- "replaces": {
+ "replacedBy": {
   "buildings": [
-   "BUILDING_PUBLIC_STONING"
+   "BUILDING_GALLOWS",
+   "BUILDING_GUILLOTINE",
+   "BUILDING_ELECTRIC_CHAIR",
+   "BUILDING_LETHAL_INJECTION"
   ]
  },
  "requires": {

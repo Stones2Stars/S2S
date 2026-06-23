@@ -7,6 +7,22 @@
    "BUILDING_RESOURCES_EGGS"
   ]
  },
+ "obsoletedBy": {
+  "techs": [
+   "TECH_ANTIBIOTICS"
+  ]
+ },
+ "replacedBy": {
+  "buildings": [
+   "BUILDING_CHICKEN_COOP",
+   "BUILDING_FARM_ANIMAL_DUCK",
+   "BUILDING_FARM_ANIMAL_GOOSE",
+   "BUILDING_SEA_TURTLE_EGG_GATHERER",
+   "BUILDING_FARM_ANIMAL_TURKEY",
+   "BUILDING_INDUSTRIAL_FARMS",
+   "BUILDING_MEAT_INDUSTRY_CONGLOMERATE"
+  ]
+ },
  "requires": {
   "build": {
    "all": [

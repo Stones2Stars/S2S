@@ -2,9 +2,18 @@
  "type": "BUILDING_RESOURCES_POISON",
  "description": "TXT_KEY_BUILDING_RESOURCES_POISON",
  "civilopedia": "TXT_KEY_BUILDING_RESOURCE_PROVIDER_PEDIA",
- "obsoletes": {
+ "obsoletedBy": {
   "buildings": [
    "BUILDING_CHEMISTRY_LAB"
+  ],
+  "techs": [
+   "TECH_NOVUS_CHEMISTRY"
+  ]
+ },
+ "replacedBy": {
+  "buildings": [
+   "BUILDING_CHEMISTRY_LAB",
+   "BUILDING_CHEMICALS_DISTRICT"
   ]
  },
  "requires": {

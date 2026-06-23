@@ -2,6 +2,12 @@
  "type": "BUILDING_EDUCATION_IGNORANCE",
  "description": "TXT_KEY_BUILDING_EDUCATION_IGNORANCE",
  "civilopedia": "TXT_KEY_BUILDING_EQ_PEDIA",
+ "replacedBy": {
+  "buildings": [
+   "BUILDING_EDUCATION_BEWILDERED",
+   "BUILDING_EDUCATION_MINDLESS"
+  ]
+ },
  "requires": {
   "build": {
    "all": [
@@ -27,21 +33,7 @@
      "min": -2000000,
      "max": -25000
     }
-   ],
-   "disabled": {
-    "all": [
-     {
-      "type": "PROPERTY_EDUCATION",
-      "scope": "city",
-      "min": -2000000,
-      "max": -30000
-     },
-     {
-      "type": "BUILDING_EDUCATION_BEWILDERED",
-      "scope": "city"
-     }
-    ]
-   }
+   ]
   }
  },
  "production": {

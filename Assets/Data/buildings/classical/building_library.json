@@ -20,12 +20,6 @@
    "BUILDING_UNIVERSITY"
   ]
  },
- "replaces": {
-  "buildings": [
-   "BUILDING_SCHOOL_OF_SCRIBES",
-   "BUILDING_STORYTELLER"
-  ]
- },
  "requires": {
   "build": {
    "all": [

@@ -2,14 +2,17 @@
  "type": "BUILDING_FACTORY_LYE",
  "description": "TXT_KEY_BUILDING_FACTORY_LYE",
  "civilopedia": "TXT_KEY_BUILDING_FACTORY_LYE_PEDIA",
- "obsoletes": {
+ "obsoletedBy": {
   "buildings": [
    "BUILDING_CHEMICALS_DISTRICT"
+  ],
+  "techs": [
+   "TECH_ANIMAMATERIALS"
   ]
  },
- "replaces": {
+ "replacedBy": {
   "buildings": [
-   "BUILDING_LYE_MAKER"
+   "BUILDING_CHEMICALS_DISTRICT"
   ]
  },
  "requires": {

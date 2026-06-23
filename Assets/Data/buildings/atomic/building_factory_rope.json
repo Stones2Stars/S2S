@@ -2,14 +2,17 @@
  "type": "BUILDING_FACTORY_ROPE",
  "description": "TXT_KEY_BUILDING_FACTORY_ROPE",
  "civilopedia": "TXT_KEY_BUILDING_FACTORY_ROPE_PEDIA",
- "obsoletes": {
+ "obsoletedBy": {
   "buildings": [
    "BUILDING_MANUFACTURING_DISTRICT"
+  ],
+  "techs": [
+   "TECH_NANOROBOTICS"
   ]
  },
- "replaces": {
+ "replacedBy": {
   "buildings": [
-   "BUILDING_ROPER"
+   "BUILDING_MANUFACTURING_DISTRICT"
   ]
  },
  "requires": {

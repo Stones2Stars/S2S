@@ -2,7 +2,15 @@
  "type": "BUILDING_PALACE_WALLS",
  "description": "TXT_KEY_BUILDING_PALACE_WALLS",
  "civilopedia": "TXT_KEY_BUILDING_PALACE_WALLS_PEDIA",
- "obsoletes": {
+ "obsoletedBy": {
+  "buildings": [
+   "BUILDING_IMPERIAL_FORTRESS"
+  ],
+  "techs": [
+   "TECH_TRENCH_WARFARE"
+  ]
+ },
+ "replacedBy": {
   "buildings": [
    "BUILDING_IMPERIAL_FORTRESS"
   ]

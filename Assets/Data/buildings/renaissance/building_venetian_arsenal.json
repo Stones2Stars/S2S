@@ -2,6 +2,11 @@
  "type": "BUILDING_VENETIAN_ARSENAL",
  "description": "TXT_KEY_BUILDING_VENETIAN_ARSENAL",
  "civilopedia": "TXT_KEY_BUILDING_VENETIAN_ARSENAL_PEDIA",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_SCREW_PROPELLER"
+  ]
+ },
  "requires": {
   "build": {
    "all": [
