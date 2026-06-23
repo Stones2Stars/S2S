@@ -1,0 +1,67 @@
+# Identifier naming — the `INFOTYPE_NAME` convention
+
+Every game entity has a string **id** of the form **`<INFOTYPE>_<NAME>`**: the leading segment is the
+**infotype** (what kind of thing it is), the rest is the specific name. `UNIT_AXEMAN` is a unit named Axeman,
+`BUILDING_FORGE` a building named Forge, `TRAIT_COMPLEX_SEAFARING` a complex trait. **This structure is fixed —
+every id starts with its infotype generalization.** The prefix is how the engine and `readJson` route a
+reference to the right registry, so it is never inferred from context (the overall id structure will not change).
+
+The same ids serve two roles: the `type` field of an entity's own file, and the value used to **reference** that
+entity from anywhere — a `requires` atom, an `enables` list, a modifier target. The atom/condition/target
+vocabulary that consumes them is the [json spec](json.md) §3.
+
+---
+
+## Infotype prefixes — and where each lives
+
+The **where** column doubles as the porting map: `✅ Assets/Data/<folder>/` = ported to JSON; `☐ XML only` =
+not yet ported (still authored in `Assets/XML`, referenced from JSON by id). Verified against the live
+`Assets/Data` folders and `type` ids.
+
+| prefix | identifies | where to look |
+|---|---|---|
+| `BONUS_` | a resource (bonus) | ✅ `bonuses/` |
+| `BONUSCLASS_` | a resource category (bonus class) | ✅ `bonusclasses/` |
+| `BUILD_` | a worker build action | ✅ `builds/` |
+| `BUILDING_` | a building | ✅ `buildings/` |
+| `C2C_ERA_` | an era | ✅ `eras/` |
+| `CIVIC_` | a civic | ✅ `civics/` |
+| `CIVICOPTION_` | a civic category / slot | ✅ `civicoptions/` |
+| `CIVILIZATION_` | a civilization | ✅ `civilizations/` |
+| `CORPORATION_` | a corporation | ✅ `corporations/` |
+| `CULTURELEVEL_` | a culture level | ✅ `culturelevels/` |
+| `FEATURE_` | a terrain feature | ✅ `features/` |
+| `GAMESPEED_` | a game speed | ✅ `gamespeeds/` |
+| `HANDICAP_` | a handicap (difficulty) | ✅ `handicaps/` |
+| `HERITAGE_` | a heritage | ✅ `heritages/` |
+| `HURRY_` | a production-rush (hurry) type | ✅ `hurries/` |
+| `IMPROVEMENT_` | a tile improvement | ✅ `improvements/` |
+| `LEADER_` | a leader (leaderhead) | ✅ `leaderheads/` |
+| `PROCESS_` | a process | ✅ `processes/` |
+| `PROJECT_` | a project | ✅ `projects/` |
+| `PROMOTION_` | a unit promotion | ✅ `promotions/` |
+| `PROMOTIONLINE_` | a promotion line (ordered chain) | ✅ `promotionlines/` |
+| `PROPERTY_` | a city property (`PROPERTY_CRIME`, …) | ✅ `properties/` |
+| `RELIGION_` | a religion | ✅ `religions/` |
+| `ROUTE_` | a route | ✅ `routes/` |
+| `SPECIALBUILDING_` | a special-building group (shared cap) | ✅ `specialbuildings/` |
+| `SPECIALIST_` | a specialist | ✅ `specialists/` |
+| `SPECIALUNIT_` | a special-unit group | ✅ `specialunits/` |
+| `TECH_` | a technology | ✅ `techs/` |
+| `TERRAIN_` | a terrain | ✅ `terrains/` |
+| **`TRAIT_`** | a **simple** trait | ✅ `traits/simple/` |
+| **`TRAIT_COMPLEX_`** | a **complex** (Thunderbrd) trait | ✅ `traits/complex/` |
+| `UNIT_` | a unit | ✅ `units/` |
+| `UNITCOMBAT_` | a unit-combat class | ✅ `unitcombats/` |
+| `VICTORY_` | a victory condition | ✅ `victories/` |
+| `VOTE_` | a diplomatic proposal (vote) | ✅ `votes/` |
+| `EFFECT_` | a map graphics effect (`EFFECT_BIRDSCATTER`) | ☐ XML only — referenced from a feature's `world.art.effect`. *(NOT `BUILDING_EFFECT_*`, the property pseudo-buildings — those are the `BUILDING_` infotype.)* |
+| `MAPCATEGORY_` | a map category (`MAPCATEGORY_EARTH`) | ☐ XML only — referenced from a building's `requires.build` |
+| `EVENT_` | an event (and its trigger) | ☐ XML only — deferred to the #425 event rework |
+| `ART_` | an art define (`ART_DEF_*`, `ART_PEDIA`, …) | ☐ XML only — referenced from `ui` / `world` art blocks |
+
+Paths are relative to `Assets/Data/` (ported) or `Assets/XML/` (not). The legacy XML holds the **complete** id
+set; when an XML-only infotype is ported it follows the same `INFOTYPE_NAME` rule and gains a `✅` row.
+
+The catch-all engine tokens that are **not** infotype ids (`TURN`, `POPULATION`, `MILITARY`, `AREA_SIZE`,
+`UNIT_LEVEL`, `SELF`, …) live in the [json spec](json.md) §3.1, not here.
