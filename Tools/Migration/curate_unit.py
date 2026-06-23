@@ -125,14 +125,18 @@ TAG_BY_UNITAI = {
     "UNITAI_WORKER":   ["worker", "civilian"], "UNITAI_WORKER_SEA": ["worker", "civilian"],
     "UNITAI_SETTLE":   ["settler", "civilian"], "UNITAI_MISSIONARY": ["missionary", "civilian"],
     "UNITAI_MERCHANT": ["merchant", "civilian"], "UNITAI_SPY": ["spy"],
-    "UNITAI_INFILTRATOR": ["outlaw"],
     # `civilian` is opt-in for genuinely-civilian units (workers, merchants — owner); `UNITAI_SPY` = the actual spy
     # (only spies run espionage missions) but is NOT civilian. spy is a TAG ONLY (owner 2026-06-23: espionage isn't a
     # skill -- only the spy unit class gets it), so the legacy bSpy CAP no longer emits a `spy` skill (dropped above).
-    # `UNITAI_INFILTRATOR` = the hidden-nationality criminal / criminal-adjacent ruffian group (exile, burglar,
-    # mobster, thief, ...) -> tag `outlaw` (owner 2026-06-23). settler/missionary carry `civilian` provisionally
-    # (peaceful non-combatants) — confirm in validation. `entertainer` (no clean signal) untagged is fine.
+    # settler/missionary carry `civilian` provisionally (peaceful non-combatants) — confirm in validation.
+    # `entertainer` (no clean signal) untagged is fine.
 }
+# The `outlaw` tag is NOT a DefaultUnitAI role — it is the criminal COMBAT CLASS (owner 2026-06-23): a unit is
+# criminal-type iff its primary <Combat> is UNITCOMBAT_CRIMINAL **or** UNITCOMBAT_CRIMINAL is among its
+# <SubCombatTypes>. This is BROADER than the old UNITAI_INFILTRATOR gate (13 units): it also catches OUTLAW (primary
+# RUFFIAN + subcombat CRIMINAL), ASSASSIN/HASHISHIN (primary STRIKE_TEAM + subcombat CRIMINAL), CUTTHROAT, etc.
+# (~21-24 total). Emitted from the combat signal beside the role tags (see curate()).
+CRIMINAL_COMBAT = "UNITCOMBAT_CRIMINAL"
 
 # ---- grants (one-shot, lists) ----
 GRANT_LIST = {"FreePromotions": "promotions", "GreatPeoples": "greatPeople", "Builds": "builds",
@@ -607,6 +611,11 @@ def curate(typ, rec, store):
             tags[t] = True
     elif _bool(rec, "bMilitarySupport"):
         tags["military"] = True
+    # `outlaw` = the criminal COMBAT CLASS (owner 2026-06-23): primary <Combat> == UNITCOMBAT_CRIMINAL OR it appears
+    # in <SubCombatTypes>. combat_class is the primary read above; SubCombatTypes is the same list curated to
+    # identity.combatClasses. Independent of (and additive to) the role/military tags above.
+    if combat_class == CRIMINAL_COMBAT or CRIMINAL_COMBAT in _typelist(rec, "SubCombatTypes"):
+        tags["outlaw"] = True
     # --- grants (lists) ---
     for tag, key in GRANT_LIST.items():
         lst = _typelist(rec, tag)

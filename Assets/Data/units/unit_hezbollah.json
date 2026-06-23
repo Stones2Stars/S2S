@@ -126,7 +126,8 @@
   }
  },
  "tags": {
-  "military": true
+  "military": true,
+  "outlaw": true
  },
  "vision": {
   "visibilityIntensity": {

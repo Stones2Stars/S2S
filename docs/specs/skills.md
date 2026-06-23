@@ -66,7 +66,7 @@ Owner-ruled or curator-grounded with a clear meaning.
 | `freeDrop` | a free paradrop (paratrooper drop) action |
 | `goldenAge` | can trigger a golden age |
 | `greatGeneral` | is a great general |
-| `hiddenNationality` | hides its owning civilization |
+| `hiddenNationality` | hides its owning civilization — a **skill** (mutable, promotion-grantable: `PROMOTION_PROUD_PIRATE` grants it via `iHiddenNationalityChange`), **not** the gate for the criminal-type `outlaw` [tag](tags.md) (owner 2026-06-23) |
 | `hillsDoubleMove` | double movement on hills |
 | `ignoreBuildingDefense` | ignores building-based city defense |
 | `ignoreNoEntryLevel` | ignores no-entry-level restrictions (grant/revoke, §4) |

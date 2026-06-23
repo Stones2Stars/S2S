@@ -33,12 +33,27 @@ classes a unit gains/loses on upgrade (a swordsman → rifleman gains `gunpowder
 not the first cut.
 
 ### Criminal-type — `outlaw`
-The 13 `UNITAI_INFILTRATOR` units — `biker_gang` · `burglar` · `exile` · `gunfighter` · `hacker` · `mobster_car` ·
-`robber` · `rogue` · `scoundrel` · `street_gang` · `technarchist` · `thief` · `thug` — the hidden-nationality
-criminal / criminal-adjacent ruffian group → tag **`outlaw`** (owner 2026-06-23). Curator: `UNITAI_INFILTRATOR` → `outlaw`.
+Derived from the **criminal combat CLASS**, not a `DefaultUnitAI` role (owner 2026-06-23). A unit is criminal-type →
+tag **`outlaw`** iff its **primary `<Combat>` is `UNITCOMBAT_CRIMINAL`** *or* `UNITCOMBAT_CRIMINAL` appears in its
+**`<SubCombatTypes>`**. Curator: `combat_class == UNITCOMBAT_CRIMINAL or UNITCOMBAT_CRIMINAL in SubCombatTypes`
+(`curate_unit.py`).
+
+This combat-class signal is **broader** than the old `UNITAI_INFILTRATOR` gate (which caught only **13**): it now
+covers **22** units, adding the ones INFILTRATOR missed — `OUTLAW` (primary `RUFFIAN` + subcombat `CRIMINAL`),
+`ASSASSIN`/`HASHISHIN` (primary `STRIKE_TEAM` + subcombat `CRIMINAL`), `CUTTHROAT`, `BEGGAR`, `BOSNEGERS`, `HAJDUK`,
+`HEZBOLLAH`, `KARAI_PYHARE` — alongside the original INFILTRATOR set (`biker_gang` · `burglar` · `exile` ·
+`gunfighter` · `hacker` · `mobster_car` · `robber` · `rogue` · `scoundrel` · `street_gang` · `technarchist` ·
+`thief` · `thug`). The full current set (22): `assassin` · `beggar` · `biker_gang` · `bosnegers` · `burglar` ·
+`cutthroat` · `exile` · `gunfighter` · `hacker` · `hajduk` · `hashishin` · `hezbollah` · `karai_pyhare` ·
+`mobster_car` · `outlaw` · `robber` · `rogue` · `scoundrel` · `street_gang` · `technarchist` · `thief` · `thug`.
+
+> `hiddenNationality` is **not** the gate — it is a **skill** (mutable, promotion-grantable; e.g.
+> `PROMOTION_PROUD_PIRATE` grants it), see [skills.md](skills.md) §1. The criminal-type `outlaw` tag and the
+> hidden-nationality skill are independent: most outlaws carry the skill, but the tag is defined by the combat class.
 
 ## Open
-- The hidden-nationality nuance of the `outlaw` group (how "criminal-but-not-criminal" reads in-game).
+- ✅ **Resolved (owner 2026-06-23):** the `outlaw` group is now the `UNITCOMBAT_CRIMINAL` primary-or-subcombat set
+  (22 units, see above), **not** the 13 `UNITAI_INFILTRATOR` units; `hiddenNationality` is a **skill**, not the gate.
 - `gunpowder`/`mechanized`/… from **unitcombats** (post-migration).
 - **Completeness** — most units untagged for now (fine).
 - The **bSpy skill → `spy` tag** reconciliation (the spy notion is mis-filed as a skill too — drop the skill).
