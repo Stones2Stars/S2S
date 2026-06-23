@@ -11031,80 +11031,34 @@ int CvCity::getAdditionalExtraYieldByBuilding(YieldTypes eIndex, BuildingTypes e
 
 	for (int iI = 0; iI < GC.getNumBonusInfos(); ++iI)
     {
-       if (eBuilding == (BuildingTypes)GC.getInfoTypeForString("BUILDING_STORAGE_EMPIRE"))
+       // #443: removed the hardcoded BUILDING_STORAGE_EMPIRE special-case (an AI-valuation-only resource cap whose
+       // XML yields were already stripped in #428, so it yields 0 via the standard path). Standard per-bonus extra
+       // yield for ALL buildings:
+       if (hasBonus((BonusTypes)iI))
        {
-           int iBonusCount = GET_PLAYER(getOwner()).getNumAvailableBonuses((BonusTypes)iI);
-           int iCityCount = GET_PLAYER(getOwner()).getNumCities();
-
-           if (iBonusCount > 0)
-           {
-
-               int fullCap = iBonusCount * 5;
-               int halfCap = iBonusCount * 10;
-
-               int iYield = building.getBonusYieldChanges(iI, eIndex);
-               int totalYield = iBonusCount * iYield;
-
-               if (iCityCount <= fullCap)
-                   {
-                       iExtraYield += totalYield; // 100%
-                   }
-                   else if (iCityCount <= halfCap)
-                   {
-                       iExtraYield += totalYield / 2; // 50%
-                   }
-           }
-
-           if (building.getVicinityBonusYieldChanges(iI, eIndex) != 0
-               && hasVicinityBonus((BonusTypes)iI))
-           {
-               int iVicinityCount = 0;
-               for (int i = 0; i < NUM_CITY_PLOTS; ++i)
-               {
-                   CvPlot* pPlot = getCityIndexPlot(i);
-                   if (pPlot != NULL
-                       && pPlot->getBonusType(getTeam()) == (BonusTypes)iI
-                       && pPlot->getOwner() == getOwner()
-                       && pPlot->getImprovementType() != NO_IMPROVEMENT
-                       && pPlot->isConnectedTo(this)
-                       && pPlot->getWorkingCity() == this)
-                   {
-                       ++iVicinityCount;
-                   }
-               }
-
-               iExtraYield += iVicinityCount * building.getVicinityBonusYieldChanges(iI, eIndex);
-           }
-
+           iExtraYield += building.getBonusYieldChanges(iI, eIndex);
        }
-        else
-        {
-            if (hasBonus((BonusTypes)iI))
-            {
-                iExtraYield += building.getBonusYieldChanges(iI, eIndex);
-            }
 
-            if (building.getVicinityBonusYieldChanges(iI, eIndex) != 0
-               && hasVicinityBonus((BonusTypes)iI))
-            {
-               int iVicinityCount = 0;
-               for (int i = 0; i < NUM_CITY_PLOTS; ++i)
+       if (building.getVicinityBonusYieldChanges(iI, eIndex) != 0
+           && hasVicinityBonus((BonusTypes)iI))
+       {
+           int iVicinityCount = 0;
+           for (int i = 0; i < NUM_CITY_PLOTS; ++i)
+           {
+               CvPlot* pPlot = getCityIndexPlot(i);
+               if (pPlot != NULL
+                   && pPlot->getBonusType(getTeam()) == (BonusTypes)iI
+                   && pPlot->getOwner() == getOwner()
+                   && pPlot->getImprovementType() != NO_IMPROVEMENT
+                   && pPlot->isConnectedTo(this)
+                   && pPlot->getWorkingCity() == this)
                {
-                   CvPlot* pPlot = getCityIndexPlot(i);
-                   if (pPlot != NULL
-                       && pPlot->getBonusType(getTeam()) == (BonusTypes)iI
-                       && pPlot->getOwner() == getOwner()
-                       && pPlot->getImprovementType() != NO_IMPROVEMENT
-                       && pPlot->isConnectedTo(this)
-                       && pPlot->getWorkingCity() == this)
-                   {
-                       ++iVicinityCount;
-                   }
+                   ++iVicinityCount;
                }
+           }
 
-               iExtraYield += iVicinityCount * building.getVicinityBonusYieldChanges(iI, eIndex);
-            }
-        }
+           iExtraYield += iVicinityCount * building.getVicinityBonusYieldChanges(iI, eIndex);
+       }
     }
 
 	const int iTradeRoutes = building.getGlobalTradeRoutes() + building.getCoastalTradeRoutes() + building.getTradeRoutes();
