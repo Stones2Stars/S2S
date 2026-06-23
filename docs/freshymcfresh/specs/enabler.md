@@ -118,8 +118,9 @@ plot scan has NO ownership/worked filter — deliberately MORE permissive than t
 
 Every `requires` resolves the same way, so it's cacheable as a pure function of clause-shape + state:
 
-1. **combinator** — the `all`/`any`/`noneOf` structure ([json](json.md) §3.4), plain-English: **`all` = AND**
-   (all of these), **`any` = OR** (any of these); nest for AND-of-ORs.
+1. **combinator** — the `all`/`any`/`noneOf` structure ([json](json.md) §3.4), verified vs `CvCascadeCondition.cpp`:
+   **`all` = AND** (a flat list of leaves), **`any` = a list of OR-groups** (within a group OR, between groups AND),
+   **`noneOf` = NONE**. One level, no nesting — AND-of-ORs is `any`'s multiple groups (or a sequential `requires`/`disabled`).
 2. **conditions** — each leaf: a presence/count **atom** (`min`/`max` at a scope) or a **predicate**. A count at
    `city`/`plot` reads the live object; at `empire`/`team`/`world` it reads the [tally](tally.md). A missing
    predicate is **ignored**, never false (json §3.5) — so retiring a system never spuriously disables data.

@@ -91,19 +91,24 @@ lands on the scope object itself (the city — the common case). Full deposit sy
 
 ### 3.4 Conditions — `all` / `any` / `noneOf`
 
-A bounded boolean tree, identical wherever a condition is needed (`requires`, and a deposit's `enabled`/`disabled`).
-**Deliberately plain-English ("normal human being") semantics — `any` = *any of these*, `all` = *all of these*:**
+A **flat, one-level** boolean shape — verified against the engine (`CvCascadeReadJson.cpp` parse +
+`CvCascadeCondition.cpp` eval) — identical wherever a condition is needed (`requires`, and a deposit's
+`enabled`/`disabled`). **There is no recursive nesting:** `all`/`noneOf` hold a flat list of **leaves**; `any`
+holds a list of **OR-groups**.
 
 ```jsonc
-{ "all":    [ … ],   // AND  — every clause holds
-  "any":    [ … ],   // OR   — at least one clause holds
-  "noneOf": [ … ] }  // NONE — none of these may be present
+{ "all":    [ leaf, … ],              // AND  — every leaf must hold
+  "any":    [ [leaf, …], [leaf, …] ], // each inner array is an OR-GROUP — within a group ≥1 holds (OR),
+                                       //   and BETWEEN groups every group must hold (AND)
+  "noneOf": [ leaf, … ] }             // NONE — none of these may be present
 ```
 
-`all` and `any` are **flat** lists of clauses: `any:[A,B,C]` = "A **or** B **or** C"; `all:[A,B,C]` = "A **and**
-B **and** C". For anything more complex (AND-of-ORs), **nest** — that is the win: "copper **or** iron, **and** a
-forge" is `{all:[ {any:[BONUS_COPPER,BONUS_IRON]}, BUILDING_FORGE ]}`. Each leaf is **either** a count/presence
-**atom** or a **predicate** (§3.5):
+So **`any` is one-or-more OR-groups, AND-ed together.** A single group `any:[[BONUS_COPPER,BONUS_IRON]]` = "copper
+**or** iron"; two groups `any:[[BONUS_COPPER,BONUS_IRON],[BUILDING_FORGE,BUILDING_FOUNDRY]]` = "(copper or iron)
+**and** (forge or foundry)". **AND-of-ORs is `any`'s multiple groups — NOT** `{any}` nested inside `all`: the parser
+reads each `all` element as a **leaf** and would silently **skip** a nested combinator. (In practice nesting is
+avoided anyway — a second sequential `requires` clause or a `disabled` reads easier; owner ruling.) Each leaf is
+**either** a count/presence **atom** or a **predicate** (§3.5):
 
 ```jsonc
 { "type": "BONUS_IRON", "scope": "city", "connection": "trade|vicinity" }   // an atom
@@ -512,7 +517,7 @@ marble; +10 culture, doubling after it has stood 1000 turns.*
 
 **Scope (singular)** — `world › team › empire › area › city › plot{improvement|feature|terrain|route} › building|specialist|unit` · off-spine `self` = the entity's own build
 **Target (plural)** — `plots · units · cities · areas · empires` = all of that kind in the scope, predicate-filtered
-**Combinators** — `all` (AND) · `any` (OR) · `noneOf` (NONE) · nest for AND-of-ORs
+**Combinators** — `all` (AND, flat leaves) · `any` (a list of OR-groups — within-group OR, between-group AND) · `noneOf` (NONE) · one level, no nesting
 **Atom** — `{ type, scope, min?, max?, connection? }` · presence = `min:1`
 **Predicate** — bare (`IS_*`/`HAS_*`/`VICINITY`/`IS_CAPITAL`…), `{PREDICATE: param}`, or membership `{terrain|feature|bonus:[…]}`
 **Units** — `flat` (amount) · `percent` (+% delta) · `multiplier` (×, identity 100). Human-readable; ×100 is a bug.
