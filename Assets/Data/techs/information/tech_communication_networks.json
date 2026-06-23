@@ -39,13 +39,6 @@
    "UNIT_STEALTH_BOMBER"
   ]
  },
- "obsoletes": {
-  "buildings": [
-   "BUILDING_CABARET_VOLTAIRE",
-   "BUILDING_TRADING_POST",
-   "BUILDING_ZUSE_COMPUTER"
-  ]
- },
  "requires": {
   "build": {
    "all": [

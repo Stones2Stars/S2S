@@ -23,12 +23,6 @@
    "TECH_DIGITIZATION"
   ]
  },
- "obsoletes": {
-  "buildings": [
-   "BUILDING_DANCE_HALL",
-   "BUILDING_GAMBLING_HALL"
-  ]
- },
  "requires": {
   "build": {
    "all": [

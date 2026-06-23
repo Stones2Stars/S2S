@@ -1,0 +1,13 @@
+{
+ "type": "PROMOTIONLINE_BUILD_UP_CONTROL_CENTER",
+ "description": "TXT_KEY_PROMOTIONLINE_BUILD_UP_CONTROL_CENTER",
+ "help": "TXT_KEY_PROMOTIONLINE_BUILD_UP_CONTROL_CENTER_HELP",
+ "ui": {
+  "art": {
+   "icon": "Art/Buttons/Promotions/ControlCenter1BuildUp.dds"
+  }
+ },
+ "identity": {
+  "buildUp": true
+ }
+}

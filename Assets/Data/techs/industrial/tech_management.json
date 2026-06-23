@@ -18,12 +18,6 @@
    "TECH_COMPULSORY_EDUCATION"
   ]
  },
- "obsoletes": {
-  "buildings": [
-   "BUILDING_SUNDIAL",
-   "BUILDING_WATERCLOCK"
-  ]
- },
  "requires": {
   "build": {
    "all": [

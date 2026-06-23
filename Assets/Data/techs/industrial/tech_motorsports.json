@@ -13,11 +13,6 @@
    "TECH_EXTREME_SPORTS"
   ]
  },
- "obsoletes": {
-  "buildings": [
-   "BUILDING_HIPPODROME"
-  ]
- },
  "requires": {
   "build": {
    "all": [

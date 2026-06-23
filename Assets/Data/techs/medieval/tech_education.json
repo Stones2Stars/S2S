@@ -44,12 +44,6 @@
    "UNIT_TAEJO"
   ]
  },
- "obsoletes": {
-  "buildings": [
-   "BUILDING_SCHOOL_OF_SCRIBES",
-   "BUILDING_TEMPLE_OF_ARTEMIS"
-  ]
- },
  "requires": {
   "build": {
    "all": [

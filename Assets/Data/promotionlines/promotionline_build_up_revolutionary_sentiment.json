@@ -1,0 +1,13 @@
+{
+ "type": "PROMOTIONLINE_BUILD_UP_REVOLUTIONARY_SENTIMENT",
+ "description": "TXT_KEY_PROMOTIONLINE_BUILD_UP_REVOLUTIONARY_SENTIMENT",
+ "help": "TXT_KEY_PROMOTIONLINE_BUILD_UP_REVOLUTIONARY_SENTIMENT_HELP",
+ "ui": {
+  "art": {
+   "icon": "Art/Buttons/Promotions/RevolutionarySentiment1Buildup.dds"
+  }
+ },
+ "identity": {
+  "buildUp": true
+ }
+}

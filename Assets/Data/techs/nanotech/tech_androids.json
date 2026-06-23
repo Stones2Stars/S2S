@@ -27,11 +27,6 @@
    "UNIT_ROBOT_IMP_GUARD"
   ]
  },
- "obsoletes": {
-  "buildings": [
-   "BUILDING_MADISON_AVENUE"
-  ]
- },
  "requires": {
   "build": {
    "all": [

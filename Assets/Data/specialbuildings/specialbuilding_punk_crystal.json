@@ -5,5 +5,8 @@
   "art": {
    "icon": "Art/interface/buttons/TechTree/crystalpunk.dds"
   }
+ },
+ "identity": {
+  "valid": true
  }
 }

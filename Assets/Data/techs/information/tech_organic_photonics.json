@@ -17,11 +17,6 @@
    "TECH_BIOMECHANICAL_HARVESTING"
   ]
  },
- "obsoletes": {
-  "buildings": [
-   "BUILDING_GAS_LAMPS"
-  ]
- },
  "requires": {
   "build": {
    "all": [

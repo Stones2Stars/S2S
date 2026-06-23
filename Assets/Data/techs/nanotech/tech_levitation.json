@@ -23,11 +23,6 @@
    "UNIT_LEVITATION_ARTILLERY"
   ]
  },
- "obsoletes": {
-  "buildings": [
-   "BUILDING_AUTOMATED_VEHICLE_DEALERSHIP"
-  ]
- },
  "requires": {
   "build": {
    "all": [

@@ -76,11 +76,6 @@
   ]
  },
  "obsoletes": {
-  "buildings": [
-   "BUILDING_HOUSING_GRASS_HUTS",
-   "BUILDING_LOG_BRIDGE",
-   "BUILDING_PALISADE"
-  ],
   "builds": [
    "BUILD_EARLY_QUARRY",
    "BUILD_WOODEN_WATCHTOWER"

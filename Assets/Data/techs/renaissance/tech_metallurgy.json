@@ -33,11 +33,6 @@
    "UNIT_VOZOVA_HRADBA"
   ]
  },
- "obsoletes": {
-  "buildings": [
-   "BUILDING_COVERED_BRIDGE"
-  ]
- },
  "requires": {
   "build": {
    "all": [

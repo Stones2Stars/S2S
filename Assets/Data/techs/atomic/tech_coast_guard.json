@@ -17,11 +17,6 @@
    "UNIT_MALACCAN_PIRATE"
   ]
  },
- "obsoletes": {
-  "buildings": [
-   "BUILDING_RIVER_AUTHORITY"
-  ]
- },
  "requires": {
   "build": {
    "all": [

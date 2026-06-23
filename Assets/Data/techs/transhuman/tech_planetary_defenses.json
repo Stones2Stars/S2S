@@ -23,12 +23,6 @@
    "TECH_SOLAR_ORDNANCE"
   ]
  },
- "obsoletes": {
-  "buildings": [
-   "BUILDING_AIRFIELD",
-   "BUILDING_MILITARY_AIRBASE"
-  ]
- },
  "requires": {
   "build": {
    "all": [

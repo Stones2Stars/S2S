@@ -30,12 +30,6 @@
    "UNIT_YAWAR_RUNA"
   ]
  },
- "obsoletes": {
-  "buildings": [
-   "BUILDING_MOON_DANCE",
-   "BUILDING_NATURE_DANCE"
-  ]
- },
  "requires": {
   "build": {
    "all": [

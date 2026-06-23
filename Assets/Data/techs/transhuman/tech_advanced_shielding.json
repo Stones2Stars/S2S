@@ -21,12 +21,6 @@
    "UNIT_DREADNOUGHT"
   ]
  },
- "obsoletes": {
-  "buildings": [
-   "BUILDING_ANTI_MISSILE_BATTERIES",
-   "BUILDING_WIRELESS_ELECTRIC_FENCE"
-  ]
- },
  "requires": {
   "build": {
    "all": [

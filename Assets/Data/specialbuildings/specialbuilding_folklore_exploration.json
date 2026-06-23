@@ -5,5 +5,8 @@
   "art": {
    "icon": "Art/Interface/Buttons/Units/DartFrog.dds"
   }
+ },
+ "identity": {
+  "valid": true
  }
 }

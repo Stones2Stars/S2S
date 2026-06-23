@@ -19,11 +19,6 @@
    "UNIT_SENTROID_INFANTRY"
   ]
  },
- "obsoletes": {
-  "buildings": [
-   "BUILDING_RADIOPLEX"
-  ]
- },
  "requires": {
   "build": {
    "all": [

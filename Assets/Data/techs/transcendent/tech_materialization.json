@@ -19,11 +19,6 @@
    "TECH_HYPERINTELLIGENCE"
   ]
  },
- "obsoletes": {
-  "buildings": [
-   "BUILDING_ATOMIC_ASSEMBLER"
-  ]
- },
  "requires": {
   "build": {
    "all": [

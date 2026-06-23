@@ -13,11 +13,6 @@
    "TECH_AQUACULTURE"
   ]
  },
- "obsoletes": {
-  "buildings": [
-   "BUILDING_GIVERNY"
-  ]
- },
  "requires": {
   "build": {
    "all": [

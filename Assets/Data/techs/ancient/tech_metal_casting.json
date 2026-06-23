@@ -32,11 +32,6 @@
    "TECH_PLUMBING"
   ]
  },
- "obsoletes": {
-  "buildings": [
-   "BUILDING_FIRE_PIT"
-  ]
- },
  "requires": {
   "build": {
    "all": [

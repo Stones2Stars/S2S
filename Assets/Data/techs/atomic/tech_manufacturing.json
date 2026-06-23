@@ -36,14 +36,6 @@
    "UNIT_REPUBLICAN_GUARD"
   ]
  },
- "obsoletes": {
-  "buildings": [
-   "BUILDING_BOATYARD",
-   "BUILDING_BOMBARD_TOWER",
-   "BUILDING_HIMEJI_SAMURAI_CASTLE",
-   "BUILDING_WIND_WATER_PUMP"
-  ]
- },
  "requires": {
   "build": {
    "all": [

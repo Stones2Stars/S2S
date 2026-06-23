@@ -20,11 +20,6 @@
    "TECH_SOCIAL_CONTRACT"
   ]
  },
- "obsoletes": {
-  "buildings": [
-   "BUILDING_CRUCIFIXION_CROSSES"
-  ]
- },
  "requires": {
   "build": {
    "all": [

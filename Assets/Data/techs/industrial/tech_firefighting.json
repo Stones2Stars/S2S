@@ -12,11 +12,6 @@
    "TECH_MODERN_SANITATION"
   ]
  },
- "obsoletes": {
-  "buildings": [
-   "BUILDING_GREAT_BONFIRE"
-  ]
- },
  "requires": {
   "build": {
    "all": [

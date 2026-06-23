@@ -22,11 +22,6 @@
    "TECH_TRANSCENDENT_LIFESTYLE"
   ]
  },
- "obsoletes": {
-  "buildings": [
-   "BUILDING_DIVE_BAR"
-  ]
- },
  "requires": {
   "build": {
    "all": [

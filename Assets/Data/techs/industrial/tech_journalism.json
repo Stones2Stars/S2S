@@ -15,11 +15,6 @@
    "TECH_TELEGRAPH"
   ]
  },
- "obsoletes": {
-  "buildings": [
-   "BUILDING_PLATOS_ACADEMY"
-  ]
- },
  "requires": {
   "build": {
    "all": [

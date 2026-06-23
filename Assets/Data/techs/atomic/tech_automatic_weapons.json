@@ -35,11 +35,6 @@
    "UNIT_PESHMERGA"
   ]
  },
- "obsoletes": {
-  "buildings": [
-   "BUILDING_J_S_BACHS_CATHEDRAL"
-  ]
- },
  "requires": {
   "build": {
    "all": [

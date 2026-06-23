@@ -5,5 +5,9 @@
   "art": {
    "icon": "Art/Interface/Buttons/Buildings/Monastery_Hindu.dds"
   }
+ },
+ "identity": {
+  "obsoleteTech": "TECH_MODERN_PHYSICS",
+  "valid": true
  }
 }

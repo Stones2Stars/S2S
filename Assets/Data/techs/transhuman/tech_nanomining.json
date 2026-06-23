@@ -29,19 +29,6 @@
    "TECH_GAIA_ECOLOGY"
   ]
  },
- "obsoletes": {
-  "buildings": [
-   "BUILDING_AMBER_GATHERER",
-   "BUILDING_FORGE",
-   "BUILDING_JADE_GATHERER",
-   "BUILDING_SMELTER_COPPER",
-   "BUILDING_SMELTER_IRON",
-   "BUILDING_SMELTER_STEEL",
-   "BUILDING_SMITH_COPPER",
-   "BUILDING_SMITH_IRON",
-   "BUILDING_SMITH_STEEL"
-  ]
- },
  "requires": {
   "build": {
    "all": [

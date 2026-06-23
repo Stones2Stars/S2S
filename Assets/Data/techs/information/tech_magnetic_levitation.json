@@ -18,12 +18,6 @@
   ]
  },
  "obsoletes": {
-  "buildings": [
-   "BUILDING_EDISONS_WORKSHOP",
-   "BUILDING_GOLDEN_SPIKE",
-   "BUILDING_GRAND_CENTRAL_STATION",
-   "BUILDING_ORIENT_EXPRESS"
-  ],
   "builds": [
    "BUILD_RAILROAD"
   ]

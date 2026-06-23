@@ -25,11 +25,6 @@
    "UNIT_TREASURE_GUARD"
   ]
  },
- "obsoletes": {
-  "buildings": [
-   "BUILDING_SENTRY_POST"
-  ]
- },
  "requires": {
   "build": {
    "all": [

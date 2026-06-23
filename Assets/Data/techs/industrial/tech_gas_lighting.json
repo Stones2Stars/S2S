@@ -19,11 +19,6 @@
    "TECH_REFINING"
   ]
  },
- "obsoletes": {
-  "buildings": [
-   "BUILDING_TORCHES"
-  ]
- },
  "requires": {
   "build": {
    "all": [

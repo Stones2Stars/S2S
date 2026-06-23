@@ -26,11 +26,6 @@
    "TECH_LUNAR_BASES"
   ]
  },
- "obsoletes": {
-  "buildings": [
-   "BUILDING_TIDEPOOL_SCAVENGER"
-  ]
- },
  "requires": {
   "build": {
    "all": [

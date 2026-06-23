@@ -16,11 +16,6 @@
    "TECH_SEXTANT"
   ]
  },
- "obsoletes": {
-  "buildings": [
-   "BUILDING_VIADUCT"
-  ]
- },
  "requires": {
   "build": {
    "all": [

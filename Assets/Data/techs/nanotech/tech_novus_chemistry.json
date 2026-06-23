@@ -22,20 +22,6 @@
    "TECH_SKYROADS"
   ]
  },
- "obsoletes": {
-  "buildings": [
-   "BUILDING_ALCHEMISTS_LAB",
-   "BUILDING_BELLADONNA",
-   "BUILDING_CURARE",
-   "BUILDING_DEATH_CAP_MUSHROOM",
-   "BUILDING_DYE_MAKER",
-   "BUILDING_LYE_MAKER",
-   "BUILDING_PERFUME_MAKER",
-   "BUILDING_RESOURCES_POISON",
-   "BUILDING_SOAP_MAKER",
-   "BUILDING_TANNIN_MAKER"
-  ]
- },
  "requires": {
   "build": {
    "all": [

@@ -62,12 +62,6 @@
   ]
  },
  "obsoletes": {
-  "buildings": [
-   "BUILDING_LIBRARY_OF_NINEVEH",
-   "BUILDING_SCROLL_MAKER",
-   "BUILDING_STONE_TOOL_MAKER",
-   "BUILDING_TABLET_MAKER"
-  ],
   "units": [
    "UNIT_MASTER_SAILOR_PRE_DREADNOUGHT"
   ]

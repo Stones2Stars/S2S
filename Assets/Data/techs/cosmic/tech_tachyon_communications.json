@@ -17,11 +17,6 @@
    "TECH_TRANSVERSE_EUCLIDEAN_GEOMETRY"
   ]
  },
- "obsoletes": {
-  "buildings": [
-   "BUILDING_PLANETARY_IMMIGRATION_OFFICE"
-  ]
- },
  "requires": {
   "build": {
    "all": [

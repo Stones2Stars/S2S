@@ -14,11 +14,6 @@
    "TECH_WARMACHINES"
   ]
  },
- "obsoletes": {
-  "buildings": [
-   "BUILDING_LOCKSMITH"
-  ]
- },
  "requires": {
   "build": {
    "all": [

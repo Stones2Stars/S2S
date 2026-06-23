@@ -11,11 +11,6 @@
    "TECH_TRENCH_WARFARE"
   ]
  },
- "obsoletes": {
-  "buildings": [
-   "BUILDING_SPIKED_PIT_TRAPS"
-  ]
- },
  "requires": {
   "build": {
    "all": [

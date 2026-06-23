@@ -42,16 +42,6 @@
    "UNIT_TERUO_NAKAMURA"
   ]
  },
- "obsoletes": {
-  "buildings": [
-   "BUILDING_APOSTOLIC_PALACE",
-   "BUILDING_CONGRESS_OF_VIENNA",
-   "BUILDING_EFFECT_LASCAUX_CAVES",
-   "BUILDING_GUILD_ARTISTS",
-   "BUILDING_HOLY_SEE_LIBRARY",
-   "BUILDING_LASCAUX_PAINTS"
-  ]
- },
  "requires": {
   "build": {
    "all": [

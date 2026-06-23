@@ -18,11 +18,6 @@
    "UNIT_SOFTWARE_DEVELOPER"
   ]
  },
- "obsoletes": {
-  "buildings": [
-   "BUILDING_ADAM_SMITHS_TRADING_COMPANY"
-  ]
- },
  "requires": {
   "build": {
    "all": [

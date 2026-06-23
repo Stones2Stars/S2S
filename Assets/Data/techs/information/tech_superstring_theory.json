@@ -15,11 +15,6 @@
    "TECH_IMAGINARY_PHYSICS"
   ]
  },
- "obsoletes": {
-  "buildings": [
-   "BUILDING_EINSTEINS_LABORATORY"
-  ]
- },
  "requires": {
   "build": {
    "all": [

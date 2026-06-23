@@ -13,11 +13,6 @@
    "TECH_PALEONTOLOGY"
   ]
  },
- "obsoletes": {
-  "buildings": [
-   "BUILDING_PESTS_APHIDS"
-  ]
- },
  "requires": {
   "build": {
    "all": [

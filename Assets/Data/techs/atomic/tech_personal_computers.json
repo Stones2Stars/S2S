@@ -33,16 +33,6 @@
    "UNIT_PROGRAMMER"
   ]
  },
- "obsoletes": {
-  "buildings": [
-   "BUILDING_ACADEMY",
-   "BUILDING_ANGKOR_WAT",
-   "BUILDING_OFFICIUM",
-   "BUILDING_SPIRAL_MINARET",
-   "BUILDING_STEP_RECKONER_MANUFACTURE",
-   "BUILDING_UNIVERSITY_OF_SANKORE"
-  ]
- },
  "requires": {
   "build": {
    "all": [

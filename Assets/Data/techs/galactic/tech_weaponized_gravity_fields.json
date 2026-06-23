@@ -18,11 +18,6 @@
    "TECH_SINGULARITY_STABILIZATION"
   ]
  },
- "obsoletes": {
-  "buildings": [
-   "BUILDING_ACTIVE_DENIAL_SYSTEM"
-  ]
- },
  "requires": {
   "build": {
    "all": [

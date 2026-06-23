@@ -16,11 +16,6 @@
    "TECH_PERSONALIZED_HEALTH"
   ]
  },
- "obsoletes": {
-  "buildings": [
-   "BUILDING_MORSE_CODE"
-  ]
- },
  "requires": {
   "build": {
    "all": [

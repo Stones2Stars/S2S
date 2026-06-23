@@ -11,13 +11,6 @@
    "TECH_FIREFIGHTING"
   ]
  },
- "obsoletes": {
-  "buildings": [
-   "BUILDING_BONFIRE",
-   "BUILDING_IMU",
-   "BUILDING_RESOURCES_CHARCOAL"
-  ]
- },
  "requires": {
   "build": {
    "all": [

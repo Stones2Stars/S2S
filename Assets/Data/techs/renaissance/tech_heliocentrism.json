@@ -11,11 +11,6 @@
    "TECH_SCIENTIFIC_METHOD"
   ]
  },
- "obsoletes": {
-  "buildings": [
-   "BUILDING_ALMAGEST"
-  ]
- },
  "requires": {
   "build": {
    "all": [

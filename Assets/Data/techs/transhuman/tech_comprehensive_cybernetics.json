@@ -33,10 +33,6 @@
   ]
  },
  "obsoletes": {
-  "buildings": [
-   "BUILDING_MOTORCYCLE_CLUB",
-   "BUILDING_MOTORCYCLE_CLUB_UNSANCTIONED"
-  ],
   "units": [
    "UNIT_BIKER_GANG",
    "UNIT_BOSNEGERS",

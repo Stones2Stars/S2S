@@ -13,12 +13,6 @@
    "TECH_REALISM"
   ]
  },
- "obsoletes": {
-  "buildings": [
-   "BUILDING_BALLISTA_TURRET",
-   "BUILDING_CASTLE"
-  ]
- },
  "requires": {
   "build": {
    "all": [

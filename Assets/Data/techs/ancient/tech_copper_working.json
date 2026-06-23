@@ -73,10 +73,6 @@
   ]
  },
  "obsoletes": {
-  "buildings": [
-   "BUILDING_LL_MONTE_VERDE",
-   "BUILDING_LL_RICHARDSON_ISLAND"
-  ],
   "units": [
    "UNIT_LOG_RAM"
   ]

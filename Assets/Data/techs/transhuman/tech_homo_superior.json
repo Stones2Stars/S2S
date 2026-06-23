@@ -17,13 +17,6 @@
    "UNIT_FERAL"
   ]
  },
- "obsoletes": {
-  "buildings": [
-   "BUILDING_221B_BAKER_STREET",
-   "BUILDING_DISEASE_SYPHILIS",
-   "BUILDING_PUBLIC_RESTROOMS"
-  ]
- },
  "requires": {
   "build": {
    "all": [

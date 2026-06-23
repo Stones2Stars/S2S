@@ -20,11 +20,6 @@
    "UNIT_CHRONOFORM_SHIP"
   ]
  },
- "obsoletes": {
-  "buildings": [
-   "BUILDING_MODULAR_CONSTRUCTION_FIRM"
-  ]
- },
  "requires": {
   "build": {
    "all": [

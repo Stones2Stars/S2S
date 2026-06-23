@@ -30,11 +30,6 @@
    "UNIT_SIPAHI"
   ]
  },
- "obsoletes": {
-  "buildings": [
-   "BUILDING_BRICK_BRIDGE"
-  ]
- },
  "requires": {
   "build": {
    "all": [

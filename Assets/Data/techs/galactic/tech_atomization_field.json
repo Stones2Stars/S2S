@@ -17,13 +17,6 @@
    "TECH_WEAPONIZED_DISINTEGRATION"
   ]
  },
- "obsoletes": {
-  "buildings": [
-   "BUILDING_ARCOLOGY_SHIELDING",
-   "BUILDING_NANOBOT_TRAPS",
-   "BUILDING_NANOBOT_WALLS"
-  ]
- },
  "requires": {
   "build": {
    "all": [

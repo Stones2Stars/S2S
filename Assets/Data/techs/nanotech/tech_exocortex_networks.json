@@ -21,12 +21,6 @@
    "TECH_CYBERIMMUNOLOGY"
   ]
  },
- "obsoletes": {
-  "buildings": [
-   "BUILDING_BELL_LABS",
-   "BUILDING_SOCIAL_NETWORKS"
-  ]
- },
  "requires": {
   "build": {
    "all": [

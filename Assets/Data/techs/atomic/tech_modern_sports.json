@@ -26,14 +26,6 @@
    "TECH_EXTREME_SPORTS"
   ]
  },
- "obsoletes": {
-  "buildings": [
-   "BUILDING_BALL_COURT",
-   "BUILDING_COLOSSEUM",
-   "BUILDING_FLAVIAN_AMPHITHEATRE",
-   "BUILDING_OLYMPIC_GAMES"
-  ]
- },
  "requires": {
   "build": {
    "all": [

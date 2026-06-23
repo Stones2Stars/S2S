@@ -19,11 +19,6 @@
    "TECH_ORNAMENTATION"
   ]
  },
- "obsoletes": {
-  "buildings": [
-   "BUILDING_VENUS_OF_WILLENDORF"
-  ]
- },
  "requires": {
   "build": {
    "all": [

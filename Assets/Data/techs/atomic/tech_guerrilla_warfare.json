@@ -42,9 +42,6 @@
   ]
  },
  "obsoletes": {
-  "buildings": [
-   "BUILDING_MECHANICAL_TRAPS"
-  ],
   "units": [
    "UNIT_PARTISAN"
   ]

@@ -25,11 +25,6 @@
    "TECH_GALACTIC_LIFESTYLE"
   ]
  },
- "obsoletes": {
-  "buildings": [
-   "BUILDING_SVALBARD_GLOBAL_SEED_VAULT"
-  ]
- },
  "requires": {
   "build": {
    "all": [

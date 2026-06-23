@@ -36,16 +36,6 @@
    "TECH_MANAGEMENT"
   ]
  },
- "obsoletes": {
-  "buildings": [
-   "BUILDING_EFFECT_TRADITION_AESTHETIC_APPRECIATION",
-   "BUILDING_GROVE",
-   "BUILDING_LEANING_TOWER_OF_PISA",
-   "BUILDING_MESA_VERDE",
-   "BUILDING_TAXPERSON",
-   "BUILDING_TRADITION_AESTHETIC_APPRECIATION"
-  ]
- },
  "requires": {
   "build": {
    "all": [

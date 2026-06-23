@@ -22,11 +22,6 @@
    "UNIT_TESLA_INFANTRY"
   ]
  },
- "obsoletes": {
-  "buildings": [
-   "BUILDING_BARBWIRE_FENCE"
-  ]
- },
  "requires": {
   "build": {
    "all": [

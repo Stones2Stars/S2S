@@ -36,9 +36,6 @@
   ]
  },
  "obsoletes": {
-  "buildings": [
-   "BUILDING_HOUSING_TREE_HOLLOW"
-  ],
   "builds": [
    "BUILD_ABATIS_THORN_HEDGE_KILL",
    "BUILD_GATHERING_CAMP_KILL"

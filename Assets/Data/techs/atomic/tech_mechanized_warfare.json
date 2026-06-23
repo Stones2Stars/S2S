@@ -33,9 +33,6 @@
   ]
  },
  "obsoletes": {
-  "buildings": [
-   "BUILDING_SHOOTING_CLUB"
-  ],
   "units": [
    "UNIT_MASTER_SAILOR_DREADNOUGHT_SHIP"
   ]

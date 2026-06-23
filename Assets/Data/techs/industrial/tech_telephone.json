@@ -24,16 +24,6 @@
    "TECH_RADIO"
   ]
  },
- "obsoletes": {
-  "buildings": [
-   "BUILDING_HOUSING_DOMUS",
-   "BUILDING_HOUSING_HOVELS",
-   "BUILDING_HOUSING_INSULAE",
-   "BUILDING_HOUSING_PALACES",
-   "BUILDING_HOUSING_SLUMS",
-   "BUILDING_HOUSING_VILLAS"
-  ]
- },
  "requires": {
   "build": {
    "all": [

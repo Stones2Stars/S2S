@@ -12,12 +12,6 @@
    "TECH_NUTRACEUTICAL_ANIMALS"
   ]
  },
- "obsoletes": {
-  "buildings": [
-   "BUILDING_ELECTRIC_CHAIR",
-   "BUILDING_PANOPTICON_PRISON"
-  ]
- },
  "requires": {
   "build": {
    "all": [

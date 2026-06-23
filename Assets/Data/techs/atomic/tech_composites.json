@@ -33,14 +33,6 @@
    "UNIT_STRIKE_FIGHTER"
   ]
  },
- "obsoletes": {
-  "buildings": [
-   "BUILDING_BRASS_INSTRUMENT_MAKER",
-   "BUILDING_PERCUSSION_INSTRUMENT_MAKER",
-   "BUILDING_STRING_INSTRUMENT_MAKER",
-   "BUILDING_WOODWIND_INSTRUMENT_MAKER"
-  ]
- },
  "requires": {
   "build": {
    "all": [

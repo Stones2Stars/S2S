@@ -84,13 +84,6 @@
    "UNIT_ECOLOGIST"
   ]
  },
- "obsoletes": {
-  "buildings": [
-   "BUILDING_CASTLE_GARDEN",
-   "BUILDING_FOUNTAIN",
-   "BUILDING_ROCK_GARDEN"
-  ]
- },
  "requires": {
   "build": {
    "all": [

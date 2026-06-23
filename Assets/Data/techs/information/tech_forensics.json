@@ -20,11 +20,6 @@
    "UNIT_SWAT_TEAM"
   ]
  },
- "obsoletes": {
-  "buildings": [
-   "BUILDING_SHERIFFS_OFFICE"
-  ]
- },
  "requires": {
   "build": {
    "all": [

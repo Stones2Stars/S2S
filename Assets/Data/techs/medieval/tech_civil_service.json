@@ -49,11 +49,6 @@
    "UNIT_TUCUME"
   ]
  },
- "obsoletes": {
-  "buildings": [
-   "BUILDING_GREAT_BATH_OF_MOHENJO_DARO"
-  ]
- },
  "requires": {
   "build": {
    "all": [

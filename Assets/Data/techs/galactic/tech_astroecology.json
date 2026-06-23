@@ -15,11 +15,6 @@
    "TECH_PLANETARY_TERRAFORMING"
   ]
  },
- "obsoletes": {
-  "buildings": [
-   "BUILDING_MARTIAN_HYDROPONICS_COMPLEX"
-  ]
- },
  "requires": {
   "build": {
    "all": [

@@ -19,12 +19,6 @@
    "UNIT_POISON_NUKE"
   ]
  },
- "obsoletes": {
-  "buildings": [
-   "BUILDING_DONKEY_BREEDER",
-   "BUILDING_HORSE_BREEDER"
-  ]
- },
  "requires": {
   "build": {
    "all": [

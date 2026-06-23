@@ -12,11 +12,6 @@
    "TECH_TRENCH_WARFARE"
   ]
  },
- "obsoletes": {
-  "buildings": [
-   "BUILDING_ABATIS"
-  ]
- },
  "requires": {
   "build": {
    "all": [

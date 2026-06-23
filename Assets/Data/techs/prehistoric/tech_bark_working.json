@@ -16,11 +16,6 @@
    "TECH_SIMPLE_WOOD_WORKING"
   ]
  },
- "obsoletes": {
-  "buildings": [
-   "BUILDING_HOUSING_ANIMAL_BURROW"
-  ]
- },
  "requires": {
   "build": {
    "all": [

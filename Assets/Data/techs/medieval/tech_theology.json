@@ -45,12 +45,6 @@
    "UNIT_TRISONG_DETSEN"
   ]
  },
- "obsoletes": {
-  "buildings": [
-   "BUILDING_CAHOKIA_MOUNDS",
-   "BUILDING_SERPENT_MOUND"
-  ]
- },
  "requires": {
   "build": {
    "all": [

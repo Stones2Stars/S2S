@@ -27,13 +27,6 @@
    "TECH_SYNTHETIC_SENTIENCE"
   ]
  },
- "obsoletes": {
-  "buildings": [
-   "BUILDING_CALLIGRAPHY_SCHOOL",
-   "BUILDING_GRAMMATICUS",
-   "BUILDING_LYCEUM"
-  ]
- },
  "requires": {
   "build": {
    "all": [

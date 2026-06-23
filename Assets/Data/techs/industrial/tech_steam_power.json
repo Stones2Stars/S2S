@@ -51,16 +51,6 @@
    "UNIT_ZEBRA_CAVALRY"
   ]
  },
- "obsoletes": {
-  "buildings": [
-   "BUILDING_CAUSEWAY",
-   "BUILDING_HAGIA_SOPHIA",
-   "BUILDING_HIERAPOLIS_SAWMILL",
-   "BUILDING_PULLEY_WHEEL",
-   "BUILDING_RIVER_PORT",
-   "BUILDING_WANG_ZHENS_WORKSHOP"
-  ]
- },
  "requires": {
   "build": {
    "all": [

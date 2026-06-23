@@ -48,12 +48,6 @@
   ]
  },
  "obsoletes": {
-  "buildings": [
-   "BUILDING_ARCHIMEDES_WORKSHOP",
-   "BUILDING_GUARD_TOWER",
-   "BUILDING_TEMPLE_OF_AH_CACAO",
-   "BUILDING_WALLS"
-  ],
   "units": [
    "UNIT_MAPINGUARI",
    "UNIT_MAPINGUARI_PIKE"

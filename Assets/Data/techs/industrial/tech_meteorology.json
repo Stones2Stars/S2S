@@ -12,11 +12,6 @@
    "TECH_LONG_RANGE_FORECASTING"
   ]
  },
- "obsoletes": {
-  "buildings": [
-   "BUILDING_CLOUD_OBSERVERS_HUT"
-  ]
- },
  "requires": {
   "build": {
    "all": [

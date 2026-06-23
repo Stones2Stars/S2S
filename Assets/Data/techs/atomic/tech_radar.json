@@ -21,10 +21,6 @@
   ]
  },
  "obsoletes": {
-  "buildings": [
-   "BUILDING_COPERNICUS_OBSERVATORY",
-   "BUILDING_RUDOLPHINE"
-  ],
   "builds": [
    "BUILD_STEEL_WATCHTOWER"
   ]

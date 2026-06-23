@@ -36,11 +36,6 @@
   ]
  },
  "obsoletes": {
-  "buildings": [
-   "BUILDING_SCARBOROUGH_FAIR",
-   "BUILDING_TROYES_TRADE_FAIR",
-   "BUILDING_VIA_APPIA"
-  ],
   "builds": [
    "BUILD_PATH"
   ]

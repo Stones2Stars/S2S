@@ -18,13 +18,6 @@
    "TECH_URBAN_CULTURE"
   ]
  },
- "obsoletes": {
-  "buildings": [
-   "BUILDING_CISTERN",
-   "BUILDING_LARGE_STEEL_ARCH_BRIDGE",
-   "BUILDING_TOWN_WELL"
-  ]
- },
  "requires": {
   "build": {
    "all": [

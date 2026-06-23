@@ -28,13 +28,6 @@
    "TECH_MICROBIOLOGY"
   ]
  },
- "obsoletes": {
-  "buildings": [
-   "BUILDING_HOUSE_OF_WISDOM",
-   "BUILDING_THE_GREAT_LIBRARY",
-   "BUILDING_THE_PARTHENON"
-  ]
- },
  "requires": {
   "build": {
    "all": [

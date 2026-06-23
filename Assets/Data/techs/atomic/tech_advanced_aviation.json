@@ -24,14 +24,6 @@
    "UNIT_PARATROOPER"
   ]
  },
- "obsoletes": {
-  "buildings": [
-   "BUILDING_CARNIVAL_BOXING_KANGAROO",
-   "BUILDING_CARNIVAL_DANCING_BEAR",
-   "BUILDING_CARNIVAL_TRAINED_SEAL",
-   "BUILDING_ORNITHOPTER_AERIE"
-  ]
- },
  "requires": {
   "build": {
    "all": [

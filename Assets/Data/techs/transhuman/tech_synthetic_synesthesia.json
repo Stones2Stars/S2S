@@ -17,11 +17,6 @@
    "TECH_SIMULATED_REALITY"
   ]
  },
- "obsoletes": {
-  "buildings": [
-   "BUILDING_SPEAKEASY"
-  ]
- },
  "requires": {
   "build": {
    "all": [

@@ -56,10 +56,6 @@
   ]
  },
  "obsoletes": {
-  "buildings": [
-   "BUILDING_ASSASSINS_DEN",
-   "BUILDING_ASSASSINS_DEN_UNSANCTIONED"
-  ],
   "units": [
    "UNIT_ASSASSIN",
    "UNIT_BANDIT_RIDER",

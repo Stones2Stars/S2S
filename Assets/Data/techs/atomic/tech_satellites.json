@@ -23,14 +23,6 @@
    "UNIT_SATELLITE"
   ]
  },
- "obsoletes": {
-  "buildings": [
-   "BUILDING_CHEOMSEONGDAE",
-   "BUILDING_MASTER_SEA_HUNTER",
-   "BUILDING_SURVEYORS_OFFICE",
-   "BUILDING_TRADITION_SEA_HUNTING"
-  ]
- },
  "requires": {
   "build": {
    "all": [

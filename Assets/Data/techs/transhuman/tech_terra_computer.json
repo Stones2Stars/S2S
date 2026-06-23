@@ -24,12 +24,6 @@
    "UNIT_SENTINEL"
   ]
  },
- "obsoletes": {
-  "buildings": [
-   "BUILDING_BROADCAST_TOWER",
-   "BUILDING_HOLOGRAPHIC_NETWORKS"
-  ]
- },
  "requires": {
   "build": {
    "all": [

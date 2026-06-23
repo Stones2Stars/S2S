@@ -24,12 +24,6 @@
   ]
  },
  "obsoletes": {
-  "buildings": [
-   "BUILDING_BARRACKS",
-   "BUILDING_EAST_INDIA_COMPANY",
-   "BUILDING_EKAL_MASHARTI",
-   "BUILDING_PORT"
-  ],
   "units": [
    "UNIT_WARLORDIV",
    "UNIT_WORKANIMAL",

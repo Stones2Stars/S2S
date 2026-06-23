@@ -21,11 +21,6 @@
    "UNIT_NANITE_REPAIR_CLOUD"
   ]
  },
- "obsoletes": {
-  "buildings": [
-   "BUILDING_EMP_TRAPS"
-  ]
- },
  "requires": {
   "build": {
    "all": [

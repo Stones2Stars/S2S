@@ -17,12 +17,6 @@
    "UNIT_ANIMA_REPAIR_CLOUD"
   ]
  },
- "obsoletes": {
-  "buildings": [
-   "BUILDING_BATTLEBOT_ARENA",
-   "BUILDING_SHOCKWAVE_VEHICLE_DEALERSHIP"
-  ]
- },
  "requires": {
   "build": {
    "all": [

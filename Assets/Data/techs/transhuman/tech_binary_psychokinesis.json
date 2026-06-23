@@ -16,14 +16,6 @@
    "UNIT_DEEPSPACE_INFANTRY"
   ]
  },
- "obsoletes": {
-  "buildings": [
-   "BUILDING_NATIONAL_NIGHT_OF_HOCKEY",
-   "BUILDING_NATIONAL_SPORTS_LEAGUE",
-   "BUILDING_STATUE_OF_CHAMPION",
-   "BUILDING_WEMBLEY_STADIUM"
-  ]
- },
  "requires": {
   "build": {
    "all": [

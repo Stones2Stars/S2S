@@ -26,10 +26,6 @@
   ]
  },
  "obsoletes": {
-  "buildings": [
-   "BUILDING_MAGELLANS_VOYAGE",
-   "BUILDING_NATIONAL_COURIER_SYSTEM"
-  ],
   "units": [
    "UNIT_MASTER_SAILOR_MANOWAR"
   ]

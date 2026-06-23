@@ -20,9 +20,6 @@
   ]
  },
  "obsoletes": {
-  "buildings": [
-   "BUILDING_TRAILS"
-  ],
   "builds": [
    "BUILD_TRAIL"
   ]

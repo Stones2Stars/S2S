@@ -20,11 +20,6 @@
    "TECH_HYPERSTRUCTURE_ENGINEERING"
   ]
  },
- "obsoletes": {
-  "buildings": [
-   "BUILDING_QUANTUM_SUPERCOMPUTER"
-  ]
- },
  "requires": {
   "build": {
    "all": [

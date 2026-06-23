@@ -26,11 +26,6 @@
    "TECH_SYNERGETICS"
   ]
  },
- "obsoletes": {
-  "buildings": [
-   "BUILDING_COMBAT_SIMULATOR"
-  ]
- },
  "requires": {
   "build": {
    "all": [

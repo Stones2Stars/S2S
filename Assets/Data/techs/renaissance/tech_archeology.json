@@ -17,11 +17,6 @@
    "TECH_PSYCHOLOGY"
   ]
  },
- "obsoletes": {
-  "buildings": [
-   "BUILDING_SIX_HARMONIES_PAGODA"
-  ]
- },
  "requires": {
   "build": {
    "all": [

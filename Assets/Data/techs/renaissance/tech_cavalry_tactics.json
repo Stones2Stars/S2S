@@ -28,11 +28,6 @@
    "UNIT_ZEBRA_CUIRASSIER"
   ]
  },
- "obsoletes": {
-  "buildings": [
-   "BUILDING_STABLE"
-  ]
- },
  "requires": {
   "build": {
    "all": [

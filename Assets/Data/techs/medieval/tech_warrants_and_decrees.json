@@ -20,11 +20,6 @@
    "UNIT_PETRA_GUARD"
   ]
  },
- "obsoletes": {
-  "buildings": [
-   "BUILDING_TOWN_WATCH"
-  ]
- },
  "requires": {
   "build": {
    "all": [

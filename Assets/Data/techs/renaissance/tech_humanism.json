@@ -30,18 +30,6 @@
    "UNIT_YUPANQUI"
   ]
  },
- "obsoletes": {
-  "buildings": [
-   "BUILDING_ALTAR_FOR_HUMAN_SACRIFICE",
-   "BUILDING_HEIMDALL_SANCTUARY",
-   "BUILDING_KINGS_CRUSADE",
-   "BUILDING_PYRAMID_OF_THE_MOON",
-   "BUILDING_PYRAMID_OF_THE_SUN",
-   "BUILDING_SOLOMONS_TEMPLE",
-   "BUILDING_THOR_ALTAR",
-   "BUILDING_THOR_SANCTUARY"
-  ]
- },
  "requires": {
   "build": {
    "all": [

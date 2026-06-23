@@ -22,13 +22,6 @@
    "UNIT_WORKBOAT_MODERN"
   ]
  },
- "obsoletes": {
-  "buildings": [
-   "BUILDING_HAND_WATER_PUMP",
-   "BUILDING_VENETIAN_ARSENAL",
-   "BUILDING_ZHENG_HES_VOYAGE"
-  ]
- },
  "requires": {
   "build": {
    "all": [

@@ -19,13 +19,6 @@
    "TECH_WORMHOLE_HIVEMIND"
   ]
  },
- "obsoletes": {
-  "buildings": [
-   "BUILDING_EXPERIMENTAL_QUANTUM_COMPUTER",
-   "BUILDING_NANOBOTIC_PRINTING_MILL",
-   "BUILDING_REPLICATOR_PLANT"
-  ]
- },
  "requires": {
   "build": {
    "all": [

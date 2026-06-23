@@ -29,14 +29,6 @@
    "UNIT_TRUGANINI"
   ]
  },
- "obsoletes": {
-  "buildings": [
-   "BUILDING_BAMBOO_ARMOURER",
-   "BUILDING_CATACOMBS_OF_KOM_EL_SHOQAFA",
-   "BUILDING_CITADEL",
-   "BUILDING_KEEP_TOWER"
-  ]
- },
  "requires": {
   "build": {
    "all": [

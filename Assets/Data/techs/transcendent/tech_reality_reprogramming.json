@@ -18,12 +18,6 @@
    "TECH_ALPHA_POINT"
   ]
  },
- "obsoletes": {
-  "buildings": [
-   "BUILDING_INTERGALACTIC_GAMMA_RAY_BURST_CANNON",
-   "BUILDING_SELF_CONSTRUCTION_FIRM"
-  ]
- },
  "requires": {
   "build": {
    "all": [

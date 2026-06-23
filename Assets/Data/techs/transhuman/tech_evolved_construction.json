@@ -18,11 +18,6 @@
    "TECH_TECHNOLOGICAL_SINGULARITY"
   ]
  },
- "obsoletes": {
-  "buildings": [
-   "BUILDING_BICYCLE_BOULEVARD"
-  ]
- },
  "requires": {
   "build": {
    "all": [

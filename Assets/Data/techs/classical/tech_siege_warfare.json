@@ -49,12 +49,6 @@
    "UNIT_WIRUTI"
   ]
  },
- "obsoletes": {
-  "buildings": [
-   "BUILDING_EARTH_WALL",
-   "BUILDING_FORTIFIED_OUTPOST"
-  ]
- },
  "requires": {
   "build": {
    "all": [

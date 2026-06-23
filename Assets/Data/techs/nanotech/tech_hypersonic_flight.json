@@ -19,12 +19,6 @@
    "UNIT_SCRAMJET"
   ]
  },
- "obsoletes": {
-  "buildings": [
-   "BUILDING_AERODROME",
-   "BUILDING_AIRPORT"
-  ]
- },
  "requires": {
   "build": {
    "all": [

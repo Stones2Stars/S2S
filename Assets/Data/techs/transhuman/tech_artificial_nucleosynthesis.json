@@ -21,15 +21,6 @@
    "TECH_TERRA_COMPUTER"
   ]
  },
- "obsoletes": {
-  "buildings": [
-   "BUILDING_D_T_FUSION_POWER_PLANT",
-   "BUILDING_NATURAL_GAS_POWER_PLANT",
-   "BUILDING_NUCLEAR_POWERCOMPLEX",
-   "BUILDING_OIL_POWER_PLANT",
-   "BUILDING_POWER_NUCLEAR"
-  ]
- },
  "requires": {
   "build": {
    "all": [

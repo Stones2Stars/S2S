@@ -16,11 +16,6 @@
    "TECH_WORMHOLE_HIVEMIND"
   ]
  },
- "obsoletes": {
-  "buildings": [
-   "BUILDING_HOUSING_COLONY_ARCOLOGY"
-  ]
- },
  "requires": {
   "build": {
    "all": [

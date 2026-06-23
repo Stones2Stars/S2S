@@ -23,12 +23,6 @@
    "TECH_ENLIGHTENMENT"
   ]
  },
- "obsoletes": {
-  "buildings": [
-   "BUILDING_GLADIATORIAL_SCHOOL",
-   "BUILDING_TOWN_HALL"
-  ]
- },
  "requires": {
   "build": {
    "all": [

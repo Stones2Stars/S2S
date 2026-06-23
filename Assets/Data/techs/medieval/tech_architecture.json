@@ -19,12 +19,6 @@
    "UNIT_MUGHAL_BABUR"
   ]
  },
- "obsoletes": {
-  "buildings": [
-   "BUILDING_THE_GREAT_SPHINX",
-   "BUILDING_VALLEY_OF_THE_KINGS"
-  ]
- },
  "requires": {
   "build": {
    "all": [

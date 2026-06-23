@@ -27,13 +27,6 @@
    "UNIT_YI_SUN_SIN"
   ]
  },
- "obsoletes": {
-  "buildings": [
-   "BUILDING_ANTIKYTHERA_MECHANISM",
-   "BUILDING_HAAMONGA_A_MAUI",
-   "BUILDING_THE_COLOSSUS"
-  ]
- },
  "requires": {
   "build": {
    "all": [

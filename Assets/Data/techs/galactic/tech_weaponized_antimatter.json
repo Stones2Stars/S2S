@@ -16,11 +16,6 @@
    "UNIT_INT_INVADER"
   ]
  },
- "obsoletes": {
-  "buildings": [
-   "BUILDING_RAILGUN_BATTERY"
-  ]
- },
  "requires": {
   "build": {
    "all": [

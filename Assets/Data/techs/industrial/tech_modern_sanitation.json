@@ -17,15 +17,6 @@
    "TECH_MEDICINE"
   ]
  },
- "obsoletes": {
-  "buildings": [
-   "BUILDING_ANCIENT_EMBALMER",
-   "BUILDING_BURIAL_GROUND",
-   "BUILDING_MONUMENT",
-   "BUILDING_OUTHOUSE",
-   "BUILDING_STONEHENGE"
-  ]
- },
  "requires": {
   "build": {
    "all": [

@@ -30,12 +30,6 @@
    "UNIT_SADDAM_HUSSEIN"
   ]
  },
- "obsoletes": {
-  "buildings": [
-   "BUILDING_CONSPIRATORS_HIDEOUT",
-   "BUILDING_CONSPIRATORS_HIDEOUT_UNSANCTIONED"
-  ]
- },
  "requires": {
   "build": {
    "all": [

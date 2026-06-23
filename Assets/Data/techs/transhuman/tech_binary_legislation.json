@@ -20,13 +20,6 @@
    "TECH_UTOPIA_DESTINY"
   ]
  },
- "obsoletes": {
-  "buildings": [
-   "BUILDING_ELECTRONIC_SECURITY_SYSTEM",
-   "BUILDING_POLICE_BOX",
-   "BUILDING_POLICE_STATION"
-  ]
- },
  "requires": {
   "build": {
    "all": [

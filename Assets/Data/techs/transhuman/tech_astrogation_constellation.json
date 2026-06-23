@@ -25,11 +25,6 @@
    "UNIT_SOLAR_WORKER"
   ]
  },
- "obsoletes": {
-  "buildings": [
-   "BUILDING_FLIGHT_SIMULATOR"
-  ]
- },
  "requires": {
   "build": {
    "all": [

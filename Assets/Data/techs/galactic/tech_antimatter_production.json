@@ -18,12 +18,6 @@
    "TECH_SPACEPUNK"
   ]
  },
- "obsoletes": {
-  "buildings": [
-   "BUILDING_D_HE3_FUSION_PLANT",
-   "BUILDING_METHANE_POWER_PLANT"
-  ]
- },
  "requires": {
   "build": {
    "all": [

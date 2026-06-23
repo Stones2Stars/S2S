@@ -62,11 +62,6 @@
   ]
  },
  "obsoletes": {
-  "buildings": [
-   "BUILDING_LOG_ROLLER_SYSTEM",
-   "BUILDING_STONE_BRIDGE",
-   "BUILDING_WATCH_TOWER"
-  ],
   "builds": [
    "BUILD_BEACON_CORAL",
    "BUILD_BEACON_REEF"

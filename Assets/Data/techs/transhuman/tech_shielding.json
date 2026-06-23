@@ -28,11 +28,6 @@
    "UNIT_FUSION_NOVA"
   ]
  },
- "obsoletes": {
-  "buildings": [
-   "BUILDING_ELECTRIC_FENCE"
-  ]
- },
  "requires": {
   "build": {
    "all": [

@@ -26,11 +26,6 @@
    "UNIT_VAKHTANG_VI"
   ]
  },
- "obsoletes": {
-  "buildings": [
-   "BUILDING_SILK_ROAD"
-  ]
- },
  "requires": {
   "build": {
    "all": [

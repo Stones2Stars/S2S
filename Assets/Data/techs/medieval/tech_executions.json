@@ -12,11 +12,6 @@
    "TECH_TORTURE"
   ]
  },
- "obsoletes": {
-  "buildings": [
-   "BUILDING_PUBLIC_STONING"
-  ]
- },
  "requires": {
   "build": {
    "all": [

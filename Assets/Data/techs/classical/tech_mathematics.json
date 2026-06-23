@@ -43,9 +43,6 @@
   ]
  },
  "obsoletes": {
-  "buildings": [
-   "BUILDING_FRONTIER_OUTPOST"
-  ],
   "builds": [
    "BUILD_FORTIFIED_CAVE_WITH_CACHE",
    "BUILD_WOODEN_PALISADE"

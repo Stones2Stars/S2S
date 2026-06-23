@@ -5,5 +5,8 @@
   "art": {
    "icon": "Art/Interface/Buttons/National_Wonders/apothecary_guild.dds"
   }
+ },
+ "identity": {
+  "valid": true
  }
 }

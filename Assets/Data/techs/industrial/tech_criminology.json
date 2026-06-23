@@ -35,13 +35,6 @@
    "UNIT_RIOTPOLICE"
   ]
  },
- "obsoletes": {
-  "buildings": [
-   "BUILDING_BAILIWICK",
-   "BUILDING_GALLOWS",
-   "BUILDING_GUARD_STATION"
-  ]
- },
  "requires": {
   "build": {
    "all": [

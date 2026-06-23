@@ -27,16 +27,6 @@
    "UNIT_MASTER_SAILOR_FUSION_CARRIER"
   ]
  },
- "obsoletes": {
-  "buildings": [
-   "BUILDING_COIT_TOWER",
-   "BUILDING_LONDON_EYE",
-   "BUILDING_NEUSCHWANSTEIN",
-   "BUILDING_NOTRE_DAME",
-   "BUILDING_SINGAPORE_FLYER",
-   "BUILDING_STEAM_CRANE"
-  ]
- },
  "requires": {
   "build": {
    "all": [

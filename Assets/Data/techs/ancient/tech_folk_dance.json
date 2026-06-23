@@ -16,11 +16,6 @@
    "TECH_ANCESTOR_WORSHIP"
   ]
  },
- "obsoletes": {
-  "buildings": [
-   "BUILDING_FIRE_DANCE"
-  ]
- },
  "requires": {
   "build": {
    "all": [

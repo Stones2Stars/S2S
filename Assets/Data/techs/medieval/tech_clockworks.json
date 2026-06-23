@@ -17,11 +17,6 @@
    "UNIT_GEAR_MECHANIC"
   ]
  },
- "obsoletes": {
-  "buildings": [
-   "BUILDING_GATE_OF_THE_SUN"
-  ]
- },
  "requires": {
   "build": {
    "all": [

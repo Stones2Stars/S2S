@@ -24,12 +24,6 @@
    "TECH_ROMANTICISM"
   ]
  },
- "obsoletes": {
-  "buildings": [
-   "BUILDING_MUSIC_HUT",
-   "BUILDING_THEATRE_OF_DIONYSUS"
-  ]
- },
  "requires": {
   "build": {
    "all": [

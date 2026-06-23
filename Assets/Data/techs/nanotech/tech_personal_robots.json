@@ -19,9 +19,6 @@
   ]
  },
  "obsoletes": {
-  "buildings": [
-   "BUILDING_BROTHEL"
-  ],
   "units": [
    "UNIT_FORTY_NINER",
    "UNIT_STEAMPUNK_WORKER",

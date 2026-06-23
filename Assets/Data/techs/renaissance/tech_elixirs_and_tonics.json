@@ -20,11 +20,6 @@
    "UNIT_SURGEON"
   ]
  },
- "obsoletes": {
-  "buildings": [
-   "BUILDING_HEALERS_HUT"
-  ]
- },
  "requires": {
   "build": {
    "all": [

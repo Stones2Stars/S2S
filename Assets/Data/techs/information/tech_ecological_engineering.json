@@ -25,9 +25,6 @@
   ]
  },
  "obsoletes": {
-  "buildings": [
-   "BUILDING_POACHERS_CAMP"
-  ],
   "builds": [
    "BUILD_SCRUB_FALLOUT"
   ]

@@ -40,10 +40,6 @@
   ]
  },
  "obsoletes": {
-  "buildings": [
-   "BUILDING_BUNKER",
-   "BUILDING_CEMENT_BARRIER"
-  ],
   "units": [
    "UNIT_GUERRILLA",
    "UNIT_HERERO_REBEL",

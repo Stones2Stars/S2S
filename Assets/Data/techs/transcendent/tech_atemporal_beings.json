@@ -18,11 +18,6 @@
    "TECH_TRANSFINITE_STRUCTURES"
   ]
  },
- "obsoletes": {
-  "buildings": [
-   "BUILDING_HEDGE_FUND"
-  ]
- },
  "requires": {
   "build": {
    "all": [

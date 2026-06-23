@@ -22,11 +22,6 @@
    "TECH_MINORITY_RIGHTS"
   ]
  },
- "obsoletes": {
-  "buildings": [
-   "BUILDING_ROYAL_TOURNAMENT"
-  ]
- },
  "requires": {
   "build": {
    "all": [

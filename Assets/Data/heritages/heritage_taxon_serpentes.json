@@ -55,17 +55,11 @@
    "flat": [
     {
      "value": 1,
-     "enabled": {
-      "type": "TECH_EDUCATION",
-      "scope": "team"
-     }
+     "enabled": "TECH_EDUCATION"
     },
     {
      "value": 1,
-     "enabled": {
-      "type": "TECH_BIOLOGY",
-      "scope": "team"
-     }
+     "enabled": "TECH_BIOLOGY"
     }
    ]
   }

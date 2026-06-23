@@ -40,14 +40,6 @@
    "TECH_ATOMIC_LIFESTYLE"
   ]
  },
- "obsoletes": {
-  "buildings": [
-   "BUILDING_ICEHOUSE",
-   "BUILDING_QUERN",
-   "BUILDING_TAVERN",
-   "BUILDING_WAREHOUSE"
-  ]
- },
  "requires": {
   "build": {
    "all": [

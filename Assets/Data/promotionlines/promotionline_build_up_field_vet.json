@@ -1,0 +1,13 @@
+{
+ "type": "PROMOTIONLINE_BUILD_UP_FIELD_VET",
+ "description": "TXT_KEY_PROMOTIONLINE_BUILD_UP_FIELD_VET",
+ "help": "TXT_KEY_PROMOTIONLINE_BUILD_UP_FIELD_VET_HELP",
+ "ui": {
+  "art": {
+   "icon": "Art/Buttons/Promotions/FieldVet1BuildUp.dds"
+  }
+ },
+ "identity": {
+  "buildUp": true
+ }
+}

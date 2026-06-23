@@ -22,14 +22,6 @@
    "TECH_MARINE_ARCHITECTURE"
   ]
  },
- "obsoletes": {
-  "buildings": [
-   "BUILDING_AQUEDUCT",
-   "BUILDING_ARTESIAN_WELL",
-   "BUILDING_RESERVOIR",
-   "BUILDING_STEAMBOAT_PORT"
-  ]
- },
  "requires": {
   "build": {
    "all": [

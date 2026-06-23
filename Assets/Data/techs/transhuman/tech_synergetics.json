@@ -20,11 +20,6 @@
    "TECH_OPTRONICS"
   ]
  },
- "obsoletes": {
-  "buildings": [
-   "BUILDING_CARRIAGE_BUILDER"
-  ]
- },
  "requires": {
   "build": {
    "all": [

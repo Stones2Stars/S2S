@@ -11,11 +11,6 @@
    "TECH_CELEBRATION"
   ]
  },
- "obsoletes": {
-  "buildings": [
-   "BUILDING_CAPTURED_FIRE"
-  ]
- },
  "requires": {
   "build": {
    "all": [

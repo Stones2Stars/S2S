@@ -25,11 +25,6 @@
    "UNIT_LAWYER"
   ]
  },
- "obsoletes": {
-  "buildings": [
-   "BUILDING_THE_GREAT_LIGHTHOUSE"
-  ]
- },
  "requires": {
   "build": {
    "all": [

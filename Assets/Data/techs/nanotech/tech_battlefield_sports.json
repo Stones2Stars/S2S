@@ -14,12 +14,6 @@
    "TECH_BINARY_LEGISLATION"
   ]
  },
- "obsoletes": {
-  "buildings": [
-   "BUILDING_AUTOMATED_FIRING_RANGE",
-   "BUILDING_MINOR_LEAGUE_STADIUM"
-  ]
- },
  "requires": {
   "build": {
    "all": [

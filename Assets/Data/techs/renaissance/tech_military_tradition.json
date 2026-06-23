@@ -46,14 +46,6 @@
    "UNIT_WAYUU_CAVALRY"
   ]
  },
- "obsoletes": {
-  "buildings": [
-   "BUILDING_ARCHERY_RANGE",
-   "BUILDING_EFFECT_TRADITION_ARCHERY",
-   "BUILDING_FLETCHERS_HUT",
-   "BUILDING_TRADITION_ARCHERY"
-  ]
- },
  "requires": {
   "build": {
    "all": [

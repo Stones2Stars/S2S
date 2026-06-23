@@ -38,11 +38,6 @@
   ]
  },
  "obsoletes": {
-  "buildings": [
-   "BUILDING_DANCE_HAKA",
-   "BUILDING_SUN_TZUS_ART_OF_WAR",
-   "BUILDING_WAR_DANCE"
-  ],
   "units": [
    "UNIT_HASHISHIN",
    "UNIT_SHARPSHOOTER",

@@ -14,11 +14,6 @@
    "UNIT_MODERN_FLAMETHROWER"
   ]
  },
- "obsoletes": {
-  "buildings": [
-   "BUILDING_FIRE_BRIGADE"
-  ]
- },
  "requires": {
   "build": {
    "all": [

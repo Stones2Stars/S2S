@@ -18,13 +18,6 @@
    "TECH_SUPERCHARGED_CRYSTALLOGRAPHY"
   ]
  },
- "obsoletes": {
-  "buildings": [
-   "BUILDING_GENERATION_IV_REACTOR",
-   "BUILDING_HIGH_TECH_COAL_POWER_PLANT",
-   "BUILDING_SMART_GRID"
-  ]
- },
  "requires": {
   "build": {
    "all": [

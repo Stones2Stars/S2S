@@ -15,11 +15,6 @@
    "TECH_GLOBALIZATION"
   ]
  },
- "obsoletes": {
-  "buildings": [
-   "BUILDING_NEGOTIATORS_HUT"
-  ]
- },
  "requires": {
   "build": {
    "all": [

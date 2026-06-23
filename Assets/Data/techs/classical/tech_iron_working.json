@@ -70,9 +70,6 @@
   "bonuses": [
    "BONUS_STONE_TOOLS"
   ],
-  "buildings": [
-   "BUILDING_MICROLITH_WORKSHOP"
-  ],
   "units": [
    "UNIT_MAPINGUARI_OBSIDIAN",
    "UNIT_MAPINGUARI_STONE",

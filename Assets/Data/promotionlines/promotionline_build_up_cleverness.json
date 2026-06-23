@@ -1,0 +1,13 @@
+{
+ "type": "PROMOTIONLINE_BUILD_UP_CLEVERNESS",
+ "description": "TXT_KEY_PROMOTIONLINE_BUILD_UP_CLEVERNESS",
+ "help": "TXT_KEY_PROMOTIONLINE_BUILD_UP_CLEVERNESS_HELP",
+ "ui": {
+  "art": {
+   "icon": "Art/Buttons/Promotions/Cleverness1Buildup.dds"
+  }
+ },
+ "identity": {
+  "buildUp": true
+ }
+}

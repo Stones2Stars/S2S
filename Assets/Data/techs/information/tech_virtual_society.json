@@ -25,14 +25,6 @@
    "TECH_COMPUTATIONAL_SOCIOLOGY"
   ]
  },
- "obsoletes": {
-  "buildings": [
-   "BUILDING_GARDEROBE",
-   "BUILDING_PINBALL_ARCADE",
-   "BUILDING_TUMEN_AMUGULANG_PALACE",
-   "BUILDING_VIDEOPHONE_NETWORK"
-  ]
- },
  "requires": {
   "build": {
    "all": [

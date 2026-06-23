@@ -18,11 +18,6 @@
    "TECH_COILGUN"
   ]
  },
- "obsoletes": {
-  "buildings": [
-   "BUILDING_AUTO_CANNON_BATTERY"
-  ]
- },
  "requires": {
   "build": {
    "all": [

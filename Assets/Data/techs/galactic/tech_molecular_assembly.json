@@ -18,11 +18,6 @@
    "TECH_FORGE_WORLDS"
   ]
  },
- "obsoletes": {
-  "buildings": [
-   "BUILDING_3D_PRINTING_MILL"
-  ]
- },
  "requires": {
   "build": {
    "all": [

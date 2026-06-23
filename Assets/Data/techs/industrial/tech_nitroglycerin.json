@@ -17,9 +17,6 @@
   ]
  },
  "obsoletes": {
-  "buildings": [
-   "BUILDING_LAS_MEDULAS"
-  ],
   "units": [
    "UNIT_RAPANUIWORKER",
    "UNIT_WORKER"

@@ -33,12 +33,6 @@
    "UNIT_MEDICAL_VET"
   ]
  },
- "obsoletes": {
-  "buildings": [
-   "BUILDING_BATHING_RITUAL",
-   "BUILDING_GOBEKLI_TEPE"
-  ]
- },
  "requires": {
   "build": {
    "all": [

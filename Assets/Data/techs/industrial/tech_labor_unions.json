@@ -37,9 +37,6 @@
   ]
  },
  "obsoletes": {
-  "buildings": [
-   "BUILDING_GUILD_SERVANTS"
-  ],
   "units": [
    "UNIT_SCOUNDREL"
   ]

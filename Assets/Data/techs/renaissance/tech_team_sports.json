@@ -18,12 +18,6 @@
    "TECH_RADIO"
   ]
  },
- "obsoletes": {
-  "buildings": [
-   "BUILDING_ARENA",
-   "BUILDING_PLAYING_FIELDS"
-  ]
- },
  "requires": {
   "build": {
    "all": [

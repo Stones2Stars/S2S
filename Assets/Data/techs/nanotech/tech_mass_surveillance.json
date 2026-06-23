@@ -18,11 +18,6 @@
    "TECH_SYNTHETIC_SENTIENCE"
   ]
  },
- "obsoletes": {
-  "buildings": [
-   "BUILDING_TERRORISTS_COMPOUND"
-  ]
- },
  "requires": {
   "build": {
    "all": [

@@ -1,7 +1,8 @@
 {
  "type": "SPECIALBUILDING_GROUP_LEGENDARY_LANDSCAPES",
  "description": "TXT_KEY_SPECIALBUILDING_GROUP_LEGENDARY_LANDSCAPES",
- "allowed": {
-  "empire": 1
+ "identity": {
+  "maxPlayerInstances": 1,
+  "valid": true
  }
 }

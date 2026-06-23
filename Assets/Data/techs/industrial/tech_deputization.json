@@ -26,9 +26,6 @@
   ]
  },
  "obsoletes": {
-  "buildings": [
-   "BUILDING_GUARDHOUSE"
-  ],
   "units": [
    "UNIT_GARAMANTES",
    "UNIT_HIGHWAYMAN",

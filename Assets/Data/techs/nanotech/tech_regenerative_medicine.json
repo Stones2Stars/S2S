@@ -24,11 +24,6 @@
    "UNIT_MEDEVAC_DROPSHIP"
   ]
  },
- "obsoletes": {
-  "buildings": [
-   "BUILDING_DISEASE_LEPROSY"
-  ]
- },
  "requires": {
   "build": {
    "all": [

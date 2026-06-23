@@ -22,11 +22,6 @@
    "TECH_COMMUNICATION_NETWORKS"
   ]
  },
- "obsoletes": {
-  "buildings": [
-   "BUILDING_THE_KREMLIN"
-  ]
- },
  "requires": {
   "build": {
    "all": [

@@ -13,11 +13,6 @@
    "TECH_CHAOS_THEORY"
   ]
  },
- "obsoletes": {
-  "buildings": [
-   "BUILDING_WEATHER_VANES"
-  ]
- },
  "requires": {
   "build": {
    "all": [

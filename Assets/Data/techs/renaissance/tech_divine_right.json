@@ -37,11 +37,6 @@
    "UNIT_TUPAC_YUPANQUI"
   ]
  },
- "obsoletes": {
-  "buildings": [
-   "BUILDING_CHICHEN_ITZA"
-  ]
- },
  "requires": {
   "build": {
    "all": [

@@ -42,14 +42,6 @@
    "UNIT_URHO_KEKKONEN"
   ]
  },
- "obsoletes": {
-  "buildings": [
-   "BUILDING_AACHEN_CATHEDRAL",
-   "BUILDING_KRAK_DES_CHEVALIERS",
-   "BUILDING_MUIDERSLOT_CASTLE",
-   "BUILDING_PORCELAIN_TOWER"
-  ]
- },
  "requires": {
   "build": {
    "all": [

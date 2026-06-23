@@ -21,11 +21,6 @@
    "UNIT_SS2_REWARD"
   ]
  },
- "obsoletes": {
-  "buildings": [
-   "BUILDING_TRAVEL_AGENCY"
-  ]
- },
  "requires": {
   "build": {
    "all": [

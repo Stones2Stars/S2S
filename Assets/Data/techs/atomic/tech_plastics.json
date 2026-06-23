@@ -32,12 +32,6 @@
    "UNIT_OFFSHORE_PLATFORM"
   ]
  },
- "obsoletes": {
-  "buildings": [
-   "BUILDING_SHELL_WORKERS_HUT",
-   "BUILDING_TOY_CARVER"
-  ]
- },
  "requires": {
   "build": {
    "all": [

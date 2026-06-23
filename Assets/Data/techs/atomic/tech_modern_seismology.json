@@ -25,12 +25,6 @@
    "TECH_VOLCANOLOGY"
   ]
  },
- "obsoletes": {
-  "buildings": [
-   "BUILDING_BRICK_MASON",
-   "BUILDING_CONCRETE_MASON"
-  ]
- },
  "requires": {
   "build": {
    "all": [

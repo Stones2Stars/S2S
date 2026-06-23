@@ -13,11 +13,6 @@
    "TECH_RENAISSANCE_LIFESTYLE"
   ]
  },
- "obsoletes": {
-  "buildings": [
-   "BUILDING_CIRCUS_MAXIMUS"
-  ]
- },
  "requires": {
   "build": {
    "all": [

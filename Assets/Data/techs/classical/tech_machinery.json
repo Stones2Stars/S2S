@@ -31,11 +31,6 @@
   ]
  },
  "obsoletes": {
-  "buildings": [
-   "BUILDING_AERIAL_BASKET_ROPEWAYS",
-   "BUILDING_PIT_TRAPS",
-   "BUILDING_TRAVOIS_MAKER"
-  ],
   "builds": [
    "BUILD_LUMBERJACK"
   ]

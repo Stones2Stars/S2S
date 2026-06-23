@@ -22,11 +22,6 @@
    "TECH_VIRTUAL_REALITY"
   ]
  },
- "obsoletes": {
-  "buildings": [
-   "BUILDING_FARNSWORTH_ELECTRONICS_LAB"
-  ]
- },
  "requires": {
   "build": {
    "all": [

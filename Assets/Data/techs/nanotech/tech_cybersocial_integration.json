@@ -17,15 +17,6 @@
    "TECH_TRANSHUMAN_LIFESTYLE"
   ]
  },
- "obsoletes": {
-  "buildings": [
-   "BUILDING_AUCTION_HOUSE",
-   "BUILDING_CREDIT_UNION",
-   "BUILDING_INSURANCE_OFFICE",
-   "BUILDING_LOAN_SHARK",
-   "BUILDING_LOAN_SHARK_UNSANCTIONED"
-  ]
- },
  "requires": {
   "build": {
    "all": [

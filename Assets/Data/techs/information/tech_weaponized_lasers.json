@@ -13,11 +13,6 @@
    "TECH_ELECTRIC_ARC_WEAPONRY"
   ]
  },
- "obsoletes": {
-  "buildings": [
-   "BUILDING_FIRING_RANGE"
-  ]
- },
  "requires": {
   "build": {
    "all": [

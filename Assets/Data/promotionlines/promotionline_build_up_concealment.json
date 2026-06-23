@@ -1,0 +1,13 @@
+{
+ "type": "PROMOTIONLINE_BUILD_UP_CONCEALMENT",
+ "description": "TXT_KEY_PROMOTIONLINE_BUILD_UP_CONCEALMENT",
+ "help": "TXT_KEY_PROMOTIONLINE_BUILD_UP_CONCEALMENT_HELP",
+ "ui": {
+  "art": {
+   "icon": "Art/Buttons/Promotions/Concealment1BuildUp.dds"
+  }
+ },
+ "identity": {
+  "buildUp": true
+ }
+}

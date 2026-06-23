@@ -25,10 +25,6 @@
   ]
  },
  "obsoletes": {
-  "buildings": [
-   "BUILDING_MAGLEV_RAILS",
-   "BUILDING_WIRELESS_GRID"
-  ],
   "builds": [
    "BUILD_ELECTRIC_RAILROAD"
   ]

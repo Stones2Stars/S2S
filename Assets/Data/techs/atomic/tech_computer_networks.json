@@ -13,14 +13,6 @@
    "TECH_MICROPROCESSOR"
   ]
  },
- "obsoletes": {
-  "buildings": [
-   "BUILDING_KERALA_SCHOOL_OF_MATHEMATICS",
-   "BUILDING_MATHEMATICS_ACADEMY",
-   "BUILDING_MUNICIPAL_COMPUTING_ENGINE",
-   "BUILDING_TELEGRAPH_STATION"
-  ]
- },
  "requires": {
   "build": {
    "all": [

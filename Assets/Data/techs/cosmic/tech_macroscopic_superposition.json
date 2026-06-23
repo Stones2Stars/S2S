@@ -16,11 +16,6 @@
    "TECH_PURE_INFORMATION_SOCIETY"
   ]
  },
- "obsoletes": {
-  "buildings": [
-   "BUILDING_MOLECULAR_ASSEMBLER"
-  ]
- },
  "requires": {
   "build": {
    "all": [

@@ -30,15 +30,6 @@
    "UNIT_MODERN_MEDIVAC"
   ]
  },
- "obsoletes": {
-  "buildings": [
-   "BUILDING_DISEASE_DIPHTHERIA",
-   "BUILDING_DISEASE_SCURVY",
-   "BUILDING_DOCTORS_OFFICE",
-   "BUILDING_GUILD_APOTHECARIES",
-   "BUILDING_GUILLOTINE"
-  ]
- },
  "requires": {
   "build": {
    "all": [

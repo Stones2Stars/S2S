@@ -12,11 +12,6 @@
    "TECH_SEXTANT"
   ]
  },
- "obsoletes": {
-  "buildings": [
-   "BUILDING_RAIN_DANCE"
-  ]
- },
  "requires": {
   "build": {
    "all": [

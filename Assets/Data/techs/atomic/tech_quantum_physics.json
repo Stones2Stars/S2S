@@ -16,11 +16,6 @@
    "TECH_FISSION"
   ]
  },
- "obsoletes": {
-  "buildings": [
-   "BUILDING_ISAAC_NEWTONS_COLLEGE"
-  ]
- },
  "requires": {
   "build": {
    "all": [

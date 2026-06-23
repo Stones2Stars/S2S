@@ -16,11 +16,6 @@
    "TECH_IMPRESSIONISM"
   ]
  },
- "obsoletes": {
-  "buildings": [
-   "BUILDING_ODEON"
-  ]
- },
  "requires": {
   "build": {
    "all": [

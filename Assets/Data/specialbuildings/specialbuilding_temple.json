@@ -5,5 +5,8 @@
   "art": {
    "icon": "Art/Interface/Buttons/Buildings/Temple.dds"
   }
+ },
+ "identity": {
+  "valid": true
  }
 }

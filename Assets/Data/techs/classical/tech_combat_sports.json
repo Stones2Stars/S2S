@@ -19,12 +19,6 @@
    "TECH_MARTIAL_ARTS"
   ]
  },
- "obsoletes": {
-  "buildings": [
-   "BUILDING_BULL_LEAPING",
-   "BUILDING_FIGHTING_PIT"
-  ]
- },
  "requires": {
   "build": {
    "all": [

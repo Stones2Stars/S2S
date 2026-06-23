@@ -19,11 +19,6 @@
    "TECH_MOTORIZED_TRANSPORTATION"
   ]
  },
- "obsoletes": {
-  "buildings": [
-   "BUILDING_OIL_LAMPS"
-  ]
- },
  "requires": {
   "build": {
    "all": [

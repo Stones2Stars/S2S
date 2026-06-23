@@ -31,11 +31,6 @@
    "UNIT_NUCLEAR_SUBMARINE"
   ]
  },
- "obsoletes": {
-  "buildings": [
-   "BUILDING_FLAK_TOWER"
-  ]
- },
  "requires": {
   "build": {
    "all": [

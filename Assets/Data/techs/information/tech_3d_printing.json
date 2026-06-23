@@ -22,11 +22,6 @@
    "UNIT_REPLICATION_MECHANIC"
   ]
  },
- "obsoletes": {
-  "buildings": [
-   "BUILDING_PARTS_MAKER"
-  ]
- },
  "requires": {
   "build": {
    "all": [

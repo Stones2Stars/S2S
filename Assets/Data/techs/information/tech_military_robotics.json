@@ -29,14 +29,6 @@
    "UNIT_WARLORDVIS"
   ]
  },
- "obsoletes": {
-  "buildings": [
-   "BUILDING_AMMUNITIONS_WORKSHOP",
-   "BUILDING_DRYDOCK",
-   "BUILDING_GARRISON",
-   "BUILDING_GUNSMITH"
-  ]
- },
  "requires": {
   "build": {
    "all": [

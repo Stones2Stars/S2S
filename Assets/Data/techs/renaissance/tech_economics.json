@@ -34,12 +34,6 @@
    "UNIT_SALAWAT_YULAYEV"
   ]
  },
- "obsoletes": {
-  "buildings": [
-   "BUILDING_EDINBURGH_CASTLE",
-   "BUILDING_PETRA"
-  ]
- },
  "requires": {
   "build": {
    "all": [

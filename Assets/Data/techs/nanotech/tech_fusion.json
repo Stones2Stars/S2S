@@ -26,17 +26,6 @@
    "UNIT_POWER_ARMORED_INFANTRY"
   ]
  },
- "obsoletes": {
-  "buildings": [
-   "BUILDING_COAL_FIRED_DYNAMO",
-   "BUILDING_COAL_PLANT",
-   "BUILDING_FAST_BREEDER_REACTOR",
-   "BUILDING_HI_TECH_NUCLEAR_REACTOR",
-   "BUILDING_PEARL_HARBOR",
-   "BUILDING_SCAPA_FLOW",
-   "BUILDING_SMALL_REACTOR_FACTORY"
-  ]
- },
  "requires": {
   "build": {
    "all": [

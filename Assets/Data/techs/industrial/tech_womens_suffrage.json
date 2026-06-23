@@ -18,13 +18,6 @@
    "TECH_ATOMIC_LIFESTYLE"
   ]
  },
- "obsoletes": {
-  "buildings": [
-   "BUILDING_EFFECT_FERTILITY_FESTIVAL",
-   "BUILDING_FERTILITY_DANCE",
-   "BUILDING_FERTILITY_FESTIVAL"
-  ]
- },
  "requires": {
   "build": {
    "all": [

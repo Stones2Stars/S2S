@@ -17,13 +17,6 @@
    "TECH_LOGISTICS"
   ]
  },
- "obsoletes": {
-  "buildings": [
-   "BUILDING_GUILD_ARTISANS",
-   "BUILDING_GUILD_MERCHANTS",
-   "BUILDING_TOLL_HOUSE"
-  ]
- },
  "requires": {
   "build": {
    "all": [

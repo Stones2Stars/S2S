@@ -27,16 +27,6 @@
    "TECH_WINDMILLS"
   ]
  },
- "obsoletes": {
-  "buildings": [
-   "BUILDING_HOUSING_BARK_HUTS",
-   "BUILDING_HOUSING_HOGANS",
-   "BUILDING_HOUSING_MUD_HUTS",
-   "BUILDING_HOUSING_PUEBLOS",
-   "BUILDING_HOUSING_TIPIS",
-   "BUILDING_HOUSING_YURTS"
-  ]
- },
  "requires": {
   "build": {
    "all": [

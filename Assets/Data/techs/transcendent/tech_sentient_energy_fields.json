@@ -16,11 +16,6 @@
    "UNIT_ENERGY_ENTITY"
   ]
  },
- "obsoletes": {
-  "buildings": [
-   "BUILDING_ANTIMATTER_INITIATED_FUSION_PLANT"
-  ]
- },
  "requires": {
   "build": {
    "all": [

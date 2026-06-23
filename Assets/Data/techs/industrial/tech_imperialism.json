@@ -17,12 +17,6 @@
    "TECH_FOREIGN_POLICY"
   ]
  },
- "obsoletes": {
-  "buildings": [
-   "BUILDING_ALHAMBRA",
-   "BUILDING_GREAT_ZIMBABWE"
-  ]
- },
  "requires": {
   "build": {
    "all": [

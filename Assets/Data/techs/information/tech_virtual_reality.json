@@ -16,12 +16,6 @@
    "TECH_WEARABLE_COMPUTERS"
   ]
  },
- "obsoletes": {
-  "buildings": [
-   "BUILDING_BAYREUTH_FESTSPIELHAUS",
-   "BUILDING_WESTMINSTER_ABBEY"
-  ]
- },
  "requires": {
   "build": {
    "all": [

@@ -18,11 +18,6 @@
    "TECH_WORMHOLE_TRAVERSAL"
   ]
  },
- "obsoletes": {
-  "buildings": [
-   "BUILDING_METAMATERIAL_WALLS"
-  ]
- },
  "requires": {
   "build": {
    "all": [

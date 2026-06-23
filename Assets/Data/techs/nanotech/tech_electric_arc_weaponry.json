@@ -21,12 +21,6 @@
    "UNIT_PLASMA_THROWER"
   ]
  },
- "obsoletes": {
-  "buildings": [
-   "BUILDING_GERM_TRAPS",
-   "BUILDING_MISSILE_BATTERY"
-  ]
- },
  "requires": {
   "build": {
    "all": [

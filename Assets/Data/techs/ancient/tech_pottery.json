@@ -41,11 +41,6 @@
   ]
  },
  "obsoletes": {
-  "buildings": [
-   "BUILDING_HOUSING_BONE_HUTS",
-   "BUILDING_HOUSING_TREEHOUSES",
-   "BUILDING_LL_CACTUS_HILL"
-  ],
   "builds": [
    "BUILD_FORTIFIED_CAVE"
   ]

@@ -14,20 +14,6 @@
    "TECH_NANOELECTRONICS"
   ]
  },
- "obsoletes": {
-  "buildings": [
-   "BUILDING_BAZAAR",
-   "BUILDING_BRIDAL_SHOP",
-   "BUILDING_COSTUME_SHOP",
-   "BUILDING_CRAFTS_HUT",
-   "BUILDING_GROCER",
-   "BUILDING_MARKET",
-   "BUILDING_PAPER_MAKER",
-   "BUILDING_PORTRAIT_PAINTER",
-   "BUILDING_SMOKE_SIGNALS",
-   "BUILDING_WIG_SHOP"
-  ]
- },
  "requires": {
   "build": {
    "all": [

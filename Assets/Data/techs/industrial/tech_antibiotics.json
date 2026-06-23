@@ -13,12 +13,6 @@
    "TECH_ATOMIC_LIFESTYLE"
   ]
  },
- "obsoletes": {
-  "buildings": [
-   "BUILDING_DISEASE_SMALLPOX",
-   "BUILDING_NEST_THIEF"
-  ]
- },
  "requires": {
   "build": {
    "all": [

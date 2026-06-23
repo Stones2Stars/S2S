@@ -78,18 +78,6 @@
    "UNIT_TORPEDO_BOAT"
   ]
  },
- "obsoletes": {
-  "buildings": [
-   "BUILDING_AUTOMATION_CLOCK",
-   "BUILDING_BASKETMAKER",
-   "BUILDING_BEADWORKER",
-   "BUILDING_GUILD_GLASSBLOWERS",
-   "BUILDING_GUILD_POTTERS",
-   "BUILDING_LACQUERWARE_MAKER",
-   "BUILDING_POTTERS_HUT",
-   "BUILDING_SEAMSTRESS"
-  ]
- },
  "requires": {
   "build": {
    "all": [

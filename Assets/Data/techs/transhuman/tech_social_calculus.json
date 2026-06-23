@@ -15,11 +15,6 @@
    "TECH_WHOLE_BRAIN_EMULATION"
   ]
  },
- "obsoletes": {
-  "buildings": [
-   "BUILDING_RACIAL_PROFILING"
-  ]
- },
  "requires": {
   "build": {
    "all": [

@@ -18,14 +18,6 @@
    "TECH_SUPERSYMMETRIC_PARTICLE_CONSTRUCTION"
   ]
  },
- "obsoletes": {
-  "buildings": [
-   "BUILDING_ACOUSTIC_CROWD_CONTROL",
-   "BUILDING_HE3_FUSION_POWER_PLANT",
-   "BUILDING_INTERSTELLAR_DYSON_SWARM",
-   "BUILDING_LASER_BATTERY"
-  ]
- },
  "requires": {
   "build": {
    "all": [

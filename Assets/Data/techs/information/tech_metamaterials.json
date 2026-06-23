@@ -36,11 +36,6 @@
   ]
  },
  "obsoletes": {
-  "buildings": [
-   "BUILDING_BARRICADES",
-   "BUILDING_BAUHAUS_SCHOOL",
-   "BUILDING_MAGINOT_LINE"
-  ],
   "builds": [
    "BUILD_COMMAND_BUNKER",
    "BUILD_RESOURCE_TOWN"

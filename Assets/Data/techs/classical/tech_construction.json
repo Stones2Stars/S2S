@@ -31,11 +31,6 @@
    "UNIT_PACADEO"
   ]
  },
- "obsoletes": {
-  "buildings": [
-   "BUILDING_BAMBOO_BRIDGE"
-  ]
- },
  "requires": {
   "build": {
    "all": [

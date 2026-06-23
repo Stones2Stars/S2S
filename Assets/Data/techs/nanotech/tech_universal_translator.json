@@ -15,11 +15,6 @@
    "TECH_PERSONAL_ROBOTS"
   ]
  },
- "obsoletes": {
-  "buildings": [
-   "BUILDING_ROSETTA_STONE"
-  ]
- },
  "requires": {
   "build": {
    "all": [

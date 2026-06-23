@@ -25,11 +25,6 @@
    "UNIT_WORLDSHIP3"
   ]
  },
- "obsoletes": {
-  "buildings": [
-   "BUILDING_INTERSTELLAR_ADVANCED_NUCLEAR_ENGINE"
-  ]
- },
  "requires": {
   "build": {
    "all": [

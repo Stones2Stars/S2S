@@ -5,5 +5,8 @@
   "art": {
    "icon": "Art/Interface/Buttons/TechTree/steampunk.dds"
   }
+ },
+ "identity": {
+  "valid": true
  }
 }

@@ -20,13 +20,6 @@
    "TECH_MORMON"
   ]
  },
- "obsoletes": {
-  "buildings": [
-   "BUILDING_HENNA_GATHERER",
-   "BUILDING_INDIGO_GATHERER",
-   "BUILDING_STORAGE_PIT"
-  ]
- },
  "requires": {
   "build": {
    "all": [

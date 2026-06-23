@@ -39,13 +39,6 @@
    "TECH_PSYCHOLOGY"
   ]
  },
- "obsoletes": {
-  "buildings": [
-   "BUILDING_CAT_SHRINE",
-   "BUILDING_COW_SHRINE",
-   "BUILDING_ELEPHANT_SHRINE"
-  ]
- },
  "requires": {
   "build": {
    "all": [

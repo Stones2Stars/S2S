@@ -23,16 +23,6 @@
    "UNIT_MEDEVAC_DROPSHIP"
   ]
  },
- "obsoletes": {
-  "buildings": [
-   "BUILDING_CHOP_SHOP",
-   "BUILDING_DIRIGIBLE_TERMINAL",
-   "BUILDING_PAVED_ROADS",
-   "BUILDING_RIVER_ROUGE_COMPLEX",
-   "BUILDING_ROUTE_66",
-   "BUILDING_ROUTE_66_TERMINUS"
-  ]
- },
  "requires": {
   "build": {
    "all": [

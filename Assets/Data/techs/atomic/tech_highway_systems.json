@@ -19,11 +19,6 @@
    "TECH_TOURISM"
   ]
  },
- "obsoletes": {
-  "buildings": [
-   "BUILDING_SMALL_STEEL_ARCH_BRIDGE"
-  ]
- },
  "requires": {
   "build": {
    "all": [

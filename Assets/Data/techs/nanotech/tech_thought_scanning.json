@@ -17,13 +17,6 @@
    "TECH_ONTOLOGICAL_ENGINEERING"
   ]
  },
- "obsoletes": {
-  "buildings": [
-   "BUILDING_MOB_STOREFRONT",
-   "BUILDING_MOB_STOREFRONT_UNSANCTIONED",
-   "BUILDING_REHABILITATION_CENTER"
-  ]
- },
  "requires": {
   "build": {
    "all": [

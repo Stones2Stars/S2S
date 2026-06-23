@@ -5,5 +5,8 @@
   "art": {
    "icon": "Art/Interface/Buttons/TechTree/retrospace.dds"
   }
+ },
+ "identity": {
+  "valid": true
  }
 }

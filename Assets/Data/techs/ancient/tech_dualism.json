@@ -36,11 +36,6 @@
    "UNIT_TOWN_WATCHMEN"
   ]
  },
- "obsoletes": {
-  "buildings": [
-   "BUILDING_LOOKOUT_POST"
-  ]
- },
  "requires": {
   "build": {
    "all": [

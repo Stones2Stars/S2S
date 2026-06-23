@@ -18,11 +18,6 @@
    "TECH_MOLECULAR_BIOLOGY"
   ]
  },
- "obsoletes": {
-  "buildings": [
-   "BUILDING_LANDMINES"
-  ]
- },
  "requires": {
   "build": {
    "all": [

@@ -20,10 +20,6 @@
   ]
  },
  "obsoletes": {
-  "buildings": [
-   "BUILDING_HUNTING_INSTRUCTIONS",
-   "BUILDING_MASTER_HUNTER"
-  ],
   "units": [
    "UNIT_GUNFIGHTER",
    "UNIT_HAJDUK"

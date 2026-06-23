@@ -5,5 +5,8 @@
   "art": {
    "icon": "Art/Interface/Buttons/Great_Wonders/corpo_cereal_mills.dds"
   }
+ },
+ "identity": {
+  "valid": true
  }
 }

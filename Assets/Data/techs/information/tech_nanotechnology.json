@@ -15,11 +15,6 @@
    "TECH_SUPERSTRING_THEORY"
   ]
  },
- "obsoletes": {
-  "buildings": [
-   "BUILDING_COTTAGE_INDUSTRY"
-  ]
- },
  "requires": {
   "build": {
    "all": [

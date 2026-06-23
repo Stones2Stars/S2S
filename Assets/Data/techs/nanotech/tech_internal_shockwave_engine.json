@@ -20,11 +20,6 @@
    "UNIT_SHOCKWAVE_APC"
   ]
  },
- "obsoletes": {
-  "buildings": [
-   "BUILDING_AUTOMOBILE_DEALERSHIP"
-  ]
- },
  "requires": {
   "build": {
    "all": [

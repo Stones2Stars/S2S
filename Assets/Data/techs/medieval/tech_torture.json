@@ -19,11 +19,6 @@
    "TECH_WARRANTS_AND_DECREES"
   ]
  },
- "obsoletes": {
-  "buildings": [
-   "BUILDING_BRAZEN_BULL"
-  ]
- },
  "requires": {
   "build": {
    "all": [

@@ -31,12 +31,6 @@
    "UNIT_TROTSKY"
   ]
  },
- "obsoletes": {
-  "buildings": [
-   "BUILDING_MARCO_POLOS_EMBASSY",
-   "BUILDING_MATSUMOTO_CASTLE"
-  ]
- },
  "requires": {
   "build": {
    "all": [

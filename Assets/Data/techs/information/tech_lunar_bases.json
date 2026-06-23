@@ -12,11 +12,6 @@
    "TECH_ASTEROID_BELT_PROBES"
   ]
  },
- "obsoletes": {
-  "buildings": [
-   "BUILDING_CARTOGRAPHERS_SHOP"
-  ]
- },
  "requires": {
   "build": {
    "all": [

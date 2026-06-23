@@ -15,15 +15,6 @@
    "TECH_FUSION_SPACECRAFT"
   ]
  },
- "obsoletes": {
-  "buildings": [
-   "BUILDING_ADVANCED_FLOODWALL",
-   "BUILDING_DEEP_SEA_MINE",
-   "BUILDING_INTERNATIONAL_PORT",
-   "BUILDING_LIGHTHOUSE",
-   "BUILDING_PIER"
-  ]
- },
  "requires": {
   "build": {
    "all": [

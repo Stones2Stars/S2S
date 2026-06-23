@@ -20,12 +20,6 @@
    "TECH_SOLAR_ORDNANCE"
   ]
  },
- "obsoletes": {
-  "buildings": [
-   "BUILDING_MARTIAN_CAVE_DWELLING",
-   "BUILDING_MARTIAN_EXPANDED_HABITAT"
-  ]
- },
  "requires": {
   "build": {
    "all": [

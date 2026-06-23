@@ -54,12 +54,6 @@
   ]
  },
  "obsoletes": {
-  "buildings": [
-   "BUILDING_DANCE_HUT",
-   "BUILDING_FIRE_ABATIS",
-   "BUILDING_SU_SONGS_WORKSHOP",
-   "BUILDING_TREADMILL_CRANE"
-  ],
   "builds": [
    "BUILD_PAVED_ROAD"
   ]

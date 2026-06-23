@@ -58,11 +58,6 @@
    "TECH_PULLEY"
   ]
  },
- "obsoletes": {
-  "buildings": [
-   "BUILDING_LL_MEADOWCROFT_ROCKSHELTER"
-  ]
- },
  "requires": {
   "build": {
    "all": [
