@@ -1,6 +1,9 @@
 # Claude Code local settings (per-developer; keep skills/ shared)
 .claude/settings.local.json
 
+# Local machine config (per-developer game paths, etc.); .env.example is the tracked template
+.env
+
 # Live-game benchmark data (per-developer; the README documenting the scheme stays tracked)
 /Benchmarks/*
 !/Benchmarks/README.md
@@ -8,6 +11,7 @@
 # Compiled Object files
 *.obj
 
+/obj
 # Precompiled Headers
 *.pch
 
