@@ -5,6 +5,10 @@
  "skills": {
   "rivalTerritory": true
  },
+ "tags": {
+  "merchant": true,
+  "civilian": true
+ },
  "grants": {
   "greatPersonAction": {
    "trade": {

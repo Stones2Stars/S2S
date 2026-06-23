@@ -96,6 +96,9 @@
   "militarySupport": true,
   "militaryTrade": true
  },
+ "tags": {
+  "military": true
+ },
  "grants": {
   "promotions": [
    "PROMOTION_BLITZ",

@@ -76,6 +76,9 @@
    "UNITCOMBAT_HELICOPTER": true
   }
  },
+ "tags": {
+  "military": true
+ },
  "succession": {
   "upgradesTo": [
    "UNIT_MOBILE_SAM"

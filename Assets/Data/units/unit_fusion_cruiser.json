@@ -85,6 +85,9 @@
   "militarySupport": true,
   "militaryTrade": true
  },
+ "tags": {
+  "military": true
+ },
  "cost": {
   "production": 4600,
   "upkeep": 3

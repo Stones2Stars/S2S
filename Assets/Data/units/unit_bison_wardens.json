@@ -53,6 +53,9 @@
    "UNITCOMBAT_PROMOTED_ARMED_GUARD": true
   }
  },
+ "tags": {
+  "military": true
+ },
  "grants": {
   "promotions": [
    "PROMOTION_HUNTING_SIGHT1",

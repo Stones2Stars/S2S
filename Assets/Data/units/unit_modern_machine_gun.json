@@ -60,6 +60,9 @@
   "militarySupport": true,
   "militaryTrade": true
  },
+ "tags": {
+  "military": true
+ },
  "succession": {
   "upgradesTo": [
    "UNIT_UNMANNED_MACHINE_GUN"

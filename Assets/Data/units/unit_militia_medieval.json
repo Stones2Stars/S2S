@@ -8,6 +8,9 @@
   "militaryProduction": true,
   "militarySupport": true
  },
+ "tags": {
+  "military": true
+ },
  "succession": {
   "upgradesTo": [
    "UNIT_MILITIA_RENAISSANCE"

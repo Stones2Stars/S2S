@@ -46,6 +46,9 @@
   "militarySupport": true,
   "militaryTrade": true
  },
+ "tags": {
+  "military": true
+ },
  "grants": {
   "greatPersonAction": {
    "trade": {

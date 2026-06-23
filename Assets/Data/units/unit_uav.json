@@ -95,6 +95,9 @@
   "militaryTrade": true,
   "dcmAirBomb": 5
  },
+ "tags": {
+  "military": true
+ },
  "cost": {
   "production": 1925,
   "upkeep": 11

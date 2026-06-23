@@ -36,6 +36,10 @@
   "inquisitor": true,
   "stateReligion": true
  },
+ "tags": {
+  "merchant": true,
+  "civilian": true
+ },
  "cost": {
   "production": 233,
   "upkeep": 1

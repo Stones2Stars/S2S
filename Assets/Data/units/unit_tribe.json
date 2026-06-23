@@ -20,6 +20,10 @@
   "found": true,
   "unlimitedException": true
  },
+ "tags": {
+  "settler": true,
+  "civilian": true
+ },
  "grants": {
   "foundBuildings": [
    {

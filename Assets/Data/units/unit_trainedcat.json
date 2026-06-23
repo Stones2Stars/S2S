@@ -99,6 +99,9 @@
    "UNITCOMBAT_STRIKE_TEAM": true
   }
  },
+ "tags": {
+  "military": true
+ },
  "vision": {
   "invisible": "INVISIBLE_CAMOUFLAGE",
   "invisibilityIntensity": {

@@ -154,6 +154,9 @@
    "UNITCOMBAT_SIEGE_ROCKETRY": true
   }
  },
+ "tags": {
+  "military": true
+ },
  "vision": {
   "invisible": "INVISIBLE_CAMOUFLAGE",
   "visibilityIntensity": {

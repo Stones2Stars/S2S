@@ -18,6 +18,11 @@
   "militaryProduction": true,
   "militarySupport": true
  },
+ "tags": {
+  "military": true,
+  "worker": true,
+  "civilian": true
+ },
  "grants": {
   "builds": [
    "BUILD_WHALING_BOATS",

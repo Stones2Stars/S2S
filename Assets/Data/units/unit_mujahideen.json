@@ -91,6 +91,9 @@
    "UNITCOMBAT_HELICOPTER": true
   }
  },
+ "tags": {
+  "military": true
+ },
  "grants": {
   "promotions": [
    "PROMOTION_GUERILLA1",

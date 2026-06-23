@@ -20,6 +20,10 @@
   "food": true,
   "found": true
  },
+ "tags": {
+  "settler": true,
+  "civilian": true
+ },
  "grants": {
   "foundBuildings": [
    {

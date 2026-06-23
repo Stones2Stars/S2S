@@ -97,6 +97,9 @@
    "UNITCOMBAT_MOUNTED": true
   }
  },
+ "tags": {
+  "military": true
+ },
  "grants": {
   "promotions": [
    "PROMOTION_COMMANDO",

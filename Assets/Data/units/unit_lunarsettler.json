@@ -35,6 +35,10 @@
   "canMoveImpassable": true,
   "food": true
  },
+ "tags": {
+  "settler": true,
+  "civilian": true
+ },
  "outcomes": {
   "actions": [
    {

@@ -21,6 +21,10 @@
   "canMoveImpassable": true,
   "ignoreTerrainCost": true
  },
+ "tags": {
+  "worker": true,
+  "civilian": true
+ },
  "grants": {
   "builds": [
    "BUILD_PLACE_ASTEROID"

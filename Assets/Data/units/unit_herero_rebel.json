@@ -142,6 +142,9 @@
    "UNITCOMBAT_GUN": true
   }
  },
+ "tags": {
+  "military": true
+ },
  "vision": {
   "visibilityIntensity": {
    "INVISIBLE_CAMOUFLAGE": 3

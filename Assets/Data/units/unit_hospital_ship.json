@@ -95,6 +95,9 @@
   "militarySupport": true,
   "militaryTrade": true
  },
+ "tags": {
+  "military": true
+ },
  "succession": {
   "upgradesTo": [
    "UNIT_HOSPITAL_SHIP_2"

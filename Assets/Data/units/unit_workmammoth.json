@@ -32,6 +32,10 @@
   "food": true,
   "workerTrade": true
  },
+ "tags": {
+  "worker": true,
+  "civilian": true
+ },
  "grants": {
   "promotions": [
    "PROMOTION_POLAR_WORKER1",

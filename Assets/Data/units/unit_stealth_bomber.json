@@ -90,6 +90,9 @@
   "militaryTrade": true,
   "dcmAirBomb": 5
  },
+ "tags": {
+  "military": true
+ },
  "succession": {
   "upgradesTo": [
    "UNIT_ORBITAL_BOMBER"

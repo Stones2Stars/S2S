@@ -97,6 +97,9 @@
    "UNITCOMBAT_HELICOPTER": true
   }
  },
+ "tags": {
+  "military": true
+ },
  "succession": {
   "upgradesTo": [
    "UNIT_SPACE_SAM_INFANTRY"

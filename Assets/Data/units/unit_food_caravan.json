@@ -24,6 +24,11 @@
   "militarySupport": true,
   "militaryTrade": true
  },
+ "tags": {
+  "military": true,
+  "merchant": true,
+  "civilian": true
+ },
  "grants": {
   "greatPersonAction": {
    "food": {

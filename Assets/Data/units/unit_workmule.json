@@ -40,6 +40,10 @@
   "food": true,
   "workerTrade": true
  },
+ "tags": {
+  "worker": true,
+  "civilian": true
+ },
  "grants": {
   "promotions": [
    "PROMOTION_FIELD_WORKER1",

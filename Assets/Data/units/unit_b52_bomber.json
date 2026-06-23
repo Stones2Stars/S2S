@@ -94,6 +94,9 @@
   "militaryTrade": true,
   "dcmAirBomb": 5
  },
+ "tags": {
+  "military": true
+ },
  "succession": {
   "upgradesTo": [
    "UNIT_B1_LANCER"

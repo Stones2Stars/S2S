@@ -148,6 +148,9 @@
    "UNITCOMBAT_CRIMINAL": true
   }
  },
+ "tags": {
+  "military": true
+ },
  "vision": {
   "visibilityIntensity": {
    "INVISIBLE_DISGUISED": 6

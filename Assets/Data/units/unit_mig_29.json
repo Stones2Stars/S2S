@@ -101,6 +101,9 @@
   "militaryTrade": true,
   "dcmAirBomb": 2
  },
+ "tags": {
+  "military": true
+ },
  "grants": {
   "promotions": [
    "PROMOTION_AIR_TO_AIR1",

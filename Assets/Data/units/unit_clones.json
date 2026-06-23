@@ -20,6 +20,10 @@
   "food": true,
   "workerTrade": true
  },
+ "tags": {
+  "worker": true,
+  "civilian": true
+ },
  "grants": {
   "builds": [
    "BUILD_MUSHROOM_GATHERER",

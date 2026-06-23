@@ -114,6 +114,19 @@ CAP_BOOL = {
 CAP_COUNT = {"iAnimalIgnoresBorders": "animalIgnoresBorders"}
 # DCM air-bomb tier bools -> capabilities.dcmAirBomb (the highest set tier)
 DCM_AIRBOMB = ["bDCMAirBomb1", "bDCMAirBomb2", "bDCMAirBomb3", "bDCMAirBomb4", "bDCMAirBomb5"]
+# ---- tags: a unit's IMMUTABLE, accounting-only classification (json.md §8). DERIVED, greenfield — there is NO
+# legacy tag boolean (it is a NEW concept; IS_MILITARY had to be *detected*). FIRST PASS: `military` from the
+# IS_MILITARY signal (bMilitarySupport, owner-verified); civilian roles from DefaultUnitAI; a role tag rides with
+# its category (worker -> worker+civilian). Incomplete is FINE (owner: low-risk, fixed during validation). The
+# accounting foundation for the future unitcombat -> activeOn.unit:<tag> work (post-migration); mounted/gunpowder/
+# mechanized etc. will be derived from unitcombats THEN, not here. ----
+TAG_BY_UNITAI = {
+    "UNITAI_WORKER":   ["worker", "civilian"], "UNITAI_WORKER_SEA": ["worker", "civilian"],
+    "UNITAI_SETTLE":   ["settler", "civilian"], "UNITAI_MISSIONARY": ["missionary", "civilian"],
+    "UNITAI_MERCHANT": ["merchant", "civilian"],
+    # `spy` deferred: collides with the `spy` SKILL (bSpy) — tag-vs-skill ambiguity is a validation discussion.
+    # `entertainer` deferred: no clean DefaultUnitAI signal yet. Untagged is fine (owner: fix in validation).
+}
 
 # ---- grants (one-shot, lists) ----
 GRANT_LIST = {"FreePromotions": "promotions", "GreatPeoples": "greatPeople", "Builds": "builds",
@@ -511,6 +524,7 @@ def curate(typ, rec, store):
 
     fams = OrderedDict()
     caps = OrderedDict()
+    tags = OrderedDict()
     grants = OrderedDict()
     succession = OrderedDict()
     identity = OrderedDict()
@@ -546,6 +560,11 @@ def curate(typ, rec, store):
     dcm = [t for t in DCM_AIRBOMB if _bool(rec, t)]
     if dcm:
         caps["dcmAirBomb"] = len(dcm)   # the tier = count of set levels
+    # --- tags (derived classification; greenfield first pass — see TAG_BY_UNITAI) ---
+    if _bool(rec, "bMilitarySupport"):
+        tags["military"] = True   # IS_MILITARY signal (owner-verified: drives the military upkeep pool + count)
+    for t in TAG_BY_UNITAI.get(_txt(rec, "DefaultUnitAI"), ()):
+        tags[t] = True
     # --- grants (lists) ---
     for tag, key in GRANT_LIST.items():
         lst = _typelist(rec, tag)
@@ -635,6 +654,8 @@ def curate(typ, rec, store):
         out[f] = fams[f]
     if caps:
         out["skills"] = caps
+    if tags:
+        out["tags"] = tags
     if vision:
         out["vision"] = vision
     if outcomes:
@@ -703,11 +724,11 @@ def main():
         print("COVERAGE: all XML tags handled or deferred (pass 2).")
 
     has = lambda k: sum(1 for o in results.values() if k in o)
-    STRUCT = {"type", "description", "civilopedia", "help", "enables", "obsoletes", "requires", "allowed", "skills",
+    STRUCT = {"type", "description", "civilopedia", "help", "enables", "obsoletes", "requires", "allowed", "skills", "tags",
               "vision", "outcomes", "grants", "succession", "cost", "ai", "loadPrune", "ui", "world", "sound", "identity"}
     seen = sorted({f for o in results.values() for f in o if f not in STRUCT})
     print("UnitInfo curated: %d  | SpecialUnitInfo: %d" % (n, len(su_results)))
-    for k in ("enables", "obsoletes", "requires", "allowed", "skills", "grants", "succession", "cost", "identity"):
+    for k in ("enables", "obsoletes", "requires", "allowed", "skills", "tags", "grants", "succession", "cost", "identity"):
         print("  with %-11s: %d" % (k, has(k)))
     print("  families seen: %s" % ", ".join(seen))
     if args.sample is not None:

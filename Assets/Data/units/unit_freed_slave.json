@@ -3,6 +3,10 @@
  "description": "TXT_KEY_UNIT_FREED_SLAVE",
  "civilopedia": "TXT_KEY_UNIT_FREED_SLAVE_PEDIA",
  "help": "TXT_KEY_UNIT_FREED_SLAVE_HELP",
+ "tags": {
+  "worker": true,
+  "civilian": true
+ },
  "outcomes": {
   "actions": [
    {

@@ -56,6 +56,11 @@
   "rivalTerritory": true,
   "militarySupport": true
  },
+ "tags": {
+  "military": true,
+  "merchant": true,
+  "civilian": true
+ },
  "grants": {
   "greatPersonAction": {
    "food": {

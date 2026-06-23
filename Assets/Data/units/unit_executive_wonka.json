@@ -27,6 +27,10 @@
    }
   }
  },
+ "tags": {
+  "missionary": true,
+  "civilian": true
+ },
  "cost": {
   "production": 275,
   "upkeep": 1

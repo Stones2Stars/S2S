@@ -21,6 +21,10 @@
   "food": true,
   "workerTrade": true
  },
+ "tags": {
+  "worker": true,
+  "civilian": true
+ },
  "grants": {
   "builds": [
    "BUILD_FORTIFIED_CAVE",

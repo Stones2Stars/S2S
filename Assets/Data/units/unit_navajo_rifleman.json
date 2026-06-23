@@ -126,6 +126,9 @@
    "UNITCOMBAT_MOUNTED": true
   }
  },
+ "tags": {
+  "military": true
+ },
  "vision": {
   "visibilityIntensity": {
    "INVISIBLE_CAMOUFLAGE": 3

@@ -173,6 +173,9 @@
    "UNITCOMBAT_CANINE": true
   }
  },
+ "tags": {
+  "military": true
+ },
  "vision": {
   "invisible": "INVISIBLE_CAMOUFLAGE",
   "visibilityIntensity": {

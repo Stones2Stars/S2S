@@ -103,6 +103,9 @@
   "militarySupport": true,
   "militaryTrade": true
  },
+ "tags": {
+  "military": true
+ },
  "vision": {
   "invisible": "INVISIBLE_STEALTH"
  },

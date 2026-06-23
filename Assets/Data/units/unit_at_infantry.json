@@ -59,6 +59,9 @@
    "UNITCOMBAT_TRACKED": true
   }
  },
+ "tags": {
+  "military": true
+ },
  "grants": {
   "promotions": [
    "PROMOTION_AMBUSH"

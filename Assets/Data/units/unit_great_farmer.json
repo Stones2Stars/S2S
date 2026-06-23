@@ -19,6 +19,10 @@
   "food": true,
   "unlimitedException": true
  },
+ "tags": {
+  "worker": true,
+  "civilian": true
+ },
  "grants": {
   "builds": [
    "BUILD_BONUS_DONKEY",

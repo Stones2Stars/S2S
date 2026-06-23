@@ -82,6 +82,9 @@
    "UNIT_LANDING_SHIP": true
   }
  },
+ "tags": {
+  "military": true
+ },
  "vision": {
   "invisible": "INVISIBLE_SUBMARINE"
  },

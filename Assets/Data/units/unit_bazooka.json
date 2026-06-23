@@ -63,6 +63,9 @@
    "UNITCOMBAT_TRACKED": true
   }
  },
+ "tags": {
+  "military": true
+ },
  "succession": {
   "upgradesTo": [
    "UNIT_AT_INFANTRY"

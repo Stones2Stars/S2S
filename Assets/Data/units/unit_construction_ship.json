@@ -25,6 +25,10 @@
   "canMoveAllTerrain": true,
   "canMoveImpassable": true
  },
+ "tags": {
+  "worker": true,
+  "civilian": true
+ },
  "grants": {
   "builds": [
    "BUILD_LUNAR_HABITATION_COMPLEX",

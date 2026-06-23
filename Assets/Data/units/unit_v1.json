@@ -46,6 +46,9 @@
   "militaryTrade": true,
   "dcmAirBomb": 3
  },
+ "tags": {
+  "military": true
+ },
  "succession": {
   "upgradesTo": [
    "UNIT_GUIDED_MISSILE"

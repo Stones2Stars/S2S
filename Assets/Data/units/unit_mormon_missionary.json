@@ -16,6 +16,10 @@
    ]
   }
  },
+ "tags": {
+  "missionary": true,
+  "civilian": true
+ },
  "grants": {
   "greatPersonAction": {
    "hurry": {

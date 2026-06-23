@@ -134,6 +134,9 @@
    "UNITCOMBAT_RUFFIAN": true
   }
  },
+ "tags": {
+  "military": true
+ },
  "vision": {
   "invisible": "INVISIBLE_CAMOUFLAGE",
   "invisibilityIntensity": {

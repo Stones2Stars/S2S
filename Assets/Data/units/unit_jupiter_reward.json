@@ -17,6 +17,10 @@
   "canMoveImpassable": true,
   "ignoreTerrainCost": true
  },
+ "tags": {
+  "worker": true,
+  "civilian": true
+ },
  "outcomes": {
   "actions": [
    {

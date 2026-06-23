@@ -7,6 +7,10 @@
   "alwaysInvisible": true,
   "rivalTerritory": true
  },
+ "tags": {
+  "merchant": true,
+  "civilian": true
+ },
  "outcomes": {
   "actions": [
    {

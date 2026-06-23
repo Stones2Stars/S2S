@@ -83,6 +83,9 @@
   "militaryTrade": true,
   "dcmAirBomb": 5
  },
+ "tags": {
+  "military": true
+ },
  "vision": {
   "invisible": "INVISIBLE_STEALTH",
   "visibilityIntensity": {

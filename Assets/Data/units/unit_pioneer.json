@@ -18,6 +18,10 @@
   "found": true,
   "ignoreTerrainCost": true
  },
+ "tags": {
+  "settler": true,
+  "civilian": true
+ },
  "grants": {
   "foundBuildings": [
    {

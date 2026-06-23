@@ -101,6 +101,9 @@
    "UNITCOMBAT_PROMOTED_ARMED_GUARD": true
   }
  },
+ "tags": {
+  "military": true
+ },
  "vision": {
   "invisible": "INVISIBLE_CAMOUFLAGE",
   "visibilityIntensity": {

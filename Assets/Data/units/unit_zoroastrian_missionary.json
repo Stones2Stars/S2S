@@ -16,6 +16,10 @@
    ]
   }
  },
+ "tags": {
+  "missionary": true,
+  "civilian": true
+ },
  "outcomes": {
   "actions": [
    {

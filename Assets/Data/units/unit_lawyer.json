@@ -35,6 +35,10 @@
    "flat": -10
   }
  },
+ "tags": {
+  "merchant": true,
+  "civilian": true
+ },
  "outcomes": {
   "actions": [
    {

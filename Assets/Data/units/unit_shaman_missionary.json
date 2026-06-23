@@ -16,6 +16,10 @@
    ]
   }
  },
+ "tags": {
+  "missionary": true,
+  "civilian": true
+ },
  "cost": {
   "production": 110
  },

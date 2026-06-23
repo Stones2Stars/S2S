@@ -88,6 +88,9 @@
    "UNIT_FUSION_TRANSPORT": true
   }
  },
+ "tags": {
+  "military": true
+ },
  "vision": {
   "invisible": "INVISIBLE_SUBMARINE"
  },

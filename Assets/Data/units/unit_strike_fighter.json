@@ -72,6 +72,9 @@
   "militaryTrade": true,
   "dcmAirBomb": 2
  },
+ "tags": {
+  "military": true
+ },
  "succession": {
   "upgradesTo": [
    "UNIT_F22_RAPTOR"
