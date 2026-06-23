@@ -10,19 +10,13 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_DEEP_SPACE_ORBITAL_BASE",
-     "scope": "city"
-    },
+    "BUILDING_DEEP_SPACE_ORBITAL_BASE",
     {
      "type": "BUILDING_NEPTUNE_ORBITAL_RING",
      "scope": "empire",
      "min": 1
     },
-    {
-     "type": "TECH_ADAPTIVE_ARCHITECTURE",
-     "scope": "team"
-    }
+    "TECH_ADAPTIVE_ARCHITECTURE"
    ],
    "any": [
     [

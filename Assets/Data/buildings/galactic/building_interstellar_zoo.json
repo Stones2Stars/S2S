@@ -5,21 +5,12 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_ECOSYNTHESIS",
-     "scope": "team"
-    }
+    "TECH_ECOSYNTHESIS"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_INTERSTELLAR_METROPOLIS",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_SPACE_COLONY_MILKY_WAY",
-      "scope": "city"
-     }
+     "BUILDING_INTERSTELLAR_METROPOLIS",
+     "BUILDING_SPACE_COLONY_MILKY_WAY"
     ],
     [
      {
@@ -40,10 +31,7 @@
     50,
     {
      "value": 12,
-     "enabled": {
-      "type": "TECH_PARTICLE_GENETICS",
-      "scope": "team"
-     }
+     "enabled": "TECH_PARTICLE_GENETICS"
     }
    ]
   }

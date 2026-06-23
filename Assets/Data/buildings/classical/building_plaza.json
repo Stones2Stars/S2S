@@ -13,14 +13,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_MOSAIC_WORKSHOP",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_MOSAIC_WORKING",
-     "scope": "team"
-    }
+    "BUILDING_MOSAIC_WORKSHOP",
+    "TECH_MOSAIC_WORKING"
    ],
    "any": [
     [
@@ -33,10 +27,7 @@
   },
   "operate": {
    "dormant": [
-    {
-     "type": "BUILDING_HIGH_TECH_CULTURAL_ENRICHMENT",
-     "scope": "city"
-    }
+    "BUILDING_HIGH_TECH_CULTURAL_ENRICHMENT"
    ]
   }
  },

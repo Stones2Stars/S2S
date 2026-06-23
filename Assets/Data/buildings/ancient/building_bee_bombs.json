@@ -10,21 +10,12 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_APICULTURE",
-     "scope": "team"
-    }
+    "TECH_APICULTURE"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_APIARY",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_FOOD_MANUFACTURING_DISTRICT",
-      "scope": "city"
-     }
+     "BUILDING_APIARY",
+     "BUILDING_FOOD_MANUFACTURING_DISTRICT"
     ],
     [
      {

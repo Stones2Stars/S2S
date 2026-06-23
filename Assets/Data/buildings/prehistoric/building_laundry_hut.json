@@ -14,10 +14,7 @@
   "build": {
    "all": [
     "HAS_RIVER",
-    {
-     "type": "TECH_SEWING",
-     "scope": "team"
-    }
+    "TECH_SEWING"
    ],
    "any": [
     [
@@ -39,10 +36,7 @@
     ]
    ],
    "dormant": [
-    {
-     "type": "BUILDING_HYPERMARKET",
-     "scope": "city"
-    }
+    "BUILDING_HYPERMARKET"
    ]
   }
  },

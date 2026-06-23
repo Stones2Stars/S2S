@@ -20,10 +20,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_CRUCIBLE_STEEL",
-     "scope": "team"
-    }
+    "TECH_CRUCIBLE_STEEL"
    ],
    "any": [
     [
@@ -57,14 +54,8 @@
     ]
    ],
    "dormant": [
-    {
-     "type": "BUILDING_ADVANCED_IRONWORKS",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_METALS_MEGACOMPLEX",
-     "scope": "city"
-    }
+    "BUILDING_ADVANCED_IRONWORKS",
+    "BUILDING_METALS_MEGACOMPLEX"
    ]
   }
  },

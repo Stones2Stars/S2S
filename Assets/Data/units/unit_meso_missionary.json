@@ -5,14 +5,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_TEMPLE_OF_AN",
-     "scope": "city"
-    },
-    {
-     "type": "RELIGION_MESOPOTAMISM",
-     "scope": "city"
-    }
+    "BUILDING_TEMPLE_OF_AN",
+    "RELIGION_MESOPOTAMISM"
    ]
   }
  },

@@ -6,10 +6,7 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "TECH_MASS_SURVEILLANCE",
-     "scope": "team"
-    }
+    "TECH_MASS_SURVEILLANCE"
    ],
    "any": [
     [

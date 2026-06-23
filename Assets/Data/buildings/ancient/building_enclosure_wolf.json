@@ -5,25 +5,13 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_TRADE",
-     "scope": "team"
-    }
+    "TECH_TRADE"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_GOVERNORS_MENAGERIE",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_CARNIVAL",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_ZOO",
-      "scope": "city"
-     }
+     "BUILDING_GOVERNORS_MENAGERIE",
+     "BUILDING_CARNIVAL",
+     "BUILDING_ZOO"
     ],
     [
      {
@@ -32,10 +20,7 @@
      }
     ],
     [
-     {
-      "type": "HERITAGE_TAXON_CANIDAE",
-      "scope": "empire"
-     }
+     "HERITAGE_TAXON_CANIDAE"
     ]
    ]
   }
@@ -45,10 +30,7 @@
    "flat": [
     {
      "value": 5,
-     "enabled": {
-      "type": "TECH_SCIENTIFIC_METHOD",
-      "scope": "team"
-     }
+     "enabled": "TECH_SCIENTIFIC_METHOD"
     }
    ]
   }

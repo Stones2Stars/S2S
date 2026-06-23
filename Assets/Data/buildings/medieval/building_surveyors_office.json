@@ -13,25 +13,13 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_SURVEYING",
-     "scope": "team"
-    }
+    "TECH_SURVEYING"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_TRADING_POST",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_SHOPPING_DISTRICT",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_MODERN_OFFICES",
-      "scope": "city"
-     }
+     "BUILDING_TRADING_POST",
+     "BUILDING_SHOPPING_DISTRICT",
+     "BUILDING_MODERN_OFFICES"
     ],
     [
      {
@@ -43,10 +31,7 @@
   },
   "operate": {
    "dormant": [
-    {
-     "type": "BUILDING_CONSTRUCTION_FIRM",
-     "scope": "city"
-    }
+    "BUILDING_CONSTRUCTION_FIRM"
    ]
   }
  },

@@ -10,19 +10,13 @@
      "scope": "city",
      "min": 7
     },
-    {
-     "type": "BUILDING_MUSEUM",
-     "scope": "city"
-    },
+    "BUILDING_MUSEUM",
     {
      "type": "BUILDING_MUSEUM",
      "scope": "empire",
      "min": 3
     },
-    {
-     "type": "TECH_SCIENTIFIC_METHOD",
-     "scope": "team"
-    }
+    "TECH_SCIENTIFIC_METHOD"
    ],
    "any": [
     [

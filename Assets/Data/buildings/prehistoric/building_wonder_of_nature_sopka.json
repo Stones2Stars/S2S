@@ -5,10 +5,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_LANGUAGE",
-     "scope": "team"
-    }
+    "TECH_LANGUAGE"
    ],
    "any": [
     [
@@ -47,17 +44,11 @@
    "flat": [
     {
      "value": 4,
-     "enabled": {
-      "type": "TECH_MOUNTAINEERING",
-      "scope": "team"
-     }
+     "enabled": "TECH_MOUNTAINEERING"
     },
     {
      "value": 10,
-     "enabled": {
-      "type": "TECH_TOURISM",
-      "scope": "team"
-     }
+     "enabled": "TECH_TOURISM"
     }
    ]
   }
@@ -68,10 +59,7 @@
     1,
     {
      "value": 3,
-     "enabled": {
-      "type": "TECH_WRITING",
-      "scope": "team"
-     }
+     "enabled": "TECH_WRITING"
     }
    ]
   }
@@ -114,10 +102,7 @@
   "city": {
    "flat": {
     "value": 5,
-    "enabled": {
-     "type": "TECH_EXPLORATION",
-     "scope": "team"
-    }
+    "enabled": "TECH_EXPLORATION"
    }
   }
  },

@@ -5,18 +5,9 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_POISON_CRAFTER",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_EXPLORATION",
-     "scope": "team"
-    },
-    {
-     "type": "TECH_SACRIFICE_CULT",
-     "scope": "team"
-    }
+    "BUILDING_POISON_CRAFTER",
+    "TECH_EXPLORATION",
+    "TECH_SACRIFICE_CULT"
    ]
   }
  },

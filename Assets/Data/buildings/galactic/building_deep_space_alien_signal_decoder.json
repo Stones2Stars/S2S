@@ -5,14 +5,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_DEEP_SPACE_BISHOP_RING",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_INTERSTELLAR_COMMUNICATION",
-     "scope": "team"
-    }
+    "BUILDING_DEEP_SPACE_BISHOP_RING",
+    "TECH_INTERSTELLAR_COMMUNICATION"
    ],
    "any": [
     [
@@ -30,10 +24,7 @@
     200,
     {
      "value": 11,
-     "enabled": {
-      "type": "TECH_NEUTRINO_COMMUNICATIONS",
-      "scope": "team"
-     }
+     "enabled": "TECH_NEUTRINO_COMMUNICATIONS"
     }
    ]
   }
@@ -44,10 +35,7 @@
     10,
     {
      "value": 11,
-     "enabled": {
-      "type": "TECH_NEUTRINO_COMMUNICATIONS",
-      "scope": "team"
-     }
+     "enabled": "TECH_NEUTRINO_COMMUNICATIONS"
     }
    ]
   }

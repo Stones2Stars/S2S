@@ -33,10 +33,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_WARRANTS_AND_DECREES",
-     "scope": "team"
-    }
+    "TECH_WARRANTS_AND_DECREES"
    ],
    "any": [
     [
@@ -68,22 +65,10 @@
     ]
    ],
    "dormant": [
-    {
-     "type": "BUILDING_GUARD_STATION",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_SHERIFFS_OFFICE",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_POLICE_STATION",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_POLICE_PRECINCT",
-     "scope": "city"
-    }
+    "BUILDING_GUARD_STATION",
+    "BUILDING_SHERIFFS_OFFICE",
+    "BUILDING_POLICE_STATION",
+    "BUILDING_POLICE_PRECINCT"
    ]
   }
  },
@@ -93,10 +78,7 @@
     5,
     {
      "value": 5,
-     "enabled": {
-      "type": "TECH_DIVINE_RIGHT",
-      "scope": "team"
-     }
+     "enabled": "TECH_DIVINE_RIGHT"
     }
    ],
    "percent": 1

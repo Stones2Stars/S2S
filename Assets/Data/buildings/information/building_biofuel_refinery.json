@@ -13,14 +13,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_FACTORY",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_BIOMATERIALS",
-     "scope": "team"
-    }
+    "BUILDING_FACTORY",
+    "TECH_BIOMATERIALS"
    ],
    "any": [
     [
@@ -82,10 +76,7 @@
     ]
    ],
    "dormant": [
-    {
-     "type": "BUILDING_ULTRAFUEL_REFINERY",
-     "scope": "city"
-    }
+    "BUILDING_ULTRAFUEL_REFINERY"
    ]
   }
  },

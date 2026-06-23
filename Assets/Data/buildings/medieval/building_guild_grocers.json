@@ -15,29 +15,14 @@
      "scope": "city",
      "min": 3
     },
-    {
-     "type": "TECH_AGRICULTURAL_TOOLS",
-     "scope": "team"
-    },
-    {
-     "type": "TECH_GUILDS",
-     "scope": "team"
-    }
+    "TECH_AGRICULTURAL_TOOLS",
+    "TECH_GUILDS"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_GROCER",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_SUPERMARKET",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_HYPERMARKET",
-      "scope": "city"
-     }
+     "BUILDING_GROCER",
+     "BUILDING_SUPERMARKET",
+     "BUILDING_HYPERMARKET"
     ],
     [
      {

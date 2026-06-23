@@ -24,21 +24,12 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "TECH_REFRIGERATION",
-     "scope": "team"
-    }
+    "TECH_REFRIGERATION"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_SHOPPING_DISTRICT",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_TRADING_POST",
-      "scope": "city"
-     }
+     "BUILDING_SHOPPING_DISTRICT",
+     "BUILDING_TRADING_POST"
     ],
     [
      {
@@ -57,14 +48,8 @@
     }
    ],
    "dormant": [
-    {
-     "type": "BUILDING_GALACTIC_CANTINA",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_ORDINANCE_ALCOHOL_PROHIBITION",
-     "scope": "city"
-    }
+    "BUILDING_GALACTIC_CANTINA",
+    "BUILDING_ORDINANCE_ALCOHOL_PROHIBITION"
    ]
   }
  },

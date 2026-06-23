@@ -13,25 +13,13 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_LEISURE",
-     "scope": "team"
-    },
-    {
-     "type": "TECH_GARDENING",
-     "scope": "team"
-    }
+    "TECH_LEISURE",
+    "TECH_GARDENING"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_TRADING_POST",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_SHOPPING_DISTRICT",
-      "scope": "city"
-     }
+     "BUILDING_TRADING_POST",
+     "BUILDING_SHOPPING_DISTRICT"
     ],
     [
      {
@@ -43,10 +31,7 @@
   },
   "operate": {
    "dormant": [
-    {
-     "type": "BUILDING_HIGH_TECH_CULTURAL_ENRICHMENT",
-     "scope": "city"
-    }
+    "BUILDING_HIGH_TECH_CULTURAL_ENRICHMENT"
    ]
   }
  },

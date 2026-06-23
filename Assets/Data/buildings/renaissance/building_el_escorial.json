@@ -5,10 +5,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_DIVINE_RIGHT",
-     "scope": "team"
-    },
+    "TECH_DIVINE_RIGHT",
     "STATE_RELIGION_IN_CITY"
    ],
    "any": [
@@ -28,10 +25,7 @@
      "scope": "city",
      "connection": "trade|vicinity"
     },
-    {
-     "type": "CIVIC_DIVINE_RIGHT",
-     "scope": "empire"
-    }
+    "CIVIC_DIVINE_RIGHT"
    ]
   }
  },

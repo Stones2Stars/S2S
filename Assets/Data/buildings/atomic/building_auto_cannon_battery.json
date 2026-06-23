@@ -18,10 +18,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_MANUFACTURING",
-     "scope": "team"
-    }
+    "TECH_MANUFACTURING"
    ],
    "any": [
     [
@@ -55,22 +52,10 @@
     ]
    ],
    "dormant": [
-    {
-     "type": "BUILDING_MISSILE_BATTERY",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_RAILGUN_BATTERY",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_LASER_BATTERY",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_ANTI_MATTER_BATTERY",
-     "scope": "city"
-    }
+    "BUILDING_MISSILE_BATTERY",
+    "BUILDING_RAILGUN_BATTERY",
+    "BUILDING_LASER_BATTERY",
+    "BUILDING_ANTI_MATTER_BATTERY"
    ]
   }
  },

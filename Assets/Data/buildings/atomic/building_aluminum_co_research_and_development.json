@@ -5,25 +5,13 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_ROCKETRY",
-     "scope": "team"
-    },
-    {
-     "type": "TECH_CORPORATION",
-     "scope": "team"
-    }
+    "TECH_ROCKETRY",
+    "TECH_CORPORATION"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_MODERN_OFFICES",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_OFFICIUM",
-      "scope": "city"
-     }
+     "BUILDING_MODERN_OFFICES",
+     "BUILDING_OFFICIUM"
     ],
     [
      {
@@ -35,10 +23,7 @@
   },
   "operate": {
    "all": [
-    {
-     "type": "CORPORATION_6",
-     "scope": "city"
-    }
+    "CORPORATION_6"
    ]
   }
  },

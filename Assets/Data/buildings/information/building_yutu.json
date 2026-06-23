@@ -5,10 +5,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_MACHINE_LEARNING",
-     "scope": "team"
-    }
+    "TECH_MACHINE_LEARNING"
    ],
    "any": [
     [

@@ -13,14 +13,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_FACTORY",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_MOTORIZED_TRANSPORTATION",
-     "scope": "team"
-    }
+    "BUILDING_FACTORY",
+    "TECH_MOTORIZED_TRANSPORTATION"
    ],
    "any": [
     [
@@ -47,10 +41,7 @@
     ]
    ],
    "dormant": [
-    {
-     "type": "BUILDING_MANUFACTURING_DISTRICT",
-     "scope": "city"
-    }
+    "BUILDING_MANUFACTURING_DISTRICT"
    ]
   }
  },

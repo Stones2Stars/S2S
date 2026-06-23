@@ -10,14 +10,8 @@
      "scope": "city",
      "connection": "trade|vicinity"
     },
-    {
-     "type": "BUILDING_INTERGALACTIC_ELECTROWEAK_STAR_BASE",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_NEUTRONIUM",
-     "scope": "team"
-    }
+    "BUILDING_INTERGALACTIC_ELECTROWEAK_STAR_BASE",
+    "TECH_NEUTRONIUM"
    ]
   }
  },

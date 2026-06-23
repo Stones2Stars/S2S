@@ -5,14 +5,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_DEEP_SPACE_ONEILL_CYLINDER",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_NANOMORPHICS",
-     "scope": "team"
-    }
+    "BUILDING_DEEP_SPACE_ONEILL_CYLINDER",
+    "TECH_NANOMORPHICS"
    ],
    "any": [
     [
@@ -30,31 +24,19 @@
     10,
     {
      "value": 10,
-     "enabled": {
-      "type": "TECH_NANOSHIELDING",
-      "scope": "team"
-     }
+     "enabled": "TECH_NANOSHIELDING"
     },
     {
      "value": 11,
-     "enabled": {
-      "type": "TECH_NANOMORPHIC_TROIDS",
-      "scope": "team"
-     }
+     "enabled": "TECH_NANOMORPHIC_TROIDS"
     },
     {
      "value": 10,
-     "enabled": {
-      "type": "TECH_NANO_DISASSEMBLY",
-      "scope": "team"
-     }
+     "enabled": "TECH_NANO_DISASSEMBLY"
     },
     {
      "value": 10,
-     "enabled": {
-      "type": "TECH_NANOTROIDS",
-      "scope": "team"
-     }
+     "enabled": "TECH_NANOTROIDS"
     }
    ]
   }

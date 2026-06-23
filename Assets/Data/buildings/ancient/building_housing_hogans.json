@@ -10,10 +10,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_POTTERY",
-     "scope": "team"
-    }
+    "TECH_POTTERY"
    ],
    "any": [
     [
@@ -52,30 +49,12 @@
     ]
    ],
    "dormant": [
-    {
-     "type": "BUILDING_HOUSING_INSULAE",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_HOUSING_COMMONS",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_HOUSING_APARTMENTS",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_HOUSING_HIGH_TECH_APARTMENTS",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_HOUSING_COLONY_ARCOLOGY",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_LAUNCH_ARCOLOGY",
-     "scope": "city"
-    }
+    "BUILDING_HOUSING_INSULAE",
+    "BUILDING_HOUSING_COMMONS",
+    "BUILDING_HOUSING_APARTMENTS",
+    "BUILDING_HOUSING_HIGH_TECH_APARTMENTS",
+    "BUILDING_HOUSING_COLONY_ARCOLOGY",
+    "BUILDING_LAUNCH_ARCOLOGY"
    ]
   }
  },

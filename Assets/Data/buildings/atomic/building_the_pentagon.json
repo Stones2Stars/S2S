@@ -15,10 +15,7 @@
      "scope": "empire",
      "min": 4
     },
-    {
-     "type": "TECH_LOGISTICS",
-     "scope": "team"
-    }
+    "TECH_LOGISTICS"
    ],
    "any": [
     [

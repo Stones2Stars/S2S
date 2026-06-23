@@ -10,10 +10,7 @@
      "scope": "city",
      "min": 7
     },
-    {
-     "type": "TECH_TOURISM",
-     "scope": "team"
-    }
+    "TECH_TOURISM"
    ],
    "any": [
     [

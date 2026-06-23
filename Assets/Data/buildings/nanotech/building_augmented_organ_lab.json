@@ -11,25 +11,13 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "TECH_GENE_ENHANCEMENT",
-     "scope": "team"
-    },
-    {
-     "type": "TECH_NANOGENERATORS",
-     "scope": "team"
-    }
+    "TECH_GENE_ENHANCEMENT",
+    "TECH_NANOGENERATORS"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_MEDICAL_PROSTHETICS_LAB",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_HEALTHCARE_MEGACOMPLEX",
-      "scope": "city"
-     }
+     "BUILDING_MEDICAL_PROSTHETICS_LAB",
+     "BUILDING_HEALTHCARE_MEGACOMPLEX"
     ],
     [
      {

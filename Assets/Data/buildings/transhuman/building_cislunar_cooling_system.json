@@ -11,18 +11,9 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_CISLUNAR_SPACEPORT",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_CISLUNAR_MATERIALS_LAB",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_FROST_BEAMS",
-     "scope": "team"
-    }
+    "BUILDING_CISLUNAR_SPACEPORT",
+    "BUILDING_CISLUNAR_MATERIALS_LAB",
+    "TECH_FROST_BEAMS"
    ],
    "any": [
     [

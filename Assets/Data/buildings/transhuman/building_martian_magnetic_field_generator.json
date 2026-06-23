@@ -6,18 +6,9 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_MARTIAN_ELECTRONICS_FACTORY",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_MARTIAN_MEGACITY",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_PLANETARY_DEFENSES",
-     "scope": "team"
-    }
+    "BUILDING_MARTIAN_ELECTRONICS_FACTORY",
+    "BUILDING_MARTIAN_MEGACITY",
+    "TECH_PLANETARY_DEFENSES"
    ],
    "any": [
     [

@@ -5,10 +5,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_STARPUNK",
-     "scope": "team"
-    }
+    "TECH_STARPUNK"
    ],
    "any": [
     [

@@ -14,18 +14,9 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_CONSTRUCTION_FIRM",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_CGI_ANIMATION_STUDIO",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_3D_MODELLING",
-     "scope": "team"
-    }
+    "BUILDING_CONSTRUCTION_FIRM",
+    "BUILDING_CGI_ANIMATION_STUDIO",
+    "TECH_3D_MODELLING"
    ],
    "any": [
     [
@@ -38,18 +29,9 @@
   },
   "operate": {
    "dormant": [
-    {
-     "type": "BUILDING_MODULAR_CONSTRUCTION_FIRM",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_SELF_CONSTRUCTION_FIRM",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_INTERTEMPORAL_CONSTRUCTION_FIRM",
-     "scope": "city"
-    }
+    "BUILDING_MODULAR_CONSTRUCTION_FIRM",
+    "BUILDING_SELF_CONSTRUCTION_FIRM",
+    "BUILDING_INTERTEMPORAL_CONSTRUCTION_FIRM"
    ]
   }
  },
@@ -63,17 +45,11 @@
    "flat": [
     {
      "value": 8,
-     "enabled": {
-      "type": "TECH_RAPID_PROTOTYPING",
-      "scope": "team"
-     }
+     "enabled": "TECH_RAPID_PROTOTYPING"
     },
     {
      "value": 8,
-     "enabled": {
-      "type": "TECH_MEGACITIES",
-      "scope": "team"
-     }
+     "enabled": "TECH_MEGACITIES"
     }
    ]
   }

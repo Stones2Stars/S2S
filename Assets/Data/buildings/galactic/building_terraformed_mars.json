@@ -6,10 +6,7 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_MARTIAN_ARCOLOGY",
-     "scope": "city"
-    },
+    "BUILDING_MARTIAN_ARCOLOGY",
     {
      "type": "BUILDING_MARTIAN_CO2_SUBLIMATION",
      "scope": "empire",
@@ -50,10 +47,7 @@
      "scope": "empire",
      "min": 1
     },
-    {
-     "type": "TECH_PLANETARY_TERRAFORMING",
-     "scope": "team"
-    }
+    "TECH_PLANETARY_TERRAFORMING"
    ],
    "any": [
     [

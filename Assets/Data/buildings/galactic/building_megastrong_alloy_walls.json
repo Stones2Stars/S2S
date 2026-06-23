@@ -15,10 +15,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_MEGASTRONG_ALLOYS",
-     "scope": "team"
-    }
+    "TECH_MEGASTRONG_ALLOYS"
    ],
    "any": [
     [

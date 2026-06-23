@@ -5,18 +5,9 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_DEEP_SPACE_BISHOP_RING",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_DEEP_SPACE_ADVANCED_RECYCLING",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_ECOSYNTHESIS",
-     "scope": "team"
-    }
+    "BUILDING_DEEP_SPACE_BISHOP_RING",
+    "BUILDING_DEEP_SPACE_ADVANCED_RECYCLING",
+    "TECH_ECOSYNTHESIS"
    ],
    "any": [
     [

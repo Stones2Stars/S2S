@@ -6,18 +6,9 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_MARTIAN_METROPOLIS",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_FROST_BEAMS",
-     "scope": "team"
-    },
-    {
-     "type": "TECH_HYPERMAGNETICS",
-     "scope": "team"
-    }
+    "BUILDING_MARTIAN_METROPOLIS",
+    "TECH_FROST_BEAMS",
+    "TECH_HYPERMAGNETICS"
    ],
    "any": [
     [

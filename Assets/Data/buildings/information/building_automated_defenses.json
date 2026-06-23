@@ -5,10 +5,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_MILITARY_ROBOTICS",
-     "scope": "team"
-    }
+    "TECH_MILITARY_ROBOTICS"
    ],
    "any": [
     [
@@ -21,10 +18,7 @@
   },
   "operate": {
    "all": [
-    {
-     "type": "CIVIC_ROBOTIC",
-     "scope": "empire"
-    }
+    "CIVIC_ROBOTIC"
    ]
   }
  },

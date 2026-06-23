@@ -15,10 +15,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_PETROGLYPHS",
-     "scope": "team"
-    }
+    "TECH_PETROGLYPHS"
    ],
    "any": [
     [
@@ -36,10 +33,7 @@
     1,
     {
      "value": -1,
-     "enabled": {
-      "type": "TECH_LITERATURE",
-      "scope": "team"
-     }
+     "enabled": "TECH_LITERATURE"
     }
    ]
   }
@@ -50,10 +44,7 @@
     2,
     {
      "value": -2,
-     "enabled": {
-      "type": "TECH_LITERATURE",
-      "scope": "team"
-     }
+     "enabled": "TECH_LITERATURE"
     }
    ]
   }
@@ -62,10 +53,7 @@
   "city": {
    "flat": {
     "value": -2,
-    "enabled": {
-     "type": "TECH_LITERATURE",
-     "scope": "team"
-    }
+    "enabled": "TECH_LITERATURE"
    }
   }
  },

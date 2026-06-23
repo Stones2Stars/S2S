@@ -10,14 +10,8 @@
      "scope": "city",
      "connection": "trade|vicinity"
     },
-    {
-     "type": "BUILDING_MUSEUM",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_MASS_MEDIA",
-     "scope": "team"
-    }
+    "BUILDING_MUSEUM",
+    "TECH_MASS_MEDIA"
    ]
   }
  },

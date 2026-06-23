@@ -13,10 +13,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_GENE_ENHANCEMENT",
-     "scope": "team"
-    },
+    "TECH_GENE_ENHANCEMENT",
     {
      "type": "BONUS_COMPUTERS",
      "scope": "city",
@@ -53,10 +50,7 @@
     ]
    ],
    "dormant": [
-    {
-     "type": "BUILDING_HIGH_TECH_CULTURAL_ENRICHMENT",
-     "scope": "city"
-    }
+    "BUILDING_HIGH_TECH_CULTURAL_ENRICHMENT"
    ]
   }
  },

@@ -13,10 +13,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_CARPENTRY",
-     "scope": "team"
-    }
+    "TECH_CARPENTRY"
    ],
    "any": [
     [
@@ -48,18 +45,9 @@
     ]
    ],
    "dormant": [
-    {
-     "type": "BUILDING_GARDEROBE",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_PUBLIC_RESTROOMS",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_SANITATION_CHAMBER",
-     "scope": "city"
-    }
+    "BUILDING_GARDEROBE",
+    "BUILDING_PUBLIC_RESTROOMS",
+    "BUILDING_SANITATION_CHAMBER"
    ]
   }
  },

@@ -10,25 +10,13 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_FELINE_DOMESTICATION",
-     "scope": "team"
-    },
-    {
-     "type": "TECH_MEGAFAUNA_DOMESTICATION",
-     "scope": "team"
-    }
+    "TECH_FELINE_DOMESTICATION",
+    "TECH_MEGAFAUNA_DOMESTICATION"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_FOLKLORE_SABRETOOTH",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_FOLKLORE_PALEOLITHIC_CAT",
-      "scope": "city"
-     }
+     "BUILDING_FOLKLORE_SABRETOOTH",
+     "BUILDING_FOLKLORE_PALEOLITHIC_CAT"
     ],
     [
      {
@@ -55,10 +43,7 @@
   "city": {
    "flat": {
     "value": 7,
-    "enabled": {
-     "type": "TECH_TOURISM",
-     "scope": "team"
-    }
+    "enabled": "TECH_TOURISM"
    }
   }
  },

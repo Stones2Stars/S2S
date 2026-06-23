@@ -6,14 +6,8 @@
   "build": {
    "all": [
     "HAS_COAST",
-    {
-     "type": "TECH_NAVAL_CANNON",
-     "scope": "team"
-    },
-    {
-     "type": "TECH_ASTRONOMY",
-     "scope": "team"
-    }
+    "TECH_NAVAL_CANNON",
+    "TECH_ASTRONOMY"
    ],
    "any": [
     [
@@ -27,26 +21,11 @@
   "operate": {
    "any": [
     [
-     {
-      "type": "CIVIC_DESPOTISM",
-      "scope": "empire"
-     },
-     {
-      "type": "CIVIC_MONARCHY",
-      "scope": "empire"
-     },
-     {
-      "type": "CIVIC_FEUDAL",
-      "scope": "empire"
-     },
-     {
-      "type": "CIVIC_NATIONALIST",
-      "scope": "empire"
-     },
-     {
-      "type": "CIVIC_MERCANTILISM",
-      "scope": "empire"
-     }
+     "CIVIC_DESPOTISM",
+     "CIVIC_MONARCHY",
+     "CIVIC_FEUDAL",
+     "CIVIC_NATIONALIST",
+     "CIVIC_MERCANTILISM"
     ]
    ]
   }

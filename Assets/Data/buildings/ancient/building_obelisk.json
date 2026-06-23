@@ -5,10 +5,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_ORNAMENTATION",
-     "scope": "team"
-    }
+    "TECH_ORNAMENTATION"
    ],
    "any": [
     [
@@ -21,10 +18,7 @@
   },
   "operate": {
    "all": [
-    {
-     "type": "RELIGION_KEMETISM",
-     "scope": "city"
-    }
+    "RELIGION_KEMETISM"
    ],
    "any": [
     [

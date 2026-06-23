@@ -18,10 +18,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_POULTRY_DOMESTICATION",
-     "scope": "team"
-    }
+    "TECH_POULTRY_DOMESTICATION"
    ],
    "any": [
     [
@@ -50,14 +47,8 @@
     ]
    ],
    "dormant": [
-    {
-     "type": "BUILDING_INDUSTRIAL_FARMS",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_MEAT_INDUSTRY_CONGLOMERATE",
-     "scope": "city"
-    }
+    "BUILDING_INDUSTRIAL_FARMS",
+    "BUILDING_MEAT_INDUSTRY_CONGLOMERATE"
    ]
   }
  },
@@ -71,10 +62,7 @@
    "flat": [
     {
      "value": -1,
-     "enabled": {
-      "type": "TECH_ECOLOGY",
-      "scope": "team"
-     }
+     "enabled": "TECH_ECOLOGY"
     }
    ]
   }

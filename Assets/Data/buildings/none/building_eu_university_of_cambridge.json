@@ -10,19 +10,13 @@
      "scope": "city",
      "min": 7
     },
-    {
-     "type": "BUILDING_UNIVERSITY",
-     "scope": "city"
-    },
+    "BUILDING_UNIVERSITY",
     {
      "type": "BUILDING_UNIVERSITY",
      "scope": "empire",
      "min": 4
     },
-    {
-     "type": "TECH_EDUCATION",
-     "scope": "team"
-    }
+    "TECH_EDUCATION"
    ],
    "any": [
     [

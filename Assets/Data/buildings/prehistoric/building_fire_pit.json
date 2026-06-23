@@ -20,37 +20,16 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_CONTROLLED_FIRE",
-     "scope": "team"
-    }
+    "TECH_CONTROLLED_FIRE"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_STICK_GATHERER",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_ANCIENT_CUSTOMS",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_LUMBER_CAMP",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_DRIFTWOOD_GATHERER",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_LUMBER_GATHERER",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_AGROFOREST",
-      "scope": "city"
-     }
+     "BUILDING_STICK_GATHERER",
+     "BUILDING_ANCIENT_CUSTOMS",
+     "BUILDING_LUMBER_CAMP",
+     "BUILDING_DRIFTWOOD_GATHERER",
+     "BUILDING_LUMBER_GATHERER",
+     "BUILDING_AGROFOREST"
     ],
     [
      {
@@ -62,18 +41,9 @@
   },
   "operate": {
    "dormant": [
-    {
-     "type": "BUILDING_IMU",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_BONFIRE",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_CHARCOAL_BURNER",
-     "scope": "city"
-    }
+    "BUILDING_IMU",
+    "BUILDING_BONFIRE",
+    "BUILDING_CHARCOAL_BURNER"
    ]
   }
  },

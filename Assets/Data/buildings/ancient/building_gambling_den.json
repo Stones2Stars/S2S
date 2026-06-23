@@ -13,10 +13,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_BOARD_GAMES",
-     "scope": "team"
-    }
+    "TECH_BOARD_GAMES"
    ],
    "any": [
     [
@@ -29,18 +26,9 @@
   },
   "operate": {
    "dormant": [
-    {
-     "type": "BUILDING_GAMBLING_HALL",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_CASINO",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_ORDINANCE_GAMBLING_BAN",
-     "scope": "city"
-    }
+    "BUILDING_GAMBLING_HALL",
+    "BUILDING_CASINO",
+    "BUILDING_ORDINANCE_GAMBLING_BAN"
    ]
   }
  },

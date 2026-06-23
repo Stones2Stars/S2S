@@ -15,14 +15,8 @@
      "scope": "world",
      "min": 10
     },
-    {
-     "type": "TECH_BIOMIMETICS",
-     "scope": "team"
-    },
-    {
-     "type": "TECH_FUSION",
-     "scope": "team"
-    }
+    "TECH_BIOMIMETICS",
+    "TECH_FUSION"
    ]
   }
  },

@@ -5,18 +5,9 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_SIEGE_WEAPONS_WORKSHOP",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_ANCIENT_MACHINERY",
-     "scope": "team"
-    },
-    {
-     "type": "TECH_IRON_WORKING",
-     "scope": "team"
-    }
+    "BUILDING_SIEGE_WEAPONS_WORKSHOP",
+    "TECH_ANCIENT_MACHINERY",
+    "TECH_IRON_WORKING"
    ]
   }
  },

@@ -5,10 +5,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_MEDIEVAL_LIFESTYLE",
-     "scope": "team"
-    }
+    "TECH_MEDIEVAL_LIFESTYLE"
    ],
    "any": [
     [
@@ -21,14 +18,8 @@
   },
   "operate": {
    "dormant": [
-    {
-     "type": "BUILDING_EDUCATION_KNOWLEDGE_BASE_RENAISSANCE",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_EDUCATION_KNOWLEDGE_BASE_INDUSTRIAL",
-     "scope": "city"
-    }
+    "BUILDING_EDUCATION_KNOWLEDGE_BASE_RENAISSANCE",
+    "BUILDING_EDUCATION_KNOWLEDGE_BASE_INDUSTRIAL"
    ]
   }
  },

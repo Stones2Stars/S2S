@@ -21,21 +21,12 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_LOCKS",
-     "scope": "team"
-    }
+    "TECH_LOCKS"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_TRADING_POST",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_SHOPPING_DISTRICT",
-      "scope": "city"
-     }
+     "BUILDING_TRADING_POST",
+     "BUILDING_SHOPPING_DISTRICT"
     ],
     [
      {
@@ -76,14 +67,8 @@
     ]
    ],
    "dormant": [
-    {
-     "type": "BUILDING_ELECTRONIC_SECURITY_SYSTEM",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_BIOMETRIC_SECURITY_SYSTEM",
-     "scope": "city"
-    }
+    "BUILDING_ELECTRONIC_SECURITY_SYSTEM",
+    "BUILDING_BIOMETRIC_SECURITY_SYSTEM"
    ]
   }
  },

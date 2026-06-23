@@ -10,18 +10,9 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_INTERGALACTIC_MORRIS_THORNE_WORMHOLE",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_INTERGALACTIC_COMMAND_CENTER",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_MEGAWORMHOLES",
-     "scope": "team"
-    }
+    "BUILDING_INTERGALACTIC_MORRIS_THORNE_WORMHOLE",
+    "BUILDING_INTERGALACTIC_COMMAND_CENTER",
+    "TECH_MEGAWORMHOLES"
    ],
    "any": [
     [

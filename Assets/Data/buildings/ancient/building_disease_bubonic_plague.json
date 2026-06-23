@@ -15,14 +15,8 @@
      "scope": "city",
      "min": 2
     },
-    {
-     "type": "BUILDING_PESTS_FLEAS",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_SEDENTARY_LIFESTYLE",
-     "scope": "team"
-    }
+    "BUILDING_PESTS_FLEAS",
+    "TECH_SEDENTARY_LIFESTYLE"
    ],
    "any": [
     [

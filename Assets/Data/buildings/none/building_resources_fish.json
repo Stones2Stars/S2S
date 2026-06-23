@@ -14,62 +14,20 @@
   "build": {
    "any": [
     [
-     {
-      "type": "BUILDING_NET_ANCHOVY",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_NETS_COD",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_NET_EEL",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_NET_FLOUNDER",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_MACKEREL_NETS",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_MARLIN_NETS",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_PARROTFISH_NETS",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_NET_SALMON",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_NET_SARDINE",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_NET_SEA_BASS",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_NET_SHARK",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_NET_SNAPPER",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_SWORDFISH_NETS",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_NET_TUNA",
-      "scope": "city"
-     }
+     "BUILDING_NET_ANCHOVY",
+     "BUILDING_NETS_COD",
+     "BUILDING_NET_EEL",
+     "BUILDING_NET_FLOUNDER",
+     "BUILDING_MACKEREL_NETS",
+     "BUILDING_MARLIN_NETS",
+     "BUILDING_PARROTFISH_NETS",
+     "BUILDING_NET_SALMON",
+     "BUILDING_NET_SARDINE",
+     "BUILDING_NET_SEA_BASS",
+     "BUILDING_NET_SHARK",
+     "BUILDING_NET_SNAPPER",
+     "BUILDING_SWORDFISH_NETS",
+     "BUILDING_NET_TUNA"
     ],
     [
      {
@@ -81,10 +39,7 @@
   },
   "operate": {
    "dormant": [
-    {
-     "type": "BUILDING_AQUAFARM",
-     "scope": "city"
-    }
+    "BUILDING_AQUAFARM"
    ]
   }
  },

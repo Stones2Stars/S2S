@@ -14,14 +14,8 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_SKYSCRAPER",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_MINORITY_RIGHTS",
-     "scope": "team"
-    }
+    "BUILDING_SKYSCRAPER",
+    "TECH_MINORITY_RIGHTS"
    ],
    "any": [
     [
@@ -34,10 +28,7 @@
   },
   "operate": {
    "dormant": [
-    {
-     "type": "BUILDING_HIGH_TECH_CULTURAL_ENRICHMENT",
-     "scope": "city"
-    }
+    "BUILDING_HIGH_TECH_CULTURAL_ENRICHMENT"
    ]
   }
  },

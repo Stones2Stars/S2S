@@ -10,21 +10,12 @@
      "scope": "city",
      "min": 7
     },
-    {
-     "type": "TECH_ECOLOGY",
-     "scope": "team"
-    }
+    "TECH_ECOLOGY"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_NATIONAL_ZOO",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_NATIONAL_AQUARIUM",
-      "scope": "city"
-     }
+     "BUILDING_NATIONAL_ZOO",
+     "BUILDING_NATIONAL_AQUARIUM"
     ],
     [
      {

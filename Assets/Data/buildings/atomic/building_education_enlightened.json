@@ -5,10 +5,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_ATOMIC_LIFESTYLE",
-     "scope": "team"
-    }
+    "TECH_ATOMIC_LIFESTYLE"
    ],
    "any": [
     [
@@ -21,30 +18,12 @@
   },
   "operate": {
    "dormant": [
-    {
-     "type": "BUILDING_EDUCATION_COSMOPOLITAN",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_EDUCATION_WUNDERKIND",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_EDUCATION_MASTERMIND",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_EDUCATION_GENIUS",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_EDUCATION_WISE",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_EDUCATION_OMNISCIENCE",
-     "scope": "city"
-    }
+    "BUILDING_EDUCATION_COSMOPOLITAN",
+    "BUILDING_EDUCATION_WUNDERKIND",
+    "BUILDING_EDUCATION_MASTERMIND",
+    "BUILDING_EDUCATION_GENIUS",
+    "BUILDING_EDUCATION_WISE",
+    "BUILDING_EDUCATION_OMNISCIENCE"
    ],
    "all": [
     {

@@ -17,33 +17,15 @@
      "scope": "city",
      "min": 13
     },
-    {
-     "type": "BUILDING_PUSHBUTTON_AUTOMAT",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_SEWER_SYSTEM",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_WATER_PIPES",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_ATOMPUNK",
-     "scope": "team"
-    }
+    "BUILDING_PUSHBUTTON_AUTOMAT",
+    "BUILDING_SEWER_SYSTEM",
+    "BUILDING_WATER_PIPES",
+    "TECH_ATOMPUNK"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_VIDEOPHONE_NETWORK",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_COMPUTER_NETWORK",
-      "scope": "city"
-     }
+     "BUILDING_VIDEOPHONE_NETWORK",
+     "BUILDING_COMPUTER_NETWORK"
     ],
     [
      {
@@ -62,18 +44,9 @@
     }
    ],
    "dormant": [
-    {
-     "type": "BUILDING_HOUSING_ARCOLOGY_SUBURBS",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_HOUSING_COLONY_ARCOLOGY",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_LAUNCH_ARCOLOGY",
-     "scope": "city"
-    }
+    "BUILDING_HOUSING_ARCOLOGY_SUBURBS",
+    "BUILDING_HOUSING_COLONY_ARCOLOGY",
+    "BUILDING_LAUNCH_ARCOLOGY"
    ]
   }
  },

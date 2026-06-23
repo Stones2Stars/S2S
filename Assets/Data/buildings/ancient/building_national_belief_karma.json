@@ -5,37 +5,16 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_KARMA",
-     "scope": "team"
-    }
+    "TECH_KARMA"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_HINDU_TEMPLE",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_BUDDHIST_TEMPLE",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_TAOIST_TEMPLE",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_SHINTO_TEMPLE",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_SIKH_GURDWARA",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_JAIN_TEMPLE",
-      "scope": "city"
-     }
+     "BUILDING_HINDU_TEMPLE",
+     "BUILDING_BUDDHIST_TEMPLE",
+     "BUILDING_TAOIST_TEMPLE",
+     "BUILDING_SHINTO_TEMPLE",
+     "BUILDING_SIKH_GURDWARA",
+     "BUILDING_JAIN_TEMPLE"
     ],
     [
      {

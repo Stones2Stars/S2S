@@ -14,14 +14,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_FARMSCRAPER_II",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_VERTICAL_FARMING",
-     "scope": "team"
-    }
+    "BUILDING_FARMSCRAPER_II",
+    "TECH_VERTICAL_FARMING"
    ],
    "any": [
     [

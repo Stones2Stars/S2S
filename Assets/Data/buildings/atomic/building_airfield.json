@@ -20,10 +20,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_AVIATION",
-     "scope": "team"
-    }
+    "TECH_AVIATION"
    ],
    "any": [
     [
@@ -43,10 +40,7 @@
     }
    ],
    "dormant": [
-    {
-     "type": "BUILDING_AEROSPACE_COMPLEX",
-     "scope": "city"
-    }
+    "BUILDING_AEROSPACE_COMPLEX"
    ]
   }
  },

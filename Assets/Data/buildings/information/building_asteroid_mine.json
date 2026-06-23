@@ -11,14 +11,8 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_CAPTURED_ASTEROID",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_ASTEROID_MINING",
-     "scope": "team"
-    }
+    "BUILDING_CAPTURED_ASTEROID",
+    "TECH_ASTEROID_MINING"
    ],
    "any": [
     [

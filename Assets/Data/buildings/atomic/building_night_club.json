@@ -25,14 +25,8 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_SHOPPING_DISTRICT",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_ELECTRONICS",
-     "scope": "team"
-    }
+    "BUILDING_SHOPPING_DISTRICT",
+    "TECH_ELECTRONICS"
    ],
    "any": [
     [

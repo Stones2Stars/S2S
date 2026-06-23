@@ -5,41 +5,17 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_C_AC_NEANDERTHAL",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_C_L_NEANDERTHAL",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_NATUROPATHY",
-     "scope": "team"
-    }
+    "BUILDING_C_AC_NEANDERTHAL",
+    "BUILDING_C_L_NEANDERTHAL",
+    "TECH_NATUROPATHY"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_HEALERS_HUT",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_DOCTORS_OFFICE",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_SURGEONS_OFFICE",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_MEDICAL_CLINIC",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_HEALTHCARE_MEGACOMPLEX",
-      "scope": "city"
-     }
+     "BUILDING_HEALERS_HUT",
+     "BUILDING_DOCTORS_OFFICE",
+     "BUILDING_SURGEONS_OFFICE",
+     "BUILDING_MEDICAL_CLINIC",
+     "BUILDING_HEALTHCARE_MEGACOMPLEX"
     ],
     [
      {

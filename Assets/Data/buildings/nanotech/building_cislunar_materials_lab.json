@@ -13,10 +13,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_LIQUID_METALS",
-     "scope": "team"
-    }
+    "TECH_LIQUID_METALS"
    ],
    "any": [
     [
@@ -34,24 +31,15 @@
     5,
     {
      "value": 9,
-     "enabled": {
-      "type": "TECH_SUPERSTRONG_ALLOYS",
-      "scope": "team"
-     }
+     "enabled": "TECH_SUPERSTRONG_ALLOYS"
     },
     {
      "value": 9,
-     "enabled": {
-      "type": "TECH_SUPERCHARGED_CRYSTALLOGRAPHY",
-      "scope": "team"
-     }
+     "enabled": "TECH_SUPERCHARGED_CRYSTALLOGRAPHY"
     },
     {
      "value": 9,
-     "enabled": {
-      "type": "TECH_NANOROBOTICS",
-      "scope": "team"
-     }
+     "enabled": "TECH_NANOROBOTICS"
     }
    ]
   }

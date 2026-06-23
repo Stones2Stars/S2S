@@ -22,10 +22,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_FLIGHT",
-     "scope": "team"
-    }
+    "TECH_FLIGHT"
    ],
    "any": [
     [
@@ -45,10 +42,7 @@
     }
    ],
    "dormant": [
-    {
-     "type": "BUILDING_COMMERCIAL_AIRPORT",
-     "scope": "city"
-    }
+    "BUILDING_COMMERCIAL_AIRPORT"
    ]
   }
  },

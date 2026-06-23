@@ -27,10 +27,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_ADVANCED_SEEDSHIPS",
-     "scope": "team"
-    }
+    "TECH_ADVANCED_SEEDSHIPS"
    ],
    "any": [
     [

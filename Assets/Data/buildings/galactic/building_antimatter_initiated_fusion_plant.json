@@ -26,10 +26,7 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "TECH_ANTIMATTER_PRODUCTION",
-     "scope": "team"
-    }
+    "TECH_ANTIMATTER_PRODUCTION"
    ],
    "any": [
     [
@@ -49,10 +46,7 @@
     }
    ],
    "dormant": [
-    {
-     "type": "BUILDING_QUANTUM_VACUUM_POWER_PLANT",
-     "scope": "city"
-    }
+    "BUILDING_QUANTUM_VACUUM_POWER_PLANT"
    ]
   }
  },

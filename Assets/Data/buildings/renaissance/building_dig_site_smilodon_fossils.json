@@ -18,10 +18,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_PALEONTOLOGY",
-     "scope": "team"
-    }
+    "TECH_PALEONTOLOGY"
    ],
    "any": [
     [
@@ -50,10 +47,7 @@
     ]
    ],
    "dormant": [
-    {
-     "type": "BUILDING_MODERN_EARTHWORKS",
-     "scope": "city"
-    }
+    "BUILDING_MODERN_EARTHWORKS"
    ]
   }
  },

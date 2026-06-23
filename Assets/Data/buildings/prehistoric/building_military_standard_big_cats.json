@@ -11,22 +11,10 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_MILITARY_STANDARD_ANIMAL_MASCOT",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_EFFECT_HERITAGE_BIG_CATS",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_FELINE_DOMESTICATION",
-     "scope": "team"
-    },
-    {
-     "type": "TECH_MEGAFAUNA_DOMESTICATION",
-     "scope": "team"
-    }
+    "BUILDING_MILITARY_STANDARD_ANIMAL_MASCOT",
+    "BUILDING_EFFECT_HERITAGE_BIG_CATS",
+    "TECH_FELINE_DOMESTICATION",
+    "TECH_MEGAFAUNA_DOMESTICATION"
    ],
    "any": [
     [

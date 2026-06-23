@@ -13,14 +13,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_CORE_MINE",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_ZEPTOTECHNOLOGY",
-     "scope": "team"
-    }
+    "BUILDING_CORE_MINE",
+    "TECH_ZEPTOTECHNOLOGY"
    ],
    "any": [
     [
@@ -33,10 +27,7 @@
   },
   "operate": {
    "dormant": [
-    {
-     "type": "BUILDING_MATERIALIZATION_COMPLEX",
-     "scope": "city"
-    }
+    "BUILDING_MATERIALIZATION_COMPLEX"
    ]
   }
  },

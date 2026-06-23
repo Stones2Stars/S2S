@@ -5,14 +5,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_HELLENIC_GYMNASIA",
-     "scope": "city"
-    },
-    {
-     "type": "RELIGION_HELLENISM",
-     "scope": "city"
-    }
+    "BUILDING_HELLENIC_GYMNASIA",
+    "RELIGION_HELLENISM"
    ]
   }
  },

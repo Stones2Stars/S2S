@@ -5,10 +5,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_GALACTIC_WARFARE",
-     "scope": "team"
-    }
+    "TECH_GALACTIC_WARFARE"
    ]
   }
  },

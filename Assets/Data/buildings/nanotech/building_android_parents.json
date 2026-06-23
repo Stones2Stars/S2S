@@ -14,14 +14,8 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_SOCIABLE_ROBOTS",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_CYBERSOCIAL_INTEGRATION",
-     "scope": "team"
-    }
+    "BUILDING_SOCIABLE_ROBOTS",
+    "TECH_CYBERSOCIAL_INTEGRATION"
    ],
    "any": [
     [
@@ -41,10 +35,7 @@
     }
    ],
    "dormant": [
-    {
-     "type": "BUILDING_HIGH_TECH_CULTURAL_ENRICHMENT",
-     "scope": "city"
-    }
+    "BUILDING_HIGH_TECH_CULTURAL_ENRICHMENT"
    ]
   }
  },
@@ -58,10 +49,7 @@
    "flat": [
     {
      "value": 10,
-     "enabled": {
-      "type": "TECH_SAPIENTROIDS",
-      "scope": "team"
-     }
+     "enabled": "TECH_SAPIENTROIDS"
     }
    ]
   }

@@ -5,10 +5,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_ATEMPORAL_BEINGS",
-     "scope": "team"
-    }
+    "TECH_ATEMPORAL_BEINGS"
    ],
    "any": [
     [

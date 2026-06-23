@@ -18,29 +18,14 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_SLAUGHTERHOUSE",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_COMMERCIAL_WHALING",
-     "scope": "team"
-    }
+    "BUILDING_SLAUGHTERHOUSE",
+    "TECH_COMMERCIAL_WHALING"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_TRADING_POST",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_SHOPPING_DISTRICT",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_FACTORY",
-      "scope": "city"
-     }
+     "BUILDING_TRADING_POST",
+     "BUILDING_SHOPPING_DISTRICT",
+     "BUILDING_FACTORY"
     ],
     [
      {
@@ -59,14 +44,8 @@
     }
    ],
    "dormant": [
-    {
-     "type": "BUILDING_INDUSTRIAL_FARMS",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_MEAT_INDUSTRY_CONGLOMERATE",
-     "scope": "city"
-    }
+    "BUILDING_INDUSTRIAL_FARMS",
+    "BUILDING_MEAT_INDUSTRY_CONGLOMERATE"
    ]
   }
  },

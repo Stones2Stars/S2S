@@ -31,10 +31,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_ASTRONOMY",
-     "scope": "team"
-    }
+    "TECH_ASTRONOMY"
    ],
    "any": [
     [
@@ -83,10 +80,7 @@
     ]
    ],
    "dormant": [
-    {
-     "type": "BUILDING_POLLUTION_BLACKENED_SKIES",
-     "scope": "city"
-    }
+    "BUILDING_POLLUTION_BLACKENED_SKIES"
    ]
   }
  },
@@ -96,52 +90,31 @@
     10,
     {
      "value": 5,
-     "enabled": {
-      "type": "TECH_CALCULUS",
-      "scope": "team"
-     }
+     "enabled": "TECH_CALCULUS"
     },
     {
      "value": 7,
-     "enabled": {
-      "type": "TECH_RADIO_ASTRONOMY",
-      "scope": "team"
-     }
+     "enabled": "TECH_RADIO_ASTRONOMY"
     },
     {
      "value": 7,
-     "enabled": {
-      "type": "TECH_THEORY_OF_RELATIVITY",
-      "scope": "team"
-     }
+     "enabled": "TECH_THEORY_OF_RELATIVITY"
     },
     {
      "value": 7,
-     "enabled": {
-      "type": "TECH_MODERN_PHYSICS",
-      "scope": "team"
-     }
+     "enabled": "TECH_MODERN_PHYSICS"
     },
     {
      "value": 7,
-     "enabled": {
-      "type": "TECH_ASTRONAUTICS",
-      "scope": "team"
-     }
+     "enabled": "TECH_ASTRONAUTICS"
     },
     {
      "value": 8,
-     "enabled": {
-      "type": "TECH_JOVIAN_EXPLORATION",
-      "scope": "team"
-     }
+     "enabled": "TECH_JOVIAN_EXPLORATION"
     },
     {
      "value": 8,
-     "enabled": {
-      "type": "TECH_ASTEROID_BELT_PROBES",
-      "scope": "team"
-     }
+     "enabled": "TECH_ASTEROID_BELT_PROBES"
     }
    ]
   }

@@ -10,14 +10,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_UNIVERSITY",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_ASTROBIOLOGY",
-     "scope": "team"
-    }
+    "BUILDING_UNIVERSITY",
+    "TECH_ASTROBIOLOGY"
    ],
    "any": [
     [
@@ -35,38 +29,23 @@
     5,
     {
      "value": 11,
-     "enabled": {
-      "type": "TECH_ASTROECOLOGY",
-      "scope": "team"
-     }
+     "enabled": "TECH_ASTROECOLOGY"
     },
     {
      "value": 10,
-     "enabled": {
-      "type": "TECH_EXTRATERRESTRIAL_AGRICULTURE",
-      "scope": "team"
-     }
+     "enabled": "TECH_EXTRATERRESTRIAL_AGRICULTURE"
     },
     {
      "value": 11,
-     "enabled": {
-      "type": "TECH_PLANETARY_TERRAFORMING",
-      "scope": "team"
-     }
+     "enabled": "TECH_PLANETARY_TERRAFORMING"
     },
     {
      "value": 11,
-     "enabled": {
-      "type": "TECH_ASTROANTHROPOLOGY",
-      "scope": "team"
-     }
+     "enabled": "TECH_ASTROANTHROPOLOGY"
     },
     {
      "value": 10,
-     "enabled": {
-      "type": "TECH_SPECIES_UPLIFTING",
-      "scope": "team"
-     }
+     "enabled": "TECH_SPECIES_UPLIFTING"
     },
     {
      "value": 1,

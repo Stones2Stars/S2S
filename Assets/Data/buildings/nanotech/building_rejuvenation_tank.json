@@ -15,21 +15,12 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "TECH_REGENERATIVE_MEDICINE",
-     "scope": "team"
-    }
+    "TECH_REGENERATIVE_MEDICINE"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_MEDICAL_CLINIC",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_HEALTHCARE_MEGACOMPLEX",
-      "scope": "city"
-     }
+     "BUILDING_MEDICAL_CLINIC",
+     "BUILDING_HEALTHCARE_MEGACOMPLEX"
     ],
     [
      {

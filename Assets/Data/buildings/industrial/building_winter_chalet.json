@@ -23,10 +23,7 @@
       "min": 40
      }
     },
-    {
-     "type": "TECH_ROMANTICISM",
-     "scope": "team"
-    }
+    "TECH_ROMANTICISM"
    ],
    "any": [
     [
@@ -59,10 +56,7 @@
     ]
    ],
    "dormant": [
-    {
-     "type": "BUILDING_ATHLETIC_MEGACOMPLEX",
-     "scope": "city"
-    }
+    "BUILDING_ATHLETIC_MEGACOMPLEX"
    ]
   }
  },

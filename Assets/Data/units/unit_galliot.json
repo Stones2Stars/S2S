@@ -16,14 +16,8 @@
      "scope": "world",
      "min": 10
     },
-    {
-     "type": "TECH_WRITING",
-     "scope": "team"
-    },
-    {
-     "type": "TECH_PIRACY",
-     "scope": "team"
-    }
+    "TECH_WRITING",
+    "TECH_PIRACY"
    ]
   }
  },

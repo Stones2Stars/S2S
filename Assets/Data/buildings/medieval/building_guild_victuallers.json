@@ -15,29 +15,14 @@
      "scope": "city",
      "min": 3
     },
-    {
-     "type": "TECH_AGRICULTURAL_TOOLS",
-     "scope": "team"
-    },
-    {
-     "type": "TECH_GUILDS",
-     "scope": "team"
-    }
+    "TECH_AGRICULTURAL_TOOLS",
+    "TECH_GUILDS"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_PUB",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_DIVE_BAR",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_GALACTIC_CANTINA",
-      "scope": "city"
-     }
+     "BUILDING_PUB",
+     "BUILDING_DIVE_BAR",
+     "BUILDING_GALACTIC_CANTINA"
     ],
     [
      {
@@ -49,10 +34,7 @@
   },
   "operate": {
    "dormant": [
-    {
-     "type": "BUILDING_ORDINANCE_ALCOHOL_PROHIBITION",
-     "scope": "city"
-    }
+    "BUILDING_ORDINANCE_ALCOHOL_PROHIBITION"
    ]
   }
  },

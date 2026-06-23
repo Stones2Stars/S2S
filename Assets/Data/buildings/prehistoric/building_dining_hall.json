@@ -10,29 +10,14 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_SIMPLE_WOOD_WORKING",
-     "scope": "team"
-    },
-    {
-     "type": "TECH_COOKING",
-     "scope": "team"
-    }
+    "TECH_SIMPLE_WOOD_WORKING",
+    "TECH_COOKING"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_STORAGE_PIT",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_GRANARY",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_MODERN_GRANARY",
-      "scope": "city"
-     }
+     "BUILDING_STORAGE_PIT",
+     "BUILDING_GRANARY",
+     "BUILDING_MODERN_GRANARY"
     ],
     [
      {

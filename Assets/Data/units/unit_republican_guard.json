@@ -10,10 +10,7 @@
      "scope": "city",
      "connection": "trade|vicinity"
     },
-    {
-     "type": "TECH_MANUFACTURING",
-     "scope": "team"
-    },
+    "TECH_MANUFACTURING",
     {
      "type": "BONUS_AMMUNITION",
      "scope": "city",

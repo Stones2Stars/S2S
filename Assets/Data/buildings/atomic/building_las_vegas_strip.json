@@ -12,18 +12,9 @@
      "scope": "city",
      "min": 7
     },
-    {
-     "type": "BUILDING_CIRCUS_CIRCUS_CASINO",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_LUXOR_CASINO",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_LEGALIZED_GAMBLING",
-     "scope": "team"
-    }
+    "BUILDING_CIRCUS_CIRCUS_CASINO",
+    "BUILDING_LUXOR_CASINO",
+    "TECH_LEGALIZED_GAMBLING"
    ],
    "any": [
     [
@@ -44,18 +35,12 @@
     ]
    ],
    "noneOf": [
-    {
-     "type": "BUILDING_MONTE_CARLO",
-     "scope": "city"
-    }
+    "BUILDING_MONTE_CARLO"
    ]
   },
   "operate": {
    "dormant": [
-    {
-     "type": "BUILDING_ORDINANCE_GAMBLING_BAN",
-     "scope": "city"
-    }
+    "BUILDING_ORDINANCE_GAMBLING_BAN"
    ]
   }
  },

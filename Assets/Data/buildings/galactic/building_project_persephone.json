@@ -5,18 +5,9 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_INTERSTELLAR_CIRCULAR_WASTE_MANAGEMENT",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_CLOSED_ECONOMIES",
-     "scope": "team"
-    },
-    {
-     "type": "TECH_SPACEPUNK",
-     "scope": "team"
-    }
+    "BUILDING_INTERSTELLAR_CIRCULAR_WASTE_MANAGEMENT",
+    "TECH_CLOSED_ECONOMIES",
+    "TECH_SPACEPUNK"
    ],
    "any": [
     [

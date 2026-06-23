@@ -13,10 +13,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_CIVIL_SERVICE",
-     "scope": "team"
-    }
+    "TECH_CIVIL_SERVICE"
    ],
    "any": [
     [
@@ -29,14 +26,8 @@
   },
   "operate": {
    "dormant": [
-    {
-     "type": "BUILDING_RETIREMENT_HOME",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_HIGH_TECH_CULTURAL_ENRICHMENT",
-     "scope": "city"
-    }
+    "BUILDING_RETIREMENT_HOME",
+    "BUILDING_HIGH_TECH_CULTURAL_ENRICHMENT"
    ]
   }
  },

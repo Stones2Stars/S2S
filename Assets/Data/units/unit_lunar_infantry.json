@@ -5,14 +5,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_LUNAR_MANUFACTURING_PLANT",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_LUNAR_MANUFACTURING",
-     "scope": "team"
-    }
+    "BUILDING_LUNAR_MANUFACTURING_PLANT",
+    "TECH_LUNAR_MANUFACTURING"
    ]
   }
  },

@@ -10,10 +10,7 @@
      "scope": "city",
      "connection": "trade|vicinity"
     },
-    {
-     "type": "TECH_CLOCKWORKS",
-     "scope": "team"
-    }
+    "TECH_CLOCKWORKS"
    ],
    "any": [
     [
@@ -24,14 +21,8 @@
      }
     ],
     [
-     {
-      "type": "BUILDING_WATCHMAKERS_SHOP",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_HYPERMARKET",
-      "scope": "city"
-     }
+     "BUILDING_WATCHMAKERS_SHOP",
+     "BUILDING_HYPERMARKET"
     ]
    ]
   }

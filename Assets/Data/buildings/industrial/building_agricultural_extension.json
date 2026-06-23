@@ -13,25 +13,13 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_UNIVERSITY",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_AGRICULTURAL_ENGINEERING",
-     "scope": "team"
-    }
+    "BUILDING_UNIVERSITY",
+    "TECH_AGRICULTURAL_ENGINEERING"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_GREENHOUSE",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_ORGANIC_FARM",
-      "scope": "city"
-     }
+     "BUILDING_GREENHOUSE",
+     "BUILDING_ORGANIC_FARM"
     ],
     [
      {
@@ -43,10 +31,7 @@
   },
   "operate": {
    "dormant": [
-    {
-     "type": "BUILDING_FARMSCRAPER_I",
-     "scope": "city"
-    }
+    "BUILDING_FARMSCRAPER_I"
    ]
   }
  },

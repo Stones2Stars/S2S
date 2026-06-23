@@ -16,10 +16,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_ADVANCED_ENVIRONMENTAL_SYSTEMS",
-     "scope": "team"
-    }
+    "TECH_ADVANCED_ENVIRONMENTAL_SYSTEMS"
    ],
    "any": [
     [
@@ -47,10 +44,7 @@
     3,
     {
      "value": 9,
-     "enabled": {
-      "type": "TECH_MASS_DRIVER",
-      "scope": "team"
-     }
+     "enabled": "TECH_MASS_DRIVER"
     }
    ]
   }
@@ -60,10 +54,7 @@
    "flat": [
     {
      "value": 10,
-     "enabled": {
-      "type": "TECH_KUIPER_BELT_EXPLORATION",
-      "scope": "team"
-     }
+     "enabled": "TECH_KUIPER_BELT_EXPLORATION"
     }
    ]
   }

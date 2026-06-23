@@ -5,22 +5,13 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_THEOLOGY",
-     "scope": "team"
-    },
+    "TECH_THEOLOGY",
     "STATE_RELIGION_IN_CITY"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_TRADING_POST",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_SHOPPING_DISTRICT",
-      "scope": "city"
-     }
+     "BUILDING_TRADING_POST",
+     "BUILDING_SHOPPING_DISTRICT"
     ],
     [
      {
@@ -55,14 +46,8 @@
      }
     ],
     [
-     {
-      "type": "CIVIC_FREE_CHURCH",
-      "scope": "empire"
-     },
-     {
-      "type": "CIVIC_RELIGIOUS",
-      "scope": "empire"
-     }
+     "CIVIC_FREE_CHURCH",
+     "CIVIC_RELIGIOUS"
     ]
    ]
   }

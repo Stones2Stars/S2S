@@ -6,10 +6,7 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "TECH_FIBER_OPTICS",
-     "scope": "team"
-    }
+    "TECH_FIBER_OPTICS"
    ],
    "any": [
     [

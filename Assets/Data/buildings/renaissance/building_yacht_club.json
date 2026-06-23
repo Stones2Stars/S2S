@@ -14,14 +14,8 @@
   "build": {
    "all": [
     "HAS_COAST",
-    {
-     "type": "BUILDING_MARINA",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_SEXTANT",
-     "scope": "team"
-    }
+    "BUILDING_MARINA",
+    "TECH_SEXTANT"
    ],
    "any": [
     [
@@ -48,10 +42,7 @@
   },
   "operate": {
    "dormant": [
-    {
-     "type": "BUILDING_HIGH_TECH_CULTURAL_ENRICHMENT",
-     "scope": "city"
-    }
+    "BUILDING_HIGH_TECH_CULTURAL_ENRICHMENT"
    ]
   }
  },

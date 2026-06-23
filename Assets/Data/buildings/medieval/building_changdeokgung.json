@@ -10,14 +10,8 @@
      "scope": "city",
      "min": 3
     },
-    {
-     "type": "BUILDING_CONFUCIAN_TEMPLE",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_FEUDALISM",
-     "scope": "team"
-    }
+    "BUILDING_CONFUCIAN_TEMPLE",
+    "TECH_FEUDALISM"
    ],
    "any": [
     [

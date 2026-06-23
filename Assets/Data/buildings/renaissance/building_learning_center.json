@@ -5,25 +5,13 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_CORPORATION",
-     "scope": "team"
-    }
+    "TECH_CORPORATION"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_HOLOGRAPHIC_SCHOOL",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_ELEMENTARY_SCHOOL",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_UNIVERSITY",
-      "scope": "city"
-     }
+     "BUILDING_HOLOGRAPHIC_SCHOOL",
+     "BUILDING_ELEMENTARY_SCHOOL",
+     "BUILDING_UNIVERSITY"
     ],
     [
      {
@@ -40,10 +28,7 @@
      "scope": "city",
      "connection": "trade|vicinity"
     },
-    {
-     "type": "CIVIC_CORPORATE",
-     "scope": "empire"
-    }
+    "CIVIC_CORPORATE"
    ]
   }
  },

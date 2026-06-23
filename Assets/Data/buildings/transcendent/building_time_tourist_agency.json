@@ -6,25 +6,13 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "TECH_ALTERNATE_HISTORY_EXPLORATION",
-     "scope": "team"
-    }
+    "TECH_ALTERNATE_HISTORY_EXPLORATION"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_HE3_FUSION_POWER_PLANT",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_ANTIMATTER_INITIATED_FUSION_PLANT",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_QUANTUM_VACUUM_POWER_PLANT",
-      "scope": "city"
-     }
+     "BUILDING_HE3_FUSION_POWER_PLANT",
+     "BUILDING_ANTIMATTER_INITIATED_FUSION_PLANT",
+     "BUILDING_QUANTUM_VACUUM_POWER_PLANT"
     ],
     [
      {

@@ -15,14 +15,8 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_COMMERCIAL_AIRPORT",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_WEIGHTLESS_FLIGHT",
-     "scope": "team"
-    }
+    "BUILDING_COMMERCIAL_AIRPORT",
+    "TECH_WEIGHTLESS_FLIGHT"
    ],
    "any": [
     [

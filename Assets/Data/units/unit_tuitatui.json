@@ -10,10 +10,7 @@
      "scope": "city",
      "connection": "trade|vicinity"
     },
-    {
-     "type": "TECH_OPTICS",
-     "scope": "team"
-    }
+    "TECH_OPTICS"
    ]
   }
  },

@@ -19,10 +19,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_TRACKING",
-     "scope": "team"
-    }
+    "TECH_TRACKING"
    ],
    "any": [
     [
@@ -35,10 +32,7 @@
   },
   "operate": {
    "dormant": [
-    {
-     "type": "BUILDING_MASTER_HUNTER_TRADITION",
-     "scope": "city"
-    }
+    "BUILDING_MASTER_HUNTER_TRADITION"
    ]
   }
  },

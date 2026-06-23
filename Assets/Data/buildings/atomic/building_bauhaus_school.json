@@ -15,21 +15,12 @@
      "scope": "city",
      "min": 7
     },
-    {
-     "type": "TECH_MODERN_ART",
-     "scope": "team"
-    }
+    "TECH_MODERN_ART"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_ENGINEERING_SCHOOL",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_UNIVERSITY",
-      "scope": "city"
-     }
+     "BUILDING_ENGINEERING_SCHOOL",
+     "BUILDING_UNIVERSITY"
     ],
     [
      {

@@ -11,22 +11,10 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_MECHATRONICS_LAB",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_FACIAL_RECOGNITION_SOFTWARE",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_THOUGHT_SCANNING",
-     "scope": "team"
-    },
-    {
-     "type": "TECH_GENESIS_BIOLOGY",
-     "scope": "team"
-    }
+    "BUILDING_MECHATRONICS_LAB",
+    "BUILDING_FACIAL_RECOGNITION_SOFTWARE",
+    "TECH_THOUGHT_SCANNING",
+    "TECH_GENESIS_BIOLOGY"
    ],
    "any": [
     [
@@ -62,31 +50,19 @@
     6,
     {
      "value": 9,
-     "enabled": {
-      "type": "TECH_BIONICS",
-      "scope": "team"
-     }
+     "enabled": "TECH_BIONICS"
     },
     {
      "value": 9,
-     "enabled": {
-      "type": "TECH_PERSONAL_ROBOTS",
-      "scope": "team"
-     }
+     "enabled": "TECH_PERSONAL_ROBOTS"
     },
     {
      "value": 9,
-     "enabled": {
-      "type": "TECH_ANDROIDS",
-      "scope": "team"
-     }
+     "enabled": "TECH_ANDROIDS"
     },
     {
      "value": 9,
-     "enabled": {
-      "type": "TECH_CYBERNETICS",
-      "scope": "team"
-     }
+     "enabled": "TECH_CYBERNETICS"
     }
    ]
   }
@@ -97,31 +73,19 @@
     3,
     {
      "value": 9,
-     "enabled": {
-      "type": "TECH_BIONICS",
-      "scope": "team"
-     }
+     "enabled": "TECH_BIONICS"
     },
     {
      "value": 9,
-     "enabled": {
-      "type": "TECH_CYBERNETICS",
-      "scope": "team"
-     }
+     "enabled": "TECH_CYBERNETICS"
     },
     {
      "value": 9,
-     "enabled": {
-      "type": "TECH_ANDROIDS",
-      "scope": "team"
-     }
+     "enabled": "TECH_ANDROIDS"
     },
     {
      "value": 9,
-     "enabled": {
-      "type": "TECH_PERSONAL_ROBOTS",
-      "scope": "team"
-     }
+     "enabled": "TECH_PERSONAL_ROBOTS"
     }
    ]
   }

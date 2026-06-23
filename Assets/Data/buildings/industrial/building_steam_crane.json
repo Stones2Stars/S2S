@@ -13,10 +13,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_STEAM_POWER",
-     "scope": "team"
-    }
+    "TECH_STEAM_POWER"
    ],
    "any": [
     [
@@ -45,14 +42,8 @@
     ]
    ],
    "dormant": [
-    {
-     "type": "BUILDING_MODERN_CRANE",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_HIGH_TECH_CRANE",
-     "scope": "city"
-    }
+    "BUILDING_MODERN_CRANE",
+    "BUILDING_HIGH_TECH_CRANE"
    ]
   }
  },

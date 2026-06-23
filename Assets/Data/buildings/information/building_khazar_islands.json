@@ -11,10 +11,7 @@
      "scope": "city",
      "min": 13
     },
-    {
-     "type": "TECH_MARINE_ARCHITECTURE",
-     "scope": "team"
-    }
+    "TECH_MARINE_ARCHITECTURE"
    ],
    "any": [
     [

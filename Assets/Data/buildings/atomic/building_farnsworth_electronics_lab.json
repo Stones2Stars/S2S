@@ -15,14 +15,8 @@
      "scope": "city",
      "min": 7
     },
-    {
-     "type": "TECH_ELECTRONICS",
-     "scope": "team"
-    },
-    {
-     "type": "TECH_DIESELPUNK",
-     "scope": "team"
-    }
+    "TECH_ELECTRONICS",
+    "TECH_DIESELPUNK"
    ],
    "any": [
     [

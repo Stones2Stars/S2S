@@ -11,19 +11,13 @@
      "scope": "city",
      "min": 13
     },
-    {
-     "type": "BUILDING_OPERA_HOUSE",
-     "scope": "city"
-    },
+    "BUILDING_OPERA_HOUSE",
     {
      "type": "BUILDING_OPERA_HOUSE",
      "scope": "empire",
      "min": 3
     },
-    {
-     "type": "TECH_REALISM",
-     "scope": "team"
-    }
+    "TECH_REALISM"
    ],
    "any": [
     [

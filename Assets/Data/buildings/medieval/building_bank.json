@@ -20,25 +20,13 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_BANKING",
-     "scope": "team"
-    }
+    "TECH_BANKING"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_MODERN_OFFICES",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_TRADING_POST",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_SHOPPING_DISTRICT",
-      "scope": "city"
-     }
+     "BUILDING_MODERN_OFFICES",
+     "BUILDING_TRADING_POST",
+     "BUILDING_SHOPPING_DISTRICT"
     ],
     [
      {

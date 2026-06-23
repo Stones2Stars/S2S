@@ -13,10 +13,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_GATHERING",
-     "scope": "team"
-    }
+    "TECH_GATHERING"
    ],
    "any": [
     [
@@ -42,10 +39,7 @@
     }
    ],
    "dormant": [
-    {
-     "type": "BUILDING_OBSIDIAN_QUARRY",
-     "scope": "city"
-    }
+    "BUILDING_OBSIDIAN_QUARRY"
    ]
   }
  },

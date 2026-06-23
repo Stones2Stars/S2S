@@ -5,14 +5,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_ZOROASTRIAN_SHRINE",
-     "scope": "city"
-    },
-    {
-     "type": "RELIGION_ZOROASTRIANISM",
-     "scope": "city"
-    }
+    "BUILDING_ZOROASTRIAN_SHRINE",
+    "RELIGION_ZOROASTRIANISM"
    ]
   }
  },

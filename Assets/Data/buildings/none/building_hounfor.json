@@ -16,10 +16,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_MEDITATION",
-     "scope": "team"
-    }
+    "TECH_MEDITATION"
    ],
    "any": [
     [
@@ -32,10 +29,7 @@
   },
   "operate": {
    "all": [
-    {
-     "type": "RELIGION_VOODOO",
-     "scope": "city"
-    }
+    "RELIGION_VOODOO"
    ],
    "any": [
     [

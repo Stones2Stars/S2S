@@ -6,18 +6,9 @@
   "build": {
    "all": [
     "HAS_COAST",
-    {
-     "type": "BUILDING_HELLENIC_PANTHEON",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_AESTHETICS",
-     "scope": "team"
-    },
-    {
-     "type": "TECH_SHIP_BUILDING",
-     "scope": "team"
-    },
+    "BUILDING_HELLENIC_PANTHEON",
+    "TECH_AESTHETICS",
+    "TECH_SHIP_BUILDING",
     "STATE_RELIGION_IN_CITY",
     {
      "STATE_RELIGION": "RELIGION_HELLENISM"
@@ -34,10 +25,7 @@
   },
   "operate": {
    "all": [
-    {
-     "type": "RELIGION_HELLENISM",
-     "scope": "city"
-    }
+    "RELIGION_HELLENISM"
    ]
   }
  },

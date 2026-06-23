@@ -13,10 +13,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_WEAVING",
-     "scope": "team"
-    }
+    "TECH_WEAVING"
    ],
    "any": [
     [
@@ -84,14 +81,8 @@
     ]
    ],
    "dormant": [
-    {
-     "type": "BUILDING_FACTORY_CLOTH",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_TEXTILE_MANUFACTURING_DISTRICT",
-     "scope": "city"
-    }
+    "BUILDING_FACTORY_CLOTH",
+    "BUILDING_TEXTILE_MANUFACTURING_DISTRICT"
    ]
   }
  },
@@ -101,10 +92,7 @@
     1,
     {
      "value": 2,
-     "enabled": {
-      "type": "TECH_TEXTILE_LOOM",
-      "scope": "team"
-     }
+     "enabled": "TECH_TEXTILE_LOOM"
     },
     {
      "value": 1,

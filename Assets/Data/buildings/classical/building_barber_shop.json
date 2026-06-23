@@ -13,21 +13,12 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_SANITATION",
-     "scope": "team"
-    }
+    "TECH_SANITATION"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_TRADING_POST",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_SHOPPING_DISTRICT",
-      "scope": "city"
-     }
+     "BUILDING_TRADING_POST",
+     "BUILDING_SHOPPING_DISTRICT"
     ],
     [
      {
@@ -68,10 +59,7 @@
     ]
    ],
    "dormant": [
-    {
-     "type": "BUILDING_HYPERMARKET",
-     "scope": "city"
-    }
+    "BUILDING_HYPERMARKET"
    ]
   }
  },

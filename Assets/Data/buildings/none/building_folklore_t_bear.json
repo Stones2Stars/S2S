@@ -11,57 +11,21 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_FOLKLORE_REQUIREMENT",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_TAXONOMY",
-     "scope": "team"
-    }
+    "BUILDING_FOLKLORE_REQUIREMENT",
+    "TECH_TAXONOMY"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_FOLKLORE_MOON_BEAR",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_FOLKLORE_BROWN_BEAR",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_FOLKLORE_BLACK_BEAR",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_FOLKLORE_CAVE_BEAR",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_FOLKLORE_GRIZZLY",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_FOLKLORE_GIANT_PANDA",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_FOLKLORE_POLAR_BEAR",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_FOLKLORE_SLOTH_BEAR",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_FOLKLORE_SPECTACLED_BEAR",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_FOLKLORE_SUN_BEAR",
-      "scope": "city"
-     }
+     "BUILDING_FOLKLORE_MOON_BEAR",
+     "BUILDING_FOLKLORE_BROWN_BEAR",
+     "BUILDING_FOLKLORE_BLACK_BEAR",
+     "BUILDING_FOLKLORE_CAVE_BEAR",
+     "BUILDING_FOLKLORE_GRIZZLY",
+     "BUILDING_FOLKLORE_GIANT_PANDA",
+     "BUILDING_FOLKLORE_POLAR_BEAR",
+     "BUILDING_FOLKLORE_SLOTH_BEAR",
+     "BUILDING_FOLKLORE_SPECTACLED_BEAR",
+     "BUILDING_FOLKLORE_SUN_BEAR"
     ],
     [
      {
@@ -78,38 +42,23 @@
     1,
     {
      "value": -0.6,
-     "enabled": {
-      "type": "TECH_LANGUAGE",
-      "scope": "team"
-     }
+     "enabled": "TECH_LANGUAGE"
     },
     {
      "value": -0.1,
-     "enabled": {
-      "type": "TECH_CLASSICAL_LIFESTYLE",
-      "scope": "team"
-     }
+     "enabled": "TECH_CLASSICAL_LIFESTYLE"
     },
     {
      "value": -0.1,
-     "enabled": {
-      "type": "TECH_MEDIEVAL_LIFESTYLE",
-      "scope": "team"
-     }
+     "enabled": "TECH_MEDIEVAL_LIFESTYLE"
     },
     {
      "value": -0.1,
-     "enabled": {
-      "type": "TECH_RENAISSANCE_LIFESTYLE",
-      "scope": "team"
-     }
+     "enabled": "TECH_RENAISSANCE_LIFESTYLE"
     },
     {
      "value": -0.1,
-     "enabled": {
-      "type": "TECH_INDUSTRIAL_LIFESTYLE",
-      "scope": "team"
-     }
+     "enabled": "TECH_INDUSTRIAL_LIFESTYLE"
     }
    ]
   }
@@ -119,38 +68,23 @@
    "flat": [
     {
      "value": 0.1,
-     "enabled": {
-      "type": "TECH_LANGUAGE",
-      "scope": "team"
-     }
+     "enabled": "TECH_LANGUAGE"
     },
     {
      "value": 0.1,
-     "enabled": {
-      "type": "TECH_CLASSICAL_LIFESTYLE",
-      "scope": "team"
-     }
+     "enabled": "TECH_CLASSICAL_LIFESTYLE"
     },
     {
      "value": 0.1,
-     "enabled": {
-      "type": "TECH_MEDIEVAL_LIFESTYLE",
-      "scope": "team"
-     }
+     "enabled": "TECH_MEDIEVAL_LIFESTYLE"
     },
     {
      "value": 0.1,
-     "enabled": {
-      "type": "TECH_RENAISSANCE_LIFESTYLE",
-      "scope": "team"
-     }
+     "enabled": "TECH_RENAISSANCE_LIFESTYLE"
     },
     {
      "value": 0.1,
-     "enabled": {
-      "type": "TECH_INDUSTRIAL_LIFESTYLE",
-      "scope": "team"
-     }
+     "enabled": "TECH_INDUSTRIAL_LIFESTYLE"
     }
    ]
   }
@@ -159,10 +93,7 @@
   "city": {
    "flat": {
     "value": 1,
-    "enabled": {
-     "type": "TECH_BIOLOGY",
-     "scope": "team"
-    }
+    "enabled": "TECH_BIOLOGY"
    }
   }
  },

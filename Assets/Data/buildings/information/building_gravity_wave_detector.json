@@ -5,14 +5,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_LABORATORY",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_IMAGINARY_PHYSICS",
-     "scope": "team"
-    }
+    "BUILDING_LABORATORY",
+    "TECH_IMAGINARY_PHYSICS"
    ],
    "any": [
     [
@@ -30,17 +24,11 @@
     12,
     {
      "value": 9,
-     "enabled": {
-      "type": "TECH_AMPLIFIED_WAVELENGTHS",
-      "scope": "team"
-     }
+     "enabled": "TECH_AMPLIFIED_WAVELENGTHS"
     },
     {
      "value": 10,
-     "enabled": {
-      "type": "TECH_UNIFICATION_PHYSICS",
-      "scope": "team"
-     }
+     "enabled": "TECH_UNIFICATION_PHYSICS"
     }
    ]
   }

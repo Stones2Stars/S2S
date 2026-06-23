@@ -10,18 +10,9 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_EFFECT_NEUROIMPLANT_EXPORTER",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_SPACE_COLONY_DEEP_SPACE",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_NANOMORPHICS",
-     "scope": "team"
-    }
+    "BUILDING_EFFECT_NEUROIMPLANT_EXPORTER",
+    "BUILDING_SPACE_COLONY_DEEP_SPACE",
+    "TECH_NANOMORPHICS"
    ],
    "any": [
     [

@@ -5,10 +5,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_EMANCIPATION",
-     "scope": "team"
-    }
+    "TECH_EMANCIPATION"
    ],
    "any": [
     [
@@ -19,10 +16,7 @@
     ]
    ],
    "noneOf": [
-    {
-     "type": "BUILDING_WORLDVIEW_SLAVERY_ACTIVE",
-     "scope": "city"
-    }
+    "BUILDING_WORLDVIEW_SLAVERY_ACTIVE"
    ]
   },
   "operate": {

@@ -6,18 +6,9 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_MATHEMATICAL_ORACLE",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_COMPUTATIONAL_METAPHYSICS_CENTER",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_ARCHETYPAL_VECTOR_SPACES",
-     "scope": "team"
-    }
+    "BUILDING_MATHEMATICAL_ORACLE",
+    "BUILDING_COMPUTATIONAL_METAPHYSICS_CENTER",
+    "TECH_ARCHETYPAL_VECTOR_SPACES"
    ],
    "any": [
     [

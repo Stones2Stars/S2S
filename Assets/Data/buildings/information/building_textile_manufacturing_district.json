@@ -12,14 +12,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_MANUFACTURING_DISTRICT",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_RAPID_PROTOTYPING",
-     "scope": "team"
-    }
+    "BUILDING_MANUFACTURING_DISTRICT",
+    "TECH_RAPID_PROTOTYPING"
    ],
    "any": [
     [

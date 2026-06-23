@@ -5,10 +5,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_CURRENCY",
-     "scope": "team"
-    }
+    "TECH_CURRENCY"
    ],
    "any": [
     [

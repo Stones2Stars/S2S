@@ -6,19 +6,13 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_HYPERSPACE_EKPYROTIC_UNIVERSE",
-     "scope": "city"
-    },
+    "BUILDING_HYPERSPACE_EKPYROTIC_UNIVERSE",
     {
      "type": "BUILDING_DISTANT_DARK_ERA_SURVIVAL_PLAN",
      "scope": "empire",
      "min": 1
     },
-    {
-     "type": "TECH_REALITY_REPROGRAMMING",
-     "scope": "team"
-    }
+    "TECH_REALITY_REPROGRAMMING"
    ],
    "any": [
     [

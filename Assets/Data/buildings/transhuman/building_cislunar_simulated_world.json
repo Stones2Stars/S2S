@@ -5,14 +5,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_CISLUNAR_GOVERNANCE",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_SIMULATED_REALITY",
-     "scope": "team"
-    }
+    "BUILDING_CISLUNAR_GOVERNANCE",
+    "TECH_SIMULATED_REALITY"
    ],
    "any": [
     [

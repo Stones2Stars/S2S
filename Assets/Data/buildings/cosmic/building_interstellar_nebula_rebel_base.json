@@ -5,14 +5,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_INTERSTELLAR_WORMHOLE_BEACON",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_GALACTIC_WARFARE",
-     "scope": "team"
-    }
+    "BUILDING_INTERSTELLAR_WORMHOLE_BEACON",
+    "TECH_GALACTIC_WARFARE"
    ],
    "any": [
     [

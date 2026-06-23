@@ -13,10 +13,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_TOURISM",
-     "scope": "team"
-    }
+    "TECH_TOURISM"
    ],
    "any": [
     [
@@ -50,10 +47,7 @@
     ]
    ],
    "dormant": [
-    {
-     "type": "BUILDING_TOURISM_MEGACOMPLEX",
-     "scope": "city"
-    }
+    "BUILDING_TOURISM_MEGACOMPLEX"
    ]
   }
  },

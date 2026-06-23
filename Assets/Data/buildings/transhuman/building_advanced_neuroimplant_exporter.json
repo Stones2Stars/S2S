@@ -5,14 +5,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_STARPORT",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_COMPREHENSIVE_CYBERNETICS",
-     "scope": "team"
-    }
+    "BUILDING_STARPORT",
+    "TECH_COMPREHENSIVE_CYBERNETICS"
    ],
    "any": [
     [

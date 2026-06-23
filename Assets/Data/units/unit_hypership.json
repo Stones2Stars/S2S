@@ -6,25 +6,13 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_DUALFLUX_QUANTUM_TEMPORAL_RIFT",
-     "scope": "team"
-    }
+    "TECH_DUALFLUX_QUANTUM_TEMPORAL_RIFT"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_INTERGALACTIC_TEMPORAL_RIFT",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_DISTANT_HYPERPORT",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_HYPERSPACE_EXPORTER",
-      "scope": "city"
-     }
+     "BUILDING_INTERGALACTIC_TEMPORAL_RIFT",
+     "BUILDING_DISTANT_HYPERPORT",
+     "BUILDING_HYPERSPACE_EXPORTER"
     ]
    ]
   }

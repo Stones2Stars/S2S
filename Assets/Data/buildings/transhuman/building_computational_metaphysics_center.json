@@ -13,14 +13,8 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_INTUITIVE_ALGORITHMS",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_BINARY_SEMIOTICS",
-     "scope": "team"
-    }
+    "BUILDING_INTUITIVE_ALGORITHMS",
+    "TECH_BINARY_SEMIOTICS"
    ],
    "any": [
     [
@@ -36,10 +30,7 @@
   "city": {
    "flat": {
     "value": 12,
-    "enabled": {
-     "type": "TECH_NOOGENESIS",
-     "scope": "team"
-    }
+    "enabled": "TECH_NOOGENESIS"
    }
   }
  },
@@ -49,10 +40,7 @@
     10,
     {
      "value": 13,
-     "enabled": {
-      "type": "TECH_PANPSYCHISM",
-      "scope": "team"
-     }
+     "enabled": "TECH_PANPSYCHISM"
     }
    ]
   }
@@ -62,10 +50,7 @@
    "flat": [
     {
      "value": 11,
-     "enabled": {
-      "type": "TECH_COSMIC_PERSPECTIVE",
-      "scope": "team"
-     }
+     "enabled": "TECH_COSMIC_PERSPECTIVE"
     }
    ]
   }

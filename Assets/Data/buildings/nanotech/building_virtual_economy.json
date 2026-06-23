@@ -11,14 +11,8 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_VIRTUAL_WORLD_GUILD",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_CYBERSOCIAL_INTEGRATION",
-     "scope": "team"
-    }
+    "BUILDING_VIRTUAL_WORLD_GUILD",
+    "TECH_CYBERSOCIAL_INTEGRATION"
    ],
    "any": [
     [

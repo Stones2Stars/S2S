@@ -5,14 +5,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_CISLUNAR_DRYDOCK",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_WARMACHINES",
-     "scope": "team"
-    }
+    "BUILDING_CISLUNAR_DRYDOCK",
+    "TECH_WARMACHINES"
    ]
   }
  },

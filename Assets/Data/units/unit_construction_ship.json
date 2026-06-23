@@ -10,14 +10,8 @@
      "scope": "city",
      "connection": "trade|vicinity"
     },
-    {
-     "type": "BUILDING_SPACE_COLONY_CISLUNAR",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_ADVANCED_ENVIRONMENTAL_SYSTEMS",
-     "scope": "team"
-    }
+    "BUILDING_SPACE_COLONY_CISLUNAR",
+    "TECH_ADVANCED_ENVIRONMENTAL_SYSTEMS"
    ]
   }
  },

@@ -16,25 +16,13 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_ENCRYPTION_MACHINES",
-     "scope": "team"
-    }
+    "TECH_ENCRYPTION_MACHINES"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_TRADING_POST",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_SHOPPING_DISTRICT",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_MODERN_OFFICES",
-      "scope": "city"
-     }
+     "BUILDING_TRADING_POST",
+     "BUILDING_SHOPPING_DISTRICT",
+     "BUILDING_MODERN_OFFICES"
     ],
     [
      {

@@ -10,10 +10,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_KNOWLEDGE_MANAGEMENT",
-     "scope": "team"
-    }
+    "TECH_KNOWLEDGE_MANAGEMENT"
    ],
    "any": [
     [

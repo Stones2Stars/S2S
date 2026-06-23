@@ -5,18 +5,9 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_INTERGALACTIC_ASTROPOLIS",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_OMEGA_MINUS_ENGINEERING",
-     "scope": "team"
-    },
-    {
-     "type": "TECH_SUPERSYMMETRIC_PARTICLE_CONSTRUCTION",
-     "scope": "team"
-    }
+    "BUILDING_INTERGALACTIC_ASTROPOLIS",
+    "TECH_OMEGA_MINUS_ENGINEERING",
+    "TECH_SUPERSYMMETRIC_PARTICLE_CONSTRUCTION"
    ],
    "any": [
     [

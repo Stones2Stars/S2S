@@ -11,18 +11,9 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_INTERGALACTIC_COMMAND_CENTER",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_DIRECTED_PANSPERMIA",
-     "scope": "team"
-    },
-    {
-     "type": "TECH_SPACE_CREASING",
-     "scope": "team"
-    }
+    "BUILDING_INTERGALACTIC_COMMAND_CENTER",
+    "TECH_DIRECTED_PANSPERMIA",
+    "TECH_SPACE_CREASING"
    ],
    "any": [
     [

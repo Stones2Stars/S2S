@@ -18,18 +18,9 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_OMEGA_ASSEMBLER",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_QUANTUM_GRAVITY_SUPERCOMPUTER",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_ZEPTOTECHNOLOGY",
-     "scope": "team"
-    }
+    "BUILDING_OMEGA_ASSEMBLER",
+    "BUILDING_QUANTUM_GRAVITY_SUPERCOMPUTER",
+    "TECH_ZEPTOTECHNOLOGY"
    ],
    "any": [
     [

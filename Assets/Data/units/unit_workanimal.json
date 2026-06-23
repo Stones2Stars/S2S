@@ -10,10 +10,7 @@
      "scope": "city",
      "connection": "trade|vicinity"
     },
-    {
-     "type": "TECH_PLOUGH",
-     "scope": "team"
-    }
+    "TECH_PLOUGH"
    ]
   }
  },

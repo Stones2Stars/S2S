@@ -15,10 +15,7 @@
      "scope": "empire",
      "min": 1
     },
-    {
-     "type": "TECH_STARPUNK",
-     "scope": "team"
-    }
+    "TECH_STARPUNK"
    ],
    "any": [
     [

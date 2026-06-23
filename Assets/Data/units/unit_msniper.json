@@ -10,10 +10,7 @@
      "scope": "city",
      "connection": "trade|vicinity"
     },
-    {
-     "type": "TECH_LASER",
-     "scope": "team"
-    }
+    "TECH_LASER"
    ],
    "any": [
     [
@@ -24,14 +21,8 @@
      }
     ],
     [
-     {
-      "type": "BUILDING_AUTOMATED_FIRING_RANGE",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_ORBITAL_TARGETS",
-      "scope": "city"
-     }
+     "BUILDING_AUTOMATED_FIRING_RANGE",
+     "BUILDING_ORBITAL_TARGETS"
     ]
    ]
   }

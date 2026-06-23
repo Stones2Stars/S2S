@@ -6,25 +6,13 @@
   "build": {
    "all": [
     "HAS_COAST",
-    {
-     "type": "BUILDING_FOLKLORE_WALRUS",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_ZOOLOGY",
-     "scope": "team"
-    }
+    "BUILDING_FOLKLORE_WALRUS",
+    "TECH_ZOOLOGY"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_AQUARIUM",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_ZOO",
-      "scope": "city"
-     }
+     "BUILDING_AQUARIUM",
+     "BUILDING_ZOO"
     ],
     [
      {

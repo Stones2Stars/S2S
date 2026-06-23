@@ -10,10 +10,7 @@
      "scope": "city",
      "connection": "trade|vicinity"
     },
-    {
-     "type": "TECH_BARTER",
-     "scope": "team"
-    }
+    "TECH_BARTER"
    ]
   }
  },

@@ -7,21 +7,12 @@
   "build": {
    "all": [
     "HAS_COAST",
-    {
-     "type": "TECH_REFRIGERATION",
-     "scope": "team"
-    }
+    "TECH_REFRIGERATION"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_TRADING_POST",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_SHOPPING_DISTRICT",
-      "scope": "city"
-     }
+     "BUILDING_TRADING_POST",
+     "BUILDING_SHOPPING_DISTRICT"
     ],
     [
      {

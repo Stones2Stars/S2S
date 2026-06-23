@@ -14,18 +14,9 @@
   "build": {
    "all": [
     "HAS_COAST",
-    {
-     "type": "BUILDING_BURIAL_TRADITION_SEA",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_CEREMONIAL_BURIAL",
-     "scope": "team"
-    },
-    {
-     "type": "TECH_RAFT_BUILDING",
-     "scope": "team"
-    }
+    "BUILDING_BURIAL_TRADITION_SEA",
+    "TECH_CEREMONIAL_BURIAL",
+    "TECH_RAFT_BUILDING"
    ],
    "any": [
     [
@@ -38,14 +29,8 @@
   },
   "operate": {
    "dormant": [
-    {
-     "type": "BUILDING_FUNERARY_SERVICES",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_HIGH_TECH_CULTURAL_ENRICHMENT",
-     "scope": "city"
-    }
+    "BUILDING_FUNERARY_SERVICES",
+    "BUILDING_HIGH_TECH_CULTURAL_ENRICHMENT"
    ]
   }
  },

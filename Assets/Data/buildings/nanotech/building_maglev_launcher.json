@@ -17,14 +17,8 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_COMMERCIAL_SPACEPORT",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_MASS_DRIVER",
-     "scope": "team"
-    }
+    "BUILDING_COMMERCIAL_SPACEPORT",
+    "TECH_MASS_DRIVER"
    ],
    "any": [
     [
@@ -42,10 +36,7 @@
     7,
     {
      "value": 10,
-     "enabled": {
-      "type": "TECH_FRICTIONLESS_FLIGHT",
-      "scope": "team"
-     }
+     "enabled": "TECH_FRICTIONLESS_FLIGHT"
     }
    ]
   }

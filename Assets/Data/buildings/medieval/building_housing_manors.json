@@ -18,14 +18,8 @@
   "build": {
    "all": [
     "HAS_FRESHWATER",
-    {
-     "type": "BUILDING_SEWER_SYSTEM",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_SURVEYING",
-     "scope": "team"
-    }
+    "BUILDING_SEWER_SYSTEM",
+    "TECH_SURVEYING"
    ],
    "any": [
     [
@@ -54,22 +48,10 @@
     ]
    ],
    "dormant": [
-    {
-     "type": "BUILDING_HOUSING_MANSIONS",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_HOUSING_CHATEAU",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_HOUSING_COLONY_ARCOLOGY",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_LAUNCH_ARCOLOGY",
-     "scope": "city"
-    }
+    "BUILDING_HOUSING_MANSIONS",
+    "BUILDING_HOUSING_CHATEAU",
+    "BUILDING_HOUSING_COLONY_ARCOLOGY",
+    "BUILDING_LAUNCH_ARCOLOGY"
    ]
   }
  },

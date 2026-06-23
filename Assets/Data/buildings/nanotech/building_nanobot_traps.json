@@ -14,10 +14,7 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "TECH_NANOELECTRONICS",
-     "scope": "team"
-    }
+    "TECH_NANOELECTRONICS"
    ],
    "any": [
     [
@@ -37,10 +34,7 @@
     }
    ],
    "dormant": [
-    {
-     "type": "BUILDING_GRAVITY_TRAPS",
-     "scope": "city"
-    }
+    "BUILDING_GRAVITY_TRAPS"
    ]
   }
  },

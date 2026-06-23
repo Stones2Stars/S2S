@@ -10,14 +10,8 @@
      "scope": "city",
      "connection": "trade|vicinity"
     },
-    {
-     "type": "BUILDING_SECRET_ARMY_BASE",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_JET_PROPULSION",
-     "scope": "team"
-    },
+    "BUILDING_SECRET_ARMY_BASE",
+    "TECH_JET_PROPULSION",
     {
      "type": "BONUS_AIRCRAFT",
      "scope": "city",

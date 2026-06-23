@@ -5,18 +5,9 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_BIOLOGY_LAB",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_ZOO",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_ZOOLOGY",
-     "scope": "team"
-    }
+    "BUILDING_BIOLOGY_LAB",
+    "BUILDING_ZOO",
+    "TECH_ZOOLOGY"
    ],
    "any": [
     [
@@ -48,10 +39,7 @@
   "city": {
    "flat": {
     "value": 8,
-    "enabled": {
-     "type": "TECH_BIOMATERIALS",
-     "scope": "team"
-    }
+    "enabled": "TECH_BIOMATERIALS"
    }
   }
  },
@@ -61,59 +49,35 @@
     5,
     {
      "value": 5,
-     "enabled": {
-      "type": "TECH_PALEONTOLOGY",
-      "scope": "team"
-     }
+     "enabled": "TECH_PALEONTOLOGY"
     },
     {
      "value": 6,
-     "enabled": {
-      "type": "TECH_WILDLIFE_CONSERVATION",
-      "scope": "team"
-     }
+     "enabled": "TECH_WILDLIFE_CONSERVATION"
     },
     {
      "value": 6,
-     "enabled": {
-      "type": "TECH_MARINE_BIOLOGY",
-      "scope": "team"
-     }
+     "enabled": "TECH_MARINE_BIOLOGY"
     },
     {
      "value": 7,
-     "enabled": {
-      "type": "TECH_ECOLOGY",
-      "scope": "team"
-     }
+     "enabled": "TECH_ECOLOGY"
     },
     {
      "value": 7,
-     "enabled": {
-      "type": "TECH_GENETICS",
-      "scope": "team"
-     }
+     "enabled": "TECH_GENETICS"
     },
     {
      "value": 8,
-     "enabled": {
-      "type": "TECH_GENESIS_BIOLOGY",
-      "scope": "team"
-     }
+     "enabled": "TECH_GENESIS_BIOLOGY"
     },
     {
      "value": 8,
-     "enabled": {
-      "type": "TECH_ECOLOGICAL_ENGINEERING",
-      "scope": "team"
-     }
+     "enabled": "TECH_ECOLOGICAL_ENGINEERING"
     },
     {
      "value": 8,
-     "enabled": {
-      "type": "TECH_GENOMIC_ENCYCLOPEDIA",
-      "scope": "team"
-     }
+     "enabled": "TECH_GENOMIC_ENCYCLOPEDIA"
     }
    ]
   }

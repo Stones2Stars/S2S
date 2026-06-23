@@ -10,10 +10,7 @@
      "scope": "city",
      "connection": "trade|vicinity"
     },
-    {
-     "type": "TECH_SENTIENT_EARTH",
-     "scope": "team"
-    }
+    "TECH_SENTIENT_EARTH"
    ],
    "any": [
     [

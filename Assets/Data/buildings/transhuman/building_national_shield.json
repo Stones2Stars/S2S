@@ -10,14 +10,8 @@
      "scope": "city",
      "min": 13
     },
-    {
-     "type": "BUILDING_INDUSTRIAL_PARK",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_ADVANCED_SHIELDING",
-     "scope": "team"
-    }
+    "BUILDING_INDUSTRIAL_PARK",
+    "TECH_ADVANCED_SHIELDING"
    ],
    "any": [
     [

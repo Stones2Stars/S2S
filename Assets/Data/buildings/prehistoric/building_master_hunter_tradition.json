@@ -12,10 +12,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_HUNTING",
-     "scope": "team"
-    }
+    "TECH_HUNTING"
    ],
    "any": [
     [

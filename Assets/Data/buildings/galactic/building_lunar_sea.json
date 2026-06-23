@@ -6,18 +6,9 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_LUNAR_SOIL_GENERATOR",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_ASTROECOLOGY",
-     "scope": "team"
-    },
-    {
-     "type": "TECH_PARATERRAFORMING",
-     "scope": "team"
-    }
+    "BUILDING_LUNAR_SOIL_GENERATOR",
+    "TECH_ASTROECOLOGY",
+    "TECH_PARATERRAFORMING"
    ],
    "any": [
     [
@@ -35,10 +26,7 @@
     3,
     {
      "value": 11,
-     "enabled": {
-      "type": "TECH_LUNAR_TERRAFORMING",
-      "scope": "team"
-     }
+     "enabled": "TECH_LUNAR_TERRAFORMING"
     }
    ]
   }

@@ -10,10 +10,7 @@
      "scope": "city",
      "connection": "trade|vicinity"
     },
-    {
-     "type": "TECH_POWERED_EXOSKELETON",
-     "scope": "team"
-    },
+    "TECH_POWERED_EXOSKELETON",
     {
      "type": "BONUS_FIREARMS",
      "scope": "city",

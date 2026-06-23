@@ -5,19 +5,13 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_INTERGALACTIC_GALACTIC_GROUP_COLONY",
-     "scope": "city"
-    },
+    "BUILDING_INTERGALACTIC_GALACTIC_GROUP_COLONY",
     {
      "type": "BUILDING_INTERSTELLAR_DEGENERATE_ERA_SURVIVAL_PLAN",
      "scope": "empire",
      "min": 1
     },
-    {
-     "type": "TECH_PURE_INFORMATION_SOCIETY",
-     "scope": "team"
-    }
+    "TECH_PURE_INFORMATION_SOCIETY"
    ],
    "any": [
     [

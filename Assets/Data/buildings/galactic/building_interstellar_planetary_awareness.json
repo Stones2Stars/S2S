@@ -10,21 +10,12 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_PLANET_SCANNING",
-     "scope": "team"
-    }
+    "TECH_PLANET_SCANNING"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_INTERSTELLAR_PLANETARY_LANDING",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_SPACE_COLONY_MILKY_WAY",
-      "scope": "city"
-     }
+     "BUILDING_INTERSTELLAR_PLANETARY_LANDING",
+     "BUILDING_SPACE_COLONY_MILKY_WAY"
     ],
     [
      {

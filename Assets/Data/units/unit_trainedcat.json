@@ -5,18 +5,9 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_EFFECT_HERITAGE_BIG_CATS",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_MEGAFAUNA_DOMESTICATION",
-     "scope": "team"
-    },
-    {
-     "type": "TECH_FELINE_DOMESTICATION",
-     "scope": "team"
-    }
+    "BUILDING_EFFECT_HERITAGE_BIG_CATS",
+    "TECH_MEGAFAUNA_DOMESTICATION",
+    "TECH_FELINE_DOMESTICATION"
    ],
    "any": [
     [

@@ -5,27 +5,15 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_FOLKLORE_REQUIREMENT",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_FOLKLORE_E_EARTH",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_FOLKLORE_E_SKY",
-     "scope": "city"
-    },
+    "BUILDING_FOLKLORE_REQUIREMENT",
+    "BUILDING_FOLKLORE_E_EARTH",
+    "BUILDING_FOLKLORE_E_SKY",
     {
      "type": "BUILDING_PRESENCE_OF_CRATER",
      "scope": "empire",
      "min": 1
     },
-    {
-     "type": "TECH_ORAL_TRADITION",
-     "scope": "team"
-    }
+    "TECH_ORAL_TRADITION"
    ],
    "any": [
     [
@@ -43,38 +31,23 @@
     1,
     {
      "value": -0.6,
-     "enabled": {
-      "type": "TECH_LANGUAGE",
-      "scope": "team"
-     }
+     "enabled": "TECH_LANGUAGE"
     },
     {
      "value": -0.1,
-     "enabled": {
-      "type": "TECH_SEDENTARY_LIFESTYLE",
-      "scope": "team"
-     }
+     "enabled": "TECH_SEDENTARY_LIFESTYLE"
     },
     {
      "value": -0.1,
-     "enabled": {
-      "type": "TECH_CLASSICAL_LIFESTYLE",
-      "scope": "team"
-     }
+     "enabled": "TECH_CLASSICAL_LIFESTYLE"
     },
     {
      "value": -0.1,
-     "enabled": {
-      "type": "TECH_MEDIEVAL_LIFESTYLE",
-      "scope": "team"
-     }
+     "enabled": "TECH_MEDIEVAL_LIFESTYLE"
     },
     {
      "value": -0.1,
-     "enabled": {
-      "type": "TECH_RENAISSANCE_LIFESTYLE",
-      "scope": "team"
-     }
+     "enabled": "TECH_RENAISSANCE_LIFESTYLE"
     }
    ]
   }
@@ -84,38 +57,23 @@
    "flat": [
     {
      "value": 0.1,
-     "enabled": {
-      "type": "TECH_LANGUAGE",
-      "scope": "team"
-     }
+     "enabled": "TECH_LANGUAGE"
     },
     {
      "value": 0.1,
-     "enabled": {
-      "type": "TECH_SEDENTARY_LIFESTYLE",
-      "scope": "team"
-     }
+     "enabled": "TECH_SEDENTARY_LIFESTYLE"
     },
     {
      "value": 0.1,
-     "enabled": {
-      "type": "TECH_CLASSICAL_LIFESTYLE",
-      "scope": "team"
-     }
+     "enabled": "TECH_CLASSICAL_LIFESTYLE"
     },
     {
      "value": 0.1,
-     "enabled": {
-      "type": "TECH_MEDIEVAL_LIFESTYLE",
-      "scope": "team"
-     }
+     "enabled": "TECH_MEDIEVAL_LIFESTYLE"
     },
     {
      "value": 0.1,
-     "enabled": {
-      "type": "TECH_RENAISSANCE_LIFESTYLE",
-      "scope": "team"
-     }
+     "enabled": "TECH_RENAISSANCE_LIFESTYLE"
     }
    ]
   }
@@ -124,10 +82,7 @@
   "city": {
    "flat": {
     "value": 1,
-    "enabled": {
-     "type": "TECH_LITERATURE",
-     "scope": "team"
-    }
+    "enabled": "TECH_LITERATURE"
    }
   }
  },

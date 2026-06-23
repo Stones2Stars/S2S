@@ -10,10 +10,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_INDUSTRIALISM",
-     "scope": "team"
-    }
+    "TECH_INDUSTRIALISM"
    ],
    "any": [
     [
@@ -23,14 +20,8 @@
      }
     ],
     [
-     {
-      "type": "TECH_ROAD_BUILDING",
-      "scope": "team"
-     },
-     {
-      "type": "TECH_SHIP_BUILDING",
-      "scope": "team"
-     }
+     "TECH_ROAD_BUILDING",
+     "TECH_SHIP_BUILDING"
     ]
    ]
   },

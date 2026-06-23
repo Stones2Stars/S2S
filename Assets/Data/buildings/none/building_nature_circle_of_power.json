@@ -38,10 +38,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_NATURE_ALTAR",
-     "scope": "city"
-    }
+    "BUILDING_NATURE_ALTAR"
    ],
    "any": [
     [
@@ -54,10 +51,7 @@
   },
   "operate": {
    "all": [
-    {
-     "type": "RELIGION_DRUIDIC_TRADITIONS",
-     "scope": "city"
-    }
+    "RELIGION_DRUIDIC_TRADITIONS"
    ]
   }
  },

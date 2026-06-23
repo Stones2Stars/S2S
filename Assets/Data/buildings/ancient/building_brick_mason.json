@@ -18,10 +18,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_MASONRY",
-     "scope": "team"
-    }
+    "TECH_MASONRY"
    ],
    "any": [
     [
@@ -48,14 +45,8 @@
     ]
    ],
    "dormant": [
-    {
-     "type": "BUILDING_MODERN_EARTHWORKS",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_FACTORY_BRICKS",
-     "scope": "city"
-    }
+    "BUILDING_MODERN_EARTHWORKS",
+    "BUILDING_FACTORY_BRICKS"
    ]
   }
  },

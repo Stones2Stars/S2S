@@ -5,25 +5,13 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_MEGACITIES",
-     "scope": "team"
-    }
+    "TECH_MEGACITIES"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_INTERNATIONAL_PORT",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_OCEAN_ADMINISTRATION",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_HYBRID_AIRSHIP_PORT",
-      "scope": "city"
-     }
+     "BUILDING_INTERNATIONAL_PORT",
+     "BUILDING_OCEAN_ADMINISTRATION",
+     "BUILDING_HYBRID_AIRSHIP_PORT"
     ],
     [
      {

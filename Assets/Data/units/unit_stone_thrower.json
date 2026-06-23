@@ -5,10 +5,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_TOOL_MAKING",
-     "scope": "team"
-    }
+    "TECH_TOOL_MAKING"
    ]
   }
  },

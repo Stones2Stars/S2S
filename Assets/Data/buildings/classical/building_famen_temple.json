@@ -6,10 +6,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_MEDITATION",
-     "scope": "team"
-    }
+    "TECH_MEDITATION"
    ],
    "any": [
     [

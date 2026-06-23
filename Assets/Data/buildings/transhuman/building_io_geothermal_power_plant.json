@@ -5,14 +5,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_IO_BASE",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_THERMAL_NEGATION",
-     "scope": "team"
-    }
+    "BUILDING_IO_BASE",
+    "TECH_THERMAL_NEGATION"
    ],
    "any": [
     [
@@ -40,10 +34,7 @@
    "flat": [
     {
      "value": 11,
-     "enabled": {
-      "type": "TECH_PLANET_CRACKING",
-      "scope": "team"
-     }
+     "enabled": "TECH_PLANET_CRACKING"
     }
    ]
   }

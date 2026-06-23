@@ -11,14 +11,8 @@
      "scope": "city",
      "min": 7
     },
-    {
-     "type": "BUILDING_ACCELERATOR",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_LASER",
-     "scope": "team"
-    }
+    "BUILDING_ACCELERATOR",
+    "TECH_LASER"
    ],
    "any": [
     [

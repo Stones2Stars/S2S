@@ -5,14 +5,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_DISTANT_COMPUTRONIUM_FILAMENT",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_EXPERIMENTAL_COSMOLOGY",
-     "scope": "team"
-    }
+    "BUILDING_DISTANT_COMPUTRONIUM_FILAMENT",
+    "TECH_EXPERIMENTAL_COSMOLOGY"
    ],
    "any": [
     [

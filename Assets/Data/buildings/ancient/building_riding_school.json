@@ -13,25 +13,13 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_ANIMAL_RIDING",
-     "scope": "team"
-    }
+    "TECH_ANIMAL_RIDING"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_STABLE",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_KNIGHTS_STABLE",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_MODERN_STABLE",
-      "scope": "city"
-     }
+     "BUILDING_STABLE",
+     "BUILDING_KNIGHTS_STABLE",
+     "BUILDING_MODERN_STABLE"
     ],
     [
      {
@@ -83,10 +71,7 @@
     ]
    ],
    "dormant": [
-    {
-     "type": "BUILDING_HOLOGRAPHIC_SCHOOL",
-     "scope": "city"
-    }
+    "BUILDING_HOLOGRAPHIC_SCHOOL"
    ]
   }
  },

@@ -5,14 +5,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_HQ_EMPERORS_CLOTHING",
-     "scope": "city"
-    },
-    {
-     "type": "CORPORATION_EMPCLOTH",
-     "scope": "city"
-    }
+    "BUILDING_HQ_EMPERORS_CLOTHING",
+    "CORPORATION_EMPCLOTH"
    ]
   }
  },

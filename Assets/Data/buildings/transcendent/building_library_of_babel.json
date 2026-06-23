@@ -5,18 +5,9 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_DISTANT_INFINITE_SPEED_TACHYON_GENERATOR",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_DISTANT_LAYERED_REALITY",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_TRANSFINITE_COMPUTATION",
-     "scope": "team"
-    }
+    "BUILDING_DISTANT_INFINITE_SPEED_TACHYON_GENERATOR",
+    "BUILDING_DISTANT_LAYERED_REALITY",
+    "TECH_TRANSFINITE_COMPUTATION"
    ],
    "any": [
     [

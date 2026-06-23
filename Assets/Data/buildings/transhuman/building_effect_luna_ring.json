@@ -5,14 +5,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_EFFECT_CISLUNAR_ECONOMY",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_LUNAR_MEGASTRUCTURES",
-     "scope": "team"
-    }
+    "BUILDING_EFFECT_CISLUNAR_ECONOMY",
+    "TECH_LUNAR_MEGASTRUCTURES"
    ],
    "any": [
     [

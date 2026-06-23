@@ -13,10 +13,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_CODE_OF_LAWS",
-     "scope": "team"
-    }
+    "TECH_CODE_OF_LAWS"
    ],
    "any": [
     [
@@ -43,22 +40,10 @@
     ]
    ],
    "dormant": [
-    {
-     "type": "BUILDING_GALLOWS",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_GUILLOTINE",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_ELECTRIC_CHAIR",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_LETHAL_INJECTION",
-     "scope": "city"
-    }
+    "BUILDING_GALLOWS",
+    "BUILDING_GUILLOTINE",
+    "BUILDING_ELECTRIC_CHAIR",
+    "BUILDING_LETHAL_INJECTION"
    ]
   }
  },

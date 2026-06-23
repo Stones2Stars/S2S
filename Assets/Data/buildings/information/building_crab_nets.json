@@ -11,29 +11,14 @@
       "max": 80
      }
     },
-    {
-     "type": "BUILDING_FOLKLORE_CRAB",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_AQUACULTURE",
-     "scope": "team"
-    }
+    "BUILDING_FOLKLORE_CRAB",
+    "TECH_AQUACULTURE"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_TOWN_HALL",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_CITY_COUNCIL",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_METROPOLITAN_ADMINISTRATION",
-      "scope": "city"
-     }
+     "BUILDING_TOWN_HALL",
+     "BUILDING_CITY_COUNCIL",
+     "BUILDING_METROPOLITAN_ADMINISTRATION"
     ],
     [
      {

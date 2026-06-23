@@ -6,14 +6,8 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_HYPERSPACE_11_DIMENSIONAL_FACTORY",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_TRANSFINITE_COMPUTATION",
-     "scope": "team"
-    }
+    "BUILDING_HYPERSPACE_11_DIMENSIONAL_FACTORY",
+    "TECH_TRANSFINITE_COMPUTATION"
    ],
    "any": [
     [

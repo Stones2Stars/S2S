@@ -5,18 +5,9 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_INTERGALACTIC_KOLMOGOROV_COMPRESSION",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_INTERGALACTIC_ROMAN_RING",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_PURE_INFORMATION_SOCIETY",
-     "scope": "team"
-    }
+    "BUILDING_INTERGALACTIC_KOLMOGOROV_COMPRESSION",
+    "BUILDING_INTERGALACTIC_ROMAN_RING",
+    "TECH_PURE_INFORMATION_SOCIETY"
    ],
    "any": [
     [

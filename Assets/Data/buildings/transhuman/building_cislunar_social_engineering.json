@@ -10,18 +10,9 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_CISLUNAR_GOVERNANCE",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_CISLUNAR_SPACEPORT",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_SOCIAL_CALCULUS",
-     "scope": "team"
-    }
+    "BUILDING_CISLUNAR_GOVERNANCE",
+    "BUILDING_CISLUNAR_SPACEPORT",
+    "TECH_SOCIAL_CALCULUS"
    ],
    "any": [
     [

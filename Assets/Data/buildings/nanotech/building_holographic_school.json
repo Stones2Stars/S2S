@@ -13,14 +13,8 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_MEGATOWER_EDUCATION_LEVEL",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_HOLOGRAPHICS",
-     "scope": "team"
-    }
+    "BUILDING_MEGATOWER_EDUCATION_LEVEL",
+    "TECH_HOLOGRAPHICS"
    ],
    "any": [
     [

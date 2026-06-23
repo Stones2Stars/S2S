@@ -10,14 +10,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_GEOLOGY_LAB",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_VOLCANOLOGY",
-     "scope": "team"
-    }
+    "BUILDING_GEOLOGY_LAB",
+    "TECH_VOLCANOLOGY"
    ],
    "any": [
     [

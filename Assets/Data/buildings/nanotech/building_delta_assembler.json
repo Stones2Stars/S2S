@@ -17,22 +17,10 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_EPSILON_ASSEMBLER",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_FACIAL_RECOGNITION_SOFTWARE",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_ELECTRIC_ARC_WEAPONRY",
-     "scope": "team"
-    },
-    {
-     "type": "TECH_UBIQUITOUS_COMPUTING",
-     "scope": "team"
-    },
+    "BUILDING_EPSILON_ASSEMBLER",
+    "BUILDING_FACIAL_RECOGNITION_SOFTWARE",
+    "TECH_ELECTRIC_ARC_WEAPONRY",
+    "TECH_UBIQUITOUS_COMPUTING",
     {
      "type": "BONUS_LIQUID_METAL",
      "scope": "city",
@@ -51,14 +39,8 @@
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_FACTORY_EXOSKELETONS",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_NANOTECH_COMPLEX",
-      "scope": "city"
-     }
+     "BUILDING_FACTORY_EXOSKELETONS",
+     "BUILDING_NANOTECH_COMPLEX"
     ],
     [
      {

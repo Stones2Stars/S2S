@@ -29,10 +29,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_ROAD_BUILDING",
-     "scope": "team"
-    }
+    "TECH_ROAD_BUILDING"
    ],
    "any": [
     [
@@ -45,22 +42,10 @@
   },
   "operate": {
    "dormant": [
-    {
-     "type": "BUILDING_PAVED_ROADS",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_ASPHALT_ROADS",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_SKYROAD_CONTROL_TOWER",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_TELEPORT_BOOTH",
-     "scope": "city"
-    }
+    "BUILDING_PAVED_ROADS",
+    "BUILDING_ASPHALT_ROADS",
+    "BUILDING_SKYROAD_CONTROL_TOWER",
+    "BUILDING_TELEPORT_BOOTH"
    ]
   }
  },

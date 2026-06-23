@@ -13,33 +13,15 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_TRAP_FISHING",
-     "scope": "team"
-    },
-    {
-     "type": "TECH_DRYING",
-     "scope": "team"
-    }
+    "TECH_TRAP_FISHING",
+    "TECH_DRYING"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_DRYING_FRAME",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_ANCIENT_CUSTOMS",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_SMOKEHOUSE",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_HYPERMARKET",
-      "scope": "city"
-     }
+     "BUILDING_DRYING_FRAME",
+     "BUILDING_ANCIENT_CUSTOMS",
+     "BUILDING_SMOKEHOUSE",
+     "BUILDING_HYPERMARKET"
     ],
     [
      {
@@ -65,10 +47,7 @@
     ]
    ],
    "dormant": [
-    {
-     "type": "BUILDING_AQUAFARM",
-     "scope": "city"
-    }
+    "BUILDING_AQUAFARM"
    ]
   }
  },

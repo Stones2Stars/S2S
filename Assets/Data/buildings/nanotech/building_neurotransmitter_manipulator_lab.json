@@ -12,14 +12,8 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_NEURON_REGENERATOR_LAB",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_CYBERIMMUNOLOGY",
-     "scope": "team"
-    }
+    "BUILDING_NEURON_REGENERATOR_LAB",
+    "TECH_CYBERIMMUNOLOGY"
    ],
    "any": [
     [

@@ -25,14 +25,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_DEEP_SPACE_ONEILL_CYLINDER",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_COLONY_ARCOLOGY",
-     "scope": "team"
-    },
+    "BUILDING_DEEP_SPACE_ONEILL_CYLINDER",
+    "TECH_COLONY_ARCOLOGY",
     {
      "type": "BONUS_SUPERINTELLIGENT_COMPUTERS",
      "scope": "city",

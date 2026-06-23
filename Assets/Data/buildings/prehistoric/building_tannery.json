@@ -18,21 +18,12 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_TANNING",
-     "scope": "team"
-    }
+    "TECH_TANNING"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_DRYING_FRAME",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_ANCIENT_CUSTOMS",
-      "scope": "city"
-     }
+     "BUILDING_DRYING_FRAME",
+     "BUILDING_ANCIENT_CUSTOMS"
     ],
     [
      {
@@ -66,14 +57,8 @@
     ]
    ],
    "dormant": [
-    {
-     "type": "BUILDING_FACTORY_LEATHER",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_MEAT_INDUSTRY_CONGLOMERATE",
-     "scope": "city"
-    }
+    "BUILDING_FACTORY_LEATHER",
+    "BUILDING_MEAT_INDUSTRY_CONGLOMERATE"
    ]
   }
  },

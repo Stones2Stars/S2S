@@ -5,14 +5,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_INTERGALACTIC_MINE",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_ZEPTOTECHNOLOGY",
-     "scope": "team"
-    }
+    "BUILDING_INTERGALACTIC_MINE",
+    "TECH_ZEPTOTECHNOLOGY"
    ],
    "any": [
     [

@@ -5,22 +5,10 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_C_AC_MIDDLE_EASTERN",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_C_L_MIDDLE_EASTERN",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_C_AC_EUROPEAN",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_MOUNTED_ARCHERY",
-     "scope": "team"
-    }
+    "BUILDING_C_AC_MIDDLE_EASTERN",
+    "BUILDING_C_L_MIDDLE_EASTERN",
+    "BUILDING_C_AC_EUROPEAN",
+    "TECH_MOUNTED_ARCHERY"
    ],
    "any": [
     [

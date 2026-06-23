@@ -75,10 +75,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_C_AC_ASIAN",
-     "scope": "city"
-    }
+    "BUILDING_C_AC_ASIAN"
    ],
    "any": [
     [

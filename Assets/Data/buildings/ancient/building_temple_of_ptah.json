@@ -5,10 +5,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_WRITING",
-     "scope": "team"
-    },
+    "TECH_WRITING",
     "STATE_RELIGION_IN_CITY",
     {
      "STATE_RELIGION": "RELIGION_KEMETISM"
@@ -30,10 +27,7 @@
      "scope": "city",
      "connection": "trade|vicinity"
     },
-    {
-     "type": "RELIGION_KEMETISM",
-     "scope": "city"
-    }
+    "RELIGION_KEMETISM"
    ],
    "any": [
     [

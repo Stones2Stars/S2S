@@ -5,14 +5,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_INTERSTELLAR_DYSON_SPHERE",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_ASTROENGINEERING",
-     "scope": "team"
-    }
+    "BUILDING_INTERSTELLAR_DYSON_SPHERE",
+    "TECH_ASTROENGINEERING"
    ],
    "any": [
     [

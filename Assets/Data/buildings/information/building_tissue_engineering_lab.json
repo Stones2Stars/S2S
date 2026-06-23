@@ -13,14 +13,8 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_STEM_CELL_LAB",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_MOLECULAR_MEDICINE",
-     "scope": "team"
-    }
+    "BUILDING_STEM_CELL_LAB",
+    "TECH_MOLECULAR_MEDICINE"
    ],
    "any": [
     [
@@ -56,31 +50,19 @@
     5,
     {
      "value": 9,
-     "enabled": {
-      "type": "TECH_ANTI_AGING_MEDICINE",
-      "scope": "team"
-     }
+     "enabled": "TECH_ANTI_AGING_MEDICINE"
     },
     {
      "value": 9,
-     "enabled": {
-      "type": "TECH_RAPID_RECUPERATION",
-      "scope": "team"
-     }
+     "enabled": "TECH_RAPID_RECUPERATION"
     },
     {
      "value": 9,
-     "enabled": {
-      "type": "TECH_GENE_ENHANCEMENT",
-      "scope": "team"
-     }
+     "enabled": "TECH_GENE_ENHANCEMENT"
     },
     {
      "value": 9,
-     "enabled": {
-      "type": "TECH_CYBERIMMUNOLOGY",
-      "scope": "team"
-     }
+     "enabled": "TECH_CYBERIMMUNOLOGY"
     }
    ]
   }
@@ -91,31 +73,19 @@
     1,
     {
      "value": 1,
-     "enabled": {
-      "type": "TECH_ANTI_AGING_MEDICINE",
-      "scope": "team"
-     }
+     "enabled": "TECH_ANTI_AGING_MEDICINE"
     },
     {
      "value": 1,
-     "enabled": {
-      "type": "TECH_RAPID_RECUPERATION",
-      "scope": "team"
-     }
+     "enabled": "TECH_RAPID_RECUPERATION"
     },
     {
      "value": 1,
-     "enabled": {
-      "type": "TECH_GENE_ENHANCEMENT",
-      "scope": "team"
-     }
+     "enabled": "TECH_GENE_ENHANCEMENT"
     },
     {
      "value": 1,
-     "enabled": {
-      "type": "TECH_CYBERIMMUNOLOGY",
-      "scope": "team"
-     }
+     "enabled": "TECH_CYBERIMMUNOLOGY"
     }
    ]
   }

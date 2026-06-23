@@ -12,18 +12,9 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_DEEP_SPACE_DOCKING_BAY",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_DEEP_SPACE_FACTORY",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_NUCLEAR_PULSE_PROPULSION",
-     "scope": "team"
-    }
+    "BUILDING_DEEP_SPACE_DOCKING_BAY",
+    "BUILDING_DEEP_SPACE_FACTORY",
+    "TECH_NUCLEAR_PULSE_PROPULSION"
    ],
    "any": [
     [

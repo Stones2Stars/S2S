@@ -6,14 +6,8 @@
   "build": {
    "all": [
     "HAS_COAST",
-    {
-     "type": "BUILDING_HARBORMASTERS_OFFICE",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_MACHINERY",
-     "scope": "team"
-    }
+    "BUILDING_HARBORMASTERS_OFFICE",
+    "TECH_MACHINERY"
    ],
    "any": [
     [

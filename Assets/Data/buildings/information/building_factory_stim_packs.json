@@ -14,14 +14,8 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_FACTORY",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_PERSONALIZED_HEALTH",
-     "scope": "team"
-    }
+    "BUILDING_FACTORY",
+    "TECH_PERSONALIZED_HEALTH"
    ],
    "any": [
     [
@@ -50,10 +44,7 @@
     ]
    ],
    "dormant": [
-    {
-     "type": "BUILDING_MEDICAL_MEGACOMPLEX",
-     "scope": "city"
-    }
+    "BUILDING_MEDICAL_MEGACOMPLEX"
    ]
   }
  },

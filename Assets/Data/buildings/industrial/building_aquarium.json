@@ -17,10 +17,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_MARINE_BIOLOGY",
-     "scope": "team"
-    }
+    "TECH_MARINE_BIOLOGY"
    ],
    "any": [
     [

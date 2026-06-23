@@ -14,18 +14,9 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_ANTHROPOMORPHICS_LAB",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_SHOPPING_DISTRICT",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_CYBERNETICS",
-     "scope": "team"
-    }
+    "BUILDING_ANTHROPOMORPHICS_LAB",
+    "BUILDING_SHOPPING_DISTRICT",
+    "TECH_CYBERNETICS"
    ],
    "any": [
     [
@@ -54,10 +45,7 @@
     ]
    ],
    "dormant": [
-    {
-     "type": "BUILDING_HIGH_TECH_CULTURAL_ENRICHMENT",
-     "scope": "city"
-    }
+    "BUILDING_HIGH_TECH_CULTURAL_ENRICHMENT"
    ]
   }
  },

@@ -10,18 +10,9 @@
      "scope": "city",
      "min": 3
     },
-    {
-     "type": "BUILDING_NATIONAL_FIRE_SERVICE",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_COURTHOUSE",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_CIVIL_ENGINEERING",
-     "scope": "team"
-    }
+    "BUILDING_NATIONAL_FIRE_SERVICE",
+    "BUILDING_COURTHOUSE",
+    "TECH_CIVIL_ENGINEERING"
    ],
    "any": [
     [

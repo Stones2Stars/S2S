@@ -114,8 +114,14 @@ avoided anyway — a second sequential `requires` clause or a `disabled` reads e
 { "type": "BONUS_IRON", "scope": "city", "connection": "trade|vicinity" }   // an atom
 ```
 
-An **atom** is `{ type, scope, min?, max?, connection? }`, always **fully explicit** — it carries its own `type`
-and `scope`; the engine never infers them.
+An **atom** is `{ type, scope?, min?, max?, connection? }`. **Scope is IMPLIED from the type's domain** and the
+engine derives it from the ID — TECH→`team`, civic/heritage→`empire`, building/bonus/religion/corporation→`city`.
+State `scope` explicitly ONLY when it differs from that default (e.g. a `world`-scope victory, a `player`-scope tech).
+So a **plain default-scope presence collapses to a bare type-string** — author the common case as a simple string
+array: `"all": ["BUILDING_FORGE", "TECH_ASTRONOMY"]` ≡ `[{type:"BUILDING_FORGE"},{type:"TECH_ASTRONOMY",scope:"team"}]`.
+Keep the object form only when a special case forces it: a `connection`, a count (`min`/`max`), or a non-default
+scope. **Forcing a redundant `{type, scope}` only invites authoring bugs.** *(Plot-substrate
+`{type:"TERRAIN_…"/"FEATURE_…"/"IMPROVEMENT_…"}` and `{type:"MAPCATEGORY_…"}` stay object-form — they are plot predicates, §3.5.)*
 
 - **presence** = `min: 1` ("have ≥ 1"). Authoring presence this way keeps it future-proof if a resource later
   gains amounts.

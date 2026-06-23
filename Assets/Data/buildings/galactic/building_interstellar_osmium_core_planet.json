@@ -10,18 +10,9 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_INTERSTELLAR_PRECIOUS_METAL_GENERATOR",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_INTERSTELLAR_ARTIFICIAL_MOON",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_ARTIFICIAL_PLANETS",
-     "scope": "team"
-    }
+    "BUILDING_INTERSTELLAR_PRECIOUS_METAL_GENERATOR",
+    "BUILDING_INTERSTELLAR_ARTIFICIAL_MOON",
+    "TECH_ARTIFICIAL_PLANETS"
    ],
    "any": [
     [

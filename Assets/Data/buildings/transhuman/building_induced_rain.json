@@ -6,14 +6,8 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_ATMOSPHERIC_WATER_GENERATOR",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_WEATHER_CONTROL",
-     "scope": "team"
-    }
+    "BUILDING_ATMOSPHERIC_WATER_GENERATOR",
+    "TECH_WEATHER_CONTROL"
    ],
    "any": [
     [

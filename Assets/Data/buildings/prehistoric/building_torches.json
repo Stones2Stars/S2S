@@ -13,10 +13,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_FIRE_MAKING",
-     "scope": "team"
-    }
+    "TECH_FIRE_MAKING"
    ],
    "any": [
     [
@@ -49,22 +46,10 @@
     ]
    ],
    "dormant": [
-    {
-     "type": "BUILDING_OIL_LAMPS",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_GAS_LAMPS",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_ELECTRIC_LAMPS",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_OLED_LAMPS",
-     "scope": "city"
-    }
+    "BUILDING_OIL_LAMPS",
+    "BUILDING_GAS_LAMPS",
+    "BUILDING_ELECTRIC_LAMPS",
+    "BUILDING_OLED_LAMPS"
    ]
   }
  },

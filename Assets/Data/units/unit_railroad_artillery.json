@@ -10,10 +10,7 @@
      "scope": "city",
      "connection": "trade|vicinity"
     },
-    {
-     "type": "TECH_DIESELPUNK",
-     "scope": "team"
-    }
+    "TECH_DIESELPUNK"
    ],
    "any": [
     [

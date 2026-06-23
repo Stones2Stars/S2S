@@ -5,21 +5,12 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_ALCHEMY",
-     "scope": "team"
-    }
+    "TECH_ALCHEMY"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_WINERY",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_FOOD_MANUFACTURING_DISTRICT",
-      "scope": "city"
-     }
+     "BUILDING_WINERY",
+     "BUILDING_FOOD_MANUFACTURING_DISTRICT"
     ],
     [
      {
@@ -31,10 +22,7 @@
   },
   "operate": {
    "dormant": [
-    {
-     "type": "BUILDING_ORDINANCE_ALCOHOL_PROHIBITION",
-     "scope": "city"
-    }
+    "BUILDING_ORDINANCE_ALCOHOL_PROHIBITION"
    ]
   }
  },

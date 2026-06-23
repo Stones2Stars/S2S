@@ -15,10 +15,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_CAMELID_DOMESTICATION",
-     "scope": "team"
-    }
+    "TECH_CAMELID_DOMESTICATION"
    ],
    "any": [
     [

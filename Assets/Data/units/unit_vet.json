@@ -10,10 +10,7 @@
      "scope": "city",
      "connection": "trade|vicinity"
     },
-    {
-     "type": "TECH_VETERINARY_MEDICINE",
-     "scope": "team"
-    }
+    "TECH_VETERINARY_MEDICINE"
    ],
    "any": [
     [
@@ -24,18 +21,9 @@
      }
     ],
     [
-     {
-      "type": "BUILDING_ANCIENT_VETERINARIAN",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_VETERINARIAN",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_HEALTHCARE_MEGACOMPLEX",
-      "scope": "city"
-     }
+     "BUILDING_ANCIENT_VETERINARIAN",
+     "BUILDING_VETERINARIAN",
+     "BUILDING_HEALTHCARE_MEGACOMPLEX"
     ]
    ]
   }

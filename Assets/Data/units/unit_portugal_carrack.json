@@ -15,10 +15,7 @@
      "scope": "world",
      "min": 10
     },
-    {
-     "type": "TECH_COMPASS",
-     "scope": "team"
-    }
+    "TECH_COMPASS"
    ]
   }
  },

@@ -10,14 +10,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_MEETING_HALL",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_MONARCHY",
-     "scope": "team"
-    }
+    "BUILDING_MEETING_HALL",
+    "TECH_MONARCHY"
    ],
    "any": [
     [

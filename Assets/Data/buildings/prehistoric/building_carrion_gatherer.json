@@ -18,10 +18,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_SCAVENGING",
-     "scope": "team"
-    }
+    "TECH_SCAVENGING"
    ],
    "any": [
     [
@@ -133,14 +130,8 @@
     ]
    ],
    "dormant": [
-    {
-     "type": "BUILDING_INDUSTRIAL_FARMS",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_MEAT_INDUSTRY_CONGLOMERATE",
-     "scope": "city"
-    }
+    "BUILDING_INDUSTRIAL_FARMS",
+    "BUILDING_MEAT_INDUSTRY_CONGLOMERATE"
    ]
   }
  },
@@ -155,10 +146,7 @@
     -1,
     {
      "value": 1,
-     "enabled": {
-      "type": "TECH_COOKING",
-      "scope": "team"
-     }
+     "enabled": "TECH_COOKING"
     }
    ]
   }

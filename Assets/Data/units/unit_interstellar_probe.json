@@ -5,14 +5,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_DEEP_SPACE_TELESCOPE",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_ASTROGATION_CONSTELLATION",
-     "scope": "team"
-    }
+    "BUILDING_DEEP_SPACE_TELESCOPE",
+    "TECH_ASTROGATION_CONSTELLATION"
    ]
   }
  },

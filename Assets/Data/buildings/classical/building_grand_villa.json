@@ -5,10 +5,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_MATHEMATICS",
-     "scope": "team"
-    }
+    "TECH_MATHEMATICS"
    ],
    "any": [
     [
@@ -22,14 +19,8 @@
   "operate": {
    "any": [
     [
-     {
-      "type": "CIVIC_MAGISTRATES",
-      "scope": "empire"
-     },
-     {
-      "type": "CIVIC_BOURGEOIS",
-      "scope": "empire"
-     }
+     "CIVIC_MAGISTRATES",
+     "CIVIC_BOURGEOIS"
     ]
    ]
   }

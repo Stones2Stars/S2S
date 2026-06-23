@@ -5,10 +5,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_UTOPIA_DESTINY",
-     "scope": "team"
-    }
+    "TECH_UTOPIA_DESTINY"
    ],
    "any": [
     [

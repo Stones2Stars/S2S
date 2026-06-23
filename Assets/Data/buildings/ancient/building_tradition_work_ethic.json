@@ -10,10 +10,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_SPECIALIZATION",
-     "scope": "team"
-    }
+    "TECH_SPECIALIZATION"
    ],
    "any": [
     [

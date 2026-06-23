@@ -16,10 +16,7 @@
      "scope": "city",
      "min": 3
     },
-    {
-     "type": "TECH_FUNDAMENTALISM",
-     "scope": "team"
-    },
+    "TECH_FUNDAMENTALISM",
     "STATE_RELIGION_IN_CITY",
     {
      "STATE_RELIGION": "RELIGION_CHRISTIANITY"
@@ -36,10 +33,7 @@
   },
   "operate": {
    "all": [
-    {
-     "type": "RELIGION_CHRISTIANITY",
-     "scope": "city"
-    }
+    "RELIGION_CHRISTIANITY"
    ]
   }
  },

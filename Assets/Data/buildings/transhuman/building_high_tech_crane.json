@@ -11,14 +11,8 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_CONSTRUCTION_FIRM",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_MEGASTRUCTURE_ENGINEERING",
-     "scope": "team"
-    }
+    "BUILDING_CONSTRUCTION_FIRM",
+    "TECH_MEGASTRUCTURE_ENGINEERING"
    ],
    "any": [
     [

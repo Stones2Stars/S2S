@@ -10,10 +10,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_CLOSED_ECONOMIES",
-     "scope": "team"
-    }
+    "TECH_CLOSED_ECONOMIES"
    ],
    "any": [
     [

@@ -5,25 +5,13 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_COOPERATION",
-     "scope": "team"
-    },
-    {
-     "type": "TECH_SHELTER_BUILDING",
-     "scope": "team"
-    }
+    "TECH_COOPERATION",
+    "TECH_SHELTER_BUILDING"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_CHILDBIRTH_HUT",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_ANCIENT_CUSTOMS",
-      "scope": "city"
-     }
+     "BUILDING_CHILDBIRTH_HUT",
+     "BUILDING_ANCIENT_CUSTOMS"
     ],
     [
      {
@@ -36,18 +24,9 @@
   "operate": {
    "any": [
     [
-     {
-      "type": "CIVIC_COMMUNALISM",
-      "scope": "empire"
-     },
-     {
-      "type": "CIVIC_BARTER",
-      "scope": "empire"
-     },
-     {
-      "type": "CIVIC_SUBSISTENCE",
-      "scope": "empire"
-     }
+     "CIVIC_COMMUNALISM",
+     "CIVIC_BARTER",
+     "CIVIC_SUBSISTENCE"
     ]
    ]
   }

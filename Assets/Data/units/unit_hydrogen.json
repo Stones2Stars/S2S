@@ -10,10 +10,7 @@
      "scope": "city",
      "connection": "trade|vicinity"
     },
-    {
-     "type": "TECH_MODERN_WARFARE",
-     "scope": "team"
-    }
+    "TECH_MODERN_WARFARE"
    ],
    "any": [
     [

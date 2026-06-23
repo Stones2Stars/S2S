@@ -6,14 +6,8 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_SECURITY_CENTER",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_AMPLIFIED_WAVELENGTHS",
-     "scope": "team"
-    }
+    "BUILDING_SECURITY_CENTER",
+    "TECH_AMPLIFIED_WAVELENGTHS"
    ],
    "any": [
     [

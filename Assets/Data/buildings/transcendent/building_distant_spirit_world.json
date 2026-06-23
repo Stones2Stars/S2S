@@ -5,14 +5,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_DISTANT_LAYERED_REALITY",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_SPIRITUAL_REALMS",
-     "scope": "team"
-    }
+    "BUILDING_DISTANT_LAYERED_REALITY",
+    "TECH_SPIRITUAL_REALMS"
    ],
    "any": [
     [
@@ -29,17 +23,11 @@
    "flat": [
     {
      "value": 13,
-     "enabled": {
-      "type": "TECH_ARCHETYPAL_VECTOR_SPACES",
-      "scope": "team"
-     }
+     "enabled": "TECH_ARCHETYPAL_VECTOR_SPACES"
     },
     {
      "value": 13,
-     "enabled": {
-      "type": "TECH_OMEGA_POINT",
-      "scope": "team"
-     }
+     "enabled": "TECH_OMEGA_POINT"
     }
    ]
   }

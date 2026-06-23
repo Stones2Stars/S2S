@@ -6,22 +6,10 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_VIROTHERAPY_CLINIC",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_NEUROTRANSMITTER_MANIPULATOR_LAB",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_REJUVENATION_TANK",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_CYBERIMMUNOLOGY",
-     "scope": "team"
-    },
+    "BUILDING_VIROTHERAPY_CLINIC",
+    "BUILDING_NEUROTRANSMITTER_MANIPULATOR_LAB",
+    "BUILDING_REJUVENATION_TANK",
+    "TECH_CYBERIMMUNOLOGY",
     {
      "type": "BONUS_NANOBOTS",
      "scope": "city",

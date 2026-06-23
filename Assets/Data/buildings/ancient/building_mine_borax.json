@@ -13,14 +13,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_MINING_CAMP",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_SALT_PROCESSING",
-     "scope": "team"
-    }
+    "BUILDING_MINING_CAMP",
+    "TECH_SALT_PROCESSING"
    ],
    "any": [
     [
@@ -49,10 +43,7 @@
     ]
    ],
    "dormant": [
-    {
-     "type": "BUILDING_MODERN_EARTHWORKS",
-     "scope": "city"
-    }
+    "BUILDING_MODERN_EARTHWORKS"
    ]
   }
  },

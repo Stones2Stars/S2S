@@ -11,18 +11,9 @@
      "scope": "city",
      "min": 3
     },
-    {
-     "type": "BUILDING_ANIMAL_DESIGNER",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_ZOO",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_BIOPUNK",
-     "scope": "team"
-    }
+    "BUILDING_ANIMAL_DESIGNER",
+    "BUILDING_ZOO",
+    "TECH_BIOPUNK"
    ],
    "any": [
     [

@@ -11,18 +11,9 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_CISLUNAR_NANOSATELLITE_CONSTELLATION",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_CISLUNAR_ONEILL_CYLINDER",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_PHOTONIC_SATELLITES",
-     "scope": "team"
-    }
+    "BUILDING_CISLUNAR_NANOSATELLITE_CONSTELLATION",
+    "BUILDING_CISLUNAR_ONEILL_CYLINDER",
+    "TECH_PHOTONIC_SATELLITES"
    ],
    "any": [
     [

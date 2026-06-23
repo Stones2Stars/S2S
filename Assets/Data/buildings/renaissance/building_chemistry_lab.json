@@ -21,14 +21,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_UNIVERSITY",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_CHEMISTRY",
-     "scope": "team"
-    }
+    "BUILDING_UNIVERSITY",
+    "TECH_CHEMISTRY"
    ],
    "any": [
     [
@@ -48,10 +42,7 @@
     }
    ],
    "dormant": [
-    {
-     "type": "BUILDING_CHEMICALS_DISTRICT",
-     "scope": "city"
-    }
+    "BUILDING_CHEMICALS_DISTRICT"
    ]
   }
  },
@@ -61,17 +52,11 @@
     15,
     {
      "value": 6,
-     "enabled": {
-      "type": "TECH_ORGANIC_CHEMISTRY",
-      "scope": "team"
-     }
+     "enabled": "TECH_ORGANIC_CHEMISTRY"
     },
     {
      "value": 9,
-     "enabled": {
-      "type": "TECH_NOVUS_CHEMISTRY",
-      "scope": "team"
-     }
+     "enabled": "TECH_NOVUS_CHEMISTRY"
     }
    ]
   }

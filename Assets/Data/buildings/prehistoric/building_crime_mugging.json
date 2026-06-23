@@ -5,10 +5,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_CONDUCT",
-     "scope": "team"
-    }
+    "TECH_CONDUCT"
    ],
    "any": [
     [

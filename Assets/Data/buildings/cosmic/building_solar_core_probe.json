@@ -6,18 +6,9 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_DEEP_SPACE_MCKENDREE_CYLINDER",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_DEEP_SPACE_SUN_SCOOP",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_FEMTOTECHNOLOGY",
-     "scope": "team"
-    }
+    "BUILDING_DEEP_SPACE_MCKENDREE_CYLINDER",
+    "BUILDING_DEEP_SPACE_SUN_SCOOP",
+    "TECH_FEMTOTECHNOLOGY"
    ],
    "any": [
     [

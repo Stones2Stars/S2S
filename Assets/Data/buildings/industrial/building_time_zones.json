@@ -6,21 +6,12 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "TECH_MANAGEMENT",
-     "scope": "team"
-    }
+    "TECH_MANAGEMENT"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_MODERN_OFFICES",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_COMPUTER_NETWORK",
-      "scope": "city"
-     }
+     "BUILDING_MODERN_OFFICES",
+     "BUILDING_COMPUTER_NETWORK"
     ],
     [
      {

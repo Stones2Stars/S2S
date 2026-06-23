@@ -5,14 +5,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_EFFECT_UNIVERSAL_ECONOMY",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_CONTROLLED_VACUUM_COLLAPSE",
-     "scope": "team"
-    }
+    "BUILDING_EFFECT_UNIVERSAL_ECONOMY",
+    "TECH_CONTROLLED_VACUUM_COLLAPSE"
    ],
    "any": [
     [

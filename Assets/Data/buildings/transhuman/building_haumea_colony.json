@@ -5,14 +5,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_DEEP_SPACE_ECOSYSTEM",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_SOLAR_ORDNANCE",
-     "scope": "team"
-    }
+    "BUILDING_DEEP_SPACE_ECOSYSTEM",
+    "TECH_SOLAR_ORDNANCE"
    ],
    "any": [
     [
@@ -29,18 +23,9 @@
     ]
    ],
    "noneOf": [
-    {
-     "type": "BUILDING_MAKEMAKE_COLONY",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_PLUTO_RESEARCH_BASE",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_ERIS_COLONY",
-     "scope": "city"
-    }
+    "BUILDING_MAKEMAKE_COLONY",
+    "BUILDING_PLUTO_RESEARCH_BASE",
+    "BUILDING_ERIS_COLONY"
    ]
   }
  },

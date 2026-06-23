@@ -6,21 +6,12 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "TECH_SYNTHETIC_SYNESTHESIA",
-     "scope": "team"
-    }
+    "TECH_SYNTHETIC_SYNESTHESIA"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_NEUROSCIENCE_CENTER",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_HEALTHCARE_MEGACOMPLEX",
-      "scope": "city"
-     }
+     "BUILDING_NEUROSCIENCE_CENTER",
+     "BUILDING_HEALTHCARE_MEGACOMPLEX"
     ],
     [
      {
@@ -37,10 +28,7 @@
     10,
     {
      "value": 10,
-     "enabled": {
-      "type": "TECH_SIMULATED_REALITY",
-      "scope": "team"
-     }
+     "enabled": "TECH_SIMULATED_REALITY"
     }
    ]
   }
@@ -51,10 +39,7 @@
     -20,
     {
      "value": 10,
-     "enabled": {
-      "type": "TECH_WHOLE_BRAIN_EMULATION",
-      "scope": "team"
-     }
+     "enabled": "TECH_WHOLE_BRAIN_EMULATION"
     }
    ]
   }
@@ -64,10 +49,7 @@
    "flat": [
     {
      "value": 10,
-     "enabled": {
-      "type": "TECH_SIMULATED_REALITY",
-      "scope": "team"
-     }
+     "enabled": "TECH_SIMULATED_REALITY"
     }
    ]
   }

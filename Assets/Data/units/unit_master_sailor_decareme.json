@@ -10,14 +10,8 @@
      "scope": "world",
      "min": 10
     },
-    {
-     "type": "TECH_ANCIENT_MACHINERY",
-     "scope": "team"
-    },
-    {
-     "type": "TECH_SHIP_BUILDING",
-     "scope": "team"
-    }
+    "TECH_ANCIENT_MACHINERY",
+    "TECH_SHIP_BUILDING"
    ]
   }
  },

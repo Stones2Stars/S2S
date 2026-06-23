@@ -6,14 +6,8 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_SPACE_COLONY_MARTIAN",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_PLANETARY_COLONIZATION",
-     "scope": "team"
-    }
+    "BUILDING_SPACE_COLONY_MARTIAN",
+    "TECH_PLANETARY_COLONIZATION"
    ],
    "any": [
     [

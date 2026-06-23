@@ -13,10 +13,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_SANITATION",
-     "scope": "team"
-    }
+    "TECH_SANITATION"
    ],
    "any": [
     [
@@ -53,14 +50,8 @@
     ]
    ],
    "dormant": [
-    {
-     "type": "BUILDING_RESERVOIR",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_MODERN_WATERWORKS",
-     "scope": "city"
-    }
+    "BUILDING_RESERVOIR",
+    "BUILDING_MODERN_WATERWORKS"
    ]
   }
  },

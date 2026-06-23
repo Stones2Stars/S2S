@@ -55,10 +55,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_CRIMINOLOGY",
-     "scope": "team"
-    },
+    "TECH_CRIMINOLOGY",
     {
      "type": "BONUS_FIREARMS",
      "scope": "city",
@@ -102,10 +99,7 @@
     ]
    ],
    "dormant": [
-    {
-     "type": "BUILDING_POLICE_PRECINCT",
-     "scope": "city"
-    }
+    "BUILDING_POLICE_PRECINCT"
    ]
   }
  },

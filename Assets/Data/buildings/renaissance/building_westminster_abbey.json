@@ -15,10 +15,7 @@
      "scope": "city",
      "min": 7
     },
-    {
-     "type": "TECH_NATIONALISM",
-     "scope": "team"
-    }
+    "TECH_NATIONALISM"
    ],
    "any": [
     [

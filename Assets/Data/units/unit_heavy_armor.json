@@ -10,10 +10,7 @@
      "scope": "city",
      "connection": "trade|vicinity"
     },
-    {
-     "type": "TECH_BIOMATERIALS",
-     "scope": "team"
-    },
+    "TECH_BIOMATERIALS",
     {
      "type": "BONUS_ALUMINUM_WARES",
      "scope": "city",

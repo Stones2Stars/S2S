@@ -13,14 +13,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_C_L_ASIAN",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_FOLK_MEDICINE",
-     "scope": "team"
-    }
+    "BUILDING_C_L_ASIAN",
+    "TECH_FOLK_MEDICINE"
    ],
    "any": [
     [
@@ -33,14 +27,8 @@
   },
   "operate": {
    "dormant": [
-    {
-     "type": "BUILDING_ALTERNATIVE_MEDICINE",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_HEALTHCARE_MEGACOMPLEX",
-     "scope": "city"
-    }
+    "BUILDING_ALTERNATIVE_MEDICINE",
+    "BUILDING_HEALTHCARE_MEGACOMPLEX"
    ]
   }
  },

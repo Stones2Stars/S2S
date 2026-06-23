@@ -6,18 +6,9 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_HYPERSPACE_SIMULATED_UNIVERSE",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_COSMIC_GOVERNANCE",
-     "scope": "team"
-    },
-    {
-     "type": "TECH_EXPERIMENTAL_COSMOLOGY",
-     "scope": "team"
-    }
+    "BUILDING_HYPERSPACE_SIMULATED_UNIVERSE",
+    "TECH_COSMIC_GOVERNANCE",
+    "TECH_EXPERIMENTAL_COSMOLOGY"
    ],
    "any": [
     [

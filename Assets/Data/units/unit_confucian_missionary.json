@@ -5,14 +5,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_CONFUCIAN_MONASTERY",
-     "scope": "city"
-    },
-    {
-     "type": "RELIGION_CONFUCIANISM",
-     "scope": "city"
-    }
+    "BUILDING_CONFUCIAN_MONASTERY",
+    "RELIGION_CONFUCIANISM"
    ]
   }
  },

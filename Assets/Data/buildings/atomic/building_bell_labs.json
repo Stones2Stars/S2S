@@ -11,14 +11,8 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_TELEPHONE_NETWORK",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_ENCRYPTION_MACHINES",
-     "scope": "team"
-    }
+    "BUILDING_TELEPHONE_NETWORK",
+    "TECH_ENCRYPTION_MACHINES"
    ],
    "any": [
     [
@@ -60,73 +54,43 @@
     18,
     {
      "value": 7,
-     "enabled": {
-      "type": "TECH_EARLY_COMPUTING",
-      "scope": "team"
-     }
+     "enabled": "TECH_EARLY_COMPUTING"
     },
     {
      "value": 7,
-     "enabled": {
-      "type": "TECH_TELEVISION",
-      "scope": "team"
-     }
+     "enabled": "TECH_TELEVISION"
     },
     {
      "value": 7,
-     "enabled": {
-      "type": "TECH_LASER",
-      "scope": "team"
-     }
+     "enabled": "TECH_LASER"
     },
     {
      "value": 7,
-     "enabled": {
-      "type": "TECH_COMPUTER_SCIENCE",
-      "scope": "team"
-     }
+     "enabled": "TECH_COMPUTER_SCIENCE"
     },
     {
      "value": 7,
-     "enabled": {
-      "type": "TECH_MICROPROCESSOR",
-      "scope": "team"
-     }
+     "enabled": "TECH_MICROPROCESSOR"
     },
     {
      "value": 7,
-     "enabled": {
-      "type": "TECH_RADIO_ASTRONOMY",
-      "scope": "team"
-     }
+     "enabled": "TECH_RADIO_ASTRONOMY"
     },
     {
      "value": 7,
-     "enabled": {
-      "type": "TECH_COMPUTER_NETWORKS",
-      "scope": "team"
-     }
+     "enabled": "TECH_COMPUTER_NETWORKS"
     },
     {
      "value": 7,
-     "enabled": {
-      "type": "TECH_ELECTRONICS",
-      "scope": "team"
-     }
+     "enabled": "TECH_ELECTRONICS"
     },
     {
      "value": 7,
-     "enabled": {
-      "type": "TECH_SOLAR_POWER",
-      "scope": "team"
-     }
+     "enabled": "TECH_SOLAR_POWER"
     },
     {
      "value": 8,
-     "enabled": {
-      "type": "TECH_COMMUNICATION_NETWORKS",
-      "scope": "team"
-     }
+     "enabled": "TECH_COMMUNICATION_NETWORKS"
     }
    ]
   }

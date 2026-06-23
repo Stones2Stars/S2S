@@ -10,14 +10,8 @@
      "scope": "world",
      "min": 10
     },
-    {
-     "type": "TECH_WARMACHINES",
-     "scope": "team"
-    },
-    {
-     "type": "TECH_NANOROBOTICS",
-     "scope": "team"
-    }
+    "TECH_WARMACHINES",
+    "TECH_NANOROBOTICS"
    ]
   }
  },

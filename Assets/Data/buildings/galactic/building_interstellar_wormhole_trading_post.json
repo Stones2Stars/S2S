@@ -18,14 +18,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_INTERSTELLAR_WORMHOLE_BEACON",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_WORMHOLE_TRAVERSAL",
-     "scope": "team"
-    }
+    "BUILDING_INTERSTELLAR_WORMHOLE_BEACON",
+    "TECH_WORMHOLE_TRAVERSAL"
    ],
    "any": [
     [
@@ -46,24 +40,15 @@
    "flat": [
     {
      "value": 12,
-     "enabled": {
-      "type": "TECH_COMPACT_WORMHOLES",
-      "scope": "team"
-     }
+     "enabled": "TECH_COMPACT_WORMHOLES"
     },
     {
      "value": 12,
-     "enabled": {
-      "type": "TECH_MEGAWORMHOLES",
-      "scope": "team"
-     }
+     "enabled": "TECH_MEGAWORMHOLES"
     },
     {
      "value": 12,
-     "enabled": {
-      "type": "TECH_WORMHOLE_HIVEMIND",
-      "scope": "team"
-     }
+     "enabled": "TECH_WORMHOLE_HIVEMIND"
     }
    ]
   }

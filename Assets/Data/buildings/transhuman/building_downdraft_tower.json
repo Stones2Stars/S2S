@@ -15,22 +15,10 @@
    "all": [
     "HAS_FRESHWATER",
     "HAS_POWER",
-    {
-     "type": "BUILDING_FACTORY",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_POWER_LINES",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_WATER_PUMPING_STATION",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_MEGASTRUCTURE_ENGINEERING",
-     "scope": "team"
-    }
+    "BUILDING_FACTORY",
+    "BUILDING_POWER_LINES",
+    "BUILDING_WATER_PUMPING_STATION",
+    "TECH_MEGASTRUCTURE_ENGINEERING"
    ],
    "any": [
     [
@@ -75,10 +63,7 @@
     ]
    ],
    "dormant": [
-    {
-     "type": "BUILDING_RENEWABLE_MEGACOMPLEX",
-     "scope": "city"
-    }
+    "BUILDING_RENEWABLE_MEGACOMPLEX"
    ]
   }
  },

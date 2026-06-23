@@ -11,18 +11,9 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_VENUS_CITY",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_PLANETARY_TRADE",
-     "scope": "team"
-    },
-    {
-     "type": "TECH_ARTIFICIAL_PHOTOSYNTHESIS",
-     "scope": "team"
-    }
+    "BUILDING_VENUS_CITY",
+    "TECH_PLANETARY_TRADE",
+    "TECH_ARTIFICIAL_PHOTOSYNTHESIS"
    ],
    "any": [
     [

@@ -5,14 +5,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_INTERGALACTIC_SUPERMASSIVE_BLACK_HOLE_PLANT",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_DARK_MATTER_ENGINEERING",
-     "scope": "team"
-    }
+    "BUILDING_INTERGALACTIC_SUPERMASSIVE_BLACK_HOLE_PLANT",
+    "TECH_DARK_MATTER_ENGINEERING"
    ],
    "any": [
     [

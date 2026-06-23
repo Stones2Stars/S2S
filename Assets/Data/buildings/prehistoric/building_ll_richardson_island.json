@@ -11,10 +11,7 @@
   "build": {
    "all": [
     "HAS_COAST",
-    {
-     "type": "TECH_ANIMISM",
-     "scope": "team"
-    }
+    "TECH_ANIMISM"
    ],
    "any": [
     [

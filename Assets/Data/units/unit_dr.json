@@ -10,29 +10,14 @@
      "scope": "city",
      "connection": "trade|vicinity"
     },
-    {
-     "type": "TECH_PLAGUE_MEDICINE",
-     "scope": "team"
-    }
+    "TECH_PLAGUE_MEDICINE"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_DOCTORS_OFFICE",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_SURGEONS_OFFICE",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_MEDICAL_CLINIC",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_HEALTHCARE_MEGACOMPLEX",
-      "scope": "city"
-     }
+     "BUILDING_DOCTORS_OFFICE",
+     "BUILDING_SURGEONS_OFFICE",
+     "BUILDING_MEDICAL_CLINIC",
+     "BUILDING_HEALTHCARE_MEGACOMPLEX"
     ]
    ]
   }

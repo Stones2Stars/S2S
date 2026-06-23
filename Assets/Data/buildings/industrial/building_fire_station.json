@@ -12,14 +12,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_MOTORIZED_TRANSPORTATION",
-     "scope": "team"
-    },
-    {
-     "type": "TECH_FIREFIGHTING",
-     "scope": "team"
-    }
+    "TECH_MOTORIZED_TRANSPORTATION",
+    "TECH_FIREFIGHTING"
    ],
    "any": [
     [

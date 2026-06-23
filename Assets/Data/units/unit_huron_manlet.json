@@ -10,10 +10,7 @@
      "scope": "city",
      "connection": "trade|vicinity"
     },
-    {
-     "type": "TECH_TRAP_FISHING",
-     "scope": "team"
-    }
+    "TECH_TRAP_FISHING"
    ]
   }
  },

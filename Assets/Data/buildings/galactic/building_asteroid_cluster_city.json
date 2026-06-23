@@ -5,14 +5,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_ASTEROID_INTERIOR_CITY",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_POSTHUMANISM",
-     "scope": "team"
-    }
+    "BUILDING_ASTEROID_INTERIOR_CITY",
+    "TECH_POSTHUMANISM"
    ],
    "any": [
     [

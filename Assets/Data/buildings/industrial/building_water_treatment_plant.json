@@ -11,14 +11,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_SEWER_SYSTEM",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_MODERN_SANITATION",
-     "scope": "team"
-    }
+    "BUILDING_SEWER_SYSTEM",
+    "TECH_MODERN_SANITATION"
    ],
    "any": [
     [

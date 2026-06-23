@@ -5,14 +5,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_POLICE_PRECINCT",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_FORENSICS",
-     "scope": "team"
-    },
+    "BUILDING_POLICE_PRECINCT",
+    "TECH_FORENSICS",
     {
      "type": "BONUS_FIREARMS",
      "scope": "city",

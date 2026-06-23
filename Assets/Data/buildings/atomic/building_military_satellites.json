@@ -12,21 +12,12 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_SATELLITES",
-     "scope": "team"
-    }
+    "TECH_SATELLITES"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_EFFECT_LAUNCH_SITE",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_MILITARY_SPACEPORT",
-      "scope": "city"
-     }
+     "BUILDING_EFFECT_LAUNCH_SITE",
+     "BUILDING_MILITARY_SPACEPORT"
     ],
     [
      {

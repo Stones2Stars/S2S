@@ -14,25 +14,13 @@
   "build": {
    "all": [
     "HAS_RIVER",
-    {
-     "type": "BUILDING_IRRIGATION_CANALS",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_WATERWHEELS",
-     "scope": "team"
-    }
+    "BUILDING_IRRIGATION_CANALS",
+    "TECH_WATERWHEELS"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_AQUEDUCT",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_MODERN_WATERWORKS",
-      "scope": "city"
-     }
+     "BUILDING_AQUEDUCT",
+     "BUILDING_MODERN_WATERWORKS"
     ],
     [
      {
@@ -58,10 +46,7 @@
     ]
    ],
    "dormant": [
-    {
-     "type": "BUILDING_RIVER_ADMINISTRATION",
-     "scope": "city"
-    }
+    "BUILDING_RIVER_ADMINISTRATION"
    ]
   }
  },

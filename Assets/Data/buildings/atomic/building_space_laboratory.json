@@ -10,25 +10,13 @@
      "scope": "city",
      "min": 7
     },
-    {
-     "type": "TECH_SPACE_STATIONS",
-     "scope": "team"
-    }
+    "TECH_SPACE_STATIONS"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_EFFECT_LAUNCH_SITE",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_COMMERCIAL_SPACEPORT",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_MILITARY_SPACEPORT",
-      "scope": "city"
-     }
+     "BUILDING_EFFECT_LAUNCH_SITE",
+     "BUILDING_COMMERCIAL_SPACEPORT",
+     "BUILDING_MILITARY_SPACEPORT"
     ],
     [
      {

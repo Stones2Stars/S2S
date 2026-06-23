@@ -6,14 +6,8 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_BLOCKCHAIN_AUTHENTICATION",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_DIRECT_MERCHANDISING",
-     "scope": "team"
-    }
+    "BUILDING_BLOCKCHAIN_AUTHENTICATION",
+    "TECH_DIRECT_MERCHANDISING"
    ],
    "any": [
     [
@@ -27,10 +21,7 @@
   "operate": {
    "any": [
     [
-     {
-      "type": "CIVIC_DEMOCRACY",
-      "scope": "empire"
-     }
+     "CIVIC_DEMOCRACY"
     ]
    ]
   }

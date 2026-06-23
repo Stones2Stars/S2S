@@ -20,14 +20,8 @@
   "build": {
    "all": [
     "HAS_COAST",
-    {
-     "type": "TECH_MASONRY",
-     "scope": "team"
-    },
-    {
-     "type": "TECH_SAILING",
-     "scope": "team"
-    }
+    "TECH_MASONRY",
+    "TECH_SAILING"
    ],
    "any": [
     [
@@ -64,10 +58,7 @@
     ]
    ],
    "dormant": [
-    {
-     "type": "BUILDING_OCEAN_ADMINISTRATION",
-     "scope": "city"
-    }
+    "BUILDING_OCEAN_ADMINISTRATION"
    ]
   }
  },

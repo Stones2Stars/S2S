@@ -10,14 +10,8 @@
      "scope": "city",
      "connection": "trade|vicinity"
     },
-    {
-     "type": "BUILDING_POLICE_PRECINCT",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_DISASTER_ROBOTS",
-     "scope": "team"
-    }
+    "BUILDING_POLICE_PRECINCT",
+    "TECH_DISASTER_ROBOTS"
    ]
   }
  },

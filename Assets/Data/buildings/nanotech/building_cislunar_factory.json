@@ -25,29 +25,14 @@
      "scope": "city",
      "min": 13
     },
-    {
-     "type": "BUILDING_MODERN_GRANARY",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_FACTORY",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_ADVANCED_ENVIRONMENTAL_SYSTEMS",
-     "scope": "team"
-    }
+    "BUILDING_MODERN_GRANARY",
+    "BUILDING_FACTORY",
+    "TECH_ADVANCED_ENVIRONMENTAL_SYSTEMS"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_EFFECT_LAUNCH_SITE",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_COMMERCIAL_SPACEPORT",
-      "scope": "city"
-     }
+     "BUILDING_EFFECT_LAUNCH_SITE",
+     "BUILDING_COMMERCIAL_SPACEPORT"
     ],
     [
      {
@@ -69,10 +54,7 @@
     5,
     {
      "value": 10,
-     "enabled": {
-      "type": "TECH_ANIMAMATERIALS",
-      "scope": "team"
-     }
+     "enabled": "TECH_ANIMAMATERIALS"
     }
    ]
   }
@@ -83,10 +65,7 @@
     2,
     {
      "value": 10,
-     "enabled": {
-      "type": "TECH_SUPERCHARGED_CRYSTALLOGRAPHY",
-      "scope": "team"
-     }
+     "enabled": "TECH_SUPERCHARGED_CRYSTALLOGRAPHY"
     }
    ]
   }

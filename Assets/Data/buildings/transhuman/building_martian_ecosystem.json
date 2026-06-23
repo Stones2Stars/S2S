@@ -13,18 +13,9 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_MARTIAN_METROPOLIS",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_QUADRUPLE_HELIX",
-     "scope": "team"
-    },
-    {
-     "type": "TECH_HYPERMAGNETICS",
-     "scope": "team"
-    }
+    "BUILDING_MARTIAN_METROPOLIS",
+    "TECH_QUADRUPLE_HELIX",
+    "TECH_HYPERMAGNETICS"
    ],
    "any": [
     [

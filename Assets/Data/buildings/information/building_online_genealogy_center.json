@@ -14,18 +14,9 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_GENEALOGY_CENTER",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_COMPUTER_NETWORK",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_BIOINFORMATICS",
-     "scope": "team"
-    }
+    "BUILDING_GENEALOGY_CENTER",
+    "BUILDING_COMPUTER_NETWORK",
+    "TECH_BIOINFORMATICS"
    ],
    "any": [
     [
@@ -45,10 +36,7 @@
     }
    ],
    "dormant": [
-    {
-     "type": "BUILDING_HIGH_TECH_CULTURAL_ENRICHMENT",
-     "scope": "city"
-    }
+    "BUILDING_HIGH_TECH_CULTURAL_ENRICHMENT"
    ]
   }
  },

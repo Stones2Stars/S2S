@@ -113,37 +113,16 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_EQUINE_DOMESTICATION",
-     "scope": "team"
-    }
+    "TECH_EQUINE_DOMESTICATION"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_FARM_ANIMAL_HORSE",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_HERD_HORSE",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_CENTRAL_BREEDER_HORSE",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_TENGRII_HORSE_TRAINER",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_INDUSTRIAL_FARMS",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_MEAT_INDUSTRY_CONGLOMERATE",
-      "scope": "city"
-     }
+     "BUILDING_FARM_ANIMAL_HORSE",
+     "BUILDING_HERD_HORSE",
+     "BUILDING_CENTRAL_BREEDER_HORSE",
+     "BUILDING_TENGRII_HORSE_TRAINER",
+     "BUILDING_INDUSTRIAL_FARMS",
+     "BUILDING_MEAT_INDUSTRY_CONGLOMERATE"
     ],
     [
      {

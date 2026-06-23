@@ -10,33 +10,15 @@
      "scope": "city",
      "min": 13
     },
-    {
-     "type": "TECH_TOURISM",
-     "scope": "team"
-    }
+    "TECH_TOURISM"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_BROADWAY",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_HOLLYWOOD",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_ROCK_N_ROLL",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_WORLD_NEWS_NETWORK",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_NATIONAL_TV_STATION",
-      "scope": "city"
-     }
+     "BUILDING_BROADWAY",
+     "BUILDING_HOLLYWOOD",
+     "BUILDING_ROCK_N_ROLL",
+     "BUILDING_WORLD_NEWS_NETWORK",
+     "BUILDING_NATIONAL_TV_STATION"
     ],
     [
      {

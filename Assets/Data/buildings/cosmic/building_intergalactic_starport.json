@@ -17,18 +17,9 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_INTERGALACTIC_CITY",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_INTERGALACTIC_TRADING_POST",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_INTERGALACTIC_COLONIZATION",
-     "scope": "team"
-    }
+    "BUILDING_INTERGALACTIC_CITY",
+    "BUILDING_INTERGALACTIC_TRADING_POST",
+    "TECH_INTERGALACTIC_COLONIZATION"
    ],
    "any": [
     [
@@ -50,45 +41,27 @@
    "flat": [
     {
      "value": 13,
-     "enabled": {
-      "type": "TECH_MULTIVERSE_TRAVERSAL",
-      "scope": "team"
-     }
+     "enabled": "TECH_MULTIVERSE_TRAVERSAL"
     },
     {
      "value": 12,
-     "enabled": {
-      "type": "TECH_INTERGROUP_TRAVEL",
-      "scope": "team"
-     }
+     "enabled": "TECH_INTERGROUP_TRAVEL"
     },
     {
      "value": 12,
-     "enabled": {
-      "type": "TECH_INTERCLUSTER_TRAVEL",
-      "scope": "team"
-     }
+     "enabled": "TECH_INTERCLUSTER_TRAVEL"
     },
     {
      "value": 12,
-     "enabled": {
-      "type": "TECH_QUANTUM_RAMJET",
-      "scope": "team"
-     }
+     "enabled": "TECH_QUANTUM_RAMJET"
     },
     {
      "value": 13,
-     "enabled": {
-      "type": "TECH_HORIZON_BREAKING",
-      "scope": "team"
-     }
+     "enabled": "TECH_HORIZON_BREAKING"
     },
     {
      "value": 12,
-     "enabled": {
-      "type": "TECH_REACTIONLESS_DRIVE",
-      "scope": "team"
-     }
+     "enabled": "TECH_REACTIONLESS_DRIVE"
     }
    ]
   }

@@ -5,14 +5,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_GALACTIC_CORE_BASE",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_GALACTIC_ENGINEERING",
-     "scope": "team"
-    }
+    "BUILDING_GALACTIC_CORE_BASE",
+    "TECH_GALACTIC_ENGINEERING"
    ],
    "any": [
     [

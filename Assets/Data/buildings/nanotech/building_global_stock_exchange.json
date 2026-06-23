@@ -10,14 +10,8 @@
      "scope": "city",
      "min": 7
     },
-    {
-     "type": "BUILDING_STOCK_MARKET",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_MEGACORPORATIONS",
-     "scope": "team"
-    }
+    "BUILDING_STOCK_MARKET",
+    "TECH_MEGACORPORATIONS"
    ],
    "any": [
     [

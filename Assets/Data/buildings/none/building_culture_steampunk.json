@@ -5,10 +5,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_STEAMPUNK",
-     "scope": "team"
-    }
+    "TECH_STEAMPUNK"
    ],
    "any": [
     [

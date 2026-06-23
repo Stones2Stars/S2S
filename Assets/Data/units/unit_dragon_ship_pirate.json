@@ -6,42 +6,21 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_SMUGGLERS_SHANTY",
-     "scope": "city"
-    },
+    "BUILDING_SMUGGLERS_SHANTY",
     {
      "type": "AREA_SIZE",
      "scope": "world",
      "min": 10
     },
-    {
-     "type": "TECH_SHIP_BUILDING",
-     "scope": "team"
-    }
+    "TECH_SHIP_BUILDING"
    ],
    "any": [
     [
-     {
-      "type": "CIVIC_MERCANTILISM",
-      "scope": "empire"
-     },
-     {
-      "type": "CIVIC_NATIONALIST",
-      "scope": "empire"
-     },
-     {
-      "type": "CIVIC_FEUDAL",
-      "scope": "empire"
-     },
-     {
-      "type": "CIVIC_MONARCHY",
-      "scope": "empire"
-     },
-     {
-      "type": "CIVIC_DESPOTISM",
-      "scope": "empire"
-     }
+     "CIVIC_MERCANTILISM",
+     "CIVIC_NATIONALIST",
+     "CIVIC_FEUDAL",
+     "CIVIC_MONARCHY",
+     "CIVIC_DESPOTISM"
     ]
    ]
   }

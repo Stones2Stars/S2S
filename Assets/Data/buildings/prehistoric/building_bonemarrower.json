@@ -10,10 +10,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_BONE_WORKING",
-     "scope": "team"
-    }
+    "TECH_BONE_WORKING"
    ],
    "any": [
     [

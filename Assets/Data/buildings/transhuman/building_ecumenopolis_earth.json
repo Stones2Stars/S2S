@@ -6,18 +6,9 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_PALACE",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_ORBITAL_HEAT_SINK",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_PLANETARY_MEGASTRUCTURES",
-     "scope": "team"
-    }
+    "BUILDING_PALACE",
+    "BUILDING_ORBITAL_HEAT_SINK",
+    "TECH_PLANETARY_MEGASTRUCTURES"
    ],
    "any": [
     [

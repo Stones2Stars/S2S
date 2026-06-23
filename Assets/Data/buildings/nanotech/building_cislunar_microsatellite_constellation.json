@@ -16,29 +16,14 @@
      "scope": "city",
      "min": 13
     },
-    {
-     "type": "BUILDING_CISLUNAR_FACTORY",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_EPSILON_ASSEMBLER",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_ADVANCED_ENVIRONMENTAL_SYSTEMS",
-     "scope": "team"
-    }
+    "BUILDING_CISLUNAR_FACTORY",
+    "BUILDING_EPSILON_ASSEMBLER",
+    "TECH_ADVANCED_ENVIRONMENTAL_SYSTEMS"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_COMMUNICATIONS_SATELLITE",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_PROPAGANDA_SATELLITES",
-      "scope": "city"
-     }
+     "BUILDING_COMMUNICATIONS_SATELLITE",
+     "BUILDING_PROPAGANDA_SATELLITES"
     ],
     [
      {

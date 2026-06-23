@@ -5,14 +5,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_TEMPLE_OF_CHONS",
-     "scope": "city"
-    },
-    {
-     "type": "RELIGION_KEMETISM",
-     "scope": "city"
-    }
+    "BUILDING_TEMPLE_OF_CHONS",
+    "RELIGION_KEMETISM"
    ]
   }
  },

@@ -11,10 +11,7 @@
   "build": {
    "all": [
     "HAS_FRESHWATER",
-    {
-     "type": "TECH_SANITATION",
-     "scope": "team"
-    }
+    "TECH_SANITATION"
    ],
    "any": [
     [
@@ -43,26 +40,11 @@
     ]
    ],
    "dormant": [
-    {
-     "type": "BUILDING_HOUSING_COTTAGES",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_HOUSING_SUBURBS",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_HOUSING_SMART_HOMES",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_HOUSING_COLONY_ARCOLOGY",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_LAUNCH_ARCOLOGY",
-     "scope": "city"
-    }
+    "BUILDING_HOUSING_COTTAGES",
+    "BUILDING_HOUSING_SUBURBS",
+    "BUILDING_HOUSING_SMART_HOMES",
+    "BUILDING_HOUSING_COLONY_ARCOLOGY",
+    "BUILDING_LAUNCH_ARCOLOGY"
    ]
   }
  },

@@ -10,10 +10,7 @@
      "scope": "city",
      "connection": "trade|vicinity"
     },
-    {
-     "type": "TECH_MECHANIZED_WARFARE",
-     "scope": "team"
-    },
+    "TECH_MECHANIZED_WARFARE",
     {
      "type": "BONUS_AUTOMOBILES",
      "scope": "city",
@@ -44,14 +41,8 @@
      }
     ],
     [
-     {
-      "type": "BUILDING_AUTO_REPAIR_SHOP",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_HYPERMARKET",
-      "scope": "city"
-     }
+     "BUILDING_AUTO_REPAIR_SHOP",
+     "BUILDING_HYPERMARKET"
     ]
    ]
   }

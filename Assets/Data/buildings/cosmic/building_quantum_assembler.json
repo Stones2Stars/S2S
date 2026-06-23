@@ -23,14 +23,8 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_OMEGA_ASSEMBLER",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_MACROSCOPIC_SUPERPOSITION",
-     "scope": "team"
-    }
+    "BUILDING_OMEGA_ASSEMBLER",
+    "TECH_MACROSCOPIC_SUPERPOSITION"
    ],
    "any": [
     [
@@ -43,10 +37,7 @@
   },
   "operate": {
    "dormant": [
-    {
-     "type": "BUILDING_MATERIALIZER",
-     "scope": "city"
-    }
+    "BUILDING_MATERIALIZER"
    ]
   }
  },
@@ -56,10 +47,7 @@
     30,
     {
      "value": 12,
-     "enabled": {
-      "type": "TECH_NEUTRONIUM",
-      "scope": "team"
-     }
+     "enabled": "TECH_NEUTRONIUM"
     }
    ],
    "percent": [

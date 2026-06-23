@@ -11,14 +11,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_FACTORY",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_MANAGEMENT",
-     "scope": "team"
-    }
+    "BUILDING_FACTORY",
+    "TECH_MANAGEMENT"
    ],
    "any": [
     [

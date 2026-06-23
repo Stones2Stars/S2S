@@ -13,25 +13,13 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_OIL_LAMPS",
-     "scope": "team"
-    }
+    "TECH_OIL_LAMPS"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_BARTER_POST",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_TRADING_POST",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_SHOPPING_DISTRICT",
-      "scope": "city"
-     }
+     "BUILDING_BARTER_POST",
+     "BUILDING_TRADING_POST",
+     "BUILDING_SHOPPING_DISTRICT"
     ],
     [
      {
@@ -69,14 +57,8 @@
     ]
    ],
    "dormant": [
-    {
-     "type": "BUILDING_FACTORY_GHEE_OIL",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_MEAT_INDUSTRY_CONGLOMERATE",
-     "scope": "city"
-    }
+    "BUILDING_FACTORY_GHEE_OIL",
+    "BUILDING_MEAT_INDUSTRY_CONGLOMERATE"
    ]
   }
  },

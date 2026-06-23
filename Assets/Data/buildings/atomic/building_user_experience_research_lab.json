@@ -5,14 +5,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_COMPUTER_SCIENCE_DEPARTMENT",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_COMPUTER_SCIENCE",
-     "scope": "team"
-    }
+    "BUILDING_COMPUTER_SCIENCE_DEPARTMENT",
+    "TECH_COMPUTER_SCIENCE"
    ],
    "any": [
     [
@@ -29,24 +23,15 @@
    "flat": [
     {
      "value": 8,
-     "enabled": {
-      "type": "TECH_WEARABLE_COMPUTERS",
-      "scope": "team"
-     }
+     "enabled": "TECH_WEARABLE_COMPUTERS"
     },
     {
      "value": 8,
-     "enabled": {
-      "type": "TECH_VIRTUAL_REALITY",
-      "scope": "team"
-     }
+     "enabled": "TECH_VIRTUAL_REALITY"
     },
     {
      "value": 8,
-     "enabled": {
-      "type": "TECH_AUGMENTED_REALITY",
-      "scope": "team"
-     }
+     "enabled": "TECH_AUGMENTED_REALITY"
     }
    ]
   }

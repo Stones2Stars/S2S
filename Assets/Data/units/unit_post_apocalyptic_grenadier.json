@@ -5,10 +5,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_GUERRILLA_WARFARE",
-     "scope": "team"
-    }
+    "TECH_GUERRILLA_WARFARE"
    ],
    "any": [
     [

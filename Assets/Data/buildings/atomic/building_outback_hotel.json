@@ -13,14 +13,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_HOTEL",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_TOURISM",
-     "scope": "team"
-    }
+    "BUILDING_HOTEL",
+    "TECH_TOURISM"
    ],
    "any": [
     [
@@ -50,10 +44,7 @@
     }
    ],
    "dormant": [
-    {
-     "type": "BUILDING_TOURISM_MEGACOMPLEX",
-     "scope": "city"
-    }
+    "BUILDING_TOURISM_MEGACOMPLEX"
    ]
   }
  },

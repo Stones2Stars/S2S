@@ -5,14 +5,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_INTERSTELLAR_BLACK_HOLE_EMS",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_ASCENSION",
-     "scope": "team"
-    }
+    "BUILDING_INTERSTELLAR_BLACK_HOLE_EMS",
+    "TECH_ASCENSION"
    ],
    "any": [
     [

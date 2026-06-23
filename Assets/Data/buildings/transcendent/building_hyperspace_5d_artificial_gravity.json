@@ -11,14 +11,8 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_HYPERFACTORY",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_EUCLIDEAN_5D_SPACE_GEOMETRY",
-     "scope": "team"
-    }
+    "BUILDING_HYPERFACTORY",
+    "TECH_EUCLIDEAN_5D_SPACE_GEOMETRY"
    ],
    "any": [
     [

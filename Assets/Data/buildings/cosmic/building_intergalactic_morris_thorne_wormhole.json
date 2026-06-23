@@ -16,14 +16,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_INTERGALACTIC_MECHANOSYNTHESIS_FACTORIES",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_MEGAWORMHOLES",
-     "scope": "team"
-    }
+    "BUILDING_INTERGALACTIC_MECHANOSYNTHESIS_FACTORIES",
+    "TECH_MEGAWORMHOLES"
    ],
    "any": [
     [
@@ -41,10 +35,7 @@
     30,
     {
      "value": 13,
-     "enabled": {
-      "type": "TECH_HYPERSTRUCTURE_ENGINEERING",
-      "scope": "team"
-     }
+     "enabled": "TECH_HYPERSTRUCTURE_ENGINEERING"
     }
    ]
   }
@@ -54,10 +45,7 @@
    "flat": [
     {
      "value": 13,
-     "enabled": {
-      "type": "TECH_TRANSDIMENSIONAL_COMMERCE",
-      "scope": "team"
-     }
+     "enabled": "TECH_TRANSDIMENSIONAL_COMMERCE"
     }
    ]
   }

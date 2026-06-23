@@ -13,21 +13,12 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_WEARABLE_COMPUTERS",
-     "scope": "team"
-    }
+    "TECH_WEARABLE_COMPUTERS"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_MALL",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_HYPERMARKET",
-      "scope": "city"
-     }
+     "BUILDING_MALL",
+     "BUILDING_HYPERMARKET"
     ],
     [
      {
@@ -46,10 +37,7 @@
     }
    ],
    "dormant": [
-    {
-     "type": "BUILDING_HEALTHCARE_MEGACOMPLEX",
-     "scope": "city"
-    }
+    "BUILDING_HEALTHCARE_MEGACOMPLEX"
    ]
   }
  },

@@ -10,19 +10,13 @@
      "scope": "city",
      "connection": "trade|vicinity"
     },
-    {
-     "type": "BUILDING_CANOE_BUILDER",
-     "scope": "city"
-    },
+    "BUILDING_CANOE_BUILDER",
     {
      "type": "AREA_SIZE",
      "scope": "world",
      "min": 5
     },
-    {
-     "type": "TECH_HARPOON_MAKING",
-     "scope": "team"
-    }
+    "TECH_HARPOON_MAKING"
    ]
   }
  },

@@ -18,10 +18,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_EQUINE_DOMESTICATION",
-     "scope": "team"
-    }
+    "TECH_EQUINE_DOMESTICATION"
    ],
    "any": [
     [

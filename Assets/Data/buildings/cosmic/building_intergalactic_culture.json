@@ -10,18 +10,9 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_INTERGALACTIC_GALACTIC_COLONY",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_CULTURAL_LONGEVITY",
-     "scope": "team"
-    },
-    {
-     "type": "TECH_INTERGALACTIC_COLONIZATION",
-     "scope": "team"
-    }
+    "BUILDING_INTERGALACTIC_GALACTIC_COLONY",
+    "TECH_CULTURAL_LONGEVITY",
+    "TECH_INTERGALACTIC_COLONIZATION"
    ],
    "any": [
     [

@@ -10,18 +10,9 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_CISLUNAR_SOLAR_MONITOR",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_PROTOTYPED_PATHOGENS",
-     "scope": "team"
-    },
-    {
-     "type": "TECH_ADVANCED_ENVIRONMENTAL_SYSTEMS",
-     "scope": "team"
-    }
+    "BUILDING_CISLUNAR_SOLAR_MONITOR",
+    "TECH_PROTOTYPED_PATHOGENS",
+    "TECH_ADVANCED_ENVIRONMENTAL_SYSTEMS"
    ],
    "any": [
     [
@@ -38,10 +29,7 @@
    "flat": [
     {
      "value": 9,
-     "enabled": {
-      "type": "TECH_DYSTOPIA_PATHOGENS",
-      "scope": "team"
-     }
+     "enabled": "TECH_DYSTOPIA_PATHOGENS"
     }
    ]
   }

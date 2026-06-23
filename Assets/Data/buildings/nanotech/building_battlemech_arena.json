@@ -6,18 +6,9 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_ANTHROPOMORPHICS_LAB",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_ATHLETIC_MEGACOMPLEX",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_BATTLEFIELD_SPORTS",
-     "scope": "team"
-    }
+    "BUILDING_ANTHROPOMORPHICS_LAB",
+    "BUILDING_ATHLETIC_MEGACOMPLEX",
+    "TECH_BATTLEFIELD_SPORTS"
    ],
    "any": [
     [

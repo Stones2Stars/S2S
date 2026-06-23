@@ -11,29 +11,14 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_MILITARY_STANDARD_ANIMAL_MASCOT",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_HERITAGE",
-     "scope": "team"
-    },
-    {
-     "type": "TECH_MEGAFAUNA_DOMESTICATION",
-     "scope": "team"
-    }
+    "BUILDING_MILITARY_STANDARD_ANIMAL_MASCOT",
+    "TECH_HERITAGE",
+    "TECH_MEGAFAUNA_DOMESTICATION"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_ANIMAL_TRAINER_RHINOCEROS",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_EFFECT_HERITAGE_RHINOS",
-      "scope": "city"
-     }
+     "BUILDING_ANIMAL_TRAINER_RHINOCEROS",
+     "BUILDING_EFFECT_HERITAGE_RHINOS"
     ],
     [
      {

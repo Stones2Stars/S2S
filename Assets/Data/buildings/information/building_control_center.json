@@ -17,14 +17,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_MILITARY_BASE",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_MILITARY_ROBOTICS",
-     "scope": "team"
-    }
+    "BUILDING_MILITARY_BASE",
+    "TECH_MILITARY_ROBOTICS"
    ],
    "any": [
     [

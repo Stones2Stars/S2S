@@ -11,29 +11,14 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_MODERN_OFFICES",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_MASS_MEDIA",
-     "scope": "team"
-    }
+    "BUILDING_MODERN_OFFICES",
+    "TECH_MASS_MEDIA"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_BROADCAST_TOWER",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_COMMUNICATION_TOWER",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_NETWORK_NODE",
-      "scope": "city"
-     }
+     "BUILDING_BROADCAST_TOWER",
+     "BUILDING_COMMUNICATION_TOWER",
+     "BUILDING_NETWORK_NODE"
     ],
     [
      {

@@ -6,18 +6,9 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_CLAYTRONIC_CITY",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_MICRO_WORMHOLE",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_REALITY_REPROGRAMMING",
-     "scope": "team"
-    }
+    "BUILDING_CLAYTRONIC_CITY",
+    "BUILDING_MICRO_WORMHOLE",
+    "TECH_REALITY_REPROGRAMMING"
    ],
    "any": [
     [

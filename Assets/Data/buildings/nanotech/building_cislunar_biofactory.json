@@ -11,22 +11,10 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_CISLUNAR_FACTORY",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_CISLUNAR_MATERIALS_LAB",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_CISLUNAR_AGRICULTURAL_LAB",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_DYSTOPIA_PATHOGENS",
-     "scope": "team"
-    }
+    "BUILDING_CISLUNAR_FACTORY",
+    "BUILDING_CISLUNAR_MATERIALS_LAB",
+    "BUILDING_CISLUNAR_AGRICULTURAL_LAB",
+    "TECH_DYSTOPIA_PATHOGENS"
    ],
    "any": [
     [
@@ -49,10 +37,7 @@
     50,
     {
      "value": 10,
-     "enabled": {
-      "type": "TECH_APOCALYPTIC_PATHOGENS",
-      "scope": "team"
-     }
+     "enabled": "TECH_APOCALYPTIC_PATHOGENS"
     }
    ]
   }

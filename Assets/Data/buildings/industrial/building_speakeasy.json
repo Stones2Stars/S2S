@@ -10,25 +10,13 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_ORDINANCE_ALCOHOL_PROHIBITION",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_WOMENS_SUFFRAGE",
-     "scope": "team"
-    }
+    "BUILDING_ORDINANCE_ALCOHOL_PROHIBITION",
+    "TECH_WOMENS_SUFFRAGE"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_TRADING_POST",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_SHOPPING_DISTRICT",
-      "scope": "city"
-     }
+     "BUILDING_TRADING_POST",
+     "BUILDING_SHOPPING_DISTRICT"
     ],
     [
      {

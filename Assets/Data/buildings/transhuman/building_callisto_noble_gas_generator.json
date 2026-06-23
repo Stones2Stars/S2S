@@ -11,18 +11,9 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_CALLISTO_NITROGEN_GENERATOR",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_ARTIFICIAL_NUCLEOSYNTHESIS",
-     "scope": "team"
-    },
-    {
-     "type": "TECH_APOCALYPTIC_PATHOGENS",
-     "scope": "team"
-    }
+    "BUILDING_CALLISTO_NITROGEN_GENERATOR",
+    "TECH_ARTIFICIAL_NUCLEOSYNTHESIS",
+    "TECH_APOCALYPTIC_PATHOGENS"
    ],
    "any": [
     [

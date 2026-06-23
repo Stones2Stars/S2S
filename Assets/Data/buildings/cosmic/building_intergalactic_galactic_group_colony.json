@@ -17,14 +17,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_INTERGALACTIC_GALACTIC_COLONY",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_INTERGROUP_TRAVEL",
-     "scope": "team"
-    }
+    "BUILDING_INTERGALACTIC_GALACTIC_COLONY",
+    "TECH_INTERGROUP_TRAVEL"
    ],
    "any": [
     [

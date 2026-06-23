@@ -11,10 +11,7 @@
      "scope": "city",
      "min": 3
     },
-    {
-     "type": "TECH_TOURNAMENTS",
-     "scope": "team"
-    }
+    "TECH_TOURNAMENTS"
    ],
    "any": [
     [
@@ -28,14 +25,8 @@
   "operate": {
    "any": [
     [
-     {
-      "type": "CIVIC_VASSAL_LEVIES",
-      "scope": "empire"
-     },
-     {
-      "type": "CIVIC_FEUDAL",
-      "scope": "empire"
-     }
+     "CIVIC_VASSAL_LEVIES",
+     "CIVIC_FEUDAL"
     ]
    ]
   }

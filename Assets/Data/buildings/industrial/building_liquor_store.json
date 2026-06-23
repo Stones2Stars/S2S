@@ -13,21 +13,12 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_REFRIGERATION",
-     "scope": "team"
-    }
+    "TECH_REFRIGERATION"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_SHOPPING_DISTRICT",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_TRADING_POST",
-      "scope": "city"
-     }
+     "BUILDING_SHOPPING_DISTRICT",
+     "BUILDING_TRADING_POST"
     ],
     [
      {
@@ -46,10 +37,7 @@
     }
    ],
    "dormant": [
-    {
-     "type": "BUILDING_HYPERMARKET",
-     "scope": "city"
-    }
+    "BUILDING_HYPERMARKET"
    ]
   }
  },

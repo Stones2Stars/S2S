@@ -16,10 +16,7 @@
   "build": {
    "all": [
     "HAS_COAST",
-    {
-     "type": "TECH_SKINNING",
-     "scope": "team"
-    }
+    "TECH_SKINNING"
    ],
    "any": [
     [

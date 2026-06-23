@@ -14,18 +14,9 @@
   "build": {
    "any": [
     [
-     {
-      "type": "BUILDING_LL_KILGII_GWAAY",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_LL_MCCALLUM",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_SKINNER",
-      "scope": "city"
-     }
+     "BUILDING_LL_KILGII_GWAAY",
+     "BUILDING_LL_MCCALLUM",
+     "BUILDING_SKINNER"
     ],
     [
      {
@@ -37,14 +28,8 @@
   },
   "operate": {
    "dormant": [
-    {
-     "type": "BUILDING_INDUSTRIAL_FARMS",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_MEAT_INDUSTRY_CONGLOMERATE",
-     "scope": "city"
-    }
+    "BUILDING_INDUSTRIAL_FARMS",
+    "BUILDING_MEAT_INDUSTRY_CONGLOMERATE"
    ]
   }
  },

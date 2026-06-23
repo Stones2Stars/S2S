@@ -18,25 +18,13 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_ALCHEMY",
-     "scope": "team"
-    }
+    "TECH_ALCHEMY"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_TRADING_POST",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_SHOPPING_DISTRICT",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_FACTORY",
-      "scope": "city"
-     }
+     "BUILDING_TRADING_POST",
+     "BUILDING_SHOPPING_DISTRICT",
+     "BUILDING_FACTORY"
     ],
     [
      {
@@ -74,14 +62,8 @@
     ]
    ],
    "dormant": [
-    {
-     "type": "BUILDING_FOOD_MANUFACTURING_DISTRICT",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_ORDINANCE_ALCOHOL_PROHIBITION",
-     "scope": "city"
-    }
+    "BUILDING_FOOD_MANUFACTURING_DISTRICT",
+    "BUILDING_ORDINANCE_ALCOHOL_PROHIBITION"
    ]
   }
  },

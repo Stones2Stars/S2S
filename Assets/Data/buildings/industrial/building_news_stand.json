@@ -13,18 +13,9 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_PRESS_AGENCY",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_ASSEMBLY_LINE",
-     "scope": "team"
-    },
-    {
-     "type": "TECH_JOURNALISM",
-     "scope": "team"
-    }
+    "BUILDING_PRESS_AGENCY",
+    "TECH_ASSEMBLY_LINE",
+    "TECH_JOURNALISM"
    ],
    "any": [
     [
@@ -44,10 +35,7 @@
     }
    ],
    "dormant": [
-    {
-     "type": "BUILDING_HYPERMARKET",
-     "scope": "city"
-    }
+    "BUILDING_HYPERMARKET"
    ]
   }
  },

@@ -14,18 +14,9 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_E_BANK",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_STOCK_MARKET",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_DIGITIZATION",
-     "scope": "team"
-    }
+    "BUILDING_E_BANK",
+    "BUILDING_STOCK_MARKET",
+    "TECH_DIGITIZATION"
    ],
    "any": [
     [
@@ -52,17 +43,11 @@
    "flat": [
     {
      "value": 9,
-     "enabled": {
-      "type": "TECH_MEGACORPORATIONS",
-      "scope": "team"
-     }
+     "enabled": "TECH_MEGACORPORATIONS"
     },
     {
      "value": 8,
-     "enabled": {
-      "type": "TECH_DIRECT_MERCHANDISING",
-      "scope": "team"
-     }
+     "enabled": "TECH_DIRECT_MERCHANDISING"
     }
    ]
   }

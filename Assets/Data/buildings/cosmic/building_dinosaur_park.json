@@ -20,10 +20,7 @@
      "scope": "empire",
      "min": 1
     },
-    {
-     "type": "TECH_TIME_TRAVEL",
-     "scope": "team"
-    }
+    "TECH_TIME_TRAVEL"
    ],
    "any": [
     [
@@ -82,10 +79,7 @@
     4,
     {
      "value": 2,
-     "enabled": {
-      "type": "BUILDING_PALEONTOLOGY_LAB",
-      "scope": "city"
-     }
+     "enabled": "BUILDING_PALEONTOLOGY_LAB"
     }
    ]
   },

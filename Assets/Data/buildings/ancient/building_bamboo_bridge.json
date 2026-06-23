@@ -14,33 +14,15 @@
   "build": {
    "all": [
     "HAS_RIVER",
-    {
-     "type": "TECH_SEDENTARY_LIFESTYLE",
-     "scope": "team"
-    }
+    "TECH_SEDENTARY_LIFESTYLE"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_TRAILS",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_ROADS",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_PAVED_ROADS",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_ASPHALT_ROADS",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_SKYROAD_CONTROL_TOWER",
-      "scope": "city"
-     }
+     "BUILDING_TRAILS",
+     "BUILDING_ROADS",
+     "BUILDING_PAVED_ROADS",
+     "BUILDING_ASPHALT_ROADS",
+     "BUILDING_SKYROAD_CONTROL_TOWER"
     ],
     [
      {
@@ -71,54 +53,18 @@
     ]
    ],
    "dormant": [
-    {
-     "type": "BUILDING_STONE_BRIDGE",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_BRICK_BRIDGE",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_COVERED_BRIDGE",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_VIADUCT",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_CAUSEWAY",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_CHAIN_BRIDGE",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_TRUSS_BRIDGE",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_SMALL_STEEL_ARCH_BRIDGE",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_LARGE_STEEL_ARCH_BRIDGE",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_SMALL_SUSPENSION_BRIDGE",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_LARGE_SUSPENSION_BRIDGE",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_TELEPORT_BOOTH",
-     "scope": "city"
-    }
+    "BUILDING_STONE_BRIDGE",
+    "BUILDING_BRICK_BRIDGE",
+    "BUILDING_COVERED_BRIDGE",
+    "BUILDING_VIADUCT",
+    "BUILDING_CAUSEWAY",
+    "BUILDING_CHAIN_BRIDGE",
+    "BUILDING_TRUSS_BRIDGE",
+    "BUILDING_SMALL_STEEL_ARCH_BRIDGE",
+    "BUILDING_LARGE_STEEL_ARCH_BRIDGE",
+    "BUILDING_SMALL_SUSPENSION_BRIDGE",
+    "BUILDING_LARGE_SUSPENSION_BRIDGE",
+    "BUILDING_TELEPORT_BOOTH"
    ]
   }
  },

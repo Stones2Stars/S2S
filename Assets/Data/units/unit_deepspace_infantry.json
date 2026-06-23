@@ -5,14 +5,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_DEEP_SPACE_MAGLEV",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_BINARY_PSYCHOKINESIS",
-     "scope": "team"
-    }
+    "BUILDING_DEEP_SPACE_MAGLEV",
+    "TECH_BINARY_PSYCHOKINESIS"
    ]
   }
  },

@@ -6,14 +6,8 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_INTERSTELLAR_INDUSTRIAL_PLANET",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_SINGULARITY_STABILIZATION",
-     "scope": "team"
-    }
+    "BUILDING_INTERSTELLAR_INDUSTRIAL_PLANET",
+    "TECH_SINGULARITY_STABILIZATION"
    ],
    "any": [
     [

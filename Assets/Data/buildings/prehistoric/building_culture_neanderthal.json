@@ -11,10 +11,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_CAVE_DWELLING",
-     "scope": "team"
-    }
+    "TECH_CAVE_DWELLING"
    ],
    "any": [
     [
@@ -89,10 +86,7 @@
     ]
    ],
    "noneOf": [
-    {
-     "type": "BUILDING_C_AC_NEANDERTHAL",
-     "scope": "city"
-    }
+    "BUILDING_C_AC_NEANDERTHAL"
    ]
   }
  },

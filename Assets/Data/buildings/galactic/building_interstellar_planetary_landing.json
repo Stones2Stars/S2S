@@ -33,14 +33,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_EFFECT_SOLAR_ECONOMY",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_INTERSTELLAR_COLONIZATION",
-     "scope": "team"
-    }
+    "BUILDING_EFFECT_SOLAR_ECONOMY",
+    "TECH_INTERSTELLAR_COLONIZATION"
    ],
    "any": [
     [

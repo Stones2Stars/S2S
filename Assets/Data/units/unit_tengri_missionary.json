@@ -5,14 +5,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_SHAMANS_YURTA",
-     "scope": "city"
-    },
-    {
-     "type": "RELIGION_TENGRIISM",
-     "scope": "city"
-    }
+    "BUILDING_SHAMANS_YURTA",
+    "RELIGION_TENGRIISM"
    ]
   }
  },

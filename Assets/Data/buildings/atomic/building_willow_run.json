@@ -16,14 +16,8 @@
      "scope": "city",
      "min": 7
     },
-    {
-     "type": "BUILDING_FACTORY",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_AVIATION",
-     "scope": "team"
-    }
+    "BUILDING_FACTORY",
+    "TECH_AVIATION"
    ],
    "any": [
     [

@@ -12,14 +12,8 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_METEOROLOGY_LAB",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_CLIMATE_MODELS",
-     "scope": "team"
-    }
+    "BUILDING_METEOROLOGY_LAB",
+    "TECH_CLIMATE_MODELS"
    ],
    "any": [
     [
@@ -46,10 +40,7 @@
     4,
     {
      "value": 8,
-     "enabled": {
-      "type": "TECH_ECOLOGICAL_ENGINEERING",
-      "scope": "team"
-     }
+     "enabled": "TECH_ECOLOGICAL_ENGINEERING"
     }
    ]
   }

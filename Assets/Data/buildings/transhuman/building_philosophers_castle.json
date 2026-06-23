@@ -6,18 +6,9 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_COMPUTATIONAL_METAPHYSICS_CENTER",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_BINARY_SEMIOTICS",
-     "scope": "team"
-    },
-    {
-     "type": "TECH_CRYSTALPUNK",
-     "scope": "team"
-    }
+    "BUILDING_COMPUTATIONAL_METAPHYSICS_CENTER",
+    "TECH_BINARY_SEMIOTICS",
+    "TECH_CRYSTALPUNK"
    ],
    "any": [
     [

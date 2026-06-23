@@ -18,10 +18,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_PLOUGH",
-     "scope": "team"
-    }
+    "TECH_PLOUGH"
    ],
    "any": [
     [
@@ -50,10 +47,7 @@
     ]
    ],
    "dormant": [
-    {
-     "type": "BUILDING_FARMSCRAPER_I",
-     "scope": "city"
-    }
+    "BUILDING_FARMSCRAPER_I"
    ]
   }
  },

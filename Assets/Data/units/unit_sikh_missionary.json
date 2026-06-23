@@ -5,14 +5,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_SIKH_GURDWARA",
-     "scope": "city"
-    },
-    {
-     "type": "RELIGION_SIKHISM",
-     "scope": "city"
-    }
+    "BUILDING_SIKH_GURDWARA",
+    "RELIGION_SIKHISM"
    ]
   }
  },

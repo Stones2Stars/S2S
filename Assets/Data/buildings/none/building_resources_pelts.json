@@ -14,90 +14,27 @@
   "build": {
    "any": [
     [
-     {
-      "type": "BUILDING_ANIMAL_PRESERVE",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_TRAP_BEAVER",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_CAMP_BELUGA",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_BREEDING_PROGRAM_BEAVER",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_BREEDING_PROGRAM_BELUGA",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_BREEDING_PROGRAM_CHINCHILLA",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_BREEDING_PROGRAM_ELEPHANT_SEAL",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_BREEDING_PROGRAM_FOX",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_BREEDING_PROGRAM_MINK",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_BREEDING_PROGRAM_RABBIT",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_BREEDING_PROGRAM_RACCOON",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_BREEDING_PROGRAM_SEAL",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_BREEDING_PROGRAM_SEA_OTTER",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_TRAP_CHINCHILLA",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_CAMP_ELEPHANT_SEAL",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_TRAP_FOX",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_TRAP_MINK",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_TRAP_SEA_OTTER",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_TRAP_RABBIT",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_TRAP_RACCOON",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_CAMP_SEAL",
-      "scope": "city"
-     }
+     "BUILDING_ANIMAL_PRESERVE",
+     "BUILDING_TRAP_BEAVER",
+     "BUILDING_CAMP_BELUGA",
+     "BUILDING_BREEDING_PROGRAM_BEAVER",
+     "BUILDING_BREEDING_PROGRAM_BELUGA",
+     "BUILDING_BREEDING_PROGRAM_CHINCHILLA",
+     "BUILDING_BREEDING_PROGRAM_ELEPHANT_SEAL",
+     "BUILDING_BREEDING_PROGRAM_FOX",
+     "BUILDING_BREEDING_PROGRAM_MINK",
+     "BUILDING_BREEDING_PROGRAM_RABBIT",
+     "BUILDING_BREEDING_PROGRAM_RACCOON",
+     "BUILDING_BREEDING_PROGRAM_SEAL",
+     "BUILDING_BREEDING_PROGRAM_SEA_OTTER",
+     "BUILDING_TRAP_CHINCHILLA",
+     "BUILDING_CAMP_ELEPHANT_SEAL",
+     "BUILDING_TRAP_FOX",
+     "BUILDING_TRAP_MINK",
+     "BUILDING_TRAP_SEA_OTTER",
+     "BUILDING_TRAP_RABBIT",
+     "BUILDING_TRAP_RACCOON",
+     "BUILDING_CAMP_SEAL"
     ],
     [
      {
@@ -109,14 +46,8 @@
   },
   "operate": {
    "dormant": [
-    {
-     "type": "BUILDING_INDUSTRIAL_FARMS",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_MEAT_INDUSTRY_CONGLOMERATE",
-     "scope": "city"
-    }
+    "BUILDING_INDUSTRIAL_FARMS",
+    "BUILDING_MEAT_INDUSTRY_CONGLOMERATE"
    ]
   }
  },

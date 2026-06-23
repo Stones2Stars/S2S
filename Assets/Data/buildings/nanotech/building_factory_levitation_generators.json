@@ -14,18 +14,9 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_FACTORY",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_ARTIFICIAL_INTELLIGENCE_CORE",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_LEVITATION",
-     "scope": "team"
-    },
+    "BUILDING_FACTORY",
+    "BUILDING_ARTIFICIAL_INTELLIGENCE_CORE",
+    "TECH_LEVITATION",
     {
      "type": "BONUS_SUPERSTRONG_ALLOYS",
      "scope": "city",
@@ -55,14 +46,8 @@
     }
    ],
    "dormant": [
-    {
-     "type": "BUILDING_NANOTECH_COMPLEX",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_FACTORY_ANTI_GRAVITY_FIELD_GENERATORS",
-     "scope": "city"
-    }
+    "BUILDING_NANOTECH_COMPLEX",
+    "BUILDING_FACTORY_ANTI_GRAVITY_FIELD_GENERATORS"
    ]
   }
  },
@@ -72,24 +57,15 @@
     3,
     {
      "value": 9,
-     "enabled": {
-      "type": "TECH_LUNAR_TRADE",
-      "scope": "team"
-     }
+     "enabled": "TECH_LUNAR_TRADE"
     },
     {
      "value": 10,
-     "enabled": {
-      "type": "TECH_MEGASTRUCTURE_ENGINEERING",
-      "scope": "team"
-     }
+     "enabled": "TECH_MEGASTRUCTURE_ENGINEERING"
     },
     {
      "value": 10,
-     "enabled": {
-      "type": "TECH_SHIELDING",
-      "scope": "team"
-     }
+     "enabled": "TECH_SHIELDING"
     }
    ]
   }

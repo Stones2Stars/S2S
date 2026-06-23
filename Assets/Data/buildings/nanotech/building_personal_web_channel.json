@@ -6,14 +6,8 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_INTERNET_TELEVISION_STATION",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_MEDIA_HIVEMIND",
-     "scope": "team"
-    }
+    "BUILDING_INTERNET_TELEVISION_STATION",
+    "TECH_MEDIA_HIVEMIND"
    ],
    "any": [
     [
@@ -31,10 +25,7 @@
     10,
     {
      "value": 10,
-     "enabled": {
-      "type": "TECH_BINARY_SEMIOTICS",
-      "scope": "team"
-     }
+     "enabled": "TECH_BINARY_SEMIOTICS"
     }
    ]
   }

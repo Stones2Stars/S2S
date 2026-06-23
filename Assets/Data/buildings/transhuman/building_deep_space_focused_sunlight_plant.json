@@ -11,18 +11,9 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_DEEP_SPACE_FACTORY",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_DEEP_SPACE_TELESCOPE",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_SOLAR_ORDNANCE",
-     "scope": "team"
-    }
+    "BUILDING_DEEP_SPACE_FACTORY",
+    "BUILDING_DEEP_SPACE_TELESCOPE",
+    "TECH_SOLAR_ORDNANCE"
    ],
    "any": [
     [
@@ -40,10 +31,7 @@
     100,
     {
      "value": 11,
-     "enabled": {
-      "type": "TECH_STAR_LIFTING",
-      "scope": "team"
-     }
+     "enabled": "TECH_STAR_LIFTING"
     }
    ]
   }

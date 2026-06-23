@@ -10,10 +10,7 @@
      "scope": "city",
      "connection": "trade|vicinity"
     },
-    {
-     "type": "TECH_OIL_LAMPS",
-     "scope": "team"
-    }
+    "TECH_OIL_LAMPS"
    ],
    "any": [
     [

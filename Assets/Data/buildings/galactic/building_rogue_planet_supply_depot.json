@@ -5,14 +5,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_ROGUE_PLANET_OUTPOST",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_INTERSTELLAR_TRADE",
-     "scope": "team"
-    }
+    "BUILDING_ROGUE_PLANET_OUTPOST",
+    "TECH_INTERSTELLAR_TRADE"
    ],
    "any": [
     [

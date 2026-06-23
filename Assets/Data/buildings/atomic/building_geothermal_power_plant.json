@@ -14,18 +14,9 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_FACTORY",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_POWER_LINES",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_VOLCANOLOGY",
-     "scope": "team"
-    }
+    "BUILDING_FACTORY",
+    "BUILDING_POWER_LINES",
+    "TECH_VOLCANOLOGY"
    ],
    "any": [
     [
@@ -53,14 +44,8 @@
     ]
    ],
    "dormant": [
-    {
-     "type": "BUILDING_ENHANCED_GEOTHERMAL_SYSTEM",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_RENEWABLE_MEGACOMPLEX",
-     "scope": "city"
-    }
+    "BUILDING_ENHANCED_GEOTHERMAL_SYSTEM",
+    "BUILDING_RENEWABLE_MEGACOMPLEX"
    ]
   }
  },

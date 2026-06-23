@@ -14,78 +14,24 @@
   "build": {
    "any": [
     [
-     {
-      "type": "BUILDING_MINE_AMETHYST",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_MINE_CITRINE",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_MINE_DIAMOND",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_MINE_EMERALD",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_MINE_FLUORITE",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_MINE_AMBER",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_MINE_GARNET",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_AMBER_GATHERER",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_JADE_GATHERER",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_MINE_GEODE",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_MINE_JADE",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_MINE_JET",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_MINE_ONYX",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_MINE_QUARTZ",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_MINE_RUBY",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_MINE_SAPPHIRE",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_MINE_TOPAZ",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_MINE_TURQUOISE",
-      "scope": "city"
-     }
+     "BUILDING_MINE_AMETHYST",
+     "BUILDING_MINE_CITRINE",
+     "BUILDING_MINE_DIAMOND",
+     "BUILDING_MINE_EMERALD",
+     "BUILDING_MINE_FLUORITE",
+     "BUILDING_MINE_AMBER",
+     "BUILDING_MINE_GARNET",
+     "BUILDING_AMBER_GATHERER",
+     "BUILDING_JADE_GATHERER",
+     "BUILDING_MINE_GEODE",
+     "BUILDING_MINE_JADE",
+     "BUILDING_MINE_JET",
+     "BUILDING_MINE_ONYX",
+     "BUILDING_MINE_QUARTZ",
+     "BUILDING_MINE_RUBY",
+     "BUILDING_MINE_SAPPHIRE",
+     "BUILDING_MINE_TOPAZ",
+     "BUILDING_MINE_TURQUOISE"
     ],
     [
      {
@@ -97,10 +43,7 @@
   },
   "operate": {
    "dormant": [
-    {
-     "type": "BUILDING_CORE_MINE",
-     "scope": "city"
-    }
+    "BUILDING_CORE_MINE"
    ]
   }
  },

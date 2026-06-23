@@ -10,10 +10,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_STONE_BUILDING",
-     "scope": "team"
-    }
+    "TECH_STONE_BUILDING"
    ],
    "any": [
     [

@@ -10,14 +10,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_VOLCANOLOGY_LAB",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_SUBTERRANEAN_EXPLORATION",
-     "scope": "team"
-    }
+    "BUILDING_VOLCANOLOGY_LAB",
+    "TECH_SUBTERRANEAN_EXPLORATION"
    ],
    "any": [
     [

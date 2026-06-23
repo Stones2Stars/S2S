@@ -5,29 +5,14 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_CONSTITUTION",
-     "scope": "team"
-    }
+    "TECH_CONSTITUTION"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_JAIL",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_SAFETY_ORBITAL_PRISON",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_MAXIMUM_SECURITY_PRISON",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_ALCATRAZ",
-      "scope": "city"
-     }
+     "BUILDING_JAIL",
+     "BUILDING_SAFETY_ORBITAL_PRISON",
+     "BUILDING_MAXIMUM_SECURITY_PRISON",
+     "BUILDING_ALCATRAZ"
     ],
     [
      {

@@ -38,10 +38,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_MOTORIZED_TRANSPORTATION",
-     "scope": "team"
-    }
+    "TECH_MOTORIZED_TRANSPORTATION"
    ],
    "any": [
     [
@@ -75,14 +72,8 @@
     ]
    ],
    "dormant": [
-    {
-     "type": "BUILDING_SKYROAD_CONTROL_TOWER",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_TELEPORT_BOOTH",
-     "scope": "city"
-    }
+    "BUILDING_SKYROAD_CONTROL_TOWER",
+    "BUILDING_TELEPORT_BOOTH"
    ]
   }
  },

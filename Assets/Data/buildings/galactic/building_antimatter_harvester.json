@@ -14,14 +14,8 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_HYBRID_AIRSHIP_PORT",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_ANTIMATTER_PRODUCTION",
-     "scope": "team"
-    }
+    "BUILDING_HYBRID_AIRSHIP_PORT",
+    "TECH_ANTIMATTER_PRODUCTION"
    ],
    "any": [
     [
@@ -34,10 +28,7 @@
   },
   "operate": {
    "dormant": [
-    {
-     "type": "BUILDING_MATERIALIZATION_COMPLEX",
-     "scope": "city"
-    }
+    "BUILDING_MATERIALIZATION_COMPLEX"
    ]
   }
  },

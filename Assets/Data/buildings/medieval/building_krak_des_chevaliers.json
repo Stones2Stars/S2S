@@ -15,42 +15,18 @@
      "scope": "city",
      "min": 7
     },
-    {
-     "type": "TECH_ENGINEERING",
-     "scope": "team"
-    },
-    {
-     "type": "TECH_THEOLOGY",
-     "scope": "team"
-    },
+    "TECH_ENGINEERING",
+    "TECH_THEOLOGY",
     "STATE_RELIGION_IN_CITY"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_HIGH_WALLS",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_BARRICADES",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_CEMENT_BARRIER",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_METAMATERIAL_WALLS",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_SUPERSTRONG_ALLOY_WALLS",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_MEGASTRONG_ALLOY_WALLS",
-      "scope": "city"
-     }
+     "BUILDING_HIGH_WALLS",
+     "BUILDING_BARRICADES",
+     "BUILDING_CEMENT_BARRIER",
+     "BUILDING_METAMATERIAL_WALLS",
+     "BUILDING_SUPERSTRONG_ALLOY_WALLS",
+     "BUILDING_MEGASTRONG_ALLOY_WALLS"
     ],
     [
      {

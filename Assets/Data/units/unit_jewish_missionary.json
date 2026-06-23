@@ -5,14 +5,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_JEWISH_MONASTERY",
-     "scope": "city"
-    },
-    {
-     "type": "RELIGION_JUDAISM",
-     "scope": "city"
-    }
+    "BUILDING_JEWISH_MONASTERY",
+    "RELIGION_JUDAISM"
    ]
   }
  },

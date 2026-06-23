@@ -18,22 +18,10 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_FACTORY",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_POWER_LINES",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_ELECTRICITY",
-     "scope": "team"
-    },
-    {
-     "type": "TECH_REFINING",
-     "scope": "team"
-    }
+    "BUILDING_FACTORY",
+    "BUILDING_POWER_LINES",
+    "TECH_ELECTRICITY",
+    "TECH_REFINING"
    ],
    "any": [
     [
@@ -62,10 +50,7 @@
     ]
    ],
    "dormant": [
-    {
-     "type": "BUILDING_ULTRAFUEL_REFINERY",
-     "scope": "city"
-    }
+    "BUILDING_ULTRAFUEL_REFINERY"
    ]
   }
  },

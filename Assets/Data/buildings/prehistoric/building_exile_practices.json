@@ -10,10 +10,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_DECEPTION",
-     "scope": "team"
-    }
+    "TECH_DECEPTION"
    ],
    "any": [
     [
@@ -27,14 +24,8 @@
   "operate": {
    "any": [
     [
-     {
-      "type": "CIVIC_PRIMITIVE",
-      "scope": "empire"
-     },
-     {
-      "type": "CIVIC_TRIBAL",
-      "scope": "empire"
-     }
+     "CIVIC_PRIMITIVE",
+     "CIVIC_TRIBAL"
     ]
    ]
   }
@@ -60,10 +51,7 @@
     "unit": "UNIT_EXILE",
     "interval": "perTurn",
     "chance": {
-     "per": {
-      "type": "PROPERTY_CRIME",
-      "scope": "city"
-     }
+     "per": "PROPERTY_CRIME"
     }
    }
   ]

@@ -5,14 +5,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_ASTRONOMICAL_DATABASE",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_JOVIAN_EXPLORATION",
-     "scope": "team"
-    }
+    "BUILDING_ASTRONOMICAL_DATABASE",
+    "TECH_JOVIAN_EXPLORATION"
    ],
    "any": [
     [
@@ -25,10 +19,7 @@
   },
   "operate": {
    "dormant": [
-    {
-     "type": "BUILDING_POLLUTION_BLACKENED_SKIES",
-     "scope": "city"
-    }
+    "BUILDING_POLLUTION_BLACKENED_SKIES"
    ]
   }
  },

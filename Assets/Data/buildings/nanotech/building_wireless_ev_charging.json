@@ -13,14 +13,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_AUTOMATED_HIGHWAY",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_ELECTROMAGNETIC_VOLTAGE",
-     "scope": "team"
-    }
+    "BUILDING_AUTOMATED_HIGHWAY",
+    "TECH_ELECTROMAGNETIC_VOLTAGE"
    ],
    "any": [
     [
@@ -33,10 +27,7 @@
   },
   "operate": {
    "dormant": [
-    {
-     "type": "BUILDING_TELEPORT_BOOTH",
-     "scope": "city"
-    }
+    "BUILDING_TELEPORT_BOOTH"
    ]
   }
  },

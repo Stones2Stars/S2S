@@ -15,25 +15,13 @@
      "scope": "city",
      "min": 3
     },
-    {
-     "type": "TECH_SURVEYING",
-     "scope": "team"
-    },
-    {
-     "type": "TECH_GUILDS",
-     "scope": "team"
-    }
+    "TECH_SURVEYING",
+    "TECH_GUILDS"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_LUMBER_CAMP",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_AGROFOREST",
-      "scope": "city"
-     }
+     "BUILDING_LUMBER_CAMP",
+     "BUILDING_AGROFOREST"
     ],
     [
      {

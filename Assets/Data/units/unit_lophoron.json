@@ -10,14 +10,8 @@
      "scope": "city",
      "connection": "trade|vicinity"
     },
-    {
-     "type": "TECH_AESTHETICS",
-     "scope": "team"
-    },
-    {
-     "type": "TECH_CURRENCY",
-     "scope": "team"
-    }
+    "TECH_AESTHETICS",
+    "TECH_CURRENCY"
    ]
   }
  },

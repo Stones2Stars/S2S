@@ -5,10 +5,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_COLONY_GOVERNANCE",
-     "scope": "team"
-    }
+    "TECH_COLONY_GOVERNANCE"
    ],
    "any": [
     [
@@ -19,14 +16,8 @@
     ]
    ],
    "noneOf": [
-    {
-     "type": "BUILDING_INTERSTELLAR_GOVERNMENT_NOOCRACY",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_INTERSTELLAR_GOVERNMENT_HOLACRACY",
-     "scope": "city"
-    }
+    "BUILDING_INTERSTELLAR_GOVERNMENT_NOOCRACY",
+    "BUILDING_INTERSTELLAR_GOVERNMENT_HOLACRACY"
    ]
   }
  },

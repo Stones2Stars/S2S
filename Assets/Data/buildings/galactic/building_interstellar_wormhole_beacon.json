@@ -13,14 +13,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_INTERSTELLAR_DYSON_SPHERE",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_WORMHOLE_COMMUNICATIONS",
-     "scope": "team"
-    }
+    "BUILDING_INTERSTELLAR_DYSON_SPHERE",
+    "TECH_WORMHOLE_COMMUNICATIONS"
    ],
    "any": [
     [
@@ -41,10 +35,7 @@
    "flat": [
     {
      "value": 13,
-     "enabled": {
-      "type": "TECH_METAVERSE",
-      "scope": "team"
-     }
+     "enabled": "TECH_METAVERSE"
     }
    ]
   }

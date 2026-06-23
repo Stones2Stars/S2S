@@ -13,10 +13,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_TANNING",
-     "scope": "team"
-    }
+    "TECH_TANNING"
    ],
    "any": [
     [
@@ -59,14 +56,8 @@
     ]
    ],
    "dormant": [
-    {
-     "type": "BUILDING_FACTORY_TANNIN",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_CHEMICALS_DISTRICT",
-     "scope": "city"
-    }
+    "BUILDING_FACTORY_TANNIN",
+    "BUILDING_CHEMICALS_DISTRICT"
    ]
   }
  },

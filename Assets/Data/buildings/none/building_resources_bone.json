@@ -14,14 +14,8 @@
   "build": {
    "any": [
     [
-     {
-      "type": "BUILDING_LL_BLACKWATER_DRAW",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_SLAUGHTERHOUSE",
-      "scope": "city"
-     }
+     "BUILDING_LL_BLACKWATER_DRAW",
+     "BUILDING_SLAUGHTERHOUSE"
     ],
     [
      {
@@ -33,14 +27,8 @@
   },
   "operate": {
    "dormant": [
-    {
-     "type": "BUILDING_INDUSTRIAL_FARMS",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_MEAT_INDUSTRY_CONGLOMERATE",
-     "scope": "city"
-    }
+    "BUILDING_INDUSTRIAL_FARMS",
+    "BUILDING_MEAT_INDUSTRY_CONGLOMERATE"
    ]
   }
  },

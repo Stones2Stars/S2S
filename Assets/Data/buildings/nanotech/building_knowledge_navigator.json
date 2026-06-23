@@ -6,18 +6,9 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_INTELLIGENT_PERSONAL_ASSISTANT",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_NATURAL_LANGUAGE_ALGORITHMS",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_ONTOLOGICAL_ENGINEERING",
-     "scope": "team"
-    }
+    "BUILDING_INTELLIGENT_PERSONAL_ASSISTANT",
+    "BUILDING_NATURAL_LANGUAGE_ALGORITHMS",
+    "TECH_ONTOLOGICAL_ENGINEERING"
    ],
    "any": [
     [
@@ -40,10 +31,7 @@
     10,
     {
      "value": 10,
-     "enabled": {
-      "type": "TECH_KNOWLEDGE_MERCANTILISM",
-      "scope": "team"
-     }
+     "enabled": "TECH_KNOWLEDGE_MERCANTILISM"
     }
    ]
   }

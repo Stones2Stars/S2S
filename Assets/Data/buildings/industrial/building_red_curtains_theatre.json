@@ -5,18 +5,9 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_MOVIE_THEATRE",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_MOTION_PICTURES",
-     "scope": "team"
-    },
-    {
-     "type": "TECH_CORPORATION",
-     "scope": "team"
-    }
+    "BUILDING_MOVIE_THEATRE",
+    "TECH_MOTION_PICTURES",
+    "TECH_CORPORATION"
    ],
    "any": [
     [
@@ -29,10 +20,7 @@
   },
   "operate": {
    "all": [
-    {
-     "type": "CORPORATION_RED",
-     "scope": "city"
-    }
+    "CORPORATION_RED"
    ]
   }
  },

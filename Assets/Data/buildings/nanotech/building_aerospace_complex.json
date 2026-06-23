@@ -33,10 +33,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_ORBITAL_FLIGHT",
-     "scope": "team"
-    },
+    "TECH_ORBITAL_FLIGHT",
     {
      "type": "BONUS_FURNITURE",
      "scope": "city",

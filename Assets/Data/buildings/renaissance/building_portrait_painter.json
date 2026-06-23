@@ -13,21 +13,12 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_OIL_PAINTING",
-     "scope": "team"
-    }
+    "TECH_OIL_PAINTING"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_TRADING_POST",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_SHOPPING_DISTRICT",
-      "scope": "city"
-     }
+     "BUILDING_TRADING_POST",
+     "BUILDING_SHOPPING_DISTRICT"
     ],
     [
      {
@@ -55,14 +46,8 @@
     ]
    ],
    "dormant": [
-    {
-     "type": "BUILDING_PHOTOGRAPHY_STUDIO",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_HYPERMARKET",
-     "scope": "city"
-    }
+    "BUILDING_PHOTOGRAPHY_STUDIO",
+    "BUILDING_HYPERMARKET"
    ]
   }
  },

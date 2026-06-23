@@ -6,14 +6,8 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_UNIVERSE_PORTAL",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_MACROVERSE_TRAVERSAL",
-     "scope": "team"
-    }
+    "BUILDING_UNIVERSE_PORTAL",
+    "TECH_MACROVERSE_TRAVERSAL"
    ],
    "any": [
     [

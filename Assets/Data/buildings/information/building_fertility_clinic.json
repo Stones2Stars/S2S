@@ -22,25 +22,13 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_STEM_CELL_LAB",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_GENETIC_BIOCHEMISTRY",
-     "scope": "team"
-    }
+    "BUILDING_STEM_CELL_LAB",
+    "TECH_GENETIC_BIOCHEMISTRY"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_MEDICAL_CLINIC",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_HEALTHCARE_MEGACOMPLEX",
-      "scope": "city"
-     }
+     "BUILDING_MEDICAL_CLINIC",
+     "BUILDING_HEALTHCARE_MEGACOMPLEX"
     ],
     [
      {
@@ -59,10 +47,7 @@
     }
    ],
    "dormant": [
-    {
-     "type": "BUILDING_NANOMORPHIC_REPLICATOR",
-     "scope": "city"
-    }
+    "BUILDING_NANOMORPHIC_REPLICATOR"
    ]
   }
  },

@@ -20,18 +20,9 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_FACTORY",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_MECHATRONICS_LAB",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_POWERED_EXOSKELETON",
-     "scope": "team"
-    }
+    "BUILDING_FACTORY",
+    "BUILDING_MECHATRONICS_LAB",
+    "TECH_POWERED_EXOSKELETON"
    ],
    "any": [
     [
@@ -60,10 +51,7 @@
     ]
    ],
    "dormant": [
-    {
-     "type": "BUILDING_NANOTECH_COMPLEX",
-     "scope": "city"
-    }
+    "BUILDING_NANOTECH_COMPLEX"
    ]
   }
  },

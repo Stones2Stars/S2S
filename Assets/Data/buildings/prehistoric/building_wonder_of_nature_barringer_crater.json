@@ -5,10 +5,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_LANGUAGE",
-     "scope": "team"
-    }
+    "TECH_LANGUAGE"
    ],
    "any": [
     [
@@ -42,10 +39,7 @@
    "flat": [
     {
      "value": 10,
-     "enabled": {
-      "type": "TECH_TOURISM",
-      "scope": "team"
-     }
+     "enabled": "TECH_TOURISM"
     }
    ]
   }
@@ -56,17 +50,11 @@
     2,
     {
      "value": 10,
-     "enabled": {
-      "type": "TECH_SPACE_STATIONS",
-      "scope": "team"
-     }
+     "enabled": "TECH_SPACE_STATIONS"
     },
     {
      "value": 5,
-     "enabled": {
-      "type": "TECH_ASTRONOMY",
-      "scope": "team"
-     }
+     "enabled": "TECH_ASTRONOMY"
     }
    ]
   }
@@ -100,10 +88,7 @@
   "city": {
    "flat": {
     "value": 5,
-    "enabled": {
-     "type": "TECH_EXPLORATION",
-     "scope": "team"
-    }
+    "enabled": "TECH_EXPLORATION"
    }
   }
  },

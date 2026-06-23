@@ -10,10 +10,7 @@
      "scope": "city",
      "min": 7
     },
-    {
-     "type": "TECH_COMMUNISM",
-     "scope": "team"
-    }
+    "TECH_COMMUNISM"
    ],
    "any": [
     [
@@ -31,10 +28,7 @@
      "scope": "city",
      "connection": "trade|vicinity"
     },
-    {
-     "type": "CIVIC_MARXIST",
-     "scope": "empire"
-    }
+    "CIVIC_MARXIST"
    ]
   }
  },
@@ -61,31 +55,19 @@
    "flat": [
     {
      "value": 2,
-     "enabled": {
-      "type": "BUILDING_SOCIAL_JUSTICE_ORGANIZATION",
-      "scope": "city"
-     }
+     "enabled": "BUILDING_SOCIAL_JUSTICE_ORGANIZATION"
     },
     {
      "value": 1,
-     "enabled": {
-      "type": "BUILDING_WELFARE_OFFICE",
-      "scope": "city"
-     }
+     "enabled": "BUILDING_WELFARE_OFFICE"
     },
     {
      "value": 1,
-     "enabled": {
-      "type": "BUILDING_PLANNING_OFFICE",
-      "scope": "city"
-     }
+     "enabled": "BUILDING_PLANNING_OFFICE"
     },
     {
      "value": 1,
-     "enabled": {
-      "type": "BUILDING_CHURCH_OF_THE_STATE",
-      "scope": "city"
-     }
+     "enabled": "BUILDING_CHURCH_OF_THE_STATE"
     }
    ]
   }

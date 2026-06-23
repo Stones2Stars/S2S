@@ -5,14 +5,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_HQ_BIG_MCDOWELLS",
-     "scope": "city"
-    },
-    {
-     "type": "CORPORATION_MCDOWELLS",
-     "scope": "city"
-    }
+    "BUILDING_HQ_BIG_MCDOWELLS",
+    "CORPORATION_MCDOWELLS"
    ]
   }
  },

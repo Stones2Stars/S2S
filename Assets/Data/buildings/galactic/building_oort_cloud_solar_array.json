@@ -6,19 +6,13 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_OORT_CLOUD_BASE",
-     "scope": "city"
-    },
+    "BUILDING_OORT_CLOUD_BASE",
     {
      "type": "BUILDING_DEEP_SPACE_FOCUSED_SUNLIGHT_PLANT",
      "scope": "empire",
      "min": 1
     },
-    {
-     "type": "TECH_INTERSTELLAR_TRAVEL",
-     "scope": "team"
-    }
+    "TECH_INTERSTELLAR_TRAVEL"
    ],
    "any": [
     [

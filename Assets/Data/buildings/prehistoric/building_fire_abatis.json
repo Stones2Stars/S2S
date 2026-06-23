@@ -13,10 +13,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_SLASH_AND_BURN",
-     "scope": "team"
-    }
+    "TECH_SLASH_AND_BURN"
    ],
    "any": [
     [
@@ -54,26 +51,11 @@
     ]
    ],
    "dormant": [
-    {
-     "type": "BUILDING_BARBWIRE_FENCE",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_ELECTRIC_FENCE",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_WIRELESS_ELECTRIC_FENCE",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_ARCOLOGY_SHIELDING",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_ADVANCED_SHIELDING",
-     "scope": "city"
-    }
+    "BUILDING_BARBWIRE_FENCE",
+    "BUILDING_ELECTRIC_FENCE",
+    "BUILDING_WIRELESS_ELECTRIC_FENCE",
+    "BUILDING_ARCOLOGY_SHIELDING",
+    "BUILDING_ADVANCED_SHIELDING"
    ]
   }
  },

@@ -13,21 +13,12 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_PRINTING_PRESS",
-     "scope": "team"
-    }
+    "TECH_PRINTING_PRESS"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_OFFICIUM",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_MODERN_OFFICES",
-      "scope": "city"
-     }
+     "BUILDING_OFFICIUM",
+     "BUILDING_MODERN_OFFICES"
     ],
     [
      {
@@ -46,10 +37,7 @@
     }
    ],
    "dormant": [
-    {
-     "type": "BUILDING_HIGH_TECH_CULTURAL_ENRICHMENT",
-     "scope": "city"
-    }
+    "BUILDING_HIGH_TECH_CULTURAL_ENRICHMENT"
    ]
   }
  },

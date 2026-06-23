@@ -5,10 +5,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_MASONRY",
-     "scope": "team"
-    }
+    "TECH_MASONRY"
    ],
    "any": [
     [

@@ -13,17 +13,11 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_NEW_URBANISM",
-     "scope": "team"
-    }
+    "TECH_NEW_URBANISM"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_METROPOLITAN_ADMINISTRATION",
-      "scope": "city"
-     }
+     "BUILDING_METROPOLITAN_ADMINISTRATION"
     ],
     [
      {
@@ -40,24 +34,15 @@
     9,
     {
      "value": 9,
-     "enabled": {
-      "type": "TECH_AUTOMATED_URBANIZATION",
-      "scope": "team"
-     }
+     "enabled": "TECH_AUTOMATED_URBANIZATION"
     },
     {
      "value": 8,
-     "enabled": {
-      "type": "TECH_MEDIA_PSYCHOLOGY",
-      "scope": "team"
-     }
+     "enabled": "TECH_MEDIA_PSYCHOLOGY"
     },
     {
      "value": 8,
-     "enabled": {
-      "type": "TECH_MEGACITIES",
-      "scope": "team"
-     }
+     "enabled": "TECH_MEGACITIES"
     }
    ]
   }

@@ -10,10 +10,7 @@
      "scope": "city",
      "connection": "trade|vicinity"
     },
-    {
-     "type": "TECH_NANO_DISASSEMBLY",
-     "scope": "team"
-    },
+    "TECH_NANO_DISASSEMBLY",
     {
      "type": "BONUS_NANOACTUATORS",
      "scope": "city",

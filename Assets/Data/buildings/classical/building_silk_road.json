@@ -16,29 +16,14 @@
      "scope": "city",
      "min": 3
     },
-    {
-     "type": "TECH_ROAD_BUILDING",
-     "scope": "team"
-    },
-    {
-     "type": "TECH_SERICULTURE",
-     "scope": "team"
-    }
+    "TECH_ROAD_BUILDING",
+    "TECH_SERICULTURE"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_BAZAAR",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_MALL",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_HYPERMARKET",
-      "scope": "city"
-     }
+     "BUILDING_BAZAAR",
+     "BUILDING_MALL",
+     "BUILDING_HYPERMARKET"
     ],
     [
      {

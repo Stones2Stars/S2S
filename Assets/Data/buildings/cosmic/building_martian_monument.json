@@ -6,14 +6,8 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_MARTIAN_CITY",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_NOOGENESIS",
-     "scope": "team"
-    }
+    "BUILDING_MARTIAN_CITY",
+    "TECH_NOOGENESIS"
    ],
    "any": [
     [
@@ -27,22 +21,10 @@
   "operate": {
    "any": [
     [
-     {
-      "type": "CIVIC_DIVINE_CULT",
-      "scope": "empire"
-     },
-     {
-      "type": "CIVIC_STATE_CHURCH",
-      "scope": "empire"
-     },
-     {
-      "type": "CIVIC_COSMIC_ENLIGHTENING",
-      "scope": "empire"
-     },
-     {
-      "type": "CIVIC_INQUISITORIAL",
-      "scope": "empire"
-     }
+     "CIVIC_DIVINE_CULT",
+     "CIVIC_STATE_CHURCH",
+     "CIVIC_COSMIC_ENLIGHTENING",
+     "CIVIC_INQUISITORIAL"
     ]
    ]
   }

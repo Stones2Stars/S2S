@@ -5,14 +5,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_OORT_CLOUD_BASE",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_INTERSTELLAR_TRAVEL",
-     "scope": "team"
-    }
+    "BUILDING_OORT_CLOUD_BASE",
+    "TECH_INTERSTELLAR_TRAVEL"
    ],
    "any": [
     [

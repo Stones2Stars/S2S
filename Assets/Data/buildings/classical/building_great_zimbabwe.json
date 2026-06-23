@@ -11,10 +11,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_CITY_PLANNING",
-     "scope": "team"
-    }
+    "TECH_CITY_PLANNING"
    ],
    "any": [
     [

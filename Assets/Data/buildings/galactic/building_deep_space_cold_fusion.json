@@ -12,14 +12,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_DEEP_SPACE_MCKENDREE_CYLINDER",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_ARTIFICIAL_STARS",
-     "scope": "team"
-    }
+    "BUILDING_DEEP_SPACE_MCKENDREE_CYLINDER",
+    "TECH_ARTIFICIAL_STARS"
    ],
    "any": [
     [

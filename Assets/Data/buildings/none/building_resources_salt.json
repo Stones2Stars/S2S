@@ -14,26 +14,11 @@
   "build": {
    "any": [
     [
-     {
-      "type": "BUILDING_DESALINATION_PLANT",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_WONDER_OF_NATURE_DEAD_SEA",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_SALT_EVAPORATION_POND",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_SALT_EVAPORATION_WORKS",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_SALT_FLAT_QUARRY",
-      "scope": "city"
-     }
+     "BUILDING_DESALINATION_PLANT",
+     "BUILDING_WONDER_OF_NATURE_DEAD_SEA",
+     "BUILDING_SALT_EVAPORATION_POND",
+     "BUILDING_SALT_EVAPORATION_WORKS",
+     "BUILDING_SALT_FLAT_QUARRY"
     ],
     [
      {
@@ -45,10 +30,7 @@
   },
   "operate": {
    "dormant": [
-    {
-     "type": "BUILDING_MATERIALS_CONGLOMERATE",
-     "scope": "city"
-    }
+    "BUILDING_MATERIALS_CONGLOMERATE"
    ]
   }
  },

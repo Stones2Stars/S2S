@@ -10,10 +10,7 @@
      "scope": "city",
      "connection": "trade|vicinity"
     },
-    {
-     "type": "TECH_METAMATERIALS",
-     "scope": "team"
-    },
+    "TECH_METAMATERIALS",
     {
      "type": "BONUS_ALUMINUM_WARES",
      "scope": "city",

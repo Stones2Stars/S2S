@@ -11,18 +11,9 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "TECH_KNOWLEDGE_MANAGEMENT",
-     "scope": "team"
-    },
-    {
-     "type": "TECH_SUPERCONDUCTORS",
-     "scope": "team"
-    },
-    {
-     "type": "TECH_ATOMPUNK",
-     "scope": "team"
-    }
+    "TECH_KNOWLEDGE_MANAGEMENT",
+    "TECH_SUPERCONDUCTORS",
+    "TECH_ATOMPUNK"
    ],
    "any": [
     [

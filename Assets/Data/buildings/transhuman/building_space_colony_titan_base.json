@@ -15,10 +15,7 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "TECH_ABYSS_COLONIZATION",
-     "scope": "team"
-    }
+    "TECH_ABYSS_COLONIZATION"
    ],
    "any": [
     [

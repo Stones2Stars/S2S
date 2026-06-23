@@ -5,14 +5,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_CLOSED_TIMELIKE_CURVE_COMPUTER",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_ENTROPY_REVERSAL",
-     "scope": "team"
-    }
+    "BUILDING_CLOSED_TIMELIKE_CURVE_COMPUTER",
+    "TECH_ENTROPY_REVERSAL"
    ],
    "any": [
     [

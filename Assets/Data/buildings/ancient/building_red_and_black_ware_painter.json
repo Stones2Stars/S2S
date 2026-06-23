@@ -5,37 +5,16 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_C_L_EUROPEAN",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_GLAZE_MAKER",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_GLASS_BLOWING",
-     "scope": "team"
-    }
+    "BUILDING_C_L_EUROPEAN",
+    "BUILDING_GLAZE_MAKER",
+    "TECH_GLASS_BLOWING"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_POTTERS_HUT",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_POTTERS_WORKSHOP",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_FACTORY_POTTERY",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_MANUFACTURING_DISTRICT",
-      "scope": "city"
-     }
+     "BUILDING_POTTERS_HUT",
+     "BUILDING_POTTERS_WORKSHOP",
+     "BUILDING_FACTORY_POTTERY",
+     "BUILDING_MANUFACTURING_DISTRICT"
     ],
     [
      {

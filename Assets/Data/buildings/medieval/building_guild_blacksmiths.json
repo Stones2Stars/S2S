@@ -15,29 +15,14 @@
      "scope": "city",
      "min": 3
     },
-    {
-     "type": "TECH_SMITHING",
-     "scope": "team"
-    },
-    {
-     "type": "TECH_GUILDS",
-     "scope": "team"
-    }
+    "TECH_SMITHING",
+    "TECH_GUILDS"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_FORGE",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_FOUNDRY",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_METALS_MEGACOMPLEX",
-      "scope": "city"
-     }
+     "BUILDING_FORGE",
+     "BUILDING_FOUNDRY",
+     "BUILDING_METALS_MEGACOMPLEX"
     ],
     [
      {

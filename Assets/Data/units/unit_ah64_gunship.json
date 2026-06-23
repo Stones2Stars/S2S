@@ -10,14 +10,8 @@
      "scope": "city",
      "connection": "trade|vicinity"
     },
-    {
-     "type": "TECH_MODERN_WARFARE",
-     "scope": "team"
-    },
-    {
-     "type": "TECH_VERTICAL_FLIGHT",
-     "scope": "team"
-    }
+    "TECH_MODERN_WARFARE",
+    "TECH_VERTICAL_FLIGHT"
    ],
    "any": [
     [

@@ -13,10 +13,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_ORCHARDS",
-     "scope": "team"
-    }
+    "TECH_ORCHARDS"
    ],
    "any": [
     [
@@ -36,10 +33,7 @@
     }
    ],
    "dormant": [
-    {
-     "type": "BUILDING_FARMSCRAPER_III",
-     "scope": "city"
-    }
+    "BUILDING_FARMSCRAPER_III"
    ]
   }
  },

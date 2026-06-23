@@ -5,14 +5,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_KUIPER_BELT_OUTPOST",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_ASTEROID_EXTRACTION",
-     "scope": "team"
-    }
+    "BUILDING_KUIPER_BELT_OUTPOST",
+    "TECH_ASTEROID_EXTRACTION"
    ],
    "any": [
     [

@@ -11,14 +11,8 @@
      "scope": "city",
      "min": 3
     },
-    {
-     "type": "BUILDING_DREAM_SIMULATION_CENTER",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_CYBERPUNK",
-     "scope": "team"
-    }
+    "BUILDING_DREAM_SIMULATION_CENTER",
+    "TECH_CYBERPUNK"
    ],
    "any": [
     [

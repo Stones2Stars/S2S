@@ -10,10 +10,7 @@
      "scope": "city",
      "connection": "trade|vicinity"
     },
-    {
-     "type": "TECH_DIVINE_RIGHT",
-     "scope": "team"
-    }
+    "TECH_DIVINE_RIGHT"
    ]
   }
  },

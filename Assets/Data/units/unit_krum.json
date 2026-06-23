@@ -10,10 +10,7 @@
      "scope": "city",
      "connection": "trade|vicinity"
     },
-    {
-     "type": "TECH_MOUNTED_ARCHERY",
-     "scope": "team"
-    }
+    "TECH_MOUNTED_ARCHERY"
    ]
   }
  },

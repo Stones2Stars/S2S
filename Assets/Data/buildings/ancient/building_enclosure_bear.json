@@ -22,29 +22,14 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_FOLKLORE_T_BEAR",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_TRADE",
-     "scope": "team"
-    }
+    "BUILDING_FOLKLORE_T_BEAR",
+    "TECH_TRADE"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_CARNIVAL",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_ZOO",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_GOVERNORS_MENAGERIE",
-      "scope": "city"
-     }
+     "BUILDING_CARNIVAL",
+     "BUILDING_ZOO",
+     "BUILDING_GOVERNORS_MENAGERIE"
     ],
     [
      {
@@ -60,10 +45,7 @@
    "flat": [
     {
      "value": 5,
-     "enabled": {
-      "type": "TECH_SCIENTIFIC_METHOD",
-      "scope": "team"
-     }
+     "enabled": "TECH_SCIENTIFIC_METHOD"
     }
    ]
   }

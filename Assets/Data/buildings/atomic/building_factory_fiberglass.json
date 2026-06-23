@@ -14,14 +14,8 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_FACTORY",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_PHYSICAL_CHEMISTRY",
-     "scope": "team"
-    }
+    "BUILDING_FACTORY",
+    "TECH_PHYSICAL_CHEMISTRY"
    ],
    "any": [
     [
@@ -50,10 +44,7 @@
     ]
    ],
    "dormant": [
-    {
-     "type": "BUILDING_MATERIALS_CONGLOMERATE",
-     "scope": "city"
-    }
+    "BUILDING_MATERIALS_CONGLOMERATE"
    ]
   }
  },

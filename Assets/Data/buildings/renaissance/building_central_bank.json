@@ -10,19 +10,13 @@
      "scope": "city",
      "min": 7
     },
-    {
-     "type": "BUILDING_BANK",
-     "scope": "city"
-    },
+    "BUILDING_BANK",
     {
      "type": "BUILDING_BANK",
      "scope": "empire",
      "min": 4
     },
-    {
-     "type": "TECH_MERCANTILISM",
-     "scope": "team"
-    }
+    "TECH_MERCANTILISM"
    ],
    "any": [
     [
@@ -36,30 +30,12 @@
   "operate": {
    "any": [
     [
-     {
-      "type": "CIVIC_CORPORATISM",
-      "scope": "empire"
-     },
-     {
-      "type": "CIVIC_GREEN",
-      "scope": "empire"
-     },
-     {
-      "type": "CIVIC_GUILDS",
-      "scope": "empire"
-     },
-     {
-      "type": "CIVIC_MERCANTILISM",
-      "scope": "empire"
-     },
-     {
-      "type": "CIVIC_PLANNED",
-      "scope": "empire"
-     },
-     {
-      "type": "CIVIC_REGULATED",
-      "scope": "empire"
-     }
+     "CIVIC_CORPORATISM",
+     "CIVIC_GREEN",
+     "CIVIC_GUILDS",
+     "CIVIC_MERCANTILISM",
+     "CIVIC_PLANNED",
+     "CIVIC_REGULATED"
     ]
    ]
   }

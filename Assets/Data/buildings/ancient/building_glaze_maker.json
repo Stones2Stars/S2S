@@ -10,21 +10,12 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_ORNAMENTATION",
-     "scope": "team"
-    }
+    "TECH_ORNAMENTATION"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_TRADING_POST",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_SHOPPING_DISTRICT",
-      "scope": "city"
-     }
+     "BUILDING_TRADING_POST",
+     "BUILDING_SHOPPING_DISTRICT"
     ],
     [
      {
@@ -63,10 +54,7 @@
    "flat": [
     {
      "value": 3,
-     "enabled": {
-      "type": "TECH_AESTHETICS",
-      "scope": "team"
-     }
+     "enabled": "TECH_AESTHETICS"
     }
    ]
   }

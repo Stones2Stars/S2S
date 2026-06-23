@@ -53,37 +53,16 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_SPECIALIZATION",
-     "scope": "team"
-    }
+    "TECH_SPECIALIZATION"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_ANIMAL_TRAINER_CAMEL",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_ANIMAL_TRAINER_LLAMA",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_ANIMAL_TRAINER_BUFFALO",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_ANIMAL_TRAINER_DONKEY",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_ANIMAL_TRAINER_HORSE",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_ANIMAL_TRAINER_ELEPHANT",
-      "scope": "city"
-     }
+     "BUILDING_ANIMAL_TRAINER_CAMEL",
+     "BUILDING_ANIMAL_TRAINER_LLAMA",
+     "BUILDING_ANIMAL_TRAINER_BUFFALO",
+     "BUILDING_ANIMAL_TRAINER_DONKEY",
+     "BUILDING_ANIMAL_TRAINER_HORSE",
+     "BUILDING_ANIMAL_TRAINER_ELEPHANT"
     ],
     [
      {

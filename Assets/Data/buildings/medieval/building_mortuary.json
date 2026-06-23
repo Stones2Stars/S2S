@@ -18,37 +18,16 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_ANATOMY",
-     "scope": "team"
-    }
+    "TECH_ANATOMY"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_BURIAL_TRADITION_CAVE",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_BURIAL_TRADITION_EARTH",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_BURIAL_TRADITION_FIRE",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_BURIAL_TRADITION_SKY",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_BURIAL_TRADITION_SEA",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_FUNERARY_SERVICES",
-      "scope": "city"
-     }
+     "BUILDING_BURIAL_TRADITION_CAVE",
+     "BUILDING_BURIAL_TRADITION_EARTH",
+     "BUILDING_BURIAL_TRADITION_FIRE",
+     "BUILDING_BURIAL_TRADITION_SKY",
+     "BUILDING_BURIAL_TRADITION_SEA",
+     "BUILDING_FUNERARY_SERVICES"
     ],
     [
      {
@@ -60,10 +39,7 @@
   },
   "operate": {
    "dormant": [
-    {
-     "type": "BUILDING_HIGH_TECH_CULTURAL_ENRICHMENT",
-     "scope": "city"
-    }
+    "BUILDING_HIGH_TECH_CULTURAL_ENRICHMENT"
    ]
   }
  },

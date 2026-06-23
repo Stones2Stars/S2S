@@ -10,10 +10,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_MASS_MEDIA",
-     "scope": "team"
-    }
+    "TECH_MASS_MEDIA"
    ],
    "any": [
     [

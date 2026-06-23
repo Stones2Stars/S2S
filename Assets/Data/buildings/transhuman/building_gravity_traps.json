@@ -6,10 +6,7 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "TECH_ANTI_GRAVITY_FIELDS",
-     "scope": "team"
-    }
+    "TECH_ANTI_GRAVITY_FIELDS"
    ],
    "any": [
     [

@@ -5,14 +5,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_ANIMAL_TRAINER_CAMEL",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_MILITARY_TRADITION",
-     "scope": "team"
-    },
+    "BUILDING_ANIMAL_TRAINER_CAMEL",
+    "TECH_MILITARY_TRADITION",
     {
      "type": "BONUS_FIREARMS",
      "scope": "city",

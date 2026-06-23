@@ -10,14 +10,8 @@
      "scope": "city",
      "connection": "trade|vicinity"
     },
-    {
-     "type": "TECH_LONG_RANGE_FORECASTING",
-     "scope": "team"
-    },
-    {
-     "type": "TECH_AMPHIBIOUS_WARFARE",
-     "scope": "team"
-    },
+    "TECH_LONG_RANGE_FORECASTING",
+    "TECH_AMPHIBIOUS_WARFARE",
     {
      "type": "BONUS_FIREARMS",
      "scope": "city",

@@ -5,10 +5,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_DIESELPUNK",
-     "scope": "team"
-    }
+    "TECH_DIESELPUNK"
    ],
    "any": [
     [

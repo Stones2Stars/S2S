@@ -20,21 +20,12 @@
   "build": {
    "all": [
     "HAS_RIVER",
-    {
-     "type": "TECH_NEW_URBANISM",
-     "scope": "team"
-    }
+    "TECH_NEW_URBANISM"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_ASPHALT_ROADS",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_SKYROAD_CONTROL_TOWER",
-      "scope": "city"
-     }
+     "BUILDING_ASPHALT_ROADS",
+     "BUILDING_SKYROAD_CONTROL_TOWER"
     ],
     [
      {
@@ -53,10 +44,7 @@
     }
    ],
    "dormant": [
-    {
-     "type": "BUILDING_TELEPORT_BOOTH",
-     "scope": "city"
-    }
+    "BUILDING_TELEPORT_BOOTH"
    ]
   }
  },

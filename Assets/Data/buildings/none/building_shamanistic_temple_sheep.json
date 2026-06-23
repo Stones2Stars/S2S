@@ -5,10 +5,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_SHAMANISTIC_TEMPLE",
-     "scope": "city"
-    }
+    "BUILDING_SHAMANISTIC_TEMPLE"
    ],
    "any": [
     [
@@ -21,10 +18,7 @@
   },
   "operate": {
    "all": [
-    {
-     "type": "RELIGION_SHAMANISM",
-     "scope": "city"
-    }
+    "RELIGION_SHAMANISM"
    ],
    "any": [
     [

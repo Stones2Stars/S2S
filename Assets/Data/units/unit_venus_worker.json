@@ -5,14 +5,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_VENUS_CARBONWORKS",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_SUPERSONIC_RAILS",
-     "scope": "team"
-    }
+    "BUILDING_VENUS_CARBONWORKS",
+    "TECH_SUPERSONIC_RAILS"
    ]
   }
  },

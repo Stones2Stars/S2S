@@ -5,14 +5,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_DEEP_SPACE_MCKENDREE_CYLINDER",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_SHAPESHIFTING",
-     "scope": "team"
-    }
+    "BUILDING_DEEP_SPACE_MCKENDREE_CYLINDER",
+    "TECH_SHAPESHIFTING"
    ],
    "any": [
     [
@@ -40,10 +34,7 @@
     10,
     {
      "value": 13,
-     "enabled": {
-      "type": "TECH_MULTIVERSE_TRAVERSAL",
-      "scope": "team"
-     }
+     "enabled": "TECH_MULTIVERSE_TRAVERSAL"
     }
    ]
   }

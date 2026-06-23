@@ -10,29 +10,14 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_PREHISTORIC_DANCE",
-     "scope": "team"
-    },
-    {
-     "type": "TECH_SHELTER_BUILDING",
-     "scope": "team"
-    }
+    "TECH_PREHISTORIC_DANCE",
+    "TECH_SHELTER_BUILDING"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_DANCE_HUT",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_DANCE_HALL",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_NIGHT_CLUB",
-      "scope": "city"
-     }
+     "BUILDING_DANCE_HUT",
+     "BUILDING_DANCE_HALL",
+     "BUILDING_NIGHT_CLUB"
     ],
     [
      {
@@ -41,18 +26,9 @@
      }
     ],
     [
-     {
-      "type": "HERITAGE_FOLKLORE_FOX_ARCTIC",
-      "scope": "empire"
-     },
-     {
-      "type": "HERITAGE_FOLKLORE_FOX_FENNEC",
-      "scope": "empire"
-     },
-     {
-      "type": "HERITAGE_FOLKLORE_FOX_RED",
-      "scope": "empire"
-     }
+     "HERITAGE_FOLKLORE_FOX_ARCTIC",
+     "HERITAGE_FOLKLORE_FOX_FENNEC",
+     "HERITAGE_FOLKLORE_FOX_RED"
     ]
    ]
   }

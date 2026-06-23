@@ -11,10 +11,7 @@
      "scope": "city",
      "min": 12
     },
-    {
-     "type": "TECH_MYTHOLOGICAL_BESTIARY",
-     "scope": "team"
-    }
+    "TECH_MYTHOLOGICAL_BESTIARY"
    ],
    "any": [
     [

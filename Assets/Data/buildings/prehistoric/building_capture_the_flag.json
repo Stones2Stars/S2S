@@ -10,21 +10,12 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_GAMES",
-     "scope": "team"
-    }
+    "TECH_GAMES"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_PLAYING_FIELDS",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_ATHLETIC_FIELDS",
-      "scope": "city"
-     }
+     "BUILDING_PLAYING_FIELDS",
+     "BUILDING_ATHLETIC_FIELDS"
     ],
     [
      {

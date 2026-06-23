@@ -24,14 +24,8 @@
       "min": 40
      }
     },
-    {
-     "type": "BUILDING_AQUARIUM",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_ECOLOGY",
-     "scope": "team"
-    }
+    "BUILDING_AQUARIUM",
+    "TECH_ECOLOGY"
    ],
    "any": [
     [
@@ -66,10 +60,7 @@
     ]
    ],
    "dormant": [
-    {
-     "type": "BUILDING_ANIMAL_PRESERVE",
-     "scope": "city"
-    }
+    "BUILDING_ANIMAL_PRESERVE"
    ]
   }
  },

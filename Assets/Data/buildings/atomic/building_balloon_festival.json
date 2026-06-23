@@ -13,14 +13,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_BALLOON_RIDES",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_TOURISM",
-     "scope": "team"
-    }
+    "BUILDING_BALLOON_RIDES",
+    "TECH_TOURISM"
    ],
    "any": [
     [
@@ -33,10 +27,7 @@
   },
   "operate": {
    "dormant": [
-    {
-     "type": "BUILDING_HIGH_TECH_CULTURAL_ENRICHMENT",
-     "scope": "city"
-    }
+    "BUILDING_HIGH_TECH_CULTURAL_ENRICHMENT"
    ]
   }
  },

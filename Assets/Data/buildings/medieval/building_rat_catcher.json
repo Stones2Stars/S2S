@@ -23,10 +23,7 @@
       "max": 80
      }
     },
-    {
-     "type": "TECH_RAT_CATCHING",
-     "scope": "team"
-    }
+    "TECH_RAT_CATCHING"
    ],
    "any": [
     [
@@ -53,10 +50,7 @@
     ]
    ],
    "dormant": [
-    {
-     "type": "BUILDING_AGROFOREST",
-     "scope": "city"
-    }
+    "BUILDING_AGROFOREST"
    ]
   }
  },

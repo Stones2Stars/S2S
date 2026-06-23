@@ -13,25 +13,13 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_POST_OFFICE",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_TELEGRAPH",
-     "scope": "team"
-    }
+    "BUILDING_POST_OFFICE",
+    "TECH_TELEGRAPH"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_TELEPHONE_NETWORK",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_TELEGRAPH_STATION",
-      "scope": "city"
-     }
+     "BUILDING_TELEPHONE_NETWORK",
+     "BUILDING_TELEGRAPH_STATION"
     ],
     [
      {
@@ -43,10 +31,7 @@
   },
   "operate": {
    "dormant": [
-    {
-     "type": "BUILDING_HYPERMARKET",
-     "scope": "city"
-    }
+    "BUILDING_HYPERMARKET"
    ]
   }
  },
@@ -56,17 +41,11 @@
     10,
     {
      "value": 7,
-     "enabled": {
-      "type": "TECH_CONSUMERISM",
-      "scope": "team"
-     }
+     "enabled": "TECH_CONSUMERISM"
     },
     {
      "value": 6,
-     "enabled": {
-      "type": "TECH_TELEPHONE",
-      "scope": "team"
-     }
+     "enabled": "TECH_TELEPHONE"
     }
    ]
   }

@@ -10,18 +10,9 @@
      "scope": "city",
      "min": 7
     },
-    {
-     "type": "BUILDING_MUSEUM",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_ART_GALLERY",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_MODERN_ART",
-     "scope": "team"
-    }
+    "BUILDING_MUSEUM",
+    "BUILDING_ART_GALLERY",
+    "TECH_MODERN_ART"
    ],
    "any": [
     [

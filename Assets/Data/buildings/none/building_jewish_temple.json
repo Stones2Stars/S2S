@@ -11,10 +11,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_PRIESTHOOD",
-     "scope": "team"
-    },
+    "TECH_PRIESTHOOD",
     {
      "type": "BONUS_BRICKS",
      "scope": "city",
@@ -37,10 +34,7 @@
   },
   "operate": {
    "all": [
-    {
-     "type": "RELIGION_JUDAISM",
-     "scope": "city"
-    }
+    "RELIGION_JUDAISM"
    ],
    "any": [
     [

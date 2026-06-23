@@ -14,14 +14,8 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_MODERN_OFFICES",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_POP_ART",
-     "scope": "team"
-    }
+    "BUILDING_MODERN_OFFICES",
+    "TECH_POP_ART"
    ],
    "any": [
     [
@@ -34,10 +28,7 @@
   },
   "operate": {
    "dormant": [
-    {
-     "type": "BUILDING_HIGH_TECH_CULTURAL_ENRICHMENT",
-     "scope": "city"
-    }
+    "BUILDING_HIGH_TECH_CULTURAL_ENRICHMENT"
    ]
   }
  },

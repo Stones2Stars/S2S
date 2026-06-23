@@ -13,10 +13,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_MASONRY",
-     "scope": "team"
-    }
+    "TECH_MASONRY"
    ],
    "any": [
     [
@@ -43,14 +40,8 @@
     ]
    ],
    "dormant": [
-    {
-     "type": "BUILDING_ARTESIAN_WELL",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_MODERN_WATERWORKS",
-     "scope": "city"
-    }
+    "BUILDING_ARTESIAN_WELL",
+    "BUILDING_MODERN_WATERWORKS"
    ]
   }
  },
@@ -59,10 +50,7 @@
    "flat": [
     {
      "value": 1,
-     "enabled": {
-      "type": "TECH_SANITATION",
-      "scope": "team"
-     }
+     "enabled": "TECH_SANITATION"
     }
    ]
   }

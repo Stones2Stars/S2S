@@ -5,41 +5,17 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_CANINE_DOMESTICATION",
-     "scope": "team"
-    }
+    "TECH_CANINE_DOMESTICATION"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_FARM_ANIMAL_SHEEP",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_FARM_ANIMAL_GOAT",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_FARM_ANIMAL_LLAMA",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_FARM_ANIMAL_ALPACA",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_FARM_ANIMAL_COW",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_INDUSTRIAL_FARMS",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_MEAT_INDUSTRY_CONGLOMERATE",
-      "scope": "city"
-     }
+     "BUILDING_FARM_ANIMAL_SHEEP",
+     "BUILDING_FARM_ANIMAL_GOAT",
+     "BUILDING_FARM_ANIMAL_LLAMA",
+     "BUILDING_FARM_ANIMAL_ALPACA",
+     "BUILDING_FARM_ANIMAL_COW",
+     "BUILDING_INDUSTRIAL_FARMS",
+     "BUILDING_MEAT_INDUSTRY_CONGLOMERATE"
     ],
     [
      {

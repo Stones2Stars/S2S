@@ -16,10 +16,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_NEW_URBANISM",
-     "scope": "team"
-    }
+    "TECH_NEW_URBANISM"
    ],
    "any": [
     [

@@ -13,14 +13,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_MIXED_USE_DEVELOPMENT",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_NEW_URBANISM",
-     "scope": "team"
-    }
+    "BUILDING_MIXED_USE_DEVELOPMENT",
+    "TECH_NEW_URBANISM"
    ],
    "any": [
     [
@@ -40,10 +34,7 @@
     }
    ],
    "dormant": [
-    {
-     "type": "BUILDING_ELEVATED_BICYCLE_TRACK",
-     "scope": "city"
-    }
+    "BUILDING_ELEVATED_BICYCLE_TRACK"
    ]
   }
  },
@@ -53,10 +44,7 @@
     4,
     {
      "value": 8,
-     "enabled": {
-      "type": "TECH_AUTONOMOUS_VEHICLES",
-      "scope": "team"
-     }
+     "enabled": "TECH_AUTONOMOUS_VEHICLES"
     }
    ]
   }

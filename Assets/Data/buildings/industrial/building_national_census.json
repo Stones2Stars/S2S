@@ -5,25 +5,13 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_STATISTICS",
-     "scope": "team"
-    }
+    "TECH_STATISTICS"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_POST_OFFICE",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_COMPUTER_NETWORK",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_HYPERMARKET",
-      "scope": "city"
-     }
+     "BUILDING_POST_OFFICE",
+     "BUILDING_COMPUTER_NETWORK",
+     "BUILDING_HYPERMARKET"
     ],
     [
      {

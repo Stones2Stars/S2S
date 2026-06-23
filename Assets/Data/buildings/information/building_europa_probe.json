@@ -10,10 +10,7 @@
      "scope": "empire",
      "min": 1
     },
-    {
-     "type": "TECH_JOVIAN_EXPLORATION",
-     "scope": "team"
-    }
+    "TECH_JOVIAN_EXPLORATION"
    ],
    "any": [
     [

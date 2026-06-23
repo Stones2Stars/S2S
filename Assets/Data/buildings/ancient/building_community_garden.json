@@ -24,10 +24,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_GARDENING",
-     "scope": "team"
-    }
+    "TECH_GARDENING"
    ],
    "any": [
     [
@@ -45,59 +42,35 @@
     1,
     {
      "value": 3,
-     "enabled": {
-      "type": "TECH_WEATHER_LORE",
-      "scope": "team"
-     }
+     "enabled": "TECH_WEATHER_LORE"
     },
     {
      "value": 3,
-     "enabled": {
-      "type": "TECH_CALENDAR",
-      "scope": "team"
-     }
+     "enabled": "TECH_CALENDAR"
     },
     {
      "value": 6,
-     "enabled": {
-      "type": "TECH_METEOROLOGY",
-      "scope": "team"
-     }
+     "enabled": "TECH_METEOROLOGY"
     },
     {
      "value": 4,
-     "enabled": {
-      "type": "TECH_CROP_ROTATION",
-      "scope": "team"
-     }
+     "enabled": "TECH_CROP_ROTATION"
     },
     {
      "value": 5,
-     "enabled": {
-      "type": "TECH_BIOLOGY",
-      "scope": "team"
-     }
+     "enabled": "TECH_BIOLOGY"
     },
     {
      "value": 7,
-     "enabled": {
-      "type": "TECH_LONG_RANGE_FORECASTING",
-      "scope": "team"
-     }
+     "enabled": "TECH_LONG_RANGE_FORECASTING"
     },
     {
      "value": 6,
-     "enabled": {
-      "type": "TECH_ORGANIC_CHEMISTRY",
-      "scope": "team"
-     }
+     "enabled": "TECH_ORGANIC_CHEMISTRY"
     },
     {
      "value": 7,
-     "enabled": {
-      "type": "TECH_GENETICS",
-      "scope": "team"
-     }
+     "enabled": "TECH_GENETICS"
     }
    ]
   }

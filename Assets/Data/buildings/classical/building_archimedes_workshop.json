@@ -10,14 +10,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_MATHEMATICS",
-     "scope": "team"
-    },
-    {
-     "type": "TECH_MILITARY_TRAINING",
-     "scope": "team"
-    }
+    "TECH_MATHEMATICS",
+    "TECH_MILITARY_TRAINING"
    ],
    "any": [
     [

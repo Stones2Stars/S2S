@@ -17,14 +17,8 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_PHENOTYPE_STUDIO",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_GENE_ENHANCEMENT",
-     "scope": "team"
-    }
+    "BUILDING_PHENOTYPE_STUDIO",
+    "TECH_GENE_ENHANCEMENT"
    ],
    "any": [
     [
@@ -58,10 +52,7 @@
   "city": {
    "flat": {
     "value": 9,
-    "enabled": {
-     "type": "TECH_ANTI_AGING_MEDICINE",
-     "scope": "team"
-    }
+    "enabled": "TECH_ANTI_AGING_MEDICINE"
    }
   }
  },
@@ -71,38 +62,23 @@
     5,
     {
      "value": 9,
-     "enabled": {
-      "type": "TECH_MAINSTREAM_CLONING",
-      "scope": "team"
-     }
+     "enabled": "TECH_MAINSTREAM_CLONING"
     },
     {
      "value": 9,
-     "enabled": {
-      "type": "TECH_ANTI_AGING_MEDICINE",
-      "scope": "team"
-     }
+     "enabled": "TECH_ANTI_AGING_MEDICINE"
     },
     {
      "value": 9,
-     "enabled": {
-      "type": "TECH_BIONICS",
-      "scope": "team"
-     }
+     "enabled": "TECH_BIONICS"
     },
     {
      "value": 10,
-     "enabled": {
-      "type": "TECH_QUADRUPLE_HELIX",
-      "scope": "team"
-     }
+     "enabled": "TECH_QUADRUPLE_HELIX"
     },
     {
      "value": 10,
-     "enabled": {
-      "type": "TECH_NEURON_ENGINEERING",
-      "scope": "team"
-     }
+     "enabled": "TECH_NEURON_ENGINEERING"
     }
    ]
   }

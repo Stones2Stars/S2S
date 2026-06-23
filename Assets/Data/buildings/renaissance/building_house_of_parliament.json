@@ -10,10 +10,7 @@
      "scope": "city",
      "min": 7
     },
-    {
-     "type": "TECH_POLITICAL_PHILOSOPHY",
-     "scope": "team"
-    }
+    "TECH_POLITICAL_PHILOSOPHY"
    ],
    "any": [
     [
@@ -44,10 +41,7 @@
      "scope": "city",
      "connection": "trade|vicinity"
     },
-    {
-     "type": "CIVIC_LEGISLATURE",
-     "scope": "empire"
-    }
+    "CIVIC_LEGISLATURE"
    ],
    "any": [
     [

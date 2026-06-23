@@ -5,14 +5,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_CHRISTIAN_TEMPLE",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_CRITICAL_THOUGHT",
-     "scope": "team"
-    }
+    "BUILDING_CHRISTIAN_TEMPLE",
+    "TECH_CRITICAL_THOUGHT"
    ],
    "any": [
     [
@@ -25,25 +19,13 @@
   },
   "operate": {
    "all": [
-    {
-     "type": "RELIGION_CHRISTIANITY",
-     "scope": "city"
-    }
+    "RELIGION_CHRISTIANITY"
    ],
    "any": [
     [
-     {
-      "type": "CIVIC_STATE_CHURCH",
-      "scope": "empire"
-     },
-     {
-      "type": "CIVIC_FREE_CHURCH",
-      "scope": "empire"
-     },
-     {
-      "type": "CIVIC_SECULARISM",
-      "scope": "empire"
-     }
+     "CIVIC_STATE_CHURCH",
+     "CIVIC_FREE_CHURCH",
+     "CIVIC_SECULARISM"
     ]
    ]
   }

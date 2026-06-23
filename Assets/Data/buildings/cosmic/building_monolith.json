@@ -5,10 +5,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_NOOGENESIS",
-     "scope": "team"
-    }
+    "TECH_NOOGENESIS"
    ],
    "any": [
     [
@@ -22,10 +19,7 @@
   "operate": {
    "any": [
     [
-     {
-      "type": "CIVIC_COSMIC_ENLIGHTENING",
-      "scope": "empire"
-     }
+     "CIVIC_COSMIC_ENLIGHTENING"
     ]
    ]
   }

@@ -11,25 +11,13 @@
   "build": {
    "all": [
     "HAS_COAST",
-    {
-     "type": "TECH_ECONOMICS",
-     "scope": "team"
-    }
+    "TECH_ECONOMICS"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_TRADING_POST",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_SHOPPING_DISTRICT",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_MODERN_OFFICES",
-      "scope": "city"
-     }
+     "BUILDING_TRADING_POST",
+     "BUILDING_SHOPPING_DISTRICT",
+     "BUILDING_MODERN_OFFICES"
     ],
     [
      {

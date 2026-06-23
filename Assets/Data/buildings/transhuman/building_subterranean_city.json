@@ -16,14 +16,8 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_ADVANCED_SHIELDING",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_SUBTERRANEAN_EXPLORATION",
-     "scope": "team"
-    }
+    "BUILDING_ADVANCED_SHIELDING",
+    "TECH_SUBTERRANEAN_EXPLORATION"
    ],
    "any": [
     [

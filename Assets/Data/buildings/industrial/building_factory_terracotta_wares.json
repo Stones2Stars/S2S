@@ -14,17 +14,11 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "TECH_ASSEMBLY_LINE",
-     "scope": "team"
-    }
+    "TECH_ASSEMBLY_LINE"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_FACTORY",
-      "scope": "city"
-     }
+     "BUILDING_FACTORY"
     ],
     [
      {
@@ -52,10 +46,7 @@
     ]
    ],
    "dormant": [
-    {
-     "type": "BUILDING_MANUFACTURING_DISTRICT",
-     "scope": "city"
-    }
+    "BUILDING_MANUFACTURING_DISTRICT"
    ]
   }
  },

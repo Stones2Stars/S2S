@@ -11,18 +11,9 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_COMPUTER_NETWORK",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_TV_STUDIO",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_CLOUD_COMPUTING",
-     "scope": "team"
-    }
+    "BUILDING_COMPUTER_NETWORK",
+    "BUILDING_TV_STUDIO",
+    "TECH_CLOUD_COMPUTING"
    ],
    "any": [
     [

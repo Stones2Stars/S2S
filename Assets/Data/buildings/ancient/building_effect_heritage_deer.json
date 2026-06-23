@@ -16,14 +16,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_HERITAGE",
-     "scope": "team"
-    },
-    {
-     "type": "TECH_MEGAFAUNA_DOMESTICATION",
-     "scope": "team"
-    }
+    "TECH_HERITAGE",
+    "TECH_MEGAFAUNA_DOMESTICATION"
    ],
    "any": [
     [

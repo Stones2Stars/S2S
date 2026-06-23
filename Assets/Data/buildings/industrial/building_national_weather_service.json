@@ -16,37 +16,16 @@
      "scope": "city",
      "min": 7
     },
-    {
-     "type": "BUILDING_MODERN_OFFICES",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_RADIO",
-     "scope": "team"
-    },
-    {
-     "type": "TECH_METEOROLOGY",
-     "scope": "team"
-    },
-    {
-     "type": "TECH_CIVIL_ENGINEERING",
-     "scope": "team"
-    }
+    "BUILDING_MODERN_OFFICES",
+    "TECH_RADIO",
+    "TECH_METEOROLOGY",
+    "TECH_CIVIL_ENGINEERING"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_BROADCAST_TOWER",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_COMMUNICATION_TOWER",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_NETWORK_NODE",
-      "scope": "city"
-     }
+     "BUILDING_BROADCAST_TOWER",
+     "BUILDING_COMMUNICATION_TOWER",
+     "BUILDING_NETWORK_NODE"
     ],
     [
      {

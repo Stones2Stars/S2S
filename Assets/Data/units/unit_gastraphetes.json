@@ -10,10 +10,7 @@
      "scope": "city",
      "connection": "trade|vicinity"
     },
-    {
-     "type": "TECH_ANCIENT_MACHINERY",
-     "scope": "team"
-    }
+    "TECH_ANCIENT_MACHINERY"
    ]
   }
  },

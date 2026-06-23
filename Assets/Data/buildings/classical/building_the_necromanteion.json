@@ -5,14 +5,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_HELLENIC_PANTHEON",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_AESTHETICS",
-     "scope": "team"
-    },
+    "BUILDING_HELLENIC_PANTHEON",
+    "TECH_AESTHETICS",
     "STATE_RELIGION_IN_CITY",
     {
      "STATE_RELIGION": "RELIGION_HELLENISM"
@@ -29,10 +23,7 @@
   },
   "operate": {
    "all": [
-    {
-     "type": "RELIGION_HELLENISM",
-     "scope": "city"
-    }
+    "RELIGION_HELLENISM"
    ]
   }
  },

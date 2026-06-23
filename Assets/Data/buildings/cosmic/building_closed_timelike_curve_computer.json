@@ -13,14 +13,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_LABORATORY",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_STABLE_TIME_LOOPS",
-     "scope": "team"
-    }
+    "BUILDING_LABORATORY",
+    "TECH_STABLE_TIME_LOOPS"
    ],
    "any": [
     [
@@ -42,24 +36,15 @@
    "flat": [
     {
      "value": 13,
-     "enabled": {
-      "type": "TECH_TIMELINE_RECTIFICATION",
-      "scope": "team"
-     }
+     "enabled": "TECH_TIMELINE_RECTIFICATION"
     },
     {
      "value": 13,
-     "enabled": {
-      "type": "TECH_TIME_REVERSAL",
-      "scope": "team"
-     }
+     "enabled": "TECH_TIME_REVERSAL"
     },
     {
      "value": 13,
-     "enabled": {
-      "type": "TECH_MULTIDIMENSIONAL_TIME",
-      "scope": "team"
-     }
+     "enabled": "TECH_MULTIDIMENSIONAL_TIME"
     }
    ]
   }

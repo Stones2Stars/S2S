@@ -24,10 +24,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_CANAL_SYSTEMS",
-     "scope": "team"
-    }
+    "TECH_CANAL_SYSTEMS"
    ],
    "any": [
     [
@@ -64,10 +61,7 @@
     ]
    ],
    "dormant": [
-    {
-     "type": "BUILDING_MODERN_WATERWORKS",
-     "scope": "city"
-    }
+    "BUILDING_MODERN_WATERWORKS"
    ]
   }
  },

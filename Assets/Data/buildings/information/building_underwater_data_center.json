@@ -7,18 +7,9 @@
    "all": [
     "HAS_COAST",
     "HAS_POWER",
-    {
-     "type": "BUILDING_CLOUD_SERVER",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_CLOUD_COMPUTING",
-     "scope": "team"
-    },
-    {
-     "type": "TECH_UNMANNED_NAVAL_VEHICLES",
-     "scope": "team"
-    }
+    "BUILDING_CLOUD_SERVER",
+    "TECH_CLOUD_COMPUTING",
+    "TECH_UNMANNED_NAVAL_VEHICLES"
    ],
    "any": [
     [

@@ -5,10 +5,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_PRIESTHOOD",
-     "scope": "team"
-    },
+    "TECH_PRIESTHOOD",
     {
      "STATE_RELIGION": "RELIGION_KEMETISM"
     }
@@ -22,14 +19,8 @@
     ]
    ],
    "noneOf": [
-    {
-     "type": "BUILDING_TEMPLE_OF_SETH",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_TEMPLE_OF_OSIRIS",
-     "scope": "city"
-    }
+    "BUILDING_TEMPLE_OF_SETH",
+    "BUILDING_TEMPLE_OF_OSIRIS"
    ]
   },
   "operate": {
@@ -39,10 +30,7 @@
      "scope": "city",
      "connection": "trade|vicinity"
     },
-    {
-     "type": "RELIGION_KEMETISM",
-     "scope": "city"
-    }
+    "RELIGION_KEMETISM"
    ],
    "any": [
     [

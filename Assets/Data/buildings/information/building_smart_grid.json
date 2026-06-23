@@ -20,14 +20,8 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_POWER_LINES",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_FUEL_CELLS",
-     "scope": "team"
-    }
+    "BUILDING_POWER_LINES",
+    "TECH_FUEL_CELLS"
    ],
    "any": [
     [
@@ -47,18 +41,9 @@
     }
    ],
    "dormant": [
-    {
-     "type": "BUILDING_WIRELESS_GRID",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_EMP_GRID",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_SUPERCONDUCTING_GRID",
-     "scope": "city"
-    }
+    "BUILDING_WIRELESS_GRID",
+    "BUILDING_EMP_GRID",
+    "BUILDING_SUPERCONDUCTING_GRID"
    ]
   }
  },

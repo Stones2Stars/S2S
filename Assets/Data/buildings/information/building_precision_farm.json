@@ -13,18 +13,9 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_GENE_FARMING_LAB",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_EFFECT_GPS",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_AUTONOMOUS_VEHICLES",
-     "scope": "team"
-    }
+    "BUILDING_GENE_FARMING_LAB",
+    "BUILDING_EFFECT_GPS",
+    "TECH_AUTONOMOUS_VEHICLES"
    ],
    "any": [
     [
@@ -44,10 +35,7 @@
     }
    ],
    "dormant": [
-    {
-     "type": "BUILDING_FARMSCRAPER_I",
-     "scope": "city"
-    }
+    "BUILDING_FARMSCRAPER_I"
    ]
   }
  },

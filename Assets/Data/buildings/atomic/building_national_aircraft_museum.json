@@ -10,10 +10,7 @@
      "scope": "city",
      "min": 13
     },
-    {
-     "type": "TECH_FLIGHT",
-     "scope": "team"
-    }
+    "TECH_FLIGHT"
    ],
    "any": [
     [
@@ -43,108 +40,63 @@
    "flat": [
     {
      "value": 7,
-     "enabled": {
-      "type": "TECH_ZEPPELINS",
-      "scope": "team"
-     }
+     "enabled": "TECH_ZEPPELINS"
     },
     {
      "value": 7,
-     "enabled": {
-      "type": "TECH_AVIATION",
-      "scope": "team"
-     }
+     "enabled": "TECH_AVIATION"
     },
     {
      "value": 7,
-     "enabled": {
-      "type": "TECH_ROCKETRY",
-      "scope": "team"
-     }
+     "enabled": "TECH_ROCKETRY"
     },
     {
      "value": 7,
-     "enabled": {
-      "type": "TECH_ADVANCED_ROCKETRY",
-      "scope": "team"
-     }
+     "enabled": "TECH_ADVANCED_ROCKETRY"
     },
     {
      "value": 7,
-     "enabled": {
-      "type": "TECH_ADVANCED_AVIATION",
-      "scope": "team"
-     }
+     "enabled": "TECH_ADVANCED_AVIATION"
     },
     {
      "value": 7,
-     "enabled": {
-      "type": "TECH_NAVAL_FLIGHT",
-      "scope": "team"
-     }
+     "enabled": "TECH_NAVAL_FLIGHT"
     },
     {
      "value": 7,
-     "enabled": {
-      "type": "TECH_JET_PROPULSION",
-      "scope": "team"
-     }
+     "enabled": "TECH_JET_PROPULSION"
     },
     {
      "value": 7,
-     "enabled": {
-      "type": "TECH_VERTICAL_FLIGHT",
-      "scope": "team"
-     }
+     "enabled": "TECH_VERTICAL_FLIGHT"
     },
     {
      "value": 7,
-     "enabled": {
-      "type": "TECH_ASTRONAUTICS",
-      "scope": "team"
-     }
+     "enabled": "TECH_ASTRONAUTICS"
     },
     {
      "value": 7,
-     "enabled": {
-      "type": "TECH_SUPERSONIC_FLIGHT",
-      "scope": "team"
-     }
+     "enabled": "TECH_SUPERSONIC_FLIGHT"
     },
     {
      "value": 8,
-     "enabled": {
-      "type": "TECH_STEALTH",
-      "scope": "team"
-     }
+     "enabled": "TECH_STEALTH"
     },
     {
      "value": 8,
-     "enabled": {
-      "type": "TECH_UNMANNED_AIR_VEHICLES",
-      "scope": "team"
-     }
+     "enabled": "TECH_UNMANNED_AIR_VEHICLES"
     },
     {
      "value": 9,
-     "enabled": {
-      "type": "TECH_HYPERSONIC_FLIGHT",
-      "scope": "team"
-     }
+     "enabled": "TECH_HYPERSONIC_FLIGHT"
     },
     {
      "value": 9,
-     "enabled": {
-      "type": "TECH_SKYROADS",
-      "scope": "team"
-     }
+     "enabled": "TECH_SKYROADS"
     },
     {
      "value": 9,
-     "enabled": {
-      "type": "TECH_ORBITAL_FLIGHT",
-      "scope": "team"
-     }
+     "enabled": "TECH_ORBITAL_FLIGHT"
     }
    ]
   }

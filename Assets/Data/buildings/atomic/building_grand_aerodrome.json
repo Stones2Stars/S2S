@@ -11,25 +11,13 @@
      "scope": "city",
      "min": 7
     },
-    {
-     "type": "TECH_ADVANCED_AVIATION",
-     "scope": "team"
-    },
-    {
-     "type": "TECH_DIESELPUNK",
-     "scope": "team"
-    }
+    "TECH_ADVANCED_AVIATION",
+    "TECH_DIESELPUNK"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_AIRPORT",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_COMMERCIAL_AIRPORT",
-      "scope": "city"
-     }
+     "BUILDING_AIRPORT",
+     "BUILDING_COMMERCIAL_AIRPORT"
     ],
     [
      {

@@ -14,21 +14,12 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_PLANET_ENGINEERING",
-     "scope": "team"
-    }
+    "TECH_PLANET_ENGINEERING"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_INTERSTELLAR_ASTEROID_MINING_SYSTEM",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_SPACE_COLONY_MILKY_WAY",
-      "scope": "city"
-     }
+     "BUILDING_INTERSTELLAR_ASTEROID_MINING_SYSTEM",
+     "BUILDING_SPACE_COLONY_MILKY_WAY"
     ],
     [
      {

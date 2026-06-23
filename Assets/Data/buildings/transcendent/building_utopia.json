@@ -6,14 +6,8 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_CHRONOPOLIS",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_OMNIBENEVOLENT_MANDATE",
-     "scope": "team"
-    }
+    "BUILDING_CHRONOPOLIS",
+    "TECH_OMNIBENEVOLENT_MANDATE"
    ],
    "any": [
     [

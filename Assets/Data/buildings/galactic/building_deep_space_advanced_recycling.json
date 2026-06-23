@@ -11,18 +11,9 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_DEEP_SPACE_HOUSING_WORKERS",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_DEEP_SPACE_ECOSYSTEM",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_CLOSED_ECONOMIES",
-     "scope": "team"
-    }
+    "BUILDING_DEEP_SPACE_HOUSING_WORKERS",
+    "BUILDING_DEEP_SPACE_ECOSYSTEM",
+    "TECH_CLOSED_ECONOMIES"
    ],
    "any": [
     [

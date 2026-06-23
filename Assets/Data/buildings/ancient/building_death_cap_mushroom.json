@@ -18,10 +18,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_FUNGICULTURE",
-     "scope": "team"
-    }
+    "TECH_FUNGICULTURE"
    ],
    "any": [
     [
@@ -67,14 +64,8 @@
     ]
    ],
    "dormant": [
-    {
-     "type": "BUILDING_CHEMISTRY_LAB",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_CHEMICALS_DISTRICT",
-     "scope": "city"
-    }
+    "BUILDING_CHEMISTRY_LAB",
+    "BUILDING_CHEMICALS_DISTRICT"
    ]
   }
  },

@@ -19,21 +19,12 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "TECH_AUGMENTED_REALITY",
-     "scope": "team"
-    }
+    "TECH_AUGMENTED_REALITY"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_HYPERMARKET",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_ELECTRONICS_STORE",
-      "scope": "city"
-     }
+     "BUILDING_HYPERMARKET",
+     "BUILDING_ELECTRONICS_STORE"
     ],
     [
      {
@@ -61,10 +52,7 @@
     ]
    ],
    "dormant": [
-    {
-     "type": "BUILDING_HIGH_TECH_CULTURAL_ENRICHMENT",
-     "scope": "city"
-    }
+    "BUILDING_HIGH_TECH_CULTURAL_ENRICHMENT"
    ]
   }
  },

@@ -10,21 +10,12 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_FLINT_KNAPPING",
-     "scope": "team"
-    }
+    "TECH_FLINT_KNAPPING"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_STONE_TOOL_MAKER",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_ANTIQUE_SHOP",
-      "scope": "city"
-     }
+     "BUILDING_STONE_TOOL_MAKER",
+     "BUILDING_ANTIQUE_SHOP"
     ],
     [
      {

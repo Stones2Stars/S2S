@@ -14,14 +14,8 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_OMEGA_ASSEMBLER",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_PARTICLE_GENETICS",
-     "scope": "team"
-    }
+    "BUILDING_OMEGA_ASSEMBLER",
+    "TECH_PARTICLE_GENETICS"
    ],
    "any": [
     [
@@ -34,10 +28,7 @@
   },
   "operate": {
    "dormant": [
-    {
-     "type": "BUILDING_MATERIALIZATION_COMPLEX",
-     "scope": "city"
-    }
+    "BUILDING_MATERIALIZATION_COMPLEX"
    ]
   }
  },

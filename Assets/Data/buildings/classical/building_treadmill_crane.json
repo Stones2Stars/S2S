@@ -13,14 +13,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_CARPENTER",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_MACHINERY",
-     "scope": "team"
-    }
+    "BUILDING_CARPENTER",
+    "TECH_MACHINERY"
    ],
    "any": [
     [
@@ -33,18 +27,9 @@
   },
   "operate": {
    "dormant": [
-    {
-     "type": "BUILDING_STEAM_CRANE",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_MODERN_CRANE",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_HIGH_TECH_CRANE",
-     "scope": "city"
-    }
+    "BUILDING_STEAM_CRANE",
+    "BUILDING_MODERN_CRANE",
+    "BUILDING_HIGH_TECH_CRANE"
    ]
   }
  },

@@ -14,14 +14,8 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_MODERN_OFFICES",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_WAR_SIMULATIONS",
-     "scope": "team"
-    }
+    "BUILDING_MODERN_OFFICES",
+    "TECH_WAR_SIMULATIONS"
    ],
    "any": [
     [

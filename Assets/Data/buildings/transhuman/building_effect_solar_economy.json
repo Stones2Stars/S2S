@@ -15,10 +15,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_PLANETARY_MEGASTRUCTURES",
-     "scope": "team"
-    }
+    "TECH_PLANETARY_MEGASTRUCTURES"
    ],
    "any": [
     [

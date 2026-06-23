@@ -15,29 +15,14 @@
      "scope": "city",
      "min": 3
     },
-    {
-     "type": "TECH_STAINED_GLASS",
-     "scope": "team"
-    },
-    {
-     "type": "TECH_GUILDS",
-     "scope": "team"
-    }
+    "TECH_STAINED_GLASS",
+    "TECH_GUILDS"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_GLASSBLOWERS_WORKSHOP",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_FACTORY_GLASSWARE",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_MANUFACTURING_DISTRICT",
-      "scope": "city"
-     }
+     "BUILDING_GLASSBLOWERS_WORKSHOP",
+     "BUILDING_FACTORY_GLASSWARE",
+     "BUILDING_MANUFACTURING_DISTRICT"
     ],
     [
      {

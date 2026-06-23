@@ -22,21 +22,12 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_NANOROBOTICS",
-     "scope": "team"
-    }
+    "TECH_NANOROBOTICS"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_NANOFACTORY",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_PICOTECH_COMPLEX",
-      "scope": "city"
-     }
+     "BUILDING_NANOFACTORY",
+     "BUILDING_PICOTECH_COMPLEX"
     ],
     [
      {
@@ -67,22 +58,10 @@
     ]
    ],
    "dormant": [
-    {
-     "type": "BUILDING_MOLECULAR_ASSEMBLER",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_ATOMIC_ASSEMBLER",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_QUANTUM_ASSEMBLER",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_MATERIALIZER",
-     "scope": "city"
-    }
+    "BUILDING_MOLECULAR_ASSEMBLER",
+    "BUILDING_ATOMIC_ASSEMBLER",
+    "BUILDING_QUANTUM_ASSEMBLER",
+    "BUILDING_MATERIALIZER"
    ]
   }
  },

@@ -5,14 +5,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_TRANSTELLAR_ARTIFICIAL_RED_DWARF",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_DARK_MATTER_ENGINEERING",
-     "scope": "team"
-    }
+    "BUILDING_TRANSTELLAR_ARTIFICIAL_RED_DWARF",
+    "TECH_DARK_MATTER_ENGINEERING"
    ],
    "any": [
     [
@@ -35,10 +29,7 @@
     100,
     {
      "value": 25,
-     "enabled": {
-      "type": "TECH_ENTROPY_REVERSAL",
-      "scope": "team"
-     }
+     "enabled": "TECH_ENTROPY_REVERSAL"
     }
    ]
   }
@@ -53,10 +44,7 @@
    "flat": [
     {
      "value": 13,
-     "enabled": {
-      "type": "TECH_MATERIALIZATION",
-      "scope": "team"
-     }
+     "enabled": "TECH_MATERIALIZATION"
     }
    ]
   }

@@ -14,14 +14,8 @@
   "build": {
    "all": [
     "HAS_RIVER",
-    {
-     "type": "BUILDING_COURTHOUSE",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_COAST_GUARD",
-     "scope": "team"
-    }
+    "BUILDING_COURTHOUSE",
+    "TECH_COAST_GUARD"
    ],
    "any": [
     [
@@ -55,10 +49,7 @@
     ]
    ],
    "dormant": [
-    {
-     "type": "BUILDING_RIVER_ADMINISTRATION",
-     "scope": "city"
-    }
+    "BUILDING_RIVER_ADMINISTRATION"
    ]
   }
  },

@@ -14,10 +14,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_GUNPOWDER",
-     "scope": "team"
-    }
+    "TECH_GUNPOWDER"
    ],
    "any": [
     [

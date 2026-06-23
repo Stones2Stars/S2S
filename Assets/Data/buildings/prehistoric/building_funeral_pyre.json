@@ -18,29 +18,14 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_BURIAL_TRADITION_FIRE",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_CEREMONIAL_BURIAL",
-     "scope": "team"
-    },
-    {
-     "type": "TECH_FIRE_MAKING",
-     "scope": "team"
-    }
+    "BUILDING_BURIAL_TRADITION_FIRE",
+    "TECH_CEREMONIAL_BURIAL",
+    "TECH_FIRE_MAKING"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_BONFIRE",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_CHARCOAL_BURNER",
-      "scope": "city"
-     }
+     "BUILDING_BONFIRE",
+     "BUILDING_CHARCOAL_BURNER"
     ],
     [
      {
@@ -66,14 +51,8 @@
     ]
    ],
    "dormant": [
-    {
-     "type": "BUILDING_FUNERARY_SERVICES",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_HIGH_TECH_CULTURAL_ENRICHMENT",
-     "scope": "city"
-    }
+    "BUILDING_FUNERARY_SERVICES",
+    "BUILDING_HIGH_TECH_CULTURAL_ENRICHMENT"
    ]
   }
  },

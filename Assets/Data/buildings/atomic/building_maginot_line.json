@@ -11,10 +11,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_TRENCH_WARFARE",
-     "scope": "team"
-    }
+    "TECH_TRENCH_WARFARE"
    ],
    "any": [
     [

@@ -6,14 +6,8 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_FIELD_GENERATOR",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_ALPHA_POINT",
-     "scope": "team"
-    }
+    "BUILDING_FIELD_GENERATOR",
+    "TECH_ALPHA_POINT"
    ],
    "any": [
     [

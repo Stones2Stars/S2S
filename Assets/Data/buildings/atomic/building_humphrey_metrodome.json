@@ -15,14 +15,8 @@
      "scope": "city",
      "min": 7
     },
-    {
-     "type": "BUILDING_MAJOR_LEAGUE_STADIUM",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_MODERN_SPORTS",
-     "scope": "team"
-    }
+    "BUILDING_MAJOR_LEAGUE_STADIUM",
+    "TECH_MODERN_SPORTS"
    ],
    "any": [
     [

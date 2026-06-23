@@ -15,10 +15,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_CELEBRATION",
-     "scope": "team"
-    }
+    "TECH_CELEBRATION"
    ],
    "any": [
     [

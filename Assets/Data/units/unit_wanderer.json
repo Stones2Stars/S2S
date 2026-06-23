@@ -5,10 +5,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_NOMADISM",
-     "scope": "team"
-    }
+    "TECH_NOMADISM"
    ]
   }
  },

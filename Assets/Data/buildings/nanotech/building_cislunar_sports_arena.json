@@ -11,14 +11,8 @@
      "scope": "city",
      "min": 13
     },
-    {
-     "type": "BUILDING_COMMERCIAL_SPACEPORT",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_ADVANCED_ENVIRONMENTAL_SYSTEMS",
-     "scope": "team"
-    },
+    "BUILDING_COMMERCIAL_SPACEPORT",
+    "TECH_ADVANCED_ENVIRONMENTAL_SYSTEMS",
     {
      "type": "BONUS_FURNITURE",
      "scope": "city",

@@ -12,29 +12,14 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_HELLENIC_TEMPLE",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_CITY_PLANNING",
-     "scope": "team"
-    },
-    {
-     "type": "TECH_MATHEMATICS",
-     "scope": "team"
-    }
+    "BUILDING_HELLENIC_TEMPLE",
+    "TECH_CITY_PLANNING",
+    "TECH_MATHEMATICS"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_CITY_COUNCIL",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_METROPOLITAN_ADMINISTRATION",
-      "scope": "city"
-     }
+     "BUILDING_CITY_COUNCIL",
+     "BUILDING_METROPOLITAN_ADMINISTRATION"
     ],
     [
      {
@@ -46,10 +31,7 @@
   },
   "operate": {
    "all": [
-    {
-     "type": "RELIGION_HELLENISM",
-     "scope": "city"
-    }
+    "RELIGION_HELLENISM"
    ]
   }
  },

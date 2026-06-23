@@ -14,110 +14,32 @@
   "build": {
    "any": [
     [
-     {
-      "type": "BUILDING_FARM_CROP_ARTICHOKE",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_FARM_CROP_BELL_PEPPER",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_FARM_CROP_BROCCOLI",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_FARM_CROP_CABBAGE",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_FARM_CROP_CARROT",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_FARM_CROP_CASSAVA",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_FARM_CROP_CAULIFLOWER",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_FARM_CROP_CELERY",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_FARM_CROP_CUCUMBER",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_FARM_CROP_EGGPLANT",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_FARM_CROP_GARLIC",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_FARM_CROP_CALABASH",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_HYDROPONIC_VEGETABLE_GARDEN",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_FARM_CROP_KALE",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_FARM_CROP_LEEK",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_FARM_CROP_LETTUCE",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_FARM_CROP_ONION",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_FARM_CROP_POTATO",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_FARM_CROP_PUMPKIN",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_FARM_CROP_RADISH",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_FARM_CROP_TURNIP",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_FARM_CROP_SPINACH",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_FARM_CROP_SQUASH",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_FARM_CROP_SWEET_POTATO",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_PLANTATION_TARO",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_FARM_CROP_ZUCCHINI",
-      "scope": "city"
-     }
+     "BUILDING_FARM_CROP_ARTICHOKE",
+     "BUILDING_FARM_CROP_BELL_PEPPER",
+     "BUILDING_FARM_CROP_BROCCOLI",
+     "BUILDING_FARM_CROP_CABBAGE",
+     "BUILDING_FARM_CROP_CARROT",
+     "BUILDING_FARM_CROP_CASSAVA",
+     "BUILDING_FARM_CROP_CAULIFLOWER",
+     "BUILDING_FARM_CROP_CELERY",
+     "BUILDING_FARM_CROP_CUCUMBER",
+     "BUILDING_FARM_CROP_EGGPLANT",
+     "BUILDING_FARM_CROP_GARLIC",
+     "BUILDING_FARM_CROP_CALABASH",
+     "BUILDING_HYDROPONIC_VEGETABLE_GARDEN",
+     "BUILDING_FARM_CROP_KALE",
+     "BUILDING_FARM_CROP_LEEK",
+     "BUILDING_FARM_CROP_LETTUCE",
+     "BUILDING_FARM_CROP_ONION",
+     "BUILDING_FARM_CROP_POTATO",
+     "BUILDING_FARM_CROP_PUMPKIN",
+     "BUILDING_FARM_CROP_RADISH",
+     "BUILDING_FARM_CROP_TURNIP",
+     "BUILDING_FARM_CROP_SPINACH",
+     "BUILDING_FARM_CROP_SQUASH",
+     "BUILDING_FARM_CROP_SWEET_POTATO",
+     "BUILDING_PLANTATION_TARO",
+     "BUILDING_FARM_CROP_ZUCCHINI"
     ],
     [
      {
@@ -129,10 +51,7 @@
   },
   "operate": {
    "dormant": [
-    {
-     "type": "BUILDING_FARMSCRAPER_I",
-     "scope": "city"
-    }
+    "BUILDING_FARMSCRAPER_I"
    ]
   }
  },

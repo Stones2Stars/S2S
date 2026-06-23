@@ -19,22 +19,10 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_COURTHOUSE",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_JAIL",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_CRIMINOLOGY",
-     "scope": "team"
-    },
-    {
-     "type": "TECH_ELECTRICITY",
-     "scope": "team"
-    }
+    "BUILDING_COURTHOUSE",
+    "BUILDING_JAIL",
+    "TECH_CRIMINOLOGY",
+    "TECH_ELECTRICITY"
    ],
    "any": [
     [
@@ -47,10 +35,7 @@
   },
   "operate": {
    "dormant": [
-    {
-     "type": "BUILDING_LETHAL_INJECTION",
-     "scope": "city"
-    }
+    "BUILDING_LETHAL_INJECTION"
    ]
   }
  },

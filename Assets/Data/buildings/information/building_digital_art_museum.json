@@ -14,18 +14,9 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_ART_GALLERY",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_MUSEUM",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_DIGITIZATION",
-     "scope": "team"
-    }
+    "BUILDING_ART_GALLERY",
+    "BUILDING_MUSEUM",
+    "TECH_DIGITIZATION"
    ],
    "any": [
     [
@@ -45,10 +36,7 @@
     }
    ],
    "dormant": [
-    {
-     "type": "BUILDING_HIGH_TECH_CULTURAL_ENRICHMENT",
-     "scope": "city"
-    }
+    "BUILDING_HIGH_TECH_CULTURAL_ENRICHMENT"
    ]
   }
  },

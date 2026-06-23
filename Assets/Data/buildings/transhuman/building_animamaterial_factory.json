@@ -14,14 +14,8 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_GAMMA_ASSEMBLER",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_ANIMAMATERIALS",
-     "scope": "team"
-    }
+    "BUILDING_GAMMA_ASSEMBLER",
+    "TECH_ANIMAMATERIALS"
    ],
    "any": [
     [
@@ -34,10 +28,7 @@
   },
   "operate": {
    "dormant": [
-    {
-     "type": "BUILDING_PICOTECH_COMPLEX",
-     "scope": "city"
-    }
+    "BUILDING_PICOTECH_COMPLEX"
    ]
   }
  },

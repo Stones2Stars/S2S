@@ -21,33 +21,15 @@
      "scope": "city",
      "min": 7
     },
-    {
-     "type": "TECH_MOTORIZED_TRANSPORTATION",
-     "scope": "team"
-    },
-    {
-     "type": "TECH_CIVIL_ENGINEERING",
-     "scope": "team"
-    }
+    "TECH_MOTORIZED_TRANSPORTATION",
+    "TECH_CIVIL_ENGINEERING"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_LARGE_STEEL_ARCH_BRIDGE",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_SMALL_SUSPENSION_BRIDGE",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_LARGE_SUSPENSION_BRIDGE",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_TELEPORT_BOOTH",
-      "scope": "city"
-     }
+     "BUILDING_LARGE_STEEL_ARCH_BRIDGE",
+     "BUILDING_SMALL_SUSPENSION_BRIDGE",
+     "BUILDING_LARGE_SUSPENSION_BRIDGE",
+     "BUILDING_TELEPORT_BOOTH"
     ],
     [
      {

@@ -5,14 +5,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_TAOIST_MONASTERY",
-     "scope": "city"
-    },
-    {
-     "type": "RELIGION_TAOISM",
-     "scope": "city"
-    }
+    "BUILDING_TAOIST_MONASTERY",
+    "RELIGION_TAOISM"
    ]
   }
  },

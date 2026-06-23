@@ -11,14 +11,8 @@
      "scope": "city",
      "min": 13
     },
-    {
-     "type": "BUILDING_SKYSCRAPER",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_CONGLOMERATES",
-     "scope": "team"
-    }
+    "BUILDING_SKYSCRAPER",
+    "TECH_CONGLOMERATES"
    ],
    "any": [
     [

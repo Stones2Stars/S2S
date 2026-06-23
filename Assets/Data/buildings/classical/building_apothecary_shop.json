@@ -26,37 +26,16 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_ANCIENT_MEDICINE",
-     "scope": "team"
-    }
+    "TECH_ANCIENT_MEDICINE"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_STORAGE_PIT",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_GRANARY",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_MODERN_GRANARY",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_BARTER_POST",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_TRADING_POST",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_SHOPPING_DISTRICT",
-      "scope": "city"
-     }
+     "BUILDING_STORAGE_PIT",
+     "BUILDING_GRANARY",
+     "BUILDING_MODERN_GRANARY",
+     "BUILDING_BARTER_POST",
+     "BUILDING_TRADING_POST",
+     "BUILDING_SHOPPING_DISTRICT"
     ],
     [
      {
@@ -68,14 +47,8 @@
   },
   "operate": {
    "dormant": [
-    {
-     "type": "BUILDING_PHARMACY",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_HEALTHCARE_MEGACOMPLEX",
-     "scope": "city"
-    }
+    "BUILDING_PHARMACY",
+    "BUILDING_HEALTHCARE_MEGACOMPLEX"
    ]
   }
  },

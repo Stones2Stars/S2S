@@ -5,14 +5,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_MUSEUM",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_ASTROANTHROPOLOGY",
-     "scope": "team"
-    }
+    "BUILDING_MUSEUM",
+    "TECH_ASTROANTHROPOLOGY"
    ],
    "any": [
     [

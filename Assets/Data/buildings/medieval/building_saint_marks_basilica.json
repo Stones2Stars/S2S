@@ -6,14 +6,8 @@
   "build": {
    "all": [
     "HAS_COAST",
-    {
-     "type": "BUILDING_CHRISTIAN_CATHEDRAL",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_ARCHITECTURE",
-     "scope": "team"
-    },
+    "BUILDING_CHRISTIAN_CATHEDRAL",
+    "TECH_ARCHITECTURE",
     "STATE_RELIGION_IN_CITY",
     {
      "STATE_RELIGION": "RELIGION_CHRISTIANITY"
@@ -30,10 +24,7 @@
   },
   "operate": {
    "all": [
-    {
-     "type": "RELIGION_CHRISTIANITY",
-     "scope": "city"
-    }
+    "RELIGION_CHRISTIANITY"
    ]
   }
  },

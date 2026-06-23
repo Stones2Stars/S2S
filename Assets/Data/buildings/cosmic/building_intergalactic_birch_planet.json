@@ -11,14 +11,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_INTERGALACTIC_YOTTAFACTORY",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_DARK_ENERGY_HARVESTING",
-     "scope": "team"
-    }
+    "BUILDING_INTERGALACTIC_YOTTAFACTORY",
+    "TECH_DARK_ENERGY_HARVESTING"
    ],
    "any": [
     [

@@ -5,14 +5,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_INTERGALACTIC_SUPERCLUSTER_COLONY",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_INTERCLUSTER_TRAVEL",
-     "scope": "team"
-    }
+    "BUILDING_INTERGALACTIC_SUPERCLUSTER_COLONY",
+    "TECH_INTERCLUSTER_TRAVEL"
    ],
    "any": [
     [
@@ -29,18 +23,9 @@
     ]
    ],
    "noneOf": [
-    {
-     "type": "BUILDING_HYDRA_SUPERCLUSTER_COLONY",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_CENTAURUS_SUPERCLUSTER_COLONY",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_PERSEUS_PISCES_SUPERCLUSTER_COLONY",
-     "scope": "city"
-    }
+    "BUILDING_HYDRA_SUPERCLUSTER_COLONY",
+    "BUILDING_CENTAURUS_SUPERCLUSTER_COLONY",
+    "BUILDING_PERSEUS_PISCES_SUPERCLUSTER_COLONY"
    ]
   }
  },

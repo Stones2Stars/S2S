@@ -10,10 +10,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_ELECTROMAGNETIC_FIELD_SHIELDING",
-     "scope": "team"
-    }
+    "TECH_ELECTROMAGNETIC_FIELD_SHIELDING"
    ],
    "any": [
     [

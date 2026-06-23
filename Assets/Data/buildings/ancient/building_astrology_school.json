@@ -30,25 +30,13 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_ASTROLOGY",
-     "scope": "team"
-    }
+    "TECH_ASTROLOGY"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_BARTER_POST",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_TRADING_POST",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_SHOPPING_DISTRICT",
-      "scope": "city"
-     }
+     "BUILDING_BARTER_POST",
+     "BUILDING_TRADING_POST",
+     "BUILDING_SHOPPING_DISTRICT"
     ],
     [
      {
@@ -79,14 +67,8 @@
     ]
    ],
    "dormant": [
-    {
-     "type": "BUILDING_OBSERVATORY",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_POLLUTION_BLACKENED_SKIES",
-     "scope": "city"
-    }
+    "BUILDING_OBSERVATORY",
+    "BUILDING_POLLUTION_BLACKENED_SKIES"
    ]
   }
  },
@@ -96,10 +78,7 @@
     2,
     {
      "value": 3,
-     "enabled": {
-      "type": "TECH_GEOCENTRISM",
-      "scope": "team"
-     }
+     "enabled": "TECH_GEOCENTRISM"
     }
    ]
   }

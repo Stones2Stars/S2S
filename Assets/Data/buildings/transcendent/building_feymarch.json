@@ -5,14 +5,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_INTERGALACTIC_BIRCH_PLANET",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_METAVERSE",
-     "scope": "team"
-    }
+    "BUILDING_INTERGALACTIC_BIRCH_PLANET",
+    "TECH_METAVERSE"
    ],
    "any": [
     [

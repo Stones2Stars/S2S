@@ -5,25 +5,13 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_SMITHING",
-     "scope": "team"
-    }
+    "TECH_SMITHING"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_FORGE",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_FOUNDRY",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_METALS_MEGACOMPLEX",
-      "scope": "city"
-     }
+     "BUILDING_FORGE",
+     "BUILDING_FOUNDRY",
+     "BUILDING_METALS_MEGACOMPLEX"
     ],
     [
      {

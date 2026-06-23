@@ -26,10 +26,7 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "TECH_INTERSTELLAR_COLONIZATION",
-     "scope": "team"
-    }
+    "TECH_INTERSTELLAR_COLONIZATION"
    ],
    "any": [
     [

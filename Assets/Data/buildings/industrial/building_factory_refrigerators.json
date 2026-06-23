@@ -13,14 +13,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_FACTORY",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_REFRIGERATION",
-     "scope": "team"
-    }
+    "BUILDING_FACTORY",
+    "TECH_REFRIGERATION"
    ],
    "any": [
     [
@@ -49,10 +43,7 @@
     ]
    ],
    "dormant": [
-    {
-     "type": "BUILDING_ELECTRONICS_MANUFACTURING_DISTRICT",
-     "scope": "city"
-    }
+    "BUILDING_ELECTRONICS_MANUFACTURING_DISTRICT"
    ]
   }
  },

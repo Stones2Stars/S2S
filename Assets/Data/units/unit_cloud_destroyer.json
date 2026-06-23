@@ -10,14 +10,8 @@
      "scope": "city",
      "connection": "trade|vicinity"
     },
-    {
-     "type": "TECH_BALLOON_WARFARE",
-     "scope": "team"
-    },
-    {
-     "type": "TECH_STEAMPUNK",
-     "scope": "team"
-    }
+    "TECH_BALLOON_WARFARE",
+    "TECH_STEAMPUNK"
    ],
    "any": [
     [

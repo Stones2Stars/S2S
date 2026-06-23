@@ -5,10 +5,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_URBAN_CULTURE",
-     "scope": "team"
-    }
+    "TECH_URBAN_CULTURE"
    ],
    "any": [
     [

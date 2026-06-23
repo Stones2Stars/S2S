@@ -10,14 +10,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_VENUS_CO2_REMOVAL",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_ASTROECOLOGY",
-     "scope": "team"
-    }
+    "BUILDING_VENUS_CO2_REMOVAL",
+    "TECH_ASTROECOLOGY"
    ],
    "any": [
     [

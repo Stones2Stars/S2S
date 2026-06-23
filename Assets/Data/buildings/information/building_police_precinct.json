@@ -52,10 +52,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_FORENSICS",
-     "scope": "team"
-    },
+    "TECH_FORENSICS",
     {
      "type": "BONUS_AUTOMOBILES",
      "scope": "city",

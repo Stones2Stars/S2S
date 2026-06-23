@@ -14,21 +14,12 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "TECH_LEGALIZED_GAMBLING",
-     "scope": "team"
-    }
+    "TECH_LEGALIZED_GAMBLING"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_VIDEO_GAME_ARCADE",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_CASINO",
-      "scope": "city"
-     }
+     "BUILDING_VIDEO_GAME_ARCADE",
+     "BUILDING_CASINO"
     ],
     [
      {
@@ -40,10 +31,7 @@
   },
   "operate": {
    "dormant": [
-    {
-     "type": "BUILDING_HIGH_TECH_CULTURAL_ENRICHMENT",
-     "scope": "city"
-    }
+    "BUILDING_HIGH_TECH_CULTURAL_ENRICHMENT"
    ]
   }
  },

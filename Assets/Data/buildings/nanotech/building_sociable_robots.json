@@ -19,14 +19,8 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_INTUITIVE_ALGORITHMS",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_CYBERSOCIAL_INTEGRATION",
-     "scope": "team"
-    }
+    "BUILDING_INTUITIVE_ALGORITHMS",
+    "TECH_CYBERSOCIAL_INTEGRATION"
    ],
    "any": [
     [
@@ -46,10 +40,7 @@
     }
    ],
    "dormant": [
-    {
-     "type": "BUILDING_HIGH_TECH_CULTURAL_ENRICHMENT",
-     "scope": "city"
-    }
+    "BUILDING_HIGH_TECH_CULTURAL_ENRICHMENT"
    ]
   }
  },
@@ -59,10 +50,7 @@
     10,
     {
      "value": 10,
-     "enabled": {
-      "type": "TECH_SAPIENTROIDS",
-      "scope": "team"
-     }
+     "enabled": "TECH_SAPIENTROIDS"
     }
    ]
   }

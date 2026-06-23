@@ -19,10 +19,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_SHELTER_BUILDING",
-     "scope": "team"
-    }
+    "TECH_SHELTER_BUILDING"
    ],
    "any": [
     [
@@ -35,10 +32,7 @@
   },
   "operate": {
    "dormant": [
-    {
-     "type": "BUILDING_ANCIENT_CUSTOMS",
-     "scope": "city"
-    }
+    "BUILDING_ANCIENT_CUSTOMS"
    ]
   }
  },

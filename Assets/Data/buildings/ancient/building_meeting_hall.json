@@ -10,10 +10,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_MONARCHY",
-     "scope": "team"
-    }
+    "TECH_MONARCHY"
    ],
    "any": [
     [

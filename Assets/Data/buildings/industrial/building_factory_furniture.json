@@ -14,14 +14,8 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_FACTORY",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_ASSEMBLY_LINE",
-     "scope": "team"
-    }
+    "BUILDING_FACTORY",
+    "TECH_ASSEMBLY_LINE"
    ],
    "any": [
     [
@@ -63,10 +57,7 @@
     ]
    ],
    "dormant": [
-    {
-     "type": "BUILDING_MANUFACTURING_DISTRICT",
-     "scope": "city"
-    }
+    "BUILDING_MANUFACTURING_DISTRICT"
    ]
   }
  },
@@ -76,31 +67,19 @@
     6,
     {
      "value": 7,
-     "enabled": {
-      "type": "TECH_PLASTICS",
-      "scope": "team"
-     }
+     "enabled": "TECH_PLASTICS"
     },
     {
      "value": 7,
-     "enabled": {
-      "type": "TECH_3D_MODELLING",
-      "scope": "team"
-     }
+     "enabled": "TECH_3D_MODELLING"
     },
     {
      "value": 7,
-     "enabled": {
-      "type": "TECH_GLOBALIZATION",
-      "scope": "team"
-     }
+     "enabled": "TECH_GLOBALIZATION"
     },
     {
      "value": 8,
-     "enabled": {
-      "type": "TECH_RAPID_PROTOTYPING",
-      "scope": "team"
-     }
+     "enabled": "TECH_RAPID_PROTOTYPING"
     },
     {
      "value": 1,

@@ -13,10 +13,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_BARBED_WIRE",
-     "scope": "team"
-    }
+    "TECH_BARBED_WIRE"
    ],
    "any": [
     [
@@ -36,22 +33,10 @@
     }
    ],
    "dormant": [
-    {
-     "type": "BUILDING_ELECTRIC_FENCE",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_WIRELESS_ELECTRIC_FENCE",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_ARCOLOGY_SHIELDING",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_ADVANCED_SHIELDING",
-     "scope": "city"
-    }
+    "BUILDING_ELECTRIC_FENCE",
+    "BUILDING_WIRELESS_ELECTRIC_FENCE",
+    "BUILDING_ARCOLOGY_SHIELDING",
+    "BUILDING_ADVANCED_SHIELDING"
    ]
   }
  },

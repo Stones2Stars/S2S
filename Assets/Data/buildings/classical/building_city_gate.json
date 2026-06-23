@@ -13,14 +13,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_CITY_GATEHOUSE",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_MACHINERY",
-     "scope": "team"
-    }
+    "BUILDING_CITY_GATEHOUSE",
+    "TECH_MACHINERY"
    ],
    "any": [
     [
@@ -40,10 +34,7 @@
     }
    ],
    "dormant": [
-    {
-     "type": "BUILDING_IMPERIAL_FORTRESS",
-     "scope": "city"
-    }
+    "BUILDING_IMPERIAL_FORTRESS"
    ]
   }
  },

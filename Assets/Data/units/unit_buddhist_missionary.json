@@ -5,14 +5,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_BUDDHIST_MONASTERY",
-     "scope": "city"
-    },
-    {
-     "type": "RELIGION_BUDDHISM",
-     "scope": "city"
-    }
+    "BUILDING_BUDDHIST_MONASTERY",
+    "RELIGION_BUDDHISM"
    ]
   }
  },

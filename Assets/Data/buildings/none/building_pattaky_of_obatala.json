@@ -10,10 +10,7 @@
      "scope": "empire",
      "min": 1
     },
-    {
-     "type": "TECH_PRIESTHOOD",
-     "scope": "team"
-    },
+    "TECH_PRIESTHOOD",
     "STATE_RELIGION_IN_CITY",
     {
      "STATE_RELIGION": "RELIGION_YORUBA"
@@ -30,10 +27,7 @@
   },
   "operate": {
    "all": [
-    {
-     "type": "RELIGION_YORUBA",
-     "scope": "city"
-    }
+    "RELIGION_YORUBA"
    ]
   }
  },

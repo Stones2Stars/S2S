@@ -10,10 +10,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_ASTROANTHROPOLOGY",
-     "scope": "team"
-    }
+    "TECH_ASTROANTHROPOLOGY"
    ],
    "any": [
     [

@@ -13,61 +13,22 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_GRAMMATICUS",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_PHILOSOPHY",
-     "scope": "team"
-    }
+    "BUILDING_GRAMMATICUS",
+    "TECH_PHILOSOPHY"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_PALACE",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_HOUSING_VILLAS",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_HOUSING_PALACES",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_HOUSING_MANORS",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_HOUSING_ESTATES",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_HOUSING_MANSIONS",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_HOUSING_CONDOMINIUMS",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_HOUSING_CHATEAU",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_HOUSING_HIGH_TECH_CONDOMINIUMS",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_HOUSING_COLONY_ARCOLOGY",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_LAUNCH_ARCOLOGY",
-      "scope": "city"
-     }
+     "BUILDING_PALACE",
+     "BUILDING_HOUSING_VILLAS",
+     "BUILDING_HOUSING_PALACES",
+     "BUILDING_HOUSING_MANORS",
+     "BUILDING_HOUSING_ESTATES",
+     "BUILDING_HOUSING_MANSIONS",
+     "BUILDING_HOUSING_CONDOMINIUMS",
+     "BUILDING_HOUSING_CHATEAU",
+     "BUILDING_HOUSING_HIGH_TECH_CONDOMINIUMS",
+     "BUILDING_HOUSING_COLONY_ARCOLOGY",
+     "BUILDING_LAUNCH_ARCOLOGY"
     ],
     [
      {
@@ -86,14 +47,8 @@
     }
    ],
    "dormant": [
-    {
-     "type": "BUILDING_ELEMENTARY_SCHOOL",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_HOLOGRAPHIC_SCHOOL",
-     "scope": "city"
-    }
+    "BUILDING_ELEMENTARY_SCHOOL",
+    "BUILDING_HOLOGRAPHIC_SCHOOL"
    ]
   }
  },

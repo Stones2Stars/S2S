@@ -19,18 +19,9 @@
      "scope": "city",
      "min": 7
     },
-    {
-     "type": "BUILDING_DEPARTMENT_OF_MOTOR_VEHICLES",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_COURTHOUSE",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_ECOLOGY",
-     "scope": "team"
-    }
+    "BUILDING_DEPARTMENT_OF_MOTOR_VEHICLES",
+    "BUILDING_COURTHOUSE",
+    "TECH_ECOLOGY"
    ],
    "any": [
     [
@@ -43,10 +34,7 @@
   },
   "operate": {
    "dormant": [
-    {
-     "type": "BUILDING_TELEPORT_BOOTH",
-     "scope": "city"
-    }
+    "BUILDING_TELEPORT_BOOTH"
    ]
   }
  },

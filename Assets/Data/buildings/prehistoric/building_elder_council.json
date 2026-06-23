@@ -13,14 +13,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_KNOWLEDGE_INHERITANCE",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_CULTURAL_IDENTITY",
-     "scope": "team"
-    }
+    "BUILDING_KNOWLEDGE_INHERITANCE",
+    "TECH_CULTURAL_IDENTITY"
    ],
    "any": [
     [
@@ -33,18 +27,9 @@
   },
   "operate": {
    "dormant": [
-    {
-     "type": "BUILDING_LYCEUM",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_ELEMENTARY_SCHOOL",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_HOLOGRAPHIC_SCHOOL",
-     "scope": "city"
-    }
+    "BUILDING_LYCEUM",
+    "BUILDING_ELEMENTARY_SCHOOL",
+    "BUILDING_HOLOGRAPHIC_SCHOOL"
    ]
   }
  },
@@ -54,10 +39,7 @@
     2,
     {
      "value": 2,
-     "enabled": {
-      "type": "TECH_PRIESTHOOD",
-      "scope": "team"
-     }
+     "enabled": "TECH_PRIESTHOOD"
     }
    ],
    "percent": 1

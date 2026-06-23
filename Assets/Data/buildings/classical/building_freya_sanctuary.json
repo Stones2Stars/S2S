@@ -5,10 +5,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_SHIP_BUILDING",
-     "scope": "team"
-    },
+    "TECH_SHIP_BUILDING",
     "STATE_RELIGION_IN_CITY",
     {
      "STATE_RELIGION": "RELIGION_ASATRU"
@@ -25,10 +22,7 @@
   },
   "operate": {
    "all": [
-    {
-     "type": "RELIGION_ASATRU",
-     "scope": "city"
-    }
+    "RELIGION_ASATRU"
    ],
    "any": [
     [

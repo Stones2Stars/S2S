@@ -5,18 +5,9 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_TEMPLE_OF_AN",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_POLYTHEISM",
-     "scope": "team"
-    },
-    {
-     "type": "TECH_PRIESTHOOD",
-     "scope": "team"
-    },
+    "BUILDING_TEMPLE_OF_AN",
+    "TECH_POLYTHEISM",
+    "TECH_PRIESTHOOD",
     {
      "STATE_RELIGION": "RELIGION_MESOPOTAMISM"
     }
@@ -32,10 +23,7 @@
   },
   "operate": {
    "all": [
-    {
-     "type": "RELIGION_MESOPOTAMISM",
-     "scope": "city"
-    }
+    "RELIGION_MESOPOTAMISM"
    ]
   }
  },

@@ -11,14 +11,8 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_STRINGWORKS",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_BRANE_CROSSOVER",
-     "scope": "team"
-    }
+    "BUILDING_STRINGWORKS",
+    "TECH_BRANE_CROSSOVER"
    ],
    "any": [
     [

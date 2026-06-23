@@ -5,14 +5,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_HQ_ADVENTURE_TOURS",
-     "scope": "city"
-    },
-    {
-     "type": "CORPORATION_ADVENTURE",
-     "scope": "city"
-    }
+    "BUILDING_HQ_ADVENTURE_TOURS",
+    "CORPORATION_ADVENTURE"
    ]
   }
  },

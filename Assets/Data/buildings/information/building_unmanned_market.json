@@ -10,25 +10,13 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_AUTONOMOUS_VEHICLES",
-     "scope": "team"
-    }
+    "TECH_AUTONOMOUS_VEHICLES"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_SUPERMARKET",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_HYPERMARKET",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_MALL",
-      "scope": "city"
-     }
+     "BUILDING_SUPERMARKET",
+     "BUILDING_HYPERMARKET",
+     "BUILDING_MALL"
     ],
     [
      {

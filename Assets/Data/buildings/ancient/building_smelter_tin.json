@@ -18,21 +18,12 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_BRONZE_WORKING",
-     "scope": "team"
-    }
+    "TECH_BRONZE_WORKING"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_CORE_MINE",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_MINE_TIN",
-      "scope": "city"
-     }
+     "BUILDING_CORE_MINE",
+     "BUILDING_MINE_TIN"
     ],
     [
      {
@@ -51,10 +42,7 @@
     }
    ],
    "dormant": [
-    {
-     "type": "BUILDING_METALS_MEGACOMPLEX",
-     "scope": "city"
-    }
+    "BUILDING_METALS_MEGACOMPLEX"
    ]
   }
  },

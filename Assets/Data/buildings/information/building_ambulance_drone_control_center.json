@@ -14,18 +14,9 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_CONTROL_CENTER",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_MEDICAL_CLINIC",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_DISASTER_ROBOTS",
-     "scope": "team"
-    }
+    "BUILDING_CONTROL_CENTER",
+    "BUILDING_MEDICAL_CLINIC",
+    "TECH_DISASTER_ROBOTS"
    ],
    "any": [
     [
@@ -45,10 +36,7 @@
     }
    ],
    "dormant": [
-    {
-     "type": "BUILDING_HEALTHCARE_MEGACOMPLEX",
-     "scope": "city"
-    }
+    "BUILDING_HEALTHCARE_MEGACOMPLEX"
    ]
   }
  },

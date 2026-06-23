@@ -5,10 +5,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_PLOUGH",
-     "scope": "team"
-    }
+    "TECH_PLOUGH"
    ],
    "any": [
     [
@@ -24,14 +21,8 @@
      }
     ],
     [
-     {
-      "type": "BUILDING_ANIMAL_TRAINER_DONKEY",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_ANIMAL_TRAINER_HORSE",
-      "scope": "city"
-     }
+     "BUILDING_ANIMAL_TRAINER_DONKEY",
+     "BUILDING_ANIMAL_TRAINER_HORSE"
     ]
    ]
   }

@@ -19,14 +19,8 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_RECYCLING_CENTER",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_RECYCLING",
-     "scope": "team"
-    }
+    "BUILDING_RECYCLING_CENTER",
+    "TECH_RECYCLING"
    ],
    "any": [
     [
@@ -88,10 +82,7 @@
     ]
    ],
    "dormant": [
-    {
-     "type": "BUILDING_METALS_MEGACOMPLEX",
-     "scope": "city"
-    }
+    "BUILDING_METALS_MEGACOMPLEX"
    ]
   }
  },

@@ -5,25 +5,13 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_MEGASTRUCTURE_ENGINEERING",
-     "scope": "team"
-    }
+    "TECH_MEGASTRUCTURE_ENGINEERING"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_ARCOLOGY",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_HOUSING_COLONY_ARCOLOGY",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_LAUNCH_ARCOLOGY",
-      "scope": "city"
-     }
+     "BUILDING_ARCOLOGY",
+     "BUILDING_HOUSING_COLONY_ARCOLOGY",
+     "BUILDING_LAUNCH_ARCOLOGY"
     ],
     [
      {

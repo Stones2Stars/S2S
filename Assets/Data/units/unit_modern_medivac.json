@@ -10,18 +10,9 @@
      "scope": "city",
      "connection": "trade|vicinity"
     },
-    {
-     "type": "TECH_MODERN_WARFARE",
-     "scope": "team"
-    },
-    {
-     "type": "TECH_VERTICAL_FLIGHT",
-     "scope": "team"
-    },
-    {
-     "type": "TECH_MODERN_HEALTH_CARE",
-     "scope": "team"
-    },
+    "TECH_MODERN_WARFARE",
+    "TECH_VERTICAL_FLIGHT",
+    "TECH_MODERN_HEALTH_CARE",
     {
      "type": "BONUS_PETROLEUM_PRODUCTS",
      "scope": "city",
@@ -37,14 +28,8 @@
      }
     ],
     [
-     {
-      "type": "BUILDING_MEDICAL_CLINIC",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_HEALTHCARE_MEGACOMPLEX",
-      "scope": "city"
-     }
+     "BUILDING_MEDICAL_CLINIC",
+     "BUILDING_HEALTHCARE_MEGACOMPLEX"
     ]
    ]
   }

@@ -13,14 +13,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_SPACE_COLONY_HYPERSPACE_PORTAL",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_CONTROLLED_INFLATION",
-     "scope": "team"
-    }
+    "BUILDING_SPACE_COLONY_HYPERSPACE_PORTAL",
+    "TECH_CONTROLLED_INFLATION"
    ],
    "any": [
     [
@@ -36,10 +30,7 @@
   "city": {
    "flat": {
     "value": 13,
-    "enabled": {
-     "type": "TECH_SUBDIMENSIONAL_UNIVERSE",
-     "scope": "team"
-    }
+    "enabled": "TECH_SUBDIMENSIONAL_UNIVERSE"
    }
   }
  },

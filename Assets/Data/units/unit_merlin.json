@@ -10,10 +10,7 @@
      "scope": "city",
      "connection": "trade|vicinity"
     },
-    {
-     "type": "TECH_CALENDAR",
-     "scope": "team"
-    }
+    "TECH_CALENDAR"
    ]
   }
  },

@@ -19,10 +19,7 @@
   "build": {
    "all": [
     "HAS_RIVER",
-    {
-     "type": "TECH_CANAL_SYSTEMS",
-     "scope": "team"
-    }
+    "TECH_CANAL_SYSTEMS"
    ],
    "any": [
     [
@@ -41,10 +38,7 @@
   },
   "operate": {
    "dormant": [
-    {
-     "type": "BUILDING_FARMSCRAPER_I",
-     "scope": "city"
-    }
+    "BUILDING_FARMSCRAPER_I"
    ]
   }
  },

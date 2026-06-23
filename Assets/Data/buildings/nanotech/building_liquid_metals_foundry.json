@@ -19,14 +19,8 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_BIOINFORMATICS_LAB",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_LIQUID_METALS",
-     "scope": "team"
-    },
+    "BUILDING_BIOINFORMATICS_LAB",
+    "TECH_LIQUID_METALS",
     {
      "type": "BONUS_METAMATERIALS",
      "scope": "city",
@@ -40,14 +34,8 @@
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_FOUNDRY",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_METALS_MEGACOMPLEX",
-      "scope": "city"
-     }
+     "BUILDING_FOUNDRY",
+     "BUILDING_METALS_MEGACOMPLEX"
     ],
     [
      {
@@ -66,10 +54,7 @@
     }
    ],
    "dormant": [
-    {
-     "type": "BUILDING_PICOTECH_COMPLEX",
-     "scope": "city"
-    }
+    "BUILDING_PICOTECH_COMPLEX"
    ]
   }
  },
@@ -84,31 +69,19 @@
     3,
     {
      "value": 9,
-     "enabled": {
-      "type": "TECH_INTERNAL_SHOCKWAVE_ENGINE",
-      "scope": "team"
-     }
+     "enabled": "TECH_INTERNAL_SHOCKWAVE_ENGINE"
     },
     {
      "value": 9,
-     "enabled": {
-      "type": "TECH_PLASTIC_ELECTRONICS",
-      "scope": "team"
-     }
+     "enabled": "TECH_PLASTIC_ELECTRONICS"
     },
     {
      "value": 9,
-     "enabled": {
-      "type": "TECH_NOVUS_CHEMISTRY",
-      "scope": "team"
-     }
+     "enabled": "TECH_NOVUS_CHEMISTRY"
     },
     {
      "value": 9,
-     "enabled": {
-      "type": "TECH_SUPERSTRONG_ALLOYS",
-      "scope": "team"
-     }
+     "enabled": "TECH_SUPERSTRONG_ALLOYS"
     }
    ]
   }

@@ -6,14 +6,8 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_MEGATOWER_POLICE_STATION_LEVEL",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_SIMULATED_REALITY",
-     "scope": "team"
-    }
+    "BUILDING_MEGATOWER_POLICE_STATION_LEVEL",
+    "TECH_SIMULATED_REALITY"
    ],
    "any": [
     [

@@ -5,14 +5,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_RANGER_STATION",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_ECOLOGY",
-     "scope": "team"
-    }
+    "BUILDING_RANGER_STATION",
+    "TECH_ECOLOGY"
    ],
    "any": [
     [
@@ -29,10 +23,7 @@
    "flat": [
     {
      "value": 1,
-     "enabled": {
-      "type": "TECH_ECOLOGICAL_ENGINEERING",
-      "scope": "team"
-     }
+     "enabled": "TECH_ECOLOGICAL_ENGINEERING"
     }
    ]
   }

@@ -6,14 +6,8 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_TV_STUDIO",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_TELEVISION",
-     "scope": "team"
-    }
+    "BUILDING_TV_STUDIO",
+    "TECH_TELEVISION"
    ],
    "any": [
     [
@@ -27,26 +21,11 @@
   "operate": {
    "any": [
     [
-     {
-      "type": "CIVIC_DIVINE_CULT",
-      "scope": "empire"
-     },
-     {
-      "type": "CIVIC_STATE_CHURCH",
-      "scope": "empire"
-     },
-     {
-      "type": "CIVIC_FREE_CHURCH",
-      "scope": "empire"
-     },
-     {
-      "type": "CIVIC_INQUISITORIAL",
-      "scope": "empire"
-     },
-     {
-      "type": "CIVIC_SECULARISM",
-      "scope": "empire"
-     }
+     "CIVIC_DIVINE_CULT",
+     "CIVIC_STATE_CHURCH",
+     "CIVIC_FREE_CHURCH",
+     "CIVIC_INQUISITORIAL",
+     "CIVIC_SECULARISM"
     ]
    ]
   }

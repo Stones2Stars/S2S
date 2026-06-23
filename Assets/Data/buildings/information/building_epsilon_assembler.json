@@ -21,22 +21,10 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_MANUFACTURING_PLANT",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_MECHATRONICS_LAB",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_GESTURE_RECOGNITION_SOFTWARE",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_BIOMECHANICAL_HARVESTING",
-     "scope": "team"
-    }
+    "BUILDING_MANUFACTURING_PLANT",
+    "BUILDING_MECHATRONICS_LAB",
+    "BUILDING_GESTURE_RECOGNITION_SOFTWARE",
+    "TECH_BIOMECHANICAL_HARVESTING"
    ],
    "any": [
     [

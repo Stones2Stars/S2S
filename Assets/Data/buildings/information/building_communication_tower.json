@@ -25,10 +25,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_COMMUNICATION_NETWORKS",
-     "scope": "team"
-    }
+    "TECH_COMMUNICATION_NETWORKS"
    ],
    "any": [
     [
@@ -62,10 +59,7 @@
     ]
    ],
    "dormant": [
-    {
-     "type": "BUILDING_NETWORK_NODE",
-     "scope": "city"
-    }
+    "BUILDING_NETWORK_NODE"
    ]
   }
  },

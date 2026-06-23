@@ -6,14 +6,8 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_GALACTIC_CANTINA",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_SPECIES_AMALGAMATION",
-     "scope": "team"
-    },
+    "BUILDING_GALACTIC_CANTINA",
+    "TECH_SPECIES_AMALGAMATION",
     {
      "type": "BONUS_HUMAN_MOD_WINGS",
      "scope": "city",

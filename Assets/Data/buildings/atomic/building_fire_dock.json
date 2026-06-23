@@ -6,18 +6,9 @@
   "build": {
    "all": [
     "HAS_COAST",
-    {
-     "type": "BUILDING_FIRE_STATION",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_HARBORMASTERS_OFFICE",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_FIRE_SUPPRESSION",
-     "scope": "team"
-    }
+    "BUILDING_FIRE_STATION",
+    "BUILDING_HARBORMASTERS_OFFICE",
+    "TECH_FIRE_SUPPRESSION"
    ],
    "any": [
     [

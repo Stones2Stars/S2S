@@ -11,10 +11,7 @@
      "scope": "city",
      "min": 3
     },
-    {
-     "type": "TECH_SCULPTURE",
-     "scope": "team"
-    }
+    "TECH_SCULPTURE"
    ],
    "any": [
     [

@@ -14,62 +14,20 @@
   "build": {
    "any": [
     [
-     {
-      "type": "BUILDING_DIG_SITE_AMMONITE_FOSSILS",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_DIG_SITE_ARCHAEOPTERYX_FOSSILS",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_DIG_SITE_DIMETRODON_FOSSILS",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_DIG_SITE_ICHTHYOSTEGA_FOSSILS",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_DIG_SITE_MAMMOTH_FOSSILS",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_DIG_SITE_NEANDERTHAL_FOSSILS",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_DIG_SITE_PETRIFIED_WOOD",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_DIG_SITE_PLESIOSAUR_FOSSILS",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_DIG_SITE_PTERODACTYL_FOSSILS",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_DIG_SITE_SHARK_TEETH",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_DIG_SITE_SMILODON_FOSSILS",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_DIG_SITE_TRICERATOPS_FOSSILS",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_DIG_SITE_TRILOBITE_FOSSILS",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_DIG_SITE_VELOCIRAPTOR_FOSSILS",
-      "scope": "city"
-     }
+     "BUILDING_DIG_SITE_AMMONITE_FOSSILS",
+     "BUILDING_DIG_SITE_ARCHAEOPTERYX_FOSSILS",
+     "BUILDING_DIG_SITE_DIMETRODON_FOSSILS",
+     "BUILDING_DIG_SITE_ICHTHYOSTEGA_FOSSILS",
+     "BUILDING_DIG_SITE_MAMMOTH_FOSSILS",
+     "BUILDING_DIG_SITE_NEANDERTHAL_FOSSILS",
+     "BUILDING_DIG_SITE_PETRIFIED_WOOD",
+     "BUILDING_DIG_SITE_PLESIOSAUR_FOSSILS",
+     "BUILDING_DIG_SITE_PTERODACTYL_FOSSILS",
+     "BUILDING_DIG_SITE_SHARK_TEETH",
+     "BUILDING_DIG_SITE_SMILODON_FOSSILS",
+     "BUILDING_DIG_SITE_TRICERATOPS_FOSSILS",
+     "BUILDING_DIG_SITE_TRILOBITE_FOSSILS",
+     "BUILDING_DIG_SITE_VELOCIRAPTOR_FOSSILS"
     ],
     [
      {
@@ -81,10 +39,7 @@
   },
   "operate": {
    "dormant": [
-    {
-     "type": "BUILDING_MODERN_EARTHWORKS",
-     "scope": "city"
-    }
+    "BUILDING_MODERN_EARTHWORKS"
    ]
   }
  },

@@ -6,14 +6,8 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_SPACESCRAPER",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_ATOMIC_SCALE_ENGINEERING",
-     "scope": "team"
-    }
+    "BUILDING_SPACESCRAPER",
+    "TECH_ATOMIC_SCALE_ENGINEERING"
    ],
    "any": [
     [

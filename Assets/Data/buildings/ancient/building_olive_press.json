@@ -13,14 +13,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_ORCHARD_OLIVE",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_FERMENTATION",
-     "scope": "team"
-    }
+    "BUILDING_ORCHARD_OLIVE",
+    "TECH_FERMENTATION"
    ],
    "any": [
     [
@@ -54,10 +48,7 @@
     ]
    ],
    "dormant": [
-    {
-     "type": "BUILDING_AGROFOREST",
-     "scope": "city"
-    }
+    "BUILDING_AGROFOREST"
    ]
   }
  },

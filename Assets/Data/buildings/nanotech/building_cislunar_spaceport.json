@@ -17,10 +17,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_LUNAR_TRADE",
-     "scope": "team"
-    }
+    "TECH_LUNAR_TRADE"
    ],
    "any": [
     [
@@ -38,10 +35,7 @@
     20,
     {
      "value": 10,
-     "enabled": {
-      "type": "TECH_ASTROGATION_CONSTELLATION",
-      "scope": "team"
-     }
+     "enabled": "TECH_ASTROGATION_CONSTELLATION"
     }
    ]
   }

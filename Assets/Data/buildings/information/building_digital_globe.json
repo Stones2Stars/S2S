@@ -19,33 +19,15 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_MODERN_CARTOGRAPHER",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_COMPUTER_NETWORK",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_COMMUNICATIONS_SATELLITE",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_VIRTUAL_REALITY",
-     "scope": "team"
-    }
+    "BUILDING_MODERN_CARTOGRAPHER",
+    "BUILDING_COMPUTER_NETWORK",
+    "BUILDING_COMMUNICATIONS_SATELLITE",
+    "TECH_VIRTUAL_REALITY"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_DESIGN_STUDIO",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_ELECTRONICS_MANUFACTURING_DISTRICT",
-      "scope": "city"
-     }
+     "BUILDING_DESIGN_STUDIO",
+     "BUILDING_ELECTRONICS_MANUFACTURING_DISTRICT"
     ],
     [
      {
@@ -64,10 +46,7 @@
     }
    ],
    "dormant": [
-    {
-     "type": "BUILDING_HIGH_TECH_CULTURAL_ENRICHMENT",
-     "scope": "city"
-    }
+    "BUILDING_HIGH_TECH_CULTURAL_ENRICHMENT"
    ]
   }
  },
@@ -82,10 +61,7 @@
     5,
     {
      "value": 8,
-     "enabled": {
-      "type": "TECH_AUGMENTED_REALITY",
-      "scope": "team"
-     }
+     "enabled": "TECH_AUGMENTED_REALITY"
     }
    ]
   }

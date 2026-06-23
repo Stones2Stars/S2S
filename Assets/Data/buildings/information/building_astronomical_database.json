@@ -10,18 +10,9 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_UNIVERSITY",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_PLANETARIUM",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_EXOPLANET_DISCOVERY",
-     "scope": "team"
-    }
+    "BUILDING_UNIVERSITY",
+    "BUILDING_PLANETARIUM",
+    "TECH_EXOPLANET_DISCOVERY"
    ],
    "any": [
     [
@@ -34,10 +25,7 @@
   },
   "operate": {
    "dormant": [
-    {
-     "type": "BUILDING_POLLUTION_BLACKENED_SKIES",
-     "scope": "city"
-    }
+    "BUILDING_POLLUTION_BLACKENED_SKIES"
    ]
   }
  },

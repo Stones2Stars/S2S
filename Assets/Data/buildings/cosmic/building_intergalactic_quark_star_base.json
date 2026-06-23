@@ -10,14 +10,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_INTERGALACTIC_STARPORT",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_EXOTIC_STARS",
-     "scope": "team"
-    }
+    "BUILDING_INTERGALACTIC_STARPORT",
+    "TECH_EXOTIC_STARS"
    ],
    "any": [
     [

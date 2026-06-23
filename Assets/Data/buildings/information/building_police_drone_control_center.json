@@ -14,18 +14,9 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_CONTROL_CENTER",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_POLICE_PRECINCT",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_DISASTER_ROBOTS",
-     "scope": "team"
-    }
+    "BUILDING_CONTROL_CENTER",
+    "BUILDING_POLICE_PRECINCT",
+    "TECH_DISASTER_ROBOTS"
    ],
    "any": [
     [
@@ -45,10 +36,7 @@
     }
    ],
    "dormant": [
-    {
-     "type": "BUILDING_AI_POLICE_FORCE",
-     "scope": "city"
-    }
+    "BUILDING_AI_POLICE_FORCE"
    ]
   }
  },

@@ -6,14 +6,8 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_NATURAL_LANGUAGE_ALGORITHMS",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_ONTOLOGICAL_ENGINEERING",
-     "scope": "team"
-    }
+    "BUILDING_NATURAL_LANGUAGE_ALGORITHMS",
+    "TECH_ONTOLOGICAL_ENGINEERING"
    ],
    "any": [
     [

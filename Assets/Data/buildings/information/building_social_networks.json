@@ -23,14 +23,8 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_ENCRYPTED_FIREWALL",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_ONLINE_COMMUNITY",
-     "scope": "team"
-    }
+    "BUILDING_ENCRYPTED_FIREWALL",
+    "TECH_ONLINE_COMMUNITY"
    ],
    "any": [
     [
@@ -50,14 +44,8 @@
     }
    ],
    "dormant": [
-    {
-     "type": "BUILDING_HOLOGRAPHIC_NETWORKS",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_EXOCORTEX_NETWORKS",
-     "scope": "city"
-    }
+    "BUILDING_HOLOGRAPHIC_NETWORKS",
+    "BUILDING_EXOCORTEX_NETWORKS"
    ]
   }
  },

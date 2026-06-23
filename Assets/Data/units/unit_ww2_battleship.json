@@ -15,10 +15,7 @@
      "scope": "world",
      "min": 10
     },
-    {
-     "type": "TECH_MECHANIZED_WARFARE",
-     "scope": "team"
-    }
+    "TECH_MECHANIZED_WARFARE"
    ],
    "any": [
     [

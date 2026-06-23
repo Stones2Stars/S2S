@@ -15,14 +15,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_STARPORT",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_SPACE_CREASING",
-     "scope": "team"
-    }
+    "BUILDING_STARPORT",
+    "TECH_SPACE_CREASING"
    ],
    "any": [
     [
@@ -45,52 +39,31 @@
     10,
     {
      "value": 12,
-     "enabled": {
-      "type": "TECH_INTERGALACTIC_COLONIZATION",
-      "scope": "team"
-     }
+     "enabled": "TECH_INTERGALACTIC_COLONIZATION"
     },
     {
      "value": 13,
-     "enabled": {
-      "type": "TECH_ENDOGENOUS_EUCLIDEAN_PROPULSION",
-      "scope": "team"
-     }
+     "enabled": "TECH_ENDOGENOUS_EUCLIDEAN_PROPULSION"
     },
     {
      "value": 13,
-     "enabled": {
-      "type": "TECH_INTERGROUP_TRAVEL",
-      "scope": "team"
-     }
+     "enabled": "TECH_INTERGROUP_TRAVEL"
     },
     {
      "value": 12,
-     "enabled": {
-      "type": "TECH_INTERCLUSTER_TRAVEL",
-      "scope": "team"
-     }
+     "enabled": "TECH_INTERCLUSTER_TRAVEL"
     },
     {
      "value": 12,
-     "enabled": {
-      "type": "TECH_QUANTUM_RAMJET",
-      "scope": "team"
-     }
+     "enabled": "TECH_QUANTUM_RAMJET"
     },
     {
      "value": 13,
-     "enabled": {
-      "type": "TECH_HORIZON_BREAKING",
-      "scope": "team"
-     }
+     "enabled": "TECH_HORIZON_BREAKING"
     },
     {
      "value": 12,
-     "enabled": {
-      "type": "TECH_REACTIONLESS_DRIVE",
-      "scope": "team"
-     }
+     "enabled": "TECH_REACTIONLESS_DRIVE"
     },
     {
      "value": 1,

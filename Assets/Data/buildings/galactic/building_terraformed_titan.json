@@ -5,18 +5,9 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_TITAN_SF6_GENERATOR",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_TITAN_ECOSYSTEM",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_LUNAR_TERRAFORMING",
-     "scope": "team"
-    }
+    "BUILDING_TITAN_SF6_GENERATOR",
+    "BUILDING_TITAN_ECOSYSTEM",
+    "TECH_LUNAR_TERRAFORMING"
    ],
    "any": [
     [

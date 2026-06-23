@@ -13,33 +13,15 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_ROAD_BUILDING",
-     "scope": "team"
-    }
+    "TECH_ROAD_BUILDING"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_ROADS",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_PAVED_ROADS",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_ASPHALT_ROADS",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_HIGHWAY",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_SKYROAD_CONTROL_TOWER",
-      "scope": "city"
-     }
+     "BUILDING_ROADS",
+     "BUILDING_PAVED_ROADS",
+     "BUILDING_ASPHALT_ROADS",
+     "BUILDING_HIGHWAY",
+     "BUILDING_SKYROAD_CONTROL_TOWER"
     ],
     [
      {
@@ -65,10 +47,7 @@
     ]
    ],
    "dormant": [
-    {
-     "type": "BUILDING_TELEPORT_BOOTH",
-     "scope": "city"
-    }
+    "BUILDING_TELEPORT_BOOTH"
    ]
   }
  },

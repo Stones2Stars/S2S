@@ -13,25 +13,13 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_CROP_ROTATION",
-     "scope": "team"
-    },
-    {
-     "type": "TECH_ALCHEMY",
-     "scope": "team"
-    }
+    "TECH_CROP_ROTATION",
+    "TECH_ALCHEMY"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_TRADING_POST",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_SHOPPING_DISTRICT",
-      "scope": "city"
-     }
+     "BUILDING_TRADING_POST",
+     "BUILDING_SHOPPING_DISTRICT"
     ],
     [
      {
@@ -52,14 +40,8 @@
     ]
    ],
    "dormant": [
-    {
-     "type": "BUILDING_FOOD_MANUFACTURING_DISTRICT",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_FACTORY_PASTA",
-     "scope": "city"
-    }
+    "BUILDING_FOOD_MANUFACTURING_DISTRICT",
+    "BUILDING_FACTORY_PASTA"
    ]
   }
  },

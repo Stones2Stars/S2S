@@ -10,10 +10,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_POISON_CRAFTING",
-     "scope": "team"
-    }
+    "TECH_POISON_CRAFTING"
    ],
    "any": [
     [
@@ -23,22 +20,10 @@
      }
     ],
     [
-     {
-      "type": "HERITAGE_FOLKLORE_ADDER_PUFF",
-      "scope": "empire"
-     },
-     {
-      "type": "HERITAGE_FOLKLORE_COBRA",
-      "scope": "empire"
-     },
-     {
-      "type": "HERITAGE_FOLKLORE_VIPER_CHAIN",
-      "scope": "empire"
-     },
-     {
-      "type": "HERITAGE_FOLKLORE_VIPER_PIT",
-      "scope": "empire"
-     }
+     "HERITAGE_FOLKLORE_ADDER_PUFF",
+     "HERITAGE_FOLKLORE_COBRA",
+     "HERITAGE_FOLKLORE_VIPER_CHAIN",
+     "HERITAGE_FOLKLORE_VIPER_PIT"
     ],
     [
      {

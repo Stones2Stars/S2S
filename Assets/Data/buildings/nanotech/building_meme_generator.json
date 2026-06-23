@@ -14,25 +14,13 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "TECH_MEDIA_HIVEMIND",
-     "scope": "team"
-    }
+    "TECH_MEDIA_HIVEMIND"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_SOCIAL_NETWORKS",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_HOLOGRAPHIC_NETWORKS",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_EXOCORTEX_NETWORKS",
-      "scope": "city"
-     }
+     "BUILDING_SOCIAL_NETWORKS",
+     "BUILDING_HOLOGRAPHIC_NETWORKS",
+     "BUILDING_EXOCORTEX_NETWORKS"
     ],
     [
      {
@@ -44,10 +32,7 @@
   },
   "operate": {
    "dormant": [
-    {
-     "type": "BUILDING_HIGH_TECH_CULTURAL_ENRICHMENT",
-     "scope": "city"
-    }
+    "BUILDING_HIGH_TECH_CULTURAL_ENRICHMENT"
    ]
   }
  },

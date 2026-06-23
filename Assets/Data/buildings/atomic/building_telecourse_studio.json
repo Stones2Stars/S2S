@@ -14,29 +14,14 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_TV_STUDIO",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_TELEVISION",
-     "scope": "team"
-    }
+    "BUILDING_TV_STUDIO",
+    "TECH_TELEVISION"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_HOLOGRAPHIC_SCHOOL",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_UNIVERSITY",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_CITY_COLLEGE",
-      "scope": "city"
-     }
+     "BUILDING_HOLOGRAPHIC_SCHOOL",
+     "BUILDING_UNIVERSITY",
+     "BUILDING_CITY_COLLEGE"
     ],
     [
      {
@@ -48,10 +33,7 @@
   },
   "operate": {
    "dormant": [
-    {
-     "type": "BUILDING_HIGH_TECH_CULTURAL_ENRICHMENT",
-     "scope": "city"
-    }
+    "BUILDING_HIGH_TECH_CULTURAL_ENRICHMENT"
    ]
   }
  },

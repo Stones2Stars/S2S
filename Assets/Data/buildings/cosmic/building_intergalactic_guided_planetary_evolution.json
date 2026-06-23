@@ -5,18 +5,9 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_INTERGALACTIC_TERRAFORMING_BASE",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_DIRECTED_PANSPERMIA",
-     "scope": "team"
-    },
-    {
-     "type": "TECH_SPACE_CREASING",
-     "scope": "team"
-    }
+    "BUILDING_INTERGALACTIC_TERRAFORMING_BASE",
+    "TECH_DIRECTED_PANSPERMIA",
+    "TECH_SPACE_CREASING"
    ],
    "any": [
     [

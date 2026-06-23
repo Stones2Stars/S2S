@@ -55,10 +55,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_C_AC_NEANDERTHAL",
-     "scope": "city"
-    }
+    "BUILDING_C_AC_NEANDERTHAL"
    ],
    "any": [
     [

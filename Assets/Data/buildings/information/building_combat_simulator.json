@@ -14,14 +14,8 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_MILITARY_BASE",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_WAR_SIMULATIONS",
-     "scope": "team"
-    }
+    "BUILDING_MILITARY_BASE",
+    "TECH_WAR_SIMULATIONS"
    ],
    "any": [
     [
@@ -41,10 +35,7 @@
     }
    ],
    "dormant": [
-    {
-     "type": "BUILDING_HOLOGRAPHIC_COMBAT_SIMULATOR",
-     "scope": "city"
-    }
+    "BUILDING_HOLOGRAPHIC_COMBAT_SIMULATOR"
    ]
   }
  },

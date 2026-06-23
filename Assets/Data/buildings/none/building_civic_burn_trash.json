@@ -15,10 +15,7 @@
   },
   "operate": {
    "all": [
-    {
-     "type": "CIVIC_BURN_GARBAGE",
-     "scope": "empire"
-    }
+    "CIVIC_BURN_GARBAGE"
    ]
   }
  },

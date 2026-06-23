@@ -6,18 +6,9 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_CYBERNETIC_ORGAN_LAB",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_NETWORK_NODE",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_TERRA_COMPUTER",
-     "scope": "team"
-    }
+    "BUILDING_CYBERNETIC_ORGAN_LAB",
+    "BUILDING_NETWORK_NODE",
+    "TECH_TERRA_COMPUTER"
    ],
    "any": [
     [

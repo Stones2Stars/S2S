@@ -12,10 +12,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_REALISM",
-     "scope": "team"
-    }
+    "TECH_REALISM"
    ],
    "any": [
     [

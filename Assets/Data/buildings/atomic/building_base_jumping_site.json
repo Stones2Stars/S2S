@@ -13,10 +13,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_EXTREME_SPORTS",
-     "scope": "team"
-    }
+    "TECH_EXTREME_SPORTS"
    ],
    "any": [
     [
@@ -35,10 +32,7 @@
   },
   "operate": {
    "dormant": [
-    {
-     "type": "BUILDING_ATHLETIC_MEGACOMPLEX",
-     "scope": "city"
-    }
+    "BUILDING_ATHLETIC_MEGACOMPLEX"
    ]
   }
  },

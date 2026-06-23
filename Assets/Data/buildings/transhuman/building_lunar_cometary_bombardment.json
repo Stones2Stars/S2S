@@ -6,14 +6,8 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_LUNAR_SPACE_PORT",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_ASTEROID_EXTRACTION",
-     "scope": "team"
-    }
+    "BUILDING_LUNAR_SPACE_PORT",
+    "TECH_ASTEROID_EXTRACTION"
    ],
    "any": [
     [

@@ -15,10 +15,7 @@
   },
   "operate": {
    "dormant": [
-    {
-     "type": "BUILDING_DEACIDIFICATION_STATION",
-     "scope": "city"
-    }
+    "BUILDING_DEACIDIFICATION_STATION"
    ],
    "all": [
     {

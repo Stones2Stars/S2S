@@ -6,14 +6,8 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_ASTEROID_MINE",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_ACOUSTOPHORESIS",
-     "scope": "team"
-    }
+    "BUILDING_ASTEROID_MINE",
+    "TECH_ACOUSTOPHORESIS"
    ],
    "any": [
     [

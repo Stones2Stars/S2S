@@ -30,14 +30,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_FACTORY",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_ARTILLERY",
-     "scope": "team"
-    }
+    "BUILDING_FACTORY",
+    "TECH_ARTILLERY"
    ],
    "any": [
     [
@@ -71,10 +65,7 @@
     ]
    ],
    "dormant": [
-    {
-     "type": "BUILDING_MILITARY_INDUSTRIAL_COMPLEX",
-     "scope": "city"
-    }
+    "BUILDING_MILITARY_INDUSTRIAL_COMPLEX"
    ]
   }
  },

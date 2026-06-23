@@ -15,10 +15,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_MEDITATION",
-     "scope": "team"
-    }
+    "TECH_MEDITATION"
    ],
    "any": [
     [
@@ -36,10 +33,7 @@
      "scope": "city",
      "connection": "trade|vicinity"
     },
-    {
-     "type": "RELIGION_SHINTO",
-     "scope": "city"
-    }
+    "RELIGION_SHINTO"
    ],
    "any": [
     [

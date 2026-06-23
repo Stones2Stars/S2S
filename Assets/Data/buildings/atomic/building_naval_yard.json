@@ -19,25 +19,13 @@
   "build": {
    "all": [
     "HAS_COAST",
-    {
-     "type": "BUILDING_HARBORMASTERS_OFFICE",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_GLOBALIZATION",
-     "scope": "team"
-    }
+    "BUILDING_HARBORMASTERS_OFFICE",
+    "TECH_GLOBALIZATION"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_INTERNATIONAL_PORT",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_OCEAN_ADMINISTRATION",
-      "scope": "city"
-     }
+     "BUILDING_INTERNATIONAL_PORT",
+     "BUILDING_OCEAN_ADMINISTRATION"
     ],
     [
      {

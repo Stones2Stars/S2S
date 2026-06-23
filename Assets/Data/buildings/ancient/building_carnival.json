@@ -22,10 +22,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_TRADE",
-     "scope": "team"
-    }
+    "TECH_TRADE"
    ],
    "any": [
     [

@@ -6,18 +6,9 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_SELF_AWARE_CITY",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_SUBTERRANEAN_CITY",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_GRAVITRONICS",
-     "scope": "team"
-    }
+    "BUILDING_SELF_AWARE_CITY",
+    "BUILDING_SUBTERRANEAN_CITY",
+    "TECH_GRAVITRONICS"
    ],
    "any": [
     [

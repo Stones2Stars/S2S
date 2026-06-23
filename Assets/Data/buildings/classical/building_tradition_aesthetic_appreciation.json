@@ -10,10 +10,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_AESTHETICS",
-     "scope": "team"
-    }
+    "TECH_AESTHETICS"
    ],
    "any": [
     [

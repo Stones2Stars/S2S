@@ -18,21 +18,12 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_AESTHETICS",
-     "scope": "team"
-    }
+    "TECH_AESTHETICS"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_FARM_ANIMAL_PIG",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_HERD_PIG",
-      "scope": "city"
-     }
+     "BUILDING_FARM_ANIMAL_PIG",
+     "BUILDING_HERD_PIG"
     ],
     [
      {
@@ -53,14 +44,8 @@
     ]
    ],
    "dormant": [
-    {
-     "type": "BUILDING_INDUSTRIAL_FARMS",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_MEAT_INDUSTRY_CONGLOMERATE",
-     "scope": "city"
-    }
+    "BUILDING_INDUSTRIAL_FARMS",
+    "BUILDING_MEAT_INDUSTRY_CONGLOMERATE"
    ]
   }
  },

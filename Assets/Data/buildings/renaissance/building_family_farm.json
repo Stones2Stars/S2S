@@ -5,10 +5,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_ECONOMICS",
-     "scope": "team"
-    }
+    "TECH_ECONOMICS"
    ],
    "any": [
     [
@@ -21,10 +18,7 @@
   },
   "operate": {
    "all": [
-    {
-     "type": "CIVIC_PRIVATE_OWNED",
-     "scope": "empire"
-    }
+    "CIVIC_PRIVATE_OWNED"
    ]
   }
  },

@@ -11,10 +11,7 @@
   "build": {
    "all": [
     "HAS_RIVER",
-    {
-     "type": "TECH_IMPRESSIONISM",
-     "scope": "team"
-    }
+    "TECH_IMPRESSIONISM"
    ],
    "any": [
     [
@@ -59,17 +56,11 @@
    "flat": [
     {
      "value": 1,
-     "enabled": {
-      "type": "BUILDING_ART_GALLERY",
-      "scope": "city"
-     }
+     "enabled": "BUILDING_ART_GALLERY"
     },
     {
      "value": 1,
-     "enabled": {
-      "type": "BUILDING_ART_PATRONAGE",
-      "scope": "city"
-     }
+     "enabled": "BUILDING_ART_PATRONAGE"
     }
    ]
   }

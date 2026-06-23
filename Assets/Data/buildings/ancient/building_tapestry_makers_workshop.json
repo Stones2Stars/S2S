@@ -13,25 +13,13 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_TEXTILE_LOOM",
-     "scope": "team"
-    },
-    {
-     "type": "TECH_TRADE",
-     "scope": "team"
-    }
+    "TECH_TEXTILE_LOOM",
+    "TECH_TRADE"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_TRADING_POST",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_SHOPPING_DISTRICT",
-      "scope": "city"
-     }
+     "BUILDING_TRADING_POST",
+     "BUILDING_SHOPPING_DISTRICT"
     ],
     [
      {
@@ -72,10 +60,7 @@
     ]
    ],
    "dormant": [
-    {
-     "type": "BUILDING_TEXTILE_MANUFACTURING_DISTRICT",
-     "scope": "city"
-    }
+    "BUILDING_TEXTILE_MANUFACTURING_DISTRICT"
    ]
   }
  },
@@ -85,38 +70,23 @@
     3,
     {
      "value": 2,
-     "enabled": {
-      "type": "TECH_ORNAMENTATION",
-      "scope": "team"
-     }
+     "enabled": "TECH_ORNAMENTATION"
     },
     {
      "value": 2,
-     "enabled": {
-      "type": "TECH_MONARCHY",
-      "scope": "team"
-     }
+     "enabled": "TECH_MONARCHY"
     },
     {
      "value": 3,
-     "enabled": {
-      "type": "TECH_ARISTOCRACY",
-      "scope": "team"
-     }
+     "enabled": "TECH_ARISTOCRACY"
     },
     {
      "value": 4,
-     "enabled": {
-      "type": "TECH_HERALDRY",
-      "scope": "team"
-     }
+     "enabled": "TECH_HERALDRY"
     },
     {
      "value": 4,
-     "enabled": {
-      "type": "TECH_CHIVALRY",
-      "scope": "team"
-     }
+     "enabled": "TECH_CHIVALRY"
     },
     {
      "value": 1,

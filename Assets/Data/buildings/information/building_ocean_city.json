@@ -15,25 +15,13 @@
   "build": {
    "all": [
     "HAS_COAST",
-    {
-     "type": "TECH_MARINE_ARCHITECTURE",
-     "scope": "team"
-    }
+    "TECH_MARINE_ARCHITECTURE"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_WAVE_FARM",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_OCEAN_THERMAL_POWER_PLANT",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_RENEWABLE_MEGACOMPLEX",
-      "scope": "city"
-     }
+     "BUILDING_WAVE_FARM",
+     "BUILDING_OCEAN_THERMAL_POWER_PLANT",
+     "BUILDING_RENEWABLE_MEGACOMPLEX"
     ],
     [
      {
@@ -50,10 +38,7 @@
     4,
     {
      "value": 9,
-     "enabled": {
-      "type": "TECH_NANO_ARCHITECTURE",
-      "scope": "team"
-     }
+     "enabled": "TECH_NANO_ARCHITECTURE"
     }
    ]
   }
@@ -64,10 +49,7 @@
     4,
     {
      "value": 10,
-     "enabled": {
-      "type": "TECH_ABYSS_COLONIZATION",
-      "scope": "team"
-     }
+     "enabled": "TECH_ABYSS_COLONIZATION"
     },
     {
      "value": 3,

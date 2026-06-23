@@ -5,18 +5,9 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_UNIVERSITY",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_CONVENTION_CENTRE",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_COMMUNICATION_NETWORKS",
-     "scope": "team"
-    }
+    "BUILDING_UNIVERSITY",
+    "BUILDING_CONVENTION_CENTRE",
+    "TECH_COMMUNICATION_NETWORKS"
    ],
    "any": [
     [

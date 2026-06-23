@@ -15,14 +15,8 @@
      "scope": "world",
      "min": 10
     },
-    {
-     "type": "TECH_NAVIGATION",
-     "scope": "team"
-    },
-    {
-     "type": "TECH_NAVAL_CANNON",
-     "scope": "team"
-    }
+    "TECH_NAVIGATION",
+    "TECH_NAVAL_CANNON"
    ],
    "any": [
     [

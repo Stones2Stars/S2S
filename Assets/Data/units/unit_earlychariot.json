@@ -10,14 +10,8 @@
      "scope": "city",
      "connection": "trade|vicinity"
     },
-    {
-     "type": "BUILDING_CHARIOT_WORKSHOP",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_CHARIOTRY",
-     "scope": "team"
-    }
+    "BUILDING_CHARIOT_WORKSHOP",
+    "TECH_CHARIOTRY"
    ]
   }
  },

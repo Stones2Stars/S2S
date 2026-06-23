@@ -13,29 +13,14 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_CARPENTRY",
-     "scope": "team"
-    },
-    {
-     "type": "TECH_TANNING",
-     "scope": "team"
-    }
+    "TECH_CARPENTRY",
+    "TECH_TANNING"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_TANNERY",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_FACTORY_LEATHER",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_MEAT_INDUSTRY_CONGLOMERATE",
-      "scope": "city"
-     }
+     "BUILDING_TANNERY",
+     "BUILDING_FACTORY_LEATHER",
+     "BUILDING_MEAT_INDUSTRY_CONGLOMERATE"
     ],
     [
      {
@@ -66,10 +51,7 @@
     }
    ],
    "dormant": [
-    {
-     "type": "BUILDING_ARMOURER",
-     "scope": "city"
-    }
+    "BUILDING_ARMOURER"
    ]
   }
  },

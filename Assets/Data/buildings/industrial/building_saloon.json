@@ -11,21 +11,12 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_DEPUTIZATION",
-     "scope": "team"
-    }
+    "TECH_DEPUTIZATION"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_TRADING_POST",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_SHOPPING_DISTRICT",
-      "scope": "city"
-     }
+     "BUILDING_TRADING_POST",
+     "BUILDING_SHOPPING_DISTRICT"
     ],
     [
      {
@@ -37,10 +28,7 @@
   },
   "operate": {
    "dormant": [
-    {
-     "type": "BUILDING_ORDINANCE_ALCOHOL_PROHIBITION",
-     "scope": "city"
-    }
+    "BUILDING_ORDINANCE_ALCOHOL_PROHIBITION"
    ]
   }
  },
@@ -147,10 +135,7 @@
     "unit": "UNIT_GUNFIGHTER",
     "interval": "perTurn",
     "chance": {
-     "per": {
-      "type": "PROPERTY_CRIME",
-      "scope": "city"
-     }
+     "per": "PROPERTY_CRIME"
     }
    }
   ]

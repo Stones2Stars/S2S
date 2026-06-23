@@ -10,10 +10,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_FUNDAMENTALISM",
-     "scope": "team"
-    },
+    "TECH_FUNDAMENTALISM",
     "STATE_RELIGION_IN_CITY",
     {
      "STATE_RELIGION": "RELIGION_VOODOO"
@@ -36,10 +33,7 @@
   },
   "operate": {
    "all": [
-    {
-     "type": "RELIGION_VOODOO",
-     "scope": "city"
-    }
+    "RELIGION_VOODOO"
    ]
   }
  },

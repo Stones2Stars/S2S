@@ -15,29 +15,14 @@
      "scope": "city",
      "min": 3
     },
-    {
-     "type": "TECH_ALCHEMY",
-     "scope": "team"
-    },
-    {
-     "type": "TECH_GUILDS",
-     "scope": "team"
-    }
+    "TECH_ALCHEMY",
+    "TECH_GUILDS"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_APOTHECARY_SHOP",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_PHARMACY",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_HEALTHCARE_MEGACOMPLEX",
-      "scope": "city"
-     }
+     "BUILDING_APOTHECARY_SHOP",
+     "BUILDING_PHARMACY",
+     "BUILDING_HEALTHCARE_MEGACOMPLEX"
     ],
     [
      {

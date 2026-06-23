@@ -18,29 +18,14 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_FERMENTATION",
-     "scope": "team"
-    }
+    "TECH_FERMENTATION"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_SHOPPING_DISTRICT",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_TRADING_POST",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_BARTER_POST",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_FACTORY",
-      "scope": "city"
-     }
+     "BUILDING_SHOPPING_DISTRICT",
+     "BUILDING_TRADING_POST",
+     "BUILDING_BARTER_POST",
+     "BUILDING_FACTORY"
     ],
     [
      {
@@ -78,14 +63,8 @@
     ]
    ],
    "dormant": [
-    {
-     "type": "BUILDING_FOOD_MANUFACTURING_DISTRICT",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_ORDINANCE_ALCOHOL_PROHIBITION",
-     "scope": "city"
-    }
+    "BUILDING_FOOD_MANUFACTURING_DISTRICT",
+    "BUILDING_ORDINANCE_ALCOHOL_PROHIBITION"
    ]
   }
  },

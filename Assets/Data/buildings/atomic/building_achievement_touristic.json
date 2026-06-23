@@ -5,14 +5,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_TOURISM",
-     "scope": "team"
-    },
-    {
-     "type": "TECH_WRITING",
-     "scope": "team"
-    }
+    "TECH_TOURISM",
+    "TECH_WRITING"
    ],
    "any": [
     [

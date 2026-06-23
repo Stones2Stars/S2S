@@ -13,21 +13,12 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_MICROWAVE_WEAPONRY",
-     "scope": "team"
-    }
+    "TECH_MICROWAVE_WEAPONRY"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_POLICE_STATION",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_POLICE_PRECINCT",
-      "scope": "city"
-     }
+     "BUILDING_POLICE_STATION",
+     "BUILDING_POLICE_PRECINCT"
     ],
     [
      {
@@ -39,14 +30,8 @@
   },
   "operate": {
    "dormant": [
-    {
-     "type": "BUILDING_ACOUSTIC_CROWD_CONTROL",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_GRAVITY_CROWD_CONTROL",
-     "scope": "city"
-    }
+    "BUILDING_ACOUSTIC_CROWD_CONTROL",
+    "BUILDING_GRAVITY_CROWD_CONTROL"
    ]
   }
  },

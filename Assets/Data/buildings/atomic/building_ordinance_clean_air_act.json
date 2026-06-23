@@ -10,18 +10,9 @@
      "scope": "city",
      "min": 3
     },
-    {
-     "type": "BUILDING_DEPARTMENT_OF_ENERGY",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_COURTHOUSE",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_ECOLOGY",
-     "scope": "team"
-    }
+    "BUILDING_DEPARTMENT_OF_ENERGY",
+    "BUILDING_COURTHOUSE",
+    "TECH_ECOLOGY"
    ],
    "any": [
     [

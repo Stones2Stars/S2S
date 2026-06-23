@@ -10,14 +10,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_ARCHERY",
-     "scope": "team"
-    },
-    {
-     "type": "TECH_SEDENTARY_LIFESTYLE",
-     "scope": "team"
-    }
+    "TECH_ARCHERY",
+    "TECH_SEDENTARY_LIFESTYLE"
    ],
    "any": [
     [

@@ -13,14 +13,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_FACTORY",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_POLYMERIZATION",
-     "scope": "team"
-    }
+    "BUILDING_FACTORY",
+    "TECH_POLYMERIZATION"
    ],
    "any": [
     [
@@ -49,10 +43,7 @@
     ]
    ],
    "dormant": [
-    {
-     "type": "BUILDING_MATERIALS_CONGLOMERATE",
-     "scope": "city"
-    }
+    "BUILDING_MATERIALS_CONGLOMERATE"
    ]
   }
  },

@@ -5,18 +5,9 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_C_AC_AFRICAN",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_C_L_AFRICAN",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_MASONRY",
-     "scope": "team"
-    }
+    "BUILDING_C_AC_AFRICAN",
+    "BUILDING_C_L_AFRICAN",
+    "TECH_MASONRY"
    ],
    "any": [
     [

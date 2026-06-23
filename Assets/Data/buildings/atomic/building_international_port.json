@@ -28,10 +28,7 @@
   "build": {
    "all": [
     "HAS_COAST",
-    {
-     "type": "TECH_LOGISTICS",
-     "scope": "team"
-    }
+    "TECH_LOGISTICS"
    ],
    "any": [
     [
@@ -60,10 +57,7 @@
     ]
    ],
    "dormant": [
-    {
-     "type": "BUILDING_OCEAN_ADMINISTRATION",
-     "scope": "city"
-    }
+    "BUILDING_OCEAN_ADMINISTRATION"
    ]
   }
  },

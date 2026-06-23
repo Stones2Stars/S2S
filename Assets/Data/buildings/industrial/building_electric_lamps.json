@@ -14,10 +14,7 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "TECH_INCANDESCENT_LIGHTING",
-     "scope": "team"
-    }
+    "TECH_INCANDESCENT_LIGHTING"
    ],
    "any": [
     [
@@ -51,10 +48,7 @@
     ]
    ],
    "dormant": [
-    {
-     "type": "BUILDING_OLED_LAMPS",
-     "scope": "city"
-    }
+    "BUILDING_OLED_LAMPS"
    ]
   }
  },

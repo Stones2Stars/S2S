@@ -13,21 +13,12 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_CALLIGRAPHY",
-     "scope": "team"
-    }
+    "TECH_CALLIGRAPHY"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_SCHOOL_OF_SCRIBES",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_LIBRARY",
-      "scope": "city"
-     }
+     "BUILDING_SCHOOL_OF_SCRIBES",
+     "BUILDING_LIBRARY"
     ],
     [
      {
@@ -60,14 +51,8 @@
     ]
    ],
    "dormant": [
-    {
-     "type": "BUILDING_ELEMENTARY_SCHOOL",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_HOLOGRAPHIC_SCHOOL",
-     "scope": "city"
-    }
+    "BUILDING_ELEMENTARY_SCHOOL",
+    "BUILDING_HOLOGRAPHIC_SCHOOL"
    ]
   }
  },
@@ -77,45 +62,27 @@
     1,
     {
      "value": 1,
-     "enabled": {
-      "type": "TECH_AESTHETICS",
-      "scope": "team"
-     }
+     "enabled": "TECH_AESTHETICS"
     },
     {
      "value": 1,
-     "enabled": {
-      "type": "TECH_DRAMA",
-      "scope": "team"
-     }
+     "enabled": "TECH_DRAMA"
     },
     {
      "value": 1,
-     "enabled": {
-      "type": "TECH_POETRY",
-      "scope": "team"
-     }
+     "enabled": "TECH_POETRY"
     },
     {
      "value": 4,
-     "enabled": {
-      "type": "TECH_CHARTERS",
-      "scope": "team"
-     }
+     "enabled": "TECH_CHARTERS"
     },
     {
      "value": 4,
-     "enabled": {
-      "type": "TECH_PAPER",
-      "scope": "team"
-     }
+     "enabled": "TECH_PAPER"
     },
     {
      "value": 4,
-     "enabled": {
-      "type": "TECH_CARTOGRAPHY",
-      "scope": "team"
-     }
+     "enabled": "TECH_CARTOGRAPHY"
     }
    ]
   }
@@ -126,45 +93,27 @@
     1,
     {
      "value": 3,
-     "enabled": {
-      "type": "TECH_AESTHETICS",
-      "scope": "team"
-     }
+     "enabled": "TECH_AESTHETICS"
     },
     {
      "value": 3,
-     "enabled": {
-      "type": "TECH_DRAMA",
-      "scope": "team"
-     }
+     "enabled": "TECH_DRAMA"
     },
     {
      "value": 3,
-     "enabled": {
-      "type": "TECH_POETRY",
-      "scope": "team"
-     }
+     "enabled": "TECH_POETRY"
     },
     {
      "value": 4,
-     "enabled": {
-      "type": "TECH_CHARTERS",
-      "scope": "team"
-     }
+     "enabled": "TECH_CHARTERS"
     },
     {
      "value": 4,
-     "enabled": {
-      "type": "TECH_PAPER",
-      "scope": "team"
-     }
+     "enabled": "TECH_PAPER"
     },
     {
      "value": 4,
-     "enabled": {
-      "type": "TECH_CARTOGRAPHY",
-      "scope": "team"
-     }
+     "enabled": "TECH_CARTOGRAPHY"
     }
    ]
   }

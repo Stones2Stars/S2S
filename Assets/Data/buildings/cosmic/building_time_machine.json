@@ -14,14 +14,8 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_ALEPH_ASSEMBLER",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_STABLE_TIME_LOOPS",
-     "scope": "team"
-    }
+    "BUILDING_ALEPH_ASSEMBLER",
+    "TECH_STABLE_TIME_LOOPS"
    ],
    "any": [
     [

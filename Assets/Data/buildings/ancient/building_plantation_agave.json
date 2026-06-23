@@ -13,10 +13,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_FERMENTATION",
-     "scope": "team"
-    }
+    "TECH_FERMENTATION"
    ],
    "any": [
     [
@@ -51,10 +48,7 @@
     ]
    ],
    "dormant": [
-    {
-     "type": "BUILDING_FOOD_MANUFACTURING_DISTRICT",
-     "scope": "city"
-    }
+    "BUILDING_FOOD_MANUFACTURING_DISTRICT"
    ]
   }
  },

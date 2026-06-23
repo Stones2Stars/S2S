@@ -12,22 +12,10 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_MERCENARY_CAMP",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_ANIMAL_TRAINER_HORSE",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_BRONZE_WORKING",
-     "scope": "team"
-    },
-    {
-     "type": "TECH_ANIMAL_RIDING",
-     "scope": "team"
-    }
+    "BUILDING_MERCENARY_CAMP",
+    "BUILDING_ANIMAL_TRAINER_HORSE",
+    "TECH_BRONZE_WORKING",
+    "TECH_ANIMAL_RIDING"
    ],
    "any": [
     [

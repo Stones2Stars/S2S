@@ -11,10 +11,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_INTERSTELLAR_TRAVEL",
-     "scope": "team"
-    }
+    "TECH_INTERSTELLAR_TRAVEL"
    ],
    "any": [
     [
@@ -47,10 +44,7 @@
     50,
     {
      "value": 11,
-     "enabled": {
-      "type": "TECH_FORGE_WORLDS",
-      "scope": "team"
-     }
+     "enabled": "TECH_FORGE_WORLDS"
     }
    ]
   }

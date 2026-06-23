@@ -14,18 +14,9 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_ORGANIC_COMPUTER_LAB",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_MAINSTREAM_CLONING",
-     "scope": "team"
-    },
-    {
-     "type": "TECH_AUGMENTED_CONSUMABLES",
-     "scope": "team"
-    }
+    "BUILDING_ORGANIC_COMPUTER_LAB",
+    "TECH_MAINSTREAM_CLONING",
+    "TECH_AUGMENTED_CONSUMABLES"
    ],
    "any": [
     [
@@ -38,10 +29,7 @@
   },
   "operate": {
    "dormant": [
-    {
-     "type": "BUILDING_NANOTECH_COMPLEX",
-     "scope": "city"
-    }
+    "BUILDING_NANOTECH_COMPLEX"
    ]
   }
  },

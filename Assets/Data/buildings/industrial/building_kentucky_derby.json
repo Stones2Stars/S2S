@@ -5,19 +5,13 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_ANIMAL_TRAINER_HORSE",
-     "scope": "city"
-    },
+    "BUILDING_ANIMAL_TRAINER_HORSE",
     {
      "type": "BUILDING_ANIMAL_RACE_TRACK",
      "scope": "empire",
      "min": 3
     },
-    {
-     "type": "TECH_LAWN_SPORTS",
-     "scope": "team"
-    }
+    "TECH_LAWN_SPORTS"
    ],
    "any": [
     [
@@ -79,10 +73,7 @@
     2,
     {
      "value": 1,
-     "enabled": {
-      "type": "BUILDING_ANIMAL_RACE_TRACK",
-      "scope": "city"
-     }
+     "enabled": "BUILDING_ANIMAL_RACE_TRACK"
     }
    ]
   }

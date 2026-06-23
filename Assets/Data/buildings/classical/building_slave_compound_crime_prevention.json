@@ -6,89 +6,29 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_SLAVE_COMPOUND",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_SANITATION",
-     "scope": "team"
-    }
+    "BUILDING_SLAVE_COMPOUND",
+    "TECH_SANITATION"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_SENTRY_POST",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_WATCH_TOWER",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_BOMBARD_TOWER",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_GUARD_TOWER",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_KEEP_TOWER",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_ARTILLERY_BATTERY",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_AUTO_CANNON_BATTERY",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_MISSILE_BATTERY",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_RAILGUN_BATTERY",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_LASER_BATTERY",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_ANTI_MATTER_BATTERY",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_TOWN_WATCH",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_TOWN_PATROL",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_GUARDHOUSE",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_GUARD_STATION",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_SHERIFFS_OFFICE",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_POLICE_STATION",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_POLICE_PRECINCT",
-      "scope": "city"
-     }
+     "BUILDING_SENTRY_POST",
+     "BUILDING_WATCH_TOWER",
+     "BUILDING_BOMBARD_TOWER",
+     "BUILDING_GUARD_TOWER",
+     "BUILDING_KEEP_TOWER",
+     "BUILDING_ARTILLERY_BATTERY",
+     "BUILDING_AUTO_CANNON_BATTERY",
+     "BUILDING_MISSILE_BATTERY",
+     "BUILDING_RAILGUN_BATTERY",
+     "BUILDING_LASER_BATTERY",
+     "BUILDING_ANTI_MATTER_BATTERY",
+     "BUILDING_TOWN_WATCH",
+     "BUILDING_TOWN_PATROL",
+     "BUILDING_GUARDHOUSE",
+     "BUILDING_GUARD_STATION",
+     "BUILDING_SHERIFFS_OFFICE",
+     "BUILDING_POLICE_STATION",
+     "BUILDING_POLICE_PRECINCT"
     ],
     [
      {
@@ -100,10 +40,7 @@
   },
   "operate": {
    "dormant": [
-    {
-     "type": "BUILDING_EFFECT_EMANCIPATION_PROCLAMATION",
-     "scope": "city"
-    }
+    "BUILDING_EFFECT_EMANCIPATION_PROCLAMATION"
    ]
   }
  },

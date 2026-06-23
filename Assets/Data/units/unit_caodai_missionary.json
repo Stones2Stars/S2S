@@ -5,14 +5,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_CAO_DAI_MONASTERY",
-     "scope": "city"
-    },
-    {
-     "type": "RELIGION_CAO_DAI",
-     "scope": "city"
-    }
+    "BUILDING_CAO_DAI_MONASTERY",
+    "RELIGION_CAO_DAI"
    ]
   }
  },

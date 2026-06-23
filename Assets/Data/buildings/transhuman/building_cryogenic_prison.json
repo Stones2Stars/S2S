@@ -6,10 +6,7 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "TECH_CRYONICS",
-     "scope": "team"
-    }
+    "TECH_CRYONICS"
    ],
    "any": [
     [
@@ -20,10 +17,7 @@
     ]
    ],
    "noneOf": [
-    {
-     "type": "BUILDING_STATUE_OF_LIBERTY",
-     "scope": "city"
-    }
+    "BUILDING_STATUE_OF_LIBERTY"
    ]
   },
   "operate": {
@@ -43,22 +37,10 @@
      }
     ],
     [
-     {
-      "type": "CIVIC_DESPOTISM",
-      "scope": "empire"
-     },
-     {
-      "type": "CIVIC_MONARCHY",
-      "scope": "empire"
-     },
-     {
-      "type": "CIVIC_TOTALITARIANISM",
-      "scope": "empire"
-     },
-     {
-      "type": "CIVIC_SUPERHUMAN",
-      "scope": "empire"
-     }
+     "CIVIC_DESPOTISM",
+     "CIVIC_MONARCHY",
+     "CIVIC_TOTALITARIANISM",
+     "CIVIC_SUPERHUMAN"
     ]
    ]
   }

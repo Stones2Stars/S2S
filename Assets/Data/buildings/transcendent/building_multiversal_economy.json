@@ -6,10 +6,7 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_EFFECT_UNIVERSAL_ECONOMY",
-     "scope": "city"
-    },
+    "BUILDING_EFFECT_UNIVERSAL_ECONOMY",
     {
      "type": "BUILDING_DISTANT_EXPLORERS_BASE",
      "scope": "empire",
@@ -45,10 +42,7 @@
      "scope": "empire",
      "min": 1
     },
-    {
-     "type": "TECH_REALITY_REPROGRAMMING",
-     "scope": "team"
-    }
+    "TECH_REALITY_REPROGRAMMING"
    ],
    "any": [
     [

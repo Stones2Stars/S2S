@@ -14,10 +14,7 @@
   "build": {
    "all": [
     "HAS_COAST",
-    {
-     "type": "TECH_AQUACULTURE",
-     "scope": "team"
-    }
+    "TECH_AQUACULTURE"
    ],
    "any": [
     [
@@ -30,10 +27,7 @@
   },
   "operate": {
    "dormant": [
-    {
-     "type": "BUILDING_FARMSCRAPER_I",
-     "scope": "city"
-    }
+    "BUILDING_FARMSCRAPER_I"
    ]
   }
  },
@@ -48,10 +42,7 @@
     1,
     {
      "value": 8,
-     "enabled": {
-      "type": "TECH_BIOMATERIALS",
-      "scope": "team"
-     }
+     "enabled": "TECH_BIOMATERIALS"
     }
    ]
   }

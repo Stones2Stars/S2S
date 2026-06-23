@@ -5,14 +5,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_UMBRIEL_COLONY",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_NUCLEAR_PULSE_PROPULSION",
-     "scope": "team"
-    }
+    "BUILDING_UMBRIEL_COLONY",
+    "TECH_NUCLEAR_PULSE_PROPULSION"
    ],
    "any": [
     [

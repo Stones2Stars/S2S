@@ -6,14 +6,8 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_NETWORK_NODE",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_INTERSTELLAR_COMMUNICATION",
-     "scope": "team"
-    }
+    "BUILDING_NETWORK_NODE",
+    "TECH_INTERSTELLAR_COMMUNICATION"
    ],
    "any": [
     [
@@ -35,17 +29,11 @@
    "flat": [
     {
      "value": 12,
-     "enabled": {
-      "type": "TECH_TACHYON_COMMUNICATIONS",
-      "scope": "team"
-     }
+     "enabled": "TECH_TACHYON_COMMUNICATIONS"
     },
     {
      "value": 11,
-     "enabled": {
-      "type": "TECH_WORMHOLE_COMMUNICATIONS",
-      "scope": "team"
-     }
+     "enabled": "TECH_WORMHOLE_COMMUNICATIONS"
     }
    ]
   }
@@ -60,10 +48,7 @@
    "flat": [
     {
      "value": 11,
-     "enabled": {
-      "type": "TECH_NEUTRINO_COMMUNICATIONS",
-      "scope": "team"
-     }
+     "enabled": "TECH_NEUTRINO_COMMUNICATIONS"
     }
    ]
   }

@@ -10,14 +10,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_WORLDVIEW_HUMAN_SACRIFICE_ACTIVE",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_SACRIFICE_CULT",
-     "scope": "team"
-    }
+    "BUILDING_WORLDVIEW_HUMAN_SACRIFICE_ACTIVE",
+    "TECH_SACRIFICE_CULT"
    ],
    "any": [
     [

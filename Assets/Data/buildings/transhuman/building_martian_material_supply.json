@@ -5,14 +5,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_DEEP_SPACE_ORBITAL_BASE",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_ASTEROID_EXTRACTION",
-     "scope": "team"
-    }
+    "BUILDING_DEEP_SPACE_ORBITAL_BASE",
+    "TECH_ASTEROID_EXTRACTION"
    ],
    "any": [
     [

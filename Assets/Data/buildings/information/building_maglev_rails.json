@@ -20,17 +20,11 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_MAGNETIC_LEVITATION",
-     "scope": "team"
-    }
+    "TECH_MAGNETIC_LEVITATION"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_METROPOLITAN_ADMINISTRATION",
-      "scope": "city"
-     }
+     "BUILDING_METROPOLITAN_ADMINISTRATION"
     ],
     [
      {
@@ -42,14 +36,8 @@
   },
   "operate": {
    "dormant": [
-    {
-     "type": "BUILDING_VACTRAIN_TERMINAL",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_GRAVITY_TRAIN",
-     "scope": "city"
-    }
+    "BUILDING_VACTRAIN_TERMINAL",
+    "BUILDING_GRAVITY_TRAIN"
    ]
   }
  },

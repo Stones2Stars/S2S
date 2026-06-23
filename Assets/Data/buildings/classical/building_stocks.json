@@ -18,14 +18,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_COURTHOUSE",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_CODE_OF_LAWS",
-     "scope": "team"
-    }
+    "BUILDING_COURTHOUSE",
+    "TECH_CODE_OF_LAWS"
    ],
    "any": [
     [
@@ -52,10 +46,7 @@
     ]
    ],
    "dormant": [
-    {
-     "type": "BUILDING_JAIL",
-     "scope": "city"
-    }
+    "BUILDING_JAIL"
    ]
   }
  },

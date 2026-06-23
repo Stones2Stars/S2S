@@ -12,21 +12,12 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_MOTION_PICTURES",
-     "scope": "team"
-    }
+    "TECH_MOTION_PICTURES"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_TRADING_POST",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_SHOPPING_DISTRICT",
-      "scope": "city"
-     }
+     "BUILDING_TRADING_POST",
+     "BUILDING_SHOPPING_DISTRICT"
     ],
     [
      {
@@ -43,24 +34,15 @@
     3,
     {
      "value": 6,
-     "enabled": {
-      "type": "TECH_ANIMATION",
-      "scope": "team"
-     }
+     "enabled": "TECH_ANIMATION"
     },
     {
      "value": 7,
-     "enabled": {
-      "type": "TECH_MASS_MEDIA",
-      "scope": "team"
-     }
+     "enabled": "TECH_MASS_MEDIA"
     },
     {
      "value": 7,
-     "enabled": {
-      "type": "TECH_3D_MODELLING",
-      "scope": "team"
-     }
+     "enabled": "TECH_3D_MODELLING"
     },
     {
      "value": 1,
@@ -80,24 +62,15 @@
     3,
     {
      "value": 6,
-     "enabled": {
-      "type": "TECH_ANIMATION",
-      "scope": "team"
-     }
+     "enabled": "TECH_ANIMATION"
     },
     {
      "value": 7,
-     "enabled": {
-      "type": "TECH_MASS_MEDIA",
-      "scope": "team"
-     }
+     "enabled": "TECH_MASS_MEDIA"
     },
     {
      "value": 7,
-     "enabled": {
-      "type": "TECH_3D_MODELLING",
-      "scope": "team"
-     }
+     "enabled": "TECH_3D_MODELLING"
     },
     {
      "value": 1,

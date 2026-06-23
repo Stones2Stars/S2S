@@ -11,21 +11,12 @@
      "scope": "empire",
      "min": 1
     },
-    {
-     "type": "TECH_MACROVERSE_TRAVERSAL",
-     "scope": "team"
-    }
+    "TECH_MACROVERSE_TRAVERSAL"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_CISLUNAR_METAMORPHIC_STATION",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_LUNAR_ARCOLOGY",
-      "scope": "city"
-     }
+     "BUILDING_CISLUNAR_METAMORPHIC_STATION",
+     "BUILDING_LUNAR_ARCOLOGY"
     ],
     [
      {

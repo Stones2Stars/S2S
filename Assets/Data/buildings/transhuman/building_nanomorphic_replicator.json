@@ -18,14 +18,8 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_MEDICAL_MEGACOMPLEX",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_NANOTROIDS",
-     "scope": "team"
-    }
+    "BUILDING_MEDICAL_MEGACOMPLEX",
+    "TECH_NANOTROIDS"
    ],
    "any": [
     [

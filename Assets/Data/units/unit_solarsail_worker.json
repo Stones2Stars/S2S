@@ -11,14 +11,8 @@
      "scope": "city",
      "connection": "trade|vicinity"
     },
-    {
-     "type": "BUILDING_EFFECT_LAUNCH_SITE",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_SOLAR_PROPULSION",
-     "scope": "team"
-    }
+    "BUILDING_EFFECT_LAUNCH_SITE",
+    "TECH_SOLAR_PROPULSION"
    ]
   }
  },

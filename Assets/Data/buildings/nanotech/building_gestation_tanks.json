@@ -19,18 +19,9 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_GENOTYPE_STUDIO",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_CLONING_FACTORY",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_RAPID_RECUPERATION",
-     "scope": "team"
-    }
+    "BUILDING_GENOTYPE_STUDIO",
+    "BUILDING_CLONING_FACTORY",
+    "TECH_RAPID_RECUPERATION"
    ],
    "any": [
     [
@@ -50,10 +41,7 @@
     }
    ],
    "dormant": [
-    {
-     "type": "BUILDING_NANOMORPHIC_REPLICATOR",
-     "scope": "city"
-    }
+    "BUILDING_NANOMORPHIC_REPLICATOR"
    ]
   }
  },

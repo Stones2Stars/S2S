@@ -5,14 +5,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_INTERGALACTIC_CULTURE",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_IMMORTALITY",
-     "scope": "team"
-    }
+    "BUILDING_INTERGALACTIC_CULTURE",
+    "TECH_IMMORTALITY"
    ],
    "any": [
     [

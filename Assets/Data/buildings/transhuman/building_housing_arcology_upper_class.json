@@ -20,33 +20,15 @@
      "scope": "city",
      "min": 13
     },
-    {
-     "type": "BUILDING_WATER_PIPES",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_SEWER_SYSTEM",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_TELEPHONE_NETWORK",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_COMPUTER_NETWORK",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_MEGASTRUCTURE_ENGINEERING",
-     "scope": "team"
-    }
+    "BUILDING_WATER_PIPES",
+    "BUILDING_SEWER_SYSTEM",
+    "BUILDING_TELEPHONE_NETWORK",
+    "BUILDING_COMPUTER_NETWORK",
+    "TECH_MEGASTRUCTURE_ENGINEERING"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_ARCOLOGY",
-      "scope": "city"
-     }
+     "BUILDING_ARCOLOGY"
     ],
     [
      {
@@ -65,14 +47,8 @@
     }
    ],
    "dormant": [
-    {
-     "type": "BUILDING_HOUSING_COLONY_ARCOLOGY",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_LAUNCH_ARCOLOGY",
-     "scope": "city"
-    }
+    "BUILDING_HOUSING_COLONY_ARCOLOGY",
+    "BUILDING_LAUNCH_ARCOLOGY"
    ]
   }
  },

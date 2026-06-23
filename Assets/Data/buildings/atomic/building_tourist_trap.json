@@ -13,25 +13,13 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_TOURISM",
-     "scope": "team"
-    }
+    "TECH_TOURISM"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_ASPHALT_ROADS",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_SKYROAD_CONTROL_TOWER",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_TELEPORT_BOOTH",
-      "scope": "city"
-     }
+     "BUILDING_ASPHALT_ROADS",
+     "BUILDING_SKYROAD_CONTROL_TOWER",
+     "BUILDING_TELEPORT_BOOTH"
     ],
     [
      {
@@ -43,10 +31,7 @@
   },
   "operate": {
    "dormant": [
-    {
-     "type": "BUILDING_TOURISM_MEGACOMPLEX",
-     "scope": "city"
-    }
+    "BUILDING_TOURISM_MEGACOMPLEX"
    ]
   }
  },

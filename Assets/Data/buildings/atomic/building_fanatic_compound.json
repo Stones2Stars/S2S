@@ -5,10 +5,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_FASCISM",
-     "scope": "team"
-    },
+    "TECH_FASCISM",
     "STATE_RELIGION_IN_CITY"
    ],
    "any": [
@@ -22,10 +19,7 @@
   },
   "operate": {
    "all": [
-    {
-     "type": "CIVIC_INQUISITORIAL",
-     "scope": "empire"
-    }
+    "CIVIC_INQUISITORIAL"
    ]
   }
  },

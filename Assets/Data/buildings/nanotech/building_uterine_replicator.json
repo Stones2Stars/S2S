@@ -20,18 +20,9 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_ANTHROPOMORPHICS_LAB",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_CYBERNETIC_ORGAN_LAB",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_CYBERNETICS",
-     "scope": "team"
-    }
+    "BUILDING_ANTHROPOMORPHICS_LAB",
+    "BUILDING_CYBERNETIC_ORGAN_LAB",
+    "TECH_CYBERNETICS"
    ],
    "any": [
     [
@@ -51,10 +42,7 @@
     }
    ],
    "dormant": [
-    {
-     "type": "BUILDING_NANOMORPHIC_REPLICATOR",
-     "scope": "city"
-    }
+    "BUILDING_NANOMORPHIC_REPLICATOR"
    ]
   }
  },

@@ -15,14 +15,8 @@
    "all": [
     "HAS_COAST",
     "HAS_POWER",
-    {
-     "type": "BUILDING_COMMERCIAL_AIRPORT",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_TOURISM",
-     "scope": "team"
-    }
+    "BUILDING_COMMERCIAL_AIRPORT",
+    "TECH_TOURISM"
    ],
    "any": [
     [
@@ -35,10 +29,7 @@
   },
   "operate": {
    "dormant": [
-    {
-     "type": "BUILDING_TOURISM_MEGACOMPLEX",
-     "scope": "city"
-    }
+    "BUILDING_TOURISM_MEGACOMPLEX"
    ]
   }
  },

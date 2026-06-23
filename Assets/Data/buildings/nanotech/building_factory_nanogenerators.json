@@ -14,22 +14,10 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_FACTORY",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_ADVANCED_QUALITY_CONTROL",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_MESH_NETWORKS",
-     "scope": "team"
-    },
-    {
-     "type": "TECH_NANOGENERATORS",
-     "scope": "team"
-    },
+    "BUILDING_FACTORY",
+    "BUILDING_ADVANCED_QUALITY_CONTROL",
+    "TECH_MESH_NETWORKS",
+    "TECH_NANOGENERATORS",
     {
      "type": "BONUS_LIQUID_METAL",
      "scope": "city",
@@ -59,10 +47,7 @@
     }
    ],
    "dormant": [
-    {
-     "type": "BUILDING_NANOTECH_COMPLEX",
-     "scope": "city"
-    }
+    "BUILDING_NANOTECH_COMPLEX"
    ]
   }
  },
@@ -72,45 +57,27 @@
     3,
     {
      "value": 9,
-     "enabled": {
-      "type": "TECH_PLASTIC_ELECTRONICS",
-      "scope": "team"
-     }
+     "enabled": "TECH_PLASTIC_ELECTRONICS"
     },
     {
      "value": 9,
-     "enabled": {
-      "type": "TECH_WIRELESS_ELECTRICITY",
-      "scope": "team"
-     }
+     "enabled": "TECH_WIRELESS_ELECTRICITY"
     },
     {
      "value": 9,
-     "enabled": {
-      "type": "TECH_BIONICS",
-      "scope": "team"
-     }
+     "enabled": "TECH_BIONICS"
     },
     {
      "value": 9,
-     "enabled": {
-      "type": "TECH_NANOELECTRONICS",
-      "scope": "team"
-     }
+     "enabled": "TECH_NANOELECTRONICS"
     },
     {
      "value": 9,
-     "enabled": {
-      "type": "TECH_NANOROBOTICS",
-      "scope": "team"
-     }
+     "enabled": "TECH_NANOROBOTICS"
     },
     {
      "value": 9,
-     "enabled": {
-      "type": "TECH_CYBERNETICS",
-      "scope": "team"
-     }
+     "enabled": "TECH_CYBERNETICS"
     }
    ]
   }

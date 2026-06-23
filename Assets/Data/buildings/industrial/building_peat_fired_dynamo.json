@@ -19,18 +19,9 @@
      "scope": "city",
      "min": 3
     },
-    {
-     "type": "BUILDING_POWER_LINES",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_ELECTRICITY",
-     "scope": "team"
-    },
-    {
-     "type": "TECH_STEAMPUNK",
-     "scope": "team"
-    }
+    "BUILDING_POWER_LINES",
+    "TECH_ELECTRICITY",
+    "TECH_STEAMPUNK"
    ],
    "any": [
     [
@@ -59,14 +50,8 @@
     ]
    ],
    "dormant": [
-    {
-     "type": "BUILDING_BIOFUEL_POWER_PLANT",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_RENEWABLE_MEGACOMPLEX",
-     "scope": "city"
-    }
+    "BUILDING_BIOFUEL_POWER_PLANT",
+    "BUILDING_RENEWABLE_MEGACOMPLEX"
    ]
   }
  },

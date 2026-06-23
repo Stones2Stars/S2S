@@ -10,21 +10,12 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_PLANET_SCANNING",
-     "scope": "team"
-    }
+    "TECH_PLANET_SCANNING"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_INTERSTELLAR_DESIGNER_CASTE_LAW_ENFORCEMENT",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_SPACE_COLONY_MILKY_WAY",
-      "scope": "city"
-     }
+     "BUILDING_INTERSTELLAR_DESIGNER_CASTE_LAW_ENFORCEMENT",
+     "BUILDING_SPACE_COLONY_MILKY_WAY"
     ],
     [
      {

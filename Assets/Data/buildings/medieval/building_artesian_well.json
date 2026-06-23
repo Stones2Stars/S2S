@@ -13,10 +13,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_INVENTION",
-     "scope": "team"
-    }
+    "TECH_INVENTION"
    ],
    "any": [
     [
@@ -48,10 +45,7 @@
     ]
    ],
    "dormant": [
-    {
-     "type": "BUILDING_MODERN_WATERWORKS",
-     "scope": "city"
-    }
+    "BUILDING_MODERN_WATERWORKS"
    ]
   }
  },

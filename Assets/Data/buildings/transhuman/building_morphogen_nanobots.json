@@ -6,18 +6,9 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_SOMATOSENSORY_MANIPULATOR_LAB",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_CIRCADIAN_CHAMBER",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_SYNTHETIC_SYNESTHESIA",
-     "scope": "team"
-    }
+    "BUILDING_SOMATOSENSORY_MANIPULATOR_LAB",
+    "BUILDING_CIRCADIAN_CHAMBER",
+    "TECH_SYNTHETIC_SYNESTHESIA"
    ],
    "any": [
     [

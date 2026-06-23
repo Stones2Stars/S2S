@@ -16,10 +16,7 @@
      "scope": "world",
      "min": 10
     },
-    {
-     "type": "TECH_SUBMARINE_WARFARE",
-     "scope": "team"
-    }
+    "TECH_SUBMARINE_WARFARE"
    ],
    "any": [
     [
@@ -30,26 +27,11 @@
      }
     ],
     [
-     {
-      "type": "CIVIC_MERCANTILISM",
-      "scope": "empire"
-     },
-     {
-      "type": "CIVIC_NATIONALIST",
-      "scope": "empire"
-     },
-     {
-      "type": "CIVIC_FEUDAL",
-      "scope": "empire"
-     },
-     {
-      "type": "CIVIC_MONARCHY",
-      "scope": "empire"
-     },
-     {
-      "type": "CIVIC_DESPOTISM",
-      "scope": "empire"
-     }
+     "CIVIC_MERCANTILISM",
+     "CIVIC_NATIONALIST",
+     "CIVIC_FEUDAL",
+     "CIVIC_MONARCHY",
+     "CIVIC_DESPOTISM"
     ]
    ]
   }

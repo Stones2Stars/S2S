@@ -11,14 +11,8 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_RATIONAL_CITY",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_TIME_TRAVEL",
-     "scope": "team"
-    }
+    "BUILDING_RATIONAL_CITY",
+    "TECH_TIME_TRAVEL"
    ],
    "any": [
     [
@@ -46,38 +40,23 @@
     10,
     {
      "value": 13,
-     "enabled": {
-      "type": "TECH_TIMELINE_RECTIFICATION",
-      "scope": "team"
-     }
+     "enabled": "TECH_TIMELINE_RECTIFICATION"
     },
     {
      "value": 13,
-     "enabled": {
-      "type": "TECH_TIME_REVERSAL",
-      "scope": "team"
-     }
+     "enabled": "TECH_TIME_REVERSAL"
     },
     {
      "value": 13,
-     "enabled": {
-      "type": "TECH_DUALFLUX_QUANTUM_TEMPORAL_RIFT",
-      "scope": "team"
-     }
+     "enabled": "TECH_DUALFLUX_QUANTUM_TEMPORAL_RIFT"
     },
     {
      "value": 13,
-     "enabled": {
-      "type": "TECH_MULTIDIMENSIONAL_TIME",
-      "scope": "team"
-     }
+     "enabled": "TECH_MULTIDIMENSIONAL_TIME"
     },
     {
      "value": 12,
-     "enabled": {
-      "type": "TECH_STABLE_TIME_LOOPS",
-      "scope": "team"
-     }
+     "enabled": "TECH_STABLE_TIME_LOOPS"
     },
     {
      "value": 1,
@@ -96,24 +75,15 @@
     10,
     {
      "value": 13,
-     "enabled": {
-      "type": "TECH_MULTIVERSE_TRAVERSAL",
-      "scope": "team"
-     }
+     "enabled": "TECH_MULTIVERSE_TRAVERSAL"
     },
     {
      "value": 13,
-     "enabled": {
-      "type": "TECH_MANIFOLD_COLONIZATION",
-      "scope": "team"
-     }
+     "enabled": "TECH_MANIFOLD_COLONIZATION"
     },
     {
      "value": 13,
-     "enabled": {
-      "type": "TECH_MACROVERSE_TRAVERSAL",
-      "scope": "team"
-     }
+     "enabled": "TECH_MACROVERSE_TRAVERSAL"
     },
     {
      "value": 1,
@@ -132,10 +102,7 @@
     10,
     {
      "value": 12,
-     "enabled": {
-      "type": "TECH_CULTURAL_LONGEVITY",
-      "scope": "team"
-     }
+     "enabled": "TECH_CULTURAL_LONGEVITY"
     }
    ]
   }

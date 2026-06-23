@@ -5,14 +5,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_LDS_MISSIONARY_TRAINING_CENTRE",
-     "scope": "city"
-    },
-    {
-     "type": "RELIGION_MORMON",
-     "scope": "city"
-    }
+    "BUILDING_LDS_MISSIONARY_TRAINING_CENTRE",
+    "RELIGION_MORMON"
    ]
   }
  },

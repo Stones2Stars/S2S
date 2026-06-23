@@ -14,14 +14,8 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_EPSILON_ASSEMBLER",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_POWERED_EXOSKELETON",
-     "scope": "team"
-    }
+    "BUILDING_EPSILON_ASSEMBLER",
+    "TECH_POWERED_EXOSKELETON"
    ],
    "any": [
     [
@@ -60,10 +54,7 @@
     ]
    ],
    "dormant": [
-    {
-     "type": "BUILDING_NANOTECH_COMPLEX",
-     "scope": "city"
-    }
+    "BUILDING_NANOTECH_COMPLEX"
    ]
   }
  },

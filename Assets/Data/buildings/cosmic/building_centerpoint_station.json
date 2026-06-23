@@ -5,18 +5,9 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_INTERSTELLAR_TRACTOR_BEAM",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_INTERSTELLAR_GALACTIC_PORT",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_GRAVITRONICS",
-     "scope": "team"
-    }
+    "BUILDING_INTERSTELLAR_TRACTOR_BEAM",
+    "BUILDING_INTERSTELLAR_GALACTIC_PORT",
+    "TECH_GRAVITRONICS"
    ],
    "any": [
     [

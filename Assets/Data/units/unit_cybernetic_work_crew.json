@@ -5,14 +5,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_MAGLEV_LAUNCHER",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_NEURON_ENGINEERING",
-     "scope": "team"
-    }
+    "BUILDING_MAGLEV_LAUNCHER",
+    "TECH_NEURON_ENGINEERING"
    ]
   }
  },

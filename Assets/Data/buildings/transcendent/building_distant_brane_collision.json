@@ -10,19 +10,13 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_DISTANT_BRANE_ASSEMBLER",
-     "scope": "city"
-    },
+    "BUILDING_DISTANT_BRANE_ASSEMBLER",
     {
      "type": "BUILDING_DISTANT_BRANE_THRUSTER",
      "scope": "empire",
      "min": 1
     },
-    {
-     "type": "TECH_BRANE_CROSSOVER",
-     "scope": "team"
-    }
+    "TECH_BRANE_CROSSOVER"
    ],
    "any": [
     [

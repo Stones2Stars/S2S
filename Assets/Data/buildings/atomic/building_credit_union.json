@@ -13,14 +13,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_BANK",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_APPLIED_ECONOMICS",
-     "scope": "team"
-    }
+    "BUILDING_BANK",
+    "TECH_APPLIED_ECONOMICS"
    ],
    "any": [
     [
@@ -33,10 +27,7 @@
   },
   "operate": {
    "dormant": [
-    {
-     "type": "BUILDING_BLOCKCHAIN_FINANCIAL_SERVICES",
-     "scope": "city"
-    }
+    "BUILDING_BLOCKCHAIN_FINANCIAL_SERVICES"
    ]
   }
  },

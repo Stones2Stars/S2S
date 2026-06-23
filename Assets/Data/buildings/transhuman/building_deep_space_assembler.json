@@ -13,25 +13,13 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_DEEP_SPACE_COLONIES",
-     "scope": "team"
-    }
+    "TECH_DEEP_SPACE_COLONIES"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_DEEP_SPACE_SOLAR_ARRAY_INNER_SOLAR_SYSTEM",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_DEEP_SPACE_SOLAR_ARRAY_OUTER_SOLAR_SYSTEM",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_DEEP_SPACE_SOLAR_ARRAY_TRANSNEPTUNIAN",
-      "scope": "city"
-     }
+     "BUILDING_DEEP_SPACE_SOLAR_ARRAY_INNER_SOLAR_SYSTEM",
+     "BUILDING_DEEP_SPACE_SOLAR_ARRAY_OUTER_SOLAR_SYSTEM",
+     "BUILDING_DEEP_SPACE_SOLAR_ARRAY_TRANSNEPTUNIAN"
     ],
     [
      {

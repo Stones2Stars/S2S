@@ -21,14 +21,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_SPACE_COLONY_DEEP_SPACE",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_ORBITAL_MEGASTRUCTURES",
-     "scope": "team"
-    }
+    "BUILDING_SPACE_COLONY_DEEP_SPACE",
+    "TECH_ORBITAL_MEGASTRUCTURES"
    ],
    "any": [
     [

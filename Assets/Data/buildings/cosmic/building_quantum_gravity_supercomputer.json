@@ -12,14 +12,8 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_OPTRONIC_SUPERCOMPUTER",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_GRAVITRONICS",
-     "scope": "team"
-    }
+    "BUILDING_OPTRONIC_SUPERCOMPUTER",
+    "TECH_GRAVITRONICS"
    ],
    "any": [
     [

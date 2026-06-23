@@ -5,14 +5,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_TRANSTELLAR_HYDROGEN_MAP",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_INTERSTELLAR_TRADE",
-     "scope": "team"
-    }
+    "BUILDING_TRANSTELLAR_HYDROGEN_MAP",
+    "TECH_INTERSTELLAR_TRADE"
    ],
    "any": [
     [

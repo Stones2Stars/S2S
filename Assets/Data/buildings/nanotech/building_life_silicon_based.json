@@ -6,14 +6,8 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_LUNAR_SILICON_PROCESSING_FACILITY",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_HYPOTHETICAL_BIOCHEMISTRY",
-     "scope": "team"
-    }
+    "BUILDING_LUNAR_SILICON_PROCESSING_FACILITY",
+    "TECH_HYPOTHETICAL_BIOCHEMISTRY"
    ],
    "any": [
     [
@@ -33,10 +27,7 @@
    "flat": [
     {
      "value": 10,
-     "enabled": {
-      "type": "TECH_GAIA_ECOLOGY",
-      "scope": "team"
-     }
+     "enabled": "TECH_GAIA_ECOLOGY"
     }
    ]
   }
@@ -47,17 +38,11 @@
     200,
     {
      "value": 10,
-     "enabled": {
-      "type": "TECH_NUTRACEUTICAL_ANIMALS",
-      "scope": "team"
-     }
+     "enabled": "TECH_NUTRACEUTICAL_ANIMALS"
     },
     {
      "value": 11,
-     "enabled": {
-      "type": "TECH_ADAPTIVE_RADIATION",
-      "scope": "team"
-     }
+     "enabled": "TECH_ADAPTIVE_RADIATION"
     }
    ]
   }
@@ -67,10 +52,7 @@
    "flat": [
     {
      "value": 11,
-     "enabled": {
-      "type": "TECH_ECOSYNTHESIS",
-      "scope": "team"
-     }
+     "enabled": "TECH_ECOSYNTHESIS"
     }
    ]
   }

@@ -13,10 +13,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_NEGOTIATION",
-     "scope": "team"
-    }
+    "TECH_NEGOTIATION"
    ],
    "any": [
     [
@@ -48,10 +45,7 @@
     ]
    ],
    "dormant": [
-    {
-     "type": "BUILDING_AMBASSADORS_HOUSE",
-     "scope": "city"
-    }
+    "BUILDING_AMBASSADORS_HOUSE"
    ]
   }
  },

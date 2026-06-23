@@ -6,14 +6,8 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_HYPERSPACE_SIMULATED_UNIVERSE",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_UNIVERSAL_SINGULARITY",
-     "scope": "team"
-    }
+    "BUILDING_HYPERSPACE_SIMULATED_UNIVERSE",
+    "TECH_UNIVERSAL_SINGULARITY"
    ],
    "any": [
     [

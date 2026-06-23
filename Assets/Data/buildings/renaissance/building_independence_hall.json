@@ -5,14 +5,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_COURTHOUSE",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_REPRESENTATIVE_DEMOCRACY",
-     "scope": "team"
-    }
+    "BUILDING_COURTHOUSE",
+    "TECH_REPRESENTATIVE_DEMOCRACY"
    ],
    "any": [
     [

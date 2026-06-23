@@ -18,22 +18,10 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_CLAYTRONIC_CITY",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_SPACESCRAPER",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_ALPHA_ASSEMBLER",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_PICOTECHNOLOGY",
-     "scope": "team"
-    }
+    "BUILDING_CLAYTRONIC_CITY",
+    "BUILDING_SPACESCRAPER",
+    "BUILDING_ALPHA_ASSEMBLER",
+    "TECH_PICOTECHNOLOGY"
    ],
    "any": [
     [

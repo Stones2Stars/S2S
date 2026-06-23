@@ -16,10 +16,7 @@
      "scope": "city",
      "min": 3
     },
-    {
-     "type": "TECH_FIREFIGHTING",
-     "scope": "team"
-    }
+    "TECH_FIREFIGHTING"
    ],
    "any": [
     [

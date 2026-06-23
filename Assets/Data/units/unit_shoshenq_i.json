@@ -10,14 +10,8 @@
      "scope": "city",
      "connection": "trade|vicinity"
     },
-    {
-     "type": "TECH_WRITING",
-     "scope": "team"
-    },
-    {
-     "type": "TECH_PRIESTHOOD",
-     "scope": "team"
-    }
+    "TECH_WRITING",
+    "TECH_PRIESTHOOD"
    ]
   }
  },

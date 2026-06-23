@@ -5,18 +5,9 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_INTERSTELLAR_SPHEREWORLD",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_EFFECT_MULTIVERSAL_ECONOMY",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_OMEGA_POINT",
-     "scope": "team"
-    }
+    "BUILDING_INTERSTELLAR_SPHEREWORLD",
+    "BUILDING_EFFECT_MULTIVERSAL_ECONOMY",
+    "TECH_OMEGA_POINT"
    ],
    "any": [
     [

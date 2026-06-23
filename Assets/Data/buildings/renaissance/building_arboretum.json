@@ -18,10 +18,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_BOTANY",
-     "scope": "team"
-    }
+    "TECH_BOTANY"
    ],
    "any": [
     [
@@ -34,10 +31,7 @@
   },
   "operate": {
    "dormant": [
-    {
-     "type": "BUILDING_AGROFOREST",
-     "scope": "city"
-    }
+    "BUILDING_AGROFOREST"
    ]
   }
  },

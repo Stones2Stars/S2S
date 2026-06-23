@@ -19,14 +19,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_ZOO",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_ECOLOGY",
-     "scope": "team"
-    }
+    "BUILDING_ZOO",
+    "TECH_ECOLOGY"
    ],
    "any": [
     [
@@ -46,10 +40,7 @@
     }
    ],
    "dormant": [
-    {
-     "type": "BUILDING_ANIMAL_PRESERVE",
-     "scope": "city"
-    }
+    "BUILDING_ANIMAL_PRESERVE"
    ]
   }
  },

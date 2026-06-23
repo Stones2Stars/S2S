@@ -6,14 +6,8 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_COMMERCIAL_AIRPORT",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_MEGACITIES",
-     "scope": "team"
-    }
+    "BUILDING_COMMERCIAL_AIRPORT",
+    "TECH_MEGACITIES"
    ],
    "any": [
     [
@@ -30,38 +24,23 @@
    "flat": [
     {
      "value": 9,
-     "enabled": {
-      "type": "TECH_SKYROADS",
-      "scope": "team"
-     }
+     "enabled": "TECH_SKYROADS"
     },
     {
      "value": 9,
-     "enabled": {
-      "type": "TECH_ORBITAL_FLIGHT",
-      "scope": "team"
-     }
+     "enabled": "TECH_ORBITAL_FLIGHT"
     },
     {
      "value": 9,
-     "enabled": {
-      "type": "TECH_LEVITATION",
-      "scope": "team"
-     }
+     "enabled": "TECH_LEVITATION"
     },
     {
      "value": 10,
-     "enabled": {
-      "type": "TECH_WEIGHTLESS_FLIGHT",
-      "scope": "team"
-     }
+     "enabled": "TECH_WEIGHTLESS_FLIGHT"
     },
     {
      "value": 10,
-     "enabled": {
-      "type": "TECH_FRICTIONLESS_FLIGHT",
-      "scope": "team"
-     }
+     "enabled": "TECH_FRICTIONLESS_FLIGHT"
     }
    ]
   }

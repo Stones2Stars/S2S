@@ -6,18 +6,9 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_LUNAR_WATER_EXTRACTION_FACILITY",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_LUNAR_ORGANIC_POLYMERE_FACTORY",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_LUNAR_MANUFACTURING",
-     "scope": "team"
-    }
+    "BUILDING_LUNAR_WATER_EXTRACTION_FACILITY",
+    "BUILDING_LUNAR_ORGANIC_POLYMERE_FACTORY",
+    "TECH_LUNAR_MANUFACTURING"
    ],
    "any": [
     [
@@ -44,10 +35,7 @@
     50,
     {
      "value": 200,
-     "enabled": {
-      "type": "TECH_LUNAR_TRADE",
-      "scope": "team"
-     }
+     "enabled": "TECH_LUNAR_TRADE"
     }
    ]
   }

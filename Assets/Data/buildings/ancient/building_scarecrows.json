@@ -23,10 +23,7 @@
       "max": 70
      }
     },
-    {
-     "type": "TECH_AGRICULTURE",
-     "scope": "team"
-    }
+    "TECH_AGRICULTURE"
    ],
    "any": [
     [
@@ -53,10 +50,7 @@
     ]
    ],
    "dormant": [
-    {
-     "type": "BUILDING_FARMSCRAPER_I",
-     "scope": "city"
-    }
+    "BUILDING_FARMSCRAPER_I"
    ]
   }
  },

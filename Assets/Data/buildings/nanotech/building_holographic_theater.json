@@ -14,14 +14,8 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_COMPUTER_NETWORK",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_HOLOGRAPHICS",
-     "scope": "team"
-    }
+    "BUILDING_COMPUTER_NETWORK",
+    "TECH_HOLOGRAPHICS"
    ],
    "any": [
     [
@@ -41,10 +35,7 @@
     }
    ],
    "dormant": [
-    {
-     "type": "BUILDING_HIGH_TECH_CULTURAL_ENRICHMENT",
-     "scope": "city"
-    }
+    "BUILDING_HIGH_TECH_CULTURAL_ENRICHMENT"
    ]
   }
  },

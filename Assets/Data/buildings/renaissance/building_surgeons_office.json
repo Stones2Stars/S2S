@@ -32,10 +32,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_ELIXIRS_AND_TONICS",
-     "scope": "team"
-    },
+    "TECH_ELIXIRS_AND_TONICS",
     {
      "type": "BONUS_DRUGS",
      "scope": "city",
@@ -74,14 +71,8 @@
     ]
    ],
    "dormant": [
-    {
-     "type": "BUILDING_MEDICAL_CLINIC",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_HEALTHCARE_MEGACOMPLEX",
-     "scope": "city"
-    }
+    "BUILDING_MEDICAL_CLINIC",
+    "BUILDING_HEALTHCARE_MEGACOMPLEX"
    ]
   }
  },

@@ -10,14 +10,8 @@
      "scope": "city",
      "connection": "trade|vicinity"
     },
-    {
-     "type": "BUILDING_PAWN_SHOP",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_CONSUMERISM",
-     "scope": "team"
-    },
+    "BUILDING_PAWN_SHOP",
+    "TECH_CONSUMERISM",
     {
      "type": "BONUS_AMMUNITION",
      "scope": "city",

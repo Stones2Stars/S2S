@@ -5,14 +5,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_STOCK_MARKET",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_CHAOS_THEORY",
-     "scope": "team"
-    }
+    "BUILDING_STOCK_MARKET",
+    "TECH_CHAOS_THEORY"
    ],
    "any": [
     [
@@ -30,10 +24,7 @@
     3,
     {
      "value": 8,
-     "enabled": {
-      "type": "TECH_DERIVATIVES",
-      "scope": "team"
-     }
+     "enabled": "TECH_DERIVATIVES"
     }
    ]
   }

@@ -64,10 +64,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_POTTERY",
-     "scope": "team"
-    }
+    "TECH_POTTERY"
    ],
    "any": [
     [
@@ -106,10 +103,7 @@
     ]
    ],
    "dormant": [
-    {
-     "type": "BUILDING_MODERN_GRANARY",
-     "scope": "city"
-    }
+    "BUILDING_MODERN_GRANARY"
    ]
   }
  },

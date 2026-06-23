@@ -13,10 +13,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_SPICE_TRADE",
-     "scope": "team"
-    }
+    "TECH_SPICE_TRADE"
    ],
    "any": [
     [
@@ -36,10 +33,7 @@
     }
    ],
    "dormant": [
-    {
-     "type": "BUILDING_HYPERMARKET",
-     "scope": "city"
-    }
+    "BUILDING_HYPERMARKET"
    ]
   }
  },

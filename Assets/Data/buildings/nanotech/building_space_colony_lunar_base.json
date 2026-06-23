@@ -16,10 +16,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_LUNAR_COLONIZATION",
-     "scope": "team"
-    }
+    "TECH_LUNAR_COLONIZATION"
    ],
    "any": [
     [

@@ -6,25 +6,13 @@
   "build": {
    "all": [
     "HAS_COAST",
-    {
-     "type": "TECH_MARINE_ARCHITECTURE",
-     "scope": "team"
-    }
+    "TECH_MARINE_ARCHITECTURE"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_WAVE_FARM",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_OCEAN_THERMAL_POWER_PLANT",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_RENEWABLE_MEGACOMPLEX",
-      "scope": "city"
-     }
+     "BUILDING_WAVE_FARM",
+     "BUILDING_OCEAN_THERMAL_POWER_PLANT",
+     "BUILDING_RENEWABLE_MEGACOMPLEX"
     ],
     [
      {
@@ -37,18 +25,9 @@
   "operate": {
    "any": [
     [
-     {
-      "type": "CIVIC_CITY_STATES",
-      "scope": "empire"
-     },
-     {
-      "type": "CIVIC_OPEN_BORDERS",
-      "scope": "empire"
-     },
-     {
-      "type": "CIVIC_POLYSTATE",
-      "scope": "empire"
-     }
+     "CIVIC_CITY_STATES",
+     "CIVIC_OPEN_BORDERS",
+     "CIVIC_POLYSTATE"
     ]
    ]
   }

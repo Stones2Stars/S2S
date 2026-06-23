@@ -5,17 +5,11 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_INDUSTRIAL_ECOLOGY",
-     "scope": "team"
-    }
+    "TECH_INDUSTRIAL_ECOLOGY"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_METROPOLITAN_ADMINISTRATION",
-      "scope": "city"
-     }
+     "BUILDING_METROPOLITAN_ADMINISTRATION"
     ],
     [
      {

@@ -6,14 +6,8 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_COMPUTER_NETWORK",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_CYBERWARFARE",
-     "scope": "team"
-    }
+    "BUILDING_COMPUTER_NETWORK",
+    "TECH_CYBERWARFARE"
    ],
    "any": [
     [
@@ -27,30 +21,12 @@
   "operate": {
    "any": [
     [
-     {
-      "type": "CIVIC_INQUISITORIAL",
-      "scope": "empire"
-     },
-     {
-      "type": "CIVIC_TOTALITARIANISM",
-      "scope": "empire"
-     },
-     {
-      "type": "CIVIC_MARXIST",
-      "scope": "empire"
-     },
-     {
-      "type": "CIVIC_PROPAGANDA",
-      "scope": "empire"
-     },
-     {
-      "type": "CIVIC_SINGLE_PARTY",
-      "scope": "empire"
-     },
-     {
-      "type": "CIVIC_GRID",
-      "scope": "empire"
-     }
+     "CIVIC_INQUISITORIAL",
+     "CIVIC_TOTALITARIANISM",
+     "CIVIC_MARXIST",
+     "CIVIC_PROPAGANDA",
+     "CIVIC_SINGLE_PARTY",
+     "CIVIC_GRID"
     ]
    ]
   }

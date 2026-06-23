@@ -14,14 +14,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_TRANSTELLAR_ARTIFICIAL_RED_DWARF",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_ULTIMA_ARCHITECTURE",
-     "scope": "team"
-    }
+    "BUILDING_TRANSTELLAR_ARTIFICIAL_RED_DWARF",
+    "TECH_ULTIMA_ARCHITECTURE"
    ],
    "any": [
     [
@@ -39,10 +33,7 @@
     20,
     {
      "value": 12,
-     "enabled": {
-      "type": "TECH_GALACTIC_ENGINEERING",
-      "scope": "team"
-     }
+     "enabled": "TECH_GALACTIC_ENGINEERING"
     }
    ]
   }
@@ -53,10 +44,7 @@
     100,
     {
      "value": 12,
-     "enabled": {
-      "type": "TECH_GALACTIC_ENGINEERING",
-      "scope": "team"
-     }
+     "enabled": "TECH_GALACTIC_ENGINEERING"
     }
    ]
   }

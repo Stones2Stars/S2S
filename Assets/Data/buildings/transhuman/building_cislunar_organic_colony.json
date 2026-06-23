@@ -10,18 +10,9 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_CISLUNAR_ENHANCED_ALGAE_FARM",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_CISLUNAR_SPACEPORT",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_BOTANICAL_ALCHEMY",
-     "scope": "team"
-    }
+    "BUILDING_CISLUNAR_ENHANCED_ALGAE_FARM",
+    "BUILDING_CISLUNAR_SPACEPORT",
+    "TECH_BOTANICAL_ALCHEMY"
    ],
    "any": [
     [

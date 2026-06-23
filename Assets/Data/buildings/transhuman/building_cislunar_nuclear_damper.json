@@ -5,18 +5,9 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_CISLUNAR_SHIELDING",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_CISLUNAR_ONEILL_CYLINDER",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_NANOSHIELDING",
-     "scope": "team"
-    }
+    "BUILDING_CISLUNAR_SHIELDING",
+    "BUILDING_CISLUNAR_ONEILL_CYLINDER",
+    "TECH_NANOSHIELDING"
    ],
    "any": [
     [

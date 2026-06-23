@@ -17,10 +17,7 @@
      "scope": "city",
      "min": 3
     },
-    {
-     "type": "TECH_CYBERPUNK",
-     "scope": "team"
-    }
+    "TECH_CYBERPUNK"
    ],
    "any": [
     [

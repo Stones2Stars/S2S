@@ -6,14 +6,8 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_MILITARY_BASE",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_HOLOGRAPHICS",
-     "scope": "team"
-    }
+    "BUILDING_MILITARY_BASE",
+    "TECH_HOLOGRAPHICS"
    ],
    "any": [
     [

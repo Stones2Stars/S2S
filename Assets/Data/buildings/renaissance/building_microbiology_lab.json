@@ -12,14 +12,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_UNIVERSITY",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_MICROBIOLOGY",
-     "scope": "team"
-    }
+    "BUILDING_UNIVERSITY",
+    "TECH_MICROBIOLOGY"
    ],
    "any": [
     [
@@ -37,66 +31,39 @@
     5,
     {
      "value": 6,
-     "enabled": {
-      "type": "TECH_ANTIBIOTICS",
-      "scope": "team"
-     }
+     "enabled": "TECH_ANTIBIOTICS"
     },
     {
      "value": 7,
-     "enabled": {
-      "type": "TECH_BIOLOGICAL_WARFARE",
-      "scope": "team"
-     }
+     "enabled": "TECH_BIOLOGICAL_WARFARE"
     },
     {
      "value": 7,
-     "enabled": {
-      "type": "TECH_ECOLOGY",
-      "scope": "team"
-     }
+     "enabled": "TECH_ECOLOGY"
     },
     {
      "value": 7,
-     "enabled": {
-      "type": "TECH_GENETICS",
-      "scope": "team"
-     }
+     "enabled": "TECH_GENETICS"
     },
     {
      "value": 8,
-     "enabled": {
-      "type": "TECH_BIOMATERIALS",
-      "scope": "team"
-     }
+     "enabled": "TECH_BIOMATERIALS"
     },
     {
      "value": 8,
-     "enabled": {
-      "type": "TECH_MOLECULAR_MEDICINE",
-      "scope": "team"
-     }
+     "enabled": "TECH_MOLECULAR_MEDICINE"
     },
     {
      "value": 8,
-     "enabled": {
-      "type": "TECH_GENOMIC_ENCYCLOPEDIA",
-      "scope": "team"
-     }
+     "enabled": "TECH_GENOMIC_ENCYCLOPEDIA"
     },
     {
      "value": 8,
-     "enabled": {
-      "type": "TECH_BIOINFORMATICS",
-      "scope": "team"
-     }
+     "enabled": "TECH_BIOINFORMATICS"
     },
     {
      "value": 9,
-     "enabled": {
-      "type": "TECH_GENE_ENHANCEMENT",
-      "scope": "team"
-     }
+     "enabled": "TECH_GENE_ENHANCEMENT"
     }
    ]
   }

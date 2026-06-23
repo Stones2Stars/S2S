@@ -5,14 +5,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_INTERGALACTIC_VOID_BASE",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_ENTROPY_REVERSAL",
-     "scope": "team"
-    }
+    "BUILDING_INTERGALACTIC_VOID_BASE",
+    "TECH_ENTROPY_REVERSAL"
    ],
    "any": [
     [

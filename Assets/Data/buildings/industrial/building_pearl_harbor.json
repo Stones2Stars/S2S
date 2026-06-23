@@ -16,21 +16,12 @@
      "scope": "city",
      "min": 3
     },
-    {
-     "type": "TECH_IMPERIALISM",
-     "scope": "team"
-    }
+    "TECH_IMPERIALISM"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_DRYDOCK",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_NAVAL_YARD",
-      "scope": "city"
-     }
+     "BUILDING_DRYDOCK",
+     "BUILDING_NAVAL_YARD"
     ],
     [
      {
@@ -40,10 +31,7 @@
     ]
    ],
    "noneOf": [
-    {
-     "type": "BUILDING_SCAPA_FLOW",
-     "scope": "city"
-    }
+    "BUILDING_SCAPA_FLOW"
    ]
   }
  },

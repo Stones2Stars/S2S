@@ -10,14 +10,8 @@
      "scope": "city",
      "connection": "trade|vicinity"
     },
-    {
-     "type": "BUILDING_CANNON_FORGE",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_GUNPOWDER",
-     "scope": "team"
-    }
+    "BUILDING_CANNON_FORGE",
+    "TECH_GUNPOWDER"
    ],
    "any": [
     [

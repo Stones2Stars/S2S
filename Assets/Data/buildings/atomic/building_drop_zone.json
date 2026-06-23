@@ -13,21 +13,12 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_EXTREME_SPORTS",
-     "scope": "team"
-    }
+    "TECH_EXTREME_SPORTS"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_AIRFIELD",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_AEROSPACE_COMPLEX",
-      "scope": "city"
-     }
+     "BUILDING_AIRFIELD",
+     "BUILDING_AEROSPACE_COMPLEX"
     ],
     [
      {
@@ -46,10 +37,7 @@
     }
    ],
    "dormant": [
-    {
-     "type": "BUILDING_ATHLETIC_MEGACOMPLEX",
-     "scope": "city"
-    }
+    "BUILDING_ATHLETIC_MEGACOMPLEX"
    ]
   }
  },

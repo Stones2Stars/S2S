@@ -16,10 +16,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_PRIESTHOOD",
-     "scope": "team"
-    }
+    "TECH_PRIESTHOOD"
    ],
    "any": [
     [
@@ -32,10 +29,7 @@
   },
   "operate": {
    "all": [
-    {
-     "type": "RELIGION_BUDDHISM",
-     "scope": "city"
-    }
+    "RELIGION_BUDDHISM"
    ],
    "any": [
     [

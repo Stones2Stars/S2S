@@ -18,14 +18,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_MINE_IRON",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_IRON_WORKING",
-     "scope": "team"
-    }
+    "BUILDING_MINE_IRON",
+    "TECH_IRON_WORKING"
    ],
    "any": [
     [
@@ -45,14 +39,8 @@
     }
    ],
    "dormant": [
-    {
-     "type": "BUILDING_ADVANCED_IRONWORKS",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_METALS_MEGACOMPLEX",
-     "scope": "city"
-    }
+    "BUILDING_ADVANCED_IRONWORKS",
+    "BUILDING_METALS_MEGACOMPLEX"
    ]
   }
  },

@@ -6,19 +6,13 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_BACTERIUM_BIOFORGE",
-     "scope": "city"
-    },
+    "BUILDING_BACTERIUM_BIOFORGE",
     {
      "type": "BUILDING_LIFE_STRUCTURAL_BACTERIA",
      "scope": "empire",
      "min": 1
     },
-    {
-     "type": "TECH_PROTOTYPED_PATHOGENS",
-     "scope": "team"
-    }
+    "TECH_PROTOTYPED_PATHOGENS"
    ],
    "any": [
     [

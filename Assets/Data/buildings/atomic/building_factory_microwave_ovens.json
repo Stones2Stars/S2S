@@ -14,14 +14,8 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_FACTORY",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_MICROWAVES",
-     "scope": "team"
-    }
+    "BUILDING_FACTORY",
+    "TECH_MICROWAVES"
    ],
    "any": [
     [
@@ -50,10 +44,7 @@
     ]
    ],
    "dormant": [
-    {
-     "type": "BUILDING_ELECTRONICS_MANUFACTURING_DISTRICT",
-     "scope": "city"
-    }
+    "BUILDING_ELECTRONICS_MANUFACTURING_DISTRICT"
    ]
   }
  },

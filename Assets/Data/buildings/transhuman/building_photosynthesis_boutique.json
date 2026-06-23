@@ -14,14 +14,8 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_BIOLUMINESCENT_BOUTIQUE",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_ARTIFICIAL_PHOTOSYNTHESIS",
-     "scope": "team"
-    }
+    "BUILDING_BIOLUMINESCENT_BOUTIQUE",
+    "TECH_ARTIFICIAL_PHOTOSYNTHESIS"
    ],
    "any": [
     [
@@ -41,10 +35,7 @@
     }
    ],
    "dormant": [
-    {
-     "type": "BUILDING_HIGH_TECH_CULTURAL_ENRICHMENT",
-     "scope": "city"
-    }
+    "BUILDING_HIGH_TECH_CULTURAL_ENRICHMENT"
    ]
   }
  },

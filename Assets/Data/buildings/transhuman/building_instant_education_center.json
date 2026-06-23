@@ -5,14 +5,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_MEMORY_TRANSFER_STATION",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_KNOWLEDGE_MERCANTILISM",
-     "scope": "team"
-    }
+    "BUILDING_MEMORY_TRANSFER_STATION",
+    "TECH_KNOWLEDGE_MERCANTILISM"
    ],
    "any": [
     [
@@ -26,10 +20,7 @@
   "operate": {
    "any": [
     [
-     {
-      "type": "CIVIC_INSTANT",
-      "scope": "empire"
-     }
+     "CIVIC_INSTANT"
     ]
    ]
   }

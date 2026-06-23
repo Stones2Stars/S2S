@@ -11,21 +11,12 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_PETROGLYPHS",
-     "scope": "team"
-    }
+    "TECH_PETROGLYPHS"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_CAVE_PAINTINGS",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_FRESCO_MURAL",
-      "scope": "city"
-     }
+     "BUILDING_CAVE_PAINTINGS",
+     "BUILDING_FRESCO_MURAL"
     ],
     [
      {

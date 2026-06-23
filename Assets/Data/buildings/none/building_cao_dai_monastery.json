@@ -15,10 +15,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_MEDITATION",
-     "scope": "team"
-    }
+    "TECH_MEDITATION"
    ],
    "any": [
     [
@@ -31,10 +28,7 @@
   },
   "operate": {
    "all": [
-    {
-     "type": "RELIGION_CAO_DAI",
-     "scope": "city"
-    }
+    "RELIGION_CAO_DAI"
    ]
   }
  },

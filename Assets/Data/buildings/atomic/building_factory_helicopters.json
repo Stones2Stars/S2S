@@ -14,14 +14,8 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_FACTORY",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_VERTICAL_FLIGHT",
-     "scope": "team"
-    }
+    "BUILDING_FACTORY",
+    "TECH_VERTICAL_FLIGHT"
    ],
    "any": [
     [
@@ -50,10 +44,7 @@
     ]
    ],
    "dormant": [
-    {
-     "type": "BUILDING_MILITARY_INDUSTRIAL_COMPLEX",
-     "scope": "city"
-    }
+    "BUILDING_MILITARY_INDUSTRIAL_COMPLEX"
    ]
   }
  },

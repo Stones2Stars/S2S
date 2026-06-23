@@ -11,14 +11,8 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_LUNAR_ALGAE_FARM",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_PARATERRAFORMING",
-     "scope": "team"
-    }
+    "BUILDING_LUNAR_ALGAE_FARM",
+    "TECH_PARATERRAFORMING"
    ],
    "any": [
     [

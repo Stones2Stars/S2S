@@ -15,10 +15,7 @@
      "scope": "city",
      "min": 3
     },
-    {
-     "type": "TECH_PRIESTHOOD",
-     "scope": "team"
-    }
+    "TECH_PRIESTHOOD"
    ],
    "any": [
     [

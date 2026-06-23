@@ -10,14 +10,8 @@
      "scope": "city",
      "connection": "trade|vicinity"
     },
-    {
-     "type": "BUILDING_GUARD_DOG_TRAINER",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_LEADERSHIP",
-     "scope": "team"
-    }
+    "BUILDING_GUARD_DOG_TRAINER",
+    "TECH_LEADERSHIP"
    ],
    "any": [
     [

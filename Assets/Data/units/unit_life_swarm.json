@@ -5,14 +5,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_LIFE_CHIRAL_FLEXIBLE",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_GRAND_UNIFICATION_BIOLOGY",
-     "scope": "team"
-    }
+    "BUILDING_LIFE_CHIRAL_FLEXIBLE",
+    "TECH_GRAND_UNIFICATION_BIOLOGY"
    ]
   }
  },

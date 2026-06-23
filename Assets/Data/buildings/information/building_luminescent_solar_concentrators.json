@@ -5,29 +5,14 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_ORGANIC_PHOTONICS",
-     "scope": "team"
-    }
+    "TECH_ORGANIC_PHOTONICS"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_SMART_GRID",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_WIRELESS_GRID",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_EMP_GRID",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_SUPERCONDUCTING_GRID",
-      "scope": "city"
-     }
+     "BUILDING_SMART_GRID",
+     "BUILDING_WIRELESS_GRID",
+     "BUILDING_EMP_GRID",
+     "BUILDING_SUPERCONDUCTING_GRID"
     ],
     [
      {

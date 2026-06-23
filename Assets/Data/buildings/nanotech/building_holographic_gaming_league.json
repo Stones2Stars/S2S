@@ -11,21 +11,12 @@
      "scope": "city",
      "min": 7
     },
-    {
-     "type": "TECH_HOLOGRAPHICS",
-     "scope": "team"
-    }
+    "TECH_HOLOGRAPHICS"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_HOLOGRAPHIC_NETWORKS",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_EXOCORTEX_NETWORKS",
-      "scope": "city"
-     }
+     "BUILDING_HOLOGRAPHIC_NETWORKS",
+     "BUILDING_EXOCORTEX_NETWORKS"
     ],
     [
      {

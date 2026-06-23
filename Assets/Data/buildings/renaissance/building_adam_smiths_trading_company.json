@@ -15,14 +15,8 @@
      "scope": "city",
      "min": 7
     },
-    {
-     "type": "BUILDING_UNIVERSITY",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_ECONOMICS",
-     "scope": "team"
-    }
+    "BUILDING_UNIVERSITY",
+    "TECH_ECONOMICS"
    ],
    "any": [
     [

@@ -5,10 +5,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_INVENTION",
-     "scope": "team"
-    }
+    "TECH_INVENTION"
    ],
    "any": [
     [
@@ -25,10 +22,7 @@
    "flat": [
     {
      "value": 5,
-     "enabled": {
-      "type": "TECH_PATENT_RIGHTS",
-      "scope": "team"
-     }
+     "enabled": "TECH_PATENT_RIGHTS"
     }
    ]
   }
@@ -39,31 +33,19 @@
     3,
     {
      "value": 5,
-     "enabled": {
-      "type": "TECH_SCIENTIFIC_METHOD",
-      "scope": "team"
-     }
+     "enabled": "TECH_SCIENTIFIC_METHOD"
     },
     {
      "value": 5,
-     "enabled": {
-      "type": "TECH_REPLACEABLE_PARTS",
-      "scope": "team"
-     }
+     "enabled": "TECH_REPLACEABLE_PARTS"
     },
     {
      "value": 7,
-     "enabled": {
-      "type": "TECH_3D_MODELLING",
-      "scope": "team"
-     }
+     "enabled": "TECH_3D_MODELLING"
     },
     {
      "value": 8,
-     "enabled": {
-      "type": "TECH_RAPID_PROTOTYPING",
-      "scope": "team"
-     }
+     "enabled": "TECH_RAPID_PROTOTYPING"
     }
    ]
   }

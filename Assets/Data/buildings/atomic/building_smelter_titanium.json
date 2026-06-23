@@ -18,21 +18,12 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_ADVANCED_METALLURGY",
-     "scope": "team"
-    }
+    "TECH_ADVANCED_METALLURGY"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_CORE_MINE",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_MINE_TITANIUM",
-      "scope": "city"
-     }
+     "BUILDING_CORE_MINE",
+     "BUILDING_MINE_TITANIUM"
     ],
     [
      {
@@ -51,10 +42,7 @@
     }
    ],
    "dormant": [
-    {
-     "type": "BUILDING_METALS_MEGACOMPLEX",
-     "scope": "city"
-    }
+    "BUILDING_METALS_MEGACOMPLEX"
    ]
   }
  },

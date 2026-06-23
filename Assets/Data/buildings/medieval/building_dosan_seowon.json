@@ -20,10 +20,7 @@
      "scope": "empire",
      "min": 4
     },
-    {
-     "type": "TECH_EDUCATION",
-     "scope": "team"
-    },
+    "TECH_EDUCATION",
     "STATE_RELIGION_IN_CITY",
     {
      "STATE_RELIGION": "RELIGION_CONFUCIANISM"
@@ -40,10 +37,7 @@
   },
   "operate": {
    "all": [
-    {
-     "type": "RELIGION_CONFUCIANISM",
-     "scope": "city"
-    }
+    "RELIGION_CONFUCIANISM"
    ]
   }
  },

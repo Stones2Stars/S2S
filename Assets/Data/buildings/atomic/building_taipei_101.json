@@ -12,14 +12,8 @@
      "scope": "world",
      "min": 4
     },
-    {
-     "type": "BUILDING_SKYSCRAPER",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_POSTMODERNISM",
-     "scope": "team"
-    }
+    "BUILDING_SKYSCRAPER",
+    "TECH_POSTMODERNISM"
    ],
    "any": [
     [

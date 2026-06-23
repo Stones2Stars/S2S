@@ -20,10 +20,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_MASONRY",
-     "scope": "team"
-    }
+    "TECH_MASONRY"
    ],
    "any": [
     [
@@ -65,18 +62,9 @@
     ]
    ],
    "dormant": [
-    {
-     "type": "BUILDING_COLOSSEUM",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_MINOR_LEAGUE_STADIUM",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_MAJOR_LEAGUE_STADIUM",
-     "scope": "city"
-    }
+    "BUILDING_COLOSSEUM",
+    "BUILDING_MINOR_LEAGUE_STADIUM",
+    "BUILDING_MAJOR_LEAGUE_STADIUM"
    ]
   }
  },

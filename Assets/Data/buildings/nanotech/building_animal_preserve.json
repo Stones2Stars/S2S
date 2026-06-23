@@ -23,14 +23,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_ZOO",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_PLANETARY_ECONOMICS",
-     "scope": "team"
-    }
+    "BUILDING_ZOO",
+    "TECH_PLANETARY_ECONOMICS"
    ],
    "any": [
     [

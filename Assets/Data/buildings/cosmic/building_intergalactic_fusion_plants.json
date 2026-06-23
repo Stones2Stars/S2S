@@ -12,10 +12,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_SPACE_CREASING",
-     "scope": "team"
-    }
+    "TECH_SPACE_CREASING"
    ],
    "any": [
     [

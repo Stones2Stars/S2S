@@ -14,14 +14,8 @@
   "build": {
    "any": [
     [
-     {
-      "type": "BUILDING_LIZARD_HUNTERS_CAMP",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_ENCLOSURE_REPTILE",
-      "scope": "city"
-     }
+     "BUILDING_LIZARD_HUNTERS_CAMP",
+     "BUILDING_ENCLOSURE_REPTILE"
     ],
     [
      {
@@ -33,10 +27,7 @@
   },
   "operate": {
    "dormant": [
-    {
-     "type": "BUILDING_REPET",
-     "scope": "city"
-    }
+    "BUILDING_REPET"
    ]
   }
  },

@@ -15,10 +15,7 @@
      "scope": "empire",
      "min": 1
     },
-    {
-     "type": "TECH_LEAD_GLASS",
-     "scope": "team"
-    }
+    "TECH_LEAD_GLASS"
    ],
    "any": [
     [

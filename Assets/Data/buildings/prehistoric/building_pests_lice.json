@@ -15,10 +15,7 @@
      "scope": "city",
      "min": 4
     },
-    {
-     "type": "TECH_CANINE_DOMESTICATION",
-     "scope": "team"
-    }
+    "TECH_CANINE_DOMESTICATION"
    ],
    "any": [
     [

@@ -13,10 +13,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_MODERN_SPORTS",
-     "scope": "team"
-    }
+    "TECH_MODERN_SPORTS"
    ],
    "any": [
     [
@@ -50,10 +47,7 @@
     ]
    ],
    "dormant": [
-    {
-     "type": "BUILDING_ATHLETIC_MEGACOMPLEX",
-     "scope": "city"
-    }
+    "BUILDING_ATHLETIC_MEGACOMPLEX"
    ]
   }
  },

@@ -16,25 +16,13 @@
     "HAS_RIVER",
     "HAS_FRESHWATER",
     "HAS_POWER",
-    {
-     "type": "BUILDING_HYDROGEN_GENERATOR",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_INDUSTRIAL_PARK",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_ROCKETRY",
-     "scope": "team"
-    }
+    "BUILDING_HYDROGEN_GENERATOR",
+    "BUILDING_INDUSTRIAL_PARK",
+    "TECH_ROCKETRY"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_CHEMICAL_PLANT",
-      "scope": "city"
-     }
+     "BUILDING_CHEMICAL_PLANT"
     ],
     [
      {
@@ -46,10 +34,7 @@
   },
   "operate": {
    "dormant": [
-    {
-     "type": "BUILDING_CHEMICALS_DISTRICT",
-     "scope": "city"
-    }
+    "BUILDING_CHEMICALS_DISTRICT"
    ]
   }
  },

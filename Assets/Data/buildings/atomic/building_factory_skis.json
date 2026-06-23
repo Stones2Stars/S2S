@@ -13,14 +13,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_FACTORY",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_MODERN_SPORTS",
-     "scope": "team"
-    }
+    "BUILDING_FACTORY",
+    "TECH_MODERN_SPORTS"
    ],
    "any": [
     [
@@ -47,10 +41,7 @@
     ]
    ],
    "dormant": [
-    {
-     "type": "BUILDING_MANUFACTURING_DISTRICT",
-     "scope": "city"
-    }
+    "BUILDING_MANUFACTURING_DISTRICT"
    ]
   }
  },

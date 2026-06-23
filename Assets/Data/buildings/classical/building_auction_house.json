@@ -13,21 +13,12 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_CURRENCY",
-     "scope": "team"
-    }
+    "TECH_CURRENCY"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_TRADING_POST",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_SHOPPING_DISTRICT",
-      "scope": "city"
-     }
+     "BUILDING_TRADING_POST",
+     "BUILDING_SHOPPING_DISTRICT"
     ],
     [
      {
@@ -39,10 +30,7 @@
   },
   "operate": {
    "dormant": [
-    {
-     "type": "BUILDING_BLOCKCHAIN_FINANCIAL_SERVICES",
-     "scope": "city"
-    }
+    "BUILDING_BLOCKCHAIN_FINANCIAL_SERVICES"
    ]
   }
  },

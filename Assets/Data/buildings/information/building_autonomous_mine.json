@@ -5,14 +5,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_MODERN_EARTHWORKS",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_AUTONOMOUS_VEHICLES",
-     "scope": "team"
-    }
+    "BUILDING_MODERN_EARTHWORKS",
+    "TECH_AUTONOMOUS_VEHICLES"
    ],
    "any": [
     [

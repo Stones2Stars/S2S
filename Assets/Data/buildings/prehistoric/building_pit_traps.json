@@ -13,14 +13,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_CARVING",
-     "scope": "team"
-    },
-    {
-     "type": "TECH_TRAPPING",
-     "scope": "team"
-    }
+    "TECH_CARVING",
+    "TECH_TRAPPING"
    ],
    "any": [
     [
@@ -39,42 +33,15 @@
   },
   "operate": {
    "dormant": [
-    {
-     "type": "BUILDING_SPIKED_PIT_TRAPS",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_MECHANICAL_TRAPS",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_LANDMINES",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_BOOBY_TRAPS",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_ROBOTIC_TRAPS",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_GERM_TRAPS",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_EMP_TRAPS",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_NANOBOT_TRAPS",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_GRAVITY_TRAPS",
-     "scope": "city"
-    }
+    "BUILDING_SPIKED_PIT_TRAPS",
+    "BUILDING_MECHANICAL_TRAPS",
+    "BUILDING_LANDMINES",
+    "BUILDING_BOOBY_TRAPS",
+    "BUILDING_ROBOTIC_TRAPS",
+    "BUILDING_GERM_TRAPS",
+    "BUILDING_EMP_TRAPS",
+    "BUILDING_NANOBOT_TRAPS",
+    "BUILDING_GRAVITY_TRAPS"
    ]
   }
  },

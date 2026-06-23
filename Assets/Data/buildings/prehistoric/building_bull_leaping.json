@@ -10,57 +10,21 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_PREHISTORIC_DANCE",
-     "scope": "team"
-    }
+    "TECH_PREHISTORIC_DANCE"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_FOLKLORE_T_BULL",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_HERD_BISON",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_CAMP_BISON",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_HERD_COW",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_FARM_ANIMAL_COW",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_CAMP_GIANT_BISON",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_CAMP_AUROCHS",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_BREEDING_PROGRAM_BISON",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_ANIMAL_PRESERVE",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_INDUSTRIAL_FARMS",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_MEAT_INDUSTRY_CONGLOMERATE",
-      "scope": "city"
-     }
+     "BUILDING_FOLKLORE_T_BULL",
+     "BUILDING_HERD_BISON",
+     "BUILDING_CAMP_BISON",
+     "BUILDING_HERD_COW",
+     "BUILDING_FARM_ANIMAL_COW",
+     "BUILDING_CAMP_GIANT_BISON",
+     "BUILDING_CAMP_AUROCHS",
+     "BUILDING_BREEDING_PROGRAM_BISON",
+     "BUILDING_ANIMAL_PRESERVE",
+     "BUILDING_INDUSTRIAL_FARMS",
+     "BUILDING_MEAT_INDUSTRY_CONGLOMERATE"
     ],
     [
      {

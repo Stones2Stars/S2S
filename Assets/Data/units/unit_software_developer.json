@@ -10,10 +10,7 @@
      "scope": "city",
      "connection": "trade|vicinity"
     },
-    {
-     "type": "TECH_MICROPROCESSOR",
-     "scope": "team"
-    },
+    "TECH_MICROPROCESSOR",
     {
      "type": "BONUS_MICROCHIPS",
      "scope": "city",
@@ -39,14 +36,8 @@
      }
     ],
     [
-     {
-      "type": "BUILDING_DESIGN_STUDIO",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_ELECTRONICS_MANUFACTURING_DISTRICT",
-      "scope": "city"
-     }
+     "BUILDING_DESIGN_STUDIO",
+     "BUILDING_ELECTRONICS_MANUFACTURING_DISTRICT"
     ]
    ]
   }

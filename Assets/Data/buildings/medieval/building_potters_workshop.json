@@ -22,10 +22,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_GUILDS",
-     "scope": "team"
-    }
+    "TECH_GUILDS"
    ],
    "any": [
     [
@@ -52,14 +49,8 @@
     ]
    ],
    "dormant": [
-    {
-     "type": "BUILDING_MANUFACTURING_DISTRICT",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_FACTORY_POTTERY",
-     "scope": "city"
-    }
+    "BUILDING_MANUFACTURING_DISTRICT",
+    "BUILDING_FACTORY_POTTERY"
    ]
   }
  },

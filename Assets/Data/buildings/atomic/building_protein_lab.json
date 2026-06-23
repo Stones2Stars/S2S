@@ -13,25 +13,13 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_MICROBIOLOGY_LAB",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_MOLECULAR_BIOLOGY",
-     "scope": "team"
-    }
+    "BUILDING_MICROBIOLOGY_LAB",
+    "TECH_MOLECULAR_BIOLOGY"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_MOLECULAR_BIOLOGY_LAB",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_CHEMICALS_DISTRICT",
-      "scope": "city"
-     }
+     "BUILDING_MOLECULAR_BIOLOGY_LAB",
+     "BUILDING_CHEMICALS_DISTRICT"
     ],
     [
      {
@@ -60,52 +48,31 @@
     5,
     {
      "value": 7,
-     "enabled": {
-      "type": "TECH_3D_MODELLING",
-      "scope": "team"
-     }
+     "enabled": "TECH_3D_MODELLING"
     },
     {
      "value": 8,
-     "enabled": {
-      "type": "TECH_GENE_MANIPULATION",
-      "scope": "team"
-     }
+     "enabled": "TECH_GENE_MANIPULATION"
     },
     {
      "value": 8,
-     "enabled": {
-      "type": "TECH_BIOMATERIALS",
-      "scope": "team"
-     }
+     "enabled": "TECH_BIOMATERIALS"
     },
     {
      "value": 10,
-     "enabled": {
-      "type": "TECH_BIOINFORMATICS",
-      "scope": "team"
-     }
+     "enabled": "TECH_BIOINFORMATICS"
     },
     {
      "value": 8,
-     "enabled": {
-      "type": "TECH_GENESIS_BIOLOGY",
-      "scope": "team"
-     }
+     "enabled": "TECH_GENESIS_BIOLOGY"
     },
     {
      "value": 7,
-     "enabled": {
-      "type": "TECH_ASTROBIOLOGY",
-      "scope": "team"
-     }
+     "enabled": "TECH_ASTROBIOLOGY"
     },
     {
      "value": 10,
-     "enabled": {
-      "type": "TECH_BIOMATHEMATICS",
-      "scope": "team"
-     }
+     "enabled": "TECH_BIOMATHEMATICS"
     },
     {
      "value": 1,
@@ -131,10 +98,7 @@
    "flat": [
     {
      "value": 2,
-     "enabled": {
-      "type": "TECH_MOLECULAR_MEDICINE",
-      "scope": "team"
-     }
+     "enabled": "TECH_MOLECULAR_MEDICINE"
     }
    ]
   }

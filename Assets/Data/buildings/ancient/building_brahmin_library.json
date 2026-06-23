@@ -5,25 +5,13 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_WRITING",
-     "scope": "team"
-    },
-    {
-     "type": "TECH_CASTE_SYSTEM",
-     "scope": "team"
-    }
+    "TECH_WRITING",
+    "TECH_CASTE_SYSTEM"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_SCHOOL_OF_SCRIBES",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_LIBRARY",
-      "scope": "city"
-     }
+     "BUILDING_SCHOOL_OF_SCRIBES",
+     "BUILDING_LIBRARY"
     ],
     [
      {
@@ -35,14 +23,8 @@
   },
   "operate": {
    "all": [
-    {
-     "type": "CIVIC_CASTE_SYSTEM",
-     "scope": "empire"
-    },
-    {
-     "type": "RELIGION_HINDUISM",
-     "scope": "city"
-    }
+    "CIVIC_CASTE_SYSTEM",
+    "RELIGION_HINDUISM"
    ]
   }
  },

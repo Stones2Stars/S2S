@@ -14,14 +14,8 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_FACTORY",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_ELECTRIC_ARC_WEAPONRY",
-     "scope": "team"
-    }
+    "BUILDING_FACTORY",
+    "TECH_ELECTRIC_ARC_WEAPONRY"
    ],
    "any": [
     [
@@ -50,10 +44,7 @@
     ]
    ],
    "dormant": [
-    {
-     "type": "BUILDING_NANOTECH_COMPLEX",
-     "scope": "city"
-    }
+    "BUILDING_NANOTECH_COMPLEX"
    ]
   }
  },

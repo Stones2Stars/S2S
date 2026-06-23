@@ -19,18 +19,9 @@
   "build": {
    "all": [
     "HAS_RIVER",
-    {
-     "type": "BUILDING_FACTORY",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_REFINING",
-     "scope": "team"
-    },
-    {
-     "type": "TECH_ASSEMBLY_LINE",
-     "scope": "team"
-    }
+    "BUILDING_FACTORY",
+    "TECH_REFINING",
+    "TECH_ASSEMBLY_LINE"
    ],
    "any": [
     [
@@ -50,10 +41,7 @@
     }
    ],
    "dormant": [
-    {
-     "type": "BUILDING_ULTRAFUEL_REFINERY",
-     "scope": "city"
-    }
+    "BUILDING_ULTRAFUEL_REFINERY"
    ]
   }
  },

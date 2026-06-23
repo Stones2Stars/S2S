@@ -19,10 +19,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_DEEP_SPACE_COLONIES",
-     "scope": "team"
-    }
+    "TECH_DEEP_SPACE_COLONIES"
    ],
    "any": [
     [

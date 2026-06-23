@@ -15,10 +15,7 @@
      "scope": "world",
      "min": 10
     },
-    {
-     "type": "TECH_COAST_GUARD",
-     "scope": "team"
-    }
+    "TECH_COAST_GUARD"
    ],
    "any": [
     [

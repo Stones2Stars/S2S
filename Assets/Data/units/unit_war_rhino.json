@@ -5,21 +5,12 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_MEGAFAUNA_DOMESTICATION",
-     "scope": "team"
-    }
+    "TECH_MEGAFAUNA_DOMESTICATION"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_ANIMAL_TRAINER_RHINOCEROS",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_EFFECT_HERITAGE_RHINOS",
-      "scope": "city"
-     }
+     "BUILDING_ANIMAL_TRAINER_RHINOCEROS",
+     "BUILDING_EFFECT_HERITAGE_RHINOS"
     ]
    ]
   }

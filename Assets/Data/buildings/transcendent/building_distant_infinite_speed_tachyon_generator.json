@@ -11,14 +11,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_DISTANT_COMPUTRONIUM_FILAMENT",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_UNIVERSAL_SINGULARITY",
-     "scope": "team"
-    }
+    "BUILDING_DISTANT_COMPUTRONIUM_FILAMENT",
+    "TECH_UNIVERSAL_SINGULARITY"
    ],
    "any": [
     [

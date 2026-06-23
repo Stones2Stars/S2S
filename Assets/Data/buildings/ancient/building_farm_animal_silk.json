@@ -13,10 +13,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_SERICULTURE",
-     "scope": "team"
-    }
+    "TECH_SERICULTURE"
    ],
    "any": [
     [
@@ -38,10 +35,7 @@
     ]
    ],
    "dormant": [
-    {
-     "type": "BUILDING_TEXTILE_MANUFACTURING_DISTRICT",
-     "scope": "city"
-    }
+    "BUILDING_TEXTILE_MANUFACTURING_DISTRICT"
    ]
   }
  },

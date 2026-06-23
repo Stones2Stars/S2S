@@ -6,14 +6,8 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_SPACE_COLONY_CISLUNAR",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_ELECTROMAGNETIC_VOLTAGE",
-     "scope": "team"
-    }
+    "BUILDING_SPACE_COLONY_CISLUNAR",
+    "TECH_ELECTROMAGNETIC_VOLTAGE"
    ],
    "any": [
     [

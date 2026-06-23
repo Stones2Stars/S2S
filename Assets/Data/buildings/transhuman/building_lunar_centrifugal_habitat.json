@@ -6,14 +6,8 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_LUNAR_MANUFACTURING_PLANT",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_HYPERMAGNETICS",
-     "scope": "team"
-    }
+    "BUILDING_LUNAR_MANUFACTURING_PLANT",
+    "TECH_HYPERMAGNETICS"
    ],
    "any": [
     [

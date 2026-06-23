@@ -5,10 +5,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_RENEWABLE_ENERGY",
-     "scope": "team"
-    }
+    "TECH_RENEWABLE_ENERGY"
    ],
    "any": [
     [

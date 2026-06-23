@@ -10,18 +10,9 @@
      "scope": "city",
      "connection": "trade|vicinity"
     },
-    {
-     "type": "BUILDING_C_AC_NEANDERTHAL",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_C_L_NEANDERTHAL",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_OBSIDIAN_WEAPONS",
-     "scope": "team"
-    }
+    "BUILDING_C_AC_NEANDERTHAL",
+    "BUILDING_C_L_NEANDERTHAL",
+    "TECH_OBSIDIAN_WEAPONS"
    ],
    "any": [
     [

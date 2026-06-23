@@ -5,14 +5,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_DEEP_SPACE_ECOSYSTEM",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_EXTRATERRESTRIAL_AGRICULTURE",
-     "scope": "team"
-    }
+    "BUILDING_DEEP_SPACE_ECOSYSTEM",
+    "TECH_EXTRATERRESTRIAL_AGRICULTURE"
    ],
    "any": [
     [

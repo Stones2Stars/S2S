@@ -14,18 +14,9 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_MEGATOWER",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_AMUSEMENT_PARK",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_NANO_ARCHITECTURE",
-     "scope": "team"
-    }
+    "BUILDING_MEGATOWER",
+    "BUILDING_AMUSEMENT_PARK",
+    "TECH_NANO_ARCHITECTURE"
    ],
    "any": [
     [
@@ -45,10 +36,7 @@
     }
    ],
    "dormant": [
-    {
-     "type": "BUILDING_HIGH_TECH_CULTURAL_ENRICHMENT",
-     "scope": "city"
-    }
+    "BUILDING_HIGH_TECH_CULTURAL_ENRICHMENT"
    ]
   }
  },

@@ -13,10 +13,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_BOARD_GAMES",
-     "scope": "team"
-    }
+    "TECH_BOARD_GAMES"
    ],
    "any": [
     [
@@ -29,18 +26,9 @@
   },
   "operate": {
    "dormant": [
-    {
-     "type": "BUILDING_FACTORY_TOYS",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_MANUFACTURING_DISTRICT",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_TOY_MAKER",
-     "scope": "city"
-    }
+    "BUILDING_FACTORY_TOYS",
+    "BUILDING_MANUFACTURING_DISTRICT",
+    "BUILDING_TOY_MAKER"
    ]
   }
  },

@@ -11,10 +11,7 @@
   "build": {
    "all": [
     "HAS_COAST",
-    {
-     "type": "TECH_ABYSS_COLONIZATION",
-     "scope": "team"
-    }
+    "TECH_ABYSS_COLONIZATION"
    ],
    "any": [
     [

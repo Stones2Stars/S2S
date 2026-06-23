@@ -11,10 +11,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_HIGHWAY_SYSTEMS",
-     "scope": "team"
-    }
+    "TECH_HIGHWAY_SYSTEMS"
    ],
    "any": [
     [

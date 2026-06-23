@@ -23,21 +23,12 @@
       "min": 40
      }
     },
-    {
-     "type": "TECH_HARPOON_MAKING",
-     "scope": "team"
-    }
+    "TECH_HARPOON_MAKING"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_HUNTERS_CAMP",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_ANCIENT_CUSTOMS",
-      "scope": "city"
-     }
+     "BUILDING_HUNTERS_CAMP",
+     "BUILDING_ANCIENT_CUSTOMS"
     ],
     [
      {
@@ -65,14 +56,8 @@
     ]
    ],
    "dormant": [
-    {
-     "type": "BUILDING_BREEDING_PROGRAM_BELUGA",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_ANIMAL_PRESERVE",
-     "scope": "city"
-    }
+    "BUILDING_BREEDING_PROGRAM_BELUGA",
+    "BUILDING_ANIMAL_PRESERVE"
    ]
   }
  },
@@ -91,10 +76,7 @@
    "flat": [
     {
      "value": -1,
-     "enabled": {
-      "type": "TECH_ECOLOGY",
-      "scope": "team"
-     }
+     "enabled": "TECH_ECOLOGY"
     }
    ]
   }

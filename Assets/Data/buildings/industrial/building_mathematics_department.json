@@ -17,14 +17,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_UNIVERSITY",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_STATISTICS",
-     "scope": "team"
-    }
+    "BUILDING_UNIVERSITY",
+    "TECH_STATISTICS"
    ],
    "any": [
     [
@@ -42,17 +36,11 @@
     21,
     {
      "value": 7,
-     "enabled": {
-      "type": "TECH_ABSTRACT_MATHEMATICS",
-      "scope": "team"
-     }
+     "enabled": "TECH_ABSTRACT_MATHEMATICS"
     },
     {
      "value": 8,
-     "enabled": {
-      "type": "TECH_CHAOS_THEORY",
-      "scope": "team"
-     }
+     "enabled": "TECH_CHAOS_THEORY"
     }
    ]
   }

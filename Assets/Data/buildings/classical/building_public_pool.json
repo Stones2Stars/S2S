@@ -13,25 +13,13 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_SANITATION",
-     "scope": "team"
-    },
-    {
-     "type": "TECH_ATHLETICS",
-     "scope": "team"
-    }
+    "TECH_SANITATION",
+    "TECH_ATHLETICS"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_AQUEDUCT",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_MODERN_WATERWORKS",
-      "scope": "city"
-     }
+     "BUILDING_AQUEDUCT",
+     "BUILDING_MODERN_WATERWORKS"
     ],
     [
      {
@@ -43,10 +31,7 @@
   },
   "operate": {
    "dormant": [
-    {
-     "type": "BUILDING_ATHLETIC_MEGACOMPLEX",
-     "scope": "city"
-    }
+    "BUILDING_ATHLETIC_MEGACOMPLEX"
    ]
   }
  },

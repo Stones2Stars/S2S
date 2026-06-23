@@ -10,14 +10,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_INTERSTELLAR_WORMHOLE_TRADING_POST",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_APPLIED_RELATIVITY",
-     "scope": "team"
-    }
+    "BUILDING_INTERSTELLAR_WORMHOLE_TRADING_POST",
+    "TECH_APPLIED_RELATIVITY"
    ],
    "any": [
     [

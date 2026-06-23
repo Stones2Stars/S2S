@@ -14,66 +14,21 @@
   "build": {
    "any": [
     [
-     {
-      "type": "BUILDING_GROVE_OAK",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_GROVE_ALMOND",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_GROVE_BRAZIL_NUT",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_GROVE_CASHEW",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_GROVE_CHESTNUT",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_PLANTATION_COCONUT",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_GROVE_GEVUINA",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_GROVE_HAZELNUT",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_GROVE_MACADAMIA",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_GROVE_MONGONGO",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_PLANTATION_PEANUT",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_GROVE_PECAN",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_GROVE_PINE_NUT",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_GROVE_PISTACHIO",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_GROVE_WALNUT",
-      "scope": "city"
-     }
+     "BUILDING_GROVE_OAK",
+     "BUILDING_GROVE_ALMOND",
+     "BUILDING_GROVE_BRAZIL_NUT",
+     "BUILDING_GROVE_CASHEW",
+     "BUILDING_GROVE_CHESTNUT",
+     "BUILDING_PLANTATION_COCONUT",
+     "BUILDING_GROVE_GEVUINA",
+     "BUILDING_GROVE_HAZELNUT",
+     "BUILDING_GROVE_MACADAMIA",
+     "BUILDING_GROVE_MONGONGO",
+     "BUILDING_PLANTATION_PEANUT",
+     "BUILDING_GROVE_PECAN",
+     "BUILDING_GROVE_PINE_NUT",
+     "BUILDING_GROVE_PISTACHIO",
+     "BUILDING_GROVE_WALNUT"
     ],
     [
      {
@@ -85,10 +40,7 @@
   },
   "operate": {
    "dormant": [
-    {
-     "type": "BUILDING_FARMSCRAPER_II",
-     "scope": "city"
-    }
+    "BUILDING_FARMSCRAPER_II"
    ]
   }
  },

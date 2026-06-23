@@ -14,21 +14,12 @@
   "build": {
    "all": [
     "HAS_COAST",
-    {
-     "type": "TECH_FISHING",
-     "scope": "team"
-    }
+    "TECH_FISHING"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_CANOE_BUILDER",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_SHIPWRIGHT",
-      "scope": "city"
-     }
+     "BUILDING_CANOE_BUILDER",
+     "BUILDING_SHIPWRIGHT"
     ],
     [
      {
@@ -52,10 +43,7 @@
   },
   "operate": {
    "dormant": [
-    {
-     "type": "BUILDING_MARINA",
-     "scope": "city"
-    }
+    "BUILDING_MARINA"
    ]
   }
  },

@@ -11,14 +11,8 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_CLIMATOLOGY_LAB",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_CHAOS_THEORY",
-     "scope": "team"
-    }
+    "BUILDING_CLIMATOLOGY_LAB",
+    "TECH_CHAOS_THEORY"
    ],
    "any": [
     [

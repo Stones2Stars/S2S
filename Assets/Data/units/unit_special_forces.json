@@ -10,18 +10,9 @@
      "scope": "city",
      "connection": "trade|vicinity"
     },
-    {
-     "type": "BUILDING_BIVOUAC_GROUNDS",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_LASER",
-     "scope": "team"
-    },
-    {
-     "type": "TECH_GUERRILLA_WARFARE",
-     "scope": "team"
-    }
+    "BUILDING_BIVOUAC_GROUNDS",
+    "TECH_LASER",
+    "TECH_GUERRILLA_WARFARE"
    ],
    "any": [
     [

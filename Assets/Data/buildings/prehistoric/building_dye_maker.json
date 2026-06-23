@@ -13,81 +13,27 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_NATURAL_PIGMENTS",
-     "scope": "team"
-    }
+    "TECH_NATURAL_PIGMENTS"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_AQUAFARM",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_FOOD_MANUFACTURING_DISTRICT",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_CORE_MINE",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_GREENHOUSE",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_FARMSCRAPER_I",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_AGROFOREST",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_INDIGO_GATHERER",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_HENNA_GATHERER",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_FARM_FLOWER_INDIGO",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_MUREX_DIVER",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_PLANTATION_HENNA",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_PLANTATION_MADDER",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_FARM_CROP_COCHINEAL",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_GROVE_FUSTIC",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_PLANTATION_SAFFRON",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_MINE_SULPHUR",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_GROVE_BRAZILWOOD",
-      "scope": "city"
-     }
+     "BUILDING_AQUAFARM",
+     "BUILDING_FOOD_MANUFACTURING_DISTRICT",
+     "BUILDING_CORE_MINE",
+     "BUILDING_GREENHOUSE",
+     "BUILDING_FARMSCRAPER_I",
+     "BUILDING_AGROFOREST",
+     "BUILDING_INDIGO_GATHERER",
+     "BUILDING_HENNA_GATHERER",
+     "BUILDING_FARM_FLOWER_INDIGO",
+     "BUILDING_MUREX_DIVER",
+     "BUILDING_PLANTATION_HENNA",
+     "BUILDING_PLANTATION_MADDER",
+     "BUILDING_FARM_CROP_COCHINEAL",
+     "BUILDING_GROVE_FUSTIC",
+     "BUILDING_PLANTATION_SAFFRON",
+     "BUILDING_MINE_SULPHUR",
+     "BUILDING_GROVE_BRAZILWOOD"
     ],
     [
      {
@@ -105,14 +51,8 @@
   },
   "operate": {
    "dormant": [
-    {
-     "type": "BUILDING_FACTORY_DYE",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_CHEMICALS_DISTRICT",
-     "scope": "city"
-    }
+    "BUILDING_FACTORY_DYE",
+    "BUILDING_CHEMICALS_DISTRICT"
    ]
   }
  },

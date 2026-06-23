@@ -5,14 +5,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_DISTANT_SPACE_WHALING_GUILD",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_NONSTANDARD_MATHEMATICS",
-     "scope": "team"
-    }
+    "BUILDING_DISTANT_SPACE_WHALING_GUILD",
+    "TECH_NONSTANDARD_MATHEMATICS"
    ],
    "any": [
     [

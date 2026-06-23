@@ -6,29 +6,14 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_MEGATOWER",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_HOLOGRAPHICS",
-     "scope": "team"
-    },
-    {
-     "type": "TECH_NANO_ARCHITECTURE",
-     "scope": "team"
-    }
+    "BUILDING_MEGATOWER",
+    "TECH_HOLOGRAPHICS",
+    "TECH_NANO_ARCHITECTURE"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_HOLOGRAPHIC_NETWORKS",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_EXOCORTEX_NETWORKS",
-      "scope": "city"
-     }
+     "BUILDING_HOLOGRAPHIC_NETWORKS",
+     "BUILDING_EXOCORTEX_NETWORKS"
     ],
     [
      {

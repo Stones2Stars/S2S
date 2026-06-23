@@ -6,18 +6,9 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_SPACESCRAPER",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_EXOTIC_ARCHITECTURE",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_SHAPESHIFTING",
-     "scope": "team"
-    }
+    "BUILDING_SPACESCRAPER",
+    "BUILDING_EXOTIC_ARCHITECTURE",
+    "TECH_SHAPESHIFTING"
    ],
    "any": [
     [

@@ -10,10 +10,7 @@
      "scope": "city",
      "min": 7
     },
-    {
-     "type": "TECH_FISSION",
-     "scope": "team"
-    }
+    "TECH_FISSION"
    ],
    "any": [
     [

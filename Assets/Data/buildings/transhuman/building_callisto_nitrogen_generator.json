@@ -10,14 +10,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_CALLISTO_RESUPPLY_BASE",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_APOCALYPTIC_PATHOGENS",
-     "scope": "team"
-    }
+    "BUILDING_CALLISTO_RESUPPLY_BASE",
+    "TECH_APOCALYPTIC_PATHOGENS"
    ],
    "any": [
     [

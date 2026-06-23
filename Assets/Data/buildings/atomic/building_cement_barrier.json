@@ -23,10 +23,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_MANUFACTURING",
-     "scope": "team"
-    }
+    "TECH_MANUFACTURING"
    ],
    "any": [
     [
@@ -46,18 +43,9 @@
     }
    ],
    "dormant": [
-    {
-     "type": "BUILDING_METAMATERIAL_WALLS",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_SUPERSTRONG_ALLOY_WALLS",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_MEGASTRONG_ALLOY_WALLS",
-     "scope": "city"
-    }
+    "BUILDING_METAMATERIAL_WALLS",
+    "BUILDING_SUPERSTRONG_ALLOY_WALLS",
+    "BUILDING_MEGASTRONG_ALLOY_WALLS"
    ]
   }
  },

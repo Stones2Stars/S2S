@@ -5,10 +5,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_ION_PROPULSION",
-     "scope": "team"
-    }
+    "TECH_ION_PROPULSION"
    ]
   }
  },

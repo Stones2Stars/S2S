@@ -5,10 +5,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_WHOLE_BRAIN_EMULATION",
-     "scope": "team"
-    }
+    "TECH_WHOLE_BRAIN_EMULATION"
    ],
    "any": [
     [

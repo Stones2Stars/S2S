@@ -5,14 +5,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_COMPUTER_SCIENCE_DEPARTMENT",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_COMPUTER_SCIENCE",
-     "scope": "team"
-    }
+    "BUILDING_COMPUTER_SCIENCE_DEPARTMENT",
+    "TECH_COMPUTER_SCIENCE"
    ],
    "any": [
     [

@@ -5,10 +5,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_ANIMAL_HUSBANDRY",
-     "scope": "team"
-    }
+    "TECH_ANIMAL_HUSBANDRY"
    ],
    "any": [
     [

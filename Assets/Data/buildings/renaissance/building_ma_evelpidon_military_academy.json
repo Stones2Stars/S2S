@@ -15,14 +15,8 @@
      "scope": "empire",
      "min": 12
     },
-    {
-     "type": "BUILDING_MILITARY_ACADEMY",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_MILITARY_TRADITION",
-     "scope": "team"
-    }
+    "BUILDING_MILITARY_ACADEMY",
+    "TECH_MILITARY_TRADITION"
    ],
    "any": [
     [

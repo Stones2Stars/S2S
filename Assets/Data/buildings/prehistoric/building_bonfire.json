@@ -25,29 +25,14 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_FIRE_MAKING",
-     "scope": "team"
-    }
+    "TECH_FIRE_MAKING"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_LUMBER_CAMP",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_DRIFTWOOD_GATHERER",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_LUMBER_GATHERER",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_AGROFOREST",
-      "scope": "city"
-     }
+     "BUILDING_LUMBER_CAMP",
+     "BUILDING_DRIFTWOOD_GATHERER",
+     "BUILDING_LUMBER_GATHERER",
+     "BUILDING_AGROFOREST"
     ],
     [
      {
@@ -73,10 +58,7 @@
     ]
    ],
    "dormant": [
-    {
-     "type": "BUILDING_CHARCOAL_BURNER",
-     "scope": "city"
-    }
+    "BUILDING_CHARCOAL_BURNER"
    ]
   }
  },

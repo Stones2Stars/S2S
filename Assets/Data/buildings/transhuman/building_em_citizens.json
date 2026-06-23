@@ -6,14 +6,8 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_BINARY_CONSCIOUSNESS_ALGORITHMS",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_WHOLE_BRAIN_EMULATION",
-     "scope": "team"
-    }
+    "BUILDING_BINARY_CONSCIOUSNESS_ALGORITHMS",
+    "TECH_WHOLE_BRAIN_EMULATION"
    ],
    "any": [
     [
@@ -24,10 +18,7 @@
     ]
    ],
    "noneOf": [
-    {
-     "type": "BUILDING_EM_SLAVES",
-     "scope": "city"
-    }
+    "BUILDING_EM_SLAVES"
    ]
   }
  },

@@ -14,18 +14,9 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_MEGATOWER",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_WIND_FARM",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_NANO_ARCHITECTURE",
-     "scope": "team"
-    }
+    "BUILDING_MEGATOWER",
+    "BUILDING_WIND_FARM",
+    "TECH_NANO_ARCHITECTURE"
    ],
    "any": [
     [
@@ -45,10 +36,7 @@
     }
    ],
    "dormant": [
-    {
-     "type": "BUILDING_RENEWABLE_MEGACOMPLEX",
-     "scope": "city"
-    }
+    "BUILDING_RENEWABLE_MEGACOMPLEX"
    ]
   }
  },

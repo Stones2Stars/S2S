@@ -6,14 +6,8 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_NETWORK_NODE",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_SENTIENT_EARTH",
-     "scope": "team"
-    }
+    "BUILDING_NETWORK_NODE",
+    "TECH_SENTIENT_EARTH"
    ],
    "any": [
     [

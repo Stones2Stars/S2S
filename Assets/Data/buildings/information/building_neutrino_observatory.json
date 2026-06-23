@@ -5,18 +5,9 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_OBSERVATORY",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_PHYSICS_LAB",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_IMAGINARY_PHYSICS",
-     "scope": "team"
-    }
+    "BUILDING_OBSERVATORY",
+    "BUILDING_PHYSICS_LAB",
+    "TECH_IMAGINARY_PHYSICS"
    ],
    "any": [
     [
@@ -29,10 +20,7 @@
   },
   "operate": {
    "dormant": [
-    {
-     "type": "BUILDING_POLLUTION_BLACKENED_SKIES",
-     "scope": "city"
-    }
+    "BUILDING_POLLUTION_BLACKENED_SKIES"
    ]
   }
  },
@@ -42,17 +30,11 @@
     8,
     {
      "value": 9,
-     "enabled": {
-      "type": "TECH_AMPLIFIED_WAVELENGTHS",
-      "scope": "team"
-     }
+     "enabled": "TECH_AMPLIFIED_WAVELENGTHS"
     },
     {
      "value": 10,
-     "enabled": {
-      "type": "TECH_OPTRONICS",
-      "scope": "team"
-     }
+     "enabled": "TECH_OPTRONICS"
     }
    ]
   }

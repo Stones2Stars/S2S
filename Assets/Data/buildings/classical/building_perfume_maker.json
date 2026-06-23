@@ -13,21 +13,12 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_SPICE_TRADE",
-     "scope": "team"
-    }
+    "TECH_SPICE_TRADE"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_TRADING_POST",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_SHOPPING_DISTRICT",
-      "scope": "city"
-     }
+     "BUILDING_TRADING_POST",
+     "BUILDING_SHOPPING_DISTRICT"
     ],
     [
      {
@@ -58,14 +49,8 @@
     ]
    ],
    "dormant": [
-    {
-     "type": "BUILDING_FACTORY_PERFUME",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_CHEMICALS_DISTRICT",
-     "scope": "city"
-    }
+    "BUILDING_FACTORY_PERFUME",
+    "BUILDING_CHEMICALS_DISTRICT"
    ]
   }
  },

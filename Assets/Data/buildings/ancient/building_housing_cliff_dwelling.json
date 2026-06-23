@@ -16,10 +16,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_MASONRY",
-     "scope": "team"
-    }
+    "TECH_MASONRY"
    ],
    "any": [
     [
@@ -54,22 +51,10 @@
     ]
    ],
    "dormant": [
-    {
-     "type": "BUILDING_HOUSING_HIGHRISES",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_HOUSING_HIGH_TECH_HIGHRISES",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_HOUSING_COLONY_ARCOLOGY",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_LAUNCH_ARCOLOGY",
-     "scope": "city"
-    }
+    "BUILDING_HOUSING_HIGHRISES",
+    "BUILDING_HOUSING_HIGH_TECH_HIGHRISES",
+    "BUILDING_HOUSING_COLONY_ARCOLOGY",
+    "BUILDING_LAUNCH_ARCOLOGY"
    ]
   }
  },

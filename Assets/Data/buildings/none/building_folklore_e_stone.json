@@ -13,14 +13,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_FOLKLORE_REQUIREMENT",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_ORAL_TRADITION",
-     "scope": "team"
-    }
+    "BUILDING_FOLKLORE_REQUIREMENT",
+    "TECH_ORAL_TRADITION"
    ],
    "any": [
     [
@@ -38,38 +32,23 @@
     1,
     {
      "value": -0.6,
-     "enabled": {
-      "type": "TECH_LANGUAGE",
-      "scope": "team"
-     }
+     "enabled": "TECH_LANGUAGE"
     },
     {
      "value": -0.1,
-     "enabled": {
-      "type": "TECH_SEDENTARY_LIFESTYLE",
-      "scope": "team"
-     }
+     "enabled": "TECH_SEDENTARY_LIFESTYLE"
     },
     {
      "value": -0.1,
-     "enabled": {
-      "type": "TECH_CLASSICAL_LIFESTYLE",
-      "scope": "team"
-     }
+     "enabled": "TECH_CLASSICAL_LIFESTYLE"
     },
     {
      "value": -0.1,
-     "enabled": {
-      "type": "TECH_MEDIEVAL_LIFESTYLE",
-      "scope": "team"
-     }
+     "enabled": "TECH_MEDIEVAL_LIFESTYLE"
     },
     {
      "value": -0.1,
-     "enabled": {
-      "type": "TECH_RENAISSANCE_LIFESTYLE",
-      "scope": "team"
-     }
+     "enabled": "TECH_RENAISSANCE_LIFESTYLE"
     }
    ]
   }
@@ -79,38 +58,23 @@
    "flat": [
     {
      "value": 0.1,
-     "enabled": {
-      "type": "TECH_LANGUAGE",
-      "scope": "team"
-     }
+     "enabled": "TECH_LANGUAGE"
     },
     {
      "value": 0.1,
-     "enabled": {
-      "type": "TECH_SEDENTARY_LIFESTYLE",
-      "scope": "team"
-     }
+     "enabled": "TECH_SEDENTARY_LIFESTYLE"
     },
     {
      "value": 0.1,
-     "enabled": {
-      "type": "TECH_CLASSICAL_LIFESTYLE",
-      "scope": "team"
-     }
+     "enabled": "TECH_CLASSICAL_LIFESTYLE"
     },
     {
      "value": 0.1,
-     "enabled": {
-      "type": "TECH_MEDIEVAL_LIFESTYLE",
-      "scope": "team"
-     }
+     "enabled": "TECH_MEDIEVAL_LIFESTYLE"
     },
     {
      "value": 0.1,
-     "enabled": {
-      "type": "TECH_RENAISSANCE_LIFESTYLE",
-      "scope": "team"
-     }
+     "enabled": "TECH_RENAISSANCE_LIFESTYLE"
     }
    ]
   }
@@ -119,10 +83,7 @@
   "city": {
    "flat": {
     "value": 1,
-    "enabled": {
-     "type": "TECH_LITERATURE",
-     "scope": "team"
-    }
+    "enabled": "TECH_LITERATURE"
    }
   }
  },

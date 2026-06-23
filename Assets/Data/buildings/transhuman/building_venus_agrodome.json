@@ -5,14 +5,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_VENUS_SURFACE_CITY",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_EXTRATERRESTRIAL_AGRICULTURE",
-     "scope": "team"
-    }
+    "BUILDING_VENUS_SURFACE_CITY",
+    "TECH_EXTRATERRESTRIAL_AGRICULTURE"
    ],
    "any": [
     [

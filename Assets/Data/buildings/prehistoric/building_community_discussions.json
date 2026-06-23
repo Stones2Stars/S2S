@@ -5,10 +5,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_LANGUAGE",
-     "scope": "team"
-    }
+    "TECH_LANGUAGE"
    ],
    "any": [
     [
@@ -22,10 +19,7 @@
   "operate": {
    "any": [
     [
-     {
-      "type": "CIVIC_NATIVE_LANGUAGE",
-      "scope": "empire"
-     }
+     "CIVIC_NATIVE_LANGUAGE"
     ]
    ]
   }

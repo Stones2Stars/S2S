@@ -5,10 +5,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_PALACE",
-     "scope": "city"
-    }
+    "BUILDING_PALACE"
    ],
    "any": [
     [
@@ -21,10 +18,7 @@
   },
   "operate": {
    "all": [
-    {
-     "type": "CIVIC_MIND_CONTROL",
-     "scope": "empire"
-    }
+    "CIVIC_MIND_CONTROL"
    ]
   }
  },

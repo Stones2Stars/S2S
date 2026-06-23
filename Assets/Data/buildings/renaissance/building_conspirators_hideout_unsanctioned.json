@@ -10,10 +10,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_POLITICAL_PHILOSOPHY",
-     "scope": "team"
-    }
+    "TECH_POLITICAL_PHILOSOPHY"
    ],
    "any": [
     [
@@ -75,10 +72,7 @@
     "unit": "UNIT_SCOUNDREL",
     "interval": "perTurn",
     "chance": {
-     "per": {
-      "type": "PROPERTY_CRIME",
-      "scope": "city"
-     }
+     "per": "PROPERTY_CRIME"
     }
    }
   ]

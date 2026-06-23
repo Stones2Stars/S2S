@@ -14,14 +14,8 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_MEGATOWER_POLICE_STATION_LEVEL",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_ACOUSTIC_WEAPONRY",
-     "scope": "team"
-    }
+    "BUILDING_MEGATOWER_POLICE_STATION_LEVEL",
+    "TECH_ACOUSTIC_WEAPONRY"
    ],
    "any": [
     [
@@ -34,10 +28,7 @@
   },
   "operate": {
    "dormant": [
-    {
-     "type": "BUILDING_GRAVITY_CROWD_CONTROL",
-     "scope": "city"
-    }
+    "BUILDING_GRAVITY_CROWD_CONTROL"
    ]
   }
  },

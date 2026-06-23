@@ -61,10 +61,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_GATHERING",
-     "scope": "team"
-    }
+    "TECH_GATHERING"
    ],
    "any": [
     [
@@ -83,14 +80,8 @@
   },
   "operate": {
    "dormant": [
-    {
-     "type": "BUILDING_GRANARY",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_MODERN_GRANARY",
-     "scope": "city"
-    }
+    "BUILDING_GRANARY",
+    "BUILDING_MODERN_GRANARY"
    ]
   }
  },

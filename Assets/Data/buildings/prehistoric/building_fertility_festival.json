@@ -10,21 +10,12 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_CELEBRATION",
-     "scope": "team"
-    }
+    "TECH_CELEBRATION"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_FERTILITY_DANCE",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_EFFECT_FERTILITY_FESTIVAL",
-      "scope": "city"
-     }
+     "BUILDING_FERTILITY_DANCE",
+     "BUILDING_EFFECT_FERTILITY_FESTIVAL"
     ],
     [
      {

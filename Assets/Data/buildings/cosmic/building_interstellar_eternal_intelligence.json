@@ -5,18 +5,9 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_EFFECT_GALACTIC_ECONOMY",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_INTERSTELLAR_BLACK_HOLE_COMPUTER",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_IMMORTALITY",
-     "scope": "team"
-    }
+    "BUILDING_EFFECT_GALACTIC_ECONOMY",
+    "BUILDING_INTERSTELLAR_BLACK_HOLE_COMPUTER",
+    "TECH_IMMORTALITY"
    ],
    "any": [
     [
@@ -43,10 +34,7 @@
    "flat": [
     {
      "value": 13,
-     "enabled": {
-      "type": "TECH_EXPERIMENTAL_COSMOLOGY",
-      "scope": "team"
-     }
+     "enabled": "TECH_EXPERIMENTAL_COSMOLOGY"
     }
    ]
   }

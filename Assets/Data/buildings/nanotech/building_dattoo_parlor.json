@@ -14,21 +14,12 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "TECH_NANOGENERATORS",
-     "scope": "team"
-    }
+    "TECH_NANOGENERATORS"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_TATTOO_PARLOR",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_PIERCING_SHOP",
-      "scope": "city"
-     }
+     "BUILDING_TATTOO_PARLOR",
+     "BUILDING_PIERCING_SHOP"
     ],
     [
      {
@@ -47,10 +38,7 @@
     }
    ],
    "dormant": [
-    {
-     "type": "BUILDING_HIGH_TECH_CULTURAL_ENRICHMENT",
-     "scope": "city"
-    }
+    "BUILDING_HIGH_TECH_CULTURAL_ENRICHMENT"
    ]
   }
  },

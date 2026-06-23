@@ -6,14 +6,8 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_ALEPH_ASSEMBLER",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_3D_PROJECTIONS",
-     "scope": "team"
-    }
+    "BUILDING_ALEPH_ASSEMBLER",
+    "TECH_3D_PROJECTIONS"
    ],
    "any": [
     [

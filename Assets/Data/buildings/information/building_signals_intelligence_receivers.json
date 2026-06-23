@@ -6,33 +6,15 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_INTELLIGENCE_AGENCY",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_SECURITY_CENTER",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_WAR_SIMULATIONS",
-     "scope": "team"
-    },
-    {
-     "type": "TECH_CYBERWARFARE",
-     "scope": "team"
-    }
+    "BUILDING_INTELLIGENCE_AGENCY",
+    "BUILDING_SECURITY_CENTER",
+    "TECH_WAR_SIMULATIONS",
+    "TECH_CYBERWARFARE"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_COMMUNICATION_TOWER",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_NETWORK_NODE",
-      "scope": "city"
-     }
+     "BUILDING_COMMUNICATION_TOWER",
+     "BUILDING_NETWORK_NODE"
     ],
     [
      {

@@ -15,14 +15,8 @@
      "scope": "world",
      "min": 10
     },
-    {
-     "type": "TECH_METALLURGY",
-     "scope": "team"
-    },
-    {
-     "type": "TECH_ASTROLABE",
-     "scope": "team"
-    }
+    "TECH_METALLURGY",
+    "TECH_ASTROLABE"
    ],
    "any": [
     [

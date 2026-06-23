@@ -10,14 +10,8 @@
      "scope": "city",
      "connection": "trade|vicinity"
     },
-    {
-     "type": "BUILDING_ANIMAL_TRAINER_LLAMA",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_CAMELID_DOMESTICATION",
-     "scope": "team"
-    }
+    "BUILDING_ANIMAL_TRAINER_LLAMA",
+    "TECH_CAMELID_DOMESTICATION"
    ],
    "any": [
     [

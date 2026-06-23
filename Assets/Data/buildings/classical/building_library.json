@@ -23,10 +23,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_LITERATURE",
-     "scope": "team"
-    },
+    "TECH_LITERATURE",
     {
      "type": "BONUS_FURNITURE",
      "scope": "city",
@@ -87,10 +84,7 @@
     2,
     {
      "value": 3,
-     "enabled": {
-      "type": "TECH_POETRY",
-      "scope": "team"
-     }
+     "enabled": "TECH_POETRY"
     }
    ]
   }

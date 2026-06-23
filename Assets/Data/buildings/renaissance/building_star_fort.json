@@ -37,10 +37,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_METALLURGY",
-     "scope": "team"
-    }
+    "TECH_METALLURGY"
    ],
    "any": [
     [
@@ -67,10 +64,7 @@
     ]
    ],
    "dormant": [
-    {
-     "type": "BUILDING_IMPERIAL_FORTRESS",
-     "scope": "city"
-    }
+    "BUILDING_IMPERIAL_FORTRESS"
    ]
   }
  },

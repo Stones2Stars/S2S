@@ -5,21 +5,12 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_PERSONAL_ROBOTS",
-     "scope": "team"
-    }
+    "TECH_PERSONAL_ROBOTS"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_FACTORY_ANDROIDS",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_NANOTECH_COMPLEX",
-      "scope": "city"
-     }
+     "BUILDING_FACTORY_ANDROIDS",
+     "BUILDING_NANOTECH_COMPLEX"
     ]
    ]
   }

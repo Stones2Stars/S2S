@@ -5,10 +5,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_REALITY_REPROGRAMMING",
-     "scope": "team"
-    }
+    "TECH_REALITY_REPROGRAMMING"
    ],
    "any": [
     [

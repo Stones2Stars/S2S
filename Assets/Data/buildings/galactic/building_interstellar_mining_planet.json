@@ -5,14 +5,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_INTERSTELLAR_SELF_REPLICATING_FACTORY",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_PLANET_ENGINEERING",
-     "scope": "team"
-    }
+    "BUILDING_INTERSTELLAR_SELF_REPLICATING_FACTORY",
+    "TECH_PLANET_ENGINEERING"
    ],
    "any": [
     [
@@ -34,10 +28,7 @@
     45,
     {
      "value": 20,
-     "enabled": {
-      "type": "TECH_INDUCED_SUPERNOVA",
-      "scope": "team"
-     }
+     "enabled": "TECH_INDUCED_SUPERNOVA"
     }
    ]
   }

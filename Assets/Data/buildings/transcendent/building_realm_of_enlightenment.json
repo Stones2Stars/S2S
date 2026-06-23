@@ -6,14 +6,8 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_SKY_GOD",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_SPIRITUAL_REALMS",
-     "scope": "team"
-    }
+    "BUILDING_SKY_GOD",
+    "TECH_SPIRITUAL_REALMS"
    ],
    "any": [
     [

@@ -6,14 +6,8 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_TELEPHONE_NETWORK",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_TELEPHONE",
-     "scope": "team"
-    }
+    "BUILDING_TELEPHONE_NETWORK",
+    "TECH_TELEPHONE"
    ],
    "any": [
     [

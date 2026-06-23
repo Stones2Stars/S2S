@@ -6,10 +6,7 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_HYPERSPACE_EKPYROTIC_UNIVERSE",
-     "scope": "city"
-    },
+    "BUILDING_HYPERSPACE_EKPYROTIC_UNIVERSE",
     {
      "type": "BUILDING_INTERSTELLAR_GALACTIC_AC",
      "scope": "empire",
@@ -20,10 +17,7 @@
      "scope": "empire",
      "min": 1
     },
-    {
-     "type": "TECH_ATEMPORAL_BEINGS",
-     "scope": "team"
-    }
+    "TECH_ATEMPORAL_BEINGS"
    ],
    "any": [
     [

@@ -5,23 +5,14 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_C_AC_NEANDERTHAL",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_C_L_NEANDERTHAL",
-     "scope": "city"
-    },
+    "BUILDING_C_AC_NEANDERTHAL",
+    "BUILDING_C_L_NEANDERTHAL",
     {
      "type": "AREA_SIZE",
      "scope": "world",
      "min": 5
     },
-    {
-     "type": "TECH_RAFT_BUILDING",
-     "scope": "team"
-    }
+    "TECH_RAFT_BUILDING"
    ],
    "any": [
     [

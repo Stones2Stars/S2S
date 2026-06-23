@@ -5,25 +5,13 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_HYPOCAUSTS",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_CANAL_SYSTEMS",
-     "scope": "team"
-    }
+    "BUILDING_HYPOCAUSTS",
+    "TECH_CANAL_SYSTEMS"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_AQUEDUCT",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_MODERN_WATERWORKS",
-      "scope": "city"
-     }
+     "BUILDING_AQUEDUCT",
+     "BUILDING_MODERN_WATERWORKS"
     ],
     [
      {

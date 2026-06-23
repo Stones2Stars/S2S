@@ -19,10 +19,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_MOTORIZED_TRANSPORTATION",
-     "scope": "team"
-    }
+    "TECH_MOTORIZED_TRANSPORTATION"
    ],
    "any": [
     [
@@ -61,10 +58,7 @@
     ]
    ],
    "dormant": [
-    {
-     "type": "BUILDING_TELEPORT_BOOTH",
-     "scope": "city"
-    }
+    "BUILDING_TELEPORT_BOOTH"
    ]
   }
  },

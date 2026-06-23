@@ -5,14 +5,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_INTERGALACTIC_RESEARCH_BASE",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_UNIFICATION_MATHEMATICS",
-     "scope": "team"
-    }
+    "BUILDING_INTERGALACTIC_RESEARCH_BASE",
+    "TECH_UNIFICATION_MATHEMATICS"
    ],
    "any": [
     [

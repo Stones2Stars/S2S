@@ -5,14 +5,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_EUROPA_COLONY",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_COLONY_ARCOLOGY",
-     "scope": "team"
-    }
+    "BUILDING_EUROPA_COLONY",
+    "TECH_COLONY_ARCOLOGY"
    ],
    "any": [
     [

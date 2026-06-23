@@ -10,14 +10,8 @@
      "scope": "city",
      "connection": "trade|vicinity"
     },
-    {
-     "type": "BUILDING_POLICE_DOG_TRAINER",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_CRIMINOLOGY",
-     "scope": "team"
-    }
+    "BUILDING_POLICE_DOG_TRAINER",
+    "TECH_CRIMINOLOGY"
    ]
   }
  },

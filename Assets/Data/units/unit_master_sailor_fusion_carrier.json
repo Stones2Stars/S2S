@@ -10,10 +10,7 @@
      "scope": "world",
      "min": 10
     },
-    {
-     "type": "TECH_MEGASTRUCTURE_ENGINEERING",
-     "scope": "team"
-    }
+    "TECH_MEGASTRUCTURE_ENGINEERING"
    ]
   }
  },

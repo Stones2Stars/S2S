@@ -10,10 +10,7 @@
      "scope": "city",
      "connection": "trade|vicinity"
     },
-    {
-     "type": "TECH_AMPHIBIOUS_WARFARE",
-     "scope": "team"
-    }
+    "TECH_AMPHIBIOUS_WARFARE"
    ],
    "any": [
     [

@@ -16,25 +16,13 @@
      "scope": "city",
      "min": 7
     },
-    {
-     "type": "BUILDING_NATIONAL_SPORTS_LEAGUE",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_MODERN_SPORTS",
-     "scope": "team"
-    }
+    "BUILDING_NATIONAL_SPORTS_LEAGUE",
+    "TECH_MODERN_SPORTS"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_HOCKEY_RINK",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_ATHLETIC_MEGACOMPLEX",
-      "scope": "city"
-     }
+     "BUILDING_HOCKEY_RINK",
+     "BUILDING_ATHLETIC_MEGACOMPLEX"
     ],
     [
      {
@@ -75,38 +63,23 @@
    "flat": [
     {
      "value": 1,
-     "enabled": {
-      "type": "BUILDING_BROADCAST_TOWER",
-      "scope": "city"
-     }
+     "enabled": "BUILDING_BROADCAST_TOWER"
     },
     {
      "value": 1,
-     "enabled": {
-      "type": "BUILDING_COMMUNICATION_TOWER",
-      "scope": "city"
-     }
+     "enabled": "BUILDING_COMMUNICATION_TOWER"
     },
     {
      "value": 1,
-     "enabled": {
-      "type": "BUILDING_NETWORK_NODE",
-      "scope": "city"
-     }
+     "enabled": "BUILDING_NETWORK_NODE"
     },
     {
      "value": 1,
-     "enabled": {
-      "type": "BUILDING_HOCKEY_RINK",
-      "scope": "city"
-     }
+     "enabled": "BUILDING_HOCKEY_RINK"
     },
     {
      "value": 1,
-     "enabled": {
-      "type": "BUILDING_ATHLETIC_MEGACOMPLEX",
-      "scope": "city"
-     }
+     "enabled": "BUILDING_ATHLETIC_MEGACOMPLEX"
     }
    ]
   }

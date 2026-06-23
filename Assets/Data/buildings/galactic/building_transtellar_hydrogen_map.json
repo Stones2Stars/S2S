@@ -11,14 +11,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_SPACE_COLONY_TRANSTELLAR",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_INTERSTELLAR_TRADE",
-     "scope": "team"
-    }
+    "BUILDING_SPACE_COLONY_TRANSTELLAR",
+    "TECH_INTERSTELLAR_TRADE"
    ],
    "any": [
     [

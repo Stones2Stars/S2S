@@ -23,41 +23,17 @@
       "max": 45
      }
     },
-    {
-     "type": "TECH_MEGAFAUNA_DOMESTICATION",
-     "scope": "team"
-    }
+    "TECH_MEGAFAUNA_DOMESTICATION"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_HERD_ZEBRA",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_CAMP_ZEBRA",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_FOLKLORE_ZEBRA",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_BREEDING_PROGRAM_ZEBRA",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_ANIMAL_PRESERVE",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_INDUSTRIAL_FARMS",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_MEAT_INDUSTRY_CONGLOMERATE",
-      "scope": "city"
-     }
+     "BUILDING_HERD_ZEBRA",
+     "BUILDING_CAMP_ZEBRA",
+     "BUILDING_FOLKLORE_ZEBRA",
+     "BUILDING_BREEDING_PROGRAM_ZEBRA",
+     "BUILDING_ANIMAL_PRESERVE",
+     "BUILDING_INDUSTRIAL_FARMS",
+     "BUILDING_MEAT_INDUSTRY_CONGLOMERATE"
     ],
     [
      {

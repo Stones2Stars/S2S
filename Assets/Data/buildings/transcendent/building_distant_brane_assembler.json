@@ -11,14 +11,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_DISTANT_BLAZAR_FACTORY",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_BRANE_CONSTRUCTION",
-     "scope": "team"
-    }
+    "BUILDING_DISTANT_BLAZAR_FACTORY",
+    "TECH_BRANE_CONSTRUCTION"
    ],
    "any": [
     [

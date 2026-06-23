@@ -11,14 +11,8 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_UNIVERSITY",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_LASER",
-     "scope": "team"
-    }
+    "BUILDING_UNIVERSITY",
+    "TECH_LASER"
    ],
    "any": [
     [

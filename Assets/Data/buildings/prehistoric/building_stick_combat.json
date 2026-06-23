@@ -10,21 +10,12 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_WARFARE",
-     "scope": "team"
-    }
+    "TECH_WARFARE"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_STICK_GATHERER",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_HUNTERS_CAMP",
-      "scope": "city"
-     }
+     "BUILDING_STICK_GATHERER",
+     "BUILDING_HUNTERS_CAMP"
     ],
     [
      {

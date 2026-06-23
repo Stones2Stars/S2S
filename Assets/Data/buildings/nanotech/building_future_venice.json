@@ -7,14 +7,8 @@
    "all": [
     "HAS_COAST",
     "HAS_POWER",
-    {
-     "type": "BUILDING_ARTIFICIAL_REEF",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_PROTOTYPED_PATHOGENS",
-     "scope": "team"
-    }
+    "BUILDING_ARTIFICIAL_REEF",
+    "TECH_PROTOTYPED_PATHOGENS"
    ],
    "any": [
     [

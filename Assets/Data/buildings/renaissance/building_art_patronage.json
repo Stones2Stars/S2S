@@ -5,10 +5,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_FREE_ARTISTRY",
-     "scope": "team"
-    }
+    "TECH_FREE_ARTISTRY"
    ],
    "any": [
     [
@@ -21,10 +18,7 @@
   },
   "operate": {
    "all": [
-    {
-     "type": "CIVIC_BOURGEOIS",
-     "scope": "empire"
-    }
+    "CIVIC_BOURGEOIS"
    ]
   }
  },

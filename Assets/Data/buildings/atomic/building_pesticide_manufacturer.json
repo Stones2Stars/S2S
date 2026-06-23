@@ -13,10 +13,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_AGRICHEMICALS",
-     "scope": "team"
-    }
+    "TECH_AGRICHEMICALS"
    ],
    "any": [
     [
@@ -29,10 +26,7 @@
   },
   "operate": {
    "dormant": [
-    {
-     "type": "BUILDING_FARMSCRAPER_I",
-     "scope": "city"
-    }
+    "BUILDING_FARMSCRAPER_I"
    ]
   }
  },

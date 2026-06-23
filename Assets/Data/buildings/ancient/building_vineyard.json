@@ -19,10 +19,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_FERMENTATION",
-     "scope": "team"
-    }
+    "TECH_FERMENTATION"
    ],
    "any": [
     [
@@ -42,10 +39,7 @@
     }
    ],
    "dormant": [
-    {
-     "type": "BUILDING_FARMSCRAPER_III",
-     "scope": "city"
-    }
+    "BUILDING_FARMSCRAPER_III"
    ]
   }
  },

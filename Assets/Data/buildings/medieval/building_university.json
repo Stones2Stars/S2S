@@ -75,14 +75,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_LIBRARY",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_EDUCATION",
-     "scope": "team"
-    }
+    "BUILDING_LIBRARY",
+    "TECH_EDUCATION"
    ],
    "any": [
     [
@@ -99,10 +93,7 @@
    "flat": [
     {
      "value": 5,
-     "enabled": {
-      "type": "TECH_BIOLOGY",
-      "scope": "team"
-     }
+     "enabled": "TECH_BIOLOGY"
     }
    ]
   }
@@ -112,10 +103,7 @@
    "flat": [
     {
      "value": 6,
-     "enabled": {
-      "type": "TECH_CIVIL_ENGINEERING",
-      "scope": "team"
-     }
+     "enabled": "TECH_CIVIL_ENGINEERING"
     }
    ]
   }
@@ -124,10 +112,7 @@
   "city": {
    "flat": {
     "value": 5,
-    "enabled": {
-     "type": "TECH_ECONOMICS",
-     "scope": "team"
-    }
+    "enabled": "TECH_ECONOMICS"
    }
   }
  },
@@ -137,17 +122,11 @@
     25,
     {
      "value": 5,
-     "enabled": {
-      "type": "TECH_PHYSICS",
-      "scope": "team"
-     }
+     "enabled": "TECH_PHYSICS"
     },
     {
      "value": 6,
-     "enabled": {
-      "type": "TECH_PSYCHOLOGY",
-      "scope": "team"
-     }
+     "enabled": "TECH_PSYCHOLOGY"
     }
    ]
   }
@@ -158,24 +137,15 @@
     4,
     {
      "value": 5,
-     "enabled": {
-      "type": "TECH_FREE_ARTISTRY",
-      "scope": "team"
-     }
+     "enabled": "TECH_FREE_ARTISTRY"
     },
     {
      "value": 5,
-     "enabled": {
-      "type": "TECH_PRINTING_PRESS",
-      "scope": "team"
-     }
+     "enabled": "TECH_PRINTING_PRESS"
     },
     {
      "value": 5,
-     "enabled": {
-      "type": "TECH_DIVINE_RIGHT",
-      "scope": "team"
-     }
+     "enabled": "TECH_DIVINE_RIGHT"
     }
    ]
   }

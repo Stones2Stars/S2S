@@ -69,10 +69,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_C_AC_NORTH_AMERICAN",
-     "scope": "city"
-    }
+    "BUILDING_C_AC_NORTH_AMERICAN"
    ],
    "any": [
     [

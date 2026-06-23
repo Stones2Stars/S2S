@@ -5,10 +5,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_AUTOMATIC_WEAPONS",
-     "scope": "team"
-    }
+    "TECH_AUTOMATIC_WEAPONS"
    ],
    "any": [
     [

@@ -10,10 +10,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_SIMPLE_WOOD_WORKING",
-     "scope": "team"
-    }
+    "TECH_SIMPLE_WOOD_WORKING"
    ],
    "any": [
     [
@@ -23,26 +20,11 @@
      }
     ],
     [
-     {
-      "type": "HERITAGE_FOLKLORE_ADDER_PUFF",
-      "scope": "empire"
-     },
-     {
-      "type": "HERITAGE_FOLKLORE_COBRA",
-      "scope": "empire"
-     },
-     {
-      "type": "HERITAGE_FOLKLORE_PYTHON_BALL",
-      "scope": "empire"
-     },
-     {
-      "type": "HERITAGE_FOLKLORE_VIPER_CHAIN",
-      "scope": "empire"
-     },
-     {
-      "type": "HERITAGE_FOLKLORE_VIPER_PIT",
-      "scope": "empire"
-     }
+     "HERITAGE_FOLKLORE_ADDER_PUFF",
+     "HERITAGE_FOLKLORE_COBRA",
+     "HERITAGE_FOLKLORE_PYTHON_BALL",
+     "HERITAGE_FOLKLORE_VIPER_CHAIN",
+     "HERITAGE_FOLKLORE_VIPER_PIT"
     ],
     [
      {
@@ -59,10 +41,7 @@
     1,
     {
      "value": -1,
-     "enabled": {
-      "type": "TECH_LITERATURE",
-      "scope": "team"
-     }
+     "enabled": "TECH_LITERATURE"
     }
    ]
   }

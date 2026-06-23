@@ -6,10 +6,7 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_INTERSTELLAR_SUPERCOMPUTER",
-     "scope": "city"
-    },
+    "BUILDING_INTERSTELLAR_SUPERCOMPUTER",
     {
      "type": "BUILDING_MULTIVAC",
      "scope": "empire",
@@ -20,10 +17,7 @@
      "scope": "empire",
      "min": 1
     },
-    {
-     "type": "TECH_UNIFICATION_MATHEMATICS",
-     "scope": "team"
-    }
+    "TECH_UNIFICATION_MATHEMATICS"
    ],
    "any": [
     [

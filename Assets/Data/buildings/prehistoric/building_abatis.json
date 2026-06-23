@@ -13,10 +13,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_SIMPLE_WOOD_WORKING",
-     "scope": "team"
-    }
+    "TECH_SIMPLE_WOOD_WORKING"
    ],
    "any": [
     [
@@ -54,30 +51,12 @@
     ]
    ],
    "dormant": [
-    {
-     "type": "BUILDING_FIRE_ABATIS",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_BARBWIRE_FENCE",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_ELECTRIC_FENCE",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_WIRELESS_ELECTRIC_FENCE",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_ARCOLOGY_SHIELDING",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_ADVANCED_SHIELDING",
-     "scope": "city"
-    }
+    "BUILDING_FIRE_ABATIS",
+    "BUILDING_BARBWIRE_FENCE",
+    "BUILDING_ELECTRIC_FENCE",
+    "BUILDING_WIRELESS_ELECTRIC_FENCE",
+    "BUILDING_ARCOLOGY_SHIELDING",
+    "BUILDING_ADVANCED_SHIELDING"
    ]
   }
  },

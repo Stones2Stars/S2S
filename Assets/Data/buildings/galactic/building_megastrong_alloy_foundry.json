@@ -14,14 +14,8 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_ALPHA_ASSEMBLER",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_MEGASTRONG_ALLOYS",
-     "scope": "team"
-    }
+    "BUILDING_ALPHA_ASSEMBLER",
+    "TECH_MEGASTRONG_ALLOYS"
    ],
    "any": [
     [
@@ -34,10 +28,7 @@
   },
   "operate": {
    "dormant": [
-    {
-     "type": "BUILDING_MATERIALIZATION_COMPLEX",
-     "scope": "city"
-    }
+    "BUILDING_MATERIALIZATION_COMPLEX"
    ]
   }
  },

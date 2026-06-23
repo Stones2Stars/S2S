@@ -6,25 +6,13 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "TECH_HOLOGRAPHICS",
-     "scope": "team"
-    }
+    "TECH_HOLOGRAPHICS"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_MILITARY_BASE",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_MILITARY_AIRBASE",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_AEROSPACE_COMPLEX",
-      "scope": "city"
-     }
+     "BUILDING_MILITARY_BASE",
+     "BUILDING_MILITARY_AIRBASE",
+     "BUILDING_AEROSPACE_COMPLEX"
     ],
     [
      {

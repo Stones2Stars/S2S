@@ -13,21 +13,12 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_SPACE_TOURISM",
-     "scope": "team"
-    }
+    "TECH_SPACE_TOURISM"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_EFFECT_LAUNCH_SITE",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_COMMERCIAL_SPACEPORT",
-      "scope": "city"
-     }
+     "BUILDING_EFFECT_LAUNCH_SITE",
+     "BUILDING_COMMERCIAL_SPACEPORT"
     ],
     [
      {
@@ -39,10 +30,7 @@
   },
   "operate": {
    "dormant": [
-    {
-     "type": "BUILDING_TOURISM_MEGACOMPLEX",
-     "scope": "city"
-    }
+    "BUILDING_TOURISM_MEGACOMPLEX"
    ]
   }
  },

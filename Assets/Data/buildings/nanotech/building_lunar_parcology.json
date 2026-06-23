@@ -11,18 +11,9 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_LUNAR_ASSEMBLY_PLANT",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_LUNAR_HYDROPONICS_FARM",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_LUNAR_TRADE",
-     "scope": "team"
-    }
+    "BUILDING_LUNAR_ASSEMBLY_PLANT",
+    "BUILDING_LUNAR_HYDROPONICS_FARM",
+    "TECH_LUNAR_TRADE"
    ],
    "any": [
     [

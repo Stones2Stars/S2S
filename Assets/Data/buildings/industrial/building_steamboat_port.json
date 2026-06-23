@@ -14,14 +14,8 @@
   "build": {
    "all": [
     "HAS_RIVER",
-    {
-     "type": "BUILDING_COURTHOUSE",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_STEAM_POWER",
-     "scope": "team"
-    }
+    "BUILDING_COURTHOUSE",
+    "TECH_STEAM_POWER"
    ],
    "any": [
     [
@@ -55,14 +49,8 @@
     ]
    ],
    "dormant": [
-    {
-     "type": "BUILDING_FERRY_TERMINAL",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_RIVER_ADMINISTRATION",
-     "scope": "city"
-    }
+    "BUILDING_FERRY_TERMINAL",
+    "BUILDING_RIVER_ADMINISTRATION"
    ]
   }
  },

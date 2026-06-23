@@ -5,14 +5,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_DISTANT_LAYERED_REALITY",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_SPIRITUAL_REALMS",
-     "scope": "team"
-    }
+    "BUILDING_DISTANT_LAYERED_REALITY",
+    "TECH_SPIRITUAL_REALMS"
    ],
    "any": [
     [
@@ -30,10 +24,7 @@
     100,
     {
      "value": 13,
-     "enabled": {
-      "type": "TECH_REALITY_REPROGRAMMING",
-      "scope": "team"
-     }
+     "enabled": "TECH_REALITY_REPROGRAMMING"
     }
    ]
   }

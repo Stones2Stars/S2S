@@ -16,25 +16,13 @@
      "scope": "city",
      "min": 3
     },
-    {
-     "type": "TECH_NAVIGATION",
-     "scope": "team"
-    }
+    "TECH_NAVIGATION"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_SHIPYARD",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_DRYDOCK",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_NAVAL_YARD",
-      "scope": "city"
-     }
+     "BUILDING_SHIPYARD",
+     "BUILDING_DRYDOCK",
+     "BUILDING_NAVAL_YARD"
     ],
     [
      {

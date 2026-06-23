@@ -5,14 +5,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_SACRIFICE_CULT",
-     "scope": "team"
-    },
-    {
-     "type": "TECH_PRIESTHOOD",
-     "scope": "team"
-    }
+    "TECH_SACRIFICE_CULT",
+    "TECH_PRIESTHOOD"
    ],
    "any": [
     [

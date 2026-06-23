@@ -11,14 +11,8 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_LUNAR_ROCK_QUARRY",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_LUNAR_COLONIZATION",
-     "scope": "team"
-    }
+    "BUILDING_LUNAR_ROCK_QUARRY",
+    "TECH_LUNAR_COLONIZATION"
    ],
    "any": [
     [
@@ -43,10 +37,7 @@
   "city": {
    "flat": {
     "value": 100,
-    "enabled": {
-     "type": "TECH_LUNAR_TRADE",
-     "scope": "team"
-    }
+    "enabled": "TECH_LUNAR_TRADE"
    }
   }
  },

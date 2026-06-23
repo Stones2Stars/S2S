@@ -15,14 +15,8 @@
      "scope": "world",
      "min": 10
     },
-    {
-     "type": "TECH_ARTILLERY",
-     "scope": "team"
-    },
-    {
-     "type": "TECH_COMBUSTION",
-     "scope": "team"
-    }
+    "TECH_ARTILLERY",
+    "TECH_COMBUSTION"
    ],
    "any": [
     [

@@ -12,14 +12,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_EFFECT_LAUNCH_SITE",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_SPACE_STATIONS",
-     "scope": "team"
-    }
+    "BUILDING_EFFECT_LAUNCH_SITE",
+    "TECH_SPACE_STATIONS"
    ],
    "any": [
     [
@@ -37,17 +31,11 @@
     8,
     {
      "value": 8,
-     "enabled": {
-      "type": "TECH_SPACE_TOURISM",
-      "scope": "team"
-     }
+     "enabled": "TECH_SPACE_TOURISM"
     },
     {
      "value": 8,
-     "enabled": {
-      "type": "TECH_ASTEROID_MINING",
-      "scope": "team"
-     }
+     "enabled": "TECH_ASTEROID_MINING"
     }
    ]
   }

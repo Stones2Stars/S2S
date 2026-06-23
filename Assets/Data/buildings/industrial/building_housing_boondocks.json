@@ -12,18 +12,9 @@
    "all": [
     "HAS_FRESHWATER",
     "HAS_POWER",
-    {
-     "type": "BUILDING_WATER_PIPES",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_SEWER_SYSTEM",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_TELEPHONE",
-     "scope": "team"
-    }
+    "BUILDING_WATER_PIPES",
+    "BUILDING_SEWER_SYSTEM",
+    "TECH_TELEPHONE"
    ],
    "any": [
     [
@@ -36,18 +27,9 @@
   },
   "operate": {
    "dormant": [
-    {
-     "type": "BUILDING_HOUSING_DUGOUTS",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_HOUSING_COLONY_ARCOLOGY",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_LAUNCH_ARCOLOGY",
-     "scope": "city"
-    }
+    "BUILDING_HOUSING_DUGOUTS",
+    "BUILDING_HOUSING_COLONY_ARCOLOGY",
+    "BUILDING_LAUNCH_ARCOLOGY"
    ]
   }
  },

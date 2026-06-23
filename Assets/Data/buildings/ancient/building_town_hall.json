@@ -26,14 +26,8 @@
      "scope": "city",
      "min": 10
     },
-    {
-     "type": "TECH_COMMUNITY",
-     "scope": "team"
-    },
-    {
-     "type": "CULTURELEVEL_DEVELOPING",
-     "scope": "city"
-    }
+    "TECH_COMMUNITY",
+    "CULTURELEVEL_DEVELOPING"
    ],
    "any": [
     [
@@ -65,14 +59,8 @@
     ]
    ],
    "dormant": [
-    {
-     "type": "BUILDING_CITY_COUNCIL",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_METROPOLITAN_ADMINISTRATION",
-     "scope": "city"
-    }
+    "BUILDING_CITY_COUNCIL",
+    "BUILDING_METROPOLITAN_ADMINISTRATION"
    ]
   }
  },

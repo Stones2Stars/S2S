@@ -10,10 +10,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_CAVE_DWELLING",
-     "scope": "team"
-    }
+    "TECH_CAVE_DWELLING"
    ],
    "any": [
     [
@@ -32,34 +29,13 @@
   },
   "operate": {
    "dormant": [
-    {
-     "type": "BUILDING_HOUSING_BARK_HUTS",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_HOUSING_HOVELS",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_HOUSING_SHACKS",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_HOUSING_BOONDOCKS",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_HOUSING_DUGOUTS",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_HOUSING_COLONY_ARCOLOGY",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_LAUNCH_ARCOLOGY",
-     "scope": "city"
-    }
+    "BUILDING_HOUSING_BARK_HUTS",
+    "BUILDING_HOUSING_HOVELS",
+    "BUILDING_HOUSING_SHACKS",
+    "BUILDING_HOUSING_BOONDOCKS",
+    "BUILDING_HOUSING_DUGOUTS",
+    "BUILDING_HOUSING_COLONY_ARCOLOGY",
+    "BUILDING_LAUNCH_ARCOLOGY"
    ]
   }
  },

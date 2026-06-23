@@ -11,25 +11,13 @@
      "scope": "city",
      "connection": "trade|vicinity"
     },
-    {
-     "type": "TECH_THE_WHEEL",
-     "scope": "team"
-    }
+    "TECH_THE_WHEEL"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_HORSE_BREEDER",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_ANIMAL_TAMER_COMPLEX",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_CENTRAL_BREEDER_HORSE",
-      "scope": "city"
-     }
+     "BUILDING_HORSE_BREEDER",
+     "BUILDING_ANIMAL_TAMER_COMPLEX",
+     "BUILDING_CENTRAL_BREEDER_HORSE"
     ]
    ]
   }

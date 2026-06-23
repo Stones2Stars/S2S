@@ -14,18 +14,9 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_FACTORY",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_ADVANCED_QUALITY_CONTROL",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_INTERNAL_SHOCKWAVE_ENGINE",
-     "scope": "team"
-    },
+    "BUILDING_FACTORY",
+    "BUILDING_ADVANCED_QUALITY_CONTROL",
+    "TECH_INTERNAL_SHOCKWAVE_ENGINE",
     {
      "type": "BONUS_METAMATERIALS",
      "scope": "city",
@@ -55,10 +46,7 @@
     }
    ],
    "dormant": [
-    {
-     "type": "BUILDING_NANOTECH_COMPLEX",
-     "scope": "city"
-    }
+    "BUILDING_NANOTECH_COMPLEX"
    ]
   }
  },
@@ -68,17 +56,11 @@
     3,
     {
      "value": 9,
-     "enabled": {
-      "type": "TECH_WARMACHINES",
-      "scope": "team"
-     }
+     "enabled": "TECH_WARMACHINES"
     },
     {
      "value": 9,
-     "enabled": {
-      "type": "TECH_SKYROADS",
-      "scope": "team"
-     }
+     "enabled": "TECH_SKYROADS"
     }
    ]
   }

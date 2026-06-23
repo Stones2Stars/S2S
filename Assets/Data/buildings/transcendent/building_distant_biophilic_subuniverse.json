@@ -5,21 +5,12 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_DIRECTED_COSMIC_EVOLUTION",
-     "scope": "team"
-    }
+    "TECH_DIRECTED_COSMIC_EVOLUTION"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_DISTANT_ARTIFICIAL_SUPERMASSIVE_BLACK_HOLE",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_DISTANT_BLACK_HOLE_CONSTELLATION",
-      "scope": "city"
-     }
+     "BUILDING_DISTANT_ARTIFICIAL_SUPERMASSIVE_BLACK_HOLE",
+     "BUILDING_DISTANT_BLACK_HOLE_CONSTELLATION"
     ],
     [
      {

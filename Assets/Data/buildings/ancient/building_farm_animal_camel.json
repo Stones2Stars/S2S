@@ -18,10 +18,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_CAMELID_DOMESTICATION",
-     "scope": "team"
-    }
+    "TECH_CAMELID_DOMESTICATION"
    ],
    "any": [
     [
@@ -49,14 +46,8 @@
     ]
    ],
    "dormant": [
-    {
-     "type": "BUILDING_INDUSTRIAL_FARMS",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_MEAT_INDUSTRY_CONGLOMERATE",
-     "scope": "city"
-    }
+    "BUILDING_INDUSTRIAL_FARMS",
+    "BUILDING_MEAT_INDUSTRY_CONGLOMERATE"
    ]
   }
  },
@@ -71,10 +62,7 @@
     1,
     {
      "value": 7,
-     "enabled": {
-      "type": "TECH_TOURISM",
-      "scope": "team"
-     }
+     "enabled": "TECH_TOURISM"
     }
    ]
   }

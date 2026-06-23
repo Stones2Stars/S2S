@@ -13,33 +13,15 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_MEDITATION",
-     "scope": "team"
-    }
+    "TECH_MEDITATION"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_BUDDHIST_TEMPLE",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_HINDU_TEMPLE",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_SIKH_GURDWARA",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_JAIN_TEMPLE",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_GYM",
-      "scope": "city"
-     }
+     "BUILDING_BUDDHIST_TEMPLE",
+     "BUILDING_HINDU_TEMPLE",
+     "BUILDING_SIKH_GURDWARA",
+     "BUILDING_JAIN_TEMPLE",
+     "BUILDING_GYM"
     ],
     [
      {
@@ -51,10 +33,7 @@
   },
   "operate": {
    "dormant": [
-    {
-     "type": "BUILDING_ATHLETIC_MEGACOMPLEX",
-     "scope": "city"
-    }
+    "BUILDING_ATHLETIC_MEGACOMPLEX"
    ]
   }
  },

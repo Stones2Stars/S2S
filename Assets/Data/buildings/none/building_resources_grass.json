@@ -14,14 +14,8 @@
   "build": {
    "any": [
     [
-     {
-      "type": "BUILDING_GRASS_GATHERER",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_WONDER_OF_NATURE_BASALT_ORGAN",
-      "scope": "city"
-     }
+     "BUILDING_GRASS_GATHERER",
+     "BUILDING_WONDER_OF_NATURE_BASALT_ORGAN"
     ],
     [
      {
@@ -33,10 +27,7 @@
   },
   "operate": {
    "dormant": [
-    {
-     "type": "BUILDING_AGROFOREST",
-     "scope": "city"
-    }
+    "BUILDING_AGROFOREST"
    ]
   }
  },

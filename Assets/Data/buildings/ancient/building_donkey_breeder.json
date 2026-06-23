@@ -18,29 +18,14 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_FOLKLORE_DONKEY",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_THE_WHEEL",
-     "scope": "team"
-    }
+    "BUILDING_FOLKLORE_DONKEY",
+    "TECH_THE_WHEEL"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_FARM_ANIMAL_DONKEY",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_INDUSTRIAL_FARMS",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_MEAT_INDUSTRY_CONGLOMERATE",
-      "scope": "city"
-     }
+     "BUILDING_FARM_ANIMAL_DONKEY",
+     "BUILDING_INDUSTRIAL_FARMS",
+     "BUILDING_MEAT_INDUSTRY_CONGLOMERATE"
     ],
     [
      {
@@ -52,10 +37,7 @@
   },
   "operate": {
    "dormant": [
-    {
-     "type": "BUILDING_ANIMAL_TAMER_COMPLEX",
-     "scope": "city"
-    }
+    "BUILDING_ANIMAL_TAMER_COMPLEX"
    ]
   }
  },

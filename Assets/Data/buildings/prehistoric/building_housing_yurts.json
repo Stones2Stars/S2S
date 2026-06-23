@@ -10,10 +10,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_PORTABLE_SHELTERS",
-     "scope": "team"
-    }
+    "TECH_PORTABLE_SHELTERS"
    ],
    "any": [
     [
@@ -62,30 +59,12 @@
     ]
    ],
    "dormant": [
-    {
-     "type": "BUILDING_HOUSING_PALACES",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_HOUSING_ESTATES",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_HOUSING_CONDOMINIUMS",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_HOUSING_HIGH_TECH_CONDOMINIUMS",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_HOUSING_COLONY_ARCOLOGY",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_LAUNCH_ARCOLOGY",
-     "scope": "city"
-    }
+    "BUILDING_HOUSING_PALACES",
+    "BUILDING_HOUSING_ESTATES",
+    "BUILDING_HOUSING_CONDOMINIUMS",
+    "BUILDING_HOUSING_HIGH_TECH_CONDOMINIUMS",
+    "BUILDING_HOUSING_COLONY_ARCOLOGY",
+    "BUILDING_LAUNCH_ARCOLOGY"
    ]
   }
  },

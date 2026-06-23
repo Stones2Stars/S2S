@@ -21,10 +21,7 @@
   "build": {
    "all": [
     "HAS_COAST",
-    {
-     "type": "TECH_GATHERING",
-     "scope": "team"
-    }
+    "TECH_GATHERING"
    ],
    "any": [
     [
@@ -43,14 +40,8 @@
   },
   "operate": {
    "dormant": [
-    {
-     "type": "BUILDING_LUMBER_CAMP",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_AGROFOREST",
-     "scope": "city"
-    }
+    "BUILDING_LUMBER_CAMP",
+    "BUILDING_AGROFOREST"
    ]
   }
  },

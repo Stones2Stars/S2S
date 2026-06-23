@@ -5,14 +5,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_HQ_MILEHIGH_TRAVELS_INTERNATIONAL",
-     "scope": "city"
-    },
-    {
-     "type": "CORPORATION_MILEHIGH",
-     "scope": "city"
-    }
+    "BUILDING_HQ_MILEHIGH_TRAVELS_INTERNATIONAL",
+    "CORPORATION_MILEHIGH"
    ]
   }
  },

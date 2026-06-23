@@ -19,14 +19,8 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_NEON_BOUTIQUE",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_MICROGENERATORS",
-     "scope": "team"
-    }
+    "BUILDING_NEON_BOUTIQUE",
+    "TECH_MICROGENERATORS"
    ],
    "any": [
     [
@@ -55,10 +49,7 @@
     ]
    ],
    "dormant": [
-    {
-     "type": "BUILDING_HIGH_TECH_CULTURAL_ENRICHMENT",
-     "scope": "city"
-    }
+    "BUILDING_HIGH_TECH_CULTURAL_ENRICHMENT"
    ]
   }
  },

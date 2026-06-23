@@ -5,10 +5,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_LANGUAGE",
-     "scope": "team"
-    }
+    "TECH_LANGUAGE"
    ],
    "any": [
     [
@@ -38,24 +35,15 @@
     3,
     {
      "value": 2,
-     "enabled": {
-      "type": "TECH_ORCHARDS",
-      "scope": "team"
-     }
+     "enabled": "TECH_ORCHARDS"
     },
     {
      "value": 2,
-     "enabled": {
-      "type": "TECH_TRACKING",
-      "scope": "team"
-     }
+     "enabled": "TECH_TRACKING"
     },
     {
      "value": -5,
-     "enabled": {
-      "type": "TECH_ECOLOGY",
-      "scope": "team"
-     }
+     "enabled": "TECH_ECOLOGY"
     }
    ]
   }
@@ -66,17 +54,11 @@
     2,
     {
      "value": 2,
-     "enabled": {
-      "type": "TECH_HARD_HAMMER_PERCUSSION",
-      "scope": "team"
-     }
+     "enabled": "TECH_HARD_HAMMER_PERCUSSION"
     },
     {
      "value": -3,
-     "enabled": {
-      "type": "TECH_ECOLOGY",
-      "scope": "team"
-     }
+     "enabled": "TECH_ECOLOGY"
     }
    ]
   }
@@ -86,10 +68,7 @@
    "flat": [
     {
      "value": 10,
-     "enabled": {
-      "type": "TECH_TOURISM",
-      "scope": "team"
-     }
+     "enabled": "TECH_TOURISM"
     }
    ]
   }
@@ -99,17 +78,11 @@
    "flat": [
     {
      "value": 7,
-     "enabled": {
-      "type": "TECH_ECOLOGY",
-      "scope": "team"
-     }
+     "enabled": "TECH_ECOLOGY"
     },
     {
      "value": 10,
-     "enabled": {
-      "type": "TECH_ARCHEOLOGY",
-      "scope": "team"
-     }
+     "enabled": "TECH_ARCHEOLOGY"
     }
    ]
   }
@@ -125,10 +98,7 @@
     3,
     {
      "value": 3,
-     "enabled": {
-      "type": "TECH_ECOLOGY",
-      "scope": "team"
-     }
+     "enabled": "TECH_ECOLOGY"
     }
    ]
   }
@@ -152,10 +122,7 @@
   "city": {
    "flat": {
     "value": 5,
-    "enabled": {
-     "type": "TECH_EXPLORATION",
-     "scope": "team"
-    }
+    "enabled": "TECH_EXPLORATION"
    }
   }
  },

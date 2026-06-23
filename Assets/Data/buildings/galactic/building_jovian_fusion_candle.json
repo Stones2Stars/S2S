@@ -6,14 +6,8 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_DEEP_SPACE_FUSION_CORE",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_ORBITAL_ENGINEERING",
-     "scope": "team"
-    }
+    "BUILDING_DEEP_SPACE_FUSION_CORE",
+    "TECH_ORBITAL_ENGINEERING"
    ],
    "any": [
     [

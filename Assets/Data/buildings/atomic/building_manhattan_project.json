@@ -10,25 +10,13 @@
      "scope": "city",
      "min": 3
     },
-    {
-     "type": "BUILDING_UNIVERSITY",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_FISSION",
-     "scope": "team"
-    }
+    "BUILDING_UNIVERSITY",
+    "TECH_FISSION"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_MILITARY_AIRBASE",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_AEROSPACE_COMPLEX",
-      "scope": "city"
-     }
+     "BUILDING_MILITARY_AIRBASE",
+     "BUILDING_AEROSPACE_COMPLEX"
     ],
     [
      {

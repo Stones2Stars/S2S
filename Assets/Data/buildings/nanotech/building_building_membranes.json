@@ -6,14 +6,8 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_MEGATOWER",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_BIOMIMETICS",
-     "scope": "team"
-    }
+    "BUILDING_MEGATOWER",
+    "TECH_BIOMIMETICS"
    ],
    "any": [
     [

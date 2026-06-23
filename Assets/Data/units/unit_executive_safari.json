@@ -5,14 +5,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_HQ_SAFARI_HUNTERS",
-     "scope": "city"
-    },
-    {
-     "type": "CORPORATION_SAFARI",
-     "scope": "city"
-    }
+    "BUILDING_HQ_SAFARI_HUNTERS",
+    "CORPORATION_SAFARI"
    ]
   }
  },

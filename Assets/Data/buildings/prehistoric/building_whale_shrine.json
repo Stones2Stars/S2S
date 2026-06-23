@@ -5,10 +5,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_HARPOON_MAKING",
-     "scope": "team"
-    }
+    "TECH_HARPOON_MAKING"
    ],
    "any": [
     [
@@ -21,10 +18,7 @@
   },
   "operate": {
    "all": [
-    {
-     "type": "CIVIC_FOLKLORE",
-     "scope": "empire"
-    }
+    "CIVIC_FOLKLORE"
    ],
    "any": [
     [

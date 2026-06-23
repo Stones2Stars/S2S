@@ -15,14 +15,8 @@
      "scope": "city",
      "min": 3
     },
-    {
-     "type": "BUILDING_LIBRARY",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_ASTRONOMY",
-     "scope": "team"
-    }
+    "BUILDING_LIBRARY",
+    "TECH_ASTRONOMY"
    ],
    "any": [
     [

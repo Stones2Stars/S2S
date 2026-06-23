@@ -15,14 +15,8 @@
      "scope": "world",
      "min": 10
     },
-    {
-     "type": "TECH_STEEL",
-     "scope": "team"
-    },
-    {
-     "type": "TECH_MILITARY_SCIENCE",
-     "scope": "team"
-    }
+    "TECH_STEEL",
+    "TECH_MILITARY_SCIENCE"
    ],
    "any": [
     [

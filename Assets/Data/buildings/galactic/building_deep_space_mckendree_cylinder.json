@@ -16,14 +16,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_DEEP_SPACE_BISHOP_RING",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_PLANET_ENGINEERING",
-     "scope": "team"
-    }
+    "BUILDING_DEEP_SPACE_BISHOP_RING",
+    "TECH_PLANET_ENGINEERING"
    ],
    "any": [
     [

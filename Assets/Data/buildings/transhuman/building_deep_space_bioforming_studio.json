@@ -5,22 +5,10 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_DEEP_SPACE_ORBITAL_BASE",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_DEEP_SPACE_ONEILL_CYLINDER",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_DEEP_SPACE_SOCIAL_ENGINEERING",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_HUMAN_TRANSMUTATION",
-     "scope": "team"
-    }
+    "BUILDING_DEEP_SPACE_ORBITAL_BASE",
+    "BUILDING_DEEP_SPACE_ONEILL_CYLINDER",
+    "BUILDING_DEEP_SPACE_SOCIAL_ENGINEERING",
+    "TECH_HUMAN_TRANSMUTATION"
    ],
    "any": [
     [

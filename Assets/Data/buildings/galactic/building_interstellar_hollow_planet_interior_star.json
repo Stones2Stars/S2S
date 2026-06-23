@@ -5,14 +5,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_INTERSTELLAR_HOLLOW_PLANET",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_ARTIFICIAL_STARS",
-     "scope": "team"
-    }
+    "BUILDING_INTERSTELLAR_HOLLOW_PLANET",
+    "TECH_ARTIFICIAL_STARS"
    ],
    "any": [
     [

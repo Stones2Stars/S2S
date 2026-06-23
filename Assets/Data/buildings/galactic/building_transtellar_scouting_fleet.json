@@ -10,10 +10,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_PLANET_SCANNING",
-     "scope": "team"
-    }
+    "TECH_PLANET_SCANNING"
    ],
    "any": [
     [

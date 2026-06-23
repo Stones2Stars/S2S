@@ -11,14 +11,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_DISTANT_HORIZON_PORT",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_EXPERIMENTAL_COSMOLOGY",
-     "scope": "team"
-    }
+    "BUILDING_DISTANT_HORIZON_PORT",
+    "TECH_EXPERIMENTAL_COSMOLOGY"
    ],
    "any": [
     [

@@ -15,21 +15,12 @@
      "scope": "city",
      "min": 3
     },
-    {
-     "type": "TECH_MATHEMATICS",
-     "scope": "team"
-    }
+    "TECH_MATHEMATICS"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_SCHOOL_OF_SCRIBES",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_LIBRARY",
-      "scope": "city"
-     }
+     "BUILDING_SCHOOL_OF_SCRIBES",
+     "BUILDING_LIBRARY"
     ],
     [
      {

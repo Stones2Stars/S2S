@@ -25,21 +25,12 @@
      "type": "VICTORY_DIPLOMATIC",
      "scope": "world"
     },
-    {
-     "type": "TECH_MASS_MEDIA",
-     "scope": "team"
-    }
+    "TECH_MASS_MEDIA"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_MODERN_OFFICES",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_SKYSCRAPER",
-      "scope": "city"
-     }
+     "BUILDING_MODERN_OFFICES",
+     "BUILDING_SKYSCRAPER"
     ],
     [
      {

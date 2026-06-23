@@ -11,23 +11,14 @@
      "scope": "city",
      "min": 7
     },
-    {
-     "type": "BUILDING_SKYSCRAPER",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_CONSTRUCTION_FIRM",
-     "scope": "city"
-    },
+    "BUILDING_SKYSCRAPER",
+    "BUILDING_CONSTRUCTION_FIRM",
     {
      "type": "BUILDING_CONSTRUCTION_FIRM",
      "scope": "empire",
      "min": 3
     },
-    {
-     "type": "TECH_GLOBALIZATION",
-     "scope": "team"
-    }
+    "TECH_GLOBALIZATION"
    ],
    "any": [
     [

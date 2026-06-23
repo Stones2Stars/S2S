@@ -6,10 +6,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_EMANCIPATION",
-     "scope": "team"
-    }
+    "TECH_EMANCIPATION"
    ],
    "any": [
     [

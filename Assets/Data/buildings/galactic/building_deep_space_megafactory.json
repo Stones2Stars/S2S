@@ -5,26 +5,11 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_DEEP_SPACE_BISHOP_RING",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_DEEP_SPACE_ADVANCED_RECYCLING",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_DEEP_SPACE_MAGLEV",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_DEEP_SPACE_ORGANIC_VOLATILE_EXTRACTION",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_FORGE_WORLDS",
-     "scope": "team"
-    }
+    "BUILDING_DEEP_SPACE_BISHOP_RING",
+    "BUILDING_DEEP_SPACE_ADVANCED_RECYCLING",
+    "BUILDING_DEEP_SPACE_MAGLEV",
+    "BUILDING_DEEP_SPACE_ORGANIC_VOLATILE_EXTRACTION",
+    "TECH_FORGE_WORLDS"
    ],
    "any": [
     [

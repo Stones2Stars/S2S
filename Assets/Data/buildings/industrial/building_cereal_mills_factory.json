@@ -5,18 +5,9 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_FACTORY",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_REFRIGERATION",
-     "scope": "team"
-    },
-    {
-     "type": "TECH_CORPORATION",
-     "scope": "team"
-    }
+    "BUILDING_FACTORY",
+    "TECH_REFRIGERATION",
+    "TECH_CORPORATION"
    ],
    "any": [
     [
@@ -29,10 +20,7 @@
   },
   "operate": {
    "all": [
-    {
-     "type": "CORPORATION_1",
-     "scope": "city"
-    }
+    "CORPORATION_1"
    ]
   }
  },

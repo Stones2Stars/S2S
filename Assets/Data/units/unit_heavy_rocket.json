@@ -11,14 +11,8 @@
      "scope": "city",
      "connection": "trade|vicinity"
     },
-    {
-     "type": "BUILDING_COMMERCIAL_SPACEPORT",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_COMMERCIAL_SPACEFLIGHT",
-     "scope": "team"
-    }
+    "BUILDING_COMMERCIAL_SPACEPORT",
+    "TECH_COMMERCIAL_SPACEFLIGHT"
    ]
   }
  },

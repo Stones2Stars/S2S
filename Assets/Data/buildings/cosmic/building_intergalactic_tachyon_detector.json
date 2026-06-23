@@ -10,14 +10,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_INTERGALACTIC_SUPERCOMPUTER",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_TACHYON_COMMUNICATIONS",
-     "scope": "team"
-    }
+    "BUILDING_INTERGALACTIC_SUPERCOMPUTER",
+    "TECH_TACHYON_COMMUNICATIONS"
    ],
    "any": [
     [

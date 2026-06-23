@@ -5,21 +5,12 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_HUNTING",
-     "scope": "team"
-    }
+    "TECH_HUNTING"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_MASTER_HUNTER",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_MASTER_HUNTER_TRADITION",
-      "scope": "city"
-     }
+     "BUILDING_MASTER_HUNTER",
+     "BUILDING_MASTER_HUNTER_TRADITION"
     ],
     [
      {

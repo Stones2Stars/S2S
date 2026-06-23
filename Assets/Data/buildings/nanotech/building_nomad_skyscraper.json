@@ -6,25 +6,13 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_PEER_TO_PEER_RENTALS",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_MESH_NETWORKS",
-     "scope": "team"
-    }
+    "BUILDING_PEER_TO_PEER_RENTALS",
+    "TECH_MESH_NETWORKS"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_AUTOMATED_TAXI_SERVICE",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_TELEPORT_BOOTH",
-      "scope": "city"
-     }
+     "BUILDING_AUTOMATED_TAXI_SERVICE",
+     "BUILDING_TELEPORT_BOOTH"
     ],
     [
      {

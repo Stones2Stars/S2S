@@ -14,21 +14,12 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_PIRACY",
-     "scope": "team"
-    }
+    "TECH_PIRACY"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_TRADING_POST",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_SHOPPING_DISTRICT",
-      "scope": "city"
-     }
+     "BUILDING_TRADING_POST",
+     "BUILDING_SHOPPING_DISTRICT"
     ],
     [
      {
@@ -53,30 +44,12 @@
      }
     ],
     [
-     {
-      "type": "CIVIC_DESPOTISM",
-      "scope": "empire"
-     },
-     {
-      "type": "CIVIC_MONARCHY",
-      "scope": "empire"
-     },
-     {
-      "type": "CIVIC_FEUDAL",
-      "scope": "empire"
-     },
-     {
-      "type": "CIVIC_NATIONALIST",
-      "scope": "empire"
-     },
-     {
-      "type": "CIVIC_MERCANTILISM",
-      "scope": "empire"
-     },
-     {
-      "type": "CIVIC_BANDITRY",
-      "scope": "empire"
-     }
+     "CIVIC_DESPOTISM",
+     "CIVIC_MONARCHY",
+     "CIVIC_FEUDAL",
+     "CIVIC_NATIONALIST",
+     "CIVIC_MERCANTILISM",
+     "CIVIC_BANDITRY"
     ]
    ]
   }

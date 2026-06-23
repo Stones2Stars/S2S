@@ -5,25 +5,13 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_EVOLVED_CONSTRUCTION",
-     "scope": "team"
-    }
+    "TECH_EVOLVED_CONSTRUCTION"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_ARCOLOGY",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_HOUSING_COLONY_ARCOLOGY",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_LAUNCH_ARCOLOGY",
-      "scope": "city"
-     }
+     "BUILDING_ARCOLOGY",
+     "BUILDING_HOUSING_COLONY_ARCOLOGY",
+     "BUILDING_LAUNCH_ARCOLOGY"
     ],
     [
      {

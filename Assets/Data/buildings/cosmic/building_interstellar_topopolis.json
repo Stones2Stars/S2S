@@ -5,14 +5,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_INTERSTELLAR_BANKS_ORBITAL",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_ULTIMA_ARCHITECTURE",
-     "scope": "team"
-    }
+    "BUILDING_INTERSTELLAR_BANKS_ORBITAL",
+    "TECH_ULTIMA_ARCHITECTURE"
    ],
    "any": [
     [

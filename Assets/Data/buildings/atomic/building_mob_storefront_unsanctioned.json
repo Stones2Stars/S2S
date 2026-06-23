@@ -10,10 +10,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_AUTOMATIC_WEAPONS",
-     "scope": "team"
-    }
+    "TECH_AUTOMATIC_WEAPONS"
    ],
    "any": [
     [
@@ -112,10 +109,7 @@
     "unit": "UNIT_MOBSTER_CAR",
     "interval": "perTurn",
     "chance": {
-     "per": {
-      "type": "PROPERTY_CRIME",
-      "scope": "city"
-     }
+     "per": "PROPERTY_CRIME"
     }
    }
   ]

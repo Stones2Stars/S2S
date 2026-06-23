@@ -10,10 +10,7 @@
      "scope": "city",
      "min": 7
     },
-    {
-     "type": "TECH_POP_ART",
-     "scope": "team"
-    }
+    "TECH_POP_ART"
    ],
    "any": [
     [

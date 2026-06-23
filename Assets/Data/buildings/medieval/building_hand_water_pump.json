@@ -13,10 +13,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_AGRICULTURAL_TOOLS",
-     "scope": "team"
-    }
+    "TECH_AGRICULTURAL_TOOLS"
    ],
    "any": [
     [
@@ -53,14 +50,8 @@
     ]
    ],
    "dormant": [
-    {
-     "type": "BUILDING_WIND_WATER_PUMP",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_WATER_PUMPING_STATION",
-     "scope": "city"
-    }
+    "BUILDING_WIND_WATER_PUMP",
+    "BUILDING_WATER_PUMPING_STATION"
    ]
   }
  },

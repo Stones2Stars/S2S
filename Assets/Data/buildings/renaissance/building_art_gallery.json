@@ -11,10 +11,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_FREE_ARTISTRY",
-     "scope": "team"
-    }
+    "TECH_FREE_ARTISTRY"
    ],
    "any": [
     [
@@ -32,94 +29,55 @@
     2,
     {
      "value": 6,
-     "enabled": {
-      "type": "TECH_ROMANTICISM",
-      "scope": "team"
-     }
+     "enabled": "TECH_ROMANTICISM"
     },
     {
      "value": 6,
-     "enabled": {
-      "type": "TECH_PHOTOGRAPHY",
-      "scope": "team"
-     }
+     "enabled": "TECH_PHOTOGRAPHY"
     },
     {
      "value": 6,
-     "enabled": {
-      "type": "TECH_REALISM",
-      "scope": "team"
-     }
+     "enabled": "TECH_REALISM"
     },
     {
      "value": 6,
-     "enabled": {
-      "type": "TECH_IMPRESSIONISM",
-      "scope": "team"
-     }
+     "enabled": "TECH_IMPRESSIONISM"
     },
     {
      "value": 6,
-     "enabled": {
-      "type": "TECH_CUBISM",
-      "scope": "team"
-     }
+     "enabled": "TECH_CUBISM"
     },
     {
      "value": 6,
-     "enabled": {
-      "type": "TECH_EXPRESSIONISM",
-      "scope": "team"
-     }
+     "enabled": "TECH_EXPRESSIONISM"
     },
     {
      "value": 7,
-     "enabled": {
-      "type": "TECH_DADA",
-      "scope": "team"
-     }
+     "enabled": "TECH_DADA"
     },
     {
      "value": 7,
-     "enabled": {
-      "type": "TECH_SURREALISM",
-      "scope": "team"
-     }
+     "enabled": "TECH_SURREALISM"
     },
     {
      "value": 7,
-     "enabled": {
-      "type": "TECH_ANIMATION",
-      "scope": "team"
-     }
+     "enabled": "TECH_ANIMATION"
     },
     {
      "value": 7,
-     "enabled": {
-      "type": "TECH_MODERN_ART",
-      "scope": "team"
-     }
+     "enabled": "TECH_MODERN_ART"
     },
     {
      "value": 7,
-     "enabled": {
-      "type": "TECH_POP_ART",
-      "scope": "team"
-     }
+     "enabled": "TECH_POP_ART"
     },
     {
      "value": 7,
-     "enabled": {
-      "type": "TECH_MASS_MEDIA",
-      "scope": "team"
-     }
+     "enabled": "TECH_MASS_MEDIA"
     },
     {
      "value": 7,
-     "enabled": {
-      "type": "TECH_3D_MODELLING",
-      "scope": "team"
-     }
+     "enabled": "TECH_3D_MODELLING"
     }
    ]
   }

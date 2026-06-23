@@ -13,17 +13,11 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_MACHINERY",
-     "scope": "team"
-    }
+    "TECH_MACHINERY"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_LUMBER_CAMP",
-      "scope": "city"
-     }
+     "BUILDING_LUMBER_CAMP"
     ],
     [
      {
@@ -71,10 +65,7 @@
     ]
    ],
    "dormant": [
-    {
-     "type": "BUILDING_AGROFOREST",
-     "scope": "city"
-    }
+    "BUILDING_AGROFOREST"
    ]
   }
  },

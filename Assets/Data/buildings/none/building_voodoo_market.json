@@ -5,25 +5,13 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_LOA_HWE",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_MUSICAL_NOTATION",
-     "scope": "team"
-    }
+    "BUILDING_LOA_HWE",
+    "TECH_MUSICAL_NOTATION"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_CITY_COUNCIL",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_METROPOLITAN_ADMINISTRATION",
-      "scope": "city"
-     }
+     "BUILDING_CITY_COUNCIL",
+     "BUILDING_METROPOLITAN_ADMINISTRATION"
     ],
     [
      {
@@ -35,10 +23,7 @@
   },
   "operate": {
    "all": [
-    {
-     "type": "RELIGION_VOODOO",
-     "scope": "city"
-    }
+    "RELIGION_VOODOO"
    ]
   }
  },

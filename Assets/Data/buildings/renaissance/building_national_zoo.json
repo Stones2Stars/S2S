@@ -20,10 +20,7 @@
      "scope": "empire",
      "min": 3
     },
-    {
-     "type": "TECH_ZOOLOGY",
-     "scope": "team"
-    }
+    "TECH_ZOOLOGY"
    ],
    "any": [
     [

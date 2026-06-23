@@ -15,10 +15,7 @@
      "scope": "city",
      "min": 7
     },
-    {
-     "type": "TECH_INVENTION",
-     "scope": "team"
-    }
+    "TECH_INVENTION"
    ],
    "any": [
     [

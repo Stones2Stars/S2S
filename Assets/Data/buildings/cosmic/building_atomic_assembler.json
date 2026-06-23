@@ -23,14 +23,8 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_OMEGA_ASSEMBLER",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_GRAVITRONICS",
-     "scope": "team"
-    }
+    "BUILDING_OMEGA_ASSEMBLER",
+    "TECH_GRAVITRONICS"
    ],
    "any": [
     [
@@ -43,14 +37,8 @@
   },
   "operate": {
    "dormant": [
-    {
-     "type": "BUILDING_QUANTUM_ASSEMBLER",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_MATERIALIZER",
-     "scope": "city"
-    }
+    "BUILDING_QUANTUM_ASSEMBLER",
+    "BUILDING_MATERIALIZER"
    ]
   }
  },
@@ -60,10 +48,7 @@
     15,
     {
      "value": 12,
-     "enabled": {
-      "type": "TECH_ZEPTOTECHNOLOGY",
-      "scope": "team"
-     }
+     "enabled": "TECH_ZEPTOTECHNOLOGY"
     }
    ],
    "percent": [

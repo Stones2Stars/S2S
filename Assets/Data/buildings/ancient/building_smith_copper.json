@@ -13,21 +13,12 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_METAL_CASTING",
-     "scope": "team"
-    }
+    "TECH_METAL_CASTING"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_FORGE",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_FOUNDRY",
-      "scope": "city"
-     }
+     "BUILDING_FORGE",
+     "BUILDING_FOUNDRY"
     ],
     [
      {
@@ -46,14 +37,8 @@
     }
    ],
    "dormant": [
-    {
-     "type": "BUILDING_ADVANCED_COPPERWORKS",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_METALS_MEGACOMPLEX",
-     "scope": "city"
-    }
+    "BUILDING_ADVANCED_COPPERWORKS",
+    "BUILDING_METALS_MEGACOMPLEX"
    ]
   }
  },
@@ -68,17 +53,11 @@
     1,
     {
      "value": 2,
-     "enabled": {
-      "type": "TECH_ORNAMENTATION",
-      "scope": "team"
-     }
+     "enabled": "TECH_ORNAMENTATION"
     },
     {
      "value": 3,
-     "enabled": {
-      "type": "TECH_AESTHETICS",
-      "scope": "team"
-     }
+     "enabled": "TECH_AESTHETICS"
     }
    ]
   }

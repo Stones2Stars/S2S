@@ -19,21 +19,12 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "TECH_PLANET_CRACKING",
-     "scope": "team"
-    }
+    "TECH_PLANET_CRACKING"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_INTERSTELLAR_ASTEROID_MINING_SYSTEM",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_SPACE_COLONY_MILKY_WAY",
-      "scope": "city"
-     }
+     "BUILDING_INTERSTELLAR_ASTEROID_MINING_SYSTEM",
+     "BUILDING_SPACE_COLONY_MILKY_WAY"
     ],
     [
      {
@@ -49,10 +40,7 @@
   },
   "operate": {
    "dormant": [
-    {
-     "type": "BUILDING_INTERSTELLAR_DYSON_SPHERE",
-     "scope": "city"
-    }
+    "BUILDING_INTERSTELLAR_DYSON_SPHERE"
    ]
   }
  },

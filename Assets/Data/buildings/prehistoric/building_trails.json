@@ -22,10 +22,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_TRAILS",
-     "scope": "team"
-    }
+    "TECH_TRAILS"
    ],
    "any": [
     [
@@ -38,26 +35,11 @@
   },
   "operate": {
    "dormant": [
-    {
-     "type": "BUILDING_ROADS",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_PAVED_ROADS",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_ASPHALT_ROADS",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_SKYROAD_CONTROL_TOWER",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_TELEPORT_BOOTH",
-     "scope": "city"
-    }
+    "BUILDING_ROADS",
+    "BUILDING_PAVED_ROADS",
+    "BUILDING_ASPHALT_ROADS",
+    "BUILDING_SKYROAD_CONTROL_TOWER",
+    "BUILDING_TELEPORT_BOOTH"
    ]
   }
  },

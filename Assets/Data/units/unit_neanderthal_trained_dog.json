@@ -10,29 +10,14 @@
      "scope": "city",
      "connection": "trade|vicinity"
     },
-    {
-     "type": "BUILDING_C_AC_NEANDERTHAL",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_C_L_NEANDERTHAL",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_CANINE_DOMESTICATION",
-     "scope": "team"
-    }
+    "BUILDING_C_AC_NEANDERTHAL",
+    "BUILDING_C_L_NEANDERTHAL",
+    "TECH_CANINE_DOMESTICATION"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_DOG_BREEDER",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_REPET",
-      "scope": "city"
-     }
+     "BUILDING_DOG_BREEDER",
+     "BUILDING_REPET"
     ],
     [
      {

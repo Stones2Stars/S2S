@@ -10,19 +10,13 @@
      "scope": "city",
      "min": 7
     },
-    {
-     "type": "BUILDING_LIBRARY",
-     "scope": "city"
-    },
+    "BUILDING_LIBRARY",
     {
      "type": "BUILDING_LIBRARY",
      "scope": "empire",
      "min": 3
     },
-    {
-     "type": "TECH_LITERATURE",
-     "scope": "team"
-    }
+    "TECH_LITERATURE"
    ],
    "any": [
     [

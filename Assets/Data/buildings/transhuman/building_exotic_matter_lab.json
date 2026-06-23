@@ -11,14 +11,8 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_MEGATOWER_RESEARCH_LEVEL",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_ARTIFICIAL_NUCLEOSYNTHESIS",
-     "scope": "team"
-    }
+    "BUILDING_MEGATOWER_RESEARCH_LEVEL",
+    "TECH_ARTIFICIAL_NUCLEOSYNTHESIS"
    ],
    "any": [
     [
@@ -35,10 +29,7 @@
    "flat": [
     {
      "value": 12,
-     "enabled": {
-      "type": "TECH_SUPERSYMMETRIC_PARTICLE_CONSTRUCTION",
-      "scope": "team"
-     }
+     "enabled": "TECH_SUPERSYMMETRIC_PARTICLE_CONSTRUCTION"
     }
    ]
   }

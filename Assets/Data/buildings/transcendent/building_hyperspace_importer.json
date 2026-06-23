@@ -11,10 +11,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_TRANSDIMENSIONAL_COMMERCE",
-     "scope": "team"
-    }
+    "TECH_TRANSDIMENSIONAL_COMMERCE"
    ],
    "any": [
     [

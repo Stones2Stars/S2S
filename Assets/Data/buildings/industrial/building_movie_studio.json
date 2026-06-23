@@ -16,10 +16,7 @@
      "scope": "city",
      "min": 7
     },
-    {
-     "type": "TECH_MOTION_PICTURES",
-     "scope": "team"
-    }
+    "TECH_MOTION_PICTURES"
    ],
    "any": [
     [

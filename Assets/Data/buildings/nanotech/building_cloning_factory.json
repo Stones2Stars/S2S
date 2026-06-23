@@ -16,18 +16,9 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_CLONING_LABORATORY",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_FACTORY",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_MAINSTREAM_CLONING",
-     "scope": "team"
-    }
+    "BUILDING_CLONING_LABORATORY",
+    "BUILDING_FACTORY",
+    "TECH_MAINSTREAM_CLONING"
    ],
    "any": [
     [

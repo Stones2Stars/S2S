@@ -15,14 +15,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_UNIVERSITY",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_NATIONALISM",
-     "scope": "team"
-    }
+    "BUILDING_UNIVERSITY",
+    "TECH_NATIONALISM"
    ],
    "any": [
     [

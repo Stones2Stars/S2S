@@ -15,25 +15,13 @@
      "scope": "city",
      "min": 3
     },
-    {
-     "type": "TECH_STEEL",
-     "scope": "team"
-    }
+    "TECH_STEEL"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_TRADING_POST",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_SHOPPING_DISTRICT",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_FACTORY",
-      "scope": "city"
-     }
+     "BUILDING_TRADING_POST",
+     "BUILDING_SHOPPING_DISTRICT",
+     "BUILDING_FACTORY"
     ],
     [
      {

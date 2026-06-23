@@ -10,25 +10,13 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_MEGALITH_CONSTRUCTION",
-     "scope": "team"
-    }
+    "TECH_MEGALITH_CONSTRUCTION"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_SAGE",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_ALTERNATIVE_MEDICINE",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_HEALTHCARE_MEGACOMPLEX",
-      "scope": "city"
-     }
+     "BUILDING_SAGE",
+     "BUILDING_ALTERNATIVE_MEDICINE",
+     "BUILDING_HEALTHCARE_MEGACOMPLEX"
     ],
     [
      {

@@ -11,14 +11,8 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_CLOUD_SERVER",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_MICROGENERATORS",
-     "scope": "team"
-    }
+    "BUILDING_CLOUD_SERVER",
+    "TECH_MICROGENERATORS"
    ],
    "any": [
     [

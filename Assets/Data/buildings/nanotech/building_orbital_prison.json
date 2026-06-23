@@ -11,14 +11,8 @@
      "scope": "city",
      "min": 13
     },
-    {
-     "type": "BUILDING_MILITARY_SPACEPORT",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_ADVANCED_ENVIRONMENTAL_SYSTEMS",
-     "scope": "team"
-    }
+    "BUILDING_MILITARY_SPACEPORT",
+    "TECH_ADVANCED_ENVIRONMENTAL_SYSTEMS"
    ],
    "any": [
     [

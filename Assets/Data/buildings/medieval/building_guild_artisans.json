@@ -15,29 +15,14 @@
      "scope": "city",
      "min": 3
     },
-    {
-     "type": "TECH_INVENTION",
-     "scope": "team"
-    },
-    {
-     "type": "TECH_GUILDS",
-     "scope": "team"
-    }
+    "TECH_INVENTION",
+    "TECH_GUILDS"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_CRAFTS_HUT",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_MALL",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_HYPERMARKET",
-      "scope": "city"
-     }
+     "BUILDING_CRAFTS_HUT",
+     "BUILDING_MALL",
+     "BUILDING_HYPERMARKET"
     ],
     [
      {

@@ -5,25 +5,13 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_PRECISION_SOCIAL_ENGINEERING",
-     "scope": "team"
-    },
-    {
-     "type": "TECH_CULTURAL_EVOLUTION",
-     "scope": "team"
-    }
+    "TECH_PRECISION_SOCIAL_ENGINEERING",
+    "TECH_CULTURAL_EVOLUTION"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_INTERSTELLAR_CULTURE_COMMERCIAL",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_INTERSTELLAR_CULTURE_INDUSTRIOUS",
-      "scope": "city"
-     }
+     "BUILDING_INTERSTELLAR_CULTURE_COMMERCIAL",
+     "BUILDING_INTERSTELLAR_CULTURE_INDUSTRIOUS"
     ],
     [
      {

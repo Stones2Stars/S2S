@@ -13,10 +13,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_IRON_WORKING",
-     "scope": "team"
-    }
+    "TECH_IRON_WORKING"
    ],
    "any": [
     [
@@ -35,10 +32,7 @@
   },
   "operate": {
    "dormant": [
-    {
-     "type": "BUILDING_MODERN_EARTHWORKS",
-     "scope": "city"
-    }
+    "BUILDING_MODERN_EARTHWORKS"
    ]
   }
  },

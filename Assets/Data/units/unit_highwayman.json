@@ -10,14 +10,8 @@
      "scope": "city",
      "connection": "trade|vicinity"
     },
-    {
-     "type": "BUILDING_HIGHWAYMANS_HIDEOUT",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_MATCHLOCK",
-     "scope": "team"
-    }
+    "BUILDING_HIGHWAYMANS_HIDEOUT",
+    "TECH_MATCHLOCK"
    ],
    "any": [
     [

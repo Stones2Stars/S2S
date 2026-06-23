@@ -15,10 +15,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_SCAVENGING",
-     "scope": "team"
-    }
+    "TECH_SCAVENGING"
    ],
    "any": [
     [

@@ -5,18 +5,9 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_DEEP_SPACE_DOCKING_BAY",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_DEEP_SPACE_BISHOP_RING",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_INTERSTELLAR_TRADE",
-     "scope": "team"
-    }
+    "BUILDING_DEEP_SPACE_DOCKING_BAY",
+    "BUILDING_DEEP_SPACE_BISHOP_RING",
+    "TECH_INTERSTELLAR_TRADE"
    ],
    "any": [
     [

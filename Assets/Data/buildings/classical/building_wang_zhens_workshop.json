@@ -11,25 +11,13 @@
   "build": {
    "all": [
     "HAS_RIVER",
-    {
-     "type": "TECH_WATERWHEELS",
-     "scope": "team"
-    }
+    "TECH_WATERWHEELS"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_WATERMILL",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_MODERN_MILL",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_FOOD_MANUFACTURING_DISTRICT",
-      "scope": "city"
-     }
+     "BUILDING_WATERMILL",
+     "BUILDING_MODERN_MILL",
+     "BUILDING_FOOD_MANUFACTURING_DISTRICT"
     ],
     [
      {

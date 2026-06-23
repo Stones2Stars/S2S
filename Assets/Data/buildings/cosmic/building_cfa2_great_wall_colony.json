@@ -5,14 +5,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_INTERGALACTIC_SUPERCLUSTER_COLONY",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_COSMIC_ENGINEERING",
-     "scope": "team"
-    }
+    "BUILDING_INTERGALACTIC_SUPERCLUSTER_COLONY",
+    "TECH_COSMIC_ENGINEERING"
    ],
    "any": [
     [
@@ -29,14 +23,8 @@
     ]
    ],
    "noneOf": [
-    {
-     "type": "BUILDING_HERCULES_CORONA_BOREALIS_GREAT_WALL_COLONY",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_SLOAN_GREAT_WALL_COLONY",
-     "scope": "city"
-    }
+    "BUILDING_HERCULES_CORONA_BOREALIS_GREAT_WALL_COLONY",
+    "BUILDING_SLOAN_GREAT_WALL_COLONY"
    ]
   }
  },

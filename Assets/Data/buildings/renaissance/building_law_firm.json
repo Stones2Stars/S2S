@@ -13,21 +13,12 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_COURTHOUSE",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_CORPORATION",
-     "scope": "team"
-    }
+    "BUILDING_COURTHOUSE",
+    "TECH_CORPORATION"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_LAW_SCHOOL",
-      "scope": "city"
-     }
+     "BUILDING_LAW_SCHOOL"
     ],
     [
      {
@@ -39,10 +30,7 @@
   },
   "operate": {
    "dormant": [
-    {
-     "type": "BUILDING_AI_LEGAL_SYSTEM",
-     "scope": "city"
-    }
+    "BUILDING_AI_LEGAL_SYSTEM"
    ]
   }
  },

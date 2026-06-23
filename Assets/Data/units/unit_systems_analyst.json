@@ -10,14 +10,8 @@
      "scope": "city",
      "connection": "trade|vicinity"
     },
-    {
-     "type": "BUILDING_ARTIFICIAL_INTELLIGENCE_CORE",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_QUANTUM_COMPUTING",
-     "scope": "team"
-    }
+    "BUILDING_ARTIFICIAL_INTELLIGENCE_CORE",
+    "TECH_QUANTUM_COMPUTING"
    ],
    "any": [
     [

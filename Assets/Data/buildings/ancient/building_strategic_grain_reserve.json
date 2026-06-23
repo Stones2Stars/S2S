@@ -6,21 +6,12 @@
   "build": {
    "all": [
     "HAS_RIVER",
-    {
-     "type": "TECH_POTTERY",
-     "scope": "team"
-    }
+    "TECH_POTTERY"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_GRANARY",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_MODERN_GRANARY",
-      "scope": "city"
-     }
+     "BUILDING_GRANARY",
+     "BUILDING_MODERN_GRANARY"
     ],
     [
      {

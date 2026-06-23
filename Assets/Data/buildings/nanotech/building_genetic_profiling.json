@@ -6,14 +6,8 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_PHENOTYPE_STUDIO",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_GENE_JURISPRUDENCE",
-     "scope": "team"
-    }
+    "BUILDING_PHENOTYPE_STUDIO",
+    "TECH_GENE_JURISPRUDENCE"
    ],
    "any": [
     [

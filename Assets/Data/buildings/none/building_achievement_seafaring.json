@@ -6,10 +6,7 @@
   "build": {
    "all": [
     "HAS_COAST",
-    {
-     "type": "TECH_WRITING",
-     "scope": "team"
-    }
+    "TECH_WRITING"
    ],
    "any": [
     [

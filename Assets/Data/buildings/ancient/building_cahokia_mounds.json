@@ -15,21 +15,12 @@
      "scope": "city",
      "min": 3
     },
-    {
-     "type": "TECH_COPPER_WORKING",
-     "scope": "team"
-    }
+    "TECH_COPPER_WORKING"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_TUMULUS",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_ANCIENT_CUSTOMS",
-      "scope": "city"
-     }
+     "BUILDING_TUMULUS",
+     "BUILDING_ANCIENT_CUSTOMS"
     ],
     [
      {

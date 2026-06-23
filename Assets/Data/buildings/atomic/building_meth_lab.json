@@ -20,14 +20,8 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_LABORATORY",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_URBAN_CULTURE",
-     "scope": "team"
-    }
+    "BUILDING_LABORATORY",
+    "TECH_URBAN_CULTURE"
    ],
    "any": [
     [
@@ -47,14 +41,8 @@
     }
    ],
    "dormant": [
-    {
-     "type": "BUILDING_MATERIALS_CONGLOMERATE",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_ORDINANCE_DRUG_PROHIBITION",
-     "scope": "city"
-    }
+    "BUILDING_MATERIALS_CONGLOMERATE",
+    "BUILDING_ORDINANCE_DRUG_PROHIBITION"
    ]
   }
  },
@@ -106,10 +94,7 @@
     "unit": "UNIT_STREET_GANG",
     "interval": "perTurn",
     "chance": {
-     "per": {
-      "type": "PROPERTY_CRIME",
-      "scope": "city"
-     }
+     "per": "PROPERTY_CRIME"
     }
    }
   ]

@@ -14,14 +14,8 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_GAMMA_ASSEMBLER",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_NUTRACEUTICAL_ANIMALS",
-     "scope": "team"
-    }
+    "BUILDING_GAMMA_ASSEMBLER",
+    "TECH_NUTRACEUTICAL_ANIMALS"
    ],
    "any": [
     [
@@ -41,10 +35,7 @@
     }
    ],
    "dormant": [
-    {
-     "type": "BUILDING_TELEPORT_BOOTH",
-     "scope": "city"
-    }
+    "BUILDING_TELEPORT_BOOTH"
    ]
   }
  },

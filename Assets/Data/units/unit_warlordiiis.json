@@ -10,14 +10,8 @@
      "scope": "city",
      "connection": "trade|vicinity"
     },
-    {
-     "type": "TECH_MATCHLOCK",
-     "scope": "team"
-    },
-    {
-     "type": "TECH_LEADERSHIP",
-     "scope": "team"
-    }
+    "TECH_MATCHLOCK",
+    "TECH_LEADERSHIP"
    ],
    "any": [
     [

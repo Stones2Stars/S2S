@@ -5,10 +5,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_CALENDAR",
-     "scope": "team"
-    }
+    "TECH_CALENDAR"
    ],
    "any": [
     [
@@ -22,26 +19,11 @@
   "operate": {
    "any": [
     [
-     {
-      "type": "CIVIC_DESPOTISM",
-      "scope": "empire"
-     },
-     {
-      "type": "CIVIC_MONARCHY",
-      "scope": "empire"
-     },
-     {
-      "type": "CIVIC_FEUDAL",
-      "scope": "empire"
-     },
-     {
-      "type": "CIVIC_CHIEFDOM",
-      "scope": "empire"
-     },
-     {
-      "type": "CIVIC_SOVEREIGNTY",
-      "scope": "empire"
-     }
+     "CIVIC_DESPOTISM",
+     "CIVIC_MONARCHY",
+     "CIVIC_FEUDAL",
+     "CIVIC_CHIEFDOM",
+     "CIVIC_SOVEREIGNTY"
     ]
    ]
   }
@@ -109,24 +91,15 @@
     1,
     {
      "value": 1,
-     "enabled": {
-      "type": "BUILDING_PALACE",
-      "scope": "city"
-     }
+     "enabled": "BUILDING_PALACE"
     },
     {
      "value": 1,
-     "enabled": {
-      "type": "BUILDING_FORBIDDEN_PALACE",
-      "scope": "city"
-     }
+     "enabled": "BUILDING_FORBIDDEN_PALACE"
     },
     {
      "value": 1,
-     "enabled": {
-      "type": "BUILDING_VERSAILLES",
-      "scope": "city"
-     }
+     "enabled": "BUILDING_VERSAILLES"
     }
    ]
   }

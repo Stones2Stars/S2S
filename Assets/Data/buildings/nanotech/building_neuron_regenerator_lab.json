@@ -14,25 +14,13 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_3D_BODY_ATLAS",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_EXOCORTEX_NETWORKS",
-     "scope": "team"
-    }
+    "BUILDING_3D_BODY_ATLAS",
+    "TECH_EXOCORTEX_NETWORKS"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_APPLIED_PSYCHOLOGY_LAB",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_HEALTHCARE_MEGACOMPLEX",
-      "scope": "city"
-     }
+     "BUILDING_APPLIED_PSYCHOLOGY_LAB",
+     "BUILDING_HEALTHCARE_MEGACOMPLEX"
     ],
     [
      {

@@ -5,27 +5,15 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_C_AC_NEANDERTHAL",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_C_L_NEANDERTHAL",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_CANOE_BUILDER",
-     "scope": "city"
-    },
+    "BUILDING_C_AC_NEANDERTHAL",
+    "BUILDING_C_L_NEANDERTHAL",
+    "BUILDING_CANOE_BUILDER",
     {
      "type": "AREA_SIZE",
      "scope": "world",
      "min": 5
     },
-    {
-     "type": "TECH_HARPOON_MAKING",
-     "scope": "team"
-    }
+    "TECH_HARPOON_MAKING"
    ],
    "any": [
     [

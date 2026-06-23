@@ -18,10 +18,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_HERITAGE",
-     "scope": "team"
-    }
+    "TECH_HERITAGE"
    ],
    "any": [
     [
@@ -58,14 +55,8 @@
     ]
    ],
    "dormant": [
-    {
-     "type": "BUILDING_ELEMENTARY_SCHOOL",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_HOLOGRAPHIC_SCHOOL",
-     "scope": "city"
-    }
+    "BUILDING_ELEMENTARY_SCHOOL",
+    "BUILDING_HOLOGRAPHIC_SCHOOL"
    ]
   }
  },
@@ -75,10 +66,7 @@
     1,
     {
      "value": 2,
-     "enabled": {
-      "type": "TECH_LINGUISTICS",
-      "scope": "team"
-     }
+     "enabled": "TECH_LINGUISTICS"
     }
    ]
   }

@@ -11,14 +11,8 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_SPACE_COLONY_LUNAR_BASE",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_LUNAR_MANUFACTURING",
-     "scope": "team"
-    }
+    "BUILDING_SPACE_COLONY_LUNAR_BASE",
+    "TECH_LUNAR_MANUFACTURING"
    ],
    "any": [
     [

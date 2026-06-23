@@ -15,14 +15,8 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_DELTA_ASSEMBLER",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_NOVUS_CHEMISTRY",
-     "scope": "team"
-    }
+    "BUILDING_DELTA_ASSEMBLER",
+    "TECH_NOVUS_CHEMISTRY"
    ],
    "any": [
     [
@@ -90,24 +84,15 @@
     75,
     {
      "value": 10,
-     "enabled": {
-      "type": "TECH_ARTIFICIAL_PHOTOSYNTHESIS",
-      "scope": "team"
-     }
+     "enabled": "TECH_ARTIFICIAL_PHOTOSYNTHESIS"
     },
     {
      "value": 10,
-     "enabled": {
-      "type": "TECH_ORGANIC_CITIES",
-      "scope": "team"
-     }
+     "enabled": "TECH_ORGANIC_CITIES"
     },
     {
      "value": 9,
-     "enabled": {
-      "type": "TECH_VERTICAL_FARMING",
-      "scope": "team"
-     }
+     "enabled": "TECH_VERTICAL_FARMING"
     },
     {
      "value": 2,

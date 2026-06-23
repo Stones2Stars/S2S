@@ -5,14 +5,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_RADIO",
-     "scope": "team"
-    },
-    {
-     "type": "TECH_MOTORIZED_TRANSPORTATION",
-     "scope": "team"
-    },
+    "TECH_RADIO",
+    "TECH_MOTORIZED_TRANSPORTATION",
     {
      "type": "BONUS_FIREARMS",
      "scope": "city",
@@ -41,14 +35,8 @@
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_POLICE_STATION",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_POLICE_PRECINCT",
-      "scope": "city"
-     }
+     "BUILDING_POLICE_STATION",
+     "BUILDING_POLICE_PRECINCT"
     ]
    ]
   }

@@ -11,14 +11,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_MILITARY_STANDARD_ANIMAL_MASCOT",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_CANINE_DOMESTICATION",
-     "scope": "team"
-    }
+    "BUILDING_MILITARY_STANDARD_ANIMAL_MASCOT",
+    "TECH_CANINE_DOMESTICATION"
    ],
    "any": [
     [
@@ -28,42 +22,15 @@
      }
     ],
     [
-     {
-      "type": "HERITAGE_FOLKLORE_DINGO",
-      "scope": "empire"
-     },
-     {
-      "type": "HERITAGE_FOLKLORE_FOX_ARCTIC",
-      "scope": "empire"
-     },
-     {
-      "type": "HERITAGE_FOLKLORE_FOX_FENNEC",
-      "scope": "empire"
-     },
-     {
-      "type": "HERITAGE_FOLKLORE_FOX_RED",
-      "scope": "empire"
-     },
-     {
-      "type": "HERITAGE_FOLKLORE_USSURI_DHOLE",
-      "scope": "empire"
-     },
-     {
-      "type": "HERITAGE_FOLKLORE_WOLF",
-      "scope": "empire"
-     },
-     {
-      "type": "HERITAGE_FOLKLORE_WOLF_DIRE",
-      "scope": "empire"
-     },
-     {
-      "type": "HERITAGE_FOLKLORE_WOLF_ETHIOPIAN",
-      "scope": "empire"
-     },
-     {
-      "type": "HERITAGE_FOLKLORE_WOLF_MANED",
-      "scope": "empire"
-     }
+     "HERITAGE_FOLKLORE_DINGO",
+     "HERITAGE_FOLKLORE_FOX_ARCTIC",
+     "HERITAGE_FOLKLORE_FOX_FENNEC",
+     "HERITAGE_FOLKLORE_FOX_RED",
+     "HERITAGE_FOLKLORE_USSURI_DHOLE",
+     "HERITAGE_FOLKLORE_WOLF",
+     "HERITAGE_FOLKLORE_WOLF_DIRE",
+     "HERITAGE_FOLKLORE_WOLF_ETHIOPIAN",
+     "HERITAGE_FOLKLORE_WOLF_MANED"
     ]
    ]
   },

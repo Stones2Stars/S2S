@@ -18,10 +18,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_IRRIGATION",
-     "scope": "team"
-    }
+    "TECH_IRRIGATION"
    ],
    "any": [
     [
@@ -41,10 +38,7 @@
     }
    ],
    "dormant": [
-    {
-     "type": "BUILDING_FARMSCRAPER_III",
-     "scope": "city"
-    }
+    "BUILDING_FARMSCRAPER_III"
    ]
   }
  },

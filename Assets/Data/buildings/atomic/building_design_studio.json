@@ -27,14 +27,8 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_MODERN_OFFICES",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_PERSONAL_COMPUTERS",
-     "scope": "team"
-    }
+    "BUILDING_MODERN_OFFICES",
+    "TECH_PERSONAL_COMPUTERS"
    ],
    "any": [
     [
@@ -54,10 +48,7 @@
     }
    ],
    "dormant": [
-    {
-     "type": "BUILDING_ELECTRONICS_MANUFACTURING_DISTRICT",
-     "scope": "city"
-    }
+    "BUILDING_ELECTRONICS_MANUFACTURING_DISTRICT"
    ]
   }
  },

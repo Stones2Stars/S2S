@@ -15,18 +15,9 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_GESTURE_RECOGNITION_SOFTWARE",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_SPEECH_RECOGNITION_SOFTWARE",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_AUGMENTED_REALITY",
-     "scope": "team"
-    }
+    "BUILDING_GESTURE_RECOGNITION_SOFTWARE",
+    "BUILDING_SPEECH_RECOGNITION_SOFTWARE",
+    "TECH_AUGMENTED_REALITY"
    ],
    "any": [
     [
@@ -58,31 +49,19 @@
     5,
     {
      "value": 9,
-     "enabled": {
-      "type": "TECH_INTERACTIVE_GLASS",
-      "scope": "team"
-     }
+     "enabled": "TECH_INTERACTIVE_GLASS"
     },
     {
      "value": 9,
-     "enabled": {
-      "type": "TECH_PERSONAL_ROBOTS",
-      "scope": "team"
-     }
+     "enabled": "TECH_PERSONAL_ROBOTS"
     },
     {
      "value": 9,
-     "enabled": {
-      "type": "TECH_AUTOMATED_ROBOTICS",
-      "scope": "team"
-     }
+     "enabled": "TECH_AUTOMATED_ROBOTICS"
     },
     {
      "value": 9,
-     "enabled": {
-      "type": "TECH_AUTOMATED_URBANIZATION",
-      "scope": "team"
-     }
+     "enabled": "TECH_AUTOMATED_URBANIZATION"
     }
    ]
   }

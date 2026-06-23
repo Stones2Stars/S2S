@@ -21,26 +21,11 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_CISLUNAR_COOLING_SYSTEM",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_CISLUNAR_GOVERNANCE",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_CISLUNAR_BIOFACTORY",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_EFFECT_CISLUNAR_ECONOMY",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_ORBITAL_MEGASTRUCTURES",
-     "scope": "team"
-    }
+    "BUILDING_CISLUNAR_COOLING_SYSTEM",
+    "BUILDING_CISLUNAR_GOVERNANCE",
+    "BUILDING_CISLUNAR_BIOFACTORY",
+    "BUILDING_EFFECT_CISLUNAR_ECONOMY",
+    "TECH_ORBITAL_MEGASTRUCTURES"
    ],
    "any": [
     [

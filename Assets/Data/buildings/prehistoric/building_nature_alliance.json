@@ -10,19 +10,13 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_NATURE_CIRCLE_OF_POWER",
-     "scope": "city"
-    },
+    "BUILDING_NATURE_CIRCLE_OF_POWER",
     {
      "type": "BUILDING_NATURE_CIRCLE_OF_POWER",
      "scope": "empire",
      "min": 2
     },
-    {
-     "type": "TECH_MEGALITH_CONSTRUCTION",
-     "scope": "team"
-    },
+    "TECH_MEGALITH_CONSTRUCTION",
     "STATE_RELIGION_IN_CITY",
     {
      "STATE_RELIGION": "RELIGION_DRUIDIC_TRADITIONS"
@@ -39,10 +33,7 @@
   },
   "operate": {
    "all": [
-    {
-     "type": "RELIGION_DRUIDIC_TRADITIONS",
-     "scope": "city"
-    }
+    "RELIGION_DRUIDIC_TRADITIONS"
    ]
   }
  },

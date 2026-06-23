@@ -6,18 +6,9 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_CONTROL_CENTER",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_FIRE_STATION",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_DISASTER_ROBOTS",
-     "scope": "team"
-    }
+    "BUILDING_CONTROL_CENTER",
+    "BUILDING_FIRE_STATION",
+    "TECH_DISASTER_ROBOTS"
    ],
    "any": [
     [

@@ -14,14 +14,8 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_BETA_ASSEMBLER",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_FUSION_SPACECRAFT",
-     "scope": "team"
-    }
+    "BUILDING_BETA_ASSEMBLER",
+    "TECH_FUSION_SPACECRAFT"
    ],
    "any": [
     [
@@ -41,10 +35,7 @@
     }
    ],
    "dormant": [
-    {
-     "type": "BUILDING_MATERIALIZATION_COMPLEX",
-     "scope": "city"
-    }
+    "BUILDING_MATERIALIZATION_COMPLEX"
    ]
   }
  },

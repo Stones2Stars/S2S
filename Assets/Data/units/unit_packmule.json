@@ -10,14 +10,8 @@
      "scope": "city",
      "connection": "trade|vicinity"
     },
-    {
-     "type": "BUILDING_ANIMAL_TRAINER_DONKEY",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_PLOUGH",
-     "scope": "team"
-    }
+    "BUILDING_ANIMAL_TRAINER_DONKEY",
+    "TECH_PLOUGH"
    ]
   }
  },

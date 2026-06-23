@@ -5,18 +5,9 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_URANIAN_SF6_GENERATOR",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_URANIAN_LUNAR_MAGNETIC_FIELD",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_LUNAR_TERRAFORMING",
-     "scope": "team"
-    }
+    "BUILDING_URANIAN_SF6_GENERATOR",
+    "BUILDING_URANIAN_LUNAR_MAGNETIC_FIELD",
+    "TECH_LUNAR_TERRAFORMING"
    ],
    "any": [
     [
@@ -33,10 +24,7 @@
     ]
    ],
    "noneOf": [
-    {
-     "type": "BUILDING_TERRAFORMED_TITANIA",
-     "scope": "city"
-    }
+    "BUILDING_TERRAFORMED_TITANIA"
    ]
   }
  },

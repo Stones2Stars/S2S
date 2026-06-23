@@ -15,25 +15,13 @@
      "scope": "city",
      "min": 3
     },
-    {
-     "type": "TECH_GUILDS",
-     "scope": "team"
-    }
+    "TECH_GUILDS"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_BUTCHERY",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_MEAT_PACKING_PLANT",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_MEAT_INDUSTRY_CONGLOMERATE",
-      "scope": "city"
-     }
+     "BUILDING_BUTCHERY",
+     "BUILDING_MEAT_PACKING_PLANT",
+     "BUILDING_MEAT_INDUSTRY_CONGLOMERATE"
     ],
     [
      {

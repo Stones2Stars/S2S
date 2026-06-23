@@ -11,18 +11,9 @@
      "scope": "city",
      "min": 7
     },
-    {
-     "type": "BUILDING_COMPUTER_NETWORK",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_UNIVERSITY",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_CLOUD_COMPUTING",
-     "scope": "team"
-    }
+    "BUILDING_COMPUTER_NETWORK",
+    "BUILDING_UNIVERSITY",
+    "TECH_CLOUD_COMPUTING"
    ],
    "any": [
     [

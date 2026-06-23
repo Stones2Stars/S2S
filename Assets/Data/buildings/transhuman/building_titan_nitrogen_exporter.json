@@ -5,14 +5,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_TITAN_HYDROCARBON_REFINERY",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_LUNAR_MEGASTRUCTURES",
-     "scope": "team"
-    }
+    "BUILDING_TITAN_HYDROCARBON_REFINERY",
+    "TECH_LUNAR_MEGASTRUCTURES"
    ],
    "any": [
     [

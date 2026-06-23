@@ -16,14 +16,8 @@
      "scope": "city",
      "min": 3
     },
-    {
-     "type": "BUILDING_WATER_PIPES",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_HYDRAULIC_MINING",
-     "scope": "team"
-    }
+    "BUILDING_WATER_PIPES",
+    "TECH_HYDRAULIC_MINING"
    ],
    "any": [
     [

@@ -6,18 +6,9 @@
   "build": {
    "all": [
     "HAS_COAST",
-    {
-     "type": "BUILDING_OCEAN_CITY",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_FARMSCRAPER_III",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_BOTANICAL_ALCHEMY",
-     "scope": "team"
-    }
+    "BUILDING_OCEAN_CITY",
+    "BUILDING_FARMSCRAPER_III",
+    "TECH_BOTANICAL_ALCHEMY"
    ],
    "any": [
     [

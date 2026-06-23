@@ -10,22 +10,10 @@
      "scope": "city",
      "connection": "trade|vicinity"
     },
-    {
-     "type": "BUILDING_HELLSMOUTH_SANCTUARY",
-     "scope": "city"
-    },
-    {
-     "type": "RELIGION_VOODOO",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_ALCHEMY",
-     "scope": "team"
-    },
-    {
-     "type": "TECH_FUNDAMENTALISM",
-     "scope": "team"
-    }
+    "BUILDING_HELLSMOUTH_SANCTUARY",
+    "RELIGION_VOODOO",
+    "TECH_ALCHEMY",
+    "TECH_FUNDAMENTALISM"
    ]
   }
  },

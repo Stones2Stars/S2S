@@ -5,14 +5,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_BIOLOGICAL_WARFARE_LAB",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_DNA_COMPUTING",
-     "scope": "team"
-    }
+    "BUILDING_BIOLOGICAL_WARFARE_LAB",
+    "TECH_DNA_COMPUTING"
    ]
   }
  },

@@ -6,18 +6,9 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_ATMOSPHERIC_WATER_GENERATOR",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_STATE_PARK",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_GAIA_ECOLOGY",
-     "scope": "team"
-    }
+    "BUILDING_ATMOSPHERIC_WATER_GENERATOR",
+    "BUILDING_STATE_PARK",
+    "TECH_GAIA_ECOLOGY"
    ],
    "any": [
     [

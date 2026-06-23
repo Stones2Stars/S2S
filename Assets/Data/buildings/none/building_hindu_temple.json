@@ -15,10 +15,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_PRIESTHOOD",
-     "scope": "team"
-    }
+    "TECH_PRIESTHOOD"
    ],
    "any": [
     [
@@ -36,10 +33,7 @@
      "scope": "city",
      "connection": "trade|vicinity"
     },
-    {
-     "type": "RELIGION_HINDUISM",
-     "scope": "city"
-    }
+    "RELIGION_HINDUISM"
    ]
   }
  },

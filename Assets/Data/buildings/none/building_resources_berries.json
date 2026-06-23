@@ -14,38 +14,14 @@
   "build": {
    "any": [
     [
-     {
-      "type": "BUILDING_FARM_CROP_BEARBERRY",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_FARM_CROP_BLACKBERRY",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_FARM_CROP_BLUEBERRY",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_FARM_CROP_CRANBERRY",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_FARM_CROP_ELDERBERRY",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_FARM_CROP_GOOSEBERRY",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_FARM_CROP_RASPBERRY",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_FARM_CROP_STRAWBERRY",
-      "scope": "city"
-     }
+     "BUILDING_FARM_CROP_BEARBERRY",
+     "BUILDING_FARM_CROP_BLACKBERRY",
+     "BUILDING_FARM_CROP_BLUEBERRY",
+     "BUILDING_FARM_CROP_CRANBERRY",
+     "BUILDING_FARM_CROP_ELDERBERRY",
+     "BUILDING_FARM_CROP_GOOSEBERRY",
+     "BUILDING_FARM_CROP_RASPBERRY",
+     "BUILDING_FARM_CROP_STRAWBERRY"
     ],
     [
      {
@@ -57,10 +33,7 @@
   },
   "operate": {
    "dormant": [
-    {
-     "type": "BUILDING_FARMSCRAPER_II",
-     "scope": "city"
-    }
+    "BUILDING_FARMSCRAPER_II"
    ]
   }
  },

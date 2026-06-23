@@ -5,10 +5,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_ARCHETYPAL_VECTOR_SPACES",
-     "scope": "team"
-    },
+    "TECH_ARCHETYPAL_VECTOR_SPACES",
     {
      "type": "BONUS_HUMAN_MOD_ARCHAILECT",
      "scope": "city",

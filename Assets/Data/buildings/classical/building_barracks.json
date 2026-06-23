@@ -24,10 +24,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_MILITARY_TRAINING",
-     "scope": "team"
-    }
+    "TECH_MILITARY_TRAINING"
    ],
    "any": [
     [
@@ -40,14 +37,8 @@
   },
   "operate": {
    "dormant": [
-    {
-     "type": "BUILDING_GARRISON",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_MILITARY_BASE",
-     "scope": "city"
-    }
+    "BUILDING_GARRISON",
+    "BUILDING_MILITARY_BASE"
    ]
   }
  },

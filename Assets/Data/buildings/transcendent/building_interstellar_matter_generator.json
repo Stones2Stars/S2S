@@ -5,14 +5,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_INTERSTELLAR_DARK_MATTER_REACTOR",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_MATERIALIZATION",
-     "scope": "team"
-    }
+    "BUILDING_INTERSTELLAR_DARK_MATTER_REACTOR",
+    "TECH_MATERIALIZATION"
    ],
    "any": [
     [

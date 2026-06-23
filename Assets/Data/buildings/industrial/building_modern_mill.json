@@ -19,18 +19,9 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_MODERN_GRANARY",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_FACTORY",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_REFRIGERATION",
-     "scope": "team"
-    }
+    "BUILDING_MODERN_GRANARY",
+    "BUILDING_FACTORY",
+    "TECH_REFRIGERATION"
    ],
    "any": [
     [
@@ -50,10 +41,7 @@
     }
    ],
    "dormant": [
-    {
-     "type": "BUILDING_FOOD_MANUFACTURING_DISTRICT",
-     "scope": "city"
-    }
+    "BUILDING_FOOD_MANUFACTURING_DISTRICT"
    ]
   }
  },

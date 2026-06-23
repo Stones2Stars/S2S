@@ -21,26 +21,11 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_GESTATION_TANKS",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_UTERINE_REPLICATOR",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_ANIMA_STUDIO",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_BODY_EXCHANGE_CLINIC",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_ARTIFICIAL_LIFE",
-     "scope": "team"
-    }
+    "BUILDING_GESTATION_TANKS",
+    "BUILDING_UTERINE_REPLICATOR",
+    "BUILDING_ANIMA_STUDIO",
+    "BUILDING_BODY_EXCHANGE_CLINIC",
+    "TECH_ARTIFICIAL_LIFE"
    ],
    "any": [
     [
@@ -60,10 +45,7 @@
     }
    ],
    "dormant": [
-    {
-     "type": "BUILDING_NANOMORPHIC_REPLICATOR",
-     "scope": "city"
-    }
+    "BUILDING_NANOMORPHIC_REPLICATOR"
    ]
   }
  },

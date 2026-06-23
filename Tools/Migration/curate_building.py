@@ -668,7 +668,25 @@ def _typelist(rec, wrapper):
     return [t for t in (engine.text(c).strip() for c in node) if t and t != "NONE"]
 
 
+def _default_scope(typ):
+    # Mirrors the parser's rjDefaultScope (CvCascadeReadJson.cpp): TECH->team, civic/heritage->empire,
+    # everything else (building/bonus/religion/corporation/population/...)->city.
+    if typ.startswith("TECH_"):
+        return "team"
+    if typ.startswith(("CIVIC_", "HERITAGE_")):
+        return "empire"
+    return "city"
+
+
 def _atom(typ, scope, **kw):
+    # Collapse a plain presence to a BARE STRING -- the parser implies scope from the ID's domain, so emitting a
+    # redundant {type, scope} only invites authoring bugs (owner 2026-06-23: forcing type+scope guarantees bugs).
+    # Object form ONLY for a special case: any kw (a `connection`, a `role`, a `min`/`max` count), a non-default
+    # scope, or a plot-substrate predicate type (TERRAIN_/FEATURE_/IMPROVEMENT_/MAPCATEGORY_) -- the parser routes
+    # those to a plot predicate by the object's `type` key, so they must stay objects, never a bare string.
+    is_plot_pred = isinstance(typ, str) and typ.startswith(("TERRAIN_", "FEATURE_", "IMPROVEMENT_", "MAPCATEGORY_"))
+    if not kw and not is_plot_pred and scope == _default_scope(typ):
+        return typ
     a = OrderedDict([("type", typ), ("scope", scope)])
     a.update(kw)
     return a

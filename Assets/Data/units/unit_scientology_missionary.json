@@ -5,14 +5,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_SCIENTOLOGY_MONASTERY",
-     "scope": "city"
-    },
-    {
-     "type": "RELIGION_SCIENTOLOGY",
-     "scope": "city"
-    }
+    "BUILDING_SCIENTOLOGY_MONASTERY",
+    "RELIGION_SCIENTOLOGY"
    ]
   }
  },

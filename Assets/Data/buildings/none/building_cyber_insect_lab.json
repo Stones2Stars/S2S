@@ -16,14 +16,8 @@
      "scope": "city",
      "min": 3
     },
-    {
-     "type": "BUILDING_BIOLOGY_LAB",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_CYBERPUNK",
-     "scope": "team"
-    }
+    "BUILDING_BIOLOGY_LAB",
+    "TECH_CYBERPUNK"
    ],
    "any": [
     [

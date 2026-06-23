@@ -10,10 +10,7 @@
      "scope": "city",
      "min": 3
     },
-    {
-     "type": "TECH_ANCIENT_MEDICINE",
-     "scope": "team"
-    }
+    "TECH_ANCIENT_MEDICINE"
    ],
    "any": [
     [
@@ -31,10 +28,7 @@
      "scope": "city",
      "connection": "trade|vicinity"
     },
-    {
-     "type": "CIVIC_CHURCH",
-     "scope": "empire"
-    }
+    "CIVIC_CHURCH"
    ]
   }
  },

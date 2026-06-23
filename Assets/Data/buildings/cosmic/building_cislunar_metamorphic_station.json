@@ -10,14 +10,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_CISLUNAR_CLAYTRONIC_STATION",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_SHAPESHIFTING",
-     "scope": "team"
-    }
+    "BUILDING_CISLUNAR_CLAYTRONIC_STATION",
+    "TECH_SHAPESHIFTING"
    ],
    "any": [
     [

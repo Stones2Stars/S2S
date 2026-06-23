@@ -5,14 +5,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_HQ_CEREAL_MILLS",
-     "scope": "city"
-    },
-    {
-     "type": "CORPORATION_1",
-     "scope": "city"
-    }
+    "BUILDING_HQ_CEREAL_MILLS",
+    "CORPORATION_1"
    ]
   }
  },

@@ -11,14 +11,8 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_MOVIE_THEATRE",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_ANIMATION",
-     "scope": "team"
-    }
+    "BUILDING_MOVIE_THEATRE",
+    "TECH_ANIMATION"
    ],
    "any": [
     [
@@ -54,31 +48,19 @@
     3,
     {
      "value": 7,
-     "enabled": {
-      "type": "TECH_POP_ART",
-      "scope": "team"
-     }
+     "enabled": "TECH_POP_ART"
     },
     {
      "value": 7,
-     "enabled": {
-      "type": "TECH_TELEVISION",
-      "scope": "team"
-     }
+     "enabled": "TECH_TELEVISION"
     },
     {
      "value": 7,
-     "enabled": {
-      "type": "TECH_3D_MODELLING",
-      "scope": "team"
-     }
+     "enabled": "TECH_3D_MODELLING"
     },
     {
      "value": 7,
-     "enabled": {
-      "type": "TECH_MASS_MEDIA",
-      "scope": "team"
-     }
+     "enabled": "TECH_MASS_MEDIA"
     },
     {
      "value": 1,
@@ -98,31 +80,19 @@
     3,
     {
      "value": 7,
-     "enabled": {
-      "type": "TECH_POP_ART",
-      "scope": "team"
-     }
+     "enabled": "TECH_POP_ART"
     },
     {
      "value": 7,
-     "enabled": {
-      "type": "TECH_3D_MODELLING",
-      "scope": "team"
-     }
+     "enabled": "TECH_3D_MODELLING"
     },
     {
      "value": 7,
-     "enabled": {
-      "type": "TECH_TELEVISION",
-      "scope": "team"
-     }
+     "enabled": "TECH_TELEVISION"
     },
     {
      "value": 7,
-     "enabled": {
-      "type": "TECH_MASS_MEDIA",
-      "scope": "team"
-     }
+     "enabled": "TECH_MASS_MEDIA"
     },
     {
      "value": 1,

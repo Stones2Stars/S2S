@@ -6,25 +6,13 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "TECH_COMPUTATIONAL_SOCIOLOGY",
-     "scope": "team"
-    }
+    "TECH_COMPUTATIONAL_SOCIOLOGY"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_SOCIAL_NETWORKS",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_HOLOGRAPHIC_NETWORKS",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_EXOCORTEX_NETWORKS",
-      "scope": "city"
-     }
+     "BUILDING_SOCIAL_NETWORKS",
+     "BUILDING_HOLOGRAPHIC_NETWORKS",
+     "BUILDING_EXOCORTEX_NETWORKS"
     ],
     [
      {

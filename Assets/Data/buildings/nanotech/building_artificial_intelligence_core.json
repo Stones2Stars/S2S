@@ -28,18 +28,9 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_BINARY_CONSCIOUSNESS_ALGORITHMS",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_QUANTUM_COMPUTING",
-     "scope": "team"
-    },
-    {
-     "type": "TECH_DROIDS",
-     "scope": "team"
-    }
+    "BUILDING_BINARY_CONSCIOUSNESS_ALGORITHMS",
+    "TECH_QUANTUM_COMPUTING",
+    "TECH_DROIDS"
    ],
    "any": [
     [
@@ -76,24 +67,15 @@
     5,
     {
      "value": 10,
-     "enabled": {
-      "type": "TECH_SENTIENT_EARTH",
-      "scope": "team"
-     }
+     "enabled": "TECH_SENTIENT_EARTH"
     },
     {
      "value": 10,
-     "enabled": {
-      "type": "TECH_TERRA_COMPUTER",
-      "scope": "team"
-     }
+     "enabled": "TECH_TERRA_COMPUTER"
     },
     {
      "value": 10,
-     "enabled": {
-      "type": "TECH_ARTIFICIAL_LIFE",
-      "scope": "team"
-     }
+     "enabled": "TECH_ARTIFICIAL_LIFE"
     }
    ]
   }

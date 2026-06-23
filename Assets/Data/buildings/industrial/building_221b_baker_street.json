@@ -10,25 +10,13 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_CRIMINOLOGY",
-     "scope": "team"
-    }
+    "TECH_CRIMINOLOGY"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_POLICE_STATION",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_POLICE_PRECINCT",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_SCOTLAND_YARD",
-      "scope": "city"
-     }
+     "BUILDING_POLICE_STATION",
+     "BUILDING_POLICE_PRECINCT",
+     "BUILDING_SCOTLAND_YARD"
     ],
     [
      {

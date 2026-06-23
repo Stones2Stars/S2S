@@ -11,21 +11,12 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_MEGASTRONG_ALLOYS",
-     "scope": "team"
-    }
+    "TECH_MEGASTRONG_ALLOYS"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_INTERSTELLAR_DYSON_SWARM",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_INTERSTELLAR_DYSON_SPHERE",
-      "scope": "city"
-     }
+     "BUILDING_INTERSTELLAR_DYSON_SWARM",
+     "BUILDING_INTERSTELLAR_DYSON_SPHERE"
     ],
     [
      {

@@ -10,10 +10,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_BONE_WORKING",
-     "scope": "team"
-    }
+    "TECH_BONE_WORKING"
    ],
    "any": [
     [
@@ -23,18 +20,9 @@
      }
     ],
     [
-     {
-      "type": "HERITAGE_FOLKLORE_TORTOISE_DESERT",
-      "scope": "empire"
-     },
-     {
-      "type": "HERITAGE_FOLKLORE_TORTOISE_GALAPAGOS",
-      "scope": "empire"
-     },
-     {
-      "type": "HERITAGE_FOLKLORE_TURTLE_SEA",
-      "scope": "empire"
-     }
+     "HERITAGE_FOLKLORE_TORTOISE_DESERT",
+     "HERITAGE_FOLKLORE_TORTOISE_GALAPAGOS",
+     "HERITAGE_FOLKLORE_TURTLE_SEA"
     ]
    ]
   }

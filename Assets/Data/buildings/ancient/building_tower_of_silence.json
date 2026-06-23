@@ -13,18 +13,12 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_PRIESTHOOD",
-     "scope": "team"
-    },
+    "TECH_PRIESTHOOD",
     "STATE_RELIGION_IN_CITY"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_BURIAL_TRADITION_SKY",
-      "scope": "city"
-     }
+     "BUILDING_BURIAL_TRADITION_SKY"
     ],
     [
      {
@@ -41,20 +35,11 @@
      "scope": "city",
      "connection": "trade|vicinity"
     },
-    {
-     "type": "RELIGION_ZOROASTRIANISM",
-     "scope": "city"
-    }
+    "RELIGION_ZOROASTRIANISM"
    ],
    "dormant": [
-    {
-     "type": "BUILDING_FUNERARY_SERVICES",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_HIGH_TECH_CULTURAL_ENRICHMENT",
-     "scope": "city"
-    }
+    "BUILDING_FUNERARY_SERVICES",
+    "BUILDING_HIGH_TECH_CULTURAL_ENRICHMENT"
    ]
   }
  },

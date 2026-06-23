@@ -6,18 +6,9 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_EFFECT_MARS_CYCLER",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_MARTIAN_CITY",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_PLANETARY_TRADE",
-     "scope": "team"
-    }
+    "BUILDING_EFFECT_MARS_CYCLER",
+    "BUILDING_MARTIAN_CITY",
+    "TECH_PLANETARY_TRADE"
    ],
    "any": [
     [

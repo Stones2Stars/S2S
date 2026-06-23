@@ -5,18 +5,9 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_DEEP_SPACE_SHIELDING",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_DEEP_SPACE_BISHOP_RING",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_COLONY_ARCOLOGY",
-     "scope": "team"
-    }
+    "BUILDING_DEEP_SPACE_SHIELDING",
+    "BUILDING_DEEP_SPACE_BISHOP_RING",
+    "TECH_COLONY_ARCOLOGY"
    ],
    "any": [
     [

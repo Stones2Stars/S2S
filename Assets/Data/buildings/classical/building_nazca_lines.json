@@ -6,18 +6,9 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_FOLKLORE_E_SKY",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_FOLKLORE_E_EARTH",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_MATHEMATICS",
-     "scope": "team"
-    }
+    "BUILDING_FOLKLORE_E_SKY",
+    "BUILDING_FOLKLORE_E_EARTH",
+    "TECH_MATHEMATICS"
    ],
    "any": [
     [

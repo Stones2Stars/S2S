@@ -21,14 +21,8 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_POWER_LINES",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_WIRELESS_ELECTRICITY",
-     "scope": "team"
-    }
+    "BUILDING_POWER_LINES",
+    "TECH_WIRELESS_ELECTRICITY"
    ],
    "any": [
     [
@@ -48,14 +42,8 @@
     }
    ],
    "dormant": [
-    {
-     "type": "BUILDING_EMP_GRID",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_SUPERCONDUCTING_GRID",
-     "scope": "city"
-    }
+    "BUILDING_EMP_GRID",
+    "BUILDING_SUPERCONDUCTING_GRID"
    ]
   }
  },

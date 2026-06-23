@@ -14,29 +14,14 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_BIOMORPHICS_LAB",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_INTUITIVE_ALGORITHMS",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_NANOELECTRONICS",
-     "scope": "team"
-    }
+    "BUILDING_BIOMORPHICS_LAB",
+    "BUILDING_INTUITIVE_ALGORITHMS",
+    "TECH_NANOELECTRONICS"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_NANOFACTORY",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_PICOTECH_COMPLEX",
-      "scope": "city"
-     }
+     "BUILDING_NANOFACTORY",
+     "BUILDING_PICOTECH_COMPLEX"
     ],
     [
      {
@@ -64,10 +49,7 @@
     ]
    ],
    "dormant": [
-    {
-     "type": "BUILDING_NANOTECH_COMPLEX",
-     "scope": "city"
-    }
+    "BUILDING_NANOTECH_COMPLEX"
    ]
   }
  },

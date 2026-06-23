@@ -5,10 +5,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_LINGUISTICS",
-     "scope": "team"
-    }
+    "TECH_LINGUISTICS"
    ]
   }
  },

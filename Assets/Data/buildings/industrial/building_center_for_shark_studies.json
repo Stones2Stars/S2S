@@ -10,23 +10,14 @@
       "max": 70
      }
     },
-    {
-     "type": "BUILDING_MARINE_INSTITUTE",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_WONDERS_OF_THE_DEEP",
-     "scope": "city"
-    },
+    "BUILDING_MARINE_INSTITUTE",
+    "BUILDING_WONDERS_OF_THE_DEEP",
     {
      "type": "BUILDING_MARINE_INSTITUTE",
      "scope": "empire",
      "min": 3
     },
-    {
-     "type": "TECH_MARINE_BIOLOGY",
-     "scope": "team"
-    }
+    "TECH_MARINE_BIOLOGY"
    ],
    "any": [
     [
@@ -37,14 +28,8 @@
     ]
    ],
    "noneOf": [
-    {
-     "type": "BUILDING_CENTER_FOR_CEPHALOPOD_STUDIES",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_CENTER_FOR_WHALE_STUDIES",
-     "scope": "city"
-    }
+    "BUILDING_CENTER_FOR_CEPHALOPOD_STUDIES",
+    "BUILDING_CENTER_FOR_WHALE_STUDIES"
    ]
   }
  },

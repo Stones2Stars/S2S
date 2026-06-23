@@ -13,14 +13,8 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_CLOUD_SERVER",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_DIRECT_MERCHANDISING",
-     "scope": "team"
-    }
+    "BUILDING_CLOUD_SERVER",
+    "TECH_DIRECT_MERCHANDISING"
    ],
    "any": [
     [

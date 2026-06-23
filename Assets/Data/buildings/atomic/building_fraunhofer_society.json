@@ -5,18 +5,9 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_MANUFACTURING_PLANT",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_LABORATORY",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_MANUFACTURING",
-     "scope": "team"
-    }
+    "BUILDING_MANUFACTURING_PLANT",
+    "BUILDING_LABORATORY",
+    "TECH_MANUFACTURING"
    ],
    "any": [
     [
@@ -37,45 +28,27 @@
     20,
     {
      "value": 8,
-     "enabled": {
-      "type": "TECH_RENEWABLE_ENERGY",
-      "scope": "team"
-     }
+     "enabled": "TECH_RENEWABLE_ENERGY"
     },
     {
      "value": 8,
-     "enabled": {
-      "type": "TECH_MACHINE_LEARNING",
-      "scope": "team"
-     }
+     "enabled": "TECH_MACHINE_LEARNING"
     },
     {
      "value": 7,
-     "enabled": {
-      "type": "TECH_COMPOSITES",
-      "scope": "team"
-     }
+     "enabled": "TECH_COMPOSITES"
     },
     {
      "value": 8,
-     "enabled": {
-      "type": "TECH_RAPID_PROTOTYPING",
-      "scope": "team"
-     }
+     "enabled": "TECH_RAPID_PROTOTYPING"
     },
     {
      "value": 8,
-     "enabled": {
-      "type": "TECH_NANOTECHNOLOGY",
-      "scope": "team"
-     }
+     "enabled": "TECH_NANOTECHNOLOGY"
     },
     {
      "value": 7,
-     "enabled": {
-      "type": "TECH_SOLAR_POWER",
-      "scope": "team"
-     }
+     "enabled": "TECH_SOLAR_POWER"
     }
    ]
   }

@@ -5,22 +5,10 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_INTERSTELLAR_SELF_REPLICATING_FACTORY",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_GRAVITY_CONTROL",
-     "scope": "team"
-    },
-    {
-     "type": "TECH_FORGE_WORLDS",
-     "scope": "team"
-    },
-    {
-     "type": "TECH_ADAPTIVE_ARCHITECTURE",
-     "scope": "team"
-    }
+    "BUILDING_INTERSTELLAR_SELF_REPLICATING_FACTORY",
+    "TECH_GRAVITY_CONTROL",
+    "TECH_FORGE_WORLDS",
+    "TECH_ADAPTIVE_ARCHITECTURE"
    ],
    "any": [
     [

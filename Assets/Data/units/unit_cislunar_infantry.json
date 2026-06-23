@@ -5,14 +5,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_CISLUNAR_FACTORY",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_ELECTRIC_ARC_WEAPONRY",
-     "scope": "team"
-    }
+    "BUILDING_CISLUNAR_FACTORY",
+    "TECH_ELECTRIC_ARC_WEAPONRY"
    ]
   }
  },

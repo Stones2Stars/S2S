@@ -6,29 +6,14 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "TECH_NOVO_PALEONTOLOGY",
-     "scope": "team"
-    }
+    "TECH_NOVO_PALEONTOLOGY"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_TRILOBITE_BREEDER",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_VELOCIRAPTOR_BREEDER",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_TYRANNOSAURUS_REX_BREEDER",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_PTERADACTYL_BREEDER",
-      "scope": "city"
-     }
+     "BUILDING_TRILOBITE_BREEDER",
+     "BUILDING_VELOCIRAPTOR_BREEDER",
+     "BUILDING_TYRANNOSAURUS_REX_BREEDER",
+     "BUILDING_PTERADACTYL_BREEDER"
     ],
     [
      {

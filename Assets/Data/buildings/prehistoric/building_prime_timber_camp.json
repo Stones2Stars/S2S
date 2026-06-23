@@ -10,10 +10,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_SIMPLE_WOOD_WORKING",
-     "scope": "team"
-    }
+    "TECH_SIMPLE_WOOD_WORKING"
    ],
    "any": [
     [
@@ -39,10 +36,7 @@
     }
    ],
    "dormant": [
-    {
-     "type": "BUILDING_AGROFOREST",
-     "scope": "city"
-    }
+    "BUILDING_AGROFOREST"
    ]
   }
  },

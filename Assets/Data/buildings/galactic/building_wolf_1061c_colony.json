@@ -5,10 +5,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_INTERSTELLAR_COLONIZATION",
-     "scope": "team"
-    }
+    "TECH_INTERSTELLAR_COLONIZATION"
    ],
    "any": [
     [
@@ -25,22 +22,10 @@
     ]
    ],
    "noneOf": [
-    {
-     "type": "BUILDING_GLIESE_667CC_COLONY",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_GLIESE_581D_COLONY",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_PROXIMA_CENTAURI_B_COLONY",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_GLIESE_163C_COLONY",
-     "scope": "city"
-    }
+    "BUILDING_GLIESE_667CC_COLONY",
+    "BUILDING_GLIESE_581D_COLONY",
+    "BUILDING_PROXIMA_CENTAURI_B_COLONY",
+    "BUILDING_GLIESE_163C_COLONY"
    ]
   }
  },

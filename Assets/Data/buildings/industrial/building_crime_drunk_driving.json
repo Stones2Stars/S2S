@@ -10,10 +10,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_MOTORIZED_TRANSPORTATION",
-     "scope": "team"
-    }
+    "TECH_MOTORIZED_TRANSPORTATION"
    ],
    "any": [
     [

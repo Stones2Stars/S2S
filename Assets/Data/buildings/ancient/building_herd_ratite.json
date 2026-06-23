@@ -20,14 +20,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_POULTRY_DOMESTICATION",
-     "scope": "team"
-    },
-    {
-     "type": "TECH_MEGAFAUNA_DOMESTICATION",
-     "scope": "team"
-    }
+    "TECH_POULTRY_DOMESTICATION",
+    "TECH_MEGAFAUNA_DOMESTICATION"
    ],
    "any": [
     [
@@ -40,14 +34,8 @@
   },
   "operate": {
    "dormant": [
-    {
-     "type": "BUILDING_INDUSTRIAL_FARMS",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_MEAT_INDUSTRY_CONGLOMERATE",
-     "scope": "city"
-    }
+    "BUILDING_INDUSTRIAL_FARMS",
+    "BUILDING_MEAT_INDUSTRY_CONGLOMERATE"
    ]
   }
  },

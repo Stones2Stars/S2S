@@ -21,10 +21,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_WEAPONIZED_LASERS",
-     "scope": "team"
-    }
+    "TECH_WEAPONIZED_LASERS"
    ],
    "any": [
     [

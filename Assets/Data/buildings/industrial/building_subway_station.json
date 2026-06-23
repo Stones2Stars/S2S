@@ -19,10 +19,7 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "TECH_MASS_TRANSIT",
-     "scope": "team"
-    },
+    "TECH_MASS_TRANSIT",
     {
      "type": "BONUS_PARTS",
      "scope": "city",
@@ -56,10 +53,7 @@
     ]
    ],
    "dormant": [
-    {
-     "type": "BUILDING_TELEPORT_BOOTH",
-     "scope": "city"
-    }
+    "BUILDING_TELEPORT_BOOTH"
    ]
   }
  },

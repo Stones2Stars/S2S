@@ -13,25 +13,13 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_PREHISTORIC_DANCE",
-     "scope": "team"
-    }
+    "TECH_PREHISTORIC_DANCE"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_DANCE_HUT",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_DANCE_HALL",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_NIGHT_CLUB",
-      "scope": "city"
-     }
+     "BUILDING_DANCE_HUT",
+     "BUILDING_DANCE_HALL",
+     "BUILDING_NIGHT_CLUB"
     ],
     [
      {
@@ -43,22 +31,10 @@
   },
   "operate": {
    "dormant": [
-    {
-     "type": "BUILDING_BROTHEL",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_GENTLEMANS_CLUB",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_ANDROID_BROTHEL",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_ORDINANCE_PROSTITUTION_BAN",
-     "scope": "city"
-    }
+    "BUILDING_BROTHEL",
+    "BUILDING_GENTLEMANS_CLUB",
+    "BUILDING_ANDROID_BROTHEL",
+    "BUILDING_ORDINANCE_PROSTITUTION_BAN"
    ]
   }
  },
@@ -68,10 +44,7 @@
     2,
     {
      "value": -2,
-     "enabled": {
-      "type": "TECH_TRADE",
-      "scope": "team"
-     }
+     "enabled": "TECH_TRADE"
     }
    ]
   }
@@ -81,10 +54,7 @@
    "flat": [
     {
      "value": 1,
-     "enabled": {
-      "type": "TECH_TRADE",
-      "scope": "team"
-     }
+     "enabled": "TECH_TRADE"
     }
    ]
   }

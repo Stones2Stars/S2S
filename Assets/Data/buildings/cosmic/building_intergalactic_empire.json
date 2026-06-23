@@ -5,14 +5,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_INTERGALACTIC_GOVERNMENT",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_INTERGALACTIC_EMPIRE",
-     "scope": "team"
-    }
+    "BUILDING_INTERGALACTIC_GOVERNMENT",
+    "TECH_INTERGALACTIC_EMPIRE"
    ],
    "any": [
     [
@@ -23,10 +17,7 @@
     ]
    ],
    "noneOf": [
-    {
-     "type": "BUILDING_INTERGALACTIC_REPUBLIC",
-     "scope": "city"
-    }
+    "BUILDING_INTERGALACTIC_REPUBLIC"
    ]
   }
  },
@@ -36,10 +27,7 @@
     30,
     {
      "value": 13,
-     "enabled": {
-      "type": "TECH_METAVERSE",
-      "scope": "team"
-     }
+     "enabled": "TECH_METAVERSE"
     }
    ]
   }

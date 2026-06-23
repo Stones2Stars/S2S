@@ -5,14 +5,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_INTERGALACTIC_CHRONOTON_GENERATOR",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_STABLE_TIME_LOOPS",
-     "scope": "team"
-    }
+    "BUILDING_INTERGALACTIC_CHRONOTON_GENERATOR",
+    "TECH_STABLE_TIME_LOOPS"
    ]
   }
  },

@@ -5,29 +5,14 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_TEMPLE_OF_RA",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_MATHEMATICS",
-     "scope": "team"
-    }
+    "BUILDING_TEMPLE_OF_RA",
+    "TECH_MATHEMATICS"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_TOWN_HALL",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_CITY_COUNCIL",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_METROPOLITAN_ADMINISTRATION",
-      "scope": "city"
-     }
+     "BUILDING_TOWN_HALL",
+     "BUILDING_CITY_COUNCIL",
+     "BUILDING_METROPOLITAN_ADMINISTRATION"
     ],
     [
      {
@@ -39,10 +24,7 @@
   },
   "operate": {
    "all": [
-    {
-     "type": "RELIGION_KEMETISM",
-     "scope": "city"
-    }
+    "RELIGION_KEMETISM"
    ]
   }
  },

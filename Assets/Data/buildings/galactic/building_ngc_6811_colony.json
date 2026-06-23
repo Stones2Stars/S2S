@@ -5,10 +5,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_STELLAR_ENGINE",
-     "scope": "team"
-    }
+    "TECH_STELLAR_ENGINE"
    ],
    "any": [
     [
@@ -25,10 +22,7 @@
     ]
    ],
    "noneOf": [
-    {
-     "type": "BUILDING_HYADES_STAR_CLUSTER_COLONY",
-     "scope": "city"
-    }
+    "BUILDING_HYADES_STAR_CLUSTER_COLONY"
    ]
   }
  },

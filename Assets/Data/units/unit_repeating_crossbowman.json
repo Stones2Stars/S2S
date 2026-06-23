@@ -10,14 +10,8 @@
      "scope": "city",
      "connection": "trade|vicinity"
     },
-    {
-     "type": "TECH_METALLURGY",
-     "scope": "team"
-    },
-    {
-     "type": "TECH_CLOCKPUNK",
-     "scope": "team"
-    }
+    "TECH_METALLURGY",
+    "TECH_CLOCKPUNK"
    ]
   }
  },

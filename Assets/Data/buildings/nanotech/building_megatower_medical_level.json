@@ -20,18 +20,9 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_MEGATOWER",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_HOSPITAL",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_NANO_ARCHITECTURE",
-     "scope": "team"
-    },
+    "BUILDING_MEGATOWER",
+    "BUILDING_HOSPITAL",
+    "TECH_NANO_ARCHITECTURE",
     {
      "type": "BONUS_PHARMACEUTICALS",
      "scope": "city",
@@ -66,10 +57,7 @@
     }
    ],
    "dormant": [
-    {
-     "type": "BUILDING_HEALTHCARE_MEGACOMPLEX",
-     "scope": "city"
-    }
+    "BUILDING_HEALTHCARE_MEGACOMPLEX"
    ]
   }
  },

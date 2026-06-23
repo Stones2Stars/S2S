@@ -5,14 +5,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_LABORATORY",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_ADVANCED_ROCKETRY",
-     "scope": "team"
-    }
+    "BUILDING_LABORATORY",
+    "TECH_ADVANCED_ROCKETRY"
    ],
    "any": [
     [

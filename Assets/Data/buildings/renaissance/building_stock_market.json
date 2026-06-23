@@ -16,14 +16,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_BANK",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_STOCK_BROKERING",
-     "scope": "team"
-    }
+    "BUILDING_BANK",
+    "TECH_STOCK_BROKERING"
    ],
    "any": [
     [

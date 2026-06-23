@@ -5,14 +5,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_CHRISTIAN_MONASTERY",
-     "scope": "city"
-    },
-    {
-     "type": "RELIGION_CHRISTIANITY",
-     "scope": "city"
-    }
+    "BUILDING_CHRISTIAN_MONASTERY",
+    "RELIGION_CHRISTIANITY"
    ]
   }
  },

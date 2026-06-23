@@ -40,14 +40,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_CLONING_LABORATORY",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_REPLACEMENT_ORGANS",
-     "scope": "team"
-    }
+    "BUILDING_CLONING_LABORATORY",
+    "TECH_REPLACEMENT_ORGANS"
    ],
    "any": [
     [

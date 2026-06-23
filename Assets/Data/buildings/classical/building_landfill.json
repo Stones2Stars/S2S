@@ -11,10 +11,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_SANITATION",
-     "scope": "team"
-    }
+    "TECH_SANITATION"
    ],
    "any": [
     [
@@ -28,18 +25,9 @@
   "operate": {
    "any": [
     [
-     {
-      "type": "CIVIC_LANDFILLS",
-      "scope": "empire"
-     },
-     {
-      "type": "CIVIC_WASTE_IMPORTATION",
-      "scope": "empire"
-     },
-     {
-      "type": "CIVIC_WASTE_TO_ENERGY",
-      "scope": "empire"
-     }
+     "CIVIC_LANDFILLS",
+     "CIVIC_WASTE_IMPORTATION",
+     "CIVIC_WASTE_TO_ENERGY"
     ]
    ]
   }
@@ -55,24 +43,15 @@
     3,
     {
      "value": 1,
-     "enabled": {
-      "type": "TECH_ECOLOGY",
-      "scope": "team"
-     }
+     "enabled": "TECH_ECOLOGY"
     },
     {
      "value": 1,
-     "enabled": {
-      "type": "TECH_RECYCLING",
-      "scope": "team"
-     }
+     "enabled": "TECH_RECYCLING"
     },
     {
      "value": 1,
-     "enabled": {
-      "type": "TECH_GENE_MANIPULATION",
-      "scope": "team"
-     }
+     "enabled": "TECH_GENE_MANIPULATION"
     }
    ]
   }

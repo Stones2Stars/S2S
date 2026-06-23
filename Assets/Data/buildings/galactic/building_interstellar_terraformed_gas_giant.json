@@ -5,18 +5,9 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_INTERSTELLAR_TERRAFORMED_PLANET",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_INTERSTELLAR_GAS_GIANT_SURFACE_SHELL",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_JOVIAN_TERRAFORMING",
-     "scope": "team"
-    }
+    "BUILDING_INTERSTELLAR_TERRAFORMED_PLANET",
+    "BUILDING_INTERSTELLAR_GAS_GIANT_SURFACE_SHELL",
+    "TECH_JOVIAN_TERRAFORMING"
    ],
    "any": [
     [

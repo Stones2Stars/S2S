@@ -18,29 +18,14 @@
      "scope": "city",
      "min": 7
     },
-    {
-     "type": "TECH_COMBUSTION",
-     "scope": "team"
-    },
-    {
-     "type": "TECH_CORPORATION",
-     "scope": "team"
-    }
+    "TECH_COMBUSTION",
+    "TECH_CORPORATION"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_MODERN_OFFICES",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_OFFICIUM",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_SKYSCRAPER",
-      "scope": "city"
-     }
+     "BUILDING_MODERN_OFFICES",
+     "BUILDING_OFFICIUM",
+     "BUILDING_SKYSCRAPER"
     ],
     [
      {

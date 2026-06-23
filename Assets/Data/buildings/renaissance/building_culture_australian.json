@@ -5,26 +5,11 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_C_AC_OCEANIAN",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_C_L_OCEANIAN",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_C_AC_EUROPEAN",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_C_L_EUROPEAN",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_NAVIGATION",
-     "scope": "team"
-    }
+    "BUILDING_C_AC_OCEANIAN",
+    "BUILDING_C_L_OCEANIAN",
+    "BUILDING_C_AC_EUROPEAN",
+    "BUILDING_C_L_EUROPEAN",
+    "TECH_NAVIGATION"
    ],
    "any": [
     [

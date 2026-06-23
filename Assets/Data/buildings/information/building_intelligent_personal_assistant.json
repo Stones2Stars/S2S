@@ -11,14 +11,8 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_SPEECH_RECOGNITION_SOFTWARE",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_AFFECTIVE_ALGORITHMS",
-     "scope": "team"
-    }
+    "BUILDING_SPEECH_RECOGNITION_SOFTWARE",
+    "TECH_AFFECTIVE_ALGORITHMS"
    ],
    "any": [
     [
@@ -41,10 +35,7 @@
     14,
     {
      "value": 9,
-     "enabled": {
-      "type": "TECH_ONTOLOGICAL_ENGINEERING",
-      "scope": "team"
-     }
+     "enabled": "TECH_ONTOLOGICAL_ENGINEERING"
     }
    ]
   }

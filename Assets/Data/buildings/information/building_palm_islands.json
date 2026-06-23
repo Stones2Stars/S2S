@@ -6,10 +6,7 @@
   "build": {
    "all": [
     "HAS_COAST",
-    {
-     "type": "TECH_UNMANNED_NAVAL_VEHICLES",
-     "scope": "team"
-    }
+    "TECH_UNMANNED_NAVAL_VEHICLES"
    ],
    "any": [
     [

@@ -10,29 +10,14 @@
      "scope": "city",
      "connection": "trade|vicinity"
     },
-    {
-     "type": "TECH_FLINTLOCK",
-     "scope": "team"
-    }
+    "TECH_FLINTLOCK"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_GUARD_STATION",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_SHERIFFS_OFFICE",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_POLICE_STATION",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_POLICE_PRECINCT",
-      "scope": "city"
-     }
+     "BUILDING_GUARD_STATION",
+     "BUILDING_SHERIFFS_OFFICE",
+     "BUILDING_POLICE_STATION",
+     "BUILDING_POLICE_PRECINCT"
     ]
    ]
   }

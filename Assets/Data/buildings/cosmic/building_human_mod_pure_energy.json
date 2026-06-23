@@ -5,10 +5,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_LUMINAL_BEINGS",
-     "scope": "team"
-    }
+    "TECH_LUMINAL_BEINGS"
    ],
    "any": [
     [

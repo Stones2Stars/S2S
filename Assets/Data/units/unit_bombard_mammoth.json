@@ -10,18 +10,9 @@
      "scope": "city",
      "connection": "trade|vicinity"
     },
-    {
-     "type": "BUILDING_CANNON_FORGE",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_CAVALRY_TACTICS",
-     "scope": "team"
-    },
-    {
-     "type": "TECH_MEGAFAUNA_DOMESTICATION",
-     "scope": "team"
-    },
+    "BUILDING_CANNON_FORGE",
+    "TECH_CAVALRY_TACTICS",
+    "TECH_MEGAFAUNA_DOMESTICATION",
     {
      "type": "BONUS_IRON_WARES",
      "scope": "city",
@@ -37,14 +28,8 @@
      }
     ],
     [
-     {
-      "type": "BUILDING_EFFECT_HERITAGE_MAMMOTHS",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_ANIMAL_TRAINER_MAMMOTH",
-      "scope": "city"
-     }
+     "BUILDING_EFFECT_HERITAGE_MAMMOTHS",
+     "BUILDING_ANIMAL_TRAINER_MAMMOTH"
     ]
    ]
   }

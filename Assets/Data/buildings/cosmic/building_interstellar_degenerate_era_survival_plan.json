@@ -5,18 +5,9 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_INTERSTELLAR_ARTIFICIAL_PLANET",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_INTERSTELLAR_ADAPTED_HUMANS",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_IMMORTALITY",
-     "scope": "team"
-    }
+    "BUILDING_INTERSTELLAR_ARTIFICIAL_PLANET",
+    "BUILDING_INTERSTELLAR_ADAPTED_HUMANS",
+    "TECH_IMMORTALITY"
    ],
    "any": [
     [

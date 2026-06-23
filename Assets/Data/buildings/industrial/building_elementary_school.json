@@ -22,10 +22,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_COMPULSORY_EDUCATION",
-     "scope": "team"
-    },
+    "TECH_COMPULSORY_EDUCATION",
     {
      "type": "BONUS_FURNITURE",
      "scope": "city",
@@ -69,10 +66,7 @@
     ]
    ],
    "dormant": [
-    {
-     "type": "BUILDING_HOLOGRAPHIC_SCHOOL",
-     "scope": "city"
-    }
+    "BUILDING_HOLOGRAPHIC_SCHOOL"
    ]
   }
  },

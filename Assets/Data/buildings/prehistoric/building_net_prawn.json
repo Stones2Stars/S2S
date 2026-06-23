@@ -18,14 +18,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_FISH_TRAPS",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_TRAP_FISHING",
-     "scope": "team"
-    }
+    "BUILDING_FISH_TRAPS",
+    "TECH_TRAP_FISHING"
    ],
    "any": [
     [
@@ -58,10 +52,7 @@
     ]
    ],
    "dormant": [
-    {
-     "type": "BUILDING_AQUAFARM",
-     "scope": "city"
-    }
+    "BUILDING_AQUAFARM"
    ]
   }
  },

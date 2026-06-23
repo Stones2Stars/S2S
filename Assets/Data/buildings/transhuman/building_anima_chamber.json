@@ -13,18 +13,9 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_MEDICAL_DIAGNOSTAT",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_CYBERNETIC_ORGAN_LAB",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_ARTIFICIAL_LIFE",
-     "scope": "team"
-    }
+    "BUILDING_MEDICAL_DIAGNOSTAT",
+    "BUILDING_CYBERNETIC_ORGAN_LAB",
+    "TECH_ARTIFICIAL_LIFE"
    ],
    "any": [
     [

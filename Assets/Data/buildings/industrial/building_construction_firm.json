@@ -14,14 +14,8 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_MODERN_OFFICES",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_CIVIL_ENGINEERING",
-     "scope": "team"
-    }
+    "BUILDING_MODERN_OFFICES",
+    "TECH_CIVIL_ENGINEERING"
    ],
    "any": [
     [

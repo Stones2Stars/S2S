@@ -5,18 +5,9 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_CISLUNAR_CONTROL_SYSTEM",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_CISLUNAR_ONEILL_CYLINDER",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_MOLECULAR_SCANNING",
-     "scope": "team"
-    }
+    "BUILDING_CISLUNAR_CONTROL_SYSTEM",
+    "BUILDING_CISLUNAR_ONEILL_CYLINDER",
+    "TECH_MOLECULAR_SCANNING"
    ],
    "any": [
     [

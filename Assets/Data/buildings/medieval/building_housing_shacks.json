@@ -11,10 +11,7 @@
   "build": {
    "all": [
     "HAS_FRESHWATER",
-    {
-     "type": "TECH_SURVEYING",
-     "scope": "team"
-    }
+    "TECH_SURVEYING"
    ],
    "any": [
     [
@@ -34,22 +31,10 @@
     }
    ],
    "dormant": [
-    {
-     "type": "BUILDING_HOUSING_BOONDOCKS",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_HOUSING_DUGOUTS",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_HOUSING_COLONY_ARCOLOGY",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_LAUNCH_ARCOLOGY",
-     "scope": "city"
-    }
+    "BUILDING_HOUSING_BOONDOCKS",
+    "BUILDING_HOUSING_DUGOUTS",
+    "BUILDING_HOUSING_COLONY_ARCOLOGY",
+    "BUILDING_LAUNCH_ARCOLOGY"
    ]
   }
  },

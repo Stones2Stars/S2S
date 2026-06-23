@@ -18,25 +18,13 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_MODERN_WAREHOUSE",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_FLIGHT",
-     "scope": "team"
-    }
+    "BUILDING_MODERN_WAREHOUSE",
+    "TECH_FLIGHT"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_AIRPORT",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_COMMERCIAL_AIRPORT",
-      "scope": "city"
-     }
+     "BUILDING_AIRPORT",
+     "BUILDING_COMMERCIAL_AIRPORT"
     ],
     [
      {
@@ -55,10 +43,7 @@
     }
    ],
    "dormant": [
-    {
-     "type": "BUILDING_TELEPORT_SHIPPING_WAREHOUSE",
-     "scope": "city"
-    }
+    "BUILDING_TELEPORT_SHIPPING_WAREHOUSE"
    ]
   }
  },

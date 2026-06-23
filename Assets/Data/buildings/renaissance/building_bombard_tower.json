@@ -18,14 +18,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_CANNON_FORGE",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_GUNPOWDER",
-     "scope": "team"
-    }
+    "BUILDING_CANNON_FORGE",
+    "TECH_GUNPOWDER"
    ],
    "any": [
     [
@@ -59,30 +53,12 @@
     ]
    ],
    "dormant": [
-    {
-     "type": "BUILDING_ARTILLERY_BATTERY",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_AUTO_CANNON_BATTERY",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_MISSILE_BATTERY",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_RAILGUN_BATTERY",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_LASER_BATTERY",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_ANTI_MATTER_BATTERY",
-     "scope": "city"
-    }
+    "BUILDING_ARTILLERY_BATTERY",
+    "BUILDING_AUTO_CANNON_BATTERY",
+    "BUILDING_MISSILE_BATTERY",
+    "BUILDING_RAILGUN_BATTERY",
+    "BUILDING_LASER_BATTERY",
+    "BUILDING_ANTI_MATTER_BATTERY"
    ]
   }
  },

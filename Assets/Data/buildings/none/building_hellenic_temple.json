@@ -12,10 +12,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_PRIESTHOOD",
-     "scope": "team"
-    }
+    "TECH_PRIESTHOOD"
    ],
    "any": [
     [
@@ -33,10 +30,7 @@
      "scope": "city",
      "connection": "trade|vicinity"
     },
-    {
-     "type": "RELIGION_HELLENISM",
-     "scope": "city"
-    }
+    "RELIGION_HELLENISM"
    ],
    "any": [
     [

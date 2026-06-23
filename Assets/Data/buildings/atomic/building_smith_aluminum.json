@@ -13,21 +13,12 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_INDUSTRIALISM",
-     "scope": "team"
-    }
+    "TECH_INDUSTRIALISM"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_FORGE",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_FOUNDRY",
-      "scope": "city"
-     }
+     "BUILDING_FORGE",
+     "BUILDING_FOUNDRY"
     ],
     [
      {
@@ -46,10 +37,7 @@
     }
    ],
    "dormant": [
-    {
-     "type": "BUILDING_METALS_MEGACOMPLEX",
-     "scope": "city"
-    }
+    "BUILDING_METALS_MEGACOMPLEX"
    ]
   }
  },

@@ -13,41 +13,17 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_CARPENTER",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_CARPENTRY",
-     "scope": "team"
-    }
+    "BUILDING_CARPENTER",
+    "TECH_CARPENTRY"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_STORAGE_PIT",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_GRANARY",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_MODERN_GRANARY",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_BARTER_POST",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_TRADING_POST",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_SHOPPING_DISTRICT",
-      "scope": "city"
-     }
+     "BUILDING_STORAGE_PIT",
+     "BUILDING_GRANARY",
+     "BUILDING_MODERN_GRANARY",
+     "BUILDING_BARTER_POST",
+     "BUILDING_TRADING_POST",
+     "BUILDING_SHOPPING_DISTRICT"
     ],
     [
      {
@@ -78,14 +54,8 @@
     ]
    ],
    "dormant": [
-    {
-     "type": "BUILDING_MANUFACTURING_DISTRICT",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_FACTORY_FURNITURE",
-     "scope": "city"
-    }
+    "BUILDING_MANUFACTURING_DISTRICT",
+    "BUILDING_FACTORY_FURNITURE"
    ]
   }
  },
@@ -104,38 +74,23 @@
     1,
     {
      "value": 2,
-     "enabled": {
-      "type": "TECH_FURNITURE_MAKING",
-      "scope": "team"
-     }
+     "enabled": "TECH_FURNITURE_MAKING"
     },
     {
      "value": 3,
-     "enabled": {
-      "type": "TECH_AESTHETICS",
-      "scope": "team"
-     }
+     "enabled": "TECH_AESTHETICS"
     },
     {
      "value": 3,
-     "enabled": {
-      "type": "TECH_MACHINERY",
-      "scope": "team"
-     }
+     "enabled": "TECH_MACHINERY"
     },
     {
      "value": 4,
-     "enabled": {
-      "type": "TECH_GUILDS",
-      "scope": "team"
-     }
+     "enabled": "TECH_GUILDS"
     },
     {
      "value": 4,
-     "enabled": {
-      "type": "TECH_INVENTION",
-      "scope": "team"
-     }
+     "enabled": "TECH_INVENTION"
     },
     {
      "value": 1,

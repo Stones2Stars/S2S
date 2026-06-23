@@ -178,10 +178,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_ASSEMBLY_LINE",
-     "scope": "team"
-    }
+    "TECH_ASSEMBLY_LINE"
    ],
    "any": [
     [

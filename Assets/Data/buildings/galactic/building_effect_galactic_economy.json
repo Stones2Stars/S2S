@@ -13,10 +13,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_FOLDING_SPACE",
-     "scope": "team"
-    }
+    "TECH_FOLDING_SPACE"
    ],
    "any": [
     [

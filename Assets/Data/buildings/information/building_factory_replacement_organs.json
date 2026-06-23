@@ -14,22 +14,10 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_FACTORY",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_CLONING_LABORATORY",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_TISSUE_ENGINEERING_LAB",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_REPLACEMENT_ORGANS",
-     "scope": "team"
-    }
+    "BUILDING_FACTORY",
+    "BUILDING_CLONING_LABORATORY",
+    "BUILDING_TISSUE_ENGINEERING_LAB",
+    "TECH_REPLACEMENT_ORGANS"
    ],
    "any": [
     [
@@ -42,10 +30,7 @@
   },
   "operate": {
    "dormant": [
-    {
-     "type": "BUILDING_MEDICAL_MEGACOMPLEX",
-     "scope": "city"
-    }
+    "BUILDING_MEDICAL_MEGACOMPLEX"
    ]
   }
  },

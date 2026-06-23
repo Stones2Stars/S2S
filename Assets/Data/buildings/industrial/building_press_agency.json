@@ -14,21 +14,12 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_JOURNALISM",
-     "scope": "team"
-    }
+    "TECH_JOURNALISM"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_OFFICIUM",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_MODERN_OFFICES",
-      "scope": "city"
-     }
+     "BUILDING_OFFICIUM",
+     "BUILDING_MODERN_OFFICES"
     ],
     [
      {

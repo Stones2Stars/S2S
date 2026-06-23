@@ -35,14 +35,8 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_COMMERCIAL_AIRPORT",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_COMMERCIAL_SPACEFLIGHT",
-     "scope": "team"
-    }
+    "BUILDING_COMMERCIAL_AIRPORT",
+    "TECH_COMMERCIAL_SPACEFLIGHT"
    ],
    "any": [
     [

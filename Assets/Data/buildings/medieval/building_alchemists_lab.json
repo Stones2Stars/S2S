@@ -18,21 +18,12 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_ALCHEMY",
-     "scope": "team"
-    }
+    "TECH_ALCHEMY"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_TRADING_POST",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_SHOPPING_DISTRICT",
-      "scope": "city"
-     }
+     "BUILDING_TRADING_POST",
+     "BUILDING_SHOPPING_DISTRICT"
     ],
     [
      {
@@ -51,14 +42,8 @@
     }
    ],
    "dormant": [
-    {
-     "type": "BUILDING_CHEMISTRY_LAB",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_CHEMICALS_DISTRICT",
-     "scope": "city"
-    }
+    "BUILDING_CHEMISTRY_LAB",
+    "BUILDING_CHEMICALS_DISTRICT"
    ]
   }
  },

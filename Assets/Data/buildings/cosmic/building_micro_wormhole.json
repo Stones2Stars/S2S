@@ -15,14 +15,8 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_TELEPORT_BOOTH",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_COMPACT_WORMHOLES",
-     "scope": "team"
-    }
+    "BUILDING_TELEPORT_BOOTH",
+    "TECH_COMPACT_WORMHOLES"
    ],
    "any": [
     [

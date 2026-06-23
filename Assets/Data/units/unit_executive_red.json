@@ -5,14 +5,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_HQ_RED_CURTAINS",
-     "scope": "city"
-    },
-    {
-     "type": "CORPORATION_RED",
-     "scope": "city"
-    }
+    "BUILDING_HQ_RED_CURTAINS",
+    "CORPORATION_RED"
    ]
   }
  },

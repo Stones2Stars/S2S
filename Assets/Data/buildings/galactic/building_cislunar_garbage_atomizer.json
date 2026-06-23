@@ -5,14 +5,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_CISLUNAR_ONEILL_CYLINDER",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_ATOMIZATION_FIELD",
-     "scope": "team"
-    }
+    "BUILDING_CISLUNAR_ONEILL_CYLINDER",
+    "TECH_ATOMIZATION_FIELD"
    ],
    "any": [
     [

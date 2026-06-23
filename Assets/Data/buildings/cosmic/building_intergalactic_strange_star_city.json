@@ -5,21 +5,12 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_EXOTIC_STARS",
-     "scope": "team"
-    }
+    "TECH_EXOTIC_STARS"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_INTERGALACTIC_QUARK_STAR_BASE",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_INTERGALACTIC_ELECTROWEAK_STAR_BASE",
-      "scope": "city"
-     }
+     "BUILDING_INTERGALACTIC_QUARK_STAR_BASE",
+     "BUILDING_INTERGALACTIC_ELECTROWEAK_STAR_BASE"
     ],
     [
      {

@@ -6,14 +6,8 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_MARTIAN_CITY",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_NEURON_ENGINEERING",
-     "scope": "team"
-    }
+    "BUILDING_MARTIAN_CITY",
+    "TECH_NEURON_ENGINEERING"
    ],
    "any": [
     [

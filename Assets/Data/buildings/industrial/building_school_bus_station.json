@@ -13,21 +13,12 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_COMPULSORY_EDUCATION",
-     "scope": "team"
-    },
-    {
-     "type": "TECH_MOTORIZED_TRANSPORTATION",
-     "scope": "team"
-    }
+    "TECH_COMPULSORY_EDUCATION",
+    "TECH_MOTORIZED_TRANSPORTATION"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_ELEMENTARY_SCHOOL",
-      "scope": "city"
-     }
+     "BUILDING_ELEMENTARY_SCHOOL"
     ],
     [
      {
@@ -60,10 +51,7 @@
     ]
    ],
    "dormant": [
-    {
-     "type": "BUILDING_HOLOGRAPHIC_SCHOOL",
-     "scope": "city"
-    }
+    "BUILDING_HOLOGRAPHIC_SCHOOL"
    ]
   }
  },

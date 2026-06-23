@@ -6,19 +6,13 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_HYPERSPACE_11_DIMENSIONAL_FACTORY",
-     "scope": "city"
-    },
+    "BUILDING_HYPERSPACE_11_DIMENSIONAL_FACTORY",
     {
      "type": "BUILDING_EXAVERSE_PORTAL",
      "scope": "empire",
      "min": 1
     },
-    {
-     "type": "TECH_MACROVERSE_TRAVERSAL",
-     "scope": "team"
-    }
+    "TECH_MACROVERSE_TRAVERSAL"
    ],
    "any": [
     [

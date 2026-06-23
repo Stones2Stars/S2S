@@ -5,14 +5,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_FOLKLORE_REQUIREMENT",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_SOFT_HAMMER_PERCUSSION",
-     "scope": "team"
-    }
+    "BUILDING_FOLKLORE_REQUIREMENT",
+    "TECH_SOFT_HAMMER_PERCUSSION"
    ],
    "any": [
     [

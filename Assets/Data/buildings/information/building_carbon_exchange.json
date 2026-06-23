@@ -13,10 +13,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_ECOLOGICAL_ENGINEERING",
-     "scope": "team"
-    }
+    "TECH_ECOLOGICAL_ENGINEERING"
    ],
    "any": [
     [
@@ -29,10 +26,7 @@
   },
   "operate": {
    "dormant": [
-    {
-     "type": "BUILDING_ECOSYSTEM_SERVICES_MARKET",
-     "scope": "city"
-    }
+    "BUILDING_ECOSYSTEM_SERVICES_MARKET"
    ]
   }
  },

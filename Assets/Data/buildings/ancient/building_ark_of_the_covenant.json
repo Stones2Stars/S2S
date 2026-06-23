@@ -5,10 +5,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_PRIESTHOOD",
-     "scope": "team"
-    },
+    "TECH_PRIESTHOOD",
     "STATE_RELIGION_IN_CITY",
     {
      "STATE_RELIGION": "RELIGION_JUDAISM"
@@ -30,10 +27,7 @@
      "scope": "city",
      "connection": "trade|vicinity"
     },
-    {
-     "type": "RELIGION_JUDAISM",
-     "scope": "city"
-    }
+    "RELIGION_JUDAISM"
    ],
    "any": [
     [

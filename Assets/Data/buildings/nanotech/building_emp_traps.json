@@ -14,10 +14,7 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "TECH_ELECTRIC_ARC_WEAPONRY",
-     "scope": "team"
-    }
+    "TECH_ELECTRIC_ARC_WEAPONRY"
    ],
    "any": [
     [
@@ -37,14 +34,8 @@
     }
    ],
    "dormant": [
-    {
-     "type": "BUILDING_NANOBOT_TRAPS",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_GRAVITY_TRAPS",
-     "scope": "city"
-    }
+    "BUILDING_NANOBOT_TRAPS",
+    "BUILDING_GRAVITY_TRAPS"
    ]
   }
  },

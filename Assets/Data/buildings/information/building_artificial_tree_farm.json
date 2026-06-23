@@ -12,10 +12,7 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "TECH_ECOLOGICAL_ENGINEERING",
-     "scope": "team"
-    }
+    "TECH_ECOLOGICAL_ENGINEERING"
    ],
    "any": [
     [

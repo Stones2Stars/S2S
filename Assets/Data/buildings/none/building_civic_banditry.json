@@ -15,10 +15,7 @@
   },
   "operate": {
    "all": [
-    {
-     "type": "CIVIC_BANDITRY",
-     "scope": "empire"
-    }
+    "CIVIC_BANDITRY"
    ]
   }
  },

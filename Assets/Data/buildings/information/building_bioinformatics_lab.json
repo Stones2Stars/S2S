@@ -13,18 +13,9 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_PROTEIN_LAB",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_NUCLEIC_ACID_LAB",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_BIOINFORMATICS",
-     "scope": "team"
-    }
+    "BUILDING_PROTEIN_LAB",
+    "BUILDING_NUCLEIC_ACID_LAB",
+    "TECH_BIOINFORMATICS"
    ],
    "any": [
     [
@@ -51,17 +42,11 @@
     10,
     {
      "value": 10,
-     "enabled": {
-      "type": "TECH_GENOMIC_ENCYCLOPEDIA",
-      "scope": "team"
-     }
+     "enabled": "TECH_GENOMIC_ENCYCLOPEDIA"
     },
     {
      "value": 10,
-     "enabled": {
-      "type": "TECH_BIOMATHEMATICS",
-      "scope": "team"
-     }
+     "enabled": "TECH_BIOMATHEMATICS"
     }
    ]
   }

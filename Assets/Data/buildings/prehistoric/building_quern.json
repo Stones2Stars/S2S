@@ -16,10 +16,7 @@
   "build": {
    "all": [
     "HAS_RIVER",
-    {
-     "type": "TECH_GROUND_STONE",
-     "scope": "team"
-    }
+    "TECH_GROUND_STONE"
    ],
    "any": [
     [
@@ -48,30 +45,12 @@
     ]
    ],
    "dormant": [
-    {
-     "type": "BUILDING_WATERMILL",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_WINDMILL",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_DONKEY_MILL",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_OXEN_MILL",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_MODERN_MILL",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_FOOD_MANUFACTURING_DISTRICT",
-     "scope": "city"
-    }
+    "BUILDING_WATERMILL",
+    "BUILDING_WINDMILL",
+    "BUILDING_DONKEY_MILL",
+    "BUILDING_OXEN_MILL",
+    "BUILDING_MODERN_MILL",
+    "BUILDING_FOOD_MANUFACTURING_DISTRICT"
    ]
   }
  },

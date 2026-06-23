@@ -5,14 +5,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_MIXED_USE_DEVELOPMENT",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_NEW_URBANISM",
-     "scope": "team"
-    }
+    "BUILDING_MIXED_USE_DEVELOPMENT",
+    "TECH_NEW_URBANISM"
    ],
    "any": [
     [

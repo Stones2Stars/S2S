@@ -18,10 +18,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_CHEMISTRY",
-     "scope": "team"
-    }
+    "TECH_CHEMISTRY"
    ],
    "any": [
     [
@@ -55,17 +52,11 @@
     3,
     {
      "value": 7,
-     "enabled": {
-      "type": "TECH_GLOBALIZATION",
-      "scope": "team"
-     }
+     "enabled": "TECH_GLOBALIZATION"
     },
     {
      "value": 8,
-     "enabled": {
-      "type": "TECH_KNOWLEDGE_MANAGEMENT",
-      "scope": "team"
-     }
+     "enabled": "TECH_KNOWLEDGE_MANAGEMENT"
     }
    ]
   }
@@ -75,10 +66,7 @@
    "flat": [
     {
      "value": 6,
-     "enabled": {
-      "type": "TECH_REFRIGERATION",
-      "scope": "team"
-     }
+     "enabled": "TECH_REFRIGERATION"
     }
    ]
   }

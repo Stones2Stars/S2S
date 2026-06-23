@@ -14,22 +14,10 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_INDUSTRIAL_PARK",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_EVOLUTIONARY_ALGORITHMS",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_NOVUS_CHEMISTRY",
-     "scope": "team"
-    },
-    {
-     "type": "TECH_NANOELECTRONICS",
-     "scope": "team"
-    },
+    "BUILDING_INDUSTRIAL_PARK",
+    "BUILDING_EVOLUTIONARY_ALGORITHMS",
+    "TECH_NOVUS_CHEMISTRY",
+    "TECH_NANOELECTRONICS",
     {
      "type": "BONUS_LIQUID_METAL",
      "scope": "city",
@@ -64,10 +52,7 @@
     }
    ],
    "dormant": [
-    {
-     "type": "BUILDING_PICOTECH_COMPLEX",
-     "scope": "city"
-    }
+    "BUILDING_PICOTECH_COMPLEX"
    ]
   }
  },
@@ -77,31 +62,19 @@
     3,
     {
      "value": 9,
-     "enabled": {
-      "type": "TECH_SUPERSTRONG_ALLOYS",
-      "scope": "team"
-     }
+     "enabled": "TECH_SUPERSTRONG_ALLOYS"
     },
     {
      "value": 9,
-     "enabled": {
-      "type": "TECH_ORBITAL_FLIGHT",
-      "scope": "team"
-     }
+     "enabled": "TECH_ORBITAL_FLIGHT"
     },
     {
      "value": 9,
-     "enabled": {
-      "type": "TECH_DNA_COMPUTING",
-      "scope": "team"
-     }
+     "enabled": "TECH_DNA_COMPUTING"
     },
     {
      "value": 10,
-     "enabled": {
-      "type": "TECH_ARTIFICIAL_PHOTOSYNTHESIS",
-      "scope": "team"
-     }
+     "enabled": "TECH_ARTIFICIAL_PHOTOSYNTHESIS"
     }
    ]
   }

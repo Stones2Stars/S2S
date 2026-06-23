@@ -14,14 +14,8 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_SHOPPING_DISTRICT",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_FUEL_CELLS",
-     "scope": "team"
-    }
+    "BUILDING_SHOPPING_DISTRICT",
+    "TECH_FUEL_CELLS"
    ],
    "any": [
     [
@@ -41,14 +35,8 @@
     }
    ],
    "dormant": [
-    {
-     "type": "BUILDING_WIRELESS_EV_CHARGING",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_TELEPORT_BOOTH",
-     "scope": "city"
-    }
+    "BUILDING_WIRELESS_EV_CHARGING",
+    "BUILDING_TELEPORT_BOOTH"
    ]
   }
  },

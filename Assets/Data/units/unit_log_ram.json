@@ -5,21 +5,12 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_WARFARE",
-     "scope": "team"
-    }
+    "TECH_WARFARE"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_LUMBER_CAMP",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_AGROFOREST",
-      "scope": "city"
-     }
+     "BUILDING_LUMBER_CAMP",
+     "BUILDING_AGROFOREST"
     ]
    ]
   }

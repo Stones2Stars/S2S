@@ -19,49 +19,19 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_TRADE",
-     "scope": "team"
-    }
+    "TECH_TRADE"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_ANIMAL_TRAINER_CAMEL",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_ANIMAL_TRAINER_LLAMA",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_ANIMAL_TRAINER_BUFFALO",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_ANIMAL_TRAINER_DONKEY",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_ANIMAL_TRAINER_HORSE",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_ANIMAL_TRAINER_ELEPHANT",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_FARM_ANIMAL_OXEN",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_INDUSTRIAL_FARMS",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_MEAT_INDUSTRY_CONGLOMERATE",
-      "scope": "city"
-     }
+     "BUILDING_ANIMAL_TRAINER_CAMEL",
+     "BUILDING_ANIMAL_TRAINER_LLAMA",
+     "BUILDING_ANIMAL_TRAINER_BUFFALO",
+     "BUILDING_ANIMAL_TRAINER_DONKEY",
+     "BUILDING_ANIMAL_TRAINER_HORSE",
+     "BUILDING_ANIMAL_TRAINER_ELEPHANT",
+     "BUILDING_FARM_ANIMAL_OXEN",
+     "BUILDING_INDUSTRIAL_FARMS",
+     "BUILDING_MEAT_INDUSTRY_CONGLOMERATE"
     ],
     [
      {

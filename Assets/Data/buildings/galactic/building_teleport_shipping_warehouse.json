@@ -12,18 +12,9 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_MODERN_WAREHOUSE",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_TELEPORT_BOOTH",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_TELEPORTATION",
-     "scope": "team"
-    }
+    "BUILDING_MODERN_WAREHOUSE",
+    "BUILDING_TELEPORT_BOOTH",
+    "TECH_TELEPORTATION"
    ],
    "any": [
     [

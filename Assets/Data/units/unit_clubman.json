@@ -5,10 +5,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_HARD_HAMMER_PERCUSSION",
-     "scope": "team"
-    }
+    "TECH_HARD_HAMMER_PERCUSSION"
    ]
   }
  },

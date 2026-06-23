@@ -6,25 +6,13 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "TECH_PERSONAL_ROBOTS",
-     "scope": "team"
-    }
+    "TECH_PERSONAL_ROBOTS"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_NIGHT_CLUB",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_CASINO",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_GALACTIC_CANTINA",
-      "scope": "city"
-     }
+     "BUILDING_NIGHT_CLUB",
+     "BUILDING_CASINO",
+     "BUILDING_GALACTIC_CANTINA"
     ],
     [
      {
@@ -43,10 +31,7 @@
     }
    ],
    "dormant": [
-    {
-     "type": "BUILDING_ORDINANCE_PROSTITUTION_BAN",
-     "scope": "city"
-    }
+    "BUILDING_ORDINANCE_PROSTITUTION_BAN"
    ]
   }
  },

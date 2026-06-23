@@ -5,14 +5,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_TRANSTELLAR_HYDROGEN_MAP",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_DIRECTED_PANSPERMIA",
-     "scope": "team"
-    }
+    "BUILDING_TRANSTELLAR_HYDROGEN_MAP",
+    "TECH_DIRECTED_PANSPERMIA"
    ],
    "any": [
     [
@@ -48,10 +42,7 @@
     125,
     {
      "value": 12,
-     "enabled": {
-      "type": "TECH_GRAND_UNIFICATION_BIOLOGY",
-      "scope": "team"
-     }
+     "enabled": "TECH_GRAND_UNIFICATION_BIOLOGY"
     }
    ]
   }

@@ -5,14 +5,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_INTERGALACTIC_DYSON_SPHERES",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_SUPERSYMMETRIC_PARTICLE_CONSTRUCTION",
-     "scope": "team"
-    }
+    "BUILDING_INTERGALACTIC_DYSON_SPHERES",
+    "TECH_SUPERSYMMETRIC_PARTICLE_CONSTRUCTION"
    ],
    "any": [
     [

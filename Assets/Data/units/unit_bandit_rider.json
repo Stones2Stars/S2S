@@ -10,18 +10,9 @@
      "scope": "city",
      "connection": "trade|vicinity"
     },
-    {
-     "type": "BUILDING_MERCENARY_STABLES",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_BRONZE_WORKING",
-     "scope": "team"
-    },
-    {
-     "type": "TECH_ANIMAL_RIDING",
-     "scope": "team"
-    }
+    "BUILDING_MERCENARY_STABLES",
+    "TECH_BRONZE_WORKING",
+    "TECH_ANIMAL_RIDING"
    ]
   }
  },

@@ -11,18 +11,9 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_SHOPPING_DISTRICT",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_PERSONAL_COMPUTERS",
-     "scope": "team"
-    },
-    {
-     "type": "TECH_ANIMATION",
-     "scope": "team"
-    }
+    "BUILDING_SHOPPING_DISTRICT",
+    "TECH_PERSONAL_COMPUTERS",
+    "TECH_ANIMATION"
    ],
    "any": [
     [
@@ -58,31 +49,19 @@
     2,
     {
      "value": 7,
-     "enabled": {
-      "type": "TECH_3D_MODELLING",
-      "scope": "team"
-     }
+     "enabled": "TECH_3D_MODELLING"
     },
     {
      "value": 8,
-     "enabled": {
-      "type": "TECH_WEARABLE_COMPUTERS",
-      "scope": "team"
-     }
+     "enabled": "TECH_WEARABLE_COMPUTERS"
     },
     {
      "value": 9,
-     "enabled": {
-      "type": "TECH_THOUGHT_SCANNING",
-      "scope": "team"
-     }
+     "enabled": "TECH_THOUGHT_SCANNING"
     },
     {
      "value": 9,
-     "enabled": {
-      "type": "TECH_DROIDS",
-      "scope": "team"
-     }
+     "enabled": "TECH_DROIDS"
     }
    ]
   }
@@ -93,31 +72,19 @@
     2,
     {
      "value": 7,
-     "enabled": {
-      "type": "TECH_3D_MODELLING",
-      "scope": "team"
-     }
+     "enabled": "TECH_3D_MODELLING"
     },
     {
      "value": 8,
-     "enabled": {
-      "type": "TECH_WEARABLE_COMPUTERS",
-      "scope": "team"
-     }
+     "enabled": "TECH_WEARABLE_COMPUTERS"
     },
     {
      "value": 9,
-     "enabled": {
-      "type": "TECH_THOUGHT_SCANNING",
-      "scope": "team"
-     }
+     "enabled": "TECH_THOUGHT_SCANNING"
     },
     {
      "value": 9,
-     "enabled": {
-      "type": "TECH_DROIDS",
-      "scope": "team"
-     }
+     "enabled": "TECH_DROIDS"
     }
    ]
   }

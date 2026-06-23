@@ -10,14 +10,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_EUROPA_COLONY",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_ARTIFICIAL_NUCLEOSYNTHESIS",
-     "scope": "team"
-    }
+    "BUILDING_EUROPA_COLONY",
+    "TECH_ARTIFICIAL_NUCLEOSYNTHESIS"
    ],
    "any": [
     [

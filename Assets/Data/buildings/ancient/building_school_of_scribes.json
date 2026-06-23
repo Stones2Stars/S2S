@@ -22,10 +22,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_WRITING",
-     "scope": "team"
-    }
+    "TECH_WRITING"
    ],
    "any": [
     [
@@ -57,10 +54,7 @@
     ]
    ],
    "dormant": [
-    {
-     "type": "BUILDING_LIBRARY",
-     "scope": "city"
-    }
+    "BUILDING_LIBRARY"
    ]
   }
  },

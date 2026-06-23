@@ -15,33 +15,15 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_PREHISTORIC_DANCE",
-     "scope": "team"
-    },
-    {
-     "type": "TECH_CONTROLLED_FIRE",
-     "scope": "team"
-    }
+    "TECH_PREHISTORIC_DANCE",
+    "TECH_CONTROLLED_FIRE"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_IMU",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_FIRE_PIT",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_BONFIRE",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_CHARCOAL_BURNER",
-      "scope": "city"
-     }
+     "BUILDING_IMU",
+     "BUILDING_FIRE_PIT",
+     "BUILDING_BONFIRE",
+     "BUILDING_CHARCOAL_BURNER"
     ],
     [
      {

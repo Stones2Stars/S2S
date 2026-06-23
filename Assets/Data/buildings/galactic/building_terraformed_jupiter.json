@@ -6,23 +6,14 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_DEEP_SPACE_BISHOP_RING",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_JOVIAN_ANTIMATTER_HARVESTER",
-     "scope": "city"
-    },
+    "BUILDING_DEEP_SPACE_BISHOP_RING",
+    "BUILDING_JOVIAN_ANTIMATTER_HARVESTER",
     {
      "type": "BUILDING_LIFE_JOVIAN_CLOUDS",
      "scope": "empire",
      "min": 1
     },
-    {
-     "type": "TECH_JOVIAN_TERRAFORMING",
-     "scope": "team"
-    }
+    "TECH_JOVIAN_TERRAFORMING"
    ],
    "any": [
     [

@@ -10,14 +10,8 @@
      "scope": "city",
      "connection": "trade|vicinity"
     },
-    {
-     "type": "BUILDING_REPET",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_HOMO_SUPERIOR",
-     "scope": "team"
-    }
+    "BUILDING_REPET",
+    "TECH_HOMO_SUPERIOR"
    ]
   }
  },

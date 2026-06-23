@@ -5,14 +5,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_CISLUNAR_ONEILL_CYLINDER",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_WEAPONIZED_DISINTEGRATION",
-     "scope": "team"
-    }
+    "BUILDING_CISLUNAR_ONEILL_CYLINDER",
+    "TECH_WEAPONIZED_DISINTEGRATION"
    ],
    "any": [
     [

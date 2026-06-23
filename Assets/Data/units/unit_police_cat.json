@@ -5,22 +5,10 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_EFFECT_HERITAGE_BIG_CATS",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_POLICE_CAT_TRAINER",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_CRIMINOLOGY",
-     "scope": "team"
-    },
-    {
-     "type": "TECH_MEGAFAUNA_DOMESTICATION",
-     "scope": "team"
-    }
+    "BUILDING_EFFECT_HERITAGE_BIG_CATS",
+    "BUILDING_POLICE_CAT_TRAINER",
+    "TECH_CRIMINOLOGY",
+    "TECH_MEGAFAUNA_DOMESTICATION"
    ]
   }
  },

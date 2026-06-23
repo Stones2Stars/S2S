@@ -5,14 +5,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_HQ_FASHION_HOUSE",
-     "scope": "city"
-    },
-    {
-     "type": "CORPORATION_FASHION",
-     "scope": "city"
-    }
+    "BUILDING_HQ_FASHION_HOUSE",
+    "CORPORATION_FASHION"
    ]
   }
  },

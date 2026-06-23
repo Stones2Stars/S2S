@@ -11,25 +11,13 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_ENGINEERING",
-     "scope": "team"
-    }
+    "TECH_ENGINEERING"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_TRADING_POST",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_SHOPPING_DISTRICT",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_UNIVERSITY",
-      "scope": "city"
-     }
+     "BUILDING_TRADING_POST",
+     "BUILDING_SHOPPING_DISTRICT",
+     "BUILDING_UNIVERSITY"
     ],
     [
      {
@@ -72,80 +60,47 @@
     3,
     {
      "value": 4,
-     "enabled": {
-      "type": "TECH_ARCHITECTURE",
-      "scope": "team"
-     }
+     "enabled": "TECH_ARCHITECTURE"
     },
     {
      "value": 4,
-     "enabled": {
-      "type": "TECH_SURVEYING",
-      "scope": "team"
-     }
+     "enabled": "TECH_SURVEYING"
     },
     {
      "value": 6,
-     "enabled": {
-      "type": "TECH_CIVIL_ENGINEERING",
-      "scope": "team"
-     }
+     "enabled": "TECH_CIVIL_ENGINEERING"
     },
     {
      "value": 10,
-     "enabled": {
-      "type": "TECH_MEGASTRUCTURE_ENGINEERING",
-      "scope": "team"
-     }
+     "enabled": "TECH_MEGASTRUCTURE_ENGINEERING"
     },
     {
      "value": 8,
-     "enabled": {
-      "type": "TECH_ECOLOGICAL_ENGINEERING",
-      "scope": "team"
-     }
+     "enabled": "TECH_ECOLOGICAL_ENGINEERING"
     },
     {
      "value": 8,
-     "enabled": {
-      "type": "TECH_MARINE_ARCHITECTURE",
-      "scope": "team"
-     }
+     "enabled": "TECH_MARINE_ARCHITECTURE"
     },
     {
      "value": 10,
-     "enabled": {
-      "type": "TECH_ORBITAL_MEGASTRUCTURES",
-      "scope": "team"
-     }
+     "enabled": "TECH_ORBITAL_MEGASTRUCTURES"
     },
     {
      "value": 10,
-     "enabled": {
-      "type": "TECH_LUNAR_MEGASTRUCTURES",
-      "scope": "team"
-     }
+     "enabled": "TECH_LUNAR_MEGASTRUCTURES"
     },
     {
      "value": 10,
-     "enabled": {
-      "type": "TECH_PLANETARY_MEGASTRUCTURES",
-      "scope": "team"
-     }
+     "enabled": "TECH_PLANETARY_MEGASTRUCTURES"
     },
     {
      "value": 11,
-     "enabled": {
-      "type": "TECH_ATOMIC_SCALE_ENGINEERING",
-      "scope": "team"
-     }
+     "enabled": "TECH_ATOMIC_SCALE_ENGINEERING"
     },
     {
      "value": 11,
-     "enabled": {
-      "type": "TECH_COLONY_ARCOLOGY",
-      "scope": "team"
-     }
+     "enabled": "TECH_COLONY_ARCOLOGY"
     }
    ]
   }

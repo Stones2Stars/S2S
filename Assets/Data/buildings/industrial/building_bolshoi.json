@@ -10,14 +10,8 @@
      "scope": "city",
      "min": 3
     },
-    {
-     "type": "BUILDING_OPERA_HOUSE",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_REALISM",
-     "scope": "team"
-    }
+    "BUILDING_OPERA_HOUSE",
+    "TECH_REALISM"
    ],
    "any": [
     [

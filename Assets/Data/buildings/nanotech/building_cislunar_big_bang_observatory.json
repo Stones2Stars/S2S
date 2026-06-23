@@ -5,22 +5,10 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_CISLUNAR_FACTORY",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_CISLUNAR_SATELLITE_FACTORY",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_CISLUNAR_TELESCOPE",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_AMPLIFIED_WAVELENGTHS",
-     "scope": "team"
-    }
+    "BUILDING_CISLUNAR_FACTORY",
+    "BUILDING_CISLUNAR_SATELLITE_FACTORY",
+    "BUILDING_CISLUNAR_TELESCOPE",
+    "TECH_AMPLIFIED_WAVELENGTHS"
    ],
    "any": [
     [

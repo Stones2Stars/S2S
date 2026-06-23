@@ -5,18 +5,9 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_LOKI_SANCTUARY",
-     "scope": "city"
-    },
-    {
-     "type": "RELIGION_ASATRU",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_CIVIL_SERVICE",
-     "scope": "team"
-    }
+    "BUILDING_LOKI_SANCTUARY",
+    "RELIGION_ASATRU",
+    "TECH_CIVIL_SERVICE"
    ],
    "any": [
     [

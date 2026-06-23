@@ -15,18 +15,9 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_INTERSTELLAR_DYSON_SPHERE",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_INTERSTELLAR_STAR_SCOOP",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_STELLAR_COMPUTING",
-     "scope": "team"
-    }
+    "BUILDING_INTERSTELLAR_DYSON_SPHERE",
+    "BUILDING_INTERSTELLAR_STAR_SCOOP",
+    "TECH_STELLAR_COMPUTING"
    ],
    "any": [
     [
@@ -63,17 +54,11 @@
     25,
     {
      "value": 12,
-     "enabled": {
-      "type": "TECH_SPACETIME_ECONOMICS",
-      "scope": "team"
-     }
+     "enabled": "TECH_SPACETIME_ECONOMICS"
     },
     {
      "value": 12,
-     "enabled": {
-      "type": "TECH_COMPUTRONIUM_UNIVERSE",
-      "scope": "team"
-     }
+     "enabled": "TECH_COMPUTRONIUM_UNIVERSE"
     }
    ]
   }
@@ -84,17 +69,11 @@
     25,
     {
      "value": 12,
-     "enabled": {
-      "type": "TECH_ULTRACOMPUTING",
-      "scope": "team"
-     }
+     "enabled": "TECH_ULTRACOMPUTING"
     },
     {
      "value": 12,
-     "enabled": {
-      "type": "TECH_UNIFICATION_MATHEMATICS",
-      "scope": "team"
-     }
+     "enabled": "TECH_UNIFICATION_MATHEMATICS"
     }
    ]
   }
@@ -105,10 +84,7 @@
     5,
     {
      "value": 12,
-     "enabled": {
-      "type": "TECH_CULTURAL_LONGEVITY",
-      "scope": "team"
-     }
+     "enabled": "TECH_CULTURAL_LONGEVITY"
     }
    ]
   }
@@ -119,10 +95,7 @@
     5,
     {
      "value": 12,
-     "enabled": {
-      "type": "TECH_IMMORTALITY",
-      "scope": "team"
-     }
+     "enabled": "TECH_IMMORTALITY"
     }
    ]
   }

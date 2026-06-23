@@ -11,10 +11,7 @@
   "build": {
    "all": [
     "HAS_RIVER",
-    {
-     "type": "TECH_WATERWHEELS",
-     "scope": "team"
-    }
+    "TECH_WATERWHEELS"
    ],
    "any": [
     [

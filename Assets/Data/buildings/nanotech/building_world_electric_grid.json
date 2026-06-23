@@ -5,25 +5,13 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_PLANETARY_ECONOMICS",
-     "scope": "team"
-    }
+    "TECH_PLANETARY_ECONOMICS"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_WIRELESS_GRID",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_EMP_GRID",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_SUPERCONDUCTING_GRID",
-      "scope": "city"
-     }
+     "BUILDING_WIRELESS_GRID",
+     "BUILDING_EMP_GRID",
+     "BUILDING_SUPERCONDUCTING_GRID"
     ],
     [
      {

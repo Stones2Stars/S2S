@@ -5,10 +5,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_CLOUD_COMPUTING",
-     "scope": "team"
-    }
+    "TECH_CLOUD_COMPUTING"
    ],
    "any": [
     [

@@ -13,21 +13,12 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_SPICE_TRADE",
-     "scope": "team"
-    }
+    "TECH_SPICE_TRADE"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_TRADING_POST",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_SHOPPING_DISTRICT",
-      "scope": "city"
-     }
+     "BUILDING_TRADING_POST",
+     "BUILDING_SHOPPING_DISTRICT"
     ],
     [
      {
@@ -46,14 +37,8 @@
     }
    ],
    "dormant": [
-    {
-     "type": "BUILDING_FACTORY_ROASTED_COFFEE",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_FOOD_MANUFACTURING_DISTRICT",
-     "scope": "city"
-    }
+    "BUILDING_FACTORY_ROASTED_COFFEE",
+    "BUILDING_FOOD_MANUFACTURING_DISTRICT"
    ]
   }
  },

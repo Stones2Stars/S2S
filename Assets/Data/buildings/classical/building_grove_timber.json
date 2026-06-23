@@ -18,10 +18,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_MACHINERY",
-     "scope": "team"
-    }
+    "TECH_MACHINERY"
    ],
    "any": [
     [
@@ -41,10 +38,7 @@
     }
    ],
    "dormant": [
-    {
-     "type": "BUILDING_AGROFOREST",
-     "scope": "city"
-    }
+    "BUILDING_AGROFOREST"
    ]
   }
  },

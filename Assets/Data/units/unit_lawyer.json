@@ -6,10 +6,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_CORPORATION",
-     "scope": "team"
-    }
+    "TECH_CORPORATION"
    ]
   }
  },

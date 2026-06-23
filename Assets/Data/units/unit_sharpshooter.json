@@ -10,33 +10,15 @@
      "scope": "city",
      "connection": "trade|vicinity"
     },
-    {
-     "type": "TECH_MATCHLOCK",
-     "scope": "team"
-    },
-    {
-     "type": "TECH_LEADERSHIP",
-     "scope": "team"
-    }
+    "TECH_MATCHLOCK",
+    "TECH_LEADERSHIP"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_SHOOTING_CLUB",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_FIRING_RANGE",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_AUTOMATED_FIRING_RANGE",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_ORBITAL_TARGETS",
-      "scope": "city"
-     }
+     "BUILDING_SHOOTING_CLUB",
+     "BUILDING_FIRING_RANGE",
+     "BUILDING_AUTOMATED_FIRING_RANGE",
+     "BUILDING_ORBITAL_TARGETS"
     ]
    ]
   }

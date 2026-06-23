@@ -18,14 +18,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_COURTHOUSE",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_EXECUTIONS",
-     "scope": "team"
-    }
+    "BUILDING_COURTHOUSE",
+    "TECH_EXECUTIONS"
    ],
    "any": [
     [
@@ -59,18 +53,9 @@
     ]
    ],
    "dormant": [
-    {
-     "type": "BUILDING_GUILLOTINE",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_ELECTRIC_CHAIR",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_LETHAL_INJECTION",
-     "scope": "city"
-    }
+    "BUILDING_GUILLOTINE",
+    "BUILDING_ELECTRIC_CHAIR",
+    "BUILDING_LETHAL_INJECTION"
    ]
   }
  },

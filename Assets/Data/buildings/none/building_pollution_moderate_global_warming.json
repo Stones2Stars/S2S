@@ -15,10 +15,7 @@
   },
   "operate": {
    "dormant": [
-    {
-     "type": "BUILDING_CLIMATE_GEOENGINEERING",
-     "scope": "city"
-    }
+    "BUILDING_CLIMATE_GEOENGINEERING"
    ],
    "all": [
     {

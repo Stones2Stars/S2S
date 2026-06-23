@@ -18,25 +18,13 @@
      "scope": "empire",
      "min": 1
     },
-    {
-     "type": "TECH_TRADE",
-     "scope": "team"
-    }
+    "TECH_TRADE"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_BAZAAR",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_MALL",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_HYPERMARKET",
-      "scope": "city"
-     }
+     "BUILDING_BAZAAR",
+     "BUILDING_MALL",
+     "BUILDING_HYPERMARKET"
     ],
     [
      {

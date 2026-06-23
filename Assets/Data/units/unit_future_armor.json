@@ -10,10 +10,7 @@
      "scope": "city",
      "connection": "trade|vicinity"
     },
-    {
-     "type": "TECH_LEVITATION",
-     "scope": "team"
-    },
+    "TECH_LEVITATION",
     {
      "type": "BONUS_ALUMINUM_WARES",
      "scope": "city",

@@ -18,25 +18,13 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_FORGE_WORLDS",
-     "scope": "team"
-    },
-    {
-     "type": "TECH_ADAPTIVE_ARCHITECTURE",
-     "scope": "team"
-    }
+    "TECH_FORGE_WORLDS",
+    "TECH_ADAPTIVE_ARCHITECTURE"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_INTERSTELLAR_METROPOLIS",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_SPACE_COLONY_MILKY_WAY",
-      "scope": "city"
-     }
+     "BUILDING_INTERSTELLAR_METROPOLIS",
+     "BUILDING_SPACE_COLONY_MILKY_WAY"
     ],
     [
      {
@@ -57,10 +45,7 @@
     50,
     {
      "value": 11,
-     "enabled": {
-      "type": "TECH_PLANET_ENGINEERING",
-      "scope": "team"
-     }
+     "enabled": "TECH_PLANET_ENGINEERING"
     }
    ]
   }
@@ -71,10 +56,7 @@
     50,
     {
      "value": 12,
-     "enabled": {
-      "type": "TECH_GRAVITRONICS",
-      "scope": "team"
-     }
+     "enabled": "TECH_GRAVITRONICS"
     }
    ]
   }

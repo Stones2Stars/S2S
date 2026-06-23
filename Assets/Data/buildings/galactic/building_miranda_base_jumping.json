@@ -5,10 +5,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_FUSION_SPACECRAFT",
-     "scope": "team"
-    }
+    "TECH_FUSION_SPACECRAFT"
    ],
    "any": [
     [

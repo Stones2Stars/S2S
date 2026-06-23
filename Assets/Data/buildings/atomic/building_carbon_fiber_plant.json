@@ -13,14 +13,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_MANUFACTURING_PLANT",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_COMPOSITES",
-     "scope": "team"
-    }
+    "BUILDING_MANUFACTURING_PLANT",
+    "TECH_COMPOSITES"
    ],
    "any": [
     [
@@ -33,10 +27,7 @@
   },
   "operate": {
    "dormant": [
-    {
-     "type": "BUILDING_MATERIALS_CONGLOMERATE",
-     "scope": "city"
-    }
+    "BUILDING_MATERIALS_CONGLOMERATE"
    ]
   }
  },

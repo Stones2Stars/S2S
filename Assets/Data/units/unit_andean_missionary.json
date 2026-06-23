@@ -5,14 +5,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_ANDEAN_MONASTERY",
-     "scope": "city"
-    },
-    {
-     "type": "RELIGION_ANDEANISM",
-     "scope": "city"
-    }
+    "BUILDING_ANDEAN_MONASTERY",
+    "RELIGION_ANDEANISM"
    ]
   }
  },

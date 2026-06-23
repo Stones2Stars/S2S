@@ -10,10 +10,7 @@
      "scope": "city",
      "connection": "trade|vicinity"
     },
-    {
-     "type": "TECH_MONARCHY",
-     "scope": "team"
-    }
+    "TECH_MONARCHY"
    ]
   }
  },

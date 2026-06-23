@@ -15,29 +15,14 @@
      "scope": "city",
      "min": 3
     },
-    {
-     "type": "TECH_STAINED_GLASS",
-     "scope": "team"
-    },
-    {
-     "type": "TECH_GUILDS",
-     "scope": "team"
-    }
+    "TECH_STAINED_GLASS",
+    "TECH_GUILDS"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_POTTERS_WORKSHOP",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_FACTORY_POTTERY",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_MANUFACTURING_DISTRICT",
-      "scope": "city"
-     }
+     "BUILDING_POTTERS_WORKSHOP",
+     "BUILDING_FACTORY_POTTERY",
+     "BUILDING_MANUFACTURING_DISTRICT"
     ],
     [
      {

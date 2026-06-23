@@ -6,14 +6,8 @@
   "build": {
    "all": [
     "HAS_COAST",
-    {
-     "type": "BUILDING_OCEAN_CITY",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_SPECIES_UPLIFTING",
-     "scope": "team"
-    }
+    "BUILDING_OCEAN_CITY",
+    "TECH_SPECIES_UPLIFTING"
    ],
    "any": [
     [

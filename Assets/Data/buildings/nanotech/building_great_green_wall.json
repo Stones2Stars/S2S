@@ -5,14 +5,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_STATE_PARK",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_ENVIRONMENTAL_ECONOMICS",
-     "scope": "team"
-    }
+    "BUILDING_STATE_PARK",
+    "TECH_ENVIRONMENTAL_ECONOMICS"
    ],
    "any": [
     [

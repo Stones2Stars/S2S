@@ -13,14 +13,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_TORTURE_CHAMBER",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_TORTURE",
-     "scope": "team"
-    }
+    "BUILDING_TORTURE_CHAMBER",
+    "TECH_TORTURE"
    ],
    "any": [
     [
@@ -33,10 +27,7 @@
   },
   "operate": {
    "dormant": [
-    {
-     "type": "BUILDING_JAIL",
-     "scope": "city"
-    }
+    "BUILDING_JAIL"
    ]
   }
  },

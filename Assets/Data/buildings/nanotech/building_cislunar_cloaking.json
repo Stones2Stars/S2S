@@ -5,18 +5,9 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_CISLUNAR_AEROGEL_SHIELDING",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_CISLUNAR_MATERIALS_LAB",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_CLOAKING",
-     "scope": "team"
-    }
+    "BUILDING_CISLUNAR_AEROGEL_SHIELDING",
+    "BUILDING_CISLUNAR_MATERIALS_LAB",
+    "TECH_CLOAKING"
    ],
    "any": [
     [
@@ -34,10 +25,7 @@
     20,
     {
      "value": 11,
-     "enabled": {
-      "type": "TECH_PHASING",
-      "scope": "team"
-     }
+     "enabled": "TECH_PHASING"
     }
    ]
   }

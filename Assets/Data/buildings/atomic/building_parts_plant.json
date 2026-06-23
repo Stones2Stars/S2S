@@ -18,10 +18,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_ADVANCED_METALLURGY",
-     "scope": "team"
-    }
+    "TECH_ADVANCED_METALLURGY"
    ],
    "any": [
     [
@@ -53,30 +50,12 @@
     ]
    ],
    "dormant": [
-    {
-     "type": "BUILDING_MOLECULAR_ASSEMBLER",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_ATOMIC_ASSEMBLER",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_QUANTUM_ASSEMBLER",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_MATERIALIZER",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_3D_PRINTING_MILL",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_NANOBOTIC_PRINTING_MILL",
-     "scope": "city"
-    }
+    "BUILDING_MOLECULAR_ASSEMBLER",
+    "BUILDING_ATOMIC_ASSEMBLER",
+    "BUILDING_QUANTUM_ASSEMBLER",
+    "BUILDING_MATERIALIZER",
+    "BUILDING_3D_PRINTING_MILL",
+    "BUILDING_NANOBOTIC_PRINTING_MILL"
    ]
   }
  },

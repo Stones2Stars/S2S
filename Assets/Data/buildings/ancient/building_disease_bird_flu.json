@@ -10,10 +10,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_POULTRY_DOMESTICATION",
-     "scope": "team"
-    }
+    "TECH_POULTRY_DOMESTICATION"
    ],
    "any": [
     [

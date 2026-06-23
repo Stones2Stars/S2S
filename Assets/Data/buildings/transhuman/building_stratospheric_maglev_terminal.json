@@ -6,25 +6,13 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_STRATOSPHERIC_TOWER",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_FRICTIONLESS_FLIGHT",
-     "scope": "team"
-    }
+    "BUILDING_STRATOSPHERIC_TOWER",
+    "TECH_FRICTIONLESS_FLIGHT"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_VACTRAIN_TERMINAL",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_GRAVITY_TRAIN",
-      "scope": "city"
-     }
+     "BUILDING_VACTRAIN_TERMINAL",
+     "BUILDING_GRAVITY_TRAIN"
     ],
     [
      {

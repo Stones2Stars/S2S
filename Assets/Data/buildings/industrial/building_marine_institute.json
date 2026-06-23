@@ -18,22 +18,10 @@
       "max": 70
      }
     },
-    {
-     "type": "BUILDING_AQUARIUM",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_UNIVERSITY",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_FOLKLORE_T_FISH",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_MARINE_BIOLOGY",
-     "scope": "team"
-    }
+    "BUILDING_AQUARIUM",
+    "BUILDING_UNIVERSITY",
+    "BUILDING_FOLKLORE_T_FISH",
+    "TECH_MARINE_BIOLOGY"
    ],
    "any": [
     [

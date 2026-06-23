@@ -19,25 +19,13 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_AESTHETICS",
-     "scope": "team"
-    },
-    {
-     "type": "TECH_CAMELID_DOMESTICATION",
-     "scope": "team"
-    }
+    "TECH_AESTHETICS",
+    "TECH_CAMELID_DOMESTICATION"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_FARM_ANIMAL_LLAMA",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_HERD_LLAMA",
-      "scope": "city"
-     }
+     "BUILDING_FARM_ANIMAL_LLAMA",
+     "BUILDING_HERD_LLAMA"
     ],
     [
      {
@@ -58,14 +46,8 @@
     ]
    ],
    "dormant": [
-    {
-     "type": "BUILDING_INDUSTRIAL_FARMS",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_MEAT_INDUSTRY_CONGLOMERATE",
-     "scope": "city"
-    }
+    "BUILDING_INDUSTRIAL_FARMS",
+    "BUILDING_MEAT_INDUSTRY_CONGLOMERATE"
    ]
   }
  },
@@ -75,10 +57,7 @@
     2,
     {
      "value": 7,
-     "enabled": {
-      "type": "TECH_TOURISM",
-      "scope": "team"
-     }
+     "enabled": "TECH_TOURISM"
     }
    ]
   }

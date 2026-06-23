@@ -18,25 +18,13 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_TEAM_SPORTS",
-     "scope": "team"
-    }
+    "TECH_TEAM_SPORTS"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_ANIMAL_TRAINER_HORSE",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_ANIMAL_TRAINER_CAMEL",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_ANIMAL_TRAINER_ELEPHANT",
-      "scope": "city"
-     }
+     "BUILDING_ANIMAL_TRAINER_HORSE",
+     "BUILDING_ANIMAL_TRAINER_CAMEL",
+     "BUILDING_ANIMAL_TRAINER_ELEPHANT"
     ],
     [
      {
@@ -48,10 +36,7 @@
   },
   "operate": {
    "dormant": [
-    {
-     "type": "BUILDING_ATHLETIC_MEGACOMPLEX",
-     "scope": "city"
-    }
+    "BUILDING_ATHLETIC_MEGACOMPLEX"
    ]
   }
  },

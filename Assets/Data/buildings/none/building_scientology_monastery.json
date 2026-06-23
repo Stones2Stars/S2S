@@ -11,10 +11,7 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_MODERN_OFFICES",
-     "scope": "city"
-    }
+    "BUILDING_MODERN_OFFICES"
    ],
    "any": [
     [
@@ -27,10 +24,7 @@
   },
   "operate": {
    "all": [
-    {
-     "type": "RELIGION_SCIENTOLOGY",
-     "scope": "city"
-    }
+    "RELIGION_SCIENTOLOGY"
    ]
   }
  },

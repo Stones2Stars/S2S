@@ -10,10 +10,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_MUSICAL_NOTATION",
-     "scope": "team"
-    }
+    "TECH_MUSICAL_NOTATION"
    ],
    "any": [
     [
@@ -42,10 +39,7 @@
     2,
     {
      "value": 7,
-     "enabled": {
-      "type": "TECH_TOURISM",
-      "scope": "team"
-     }
+     "enabled": "TECH_TOURISM"
     }
    ]
   }

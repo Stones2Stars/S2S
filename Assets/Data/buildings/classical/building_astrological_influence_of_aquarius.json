@@ -10,29 +10,14 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_SHIP_BUILDING",
-     "scope": "team"
-    },
-    {
-     "type": "TECH_ASTROLOGY",
-     "scope": "team"
-    },
-    {
-     "type": "TECH_CLASSICAL_LIFESTYLE",
-     "scope": "team"
-    }
+    "TECH_SHIP_BUILDING",
+    "TECH_ASTROLOGY",
+    "TECH_CLASSICAL_LIFESTYLE"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_ASTROLOGY_SCHOOL",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_OBSERVATORY",
-      "scope": "city"
-     }
+     "BUILDING_ASTROLOGY_SCHOOL",
+     "BUILDING_OBSERVATORY"
     ],
     [
      {

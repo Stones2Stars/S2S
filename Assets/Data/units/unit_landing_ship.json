@@ -10,10 +10,7 @@
      "scope": "world",
      "min": 10
     },
-    {
-     "type": "TECH_MANUFACTURING",
-     "scope": "team"
-    }
+    "TECH_MANUFACTURING"
    ],
    "any": [
     [

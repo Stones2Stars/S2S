@@ -11,14 +11,8 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_STRATOSPHERIC_TOWER",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_THERMAL_NEGATION",
-     "scope": "team"
-    }
+    "BUILDING_STRATOSPHERIC_TOWER",
+    "TECH_THERMAL_NEGATION"
    ],
    "any": [
     [

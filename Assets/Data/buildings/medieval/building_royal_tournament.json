@@ -18,10 +18,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_TOURNAMENTS",
-     "scope": "team"
-    }
+    "TECH_TOURNAMENTS"
    ],
    "any": [
     [
@@ -53,10 +50,7 @@
     ]
    ],
    "dormant": [
-    {
-     "type": "BUILDING_SPEEDWAY",
-     "scope": "city"
-    }
+    "BUILDING_SPEEDWAY"
    ]
   }
  },

@@ -6,14 +6,8 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_FOOD_MANUFACTURING_DISTRICT",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_AUGMENTED_CONSUMABLES",
-     "scope": "team"
-    }
+    "BUILDING_FOOD_MANUFACTURING_DISTRICT",
+    "TECH_AUGMENTED_CONSUMABLES"
    ],
    "any": [
     [

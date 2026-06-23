@@ -10,10 +10,7 @@
      "scope": "city",
      "connection": "trade|vicinity"
     },
-    {
-     "type": "TECH_ARMORED_CAVALRY",
-     "scope": "team"
-    }
+    "TECH_ARMORED_CAVALRY"
    ]
   }
  },

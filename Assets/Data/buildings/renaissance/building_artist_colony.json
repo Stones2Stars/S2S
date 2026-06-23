@@ -13,10 +13,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_FREE_ARTISTRY",
-     "scope": "team"
-    }
+    "TECH_FREE_ARTISTRY"
    ],
    "any": [
     [

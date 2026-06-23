@@ -13,14 +13,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_SHOPPING_DISTRICT",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_COUNTERCULTURE",
-     "scope": "team"
-    }
+    "BUILDING_SHOPPING_DISTRICT",
+    "TECH_COUNTERCULTURE"
    ],
    "any": [
     [
@@ -33,10 +27,7 @@
   },
   "operate": {
    "dormant": [
-    {
-     "type": "BUILDING_HIGH_TECH_CULTURAL_ENRICHMENT",
-     "scope": "city"
-    }
+    "BUILDING_HIGH_TECH_CULTURAL_ENRICHMENT"
    ]
   }
  },

@@ -13,14 +13,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_JADE_CARVER",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_BARTER",
-     "scope": "team"
-    }
+    "BUILDING_JADE_CARVER",
+    "TECH_BARTER"
    ],
    "any": [
     [
@@ -47,10 +41,7 @@
     1,
     {
      "value": 2,
-     "enabled": {
-      "type": "TECH_ELECTROWEAK_MATTER",
-      "scope": "team"
-     }
+     "enabled": "TECH_ELECTROWEAK_MATTER"
     }
    ]
   }

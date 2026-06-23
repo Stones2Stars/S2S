@@ -19,18 +19,9 @@
      "scope": "city",
      "min": 7
     },
-    {
-     "type": "BUILDING_PLASTIC_SURGERY_CLINIC",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_BIOPUNK_LAB",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_BIOPUNK",
-     "scope": "team"
-    }
+    "BUILDING_PLASTIC_SURGERY_CLINIC",
+    "BUILDING_BIOPUNK_LAB",
+    "TECH_BIOPUNK"
    ],
    "any": [
     [
@@ -50,10 +41,7 @@
     }
    ],
    "dormant": [
-    {
-     "type": "BUILDING_HIGH_TECH_CULTURAL_ENRICHMENT",
-     "scope": "city"
-    }
+    "BUILDING_HIGH_TECH_CULTURAL_ENRICHMENT"
    ]
   }
  },

@@ -11,19 +11,13 @@
      "scope": "city",
      "min": 7
     },
-    {
-     "type": "BUILDING_LABORATORY",
-     "scope": "city"
-    },
+    "BUILDING_LABORATORY",
     {
      "type": "BUILDING_ACCELERATOR",
      "scope": "empire",
      "min": 4
     },
-    {
-     "type": "TECH_SUPERCONDUCTORS",
-     "scope": "team"
-    }
+    "TECH_SUPERCONDUCTORS"
    ],
    "any": [
     [

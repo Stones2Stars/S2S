@@ -5,10 +5,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_ENDOGENOUS_EUCLIDEAN_PROPULSION",
-     "scope": "team"
-    }
+    "TECH_ENDOGENOUS_EUCLIDEAN_PROPULSION"
    ],
    "any": [
     [

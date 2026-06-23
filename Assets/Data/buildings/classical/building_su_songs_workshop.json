@@ -11,25 +11,13 @@
   "build": {
    "all": [
     "HAS_RIVER",
-    {
-     "type": "TECH_WATERWHEELS",
-     "scope": "team"
-    },
-    {
-     "type": "TECH_CALENDAR",
-     "scope": "team"
-    }
+    "TECH_WATERWHEELS",
+    "TECH_CALENDAR"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_WATERCLOCK",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_TOWNCLOCK",
-      "scope": "city"
-     }
+     "BUILDING_WATERCLOCK",
+     "BUILDING_TOWNCLOCK"
     ],
     [
      {

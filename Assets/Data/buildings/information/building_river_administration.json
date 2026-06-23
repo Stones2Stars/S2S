@@ -6,17 +6,11 @@
   "build": {
    "all": [
     "HAS_RIVER",
-    {
-     "type": "TECH_MEGACITIES",
-     "scope": "team"
-    }
+    "TECH_MEGACITIES"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_METROPOLITAN_ADMINISTRATION",
-      "scope": "city"
-     }
+     "BUILDING_METROPOLITAN_ADMINISTRATION"
     ],
     [
      {

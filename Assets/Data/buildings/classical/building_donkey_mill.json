@@ -18,29 +18,14 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_MACHINERY",
-     "scope": "team"
-    }
+    "TECH_MACHINERY"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_FARM_ANIMAL_DONKEY",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_HERD_DONKEY",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_INDUSTRIAL_FARMS",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_MEAT_INDUSTRY_CONGLOMERATE",
-      "scope": "city"
-     }
+     "BUILDING_FARM_ANIMAL_DONKEY",
+     "BUILDING_HERD_DONKEY",
+     "BUILDING_INDUSTRIAL_FARMS",
+     "BUILDING_MEAT_INDUSTRY_CONGLOMERATE"
     ],
     [
      {
@@ -78,14 +63,8 @@
     ]
    ],
    "dormant": [
-    {
-     "type": "BUILDING_MODERN_MILL",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_FOOD_MANUFACTURING_DISTRICT",
-     "scope": "city"
-    }
+    "BUILDING_MODERN_MILL",
+    "BUILDING_FOOD_MANUFACTURING_DISTRICT"
    ]
   }
  },

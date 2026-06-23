@@ -6,21 +6,12 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "TECH_NONSTANDARD_MATHEMATICS",
-     "scope": "team"
-    }
+    "TECH_NONSTANDARD_MATHEMATICS"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_HYPERSPACE_REAL_PROJECTIVE_SPACE_COLONY",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_HYPERSPACE_COMPLEX_PROJECTIVE_SPACE_COLONY",
-      "scope": "city"
-     }
+     "BUILDING_HYPERSPACE_REAL_PROJECTIVE_SPACE_COLONY",
+     "BUILDING_HYPERSPACE_COMPLEX_PROJECTIVE_SPACE_COLONY"
     ],
     [
      {

@@ -14,182 +14,50 @@
   "build": {
    "any": [
     [
-     {
-      "type": "BUILDING_ORCHARD_APPLE",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_ORCHARD_APRICOT",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_ORCHARD_ATEMOYA",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_ORCHARD_AVOCADO",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_PLANTATION_BANANA",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_ORCHARD_BREADFRUIT",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_PLANTATION_CACTUS",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_FARM_CROP_CANTALOUPE",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_PLANTATION_CARDON_CACTUS",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_ORCHARD_CHERIMOYA",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_ORCHARD_CHERRY",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_PLANTATION_DATE_PALM",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_ORCHARD_DURIAN",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_PLANTATION_FIGS",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_ORCHARD_GRAPEFRUIT",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_ORCHARD_GUAVA",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_FARM_CROP_HONEYDEW",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_ORCHARD_JUJUBE",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_ORCHARD_KIWIFRUIT",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_ORCHARD_KUMQUAT",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_ORCHARD_LEMON",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_ORCHARD_LIME",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_ORCHARD_LONGAN",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_ORCHARD_LOQUAT",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_ORCHARD_LYCHEE",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_ORCHARD_MANGO",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_ORCHARD_ORANGE",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_PLANTATION_PAPAYAS",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_ORCHARD_PAPAYA",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_ORCHARD_PEACH",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_ORCHARD_PEAR",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_ORCHARD_PERSIMMON",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_PLANTATION_PINEAPPLE",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_ORCHARD_PITAYA",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_PLANTATION_PLANTAIN",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_ORCHARD_PLUM",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_ORCHARD_POMEGRANATE",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_ORCHARD_SAPOTE",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_ORCHARD_STARFRUIT",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_ORCHARD_TANGERINE",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_PLANTATION_TOMATILLO",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_FARM_CROP_TOMATO",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_VINEYARD",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_FARM_CROP_WATERMELON",
-      "scope": "city"
-     }
+     "BUILDING_ORCHARD_APPLE",
+     "BUILDING_ORCHARD_APRICOT",
+     "BUILDING_ORCHARD_ATEMOYA",
+     "BUILDING_ORCHARD_AVOCADO",
+     "BUILDING_PLANTATION_BANANA",
+     "BUILDING_ORCHARD_BREADFRUIT",
+     "BUILDING_PLANTATION_CACTUS",
+     "BUILDING_FARM_CROP_CANTALOUPE",
+     "BUILDING_PLANTATION_CARDON_CACTUS",
+     "BUILDING_ORCHARD_CHERIMOYA",
+     "BUILDING_ORCHARD_CHERRY",
+     "BUILDING_PLANTATION_DATE_PALM",
+     "BUILDING_ORCHARD_DURIAN",
+     "BUILDING_PLANTATION_FIGS",
+     "BUILDING_ORCHARD_GRAPEFRUIT",
+     "BUILDING_ORCHARD_GUAVA",
+     "BUILDING_FARM_CROP_HONEYDEW",
+     "BUILDING_ORCHARD_JUJUBE",
+     "BUILDING_ORCHARD_KIWIFRUIT",
+     "BUILDING_ORCHARD_KUMQUAT",
+     "BUILDING_ORCHARD_LEMON",
+     "BUILDING_ORCHARD_LIME",
+     "BUILDING_ORCHARD_LONGAN",
+     "BUILDING_ORCHARD_LOQUAT",
+     "BUILDING_ORCHARD_LYCHEE",
+     "BUILDING_ORCHARD_MANGO",
+     "BUILDING_ORCHARD_ORANGE",
+     "BUILDING_PLANTATION_PAPAYAS",
+     "BUILDING_ORCHARD_PAPAYA",
+     "BUILDING_ORCHARD_PEACH",
+     "BUILDING_ORCHARD_PEAR",
+     "BUILDING_ORCHARD_PERSIMMON",
+     "BUILDING_PLANTATION_PINEAPPLE",
+     "BUILDING_ORCHARD_PITAYA",
+     "BUILDING_PLANTATION_PLANTAIN",
+     "BUILDING_ORCHARD_PLUM",
+     "BUILDING_ORCHARD_POMEGRANATE",
+     "BUILDING_ORCHARD_SAPOTE",
+     "BUILDING_ORCHARD_STARFRUIT",
+     "BUILDING_ORCHARD_TANGERINE",
+     "BUILDING_PLANTATION_TOMATILLO",
+     "BUILDING_FARM_CROP_TOMATO",
+     "BUILDING_VINEYARD",
+     "BUILDING_FARM_CROP_WATERMELON"
     ],
     [
      {
@@ -201,10 +69,7 @@
   },
   "operate": {
    "dormant": [
-    {
-     "type": "BUILDING_FARMSCRAPER_III",
-     "scope": "city"
-    }
+    "BUILDING_FARMSCRAPER_III"
    ]
   }
  },

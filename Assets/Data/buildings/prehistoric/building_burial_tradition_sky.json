@@ -24,14 +24,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_FOLKLORE_E_SKY",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_CEREMONIAL_BURIAL",
-     "scope": "team"
-    }
+    "BUILDING_FOLKLORE_E_SKY",
+    "TECH_CEREMONIAL_BURIAL"
    ],
    "any": [
     [
@@ -42,34 +36,16 @@
     ]
    ],
    "noneOf": [
-    {
-     "type": "BUILDING_BURIAL_TRADITION_CAVE",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_BURIAL_TRADITION_EARTH",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_BURIAL_TRADITION_FIRE",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_BURIAL_TRADITION_SEA",
-     "scope": "city"
-    }
+    "BUILDING_BURIAL_TRADITION_CAVE",
+    "BUILDING_BURIAL_TRADITION_EARTH",
+    "BUILDING_BURIAL_TRADITION_FIRE",
+    "BUILDING_BURIAL_TRADITION_SEA"
    ]
   },
   "operate": {
    "dormant": [
-    {
-     "type": "BUILDING_FUNERARY_SERVICES",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_HIGH_TECH_CULTURAL_ENRICHMENT",
-     "scope": "city"
-    }
+    "BUILDING_FUNERARY_SERVICES",
+    "BUILDING_HIGH_TECH_CULTURAL_ENRICHMENT"
    ]
   }
  },

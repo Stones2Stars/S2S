@@ -10,14 +10,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_DEEP_SPACE_ONEILL_CYLINDER",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_PLANETARY_DEFENSES",
-     "scope": "team"
-    }
+    "BUILDING_DEEP_SPACE_ONEILL_CYLINDER",
+    "TECH_PLANETARY_DEFENSES"
    ],
    "any": [
     [

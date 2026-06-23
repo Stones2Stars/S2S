@@ -5,18 +5,9 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_C_AC_MIDDLE_EASTERN",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_C_L_MIDDLE_EASTERN",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_MUSICAL_NOTATION",
-     "scope": "team"
-    }
+    "BUILDING_C_AC_MIDDLE_EASTERN",
+    "BUILDING_C_L_MIDDLE_EASTERN",
+    "TECH_MUSICAL_NOTATION"
    ],
    "any": [
     [

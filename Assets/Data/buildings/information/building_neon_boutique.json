@@ -19,14 +19,8 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_SHOPPING_DISTRICT",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_3D_PRINTING",
-     "scope": "team"
-    }
+    "BUILDING_SHOPPING_DISTRICT",
+    "TECH_3D_PRINTING"
    ],
    "any": [
     [
@@ -55,10 +49,7 @@
     ]
    ],
    "dormant": [
-    {
-     "type": "BUILDING_HIGH_TECH_CULTURAL_ENRICHMENT",
-     "scope": "city"
-    }
+    "BUILDING_HIGH_TECH_CULTURAL_ENRICHMENT"
    ]
   }
  },

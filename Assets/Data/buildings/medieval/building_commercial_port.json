@@ -24,10 +24,7 @@
   "build": {
    "all": [
     "HAS_COAST",
-    {
-     "type": "TECH_COMPASS",
-     "scope": "team"
-    }
+    "TECH_COMPASS"
    ],
    "any": [
     [
@@ -54,14 +51,8 @@
     ]
    ],
    "dormant": [
-    {
-     "type": "BUILDING_INTERNATIONAL_PORT",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_OCEAN_ADMINISTRATION",
-     "scope": "city"
-    }
+    "BUILDING_INTERNATIONAL_PORT",
+    "BUILDING_OCEAN_ADMINISTRATION"
    ]
   }
  },

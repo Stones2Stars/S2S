@@ -12,10 +12,7 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "TECH_NOVUS_CHEMISTRY",
-     "scope": "team"
-    }
+    "TECH_NOVUS_CHEMISTRY"
    ],
    "any": [
     [

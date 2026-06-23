@@ -11,45 +11,18 @@
      "scope": "city",
      "min": 3
     },
-    {
-     "type": "TECH_ATOMPUNK",
-     "scope": "team"
-    }
+    "TECH_ATOMPUNK"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_CLEAN_NUCLEAR_REACTOR",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_HI_TECH_NUCLEAR_REACTOR",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_GENERATION_IV_REACTOR",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_D_T_FUSION_POWER_PLANT",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_D_HE3_FUSION_PLANT",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_HE3_FUSION_POWER_PLANT",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_ANTIMATTER_INITIATED_FUSION_PLANT",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_QUANTUM_VACUUM_POWER_PLANT",
-      "scope": "city"
-     }
+     "BUILDING_CLEAN_NUCLEAR_REACTOR",
+     "BUILDING_HI_TECH_NUCLEAR_REACTOR",
+     "BUILDING_GENERATION_IV_REACTOR",
+     "BUILDING_D_T_FUSION_POWER_PLANT",
+     "BUILDING_D_HE3_FUSION_PLANT",
+     "BUILDING_HE3_FUSION_POWER_PLANT",
+     "BUILDING_ANTIMATTER_INITIATED_FUSION_PLANT",
+     "BUILDING_QUANTUM_VACUUM_POWER_PLANT"
     ],
     [
      {
@@ -75,45 +48,27 @@
     25,
     {
      "value": 8,
-     "enabled": {
-      "type": "TECH_SUPERCONDUCTORS",
-      "scope": "team"
-     }
+     "enabled": "TECH_SUPERCONDUCTORS"
     },
     {
      "value": 9,
-     "enabled": {
-      "type": "TECH_WIRELESS_ELECTRICITY",
-      "scope": "team"
-     }
+     "enabled": "TECH_WIRELESS_ELECTRICITY"
     },
     {
      "value": 7,
-     "enabled": {
-      "type": "TECH_LASER",
-      "scope": "team"
-     }
+     "enabled": "TECH_LASER"
     },
     {
      "value": 8,
-     "enabled": {
-      "type": "TECH_MAGNETIC_LEVITATION",
-      "scope": "team"
-     }
+     "enabled": "TECH_MAGNETIC_LEVITATION"
     },
     {
      "value": 8,
-     "enabled": {
-      "type": "TECH_QUANTUM_TELEPORTATION",
-      "scope": "team"
-     }
+     "enabled": "TECH_QUANTUM_TELEPORTATION"
     },
     {
      "value": 8,
-     "enabled": {
-      "type": "TECH_CONTROLLED_PLASMA",
-      "scope": "team"
-     }
+     "enabled": "TECH_CONTROLLED_PLASMA"
     }
    ]
   }

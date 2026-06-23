@@ -13,18 +13,9 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_GAMMA_ASSEMBLER",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_ANIMA_STUDIO",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_ADVANCED_WARMACHINES",
-     "scope": "team"
-    }
+    "BUILDING_GAMMA_ASSEMBLER",
+    "BUILDING_ANIMA_STUDIO",
+    "TECH_ADVANCED_WARMACHINES"
    ],
    "any": [
     [

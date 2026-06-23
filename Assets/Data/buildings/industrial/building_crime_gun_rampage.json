@@ -5,10 +5,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_SEMI_AUTOMATIC_WEAPONS",
-     "scope": "team"
-    }
+    "TECH_SEMI_AUTOMATIC_WEAPONS"
    ],
    "any": [
     [
@@ -83,10 +80,7 @@
     "unit": "UNIT_GUNFIGHTER",
     "interval": "perTurn",
     "chance": {
-     "per": {
-      "type": "PROPERTY_CRIME",
-      "scope": "city"
-     }
+     "per": "PROPERTY_CRIME"
     }
    }
   ]

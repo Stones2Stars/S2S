@@ -20,10 +20,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_TRAP_FISHING",
-     "scope": "team"
-    }
+    "TECH_TRAP_FISHING"
    ],
    "any": [
     [
@@ -43,10 +40,7 @@
     }
    ],
    "dormant": [
-    {
-     "type": "BUILDING_AQUAFARM",
-     "scope": "city"
-    }
+    "BUILDING_AQUAFARM"
    ]
   }
  },

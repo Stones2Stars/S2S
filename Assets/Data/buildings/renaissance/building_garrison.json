@@ -28,10 +28,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_LEADERSHIP",
-     "scope": "team"
-    }
+    "TECH_LEADERSHIP"
    ],
    "any": [
     [
@@ -44,10 +41,7 @@
   },
   "operate": {
    "dormant": [
-    {
-     "type": "BUILDING_MILITARY_BASE",
-     "scope": "city"
-    }
+    "BUILDING_MILITARY_BASE"
    ]
   }
  },

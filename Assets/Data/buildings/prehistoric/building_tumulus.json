@@ -19,10 +19,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_CEREMONIAL_BURIAL",
-     "scope": "team"
-    }
+    "TECH_CEREMONIAL_BURIAL"
    ],
    "any": [
     [
@@ -41,10 +38,7 @@
   },
   "operate": {
    "dormant": [
-    {
-     "type": "BUILDING_ANCIENT_CUSTOMS",
-     "scope": "city"
-    }
+    "BUILDING_ANCIENT_CUSTOMS"
    ]
   }
  },

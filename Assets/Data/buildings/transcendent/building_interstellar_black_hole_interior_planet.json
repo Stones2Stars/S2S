@@ -5,14 +5,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_INTERSTELLAR_EVENT_HORIZON_PROBE",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_HORIZON_BREAKING",
-     "scope": "team"
-    }
+    "BUILDING_INTERSTELLAR_EVENT_HORIZON_PROBE",
+    "TECH_HORIZON_BREAKING"
    ],
    "any": [
     [

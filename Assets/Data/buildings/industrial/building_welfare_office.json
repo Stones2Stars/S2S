@@ -10,25 +10,13 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_LABOR_UNIONS",
-     "scope": "team"
-    }
+    "TECH_LABOR_UNIONS"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_TRADING_POST",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_SHOPPING_DISTRICT",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_MODERN_OFFICES",
-      "scope": "city"
-     }
+     "BUILDING_TRADING_POST",
+     "BUILDING_SHOPPING_DISTRICT",
+     "BUILDING_MODERN_OFFICES"
     ],
     [
      {
@@ -41,14 +29,8 @@
   "operate": {
    "any": [
     [
-     {
-      "type": "CIVIC_SOCIALIZED",
-      "scope": "empire"
-     },
-     {
-      "type": "CIVIC_ECO_FRIENDLY",
-      "scope": "empire"
-     }
+     "CIVIC_SOCIALIZED",
+     "CIVIC_ECO_FRIENDLY"
     ]
    ]
   }

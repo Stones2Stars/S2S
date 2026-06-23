@@ -13,21 +13,12 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_WRITING",
-     "scope": "team"
-    }
+    "TECH_WRITING"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_TRADING_POST",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_SHOPPING_DISTRICT",
-      "scope": "city"
-     }
+     "BUILDING_TRADING_POST",
+     "BUILDING_SHOPPING_DISTRICT"
     ],
     [
      {
@@ -58,10 +49,7 @@
     ]
    ],
    "dormant": [
-    {
-     "type": "BUILDING_ANTIQUE_SHOP",
-     "scope": "city"
-    }
+    "BUILDING_ANTIQUE_SHOP"
    ]
   }
  },
@@ -71,10 +59,7 @@
     1,
     {
      "value": -1,
-     "enabled": {
-      "type": "TECH_PRINTING_PRESS",
-      "scope": "team"
-     }
+     "enabled": "TECH_PRINTING_PRESS"
     }
    ]
   }
@@ -84,10 +69,7 @@
    "flat": [
     {
      "value": 5,
-     "enabled": {
-      "type": "TECH_PRINTING_PRESS",
-      "scope": "team"
-     }
+     "enabled": "TECH_PRINTING_PRESS"
     }
    ]
   }
@@ -101,10 +83,7 @@
   "city": {
    "flat": {
     "value": -2,
-    "enabled": {
-     "type": "TECH_PRINTING_PRESS",
-     "scope": "team"
-    }
+    "enabled": "TECH_PRINTING_PRESS"
    }
   }
  },

@@ -13,10 +13,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_REFINING",
-     "scope": "team"
-    }
+    "TECH_REFINING"
    ],
    "any": [
     [
@@ -55,10 +52,7 @@
     ]
    ],
    "dormant": [
-    {
-     "type": "BUILDING_ULTRAFUEL_REFINERY",
-     "scope": "city"
-    }
+    "BUILDING_ULTRAFUEL_REFINERY"
    ]
   }
  },

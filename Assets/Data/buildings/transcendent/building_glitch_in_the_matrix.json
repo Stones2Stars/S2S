@@ -5,14 +5,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_TRANSFINITE_ORACLE",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_SIMULATION_AWARENESS",
-     "scope": "team"
-    }
+    "BUILDING_TRANSFINITE_ORACLE",
+    "TECH_SIMULATION_AWARENESS"
    ],
    "any": [
     [

@@ -11,14 +11,8 @@
      "scope": "city",
      "min": 13
     },
-    {
-     "type": "BUILDING_DEEP_SEA_LAB",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_DEEP_SEA_EXPLORATION",
-     "scope": "team"
-    }
+    "BUILDING_DEEP_SEA_LAB",
+    "TECH_DEEP_SEA_EXPLORATION"
    ],
    "any": [
     [

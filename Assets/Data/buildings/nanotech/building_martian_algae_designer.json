@@ -6,26 +6,11 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_MARTIAN_CITY",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_MARTIAN_BIOFACTORY",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_DYSTOPIA_PATHOGENS",
-     "scope": "team"
-    },
-    {
-     "type": "TECH_DESIGNER_MICROBIOLOGY",
-     "scope": "team"
-    },
-    {
-     "type": "TECH_SUPERCHARGED_CRYSTALLOGRAPHY",
-     "scope": "team"
-    }
+    "BUILDING_MARTIAN_CITY",
+    "BUILDING_MARTIAN_BIOFACTORY",
+    "TECH_DYSTOPIA_PATHOGENS",
+    "TECH_DESIGNER_MICROBIOLOGY",
+    "TECH_SUPERCHARGED_CRYSTALLOGRAPHY"
    ],
    "any": [
     [

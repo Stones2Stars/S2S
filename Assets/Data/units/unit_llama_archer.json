@@ -10,18 +10,9 @@
      "scope": "city",
      "connection": "trade|vicinity"
     },
-    {
-     "type": "BUILDING_ANIMAL_TRAINER_LLAMA",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_MOUNTED_ARCHERY",
-     "scope": "team"
-    },
-    {
-     "type": "TECH_MEGAFAUNA_DOMESTICATION",
-     "scope": "team"
-    }
+    "BUILDING_ANIMAL_TRAINER_LLAMA",
+    "TECH_MOUNTED_ARCHERY",
+    "TECH_MEGAFAUNA_DOMESTICATION"
    ]
   }
  },

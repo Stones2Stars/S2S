@@ -10,10 +10,7 @@
      "scope": "city",
      "connection": "trade|vicinity"
     },
-    {
-     "type": "TECH_NANO_ARCHITECTURE",
-     "scope": "team"
-    },
+    "TECH_NANO_ARCHITECTURE",
     {
      "type": "BONUS_BIOPOLYMERS",
      "scope": "city",
@@ -27,14 +24,8 @@
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_MEGATOWER_MEDICAL_LEVEL",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_HEALTHCARE_MEGACOMPLEX",
-      "scope": "city"
-     }
+     "BUILDING_MEGATOWER_MEDICAL_LEVEL",
+     "BUILDING_HEALTHCARE_MEGACOMPLEX"
     ]
    ]
   }

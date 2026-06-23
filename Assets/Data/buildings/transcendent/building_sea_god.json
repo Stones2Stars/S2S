@@ -11,14 +11,8 @@
   "build": {
    "all": [
     "HAS_COAST",
-    {
-     "type": "BUILDING_OCEAN_ARCOLOGY",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_DEITIES",
-     "scope": "team"
-    }
+    "BUILDING_OCEAN_ARCOLOGY",
+    "TECH_DEITIES"
    ],
    "any": [
     [

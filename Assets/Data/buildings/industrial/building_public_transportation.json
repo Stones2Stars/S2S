@@ -18,41 +18,17 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_MASS_TRANSIT",
-     "scope": "team"
-    }
+    "TECH_MASS_TRANSIT"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_BUS_STATION",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_RAILROAD_STATION",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_SUBWAY_STATION",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_STREET_CARS",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_MAGLEV_STATION",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_SKYROAD_STATION",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_CABLE_CARS",
-      "scope": "city"
-     }
+     "BUILDING_BUS_STATION",
+     "BUILDING_RAILROAD_STATION",
+     "BUILDING_SUBWAY_STATION",
+     "BUILDING_STREET_CARS",
+     "BUILDING_MAGLEV_STATION",
+     "BUILDING_SKYROAD_STATION",
+     "BUILDING_CABLE_CARS"
     ],
     [
      {
@@ -64,10 +40,7 @@
   },
   "operate": {
    "dormant": [
-    {
-     "type": "BUILDING_TELEPORT_BOOTH",
-     "scope": "city"
-    }
+    "BUILDING_TELEPORT_BOOTH"
    ]
   }
  },
@@ -79,10 +52,7 @@
    "flat": [
     {
      "value": 2,
-     "enabled": {
-      "type": "TECH_NEW_URBANISM",
-      "scope": "team"
-     }
+     "enabled": "TECH_NEW_URBANISM"
     },
     {
      "value": 1,

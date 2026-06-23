@@ -14,25 +14,13 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "TECH_ELECTRONICS",
-     "scope": "team"
-    },
-    {
-     "type": "TECH_ANIMATION",
-     "scope": "team"
-    }
+    "TECH_ELECTRONICS",
+    "TECH_ANIMATION"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_AMUSEMENT_PARK",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_THEATRE",
-      "scope": "city"
-     }
+     "BUILDING_AMUSEMENT_PARK",
+     "BUILDING_THEATRE"
     ],
     [
      {
@@ -60,10 +48,7 @@
     ]
    ],
    "dormant": [
-    {
-     "type": "BUILDING_HIGH_TECH_CULTURAL_ENRICHMENT",
-     "scope": "city"
-    }
+    "BUILDING_HIGH_TECH_CULTURAL_ENRICHMENT"
    ]
   }
  },

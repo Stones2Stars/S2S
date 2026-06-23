@@ -5,18 +5,9 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_STARPORT",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_PALACE",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_GALACTIC_FEDERATION",
-     "scope": "team"
-    }
+    "BUILDING_STARPORT",
+    "BUILDING_PALACE",
+    "TECH_GALACTIC_FEDERATION"
    ],
    "any": [
     [

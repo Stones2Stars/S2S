@@ -11,14 +11,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_TITAN_HYDROCARBON_REFINERY",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_ARTIFICIAL_NUCLEOSYNTHESIS",
-     "scope": "team"
-    }
+    "BUILDING_TITAN_HYDROCARBON_REFINERY",
+    "TECH_ARTIFICIAL_NUCLEOSYNTHESIS"
    ],
    "any": [
     [

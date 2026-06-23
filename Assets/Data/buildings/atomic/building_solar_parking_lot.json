@@ -14,25 +14,13 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_POWER_LINES",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_SOLAR_POWER",
-     "scope": "team"
-    }
+    "BUILDING_POWER_LINES",
+    "TECH_SOLAR_POWER"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_PARKING_LOT",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_TELEPORT_BOOTH",
-      "scope": "city"
-     }
+     "BUILDING_PARKING_LOT",
+     "BUILDING_TELEPORT_BOOTH"
     ],
     [
      {
@@ -60,14 +48,8 @@
     ]
    ],
    "dormant": [
-    {
-     "type": "BUILDING_RENEWABLE_MEGACOMPLEX",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_POLLUTION_BLACKENED_SKIES",
-     "scope": "city"
-    }
+    "BUILDING_RENEWABLE_MEGACOMPLEX",
+    "BUILDING_POLLUTION_BLACKENED_SKIES"
    ]
   }
  },

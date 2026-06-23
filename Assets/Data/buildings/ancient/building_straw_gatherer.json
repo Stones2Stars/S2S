@@ -13,10 +13,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_AGRICULTURE",
-     "scope": "team"
-    }
+    "TECH_AGRICULTURE"
    ],
    "any": [
     [
@@ -57,10 +54,7 @@
   },
   "operate": {
    "dormant": [
-    {
-     "type": "BUILDING_AGROFOREST",
-     "scope": "city"
-    }
+    "BUILDING_AGROFOREST"
    ]
   }
  },

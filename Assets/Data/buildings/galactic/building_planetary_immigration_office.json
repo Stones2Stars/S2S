@@ -13,14 +13,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_STARPORT",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_FUSION_SPACECRAFT",
-     "scope": "team"
-    }
+    "BUILDING_STARPORT",
+    "TECH_FUSION_SPACECRAFT"
    ],
    "any": [
     [
@@ -33,10 +27,7 @@
   },
   "operate": {
    "dormant": [
-    {
-     "type": "BUILDING_INTERSTELLAR_IMMIGRATION_OFFICE",
-     "scope": "city"
-    }
+    "BUILDING_INTERSTELLAR_IMMIGRATION_OFFICE"
    ]
   }
  },

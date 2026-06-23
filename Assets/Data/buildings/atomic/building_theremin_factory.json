@@ -19,18 +19,9 @@
      "scope": "city",
      "min": 3
     },
-    {
-     "type": "BUILDING_FACTORY",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_ELECTRONICS",
-     "scope": "team"
-    },
-    {
-     "type": "TECH_DIESELPUNK",
-     "scope": "team"
-    }
+    "BUILDING_FACTORY",
+    "TECH_ELECTRONICS",
+    "TECH_DIESELPUNK"
    ],
    "any": [
     [
@@ -50,10 +41,7 @@
     }
    ],
    "dormant": [
-    {
-     "type": "BUILDING_ELECTRONICS_MANUFACTURING_DISTRICT",
-     "scope": "city"
-    }
+    "BUILDING_ELECTRONICS_MANUFACTURING_DISTRICT"
    ]
   }
  },

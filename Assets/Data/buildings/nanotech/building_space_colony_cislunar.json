@@ -17,10 +17,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_ADVANCED_ENVIRONMENTAL_SYSTEMS",
-     "scope": "team"
-    }
+    "TECH_ADVANCED_ENVIRONMENTAL_SYSTEMS"
    ],
    "any": [
     [
@@ -38,10 +35,7 @@
     5,
     {
      "value": 9,
-     "enabled": {
-      "type": "TECH_AUGMENTED_CONSUMABLES",
-      "scope": "team"
-     }
+     "enabled": "TECH_AUGMENTED_CONSUMABLES"
     }
    ]
   }

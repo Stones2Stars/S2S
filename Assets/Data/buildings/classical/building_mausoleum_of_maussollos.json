@@ -10,10 +10,7 @@
      "scope": "city",
      "min": 3
     },
-    {
-     "type": "TECH_CALENDAR",
-     "scope": "team"
-    },
+    "TECH_CALENDAR",
     {
      "type": "BONUS_FURNITURE",
      "scope": "city",

@@ -18,10 +18,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_FERMENTATION",
-     "scope": "team"
-    }
+    "TECH_FERMENTATION"
    ],
    "any": [
     [
@@ -41,10 +38,7 @@
     }
    ],
    "dormant": [
-    {
-     "type": "BUILDING_AGROFOREST",
-     "scope": "city"
-    }
+    "BUILDING_AGROFOREST"
    ]
   }
  },

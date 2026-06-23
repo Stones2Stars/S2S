@@ -5,10 +5,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_MILITARY_TRADITION",
-     "scope": "team"
-    }
+    "TECH_MILITARY_TRADITION"
    ],
    "any": [
     [

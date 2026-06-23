@@ -10,10 +10,7 @@
      "scope": "city",
      "connection": "trade|vicinity"
     },
-    {
-     "type": "TECH_ADVANCED_COMPUTERS",
-     "scope": "team"
-    }
+    "TECH_ADVANCED_COMPUTERS"
    ],
    "any": [
     [

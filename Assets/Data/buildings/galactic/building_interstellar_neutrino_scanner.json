@@ -10,14 +10,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_INTERSTELLAR_PLANETARY_AWARENESS",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_NEUTRINO_COMMUNICATIONS",
-     "scope": "team"
-    }
+    "BUILDING_INTERSTELLAR_PLANETARY_AWARENESS",
+    "TECH_NEUTRINO_COMMUNICATIONS"
    ],
    "any": [
     [

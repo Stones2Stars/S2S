@@ -10,21 +10,12 @@
      "scope": "empire",
      "min": 1
     },
-    {
-     "type": "TECH_ASTEROID_BELT_PROBES",
-     "scope": "team"
-    }
+    "TECH_ASTEROID_BELT_PROBES"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_MILITARY_SPACEPORT",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_COMMERCIAL_SPACEPORT",
-      "scope": "city"
-     }
+     "BUILDING_MILITARY_SPACEPORT",
+     "BUILDING_COMMERCIAL_SPACEPORT"
     ],
     [
      {

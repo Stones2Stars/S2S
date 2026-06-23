@@ -13,14 +13,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_BIOLOGICAL_WARFARE_LAB",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_BIOLOGICAL_WARFARE",
-     "scope": "team"
-    }
+    "BUILDING_BIOLOGICAL_WARFARE_LAB",
+    "TECH_BIOLOGICAL_WARFARE"
    ],
    "any": [
     [
@@ -33,22 +27,10 @@
   },
   "operate": {
    "dormant": [
-    {
-     "type": "BUILDING_ROBOTIC_TRAPS",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_EMP_TRAPS",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_NANOBOT_TRAPS",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_GRAVITY_TRAPS",
-     "scope": "city"
-    }
+    "BUILDING_ROBOTIC_TRAPS",
+    "BUILDING_EMP_TRAPS",
+    "BUILDING_NANOBOT_TRAPS",
+    "BUILDING_GRAVITY_TRAPS"
    ]
   }
  },

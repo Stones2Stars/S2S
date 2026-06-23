@@ -10,10 +10,7 @@
      "scope": "world",
      "min": 10
     },
-    {
-     "type": "TECH_GRAND_WAR",
-     "scope": "team"
-    }
+    "TECH_GRAND_WAR"
    ]
   }
  },

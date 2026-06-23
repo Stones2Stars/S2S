@@ -11,18 +11,9 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_SOMATOSENSORY_MANIPULATOR_LAB",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_CHEMOSYNTHESIS_PLANT_FARM",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_ARTIFICIAL_PHOTOSYNTHESIS",
-     "scope": "team"
-    }
+    "BUILDING_SOMATOSENSORY_MANIPULATOR_LAB",
+    "BUILDING_CHEMOSYNTHESIS_PLANT_FARM",
+    "TECH_ARTIFICIAL_PHOTOSYNTHESIS"
    ],
    "any": [
     [

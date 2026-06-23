@@ -14,21 +14,12 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_FACTORY",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_MOLECULAR_BIOLOGY",
-     "scope": "team"
-    }
+    "BUILDING_FACTORY",
+    "TECH_MOLECULAR_BIOLOGY"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_MOLECULAR_BIOLOGY_LAB",
-      "scope": "city"
-     }
+     "BUILDING_MOLECULAR_BIOLOGY_LAB"
     ],
     [
      {
@@ -47,10 +38,7 @@
     }
    ],
    "dormant": [
-    {
-     "type": "BUILDING_CHEMICALS_DISTRICT",
-     "scope": "city"
-    }
+    "BUILDING_CHEMICALS_DISTRICT"
    ]
   }
  },

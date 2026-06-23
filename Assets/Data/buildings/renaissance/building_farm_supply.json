@@ -13,21 +13,12 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_CHEMISTRY",
-     "scope": "team"
-    }
+    "TECH_CHEMISTRY"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_TRADING_POST",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_SHOPPING_DISTRICT",
-      "scope": "city"
-     }
+     "BUILDING_TRADING_POST",
+     "BUILDING_SHOPPING_DISTRICT"
     ],
     [
      {
@@ -49,10 +40,7 @@
   },
   "operate": {
    "dormant": [
-    {
-     "type": "BUILDING_FARMSCRAPER_I",
-     "scope": "city"
-    }
+    "BUILDING_FARMSCRAPER_I"
    ]
   }
  },
@@ -66,24 +54,15 @@
    "flat": [
     {
      "value": 6,
-     "enabled": {
-      "type": "TECH_REFRIGERATION",
-      "scope": "team"
-     }
+     "enabled": "TECH_REFRIGERATION"
     },
     {
      "value": 8,
-     "enabled": {
-      "type": "TECH_GENE_MANIPULATION",
-      "scope": "team"
-     }
+     "enabled": "TECH_GENE_MANIPULATION"
     },
     {
      "value": 7,
-     "enabled": {
-      "type": "TECH_LONG_RANGE_FORECASTING",
-      "scope": "team"
-     }
+     "enabled": "TECH_LONG_RANGE_FORECASTING"
     }
    ]
   }

@@ -10,10 +10,7 @@
       "min": 55
      }
     },
-    {
-     "type": "TECH_TOURISM",
-     "scope": "team"
-    }
+    "TECH_TOURISM"
    ],
    "any": [
     [

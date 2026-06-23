@@ -11,10 +11,7 @@
   "build": {
    "all": [
     "HAS_COAST",
-    {
-     "type": "TECH_WILDLIFE_CONSERVATION",
-     "scope": "team"
-    }
+    "TECH_WILDLIFE_CONSERVATION"
    ],
    "any": [
     [
@@ -31,10 +28,7 @@
    "flat": [
     {
      "value": 7,
-     "enabled": {
-      "type": "TECH_TOURISM",
-      "scope": "team"
-     }
+     "enabled": "TECH_TOURISM"
     }
    ]
   }
@@ -44,10 +38,7 @@
    "flat": [
     {
      "value": 1,
-     "enabled": {
-      "type": "TECH_SENTIENT_EARTH",
-      "scope": "team"
-     }
+     "enabled": "TECH_SENTIENT_EARTH"
     }
    ]
   }
@@ -57,10 +48,7 @@
    "flat": [
     {
      "value": 1,
-     "enabled": {
-      "type": "TECH_ECOLOGICAL_ENGINEERING",
-      "scope": "team"
-     }
+     "enabled": "TECH_ECOLOGICAL_ENGINEERING"
     }
    ]
   }

@@ -5,10 +5,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_MEGALITH_CONSTRUCTION",
-     "scope": "team"
-    }
+    "TECH_MEGALITH_CONSTRUCTION"
    ],
    "any": [
     [
@@ -28,22 +25,10 @@
   "operate": {
    "any": [
     [
-     {
-      "type": "CIVIC_CHIEFDOM",
-      "scope": "empire"
-     },
-     {
-      "type": "CIVIC_DESPOTISM",
-      "scope": "empire"
-     },
-     {
-      "type": "CIVIC_MONARCHY",
-      "scope": "empire"
-     },
-     {
-      "type": "CIVIC_THEOCRACY",
-      "scope": "empire"
-     }
+     "CIVIC_CHIEFDOM",
+     "CIVIC_DESPOTISM",
+     "CIVIC_MONARCHY",
+     "CIVIC_THEOCRACY"
     ]
    ]
   }

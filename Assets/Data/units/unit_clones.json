@@ -5,14 +5,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_CLONING_LABORATORY",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_MAINSTREAM_CLONING",
-     "scope": "team"
-    }
+    "BUILDING_CLONING_LABORATORY",
+    "TECH_MAINSTREAM_CLONING"
    ]
   }
  },

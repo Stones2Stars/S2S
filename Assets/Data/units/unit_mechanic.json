@@ -10,10 +10,7 @@
      "scope": "city",
      "connection": "trade|vicinity"
     },
-    {
-     "type": "TECH_MOTORIZED_TRANSPORTATION",
-     "scope": "team"
-    },
+    "TECH_MOTORIZED_TRANSPORTATION",
     {
      "type": "BONUS_TOOLS",
      "scope": "city",
@@ -29,14 +26,8 @@
      }
     ],
     [
-     {
-      "type": "BUILDING_AUTO_REPAIR_SHOP",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_HYPERMARKET",
-      "scope": "city"
-     }
+     "BUILDING_AUTO_REPAIR_SHOP",
+     "BUILDING_HYPERMARKET"
     ]
    ]
   }

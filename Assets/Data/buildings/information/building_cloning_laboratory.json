@@ -21,14 +21,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_LABORATORY",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_CLONING",
-     "scope": "team"
-    }
+    "BUILDING_LABORATORY",
+    "TECH_CLONING"
    ],
    "any": [
     [

@@ -10,10 +10,7 @@
      "scope": "city",
      "min": 7
     },
-    {
-     "type": "TECH_PERSPECTIVE",
-     "scope": "team"
-    }
+    "TECH_PERSPECTIVE"
    ],
    "any": [
     [

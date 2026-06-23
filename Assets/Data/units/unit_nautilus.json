@@ -10,19 +10,13 @@
      "scope": "city",
      "connection": "trade|vicinity"
     },
-    {
-     "type": "BUILDING_NEMOS_NAVAL_ACADEMY",
-     "scope": "city"
-    },
+    "BUILDING_NEMOS_NAVAL_ACADEMY",
     {
      "type": "AREA_SIZE",
      "scope": "world",
      "min": 10
     },
-    {
-     "type": "TECH_STEAMPUNK",
-     "scope": "team"
-    }
+    "TECH_STEAMPUNK"
    ],
    "any": [
     [

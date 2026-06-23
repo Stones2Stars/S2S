@@ -13,14 +13,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_TRAINING_DOJO",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_MARTIAL_ARTS",
-     "scope": "team"
-    }
+    "BUILDING_TRAINING_DOJO",
+    "TECH_MARTIAL_ARTS"
    ],
    "any": [
     [
@@ -33,10 +27,7 @@
   },
   "operate": {
    "dormant": [
-    {
-     "type": "BUILDING_ATHLETIC_MEGACOMPLEX",
-     "scope": "city"
-    }
+    "BUILDING_ATHLETIC_MEGACOMPLEX"
    ]
   }
  },

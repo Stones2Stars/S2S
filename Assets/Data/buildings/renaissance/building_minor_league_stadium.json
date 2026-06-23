@@ -22,10 +22,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_TEAM_SPORTS",
-     "scope": "team"
-    },
+    "TECH_TEAM_SPORTS",
     {
      "type": "BONUS_FURNITURE",
      "scope": "city",
@@ -59,10 +56,7 @@
     ]
    ],
    "dormant": [
-    {
-     "type": "BUILDING_MAJOR_LEAGUE_STADIUM",
-     "scope": "city"
-    }
+    "BUILDING_MAJOR_LEAGUE_STADIUM"
    ]
   }
  },

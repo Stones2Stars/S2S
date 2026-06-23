@@ -13,10 +13,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_COMBAT_SPORTS",
-     "scope": "team"
-    }
+    "TECH_COMBAT_SPORTS"
    ],
    "any": [
     [
@@ -34,10 +31,7 @@
      "scope": "city",
      "connection": "trade|vicinity"
     },
-    {
-     "type": "RELIGION_NAGHUALISM",
-     "scope": "city"
-    }
+    "RELIGION_NAGHUALISM"
    ],
    "any": [
     [
@@ -64,14 +58,8 @@
     ]
    ],
    "dormant": [
-    {
-     "type": "BUILDING_MINOR_LEAGUE_STADIUM",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_MAJOR_LEAGUE_STADIUM",
-     "scope": "city"
-    }
+    "BUILDING_MINOR_LEAGUE_STADIUM",
+    "BUILDING_MAJOR_LEAGUE_STADIUM"
    ]
   }
  },

@@ -13,10 +13,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_SLAVERY",
-     "scope": "team"
-    }
+    "TECH_SLAVERY"
    ],
    "any": [
     [
@@ -35,10 +32,7 @@
   },
   "operate": {
    "dormant": [
-    {
-     "type": "BUILDING_EFFECT_EMANCIPATION_PROCLAMATION",
-     "scope": "city"
-    }
+    "BUILDING_EFFECT_EMANCIPATION_PROCLAMATION"
    ]
   }
  },
@@ -47,101 +41,59 @@
    "percent": [
     {
      "value": -5,
-     "enabled": {
-      "type": "TECH_MEDIEVAL_LIFESTYLE",
-      "scope": "team"
-     }
+     "enabled": "TECH_MEDIEVAL_LIFESTYLE"
     },
     {
      "value": -5,
-     "enabled": {
-      "type": "TECH_INVENTION",
-      "scope": "team"
-     }
+     "enabled": "TECH_INVENTION"
     },
     {
      "value": -5,
-     "enabled": {
-      "type": "TECH_RENAISSANCE_LIFESTYLE",
-      "scope": "team"
-     }
+     "enabled": "TECH_RENAISSANCE_LIFESTYLE"
     },
     {
      "value": -5,
-     "enabled": {
-      "type": "TECH_SCIENTIFIC_METHOD",
-      "scope": "team"
-     }
+     "enabled": "TECH_SCIENTIFIC_METHOD"
     },
     {
      "value": -5,
-     "enabled": {
-      "type": "TECH_ENLIGHTENMENT",
-      "scope": "team"
-     }
+     "enabled": "TECH_ENLIGHTENMENT"
     },
     {
      "value": -5,
-     "enabled": {
-      "type": "TECH_LIBERALISM",
-      "scope": "team"
-     }
+     "enabled": "TECH_LIBERALISM"
     },
     {
      "value": -5,
-     "enabled": {
-      "type": "TECH_ROMANTICISM",
-      "scope": "team"
-     }
+     "enabled": "TECH_ROMANTICISM"
     },
     {
      "value": -15,
-     "enabled": {
-      "type": "TECH_ASSEMBLY_LINE",
-      "scope": "team"
-     }
+     "enabled": "TECH_ASSEMBLY_LINE"
     },
     {
      "value": -5,
-     "enabled": {
-      "type": "TECH_WOMENS_SUFFRAGE",
-      "scope": "team"
-     }
+     "enabled": "TECH_WOMENS_SUFFRAGE"
     },
     {
      "value": -10,
-     "enabled": {
-      "type": "TECH_MANAGEMENT",
-      "scope": "team"
-     }
+     "enabled": "TECH_MANAGEMENT"
     },
     {
      "value": -10,
-     "enabled": {
-      "type": "TECH_ABSTRACT_MATHEMATICS",
-      "scope": "team"
-     }
+     "enabled": "TECH_ABSTRACT_MATHEMATICS"
     },
     {
      "value": -5,
-     "enabled": {
-      "type": "TECH_MASS_MEDIA",
-      "scope": "team"
-     }
+     "enabled": "TECH_MASS_MEDIA"
     },
     {
      "value": -5,
-     "enabled": {
-      "type": "TECH_MINORITY_RIGHTS",
-      "scope": "team"
-     }
+     "enabled": "TECH_MINORITY_RIGHTS"
     },
     {
      "value": -25,
-     "enabled": {
-      "type": "TECH_INFORMATION_LIFESTYLE",
-      "scope": "team"
-     }
+     "enabled": "TECH_INFORMATION_LIFESTYLE"
     }
    ]
   }
@@ -151,80 +103,47 @@
    "percent": [
     {
      "value": -5,
-     "enabled": {
-      "type": "TECH_MEDIEVAL_LIFESTYLE",
-      "scope": "team"
-     }
+     "enabled": "TECH_MEDIEVAL_LIFESTYLE"
     },
     {
      "value": -5,
-     "enabled": {
-      "type": "TECH_RENAISSANCE_LIFESTYLE",
-      "scope": "team"
-     }
+     "enabled": "TECH_RENAISSANCE_LIFESTYLE"
     },
     {
      "value": -10,
-     "enabled": {
-      "type": "TECH_HUMANISM",
-      "scope": "team"
-     }
+     "enabled": "TECH_HUMANISM"
     },
     {
      "value": -5,
-     "enabled": {
-      "type": "TECH_SOCIAL_CONTRACT",
-      "scope": "team"
-     }
+     "enabled": "TECH_SOCIAL_CONTRACT"
     },
     {
      "value": -5,
-     "enabled": {
-      "type": "TECH_ECONOMICS",
-      "scope": "team"
-     }
+     "enabled": "TECH_ECONOMICS"
     },
     {
      "value": -5,
-     "enabled": {
-      "type": "TECH_ROMANTICISM",
-      "scope": "team"
-     }
+     "enabled": "TECH_ROMANTICISM"
     },
     {
      "value": -5,
-     "enabled": {
-      "type": "TECH_ASSEMBLY_LINE",
-      "scope": "team"
-     }
+     "enabled": "TECH_ASSEMBLY_LINE"
     },
     {
      "value": -10,
-     "enabled": {
-      "type": "TECH_WOMENS_SUFFRAGE",
-      "scope": "team"
-     }
+     "enabled": "TECH_WOMENS_SUFFRAGE"
     },
     {
      "value": -5,
-     "enabled": {
-      "type": "TECH_CONSUMERISM",
-      "scope": "team"
-     }
+     "enabled": "TECH_CONSUMERISM"
     },
     {
      "value": -10,
-     "enabled": {
-      "type": "TECH_MASS_MEDIA",
-      "scope": "team"
-     }
+     "enabled": "TECH_MASS_MEDIA"
     },
     {
      "value": -5,
-     "enabled": {
-      "type": "TECH_MINORITY_RIGHTS",
-      "scope": "team"
-     }
+     "enabled": "TECH_MINORITY_RIGHTS"
     }
    ]
   }
@@ -234,45 +153,27 @@
    "flat": [
     {
      "value": -5,
-     "enabled": {
-      "type": "TECH_HUMANISM",
-      "scope": "team"
-     }
+     "enabled": "TECH_HUMANISM"
     },
     {
      "value": -1,
-     "enabled": {
-      "type": "TECH_ENLIGHTENMENT",
-      "scope": "team"
-     }
+     "enabled": "TECH_ENLIGHTENMENT"
     },
     {
      "value": -2,
-     "enabled": {
-      "type": "TECH_EMANCIPATION",
-      "scope": "team"
-     }
+     "enabled": "TECH_EMANCIPATION"
     },
     {
      "value": -1,
-     "enabled": {
-      "type": "TECH_LABOR_UNIONS",
-      "scope": "team"
-     }
+     "enabled": "TECH_LABOR_UNIONS"
     },
     {
      "value": -1,
-     "enabled": {
-      "type": "TECH_COMMUNISM",
-      "scope": "team"
-     }
+     "enabled": "TECH_COMMUNISM"
     },
     {
      "value": -5,
-     "enabled": {
-      "type": "TECH_MINORITY_RIGHTS",
-      "scope": "team"
-     }
+     "enabled": "TECH_MINORITY_RIGHTS"
     }
    ]
   }

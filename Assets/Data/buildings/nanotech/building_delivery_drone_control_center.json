@@ -14,18 +14,9 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_CONTROL_CENTER",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_MODERN_WAREHOUSE",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_AUTOMATED_URBANIZATION",
-     "scope": "team"
-    }
+    "BUILDING_CONTROL_CENTER",
+    "BUILDING_MODERN_WAREHOUSE",
+    "TECH_AUTOMATED_URBANIZATION"
    ],
    "any": [
     [
@@ -45,10 +36,7 @@
     }
    ],
    "dormant": [
-    {
-     "type": "BUILDING_TELEPORT_BOOTH",
-     "scope": "city"
-    }
+    "BUILDING_TELEPORT_BOOTH"
    ]
   }
  },

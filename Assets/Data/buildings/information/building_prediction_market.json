@@ -5,14 +5,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_STOCK_MARKET",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_DERIVATIVES",
-     "scope": "team"
-    }
+    "BUILDING_STOCK_MARKET",
+    "TECH_DERIVATIVES"
    ],
    "any": [
     [

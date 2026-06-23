@@ -5,10 +5,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_LANGUAGE",
-     "scope": "team"
-    }
+    "TECH_LANGUAGE"
    ],
    "any": [
     [
@@ -38,17 +35,11 @@
     3,
     {
      "value": 4,
-     "enabled": {
-      "type": "TECH_COMMERCIAL_WHALING",
-      "scope": "team"
-     }
+     "enabled": "TECH_COMMERCIAL_WHALING"
     },
     {
      "value": -5,
-     "enabled": {
-      "type": "TECH_ECOLOGY",
-      "scope": "team"
-     }
+     "enabled": "TECH_ECOLOGY"
     }
    ]
   }
@@ -63,17 +54,11 @@
    "flat": [
     {
      "value": 10,
-     "enabled": {
-      "type": "TECH_TOURISM",
-      "scope": "team"
-     }
+     "enabled": "TECH_TOURISM"
     },
     {
      "value": 7,
-     "enabled": {
-      "type": "TECH_EXTREME_SPORTS",
-      "scope": "team"
-     }
+     "enabled": "TECH_EXTREME_SPORTS"
     }
    ]
   }
@@ -83,24 +68,15 @@
    "flat": [
     {
      "value": 5,
-     "enabled": {
-      "type": "TECH_ARCHEOLOGY",
-      "scope": "team"
-     }
+     "enabled": "TECH_ARCHEOLOGY"
     },
     {
      "value": 4,
-     "enabled": {
-      "type": "TECH_EDUCATION",
-      "scope": "team"
-     }
+     "enabled": "TECH_EDUCATION"
     },
     {
      "value": 6,
-     "enabled": {
-      "type": "TECH_MARINE_BIOLOGY",
-      "scope": "team"
-     }
+     "enabled": "TECH_MARINE_BIOLOGY"
     }
    ]
   }
@@ -116,10 +92,7 @@
     3,
     {
      "value": 2,
-     "enabled": {
-      "type": "TECH_ECOLOGY",
-      "scope": "team"
-     }
+     "enabled": "TECH_ECOLOGY"
     }
    ]
   }
@@ -143,10 +116,7 @@
   "city": {
    "flat": {
     "value": 5,
-    "enabled": {
-     "type": "TECH_EXPLORATION",
-     "scope": "team"
-    }
+    "enabled": "TECH_EXPLORATION"
    }
   }
  },

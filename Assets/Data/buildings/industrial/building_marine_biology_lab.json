@@ -12,14 +12,8 @@
   "build": {
    "all": [
     "HAS_COAST",
-    {
-     "type": "BUILDING_UNIVERSITY",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_MARINE_BIOLOGY",
-     "scope": "team"
-    }
+    "BUILDING_UNIVERSITY",
+    "TECH_MARINE_BIOLOGY"
    ],
    "any": [
     [
@@ -37,17 +31,11 @@
     5,
     {
      "value": 7,
-     "enabled": {
-      "type": "TECH_DEEP_SEA_EXPLORATION",
-      "scope": "team"
-     }
+     "enabled": "TECH_DEEP_SEA_EXPLORATION"
     },
     {
      "value": 8,
-     "enabled": {
-      "type": "TECH_AQUACULTURE",
-      "scope": "team"
-     }
+     "enabled": "TECH_AQUACULTURE"
     }
    ]
   }

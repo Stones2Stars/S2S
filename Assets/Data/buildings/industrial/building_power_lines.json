@@ -52,10 +52,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_ELECTRICITY",
-     "scope": "team"
-    }
+    "TECH_ELECTRICITY"
    ],
    "any": [
     [

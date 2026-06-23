@@ -11,14 +11,8 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_VIRTUAL_WORLD",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_MASS_SURVEILLANCE",
-     "scope": "team"
-    }
+    "BUILDING_VIRTUAL_WORLD",
+    "TECH_MASS_SURVEILLANCE"
    ],
    "any": [
     [

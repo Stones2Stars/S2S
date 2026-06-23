@@ -5,10 +5,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_NUCLEAR_PULSE_PROPULSION",
-     "scope": "team"
-    }
+    "TECH_NUCLEAR_PULSE_PROPULSION"
    ],
    "any": [
     [
@@ -38,10 +35,7 @@
     5,
     {
      "value": 11,
-     "enabled": {
-      "type": "TECH_PARATERRAFORMING",
-      "scope": "team"
-     }
+     "enabled": "TECH_PARATERRAFORMING"
     }
    ]
   }

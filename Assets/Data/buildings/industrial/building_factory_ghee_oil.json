@@ -14,14 +14,8 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_FACTORY",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_REFRIGERATION",
-     "scope": "team"
-    }
+    "BUILDING_FACTORY",
+    "TECH_REFRIGERATION"
    ],
    "any": [
     [
@@ -60,10 +54,7 @@
     ]
    ],
    "dormant": [
-    {
-     "type": "BUILDING_MEAT_INDUSTRY_CONGLOMERATE",
-     "scope": "city"
-    }
+    "BUILDING_MEAT_INDUSTRY_CONGLOMERATE"
    ]
   }
  },

@@ -14,102 +14,30 @@
   "build": {
    "any": [
     [
-     {
-      "type": "BUILDING_GROVE_ACACIA",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_PLANTATION_ALLSPICES",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_FARM_CROP_CHILI",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_FARM_CROP_CHIVES",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_GROVE_CINNAMOMUM",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_FARM_CROP_CLOVES",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_PLANTATION_COFFEE",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_FARM_CROP_GINGER_ROOT",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_PLANTATION_FRANKINCENSE",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_FARM_CROP_LICORICE",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_GROVE_MAPLE",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_FARM_CROP_PEPPERMINT",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_PLANTATION_NUTMEG",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_FARM_CROP_BLACK_PEPPER",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_FARM_CROP_RHUBARB",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_PLANTATION_SAFFRON",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_GROVE_SASSAFRAS",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_FARM_CROP_SESAME",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_PLANTATION_CINNAMON",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_SPICE_VOYAGE",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_PLANTATION_SUGARCANE",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_PLANTATION_TEA",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_PLANTATION_VANILLA",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_FARM_CROP_WASABI",
-      "scope": "city"
-     }
+     "BUILDING_GROVE_ACACIA",
+     "BUILDING_PLANTATION_ALLSPICES",
+     "BUILDING_FARM_CROP_CHILI",
+     "BUILDING_FARM_CROP_CHIVES",
+     "BUILDING_GROVE_CINNAMOMUM",
+     "BUILDING_FARM_CROP_CLOVES",
+     "BUILDING_PLANTATION_COFFEE",
+     "BUILDING_FARM_CROP_GINGER_ROOT",
+     "BUILDING_PLANTATION_FRANKINCENSE",
+     "BUILDING_FARM_CROP_LICORICE",
+     "BUILDING_GROVE_MAPLE",
+     "BUILDING_FARM_CROP_PEPPERMINT",
+     "BUILDING_PLANTATION_NUTMEG",
+     "BUILDING_FARM_CROP_BLACK_PEPPER",
+     "BUILDING_FARM_CROP_RHUBARB",
+     "BUILDING_PLANTATION_SAFFRON",
+     "BUILDING_GROVE_SASSAFRAS",
+     "BUILDING_FARM_CROP_SESAME",
+     "BUILDING_PLANTATION_CINNAMON",
+     "BUILDING_SPICE_VOYAGE",
+     "BUILDING_PLANTATION_SUGARCANE",
+     "BUILDING_PLANTATION_TEA",
+     "BUILDING_PLANTATION_VANILLA",
+     "BUILDING_FARM_CROP_WASABI"
     ],
     [
      {
@@ -121,10 +49,7 @@
   },
   "operate": {
    "dormant": [
-    {
-     "type": "BUILDING_FOOD_MANUFACTURING_DISTRICT",
-     "scope": "city"
-    }
+    "BUILDING_FOOD_MANUFACTURING_DISTRICT"
    ]
   }
  },

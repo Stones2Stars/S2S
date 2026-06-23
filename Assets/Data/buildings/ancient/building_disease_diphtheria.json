@@ -10,10 +10,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_TRADE",
-     "scope": "team"
-    }
+    "TECH_TRADE"
    ],
    "any": [
     [
@@ -61,17 +58,11 @@
     -4,
     {
      "value": 1,
-     "enabled": {
-      "type": "TECH_SANITATION",
-      "scope": "team"
-     }
+     "enabled": "TECH_SANITATION"
     },
     {
      "value": 1,
-     "enabled": {
-      "type": "TECH_MODERN_SANITATION",
-      "scope": "team"
-     }
+     "enabled": "TECH_MODERN_SANITATION"
     }
    ],
    "perPopulation": {

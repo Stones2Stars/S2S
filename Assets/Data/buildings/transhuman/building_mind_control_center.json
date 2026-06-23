@@ -10,21 +10,12 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_SIMULATED_REALITY",
-     "scope": "team"
-    }
+    "TECH_SIMULATED_REALITY"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_INDUSTRIAL_PARK",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_MODERN_OFFICES",
-      "scope": "city"
-     }
+     "BUILDING_INDUSTRIAL_PARK",
+     "BUILDING_MODERN_OFFICES"
     ],
     [
      {
@@ -36,10 +27,7 @@
   },
   "operate": {
    "all": [
-    {
-     "type": "CIVIC_MIND_CONTROL",
-     "scope": "empire"
-    }
+    "CIVIC_MIND_CONTROL"
    ]
   }
  },

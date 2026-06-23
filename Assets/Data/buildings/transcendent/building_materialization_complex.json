@@ -6,14 +6,8 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_MATERIALIZER",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_MATERIALIZATION",
-     "scope": "team"
-    }
+    "BUILDING_MATERIALIZER",
+    "TECH_MATERIALIZATION"
    ],
    "any": [
     [

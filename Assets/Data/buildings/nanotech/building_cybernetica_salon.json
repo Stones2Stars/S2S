@@ -14,18 +14,9 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_BEAUTY_SALON",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_ANTHROPOMORPHICS_LAB",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_CYBERNETICS",
-     "scope": "team"
-    }
+    "BUILDING_BEAUTY_SALON",
+    "BUILDING_ANTHROPOMORPHICS_LAB",
+    "TECH_CYBERNETICS"
    ],
    "any": [
     [
@@ -45,10 +36,7 @@
     }
    ],
    "dormant": [
-    {
-     "type": "BUILDING_HIGH_TECH_CULTURAL_ENRICHMENT",
-     "scope": "city"
-    }
+    "BUILDING_HIGH_TECH_CULTURAL_ENRICHMENT"
    ]
   }
  },

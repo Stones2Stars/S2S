@@ -10,10 +10,7 @@
      "scope": "world",
      "min": 10
     },
-    {
-     "type": "TECH_STEAM_POWER",
-     "scope": "team"
-    }
+    "TECH_STEAM_POWER"
    ],
    "any": [
     [

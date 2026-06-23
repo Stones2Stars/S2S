@@ -6,21 +6,12 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "TECH_COLONY_ARCOLOGY",
-     "scope": "team"
-    }
+    "TECH_COLONY_ARCOLOGY"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_HOUSING_COLONY_ARCOLOGY",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_LAUNCH_ARCOLOGY",
-      "scope": "city"
-     }
+     "BUILDING_HOUSING_COLONY_ARCOLOGY",
+     "BUILDING_LAUNCH_ARCOLOGY"
     ],
     [
      {

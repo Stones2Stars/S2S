@@ -10,19 +10,13 @@
      "scope": "city",
      "connection": "trade|vicinity"
     },
-    {
-     "type": "BUILDING_CANOE_BUILDER",
-     "scope": "city"
-    },
+    "BUILDING_CANOE_BUILDER",
     {
      "type": "AREA_SIZE",
      "scope": "world",
      "min": 10
     },
-    {
-     "type": "TECH_FISHING",
-     "scope": "team"
-    }
+    "TECH_FISHING"
    ]
   }
  },

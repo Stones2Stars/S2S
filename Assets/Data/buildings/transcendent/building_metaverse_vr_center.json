@@ -10,10 +10,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_METAVERSE",
-     "scope": "team"
-    }
+    "TECH_METAVERSE"
    ],
    "any": [
     [

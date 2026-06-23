@@ -15,25 +15,13 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_MOTORIZED_TRANSPORTATION",
-     "scope": "team"
-    },
-    {
-     "type": "TECH_SEMI_AUTOMATIC_WEAPONS",
-     "scope": "team"
-    }
+    "TECH_MOTORIZED_TRANSPORTATION",
+    "TECH_SEMI_AUTOMATIC_WEAPONS"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_TRADING_POST",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_SHOPPING_DISTRICT",
-      "scope": "city"
-     }
+     "BUILDING_TRADING_POST",
+     "BUILDING_SHOPPING_DISTRICT"
     ],
     [
      {
@@ -137,10 +125,7 @@
     "unit": "UNIT_MOBSTER_CAR",
     "interval": "perTurn",
     "chance": {
-     "per": {
-      "type": "PROPERTY_CRIME",
-      "scope": "city"
-     }
+     "per": "PROPERTY_CRIME"
     }
    }
   ]

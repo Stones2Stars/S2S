@@ -5,21 +5,12 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_CHEMISTRY",
-     "scope": "team"
-    }
+    "TECH_CHEMISTRY"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_CHEMISTRY_LAB",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_CHEMICALS_DISTRICT",
-      "scope": "city"
-     }
+     "BUILDING_CHEMISTRY_LAB",
+     "BUILDING_CHEMICALS_DISTRICT"
     ],
     [
      {

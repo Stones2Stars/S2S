@@ -10,14 +10,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_INTERGALACTIC_CORE_DYSON_SPHERE",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_PANPSYCHISM",
-     "scope": "team"
-    }
+    "BUILDING_INTERGALACTIC_CORE_DYSON_SPHERE",
+    "TECH_PANPSYCHISM"
    ],
    "any": [
     [

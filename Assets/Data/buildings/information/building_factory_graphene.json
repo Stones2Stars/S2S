@@ -14,14 +14,8 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_FACTORY",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_GRAPHENE_ALLOYS",
-     "scope": "team"
-    }
+    "BUILDING_FACTORY",
+    "TECH_GRAPHENE_ALLOYS"
    ],
    "any": [
     [
@@ -34,10 +28,7 @@
   },
   "operate": {
    "dormant": [
-    {
-     "type": "BUILDING_PICOTECH_COMPLEX",
-     "scope": "city"
-    }
+    "BUILDING_PICOTECH_COMPLEX"
    ]
   }
  },

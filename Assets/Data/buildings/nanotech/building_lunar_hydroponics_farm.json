@@ -14,14 +14,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_LUNAR_WATER_EXTRACTION_FACILITY",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_LUNAR_COLONIZATION",
-     "scope": "team"
-    }
+    "BUILDING_LUNAR_WATER_EXTRACTION_FACILITY",
+    "TECH_LUNAR_COLONIZATION"
    ],
    "any": [
     [

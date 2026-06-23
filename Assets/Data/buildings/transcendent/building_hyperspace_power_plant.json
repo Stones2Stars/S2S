@@ -6,10 +6,7 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "TECH_DUALFLUX_QUANTUM_TEMPORAL_RIFT",
-     "scope": "team"
-    }
+    "TECH_DUALFLUX_QUANTUM_TEMPORAL_RIFT"
    ],
    "any": [
     [

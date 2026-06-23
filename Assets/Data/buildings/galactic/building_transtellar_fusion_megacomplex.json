@@ -12,10 +12,7 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "TECH_FORGE_WORLDS",
-     "scope": "team"
-    }
+    "TECH_FORGE_WORLDS"
    ],
    "any": [
     [

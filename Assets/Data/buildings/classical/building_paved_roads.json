@@ -33,10 +33,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_PAVED_ROADS",
-     "scope": "team"
-    }
+    "TECH_PAVED_ROADS"
    ],
    "any": [
     [
@@ -63,18 +60,9 @@
     ]
    ],
    "dormant": [
-    {
-     "type": "BUILDING_ASPHALT_ROADS",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_SKYROAD_CONTROL_TOWER",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_TELEPORT_BOOTH",
-     "scope": "city"
-    }
+    "BUILDING_ASPHALT_ROADS",
+    "BUILDING_SKYROAD_CONTROL_TOWER",
+    "BUILDING_TELEPORT_BOOTH"
    ]
   }
  },

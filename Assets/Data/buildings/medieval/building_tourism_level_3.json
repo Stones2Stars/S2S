@@ -5,10 +5,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_MEDIEVAL_LIFESTYLE",
-     "scope": "team"
-    }
+    "TECH_MEDIEVAL_LIFESTYLE"
    ],
    "any": [
     [

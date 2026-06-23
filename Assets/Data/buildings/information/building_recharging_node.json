@@ -6,14 +6,8 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_COMPUTER_NETWORK",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_BIOMECHANICAL_HARVESTING",
-     "scope": "team"
-    }
+    "BUILDING_COMPUTER_NETWORK",
+    "TECH_BIOMECHANICAL_HARVESTING"
    ],
    "any": [
     [
@@ -40,38 +34,23 @@
     5,
     {
      "value": 9,
-     "enabled": {
-      "type": "TECH_WIRELESS_ELECTRICITY",
-      "scope": "team"
-     }
+     "enabled": "TECH_WIRELESS_ELECTRICITY"
     },
     {
      "value": 8,
-     "enabled": {
-      "type": "TECH_MICROGENERATORS",
-      "scope": "team"
-     }
+     "enabled": "TECH_MICROGENERATORS"
     },
     {
      "value": 9,
-     "enabled": {
-      "type": "TECH_NANOGENERATORS",
-      "scope": "team"
-     }
+     "enabled": "TECH_NANOGENERATORS"
     },
     {
      "value": 9,
-     "enabled": {
-      "type": "TECH_BIONICS",
-      "scope": "team"
-     }
+     "enabled": "TECH_BIONICS"
     },
     {
      "value": 9,
-     "enabled": {
-      "type": "TECH_CYBERNETICS",
-      "scope": "team"
-     }
+     "enabled": "TECH_CYBERNETICS"
     }
    ]
   }

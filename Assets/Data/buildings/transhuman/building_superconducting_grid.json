@@ -13,14 +13,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_POWER_LINES",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_FRICTIONLESS_FLIGHT",
-     "scope": "team"
-    }
+    "BUILDING_POWER_LINES",
+    "TECH_FRICTIONLESS_FLIGHT"
    ],
    "any": [
     [

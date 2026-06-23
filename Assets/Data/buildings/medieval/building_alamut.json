@@ -15,10 +15,7 @@
      "scope": "city",
      "min": 7
     },
-    {
-     "type": "TECH_FUNDAMENTALISM",
-     "scope": "team"
-    },
+    "TECH_FUNDAMENTALISM",
     "STATE_RELIGION_IN_CITY"
    ],
    "any": [
@@ -51,18 +48,9 @@
      }
     ],
     [
-     {
-      "type": "CIVIC_DIVINE_CULT",
-      "scope": "empire"
-     },
-     {
-      "type": "CIVIC_STATE_CHURCH",
-      "scope": "empire"
-     },
-     {
-      "type": "CIVIC_INQUISITORIAL",
-      "scope": "empire"
-     }
+     "CIVIC_DIVINE_CULT",
+     "CIVIC_STATE_CHURCH",
+     "CIVIC_INQUISITORIAL"
     ]
    ]
   }

@@ -16,14 +16,8 @@
      "scope": "city",
      "min": 7
     },
-    {
-     "type": "BUILDING_FACTORY",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_MOTORIZED_TRANSPORTATION",
-     "scope": "team"
-    }
+    "BUILDING_FACTORY",
+    "TECH_MOTORIZED_TRANSPORTATION"
    ],
    "any": [
     [

@@ -13,10 +13,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_ELIXIRS_AND_TONICS",
-     "scope": "team"
-    }
+    "TECH_ELIXIRS_AND_TONICS"
    ],
    "any": [
     [
@@ -36,14 +33,8 @@
     }
    ],
    "dormant": [
-    {
-     "type": "BUILDING_ALTERNATIVE_MEDICINE",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_HEALTHCARE_MEGACOMPLEX",
-     "scope": "city"
-    }
+    "BUILDING_ALTERNATIVE_MEDICINE",
+    "BUILDING_HEALTHCARE_MEGACOMPLEX"
    ]
   }
  },

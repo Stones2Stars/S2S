@@ -6,18 +6,9 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_MARTIAN_DEUTERIUM_MINE",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_SPACE_COLONY_MARTIAN",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_UNIFICATION_PHYSICS",
-     "scope": "team"
-    }
+    "BUILDING_MARTIAN_DEUTERIUM_MINE",
+    "BUILDING_SPACE_COLONY_MARTIAN",
+    "TECH_UNIFICATION_PHYSICS"
    ],
    "any": [
     [
@@ -35,17 +26,11 @@
     100,
     {
      "value": 10,
-     "enabled": {
-      "type": "TECH_ARTIFICIAL_NUCLEOSYNTHESIS",
-      "scope": "team"
-     }
+     "enabled": "TECH_ARTIFICIAL_NUCLEOSYNTHESIS"
     },
     {
      "value": 11,
-     "enabled": {
-      "type": "TECH_ATOMIZATION_FIELD",
-      "scope": "team"
-     }
+     "enabled": "TECH_ATOMIZATION_FIELD"
     }
    ]
   }

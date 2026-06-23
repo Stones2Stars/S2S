@@ -10,14 +10,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_OBSERVATORY",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_COSMOLOGY",
-     "scope": "team"
-    }
+    "BUILDING_OBSERVATORY",
+    "TECH_COSMOLOGY"
    ],
    "any": [
     [
@@ -30,10 +24,7 @@
   },
   "operate": {
    "dormant": [
-    {
-     "type": "BUILDING_POLLUTION_BLACKENED_SKIES",
-     "scope": "city"
-    }
+    "BUILDING_POLLUTION_BLACKENED_SKIES"
    ]
   }
  },
@@ -41,10 +32,7 @@
   "city": {
    "flat": {
     "value": 7,
-    "enabled": {
-     "type": "TECH_LASER",
-     "scope": "team"
-    }
+    "enabled": "TECH_LASER"
    }
   }
  },
@@ -54,31 +42,19 @@
     5,
     {
      "value": 7,
-     "enabled": {
-      "type": "TECH_RADIO_ASTRONOMY",
-      "scope": "team"
-     }
+     "enabled": "TECH_RADIO_ASTRONOMY"
     },
     {
      "value": 7,
-     "enabled": {
-      "type": "TECH_LUNAR_EXPLORATION",
-      "scope": "team"
-     }
+     "enabled": "TECH_LUNAR_EXPLORATION"
     },
     {
      "value": 8,
-     "enabled": {
-      "type": "TECH_PLANETARY_EXPLORATION",
-      "scope": "team"
-     }
+     "enabled": "TECH_PLANETARY_EXPLORATION"
     },
     {
      "value": 8,
-     "enabled": {
-      "type": "TECH_JOVIAN_EXPLORATION",
-      "scope": "team"
-     }
+     "enabled": "TECH_JOVIAN_EXPLORATION"
     }
    ]
   }
@@ -88,10 +64,7 @@
    "flat": [
     {
      "value": 7,
-     "enabled": {
-      "type": "TECH_LASER",
-      "scope": "team"
-     }
+     "enabled": "TECH_LASER"
     }
    ]
   }
@@ -101,10 +74,7 @@
    "flat": [
     {
      "value": 1,
-     "enabled": {
-      "type": "TECH_LASER",
-      "scope": "team"
-     }
+     "enabled": "TECH_LASER"
     },
     {
      "value": 1,

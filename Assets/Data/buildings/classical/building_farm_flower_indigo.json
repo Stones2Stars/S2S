@@ -20,21 +20,12 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_FLORISTRY",
-     "scope": "team"
-    }
+    "TECH_FLORISTRY"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_FOOD_MANUFACTURING_DISTRICT",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_APIARY",
-      "scope": "city"
-     }
+     "BUILDING_FOOD_MANUFACTURING_DISTRICT",
+     "BUILDING_APIARY"
     ],
     [
      {
@@ -53,10 +44,7 @@
     }
    ],
    "dormant": [
-    {
-     "type": "BUILDING_GREENHOUSE",
-     "scope": "city"
-    }
+    "BUILDING_GREENHOUSE"
    ]
   }
  },

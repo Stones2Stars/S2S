@@ -11,19 +11,13 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_SKYSCRAPER",
-     "scope": "city"
-    },
+    "BUILDING_SKYSCRAPER",
     {
      "type": "BUILDING_ADVERTISING_AGENCY",
      "scope": "empire",
      "min": 6
     },
-    {
-     "type": "TECH_CONSUMERISM",
-     "scope": "team"
-    }
+    "TECH_CONSUMERISM"
    ],
    "any": [
     [

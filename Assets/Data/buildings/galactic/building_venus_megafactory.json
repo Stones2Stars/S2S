@@ -10,14 +10,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_VENUS_FUSION_PLANT",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_FORGE_WORLDS",
-     "scope": "team"
-    }
+    "BUILDING_VENUS_FUSION_PLANT",
+    "TECH_FORGE_WORLDS"
    ],
    "any": [
     [

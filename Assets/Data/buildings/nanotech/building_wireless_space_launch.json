@@ -6,14 +6,8 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_MAGLEV_LAUNCHER",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_ELECTROMAGNETIC_VOLTAGE",
-     "scope": "team"
-    }
+    "BUILDING_MAGLEV_LAUNCHER",
+    "TECH_ELECTROMAGNETIC_VOLTAGE"
    ],
    "any": [
     [

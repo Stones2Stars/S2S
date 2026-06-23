@@ -14,18 +14,9 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_COMPUTER_NETWORK",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_TRAFFIC_SIGNALS",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_KNOWLEDGE_MANAGEMENT",
-     "scope": "team"
-    }
+    "BUILDING_COMPUTER_NETWORK",
+    "BUILDING_TRAFFIC_SIGNALS",
+    "TECH_KNOWLEDGE_MANAGEMENT"
    ],
    "any": [
     [
@@ -45,10 +36,7 @@
     }
    ],
    "dormant": [
-    {
-     "type": "BUILDING_TELEPORT_BOOTH",
-     "scope": "city"
-    }
+    "BUILDING_TELEPORT_BOOTH"
    ]
   }
  },

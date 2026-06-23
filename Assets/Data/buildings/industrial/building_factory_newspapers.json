@@ -13,18 +13,9 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_FACTORY",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_PRESS_AGENCY",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_ASSEMBLY_LINE",
-     "scope": "team"
-    }
+    "BUILDING_FACTORY",
+    "BUILDING_PRESS_AGENCY",
+    "TECH_ASSEMBLY_LINE"
    ],
    "any": [
     [
@@ -53,10 +44,7 @@
     ]
    ],
    "dormant": [
-    {
-     "type": "BUILDING_MANUFACTURING_DISTRICT",
-     "scope": "city"
-    }
+    "BUILDING_MANUFACTURING_DISTRICT"
    ]
   }
  },

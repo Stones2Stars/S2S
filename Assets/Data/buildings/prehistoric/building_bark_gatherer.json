@@ -13,10 +13,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_BARK_WORKING",
-     "scope": "team"
-    }
+    "TECH_BARK_WORKING"
    ],
    "any": [
     [
@@ -35,14 +32,8 @@
   },
   "operate": {
    "dormant": [
-    {
-     "type": "BUILDING_LUMBER_MILL",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_AGROFOREST",
-     "scope": "city"
-    }
+    "BUILDING_LUMBER_MILL",
+    "BUILDING_AGROFOREST"
    ]
   }
  },

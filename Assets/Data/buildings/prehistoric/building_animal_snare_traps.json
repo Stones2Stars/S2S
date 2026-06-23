@@ -22,10 +22,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_TRAPPING",
-     "scope": "team"
-    }
+    "TECH_TRAPPING"
    ],
    "any": [
     [
@@ -44,10 +41,7 @@
   },
   "operate": {
    "dormant": [
-    {
-     "type": "BUILDING_ANCIENT_CUSTOMS",
-     "scope": "city"
-    }
+    "BUILDING_ANCIENT_CUSTOMS"
    ]
   }
  },

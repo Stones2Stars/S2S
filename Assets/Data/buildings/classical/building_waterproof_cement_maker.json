@@ -13,25 +13,13 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_LAVA_ROCK_GATHERER",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_WATERPROOF_CONCRETE",
-     "scope": "team"
-    }
+    "BUILDING_LAVA_ROCK_GATHERER",
+    "TECH_WATERPROOF_CONCRETE"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_CONCRETE_MASON",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_CEMENT_MILL",
-      "scope": "city"
-     }
+     "BUILDING_CONCRETE_MASON",
+     "BUILDING_CEMENT_MILL"
     ],
     [
      {
@@ -43,10 +31,7 @@
   },
   "operate": {
    "dormant": [
-    {
-     "type": "BUILDING_MODERN_EARTHWORKS",
-     "scope": "city"
-    }
+    "BUILDING_MODERN_EARTHWORKS"
    ]
   }
  },

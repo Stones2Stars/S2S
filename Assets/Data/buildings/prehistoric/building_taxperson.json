@@ -13,10 +13,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_ARITHMETIC",
-     "scope": "team"
-    }
+    "TECH_ARITHMETIC"
    ],
    "any": [
     [
@@ -29,14 +26,8 @@
   },
   "operate": {
    "dormant": [
-    {
-     "type": "BUILDING_OFFICIUM",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_MODERN_OFFICES",
-     "scope": "city"
-    }
+    "BUILDING_OFFICIUM",
+    "BUILDING_MODERN_OFFICES"
    ]
   }
  },

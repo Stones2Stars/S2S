@@ -5,10 +5,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_MINORITY_RIGHTS",
-     "scope": "team"
-    }
+    "TECH_MINORITY_RIGHTS"
    ],
    "any": [
     [

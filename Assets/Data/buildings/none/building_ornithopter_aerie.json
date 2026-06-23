@@ -18,14 +18,8 @@
      "scope": "city",
      "min": 7
     },
-    {
-     "type": "BUILDING_CLOCKWORK_WORKSHOP",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_CLOCKPUNK",
-     "scope": "team"
-    }
+    "BUILDING_CLOCKWORK_WORKSHOP",
+    "TECH_CLOCKPUNK"
    ],
    "any": [
     [
@@ -45,14 +39,8 @@
     }
    ],
    "dormant": [
-    {
-     "type": "BUILDING_AIRPORT",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_COMMERCIAL_AIRPORT",
-     "scope": "city"
-    }
+    "BUILDING_AIRPORT",
+    "BUILDING_COMMERCIAL_AIRPORT"
    ]
   }
  },

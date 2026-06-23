@@ -5,10 +5,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_RESURRECTION",
-     "scope": "team"
-    }
+    "TECH_RESURRECTION"
    ],
    "any": [
     [

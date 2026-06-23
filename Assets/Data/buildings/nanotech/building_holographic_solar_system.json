@@ -14,18 +14,9 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_DIGITAL_GLOBE",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_HOLOGRAPHICS",
-     "scope": "team"
-    },
-    {
-     "type": "TECH_JOVIAN_EXPLORATION",
-     "scope": "team"
-    }
+    "BUILDING_DIGITAL_GLOBE",
+    "TECH_HOLOGRAPHICS",
+    "TECH_JOVIAN_EXPLORATION"
    ],
    "any": [
     [
@@ -45,10 +36,7 @@
     }
    ],
    "dormant": [
-    {
-     "type": "BUILDING_HIGH_TECH_CULTURAL_ENRICHMENT",
-     "scope": "city"
-    }
+    "BUILDING_HIGH_TECH_CULTURAL_ENRICHMENT"
    ]
   }
  },
@@ -58,10 +46,7 @@
     5,
     {
      "value": 9,
-     "enabled": {
-      "type": "TECH_PLANETARY_ECONOMICS",
-      "scope": "team"
-     }
+     "enabled": "TECH_PLANETARY_ECONOMICS"
     }
    ]
   }
@@ -72,17 +57,11 @@
     5,
     {
      "value": 10,
-     "enabled": {
-      "type": "TECH_PHOTONIC_SATELLITES",
-      "scope": "team"
-     }
+     "enabled": "TECH_PHOTONIC_SATELLITES"
     },
     {
      "value": 10,
-     "enabled": {
-      "type": "TECH_TERRA_COMPUTER",
-      "scope": "team"
-     }
+     "enabled": "TECH_TERRA_COMPUTER"
     }
    ]
   }

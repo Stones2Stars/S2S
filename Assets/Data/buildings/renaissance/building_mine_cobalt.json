@@ -13,14 +13,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_MINING_CAMP",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_GUNPOWDER",
-     "scope": "team"
-    }
+    "BUILDING_MINING_CAMP",
+    "TECH_GUNPOWDER"
    ],
    "any": [
     [
@@ -49,10 +43,7 @@
     ]
    ],
    "dormant": [
-    {
-     "type": "BUILDING_CORE_MINE",
-     "scope": "city"
-    }
+    "BUILDING_CORE_MINE"
    ]
   }
  },

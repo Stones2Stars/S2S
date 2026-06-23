@@ -23,21 +23,12 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_EARTH_OVEN",
-     "scope": "team"
-    }
+    "TECH_EARTH_OVEN"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_LUMBER_CAMP",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_AGROFOREST",
-      "scope": "city"
-     }
+     "BUILDING_LUMBER_CAMP",
+     "BUILDING_AGROFOREST"
     ],
     [
      {
@@ -63,10 +54,7 @@
     ]
    ],
    "dormant": [
-    {
-     "type": "BUILDING_CHARCOAL_BURNER",
-     "scope": "city"
-    }
+    "BUILDING_CHARCOAL_BURNER"
    ]
   }
  },

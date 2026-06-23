@@ -15,25 +15,13 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_CODE_OF_LAWS",
-     "scope": "team"
-    }
+    "TECH_CODE_OF_LAWS"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_BARTER_POST",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_TRADING_POST",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_SHOPPING_DISTRICT",
-      "scope": "city"
-     }
+     "BUILDING_BARTER_POST",
+     "BUILDING_TRADING_POST",
+     "BUILDING_SHOPPING_DISTRICT"
     ],
     [
      {
@@ -96,10 +84,7 @@
     "unit": "UNIT_ASSASSIN",
     "interval": "perTurn",
     "chance": {
-     "per": {
-      "type": "PROPERTY_CRIME",
-      "scope": "city"
-     }
+     "per": "PROPERTY_CRIME"
     }
    }
   ]

@@ -5,29 +5,14 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_MEDICINE",
-     "scope": "team"
-    },
-    {
-     "type": "TECH_SCREW_PROPELLER",
-     "scope": "team"
-    },
-    {
-     "type": "TECH_CORPORATION",
-     "scope": "team"
-    }
+    "TECH_MEDICINE",
+    "TECH_SCREW_PROPELLER",
+    "TECH_CORPORATION"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_SHOPPING_DISTRICT",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_TRADING_POST",
-      "scope": "city"
-     }
+     "BUILDING_SHOPPING_DISTRICT",
+     "BUILDING_TRADING_POST"
     ],
     [
      {
@@ -39,10 +24,7 @@
   },
   "operate": {
    "all": [
-    {
-     "type": "CORPORATION_2",
-     "scope": "city"
-    }
+    "CORPORATION_2"
    ]
   }
  },

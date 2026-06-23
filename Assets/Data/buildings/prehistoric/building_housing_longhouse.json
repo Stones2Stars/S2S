@@ -15,10 +15,7 @@
      "scope": "city",
      "min": 3
     },
-    {
-     "type": "TECH_CARPENTRY",
-     "scope": "team"
-    }
+    "TECH_CARPENTRY"
    ],
    "any": [
     [
@@ -56,34 +53,13 @@
     }
    ],
    "dormant": [
-    {
-     "type": "BUILDING_HOUSING_PUEBLOS",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_HOUSING_SLUMS",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_HOUSING_SHANTY_TOWN",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_HOUSING_GHETTOS",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_HOUSING_INNER_CITY",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_HOUSING_COLONY_ARCOLOGY",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_LAUNCH_ARCOLOGY",
-     "scope": "city"
-    }
+    "BUILDING_HOUSING_PUEBLOS",
+    "BUILDING_HOUSING_SLUMS",
+    "BUILDING_HOUSING_SHANTY_TOWN",
+    "BUILDING_HOUSING_GHETTOS",
+    "BUILDING_HOUSING_INNER_CITY",
+    "BUILDING_HOUSING_COLONY_ARCOLOGY",
+    "BUILDING_LAUNCH_ARCOLOGY"
    ]
   }
  },

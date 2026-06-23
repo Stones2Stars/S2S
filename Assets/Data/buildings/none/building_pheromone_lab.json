@@ -11,14 +11,8 @@
      "scope": "city",
      "min": 3
     },
-    {
-     "type": "BUILDING_BIOPUNK_LAB",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_BIOPUNK",
-     "scope": "team"
-    }
+    "BUILDING_BIOPUNK_LAB",
+    "TECH_BIOPUNK"
    ],
    "any": [
     [

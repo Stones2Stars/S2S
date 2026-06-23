@@ -13,14 +13,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_UNIVERSAL_LIBRARY",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_MENSIOKINESIS",
-     "scope": "team"
-    }
+    "BUILDING_UNIVERSAL_LIBRARY",
+    "TECH_MENSIOKINESIS"
    ],
    "any": [
     [
@@ -33,10 +27,7 @@
   },
   "operate": {
    "dormant": [
-    {
-     "type": "BUILDING_MATERIALIZATION_COMPLEX",
-     "scope": "city"
-    }
+    "BUILDING_MATERIALIZATION_COMPLEX"
    ]
   }
  },

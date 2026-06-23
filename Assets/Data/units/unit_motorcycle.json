@@ -10,14 +10,8 @@
      "scope": "city",
      "connection": "trade|vicinity"
     },
-    {
-     "type": "TECH_MOTORIZED_TRANSPORTATION",
-     "scope": "team"
-    },
-    {
-     "type": "TECH_SEMI_AUTOMATIC_WEAPONS",
-     "scope": "team"
-    }
+    "TECH_MOTORIZED_TRANSPORTATION",
+    "TECH_SEMI_AUTOMATIC_WEAPONS"
    ],
    "any": [
     [

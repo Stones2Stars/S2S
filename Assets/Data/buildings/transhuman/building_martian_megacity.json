@@ -21,14 +21,8 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_MARTIAN_METROPOLIS",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_ANIMAMATERIALS",
-     "scope": "team"
-    }
+    "BUILDING_MARTIAN_METROPOLIS",
+    "TECH_ANIMAMATERIALS"
    ],
    "any": [
     [

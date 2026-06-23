@@ -5,14 +5,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_HQ_SIDS_SUSHI_CO",
-     "scope": "city"
-    },
-    {
-     "type": "CORPORATION_2",
-     "scope": "city"
-    }
+    "BUILDING_HQ_SIDS_SUSHI_CO",
+    "CORPORATION_2"
    ]
   }
  },

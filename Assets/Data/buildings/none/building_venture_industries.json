@@ -10,18 +10,9 @@
      "scope": "city",
      "min": 7
     },
-    {
-     "type": "BUILDING_LABORATORY",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_INDUSTRIAL_PARK",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_ATOMPUNK",
-     "scope": "team"
-    }
+    "BUILDING_LABORATORY",
+    "BUILDING_INDUSTRIAL_PARK",
+    "TECH_ATOMPUNK"
    ],
    "any": [
     [
@@ -50,24 +41,15 @@
    "flat": [
     {
      "value": 8,
-     "enabled": {
-      "type": "TECH_CLONING",
-      "scope": "team"
-     }
+     "enabled": "TECH_CLONING"
     },
     {
      "value": 7,
-     "enabled": {
-      "type": "TECH_LUNAR_EXPLORATION",
-      "scope": "team"
-     }
+     "enabled": "TECH_LUNAR_EXPLORATION"
     },
     {
      "value": 7,
-     "enabled": {
-      "type": "TECH_SPACE_STATIONS",
-      "scope": "team"
-     }
+     "enabled": "TECH_SPACE_STATIONS"
     }
    ]
   }
@@ -78,10 +60,7 @@
     5,
     {
      "value": 7,
-     "enabled": {
-      "type": "TECH_ROBOTICS",
-      "scope": "team"
-     }
+     "enabled": "TECH_ROBOTICS"
     }
    ]
   }
@@ -97,31 +76,19 @@
     5,
     {
      "value": 7,
-     "enabled": {
-      "type": "TECH_LUNAR_EXPLORATION",
-      "scope": "team"
-     }
+     "enabled": "TECH_LUNAR_EXPLORATION"
     },
     {
      "value": 7,
-     "enabled": {
-      "type": "TECH_SPACE_STATIONS",
-      "scope": "team"
-     }
+     "enabled": "TECH_SPACE_STATIONS"
     },
     {
      "value": 7,
-     "enabled": {
-      "type": "TECH_ROBOTICS",
-      "scope": "team"
-     }
+     "enabled": "TECH_ROBOTICS"
     },
     {
      "value": 8,
-     "enabled": {
-      "type": "TECH_CLONING",
-      "scope": "team"
-     }
+     "enabled": "TECH_CLONING"
     }
    ]
   }

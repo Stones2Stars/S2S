@@ -13,14 +13,8 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_COMPUTER_NETWORK",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_MESH_NETWORKS",
-     "scope": "team"
-    }
+    "BUILDING_COMPUTER_NETWORK",
+    "TECH_MESH_NETWORKS"
    ],
    "any": [
     [

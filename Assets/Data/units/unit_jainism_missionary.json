@@ -5,14 +5,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_JAIN_MONASTERY",
-     "scope": "city"
-    },
-    {
-     "type": "RELIGION_JAINISM",
-     "scope": "city"
-    }
+    "BUILDING_JAIN_MONASTERY",
+    "RELIGION_JAINISM"
    ]
   }
  },

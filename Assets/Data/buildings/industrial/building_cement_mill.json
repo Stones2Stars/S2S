@@ -18,25 +18,13 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_THERMODYNAMICS",
-     "scope": "team"
-    }
+    "TECH_THERMODYNAMICS"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_TRADING_POST",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_SHOPPING_DISTRICT",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_FACTORY",
-      "scope": "city"
-     }
+     "BUILDING_TRADING_POST",
+     "BUILDING_SHOPPING_DISTRICT",
+     "BUILDING_FACTORY"
     ],
     [
      {
@@ -64,10 +52,7 @@
     ]
    ],
    "dormant": [
-    {
-     "type": "BUILDING_MODERN_EARTHWORKS",
-     "scope": "city"
-    }
+    "BUILDING_MODERN_EARTHWORKS"
    ]
   }
  },

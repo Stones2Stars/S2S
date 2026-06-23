@@ -6,14 +6,8 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_COMPUTATIONAL_METAPHYSICS_CENTER",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_SPACEPUNK",
-     "scope": "team"
-    }
+    "BUILDING_COMPUTATIONAL_METAPHYSICS_CENTER",
+    "TECH_SPACEPUNK"
    ],
    "any": [
     [

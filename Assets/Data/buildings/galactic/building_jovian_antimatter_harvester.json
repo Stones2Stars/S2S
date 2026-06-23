@@ -11,14 +11,8 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_DEEP_SPACE_FACTORY",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_ANTIMATTER_PRODUCTION",
-     "scope": "team"
-    }
+    "BUILDING_DEEP_SPACE_FACTORY",
+    "TECH_ANTIMATTER_PRODUCTION"
    ],
    "any": [
     [

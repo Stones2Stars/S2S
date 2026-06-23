@@ -16,14 +16,8 @@
      "scope": "city",
      "min": 3
     },
-    {
-     "type": "BUILDING_FACTORY",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_ATOMPUNK",
-     "scope": "team"
-    },
+    "BUILDING_FACTORY",
+    "TECH_ATOMPUNK",
     {
      "type": "BONUS_HEAVY_WATER",
      "scope": "city",

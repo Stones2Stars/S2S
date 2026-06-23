@@ -12,14 +12,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_INTERSTELLAR_STARPORT",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_SPACE_CREASING",
-     "scope": "team"
-    }
+    "BUILDING_INTERSTELLAR_STARPORT",
+    "TECH_SPACE_CREASING"
    ],
    "any": [
     [

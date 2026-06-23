@@ -11,14 +11,8 @@
      "scope": "city",
      "min": 7
     },
-    {
-     "type": "TECH_ANIMATION",
-     "scope": "team"
-    },
-    {
-     "type": "TECH_CIVIL_ENGINEERING",
-     "scope": "team"
-    }
+    "TECH_ANIMATION",
+    "TECH_CIVIL_ENGINEERING"
    ],
    "any": [
     [

@@ -13,10 +13,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_PRIESTHOOD",
-     "scope": "team"
-    }
+    "TECH_PRIESTHOOD"
    ],
    "any": [
     [
@@ -34,10 +31,7 @@
      "scope": "city",
      "connection": "trade|vicinity"
     },
-    {
-     "type": "RELIGION_TAOISM",
-     "scope": "city"
-    }
+    "RELIGION_TAOISM"
    ],
    "any": [
     [

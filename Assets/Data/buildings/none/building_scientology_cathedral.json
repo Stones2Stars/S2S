@@ -6,25 +6,13 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_SCIENTOLOGY_TEMPLE",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_MUSICAL_NOTATION",
-     "scope": "team"
-    }
+    "BUILDING_SCIENTOLOGY_TEMPLE",
+    "TECH_MUSICAL_NOTATION"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_CITY_COUNCIL",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_METROPOLITAN_ADMINISTRATION",
-      "scope": "city"
-     }
+     "BUILDING_CITY_COUNCIL",
+     "BUILDING_METROPOLITAN_ADMINISTRATION"
     ],
     [
      {
@@ -36,10 +24,7 @@
   },
   "operate": {
    "all": [
-    {
-     "type": "RELIGION_SCIENTOLOGY",
-     "scope": "city"
-    }
+    "RELIGION_SCIENTOLOGY"
    ]
   }
  },

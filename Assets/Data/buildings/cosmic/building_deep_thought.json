@@ -5,19 +5,13 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_EFFECT_GALACTIC_ECONOMY",
-     "scope": "city"
-    },
+    "BUILDING_EFFECT_GALACTIC_ECONOMY",
     {
      "type": "BUILDING_CLOSED_TIMELIKE_CURVE_COMPUTER",
      "scope": "empire",
      "min": 1
     },
-    {
-     "type": "TECH_STABLE_TIME_LOOPS",
-     "scope": "team"
-    }
+    "TECH_STABLE_TIME_LOOPS"
    ],
    "any": [
     [

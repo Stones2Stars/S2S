@@ -13,21 +13,12 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_CRUCIBLE_STEEL",
-     "scope": "team"
-    }
+    "TECH_CRUCIBLE_STEEL"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_FORGE",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_FOUNDRY",
-      "scope": "city"
-     }
+     "BUILDING_FORGE",
+     "BUILDING_FOUNDRY"
     ],
     [
      {
@@ -46,14 +37,8 @@
     }
    ],
    "dormant": [
-    {
-     "type": "BUILDING_ADVANCED_IRONWORKS",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_METALS_MEGACOMPLEX",
-     "scope": "city"
-    }
+    "BUILDING_ADVANCED_IRONWORKS",
+    "BUILDING_METALS_MEGACOMPLEX"
    ]
   }
  },

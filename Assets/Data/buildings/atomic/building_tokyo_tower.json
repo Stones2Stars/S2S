@@ -11,14 +11,8 @@
      "scope": "city",
      "min": 7
     },
-    {
-     "type": "BUILDING_SKYSCRAPER",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_MASS_MEDIA",
-     "scope": "team"
-    }
+    "BUILDING_SKYSCRAPER",
+    "TECH_MASS_MEDIA"
    ],
    "any": [
     [
@@ -52,24 +46,15 @@
    "flat": [
     {
      "value": 2,
-     "enabled": {
-      "type": "BUILDING_BROADCAST_TOWER",
-      "scope": "city"
-     }
+     "enabled": "BUILDING_BROADCAST_TOWER"
     },
     {
      "value": 2,
-     "enabled": {
-      "type": "BUILDING_COMMUNICATION_TOWER",
-      "scope": "city"
-     }
+     "enabled": "BUILDING_COMMUNICATION_TOWER"
     },
     {
      "value": 2,
-     "enabled": {
-      "type": "BUILDING_NETWORK_NODE",
-      "scope": "city"
-     }
+     "enabled": "BUILDING_NETWORK_NODE"
     }
    ]
   }

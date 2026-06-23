@@ -10,10 +10,7 @@
      "scope": "empire",
      "min": 1
     },
-    {
-     "type": "TECH_ION_PROPULSION",
-     "scope": "team"
-    }
+    "TECH_ION_PROPULSION"
    ],
    "any": [
     [

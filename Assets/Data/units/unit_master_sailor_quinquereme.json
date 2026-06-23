@@ -10,10 +10,7 @@
      "scope": "world",
      "min": 10
     },
-    {
-     "type": "TECH_ANCIENT_BALLISTICS",
-     "scope": "team"
-    }
+    "TECH_ANCIENT_BALLISTICS"
    ]
   }
  },

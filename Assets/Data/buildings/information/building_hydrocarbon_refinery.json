@@ -19,18 +19,9 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_INDUSTRIAL_PARK",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_BACTERIUM_BIOFORGE",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_BACTERIUM_ENGINEERING",
-     "scope": "team"
-    }
+    "BUILDING_INDUSTRIAL_PARK",
+    "BUILDING_BACTERIUM_BIOFORGE",
+    "TECH_BACTERIUM_ENGINEERING"
    ],
    "any": [
     [
@@ -62,10 +53,7 @@
     ]
    ],
    "dormant": [
-    {
-     "type": "BUILDING_ULTRAFUEL_REFINERY",
-     "scope": "city"
-    }
+    "BUILDING_ULTRAFUEL_REFINERY"
    ]
   }
  },

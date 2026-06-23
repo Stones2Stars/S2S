@@ -5,14 +5,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_DISTANT_EXPLORERS_BASE",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_TIMELINE_RECTIFICATION",
-     "scope": "team"
-    }
+    "BUILDING_DISTANT_EXPLORERS_BASE",
+    "TECH_TIMELINE_RECTIFICATION"
    ],
    "any": [
     [

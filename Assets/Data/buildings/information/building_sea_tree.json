@@ -7,18 +7,9 @@
    "all": [
     "HAS_COAST",
     "HAS_POWER",
-    {
-     "type": "BUILDING_ECOSCRAPER",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_COASTAL_PRESERVE",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_ECOLOGICAL_ENGINEERING",
-     "scope": "team"
-    }
+    "BUILDING_ECOSCRAPER",
+    "BUILDING_COASTAL_PRESERVE",
+    "TECH_ECOLOGICAL_ENGINEERING"
    ],
    "any": [
     [

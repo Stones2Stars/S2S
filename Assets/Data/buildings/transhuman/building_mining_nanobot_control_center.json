@@ -11,14 +11,8 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_MINING_MECH_CONTROL_CENTER",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_NANOMINING",
-     "scope": "team"
-    }
+    "BUILDING_MINING_MECH_CONTROL_CENTER",
+    "TECH_NANOMINING"
    ],
    "any": [
     [

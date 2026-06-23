@@ -6,14 +6,8 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_SKYSCRAPER",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_MEGACITIES",
-     "scope": "team"
-    }
+    "BUILDING_SKYSCRAPER",
+    "TECH_MEGACITIES"
    ],
    "any": [
     [

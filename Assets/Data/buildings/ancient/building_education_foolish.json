@@ -5,10 +5,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_SEDENTARY_LIFESTYLE",
-     "scope": "team"
-    }
+    "TECH_SEDENTARY_LIFESTYLE"
    ],
    "any": [
     [
@@ -21,50 +18,17 @@
   },
   "operate": {
    "dormant": [
-    {
-     "type": "BUILDING_EDUCATION_SENSELESS",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_EDUCATION_ABSURD",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_EDUCATION_MORONIC",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_EDUCATION_FARCICAL",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_EDUCATION_DIMWITTED",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_EDUCATION_RIDICULOUS",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_EDUCATION_PREPOSTEROUS",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_EDUCATION_IDIOCRACY",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_EDUCATION_IGNORANCE",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_EDUCATION_BEWILDERED",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_EDUCATION_MINDLESS",
-     "scope": "city"
-    }
+    "BUILDING_EDUCATION_SENSELESS",
+    "BUILDING_EDUCATION_ABSURD",
+    "BUILDING_EDUCATION_MORONIC",
+    "BUILDING_EDUCATION_FARCICAL",
+    "BUILDING_EDUCATION_DIMWITTED",
+    "BUILDING_EDUCATION_RIDICULOUS",
+    "BUILDING_EDUCATION_PREPOSTEROUS",
+    "BUILDING_EDUCATION_IDIOCRACY",
+    "BUILDING_EDUCATION_IGNORANCE",
+    "BUILDING_EDUCATION_BEWILDERED",
+    "BUILDING_EDUCATION_MINDLESS"
    ],
    "all": [
     {

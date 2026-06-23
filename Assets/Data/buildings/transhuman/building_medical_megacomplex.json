@@ -11,10 +11,7 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "TECH_MOLECULAR_SCANNING",
-     "scope": "team"
-    }
+    "TECH_MOLECULAR_SCANNING"
    ],
    "any": [
     [

@@ -11,14 +11,8 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_WIRELESS_NETWORKS",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_COMMUNICATION_NETWORKS",
-     "scope": "team"
-    }
+    "BUILDING_WIRELESS_NETWORKS",
+    "TECH_COMMUNICATION_NETWORKS"
    ],
    "any": [
     [
@@ -72,10 +66,7 @@
     "unit": "UNIT_HACKER",
     "interval": "perTurn",
     "chance": {
-     "per": {
-      "type": "PROPERTY_CRIME",
-      "scope": "city"
-     }
+     "per": "PROPERTY_CRIME"
     }
    },
    {

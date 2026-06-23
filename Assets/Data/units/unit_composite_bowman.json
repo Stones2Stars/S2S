@@ -5,10 +5,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_BRONZE_WORKING",
-     "scope": "team"
-    }
+    "TECH_BRONZE_WORKING"
    ]
   }
  },

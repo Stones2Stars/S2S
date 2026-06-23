@@ -19,25 +19,13 @@
   "build": {
    "all": [
     "HAS_COAST",
-    {
-     "type": "BUILDING_HARBORMASTERS_OFFICE",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_CITY_PLANNING",
-     "scope": "team"
-    }
+    "BUILDING_HARBORMASTERS_OFFICE",
+    "TECH_CITY_PLANNING"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_WAREHOUSE",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_MODERN_WAREHOUSE",
-      "scope": "city"
-     }
+     "BUILDING_WAREHOUSE",
+     "BUILDING_MODERN_WAREHOUSE"
     ],
     [
      {
@@ -49,10 +37,7 @@
   },
   "operate": {
    "dormant": [
-    {
-     "type": "BUILDING_TELEPORT_SHIPPING_WAREHOUSE",
-     "scope": "city"
-    }
+    "BUILDING_TELEPORT_SHIPPING_WAREHOUSE"
    ]
   }
  },

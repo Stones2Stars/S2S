@@ -14,29 +14,14 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_EQUINE_DOMESTICATION",
-     "scope": "team"
-    }
+    "TECH_EQUINE_DOMESTICATION"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_HERD_BUFFALO",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_FARM_ANIMAL_OXEN",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_INDUSTRIAL_FARMS",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_MEAT_INDUSTRY_CONGLOMERATE",
-      "scope": "city"
-     }
+     "BUILDING_HERD_BUFFALO",
+     "BUILDING_FARM_ANIMAL_OXEN",
+     "BUILDING_INDUSTRIAL_FARMS",
+     "BUILDING_MEAT_INDUSTRY_CONGLOMERATE"
     ],
     [
      {

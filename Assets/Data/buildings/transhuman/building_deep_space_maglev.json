@@ -13,14 +13,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_DEEP_SPACE_ONEILL_CYLINDER",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_ORBITAL_MEGASTRUCTURES",
-     "scope": "team"
-    }
+    "BUILDING_DEEP_SPACE_ONEILL_CYLINDER",
+    "TECH_ORBITAL_MEGASTRUCTURES"
    ],
    "any": [
     [

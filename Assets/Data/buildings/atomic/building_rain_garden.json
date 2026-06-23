@@ -5,14 +5,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_COMMUNITY_GARDEN",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_ECOLOGY",
-     "scope": "team"
-    }
+    "BUILDING_COMMUNITY_GARDEN",
+    "TECH_ECOLOGY"
    ],
    "any": [
     [

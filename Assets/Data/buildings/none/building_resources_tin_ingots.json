@@ -14,18 +14,9 @@
   "build": {
    "any": [
     [
-     {
-      "type": "BUILDING_NATIONAL_SMELTER_TIN",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_SMELTER_TIN",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_TIN_RECLAMATION_PLANT",
-      "scope": "city"
-     }
+     "BUILDING_NATIONAL_SMELTER_TIN",
+     "BUILDING_SMELTER_TIN",
+     "BUILDING_TIN_RECLAMATION_PLANT"
     ],
     [
      {
@@ -37,10 +28,7 @@
   },
   "operate": {
    "dormant": [
-    {
-     "type": "BUILDING_METALS_MEGACOMPLEX",
-     "scope": "city"
-    }
+    "BUILDING_METALS_MEGACOMPLEX"
    ]
   }
  },

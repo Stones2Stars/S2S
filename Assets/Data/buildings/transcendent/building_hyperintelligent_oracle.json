@@ -10,14 +10,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_CLOSED_TIMELIKE_CURVE_COMPUTER",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_HYPERINTELLIGENCE",
-     "scope": "team"
-    }
+    "BUILDING_CLOSED_TIMELIKE_CURVE_COMPUTER",
+    "TECH_HYPERINTELLIGENCE"
    ],
    "any": [
     [

@@ -13,21 +13,12 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_FRANCHISES",
-     "scope": "team"
-    }
+    "TECH_FRANCHISES"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_TRADING_POST",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_SHOPPING_DISTRICT",
-      "scope": "city"
-     }
+     "BUILDING_TRADING_POST",
+     "BUILDING_SHOPPING_DISTRICT"
     ],
     [
      {
@@ -55,10 +46,7 @@
     ]
    ],
    "dormant": [
-    {
-     "type": "BUILDING_UNIVERSAL_RESTAURANT",
-     "scope": "city"
-    }
+    "BUILDING_UNIVERSAL_RESTAURANT"
    ]
   }
  },

@@ -10,10 +10,7 @@
      "scope": "city",
      "connection": "trade|vicinity"
     },
-    {
-     "type": "TECH_ANDROIDS",
-     "scope": "team"
-    },
+    "TECH_ANDROIDS",
     {
      "type": "BONUS_TANKS",
      "scope": "city",

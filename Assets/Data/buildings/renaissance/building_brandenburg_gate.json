@@ -10,21 +10,12 @@
      "scope": "city",
      "min": 3
     },
-    {
-     "type": "TECH_MILITARY_TRADITION",
-     "scope": "team"
-    }
+    "TECH_MILITARY_TRADITION"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_GARRISON",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_MILITARY_BASE",
-      "scope": "city"
-     }
+     "BUILDING_GARRISON",
+     "BUILDING_MILITARY_BASE"
     ],
     [
      {

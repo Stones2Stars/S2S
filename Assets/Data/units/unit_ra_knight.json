@@ -10,18 +10,9 @@
      "scope": "city",
      "connection": "trade|vicinity"
     },
-    {
-     "type": "BUILDING_TEMPLE_OF_CHONS",
-     "scope": "city"
-    },
-    {
-     "type": "RELIGION_KEMETISM",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_CHIVALRY",
-     "scope": "team"
-    }
+    "BUILDING_TEMPLE_OF_CHONS",
+    "RELIGION_KEMETISM",
+    "TECH_CHIVALRY"
    ],
    "any": [
     [

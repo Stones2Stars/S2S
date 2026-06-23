@@ -30,33 +30,15 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_ANIMAL_RIDING",
-     "scope": "team"
-    }
+    "TECH_ANIMAL_RIDING"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_ANIMAL_TRAINER_CAMEL",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_ANIMAL_TRAINER_DONKEY",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_ANIMAL_TRAINER_HORSE",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_ANIMAL_TRAINER_ELEPHANT",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_ANIMAL_TRAINER_LLAMA",
-      "scope": "city"
-     }
+     "BUILDING_ANIMAL_TRAINER_CAMEL",
+     "BUILDING_ANIMAL_TRAINER_DONKEY",
+     "BUILDING_ANIMAL_TRAINER_HORSE",
+     "BUILDING_ANIMAL_TRAINER_ELEPHANT",
+     "BUILDING_ANIMAL_TRAINER_LLAMA"
     ],
     [
      {
@@ -81,14 +63,8 @@
     }
    ],
    "dormant": [
-    {
-     "type": "BUILDING_MODERN_STABLE",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_KNIGHTS_STABLE",
-     "scope": "city"
-    }
+    "BUILDING_MODERN_STABLE",
+    "BUILDING_KNIGHTS_STABLE"
    ]
   }
  },
@@ -97,10 +73,7 @@
    "flat": [
     {
      "value": 1,
-     "enabled": {
-      "type": "TECH_LEISURE",
-      "scope": "team"
-     }
+     "enabled": "TECH_LEISURE"
     }
    ]
   }

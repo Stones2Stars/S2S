@@ -6,25 +6,13 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_MEGATOWER",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_NANO_ARCHITECTURE",
-     "scope": "team"
-    }
+    "BUILDING_MEGATOWER",
+    "TECH_NANO_ARCHITECTURE"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_MALL",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_HYPERMARKET",
-      "scope": "city"
-     }
+     "BUILDING_MALL",
+     "BUILDING_HYPERMARKET"
     ],
     [
      {

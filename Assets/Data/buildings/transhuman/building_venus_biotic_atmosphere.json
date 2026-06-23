@@ -5,27 +5,15 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_VENUS_ECOSYSTEM",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_LIFE_SULFURIC_ACID",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_VENUS_SURFACE_CITY",
-     "scope": "city"
-    },
+    "BUILDING_VENUS_ECOSYSTEM",
+    "BUILDING_LIFE_SULFURIC_ACID",
+    "BUILDING_VENUS_SURFACE_CITY",
     {
      "type": "BUILDING_LIFE_SULFURIC_ACID",
      "scope": "empire",
      "min": 1
     },
-    {
-     "type": "TECH_GAIA_ECOLOGY",
-     "scope": "team"
-    }
+    "TECH_GAIA_ECOLOGY"
    ],
    "any": [
     [

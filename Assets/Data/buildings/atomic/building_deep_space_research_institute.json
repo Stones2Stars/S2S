@@ -11,18 +11,9 @@
      "scope": "city",
      "min": 7
     },
-    {
-     "type": "BUILDING_MODERN_OFFICES",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_LABORATORY",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_ASTRONAUTICS",
-     "scope": "team"
-    }
+    "BUILDING_MODERN_OFFICES",
+    "BUILDING_LABORATORY",
+    "TECH_ASTRONAUTICS"
    ],
    "any": [
     [

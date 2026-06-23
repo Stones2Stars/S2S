@@ -5,14 +5,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_WELFARE_OFFICE",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_LABOR_UNIONS",
-     "scope": "team"
-    }
+    "BUILDING_WELFARE_OFFICE",
+    "TECH_LABOR_UNIONS"
    ],
    "any": [
     [
@@ -26,14 +20,8 @@
   "operate": {
    "any": [
     [
-     {
-      "type": "CIVIC_SOCIALIZED",
-      "scope": "empire"
-     },
-     {
-      "type": "CIVIC_ECO_FRIENDLY",
-      "scope": "empire"
-     }
+     "CIVIC_SOCIALIZED",
+     "CIVIC_ECO_FRIENDLY"
     ]
    ],
    "all": [

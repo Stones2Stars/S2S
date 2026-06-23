@@ -16,25 +16,13 @@
      "scope": "empire",
      "min": 3
     },
-    {
-     "type": "TECH_ASTEROID_MINING",
-     "scope": "team"
-    }
+    "TECH_ASTEROID_MINING"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_AEROSPACE_COMPLEX",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_MILITARY_SPACEPORT",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_COMMERCIAL_SPACEPORT",
-      "scope": "city"
-     }
+     "BUILDING_AEROSPACE_COMPLEX",
+     "BUILDING_MILITARY_SPACEPORT",
+     "BUILDING_COMMERCIAL_SPACEPORT"
     ],
     [
      {

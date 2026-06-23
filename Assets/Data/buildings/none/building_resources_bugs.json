@@ -14,198 +14,54 @@
   "build": {
    "any": [
     [
-     {
-      "type": "BUILDING_ANCIENT_CUSTOMS",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_ANT_CATCHER",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_ASSASSIN_BUG_GATHERER",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_ASSASSIN_BUG_SANCTUARY",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_BAMBOO_WORM_GATHERER",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_BOGONG_MOTH_GATHERER",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_GRASSHOPPER_CATCHER",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_BUTTERFLY_GATHERER",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_BUTTERFLY_SANCTUARY",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_CENTIPEDE_GATHERER",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_CICADA_GATHERER",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_CICADA_SANCTUARY",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_GIANT_COCKROACH_GATHERER",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_CRICKET_GATHERER",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_CRICKET_SANCTUARY",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_DRAGONFLY_GATHERER",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_DRAGONFLY_SANCTUARY",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_DUNG_BEETLE_GATHERER",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_FIREFLY_GATHERER",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_FIREFLY_SANCTUARY",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_EARTHWORM_GATHERER",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_SNAIL_GATHERER",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_GOLIATH_BEETLE_GATHERER",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_GOLIATH_BEETLE_SANCTUARY",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_GRASSHOPPER_GATHERER",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_HERCULES_BEETLE_GATHERER",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_HERCULES_BEETLE_SANCTUARY",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_JUMILES_GATHERER",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_JUNEBUG_GATHERER",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_JUNEBUG_SANCTUARY",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_LADYBUG_GATHERER",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_LADYBUG_SANCTUARY",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_MEALWORM_GATHERER",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_MEZCAL_WORM_GATHERER",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_MOPANE_MOTH_GATHERER",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_PALM_WEEVIL_GATHERER",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_PILLBUG_GATHERER",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_PRAYING_MANTIS_GATHERER",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_PRAYING_MANTIS_SANCTUARY",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_RICE_BEETLE_GATHERER",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_SCARAB_BEETLE_GATHERER",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_SCARAB_BEETLE_SANCTUARY",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_SCORPION_GATHERER",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_SCORPION_SANCTUARY",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_TARANTULA_GATHERER",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_TERMITE_CATCHER",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_WEAVING_SPIDER_GATHERER",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_WEAVING_SPIDER_SANCTUARY",
-      "scope": "city"
-     }
+     "BUILDING_ANCIENT_CUSTOMS",
+     "BUILDING_ANT_CATCHER",
+     "BUILDING_ASSASSIN_BUG_GATHERER",
+     "BUILDING_ASSASSIN_BUG_SANCTUARY",
+     "BUILDING_BAMBOO_WORM_GATHERER",
+     "BUILDING_BOGONG_MOTH_GATHERER",
+     "BUILDING_GRASSHOPPER_CATCHER",
+     "BUILDING_BUTTERFLY_GATHERER",
+     "BUILDING_BUTTERFLY_SANCTUARY",
+     "BUILDING_CENTIPEDE_GATHERER",
+     "BUILDING_CICADA_GATHERER",
+     "BUILDING_CICADA_SANCTUARY",
+     "BUILDING_GIANT_COCKROACH_GATHERER",
+     "BUILDING_CRICKET_GATHERER",
+     "BUILDING_CRICKET_SANCTUARY",
+     "BUILDING_DRAGONFLY_GATHERER",
+     "BUILDING_DRAGONFLY_SANCTUARY",
+     "BUILDING_DUNG_BEETLE_GATHERER",
+     "BUILDING_FIREFLY_GATHERER",
+     "BUILDING_FIREFLY_SANCTUARY",
+     "BUILDING_EARTHWORM_GATHERER",
+     "BUILDING_SNAIL_GATHERER",
+     "BUILDING_GOLIATH_BEETLE_GATHERER",
+     "BUILDING_GOLIATH_BEETLE_SANCTUARY",
+     "BUILDING_GRASSHOPPER_GATHERER",
+     "BUILDING_HERCULES_BEETLE_GATHERER",
+     "BUILDING_HERCULES_BEETLE_SANCTUARY",
+     "BUILDING_JUMILES_GATHERER",
+     "BUILDING_JUNEBUG_GATHERER",
+     "BUILDING_JUNEBUG_SANCTUARY",
+     "BUILDING_LADYBUG_GATHERER",
+     "BUILDING_LADYBUG_SANCTUARY",
+     "BUILDING_MEALWORM_GATHERER",
+     "BUILDING_MEZCAL_WORM_GATHERER",
+     "BUILDING_MOPANE_MOTH_GATHERER",
+     "BUILDING_PALM_WEEVIL_GATHERER",
+     "BUILDING_PILLBUG_GATHERER",
+     "BUILDING_PRAYING_MANTIS_GATHERER",
+     "BUILDING_PRAYING_MANTIS_SANCTUARY",
+     "BUILDING_RICE_BEETLE_GATHERER",
+     "BUILDING_SCARAB_BEETLE_GATHERER",
+     "BUILDING_SCARAB_BEETLE_SANCTUARY",
+     "BUILDING_SCORPION_GATHERER",
+     "BUILDING_SCORPION_SANCTUARY",
+     "BUILDING_TARANTULA_GATHERER",
+     "BUILDING_TERMITE_CATCHER",
+     "BUILDING_WEAVING_SPIDER_GATHERER",
+     "BUILDING_WEAVING_SPIDER_SANCTUARY"
     ],
     [
      {
@@ -217,14 +73,8 @@
   },
   "operate": {
    "dormant": [
-    {
-     "type": "BUILDING_ARBORETUM",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_AGROFOREST",
-     "scope": "city"
-    }
+    "BUILDING_ARBORETUM",
+    "BUILDING_AGROFOREST"
    ]
   }
  },

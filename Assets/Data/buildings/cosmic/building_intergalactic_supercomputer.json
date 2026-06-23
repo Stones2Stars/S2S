@@ -14,14 +14,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_INTERGALACTIC_RESEARCH_BASE",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_ULTRACOMPUTING",
-     "scope": "team"
-    }
+    "BUILDING_INTERGALACTIC_RESEARCH_BASE",
+    "TECH_ULTRACOMPUTING"
    ],
    "any": [
     [
@@ -38,10 +32,7 @@
    "flat": [
     {
      "value": 13,
-     "enabled": {
-      "type": "TECH_NONSTANDARD_MATHEMATICS",
-      "scope": "team"
-     }
+     "enabled": "TECH_NONSTANDARD_MATHEMATICS"
     }
    ]
   }

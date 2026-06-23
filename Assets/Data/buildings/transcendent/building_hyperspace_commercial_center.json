@@ -10,18 +10,9 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_HYPERSPACE_IMPORTER",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_HYPERSPACE_EXPORTER",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_TRANSDIMENSIONAL_COMMERCE",
-     "scope": "team"
-    }
+    "BUILDING_HYPERSPACE_IMPORTER",
+    "BUILDING_HYPERSPACE_EXPORTER",
+    "TECH_TRANSDIMENSIONAL_COMMERCE"
    ],
    "any": [
     [

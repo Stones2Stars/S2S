@@ -5,14 +5,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_SPACE_COLONY_MARTIAN",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_PHOTON_THERMODYNAMICS",
-     "scope": "team"
-    }
+    "BUILDING_SPACE_COLONY_MARTIAN",
+    "TECH_PHOTON_THERMODYNAMICS"
    ],
    "any": [
     [
@@ -30,10 +24,7 @@
     200,
     {
      "value": 10,
-     "enabled": {
-      "type": "TECH_OPTRONICS",
-      "scope": "team"
-     }
+     "enabled": "TECH_OPTRONICS"
     }
    ]
   }

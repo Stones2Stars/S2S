@@ -5,14 +5,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_HQ_MALLWART",
-     "scope": "city"
-    },
-    {
-     "type": "CORPORATION_MALLWART",
-     "scope": "city"
-    }
+    "BUILDING_HQ_MALLWART",
+    "CORPORATION_MALLWART"
    ]
   }
  },

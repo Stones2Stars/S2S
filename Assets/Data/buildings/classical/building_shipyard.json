@@ -21,18 +21,9 @@
   "build": {
    "all": [
     "HAS_COAST",
-    {
-     "type": "BUILDING_SHIPWRIGHT",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_HARBORMASTERS_OFFICE",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_SHIP_BUILDING",
-     "scope": "team"
-    }
+    "BUILDING_SHIPWRIGHT",
+    "BUILDING_HARBORMASTERS_OFFICE",
+    "TECH_SHIP_BUILDING"
    ],
    "any": [
     [
@@ -45,14 +36,8 @@
   },
   "operate": {
    "dormant": [
-    {
-     "type": "BUILDING_DRYDOCK",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_NAVAL_YARD",
-     "scope": "city"
-    }
+    "BUILDING_DRYDOCK",
+    "BUILDING_NAVAL_YARD"
    ]
   }
  },

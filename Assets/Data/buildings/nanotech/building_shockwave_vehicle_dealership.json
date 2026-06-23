@@ -14,22 +14,10 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_SHOPPING_DISTRICT",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_ADVANCED_QUALITY_CONTROL",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_INTERNAL_SHOCKWAVE_ENGINE",
-     "scope": "team"
-    },
-    {
-     "type": "TECH_HOLOGRAPHICS",
-     "scope": "team"
-    },
+    "BUILDING_SHOPPING_DISTRICT",
+    "BUILDING_ADVANCED_QUALITY_CONTROL",
+    "TECH_INTERNAL_SHOCKWAVE_ENGINE",
+    "TECH_HOLOGRAPHICS",
     {
      "type": "BONUS_GRAPHENE",
      "scope": "city",
@@ -48,14 +36,8 @@
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_HOLOGRAPHIC_NETWORKS",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_EXOCORTEX_NETWORKS",
-      "scope": "city"
-     }
+     "BUILDING_HOLOGRAPHIC_NETWORKS",
+     "BUILDING_EXOCORTEX_NETWORKS"
     ],
     [
      {
@@ -74,10 +56,7 @@
     }
    ],
    "dormant": [
-    {
-     "type": "BUILDING_ANTIGRAV_VEHICLE_DEALERSHIP",
-     "scope": "city"
-    }
+    "BUILDING_ANTIGRAV_VEHICLE_DEALERSHIP"
    ]
   }
  },

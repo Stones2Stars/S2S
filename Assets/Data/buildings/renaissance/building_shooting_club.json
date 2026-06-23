@@ -20,25 +20,13 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_MATCHLOCK",
-     "scope": "team"
-    }
+    "TECH_MATCHLOCK"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_GUNSMITH",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_FACTORY_AMMUNITION",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_MILITARY_INDUSTRIAL_COMPLEX",
-      "scope": "city"
-     }
+     "BUILDING_GUNSMITH",
+     "BUILDING_FACTORY_AMMUNITION",
+     "BUILDING_MILITARY_INDUSTRIAL_COMPLEX"
     ],
     [
      {
@@ -64,18 +52,9 @@
     ]
    ],
    "dormant": [
-    {
-     "type": "BUILDING_FIRING_RANGE",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_AUTOMATED_FIRING_RANGE",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_ORBITAL_TARGETS",
-     "scope": "city"
-    }
+    "BUILDING_FIRING_RANGE",
+    "BUILDING_AUTOMATED_FIRING_RANGE",
+    "BUILDING_ORBITAL_TARGETS"
    ]
   }
  },

@@ -15,25 +15,13 @@
      "scope": "city",
      "min": 3
     },
-    {
-     "type": "TECH_GEARS",
-     "scope": "team"
-    },
-    {
-     "type": "TECH_SUNDIAL",
-     "scope": "team"
-    }
+    "TECH_GEARS",
+    "TECH_SUNDIAL"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_STARGAZERS_HUT",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_OBSERVATORY",
-      "scope": "city"
-     }
+     "BUILDING_STARGAZERS_HUT",
+     "BUILDING_OBSERVATORY"
     ],
     [
      {
@@ -52,10 +40,7 @@
     }
    ],
    "dormant": [
-    {
-     "type": "BUILDING_POLLUTION_BLACKENED_SKIES",
-     "scope": "city"
-    }
+    "BUILDING_POLLUTION_BLACKENED_SKIES"
    ]
   }
  },

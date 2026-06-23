@@ -10,10 +10,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_INTERSTELLAR_COMMUNICATION",
-     "scope": "team"
-    }
+    "TECH_INTERSTELLAR_COMMUNICATION"
    ],
    "any": [
     [

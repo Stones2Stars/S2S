@@ -18,14 +18,8 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_STRATOSPHERIC_TOWER",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_ATOMIC_SCALE_ENGINEERING",
-     "scope": "team"
-    }
+    "BUILDING_STRATOSPHERIC_TOWER",
+    "TECH_ATOMIC_SCALE_ENGINEERING"
    ],
    "any": [
     [
@@ -62,10 +56,7 @@
     6,
     {
      "value": 11,
-     "enabled": {
-      "type": "TECH_ADAPTIVE_ARCHITECTURE",
-      "scope": "team"
-     }
+     "enabled": "TECH_ADAPTIVE_ARCHITECTURE"
     }
    ]
   }

@@ -6,18 +6,9 @@
   "build": {
    "all": [
     "HAS_COAST",
-    {
-     "type": "BUILDING_C_AC_EUROPEAN",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_C_L_EUROPEAN",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_WRITING",
-     "scope": "team"
-    }
+    "BUILDING_C_AC_EUROPEAN",
+    "BUILDING_C_L_EUROPEAN",
+    "TECH_WRITING"
    ],
    "any": [
     [

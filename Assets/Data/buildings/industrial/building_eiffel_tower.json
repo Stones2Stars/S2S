@@ -10,29 +10,14 @@
      "scope": "city",
      "min": 7
     },
-    {
-     "type": "TECH_RADIO",
-     "scope": "team"
-    },
-    {
-     "type": "TECH_CIVIL_ENGINEERING",
-     "scope": "team"
-    }
+    "TECH_RADIO",
+    "TECH_CIVIL_ENGINEERING"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_SMELTER_STEEL",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_ADVANCED_IRONWORKS",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_METALS_MEGACOMPLEX",
-      "scope": "city"
-     }
+     "BUILDING_SMELTER_STEEL",
+     "BUILDING_ADVANCED_IRONWORKS",
+     "BUILDING_METALS_MEGACOMPLEX"
     ],
     [
      {
@@ -51,10 +36,7 @@
    "flat": [
     {
      "value": 7,
-     "enabled": {
-      "type": "TECH_TOURISM",
-      "scope": "team"
-     }
+     "enabled": "TECH_TOURISM"
     }
    ]
   }

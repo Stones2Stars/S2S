@@ -13,10 +13,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_BICYCLES",
-     "scope": "team"
-    }
+    "TECH_BICYCLES"
    ],
    "any": [
     [
@@ -65,10 +62,7 @@
     ]
    ],
    "dormant": [
-    {
-     "type": "BUILDING_MANUFACTURING_DISTRICT",
-     "scope": "city"
-    }
+    "BUILDING_MANUFACTURING_DISTRICT"
    ]
   }
  },
@@ -83,10 +77,7 @@
     1,
     {
      "value": 7,
-     "enabled": {
-      "type": "TECH_NEW_URBANISM",
-      "scope": "team"
-     }
+     "enabled": "TECH_NEW_URBANISM"
     }
    ]
   }

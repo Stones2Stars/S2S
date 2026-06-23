@@ -5,14 +5,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_UNIVERSITY",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_PALEONTOLOGY",
-     "scope": "team"
-    }
+    "BUILDING_UNIVERSITY",
+    "TECH_PALEONTOLOGY"
    ],
    "any": [
     [
@@ -39,31 +33,19 @@
     5,
     {
      "value": 7,
-     "enabled": {
-      "type": "TECH_MODERN_SEISMOLOGY",
-      "scope": "team"
-     }
+     "enabled": "TECH_MODERN_SEISMOLOGY"
     },
     {
      "value": 7,
-     "enabled": {
-      "type": "TECH_GENETICS",
-      "scope": "team"
-     }
+     "enabled": "TECH_GENETICS"
     },
     {
      "value": 8,
-     "enabled": {
-      "type": "TECH_GENOMIC_ENCYCLOPEDIA",
-      "scope": "team"
-     }
+     "enabled": "TECH_GENOMIC_ENCYCLOPEDIA"
     },
     {
      "value": 8,
-     "enabled": {
-      "type": "TECH_BIOINFORMATICS",
-      "scope": "team"
-     }
+     "enabled": "TECH_BIOINFORMATICS"
     },
     {
      "value": 1,

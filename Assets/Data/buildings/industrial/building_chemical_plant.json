@@ -21,25 +21,13 @@
   "build": {
    "all": [
     "HAS_RIVER",
-    {
-     "type": "TECH_POLYMERIZATION",
-     "scope": "team"
-    }
+    "TECH_POLYMERIZATION"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_TRADING_POST",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_SHOPPING_DISTRICT",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_FACTORY",
-      "scope": "city"
-     }
+     "BUILDING_TRADING_POST",
+     "BUILDING_SHOPPING_DISTRICT",
+     "BUILDING_FACTORY"
     ],
     [
      {
@@ -72,10 +60,7 @@
     ]
    ],
    "dormant": [
-    {
-     "type": "BUILDING_CHEMICALS_DISTRICT",
-     "scope": "city"
-    }
+    "BUILDING_CHEMICALS_DISTRICT"
    ]
   }
  },

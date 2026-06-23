@@ -15,14 +15,8 @@
      "scope": "empire",
      "min": 8
     },
-    {
-     "type": "TECH_DUALISM",
-     "scope": "team"
-    },
-    {
-     "type": "TECH_SCULPTURE",
-     "scope": "team"
-    },
+    "TECH_DUALISM",
+    "TECH_SCULPTURE",
     "STATE_RELIGION_IN_CITY",
     {
      "STATE_RELIGION": "RELIGION_ZOROASTRIANISM"
@@ -40,10 +34,7 @@
   },
   "operate": {
    "all": [
-    {
-     "type": "RELIGION_ZOROASTRIANISM",
-     "scope": "city"
-    }
+    "RELIGION_ZOROASTRIANISM"
    ]
   }
  },

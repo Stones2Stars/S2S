@@ -10,10 +10,7 @@
      "scope": "city",
      "connection": "trade|vicinity"
     },
-    {
-     "type": "TECH_MILITARY_SCIENCE",
-     "scope": "team"
-    },
+    "TECH_MILITARY_SCIENCE",
     {
      "type": "BONUS_FIREARMS",
      "scope": "city",

@@ -12,25 +12,13 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_COMMUNICATIONS_SATELLITE",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_COMMUNICATION_NETWORKS",
-     "scope": "team"
-    }
+    "BUILDING_COMMUNICATIONS_SATELLITE",
+    "TECH_COMMUNICATION_NETWORKS"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_COMMUNICATION_TOWER",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_NETWORK_NODE",
-      "scope": "city"
-     }
+     "BUILDING_COMMUNICATION_TOWER",
+     "BUILDING_NETWORK_NODE"
     ],
     [
      {
@@ -55,10 +43,7 @@
    "flat": [
     {
      "value": 9,
-     "enabled": {
-      "type": "TECH_AUTOMATED_TRAFFIC",
-      "scope": "team"
-     }
+     "enabled": "TECH_AUTOMATED_TRAFFIC"
     }
    ]
   }
@@ -69,38 +54,23 @@
     5,
     {
      "value": 9,
-     "enabled": {
-      "type": "TECH_CLOUD_COMPUTING",
-      "scope": "team"
-     }
+     "enabled": "TECH_CLOUD_COMPUTING"
     },
     {
      "value": 8,
-     "enabled": {
-      "type": "TECH_MICROGENERATORS",
-      "scope": "team"
-     }
+     "enabled": "TECH_MICROGENERATORS"
     },
     {
      "value": 10,
-     "enabled": {
-      "type": "TECH_NANOGENERATORS",
-      "scope": "team"
-     }
+     "enabled": "TECH_NANOGENERATORS"
     },
     {
      "value": 9,
-     "enabled": {
-      "type": "TECH_WIRELESS_ELECTRICITY",
-      "scope": "team"
-     }
+     "enabled": "TECH_WIRELESS_ELECTRICITY"
     },
     {
      "value": 9,
-     "enabled": {
-      "type": "TECH_UNIVERSAL_TRANSLATOR",
-      "scope": "team"
-     }
+     "enabled": "TECH_UNIVERSAL_TRANSLATOR"
     }
    ]
   }
@@ -111,17 +81,11 @@
     5,
     {
      "value": 8,
-     "enabled": {
-      "type": "TECH_MEDIA_PSYCHOLOGY",
-      "scope": "team"
-     }
+     "enabled": "TECH_MEDIA_PSYCHOLOGY"
     },
     {
      "value": 9,
-     "enabled": {
-      "type": "TECH_UNIVERSAL_TRANSLATOR",
-      "scope": "team"
-     }
+     "enabled": "TECH_UNIVERSAL_TRANSLATOR"
     }
    ]
   }
@@ -131,10 +95,7 @@
    "flat": [
     {
      "value": 8,
-     "enabled": {
-      "type": "TECH_CYBERWARFARE",
-      "scope": "team"
-     }
+     "enabled": "TECH_CYBERWARFARE"
     }
    ]
   }

@@ -5,14 +5,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_GALACTIC_PORT",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_STARPUNK",
-     "scope": "team"
-    }
+    "BUILDING_GALACTIC_PORT",
+    "TECH_STARPUNK"
    ],
    "any": [
     [

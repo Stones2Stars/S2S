@@ -11,10 +11,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_WEATHER_CONTROL",
-     "scope": "team"
-    }
+    "TECH_WEATHER_CONTROL"
    ],
    "any": [
     [

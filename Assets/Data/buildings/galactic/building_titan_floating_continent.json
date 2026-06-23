@@ -5,14 +5,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_TITAN_SF6_GENERATOR",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_GEOSCULPTING",
-     "scope": "team"
-    }
+    "BUILDING_TITAN_SF6_GENERATOR",
+    "TECH_GEOSCULPTING"
    ],
    "any": [
     [

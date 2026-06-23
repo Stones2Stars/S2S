@@ -6,14 +6,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_DEEP_SPACE_SPACECRAFT_FACTORY",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_INTERSTELLAR_TRAVEL",
-     "scope": "team"
-    }
+    "BUILDING_DEEP_SPACE_SPACECRAFT_FACTORY",
+    "TECH_INTERSTELLAR_TRAVEL"
    ]
   }
  },

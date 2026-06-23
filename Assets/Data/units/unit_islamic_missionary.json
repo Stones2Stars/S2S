@@ -5,14 +5,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_ISLAMIC_MONASTERY",
-     "scope": "city"
-    },
-    {
-     "type": "RELIGION_ISLAM",
-     "scope": "city"
-    }
+    "BUILDING_ISLAMIC_MONASTERY",
+    "RELIGION_ISLAM"
    ]
   }
  },

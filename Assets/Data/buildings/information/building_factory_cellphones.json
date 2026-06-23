@@ -20,14 +20,8 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_FACTORY",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_COMMUNICATION_NETWORKS",
-     "scope": "team"
-    }
+    "BUILDING_FACTORY",
+    "TECH_COMMUNICATION_NETWORKS"
    ],
    "any": [
     [
@@ -56,10 +50,7 @@
     ]
    ],
    "dormant": [
-    {
-     "type": "BUILDING_ELECTRONICS_MANUFACTURING_DISTRICT",
-     "scope": "city"
-    }
+    "BUILDING_ELECTRONICS_MANUFACTURING_DISTRICT"
    ]
   }
  },

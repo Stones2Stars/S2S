@@ -13,10 +13,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_TRANSHUMANISM",
-     "scope": "team"
-    }
+    "TECH_TRANSHUMANISM"
    ],
    "any": [
     [
@@ -206,17 +203,11 @@
     100,
     {
      "value": 10,
-     "enabled": {
-      "type": "TECH_PHOTONIC_SATELLITES",
-      "scope": "team"
-     }
+     "enabled": "TECH_PHOTONIC_SATELLITES"
     },
     {
      "value": 10,
-     "enabled": {
-      "type": "TECH_TERRA_COMPUTER",
-      "scope": "team"
-     }
+     "enabled": "TECH_TERRA_COMPUTER"
     }
    ],
    "percent": 1

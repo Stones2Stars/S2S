@@ -6,22 +6,10 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_POWER_LINES",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_LANDFILL",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_RECYCLING_CENTER",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_RECYCLING",
-     "scope": "team"
-    }
+    "BUILDING_POWER_LINES",
+    "BUILDING_LANDFILL",
+    "BUILDING_RECYCLING_CENTER",
+    "TECH_RECYCLING"
    ],
    "any": [
     [
@@ -35,18 +23,9 @@
   "operate": {
    "any": [
     [
-     {
-      "type": "CIVIC_WASTE_TO_ENERGY",
-      "scope": "empire"
-     },
-     {
-      "type": "CIVIC_WASTE_IMPORTATION",
-      "scope": "empire"
-     },
-     {
-      "type": "CIVIC_LANDFILLS",
-      "scope": "empire"
-     }
+     "CIVIC_WASTE_TO_ENERGY",
+     "CIVIC_WASTE_IMPORTATION",
+     "CIVIC_LANDFILLS"
     ]
    ]
   }

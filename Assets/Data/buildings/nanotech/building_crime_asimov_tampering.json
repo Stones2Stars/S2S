@@ -6,10 +6,7 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "TECH_PERSONAL_ROBOTS",
-     "scope": "team"
-    }
+    "TECH_PERSONAL_ROBOTS"
    ],
    "any": [
     [
@@ -73,10 +70,7 @@
     "unit": "UNIT_TECHNARCHIST",
     "interval": "perTurn",
     "chance": {
-     "per": {
-      "type": "PROPERTY_CRIME",
-      "scope": "city"
-     }
+     "per": "PROPERTY_CRIME"
     }
    }
   ]

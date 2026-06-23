@@ -18,10 +18,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_ORAL_TRADITION",
-     "scope": "team"
-    }
+    "TECH_ORAL_TRADITION"
    ],
    "any": [
     [
@@ -34,18 +31,9 @@
   },
   "operate": {
    "dormant": [
-    {
-     "type": "BUILDING_LYCEUM",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_ELEMENTARY_SCHOOL",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_HOLOGRAPHIC_SCHOOL",
-     "scope": "city"
-    }
+    "BUILDING_LYCEUM",
+    "BUILDING_ELEMENTARY_SCHOOL",
+    "BUILDING_HOLOGRAPHIC_SCHOOL"
    ]
   }
  },

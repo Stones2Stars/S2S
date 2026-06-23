@@ -11,25 +11,13 @@
   "build": {
    "all": [
     "HAS_COAST",
-    {
-     "type": "TECH_GUNPOWDER",
-     "scope": "team"
-    }
+    "TECH_GUNPOWDER"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_SHIPYARD",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_DRYDOCK",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_NAVAL_YARD",
-      "scope": "city"
-     }
+     "BUILDING_SHIPYARD",
+     "BUILDING_DRYDOCK",
+     "BUILDING_NAVAL_YARD"
     ],
     [
      {

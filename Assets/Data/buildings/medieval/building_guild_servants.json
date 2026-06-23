@@ -15,25 +15,13 @@
      "scope": "city",
      "min": 3
     },
-    {
-     "type": "TECH_CIVIL_SERVICE",
-     "scope": "team"
-    },
-    {
-     "type": "TECH_GUILDS",
-     "scope": "team"
-    }
+    "TECH_CIVIL_SERVICE",
+    "TECH_GUILDS"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_SERVANTS_QUARTERS",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_IMPERIAL_FORTRESS",
-      "scope": "city"
-     }
+     "BUILDING_SERVANTS_QUARTERS",
+     "BUILDING_IMPERIAL_FORTRESS"
     ],
     [
      {

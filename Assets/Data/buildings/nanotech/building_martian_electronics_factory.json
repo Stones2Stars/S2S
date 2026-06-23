@@ -13,14 +13,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_MARTIAN_FACTORY",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_ION_BEAMS",
-     "scope": "team"
-    }
+    "BUILDING_MARTIAN_FACTORY",
+    "TECH_ION_BEAMS"
    ],
    "any": [
     [

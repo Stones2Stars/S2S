@@ -13,21 +13,12 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_TRADE",
-     "scope": "team"
-    }
+    "TECH_TRADE"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_CARNIVAL",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_ZOO",
-      "scope": "city"
-     }
+     "BUILDING_CARNIVAL",
+     "BUILDING_ZOO"
     ],
     [
      {
@@ -36,10 +27,7 @@
      }
     ],
     [
-     {
-      "type": "HERITAGE_TAXON_AMPHIBIA",
-      "scope": "empire"
-     }
+     "HERITAGE_TAXON_AMPHIBIA"
     ]
    ]
   }
@@ -50,10 +38,7 @@
     1,
     {
      "value": 5,
-     "enabled": {
-      "type": "TECH_SCIENTIFIC_METHOD",
-      "scope": "team"
-     }
+     "enabled": "TECH_SCIENTIFIC_METHOD"
     }
    ]
   }

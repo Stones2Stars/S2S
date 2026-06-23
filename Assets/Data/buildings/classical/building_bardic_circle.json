@@ -13,14 +13,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_THEATRE",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_POETRY",
-     "scope": "team"
-    }
+    "BUILDING_THEATRE",
+    "TECH_POETRY"
    ],
    "any": [
     [
@@ -33,10 +27,7 @@
   },
   "operate": {
    "dormant": [
-    {
-     "type": "BUILDING_HIGH_TECH_CULTURAL_ENRICHMENT",
-     "scope": "city"
-    }
+    "BUILDING_HIGH_TECH_CULTURAL_ENRICHMENT"
    ]
   }
  },
@@ -46,31 +37,19 @@
     1,
     {
      "value": 4,
-     "enabled": {
-      "type": "TECH_HERALDRY",
-      "scope": "team"
-     }
+     "enabled": "TECH_HERALDRY"
     },
     {
      "value": 4,
-     "enabled": {
-      "type": "TECH_GUILDS",
-      "scope": "team"
-     }
+     "enabled": "TECH_GUILDS"
     },
     {
      "value": 4,
-     "enabled": {
-      "type": "TECH_ACOUSTICS",
-      "scope": "team"
-     }
+     "enabled": "TECH_ACOUSTICS"
     },
     {
      "value": 6,
-     "enabled": {
-      "type": "TECH_ROMANTICISM",
-      "scope": "team"
-     }
+     "enabled": "TECH_ROMANTICISM"
     }
    ]
   }
@@ -81,31 +60,19 @@
     1,
     {
      "value": 4,
-     "enabled": {
-      "type": "TECH_HERALDRY",
-      "scope": "team"
-     }
+     "enabled": "TECH_HERALDRY"
     },
     {
      "value": 4,
-     "enabled": {
-      "type": "TECH_GUILDS",
-      "scope": "team"
-     }
+     "enabled": "TECH_GUILDS"
     },
     {
      "value": 4,
-     "enabled": {
-      "type": "TECH_ACOUSTICS",
-      "scope": "team"
-     }
+     "enabled": "TECH_ACOUSTICS"
     },
     {
      "value": 6,
-     "enabled": {
-      "type": "TECH_ROMANTICISM",
-      "scope": "team"
-     }
+     "enabled": "TECH_ROMANTICISM"
     }
    ]
   }

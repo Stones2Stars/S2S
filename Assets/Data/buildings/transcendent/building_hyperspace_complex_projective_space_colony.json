@@ -11,14 +11,8 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_HYPERSPACE_EKPYROTIC_UNIVERSE",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_MANIFOLD_COLONIZATION",
-     "scope": "team"
-    }
+    "BUILDING_HYPERSPACE_EKPYROTIC_UNIVERSE",
+    "TECH_MANIFOLD_COLONIZATION"
    ],
    "any": [
     [

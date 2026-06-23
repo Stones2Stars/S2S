@@ -5,14 +5,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_HYPERFACTORY",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_SENTIENT_ENERGY_FIELDS",
-     "scope": "team"
-    }
+    "BUILDING_HYPERFACTORY",
+    "TECH_SENTIENT_ENERGY_FIELDS"
    ]
   }
  },

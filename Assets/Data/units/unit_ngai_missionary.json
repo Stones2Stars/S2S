@@ -5,14 +5,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_NGAI_BLESS",
-     "scope": "city"
-    },
-    {
-     "type": "RELIGION_NGAIISM",
-     "scope": "city"
-    }
+    "BUILDING_NGAI_BLESS",
+    "RELIGION_NGAIISM"
    ]
   }
  },

@@ -18,10 +18,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_ADVANCED_ROCKETRY",
-     "scope": "team"
-    }
+    "TECH_ADVANCED_ROCKETRY"
    ],
    "any": [
     [
@@ -34,18 +31,9 @@
   },
   "operate": {
    "dormant": [
-    {
-     "type": "BUILDING_RAILGUN_BATTERY",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_LASER_BATTERY",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_ANTI_MATTER_BATTERY",
-     "scope": "city"
-    }
+    "BUILDING_RAILGUN_BATTERY",
+    "BUILDING_LASER_BATTERY",
+    "BUILDING_ANTI_MATTER_BATTERY"
    ]
   }
  },

@@ -14,26 +14,11 @@
   "build": {
    "any": [
     [
-     {
-      "type": "BUILDING_GROVE_BRAZILWOOD",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_DRIFTWOOD_GATHERER",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_LUMBER_GATHERER",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_LUMBER_CAMP",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_GROVE_TIMBER",
-      "scope": "city"
-     }
+     "BUILDING_GROVE_BRAZILWOOD",
+     "BUILDING_DRIFTWOOD_GATHERER",
+     "BUILDING_LUMBER_GATHERER",
+     "BUILDING_LUMBER_CAMP",
+     "BUILDING_GROVE_TIMBER"
     ],
     [
      {
@@ -45,10 +30,7 @@
   },
   "operate": {
    "dormant": [
-    {
-     "type": "BUILDING_AGROFOREST",
-     "scope": "city"
-    }
+    "BUILDING_AGROFOREST"
    ]
   }
  },

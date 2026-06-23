@@ -39,10 +39,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_SANITATION",
-     "scope": "team"
-    }
+    "TECH_SANITATION"
    ],
    "any": [
     [

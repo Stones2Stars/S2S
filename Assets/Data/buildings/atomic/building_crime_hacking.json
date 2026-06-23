@@ -6,10 +6,7 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "TECH_PERSONAL_COMPUTERS",
-     "scope": "team"
-    }
+    "TECH_PERSONAL_COMPUTERS"
    ],
    "any": [
     [

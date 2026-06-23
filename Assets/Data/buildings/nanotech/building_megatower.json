@@ -36,18 +36,9 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_SKYSCRAPER",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_SHOPPING_DISTRICT",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_NANO_ARCHITECTURE",
-     "scope": "team"
-    }
+    "BUILDING_SKYSCRAPER",
+    "BUILDING_SHOPPING_DISTRICT",
+    "TECH_NANO_ARCHITECTURE"
    ],
    "any": [
     [

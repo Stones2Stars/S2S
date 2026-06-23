@@ -18,21 +18,12 @@
      "scope": "city",
      "min": 7
     },
-    {
-     "type": "TECH_DIESELPUNK",
-     "scope": "team"
-    }
+    "TECH_DIESELPUNK"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_AIRPORT",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_COMMERCIAL_AIRPORT",
-      "scope": "city"
-     }
+     "BUILDING_AIRPORT",
+     "BUILDING_COMMERCIAL_AIRPORT"
     ],
     [
      {
@@ -51,10 +42,7 @@
     }
    ],
    "dormant": [
-    {
-     "type": "BUILDING_GRAND_AERODROME",
-     "scope": "city"
-    }
+    "BUILDING_GRAND_AERODROME"
    ]
   }
  },

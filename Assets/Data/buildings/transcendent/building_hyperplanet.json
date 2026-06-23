@@ -12,18 +12,9 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_HYPERFACTORY",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_HYPERSPACE_PAN_DIMENSIONAL_CITY",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_EUCLIDEAN_5D_SPACE_GEOMETRY",
-     "scope": "team"
-    }
+    "BUILDING_HYPERFACTORY",
+    "BUILDING_HYPERSPACE_PAN_DIMENSIONAL_CITY",
+    "TECH_EUCLIDEAN_5D_SPACE_GEOMETRY"
    ],
    "any": [
     [
@@ -40,10 +31,7 @@
    "flat": [
     {
      "value": 20,
-     "enabled": {
-      "type": "TECH_TRANSFINITE_STRUCTURES",
-      "scope": "team"
-     }
+     "enabled": "TECH_TRANSFINITE_STRUCTURES"
     }
    ]
   }
@@ -54,10 +42,7 @@
     35,
     {
      "value": 13,
-     "enabled": {
-      "type": "TECH_TRANSFINITE_COMPUTATION",
-      "scope": "team"
-     }
+     "enabled": "TECH_TRANSFINITE_COMPUTATION"
     }
    ]
   }

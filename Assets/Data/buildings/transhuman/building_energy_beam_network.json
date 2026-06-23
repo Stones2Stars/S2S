@@ -5,14 +5,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_CISLUNAR_DYSON_HARROP_SATELLITE",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_PHOTONIC_SATELLITES",
-     "scope": "team"
-    }
+    "BUILDING_CISLUNAR_DYSON_HARROP_SATELLITE",
+    "TECH_PHOTONIC_SATELLITES"
    ],
    "any": [
     [

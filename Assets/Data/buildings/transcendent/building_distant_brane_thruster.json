@@ -5,18 +5,9 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_DISTANT_BUBBLE_TRANSFER_STATION",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_DISTANT_BRANE_ASSEMBLER",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_BRANE_CROSSOVER",
-     "scope": "team"
-    }
+    "BUILDING_DISTANT_BUBBLE_TRANSFER_STATION",
+    "BUILDING_DISTANT_BRANE_ASSEMBLER",
+    "TECH_BRANE_CROSSOVER"
    ],
    "any": [
     [

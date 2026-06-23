@@ -10,10 +10,7 @@
      "scope": "city",
      "connection": "trade|vicinity"
     },
-    {
-     "type": "TECH_ANIMAL_RIDING",
-     "scope": "team"
-    }
+    "TECH_ANIMAL_RIDING"
    ]
   }
  },

@@ -12,14 +12,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_TRANSTELLAR_ARTIFICIAL_BROWN_DWARF",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_ARTIFICIAL_STARS",
-     "scope": "team"
-    }
+    "BUILDING_TRANSTELLAR_ARTIFICIAL_BROWN_DWARF",
+    "TECH_ARTIFICIAL_STARS"
    ],
    "any": [
     [

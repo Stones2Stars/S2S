@@ -5,14 +5,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_INTERGALACTIC_COMMAND_CENTER",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_NOOGENESIS",
-     "scope": "team"
-    }
+    "BUILDING_INTERGALACTIC_COMMAND_CENTER",
+    "TECH_NOOGENESIS"
    ],
    "any": [
     [

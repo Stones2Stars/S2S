@@ -10,14 +10,8 @@
      "scope": "city",
      "connection": "trade|vicinity"
     },
-    {
-     "type": "BUILDING_ROBOTICS_LAB",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_BINARY_SUBCONSCIOUSNESS",
-     "scope": "team"
-    },
+    "BUILDING_ROBOTICS_LAB",
+    "TECH_BINARY_SUBCONSCIOUSNESS",
     {
      "type": "BONUS_FIREARMS",
      "scope": "city",

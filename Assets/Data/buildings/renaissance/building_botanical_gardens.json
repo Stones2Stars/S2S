@@ -10,21 +10,12 @@
      "scope": "city",
      "min": 3
     },
-    {
-     "type": "TECH_BOTANY",
-     "scope": "team"
-    }
+    "TECH_BOTANY"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_ARBORETUM",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_AGROFOREST",
-      "scope": "city"
-     }
+     "BUILDING_ARBORETUM",
+     "BUILDING_AGROFOREST"
     ],
     [
      {

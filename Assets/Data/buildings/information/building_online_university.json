@@ -6,18 +6,9 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_UNIVERSITY",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_COMPUTER_NETWORK",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_VIRTUAL_SOCIETY",
-     "scope": "team"
-    }
+    "BUILDING_UNIVERSITY",
+    "BUILDING_COMPUTER_NETWORK",
+    "TECH_VIRTUAL_SOCIETY"
    ],
    "any": [
     [
@@ -30,10 +21,7 @@
   },
   "operate": {
    "all": [
-    {
-     "type": "CIVIC_ONLINE",
-     "scope": "empire"
-    }
+    "CIVIC_ONLINE"
    ]
   }
  },

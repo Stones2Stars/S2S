@@ -42,10 +42,7 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "TECH_SKYROADS",
-     "scope": "team"
-    }
+    "TECH_SKYROADS"
    ],
    "any": [
     [
@@ -58,10 +55,7 @@
   },
   "operate": {
    "dormant": [
-    {
-     "type": "BUILDING_TELEPORT_BOOTH",
-     "scope": "city"
-    }
+    "BUILDING_TELEPORT_BOOTH"
    ]
   }
  },

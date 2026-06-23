@@ -5,14 +5,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_LIBRARY",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_LITERATURE",
-     "scope": "team"
-    }
+    "BUILDING_LIBRARY",
+    "TECH_LITERATURE"
    ],
    "any": [
     [

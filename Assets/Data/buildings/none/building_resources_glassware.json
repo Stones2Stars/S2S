@@ -14,18 +14,9 @@
   "build": {
    "any": [
     [
-     {
-      "type": "BUILDING_GLASSBLOWERS_WORKSHOP",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_FACTORY_GLASSWARE",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_GLASS_RECLAMATION_PLANT",
-      "scope": "city"
-     }
+     "BUILDING_GLASSBLOWERS_WORKSHOP",
+     "BUILDING_FACTORY_GLASSWARE",
+     "BUILDING_GLASS_RECLAMATION_PLANT"
     ],
     [
      {
@@ -37,10 +28,7 @@
   },
   "operate": {
    "dormant": [
-    {
-     "type": "BUILDING_MANUFACTURING_DISTRICT",
-     "scope": "city"
-    }
+    "BUILDING_MANUFACTURING_DISTRICT"
    ]
   }
  },

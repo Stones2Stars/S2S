@@ -5,14 +5,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_ROGUE_PLANET_OUTPOST",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_DIRECTED_PANSPERMIA",
-     "scope": "team"
-    }
+    "BUILDING_ROGUE_PLANET_OUTPOST",
+    "TECH_DIRECTED_PANSPERMIA"
    ],
    "any": [
     [

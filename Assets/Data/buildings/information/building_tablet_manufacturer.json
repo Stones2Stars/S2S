@@ -13,21 +13,12 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_WEARABLE_COMPUTERS",
-     "scope": "team"
-    }
+    "TECH_WEARABLE_COMPUTERS"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_FACTORY_CELLPHONES",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_ELECTRONICS_MANUFACTURING_DISTRICT",
-      "scope": "city"
-     }
+     "BUILDING_FACTORY_CELLPHONES",
+     "BUILDING_ELECTRONICS_MANUFACTURING_DISTRICT"
     ],
     [
      {
@@ -46,10 +37,7 @@
     }
    ],
    "dormant": [
-    {
-     "type": "BUILDING_HYPERMARKET",
-     "scope": "city"
-    }
+    "BUILDING_HYPERMARKET"
    ]
   }
  },

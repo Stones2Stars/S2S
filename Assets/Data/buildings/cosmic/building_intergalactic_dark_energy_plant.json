@@ -11,18 +11,9 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_INTERGALACTIC_MECHANOSYNTHESIS_FACTORIES",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_INTERGALACTIC_MINE",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_DARK_ENERGY_HARVESTING",
-     "scope": "team"
-    }
+    "BUILDING_INTERGALACTIC_MECHANOSYNTHESIS_FACTORIES",
+    "BUILDING_INTERGALACTIC_MINE",
+    "TECH_DARK_ENERGY_HARVESTING"
    ],
    "any": [
     [
@@ -40,10 +31,7 @@
     300,
     {
      "value": 50,
-     "enabled": {
-      "type": "TECH_HYPERSTRUCTURE_ENGINEERING",
-      "scope": "team"
-     }
+     "enabled": "TECH_HYPERSTRUCTURE_ENGINEERING"
     }
    ]
   }

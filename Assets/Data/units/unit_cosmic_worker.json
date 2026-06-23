@@ -5,25 +5,13 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_PHASING",
-     "scope": "team"
-    }
+    "TECH_PHASING"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_INTERSTELLAR_STARPORT",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_INTERGALACTIC_STARPORT",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_DISTANT_HORIZON_PORT",
-      "scope": "city"
-     }
+     "BUILDING_INTERSTELLAR_STARPORT",
+     "BUILDING_INTERGALACTIC_STARPORT",
+     "BUILDING_DISTANT_HORIZON_PORT"
     ]
    ]
   }

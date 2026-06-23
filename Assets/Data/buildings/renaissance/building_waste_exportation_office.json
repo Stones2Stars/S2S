@@ -5,10 +5,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_ECONOMICS",
-     "scope": "team"
-    }
+    "TECH_ECONOMICS"
    ],
    "any": [
     [
@@ -22,10 +19,7 @@
   "operate": {
    "any": [
     [
-     {
-      "type": "CIVIC_WASTE_EXPORTATION",
-      "scope": "empire"
-     }
+     "CIVIC_WASTE_EXPORTATION"
     ]
    ]
   }
@@ -35,10 +29,7 @@
    "flat": [
     {
      "value": -5,
-     "enabled": {
-      "type": "TECH_RECYCLING",
-      "scope": "team"
-     }
+     "enabled": "TECH_RECYCLING"
     }
    ]
   }

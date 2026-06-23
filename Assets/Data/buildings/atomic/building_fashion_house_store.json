@@ -5,14 +5,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_INDUSTRIALISM",
-     "scope": "team"
-    },
-    {
-     "type": "TECH_CORPORATION",
-     "scope": "team"
-    }
+    "TECH_INDUSTRIALISM",
+    "TECH_CORPORATION"
    ],
    "any": [
     [
@@ -25,10 +19,7 @@
   },
   "operate": {
    "all": [
-    {
-     "type": "CORPORATION_FASHION",
-     "scope": "city"
-    }
+    "CORPORATION_FASHION"
    ]
   }
  },

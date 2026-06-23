@@ -13,10 +13,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_MEDITATION",
-     "scope": "team"
-    }
+    "TECH_MEDITATION"
    ],
    "any": [
     [
@@ -36,10 +33,7 @@
     }
    ],
    "dormant": [
-    {
-     "type": "BUILDING_CITY_PARK",
-     "scope": "city"
-    }
+    "BUILDING_CITY_PARK"
    ]
   }
  },

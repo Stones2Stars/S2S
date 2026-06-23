@@ -13,10 +13,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_VERTICAL_FARMING",
-     "scope": "team"
-    }
+    "TECH_VERTICAL_FARMING"
    ],
    "any": [
     [

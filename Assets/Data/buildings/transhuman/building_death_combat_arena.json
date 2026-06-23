@@ -6,25 +6,13 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_ATHLETIC_MEGACOMPLEX",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_TRANSHUMANISM",
-     "scope": "team"
-    }
+    "BUILDING_ATHLETIC_MEGACOMPLEX",
+    "TECH_TRANSHUMANISM"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_RESURRECTION_HUB",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_NANOMORPHIC_REPLICATOR",
-      "scope": "city"
-     }
+     "BUILDING_RESURRECTION_HUB",
+     "BUILDING_NANOMORPHIC_REPLICATOR"
     ],
     [
      {

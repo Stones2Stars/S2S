@@ -10,14 +10,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_HYPERINTELLIGENT_ORACLE",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_TRANSFINITE_COMPUTATION",
-     "scope": "team"
-    }
+    "BUILDING_HYPERINTELLIGENT_ORACLE",
+    "TECH_TRANSFINITE_COMPUTATION"
    ],
    "any": [
     [

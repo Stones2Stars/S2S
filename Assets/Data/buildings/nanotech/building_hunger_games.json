@@ -6,14 +6,8 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_ATHLETIC_MEGACOMPLEX",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_BATTLEFIELD_SPORTS",
-     "scope": "team"
-    }
+    "BUILDING_ATHLETIC_MEGACOMPLEX",
+    "TECH_BATTLEFIELD_SPORTS"
    ],
    "any": [
     [

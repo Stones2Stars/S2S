@@ -5,14 +5,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_LANDFILL",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_MODERN_SANITATION",
-     "scope": "team"
-    }
+    "BUILDING_LANDFILL",
+    "TECH_MODERN_SANITATION"
    ],
    "any": [
     [
@@ -26,18 +20,9 @@
   "operate": {
    "any": [
     [
-     {
-      "type": "CIVIC_LANDFILLS",
-      "scope": "empire"
-     },
-     {
-      "type": "CIVIC_WASTE_IMPORTATION",
-      "scope": "empire"
-     },
-     {
-      "type": "CIVIC_WASTE_TO_ENERGY",
-      "scope": "empire"
-     }
+     "CIVIC_LANDFILLS",
+     "CIVIC_WASTE_IMPORTATION",
+     "CIVIC_WASTE_TO_ENERGY"
     ]
    ]
   }

@@ -12,10 +12,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_HORIZON_BREAKING",
-     "scope": "team"
-    }
+    "TECH_HORIZON_BREAKING"
    ],
    "any": [
     [

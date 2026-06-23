@@ -23,14 +23,8 @@
      "scope": "city",
      "min": 3
     },
-    {
-     "type": "BUILDING_SEWER_SYSTEM",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_SURVEYING",
-     "scope": "team"
-    }
+    "BUILDING_SEWER_SYSTEM",
+    "TECH_SURVEYING"
    ],
    "any": [
     [
@@ -59,22 +53,10 @@
     ]
    ],
    "dormant": [
-    {
-     "type": "BUILDING_HOUSING_CONDOMINIUMS",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_HOUSING_HIGH_TECH_CONDOMINIUMS",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_HOUSING_COLONY_ARCOLOGY",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_LAUNCH_ARCOLOGY",
-     "scope": "city"
-    }
+    "BUILDING_HOUSING_CONDOMINIUMS",
+    "BUILDING_HOUSING_HIGH_TECH_CONDOMINIUMS",
+    "BUILDING_HOUSING_COLONY_ARCOLOGY",
+    "BUILDING_LAUNCH_ARCOLOGY"
    ]
   }
  },

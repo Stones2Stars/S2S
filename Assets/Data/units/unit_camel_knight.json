@@ -10,14 +10,8 @@
      "scope": "city",
      "connection": "trade|vicinity"
     },
-    {
-     "type": "BUILDING_ANIMAL_TRAINER_CAMEL",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_ARMORED_CAVALRY",
-     "scope": "team"
-    }
+    "BUILDING_ANIMAL_TRAINER_CAMEL",
+    "TECH_ARMORED_CAVALRY"
    ],
    "any": [
     [

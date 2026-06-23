@@ -10,10 +10,7 @@
      "scope": "city",
      "min": 7
     },
-    {
-     "type": "TECH_TERRA_COMPUTER",
-     "scope": "team"
-    }
+    "TECH_TERRA_COMPUTER"
    ],
    "any": [
     [

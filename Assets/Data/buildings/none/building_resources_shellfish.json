@@ -14,50 +14,17 @@
   "build": {
    "any": [
     [
-     {
-      "type": "BUILDING_ABALONE_DIGGERS",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_CLAM_DIGGERS",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_CONCH_DIVER",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_NET_CRAB",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_GIANT_CLAM_DIVERS",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_NET_LOBSTER",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_MUREX_DIVER",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_PEARL_DIVER",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_NET_PRAWN",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_NET_SHRIMP",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_NET_SQUID",
-      "scope": "city"
-     }
+     "BUILDING_ABALONE_DIGGERS",
+     "BUILDING_CLAM_DIGGERS",
+     "BUILDING_CONCH_DIVER",
+     "BUILDING_NET_CRAB",
+     "BUILDING_GIANT_CLAM_DIVERS",
+     "BUILDING_NET_LOBSTER",
+     "BUILDING_MUREX_DIVER",
+     "BUILDING_PEARL_DIVER",
+     "BUILDING_NET_PRAWN",
+     "BUILDING_NET_SHRIMP",
+     "BUILDING_NET_SQUID"
     ],
     [
      {
@@ -69,10 +36,7 @@
   },
   "operate": {
    "dormant": [
-    {
-     "type": "BUILDING_AQUAFARM",
-     "scope": "city"
-    }
+    "BUILDING_AQUAFARM"
    ]
   }
  },

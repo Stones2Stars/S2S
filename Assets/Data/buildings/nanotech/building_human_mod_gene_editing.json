@@ -6,14 +6,8 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_STEM_CELL_LAB",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_GENE_ENHANCEMENT",
-     "scope": "team"
-    }
+    "BUILDING_STEM_CELL_LAB",
+    "TECH_GENE_ENHANCEMENT"
    ],
    "any": [
     [

@@ -11,21 +11,12 @@
      "scope": "city",
      "connection": "trade|vicinity"
     },
-    {
-     "type": "TECH_SPACE_CREASING",
-     "scope": "team"
-    }
+    "TECH_SPACE_CREASING"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_INTERSTELLAR_WORMHOLE_TRADING_POST",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_INTERGALACTIC_MORRIS_THORNE_WORMHOLE",
-      "scope": "city"
-     }
+     "BUILDING_INTERSTELLAR_WORMHOLE_TRADING_POST",
+     "BUILDING_INTERGALACTIC_MORRIS_THORNE_WORMHOLE"
     ]
    ]
   }

@@ -51,14 +51,8 @@
   "build": {
    "all": [
     "HAS_COAST",
-    {
-     "type": "BUILDING_CARPENTER",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_SAILING",
-     "scope": "team"
-    }
+    "BUILDING_CARPENTER",
+    "TECH_SAILING"
    ],
    "any": [
     [

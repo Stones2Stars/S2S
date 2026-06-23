@@ -10,41 +10,17 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_PREHISTORIC_DANCE",
-     "scope": "team"
-    }
+    "TECH_PREHISTORIC_DANCE"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_DANCE_HUT",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_DANCE_HALL",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_NIGHT_CLUB",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_FIRE_PIT",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_BONFIRE",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_IMU",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_CHARCOAL_BURNER",
-      "scope": "city"
-     }
+     "BUILDING_DANCE_HUT",
+     "BUILDING_DANCE_HALL",
+     "BUILDING_NIGHT_CLUB",
+     "BUILDING_FIRE_PIT",
+     "BUILDING_BONFIRE",
+     "BUILDING_IMU",
+     "BUILDING_CHARCOAL_BURNER"
     ],
     [
      {
@@ -57,14 +33,8 @@
   "operate": {
    "any": [
     [
-     {
-      "type": "CIVIC_ANARCHISM",
-      "scope": "empire"
-     },
-     {
-      "type": "CIVIC_CHIEFDOM",
-      "scope": "empire"
-     }
+     "CIVIC_ANARCHISM",
+     "CIVIC_CHIEFDOM"
     ]
    ]
   }
@@ -74,10 +44,7 @@
    "flat": [
     {
      "value": 1,
-     "enabled": {
-      "type": "TECH_SACRIFICE_CULT",
-      "scope": "team"
-     }
+     "enabled": "TECH_SACRIFICE_CULT"
     }
    ]
   }

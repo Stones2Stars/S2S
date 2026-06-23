@@ -10,10 +10,7 @@
      "scope": "empire",
      "min": 1
     },
-    {
-     "type": "TECH_MAGNETIC_SAILS",
-     "scope": "team"
-    }
+    "TECH_MAGNETIC_SAILS"
    ],
    "any": [
     [

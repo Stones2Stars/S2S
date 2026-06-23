@@ -15,61 +15,22 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_MEGAFAUNA_DOMESTICATION",
-     "scope": "team"
-    }
+    "TECH_MEGAFAUNA_DOMESTICATION"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_CARNIVAL_DANCING_BEAR",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_ENCLOSURE_BEAR",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_FOLKLORE_MOON_BEAR",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_FOLKLORE_BLACK_BEAR",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_FOLKLORE_BROWN_BEAR",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_FOLKLORE_CAVE_BEAR",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_FOLKLORE_GRIZZLY",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_FOLKLORE_GIANT_PANDA",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_FOLKLORE_POLAR_BEAR",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_FOLKLORE_SLOTH_BEAR",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_FOLKLORE_SPECTACLED_BEAR",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_FOLKLORE_SUN_BEAR",
-      "scope": "city"
-     }
+     "BUILDING_CARNIVAL_DANCING_BEAR",
+     "BUILDING_ENCLOSURE_BEAR",
+     "BUILDING_FOLKLORE_MOON_BEAR",
+     "BUILDING_FOLKLORE_BLACK_BEAR",
+     "BUILDING_FOLKLORE_BROWN_BEAR",
+     "BUILDING_FOLKLORE_CAVE_BEAR",
+     "BUILDING_FOLKLORE_GRIZZLY",
+     "BUILDING_FOLKLORE_GIANT_PANDA",
+     "BUILDING_FOLKLORE_POLAR_BEAR",
+     "BUILDING_FOLKLORE_SLOTH_BEAR",
+     "BUILDING_FOLKLORE_SPECTACLED_BEAR",
+     "BUILDING_FOLKLORE_SUN_BEAR"
     ],
     [
      {

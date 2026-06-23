@@ -168,10 +168,7 @@
      "scope": "empire",
      "min": 1
     },
-    {
-     "type": "TECH_LANGUAGE",
-     "scope": "team"
-    }
+    "TECH_LANGUAGE"
    ],
    "any": [
     [

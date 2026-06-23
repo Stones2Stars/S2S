@@ -6,14 +6,8 @@
   "build": {
    "all": [
     "HAS_COAST",
-    {
-     "type": "BUILDING_OCEAN_FLOOR_CITY",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_ABYSS_COLONIZATION",
-     "scope": "team"
-    }
+    "BUILDING_OCEAN_FLOOR_CITY",
+    "TECH_ABYSS_COLONIZATION"
    ],
    "any": [
     [
@@ -31,10 +25,7 @@
     2,
     {
      "value": 12,
-     "enabled": {
-      "type": "TECH_FANTASY_MATERIALS",
-      "scope": "team"
-     }
+     "enabled": "TECH_FANTASY_MATERIALS"
     },
     {
      "value": 1,

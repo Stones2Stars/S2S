@@ -5,10 +5,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_KARMA",
-     "scope": "team"
-    }
+    "TECH_KARMA"
    ],
    "any": [
     [

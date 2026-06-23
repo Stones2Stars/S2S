@@ -5,19 +5,13 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_SPIRITS_ALLIANCE",
-     "scope": "city"
-    },
+    "BUILDING_SPIRITS_ALLIANCE",
     {
      "type": "BUILDING_SPIRITS_ALLIANCE",
      "scope": "empire",
      "min": 2
     },
-    {
-     "type": "TECH_MEGALITH_CONSTRUCTION",
-     "scope": "team"
-    },
+    "TECH_MEGALITH_CONSTRUCTION",
     "STATE_RELIGION_IN_CITY",
     {
      "STATE_RELIGION": "RELIGION_SHAMANISM"
@@ -34,10 +28,7 @@
   },
   "operate": {
    "all": [
-    {
-     "type": "RELIGION_SHAMANISM",
-     "scope": "city"
-    }
+    "RELIGION_SHAMANISM"
    ]
   }
  },

@@ -14,14 +14,8 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_FACTORY",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_ASSEMBLY_LINE",
-     "scope": "team"
-    },
+    "BUILDING_FACTORY",
+    "TECH_ASSEMBLY_LINE",
     {
      "type": "BONUS_BARRELS",
      "scope": "city",
@@ -65,10 +59,7 @@
     ]
    ],
    "dormant": [
-    {
-     "type": "BUILDING_CHEMICALS_DISTRICT",
-     "scope": "city"
-    }
+    "BUILDING_CHEMICALS_DISTRICT"
    ]
   }
  },

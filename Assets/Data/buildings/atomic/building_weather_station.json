@@ -6,29 +6,14 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_MODERN_OFFICES",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_LONG_RANGE_FORECASTING",
-     "scope": "team"
-    }
+    "BUILDING_MODERN_OFFICES",
+    "TECH_LONG_RANGE_FORECASTING"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_BROADCAST_TOWER",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_COMMUNICATION_TOWER",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_NETWORK_NODE",
-      "scope": "city"
-     }
+     "BUILDING_BROADCAST_TOWER",
+     "BUILDING_COMMUNICATION_TOWER",
+     "BUILDING_NETWORK_NODE"
     ],
     [
      {

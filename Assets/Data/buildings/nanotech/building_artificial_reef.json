@@ -12,14 +12,8 @@
    "all": [
     "HAS_COAST",
     "HAS_POWER",
-    {
-     "type": "BUILDING_BACTERIUM_BIOFORGE",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_PROTOTYPED_PATHOGENS",
-     "scope": "team"
-    }
+    "BUILDING_BACTERIUM_BIOFORGE",
+    "TECH_PROTOTYPED_PATHOGENS"
    ],
    "any": [
     [
@@ -42,10 +36,7 @@
     1,
     {
      "value": 9,
-     "enabled": {
-      "type": "TECH_HYPOTHETICAL_BIOCHEMISTRY",
-      "scope": "team"
-     }
+     "enabled": "TECH_HYPOTHETICAL_BIOCHEMISTRY"
     }
    ]
   }

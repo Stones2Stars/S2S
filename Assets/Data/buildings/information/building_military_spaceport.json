@@ -21,25 +21,13 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_MILITARY_ROBOTICS",
-     "scope": "team"
-    },
-    {
-     "type": "TECH_LUNAR_BASES",
-     "scope": "team"
-    }
+    "TECH_MILITARY_ROBOTICS",
+    "TECH_LUNAR_BASES"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_MILITARY_AIRBASE",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_AEROSPACE_COMPLEX",
-      "scope": "city"
-     }
+     "BUILDING_MILITARY_AIRBASE",
+     "BUILDING_AEROSPACE_COMPLEX"
     ],
     [
      {

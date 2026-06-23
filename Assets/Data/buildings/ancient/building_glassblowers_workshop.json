@@ -19,21 +19,12 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_GLASS_BLOWING",
-     "scope": "team"
-    }
+    "TECH_GLASS_BLOWING"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_TRADING_POST",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_SHOPPING_DISTRICT",
-      "scope": "city"
-     }
+     "BUILDING_TRADING_POST",
+     "BUILDING_SHOPPING_DISTRICT"
     ],
     [
      {
@@ -52,14 +43,8 @@
     }
    ],
    "dormant": [
-    {
-     "type": "BUILDING_MANUFACTURING_DISTRICT",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_FACTORY_GLASSWARE",
-     "scope": "city"
-    }
+    "BUILDING_MANUFACTURING_DISTRICT",
+    "BUILDING_FACTORY_GLASSWARE"
    ]
   }
  },
@@ -102,10 +87,7 @@
    "flat": [
     {
      "value": 3,
-     "enabled": {
-      "type": "TECH_AESTHETICS",
-      "scope": "team"
-     }
+     "enabled": "TECH_AESTHETICS"
     }
    ]
   }

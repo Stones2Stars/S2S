@@ -5,10 +5,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_LEADERSHIP",
-     "scope": "team"
-    }
+    "TECH_LEADERSHIP"
    ]
   }
  },

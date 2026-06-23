@@ -5,18 +5,9 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_MERCURY_COLONY",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_EFFECT_SOLAR_ECONOMY",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_ACNP_PROPULSION",
-     "scope": "team"
-    }
+    "BUILDING_MERCURY_COLONY",
+    "BUILDING_EFFECT_SOLAR_ECONOMY",
+    "TECH_ACNP_PROPULSION"
    ],
    "any": [
     [

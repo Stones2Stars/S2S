@@ -10,14 +10,8 @@
      "scope": "city",
      "connection": "trade|vicinity"
     },
-    {
-     "type": "TECH_MECHANIZED_WARFARE",
-     "scope": "team"
-    },
-    {
-     "type": "TECH_ROCKETRY",
-     "scope": "team"
-    },
+    "TECH_MECHANIZED_WARFARE",
+    "TECH_ROCKETRY",
     {
      "type": "BONUS_AMMUNITION",
      "scope": "city",

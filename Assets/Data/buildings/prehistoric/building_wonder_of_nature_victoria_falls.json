@@ -5,10 +5,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_LANGUAGE",
-     "scope": "team"
-    }
+    "TECH_LANGUAGE"
    ],
    "any": [
     [
@@ -38,24 +35,15 @@
     5,
     {
      "value": 2,
-     "enabled": {
-      "type": "TECH_RAFT_BUILDING",
-      "scope": "team"
-     }
+     "enabled": "TECH_RAFT_BUILDING"
     },
     {
      "value": 2,
-     "enabled": {
-      "type": "TECH_SPEARFISHING",
-      "scope": "team"
-     }
+     "enabled": "TECH_SPEARFISHING"
     },
     {
      "value": 2,
-     "enabled": {
-      "type": "TECH_AGRICULTURE",
-      "scope": "team"
-     }
+     "enabled": "TECH_AGRICULTURE"
     }
    ]
   }
@@ -71,10 +59,7 @@
     2,
     {
      "value": 10,
-     "enabled": {
-      "type": "TECH_TOURISM",
-      "scope": "team"
-     }
+     "enabled": "TECH_TOURISM"
     }
    ]
   }
@@ -84,10 +69,7 @@
    "flat": [
     {
      "value": 5,
-     "enabled": {
-      "type": "TECH_ARCHEOLOGY",
-      "scope": "team"
-     }
+     "enabled": "TECH_ARCHEOLOGY"
     }
    ]
   }
@@ -98,10 +80,7 @@
     2,
     {
      "value": 5,
-     "enabled": {
-      "type": "TECH_ANIMISM",
-      "scope": "team"
-     }
+     "enabled": "TECH_ANIMISM"
     }
    ]
   }
@@ -135,10 +114,7 @@
   "city": {
    "flat": {
     "value": 5,
-    "enabled": {
-     "type": "TECH_EXPLORATION",
-     "scope": "team"
-    }
+    "enabled": "TECH_EXPLORATION"
    }
   }
  },

@@ -19,23 +19,14 @@
      "scope": "city",
      "min": 3
     },
-    {
-     "type": "BUILDING_FACTORY",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_POWER_LINES",
-     "scope": "city"
-    },
+    "BUILDING_FACTORY",
+    "BUILDING_POWER_LINES",
     {
      "type": "BUILDING_TOXIC_WASTE_DUMP",
      "scope": "empire",
      "min": 1
     },
-    {
-     "type": "TECH_NUCLEAR_POWER",
-     "scope": "team"
-    },
+    "TECH_NUCLEAR_POWER",
     {
      "type": "BONUS_HEAVY_WATER",
      "scope": "city",
@@ -69,34 +60,13 @@
     ]
    ],
    "dormant": [
-    {
-     "type": "BUILDING_FAST_BREEDER_REACTOR",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_GENERATION_IV_REACTOR",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_D_T_FUSION_POWER_PLANT",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_D_HE3_FUSION_PLANT",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_HE3_FUSION_POWER_PLANT",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_ANTIMATTER_INITIATED_FUSION_PLANT",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_QUANTUM_VACUUM_POWER_PLANT",
-     "scope": "city"
-    }
+    "BUILDING_FAST_BREEDER_REACTOR",
+    "BUILDING_GENERATION_IV_REACTOR",
+    "BUILDING_D_T_FUSION_POWER_PLANT",
+    "BUILDING_D_HE3_FUSION_PLANT",
+    "BUILDING_HE3_FUSION_POWER_PLANT",
+    "BUILDING_ANTIMATTER_INITIATED_FUSION_PLANT",
+    "BUILDING_QUANTUM_VACUUM_POWER_PLANT"
    ]
   }
  },

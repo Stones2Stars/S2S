@@ -5,10 +5,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_ZOOLOGY",
-     "scope": "team"
-    }
+    "TECH_ZOOLOGY"
    ],
    "any": [
     [

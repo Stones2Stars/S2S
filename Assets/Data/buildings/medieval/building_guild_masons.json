@@ -15,29 +15,14 @@
      "scope": "city",
      "min": 3
     },
-    {
-     "type": "TECH_ARCHITECTURE",
-     "scope": "team"
-    },
-    {
-     "type": "TECH_GUILDS",
-     "scope": "team"
-    }
+    "TECH_ARCHITECTURE",
+    "TECH_GUILDS"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_BRICK_MASON",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_FACTORY_BRICKS",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_MODERN_EARTHWORKS",
-      "scope": "city"
-     }
+     "BUILDING_BRICK_MASON",
+     "BUILDING_FACTORY_BRICKS",
+     "BUILDING_MODERN_EARTHWORKS"
     ],
     [
      {

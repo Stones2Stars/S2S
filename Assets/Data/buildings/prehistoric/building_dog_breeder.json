@@ -29,10 +29,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_CANINE_DOMESTICATION",
-     "scope": "team"
-    }
+    "TECH_CANINE_DOMESTICATION"
    ],
    "any": [
     [
@@ -65,10 +62,7 @@
     ]
    ],
    "dormant": [
-    {
-     "type": "BUILDING_REPET",
-     "scope": "city"
-    }
+    "BUILDING_REPET"
    ]
   }
  },

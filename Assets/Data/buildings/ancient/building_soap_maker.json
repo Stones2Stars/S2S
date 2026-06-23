@@ -13,21 +13,12 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_SOAP_MAKING",
-     "scope": "team"
-    }
+    "TECH_SOAP_MAKING"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_TRADING_POST",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_SHOPPING_DISTRICT",
-      "scope": "city"
-     }
+     "BUILDING_TRADING_POST",
+     "BUILDING_SHOPPING_DISTRICT"
     ],
     [
      {
@@ -60,14 +51,8 @@
     ]
    ],
    "dormant": [
-    {
-     "type": "BUILDING_FACTORY_SOAP",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_CHEMICALS_DISTRICT",
-     "scope": "city"
-    }
+    "BUILDING_FACTORY_SOAP",
+    "BUILDING_CHEMICALS_DISTRICT"
    ]
   }
  },

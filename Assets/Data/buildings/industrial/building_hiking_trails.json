@@ -5,14 +5,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_RANGER_STATION",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_WILDLIFE_CONSERVATION",
-     "scope": "team"
-    }
+    "BUILDING_RANGER_STATION",
+    "TECH_WILDLIFE_CONSERVATION"
    ],
    "any": [
     [
@@ -30,10 +24,7 @@
     1,
     {
      "value": 1,
-     "enabled": {
-      "type": "TECH_TOURISM",
-      "scope": "team"
-     }
+     "enabled": "TECH_TOURISM"
     }
    ]
   }

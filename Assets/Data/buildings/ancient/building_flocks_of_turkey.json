@@ -5,29 +5,14 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_FOLKLORE_WILD_TURKEY",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_POULTRY_DOMESTICATION",
-     "scope": "team"
-    }
+    "BUILDING_FOLKLORE_WILD_TURKEY",
+    "TECH_POULTRY_DOMESTICATION"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_HERD_POULTRY",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_INDUSTRIAL_FARMS",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_MEAT_INDUSTRY_CONGLOMERATE",
-      "scope": "city"
-     }
+     "BUILDING_HERD_POULTRY",
+     "BUILDING_INDUSTRIAL_FARMS",
+     "BUILDING_MEAT_INDUSTRY_CONGLOMERATE"
     ],
     [
      {

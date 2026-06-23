@@ -18,10 +18,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_SUNDIAL",
-     "scope": "team"
-    }
+    "TECH_SUNDIAL"
    ],
    "any": [
     [
@@ -48,14 +45,8 @@
     ]
    ],
    "dormant": [
-    {
-     "type": "BUILDING_TOWNCLOCK",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_POLLUTION_BLACKENED_SKIES",
-     "scope": "city"
-    }
+    "BUILDING_TOWNCLOCK",
+    "BUILDING_POLLUTION_BLACKENED_SKIES"
    ]
   }
  },

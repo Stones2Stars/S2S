@@ -5,22 +5,10 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_EFFECT_HERITAGE_BIG_CATS",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_REPET",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_HOMO_SUPERIOR",
-     "scope": "team"
-    },
-    {
-     "type": "TECH_MEGAFAUNA_DOMESTICATION",
-     "scope": "team"
-    }
+    "BUILDING_EFFECT_HERITAGE_BIG_CATS",
+    "BUILDING_REPET",
+    "TECH_HOMO_SUPERIOR",
+    "TECH_MEGAFAUNA_DOMESTICATION"
    ]
   }
  },

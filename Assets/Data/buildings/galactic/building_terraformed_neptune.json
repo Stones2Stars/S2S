@@ -5,18 +5,9 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_DEEP_SPACE_BISHOP_RING",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_NEPTUNE_CHANDELIER_CITY",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_JOVIAN_TERRAFORMING",
-     "scope": "team"
-    }
+    "BUILDING_DEEP_SPACE_BISHOP_RING",
+    "BUILDING_NEPTUNE_CHANDELIER_CITY",
+    "TECH_JOVIAN_TERRAFORMING"
    ],
    "any": [
     [

@@ -5,18 +5,9 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_EUROPA_ECOSYSTEM",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_SPECULATIVE_PHYSIOLOGY",
-     "scope": "team"
-    },
-    {
-     "type": "TECH_GAIA_ECOLOGY",
-     "scope": "team"
-    }
+    "BUILDING_EUROPA_ECOSYSTEM",
+    "TECH_SPECULATIVE_PHYSIOLOGY",
+    "TECH_GAIA_ECOLOGY"
    ],
    "any": [
     [

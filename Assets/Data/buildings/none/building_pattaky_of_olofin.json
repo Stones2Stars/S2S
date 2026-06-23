@@ -10,10 +10,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_PRIESTHOOD",
-     "scope": "team"
-    }
+    "TECH_PRIESTHOOD"
    ],
    "any": [
     [
@@ -26,10 +23,7 @@
   },
   "operate": {
    "all": [
-    {
-     "type": "RELIGION_YORUBA",
-     "scope": "city"
-    }
+    "RELIGION_YORUBA"
    ]
   }
  },

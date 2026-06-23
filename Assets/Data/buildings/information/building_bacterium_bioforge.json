@@ -20,22 +20,10 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_VIROTHERAPY_CLINIC",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_PHENOTYPE_STUDIO",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_INTUITIVE_ALGORITHMS",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_BACTERIUM_ENGINEERING",
-     "scope": "team"
-    }
+    "BUILDING_VIROTHERAPY_CLINIC",
+    "BUILDING_PHENOTYPE_STUDIO",
+    "BUILDING_INTUITIVE_ALGORITHMS",
+    "TECH_BACTERIUM_ENGINEERING"
    ],
    "any": [
     [
@@ -71,24 +59,15 @@
     4,
     {
      "value": 9,
-     "enabled": {
-      "type": "TECH_PROTOTYPED_PATHOGENS",
-      "scope": "team"
-     }
+     "enabled": "TECH_PROTOTYPED_PATHOGENS"
     },
     {
      "value": 9,
-     "enabled": {
-      "type": "TECH_MAINSTREAM_CLONING",
-      "scope": "team"
-     }
+     "enabled": "TECH_MAINSTREAM_CLONING"
     },
     {
      "value": 9,
-     "enabled": {
-      "type": "TECH_AUGMENTED_CONSUMABLES",
-      "scope": "team"
-     }
+     "enabled": "TECH_AUGMENTED_CONSUMABLES"
     }
    ]
   }

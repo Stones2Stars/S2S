@@ -5,14 +5,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_CORE_MINE",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_GEOSCULPTING",
-     "scope": "team"
-    }
+    "BUILDING_CORE_MINE",
+    "TECH_GEOSCULPTING"
    ],
    "any": [
     [

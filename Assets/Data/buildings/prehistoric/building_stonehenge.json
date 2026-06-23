@@ -10,10 +10,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_MEGALITH_CONSTRUCTION",
-     "scope": "team"
-    }
+    "TECH_MEGALITH_CONSTRUCTION"
    ],
    "any": [
     [

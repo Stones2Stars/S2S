@@ -15,33 +15,15 @@
      "scope": "city",
      "min": 3
     },
-    {
-     "type": "TECH_HERALDRY",
-     "scope": "team"
-    },
-    {
-     "type": "TECH_GUILDS",
-     "scope": "team"
-    }
+    "TECH_HERALDRY",
+    "TECH_GUILDS"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_SEAMSTRESS",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_TEXTILE_MILL",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_FACTORY_CLOTHING",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_TEXTILE_MANUFACTURING_DISTRICT",
-      "scope": "city"
-     }
+     "BUILDING_SEAMSTRESS",
+     "BUILDING_TEXTILE_MILL",
+     "BUILDING_FACTORY_CLOTHING",
+     "BUILDING_TEXTILE_MANUFACTURING_DISTRICT"
     ],
     [
      {

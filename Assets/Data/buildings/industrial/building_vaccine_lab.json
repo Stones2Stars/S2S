@@ -11,25 +11,13 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_UNIVERSITY",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_ANTIBIOTICS",
-     "scope": "team"
-    }
+    "BUILDING_UNIVERSITY",
+    "TECH_ANTIBIOTICS"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_HOSPITAL",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_HEALTHCARE_MEGACOMPLEX",
-      "scope": "city"
-     }
+     "BUILDING_HOSPITAL",
+     "BUILDING_HEALTHCARE_MEGACOMPLEX"
     ],
     [
      {
@@ -46,52 +34,31 @@
     5,
     {
      "value": 7,
-     "enabled": {
-      "type": "TECH_BIOLOGICAL_WARFARE",
-      "scope": "team"
-     }
+     "enabled": "TECH_BIOLOGICAL_WARFARE"
     },
     {
      "value": 7,
-     "enabled": {
-      "type": "TECH_GENETICS",
-      "scope": "team"
-     }
+     "enabled": "TECH_GENETICS"
     },
     {
      "value": 9,
-     "enabled": {
-      "type": "TECH_SMART_DRUGS",
-      "scope": "team"
-     }
+     "enabled": "TECH_SMART_DRUGS"
     },
     {
      "value": 9,
-     "enabled": {
-      "type": "TECH_ANTI_AGING_MEDICINE",
-      "scope": "team"
-     }
+     "enabled": "TECH_ANTI_AGING_MEDICINE"
     },
     {
      "value": 9,
-     "enabled": {
-      "type": "TECH_GENE_ENHANCEMENT",
-      "scope": "team"
-     }
+     "enabled": "TECH_GENE_ENHANCEMENT"
     },
     {
      "value": 8,
-     "enabled": {
-      "type": "TECH_BIOINFORMATICS",
-      "scope": "team"
-     }
+     "enabled": "TECH_BIOINFORMATICS"
     },
     {
      "value": 8,
-     "enabled": {
-      "type": "TECH_PERSONALIZED_HEALTH",
-      "scope": "team"
-     }
+     "enabled": "TECH_PERSONALIZED_HEALTH"
     },
     {
      "value": 1,

@@ -12,14 +12,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_CISLUNAR_CONTROL_SYSTEM",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_BINARY_LEGISLATION",
-     "scope": "team"
-    }
+    "BUILDING_CISLUNAR_CONTROL_SYSTEM",
+    "TECH_BINARY_LEGISLATION"
    ],
    "any": [
     [
@@ -36,10 +30,7 @@
    "flat": [
     {
      "value": 11,
-     "enabled": {
-      "type": "TECH_SOCIAL_CALCULUS",
-      "scope": "team"
-     }
+     "enabled": "TECH_SOCIAL_CALCULUS"
     }
    ]
   }
@@ -49,10 +40,7 @@
    "flat": [
     {
      "value": 11,
-     "enabled": {
-      "type": "TECH_CULTURAL_EVOLUTION",
-      "scope": "team"
-     }
+     "enabled": "TECH_CULTURAL_EVOLUTION"
     }
    ]
   }
@@ -62,24 +50,15 @@
    "flat": [
     {
      "value": 11,
-     "enabled": {
-      "type": "TECH_GERONTOCRACY",
-      "scope": "team"
-     }
+     "enabled": "TECH_GERONTOCRACY"
     },
     {
      "value": 50,
-     "enabled": {
-      "type": "TECH_PRECISION_SOCIAL_ENGINEERING",
-      "scope": "team"
-     }
+     "enabled": "TECH_PRECISION_SOCIAL_ENGINEERING"
     },
     {
      "value": 11,
-     "enabled": {
-      "type": "TECH_COLONY_GOVERNANCE",
-      "scope": "team"
-     }
+     "enabled": "TECH_COLONY_GOVERNANCE"
     }
    ]
   }

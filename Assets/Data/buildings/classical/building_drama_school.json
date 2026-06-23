@@ -10,25 +10,13 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_THEATRE",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_DRAMA",
-     "scope": "team"
-    }
+    "BUILDING_THEATRE",
+    "TECH_DRAMA"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_TRADING_POST",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_SHOPPING_DISTRICT",
-      "scope": "city"
-     }
+     "BUILDING_TRADING_POST",
+     "BUILDING_SHOPPING_DISTRICT"
     ],
     [
      {

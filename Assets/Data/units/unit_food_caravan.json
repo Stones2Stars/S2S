@@ -5,14 +5,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_CARAVAN_POST",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_TRADE",
-     "scope": "team"
-    }
+    "BUILDING_CARAVAN_POST",
+    "TECH_TRADE"
    ]
   }
  },

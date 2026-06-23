@@ -5,10 +5,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_SIEGE_WARFARE",
-     "scope": "team"
-    }
+    "TECH_SIEGE_WARFARE"
    ],
    "any": [
     [
@@ -24,14 +21,8 @@
      }
     ],
     [
-     {
-      "type": "BUILDING_MAPINGUARI_COMPOUND",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_MAPINGUARI_CHANGING_OF_THE_GUARD_CEREMONY",
-      "scope": "city"
-     }
+     "BUILDING_MAPINGUARI_COMPOUND",
+     "BUILDING_MAPINGUARI_CHANGING_OF_THE_GUARD_CEREMONY"
     ]
    ]
   }

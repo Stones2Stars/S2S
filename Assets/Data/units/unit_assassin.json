@@ -5,14 +5,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_ASSASSINS_DEN",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_CODE_OF_LAWS",
-     "scope": "team"
-    }
+    "BUILDING_ASSASSINS_DEN",
+    "TECH_CODE_OF_LAWS"
    ]
   }
  },

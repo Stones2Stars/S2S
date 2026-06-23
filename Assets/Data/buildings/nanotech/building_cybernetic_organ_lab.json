@@ -14,18 +14,9 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_AUGMENTED_ORGAN_LAB",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_SOMATOSENSORY_MANIPULATOR_LAB",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_CYBERNETICS",
-     "scope": "team"
-    }
+    "BUILDING_AUGMENTED_ORGAN_LAB",
+    "BUILDING_SOMATOSENSORY_MANIPULATOR_LAB",
+    "TECH_CYBERNETICS"
    ],
    "any": [
     [

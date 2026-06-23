@@ -6,18 +6,9 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_MATHEMATICS_DEPARTMENT",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_COMPUTER_NETWORK",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_CHAOS_THEORY",
-     "scope": "team"
-    }
+    "BUILDING_MATHEMATICS_DEPARTMENT",
+    "BUILDING_COMPUTER_NETWORK",
+    "TECH_CHAOS_THEORY"
    ],
    "any": [
     [

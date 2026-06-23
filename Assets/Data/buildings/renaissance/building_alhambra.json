@@ -18,10 +18,7 @@
      "scope": "city",
      "min": 3
     },
-    {
-     "type": "TECH_DIVINE_RIGHT",
-     "scope": "team"
-    },
+    "TECH_DIVINE_RIGHT",
     "STATE_RELIGION_IN_CITY",
     {
      "STATE_RELIGION": "RELIGION_ISLAM"
@@ -39,10 +36,7 @@
   },
   "operate": {
    "all": [
-    {
-     "type": "RELIGION_ISLAM",
-     "scope": "city"
-    }
+    "RELIGION_ISLAM"
    ]
   }
  },

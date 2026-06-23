@@ -15,18 +15,9 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_EVOLUTIONARY_ALGORITHMS",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_BIONICS",
-     "scope": "team"
-    },
-    {
-     "type": "TECH_WIRELESS_ELECTRICITY",
-     "scope": "team"
-    }
+    "BUILDING_EVOLUTIONARY_ALGORITHMS",
+    "TECH_BIONICS",
+    "TECH_WIRELESS_ELECTRICITY"
    ],
    "any": [
     [
@@ -62,31 +53,19 @@
     6,
     {
      "value": 10,
-     "enabled": {
-      "type": "TECH_SPECIES_UPLIFTING",
-      "scope": "team"
-     }
+     "enabled": "TECH_SPECIES_UPLIFTING"
     },
     {
      "value": 9,
-     "enabled": {
-      "type": "TECH_PERSONAL_ROBOTS",
-      "scope": "team"
-     }
+     "enabled": "TECH_PERSONAL_ROBOTS"
     },
     {
      "value": 9,
-     "enabled": {
-      "type": "TECH_ANDROIDS",
-      "scope": "team"
-     }
+     "enabled": "TECH_ANDROIDS"
     },
     {
      "value": 9,
-     "enabled": {
-      "type": "TECH_CYBERNETICS",
-      "scope": "team"
-     }
+     "enabled": "TECH_CYBERNETICS"
     }
    ]
   }
@@ -97,31 +76,19 @@
     3,
     {
      "value": 10,
-     "enabled": {
-      "type": "TECH_SPECIES_UPLIFTING",
-      "scope": "team"
-     }
+     "enabled": "TECH_SPECIES_UPLIFTING"
     },
     {
      "value": 9,
-     "enabled": {
-      "type": "TECH_CYBERNETICS",
-      "scope": "team"
-     }
+     "enabled": "TECH_CYBERNETICS"
     },
     {
      "value": 9,
-     "enabled": {
-      "type": "TECH_ANDROIDS",
-      "scope": "team"
-     }
+     "enabled": "TECH_ANDROIDS"
     },
     {
      "value": 9,
-     "enabled": {
-      "type": "TECH_PERSONAL_ROBOTS",
-      "scope": "team"
-     }
+     "enabled": "TECH_PERSONAL_ROBOTS"
     }
    ]
   }

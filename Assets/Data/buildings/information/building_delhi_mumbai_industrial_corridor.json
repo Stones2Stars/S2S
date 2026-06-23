@@ -10,14 +10,8 @@
      "scope": "city",
      "min": 20
     },
-    {
-     "type": "BUILDING_INDUSTRIAL_PARK",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_MEGACITIES",
-     "scope": "team"
-    }
+    "BUILDING_INDUSTRIAL_PARK",
+    "TECH_MEGACITIES"
    ],
    "any": [
     [

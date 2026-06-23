@@ -20,18 +20,9 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_MODERN_WAREHOUSE",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_COMMERCIAL_SPACEPORT",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_ORBITAL_FLIGHT",
-     "scope": "team"
-    }
+    "BUILDING_MODERN_WAREHOUSE",
+    "BUILDING_COMMERCIAL_SPACEPORT",
+    "TECH_ORBITAL_FLIGHT"
    ],
    "any": [
     [
@@ -44,10 +35,7 @@
   },
   "operate": {
    "dormant": [
-    {
-     "type": "BUILDING_TELEPORT_SHIPPING_WAREHOUSE",
-     "scope": "city"
-    }
+    "BUILDING_TELEPORT_SHIPPING_WAREHOUSE"
    ]
   }
  },

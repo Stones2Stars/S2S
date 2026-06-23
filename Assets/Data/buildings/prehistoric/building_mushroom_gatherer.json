@@ -10,10 +10,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_GATHERING",
-     "scope": "team"
-    }
+    "TECH_GATHERING"
    ],
    "any": [
     [
@@ -45,10 +42,7 @@
     -1,
     {
      "value": 1,
-     "enabled": {
-      "type": "TECH_HERBALISM",
-      "scope": "team"
-     }
+     "enabled": "TECH_HERBALISM"
     }
    ]
   }

@@ -13,10 +13,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_AGRICULTURE",
-     "scope": "team"
-    }
+    "TECH_AGRICULTURE"
    ],
    "any": [
     [
@@ -38,10 +35,7 @@
     ]
    ],
    "dormant": [
-    {
-     "type": "BUILDING_TEXTILE_MANUFACTURING_DISTRICT",
-     "scope": "city"
-    }
+    "BUILDING_TEXTILE_MANUFACTURING_DISTRICT"
    ]
   }
  },

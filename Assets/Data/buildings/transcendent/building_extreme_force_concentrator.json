@@ -11,14 +11,8 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_SPACETIME_FACTORY",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_DECOMPACTIFIED_SPACE",
-     "scope": "team"
-    }
+    "BUILDING_SPACETIME_FACTORY",
+    "TECH_DECOMPACTIFIED_SPACE"
    ],
    "any": [
     [

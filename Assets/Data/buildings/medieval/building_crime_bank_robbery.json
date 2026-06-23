@@ -5,14 +5,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_BANK",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_BANKING",
-     "scope": "team"
-    }
+    "BUILDING_BANK",
+    "TECH_BANKING"
    ],
    "any": [
     [
@@ -76,10 +70,7 @@
     "unit": "UNIT_ROBBER",
     "interval": "perTurn",
     "chance": {
-     "per": {
-      "type": "PROPERTY_CRIME",
-      "scope": "city"
-     }
+     "per": "PROPERTY_CRIME"
     }
    }
   ]

@@ -13,21 +13,12 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_DRUG_TRADE",
-     "scope": "team"
-    }
+    "TECH_DRUG_TRADE"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_PLANTATION_TOBACCO",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_FARMSCRAPER_I",
-      "scope": "city"
-     }
+     "BUILDING_PLANTATION_TOBACCO",
+     "BUILDING_FARMSCRAPER_I"
     ],
     [
      {
@@ -39,10 +30,7 @@
   },
   "operate": {
    "dormant": [
-    {
-     "type": "BUILDING_HYPERMARKET",
-     "scope": "city"
-    }
+    "BUILDING_HYPERMARKET"
    ]
   }
  },

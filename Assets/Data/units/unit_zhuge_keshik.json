@@ -10,18 +10,9 @@
      "scope": "city",
      "connection": "trade|vicinity"
     },
-    {
-     "type": "BUILDING_ANIMAL_TRAINER_HORSE",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_ANCIENT_BALLISTICS",
-     "scope": "team"
-    },
-    {
-     "type": "TECH_MOUNTED_ARCHERY",
-     "scope": "team"
-    },
+    "BUILDING_ANIMAL_TRAINER_HORSE",
+    "TECH_ANCIENT_BALLISTICS",
+    "TECH_MOUNTED_ARCHERY",
     {
      "type": "BONUS_HORSE",
      "scope": "city",

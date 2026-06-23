@@ -16,14 +16,8 @@
      "scope": "city",
      "min": 7
     },
-    {
-     "type": "TECH_EARLY_COMPUTING",
-     "scope": "team"
-    },
-    {
-     "type": "TECH_DIESELPUNK",
-     "scope": "team"
-    }
+    "TECH_EARLY_COMPUTING",
+    "TECH_DIESELPUNK"
    ],
    "any": [
     [

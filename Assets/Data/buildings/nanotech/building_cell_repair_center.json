@@ -14,14 +14,8 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_MEDICAL_CLINIC",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_ANTI_AGING_MEDICINE",
-     "scope": "team"
-    }
+    "BUILDING_MEDICAL_CLINIC",
+    "TECH_ANTI_AGING_MEDICINE"
    ],
    "any": [
     [
@@ -34,10 +28,7 @@
   },
   "operate": {
    "dormant": [
-    {
-     "type": "BUILDING_HEALTHCARE_MEGACOMPLEX",
-     "scope": "city"
-    }
+    "BUILDING_HEALTHCARE_MEGACOMPLEX"
    ]
   }
  },

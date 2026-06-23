@@ -11,14 +11,8 @@
      "scope": "city",
      "min": 7
     },
-    {
-     "type": "BUILDING_LABORATORY",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_ASTRO_ENVIRONMENTAL_SYSTEMS",
-     "scope": "team"
-    }
+    "BUILDING_LABORATORY",
+    "TECH_ASTRO_ENVIRONMENTAL_SYSTEMS"
    ],
    "any": [
     [

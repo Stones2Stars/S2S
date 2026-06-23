@@ -10,14 +10,8 @@
      "scope": "city",
      "min": 7
     },
-    {
-     "type": "BUILDING_MUSEUM",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_GLOBALIZATION",
-     "scope": "team"
-    }
+    "BUILDING_MUSEUM",
+    "TECH_GLOBALIZATION"
    ],
    "any": [
     [

@@ -5,25 +5,13 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_AUTOMATIC_WEAPONS",
-     "scope": "team"
-    }
+    "TECH_AUTOMATIC_WEAPONS"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_FACTORY_AMMUNITION",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_AMMUNITIONS_WORKSHOP",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_MILITARY_INDUSTRIAL_COMPLEX",
-      "scope": "city"
-     }
+     "BUILDING_FACTORY_AMMUNITION",
+     "BUILDING_AMMUNITIONS_WORKSHOP",
+     "BUILDING_MILITARY_INDUSTRIAL_COMPLEX"
     ]
    ]
   }

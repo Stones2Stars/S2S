@@ -5,18 +5,9 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_INTERSTELLAR_CARBON_12_13_CRYSTAL",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_INTERSTELLAR_ARTIFICIAL_PLANET",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_IMMORTALITY",
-     "scope": "team"
-    }
+    "BUILDING_INTERSTELLAR_CARBON_12_13_CRYSTAL",
+    "BUILDING_INTERSTELLAR_ARTIFICIAL_PLANET",
+    "TECH_IMMORTALITY"
    ],
    "any": [
     [

@@ -6,14 +6,8 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_SIMULATED_WORLD",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_BINARY_PSYCHOKINESIS",
-     "scope": "team"
-    }
+    "BUILDING_SIMULATED_WORLD",
+    "TECH_BINARY_PSYCHOKINESIS"
    ],
    "any": [
     [

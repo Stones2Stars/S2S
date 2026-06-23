@@ -5,10 +5,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_SUPERCHARGED_CRYSTALLOGRAPHY",
-     "scope": "team"
-    }
+    "TECH_SUPERCHARGED_CRYSTALLOGRAPHY"
    ],
    "any": [
     [
@@ -37,10 +34,7 @@
     5,
     {
      "value": 11,
-     "enabled": {
-      "type": "TECH_PARATERRAFORMING",
-      "scope": "team"
-     }
+     "enabled": "TECH_PARATERRAFORMING"
     }
    ]
   }
@@ -51,17 +45,11 @@
     200,
     {
      "value": 10,
-     "enabled": {
-      "type": "TECH_HYPERMAGNETICS",
-      "scope": "team"
-     }
+     "enabled": "TECH_HYPERMAGNETICS"
     },
     {
      "value": 11,
-     "enabled": {
-      "type": "TECH_PLANET_CRACKING",
-      "scope": "team"
-     }
+     "enabled": "TECH_PLANET_CRACKING"
     }
    ]
   }

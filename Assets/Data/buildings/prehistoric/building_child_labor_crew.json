@@ -5,33 +5,15 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_COOPERATION",
-     "scope": "team"
-    },
-    {
-     "type": "TECH_TOOL_MAKING",
-     "scope": "team"
-    },
-    {
-     "type": "TECH_SHELTER_BUILDING",
-     "scope": "team"
-    }
+    "TECH_COOPERATION",
+    "TECH_TOOL_MAKING",
+    "TECH_SHELTER_BUILDING"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_CHILDCARE_HUT",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_DAY_CARE_CENTER",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_HIGH_TECH_CULTURAL_ENRICHMENT",
-      "scope": "city"
-     }
+     "BUILDING_CHILDCARE_HUT",
+     "BUILDING_DAY_CARE_CENTER",
+     "BUILDING_HIGH_TECH_CULTURAL_ENRICHMENT"
     ],
     [
      {
@@ -82,10 +64,7 @@
      }
     ],
     [
-     {
-      "type": "CIVIC_COMMUNAL",
-      "scope": "empire"
-     }
+     "CIVIC_COMMUNAL"
     ]
    ]
   }

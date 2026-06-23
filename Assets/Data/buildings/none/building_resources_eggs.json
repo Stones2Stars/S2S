@@ -14,38 +14,14 @@
   "build": {
    "any": [
     [
-     {
-      "type": "BUILDING_CHICKEN_COOP",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_FARM_ANIMAL_DUCK",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_FARM_ANIMAL_GOOSE",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_NEST_THIEF",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_HERD_POULTRY",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_HERD_RATITE",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_SEA_TURTLE_EGG_GATHERER",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_FARM_ANIMAL_TURKEY",
-      "scope": "city"
-     }
+     "BUILDING_CHICKEN_COOP",
+     "BUILDING_FARM_ANIMAL_DUCK",
+     "BUILDING_FARM_ANIMAL_GOOSE",
+     "BUILDING_NEST_THIEF",
+     "BUILDING_HERD_POULTRY",
+     "BUILDING_HERD_RATITE",
+     "BUILDING_SEA_TURTLE_EGG_GATHERER",
+     "BUILDING_FARM_ANIMAL_TURKEY"
     ],
     [
      {
@@ -57,14 +33,8 @@
   },
   "operate": {
    "dormant": [
-    {
-     "type": "BUILDING_INDUSTRIAL_FARMS",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_MEAT_INDUSTRY_CONGLOMERATE",
-     "scope": "city"
-    }
+    "BUILDING_INDUSTRIAL_FARMS",
+    "BUILDING_MEAT_INDUSTRY_CONGLOMERATE"
    ]
   }
  },

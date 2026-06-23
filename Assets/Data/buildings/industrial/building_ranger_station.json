@@ -13,10 +13,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_WILDLIFE_CONSERVATION",
-     "scope": "team"
-    }
+    "TECH_WILDLIFE_CONSERVATION"
    ],
    "any": [
     [
@@ -56,10 +53,7 @@
    "flat": [
     {
      "value": 1,
-     "enabled": {
-      "type": "TECH_TOURISM",
-      "scope": "team"
-     }
+     "enabled": "TECH_TOURISM"
     }
    ]
   }

@@ -6,14 +6,8 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_INDUSTRIAL_PARK",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_WEATHER_CONTROL",
-     "scope": "team"
-    }
+    "BUILDING_INDUSTRIAL_PARK",
+    "TECH_WEATHER_CONTROL"
    ],
    "any": [
     [

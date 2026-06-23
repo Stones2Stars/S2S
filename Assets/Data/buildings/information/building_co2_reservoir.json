@@ -5,14 +5,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_INDUSTRIAL_PARK",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_INDUSTRIAL_ECOLOGY",
-     "scope": "team"
-    }
+    "BUILDING_INDUSTRIAL_PARK",
+    "TECH_INDUSTRIAL_ECOLOGY"
    ],
    "any": [
     [

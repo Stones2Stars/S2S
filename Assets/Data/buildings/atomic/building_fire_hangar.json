@@ -6,21 +6,12 @@
   "build": {
    "all": [
     "HAS_FRESHWATER",
-    {
-     "type": "TECH_FLIGHT",
-     "scope": "team"
-    }
+    "TECH_FLIGHT"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_AIRPORT",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_COMMERCIAL_AIRPORT",
-      "scope": "city"
-     }
+     "BUILDING_AIRPORT",
+     "BUILDING_COMMERCIAL_AIRPORT"
     ],
     [
      {
@@ -37,10 +28,7 @@
     1,
     {
      "value": 1,
-     "enabled": {
-      "type": "TECH_FIRE_SUPPRESSION",
-      "scope": "team"
-     }
+     "enabled": "TECH_FIRE_SUPPRESSION"
     }
    ]
   }

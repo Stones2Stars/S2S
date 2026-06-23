@@ -18,14 +18,8 @@
      "scope": "city",
      "min": 7
     },
-    {
-     "type": "BUILDING_ENGINEERING_SCHOOL",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_CLOCKPUNK",
-     "scope": "team"
-    }
+    "BUILDING_ENGINEERING_SCHOOL",
+    "TECH_CLOCKPUNK"
    ],
    "any": [
     [

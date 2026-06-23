@@ -15,10 +15,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_MEDITATION",
-     "scope": "team"
-    },
+    "TECH_MEDITATION",
     {
      "type": "BONUS_FURNITURE",
      "scope": "city",
@@ -41,10 +38,7 @@
   },
   "operate": {
    "all": [
-    {
-     "type": "RELIGION_CONFUCIANISM",
-     "scope": "city"
-    }
+    "RELIGION_CONFUCIANISM"
    ],
    "any": [
     [

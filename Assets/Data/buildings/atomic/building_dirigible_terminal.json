@@ -16,25 +16,13 @@
      "scope": "city",
      "min": 7
     },
-    {
-     "type": "TECH_ZEPPELINS",
-     "scope": "team"
-    },
-    {
-     "type": "TECH_DIESELPUNK",
-     "scope": "team"
-    }
+    "TECH_ZEPPELINS",
+    "TECH_DIESELPUNK"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_SKYSCRAPER",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_EMPIRE_STATE_BUILDING",
-      "scope": "city"
-     }
+     "BUILDING_SKYSCRAPER",
+     "BUILDING_EMPIRE_STATE_BUILDING"
     ],
     [
      {

@@ -23,14 +23,8 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_ALPHA_ASSEMBLER",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_MOLECULAR_ASSEMBLY",
-     "scope": "team"
-    }
+    "BUILDING_ALPHA_ASSEMBLER",
+    "TECH_MOLECULAR_ASSEMBLY"
    ],
    "any": [
     [
@@ -43,18 +37,9 @@
   },
   "operate": {
    "dormant": [
-    {
-     "type": "BUILDING_ATOMIC_ASSEMBLER",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_QUANTUM_ASSEMBLER",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_MATERIALIZER",
-     "scope": "city"
-    }
+    "BUILDING_ATOMIC_ASSEMBLER",
+    "BUILDING_QUANTUM_ASSEMBLER",
+    "BUILDING_MATERIALIZER"
    ]
   }
  },
@@ -70,10 +55,7 @@
    "flat": [
     {
      "value": 11,
-     "enabled": {
-      "type": "TECH_PICOTECHNOLOGY",
-      "scope": "team"
-     }
+     "enabled": "TECH_PICOTECHNOLOGY"
     }
    ]
   }

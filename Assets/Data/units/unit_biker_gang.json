@@ -10,14 +10,8 @@
      "scope": "city",
      "connection": "trade|vicinity"
     },
-    {
-     "type": "BUILDING_MOTORCYCLE_CLUB",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_MASS_MEDIA",
-     "scope": "team"
-    },
+    "BUILDING_MOTORCYCLE_CLUB",
+    "TECH_MASS_MEDIA",
     {
      "type": "BONUS_AMMUNITION",
      "scope": "city",

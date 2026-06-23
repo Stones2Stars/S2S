@@ -10,21 +10,12 @@
      "scope": "city",
      "min": 20
     },
-    {
-     "type": "TECH_AUTOMATED_URBANIZATION",
-     "scope": "team"
-    }
+    "TECH_AUTOMATED_URBANIZATION"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_SELF_CONSTRUCTION_FIRM",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_INTERTEMPORAL_CONSTRUCTION_FIRM",
-      "scope": "city"
-     }
+     "BUILDING_SELF_CONSTRUCTION_FIRM",
+     "BUILDING_INTERTEMPORAL_CONSTRUCTION_FIRM"
     ],
     [
      {

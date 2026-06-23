@@ -10,26 +10,11 @@
      "scope": "city",
      "connection": "trade|vicinity"
     },
-    {
-     "type": "BUILDING_C_AC_NEANDERTHAL",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_C_L_NEANDERTHAL",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_ANIMAL_TRAINER_ELEPHANT",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_ANIMAL_RIDING",
-     "scope": "team"
-    },
-    {
-     "type": "TECH_ELEPHANT_DOMESTICATION",
-     "scope": "team"
-    }
+    "BUILDING_C_AC_NEANDERTHAL",
+    "BUILDING_C_L_NEANDERTHAL",
+    "BUILDING_ANIMAL_TRAINER_ELEPHANT",
+    "TECH_ANIMAL_RIDING",
+    "TECH_ELEPHANT_DOMESTICATION"
    ],
    "any": [
     [

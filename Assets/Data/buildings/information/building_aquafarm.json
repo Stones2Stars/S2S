@@ -13,10 +13,7 @@
   "build": {
    "all": [
     "HAS_COAST",
-    {
-     "type": "TECH_AQUACULTURE",
-     "scope": "team"
-    }
+    "TECH_AQUACULTURE"
    ],
    "any": [
     [

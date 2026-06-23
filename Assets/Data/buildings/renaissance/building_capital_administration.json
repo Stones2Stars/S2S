@@ -10,18 +10,9 @@
      "scope": "city",
      "min": 30
     },
-    {
-     "type": "BUILDING_PALACE",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_METROPOLITAN_ADMINISTRATION",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_SOCIAL_CONTRACT",
-     "scope": "team"
-    }
+    "BUILDING_PALACE",
+    "BUILDING_METROPOLITAN_ADMINISTRATION",
+    "TECH_SOCIAL_CONTRACT"
    ],
    "any": [
     [

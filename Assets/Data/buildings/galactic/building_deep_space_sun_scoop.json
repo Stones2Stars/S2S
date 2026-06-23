@@ -12,18 +12,9 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_DEEP_SPACE_BISHOP_RING",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_DEEP_SPACE_FOCUSED_SUNLIGHT_PLANT",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_STAR_LIFTING",
-     "scope": "team"
-    }
+    "BUILDING_DEEP_SPACE_BISHOP_RING",
+    "BUILDING_DEEP_SPACE_FOCUSED_SUNLIGHT_PLANT",
+    "TECH_STAR_LIFTING"
    ],
    "any": [
     [

@@ -16,25 +16,13 @@
      "scope": "city",
      "min": 7
     },
-    {
-     "type": "BUILDING_LABORATORY",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_SMART_DRUGS",
-     "scope": "team"
-    }
+    "BUILDING_LABORATORY",
+    "TECH_SMART_DRUGS"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_HOSPITAL",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_HEALTHCARE_MEGACOMPLEX",
-      "scope": "city"
-     }
+     "BUILDING_HOSPITAL",
+     "BUILDING_HEALTHCARE_MEGACOMPLEX"
     ],
     [
      {

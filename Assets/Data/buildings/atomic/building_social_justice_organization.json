@@ -6,14 +6,8 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_MODERN_OFFICES",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_GLOBALIZATION",
-     "scope": "team"
-    }
+    "BUILDING_MODERN_OFFICES",
+    "TECH_GLOBALIZATION"
    ],
    "any": [
     [
@@ -27,14 +21,8 @@
   "operate": {
    "any": [
     [
-     {
-      "type": "CIVIC_MARXIST",
-      "scope": "empire"
-     },
-     {
-      "type": "CIVIC_SOCIALIZED",
-      "scope": "empire"
-     }
+     "CIVIC_MARXIST",
+     "CIVIC_SOCIALIZED"
     ]
    ]
   }

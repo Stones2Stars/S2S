@@ -13,10 +13,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_PLASTICS",
-     "scope": "team"
-    }
+    "TECH_PLASTICS"
    ],
    "any": [
     [
@@ -38,10 +35,7 @@
     ]
    ],
    "dormant": [
-    {
-     "type": "BUILDING_HYPERMARKET",
-     "scope": "city"
-    }
+    "BUILDING_HYPERMARKET"
    ]
   }
  },

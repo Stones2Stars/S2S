@@ -5,14 +5,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_MASONRY",
-     "scope": "team"
-    },
-    {
-     "type": "TECH_POLYTHEISM",
-     "scope": "team"
-    }
+    "TECH_MASONRY",
+    "TECH_POLYTHEISM"
    ],
    "any": [
     [
@@ -25,10 +19,7 @@
   },
   "operate": {
    "all": [
-    {
-     "type": "RELIGION_MESOPOTAMISM",
-     "scope": "city"
-    }
+    "RELIGION_MESOPOTAMISM"
    ],
    "any": [
     [

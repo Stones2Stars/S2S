@@ -6,19 +6,13 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_LUNAR_ARCOLOGY",
-     "scope": "city"
-    },
+    "BUILDING_LUNAR_ARCOLOGY",
     {
      "type": "BUILDING_LUNAR_ARCOLOGY",
      "scope": "empire",
      "min": 2
     },
-    {
-     "type": "TECH_LUNAR_MEGASTRUCTURES",
-     "scope": "team"
-    }
+    "TECH_LUNAR_MEGASTRUCTURES"
    ],
    "any": [
     [

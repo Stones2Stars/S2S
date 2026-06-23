@@ -5,14 +5,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_HQ_BURGERWORLD",
-     "scope": "city"
-    },
-    {
-     "type": "CORPORATION_BURGERWORLD",
-     "scope": "city"
-    }
+    "BUILDING_HQ_BURGERWORLD",
+    "CORPORATION_BURGERWORLD"
    ]
   }
  },

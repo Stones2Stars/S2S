@@ -21,14 +21,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_MANUFACTURING_DISTRICT",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_RAPID_PROTOTYPING",
-     "scope": "team"
-    },
+    "BUILDING_MANUFACTURING_DISTRICT",
+    "TECH_RAPID_PROTOTYPING",
     {
      "type": "BONUS_PLASTIC",
      "scope": "city",
@@ -66,10 +60,7 @@
     10,
     {
      "value": 11,
-     "enabled": {
-      "type": "TECH_CLOSED_ECONOMIES",
-      "scope": "team"
-     }
+     "enabled": "TECH_CLOSED_ECONOMIES"
     },
     {
      "value": 1,

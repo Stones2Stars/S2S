@@ -14,18 +14,9 @@
   "build": {
    "any": [
     [
-     {
-      "type": "BUILDING_SMELTER_ALUMINUM",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_ALUMINUM_RECLAMATION_PLANT",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_NATIONAL_SMELTER_ALUMINUM",
-      "scope": "city"
-     }
+     "BUILDING_SMELTER_ALUMINUM",
+     "BUILDING_ALUMINUM_RECLAMATION_PLANT",
+     "BUILDING_NATIONAL_SMELTER_ALUMINUM"
     ],
     [
      {
@@ -37,10 +28,7 @@
   },
   "operate": {
    "dormant": [
-    {
-     "type": "BUILDING_METALS_MEGACOMPLEX",
-     "scope": "city"
-    }
+    "BUILDING_METALS_MEGACOMPLEX"
    ]
   }
  },

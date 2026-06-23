@@ -5,25 +5,13 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_ORAL_TRADITION",
-     "scope": "team"
-    }
+    "TECH_ORAL_TRADITION"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_STORYTELLER",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_SCHOOL_OF_SCRIBES",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_LIBRARY",
-      "scope": "city"
-     }
+     "BUILDING_STORYTELLER",
+     "BUILDING_SCHOOL_OF_SCRIBES",
+     "BUILDING_LIBRARY"
     ],
     [
      {
@@ -35,10 +23,7 @@
   },
   "operate": {
    "all": [
-    {
-     "type": "CIVIC_ORAL_TRADITION",
-     "scope": "empire"
-    }
+    "CIVIC_ORAL_TRADITION"
    ]
   }
  },

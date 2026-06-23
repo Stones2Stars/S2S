@@ -6,14 +6,8 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_TRANSGENICS_LAB",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_HYPOTHETICAL_BIOCHEMISTRY",
-     "scope": "team"
-    }
+    "BUILDING_TRANSGENICS_LAB",
+    "TECH_HYPOTHETICAL_BIOCHEMISTRY"
    ],
    "any": [
     [
@@ -39,10 +33,7 @@
     20,
     {
      "value": 11,
-     "enabled": {
-      "type": "TECH_ADAPTIVE_RADIATION",
-      "scope": "team"
-     }
+     "enabled": "TECH_ADAPTIVE_RADIATION"
     }
    ]
   }

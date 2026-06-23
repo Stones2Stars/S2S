@@ -5,19 +5,13 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_INTERSTELLAR_MATRIOSHKA_BRAIN",
-     "scope": "city"
-    },
+    "BUILDING_INTERSTELLAR_MATRIOSHKA_BRAIN",
     {
      "type": "BUILDING_INTERSTELLAR_MATRIOSHKA_BRAIN",
      "scope": "empire",
      "min": 2
     },
-    {
-     "type": "TECH_WORMHOLE_HIVEMIND",
-     "scope": "team"
-    }
+    "TECH_WORMHOLE_HIVEMIND"
    ],
    "any": [
     [

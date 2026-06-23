@@ -14,286 +14,76 @@
   "build": {
    "any": [
     [
-     {
-      "type": "BUILDING_ANIMAL_PRESERVE",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_CAMP_ANTELOPE",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_CAMP_AUROCHS",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_CAMP_BISON",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_HERD_BISON",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_CAMP_BOAR",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_BREEDING_PROGRAM_ANTELOPE",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_BREEDING_PROGRAM_BISON",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_BREEDING_PROGRAM_BOAR",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_BREEDING_PROGRAM_CARIBOU",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_BREEDING_PROGRAM_DEER",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_BREEDING_PROGRAM_ELEPHANT",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_BREEDING_PROGRAM_EMU",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_BREEDING_PROGRAM_GIRAFFE",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_BREEDING_PROGRAM_HIPPO",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_BREEDING_PROGRAM_KANGAROO",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_BREEDING_PROGRAM_MAMMOTH",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_BREEDING_PROGRAM_MOOSE",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_BREEDING_PROGRAM_MOUFLON",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_BREEDING_PROGRAM_MUSKOX",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_BREEDING_PROGRAM_NARWHAL",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_BREEDING_PROGRAM_OSTRICH",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_BREEDING_PROGRAM_RHEA",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_BREEDING_PROGRAM_RHINO",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_BREEDING_PROGRAM_WALRUS",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_BREEDING_PROGRAM_ZEBRA",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_HERD_BUFFALO",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_HERD_CAMEL",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_CAMP_CARIBOU",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_FARM_ANIMAL_COW",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_HERD_COW",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_CAMP_DEER",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_HERD_DEER",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_CAMP_DIPROTODON",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_HERD_DONKEY",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_CAMP_ELEPHANT",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_HERD_ELEPHANT",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_CAMP_EMU",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_CARRION_GATHERER",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_CAMP_GIRAFFE",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_FARM_ANIMAL_GOAT",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_HERD_GOAT",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_CAMP_HIPPO",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_HERD_HORSE",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_CAMP_GIANT_BISON",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_CAMP_KANGAROO",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_HERD_LLAMA",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_CAMP_MAMMOTH",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_CAMP_MEGALOCEROS",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_CAMP_MEGATHERIUM",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_CAMP_MOOSE",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_CAMP_MOUFLON",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_CAMP_MUSKOX",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_HERD_MUSKOX",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_CAMP_NARWHAL",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_CAMP_OSTRICH",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_FARM_ANIMAL_OXEN",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_FARM_ANIMAL_PIG",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_HERD_PIG",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_HERD_RATITE",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_FARM_ANIMAL_REINDEER",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_CAMP_RHEA",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_CAMP_RHINO",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_HERD_KANGAROO",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_FARM_ANIMAL_SHEEP",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_HERD_SHEEP",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_CAMP_WALRUS",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_WHALERS_DOCK",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_CAMP_WOOLLY_RHINO",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_CAMP_ZEBRA",
-      "scope": "city"
-     }
+     "BUILDING_ANIMAL_PRESERVE",
+     "BUILDING_CAMP_ANTELOPE",
+     "BUILDING_CAMP_AUROCHS",
+     "BUILDING_CAMP_BISON",
+     "BUILDING_HERD_BISON",
+     "BUILDING_CAMP_BOAR",
+     "BUILDING_BREEDING_PROGRAM_ANTELOPE",
+     "BUILDING_BREEDING_PROGRAM_BISON",
+     "BUILDING_BREEDING_PROGRAM_BOAR",
+     "BUILDING_BREEDING_PROGRAM_CARIBOU",
+     "BUILDING_BREEDING_PROGRAM_DEER",
+     "BUILDING_BREEDING_PROGRAM_ELEPHANT",
+     "BUILDING_BREEDING_PROGRAM_EMU",
+     "BUILDING_BREEDING_PROGRAM_GIRAFFE",
+     "BUILDING_BREEDING_PROGRAM_HIPPO",
+     "BUILDING_BREEDING_PROGRAM_KANGAROO",
+     "BUILDING_BREEDING_PROGRAM_MAMMOTH",
+     "BUILDING_BREEDING_PROGRAM_MOOSE",
+     "BUILDING_BREEDING_PROGRAM_MOUFLON",
+     "BUILDING_BREEDING_PROGRAM_MUSKOX",
+     "BUILDING_BREEDING_PROGRAM_NARWHAL",
+     "BUILDING_BREEDING_PROGRAM_OSTRICH",
+     "BUILDING_BREEDING_PROGRAM_RHEA",
+     "BUILDING_BREEDING_PROGRAM_RHINO",
+     "BUILDING_BREEDING_PROGRAM_WALRUS",
+     "BUILDING_BREEDING_PROGRAM_ZEBRA",
+     "BUILDING_HERD_BUFFALO",
+     "BUILDING_HERD_CAMEL",
+     "BUILDING_CAMP_CARIBOU",
+     "BUILDING_FARM_ANIMAL_COW",
+     "BUILDING_HERD_COW",
+     "BUILDING_CAMP_DEER",
+     "BUILDING_HERD_DEER",
+     "BUILDING_CAMP_DIPROTODON",
+     "BUILDING_HERD_DONKEY",
+     "BUILDING_CAMP_ELEPHANT",
+     "BUILDING_HERD_ELEPHANT",
+     "BUILDING_CAMP_EMU",
+     "BUILDING_CARRION_GATHERER",
+     "BUILDING_CAMP_GIRAFFE",
+     "BUILDING_FARM_ANIMAL_GOAT",
+     "BUILDING_HERD_GOAT",
+     "BUILDING_CAMP_HIPPO",
+     "BUILDING_HERD_HORSE",
+     "BUILDING_CAMP_GIANT_BISON",
+     "BUILDING_CAMP_KANGAROO",
+     "BUILDING_HERD_LLAMA",
+     "BUILDING_CAMP_MAMMOTH",
+     "BUILDING_CAMP_MEGALOCEROS",
+     "BUILDING_CAMP_MEGATHERIUM",
+     "BUILDING_CAMP_MOOSE",
+     "BUILDING_CAMP_MOUFLON",
+     "BUILDING_CAMP_MUSKOX",
+     "BUILDING_HERD_MUSKOX",
+     "BUILDING_CAMP_NARWHAL",
+     "BUILDING_CAMP_OSTRICH",
+     "BUILDING_FARM_ANIMAL_OXEN",
+     "BUILDING_FARM_ANIMAL_PIG",
+     "BUILDING_HERD_PIG",
+     "BUILDING_HERD_RATITE",
+     "BUILDING_FARM_ANIMAL_REINDEER",
+     "BUILDING_CAMP_RHEA",
+     "BUILDING_CAMP_RHINO",
+     "BUILDING_HERD_KANGAROO",
+     "BUILDING_FARM_ANIMAL_SHEEP",
+     "BUILDING_HERD_SHEEP",
+     "BUILDING_CAMP_WALRUS",
+     "BUILDING_WHALERS_DOCK",
+     "BUILDING_CAMP_WOOLLY_RHINO",
+     "BUILDING_CAMP_ZEBRA"
     ],
     [
      {
@@ -305,14 +95,8 @@
   },
   "operate": {
    "dormant": [
-    {
-     "type": "BUILDING_INDUSTRIAL_FARMS",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_MEAT_INDUSTRY_CONGLOMERATE",
-     "scope": "city"
-    }
+    "BUILDING_INDUSTRIAL_FARMS",
+    "BUILDING_MEAT_INDUSTRY_CONGLOMERATE"
    ]
   }
  },

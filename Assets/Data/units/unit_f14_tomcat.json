@@ -11,10 +11,7 @@
      "scope": "city",
      "connection": "trade|vicinity"
     },
-    {
-     "type": "TECH_GUIDED_WEAPONS",
-     "scope": "team"
-    },
+    "TECH_GUIDED_WEAPONS",
     {
      "type": "BONUS_AIRCRAFT",
      "scope": "city",
@@ -35,14 +32,8 @@
      }
     ],
     [
-     {
-      "type": "BUILDING_MILITARY_AIRBASE",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_AEROSPACE_COMPLEX",
-      "scope": "city"
-     }
+     "BUILDING_MILITARY_AIRBASE",
+     "BUILDING_AEROSPACE_COMPLEX"
     ]
    ]
   }

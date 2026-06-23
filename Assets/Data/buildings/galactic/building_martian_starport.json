@@ -11,18 +11,9 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_MARTIAN_ARCOLOGY",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_MARTIAN_SPACEPORT",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_FOLDING_SPACE",
-     "scope": "team"
-    }
+    "BUILDING_MARTIAN_ARCOLOGY",
+    "BUILDING_MARTIAN_SPACEPORT",
+    "TECH_FOLDING_SPACE"
    ],
    "any": [
     [

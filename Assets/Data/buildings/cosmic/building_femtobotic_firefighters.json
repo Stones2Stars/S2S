@@ -6,14 +6,8 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_ATOMIC_FIREPROOFING",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_PARTICLE_GENETICS",
-     "scope": "team"
-    }
+    "BUILDING_ATOMIC_FIREPROOFING",
+    "TECH_PARTICLE_GENETICS"
    ],
    "any": [
     [

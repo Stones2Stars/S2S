@@ -29,41 +29,17 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_NATUROPATHY",
-     "scope": "team"
-    },
-    {
-     "type": "TECH_SHELTER_BUILDING",
-     "scope": "team"
-    }
+    "TECH_NATUROPATHY",
+    "TECH_SHELTER_BUILDING"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_STORAGE_PIT",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_GRANARY",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_MODERN_GRANARY",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_BARTER_POST",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_TRADING_POST",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_SHOPPING_DISTRICT",
-      "scope": "city"
-     }
+     "BUILDING_STORAGE_PIT",
+     "BUILDING_GRANARY",
+     "BUILDING_MODERN_GRANARY",
+     "BUILDING_BARTER_POST",
+     "BUILDING_TRADING_POST",
+     "BUILDING_SHOPPING_DISTRICT"
     ],
     [
      {
@@ -75,22 +51,10 @@
   },
   "operate": {
    "dormant": [
-    {
-     "type": "BUILDING_DOCTORS_OFFICE",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_SURGEONS_OFFICE",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_MEDICAL_CLINIC",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_HEALTHCARE_MEGACOMPLEX",
-     "scope": "city"
-    }
+    "BUILDING_DOCTORS_OFFICE",
+    "BUILDING_SURGEONS_OFFICE",
+    "BUILDING_MEDICAL_CLINIC",
+    "BUILDING_HEALTHCARE_MEGACOMPLEX"
    ]
   }
  },

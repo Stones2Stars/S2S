@@ -6,10 +6,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_LIBERALISM",
-     "scope": "team"
-    }
+    "TECH_LIBERALISM"
    ],
    "any": [
     [

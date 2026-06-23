@@ -20,10 +20,7 @@
   "build": {
    "all": [
     "HAS_RIVER",
-    {
-     "type": "TECH_AGRICULTURE",
-     "scope": "team"
-    }
+    "TECH_AGRICULTURE"
    ],
    "any": [
     [
@@ -45,10 +42,7 @@
     ]
    ],
    "dormant": [
-    {
-     "type": "BUILDING_FARMSCRAPER_III",
-     "scope": "city"
-    }
+    "BUILDING_FARMSCRAPER_III"
    ]
   }
  },

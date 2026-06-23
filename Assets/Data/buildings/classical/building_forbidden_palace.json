@@ -19,19 +19,13 @@
      "scope": "empire",
      "min": 8
     },
-    {
-     "type": "BUILDING_COURTHOUSE",
-     "scope": "city"
-    },
+    "BUILDING_COURTHOUSE",
     {
      "type": "BUILDING_COURTHOUSE",
      "scope": "empire",
      "min": 4
     },
-    {
-     "type": "TECH_CITY_PLANNING",
-     "scope": "team"
-    }
+    "TECH_CITY_PLANNING"
    ],
    "any": [
     [

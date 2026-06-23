@@ -36,18 +36,9 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_MEAT_INDUSTRY_CONGLOMERATE",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_EPSILON_ASSEMBLER",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_AUGMENTED_CONSUMABLES",
-     "scope": "team"
-    }
+    "BUILDING_MEAT_INDUSTRY_CONGLOMERATE",
+    "BUILDING_EPSILON_ASSEMBLER",
+    "TECH_AUGMENTED_CONSUMABLES"
    ],
    "any": [
     [

@@ -5,14 +5,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_CISLUNAR_DILATON_GENERATOR",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_SINGULARITY_STABILIZATION",
-     "scope": "team"
-    }
+    "BUILDING_CISLUNAR_DILATON_GENERATOR",
+    "TECH_SINGULARITY_STABILIZATION"
    ],
    "any": [
     [

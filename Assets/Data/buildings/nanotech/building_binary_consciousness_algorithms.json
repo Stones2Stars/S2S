@@ -13,18 +13,9 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_EVOLUTIONARY_ALGORITHMS",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_EXOCORTEX_NETWORKS",
-     "scope": "team"
-    },
-    {
-     "type": "TECH_ADVANCED_COMPUTERS",
-     "scope": "team"
-    }
+    "BUILDING_EVOLUTIONARY_ALGORITHMS",
+    "TECH_EXOCORTEX_NETWORKS",
+    "TECH_ADVANCED_COMPUTERS"
    ],
    "any": [
     [
@@ -56,38 +47,23 @@
     5,
     {
      "value": 10,
-     "enabled": {
-      "type": "TECH_MIND_UPLOADING",
-      "scope": "team"
-     }
+     "enabled": "TECH_MIND_UPLOADING"
     },
     {
      "value": 9,
-     "enabled": {
-      "type": "TECH_ANDROIDS",
-      "scope": "team"
-     }
+     "enabled": "TECH_ANDROIDS"
     },
     {
      "value": 10,
-     "enabled": {
-      "type": "TECH_SPECIES_UPLIFTING",
-      "scope": "team"
-     }
+     "enabled": "TECH_SPECIES_UPLIFTING"
     },
     {
      "value": 10,
-     "enabled": {
-      "type": "TECH_TERRA_COMPUTER",
-      "scope": "team"
-     }
+     "enabled": "TECH_TERRA_COMPUTER"
     },
     {
      "value": 10,
-     "enabled": {
-      "type": "TECH_ARTIFICIAL_LIFE",
-      "scope": "team"
-     }
+     "enabled": "TECH_ARTIFICIAL_LIFE"
     }
    ]
   }

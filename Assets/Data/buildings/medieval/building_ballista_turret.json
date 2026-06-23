@@ -13,25 +13,13 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_SIEGE_WEAPONS_WORKSHOP",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_ENGINEERING",
-     "scope": "team"
-    }
+    "BUILDING_SIEGE_WEAPONS_WORKSHOP",
+    "TECH_ENGINEERING"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_CASTLE",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_STAR_FORT",
-      "scope": "city"
-     }
+     "BUILDING_CASTLE",
+     "BUILDING_STAR_FORT"
     ],
     [
      {
@@ -43,14 +31,8 @@
   },
   "operate": {
    "dormant": [
-    {
-     "type": "BUILDING_CANNON_TURRET",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_IMPERIAL_FORTRESS",
-     "scope": "city"
-    }
+    "BUILDING_CANNON_TURRET",
+    "BUILDING_IMPERIAL_FORTRESS"
    ]
   }
  },

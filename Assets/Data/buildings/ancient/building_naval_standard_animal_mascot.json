@@ -10,33 +10,15 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_SAILING",
-     "scope": "team"
-    }
+    "TECH_SAILING"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_WONDERS_OF_THE_DEEP",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_FOLKLORE_T_LEVIATHAN",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_FOLKLORE_T_SHARKS",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_FOLKLORE_T_RAY",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_FOLKLORE_GIANT_SQUID",
-      "scope": "city"
-     }
+     "BUILDING_WONDERS_OF_THE_DEEP",
+     "BUILDING_FOLKLORE_T_LEVIATHAN",
+     "BUILDING_FOLKLORE_T_SHARKS",
+     "BUILDING_FOLKLORE_T_RAY",
+     "BUILDING_FOLKLORE_GIANT_SQUID"
     ],
     [
      {

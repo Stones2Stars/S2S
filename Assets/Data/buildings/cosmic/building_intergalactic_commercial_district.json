@@ -5,14 +5,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_INTERGALACTIC_LOGISTICS_CENTER",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_SPACETIME_ECONOMICS",
-     "scope": "team"
-    }
+    "BUILDING_INTERGALACTIC_LOGISTICS_CENTER",
+    "TECH_SPACETIME_ECONOMICS"
    ],
    "any": [
     [

@@ -5,14 +5,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_MERCURY_COLONY",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_POSTHUMANISM",
-     "scope": "team"
-    }
+    "BUILDING_MERCURY_COLONY",
+    "TECH_POSTHUMANISM"
    ],
    "any": [
     [

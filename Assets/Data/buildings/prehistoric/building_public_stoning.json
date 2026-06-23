@@ -13,21 +13,12 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_CONDUCT",
-     "scope": "team"
-    }
+    "TECH_CONDUCT"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_ROCK_GATHERER",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_ANCIENT_CUSTOMS",
-      "scope": "city"
-     }
+     "BUILDING_ROCK_GATHERER",
+     "BUILDING_ANCIENT_CUSTOMS"
     ],
     [
      {
@@ -39,26 +30,11 @@
   },
   "operate": {
    "dormant": [
-    {
-     "type": "BUILDING_CRUCIFIXION_CROSSES",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_GALLOWS",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_GUILLOTINE",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_ELECTRIC_CHAIR",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_LETHAL_INJECTION",
-     "scope": "city"
-    }
+    "BUILDING_CRUCIFIXION_CROSSES",
+    "BUILDING_GALLOWS",
+    "BUILDING_GUILLOTINE",
+    "BUILDING_ELECTRIC_CHAIR",
+    "BUILDING_LETHAL_INJECTION"
    ]
   }
  },

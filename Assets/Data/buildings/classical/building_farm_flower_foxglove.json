@@ -18,10 +18,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_FLORISTRY",
-     "scope": "team"
-    }
+    "TECH_FLORISTRY"
    ],
    "any": [
     [
@@ -50,10 +47,7 @@
     ]
    ],
    "dormant": [
-    {
-     "type": "BUILDING_GREENHOUSE",
-     "scope": "city"
-    }
+    "BUILDING_GREENHOUSE"
    ]
   }
  },

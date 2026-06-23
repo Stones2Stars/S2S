@@ -15,10 +15,7 @@
      "scope": "city",
      "min": 7
     },
-    {
-     "type": "TECH_LITERATURE",
-     "scope": "team"
-    }
+    "TECH_LITERATURE"
    ],
    "any": [
     [

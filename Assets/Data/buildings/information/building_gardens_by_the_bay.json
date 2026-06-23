@@ -7,14 +7,8 @@
    "all": [
     "HAS_COAST",
     "HAS_POWER",
-    {
-     "type": "BUILDING_ECOSCRAPER",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_ECOLOGICAL_ENGINEERING",
-     "scope": "team"
-    }
+    "BUILDING_ECOSCRAPER",
+    "TECH_ECOLOGICAL_ENGINEERING"
    ],
    "any": [
     [

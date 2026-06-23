@@ -11,14 +11,8 @@
      "scope": "city",
      "min": 7
     },
-    {
-     "type": "TECH_ORGANIC_CITIES",
-     "scope": "team"
-    },
-    {
-     "type": "TECH_BIOPUNK",
-     "scope": "team"
-    }
+    "TECH_ORGANIC_CITIES",
+    "TECH_BIOPUNK"
    ],
    "any": [
     [

@@ -6,22 +6,10 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_ANIMAL_TAMER_COMPLEX",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_ENCLOSURE_EXOTIC_HERBIVORE",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_FOLKLORE_INDIAN_RHINOCEROS",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_SPECIALIZATION",
-     "scope": "team"
-    }
+    "BUILDING_ANIMAL_TAMER_COMPLEX",
+    "BUILDING_ENCLOSURE_EXOTIC_HERBIVORE",
+    "BUILDING_FOLKLORE_INDIAN_RHINOCEROS",
+    "TECH_SPECIALIZATION"
    ]
   }
  },

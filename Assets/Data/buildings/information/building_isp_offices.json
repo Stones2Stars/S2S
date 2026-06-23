@@ -6,18 +6,9 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_MODERN_OFFICES",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_COMPUTER_NETWORK",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_FIBER_OPTICS",
-     "scope": "team"
-    }
+    "BUILDING_MODERN_OFFICES",
+    "BUILDING_COMPUTER_NETWORK",
+    "TECH_FIBER_OPTICS"
    ],
    "any": [
     [
@@ -44,17 +35,11 @@
     3,
     {
      "value": 8,
-     "enabled": {
-      "type": "TECH_COMMUNICATION_NETWORKS",
-      "scope": "team"
-     }
+     "enabled": "TECH_COMMUNICATION_NETWORKS"
     },
     {
      "value": 8,
-     "enabled": {
-      "type": "TECH_DIGITIZATION",
-      "scope": "team"
-     }
+     "enabled": "TECH_DIGITIZATION"
     }
    ]
   }
@@ -64,10 +49,7 @@
    "flat": [
     {
      "value": 8,
-     "enabled": {
-      "type": "TECH_KNOWLEDGE_MANAGEMENT",
-      "scope": "team"
-     }
+     "enabled": "TECH_KNOWLEDGE_MANAGEMENT"
     }
    ]
   }

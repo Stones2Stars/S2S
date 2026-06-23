@@ -13,10 +13,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_INTERSTELLAR_TRAVEL",
-     "scope": "team"
-    }
+    "TECH_INTERSTELLAR_TRAVEL"
    ],
    "any": [
     [

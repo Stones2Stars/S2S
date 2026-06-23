@@ -6,22 +6,10 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_SHOPPING_DISTRICT",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_EXOCORTEX_NETWORKS",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_SKYROAD_STATION",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_LEVITATION",
-     "scope": "team"
-    },
+    "BUILDING_SHOPPING_DISTRICT",
+    "BUILDING_EXOCORTEX_NETWORKS",
+    "BUILDING_SKYROAD_STATION",
+    "TECH_LEVITATION",
     {
      "type": "BONUS_LEVITATION_GENERATORS",
      "scope": "city",
@@ -40,14 +28,8 @@
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_INTELLIGENT_PAVEMENT",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_TELEPORT_BOOTH",
-      "scope": "city"
-     }
+     "BUILDING_INTELLIGENT_PAVEMENT",
+     "BUILDING_TELEPORT_BOOTH"
     ],
     [
      {

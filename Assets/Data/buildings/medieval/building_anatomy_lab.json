@@ -12,14 +12,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_UNIVERSITY",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_ANATOMY",
-     "scope": "team"
-    }
+    "BUILDING_UNIVERSITY",
+    "TECH_ANATOMY"
    ],
    "any": [
     [
@@ -37,24 +31,15 @@
     5,
     {
      "value": 6,
-     "enabled": {
-      "type": "TECH_PSYCHOLOGY",
-      "scope": "team"
-     }
+     "enabled": "TECH_PSYCHOLOGY"
     },
     {
      "value": 7,
-     "enabled": {
-      "type": "TECH_GENETICS",
-      "scope": "team"
-     }
+     "enabled": "TECH_GENETICS"
     },
     {
      "value": 10,
-     "enabled": {
-      "type": "TECH_HOMO_SUPERIOR",
-      "scope": "team"
-     }
+     "enabled": "TECH_HOMO_SUPERIOR"
     }
    ]
   }

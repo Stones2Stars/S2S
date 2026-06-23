@@ -5,14 +5,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_PHYSICS_LAB",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_MODERN_PHYSICS",
-     "scope": "team"
-    }
+    "BUILDING_PHYSICS_LAB",
+    "TECH_MODERN_PHYSICS"
    ],
    "any": [
     [
@@ -33,31 +27,19 @@
     25,
     {
      "value": 8,
-     "enabled": {
-      "type": "TECH_IMAGINARY_PHYSICS",
-      "scope": "team"
-     }
+     "enabled": "TECH_IMAGINARY_PHYSICS"
     },
     {
      "value": 8,
-     "enabled": {
-      "type": "TECH_QUANTUM_TELEPORTATION",
-      "scope": "team"
-     }
+     "enabled": "TECH_QUANTUM_TELEPORTATION"
     },
     {
      "value": 8,
-     "enabled": {
-      "type": "TECH_SUPERSTRING_THEORY",
-      "scope": "team"
-     }
+     "enabled": "TECH_SUPERSTRING_THEORY"
     },
     {
      "value": 10,
-     "enabled": {
-      "type": "TECH_UNIFICATION_PHYSICS",
-      "scope": "team"
-     }
+     "enabled": "TECH_UNIFICATION_PHYSICS"
     }
    ]
   }

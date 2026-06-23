@@ -5,14 +5,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_OBSERVATORY",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_SUPERSTRING_THEORY",
-     "scope": "team"
-    }
+    "BUILDING_OBSERVATORY",
+    "TECH_SUPERSTRING_THEORY"
    ],
    "any": [
     [
@@ -25,10 +19,7 @@
   },
   "operate": {
    "dormant": [
-    {
-     "type": "BUILDING_POLLUTION_BLACKENED_SKIES",
-     "scope": "city"
-    }
+    "BUILDING_POLLUTION_BLACKENED_SKIES"
    ]
   }
  },

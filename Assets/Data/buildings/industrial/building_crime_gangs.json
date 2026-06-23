@@ -5,10 +5,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_LABOR_UNIONS",
-     "scope": "team"
-    }
+    "TECH_LABOR_UNIONS"
    ],
    "any": [
     [
@@ -93,10 +90,7 @@
     "unit": "UNIT_THUG",
     "interval": "perTurn",
     "chance": {
-     "per": {
-      "type": "PROPERTY_CRIME",
-      "scope": "city"
-     }
+     "per": "PROPERTY_CRIME"
     }
    }
   ]

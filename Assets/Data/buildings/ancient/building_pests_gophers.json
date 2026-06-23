@@ -15,10 +15,7 @@
      "scope": "city",
      "min": 7
     },
-    {
-     "type": "TECH_AGRICULTURE",
-     "scope": "team"
-    }
+    "TECH_AGRICULTURE"
    ],
    "any": [
     [

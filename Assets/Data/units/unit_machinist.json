@@ -10,10 +10,7 @@
      "scope": "city",
      "connection": "trade|vicinity"
     },
-    {
-     "type": "TECH_MACHINE_TOOLS",
-     "scope": "team"
-    },
+    "TECH_MACHINE_TOOLS",
     {
      "type": "BONUS_TOOLS",
      "scope": "city",
@@ -29,38 +26,14 @@
      }
     ],
     [
-     {
-      "type": "BUILDING_PARTS_MAKER",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_PARTS_PLANT",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_3D_PRINTING_MILL",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_NANOBOTIC_PRINTING_MILL",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_MOLECULAR_ASSEMBLER",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_ATOMIC_ASSEMBLER",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_QUANTUM_ASSEMBLER",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_MATERIALIZER",
-      "scope": "city"
-     }
+     "BUILDING_PARTS_MAKER",
+     "BUILDING_PARTS_PLANT",
+     "BUILDING_3D_PRINTING_MILL",
+     "BUILDING_NANOBOTIC_PRINTING_MILL",
+     "BUILDING_MOLECULAR_ASSEMBLER",
+     "BUILDING_ATOMIC_ASSEMBLER",
+     "BUILDING_QUANTUM_ASSEMBLER",
+     "BUILDING_MATERIALIZER"
     ]
    ]
   }

@@ -23,14 +23,8 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_MEGATOWER",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_SUPERSONIC_RAILS",
-     "scope": "team"
-    }
+    "BUILDING_MEGATOWER",
+    "TECH_SUPERSONIC_RAILS"
    ],
    "any": [
     [
@@ -43,10 +37,7 @@
   },
   "operate": {
    "dormant": [
-    {
-     "type": "BUILDING_GRAVITY_TRAIN",
-     "scope": "city"
-    }
+    "BUILDING_GRAVITY_TRAIN"
    ]
   }
  },

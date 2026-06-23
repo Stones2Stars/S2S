@@ -19,25 +19,13 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_REPLACEABLE_PARTS",
-     "scope": "team"
-    }
+    "TECH_REPLACEABLE_PARTS"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_TRADING_POST",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_SHOPPING_DISTRICT",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_FACTORY",
-      "scope": "city"
-     }
+     "BUILDING_TRADING_POST",
+     "BUILDING_SHOPPING_DISTRICT",
+     "BUILDING_FACTORY"
     ],
     [
      {
@@ -73,14 +61,8 @@
     ]
    ],
    "dormant": [
-    {
-     "type": "BUILDING_FACTORY_CLOTHING",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_TEXTILE_MANUFACTURING_DISTRICT",
-     "scope": "city"
-    }
+    "BUILDING_FACTORY_CLOTHING",
+    "BUILDING_TEXTILE_MANUFACTURING_DISTRICT"
    ]
   }
  },

@@ -5,10 +5,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_SEDENTARY_LIFESTYLE",
-     "scope": "team"
-    }
+    "TECH_SEDENTARY_LIFESTYLE"
    ],
    "any": [
     [
@@ -21,22 +18,10 @@
   },
   "operate": {
    "dormant": [
-    {
-     "type": "BUILDING_EDUCATION_KNOWLEDGE_BASE_CLASSICAL",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_EDUCATION_KNOWLEDGE_BASE_MEDIEVAL",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_EDUCATION_KNOWLEDGE_BASE_RENAISSANCE",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_EDUCATION_KNOWLEDGE_BASE_INDUSTRIAL",
-     "scope": "city"
-    }
+    "BUILDING_EDUCATION_KNOWLEDGE_BASE_CLASSICAL",
+    "BUILDING_EDUCATION_KNOWLEDGE_BASE_MEDIEVAL",
+    "BUILDING_EDUCATION_KNOWLEDGE_BASE_RENAISSANCE",
+    "BUILDING_EDUCATION_KNOWLEDGE_BASE_INDUSTRIAL"
    ]
   }
  },

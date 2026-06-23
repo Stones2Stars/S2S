@@ -10,14 +10,8 @@
      "scope": "city",
      "connection": "trade|vicinity"
     },
-    {
-     "type": "TECH_FISSION",
-     "scope": "team"
-    },
-    {
-     "type": "TECH_AVIATION",
-     "scope": "team"
-    }
+    "TECH_FISSION",
+    "TECH_AVIATION"
    ],
    "any": [
     [

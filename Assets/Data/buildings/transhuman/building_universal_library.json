@@ -11,14 +11,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_UNIVERSITY",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_KNOWLEDGE_MERCANTILISM",
-     "scope": "team"
-    }
+    "BUILDING_UNIVERSITY",
+    "TECH_KNOWLEDGE_MERCANTILISM"
    ],
    "any": [
     [
@@ -35,10 +29,7 @@
    "flat": [
     {
      "value": 13,
-     "enabled": {
-      "type": "TECH_ENDLESS_EXPLORATION",
-      "scope": "team"
-     }
+     "enabled": "TECH_ENDLESS_EXPLORATION"
     },
     {
      "value": 1,
@@ -57,24 +48,15 @@
     20,
     {
      "value": 12,
-     "enabled": {
-      "type": "TECH_PURE_INFORMATION_SOCIETY",
-      "scope": "team"
-     }
+     "enabled": "TECH_PURE_INFORMATION_SOCIETY"
     },
     {
      "value": 11,
-     "enabled": {
-      "type": "TECH_DATA_ARCHIVAL",
-      "scope": "team"
-     }
+     "enabled": "TECH_DATA_ARCHIVAL"
     },
     {
      "value": 13,
-     "enabled": {
-      "type": "TECH_ALTERNATE_HISTORY_EXPLORATION",
-      "scope": "team"
-     }
+     "enabled": "TECH_ALTERNATE_HISTORY_EXPLORATION"
     }
    ]
   }
@@ -85,17 +67,11 @@
     5,
     {
      "value": 12,
-     "enabled": {
-      "type": "TECH_CULTURAL_LONGEVITY",
-      "scope": "team"
-     }
+     "enabled": "TECH_CULTURAL_LONGEVITY"
     },
     {
      "value": 11,
-     "enabled": {
-      "type": "TECH_CULTURAL_EVOLUTION",
-      "scope": "team"
-     }
+     "enabled": "TECH_CULTURAL_EVOLUTION"
     }
    ]
   }

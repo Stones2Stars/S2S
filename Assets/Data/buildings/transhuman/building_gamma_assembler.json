@@ -14,18 +14,9 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_DELTA_ASSEMBLER",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_ARTIFICIAL_INTELLIGENCE_CORE",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_ARTIFICIAL_PHOTOSYNTHESIS",
-     "scope": "team"
-    },
+    "BUILDING_DELTA_ASSEMBLER",
+    "BUILDING_ARTIFICIAL_INTELLIGENCE_CORE",
+    "TECH_ARTIFICIAL_PHOTOSYNTHESIS",
     {
      "type": "BONUS_SUPERSTRONG_ALLOYS",
      "scope": "city",
@@ -44,14 +35,8 @@
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_UTERINE_REPLICATOR",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_NANOMORPHIC_REPLICATOR",
-      "scope": "city"
-     }
+     "BUILDING_UTERINE_REPLICATOR",
+     "BUILDING_NANOMORPHIC_REPLICATOR"
     ],
     [
      {

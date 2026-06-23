@@ -10,14 +10,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_DISTANT_PORTAL_TO_DIMENSION_X",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_MULTIVERSE_TRAVERSAL",
-     "scope": "team"
-    }
+    "BUILDING_DISTANT_PORTAL_TO_DIMENSION_X",
+    "TECH_MULTIVERSE_TRAVERSAL"
    ],
    "any": [
     [
@@ -35,10 +29,7 @@
     10,
     {
      "value": 13,
-     "enabled": {
-      "type": "TECH_SPATIAL_TRANSCENDENCE",
-      "scope": "team"
-     }
+     "enabled": "TECH_SPATIAL_TRANSCENDENCE"
     }
    ]
   }

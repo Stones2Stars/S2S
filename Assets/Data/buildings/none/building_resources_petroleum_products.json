@@ -14,18 +14,9 @@
   "build": {
    "any": [
     [
-     {
-      "type": "BUILDING_HYDROCARBON_REFINERY",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_SHALE_PLANT",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_OIL_REFINERY",
-      "scope": "city"
-     }
+     "BUILDING_HYDROCARBON_REFINERY",
+     "BUILDING_SHALE_PLANT",
+     "BUILDING_OIL_REFINERY"
     ],
     [
      {
@@ -37,10 +28,7 @@
   },
   "operate": {
    "dormant": [
-    {
-     "type": "BUILDING_ULTRAFUEL_REFINERY",
-     "scope": "city"
-    }
+    "BUILDING_ULTRAFUEL_REFINERY"
    ]
   }
  },

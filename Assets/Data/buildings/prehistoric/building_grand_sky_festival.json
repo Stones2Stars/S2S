@@ -10,29 +10,14 @@
      "scope": "city",
      "min": 3
     },
-    {
-     "type": "BUILDING_FOLKLORE_E_SKY",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_CELEBRATION",
-     "scope": "team"
-    }
+    "BUILDING_FOLKLORE_E_SKY",
+    "TECH_CELEBRATION"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_MOON_DANCE",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_STARGAZERS_HUT",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_OBSERVATORY",
-      "scope": "city"
-     }
+     "BUILDING_MOON_DANCE",
+     "BUILDING_STARGAZERS_HUT",
+     "BUILDING_OBSERVATORY"
     ],
     [
      {
@@ -48,18 +33,9 @@
     ]
    ],
    "noneOf": [
-    {
-     "type": "BUILDING_GRAND_FIRE_FESTIVAL",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_GRAND_EARTH_FESTIVAL",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_GRAND_MARINE_FESTIVAL",
-     "scope": "city"
-    }
+    "BUILDING_GRAND_FIRE_FESTIVAL",
+    "BUILDING_GRAND_EARTH_FESTIVAL",
+    "BUILDING_GRAND_MARINE_FESTIVAL"
    ]
   },
   "operate": {
@@ -103,10 +79,7 @@
     ]
    ],
    "dormant": [
-    {
-     "type": "BUILDING_POLLUTION_BLACKENED_SKIES",
-     "scope": "city"
-    }
+    "BUILDING_POLLUTION_BLACKENED_SKIES"
    ]
   }
  },
@@ -193,45 +166,27 @@
     4,
     {
      "value": 2,
-     "enabled": {
-      "type": "TECH_SACRIFICE_CULT",
-      "scope": "team"
-     }
+     "enabled": "TECH_SACRIFICE_CULT"
     },
     {
      "value": 2,
-     "enabled": {
-      "type": "TECH_STARGAZING",
-      "scope": "team"
-     }
+     "enabled": "TECH_STARGAZING"
     },
     {
      "value": 2,
-     "enabled": {
-      "type": "TECH_FOLK_DANCE",
-      "scope": "team"
-     }
+     "enabled": "TECH_FOLK_DANCE"
     },
     {
      "value": 2,
-     "enabled": {
-      "type": "TECH_FOLK_MUSIC",
-      "scope": "team"
-     }
+     "enabled": "TECH_FOLK_MUSIC"
     },
     {
      "value": 3,
-     "enabled": {
-      "type": "TECH_MUSICAL_NOTATION",
-      "scope": "team"
-     }
+     "enabled": "TECH_MUSICAL_NOTATION"
     },
     {
      "value": 3,
-     "enabled": {
-      "type": "TECH_SPICE_TRADE",
-      "scope": "team"
-     }
+     "enabled": "TECH_SPICE_TRADE"
     }
    ]
   }
@@ -242,10 +197,7 @@
     3,
     {
      "value": 1,
-     "enabled": {
-      "type": "TECH_DRUG_TRADE",
-      "scope": "team"
-     }
+     "enabled": "TECH_DRUG_TRADE"
     }
    ]
   },

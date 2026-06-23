@@ -5,10 +5,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_WILDLIFE_CONSERVATION",
-     "scope": "team"
-    }
+    "TECH_WILDLIFE_CONSERVATION"
    ],
    "any": [
     [

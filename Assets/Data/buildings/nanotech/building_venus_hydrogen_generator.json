@@ -11,14 +11,8 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_SPACE_COLONY_VENUS",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_PLANETARY_MANUFACTURING",
-     "scope": "team"
-    }
+    "BUILDING_SPACE_COLONY_VENUS",
+    "TECH_PLANETARY_MANUFACTURING"
    ],
    "any": [
     [

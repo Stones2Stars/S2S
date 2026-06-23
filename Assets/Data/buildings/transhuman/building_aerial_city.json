@@ -12,14 +12,8 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_HYBRID_AIRSHIP_PORT",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_ANTI_GRAVITY_FIELDS",
-     "scope": "team"
-    }
+    "BUILDING_HYBRID_AIRSHIP_PORT",
+    "TECH_ANTI_GRAVITY_FIELDS"
    ],
    "any": [
     [

@@ -6,10 +6,7 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_EFFECT_SOLAR_ECONOMY",
-     "scope": "city"
-    },
+    "BUILDING_EFFECT_SOLAR_ECONOMY",
     {
      "type": "BUILDING_SPACESCRAPER",
      "scope": "empire",
@@ -20,10 +17,7 @@
      "scope": "empire",
      "min": 3
     },
-    {
-     "type": "TECH_FOLDING_SPACE",
-     "scope": "team"
-    }
+    "TECH_FOLDING_SPACE"
    ],
    "any": [
     [

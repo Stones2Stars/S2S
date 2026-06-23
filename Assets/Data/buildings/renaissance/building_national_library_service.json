@@ -10,34 +10,19 @@
      "scope": "city",
      "min": 7
     },
-    {
-     "type": "BUILDING_LIBRARY",
-     "scope": "city"
-    },
+    "BUILDING_LIBRARY",
     {
      "type": "BUILDING_LIBRARY",
      "scope": "empire",
      "min": 3
     },
-    {
-     "type": "TECH_LIBERALISM",
-     "scope": "team"
-    }
+    "TECH_LIBERALISM"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_TRADING_POST",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_SHOPPING_DISTRICT",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_MODERN_OFFICES",
-      "scope": "city"
-     }
+     "BUILDING_TRADING_POST",
+     "BUILDING_SHOPPING_DISTRICT",
+     "BUILDING_MODERN_OFFICES"
     ],
     [
      {

@@ -10,10 +10,7 @@
      "scope": "city",
      "connection": "trade|vicinity"
     },
-    {
-     "type": "TECH_SIMPLE_WOOD_WORKING",
-     "scope": "team"
-    }
+    "TECH_SIMPLE_WOOD_WORKING"
    ]
   }
  },

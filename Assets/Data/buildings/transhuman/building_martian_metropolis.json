@@ -20,14 +20,8 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_MARTIAN_CITY",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_HYPERMAGNETICS",
-     "scope": "team"
-    }
+    "BUILDING_MARTIAN_CITY",
+    "TECH_HYPERMAGNETICS"
    ],
    "any": [
     [

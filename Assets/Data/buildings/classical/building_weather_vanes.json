@@ -13,10 +13,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_WEATHER_LORE",
-     "scope": "team"
-    }
+    "TECH_WEATHER_LORE"
    ],
    "any": [
     [
@@ -58,10 +55,7 @@
     ]
    ],
    "dormant": [
-    {
-     "type": "BUILDING_METEOROLOGY_LAB",
-     "scope": "city"
-    }
+    "BUILDING_METEOROLOGY_LAB"
    ]
   }
  },
@@ -76,10 +70,7 @@
     1,
     {
      "value": 5,
-     "enabled": {
-      "type": "TECH_WEATHER_FORECASTING",
-      "scope": "team"
-     }
+     "enabled": "TECH_WEATHER_FORECASTING"
     }
    ]
   }

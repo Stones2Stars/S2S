@@ -19,17 +19,11 @@
   "build": {
    "all": [
     "HAS_RIVER",
-    {
-     "type": "TECH_AGRICULTURAL_TOOLS",
-     "scope": "team"
-    }
+    "TECH_AGRICULTURAL_TOOLS"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_RICE_PADDY",
-      "scope": "city"
-     }
+     "BUILDING_RICE_PADDY"
     ],
     [
      {
@@ -56,10 +50,7 @@
     ]
    ],
    "dormant": [
-    {
-     "type": "BUILDING_FARMSCRAPER_III",
-     "scope": "city"
-    }
+    "BUILDING_FARMSCRAPER_III"
    ]
   }
  },

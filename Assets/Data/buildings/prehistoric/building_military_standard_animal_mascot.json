@@ -24,10 +24,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_CULTURAL_IDENTITY",
-     "scope": "team"
-    }
+    "TECH_CULTURAL_IDENTITY"
    ],
    "any": [
     [

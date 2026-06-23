@@ -6,29 +6,14 @@
   "build": {
    "all": [
     "HAS_COAST",
-    {
-     "type": "TECH_ECONOMICS",
-     "scope": "team"
-    }
+    "TECH_ECONOMICS"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_PORT",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_COMMERCIAL_PORT",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_INTERNATIONAL_PORT",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_OCEAN_ADMINISTRATION",
-      "scope": "city"
-     }
+     "BUILDING_PORT",
+     "BUILDING_COMMERCIAL_PORT",
+     "BUILDING_INTERNATIONAL_PORT",
+     "BUILDING_OCEAN_ADMINISTRATION"
     ],
     [
      {
@@ -40,10 +25,7 @@
   },
   "operate": {
    "all": [
-    {
-     "type": "CIVIC_FREE_MARKET",
-     "scope": "empire"
-    }
+    "CIVIC_FREE_MARKET"
    ]
   }
  },

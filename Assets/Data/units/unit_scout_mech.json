@@ -10,10 +10,7 @@
      "scope": "city",
      "connection": "trade|vicinity"
     },
-    {
-     "type": "TECH_DISASTER_ROBOTS",
-     "scope": "team"
-    }
+    "TECH_DISASTER_ROBOTS"
    ],
    "any": [
     [

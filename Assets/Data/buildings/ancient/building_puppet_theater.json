@@ -13,14 +13,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_FOLK_DANCE",
-     "scope": "team"
-    },
-    {
-     "type": "TECH_FOLK_MUSIC",
-     "scope": "team"
-    }
+    "TECH_FOLK_DANCE",
+    "TECH_FOLK_MUSIC"
    ],
    "any": [
     [
@@ -49,10 +43,7 @@
     ]
    ],
    "dormant": [
-    {
-     "type": "BUILDING_HIGH_TECH_CULTURAL_ENRICHMENT",
-     "scope": "city"
-    }
+    "BUILDING_HIGH_TECH_CULTURAL_ENRICHMENT"
    ]
   }
  },

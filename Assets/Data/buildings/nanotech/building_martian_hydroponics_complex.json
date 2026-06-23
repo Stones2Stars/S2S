@@ -13,26 +13,11 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_MARTIAN_RADIATION_SHIELD",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_SPACE_COLONY_MARTIAN",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_ELECTROMAGNETIC_FIELD_SHIELDING",
-     "scope": "team"
-    },
-    {
-     "type": "TECH_AUGMENTED_CONSUMABLES",
-     "scope": "team"
-    },
-    {
-     "type": "TECH_PLANETARY_MANUFACTURING",
-     "scope": "team"
-    }
+    "BUILDING_MARTIAN_RADIATION_SHIELD",
+    "BUILDING_SPACE_COLONY_MARTIAN",
+    "TECH_ELECTROMAGNETIC_FIELD_SHIELDING",
+    "TECH_AUGMENTED_CONSUMABLES",
+    "TECH_PLANETARY_MANUFACTURING"
    ],
    "any": [
     [
@@ -45,10 +30,7 @@
   },
   "operate": {
    "dormant": [
-    {
-     "type": "BUILDING_MARTIAN_VERTICAL_FARM",
-     "scope": "city"
-    }
+    "BUILDING_MARTIAN_VERTICAL_FARM"
    ]
   }
  },

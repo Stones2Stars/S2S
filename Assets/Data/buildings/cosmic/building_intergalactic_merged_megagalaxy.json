@@ -10,23 +10,14 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_INTERGALACTIC_GOVERNMENT",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_INTERGALACTIC_BIRCH_PLANET",
-     "scope": "city"
-    },
+    "BUILDING_INTERGALACTIC_GOVERNMENT",
+    "BUILDING_INTERGALACTIC_BIRCH_PLANET",
     {
      "type": "BUILDING_INTERGALACTIC_SHKADOV_THRUSTER",
      "scope": "empire",
      "min": 2
     },
-    {
-     "type": "TECH_COSMIC_ENGINEERING",
-     "scope": "team"
-    }
+    "TECH_COSMIC_ENGINEERING"
    ],
    "any": [
     [

@@ -10,14 +10,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_INTERSTELLAR_KUGELBLITZ_POWER_PLANT",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_APPLIED_RELATIVITY",
-     "scope": "team"
-    }
+    "BUILDING_INTERSTELLAR_KUGELBLITZ_POWER_PLANT",
+    "TECH_APPLIED_RELATIVITY"
    ],
    "any": [
     [

@@ -5,22 +5,10 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_DEEP_SPACE_HOUSING_MANAGEMENT",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_DEEP_SPACE_SIMULATED_WORLD",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_DEEP_SPACE_ONEILL_CYLINDER",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_MOLECULAR_SCANNING",
-     "scope": "team"
-    }
+    "BUILDING_DEEP_SPACE_HOUSING_MANAGEMENT",
+    "BUILDING_DEEP_SPACE_SIMULATED_WORLD",
+    "BUILDING_DEEP_SPACE_ONEILL_CYLINDER",
+    "TECH_MOLECULAR_SCANNING"
    ],
    "any": [
     [

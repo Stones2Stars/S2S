@@ -10,10 +10,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_CONSTRUCTION",
-     "scope": "team"
-    },
+    "TECH_CONSTRUCTION",
     "STATE_RELIGION_IN_CITY",
     {
      "STATE_RELIGION": "RELIGION_JUDAISM"
@@ -30,10 +27,7 @@
   },
   "operate": {
    "all": [
-    {
-     "type": "RELIGION_JUDAISM",
-     "scope": "city"
-    }
+    "RELIGION_JUDAISM"
    ]
   }
  },

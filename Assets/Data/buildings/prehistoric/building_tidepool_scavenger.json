@@ -14,10 +14,7 @@
   "build": {
    "all": [
     "HAS_COAST",
-    {
-     "type": "TECH_SCAVENGING",
-     "scope": "team"
-    }
+    "TECH_SCAVENGING"
    ],
    "any": [
     [
@@ -30,14 +27,8 @@
   },
   "operate": {
    "dormant": [
-    {
-     "type": "BUILDING_FISHERMANS_HUT",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_AQUAFARM",
-     "scope": "city"
-    }
+    "BUILDING_FISHERMANS_HUT",
+    "BUILDING_AQUAFARM"
    ]
   }
  },
@@ -47,10 +38,7 @@
     1,
     {
      "value": 1,
-     "enabled": {
-      "type": "TECH_SPEARFISHING",
-      "scope": "team"
-     }
+     "enabled": "TECH_SPEARFISHING"
     }
    ]
   }
@@ -61,10 +49,7 @@
     -1,
     {
      "value": 1,
-     "enabled": {
-      "type": "TECH_COOKING",
-      "scope": "team"
-     }
+     "enabled": "TECH_COOKING"
     }
    ]
   }

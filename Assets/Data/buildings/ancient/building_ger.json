@@ -10,25 +10,13 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_ANIMAL_RIDING",
-     "scope": "team"
-    }
+    "TECH_ANIMAL_RIDING"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_STABLE",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_KNIGHTS_STABLE",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_MODERN_STABLE",
-      "scope": "city"
-     }
+     "BUILDING_STABLE",
+     "BUILDING_KNIGHTS_STABLE",
+     "BUILDING_MODERN_STABLE"
     ],
     [
      {
@@ -45,10 +33,7 @@
      "scope": "city",
      "connection": "trade|vicinity"
     },
-    {
-     "type": "RELIGION_TENGRIISM",
-     "scope": "city"
-    }
+    "RELIGION_TENGRIISM"
    ]
   }
  },

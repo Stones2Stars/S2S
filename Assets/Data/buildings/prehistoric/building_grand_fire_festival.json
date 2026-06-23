@@ -10,33 +10,15 @@
      "scope": "city",
      "min": 3
     },
-    {
-     "type": "BUILDING_FOLKLORE_E_FIRE",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_CELEBRATION",
-     "scope": "team"
-    }
+    "BUILDING_FOLKLORE_E_FIRE",
+    "TECH_CELEBRATION"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_FIRE_DANCE",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_FORGE",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_FOUNDRY",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_METALS_MEGACOMPLEX",
-      "scope": "city"
-     }
+     "BUILDING_FIRE_DANCE",
+     "BUILDING_FORGE",
+     "BUILDING_FOUNDRY",
+     "BUILDING_METALS_MEGACOMPLEX"
     ],
     [
      {
@@ -72,18 +54,9 @@
     ]
    ],
    "noneOf": [
-    {
-     "type": "BUILDING_GRAND_SKY_FESTIVAL",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_GRAND_EARTH_FESTIVAL",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_GRAND_MARINE_FESTIVAL",
-     "scope": "city"
-    }
+    "BUILDING_GRAND_SKY_FESTIVAL",
+    "BUILDING_GRAND_EARTH_FESTIVAL",
+    "BUILDING_GRAND_MARINE_FESTIVAL"
    ]
   },
   "operate": {
@@ -211,45 +184,27 @@
     4,
     {
      "value": 2,
-     "enabled": {
-      "type": "TECH_ANCESTOR_WORSHIP",
-      "scope": "team"
-     }
+     "enabled": "TECH_ANCESTOR_WORSHIP"
     },
     {
      "value": 2,
-     "enabled": {
-      "type": "TECH_BRONZE_WORKING",
-      "scope": "team"
-     }
+     "enabled": "TECH_BRONZE_WORKING"
     },
     {
      "value": 2,
-     "enabled": {
-      "type": "TECH_FOLK_DANCE",
-      "scope": "team"
-     }
+     "enabled": "TECH_FOLK_DANCE"
     },
     {
      "value": 2,
-     "enabled": {
-      "type": "TECH_FOLK_MUSIC",
-      "scope": "team"
-     }
+     "enabled": "TECH_FOLK_MUSIC"
     },
     {
      "value": 3,
-     "enabled": {
-      "type": "TECH_MUSICAL_NOTATION",
-      "scope": "team"
-     }
+     "enabled": "TECH_MUSICAL_NOTATION"
     },
     {
      "value": 4,
-     "enabled": {
-      "type": "TECH_SMITHING",
-      "scope": "team"
-     }
+     "enabled": "TECH_SMITHING"
     }
    ]
   }
@@ -260,10 +215,7 @@
     3,
     {
      "value": 1,
-     "enabled": {
-      "type": "TECH_FLINTLOCK",
-      "scope": "team"
-     }
+     "enabled": "TECH_FLINTLOCK"
     }
    ]
   },

@@ -5,18 +5,9 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_EFFECT_SOLAR_ECONOMY",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_DEEP_SPACE_ONEILL_CYLINDER",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_INTERSTELLAR_TRADE",
-     "scope": "team"
-    }
+    "BUILDING_EFFECT_SOLAR_ECONOMY",
+    "BUILDING_DEEP_SPACE_ONEILL_CYLINDER",
+    "TECH_INTERSTELLAR_TRADE"
    ],
    "any": [
     [

@@ -10,18 +10,9 @@
       "max": 45
      }
     },
-    {
-     "type": "BUILDING_ANIMAL_TRAINER_ZEBRA",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_HERITAGE",
-     "scope": "team"
-    },
-    {
-     "type": "TECH_MEGAFAUNA_DOMESTICATION",
-     "scope": "team"
-    }
+    "BUILDING_ANIMAL_TRAINER_ZEBRA",
+    "TECH_HERITAGE",
+    "TECH_MEGAFAUNA_DOMESTICATION"
    ],
    "any": [
     [

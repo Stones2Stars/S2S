@@ -5,10 +5,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_COMMUNISM",
-     "scope": "team"
-    }
+    "TECH_COMMUNISM"
    ],
    "any": [
     [
@@ -21,10 +18,7 @@
   },
   "operate": {
    "all": [
-    {
-     "type": "CIVIC_STATE_OWNED",
-     "scope": "empire"
-    }
+    "CIVIC_STATE_OWNED"
    ]
   }
  },

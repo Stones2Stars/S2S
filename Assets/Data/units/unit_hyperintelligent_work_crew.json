@@ -5,14 +5,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_MICRO_WORMHOLE",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_HYPERINTELLIGENCE",
-     "scope": "team"
-    }
+    "BUILDING_MICRO_WORMHOLE",
+    "TECH_HYPERINTELLIGENCE"
    ]
   }
  },

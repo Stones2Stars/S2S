@@ -12,18 +12,9 @@
    "all": [
     "HAS_FRESHWATER",
     "HAS_POWER",
-    {
-     "type": "BUILDING_CONTROL_CENTER",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_AEROPONICS_LAB",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_BIOMETRIC_WARFARE",
-     "scope": "team"
-    }
+    "BUILDING_CONTROL_CENTER",
+    "BUILDING_AEROPONICS_LAB",
+    "TECH_BIOMETRIC_WARFARE"
    ],
    "any": [
     [
@@ -50,10 +41,7 @@
     5,
     {
      "value": 9,
-     "enabled": {
-      "type": "TECH_VERTICAL_FARMING",
-      "scope": "team"
-     }
+     "enabled": "TECH_VERTICAL_FARMING"
     }
    ]
   }

@@ -5,10 +5,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_WORLDVIEW_SLAVERY_ACTIVE",
-     "scope": "city"
-    }
+    "BUILDING_WORLDVIEW_SLAVERY_ACTIVE"
    ],
    "any": [
     [
@@ -21,16 +18,10 @@
   },
   "operate": {
    "all": [
-    {
-     "type": "RELIGION_ZOROASTRIANISM",
-     "scope": "city"
-    }
+    "RELIGION_ZOROASTRIANISM"
    ],
    "dormant": [
-    {
-     "type": "BUILDING_EFFECT_EMANCIPATION_PROCLAMATION",
-     "scope": "city"
-    }
+    "BUILDING_EFFECT_EMANCIPATION_PROCLAMATION"
    ]
   }
  },

@@ -10,10 +10,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_LANGUAGE",
-     "scope": "team"
-    }
+    "TECH_LANGUAGE"
    ],
    "any": [
     [
@@ -48,17 +45,11 @@
     4,
     {
      "value": 10,
-     "enabled": {
-      "type": "TECH_TOURISM",
-      "scope": "team"
-     }
+     "enabled": "TECH_TOURISM"
     },
     {
      "value": 5,
-     "enabled": {
-      "type": "TECH_TOURISM",
-      "scope": "team"
-     }
+     "enabled": "TECH_TOURISM"
     }
    ]
   }
@@ -69,10 +60,7 @@
     4,
     {
      "value": 5,
-     "enabled": {
-      "type": "TECH_ARCHEOLOGY",
-      "scope": "team"
-     }
+     "enabled": "TECH_ARCHEOLOGY"
     }
    ]
   }
@@ -87,31 +75,19 @@
    "flat": [
     {
      "value": 1,
-     "enabled": {
-      "type": "TECH_ANIMISM",
-      "scope": "team"
-     }
+     "enabled": "TECH_ANIMISM"
     },
     {
      "value": 1,
-     "enabled": {
-      "type": "TECH_ANCIENT_MEDICINE",
-      "scope": "team"
-     }
+     "enabled": "TECH_ANCIENT_MEDICINE"
     },
     {
      "value": 1,
-     "enabled": {
-      "type": "TECH_MEDICINE",
-      "scope": "team"
-     }
+     "enabled": "TECH_MEDICINE"
     },
     {
      "value": 1,
-     "enabled": {
-      "type": "TECH_MOLECULAR_MEDICINE",
-      "scope": "team"
-     }
+     "enabled": "TECH_MOLECULAR_MEDICINE"
     }
    ]
   }
@@ -135,10 +111,7 @@
   "city": {
    "flat": {
     "value": 5,
-    "enabled": {
-     "type": "TECH_EXPLORATION",
-     "scope": "team"
-    }
+    "enabled": "TECH_EXPLORATION"
    }
   }
  },

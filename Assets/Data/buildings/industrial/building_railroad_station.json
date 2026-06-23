@@ -20,10 +20,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_RAILROAD",
-     "scope": "team"
-    },
+    "TECH_RAILROAD",
     {
      "type": "BONUS_STEEL_WARES",
      "scope": "city",
@@ -67,10 +64,7 @@
     ]
    ],
    "dormant": [
-    {
-     "type": "BUILDING_TELEPORT_BOOTH",
-     "scope": "city"
-    }
+    "BUILDING_TELEPORT_BOOTH"
    ]
   }
  },

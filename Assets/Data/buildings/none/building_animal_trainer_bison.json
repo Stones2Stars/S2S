@@ -14,57 +14,21 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_MEGAFAUNA_DOMESTICATION",
-     "scope": "team"
-    }
+    "TECH_MEGAFAUNA_DOMESTICATION"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_FOLKLORE_T_BULL",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_FOLKLORE_BISON",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_HERD_BISON",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_CAMP_MUSKOX",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_CAMP_BISON",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_CAMP_GIANT_BISON",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_BREEDING_PROGRAM_MUSKOX",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_BREEDING_PROGRAM_BISON",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_ANIMAL_PRESERVE",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_INDUSTRIAL_FARMS",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_MEAT_INDUSTRY_CONGLOMERATE",
-      "scope": "city"
-     }
+     "BUILDING_FOLKLORE_T_BULL",
+     "BUILDING_FOLKLORE_BISON",
+     "BUILDING_HERD_BISON",
+     "BUILDING_CAMP_MUSKOX",
+     "BUILDING_CAMP_BISON",
+     "BUILDING_CAMP_GIANT_BISON",
+     "BUILDING_BREEDING_PROGRAM_MUSKOX",
+     "BUILDING_BREEDING_PROGRAM_BISON",
+     "BUILDING_ANIMAL_PRESERVE",
+     "BUILDING_INDUSTRIAL_FARMS",
+     "BUILDING_MEAT_INDUSTRY_CONGLOMERATE"
     ],
     [
      {

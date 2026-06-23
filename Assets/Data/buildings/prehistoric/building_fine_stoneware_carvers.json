@@ -5,14 +5,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_C_L_MIDDLE_EASTERN",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_BARTER",
-     "scope": "team"
-    }
+    "BUILDING_C_L_MIDDLE_EASTERN",
+    "TECH_BARTER"
    ],
    "any": [
     [

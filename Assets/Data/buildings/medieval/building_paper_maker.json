@@ -19,21 +19,12 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_PAPER",
-     "scope": "team"
-    }
+    "TECH_PAPER"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_TRADING_POST",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_SHOPPING_DISTRICT",
-      "scope": "city"
-     }
+     "BUILDING_TRADING_POST",
+     "BUILDING_SHOPPING_DISTRICT"
     ],
     [
      {
@@ -69,14 +60,8 @@
     ]
    ],
    "dormant": [
-    {
-     "type": "BUILDING_FACTORY_PAPER",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_ELECTRONIC_PAPER_MAKER",
-     "scope": "city"
-    }
+    "BUILDING_FACTORY_PAPER",
+    "BUILDING_ELECTRONIC_PAPER_MAKER"
    ]
   }
  },

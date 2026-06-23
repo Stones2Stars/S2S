@@ -13,41 +13,17 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_MEDITATION",
-     "scope": "team"
-    }
+    "TECH_MEDITATION"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_WALLS",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_HIGH_WALLS",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_BARRICADES",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_CEMENT_BARRIER",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_METAMATERIAL_WALLS",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_SUPERSTRONG_ALLOY_WALLS",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_MEGASTRONG_ALLOY_WALLS",
-      "scope": "city"
-     }
+     "BUILDING_WALLS",
+     "BUILDING_HIGH_WALLS",
+     "BUILDING_BARRICADES",
+     "BUILDING_CEMENT_BARRIER",
+     "BUILDING_METAMATERIAL_WALLS",
+     "BUILDING_SUPERSTRONG_ALLOY_WALLS",
+     "BUILDING_MEGASTRONG_ALLOY_WALLS"
     ],
     [
      {
@@ -59,14 +35,8 @@
   },
   "operate": {
    "dormant": [
-    {
-     "type": "BUILDING_CASTLE_GARDEN",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_CITY_PARK",
-     "scope": "city"
-    }
+    "BUILDING_CASTLE_GARDEN",
+    "BUILDING_CITY_PARK"
    ]
   }
  },

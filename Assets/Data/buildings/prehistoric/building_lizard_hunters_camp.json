@@ -18,17 +18,11 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_TRACKING",
-     "scope": "team"
-    }
+    "TECH_TRACKING"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_HUNTERS_CAMP",
-      "scope": "city"
-     }
+     "BUILDING_HUNTERS_CAMP"
     ],
     [
      {
@@ -49,10 +43,7 @@
     ]
    ],
    "dormant": [
-    {
-     "type": "BUILDING_REPET",
-     "scope": "city"
-    }
+    "BUILDING_REPET"
    ]
   }
  },
@@ -71,10 +62,7 @@
    "flat": [
     {
      "value": -1,
-     "enabled": {
-      "type": "TECH_ECOLOGY",
-      "scope": "team"
-     }
+     "enabled": "TECH_ECOLOGY"
     }
    ]
   }

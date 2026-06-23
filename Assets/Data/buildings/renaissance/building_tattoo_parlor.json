@@ -19,21 +19,12 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_MILITARY_TRADITION",
-     "scope": "team"
-    }
+    "TECH_MILITARY_TRADITION"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_TRADING_POST",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_SHOPPING_DISTRICT",
-      "scope": "city"
-     }
+     "BUILDING_TRADING_POST",
+     "BUILDING_SHOPPING_DISTRICT"
     ],
     [
      {
@@ -71,10 +62,7 @@
     ]
    ],
    "dormant": [
-    {
-     "type": "BUILDING_HIGH_TECH_CULTURAL_ENRICHMENT",
-     "scope": "city"
-    }
+    "BUILDING_HIGH_TECH_CULTURAL_ENRICHMENT"
    ]
   }
  },
@@ -105,10 +93,7 @@
     1,
     {
      "value": -1,
-     "enabled": {
-      "type": "TECH_GUERRILLA_WARFARE",
-      "scope": "team"
-     }
+     "enabled": "TECH_GUERRILLA_WARFARE"
     }
    ]
   }
@@ -119,10 +104,7 @@
     -1,
     {
      "value": 1,
-     "enabled": {
-      "type": "TECH_LASER",
-      "scope": "team"
-     }
+     "enabled": "TECH_LASER"
     }
    ]
   }

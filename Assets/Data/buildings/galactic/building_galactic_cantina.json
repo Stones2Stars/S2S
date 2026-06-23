@@ -18,10 +18,7 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "TECH_ASTROANTHROPOLOGY",
-     "scope": "team"
-    }
+    "TECH_ASTROANTHROPOLOGY"
    ],
    "any": [
     [

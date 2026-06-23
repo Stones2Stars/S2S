@@ -18,10 +18,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_POISON_CRAFTING",
-     "scope": "team"
-    }
+    "TECH_POISON_CRAFTING"
    ],
    "any": [
     [
@@ -65,14 +62,8 @@
     }
    ],
    "dormant": [
-    {
-     "type": "BUILDING_CHEMISTRY_LAB",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_CHEMICALS_DISTRICT",
-     "scope": "city"
-    }
+    "BUILDING_CHEMISTRY_LAB",
+    "BUILDING_CHEMICALS_DISTRICT"
    ]
   }
  },

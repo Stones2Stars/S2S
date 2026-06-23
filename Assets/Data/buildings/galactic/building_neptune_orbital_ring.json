@@ -5,14 +5,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_NEPTUNE_WIND_TURBINE",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_PLANET_CRACKING",
-     "scope": "team"
-    }
+    "BUILDING_NEPTUNE_WIND_TURBINE",
+    "TECH_PLANET_CRACKING"
    ],
    "any": [
     [

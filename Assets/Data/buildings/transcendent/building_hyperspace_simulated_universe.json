@@ -18,22 +18,10 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_HYPERSPACE_5D_ARTIFICIAL_GRAVITY",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_HYPERSPACE_INFLATON_FIELD",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_EFFECT_UNIVERSAL_ECONOMY",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_EXPERIMENTAL_COSMOLOGY",
-     "scope": "team"
-    }
+    "BUILDING_HYPERSPACE_5D_ARTIFICIAL_GRAVITY",
+    "BUILDING_HYPERSPACE_INFLATON_FIELD",
+    "BUILDING_EFFECT_UNIVERSAL_ECONOMY",
+    "TECH_EXPERIMENTAL_COSMOLOGY"
    ],
    "any": [
     [
@@ -51,17 +39,11 @@
     120,
     {
      "value": 20,
-     "enabled": {
-      "type": "TECH_OMEGA_POINT",
-      "scope": "team"
-     }
+     "enabled": "TECH_OMEGA_POINT"
     },
     {
      "value": 13,
-     "enabled": {
-      "type": "TECH_UNIVERSAL_SINGULARITY",
-      "scope": "team"
-     }
+     "enabled": "TECH_UNIVERSAL_SINGULARITY"
     }
    ]
   }
@@ -72,10 +54,7 @@
     120,
     {
      "value": 20,
-     "enabled": {
-      "type": "TECH_SIMULATION_AWARENESS",
-      "scope": "team"
-     }
+     "enabled": "TECH_SIMULATION_AWARENESS"
     }
    ]
   }
@@ -85,24 +64,15 @@
    "flat": [
     {
      "value": 13,
-     "enabled": {
-      "type": "TECH_DIRECTED_COSMIC_EVOLUTION",
-      "scope": "team"
-     }
+     "enabled": "TECH_DIRECTED_COSMIC_EVOLUTION"
     },
     {
      "value": 13,
-     "enabled": {
-      "type": "TECH_ASCENSION",
-      "scope": "team"
-     }
+     "enabled": "TECH_ASCENSION"
     },
     {
      "value": 20,
-     "enabled": {
-      "type": "TECH_ALPHA_POINT",
-      "scope": "team"
-     }
+     "enabled": "TECH_ALPHA_POINT"
     }
    ]
   }

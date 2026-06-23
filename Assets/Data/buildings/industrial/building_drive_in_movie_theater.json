@@ -13,14 +13,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_MOTORIZED_TRANSPORTATION",
-     "scope": "team"
-    },
-    {
-     "type": "TECH_MOTION_PICTURES",
-     "scope": "team"
-    }
+    "TECH_MOTORIZED_TRANSPORTATION",
+    "TECH_MOTION_PICTURES"
    ],
    "any": [
     [
@@ -40,10 +34,7 @@
     }
    ],
    "dormant": [
-    {
-     "type": "BUILDING_HIGH_TECH_CULTURAL_ENRICHMENT",
-     "scope": "city"
-    }
+    "BUILDING_HIGH_TECH_CULTURAL_ENRICHMENT"
    ]
   }
  },

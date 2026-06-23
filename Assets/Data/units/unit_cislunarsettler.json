@@ -6,21 +6,12 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_ADVANCED_ENVIRONMENTAL_SYSTEMS",
-     "scope": "team"
-    }
+    "TECH_ADVANCED_ENVIRONMENTAL_SYSTEMS"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_CISLUNAR_FACTORY",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_SPACE_STATION",
-      "scope": "city"
-     }
+     "BUILDING_CISLUNAR_FACTORY",
+     "BUILDING_SPACE_STATION"
     ]
    ]
   }

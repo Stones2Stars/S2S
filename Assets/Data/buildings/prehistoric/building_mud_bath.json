@@ -13,37 +13,16 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_NATUROPATHY",
-     "scope": "team"
-    }
+    "TECH_NATUROPATHY"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_HEALERS_HUT",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_DOCTORS_OFFICE",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_SURGEONS_OFFICE",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_MEDICAL_CLINIC",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_APOTHECARY_SHOP",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_PHARMACY",
-      "scope": "city"
-     }
+     "BUILDING_HEALERS_HUT",
+     "BUILDING_DOCTORS_OFFICE",
+     "BUILDING_SURGEONS_OFFICE",
+     "BUILDING_MEDICAL_CLINIC",
+     "BUILDING_APOTHECARY_SHOP",
+     "BUILDING_PHARMACY"
     ],
     [
      {
@@ -69,14 +48,8 @@
     ]
    ],
    "dormant": [
-    {
-     "type": "BUILDING_HEALTH_SPA",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_HEALTHCARE_MEGACOMPLEX",
-     "scope": "city"
-    }
+    "BUILDING_HEALTH_SPA",
+    "BUILDING_HEALTHCARE_MEGACOMPLEX"
    ]
   }
  },

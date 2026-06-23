@@ -22,18 +22,9 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_EFFECT_GALACTIC_ECONOMY",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_SPACE_COLONY_EXTRAGALACTIC",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_INTERGALACTIC_COLONIZATION",
-     "scope": "team"
-    }
+    "BUILDING_EFFECT_GALACTIC_ECONOMY",
+    "BUILDING_SPACE_COLONY_EXTRAGALACTIC",
+    "TECH_INTERGALACTIC_COLONIZATION"
    ],
    "any": [
     [

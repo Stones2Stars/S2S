@@ -7,14 +7,8 @@
    "all": [
     "HAS_COAST",
     "HAS_POWER",
-    {
-     "type": "BUILDING_MEGATOWER",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_NANO_ARCHITECTURE",
-     "scope": "team"
-    }
+    "BUILDING_MEGATOWER",
+    "TECH_NANO_ARCHITECTURE"
    ],
    "any": [
     [

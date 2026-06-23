@@ -13,37 +13,16 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_TANNING",
-     "scope": "team"
-    }
+    "TECH_TANNING"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_STORAGE_PIT",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_GRANARY",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_MODERN_GRANARY",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_BARTER_POST",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_TRADING_POST",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_SHOPPING_DISTRICT",
-      "scope": "city"
-     }
+     "BUILDING_STORAGE_PIT",
+     "BUILDING_GRANARY",
+     "BUILDING_MODERN_GRANARY",
+     "BUILDING_BARTER_POST",
+     "BUILDING_TRADING_POST",
+     "BUILDING_SHOPPING_DISTRICT"
     ],
     [
      {
@@ -62,14 +41,8 @@
     }
    ],
    "dormant": [
-    {
-     "type": "BUILDING_FACTORY_SHOES",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_TEXTILE_MANUFACTURING_DISTRICT",
-     "scope": "city"
-    }
+    "BUILDING_FACTORY_SHOES",
+    "BUILDING_TEXTILE_MANUFACTURING_DISTRICT"
    ]
   }
  },

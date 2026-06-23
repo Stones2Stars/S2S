@@ -10,14 +10,8 @@
      "scope": "city",
      "connection": "trade|vicinity"
     },
-    {
-     "type": "TECH_PERSONAL_COMPUTERS",
-     "scope": "team"
-    },
-    {
-     "type": "TECH_JET_PROPULSION",
-     "scope": "team"
-    },
+    "TECH_PERSONAL_COMPUTERS",
+    "TECH_JET_PROPULSION",
     {
      "type": "BONUS_AIRCRAFT",
      "scope": "city",
@@ -38,14 +32,8 @@
      }
     ],
     [
-     {
-      "type": "BUILDING_MILITARY_AIRBASE",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_AEROSPACE_COMPLEX",
-      "scope": "city"
-     }
+     "BUILDING_MILITARY_AIRBASE",
+     "BUILDING_AEROSPACE_COMPLEX"
     ]
    ]
   }

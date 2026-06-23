@@ -11,14 +11,8 @@
      "scope": "city",
      "min": 3
     },
-    {
-     "type": "BUILDING_MICROBIOLOGY_LAB",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_BIOPUNK",
-     "scope": "team"
-    }
+    "BUILDING_MICROBIOLOGY_LAB",
+    "TECH_BIOPUNK"
    ],
    "any": [
     [

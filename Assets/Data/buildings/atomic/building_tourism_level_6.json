@@ -5,10 +5,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_ATOMIC_LIFESTYLE",
-     "scope": "team"
-    }
+    "TECH_ATOMIC_LIFESTYLE"
    ],
    "any": [
     [

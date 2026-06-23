@@ -21,14 +21,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_ASSEMBLY_PLANT",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_ADVANCED_METALLURGY",
-     "scope": "team"
-    }
+    "BUILDING_ASSEMBLY_PLANT",
+    "TECH_ADVANCED_METALLURGY"
    ],
    "any": [
     [
@@ -48,10 +42,7 @@
     }
    ],
    "dormant": [
-    {
-     "type": "BUILDING_METALS_MEGACOMPLEX",
-     "scope": "city"
-    }
+    "BUILDING_METALS_MEGACOMPLEX"
    ]
   }
  },
@@ -61,10 +52,7 @@
     10,
     {
      "value": 9,
-     "enabled": {
-      "type": "TECH_ELECTRIC_ARC_WEAPONRY",
-      "scope": "team"
-     }
+     "enabled": "TECH_ELECTRIC_ARC_WEAPONRY"
     }
    ]
   }

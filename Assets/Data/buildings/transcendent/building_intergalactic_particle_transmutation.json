@@ -5,14 +5,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_INTERGALACTIC_MATTER_PRESERVER",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_STRING_MANIPULATION",
-     "scope": "team"
-    }
+    "BUILDING_INTERGALACTIC_MATTER_PRESERVER",
+    "TECH_STRING_MANIPULATION"
    ],
    "any": [
     [

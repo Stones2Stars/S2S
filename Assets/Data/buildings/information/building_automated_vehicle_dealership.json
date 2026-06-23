@@ -14,26 +14,11 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_SHOPPING_DISTRICT",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_GESTURE_RECOGNITION_SOFTWARE",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_MECHATRONICS_LAB",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_BIOMECHANICAL_HARVESTING",
-     "scope": "team"
-    },
-    {
-     "type": "TECH_AUTONOMOUS_VEHICLES",
-     "scope": "team"
-    },
+    "BUILDING_SHOPPING_DISTRICT",
+    "BUILDING_GESTURE_RECOGNITION_SOFTWARE",
+    "BUILDING_MECHATRONICS_LAB",
+    "TECH_BIOMECHANICAL_HARVESTING",
+    "TECH_AUTONOMOUS_VEHICLES",
     {
      "type": "BONUS_AUTOMOBILES",
      "scope": "city",
@@ -61,14 +46,8 @@
   },
   "operate": {
    "dormant": [
-    {
-     "type": "BUILDING_SHOCKWAVE_VEHICLE_DEALERSHIP",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_ANTIGRAV_VEHICLE_DEALERSHIP",
-     "scope": "city"
-    }
+    "BUILDING_SHOCKWAVE_VEHICLE_DEALERSHIP",
+    "BUILDING_ANTIGRAV_VEHICLE_DEALERSHIP"
    ]
   }
  },

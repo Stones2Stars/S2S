@@ -5,10 +5,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_PROTOTYPED_PATHOGENS",
-     "scope": "team"
-    }
+    "TECH_PROTOTYPED_PATHOGENS"
    ]
   }
  },

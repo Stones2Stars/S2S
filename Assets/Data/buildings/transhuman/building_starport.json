@@ -24,10 +24,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_ASTROGATION_CONSTELLATION",
-     "scope": "team"
-    }
+    "TECH_ASTROGATION_CONSTELLATION"
    ],
    "any": [
     [
@@ -44,24 +41,15 @@
    "flat": [
     {
      "value": 11,
-     "enabled": {
-      "type": "TECH_LAUNCH_ARCOLOGY",
-      "scope": "team"
-     }
+     "enabled": "TECH_LAUNCH_ARCOLOGY"
     },
     {
      "value": 11,
-     "enabled": {
-      "type": "TECH_ADVANCED_SEEDSHIPS",
-      "scope": "team"
-     }
+     "enabled": "TECH_ADVANCED_SEEDSHIPS"
     },
     {
      "value": 11,
-     "enabled": {
-      "type": "TECH_INTERSTELLAR_TRADE",
-      "scope": "team"
-     }
+     "enabled": "TECH_INTERSTELLAR_TRADE"
     }
    ]
   }
@@ -72,73 +60,43 @@
     6,
     {
      "value": 11,
-     "enabled": {
-      "type": "TECH_FOLDING_SPACE",
-      "scope": "team"
-     }
+     "enabled": "TECH_FOLDING_SPACE"
     },
     {
      "value": 12,
-     "enabled": {
-      "type": "TECH_SPACE_CREASING",
-      "scope": "team"
-     }
+     "enabled": "TECH_SPACE_CREASING"
     },
     {
      "value": 11,
-     "enabled": {
-      "type": "TECH_ANTIMATTER_ROCKETS",
-      "scope": "team"
-     }
+     "enabled": "TECH_ANTIMATTER_ROCKETS"
     },
     {
      "value": 11,
-     "enabled": {
-      "type": "TECH_WORMHOLE_TRAVERSAL",
-      "scope": "team"
-     }
+     "enabled": "TECH_WORMHOLE_TRAVERSAL"
     },
     {
      "value": 10,
-     "enabled": {
-      "type": "TECH_NUCLEAR_PULSE_PROPULSION",
-      "scope": "team"
-     }
+     "enabled": "TECH_NUCLEAR_PULSE_PROPULSION"
     },
     {
      "value": 11,
-     "enabled": {
-      "type": "TECH_FUSION_SPACECRAFT",
-      "scope": "team"
-     }
+     "enabled": "TECH_FUSION_SPACECRAFT"
     },
     {
      "value": 11,
-     "enabled": {
-      "type": "TECH_ACNP_PROPULSION",
-      "scope": "team"
-     }
+     "enabled": "TECH_ACNP_PROPULSION"
     },
     {
      "value": 11,
-     "enabled": {
-      "type": "TECH_TRANSTANGIBLE_NEUTRINO_ACCELERATORS",
-      "scope": "team"
-     }
+     "enabled": "TECH_TRANSTANGIBLE_NEUTRINO_ACCELERATORS"
     },
     {
      "value": 11,
-     "enabled": {
-      "type": "TECH_INTERSTELLAR_TRAVEL",
-      "scope": "team"
-     }
+     "enabled": "TECH_INTERSTELLAR_TRAVEL"
     },
     {
      "value": 11,
-     "enabled": {
-      "type": "TECH_INTERSTELLAR_COLONIZATION",
-      "scope": "team"
-     }
+     "enabled": "TECH_INTERSTELLAR_COLONIZATION"
     },
     {
      "value": 1,

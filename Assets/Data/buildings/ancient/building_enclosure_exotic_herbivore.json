@@ -25,21 +25,12 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_TRADE",
-     "scope": "team"
-    }
+    "TECH_TRADE"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_CARNIVAL",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_ZOO",
-      "scope": "city"
-     }
+     "BUILDING_CARNIVAL",
+     "BUILDING_ZOO"
     ],
     [
      {
@@ -48,44 +39,17 @@
      }
     ],
     [
-     {
-      "type": "HERITAGE_TAXON_SUIDAE",
-      "scope": "empire"
-     },
-     {
-      "type": "HERITAGE_TAXON_ELEPHANTIDAE",
-      "scope": "empire"
-     },
-     {
-      "type": "HERITAGE_TAXON_TAPIRIDAE",
-      "scope": "empire"
-     },
-     {
-      "type": "HERITAGE_TAXON_HIPPOPOTAMIDAE",
-      "scope": "empire"
-     },
-     {
-      "type": "HERITAGE_TAXON_MONOTREMATA",
-      "scope": "empire"
-     }
+     "HERITAGE_TAXON_SUIDAE",
+     "HERITAGE_TAXON_ELEPHANTIDAE",
+     "HERITAGE_TAXON_TAPIRIDAE",
+     "HERITAGE_TAXON_HIPPOPOTAMIDAE",
+     "HERITAGE_TAXON_MONOTREMATA"
     ],
     [
-     {
-      "type": "BUILDING_FOLKLORE_T_FLIGHTLESS_BIRDS",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_FOLKLORE_T_ANTELOPE",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_FOLKLORE_T_RHINOCEROSES",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_FOLKLORE_T_BULL",
-      "scope": "city"
-     }
+     "BUILDING_FOLKLORE_T_FLIGHTLESS_BIRDS",
+     "BUILDING_FOLKLORE_T_ANTELOPE",
+     "BUILDING_FOLKLORE_T_RHINOCEROSES",
+     "BUILDING_FOLKLORE_T_BULL"
     ]
    ]
   }
@@ -95,10 +59,7 @@
    "percent": [
     {
      "value": 1,
-     "enabled": {
-      "type": "TECH_SCIENTIFIC_METHOD",
-      "scope": "team"
-     }
+     "enabled": "TECH_SCIENTIFIC_METHOD"
     }
    ]
   }

@@ -11,22 +11,10 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_STEM_CELL_LAB",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_COMPUTER_NETWORK",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_EVOLUTION_SIMULATOR",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_BIOMATHEMATICS",
-     "scope": "team"
-    }
+    "BUILDING_STEM_CELL_LAB",
+    "BUILDING_COMPUTER_NETWORK",
+    "BUILDING_EVOLUTION_SIMULATOR",
+    "TECH_BIOMATHEMATICS"
    ],
    "any": [
     [
@@ -53,17 +41,11 @@
     5,
     {
      "value": 8,
-     "enabled": {
-      "type": "TECH_GENESIS_BIOLOGY",
-      "scope": "team"
-     }
+     "enabled": "TECH_GENESIS_BIOLOGY"
     },
     {
      "value": 8,
-     "enabled": {
-      "type": "TECH_AFFECTIVE_ALGORITHMS",
-      "scope": "team"
-     }
+     "enabled": "TECH_AFFECTIVE_ALGORITHMS"
     }
    ]
   }
@@ -74,10 +56,7 @@
     2,
     {
      "value": 2,
-     "enabled": {
-      "type": "TECH_PERSONALIZED_HEALTH",
-      "scope": "team"
-     }
+     "enabled": "TECH_PERSONALIZED_HEALTH"
     }
    ]
   }

@@ -6,17 +6,11 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_FUNDAMENTALISM",
-     "scope": "team"
-    }
+    "TECH_FUNDAMENTALISM"
    ],
    "any": [
     [
-     {
-      "type": "CIVIC_INQUISITORIAL",
-      "scope": "empire"
-     }
+     "CIVIC_INQUISITORIAL"
     ]
    ]
   }

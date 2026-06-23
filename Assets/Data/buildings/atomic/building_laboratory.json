@@ -38,14 +38,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_UNIVERSITY",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_MODERN_PHYSICS",
-     "scope": "team"
-    }
+    "BUILDING_UNIVERSITY",
+    "TECH_MODERN_PHYSICS"
    ],
    "any": [
     [

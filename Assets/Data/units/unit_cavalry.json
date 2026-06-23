@@ -5,14 +5,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_ANIMAL_TRAINER_HORSE",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_MILITARY_TRADITION",
-     "scope": "team"
-    },
+    "BUILDING_ANIMAL_TRAINER_HORSE",
+    "TECH_MILITARY_TRADITION",
     {
      "type": "BONUS_FIREARMS",
      "scope": "city",

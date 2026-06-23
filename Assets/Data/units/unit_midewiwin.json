@@ -10,10 +10,7 @@
      "scope": "city",
      "connection": "trade|vicinity"
     },
-    {
-     "type": "TECH_ANCIENT_MEDICINE",
-     "scope": "team"
-    }
+    "TECH_ANCIENT_MEDICINE"
    ],
    "any": [
     [
@@ -24,18 +21,9 @@
      }
     ],
     [
-     {
-      "type": "BUILDING_APOTHECARY_SHOP",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_PHARMACY",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_HEALTHCARE_MEGACOMPLEX",
-      "scope": "city"
-     }
+     "BUILDING_APOTHECARY_SHOP",
+     "BUILDING_PHARMACY",
+     "BUILDING_HEALTHCARE_MEGACOMPLEX"
     ]
    ]
   }

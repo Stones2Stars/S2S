@@ -13,25 +13,13 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_POULTRY_DOMESTICATION",
-     "scope": "team"
-    }
+    "TECH_POULTRY_DOMESTICATION"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_MEAT_INDUSTRY_CONGLOMERATE",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_INDUSTRIAL_FARMS",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_CHICKEN_COOP",
-      "scope": "city"
-     }
+     "BUILDING_MEAT_INDUSTRY_CONGLOMERATE",
+     "BUILDING_INDUSTRIAL_FARMS",
+     "BUILDING_CHICKEN_COOP"
     ],
     [
      {
@@ -50,10 +38,7 @@
     }
    ],
    "dormant": [
-    {
-     "type": "BUILDING_HIGH_TECH_CULTURAL_ENRICHMENT",
-     "scope": "city"
-    }
+    "BUILDING_HIGH_TECH_CULTURAL_ENRICHMENT"
    ]
   }
  },
@@ -63,10 +48,7 @@
     1,
     {
      "value": 7,
-     "enabled": {
-      "type": "TECH_LEGALIZED_GAMBLING",
-      "scope": "team"
-     }
+     "enabled": "TECH_LEGALIZED_GAMBLING"
     }
    ]
   }

@@ -11,14 +11,8 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_HYPERSPACE_PICARD_HORN",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_MANIFOLD_COLONIZATION",
-     "scope": "team"
-    }
+    "BUILDING_HYPERSPACE_PICARD_HORN",
+    "TECH_MANIFOLD_COLONIZATION"
    ],
    "any": [
     [

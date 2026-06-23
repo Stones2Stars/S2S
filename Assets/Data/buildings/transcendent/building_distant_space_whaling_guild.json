@@ -10,14 +10,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_SPACE_COLONY_DISTANT",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_ENDLESS_EXPLORATION",
-     "scope": "team"
-    }
+    "BUILDING_SPACE_COLONY_DISTANT",
+    "TECH_ENDLESS_EXPLORATION"
    ],
    "any": [
     [

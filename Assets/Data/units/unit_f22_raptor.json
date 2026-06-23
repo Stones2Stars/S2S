@@ -10,14 +10,8 @@
      "scope": "city",
      "connection": "trade|vicinity"
     },
-    {
-     "type": "TECH_WAR_SIMULATIONS",
-     "scope": "team"
-    },
-    {
-     "type": "TECH_STEALTH",
-     "scope": "team"
-    },
+    "TECH_WAR_SIMULATIONS",
+    "TECH_STEALTH",
     {
      "type": "BONUS_AIRCRAFT",
      "scope": "city",
@@ -38,14 +32,8 @@
      }
     ],
     [
-     {
-      "type": "BUILDING_MILITARY_AIRBASE",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_AEROSPACE_COMPLEX",
-      "scope": "city"
-     }
+     "BUILDING_MILITARY_AIRBASE",
+     "BUILDING_AEROSPACE_COMPLEX"
     ]
    ]
   }

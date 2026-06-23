@@ -18,37 +18,16 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_BALLOON_WARFARE",
-     "scope": "team"
-    }
+    "TECH_BALLOON_WARFARE"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_FAIRGROUNDS",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_CARNIVAL",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_AMUSEMENT_PARK",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_CITY_PARK",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_AIRFIELD",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_AEROSPACE_COMPLEX",
-      "scope": "city"
-     }
+     "BUILDING_FAIRGROUNDS",
+     "BUILDING_CARNIVAL",
+     "BUILDING_AMUSEMENT_PARK",
+     "BUILDING_CITY_PARK",
+     "BUILDING_AIRFIELD",
+     "BUILDING_AEROSPACE_COMPLEX"
     ],
     [
      {
@@ -60,10 +39,7 @@
   },
   "operate": {
    "dormant": [
-    {
-     "type": "BUILDING_HIGH_TECH_CULTURAL_ENRICHMENT",
-     "scope": "city"
-    }
+    "BUILDING_HIGH_TECH_CULTURAL_ENRICHMENT"
    ]
   }
  },
@@ -73,10 +49,7 @@
     10,
     {
      "value": 7,
-     "enabled": {
-      "type": "TECH_TOURISM",
-      "scope": "team"
-     }
+     "enabled": "TECH_TOURISM"
     }
    ]
   }
@@ -86,10 +59,7 @@
    "flat": [
     {
      "value": 6,
-     "enabled": {
-      "type": "TECH_EXPRESSIONISM",
-      "scope": "team"
-     }
+     "enabled": "TECH_EXPRESSIONISM"
     }
    ]
   }

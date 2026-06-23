@@ -5,14 +5,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_INTERGALACTIC_VON_NEUMANN_COLONIZERS",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_COMPUTRONIUM_UNIVERSE",
-     "scope": "team"
-    }
+    "BUILDING_INTERGALACTIC_VON_NEUMANN_COLONIZERS",
+    "TECH_COMPUTRONIUM_UNIVERSE"
    ],
    "any": [
     [

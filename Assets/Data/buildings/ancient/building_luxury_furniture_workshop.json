@@ -13,10 +13,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_FURNITURE_MAKING",
-     "scope": "team"
-    },
+    "TECH_FURNITURE_MAKING",
     {
      "type": "BONUS_BRICKS",
      "scope": "city",
@@ -30,50 +27,17 @@
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_PALACE",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_HOUSING_VILLAS",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_HOUSING_PALACES",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_HOUSING_MANORS",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_HOUSING_ESTATES",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_HOUSING_MANSIONS",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_HOUSING_CONDOMINIUMS",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_HOUSING_CHATEAU",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_HOUSING_HIGH_TECH_CONDOMINIUMS",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_HOUSING_COLONY_ARCOLOGY",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_LAUNCH_ARCOLOGY",
-      "scope": "city"
-     }
+     "BUILDING_PALACE",
+     "BUILDING_HOUSING_VILLAS",
+     "BUILDING_HOUSING_PALACES",
+     "BUILDING_HOUSING_MANORS",
+     "BUILDING_HOUSING_ESTATES",
+     "BUILDING_HOUSING_MANSIONS",
+     "BUILDING_HOUSING_CONDOMINIUMS",
+     "BUILDING_HOUSING_CHATEAU",
+     "BUILDING_HOUSING_HIGH_TECH_CONDOMINIUMS",
+     "BUILDING_HOUSING_COLONY_ARCOLOGY",
+     "BUILDING_LAUNCH_ARCOLOGY"
     ],
     [
      {
@@ -94,10 +58,7 @@
     ]
    ],
    "dormant": [
-    {
-     "type": "BUILDING_HYPERMARKET",
-     "scope": "city"
-    }
+    "BUILDING_HYPERMARKET"
    ]
   }
  },

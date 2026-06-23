@@ -12,14 +12,8 @@
   "build": {
    "all": [
     "HAS_FRESHWATER",
-    {
-     "type": "BUILDING_WATER_TOWER",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_SCREW_PROPELLER",
-     "scope": "team"
-    }
+    "BUILDING_WATER_TOWER",
+    "TECH_SCREW_PROPELLER"
    ],
    "any": [
     [

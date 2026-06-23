@@ -11,14 +11,8 @@
   "build": {
    "all": [
     "HAS_COAST",
-    {
-     "type": "BUILDING_HARBORMASTERS_OFFICE",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_ASTROLABE",
-     "scope": "team"
-    }
+    "BUILDING_HARBORMASTERS_OFFICE",
+    "TECH_ASTROLABE"
    ],
    "any": [
     [

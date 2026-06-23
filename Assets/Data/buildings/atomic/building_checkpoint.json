@@ -5,21 +5,12 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_FASCISM",
-     "scope": "team"
-    }
+    "TECH_FASCISM"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_GARRISON",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_MILITARY_BASE",
-      "scope": "city"
-     }
+     "BUILDING_GARRISON",
+     "BUILDING_MILITARY_BASE"
     ],
     [
      {
@@ -31,10 +22,7 @@
   },
   "operate": {
    "all": [
-    {
-     "type": "CIVIC_TOTALITARIANISM",
-     "scope": "empire"
-    }
+    "CIVIC_TOTALITARIANISM"
    ]
   }
  },

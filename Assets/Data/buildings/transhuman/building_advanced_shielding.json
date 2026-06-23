@@ -13,10 +13,7 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "TECH_ADVANCED_SHIELDING",
-     "scope": "team"
-    }
+    "TECH_ADVANCED_SHIELDING"
    ],
    "any": [
     [

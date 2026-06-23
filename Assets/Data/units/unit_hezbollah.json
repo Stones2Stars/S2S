@@ -10,10 +10,7 @@
      "scope": "city",
      "connection": "trade|vicinity"
     },
-    {
-     "type": "TECH_URBAN_CULTURE",
-     "scope": "team"
-    },
+    "TECH_URBAN_CULTURE",
     {
      "type": "BONUS_AMMUNITION",
      "scope": "city",
@@ -29,14 +26,8 @@
      }
     ],
     [
-     {
-      "type": "BUILDING_METH_LAB",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_MATERIALS_CONGLOMERATE",
-      "scope": "city"
-     }
+     "BUILDING_METH_LAB",
+     "BUILDING_MATERIALS_CONGLOMERATE"
     ]
    ]
   }

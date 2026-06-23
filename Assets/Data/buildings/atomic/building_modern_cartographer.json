@@ -11,10 +11,7 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "TECH_SATELLITES",
-     "scope": "team"
-    }
+    "TECH_SATELLITES"
    ],
    "any": [
     [

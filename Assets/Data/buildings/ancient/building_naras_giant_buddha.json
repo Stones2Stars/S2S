@@ -5,10 +5,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_BRONZE_WORKING",
-     "scope": "team"
-    },
+    "TECH_BRONZE_WORKING",
     "STATE_RELIGION_IN_CITY",
     {
      "STATE_RELIGION": "RELIGION_BUDDHISM"
@@ -30,10 +27,7 @@
      "scope": "city",
      "connection": "trade|vicinity"
     },
-    {
-     "type": "RELIGION_BUDDHISM",
-     "scope": "city"
-    }
+    "RELIGION_BUDDHISM"
    ]
   }
  },

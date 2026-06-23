@@ -13,14 +13,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_MORTUARY",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_CHEMISTRY",
-     "scope": "team"
-    }
+    "BUILDING_MORTUARY",
+    "TECH_CHEMISTRY"
    ],
    "any": [
     [
@@ -40,14 +34,8 @@
     }
    ],
    "dormant": [
-    {
-     "type": "BUILDING_FUNERARY_SERVICES",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_HIGH_TECH_CULTURAL_ENRICHMENT",
-     "scope": "city"
-    }
+    "BUILDING_FUNERARY_SERVICES",
+    "BUILDING_HIGH_TECH_CULTURAL_ENRICHMENT"
    ]
   }
  },

@@ -13,14 +13,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_FACTORY",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_FIBER_OPTICS",
-     "scope": "team"
-    }
+    "BUILDING_FACTORY",
+    "TECH_FIBER_OPTICS"
    ],
    "any": [
     [
@@ -40,10 +34,7 @@
     }
    ],
    "dormant": [
-    {
-     "type": "BUILDING_ELECTRONICS_MANUFACTURING_DISTRICT",
-     "scope": "city"
-    }
+    "BUILDING_ELECTRONICS_MANUFACTURING_DISTRICT"
    ]
   }
  },

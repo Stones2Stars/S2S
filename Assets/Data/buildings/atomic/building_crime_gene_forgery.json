@@ -5,10 +5,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_GENETICS",
-     "scope": "team"
-    }
+    "TECH_GENETICS"
    ],
    "any": [
     [

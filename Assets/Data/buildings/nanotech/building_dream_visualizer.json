@@ -11,18 +11,9 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_NEURON_REGENERATOR_LAB",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_EXOCORTEX_NETWORKS",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_EXOCORTEX_NETWORKS",
-     "scope": "team"
-    }
+    "BUILDING_NEURON_REGENERATOR_LAB",
+    "BUILDING_EXOCORTEX_NETWORKS",
+    "TECH_EXOCORTEX_NETWORKS"
    ],
    "any": [
     [

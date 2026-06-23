@@ -13,10 +13,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_MINE_WARFARE",
-     "scope": "team"
-    }
+    "TECH_MINE_WARFARE"
    ],
    "any": [
     [
@@ -43,30 +40,12 @@
     ]
    ],
    "dormant": [
-    {
-     "type": "BUILDING_BOOBY_TRAPS",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_ROBOTIC_TRAPS",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_GERM_TRAPS",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_EMP_TRAPS",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_NANOBOT_TRAPS",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_GRAVITY_TRAPS",
-     "scope": "city"
-    }
+    "BUILDING_BOOBY_TRAPS",
+    "BUILDING_ROBOTIC_TRAPS",
+    "BUILDING_GERM_TRAPS",
+    "BUILDING_EMP_TRAPS",
+    "BUILDING_NANOBOT_TRAPS",
+    "BUILDING_GRAVITY_TRAPS"
    ]
   }
  },

@@ -11,25 +11,13 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_LABORATORY",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_FORENSICS",
-     "scope": "team"
-    }
+    "BUILDING_LABORATORY",
+    "TECH_FORENSICS"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_POLICE_STATION",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_POLICE_PRECINCT",
-      "scope": "city"
-     }
+     "BUILDING_POLICE_STATION",
+     "BUILDING_POLICE_PRECINCT"
     ],
     [
      {
@@ -46,24 +34,15 @@
     5,
     {
      "value": 8,
-     "enabled": {
-      "type": "TECH_KNOWLEDGE_MANAGEMENT",
-      "scope": "team"
-     }
+     "enabled": "TECH_KNOWLEDGE_MANAGEMENT"
     },
     {
      "value": 8,
-     "enabled": {
-      "type": "TECH_GENOMIC_ENCYCLOPEDIA",
-      "scope": "team"
-     }
+     "enabled": "TECH_GENOMIC_ENCYCLOPEDIA"
     },
     {
      "value": 9,
-     "enabled": {
-      "type": "TECH_GENE_JURISPRUDENCE",
-      "scope": "team"
-     }
+     "enabled": "TECH_GENE_JURISPRUDENCE"
     }
    ]
   }

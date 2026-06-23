@@ -16,21 +16,12 @@
      "scope": "city",
      "min": 7
     },
-    {
-     "type": "TECH_ATOMPUNK",
-     "scope": "team"
-    }
+    "TECH_ATOMPUNK"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_CANNERY",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_FARMSCRAPER_II",
-      "scope": "city"
-     }
+     "BUILDING_CANNERY",
+     "BUILDING_FARMSCRAPER_II"
     ],
     [
      {

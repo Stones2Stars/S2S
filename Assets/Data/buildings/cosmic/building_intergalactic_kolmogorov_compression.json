@@ -10,14 +10,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_INTERGALACTIC_SUPERCOMPUTER",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_UNIFICATION_MATHEMATICS",
-     "scope": "team"
-    }
+    "BUILDING_INTERGALACTIC_SUPERCOMPUTER",
+    "TECH_UNIFICATION_MATHEMATICS"
    ],
    "any": [
     [

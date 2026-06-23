@@ -13,29 +13,14 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_FIRE_MAKING",
-     "scope": "team"
-    }
+    "TECH_FIRE_MAKING"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_IMU",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_FIRE_PIT",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_BONFIRE",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_CHARCOAL_BURNER",
-      "scope": "city"
-     }
+     "BUILDING_IMU",
+     "BUILDING_FIRE_PIT",
+     "BUILDING_BONFIRE",
+     "BUILDING_CHARCOAL_BURNER"
     ],
     [
      {
@@ -47,14 +32,8 @@
   },
   "operate": {
    "dormant": [
-    {
-     "type": "BUILDING_SEAL_MAKER",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_HYPERMARKET",
-     "scope": "city"
-    }
+    "BUILDING_SEAL_MAKER",
+    "BUILDING_HYPERMARKET"
    ]
   }
  },

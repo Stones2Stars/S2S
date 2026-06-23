@@ -15,10 +15,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_LUNAR_TRADE",
-     "scope": "team"
-    }
+    "TECH_LUNAR_TRADE"
    ],
    "any": [
     [

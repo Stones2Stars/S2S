@@ -10,10 +10,7 @@
      "scope": "city",
      "min": 3
     },
-    {
-     "type": "TECH_EDUCATION",
-     "scope": "team"
-    }
+    "TECH_EDUCATION"
    ],
    "any": [
     [
@@ -26,10 +23,7 @@
   },
   "operate": {
    "all": [
-    {
-     "type": "CIVIC_BOURGEOIS",
-     "scope": "empire"
-    }
+    "CIVIC_BOURGEOIS"
    ]
   }
  },

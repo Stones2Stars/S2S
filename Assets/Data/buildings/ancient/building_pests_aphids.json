@@ -18,10 +18,7 @@
      "scope": "city",
      "min": 6
     },
-    {
-     "type": "TECH_PLOUGH",
-     "scope": "team"
-    }
+    "TECH_PLOUGH"
    ],
    "any": [
     [
@@ -53,18 +50,9 @@
     ]
    ],
    "dormant": [
-    {
-     "type": "BUILDING_LADYBUG_SANCTUARY",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_ARBORETUM",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_AGROFOREST",
-     "scope": "city"
-    }
+    "BUILDING_LADYBUG_SANCTUARY",
+    "BUILDING_ARBORETUM",
+    "BUILDING_AGROFOREST"
    ]
   }
  },

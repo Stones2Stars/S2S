@@ -10,14 +10,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_VENUS_ARCOLOGY",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_GRAVITY_CONTROL",
-     "scope": "team"
-    }
+    "BUILDING_VENUS_ARCOLOGY",
+    "TECH_GRAVITY_CONTROL"
    ],
    "any": [
     [

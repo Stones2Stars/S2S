@@ -11,14 +11,8 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_ALEPH_ASSEMBLER",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_SENTIENT_ENERGY_FIELDS",
-     "scope": "team"
-    }
+    "BUILDING_ALEPH_ASSEMBLER",
+    "TECH_SENTIENT_ENERGY_FIELDS"
    ],
    "any": [
     [

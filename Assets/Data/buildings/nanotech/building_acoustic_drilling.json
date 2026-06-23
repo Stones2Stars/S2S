@@ -5,14 +5,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_MINING_CAMP",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_ACOUSTOPHORESIS",
-     "scope": "team"
-    }
+    "BUILDING_MINING_CAMP",
+    "TECH_ACOUSTOPHORESIS"
    ],
    "any": [
     [
@@ -30,10 +24,7 @@
     5,
     {
      "value": 9,
-     "enabled": {
-      "type": "TECH_ELECTROMAGNETIC_FIELD_SHIELDING",
-      "scope": "team"
-     }
+     "enabled": "TECH_ELECTROMAGNETIC_FIELD_SHIELDING"
     }
    ]
   }

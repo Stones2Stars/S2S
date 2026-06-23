@@ -7,19 +7,13 @@
   "build": {
    "all": [
     "HAS_COAST",
-    {
-     "type": "BUILDING_ZOO",
-     "scope": "city"
-    },
+    "BUILDING_ZOO",
     {
      "type": "BUILDING_ZOO",
      "scope": "empire",
      "min": 4
     },
-    {
-     "type": "TECH_ECOLOGY",
-     "scope": "team"
-    }
+    "TECH_ECOLOGY"
    ],
    "any": [
     [

@@ -16,18 +16,9 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_FORENSICS_LAB",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_CLONING_LABORATORY",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_CLONING",
-     "scope": "team"
-    }
+    "BUILDING_FORENSICS_LAB",
+    "BUILDING_CLONING_LABORATORY",
+    "TECH_CLONING"
    ],
    "any": [
     [
@@ -63,31 +54,19 @@
     5,
     {
      "value": 8,
-     "enabled": {
-      "type": "TECH_REPLACEMENT_ORGANS",
-      "scope": "team"
-     }
+     "enabled": "TECH_REPLACEMENT_ORGANS"
     },
     {
      "value": 8,
-     "enabled": {
-      "type": "TECH_GENOMIC_ENCYCLOPEDIA",
-      "scope": "team"
-     }
+     "enabled": "TECH_GENOMIC_ENCYCLOPEDIA"
     },
     {
      "value": 9,
-     "enabled": {
-      "type": "TECH_GENE_ENHANCEMENT",
-      "scope": "team"
-     }
+     "enabled": "TECH_GENE_ENHANCEMENT"
     },
     {
      "value": 9,
-     "enabled": {
-      "type": "TECH_DNA_COMPUTING",
-      "scope": "team"
-     }
+     "enabled": "TECH_DNA_COMPUTING"
     }
    ]
   }
@@ -98,31 +77,19 @@
     1,
     {
      "value": 1,
-     "enabled": {
-      "type": "TECH_REPLACEMENT_ORGANS",
-      "scope": "team"
-     }
+     "enabled": "TECH_REPLACEMENT_ORGANS"
     },
     {
      "value": 1,
-     "enabled": {
-      "type": "TECH_GENOMIC_ENCYCLOPEDIA",
-      "scope": "team"
-     }
+     "enabled": "TECH_GENOMIC_ENCYCLOPEDIA"
     },
     {
      "value": 1,
-     "enabled": {
-      "type": "TECH_GENE_ENHANCEMENT",
-      "scope": "team"
-     }
+     "enabled": "TECH_GENE_ENHANCEMENT"
     },
     {
      "value": 1,
-     "enabled": {
-      "type": "TECH_DNA_COMPUTING",
-      "scope": "team"
-     }
+     "enabled": "TECH_DNA_COMPUTING"
     }
    ]
   }

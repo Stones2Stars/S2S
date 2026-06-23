@@ -10,10 +10,7 @@
      "scope": "city",
      "min": 7
     },
-    {
-     "type": "TECH_COMPUTER_NETWORKS",
-     "scope": "team"
-    }
+    "TECH_COMPUTER_NETWORKS"
    ],
    "any": [
     [

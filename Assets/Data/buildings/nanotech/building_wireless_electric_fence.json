@@ -14,10 +14,7 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "TECH_WIRELESS_ELECTRICITY",
-     "scope": "team"
-    }
+    "TECH_WIRELESS_ELECTRICITY"
    ],
    "any": [
     [
@@ -37,14 +34,8 @@
     }
    ],
    "dormant": [
-    {
-     "type": "BUILDING_ARCOLOGY_SHIELDING",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_ADVANCED_SHIELDING",
-     "scope": "city"
-    }
+    "BUILDING_ARCOLOGY_SHIELDING",
+    "BUILDING_ADVANCED_SHIELDING"
    ]
   }
  },

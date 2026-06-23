@@ -5,14 +5,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_MARTIAN_FACTORY",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_SUPERSONIC_RAILS",
-     "scope": "team"
-    }
+    "BUILDING_MARTIAN_FACTORY",
+    "TECH_SUPERSONIC_RAILS"
    ]
   }
  },

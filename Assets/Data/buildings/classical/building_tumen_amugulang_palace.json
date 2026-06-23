@@ -15,25 +15,13 @@
      "scope": "city",
      "min": 3
     },
-    {
-     "type": "TECH_AESTHETICS",
-     "scope": "team"
-    },
-    {
-     "type": "TECH_CANAL_SYSTEMS",
-     "scope": "team"
-    }
+    "TECH_AESTHETICS",
+    "TECH_CANAL_SYSTEMS"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_FOUNTAIN",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_CITY_PARK",
-      "scope": "city"
-     }
+     "BUILDING_FOUNTAIN",
+     "BUILDING_CITY_PARK"
     ],
     [
      {

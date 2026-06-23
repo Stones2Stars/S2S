@@ -18,10 +18,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_NATURAL_PIGMENTS",
-     "scope": "team"
-    }
+    "TECH_NATURAL_PIGMENTS"
    ],
    "any": [
     [
@@ -41,14 +38,8 @@
     }
    ],
    "dormant": [
-    {
-     "type": "BUILDING_PLANTATION_HENNA",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_GREENHOUSE",
-     "scope": "city"
-    }
+    "BUILDING_PLANTATION_HENNA",
+    "BUILDING_GREENHOUSE"
    ]
   }
  },

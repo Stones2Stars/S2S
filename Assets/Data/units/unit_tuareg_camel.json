@@ -10,18 +10,9 @@
      "scope": "city",
      "connection": "trade|vicinity"
     },
-    {
-     "type": "BUILDING_ANIMAL_TRAINER_CAMEL",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_ANIMAL_RIDING",
-     "scope": "team"
-    },
-    {
-     "type": "TECH_CAMELID_DOMESTICATION",
-     "scope": "team"
-    }
+    "BUILDING_ANIMAL_TRAINER_CAMEL",
+    "TECH_ANIMAL_RIDING",
+    "TECH_CAMELID_DOMESTICATION"
    ],
    "any": [
     [

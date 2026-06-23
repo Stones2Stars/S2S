@@ -13,14 +13,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_SPACE_COLONY_MARTIAN",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_PLANETARY_COLONIZATION",
-     "scope": "team"
-    }
+    "BUILDING_SPACE_COLONY_MARTIAN",
+    "TECH_PLANETARY_COLONIZATION"
    ],
    "any": [
     [
@@ -33,14 +27,8 @@
   },
   "operate": {
    "dormant": [
-    {
-     "type": "BUILDING_MARTIAN_HYDROPONICS_COMPLEX",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_MARTIAN_VERTICAL_FARM",
-     "scope": "city"
-    }
+    "BUILDING_MARTIAN_HYDROPONICS_COMPLEX",
+    "BUILDING_MARTIAN_VERTICAL_FARM"
    ]
   }
  },

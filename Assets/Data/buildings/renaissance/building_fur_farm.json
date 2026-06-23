@@ -15,10 +15,7 @@
       "max": 60
      }
     },
-    {
-     "type": "TECH_FREE_ARTISTRY",
-     "scope": "team"
-    }
+    "TECH_FREE_ARTISTRY"
    ],
    "any": [
     [
@@ -28,34 +25,13 @@
      }
     ],
     [
-     {
-      "type": "HERITAGE_FOLKLORE_BEAVER",
-      "scope": "empire"
-     },
-     {
-      "type": "HERITAGE_FOLKLORE_FOX_ARCTIC",
-      "scope": "empire"
-     },
-     {
-      "type": "HERITAGE_FOLKLORE_FOX_FENNEC",
-      "scope": "empire"
-     },
-     {
-      "type": "HERITAGE_FOLKLORE_FOX_RED",
-      "scope": "empire"
-     },
-     {
-      "type": "HERITAGE_FOLKLORE_KOALA",
-      "scope": "empire"
-     },
-     {
-      "type": "HERITAGE_FOLKLORE_OTTER_SEA",
-      "scope": "empire"
-     },
-     {
-      "type": "HERITAGE_FOLKLORE_PLATYPUS",
-      "scope": "empire"
-     }
+     "HERITAGE_FOLKLORE_BEAVER",
+     "HERITAGE_FOLKLORE_FOX_ARCTIC",
+     "HERITAGE_FOLKLORE_FOX_FENNEC",
+     "HERITAGE_FOLKLORE_FOX_RED",
+     "HERITAGE_FOLKLORE_KOALA",
+     "HERITAGE_FOLKLORE_OTTER_SEA",
+     "HERITAGE_FOLKLORE_PLATYPUS"
     ]
    ]
   }

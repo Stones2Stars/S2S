@@ -14,14 +14,8 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_EVOLUTIONARY_ALGORITHMS",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_SUPERSTRONG_ALLOYS",
-     "scope": "team"
-    },
+    "BUILDING_EVOLUTIONARY_ALGORITHMS",
+    "TECH_SUPERSTRONG_ALLOYS",
     {
      "type": "BONUS_METAMATERIALS",
      "scope": "city",
@@ -40,14 +34,8 @@
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_FOUNDRY",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_METALS_MEGACOMPLEX",
-      "scope": "city"
-     }
+     "BUILDING_FOUNDRY",
+     "BUILDING_METALS_MEGACOMPLEX"
     ],
     [
      {
@@ -66,10 +54,7 @@
     }
    ],
    "dormant": [
-    {
-     "type": "BUILDING_PICOTECH_COMPLEX",
-     "scope": "city"
-    }
+    "BUILDING_PICOTECH_COMPLEX"
    ]
   }
  },
@@ -84,17 +69,11 @@
     3,
     {
      "value": 10,
-     "enabled": {
-      "type": "TECH_NANOMINING",
-      "scope": "team"
-     }
+     "enabled": "TECH_NANOMINING"
     },
     {
      "value": 10,
-     "enabled": {
-      "type": "TECH_MEGASTRUCTURE_ENGINEERING",
-      "scope": "team"
-     }
+     "enabled": "TECH_MEGASTRUCTURE_ENGINEERING"
     }
    ]
   }

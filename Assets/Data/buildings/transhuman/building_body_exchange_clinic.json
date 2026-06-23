@@ -12,14 +12,8 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_CLONING_FACTORY",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_ARTIFICIAL_LIFE",
-     "scope": "team"
-    }
+    "BUILDING_CLONING_FACTORY",
+    "TECH_ARTIFICIAL_LIFE"
    ],
    "any": [
     [

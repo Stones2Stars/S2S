@@ -6,14 +6,8 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_SECURITY_CENTER",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_ACOUSTIC_WEAPONRY",
-     "scope": "team"
-    }
+    "BUILDING_SECURITY_CENTER",
+    "TECH_ACOUSTIC_WEAPONRY"
    ],
    "any": [
     [

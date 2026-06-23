@@ -13,10 +13,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_WARFARE",
-     "scope": "team"
-    }
+    "TECH_WARFARE"
    ],
    "any": [
     [
@@ -35,22 +32,10 @@
   },
   "operate": {
    "dormant": [
-    {
-     "type": "BUILDING_ARENA",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_COLOSSEUM",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_MINOR_LEAGUE_STADIUM",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_MAJOR_LEAGUE_STADIUM",
-     "scope": "city"
-    }
+    "BUILDING_ARENA",
+    "BUILDING_COLOSSEUM",
+    "BUILDING_MINOR_LEAGUE_STADIUM",
+    "BUILDING_MAJOR_LEAGUE_STADIUM"
    ]
   }
  },

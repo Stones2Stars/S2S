@@ -10,14 +10,8 @@
      "scope": "city",
      "min": 3
     },
-    {
-     "type": "TECH_DUALISM",
-     "scope": "team"
-    },
-    {
-     "type": "TECH_GARDENING",
-     "scope": "team"
-    }
+    "TECH_DUALISM",
+    "TECH_GARDENING"
    ],
    "any": [
     [

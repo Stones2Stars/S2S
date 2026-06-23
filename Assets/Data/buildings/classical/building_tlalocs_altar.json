@@ -10,14 +10,8 @@
      "scope": "city",
      "min": 3
     },
-    {
-     "type": "BUILDING_TEMPLE_OF_TLALOC",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_MATHEMATICS",
-     "scope": "team"
-    }
+    "BUILDING_TEMPLE_OF_TLALOC",
+    "TECH_MATHEMATICS"
    ],
    "any": [
     [
@@ -30,14 +24,8 @@
   },
   "operate": {
    "all": [
-    {
-     "type": "CIVIC_DIVINE_CULT",
-     "scope": "empire"
-    },
-    {
-     "type": "RELIGION_NAGHUALISM",
-     "scope": "city"
-    }
+    "CIVIC_DIVINE_CULT",
+    "RELIGION_NAGHUALISM"
    ]
   }
  },

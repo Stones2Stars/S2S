@@ -15,10 +15,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_SCAVENGING",
-     "scope": "team"
-    }
+    "TECH_SCAVENGING"
    ],
    "any": [
     [
@@ -54,24 +51,15 @@
     1,
     {
      "value": 1,
-     "enabled": {
-      "type": "TECH_BOAT_BUILDING",
-      "scope": "team"
-     }
+     "enabled": "TECH_BOAT_BUILDING"
     },
     {
      "value": 2,
-     "enabled": {
-      "type": "TECH_AGRICULTURE",
-      "scope": "team"
-     }
+     "enabled": "TECH_AGRICULTURE"
     },
     {
      "value": 2,
-     "enabled": {
-      "type": "TECH_GARDENING",
-      "scope": "team"
-     }
+     "enabled": "TECH_GARDENING"
     }
    ]
   }
@@ -82,10 +70,7 @@
     -1,
     {
      "value": 1,
-     "enabled": {
-      "type": "TECH_COOKING",
-      "scope": "team"
-     }
+     "enabled": "TECH_COOKING"
     }
    ]
   }

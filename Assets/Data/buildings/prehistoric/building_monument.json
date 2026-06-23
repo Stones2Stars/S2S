@@ -13,10 +13,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_RITUALISM",
-     "scope": "team"
-    }
+    "TECH_RITUALISM"
    ],
    "any": [
     [
@@ -53,18 +50,9 @@
     ]
    ],
    "dormant": [
-    {
-     "type": "BUILDING_STELE",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_FUNERARY_SERVICES",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_HIGH_TECH_CULTURAL_ENRICHMENT",
-     "scope": "city"
-    }
+    "BUILDING_STELE",
+    "BUILDING_FUNERARY_SERVICES",
+    "BUILDING_HIGH_TECH_CULTURAL_ENRICHMENT"
    ]
   }
  },

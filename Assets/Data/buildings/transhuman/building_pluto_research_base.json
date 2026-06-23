@@ -10,14 +10,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_DEEP_SPACE_ORBITAL_BASE",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_KUIPER_BELT_EXPLORATION",
-     "scope": "team"
-    }
+    "BUILDING_DEEP_SPACE_ORBITAL_BASE",
+    "TECH_KUIPER_BELT_EXPLORATION"
    ],
    "any": [
     [
@@ -34,18 +28,9 @@
     ]
    ],
    "noneOf": [
-    {
-     "type": "BUILDING_MAKEMAKE_COLONY",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_HAUMEA_COLONY",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_ERIS_COLONY",
-     "scope": "city"
-    }
+    "BUILDING_MAKEMAKE_COLONY",
+    "BUILDING_HAUMEA_COLONY",
+    "BUILDING_ERIS_COLONY"
    ]
   }
  },

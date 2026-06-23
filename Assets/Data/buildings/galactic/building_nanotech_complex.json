@@ -15,14 +15,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_MANUFACTURING_DISTRICT",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_ATOMIC_SCALE_ENGINEERING",
-     "scope": "team"
-    }
+    "BUILDING_MANUFACTURING_DISTRICT",
+    "TECH_ATOMIC_SCALE_ENGINEERING"
    ],
    "any": [
     [

@@ -10,21 +10,12 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_TELEGRAPH",
-     "scope": "team"
-    }
+    "TECH_TELEGRAPH"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_TELEGRAPH_STATION",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_TELEPHONE_NETWORK",
-      "scope": "city"
-     }
+     "BUILDING_TELEGRAPH_STATION",
+     "BUILDING_TELEPHONE_NETWORK"
     ],
     [
      {

@@ -7,14 +7,8 @@
    "all": [
     "HAS_RIVER",
     "HAS_POWER",
-    {
-     "type": "BUILDING_WATER_TREATMENT_PLANT",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_ECOLOGICAL_ENGINEERING",
-     "scope": "team"
-    }
+    "BUILDING_WATER_TREATMENT_PLANT",
+    "TECH_ECOLOGICAL_ENGINEERING"
    ],
    "any": [
     [

@@ -5,17 +5,11 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_FOLKLORE_REQUIREMENT",
-     "scope": "city"
-    }
+    "BUILDING_FOLKLORE_REQUIREMENT"
    ],
    "any": [
     [
-     {
-      "type": "HERITAGE_FOLKLORE_MAMMOTH",
-      "scope": "empire"
-     }
+     "HERITAGE_FOLKLORE_MAMMOTH"
     ]
    ]
   },
@@ -36,10 +30,7 @@
    "flat": [
     {
      "value": 5,
-     "enabled": {
-      "type": "TECH_BIOLOGY",
-      "scope": "team"
-     }
+     "enabled": "TECH_BIOLOGY"
     }
    ]
   }
@@ -62,10 +53,7 @@
   "city": {
    "flat": {
     "value": 1,
-    "enabled": {
-     "type": "TECH_BIOLOGY",
-     "scope": "team"
-    }
+    "enabled": "TECH_BIOLOGY"
    }
   }
  },

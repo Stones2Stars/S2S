@@ -5,14 +5,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_SIEGE_WEAPONS_WORKSHOP",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_SIEGE_WARFARE",
-     "scope": "team"
-    }
+    "BUILDING_SIEGE_WEAPONS_WORKSHOP",
+    "TECH_SIEGE_WARFARE"
    ],
    "any": [
     [

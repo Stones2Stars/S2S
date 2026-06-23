@@ -15,18 +15,9 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_CARNIVAL",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_FOLKLORE_T_BEAR",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_TRADE",
-     "scope": "team"
-    }
+    "BUILDING_CARNIVAL",
+    "BUILDING_FOLKLORE_T_BEAR",
+    "TECH_TRADE"
    ],
    "any": [
     [

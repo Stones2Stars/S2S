@@ -18,10 +18,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_ELECTRIC_ARC_WEAPONRY",
-     "scope": "team"
-    }
+    "TECH_ELECTRIC_ARC_WEAPONRY"
    ],
    "any": [
     [
@@ -41,10 +38,7 @@
     }
    ],
    "dormant": [
-    {
-     "type": "BUILDING_ANTI_MATTER_BATTERY",
-     "scope": "city"
-    }
+    "BUILDING_ANTI_MATTER_BATTERY"
    ]
   }
  },

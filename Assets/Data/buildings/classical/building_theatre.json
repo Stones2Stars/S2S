@@ -17,10 +17,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_DRAMA",
-     "scope": "team"
-    }
+    "TECH_DRAMA"
    ],
    "any": [
     [
@@ -59,24 +56,15 @@
     1,
     {
      "value": 5,
-     "enabled": {
-      "type": "TECH_FREE_ARTISTRY",
-      "scope": "team"
-     }
+     "enabled": "TECH_FREE_ARTISTRY"
     },
     {
      "value": 7,
-     "enabled": {
-      "type": "TECH_MODERN_ART",
-      "scope": "team"
-     }
+     "enabled": "TECH_MODERN_ART"
     },
     {
      "value": 7,
-     "enabled": {
-      "type": "TECH_MASS_MEDIA",
-      "scope": "team"
-     }
+     "enabled": "TECH_MASS_MEDIA"
     }
    ]
   }
@@ -87,24 +75,15 @@
     3,
     {
      "value": 5,
-     "enabled": {
-      "type": "TECH_FREE_ARTISTRY",
-      "scope": "team"
-     }
+     "enabled": "TECH_FREE_ARTISTRY"
     },
     {
      "value": 7,
-     "enabled": {
-      "type": "TECH_MODERN_ART",
-      "scope": "team"
-     }
+     "enabled": "TECH_MODERN_ART"
     },
     {
      "value": 7,
-     "enabled": {
-      "type": "TECH_MASS_MEDIA",
-      "scope": "team"
-     }
+     "enabled": "TECH_MASS_MEDIA"
     }
    ]
   }

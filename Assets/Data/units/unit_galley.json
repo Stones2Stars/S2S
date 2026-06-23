@@ -5,19 +5,13 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_SHIPWRIGHT",
-     "scope": "city"
-    },
+    "BUILDING_SHIPWRIGHT",
     {
      "type": "AREA_SIZE",
      "scope": "world",
      "min": 10
     },
-    {
-     "type": "TECH_SAILING",
-     "scope": "team"
-    }
+    "TECH_SAILING"
    ]
   }
  },

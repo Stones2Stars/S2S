@@ -21,14 +21,8 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_OMEGA_ASSEMBLER",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_ZERO_POINT_ENERGY",
-     "scope": "team"
-    }
+    "BUILDING_OMEGA_ASSEMBLER",
+    "TECH_ZERO_POINT_ENERGY"
    ],
    "any": [
     [

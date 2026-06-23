@@ -19,41 +19,17 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_COMPUTER_NETWORK",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_CLOUD_COMPUTING",
-     "scope": "team"
-    }
+    "BUILDING_COMPUTER_NETWORK",
+    "TECH_CLOUD_COMPUTING"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_MODERN_WAREHOUSE",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_NAVAL_SHIPPING_WAREHOUSE",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_RAIL_SHIPPING_WAREHOUSE",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_TRUCK_SHIPPING_WAREHOUSE",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_AIR_SHIPPING_WAREHOUSE",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_SPACE_SHIPPING_WAREHOUSE",
-      "scope": "city"
-     }
+     "BUILDING_MODERN_WAREHOUSE",
+     "BUILDING_NAVAL_SHIPPING_WAREHOUSE",
+     "BUILDING_RAIL_SHIPPING_WAREHOUSE",
+     "BUILDING_TRUCK_SHIPPING_WAREHOUSE",
+     "BUILDING_AIR_SHIPPING_WAREHOUSE",
+     "BUILDING_SPACE_SHIPPING_WAREHOUSE"
     ],
     [
      {
@@ -72,10 +48,7 @@
     }
    ],
    "dormant": [
-    {
-     "type": "BUILDING_TELEPORT_SHIPPING_WAREHOUSE",
-     "scope": "city"
-    }
+    "BUILDING_TELEPORT_SHIPPING_WAREHOUSE"
    ]
   }
  },

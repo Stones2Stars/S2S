@@ -15,10 +15,7 @@
       "min": 50
      }
     },
-    {
-     "type": "TECH_GENETICS",
-     "scope": "team"
-    }
+    "TECH_GENETICS"
    ],
    "any": [
     [

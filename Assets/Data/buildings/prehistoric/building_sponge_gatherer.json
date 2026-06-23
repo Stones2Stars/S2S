@@ -14,10 +14,7 @@
   "build": {
    "all": [
     "HAS_COAST",
-    {
-     "type": "TECH_FISHING",
-     "scope": "team"
-    }
+    "TECH_FISHING"
    ],
    "any": [
     [
@@ -56,10 +53,7 @@
   },
   "operate": {
    "dormant": [
-    {
-     "type": "BUILDING_SPONGE_FARM",
-     "scope": "city"
-    }
+    "BUILDING_SPONGE_FARM"
    ]
   }
  },
@@ -73,10 +67,7 @@
    "flat": [
     {
      "value": -1,
-     "enabled": {
-      "type": "TECH_ECOLOGY",
-      "scope": "team"
-     }
+     "enabled": "TECH_ECOLOGY"
     }
    ]
   }

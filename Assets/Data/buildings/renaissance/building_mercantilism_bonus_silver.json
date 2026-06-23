@@ -5,10 +5,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_MERCANTILISM",
-     "scope": "team"
-    }
+    "TECH_MERCANTILISM"
    ],
    "any": [
     [
@@ -21,10 +18,7 @@
   },
   "operate": {
    "all": [
-    {
-     "type": "CIVIC_MERCANTILISM",
-     "scope": "empire"
-    }
+    "CIVIC_MERCANTILISM"
    ],
    "any": [
     [

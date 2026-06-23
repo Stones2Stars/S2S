@@ -5,10 +5,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_TRANSTANGIBLE_NEUTRINO_ACCELERATORS",
-     "scope": "team"
-    }
+    "TECH_TRANSTANGIBLE_NEUTRINO_ACCELERATORS"
    ],
    "any": [
     [
@@ -25,18 +22,9 @@
     ]
    ],
    "noneOf": [
-    {
-     "type": "BUILDING_NORMA_AND_OUTER_ARM_COLONY",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_SCUTUM_CRUX_ARM_COLONY",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_CARINA_AND_SAGITTARIUS_ARM_COLONY",
-     "scope": "city"
-    }
+    "BUILDING_NORMA_AND_OUTER_ARM_COLONY",
+    "BUILDING_SCUTUM_CRUX_ARM_COLONY",
+    "BUILDING_CARINA_AND_SAGITTARIUS_ARM_COLONY"
    ]
   }
  },

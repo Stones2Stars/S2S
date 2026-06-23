@@ -11,14 +11,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_UNIVERSITY",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_GEOLOGY",
-     "scope": "team"
-    }
+    "BUILDING_UNIVERSITY",
+    "TECH_GEOLOGY"
    ],
    "any": [
     [
@@ -36,10 +30,7 @@
     5,
     {
      "value": 7,
-     "enabled": {
-      "type": "TECH_MODERN_SEISMOLOGY",
-      "scope": "team"
-     }
+     "enabled": "TECH_MODERN_SEISMOLOGY"
     }
    ]
   }

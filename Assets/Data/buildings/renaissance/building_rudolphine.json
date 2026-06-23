@@ -15,19 +15,13 @@
      "scope": "city",
      "min": 7
     },
-    {
-     "type": "BUILDING_OBSERVATORY",
-     "scope": "city"
-    },
+    "BUILDING_OBSERVATORY",
     {
      "type": "BUILDING_OBSERVATORY",
      "scope": "empire",
      "min": 3
     },
-    {
-     "type": "TECH_HELIOCENTRISM",
-     "scope": "team"
-    }
+    "TECH_HELIOCENTRISM"
    ],
    "any": [
     [
@@ -40,10 +34,7 @@
   },
   "operate": {
    "dormant": [
-    {
-     "type": "BUILDING_POLLUTION_BLACKENED_SKIES",
-     "scope": "city"
-    }
+    "BUILDING_POLLUTION_BLACKENED_SKIES"
    ]
   }
  },

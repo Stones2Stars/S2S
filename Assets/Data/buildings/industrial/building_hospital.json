@@ -34,10 +34,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_MEDICINE",
-     "scope": "team"
-    },
+    "TECH_MEDICINE",
     {
      "type": "BONUS_PHARMACEUTICALS",
      "scope": "city",
@@ -76,10 +73,7 @@
     ]
    ],
    "dormant": [
-    {
-     "type": "BUILDING_HEALTHCARE_MEGACOMPLEX",
-     "scope": "city"
-    }
+    "BUILDING_HEALTHCARE_MEGACOMPLEX"
    ]
   }
  },

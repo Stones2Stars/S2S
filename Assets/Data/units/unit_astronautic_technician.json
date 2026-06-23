@@ -10,10 +10,7 @@
      "scope": "city",
      "connection": "trade|vicinity"
     },
-    {
-     "type": "TECH_ASTRONAUTICS",
-     "scope": "team"
-    },
+    "TECH_ASTRONAUTICS",
     {
      "type": "BONUS_FIREARMS",
      "scope": "city",
@@ -49,14 +46,8 @@
      }
     ],
     [
-     {
-      "type": "BUILDING_FACTORY_JET_ENGINES",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_MILITARY_INDUSTRIAL_COMPLEX",
-      "scope": "city"
-     }
+     "BUILDING_FACTORY_JET_ENGINES",
+     "BUILDING_MILITARY_INDUSTRIAL_COMPLEX"
     ]
    ]
   }

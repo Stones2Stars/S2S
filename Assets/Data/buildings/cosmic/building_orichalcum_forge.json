@@ -6,25 +6,13 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_AERIAL_CITY",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_FANTASY_MATERIALS",
-     "scope": "team"
-    }
+    "BUILDING_AERIAL_CITY",
+    "TECH_FANTASY_MATERIALS"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_SPACE_SHIPPING_WAREHOUSE",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_TELEPORT_SHIPPING_WAREHOUSE",
-      "scope": "city"
-     }
+     "BUILDING_SPACE_SHIPPING_WAREHOUSE",
+     "BUILDING_TELEPORT_SHIPPING_WAREHOUSE"
     ],
     [
      {

@@ -20,22 +20,10 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_RIDESHARE",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_EFFECT_GPS",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_AUTOMATED_PARKING_GARAGE",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_AUTONOMOUS_VEHICLES",
-     "scope": "team"
-    }
+    "BUILDING_RIDESHARE",
+    "BUILDING_EFFECT_GPS",
+    "BUILDING_AUTOMATED_PARKING_GARAGE",
+    "TECH_AUTONOMOUS_VEHICLES"
    ],
    "any": [
     [
@@ -48,10 +36,7 @@
   },
   "operate": {
    "dormant": [
-    {
-     "type": "BUILDING_TELEPORT_BOOTH",
-     "scope": "city"
-    }
+    "BUILDING_TELEPORT_BOOTH"
    ]
   }
  },

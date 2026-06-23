@@ -11,18 +11,9 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_MEGATOWER_PARK_LEVEL",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_ARTIFICIAL_INTELLIGENCE_CORE",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_UTOPIA_DESTINY",
-     "scope": "team"
-    }
+    "BUILDING_MEGATOWER_PARK_LEVEL",
+    "BUILDING_ARTIFICIAL_INTELLIGENCE_CORE",
+    "TECH_UTOPIA_DESTINY"
    ],
    "any": [
     [
@@ -74,10 +65,7 @@
     10,
     {
      "value": 13,
-     "enabled": {
-      "type": "TECH_OMNIBENEVOLENT_MANDATE",
-      "scope": "team"
-     }
+     "enabled": "TECH_OMNIBENEVOLENT_MANDATE"
     }
    ]
   }

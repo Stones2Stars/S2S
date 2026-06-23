@@ -13,10 +13,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_MEGACITIES",
-     "scope": "team"
-    }
+    "TECH_MEGACITIES"
    ],
    "any": [
     [
@@ -29,14 +26,8 @@
   },
   "operate": {
    "dormant": [
-    {
-     "type": "BUILDING_SELF_CONSTRUCTION_FIRM",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_INTERTEMPORAL_CONSTRUCTION_FIRM",
-     "scope": "city"
-    }
+    "BUILDING_SELF_CONSTRUCTION_FIRM",
+    "BUILDING_INTERTEMPORAL_CONSTRUCTION_FIRM"
    ]
   }
  },
@@ -51,17 +42,11 @@
    "flat": [
     {
      "value": 9,
-     "enabled": {
-      "type": "TECH_NANO_ARCHITECTURE",
-      "scope": "team"
-     }
+     "enabled": "TECH_NANO_ARCHITECTURE"
     },
     {
      "value": 9,
-     "enabled": {
-      "type": "TECH_AUTOMATED_ROBOTICS",
-      "scope": "team"
-     }
+     "enabled": "TECH_AUTOMATED_ROBOTICS"
     }
    ]
   }

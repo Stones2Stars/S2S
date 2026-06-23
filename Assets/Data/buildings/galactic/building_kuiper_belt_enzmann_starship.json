@@ -5,14 +5,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_KUIPER_BELT_FUSION_PLANT",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_COSMIC_PERSPECTIVE",
-     "scope": "team"
-    }
+    "BUILDING_KUIPER_BELT_FUSION_PLANT",
+    "TECH_COSMIC_PERSPECTIVE"
    ],
    "any": [
     [

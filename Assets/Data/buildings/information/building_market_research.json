@@ -13,22 +13,10 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_MODERN_OFFICES",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_COMPUTER_NETWORK",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_SKYSCRAPER",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_MEDIA_PSYCHOLOGY",
-     "scope": "team"
-    }
+    "BUILDING_MODERN_OFFICES",
+    "BUILDING_COMPUTER_NETWORK",
+    "BUILDING_SKYSCRAPER",
+    "TECH_MEDIA_PSYCHOLOGY"
    ],
    "any": [
     [

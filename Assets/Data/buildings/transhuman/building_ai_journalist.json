@@ -6,14 +6,8 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_ARTIFICIAL_INTELLIGENCE_CORE",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_BINARY_SEMIOTICS",
-     "scope": "team"
-    }
+    "BUILDING_ARTIFICIAL_INTELLIGENCE_CORE",
+    "TECH_BINARY_SEMIOTICS"
    ],
    "any": [
     [

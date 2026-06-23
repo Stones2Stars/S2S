@@ -10,14 +10,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_VENUS_CITY",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_OPTRONICS",
-     "scope": "team"
-    }
+    "BUILDING_VENUS_CITY",
+    "TECH_OPTRONICS"
    ],
    "any": [
     [

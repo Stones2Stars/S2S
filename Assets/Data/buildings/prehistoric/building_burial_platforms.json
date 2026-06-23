@@ -13,17 +13,11 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_CEREMONIAL_BURIAL",
-     "scope": "team"
-    }
+    "TECH_CEREMONIAL_BURIAL"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_BURIAL_TRADITION_SKY",
-      "scope": "city"
-     }
+     "BUILDING_BURIAL_TRADITION_SKY"
     ],
     [
      {
@@ -35,14 +29,8 @@
   },
   "operate": {
    "dormant": [
-    {
-     "type": "BUILDING_FUNERARY_SERVICES",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_HIGH_TECH_CULTURAL_ENRICHMENT",
-     "scope": "city"
-    }
+    "BUILDING_FUNERARY_SERVICES",
+    "BUILDING_HIGH_TECH_CULTURAL_ENRICHMENT"
    ]
   }
  },

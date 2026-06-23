@@ -5,14 +5,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_INTERGALACTIC_DYSON_SPHERES",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_WORMHOLE_HIVEMIND",
-     "scope": "team"
-    }
+    "BUILDING_INTERGALACTIC_DYSON_SPHERES",
+    "TECH_WORMHOLE_HIVEMIND"
    ],
    "any": [
     [

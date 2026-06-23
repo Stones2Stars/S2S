@@ -5,19 +5,13 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_INTERSTELLAR_SHKADOV_THRUSTER",
-     "scope": "city"
-    },
+    "BUILDING_INTERSTELLAR_SHKADOV_THRUSTER",
     {
      "type": "BUILDING_INTERSTELLAR_SHKADOV_THRUSTER",
      "scope": "empire",
      "min": 2
     },
-    {
-     "type": "TECH_STELLAR_ENGINE",
-     "scope": "team"
-    }
+    "TECH_STELLAR_ENGINE"
    ],
    "any": [
     [

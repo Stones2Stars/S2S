@@ -14,25 +14,13 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "TECH_DIGITIZATION",
-     "scope": "team"
-    }
+    "TECH_DIGITIZATION"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_SOCIAL_NETWORKS",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_HOLOGRAPHIC_NETWORKS",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_EXOCORTEX_NETWORKS",
-      "scope": "city"
-     }
+     "BUILDING_SOCIAL_NETWORKS",
+     "BUILDING_HOLOGRAPHIC_NETWORKS",
+     "BUILDING_EXOCORTEX_NETWORKS"
     ],
     [
      {
@@ -51,10 +39,7 @@
     }
    ],
    "dormant": [
-    {
-     "type": "BUILDING_HIGH_TECH_CULTURAL_ENRICHMENT",
-     "scope": "city"
-    }
+    "BUILDING_HIGH_TECH_CULTURAL_ENRICHMENT"
    ]
   }
  },
@@ -63,10 +48,7 @@
    "flat": [
     {
      "value": 8,
-     "enabled": {
-      "type": "TECH_DIRECT_MERCHANDISING",
-      "scope": "team"
-     }
+     "enabled": "TECH_DIRECT_MERCHANDISING"
     }
    ]
   }
@@ -87,17 +69,11 @@
     4,
     {
      "value": 1,
-     "enabled": {
-      "type": "TECH_EXOCORTEX_NETWORKS",
-      "scope": "team"
-     }
+     "enabled": "TECH_EXOCORTEX_NETWORKS"
     },
     {
      "value": 1,
-     "enabled": {
-      "type": "TECH_HOLOGRAPHICS",
-      "scope": "team"
-     }
+     "enabled": "TECH_HOLOGRAPHICS"
     }
    ]
   }

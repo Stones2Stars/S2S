@@ -16,14 +16,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_SPACE_COLONY_MARTIAN",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_PLANETARY_MANUFACTURING",
-     "scope": "team"
-    }
+    "BUILDING_SPACE_COLONY_MARTIAN",
+    "TECH_PLANETARY_MANUFACTURING"
    ],
    "any": [
     [

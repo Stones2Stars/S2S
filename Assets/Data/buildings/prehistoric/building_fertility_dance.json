@@ -15,25 +15,13 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_PREHISTORIC_DANCE",
-     "scope": "team"
-    }
+    "TECH_PREHISTORIC_DANCE"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_DANCE_HUT",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_DANCE_HALL",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_NIGHT_CLUB",
-      "scope": "city"
-     }
+     "BUILDING_DANCE_HUT",
+     "BUILDING_DANCE_HALL",
+     "BUILDING_NIGHT_CLUB"
     ],
     [
      {
@@ -45,10 +33,7 @@
   },
   "operate": {
    "dormant": [
-    {
-     "type": "BUILDING_EFFECT_FERTILITY_FESTIVAL",
-     "scope": "city"
-    }
+    "BUILDING_EFFECT_FERTILITY_FESTIVAL"
    ]
   }
  },

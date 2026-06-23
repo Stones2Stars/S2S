@@ -5,14 +5,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_RECYCLING_CENTER",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_RECYCLING",
-     "scope": "team"
-    }
+    "BUILDING_RECYCLING_CENTER",
+    "TECH_RECYCLING"
    ],
    "any": [
     [
@@ -25,10 +19,7 @@
   },
   "operate": {
    "all": [
-    {
-     "type": "CIVIC_GREEN",
-     "scope": "empire"
-    }
+    "CIVIC_GREEN"
    ]
   }
  },

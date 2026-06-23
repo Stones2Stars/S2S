@@ -15,10 +15,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_ELEPHANT_DOMESTICATION",
-     "scope": "team"
-    }
+    "TECH_ELEPHANT_DOMESTICATION"
    ],
    "any": [
     [

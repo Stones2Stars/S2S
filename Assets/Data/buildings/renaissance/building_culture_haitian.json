@@ -6,26 +6,11 @@
   "build": {
    "all": [
     "HAS_COAST",
-    {
-     "type": "BUILDING_C_AC_NORTH_AMERICAN",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_C_L_NORTH_AMERICAN",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_C_AC_EUROPEAN",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_C_AC_AFRICAN",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_COLONIALISM",
-     "scope": "team"
-    }
+    "BUILDING_C_AC_NORTH_AMERICAN",
+    "BUILDING_C_L_NORTH_AMERICAN",
+    "BUILDING_C_AC_EUROPEAN",
+    "BUILDING_C_AC_AFRICAN",
+    "TECH_COLONIALISM"
    ],
    "any": [
     [

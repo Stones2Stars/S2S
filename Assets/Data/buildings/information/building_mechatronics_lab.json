@@ -14,18 +14,9 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_ROBOTICS_LAB",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_BIOMECHANICAL_HARVESTING",
-     "scope": "team"
-    },
-    {
-     "type": "TECH_MACHINE_LEARNING",
-     "scope": "team"
-    }
+    "BUILDING_ROBOTICS_LAB",
+    "TECH_BIOMECHANICAL_HARVESTING",
+    "TECH_MACHINE_LEARNING"
    ],
    "any": [
     [
@@ -52,45 +43,27 @@
     6,
     {
      "value": 8,
-     "enabled": {
-      "type": "TECH_POWERED_EXOSKELETON",
-      "scope": "team"
-     }
+     "enabled": "TECH_POWERED_EXOSKELETON"
     },
     {
      "value": 9,
-     "enabled": {
-      "type": "TECH_WARMACHINES",
-      "scope": "team"
-     }
+     "enabled": "TECH_WARMACHINES"
     },
     {
      "value": 9,
-     "enabled": {
-      "type": "TECH_ANDROIDS",
-      "scope": "team"
-     }
+     "enabled": "TECH_ANDROIDS"
     },
     {
      "value": 8,
-     "enabled": {
-      "type": "TECH_GRAPHENE_ALLOYS",
-      "scope": "team"
-     }
+     "enabled": "TECH_GRAPHENE_ALLOYS"
     },
     {
      "value": 9,
-     "enabled": {
-      "type": "TECH_LIQUID_METALS",
-      "scope": "team"
-     }
+     "enabled": "TECH_LIQUID_METALS"
     },
     {
      "value": 9,
-     "enabled": {
-      "type": "TECH_INTERNAL_SHOCKWAVE_ENGINE",
-      "scope": "team"
-     }
+     "enabled": "TECH_INTERNAL_SHOCKWAVE_ENGINE"
     }
    ]
   }
@@ -101,45 +74,27 @@
     3,
     {
      "value": 8,
-     "enabled": {
-      "type": "TECH_POWERED_EXOSKELETON",
-      "scope": "team"
-     }
+     "enabled": "TECH_POWERED_EXOSKELETON"
     },
     {
      "value": 9,
-     "enabled": {
-      "type": "TECH_WARMACHINES",
-      "scope": "team"
-     }
+     "enabled": "TECH_WARMACHINES"
     },
     {
      "value": 9,
-     "enabled": {
-      "type": "TECH_ANDROIDS",
-      "scope": "team"
-     }
+     "enabled": "TECH_ANDROIDS"
     },
     {
      "value": 8,
-     "enabled": {
-      "type": "TECH_GRAPHENE_ALLOYS",
-      "scope": "team"
-     }
+     "enabled": "TECH_GRAPHENE_ALLOYS"
     },
     {
      "value": 9,
-     "enabled": {
-      "type": "TECH_LIQUID_METALS",
-      "scope": "team"
-     }
+     "enabled": "TECH_LIQUID_METALS"
     },
     {
      "value": 9,
-     "enabled": {
-      "type": "TECH_INTERNAL_SHOCKWAVE_ENGINE",
-      "scope": "team"
-     }
+     "enabled": "TECH_INTERNAL_SHOCKWAVE_ENGINE"
     }
    ]
   }

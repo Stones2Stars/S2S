@@ -18,14 +18,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_RABBIT_BREEDER",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_AESTHETICS",
-     "scope": "team"
-    }
+    "BUILDING_RABBIT_BREEDER",
+    "TECH_AESTHETICS"
    ],
    "any": [
     [
@@ -47,14 +41,8 @@
     ]
    ],
    "dormant": [
-    {
-     "type": "BUILDING_INDUSTRIAL_FARMS",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_MEAT_INDUSTRY_CONGLOMERATE",
-     "scope": "city"
-    }
+    "BUILDING_INDUSTRIAL_FARMS",
+    "BUILDING_MEAT_INDUSTRY_CONGLOMERATE"
    ]
   }
  },

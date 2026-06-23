@@ -18,29 +18,14 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_MODERN_WAREHOUSE",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_RAILROAD",
-     "scope": "team"
-    }
+    "BUILDING_MODERN_WAREHOUSE",
+    "TECH_RAILROAD"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_RAILROAD_STATION",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_MAGLEV_STATION",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_TELEPORT_BOOTH",
-      "scope": "city"
-     }
+     "BUILDING_RAILROAD_STATION",
+     "BUILDING_MAGLEV_STATION",
+     "BUILDING_TELEPORT_BOOTH"
     ],
     [
      {
@@ -52,10 +37,7 @@
   },
   "operate": {
    "dormant": [
-    {
-     "type": "BUILDING_TELEPORT_SHIPPING_WAREHOUSE",
-     "scope": "city"
-    }
+    "BUILDING_TELEPORT_SHIPPING_WAREHOUSE"
    ]
   }
  },

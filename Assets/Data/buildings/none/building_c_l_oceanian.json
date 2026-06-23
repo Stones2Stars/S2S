@@ -50,10 +50,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_C_AC_OCEANIAN",
-     "scope": "city"
-    }
+    "BUILDING_C_AC_OCEANIAN"
    ],
    "any": [
     [

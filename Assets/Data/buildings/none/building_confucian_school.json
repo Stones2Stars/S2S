@@ -31,10 +31,7 @@
   },
   "operate": {
    "all": [
-    {
-     "type": "RELIGION_CONFUCIANISM",
-     "scope": "city"
-    }
+    "RELIGION_CONFUCIANISM"
    ],
    "any": [
     [

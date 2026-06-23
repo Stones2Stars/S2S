@@ -20,18 +20,9 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_NANITE_LAB",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_DELTA_ASSEMBLER",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_NANOELECTRONICS",
-     "scope": "team"
-    }
+    "BUILDING_NANITE_LAB",
+    "BUILDING_DELTA_ASSEMBLER",
+    "TECH_NANOELECTRONICS"
    ],
    "any": [
     [
@@ -51,10 +42,7 @@
     }
    ],
    "dormant": [
-    {
-     "type": "BUILDING_PICOTECH_COMPLEX",
-     "scope": "city"
-    }
+    "BUILDING_PICOTECH_COMPLEX"
    ]
   }
  },

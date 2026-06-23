@@ -5,29 +5,14 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_BLOOD_DANCE",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_TATTOOS",
-     "scope": "team"
-    }
+    "BUILDING_BLOOD_DANCE",
+    "TECH_TATTOOS"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_TATTOOER",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_TATTOO_PARLOR",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_HIGH_TECH_CULTURAL_ENRICHMENT",
-      "scope": "city"
-     }
+     "BUILDING_TATTOOER",
+     "BUILDING_TATTOO_PARLOR",
+     "BUILDING_HIGH_TECH_CULTURAL_ENRICHMENT"
     ],
     [
      {
@@ -40,14 +25,8 @@
   "operate": {
    "any": [
     [
-     {
-      "type": "CIVIC_ANARCHISM",
-      "scope": "empire"
-     },
-     {
-      "type": "CIVIC_CHIEFDOM",
-      "scope": "empire"
-     }
+     "CIVIC_ANARCHISM",
+     "CIVIC_CHIEFDOM"
     ]
    ]
   }
@@ -77,10 +56,7 @@
    "flat": [
     {
      "value": 1,
-     "enabled": {
-      "type": "TECH_SACRIFICE_CULT",
-      "scope": "team"
-     }
+     "enabled": "TECH_SACRIFICE_CULT"
     }
    ]
   }

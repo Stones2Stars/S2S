@@ -11,14 +11,8 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_DELTA_ASSEMBLER",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_CRYSTALPUNK",
-     "scope": "team"
-    }
+    "BUILDING_DELTA_ASSEMBLER",
+    "TECH_CRYSTALPUNK"
    ],
    "any": [
     [

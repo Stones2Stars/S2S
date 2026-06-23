@@ -5,18 +5,9 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_INTERGALACTIC_ANCIENT_CIVILIZATION",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_INTERGALACTIC_DARK_ENERGY_PLANT",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_LUMINAL_BEINGS",
-     "scope": "team"
-    }
+    "BUILDING_INTERGALACTIC_ANCIENT_CIVILIZATION",
+    "BUILDING_INTERGALACTIC_DARK_ENERGY_PLANT",
+    "TECH_LUMINAL_BEINGS"
    ],
    "any": [
     [

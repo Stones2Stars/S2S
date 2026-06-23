@@ -14,10 +14,7 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "TECH_ELECTRONICS",
-     "scope": "team"
-    }
+    "TECH_ELECTRONICS"
    ],
    "any": [
     [
@@ -37,18 +34,9 @@
     }
    ],
    "dormant": [
-    {
-     "type": "BUILDING_WIRELESS_ELECTRIC_FENCE",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_ARCOLOGY_SHIELDING",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_ADVANCED_SHIELDING",
-     "scope": "city"
-    }
+    "BUILDING_WIRELESS_ELECTRIC_FENCE",
+    "BUILDING_ARCOLOGY_SHIELDING",
+    "BUILDING_ADVANCED_SHIELDING"
    ]
   }
  },

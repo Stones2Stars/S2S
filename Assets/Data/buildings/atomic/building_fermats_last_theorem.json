@@ -5,14 +5,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_MATHEMATICS_DEPARTMENT",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_ABSTRACT_MATHEMATICS",
-     "scope": "team"
-    }
+    "BUILDING_MATHEMATICS_DEPARTMENT",
+    "TECH_ABSTRACT_MATHEMATICS"
    ],
    "any": [
     [

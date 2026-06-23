@@ -12,18 +12,9 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_MEGATOWER_SKYBRIDGE",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_UBIQUITOUS_SENSORS",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_NANO_ARCHITECTURE",
-     "scope": "team"
-    }
+    "BUILDING_MEGATOWER_SKYBRIDGE",
+    "BUILDING_UBIQUITOUS_SENSORS",
+    "TECH_NANO_ARCHITECTURE"
    ],
    "any": [
     [

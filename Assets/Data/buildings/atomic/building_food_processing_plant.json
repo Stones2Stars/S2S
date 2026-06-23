@@ -5,18 +5,9 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_MODERN_GRANARY",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_FACTORY",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_MANUFACTURING",
-     "scope": "team"
-    }
+    "BUILDING_MODERN_GRANARY",
+    "BUILDING_FACTORY",
+    "TECH_MANUFACTURING"
    ],
    "any": [
     [

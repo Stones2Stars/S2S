@@ -20,10 +20,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_DRYING",
-     "scope": "team"
-    }
+    "TECH_DRYING"
    ],
    "any": [
     [
@@ -42,10 +39,7 @@
   },
   "operate": {
    "dormant": [
-    {
-     "type": "BUILDING_ANCIENT_CUSTOMS",
-     "scope": "city"
-    }
+    "BUILDING_ANCIENT_CUSTOMS"
    ]
   }
  },

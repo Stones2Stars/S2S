@@ -6,14 +6,8 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_MARTIAN_ECOSYSTEM",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_ASTROECOLOGY",
-     "scope": "team"
-    }
+    "BUILDING_MARTIAN_ECOSYSTEM",
+    "TECH_ASTROECOLOGY"
    ],
    "any": [
     [

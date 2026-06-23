@@ -5,10 +5,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_ACNP_PROPULSION",
-     "scope": "team"
-    }
+    "TECH_ACNP_PROPULSION"
    ],
    "any": [
     [
@@ -25,10 +22,7 @@
     ]
    ],
    "noneOf": [
-    {
-     "type": "BUILDING_GLIESE_163C_COLONY",
-     "scope": "city"
-    }
+    "BUILDING_GLIESE_163C_COLONY"
    ]
   }
  },

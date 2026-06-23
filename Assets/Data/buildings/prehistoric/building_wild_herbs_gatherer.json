@@ -16,10 +16,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_HERBALISM",
-     "scope": "team"
-    }
+    "TECH_HERBALISM"
    ],
    "any": [
     [
@@ -42,10 +39,7 @@
    "flat": [
     {
      "value": 1,
-     "enabled": {
-      "type": "TECH_COOKING",
-      "scope": "team"
-     }
+     "enabled": "TECH_COOKING"
     }
    ]
   }
@@ -56,10 +50,7 @@
     1,
     {
      "value": 1,
-     "enabled": {
-      "type": "TECH_NATUROPATHY",
-      "scope": "team"
-     }
+     "enabled": "TECH_NATUROPATHY"
     }
    ]
   }

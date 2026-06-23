@@ -5,10 +5,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_COMPULSORY_EDUCATION",
-     "scope": "team"
-    }
+    "TECH_COMPULSORY_EDUCATION"
    ],
    "any": [
     [
@@ -26,10 +23,7 @@
      "scope": "city",
      "connection": "trade|vicinity"
     },
-    {
-     "type": "CIVIC_ANTIRELIGION",
-     "scope": "empire"
-    }
+    "CIVIC_ANTIRELIGION"
    ],
    "any": [
     [

@@ -6,14 +6,8 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_LUNAR_SPACE_PORT",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_LUNAR_TOURISM",
-     "scope": "team"
-    }
+    "BUILDING_LUNAR_SPACE_PORT",
+    "TECH_LUNAR_TOURISM"
    ],
    "any": [
     [

@@ -5,19 +5,13 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_VENUS_ARCOLOGY",
-     "scope": "city"
-    },
+    "BUILDING_VENUS_ARCOLOGY",
     {
      "type": "BUILDING_IO_BASE",
      "scope": "empire",
      "min": 1
     },
-    {
-     "type": "TECH_ORBITAL_ENGINEERING",
-     "scope": "team"
-    }
+    "TECH_ORBITAL_ENGINEERING"
    ],
    "any": [
     [

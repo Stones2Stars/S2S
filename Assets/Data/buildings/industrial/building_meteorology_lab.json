@@ -10,14 +10,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_UNIVERSITY",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_METEOROLOGY",
-     "scope": "team"
-    }
+    "BUILDING_UNIVERSITY",
+    "TECH_METEOROLOGY"
    ],
    "any": [
     [
@@ -40,24 +34,15 @@
     6,
     {
      "value": 7,
-     "enabled": {
-      "type": "TECH_LONG_RANGE_FORECASTING",
-      "scope": "team"
-     }
+     "enabled": "TECH_LONG_RANGE_FORECASTING"
     },
     {
      "value": 7,
-     "enabled": {
-      "type": "TECH_RADAR",
-      "scope": "team"
-     }
+     "enabled": "TECH_RADAR"
     },
     {
      "value": 7,
-     "enabled": {
-      "type": "TECH_SATELLITES",
-      "scope": "team"
-     }
+     "enabled": "TECH_SATELLITES"
     }
    ]
   }

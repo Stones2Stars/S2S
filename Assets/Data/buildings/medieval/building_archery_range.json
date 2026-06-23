@@ -13,21 +13,12 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_YEOMANRY",
-     "scope": "team"
-    }
+    "TECH_YEOMANRY"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_FLETCHERS_HUT",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_EFFECT_TRADITION_ARCHERY",
-      "scope": "city"
-     }
+     "BUILDING_FLETCHERS_HUT",
+     "BUILDING_EFFECT_TRADITION_ARCHERY"
     ],
     [
      {
@@ -39,22 +30,10 @@
   },
   "operate": {
    "dormant": [
-    {
-     "type": "BUILDING_SHOOTING_CLUB",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_FIRING_RANGE",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_AUTOMATED_FIRING_RANGE",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_ORBITAL_TARGETS",
-     "scope": "city"
-    }
+    "BUILDING_SHOOTING_CLUB",
+    "BUILDING_FIRING_RANGE",
+    "BUILDING_AUTOMATED_FIRING_RANGE",
+    "BUILDING_ORBITAL_TARGETS"
    ]
   }
  },

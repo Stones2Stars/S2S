@@ -10,10 +10,7 @@
      "scope": "city",
      "min": 3
     },
-    {
-     "type": "TECH_NUCLEAR_POWER",
-     "scope": "team"
-    }
+    "TECH_NUCLEAR_POWER"
    ],
    "any": [
     [

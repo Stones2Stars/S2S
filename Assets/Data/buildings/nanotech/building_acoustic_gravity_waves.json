@@ -5,10 +5,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_ACOUSTOPHORESIS",
-     "scope": "team"
-    }
+    "TECH_ACOUSTOPHORESIS"
    ],
    "any": [
     [

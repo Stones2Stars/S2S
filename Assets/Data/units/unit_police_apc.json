@@ -5,10 +5,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_MECHANIZED_WARFARE",
-     "scope": "team"
-    },
+    "TECH_MECHANIZED_WARFARE",
     {
      "type": "BONUS_FIREARMS",
      "scope": "city",
@@ -37,14 +34,8 @@
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_POLICE_STATION",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_POLICE_PRECINCT",
-      "scope": "city"
-     }
+     "BUILDING_POLICE_STATION",
+     "BUILDING_POLICE_PRECINCT"
     ]
    ]
   }

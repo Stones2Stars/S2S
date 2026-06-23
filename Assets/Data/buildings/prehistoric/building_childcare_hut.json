@@ -18,14 +18,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_COOPERATION",
-     "scope": "team"
-    },
-    {
-     "type": "TECH_SHELTER_BUILDING",
-     "scope": "team"
-    }
+    "TECH_COOPERATION",
+    "TECH_SHELTER_BUILDING"
    ],
    "any": [
     [
@@ -44,14 +38,8 @@
   },
   "operate": {
    "dormant": [
-    {
-     "type": "BUILDING_DAY_CARE_CENTER",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_HIGH_TECH_CULTURAL_ENRICHMENT",
-     "scope": "city"
-    }
+    "BUILDING_DAY_CARE_CENTER",
+    "BUILDING_HIGH_TECH_CULTURAL_ENRICHMENT"
    ]
   }
  },
@@ -61,10 +49,7 @@
     2,
     {
      "value": 2,
-     "enabled": {
-      "type": "TECH_COMMUNITY",
-      "scope": "team"
-     }
+     "enabled": "TECH_COMMUNITY"
     }
    ]
   }

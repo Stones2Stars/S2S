@@ -18,10 +18,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_PERSONAL_ADORNMENTS",
-     "scope": "team"
-    }
+    "TECH_PERSONAL_ADORNMENTS"
    ],
    "any": [
     [
@@ -78,10 +75,7 @@
     ]
    ],
    "dormant": [
-    {
-     "type": "BUILDING_MANUFACTURING_DISTRICT",
-     "scope": "city"
-    }
+    "BUILDING_MANUFACTURING_DISTRICT"
    ]
   }
  },

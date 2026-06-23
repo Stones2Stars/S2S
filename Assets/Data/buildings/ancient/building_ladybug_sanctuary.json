@@ -18,21 +18,12 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_COMMUNITY_GARDEN",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_GARDENING",
-     "scope": "team"
-    }
+    "BUILDING_COMMUNITY_GARDEN",
+    "TECH_GARDENING"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_LADYBUG_GATHERER",
-      "scope": "city"
-     }
+     "BUILDING_LADYBUG_GATHERER"
     ],
     [
      {
@@ -44,14 +35,8 @@
   },
   "operate": {
    "dormant": [
-    {
-     "type": "BUILDING_ARBORETUM",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_AGROFOREST",
-     "scope": "city"
-    }
+    "BUILDING_ARBORETUM",
+    "BUILDING_AGROFOREST"
    ]
   }
  },
@@ -66,17 +51,11 @@
     1,
     {
      "value": 5,
-     "enabled": {
-      "type": "TECH_ZOOLOGY",
-      "scope": "team"
-     }
+     "enabled": "TECH_ZOOLOGY"
     },
     {
      "value": 5,
-     "enabled": {
-      "type": "TECH_BIOLOGY",
-      "scope": "team"
-     }
+     "enabled": "TECH_BIOLOGY"
     }
    ]
   }
@@ -87,10 +66,7 @@
     1,
     {
      "value": 4,
-     "enabled": {
-      "type": "TECH_PAPER",
-      "scope": "team"
-     }
+     "enabled": "TECH_PAPER"
     }
    ]
   }

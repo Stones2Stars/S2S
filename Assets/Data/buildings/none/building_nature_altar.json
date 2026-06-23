@@ -46,10 +46,7 @@
   },
   "operate": {
    "all": [
-    {
-     "type": "RELIGION_DRUIDIC_TRADITIONS",
-     "scope": "city"
-    }
+    "RELIGION_DRUIDIC_TRADITIONS"
    ]
   }
  },

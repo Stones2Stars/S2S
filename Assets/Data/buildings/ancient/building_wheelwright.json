@@ -22,25 +22,13 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_THE_WHEEL",
-     "scope": "team"
-    }
+    "TECH_THE_WHEEL"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_BARTER_POST",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_TRADING_POST",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_SHOPPING_DISTRICT",
-      "scope": "city"
-     }
+     "BUILDING_BARTER_POST",
+     "BUILDING_TRADING_POST",
+     "BUILDING_SHOPPING_DISTRICT"
     ],
     [
      {
@@ -71,18 +59,9 @@
     ]
    ],
    "dormant": [
-    {
-     "type": "BUILDING_CARRIAGE_BUILDER",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_FACTORY_AUTOMOBILES",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_SELF_ASSEMBLY_FACTORY",
-     "scope": "city"
-    }
+    "BUILDING_CARRIAGE_BUILDER",
+    "BUILDING_FACTORY_AUTOMOBILES",
+    "BUILDING_SELF_ASSEMBLY_FACTORY"
    ]
   }
  },

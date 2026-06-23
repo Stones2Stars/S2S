@@ -15,25 +15,13 @@
      "scope": "city",
      "min": 3
     },
-    {
-     "type": "TECH_ARMORED_CAVALRY",
-     "scope": "team"
-    },
-    {
-     "type": "TECH_GUILDS",
-     "scope": "team"
-    }
+    "TECH_ARMORED_CAVALRY",
+    "TECH_GUILDS"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_KNIGHTS_STABLE",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_MODERN_STABLE",
-      "scope": "city"
-     }
+     "BUILDING_KNIGHTS_STABLE",
+     "BUILDING_MODERN_STABLE"
     ],
     [
      {

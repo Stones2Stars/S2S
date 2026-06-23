@@ -5,14 +5,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_HQ_STANDARD_ETHANOL",
-     "scope": "city"
-    },
-    {
-     "type": "CORPORATION_3",
-     "scope": "city"
-    }
+    "BUILDING_HQ_STANDARD_ETHANOL",
+    "CORPORATION_3"
    ]
   }
  },

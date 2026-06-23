@@ -6,14 +6,8 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_VIRTUAL_GOVERNANCE",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_SOCIAL_CALCULUS",
-     "scope": "team"
-    }
+    "BUILDING_VIRTUAL_GOVERNANCE",
+    "TECH_SOCIAL_CALCULUS"
    ],
    "any": [
     [

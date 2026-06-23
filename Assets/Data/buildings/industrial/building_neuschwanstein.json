@@ -15,10 +15,7 @@
      "scope": "city",
      "min": 3
     },
-    {
-     "type": "TECH_ROMANTICISM",
-     "scope": "team"
-    },
+    "TECH_ROMANTICISM",
     {
      "type": "BONUS_BRICKS",
      "scope": "city",

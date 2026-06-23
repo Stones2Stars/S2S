@@ -5,25 +5,13 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_LABORATORY",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_MODERN_PHYSICS",
-     "scope": "team"
-    }
+    "BUILDING_LABORATORY",
+    "TECH_MODERN_PHYSICS"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_PET_SHOP",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_REPET",
-      "scope": "city"
-     }
+     "BUILDING_PET_SHOP",
+     "BUILDING_REPET"
     ],
     [
      {

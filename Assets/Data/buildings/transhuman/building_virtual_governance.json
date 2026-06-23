@@ -11,14 +11,8 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_VIRTUAL_ECONOMY",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_BINARY_LEGISLATION",
-     "scope": "team"
-    }
+    "BUILDING_VIRTUAL_ECONOMY",
+    "TECH_BINARY_LEGISLATION"
    ],
    "any": [
     [

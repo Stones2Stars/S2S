@@ -17,18 +17,9 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_DEEP_SPACE_ONEILL_CYLINDER",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_DEEP_SPACE_ASSEMBLER",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_ANIMAMATERIALS",
-     "scope": "team"
-    }
+    "BUILDING_DEEP_SPACE_ONEILL_CYLINDER",
+    "BUILDING_DEEP_SPACE_ASSEMBLER",
+    "TECH_ANIMAMATERIALS"
    ],
    "any": [
     [

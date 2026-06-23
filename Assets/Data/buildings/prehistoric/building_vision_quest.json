@@ -10,14 +10,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_C_L_NORTH_AMERICAN",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_RITUALISM",
-     "scope": "team"
-    }
+    "BUILDING_C_L_NORTH_AMERICAN",
+    "TECH_RITUALISM"
    ],
    "any": [
     [

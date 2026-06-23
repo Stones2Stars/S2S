@@ -5,10 +5,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_LITERATURE",
-     "scope": "team"
-    }
+    "TECH_LITERATURE"
    ],
    "any": [
     [

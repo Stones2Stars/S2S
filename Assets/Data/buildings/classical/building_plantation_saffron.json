@@ -20,10 +20,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_SPICE_TRADE",
-     "scope": "team"
-    }
+    "TECH_SPICE_TRADE"
    ],
    "any": [
     [
@@ -52,10 +49,7 @@
     ]
    ],
    "dormant": [
-    {
-     "type": "BUILDING_FOOD_MANUFACTURING_DISTRICT",
-     "scope": "city"
-    }
+    "BUILDING_FOOD_MANUFACTURING_DISTRICT"
    ]
   }
  },

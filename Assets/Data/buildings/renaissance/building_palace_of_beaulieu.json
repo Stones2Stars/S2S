@@ -10,14 +10,8 @@
      "scope": "city",
      "min": 7
     },
-    {
-     "type": "BUILDING_GRAND_MANOR",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_HUMANISM",
-     "scope": "team"
-    }
+    "BUILDING_GRAND_MANOR",
+    "TECH_HUMANISM"
    ],
    "any": [
     [
@@ -35,10 +29,7 @@
      "scope": "city",
      "connection": "trade|vicinity"
     },
-    {
-     "type": "CIVIC_VASSALAGE",
-     "scope": "empire"
-    }
+    "CIVIC_VASSALAGE"
    ]
   }
  },

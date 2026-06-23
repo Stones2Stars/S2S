@@ -5,19 +5,13 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_SPY_HIDEOUT",
-     "scope": "city"
-    },
+    "BUILDING_SPY_HIDEOUT",
     {
      "type": "BUILDING_SPY_NETWORK",
      "scope": "empire",
      "min": 1
     },
-    {
-     "type": "TECH_POLITICAL_PHILOSOPHY",
-     "scope": "team"
-    }
+    "TECH_POLITICAL_PHILOSOPHY"
    ],
    "any": [
     [

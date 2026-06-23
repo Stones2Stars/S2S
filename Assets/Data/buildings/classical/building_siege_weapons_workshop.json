@@ -34,14 +34,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_CARPENTER",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_ANCIENT_MACHINERY",
-     "scope": "team"
-    }
+    "BUILDING_CARPENTER",
+    "TECH_ANCIENT_MACHINERY"
    ],
    "any": [
     [

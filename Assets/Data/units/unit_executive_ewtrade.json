@@ -5,14 +5,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_HQ_EAST_WEST_TRADERS",
-     "scope": "city"
-    },
-    {
-     "type": "CORPORATION_EWTRADE",
-     "scope": "city"
-    }
+    "BUILDING_HQ_EAST_WEST_TRADERS",
+    "CORPORATION_EWTRADE"
    ]
   }
  },

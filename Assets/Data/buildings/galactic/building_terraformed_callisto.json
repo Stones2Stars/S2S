@@ -5,14 +5,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_CALLISTO_NOBLE_GAS_GENERATOR",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_LUNAR_TERRAFORMING",
-     "scope": "team"
-    }
+    "BUILDING_CALLISTO_NOBLE_GAS_GENERATOR",
+    "TECH_LUNAR_TERRAFORMING"
    ],
    "any": [
     [

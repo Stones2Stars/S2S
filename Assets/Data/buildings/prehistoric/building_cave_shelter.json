@@ -10,10 +10,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_CAVE_DWELLING",
-     "scope": "team"
-    }
+    "TECH_CAVE_DWELLING"
    ],
    "any": [
     [
@@ -32,30 +29,12 @@
   },
   "operate": {
    "dormant": [
-    {
-     "type": "BUILDING_PC_BLUEFISH_CAVES",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_PC_KLASIES_RIVER_CAVES",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_PC_CAVE_OF_ALTAMIRA",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_PC_BLOMBOS_CAVE",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_PC_CHARLIE_LAKE_CAVE",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_PC_PEDRA_FURADA",
-     "scope": "city"
-    }
+    "BUILDING_PC_BLUEFISH_CAVES",
+    "BUILDING_PC_KLASIES_RIVER_CAVES",
+    "BUILDING_PC_CAVE_OF_ALTAMIRA",
+    "BUILDING_PC_BLOMBOS_CAVE",
+    "BUILDING_PC_CHARLIE_LAKE_CAVE",
+    "BUILDING_PC_PEDRA_FURADA"
    ]
   }
  },
@@ -70,10 +49,7 @@
     1,
     {
      "value": 1,
-     "enabled": {
-      "type": "TECH_PETROGLYPHS",
-      "scope": "team"
-     }
+     "enabled": "TECH_PETROGLYPHS"
     }
    ]
   }

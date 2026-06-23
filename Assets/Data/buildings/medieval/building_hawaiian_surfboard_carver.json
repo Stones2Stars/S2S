@@ -5,14 +5,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_C_L_OCEANIAN",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_MARTIAL_ARTS",
-     "scope": "team"
-    }
+    "BUILDING_C_L_OCEANIAN",
+    "TECH_MARTIAL_ARTS"
    ],
    "any": [
     [

@@ -19,14 +19,8 @@
      "scope": "city",
      "min": 3
     },
-    {
-     "type": "BUILDING_FACTORY",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_ANTI_GRAVITY_FIELDS",
-     "scope": "team"
-    }
+    "BUILDING_FACTORY",
+    "TECH_ANTI_GRAVITY_FIELDS"
    ],
    "any": [
     [
@@ -63,10 +57,7 @@
     ]
    ],
    "dormant": [
-    {
-     "type": "BUILDING_NANOTECH_COMPLEX",
-     "scope": "city"
-    }
+    "BUILDING_NANOTECH_COMPLEX"
    ]
   }
  },
@@ -81,10 +72,7 @@
     25,
     {
      "value": 10,
-     "enabled": {
-      "type": "TECH_SHIELDING",
-      "scope": "team"
-     }
+     "enabled": "TECH_SHIELDING"
     }
    ]
   }

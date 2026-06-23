@@ -10,18 +10,9 @@
      "scope": "city",
      "connection": "trade|vicinity"
     },
-    {
-     "type": "BUILDING_CANNON_FORGE",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_METALLURGY",
-     "scope": "team"
-    },
-    {
-     "type": "TECH_MATCHLOCK",
-     "scope": "team"
-    }
+    "BUILDING_CANNON_FORGE",
+    "TECH_METALLURGY",
+    "TECH_MATCHLOCK"
    ],
    "any": [
     [

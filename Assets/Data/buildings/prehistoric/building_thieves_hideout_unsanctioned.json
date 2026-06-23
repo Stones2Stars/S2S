@@ -10,10 +10,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_THEFT",
-     "scope": "team"
-    }
+    "TECH_THEFT"
    ],
    "any": [
     [
@@ -65,10 +62,7 @@
     "unit": "UNIT_THIEF",
     "interval": "perTurn",
     "chance": {
-     "per": {
-      "type": "PROPERTY_CRIME",
-      "scope": "city"
-     }
+     "per": "PROPERTY_CRIME"
     }
    }
   ]

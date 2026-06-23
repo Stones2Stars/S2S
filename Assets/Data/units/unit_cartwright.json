@@ -10,10 +10,7 @@
      "scope": "city",
      "connection": "trade|vicinity"
     },
-    {
-     "type": "TECH_CHARIOTRY",
-     "scope": "team"
-    },
+    "TECH_CHARIOTRY",
     {
      "type": "BONUS_ROPE",
      "scope": "city",
@@ -39,22 +36,10 @@
      }
     ],
     [
-     {
-      "type": "BUILDING_WHEELWRIGHT",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_CARRIAGE_BUILDER",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_FACTORY_AUTOMOBILES",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_SELF_ASSEMBLY_FACTORY",
-      "scope": "city"
-     }
+     "BUILDING_WHEELWRIGHT",
+     "BUILDING_CARRIAGE_BUILDER",
+     "BUILDING_FACTORY_AUTOMOBILES",
+     "BUILDING_SELF_ASSEMBLY_FACTORY"
     ]
    ]
   }

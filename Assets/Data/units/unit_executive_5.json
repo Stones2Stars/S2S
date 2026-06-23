@@ -5,14 +5,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_HQ_MINING_INC",
-     "scope": "city"
-    },
-    {
-     "type": "CORPORATION_5",
-     "scope": "city"
-    }
+    "BUILDING_HQ_MINING_INC",
+    "CORPORATION_5"
    ]
   }
  },

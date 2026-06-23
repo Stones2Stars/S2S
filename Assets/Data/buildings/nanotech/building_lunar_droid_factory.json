@@ -11,14 +11,8 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_LUNAR_ASSEMBLY_PLANT",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_ANDROIDS",
-     "scope": "team"
-    }
+    "BUILDING_LUNAR_ASSEMBLY_PLANT",
+    "TECH_ANDROIDS"
    ],
    "any": [
     [
@@ -57,10 +51,7 @@
   "city": {
    "flat": {
     "value": 200,
-    "enabled": {
-     "type": "TECH_LUNAR_TRADE",
-     "scope": "team"
-    }
+    "enabled": "TECH_LUNAR_TRADE"
    }
   }
  },

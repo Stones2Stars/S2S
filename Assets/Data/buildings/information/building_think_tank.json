@@ -5,14 +5,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_PRESS_AGENCY",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_VIRTUAL_SOCIETY",
-     "scope": "team"
-    }
+    "BUILDING_PRESS_AGENCY",
+    "TECH_VIRTUAL_SOCIETY"
    ],
    "any": [
     [
@@ -25,10 +19,7 @@
   },
   "operate": {
    "all": [
-    {
-     "type": "CIVIC_TECHNOCRACY",
-     "scope": "empire"
-    }
+    "CIVIC_TECHNOCRACY"
    ]
   }
  },

@@ -10,10 +10,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_SHIELDING",
-     "scope": "team"
-    }
+    "TECH_SHIELDING"
    ],
    "any": [
     [

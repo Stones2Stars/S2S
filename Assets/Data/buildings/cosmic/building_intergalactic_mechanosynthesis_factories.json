@@ -17,14 +17,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_INTERGALACTIC_FUSION_PLANTS",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_SPACE_CREASING",
-     "scope": "team"
-    }
+    "BUILDING_INTERGALACTIC_FUSION_PLANTS",
+    "TECH_SPACE_CREASING"
    ],
    "any": [
     [
@@ -47,17 +41,11 @@
     100,
     {
      "value": 12,
-     "enabled": {
-      "type": "TECH_ZERO_POINT_ENERGY",
-      "scope": "team"
-     }
+     "enabled": "TECH_ZERO_POINT_ENERGY"
     },
     {
      "value": 12,
-     "enabled": {
-      "type": "TECH_NEUTRONIUM",
-      "scope": "team"
-     }
+     "enabled": "TECH_NEUTRONIUM"
     }
    ]
   }

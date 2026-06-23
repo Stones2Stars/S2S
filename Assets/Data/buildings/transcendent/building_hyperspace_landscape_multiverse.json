@@ -6,14 +6,8 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_HYPERSPACE_POINCARE_DODECAHEDRAL_SPACE",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_ALPHA_POINT",
-     "scope": "team"
-    }
+    "BUILDING_HYPERSPACE_POINCARE_DODECAHEDRAL_SPACE",
+    "TECH_ALPHA_POINT"
    ],
    "any": [
     [

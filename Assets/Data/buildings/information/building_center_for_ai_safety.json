@@ -5,14 +5,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_APPLIED_SOCIOLOGY_LAB",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_COMPUTATIONAL_SOCIOLOGY",
-     "scope": "team"
-    }
+    "BUILDING_APPLIED_SOCIOLOGY_LAB",
+    "TECH_COMPUTATIONAL_SOCIOLOGY"
    ],
    "any": [
     [

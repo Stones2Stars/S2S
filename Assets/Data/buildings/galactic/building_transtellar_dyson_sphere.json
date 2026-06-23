@@ -10,14 +10,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_TRANSTELLAR_ARTIFICIAL_RED_DWARF",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_ARTIFICIAL_STARS",
-     "scope": "team"
-    }
+    "BUILDING_TRANSTELLAR_ARTIFICIAL_RED_DWARF",
+    "TECH_ARTIFICIAL_STARS"
    ],
    "any": [
     [

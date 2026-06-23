@@ -16,14 +16,8 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_ALEPH_ASSEMBLER",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_MATERIALIZATION",
-     "scope": "team"
-    }
+    "BUILDING_ALEPH_ASSEMBLER",
+    "TECH_MATERIALIZATION"
    ],
    "any": [
     [
@@ -41,10 +35,7 @@
     45,
     {
      "value": 15,
-     "enabled": {
-      "type": "TECH_ENTROPY_REVERSAL",
-      "scope": "team"
-     }
+     "enabled": "TECH_ENTROPY_REVERSAL"
     }
    ],
    "percent": [

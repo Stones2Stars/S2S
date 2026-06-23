@@ -5,22 +5,10 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_INTERGALACTIC_CORE_DYSON_SPHERE",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_INTERGALACTIC_DYSON_SPHERES",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_INTERGALACTIC_YOTTAFACTORY",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_DARK_ENERGY_HARVESTING",
-     "scope": "team"
-    }
+    "BUILDING_INTERGALACTIC_CORE_DYSON_SPHERE",
+    "BUILDING_INTERGALACTIC_DYSON_SPHERES",
+    "BUILDING_INTERGALACTIC_YOTTAFACTORY",
+    "TECH_DARK_ENERGY_HARVESTING"
    ],
    "any": [
     [
@@ -38,10 +26,7 @@
     25,
     {
      "value": 13,
-     "enabled": {
-      "type": "TECH_HYPERSTRUCTURE_ENGINEERING",
-      "scope": "team"
-     }
+     "enabled": "TECH_HYPERSTRUCTURE_ENGINEERING"
     }
    ]
   }

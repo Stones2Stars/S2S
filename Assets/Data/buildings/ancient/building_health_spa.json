@@ -13,10 +13,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_FOLK_MEDICINE",
-     "scope": "team"
-    }
+    "TECH_FOLK_MEDICINE"
    ],
    "any": [
     [
@@ -29,10 +26,7 @@
   },
   "operate": {
    "dormant": [
-    {
-     "type": "BUILDING_HEALTHCARE_MEGACOMPLEX",
-     "scope": "city"
-    }
+    "BUILDING_HEALTHCARE_MEGACOMPLEX"
    ]
   }
  },

@@ -14,62 +14,20 @@
   "build": {
    "any": [
     [
-     {
-      "type": "BUILDING_ANIMAL_PRESERVE",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_BREEDING_PROGRAM_ELEPHANT",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_BREEDING_PROGRAM_MAMMOTH",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_BREEDING_PROGRAM_NARWHAL",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_BREEDING_PROGRAM_RHINO",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_BREEDING_PROGRAM_WALRUS",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_CAMP_ELEPHANT",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_FARM_ANIMAL_ELEPHANT",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_HERD_ELEPHANT",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_CAMP_MAMMOTH",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_CAMP_NARWHAL",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_CAMP_RHINO",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_CAMP_WALRUS",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_CAMP_WOOLLY_RHINO",
-      "scope": "city"
-     }
+     "BUILDING_ANIMAL_PRESERVE",
+     "BUILDING_BREEDING_PROGRAM_ELEPHANT",
+     "BUILDING_BREEDING_PROGRAM_MAMMOTH",
+     "BUILDING_BREEDING_PROGRAM_NARWHAL",
+     "BUILDING_BREEDING_PROGRAM_RHINO",
+     "BUILDING_BREEDING_PROGRAM_WALRUS",
+     "BUILDING_CAMP_ELEPHANT",
+     "BUILDING_FARM_ANIMAL_ELEPHANT",
+     "BUILDING_HERD_ELEPHANT",
+     "BUILDING_CAMP_MAMMOTH",
+     "BUILDING_CAMP_NARWHAL",
+     "BUILDING_CAMP_RHINO",
+     "BUILDING_CAMP_WALRUS",
+     "BUILDING_CAMP_WOOLLY_RHINO"
     ],
     [
      {
@@ -81,14 +39,8 @@
   },
   "operate": {
    "dormant": [
-    {
-     "type": "BUILDING_INDUSTRIAL_FARMS",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_MEAT_INDUSTRY_CONGLOMERATE",
-     "scope": "city"
-    }
+    "BUILDING_INDUSTRIAL_FARMS",
+    "BUILDING_MEAT_INDUSTRY_CONGLOMERATE"
    ]
   }
  },

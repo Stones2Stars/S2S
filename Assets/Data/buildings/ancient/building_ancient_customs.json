@@ -55,10 +55,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_HERITAGE",
-     "scope": "team"
-    }
+    "TECH_HERITAGE"
    ],
    "any": [
     [
@@ -154,10 +151,7 @@
     1,
     {
      "value": -1,
-     "enabled": {
-      "type": "TECH_LITERATURE",
-      "scope": "team"
-     }
+     "enabled": "TECH_LITERATURE"
     }
    ],
    "percent": 1
@@ -169,10 +163,7 @@
     2,
     {
      "value": -1,
-     "enabled": {
-      "type": "TECH_LITERATURE",
-      "scope": "team"
-     }
+     "enabled": "TECH_LITERATURE"
     }
    ],
    "percent": 1
@@ -188,10 +179,7 @@
    "flat": [
     {
      "value": 1,
-     "enabled": {
-      "type": "TECH_LEISURE",
-      "scope": "team"
-     }
+     "enabled": "TECH_LEISURE"
     }
    ]
   }
@@ -225,10 +213,7 @@
   "city": {
    "flat": {
     "value": -1,
-    "enabled": {
-     "type": "TECH_LITERATURE",
-     "scope": "team"
-    }
+    "enabled": "TECH_LITERATURE"
    }
   }
  },

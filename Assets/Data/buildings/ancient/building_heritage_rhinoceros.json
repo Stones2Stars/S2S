@@ -5,18 +5,9 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_ANIMAL_TRAINER_RHINOCEROS",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_HERITAGE",
-     "scope": "team"
-    },
-    {
-     "type": "TECH_MEGAFAUNA_DOMESTICATION",
-     "scope": "team"
-    }
+    "BUILDING_ANIMAL_TRAINER_RHINOCEROS",
+    "TECH_HERITAGE",
+    "TECH_MEGAFAUNA_DOMESTICATION"
    ],
    "any": [
     [

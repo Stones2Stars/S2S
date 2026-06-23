@@ -10,22 +10,10 @@
      "scope": "city",
      "connection": "trade|vicinity"
     },
-    {
-     "type": "BUILDING_REJUVENATION_TANK",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_SKYROAD_STATION",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_REGENERATIVE_MEDICINE",
-     "scope": "team"
-    },
-    {
-     "type": "TECH_SKYROADS",
-     "scope": "team"
-    },
+    "BUILDING_REJUVENATION_TANK",
+    "BUILDING_SKYROAD_STATION",
+    "TECH_REGENERATIVE_MEDICINE",
+    "TECH_SKYROADS",
     {
      "type": "BONUS_BIOFUEL",
      "scope": "city",
@@ -76,14 +64,8 @@
      }
     ],
     [
-     {
-      "type": "BUILDING_MEGATOWER_MEDICAL_LEVEL",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_HEALTHCARE_MEGACOMPLEX",
-      "scope": "city"
-     }
+     "BUILDING_MEGATOWER_MEDICAL_LEVEL",
+     "BUILDING_HEALTHCARE_MEGACOMPLEX"
     ]
    ]
   }

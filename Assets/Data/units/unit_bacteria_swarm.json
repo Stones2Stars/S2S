@@ -5,14 +5,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_INTERSTELLAR_WORLDHOUSE",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_DIRECTED_PANSPERMIA",
-     "scope": "team"
-    }
+    "BUILDING_INTERSTELLAR_WORLDHOUSE",
+    "TECH_DIRECTED_PANSPERMIA"
    ]
   }
  },

@@ -6,21 +6,12 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_MEDICAL_DIAGNOSTAT",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_ARTIFICIAL_LIFE",
-     "scope": "team"
-    }
+    "BUILDING_MEDICAL_DIAGNOSTAT",
+    "TECH_ARTIFICIAL_LIFE"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_NEUROTRANSMITTER_MANIPULATOR_LAB",
-      "scope": "city"
-     }
+     "BUILDING_NEUROTRANSMITTER_MANIPULATOR_LAB"
     ],
     [
      {

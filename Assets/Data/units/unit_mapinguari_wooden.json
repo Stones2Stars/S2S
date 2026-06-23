@@ -5,21 +5,12 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_SIMPLE_WOOD_WORKING",
-     "scope": "team"
-    }
+    "TECH_SIMPLE_WOOD_WORKING"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_MAPINGUARI_COMPOUND",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_MAPINGUARI_CHANGING_OF_THE_GUARD_CEREMONY",
-      "scope": "city"
-     }
+     "BUILDING_MAPINGUARI_COMPOUND",
+     "BUILDING_MAPINGUARI_CHANGING_OF_THE_GUARD_CEREMONY"
     ]
    ]
   }

@@ -13,10 +13,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_MODERN_HEALTH_CARE",
-     "scope": "team"
-    }
+    "TECH_MODERN_HEALTH_CARE"
    ],
    "any": [
     [
@@ -29,10 +26,7 @@
   },
   "operate": {
    "dormant": [
-    {
-     "type": "BUILDING_HIGH_TECH_CULTURAL_ENRICHMENT",
-     "scope": "city"
-    }
+    "BUILDING_HIGH_TECH_CULTURAL_ENRICHMENT"
    ]
   }
  },
@@ -47,10 +41,7 @@
     2,
     {
      "value": 1,
-     "enabled": {
-      "type": "TECH_ANTI_AGING_MEDICINE",
-      "scope": "team"
-     }
+     "enabled": "TECH_ANTI_AGING_MEDICINE"
     },
     {
      "value": 1,

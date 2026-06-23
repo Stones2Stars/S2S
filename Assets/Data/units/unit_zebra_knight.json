@@ -5,14 +5,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_ARMORED_CAVALRY",
-     "scope": "team"
-    },
-    {
-     "type": "TECH_MEGAFAUNA_DOMESTICATION",
-     "scope": "team"
-    }
+    "TECH_ARMORED_CAVALRY",
+    "TECH_MEGAFAUNA_DOMESTICATION"
    ],
    "any": [
     [
@@ -23,14 +17,8 @@
      }
     ],
     [
-     {
-      "type": "BUILDING_EFFECT_HERITAGE_ZEBRAS",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_ANIMAL_TRAINER_ZEBRA",
-      "scope": "city"
-     }
+     "BUILDING_EFFECT_HERITAGE_ZEBRAS",
+     "BUILDING_ANIMAL_TRAINER_ZEBRA"
     ]
    ]
   }

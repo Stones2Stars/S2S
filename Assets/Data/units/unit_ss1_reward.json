@@ -5,10 +5,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_SPACE_STATIONS",
-     "scope": "team"
-    }
+    "TECH_SPACE_STATIONS"
    ]
   }
  },

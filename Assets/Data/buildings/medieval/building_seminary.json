@@ -5,10 +5,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_THEOLOGY",
-     "scope": "team"
-    },
+    "TECH_THEOLOGY",
     "STATE_RELIGION_IN_CITY"
    ],
    "any": [
@@ -47,18 +44,9 @@
      }
     ],
     [
-     {
-      "type": "CIVIC_STATE_CHURCH",
-      "scope": "empire"
-     },
-     {
-      "type": "CIVIC_FREE_CHURCH",
-      "scope": "empire"
-     },
-     {
-      "type": "CIVIC_RELIGIOUS",
-      "scope": "empire"
-     }
+     "CIVIC_STATE_CHURCH",
+     "CIVIC_FREE_CHURCH",
+     "CIVIC_RELIGIOUS"
     ]
    ]
   }

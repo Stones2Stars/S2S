@@ -11,22 +11,10 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_NEURON_REGENERATOR_LAB",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_EXOCORTEX_NETWORKS",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_REJUVENATION_TANK",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_REGENERATIVE_MEDICINE",
-     "scope": "team"
-    }
+    "BUILDING_NEURON_REGENERATOR_LAB",
+    "BUILDING_EXOCORTEX_NETWORKS",
+    "BUILDING_REJUVENATION_TANK",
+    "TECH_REGENERATIVE_MEDICINE"
    ],
    "any": [
     [

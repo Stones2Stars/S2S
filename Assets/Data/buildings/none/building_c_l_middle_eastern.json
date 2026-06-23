@@ -68,10 +68,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_C_AC_MIDDLE_EASTERN",
-     "scope": "city"
-    }
+    "BUILDING_C_AC_MIDDLE_EASTERN"
    ],
    "any": [
     [

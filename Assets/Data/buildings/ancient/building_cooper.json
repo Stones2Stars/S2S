@@ -13,14 +13,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_CARPENTER",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_FERMENTATION",
-     "scope": "team"
-    }
+    "BUILDING_CARPENTER",
+    "TECH_FERMENTATION"
    ],
    "any": [
     [
@@ -64,14 +58,8 @@
     ]
    ],
    "dormant": [
-    {
-     "type": "BUILDING_FACTORY_BARRELS",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_MANUFACTURING_DISTRICT",
-     "scope": "city"
-    }
+    "BUILDING_FACTORY_BARRELS",
+    "BUILDING_MANUFACTURING_DISTRICT"
    ]
   }
  },

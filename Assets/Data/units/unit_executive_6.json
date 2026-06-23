@@ -5,14 +5,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_HQ_ALUMINUM_CO",
-     "scope": "city"
-    },
-    {
-     "type": "CORPORATION_6",
-     "scope": "city"
-    }
+    "BUILDING_HQ_ALUMINUM_CO",
+    "CORPORATION_6"
    ]
   }
  },

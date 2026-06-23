@@ -11,25 +11,13 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_LABORATORY",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_GENE_MANIPULATION",
-     "scope": "team"
-    }
+    "BUILDING_LABORATORY",
+    "TECH_GENE_MANIPULATION"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_VACCINE_LAB",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_HEALTHCARE_MEGACOMPLEX",
-      "scope": "city"
-     }
+     "BUILDING_VACCINE_LAB",
+     "BUILDING_HEALTHCARE_MEGACOMPLEX"
     ],
     [
      {

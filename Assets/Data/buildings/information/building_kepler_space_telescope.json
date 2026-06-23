@@ -10,10 +10,7 @@
      "scope": "empire",
      "min": 1
     },
-    {
-     "type": "TECH_EXOPLANET_DISCOVERY",
-     "scope": "team"
-    }
+    "TECH_EXOPLANET_DISCOVERY"
    ],
    "any": [
     [

@@ -5,26 +5,11 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_CISLUNAR_ORGANIC_COLONY",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_CISLUNAR_BIOFACTORY",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_CISLUNAR_SOCIAL_ENGINEERING",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_BOTANICAL_ALCHEMY",
-     "scope": "team"
-    },
-    {
-     "type": "TECH_EVOLVED_CONSTRUCTION",
-     "scope": "team"
-    }
+    "BUILDING_CISLUNAR_ORGANIC_COLONY",
+    "BUILDING_CISLUNAR_BIOFACTORY",
+    "BUILDING_CISLUNAR_SOCIAL_ENGINEERING",
+    "TECH_BOTANICAL_ALCHEMY",
+    "TECH_EVOLVED_CONSTRUCTION"
    ],
    "any": [
     [

@@ -5,14 +5,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_DISTANT_DARK_FLOW_GENERATOR",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_BRANE_CONSTRUCTION",
-     "scope": "team"
-    }
+    "BUILDING_DISTANT_DARK_FLOW_GENERATOR",
+    "TECH_BRANE_CONSTRUCTION"
    ],
    "any": [
     [

@@ -15,10 +15,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_SCAVENGING",
-     "scope": "team"
-    }
+    "TECH_SCAVENGING"
    ],
    "any": [
     [
@@ -38,34 +35,13 @@
     }
    ],
    "dormant": [
-    {
-     "type": "BUILDING_CHICKEN_COOP",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_FARM_ANIMAL_DUCK",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_FARM_ANIMAL_GOOSE",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_SEA_TURTLE_EGG_GATHERER",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_FARM_ANIMAL_TURKEY",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_INDUSTRIAL_FARMS",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_MEAT_INDUSTRY_CONGLOMERATE",
-     "scope": "city"
-    }
+    "BUILDING_CHICKEN_COOP",
+    "BUILDING_FARM_ANIMAL_DUCK",
+    "BUILDING_FARM_ANIMAL_GOOSE",
+    "BUILDING_SEA_TURTLE_EGG_GATHERER",
+    "BUILDING_FARM_ANIMAL_TURKEY",
+    "BUILDING_INDUSTRIAL_FARMS",
+    "BUILDING_MEAT_INDUSTRY_CONGLOMERATE"
    ]
   }
  },
@@ -80,10 +56,7 @@
     -1,
     {
      "value": 1,
-     "enabled": {
-      "type": "TECH_COOKING",
-      "scope": "team"
-     }
+     "enabled": "TECH_COOKING"
     }
    ]
   }

@@ -26,14 +26,8 @@
   "build": {
    "all": [
     "HAS_COAST",
-    {
-     "type": "BUILDING_HARBORMASTERS_OFFICE",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_STEEL",
-     "scope": "team"
-    }
+    "BUILDING_HARBORMASTERS_OFFICE",
+    "TECH_STEEL"
    ],
    "any": [
     [
@@ -62,10 +56,7 @@
     ]
    ],
    "dormant": [
-    {
-     "type": "BUILDING_NAVAL_YARD",
-     "scope": "city"
-    }
+    "BUILDING_NAVAL_YARD"
    ]
   }
  },

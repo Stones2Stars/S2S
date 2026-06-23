@@ -12,14 +12,8 @@
      "scope": "city",
      "min": 6
     },
-    {
-     "type": "BUILDING_FACTORY",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_QUANTUM_PHYSICS",
-     "scope": "team"
-    }
+    "BUILDING_FACTORY",
+    "TECH_QUANTUM_PHYSICS"
    ],
    "any": [
     [

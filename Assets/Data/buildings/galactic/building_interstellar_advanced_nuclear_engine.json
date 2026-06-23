@@ -13,10 +13,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_INTERSTELLAR_TRAVEL",
-     "scope": "team"
-    }
+    "TECH_INTERSTELLAR_TRAVEL"
    ],
    "any": [
     [
@@ -33,10 +30,7 @@
   },
   "operate": {
    "dormant": [
-    {
-     "type": "BUILDING_INTERSTELLAR_FUSION_ENGINE",
-     "scope": "city"
-    }
+    "BUILDING_INTERSTELLAR_FUSION_ENGINE"
    ]
   }
  },

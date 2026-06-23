@@ -11,14 +11,8 @@
      "scope": "city",
      "min": 7
     },
-    {
-     "type": "BUILDING_ANIMA_STUDIO",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_ARTIFICIAL_LIFE",
-     "scope": "team"
-    }
+    "BUILDING_ANIMA_STUDIO",
+    "TECH_ARTIFICIAL_LIFE"
    ],
    "any": [
     [

@@ -14,14 +14,8 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_POWER_LINES",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_WEIGHTLESS_FLIGHT",
-     "scope": "team"
-    }
+    "BUILDING_POWER_LINES",
+    "TECH_WEIGHTLESS_FLIGHT"
    ],
    "any": [
     [
@@ -34,10 +28,7 @@
   },
   "operate": {
    "dormant": [
-    {
-     "type": "BUILDING_RENEWABLE_MEGACOMPLEX",
-     "scope": "city"
-    }
+    "BUILDING_RENEWABLE_MEGACOMPLEX"
    ]
   }
  },

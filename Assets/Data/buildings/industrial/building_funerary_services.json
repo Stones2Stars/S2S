@@ -21,10 +21,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_MODERN_SANITATION",
-     "scope": "team"
-    }
+    "TECH_MODERN_SANITATION"
    ],
    "any": [
     [
@@ -37,10 +34,7 @@
   },
   "operate": {
    "dormant": [
-    {
-     "type": "BUILDING_HIGH_TECH_CULTURAL_ENRICHMENT",
-     "scope": "city"
-    }
+    "BUILDING_HIGH_TECH_CULTURAL_ENRICHMENT"
    ]
   }
  },

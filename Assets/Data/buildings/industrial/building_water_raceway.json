@@ -14,10 +14,7 @@
   "build": {
    "all": [
     "HAS_COAST",
-    {
-     "type": "TECH_WATER_SPORTS",
-     "scope": "team"
-    }
+    "TECH_WATER_SPORTS"
    ],
    "any": [
     [
@@ -30,10 +27,7 @@
   },
   "operate": {
    "dormant": [
-    {
-     "type": "BUILDING_ATHLETIC_MEGACOMPLEX",
-     "scope": "city"
-    }
+    "BUILDING_ATHLETIC_MEGACOMPLEX"
    ]
   }
  },

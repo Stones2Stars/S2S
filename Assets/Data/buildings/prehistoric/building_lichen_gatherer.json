@@ -15,10 +15,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_GATHERING",
-     "scope": "team"
-    }
+    "TECH_GATHERING"
    ],
    "any": [
     [

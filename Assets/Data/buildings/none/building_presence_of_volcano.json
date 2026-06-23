@@ -5,10 +5,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_FOLKLORE_REQUIREMENT",
-     "scope": "city"
-    }
+    "BUILDING_FOLKLORE_REQUIREMENT"
    ],
    "any": [
     [

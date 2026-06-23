@@ -10,10 +10,7 @@
      "scope": "city",
      "min": 3
     },
-    {
-     "type": "TECH_AESTHETICS",
-     "scope": "team"
-    },
+    "TECH_AESTHETICS",
     "STATE_RELIGION_IN_CITY",
     {
      "STATE_RELIGION": "RELIGION_BUDDHISM"
@@ -35,10 +32,7 @@
      "scope": "city",
      "connection": "trade|vicinity"
     },
-    {
-     "type": "RELIGION_BUDDHISM",
-     "scope": "city"
-    }
+    "RELIGION_BUDDHISM"
    ]
   }
  },

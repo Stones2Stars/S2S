@@ -13,21 +13,12 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_MANAGEMENT",
-     "scope": "team"
-    }
+    "TECH_MANAGEMENT"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_POLICE_STATION",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_POLICE_PRECINCT",
-      "scope": "city"
-     }
+     "BUILDING_POLICE_STATION",
+     "BUILDING_POLICE_PRECINCT"
     ],
     [
      {
@@ -39,10 +30,7 @@
   },
   "operate": {
    "dormant": [
-    {
-     "type": "BUILDING_GENETIC_PROFILING",
-     "scope": "city"
-    }
+    "BUILDING_GENETIC_PROFILING"
    ]
   }
  },
@@ -52,10 +40,7 @@
     -5,
     {
      "value": -1,
-     "enabled": {
-      "type": "TECH_MINORITY_RIGHTS",
-      "scope": "team"
-     }
+     "enabled": "TECH_MINORITY_RIGHTS"
     }
    ]
   }

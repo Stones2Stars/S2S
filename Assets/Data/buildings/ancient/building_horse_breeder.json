@@ -18,14 +18,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_ANIMAL_TRAINER_HORSE",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_THE_WHEEL",
-     "scope": "team"
-    }
+    "BUILDING_ANIMAL_TRAINER_HORSE",
+    "TECH_THE_WHEEL"
    ],
    "any": [
     [
@@ -35,19 +29,13 @@
      }
     ],
     [
-     {
-      "type": "HERITAGE_FOLKLORE_HORSE",
-      "scope": "empire"
-     }
+     "HERITAGE_FOLKLORE_HORSE"
     ]
    ]
   },
   "operate": {
    "dormant": [
-    {
-     "type": "BUILDING_ANIMAL_TAMER_COMPLEX",
-     "scope": "city"
-    }
+    "BUILDING_ANIMAL_TAMER_COMPLEX"
    ]
   }
  },

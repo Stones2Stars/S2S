@@ -11,10 +11,7 @@
   "build": {
    "all": [
     "HAS_FRESHWATER",
-    {
-     "type": "TECH_CARPENTRY",
-     "scope": "team"
-    }
+    "TECH_CARPENTRY"
    ],
    "any": [
     [

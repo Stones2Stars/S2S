@@ -20,10 +20,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_THEFT",
-     "scope": "team"
-    }
+    "TECH_THEFT"
    ],
    "any": [
     [
@@ -41,24 +38,15 @@
     3,
     {
      "value": 1,
-     "enabled": {
-      "type": "TECH_BARTER",
-      "scope": "team"
-     }
+     "enabled": "TECH_BARTER"
     },
     {
      "value": 2,
-     "enabled": {
-      "type": "TECH_TRADE",
-      "scope": "team"
-     }
+     "enabled": "TECH_TRADE"
     },
     {
      "value": 3,
-     "enabled": {
-      "type": "TECH_CURRENCY",
-      "scope": "team"
-     }
+     "enabled": "TECH_CURRENCY"
     }
    ]
   }
@@ -104,10 +92,7 @@
     "unit": "UNIT_THIEF",
     "interval": "perTurn",
     "chance": {
-     "per": {
-      "type": "PROPERTY_CRIME",
-      "scope": "city"
-     }
+     "per": "PROPERTY_CRIME"
     }
    }
   ]

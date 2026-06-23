@@ -10,18 +10,9 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_DEEP_SPACE_DOCKING_BAY",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_DEEP_SPACE_ONEILL_CYLINDER",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_ASTEROID_EXTRACTION",
-     "scope": "team"
-    }
+    "BUILDING_DEEP_SPACE_DOCKING_BAY",
+    "BUILDING_DEEP_SPACE_ONEILL_CYLINDER",
+    "TECH_ASTEROID_EXTRACTION"
    ],
    "any": [
     [

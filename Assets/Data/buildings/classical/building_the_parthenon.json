@@ -10,18 +10,9 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_HELLENIC_PANTHEON",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_AESTHETICS",
-     "scope": "team"
-    },
-    {
-     "type": "TECH_CONSTRUCTION",
-     "scope": "team"
-    },
+    "BUILDING_HELLENIC_PANTHEON",
+    "TECH_AESTHETICS",
+    "TECH_CONSTRUCTION",
     "STATE_RELIGION_IN_CITY",
     {
      "STATE_RELIGION": "RELIGION_HELLENISM"
@@ -43,10 +34,7 @@
      "scope": "city",
      "connection": "trade|vicinity"
     },
-    {
-     "type": "RELIGION_HELLENISM",
-     "scope": "city"
-    }
+    "RELIGION_HELLENISM"
    ]
   }
  },

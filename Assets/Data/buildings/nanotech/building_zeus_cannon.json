@@ -5,14 +5,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_CISLUNAR_ION_CANNON",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_ION_BEAMS",
-     "scope": "team"
-    }
+    "BUILDING_CISLUNAR_ION_CANNON",
+    "TECH_ION_BEAMS"
    ],
    "any": [
     [

@@ -14,18 +14,9 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_LIVING_BUILDINGS",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_ARTIFICIAL_INTELLIGENCE_CORE",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_TECHNOLOGICAL_SINGULARITY",
-     "scope": "team"
-    }
+    "BUILDING_LIVING_BUILDINGS",
+    "BUILDING_ARTIFICIAL_INTELLIGENCE_CORE",
+    "TECH_TECHNOLOGICAL_SINGULARITY"
    ],
    "any": [
     [

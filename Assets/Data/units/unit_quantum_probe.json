@@ -5,14 +5,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_INTERGALACTIC_STARPORT",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_QUANTUM_RAMJET",
-     "scope": "team"
-    }
+    "BUILDING_INTERGALACTIC_STARPORT",
+    "TECH_QUANTUM_RAMJET"
    ]
   }
  },

@@ -26,29 +26,14 @@
       "max": 45
      }
     },
-    {
-     "type": "TECH_MEGAFAUNA_DOMESTICATION",
-     "scope": "team"
-    }
+    "TECH_MEGAFAUNA_DOMESTICATION"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_FOLKLORE_GIRAFFE",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_CAMP_GIRAFFE",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_BREEDING_PROGRAM_GIRAFFE",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_ANIMAL_PRESERVE",
-      "scope": "city"
-     }
+     "BUILDING_FOLKLORE_GIRAFFE",
+     "BUILDING_CAMP_GIRAFFE",
+     "BUILDING_BREEDING_PROGRAM_GIRAFFE",
+     "BUILDING_ANIMAL_PRESERVE"
     ],
     [
      {

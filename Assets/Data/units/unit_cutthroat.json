@@ -5,29 +5,14 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_THIEVES_HIDEOUT",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_USURY",
-     "scope": "team"
-    }
+    "BUILDING_THIEVES_HIDEOUT",
+    "TECH_USURY"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_LOCKSMITH",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_ELECTRONIC_SECURITY_SYSTEM",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_BIOMETRIC_SECURITY_SYSTEM",
-      "scope": "city"
-     }
+     "BUILDING_LOCKSMITH",
+     "BUILDING_ELECTRONIC_SECURITY_SYSTEM",
+     "BUILDING_BIOMETRIC_SECURITY_SYSTEM"
     ]
    ]
   }

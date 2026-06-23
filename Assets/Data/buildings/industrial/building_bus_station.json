@@ -18,10 +18,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_MASS_TRANSIT",
-     "scope": "team"
-    }
+    "TECH_MASS_TRANSIT"
    ],
    "any": [
     [
@@ -55,10 +52,7 @@
     ]
    ],
    "dormant": [
-    {
-     "type": "BUILDING_TELEPORT_BOOTH",
-     "scope": "city"
-    }
+    "BUILDING_TELEPORT_BOOTH"
    ]
   }
  },

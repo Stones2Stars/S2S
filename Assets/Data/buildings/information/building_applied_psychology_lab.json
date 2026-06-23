@@ -19,18 +19,9 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_PSYCHOLOGY_LAB",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_NEUROSCIENCE_CENTER",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_MEDIA_PSYCHOLOGY",
-     "scope": "team"
-    }
+    "BUILDING_PSYCHOLOGY_LAB",
+    "BUILDING_NEUROSCIENCE_CENTER",
+    "TECH_MEDIA_PSYCHOLOGY"
    ],
    "any": [
     [
@@ -50,10 +41,7 @@
     }
    ],
    "dormant": [
-    {
-     "type": "BUILDING_HEALTHCARE_MEGACOMPLEX",
-     "scope": "city"
-    }
+    "BUILDING_HEALTHCARE_MEGACOMPLEX"
    ]
   }
  },
@@ -63,10 +51,7 @@
     4,
     {
      "value": 8,
-     "enabled": {
-      "type": "TECH_VIRTUAL_SOCIETY",
-      "scope": "team"
-     }
+     "enabled": "TECH_VIRTUAL_SOCIETY"
     }
    ]
   }
@@ -77,10 +62,7 @@
     2,
     {
      "value": 2,
-     "enabled": {
-      "type": "TECH_PERSONALIZED_HEALTH",
-      "scope": "team"
-     }
+     "enabled": "TECH_PERSONALIZED_HEALTH"
     }
    ]
   }

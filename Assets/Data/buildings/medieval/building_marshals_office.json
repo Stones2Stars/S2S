@@ -5,14 +5,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_KINGS_COUNCIL",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_PARLIAMENTS",
-     "scope": "team"
-    }
+    "BUILDING_KINGS_COUNCIL",
+    "TECH_PARLIAMENTS"
    ],
    "any": [
     [
@@ -26,14 +20,8 @@
   "operate": {
    "any": [
     [
-     {
-      "type": "CIVIC_MONARCHY",
-      "scope": "empire"
-     },
-     {
-      "type": "CIVIC_FEUDAL",
-      "scope": "empire"
-     }
+     "CIVIC_MONARCHY",
+     "CIVIC_FEUDAL"
     ]
    ]
   }

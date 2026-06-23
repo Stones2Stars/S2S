@@ -5,10 +5,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_WARFARE",
-     "scope": "team"
-    }
+    "TECH_WARFARE"
    ],
    "any": [
     [
@@ -27,10 +24,7 @@
   },
   "operate": {
    "all": [
-    {
-     "type": "CIVIC_TRIBAL_WARFARE",
-     "scope": "empire"
-    }
+    "CIVIC_TRIBAL_WARFARE"
    ]
   }
  },

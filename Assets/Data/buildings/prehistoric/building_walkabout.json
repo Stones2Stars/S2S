@@ -10,14 +10,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_C_L_OCEANIAN",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_RITUALISM",
-     "scope": "team"
-    }
+    "BUILDING_C_L_OCEANIAN",
+    "TECH_RITUALISM"
    ],
    "any": [
     [

@@ -14,18 +14,9 @@
   "build": {
    "any": [
     [
-     {
-      "type": "BUILDING_BEACH_SAND_GATHERER",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_DESERT_SAND_GATHERER",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_ROCKDUST_GATHERER",
-      "scope": "city"
-     }
+     "BUILDING_BEACH_SAND_GATHERER",
+     "BUILDING_DESERT_SAND_GATHERER",
+     "BUILDING_ROCKDUST_GATHERER"
     ],
     [
      {
@@ -37,10 +28,7 @@
   },
   "operate": {
    "dormant": [
-    {
-     "type": "BUILDING_MODERN_EARTHWORKS",
-     "scope": "city"
-    }
+    "BUILDING_MODERN_EARTHWORKS"
    ]
   }
  },

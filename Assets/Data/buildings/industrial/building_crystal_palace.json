@@ -10,10 +10,7 @@
      "scope": "city",
      "min": 7
     },
-    {
-     "type": "TECH_IMPERIALISM",
-     "scope": "team"
-    }
+    "TECH_IMPERIALISM"
    ],
    "any": [
     [

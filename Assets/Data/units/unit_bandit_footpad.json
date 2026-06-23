@@ -5,14 +5,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_MERCENARY_CAMP",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_BRONZE_WORKING",
-     "scope": "team"
-    }
+    "BUILDING_MERCENARY_CAMP",
+    "TECH_BRONZE_WORKING"
    ]
   }
  },

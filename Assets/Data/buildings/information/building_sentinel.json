@@ -5,21 +5,12 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_SOLAR_PROPULSION",
-     "scope": "team"
-    }
+    "TECH_SOLAR_PROPULSION"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_MILITARY_SATELLITES",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_MILITARY_SPACEPORT",
-      "scope": "city"
-     }
+     "BUILDING_MILITARY_SATELLITES",
+     "BUILDING_MILITARY_SPACEPORT"
     ],
     [
      {

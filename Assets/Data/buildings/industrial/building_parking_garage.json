@@ -13,25 +13,13 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_PARKING_LOT",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_MOTORIZED_TRANSPORTATION",
-     "scope": "team"
-    }
+    "BUILDING_PARKING_LOT",
+    "TECH_MOTORIZED_TRANSPORTATION"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_SHOPPING_DISTRICT",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_TRADING_POST",
-      "scope": "city"
-     }
+     "BUILDING_SHOPPING_DISTRICT",
+     "BUILDING_TRADING_POST"
     ],
     [
      {
@@ -64,14 +52,8 @@
     ]
    ],
    "dormant": [
-    {
-     "type": "BUILDING_AUTOMATED_PARKING_GARAGE",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_TELEPORT_BOOTH",
-     "scope": "city"
-    }
+    "BUILDING_AUTOMATED_PARKING_GARAGE",
+    "BUILDING_TELEPORT_BOOTH"
    ]
   }
  },

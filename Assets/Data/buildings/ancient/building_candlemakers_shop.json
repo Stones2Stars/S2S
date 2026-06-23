@@ -13,21 +13,12 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_CANDLE_MAKING",
-     "scope": "team"
-    }
+    "TECH_CANDLE_MAKING"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_TRADING_POST",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_SHOPPING_DISTRICT",
-      "scope": "city"
-     }
+     "BUILDING_TRADING_POST",
+     "BUILDING_SHOPPING_DISTRICT"
     ],
     [
      {
@@ -53,14 +44,8 @@
     ]
    ],
    "dormant": [
-    {
-     "type": "BUILDING_FACTORY_CANDLES",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_MANUFACTURING_DISTRICT",
-     "scope": "city"
-    }
+    "BUILDING_FACTORY_CANDLES",
+    "BUILDING_MANUFACTURING_DISTRICT"
    ]
   }
  },

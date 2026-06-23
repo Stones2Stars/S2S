@@ -14,18 +14,9 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_FACTORY",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_BIOINFORMATICS_LAB",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_ORGANIC_PHOTONICS",
-     "scope": "team"
-    },
+    "BUILDING_FACTORY",
+    "BUILDING_BIOINFORMATICS_LAB",
+    "TECH_ORGANIC_PHOTONICS",
     {
      "type": "BONUS_BIOPOLYMERS",
      "scope": "city",
@@ -55,10 +46,7 @@
     }
    ],
    "dormant": [
-    {
-     "type": "BUILDING_CHEMICALS_DISTRICT",
-     "scope": "city"
-    }
+    "BUILDING_CHEMICALS_DISTRICT"
    ]
   }
  },
@@ -68,45 +56,27 @@
     3,
     {
      "value": 8,
-     "enabled": {
-      "type": "TECH_GENESIS_BIOLOGY",
-      "scope": "team"
-     }
+     "enabled": "TECH_GENESIS_BIOLOGY"
     },
     {
      "value": 8,
-     "enabled": {
-      "type": "TECH_MARINE_ARCHITECTURE",
-      "scope": "team"
-     }
+     "enabled": "TECH_MARINE_ARCHITECTURE"
     },
     {
      "value": 9,
-     "enabled": {
-      "type": "TECH_GENE_ENHANCEMENT",
-      "scope": "team"
-     }
+     "enabled": "TECH_GENE_ENHANCEMENT"
     },
     {
      "value": 9,
-     "enabled": {
-      "type": "TECH_VERTICAL_FARMING",
-      "scope": "team"
-     }
+     "enabled": "TECH_VERTICAL_FARMING"
     },
     {
      "value": 10,
-     "enabled": {
-      "type": "TECH_ARTIFICIAL_PHOTOSYNTHESIS",
-      "scope": "team"
-     }
+     "enabled": "TECH_ARTIFICIAL_PHOTOSYNTHESIS"
     },
     {
      "value": 10,
-     "enabled": {
-      "type": "TECH_ORGANIC_CITIES",
-      "scope": "team"
-     }
+     "enabled": "TECH_ORGANIC_CITIES"
     }
    ]
   }

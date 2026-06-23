@@ -10,18 +10,9 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_INTERGALACTIC_GALACTIC_GROUP_COLONY",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_INTERGALACTIC_CITY",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_SPACETIME_ECONOMICS",
-     "scope": "team"
-    }
+    "BUILDING_INTERGALACTIC_GALACTIC_GROUP_COLONY",
+    "BUILDING_INTERGALACTIC_CITY",
+    "TECH_SPACETIME_ECONOMICS"
    ],
    "any": [
     [

@@ -5,14 +5,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_INTERSTELLAR_BLACK_HOLE_COLONY",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_APPLIED_RELATIVITY",
-     "scope": "team"
-    }
+    "BUILDING_INTERSTELLAR_BLACK_HOLE_COLONY",
+    "TECH_APPLIED_RELATIVITY"
    ],
    "any": [
     [
@@ -30,10 +24,7 @@
     100,
     {
      "value": 13,
-     "enabled": {
-      "type": "TECH_STRING_MANIPULATION",
-      "scope": "team"
-     }
+     "enabled": "TECH_STRING_MANIPULATION"
     }
    ]
   }
@@ -43,10 +34,7 @@
    "flat": [
     {
      "value": 13,
-     "enabled": {
-      "type": "TECH_REALITY_REPROGRAMMING",
-      "scope": "team"
-     }
+     "enabled": "TECH_REALITY_REPROGRAMMING"
     }
    ]
   }

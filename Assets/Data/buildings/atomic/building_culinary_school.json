@@ -11,14 +11,8 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_UNIVERSITY",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_GASTRONOMY",
-     "scope": "team"
-    }
+    "BUILDING_UNIVERSITY",
+    "TECH_GASTRONOMY"
    ],
    "any": [
     [
@@ -36,17 +30,11 @@
     4,
     {
      "value": 8,
-     "enabled": {
-      "type": "TECH_GENESIS_BIOLOGY",
-      "scope": "team"
-     }
+     "enabled": "TECH_GENESIS_BIOLOGY"
     },
     {
      "value": 9,
-     "enabled": {
-      "type": "TECH_AUGMENTED_CONSUMABLES",
-      "scope": "team"
-     }
+     "enabled": "TECH_AUGMENTED_CONSUMABLES"
     }
    ]
   }

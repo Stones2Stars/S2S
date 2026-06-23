@@ -5,19 +5,13 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_CISLUNAR_DOCKING_BAY",
-     "scope": "city"
-    },
+    "BUILDING_CISLUNAR_DOCKING_BAY",
     {
      "type": "BUILDING_LUNAR_WATER_EXTRACTION_FACILITY",
      "scope": "empire",
      "min": 1
     },
-    {
-     "type": "TECH_LUNAR_MANUFACTURING",
-     "scope": "team"
-    }
+    "TECH_LUNAR_MANUFACTURING"
    ],
    "any": [
     [

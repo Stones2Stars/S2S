@@ -10,14 +10,8 @@
      "scope": "city",
      "connection": "trade|vicinity"
     },
-    {
-     "type": "BUILDING_WAR_DOG_TRAINER",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_MILITARY_TRAINING",
-     "scope": "team"
-    }
+    "BUILDING_WAR_DOG_TRAINER",
+    "TECH_MILITARY_TRAINING"
    ],
    "any": [
     [

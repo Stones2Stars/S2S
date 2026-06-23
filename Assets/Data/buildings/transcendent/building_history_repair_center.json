@@ -11,14 +11,8 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_TIME_MACHINE",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_TIMELINE_RECTIFICATION",
-     "scope": "team"
-    }
+    "BUILDING_TIME_MACHINE",
+    "TECH_TIMELINE_RECTIFICATION"
    ],
    "any": [
     [

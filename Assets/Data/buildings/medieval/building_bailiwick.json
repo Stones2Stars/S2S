@@ -13,14 +13,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_COURTHOUSE",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_USURY",
-     "scope": "team"
-    }
+    "BUILDING_COURTHOUSE",
+    "TECH_USURY"
    ],
    "any": [
     [
@@ -33,18 +27,9 @@
   },
   "operate": {
    "dormant": [
-    {
-     "type": "BUILDING_SHERIFFS_OFFICE",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_POLICE_STATION",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_POLICE_PRECINCT",
-     "scope": "city"
-    }
+    "BUILDING_SHERIFFS_OFFICE",
+    "BUILDING_POLICE_STATION",
+    "BUILDING_POLICE_PRECINCT"
    ]
   }
  },

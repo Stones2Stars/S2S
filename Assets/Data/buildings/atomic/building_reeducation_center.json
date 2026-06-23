@@ -13,14 +13,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_JAIL",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_COMMUNISM",
-     "scope": "team"
-    }
+    "BUILDING_JAIL",
+    "TECH_COMMUNISM"
    ],
    "any": [
     [
@@ -33,10 +27,7 @@
   },
   "operate": {
    "dormant": [
-    {
-     "type": "BUILDING_CYBERNETIC_PRISON",
-     "scope": "city"
-    }
+    "BUILDING_CYBERNETIC_PRISON"
    ]
   }
  },

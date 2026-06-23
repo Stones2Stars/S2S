@@ -10,17 +10,11 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_CONTROLLED_FIRE",
-     "scope": "team"
-    }
+    "TECH_CONTROLLED_FIRE"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_STICK_GATHERER",
-      "scope": "city"
-     }
+     "BUILDING_STICK_GATHERER"
     ],
     [
      {

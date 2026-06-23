@@ -5,10 +5,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_SEDENTARY_LIFESTYLE",
-     "scope": "team"
-    }
+    "TECH_SEDENTARY_LIFESTYLE"
    ]
   }
  },
@@ -24,112 +21,73 @@
   "foundBuildings": [
    {
     "building": "BUILDING_STABLE",
-    "enabled": {
-     "type": "TECH_STEAM_POWER",
-     "scope": "team"
-    }
+    "enabled": "TECH_STEAM_POWER"
    },
    {
     "building": "BUILDING_BARRACKS",
-    "enabled": {
-     "type": "TECH_COLONIALISM",
-     "scope": "team"
-    }
+    "enabled": "TECH_COLONIALISM"
    },
    {
     "building": "BUILDING_COURTHOUSE",
-    "enabled": {
-     "type": "TECH_STEAM_POWER",
-     "scope": "team"
-    }
+    "enabled": "TECH_STEAM_POWER"
    },
    {
     "building": "BUILDING_FISHERMANS_HUT",
     "enabled": {
      "all": [
       "HAS_COAST",
-      {
-       "type": "TECH_COLONIALISM",
-       "scope": "team"
-      }
+      "TECH_COLONIALISM"
      ]
     }
    },
    {
     "building": "BUILDING_FORGE",
-    "enabled": {
-     "type": "TECH_COLONIALISM",
-     "scope": "team"
-    }
+    "enabled": "TECH_COLONIALISM"
    },
    {
     "building": "BUILDING_GARRISON",
-    "enabled": {
-     "type": "TECH_STEAM_POWER",
-     "scope": "team"
-    }
+    "enabled": "TECH_STEAM_POWER"
    },
    {
     "building": "BUILDING_GRANARY",
-    "enabled": {
-     "type": "TECH_COLONIALISM",
-     "scope": "team"
-    }
+    "enabled": "TECH_COLONIALISM"
    },
    {
     "building": "BUILDING_GROCER",
-    "enabled": {
-     "type": "TECH_STEAM_POWER",
-     "scope": "team"
-    }
+    "enabled": "TECH_STEAM_POWER"
    },
    {
     "building": "BUILDING_HARBOR",
     "enabled": {
      "all": [
       "HAS_COAST",
-      {
-       "type": "TECH_COLONIALISM",
-       "scope": "team"
-      }
+      "TECH_COLONIALISM"
      ]
     }
    },
    {
     "building": "BUILDING_LIBRARY",
-    "enabled": {
-     "type": "TECH_STEAM_POWER",
-     "scope": "team"
-    }
+    "enabled": "TECH_STEAM_POWER"
    },
    {
     "building": "BUILDING_LIGHTHOUSE",
     "enabled": {
      "all": [
       "HAS_COAST",
-      {
-       "type": "TECH_COLONIALISM",
-       "scope": "team"
-      }
+      "TECH_COLONIALISM"
      ]
     }
    },
    {
     "building": "BUILDING_MARKET",
-    "enabled": {
-     "type": "TECH_COLONIALISM",
-     "scope": "team"
-    }
+    "enabled": "TECH_COLONIALISM"
    },
    {
     "building": "BUILDING_PORT",
     "enabled": {
      "all": [
       "HAS_COAST",
-      {
-       "type": "TECH_STEAM_POWER",
-       "scope": "team"
-      }
+      "TECH_STEAM_POWER"
      ]
     }
    },

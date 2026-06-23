@@ -20,10 +20,7 @@
   "build": {
    "all": [
     "HAS_COAST",
-    {
-     "type": "TECH_SEAFARING",
-     "scope": "team"
-    }
+    "TECH_SEAFARING"
    ],
    "any": [
     [
@@ -55,22 +52,10 @@
     ]
    ],
    "dormant": [
-    {
-     "type": "BUILDING_PORT",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_COMMERCIAL_PORT",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_INTERNATIONAL_PORT",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_OCEAN_ADMINISTRATION",
-     "scope": "city"
-    }
+    "BUILDING_PORT",
+    "BUILDING_COMMERCIAL_PORT",
+    "BUILDING_INTERNATIONAL_PORT",
+    "BUILDING_OCEAN_ADMINISTRATION"
    ]
   }
  },

@@ -14,25 +14,13 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "TECH_WAR_SIMULATIONS",
-     "scope": "team"
-    }
+    "TECH_WAR_SIMULATIONS"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_MILITARY_BASE",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_MILITARY_AIRBASE",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_AEROSPACE_COMPLEX",
-      "scope": "city"
-     }
+     "BUILDING_MILITARY_BASE",
+     "BUILDING_MILITARY_AIRBASE",
+     "BUILDING_AEROSPACE_COMPLEX"
     ],
     [
      {
@@ -51,10 +39,7 @@
     }
    ],
    "dormant": [
-    {
-     "type": "BUILDING_HOLOGRAPHIC_FLIGHT_SIMULATOR",
-     "scope": "city"
-    }
+    "BUILDING_HOLOGRAPHIC_FLIGHT_SIMULATOR"
    ]
   }
  },

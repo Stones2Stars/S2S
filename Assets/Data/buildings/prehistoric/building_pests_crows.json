@@ -23,10 +23,7 @@
       "max": 70
      }
     },
-    {
-     "type": "TECH_TRIBALISM",
-     "scope": "team"
-    }
+    "TECH_TRIBALISM"
    ],
    "any": [
     [
@@ -53,14 +50,8 @@
     ]
    ],
    "dormant": [
-    {
-     "type": "BUILDING_SCARECROWS",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_FARMSCRAPER_I",
-     "scope": "city"
-    }
+    "BUILDING_SCARECROWS",
+    "BUILDING_FARMSCRAPER_I"
    ]
   }
  },

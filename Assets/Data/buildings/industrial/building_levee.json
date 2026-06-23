@@ -14,10 +14,7 @@
   "build": {
    "all": [
     "HAS_RIVER",
-    {
-     "type": "TECH_STEAM_POWER",
-     "scope": "team"
-    }
+    "TECH_STEAM_POWER"
    ],
    "any": [
     [
@@ -30,10 +27,7 @@
   },
   "operate": {
    "dormant": [
-    {
-     "type": "BUILDING_RIVER_ADMINISTRATION",
-     "scope": "city"
-    }
+    "BUILDING_RIVER_ADMINISTRATION"
    ]
   }
  },

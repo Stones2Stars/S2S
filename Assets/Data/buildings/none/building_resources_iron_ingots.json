@@ -14,22 +14,10 @@
   "build": {
    "any": [
     [
-     {
-      "type": "BUILDING_ADVANCED_IRONWORKS",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_IRON_RECLAMATION_PLANT",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_NATIONAL_SMELTER_IRON",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_SMELTER_IRON",
-      "scope": "city"
-     }
+     "BUILDING_ADVANCED_IRONWORKS",
+     "BUILDING_IRON_RECLAMATION_PLANT",
+     "BUILDING_NATIONAL_SMELTER_IRON",
+     "BUILDING_SMELTER_IRON"
     ],
     [
      {
@@ -41,10 +29,7 @@
   },
   "operate": {
    "dormant": [
-    {
-     "type": "BUILDING_METALS_MEGACOMPLEX",
-     "scope": "city"
-    }
+    "BUILDING_METALS_MEGACOMPLEX"
    ]
   }
  },

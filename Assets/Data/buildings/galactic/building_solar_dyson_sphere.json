@@ -5,19 +5,13 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_DEEP_SPACE_BISHOP_RING",
-     "scope": "city"
-    },
+    "BUILDING_DEEP_SPACE_BISHOP_RING",
     {
      "type": "BUILDING_DEEP_SPACE_MCKENDREE_CYLINDER",
      "scope": "empire",
      "min": 3
     },
-    {
-     "type": "TECH_ASTROENGINEERING",
-     "scope": "team"
-    }
+    "TECH_ASTROENGINEERING"
    ],
    "any": [
     [
@@ -38,10 +32,7 @@
     1000,
     {
      "value": 12,
-     "enabled": {
-      "type": "TECH_ULTIMA_ARCHITECTURE",
-      "scope": "team"
-     }
+     "enabled": "TECH_ULTIMA_ARCHITECTURE"
     }
    ]
   }

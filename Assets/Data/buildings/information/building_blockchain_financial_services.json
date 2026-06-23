@@ -11,14 +11,8 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_BLOCKCHAIN_AUTHENTICATION",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_DIRECT_MERCHANDISING",
-     "scope": "team"
-    }
+    "BUILDING_BLOCKCHAIN_AUTHENTICATION",
+    "TECH_DIRECT_MERCHANDISING"
    ],
    "any": [
     [
@@ -36,10 +30,7 @@
     15,
     {
      "value": 9,
-     "enabled": {
-      "type": "TECH_MESH_NETWORKS",
-      "scope": "team"
-     }
+     "enabled": "TECH_MESH_NETWORKS"
     }
    ],
    "percent": 2

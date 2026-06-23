@@ -6,69 +6,24 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_SLAVE_COMPOUND",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_SLAVERY",
-     "scope": "team"
-    }
+    "BUILDING_SLAVE_COMPOUND",
+    "TECH_SLAVERY"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_STORYTELLER",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_SCHOOL_OF_SCRIBES",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_LIBRARY",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_DANCE_HUT",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_DANCE_HALL",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_MUSIC_HUT",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_MUSIC_SCHOOL",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_DRAMA_SCHOOL",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_ARENA",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_COLOSSEUM",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_MINOR_LEAGUE_STADIUM",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_NIGHT_CLUB",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_MAJOR_LEAGUE_STADIUM",
-      "scope": "city"
-     }
+     "BUILDING_STORYTELLER",
+     "BUILDING_SCHOOL_OF_SCRIBES",
+     "BUILDING_LIBRARY",
+     "BUILDING_DANCE_HUT",
+     "BUILDING_DANCE_HALL",
+     "BUILDING_MUSIC_HUT",
+     "BUILDING_MUSIC_SCHOOL",
+     "BUILDING_DRAMA_SCHOOL",
+     "BUILDING_ARENA",
+     "BUILDING_COLOSSEUM",
+     "BUILDING_MINOR_LEAGUE_STADIUM",
+     "BUILDING_NIGHT_CLUB",
+     "BUILDING_MAJOR_LEAGUE_STADIUM"
     ],
     [
      {
@@ -80,10 +35,7 @@
   },
   "operate": {
    "dormant": [
-    {
-     "type": "BUILDING_EFFECT_EMANCIPATION_PROCLAMATION",
-     "scope": "city"
-    }
+    "BUILDING_EFFECT_EMANCIPATION_PROCLAMATION"
    ]
   }
  },

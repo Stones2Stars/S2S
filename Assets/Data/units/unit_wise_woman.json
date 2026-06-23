@@ -5,17 +5,11 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_HERBALISM",
-     "scope": "team"
-    }
+    "TECH_HERBALISM"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_WILD_HERBS_GATHERER",
-      "scope": "city"
-     }
+     "BUILDING_WILD_HERBS_GATHERER"
     ]
    ]
   }

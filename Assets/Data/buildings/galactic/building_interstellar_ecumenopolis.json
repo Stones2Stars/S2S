@@ -15,21 +15,12 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_ASTROIMPERIALISM",
-     "scope": "team"
-    }
+    "TECH_ASTROIMPERIALISM"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_INTERSTELLAR_METROPOLIS",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_SPACE_COLONY_MILKY_WAY",
-      "scope": "city"
-     }
+     "BUILDING_INTERSTELLAR_METROPOLIS",
+     "BUILDING_SPACE_COLONY_MILKY_WAY"
     ],
     [
      {
@@ -59,10 +50,7 @@
    "flat": [
     {
      "value": 11,
-     "enabled": {
-      "type": "TECH_SPECIES_AMALGAMATION",
-      "scope": "team"
-     }
+     "enabled": "TECH_SPECIES_AMALGAMATION"
     }
    ]
   }

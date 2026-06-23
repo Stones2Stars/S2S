@@ -5,14 +5,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_CISLUNAR_FACTORY",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_SUPERSONIC_RAILS",
-     "scope": "team"
-    }
+    "BUILDING_CISLUNAR_FACTORY",
+    "TECH_SUPERSONIC_RAILS"
    ],
    "any": [
     [

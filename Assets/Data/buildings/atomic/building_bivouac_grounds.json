@@ -11,21 +11,12 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_LOGISTICS",
-     "scope": "team"
-    }
+    "TECH_LOGISTICS"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_AUTOMATED_FIRING_RANGE",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_ORBITAL_TARGETS",
-      "scope": "city"
-     }
+     "BUILDING_AUTOMATED_FIRING_RANGE",
+     "BUILDING_ORBITAL_TARGETS"
     ],
     [
      {

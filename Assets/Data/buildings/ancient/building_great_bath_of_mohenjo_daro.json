@@ -12,10 +12,7 @@
   "build": {
    "all": [
     "HAS_FRESHWATER",
-    {
-     "type": "TECH_POTTERY",
-     "scope": "team"
-    }
+    "TECH_POTTERY"
    ],
    "any": [
     [

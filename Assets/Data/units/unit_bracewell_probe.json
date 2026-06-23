@@ -5,14 +5,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_INTERSTELLAR_SELF_REPLICATING_FACTORY",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_ACNP_PROPULSION",
-     "scope": "team"
-    }
+    "BUILDING_INTERSTELLAR_SELF_REPLICATING_FACTORY",
+    "TECH_ACNP_PROPULSION"
    ]
   }
  },

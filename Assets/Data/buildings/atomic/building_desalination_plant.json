@@ -20,14 +20,8 @@
    "all": [
     "HAS_COAST",
     "HAS_FRESHWATER",
-    {
-     "type": "BUILDING_WATER_PIPES",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_INDUSTRIALISM",
-     "scope": "team"
-    }
+    "BUILDING_WATER_PIPES",
+    "TECH_INDUSTRIALISM"
    ],
    "any": [
     [
@@ -40,10 +34,7 @@
   },
   "operate": {
    "dormant": [
-    {
-     "type": "BUILDING_MATERIALS_CONGLOMERATE",
-     "scope": "city"
-    }
+    "BUILDING_MATERIALS_CONGLOMERATE"
    ]
   }
  },

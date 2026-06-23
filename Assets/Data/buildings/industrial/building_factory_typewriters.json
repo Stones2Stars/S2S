@@ -13,14 +13,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_MACHINE_TOOLS",
-     "scope": "team"
-    },
-    {
-     "type": "TECH_JOURNALISM",
-     "scope": "team"
-    },
+    "TECH_MACHINE_TOOLS",
+    "TECH_JOURNALISM",
     {
      "type": "BONUS_PARTS",
      "scope": "city",
@@ -39,18 +33,9 @@
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_FACTORY",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_TRADING_POST",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_SHOPPING_DISTRICT",
-      "scope": "city"
-     }
+     "BUILDING_FACTORY",
+     "BUILDING_TRADING_POST",
+     "BUILDING_SHOPPING_DISTRICT"
     ],
     [
      {
@@ -62,10 +47,7 @@
   },
   "operate": {
    "dormant": [
-    {
-     "type": "BUILDING_MANUFACTURING_DISTRICT",
-     "scope": "city"
-    }
+    "BUILDING_MANUFACTURING_DISTRICT"
    ]
   }
  },

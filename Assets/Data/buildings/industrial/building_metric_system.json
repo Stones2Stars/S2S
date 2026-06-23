@@ -5,10 +5,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_STATISTICS",
-     "scope": "team"
-    }
+    "TECH_STATISTICS"
    ],
    "any": [
     [
@@ -29,17 +26,11 @@
     15,
     {
      "value": 7,
-     "enabled": {
-      "type": "TECH_MODERN_PHYSICS",
-      "scope": "team"
-     }
+     "enabled": "TECH_MODERN_PHYSICS"
     },
     {
      "value": 6,
-     "enabled": {
-      "type": "TECH_ORGANIC_CHEMISTRY",
-      "scope": "team"
-     }
+     "enabled": "TECH_ORGANIC_CHEMISTRY"
     }
    ]
   }

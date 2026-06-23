@@ -5,10 +5,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_PALACE",
-     "scope": "city"
-    }
+    "BUILDING_PALACE"
    ],
    "any": [
     [
@@ -21,42 +18,15 @@
   },
   "operate": {
    "dormant": [
-    {
-     "type": "BUILDING_EDUCATION_ARGUMENTATIVE_AWARENESS_5",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_EDUCATION_ARGUMENTATIVE_AWARENESS_6",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_EDUCATION_ARGUMENTATIVE_AWARENESS_7",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_EDUCATION_ARGUMENTATIVE_AWARENESS_8",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_EDUCATION_ARGUMENTATIVE_AWARENESS_9",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_EDUCATION_ARGUMENTATIVE_AWARENESS_10",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_EDUCATION_ARGUMENTATIVE_AWARENESS_11",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_EDUCATION_ARGUMENTATIVE_AWARENESS_12",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_EDUCATION_ARGUMENTATIVE_AWARENESS_13",
-     "scope": "city"
-    }
+    "BUILDING_EDUCATION_ARGUMENTATIVE_AWARENESS_5",
+    "BUILDING_EDUCATION_ARGUMENTATIVE_AWARENESS_6",
+    "BUILDING_EDUCATION_ARGUMENTATIVE_AWARENESS_7",
+    "BUILDING_EDUCATION_ARGUMENTATIVE_AWARENESS_8",
+    "BUILDING_EDUCATION_ARGUMENTATIVE_AWARENESS_9",
+    "BUILDING_EDUCATION_ARGUMENTATIVE_AWARENESS_10",
+    "BUILDING_EDUCATION_ARGUMENTATIVE_AWARENESS_11",
+    "BUILDING_EDUCATION_ARGUMENTATIVE_AWARENESS_12",
+    "BUILDING_EDUCATION_ARGUMENTATIVE_AWARENESS_13"
    ],
    "all": [
     {

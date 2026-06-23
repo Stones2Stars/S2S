@@ -5,10 +5,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_LANGUAGE",
-     "scope": "team"
-    }
+    "TECH_LANGUAGE"
    ],
    "any": [
     [
@@ -43,10 +40,7 @@
     3,
     {
      "value": 10,
-     "enabled": {
-      "type": "TECH_TOURISM",
-      "scope": "team"
-     }
+     "enabled": "TECH_TOURISM"
     }
    ]
   }
@@ -57,10 +51,7 @@
     3,
     {
      "value": 5,
-     "enabled": {
-      "type": "TECH_MYSTICISM",
-      "scope": "team"
-     }
+     "enabled": "TECH_MYSTICISM"
     }
    ]
   }
@@ -96,10 +87,7 @@
   "city": {
    "flat": {
     "value": 5,
-    "enabled": {
-     "type": "TECH_EXPLORATION",
-     "scope": "team"
-    }
+    "enabled": "TECH_EXPLORATION"
    }
   }
  },

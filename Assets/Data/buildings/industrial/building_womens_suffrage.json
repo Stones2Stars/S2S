@@ -5,10 +5,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_WOMENS_SUFFRAGE",
-     "scope": "team"
-    }
+    "TECH_WOMENS_SUFFRAGE"
    ],
    "any": [
     [
@@ -22,14 +19,8 @@
   "operate": {
    "any": [
     [
-     {
-      "type": "CIVIC_DEMOCRACY",
-      "scope": "empire"
-     },
-     {
-      "type": "CIVIC_REPUBLIC",
-      "scope": "empire"
-     }
+     "CIVIC_DEMOCRACY",
+     "CIVIC_REPUBLIC"
     ]
    ]
   }

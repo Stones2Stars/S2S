@@ -5,14 +5,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_HERALDRY",
-     "scope": "team"
-    },
-    {
-     "type": "TECH_SMITHING",
-     "scope": "team"
-    }
+    "TECH_HERALDRY",
+    "TECH_SMITHING"
    ],
    "any": [
     [

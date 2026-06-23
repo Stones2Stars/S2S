@@ -22,25 +22,13 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_COMPUTER_NETWORK",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_FIBER_OPTICS",
-     "scope": "team"
-    }
+    "BUILDING_COMPUTER_NETWORK",
+    "TECH_FIBER_OPTICS"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_POLICE_STATION",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_POLICE_PRECINCT",
-      "scope": "city"
-     }
+     "BUILDING_POLICE_STATION",
+     "BUILDING_POLICE_PRECINCT"
     ],
     [
      {
@@ -59,10 +47,7 @@
     }
    ],
    "dormant": [
-    {
-     "type": "BUILDING_BIOMETRIC_SECURITY_SYSTEM",
-     "scope": "city"
-    }
+    "BUILDING_BIOMETRIC_SECURITY_SYSTEM"
    ]
   }
  },

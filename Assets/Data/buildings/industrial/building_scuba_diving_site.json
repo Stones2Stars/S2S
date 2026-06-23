@@ -14,10 +14,7 @@
   "build": {
    "all": [
     "HAS_COAST",
-    {
-     "type": "TECH_MARINE_BIOLOGY",
-     "scope": "team"
-    }
+    "TECH_MARINE_BIOLOGY"
    ],
    "any": [
     [
@@ -30,10 +27,7 @@
   },
   "operate": {
    "dormant": [
-    {
-     "type": "BUILDING_TOURISM_MEGACOMPLEX",
-     "scope": "city"
-    }
+    "BUILDING_TOURISM_MEGACOMPLEX"
    ]
   }
  },
@@ -43,10 +37,7 @@
     1,
     {
      "value": 1,
-     "enabled": {
-      "type": "TECH_TOURISM",
-      "scope": "team"
-     }
+     "enabled": "TECH_TOURISM"
     }
    ]
   }

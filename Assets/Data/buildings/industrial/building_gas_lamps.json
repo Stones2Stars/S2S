@@ -13,10 +13,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_GAS_LIGHTING",
-     "scope": "team"
-    }
+    "TECH_GAS_LIGHTING"
    ],
    "any": [
     [
@@ -43,14 +40,8 @@
     ]
    ],
    "dormant": [
-    {
-     "type": "BUILDING_ELECTRIC_LAMPS",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_OLED_LAMPS",
-     "scope": "city"
-    }
+    "BUILDING_ELECTRIC_LAMPS",
+    "BUILDING_OLED_LAMPS"
    ]
   }
  },

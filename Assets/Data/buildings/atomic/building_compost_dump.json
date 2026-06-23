@@ -5,10 +5,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_ECOLOGY",
-     "scope": "team"
-    }
+    "TECH_ECOLOGY"
    ],
    "any": [
     [
@@ -21,10 +18,7 @@
   },
   "operate": {
    "all": [
-    {
-     "type": "CIVIC_ORGANIC_FARMING",
-     "scope": "empire"
-    }
+    "CIVIC_ORGANIC_FARMING"
    ]
   }
  },

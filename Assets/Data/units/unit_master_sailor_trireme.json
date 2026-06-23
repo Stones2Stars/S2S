@@ -10,10 +10,7 @@
      "scope": "world",
      "min": 10
     },
-    {
-     "type": "TECH_SEAFARING",
-     "scope": "team"
-    }
+    "TECH_SEAFARING"
    ]
   }
  },

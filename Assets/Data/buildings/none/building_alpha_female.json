@@ -22,10 +22,7 @@
   "operate": {
    "any": [
     [
-     {
-      "type": "CIVIC_STRONGMAN",
-      "scope": "empire"
-     }
+     "CIVIC_STRONGMAN"
     ]
    ]
   }

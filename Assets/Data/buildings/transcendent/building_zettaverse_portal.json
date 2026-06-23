@@ -6,19 +6,13 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_INTERGALACTIC_TEMPORAL_RIFT",
-     "scope": "city"
-    },
+    "BUILDING_INTERGALACTIC_TEMPORAL_RIFT",
     {
      "type": "BUILDING_EXAVERSE_PORTAL",
      "scope": "empire",
      "min": 1
     },
-    {
-     "type": "TECH_MACROVERSE_TRAVERSAL",
-     "scope": "team"
-    }
+    "TECH_MACROVERSE_TRAVERSAL"
    ],
    "any": [
     [

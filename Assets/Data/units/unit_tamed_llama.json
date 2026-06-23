@@ -11,33 +11,15 @@
      "scope": "city",
      "connection": "trade|vicinity"
     },
-    {
-     "type": "BUILDING_ANIMAL_TRAINER_LLAMA",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_ANIMAL_TAMER_COMPLEX",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_SPECIALIZATION",
-     "scope": "team"
-    }
+    "BUILDING_ANIMAL_TRAINER_LLAMA",
+    "BUILDING_ANIMAL_TAMER_COMPLEX",
+    "TECH_SPECIALIZATION"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_STABLE",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_KNIGHTS_STABLE",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_MODERN_STABLE",
-      "scope": "city"
-     }
+     "BUILDING_STABLE",
+     "BUILDING_KNIGHTS_STABLE",
+     "BUILDING_MODERN_STABLE"
     ]
    ]
   }

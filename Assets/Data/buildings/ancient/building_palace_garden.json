@@ -13,21 +13,12 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_GARDENING",
-     "scope": "team"
-    }
+    "TECH_GARDENING"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_PALACE",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_FORBIDDEN_PALACE",
-      "scope": "city"
-     }
+     "BUILDING_PALACE",
+     "BUILDING_FORBIDDEN_PALACE"
     ],
     [
      {
@@ -39,10 +30,7 @@
   },
   "operate": {
    "dormant": [
-    {
-     "type": "BUILDING_IMPERIAL_FORTRESS",
-     "scope": "city"
-    }
+    "BUILDING_IMPERIAL_FORTRESS"
    ]
   }
  },

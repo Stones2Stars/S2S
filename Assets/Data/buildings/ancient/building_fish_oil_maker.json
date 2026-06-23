@@ -13,29 +13,14 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_OIL_LAMPS",
-     "scope": "team"
-    }
+    "TECH_OIL_LAMPS"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_BARTER_POST",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_TRADING_POST",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_SHOPPING_DISTRICT",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_FACTORY",
-      "scope": "city"
-     }
+     "BUILDING_BARTER_POST",
+     "BUILDING_TRADING_POST",
+     "BUILDING_SHOPPING_DISTRICT",
+     "BUILDING_FACTORY"
     ],
     [
      {
@@ -73,14 +58,8 @@
     ]
    ],
    "dormant": [
-    {
-     "type": "BUILDING_INDUSTRIAL_FARMS",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_MEAT_INDUSTRY_CONGLOMERATE",
-     "scope": "city"
-    }
+    "BUILDING_INDUSTRIAL_FARMS",
+    "BUILDING_MEAT_INDUSTRY_CONGLOMERATE"
    ]
   }
  },
@@ -95,10 +74,7 @@
     1,
     {
      "value": 6,
-     "enabled": {
-      "type": "TECH_MEDICINE",
-      "scope": "team"
-     }
+     "enabled": "TECH_MEDICINE"
     }
    ]
   }
@@ -108,10 +84,7 @@
    "flat": [
     {
      "value": 1,
-     "enabled": {
-      "type": "TECH_MEDICINE",
-      "scope": "team"
-     }
+     "enabled": "TECH_MEDICINE"
     }
    ]
   }

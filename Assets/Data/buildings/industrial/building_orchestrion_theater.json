@@ -18,18 +18,9 @@
      "scope": "city",
      "min": 7
     },
-    {
-     "type": "BUILDING_OPERA_HOUSE",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_REALISM",
-     "scope": "team"
-    },
-    {
-     "type": "TECH_CLOCKPUNK",
-     "scope": "team"
-    }
+    "BUILDING_OPERA_HOUSE",
+    "TECH_REALISM",
+    "TECH_CLOCKPUNK"
    ],
    "any": [
     [
@@ -49,10 +40,7 @@
     }
    ],
    "dormant": [
-    {
-     "type": "BUILDING_HIGH_TECH_CULTURAL_ENRICHMENT",
-     "scope": "city"
-    }
+    "BUILDING_HIGH_TECH_CULTURAL_ENRICHMENT"
    ]
   }
  },

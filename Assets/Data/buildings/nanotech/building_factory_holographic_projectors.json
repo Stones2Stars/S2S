@@ -14,14 +14,8 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_FACTORY",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_HOLOGRAPHICS",
-     "scope": "team"
-    },
+    "BUILDING_FACTORY",
+    "TECH_HOLOGRAPHICS",
     {
      "type": "BONUS_COMPUTERS",
      "scope": "city",
@@ -49,10 +43,7 @@
   },
   "operate": {
    "dormant": [
-    {
-     "type": "BUILDING_NANOTECH_COMPLEX",
-     "scope": "city"
-    }
+    "BUILDING_NANOTECH_COMPLEX"
    ]
   }
  },

@@ -14,14 +14,8 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_ARTIFICIAL_INTELLIGENCE_CORE",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_QUANTUM_COMPUTING",
-     "scope": "team"
-    }
+    "BUILDING_ARTIFICIAL_INTELLIGENCE_CORE",
+    "TECH_QUANTUM_COMPUTING"
    ],
    "any": [
     [
@@ -41,10 +35,7 @@
     }
    ],
    "dormant": [
-    {
-     "type": "BUILDING_QUANTUM_GRAVITY_SUPERCOMPUTER",
-     "scope": "city"
-    }
+    "BUILDING_QUANTUM_GRAVITY_SUPERCOMPUTER"
    ]
   }
  },

@@ -24,14 +24,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_DUNGEON",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_TORTURE",
-     "scope": "team"
-    }
+    "BUILDING_DUNGEON",
+    "TECH_TORTURE"
    ],
    "any": [
     [
@@ -44,10 +38,7 @@
   },
   "operate": {
    "dormant": [
-    {
-     "type": "BUILDING_JAIL",
-     "scope": "city"
-    }
+    "BUILDING_JAIL"
    ]
   }
  },

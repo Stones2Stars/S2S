@@ -13,17 +13,11 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_ALCHEMY",
-     "scope": "team"
-    }
+    "TECH_ALCHEMY"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_BAKERY",
-      "scope": "city"
-     }
+     "BUILDING_BAKERY"
     ],
     [
      {
@@ -56,14 +50,8 @@
     ]
    ],
    "dormant": [
-    {
-     "type": "BUILDING_FACTORY_MARZIPAN",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_FOOD_MANUFACTURING_DISTRICT",
-     "scope": "city"
-    }
+    "BUILDING_FACTORY_MARZIPAN",
+    "BUILDING_FOOD_MANUFACTURING_DISTRICT"
    ]
   }
  },

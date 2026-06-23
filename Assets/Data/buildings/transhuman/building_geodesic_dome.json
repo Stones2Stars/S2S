@@ -11,14 +11,8 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_MEGATOWER",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_SYNERGETICS",
-     "scope": "team"
-    }
+    "BUILDING_MEGATOWER",
+    "TECH_SYNERGETICS"
    ],
    "any": [
     [

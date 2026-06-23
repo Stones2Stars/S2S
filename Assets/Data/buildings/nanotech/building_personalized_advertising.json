@@ -6,18 +6,9 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_FACIAL_RECOGNITION_SOFTWARE",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_DIGITAL_ADVERTISING_FIRM",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_THOUGHT_SCANNING",
-     "scope": "team"
-    }
+    "BUILDING_FACIAL_RECOGNITION_SOFTWARE",
+    "BUILDING_DIGITAL_ADVERTISING_FIRM",
+    "TECH_THOUGHT_SCANNING"
    ],
    "any": [
     [

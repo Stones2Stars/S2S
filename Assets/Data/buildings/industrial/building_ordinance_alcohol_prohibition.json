@@ -10,10 +10,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_WOMENS_SUFFRAGE",
-     "scope": "team"
-    }
+    "TECH_WOMENS_SUFFRAGE"
    ],
    "any": [
     [

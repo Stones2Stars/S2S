@@ -10,14 +10,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_TITAN_BIOFACTORY",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_SPECULATIVE_PHYSIOLOGY",
-     "scope": "team"
-    }
+    "BUILDING_TITAN_BIOFACTORY",
+    "TECH_SPECULATIVE_PHYSIOLOGY"
    ],
    "any": [
     [

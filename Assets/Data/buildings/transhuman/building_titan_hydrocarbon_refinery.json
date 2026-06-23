@@ -12,14 +12,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_SPACE_COLONY_TITAN_BASE",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_ABYSS_COLONIZATION",
-     "scope": "team"
-    }
+    "BUILDING_SPACE_COLONY_TITAN_BASE",
+    "TECH_ABYSS_COLONIZATION"
    ],
    "any": [
     [

@@ -5,10 +5,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_ONLINE_COMMUNITY",
-     "scope": "team"
-    }
+    "TECH_ONLINE_COMMUNITY"
    ],
    "any": [
     [

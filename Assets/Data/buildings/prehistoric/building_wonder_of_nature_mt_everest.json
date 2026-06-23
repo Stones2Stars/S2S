@@ -5,10 +5,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_LANGUAGE",
-     "scope": "team"
-    }
+    "TECH_LANGUAGE"
    ],
    "any": [
     [
@@ -37,10 +34,7 @@
    "flat": [
     {
      "value": -5,
-     "enabled": {
-      "type": "TECH_SCIENTIFIC_METHOD",
-      "scope": "team"
-     }
+     "enabled": "TECH_SCIENTIFIC_METHOD"
     }
    ]
   }
@@ -51,17 +45,11 @@
     3,
     {
      "value": 5,
-     "enabled": {
-      "type": "TECH_MINING",
-      "scope": "team"
-     }
+     "enabled": "TECH_MINING"
     },
     {
      "value": -5,
-     "enabled": {
-      "type": "TECH_TOURISM",
-      "scope": "team"
-     }
+     "enabled": "TECH_TOURISM"
     }
    ]
   }
@@ -71,17 +59,11 @@
    "flat": [
     {
      "value": 10,
-     "enabled": {
-      "type": "TECH_TOURISM",
-      "scope": "team"
-     }
+     "enabled": "TECH_TOURISM"
     },
     {
      "value": 4,
-     "enabled": {
-      "type": "TECH_MOUNTAINEERING",
-      "scope": "team"
-     }
+     "enabled": "TECH_MOUNTAINEERING"
     }
    ]
   }
@@ -92,10 +74,7 @@
     5,
     {
      "value": 5,
-     "enabled": {
-      "type": "TECH_MYSTICISM",
-      "scope": "team"
-     }
+     "enabled": "TECH_MYSTICISM"
     }
    ]
   }
@@ -106,10 +85,7 @@
     3,
     {
      "value": 2,
-     "enabled": {
-      "type": "TECH_CULTURAL_IDENTITY",
-      "scope": "team"
-     }
+     "enabled": "TECH_CULTURAL_IDENTITY"
     }
    ]
   }
@@ -133,10 +109,7 @@
   "city": {
    "flat": {
     "value": 5,
-    "enabled": {
-     "type": "TECH_EXPLORATION",
-     "scope": "team"
-    }
+    "enabled": "TECH_EXPLORATION"
    }
   }
  },

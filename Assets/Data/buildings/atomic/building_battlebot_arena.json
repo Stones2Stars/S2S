@@ -13,10 +13,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_ROBOTICS",
-     "scope": "team"
-    }
+    "TECH_ROBOTICS"
    ],
    "any": [
     [
@@ -29,10 +26,7 @@
   },
   "operate": {
    "dormant": [
-    {
-     "type": "BUILDING_BATTLEMECH_ARENA",
-     "scope": "city"
-    }
+    "BUILDING_BATTLEMECH_ARENA"
    ]
   }
  },

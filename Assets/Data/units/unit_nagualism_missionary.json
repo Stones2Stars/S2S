@@ -5,14 +5,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_CALMACEC",
-     "scope": "city"
-    },
-    {
-     "type": "RELIGION_NAGHUALISM",
-     "scope": "city"
-    }
+    "BUILDING_CALMACEC",
+    "RELIGION_NAGHUALISM"
    ]
   }
  },

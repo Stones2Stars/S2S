@@ -13,14 +13,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_INTERGALACTIC_SUPERMASSIVE_BLACK_HOLE_PLANT",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_GALACTIC_ENGINEERING",
-     "scope": "team"
-    }
+    "BUILDING_INTERGALACTIC_SUPERMASSIVE_BLACK_HOLE_PLANT",
+    "TECH_GALACTIC_ENGINEERING"
    ],
    "any": [
     [

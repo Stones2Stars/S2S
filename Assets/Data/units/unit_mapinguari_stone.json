@@ -5,21 +5,12 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_SPEAR_MAKING",
-     "scope": "team"
-    }
+    "TECH_SPEAR_MAKING"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_MAPINGUARI_COMPOUND",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_MAPINGUARI_CHANGING_OF_THE_GUARD_CEREMONY",
-      "scope": "city"
-     }
+     "BUILDING_MAPINGUARI_COMPOUND",
+     "BUILDING_MAPINGUARI_CHANGING_OF_THE_GUARD_CEREMONY"
     ]
    ]
   }

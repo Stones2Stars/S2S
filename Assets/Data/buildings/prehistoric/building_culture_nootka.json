@@ -5,18 +5,9 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_C_AC_NORTH_AMERICAN",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_C_L_NORTH_AMERICAN",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_WOODWORKING",
-     "scope": "team"
-    }
+    "BUILDING_C_AC_NORTH_AMERICAN",
+    "BUILDING_C_L_NORTH_AMERICAN",
+    "TECH_WOODWORKING"
    ],
    "any": [
     [

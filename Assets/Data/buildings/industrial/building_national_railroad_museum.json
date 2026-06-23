@@ -10,14 +10,8 @@
      "scope": "city",
      "min": 13
     },
-    {
-     "type": "BUILDING_MUSEUM",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_RAILROAD",
-     "scope": "team"
-    }
+    "BUILDING_MUSEUM",
+    "TECH_RAILROAD"
    ],
    "any": [
     [
@@ -43,24 +37,15 @@
     1,
     {
      "value": 6,
-     "enabled": {
-      "type": "TECH_MASS_TRANSIT",
-      "scope": "team"
-     }
+     "enabled": "TECH_MASS_TRANSIT"
     },
     {
      "value": 8,
-     "enabled": {
-      "type": "TECH_MAGNETIC_LEVITATION",
-      "scope": "team"
-     }
+     "enabled": "TECH_MAGNETIC_LEVITATION"
     },
     {
      "value": 9,
-     "enabled": {
-      "type": "TECH_SUPERSONIC_RAILS",
-      "scope": "team"
-     }
+     "enabled": "TECH_SUPERSONIC_RAILS"
     }
    ]
   }

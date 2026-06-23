@@ -5,14 +5,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_SHIPWRIGHT",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_RUDDER",
-     "scope": "team"
-    }
+    "BUILDING_SHIPWRIGHT",
+    "TECH_RUDDER"
    ]
   }
  },

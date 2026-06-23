@@ -5,10 +5,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_HYPOTHETICAL_BIOCHEMISTRY",
-     "scope": "team"
-    }
+    "TECH_HYPOTHETICAL_BIOCHEMISTRY"
    ],
    "any": [
     [

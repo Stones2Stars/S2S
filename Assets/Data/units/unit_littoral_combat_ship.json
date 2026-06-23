@@ -15,10 +15,7 @@
      "scope": "world",
      "min": 10
     },
-    {
-     "type": "TECH_DISASTER_ROBOTS",
-     "scope": "team"
-    }
+    "TECH_DISASTER_ROBOTS"
    ],
    "any": [
     [

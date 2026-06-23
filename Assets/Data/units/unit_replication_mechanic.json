@@ -10,10 +10,7 @@
      "scope": "city",
      "connection": "trade|vicinity"
     },
-    {
-     "type": "TECH_3D_PRINTING",
-     "scope": "team"
-    },
+    "TECH_3D_PRINTING",
     {
      "type": "BONUS_HELICOPTERS",
      "scope": "city",
@@ -39,30 +36,12 @@
      }
     ],
     [
-     {
-      "type": "BUILDING_3D_PRINTING_MILL",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_NANOBOTIC_PRINTING_MILL",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_MOLECULAR_ASSEMBLER",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_ATOMIC_ASSEMBLER",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_QUANTUM_ASSEMBLER",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_MATERIALIZER",
-      "scope": "city"
-     }
+     "BUILDING_3D_PRINTING_MILL",
+     "BUILDING_NANOBOTIC_PRINTING_MILL",
+     "BUILDING_MOLECULAR_ASSEMBLER",
+     "BUILDING_ATOMIC_ASSEMBLER",
+     "BUILDING_QUANTUM_ASSEMBLER",
+     "BUILDING_MATERIALIZER"
     ]
    ]
   }

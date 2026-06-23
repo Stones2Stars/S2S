@@ -11,10 +11,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_DATA_ARCHIVAL",
-     "scope": "team"
-    }
+    "TECH_DATA_ARCHIVAL"
    ],
    "any": [
     [

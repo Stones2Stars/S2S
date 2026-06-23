@@ -11,14 +11,8 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_CLOUD_SERVER",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_ONLINE_COMMUNITY",
-     "scope": "team"
-    }
+    "BUILDING_CLOUD_SERVER",
+    "TECH_ONLINE_COMMUNITY"
    ],
    "any": [
     [

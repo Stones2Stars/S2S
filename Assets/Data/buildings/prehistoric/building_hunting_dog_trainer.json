@@ -5,33 +5,15 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_CANINE_DOMESTICATION",
-     "scope": "team"
-    }
+    "TECH_CANINE_DOMESTICATION"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_HUNTERS_CAMP",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_FURRIER",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_ANCIENT_CUSTOMS",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_INDUSTRIAL_FARMS",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_MEAT_INDUSTRY_CONGLOMERATE",
-      "scope": "city"
-     }
+     "BUILDING_HUNTERS_CAMP",
+     "BUILDING_FURRIER",
+     "BUILDING_ANCIENT_CUSTOMS",
+     "BUILDING_INDUSTRIAL_FARMS",
+     "BUILDING_MEAT_INDUSTRY_CONGLOMERATE"
     ],
     [
      {

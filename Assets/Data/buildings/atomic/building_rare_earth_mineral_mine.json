@@ -13,14 +13,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_MODERN_EARTHWORKS",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_MODERN_SEISMOLOGY",
-     "scope": "team"
-    }
+    "BUILDING_MODERN_EARTHWORKS",
+    "TECH_MODERN_SEISMOLOGY"
    ],
    "any": [
     [
@@ -51,10 +45,7 @@
   },
   "operate": {
    "dormant": [
-    {
-     "type": "BUILDING_CORE_MINE",
-     "scope": "city"
-    }
+    "BUILDING_CORE_MINE"
    ]
   }
  },

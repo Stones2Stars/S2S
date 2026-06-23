@@ -43,10 +43,7 @@
   "build": {
    "all": [
     "HAS_FRESHWATER",
-    {
-     "type": "TECH_PLUMBING",
-     "scope": "team"
-    }
+    "TECH_PLUMBING"
    ],
    "any": [
     [

@@ -18,10 +18,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_PSYCHOLOGY",
-     "scope": "team"
-    }
+    "TECH_PSYCHOLOGY"
    ],
    "any": [
     [
@@ -55,10 +52,7 @@
     ]
    ],
    "dormant": [
-    {
-     "type": "BUILDING_HEALTHCARE_MEGACOMPLEX",
-     "scope": "city"
-    }
+    "BUILDING_HEALTHCARE_MEGACOMPLEX"
    ]
   }
  },
@@ -78,10 +72,7 @@
     1,
     {
      "value": 1,
-     "enabled": {
-      "type": "TECH_MODERN_HEALTH_CARE",
-      "scope": "team"
-     }
+     "enabled": "TECH_MODERN_HEALTH_CARE"
     },
     {
      "value": 1,

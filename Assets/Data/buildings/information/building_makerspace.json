@@ -6,14 +6,8 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_ROBOTICS_LAB",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_3D_PRINTING",
-     "scope": "team"
-    }
+    "BUILDING_ROBOTICS_LAB",
+    "TECH_3D_PRINTING"
    ],
    "any": [
     [
@@ -31,10 +25,7 @@
     5,
     {
      "value": 8,
-     "enabled": {
-      "type": "TECH_RAPID_PROTOTYPING",
-      "scope": "team"
-     }
+     "enabled": "TECH_RAPID_PROTOTYPING"
     }
    ]
   }
@@ -45,17 +36,11 @@
     5,
     {
      "value": 9,
-     "enabled": {
-      "type": "TECH_MESH_NETWORKS",
-      "scope": "team"
-     }
+     "enabled": "TECH_MESH_NETWORKS"
     },
     {
      "value": 8,
-     "enabled": {
-      "type": "TECH_DIRECT_MERCHANDISING",
-      "scope": "team"
-     }
+     "enabled": "TECH_DIRECT_MERCHANDISING"
     },
     {
      "value": 1,

@@ -20,25 +20,13 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_FACTORY",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_REFRIGERATION",
-     "scope": "team"
-    }
+    "BUILDING_FACTORY",
+    "TECH_REFRIGERATION"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_SLAUGHTERHOUSE",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_INDUSTRIAL_FARMS",
-      "scope": "city"
-     }
+     "BUILDING_SLAUGHTERHOUSE",
+     "BUILDING_INDUSTRIAL_FARMS"
     ],
     [
      {
@@ -50,10 +38,7 @@
   },
   "operate": {
    "dormant": [
-    {
-     "type": "BUILDING_MEAT_INDUSTRY_CONGLOMERATE",
-     "scope": "city"
-    }
+    "BUILDING_MEAT_INDUSTRY_CONGLOMERATE"
    ]
   }
  },

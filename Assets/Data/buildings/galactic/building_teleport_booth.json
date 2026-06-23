@@ -25,10 +25,7 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "TECH_TELEPORTATION",
-     "scope": "team"
-    }
+    "TECH_TELEPORTATION"
    ],
    "any": [
     [

@@ -10,33 +10,15 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_WARFARE",
-     "scope": "team"
-    }
+    "TECH_WARFARE"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_STORAGE_PIT",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_GRANARY",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_MODERN_GRANARY",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_WAREHOUSE",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_MODERN_WAREHOUSE",
-      "scope": "city"
-     }
+     "BUILDING_STORAGE_PIT",
+     "BUILDING_GRANARY",
+     "BUILDING_MODERN_GRANARY",
+     "BUILDING_WAREHOUSE",
+     "BUILDING_MODERN_WAREHOUSE"
     ],
     [
      {

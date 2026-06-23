@@ -20,21 +20,12 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_AUTOMATED_TRAFFIC",
-     "scope": "team"
-    }
+    "TECH_AUTOMATED_TRAFFIC"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_HIGHWAY",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_SKYROAD_CONTROL_TOWER",
-      "scope": "city"
-     }
+     "BUILDING_HIGHWAY",
+     "BUILDING_SKYROAD_CONTROL_TOWER"
     ],
     [
      {
@@ -46,10 +37,7 @@
   },
   "operate": {
    "dormant": [
-    {
-     "type": "BUILDING_TELEPORT_BOOTH",
-     "scope": "city"
-    }
+    "BUILDING_TELEPORT_BOOTH"
    ]
   }
  },
@@ -63,10 +51,7 @@
    "flat": [
     {
      "value": 9,
-     "enabled": {
-      "type": "TECH_AUTOMATED_URBANIZATION",
-      "scope": "team"
-     }
+     "enabled": "TECH_AUTOMATED_URBANIZATION"
     }
    ]
   }

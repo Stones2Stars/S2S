@@ -5,14 +5,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_SHINTO_MONASTERY",
-     "scope": "city"
-    },
-    {
-     "type": "RELIGION_SHINTO",
-     "scope": "city"
-    }
+    "BUILDING_SHINTO_MONASTERY",
+    "RELIGION_SHINTO"
    ]
   }
  },

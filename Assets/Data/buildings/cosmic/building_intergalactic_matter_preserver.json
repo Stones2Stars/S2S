@@ -10,14 +10,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_INTERGALACTIC_MECHANOSYNTHESIS_FACTORIES",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_OMEGA_MINUS_ENGINEERING",
-     "scope": "team"
-    }
+    "BUILDING_INTERGALACTIC_MECHANOSYNTHESIS_FACTORIES",
+    "TECH_OMEGA_MINUS_ENGINEERING"
    ],
    "any": [
     [

@@ -31,10 +31,7 @@
   },
   "operate": {
    "all": [
-    {
-     "type": "RELIGION_TAOISM",
-     "scope": "city"
-    }
+    "RELIGION_TAOISM"
    ],
    "any": [
     [

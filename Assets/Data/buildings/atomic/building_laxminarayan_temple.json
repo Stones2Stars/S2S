@@ -10,21 +10,12 @@
      "scope": "city",
      "min": 3
     },
-    {
-     "type": "TECH_INDUSTRIALISM",
-     "scope": "team"
-    }
+    "TECH_INDUSTRIALISM"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_HINDU_TEMPLE",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_BUDDHIST_TEMPLE",
-      "scope": "city"
-     }
+     "BUILDING_HINDU_TEMPLE",
+     "BUILDING_BUDDHIST_TEMPLE"
     ],
     [
      {

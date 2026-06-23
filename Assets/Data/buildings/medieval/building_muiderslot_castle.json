@@ -15,25 +15,13 @@
      "scope": "city",
      "min": 3
     },
-    {
-     "type": "TECH_ENGINEERING",
-     "scope": "team"
-    }
+    "TECH_ENGINEERING"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_CASTLE",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_STAR_FORT",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_IMPERIAL_FORTRESS",
-      "scope": "city"
-     }
+     "BUILDING_CASTLE",
+     "BUILDING_STAR_FORT",
+     "BUILDING_IMPERIAL_FORTRESS"
     ],
     [
      {

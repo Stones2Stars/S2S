@@ -6,26 +6,11 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_PROGRAMMABLE_PLANT_FARM",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_ANIMA_CHAMBER",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_PARK_ARCOLOGY",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_ARTIFICIAL_LIFE",
-     "scope": "team"
-    },
-    {
-     "type": "TECH_ORGANIC_CITIES",
-     "scope": "team"
-    }
+    "BUILDING_PROGRAMMABLE_PLANT_FARM",
+    "BUILDING_ANIMA_CHAMBER",
+    "BUILDING_PARK_ARCOLOGY",
+    "TECH_ARTIFICIAL_LIFE",
+    "TECH_ORGANIC_CITIES"
    ],
    "any": [
     [
@@ -43,10 +28,7 @@
      "scope": "city",
      "connection": "trade|vicinity"
     },
-    {
-     "type": "CIVIC_ECO_FRIENDLY",
-     "scope": "empire"
-    }
+    "CIVIC_ECO_FRIENDLY"
    ]
   }
  },

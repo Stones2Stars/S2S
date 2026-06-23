@@ -18,14 +18,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_MINE_COPPER",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_COPPER_WORKING",
-     "scope": "team"
-    }
+    "BUILDING_MINE_COPPER",
+    "TECH_COPPER_WORKING"
    ],
    "any": [
     [
@@ -45,14 +39,8 @@
     }
    ],
    "dormant": [
-    {
-     "type": "BUILDING_ADVANCED_COPPERWORKS",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_METALS_MEGACOMPLEX",
-     "scope": "city"
-    }
+    "BUILDING_ADVANCED_COPPERWORKS",
+    "BUILDING_METALS_MEGACOMPLEX"
    ]
   }
  },

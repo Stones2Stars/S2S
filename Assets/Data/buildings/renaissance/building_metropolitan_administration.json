@@ -44,14 +44,8 @@
      "scope": "city",
      "min": 30
     },
-    {
-     "type": "TECH_SOCIAL_CONTRACT",
-     "scope": "team"
-    },
-    {
-     "type": "CULTURELEVEL_INFLUENTIAL",
-     "scope": "city"
-    }
+    "TECH_SOCIAL_CONTRACT",
+    "CULTURELEVEL_INFLUENTIAL"
    ],
    "any": [
     [

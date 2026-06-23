@@ -6,18 +6,9 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_MARTIAN_CITY",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_BINARY_LEGISLATION",
-     "scope": "team"
-    },
-    {
-     "type": "CULTURELEVEL_ELEGANT",
-     "scope": "city"
-    }
+    "BUILDING_MARTIAN_CITY",
+    "TECH_BINARY_LEGISLATION",
+    "CULTURELEVEL_ELEGANT"
    ],
    "any": [
     [

@@ -10,10 +10,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_CEREMONIAL_BURIAL",
-     "scope": "team"
-    }
+    "TECH_CEREMONIAL_BURIAL"
    ],
    "any": [
     [
@@ -23,10 +20,7 @@
      }
     ],
     [
-     {
-      "type": "HERITAGE_FOLKLORE_MAMMOTH",
-      "scope": "empire"
-     }
+     "HERITAGE_FOLKLORE_MAMMOTH"
     ]
    ]
   },
@@ -57,10 +51,7 @@
    "flat": [
     {
      "value": 1,
-     "enabled": {
-      "type": "TECH_MYSTICISM",
-      "scope": "team"
-     }
+     "enabled": "TECH_MYSTICISM"
     }
    ]
   }

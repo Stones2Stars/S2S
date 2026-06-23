@@ -11,14 +11,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_TRANSTELLAR_ARTIFICIAL_ROCKY_PLANET",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_ARTIFICIAL_PLANETS",
-     "scope": "team"
-    }
+    "BUILDING_TRANSTELLAR_ARTIFICIAL_ROCKY_PLANET",
+    "TECH_ARTIFICIAL_PLANETS"
    ],
    "any": [
     [

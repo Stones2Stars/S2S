@@ -10,14 +10,8 @@
      "scope": "city",
      "connection": "trade|vicinity"
     },
-    {
-     "type": "BUILDING_ANIMAL_TRAINER_HORSE",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_CAVALRY_TACTICS",
-     "scope": "team"
-    },
+    "BUILDING_ANIMAL_TRAINER_HORSE",
+    "TECH_CAVALRY_TACTICS",
     {
      "type": "BONUS_HORSE",
      "scope": "city",

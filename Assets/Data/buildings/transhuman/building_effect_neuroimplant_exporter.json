@@ -10,10 +10,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_COMPREHENSIVE_CYBERNETICS",
-     "scope": "team"
-    }
+    "TECH_COMPREHENSIVE_CYBERNETICS"
    ],
    "any": [
     [

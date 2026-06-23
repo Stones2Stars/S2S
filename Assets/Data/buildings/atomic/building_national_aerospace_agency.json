@@ -10,21 +10,12 @@
      "scope": "city",
      "min": 7
     },
-    {
-     "type": "TECH_ADVANCED_ROCKETRY",
-     "scope": "team"
-    }
+    "TECH_ADVANCED_ROCKETRY"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_MILITARY_AIRBASE",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_AEROSPACE_COMPLEX",
-      "scope": "city"
-     }
+     "BUILDING_MILITARY_AIRBASE",
+     "BUILDING_AEROSPACE_COMPLEX"
     ],
     [
      {

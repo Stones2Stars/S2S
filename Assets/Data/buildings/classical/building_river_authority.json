@@ -14,18 +14,9 @@
   "build": {
    "all": [
     "HAS_RIVER",
-    {
-     "type": "BUILDING_COURTHOUSE",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_CODE_OF_LAWS",
-     "scope": "team"
-    },
-    {
-     "type": "TECH_CURRENCY",
-     "scope": "team"
-    }
+    "BUILDING_COURTHOUSE",
+    "TECH_CODE_OF_LAWS",
+    "TECH_CURRENCY"
    ],
    "any": [
     [
@@ -38,18 +29,9 @@
   },
   "operate": {
    "dormant": [
-    {
-     "type": "BUILDING_STEAMBOAT_PORT",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_FERRY_TERMINAL",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_RIVER_ADMINISTRATION",
-     "scope": "city"
-    }
+    "BUILDING_STEAMBOAT_PORT",
+    "BUILDING_FERRY_TERMINAL",
+    "BUILDING_RIVER_ADMINISTRATION"
    ]
   }
  },

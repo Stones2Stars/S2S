@@ -13,14 +13,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_MANUFACTURING_PLANT",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_SEMICONDUCTORS",
-     "scope": "team"
-    }
+    "BUILDING_MANUFACTURING_PLANT",
+    "TECH_SEMICONDUCTORS"
    ],
    "any": [
     [
@@ -49,10 +43,7 @@
     ]
    ],
    "dormant": [
-    {
-     "type": "BUILDING_ELECTRONICS_MANUFACTURING_DISTRICT",
-     "scope": "city"
-    }
+    "BUILDING_ELECTRONICS_MANUFACTURING_DISTRICT"
    ]
   }
  },

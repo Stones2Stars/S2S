@@ -14,14 +14,8 @@
   "build": {
    "any": [
     [
-     {
-      "type": "BUILDING_CHEMICAL_PLANT",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_CHEMISTRY_LAB",
-      "scope": "city"
-     }
+     "BUILDING_CHEMICAL_PLANT",
+     "BUILDING_CHEMISTRY_LAB"
     ],
     [
      {
@@ -33,10 +27,7 @@
   },
   "operate": {
    "dormant": [
-    {
-     "type": "BUILDING_CHEMICALS_DISTRICT",
-     "scope": "city"
-    }
+    "BUILDING_CHEMICALS_DISTRICT"
    ]
   }
  },

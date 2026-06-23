@@ -14,14 +14,8 @@
   "build": {
    "all": [
     "HAS_FRESHWATER",
-    {
-     "type": "BUILDING_WATER_TOWER",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_REPLACEABLE_PARTS",
-     "scope": "team"
-    }
+    "BUILDING_WATER_TOWER",
+    "TECH_REPLACEABLE_PARTS"
    ],
    "any": [
     [
@@ -58,10 +52,7 @@
     ]
    ],
    "dormant": [
-    {
-     "type": "BUILDING_WATER_PUMPING_STATION",
-     "scope": "city"
-    }
+    "BUILDING_WATER_PUMPING_STATION"
    ]
   }
  },

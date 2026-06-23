@@ -6,19 +6,13 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_DEEP_SPACE_COLD_FUSION",
-     "scope": "city"
-    },
+    "BUILDING_DEEP_SPACE_COLD_FUSION",
     {
      "type": "BUILDING_MEGAVERSE_PORTAL",
      "scope": "empire",
      "min": 1
     },
-    {
-     "type": "TECH_MACROVERSE_TRAVERSAL",
-     "scope": "team"
-    }
+    "TECH_MACROVERSE_TRAVERSAL"
    ],
    "any": [
     [

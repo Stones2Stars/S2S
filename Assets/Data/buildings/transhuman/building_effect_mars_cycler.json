@@ -14,10 +14,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_PLANETARY_TRADE",
-     "scope": "team"
-    }
+    "TECH_PLANETARY_TRADE"
    ],
    "any": [
     [

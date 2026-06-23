@@ -5,19 +5,13 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_DEEP_SPACE_MCKENDREE_CYLINDER",
-     "scope": "city"
-    },
+    "BUILDING_DEEP_SPACE_MCKENDREE_CYLINDER",
     {
      "type": "BUILDING_SOLAR_DYSON_SPHERE",
      "scope": "empire",
      "min": 1
     },
-    {
-     "type": "TECH_STELLAR_COMPUTING",
-     "scope": "team"
-    }
+    "TECH_STELLAR_COMPUTING"
    ],
    "any": [
     [

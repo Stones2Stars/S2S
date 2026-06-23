@@ -10,37 +10,16 @@
      "scope": "city",
      "min": 3
     },
-    {
-     "type": "BUILDING_FOLKLORE_E_EARTH",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_CELEBRATION",
-     "scope": "team"
-    }
+    "BUILDING_FOLKLORE_E_EARTH",
+    "TECH_CELEBRATION"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_NATURE_DANCE",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_STONE_QUARRY",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_MINE_IRON",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_METALS_MEGACOMPLEX",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_MODERN_EARTHWORKS",
-      "scope": "city"
-     }
+     "BUILDING_NATURE_DANCE",
+     "BUILDING_STONE_QUARRY",
+     "BUILDING_MINE_IRON",
+     "BUILDING_METALS_MEGACOMPLEX",
+     "BUILDING_MODERN_EARTHWORKS"
     ],
     [
      {
@@ -88,18 +67,9 @@
     ]
    ],
    "noneOf": [
-    {
-     "type": "BUILDING_GRAND_SKY_FESTIVAL",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_GRAND_FIRE_FESTIVAL",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_GRAND_MARINE_FESTIVAL",
-     "scope": "city"
-    }
+    "BUILDING_GRAND_SKY_FESTIVAL",
+    "BUILDING_GRAND_FIRE_FESTIVAL",
+    "BUILDING_GRAND_MARINE_FESTIVAL"
    ]
   },
   "operate": {
@@ -227,45 +197,27 @@
     4,
     {
      "value": 2,
-     "enabled": {
-      "type": "TECH_MINING",
-      "scope": "team"
-     }
+     "enabled": "TECH_MINING"
     },
     {
      "value": 3,
-     "enabled": {
-      "type": "TECH_CONSTRUCTION",
-      "scope": "team"
-     }
+     "enabled": "TECH_CONSTRUCTION"
     },
     {
      "value": 2,
-     "enabled": {
-      "type": "TECH_FOLK_DANCE",
-      "scope": "team"
-     }
+     "enabled": "TECH_FOLK_DANCE"
     },
     {
      "value": 2,
-     "enabled": {
-      "type": "TECH_FOLK_MUSIC",
-      "scope": "team"
-     }
+     "enabled": "TECH_FOLK_MUSIC"
     },
     {
      "value": 3,
-     "enabled": {
-      "type": "TECH_MUSICAL_NOTATION",
-      "scope": "team"
-     }
+     "enabled": "TECH_MUSICAL_NOTATION"
     },
     {
      "value": 5,
-     "enabled": {
-      "type": "TECH_METALLURGY",
-      "scope": "team"
-     }
+     "enabled": "TECH_METALLURGY"
     }
    ]
   }
@@ -283,10 +235,7 @@
     3,
     {
      "value": 1,
-     "enabled": {
-      "type": "TECH_GEOLOGY",
-      "scope": "team"
-     }
+     "enabled": "TECH_GEOLOGY"
     }
    ]
   },

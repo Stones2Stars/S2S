@@ -15,10 +15,7 @@
      "scope": "empire",
      "min": 2
     },
-    {
-     "type": "TECH_EXTREME_SPORTS",
-     "scope": "team"
-    }
+    "TECH_EXTREME_SPORTS"
    ],
    "any": [
     [

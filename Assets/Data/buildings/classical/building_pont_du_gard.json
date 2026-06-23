@@ -15,10 +15,7 @@
      "scope": "empire",
      "min": 4
     },
-    {
-     "type": "TECH_CANAL_SYSTEMS",
-     "scope": "team"
-    }
+    "TECH_CANAL_SYSTEMS"
    ],
    "any": [
     [

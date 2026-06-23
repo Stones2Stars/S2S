@@ -11,14 +11,8 @@
      "scope": "city",
      "min": 3
     },
-    {
-     "type": "BUILDING_CUSTOMS_OFFICE",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_ECONOMICS",
-     "scope": "team"
-    }
+    "BUILDING_CUSTOMS_OFFICE",
+    "TECH_ECONOMICS"
    ],
    "any": [
     [

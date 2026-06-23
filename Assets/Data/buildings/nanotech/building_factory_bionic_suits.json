@@ -14,18 +14,9 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_FACTORY",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_EVOLUTIONARY_ALGORITHMS",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_BIONICS",
-     "scope": "team"
-    }
+    "BUILDING_FACTORY",
+    "BUILDING_EVOLUTIONARY_ALGORITHMS",
+    "TECH_BIONICS"
    ],
    "any": [
     [
@@ -54,10 +45,7 @@
     ]
    ],
    "dormant": [
-    {
-     "type": "BUILDING_NANOTECH_COMPLEX",
-     "scope": "city"
-    }
+    "BUILDING_NANOTECH_COMPLEX"
    ]
   }
  },

@@ -6,21 +6,12 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "TECH_TRANSHUMANISM",
-     "scope": "team"
-    }
+    "TECH_TRANSHUMANISM"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_RESURRECTION_HUB",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_NANOMORPHIC_REPLICATOR",
-      "scope": "city"
-     }
+     "BUILDING_RESURRECTION_HUB",
+     "BUILDING_NANOMORPHIC_REPLICATOR"
     ],
     [
      {

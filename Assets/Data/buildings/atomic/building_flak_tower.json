@@ -10,14 +10,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_AUTOMATIC_WEAPONS",
-     "scope": "team"
-    },
-    {
-     "type": "TECH_FLIGHT",
-     "scope": "team"
-    }
+    "TECH_AUTOMATIC_WEAPONS",
+    "TECH_FLIGHT"
    ],
    "any": [
     [

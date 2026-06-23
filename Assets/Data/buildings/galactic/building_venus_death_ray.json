@@ -5,14 +5,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_VENUS_FUSION_PLANT",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_WEAPONIZED_DISINTEGRATION",
-     "scope": "team"
-    }
+    "BUILDING_VENUS_FUSION_PLANT",
+    "TECH_WEAPONIZED_DISINTEGRATION"
    ],
    "any": [
     [

@@ -16,10 +16,7 @@
      "scope": "empire",
      "min": 5
     },
-    {
-     "type": "TECH_BANKING",
-     "scope": "team"
-    }
+    "TECH_BANKING"
    ],
    "any": [
     [
@@ -33,18 +30,9 @@
   "operate": {
    "any": [
     [
-     {
-      "type": "CIVIC_COINAGE",
-      "scope": "empire"
-     },
-     {
-      "type": "CIVIC_FREE_MARKET",
-      "scope": "empire"
-     },
-     {
-      "type": "CIVIC_MERCANTILISM",
-      "scope": "empire"
-     }
+     "CIVIC_COINAGE",
+     "CIVIC_FREE_MARKET",
+     "CIVIC_MERCANTILISM"
     ]
    ]
   }

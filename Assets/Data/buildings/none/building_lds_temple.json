@@ -5,10 +5,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_MUSICAL_NOTATION",
-     "scope": "team"
-    }
+    "TECH_MUSICAL_NOTATION"
    ],
    "any": [
     [
@@ -21,10 +18,7 @@
   },
   "operate": {
    "all": [
-    {
-     "type": "RELIGION_MORMON",
-     "scope": "city"
-    }
+    "RELIGION_MORMON"
    ]
   }
  },

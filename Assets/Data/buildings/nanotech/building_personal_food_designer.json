@@ -6,14 +6,8 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_FOOD_MANUFACTURING_DISTRICT",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_DESIGNER_MICROBIOLOGY",
-     "scope": "team"
-    }
+    "BUILDING_FOOD_MANUFACTURING_DISTRICT",
+    "TECH_DESIGNER_MICROBIOLOGY"
    ],
    "any": [
     [

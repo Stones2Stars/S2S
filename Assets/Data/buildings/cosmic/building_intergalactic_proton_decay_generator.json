@@ -5,14 +5,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_INTERGALACTIC_MECHANOSYNTHESIS_FACTORIES",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_ELECTROWEAK_MATTER",
-     "scope": "team"
-    }
+    "BUILDING_INTERGALACTIC_MECHANOSYNTHESIS_FACTORIES",
+    "TECH_ELECTROWEAK_MATTER"
    ],
    "any": [
     [

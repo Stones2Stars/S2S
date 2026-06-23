@@ -10,14 +10,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_C_L_NEANDERTHAL",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_CAVE_DWELLING",
-     "scope": "team"
-    }
+    "BUILDING_C_L_NEANDERTHAL",
+    "TECH_CAVE_DWELLING"
    ],
    "any": [
     [
@@ -47,10 +41,7 @@
     1,
     {
      "value": 1,
-     "enabled": {
-      "type": "TECH_PETROGLYPHS",
-      "scope": "team"
-     }
+     "enabled": "TECH_PETROGLYPHS"
     }
    ]
   }

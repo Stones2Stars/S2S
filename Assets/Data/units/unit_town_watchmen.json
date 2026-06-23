@@ -5,41 +5,17 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_DUALISM",
-     "scope": "team"
-    }
+    "TECH_DUALISM"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_TOWN_WATCH",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_TOWN_PATROL",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_GUARDHOUSE",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_GUARD_STATION",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_SHERIFFS_OFFICE",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_POLICE_STATION",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_POLICE_PRECINCT",
-      "scope": "city"
-     }
+     "BUILDING_TOWN_WATCH",
+     "BUILDING_TOWN_PATROL",
+     "BUILDING_GUARDHOUSE",
+     "BUILDING_GUARD_STATION",
+     "BUILDING_SHERIFFS_OFFICE",
+     "BUILDING_POLICE_STATION",
+     "BUILDING_POLICE_PRECINCT"
     ]
    ]
   }

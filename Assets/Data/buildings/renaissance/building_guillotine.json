@@ -18,14 +18,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_COURTHOUSE",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_JURISPRUDENCE",
-     "scope": "team"
-    }
+    "BUILDING_COURTHOUSE",
+    "TECH_JURISPRUDENCE"
    ],
    "any": [
     [
@@ -64,14 +58,8 @@
     ]
    ],
    "dormant": [
-    {
-     "type": "BUILDING_ELECTRIC_CHAIR",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_LETHAL_INJECTION",
-     "scope": "city"
-    }
+    "BUILDING_ELECTRIC_CHAIR",
+    "BUILDING_LETHAL_INJECTION"
    ]
   }
  },

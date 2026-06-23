@@ -10,18 +10,9 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_CISLUNAR_ONEILL_CYLINDER",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_CISLUNAR_ION_CANNON",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_SINGULARITY_STABILIZATION",
-     "scope": "team"
-    }
+    "BUILDING_CISLUNAR_ONEILL_CYLINDER",
+    "BUILDING_CISLUNAR_ION_CANNON",
+    "TECH_SINGULARITY_STABILIZATION"
    ],
    "any": [
     [

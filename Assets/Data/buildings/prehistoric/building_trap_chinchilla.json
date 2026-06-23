@@ -18,21 +18,12 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_TRAPPING",
-     "scope": "team"
-    }
+    "TECH_TRAPPING"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_ANIMAL_SNARE_TRAPS",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_ANCIENT_CUSTOMS",
-      "scope": "city"
-     }
+     "BUILDING_ANIMAL_SNARE_TRAPS",
+     "BUILDING_ANCIENT_CUSTOMS"
     ],
     [
      {
@@ -66,14 +57,8 @@
     ]
    ],
    "dormant": [
-    {
-     "type": "BUILDING_BREEDING_PROGRAM_CHINCHILLA",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_ANIMAL_PRESERVE",
-     "scope": "city"
-    }
+    "BUILDING_BREEDING_PROGRAM_CHINCHILLA",
+    "BUILDING_ANIMAL_PRESERVE"
    ]
   }
  },
@@ -92,10 +77,7 @@
    "flat": [
     {
      "value": -1,
-     "enabled": {
-      "type": "TECH_ECOLOGY",
-      "scope": "team"
-     }
+     "enabled": "TECH_ECOLOGY"
     }
    ]
   }

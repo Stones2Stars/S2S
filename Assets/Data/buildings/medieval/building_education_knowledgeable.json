@@ -5,10 +5,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_MEDIEVAL_LIFESTYLE",
-     "scope": "team"
-    }
+    "TECH_MEDIEVAL_LIFESTYLE"
    ],
    "any": [
     [
@@ -21,42 +18,15 @@
   },
   "operate": {
    "dormant": [
-    {
-     "type": "BUILDING_EDUCATION_ACUMEN",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_EDUCATION_SCHOLARLY",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_EDUCATION_ENLIGHTENED",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_EDUCATION_COSMOPOLITAN",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_EDUCATION_WUNDERKIND",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_EDUCATION_MASTERMIND",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_EDUCATION_GENIUS",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_EDUCATION_WISE",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_EDUCATION_OMNISCIENCE",
-     "scope": "city"
-    }
+    "BUILDING_EDUCATION_ACUMEN",
+    "BUILDING_EDUCATION_SCHOLARLY",
+    "BUILDING_EDUCATION_ENLIGHTENED",
+    "BUILDING_EDUCATION_COSMOPOLITAN",
+    "BUILDING_EDUCATION_WUNDERKIND",
+    "BUILDING_EDUCATION_MASTERMIND",
+    "BUILDING_EDUCATION_GENIUS",
+    "BUILDING_EDUCATION_WISE",
+    "BUILDING_EDUCATION_OMNISCIENCE"
    ],
    "all": [
     {

@@ -10,18 +10,9 @@
      "scope": "city",
      "connection": "trade|vicinity"
     },
-    {
-     "type": "TECH_HUMAN_TRANSMUTATION",
-     "scope": "team"
-    },
-    {
-     "type": "TECH_ANTI_GRAVITY_FIELDS",
-     "scope": "team"
-    },
-    {
-     "type": "TECH_ANIMAMATERIALS",
-     "scope": "team"
-    },
+    "TECH_HUMAN_TRANSMUTATION",
+    "TECH_ANTI_GRAVITY_FIELDS",
+    "TECH_ANIMAMATERIALS",
     {
      "type": "BONUS_NANOACTUATORS",
      "scope": "city",

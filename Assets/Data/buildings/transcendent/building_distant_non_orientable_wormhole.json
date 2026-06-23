@@ -10,14 +10,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_DISTANT_BRANE_COLLISION",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_MANIFOLD_COLONIZATION",
-     "scope": "team"
-    }
+    "BUILDING_DISTANT_BRANE_COLLISION",
+    "TECH_MANIFOLD_COLONIZATION"
    ],
    "any": [
     [

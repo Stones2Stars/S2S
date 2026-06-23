@@ -10,25 +10,13 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_ORGANIC_CITIES",
-     "scope": "team"
-    }
+    "TECH_ORGANIC_CITIES"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_ARCOLOGY",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_HOUSING_COLONY_ARCOLOGY",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_LAUNCH_ARCOLOGY",
-      "scope": "city"
-     }
+     "BUILDING_ARCOLOGY",
+     "BUILDING_HOUSING_COLONY_ARCOLOGY",
+     "BUILDING_LAUNCH_ARCOLOGY"
     ],
     [
      {
@@ -40,10 +28,7 @@
   },
   "operate": {
    "all": [
-    {
-     "type": "CIVIC_ECO_FRIENDLY",
-     "scope": "empire"
-    }
+    "CIVIC_ECO_FRIENDLY"
    ]
   }
  },

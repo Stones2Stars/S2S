@@ -10,14 +10,8 @@
      "scope": "city",
      "min": 7
     },
-    {
-     "type": "BUILDING_EFFECT_LAUNCH_SITE",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_ORBITAL_FLIGHT",
-     "scope": "team"
-    }
+    "BUILDING_EFFECT_LAUNCH_SITE",
+    "TECH_ORBITAL_FLIGHT"
    ],
    "any": [
     [
@@ -31,10 +25,7 @@
   "operate": {
    "any": [
     [
-     {
-      "type": "CIVIC_OFF_PLANET_DUMPING",
-      "scope": "empire"
-     }
+     "CIVIC_OFF_PLANET_DUMPING"
     ]
    ]
   }

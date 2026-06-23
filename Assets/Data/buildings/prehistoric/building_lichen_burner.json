@@ -10,14 +10,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_LICHEN_GATHERER",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_COOKING",
-     "scope": "team"
-    }
+    "BUILDING_LICHEN_GATHERER",
+    "TECH_COOKING"
    ],
    "any": [
     [

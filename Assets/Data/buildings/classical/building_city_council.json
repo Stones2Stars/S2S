@@ -45,14 +45,8 @@
      "scope": "city",
      "min": 20
     },
-    {
-     "type": "TECH_CITY_PLANNING",
-     "scope": "team"
-    },
-    {
-     "type": "CULTURELEVEL_REFINED",
-     "scope": "city"
-    }
+    "TECH_CITY_PLANNING",
+    "CULTURELEVEL_REFINED"
    ],
    "any": [
     [
@@ -86,10 +80,7 @@
     ]
    ],
    "dormant": [
-    {
-     "type": "BUILDING_METROPOLITAN_ADMINISTRATION",
-     "scope": "city"
-    }
+    "BUILDING_METROPOLITAN_ADMINISTRATION"
    ]
   }
  },

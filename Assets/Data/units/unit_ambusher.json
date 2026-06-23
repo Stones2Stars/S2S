@@ -5,14 +5,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_POISON_CRAFTER",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_NOCTURNALISM",
-     "scope": "team"
-    }
+    "BUILDING_POISON_CRAFTER",
+    "TECH_NOCTURNALISM"
    ]
   }
  },

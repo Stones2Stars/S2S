@@ -21,14 +21,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_MODERN_EARTHWORKS",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_NANOMINING",
-     "scope": "team"
-    }
+    "BUILDING_MODERN_EARTHWORKS",
+    "TECH_NANOMINING"
    ],
    "any": [
     [

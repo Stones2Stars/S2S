@@ -10,19 +10,13 @@
      "scope": "city",
      "min": 7
     },
-    {
-     "type": "BUILDING_STOCK_MARKET",
-     "scope": "city"
-    },
+    "BUILDING_STOCK_MARKET",
     {
      "type": "BUILDING_STOCK_MARKET",
      "scope": "empire",
      "min": 4
     },
-    {
-     "type": "TECH_STOCK_BROKERING",
-     "scope": "team"
-    }
+    "TECH_STOCK_BROKERING"
    ],
    "any": [
     [
@@ -43,10 +37,7 @@
     25,
     {
      "value": 5,
-     "enabled": {
-      "type": "TECH_DERIVATIVES",
-      "scope": "team"
-     }
+     "enabled": "TECH_DERIVATIVES"
     }
    ]
   }

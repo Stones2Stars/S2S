@@ -13,10 +13,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_ZOOLOGY",
-     "scope": "team"
-    }
+    "TECH_ZOOLOGY"
    ],
    "any": [
     [
@@ -45,10 +42,7 @@
     ]
    ],
    "dormant": [
-    {
-     "type": "BUILDING_MEAT_INDUSTRY_CONGLOMERATE",
-     "scope": "city"
-    }
+    "BUILDING_MEAT_INDUSTRY_CONGLOMERATE"
    ]
   }
  },

@@ -10,10 +10,7 @@
      "scope": "city",
      "connection": "trade|vicinity"
     },
-    {
-     "type": "TECH_AXE_MAKING",
-     "scope": "team"
-    }
+    "TECH_AXE_MAKING"
    ]
   }
  },

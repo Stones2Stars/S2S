@@ -13,10 +13,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_GUIDED_WEAPONS",
-     "scope": "team"
-    }
+    "TECH_GUIDED_WEAPONS"
    ],
    "any": [
     [
@@ -36,14 +33,8 @@
     }
    ],
    "dormant": [
-    {
-     "type": "BUILDING_ARCOLOGY_SHIELDING",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_ADVANCED_SHIELDING",
-     "scope": "city"
-    }
+    "BUILDING_ARCOLOGY_SHIELDING",
+    "BUILDING_ADVANCED_SHIELDING"
    ]
   }
  },

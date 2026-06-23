@@ -15,14 +15,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_LABORATORY",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_BIOLOGICAL_WARFARE",
-     "scope": "team"
-    }
+    "BUILDING_LABORATORY",
+    "TECH_BIOLOGICAL_WARFARE"
    ],
    "any": [
     [

@@ -5,14 +5,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_DEEP_SPACE_COLD_FUSION",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_COMPUTRONIUM_UNIVERSE",
-     "scope": "team"
-    }
+    "BUILDING_DEEP_SPACE_COLD_FUSION",
+    "TECH_COMPUTRONIUM_UNIVERSE"
    ],
    "any": [
     [

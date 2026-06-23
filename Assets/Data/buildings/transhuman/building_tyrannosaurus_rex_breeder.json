@@ -11,14 +11,8 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_TRANSGENICS_LAB",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_NOVO_PALEONTOLOGY",
-     "scope": "team"
-    }
+    "BUILDING_TRANSGENICS_LAB",
+    "TECH_NOVO_PALEONTOLOGY"
    ],
    "any": [
     [

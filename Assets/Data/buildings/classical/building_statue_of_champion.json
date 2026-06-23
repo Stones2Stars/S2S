@@ -15,33 +15,15 @@
      "scope": "city",
      "min": 3
     },
-    {
-     "type": "TECH_COMBAT_SPORTS",
-     "scope": "team"
-    }
+    "TECH_COMBAT_SPORTS"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_ARENA",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_COLOSSEUM",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_FLAVIAN_AMPHITHEATRE",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_MINOR_LEAGUE_STADIUM",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_MAJOR_LEAGUE_STADIUM",
-      "scope": "city"
-     }
+     "BUILDING_ARENA",
+     "BUILDING_COLOSSEUM",
+     "BUILDING_FLAVIAN_AMPHITHEATRE",
+     "BUILDING_MINOR_LEAGUE_STADIUM",
+     "BUILDING_MAJOR_LEAGUE_STADIUM"
     ],
     [
      {

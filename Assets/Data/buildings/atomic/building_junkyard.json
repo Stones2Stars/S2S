@@ -5,10 +5,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_INDUSTRIALISM",
-     "scope": "team"
-    }
+    "TECH_INDUSTRIALISM"
    ],
    "any": [
     [
@@ -22,10 +19,7 @@
   "operate": {
    "any": [
     [
-     {
-      "type": "CIVIC_WASTE_IMPORTATION",
-      "scope": "empire"
-     }
+     "CIVIC_WASTE_IMPORTATION"
     ]
    ]
   }
@@ -36,10 +30,7 @@
     5,
     {
      "value": 7,
-     "enabled": {
-      "type": "TECH_RECYCLING",
-      "scope": "team"
-     }
+     "enabled": "TECH_RECYCLING"
     }
    ]
   }

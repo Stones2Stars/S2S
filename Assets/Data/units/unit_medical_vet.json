@@ -10,14 +10,8 @@
      "scope": "city",
      "connection": "trade|vicinity"
     },
-    {
-     "type": "BUILDING_ANIMAL_TRAINER_HORSE",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_MEDICINE",
-     "scope": "team"
-    }
+    "BUILDING_ANIMAL_TRAINER_HORSE",
+    "TECH_MEDICINE"
    ],
    "any": [
     [
@@ -33,14 +27,8 @@
      }
     ],
     [
-     {
-      "type": "BUILDING_VETERINARIAN",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_HEALTHCARE_MEGACOMPLEX",
-      "scope": "city"
-     }
+     "BUILDING_VETERINARIAN",
+     "BUILDING_HEALTHCARE_MEGACOMPLEX"
     ]
    ]
   }

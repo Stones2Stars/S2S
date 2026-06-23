@@ -6,18 +6,9 @@
   "build": {
    "all": [
     "HAS_COAST",
-    {
-     "type": "BUILDING_C_AC_NORTH_AMERICAN",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_C_L_NORTH_AMERICAN",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_GUNPOWDER",
-     "scope": "team"
-    }
+    "BUILDING_C_AC_NORTH_AMERICAN",
+    "BUILDING_C_L_NORTH_AMERICAN",
+    "TECH_GUNPOWDER"
    ],
    "any": [
     [

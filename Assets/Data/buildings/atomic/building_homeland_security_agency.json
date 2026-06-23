@@ -6,19 +6,13 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_PALACE",
-     "scope": "city"
-    },
+    "BUILDING_PALACE",
     {
      "type": "BUILDING_SECURITY_BUREAU",
      "scope": "empire",
      "min": 3
     },
-    {
-     "type": "TECH_FASCISM",
-     "scope": "team"
-    }
+    "TECH_FASCISM"
    ],
    "any": [
     [

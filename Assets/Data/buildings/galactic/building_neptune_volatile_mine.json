@@ -5,19 +5,13 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_NEPTUNE_WIND_TURBINE",
-     "scope": "city"
-    },
+    "BUILDING_NEPTUNE_WIND_TURBINE",
     {
      "type": "BUILDING_NEPTUNE_ORBITAL_RING",
      "scope": "empire",
      "min": 1
     },
-    {
-     "type": "TECH_PLANET_CRACKING",
-     "scope": "team"
-    }
+    "TECH_PLANET_CRACKING"
    ],
    "any": [
     [

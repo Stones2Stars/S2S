@@ -13,14 +13,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_STOCK_MARKET",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_DERIVATIVES",
-     "scope": "team"
-    }
+    "BUILDING_STOCK_MARKET",
+    "TECH_DERIVATIVES"
    ],
    "any": [
     [
@@ -33,10 +27,7 @@
   },
   "operate": {
    "dormant": [
-    {
-     "type": "BUILDING_INTERTEMPORAL_STOCK_MARKET",
-     "scope": "city"
-    }
+    "BUILDING_INTERTEMPORAL_STOCK_MARKET"
    ]
   }
  },
@@ -46,17 +37,11 @@
    "flat": [
     {
      "value": 9,
-     "enabled": {
-      "type": "TECH_MEGACORPORATIONS",
-      "scope": "team"
-     }
+     "enabled": "TECH_MEGACORPORATIONS"
     },
     {
      "value": 8,
-     "enabled": {
-      "type": "TECH_MACHINE_LEARNING",
-      "scope": "team"
-     }
+     "enabled": "TECH_MACHINE_LEARNING"
     }
    ]
   }
@@ -66,17 +51,11 @@
    "flat": [
     {
      "value": 9,
-     "enabled": {
-      "type": "TECH_MEGACORPORATIONS",
-      "scope": "team"
-     }
+     "enabled": "TECH_MEGACORPORATIONS"
     },
     {
      "value": 8,
-     "enabled": {
-      "type": "TECH_MACHINE_LEARNING",
-      "scope": "team"
-     }
+     "enabled": "TECH_MACHINE_LEARNING"
     }
    ]
   }

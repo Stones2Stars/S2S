@@ -30,10 +30,7 @@
      "scope": "city",
      "connection": "trade|vicinity"
     },
-    {
-     "type": "RELIGION_TENGRIISM",
-     "scope": "city"
-    }
+    "RELIGION_TENGRIISM"
    ],
    "any": [
     [

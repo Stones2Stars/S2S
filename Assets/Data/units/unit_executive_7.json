@@ -5,14 +5,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_HQ_CIVILIZED_JEWELERS_INC",
-     "scope": "city"
-    },
-    {
-     "type": "CORPORATION_7",
-     "scope": "city"
-    }
+    "BUILDING_HQ_CIVILIZED_JEWELERS_INC",
+    "CORPORATION_7"
    ]
   }
  },

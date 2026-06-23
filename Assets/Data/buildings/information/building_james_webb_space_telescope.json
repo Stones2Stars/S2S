@@ -5,19 +5,13 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_OBSERVATORY",
-     "scope": "city"
-    },
+    "BUILDING_OBSERVATORY",
     {
      "type": "BUILDING_JET_PROPULSION_LABORATORY",
      "scope": "empire",
      "min": 1
     },
-    {
-     "type": "TECH_EXOPLANET_DISCOVERY",
-     "scope": "team"
-    }
+    "TECH_EXOPLANET_DISCOVERY"
    ],
    "any": [
     [
@@ -30,10 +24,7 @@
   },
   "operate": {
    "dormant": [
-    {
-     "type": "BUILDING_POLLUTION_BLACKENED_SKIES",
-     "scope": "city"
-    }
+    "BUILDING_POLLUTION_BLACKENED_SKIES"
    ]
   }
  },

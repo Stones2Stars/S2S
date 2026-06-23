@@ -19,14 +19,8 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_FACTORY",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_PLASTICS",
-     "scope": "team"
-    }
+    "BUILDING_FACTORY",
+    "TECH_PLASTICS"
    ],
    "any": [
     [
@@ -60,10 +54,7 @@
     ]
    ],
    "dormant": [
-    {
-     "type": "BUILDING_MATERIALS_CONGLOMERATE",
-     "scope": "city"
-    }
+    "BUILDING_MATERIALS_CONGLOMERATE"
    ]
   }
  },

@@ -10,14 +10,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_CARNIVAL",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_TRADE",
-     "scope": "team"
-    }
+    "BUILDING_CARNIVAL",
+    "TECH_TRADE"
    ],
    "any": [
     [
@@ -27,10 +21,7 @@
      }
     ],
     [
-     {
-      "type": "HERITAGE_TAXON_MARSUPIALIA",
-      "scope": "empire"
-     }
+     "HERITAGE_TAXON_MARSUPIALIA"
     ]
    ]
   }

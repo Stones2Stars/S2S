@@ -10,14 +10,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_CLOSED_TIMELIKE_CURVE_COMPUTER",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_STABLE_TIME_LOOPS",
-     "scope": "team"
-    }
+    "BUILDING_CLOSED_TIMELIKE_CURVE_COMPUTER",
+    "TECH_STABLE_TIME_LOOPS"
    ],
    "any": [
     [
@@ -40,10 +34,7 @@
     60,
     {
      "value": 13,
-     "enabled": {
-      "type": "TECH_MULTIVERSE_TRAVERSAL",
-      "scope": "team"
-     }
+     "enabled": "TECH_MULTIVERSE_TRAVERSAL"
     },
     {
      "value": 1,

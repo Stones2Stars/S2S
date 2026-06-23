@@ -10,18 +10,9 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_WAR_DANCE",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_C_L_OCEANIAN",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_PREHISTORIC_DANCE",
-     "scope": "team"
-    }
+    "BUILDING_WAR_DANCE",
+    "BUILDING_C_L_OCEANIAN",
+    "TECH_PREHISTORIC_DANCE"
    ],
    "any": [
     [

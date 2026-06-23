@@ -15,10 +15,7 @@
      "scope": "city",
      "min": 7
     },
-    {
-     "type": "TECH_MODERN_ART",
-     "scope": "team"
-    }
+    "TECH_MODERN_ART"
    ],
    "any": [
     [
@@ -80,31 +77,19 @@
    "flat": [
     {
      "value": 1,
-     "enabled": {
-      "type": "BUILDING_FIRE_BRIGADE",
-      "scope": "city"
-     }
+     "enabled": "BUILDING_FIRE_BRIGADE"
     },
     {
      "value": 1,
-     "enabled": {
-      "type": "BUILDING_FIRE_STATION",
-      "scope": "city"
-     }
+     "enabled": "BUILDING_FIRE_STATION"
     },
     {
      "value": 1,
-     "enabled": {
-      "type": "BUILDING_FIRE_HANGAR",
-      "scope": "city"
-     }
+     "enabled": "BUILDING_FIRE_HANGAR"
     },
     {
      "value": 1,
-     "enabled": {
-      "type": "BUILDING_FIRE_DOCK",
-      "scope": "city"
-     }
+     "enabled": "BUILDING_FIRE_DOCK"
     }
    ]
   }

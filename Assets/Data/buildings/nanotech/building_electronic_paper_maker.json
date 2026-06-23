@@ -10,14 +10,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_ELECTRONICS_MANUFACTURING_DISTRICT",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_PLASTIC_ELECTRONICS",
-     "scope": "team"
-    }
+    "BUILDING_ELECTRONICS_MANUFACTURING_DISTRICT",
+    "TECH_PLASTIC_ELECTRONICS"
    ],
    "any": [
     [

@@ -5,14 +5,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_DEEP_SPACE_DOCKING_BAY",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_NANOTROIDS",
-     "scope": "team"
-    }
+    "BUILDING_DEEP_SPACE_DOCKING_BAY",
+    "TECH_NANOTROIDS"
    ]
   }
  },

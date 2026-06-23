@@ -46,14 +46,8 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_HOSPITAL",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_MODERN_HEALTH_CARE",
-     "scope": "team"
-    },
+    "BUILDING_HOSPITAL",
+    "TECH_MODERN_HEALTH_CARE",
     {
      "type": "BONUS_PHARMACEUTICALS",
      "scope": "city",
@@ -81,10 +75,7 @@
   },
   "operate": {
    "dormant": [
-    {
-     "type": "BUILDING_HEALTHCARE_MEGACOMPLEX",
-     "scope": "city"
-    }
+    "BUILDING_HEALTHCARE_MEGACOMPLEX"
    ]
   }
  },

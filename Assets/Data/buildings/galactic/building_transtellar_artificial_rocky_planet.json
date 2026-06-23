@@ -11,14 +11,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_TRANSTELLAR_FUSION_MEGACOMPLEX",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_ARTIFICIAL_PLANETS",
-     "scope": "team"
-    }
+    "BUILDING_TRANSTELLAR_FUSION_MEGACOMPLEX",
+    "TECH_ARTIFICIAL_PLANETS"
    ],
    "any": [
     [

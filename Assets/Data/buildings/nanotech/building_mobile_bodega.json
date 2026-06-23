@@ -14,18 +14,9 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_UNMANNED_MARKET",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_AUTOMATED_TAXI_SERVICE",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_AUTOMATED_TRAFFIC",
-     "scope": "team"
-    }
+    "BUILDING_UNMANNED_MARKET",
+    "BUILDING_AUTOMATED_TAXI_SERVICE",
+    "TECH_AUTOMATED_TRAFFIC"
    ],
    "any": [
     [
@@ -38,10 +29,7 @@
   },
   "operate": {
    "dormant": [
-    {
-     "type": "BUILDING_TELEPORT_BOOTH",
-     "scope": "city"
-    }
+    "BUILDING_TELEPORT_BOOTH"
    ]
   }
  },

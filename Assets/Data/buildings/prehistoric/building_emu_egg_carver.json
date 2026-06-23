@@ -5,29 +5,14 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_C_L_OCEANIAN",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_PICTOGRAPHS",
-     "scope": "team"
-    }
+    "BUILDING_C_L_OCEANIAN",
+    "TECH_PICTOGRAPHS"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_CAMP_EMU",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_BREEDING_PROGRAM_EMU",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_ANIMAL_PRESERVE",
-      "scope": "city"
-     }
+     "BUILDING_CAMP_EMU",
+     "BUILDING_BREEDING_PROGRAM_EMU",
+     "BUILDING_ANIMAL_PRESERVE"
     ],
     [
      {

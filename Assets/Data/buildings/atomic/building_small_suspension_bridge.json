@@ -20,21 +20,12 @@
   "build": {
    "all": [
     "HAS_RIVER",
-    {
-     "type": "TECH_HIGHWAY_SYSTEMS",
-     "scope": "team"
-    }
+    "TECH_HIGHWAY_SYSTEMS"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_ASPHALT_ROADS",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_SKYROAD_CONTROL_TOWER",
-      "scope": "city"
-     }
+     "BUILDING_ASPHALT_ROADS",
+     "BUILDING_SKYROAD_CONTROL_TOWER"
     ],
     [
      {
@@ -53,14 +44,8 @@
     }
    ],
    "dormant": [
-    {
-     "type": "BUILDING_LARGE_SUSPENSION_BRIDGE",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_TELEPORT_BOOTH",
-     "scope": "city"
-    }
+    "BUILDING_LARGE_SUSPENSION_BRIDGE",
+    "BUILDING_TELEPORT_BOOTH"
    ]
   }
  },

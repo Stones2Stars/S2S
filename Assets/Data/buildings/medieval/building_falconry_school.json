@@ -10,21 +10,12 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_FEUDALISM",
-     "scope": "team"
-    }
+    "TECH_FEUDALISM"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_HAWKING_HUT",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_FOLKLORE_HAWK",
-      "scope": "city"
-     }
+     "BUILDING_HAWKING_HUT",
+     "BUILDING_FOLKLORE_HAWK"
     ],
     [
      {
@@ -41,10 +32,7 @@
     2,
     {
      "value": -1,
-     "enabled": {
-      "type": "TECH_INDUSTRIALISM",
-      "scope": "team"
-     }
+     "enabled": "TECH_INDUSTRIALISM"
     }
    ]
   }
@@ -55,10 +43,7 @@
     1,
     {
      "value": 7,
-     "enabled": {
-      "type": "TECH_TOURISM",
-      "scope": "team"
-     }
+     "enabled": "TECH_TOURISM"
     }
    ]
   }

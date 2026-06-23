@@ -10,21 +10,12 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_GEOCENTRISM",
-     "scope": "team"
-    }
+    "TECH_GEOCENTRISM"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_ASTROLOGY_SCHOOL",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_OBSERVATORY",
-      "scope": "city"
-     }
+     "BUILDING_ASTROLOGY_SCHOOL",
+     "BUILDING_OBSERVATORY"
     ],
     [
      {

@@ -28,10 +28,7 @@
   },
   "operate": {
    "all": [
-    {
-     "type": "RELIGION_SHAMANISM",
-     "scope": "city"
-    }
+    "RELIGION_SHAMANISM"
    ]
   }
  },

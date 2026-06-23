@@ -19,14 +19,8 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_MEGATOWER_OFFICE_LEVEL",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_AUTOMATED_URBANIZATION",
-     "scope": "team"
-    }
+    "BUILDING_MEGATOWER_OFFICE_LEVEL",
+    "TECH_AUTOMATED_URBANIZATION"
    ],
    "any": [
     [
@@ -39,10 +33,7 @@
   },
   "operate": {
    "dormant": [
-    {
-     "type": "BUILDING_INTERTEMPORAL_CONSTRUCTION_FIRM",
-     "scope": "city"
-    }
+    "BUILDING_INTERTEMPORAL_CONSTRUCTION_FIRM"
    ]
   }
  },
@@ -57,17 +48,11 @@
     40,
     {
      "value": 10,
-     "enabled": {
-      "type": "TECH_PLANETARY_MEGASTRUCTURES",
-      "scope": "team"
-     }
+     "enabled": "TECH_PLANETARY_MEGASTRUCTURES"
     },
     {
      "value": 10,
-     "enabled": {
-      "type": "TECH_EVOLVED_CONSTRUCTION",
-      "scope": "team"
-     }
+     "enabled": "TECH_EVOLVED_CONSTRUCTION"
     },
     {
      "value": 1,

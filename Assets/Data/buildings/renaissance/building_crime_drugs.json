@@ -5,10 +5,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_POLITICAL_PHILOSOPHY",
-     "scope": "team"
-    }
+    "TECH_POLITICAL_PHILOSOPHY"
    ],
    "any": [
     [

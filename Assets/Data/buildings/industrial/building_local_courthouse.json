@@ -13,10 +13,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_LABOR_UNIONS",
-     "scope": "team"
-    }
+    "TECH_LABOR_UNIONS"
    ],
    "any": [
     [
@@ -53,10 +50,7 @@
     ]
    ],
    "dormant": [
-    {
-     "type": "BUILDING_AI_LEGAL_SYSTEM",
-     "scope": "city"
-    }
+    "BUILDING_AI_LEGAL_SYSTEM"
    ]
   }
  },

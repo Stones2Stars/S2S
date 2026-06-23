@@ -6,18 +6,9 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_MARTIAN_SPACEPORT",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_MARTIAN_MEGACITY",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_ADVANCED_WARMACHINES",
-     "scope": "team"
-    }
+    "BUILDING_MARTIAN_SPACEPORT",
+    "BUILDING_MARTIAN_MEGACITY",
+    "TECH_ADVANCED_WARMACHINES"
    ],
    "any": [
     [

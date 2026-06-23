@@ -11,14 +11,8 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_SPACE_COLONY_HYPERSPACE_PORTAL",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_TRANSVERSE_EUCLIDEAN_GEOMETRY",
-     "scope": "team"
-    }
+    "BUILDING_SPACE_COLONY_HYPERSPACE_PORTAL",
+    "TECH_TRANSVERSE_EUCLIDEAN_GEOMETRY"
    ],
    "any": [
     [

@@ -6,10 +6,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_PALACE",
-     "scope": "city"
-    },
+    "BUILDING_PALACE",
     {
      "type": "BUILDING_C_L_AFRICAN",
      "scope": "empire",
@@ -25,10 +22,7 @@
     ]
    ],
    "noneOf": [
-    {
-     "type": "BUILDING_C_N_AFRICAN",
-     "scope": "city"
-    }
+    "BUILDING_C_N_AFRICAN"
    ]
   }
  },

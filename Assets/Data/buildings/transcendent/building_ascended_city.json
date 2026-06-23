@@ -6,18 +6,9 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_CLAYTRONIC_CITY",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_QUANTUM_VACUUM_POWER_PLANT",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_OMEGA_POINT",
-     "scope": "team"
-    }
+    "BUILDING_CLAYTRONIC_CITY",
+    "BUILDING_QUANTUM_VACUUM_POWER_PLANT",
+    "TECH_OMEGA_POINT"
    ],
    "any": [
     [

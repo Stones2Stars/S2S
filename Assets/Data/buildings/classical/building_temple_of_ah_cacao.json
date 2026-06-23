@@ -10,10 +10,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_CALENDAR",
-     "scope": "team"
-    }
+    "TECH_CALENDAR"
    ],
    "any": [
     [

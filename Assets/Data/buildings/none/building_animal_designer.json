@@ -18,14 +18,8 @@
      "scope": "city",
      "min": 3
     },
-    {
-     "type": "BUILDING_CLONING_LABORATORY",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_BIOPUNK",
-     "scope": "team"
-    }
+    "BUILDING_CLONING_LABORATORY",
+    "TECH_BIOPUNK"
    ],
    "any": [
     [

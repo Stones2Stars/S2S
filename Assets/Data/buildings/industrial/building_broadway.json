@@ -15,14 +15,8 @@
      "scope": "city",
      "min": 7
     },
-    {
-     "type": "BUILDING_THEATRE",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_INCANDESCENT_LIGHTING",
-     "scope": "team"
-    }
+    "BUILDING_THEATRE",
+    "TECH_INCANDESCENT_LIGHTING"
    ],
    "any": [
     [

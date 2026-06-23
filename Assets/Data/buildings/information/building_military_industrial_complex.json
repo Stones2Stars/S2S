@@ -27,14 +27,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_MANUFACTURING_DISTRICT",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_MILITARY_ROBOTICS",
-     "scope": "team"
-    },
+    "BUILDING_MANUFACTURING_DISTRICT",
+    "TECH_MILITARY_ROBOTICS",
     {
      "type": "BONUS_PLASTIC",
      "scope": "city",

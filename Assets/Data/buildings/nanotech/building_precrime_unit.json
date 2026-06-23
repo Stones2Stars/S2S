@@ -5,14 +5,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_FORENSICS_LAB",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_MASS_SURVEILLANCE",
-     "scope": "team"
-    }
+    "BUILDING_FORENSICS_LAB",
+    "TECH_MASS_SURVEILLANCE"
    ],
    "any": [
     [

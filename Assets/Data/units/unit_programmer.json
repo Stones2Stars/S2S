@@ -10,10 +10,7 @@
      "scope": "city",
      "connection": "trade|vicinity"
     },
-    {
-     "type": "TECH_PERSONAL_COMPUTERS",
-     "scope": "team"
-    }
+    "TECH_PERSONAL_COMPUTERS"
    ],
    "any": [
     [
@@ -24,14 +21,8 @@
      }
     ],
     [
-     {
-      "type": "BUILDING_DESIGN_STUDIO",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_ELECTRONICS_MANUFACTURING_DISTRICT",
-      "scope": "city"
-     }
+     "BUILDING_DESIGN_STUDIO",
+     "BUILDING_ELECTRONICS_MANUFACTURING_DISTRICT"
     ]
    ]
   }

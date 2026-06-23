@@ -5,14 +5,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_INVOCATION_HUT",
-     "scope": "city"
-    },
-    {
-     "type": "RELIGION_SHAMANISM",
-     "scope": "city"
-    }
+    "BUILDING_INVOCATION_HUT",
+    "RELIGION_SHAMANISM"
    ]
   }
  },

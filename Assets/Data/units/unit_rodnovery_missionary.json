@@ -5,14 +5,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_IDOL",
-     "scope": "city"
-    },
-    {
-     "type": "RELIGION_RODNOVERA",
-     "scope": "city"
-    }
+    "BUILDING_IDOL",
+    "RELIGION_RODNOVERA"
    ]
   }
  },

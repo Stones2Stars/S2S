@@ -5,18 +5,9 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_DEEP_SPACE_ECOSYSTEM",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_DEEP_SPACE_CONSCIOUS_STATION",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_ECOSYNTHESIS",
-     "scope": "team"
-    }
+    "BUILDING_DEEP_SPACE_ECOSYSTEM",
+    "BUILDING_DEEP_SPACE_CONSCIOUS_STATION",
+    "TECH_ECOSYNTHESIS"
    ],
    "any": [
     [

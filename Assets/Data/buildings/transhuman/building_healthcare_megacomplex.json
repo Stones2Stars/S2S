@@ -51,14 +51,8 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_HOLODECK",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_NANOTROIDS",
-     "scope": "team"
-    }
+    "BUILDING_HOLODECK",
+    "TECH_NANOTROIDS"
    ],
    "any": [
     [

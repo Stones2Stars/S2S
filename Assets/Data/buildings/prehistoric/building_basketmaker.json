@@ -13,37 +13,16 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_BASKETRY",
-     "scope": "team"
-    }
+    "TECH_BASKETRY"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_STORAGE_PIT",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_GRANARY",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_MODERN_GRANARY",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_BARTER_POST",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_TRADING_POST",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_SHOPPING_DISTRICT",
-      "scope": "city"
-     }
+     "BUILDING_STORAGE_PIT",
+     "BUILDING_GRANARY",
+     "BUILDING_MODERN_GRANARY",
+     "BUILDING_BARTER_POST",
+     "BUILDING_TRADING_POST",
+     "BUILDING_SHOPPING_DISTRICT"
     ],
     [
      {
@@ -84,18 +63,9 @@
     ]
    ],
    "dormant": [
-    {
-     "type": "BUILDING_MANUFACTURING_DISTRICT",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_BASKET_MAKERS_WORKSHOP",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_FACTORY_BASKETS",
-     "scope": "city"
-    }
+    "BUILDING_MANUFACTURING_DISTRICT",
+    "BUILDING_BASKET_MAKERS_WORKSHOP",
+    "BUILDING_FACTORY_BASKETS"
    ]
   }
  },

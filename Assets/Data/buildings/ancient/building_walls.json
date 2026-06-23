@@ -19,10 +19,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_MASONRY",
-     "scope": "team"
-    }
+    "TECH_MASONRY"
    ],
    "any": [
     [
@@ -49,10 +46,7 @@
     ]
    ],
    "dormant": [
-    {
-     "type": "BUILDING_HIGH_WALLS",
-     "scope": "city"
-    }
+    "BUILDING_HIGH_WALLS"
    ]
   }
  },

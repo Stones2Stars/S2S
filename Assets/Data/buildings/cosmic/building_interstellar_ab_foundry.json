@@ -5,18 +5,9 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_INTERSTELLAR_INDUSTRIAL_PLANET",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_INTERSTELLAR_STELLAR_FUSION_PLANT",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_FEMTOTECHNOLOGY",
-     "scope": "team"
-    }
+    "BUILDING_INTERSTELLAR_INDUSTRIAL_PLANET",
+    "BUILDING_INTERSTELLAR_STELLAR_FUSION_PLANT",
+    "TECH_FEMTOTECHNOLOGY"
    ],
    "any": [
     [

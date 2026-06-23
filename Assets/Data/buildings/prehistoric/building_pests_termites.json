@@ -15,10 +15,7 @@
      "scope": "city",
      "min": 5
     },
-    {
-     "type": "TECH_COOKING",
-     "scope": "team"
-    }
+    "TECH_COOKING"
    ],
    "any": [
     [

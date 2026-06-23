@@ -6,21 +6,12 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "TECH_LUNAR_MANUFACTURING",
-     "scope": "team"
-    }
+    "TECH_LUNAR_MANUFACTURING"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_LUNAR_ALGAE_LAB",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_LUNAR_OBSERVATORY",
-      "scope": "city"
-     }
+     "BUILDING_LUNAR_ALGAE_LAB",
+     "BUILDING_LUNAR_OBSERVATORY"
     ],
     [
      {

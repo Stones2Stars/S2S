@@ -11,14 +11,8 @@
      "scope": "city",
      "min": 20
     },
-    {
-     "type": "BUILDING_DIGITAL_OFFICES",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_MEGACITIES",
-     "scope": "team"
-    }
+    "BUILDING_DIGITAL_OFFICES",
+    "TECH_MEGACITIES"
    ],
    "any": [
     [

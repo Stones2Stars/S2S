@@ -14,86 +14,26 @@
   "build": {
    "any": [
     [
-     {
-      "type": "BUILDING_FARM_FLOWER_BEGONIA",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_FARM_FLOWER_BLUEBELL",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_FARM_FLOWER_CARNATION",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_FARM_FLOWER_DAISY",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_FARM_FLOWER_FLAX",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_FARM_FLOWER_FOXGLOVE",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_PLANTATION_HENNA",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_FARM_FLOWER_HIBISCUS",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_FARM_FLOWER_INDIGO",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_FARM_FLOWER_IRIS",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_FARM_FLOWER_LILY",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_PLANTATION_MADDER",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_FARM_FLOWER_ORCHID",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_FARM_FLOWER_PANSY",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_FARM_FLOWER_ROSE",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_FARM_FLOWER_SNAPDRAGON",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_FARM_FLOWER_SUNFLOWER",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_FARM_FLOWER_TULIP",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_TEXTILE_MANUFACTURING_DISTRICT",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_FARM_FLOWER_VIOLET",
-      "scope": "city"
-     }
+     "BUILDING_FARM_FLOWER_BEGONIA",
+     "BUILDING_FARM_FLOWER_BLUEBELL",
+     "BUILDING_FARM_FLOWER_CARNATION",
+     "BUILDING_FARM_FLOWER_DAISY",
+     "BUILDING_FARM_FLOWER_FLAX",
+     "BUILDING_FARM_FLOWER_FOXGLOVE",
+     "BUILDING_PLANTATION_HENNA",
+     "BUILDING_FARM_FLOWER_HIBISCUS",
+     "BUILDING_FARM_FLOWER_INDIGO",
+     "BUILDING_FARM_FLOWER_IRIS",
+     "BUILDING_FARM_FLOWER_LILY",
+     "BUILDING_PLANTATION_MADDER",
+     "BUILDING_FARM_FLOWER_ORCHID",
+     "BUILDING_FARM_FLOWER_PANSY",
+     "BUILDING_FARM_FLOWER_ROSE",
+     "BUILDING_FARM_FLOWER_SNAPDRAGON",
+     "BUILDING_FARM_FLOWER_SUNFLOWER",
+     "BUILDING_FARM_FLOWER_TULIP",
+     "BUILDING_TEXTILE_MANUFACTURING_DISTRICT",
+     "BUILDING_FARM_FLOWER_VIOLET"
     ],
     [
      {
@@ -105,10 +45,7 @@
   },
   "operate": {
    "dormant": [
-    {
-     "type": "BUILDING_GREENHOUSE",
-     "scope": "city"
-    }
+    "BUILDING_GREENHOUSE"
    ]
   }
  },

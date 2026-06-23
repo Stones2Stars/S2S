@@ -13,18 +13,9 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_SYSTEMS_BIOLOGY_SIMULATOR",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_EFFECT_MEDICAL_DATABASE",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_BIOMATHEMATICS",
-     "scope": "team"
-    }
+    "BUILDING_SYSTEMS_BIOLOGY_SIMULATOR",
+    "BUILDING_EFFECT_MEDICAL_DATABASE",
+    "TECH_BIOMATHEMATICS"
    ],
    "any": [
     [

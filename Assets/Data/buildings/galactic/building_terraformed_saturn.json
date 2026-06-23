@@ -5,18 +5,9 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_SATURN_CLOUD_CITY",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_DEEP_SPACE_BISHOP_RING",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_JOVIAN_TERRAFORMING",
-     "scope": "team"
-    }
+    "BUILDING_SATURN_CLOUD_CITY",
+    "BUILDING_DEEP_SPACE_BISHOP_RING",
+    "TECH_JOVIAN_TERRAFORMING"
    ],
    "any": [
     [

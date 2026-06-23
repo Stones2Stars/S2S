@@ -11,21 +11,12 @@
      "scope": "empire",
      "min": 1
     },
-    {
-     "type": "TECH_MACROVERSE_TRAVERSAL",
-     "scope": "team"
-    }
+    "TECH_MACROVERSE_TRAVERSAL"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_MARTIAN_STARPORT",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_VENUS_MEGAFACTORY",
-      "scope": "city"
-     }
+     "BUILDING_MARTIAN_STARPORT",
+     "BUILDING_VENUS_MEGAFACTORY"
     ],
     [
      {

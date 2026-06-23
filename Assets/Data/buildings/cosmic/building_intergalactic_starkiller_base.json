@@ -5,18 +5,9 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_INTERGALACTIC_COMMAND_CENTER",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_INTERGALACTIC_FUSION_PLANTS",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_EXTREME_ENERGY_WEAPONS",
-     "scope": "team"
-    }
+    "BUILDING_INTERGALACTIC_COMMAND_CENTER",
+    "BUILDING_INTERGALACTIC_FUSION_PLANTS",
+    "TECH_EXTREME_ENERGY_WEAPONS"
    ],
    "any": [
     [

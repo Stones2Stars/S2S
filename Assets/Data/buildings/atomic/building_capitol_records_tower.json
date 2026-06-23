@@ -11,14 +11,8 @@
      "scope": "city",
      "min": 7
     },
-    {
-     "type": "BUILDING_RECORDING_STUDIO",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_MASS_MEDIA",
-     "scope": "team"
-    }
+    "BUILDING_RECORDING_STUDIO",
+    "TECH_MASS_MEDIA"
    ],
    "any": [
     [

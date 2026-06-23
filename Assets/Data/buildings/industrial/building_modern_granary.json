@@ -59,10 +59,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_AGRICULTURAL_ENGINEERING",
-     "scope": "team"
-    }
+    "TECH_AGRICULTURAL_ENGINEERING"
    ],
    "any": [
     [

@@ -10,14 +10,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_EFFECT_SOLAR_ECONOMY",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_COLONY_ARCOLOGY",
-     "scope": "team"
-    }
+    "BUILDING_EFFECT_SOLAR_ECONOMY",
+    "TECH_COLONY_ARCOLOGY"
    ],
    "any": [
     [

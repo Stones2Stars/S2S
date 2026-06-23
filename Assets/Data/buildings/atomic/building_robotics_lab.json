@@ -21,21 +21,12 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "TECH_ROBOTICS",
-     "scope": "team"
-    }
+    "TECH_ROBOTICS"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_LABORATORY",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_UNIVERSITY",
-      "scope": "city"
-     }
+     "BUILDING_LABORATORY",
+     "BUILDING_UNIVERSITY"
     ],
     [
      {
@@ -61,94 +52,55 @@
     5,
     {
      "value": 8,
-     "enabled": {
-      "type": "TECH_MACHINE_LEARNING",
-      "scope": "team"
-     }
+     "enabled": "TECH_MACHINE_LEARNING"
     },
     {
      "value": 9,
-     "enabled": {
-      "type": "TECH_ANDROIDS",
-      "scope": "team"
-     }
+     "enabled": "TECH_ANDROIDS"
     },
     {
      "value": 9,
-     "enabled": {
-      "type": "TECH_CYBERNETICS",
-      "scope": "team"
-     }
+     "enabled": "TECH_CYBERNETICS"
     },
     {
      "value": 9,
-     "enabled": {
-      "type": "TECH_BIONICS",
-      "scope": "team"
-     }
+     "enabled": "TECH_BIONICS"
     },
     {
      "value": 8,
-     "enabled": {
-      "type": "TECH_POWERED_EXOSKELETON",
-      "scope": "team"
-     }
+     "enabled": "TECH_POWERED_EXOSKELETON"
     },
     {
      "value": 9,
-     "enabled": {
-      "type": "TECH_PERSONAL_ROBOTS",
-      "scope": "team"
-     }
+     "enabled": "TECH_PERSONAL_ROBOTS"
     },
     {
      "value": 9,
-     "enabled": {
-      "type": "TECH_NANOROBOTICS",
-      "scope": "team"
-     }
+     "enabled": "TECH_NANOROBOTICS"
     },
     {
      "value": 9,
-     "enabled": {
-      "type": "TECH_DROIDS",
-      "scope": "team"
-     }
+     "enabled": "TECH_DROIDS"
     },
     {
      "value": 8,
-     "enabled": {
-      "type": "TECH_MILITARY_ROBOTICS",
-      "scope": "team"
-     }
+     "enabled": "TECH_MILITARY_ROBOTICS"
     },
     {
      "value": 9,
-     "enabled": {
-      "type": "TECH_BIOMETRIC_WARFARE",
-      "scope": "team"
-     }
+     "enabled": "TECH_BIOMETRIC_WARFARE"
     },
     {
      "value": 8,
-     "enabled": {
-      "type": "TECH_UNMANNED_NAVAL_VEHICLES",
-      "scope": "team"
-     }
+     "enabled": "TECH_UNMANNED_NAVAL_VEHICLES"
     },
     {
      "value": 8,
-     "enabled": {
-      "type": "TECH_UNMANNED_AIR_VEHICLES",
-      "scope": "team"
-     }
+     "enabled": "TECH_UNMANNED_AIR_VEHICLES"
     },
     {
      "value": 8,
-     "enabled": {
-      "type": "TECH_DISASTER_ROBOTS",
-      "scope": "team"
-     }
+     "enabled": "TECH_DISASTER_ROBOTS"
     }
    ]
   }

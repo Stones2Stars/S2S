@@ -10,10 +10,7 @@
      "scope": "city",
      "connection": "trade|vicinity"
     },
-    {
-     "type": "TECH_MOTORIZED_TRANSPORTATION",
-     "scope": "team"
-    },
+    "TECH_MOTORIZED_TRANSPORTATION",
     {
      "type": "BONUS_AUTOMOBILES",
      "scope": "city",
@@ -32,14 +29,8 @@
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_HOSPITAL",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_HEALTHCARE_MEGACOMPLEX",
-      "scope": "city"
-     }
+     "BUILDING_HOSPITAL",
+     "BUILDING_HEALTHCARE_MEGACOMPLEX"
     ]
    ]
   }

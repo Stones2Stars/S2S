@@ -14,18 +14,9 @@
   "build": {
    "any": [
     [
-     {
-      "type": "BUILDING_NATIONAL_SMELTER_TITANIUM",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_SMELTER_TITANIUM",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_TITANIUM_RECLAMATION_PLANT",
-      "scope": "city"
-     }
+     "BUILDING_NATIONAL_SMELTER_TITANIUM",
+     "BUILDING_SMELTER_TITANIUM",
+     "BUILDING_TITANIUM_RECLAMATION_PLANT"
     ],
     [
      {
@@ -37,10 +28,7 @@
   },
   "operate": {
    "dormant": [
-    {
-     "type": "BUILDING_METALS_MEGACOMPLEX",
-     "scope": "city"
-    }
+    "BUILDING_METALS_MEGACOMPLEX"
    ]
   }
  },

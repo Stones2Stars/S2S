@@ -12,10 +12,7 @@
      "scope": "city",
      "min": 13
     },
-    {
-     "type": "BUILDING_PARADISE_GARDEN",
-     "scope": "city"
-    },
+    "BUILDING_PARADISE_GARDEN",
     {
      "type": "BUILDING_PARADISE_GARDEN",
      "scope": "empire",
@@ -25,18 +22,9 @@
      "type": "VICTORY_SCIENTIFIC",
      "scope": "world"
     },
-    {
-     "type": "TECH_ASCENSION",
-     "scope": "team"
-    },
-    {
-     "type": "TECH_ALPHA_POINT",
-     "scope": "team"
-    },
-    {
-     "type": "TECH_SIMULATION_AWARENESS",
-     "scope": "team"
-    }
+    "TECH_ASCENSION",
+    "TECH_ALPHA_POINT",
+    "TECH_SIMULATION_AWARENESS"
    ],
    "any": [
     [

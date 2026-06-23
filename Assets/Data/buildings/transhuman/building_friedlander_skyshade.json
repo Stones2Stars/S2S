@@ -6,14 +6,8 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_ADVANCED_SHIELDING",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_PLANETARY_DEFENSES",
-     "scope": "team"
-    }
+    "BUILDING_ADVANCED_SHIELDING",
+    "TECH_PLANETARY_DEFENSES"
    ],
    "any": [
     [

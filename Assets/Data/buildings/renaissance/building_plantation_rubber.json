@@ -13,10 +13,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_CHEMISTRY",
-     "scope": "team"
-    }
+    "TECH_CHEMISTRY"
    ],
    "any": [
     [
@@ -38,10 +35,7 @@
     ]
    ],
    "dormant": [
-    {
-     "type": "BUILDING_AGROFOREST",
-     "scope": "city"
-    }
+    "BUILDING_AGROFOREST"
    ]
   }
  },

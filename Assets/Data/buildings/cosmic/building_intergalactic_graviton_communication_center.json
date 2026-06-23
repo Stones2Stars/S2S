@@ -5,18 +5,9 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_INTERGALACTIC_DYSON_SPHERES",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_INTERGALACTIC_RESEARCH_BASE",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_LUMINAL_BEINGS",
-     "scope": "team"
-    }
+    "BUILDING_INTERGALACTIC_DYSON_SPHERES",
+    "BUILDING_INTERGALACTIC_RESEARCH_BASE",
+    "TECH_LUMINAL_BEINGS"
    ],
    "any": [
     [

@@ -10,41 +10,17 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_HUNTING",
-     "scope": "team"
-    }
+    "TECH_HUNTING"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_HERD_BISON",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_CAMP_BISON",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_CAMP_GIANT_BISON",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_BREEDING_PROGRAM_BISON",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_ANIMAL_PRESERVE",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_INDUSTRIAL_FARMS",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_MEAT_INDUSTRY_CONGLOMERATE",
-      "scope": "city"
-     }
+     "BUILDING_HERD_BISON",
+     "BUILDING_CAMP_BISON",
+     "BUILDING_CAMP_GIANT_BISON",
+     "BUILDING_BREEDING_PROGRAM_BISON",
+     "BUILDING_ANIMAL_PRESERVE",
+     "BUILDING_INDUSTRIAL_FARMS",
+     "BUILDING_MEAT_INDUSTRY_CONGLOMERATE"
     ],
     [
      {

@@ -5,10 +5,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_URBAN_CULTURE",
-     "scope": "team"
-    }
+    "TECH_URBAN_CULTURE"
    ],
    "any": [
     [
@@ -88,10 +85,7 @@
     "unit": "UNIT_STREET_GANG",
     "interval": "perTurn",
     "chance": {
-     "per": {
-      "type": "PROPERTY_CRIME",
-      "scope": "city"
-     }
+     "per": "PROPERTY_CRIME"
     }
    }
   ]

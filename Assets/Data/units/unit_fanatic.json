@@ -6,10 +6,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_DIVINE_RIGHT",
-     "scope": "team"
-    }
+    "TECH_DIVINE_RIGHT"
    ]
   }
  },

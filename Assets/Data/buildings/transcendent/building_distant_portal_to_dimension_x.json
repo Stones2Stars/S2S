@@ -11,14 +11,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_DISTANT_HORIZON_PORT",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_CONTROLLED_VACUUM_COLLAPSE",
-     "scope": "team"
-    }
+    "BUILDING_DISTANT_HORIZON_PORT",
+    "TECH_CONTROLLED_VACUUM_COLLAPSE"
    ],
    "any": [
     [
@@ -35,10 +29,7 @@
    "flat": [
     {
      "value": 13,
-     "enabled": {
-      "type": "TECH_MACROVERSE_TRAVERSAL",
-      "scope": "team"
-     }
+     "enabled": "TECH_MACROVERSE_TRAVERSAL"
     }
    ]
   }

@@ -5,21 +5,12 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_TRIBALISM",
-     "scope": "team"
-    }
+    "TECH_TRIBALISM"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_WOODCARVER",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_ANCIENT_CUSTOMS",
-      "scope": "city"
-     }
+     "BUILDING_WOODCARVER",
+     "BUILDING_ANCIENT_CUSTOMS"
     ],
     [
      {
@@ -31,14 +22,8 @@
   },
   "operate": {
    "all": [
-    {
-     "type": "CIVIC_TRIBAL",
-     "scope": "empire"
-    },
-    {
-     "type": "RELIGION_SHAMANISM",
-     "scope": "city"
-    }
+    "CIVIC_TRIBAL",
+    "RELIGION_SHAMANISM"
    ],
    "any": [
     [

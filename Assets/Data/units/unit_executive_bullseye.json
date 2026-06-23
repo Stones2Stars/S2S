@@ -5,14 +5,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_HQ_BULLSEYE",
-     "scope": "city"
-    },
-    {
-     "type": "CORPORATION_BULLSEYE",
-     "scope": "city"
-    }
+    "BUILDING_HQ_BULLSEYE",
+    "CORPORATION_BULLSEYE"
    ]
   }
  },

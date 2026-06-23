@@ -15,49 +15,19 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_MEGAFAUNA_DOMESTICATION",
-     "scope": "team"
-    }
+    "TECH_MEGAFAUNA_DOMESTICATION"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_CAMP_RHINO",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_FOLKLORE_T_RHINOCEROSES",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_FOLKLORE_BLACK_RHINOCEROS",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_FOLKLORE_INDIAN_RHINOCEROS",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_FOLKLORE_JAVA_RHINOCEROS",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_FOLKLORE_WHITE_RHINOCEROS",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_FOLKLORE_GIANT_RHINOCEROS",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_BREEDING_PROGRAM_RHINO",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_ANIMAL_PRESERVE",
-      "scope": "city"
-     }
+     "BUILDING_CAMP_RHINO",
+     "BUILDING_FOLKLORE_T_RHINOCEROSES",
+     "BUILDING_FOLKLORE_BLACK_RHINOCEROS",
+     "BUILDING_FOLKLORE_INDIAN_RHINOCEROS",
+     "BUILDING_FOLKLORE_JAVA_RHINOCEROS",
+     "BUILDING_FOLKLORE_WHITE_RHINOCEROS",
+     "BUILDING_FOLKLORE_GIANT_RHINOCEROS",
+     "BUILDING_BREEDING_PROGRAM_RHINO",
+     "BUILDING_ANIMAL_PRESERVE"
     ],
     [
      {

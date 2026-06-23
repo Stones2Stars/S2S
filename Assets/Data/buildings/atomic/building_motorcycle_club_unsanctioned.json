@@ -10,10 +10,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_MASS_MEDIA",
-     "scope": "team"
-    }
+    "TECH_MASS_MEDIA"
    ],
    "any": [
     [
@@ -94,10 +91,7 @@
     "unit": "UNIT_BIKER_GANG",
     "interval": "perTurn",
     "chance": {
-     "per": {
-      "type": "PROPERTY_CRIME",
-      "scope": "city"
-     }
+     "per": "PROPERTY_CRIME"
     }
    }
   ]

@@ -10,21 +10,12 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_ELECTROWEAK_MATTER",
-     "scope": "team"
-    }
+    "TECH_ELECTROWEAK_MATTER"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_INTERGALACTIC_RINGED_GALAXY",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_INTERGALACTIC_ARTIFICIAL_SPIRAL_GALAXY",
-      "scope": "city"
-     }
+     "BUILDING_INTERGALACTIC_RINGED_GALAXY",
+     "BUILDING_INTERGALACTIC_ARTIFICIAL_SPIRAL_GALAXY"
     ],
     [
      {

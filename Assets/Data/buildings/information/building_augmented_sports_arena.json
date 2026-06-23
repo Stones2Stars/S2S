@@ -14,14 +14,8 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_AUGMENTED_EQUIPMENT_CENTER",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_AUGMENTED_REALITY",
-     "scope": "team"
-    }
+    "BUILDING_AUGMENTED_EQUIPMENT_CENTER",
+    "TECH_AUGMENTED_REALITY"
    ],
    "any": [
     [
@@ -50,10 +44,7 @@
     ]
    ],
    "dormant": [
-    {
-     "type": "BUILDING_HIGH_TECH_CULTURAL_ENRICHMENT",
-     "scope": "city"
-    }
+    "BUILDING_HIGH_TECH_CULTURAL_ENRICHMENT"
    ]
   }
  },
@@ -63,17 +54,11 @@
     5,
     {
      "value": 9,
-     "enabled": {
-      "type": "TECH_MEDIA_HIVEMIND",
-      "scope": "team"
-     }
+     "enabled": "TECH_MEDIA_HIVEMIND"
     },
     {
      "value": 9,
-     "enabled": {
-      "type": "TECH_BATTLEFIELD_SPORTS",
-      "scope": "team"
-     }
+     "enabled": "TECH_BATTLEFIELD_SPORTS"
     },
     {
      "value": 1,

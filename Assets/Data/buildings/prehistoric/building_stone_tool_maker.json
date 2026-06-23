@@ -18,21 +18,12 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_TOOL_MAKING",
-     "scope": "team"
-    }
+    "TECH_TOOL_MAKING"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_ROCK_GATHERER",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_ANCIENT_CUSTOMS",
-      "scope": "city"
-     }
+     "BUILDING_ROCK_GATHERER",
+     "BUILDING_ANCIENT_CUSTOMS"
     ],
     [
      {
@@ -50,10 +41,7 @@
   },
   "operate": {
    "dormant": [
-    {
-     "type": "BUILDING_ANTIQUE_SHOP",
-     "scope": "city"
-    }
+    "BUILDING_ANTIQUE_SHOP"
    ]
   }
  },
@@ -63,87 +51,51 @@
     2,
     {
      "value": 1,
-     "enabled": {
-      "type": "TECH_COMPOSITE_TOOLS",
-      "scope": "team"
-     }
+     "enabled": "TECH_COMPOSITE_TOOLS"
     },
     {
      "value": 1,
-     "enabled": {
-      "type": "TECH_MICROLITH",
-      "scope": "team"
-     }
+     "enabled": "TECH_MICROLITH"
     },
     {
      "value": 1,
-     "enabled": {
-      "type": "TECH_SHARPENING",
-      "scope": "team"
-     }
+     "enabled": "TECH_SHARPENING"
     },
     {
      "value": 1,
-     "enabled": {
-      "type": "TECH_FLINT_KNAPPING",
-      "scope": "team"
-     }
+     "enabled": "TECH_FLINT_KNAPPING"
     },
     {
      "value": 1,
-     "enabled": {
-      "type": "TECH_CHOPPING",
-      "scope": "team"
-     }
+     "enabled": "TECH_CHOPPING"
     },
     {
      "value": 1,
-     "enabled": {
-      "type": "TECH_PIERCING",
-      "scope": "team"
-     }
+     "enabled": "TECH_PIERCING"
     },
     {
      "value": 1,
-     "enabled": {
-      "type": "TECH_SCRAPING",
-      "scope": "team"
-     }
+     "enabled": "TECH_SCRAPING"
     },
     {
      "value": -1,
-     "enabled": {
-      "type": "TECH_COPPER_WORKING",
-      "scope": "team"
-     }
+     "enabled": "TECH_COPPER_WORKING"
     },
     {
      "value": -1,
-     "enabled": {
-      "type": "TECH_METAL_CASTING",
-      "scope": "team"
-     }
+     "enabled": "TECH_METAL_CASTING"
     },
     {
      "value": -1,
-     "enabled": {
-      "type": "TECH_BRONZE_WORKING",
-      "scope": "team"
-     }
+     "enabled": "TECH_BRONZE_WORKING"
     },
     {
      "value": -1,
-     "enabled": {
-      "type": "TECH_LEAD_WORKING",
-      "scope": "team"
-     }
+     "enabled": "TECH_LEAD_WORKING"
     },
     {
      "value": -3,
-     "enabled": {
-      "type": "TECH_SEDENTARY_LIFESTYLE",
-      "scope": "team"
-     }
+     "enabled": "TECH_SEDENTARY_LIFESTYLE"
     }
    ]
   }
@@ -154,59 +106,35 @@
     1,
     {
      "value": 1,
-     "enabled": {
-      "type": "TECH_ATLATL_MAKING",
-      "scope": "team"
-     }
+     "enabled": "TECH_ATLATL_MAKING"
     },
     {
      "value": 1,
-     "enabled": {
-      "type": "TECH_SPEAR_MAKING",
-      "scope": "team"
-     }
+     "enabled": "TECH_SPEAR_MAKING"
     },
     {
      "value": 1,
-     "enabled": {
-      "type": "TECH_AXE_MAKING",
-      "scope": "team"
-     }
+     "enabled": "TECH_AXE_MAKING"
     },
     {
      "value": 1,
-     "enabled": {
-      "type": "TECH_OBSIDIAN_WEAPONS",
-      "scope": "team"
-     }
+     "enabled": "TECH_OBSIDIAN_WEAPONS"
     },
     {
      "value": -1,
-     "enabled": {
-      "type": "TECH_COPPER_WORKING",
-      "scope": "team"
-     }
+     "enabled": "TECH_COPPER_WORKING"
     },
     {
      "value": -1,
-     "enabled": {
-      "type": "TECH_METAL_CASTING",
-      "scope": "team"
-     }
+     "enabled": "TECH_METAL_CASTING"
     },
     {
      "value": -1,
-     "enabled": {
-      "type": "TECH_BRONZE_WORKING",
-      "scope": "team"
-     }
+     "enabled": "TECH_BRONZE_WORKING"
     },
     {
      "value": -1,
-     "enabled": {
-      "type": "TECH_LEAD_WORKING",
-      "scope": "team"
-     }
+     "enabled": "TECH_LEAD_WORKING"
     }
    ]
   }
@@ -216,66 +144,39 @@
    "flat": [
     {
      "value": 1,
-     "enabled": {
-      "type": "TECH_SOFT_HAMMER_PERCUSSION",
-      "scope": "team"
-     }
+     "enabled": "TECH_SOFT_HAMMER_PERCUSSION"
     },
     {
      "value": 1,
-     "enabled": {
-      "type": "TECH_SCRAPING",
-      "scope": "team"
-     }
+     "enabled": "TECH_SCRAPING"
     },
     {
      "value": 1,
-     "enabled": {
-      "type": "TECH_CHOPPING",
-      "scope": "team"
-     }
+     "enabled": "TECH_CHOPPING"
     },
     {
      "value": 1,
-     "enabled": {
-      "type": "TECH_PIERCING",
-      "scope": "team"
-     }
+     "enabled": "TECH_PIERCING"
     },
     {
      "value": 1,
-     "enabled": {
-      "type": "TECH_CARVING",
-      "scope": "team"
-     }
+     "enabled": "TECH_CARVING"
     },
     {
      "value": -1,
-     "enabled": {
-      "type": "TECH_COPPER_WORKING",
-      "scope": "team"
-     }
+     "enabled": "TECH_COPPER_WORKING"
     },
     {
      "value": -1,
-     "enabled": {
-      "type": "TECH_METAL_CASTING",
-      "scope": "team"
-     }
+     "enabled": "TECH_METAL_CASTING"
     },
     {
      "value": -1,
-     "enabled": {
-      "type": "TECH_BRONZE_WORKING",
-      "scope": "team"
-     }
+     "enabled": "TECH_BRONZE_WORKING"
     },
     {
      "value": -1,
-     "enabled": {
-      "type": "TECH_LEAD_WORKING",
-      "scope": "team"
-     }
+     "enabled": "TECH_LEAD_WORKING"
     }
    ]
   }
@@ -285,10 +186,7 @@
    "flat": [
     {
      "value": 3,
-     "enabled": {
-      "type": "TECH_IRON_WORKING",
-      "scope": "team"
-     }
+     "enabled": "TECH_IRON_WORKING"
     }
    ]
   }

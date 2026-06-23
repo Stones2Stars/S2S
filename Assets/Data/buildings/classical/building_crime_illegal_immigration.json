@@ -5,10 +5,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_ALPHABET",
-     "scope": "team"
-    }
+    "TECH_ALPHABET"
    ],
    "any": [
     [
@@ -22,18 +19,9 @@
   "operate": {
    "any": [
     [
-     {
-      "type": "CIVIC_CLOSED_BORDERS",
-      "scope": "empire"
-     },
-     {
-      "type": "CIVIC_SKILLED_WORKERS",
-      "scope": "empire"
-     },
-     {
-      "type": "CIVIC_SECURED_BORDERS",
-      "scope": "empire"
-     }
+     "CIVIC_CLOSED_BORDERS",
+     "CIVIC_SKILLED_WORKERS",
+     "CIVIC_SECURED_BORDERS"
     ]
    ],
    "all": [

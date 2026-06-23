@@ -15,14 +15,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_DEEP_SPACE_ASSEMBLER",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_DEEP_SPACE_COLONIES",
-     "scope": "team"
-    }
+    "BUILDING_DEEP_SPACE_ASSEMBLER",
+    "TECH_DEEP_SPACE_COLONIES"
    ],
    "any": [
     [

@@ -5,10 +5,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_SYNTHETIC_SENTIENCE",
-     "scope": "team"
-    }
+    "TECH_SYNTHETIC_SENTIENCE"
    ],
    "any": [
     [
@@ -35,10 +32,7 @@
     5,
     {
      "value": 10,
-     "enabled": {
-      "type": "TECH_BINARY_SUBCONSCIOUSNESS",
-      "scope": "team"
-     }
+     "enabled": "TECH_BINARY_SUBCONSCIOUSNESS"
     }
    ]
   }

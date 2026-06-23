@@ -18,10 +18,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_FALCONRY",
-     "scope": "team"
-    }
+    "TECH_FALCONRY"
    ],
    "any": [
     [
@@ -50,10 +47,7 @@
     ]
    ],
    "dormant": [
-    {
-     "type": "BUILDING_FALCONRY_SCHOOL",
-     "scope": "city"
-    }
+    "BUILDING_FALCONRY_SCHOOL"
    ]
   }
  },
@@ -63,10 +57,7 @@
     1,
     {
      "value": -1,
-     "enabled": {
-      "type": "TECH_INDUSTRIALISM",
-      "scope": "team"
-     }
+     "enabled": "TECH_INDUSTRIALISM"
     }
    ]
   }

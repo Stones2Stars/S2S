@@ -6,14 +6,8 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_DIGITAL_OFFICES",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_ONLINE_COMMUNITY",
-     "scope": "team"
-    }
+    "BUILDING_DIGITAL_OFFICES",
+    "TECH_ONLINE_COMMUNITY"
    ],
    "any": [
     [
@@ -31,10 +25,7 @@
     5,
     {
      "value": 9,
-     "enabled": {
-      "type": "TECH_MESH_NETWORKS",
-      "scope": "team"
-     }
+     "enabled": "TECH_MESH_NETWORKS"
     }
    ]
   }

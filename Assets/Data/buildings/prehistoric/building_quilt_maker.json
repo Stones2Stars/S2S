@@ -13,29 +13,14 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_SEWING",
-     "scope": "team"
-    }
+    "TECH_SEWING"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_SEAMSTRESS",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_TEXTILE_MILL",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_FACTORY_CLOTHING",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_TEXTILE_MANUFACTURING_DISTRICT",
-      "scope": "city"
-     }
+     "BUILDING_SEAMSTRESS",
+     "BUILDING_TEXTILE_MILL",
+     "BUILDING_FACTORY_CLOTHING",
+     "BUILDING_TEXTILE_MANUFACTURING_DISTRICT"
     ],
     [
      {
@@ -56,10 +41,7 @@
     ]
    ],
    "dormant": [
-    {
-     "type": "BUILDING_HYPERMARKET",
-     "scope": "city"
-    }
+    "BUILDING_HYPERMARKET"
    ]
   }
  },

@@ -10,10 +10,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_CHIEFDOM",
-     "scope": "team"
-    }
+    "TECH_CHIEFDOM"
    ],
    "any": [
     [
@@ -26,10 +23,7 @@
   },
   "operate": {
    "all": [
-    {
-     "type": "CIVIC_CHIEFDOM",
-     "scope": "empire"
-    }
+    "CIVIC_CHIEFDOM"
    ]
   }
  },
@@ -44,10 +38,7 @@
     2,
     {
      "value": 2,
-     "enabled": {
-      "type": "TECH_NEGOTIATION",
-      "scope": "team"
-     }
+     "enabled": "TECH_NEGOTIATION"
     }
    ]
   }

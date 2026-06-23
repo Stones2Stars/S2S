@@ -14,22 +14,10 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_MEGATOWER_POLICE_STATION_LEVEL",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_FACIAL_RECOGNITION_SOFTWARE",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_BIOMETRIC_WARFARE",
-     "scope": "team"
-    },
-    {
-     "type": "TECH_NANO_ARCHITECTURE",
-     "scope": "team"
-    }
+    "BUILDING_MEGATOWER_POLICE_STATION_LEVEL",
+    "BUILDING_FACIAL_RECOGNITION_SOFTWARE",
+    "TECH_BIOMETRIC_WARFARE",
+    "TECH_NANO_ARCHITECTURE"
    ],
    "any": [
     [
@@ -52,17 +40,11 @@
     15,
     {
      "value": 9,
-     "enabled": {
-      "type": "TECH_MASS_SURVEILLANCE",
-      "scope": "team"
-     }
+     "enabled": "TECH_MASS_SURVEILLANCE"
     },
     {
      "value": 9,
-     "enabled": {
-      "type": "TECH_SYNTHETIC_SENTIENCE",
-      "scope": "team"
-     }
+     "enabled": "TECH_SYNTHETIC_SENTIENCE"
     }
    ]
   }

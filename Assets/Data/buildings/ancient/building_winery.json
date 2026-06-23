@@ -21,21 +21,12 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_FERMENTATION",
-     "scope": "team"
-    }
+    "TECH_FERMENTATION"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_VINEYARD",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_FARMSCRAPER_III",
-      "scope": "city"
-     }
+     "BUILDING_VINEYARD",
+     "BUILDING_FARMSCRAPER_III"
     ],
     [
      {
@@ -66,14 +57,8 @@
     ]
    ],
    "dormant": [
-    {
-     "type": "BUILDING_ORDINANCE_ALCOHOL_PROHIBITION",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_FOOD_MANUFACTURING_DISTRICT",
-     "scope": "city"
-    }
+    "BUILDING_ORDINANCE_ALCOHOL_PROHIBITION",
+    "BUILDING_FOOD_MANUFACTURING_DISTRICT"
    ]
   }
  },

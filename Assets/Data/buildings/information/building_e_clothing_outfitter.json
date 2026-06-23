@@ -13,21 +13,12 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_MICROGENERATORS",
-     "scope": "team"
-    }
+    "TECH_MICROGENERATORS"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_MALL",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_HYPERMARKET",
-      "scope": "city"
-     }
+     "BUILDING_MALL",
+     "BUILDING_HYPERMARKET"
     ],
     [
      {
@@ -39,10 +30,7 @@
   },
   "operate": {
    "dormant": [
-    {
-     "type": "BUILDING_NANOTECH_CLOTHING_OUTFITTER",
-     "scope": "city"
-    }
+    "BUILDING_NANOTECH_CLOTHING_OUTFITTER"
    ]
   }
  },

@@ -12,21 +12,12 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "TECH_CYBERIMMUNOLOGY",
-     "scope": "team"
-    }
+    "TECH_CYBERIMMUNOLOGY"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_AUTODOCTOR",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_HEALTHCARE_MEGACOMPLEX",
-      "scope": "city"
-     }
+     "BUILDING_AUTODOCTOR",
+     "BUILDING_HEALTHCARE_MEGACOMPLEX"
     ],
     [
      {

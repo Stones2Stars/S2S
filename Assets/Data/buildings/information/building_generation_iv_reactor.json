@@ -21,18 +21,9 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_MANUFACTURING_PLANT",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_POWER_LINES",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_INDUSTRIAL_ECOLOGY",
-     "scope": "team"
-    }
+    "BUILDING_MANUFACTURING_PLANT",
+    "BUILDING_POWER_LINES",
+    "TECH_INDUSTRIAL_ECOLOGY"
    ],
    "any": [
     [
@@ -52,26 +43,11 @@
     }
    ],
    "dormant": [
-    {
-     "type": "BUILDING_D_T_FUSION_POWER_PLANT",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_D_HE3_FUSION_PLANT",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_HE3_FUSION_POWER_PLANT",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_ANTIMATTER_INITIATED_FUSION_PLANT",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_QUANTUM_VACUUM_POWER_PLANT",
-     "scope": "city"
-    }
+    "BUILDING_D_T_FUSION_POWER_PLANT",
+    "BUILDING_D_HE3_FUSION_PLANT",
+    "BUILDING_HE3_FUSION_POWER_PLANT",
+    "BUILDING_ANTIMATTER_INITIATED_FUSION_PLANT",
+    "BUILDING_QUANTUM_VACUUM_POWER_PLANT"
    ]
   }
  },

@@ -15,29 +15,14 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_BIOINFORMATICS_LAB",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_TISSUE_ENGINEERING_LAB",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_BACTERIUM_ENGINEERING",
-     "scope": "team"
-    }
+    "BUILDING_BIOINFORMATICS_LAB",
+    "BUILDING_TISSUE_ENGINEERING_LAB",
+    "TECH_BACTERIUM_ENGINEERING"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_FERTILITY_CLINIC",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_NANOMORPHIC_REPLICATOR",
-      "scope": "city"
-     }
+     "BUILDING_FERTILITY_CLINIC",
+     "BUILDING_NANOMORPHIC_REPLICATOR"
     ],
     [
      {

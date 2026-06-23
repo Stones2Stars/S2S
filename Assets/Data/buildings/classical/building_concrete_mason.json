@@ -18,10 +18,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_CONCRETE",
-     "scope": "team"
-    }
+    "TECH_CONCRETE"
    ],
    "any": [
     [
@@ -50,14 +47,8 @@
     ]
    ],
    "dormant": [
-    {
-     "type": "BUILDING_MODERN_EARTHWORKS",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_CEMENT_MILL",
-     "scope": "city"
-    }
+    "BUILDING_MODERN_EARTHWORKS",
+    "BUILDING_CEMENT_MILL"
    ]
   }
  },

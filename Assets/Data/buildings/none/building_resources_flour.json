@@ -14,26 +14,11 @@
   "build": {
    "any": [
     [
-     {
-      "type": "BUILDING_DONKEY_MILL",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_OXEN_MILL",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_QUERN",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_WATERMILL",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_WINDMILL",
-      "scope": "city"
-     }
+     "BUILDING_DONKEY_MILL",
+     "BUILDING_OXEN_MILL",
+     "BUILDING_QUERN",
+     "BUILDING_WATERMILL",
+     "BUILDING_WINDMILL"
     ],
     [
      {
@@ -45,14 +30,8 @@
   },
   "operate": {
    "dormant": [
-    {
-     "type": "BUILDING_MODERN_MILL",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_FOOD_MANUFACTURING_DISTRICT",
-     "scope": "city"
-    }
+    "BUILDING_MODERN_MILL",
+    "BUILDING_FOOD_MANUFACTURING_DISTRICT"
    ]
   }
  },

@@ -5,14 +5,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_MARTIAN_MINE",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_PLANETARY_EXTRACTION",
-     "scope": "team"
-    }
+    "BUILDING_MARTIAN_MINE",
+    "TECH_PLANETARY_EXTRACTION"
    ],
    "any": [
     [

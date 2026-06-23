@@ -14,14 +14,8 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_FACTORY",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_MICROGENERATORS",
-     "scope": "team"
-    }
+    "BUILDING_FACTORY",
+    "TECH_MICROGENERATORS"
    ],
    "any": [
     [
@@ -50,10 +44,7 @@
     ]
    ],
    "dormant": [
-    {
-     "type": "BUILDING_NANOTECH_COMPLEX",
-     "scope": "city"
-    }
+    "BUILDING_NANOTECH_COMPLEX"
    ]
   }
  },
@@ -63,17 +54,11 @@
     3,
     {
      "value": 8,
-     "enabled": {
-      "type": "TECH_ASTEROID_MINING",
-      "scope": "team"
-     }
+     "enabled": "TECH_ASTEROID_MINING"
     },
     {
      "value": 9,
-     "enabled": {
-      "type": "TECH_UBIQUITOUS_COMPUTING",
-      "scope": "team"
-     }
+     "enabled": "TECH_UBIQUITOUS_COMPUTING"
     }
    ]
   }

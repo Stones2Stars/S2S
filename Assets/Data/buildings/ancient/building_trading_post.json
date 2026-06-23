@@ -224,10 +224,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_TRADE",
-     "scope": "team"
-    }
+    "TECH_TRADE"
    ],
    "any": [
     [
@@ -254,10 +251,7 @@
     ]
    ],
    "dormant": [
-    {
-     "type": "BUILDING_SHOPPING_DISTRICT",
-     "scope": "city"
-    }
+    "BUILDING_SHOPPING_DISTRICT"
    ]
   }
  },

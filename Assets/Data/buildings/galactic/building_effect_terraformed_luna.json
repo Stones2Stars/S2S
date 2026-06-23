@@ -5,10 +5,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_LUNAR_TERRAFORMING",
-     "scope": "team"
-    }
+    "TECH_LUNAR_TERRAFORMING"
    ],
    "any": [
     [

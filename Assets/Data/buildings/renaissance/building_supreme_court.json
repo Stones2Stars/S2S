@@ -19,19 +19,13 @@
      "scope": "city",
      "min": 7
     },
-    {
-     "type": "BUILDING_DISTRICT_COURTHOUSE",
-     "scope": "city"
-    },
+    "BUILDING_DISTRICT_COURTHOUSE",
     {
      "type": "BUILDING_COURTHOUSE",
      "scope": "empire",
      "min": 5
     },
-    {
-     "type": "TECH_JURISPRUDENCE",
-     "scope": "team"
-    }
+    "TECH_JURISPRUDENCE"
    ],
    "any": [
     [

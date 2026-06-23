@@ -19,14 +19,8 @@
   "build": {
    "all": [
     "HAS_COAST",
-    {
-     "type": "TECH_POULTRY_DOMESTICATION",
-     "scope": "team"
-    },
-    {
-     "type": "TECH_FISHING",
-     "scope": "team"
-    }
+    "TECH_POULTRY_DOMESTICATION",
+    "TECH_FISHING"
    ],
    "any": [
     [
@@ -55,14 +49,8 @@
     ]
    ],
    "dormant": [
-    {
-     "type": "BUILDING_INDUSTRIAL_FARMS",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_MEAT_INDUSTRY_CONGLOMERATE",
-     "scope": "city"
-    }
+    "BUILDING_INDUSTRIAL_FARMS",
+    "BUILDING_MEAT_INDUSTRY_CONGLOMERATE"
    ]
   }
  },
@@ -87,10 +75,7 @@
     1,
     {
      "value": 7,
-     "enabled": {
-      "type": "TECH_TOURISM",
-      "scope": "team"
-     }
+     "enabled": "TECH_TOURISM"
     }
    ]
   }

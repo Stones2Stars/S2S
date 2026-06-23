@@ -5,10 +5,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_DIVINATION",
-     "scope": "team"
-    }
+    "TECH_DIVINATION"
    ],
    "any": [
     [
@@ -22,22 +19,10 @@
   "operate": {
    "any": [
     [
-     {
-      "type": "CIVIC_PROPHETS",
-      "scope": "empire"
-     },
-     {
-      "type": "CIVIC_STATE_CHURCH",
-      "scope": "empire"
-     },
-     {
-      "type": "CIVIC_FREE_CHURCH",
-      "scope": "empire"
-     },
-     {
-      "type": "CIVIC_RELIGIOUS",
-      "scope": "empire"
-     }
+     "CIVIC_PROPHETS",
+     "CIVIC_STATE_CHURCH",
+     "CIVIC_FREE_CHURCH",
+     "CIVIC_RELIGIOUS"
     ]
    ]
   }

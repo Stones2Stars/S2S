@@ -11,14 +11,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_DEEP_SPACE_ORBITAL_BASE",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_ADVANCED_WARMACHINES",
-     "scope": "team"
-    }
+    "BUILDING_DEEP_SPACE_ORBITAL_BASE",
+    "TECH_ADVANCED_WARMACHINES"
    ],
    "any": [
     [

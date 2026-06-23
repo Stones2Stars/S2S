@@ -15,10 +15,7 @@
      "scope": "city",
      "min": 7
     },
-    {
-     "type": "TECH_MOTORIZED_TRANSPORTATION",
-     "scope": "team"
-    }
+    "TECH_MOTORIZED_TRANSPORTATION"
    ],
    "any": [
     [
@@ -64,17 +61,11 @@
    "flat": [
     {
      "value": 1,
-     "enabled": {
-      "type": "TECH_ANDROIDS",
-      "scope": "team"
-     }
+     "enabled": "TECH_ANDROIDS"
     },
     {
      "value": 1,
-     "enabled": {
-      "type": "TECH_TELEPORTATION",
-      "scope": "team"
-     }
+     "enabled": "TECH_TELEPORTATION"
     }
    ]
   }

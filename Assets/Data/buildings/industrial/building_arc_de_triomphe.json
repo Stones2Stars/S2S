@@ -5,10 +5,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_MILITARY_SCIENCE",
-     "scope": "team"
-    }
+    "TECH_MILITARY_SCIENCE"
    ],
    "any": [
     [

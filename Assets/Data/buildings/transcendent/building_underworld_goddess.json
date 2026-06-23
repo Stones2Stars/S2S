@@ -11,14 +11,8 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_SUBTERRANEAN_CITY",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_DEITIES",
-     "scope": "team"
-    }
+    "BUILDING_SUBTERRANEAN_CITY",
+    "TECH_DEITIES"
    ],
    "any": [
     [

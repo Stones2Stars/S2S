@@ -6,33 +6,15 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_ANIMAL_TAMER_COMPLEX",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_ENCLOSURE_EXOTIC_HERBIVORE",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_SPECIALIZATION",
-     "scope": "team"
-    }
+    "BUILDING_ANIMAL_TAMER_COMPLEX",
+    "BUILDING_ENCLOSURE_EXOTIC_HERBIVORE",
+    "TECH_SPECIALIZATION"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_HERD_MUSKOX",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_INDUSTRIAL_FARMS",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_MEAT_INDUSTRY_CONGLOMERATE",
-      "scope": "city"
-     }
+     "BUILDING_HERD_MUSKOX",
+     "BUILDING_INDUSTRIAL_FARMS",
+     "BUILDING_MEAT_INDUSTRY_CONGLOMERATE"
     ]
    ]
   }

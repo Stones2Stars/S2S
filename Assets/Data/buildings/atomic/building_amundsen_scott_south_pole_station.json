@@ -5,10 +5,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_CLIMATE_MODELS",
-     "scope": "team"
-    }
+    "TECH_CLIMATE_MODELS"
    ],
    "any": [
     [
@@ -35,17 +32,11 @@
     20,
     {
      "value": 8,
-     "enabled": {
-      "type": "TECH_EXOPLANET_DISCOVERY",
-      "scope": "team"
-     }
+     "enabled": "TECH_EXOPLANET_DISCOVERY"
     },
     {
      "value": 8,
-     "enabled": {
-      "type": "TECH_IMAGINARY_PHYSICS",
-      "scope": "team"
-     }
+     "enabled": "TECH_IMAGINARY_PHYSICS"
     }
    ]
   }

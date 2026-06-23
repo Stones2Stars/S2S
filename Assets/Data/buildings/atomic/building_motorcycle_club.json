@@ -15,21 +15,12 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_MASS_MEDIA",
-     "scope": "team"
-    }
+    "TECH_MASS_MEDIA"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_AUTO_REPAIR_SHOP",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_HYPERMARKET",
-      "scope": "city"
-     }
+     "BUILDING_AUTO_REPAIR_SHOP",
+     "BUILDING_HYPERMARKET"
     ],
     [
      {
@@ -215,10 +206,7 @@
     "unit": "UNIT_BIKER_GANG",
     "interval": "perTurn",
     "chance": {
-     "per": {
-      "type": "PROPERTY_CRIME",
-      "scope": "city"
-     }
+     "per": "PROPERTY_CRIME"
     }
    },
    {

@@ -10,21 +10,12 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_IDEOGRAMS",
-     "scope": "team"
-    }
+    "TECH_IDEOGRAMS"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_TABLET_MAKER",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_ANTIQUE_SHOP",
-      "scope": "city"
-     }
+     "BUILDING_TABLET_MAKER",
+     "BUILDING_ANTIQUE_SHOP"
     ],
     [
      {

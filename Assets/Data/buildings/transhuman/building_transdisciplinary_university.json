@@ -5,14 +5,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_UNIVERSITY",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_KNOWLEDGE_MERCANTILISM",
-     "scope": "team"
-    }
+    "BUILDING_UNIVERSITY",
+    "TECH_KNOWLEDGE_MERCANTILISM"
    ],
    "any": [
     [

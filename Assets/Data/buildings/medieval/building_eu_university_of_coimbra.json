@@ -10,14 +10,8 @@
      "scope": "city",
      "min": 7
     },
-    {
-     "type": "BUILDING_UNIVERSITY",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_ANATOMY_LAB",
-     "scope": "city"
-    },
+    "BUILDING_UNIVERSITY",
+    "BUILDING_ANATOMY_LAB",
     {
      "type": "BUILDING_UNIVERSITY",
      "scope": "empire",
@@ -28,14 +22,8 @@
      "scope": "empire",
      "min": 4
     },
-    {
-     "type": "TECH_ANATOMY",
-     "scope": "team"
-    },
-    {
-     "type": "TECH_EDUCATION",
-     "scope": "team"
-    }
+    "TECH_ANATOMY",
+    "TECH_EDUCATION"
    ],
    "any": [
     [

@@ -13,14 +13,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_QUANTUM_LAB",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_QUANTUM_TELEPORTATION",
-     "scope": "team"
-    }
+    "BUILDING_QUANTUM_LAB",
+    "TECH_QUANTUM_TELEPORTATION"
    ],
    "any": [
     [
@@ -33,14 +27,8 @@
   },
   "operate": {
    "dormant": [
-    {
-     "type": "BUILDING_QUANTUM_SUPERCOMPUTER",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_QUANTUM_GRAVITY_SUPERCOMPUTER",
-     "scope": "city"
-    }
+    "BUILDING_QUANTUM_SUPERCOMPUTER",
+    "BUILDING_QUANTUM_GRAVITY_SUPERCOMPUTER"
    ]
   }
  },

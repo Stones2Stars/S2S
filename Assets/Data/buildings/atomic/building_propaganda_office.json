@@ -5,14 +5,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_PRESS_AGENCY",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_PROPAGANDA",
-     "scope": "team"
-    }
+    "BUILDING_PRESS_AGENCY",
+    "TECH_PROPAGANDA"
    ],
    "any": [
     [
@@ -25,10 +19,7 @@
   },
   "operate": {
    "all": [
-    {
-     "type": "CIVIC_PROPAGANDA",
-     "scope": "empire"
-    }
+    "CIVIC_PROPAGANDA"
    ]
   }
  },

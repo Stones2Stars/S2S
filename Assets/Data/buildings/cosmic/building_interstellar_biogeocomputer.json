@@ -5,14 +5,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_INTERSTELLAR_TERRAFORMED_PLANET",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_DIRECTED_PANSPERMIA",
-     "scope": "team"
-    }
+    "BUILDING_INTERSTELLAR_TERRAFORMED_PLANET",
+    "TECH_DIRECTED_PANSPERMIA"
    ],
    "any": [
     [
@@ -43,24 +37,15 @@
    "flat": [
     {
      "value": 12,
-     "enabled": {
-      "type": "TECH_GALACTIC_ECOLOGY",
-      "scope": "team"
-     }
+     "enabled": "TECH_GALACTIC_ECOLOGY"
     },
     {
      "value": 12,
-     "enabled": {
-      "type": "TECH_GRAND_UNIFICATION_BIOLOGY",
-      "scope": "team"
-     }
+     "enabled": "TECH_GRAND_UNIFICATION_BIOLOGY"
     },
     {
      "value": 12,
-     "enabled": {
-      "type": "TECH_PARTICLE_GENETICS",
-      "scope": "team"
-     }
+     "enabled": "TECH_PARTICLE_GENETICS"
     }
    ]
   }

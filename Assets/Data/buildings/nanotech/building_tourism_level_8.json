@@ -5,10 +5,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_NANOTECH_LIFESTYLE",
-     "scope": "team"
-    }
+    "TECH_NANOTECH_LIFESTYLE"
    ],
    "any": [
     [

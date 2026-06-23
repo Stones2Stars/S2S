@@ -18,21 +18,12 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_SCULPTURE",
-     "scope": "team"
-    }
+    "TECH_SCULPTURE"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_TRADING_POST",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_SHOPPING_DISTRICT",
-      "scope": "city"
-     }
+     "BUILDING_TRADING_POST",
+     "BUILDING_SHOPPING_DISTRICT"
     ],
     [
      {
@@ -68,14 +59,8 @@
     ]
    ],
    "dormant": [
-    {
-     "type": "BUILDING_FACTORY_SCULPTURES",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_MANUFACTURING_DISTRICT",
-     "scope": "city"
-    }
+    "BUILDING_FACTORY_SCULPTURES",
+    "BUILDING_MANUFACTURING_DISTRICT"
    ]
   }
  },
@@ -90,24 +75,15 @@
     1,
     {
      "value": 2,
-     "enabled": {
-      "type": "TECH_ORNAMENTATION",
-      "scope": "team"
-     }
+     "enabled": "TECH_ORNAMENTATION"
     },
     {
      "value": 3,
-     "enabled": {
-      "type": "TECH_AESTHETICS",
-      "scope": "team"
-     }
+     "enabled": "TECH_AESTHETICS"
     },
     {
      "value": 5,
-     "enabled": {
-      "type": "TECH_FREE_ARTISTRY",
-      "scope": "team"
-     }
+     "enabled": "TECH_FREE_ARTISTRY"
     }
    ]
   }

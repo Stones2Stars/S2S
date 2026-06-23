@@ -12,14 +12,8 @@
   "build": {
    "all": [
     "HAS_COAST",
-    {
-     "type": "BUILDING_UNIVERSITY",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_NAVAL_TACTICS",
-     "scope": "team"
-    }
+    "BUILDING_UNIVERSITY",
+    "TECH_NAVAL_TACTICS"
    ],
    "any": [
     [

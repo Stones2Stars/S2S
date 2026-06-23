@@ -10,10 +10,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_CONSUMERISM",
-     "scope": "team"
-    }
+    "TECH_CONSUMERISM"
    ],
    "any": [
     [
@@ -72,10 +69,7 @@
     "unit": "UNIT_ROBBER",
     "interval": "perTurn",
     "chance": {
-     "per": {
-      "type": "PROPERTY_CRIME",
-      "scope": "city"
-     }
+     "per": "PROPERTY_CRIME"
     }
    }
   ]

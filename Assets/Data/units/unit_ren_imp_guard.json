@@ -5,14 +5,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_PALACE",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_FLINTLOCK",
-     "scope": "team"
-    }
+    "BUILDING_PALACE",
+    "TECH_FLINTLOCK"
    ],
    "any": [
     [
@@ -23,10 +17,7 @@
      }
     ],
     [
-     {
-      "type": "CIVIC_MONARCHY",
-      "scope": "empire"
-     }
+     "CIVIC_MONARCHY"
     ]
    ]
   }

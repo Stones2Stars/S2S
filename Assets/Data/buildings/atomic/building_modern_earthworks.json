@@ -17,14 +17,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_MINING_CAMP",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_MODERN_SEISMOLOGY",
-     "scope": "team"
-    }
+    "BUILDING_MINING_CAMP",
+    "TECH_MODERN_SEISMOLOGY"
    ],
    "any": [
     [

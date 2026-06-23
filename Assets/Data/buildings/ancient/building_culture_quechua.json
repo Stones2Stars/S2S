@@ -5,18 +5,9 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_C_AC_SOUTH_AMERICAN",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_C_L_SOUTH_AMERICAN",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_BRONZE_WORKING",
-     "scope": "team"
-    }
+    "BUILDING_C_AC_SOUTH_AMERICAN",
+    "BUILDING_C_L_SOUTH_AMERICAN",
+    "TECH_BRONZE_WORKING"
    ],
    "any": [
     [

@@ -5,14 +5,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_INTERSTELLAR_INDUSTRIAL_PLANET",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_PICOTECHNOLOGY",
-     "scope": "team"
-    }
+    "BUILDING_INTERSTELLAR_INDUSTRIAL_PLANET",
+    "TECH_PICOTECHNOLOGY"
    ],
    "any": [
     [

@@ -5,14 +5,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_INTERGALACTIC_TERRAFORMING_BASE",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_GRAND_UNIFICATION_BIOLOGY",
-     "scope": "team"
-    }
+    "BUILDING_INTERGALACTIC_TERRAFORMING_BASE",
+    "TECH_GRAND_UNIFICATION_BIOLOGY"
    ],
    "any": [
     [

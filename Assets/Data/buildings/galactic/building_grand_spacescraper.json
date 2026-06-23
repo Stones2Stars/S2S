@@ -6,19 +6,13 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_SPACESCRAPER",
-     "scope": "city"
-    },
+    "BUILDING_SPACESCRAPER",
     {
      "type": "BUILDING_ECUMENOPOLIS_EARTH",
      "scope": "empire",
      "min": 1
     },
-    {
-     "type": "TECH_ADAPTIVE_ARCHITECTURE",
-     "scope": "team"
-    }
+    "TECH_ADAPTIVE_ARCHITECTURE"
    ],
    "any": [
     [

@@ -10,14 +10,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_POETRY",
-     "scope": "team"
-    },
-    {
-     "type": "TECH_CONSTRUCTION",
-     "scope": "team"
-    }
+    "TECH_POETRY",
+    "TECH_CONSTRUCTION"
    ],
    "any": [
     [
@@ -30,10 +24,7 @@
   },
   "operate": {
    "all": [
-    {
-     "type": "RELIGION_HELLENISM",
-     "scope": "city"
-    }
+    "RELIGION_HELLENISM"
    ]
   }
  },

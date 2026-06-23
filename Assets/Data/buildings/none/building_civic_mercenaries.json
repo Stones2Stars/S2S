@@ -15,10 +15,7 @@
   },
   "operate": {
    "all": [
-    {
-     "type": "CIVIC_MERCENARIES",
-     "scope": "empire"
-    }
+    "CIVIC_MERCENARIES"
    ]
   }
  },

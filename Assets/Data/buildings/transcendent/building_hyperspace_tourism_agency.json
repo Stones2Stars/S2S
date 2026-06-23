@@ -5,14 +5,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_HYPERSPACE_IMPORTER",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_ENDOGENOUS_EUCLIDEAN_PROPULSION",
-     "scope": "team"
-    }
+    "BUILDING_HYPERSPACE_IMPORTER",
+    "TECH_ENDOGENOUS_EUCLIDEAN_PROPULSION"
    ],
    "any": [
     [

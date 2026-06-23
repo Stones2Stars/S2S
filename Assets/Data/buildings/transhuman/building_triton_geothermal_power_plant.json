@@ -11,14 +11,8 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_TRITON_COLONY",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_ASTROGATION_CONSTELLATION",
-     "scope": "team"
-    }
+    "BUILDING_TRITON_COLONY",
+    "TECH_ASTROGATION_CONSTELLATION"
    ],
    "any": [
     [

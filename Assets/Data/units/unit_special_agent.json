@@ -5,14 +5,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_INTELLIGENCE_AGENCY",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_ELECTRONICS",
-     "scope": "team"
-    }
+    "BUILDING_INTELLIGENCE_AGENCY",
+    "TECH_ELECTRONICS"
    ]
   }
  },

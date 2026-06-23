@@ -5,10 +5,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_CIVIL_SERVICE",
-     "scope": "team"
-    }
+    "TECH_CIVIL_SERVICE"
    ],
    "any": [
     [
@@ -21,10 +18,7 @@
   },
   "operate": {
    "all": [
-    {
-     "type": "CIVIC_BUREAUCRACY",
-     "scope": "empire"
-    }
+    "CIVIC_BUREAUCRACY"
    ],
    "any": [
     [

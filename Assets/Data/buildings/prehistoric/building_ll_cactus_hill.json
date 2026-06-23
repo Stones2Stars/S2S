@@ -10,10 +10,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_AXE_MAKING",
-     "scope": "team"
-    }
+    "TECH_AXE_MAKING"
    ],
    "any": [
     [

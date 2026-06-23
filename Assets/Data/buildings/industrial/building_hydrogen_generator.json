@@ -19,14 +19,8 @@
   "build": {
    "all": [
     "HAS_FRESHWATER",
-    {
-     "type": "BUILDING_WATER_PIPES",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_THERMODYNAMICS",
-     "scope": "team"
-    }
+    "BUILDING_WATER_PIPES",
+    "TECH_THERMODYNAMICS"
    ],
    "any": [
     [
@@ -39,10 +33,7 @@
   },
   "operate": {
    "dormant": [
-    {
-     "type": "BUILDING_CHEMICALS_DISTRICT",
-     "scope": "city"
-    }
+    "BUILDING_CHEMICALS_DISTRICT"
    ]
   }
  },

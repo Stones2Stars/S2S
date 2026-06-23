@@ -5,10 +5,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_ARISTOCRACY",
-     "scope": "team"
-    }
+    "TECH_ARISTOCRACY"
    ]
   }
  },

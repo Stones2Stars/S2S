@@ -5,14 +5,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_TITAN_BIOFACTORY",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_ABYSS_COLONIZATION",
-     "scope": "team"
-    }
+    "BUILDING_TITAN_BIOFACTORY",
+    "TECH_ABYSS_COLONIZATION"
    ],
    "any": [
     [

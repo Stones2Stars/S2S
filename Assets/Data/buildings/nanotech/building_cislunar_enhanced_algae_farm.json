@@ -10,18 +10,9 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_CISLUNAR_SANITATION_SYSTEM",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_CISLUNAR_AGRICULTURAL_LAB",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_DESIGNER_MICROBIOLOGY",
-     "scope": "team"
-    }
+    "BUILDING_CISLUNAR_SANITATION_SYSTEM",
+    "BUILDING_CISLUNAR_AGRICULTURAL_LAB",
+    "TECH_DESIGNER_MICROBIOLOGY"
    ],
    "any": [
     [

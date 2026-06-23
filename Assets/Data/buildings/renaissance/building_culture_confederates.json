@@ -5,22 +5,10 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_C_AC_NORTH_AMERICAN",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_C_L_NORTH_AMERICAN",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_C_AC_EUROPEAN",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_CONSTITUTION",
-     "scope": "team"
-    }
+    "BUILDING_C_AC_NORTH_AMERICAN",
+    "BUILDING_C_L_NORTH_AMERICAN",
+    "BUILDING_C_AC_EUROPEAN",
+    "TECH_CONSTITUTION"
    ],
    "any": [
     [
@@ -38,10 +26,7 @@
      "scope": "city",
      "connection": "vicinity"
     },
-    {
-     "type": "CIVIC_CONFEDERACY",
-     "scope": "empire"
-    }
+    "CIVIC_CONFEDERACY"
    ]
   }
  },

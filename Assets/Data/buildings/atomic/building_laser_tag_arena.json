@@ -14,14 +14,8 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "TECH_EXTREME_SPORTS",
-     "scope": "team"
-    },
-    {
-     "type": "TECH_LASER",
-     "scope": "team"
-    }
+    "TECH_EXTREME_SPORTS",
+    "TECH_LASER"
    ],
    "any": [
     [
@@ -50,10 +44,7 @@
     ]
    ],
    "dormant": [
-    {
-     "type": "BUILDING_ATHLETIC_MEGACOMPLEX",
-     "scope": "city"
-    }
+    "BUILDING_ATHLETIC_MEGACOMPLEX"
    ]
   }
  },

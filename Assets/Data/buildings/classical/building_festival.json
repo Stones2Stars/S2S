@@ -5,21 +5,12 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_DEMOCRACY",
-     "scope": "team"
-    }
+    "TECH_DEMOCRACY"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_TRADING_POST",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_SHOPPING_DISTRICT",
-      "scope": "city"
-     }
+     "BUILDING_TRADING_POST",
+     "BUILDING_SHOPPING_DISTRICT"
     ],
     [
      {
@@ -31,10 +22,7 @@
   },
   "operate": {
    "all": [
-    {
-     "type": "CIVIC_PROLETARIAT",
-     "scope": "empire"
-    }
+    "CIVIC_PROLETARIAT"
    ]
   }
  },

@@ -14,25 +14,13 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_TELEPHONE_NETWORK",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_TELEPHONE",
-     "scope": "team"
-    },
-    {
-     "type": "TECH_CRIMINOLOGY",
-     "scope": "team"
-    }
+    "BUILDING_TELEPHONE_NETWORK",
+    "TECH_TELEPHONE",
+    "TECH_CRIMINOLOGY"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_POLICE_STATION",
-      "scope": "city"
-     }
+     "BUILDING_POLICE_STATION"
     ],
     [
      {
@@ -44,10 +32,7 @@
   },
   "operate": {
    "dormant": [
-    {
-     "type": "BUILDING_POLICE_PRECINCT",
-     "scope": "city"
-    }
+    "BUILDING_POLICE_PRECINCT"
    ]
   }
  },

@@ -13,10 +13,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_MODERN_HEALTH_CARE",
-     "scope": "team"
-    },
+    "TECH_MODERN_HEALTH_CARE",
     {
      "type": "BONUS_FURNITURE",
      "scope": "city",
@@ -55,10 +52,7 @@
     ]
    ],
    "dormant": [
-    {
-     "type": "BUILDING_HEALTHCARE_MEGACOMPLEX",
-     "scope": "city"
-    }
+    "BUILDING_HEALTHCARE_MEGACOMPLEX"
    ]
   }
  },

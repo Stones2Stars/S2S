@@ -6,14 +6,8 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_QUANTUM_GRAVITY_SUPERCOMPUTER",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_HYPERINTELLIGENCE",
-     "scope": "team"
-    }
+    "BUILDING_QUANTUM_GRAVITY_SUPERCOMPUTER",
+    "TECH_HYPERINTELLIGENCE"
    ],
    "any": [
     [

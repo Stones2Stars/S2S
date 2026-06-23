@@ -13,37 +13,16 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_FLIGHT",
-     "scope": "team"
-    }
+    "TECH_FLIGHT"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_AIRFIELD",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_AIRPORT",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_COMMERCIAL_AIRPORT",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_MILITARY_AIRBASE",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_AEROSPACE_COMPLEX",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_COMMERCIAL_SPACEPORT",
-      "scope": "city"
-     }
+     "BUILDING_AIRFIELD",
+     "BUILDING_AIRPORT",
+     "BUILDING_COMMERCIAL_AIRPORT",
+     "BUILDING_MILITARY_AIRBASE",
+     "BUILDING_AEROSPACE_COMPLEX",
+     "BUILDING_COMMERCIAL_SPACEPORT"
     ],
     [
      {
@@ -62,10 +41,7 @@
     }
    ],
    "dormant": [
-    {
-     "type": "BUILDING_HOLOGRAPHIC_SCHOOL",
-     "scope": "city"
-    }
+    "BUILDING_HOLOGRAPHIC_SCHOOL"
    ]
   }
  },

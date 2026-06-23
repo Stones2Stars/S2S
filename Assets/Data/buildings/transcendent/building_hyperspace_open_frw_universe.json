@@ -5,18 +5,9 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_HYPERSPACE_INFLATON_FIELD",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_EFFECT_UNIVERSAL_ECONOMY",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_CONTROLLED_INFLATION",
-     "scope": "team"
-    }
+    "BUILDING_HYPERSPACE_INFLATON_FIELD",
+    "BUILDING_EFFECT_UNIVERSAL_ECONOMY",
+    "TECH_CONTROLLED_INFLATION"
    ],
    "any": [
     [
@@ -34,10 +25,7 @@
     100,
     {
      "value": 20,
-     "enabled": {
-      "type": "TECH_PARAMETER_TUNING",
-      "scope": "team"
-     }
+     "enabled": "TECH_PARAMETER_TUNING"
     }
    ]
   }

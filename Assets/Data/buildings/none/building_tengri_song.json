@@ -5,10 +5,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_SHAMANS_YURTA",
-     "scope": "city"
-    },
+    "BUILDING_SHAMANS_YURTA",
     {
      "type": "BUILDING_EJE_SONG",
      "scope": "empire",
@@ -29,10 +26,7 @@
   },
   "operate": {
    "all": [
-    {
-     "type": "RELIGION_TENGRIISM",
-     "scope": "city"
-    }
+    "RELIGION_TENGRIISM"
    ]
   }
  },

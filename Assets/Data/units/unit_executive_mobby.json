@@ -5,14 +5,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_HQ_MOBBY_MEATS_INTERNATIONAL",
-     "scope": "city"
-    },
-    {
-     "type": "CORPORATION_MOBBY",
-     "scope": "city"
-    }
+    "BUILDING_HQ_MOBBY_MEATS_INTERNATIONAL",
+    "CORPORATION_MOBBY"
    ]
   }
  },

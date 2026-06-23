@@ -5,10 +5,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_ANTIMATTER_ROCKETS",
-     "scope": "team"
-    }
+    "TECH_ANTIMATTER_ROCKETS"
    ],
    "any": [
     [
@@ -25,10 +22,7 @@
     ]
    ],
    "noneOf": [
-    {
-     "type": "BUILDING_KEPLER_186F_COLONY",
-     "scope": "city"
-    }
+    "BUILDING_KEPLER_186F_COLONY"
    ]
   }
  },

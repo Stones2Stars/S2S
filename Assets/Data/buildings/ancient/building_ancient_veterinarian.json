@@ -18,25 +18,13 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_VETERINARY_MEDICINE",
-     "scope": "team"
-    }
+    "TECH_VETERINARY_MEDICINE"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_DOG_BREEDER",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_CAT_BREEDER",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_REPET",
-      "scope": "city"
-     }
+     "BUILDING_DOG_BREEDER",
+     "BUILDING_CAT_BREEDER",
+     "BUILDING_REPET"
     ],
     [
      {
@@ -48,14 +36,8 @@
   },
   "operate": {
    "dormant": [
-    {
-     "type": "BUILDING_VETERINARIAN",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_HEALTHCARE_MEGACOMPLEX",
-     "scope": "city"
-    }
+    "BUILDING_VETERINARIAN",
+    "BUILDING_HEALTHCARE_MEGACOMPLEX"
    ]
   }
  },

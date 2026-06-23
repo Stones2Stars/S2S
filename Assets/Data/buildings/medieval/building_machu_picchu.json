@@ -6,10 +6,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_MOUNTAINEERING",
-     "scope": "team"
-    },
+    "TECH_MOUNTAINEERING",
     "STATE_RELIGION_IN_CITY",
     {
      "STATE_RELIGION": "RELIGION_ANDEANISM"
@@ -32,10 +29,7 @@
   },
   "operate": {
    "all": [
-    {
-     "type": "RELIGION_ANDEANISM",
-     "scope": "city"
-    }
+    "RELIGION_ANDEANISM"
    ]
   }
  },

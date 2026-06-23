@@ -15,174 +15,48 @@
   },
   "operate": {
    "dormant": [
-    {
-     "type": "BUILDING_HOUSING_TREE_HOLLOW",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_HOUSING_ANIMAL_BURROW",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_HOUSING_LEAN_TOS",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_HOUSING_GRASS_HUTS",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_HOUSING_BARK_HUTS",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_HOUSING_LONGHOUSE",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_HOUSING_BONE_HUTS",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_HOUSING_ANIMAL_HIDE_TENTS",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_HOUSING_TIPIS",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_HOUSING_YURTS",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_HOUSING_MUD_HUTS",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_HOUSING_STONE_HUTS",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_HOUSING_TREEHOUSES",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_HOUSING_STILT_HUTS",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_HOUSING_HOGANS",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_HOUSING_PUEBLOS",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_HOUSING_HOVELS",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_HOUSING_DOMUS",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_HOUSING_SHACKS",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_HOUSING_INSULAE",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_HOUSING_VILLAS",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_HOUSING_SLUMS",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_HOUSING_PALACES",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_HOUSING_COTTAGES",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_HOUSING_MANORS",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_HOUSING_COMMONS",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_HOUSING_SHANTY_TOWN",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_HOUSING_ESTATES",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_HOUSING_APARTMENTS",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_HOUSING_BOONDOCKS",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_HOUSING_MANSIONS",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_HOUSING_SUBURBS",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_HOUSING_GHETTOS",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_HOUSING_CONDOMINIUMS",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_HOUSING_DUGOUTS",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_HOUSING_SMART_HOMES",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_HOUSING_HIGH_TECH_APARTMENTS",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_HOUSING_CHATEAU",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_HOUSING_INNER_CITY",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_HOUSING_HIGH_TECH_CONDOMINIUMS",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_HOUSING_COLONY_ARCOLOGY",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_LAUNCH_ARCOLOGY",
-     "scope": "city"
-    }
+    "BUILDING_HOUSING_TREE_HOLLOW",
+    "BUILDING_HOUSING_ANIMAL_BURROW",
+    "BUILDING_HOUSING_LEAN_TOS",
+    "BUILDING_HOUSING_GRASS_HUTS",
+    "BUILDING_HOUSING_BARK_HUTS",
+    "BUILDING_HOUSING_LONGHOUSE",
+    "BUILDING_HOUSING_BONE_HUTS",
+    "BUILDING_HOUSING_ANIMAL_HIDE_TENTS",
+    "BUILDING_HOUSING_TIPIS",
+    "BUILDING_HOUSING_YURTS",
+    "BUILDING_HOUSING_MUD_HUTS",
+    "BUILDING_HOUSING_STONE_HUTS",
+    "BUILDING_HOUSING_TREEHOUSES",
+    "BUILDING_HOUSING_STILT_HUTS",
+    "BUILDING_HOUSING_HOGANS",
+    "BUILDING_HOUSING_PUEBLOS",
+    "BUILDING_HOUSING_HOVELS",
+    "BUILDING_HOUSING_DOMUS",
+    "BUILDING_HOUSING_SHACKS",
+    "BUILDING_HOUSING_INSULAE",
+    "BUILDING_HOUSING_VILLAS",
+    "BUILDING_HOUSING_SLUMS",
+    "BUILDING_HOUSING_PALACES",
+    "BUILDING_HOUSING_COTTAGES",
+    "BUILDING_HOUSING_MANORS",
+    "BUILDING_HOUSING_COMMONS",
+    "BUILDING_HOUSING_SHANTY_TOWN",
+    "BUILDING_HOUSING_ESTATES",
+    "BUILDING_HOUSING_APARTMENTS",
+    "BUILDING_HOUSING_BOONDOCKS",
+    "BUILDING_HOUSING_MANSIONS",
+    "BUILDING_HOUSING_SUBURBS",
+    "BUILDING_HOUSING_GHETTOS",
+    "BUILDING_HOUSING_CONDOMINIUMS",
+    "BUILDING_HOUSING_DUGOUTS",
+    "BUILDING_HOUSING_SMART_HOMES",
+    "BUILDING_HOUSING_HIGH_TECH_APARTMENTS",
+    "BUILDING_HOUSING_CHATEAU",
+    "BUILDING_HOUSING_INNER_CITY",
+    "BUILDING_HOUSING_HIGH_TECH_CONDOMINIUMS",
+    "BUILDING_HOUSING_COLONY_ARCOLOGY",
+    "BUILDING_LAUNCH_ARCOLOGY"
    ]
   }
  },

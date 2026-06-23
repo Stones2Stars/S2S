@@ -6,18 +6,9 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_ANIMAL_TAMER_COMPLEX",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_ENCLOSURE_BIG_CAT",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_SPECIALIZATION",
-     "scope": "team"
-    }
+    "BUILDING_ANIMAL_TAMER_COMPLEX",
+    "BUILDING_ENCLOSURE_BIG_CAT",
+    "TECH_SPECIALIZATION"
    ]
   }
  },

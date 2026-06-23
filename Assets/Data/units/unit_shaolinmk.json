@@ -10,14 +10,8 @@
      "scope": "city",
      "connection": "trade|vicinity"
     },
-    {
-     "type": "BUILDING_SHAOLIN_TEMPLE",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_MARTIAL_ARTS",
-     "scope": "team"
-    }
+    "BUILDING_SHAOLIN_TEMPLE",
+    "TECH_MARTIAL_ARTS"
    ],
    "any": [
     [

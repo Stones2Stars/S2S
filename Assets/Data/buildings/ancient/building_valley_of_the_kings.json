@@ -15,10 +15,7 @@
      "scope": "city",
      "min": 3
     },
-    {
-     "type": "BUILDING_PALACE",
-     "scope": "city"
-    },
+    "BUILDING_PALACE",
     {
      "type": "BUILDING_THE_GREAT_PYRAMID",
      "scope": "empire",
@@ -29,10 +26,7 @@
      "scope": "empire",
      "min": 1
     },
-    {
-     "type": "TECH_SCULPTURE",
-     "scope": "team"
-    }
+    "TECH_SCULPTURE"
    ],
    "any": [
     [

@@ -11,10 +11,7 @@
      "scope": "city",
      "min": 7
     },
-    {
-     "type": "TECH_SMART_DUST",
-     "scope": "team"
-    }
+    "TECH_SMART_DUST"
    ],
    "any": [
     [

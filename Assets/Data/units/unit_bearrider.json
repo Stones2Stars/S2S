@@ -5,21 +5,12 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_MEGAFAUNA_DOMESTICATION",
-     "scope": "team"
-    }
+    "TECH_MEGAFAUNA_DOMESTICATION"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_EFFECT_HERITAGE_BEARS",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_ANIMAL_TRAINER_BEAR",
-      "scope": "city"
-     }
+     "BUILDING_EFFECT_HERITAGE_BEARS",
+     "BUILDING_ANIMAL_TRAINER_BEAR"
     ]
    ]
   }

@@ -13,14 +13,8 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_SPACETIME_FACTORY",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_STRING_MANIPULATION",
-     "scope": "team"
-    }
+    "BUILDING_SPACETIME_FACTORY",
+    "TECH_STRING_MANIPULATION"
    ],
    "any": [
     [
@@ -38,17 +32,11 @@
     60,
     {
      "value": 13,
-     "enabled": {
-      "type": "TECH_BRANE_CONSTRUCTION",
-      "scope": "team"
-     }
+     "enabled": "TECH_BRANE_CONSTRUCTION"
     },
     {
      "value": 13,
-     "enabled": {
-      "type": "TECH_DECOMPACTIFIED_SPACE",
-      "scope": "team"
-     }
+     "enabled": "TECH_DECOMPACTIFIED_SPACE"
     }
    ]
   }
@@ -59,10 +47,7 @@
     15,
     {
      "value": 13,
-     "enabled": {
-      "type": "TECH_MANIFOLD_COLONIZATION",
-      "scope": "team"
-     }
+     "enabled": "TECH_MANIFOLD_COLONIZATION"
     }
    ]
   }
@@ -73,10 +58,7 @@
     5,
     {
      "value": 13,
-     "enabled": {
-      "type": "TECH_BRANE_CROSSOVER",
-      "scope": "team"
-     }
+     "enabled": "TECH_BRANE_CROSSOVER"
     }
    ]
   }

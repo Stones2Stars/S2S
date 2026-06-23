@@ -5,10 +5,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_TRADE",
-     "scope": "team"
-    }
+    "TECH_TRADE"
    ],
    "any": [
     [
@@ -18,28 +15,13 @@
      }
     ],
     [
-     {
-      "type": "BUILDING_CARNIVAL",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_ZOO",
-      "scope": "city"
-     }
+     "BUILDING_CARNIVAL",
+     "BUILDING_ZOO"
     ],
     [
-     {
-      "type": "BUILDING_FOLKLORE_T_OLD_MAN_OF_THE_FOREST",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_FOLKLORE_T_OLD_WORLD_MONKEYS",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_FOLKLORE_T_NEW_WORLD_MONKEYS",
-      "scope": "city"
-     }
+     "BUILDING_FOLKLORE_T_OLD_MAN_OF_THE_FOREST",
+     "BUILDING_FOLKLORE_T_OLD_WORLD_MONKEYS",
+     "BUILDING_FOLKLORE_T_NEW_WORLD_MONKEYS"
     ]
    ]
   }
@@ -49,10 +31,7 @@
    "flat": [
     {
      "value": 5,
-     "enabled": {
-      "type": "TECH_SCIENTIFIC_METHOD",
-      "scope": "team"
-     }
+     "enabled": "TECH_SCIENTIFIC_METHOD"
     }
    ]
   }

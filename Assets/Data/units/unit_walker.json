@@ -10,14 +10,8 @@
      "scope": "city",
      "connection": "trade|vicinity"
     },
-    {
-     "type": "BUILDING_ROBOTICS_LAB",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_MACHINE_LEARNING",
-     "scope": "team"
-    }
+    "BUILDING_ROBOTICS_LAB",
+    "TECH_MACHINE_LEARNING"
    ],
    "any": [
     [

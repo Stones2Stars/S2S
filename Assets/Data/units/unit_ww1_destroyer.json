@@ -15,10 +15,7 @@
      "scope": "world",
      "min": 10
     },
-    {
-     "type": "TECH_ARMORED_VEHICLES",
-     "scope": "team"
-    }
+    "TECH_ARMORED_VEHICLES"
    ],
    "any": [
     [

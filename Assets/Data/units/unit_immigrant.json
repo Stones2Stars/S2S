@@ -6,10 +6,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_CONSTRUCTION",
-     "scope": "team"
-    },
+    "TECH_CONSTRUCTION",
     {
      "type": "POPULATION",
      "scope": "city",

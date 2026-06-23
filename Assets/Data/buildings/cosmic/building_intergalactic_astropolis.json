@@ -11,10 +11,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_INTERGALACTIC_COLONIZATION",
-     "scope": "team"
-    }
+    "TECH_INTERGALACTIC_COLONIZATION"
    ],
    "any": [
     [

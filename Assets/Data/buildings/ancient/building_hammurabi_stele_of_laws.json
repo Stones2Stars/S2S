@@ -5,10 +5,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_DUALISM",
-     "scope": "team"
-    },
+    "TECH_DUALISM",
     {
      "STATE_RELIGION": "RELIGION_MESOPOTAMISM"
     }
@@ -29,10 +26,7 @@
      "scope": "city",
      "connection": "trade|vicinity"
     },
-    {
-     "type": "RELIGION_MESOPOTAMISM",
-     "scope": "city"
-    }
+    "RELIGION_MESOPOTAMISM"
    ]
   }
  },

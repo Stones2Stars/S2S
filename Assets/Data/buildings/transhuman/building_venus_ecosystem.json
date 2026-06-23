@@ -10,14 +10,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_SPACE_COLONY_VENUS",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_QUADRUPLE_HELIX",
-     "scope": "team"
-    }
+    "BUILDING_SPACE_COLONY_VENUS",
+    "TECH_QUADRUPLE_HELIX"
    ],
    "any": [
     [

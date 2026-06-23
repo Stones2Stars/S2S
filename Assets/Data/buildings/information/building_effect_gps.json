@@ -12,10 +12,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_COMMUNICATION_NETWORKS",
-     "scope": "team"
-    }
+    "TECH_COMMUNICATION_NETWORKS"
    ],
    "any": [
     [
@@ -32,24 +29,15 @@
    "flat": [
     {
      "value": 8,
-     "enabled": {
-      "type": "TECH_ONLINE_COMMUNITY",
-      "scope": "team"
-     }
+     "enabled": "TECH_ONLINE_COMMUNITY"
     },
     {
      "value": 9,
-     "enabled": {
-      "type": "TECH_AUTOMATED_TRAFFIC",
-      "scope": "team"
-     }
+     "enabled": "TECH_AUTOMATED_TRAFFIC"
     },
     {
      "value": 8,
-     "enabled": {
-      "type": "TECH_WEARABLE_COMPUTERS",
-      "scope": "team"
-     }
+     "enabled": "TECH_WEARABLE_COMPUTERS"
     }
    ]
   }
@@ -59,24 +47,15 @@
    "flat": [
     {
      "value": 8,
-     "enabled": {
-      "type": "TECH_DIGITIZATION",
-      "scope": "team"
-     }
+     "enabled": "TECH_DIGITIZATION"
     },
     {
      "value": 8,
-     "enabled": {
-      "type": "TECH_CYBERWARFARE",
-      "scope": "team"
-     }
+     "enabled": "TECH_CYBERWARFARE"
     },
     {
      "value": 8,
-     "enabled": {
-      "type": "TECH_WAR_SIMULATIONS",
-      "scope": "team"
-     }
+     "enabled": "TECH_WAR_SIMULATIONS"
     }
    ]
   }

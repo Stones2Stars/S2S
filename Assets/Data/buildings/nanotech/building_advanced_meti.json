@@ -5,14 +5,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_ASTROBIOLOGY_LAB",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_UNIVERSAL_TRANSLATOR",
-     "scope": "team"
-    }
+    "BUILDING_ASTROBIOLOGY_LAB",
+    "TECH_UNIVERSAL_TRANSLATOR"
    ],
    "any": [
     [
@@ -33,24 +27,15 @@
     10,
     {
      "value": 11,
-     "enabled": {
-      "type": "TECH_XENODIPLOMACY",
-      "scope": "team"
-     }
+     "enabled": "TECH_XENODIPLOMACY"
     },
     {
      "value": 10,
-     "enabled": {
-      "type": "TECH_BINARY_SEMIOTICS",
-      "scope": "team"
-     }
+     "enabled": "TECH_BINARY_SEMIOTICS"
     },
     {
      "value": 11,
-     "enabled": {
-      "type": "TECH_INTERSTELLAR_COMMUNICATION",
-      "scope": "team"
-     }
+     "enabled": "TECH_INTERSTELLAR_COMMUNICATION"
     }
    ]
   }

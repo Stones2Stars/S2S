@@ -15,14 +15,8 @@
      "scope": "city",
      "min": 7
     },
-    {
-     "type": "BUILDING_MOVIE_STUDIO",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_MOTION_PICTURES",
-     "scope": "team"
-    }
+    "BUILDING_MOVIE_STUDIO",
+    "TECH_MOTION_PICTURES"
    ],
    "any": [
     [

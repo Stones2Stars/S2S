@@ -14,14 +14,8 @@
   "build": {
    "all": [
     "HAS_FRESHWATER",
-    {
-     "type": "BUILDING_WATER_PIPES",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_PSYCHOLOGY",
-     "scope": "team"
-    }
+    "BUILDING_WATER_PIPES",
+    "TECH_PSYCHOLOGY"
    ],
    "any": [
     [
@@ -34,10 +28,7 @@
   },
   "operate": {
    "dormant": [
-    {
-     "type": "BUILDING_HIGH_TECH_CULTURAL_ENRICHMENT",
-     "scope": "city"
-    }
+    "BUILDING_HIGH_TECH_CULTURAL_ENRICHMENT"
    ]
   }
  },

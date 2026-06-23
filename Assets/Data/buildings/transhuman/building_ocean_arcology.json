@@ -12,14 +12,8 @@
   "build": {
    "all": [
     "HAS_COAST",
-    {
-     "type": "BUILDING_OCEAN_CITY",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_MEGASTRUCTURE_ENGINEERING",
-     "scope": "team"
-    }
+    "BUILDING_OCEAN_CITY",
+    "TECH_MEGASTRUCTURE_ENGINEERING"
    ],
    "any": [
     [

@@ -15,10 +15,7 @@
      "scope": "world",
      "min": 10
     },
-    {
-     "type": "TECH_STEALTH",
-     "scope": "team"
-    }
+    "TECH_STEALTH"
    ],
    "any": [
     [

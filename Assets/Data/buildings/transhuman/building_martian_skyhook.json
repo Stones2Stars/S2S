@@ -6,18 +6,9 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_MARTIAN_SPACEPORT",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_MARTIAN_METROPOLIS",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_WEIGHTLESS_FLIGHT",
-     "scope": "team"
-    }
+    "BUILDING_MARTIAN_SPACEPORT",
+    "BUILDING_MARTIAN_METROPOLIS",
+    "TECH_WEIGHTLESS_FLIGHT"
    ],
    "any": [
     [

@@ -5,14 +5,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_INTERSTELLAR_BASE_TIDALLY_LOCKED_PLANET",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_FORGE_WORLDS",
-     "scope": "team"
-    }
+    "BUILDING_INTERSTELLAR_BASE_TIDALLY_LOCKED_PLANET",
+    "TECH_FORGE_WORLDS"
    ],
    "any": [
     [

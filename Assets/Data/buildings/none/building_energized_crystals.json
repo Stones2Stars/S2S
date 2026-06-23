@@ -6,14 +6,8 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_CRYSTAL_JEWELLER",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_CRYSTALPUNK",
-     "scope": "team"
-    }
+    "BUILDING_CRYSTAL_JEWELLER",
+    "TECH_CRYSTALPUNK"
    ],
    "any": [
     [

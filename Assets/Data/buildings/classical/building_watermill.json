@@ -20,21 +20,12 @@
   "build": {
    "all": [
     "HAS_RIVER",
-    {
-     "type": "TECH_WATERWHEELS",
-     "scope": "team"
-    }
+    "TECH_WATERWHEELS"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_GRANARY",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_MODERN_GRANARY",
-      "scope": "city"
-     }
+     "BUILDING_GRANARY",
+     "BUILDING_MODERN_GRANARY"
     ],
     [
      {
@@ -53,14 +44,8 @@
     }
    ],
    "dormant": [
-    {
-     "type": "BUILDING_MODERN_MILL",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_FOOD_MANUFACTURING_DISTRICT",
-     "scope": "city"
-    }
+    "BUILDING_MODERN_MILL",
+    "BUILDING_FOOD_MANUFACTURING_DISTRICT"
    ]
   }
  },

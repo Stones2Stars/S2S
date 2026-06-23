@@ -5,14 +5,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_EXILE_PRACTICES",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_DECEPTION",
-     "scope": "team"
-    }
+    "BUILDING_EXILE_PRACTICES",
+    "TECH_DECEPTION"
    ]
   }
  },

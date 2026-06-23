@@ -15,10 +15,7 @@
      "scope": "city",
      "min": 3
     },
-    {
-     "type": "TECH_PAPACY",
-     "scope": "team"
-    },
+    "TECH_PAPACY",
     "STATE_RELIGION_IN_CITY"
    ],
    "any": [

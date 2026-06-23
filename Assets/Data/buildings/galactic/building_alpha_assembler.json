@@ -16,26 +16,11 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_BETA_ASSEMBLER",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_FARMSCRAPER_III",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_URBAN_PSYCHIC_INTEGRATION",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_SELF_AWARE_CITY",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_ATOMIC_SCALE_ENGINEERING",
-     "scope": "team"
-    }
+    "BUILDING_BETA_ASSEMBLER",
+    "BUILDING_FARMSCRAPER_III",
+    "BUILDING_URBAN_PSYCHIC_INTEGRATION",
+    "BUILDING_SELF_AWARE_CITY",
+    "TECH_ATOMIC_SCALE_ENGINEERING"
    ],
    "any": [
     [

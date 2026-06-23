@@ -14,14 +14,8 @@
   "build": {
    "all": [
     "HAS_RIVER",
-    {
-     "type": "BUILDING_CHINAMPA",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_AGRICULTURAL_TOOLS",
-     "scope": "team"
-    }
+    "BUILDING_CHINAMPA",
+    "TECH_AGRICULTURAL_TOOLS"
    ],
    "any": [
     [
@@ -40,10 +34,7 @@
   },
   "operate": {
    "dormant": [
-    {
-     "type": "BUILDING_FARMSCRAPER_I",
-     "scope": "city"
-    }
+    "BUILDING_FARMSCRAPER_I"
    ]
   }
  },

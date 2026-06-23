@@ -6,33 +6,15 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_DOG_KENNELS",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_THE_WHEEL",
-     "scope": "team"
-    }
+    "BUILDING_DOG_KENNELS",
+    "TECH_THE_WHEEL"
    ],
    "any": [
     [
-     {
-      "type": "HERITAGE_FOLKLORE_WOLF",
-      "scope": "empire"
-     },
-     {
-      "type": "HERITAGE_FOLKLORE_WOLF_DIRE",
-      "scope": "empire"
-     },
-     {
-      "type": "HERITAGE_FOLKLORE_WOLF_ETHIOPIAN",
-      "scope": "empire"
-     },
-     {
-      "type": "HERITAGE_TAXON_CANIDAE",
-      "scope": "empire"
-     }
+     "HERITAGE_FOLKLORE_WOLF",
+     "HERITAGE_FOLKLORE_WOLF_DIRE",
+     "HERITAGE_FOLKLORE_WOLF_ETHIOPIAN",
+     "HERITAGE_TAXON_CANIDAE"
     ]
    ]
   }

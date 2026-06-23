@@ -12,14 +12,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_NGAI_BLESS",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_PRIESTHOOD",
-     "scope": "team"
-    },
+    "BUILDING_NGAI_BLESS",
+    "TECH_PRIESTHOOD",
     "STATE_RELIGION_IN_CITY",
     {
      "STATE_RELIGION": "RELIGION_NGAIISM"
@@ -36,10 +30,7 @@
   },
   "operate": {
    "all": [
-    {
-     "type": "RELIGION_NGAIISM",
-     "scope": "city"
-    }
+    "RELIGION_NGAIISM"
    ]
   }
  },

@@ -6,14 +6,8 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_REWILDERNESS",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_DEITIES",
-     "scope": "team"
-    }
+    "BUILDING_REWILDERNESS",
+    "TECH_DEITIES"
    ],
    "any": [
     [

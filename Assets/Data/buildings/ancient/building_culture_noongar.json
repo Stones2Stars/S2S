@@ -6,18 +6,9 @@
   "build": {
    "all": [
     "HAS_COAST",
-    {
-     "type": "BUILDING_C_AC_OCEANIAN",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_C_L_OCEANIAN",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_MONARCHY",
-     "scope": "team"
-    }
+    "BUILDING_C_AC_OCEANIAN",
+    "BUILDING_C_L_OCEANIAN",
+    "TECH_MONARCHY"
    ],
    "any": [
     [

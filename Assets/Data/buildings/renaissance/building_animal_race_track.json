@@ -5,25 +5,13 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_CAVALRY_TACTICS",
-     "scope": "team"
-    }
+    "TECH_CAVALRY_TACTICS"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_STABLE",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_KNIGHTS_STABLE",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_MODERN_STABLE",
-      "scope": "city"
-     }
+     "BUILDING_STABLE",
+     "BUILDING_KNIGHTS_STABLE",
+     "BUILDING_MODERN_STABLE"
     ],
     [
      {
@@ -40,10 +28,7 @@
     1,
     {
      "value": 7,
-     "enabled": {
-      "type": "TECH_LEGALIZED_GAMBLING",
-      "scope": "team"
-     }
+     "enabled": "TECH_LEGALIZED_GAMBLING"
     },
     {
      "value": 1,

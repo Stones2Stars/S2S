@@ -5,10 +5,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_INFORMATION_LIFESTYLE",
-     "scope": "team"
-    }
+    "TECH_INFORMATION_LIFESTYLE"
    ],
    "any": [
     [
@@ -21,26 +18,11 @@
   },
   "operate": {
    "dormant": [
-    {
-     "type": "BUILDING_EDUCATION_PREPOSTEROUS",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_EDUCATION_IDIOCRACY",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_EDUCATION_IGNORANCE",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_EDUCATION_BEWILDERED",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_EDUCATION_MINDLESS",
-     "scope": "city"
-    }
+    "BUILDING_EDUCATION_PREPOSTEROUS",
+    "BUILDING_EDUCATION_IDIOCRACY",
+    "BUILDING_EDUCATION_IGNORANCE",
+    "BUILDING_EDUCATION_BEWILDERED",
+    "BUILDING_EDUCATION_MINDLESS"
    ],
    "all": [
     {

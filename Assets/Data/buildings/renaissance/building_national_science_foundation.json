@@ -10,14 +10,8 @@
      "scope": "city",
      "min": 13
     },
-    {
-     "type": "BUILDING_UNIVERSITY",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_SCIENTIFIC_METHOD",
-     "scope": "team"
-    }
+    "BUILDING_UNIVERSITY",
+    "TECH_SCIENTIFIC_METHOD"
    ],
    "any": [
     [

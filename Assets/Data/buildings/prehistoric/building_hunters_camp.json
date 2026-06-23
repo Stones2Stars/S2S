@@ -51,10 +51,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_TRACKING",
-     "scope": "team"
-    }
+    "TECH_TRACKING"
    ],
    "any": [
     [
@@ -67,10 +64,7 @@
   },
   "operate": {
    "dormant": [
-    {
-     "type": "BUILDING_ANCIENT_CUSTOMS",
-     "scope": "city"
-    }
+    "BUILDING_ANCIENT_CUSTOMS"
    ]
   }
  },
@@ -89,10 +83,7 @@
    "flat": [
     {
      "value": 1,
-     "enabled": {
-      "type": "TECH_LEISURE",
-      "scope": "team"
-     }
+     "enabled": "TECH_LEISURE"
     }
    ]
   }

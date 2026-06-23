@@ -5,10 +5,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_PRINTING_PRESS",
-     "scope": "team"
-    }
+    "TECH_PRINTING_PRESS"
    ],
    "any": [
     [
@@ -21,10 +18,7 @@
   },
   "operate": {
    "all": [
-    {
-     "type": "CIVIC_PAPER_MONEY",
-     "scope": "empire"
-    }
+    "CIVIC_PAPER_MONEY"
    ]
   }
  },

@@ -13,14 +13,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_FACTORY",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_NANOROBOTICS",
-     "scope": "team"
-    }
+    "BUILDING_FACTORY",
+    "TECH_NANOROBOTICS"
    ],
    "any": [
     [
@@ -40,22 +34,10 @@
     }
    ],
    "dormant": [
-    {
-     "type": "BUILDING_MOLECULAR_ASSEMBLER",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_ATOMIC_ASSEMBLER",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_QUANTUM_ASSEMBLER",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_MATERIALIZER",
-     "scope": "city"
-    }
+    "BUILDING_MOLECULAR_ASSEMBLER",
+    "BUILDING_ATOMIC_ASSEMBLER",
+    "BUILDING_QUANTUM_ASSEMBLER",
+    "BUILDING_MATERIALIZER"
    ]
   }
  },

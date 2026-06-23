@@ -13,10 +13,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_CARVING",
-     "scope": "team"
-    }
+    "TECH_CARVING"
    ],
    "any": [
     [
@@ -29,22 +26,10 @@
   },
   "operate": {
    "dormant": [
-    {
-     "type": "BUILDING_OUTHOUSE",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_GARDEROBE",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_PUBLIC_RESTROOMS",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_SANITATION_CHAMBER",
-     "scope": "city"
-    }
+    "BUILDING_OUTHOUSE",
+    "BUILDING_GARDEROBE",
+    "BUILDING_PUBLIC_RESTROOMS",
+    "BUILDING_SANITATION_CHAMBER"
    ]
   }
  },

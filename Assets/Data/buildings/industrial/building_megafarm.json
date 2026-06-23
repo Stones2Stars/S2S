@@ -5,10 +5,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_AGRICULTURAL_ENGINEERING",
-     "scope": "team"
-    }
+    "TECH_AGRICULTURAL_ENGINEERING"
    ],
    "any": [
     [
@@ -51,10 +48,7 @@
   },
   "operate": {
    "all": [
-    {
-     "type": "CIVIC_CORPORATE_OWNED",
-     "scope": "empire"
-    }
+    "CIVIC_CORPORATE_OWNED"
    ]
   }
  },

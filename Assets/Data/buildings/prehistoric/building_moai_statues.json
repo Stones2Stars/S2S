@@ -6,10 +6,7 @@
   "build": {
    "all": [
     "HAS_COAST",
-    {
-     "type": "TECH_MEGALITH_CONSTRUCTION",
-     "scope": "team"
-    }
+    "TECH_MEGALITH_CONSTRUCTION"
    ],
    "any": [
     [

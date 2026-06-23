@@ -5,10 +5,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_PLANETARY_TERRAFORMING",
-     "scope": "team"
-    }
+    "TECH_PLANETARY_TERRAFORMING"
    ],
    "any": [
     [

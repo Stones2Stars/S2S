@@ -10,14 +10,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_TRANSTELLAR_ARTIFICIAL_GAS_GIANT",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_ARTIFICIAL_PLANETS",
-     "scope": "team"
-    }
+    "BUILDING_TRANSTELLAR_ARTIFICIAL_GAS_GIANT",
+    "TECH_ARTIFICIAL_PLANETS"
    ],
    "any": [
     [

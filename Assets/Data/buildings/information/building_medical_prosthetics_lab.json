@@ -19,14 +19,8 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_MEDICAL_CLINIC",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_MOLECULAR_MEDICINE",
-     "scope": "team"
-    }
+    "BUILDING_MEDICAL_CLINIC",
+    "TECH_MOLECULAR_MEDICINE"
    ],
    "any": [
     [
@@ -46,10 +40,7 @@
     }
    ],
    "dormant": [
-    {
-     "type": "BUILDING_HEALTHCARE_MEGACOMPLEX",
-     "scope": "city"
-    }
+    "BUILDING_HEALTHCARE_MEGACOMPLEX"
    ]
   }
  },
@@ -59,10 +50,7 @@
     2,
     {
      "value": 1,
-     "enabled": {
-      "type": "TECH_REPLACEMENT_ORGANS",
-      "scope": "team"
-     }
+     "enabled": "TECH_REPLACEMENT_ORGANS"
     }
    ]
   }

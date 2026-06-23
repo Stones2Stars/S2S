@@ -14,29 +14,14 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "TECH_LEGALIZED_GAMBLING",
-     "scope": "team"
-    }
+    "TECH_LEGALIZED_GAMBLING"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_NIGHT_CLUB",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_CASINO",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_DIVE_BAR",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_GALACTIC_CANTINA",
-      "scope": "city"
-     }
+     "BUILDING_NIGHT_CLUB",
+     "BUILDING_CASINO",
+     "BUILDING_DIVE_BAR",
+     "BUILDING_GALACTIC_CANTINA"
     ],
     [
      {
@@ -48,14 +33,8 @@
   },
   "operate": {
    "dormant": [
-    {
-     "type": "BUILDING_ANDROID_BROTHEL",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_ORDINANCE_PROSTITUTION_BAN",
-     "scope": "city"
-    }
+    "BUILDING_ANDROID_BROTHEL",
+    "BUILDING_ORDINANCE_PROSTITUTION_BAN"
    ]
   }
  },

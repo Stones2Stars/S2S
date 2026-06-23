@@ -11,14 +11,8 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_AERIAL_CITY",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_DEITIES",
-     "scope": "team"
-    }
+    "BUILDING_AERIAL_CITY",
+    "TECH_DEITIES"
    ],
    "any": [
     [

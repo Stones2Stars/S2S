@@ -13,10 +13,7 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "TECH_ATOMIC_SCALE_ENGINEERING",
-     "scope": "team"
-    }
+    "TECH_ATOMIC_SCALE_ENGINEERING"
    ],
    "any": [
     [

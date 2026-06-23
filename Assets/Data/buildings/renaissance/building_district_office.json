@@ -5,10 +5,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_REPRESENTATIVE_DEMOCRACY",
-     "scope": "team"
-    }
+    "TECH_REPRESENTATIVE_DEMOCRACY"
    ],
    "any": [
     [
@@ -21,10 +18,7 @@
   },
   "operate": {
    "all": [
-    {
-     "type": "CIVIC_DEMOCRACY",
-     "scope": "empire"
-    }
+    "CIVIC_DEMOCRACY"
    ]
   }
  },

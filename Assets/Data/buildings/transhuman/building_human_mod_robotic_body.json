@@ -6,18 +6,9 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_ANIMA_CHAMBER",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_COMPREHENSIVE_CYBERNETICS",
-     "scope": "team"
-    },
-    {
-     "type": "TECH_ARTIFICIAL_LIFE",
-     "scope": "team"
-    }
+    "BUILDING_ANIMA_CHAMBER",
+    "TECH_COMPREHENSIVE_CYBERNETICS",
+    "TECH_ARTIFICIAL_LIFE"
    ],
    "any": [
     [

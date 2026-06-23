@@ -5,14 +5,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_HOUNFOR",
-     "scope": "city"
-    },
-    {
-     "type": "RELIGION_VOODOO",
-     "scope": "city"
-    }
+    "BUILDING_HOUNFOR",
+    "RELIGION_VOODOO"
    ]
   }
  },

@@ -5,10 +5,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_LANGUAGE",
-     "scope": "team"
-    }
+    "TECH_LANGUAGE"
    ],
    "any": [
     [
@@ -37,17 +34,11 @@
    "flat": [
     {
      "value": 4,
-     "enabled": {
-      "type": "TECH_MOUNTAINEERING",
-      "scope": "team"
-     }
+     "enabled": "TECH_MOUNTAINEERING"
     },
     {
      "value": 5,
-     "enabled": {
-      "type": "TECH_BIOLOGY",
-      "scope": "team"
-     }
+     "enabled": "TECH_BIOLOGY"
     }
    ]
   }
@@ -57,10 +48,7 @@
    "flat": [
     {
      "value": 4,
-     "enabled": {
-      "type": "TECH_MOUNTAINEERING",
-      "scope": "team"
-     }
+     "enabled": "TECH_MOUNTAINEERING"
     }
    ]
   }
@@ -71,17 +59,11 @@
     2,
     {
      "value": 10,
-     "enabled": {
-      "type": "TECH_TOURISM",
-      "scope": "team"
-     }
+     "enabled": "TECH_TOURISM"
     },
     {
      "value": 7,
-     "enabled": {
-      "type": "TECH_VERTICAL_FLIGHT",
-      "scope": "team"
-     }
+     "enabled": "TECH_VERTICAL_FLIGHT"
     }
    ]
   }
@@ -91,10 +73,7 @@
    "flat": [
     {
      "value": 4,
-     "enabled": {
-      "type": "TECH_MOUNTAINEERING",
-      "scope": "team"
-     }
+     "enabled": "TECH_MOUNTAINEERING"
     }
    ]
   }
@@ -104,17 +83,11 @@
    "flat": [
     {
      "value": 7,
-     "enabled": {
-      "type": "TECH_BIOLOGY",
-      "scope": "team"
-     }
+     "enabled": "TECH_BIOLOGY"
     },
     {
      "value": 7,
-     "enabled": {
-      "type": "TECH_GEOLOGY",
-      "scope": "team"
-     }
+     "enabled": "TECH_GEOLOGY"
     }
    ]
   }
@@ -125,10 +98,7 @@
     5,
     {
      "value": 7,
-     "enabled": {
-      "type": "TECH_TOURISM",
-      "scope": "team"
-     }
+     "enabled": "TECH_TOURISM"
     }
    ]
   }
@@ -138,10 +108,7 @@
    "flat": [
     {
      "value": 4,
-     "enabled": {
-      "type": "TECH_MOUNTAINEERING",
-      "scope": "team"
-     }
+     "enabled": "TECH_MOUNTAINEERING"
     }
    ]
   }
@@ -170,10 +137,7 @@
   "city": {
    "flat": {
     "value": 5,
-    "enabled": {
-     "type": "TECH_EXPLORATION",
-     "scope": "team"
-    }
+    "enabled": "TECH_EXPLORATION"
    }
   }
  },

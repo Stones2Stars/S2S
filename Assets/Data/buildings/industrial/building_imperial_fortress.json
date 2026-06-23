@@ -19,10 +19,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_ROMANTICISM",
-     "scope": "team"
-    }
+    "TECH_ROMANTICISM"
    ],
    "any": [
     [

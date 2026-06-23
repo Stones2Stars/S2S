@@ -11,14 +11,8 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_SKYSCRAPER",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_PLASTICS",
-     "scope": "team"
-    }
+    "BUILDING_SKYSCRAPER",
+    "TECH_PLASTICS"
    ],
    "any": [
     [

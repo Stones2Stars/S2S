@@ -15,10 +15,7 @@
      "scope": "city",
      "min": 7
     },
-    {
-     "type": "TECH_MARTIAL_ARTS",
-     "scope": "team"
-    }
+    "TECH_MARTIAL_ARTS"
    ],
    "any": [
     [

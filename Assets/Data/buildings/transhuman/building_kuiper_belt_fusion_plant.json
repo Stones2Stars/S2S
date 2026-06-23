@@ -12,14 +12,8 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_KUIPER_BELT_OUTPOST",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_NUCLEAR_PULSE_PROPULSION",
-     "scope": "team"
-    }
+    "BUILDING_KUIPER_BELT_OUTPOST",
+    "TECH_NUCLEAR_PULSE_PROPULSION"
    ],
    "any": [
     [

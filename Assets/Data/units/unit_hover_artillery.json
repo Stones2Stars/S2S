@@ -10,14 +10,8 @@
      "scope": "city",
      "connection": "trade|vicinity"
     },
-    {
-     "type": "TECH_FUSION",
-     "scope": "team"
-    },
-    {
-     "type": "TECH_LIQUID_METALS",
-     "scope": "team"
-    },
+    "TECH_FUSION",
+    "TECH_LIQUID_METALS",
     {
      "type": "BONUS_HOVERCRAFTS",
      "scope": "city",

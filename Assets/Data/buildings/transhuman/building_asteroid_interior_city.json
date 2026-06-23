@@ -10,14 +10,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_ASTEROID_WATER_SHIELD",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_ASTEROID_EXTRACTION",
-     "scope": "team"
-    }
+    "BUILDING_ASTEROID_WATER_SHIELD",
+    "TECH_ASTEROID_EXTRACTION"
    ],
    "any": [
     [
@@ -41,10 +35,7 @@
     10,
     {
      "value": 11,
-     "enabled": {
-      "type": "TECH_PARATERRAFORMING",
-      "scope": "team"
-     }
+     "enabled": "TECH_PARATERRAFORMING"
     }
    ]
   }

@@ -11,14 +11,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_MAJOR_LEAGUE_STADIUM",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_SATELLITES",
-     "scope": "team"
-    }
+    "BUILDING_MAJOR_LEAGUE_STADIUM",
+    "TECH_SATELLITES"
    ],
    "any": [
     [

@@ -5,10 +5,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_MILITARY_TRAINING",
-     "scope": "team"
-    },
+    "TECH_MILITARY_TRAINING",
     {
      "STATE_RELIGION": "RELIGION_KEMETISM"
     }
@@ -22,14 +19,8 @@
     ]
    ],
    "noneOf": [
-    {
-     "type": "BUILDING_TEMPLE_OF_OSIRIS",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_TEMPLE_OF_ISIS",
-     "scope": "city"
-    }
+    "BUILDING_TEMPLE_OF_OSIRIS",
+    "BUILDING_TEMPLE_OF_ISIS"
    ]
   },
   "operate": {
@@ -39,10 +30,7 @@
      "scope": "city",
      "connection": "trade|vicinity"
     },
-    {
-     "type": "RELIGION_KEMETISM",
-     "scope": "city"
-    }
+    "RELIGION_KEMETISM"
    ],
    "any": [
     [

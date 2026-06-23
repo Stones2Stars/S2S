@@ -21,33 +21,15 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_ANIMAL_TRAINER_HORSE",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_CHARIOTRY",
-     "scope": "team"
-    }
+    "BUILDING_ANIMAL_TRAINER_HORSE",
+    "TECH_CHARIOTRY"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_WHEELWRIGHT",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_CARRIAGE_BUILDER",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_FACTORY_AUTOMOBILES",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_SELF_ASSEMBLY_FACTORY",
-      "scope": "city"
-     }
+     "BUILDING_WHEELWRIGHT",
+     "BUILDING_CARRIAGE_BUILDER",
+     "BUILDING_FACTORY_AUTOMOBILES",
+     "BUILDING_SELF_ASSEMBLY_FACTORY"
     ],
     [
      {

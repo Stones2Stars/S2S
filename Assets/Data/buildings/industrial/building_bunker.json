@@ -13,10 +13,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_ELECTRICITY",
-     "scope": "team"
-    }
+    "TECH_ELECTRICITY"
    ],
    "any": [
     [
@@ -55,10 +52,7 @@
     ]
    ],
    "dormant": [
-    {
-     "type": "BUILDING_BOMB_SHELTERS",
-     "scope": "city"
-    }
+    "BUILDING_BOMB_SHELTERS"
    ]
   }
  },

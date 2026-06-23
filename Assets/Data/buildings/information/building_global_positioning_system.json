@@ -5,25 +5,13 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_ATOMIC_CLOCK",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_COMMUNICATION_NETWORKS",
-     "scope": "team"
-    }
+    "BUILDING_ATOMIC_CLOCK",
+    "TECH_COMMUNICATION_NETWORKS"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_MILITARY_SATELLITES",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_MILITARY_SPACEPORT",
-      "scope": "city"
-     }
+     "BUILDING_MILITARY_SATELLITES",
+     "BUILDING_MILITARY_SPACEPORT"
     ],
     [
      {

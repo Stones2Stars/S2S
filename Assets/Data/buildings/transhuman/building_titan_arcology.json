@@ -10,18 +10,9 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_TITAN_AIRPORT",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_TITAN_BIOFACTORY",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_LUNAR_MEGASTRUCTURES",
-     "scope": "team"
-    }
+    "BUILDING_TITAN_AIRPORT",
+    "BUILDING_TITAN_BIOFACTORY",
+    "TECH_LUNAR_MEGASTRUCTURES"
    ],
    "any": [
     [

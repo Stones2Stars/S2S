@@ -24,14 +24,8 @@
      "scope": "city",
      "min": 7
     },
-    {
-     "type": "BUILDING_TELEPHONE_NETWORK",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_ATOMPUNK",
-     "scope": "team"
-    },
+    "BUILDING_TELEPHONE_NETWORK",
+    "TECH_ATOMPUNK",
     {
      "type": "BONUS_COPPER_WIRES",
      "scope": "city",
@@ -61,10 +55,7 @@
     }
    ],
    "dormant": [
-    {
-     "type": "BUILDING_COMPUTER_NETWORK",
-     "scope": "city"
-    }
+    "BUILDING_COMPUTER_NETWORK"
    ]
   }
  },

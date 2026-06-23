@@ -5,21 +5,12 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_SPATIAL_TRANSCENDENCE",
-     "scope": "team"
-    }
+    "TECH_SPATIAL_TRANSCENDENCE"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_INTERGALACTIC_MORRIS_THORNE_WORMHOLE",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_DISTANT_PORTAL_TO_DIMENSION_X",
-      "scope": "city"
-     }
+     "BUILDING_INTERGALACTIC_MORRIS_THORNE_WORMHOLE",
+     "BUILDING_DISTANT_PORTAL_TO_DIMENSION_X"
     ],
     [
      {

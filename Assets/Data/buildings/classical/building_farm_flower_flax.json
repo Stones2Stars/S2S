@@ -18,10 +18,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_FLORISTRY",
-     "scope": "team"
-    }
+    "TECH_FLORISTRY"
    ],
    "any": [
     [
@@ -41,10 +38,7 @@
     }
    ],
    "dormant": [
-    {
-     "type": "BUILDING_TEXTILE_MANUFACTURING_DISTRICT",
-     "scope": "city"
-    }
+    "BUILDING_TEXTILE_MANUFACTURING_DISTRICT"
    ]
   }
  },

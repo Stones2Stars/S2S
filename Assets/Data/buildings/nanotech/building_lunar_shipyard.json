@@ -6,18 +6,9 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_LUNAR_ASSEMBLY_PLANT",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_PLASTIC_ELECTRONICS",
-     "scope": "team"
-    },
-    {
-     "type": "TECH_LUNAR_MANUFACTURING",
-     "scope": "team"
-    },
+    "BUILDING_LUNAR_ASSEMBLY_PLANT",
+    "TECH_PLASTIC_ELECTRONICS",
+    "TECH_LUNAR_MANUFACTURING",
     {
      "type": "BONUS_GLASSWARE",
      "scope": "city",
@@ -57,10 +48,7 @@
   "city": {
    "flat": {
     "value": 200,
-    "enabled": {
-     "type": "TECH_LUNAR_TRADE",
-     "scope": "team"
-    }
+    "enabled": "TECH_LUNAR_TRADE"
    }
   }
  },

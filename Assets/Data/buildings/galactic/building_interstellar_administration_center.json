@@ -5,21 +5,12 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_WORMHOLE_COMMUNICATIONS",
-     "scope": "team"
-    }
+    "TECH_WORMHOLE_COMMUNICATIONS"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_INTERSTELLAR_CAPITOL",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_SPACE_COLONY_MILKY_WAY",
-      "scope": "city"
-     }
+     "BUILDING_INTERSTELLAR_CAPITOL",
+     "BUILDING_SPACE_COLONY_MILKY_WAY"
     ],
     [
      {
@@ -44,10 +35,7 @@
    "flat": [
     {
      "value": 12,
-     "enabled": {
-      "type": "TECH_TACHYON_COMMUNICATIONS",
-      "scope": "team"
-     }
+     "enabled": "TECH_TACHYON_COMMUNICATIONS"
     }
    ]
   }
@@ -57,10 +45,7 @@
    "flat": [
     {
      "value": 12,
-     "enabled": {
-      "type": "TECH_CULTURAL_LONGEVITY",
-      "scope": "team"
-     }
+     "enabled": "TECH_CULTURAL_LONGEVITY"
     }
    ]
   }
@@ -70,31 +55,19 @@
    "flat": [
     {
      "value": 12,
-     "enabled": {
-      "type": "TECH_GALACTIC_WARFARE",
-      "scope": "team"
-     }
+     "enabled": "TECH_GALACTIC_WARFARE"
     },
     {
      "value": 13,
-     "enabled": {
-      "type": "TECH_COSMIC_WARFARE",
-      "scope": "team"
-     }
+     "enabled": "TECH_COSMIC_WARFARE"
     },
     {
      "value": 13,
-     "enabled": {
-      "type": "TECH_COSMIC_GOVERNANCE",
-      "scope": "team"
-     }
+     "enabled": "TECH_COSMIC_GOVERNANCE"
     },
     {
      "value": 11,
-     "enabled": {
-      "type": "TECH_GALACTIC_FEDERATION",
-      "scope": "team"
-     }
+     "enabled": "TECH_GALACTIC_FEDERATION"
     }
    ]
   }

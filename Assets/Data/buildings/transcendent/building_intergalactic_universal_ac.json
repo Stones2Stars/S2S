@@ -5,19 +5,13 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_INTERGALACTIC_SUPERCOMPUTER",
-     "scope": "city"
-    },
+    "BUILDING_INTERGALACTIC_SUPERCOMPUTER",
     {
      "type": "BUILDING_DEEP_SPACE_MICROVAC",
      "scope": "empire",
      "min": 1
     },
-    {
-     "type": "TECH_HYPERINTELLIGENCE",
-     "scope": "team"
-    }
+    "TECH_HYPERINTELLIGENCE"
    ],
    "any": [
     [

@@ -5,14 +5,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_EUROPA_SF6_GENERATOR",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_LUNAR_TERRAFORMING",
-     "scope": "team"
-    }
+    "BUILDING_EUROPA_SF6_GENERATOR",
+    "TECH_LUNAR_TERRAFORMING"
    ],
    "any": [
     [

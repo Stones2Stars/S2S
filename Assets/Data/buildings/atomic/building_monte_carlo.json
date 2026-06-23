@@ -11,10 +11,7 @@
      "scope": "city",
      "min": 7
     },
-    {
-     "type": "TECH_LEGALIZED_GAMBLING",
-     "scope": "team"
-    }
+    "TECH_LEGALIZED_GAMBLING"
    ],
    "any": [
     [
@@ -25,10 +22,7 @@
     ]
    ],
    "noneOf": [
-    {
-     "type": "BUILDING_LAS_VEGAS_STRIP",
-     "scope": "city"
-    }
+    "BUILDING_LAS_VEGAS_STRIP"
    ]
   },
   "operate": {
@@ -52,10 +46,7 @@
     ]
    ],
    "dormant": [
-    {
-     "type": "BUILDING_ORDINANCE_GAMBLING_BAN",
-     "scope": "city"
-    }
+    "BUILDING_ORDINANCE_GAMBLING_BAN"
    ]
   }
  },
@@ -108,10 +99,7 @@
    "flat": [
     {
      "value": 1,
-     "enabled": {
-      "type": "BUILDING_CASINO",
-      "scope": "city"
-     }
+     "enabled": "BUILDING_CASINO"
     }
    ]
   }

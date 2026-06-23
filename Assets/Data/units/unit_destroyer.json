@@ -15,14 +15,8 @@
      "scope": "world",
      "min": 10
     },
-    {
-     "type": "TECH_SEMICONDUCTORS",
-     "scope": "team"
-    },
-    {
-     "type": "TECH_SONAR",
-     "scope": "team"
-    }
+    "TECH_SEMICONDUCTORS",
+    "TECH_SONAR"
    ],
    "any": [
     [

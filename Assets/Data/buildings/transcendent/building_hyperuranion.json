@@ -5,14 +5,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_METAVERSE_VR_CENTER",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_ARCHETYPAL_VECTOR_SPACES",
-     "scope": "team"
-    }
+    "BUILDING_METAVERSE_VR_CENTER",
+    "TECH_ARCHETYPAL_VECTOR_SPACES"
    ],
    "any": [
     [

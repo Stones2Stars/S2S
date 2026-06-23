@@ -11,22 +11,10 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_MINING_BOT_CONTROL_CENTER",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_EVOLUTIONARY_ALGORITHMS",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_WARMACHINES",
-     "scope": "team"
-    },
-    {
-     "type": "TECH_WIRELESS_ELECTRICITY",
-     "scope": "team"
-    }
+    "BUILDING_MINING_BOT_CONTROL_CENTER",
+    "BUILDING_EVOLUTIONARY_ALGORITHMS",
+    "TECH_WARMACHINES",
+    "TECH_WIRELESS_ELECTRICITY"
    ],
    "any": [
     [

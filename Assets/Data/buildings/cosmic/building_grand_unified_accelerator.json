@@ -5,14 +5,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_DEEP_SPACE_MCKENDREE_CYLINDER",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_ZEPTOTECHNOLOGY",
-     "scope": "team"
-    }
+    "BUILDING_DEEP_SPACE_MCKENDREE_CYLINDER",
+    "TECH_ZEPTOTECHNOLOGY"
    ],
    "any": [
     [
@@ -33,24 +27,15 @@
     1000,
     {
      "value": 50,
-     "enabled": {
-      "type": "TECH_OMEGA_MINUS_ENGINEERING",
-      "scope": "team"
-     }
+     "enabled": "TECH_OMEGA_MINUS_ENGINEERING"
     },
     {
      "value": 50,
-     "enabled": {
-      "type": "TECH_CONTROLLED_VACUUM_COLLAPSE",
-      "scope": "team"
-     }
+     "enabled": "TECH_CONTROLLED_VACUUM_COLLAPSE"
     },
     {
      "value": 50,
-     "enabled": {
-      "type": "TECH_CONTROLLED_INFLATION",
-      "scope": "team"
-     }
+     "enabled": "TECH_CONTROLLED_INFLATION"
     }
    ]
   }

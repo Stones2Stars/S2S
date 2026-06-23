@@ -6,14 +6,8 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_GRAVITY_TRAIN",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_REACTIONLESS_DRIVE",
-     "scope": "team"
-    }
+    "BUILDING_GRAVITY_TRAIN",
+    "TECH_REACTIONLESS_DRIVE"
    ],
    "any": [
     [

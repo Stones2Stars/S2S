@@ -6,10 +6,7 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_EFFECT_CISLUNAR_ECONOMY",
-     "scope": "city"
-    },
+    "BUILDING_EFFECT_CISLUNAR_ECONOMY",
     {
      "type": "BUILDING_STARPORT",
      "scope": "empire",
@@ -20,10 +17,7 @@
      "scope": "empire",
      "min": 2
     },
-    {
-     "type": "TECH_PLANETARY_MEGASTRUCTURES",
-     "scope": "team"
-    }
+    "TECH_PLANETARY_MEGASTRUCTURES"
    ],
    "any": [
     [

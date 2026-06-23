@@ -5,18 +5,9 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_EFFECT_HERITAGE_BIG_CATS",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_LEADERSHIP",
-     "scope": "team"
-    },
-    {
-     "type": "TECH_MEGAFAUNA_DOMESTICATION",
-     "scope": "team"
-    }
+    "BUILDING_EFFECT_HERITAGE_BIG_CATS",
+    "TECH_LEADERSHIP",
+    "TECH_MEGAFAUNA_DOMESTICATION"
    ],
    "any": [
     [
@@ -32,14 +23,8 @@
      }
     ],
     [
-     {
-      "type": "BUILDING_MILITARY_BASE",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_GARRISON",
-      "scope": "city"
-     }
+     "BUILDING_MILITARY_BASE",
+     "BUILDING_GARRISON"
     ]
    ]
   }

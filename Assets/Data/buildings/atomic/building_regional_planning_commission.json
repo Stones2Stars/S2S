@@ -5,17 +5,11 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_NEW_URBANISM",
-     "scope": "team"
-    }
+    "TECH_NEW_URBANISM"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_METROPOLITAN_ADMINISTRATION",
-      "scope": "city"
-     }
+     "BUILDING_METROPOLITAN_ADMINISTRATION"
     ],
     [
      {

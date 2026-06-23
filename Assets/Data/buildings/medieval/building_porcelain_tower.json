@@ -15,14 +15,8 @@
      "scope": "city",
      "min": 3
     },
-    {
-     "type": "TECH_ARCHITECTURE",
-     "scope": "team"
-    },
-    {
-     "type": "TECH_MEDITATION",
-     "scope": "team"
-    }
+    "TECH_ARCHITECTURE",
+    "TECH_MEDITATION"
    ],
    "any": [
     [

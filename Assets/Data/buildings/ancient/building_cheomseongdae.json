@@ -18,14 +18,8 @@
      "scope": "city",
      "min": 3
     },
-    {
-     "type": "TECH_MASONRY",
-     "scope": "team"
-    },
-    {
-     "type": "TECH_STARGAZING",
-     "scope": "team"
-    }
+    "TECH_MASONRY",
+    "TECH_STARGAZING"
    ],
    "any": [
     [

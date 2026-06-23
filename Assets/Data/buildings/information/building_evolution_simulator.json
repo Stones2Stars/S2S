@@ -12,25 +12,13 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_BIOLOGY_LAB",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_VIRTUAL_REALITY",
-     "scope": "team"
-    }
+    "BUILDING_BIOLOGY_LAB",
+    "TECH_VIRTUAL_REALITY"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_DESIGN_STUDIO",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_ELECTRONICS_MANUFACTURING_DISTRICT",
-      "scope": "city"
-     }
+     "BUILDING_DESIGN_STUDIO",
+     "BUILDING_ELECTRONICS_MANUFACTURING_DISTRICT"
     ],
     [
      {
@@ -55,10 +43,7 @@
    "flat": [
     {
      "value": 8,
-     "enabled": {
-      "type": "TECH_RAPID_PROTOTYPING",
-      "scope": "team"
-     }
+     "enabled": "TECH_RAPID_PROTOTYPING"
     }
    ]
   }
@@ -74,17 +59,11 @@
     5,
     {
      "value": 8,
-     "enabled": {
-      "type": "TECH_GENESIS_BIOLOGY",
-      "scope": "team"
-     }
+     "enabled": "TECH_GENESIS_BIOLOGY"
     },
     {
      "value": 8,
-     "enabled": {
-      "type": "TECH_MACHINE_LEARNING",
-      "scope": "team"
-     }
+     "enabled": "TECH_MACHINE_LEARNING"
     }
    ]
   }

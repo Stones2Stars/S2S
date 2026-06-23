@@ -10,21 +10,12 @@
      "scope": "city",
      "min": 7
     },
-    {
-     "type": "TECH_TOURNAMENTS",
-     "scope": "team"
-    }
+    "TECH_TOURNAMENTS"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_KNIGHTS_STABLE",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_MODERN_STABLE",
-      "scope": "city"
-     }
+     "BUILDING_KNIGHTS_STABLE",
+     "BUILDING_MODERN_STABLE"
     ],
     [
      {
@@ -54,14 +45,8 @@
      }
     ],
     [
-     {
-      "type": "CIVIC_FEUDAL",
-      "scope": "empire"
-     },
-     {
-      "type": "CIVIC_VASSAL_LEVIES",
-      "scope": "empire"
-     }
+     "CIVIC_FEUDAL",
+     "CIVIC_VASSAL_LEVIES"
     ]
    ]
   }

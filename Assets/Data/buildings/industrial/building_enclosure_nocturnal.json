@@ -5,14 +5,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_ZOO",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_INCANDESCENT_LIGHTING",
-     "scope": "team"
-    }
+    "BUILDING_ZOO",
+    "TECH_INCANDESCENT_LIGHTING"
    ],
    "any": [
     [
@@ -22,46 +16,16 @@
      }
     ],
     [
-     {
-      "type": "HERITAGE_FOLKLORE_BADGER",
-      "scope": "empire"
-     },
-     {
-      "type": "HERITAGE_FOLKLORE_KOALA",
-      "scope": "empire"
-     },
-     {
-      "type": "HERITAGE_FOLKLORE_OWL_BARN",
-      "scope": "empire"
-     },
-     {
-      "type": "HERITAGE_FOLKLORE_OWL_BARRED",
-      "scope": "empire"
-     },
-     {
-      "type": "HERITAGE_FOLKLORE_OWL_GREAT_HORNED",
-      "scope": "empire"
-     },
-     {
-      "type": "HERITAGE_FOLKLORE_RACCOON",
-      "scope": "empire"
-     },
-     {
-      "type": "HERITAGE_FOLKLORE_RATEL",
-      "scope": "empire"
-     },
-     {
-      "type": "HERITAGE_FOLKLORE_RED_PANDA",
-      "scope": "empire"
-     },
-     {
-      "type": "HERITAGE_FOLKLORE_SKUNK",
-      "scope": "empire"
-     },
-     {
-      "type": "HERITAGE_FOLKLORE_TASMANIAN_DEVIL",
-      "scope": "empire"
-     }
+     "HERITAGE_FOLKLORE_BADGER",
+     "HERITAGE_FOLKLORE_KOALA",
+     "HERITAGE_FOLKLORE_OWL_BARN",
+     "HERITAGE_FOLKLORE_OWL_BARRED",
+     "HERITAGE_FOLKLORE_OWL_GREAT_HORNED",
+     "HERITAGE_FOLKLORE_RACCOON",
+     "HERITAGE_FOLKLORE_RATEL",
+     "HERITAGE_FOLKLORE_RED_PANDA",
+     "HERITAGE_FOLKLORE_SKUNK",
+     "HERITAGE_FOLKLORE_TASMANIAN_DEVIL"
     ]
    ]
   }

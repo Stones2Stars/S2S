@@ -6,14 +6,8 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_STRATOSPHERIC_TOWER",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_HYPERMAGNETICS",
-     "scope": "team"
-    }
+    "BUILDING_STRATOSPHERIC_TOWER",
+    "TECH_HYPERMAGNETICS"
    ],
    "any": [
     [

@@ -11,18 +11,9 @@
      "scope": "city",
      "min": 7
     },
-    {
-     "type": "BUILDING_LABORATORY",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_MODERN_OFFICES",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_SUPERCONDUCTORS",
-     "scope": "team"
-    }
+    "BUILDING_LABORATORY",
+    "BUILDING_MODERN_OFFICES",
+    "TECH_SUPERCONDUCTORS"
    ],
    "any": [
     [

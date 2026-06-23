@@ -5,14 +5,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_ANCIENT_MEDICINE",
-     "scope": "team"
-    },
-    {
-     "type": "TECH_WRITING",
-     "scope": "team"
-    }
+    "TECH_ANCIENT_MEDICINE",
+    "TECH_WRITING"
    ],
    "any": [
     [

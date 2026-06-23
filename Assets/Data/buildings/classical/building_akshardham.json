@@ -5,14 +5,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_AESTHETICS",
-     "scope": "team"
-    },
-    {
-     "type": "TECH_CONSTRUCTION",
-     "scope": "team"
-    },
+    "TECH_AESTHETICS",
+    "TECH_CONSTRUCTION",
     "STATE_RELIGION_IN_CITY",
     {
      "STATE_RELIGION": "RELIGION_HINDUISM"
@@ -34,10 +28,7 @@
      "scope": "city",
      "connection": "trade|vicinity"
     },
-    {
-     "type": "RELIGION_HINDUISM",
-     "scope": "city"
-    }
+    "RELIGION_HINDUISM"
    ]
   }
  },

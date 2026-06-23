@@ -14,14 +14,8 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_LABORATORY",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_COUNTERCULTURE",
-     "scope": "team"
-    }
+    "BUILDING_LABORATORY",
+    "TECH_COUNTERCULTURE"
    ],
    "any": [
     [
@@ -50,14 +44,8 @@
     ]
    ],
    "dormant": [
-    {
-     "type": "BUILDING_MATERIALS_CONGLOMERATE",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_ORDINANCE_DRUG_PROHIBITION",
-     "scope": "city"
-    }
+    "BUILDING_MATERIALS_CONGLOMERATE",
+    "BUILDING_ORDINANCE_DRUG_PROHIBITION"
    ]
   }
  },

@@ -26,25 +26,13 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_EXPLOSIVES",
-     "scope": "team"
-    }
+    "TECH_EXPLOSIVES"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_TRADING_POST",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_SHOPPING_DISTRICT",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_FACTORY",
-      "scope": "city"
-     }
+     "BUILDING_TRADING_POST",
+     "BUILDING_SHOPPING_DISTRICT",
+     "BUILDING_FACTORY"
     ],
     [
      {
@@ -87,14 +75,8 @@
     ]
    ],
    "dormant": [
-    {
-     "type": "BUILDING_FACTORY_AMMUNITION",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_MILITARY_INDUSTRIAL_COMPLEX",
-     "scope": "city"
-    }
+    "BUILDING_FACTORY_AMMUNITION",
+    "BUILDING_MILITARY_INDUSTRIAL_COMPLEX"
    ]
   }
  },

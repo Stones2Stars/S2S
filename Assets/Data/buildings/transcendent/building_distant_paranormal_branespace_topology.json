@@ -10,14 +10,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_DISTANT_LAYERED_REALITY",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_REALITY_REPROGRAMMING",
-     "scope": "team"
-    }
+    "BUILDING_DISTANT_LAYERED_REALITY",
+    "TECH_REALITY_REPROGRAMMING"
    ],
    "any": [
     [

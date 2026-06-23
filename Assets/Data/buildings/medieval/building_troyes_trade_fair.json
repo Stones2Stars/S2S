@@ -15,25 +15,13 @@
      "scope": "city",
      "min": 3
     },
-    {
-     "type": "TECH_CHARTERS",
-     "scope": "team"
-    }
+    "TECH_CHARTERS"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_MARKET",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_SUPERMARKET",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_HYPERMARKET",
-      "scope": "city"
-     }
+     "BUILDING_MARKET",
+     "BUILDING_SUPERMARKET",
+     "BUILDING_HYPERMARKET"
     ],
     [
      {
@@ -43,10 +31,7 @@
     ]
    ],
    "noneOf": [
-    {
-     "type": "BUILDING_SCARBOROUGH_FAIR",
-     "scope": "city"
-    }
+    "BUILDING_SCARBOROUGH_FAIR"
    ]
   }
  },

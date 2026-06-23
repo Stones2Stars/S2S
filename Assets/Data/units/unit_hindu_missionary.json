@@ -5,14 +5,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_HINDU_MONASTERY",
-     "scope": "city"
-    },
-    {
-     "type": "RELIGION_HINDUISM",
-     "scope": "city"
-    }
+    "BUILDING_HINDU_MONASTERY",
+    "RELIGION_HINDUISM"
    ]
   }
  },

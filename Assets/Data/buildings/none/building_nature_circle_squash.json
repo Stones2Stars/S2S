@@ -5,10 +5,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_NATURE_CIRCLE_OF_POWER",
-     "scope": "city"
-    },
+    "BUILDING_NATURE_CIRCLE_OF_POWER",
     {
      "STATE_RELIGION": "RELIGION_DRUIDIC_TRADITIONS"
     }
@@ -29,10 +26,7 @@
      "scope": "city",
      "connection": "vicinity"
     },
-    {
-     "type": "RELIGION_DRUIDIC_TRADITIONS",
-     "scope": "city"
-    }
+    "RELIGION_DRUIDIC_TRADITIONS"
    ]
   }
  },

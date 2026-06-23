@@ -5,10 +5,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_TAOIST_MONASTERY",
-     "scope": "city"
-    },
+    "BUILDING_TAOIST_MONASTERY",
     "STATE_RELIGION_IN_CITY",
     {
      "STATE_RELIGION": "RELIGION_TAOISM"
@@ -25,10 +22,7 @@
   },
   "operate": {
    "all": [
-    {
-     "type": "RELIGION_TAOISM",
-     "scope": "city"
-    }
+    "RELIGION_TAOISM"
    ]
   }
  },

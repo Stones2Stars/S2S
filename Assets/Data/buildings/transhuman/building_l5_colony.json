@@ -5,14 +5,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_CISLUNAR_ONEILL_CYLINDER",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_ORBITAL_MEGASTRUCTURES",
-     "scope": "team"
-    }
+    "BUILDING_CISLUNAR_ONEILL_CYLINDER",
+    "TECH_ORBITAL_MEGASTRUCTURES"
    ],
    "any": [
     [

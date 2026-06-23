@@ -6,10 +6,7 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "TECH_SMART_DUST",
-     "scope": "team"
-    }
+    "TECH_SMART_DUST"
    ],
    "any": [
     [

@@ -11,10 +11,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_PALACE",
-     "scope": "city"
-    },
+    "BUILDING_PALACE",
     {
      "type": "BUILDING_C_L_NEANDERTHAL",
      "scope": "empire",
@@ -30,10 +27,7 @@
     ]
    ],
    "noneOf": [
-    {
-     "type": "BUILDING_C_N_NEANDERTHAL",
-     "scope": "city"
-    }
+    "BUILDING_C_N_NEANDERTHAL"
    ]
   }
  },

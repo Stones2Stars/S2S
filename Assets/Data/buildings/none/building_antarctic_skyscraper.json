@@ -6,14 +6,8 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_STRATOSPHERIC_TOWER",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_CRYSTALPUNK",
-     "scope": "team"
-    }
+    "BUILDING_STRATOSPHERIC_TOWER",
+    "TECH_CRYSTALPUNK"
    ],
    "any": [
     [

@@ -6,10 +6,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_NATIONALISM",
-     "scope": "team"
-    }
+    "TECH_NATIONALISM"
    ],
    "any": [
     [

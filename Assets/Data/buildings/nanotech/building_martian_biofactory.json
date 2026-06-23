@@ -10,18 +10,9 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_MARTIAN_FACTORY",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_MARTIAN_RADIATION_SHIELD",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_DYSTOPIA_PATHOGENS",
-     "scope": "team"
-    }
+    "BUILDING_MARTIAN_FACTORY",
+    "BUILDING_MARTIAN_RADIATION_SHIELD",
+    "TECH_DYSTOPIA_PATHOGENS"
    ],
    "any": [
     [
@@ -62,10 +53,7 @@
     25,
     {
      "value": 10,
-     "enabled": {
-      "type": "TECH_APOCALYPTIC_PATHOGENS",
-      "scope": "team"
-     }
+     "enabled": "TECH_APOCALYPTIC_PATHOGENS"
     }
    ]
   }

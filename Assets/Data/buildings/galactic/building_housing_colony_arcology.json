@@ -34,10 +34,7 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "TECH_COLONY_ARCOLOGY",
-     "scope": "team"
-    }
+    "TECH_COLONY_ARCOLOGY"
    ],
    "any": [
     [
@@ -57,10 +54,7 @@
     }
    ],
    "dormant": [
-    {
-     "type": "BUILDING_LAUNCH_ARCOLOGY",
-     "scope": "city"
-    }
+    "BUILDING_LAUNCH_ARCOLOGY"
    ]
   }
  },

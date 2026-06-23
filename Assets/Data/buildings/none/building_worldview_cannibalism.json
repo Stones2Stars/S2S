@@ -6,10 +6,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_PALACE",
-     "scope": "city"
-    }
+    "BUILDING_PALACE"
    ],
    "any": [
     [
@@ -22,10 +19,7 @@
   },
   "operate": {
    "dormant": [
-    {
-     "type": "BUILDING_EFFECT_EMANCIPATION_PROCLAMATION",
-     "scope": "city"
-    }
+    "BUILDING_EFFECT_EMANCIPATION_PROCLAMATION"
    ]
   }
  },

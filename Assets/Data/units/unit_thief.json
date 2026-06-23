@@ -5,14 +5,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_THIEVES_HIDEOUT",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_THEFT",
-     "scope": "team"
-    }
+    "BUILDING_THIEVES_HIDEOUT",
+    "TECH_THEFT"
    ]
   }
  },

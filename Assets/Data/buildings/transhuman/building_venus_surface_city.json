@@ -16,14 +16,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_VENUS_CITY",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_ABYSS_COLONIZATION",
-     "scope": "team"
-    }
+    "BUILDING_VENUS_CITY",
+    "TECH_ABYSS_COLONIZATION"
    ],
    "any": [
     [
@@ -65,10 +59,7 @@
     500,
     {
      "value": 10,
-     "enabled": {
-      "type": "TECH_THERMAL_NEGATION",
-      "scope": "team"
-     }
+     "enabled": "TECH_THERMAL_NEGATION"
     }
    ]
   }

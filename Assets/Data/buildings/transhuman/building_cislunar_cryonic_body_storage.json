@@ -5,18 +5,9 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_CISLUNAR_COOLING_SYSTEM",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_CISLUNAR_SPACEPORT",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_CRYONICS",
-     "scope": "team"
-    }
+    "BUILDING_CISLUNAR_COOLING_SYSTEM",
+    "BUILDING_CISLUNAR_SPACEPORT",
+    "TECH_CRYONICS"
    ],
    "any": [
     [

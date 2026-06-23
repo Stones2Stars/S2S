@@ -14,10 +14,7 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "TECH_NANOROBOTICS",
-     "scope": "team"
-    }
+    "TECH_NANOROBOTICS"
    ],
    "any": [
     [
@@ -37,10 +34,7 @@
     }
    ],
    "dormant": [
-    {
-     "type": "BUILDING_SMART_DUST_WALLS",
-     "scope": "city"
-    }
+    "BUILDING_SMART_DUST_WALLS"
    ]
   }
  },

@@ -7,22 +7,10 @@
    "all": [
     "HAS_FRESHWATER",
     "HAS_POWER",
-    {
-     "type": "BUILDING_FARM_MECH_CONTROL_CENTER",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_GENOTYPE_STUDIO",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_INTERACTIVE_GLASS",
-     "scope": "team"
-    },
-    {
-     "type": "TECH_ACCELERATED_GERMINATION",
-     "scope": "team"
-    }
+    "BUILDING_FARM_MECH_CONTROL_CENTER",
+    "BUILDING_GENOTYPE_STUDIO",
+    "TECH_INTERACTIVE_GLASS",
+    "TECH_ACCELERATED_GERMINATION"
    ],
    "any": [
     [
@@ -49,10 +37,7 @@
     20,
     {
      "value": 20,
-     "enabled": {
-      "type": "TECH_EXTRATERRESTRIAL_AGRICULTURE",
-      "scope": "team"
-     }
+     "enabled": "TECH_EXTRATERRESTRIAL_AGRICULTURE"
     }
    ]
   }

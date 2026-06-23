@@ -10,10 +10,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_CULTURAL_EVOLUTION",
-     "scope": "team"
-    }
+    "TECH_CULTURAL_EVOLUTION"
    ],
    "any": [
     [
@@ -24,30 +21,12 @@
     ]
    ],
    "noneOf": [
-    {
-     "type": "BUILDING_INTERSTELLAR_CULTURE_AGGRESSIVE",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_INTERSTELLAR_CULTURE_COMMERCIAL",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_INTERSTELLAR_CULTURE_EXPLORATORY",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_INTERSTELLAR_CULTURE_INDUSTRIOUS",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_INTERSTELLAR_CULTURE_OBEDIENT",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_INTERSTELLAR_CULTURE_REBELLIOUS",
-     "scope": "city"
-    }
+    "BUILDING_INTERSTELLAR_CULTURE_AGGRESSIVE",
+    "BUILDING_INTERSTELLAR_CULTURE_COMMERCIAL",
+    "BUILDING_INTERSTELLAR_CULTURE_EXPLORATORY",
+    "BUILDING_INTERSTELLAR_CULTURE_INDUSTRIOUS",
+    "BUILDING_INTERSTELLAR_CULTURE_OBEDIENT",
+    "BUILDING_INTERSTELLAR_CULTURE_REBELLIOUS"
    ]
   }
  },

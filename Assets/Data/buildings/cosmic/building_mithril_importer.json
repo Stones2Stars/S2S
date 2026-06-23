@@ -6,19 +6,13 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_STARPORT",
-     "scope": "city"
-    },
+    "BUILDING_STARPORT",
     {
      "type": "BUILDING_MITHRIL_FOUNDRY",
      "scope": "empire",
      "min": 1
     },
-    {
-     "type": "TECH_FANTASY_MATERIALS",
-     "scope": "team"
-    }
+    "TECH_FANTASY_MATERIALS"
    ],
    "any": [
     [

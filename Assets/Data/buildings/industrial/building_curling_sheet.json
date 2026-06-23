@@ -13,18 +13,9 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_ICE_RINK",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_REFRIGERATION",
-     "scope": "team"
-    },
-    {
-     "type": "TECH_LAWN_SPORTS",
-     "scope": "team"
-    }
+    "BUILDING_ICE_RINK",
+    "TECH_REFRIGERATION",
+    "TECH_LAWN_SPORTS"
    ],
    "any": [
     [
@@ -37,10 +28,7 @@
   },
   "operate": {
    "dormant": [
-    {
-     "type": "BUILDING_ATHLETIC_MEGACOMPLEX",
-     "scope": "city"
-    }
+    "BUILDING_ATHLETIC_MEGACOMPLEX"
    ]
   }
  },

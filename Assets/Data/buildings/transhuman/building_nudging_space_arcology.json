@@ -6,29 +6,14 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_GEODESIC_DOME",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_ORGANIC_CITIES",
-     "scope": "team"
-    }
+    "BUILDING_GEODESIC_DOME",
+    "TECH_ORGANIC_CITIES"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_ARCOLOGY",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_HOUSING_COLONY_ARCOLOGY",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_LAUNCH_ARCOLOGY",
-      "scope": "city"
-     }
+     "BUILDING_ARCOLOGY",
+     "BUILDING_HOUSING_COLONY_ARCOLOGY",
+     "BUILDING_LAUNCH_ARCOLOGY"
     ],
     [
      {

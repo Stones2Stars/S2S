@@ -5,14 +5,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_CODE_OF_LAWS",
-     "scope": "team"
-    },
-    {
-     "type": "TECH_WRITING",
-     "scope": "team"
-    }
+    "TECH_CODE_OF_LAWS",
+    "TECH_WRITING"
    ],
    "any": [
     [

@@ -11,18 +11,9 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_CISLUNAR_NANOSATELLITE_CONSTELLATION",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_CISLUNAR_ONEILL_CYLINDER",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_NANOMORPHIC_TROIDS",
-     "scope": "team"
-    }
+    "BUILDING_CISLUNAR_NANOSATELLITE_CONSTELLATION",
+    "BUILDING_CISLUNAR_ONEILL_CYLINDER",
+    "TECH_NANOMORPHIC_TROIDS"
    ],
    "any": [
     [

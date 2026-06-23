@@ -11,14 +11,8 @@
   "build": {
    "all": [
     "HAS_COAST",
-    {
-     "type": "TECH_BOAT_BUILDING",
-     "scope": "team"
-    },
-    {
-     "type": "TECH_SEDENTARY_LIFESTYLE",
-     "scope": "team"
-    }
+    "TECH_BOAT_BUILDING",
+    "TECH_SEDENTARY_LIFESTYLE"
    ],
    "any": [
     [

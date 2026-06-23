@@ -5,14 +5,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_INTERGALACTIC_SUPERCOMPUTER",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_ELECTROWEAK_MATTER",
-     "scope": "team"
-    }
+    "BUILDING_INTERGALACTIC_SUPERCOMPUTER",
+    "TECH_ELECTROWEAK_MATTER"
    ],
    "any": [
     [

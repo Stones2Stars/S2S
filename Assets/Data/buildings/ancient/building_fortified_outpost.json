@@ -13,10 +13,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_MASONRY",
-     "scope": "team"
-    }
+    "TECH_MASONRY"
    ],
    "any": [
     [
@@ -53,46 +50,16 @@
     ]
    ],
    "dormant": [
-    {
-     "type": "BUILDING_WATCH_TOWER",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_GUARD_TOWER",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_KEEP_TOWER",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_BOMBARD_TOWER",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_ARTILLERY_BATTERY",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_AUTO_CANNON_BATTERY",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_MISSILE_BATTERY",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_RAILGUN_BATTERY",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_LASER_BATTERY",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_ANTI_MATTER_BATTERY",
-     "scope": "city"
-    }
+    "BUILDING_WATCH_TOWER",
+    "BUILDING_GUARD_TOWER",
+    "BUILDING_KEEP_TOWER",
+    "BUILDING_BOMBARD_TOWER",
+    "BUILDING_ARTILLERY_BATTERY",
+    "BUILDING_AUTO_CANNON_BATTERY",
+    "BUILDING_MISSILE_BATTERY",
+    "BUILDING_RAILGUN_BATTERY",
+    "BUILDING_LASER_BATTERY",
+    "BUILDING_ANTI_MATTER_BATTERY"
    ]
   }
  },

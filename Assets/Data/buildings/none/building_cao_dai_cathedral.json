@@ -10,10 +10,7 @@
      "scope": "empire",
      "min": 2
     },
-    {
-     "type": "TECH_MUSICAL_NOTATION",
-     "scope": "team"
-    }
+    "TECH_MUSICAL_NOTATION"
    ],
    "any": [
     [
@@ -26,10 +23,7 @@
   },
   "operate": {
    "all": [
-    {
-     "type": "RELIGION_CAO_DAI",
-     "scope": "city"
-    }
+    "RELIGION_CAO_DAI"
    ]
   }
  },

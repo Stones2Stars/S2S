@@ -11,18 +11,9 @@
      "scope": "city",
      "min": 3
     },
-    {
-     "type": "BUILDING_FACTORY",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_POWER_LINES",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_MEGASTRUCTURE_ENGINEERING",
-     "scope": "team"
-    }
+    "BUILDING_FACTORY",
+    "BUILDING_POWER_LINES",
+    "TECH_MEGASTRUCTURE_ENGINEERING"
    ],
    "any": [
     [
@@ -56,10 +47,7 @@
     ]
    ],
    "dormant": [
-    {
-     "type": "BUILDING_POLLUTION_BLACKENED_SKIES",
-     "scope": "city"
-    }
+    "BUILDING_POLLUTION_BLACKENED_SKIES"
    ]
   }
  },

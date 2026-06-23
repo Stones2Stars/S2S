@@ -19,10 +19,7 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "TECH_TRANSVERSE_EUCLIDEAN_GEOMETRY",
-     "scope": "team"
-    }
+    "TECH_TRANSVERSE_EUCLIDEAN_GEOMETRY"
    ],
    "any": [
     [
@@ -40,10 +37,7 @@
     200,
     {
      "value": 20,
-     "enabled": {
-      "type": "TECH_EUCLIDEAN_5D_SPACE_GEOMETRY",
-      "scope": "team"
-     }
+     "enabled": "TECH_EUCLIDEAN_5D_SPACE_GEOMETRY"
     }
    ]
   }

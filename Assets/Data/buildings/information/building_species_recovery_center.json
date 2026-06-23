@@ -16,10 +16,7 @@
      "scope": "empire",
      "min": 10
     },
-    {
-     "type": "TECH_GENESIS_BIOLOGY",
-     "scope": "team"
-    }
+    "TECH_GENESIS_BIOLOGY"
    ],
    "any": [
     [

@@ -5,10 +5,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_COSMIC_WARFARE",
-     "scope": "team"
-    }
+    "TECH_COSMIC_WARFARE"
    ],
    "any": [
     [

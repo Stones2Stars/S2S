@@ -11,14 +11,8 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_SIMULATED_WORLD",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_NANOTROIDS",
-     "scope": "team"
-    }
+    "BUILDING_SIMULATED_WORLD",
+    "TECH_NANOTROIDS"
    ],
    "any": [
     [

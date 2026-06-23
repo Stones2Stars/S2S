@@ -6,18 +6,9 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_REWILDERNESS",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_PARADISE_GARDEN",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_OMNIBENEVOLENT_MANDATE",
-     "scope": "team"
-    }
+    "BUILDING_REWILDERNESS",
+    "BUILDING_PARADISE_GARDEN",
+    "TECH_OMNIBENEVOLENT_MANDATE"
    ],
    "any": [
     [

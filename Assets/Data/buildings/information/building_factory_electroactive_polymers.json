@@ -14,18 +14,9 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_FACTORY",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_CHEMISTRY_LAB",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_BIOMECHANICAL_HARVESTING",
-     "scope": "team"
-    }
+    "BUILDING_FACTORY",
+    "BUILDING_CHEMISTRY_LAB",
+    "TECH_BIOMECHANICAL_HARVESTING"
    ],
    "any": [
     [
@@ -54,10 +45,7 @@
     ]
    ],
    "dormant": [
-    {
-     "type": "BUILDING_CHEMICALS_DISTRICT",
-     "scope": "city"
-    }
+    "BUILDING_CHEMICALS_DISTRICT"
    ]
   }
  },

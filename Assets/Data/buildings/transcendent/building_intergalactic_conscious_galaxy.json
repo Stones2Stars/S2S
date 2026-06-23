@@ -5,22 +5,10 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_INTERGALACTIC_GALAXY_SCAN",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_INTERGALACTIC_SUPERCOMPUTER",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_INTERGALACTIC_WORMHOLE_COMMUNICATION_NETWORK",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_HYPERINTELLIGENCE",
-     "scope": "team"
-    }
+    "BUILDING_INTERGALACTIC_GALAXY_SCAN",
+    "BUILDING_INTERGALACTIC_SUPERCOMPUTER",
+    "BUILDING_INTERGALACTIC_WORMHOLE_COMMUNICATION_NETWORK",
+    "TECH_HYPERINTELLIGENCE"
    ],
    "any": [
     [
@@ -37,10 +25,7 @@
    "flat": [
     {
      "value": 13,
-     "enabled": {
-      "type": "TECH_ARCHETYPAL_VECTOR_SPACES",
-      "scope": "team"
-     }
+     "enabled": "TECH_ARCHETYPAL_VECTOR_SPACES"
     }
    ]
   }

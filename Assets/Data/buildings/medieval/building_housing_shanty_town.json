@@ -21,10 +21,7 @@
      "scope": "city",
      "min": 3
     },
-    {
-     "type": "TECH_SURVEYING",
-     "scope": "team"
-    }
+    "TECH_SURVEYING"
    ],
    "any": [
     [
@@ -53,22 +50,10 @@
     ]
    ],
    "dormant": [
-    {
-     "type": "BUILDING_HOUSING_GHETTOS",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_HOUSING_INNER_CITY",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_HOUSING_COLONY_ARCOLOGY",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_LAUNCH_ARCOLOGY",
-     "scope": "city"
-    }
+    "BUILDING_HOUSING_GHETTOS",
+    "BUILDING_HOUSING_INNER_CITY",
+    "BUILDING_HOUSING_COLONY_ARCOLOGY",
+    "BUILDING_LAUNCH_ARCOLOGY"
    ]
   }
  },

@@ -14,29 +14,14 @@
   "build": {
    "all": [
     "HAS_RIVER",
-    {
-     "type": "TECH_METALLURGY",
-     "scope": "team"
-    }
+    "TECH_METALLURGY"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_ROADS",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_PAVED_ROADS",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_ASPHALT_ROADS",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_SKYROAD_CONTROL_TOWER",
-      "scope": "city"
-     }
+     "BUILDING_ROADS",
+     "BUILDING_PAVED_ROADS",
+     "BUILDING_ASPHALT_ROADS",
+     "BUILDING_SKYROAD_CONTROL_TOWER"
     ],
     [
      {
@@ -72,34 +57,13 @@
     ]
    ],
    "dormant": [
-    {
-     "type": "BUILDING_CHAIN_BRIDGE",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_TRUSS_BRIDGE",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_SMALL_STEEL_ARCH_BRIDGE",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_LARGE_STEEL_ARCH_BRIDGE",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_SMALL_SUSPENSION_BRIDGE",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_LARGE_SUSPENSION_BRIDGE",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_TELEPORT_BOOTH",
-     "scope": "city"
-    }
+    "BUILDING_CHAIN_BRIDGE",
+    "BUILDING_TRUSS_BRIDGE",
+    "BUILDING_SMALL_STEEL_ARCH_BRIDGE",
+    "BUILDING_LARGE_STEEL_ARCH_BRIDGE",
+    "BUILDING_SMALL_SUSPENSION_BRIDGE",
+    "BUILDING_LARGE_SUSPENSION_BRIDGE",
+    "BUILDING_TELEPORT_BOOTH"
    ]
   }
  },

@@ -10,29 +10,14 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_FACTORY",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_MICROWAVE_WEAPONRY",
-     "scope": "team"
-    }
+    "BUILDING_FACTORY",
+    "TECH_MICROWAVE_WEAPONRY"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_EFFECT_LAUNCH_SITE",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_COMMERCIAL_SPACEPORT",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_MILITARY_SPACEPORT",
-      "scope": "city"
-     }
+     "BUILDING_EFFECT_LAUNCH_SITE",
+     "BUILDING_COMMERCIAL_SPACEPORT",
+     "BUILDING_MILITARY_SPACEPORT"
     ],
     [
      {

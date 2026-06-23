@@ -5,53 +5,20 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_RESURRECTION",
-     "scope": "team"
-    }
+    "TECH_RESURRECTION"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_LOA_HWE",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_BUDDHIST_TEMPLE",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_HINDU_TEMPLE",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_CHRISTIAN_TEMPLE",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_ISLAMIC_TEMPLE",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_JEWISH_TEMPLE",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_HELLENIC_TEMPLE",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_TEMPLE_OF_RA",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_NATURE_ALTAR",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_CANAANITE_TEMPLE",
-      "scope": "city"
-     }
+     "BUILDING_LOA_HWE",
+     "BUILDING_BUDDHIST_TEMPLE",
+     "BUILDING_HINDU_TEMPLE",
+     "BUILDING_CHRISTIAN_TEMPLE",
+     "BUILDING_ISLAMIC_TEMPLE",
+     "BUILDING_JEWISH_TEMPLE",
+     "BUILDING_HELLENIC_TEMPLE",
+     "BUILDING_TEMPLE_OF_RA",
+     "BUILDING_NATURE_ALTAR",
+     "BUILDING_CANAANITE_TEMPLE"
     ],
     [
      {

@@ -12,22 +12,10 @@
    "all": [
     "HAS_FRESHWATER",
     "HAS_POWER",
-    {
-     "type": "BUILDING_FARM_BOT_CONTROL_CENTER",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_PHENOTYPE_STUDIO",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_AUTOMATED_ROBOTICS",
-     "scope": "team"
-    },
-    {
-     "type": "TECH_GENE_ENHANCEMENT",
-     "scope": "team"
-    }
+    "BUILDING_FARM_BOT_CONTROL_CENTER",
+    "BUILDING_PHENOTYPE_STUDIO",
+    "TECH_AUTOMATED_ROBOTICS",
+    "TECH_GENE_ENHANCEMENT"
    ],
    "any": [
     [
@@ -54,10 +42,7 @@
     10,
     {
      "value": 10,
-     "enabled": {
-      "type": "TECH_EXTRATERRESTRIAL_AGRICULTURE",
-      "scope": "team"
-     }
+     "enabled": "TECH_EXTRATERRESTRIAL_AGRICULTURE"
     }
    ]
   }

@@ -10,14 +10,8 @@
      "scope": "city",
      "min": 13
     },
-    {
-     "type": "BUILDING_SUBTERRANEAN_LAB",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_SUBTERRANEAN_EXPLORATION",
-     "scope": "team"
-    }
+    "BUILDING_SUBTERRANEAN_LAB",
+    "TECH_SUBTERRANEAN_EXPLORATION"
    ],
    "any": [
     [

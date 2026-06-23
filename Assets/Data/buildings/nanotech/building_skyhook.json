@@ -6,14 +6,8 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_COMMERCIAL_SPACEPORT",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_HYPERSONIC_FLIGHT",
-     "scope": "team"
-    }
+    "BUILDING_COMMERCIAL_SPACEPORT",
+    "TECH_HYPERSONIC_FLIGHT"
    ],
    "any": [
     [

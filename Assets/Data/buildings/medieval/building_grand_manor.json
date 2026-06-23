@@ -11,25 +11,13 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_FEUDALISM",
-     "scope": "team"
-    }
+    "TECH_FEUDALISM"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_FORGE",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_FOUNDRY",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_METALS_MEGACOMPLEX",
-      "scope": "city"
-     }
+     "BUILDING_FORGE",
+     "BUILDING_FOUNDRY",
+     "BUILDING_METALS_MEGACOMPLEX"
     ],
     [
      {
@@ -41,10 +29,7 @@
   },
   "operate": {
    "all": [
-    {
-     "type": "CIVIC_VASSALAGE",
-     "scope": "empire"
-    }
+    "CIVIC_VASSALAGE"
    ]
   }
  },

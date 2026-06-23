@@ -12,18 +12,9 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_BACTERIOPHAGE_THERAPY_CLINIC",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_STEM_CELL_LAB",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_MOLECULAR_MEDICINE",
-     "scope": "team"
-    },
+    "BUILDING_BACTERIOPHAGE_THERAPY_CLINIC",
+    "BUILDING_STEM_CELL_LAB",
+    "TECH_MOLECULAR_MEDICINE",
     {
      "type": "BONUS_IMMUNITY_DRUGS",
      "scope": "city",
@@ -69,24 +60,15 @@
     6,
     {
      "value": 9,
-     "enabled": {
-      "type": "TECH_GENE_ENHANCEMENT",
-      "scope": "team"
-     }
+     "enabled": "TECH_GENE_ENHANCEMENT"
     },
     {
      "value": 9,
-     "enabled": {
-      "type": "TECH_CYBERIMMUNOLOGY",
-      "scope": "team"
-     }
+     "enabled": "TECH_CYBERIMMUNOLOGY"
     },
     {
      "value": 9,
-     "enabled": {
-      "type": "TECH_NANOROBOTICS",
-      "scope": "team"
-     }
+     "enabled": "TECH_NANOROBOTICS"
     }
    ]
   }

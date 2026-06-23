@@ -10,14 +10,8 @@
      "scope": "city",
      "connection": "trade|vicinity"
     },
-    {
-     "type": "TECH_COMMUNICATION_NETWORKS",
-     "scope": "team"
-    },
-    {
-     "type": "TECH_STEALTH",
-     "scope": "team"
-    },
+    "TECH_COMMUNICATION_NETWORKS",
+    "TECH_STEALTH",
     {
      "type": "BONUS_AIRCRAFT",
      "scope": "city",

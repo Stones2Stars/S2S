@@ -5,14 +5,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_MILKY_WAY_CORE_COLONY",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_EXOTIC_STARS",
-     "scope": "team"
-    }
+    "BUILDING_MILKY_WAY_CORE_COLONY",
+    "TECH_EXOTIC_STARS"
    ],
    "any": [
     [

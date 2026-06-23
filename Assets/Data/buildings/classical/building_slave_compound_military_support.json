@@ -6,29 +6,14 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_SLAVE_COMPOUND",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_MILITARY_TRAINING",
-     "scope": "team"
-    }
+    "BUILDING_SLAVE_COMPOUND",
+    "TECH_MILITARY_TRAINING"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_GARRISON",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_BARRACKS",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_MILITARY_BASE",
-      "scope": "city"
-     }
+     "BUILDING_GARRISON",
+     "BUILDING_BARRACKS",
+     "BUILDING_MILITARY_BASE"
     ],
     [
      {
@@ -46,10 +31,7 @@
   },
   "operate": {
    "dormant": [
-    {
-     "type": "BUILDING_EFFECT_EMANCIPATION_PROCLAMATION",
-     "scope": "city"
-    }
+    "BUILDING_EFFECT_EMANCIPATION_PROCLAMATION"
    ]
   }
  },

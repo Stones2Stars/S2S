@@ -10,10 +10,7 @@
      "scope": "empire",
      "min": 1
     },
-    {
-     "type": "TECH_ACNP_PROPULSION",
-     "scope": "team"
-    }
+    "TECH_ACNP_PROPULSION"
    ],
    "any": [
     [

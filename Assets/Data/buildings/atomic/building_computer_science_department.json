@@ -12,14 +12,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_MATHEMATICS_DEPARTMENT",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_COMPUTER_SCIENCE",
-     "scope": "team"
-    }
+    "BUILDING_MATHEMATICS_DEPARTMENT",
+    "TECH_COMPUTER_SCIENCE"
    ],
    "any": [
     [
@@ -37,31 +31,19 @@
     5,
     {
      "value": 7,
-     "enabled": {
-      "type": "TECH_PERSONAL_COMPUTERS",
-      "scope": "team"
-     }
+     "enabled": "TECH_PERSONAL_COMPUTERS"
     },
     {
      "value": 8,
-     "enabled": {
-      "type": "TECH_CLOUD_COMPUTING",
-      "scope": "team"
-     }
+     "enabled": "TECH_CLOUD_COMPUTING"
     },
     {
      "value": 8,
-     "enabled": {
-      "type": "TECH_DIGITIZATION",
-      "scope": "team"
-     }
+     "enabled": "TECH_DIGITIZATION"
     },
     {
      "value": 8,
-     "enabled": {
-      "type": "TECH_MACHINE_LEARNING",
-      "scope": "team"
-     }
+     "enabled": "TECH_MACHINE_LEARNING"
     }
    ]
   }

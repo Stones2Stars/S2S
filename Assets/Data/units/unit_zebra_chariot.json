@@ -5,25 +5,13 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_CHARIOTRY",
-     "scope": "team"
-    },
-    {
-     "type": "TECH_MEGAFAUNA_DOMESTICATION",
-     "scope": "team"
-    }
+    "TECH_CHARIOTRY",
+    "TECH_MEGAFAUNA_DOMESTICATION"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_EFFECT_HERITAGE_ZEBRAS",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_ANIMAL_TRAINER_ZEBRA",
-      "scope": "city"
-     }
+     "BUILDING_EFFECT_HERITAGE_ZEBRAS",
+     "BUILDING_ANIMAL_TRAINER_ZEBRA"
     ]
    ]
   }

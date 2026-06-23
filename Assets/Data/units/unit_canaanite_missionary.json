@@ -5,14 +5,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_CANAANITE_MONASTERY",
-     "scope": "city"
-    },
-    {
-     "type": "RELIGION_CANAANISM",
-     "scope": "city"
-    }
+    "BUILDING_CANAANITE_MONASTERY",
+    "RELIGION_CANAANISM"
    ]
   }
  },

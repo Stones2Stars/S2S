@@ -12,18 +12,9 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_ARTIFICIAL_INTELLIGENCE_CORE",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_MEGATOWER_POLICE_STATION_LEVEL",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_UTOPIA_DESTINY",
-     "scope": "team"
-    }
+    "BUILDING_ARTIFICIAL_INTELLIGENCE_CORE",
+    "BUILDING_MEGATOWER_POLICE_STATION_LEVEL",
+    "TECH_UTOPIA_DESTINY"
    ],
    "any": [
     [

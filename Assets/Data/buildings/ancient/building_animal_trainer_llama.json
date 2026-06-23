@@ -22,33 +22,15 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_CAMELID_DOMESTICATION",
-     "scope": "team"
-    }
+    "TECH_CAMELID_DOMESTICATION"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_FARM_ANIMAL_LLAMA",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_HERD_LLAMA",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_CENTRAL_BREEDER_LLAMA",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_INDUSTRIAL_FARMS",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_MEAT_INDUSTRY_CONGLOMERATE",
-      "scope": "city"
-     }
+     "BUILDING_FARM_ANIMAL_LLAMA",
+     "BUILDING_HERD_LLAMA",
+     "BUILDING_CENTRAL_BREEDER_LLAMA",
+     "BUILDING_INDUSTRIAL_FARMS",
+     "BUILDING_MEAT_INDUSTRY_CONGLOMERATE"
     ],
     [
      {

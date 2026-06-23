@@ -13,14 +13,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_SEWER_SYSTEM",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_SANITATION",
-     "scope": "team"
-    }
+    "BUILDING_SEWER_SYSTEM",
+    "TECH_SANITATION"
    ],
    "any": [
     [
@@ -52,14 +46,8 @@
     ]
    ],
    "dormant": [
-    {
-     "type": "BUILDING_PUBLIC_RESTROOMS",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_SANITATION_CHAMBER",
-     "scope": "city"
-    }
+    "BUILDING_PUBLIC_RESTROOMS",
+    "BUILDING_SANITATION_CHAMBER"
    ]
   }
  },

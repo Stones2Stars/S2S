@@ -10,18 +10,9 @@
      "scope": "city",
      "min": 12
     },
-    {
-     "type": "BUILDING_C_AC_AFRICAN",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_C_L_AFRICAN",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_MYTHOLOGICAL_BESTIARY",
-     "scope": "team"
-    }
+    "BUILDING_C_AC_AFRICAN",
+    "BUILDING_C_L_AFRICAN",
+    "TECH_MYTHOLOGICAL_BESTIARY"
    ],
    "any": [
     [
@@ -32,30 +23,12 @@
     ]
    ],
    "noneOf": [
-    {
-     "type": "BUILDING_JACKALOPE_BREEDER",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_PEGASUS_BREEDER",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_PHOENIX_BREEDER",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_QILIN_BREEDER",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_QUETZALCOATL_BREEDER",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_RAINBOW_SERPENT_BREEDER",
-     "scope": "city"
-    }
+    "BUILDING_JACKALOPE_BREEDER",
+    "BUILDING_PEGASUS_BREEDER",
+    "BUILDING_PHOENIX_BREEDER",
+    "BUILDING_QILIN_BREEDER",
+    "BUILDING_QUETZALCOATL_BREEDER",
+    "BUILDING_RAINBOW_SERPENT_BREEDER"
    ]
   },
   "operate": {

@@ -10,10 +10,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_FELINE_DOMESTICATION",
-     "scope": "team"
-    }
+    "TECH_FELINE_DOMESTICATION"
    ],
    "any": [
     [
@@ -31,10 +28,7 @@
      "scope": "city",
      "connection": "trade|vicinity"
     },
-    {
-     "type": "RELIGION_KEMETISM",
-     "scope": "city"
-    }
+    "RELIGION_KEMETISM"
    ]
   }
  },

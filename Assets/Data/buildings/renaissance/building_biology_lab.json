@@ -15,14 +15,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_UNIVERSITY",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_BIOLOGY",
-     "scope": "team"
-    }
+    "BUILDING_UNIVERSITY",
+    "TECH_BIOLOGY"
    ],
    "any": [
     [
@@ -40,59 +34,35 @@
     5,
     {
      "value": 5,
-     "enabled": {
-      "type": "TECH_ZOOLOGY",
-      "scope": "team"
-     }
+     "enabled": "TECH_ZOOLOGY"
     },
     {
      "value": 5,
-     "enabled": {
-      "type": "TECH_BOTANY",
-      "scope": "team"
-     }
+     "enabled": "TECH_BOTANY"
     },
     {
      "value": 7,
-     "enabled": {
-      "type": "TECH_ECOLOGY",
-      "scope": "team"
-     }
+     "enabled": "TECH_ECOLOGY"
     },
     {
      "value": 7,
-     "enabled": {
-      "type": "TECH_GENETICS",
-      "scope": "team"
-     }
+     "enabled": "TECH_GENETICS"
     },
     {
      "value": 7,
-     "enabled": {
-      "type": "TECH_MOLECULAR_BIOLOGY",
-      "scope": "team"
-     }
+     "enabled": "TECH_MOLECULAR_BIOLOGY"
     },
     {
      "value": 8,
-     "enabled": {
-      "type": "TECH_GENESIS_BIOLOGY",
-      "scope": "team"
-     }
+     "enabled": "TECH_GENESIS_BIOLOGY"
     },
     {
      "value": 8,
-     "enabled": {
-      "type": "TECH_GENOMIC_ENCYCLOPEDIA",
-      "scope": "team"
-     }
+     "enabled": "TECH_GENOMIC_ENCYCLOPEDIA"
     },
     {
      "value": 8,
-     "enabled": {
-      "type": "TECH_BIOINFORMATICS",
-      "scope": "team"
-     }
+     "enabled": "TECH_BIOINFORMATICS"
     }
    ]
   }

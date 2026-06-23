@@ -11,14 +11,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_URANIAN_LUNAR_HEATING",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_PLANETARY_DEFENSES",
-     "scope": "team"
-    }
+    "BUILDING_URANIAN_LUNAR_HEATING",
+    "TECH_PLANETARY_DEFENSES"
    ],
    "any": [
     [

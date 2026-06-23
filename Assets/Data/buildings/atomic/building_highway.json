@@ -25,17 +25,11 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_HIGHWAY_SYSTEMS",
-     "scope": "team"
-    }
+    "TECH_HIGHWAY_SYSTEMS"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_ASPHALT_ROADS",
-      "scope": "city"
-     }
+     "BUILDING_ASPHALT_ROADS"
     ],
     [
      {
@@ -73,14 +67,8 @@
     ]
    ],
    "dormant": [
-    {
-     "type": "BUILDING_SKYROAD_CONTROL_TOWER",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_TELEPORT_BOOTH",
-     "scope": "city"
-    }
+    "BUILDING_SKYROAD_CONTROL_TOWER",
+    "BUILDING_TELEPORT_BOOTH"
    ]
   }
  },

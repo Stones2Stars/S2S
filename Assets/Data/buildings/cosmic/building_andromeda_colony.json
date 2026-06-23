@@ -5,14 +5,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_INTERGALACTIC_GALACTIC_COLONY",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_INTERGALACTIC_COLONIZATION",
-     "scope": "team"
-    }
+    "BUILDING_INTERGALACTIC_GALACTIC_COLONY",
+    "TECH_INTERGALACTIC_COLONIZATION"
    ],
    "any": [
     [
@@ -35,22 +29,10 @@
     ]
    ],
    "noneOf": [
-    {
-     "type": "BUILDING_SMALL_MAGELLANIC_CLOUD_COLONY",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_LARGE_MAGELLANIC_CLOUD_COLONY",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_SAGITTARIUS_DWARF_ELLIPTICAL_GALAXY_COLONY",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_TRIANGULUM_COLONY",
-     "scope": "city"
-    }
+    "BUILDING_SMALL_MAGELLANIC_CLOUD_COLONY",
+    "BUILDING_LARGE_MAGELLANIC_CLOUD_COLONY",
+    "BUILDING_SAGITTARIUS_DWARF_ELLIPTICAL_GALAXY_COLONY",
+    "BUILDING_TRIANGULUM_COLONY"
    ]
   }
  },

@@ -6,22 +6,10 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_HYPERSPACE_RESIDENTIAL_PORTAL",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_HYPERSPACE_PAN_DIMENSIONAL_CITY",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_TESSERACT_CONSTRUCTION",
-     "scope": "team"
-    },
-    {
-     "type": "TECH_EUCLIDEAN_5D_SPACE_GEOMETRY",
-     "scope": "team"
-    }
+    "BUILDING_HYPERSPACE_RESIDENTIAL_PORTAL",
+    "BUILDING_HYPERSPACE_PAN_DIMENSIONAL_CITY",
+    "TECH_TESSERACT_CONSTRUCTION",
+    "TECH_EUCLIDEAN_5D_SPACE_GEOMETRY"
    ],
    "any": [
     [

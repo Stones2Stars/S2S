@@ -5,14 +5,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_KUIPER_BELT_OUTPOST",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_ADAPTIVE_RADIATION",
-     "scope": "team"
-    }
+    "BUILDING_KUIPER_BELT_OUTPOST",
+    "TECH_ADAPTIVE_RADIATION"
    ],
    "any": [
     [

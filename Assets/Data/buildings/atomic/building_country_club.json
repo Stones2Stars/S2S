@@ -13,25 +13,13 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_TOURISM",
-     "scope": "team"
-    }
+    "TECH_TOURISM"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_TENNIS_COURT",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_GOLF_COURSE",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_POLO_FIELD",
-      "scope": "city"
-     }
+     "BUILDING_TENNIS_COURT",
+     "BUILDING_GOLF_COURSE",
+     "BUILDING_POLO_FIELD"
     ],
     [
      {
@@ -43,10 +31,7 @@
   },
   "operate": {
    "dormant": [
-    {
-     "type": "BUILDING_ATHLETIC_MEGACOMPLEX",
-     "scope": "city"
-    }
+    "BUILDING_ATHLETIC_MEGACOMPLEX"
    ]
   }
  },

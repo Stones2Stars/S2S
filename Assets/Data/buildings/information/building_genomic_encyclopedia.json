@@ -21,10 +21,7 @@
      "scope": "empire",
      "min": 10
     },
-    {
-     "type": "TECH_GENOMIC_ENCYCLOPEDIA",
-     "scope": "team"
-    }
+    "TECH_GENOMIC_ENCYCLOPEDIA"
    ],
    "any": [
     [

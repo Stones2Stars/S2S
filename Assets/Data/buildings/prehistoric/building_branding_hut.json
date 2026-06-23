@@ -5,29 +5,14 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_HEAT_TREATMENT",
-     "scope": "team"
-    }
+    "TECH_HEAT_TREATMENT"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_FIRE_PIT",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_IMU",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_BONFIRE",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_CHARCOAL_BURNER",
-      "scope": "city"
-     }
+     "BUILDING_FIRE_PIT",
+     "BUILDING_IMU",
+     "BUILDING_BONFIRE",
+     "BUILDING_CHARCOAL_BURNER"
     ],
     [
      {
@@ -40,10 +25,7 @@
   "operate": {
    "any": [
     [
-     {
-      "type": "CIVIC_OBEDIENCE",
-      "scope": "empire"
-     }
+     "CIVIC_OBEDIENCE"
     ]
    ]
   }

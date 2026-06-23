@@ -10,18 +10,9 @@
      "scope": "city",
      "connection": "trade|vicinity"
     },
-    {
-     "type": "BUILDING_ROBOTICS_LAB",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_AUTOMATED_ROBOTICS",
-     "scope": "team"
-    },
-    {
-     "type": "TECH_COILGUN",
-     "scope": "team"
-    },
+    "BUILDING_ROBOTICS_LAB",
+    "TECH_AUTOMATED_ROBOTICS",
+    "TECH_COILGUN",
     {
      "type": "BONUS_FIREARMS",
      "scope": "city",

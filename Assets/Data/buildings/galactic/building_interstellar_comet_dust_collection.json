@@ -11,14 +11,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_INTERSTELLAR_PLANETARY_LANDING",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_PLANET_CRACKING",
-     "scope": "team"
-    }
+    "BUILDING_INTERSTELLAR_PLANETARY_LANDING",
+    "TECH_PLANET_CRACKING"
    ],
    "any": [
     [
@@ -35,10 +29,7 @@
   },
   "operate": {
    "dormant": [
-    {
-     "type": "BUILDING_SPACE_COLONY_MILKY_WAY",
-     "scope": "city"
-    }
+    "BUILDING_SPACE_COLONY_MILKY_WAY"
    ]
   }
  },

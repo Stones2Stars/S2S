@@ -12,10 +12,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_PRECISION_SOCIAL_ENGINEERING",
-     "scope": "team"
-    }
+    "TECH_PRECISION_SOCIAL_ENGINEERING"
    ],
    "any": [
     [

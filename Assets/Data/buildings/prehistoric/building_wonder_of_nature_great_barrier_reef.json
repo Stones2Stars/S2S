@@ -5,10 +5,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_LANGUAGE",
-     "scope": "team"
-    }
+    "TECH_LANGUAGE"
    ],
    "any": [
     [
@@ -45,24 +42,15 @@
    "flat": [
     {
      "value": 3,
-     "enabled": {
-      "type": "TECH_SPEARFISHING",
-      "scope": "team"
-     }
+     "enabled": "TECH_SPEARFISHING"
     },
     {
      "value": 2,
-     "enabled": {
-      "type": "TECH_FISHING",
-      "scope": "team"
-     }
+     "enabled": "TECH_FISHING"
     },
     {
      "value": -5,
-     "enabled": {
-      "type": "TECH_ECOLOGY",
-      "scope": "team"
-     }
+     "enabled": "TECH_ECOLOGY"
     }
    ]
   }
@@ -73,38 +61,23 @@
     2,
     {
      "value": 2,
-     "enabled": {
-      "type": "TECH_SPEARFISHING",
-      "scope": "team"
-     }
+     "enabled": "TECH_SPEARFISHING"
     },
     {
      "value": -2,
-     "enabled": {
-      "type": "TECH_ECOLOGY",
-      "scope": "team"
-     }
+     "enabled": "TECH_ECOLOGY"
     },
     {
      "value": 2,
-     "enabled": {
-      "type": "TECH_BEAD_MAKING",
-      "scope": "team"
-     }
+     "enabled": "TECH_BEAD_MAKING"
     },
     {
      "value": 10,
-     "enabled": {
-      "type": "TECH_TOURISM",
-      "scope": "team"
-     }
+     "enabled": "TECH_TOURISM"
     },
     {
      "value": 7,
-     "enabled": {
-      "type": "TECH_VERTICAL_FLIGHT",
-      "scope": "team"
-     }
+     "enabled": "TECH_VERTICAL_FLIGHT"
     }
    ]
   }
@@ -114,10 +87,7 @@
    "flat": [
     {
      "value": 10,
-     "enabled": {
-      "type": "TECH_ECOLOGY",
-      "scope": "team"
-     }
+     "enabled": "TECH_ECOLOGY"
     }
    ]
   }
@@ -151,10 +121,7 @@
   "city": {
    "flat": {
     "value": 5,
-    "enabled": {
-     "type": "TECH_EXPLORATION",
-     "scope": "team"
-    }
+    "enabled": "TECH_EXPLORATION"
    }
   }
  },

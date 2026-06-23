@@ -5,10 +5,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_BINDING",
-     "scope": "team"
-    }
+    "TECH_BINDING"
    ]
   }
  },

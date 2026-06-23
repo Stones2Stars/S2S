@@ -5,10 +5,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_FEUDALISM",
-     "scope": "team"
-    }
+    "TECH_FEUDALISM"
    ],
    "any": [
     [
@@ -21,10 +18,7 @@
   },
   "operate": {
    "all": [
-    {
-     "type": "CIVIC_VASSAL_LEVIES",
-     "scope": "empire"
-    }
+    "CIVIC_VASSAL_LEVIES"
    ]
   }
  },

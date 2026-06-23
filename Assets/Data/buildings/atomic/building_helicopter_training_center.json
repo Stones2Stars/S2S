@@ -13,14 +13,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_MILITARY_BASE",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_VERTICAL_FLIGHT",
-     "scope": "team"
-    }
+    "BUILDING_MILITARY_BASE",
+    "TECH_VERTICAL_FLIGHT"
    ],
    "any": [
     [
@@ -47,10 +41,7 @@
     ]
    ],
    "dormant": [
-    {
-     "type": "BUILDING_HOLOGRAPHIC_SCHOOL",
-     "scope": "city"
-    }
+    "BUILDING_HOLOGRAPHIC_SCHOOL"
    ]
   }
  },

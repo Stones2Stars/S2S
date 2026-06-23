@@ -11,19 +11,13 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_MAGLEV_LAUNCHER",
-     "scope": "city"
-    },
+    "BUILDING_MAGLEV_LAUNCHER",
     {
      "type": "BUILDING_MAGLEV_LAUNCHER",
      "scope": "empire",
      "min": 2
     },
-    {
-     "type": "TECH_HYPERMAGNETICS",
-     "scope": "team"
-    }
+    "TECH_HYPERMAGNETICS"
    ],
    "any": [
     [

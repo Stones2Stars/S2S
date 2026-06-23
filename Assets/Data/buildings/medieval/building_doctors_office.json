@@ -30,25 +30,13 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_PLAGUE_MEDICINE",
-     "scope": "team"
-    }
+    "TECH_PLAGUE_MEDICINE"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_TRADING_POST",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_SHOPPING_DISTRICT",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_MODERN_OFFICES",
-      "scope": "city"
-     }
+     "BUILDING_TRADING_POST",
+     "BUILDING_SHOPPING_DISTRICT",
+     "BUILDING_MODERN_OFFICES"
     ],
     [
      {
@@ -60,18 +48,9 @@
   },
   "operate": {
    "dormant": [
-    {
-     "type": "BUILDING_SURGEONS_OFFICE",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_MEDICAL_CLINIC",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_HEALTHCARE_MEGACOMPLEX",
-     "scope": "city"
-    }
+    "BUILDING_SURGEONS_OFFICE",
+    "BUILDING_MEDICAL_CLINIC",
+    "BUILDING_HEALTHCARE_MEGACOMPLEX"
    ]
   }
  },

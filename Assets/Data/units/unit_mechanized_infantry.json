@@ -5,10 +5,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_ROBOTICS",
-     "scope": "team"
-    }
+    "TECH_ROBOTICS"
    ]
   }
  },

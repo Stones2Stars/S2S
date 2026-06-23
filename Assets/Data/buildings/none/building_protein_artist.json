@@ -11,14 +11,8 @@
      "scope": "city",
      "min": 3
     },
-    {
-     "type": "BUILDING_PROTEIN_LAB",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_BIOPUNK",
-     "scope": "team"
-    }
+    "BUILDING_PROTEIN_LAB",
+    "TECH_BIOPUNK"
    ],
    "any": [
     [

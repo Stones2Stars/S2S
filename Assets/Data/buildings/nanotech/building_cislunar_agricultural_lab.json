@@ -12,10 +12,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_AUGMENTED_CONSUMABLES",
-     "scope": "team"
-    }
+    "TECH_AUGMENTED_CONSUMABLES"
    ],
    "any": [
     [
@@ -33,24 +30,15 @@
     5,
     {
      "value": 9,
-     "enabled": {
-      "type": "TECH_VERTICAL_FARMING",
-      "scope": "team"
-     }
+     "enabled": "TECH_VERTICAL_FARMING"
     },
     {
      "value": 9,
-     "enabled": {
-      "type": "TECH_ACCELERATED_GERMINATION",
-      "scope": "team"
-     }
+     "enabled": "TECH_ACCELERATED_GERMINATION"
     },
     {
      "value": 10,
-     "enabled": {
-      "type": "TECH_BOTANICAL_ALCHEMY",
-      "scope": "team"
-     }
+     "enabled": "TECH_BOTANICAL_ALCHEMY"
     }
    ]
   }
@@ -60,10 +48,7 @@
    "flat": [
     {
      "value": 10,
-     "enabled": {
-      "type": "TECH_ARTIFICIAL_PHOTOSYNTHESIS",
-      "scope": "team"
-     }
+     "enabled": "TECH_ARTIFICIAL_PHOTOSYNTHESIS"
     }
    ]
   }

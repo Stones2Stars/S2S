@@ -10,10 +10,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_MESH_NETWORKS",
-     "scope": "team"
-    }
+    "TECH_MESH_NETWORKS"
    ],
    "any": [
     [

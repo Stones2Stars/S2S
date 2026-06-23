@@ -83,10 +83,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_BARTER",
-     "scope": "team"
-    }
+    "TECH_BARTER"
    ],
    "any": [
     [
@@ -99,14 +96,8 @@
   },
   "operate": {
    "dormant": [
-    {
-     "type": "BUILDING_TRADING_POST",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_SHOPPING_DISTRICT",
-     "scope": "city"
-    }
+    "BUILDING_TRADING_POST",
+    "BUILDING_SHOPPING_DISTRICT"
    ]
   }
  },

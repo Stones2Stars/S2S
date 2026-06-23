@@ -18,17 +18,11 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_SCRIPTURES",
-     "scope": "team"
-    }
+    "TECH_SCRIPTURES"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_BURIAL_TRADITION_EARTH",
-      "scope": "city"
-     }
+     "BUILDING_BURIAL_TRADITION_EARTH"
     ],
     [
      {
@@ -40,14 +34,8 @@
   },
   "operate": {
    "dormant": [
-    {
-     "type": "BUILDING_FUNERARY_SERVICES",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_HIGH_TECH_CULTURAL_ENRICHMENT",
-     "scope": "city"
-    }
+    "BUILDING_FUNERARY_SERVICES",
+    "BUILDING_HIGH_TECH_CULTURAL_ENRICHMENT"
    ]
   }
  },

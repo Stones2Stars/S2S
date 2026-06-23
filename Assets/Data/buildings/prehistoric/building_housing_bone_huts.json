@@ -10,14 +10,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_BONE_WORKING",
-     "scope": "team"
-    },
-    {
-     "type": "TECH_SHELTER_BUILDING",
-     "scope": "team"
-    }
+    "TECH_BONE_WORKING",
+    "TECH_SHELTER_BUILDING"
    ],
    "any": [
     [
@@ -37,38 +31,14 @@
     }
    ],
    "dormant": [
-    {
-     "type": "BUILDING_HOUSING_STONE_HUTS",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_HOUSING_MUD_HUTS",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_HOUSING_DOMUS",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_HOUSING_COTTAGES",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_HOUSING_SUBURBS",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_HOUSING_SMART_HOMES",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_HOUSING_COLONY_ARCOLOGY",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_LAUNCH_ARCOLOGY",
-     "scope": "city"
-    }
+    "BUILDING_HOUSING_STONE_HUTS",
+    "BUILDING_HOUSING_MUD_HUTS",
+    "BUILDING_HOUSING_DOMUS",
+    "BUILDING_HOUSING_COTTAGES",
+    "BUILDING_HOUSING_SUBURBS",
+    "BUILDING_HOUSING_SMART_HOMES",
+    "BUILDING_HOUSING_COLONY_ARCOLOGY",
+    "BUILDING_LAUNCH_ARCOLOGY"
    ]
   }
  },

@@ -15,10 +15,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_SAILING",
-     "scope": "team"
-    }
+    "TECH_SAILING"
    ],
    "any": [
     [

@@ -5,10 +5,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_NEW_URBANISM",
-     "scope": "team"
-    }
+    "TECH_NEW_URBANISM"
    ],
    "any": [
     [
@@ -22,14 +19,8 @@
   "operate": {
    "any": [
     [
-     {
-      "type": "CIVIC_GREEN",
-      "scope": "empire"
-     },
-     {
-      "type": "CIVIC_PUBLIC_WORKS",
-      "scope": "empire"
-     }
+     "CIVIC_GREEN",
+     "CIVIC_PUBLIC_WORKS"
     ]
    ]
   }

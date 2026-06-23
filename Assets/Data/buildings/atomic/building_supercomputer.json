@@ -13,14 +13,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_LABORATORY",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_COMPUTER_SCIENCE",
-     "scope": "team"
-    }
+    "BUILDING_LABORATORY",
+    "TECH_COMPUTER_SCIENCE"
    ],
    "any": [
     [
@@ -33,10 +27,7 @@
   },
   "operate": {
    "dormant": [
-    {
-     "type": "BUILDING_OPTRONIC_SUPERCOMPUTER",
-     "scope": "city"
-    }
+    "BUILDING_OPTRONIC_SUPERCOMPUTER"
    ]
   }
  },
@@ -45,17 +36,11 @@
    "flat": [
     {
      "value": 8,
-     "enabled": {
-      "type": "TECH_NEURAL_NETWORKS",
-      "scope": "team"
-     }
+     "enabled": "TECH_NEURAL_NETWORKS"
     },
     {
      "value": 8,
-     "enabled": {
-      "type": "TECH_MACHINE_LEARNING",
-      "scope": "team"
-     }
+     "enabled": "TECH_MACHINE_LEARNING"
     }
    ]
   }
@@ -66,17 +51,11 @@
     20,
     {
      "value": 8,
-     "enabled": {
-      "type": "TECH_NEURAL_NETWORKS",
-      "scope": "team"
-     }
+     "enabled": "TECH_NEURAL_NETWORKS"
     },
     {
      "value": 8,
-     "enabled": {
-      "type": "TECH_MACHINE_LEARNING",
-      "scope": "team"
-     }
+     "enabled": "TECH_MACHINE_LEARNING"
     }
    ]
   }

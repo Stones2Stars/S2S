@@ -15,14 +15,8 @@
      "scope": "city",
      "min": 3
     },
-    {
-     "type": "BUILDING_TOWNCLOCK",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_CLOCKPUNK",
-     "scope": "team"
-    }
+    "BUILDING_TOWNCLOCK",
+    "TECH_CLOCKPUNK"
    ],
    "any": [
     [

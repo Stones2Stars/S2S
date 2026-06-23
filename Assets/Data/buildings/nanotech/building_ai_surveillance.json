@@ -6,29 +6,14 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_COMPUTER_NETWORK",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_ADVANCED_COMPUTERS",
-     "scope": "team"
-    }
+    "BUILDING_COMPUTER_NETWORK",
+    "TECH_ADVANCED_COMPUTERS"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_POLICE_STATION",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_POLICE_PRECINCT",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_INTELLIGENCE_AGENCY",
-      "scope": "city"
-     }
+     "BUILDING_POLICE_STATION",
+     "BUILDING_POLICE_PRECINCT",
+     "BUILDING_INTELLIGENCE_AGENCY"
     ],
     [
      {
@@ -40,10 +25,7 @@
   },
   "operate": {
    "all": [
-    {
-     "type": "CIVIC_TECHNOCRACY",
-     "scope": "empire"
-    }
+    "CIVIC_TECHNOCRACY"
    ]
   }
  },

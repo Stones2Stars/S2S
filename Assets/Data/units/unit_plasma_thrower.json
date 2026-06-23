@@ -10,10 +10,7 @@
      "scope": "city",
      "connection": "trade|vicinity"
     },
-    {
-     "type": "TECH_ELECTRIC_ARC_WEAPONRY",
-     "scope": "team"
-    }
+    "TECH_ELECTRIC_ARC_WEAPONRY"
    ]
   }
  },

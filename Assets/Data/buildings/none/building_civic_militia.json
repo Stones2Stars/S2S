@@ -15,10 +15,7 @@
   },
   "operate": {
    "all": [
-    {
-     "type": "CIVIC_MILITIA",
-     "scope": "empire"
-    }
+    "CIVIC_MILITIA"
    ]
   }
  },

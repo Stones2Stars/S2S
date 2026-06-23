@@ -5,18 +5,9 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_CISLUNAR_CONTROL_SYSTEM",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_CISLUNAR_ONEILL_CYLINDER",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_LAUNCH_ARCOLOGY",
-     "scope": "team"
-    }
+    "BUILDING_CISLUNAR_CONTROL_SYSTEM",
+    "BUILDING_CISLUNAR_ONEILL_CYLINDER",
+    "TECH_LAUNCH_ARCOLOGY"
    ],
    "any": [
     [
@@ -30,22 +21,10 @@
   "operate": {
    "any": [
     [
-     {
-      "type": "CIVIC_DESPOTISM",
-      "scope": "empire"
-     },
-     {
-      "type": "CIVIC_MONARCHY",
-      "scope": "empire"
-     },
-     {
-      "type": "CIVIC_TOTALITARIANISM",
-      "scope": "empire"
-     },
-     {
-      "type": "CIVIC_SUPERHUMAN",
-      "scope": "empire"
-     }
+     "CIVIC_DESPOTISM",
+     "CIVIC_MONARCHY",
+     "CIVIC_TOTALITARIANISM",
+     "CIVIC_SUPERHUMAN"
     ]
    ]
   }

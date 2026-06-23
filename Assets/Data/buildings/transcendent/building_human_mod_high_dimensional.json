@@ -5,10 +5,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_TRANSVERSE_EUCLIDEAN_GEOMETRY",
-     "scope": "team"
-    },
+    "TECH_TRANSVERSE_EUCLIDEAN_GEOMETRY",
     {
      "type": "BONUS_HUMAN_MOD_IMMORTAL",
      "scope": "city",

@@ -5,21 +5,12 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_ASSEMBLY_LINE",
-     "scope": "team"
-    }
+    "TECH_ASSEMBLY_LINE"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_MODERN_OFFICES",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_OFFICIUM",
-      "scope": "city"
-     }
+     "BUILDING_MODERN_OFFICES",
+     "BUILDING_OFFICIUM"
     ],
     [
      {
@@ -31,29 +22,14 @@
   },
   "operate": {
    "all": [
-    {
-     "type": "CIVIC_PRIVATIZED",
-     "scope": "empire"
-    }
+    "CIVIC_PRIVATIZED"
    ],
    "any": [
     [
-     {
-      "type": "CIVIC_CORPORATISM",
-      "scope": "empire"
-     },
-     {
-      "type": "CIVIC_FREE_MARKET",
-      "scope": "empire"
-     },
-     {
-      "type": "CIVIC_GREEN",
-      "scope": "empire"
-     },
-     {
-      "type": "CIVIC_REGULATED",
-      "scope": "empire"
-     }
+     "CIVIC_CORPORATISM",
+     "CIVIC_FREE_MARKET",
+     "CIVIC_GREEN",
+     "CIVIC_REGULATED"
     ]
    ]
   }

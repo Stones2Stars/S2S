@@ -5,14 +5,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_ASTEROID_CERES_TRADING_POST",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_LUNAR_TERRAFORMING",
-     "scope": "team"
-    }
+    "BUILDING_ASTEROID_CERES_TRADING_POST",
+    "TECH_LUNAR_TERRAFORMING"
    ],
    "any": [
     [

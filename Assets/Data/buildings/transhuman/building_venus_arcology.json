@@ -12,14 +12,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_VENUS_SURFACE_CITY",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_PLANETARY_MEGASTRUCTURES",
-     "scope": "team"
-    }
+    "BUILDING_VENUS_SURFACE_CITY",
+    "TECH_PLANETARY_MEGASTRUCTURES"
    ],
    "any": [
     [
@@ -52,17 +46,11 @@
     500,
     {
      "value": 11,
-     "enabled": {
-      "type": "TECH_LAUNCH_ARCOLOGY",
-      "scope": "team"
-     }
+     "enabled": "TECH_LAUNCH_ARCOLOGY"
     },
     {
      "value": 11,
-     "enabled": {
-      "type": "TECH_COLONY_ARCOLOGY",
-      "scope": "team"
-     }
+     "enabled": "TECH_COLONY_ARCOLOGY"
     }
    ]
   }

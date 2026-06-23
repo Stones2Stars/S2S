@@ -12,14 +12,8 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_HYPERSPACE_SIMULATED_UNIVERSE",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_PARAMETER_TUNING",
-     "scope": "team"
-    }
+    "BUILDING_HYPERSPACE_SIMULATED_UNIVERSE",
+    "TECH_PARAMETER_TUNING"
    ],
    "any": [
     [

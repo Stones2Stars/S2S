@@ -13,10 +13,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_MATHEMATICS",
-     "scope": "team"
-    }
+    "TECH_MATHEMATICS"
    ],
    "any": [
     [
@@ -53,10 +50,7 @@
     ]
    ],
    "dormant": [
-    {
-     "type": "BUILDING_MATHEMATICS_DEPARTMENT",
-     "scope": "city"
-    }
+    "BUILDING_MATHEMATICS_DEPARTMENT"
    ]
   }
  },
@@ -66,24 +60,15 @@
     3,
     {
      "value": 3,
-     "enabled": {
-      "type": "TECH_GEOMETRY",
-      "scope": "team"
-     }
+     "enabled": "TECH_GEOMETRY"
     },
     {
      "value": 4,
-     "enabled": {
-      "type": "TECH_ALGEBRA",
-      "scope": "team"
-     }
+     "enabled": "TECH_ALGEBRA"
     },
     {
      "value": 5,
-     "enabled": {
-      "type": "TECH_CALCULUS",
-      "scope": "team"
-     }
+     "enabled": "TECH_CALCULUS"
     }
    ]
   }

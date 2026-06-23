@@ -5,10 +5,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_CITY_PLANNING",
-     "scope": "team"
-    },
+    "TECH_CITY_PLANNING",
     "STATE_RELIGION_IN_CITY",
     {
      "STATE_RELIGION": "RELIGION_HELLENISM"
@@ -16,18 +13,9 @@
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_SCULPTORS_WORKSHOP",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_FACTORY_SCULPTURES",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_MANUFACTURING_DISTRICT",
-      "scope": "city"
-     }
+     "BUILDING_SCULPTORS_WORKSHOP",
+     "BUILDING_FACTORY_SCULPTURES",
+     "BUILDING_MANUFACTURING_DISTRICT"
     ],
     [
      {
@@ -39,10 +27,7 @@
   },
   "operate": {
    "all": [
-    {
-     "type": "RELIGION_HELLENISM",
-     "scope": "city"
-    }
+    "RELIGION_HELLENISM"
    ]
   }
  },

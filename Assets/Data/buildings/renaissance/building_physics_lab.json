@@ -12,14 +12,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_UNIVERSITY",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_PHYSICS",
-     "scope": "team"
-    }
+    "BUILDING_UNIVERSITY",
+    "TECH_PHYSICS"
    ],
    "any": [
     [
@@ -37,17 +31,11 @@
     5,
     {
      "value": 7,
-     "enabled": {
-      "type": "TECH_QUANTUM_PHYSICS",
-      "scope": "team"
-     }
+     "enabled": "TECH_QUANTUM_PHYSICS"
     },
     {
      "value": 7,
-     "enabled": {
-      "type": "TECH_MODERN_PHYSICS",
-      "scope": "team"
-     }
+     "enabled": "TECH_MODERN_PHYSICS"
     }
    ]
   }

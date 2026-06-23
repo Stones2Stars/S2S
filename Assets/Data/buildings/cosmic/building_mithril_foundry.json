@@ -6,18 +6,9 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_LUNAR_ARCOLOGY",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_LUNAR_SPACE_PORT",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_FANTASY_MATERIALS",
-     "scope": "team"
-    }
+    "BUILDING_LUNAR_ARCOLOGY",
+    "BUILDING_LUNAR_SPACE_PORT",
+    "TECH_FANTASY_MATERIALS"
    ],
    "any": [
     [

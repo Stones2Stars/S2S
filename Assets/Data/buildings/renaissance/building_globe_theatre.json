@@ -10,19 +10,13 @@
      "scope": "city",
      "min": 3
     },
-    {
-     "type": "BUILDING_THEATRE",
-     "scope": "city"
-    },
+    "BUILDING_THEATRE",
     {
      "type": "BUILDING_THEATRE",
      "scope": "empire",
      "min": 4
     },
-    {
-     "type": "TECH_FREE_ARTISTRY",
-     "scope": "team"
-    }
+    "TECH_FREE_ARTISTRY"
    ],
    "any": [
     [

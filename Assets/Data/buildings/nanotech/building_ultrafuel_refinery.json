@@ -7,14 +7,8 @@
    "all": [
     "HAS_RIVER",
     "HAS_POWER",
-    {
-     "type": "BUILDING_FACTORY",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_AUGMENTED_CONSUMABLES",
-     "scope": "team"
-    }
+    "BUILDING_FACTORY",
+    "TECH_AUGMENTED_CONSUMABLES"
    ],
    "any": [
     [

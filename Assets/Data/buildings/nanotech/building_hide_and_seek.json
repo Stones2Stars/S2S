@@ -6,14 +6,8 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_ATHLETIC_MEGACOMPLEX",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_CLOAKING",
-     "scope": "team"
-    }
+    "BUILDING_ATHLETIC_MEGACOMPLEX",
+    "TECH_CLOAKING"
    ],
    "any": [
     [
@@ -30,52 +24,31 @@
    "flat": [
     {
      "value": 13,
-     "enabled": {
-      "type": "TECH_TRANSFINITE_STRUCTURES",
-      "scope": "team"
-     }
+     "enabled": "TECH_TRANSFINITE_STRUCTURES"
     },
     {
      "value": 10,
-     "enabled": {
-      "type": "TECH_NANOMORPHICS",
-      "scope": "team"
-     }
+     "enabled": "TECH_NANOMORPHICS"
     },
     {
      "value": 13,
-     "enabled": {
-      "type": "TECH_HYPERLANES",
-      "scope": "team"
-     }
+     "enabled": "TECH_HYPERLANES"
     },
     {
      "value": 12,
-     "enabled": {
-      "type": "TECH_QUANTUM_RAMJET",
-      "scope": "team"
-     }
+     "enabled": "TECH_QUANTUM_RAMJET"
     },
     {
      "value": 11,
-     "enabled": {
-      "type": "TECH_PHASING",
-      "scope": "team"
-     }
+     "enabled": "TECH_PHASING"
     },
     {
      "value": 13,
-     "enabled": {
-      "type": "TECH_SPATIAL_TRANSCENDENCE",
-      "scope": "team"
-     }
+     "enabled": "TECH_SPATIAL_TRANSCENDENCE"
     },
     {
      "value": 12,
-     "enabled": {
-      "type": "TECH_TIME_TRAVEL",
-      "scope": "team"
-     }
+     "enabled": "TECH_TIME_TRAVEL"
     },
     {
      "value": 1,

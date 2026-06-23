@@ -10,14 +10,8 @@
      "scope": "city",
      "connection": "trade|vicinity"
     },
-    {
-     "type": "BUILDING_BLACK_HAT_HIDEOUT",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_CYBERWARFARE",
-     "scope": "team"
-    },
+    "BUILDING_BLACK_HAT_HIDEOUT",
+    "TECH_CYBERWARFARE",
     {
      "type": "BONUS_PERSONAL_ELECTRONICS",
      "scope": "city",

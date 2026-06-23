@@ -18,41 +18,17 @@
      "scope": "city",
      "min": 7
     },
-    {
-     "type": "BUILDING_MOVIE_STUDIO",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_MOTION_PICTURES",
-     "scope": "team"
-    }
+    "BUILDING_MOVIE_STUDIO",
+    "TECH_MOTION_PICTURES"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_REPET",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_DOG_BREEDER",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_CAT_BREEDER",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_ANIMAL_TRAINER_HORSE",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_ANIMAL_TRAINER_ELEPHANT",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_MONKEY_BREEDER",
-      "scope": "city"
-     }
+     "BUILDING_REPET",
+     "BUILDING_DOG_BREEDER",
+     "BUILDING_CAT_BREEDER",
+     "BUILDING_ANIMAL_TRAINER_HORSE",
+     "BUILDING_ANIMAL_TRAINER_ELEPHANT",
+     "BUILDING_MONKEY_BREEDER"
     ],
     [
      {
@@ -64,10 +40,7 @@
   },
   "operate": {
    "dormant": [
-    {
-     "type": "BUILDING_HIGH_TECH_CULTURAL_ENRICHMENT",
-     "scope": "city"
-    }
+    "BUILDING_HIGH_TECH_CULTURAL_ENRICHMENT"
    ]
   }
  },

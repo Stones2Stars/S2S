@@ -6,14 +6,8 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_ULTIMATE_COMBAT_ARENA",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_MENSIOKINESIS",
-     "scope": "team"
-    }
+    "BUILDING_ULTIMATE_COMBAT_ARENA",
+    "TECH_MENSIOKINESIS"
    ],
    "any": [
     [
@@ -31,10 +25,7 @@
     12,
     {
      "value": 13,
-     "enabled": {
-      "type": "TECH_SENTIENT_ENERGY_FIELDS",
-      "scope": "team"
-     }
+     "enabled": "TECH_SENTIENT_ENERGY_FIELDS"
     },
     {
      "value": 1,

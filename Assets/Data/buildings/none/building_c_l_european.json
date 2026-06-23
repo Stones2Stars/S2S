@@ -93,10 +93,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_C_AC_EUROPEAN",
-     "scope": "city"
-    }
+    "BUILDING_C_AC_EUROPEAN"
    ],
    "any": [
     [

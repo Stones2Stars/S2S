@@ -19,25 +19,13 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_COOKING",
-     "scope": "team"
-    },
-    {
-     "type": "TECH_SHELTER_BUILDING",
-     "scope": "team"
-    }
+    "TECH_COOKING",
+    "TECH_SHELTER_BUILDING"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_SLAUGHTERHOUSE",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_INDUSTRIAL_FARMS",
-      "scope": "city"
-     }
+     "BUILDING_SLAUGHTERHOUSE",
+     "BUILDING_INDUSTRIAL_FARMS"
     ],
     [
      {
@@ -49,14 +37,8 @@
   },
   "operate": {
    "dormant": [
-    {
-     "type": "BUILDING_MEAT_INDUSTRY_CONGLOMERATE",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_MEAT_PACKING_PLANT",
-     "scope": "city"
-    }
+    "BUILDING_MEAT_INDUSTRY_CONGLOMERATE",
+    "BUILDING_MEAT_PACKING_PLANT"
    ]
   }
  },

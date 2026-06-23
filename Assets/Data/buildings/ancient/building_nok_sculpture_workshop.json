@@ -5,14 +5,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_C_L_AFRICAN",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_ORNAMENTATION",
-     "scope": "team"
-    }
+    "BUILDING_C_L_AFRICAN",
+    "TECH_ORNAMENTATION"
    ],
    "any": [
     [

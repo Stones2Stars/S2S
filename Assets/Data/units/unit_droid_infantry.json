@@ -10,14 +10,8 @@
      "scope": "city",
      "connection": "trade|vicinity"
     },
-    {
-     "type": "BUILDING_ROBOTICS_LAB",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_DROIDS",
-     "scope": "team"
-    },
+    "BUILDING_ROBOTICS_LAB",
+    "TECH_DROIDS",
     {
      "type": "BONUS_FIREARMS",
      "scope": "city",

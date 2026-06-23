@@ -19,18 +19,9 @@
   "build": {
    "all": [
     "HAS_FRESHWATER",
-    {
-     "type": "BUILDING_WATER_PIPES",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_AESTHETICS",
-     "scope": "team"
-    },
-    {
-     "type": "TECH_CANAL_SYSTEMS",
-     "scope": "team"
-    }
+    "BUILDING_WATER_PIPES",
+    "TECH_AESTHETICS",
+    "TECH_CANAL_SYSTEMS"
    ],
    "any": [
     [
@@ -50,10 +41,7 @@
     }
    ],
    "dormant": [
-    {
-     "type": "BUILDING_CITY_PARK",
-     "scope": "city"
-    }
+    "BUILDING_CITY_PARK"
    ]
   }
  },

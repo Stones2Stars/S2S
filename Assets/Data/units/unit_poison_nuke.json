@@ -5,14 +5,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_BIOLOGICAL_WARFARE_LAB",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_GENE_MANIPULATION",
-     "scope": "team"
-    }
+    "BUILDING_BIOLOGICAL_WARFARE_LAB",
+    "TECH_GENE_MANIPULATION"
    ]
   }
  },

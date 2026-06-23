@@ -100,10 +100,7 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "TECH_CIVIL_ENGINEERING",
-     "scope": "team"
-    }
+    "TECH_CIVIL_ENGINEERING"
    ],
    "any": [
     [

@@ -16,10 +16,7 @@
      "scope": "city",
      "min": 7
     },
-    {
-     "type": "TECH_RAILROAD",
-     "scope": "team"
-    }
+    "TECH_RAILROAD"
    ],
    "any": [
     [

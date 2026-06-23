@@ -22,21 +22,12 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_MACHINERY",
-     "scope": "team"
-    }
+    "TECH_MACHINERY"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_TRADING_POST",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_SHOPPING_DISTRICT",
-      "scope": "city"
-     }
+     "BUILDING_TRADING_POST",
+     "BUILDING_SHOPPING_DISTRICT"
     ],
     [
      {
@@ -79,14 +70,8 @@
     ]
    ],
    "dormant": [
-    {
-     "type": "BUILDING_FACTORY_AUTOMOBILES",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_SELF_ASSEMBLY_FACTORY",
-     "scope": "city"
-    }
+    "BUILDING_FACTORY_AUTOMOBILES",
+    "BUILDING_SELF_ASSEMBLY_FACTORY"
    ]
   }
  },

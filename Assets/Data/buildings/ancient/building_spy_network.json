@@ -5,10 +5,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_WRITING",
-     "scope": "team"
-    }
+    "TECH_WRITING"
    ],
    "any": [
     [
@@ -29,24 +26,15 @@
     1,
     {
      "value": 5,
-     "enabled": {
-      "type": "TECH_FREE_ARTISTRY",
-      "scope": "team"
-     }
+     "enabled": "TECH_FREE_ARTISTRY"
     },
     {
      "value": 5,
-     "enabled": {
-      "type": "TECH_PRINTING_PRESS",
-      "scope": "team"
-     }
+     "enabled": "TECH_PRINTING_PRESS"
     },
     {
      "value": 7,
-     "enabled": {
-      "type": "TECH_ELECTRONICS",
-      "scope": "team"
-     }
+     "enabled": "TECH_ELECTRONICS"
     }
    ]
   }

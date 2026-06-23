@@ -5,10 +5,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_NANOPUNK",
-     "scope": "team"
-    }
+    "TECH_NANOPUNK"
    ],
    "any": [
     [

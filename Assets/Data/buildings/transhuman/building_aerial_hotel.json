@@ -6,14 +6,8 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_MEGATOWER_HOTEL_LEVEL",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_WEIGHTLESS_FLIGHT",
-     "scope": "team"
-    }
+    "BUILDING_MEGATOWER_HOTEL_LEVEL",
+    "TECH_WEIGHTLESS_FLIGHT"
    ],
    "any": [
     [

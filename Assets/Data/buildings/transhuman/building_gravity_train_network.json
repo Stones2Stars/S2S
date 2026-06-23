@@ -6,18 +6,9 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_MINING_NANOBOT_CONTROL_CENTER",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_GRAVITY_TRAIN",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_SUBTERRANEAN_EXPLORATION",
-     "scope": "team"
-    }
+    "BUILDING_MINING_NANOBOT_CONTROL_CENTER",
+    "BUILDING_GRAVITY_TRAIN",
+    "TECH_SUBTERRANEAN_EXPLORATION"
    ],
    "any": [
     [

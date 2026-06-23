@@ -6,18 +6,9 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_SOMATOSENSORY_MANIPULATOR_LAB",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_DREAM_VISUALIZER",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_NEURON_ENGINEERING",
-     "scope": "team"
-    }
+    "BUILDING_SOMATOSENSORY_MANIPULATOR_LAB",
+    "BUILDING_DREAM_VISUALIZER",
+    "TECH_NEURON_ENGINEERING"
    ],
    "any": [
     [

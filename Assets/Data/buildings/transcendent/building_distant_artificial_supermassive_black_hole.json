@@ -10,14 +10,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_DISTANT_BLAZAR_FACTORY",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_DIRECTED_COSMIC_EVOLUTION",
-     "scope": "team"
-    }
+    "BUILDING_DISTANT_BLAZAR_FACTORY",
+    "TECH_DIRECTED_COSMIC_EVOLUTION"
    ],
    "any": [
     [

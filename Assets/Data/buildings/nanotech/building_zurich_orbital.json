@@ -11,14 +11,8 @@
      "scope": "city",
      "min": 13
     },
-    {
-     "type": "BUILDING_COMMERCIAL_SPACEPORT",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_ORBITAL_FLIGHT",
-     "scope": "team"
-    }
+    "BUILDING_COMMERCIAL_SPACEPORT",
+    "TECH_ORBITAL_FLIGHT"
    ],
    "any": [
     [

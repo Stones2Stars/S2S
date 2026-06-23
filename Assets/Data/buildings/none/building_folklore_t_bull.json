@@ -12,37 +12,16 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_FOLKLORE_REQUIREMENT",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_TAXONOMY",
-     "scope": "team"
-    }
+    "BUILDING_FOLKLORE_REQUIREMENT",
+    "TECH_TAXONOMY"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_FOLKLORE_BISON",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_FOLKLORE_CAPE_BUFFALO",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_FOLKLORE_AUROCHS",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_FOLKLORE_MUSKOX",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_FOLKLORE_WILDEBEEST",
-      "scope": "city"
-     }
+     "BUILDING_FOLKLORE_BISON",
+     "BUILDING_FOLKLORE_CAPE_BUFFALO",
+     "BUILDING_FOLKLORE_AUROCHS",
+     "BUILDING_FOLKLORE_MUSKOX",
+     "BUILDING_FOLKLORE_WILDEBEEST"
     ],
     [
      {
@@ -59,38 +38,23 @@
     1,
     {
      "value": -0.6,
-     "enabled": {
-      "type": "TECH_LANGUAGE",
-      "scope": "team"
-     }
+     "enabled": "TECH_LANGUAGE"
     },
     {
      "value": -0.1,
-     "enabled": {
-      "type": "TECH_CLASSICAL_LIFESTYLE",
-      "scope": "team"
-     }
+     "enabled": "TECH_CLASSICAL_LIFESTYLE"
     },
     {
      "value": -0.1,
-     "enabled": {
-      "type": "TECH_MEDIEVAL_LIFESTYLE",
-      "scope": "team"
-     }
+     "enabled": "TECH_MEDIEVAL_LIFESTYLE"
     },
     {
      "value": -0.1,
-     "enabled": {
-      "type": "TECH_RENAISSANCE_LIFESTYLE",
-      "scope": "team"
-     }
+     "enabled": "TECH_RENAISSANCE_LIFESTYLE"
     },
     {
      "value": -0.1,
-     "enabled": {
-      "type": "TECH_INDUSTRIAL_LIFESTYLE",
-      "scope": "team"
-     }
+     "enabled": "TECH_INDUSTRIAL_LIFESTYLE"
     }
    ]
   }
@@ -100,38 +64,23 @@
    "flat": [
     {
      "value": 0.1,
-     "enabled": {
-      "type": "TECH_LANGUAGE",
-      "scope": "team"
-     }
+     "enabled": "TECH_LANGUAGE"
     },
     {
      "value": 0.1,
-     "enabled": {
-      "type": "TECH_CLASSICAL_LIFESTYLE",
-      "scope": "team"
-     }
+     "enabled": "TECH_CLASSICAL_LIFESTYLE"
     },
     {
      "value": 0.1,
-     "enabled": {
-      "type": "TECH_MEDIEVAL_LIFESTYLE",
-      "scope": "team"
-     }
+     "enabled": "TECH_MEDIEVAL_LIFESTYLE"
     },
     {
      "value": 0.1,
-     "enabled": {
-      "type": "TECH_RENAISSANCE_LIFESTYLE",
-      "scope": "team"
-     }
+     "enabled": "TECH_RENAISSANCE_LIFESTYLE"
     },
     {
      "value": 0.1,
-     "enabled": {
-      "type": "TECH_INDUSTRIAL_LIFESTYLE",
-      "scope": "team"
-     }
+     "enabled": "TECH_INDUSTRIAL_LIFESTYLE"
     }
    ]
   }
@@ -140,10 +89,7 @@
   "city": {
    "flat": {
     "value": 1,
-    "enabled": {
-     "type": "TECH_BIOLOGY",
-     "scope": "team"
-    }
+    "enabled": "TECH_BIOLOGY"
    }
   }
  },

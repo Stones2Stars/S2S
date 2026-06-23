@@ -10,10 +10,7 @@
      "scope": "city",
      "connection": "trade|vicinity"
     },
-    {
-     "type": "TECH_NITROGLYCERIN",
-     "scope": "team"
-    }
+    "TECH_NITROGLYCERIN"
    ]
   }
  },

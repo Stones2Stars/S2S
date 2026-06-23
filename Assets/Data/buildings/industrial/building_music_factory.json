@@ -6,14 +6,8 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_FACTORY",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_ASSEMBLY_LINE",
-     "scope": "team"
-    }
+    "BUILDING_FACTORY",
+    "TECH_ASSEMBLY_LINE"
    ],
    "any": [
     [
@@ -36,17 +30,11 @@
     70,
     {
      "value": 28,
-     "enabled": {
-      "type": "TECH_MASS_MEDIA",
-      "scope": "team"
-     }
+     "enabled": "TECH_MASS_MEDIA"
     },
     {
      "value": 24,
-     "enabled": {
-      "type": "TECH_RADIO",
-      "scope": "team"
-     }
+     "enabled": "TECH_RADIO"
     }
    ]
   }

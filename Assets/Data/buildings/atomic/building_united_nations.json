@@ -21,18 +21,12 @@
      "scope": "world",
      "min": 3
     },
-    {
-     "type": "BUILDING_SKYSCRAPER",
-     "scope": "city"
-    },
+    "BUILDING_SKYSCRAPER",
     {
      "type": "VICTORY_DIPLOMATIC",
      "scope": "world"
     },
-    {
-     "type": "TECH_GLOBALIZATION",
-     "scope": "team"
-    }
+    "TECH_GLOBALIZATION"
    ],
    "any": [
     [

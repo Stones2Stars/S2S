@@ -5,18 +5,9 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_C_AC_ASIAN",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_C_L_ASIAN",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_CANAL_SYSTEMS",
-     "scope": "team"
-    }
+    "BUILDING_C_AC_ASIAN",
+    "BUILDING_C_L_ASIAN",
+    "TECH_CANAL_SYSTEMS"
    ],
    "any": [
     [

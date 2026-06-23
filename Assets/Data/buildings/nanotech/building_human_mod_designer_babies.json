@@ -5,10 +5,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_GENE_JURISPRUDENCE",
-     "scope": "team"
-    }
+    "TECH_GENE_JURISPRUDENCE"
    ],
    "any": [
     [

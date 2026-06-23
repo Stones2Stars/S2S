@@ -15,10 +15,7 @@
      "scope": "world",
      "min": 10
     },
-    {
-     "type": "TECH_MOTORIZED_TRANSPORTATION",
-     "scope": "team"
-    }
+    "TECH_MOTORIZED_TRANSPORTATION"
    ],
    "any": [
     [
@@ -34,24 +31,12 @@
      }
     ],
     [
-     {
-      "type": "BUILDING_DRYDOCK",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_NAVAL_YARD",
-      "scope": "city"
-     }
+     "BUILDING_DRYDOCK",
+     "BUILDING_NAVAL_YARD"
     ],
     [
-     {
-      "type": "BUILDING_HOSPITAL",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_HEALTHCARE_MEGACOMPLEX",
-      "scope": "city"
-     }
+     "BUILDING_HOSPITAL",
+     "BUILDING_HEALTHCARE_MEGACOMPLEX"
     ]
    ]
   }

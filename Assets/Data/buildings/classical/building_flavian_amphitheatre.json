@@ -15,29 +15,14 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_CONSTRUCTION",
-     "scope": "team"
-    },
-    {
-     "type": "TECH_COMBAT_SPORTS",
-     "scope": "team"
-    }
+    "TECH_CONSTRUCTION",
+    "TECH_COMBAT_SPORTS"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_COLOSSEUM",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_MINOR_LEAGUE_STADIUM",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_MAJOR_LEAGUE_STADIUM",
-      "scope": "city"
-     }
+     "BUILDING_COLOSSEUM",
+     "BUILDING_MINOR_LEAGUE_STADIUM",
+     "BUILDING_MAJOR_LEAGUE_STADIUM"
     ],
     [
      {

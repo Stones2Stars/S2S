@@ -6,18 +6,9 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_SUBTERRANEAN_CITY",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_CORE_MINE",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_GEOSCULPTING",
-     "scope": "team"
-    }
+    "BUILDING_SUBTERRANEAN_CITY",
+    "BUILDING_CORE_MINE",
+    "TECH_GEOSCULPTING"
    ],
    "any": [
     [

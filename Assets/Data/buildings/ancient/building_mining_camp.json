@@ -61,10 +61,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_MINING",
-     "scope": "team"
-    }
+    "TECH_MINING"
    ],
    "any": [
     [
@@ -82,108 +79,63 @@
     1,
     {
      "value": 2,
-     "enabled": {
-      "type": "TECH_HYDRAULIC_MINING",
-      "scope": "team"
-     }
+     "enabled": "TECH_HYDRAULIC_MINING"
     },
     {
      "value": 2,
-     "enabled": {
-      "type": "TECH_MASONRY",
-      "scope": "team"
-     }
+     "enabled": "TECH_MASONRY"
     },
     {
      "value": 5,
-     "enabled": {
-      "type": "TECH_GEOLOGY",
-      "scope": "team"
-     }
+     "enabled": "TECH_GEOLOGY"
     },
     {
      "value": 5,
-     "enabled": {
-      "type": "TECH_EXPLOSIVES",
-      "scope": "team"
-     }
+     "enabled": "TECH_EXPLOSIVES"
     },
     {
      "value": 6,
-     "enabled": {
-      "type": "TECH_NITROGLYCERIN",
-      "scope": "team"
-     }
+     "enabled": "TECH_NITROGLYCERIN"
     },
     {
      "value": 7,
-     "enabled": {
-      "type": "TECH_MODERN_SEISMOLOGY",
-      "scope": "team"
-     }
+     "enabled": "TECH_MODERN_SEISMOLOGY"
     },
     {
      "value": 7,
-     "enabled": {
-      "type": "TECH_ASTROGEOLOGY",
-      "scope": "team"
-     }
+     "enabled": "TECH_ASTROGEOLOGY"
     },
     {
      "value": 7,
-     "enabled": {
-      "type": "TECH_VOLCANOLOGY",
-      "scope": "team"
-     }
+     "enabled": "TECH_VOLCANOLOGY"
     },
     {
      "value": 10,
-     "enabled": {
-      "type": "TECH_NANOMINING",
-      "scope": "team"
-     }
+     "enabled": "TECH_NANOMINING"
     },
     {
      "value": 8,
-     "enabled": {
-      "type": "TECH_ASTEROID_MINING",
-      "scope": "team"
-     }
+     "enabled": "TECH_ASTEROID_MINING"
     },
     {
      "value": 10,
-     "enabled": {
-      "type": "TECH_ASTEROID_EXTRACTION",
-      "scope": "team"
-     }
+     "enabled": "TECH_ASTEROID_EXTRACTION"
     },
     {
      "value": 10,
-     "enabled": {
-      "type": "TECH_SUBTERRANEAN_EXPLORATION",
-      "scope": "team"
-     }
+     "enabled": "TECH_SUBTERRANEAN_EXPLORATION"
     },
     {
      "value": 9,
-     "enabled": {
-      "type": "TECH_PLANETARY_EXTRACTION",
-      "scope": "team"
-     }
+     "enabled": "TECH_PLANETARY_EXTRACTION"
     },
     {
      "value": 2,
-     "enabled": {
-      "type": "TECH_PULLEY",
-      "scope": "team"
-     }
+     "enabled": "TECH_PULLEY"
     },
     {
      "value": 2,
-     "enabled": {
-      "type": "TECH_GEARS",
-      "scope": "team"
-     }
+     "enabled": "TECH_GEARS"
     }
    ]
   }
@@ -194,108 +146,63 @@
     1,
     {
      "value": 2,
-     "enabled": {
-      "type": "TECH_HYDRAULIC_MINING",
-      "scope": "team"
-     }
+     "enabled": "TECH_HYDRAULIC_MINING"
     },
     {
      "value": 2,
-     "enabled": {
-      "type": "TECH_MASONRY",
-      "scope": "team"
-     }
+     "enabled": "TECH_MASONRY"
     },
     {
      "value": 5,
-     "enabled": {
-      "type": "TECH_GEOLOGY",
-      "scope": "team"
-     }
+     "enabled": "TECH_GEOLOGY"
     },
     {
      "value": 5,
-     "enabled": {
-      "type": "TECH_EXPLOSIVES",
-      "scope": "team"
-     }
+     "enabled": "TECH_EXPLOSIVES"
     },
     {
      "value": 6,
-     "enabled": {
-      "type": "TECH_NITROGLYCERIN",
-      "scope": "team"
-     }
+     "enabled": "TECH_NITROGLYCERIN"
     },
     {
      "value": 7,
-     "enabled": {
-      "type": "TECH_MODERN_SEISMOLOGY",
-      "scope": "team"
-     }
+     "enabled": "TECH_MODERN_SEISMOLOGY"
     },
     {
      "value": 7,
-     "enabled": {
-      "type": "TECH_ASTROGEOLOGY",
-      "scope": "team"
-     }
+     "enabled": "TECH_ASTROGEOLOGY"
     },
     {
      "value": 7,
-     "enabled": {
-      "type": "TECH_VOLCANOLOGY",
-      "scope": "team"
-     }
+     "enabled": "TECH_VOLCANOLOGY"
     },
     {
      "value": 10,
-     "enabled": {
-      "type": "TECH_NANOMINING",
-      "scope": "team"
-     }
+     "enabled": "TECH_NANOMINING"
     },
     {
      "value": 8,
-     "enabled": {
-      "type": "TECH_ASTEROID_MINING",
-      "scope": "team"
-     }
+     "enabled": "TECH_ASTEROID_MINING"
     },
     {
      "value": 10,
-     "enabled": {
-      "type": "TECH_ASTEROID_EXTRACTION",
-      "scope": "team"
-     }
+     "enabled": "TECH_ASTEROID_EXTRACTION"
     },
     {
      "value": 10,
-     "enabled": {
-      "type": "TECH_SUBTERRANEAN_EXPLORATION",
-      "scope": "team"
-     }
+     "enabled": "TECH_SUBTERRANEAN_EXPLORATION"
     },
     {
      "value": 9,
-     "enabled": {
-      "type": "TECH_PLANETARY_EXTRACTION",
-      "scope": "team"
-     }
+     "enabled": "TECH_PLANETARY_EXTRACTION"
     },
     {
      "value": 2,
-     "enabled": {
-      "type": "TECH_PULLEY",
-      "scope": "team"
-     }
+     "enabled": "TECH_PULLEY"
     },
     {
      "value": 2,
-     "enabled": {
-      "type": "TECH_GEARS",
-      "scope": "team"
-     }
+     "enabled": "TECH_GEARS"
     }
    ]
   }

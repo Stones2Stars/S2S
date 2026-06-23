@@ -10,25 +10,13 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_IDEOGRAMS",
-     "scope": "team"
-    }
+    "TECH_IDEOGRAMS"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_ROCK_ART",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_EFFECT_LASCAUX_CAVES",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_ANCIENT_CUSTOMS",
-      "scope": "city"
-     }
+     "BUILDING_ROCK_ART",
+     "BUILDING_EFFECT_LASCAUX_CAVES",
+     "BUILDING_ANCIENT_CUSTOMS"
     ],
     [
      {

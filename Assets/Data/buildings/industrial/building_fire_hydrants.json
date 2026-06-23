@@ -6,18 +6,9 @@
   "build": {
    "all": [
     "HAS_FRESHWATER",
-    {
-     "type": "BUILDING_WATER_PIPES",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_WATER_PUMPING_STATION",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_MODERN_SANITATION",
-     "scope": "team"
-    }
+    "BUILDING_WATER_PIPES",
+    "BUILDING_WATER_PUMPING_STATION",
+    "TECH_MODERN_SANITATION"
    ],
    "any": [
     [
@@ -66,10 +57,7 @@
     2,
     {
      "value": 1,
-     "enabled": {
-      "type": "TECH_FIRE_SUPPRESSION",
-      "scope": "team"
-     }
+     "enabled": "TECH_FIRE_SUPPRESSION"
     },
     {
      "value": 1,

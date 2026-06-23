@@ -13,18 +13,9 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_MODERN_EARTHWORKS",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_POWER_LINES",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_INDUSTRIAL_ECOLOGY",
-     "scope": "team"
-    }
+    "BUILDING_MODERN_EARTHWORKS",
+    "BUILDING_POWER_LINES",
+    "TECH_INDUSTRIAL_ECOLOGY"
    ],
    "any": [
     [
@@ -46,10 +37,7 @@
     ]
    ],
    "dormant": [
-    {
-     "type": "BUILDING_ULTRAFUEL_REFINERY",
-     "scope": "city"
-    }
+    "BUILDING_ULTRAFUEL_REFINERY"
    ]
   }
  },

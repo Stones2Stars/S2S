@@ -11,14 +11,8 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_MEGATOWER",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_EVOLVED_CONSTRUCTION",
-     "scope": "team"
-    }
+    "BUILDING_MEGATOWER",
+    "TECH_EVOLVED_CONSTRUCTION"
    ],
    "any": [
     [
@@ -35,10 +29,7 @@
    "flat": [
     {
      "value": 11,
-     "enabled": {
-      "type": "TECH_ADAPTIVE_ARCHITECTURE",
-      "scope": "team"
-     }
+     "enabled": "TECH_ADAPTIVE_ARCHITECTURE"
     }
    ]
   }

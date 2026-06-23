@@ -11,14 +11,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_TRITON_GEOTHERMAL_POWER_PLANT",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_ADVANCED_SHIELDING",
-     "scope": "team"
-    }
+    "BUILDING_TRITON_GEOTHERMAL_POWER_PLANT",
+    "TECH_ADVANCED_SHIELDING"
    ],
    "any": [
     [

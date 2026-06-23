@@ -13,29 +13,14 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_ALCHEMY",
-     "scope": "team"
-    }
+    "TECH_ALCHEMY"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_HEALERS_HUT",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_DOCTORS_OFFICE",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_SURGEONS_OFFICE",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_MEDICAL_CLINIC",
-      "scope": "city"
-     }
+     "BUILDING_HEALERS_HUT",
+     "BUILDING_DOCTORS_OFFICE",
+     "BUILDING_SURGEONS_OFFICE",
+     "BUILDING_MEDICAL_CLINIC"
     ],
     [
      {
@@ -47,14 +32,8 @@
   },
   "operate": {
    "dormant": [
-    {
-     "type": "BUILDING_ALTERNATIVE_MEDICINE",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_HEALTHCARE_MEGACOMPLEX",
-     "scope": "city"
-    }
+    "BUILDING_ALTERNATIVE_MEDICINE",
+    "BUILDING_HEALTHCARE_MEGACOMPLEX"
    ]
   }
  },

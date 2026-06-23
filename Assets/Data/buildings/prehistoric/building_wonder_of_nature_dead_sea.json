@@ -10,10 +10,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_LANGUAGE",
-     "scope": "team"
-    }
+    "TECH_LANGUAGE"
    ],
    "any": [
     [
@@ -48,17 +45,11 @@
     5,
     {
      "value": 10,
-     "enabled": {
-      "type": "TECH_TOURISM",
-      "scope": "team"
-     }
+     "enabled": "TECH_TOURISM"
     },
     {
      "value": 3,
-     "enabled": {
-      "type": "TECH_TRADE",
-      "scope": "team"
-     }
+     "enabled": "TECH_TRADE"
     }
    ]
   }
@@ -69,17 +60,11 @@
     1,
     {
      "value": 5,
-     "enabled": {
-      "type": "TECH_EDUCATION",
-      "scope": "team"
-     }
+     "enabled": "TECH_EDUCATION"
     },
     {
      "value": 5,
-     "enabled": {
-      "type": "TECH_CHEMISTRY",
-      "scope": "team"
-     }
+     "enabled": "TECH_CHEMISTRY"
     }
    ]
   }
@@ -90,10 +75,7 @@
     3,
     {
      "value": 10,
-     "enabled": {
-      "type": "TECH_MONOTHEISM",
-      "scope": "team"
-     }
+     "enabled": "TECH_MONOTHEISM"
     }
    ]
   }
@@ -109,31 +91,19 @@
     2,
     {
      "value": 1,
-     "enabled": {
-      "type": "TECH_ANIMISM",
-      "scope": "team"
-     }
+     "enabled": "TECH_ANIMISM"
     },
     {
      "value": 1,
-     "enabled": {
-      "type": "TECH_ANCIENT_MEDICINE",
-      "scope": "team"
-     }
+     "enabled": "TECH_ANCIENT_MEDICINE"
     },
     {
      "value": 1,
-     "enabled": {
-      "type": "TECH_MEDICINE",
-      "scope": "team"
-     }
+     "enabled": "TECH_MEDICINE"
     },
     {
      "value": 1,
-     "enabled": {
-      "type": "TECH_MOLECULAR_MEDICINE",
-      "scope": "team"
-     }
+     "enabled": "TECH_MOLECULAR_MEDICINE"
     }
    ]
   },
@@ -160,10 +130,7 @@
   "city": {
    "flat": {
     "value": 5,
-    "enabled": {
-     "type": "TECH_EXPLORATION",
-     "scope": "team"
-    }
+    "enabled": "TECH_EXPLORATION"
    }
   }
  },

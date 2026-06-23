@@ -13,14 +13,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_INTERGALACTIC_MORRIS_THORNE_WORMHOLE",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_DUALFLUX_QUANTUM_TEMPORAL_RIFT",
-     "scope": "team"
-    }
+    "BUILDING_INTERGALACTIC_MORRIS_THORNE_WORMHOLE",
+    "TECH_DUALFLUX_QUANTUM_TEMPORAL_RIFT"
    ],
    "any": [
     [
@@ -37,10 +31,7 @@
    "flat": [
     {
      "value": 13,
-     "enabled": {
-      "type": "TECH_TESSERACT_CONSTRUCTION",
-      "scope": "team"
-     }
+     "enabled": "TECH_TESSERACT_CONSTRUCTION"
     }
    ]
   }
@@ -50,10 +41,7 @@
    "flat": [
     {
      "value": 13,
-     "enabled": {
-      "type": "TECH_HYPERLANES",
-      "scope": "team"
-     }
+     "enabled": "TECH_HYPERLANES"
     }
    ]
   }

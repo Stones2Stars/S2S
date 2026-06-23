@@ -14,18 +14,9 @@
   "build": {
    "all": [
     "HAS_FRESHWATER",
-    {
-     "type": "BUILDING_SEWER_SYSTEM",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_WATER_PIPES",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_MODERN_SANITATION",
-     "scope": "team"
-    }
+    "BUILDING_SEWER_SYSTEM",
+    "BUILDING_WATER_PIPES",
+    "TECH_MODERN_SANITATION"
    ],
    "any": [
     [
@@ -64,10 +55,7 @@
     ]
    ],
    "dormant": [
-    {
-     "type": "BUILDING_SANITATION_CHAMBER",
-     "scope": "city"
-    }
+    "BUILDING_SANITATION_CHAMBER"
    ]
   }
  },

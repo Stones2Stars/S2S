@@ -24,10 +24,7 @@
       "max": 35
      }
     },
-    {
-     "type": "TECH_SALT_PROCESSING",
-     "scope": "team"
-    }
+    "TECH_SALT_PROCESSING"
    ],
    "any": [
     [
@@ -40,10 +37,7 @@
   },
   "operate": {
    "dormant": [
-    {
-     "type": "BUILDING_MATERIALS_CONGLOMERATE",
-     "scope": "city"
-    }
+    "BUILDING_MATERIALS_CONGLOMERATE"
    ]
   }
  },

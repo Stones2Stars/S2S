@@ -5,14 +5,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_ASTEROID_SHELL_WORLD",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_PARATERRAFORMING",
-     "scope": "team"
-    }
+    "BUILDING_ASTEROID_SHELL_WORLD",
+    "TECH_PARATERRAFORMING"
    ],
    "any": [
     [

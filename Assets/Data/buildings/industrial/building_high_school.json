@@ -18,17 +18,11 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_COMPULSORY_EDUCATION",
-     "scope": "team"
-    }
+    "TECH_COMPULSORY_EDUCATION"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_ELEMENTARY_SCHOOL",
-      "scope": "city"
-     }
+     "BUILDING_ELEMENTARY_SCHOOL"
     ],
     [
      {
@@ -40,10 +34,7 @@
   },
   "operate": {
    "dormant": [
-    {
-     "type": "BUILDING_HOLOGRAPHIC_SCHOOL",
-     "scope": "city"
-    }
+    "BUILDING_HOLOGRAPHIC_SCHOOL"
    ]
   }
  },

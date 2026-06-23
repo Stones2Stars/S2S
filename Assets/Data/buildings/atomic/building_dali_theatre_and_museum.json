@@ -10,14 +10,8 @@
      "scope": "city",
      "min": 3
     },
-    {
-     "type": "BUILDING_THEATRE",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_SURREALISM",
-     "scope": "team"
-    }
+    "BUILDING_THEATRE",
+    "TECH_SURREALISM"
    ],
    "any": [
     [

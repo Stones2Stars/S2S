@@ -5,10 +5,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_MYSTICISM",
-     "scope": "team"
-    }
+    "TECH_MYSTICISM"
    ],
    "any": [
     [
@@ -27,10 +24,7 @@
   },
   "operate": {
    "all": [
-    {
-     "type": "CIVIC_DIVINE_CULT",
-     "scope": "empire"
-    }
+    "CIVIC_DIVINE_CULT"
    ]
   }
  },

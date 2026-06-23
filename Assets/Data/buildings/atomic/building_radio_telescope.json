@@ -10,19 +10,13 @@
      "scope": "city",
      "min": 3
     },
-    {
-     "type": "BUILDING_UNIVERSITY",
-     "scope": "city"
-    },
+    "BUILDING_UNIVERSITY",
     {
      "type": "BUILDING_UNIVERSITY",
      "scope": "empire",
      "min": 4
     },
-    {
-     "type": "TECH_RADIO_ASTRONOMY",
-     "scope": "team"
-    }
+    "TECH_RADIO_ASTRONOMY"
    ],
    "any": [
     [

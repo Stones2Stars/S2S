@@ -17,10 +17,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_MODERN_SPORTS",
-     "scope": "team"
-    }
+    "TECH_MODERN_SPORTS"
    ],
    "any": [
     [

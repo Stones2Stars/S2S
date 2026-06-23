@@ -5,14 +5,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_OBSERVATORY",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_IMAGINARY_PHYSICS",
-     "scope": "team"
-    }
+    "BUILDING_OBSERVATORY",
+    "TECH_IMAGINARY_PHYSICS"
    ],
    "any": [
     [
@@ -25,10 +19,7 @@
   },
   "operate": {
    "dormant": [
-    {
-     "type": "BUILDING_POLLUTION_BLACKENED_SKIES",
-     "scope": "city"
-    }
+    "BUILDING_POLLUTION_BLACKENED_SKIES"
    ]
   }
  },
@@ -38,17 +29,11 @@
     12,
     {
      "value": 9,
-     "enabled": {
-      "type": "TECH_PHOTON_THERMODYNAMICS",
-      "scope": "team"
-     }
+     "enabled": "TECH_PHOTON_THERMODYNAMICS"
     },
     {
      "value": 10,
-     "enabled": {
-      "type": "TECH_UNIFICATION_PHYSICS",
-      "scope": "team"
-     }
+     "enabled": "TECH_UNIFICATION_PHYSICS"
     }
    ]
   }

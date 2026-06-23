@@ -15,23 +15,14 @@
      "scope": "city",
      "min": 3
     },
-    {
-     "type": "BUILDING_CARPENTER",
-     "scope": "city"
-    },
+    "BUILDING_CARPENTER",
     {
      "type": "BUILDING_CARPENTER",
      "scope": "empire",
      "min": 3
     },
-    {
-     "type": "TECH_SURVEYING",
-     "scope": "team"
-    },
-    {
-     "type": "TECH_GUILDS",
-     "scope": "team"
-    }
+    "TECH_SURVEYING",
+    "TECH_GUILDS"
    ],
    "any": [
     [

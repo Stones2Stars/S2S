@@ -11,14 +11,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_UMBRIEL_COLONY",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_SHIELDING",
-     "scope": "team"
-    }
+    "BUILDING_UMBRIEL_COLONY",
+    "TECH_SHIELDING"
    ],
    "any": [
     [

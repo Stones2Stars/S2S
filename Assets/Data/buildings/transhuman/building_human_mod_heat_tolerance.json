@@ -5,10 +5,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_THERMAL_NEGATION",
-     "scope": "team"
-    }
+    "TECH_THERMAL_NEGATION"
    ],
    "any": [
     [

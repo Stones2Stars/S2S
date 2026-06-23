@@ -20,14 +20,8 @@
    "all": [
     "HAS_FRESHWATER",
     "HAS_POWER",
-    {
-     "type": "BUILDING_HYDROPONICS_LAB",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_HYDROPONICS",
-     "scope": "team"
-    }
+    "BUILDING_HYDROPONICS_LAB",
+    "TECH_HYDROPONICS"
    ],
    "any": [
     [
@@ -40,10 +34,7 @@
   },
   "operate": {
    "dormant": [
-    {
-     "type": "BUILDING_FARMSCRAPER_I",
-     "scope": "city"
-    }
+    "BUILDING_FARMSCRAPER_I"
    ]
   }
  },

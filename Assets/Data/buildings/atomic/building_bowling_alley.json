@@ -14,14 +14,8 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_SHOPPING_DISTRICT",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_MODERN_SPORTS",
-     "scope": "team"
-    },
+    "BUILDING_SHOPPING_DISTRICT",
+    "TECH_MODERN_SPORTS",
     {
      "type": "BONUS_FURNITURE",
      "scope": "city",
@@ -60,10 +54,7 @@
     ]
    ],
    "dormant": [
-    {
-     "type": "BUILDING_ATHLETIC_MEGACOMPLEX",
-     "scope": "city"
-    }
+    "BUILDING_ATHLETIC_MEGACOMPLEX"
    ]
   }
  },

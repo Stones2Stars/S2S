@@ -10,18 +10,9 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_COURTHOUSE",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_JAIL",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_MODERN_HEALTH_CARE",
-     "scope": "team"
-    }
+    "BUILDING_COURTHOUSE",
+    "BUILDING_JAIL",
+    "TECH_MODERN_HEALTH_CARE"
    ],
    "any": [
     [

@@ -6,19 +6,13 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_MARTIAN_ARCOLOGY",
-     "scope": "city"
-    },
+    "BUILDING_MARTIAN_ARCOLOGY",
     {
      "type": "BUILDING_MARTIAN_ARCOLOGY",
      "scope": "empire",
      "min": 2
     },
-    {
-     "type": "TECH_PLANETARY_MEGASTRUCTURES",
-     "scope": "team"
-    }
+    "TECH_PLANETARY_MEGASTRUCTURES"
    ],
    "any": [
     [

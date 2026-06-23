@@ -13,14 +13,8 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_VIRTUAL_WORLD_DATA_ANALYSIS",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_SIMULATED_REALITY",
-     "scope": "team"
-    }
+    "BUILDING_VIRTUAL_WORLD_DATA_ANALYSIS",
+    "TECH_SIMULATED_REALITY"
    ],
    "any": [
     [

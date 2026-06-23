@@ -5,25 +5,13 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_CONTROL_CENTER",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_MEDIA_HIVEMIND",
-     "scope": "team"
-    }
+    "BUILDING_CONTROL_CENTER",
+    "TECH_MEDIA_HIVEMIND"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_LIQUID_METALS_FOUNDRY",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_PICOTECH_COMPLEX",
-      "scope": "city"
-     }
+     "BUILDING_LIQUID_METALS_FOUNDRY",
+     "BUILDING_PICOTECH_COMPLEX"
     ],
     [
      {

@@ -10,14 +10,8 @@
      "scope": "empire",
      "min": 4
     },
-    {
-     "type": "BUILDING_PALACE",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_MONARCHY",
-     "scope": "team"
-    }
+    "BUILDING_PALACE",
+    "TECH_MONARCHY"
    ],
    "any": [
     [

@@ -13,21 +13,12 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_USURY",
-     "scope": "team"
-    }
+    "TECH_USURY"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_TRADING_POST",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_SHOPPING_DISTRICT",
-      "scope": "city"
-     }
+     "BUILDING_TRADING_POST",
+     "BUILDING_SHOPPING_DISTRICT"
     ],
     [
      {
@@ -39,14 +30,8 @@
   },
   "operate": {
    "dormant": [
-    {
-     "type": "BUILDING_CASINO",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_ORDINANCE_GAMBLING_BAN",
-     "scope": "city"
-    }
+    "BUILDING_CASINO",
+    "BUILDING_ORDINANCE_GAMBLING_BAN"
    ]
   }
  },

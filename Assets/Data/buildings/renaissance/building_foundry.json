@@ -39,10 +39,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_METALLURGY",
-     "scope": "team"
-    }
+    "TECH_METALLURGY"
    ],
    "any": [
     [
@@ -131,10 +128,7 @@
     ]
    ],
    "dormant": [
-    {
-     "type": "BUILDING_METALS_MEGACOMPLEX",
-     "scope": "city"
-    }
+    "BUILDING_METALS_MEGACOMPLEX"
    ]
   }
  },

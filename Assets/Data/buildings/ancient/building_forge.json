@@ -36,10 +36,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_METAL_CASTING",
-     "scope": "team"
-    }
+    "TECH_METAL_CASTING"
    ],
    "any": [
     [
@@ -128,14 +125,8 @@
     ]
    ],
    "dormant": [
-    {
-     "type": "BUILDING_FOUNDRY",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_METALS_MEGACOMPLEX",
-     "scope": "city"
-    }
+    "BUILDING_FOUNDRY",
+    "BUILDING_METALS_MEGACOMPLEX"
    ]
   }
  },

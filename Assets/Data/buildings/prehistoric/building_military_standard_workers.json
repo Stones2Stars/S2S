@@ -11,29 +11,14 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_MILITARY_STANDARD_ANIMAL_MASCOT",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_CULTURAL_IDENTITY",
-     "scope": "team"
-    }
+    "BUILDING_MILITARY_STANDARD_ANIMAL_MASCOT",
+    "TECH_CULTURAL_IDENTITY"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_FOLKLORE_NINE_BANDED_ARMADILLO",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_FOLKLORE_GLYPTODON",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_FOLKLORE_GROUND_SLOTH",
-      "scope": "city"
-     }
+     "BUILDING_FOLKLORE_NINE_BANDED_ARMADILLO",
+     "BUILDING_FOLKLORE_GLYPTODON",
+     "BUILDING_FOLKLORE_GROUND_SLOTH"
     ],
     [
      {
@@ -42,18 +27,9 @@
      }
     ],
     [
-     {
-      "type": "HERITAGE_FOLKLORE_AARDVARK",
-      "scope": "empire"
-     },
-     {
-      "type": "HERITAGE_FOLKLORE_ANTEATER",
-      "scope": "empire"
-     },
-     {
-      "type": "HERITAGE_FOLKLORE_BEAVER",
-      "scope": "empire"
-     }
+     "HERITAGE_FOLKLORE_AARDVARK",
+     "HERITAGE_FOLKLORE_ANTEATER",
+     "HERITAGE_FOLKLORE_BEAVER"
     ]
    ]
   }

@@ -13,14 +13,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_GAMES",
-     "scope": "team"
-    },
-    {
-     "type": "TECH_NATURAL_PIGMENTS",
-     "scope": "team"
-    }
+    "TECH_GAMES",
+    "TECH_NATURAL_PIGMENTS"
    ],
    "any": [
     [
@@ -33,10 +27,7 @@
   },
   "operate": {
    "dormant": [
-    {
-     "type": "BUILDING_HIGH_TECH_CULTURAL_ENRICHMENT",
-     "scope": "city"
-    }
+    "BUILDING_HIGH_TECH_CULTURAL_ENRICHMENT"
    ]
   }
  },

@@ -12,25 +12,13 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "TECH_MACHINE_LEARNING",
-     "scope": "team"
-    },
-    {
-     "type": "TECH_ONLINE_COMMUNITY",
-     "scope": "team"
-    }
+    "TECH_MACHINE_LEARNING",
+    "TECH_ONLINE_COMMUNITY"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_DESIGN_STUDIO",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_ELECTRONICS_MANUFACTURING_DISTRICT",
-      "scope": "city"
-     }
+     "BUILDING_DESIGN_STUDIO",
+     "BUILDING_ELECTRONICS_MANUFACTURING_DISTRICT"
     ],
     [
      {
@@ -60,17 +48,11 @@
    "flat": [
     {
      "value": 9,
-     "enabled": {
-      "type": "TECH_AUTOMATED_ROBOTICS",
-      "scope": "team"
-     }
+     "enabled": "TECH_AUTOMATED_ROBOTICS"
     },
     {
      "value": 9,
-     "enabled": {
-      "type": "TECH_AUTOMATED_URBANIZATION",
-      "scope": "team"
-     }
+     "enabled": "TECH_AUTOMATED_URBANIZATION"
     }
    ]
   }
@@ -81,17 +63,11 @@
     5,
     {
      "value": 8,
-     "enabled": {
-      "type": "TECH_VIRTUAL_SOCIETY",
-      "scope": "team"
-     }
+     "enabled": "TECH_VIRTUAL_SOCIETY"
     },
     {
      "value": 9,
-     "enabled": {
-      "type": "TECH_UNIVERSAL_TRANSLATOR",
-      "scope": "team"
-     }
+     "enabled": "TECH_UNIVERSAL_TRANSLATOR"
     }
    ]
   }

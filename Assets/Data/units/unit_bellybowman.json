@@ -5,10 +5,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_ANCIENT_MACHINERY",
-     "scope": "team"
-    }
+    "TECH_ANCIENT_MACHINERY"
    ]
   }
  },

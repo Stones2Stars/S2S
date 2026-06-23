@@ -12,14 +12,8 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_HYPERFACTORY",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_DECOMPACTIFIED_SPACE",
-     "scope": "team"
-    }
+    "BUILDING_HYPERFACTORY",
+    "TECH_DECOMPACTIFIED_SPACE"
    ],
    "any": [
     [

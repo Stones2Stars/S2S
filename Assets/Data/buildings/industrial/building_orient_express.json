@@ -15,21 +15,12 @@
      "scope": "city",
      "min": 7
     },
-    {
-     "type": "TECH_RAILROAD",
-     "scope": "team"
-    }
+    "TECH_RAILROAD"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_RAILROAD_STATION",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_TELEPORT_BOOTH",
-      "scope": "city"
-     }
+     "BUILDING_RAILROAD_STATION",
+     "BUILDING_TELEPORT_BOOTH"
     ],
     [
      {
@@ -75,17 +66,11 @@
    "flat": [
     {
      "value": 2,
-     "enabled": {
-      "type": "BUILDING_RAILROAD_STATION",
-      "scope": "city"
-     }
+     "enabled": "BUILDING_RAILROAD_STATION"
     },
     {
      "value": 2,
-     "enabled": {
-      "type": "BUILDING_TELEPORT_BOOTH",
-      "scope": "city"
-     }
+     "enabled": "BUILDING_TELEPORT_BOOTH"
     }
    ]
   }

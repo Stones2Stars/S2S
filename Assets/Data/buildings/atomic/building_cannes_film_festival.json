@@ -15,10 +15,7 @@
      "scope": "empire",
      "min": 1
     },
-    {
-     "type": "TECH_MASS_MEDIA",
-     "scope": "team"
-    }
+    "TECH_MASS_MEDIA"
    ],
    "any": [
     [
@@ -29,10 +26,7 @@
     ]
    ],
    "noneOf": [
-    {
-     "type": "BUILDING_HOLLYWOOD",
-     "scope": "city"
-    }
+    "BUILDING_HOLLYWOOD"
    ]
   }
  },

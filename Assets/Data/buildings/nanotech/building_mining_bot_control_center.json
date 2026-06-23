@@ -11,25 +11,13 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_CONTROL_CENTER",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_BIOMETRIC_WARFARE",
-     "scope": "team"
-    }
+    "BUILDING_CONTROL_CENTER",
+    "TECH_BIOMETRIC_WARFARE"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_FACTORY_EXOSKELETONS",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_NANOTECH_COMPLEX",
-      "scope": "city"
-     }
+     "BUILDING_FACTORY_EXOSKELETONS",
+     "BUILDING_NANOTECH_COMPLEX"
     ],
     [
      {

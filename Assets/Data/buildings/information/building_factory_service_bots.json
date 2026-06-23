@@ -14,14 +14,8 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_EPSILON_ASSEMBLER",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_DISASTER_ROBOTS",
-     "scope": "team"
-    }
+    "BUILDING_EPSILON_ASSEMBLER",
+    "TECH_DISASTER_ROBOTS"
    ],
    "any": [
     [
@@ -55,10 +49,7 @@
     ]
    ],
    "dormant": [
-    {
-     "type": "BUILDING_NANOTECH_COMPLEX",
-     "scope": "city"
-    }
+    "BUILDING_NANOTECH_COMPLEX"
    ]
   }
  },
@@ -68,17 +59,11 @@
     3,
     {
      "value": 9,
-     "enabled": {
-      "type": "TECH_ANDROIDS",
-      "scope": "team"
-     }
+     "enabled": "TECH_ANDROIDS"
     },
     {
      "value": 9,
-     "enabled": {
-      "type": "TECH_PERSONAL_ROBOTS",
-      "scope": "team"
-     }
+     "enabled": "TECH_PERSONAL_ROBOTS"
     }
    ]
   }

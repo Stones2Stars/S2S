@@ -10,38 +10,20 @@
      "scope": "city",
      "min": 3
     },
-    {
-     "type": "BUILDING_C_L_ASIAN",
-     "scope": "city"
-    },
+    "BUILDING_C_L_ASIAN",
     {
      "type": "BUILDING_GLAZE_MAKER",
      "scope": "empire",
      "min": 1
     },
-    {
-     "type": "TECH_ORNAMENTATION",
-     "scope": "team"
-    }
+    "TECH_ORNAMENTATION"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_BEADWORKER",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_BEADMAKERS_WORKSHOP",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_FACTORY_BEADS",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_MANUFACTURING_DISTRICT",
-      "scope": "city"
-     }
+     "BUILDING_BEADWORKER",
+     "BUILDING_BEADMAKERS_WORKSHOP",
+     "BUILDING_FACTORY_BEADS",
+     "BUILDING_MANUFACTURING_DISTRICT"
     ],
     [
      {

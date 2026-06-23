@@ -12,21 +12,12 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_ECOSYNTHESIS",
-     "scope": "team"
-    }
+    "TECH_ECOSYNTHESIS"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_INTERSTELLAR_COMET_DUST_COLLECTION",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_SPACE_COLONY_MILKY_WAY",
-      "scope": "city"
-     }
+     "BUILDING_INTERSTELLAR_COMET_DUST_COLLECTION",
+     "BUILDING_SPACE_COLONY_MILKY_WAY"
     ],
     [
      {
@@ -56,10 +47,7 @@
    "flat": [
     {
      "value": 11,
-     "enabled": {
-      "type": "TECH_JOVIAN_TERRAFORMING",
-      "scope": "team"
-     }
+     "enabled": "TECH_JOVIAN_TERRAFORMING"
     }
    ]
   }

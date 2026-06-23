@@ -5,14 +5,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_PATTAKY_OF_OLOFIN",
-     "scope": "city"
-    },
-    {
-     "type": "RELIGION_YORUBA",
-     "scope": "city"
-    }
+    "BUILDING_PATTAKY_OF_OLOFIN",
+    "RELIGION_YORUBA"
    ]
   }
  },

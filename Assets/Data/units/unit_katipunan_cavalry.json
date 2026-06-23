@@ -10,14 +10,8 @@
      "scope": "city",
      "connection": "trade|vicinity"
     },
-    {
-     "type": "BUILDING_ANIMAL_TRAINER_HORSE",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_TRENCH_WARFARE",
-     "scope": "team"
-    },
+    "BUILDING_ANIMAL_TRAINER_HORSE",
+    "TECH_TRENCH_WARFARE",
     {
      "type": "BONUS_AMMUNITION",
      "scope": "city",

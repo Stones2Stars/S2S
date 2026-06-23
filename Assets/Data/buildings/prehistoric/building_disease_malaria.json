@@ -15,14 +15,8 @@
      "scope": "city",
      "min": 3
     },
-    {
-     "type": "BUILDING_PESTS_MOSQUITOES",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_TRIBALISM",
-     "scope": "team"
-    }
+    "BUILDING_PESTS_MOSQUITOES",
+    "TECH_TRIBALISM"
    ],
    "any": [
     [

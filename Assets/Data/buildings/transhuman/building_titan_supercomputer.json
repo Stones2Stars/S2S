@@ -10,14 +10,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_TITAN_HYDROCARBON_REFINERY",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_TERRA_COMPUTER",
-     "scope": "team"
-    }
+    "BUILDING_TITAN_HYDROCARBON_REFINERY",
+    "TECH_TERRA_COMPUTER"
    ],
    "any": [
     [

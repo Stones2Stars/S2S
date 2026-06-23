@@ -6,14 +6,8 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_MEGATOWER_FIRE_STATION_LEVEL",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_NOVUS_CHEMISTRY",
-     "scope": "team"
-    }
+    "BUILDING_MEGATOWER_FIRE_STATION_LEVEL",
+    "TECH_NOVUS_CHEMISTRY"
    ],
    "any": [
     [

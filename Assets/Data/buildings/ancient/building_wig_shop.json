@@ -13,25 +13,13 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_ORNAMENTATION",
-     "scope": "team"
-    }
+    "TECH_ORNAMENTATION"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_BARTER_POST",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_TRADING_POST",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_SHOPPING_DISTRICT",
-      "scope": "city"
-     }
+     "BUILDING_BARTER_POST",
+     "BUILDING_TRADING_POST",
+     "BUILDING_SHOPPING_DISTRICT"
     ],
     [
      {
@@ -43,14 +31,8 @@
   },
   "operate": {
    "dormant": [
-    {
-     "type": "BUILDING_MALL",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_HYPERMARKET",
-     "scope": "city"
-    }
+    "BUILDING_MALL",
+    "BUILDING_HYPERMARKET"
    ]
   }
  },

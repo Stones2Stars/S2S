@@ -15,10 +15,7 @@
      "scope": "city",
      "min": 3
     },
-    {
-     "type": "TECH_STEAMPUNK",
-     "scope": "team"
-    }
+    "TECH_STEAMPUNK"
    ],
    "any": [
     [

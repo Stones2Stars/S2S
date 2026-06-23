@@ -5,14 +5,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_SPACE_COLONY_VENUS",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_SUPERSONIC_RAILS",
-     "scope": "team"
-    }
+    "BUILDING_SPACE_COLONY_VENUS",
+    "TECH_SUPERSONIC_RAILS"
    ],
    "any": [
     [

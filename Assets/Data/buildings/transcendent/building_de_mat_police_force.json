@@ -6,14 +6,8 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_AI_POLICE_FORCE",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_REALITY_REPROGRAMMING",
-     "scope": "team"
-    }
+    "BUILDING_AI_POLICE_FORCE",
+    "TECH_REALITY_REPROGRAMMING"
    ],
    "any": [
     [

@@ -10,10 +10,7 @@
      "scope": "city",
      "connection": "trade|vicinity"
     },
-    {
-     "type": "TECH_HORSE_BREEDING",
-     "scope": "team"
-    }
+    "TECH_HORSE_BREEDING"
    ]
   }
  },

@@ -60,18 +60,9 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_TELEPHONE_NETWORK",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_MODERN_OFFICES",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_COMPUTER_NETWORKS",
-     "scope": "team"
-    }
+    "BUILDING_TELEPHONE_NETWORK",
+    "BUILDING_MODERN_OFFICES",
+    "TECH_COMPUTER_NETWORKS"
    ],
    "any": [
     [

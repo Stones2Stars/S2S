@@ -5,14 +5,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_GEOLOGY_LAB",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_ASTROGEOLOGY",
-     "scope": "team"
-    }
+    "BUILDING_GEOLOGY_LAB",
+    "TECH_ASTROGEOLOGY"
    ],
    "any": [
     [

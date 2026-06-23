@@ -10,10 +10,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_CALENDAR",
-     "scope": "team"
-    },
+    "TECH_CALENDAR",
     "STATE_RELIGION_IN_CITY",
     {
      "STATE_RELIGION": "RELIGION_NAGHUALISM"
@@ -35,10 +32,7 @@
      "scope": "city",
      "connection": "trade|vicinity"
     },
-    {
-     "type": "RELIGION_NAGHUALISM",
-     "scope": "city"
-    }
+    "RELIGION_NAGHUALISM"
    ]
   }
  },

@@ -5,10 +5,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_BANKING",
-     "scope": "team"
-    }
+    "TECH_BANKING"
    ],
    "any": [
     [

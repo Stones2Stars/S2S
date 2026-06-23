@@ -13,45 +13,18 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_EXTREME_SPORTS",
-     "scope": "team"
-    }
+    "TECH_EXTREME_SPORTS"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_MODERN_CRANE",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_HIGH_TECH_CRANE",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_SMALL_STEEL_ARCH_BRIDGE",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_LARGE_STEEL_ARCH_BRIDGE",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_SMALL_SUSPENSION_BRIDGE",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_LARGE_SUSPENSION_BRIDGE",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_GOLDEN_GATE_BRIDGE",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_TELEPORT_BOOTH",
-      "scope": "city"
-     }
+     "BUILDING_MODERN_CRANE",
+     "BUILDING_HIGH_TECH_CRANE",
+     "BUILDING_SMALL_STEEL_ARCH_BRIDGE",
+     "BUILDING_LARGE_STEEL_ARCH_BRIDGE",
+     "BUILDING_SMALL_SUSPENSION_BRIDGE",
+     "BUILDING_LARGE_SUSPENSION_BRIDGE",
+     "BUILDING_GOLDEN_GATE_BRIDGE",
+     "BUILDING_TELEPORT_BOOTH"
     ],
     [
      {
@@ -63,10 +36,7 @@
   },
   "operate": {
    "dormant": [
-    {
-     "type": "BUILDING_ATHLETIC_MEGACOMPLEX",
-     "scope": "city"
-    }
+    "BUILDING_ATHLETIC_MEGACOMPLEX"
    ]
   }
  },

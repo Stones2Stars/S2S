@@ -6,10 +6,7 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_INTERSTELLAR_TIMEHOLE",
-     "scope": "city"
-    },
+    "BUILDING_INTERSTELLAR_TIMEHOLE",
     {
      "type": "BUILDING_TERAVERSE_PORTAL",
      "scope": "empire",
@@ -25,10 +22,7 @@
      "scope": "empire",
      "min": 1
     },
-    {
-     "type": "TECH_MACROVERSE_TRAVERSAL",
-     "scope": "team"
-    }
+    "TECH_MACROVERSE_TRAVERSAL"
    ],
    "any": [
     [

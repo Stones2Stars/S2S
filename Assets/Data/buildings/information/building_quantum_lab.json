@@ -10,19 +10,13 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_UNIVERSITY",
-     "scope": "city"
-    },
+    "BUILDING_UNIVERSITY",
     {
      "type": "BUILDING_UNIVERSITY",
      "scope": "empire",
      "min": 3
     },
-    {
-     "type": "TECH_QUANTUM_TELEPORTATION",
-     "scope": "team"
-    }
+    "TECH_QUANTUM_TELEPORTATION"
    ],
    "any": [
     [

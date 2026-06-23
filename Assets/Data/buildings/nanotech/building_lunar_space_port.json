@@ -13,14 +13,8 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_LUNAR_LAUNCH_SITE",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_LUNAR_TOURISM",
-     "scope": "team"
-    },
+    "BUILDING_LUNAR_LAUNCH_SITE",
+    "TECH_LUNAR_TOURISM",
     {
      "type": "BONUS_PLASTIC",
      "scope": "city",

@@ -14,25 +14,13 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_SHOPPING_DISTRICT",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_GENESIS_BIOLOGY",
-     "scope": "team"
-    }
+    "BUILDING_SHOPPING_DISTRICT",
+    "TECH_GENESIS_BIOLOGY"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_MOLECULAR_BIOLOGY_LAB",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_CHEMICALS_DISTRICT",
-      "scope": "city"
-     }
+     "BUILDING_MOLECULAR_BIOLOGY_LAB",
+     "BUILDING_CHEMICALS_DISTRICT"
     ],
     [
      {
@@ -51,10 +39,7 @@
     }
    ],
    "dormant": [
-    {
-     "type": "BUILDING_HIGH_TECH_CULTURAL_ENRICHMENT",
-     "scope": "city"
-    }
+    "BUILDING_HIGH_TECH_CULTURAL_ENRICHMENT"
    ]
   }
  },

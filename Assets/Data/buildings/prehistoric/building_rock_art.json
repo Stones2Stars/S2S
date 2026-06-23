@@ -18,14 +18,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_ROCK_GATHERER",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_PICTOGRAPHS",
-     "scope": "team"
-    }
+    "BUILDING_ROCK_GATHERER",
+    "TECH_PICTOGRAPHS"
    ],
    "any": [
     [
@@ -38,10 +32,7 @@
   },
   "operate": {
    "dormant": [
-    {
-     "type": "BUILDING_ANCIENT_CUSTOMS",
-     "scope": "city"
-    }
+    "BUILDING_ANCIENT_CUSTOMS"
    ]
   }
  },
@@ -51,10 +42,7 @@
     1,
     {
      "value": -1,
-     "enabled": {
-      "type": "TECH_LITERATURE",
-      "scope": "team"
-     }
+     "enabled": "TECH_LITERATURE"
     }
    ]
   }
@@ -65,10 +53,7 @@
     1,
     {
      "value": -1,
-     "enabled": {
-      "type": "TECH_LITERATURE",
-      "scope": "team"
-     }
+     "enabled": "TECH_LITERATURE"
     }
    ]
   }
@@ -82,10 +67,7 @@
   "city": {
    "flat": {
     "value": -1,
-    "enabled": {
-     "type": "TECH_LITERATURE",
-     "scope": "team"
-    }
+    "enabled": "TECH_LITERATURE"
    }
   }
  },

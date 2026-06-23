@@ -11,25 +11,13 @@
      "scope": "city",
      "min": 7
     },
-    {
-     "type": "TECH_REPRESENTATIVE_DEMOCRACY",
-     "scope": "team"
-    }
+    "TECH_REPRESENTATIVE_DEMOCRACY"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_SMELTER_STEEL",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_ADVANCED_IRONWORKS",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_METALS_MEGACOMPLEX",
-      "scope": "city"
-     }
+     "BUILDING_SMELTER_STEEL",
+     "BUILDING_ADVANCED_IRONWORKS",
+     "BUILDING_METALS_MEGACOMPLEX"
     ],
     [
      {
@@ -41,10 +29,7 @@
   },
   "operate": {
    "all": [
-    {
-     "type": "CIVIC_EGALITARIAN",
-     "scope": "empire"
-    }
+    "CIVIC_EGALITARIAN"
    ]
   }
  },

@@ -14,18 +14,9 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_FACTORY",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_GENE_FARMING_LAB",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_MOLECULAR_MEDICINE",
-     "scope": "team"
-    }
+    "BUILDING_FACTORY",
+    "BUILDING_GENE_FARMING_LAB",
+    "TECH_MOLECULAR_MEDICINE"
    ],
    "any": [
     [
@@ -38,10 +29,7 @@
   },
   "operate": {
    "dormant": [
-    {
-     "type": "BUILDING_MEDICAL_MEGACOMPLEX",
-     "scope": "city"
-    }
+    "BUILDING_MEDICAL_MEGACOMPLEX"
    ]
   }
  },

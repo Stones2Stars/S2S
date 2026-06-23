@@ -5,18 +5,9 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_GALACTIC_PORT",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_PALACE",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_INTERGALACTIC_EMPIRE",
-     "scope": "team"
-    }
+    "BUILDING_GALACTIC_PORT",
+    "BUILDING_PALACE",
+    "TECH_INTERGALACTIC_EMPIRE"
    ],
    "any": [
     [

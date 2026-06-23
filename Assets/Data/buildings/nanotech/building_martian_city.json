@@ -24,14 +24,8 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_SPACE_COLONY_MARTIAN",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_SUPERCHARGED_CRYSTALLOGRAPHY",
-     "scope": "team"
-    }
+    "BUILDING_SPACE_COLONY_MARTIAN",
+    "TECH_SUPERCHARGED_CRYSTALLOGRAPHY"
    ],
    "any": [
     [

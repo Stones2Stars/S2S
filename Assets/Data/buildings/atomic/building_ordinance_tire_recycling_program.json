@@ -10,18 +10,9 @@
      "scope": "city",
      "min": 7
     },
-    {
-     "type": "BUILDING_GARBAGE_COLLECTION_AGENCY",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_COURTHOUSE",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_RECYCLING",
-     "scope": "team"
-    }
+    "BUILDING_GARBAGE_COLLECTION_AGENCY",
+    "BUILDING_COURTHOUSE",
+    "TECH_RECYCLING"
    ],
    "any": [
     [

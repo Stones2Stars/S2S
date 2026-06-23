@@ -11,33 +11,15 @@
      "scope": "city",
      "connection": "trade|vicinity"
     },
-    {
-     "type": "BUILDING_ANIMAL_TAMER_COMPLEX",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_ENCLOSURE_EXOTIC_HERBIVORE",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_SPECIALIZATION",
-     "scope": "team"
-    }
+    "BUILDING_ANIMAL_TAMER_COMPLEX",
+    "BUILDING_ENCLOSURE_EXOTIC_HERBIVORE",
+    "TECH_SPECIALIZATION"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_FARM_ANIMAL_PIG",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_INDUSTRIAL_FARMS",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_MEAT_INDUSTRY_CONGLOMERATE",
-      "scope": "city"
-     }
+     "BUILDING_FARM_ANIMAL_PIG",
+     "BUILDING_INDUSTRIAL_FARMS",
+     "BUILDING_MEAT_INDUSTRY_CONGLOMERATE"
     ]
    ]
   }

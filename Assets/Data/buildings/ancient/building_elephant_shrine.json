@@ -10,14 +10,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_REINCARNATION",
-     "scope": "team"
-    },
-    {
-     "type": "TECH_ELEPHANT_DOMESTICATION",
-     "scope": "team"
-    }
+    "TECH_REINCARNATION",
+    "TECH_ELEPHANT_DOMESTICATION"
    ],
    "any": [
     [
@@ -35,10 +29,7 @@
      "scope": "city",
      "connection": "trade|vicinity"
     },
-    {
-     "type": "RELIGION_HINDUISM",
-     "scope": "city"
-    }
+    "RELIGION_HINDUISM"
    ]
   }
  },

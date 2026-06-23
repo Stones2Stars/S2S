@@ -10,10 +10,7 @@
      "scope": "empire",
      "min": 1
     },
-    {
-     "type": "TECH_WEAPONIZED_LASERS",
-     "scope": "team"
-    }
+    "TECH_WEAPONIZED_LASERS"
    ],
    "any": [
     [

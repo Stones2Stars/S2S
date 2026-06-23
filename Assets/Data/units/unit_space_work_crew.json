@@ -5,14 +5,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_COMMERCIAL_SPACEPORT",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_MASS_DRIVER",
-     "scope": "team"
-    }
+    "BUILDING_COMMERCIAL_SPACEPORT",
+    "TECH_MASS_DRIVER"
    ]
   }
  },

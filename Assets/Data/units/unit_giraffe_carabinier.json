@@ -10,14 +10,8 @@
      "scope": "city",
      "connection": "trade|vicinity"
     },
-    {
-     "type": "TECH_CAVALRY_TACTICS",
-     "scope": "team"
-    },
-    {
-     "type": "TECH_MEGAFAUNA_DOMESTICATION",
-     "scope": "team"
-    }
+    "TECH_CAVALRY_TACTICS",
+    "TECH_MEGAFAUNA_DOMESTICATION"
    ],
    "any": [
     [
@@ -28,14 +22,8 @@
      }
     ],
     [
-     {
-      "type": "BUILDING_EFFECT_HERITAGE_GIRAFFES",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_ANIMAL_TRAINER_GIRAFFE",
-      "scope": "city"
-     }
+     "BUILDING_EFFECT_HERITAGE_GIRAFFES",
+     "BUILDING_ANIMAL_TRAINER_GIRAFFE"
     ]
    ]
   }

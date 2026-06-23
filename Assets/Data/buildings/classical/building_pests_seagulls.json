@@ -21,10 +21,7 @@
       "max": 80
      }
     },
-    {
-     "type": "TECH_SANITATION",
-     "scope": "team"
-    }
+    "TECH_SANITATION"
    ],
    "any": [
     [

@@ -14,18 +14,9 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_FACTORY",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_POWER_LINES",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_RENEWABLE_ENERGY",
-     "scope": "team"
-    }
+    "BUILDING_FACTORY",
+    "BUILDING_POWER_LINES",
+    "TECH_RENEWABLE_ENERGY"
    ],
    "any": [
     [
@@ -49,10 +40,7 @@
     }
    ],
    "dormant": [
-    {
-     "type": "BUILDING_RENEWABLE_MEGACOMPLEX",
-     "scope": "city"
-    }
+    "BUILDING_RENEWABLE_MEGACOMPLEX"
    ]
   }
  },

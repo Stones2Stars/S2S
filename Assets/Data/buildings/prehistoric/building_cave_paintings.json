@@ -18,45 +18,18 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_PETROGLYPHS",
-     "scope": "team"
-    }
+    "TECH_PETROGLYPHS"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_CLAY_PIT",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_CHALK_GATHERER",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_HEMATITE_GATHERER",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_MODERN_EARTHWORKS",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_FIRE_PIT",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_BONFIRE",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_IMU",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_CHARCOAL_BURNER",
-      "scope": "city"
-     }
+     "BUILDING_CLAY_PIT",
+     "BUILDING_CHALK_GATHERER",
+     "BUILDING_HEMATITE_GATHERER",
+     "BUILDING_MODERN_EARTHWORKS",
+     "BUILDING_FIRE_PIT",
+     "BUILDING_BONFIRE",
+     "BUILDING_IMU",
+     "BUILDING_CHARCOAL_BURNER"
     ],
     [
      {
@@ -74,10 +47,7 @@
   },
   "operate": {
    "dormant": [
-    {
-     "type": "BUILDING_FRESCO_MURAL",
-     "scope": "city"
-    }
+    "BUILDING_FRESCO_MURAL"
    ]
   }
  },

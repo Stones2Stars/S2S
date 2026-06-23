@@ -11,25 +11,13 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_ATHLETIC_MEGACOMPLEX",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_BINARY_PSYCHOKINESIS",
-     "scope": "team"
-    }
+    "BUILDING_ATHLETIC_MEGACOMPLEX",
+    "TECH_BINARY_PSYCHOKINESIS"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_RESURRECTION_HUB",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_NANOMORPHIC_REPLICATOR",
-      "scope": "city"
-     }
+     "BUILDING_RESURRECTION_HUB",
+     "BUILDING_NANOMORPHIC_REPLICATOR"
     ],
     [
      {
@@ -46,45 +34,27 @@
     6,
     {
      "value": 12,
-     "enabled": {
-      "type": "TECH_FANTASY_MATERIALS",
-      "scope": "team"
-     }
+     "enabled": "TECH_FANTASY_MATERIALS"
     },
     {
      "value": 13,
-     "enabled": {
-      "type": "TECH_HYPERINTELLIGENCE",
-      "scope": "team"
-     }
+     "enabled": "TECH_HYPERINTELLIGENCE"
     },
     {
      "value": 13,
-     "enabled": {
-      "type": "TECH_DEITIES",
-      "scope": "team"
-     }
+     "enabled": "TECH_DEITIES"
     },
     {
      "value": 11,
-     "enabled": {
-      "type": "TECH_POSTHUMANISM",
-      "scope": "team"
-     }
+     "enabled": "TECH_POSTHUMANISM"
     },
     {
      "value": 12,
-     "enabled": {
-      "type": "TECH_SHAPESHIFTING",
-      "scope": "team"
-     }
+     "enabled": "TECH_SHAPESHIFTING"
     },
     {
      "value": 12,
-     "enabled": {
-      "type": "TECH_MENSIOKINESIS",
-      "scope": "team"
-     }
+     "enabled": "TECH_MENSIOKINESIS"
     },
     {
      "value": 1,

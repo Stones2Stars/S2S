@@ -14,14 +14,8 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_MEDICAL_CLINIC",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_GENETICS",
-     "scope": "team"
-    }
+    "BUILDING_MEDICAL_CLINIC",
+    "TECH_GENETICS"
    ],
    "any": [
     [
@@ -41,14 +35,8 @@
     }
    ],
    "dormant": [
-    {
-     "type": "BUILDING_MEDICAL_PROSTHETICS_LAB",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_HEALTHCARE_MEGACOMPLEX",
-     "scope": "city"
-    }
+    "BUILDING_MEDICAL_PROSTHETICS_LAB",
+    "BUILDING_HEALTHCARE_MEGACOMPLEX"
    ]
   }
  },

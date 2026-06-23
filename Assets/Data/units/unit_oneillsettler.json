@@ -6,21 +6,12 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_DEEP_SPACE_COLONIES",
-     "scope": "team"
-    }
+    "TECH_DEEP_SPACE_COLONIES"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_CISLUNAR_SPACEPORT",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_DEEP_SPACE_DOCKING_BAY",
-      "scope": "city"
-     }
+     "BUILDING_CISLUNAR_SPACEPORT",
+     "BUILDING_DEEP_SPACE_DOCKING_BAY"
     ]
    ]
   }

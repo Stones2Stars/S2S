@@ -5,25 +5,13 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_PROPAGANDA",
-     "scope": "team"
-    }
+    "TECH_PROPAGANDA"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_MODERN_OFFICES",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_TRADING_POST",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_SHOPPING_DISTRICT",
-      "scope": "city"
-     }
+     "BUILDING_MODERN_OFFICES",
+     "BUILDING_TRADING_POST",
+     "BUILDING_SHOPPING_DISTRICT"
     ],
     [
      {
@@ -35,10 +23,7 @@
   },
   "operate": {
    "all": [
-    {
-     "type": "CIVIC_PROPAGANDA",
-     "scope": "empire"
-    }
+    "CIVIC_PROPAGANDA"
    ]
   }
  },

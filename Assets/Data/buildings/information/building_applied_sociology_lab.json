@@ -12,14 +12,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_UNIVERSITY",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_COMPUTATIONAL_SOCIOLOGY",
-     "scope": "team"
-    }
+    "BUILDING_UNIVERSITY",
+    "TECH_COMPUTATIONAL_SOCIOLOGY"
    ],
    "any": [
     [
@@ -37,17 +31,11 @@
     10,
     {
      "value": 10,
-     "enabled": {
-      "type": "TECH_SYNERGETICS",
-      "scope": "team"
-     }
+     "enabled": "TECH_SYNERGETICS"
     },
     {
      "value": 9,
-     "enabled": {
-      "type": "TECH_CYBERSOCIAL_INTEGRATION",
-      "scope": "team"
-     }
+     "enabled": "TECH_CYBERSOCIAL_INTEGRATION"
     }
    ]
   }
@@ -57,10 +45,7 @@
    "flat": [
     {
      "value": 11,
-     "enabled": {
-      "type": "TECH_PRECISION_SOCIAL_ENGINEERING",
-      "scope": "team"
-     }
+     "enabled": "TECH_PRECISION_SOCIAL_ENGINEERING"
     }
    ]
   }

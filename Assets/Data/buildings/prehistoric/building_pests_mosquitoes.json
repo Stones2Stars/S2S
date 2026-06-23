@@ -20,10 +20,7 @@
      "scope": "city",
      "min": 3
     },
-    {
-     "type": "TECH_TRAP_FISHING",
-     "scope": "team"
-    }
+    "TECH_TRAP_FISHING"
    ],
    "any": [
     [

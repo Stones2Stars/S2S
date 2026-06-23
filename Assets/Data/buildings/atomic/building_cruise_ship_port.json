@@ -14,21 +14,12 @@
   "build": {
    "all": [
     "HAS_COAST",
-    {
-     "type": "TECH_TOURISM",
-     "scope": "team"
-    }
+    "TECH_TOURISM"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_INTERNATIONAL_PORT",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_OCEAN_ADMINISTRATION",
-      "scope": "city"
-     }
+     "BUILDING_INTERNATIONAL_PORT",
+     "BUILDING_OCEAN_ADMINISTRATION"
     ],
     [
      {
@@ -40,10 +31,7 @@
   },
   "operate": {
    "dormant": [
-    {
-     "type": "BUILDING_TELEPORT_BOOTH",
-     "scope": "city"
-    }
+    "BUILDING_TELEPORT_BOOTH"
    ]
   }
  },
@@ -68,10 +56,7 @@
     -1,
     {
      "value": 1,
-     "enabled": {
-      "type": "TECH_SMART_DRUGS",
-      "scope": "team"
-     }
+     "enabled": "TECH_SMART_DRUGS"
     }
    ]
   }

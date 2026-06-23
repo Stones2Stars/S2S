@@ -18,25 +18,13 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_UNIVERSITY",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_PSYCHOLOGY",
-     "scope": "team"
-    }
+    "BUILDING_UNIVERSITY",
+    "TECH_PSYCHOLOGY"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_INSANE_ASYLUM",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_NEUROSCIENCE_CENTER",
-      "scope": "city"
-     }
+     "BUILDING_INSANE_ASYLUM",
+     "BUILDING_NEUROSCIENCE_CENTER"
     ],
     [
      {
@@ -48,10 +36,7 @@
   },
   "operate": {
    "dormant": [
-    {
-     "type": "BUILDING_HEALTHCARE_MEGACOMPLEX",
-     "scope": "city"
-    }
+    "BUILDING_HEALTHCARE_MEGACOMPLEX"
    ]
   }
  },
@@ -61,31 +46,19 @@
     4,
     {
      "value": 6,
-     "enabled": {
-      "type": "TECH_COMPULSORY_EDUCATION",
-      "scope": "team"
-     }
+     "enabled": "TECH_COMPULSORY_EDUCATION"
     },
     {
      "value": 7,
-     "enabled": {
-      "type": "TECH_PROPAGANDA",
-      "scope": "team"
-     }
+     "enabled": "TECH_PROPAGANDA"
     },
     {
      "value": 7,
-     "enabled": {
-      "type": "TECH_MASS_MEDIA",
-      "scope": "team"
-     }
+     "enabled": "TECH_MASS_MEDIA"
     },
     {
      "value": 7,
-     "enabled": {
-      "type": "TECH_COUNTERCULTURE",
-      "scope": "team"
-     }
+     "enabled": "TECH_COUNTERCULTURE"
     }
    ]
   }

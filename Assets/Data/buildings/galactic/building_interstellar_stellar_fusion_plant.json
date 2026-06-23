@@ -11,18 +11,9 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_INTERSTELLAR_STAR_SCOOP",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_PLANET_ENGINEERING",
-     "scope": "team"
-    },
-    {
-     "type": "TECH_STAR_LIFTING",
-     "scope": "team"
-    }
+    "BUILDING_INTERSTELLAR_STAR_SCOOP",
+    "TECH_PLANET_ENGINEERING",
+    "TECH_STAR_LIFTING"
    ],
    "any": [
     [

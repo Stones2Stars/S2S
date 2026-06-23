@@ -13,17 +13,11 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_CONSCIOUSNESS",
-     "scope": "team"
-    }
+    "TECH_CONSCIOUSNESS"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_SAGE",
-      "scope": "city"
-     }
+     "BUILDING_SAGE"
     ],
     [
      {
@@ -74,14 +68,8 @@
     ]
    ],
    "dormant": [
-    {
-     "type": "BUILDING_ALTERNATIVE_MEDICINE",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_HEALTHCARE_MEGACOMPLEX",
-     "scope": "city"
-    }
+    "BUILDING_ALTERNATIVE_MEDICINE",
+    "BUILDING_HEALTHCARE_MEGACOMPLEX"
    ]
   }
  },

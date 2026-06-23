@@ -11,25 +11,13 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_ARTIFICIAL_INTELLIGENCE_CORE",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_COMPREHENSIVE_CYBERNETICS",
-     "scope": "team"
-    }
+    "BUILDING_ARTIFICIAL_INTELLIGENCE_CORE",
+    "TECH_COMPREHENSIVE_CYBERNETICS"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_EMP_GRID",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_SUPERCONDUCTING_GRID",
-      "scope": "city"
-     }
+     "BUILDING_EMP_GRID",
+     "BUILDING_SUPERCONDUCTING_GRID"
     ],
     [
      {
@@ -45,10 +33,7 @@
    "flat": [
     {
      "value": 10,
-     "enabled": {
-      "type": "TECH_NANOMORPHICS",
-      "scope": "team"
-     }
+     "enabled": "TECH_NANOMORPHICS"
     }
    ]
   }

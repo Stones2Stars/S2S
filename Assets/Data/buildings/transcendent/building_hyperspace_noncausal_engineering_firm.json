@@ -6,18 +6,9 @@
   "build": {
    "all": [
     "HAS_POWER",
-    {
-     "type": "BUILDING_HYPERFACTORY",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_HYPERSPACE_PAN_DIMENSIONAL_CITY",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_MULTIDIMENSIONAL_TIME",
-     "scope": "team"
-    }
+    "BUILDING_HYPERFACTORY",
+    "BUILDING_HYPERSPACE_PAN_DIMENSIONAL_CITY",
+    "TECH_MULTIDIMENSIONAL_TIME"
    ],
    "any": [
     [

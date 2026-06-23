@@ -5,14 +5,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_HQ_MOONBEAN_COFFEE",
-     "scope": "city"
-    },
-    {
-     "type": "CORPORATION_MOONBEAN",
-     "scope": "city"
-    }
+    "BUILDING_HQ_MOONBEAN_COFFEE",
+    "CORPORATION_MOONBEAN"
    ]
   }
  },

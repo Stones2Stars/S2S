@@ -10,10 +10,7 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_REINCARNATION",
-     "scope": "team"
-    }
+    "TECH_REINCARNATION"
    ],
    "any": [
     [
@@ -31,10 +28,7 @@
      "scope": "city",
      "connection": "trade|vicinity"
     },
-    {
-     "type": "RELIGION_HINDUISM",
-     "scope": "city"
-    }
+    "RELIGION_HINDUISM"
    ]
   }
  },

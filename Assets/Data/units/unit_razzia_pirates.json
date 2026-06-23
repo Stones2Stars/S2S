@@ -10,23 +10,14 @@
      "scope": "city",
      "connection": "trade|vicinity"
     },
-    {
-     "type": "BUILDING_SHIPWRIGHT",
-     "scope": "city"
-    },
+    "BUILDING_SHIPWRIGHT",
     {
      "type": "AREA_SIZE",
      "scope": "world",
      "min": 10
     },
-    {
-     "type": "TECH_MERCANTILISM",
-     "scope": "team"
-    },
-    {
-     "type": "TECH_NAVAL_CANNON",
-     "scope": "team"
-    }
+    "TECH_MERCANTILISM",
+    "TECH_NAVAL_CANNON"
    ],
    "any": [
     [
@@ -42,26 +33,11 @@
      }
     ],
     [
-     {
-      "type": "CIVIC_MERCANTILISM",
-      "scope": "empire"
-     },
-     {
-      "type": "CIVIC_NATIONALIST",
-      "scope": "empire"
-     },
-     {
-      "type": "CIVIC_FEUDAL",
-      "scope": "empire"
-     },
-     {
-      "type": "CIVIC_MONARCHY",
-      "scope": "empire"
-     },
-     {
-      "type": "CIVIC_DESPOTISM",
-      "scope": "empire"
-     }
+     "CIVIC_MERCANTILISM",
+     "CIVIC_NATIONALIST",
+     "CIVIC_FEUDAL",
+     "CIVIC_MONARCHY",
+     "CIVIC_DESPOTISM"
     ]
    ]
   }

@@ -11,21 +11,12 @@
      "scope": "city",
      "connection": "trade|vicinity"
     },
-    {
-     "type": "TECH_PLANETARY_COLONIZATION",
-     "scope": "team"
-    }
+    "TECH_PLANETARY_COLONIZATION"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_CISLUNAR_FACTORY",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_SPACE_STATION",
-      "scope": "city"
-     }
+     "BUILDING_CISLUNAR_FACTORY",
+     "BUILDING_SPACE_STATION"
     ]
    ]
   }

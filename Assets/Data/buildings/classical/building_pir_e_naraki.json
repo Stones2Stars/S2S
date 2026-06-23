@@ -5,18 +5,9 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "TECH_SANITATION",
-     "scope": "team"
-    },
-    {
-     "type": "TECH_SIEGE_WARFARE",
-     "scope": "team"
-    },
-    {
-     "type": "TECH_AESTHETICS",
-     "scope": "team"
-    },
+    "TECH_SANITATION",
+    "TECH_SIEGE_WARFARE",
+    "TECH_AESTHETICS",
     {
      "STATE_RELIGION": "RELIGION_ZOROASTRIANISM"
     }
@@ -37,10 +28,7 @@
      "scope": "city",
      "connection": "trade|vicinity"
     },
-    {
-     "type": "RELIGION_ZOROASTRIANISM",
-     "scope": "city"
-    }
+    "RELIGION_ZOROASTRIANISM"
    ]
   }
  },

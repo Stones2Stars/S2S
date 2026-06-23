@@ -5,14 +5,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_INTERSTELLAR_MATRIOSHKA_BRAIN",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_NOOGENESIS",
-     "scope": "team"
-    }
+    "BUILDING_INTERSTELLAR_MATRIOSHKA_BRAIN",
+    "TECH_NOOGENESIS"
    ],
    "any": [
     [

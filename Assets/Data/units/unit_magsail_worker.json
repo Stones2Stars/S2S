@@ -11,25 +11,13 @@
      "scope": "city",
      "connection": "trade|vicinity"
     },
-    {
-     "type": "TECH_MAGNETIC_SAILS",
-     "scope": "team"
-    }
+    "TECH_MAGNETIC_SAILS"
    ],
    "any": [
     [
-     {
-      "type": "BUILDING_EFFECT_LAUNCH_SITE",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_CISLUNAR_DOCKING_BAY",
-      "scope": "city"
-     },
-     {
-      "type": "BUILDING_DEEP_SPACE_DOCKING_BAY",
-      "scope": "city"
-     }
+     "BUILDING_EFFECT_LAUNCH_SITE",
+     "BUILDING_CISLUNAR_DOCKING_BAY",
+     "BUILDING_DEEP_SPACE_DOCKING_BAY"
     ]
    ]
   }

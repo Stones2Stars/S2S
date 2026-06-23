@@ -6,18 +6,9 @@
   "build": {
    "all": [
     "HAS_COAST",
-    {
-     "type": "BUILDING_C_AC_ASIAN",
-     "scope": "city"
-    },
-    {
-     "type": "BUILDING_C_L_ASIAN",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_INDUSTRIALISM",
-     "scope": "team"
-    }
+    "BUILDING_C_AC_ASIAN",
+    "BUILDING_C_L_ASIAN",
+    "TECH_INDUSTRIALISM"
    ],
    "any": [
     [

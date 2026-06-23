@@ -11,14 +11,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_MANUFACTURING_DISTRICT",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_MEGACORPORATIONS",
-     "scope": "team"
-    }
+    "BUILDING_MANUFACTURING_DISTRICT",
+    "TECH_MEGACORPORATIONS"
    ],
    "any": [
     [

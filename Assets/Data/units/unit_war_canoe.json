@@ -5,23 +5,14 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_CANOE_BUILDER",
-     "scope": "city"
-    },
+    "BUILDING_CANOE_BUILDER",
     {
      "type": "AREA_SIZE",
      "scope": "world",
      "min": 5
     },
-    {
-     "type": "TECH_HARPOON_MAKING",
-     "scope": "team"
-    },
-    {
-     "type": "TECH_WARFARE",
-     "scope": "team"
-    }
+    "TECH_HARPOON_MAKING",
+    "TECH_WARFARE"
    ],
    "any": [
     [

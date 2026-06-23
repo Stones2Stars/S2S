@@ -16,10 +16,7 @@
      "scope": "world",
      "min": 10
     },
-    {
-     "type": "TECH_URBAN_CULTURE",
-     "scope": "team"
-    }
+    "TECH_URBAN_CULTURE"
    ],
    "any": [
     [

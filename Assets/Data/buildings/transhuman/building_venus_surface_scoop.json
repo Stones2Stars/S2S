@@ -5,14 +5,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_VENUS_CITY",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_NANOMINING",
-     "scope": "team"
-    }
+    "BUILDING_VENUS_CITY",
+    "TECH_NANOMINING"
    ],
    "any": [
     [

@@ -16,33 +16,15 @@
      "scope": "world",
      "min": 10
     },
-    {
-     "type": "TECH_COAST_GUARD",
-     "scope": "team"
-    }
+    "TECH_COAST_GUARD"
    ],
    "any": [
     [
-     {
-      "type": "CIVIC_MERCANTILISM",
-      "scope": "empire"
-     },
-     {
-      "type": "CIVIC_NATIONALIST",
-      "scope": "empire"
-     },
-     {
-      "type": "CIVIC_FEUDAL",
-      "scope": "empire"
-     },
-     {
-      "type": "CIVIC_MONARCHY",
-      "scope": "empire"
-     },
-     {
-      "type": "CIVIC_DESPOTISM",
-      "scope": "empire"
-     }
+     "CIVIC_MERCANTILISM",
+     "CIVIC_NATIONALIST",
+     "CIVIC_FEUDAL",
+     "CIVIC_MONARCHY",
+     "CIVIC_DESPOTISM"
     ]
    ]
   }

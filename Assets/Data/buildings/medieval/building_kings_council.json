@@ -14,14 +14,8 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "BUILDING_PALACE",
-     "scope": "city"
-    },
-    {
-     "type": "TECH_PARLIAMENTS",
-     "scope": "team"
-    }
+    "BUILDING_PALACE",
+    "TECH_PARLIAMENTS"
    ],
    "any": [
     [
@@ -35,14 +29,8 @@
   "operate": {
    "any": [
     [
-     {
-      "type": "CIVIC_MONARCHY",
-      "scope": "empire"
-     },
-     {
-      "type": "CIVIC_FEUDAL",
-      "scope": "empire"
-     }
+     "CIVIC_MONARCHY",
+     "CIVIC_FEUDAL"
     ]
    ]
   }
