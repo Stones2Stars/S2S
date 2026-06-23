@@ -1,0 +1,10 @@
+# .NET build output
+bin/
+obj/
+
+# Extractor snapshots / any generated JSON dumps — live-game data, never committed
+output/
+
+# IDE / user
+*.user
+.vs/

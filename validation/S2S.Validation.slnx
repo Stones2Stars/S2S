@@ -1,0 +1,12 @@
+<Solution>
+  <Project Path="S2S.Application/S2S.Application.csproj" />
+  <Project Path="S2S.Cascade.Cli/S2S.Cascade.Cli.csproj" />
+  <Project Path="S2S.Enabler/S2S.Enabler.csproj" />
+  <Project Path="S2S.Extractor.Cli/S2S.Extractor.Cli.csproj" />
+  <Project Path="S2S.Extractor/S2S.Extractor.csproj" />
+  <Project Path="S2S.Model.Tests/S2S.Model.Tests.csproj" />
+  <Project Path="S2S.Model/S2S.Model.csproj" />
+  <Project Path="S2S.Parity.Cli/S2S.Parity.Cli.csproj" />
+  <Project Path="S2S.Parity/S2S.Parity.csproj" />
+  <Project Path="S2S.Tally/S2S.Tally.csproj" />
+</Solution>
