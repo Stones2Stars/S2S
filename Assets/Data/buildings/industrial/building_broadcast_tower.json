@@ -20,12 +20,6 @@
    "TECH_TERRA_COMPUTER"
   ]
  },
- "replacedBy": {
-  "buildings": [
-   "BUILDING_COMMUNICATION_TOWER",
-   "BUILDING_NETWORK_NODE"
-  ]
- },
  "requires": {
   "build": {
    "all": [
@@ -64,6 +58,16 @@
       "connection": "trade|vicinity"
      }
     ]
+   ],
+   "dormant": [
+    {
+     "type": "BUILDING_COMMUNICATION_TOWER",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_NETWORK_NODE",
+     "scope": "city"
+    }
    ]
   }
  },

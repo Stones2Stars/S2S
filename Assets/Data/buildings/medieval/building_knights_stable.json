@@ -29,11 +29,6 @@
    "TECH_VERTICAL_FLIGHT"
   ]
  },
- "replacedBy": {
-  "buildings": [
-   "BUILDING_MODERN_STABLE"
-  ]
- },
  "requires": {
   "build": {
    "all": [
@@ -89,6 +84,12 @@
       "connection": "trade|vicinity"
      }
     ]
+   ],
+   "dormant": [
+    {
+     "type": "BUILDING_MODERN_STABLE",
+     "scope": "city"
+    }
    ]
   }
  },

@@ -10,11 +10,6 @@
    "TECH_ARTILLERY"
   ]
  },
- "replacedBy": {
-  "buildings": [
-   "BUILDING_ARMOURER"
-  ]
- },
  "requires": {
   "build": {
    "all": [
@@ -68,6 +63,12 @@
      "type": "BONUS_BAMBOO",
      "scope": "city",
      "connection": "trade|vicinity"
+    }
+   ],
+   "dormant": [
+    {
+     "type": "BUILDING_ARMOURER",
+     "scope": "city"
     }
    ]
   }

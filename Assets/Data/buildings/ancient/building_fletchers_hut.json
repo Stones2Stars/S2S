@@ -14,11 +14,6 @@
    "TECH_MILITARY_TRADITION"
   ]
  },
- "replacedBy": {
-  "buildings": [
-   "BUILDING_EFFECT_TRADITION_ARCHERY"
-  ]
- },
  "requires": {
   "build": {
    "all": [
@@ -98,6 +93,12 @@
       "connection": "trade|vicinity"
      }
     ]
+   ],
+   "dormant": [
+    {
+     "type": "BUILDING_EFFECT_TRADITION_ARCHERY",
+     "scope": "city"
+    }
    ]
   }
  },

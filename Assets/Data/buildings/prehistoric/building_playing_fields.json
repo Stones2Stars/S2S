@@ -15,11 +15,6 @@
    "TECH_TEAM_SPORTS"
   ]
  },
- "replacedBy": {
-  "buildings": [
-   "BUILDING_ATHLETIC_FIELDS"
-  ]
- },
  "requires": {
   "build": {
    "all": [
@@ -41,6 +36,14 @@
       "scope": "empire"
      }
     ]
+   ]
+  },
+  "operate": {
+   "dormant": [
+    {
+     "type": "BUILDING_ATHLETIC_FIELDS",
+     "scope": "city"
+    }
    ]
   }
  },

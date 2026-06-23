@@ -10,13 +10,6 @@
    "TECH_CITY_PLANNING"
   ]
  },
- "replacedBy": {
-  "buildings": [
-   "BUILDING_TOWN_HALL",
-   "BUILDING_CITY_COUNCIL",
-   "BUILDING_METROPOLITAN_ADMINISTRATION"
-  ]
- },
  "requires": {
   "build": {
    "all": [
@@ -63,6 +56,20 @@
       "connection": "trade|vicinity"
      }
     ]
+   ],
+   "dormant": [
+    {
+     "type": "BUILDING_TOWN_HALL",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_CITY_COUNCIL",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_METROPOLITAN_ADMINISTRATION",
+     "scope": "city"
+    }
    ]
   }
  },

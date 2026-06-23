@@ -10,12 +10,6 @@
    "TECH_LEVITATION"
   ]
  },
- "replacedBy": {
-  "buildings": [
-   "BUILDING_SHOCKWAVE_VEHICLE_DEALERSHIP",
-   "BUILDING_ANTIGRAV_VEHICLE_DEALERSHIP"
-  ]
- },
  "requires": {
   "build": {
    "all": [
@@ -63,6 +57,18 @@
       "scope": "plot"
      }
     ]
+   ]
+  },
+  "operate": {
+   "dormant": [
+    {
+     "type": "BUILDING_SHOCKWAVE_VEHICLE_DEALERSHIP",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_ANTIGRAV_VEHICLE_DEALERSHIP",
+     "scope": "city"
+    }
    ]
   }
  },

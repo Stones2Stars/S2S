@@ -15,11 +15,6 @@
    "TECH_PICOTECHNOLOGY"
   ]
  },
- "replacedBy": {
-  "buildings": [
-   "BUILDING_HEALTHCARE_MEGACOMPLEX"
-  ]
- },
  "requires": {
   "build": {
    "all": [
@@ -52,6 +47,12 @@
      "type": "BONUS_COMPUTERS",
      "scope": "city",
      "connection": "trade|vicinity"
+    }
+   ],
+   "dormant": [
+    {
+     "type": "BUILDING_HEALTHCARE_MEGACOMPLEX",
+     "scope": "city"
     }
    ]
   }

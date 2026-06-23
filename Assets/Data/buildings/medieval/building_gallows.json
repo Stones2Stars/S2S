@@ -15,13 +15,6 @@
    "TECH_CRIMINOLOGY"
   ]
  },
- "replacedBy": {
-  "buildings": [
-   "BUILDING_GUILLOTINE",
-   "BUILDING_ELECTRIC_CHAIR",
-   "BUILDING_LETHAL_INJECTION"
-  ]
- },
  "requires": {
   "build": {
    "all": [
@@ -64,6 +57,20 @@
       "connection": "trade|vicinity"
      }
     ]
+   ],
+   "dormant": [
+    {
+     "type": "BUILDING_GUILLOTINE",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_ELECTRIC_CHAIR",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_LETHAL_INJECTION",
+     "scope": "city"
+    }
    ]
   }
  },

@@ -17,12 +17,6 @@
    "TECH_FRICTIONLESS_FLIGHT"
   ]
  },
- "replacedBy": {
-  "buildings": [
-   "BUILDING_VACTRAIN_TERMINAL",
-   "BUILDING_GRAVITY_TRAIN"
-  ]
- },
  "requires": {
   "build": {
    "all": [
@@ -44,6 +38,18 @@
       "scope": "plot"
      }
     ]
+   ]
+  },
+  "operate": {
+   "dormant": [
+    {
+     "type": "BUILDING_VACTRAIN_TERMINAL",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_GRAVITY_TRAIN",
+     "scope": "city"
+    }
    ]
   }
  },

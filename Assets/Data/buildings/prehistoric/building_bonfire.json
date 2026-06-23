@@ -22,11 +22,6 @@
    "TECH_FIRE_BRIGADES"
   ]
  },
- "replacedBy": {
-  "buildings": [
-   "BUILDING_CHARCOAL_BURNER"
-  ]
- },
  "requires": {
   "build": {
    "all": [
@@ -76,6 +71,12 @@
       "connection": "trade|vicinity"
      }
     ]
+   ],
+   "dormant": [
+    {
+     "type": "BUILDING_CHARCOAL_BURNER",
+     "scope": "city"
+    }
    ]
   }
  },

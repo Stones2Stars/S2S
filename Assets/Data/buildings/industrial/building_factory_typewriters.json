@@ -10,11 +10,6 @@
    "TECH_NANOROBOTICS"
   ]
  },
- "replacedBy": {
-  "buildings": [
-   "BUILDING_MANUFACTURING_DISTRICT"
-  ]
- },
  "requires": {
   "build": {
    "all": [
@@ -63,6 +58,14 @@
       "scope": "plot"
      }
     ]
+   ]
+  },
+  "operate": {
+   "dormant": [
+    {
+     "type": "BUILDING_MANUFACTURING_DISTRICT",
+     "scope": "city"
+    }
    ]
   }
  },

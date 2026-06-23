@@ -20,14 +20,6 @@
    "TECH_METAMATERIALS"
   ]
  },
- "replacedBy": {
-  "buildings": [
-   "BUILDING_CEMENT_BARRIER",
-   "BUILDING_METAMATERIAL_WALLS",
-   "BUILDING_SUPERSTRONG_ALLOY_WALLS",
-   "BUILDING_MEGASTRONG_ALLOY_WALLS"
-  ]
- },
  "requires": {
   "build": {
    "all": [
@@ -43,6 +35,26 @@
       "scope": "plot"
      }
     ]
+   ]
+  },
+  "operate": {
+   "dormant": [
+    {
+     "type": "BUILDING_CEMENT_BARRIER",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_METAMATERIAL_WALLS",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_SUPERSTRONG_ALLOY_WALLS",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_MEGASTRONG_ALLOY_WALLS",
+     "scope": "city"
+    }
    ]
   }
  },

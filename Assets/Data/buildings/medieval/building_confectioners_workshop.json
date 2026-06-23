@@ -10,12 +10,6 @@
    "TECH_AUGMENTED_CONSUMABLES"
   ]
  },
- "replacedBy": {
-  "buildings": [
-   "BUILDING_FACTORY_MARZIPAN",
-   "BUILDING_FOOD_MANUFACTURING_DISTRICT"
-  ]
- },
  "requires": {
   "build": {
    "all": [
@@ -60,6 +54,16 @@
       "connection": "trade|vicinity"
      }
     ]
+   ],
+   "dormant": [
+    {
+     "type": "BUILDING_FACTORY_MARZIPAN",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_FOOD_MANUFACTURING_DISTRICT",
+     "scope": "city"
+    }
    ]
   }
  },

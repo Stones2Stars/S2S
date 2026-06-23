@@ -10,12 +10,6 @@
    "TECH_TRANSHUMANISM"
   ]
  },
- "replacedBy": {
-  "buildings": [
-   "BUILDING_PSYCHIC_ADVISOR",
-   "BUILDING_HIGH_TECH_CULTURAL_ENRICHMENT"
-  ]
- },
  "requires": {
   "build": {
    "all": [
@@ -41,6 +35,18 @@
       "scope": "plot"
      }
     ]
+   ]
+  },
+  "operate": {
+   "dormant": [
+    {
+     "type": "BUILDING_PSYCHIC_ADVISOR",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_HIGH_TECH_CULTURAL_ENRICHMENT",
+     "scope": "city"
+    }
    ]
   }
  },

@@ -10,11 +10,6 @@
    "TECH_SOCIAL_CALCULUS"
   ]
  },
- "replacedBy": {
-  "buildings": [
-   "BUILDING_GENETIC_PROFILING"
-  ]
- },
  "requires": {
   "build": {
    "all": [
@@ -40,6 +35,14 @@
       "scope": "plot"
      }
     ]
+   ]
+  },
+  "operate": {
+   "dormant": [
+    {
+     "type": "BUILDING_GENETIC_PROFILING",
+     "scope": "city"
+    }
    ]
   }
  },

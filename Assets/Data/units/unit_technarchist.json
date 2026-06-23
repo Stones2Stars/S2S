@@ -119,6 +119,9 @@
    "UNITCOMBAT_ASSAULT_MECH": true
   }
  },
+ "tags": {
+  "outlaw": true
+ },
  "vision": {
   "visibilityIntensity": {
    "INVISIBLE_DISGUISED": 1,

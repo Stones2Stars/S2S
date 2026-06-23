@@ -27,13 +27,6 @@
    "TECH_MODERN_HEALTH_CARE"
   ]
  },
- "replacedBy": {
-  "buildings": [
-   "BUILDING_SURGEONS_OFFICE",
-   "BUILDING_MEDICAL_CLINIC",
-   "BUILDING_HEALTHCARE_MEGACOMPLEX"
-  ]
- },
  "requires": {
   "build": {
    "all": [
@@ -63,6 +56,22 @@
       "scope": "plot"
      }
     ]
+   ]
+  },
+  "operate": {
+   "dormant": [
+    {
+     "type": "BUILDING_SURGEONS_OFFICE",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_MEDICAL_CLINIC",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_HEALTHCARE_MEGACOMPLEX",
+     "scope": "city"
+    }
    ]
   }
  },

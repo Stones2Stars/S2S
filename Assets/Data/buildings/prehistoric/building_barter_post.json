@@ -80,12 +80,6 @@
    "TECH_CONSUMERISM"
   ]
  },
- "replacedBy": {
-  "buildings": [
-   "BUILDING_TRADING_POST",
-   "BUILDING_SHOPPING_DISTRICT"
-  ]
- },
  "requires": {
   "build": {
    "all": [
@@ -101,6 +95,18 @@
       "scope": "plot"
      }
     ]
+   ]
+  },
+  "operate": {
+   "dormant": [
+    {
+     "type": "BUILDING_TRADING_POST",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_SHOPPING_DISTRICT",
+     "scope": "city"
+    }
    ]
   }
  },

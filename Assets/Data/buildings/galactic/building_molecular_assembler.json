@@ -19,13 +19,6 @@
    "TECH_MACROSCOPIC_SUPERPOSITION"
   ]
  },
- "replacedBy": {
-  "buildings": [
-   "BUILDING_ATOMIC_ASSEMBLER",
-   "BUILDING_QUANTUM_ASSEMBLER",
-   "BUILDING_MATERIALIZER"
-  ]
- },
  "requires": {
   "build": {
    "all": [
@@ -46,6 +39,22 @@
       "scope": "plot"
      }
     ]
+   ]
+  },
+  "operate": {
+   "dormant": [
+    {
+     "type": "BUILDING_ATOMIC_ASSEMBLER",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_QUANTUM_ASSEMBLER",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_MATERIALIZER",
+     "scope": "city"
+    }
    ]
   }
  },

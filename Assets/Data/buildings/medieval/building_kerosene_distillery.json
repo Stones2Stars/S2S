@@ -10,11 +10,6 @@
    "TECH_ANIMAMATERIALS"
   ]
  },
- "replacedBy": {
-  "buildings": [
-   "BUILDING_CHEMICALS_DISTRICT"
-  ]
- },
  "requires": {
   "build": {
    "all": [
@@ -69,6 +64,12 @@
       "connection": "trade|vicinity"
      }
     ]
+   ],
+   "dormant": [
+    {
+     "type": "BUILDING_CHEMICALS_DISTRICT",
+     "scope": "city"
+    }
    ]
   }
  },

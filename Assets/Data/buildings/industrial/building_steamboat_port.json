@@ -10,12 +10,6 @@
    "TECH_MEGACITIES"
   ]
  },
- "replacedBy": {
-  "buildings": [
-   "BUILDING_FERRY_TERMINAL",
-   "BUILDING_RIVER_ADMINISTRATION"
-  ]
- },
  "requires": {
   "build": {
    "all": [
@@ -59,6 +53,16 @@
       "connection": "trade|vicinity"
      }
     ]
+   ],
+   "dormant": [
+    {
+     "type": "BUILDING_FERRY_TERMINAL",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_RIVER_ADMINISTRATION",
+     "scope": "city"
+    }
    ]
   }
  },

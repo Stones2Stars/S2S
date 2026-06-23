@@ -15,12 +15,6 @@
    "TECH_PLANETARY_ECONOMICS"
   ]
  },
- "replacedBy": {
-  "buildings": [
-   "BUILDING_BREEDING_PROGRAM_SEAL",
-   "BUILDING_ANIMAL_PRESERVE"
-  ]
- },
  "requires": {
   "build": {
    "all": [
@@ -59,6 +53,16 @@
      "type": "BONUS_SEA_LION_AND_SEAL",
      "scope": "city",
      "connection": "vicinity"
+    }
+   ],
+   "dormant": [
+    {
+     "type": "BUILDING_BREEDING_PROGRAM_SEAL",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_ANIMAL_PRESERVE",
+     "scope": "city"
     }
    ]
   }

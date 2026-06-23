@@ -10,12 +10,6 @@
    "TECH_CIVIL_ENGINEERING"
   ]
  },
- "replacedBy": {
-  "buildings": [
-   "BUILDING_OFFICIUM",
-   "BUILDING_MODERN_OFFICES"
-  ]
- },
  "requires": {
   "build": {
    "all": [
@@ -31,6 +25,18 @@
       "scope": "plot"
      }
     ]
+   ]
+  },
+  "operate": {
+   "dormant": [
+    {
+     "type": "BUILDING_OFFICIUM",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_MODERN_OFFICES",
+     "scope": "city"
+    }
    ]
   }
  },

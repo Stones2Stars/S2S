@@ -20,12 +20,6 @@
    "TECH_PURE_INFORMATION_SOCIETY"
   ]
  },
- "replacedBy": {
-  "buildings": [
-   "BUILDING_GALACTIC_CANTINA",
-   "BUILDING_ORDINANCE_ALCOHOL_PROHIBITION"
-  ]
- },
  "requires": {
   "build": {
    "all": [
@@ -60,6 +54,16 @@
      "type": "BONUS_ALCOHOL",
      "scope": "city",
      "connection": "trade|vicinity"
+    }
+   ],
+   "dormant": [
+    {
+     "type": "BUILDING_GALACTIC_CANTINA",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_ORDINANCE_ALCOHOL_PROHIBITION",
+     "scope": "city"
     }
    ]
   }

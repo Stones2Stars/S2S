@@ -15,12 +15,6 @@
    "TECH_PLANETARY_ECONOMICS"
   ]
  },
- "replacedBy": {
-  "buildings": [
-   "BUILDING_BREEDING_PROGRAM_ANTELOPE",
-   "BUILDING_ANIMAL_PRESERVE"
-  ]
- },
  "requires": {
   "build": {
    "all": [
@@ -64,6 +58,16 @@
       "connection": "vicinity"
      }
     ]
+   ],
+   "dormant": [
+    {
+     "type": "BUILDING_BREEDING_PROGRAM_ANTELOPE",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_ANIMAL_PRESERVE",
+     "scope": "city"
+    }
    ]
   }
  },

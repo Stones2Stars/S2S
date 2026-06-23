@@ -2,11 +2,6 @@
  "type": "BUILDING_NEUTRINO_OBSERVATORY",
  "description": "TXT_KEY_BUILDING_NEUTRINO_OBSERVATORY",
  "civilopedia": "TXT_KEY_BUILDING_NEUTRINO_OBSERVATORY_PEDIA",
- "replacedBy": {
-  "buildings": [
-   "BUILDING_POLLUTION_BLACKENED_SKIES"
-  ]
- },
  "requires": {
   "build": {
    "all": [
@@ -30,6 +25,14 @@
       "scope": "plot"
      }
     ]
+   ]
+  },
+  "operate": {
+   "dormant": [
+    {
+     "type": "BUILDING_POLLUTION_BLACKENED_SKIES",
+     "scope": "city"
+    }
    ]
   }
  },

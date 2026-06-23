@@ -184,8 +184,10 @@ PREREQ_FIELDS = [
 # that thing enables/removes — never an upward "who-affects-me" query (that view is the cold-path pedia index).
 
 # Obsolete edges — top-down: a tech OBSOLETES these targets (reverse of <entity>.ObsoleteTech).
+# Buildings MIGRATED to TARGET-side `obsoletedBy` (owner ruling 2026-06-22): the building authors its own
+# obsoleting tech (ObsoleteTech) + superseding building (ObsoletesToBuilding) directly; the cascade builds the
+# reverse map at load. So buildings are no longer inverted here (units/builds/bonuses/… still source-side).
 OBSOLETE_FIELDS = [
-    ("BuildingInfo", "ObsoleteTech", "buildings"),
     ("UnitInfo",     "ObsoleteTech", "units"),
     ("BuildInfo",    "ObsoleteTech", "builds"),
     ("BonusInfo",    "TechObsolete", "bonuses"),
@@ -193,15 +195,13 @@ OBSOLETE_FIELDS = [
     ("PromotionInfo", "ObsoleteTech", "promotions"),      # a tech can obsolete a promotion (#428 #28; owner-approved)
 ]
 
-# Replace edges — top-down SUCCESSION (enabler-spec §6, `replaces`, self-framing on the SUCCESSOR you HAVE).
-# XML authors `ReplacementBuildings` on the PREDECESSOR A: A lists the buildings [B] that, when present,
-# remove A (CvBuildingInfo.cpp:1453 getBuildingInfo(B).setReplacedBuilding(A); CvCity.cpp:14465 A removed
-# when the city hasBuilding(B)). So A->[B] in XML means "B replaces A." Inverting via _build_index keys the
-# index by the successor B (the thing you HAVE) -> replaces_of(B) = {buildings:[A]} = forward-read "having B
-# removes A." (The engine prunes a building replacing itself, CvBuildingInfo.cpp:1442-1449.)
-REPLACE_FIELDS = [
-    ("BuildingInfo", "ReplacementBuildings/BuildingType", "buildings"),
-]
+# Replace edges — `replaces` stays a DEFINED concept but is UNUSED (owner 2026-06-23, engine-verified). Legacy
+# `ReplacementBuildings` on predecessor A (A lists [B] that supersede it) is NOT removal: the engine DISABLES A
+# (setDisabledBuilding, CvCity.cpp:14413) while B is present and re-enables it when B is gone — reversible DORMANCY,
+# never "A removed" (the old "CvCity:14465 removed when hasBuilding(B)" note was wrong). So the building curator
+# mirrors it as A.requires.operate.dormant: [B] (target-side, no inversion), NOT a `replaces`/`replacedBy` edge.
+# `replaces` keeps its enables-family slot for a future genuine-removal source; there is none today.
+REPLACE_FIELDS = []
 
 # Disable edges — DESTRUCTIVE reversible BANS (enabler-spec §5). LATENT: there is NO live generic XML source
 # today. The only converted `disables` is per-civ `CivilizationInfo.DisableTechs` (CvPlayer.cpp:8266 inside

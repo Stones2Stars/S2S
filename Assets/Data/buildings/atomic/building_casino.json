@@ -16,11 +16,6 @@
    "BUILDING_VIP_CLUB"
   ]
  },
- "replacedBy": {
-  "buildings": [
-   "BUILDING_ORDINANCE_GAMBLING_BAN"
-  ]
- },
  "requires": {
   "build": {
    "all": [
@@ -55,6 +50,12 @@
       "connection": "trade|vicinity"
      }
     ]
+   ],
+   "dormant": [
+    {
+     "type": "BUILDING_ORDINANCE_GAMBLING_BAN",
+     "scope": "city"
+    }
    ]
   }
  },

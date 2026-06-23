@@ -10,12 +10,6 @@
    "TECH_ORGANIC_PHOTONICS"
   ]
  },
- "replacedBy": {
-  "buildings": [
-   "BUILDING_ELECTRIC_LAMPS",
-   "BUILDING_OLED_LAMPS"
-  ]
- },
  "requires": {
   "build": {
    "all": [
@@ -47,6 +41,16 @@
       "connection": "trade|vicinity"
      }
     ]
+   ],
+   "dormant": [
+    {
+     "type": "BUILDING_ELECTRIC_LAMPS",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_OLED_LAMPS",
+     "scope": "city"
+    }
    ]
   }
  },

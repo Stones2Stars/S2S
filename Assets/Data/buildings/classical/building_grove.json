@@ -10,12 +10,6 @@
    "TECH_CIVIL_ENGINEERING"
   ]
  },
- "replacedBy": {
-  "buildings": [
-   "BUILDING_CASTLE_GARDEN",
-   "BUILDING_CITY_PARK"
-  ]
- },
  "requires": {
   "build": {
    "all": [
@@ -61,6 +55,18 @@
       "scope": "plot"
      }
     ]
+   ]
+  },
+  "operate": {
+   "dormant": [
+    {
+     "type": "BUILDING_CASTLE_GARDEN",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_CITY_PARK",
+     "scope": "city"
+    }
    ]
   }
  },

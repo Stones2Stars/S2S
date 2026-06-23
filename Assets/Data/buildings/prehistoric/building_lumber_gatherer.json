@@ -17,12 +17,6 @@
    "TECH_ENVIRONMENTAL_ECONOMICS"
   ]
  },
- "replacedBy": {
-  "buildings": [
-   "BUILDING_LUMBER_CAMP",
-   "BUILDING_AGROFOREST"
-  ]
- },
  "requires": {
   "build": {
    "all": [
@@ -66,6 +60,18 @@
       "scope": "empire"
      }
     ]
+   ]
+  },
+  "operate": {
+   "dormant": [
+    {
+     "type": "BUILDING_LUMBER_CAMP",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_AGROFOREST",
+     "scope": "city"
+    }
    ]
   }
  },

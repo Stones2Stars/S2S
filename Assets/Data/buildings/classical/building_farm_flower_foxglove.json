@@ -15,11 +15,6 @@
    "TECH_INDUSTRIAL_ECOLOGY"
   ]
  },
- "replacedBy": {
-  "buildings": [
-   "BUILDING_GREENHOUSE"
-  ]
- },
  "requires": {
   "build": {
    "all": [
@@ -53,6 +48,12 @@
       "connection": "vicinity"
      }
     ]
+   ],
+   "dormant": [
+    {
+     "type": "BUILDING_GREENHOUSE",
+     "scope": "city"
+    }
    ]
   }
  },

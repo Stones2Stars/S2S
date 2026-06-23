@@ -10,12 +10,6 @@
    "TECH_NOVUS_CHEMISTRY"
   ]
  },
- "replacedBy": {
-  "buildings": [
-   "BUILDING_FACTORY_DYE",
-   "BUILDING_CHEMICALS_DISTRICT"
-  ]
- },
  "requires": {
   "build": {
    "all": [
@@ -107,6 +101,18 @@
       "scope": "empire"
      }
     ]
+   ]
+  },
+  "operate": {
+   "dormant": [
+    {
+     "type": "BUILDING_FACTORY_DYE",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_CHEMICALS_DISTRICT",
+     "scope": "city"
+    }
    ]
   }
  },

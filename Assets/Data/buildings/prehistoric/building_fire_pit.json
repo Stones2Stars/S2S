@@ -17,13 +17,6 @@
    "TECH_METAL_CASTING"
   ]
  },
- "replacedBy": {
-  "buildings": [
-   "BUILDING_IMU",
-   "BUILDING_BONFIRE",
-   "BUILDING_CHARCOAL_BURNER"
-  ]
- },
  "requires": {
   "build": {
    "all": [
@@ -65,6 +58,22 @@
       "scope": "plot"
      }
     ]
+   ]
+  },
+  "operate": {
+   "dormant": [
+    {
+     "type": "BUILDING_IMU",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_BONFIRE",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_CHARCOAL_BURNER",
+     "scope": "city"
+    }
    ]
   }
  },

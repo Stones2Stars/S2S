@@ -15,11 +15,6 @@
    "TECH_ATOMIC_SCALE_ENGINEERING"
   ]
  },
- "replacedBy": {
-  "buildings": [
-   "BUILDING_HIGH_TECH_CRANE"
-  ]
- },
  "requires": {
   "build": {
    "all": [
@@ -63,6 +58,12 @@
       "connection": "trade|vicinity"
      }
     ]
+   ],
+   "dormant": [
+    {
+     "type": "BUILDING_HIGH_TECH_CRANE",
+     "scope": "city"
+    }
    ]
   }
  },

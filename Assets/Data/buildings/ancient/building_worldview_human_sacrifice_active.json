@@ -7,11 +7,6 @@
    "BUILDING_ALTAR_FOR_HUMAN_SACRIFICE"
   ]
  },
- "replacedBy": {
-  "buildings": [
-   "BUILDING_EFFECT_EMANCIPATION_PROCLAMATION"
-  ]
- },
  "requires": {
   "build": {
    "all": [
@@ -27,6 +22,14 @@
       "scope": "plot"
      }
     ]
+   ]
+  },
+  "operate": {
+   "dormant": [
+    {
+     "type": "BUILDING_EFFECT_EMANCIPATION_PROCLAMATION",
+     "scope": "city"
+    }
    ]
   }
  },

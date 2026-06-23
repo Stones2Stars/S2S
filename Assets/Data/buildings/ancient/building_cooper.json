@@ -10,12 +10,6 @@
    "TECH_RAPID_PROTOTYPING"
   ]
  },
- "replacedBy": {
-  "buildings": [
-   "BUILDING_FACTORY_BARRELS",
-   "BUILDING_MANUFACTURING_DISTRICT"
-  ]
- },
  "requires": {
   "build": {
    "all": [
@@ -68,6 +62,16 @@
       "connection": "trade|vicinity"
      }
     ]
+   ],
+   "dormant": [
+    {
+     "type": "BUILDING_FACTORY_BARRELS",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_MANUFACTURING_DISTRICT",
+     "scope": "city"
+    }
    ]
   }
  },

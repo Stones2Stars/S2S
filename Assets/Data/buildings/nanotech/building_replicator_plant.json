@@ -10,14 +10,6 @@
    "TECH_GRAVITRONICS"
   ]
  },
- "replacedBy": {
-  "buildings": [
-   "BUILDING_MOLECULAR_ASSEMBLER",
-   "BUILDING_ATOMIC_ASSEMBLER",
-   "BUILDING_QUANTUM_ASSEMBLER",
-   "BUILDING_MATERIALIZER"
-  ]
- },
  "requires": {
   "build": {
    "all": [
@@ -45,6 +37,24 @@
      "type": "BONUS_CHEMICALS",
      "scope": "city",
      "connection": "trade|vicinity"
+    }
+   ],
+   "dormant": [
+    {
+     "type": "BUILDING_MOLECULAR_ASSEMBLER",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_ATOMIC_ASSEMBLER",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_QUANTUM_ASSEMBLER",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_MATERIALIZER",
+     "scope": "city"
     }
    ]
   }

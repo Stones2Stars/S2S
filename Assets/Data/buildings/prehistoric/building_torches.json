@@ -10,14 +10,6 @@
    "TECH_GAS_LIGHTING"
   ]
  },
- "replacedBy": {
-  "buildings": [
-   "BUILDING_OIL_LAMPS",
-   "BUILDING_GAS_LAMPS",
-   "BUILDING_ELECTRIC_LAMPS",
-   "BUILDING_OLED_LAMPS"
-  ]
- },
  "requires": {
   "build": {
    "all": [
@@ -55,6 +47,24 @@
       "connection": "trade|vicinity"
      }
     ]
+   ],
+   "dormant": [
+    {
+     "type": "BUILDING_OIL_LAMPS",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_GAS_LAMPS",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_ELECTRIC_LAMPS",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_OLED_LAMPS",
+     "scope": "city"
+    }
    ]
   }
  },

@@ -31,11 +31,6 @@
    "TECH_PICOTECHNOLOGY"
   ]
  },
- "replacedBy": {
-  "buildings": [
-   "BUILDING_HEALTHCARE_MEGACOMPLEX"
-  ]
- },
  "requires": {
   "build": {
    "all": [
@@ -79,6 +74,12 @@
       "connection": "trade|vicinity"
      }
     ]
+   ],
+   "dormant": [
+    {
+     "type": "BUILDING_HEALTHCARE_MEGACOMPLEX",
+     "scope": "city"
+    }
    ]
   }
  },

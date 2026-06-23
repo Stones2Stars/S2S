@@ -10,13 +10,6 @@
    "TECH_MODERN_SANITATION"
   ]
  },
- "replacedBy": {
-  "buildings": [
-   "BUILDING_GARDEROBE",
-   "BUILDING_PUBLIC_RESTROOMS",
-   "BUILDING_SANITATION_CHAMBER"
-  ]
- },
  "requires": {
   "build": {
    "all": [
@@ -53,6 +46,20 @@
       "connection": "trade|vicinity"
      }
     ]
+   ],
+   "dormant": [
+    {
+     "type": "BUILDING_GARDEROBE",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_PUBLIC_RESTROOMS",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_SANITATION_CHAMBER",
+     "scope": "city"
+    }
    ]
   }
  },

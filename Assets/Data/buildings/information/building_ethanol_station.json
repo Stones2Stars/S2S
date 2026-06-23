@@ -10,11 +10,6 @@
    "TECH_WORMHOLE_HIVEMIND"
   ]
  },
- "replacedBy": {
-  "buildings": [
-   "BUILDING_TELEPORT_BOOTH"
-  ]
- },
  "requires": {
   "build": {
    "all": [
@@ -42,6 +37,12 @@
      "type": "BONUS_BIOFUEL",
      "scope": "city",
      "connection": "trade|vicinity"
+    }
+   ],
+   "dormant": [
+    {
+     "type": "BUILDING_TELEPORT_BOOTH",
+     "scope": "city"
     }
    ]
   }

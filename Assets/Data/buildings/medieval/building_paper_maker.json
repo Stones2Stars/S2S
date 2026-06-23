@@ -16,12 +16,6 @@
    "TECH_PLASTIC_ELECTRONICS"
   ]
  },
- "replacedBy": {
-  "buildings": [
-   "BUILDING_FACTORY_PAPER",
-   "BUILDING_ELECTRONIC_PAPER_MAKER"
-  ]
- },
  "requires": {
   "build": {
    "all": [
@@ -73,6 +67,16 @@
       "connection": "trade|vicinity"
      }
     ]
+   ],
+   "dormant": [
+    {
+     "type": "BUILDING_FACTORY_PAPER",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_ELECTRONIC_PAPER_MAKER",
+     "scope": "city"
+    }
    ]
   }
  },

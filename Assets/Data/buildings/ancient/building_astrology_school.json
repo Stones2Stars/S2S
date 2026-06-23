@@ -27,12 +27,6 @@
    "TECH_COMPULSORY_EDUCATION"
   ]
  },
- "replacedBy": {
-  "buildings": [
-   "BUILDING_OBSERVATORY",
-   "BUILDING_POLLUTION_BLACKENED_SKIES"
-  ]
- },
  "requires": {
   "build": {
    "all": [
@@ -83,6 +77,16 @@
       "connection": "trade|vicinity"
      }
     ]
+   ],
+   "dormant": [
+    {
+     "type": "BUILDING_OBSERVATORY",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_POLLUTION_BLACKENED_SKIES",
+     "scope": "city"
+    }
    ]
   }
  },

@@ -10,11 +10,6 @@
    "TECH_EVOLVED_CONSTRUCTION"
   ]
  },
- "replacedBy": {
-  "buildings": [
-   "BUILDING_ELEVATED_BICYCLE_TRACK"
-  ]
- },
  "requires": {
   "build": {
    "all": [
@@ -42,6 +37,12 @@
      "type": "BONUS_BICYCLES",
      "scope": "city",
      "connection": "trade|vicinity"
+    }
+   ],
+   "dormant": [
+    {
+     "type": "BUILDING_ELEVATED_BICYCLE_TRACK",
+     "scope": "city"
     }
    ]
   }

@@ -16,12 +16,6 @@
    "TECH_AUGMENTED_CONSUMABLES"
   ]
  },
- "replacedBy": {
-  "buildings": [
-   "BUILDING_MODERN_MILL",
-   "BUILDING_FOOD_MANUFACTURING_DISTRICT"
-  ]
- },
  "requires": {
   "build": {
    "all": [
@@ -56,6 +50,16 @@
      "type": "BONUS_GRAINS",
      "scope": "city",
      "connection": "trade|vicinity"
+    }
+   ],
+   "dormant": [
+    {
+     "type": "BUILDING_MODERN_MILL",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_FOOD_MANUFACTURING_DISTRICT",
+     "scope": "city"
     }
    ]
   }

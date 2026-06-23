@@ -20,13 +20,6 @@
    "TECH_SUPERSTRONG_ALLOYS"
   ]
  },
- "replacedBy": {
-  "buildings": [
-   "BUILDING_METAMATERIAL_WALLS",
-   "BUILDING_SUPERSTRONG_ALLOY_WALLS",
-   "BUILDING_MEGASTRONG_ALLOY_WALLS"
-  ]
- },
  "requires": {
   "build": {
    "all": [
@@ -50,6 +43,20 @@
      "type": "BONUS_CEMENT",
      "scope": "city",
      "connection": "trade|vicinity"
+    }
+   ],
+   "dormant": [
+    {
+     "type": "BUILDING_METAMATERIAL_WALLS",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_SUPERSTRONG_ALLOY_WALLS",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_MEGASTRONG_ALLOY_WALLS",
+     "scope": "city"
     }
    ]
   }

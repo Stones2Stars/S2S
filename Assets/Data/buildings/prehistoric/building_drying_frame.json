@@ -17,11 +17,6 @@
    "TECH_CITY_PLANNING"
   ]
  },
- "replacedBy": {
-  "buildings": [
-   "BUILDING_ANCIENT_CUSTOMS"
-  ]
- },
  "requires": {
   "build": {
    "all": [
@@ -43,6 +38,14 @@
       "scope": "empire"
      }
     ]
+   ]
+  },
+  "operate": {
+   "dormant": [
+    {
+     "type": "BUILDING_ANCIENT_CUSTOMS",
+     "scope": "city"
+    }
    ]
   }
  },

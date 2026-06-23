@@ -16,14 +16,6 @@
    "TECH_COMPASS"
   ]
  },
- "replacedBy": {
-  "buildings": [
-   "BUILDING_PORT",
-   "BUILDING_COMMERCIAL_PORT",
-   "BUILDING_INTERNATIONAL_PORT",
-   "BUILDING_OCEAN_ADMINISTRATION"
-  ]
- },
  "requires": {
   "build": {
    "all": [
@@ -61,6 +53,24 @@
       "connection": "trade|vicinity"
      }
     ]
+   ],
+   "dormant": [
+    {
+     "type": "BUILDING_PORT",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_COMMERCIAL_PORT",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_INTERNATIONAL_PORT",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_OCEAN_ADMINISTRATION",
+     "scope": "city"
+    }
    ]
   }
  },

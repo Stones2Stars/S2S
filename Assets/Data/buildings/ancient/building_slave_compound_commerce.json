@@ -3,11 +3,6 @@
  "description": "TXT_KEY_BUILDING_SLAVE_COMPOUND_COMMERCE",
  "civilopedia": "TXT_KEY_BUILDING_SLAVE_COMPOUND_PEDIA",
  "help": "TXT_KEY_BUILDING_SLAVE_COMPOUND_HELP",
- "replacedBy": {
-  "buildings": [
-   "BUILDING_EFFECT_EMANCIPATION_PROCLAMATION"
-  ]
- },
  "requires": {
   "build": {
    "all": [
@@ -27,6 +22,14 @@
       "scope": "plot"
      }
     ]
+   ]
+  },
+  "operate": {
+   "dormant": [
+    {
+     "type": "BUILDING_EFFECT_EMANCIPATION_PROCLAMATION",
+     "scope": "city"
+    }
    ]
   }
  },

@@ -19,12 +19,6 @@
    "TECH_EXOCORTEX_NETWORKS"
   ]
  },
- "replacedBy": {
-  "buildings": [
-   "BUILDING_HOLOGRAPHIC_NETWORKS",
-   "BUILDING_EXOCORTEX_NETWORKS"
-  ]
- },
  "requires": {
   "build": {
    "all": [
@@ -53,6 +47,16 @@
      "type": "BONUS_COMPUTERS",
      "scope": "city",
      "connection": "trade|vicinity"
+    }
+   ],
+   "dormant": [
+    {
+     "type": "BUILDING_HOLOGRAPHIC_NETWORKS",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_EXOCORTEX_NETWORKS",
+     "scope": "city"
     }
    ]
   }

@@ -10,12 +10,6 @@
    "TECH_NEW_URBANISM"
   ]
  },
- "replacedBy": {
-  "buildings": [
-   "BUILDING_ARTESIAN_WELL",
-   "BUILDING_MODERN_WATERWORKS"
-  ]
- },
  "requires": {
   "build": {
    "all": [
@@ -47,6 +41,16 @@
       "connection": "trade|vicinity"
      }
     ]
+   ],
+   "dormant": [
+    {
+     "type": "BUILDING_ARTESIAN_WELL",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_MODERN_WATERWORKS",
+     "scope": "city"
+    }
    ]
   }
  },

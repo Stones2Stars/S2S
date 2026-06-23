@@ -15,11 +15,6 @@
    "TECH_COUNTERCULTURE"
   ]
  },
- "replacedBy": {
-  "buildings": [
-   "BUILDING_SPEEDWAY"
-  ]
- },
  "requires": {
   "build": {
    "all": [
@@ -56,6 +51,12 @@
       "connection": "trade|vicinity"
      }
     ]
+   ],
+   "dormant": [
+    {
+     "type": "BUILDING_SPEEDWAY",
+     "scope": "city"
+    }
    ]
   }
  },

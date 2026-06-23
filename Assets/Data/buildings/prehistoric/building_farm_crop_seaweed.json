@@ -10,11 +10,6 @@
    "TECH_AUTOMATED_URBANIZATION"
   ]
  },
- "replacedBy": {
-  "buildings": [
-   "BUILDING_AQUAFARM"
-  ]
- },
  "requires": {
   "build": {
    "all": [
@@ -36,6 +31,14 @@
       "scope": "plot"
      }
     ]
+   ]
+  },
+  "operate": {
+   "dormant": [
+    {
+     "type": "BUILDING_AQUAFARM",
+     "scope": "city"
+    }
    ]
   }
  },

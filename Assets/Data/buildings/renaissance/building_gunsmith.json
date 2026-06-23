@@ -15,12 +15,6 @@
    "TECH_MILITARY_ROBOTICS"
   ]
  },
- "replacedBy": {
-  "buildings": [
-   "BUILDING_MILITARY_INDUSTRIAL_COMPLEX",
-   "BUILDING_FACTORY_AMMUNITION"
-  ]
- },
  "requires": {
   "build": {
    "all": [
@@ -62,6 +56,16 @@
       "connection": "trade|vicinity"
      }
     ]
+   ],
+   "dormant": [
+    {
+     "type": "BUILDING_MILITARY_INDUSTRIAL_COMPLEX",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_FACTORY_AMMUNITION",
+     "scope": "city"
+    }
    ]
   }
  },

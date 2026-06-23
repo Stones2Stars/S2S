@@ -22,12 +22,6 @@
    "TECH_ZERO_POINT_ENERGY"
   ]
  },
- "replacedBy": {
-  "buildings": [
-   "BUILDING_ANTIMATTER_INITIATED_FUSION_PLANT",
-   "BUILDING_QUANTUM_VACUUM_POWER_PLANT"
-  ]
- },
  "requires": {
   "build": {
    "all": [
@@ -60,6 +54,16 @@
      "type": "BONUS_SUPERSTRONG_ALLOYS",
      "scope": "city",
      "connection": "trade|vicinity"
+    }
+   ],
+   "dormant": [
+    {
+     "type": "BUILDING_ANTIMATTER_INITIATED_FUSION_PLANT",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_QUANTUM_VACUUM_POWER_PLANT",
+     "scope": "city"
     }
    ]
   }

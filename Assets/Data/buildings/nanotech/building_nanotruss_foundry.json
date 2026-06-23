@@ -10,11 +10,6 @@
    "TECH_ELECTROWEAK_MATTER"
   ]
  },
- "replacedBy": {
-  "buildings": [
-   "BUILDING_PICOTECH_COMPLEX"
-  ]
- },
  "requires": {
   "build": {
    "all": [
@@ -43,6 +38,12 @@
      "type": "BONUS_METAMATERIALS",
      "scope": "city",
      "connection": "trade|vicinity"
+    }
+   ],
+   "dormant": [
+    {
+     "type": "BUILDING_PICOTECH_COMPLEX",
+     "scope": "city"
     }
    ]
   }

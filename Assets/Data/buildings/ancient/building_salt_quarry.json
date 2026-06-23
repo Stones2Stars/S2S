@@ -10,11 +10,6 @@
    "TECH_SMART_DUST"
   ]
  },
- "replacedBy": {
-  "buildings": [
-   "BUILDING_MATERIALS_CONGLOMERATE"
-  ]
- },
  "requires": {
   "build": {
    "all": [
@@ -42,6 +37,12 @@
      "type": "BONUS_SALT",
      "scope": "city",
      "connection": "vicinity"
+    }
+   ],
+   "dormant": [
+    {
+     "type": "BUILDING_MATERIALS_CONGLOMERATE",
+     "scope": "city"
     }
    ]
   }

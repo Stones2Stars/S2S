@@ -10,11 +10,6 @@
    "TECH_SENTIENT_EARTH"
   ]
  },
- "replacedBy": {
-  "buildings": [
-   "BUILDING_AGROFOREST"
-  ]
- },
  "requires": {
   "build": {
    "all": [
@@ -42,6 +37,14 @@
       "scope": "empire"
      }
     ]
+   ]
+  },
+  "operate": {
+   "dormant": [
+    {
+     "type": "BUILDING_AGROFOREST",
+     "scope": "city"
+    }
    ]
   }
  },

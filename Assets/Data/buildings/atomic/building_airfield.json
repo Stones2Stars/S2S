@@ -17,11 +17,6 @@
    "TECH_PLANETARY_DEFENSES"
   ]
  },
- "replacedBy": {
-  "buildings": [
-   "BUILDING_AEROSPACE_COMPLEX"
-  ]
- },
  "requires": {
   "build": {
    "all": [
@@ -45,6 +40,12 @@
      "type": "BONUS_AIRCRAFT",
      "scope": "city",
      "connection": "trade|vicinity"
+    }
+   ],
+   "dormant": [
+    {
+     "type": "BUILDING_AEROSPACE_COMPLEX",
+     "scope": "city"
     }
    ]
   }

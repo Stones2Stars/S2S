@@ -10,11 +10,6 @@
    "TECH_FOREIGN_POLICY"
   ]
  },
- "replacedBy": {
-  "buildings": [
-   "BUILDING_AMBASSADORS_HOUSE"
-  ]
- },
  "requires": {
   "build": {
    "all": [
@@ -51,6 +46,12 @@
       "connection": "trade|vicinity"
      }
     ]
+   ],
+   "dormant": [
+    {
+     "type": "BUILDING_AMBASSADORS_HOUSE",
+     "scope": "city"
+    }
    ]
   }
  },

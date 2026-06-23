@@ -10,12 +10,6 @@
    "TECH_VERTICAL_FARMING"
   ]
  },
- "replacedBy": {
-  "buildings": [
-   "BUILDING_SCARECROWS",
-   "BUILDING_FARMSCRAPER_I"
-  ]
- },
  "requires": {
   "build": {
    "all": [
@@ -57,6 +51,16 @@
       "connection": "vicinity"
      }
     ]
+   ],
+   "dormant": [
+    {
+     "type": "BUILDING_SCARECROWS",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_FARMSCRAPER_I",
+     "scope": "city"
+    }
    ]
   }
  },

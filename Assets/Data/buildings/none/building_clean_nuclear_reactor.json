@@ -15,17 +15,6 @@
    "TECH_INDUSTRIAL_ECOLOGY"
   ]
  },
- "replacedBy": {
-  "buildings": [
-   "BUILDING_HI_TECH_NUCLEAR_REACTOR",
-   "BUILDING_GENERATION_IV_REACTOR",
-   "BUILDING_D_T_FUSION_POWER_PLANT",
-   "BUILDING_D_HE3_FUSION_PLANT",
-   "BUILDING_HE3_FUSION_POWER_PLANT",
-   "BUILDING_ANTIMATTER_INITIATED_FUSION_PLANT",
-   "BUILDING_QUANTUM_VACUUM_POWER_PLANT"
-  ]
- },
  "requires": {
   "build": {
    "all": [
@@ -74,6 +63,36 @@
       "connection": "trade|vicinity"
      }
     ]
+   ],
+   "dormant": [
+    {
+     "type": "BUILDING_HI_TECH_NUCLEAR_REACTOR",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_GENERATION_IV_REACTOR",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_D_T_FUSION_POWER_PLANT",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_D_HE3_FUSION_PLANT",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_HE3_FUSION_POWER_PLANT",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_ANTIMATTER_INITIATED_FUSION_PLANT",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_QUANTUM_VACUUM_POWER_PLANT",
+     "scope": "city"
+    }
    ]
   }
  },

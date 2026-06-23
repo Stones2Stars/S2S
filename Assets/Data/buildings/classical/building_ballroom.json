@@ -10,11 +10,6 @@
    "TECH_TRENCH_WARFARE"
   ]
  },
- "replacedBy": {
-  "buildings": [
-   "BUILDING_IMPERIAL_FORTRESS"
-  ]
- },
  "requires": {
   "build": {
    "all": [
@@ -48,6 +43,14 @@
       "scope": "plot"
      }
     ]
+   ]
+  },
+  "operate": {
+   "dormant": [
+    {
+     "type": "BUILDING_IMPERIAL_FORTRESS",
+     "scope": "city"
+    }
    ]
   }
  },

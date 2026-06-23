@@ -3,11 +3,6 @@
  "description": "TXT_KEY_BUILDING_LAS_VEGAS_STRIP",
  "civilopedia": "TXT_KEY_BUILDING_LAS_VEGAS_STRIP_PEDIA",
  "help": "TXT_KEY_BUILDING_LASVEGASSTRIP_HELP",
- "replacedBy": {
-  "buildings": [
-   "BUILDING_ORDINANCE_GAMBLING_BAN"
-  ]
- },
  "requires": {
   "build": {
    "all": [
@@ -51,6 +46,14 @@
    "noneOf": [
     {
      "type": "BUILDING_MONTE_CARLO",
+     "scope": "city"
+    }
+   ]
+  },
+  "operate": {
+   "dormant": [
+    {
+     "type": "BUILDING_ORDINANCE_GAMBLING_BAN",
      "scope": "city"
     }
    ]

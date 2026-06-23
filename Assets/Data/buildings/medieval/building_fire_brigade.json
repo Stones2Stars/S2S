@@ -10,11 +10,6 @@
    "TECH_FIRE_SUPPRESSION"
   ]
  },
- "replacedBy": {
-  "buildings": [
-   "BUILDING_FIRE_STATION"
-  ]
- },
  "requires": {
   "build": {
    "all": [
@@ -41,6 +36,12 @@
       "connection": "trade|vicinity"
      }
     ]
+   ],
+   "dormant": [
+    {
+     "type": "BUILDING_FIRE_STATION",
+     "scope": "city"
+    }
    ]
   }
  },

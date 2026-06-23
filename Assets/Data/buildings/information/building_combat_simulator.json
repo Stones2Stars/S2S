@@ -10,11 +10,6 @@
    "TECH_SIMULATED_REALITY"
   ]
  },
- "replacedBy": {
-  "buildings": [
-   "BUILDING_HOLOGRAPHIC_COMBAT_SIMULATOR"
-  ]
- },
  "requires": {
   "build": {
    "all": [
@@ -43,6 +38,12 @@
      "type": "BONUS_COMPUTERS",
      "scope": "city",
      "connection": "trade|vicinity"
+    }
+   ],
+   "dormant": [
+    {
+     "type": "BUILDING_HOLOGRAPHIC_COMBAT_SIMULATOR",
+     "scope": "city"
     }
    ]
   }

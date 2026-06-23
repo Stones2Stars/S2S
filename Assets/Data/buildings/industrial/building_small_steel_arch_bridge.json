@@ -15,14 +15,6 @@
    "TECH_HIGHWAY_SYSTEMS"
   ]
  },
- "replacedBy": {
-  "buildings": [
-   "BUILDING_LARGE_STEEL_ARCH_BRIDGE",
-   "BUILDING_SMALL_SUSPENSION_BRIDGE",
-   "BUILDING_LARGE_SUSPENSION_BRIDGE",
-   "BUILDING_TELEPORT_BOOTH"
-  ]
- },
  "requires": {
   "build": {
    "all": [
@@ -61,6 +53,24 @@
      "type": "BONUS_STEEL_WARES",
      "scope": "city",
      "connection": "trade|vicinity"
+    }
+   ],
+   "dormant": [
+    {
+     "type": "BUILDING_LARGE_STEEL_ARCH_BRIDGE",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_SMALL_SUSPENSION_BRIDGE",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_LARGE_SUSPENSION_BRIDGE",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_TELEPORT_BOOTH",
+     "scope": "city"
     }
    ]
   }

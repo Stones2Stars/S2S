@@ -7,11 +7,6 @@
    "TECH_RADAR"
   ]
  },
- "replacedBy": {
-  "buildings": [
-   "BUILDING_POLLUTION_BLACKENED_SKIES"
-  ]
- },
  "requires": {
   "build": {
    "all": [
@@ -41,6 +36,14 @@
       "scope": "plot"
      }
     ]
+   ]
+  },
+  "operate": {
+   "dormant": [
+    {
+     "type": "BUILDING_POLLUTION_BLACKENED_SKIES",
+     "scope": "city"
+    }
    ]
   }
  },

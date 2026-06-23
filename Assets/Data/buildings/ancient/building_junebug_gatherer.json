@@ -16,12 +16,6 @@
    "TECH_ENVIRONMENTAL_ECONOMICS"
   ]
  },
- "replacedBy": {
-  "buildings": [
-   "BUILDING_ARBORETUM",
-   "BUILDING_AGROFOREST"
-  ]
- },
  "requires": {
   "build": {
    "all": [
@@ -55,6 +49,16 @@
       "connection": "vicinity"
      }
     ]
+   ],
+   "dormant": [
+    {
+     "type": "BUILDING_ARBORETUM",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_AGROFOREST",
+     "scope": "city"
+    }
    ]
   }
  },

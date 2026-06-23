@@ -10,11 +10,6 @@
    "TECH_ABYSS_COLONIZATION"
   ]
  },
- "replacedBy": {
-  "buildings": [
-   "BUILDING_SPONGE_FARM"
-  ]
- },
  "requires": {
   "build": {
    "all": [
@@ -57,6 +52,14 @@
       "scope": "plot"
      }
     ]
+   ]
+  },
+  "operate": {
+   "dormant": [
+    {
+     "type": "BUILDING_SPONGE_FARM",
+     "scope": "city"
+    }
    ]
   }
  },

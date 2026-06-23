@@ -7,13 +7,6 @@
    "TECH_COLONY_ARCOLOGY"
   ]
  },
- "replacedBy": {
-  "buildings": [
-   "BUILDING_HOUSING_DUGOUTS",
-   "BUILDING_HOUSING_COLONY_ARCOLOGY",
-   "BUILDING_LAUNCH_ARCOLOGY"
-  ]
- },
  "requires": {
   "build": {
    "all": [
@@ -39,6 +32,22 @@
       "scope": "plot"
      }
     ]
+   ]
+  },
+  "operate": {
+   "dormant": [
+    {
+     "type": "BUILDING_HOUSING_DUGOUTS",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_HOUSING_COLONY_ARCOLOGY",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_LAUNCH_ARCOLOGY",
+     "scope": "city"
+    }
    ]
   }
  },

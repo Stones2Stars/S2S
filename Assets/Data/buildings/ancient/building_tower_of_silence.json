@@ -10,12 +10,6 @@
    "TECH_TRANSHUMANISM"
   ]
  },
- "replacedBy": {
-  "buildings": [
-   "BUILDING_FUNERARY_SERVICES",
-   "BUILDING_HIGH_TECH_CULTURAL_ENRICHMENT"
-  ]
- },
  "requires": {
   "build": {
    "all": [
@@ -49,6 +43,16 @@
     },
     {
      "type": "RELIGION_ZOROASTRIANISM",
+     "scope": "city"
+    }
+   ],
+   "dormant": [
+    {
+     "type": "BUILDING_FUNERARY_SERVICES",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_HIGH_TECH_CULTURAL_ENRICHMENT",
      "scope": "city"
     }
    ]

@@ -19,11 +19,6 @@
    "TECH_BATTLEFIELD_SPORTS"
   ]
  },
- "replacedBy": {
-  "buildings": [
-   "BUILDING_MAJOR_LEAGUE_STADIUM"
-  ]
- },
  "requires": {
   "build": {
    "all": [
@@ -62,6 +57,12 @@
       "connection": "trade|vicinity"
      }
     ]
+   ],
+   "dormant": [
+    {
+     "type": "BUILDING_MAJOR_LEAGUE_STADIUM",
+     "scope": "city"
+    }
    ]
   }
  },

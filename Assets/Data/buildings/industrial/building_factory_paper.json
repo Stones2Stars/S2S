@@ -16,11 +16,6 @@
    "TECH_ANIMAMATERIALS"
   ]
  },
- "replacedBy": {
-  "buildings": [
-   "BUILDING_ELECTRONIC_PAPER_MAKER"
-  ]
- },
  "requires": {
   "build": {
    "all": [
@@ -59,6 +54,12 @@
       "connection": "trade|vicinity"
      }
     ]
+   ],
+   "dormant": [
+    {
+     "type": "BUILDING_ELECTRONIC_PAPER_MAKER",
+     "scope": "city"
+    }
    ]
   }
  },

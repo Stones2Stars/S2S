@@ -10,12 +10,6 @@
    "TECH_ENVIRONMENTAL_ECONOMICS"
   ]
  },
- "replacedBy": {
-  "buildings": [
-   "BUILDING_RAT_CATCHER",
-   "BUILDING_AGROFOREST"
-  ]
- },
  "requires": {
   "build": {
    "all": [
@@ -62,6 +56,16 @@
       "connection": "vicinity"
      }
     ]
+   ],
+   "dormant": [
+    {
+     "type": "BUILDING_RAT_CATCHER",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_AGROFOREST",
+     "scope": "city"
+    }
    ]
   }
  },

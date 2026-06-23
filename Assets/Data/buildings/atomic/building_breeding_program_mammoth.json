@@ -17,11 +17,6 @@
    "TECH_SENTIENT_EARTH"
   ]
  },
- "replacedBy": {
-  "buildings": [
-   "BUILDING_ANIMAL_PRESERVE"
-  ]
- },
  "requires": {
   "build": {
    "all": [
@@ -49,6 +44,12 @@
      "type": "BONUS_MAMMOTH",
      "scope": "city",
      "connection": "vicinity"
+    }
+   ],
+   "dormant": [
+    {
+     "type": "BUILDING_ANIMAL_PRESERVE",
+     "scope": "city"
     }
    ]
   }

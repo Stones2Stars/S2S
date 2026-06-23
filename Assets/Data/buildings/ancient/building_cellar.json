@@ -10,11 +10,6 @@
    "TECH_GLOBALIZATION"
   ]
  },
- "replacedBy": {
-  "buildings": [
-   "BUILDING_MODERN_GRANARY"
-  ]
- },
  "requires": {
   "build": {
    "all": [
@@ -51,6 +46,12 @@
       "connection": "trade|vicinity"
      }
     ]
+   ],
+   "dormant": [
+    {
+     "type": "BUILDING_MODERN_GRANARY",
+     "scope": "city"
+    }
    ]
   }
  },

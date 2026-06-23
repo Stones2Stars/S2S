@@ -10,12 +10,6 @@
    "TECH_AUGMENTED_CONSUMABLES"
   ]
  },
- "replacedBy": {
-  "buildings": [
-   "BUILDING_FACTORY_ROASTED_COFFEE",
-   "BUILDING_FOOD_MANUFACTURING_DISTRICT"
-  ]
- },
  "requires": {
   "build": {
    "all": [
@@ -49,6 +43,16 @@
      "type": "BONUS_COFFEE",
      "scope": "city",
      "connection": "trade|vicinity"
+    }
+   ],
+   "dormant": [
+    {
+     "type": "BUILDING_FACTORY_ROASTED_COFFEE",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_FOOD_MANUFACTURING_DISTRICT",
+     "scope": "city"
     }
    ]
   }

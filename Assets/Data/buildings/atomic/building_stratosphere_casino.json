@@ -2,11 +2,6 @@
  "type": "BUILDING_STRATOSPHERE_CASINO",
  "description": "TXT_KEY_BUILDING_STRATOSPHERE_CASINO",
  "civilopedia": "TXT_KEY_BUILDING_STRATOSPHERE_CASINO_PEDIA",
- "replacedBy": {
-  "buildings": [
-   "BUILDING_ORDINANCE_GAMBLING_BAN"
-  ]
- },
  "requires": {
   "build": {
    "all": [
@@ -42,6 +37,14 @@
       "scope": "plot"
      }
     ]
+   ]
+  },
+  "operate": {
+   "dormant": [
+    {
+     "type": "BUILDING_ORDINANCE_GAMBLING_BAN",
+     "scope": "city"
+    }
    ]
   }
  },

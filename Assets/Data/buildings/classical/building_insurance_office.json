@@ -15,11 +15,6 @@
    "TECH_CYBERSOCIAL_INTEGRATION"
   ]
  },
- "replacedBy": {
-  "buildings": [
-   "BUILDING_BLOCKCHAIN_FINANCIAL_SERVICES"
-  ]
- },
  "requires": {
   "build": {
    "all": [
@@ -49,6 +44,14 @@
       "scope": "plot"
      }
     ]
+   ]
+  },
+  "operate": {
+   "dormant": [
+    {
+     "type": "BUILDING_BLOCKCHAIN_FINANCIAL_SERVICES",
+     "scope": "city"
+    }
    ]
   }
  },

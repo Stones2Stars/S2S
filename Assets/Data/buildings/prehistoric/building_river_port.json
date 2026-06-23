@@ -10,14 +10,6 @@
    "TECH_STEAM_POWER"
   ]
  },
- "replacedBy": {
-  "buildings": [
-   "BUILDING_RIVER_AUTHORITY",
-   "BUILDING_STEAMBOAT_PORT",
-   "BUILDING_FERRY_TERMINAL",
-   "BUILDING_RIVER_ADMINISTRATION"
-  ]
- },
  "requires": {
   "build": {
    "all": [
@@ -50,6 +42,24 @@
       "connection": "trade|vicinity"
      }
     ]
+   ],
+   "dormant": [
+    {
+     "type": "BUILDING_RIVER_AUTHORITY",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_STEAMBOAT_PORT",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_FERRY_TERMINAL",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_RIVER_ADMINISTRATION",
+     "scope": "city"
+    }
    ]
   }
  },

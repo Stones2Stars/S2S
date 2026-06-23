@@ -10,11 +10,6 @@
    "TECH_STRING_MANIPULATION"
   ]
  },
- "replacedBy": {
-  "buildings": [
-   "BUILDING_QUANTUM_GRAVITY_SUPERCOMPUTER"
-  ]
- },
  "requires": {
   "build": {
    "all": [
@@ -43,6 +38,12 @@
      "type": "BONUS_QUANTUM_DOTS",
      "scope": "city",
      "connection": "trade|vicinity"
+    }
+   ],
+   "dormant": [
+    {
+     "type": "BUILDING_QUANTUM_GRAVITY_SUPERCOMPUTER",
+     "scope": "city"
     }
    ]
   }

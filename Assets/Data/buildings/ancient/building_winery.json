@@ -18,12 +18,6 @@
    "TECH_MIND_UPLOADING"
   ]
  },
- "replacedBy": {
-  "buildings": [
-   "BUILDING_ORDINANCE_ALCOHOL_PROHIBITION",
-   "BUILDING_FOOD_MANUFACTURING_DISTRICT"
-  ]
- },
  "requires": {
   "build": {
    "all": [
@@ -70,6 +64,16 @@
       "connection": "trade|vicinity"
      }
     ]
+   ],
+   "dormant": [
+    {
+     "type": "BUILDING_ORDINANCE_ALCOHOL_PROHIBITION",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_FOOD_MANUFACTURING_DISTRICT",
+     "scope": "city"
+    }
    ]
   }
  },

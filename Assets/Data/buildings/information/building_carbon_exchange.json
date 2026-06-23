@@ -10,11 +10,6 @@
    "TECH_SENTIENT_EARTH"
   ]
  },
- "replacedBy": {
-  "buildings": [
-   "BUILDING_ECOSYSTEM_SERVICES_MARKET"
-  ]
- },
  "requires": {
   "build": {
    "all": [
@@ -30,6 +25,14 @@
       "scope": "plot"
      }
     ]
+   ]
+  },
+  "operate": {
+   "dormant": [
+    {
+     "type": "BUILDING_ECOSYSTEM_SERVICES_MARKET",
+     "scope": "city"
+    }
    ]
   }
  },

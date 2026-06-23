@@ -15,14 +15,6 @@
    "TECH_RAILGUN"
   ]
  },
- "replacedBy": {
-  "buildings": [
-   "BUILDING_MISSILE_BATTERY",
-   "BUILDING_RAILGUN_BATTERY",
-   "BUILDING_LASER_BATTERY",
-   "BUILDING_ANTI_MATTER_BATTERY"
-  ]
- },
  "requires": {
   "build": {
    "all": [
@@ -61,6 +53,24 @@
       "connection": "trade|vicinity"
      }
     ]
+   ],
+   "dormant": [
+    {
+     "type": "BUILDING_MISSILE_BATTERY",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_RAILGUN_BATTERY",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_LASER_BATTERY",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_ANTI_MATTER_BATTERY",
+     "scope": "city"
+    }
    ]
   }
  },

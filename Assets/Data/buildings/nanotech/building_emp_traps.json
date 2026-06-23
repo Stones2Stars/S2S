@@ -10,12 +10,6 @@
    "TECH_ANTI_GRAVITY_FIELDS"
   ]
  },
- "replacedBy": {
-  "buildings": [
-   "BUILDING_NANOBOT_TRAPS",
-   "BUILDING_GRAVITY_TRAPS"
-  ]
- },
  "requires": {
   "build": {
    "all": [
@@ -40,6 +34,16 @@
      "type": "BONUS_COMPUTERS",
      "scope": "city",
      "connection": "trade|vicinity"
+    }
+   ],
+   "dormant": [
+    {
+     "type": "BUILDING_NANOBOT_TRAPS",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_GRAVITY_TRAPS",
+     "scope": "city"
     }
    ]
   }

@@ -10,11 +10,6 @@
    "TECH_COMPUTER_NETWORKS"
   ]
  },
- "replacedBy": {
-  "buildings": [
-   "BUILDING_MATHEMATICS_DEPARTMENT"
-  ]
- },
  "requires": {
   "build": {
    "all": [
@@ -56,6 +51,12 @@
       "connection": "trade|vicinity"
      }
     ]
+   ],
+   "dormant": [
+    {
+     "type": "BUILDING_MATHEMATICS_DEPARTMENT",
+     "scope": "city"
+    }
    ]
   }
  },

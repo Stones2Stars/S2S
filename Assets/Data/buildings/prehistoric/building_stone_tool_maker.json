@@ -15,11 +15,6 @@
    "TECH_INDUSTRIALISM"
   ]
  },
- "replacedBy": {
-  "buildings": [
-   "BUILDING_ANTIQUE_SHOP"
-  ]
- },
  "requires": {
   "build": {
    "all": [
@@ -51,6 +46,14 @@
       "scope": "empire"
      }
     ]
+   ]
+  },
+  "operate": {
+   "dormant": [
+    {
+     "type": "BUILDING_ANTIQUE_SHOP",
+     "scope": "city"
+    }
    ]
   }
  },

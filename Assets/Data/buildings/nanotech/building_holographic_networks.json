@@ -23,11 +23,6 @@
    "TECH_TERRA_COMPUTER"
   ]
  },
- "replacedBy": {
-  "buildings": [
-   "BUILDING_EXOCORTEX_NETWORKS"
-  ]
- },
  "requires": {
   "build": {
    "all": [
@@ -60,6 +55,12 @@
      "type": "BONUS_HOLOGRAPHIC_PROJECTORS",
      "scope": "city",
      "connection": "trade|vicinity"
+    }
+   ],
+   "dormant": [
+    {
+     "type": "BUILDING_EXOCORTEX_NETWORKS",
+     "scope": "city"
     }
    ]
   }

@@ -15,11 +15,6 @@
    "TECH_ENVIRONMENTAL_ECONOMICS"
   ]
  },
- "replacedBy": {
-  "buildings": [
-   "BUILDING_FALCONRY_SCHOOL"
-  ]
- },
  "requires": {
   "build": {
    "all": [
@@ -53,6 +48,12 @@
       "connection": "vicinity"
      }
     ]
+   ],
+   "dormant": [
+    {
+     "type": "BUILDING_FALCONRY_SCHOOL",
+     "scope": "city"
+    }
    ]
   }
  },

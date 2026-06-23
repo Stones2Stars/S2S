@@ -15,12 +15,6 @@
    "TECH_VERTICAL_FARMING"
   ]
  },
- "replacedBy": {
-  "buildings": [
-   "BUILDING_FARM_CROP_BARLEY",
-   "BUILDING_FARMSCRAPER_III"
-  ]
- },
  "requires": {
   "build": {
    "all": [
@@ -44,6 +38,16 @@
      "type": "BONUS_BARLEY",
      "scope": "city",
      "connection": "vicinity"
+    }
+   ],
+   "dormant": [
+    {
+     "type": "BUILDING_FARM_CROP_BARLEY",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_FARMSCRAPER_III",
+     "scope": "city"
     }
    ]
   }

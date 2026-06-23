@@ -45,11 +45,6 @@
    "TECH_PLANETARY_ECONOMICS"
   ]
  },
- "replacedBy": {
-  "buildings": [
-   "BUILDING_MEAT_INDUSTRY_CONGLOMERATE"
-  ]
- },
  "requires": {
   "build": {
    "all": [
@@ -69,6 +64,14 @@
       "scope": "plot"
      }
     ]
+   ]
+  },
+  "operate": {
+   "dormant": [
+    {
+     "type": "BUILDING_MEAT_INDUSTRY_CONGLOMERATE",
+     "scope": "city"
+    }
    ]
   }
  },

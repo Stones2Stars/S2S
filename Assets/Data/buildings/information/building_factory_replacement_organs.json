@@ -10,11 +10,6 @@
    "TECH_POSTHUMANISM"
   ]
  },
- "replacedBy": {
-  "buildings": [
-   "BUILDING_MEDICAL_MEGACOMPLEX"
-  ]
- },
  "requires": {
   "build": {
    "all": [
@@ -43,6 +38,14 @@
       "scope": "plot"
      }
     ]
+   ]
+  },
+  "operate": {
+   "dormant": [
+    {
+     "type": "BUILDING_MEDICAL_MEGACOMPLEX",
+     "scope": "city"
+    }
    ]
   }
  },

@@ -10,11 +10,6 @@
    "TECH_COLONY_ARCOLOGY"
   ]
  },
- "replacedBy": {
-  "buildings": [
-   "BUILDING_AI_POLICE_FORCE"
-  ]
- },
  "requires": {
   "build": {
    "all": [
@@ -47,6 +42,12 @@
      "type": "BONUS_SERVICE_BOTS",
      "scope": "city",
      "connection": "trade|vicinity"
+    }
+   ],
+   "dormant": [
+    {
+     "type": "BUILDING_AI_POLICE_FORCE",
+     "scope": "city"
     }
    ]
   }

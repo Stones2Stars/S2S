@@ -10,11 +10,6 @@
    "TECH_ASTROGATION_CONSTELLATION"
   ]
  },
- "replacedBy": {
-  "buildings": [
-   "BUILDING_HOLOGRAPHIC_FLIGHT_SIMULATOR"
-  ]
- },
  "requires": {
   "build": {
    "all": [
@@ -53,6 +48,12 @@
      "type": "BONUS_COMPUTERS",
      "scope": "city",
      "connection": "trade|vicinity"
+    }
+   ],
+   "dormant": [
+    {
+     "type": "BUILDING_HOLOGRAPHIC_FLIGHT_SIMULATOR",
+     "scope": "city"
     }
    ]
   }

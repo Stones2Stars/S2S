@@ -7,11 +7,6 @@
    "TECH_CLOCKWORKS"
   ]
  },
- "replacedBy": {
-  "buildings": [
-   "BUILDING_POLLUTION_BLACKENED_SKIES"
-  ]
- },
  "requires": {
   "build": {
    "all": [
@@ -55,6 +50,12 @@
       "connection": "trade|vicinity"
      }
     ]
+   ],
+   "dormant": [
+    {
+     "type": "BUILDING_POLLUTION_BLACKENED_SKIES",
+     "scope": "city"
+    }
    ]
   }
  },

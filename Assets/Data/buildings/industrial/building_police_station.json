@@ -52,11 +52,6 @@
    "TECH_BINARY_LEGISLATION"
   ]
  },
- "replacedBy": {
-  "buildings": [
-   "BUILDING_POLICE_PRECINCT"
-  ]
- },
  "requires": {
   "build": {
    "all": [
@@ -105,6 +100,12 @@
       "connection": "trade|vicinity"
      }
     ]
+   ],
+   "dormant": [
+    {
+     "type": "BUILDING_POLICE_PRECINCT",
+     "scope": "city"
+    }
    ]
   }
  },

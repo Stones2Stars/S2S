@@ -10,16 +10,6 @@
    "TECH_FUSION"
   ]
  },
- "replacedBy": {
-  "buildings": [
-   "BUILDING_HIGH_TECH_COAL_POWER_PLANT",
-   "BUILDING_D_T_FUSION_POWER_PLANT",
-   "BUILDING_D_HE3_FUSION_PLANT",
-   "BUILDING_HE3_FUSION_POWER_PLANT",
-   "BUILDING_ANTIMATTER_INITIATED_FUSION_PLANT",
-   "BUILDING_QUANTUM_VACUUM_POWER_PLANT"
-  ]
- },
  "requires": {
   "build": {
    "all": [
@@ -67,6 +57,32 @@
       "connection": "trade|vicinity"
      }
     ]
+   ],
+   "dormant": [
+    {
+     "type": "BUILDING_HIGH_TECH_COAL_POWER_PLANT",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_D_T_FUSION_POWER_PLANT",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_D_HE3_FUSION_PLANT",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_HE3_FUSION_POWER_PLANT",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_ANTIMATTER_INITIATED_FUSION_PLANT",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_QUANTUM_VACUUM_POWER_PLANT",
+     "scope": "city"
+    }
    ]
   }
  },

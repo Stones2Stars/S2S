@@ -10,11 +10,6 @@
    "TECH_SMART_DUST"
   ]
  },
- "replacedBy": {
-  "buildings": [
-   "BUILDING_HYPERMARKET"
-  ]
- },
  "requires": {
   "build": {
    "all": [
@@ -48,6 +43,12 @@
      "type": "BONUS_PAPER",
      "scope": "city",
      "connection": "trade|vicinity"
+    }
+   ],
+   "dormant": [
+    {
+     "type": "BUILDING_HYPERMARKET",
+     "scope": "city"
     }
    ]
   }

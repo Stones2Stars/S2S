@@ -15,11 +15,6 @@
    "TECH_ZERO_POINT_ENERGY"
   ]
  },
- "replacedBy": {
-  "buildings": [
-   "BUILDING_INTERSTELLAR_DYSON_SPHERE"
-  ]
- },
  "requires": {
   "build": {
    "all": [
@@ -50,6 +45,14 @@
       "scope": "plot"
      }
     ]
+   ]
+  },
+  "operate": {
+   "dormant": [
+    {
+     "type": "BUILDING_INTERSTELLAR_DYSON_SPHERE",
+     "scope": "city"
+    }
    ]
   }
  },

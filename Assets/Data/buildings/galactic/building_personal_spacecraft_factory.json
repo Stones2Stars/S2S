@@ -10,11 +10,6 @@
    "TECH_OMEGA_POINT"
   ]
  },
- "replacedBy": {
-  "buildings": [
-   "BUILDING_MATERIALIZATION_COMPLEX"
-  ]
- },
  "requires": {
   "build": {
    "all": [
@@ -43,6 +38,12 @@
      "type": "BONUS_ANTI_GRAVITY_FIELD_GENERATORS",
      "scope": "city",
      "connection": "trade|vicinity"
+    }
+   ],
+   "dormant": [
+    {
+     "type": "BUILDING_MATERIALIZATION_COMPLEX",
+     "scope": "city"
     }
    ]
   }

@@ -17,12 +17,6 @@
    "TECH_FRICTIONLESS_FLIGHT"
   ]
  },
- "replacedBy": {
-  "buildings": [
-   "BUILDING_EMP_GRID",
-   "BUILDING_SUPERCONDUCTING_GRID"
-  ]
- },
  "requires": {
   "build": {
    "all": [
@@ -51,6 +45,16 @@
      "type": "BONUS_ELECTROLYTIC_CELLS",
      "scope": "city",
      "connection": "trade|vicinity"
+    }
+   ],
+   "dormant": [
+    {
+     "type": "BUILDING_EMP_GRID",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_SUPERCONDUCTING_GRID",
+     "scope": "city"
     }
    ]
   }

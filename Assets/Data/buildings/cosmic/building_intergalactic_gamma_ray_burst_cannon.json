@@ -10,11 +10,6 @@
    "TECH_REALITY_REPROGRAMMING"
   ]
  },
- "replacedBy": {
-  "buildings": [
-   "BUILDING_INTERGALACTIC_STAR_CANNON"
-  ]
- },
  "requires": {
   "build": {
    "all": [
@@ -34,6 +29,14 @@
       "scope": "plot"
      }
     ]
+   ]
+  },
+  "operate": {
+   "dormant": [
+    {
+     "type": "BUILDING_INTERGALACTIC_STAR_CANNON",
+     "scope": "city"
+    }
    ]
   }
  },

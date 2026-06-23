@@ -10,11 +10,6 @@
    "TECH_ATOMIC_SCALE_ENGINEERING"
   ]
  },
- "replacedBy": {
-  "buildings": [
-   "BUILDING_CORE_MINE"
-  ]
- },
  "requires": {
   "build": {
    "all": [
@@ -52,6 +47,12 @@
       "connection": "vicinity"
      }
     ]
+   ],
+   "dormant": [
+    {
+     "type": "BUILDING_CORE_MINE",
+     "scope": "city"
+    }
    ]
   }
  },

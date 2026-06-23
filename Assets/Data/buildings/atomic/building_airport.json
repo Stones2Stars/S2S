@@ -19,11 +19,6 @@
    "TECH_HYPERSONIC_FLIGHT"
   ]
  },
- "replacedBy": {
-  "buildings": [
-   "BUILDING_COMMERCIAL_AIRPORT"
-  ]
- },
  "requires": {
   "build": {
    "all": [
@@ -47,6 +42,12 @@
      "type": "BONUS_AIRCRAFT",
      "scope": "city",
      "connection": "trade|vicinity"
+    }
+   ],
+   "dormant": [
+    {
+     "type": "BUILDING_COMMERCIAL_AIRPORT",
+     "scope": "city"
     }
    ]
   }

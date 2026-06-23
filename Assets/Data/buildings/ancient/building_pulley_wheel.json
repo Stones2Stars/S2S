@@ -10,14 +10,6 @@
    "TECH_STEAM_POWER"
   ]
  },
- "replacedBy": {
-  "buildings": [
-   "BUILDING_TREADMILL_CRANE",
-   "BUILDING_STEAM_CRANE",
-   "BUILDING_MODERN_CRANE",
-   "BUILDING_HIGH_TECH_CRANE"
-  ]
- },
  "requires": {
   "build": {
    "all": [
@@ -45,6 +37,24 @@
      "type": "BONUS_ROPE",
      "scope": "city",
      "connection": "trade|vicinity"
+    }
+   ],
+   "dormant": [
+    {
+     "type": "BUILDING_TREADMILL_CRANE",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_STEAM_CRANE",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_MODERN_CRANE",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_HIGH_TECH_CRANE",
+     "scope": "city"
     }
    ]
   }

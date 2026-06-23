@@ -16,12 +16,6 @@
    "TECH_LITERATURE"
   ]
  },
- "replacedBy": {
-  "buildings": [
-   "BUILDING_SCHOOL_OF_SCRIBES",
-   "BUILDING_LIBRARY"
-  ]
- },
  "requires": {
   "build": {
    "all": [
@@ -63,6 +57,18 @@
       "scope": "plot"
      }
     ]
+   ]
+  },
+  "operate": {
+   "dormant": [
+    {
+     "type": "BUILDING_SCHOOL_OF_SCRIBES",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_LIBRARY",
+     "scope": "city"
+    }
    ]
   }
  },

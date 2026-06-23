@@ -10,11 +10,6 @@
    "TECH_SATELLITES"
   ]
  },
- "replacedBy": {
-  "buildings": [
-   "BUILDING_CONSTRUCTION_FIRM"
-  ]
- },
  "requires": {
   "build": {
    "all": [
@@ -44,6 +39,14 @@
       "scope": "plot"
      }
     ]
+   ]
+  },
+  "operate": {
+   "dormant": [
+    {
+     "type": "BUILDING_CONSTRUCTION_FIRM",
+     "scope": "city"
+    }
    ]
   }
  },

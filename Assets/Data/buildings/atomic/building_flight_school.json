@@ -10,11 +10,6 @@
    "TECH_MIND_UPLOADING"
   ]
  },
- "replacedBy": {
-  "buildings": [
-   "BUILDING_HOLOGRAPHIC_SCHOOL"
-  ]
- },
  "requires": {
   "build": {
    "all": [
@@ -64,6 +59,12 @@
      "type": "BONUS_AIRCRAFT",
      "scope": "city",
      "connection": "trade|vicinity"
+    }
+   ],
+   "dormant": [
+    {
+     "type": "BUILDING_HOLOGRAPHIC_SCHOOL",
+     "scope": "city"
     }
    ]
   }

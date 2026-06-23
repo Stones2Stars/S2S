@@ -261,7 +261,10 @@ routes · votes · hurries · traits · specialists`. **Tech unlocks live here**
 Same per-kind bucket shape as `enables`.
 
 - **`obsoletes`** — supersession: new builds barred; **existing instances persist** (an obsolete unit stays on the map).
-- **`replaces`** — succession: a successor takes the predecessor's slot (transitive). Wins over `obsoletes`.
+- **`replaces`** — succession: a successor takes the predecessor's slot (transitive). **Defined but UNUSED today** —
+  the legacy `ReplacementBuildings` is *not* removal but reversible **dormancy** (engine `setDisabledBuilding`), so it
+  is mirrored as the predecessor's `requires.operate.dormant: [successor]` (§4.3), not a `replaces` edge. Reserved for
+  a future genuine-removal source. *(Distinct from §9 `replacedBy`, the whole-entity Info-swap.)*
 - **`disables`** — a **law/ban** that **destroys** the target (a policy forbidding a building; repeal ⇒ rebuilt
   from scratch). It is **not** the dormancy mechanism: a target that should go **dormant** while a condition holds
   (e.g. an observatory under blackened skies — it parks and auto-resumes, never nuked-from-orbit) carries
@@ -470,7 +473,8 @@ Data read by a specific system, not the cascade. Use only when the entity needs 
 - **`succession`** — `{ upgradesTo, promotionLine, priority }` (manual upgrade / promotion-line link).
 - **`excludes`** — same-tier mutual exclusion (conflicting traits).
 - **`produces`** — a Build's outcome FKs (what laying it creates).
-- **`replacedBy`** — a conditional whole-entity swap (an alternate Info under a culture level / game option).
+- **`replacedBy`** — a conditional whole-entity swap (an alternate Info under a culture level / game option; e.g.
+  `CULTURELEVEL_ALT_POOR`). *(NOT the building `ReplacementBuildings`, which is reversible dormancy → `requires.operate.dormant`, §4.2/§4.3.)*
 - **`condition`** (Victory) · **`effect`** (Vote) · **`vision`** (line-of-sight) · **`outcomes`** (mission
   results) · **`mapGeneration`** (placement/spawn config).
 - **bespoke** object-sections, each read by its own system: `promotionLine` · `buildUp` · `shrine` · `properties` ·

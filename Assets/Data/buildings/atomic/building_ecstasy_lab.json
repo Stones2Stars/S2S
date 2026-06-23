@@ -10,12 +10,6 @@
    "TECH_SMART_DUST"
   ]
  },
- "replacedBy": {
-  "buildings": [
-   "BUILDING_MATERIALS_CONGLOMERATE",
-   "BUILDING_ORDINANCE_DRUG_PROHIBITION"
-  ]
- },
  "requires": {
   "build": {
    "all": [
@@ -44,6 +38,16 @@
      "type": "BONUS_CHEMICALS",
      "scope": "city",
      "connection": "trade|vicinity"
+    }
+   ],
+   "dormant": [
+    {
+     "type": "BUILDING_MATERIALS_CONGLOMERATE",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_ORDINANCE_DRUG_PROHIBITION",
+     "scope": "city"
     }
    ]
   }

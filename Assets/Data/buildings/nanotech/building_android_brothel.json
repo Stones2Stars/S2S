@@ -2,11 +2,6 @@
  "type": "BUILDING_ANDROID_BROTHEL",
  "description": "TXT_KEY_BUILDING_ANDROID_BROTHEL",
  "civilopedia": "TXT_KEY_BUILDING_ANDROID_BROTHEL_PEDIA",
- "replacedBy": {
-  "buildings": [
-   "BUILDING_ORDINANCE_PROSTITUTION_BAN"
-  ]
- },
  "requires": {
   "build": {
    "all": [
@@ -45,6 +40,12 @@
      "type": "BONUS_ANDROIDS",
      "scope": "city",
      "connection": "trade|vicinity"
+    }
+   ],
+   "dormant": [
+    {
+     "type": "BUILDING_ORDINANCE_PROSTITUTION_BAN",
+     "scope": "city"
     }
    ]
   }

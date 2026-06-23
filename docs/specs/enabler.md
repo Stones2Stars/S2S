@@ -50,9 +50,18 @@ the other three **remove** from it.
 | **`enables`** | a permanent unlock | **added** to CAN GET | — (this *is* the unlock) |
 | **`disables`** | a **law / ban** (policy forbids) | removed while the disabler is held | **destroyed** — torn down; rebuilt on repeal. *(Dormancy is NOT a `disables` — it's the target's `requires.operate.dormant`, §3.)* |
 | **`obsoletes`** | passive supersession | removed | **persist** (an obsolete unit stays on the map); the target decides its own fate |
-| **`replaces`** | succession | removed | replaced by the successor (transitive chain) |
+| **`replaces`** | succession — **defined but UNUSED** (see note) | removed | reserved for a future genuine removal-on-succession; the legacy `ReplacementBuildings` is *dormancy* (`requires.operate.dormant`, §3), not this |
 
-So **`CAN GET = union(enables) − (disables ∪ obsoletes ∪ replaces)`**, all over HAVE.
+So **`CAN GET = union(enables) − (disables ∪ obsoletes ∪ replaces)`**, all over HAVE (with `replaces` empty today).
+
+> **`replaces` is currently UNUSED — "replacement" is dormancy (owner 2026-06-23, engine-verified).** The legacy
+> `ReplacementBuildings` (A lists the buildings that supersede it) *looks* like removal, but the engine only
+> **disables** A while the successor is present (`setDisabledBuilding`, CvCity.cpp:14413) and re-enables it when the
+> successor is gone — reversible **dormancy**, never removed. So it is mirrored as the **target's
+> `requires.operate.dormant: [successor]`** (§3) and leaves CAN-GET membership untouched — *not* a `replaces` edge.
+> This unifies the education ladders (a lower band dorms while a higher is present = only-highest-active) with the
+> pollution effects (blackened-skies dorms the observatory). `replaces` stays a defined family member for a future
+> genuine-removal source; there is none today.
 
 **`obsoletes` vs `disables` kept SEPARATE for clear semantics** (progress-supersedes vs policy-forbids) + the
 pedia line ("Obsoleted by [tech]"). `disables` = a hard "be gone" (the source commands; the target gets no say);

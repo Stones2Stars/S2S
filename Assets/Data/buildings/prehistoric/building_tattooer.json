@@ -15,12 +15,6 @@
    "TECH_TRANSHUMANISM"
   ]
  },
- "replacedBy": {
-  "buildings": [
-   "BUILDING_TATTOO_PARLOR",
-   "BUILDING_HIGH_TECH_CULTURAL_ENRICHMENT"
-  ]
- },
  "requires": {
   "build": {
    "all": [
@@ -86,6 +80,16 @@
       "connection": "trade|vicinity"
      }
     ]
+   ],
+   "dormant": [
+    {
+     "type": "BUILDING_TATTOO_PARLOR",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_HIGH_TECH_CULTURAL_ENRICHMENT",
+     "scope": "city"
+    }
    ]
   }
  },

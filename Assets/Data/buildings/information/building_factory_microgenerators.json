@@ -10,11 +10,6 @@
    "TECH_FEMTOTECHNOLOGY"
   ]
  },
- "replacedBy": {
-  "buildings": [
-   "BUILDING_NANOTECH_COMPLEX"
-  ]
- },
  "requires": {
   "build": {
    "all": [
@@ -53,6 +48,12 @@
       "connection": "trade|vicinity"
      }
     ]
+   ],
+   "dormant": [
+    {
+     "type": "BUILDING_NANOTECH_COMPLEX",
+     "scope": "city"
+    }
    ]
   }
  },

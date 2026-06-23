@@ -17,13 +17,6 @@
    "TECH_TEAM_SPORTS"
   ]
  },
- "replacedBy": {
-  "buildings": [
-   "BUILDING_COLOSSEUM",
-   "BUILDING_MINOR_LEAGUE_STADIUM",
-   "BUILDING_MAJOR_LEAGUE_STADIUM"
-  ]
- },
  "requires": {
   "build": {
    "all": [
@@ -70,6 +63,20 @@
       "connection": "trade|vicinity"
      }
     ]
+   ],
+   "dormant": [
+    {
+     "type": "BUILDING_COLOSSEUM",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_MINOR_LEAGUE_STADIUM",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_MAJOR_LEAGUE_STADIUM",
+     "scope": "city"
+    }
    ]
   }
  },

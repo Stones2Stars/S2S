@@ -15,11 +15,6 @@
    "TECH_RAPID_PROTOTYPING"
   ]
  },
- "replacedBy": {
-  "buildings": [
-   "BUILDING_MODERN_EARTHWORKS"
-  ]
- },
  "requires": {
   "build": {
    "all": [
@@ -67,6 +62,12 @@
       "connection": "trade|vicinity"
      }
     ]
+   ],
+   "dormant": [
+    {
+     "type": "BUILDING_MODERN_EARTHWORKS",
+     "scope": "city"
+    }
    ]
   }
  },

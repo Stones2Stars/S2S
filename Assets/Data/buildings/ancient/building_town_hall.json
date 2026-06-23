@@ -18,12 +18,6 @@
    "TECH_SOCIAL_CONTRACT"
   ]
  },
- "replacedBy": {
-  "buildings": [
-   "BUILDING_CITY_COUNCIL",
-   "BUILDING_METROPOLITAN_ADMINISTRATION"
-  ]
- },
  "requires": {
   "build": {
    "all": [
@@ -69,6 +63,16 @@
       "connection": "trade|vicinity"
      }
     ]
+   ],
+   "dormant": [
+    {
+     "type": "BUILDING_CITY_COUNCIL",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_METROPOLITAN_ADMINISTRATION",
+     "scope": "city"
+    }
    ]
   }
  },

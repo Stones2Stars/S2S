@@ -10,12 +10,6 @@
    "TECH_GRAVITRONICS"
   ]
  },
- "replacedBy": {
-  "buildings": [
-   "BUILDING_QUANTUM_SUPERCOMPUTER",
-   "BUILDING_QUANTUM_GRAVITY_SUPERCOMPUTER"
-  ]
- },
  "requires": {
   "build": {
    "all": [
@@ -35,6 +29,18 @@
       "scope": "plot"
      }
     ]
+   ]
+  },
+  "operate": {
+   "dormant": [
+    {
+     "type": "BUILDING_QUANTUM_SUPERCOMPUTER",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_QUANTUM_GRAVITY_SUPERCOMPUTER",
+     "scope": "city"
+    }
    ]
   }
  },

@@ -10,13 +10,6 @@
    "TECH_MODERN_SANITATION"
   ]
  },
- "replacedBy": {
-  "buildings": [
-   "BUILDING_GRAVEYARD",
-   "BUILDING_FUNERARY_SERVICES",
-   "BUILDING_HIGH_TECH_CULTURAL_ENRICHMENT"
-  ]
- },
  "requires": {
   "build": {
    "all": [
@@ -38,6 +31,22 @@
       "scope": "plot"
      }
     ]
+   ]
+  },
+  "operate": {
+   "dormant": [
+    {
+     "type": "BUILDING_GRAVEYARD",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_FUNERARY_SERVICES",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_HIGH_TECH_CULTURAL_ENRICHMENT",
+     "scope": "city"
+    }
    ]
   }
  },

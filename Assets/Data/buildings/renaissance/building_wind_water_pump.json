@@ -10,11 +10,6 @@
    "TECH_MANUFACTURING"
   ]
  },
- "replacedBy": {
-  "buildings": [
-   "BUILDING_WATER_PUMPING_STATION"
-  ]
- },
  "requires": {
   "build": {
    "all": [
@@ -61,6 +56,12 @@
       "connection": "trade|vicinity"
      }
     ]
+   ],
+   "dormant": [
+    {
+     "type": "BUILDING_WATER_PUMPING_STATION",
+     "scope": "city"
+    }
    ]
   }
  },

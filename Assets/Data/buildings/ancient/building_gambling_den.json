@@ -10,13 +10,6 @@
    "TECH_LEGALIZED_GAMBLING"
   ]
  },
- "replacedBy": {
-  "buildings": [
-   "BUILDING_GAMBLING_HALL",
-   "BUILDING_CASINO",
-   "BUILDING_ORDINANCE_GAMBLING_BAN"
-  ]
- },
  "requires": {
   "build": {
    "all": [
@@ -32,6 +25,22 @@
       "scope": "plot"
      }
     ]
+   ]
+  },
+  "operate": {
+   "dormant": [
+    {
+     "type": "BUILDING_GAMBLING_HALL",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_CASINO",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_ORDINANCE_GAMBLING_BAN",
+     "scope": "city"
+    }
    ]
   }
  },

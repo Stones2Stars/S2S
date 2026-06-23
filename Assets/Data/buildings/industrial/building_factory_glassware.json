@@ -16,11 +16,6 @@
    "TECH_NANOROBOTICS"
   ]
  },
- "replacedBy": {
-  "buildings": [
-   "BUILDING_MANUFACTURING_DISTRICT"
-  ]
- },
  "requires": {
   "build": {
    "all": [
@@ -49,6 +44,12 @@
      "type": "BONUS_SAND",
      "scope": "city",
      "connection": "trade|vicinity"
+    }
+   ],
+   "dormant": [
+    {
+     "type": "BUILDING_MANUFACTURING_DISTRICT",
+     "scope": "city"
     }
    ]
   }

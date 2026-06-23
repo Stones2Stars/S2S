@@ -33,12 +33,6 @@
    "TECH_FORENSICS"
   ]
  },
- "replacedBy": {
-  "buildings": [
-   "BUILDING_POLICE_STATION",
-   "BUILDING_POLICE_PRECINCT"
-  ]
- },
  "requires": {
   "build": {
    "all": [
@@ -68,6 +62,18 @@
       "scope": "plot"
      }
     ]
+   ]
+  },
+  "operate": {
+   "dormant": [
+    {
+     "type": "BUILDING_POLICE_STATION",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_POLICE_PRECINCT",
+     "scope": "city"
+    }
    ]
   }
  },

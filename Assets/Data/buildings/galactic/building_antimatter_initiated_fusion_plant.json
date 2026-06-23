@@ -22,11 +22,6 @@
    "TECH_SENTIENT_ENERGY_FIELDS"
   ]
  },
- "replacedBy": {
-  "buildings": [
-   "BUILDING_QUANTUM_VACUUM_POWER_PLANT"
-  ]
- },
  "requires": {
   "build": {
    "all": [
@@ -51,6 +46,12 @@
      "type": "BONUS_ANTIMATTER",
      "scope": "city",
      "connection": "trade|vicinity"
+    }
+   ],
+   "dormant": [
+    {
+     "type": "BUILDING_QUANTUM_VACUUM_POWER_PLANT",
+     "scope": "city"
     }
    ]
   }

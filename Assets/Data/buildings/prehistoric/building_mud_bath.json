@@ -10,12 +10,6 @@
    "TECH_NANOTROIDS"
   ]
  },
- "replacedBy": {
-  "buildings": [
-   "BUILDING_HEALTH_SPA",
-   "BUILDING_HEALTHCARE_MEGACOMPLEX"
-  ]
- },
  "requires": {
   "build": {
    "all": [
@@ -73,6 +67,16 @@
       "connection": "trade|vicinity"
      }
     ]
+   ],
+   "dormant": [
+    {
+     "type": "BUILDING_HEALTH_SPA",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_HEALTHCARE_MEGACOMPLEX",
+     "scope": "city"
+    }
    ]
   }
  },

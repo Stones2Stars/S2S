@@ -10,12 +10,6 @@
    "TECH_NEW_URBANISM"
   ]
  },
- "replacedBy": {
-  "buildings": [
-   "BUILDING_RESERVOIR",
-   "BUILDING_MODERN_WATERWORKS"
-  ]
- },
  "requires": {
   "build": {
    "all": [
@@ -57,6 +51,16 @@
       "connection": "trade|vicinity"
      }
     ]
+   ],
+   "dormant": [
+    {
+     "type": "BUILDING_RESERVOIR",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_MODERN_WATERWORKS",
+     "scope": "city"
+    }
    ]
   }
  },

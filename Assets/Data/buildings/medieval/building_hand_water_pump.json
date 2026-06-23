@@ -10,12 +10,6 @@
    "TECH_SCREW_PROPELLER"
   ]
  },
- "replacedBy": {
-  "buildings": [
-   "BUILDING_WIND_WATER_PUMP",
-   "BUILDING_WATER_PUMPING_STATION"
-  ]
- },
  "requires": {
   "build": {
    "all": [
@@ -57,6 +51,16 @@
       "connection": "trade|vicinity"
      }
     ]
+   ],
+   "dormant": [
+    {
+     "type": "BUILDING_WIND_WATER_PUMP",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_WATER_PUMPING_STATION",
+     "scope": "city"
+    }
    ]
   }
  },

@@ -2,11 +2,6 @@
  "type": "BUILDING_EDUCATION_KNOWLEDGE_BASE_RENAISSANCE",
  "description": "TXT_KEY_BUILDING_EDUCATION_KNOWLEDGE_BASE_RENAISSANCE",
  "civilopedia": "TXT_KEY_BUILDING_EDUCATION_KNOWLEDGE_BASE_RENAISSANCE_PEDIA",
- "replacedBy": {
-  "buildings": [
-   "BUILDING_EDUCATION_KNOWLEDGE_BASE_INDUSTRIAL"
-  ]
- },
  "requires": {
   "build": {
    "all": [
@@ -22,6 +17,14 @@
       "scope": "plot"
      }
     ]
+   ]
+  },
+  "operate": {
+   "dormant": [
+    {
+     "type": "BUILDING_EDUCATION_KNOWLEDGE_BASE_INDUSTRIAL",
+     "scope": "city"
+    }
    ]
   }
  },

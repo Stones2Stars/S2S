@@ -10,11 +10,6 @@
    "TECH_ORBITAL_FLIGHT"
   ]
  },
- "replacedBy": {
-  "buildings": [
-   "BUILDING_MILITARY_INDUSTRIAL_COMPLEX"
-  ]
- },
  "requires": {
   "build": {
    "all": [
@@ -52,6 +47,12 @@
       "connection": "trade|vicinity"
      }
     ]
+   ],
+   "dormant": [
+    {
+     "type": "BUILDING_MILITARY_INDUSTRIAL_COMPLEX",
+     "scope": "city"
+    }
    ]
   }
  },

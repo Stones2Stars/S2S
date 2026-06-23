@@ -10,11 +10,6 @@
    "TECH_GAIA_ECOLOGY"
   ]
  },
- "replacedBy": {
-  "buildings": [
-   "BUILDING_FARMSCRAPER_I"
-  ]
- },
  "requires": {
   "build": {
    "all": [
@@ -46,6 +41,12 @@
      "type": "BONUS_UNMANNED_AIRCRAFTS",
      "scope": "city",
      "connection": "trade|vicinity"
+    }
+   ],
+   "dormant": [
+    {
+     "type": "BUILDING_FARMSCRAPER_I",
+     "scope": "city"
     }
    ]
   }

@@ -15,11 +15,6 @@
    "TECH_VIRTUAL_SOCIETY"
   ]
  },
- "replacedBy": {
-  "buildings": [
-   "BUILDING_COMPUTER_NETWORK"
-  ]
- },
  "requires": {
   "build": {
    "all": [
@@ -63,6 +58,12 @@
      "type": "BONUS_ATOMPUNK",
      "scope": "city",
      "connection": "trade|vicinity"
+    }
+   ],
+   "dormant": [
+    {
+     "type": "BUILDING_COMPUTER_NETWORK",
+     "scope": "city"
     }
    ]
   }

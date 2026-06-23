@@ -10,11 +10,6 @@
    "TECH_BOTANICAL_ALCHEMY"
   ]
  },
- "replacedBy": {
-  "buildings": [
-   "BUILDING_ULTRAFUEL_REFINERY"
-  ]
- },
  "requires": {
   "build": {
    "all": [
@@ -58,6 +53,12 @@
       "connection": "trade|vicinity"
      }
     ]
+   ],
+   "dormant": [
+    {
+     "type": "BUILDING_ULTRAFUEL_REFINERY",
+     "scope": "city"
+    }
    ]
   }
  },

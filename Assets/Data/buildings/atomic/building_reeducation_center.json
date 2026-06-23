@@ -10,11 +10,6 @@
    "TECH_COLONY_ARCOLOGY"
   ]
  },
- "replacedBy": {
-  "buildings": [
-   "BUILDING_CYBERNETIC_PRISON"
-  ]
- },
  "requires": {
   "build": {
    "all": [
@@ -34,6 +29,14 @@
       "scope": "plot"
      }
     ]
+   ]
+  },
+  "operate": {
+   "dormant": [
+    {
+     "type": "BUILDING_CYBERNETIC_PRISON",
+     "scope": "city"
+    }
    ]
   }
  },

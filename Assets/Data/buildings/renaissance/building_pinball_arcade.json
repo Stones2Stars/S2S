@@ -10,11 +10,6 @@
    "TECH_VIRTUAL_SOCIETY"
   ]
  },
- "replacedBy": {
-  "buildings": [
-   "BUILDING_VIDEO_GAME_ARCADE"
-  ]
- },
  "requires": {
   "build": {
    "all": [
@@ -58,6 +53,12 @@
       "connection": "trade|vicinity"
      }
     ]
+   ],
+   "dormant": [
+    {
+     "type": "BUILDING_VIDEO_GAME_ARCADE",
+     "scope": "city"
+    }
    ]
   }
  },

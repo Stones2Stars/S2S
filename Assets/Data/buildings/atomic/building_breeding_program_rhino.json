@@ -17,11 +17,6 @@
    "TECH_SENTIENT_EARTH"
   ]
  },
- "replacedBy": {
-  "buildings": [
-   "BUILDING_ANIMAL_PRESERVE"
-  ]
- },
  "requires": {
   "build": {
    "all": [
@@ -59,6 +54,12 @@
       "connection": "vicinity"
      }
     ]
+   ],
+   "dormant": [
+    {
+     "type": "BUILDING_ANIMAL_PRESERVE",
+     "scope": "city"
+    }
    ]
   }
  },

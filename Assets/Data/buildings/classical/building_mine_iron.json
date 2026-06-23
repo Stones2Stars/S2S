@@ -16,11 +16,6 @@
    "TECH_ATOMIC_SCALE_ENGINEERING"
   ]
  },
- "replacedBy": {
-  "buildings": [
-   "BUILDING_METALS_MEGACOMPLEX"
-  ]
- },
  "requires": {
   "build": {
    "all": [
@@ -48,6 +43,12 @@
      "type": "BONUS_IRON_ORE",
      "scope": "city",
      "connection": "vicinity"
+    }
+   ],
+   "dormant": [
+    {
+     "type": "BUILDING_METALS_MEGACOMPLEX",
+     "scope": "city"
     }
    ]
   }

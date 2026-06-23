@@ -10,11 +10,6 @@
    "TECH_MIND_UPLOADING"
   ]
  },
- "replacedBy": {
-  "buildings": [
-   "BUILDING_FOOD_MANUFACTURING_DISTRICT"
-  ]
- },
  "requires": {
   "build": {
    "all": [
@@ -38,6 +33,12 @@
      "type": "BONUS_COCOA",
      "scope": "city",
      "connection": "vicinity"
+    }
+   ],
+   "dormant": [
+    {
+     "type": "BUILDING_FOOD_MANUFACTURING_DISTRICT",
+     "scope": "city"
     }
    ]
   }

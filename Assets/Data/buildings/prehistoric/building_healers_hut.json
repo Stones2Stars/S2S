@@ -26,14 +26,6 @@
    "TECH_ELIXIRS_AND_TONICS"
   ]
  },
- "replacedBy": {
-  "buildings": [
-   "BUILDING_DOCTORS_OFFICE",
-   "BUILDING_SURGEONS_OFFICE",
-   "BUILDING_MEDICAL_CLINIC",
-   "BUILDING_HEALTHCARE_MEGACOMPLEX"
-  ]
- },
  "requires": {
   "build": {
    "all": [
@@ -79,6 +71,26 @@
       "scope": "plot"
      }
     ]
+   ]
+  },
+  "operate": {
+   "dormant": [
+    {
+     "type": "BUILDING_DOCTORS_OFFICE",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_SURGEONS_OFFICE",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_MEDICAL_CLINIC",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_HEALTHCARE_MEGACOMPLEX",
+     "scope": "city"
+    }
    ]
   }
  },

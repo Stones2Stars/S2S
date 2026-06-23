@@ -10,12 +10,6 @@
    "TECH_BOTANICAL_ALCHEMY"
   ]
  },
- "replacedBy": {
-  "buildings": [
-   "BUILDING_MARTIAN_HYDROPONICS_COMPLEX",
-   "BUILDING_MARTIAN_VERTICAL_FARM"
-  ]
- },
  "requires": {
   "build": {
    "all": [
@@ -35,6 +29,18 @@
       "scope": "plot"
      }
     ]
+   ]
+  },
+  "operate": {
+   "dormant": [
+    {
+     "type": "BUILDING_MARTIAN_HYDROPONICS_COMPLEX",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_MARTIAN_VERTICAL_FARM",
+     "scope": "city"
+    }
    ]
   }
  },

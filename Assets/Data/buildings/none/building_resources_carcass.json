@@ -10,12 +10,6 @@
    "TECH_REPLACEMENT_ORGANS"
   ]
  },
- "replacedBy": {
-  "buildings": [
-   "BUILDING_INDUSTRIAL_FARMS",
-   "BUILDING_MEAT_INDUSTRY_CONGLOMERATE"
-  ]
- },
  "requires": {
   "build": {
    "any": [
@@ -307,6 +301,18 @@
       "scope": "plot"
      }
     ]
+   ]
+  },
+  "operate": {
+   "dormant": [
+    {
+     "type": "BUILDING_INDUSTRIAL_FARMS",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_MEAT_INDUSTRY_CONGLOMERATE",
+     "scope": "city"
+    }
    ]
   }
  },

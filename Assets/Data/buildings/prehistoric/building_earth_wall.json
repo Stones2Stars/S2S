@@ -10,12 +10,6 @@
    "TECH_SIEGE_WARFARE"
   ]
  },
- "replacedBy": {
-  "buildings": [
-   "BUILDING_WALLS",
-   "BUILDING_HIGH_WALLS"
-  ]
- },
  "requires": {
   "build": {
    "all": [
@@ -37,6 +31,18 @@
       "scope": "empire"
      }
     ]
+   ]
+  },
+  "operate": {
+   "dormant": [
+    {
+     "type": "BUILDING_WALLS",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_HIGH_WALLS",
+     "scope": "city"
+    }
    ]
   }
  },

@@ -16,12 +16,6 @@
    "TECH_REPLACEMENT_ORGANS"
   ]
  },
- "replacedBy": {
-  "buildings": [
-   "BUILDING_MEAT_INDUSTRY_CONGLOMERATE",
-   "BUILDING_MEAT_PACKING_PLANT"
-  ]
- },
  "requires": {
   "build": {
    "all": [
@@ -51,6 +45,18 @@
       "scope": "plot"
      }
     ]
+   ]
+  },
+  "operate": {
+   "dormant": [
+    {
+     "type": "BUILDING_MEAT_INDUSTRY_CONGLOMERATE",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_MEAT_PACKING_PLANT",
+     "scope": "city"
+    }
    ]
   }
  },

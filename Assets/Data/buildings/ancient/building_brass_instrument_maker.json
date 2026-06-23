@@ -10,11 +10,6 @@
    "TECH_COMPOSITES"
   ]
  },
- "replacedBy": {
-  "buildings": [
-   "BUILDING_MUSIC_FACTORY"
-  ]
- },
  "requires": {
   "build": {
    "all": [
@@ -72,6 +67,12 @@
       "connection": "trade|vicinity"
      }
     ]
+   ],
+   "dormant": [
+    {
+     "type": "BUILDING_MUSIC_FACTORY",
+     "scope": "city"
+    }
    ]
   }
  },

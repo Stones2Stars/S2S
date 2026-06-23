@@ -16,11 +16,6 @@
    "TECH_WORMHOLE_HIVEMIND"
   ]
  },
- "replacedBy": {
-  "buildings": [
-   "BUILDING_TELEPORT_BOOTH"
-  ]
- },
  "requires": {
   "build": {
    "all": [
@@ -60,6 +55,12 @@
       "connection": "trade|vicinity"
      }
     ]
+   ],
+   "dormant": [
+    {
+     "type": "BUILDING_TELEPORT_BOOTH",
+     "scope": "city"
+    }
    ]
   }
  },

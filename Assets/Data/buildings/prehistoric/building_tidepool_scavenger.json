@@ -10,12 +10,6 @@
    "TECH_AQUACULTURE"
   ]
  },
- "replacedBy": {
-  "buildings": [
-   "BUILDING_FISHERMANS_HUT",
-   "BUILDING_AQUAFARM"
-  ]
- },
  "requires": {
   "build": {
    "all": [
@@ -32,6 +26,18 @@
       "scope": "plot"
      }
     ]
+   ]
+  },
+  "operate": {
+   "dormant": [
+    {
+     "type": "BUILDING_FISHERMANS_HUT",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_AQUAFARM",
+     "scope": "city"
+    }
    ]
   }
  },

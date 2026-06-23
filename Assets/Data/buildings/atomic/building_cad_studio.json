@@ -10,13 +10,6 @@
    "TECH_AUTOMATED_URBANIZATION"
   ]
  },
- "replacedBy": {
-  "buildings": [
-   "BUILDING_MODULAR_CONSTRUCTION_FIRM",
-   "BUILDING_SELF_CONSTRUCTION_FIRM",
-   "BUILDING_INTERTEMPORAL_CONSTRUCTION_FIRM"
-  ]
- },
  "requires": {
   "build": {
    "all": [
@@ -41,6 +34,22 @@
       "scope": "plot"
      }
     ]
+   ]
+  },
+  "operate": {
+   "dormant": [
+    {
+     "type": "BUILDING_MODULAR_CONSTRUCTION_FIRM",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_SELF_CONSTRUCTION_FIRM",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_INTERTEMPORAL_CONSTRUCTION_FIRM",
+     "scope": "city"
+    }
    ]
   }
  },

@@ -10,12 +10,6 @@
    "TECH_NOVUS_CHEMISTRY"
   ]
  },
- "replacedBy": {
-  "buildings": [
-   "BUILDING_FACTORY_LYE",
-   "BUILDING_CHEMICALS_DISTRICT"
-  ]
- },
  "requires": {
   "build": {
    "all": [
@@ -78,6 +72,16 @@
       "connection": "trade|vicinity"
      }
     ]
+   ],
+   "dormant": [
+    {
+     "type": "BUILDING_FACTORY_LYE",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_CHEMICALS_DISTRICT",
+     "scope": "city"
+    }
    ]
   }
  },

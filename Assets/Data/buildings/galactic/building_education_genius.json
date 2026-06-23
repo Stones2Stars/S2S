@@ -2,12 +2,6 @@
  "type": "BUILDING_EDUCATION_GENIUS",
  "description": "TXT_KEY_BUILDING_EDUCATION_GENIUS",
  "civilopedia": "TXT_KEY_BUILDING_EQ_PEDIA",
- "replacedBy": {
-  "buildings": [
-   "BUILDING_EDUCATION_WISE",
-   "BUILDING_EDUCATION_OMNISCIENCE"
-  ]
- },
  "requires": {
   "build": {
    "all": [
@@ -26,6 +20,16 @@
    ]
   },
   "operate": {
+   "dormant": [
+    {
+     "type": "BUILDING_EDUCATION_WISE",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_EDUCATION_OMNISCIENCE",
+     "scope": "city"
+    }
+   ],
    "all": [
     {
      "type": "PROPERTY_EDUCATION",

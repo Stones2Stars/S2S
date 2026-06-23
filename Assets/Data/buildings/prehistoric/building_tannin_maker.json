@@ -10,12 +10,6 @@
    "TECH_NOVUS_CHEMISTRY"
   ]
  },
- "replacedBy": {
-  "buildings": [
-   "BUILDING_FACTORY_TANNIN",
-   "BUILDING_CHEMICALS_DISTRICT"
-  ]
- },
  "requires": {
   "build": {
    "all": [
@@ -63,6 +57,16 @@
       "connection": "trade|vicinity"
      }
     ]
+   ],
+   "dormant": [
+    {
+     "type": "BUILDING_FACTORY_TANNIN",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_CHEMICALS_DISTRICT",
+     "scope": "city"
+    }
    ]
   }
  },

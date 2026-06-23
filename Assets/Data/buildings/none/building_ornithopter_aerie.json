@@ -10,12 +10,6 @@
    "TECH_ADVANCED_AVIATION"
   ]
  },
- "replacedBy": {
-  "buildings": [
-   "BUILDING_AIRPORT",
-   "BUILDING_COMMERCIAL_AIRPORT"
-  ]
- },
  "requires": {
   "build": {
    "all": [
@@ -48,6 +42,16 @@
      "type": "BONUS_CLOCKPUNK",
      "scope": "city",
      "connection": "trade|vicinity"
+    }
+   ],
+   "dormant": [
+    {
+     "type": "BUILDING_AIRPORT",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_COMMERCIAL_AIRPORT",
+     "scope": "city"
     }
    ]
   }

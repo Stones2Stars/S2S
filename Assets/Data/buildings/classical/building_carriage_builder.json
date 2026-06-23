@@ -19,12 +19,6 @@
    "TECH_SYNERGETICS"
   ]
  },
- "replacedBy": {
-  "buildings": [
-   "BUILDING_FACTORY_AUTOMOBILES",
-   "BUILDING_SELF_ASSEMBLY_FACTORY"
-  ]
- },
  "requires": {
   "build": {
    "all": [
@@ -83,6 +77,16 @@
       "connection": "trade|vicinity"
      }
     ]
+   ],
+   "dormant": [
+    {
+     "type": "BUILDING_FACTORY_AUTOMOBILES",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_SELF_ASSEMBLY_FACTORY",
+     "scope": "city"
+    }
    ]
   }
  },

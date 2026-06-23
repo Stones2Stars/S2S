@@ -10,11 +10,6 @@
    "TECH_MANUFACTURING"
   ]
  },
- "replacedBy": {
-  "buildings": [
-   "BUILDING_MARINA"
-  ]
- },
  "requires": {
   "build": {
    "all": [
@@ -53,6 +48,14 @@
       "scope": "empire"
      }
     ]
+   ]
+  },
+  "operate": {
+   "dormant": [
+    {
+     "type": "BUILDING_MARINA",
+     "scope": "city"
+    }
    ]
   }
  },

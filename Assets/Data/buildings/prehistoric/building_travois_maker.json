@@ -15,14 +15,6 @@
    "TECH_MACHINERY"
   ]
  },
- "replacedBy": {
-  "buildings": [
-   "BUILDING_WHEELWRIGHT",
-   "BUILDING_CARRIAGE_BUILDER",
-   "BUILDING_FACTORY_AUTOMOBILES",
-   "BUILDING_SELF_ASSEMBLY_FACTORY"
-  ]
- },
  "requires": {
   "build": {
    "all": [
@@ -91,6 +83,24 @@
       "connection": "trade|vicinity"
      }
     ]
+   ],
+   "dormant": [
+    {
+     "type": "BUILDING_WHEELWRIGHT",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_CARRIAGE_BUILDER",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_FACTORY_AUTOMOBILES",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_SELF_ASSEMBLY_FACTORY",
+     "scope": "city"
+    }
    ]
   }
  },

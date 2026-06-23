@@ -10,11 +10,6 @@
    "TECH_SUPERSTRONG_ALLOYS"
   ]
  },
- "replacedBy": {
-  "buildings": [
-   "BUILDING_BOMB_SHELTERS"
-  ]
- },
  "requires": {
   "build": {
    "all": [
@@ -58,6 +53,12 @@
       "connection": "trade|vicinity"
      }
     ]
+   ],
+   "dormant": [
+    {
+     "type": "BUILDING_BOMB_SHELTERS",
+     "scope": "city"
+    }
    ]
   }
  },

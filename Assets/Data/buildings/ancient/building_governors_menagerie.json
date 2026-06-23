@@ -9,11 +9,6 @@
    "BUILDING_ENCLOSURE_WOLF"
   ]
  },
- "replacedBy": {
-  "buildings": [
-   "BUILDING_ZOO"
-  ]
- },
  "requires": {
   "build": {
    "all": [
@@ -41,6 +36,12 @@
      "type": "BONUS_BRICKS",
      "scope": "city",
      "connection": "trade|vicinity"
+    }
+   ],
+   "dormant": [
+    {
+     "type": "BUILDING_ZOO",
+     "scope": "city"
     }
    ]
   }

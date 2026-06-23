@@ -10,12 +10,6 @@
    "TECH_NANOTROIDS"
   ]
  },
- "replacedBy": {
-  "buildings": [
-   "BUILDING_MEDICAL_PROSTHETICS_LAB",
-   "BUILDING_HEALTHCARE_MEGACOMPLEX"
-  ]
- },
  "requires": {
   "build": {
    "all": [
@@ -44,6 +38,16 @@
      "type": "BONUS_PARTS",
      "scope": "city",
      "connection": "trade|vicinity"
+    }
+   ],
+   "dormant": [
+    {
+     "type": "BUILDING_MEDICAL_PROSTHETICS_LAB",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_HEALTHCARE_MEGACOMPLEX",
+     "scope": "city"
     }
    ]
   }

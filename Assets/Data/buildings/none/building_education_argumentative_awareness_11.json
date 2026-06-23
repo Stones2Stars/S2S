@@ -2,12 +2,6 @@
  "type": "BUILDING_EDUCATION_ARGUMENTATIVE_AWARENESS_11",
  "description": "TXT_KEY_BUILDING_EDUCATION_ARGUMENTATIVE_AWARENESS_11",
  "civilopedia": "TXT_KEY_BUILDING_EQ_PEDIA",
- "replacedBy": {
-  "buildings": [
-   "BUILDING_EDUCATION_ARGUMENTATIVE_AWARENESS_12",
-   "BUILDING_EDUCATION_ARGUMENTATIVE_AWARENESS_13"
-  ]
- },
  "requires": {
   "build": {
    "all": [
@@ -26,6 +20,16 @@
    ]
   },
   "operate": {
+   "dormant": [
+    {
+     "type": "BUILDING_EDUCATION_ARGUMENTATIVE_AWARENESS_12",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_EDUCATION_ARGUMENTATIVE_AWARENESS_13",
+     "scope": "city"
+    }
+   ],
    "all": [
     {
      "type": "PROPERTY_EDUCATION",

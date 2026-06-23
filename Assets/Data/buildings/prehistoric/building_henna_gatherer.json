@@ -15,12 +15,6 @@
    "TECH_AGRICULTURAL_ENGINEERING"
   ]
  },
- "replacedBy": {
-  "buildings": [
-   "BUILDING_PLANTATION_HENNA",
-   "BUILDING_GREENHOUSE"
-  ]
- },
  "requires": {
   "build": {
    "all": [
@@ -44,6 +38,16 @@
      "type": "BONUS_HENNA",
      "scope": "city",
      "connection": "vicinity"
+    }
+   ],
+   "dormant": [
+    {
+     "type": "BUILDING_PLANTATION_HENNA",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_GREENHOUSE",
+     "scope": "city"
     }
    ]
   }

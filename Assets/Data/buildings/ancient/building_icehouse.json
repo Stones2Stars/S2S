@@ -10,11 +10,6 @@
    "TECH_REFRIGERATION"
   ]
  },
- "replacedBy": {
-  "buildings": [
-   "BUILDING_MODERN_WAREHOUSE"
-  ]
- },
  "requires": {
   "build": {
    "all": [
@@ -30,6 +25,14 @@
       "scope": "plot"
      }
     ]
+   ]
+  },
+  "operate": {
+   "dormant": [
+    {
+     "type": "BUILDING_MODERN_WAREHOUSE",
+     "scope": "city"
+    }
    ]
   }
  },

@@ -10,11 +10,6 @@
    "TECH_NANO_DISASSEMBLY"
   ]
  },
- "replacedBy": {
-  "buildings": [
-   "BUILDING_ANTIGRAV_VEHICLE_DEALERSHIP"
-  ]
- },
  "requires": {
   "build": {
    "all": [
@@ -76,6 +71,12 @@
      "type": "BONUS_AUTOMOBILES",
      "scope": "city",
      "connection": "trade|vicinity"
+    }
+   ],
+   "dormant": [
+    {
+     "type": "BUILDING_ANTIGRAV_VEHICLE_DEALERSHIP",
+     "scope": "city"
     }
    ]
   }

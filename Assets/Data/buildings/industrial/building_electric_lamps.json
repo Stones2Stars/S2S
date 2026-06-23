@@ -10,11 +10,6 @@
    "TECH_PHOTON_THERMODYNAMICS"
   ]
  },
- "replacedBy": {
-  "buildings": [
-   "BUILDING_OLED_LAMPS"
-  ]
- },
  "requires": {
   "build": {
    "all": [
@@ -54,6 +49,12 @@
       "connection": "trade|vicinity"
      }
     ]
+   ],
+   "dormant": [
+    {
+     "type": "BUILDING_OLED_LAMPS",
+     "scope": "city"
+    }
    ]
   }
  },

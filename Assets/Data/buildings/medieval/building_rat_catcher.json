@@ -10,11 +10,6 @@
    "TECH_SENTIENT_EARTH"
   ]
  },
- "replacedBy": {
-  "buildings": [
-   "BUILDING_AGROFOREST"
-  ]
- },
  "requires": {
   "build": {
    "all": [
@@ -56,6 +51,12 @@
       "connection": "trade|vicinity"
      }
     ]
+   ],
+   "dormant": [
+    {
+     "type": "BUILDING_AGROFOREST",
+     "scope": "city"
+    }
    ]
   }
  },

@@ -10,13 +10,6 @@
    "TECH_PLASTICS"
   ]
  },
- "replacedBy": {
-  "buildings": [
-   "BUILDING_FACTORY_TOYS",
-   "BUILDING_MANUFACTURING_DISTRICT",
-   "BUILDING_TOY_MAKER"
-  ]
- },
  "requires": {
   "build": {
    "all": [
@@ -32,6 +25,22 @@
       "scope": "plot"
      }
     ]
+   ]
+  },
+  "operate": {
+   "dormant": [
+    {
+     "type": "BUILDING_FACTORY_TOYS",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_MANUFACTURING_DISTRICT",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_TOY_MAKER",
+     "scope": "city"
+    }
    ]
   }
  },

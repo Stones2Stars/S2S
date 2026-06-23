@@ -17,12 +17,6 @@
    "TECH_GLOBALIZATION"
   ]
  },
- "replacedBy": {
-  "buildings": [
-   "BUILDING_DRYDOCK",
-   "BUILDING_NAVAL_YARD"
-  ]
- },
  "requires": {
   "build": {
    "all": [
@@ -47,6 +41,18 @@
       "scope": "plot"
      }
     ]
+   ]
+  },
+  "operate": {
+   "dormant": [
+    {
+     "type": "BUILDING_DRYDOCK",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_NAVAL_YARD",
+     "scope": "city"
+    }
    ]
   }
  },

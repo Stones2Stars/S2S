@@ -15,13 +15,6 @@
    "TECH_ELECTRIC_ARC_WEAPONRY"
   ]
  },
- "replacedBy": {
-  "buildings": [
-   "BUILDING_RAILGUN_BATTERY",
-   "BUILDING_LASER_BATTERY",
-   "BUILDING_ANTI_MATTER_BATTERY"
-  ]
- },
  "requires": {
   "build": {
    "all": [
@@ -37,6 +30,22 @@
       "scope": "plot"
      }
     ]
+   ]
+  },
+  "operate": {
+   "dormant": [
+    {
+     "type": "BUILDING_RAILGUN_BATTERY",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_LASER_BATTERY",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_ANTI_MATTER_BATTERY",
+     "scope": "city"
+    }
    ]
   }
  },

@@ -221,11 +221,6 @@
    "TECH_COMMUNICATION_NETWORKS"
   ]
  },
- "replacedBy": {
-  "buildings": [
-   "BUILDING_SHOPPING_DISTRICT"
-  ]
- },
  "requires": {
   "build": {
    "all": [
@@ -257,6 +252,12 @@
       "connection": "trade|vicinity"
      }
     ]
+   ],
+   "dormant": [
+    {
+     "type": "BUILDING_SHOPPING_DISTRICT",
+     "scope": "city"
+    }
    ]
   }
  },

@@ -10,13 +10,6 @@
    "TECH_MASONRY"
   ]
  },
- "replacedBy": {
-  "buildings": [
-   "BUILDING_EARTH_WALL",
-   "BUILDING_WALLS",
-   "BUILDING_HIGH_WALLS"
-  ]
- },
  "requires": {
   "build": {
    "all": [
@@ -59,6 +52,20 @@
       "connection": "trade|vicinity"
      }
     ]
+   ],
+   "dormant": [
+    {
+     "type": "BUILDING_EARTH_WALL",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_WALLS",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_HIGH_WALLS",
+     "scope": "city"
+    }
    ]
   }
  },

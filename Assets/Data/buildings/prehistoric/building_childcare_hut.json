@@ -15,12 +15,6 @@
    "TECH_TRANSHUMANISM"
   ]
  },
- "replacedBy": {
-  "buildings": [
-   "BUILDING_DAY_CARE_CENTER",
-   "BUILDING_HIGH_TECH_CULTURAL_ENRICHMENT"
-  ]
- },
  "requires": {
   "build": {
    "all": [
@@ -46,6 +40,18 @@
       "scope": "empire"
      }
     ]
+   ]
+  },
+  "operate": {
+   "dormant": [
+    {
+     "type": "BUILDING_DAY_CARE_CENTER",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_HIGH_TECH_CULTURAL_ENRICHMENT",
+     "scope": "city"
+    }
    ]
   }
  },

@@ -15,12 +15,6 @@
    "TECH_VERTICAL_FARMING"
   ]
  },
- "replacedBy": {
-  "buildings": [
-   "BUILDING_FARM_CROP_WHEAT",
-   "BUILDING_FARMSCRAPER_III"
-  ]
- },
  "requires": {
   "build": {
    "all": [
@@ -44,6 +38,16 @@
      "type": "BONUS_WHEAT",
      "scope": "city",
      "connection": "vicinity"
+    }
+   ],
+   "dormant": [
+    {
+     "type": "BUILDING_FARM_CROP_WHEAT",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_FARMSCRAPER_III",
+     "scope": "city"
     }
    ]
   }

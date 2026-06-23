@@ -10,11 +10,6 @@
    "TECH_GAIA_ECOLOGY"
   ]
  },
- "replacedBy": {
-  "buildings": [
-   "BUILDING_FARMSCRAPER_I"
-  ]
- },
  "requires": {
   "build": {
    "all": [
@@ -38,6 +33,12 @@
      "type": "BONUS_MUSHROOMS",
      "scope": "city",
      "connection": "vicinity"
+    }
+   ],
+   "dormant": [
+    {
+     "type": "BUILDING_FARMSCRAPER_I",
+     "scope": "city"
     }
    ]
   }

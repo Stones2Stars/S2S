@@ -40,7 +40,7 @@ from curate_promotion import (STRENGTH, FAMILIES, CAP_BOOL, CAP_PAIR, CAP_COUNT,
                               VISION_STRUCTS, _txt, _int, _simple_list, _pairs)
 
 # UnitCombat-specific extensions to the shared tables.
-CAP_BOOL_X = {"bSpy": "spy", "bCannotMergeSplit": "cannotMergeSplit", "bRBombardDirect": "rBombardDirect",
+CAP_BOOL_X = {"bCannotMergeSplit": "cannotMergeSplit", "bRBombardDirect": "rBombardDirect",
               "bRBombardForceAbility": "rBombardForceAbility", "bInvisible": "alwaysInvisible", "bHealsAs": "healsAs"}
 CAP_COUNT_X = {"iNoCaptureChange": "noCapture"}
 VISION_PAIRS_X = {"VisibilityIntensitySameTileChangeTypes": "visibilityIntensitySameTile"}

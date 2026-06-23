@@ -30,13 +30,6 @@
    "TECH_SKYROADS"
   ]
  },
- "replacedBy": {
-  "buildings": [
-   "BUILDING_ASPHALT_ROADS",
-   "BUILDING_SKYROAD_CONTROL_TOWER",
-   "BUILDING_TELEPORT_BOOTH"
-  ]
- },
  "requires": {
   "build": {
    "all": [
@@ -68,6 +61,20 @@
       "connection": "trade|vicinity"
      }
     ]
+   ],
+   "dormant": [
+    {
+     "type": "BUILDING_ASPHALT_ROADS",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_SKYROAD_CONTROL_TOWER",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_TELEPORT_BOOTH",
+     "scope": "city"
+    }
    ]
   }
  },

@@ -131,6 +131,9 @@
    "UNITCOMBAT_PROMOTED_ARMED_GUARD": true
   }
  },
+ "tags": {
+  "outlaw": true
+ },
  "vision": {
   "invisible": "INVISIBLE_CAMOUFLAGE",
   "visibilityIntensity": {

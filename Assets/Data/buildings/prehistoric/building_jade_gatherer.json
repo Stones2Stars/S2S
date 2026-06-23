@@ -15,12 +15,6 @@
    "TECH_NANOMINING"
   ]
  },
- "replacedBy": {
-  "buildings": [
-   "BUILDING_MINE_JADE",
-   "BUILDING_CORE_MINE"
-  ]
- },
  "requires": {
   "build": {
    "all": [
@@ -44,6 +38,16 @@
      "type": "BONUS_JADE",
      "scope": "city",
      "connection": "vicinity"
+    }
+   ],
+   "dormant": [
+    {
+     "type": "BUILDING_MINE_JADE",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_CORE_MINE",
+     "scope": "city"
     }
    ]
   }

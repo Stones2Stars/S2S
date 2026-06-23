@@ -2,11 +2,6 @@
  "type": "BUILDING_ET_DISCOVERY",
  "description": "TXT_KEY_BUILDING_ET_DISCOVERY",
  "civilopedia": "TXT_KEY_BUILDING_ET_DISCOVERY_PEDIA",
- "replacedBy": {
-  "buildings": [
-   "BUILDING_POLLUTION_BLACKENED_SKIES"
-  ]
- },
  "requires": {
   "build": {
    "all": [
@@ -47,6 +42,14 @@
       "scope": "plot"
      }
     ]
+   ]
+  },
+  "operate": {
+   "dormant": [
+    {
+     "type": "BUILDING_POLLUTION_BLACKENED_SKIES",
+     "scope": "city"
+    }
    ]
   }
  },

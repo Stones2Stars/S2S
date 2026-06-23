@@ -10,13 +10,6 @@
    "TECH_INTERNAL_SHOCKWAVE_ENGINE"
   ]
  },
- "replacedBy": {
-  "buildings": [
-   "BUILDING_AUTOMATED_VEHICLE_DEALERSHIP",
-   "BUILDING_SHOCKWAVE_VEHICLE_DEALERSHIP",
-   "BUILDING_ANTIGRAV_VEHICLE_DEALERSHIP"
-  ]
- },
  "requires": {
   "build": {
    "all": [
@@ -65,6 +58,20 @@
       "connection": "trade|vicinity"
      }
     ]
+   ],
+   "dormant": [
+    {
+     "type": "BUILDING_AUTOMATED_VEHICLE_DEALERSHIP",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_SHOCKWAVE_VEHICLE_DEALERSHIP",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_ANTIGRAV_VEHICLE_DEALERSHIP",
+     "scope": "city"
+    }
    ]
   }
  },

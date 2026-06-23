@@ -16,11 +16,6 @@
    "TECH_ATOMIC_SCALE_ENGINEERING"
   ]
  },
- "replacedBy": {
-  "buildings": [
-   "BUILDING_CORE_MINE"
-  ]
- },
  "requires": {
   "build": {
    "all": [
@@ -48,6 +43,12 @@
      "type": "BONUS_SULPHUR",
      "scope": "city",
      "connection": "vicinity"
+    }
+   ],
+   "dormant": [
+    {
+     "type": "BUILDING_CORE_MINE",
+     "scope": "city"
     }
    ]
   }

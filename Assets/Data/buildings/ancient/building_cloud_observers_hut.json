@@ -10,12 +10,6 @@
    "TECH_METEOROLOGY"
   ]
  },
- "replacedBy": {
-  "buildings": [
-   "BUILDING_WEATHER_VANES",
-   "BUILDING_METEOROLOGY_LAB"
-  ]
- },
  "requires": {
   "build": {
    "all": [
@@ -31,6 +25,18 @@
       "scope": "plot"
      }
     ]
+   ]
+  },
+  "operate": {
+   "dormant": [
+    {
+     "type": "BUILDING_WEATHER_VANES",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_METEOROLOGY_LAB",
+     "scope": "city"
+    }
    ]
   }
  },

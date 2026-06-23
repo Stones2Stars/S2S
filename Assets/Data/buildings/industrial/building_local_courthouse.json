@@ -10,11 +10,6 @@
    "TECH_NANOTROIDS"
   ]
  },
- "replacedBy": {
-  "buildings": [
-   "BUILDING_AI_LEGAL_SYSTEM"
-  ]
- },
  "requires": {
   "build": {
    "all": [
@@ -56,6 +51,12 @@
       "connection": "trade|vicinity"
      }
     ]
+   ],
+   "dormant": [
+    {
+     "type": "BUILDING_AI_LEGAL_SYSTEM",
+     "scope": "city"
+    }
    ]
   }
  },

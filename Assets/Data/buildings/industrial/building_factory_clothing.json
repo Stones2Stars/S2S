@@ -16,11 +16,6 @@
    "TECH_NANOROBOTICS"
   ]
  },
- "replacedBy": {
-  "buildings": [
-   "BUILDING_TEXTILE_MANUFACTURING_DISTRICT"
-  ]
- },
  "requires": {
   "build": {
    "all": [
@@ -67,6 +62,12 @@
       "connection": "trade|vicinity"
      }
     ]
+   ],
+   "dormant": [
+    {
+     "type": "BUILDING_TEXTILE_MANUFACTURING_DISTRICT",
+     "scope": "city"
+    }
    ]
   }
  },

@@ -10,11 +10,6 @@
    "TECH_SMART_DUST"
   ]
  },
- "replacedBy": {
-  "buildings": [
-   "BUILDING_HYPERMARKET"
-  ]
- },
  "requires": {
   "build": {
    "all": [
@@ -35,6 +30,14 @@
       "scope": "plot"
      }
     ]
+   ]
+  },
+  "operate": {
+   "dormant": [
+    {
+     "type": "BUILDING_HYPERMARKET",
+     "scope": "city"
+    }
    ]
   }
  },

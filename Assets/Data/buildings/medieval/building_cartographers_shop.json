@@ -10,11 +10,6 @@
    "TECH_LUNAR_BASES"
   ]
  },
- "replacedBy": {
-  "buildings": [
-   "BUILDING_MODERN_CARTOGRAPHER"
-  ]
- },
  "requires": {
   "build": {
    "all": [
@@ -66,6 +61,12 @@
       "connection": "trade|vicinity"
      }
     ]
+   ],
+   "dormant": [
+    {
+     "type": "BUILDING_MODERN_CARTOGRAPHER",
+     "scope": "city"
+    }
    ]
   }
  },

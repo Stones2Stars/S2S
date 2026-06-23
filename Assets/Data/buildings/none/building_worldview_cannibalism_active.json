@@ -2,11 +2,6 @@
  "type": "BUILDING_WORLDVIEW_CANNIBALISM_ACTIVE",
  "description": "TXT_KEY_BUILDING_WORLDVIEW_CANNIBALISM_ACTIVE",
  "civilopedia": "TXT_KEY_BUILDING_WORLDVIEW_CANNIBALISM_PEDIA",
- "replacedBy": {
-  "buildings": [
-   "BUILDING_EFFECT_EMANCIPATION_PROCLAMATION"
-  ]
- },
  "requires": {
   "build": {
    "all": [
@@ -23,6 +18,14 @@
       "scope": "plot"
      }
     ]
+   ]
+  },
+  "operate": {
+   "dormant": [
+    {
+     "type": "BUILDING_EFFECT_EMANCIPATION_PROCLAMATION",
+     "scope": "city"
+    }
    ]
   }
  },

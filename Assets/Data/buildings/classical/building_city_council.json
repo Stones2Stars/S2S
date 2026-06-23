@@ -37,11 +37,6 @@
    "TECH_MOTORIZED_TRANSPORTATION"
   ]
  },
- "replacedBy": {
-  "buildings": [
-   "BUILDING_METROPOLITAN_ADMINISTRATION"
-  ]
- },
  "requires": {
   "build": {
    "all": [
@@ -89,6 +84,12 @@
       "connection": "trade|vicinity"
      }
     ]
+   ],
+   "dormant": [
+    {
+     "type": "BUILDING_METROPOLITAN_ADMINISTRATION",
+     "scope": "city"
+    }
    ]
   }
  },

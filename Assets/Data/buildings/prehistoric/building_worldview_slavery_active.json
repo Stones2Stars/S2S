@@ -10,11 +10,6 @@
    "BUILDING_WORLDVIEW_SLAVERY_ZOROASTRIANISM_II"
   ]
  },
- "replacedBy": {
-  "buildings": [
-   "BUILDING_EFFECT_EMANCIPATION_PROCLAMATION"
-  ]
- },
  "requires": {
   "build": {
    "all": [
@@ -36,6 +31,14 @@
       "scope": "empire"
      }
     ]
+   ]
+  },
+  "operate": {
+   "dormant": [
+    {
+     "type": "BUILDING_EFFECT_EMANCIPATION_PROCLAMATION",
+     "scope": "city"
+    }
    ]
   }
  },

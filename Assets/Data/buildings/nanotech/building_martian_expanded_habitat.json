@@ -10,11 +10,6 @@
    "TECH_NANOSHIELDING"
   ]
  },
- "replacedBy": {
-  "buildings": [
-   "BUILDING_MARTIAN_SKYSCRAPER"
-  ]
- },
  "requires": {
   "build": {
    "all": [
@@ -34,6 +29,14 @@
       "scope": "plot"
      }
     ]
+   ]
+  },
+  "operate": {
+   "dormant": [
+    {
+     "type": "BUILDING_MARTIAN_SKYSCRAPER",
+     "scope": "city"
+    }
    ]
   }
  },

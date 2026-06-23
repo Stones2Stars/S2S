@@ -10,11 +10,6 @@
    "TECH_LAUNCH_ARCOLOGY"
   ]
  },
- "replacedBy": {
-  "buildings": [
-   "BUILDING_OCEAN_ADMINISTRATION"
-  ]
- },
  "requires": {
   "build": {
    "all": [
@@ -31,6 +26,14 @@
       "scope": "plot"
      }
     ]
+   ]
+  },
+  "operate": {
+   "dormant": [
+    {
+     "type": "BUILDING_OCEAN_ADMINISTRATION",
+     "scope": "city"
+    }
    ]
   }
  },

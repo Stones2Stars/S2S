@@ -21,12 +21,6 @@
    "TECH_TRANSHUMANISM"
   ]
  },
- "replacedBy": {
-  "buildings": [
-   "BUILDING_FUNERARY_SERVICES",
-   "BUILDING_HIGH_TECH_CULTURAL_ENRICHMENT"
-  ]
- },
  "requires": {
   "build": {
    "all": [
@@ -62,6 +56,18 @@
     },
     {
      "type": "BUILDING_BURIAL_TRADITION_SEA",
+     "scope": "city"
+    }
+   ]
+  },
+  "operate": {
+   "dormant": [
+    {
+     "type": "BUILDING_FUNERARY_SERVICES",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_HIGH_TECH_CULTURAL_ENRICHMENT",
      "scope": "city"
     }
    ]

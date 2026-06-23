@@ -10,11 +10,6 @@
    "TECH_GAIA_ECOLOGY"
   ]
  },
- "replacedBy": {
-  "buildings": [
-   "BUILDING_FARMSCRAPER_III"
-  ]
- },
  "requires": {
   "build": {
    "any": [
@@ -82,6 +77,14 @@
       "scope": "plot"
      }
     ]
+   ]
+  },
+  "operate": {
+   "dormant": [
+    {
+     "type": "BUILDING_FARMSCRAPER_III",
+     "scope": "city"
+    }
    ]
   }
  },

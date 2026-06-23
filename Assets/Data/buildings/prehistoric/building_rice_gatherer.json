@@ -15,12 +15,6 @@
    "TECH_VERTICAL_FARMING"
   ]
  },
- "replacedBy": {
-  "buildings": [
-   "BUILDING_RICE_PADDY",
-   "BUILDING_FARMSCRAPER_III"
-  ]
- },
  "requires": {
   "build": {
    "all": [
@@ -44,6 +38,16 @@
      "type": "BONUS_RICE",
      "scope": "city",
      "connection": "vicinity"
+    }
+   ],
+   "dormant": [
+    {
+     "type": "BUILDING_RICE_PADDY",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_FARMSCRAPER_III",
+     "scope": "city"
     }
    ]
   }

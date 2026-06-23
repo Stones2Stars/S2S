@@ -16,12 +16,6 @@
    "TECH_PLANETARY_ECONOMICS"
   ]
  },
- "replacedBy": {
-  "buildings": [
-   "BUILDING_BREEDING_PROGRAM_MUSKOX",
-   "BUILDING_ANIMAL_PRESERVE"
-  ]
- },
  "requires": {
   "build": {
    "all": [
@@ -80,6 +74,16 @@
       "connection": "vicinity"
      }
     ]
+   ],
+   "dormant": [
+    {
+     "type": "BUILDING_BREEDING_PROGRAM_MUSKOX",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_ANIMAL_PRESERVE",
+     "scope": "city"
+    }
    ]
   }
  },

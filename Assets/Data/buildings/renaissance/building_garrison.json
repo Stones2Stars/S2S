@@ -25,11 +25,6 @@
    "TECH_MILITARY_ROBOTICS"
   ]
  },
- "replacedBy": {
-  "buildings": [
-   "BUILDING_MILITARY_BASE"
-  ]
- },
  "requires": {
   "build": {
    "all": [
@@ -45,6 +40,14 @@
       "scope": "plot"
      }
     ]
+   ]
+  },
+  "operate": {
+   "dormant": [
+    {
+     "type": "BUILDING_MILITARY_BASE",
+     "scope": "city"
+    }
    ]
   }
  },

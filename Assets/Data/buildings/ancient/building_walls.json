@@ -16,11 +16,6 @@
    "TECH_GUNPOWDER"
   ]
  },
- "replacedBy": {
-  "buildings": [
-   "BUILDING_HIGH_WALLS"
-  ]
- },
  "requires": {
   "build": {
    "all": [
@@ -52,6 +47,12 @@
       "connection": "trade|vicinity"
      }
     ]
+   ],
+   "dormant": [
+    {
+     "type": "BUILDING_HIGH_WALLS",
+     "scope": "city"
+    }
    ]
   }
  },

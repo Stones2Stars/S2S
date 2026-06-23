@@ -10,11 +10,6 @@
    "TECH_CLIMATE_MODELS"
   ]
  },
- "replacedBy": {
-  "buildings": [
-   "BUILDING_METEOROLOGY_LAB"
-  ]
- },
  "requires": {
   "build": {
    "all": [
@@ -61,6 +56,12 @@
       "connection": "trade|vicinity"
      }
     ]
+   ],
+   "dormant": [
+    {
+     "type": "BUILDING_METEOROLOGY_LAB",
+     "scope": "city"
+    }
    ]
   }
  },

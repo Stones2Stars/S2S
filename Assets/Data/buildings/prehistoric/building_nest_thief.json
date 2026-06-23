@@ -12,17 +12,6 @@
    "TECH_ANTIBIOTICS"
   ]
  },
- "replacedBy": {
-  "buildings": [
-   "BUILDING_CHICKEN_COOP",
-   "BUILDING_FARM_ANIMAL_DUCK",
-   "BUILDING_FARM_ANIMAL_GOOSE",
-   "BUILDING_SEA_TURTLE_EGG_GATHERER",
-   "BUILDING_FARM_ANIMAL_TURKEY",
-   "BUILDING_INDUSTRIAL_FARMS",
-   "BUILDING_MEAT_INDUSTRY_CONGLOMERATE"
-  ]
- },
  "requires": {
   "build": {
    "all": [
@@ -46,6 +35,36 @@
      "type": "BONUS_POULTRY",
      "scope": "city",
      "connection": "vicinity"
+    }
+   ],
+   "dormant": [
+    {
+     "type": "BUILDING_CHICKEN_COOP",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_FARM_ANIMAL_DUCK",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_FARM_ANIMAL_GOOSE",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_SEA_TURTLE_EGG_GATHERER",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_FARM_ANIMAL_TURKEY",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_INDUSTRIAL_FARMS",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_MEAT_INDUSTRY_CONGLOMERATE",
+     "scope": "city"
     }
    ]
   }

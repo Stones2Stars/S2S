@@ -15,11 +15,6 @@
    "TECH_LITERATURE"
   ]
  },
- "replacedBy": {
-  "buildings": [
-   "BUILDING_FRESCO_MURAL"
-  ]
- },
  "requires": {
   "build": {
    "all": [
@@ -75,6 +70,14 @@
       "scope": "plot"
      }
     ]
+   ]
+  },
+  "operate": {
+   "dormant": [
+    {
+     "type": "BUILDING_FRESCO_MURAL",
+     "scope": "city"
+    }
    ]
   }
  },

@@ -10,12 +10,6 @@
    "TECH_PLASTIC_ELECTRONICS"
   ]
  },
- "replacedBy": {
-  "buildings": [
-   "BUILDING_PHOTOGRAPHY_STUDIO",
-   "BUILDING_HYPERMARKET"
-  ]
- },
  "requires": {
   "build": {
    "all": [
@@ -59,6 +53,16 @@
       "connection": "trade|vicinity"
      }
     ]
+   ],
+   "dormant": [
+    {
+     "type": "BUILDING_PHOTOGRAPHY_STUDIO",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_HYPERMARKET",
+     "scope": "city"
+    }
    ]
   }
  },

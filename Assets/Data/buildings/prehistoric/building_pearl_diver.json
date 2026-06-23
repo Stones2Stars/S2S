@@ -15,11 +15,6 @@
    "TECH_AUTOMATED_URBANIZATION"
   ]
  },
- "replacedBy": {
-  "buildings": [
-   "BUILDING_AQUAFARM"
-  ]
- },
  "requires": {
   "build": {
    "all": [
@@ -43,6 +38,12 @@
      "type": "BONUS_PEARLS",
      "scope": "city",
      "connection": "vicinity"
+    }
+   ],
+   "dormant": [
+    {
+     "type": "BUILDING_AQUAFARM",
+     "scope": "city"
     }
    ]
   }

@@ -10,11 +10,6 @@
    "TECH_TRENCH_WARFARE"
   ]
  },
- "replacedBy": {
-  "buildings": [
-   "BUILDING_IMPERIAL_FORTRESS"
-  ]
- },
  "requires": {
   "build": {
    "all": [
@@ -42,6 +37,12 @@
      "type": "BONUS_IRON_WARES",
      "scope": "city",
      "connection": "trade|vicinity"
+    }
+   ],
+   "dormant": [
+    {
+     "type": "BUILDING_IMPERIAL_FORTRESS",
+     "scope": "city"
     }
    ]
   }

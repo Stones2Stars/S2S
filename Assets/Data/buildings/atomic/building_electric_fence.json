@@ -10,13 +10,6 @@
    "TECH_SHIELDING"
   ]
  },
- "replacedBy": {
-  "buildings": [
-   "BUILDING_WIRELESS_ELECTRIC_FENCE",
-   "BUILDING_ARCOLOGY_SHIELDING",
-   "BUILDING_ADVANCED_SHIELDING"
-  ]
- },
  "requires": {
   "build": {
    "all": [
@@ -41,6 +34,20 @@
      "type": "BONUS_STEEL_WARES",
      "scope": "city",
      "connection": "trade|vicinity"
+    }
+   ],
+   "dormant": [
+    {
+     "type": "BUILDING_WIRELESS_ELECTRIC_FENCE",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_ARCOLOGY_SHIELDING",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_ADVANCED_SHIELDING",
+     "scope": "city"
     }
    ]
   }

@@ -10,12 +10,6 @@
    "TECH_TELEPORTATION"
   ]
  },
- "replacedBy": {
-  "buildings": [
-   "BUILDING_WIRELESS_EV_CHARGING",
-   "BUILDING_TELEPORT_BOOTH"
-  ]
- },
  "requires": {
   "build": {
    "all": [
@@ -44,6 +38,16 @@
      "type": "BONUS_AUTOMOBILES",
      "scope": "city",
      "connection": "trade|vicinity"
+    }
+   ],
+   "dormant": [
+    {
+     "type": "BUILDING_WIRELESS_EV_CHARGING",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_TELEPORT_BOOTH",
+     "scope": "city"
     }
    ]
   }

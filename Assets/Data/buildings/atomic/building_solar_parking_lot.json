@@ -10,12 +10,6 @@
    "TECH_FEMTOTECHNOLOGY"
   ]
  },
- "replacedBy": {
-  "buildings": [
-   "BUILDING_RENEWABLE_MEGACOMPLEX",
-   "BUILDING_POLLUTION_BLACKENED_SKIES"
-  ]
- },
  "requires": {
   "build": {
    "all": [
@@ -64,6 +58,16 @@
       "connection": "trade|vicinity"
      }
     ]
+   ],
+   "dormant": [
+    {
+     "type": "BUILDING_RENEWABLE_MEGACOMPLEX",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_POLLUTION_BLACKENED_SKIES",
+     "scope": "city"
+    }
    ]
   }
  },

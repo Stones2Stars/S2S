@@ -10,11 +10,6 @@
    "TECH_ANIMAMATERIALS"
   ]
  },
- "replacedBy": {
-  "buildings": [
-   "BUILDING_ELECTRONIC_PAPER_MAKER"
-  ]
- },
  "requires": {
   "build": {
    "any": [
@@ -38,6 +33,14 @@
       "scope": "plot"
      }
     ]
+   ]
+  },
+  "operate": {
+   "dormant": [
+    {
+     "type": "BUILDING_ELECTRONIC_PAPER_MAKER",
+     "scope": "city"
+    }
    ]
   }
  },

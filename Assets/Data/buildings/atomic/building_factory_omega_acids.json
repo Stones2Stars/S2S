@@ -10,11 +10,6 @@
    "TECH_ANIMAMATERIALS"
   ]
  },
- "replacedBy": {
-  "buildings": [
-   "BUILDING_CHEMICALS_DISTRICT"
-  ]
- },
  "requires": {
   "build": {
    "all": [
@@ -49,6 +44,12 @@
      "type": "BONUS_LARD",
      "scope": "city",
      "connection": "trade|vicinity"
+    }
+   ],
+   "dormant": [
+    {
+     "type": "BUILDING_CHEMICALS_DISTRICT",
+     "scope": "city"
     }
    ]
   }

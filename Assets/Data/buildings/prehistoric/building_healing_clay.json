@@ -10,12 +10,6 @@
    "TECH_NANOTROIDS"
   ]
  },
- "replacedBy": {
-  "buildings": [
-   "BUILDING_ALTERNATIVE_MEDICINE",
-   "BUILDING_HEALTHCARE_MEGACOMPLEX"
-  ]
- },
  "requires": {
   "build": {
    "all": [
@@ -65,6 +59,16 @@
      "type": "BONUS_FINE_CLAY",
      "scope": "city",
      "connection": "vicinity"
+    }
+   ],
+   "dormant": [
+    {
+     "type": "BUILDING_ALTERNATIVE_MEDICINE",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_HEALTHCARE_MEGACOMPLEX",
+     "scope": "city"
     }
    ]
   }

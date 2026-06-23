@@ -19,11 +19,6 @@
    "TECH_EDUCATION"
   ]
  },
- "replacedBy": {
-  "buildings": [
-   "BUILDING_LIBRARY"
-  ]
- },
  "requires": {
   "build": {
    "all": [
@@ -60,6 +55,12 @@
       "connection": "trade|vicinity"
      }
     ]
+   ],
+   "dormant": [
+    {
+     "type": "BUILDING_LIBRARY",
+     "scope": "city"
+    }
    ]
   }
  },

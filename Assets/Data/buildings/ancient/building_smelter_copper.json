@@ -15,12 +15,6 @@
    "TECH_NANOMINING"
   ]
  },
- "replacedBy": {
-  "buildings": [
-   "BUILDING_ADVANCED_COPPERWORKS",
-   "BUILDING_METALS_MEGACOMPLEX"
-  ]
- },
  "requires": {
   "build": {
    "all": [
@@ -48,6 +42,16 @@
      "type": "BONUS_COPPER_ORE",
      "scope": "city",
      "connection": "trade|vicinity"
+    }
+   ],
+   "dormant": [
+    {
+     "type": "BUILDING_ADVANCED_COPPERWORKS",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_METALS_MEGACOMPLEX",
+     "scope": "city"
     }
    ]
   }

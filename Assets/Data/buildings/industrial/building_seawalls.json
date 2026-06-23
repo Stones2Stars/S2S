@@ -10,12 +10,6 @@
    "TECH_ABYSS_COLONIZATION"
   ]
  },
- "replacedBy": {
-  "buildings": [
-   "BUILDING_ADVANCED_FLOODWALL",
-   "BUILDING_OCEAN_ADMINISTRATION"
-  ]
- },
  "requires": {
   "build": {
    "all": [
@@ -36,6 +30,18 @@
       "scope": "plot"
      }
     ]
+   ]
+  },
+  "operate": {
+   "dormant": [
+    {
+     "type": "BUILDING_ADVANCED_FLOODWALL",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_OCEAN_ADMINISTRATION",
+     "scope": "city"
+    }
    ]
   }
  },

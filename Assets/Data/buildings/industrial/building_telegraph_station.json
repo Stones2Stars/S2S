@@ -16,11 +16,6 @@
    "TECH_COMPUTER_NETWORKS"
   ]
  },
- "replacedBy": {
-  "buildings": [
-   "BUILDING_TELEPHONE_NETWORK"
-  ]
- },
  "requires": {
   "build": {
    "all": [
@@ -58,6 +53,12 @@
      "type": "BONUS_COPPER_WARES",
      "scope": "city",
      "connection": "trade|vicinity"
+    }
+   ],
+   "dormant": [
+    {
+     "type": "BUILDING_TELEPHONE_NETWORK",
+     "scope": "city"
     }
    ]
   }

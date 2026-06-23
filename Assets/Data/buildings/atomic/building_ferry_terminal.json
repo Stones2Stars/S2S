@@ -10,11 +10,6 @@
    "TECH_ENVIRONMENTAL_ECONOMICS"
   ]
  },
- "replacedBy": {
-  "buildings": [
-   "BUILDING_RIVER_ADMINISTRATION"
-  ]
- },
  "requires": {
   "build": {
    "all": [
@@ -58,6 +53,12 @@
       "connection": "trade|vicinity"
      }
     ]
+   ],
+   "dormant": [
+    {
+     "type": "BUILDING_RIVER_ADMINISTRATION",
+     "scope": "city"
+    }
    ]
   }
  },

@@ -33,12 +33,6 @@
    "TECH_NANOMINING"
   ]
  },
- "replacedBy": {
-  "buildings": [
-   "BUILDING_FOUNDRY",
-   "BUILDING_METALS_MEGACOMPLEX"
-  ]
- },
  "requires": {
   "build": {
    "all": [
@@ -132,6 +126,16 @@
       "connection": "trade|vicinity"
      }
     ]
+   ],
+   "dormant": [
+    {
+     "type": "BUILDING_FOUNDRY",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_METALS_MEGACOMPLEX",
+     "scope": "city"
+    }
    ]
   }
  },

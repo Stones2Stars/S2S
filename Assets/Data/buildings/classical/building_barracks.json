@@ -21,12 +21,6 @@
    "TECH_LOGISTICS"
   ]
  },
- "replacedBy": {
-  "buildings": [
-   "BUILDING_GARRISON",
-   "BUILDING_MILITARY_BASE"
-  ]
- },
  "requires": {
   "build": {
    "all": [
@@ -42,6 +36,18 @@
       "scope": "plot"
      }
     ]
+   ]
+  },
+  "operate": {
+   "dormant": [
+    {
+     "type": "BUILDING_GARRISON",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_MILITARY_BASE",
+     "scope": "city"
+    }
    ]
   }
  },

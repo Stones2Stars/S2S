@@ -18,11 +18,6 @@
    "TECH_ATOMIC_SCALE_ENGINEERING"
   ]
  },
- "replacedBy": {
-  "buildings": [
-   "BUILDING_SUPERCONDUCTING_GRID"
-  ]
- },
  "requires": {
   "build": {
    "all": [
@@ -51,6 +46,12 @@
      "type": "BONUS_ELECTROLYTIC_CELLS",
      "scope": "city",
      "connection": "trade|vicinity"
+    }
+   ],
+   "dormant": [
+    {
+     "type": "BUILDING_SUPERCONDUCTING_GRID",
+     "scope": "city"
     }
    ]
   }

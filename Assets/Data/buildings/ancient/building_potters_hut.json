@@ -18,13 +18,6 @@
    "TECH_ASSEMBLY_LINE"
   ]
  },
- "replacedBy": {
-  "buildings": [
-   "BUILDING_MANUFACTURING_DISTRICT",
-   "BUILDING_POTTERS_WORKSHOP",
-   "BUILDING_FACTORY_POTTERY"
-  ]
- },
  "requires": {
   "build": {
    "all": [
@@ -82,6 +75,20 @@
       "connection": "trade|vicinity"
      }
     ]
+   ],
+   "dormant": [
+    {
+     "type": "BUILDING_MANUFACTURING_DISTRICT",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_POTTERS_WORKSHOP",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_FACTORY_POTTERY",
+     "scope": "city"
+    }
    ]
   }
  },

@@ -10,11 +10,6 @@
    "TECH_FEMTOTECHNOLOGY"
   ]
  },
- "replacedBy": {
-  "buildings": [
-   "BUILDING_NANOTECH_COMPLEX"
-  ]
- },
  "requires": {
   "build": {
    "all": [
@@ -61,6 +56,12 @@
      "type": "BONUS_MICROGENERATORS",
      "scope": "city",
      "connection": "trade|vicinity"
+    }
+   ],
+   "dormant": [
+    {
+     "type": "BUILDING_NANOTECH_COMPLEX",
+     "scope": "city"
     }
    ]
   }

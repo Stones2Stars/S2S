@@ -20,12 +20,6 @@
    "TECH_MEGASTRONG_ALLOYS"
   ]
  },
- "replacedBy": {
-  "buildings": [
-   "BUILDING_SUPERSTRONG_ALLOY_WALLS",
-   "BUILDING_MEGASTRONG_ALLOY_WALLS"
-  ]
- },
  "requires": {
   "build": {
    "all": [
@@ -49,6 +43,16 @@
      "type": "BONUS_METAMATERIALS",
      "scope": "city",
      "connection": "trade|vicinity"
+    }
+   ],
+   "dormant": [
+    {
+     "type": "BUILDING_SUPERSTRONG_ALLOY_WALLS",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_MEGASTRONG_ALLOY_WALLS",
+     "scope": "city"
     }
    ]
   }

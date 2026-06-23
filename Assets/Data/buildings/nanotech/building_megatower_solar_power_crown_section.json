@@ -10,11 +10,6 @@
    "TECH_FEMTOTECHNOLOGY"
   ]
  },
- "replacedBy": {
-  "buildings": [
-   "BUILDING_RENEWABLE_MEGACOMPLEX"
-  ]
- },
  "requires": {
   "build": {
    "all": [
@@ -47,6 +42,12 @@
      "type": "BONUS_QUANTUM_DOTS",
      "scope": "city",
      "connection": "trade|vicinity"
+    }
+   ],
+   "dormant": [
+    {
+     "type": "BUILDING_RENEWABLE_MEGACOMPLEX",
+     "scope": "city"
     }
    ]
   }

@@ -15,11 +15,6 @@
    "TECH_CRYONICS"
   ]
  },
- "replacedBy": {
-  "buildings": [
-   "BUILDING_LETHAL_INJECTION"
-  ]
- },
  "requires": {
   "build": {
    "all": [
@@ -48,6 +43,14 @@
       "scope": "plot"
      }
     ]
+   ]
+  },
+  "operate": {
+   "dormant": [
+    {
+     "type": "BUILDING_LETHAL_INJECTION",
+     "scope": "city"
+    }
    ]
   }
  },

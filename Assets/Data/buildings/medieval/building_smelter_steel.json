@@ -17,12 +17,6 @@
    "TECH_NANOMINING"
   ]
  },
- "replacedBy": {
-  "buildings": [
-   "BUILDING_ADVANCED_IRONWORKS",
-   "BUILDING_METALS_MEGACOMPLEX"
-  ]
- },
  "requires": {
   "build": {
    "all": [
@@ -61,6 +55,16 @@
       "connection": "trade|vicinity"
      }
     ]
+   ],
+   "dormant": [
+    {
+     "type": "BUILDING_ADVANCED_IRONWORKS",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_METALS_MEGACOMPLEX",
+     "scope": "city"
+    }
    ]
   }
  },

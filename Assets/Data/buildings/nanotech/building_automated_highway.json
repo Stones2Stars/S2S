@@ -17,11 +17,6 @@
    "TECH_WORMHOLE_HIVEMIND"
   ]
  },
- "replacedBy": {
-  "buildings": [
-   "BUILDING_TELEPORT_BOOTH"
-  ]
- },
  "requires": {
   "build": {
    "all": [
@@ -47,6 +42,14 @@
       "scope": "plot"
      }
     ]
+   ]
+  },
+  "operate": {
+   "dormant": [
+    {
+     "type": "BUILDING_TELEPORT_BOOTH",
+     "scope": "city"
+    }
    ]
   }
  },

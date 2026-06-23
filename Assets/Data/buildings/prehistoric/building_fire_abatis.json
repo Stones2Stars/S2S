@@ -10,15 +10,6 @@
    "TECH_ELECTRONICS"
   ]
  },
- "replacedBy": {
-  "buildings": [
-   "BUILDING_BARBWIRE_FENCE",
-   "BUILDING_ELECTRIC_FENCE",
-   "BUILDING_WIRELESS_ELECTRIC_FENCE",
-   "BUILDING_ARCOLOGY_SHIELDING",
-   "BUILDING_ADVANCED_SHIELDING"
-  ]
- },
  "requires": {
   "build": {
    "all": [
@@ -61,6 +52,28 @@
       "connection": "trade|vicinity"
      }
     ]
+   ],
+   "dormant": [
+    {
+     "type": "BUILDING_BARBWIRE_FENCE",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_ELECTRIC_FENCE",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_WIRELESS_ELECTRIC_FENCE",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_ARCOLOGY_SHIELDING",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_ADVANCED_SHIELDING",
+     "scope": "city"
+    }
    ]
   }
  },

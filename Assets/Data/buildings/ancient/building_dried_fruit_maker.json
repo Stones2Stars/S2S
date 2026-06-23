@@ -10,11 +10,6 @@
    "TECH_GAIA_ECOLOGY"
   ]
  },
- "replacedBy": {
-  "buildings": [
-   "BUILDING_FARMSCRAPER_III"
-  ]
- },
  "requires": {
   "build": {
    "all": [
@@ -38,6 +33,12 @@
      "type": "BONUS_FRUIT",
      "scope": "city",
      "connection": "trade|vicinity"
+    }
+   ],
+   "dormant": [
+    {
+     "type": "BUILDING_FARMSCRAPER_III",
+     "scope": "city"
     }
    ]
   }

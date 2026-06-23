@@ -10,12 +10,6 @@
    "TECH_ATOMIC_SCALE_ENGINEERING"
   ]
  },
- "replacedBy": {
-  "buildings": [
-   "BUILDING_NANOTECH_COMPLEX",
-   "BUILDING_FACTORY_ANTI_GRAVITY_FIELD_GENERATORS"
-  ]
- },
  "requires": {
   "build": {
    "all": [
@@ -58,6 +52,16 @@
      "type": "BONUS_SHOCKWAVE_ENGINES",
      "scope": "city",
      "connection": "trade|vicinity"
+    }
+   ],
+   "dormant": [
+    {
+     "type": "BUILDING_NANOTECH_COMPLEX",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_FACTORY_ANTI_GRAVITY_FIELD_GENERATORS",
+     "scope": "city"
     }
    ]
   }

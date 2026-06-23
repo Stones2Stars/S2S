@@ -15,12 +15,6 @@
    "TECH_WEAPONIZED_ANTIMATTER"
   ]
  },
- "replacedBy": {
-  "buildings": [
-   "BUILDING_LASER_BATTERY",
-   "BUILDING_ANTI_MATTER_BATTERY"
-  ]
- },
  "requires": {
   "build": {
    "all": [
@@ -44,6 +38,16 @@
      "type": "BONUS_NANOTUBES",
      "scope": "city",
      "connection": "trade|vicinity"
+    }
+   ],
+   "dormant": [
+    {
+     "type": "BUILDING_LASER_BATTERY",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_ANTI_MATTER_BATTERY",
+     "scope": "city"
     }
    ]
   }

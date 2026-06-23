@@ -15,11 +15,6 @@
    "TECH_REALITY_REPROGRAMMING"
   ]
  },
- "replacedBy": {
-  "buildings": [
-   "BUILDING_INTERTEMPORAL_CONSTRUCTION_FIRM"
-  ]
- },
  "requires": {
   "build": {
    "all": [
@@ -40,6 +35,14 @@
       "scope": "plot"
      }
     ]
+   ]
+  },
+  "operate": {
+   "dormant": [
+    {
+     "type": "BUILDING_INTERTEMPORAL_CONSTRUCTION_FIRM",
+     "scope": "city"
+    }
    ]
   }
  },

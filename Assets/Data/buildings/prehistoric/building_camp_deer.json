@@ -16,12 +16,6 @@
    "TECH_PLANETARY_ECONOMICS"
   ]
  },
- "replacedBy": {
-  "buildings": [
-   "BUILDING_BREEDING_PROGRAM_DEER",
-   "BUILDING_ANIMAL_PRESERVE"
-  ]
- },
  "requires": {
   "build": {
    "all": [
@@ -55,6 +49,16 @@
      "type": "BONUS_DEER",
      "scope": "city",
      "connection": "vicinity"
+    }
+   ],
+   "dormant": [
+    {
+     "type": "BUILDING_BREEDING_PROGRAM_DEER",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_ANIMAL_PRESERVE",
+     "scope": "city"
     }
    ]
   }

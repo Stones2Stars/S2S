@@ -23,12 +23,6 @@
    "TECH_NANOTROIDS"
   ]
  },
- "replacedBy": {
-  "buildings": [
-   "BUILDING_PHARMACY",
-   "BUILDING_HEALTHCARE_MEGACOMPLEX"
-  ]
- },
  "requires": {
   "build": {
    "all": [
@@ -70,6 +64,18 @@
       "scope": "plot"
      }
     ]
+   ]
+  },
+  "operate": {
+   "dormant": [
+    {
+     "type": "BUILDING_PHARMACY",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_HEALTHCARE_MEGACOMPLEX",
+     "scope": "city"
+    }
    ]
   }
  },

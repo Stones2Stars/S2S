@@ -15,11 +15,6 @@
    "TECH_FREE_ARTISTRY"
   ]
  },
- "replacedBy": {
-  "buildings": [
-   "BUILDING_MUSIC_SCHOOL"
-  ]
- },
  "requires": {
   "build": {
    "all": [
@@ -71,6 +66,14 @@
       "scope": "empire"
      }
     ]
+   ]
+  },
+  "operate": {
+   "dormant": [
+    {
+     "type": "BUILDING_MUSIC_SCHOOL",
+     "scope": "city"
+    }
    ]
   }
  },

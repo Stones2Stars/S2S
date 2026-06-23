@@ -10,14 +10,6 @@
    "TECH_SANITATION"
   ]
  },
- "replacedBy": {
-  "buildings": [
-   "BUILDING_OUTHOUSE",
-   "BUILDING_GARDEROBE",
-   "BUILDING_PUBLIC_RESTROOMS",
-   "BUILDING_SANITATION_CHAMBER"
-  ]
- },
  "requires": {
   "build": {
    "all": [
@@ -33,6 +25,26 @@
       "scope": "plot"
      }
     ]
+   ]
+  },
+  "operate": {
+   "dormant": [
+    {
+     "type": "BUILDING_OUTHOUSE",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_GARDEROBE",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_PUBLIC_RESTROOMS",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_SANITATION_CHAMBER",
+     "scope": "city"
+    }
    ]
   }
  },

@@ -36,7 +36,6 @@
   "investigate": true,
   "alwaysInvisible": true,
   "rivalTerritory": true,
-  "spy": true,
   "stealPlans": true,
   "unlimitedException": true,
   "militarySupport": true

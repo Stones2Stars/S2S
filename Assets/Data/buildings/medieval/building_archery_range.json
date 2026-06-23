@@ -10,14 +10,6 @@
    "TECH_MILITARY_TRADITION"
   ]
  },
- "replacedBy": {
-  "buildings": [
-   "BUILDING_SHOOTING_CLUB",
-   "BUILDING_FIRING_RANGE",
-   "BUILDING_AUTOMATED_FIRING_RANGE",
-   "BUILDING_ORBITAL_TARGETS"
-  ]
- },
  "requires": {
   "build": {
    "all": [
@@ -43,6 +35,26 @@
       "scope": "plot"
      }
     ]
+   ]
+  },
+  "operate": {
+   "dormant": [
+    {
+     "type": "BUILDING_SHOOTING_CLUB",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_FIRING_RANGE",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_AUTOMATED_FIRING_RANGE",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_ORBITAL_TARGETS",
+     "scope": "city"
+    }
    ]
   }
  },

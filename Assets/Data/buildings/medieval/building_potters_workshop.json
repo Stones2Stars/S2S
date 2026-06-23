@@ -19,12 +19,6 @@
    "TECH_RAPID_PROTOTYPING"
   ]
  },
- "replacedBy": {
-  "buildings": [
-   "BUILDING_MANUFACTURING_DISTRICT",
-   "BUILDING_FACTORY_POTTERY"
-  ]
- },
  "requires": {
   "build": {
    "all": [
@@ -56,6 +50,16 @@
       "connection": "trade|vicinity"
      }
     ]
+   ],
+   "dormant": [
+    {
+     "type": "BUILDING_MANUFACTURING_DISTRICT",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_FACTORY_POTTERY",
+     "scope": "city"
+    }
    ]
   }
  },

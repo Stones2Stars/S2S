@@ -10,12 +10,6 @@
    "TECH_MEGASTRUCTURE_ENGINEERING"
   ]
  },
- "replacedBy": {
-  "buildings": [
-   "BUILDING_MODERN_CRANE",
-   "BUILDING_HIGH_TECH_CRANE"
-  ]
- },
  "requires": {
   "build": {
    "all": [
@@ -49,6 +43,16 @@
       "connection": "trade|vicinity"
      }
     ]
+   ],
+   "dormant": [
+    {
+     "type": "BUILDING_MODERN_CRANE",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_HIGH_TECH_CRANE",
+     "scope": "city"
+    }
    ]
   }
  },

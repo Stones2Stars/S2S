@@ -15,12 +15,6 @@
    "TECH_MODERN_SEISMOLOGY"
   ]
  },
- "replacedBy": {
-  "buildings": [
-   "BUILDING_MODERN_EARTHWORKS",
-   "BUILDING_CEMENT_MILL"
-  ]
- },
  "requires": {
   "build": {
    "all": [
@@ -54,6 +48,16 @@
       "connection": "trade|vicinity"
      }
     ]
+   ],
+   "dormant": [
+    {
+     "type": "BUILDING_MODERN_EARTHWORKS",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_CEMENT_MILL",
+     "scope": "city"
+    }
    ]
   }
  },

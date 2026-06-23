@@ -10,11 +10,6 @@
    "TECH_MIND_UPLOADING"
   ]
  },
- "replacedBy": {
-  "buildings": [
-   "BUILDING_FOOD_MANUFACTURING_DISTRICT"
-  ]
- },
  "requires": {
   "build": {
    "any": [
@@ -122,6 +117,14 @@
       "scope": "plot"
      }
     ]
+   ]
+  },
+  "operate": {
+   "dormant": [
+    {
+     "type": "BUILDING_FOOD_MANUFACTURING_DISTRICT",
+     "scope": "city"
+    }
    ]
   }
  },

@@ -15,12 +15,6 @@
    "TECH_MODERN_SEISMOLOGY"
   ]
  },
- "replacedBy": {
-  "buildings": [
-   "BUILDING_MODERN_EARTHWORKS",
-   "BUILDING_FACTORY_BRICKS"
-  ]
- },
  "requires": {
   "build": {
    "all": [
@@ -52,6 +46,16 @@
       "connection": "trade|vicinity"
      }
     ]
+   ],
+   "dormant": [
+    {
+     "type": "BUILDING_MODERN_EARTHWORKS",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_FACTORY_BRICKS",
+     "scope": "city"
+    }
    ]
   }
  },

@@ -16,13 +16,6 @@
    "TECH_ASSEMBLY_LINE"
   ]
  },
- "replacedBy": {
-  "buildings": [
-   "BUILDING_TEXTILE_MILL",
-   "BUILDING_FACTORY_CLOTHING",
-   "BUILDING_TEXTILE_MANUFACTURING_DISTRICT"
-  ]
- },
  "requires": {
   "build": {
    "all": [
@@ -90,6 +83,20 @@
       "connection": "trade|vicinity"
      }
     ]
+   ],
+   "dormant": [
+    {
+     "type": "BUILDING_TEXTILE_MILL",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_FACTORY_CLOTHING",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_TEXTILE_MANUFACTURING_DISTRICT",
+     "scope": "city"
+    }
    ]
   }
  },

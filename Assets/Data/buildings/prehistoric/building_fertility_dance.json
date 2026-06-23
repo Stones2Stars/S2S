@@ -12,11 +12,6 @@
    "TECH_WOMENS_SUFFRAGE"
   ]
  },
- "replacedBy": {
-  "buildings": [
-   "BUILDING_EFFECT_FERTILITY_FESTIVAL"
-  ]
- },
  "requires": {
   "build": {
    "all": [
@@ -46,6 +41,14 @@
       "scope": "plot"
      }
     ]
+   ]
+  },
+  "operate": {
+   "dormant": [
+    {
+     "type": "BUILDING_EFFECT_FERTILITY_FESTIVAL",
+     "scope": "city"
+    }
    ]
   }
  },

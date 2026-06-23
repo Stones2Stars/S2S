@@ -7,16 +7,6 @@
    "TECH_SEDENTARY_LIFESTYLE"
   ]
  },
- "replacedBy": {
-  "buildings": [
-   "BUILDING_PC_BLUEFISH_CAVES",
-   "BUILDING_PC_KLASIES_RIVER_CAVES",
-   "BUILDING_PC_CAVE_OF_ALTAMIRA",
-   "BUILDING_PC_BLOMBOS_CAVE",
-   "BUILDING_PC_CHARLIE_LAKE_CAVE",
-   "BUILDING_PC_PEDRA_FURADA"
-  ]
- },
  "requires": {
   "build": {
    "all": [
@@ -38,6 +28,34 @@
       "scope": "plot"
      }
     ]
+   ]
+  },
+  "operate": {
+   "dormant": [
+    {
+     "type": "BUILDING_PC_BLUEFISH_CAVES",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_PC_KLASIES_RIVER_CAVES",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_PC_CAVE_OF_ALTAMIRA",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_PC_BLOMBOS_CAVE",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_PC_CHARLIE_LAKE_CAVE",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_PC_PEDRA_FURADA",
+     "scope": "city"
+    }
    ]
   }
  },

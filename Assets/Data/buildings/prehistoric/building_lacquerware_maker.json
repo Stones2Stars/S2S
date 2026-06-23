@@ -10,13 +10,6 @@
    "TECH_ASSEMBLY_LINE"
   ]
  },
- "replacedBy": {
-  "buildings": [
-   "BUILDING_MANUFACTURING_DISTRICT",
-   "BUILDING_LACQUERWARE_WORKSHOP",
-   "BUILDING_FACTORY_LACQUERWARE"
-  ]
- },
  "requires": {
   "build": {
    "all": [
@@ -85,6 +78,20 @@
       "connection": "trade|vicinity"
      }
     ]
+   ],
+   "dormant": [
+    {
+     "type": "BUILDING_MANUFACTURING_DISTRICT",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_LACQUERWARE_WORKSHOP",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_FACTORY_LACQUERWARE",
+     "scope": "city"
+    }
    ]
   }
  },

@@ -10,13 +10,6 @@
    "TECH_CRIMINOLOGY"
   ]
  },
- "replacedBy": {
-  "buildings": [
-   "BUILDING_SHERIFFS_OFFICE",
-   "BUILDING_POLICE_STATION",
-   "BUILDING_POLICE_PRECINCT"
-  ]
- },
  "requires": {
   "build": {
    "all": [
@@ -36,6 +29,22 @@
       "scope": "plot"
      }
     ]
+   ]
+  },
+  "operate": {
+   "dormant": [
+    {
+     "type": "BUILDING_SHERIFFS_OFFICE",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_POLICE_STATION",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_POLICE_PRECINCT",
+     "scope": "city"
+    }
    ]
   }
  },

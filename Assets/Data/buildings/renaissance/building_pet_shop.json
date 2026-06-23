@@ -15,11 +15,6 @@
    "TECH_ARTIFICIAL_LIFE"
   ]
  },
- "replacedBy": {
-  "buildings": [
-   "BUILDING_REPET"
-  ]
- },
  "requires": {
   "build": {
    "all": [
@@ -45,6 +40,14 @@
       "scope": "plot"
      }
     ]
+   ]
+  },
+  "operate": {
+   "dormant": [
+    {
+     "type": "BUILDING_REPET",
+     "scope": "city"
+    }
    ]
   }
  },

@@ -10,11 +10,6 @@
    "TECH_ELECTROWEAK_MATTER"
   ]
  },
- "replacedBy": {
-  "buildings": [
-   "BUILDING_PICOTECH_COMPLEX"
-  ]
- },
  "requires": {
   "build": {
    "all": [
@@ -34,6 +29,14 @@
       "scope": "plot"
      }
     ]
+   ]
+  },
+  "operate": {
+   "dormant": [
+    {
+     "type": "BUILDING_PICOTECH_COMPLEX",
+     "scope": "city"
+    }
    ]
   }
  },

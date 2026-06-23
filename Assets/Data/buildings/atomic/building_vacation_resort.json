@@ -10,11 +10,6 @@
    "TECH_FUSION_SPACECRAFT"
   ]
  },
- "replacedBy": {
-  "buildings": [
-   "BUILDING_TOURISM_MEGACOMPLEX"
-  ]
- },
  "requires": {
   "build": {
    "all": [
@@ -36,6 +31,14 @@
       "scope": "plot"
      }
     ]
+   ]
+  },
+  "operate": {
+   "dormant": [
+    {
+     "type": "BUILDING_TOURISM_MEGACOMPLEX",
+     "scope": "city"
+    }
    ]
   }
  },

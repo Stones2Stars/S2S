@@ -15,12 +15,6 @@
    "TECH_NOVUS_CHEMISTRY"
   ]
  },
- "replacedBy": {
-  "buildings": [
-   "BUILDING_CHEMISTRY_LAB",
-   "BUILDING_CHEMICALS_DISTRICT"
-  ]
- },
  "requires": {
   "build": {
    "all": [
@@ -56,6 +50,16 @@
      "type": "BONUS_PRIME_TIMBER",
      "scope": "city",
      "connection": "vicinity"
+    }
+   ],
+   "dormant": [
+    {
+     "type": "BUILDING_CHEMISTRY_LAB",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_CHEMICALS_DISTRICT",
+     "scope": "city"
     }
    ]
   }

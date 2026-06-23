@@ -18,12 +18,6 @@
    "TECH_BIOMETRIC_WARFARE"
   ]
  },
- "replacedBy": {
-  "buildings": [
-   "BUILDING_ELECTRONIC_SECURITY_SYSTEM",
-   "BUILDING_BIOMETRIC_SECURITY_SYSTEM"
-  ]
- },
  "requires": {
   "build": {
    "all": [
@@ -80,6 +74,16 @@
       "connection": "trade|vicinity"
      }
     ]
+   ],
+   "dormant": [
+    {
+     "type": "BUILDING_ELECTRONIC_SECURITY_SYSTEM",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_BIOMETRIC_SECURITY_SYSTEM",
+     "scope": "city"
+    }
    ]
   }
  },

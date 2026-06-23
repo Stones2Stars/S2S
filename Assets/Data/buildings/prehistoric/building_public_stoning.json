@@ -10,15 +10,6 @@
    "TECH_EXECUTIONS"
   ]
  },
- "replacedBy": {
-  "buildings": [
-   "BUILDING_CRUCIFIXION_CROSSES",
-   "BUILDING_GALLOWS",
-   "BUILDING_GUILLOTINE",
-   "BUILDING_ELECTRIC_CHAIR",
-   "BUILDING_LETHAL_INJECTION"
-  ]
- },
  "requires": {
   "build": {
    "all": [
@@ -44,6 +35,30 @@
       "scope": "plot"
      }
     ]
+   ]
+  },
+  "operate": {
+   "dormant": [
+    {
+     "type": "BUILDING_CRUCIFIXION_CROSSES",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_GALLOWS",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_GUILLOTINE",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_ELECTRIC_CHAIR",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_LETHAL_INJECTION",
+     "scope": "city"
+    }
    ]
   }
  },

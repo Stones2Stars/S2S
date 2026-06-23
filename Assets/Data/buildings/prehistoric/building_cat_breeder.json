@@ -17,11 +17,6 @@
    "TECH_ARTIFICIAL_LIFE"
   ]
  },
- "replacedBy": {
-  "buildings": [
-   "BUILDING_REPET"
-  ]
- },
  "requires": {
   "build": {
    "all": [
@@ -53,6 +48,12 @@
       "connection": "trade|vicinity"
      }
     ]
+   ],
+   "dormant": [
+    {
+     "type": "BUILDING_REPET",
+     "scope": "city"
+    }
    ]
   }
  },

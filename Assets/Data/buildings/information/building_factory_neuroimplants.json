@@ -10,11 +10,6 @@
    "TECH_POSTHUMANISM"
   ]
  },
- "replacedBy": {
-  "buildings": [
-   "BUILDING_MEDICAL_MEGACOMPLEX"
-  ]
- },
  "requires": {
   "build": {
    "all": [
@@ -43,6 +38,12 @@
      "type": "BONUS_MICROCHIPS",
      "scope": "city",
      "connection": "trade|vicinity"
+    }
+   ],
+   "dormant": [
+    {
+     "type": "BUILDING_MEDICAL_MEGACOMPLEX",
+     "scope": "city"
     }
    ]
   }

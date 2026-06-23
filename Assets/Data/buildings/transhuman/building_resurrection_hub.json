@@ -17,11 +17,6 @@
    "TECH_ASTROANTHROPOLOGY"
   ]
  },
- "replacedBy": {
-  "buildings": [
-   "BUILDING_NANOMORPHIC_REPLICATOR"
-  ]
- },
  "requires": {
   "build": {
    "all": [
@@ -62,6 +57,12 @@
      "type": "BONUS_NANOBOTS",
      "scope": "city",
      "connection": "trade|vicinity"
+    }
+   ],
+   "dormant": [
+    {
+     "type": "BUILDING_NANOMORPHIC_REPLICATOR",
+     "scope": "city"
     }
    ]
   }

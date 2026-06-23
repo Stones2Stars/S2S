@@ -10,11 +10,6 @@
    "TECH_NANO_DISASSEMBLY"
   ]
  },
- "replacedBy": {
-  "buildings": [
-   "BUILDING_BATTLEMECH_ARENA"
-  ]
- },
  "requires": {
   "build": {
    "all": [
@@ -30,6 +25,14 @@
       "scope": "plot"
      }
     ]
+   ]
+  },
+  "operate": {
+   "dormant": [
+    {
+     "type": "BUILDING_BATTLEMECH_ARENA",
+     "scope": "city"
+    }
    ]
   }
  },

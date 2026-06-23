@@ -7,11 +7,6 @@
    "TECH_ASTRONOMY"
   ]
  },
- "replacedBy": {
-  "buildings": [
-   "BUILDING_POLLUTION_BLACKENED_SKIES"
-  ]
- },
  "requires": {
   "build": {
    "all": [
@@ -54,6 +49,12 @@
      "type": "BONUS_BRONZE_WARES",
      "scope": "city",
      "connection": "trade|vicinity"
+    }
+   ],
+   "dormant": [
+    {
+     "type": "BUILDING_POLLUTION_BLACKENED_SKIES",
+     "scope": "city"
     }
    ]
   }

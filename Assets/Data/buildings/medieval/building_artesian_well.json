@@ -10,11 +10,6 @@
    "TECH_MEGACITIES"
   ]
  },
- "replacedBy": {
-  "buildings": [
-   "BUILDING_MODERN_WATERWORKS"
-  ]
- },
  "requires": {
   "build": {
    "all": [
@@ -51,6 +46,12 @@
       "connection": "trade|vicinity"
      }
     ]
+   ],
+   "dormant": [
+    {
+     "type": "BUILDING_MODERN_WATERWORKS",
+     "scope": "city"
+    }
    ]
   }
  },

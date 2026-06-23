@@ -15,11 +15,6 @@
    "TECH_WORMHOLE_HIVEMIND"
   ]
  },
- "replacedBy": {
-  "buildings": [
-   "BUILDING_TELEPORT_SHIPPING_WAREHOUSE"
-  ]
- },
  "requires": {
   "build": {
    "all": [
@@ -57,6 +52,12 @@
      "type": "BONUS_AIRCRAFT",
      "scope": "city",
      "connection": "trade|vicinity"
+    }
+   ],
+   "dormant": [
+    {
+     "type": "BUILDING_TELEPORT_SHIPPING_WAREHOUSE",
+     "scope": "city"
     }
    ]
   }

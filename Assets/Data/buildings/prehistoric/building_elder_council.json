@@ -10,13 +10,6 @@
    "TECH_COMPULSORY_EDUCATION"
   ]
  },
- "replacedBy": {
-  "buildings": [
-   "BUILDING_LYCEUM",
-   "BUILDING_ELEMENTARY_SCHOOL",
-   "BUILDING_HOLOGRAPHIC_SCHOOL"
-  ]
- },
  "requires": {
   "build": {
    "all": [
@@ -36,6 +29,22 @@
       "scope": "plot"
      }
     ]
+   ]
+  },
+  "operate": {
+   "dormant": [
+    {
+     "type": "BUILDING_LYCEUM",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_ELEMENTARY_SCHOOL",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_HOLOGRAPHIC_SCHOOL",
+     "scope": "city"
+    }
    ]
   }
  },

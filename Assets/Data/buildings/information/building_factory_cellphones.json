@@ -16,11 +16,6 @@
    "TECH_NANOELECTRONICS"
   ]
  },
- "replacedBy": {
-  "buildings": [
-   "BUILDING_ELECTRONICS_MANUFACTURING_DISTRICT"
-  ]
- },
  "requires": {
   "build": {
    "all": [
@@ -59,6 +54,12 @@
       "connection": "trade|vicinity"
      }
     ]
+   ],
+   "dormant": [
+    {
+     "type": "BUILDING_ELECTRONICS_MANUFACTURING_DISTRICT",
+     "scope": "city"
+    }
    ]
   }
  },

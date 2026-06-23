@@ -15,11 +15,6 @@
    "TECH_ZERO_POINT_ENERGY"
   ]
  },
- "replacedBy": {
-  "buildings": [
-   "BUILDING_ANTI_MATTER_BATTERY"
-  ]
- },
  "requires": {
   "build": {
    "all": [
@@ -43,6 +38,12 @@
      "type": "BONUS_NANOTUBES",
      "scope": "city",
      "connection": "trade|vicinity"
+    }
+   ],
+   "dormant": [
+    {
+     "type": "BUILDING_ANTI_MATTER_BATTERY",
+     "scope": "city"
     }
    ]
   }

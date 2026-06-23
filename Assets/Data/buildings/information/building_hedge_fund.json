@@ -10,11 +10,6 @@
    "TECH_ATEMPORAL_BEINGS"
   ]
  },
- "replacedBy": {
-  "buildings": [
-   "BUILDING_INTERTEMPORAL_STOCK_MARKET"
-  ]
- },
  "requires": {
   "build": {
    "all": [
@@ -34,6 +29,14 @@
       "scope": "plot"
      }
     ]
+   ]
+  },
+  "operate": {
+   "dormant": [
+    {
+     "type": "BUILDING_INTERTEMPORAL_STOCK_MARKET",
+     "scope": "city"
+    }
    ]
   }
  },

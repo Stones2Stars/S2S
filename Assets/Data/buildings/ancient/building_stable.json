@@ -27,12 +27,6 @@
    "TECH_CAVALRY_TACTICS"
   ]
  },
- "replacedBy": {
-  "buildings": [
-   "BUILDING_MODERN_STABLE",
-   "BUILDING_KNIGHTS_STABLE"
-  ]
- },
  "requires": {
   "build": {
    "all": [
@@ -84,6 +78,16 @@
      "type": "BONUS_SADDLES",
      "scope": "city",
      "connection": "trade|vicinity"
+    }
+   ],
+   "dormant": [
+    {
+     "type": "BUILDING_MODERN_STABLE",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_KNIGHTS_STABLE",
+     "scope": "city"
     }
    ]
   }

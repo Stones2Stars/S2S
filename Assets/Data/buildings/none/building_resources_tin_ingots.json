@@ -10,11 +10,6 @@
    "TECH_ATOMIC_SCALE_ENGINEERING"
   ]
  },
- "replacedBy": {
-  "buildings": [
-   "BUILDING_METALS_MEGACOMPLEX"
-  ]
- },
  "requires": {
   "build": {
    "any": [
@@ -38,6 +33,14 @@
       "scope": "plot"
      }
     ]
+   ]
+  },
+  "operate": {
+   "dormant": [
+    {
+     "type": "BUILDING_METALS_MEGACOMPLEX",
+     "scope": "city"
+    }
    ]
   }
  },

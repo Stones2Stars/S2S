@@ -10,11 +10,6 @@
    "TECH_ASTROECOLOGY"
   ]
  },
- "replacedBy": {
-  "buildings": [
-   "BUILDING_MARTIAN_VERTICAL_FARM"
-  ]
- },
  "requires": {
   "build": {
    "all": [
@@ -46,6 +41,14 @@
       "scope": "plot"
      }
     ]
+   ]
+  },
+  "operate": {
+   "dormant": [
+    {
+     "type": "BUILDING_MARTIAN_VERTICAL_FARM",
+     "scope": "city"
+    }
    ]
   }
  },

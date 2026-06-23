@@ -2,11 +2,6 @@
  "type": "BUILDING_GRAND_SKY_FESTIVAL",
  "description": "TXT_KEY_BUILDING_GRAND_SKY_FESTIVAL",
  "civilopedia": "TXT_KEY_BUILDING_GRAND_SKY_FESTIVAL_PEDIA",
- "replacedBy": {
-  "buildings": [
-   "BUILDING_POLLUTION_BLACKENED_SKIES"
-  ]
- },
  "requires": {
   "build": {
    "all": [
@@ -106,6 +101,12 @@
       "connection": "trade|vicinity"
      }
     ]
+   ],
+   "dormant": [
+    {
+     "type": "BUILDING_POLLUTION_BLACKENED_SKIES",
+     "scope": "city"
+    }
    ]
   }
  },

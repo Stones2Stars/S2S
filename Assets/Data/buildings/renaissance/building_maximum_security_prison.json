@@ -7,11 +7,6 @@
    "BUILDING_CRIME_PRISON_BREAKOUTS"
   ]
  },
- "replacedBy": {
-  "buildings": [
-   "BUILDING_SAFETY_ORBITAL_PRISON"
-  ]
- },
  "requires": {
   "build": {
    "all": [
@@ -48,6 +43,12 @@
       "connection": "trade|vicinity"
      }
     ]
+   ],
+   "dormant": [
+    {
+     "type": "BUILDING_SAFETY_ORBITAL_PRISON",
+     "scope": "city"
+    }
    ]
   }
  },

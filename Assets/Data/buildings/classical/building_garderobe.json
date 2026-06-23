@@ -10,12 +10,6 @@
    "TECH_VIRTUAL_SOCIETY"
   ]
  },
- "replacedBy": {
-  "buildings": [
-   "BUILDING_PUBLIC_RESTROOMS",
-   "BUILDING_SANITATION_CHAMBER"
-  ]
- },
  "requires": {
   "build": {
    "all": [
@@ -56,6 +50,16 @@
       "connection": "trade|vicinity"
      }
     ]
+   ],
+   "dormant": [
+    {
+     "type": "BUILDING_PUBLIC_RESTROOMS",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_SANITATION_CHAMBER",
+     "scope": "city"
+    }
    ]
   }
  },

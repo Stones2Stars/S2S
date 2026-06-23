@@ -10,18 +10,6 @@
    "TECH_MINE_WARFARE"
   ]
  },
- "replacedBy": {
-  "buildings": [
-   "BUILDING_MECHANICAL_TRAPS",
-   "BUILDING_LANDMINES",
-   "BUILDING_BOOBY_TRAPS",
-   "BUILDING_ROBOTIC_TRAPS",
-   "BUILDING_GERM_TRAPS",
-   "BUILDING_EMP_TRAPS",
-   "BUILDING_NANOBOT_TRAPS",
-   "BUILDING_GRAVITY_TRAPS"
-  ]
- },
  "requires": {
   "build": {
    "all": [
@@ -64,6 +52,40 @@
       "connection": "trade|vicinity"
      }
     ]
+   ],
+   "dormant": [
+    {
+     "type": "BUILDING_MECHANICAL_TRAPS",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_LANDMINES",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_BOOBY_TRAPS",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_ROBOTIC_TRAPS",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_GERM_TRAPS",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_EMP_TRAPS",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_NANOBOT_TRAPS",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_GRAVITY_TRAPS",
+     "scope": "city"
+    }
    ]
   }
  },

@@ -10,12 +10,6 @@
    "TECH_ATOMIC_SCALE_ENGINEERING"
   ]
  },
- "replacedBy": {
-  "buildings": [
-   "BUILDING_ENHANCED_GEOTHERMAL_SYSTEM",
-   "BUILDING_RENEWABLE_MEGACOMPLEX"
-  ]
- },
  "requires": {
   "build": {
    "all": [
@@ -57,6 +51,16 @@
       "connection": "vicinity"
      }
     ]
+   ],
+   "dormant": [
+    {
+     "type": "BUILDING_ENHANCED_GEOTHERMAL_SYSTEM",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_RENEWABLE_MEGACOMPLEX",
+     "scope": "city"
+    }
    ]
   }
  },

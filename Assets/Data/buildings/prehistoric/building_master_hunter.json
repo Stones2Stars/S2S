@@ -16,11 +16,6 @@
    "TECH_SEMI_AUTOMATIC_WEAPONS"
   ]
  },
- "replacedBy": {
-  "buildings": [
-   "BUILDING_MASTER_HUNTER_TRADITION"
-  ]
- },
  "requires": {
   "build": {
    "all": [
@@ -36,6 +31,14 @@
       "scope": "plot"
      }
     ]
+   ]
+  },
+  "operate": {
+   "dormant": [
+    {
+     "type": "BUILDING_MASTER_HUNTER_TRADITION",
+     "scope": "city"
+    }
    ]
   }
  },

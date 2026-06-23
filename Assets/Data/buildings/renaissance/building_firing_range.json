@@ -21,12 +21,6 @@
    "TECH_WEAPONIZED_LASERS"
   ]
  },
- "replacedBy": {
-  "buildings": [
-   "BUILDING_AUTOMATED_FIRING_RANGE",
-   "BUILDING_ORBITAL_TARGETS"
-  ]
- },
  "requires": {
   "build": {
    "all": [
@@ -58,6 +52,16 @@
       "connection": "trade|vicinity"
      }
     ]
+   ],
+   "dormant": [
+    {
+     "type": "BUILDING_AUTOMATED_FIRING_RANGE",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_ORBITAL_TARGETS",
+     "scope": "city"
+    }
    ]
   }
  },

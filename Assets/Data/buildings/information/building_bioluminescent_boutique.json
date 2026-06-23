@@ -15,11 +15,6 @@
    "TECH_CULTURAL_EVOLUTION"
   ]
  },
- "replacedBy": {
-  "buildings": [
-   "BUILDING_HIGH_TECH_CULTURAL_ENRICHMENT"
-  ]
- },
  "requires": {
   "build": {
    "all": [
@@ -58,6 +53,12 @@
       "connection": "trade|vicinity"
      }
     ]
+   ],
+   "dormant": [
+    {
+     "type": "BUILDING_HIGH_TECH_CULTURAL_ENRICHMENT",
+     "scope": "city"
+    }
    ]
   }
  },

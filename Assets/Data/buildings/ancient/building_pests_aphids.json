@@ -10,13 +10,6 @@
    "TECH_BOTANY"
   ]
  },
- "replacedBy": {
-  "buildings": [
-   "BUILDING_LADYBUG_SANCTUARY",
-   "BUILDING_ARBORETUM",
-   "BUILDING_AGROFOREST"
-  ]
- },
  "requires": {
   "build": {
    "all": [
@@ -58,6 +51,20 @@
       "connection": "vicinity"
      }
     ]
+   ],
+   "dormant": [
+    {
+     "type": "BUILDING_LADYBUG_SANCTUARY",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_ARBORETUM",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_AGROFOREST",
+     "scope": "city"
+    }
    ]
   }
  },

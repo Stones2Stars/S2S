@@ -10,14 +10,6 @@
    "TECH_COMBAT_SPORTS"
   ]
  },
- "replacedBy": {
-  "buildings": [
-   "BUILDING_ARENA",
-   "BUILDING_COLOSSEUM",
-   "BUILDING_MINOR_LEAGUE_STADIUM",
-   "BUILDING_MAJOR_LEAGUE_STADIUM"
-  ]
- },
  "requires": {
   "build": {
    "all": [
@@ -39,6 +31,26 @@
       "scope": "empire"
      }
     ]
+   ]
+  },
+  "operate": {
+   "dormant": [
+    {
+     "type": "BUILDING_ARENA",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_COLOSSEUM",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_MINOR_LEAGUE_STADIUM",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_MAJOR_LEAGUE_STADIUM",
+     "scope": "city"
+    }
    ]
   }
  },

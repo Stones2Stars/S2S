@@ -20,11 +20,6 @@
    "TECH_ELECTROWEAK_MATTER"
   ]
  },
- "replacedBy": {
-  "buildings": [
-   "BUILDING_MEGASTRONG_ALLOY_WALLS"
-  ]
- },
  "requires": {
   "build": {
    "all": [
@@ -48,6 +43,12 @@
      "type": "BONUS_SUPERSTRONG_ALLOYS",
      "scope": "city",
      "connection": "trade|vicinity"
+    }
+   ],
+   "dormant": [
+    {
+     "type": "BUILDING_MEGASTRONG_ALLOY_WALLS",
+     "scope": "city"
     }
    ]
   }

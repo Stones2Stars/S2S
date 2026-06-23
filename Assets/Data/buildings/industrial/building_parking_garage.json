@@ -10,12 +10,6 @@
    "TECH_TELEPORTATION"
   ]
  },
- "replacedBy": {
-  "buildings": [
-   "BUILDING_AUTOMATED_PARKING_GARAGE",
-   "BUILDING_TELEPORT_BOOTH"
-  ]
- },
  "requires": {
   "build": {
    "all": [
@@ -68,6 +62,16 @@
       "connection": "trade|vicinity"
      }
     ]
+   ],
+   "dormant": [
+    {
+     "type": "BUILDING_AUTOMATED_PARKING_GARAGE",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_TELEPORT_BOOTH",
+     "scope": "city"
+    }
    ]
   }
  },

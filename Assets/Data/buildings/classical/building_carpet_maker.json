@@ -10,12 +10,6 @@
    "TECH_RAPID_PROTOTYPING"
   ]
  },
- "replacedBy": {
-  "buildings": [
-   "BUILDING_FACTORY_CARPETS",
-   "BUILDING_TEXTILE_MANUFACTURING_DISTRICT"
-  ]
- },
  "requires": {
   "build": {
    "all": [
@@ -49,6 +43,16 @@
      "type": "BONUS_CLOTH",
      "scope": "city",
      "connection": "trade|vicinity"
+    }
+   ],
+   "dormant": [
+    {
+     "type": "BUILDING_FACTORY_CARPETS",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_TEXTILE_MANUFACTURING_DISTRICT",
+     "scope": "city"
     }
    ]
   }

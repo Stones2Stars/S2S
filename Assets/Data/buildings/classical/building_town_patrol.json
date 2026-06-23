@@ -29,15 +29,6 @@
    "TECH_FLINTLOCK"
   ]
  },
- "replacedBy": {
-  "buildings": [
-   "BUILDING_GUARDHOUSE",
-   "BUILDING_GUARD_STATION",
-   "BUILDING_SHERIFFS_OFFICE",
-   "BUILDING_POLICE_STATION",
-   "BUILDING_POLICE_PRECINCT"
-  ]
- },
  "requires": {
   "build": {
    "all": [
@@ -53,6 +44,30 @@
       "scope": "plot"
      }
     ]
+   ]
+  },
+  "operate": {
+   "dormant": [
+    {
+     "type": "BUILDING_GUARDHOUSE",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_GUARD_STATION",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_SHERIFFS_OFFICE",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_POLICE_STATION",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_POLICE_PRECINCT",
+     "scope": "city"
+    }
    ]
   }
  },

@@ -10,12 +10,6 @@
    "TECH_ADVANCED_SHIELDING"
   ]
  },
- "replacedBy": {
-  "buildings": [
-   "BUILDING_ARCOLOGY_SHIELDING",
-   "BUILDING_ADVANCED_SHIELDING"
-  ]
- },
  "requires": {
   "build": {
    "all": [
@@ -40,6 +34,16 @@
      "type": "BONUS_COMPUTERS",
      "scope": "city",
      "connection": "trade|vicinity"
+    }
+   ],
+   "dormant": [
+    {
+     "type": "BUILDING_ARCOLOGY_SHIELDING",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_ADVANCED_SHIELDING",
+     "scope": "city"
     }
    ]
   }

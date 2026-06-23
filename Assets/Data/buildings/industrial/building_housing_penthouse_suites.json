@@ -7,13 +7,6 @@
    "TECH_COLONY_ARCOLOGY"
   ]
  },
- "replacedBy": {
-  "buildings": [
-   "BUILDING_HOUSING_HOLO_SUITES",
-   "BUILDING_HOUSING_COLONY_ARCOLOGY",
-   "BUILDING_LAUNCH_ARCOLOGY"
-  ]
- },
  "requires": {
   "build": {
    "all": [
@@ -64,6 +57,20 @@
      "type": "BONUS_MARBLE",
      "scope": "city",
      "connection": "trade|vicinity"
+    }
+   ],
+   "dormant": [
+    {
+     "type": "BUILDING_HOUSING_HOLO_SUITES",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_HOUSING_COLONY_ARCOLOGY",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_LAUNCH_ARCOLOGY",
+     "scope": "city"
     }
    ]
   }

@@ -16,12 +16,6 @@
    "TECH_PLANETARY_ECONOMICS"
   ]
  },
- "replacedBy": {
-  "buildings": [
-   "BUILDING_BREEDING_PROGRAM_ELEPHANT",
-   "BUILDING_ANIMAL_PRESERVE"
-  ]
- },
  "requires": {
   "build": {
    "all": [
@@ -61,6 +55,16 @@
      "type": "BONUS_ELEPHANTS",
      "scope": "city",
      "connection": "vicinity"
+    }
+   ],
+   "dormant": [
+    {
+     "type": "BUILDING_BREEDING_PROGRAM_ELEPHANT",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_ANIMAL_PRESERVE",
+     "scope": "city"
     }
    ]
   }

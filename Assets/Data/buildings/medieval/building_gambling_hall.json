@@ -10,12 +10,6 @@
    "TECH_ONLINE_COMMUNITY"
   ]
  },
- "replacedBy": {
-  "buildings": [
-   "BUILDING_CASINO",
-   "BUILDING_ORDINANCE_GAMBLING_BAN"
-  ]
- },
  "requires": {
   "build": {
    "all": [
@@ -41,6 +35,18 @@
       "scope": "plot"
      }
     ]
+   ]
+  },
+  "operate": {
+   "dormant": [
+    {
+     "type": "BUILDING_CASINO",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_ORDINANCE_GAMBLING_BAN",
+     "scope": "city"
+    }
    ]
   }
  },

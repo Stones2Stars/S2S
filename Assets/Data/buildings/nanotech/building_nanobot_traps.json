@@ -10,11 +10,6 @@
    "TECH_ATOMIZATION_FIELD"
   ]
  },
- "replacedBy": {
-  "buildings": [
-   "BUILDING_GRAVITY_TRAPS"
-  ]
- },
  "requires": {
   "build": {
    "all": [
@@ -39,6 +34,12 @@
      "type": "BONUS_NANOBOTS",
      "scope": "city",
      "connection": "trade|vicinity"
+    }
+   ],
+   "dormant": [
+    {
+     "type": "BUILDING_GRAVITY_TRAPS",
+     "scope": "city"
     }
    ]
   }

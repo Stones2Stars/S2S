@@ -103,7 +103,7 @@ CAP_BOOL = {
     "bMechanized": "mechanized", "bNoBadGoodies": "noBadGoodies", "bNoNonOwnedCityEntry": "noNonOwnedCityEntry",
     "bNoNonTypeProdMods": "noNonTypeProdMods", "bNukeImmune": "nukeImmune", "bOnlyDefensive": "onlyDefensive",
     "bPassage": "passage", "bRBombardForceAbility": "rBombardForceAbility", "bRivalTerritory": "rivalTerritory",
-    "bSabotage": "sabotage", "bSpy": "spy", "bStateReligion": "stateReligion", "bStealPlans": "stealPlans",
+    "bSabotage": "sabotage", "bStateReligion": "stateReligion", "bStealPlans": "stealPlans",
     "bStealthDefense": "stealthDefense", "bSuicide": "suicide", "bUnlimitedException": "unlimitedException",
     "bUpgradeAnywhere": "upgradeAnywhere", "bWorkerTrade": "workerTrade", "bAttackOnlyCities": "attackOnlyCities",
     "bIgnoreNoEntryLevel": "ignoreNoEntryLevel", "bFliesToMove": "fliesToMove", "bFreeDrop": "freeDrop",
@@ -125,12 +125,13 @@ TAG_BY_UNITAI = {
     "UNITAI_WORKER":   ["worker", "civilian"], "UNITAI_WORKER_SEA": ["worker", "civilian"],
     "UNITAI_SETTLE":   ["settler", "civilian"], "UNITAI_MISSIONARY": ["missionary", "civilian"],
     "UNITAI_MERCHANT": ["merchant", "civilian"], "UNITAI_SPY": ["spy"],
+    "UNITAI_INFILTRATOR": ["outlaw"],
     # `civilian` is opt-in for genuinely-civilian units (workers, merchants — owner); `UNITAI_SPY` = the actual spy
-    # (only spies run espionage missions) but is NOT civilian. NB the `spy` SKILL (bSpy) is the same notion
-    # mis-filed as a skill; reconcile in post-migration (drop the skill, keep the tag). settler/missionary carry
-    # `civilian` provisionally (peaceful non-combatants) — confirm in validation.
-    # Deferred: `UNITAI_INFILTRATOR` = a criminal-type unit (hidden-nationality, alongside `exile`) — its own tag,
-    # not spy; `entertainer` (no clean signal). Untagged is fine (owner: fix in validation).
+    # (only spies run espionage missions) but is NOT civilian. spy is a TAG ONLY (owner 2026-06-23: espionage isn't a
+    # skill -- only the spy unit class gets it), so the legacy bSpy CAP no longer emits a `spy` skill (dropped above).
+    # `UNITAI_INFILTRATOR` = the hidden-nationality criminal / criminal-adjacent ruffian group (exile, burglar,
+    # mobster, thief, ...) -> tag `outlaw` (owner 2026-06-23). settler/missionary carry `civilian` provisionally
+    # (peaceful non-combatants) — confirm in validation. `entertainer` (no clean signal) untagged is fine.
 }
 
 # ---- grants (one-shot, lists) ----
@@ -718,7 +719,8 @@ def curate_special_unit(typ, rec, store):
 HANDLED = (set(BASE) | set(UNIT_FAMILIES) | set(CAP_BOOL) | set(CAP_COUNT) | set(DCM_AIRBOMB) | set(GRANT_LIST)
            | set(COST) | set(ID_SCALAR) | set(ID_LIST) | set(TEXT) | set(ART) | REQUIRES_TAGS | STORE_TAGS
            | PASS2_TAGS | {"Type", "Combat", "Flavors", "iAIWeight", "iInstanceCostModifier", "bGoldenAge",
-                           "DefaultUnitAI", "UnitMeshGroups", "FreePromotions"})
+                           "DefaultUnitAI", "UnitMeshGroups", "FreePromotions",
+                           "bSpy"})   # dropped: redundant with the 'spy' tag (every bSpy unit is UNITAI_SPY); spy isn't a skill (owner 2026-06-23)
 
 
 def main():

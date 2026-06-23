@@ -10,11 +10,6 @@
    "TECH_COMPOSITES"
   ]
  },
- "replacedBy": {
-  "buildings": [
-   "BUILDING_MUSIC_FACTORY"
-  ]
- },
  "requires": {
   "build": {
    "all": [
@@ -60,6 +55,14 @@
       "scope": "plot"
      }
     ]
+   ]
+  },
+  "operate": {
+   "dormant": [
+    {
+     "type": "BUILDING_MUSIC_FACTORY",
+     "scope": "city"
+    }
    ]
   }
  },

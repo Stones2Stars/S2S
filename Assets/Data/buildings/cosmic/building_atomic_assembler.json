@@ -19,12 +19,6 @@
    "TECH_MATERIALIZATION"
   ]
  },
- "replacedBy": {
-  "buildings": [
-   "BUILDING_QUANTUM_ASSEMBLER",
-   "BUILDING_MATERIALIZER"
-  ]
- },
  "requires": {
   "build": {
    "all": [
@@ -45,6 +39,18 @@
       "scope": "plot"
      }
     ]
+   ]
+  },
+  "operate": {
+   "dormant": [
+    {
+     "type": "BUILDING_QUANTUM_ASSEMBLER",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_MATERIALIZER",
+     "scope": "city"
+    }
    ]
   }
  },

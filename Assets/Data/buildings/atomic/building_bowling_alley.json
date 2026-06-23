@@ -10,11 +10,6 @@
    "TECH_WEATHER_CONTROL"
   ]
  },
- "replacedBy": {
-  "buildings": [
-   "BUILDING_ATHLETIC_MEGACOMPLEX"
-  ]
- },
  "requires": {
   "build": {
    "all": [
@@ -63,6 +58,12 @@
       "connection": "trade|vicinity"
      }
     ]
+   ],
+   "dormant": [
+    {
+     "type": "BUILDING_ATHLETIC_MEGACOMPLEX",
+     "scope": "city"
+    }
    ]
   }
  },

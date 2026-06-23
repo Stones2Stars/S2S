@@ -15,11 +15,6 @@
    "TECH_PSYCHOLOGY"
   ]
  },
- "replacedBy": {
-  "buildings": [
-   "BUILDING_JAIL"
-  ]
- },
  "requires": {
   "build": {
    "all": [
@@ -49,6 +44,14 @@
       "scope": "plot"
      }
     ]
+   ]
+  },
+  "operate": {
+   "dormant": [
+    {
+     "type": "BUILDING_JAIL",
+     "scope": "city"
+    }
    ]
   }
  },

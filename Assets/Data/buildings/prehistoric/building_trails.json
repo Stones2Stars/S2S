@@ -19,15 +19,6 @@
    "TECH_PAVED_ROADS"
   ]
  },
- "replacedBy": {
-  "buildings": [
-   "BUILDING_ROADS",
-   "BUILDING_PAVED_ROADS",
-   "BUILDING_ASPHALT_ROADS",
-   "BUILDING_SKYROAD_CONTROL_TOWER",
-   "BUILDING_TELEPORT_BOOTH"
-  ]
- },
  "requires": {
   "build": {
    "all": [
@@ -43,6 +34,30 @@
       "scope": "plot"
      }
     ]
+   ]
+  },
+  "operate": {
+   "dormant": [
+    {
+     "type": "BUILDING_ROADS",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_PAVED_ROADS",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_ASPHALT_ROADS",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_SKYROAD_CONTROL_TOWER",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_TELEPORT_BOOTH",
+     "scope": "city"
+    }
    ]
   }
  },

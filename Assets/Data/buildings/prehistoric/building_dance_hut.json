@@ -23,12 +23,6 @@
    "TECH_ELECTRONICS"
   ]
  },
- "replacedBy": {
-  "buildings": [
-   "BUILDING_DANCE_HALL",
-   "BUILDING_NIGHT_CLUB"
-  ]
- },
  "requires": {
   "build": {
    "all": [
@@ -80,6 +74,18 @@
       "scope": "empire"
      }
     ]
+   ]
+  },
+  "operate": {
+   "dormant": [
+    {
+     "type": "BUILDING_DANCE_HALL",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_NIGHT_CLUB",
+     "scope": "city"
+    }
    ]
   }
  },

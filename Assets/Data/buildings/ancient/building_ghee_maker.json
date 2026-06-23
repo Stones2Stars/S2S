@@ -10,12 +10,6 @@
    "TECH_REPLACEMENT_ORGANS"
   ]
  },
- "replacedBy": {
-  "buildings": [
-   "BUILDING_FACTORY_GHEE_OIL",
-   "BUILDING_MEAT_INDUSTRY_CONGLOMERATE"
-  ]
- },
  "requires": {
   "build": {
    "all": [
@@ -73,6 +67,16 @@
       "connection": "trade|vicinity"
      }
     ]
+   ],
+   "dormant": [
+    {
+     "type": "BUILDING_FACTORY_GHEE_OIL",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_MEAT_INDUSTRY_CONGLOMERATE",
+     "scope": "city"
+    }
    ]
   }
  },

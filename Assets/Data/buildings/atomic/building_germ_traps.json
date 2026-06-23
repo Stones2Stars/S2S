@@ -10,14 +10,6 @@
    "TECH_ELECTRIC_ARC_WEAPONRY"
   ]
  },
- "replacedBy": {
-  "buildings": [
-   "BUILDING_ROBOTIC_TRAPS",
-   "BUILDING_EMP_TRAPS",
-   "BUILDING_NANOBOT_TRAPS",
-   "BUILDING_GRAVITY_TRAPS"
-  ]
- },
  "requires": {
   "build": {
    "all": [
@@ -37,6 +29,26 @@
       "scope": "plot"
      }
     ]
+   ]
+  },
+  "operate": {
+   "dormant": [
+    {
+     "type": "BUILDING_ROBOTIC_TRAPS",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_EMP_TRAPS",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_NANOBOT_TRAPS",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_GRAVITY_TRAPS",
+     "scope": "city"
+    }
    ]
   }
  },

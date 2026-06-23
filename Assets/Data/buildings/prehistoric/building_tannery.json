@@ -15,12 +15,6 @@
    "TECH_REPLACEMENT_ORGANS"
   ]
  },
- "replacedBy": {
-  "buildings": [
-   "BUILDING_FACTORY_LEATHER",
-   "BUILDING_MEAT_INDUSTRY_CONGLOMERATE"
-  ]
- },
  "requires": {
   "build": {
    "all": [
@@ -70,6 +64,16 @@
       "connection": "trade|vicinity"
      }
     ]
+   ],
+   "dormant": [
+    {
+     "type": "BUILDING_FACTORY_LEATHER",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_MEAT_INDUSTRY_CONGLOMERATE",
+     "scope": "city"
+    }
    ]
   }
  },

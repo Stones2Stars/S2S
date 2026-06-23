@@ -15,12 +15,6 @@
    "TECH_MANAGEMENT"
   ]
  },
- "replacedBy": {
-  "buildings": [
-   "BUILDING_TOWNCLOCK",
-   "BUILDING_POLLUTION_BLACKENED_SKIES"
-  ]
- },
  "requires": {
   "build": {
    "all": [
@@ -52,6 +46,16 @@
       "connection": "trade|vicinity"
      }
     ]
+   ],
+   "dormant": [
+    {
+     "type": "BUILDING_TOWNCLOCK",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_POLLUTION_BLACKENED_SKIES",
+     "scope": "city"
+    }
    ]
   }
  },

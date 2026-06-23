@@ -34,7 +34,7 @@ from collections import OrderedDict
 
 import engine
 import boolexpr
-from curate_common import put_art, emit_art, FAMILY_ORDER, de_i
+from curate_common import put_art, emit_art, FAMILY_ORDER, de_i, descale100
 from store import Store, REPO
 
 # ---- scalar/percent modifier families: tag -> (family, scope, member|None, unit). Corrected scopes from the
@@ -103,11 +103,11 @@ SCALAR_FAMILIES = {
     "iRevIdxLocal": ("revolution", "city", None, "flat"),
     "iRevIdxNational": ("revolution", "empire", None, "flat"),
     "iRevIdxDistanceModifier": ("revolution", "city", "distanceModifier", "percent"),
-    # pillage gold (REVIVE, §8-ii)
-    "iPillageGoldModifier": ("pillageGold", "empire", None, "percent"),
-    # espionage stats (insidiousness/investigation)
-    "iInsidiousness": ("espionage", "city", "insidiousness", "flat"),
-    "iInvestigation": ("espionage", "city", "investigation", "flat"),
+    # cops-and-robbers (owner ruling 2026-06-20): criminal stealth (insidiousness) vs city catch (investigation)
+    # -> the makeWanted/arrest mechanic (verified CvUnit::doInsidiousnessVSInvestigationCheck). Dedicated block,
+    # NOT espionage (one stat, one name -- espionage never "becomes" insidiousness). iPillageGoldModifier dropped (dead).
+    "iInsidiousness": ("copsAndRobbers", "city", "insidiousness", "flat"),
+    "iInvestigation": ("copsAndRobbers", "city", "investigation", "flat"),
     "iEspionageDefense": ("espionageDefense", "city", None, "flat"),
     # cityCapture (NEW family — capturing CITIES, distinct from §5 unit capture)
     "iNationalCaptureProbabilityModifier": ("cityCapture", "empire", "probability", "percent"),
@@ -130,7 +130,6 @@ SCALAR_FAMILIES = {
     "iDamageAttackerChance": ("defense", "city", "damageAttackerChance", "flat"),
     "iDamageToAttacker": ("defense", "city", "damageToAttacker", "flat"),
     "iAdjacentDamagePercent": ("defense", "city", "adjacentDamage", "percent"),
-    "iLocalRepel": ("defense", "city", "repel", "flat"),
 }
 # scope-wide yield/commerce families: tag -> (scope, keys, kind). SPLIT into per-identifier families (food/gold/…).
 YIELD_FAMILIES = {
@@ -139,12 +138,16 @@ YIELD_FAMILIES = {
     "YieldPerPopChanges": ("city", engine.YIELDS, "perPopulation"),
     "AreaYieldModifiers": ("area", engine.YIELDS, "percent"),
     "GlobalYieldModifiers": ("empire", engine.YIELDS, "percent"),
-    "GlobalSeaPlotYieldChanges": ("empire", engine.YIELDS, "flat"),  # IS_WATER-gated (post_process pass 2)
+    # GlobalSeaPlotYieldChanges + RiverPlotYieldChanges are PLOTS-TARGET folds (owner 2026-06-22): a scope-wide
+    # source depositing onto every matching plot in scope. Handled in pass2 via _inject_plots (the "PLOTS-TARGET
+    # folds" block), NOT the scope-wide flat path -- so `plotTypes`/`empire.flat`+post_process/`.river` are retired.
     "CommerceChanges": ("city", engine.COMMERCES, "flat"),
     "CommerceModifiers": ("city", engine.COMMERCES, "percent"),
     "CommercePerPopChanges": ("city", engine.COMMERCES, "perPopulation"),
     "GlobalCommerceModifiers": ("empire", engine.COMMERCES, "percent"),
-    "SpecialistExtraCommerces": ("empire", engine.COMMERCES, "flat"),  # empire bonus on all specialists' commerce
+    # +commerce per specialist (ALL types) -> <c>.empire.specialist.perSpecialist, UNIFORM with civic/trait
+    # (legacy getSpecialistExtraCommerce, scaled x total specialist count -- a flat would mis-count by ~count-1).
+    "SpecialistExtraCommerces": ("empire", engine.COMMERCES, "perSpecialist", "specialist"),
 }
 
 # capability bools -> identity (owner: revisit Phase F). Plain b-flag -> clean name: true (false omitted).
@@ -152,7 +155,7 @@ CAP_IDENTITY = {
     "bNukeImmune": "nukeImmune", "bNeverCapture": "neverCapture", "bZoneOfControl": "zoneOfControl",
     "bProtectedCulture": "protectedCulture", "bBorderObstacle": "borderObstacle", "bNoUnhappiness": "noUnhappiness",
     "bNoUnhealthyPopulation": "noUnhealthyPopulation", "bBuildingOnlyHealthy": "buildingOnlyHealthy",
-    "bForceAllTradeRoutes": "forceAllTradeRoutes", "bNoEnemyPillagingIncome": "noEnemyPillagingIncome",
+    "bForceAllTradeRoutes": "forceAllTradeRoutes",
     "bQuarantine": "quarantine", "bMapCentering": "mapCentering", "bCenterInCity": "centerInCity",
     "bTeamShare": "teamShare", "bOrbital": "orbital", "bOrbitalInfrastructure": "orbitalInfrastructure",
     "bGovernmentCenter": "governmentCenter", "bCapital": "capital", "bAllowsNukes": "allowsNukes",
@@ -182,7 +185,13 @@ COST = {"iCost": "production", "iCostSizeModifier": "sizeModifier", "iCostCountM
 
 # ---- DROP / DEFER tables ----
 # DEAD (§8-i, confirmed zero consumers) + meltdown (excluded-module-only data, not emitted).
-DROP_DEAD = {"iMaxPopulationAllowed", "iMaxPopulationChange", "iDCMNukesOkay", "bDCMNukesOkay", "iNukeExplosionRand"}
+DROP_DEAD = {"iMaxPopulationAllowed", "iMaxPopulationChange", "iDCMNukesOkay", "bDCMNukesOkay", "iNukeExplosionRand",
+    # dead, re-verified 2026-06-20 (zero consumers): building field unwired -- live pillage-gold is the promotion PillageChange
+    "iPillageGoldModifier",
+    # dead, re-verified 2026-06-20: the repel combat mechanic was REMOVED from the engine (CvCombatModel.cpp:294); field is a vestige (only debug TestCode.py reads getLocalRepel)
+    "iLocalRepel",
+    # dead, re-verified 2026-06-20: old wonder item never wired (only the loader/getter decl, zero consumers)
+    "bNoEnemyPillagingIncome"}
 # Module-LOADER directives (not gameplay): bForceOverwrite is a modular-merge control, never a building property.
 DROP_MODULE = {"bForceOverwrite"}
 # Handled by requires_fn (read off rec). Most are in the mapping prereqs; listed here for the coverage check.
@@ -208,7 +217,7 @@ PASS2_TAGS = {
     "TechHealthChanges", "TechSpecialistChanges", "BonusHealthChanges", "BonusHappinessChanges", "BonusYieldChanges",
     "BonusYieldModifiers", "BonusCommercePercentChanges", "VicinityBonusYieldChanges", "BonusProductionModifiers",
     "ImprovementYieldChanges", "GlobalImprovementYieldChanges", "TerrainYieldChanges", "ReligionChanges",
-    "PlotYieldChanges", "BonusDefenseChanges", "RiverPlotYieldChanges", "PowerYieldModifiers",
+    "PlotYieldChanges", "GlobalSeaPlotYieldChanges", "RiverPlotYieldChanges", "BonusDefenseChanges", "PowerYieldModifiers",
     # building-on-building:
     "BuildingHappinessChanges", "BuildingProductionModifiers", "GlobalBuildingProductionModifiers",
     "GlobalBuildingCostModifiers", "GlobalBuildingExtraCommerces",
@@ -252,7 +261,7 @@ COND_KEYED = {
     "BonusHappinessChanges":       ("happiness", "city", None, "flat", "bonus"),
     "BonusYieldChanges":           (None, "city", engine.YIELDS, "flat", "bonus"),
     "BonusYieldModifiers":         (None, "city", engine.YIELDS, "percent", "bonus"),
-    "BonusCommercePercentChanges": (None, "city", engine.COMMERCES, "percent", "bonus"),
+    "BonusCommercePercentChanges": (None, "city", engine.COMMERCES, "flat", "bonus"),   # FLAT x100 (getBonusCommercePercentChanges -> getBaseCommerceRate100, CvCity.cpp:12135) -- NOT a percent (the "Percent" XML name is a misnomer, like TechCommerceChanges); de-scaled via PER100_TAGS
     "BonusProductionModifiers":    ("buildRate", "self", None, "percent", "bonus"),
     "VicinityBonusYieldChanges":   (None, "city", engine.YIELDS, "flat", "vicinityBonus"),
     "BuildingHappinessChanges":    ("happiness", "city", None, "flat", "building"),
@@ -264,7 +273,8 @@ TARGET_KEYED = {
     "ImprovementYieldChanges":       (None, "city", "improvements", engine.YIELDS, "flat"),
     "GlobalImprovementYieldChanges": (None, "empire", "improvements", engine.YIELDS, "flat"),
     "TerrainYieldChanges":           (None, "city", "terrains", engine.YIELDS, "flat"),
-    "PlotYieldChanges":              (None, "plot", "plotTypes", engine.YIELDS, "flat"),
+    # PlotYieldChanges -> a PLOTS-TARGET fold (owner 2026-06-22): per-plot-TYPE map folds into the `plots` target
+    # filtered by a plot predicate (IS_WATER/IS_LAND/HAS_HILLS/HAS_PEAK). Handled in pass2 (_inject_plots), NOT plotTypes.
     "GlobalBuildingExtraCommerces":  (None, "empire", "buildings", engine.COMMERCES, "flat"),
     # Specialist{Yield,Commerce}Changes + Local* -> NOT here: a building boosting a specialist is the SPECIALIST's
     # OWN output conditioned by the building's presence (own-output home, modifier.md §6.5, owner 2026-06-20), so it
@@ -291,7 +301,7 @@ _KEY_TAGS = ("PrereqTech", "TechType", "BuildingType", "BonusType", "Improvement
 # flows straight into the x100 `m_buildingExtraYield100` bucket, CvCity.cpp:4951 -- verified from the math, not the
 # field name alone). The JSON layer must be human ("+7", not 700); the human->x100 conversion is readJson's sole job.
 # After this single XML->JSON conversion no per-100/normal mix survives anywhere downstream (owner 2026-06-19).
-PER100_TAGS = frozenset(("TechYieldChanges", "TechCommerceChanges"))
+PER100_TAGS = frozenset(("TechYieldChanges", "TechCommerceChanges", "BonusCommercePercentChanges"))
 
 
 def _descale100(v):
@@ -367,7 +377,27 @@ def _inject_keyed(fams, family, scope, target_type, key, unit, value):
         node[unit] = value
 
 
-def pass2(typ, rec, store, fams, grants, repeatable, identity, enables, obsoletes):
+# PlotType key -> the plots-target predicate (the plotTypes fold, owner 2026-06-22).
+PLOT_PRED = {"PLOT_OCEAN": "IS_WATER", "PLOT_LAND": "IS_LAND", "PLOT_HILLS": "HAS_HILLS", "PLOT_PEAK": "HAS_PEAK"}
+
+
+def _inject_plots(fams, family, scope, unit, value, enabled):
+    """A `plots`-TARGET deposit (owner 2026-06-22): <family>.<scope>.plots.<unit> = [{value, enabled:<predicate>}, ...]
+    (data-model.md §4.1/§6). A scope-wide source deposits onto EVERY plot in scope matching the predicate -- ONE
+    uniform mechanism retiring getYieldChangeAt / getSeaPlotYield / getRiverPlotYield + the per-plot-type accumulators.
+    Always a LIST of entries (matches _inject_cond), so multiple predicates accumulate under one (family, scope)."""
+    node = fams.setdefault(family, OrderedDict()).setdefault(scope, OrderedDict()).setdefault("plots", OrderedDict())
+    entry = OrderedDict([("value", value), ("enabled", enabled)])
+    cur = node.get(unit)
+    if cur is None:
+        node[unit] = [entry]
+    elif isinstance(cur, list):
+        cur.append(entry)
+    else:
+        node[unit] = [cur, entry]
+
+
+def pass2(typ, rec, store, fams, grants, repeatable, identity, enables):
     """The custom-shape layer: keyed inversions (§6.1), properties, repeatable grants, one-shot grants/pulses,
     enables-from-XML, the conditional/temporal deposits. Mutates the passed-in collections."""
     # --- CONDITION-gated keyed deposits (Tech/Bonus/Building/Power conditioners) ---
@@ -395,6 +425,27 @@ def pass2(typ, rec, store, fams, grants, repeatable, identity, enables, obsolete
                     _inject_keyed(fams, member, scope, ttype, ref, unit, v)
             else:
                 _inject_keyed(fams, family, scope, ttype, ref, unit, val)
+    # --- PLOTS-TARGET folds (owner 2026-06-22): plotTypes/seaPlot/.river -> the explicit `plots` target filtered by a
+    # plot predicate. A scope-wide source deposits onto EVERY matching plot in scope (data-model §4.1/§6); ONE uniform
+    # mechanism retiring getYieldChangeAt / getSeaPlotYield / getRiverPlotYield + the per-plot-type accumulators. ---
+    pyc = rec.find("PlotYieldChanges")           # per-plot-TYPE (OCEAN/LAND/HILLS/PEAK) -> <yield>.city.plots.flat {pred}
+    if pyc is not None:
+        for ref, val in _keyed(pyc, engine.YIELDS):
+            pred = PLOT_PRED.get(ref)
+            if pred is None or not isinstance(val, dict):
+                continue                          # unknown PlotType -> skip (never invent a predicate)
+            for member, v in val.items():
+                _inject_plots(fams, member, "city", "flat", v, pred)
+    gsp = rec.find("GlobalSeaPlotYieldChanges")  # empire-wide flat to water tiles -> <yield>.empire.plots.flat {IS_WATER}
+    if gsp is not None:
+        for member, v in engine.named_array(gsp, engine.YIELDS).items():
+            if v:
+                _inject_plots(fams, member, "empire", "flat", v, "IS_WATER")
+    rpy = rec.find("RiverPlotYieldChanges")      # yield to the city's worked river plots -> <yield>.city.plots.flat {HAS_RIVER}
+    if rpy is not None:
+        for member, v in engine.named_array(rpy, engine.YIELDS).items():
+            if v:
+                _inject_plots(fams, member, "city", "flat", v, "HAS_RIVER")
     # --- PowerYieldModifiers: a DIRECT per-yield array (<iYield>..</iYield>), NOT entity-keyed -> emit each yield as a
     # city-scope `percent` deposit gated `enabled: HAS_POWER` (legacy getPowerYieldRateModifier, summed only when
     # isPower(), CvCity.cpp:11228). Was mis-classified in COND_KEYED (which expects a key-tag) -> silently dropped. ---
@@ -546,10 +597,7 @@ def pass2(typ, rec, store, fams, grants, repeatable, identity, enables, obsolete
         enables.setdefault("hurries", []).extend(hurries)
     if _bool(rec, "bForceTeamVoteEligible"):
         enables.setdefault("votes", []).append("FORCE_TEAM_ELIGIBLE")
-    # --- ObsoletesToBuilding: the building's OWN obsolescence edge ---
-    otb = _txt(rec, "ObsoletesToBuilding")
-    if otb:
-        obsoletes.setdefault("buildings", []).append(otb)
+    # ObsoletesToBuilding is authored TARGET-side as `obsoletedBy` in the main emit (not here) — owner 2026-06-22.
     # --- NewCityFree: RELOCATED off the building onto the FOUNDER units as grants.foundBuildings (owner 2026-06-16:
     # the settler "carries buildings into settling"; gated by each building's NewCityFree BoolExpr -> a tech-gated
     # building unavailable at settle time is not pre-built). curate_unit.found_buildings() reads NewCityFree off the
@@ -629,42 +677,54 @@ def _atom(typ, scope, **kw):
 def requires_building(rec, store):
     """The TARGET-side reversible MEANS gate (enabler-spec §3/§5): build (greying) vs operate (dormancy).
     Most SOURCE->building enabler edges are store-wired onto the source; here we author the building's OWN means."""
-    build_all, build_any, build_none, op_all, op_any = [], [], [], [], []
-    # --- resources (build-time greying; PrereqBonuses are a presence check) ---
+    build_all, build_any, build_none, op_all, op_any, op_dormant = [], [], [], [], [], []
+    # --- resources: a bonus prereq is REVERSIBLE, but WHERE it lands depends on whether the building NEEDS the
+    # resource to FUNCTION or merely to APPEAR (owner ruling 2026-06-22; live-verified):
+    #   * MANUALLY-built buildings that need the resource to operate (the gatherer line -- RICE_GATHERER &c.) go
+    #     DORMANT when the resource is lost -> requires.OPERATE. (Corrects the 2026-06-21 build-side classification,
+    #     which leaned on an INCOMPLETE "isDisabledBuilding == replacement/religion/corp only" grounding; the live
+    #     enabler verify proved the engine DOES disable these on bonus loss -- the ~1,193 missed-dormant gatherers.)
+    # ⚑ PESTS/CRIME disease pseudobuildings (bAutoBuild) are a KNOWN GAP: the engine dormants them by their
+    #   DISEASE/CRIME PROPERTY band (owner 2026-06-22), NOT the bonus -- but they are not in CIV4PropertyInfos, so
+    #   the curator doesn't author that band. Routing their bonus to BUILD (no operate) over-permits (the engine
+    #   dormants most PESTS -> +misses); routing to OPERATE over-dormants the persisters (e.g. TERMITES -> false-
+    #   dormants) but matches MORE cities (28 misses / 61% vs 101 / 51%). Until the PESTS property band is migrated,
+    #   operate is the closer approximation, so bonus -> operate uniformly (the gatherer line is the real win here).
+    bonus_all, bonus_any = op_all, op_any
     b = _txt(rec, "Bonus")
     if b:
-        build_all.append(_atom(b, "city", connection="trade|vicinity"))
+        bonus_all.append(_atom(b, "city", connection="trade|vicinity"))
     orb = _typelist(rec, "PrereqBonuses")
     if orb:
-        build_any.append([_atom(x, "city", connection="trade|vicinity") for x in orb])
+        bonus_any.append([_atom(x, "city", connection="trade|vicinity") for x in orb])
     # RawVicinity FOLDS into normal vicinity (owner 2026-06-16: lose the adjacency strictness, simpler vocab).
     for tag in ("VicinityBonus", "RawVicinityBonus"):
         v = _txt(rec, tag)
         if v:
-            build_all.append(_atom(v, "city", connection="vicinity"))
+            bonus_all.append(_atom(v, "city", connection="vicinity"))
     for tag in ("PrereqVicinityBonuses", "PrereqRawVicinityBonuses"):
         lst = _typelist(rec, tag)
         if lst:
-            build_any.append([_atom(x, "city", connection="vicinity") for x in lst])
+            bonus_any.append([_atom(x, "city", connection="vicinity") for x in lst])
     # --- plot-state predicates (bare). bWater = the city is COASTAL, not the plot being water: legacy
     # isValidBuildingLocation (CvCity.cpp:18500-18506) gates bWater on isCoastal() (a city sits on LAND, so
     # IS_WATER/pl->isWater() is always false -> every coastal building wrongly hidden). With bRiver also set it is
     # coastal OR river (line 18502). bRiver-alone / bFreshWater stay plot predicates (lines 18507/18516). ---
     bw, br = _bool(rec, "bWater"), _bool(rec, "bRiver")
     if bw and br:
-        build_any.append(["IS_COASTAL", "HAS_RIVER"])   # water OR river
+        build_any.append(["HAS_COAST", "HAS_RIVER"])   # city is coastal OR river (HAS_COAST @ city = isCoastal)
     elif bw:
-        build_all.append("IS_COASTAL")
+        build_all.append("HAS_COAST")
     elif br:
         build_all.append("HAS_RIVER")
     if _bool(rec, "bFreshWater"):
-        build_all.append("IS_FRESHWATER")
+        build_all.append("HAS_FRESHWATER")
     # --- power (presence) ---
     if _bool(rec, "bPower") or _bool(rec, "bPrereqPower"):
         build_all.append("HAS_POWER")
     pb = _txt(rec, "PowerBonus")
     if pb:
-        build_all.append(_atom(pb, "city", connection="trade|vicinity", role="power"))
+        bonus_all.append(_atom(pb, "city", connection="trade|vicinity", role="power"))   # operate/build by bAutoBuild
     # --- city / world counts + size (tally) ---
     for tag, scope in (("iPrereqPopulation", "city"), ("iCitiesPrereq", "empire"), ("iTeamsPrereq", "world"),
                        ("iLevelPrereq", "empire")):
@@ -760,26 +820,50 @@ def requires_building(rec, store):
     pc = _txt(rec, "PrereqCivic")
     if pc:
         op_all.append(_atom(pc, "empire"))
+    # bNeedStateReligionInCity (STATE_RELIGION_IN_CITY) and StateReligion (getPrereqStateReligion,
+    # m_iStateReligion, "this religion must be your STATE religion") are BUILD gates (greying), NOT operate
+    # (dormancy): both are checked ONLY in canConstruct (needStateReligionInCity CvCity.cpp:2604;
+    # getPrereqStateReligion CvPlayer.cpp:6676) and appear in NO disable/isActiveBuilding path -> once built, the
+    # building does NOT go dormant if the player later switches state religion away. So -> build. (verified 2026-06-21)
     if _bool(rec, "bNeedStateReligionInCity"):
-        op_all.append("STATE_RELIGION_IN_CITY")
-    # StateReligion holds a RELIGION TYPE (the legacy getPrereqStateReligion gate, m_iStateReligion ->
-    # CvPlayer.cpp:6674: "this religion must be your STATE religion"), NOT a bool. Emit the parameterized
-    # {STATE_RELIGION: RELIGION_X} predicate (cascade PRED_STATE_RELIGION) -- same pattern as StateReligionCommerces
-    # (line ~382). The old `_bool(...) -> "HAS_STATE_RELIGION"` both mis-typed the field AND lost the specific religion.
+        build_all.append("STATE_RELIGION_IN_CITY")
     sr = _txt(rec, "StateReligion")
     if sr:
-        op_all.append(OrderedDict([("STATE_RELIGION", sr)]))
-    # PrereqReligion / PrereqCorporation / PrereqCultureLevel are store-wired onto the source, BUT they are also
-    # the building's reversible MEANS (a religion can leave via inquisition) -> author on operate too (forward check).
-    for tag, scope in (("PrereqReligion", "city"), ("PrereqCorporation", "city"), ("PrereqCultureLevel", "city")):
+        build_all.append(OrderedDict([("STATE_RELIGION", sr)]))
+    # PrereqReligion / PrereqCorporation are the building's reversible MEANS (a religion can leave via inquisition,
+    # a corp can be lost) and the engine DOES disable a built building when they go (CvCity.cpp applyReligionModifiers
+    # ~14999 / applyCorporationModifiers ~15198 set isDisabledBuilding) -> author on operate (dormancy, forward check).
+    for tag, scope in (("PrereqReligion", "city"), ("PrereqCorporation", "city")):
         v = _txt(rec, tag)
         if v:
             op_all.append(_atom(v, scope))
+    # ReplacementBuildings is reversible DORMANCY in the engine -- CvCity.cpp:14413 setDisabledBuilding(predecessor,
+    # true) while the successor is present (NOT removal: the predecessor STAYS, hasBuilding() true), re-enabled when
+    # it's gone (unless another replacer holds). Mirror it EXACTLY with requires.operate.dormant (parity -- a
+    # behavioural redesign of whether e.g. blackened-skies should dorm an observatory is POST-migration). The
+    # `replaces` enabler edge stays a defined concept but is now UNUSED -- the whole mechanic is operate.dormant.
+    # (owner 2026-06-23; engine-verified.)
+    for x in _typelist_struct(rec, "ReplacementBuildings", "BuildingType"):
+        op_dormant.append(_atom(x, "city"))
+    # PrereqCultureLevel is a BUILD gate (greying), NOT operate (dormancy): getPrereqCultureLevel is checked ONLY in
+    # canConstruct (CvCity.cpp:2788, sets probabilityEverConstructable) and appears in NO disable/isActiveBuilding
+    # path -> a built building does NOT go dormant if its city's culture level later drops. (verified 2026-06-21)
+    v = _txt(rec, "PrereqCultureLevel")
+    if v:
+        build_all.append(_atom(v, "city"))
     # --- ConstructCondition BoolExpr -> build (greying). It is checked ONLY at canConstruct (CvCity.cpp:2976-2999),
     # never isActiveBuilding, so losing a ConstructCondition bonus after build does nothing -> build (greying), NOT
     # operate (dormancy). Folded via the shared boolexpr converter (And/Or of Has over bonus/feature/tech/terrain/
     # building). owner 2026-06-16; renames §Building. ---
     boolexpr.merge_into(boolexpr.convert_field(rec.find("ConstructCondition")), build_all, build_any, build_none)
+    # EnabledCivilizationTypes: a civ-WHITELIST build gate (owner 2026-06-22) -- only the listed civ(s) may build it
+    # (CvCity::canConstruct, getCivilizationType()==getEnabledCivilizationType(i).eCivilization, CvCity.cpp:2560; the
+    # civ-unique building mechanism, 242 regular buildings + module). -> requires.build.any OR-group of
+    # {type:CIVILIZATION_X, scope:empire} (empty list = unrestricted). Was UN-MIGRATED: it sat in REQUIRES_TAGS for the
+    # coverage check only and requires_building() never read it -> emitted nothing.
+    civs = _typelist_struct(rec, "EnabledCivilizationTypes", "CivilizationType")
+    if civs:
+        build_any.append([_atom(c, "empire") for c in civs])
 
     build = OrderedDict()
     if build_all:
@@ -798,12 +882,14 @@ def requires_building(rec, store):
     out = OrderedDict()
     if build:
         out["build"] = build
-    if op_all or op_any:
+    if op_all or op_any or op_dormant:
         operate = OrderedDict()
         if op_all:
             operate["all"] = op_all
         if op_any:
             operate["any"] = op_any
+        if op_dormant:
+            operate["dormant"] = op_dormant   # dormant while ANY listed is present (the reversible-disable mirror)
         out["operate"] = operate
     # loadPrune (game options) lives in its own section, but author it here for now under requires for visibility.
     return out or None
@@ -875,6 +961,43 @@ def _set_fam(fams, family, scope, member, unit, value):
     node[unit] = value
 
 
+def _gold_cost_to_maintenance(fams):
+    """gold UPKEEP -> maintenance (owner ruling 2026-06-20; DEC-maintenance-bookkeeping). A building's UNCONDITIONAL
+    negative gold-commerce is its gold COST: legacy charges it to MAINTENANCE (TREAT_NEGATIVE_GOLD_AS_MAINTENANCE /
+    calculateBuildingMaintenanceTimes100), NEVER to gold commerce. So move that negative out of the `gold` family into
+    the `maintenance` family as a flat cost (a POSITIVE amount) — maintenance is a separate bookkeeping channel,
+    OUTSIDE the commerce chain. Positive gold stays as commerce; CONDITIONAL gold (dict deposits, e.g. age-gated
+    CommerceChangeDoubleTimes) is left in place — legacy's maintenance gate reads the static base getBuildingCommerce,
+    not conditionals."""
+    gold = fams.get("gold")
+    if not isinstance(gold, dict):
+        return
+    city = gold.get("city")
+    if not isinstance(city, dict) or "flat" not in city:
+        return
+    flat = city["flat"]
+    cost = 0
+    if isinstance(flat, (int, float)):
+        if flat < 0:
+            cost = -flat
+            del city["flat"]
+    elif isinstance(flat, list):
+        cost = sum(-it for it in flat if isinstance(it, (int, float)) and it < 0)
+        if cost:
+            keep = [it for it in flat if not (isinstance(it, (int, float)) and it < 0)]
+            if keep:
+                city["flat"] = keep[0] if len(keep) == 1 else keep
+            else:
+                del city["flat"]
+    if not cost:
+        return
+    if not city:
+        del gold["city"]
+    if not gold:
+        del fams["gold"]
+    _set_fam(fams, "maintenance", "city", None, "flat", cost)
+
+
 def curate(typ, rec, store):
     out = OrderedDict([("type", typ)])
     for tag, key in TEXT.items():
@@ -894,17 +1017,44 @@ def curate(typ, rec, store):
         if v:
             _set_fam(fams, family, scope, member, unit, v)
     # --- yield/commerce split families ---
-    for tag, (scope, keys, unit) in YIELD_FAMILIES.items():
+    for tag, spec in YIELD_FAMILIES.items():
         node = rec.find(tag)
         if node is None:
             continue
+        scope, keys, unit = spec[0], spec[1], spec[2]
+        submember = spec[3] if len(spec) > 3 else None     # optional sub-scope (e.g. 'specialist' for perSpecialist)
         for member, v in engine.named_array(node, keys).items():
-            _set_fam(fams, member, scope, None, unit, v)   # member IS the family (split)
+            # per-pop (Yield/CommercePerPopChanges) is x100-scaled in XML (100 = 1/pop) -> de-scale to human (1),
+            # so the JSON carries human per-pop numbers (cascade-fixed-point: curator emits human, readJson re-x100s).
+            if unit == "perPopulation":
+                v = descale100(v)
+            _set_fam(fams, member, scope, submember, unit, v)   # member IS the family (split)
 
     # --- enables / obsoletes / replaces (store-derived; COPIED so pass2 can extend FoundsCorporation/ObsoletesToBuilding) ---
     enables = OrderedDict((k, list(v)) for k, v in (store.enabled_by(typ) or {}).items())
-    obsoletes = OrderedDict((k, list(v)) for k, v in (store.obsoletes_of(typ) or {}).items())
-    replaces = store.replaces_of(typ)
+    # supersession, TARGET-side (owner ruling 2026-06-22): authored on THIS (the superseded) building, read off
+    # its OWN fields, no store inversion. obsoletedBy = obsoleting tech (ObsoleteTech) + superseding building
+    # (ObsoletesToBuilding). NB `ReplacementBuildings` is NOT authored as `replacedBy` here -- it is reversible
+    # DORMANCY in the engine (setDisabledBuilding, not removal), so it lands on `requires.operate.dormant` (above);
+    # the `replaces` enabler edge stays a defined concept but is now UNUSED. The cascade builds the obsoletion
+    # reverse map (superseder -> [superseded]) at load — never stored in the JSON.
+    obsoleted_by = OrderedDict()
+    _ot = _txt(rec, "ObsoleteTech")
+    if _ot:
+        obsoleted_by["techs"] = [_ot]
+    _otb = _txt(rec, "ObsoletesToBuilding")
+    if _otb:
+        obsoleted_by["buildings"] = [_otb]
+    # SpecialBuilding GROUP obsoletion inherited onto the MEMBER, target-side (owner 2026-06-22: put the group's
+    # ObsoleteTech on the monastery itself; double-representation with the store's source-side _inherit_group_obsoletes
+    # is fine). The target-side cascade reads the member's obsoletedBy, not the tech's obsoletes, so author it here —
+    # this is exactly the edge my target-side migration orphaned when it stopped reading store.obsoletes_of(typ).
+    _sbt = _txt(rec, "SpecialBuildingType")
+    if _sbt:
+        _grp = store.table("SpecialBuildingInfo").get(_sbt)
+        _grp_ot = _txt(_grp, "ObsoleteTech") if _grp is not None else None
+        if _grp_ot and _grp_ot != "NONE":
+            obsoleted_by.setdefault("techs", []).append(_grp_ot)
 
     grants = OrderedDict()
     repeatable = []
@@ -913,9 +1063,13 @@ def curate(typ, rec, store):
     loadprune = loadprune_building(rec)
 
     # --- PASS 2: keyed inversions (§6.1), properties, repeatable grants, one-shot grants, enables-from-XML ---
-    pass2(typ, rec, store, fams, grants, repeatable, identity, enables, obsoletes)
+    pass2(typ, rec, store, fams, grants, repeatable, identity, enables)
     if repeatable:
         grants["repeatable"] = repeatable
+
+    # gold UPKEEP -> maintenance (DEC-maintenance-bookkeeping): a building's unconditional negative gold-commerce is
+    # its gold COST, which legacy charges to MAINTENANCE (TREAT_NEGATIVE_GOLD_AS_MAINTENANCE), not gold commerce.
+    _gold_cost_to_maintenance(fams)
 
     # --- cost ---
     for tag, key in COST.items():
@@ -967,10 +1121,8 @@ def curate(typ, rec, store):
     # --- assemble (reserved order, modifier-spec §1.1) ---
     if enables:
         out["enables"] = OrderedDict((k, enables[k]) for k in sorted(enables))
-    if obsoletes:
-        out["obsoletes"] = OrderedDict((k, obsoletes[k]) for k in sorted(obsoletes))
-    if replaces:
-        out["replaces"] = OrderedDict((k, replaces[k]) for k in sorted(replaces))
+    if obsoleted_by:
+        out["obsoletedBy"] = OrderedDict((k, obsoleted_by[k]) for k in sorted(obsoleted_by))
     if requires:
         out["requires"] = requires
     if allowed:
@@ -1037,33 +1189,29 @@ HANDLED = (set(SCALAR_FAMILIES) | set(YIELD_FAMILIES) | set(CAP_IDENTITY) | set(
            | {"Type", "Flavors", "iAIWeight"})
 
 
-# ============================ PROPERTY-BAND REALIGNMENT (owner 2026-06-19) ============================
-# Pull the EDUCATION band system back in line with how every OTHER property's bands work.
-#
+# ============================ PROPERTY-BAND REALIGNMENT (owner 2026-06-23) ============================
 # Property-effect "pseudobuildings" (the BuildingType under each PROPERTY's <PropertyBuildings>) are placed/removed
-# by the property-band system (checkPropertyBuildings) on a THRESHOLD->infinity band (data-model §2.1, enabler-spec
-# §3). Owner ruling: pseudobuildings must NOT `replace` EACH OTHER -- they enable/obsolete + go active/dormant on the
-# band, CUMULATIVELY (every band whose threshold is met stays active). Crime/disease/tourism/pollution already do this
-# (0 replaces). EDUCATION is the outlier: its author built a parallel system -- 4 ladders (positive/negative era,
-# argumentative-awareness, blissful-ignorance), each a succession chain (legacy ReplacementBuildings) carrying the
-# FULL per-band value. Two fixes pull it in line:
-#   (1) STRIP pseudo->pseudo `replaces` (they shouldn't replace each other). A pseudo->REAL replace STAYS -- e.g.
-#       BLACKENED_SKIES (air-pollution band) supersedes the telescope/observatory buildings; that is a real edge.
-#   (2) With no replace the ladder bands now STACK cumulatively, so re-author each as its INCREMENTAL delta
-#       (full[rank] - full[rank-1]); summing the active cumulative bands reproduces the top band's intended total
-#       ('nerf each building for UX' -- you see every level achieved, the sum is unchanged).
-# The threshold->infinity active/dormant GATING is a `requires.operate` PROPERTY-in-band atom authored on EVERY
-# pseudobuilding from its <PropertyBuilding> iMinValue/iMaxValue (owner ruling 2026-06-19, repeated: pseudobuildings
-# COMPOUND, set up by `requires`, NEVER `replace`). The atom {type:PROPERTY_X, scope:city, min:iMinValue, max:iMaxValue}
-# (data-model §2.1 ATOMDOMAIN_PROPERTY, enabler-spec §3) makes the band ACTIVE iff the city's property value is in the
-# band -- so the cascade places ALL in-band bands cumulatively (every other property -- crime/disease/tourism/pollution
-# -- works the same; education's full per-band values were already increment-converted above so the cumulative sum
-# reproduces the highest reached band's intended total). The atom is MERGED into the band's `requires.operate.all`
-# (its requires.build tech gate, if any, is preserved).
+# by the property-band system (checkPropertyBuildings) on an [iMinValue, iMaxValue] band (data-model §2.1, enabler-
+# spec §3). apply_property_bands authors a `requires.operate` PROPERTY-in-band atom {type:PROPERTY_X, scope:city,
+# min, max} on each pseudobuilding -- the band is ACTIVE iff the city's property value is in [min, max]. Crime/
+# disease/tourism/pollution bands carry no ReplacementBuildings, so every in-band band stays active (they COMPOUND).
+#
+# EDUCATION's 4 ladders (positive/negative era, argumentative-awareness, blissful-ignorance) ARE succession chains
+# (legacy ReplacementBuildings) -- and that is now handled UNIFORMLY, with NO special case. ReplacementBuildings is
+# reversible DORMANCY in the engine (setDisabledBuilding, CvCity.cpp:14413 -- NOT removal), so requires_building
+# mirrors it as `requires.operate.dormant: successor`: a lower band dorms while a higher band is present => only the
+# highest reached band is active, FULL per-band value, == the LEGACY engine (parity). The same mirror covers the
+# pseudo->REAL case (BLACKENED_SKIES dorms the telescope/observatory; it is not nuked from orbit).
+#
+# ⛔ The earlier (2026-06-19/22) "pseudobuildings COMPOUND, NEVER replace -- strip replaces + increment-convert
+# education + a banded only-highest disable" model is OBSOLETE (owner 2026-06-23): it rollerskated away, and its
+# strip/ladder code was reading a `replaces` key the curator never emitted (dead). The uniform ReplacementBuildings
+# -> requires.operate.dormant mirror replaces it and RESTORES education parity (the old ~1,100-building BY-DESIGN
+# divergence is gone). Behavioural redesign (should education be only-highest at all?) is POST-migration, never here.
 
 PROPERTY_INFOS_XML = os.path.join(REPO, "Assets", "XML", "GameInfo", "CIV4PropertyInfos.xml")
 # top-level reserved (non-family) keys -- everything else on a band object is a modifier family to increment.
-RESERVED_NONFAMILY = {"type", "description", "civilopedia", "help", "enables", "obsoletes", "replaces", "requires",
+RESERVED_NONFAMILY = {"type", "description", "civilopedia", "help", "enables", "obsoletedBy", "replacedBy", "requires",
                       "allowed", "grants", "cost", "ai", "loadPrune", "ui", "world", "sound", "identity"}
 
 
@@ -1111,7 +1259,7 @@ def property_band_atoms():
 
 def _set_requires(obj, req):
     """Place/replace `requires` in its canonical slot (after enables/obsoletes/replaces/disables, before families)."""
-    LEADING = ("type", "description", "civilopedia", "help", "enables", "obsoletes", "replaces", "disables")
+    LEADING = ("type", "description", "civilopedia", "help", "enables", "obsoletedBy", "replacedBy", "disables")
     out = OrderedDict()
     inserted = False
     for k, v in obj.items():
@@ -1126,143 +1274,20 @@ def _set_requires(obj, req):
     return out
 
 
-def _band_families(obj):
-    return [k for k in obj if k not in RESERVED_NONFAMILY]
-
-
-def _has_complex_family(obj):
-    """True if any family leaf is a list or a conditional ({value/enabled/disabled}) -- the plain numeric increment
-    subtraction below would be unsafe, so we SKIP (keep full values) and warn rather than corrupt silently."""
-    def walk(n):
-        if isinstance(n, list):
-            return True
-        if isinstance(n, dict):
-            if "value" in n or "enabled" in n or "disabled" in n:
-                return True
-            return any(walk(v) for v in n.values())
-        return False
-    return any(walk(obj[f]) for f in _band_families(obj))
-
-
-def _sub_leaves(a, b):
-    """a - b over matching numeric leaves (b-missing leaf = 0); structure follows `a`. Non-numeric left as-is."""
-    if isinstance(a, dict):
-        out = OrderedDict()
-        for k, v in a.items():
-            out[k] = _sub_leaves(v, b.get(k) if isinstance(b, dict) else None)
-        return out
-    if isinstance(a, bool):
-        return a
-    if isinstance(a, int):
-        return a - (b if isinstance(b, int) and not isinstance(b, bool) else 0)
-    if isinstance(a, float):
-        r = a - (b if isinstance(b, (int, float)) and not isinstance(b, bool) else 0)
-        return int(r) if float(r).is_integer() else round(r, 2)
-    return a
-
-
-def _prune_zero(n):
-    """Drop numeric-zero leaves (a +0 deposit is a no-op, like an absent one) + the emptied parents. -> None if empty."""
-    if isinstance(n, bool):
-        return n
-    if isinstance(n, dict):
-        out = OrderedDict()
-        for k, v in n.items():
-            pv = _prune_zero(v)
-            if pv is not None:
-                out[k] = pv
-        return out or None
-    if isinstance(n, (int, float)):
-        return None if n == 0 else n
-    return n
-
-
-def _with_disables(obj, disables):
-    """Return obj with a `disables` section inserted in the Availability slot (after enables/obsoletes/replaces,
-    before requires/families). Used when a pseudo->REAL `replace` is converted to a reversible disable."""
-    LEADING = ("type", "description", "civilopedia", "help", "enables", "obsoletes", "replaces")
-    out = OrderedDict()
-    done = False
-    for k, v in obj.items():
-        if not done and k not in LEADING:
-            out["disables"] = disables
-            done = True
-        out[k] = v
-    if not done:
-        out["disables"] = disables
-    return out
-
-
 def apply_property_bands(results, pseudo):
-    """(1) increment-convert each replace-defined EDUCATION-style ladder; (2) pseudobuildings must NEVER `replace`
-    (replace = REMOVE): drop pseudo->pseudo replaces (bands stack), convert a pseudo->REAL replace to a reversible
-    `disables` (the effect DISABLES the building into DORMANCY -- it reactivates when the disabler clears -- not
-    'nuked from orbit', owner 2026-06-19). Returns (n_ladders, n_incremented, n_stripped, n_disabled). Mutates results."""
-    # union-find over pseudo->pseudo `replaces` edges -> ladder components; `intra` = each band's pseudo predecessors.
-    parent, intra = {}, {}
-
-    def find(x):
-        parent.setdefault(x, x)
-        while parent[x] != x:
-            parent[x] = parent[parent[x]]
-            x = parent[x]
-        return x
-
-    for b in pseudo:
-        obj = results.get(b)
-        if not obj:
-            continue
-        ps = set(x for x in obj.get("replaces", {}).get("buildings", []) if x in pseudo)
-        if ps:
-            intra[b] = ps
-            for t in ps:
-                parent[find(b)] = find(t)
-    comps = {}
-    for b in set(intra) | set(t for s in intra.values() for t in s):
-        comps.setdefault(find(b), set()).add(b)
-
-    n_inc = 0
-    for members in comps.values():
-        ranked = sorted(members, key=lambda b: len(intra.get(b, ())))
-        if [len(intra.get(b, ())) for b in ranked] != list(range(len(ranked))):
-            print("  [BANDS] WARN non-contiguous ranks -> skipping ladder: %s" % sorted(members))
-            continue
-        if any(_has_complex_family(results[b]) for b in ranked):
-            print("  [BANDS] WARN conditional/array family -> skipping ladder: %s" % sorted(members))
-            continue
-        full = {b: OrderedDict((f, results[b][f]) for f in _band_families(results[b])) for b in ranked}
-        for i in range(1, len(ranked)):
-            b, p = ranked[i], ranked[i - 1]
-            for f in _band_families(results[b]):
-                inc = _prune_zero(_sub_leaves(full[b][f], full[p].get(f)))
-                if inc is None:
-                    del results[b][f]
-                else:
-                    results[b][f] = inc
-            n_inc += 1
-
-    # pseudobuildings must NEVER `replace` (replace = REMOVE). Drop pseudo->pseudo replaces (the bands STACK); convert
-    # a pseudo->REAL replace to a reversible `disables` -- the effect DISABLES the building into DORMANCY (it
-    # reactivates when the disabler clears), it is NOT 'nuked from orbit' (owner 2026-06-19; BLACKENED_SKIES disables,
-    # not removes, the telescopes/observatories). enabler-spec §5 (reversible effect-disable). When building GROUPS
-    # land (data-model §7) a band can disable a building-GROUP instead of enumerating each member (owner 2026-06-19).
-    stripped, disabled = 0, 0
-    for b in pseudo:
-        obj = results.get(b)
-        if not obj or "replaces" not in obj:
-            continue
-        real = [x for x in obj["replaces"].get("buildings", []) if x not in pseudo]
-        obj.pop("replaces", None)
-        stripped += 1
-        if real:
-            results[b] = _with_disables(obj, OrderedDict([("buildings", real)]))
-            disabled += 1
-
-    # (3) author the requires.operate PROPERTY-in-band atom on EVERY pseudobuilding so the band is CUMULATIVE
-    # (active iff the city's property value is in [iMinValue, iMaxValue]) -- owner 2026-06-19: compound, set up by
-    # `requires`, never `replace`. Merged into requires.operate.all, preserving any requires.build tech gate.
+    """Author the requires.operate PROPERTY-in-band atom on every property-effect pseudobuilding -- the band is
+    ACTIVE iff the city's property value is in [iMinValue, iMaxValue] (data-model §2.1, enabler-spec §3). The
+    only-highest education ladders + the pseudo->REAL disable (blackened-skies dorms the observatory) are NOT
+    special-cased here: their legacy `ReplacementBuildings` is reversible DORMANCY (engine `setDisabledBuilding`,
+    CvCity.cpp:14413 -- never removal), already mirrored as `requires.operate.dormant` by requires_building
+    (owner 2026-06-23, engine-verified; the prior 2026-06-19/22 'pseudobuildings compound, never replace' ruling
+    is OBSOLETE). Returns n_banded; mutates results."""
+    band_atoms = property_band_atoms()   # building -> (ptype, iMinValue, iMaxValue)
+    # Author the requires.operate PROPERTY-in-band atom on every pseudobuilding -- ACTIVE iff the city's property
+    # value is in [iMinValue, iMaxValue]. Merged into requires.operate.all, preserving any requires.build tech gate
+    # + the requires.operate.dormant emitted by requires_building (the only-highest / pseudo->real dormancy mirror).
     banded = 0
-    for b, (ptype, lo, hi) in property_band_atoms().items():
+    for b, (ptype, lo, hi) in band_atoms.items():
         obj = results.get(b)
         if not obj:
             continue
@@ -1280,7 +1305,7 @@ def apply_property_bands(results, pseudo):
         req["operate"] = op
         results[b] = _set_requires(obj, req)
         banded += 1
-    return len(comps), n_inc, stripped, disabled, banded
+    return banded
 
 
 def build_era(store):
@@ -1312,12 +1337,12 @@ def main():
     sb_results = OrderedDict((typ, curate_special(typ, rec, store))
                              for typ, rec in store.table("SpecialBuildingInfo").items())
 
-    # PROPERTY-BAND realignment (owner 2026-06-19): strip pseudo->pseudo `replaces` + increment-convert the
-    # education ladders so they stack cumulatively like every other property's bands.
+    # PROPERTY-BAND realignment (owner 2026-06-23): author the requires.operate PROPERTY-in-band atom on every
+    # pseudobuilding. The only-highest education ladders + the pseudo->REAL dormancy (blackened-skies) are NOT
+    # special-cased here -- they ride the uniform `ReplacementBuildings -> requires.operate.dormant` mirror.
     pseudo = property_band_buildings()
-    n_lad, n_inc, n_strip, n_dis, n_band = apply_property_bands(results, pseudo)
-    print("PROPERTY BANDS: %d pseudobuildings | %d ladders increment-converted (%d member bands) | %d had `replaces` removed (pseudo never replaces) | %d pseudo->REAL replace -> reversible `disables` | %d got requires.operate band atom (cumulative)"
-          % (len(pseudo), n_lad, n_inc, n_strip, n_dis, n_band))
+    n_band = apply_property_bands(results, pseudo)
+    print("PROPERTY BANDS: %d pseudobuildings | %d got requires.operate band atom" % (len(pseudo), n_band))
 
     from collections import Counter
     leftover = Counter()

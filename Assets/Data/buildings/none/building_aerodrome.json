@@ -10,11 +10,6 @@
    "TECH_HYPERSONIC_FLIGHT"
   ]
  },
- "replacedBy": {
-  "buildings": [
-   "BUILDING_GRAND_AERODROME"
-  ]
- },
  "requires": {
   "build": {
    "all": [
@@ -53,6 +48,12 @@
      "type": "BONUS_DIESELPUNK",
      "scope": "city",
      "connection": "trade|vicinity"
+    }
+   ],
+   "dormant": [
+    {
+     "type": "BUILDING_GRAND_AERODROME",
+     "scope": "city"
     }
    ]
   }

@@ -10,16 +10,6 @@
    "TECH_STEEL"
   ]
  },
- "replacedBy": {
-  "buildings": [
-   "BUILDING_TRUSS_BRIDGE",
-   "BUILDING_SMALL_STEEL_ARCH_BRIDGE",
-   "BUILDING_LARGE_STEEL_ARCH_BRIDGE",
-   "BUILDING_SMALL_SUSPENSION_BRIDGE",
-   "BUILDING_LARGE_SUSPENSION_BRIDGE",
-   "BUILDING_TELEPORT_BOOTH"
-  ]
- },
  "requires": {
   "build": {
    "all": [
@@ -77,6 +67,32 @@
       "connection": "trade|vicinity"
      }
     ]
+   ],
+   "dormant": [
+    {
+     "type": "BUILDING_TRUSS_BRIDGE",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_SMALL_STEEL_ARCH_BRIDGE",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_LARGE_STEEL_ARCH_BRIDGE",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_SMALL_SUSPENSION_BRIDGE",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_LARGE_SUSPENSION_BRIDGE",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_TELEPORT_BOOTH",
+     "scope": "city"
+    }
    ]
   }
  },

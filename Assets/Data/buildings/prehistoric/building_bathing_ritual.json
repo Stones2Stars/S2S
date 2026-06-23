@@ -10,11 +10,6 @@
    "TECH_MEDICINE"
   ]
  },
- "replacedBy": {
-  "buildings": [
-   "BUILDING_BATH_HOUSE"
-  ]
- },
  "requires": {
   "build": {
    "all": [
@@ -31,6 +26,14 @@
       "scope": "plot"
      }
     ]
+   ]
+  },
+  "operate": {
+   "dormant": [
+    {
+     "type": "BUILDING_BATH_HOUSE",
+     "scope": "city"
+    }
    ]
   }
  },

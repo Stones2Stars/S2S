@@ -10,14 +10,6 @@
    "TECH_LEGALIZED_GAMBLING"
   ]
  },
- "replacedBy": {
-  "buildings": [
-   "BUILDING_BROTHEL",
-   "BUILDING_GENTLEMANS_CLUB",
-   "BUILDING_ANDROID_BROTHEL",
-   "BUILDING_ORDINANCE_PROSTITUTION_BAN"
-  ]
- },
  "requires": {
   "build": {
    "all": [
@@ -47,6 +39,26 @@
       "scope": "plot"
      }
     ]
+   ]
+  },
+  "operate": {
+   "dormant": [
+    {
+     "type": "BUILDING_BROTHEL",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_GENTLEMANS_CLUB",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_ANDROID_BROTHEL",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_ORDINANCE_PROSTITUTION_BAN",
+     "scope": "city"
+    }
    ]
   }
  },

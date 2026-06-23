@@ -15,12 +15,6 @@
    "TECH_AGRICULTURAL_ENGINEERING"
   ]
  },
- "replacedBy": {
-  "buildings": [
-   "BUILDING_FARM_FLOWER_INDIGO",
-   "BUILDING_GREENHOUSE"
-  ]
- },
  "requires": {
   "build": {
    "all": [
@@ -44,6 +38,16 @@
      "type": "BONUS_INDIGO",
      "scope": "city",
      "connection": "vicinity"
+    }
+   ],
+   "dormant": [
+    {
+     "type": "BUILDING_FARM_FLOWER_INDIGO",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_GREENHOUSE",
+     "scope": "city"
     }
    ]
   }

@@ -10,11 +10,6 @@
    "TECH_HOMO_SUPERIOR"
   ]
  },
- "replacedBy": {
-  "buildings": [
-   "BUILDING_SANITATION_CHAMBER"
-  ]
- },
  "requires": {
   "build": {
    "all": [
@@ -67,6 +62,12 @@
       "connection": "trade|vicinity"
      }
     ]
+   ],
+   "dormant": [
+    {
+     "type": "BUILDING_SANITATION_CHAMBER",
+     "scope": "city"
+    }
    ]
   }
  },

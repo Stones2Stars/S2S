@@ -10,11 +10,6 @@
    "TECH_FUSION_SPACECRAFT"
   ]
  },
- "replacedBy": {
-  "buildings": [
-   "BUILDING_TOURISM_MEGACOMPLEX"
-  ]
- },
  "requires": {
   "build": {
    "all": [
@@ -48,6 +43,12 @@
      "type": "BONUS_AUTOMOBILES",
      "scope": "city",
      "connection": "trade|vicinity"
+    }
+   ],
+   "dormant": [
+    {
+     "type": "BUILDING_TOURISM_MEGACOMPLEX",
+     "scope": "city"
     }
    ]
   }

@@ -10,12 +10,6 @@
    "TECH_AUGMENTED_CONSUMABLES"
   ]
  },
- "replacedBy": {
-  "buildings": [
-   "BUILDING_FACTORY_CHEESE",
-   "BUILDING_FOOD_MANUFACTURING_DISTRICT"
-  ]
- },
  "requires": {
   "build": {
    "all": [
@@ -49,6 +43,16 @@
      "type": "BONUS_MILK",
      "scope": "city",
      "connection": "trade|vicinity"
+    }
+   ],
+   "dormant": [
+    {
+     "type": "BUILDING_FACTORY_CHEESE",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_FOOD_MANUFACTURING_DISTRICT",
+     "scope": "city"
     }
    ]
   }

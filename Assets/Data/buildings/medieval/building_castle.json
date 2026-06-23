@@ -34,12 +34,6 @@
    "TECH_ROMANTICISM"
   ]
  },
- "replacedBy": {
-  "buildings": [
-   "BUILDING_STAR_FORT",
-   "BUILDING_IMPERIAL_FORTRESS"
-  ]
- },
  "requires": {
   "build": {
    "all": [
@@ -104,6 +98,16 @@
       "connection": "trade|vicinity"
      }
     ]
+   ],
+   "dormant": [
+    {
+     "type": "BUILDING_STAR_FORT",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_IMPERIAL_FORTRESS",
+     "scope": "city"
+    }
    ]
   }
  },

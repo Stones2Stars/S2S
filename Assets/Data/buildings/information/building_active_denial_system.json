@@ -10,12 +10,6 @@
    "TECH_WEAPONIZED_GRAVITY_FIELDS"
   ]
  },
- "replacedBy": {
-  "buildings": [
-   "BUILDING_ACOUSTIC_CROWD_CONTROL",
-   "BUILDING_GRAVITY_CROWD_CONTROL"
-  ]
- },
  "requires": {
   "build": {
    "all": [
@@ -41,6 +35,18 @@
       "scope": "plot"
      }
     ]
+   ]
+  },
+  "operate": {
+   "dormant": [
+    {
+     "type": "BUILDING_ACOUSTIC_CROWD_CONTROL",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_GRAVITY_CROWD_CONTROL",
+     "scope": "city"
+    }
    ]
   }
  },

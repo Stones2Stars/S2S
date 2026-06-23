@@ -25,11 +25,6 @@
    "TECH_BATTLEFIELD_SPORTS"
   ]
  },
- "replacedBy": {
-  "buildings": [
-   "BUILDING_ORBITAL_TARGETS"
-  ]
- },
  "requires": {
   "build": {
    "all": [
@@ -61,6 +56,12 @@
       "connection": "trade|vicinity"
      }
     ]
+   ],
+   "dormant": [
+    {
+     "type": "BUILDING_ORBITAL_TARGETS",
+     "scope": "city"
+    }
    ]
   }
  },

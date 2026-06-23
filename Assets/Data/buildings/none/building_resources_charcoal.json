@@ -10,11 +10,6 @@
    "TECH_FIRE_BRIGADES"
   ]
  },
- "replacedBy": {
-  "buildings": [
-   "BUILDING_CHARCOAL_BURNER"
-  ]
- },
  "requires": {
   "build": {
    "any": [
@@ -42,6 +37,14 @@
       "scope": "plot"
      }
     ]
+   ]
+  },
+  "operate": {
+   "dormant": [
+    {
+     "type": "BUILDING_CHARCOAL_BURNER",
+     "scope": "city"
+    }
    ]
   }
  },
