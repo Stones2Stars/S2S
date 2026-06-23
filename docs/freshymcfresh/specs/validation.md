@@ -1,0 +1,46 @@
+# Validation — the cascade test suite (dry-calc)
+
+> **Project-specific & temporary (owner).** Validation is the migration's **unit / integration / end-to-end
+> tests**: it proves the new cascade reproduces the legacy engine so the legacy C++ maintainers can be deleted
+> (**map-before-delete**). When the migration is done, validation in this form is **stone dead** and gets removed —
+> *that deletion is the finish line*. We need it **now**. (Specs aren't permanent; they exist so agents don't get
+> yoinked — this one rides with the project and dies with it. It lives in the **one** specs surface, never a
+> siloed project folder — that concept failed catastrophically.)
+
+## What it is
+
+A **dry-calc**: rebuild the cascade (the three machines — [enabler](enabler.md) / [modifier](modifier.md) /
+[tally](tally.md)) **offline from the raw inputs**, compute the *expected* output, and **diff it against the live
+engine's actual output**. Our calculator is the test; the engine is the oracle.
+
+- **Inputs** — the curated `Assets/Data/**` JSON + the raw game state from [`/state`](http-endpoints.md)
+  (raw inputs only, no computed outputs).
+- **Oracle** — the engine's actual values from [`/extractor`](http-endpoints.md) (the yield-loaded state) and the
+  [`/can/*`](http-endpoints.md) gate queries.
+- **Bar** — per entity/instance, **0 in-scope mismatches**. Out-of-scope (depends on a lower, not-yet-validated
+  layer — e.g. a tech needing a `BUILDING_` prereq) is **deferred: shown, never silently dropped**.
+
+## The three test levels
+- **Unit** — a single calc: one modifier value, one enabler gate, one tech's availability.
+- **Integration** — a subsystem: a city's full yield re-derived from its plots, a player's happiness.
+- **End-to-end** — the whole snapshot: the calculator over full game state vs the extractor.
+
+## ⛔ The pollution guardrail — structural, not disciplinary
+
+**Engine-calculated data may enter ONLY at the comparison boundary — never as a cascade input.** (The same rule
+[`/state`](http-endpoints.md) enforces by excluding computed yields.) If the calculator could read the engine's
+answer it would validate the game *against itself*. The dry-calc enforces this **structurally** via
+Clean-Architecture layering: the cascade domain physically **cannot reference the live-state DTOs** — only the
+composition root reads the snapshot (translating it into events + the player→team map). The no-rollerskating rule
+is the **project graph**, not discipline.
+
+## Build order (per the model)
+Replay events to populate the [tally](tally.md) **fully first**, *then* run the [enabler](enabler.md) (its required
+side reads aggregated counts — correct only once the tally is complete). The [modifier](modifier.md) machine rides
+the same spine, with a value outcome instead of a true/false. The only live-vs-dry difference is **"when"** (live
+events carry the turn; the dry replay doesn't, and the cascade doesn't consume it).
+
+## See also
+- [http-endpoints.md](http-endpoints.md) — `/state` (inputs) vs `/extractor` (oracle); the verification flow.
+- [enabler.md](enabler.md) · [modifier.md](modifier.md) · [tally.md](tally.md) — the machines this rebuilds and proves.
+- [logging.md](logging.md) — the shadow / map-before-delete bar validation serves.

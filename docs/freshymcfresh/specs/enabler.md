@@ -85,8 +85,8 @@ So the build-time gate = `build ∧ operate`; the ongoing dormancy gate = `opera
 
 Every `requires` resolves the same way, so it's cacheable as a pure function of clause-shape + state:
 
-1. **combinator** — the `all`/`any`/`noneOf` structure ([json](json.md) §3.4). `all` = AND; **`any` = a list of
-   OR-groups AND-ed together** (not OR-of-ANDs).
+1. **combinator** — the `all`/`any`/`noneOf` structure ([json](json.md) §3.4), plain-English: **`all` = AND**
+   (all of these), **`any` = OR** (any of these); nest for AND-of-ORs.
 2. **conditions** — each leaf: a presence/count **atom** (`min`/`max` at a scope) or a **predicate**. A count at
    `city`/`plot` reads the live object; at `empire`/`team`/`world` it reads the [tally](tally.md). A missing
    predicate is **ignored**, never false (json §3.5) — so retiring a system never spuriously disables data.

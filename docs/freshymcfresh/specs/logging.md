@@ -43,7 +43,9 @@ Every observability hook is one of these — cheap, gated, **off by default**:
 3. **Mailbox `/diagnostic/*` endpoint** — an on-demand snapshot computed on the game thread (the
    `/diagnostic/sweep` pattern), depending on **no** log file or gate.
 
-The endpoint *catalogue* — which endpoints exist and their clean structure — is [http-endpoints.md](http-endpoints.md).
+The endpoint *catalogue* + the clean **route structure** is [http-endpoints.md](http-endpoints.md) — it is
+canonical and **supersedes the illustrative legacy names above**: `/players`/`/cities`/`/units` → `/state/*`;
+`/diagnostic/*` → `/shadow/*` + `/decompose/*` + `/extractor/*`.
 
 ---
 

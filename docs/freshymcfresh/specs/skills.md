@@ -5,8 +5,8 @@ The catalogue of a unit's **innate boolean abilities** — the `blitz`/`amphibio
 
 > **The classification model (owner).** A **unit** carries three blocks. The **operative test: *can a promotion
 > grant it?*** — yes → a **`skill`** (you can train into `blitz`); no, it comes only from the unit's *type* (you
-> can't promote your way to firing guns — a swordsman must *upgrade* to a rifleman) → a **`tag`**. The three, by
-> lifecycle/mutability:
+> can't promote your way to firing guns — a swordsman must *upgrade* to a rifleman) → a **`tag`**; and if it's
+> **transient** (fired, then expires) it is neither — it is a **`state`**. The three, by lifecycle/mutability:
 > — **`skills`** — **mutable**: gained/lost over the unit's life (promotions); the classic abilities (`blitz`,
 >   attack-over-river, …) catalogued in *this* file;
 > — **`state`** — **transient**: fired, counted down, then over (`paralyze`/immobilise/…). *Never a first-class
@@ -57,7 +57,7 @@ Owner-ruled or curator-grounded with a clear meaning.
 | `canMovePeaks` | can move through peak tiles |
 | `cannotMergeSplit` | cannot merge with / split from other units |
 | `enemyRoute` | can use enemy (rival) roads |
-| `excile` | an investigation / criminal state |
+| `excile` | an investigation / criminal **ability** (legacy spelling, from `iExcileChange`) — distinct from the `exile` *unit* in the criminal-type tags ([tags.md](tags.md)) |
 | `firstStrikeImmune` / `immuneToFirstStrikes` | immune to first strikes |
 | `flatMovementCost` | every tile costs 1 movement |
 | `fliesToMove` | flies to move (grant/revoke, §4) |
@@ -91,7 +91,7 @@ Owner-ruled or curator-grounded with a clear meaning.
 | `rivalTerritory` | can enter rival territory |
 | `river` | attacks over a river without penalty (the river-only subset of `amphib`) |
 | `sabotage` | can perform sabotage |
-| `spy` | functions as a spy |
+| `spy` | functions as a spy — ⏳ **being reclassified to the `spy` tag** (only spies run espionage missions); drop this skill, see [tags.md](tags.md) |
 | `stealPlans` | can steal plans (espionage mission) |
 | `suicide` | destroyed after attacking |
 | `tradable` | can be traded with another empire — consolidates the legacy `militaryTrade` + `workerTrade` (curator fold) |
@@ -136,7 +136,7 @@ are grounded in the consuming code (high confidence unless noted), not general k
 | `offensiveVictoryMove` | expends a full move point after a successful attack |
 | `oneUp` | ❌ **DEAD?** — believed unused; possible entertainer city-revolt-reduction use (verify); else drop |
 | `onslaught` | can chain attacks in a turn after a no-damage kill while defenders remain |
-| `paralyze` | ⚠ **not a skill** — a temporary unit **state** (immobilise), fired by an event; belongs in the state system, not the skills glossary |
+| `paralyze` | ⚠ **not a skill** — a transient unit **state** (immobilise, fired by an event); **migrate to [state.md](state.md)** and remove from skills |
 | `pillageMarauder` | gains gold from pillaging / combat pillage |
 | `rBombardDirect` | (unit-combat) exempt from first-defender deprioritisation in ranged-bombard targeting |
 | `rBombardForceAbility` | lets a defensive-only unit still ranged-bombard (overrides `isOnlyDefensive`) |
@@ -202,4 +202,4 @@ ability *away*): `stampede`, `attackOnlyCities`, `ignoreNoEntryLevel`, `ignoreZo
 - [json.md](json.md) §8 — the **system**: what a skill is, and the unit-`skills` vs empire-`capabilities` split.
 - [naming.md](naming.md) — the sibling glossary (infotype id prefixes); same spec-defines-the-system,
   glossary-lists-the-namings split.
-- the **empire `capabilities`** glossary — *to be written*.
+- [capabilities.md](capabilities.md) — the **empire `capabilities`** glossary (the sibling; started).

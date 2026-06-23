@@ -49,13 +49,13 @@ slot does pure integer math and never sees the human boundary.
 > treated as identity (skipped) so the cascade is additive-only — exactly matching legacy — to prove the
 > deposit-flow plumbing before the new multiplicative capability is switched on. Matching legacy is **not** the
 > end goal (the formula is a deliberate redesign that corrects latent legacy bugs); parity-mode is the
-> verification scaffold, not the target. See the shadow methodology (sibling doc, pending).
+> verification scaffold, not the target. See the shadow methodology ([logging](logging.md) §6) + [validation](validation.md).
 
 ---
 
 ## 3. Conditioning — re-evaluated every recompute (the dormancy model)
 
-A deposit may carry `enabled` / `disabled` / `per` ([json](json.md) §3.8–3.9). A deposit's condition uses the
+A deposit may carry `enabled` / `disabled` / `per` ([json](json.md) §3.7, §3.9). A deposit's condition uses the
 **same vocabulary** as the enabler's `requires` — the same `all`/`any`/`noneOf` tree over the same atoms and
 predicates — so a conditioned deposit is, in essence, **a `requires`-shaped gate with an output attached**: the
 enabler resolves that shape to *availability* ("can I?"), the modifier resolves the *same* shape to a *magnitude*
@@ -125,7 +125,9 @@ A deposit lands in one of three ways ([json](json.md) §6.1):
 
 A `unit`-scope deposit is a **self-accumulator**: source == target. A unit's promotions and unit-combat class
 deposit their stat changes onto the unit itself (the existing additive promotion stack), summed for O(1)
-concatenation as each promotion is added — not a downward cascade. **Host-from-occupants** effects — what a city gets *per unit stationed in it* (military happiness/anger) — are
+concatenation as each promotion is added — not a downward cascade.
+
+**Host-from-occupants** effects — what a city gets *per unit stationed in it* (military happiness/anger) — are
 **not** a bespoke host-family: they're an ordinary deposit on the source (the civic/trait), scaled by a
 predicate-filtered unit count and targeting `cities`: `happiness.empire.cities.{unit: IS_MILITARY, flat: N}`
 ([json](json.md) §3.7). The **carrier↔cargo** behaviour splits across the two systems. The carry *ability* is a unit **skill** — whether

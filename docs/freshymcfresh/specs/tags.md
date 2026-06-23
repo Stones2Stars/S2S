@@ -27,9 +27,10 @@ The catalogue of a unit's **immutable, accounting-only classification tags** (th
 | `spy` | runs espionage missions (only spies do) | `UNITAI_SPY` → `spy` (not civilian, not military) |
 
 ### Tech / equipment class — ⏳ deferred (from unitcombats, post-migration)
-`gunpowder` (uses gunpowder) · `mechanized` (mechanical/motorised) · … — these are *type* classes a unit gains on
-upgrade (a swordsman → rifleman gains `gunpowder`). To be derived from **unitcombats** in the post-migration
-unitcombat pass, not the first cut.
+`gunpowder` (uses gunpowder) · `mechanized` (mechanical/motorised) · `mounted` (cavalry) · … — these are *type*
+classes a unit gains/loses on upgrade (a swordsman → rifleman gains `gunpowder`; a `mounted` horseman *loses*
+`mounted` upgrading to a helicopter). To be derived from **unitcombats** in the post-migration unitcombat pass,
+not the first cut.
 
 ### Criminal-type — ⏳ deferred ("map the lunacy")
 The 13 `UNITAI_INFILTRATOR` units — `biker_gang` · `burglar` · `exile` · `gunfighter` · `hacker` · `mobster_car` ·
@@ -41,8 +42,8 @@ The 13 `UNITAI_INFILTRATOR` units — `biker_gang` · `burglar` · `exile` · `g
 - `gunpowder`/`mechanized`/… from **unitcombats** (post-migration).
 - **Completeness** — most units untagged for now (fine).
 - The **bSpy skill → `spy` tag** reconciliation (the spy notion is mis-filed as a skill too — drop the skill).
-- Whether `IS_<TAG>` predicates *are* tag-membership or independent queries — owner leans **independent**
-  ([json](json.md) §3.7).
+- `IS_*` predicates are **independent queries** (not tag-membership), but **may be defined to encompass tags**;
+  JSON-definable + predicate groups come post-migration ([json](json.md) §3.7).
 
 ## See also
 - [json.md](json.md) §8 — the system (the four-block classification model).

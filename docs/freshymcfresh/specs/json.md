@@ -46,7 +46,7 @@ of them.
 | **Provisions** | `grants` | one-shot / recurring things this hands out (units, buildings, pulses) |
 | **Effects** | every **modifier family** key (`food`, `production`, `happiness`, …, one per `PROPERTY_*`) | per-turn magnitudes this deposits onto targets |
 | **Intrinsic** ("what am I") | `identity` (incl. all TEXT) · `cost` · `ui` · `world` · `sound` · `ai` | empire-agnostic self-description, art, audio, AI metadata |
-| **Classification** | `skills` (UNIT, mutable abilities) · `tags` (UNIT, immutable type membership) · `state` (UNIT, transient) · `capabilities` (TEAM, tech-unlocked) | §8 — the four-block classification model; scope carried by the section name |
+| **Classification** | `skills` (UNIT, mutable abilities) · `tags` (UNIT, immutable type membership) · `state` (UNIT, transient) · `capabilities` (TEAM, tech/civic-unlocked) | §8 — the four-block classification model; scope carried by the section name |
 | **Auxiliary / bespoke** | `loadPrune` · `policies` · `succession` · `excludes` · `produces` · `condition` · `effect` · `vision` · `outcomes` · `mapGeneration` · `replacedBy` · `promotionLine` · `buildUp` · `shrine` · `properties` · `voteSource` · `threshold` · `role` · `victory` · `targetLevel` · `conversion` · `cityFounding` · `unitCapability` | data read by their own systems, not the cascade |
 
 `type` (the entity's own id, e.g. `"BUILDING_FORGE"`) and the TEXT fields are present where relevant.
@@ -91,17 +91,19 @@ lands on the scope object itself (the city — the common case). Full deposit sy
 
 ### 3.4 Conditions — `all` / `any` / `noneOf`
 
-A bounded boolean tree, identical wherever a condition is needed (`requires`, and a deposit's `enabled`/`disabled`):
+A bounded boolean tree, identical wherever a condition is needed (`requires`, and a deposit's `enabled`/`disabled`).
+**Deliberately plain-English ("normal human being") semantics — `any` = *any of these*, `all` = *all of these*:**
 
 ```jsonc
-{ "all":    [ … ],      // AND — every clause must hold
-  "any":    [ [ … ], … ], // OR  — a LIST OF OR-GROUPS, each AND-ed with the rest (each group: ≥1 true)
-  "noneOf": [ … ] }      // NONE of these may be present
+{ "all":    [ … ],   // AND  — every clause holds
+  "any":    [ … ],   // OR   — at least one clause holds
+  "noneOf": [ … ] }  // NONE — none of these may be present
 ```
 
-`any:[[A,B,C]]` (one group) = "any of A,B,C"; `any:[[A],[B]]` (two groups) = "A AND B" — each inner list is an OR-group and the groups are AND-ed, e.g.
-`any:[[BONUS_COPPER,BONUS_IRON],[BUILDING_FORGE]]` = "copper **or** iron, **and** a forge". Each leaf is **either** a
-count/presence **atom** or a **predicate** (§3.5):
+`all` and `any` are **flat** lists of clauses: `any:[A,B,C]` = "A **or** B **or** C"; `all:[A,B,C]` = "A **and**
+B **and** C". For anything more complex (AND-of-ORs), **nest** — that is the win: "copper **or** iron, **and** a
+forge" is `{all:[ {any:[BONUS_COPPER,BONUS_IRON]}, BUILDING_FORGE ]}`. Each leaf is **either** a count/presence
+**atom** or a **predicate** (§3.5):
 
 ```jsonc
 { "type": "BONUS_IRON", "scope": "city", "connection": "trade|vicinity" }   // an atom
@@ -127,7 +129,7 @@ context: `IS_WATER` on `plots` = a water tile, on `units` = a sea unit. An **unk
 IGNORED**, never treated as false — retiring a system never spuriously disables unrelated data.
 
 - **bare** (parameter-free string), four groups:
-  - **environment** `IS_<where>` (target-relative): `IS_WATER` · `IS_LAND` · `IS_SPACE` · `IS_LUNAR` · `IS_MARS`
+  - **environment / domain** `IS_<where>` (target-relative): `IS_WATER` · `IS_LAND` · `IS_AIR` · `IS_SPACE` · `IS_LUNAR` · `IS_MARS`
     (extensible).
   - **plot attributes** `HAS_<attr>` (relief & adjacency a plot carries, orthogonal to environment so they
     compose): `HAS_PEAK` · `HAS_HILLS` · `HAS_COAST` (adjacent to water) · `HAS_RIVER` · `HAS_FRESHWATER` ·
@@ -193,7 +195,9 @@ Every deposit, grant, or conditioned value is the same shape:
 { <payload>, "scope"?, "per"?, "enabled"?, "disabled"?, "ai"? }
 ```
 
-- **payload** — a unit magnitude (`flat`/`percent`/`multiplier`: value), OR a grant (`type`+`count`), OR a predicate.
+- **payload** — a unit magnitude: a **bare number**, or `{ "value": N, … }` when conditioned or in a list — the
+  **unit** (`flat`/`percent`/`multiplier`) is the key *above* the entry, and `value` carries the magnitude inside
+  it. OR a grant (`type`+`count`), OR a predicate.
 - **`scope`** default = the containing scope · **`per`** default ×1 · **`enabled`** default true (applies only
   while the condition holds) · **`disabled`** default false (suppressed while it holds) · **`ai`** an optional
   sibling block applied for AI players only (same inner shape).
@@ -204,8 +208,8 @@ Every deposit, grant, or conditioned value is the same shape:
 
 ```jsonc
 "production": { "city": { "percent": [
-    25,                                                       // always +25%
-    { "value": 25, "enabled": { "min": ["BONUS_COAL", 1] } }  // +25% more while coal is connected
+    25,                                                            // always +25% (a bare number)
+    { "value": 25, "enabled": { "type": "BONUS_COAL", "min": 1 } }  // +25% more while coal is connected
 ] } }
 ```
 
@@ -403,7 +407,7 @@ promotion grant it?***
 - **`state`** — **transient** conditions (fired → counted down → over: `paralyze`/immobilise). **Greenfield** —
   never first-class; historically faked via pseudo-promotions + Python events.
 
-The **empire** counterpart to unit `skills` is **`capabilities`** — **team-wide, tech-unlocked** civilization
+The **empire** counterpart to unit `skills` is **`capabilities`** — **team-wide, tech/civic-unlocked** civilization
 abilities (found-on-peaks, pass-peaks, move-on-water, tech-trading, irrigation, bridge-building, river-trade).
 The **section name carries the scope**, so the engine never guesses.
 
@@ -491,7 +495,7 @@ marble; +10 culture, doubling after it has stood 1000 turns.*
 
 **Scope (singular)** — `world › team › empire › area › city › plot{improvement|feature|terrain|route} › building|specialist|unit` · off-spine `self` = the entity's own build
 **Target (plural)** — `plots · units · cities · areas · empires` = all of that kind in the scope, predicate-filtered
-**Combinators** — `all` (AND) · `any` (OR-of-groups) · `noneOf` (NONE)
+**Combinators** — `all` (AND) · `any` (OR) · `noneOf` (NONE) · nest for AND-of-ORs
 **Atom** — `{ type, scope, min?, max?, connection? }` · presence = `min:1`
 **Predicate** — bare (`IS_*`/`HAS_*`/`VICINITY`/`IS_CAPITAL`…), `{PREDICATE: param}`, or membership `{terrain|feature|bonus:[…]}`
 **Units** — `flat` (amount) · `percent` (+% delta) · `multiplier` (×, identity 100). Human-readable; ×100 is a bug.
