@@ -15,13 +15,20 @@ consolidation treatment **when its initiative becomes active** — at which poin
 [`../README.md`](../README.md) roadmap. Until then it preserves the *intent* only.
 
 ## What's here
+**Triaged 2026-06-23** — the implemented/exhausted plans were dropped (`size-matters-ai`, `gamespeed-simplification`,
+`combat-odds-baseline`, `combat-phase3b-plan`). Several below are **PARTIAL**: their done phases are noted inside; the
+open remainder is the live item.
+
 - **AI side** — `ai-architecture-north-star`, `ai-logging-rollout`, `ai-vs-human-benchmarking`,
-  `unit-ai-valuation`, `sea-ai-rework`, `size-matters-ai`, `subdued-animal-ai`, `fight-or-flight`.
+  `unit-ai-valuation`, `sea-ai-rework`, `subdued-animal-ai`.
   *(The AI is the consumer of the cascade data side — [`../../architecture/north-star.md`](../../architecture/north-star.md) §1.)*
-- **Combat model rework** — `combat-model-sketch`, `combat-odds-baseline`, `combat-phase3b-plan`,
-  `combat-simplification-scope`.
-- **Other** — `worker-stranded-tiles-reachability`, `surround-destroy-removal-map`, `multimap-zone-rework`,
-  `gamespeed-simplification`.
+- **Combat model** — `combat-model-sketch` (air-combat / Layer-2 gaps), `combat-simplification-scope`
+  (the good-ideas backlog), `fight-or-flight` (preserved for pluggable reimplementation).
+- **Systems / data** — `improvement-category-yields`, `specialist-rebalance`, `team-buildings` (empire-scope
+  constructables — implementation path is now the cascade [enabler](../../specs/enabler.md), not the dead prototype),
+  `global-warming-mod` (the #436 vestige-removal scope).
+- **Performance / other** — `turn-time-optimization`, `codebase-bug-hunt`, `worker-stranded-tiles-reachability`,
+  `surround-destroy-removal-map`, `multimap-zone-rework`, `unified-civilopedia`.
 
 ## See also
 - [`../README.md`](../README.md) — the active roadmap.
