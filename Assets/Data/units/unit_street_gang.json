@@ -94,13 +94,6 @@
    }
   }
  },
- "cargo": {
-  "unit": {
-   "space": {
-    "flat": 1
-   }
-  }
- },
  "costs": {
   "empire": {
    "perInstance": {
@@ -118,6 +111,14 @@
   },
   "plot": {
    "flat": 40
+  }
+ },
+ "cargo": {
+  "unit": {
+   "space": {
+    "unit": "IS_LAND",
+    "flat": 1
+   }
   }
  },
  "skills": {
@@ -211,7 +212,6 @@
    "MAPCATEGORY_EARTH"
   ],
   "cargo": {
-   "domain": "DOMAIN_LAND",
    "special": "SPECIALUNIT_PEOPLE",
    "smNotSpecial": "SPECIALUNIT_VTOL"
   },

@@ -128,9 +128,6 @@
    "TERRAIN_TRENCH_POLAR",
    "TERRAIN_TRENCH_TROPICAL"
   ],
-  "cargo": {
-   "domain": "DOMAIN_LAND"
-  },
   "base": {
    "combat": 8,
    "moves": 2,

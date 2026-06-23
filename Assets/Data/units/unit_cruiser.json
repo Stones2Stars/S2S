@@ -45,13 +45,6 @@
    }
   }
  },
- "cargo": {
-  "unit": {
-   "space": {
-    "flat": 1
-   }
-  }
- },
  "strength": {
   "unit": {
    "unitCombat": {
@@ -61,6 +54,14 @@
     "UNITCOMBAT_STEAM_SHIPS": {
      "percent": 20
     }
+   }
+  }
+ },
+ "cargo": {
+  "unit": {
+   "space": {
+    "unit": "IS_AIR",
+    "flat": 1
    }
   }
  },
@@ -124,7 +125,6 @@
    "MAPCATEGORY_EARTH"
   ],
   "cargo": {
-   "domain": "DOMAIN_AIR",
    "special": "SPECIALUNIT_SEAPLANE"
   },
   "base": {

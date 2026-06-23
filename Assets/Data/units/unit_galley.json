@@ -46,6 +46,7 @@
  "cargo": {
   "unit": {
    "space": {
+    "unit": "IS_LAND",
     "flat": 3
    }
   }
@@ -119,9 +120,6 @@
    "TERRAIN_TRENCH_TROPICAL",
    "TERRAIN_TRENCH_POLAR"
   ],
-  "cargo": {
-   "domain": "DOMAIN_LAND"
-  },
   "terrainPassableTechs": [
    {
     "TERRAIN_SEA_TROPICAL": "TECH_SEAFARING"

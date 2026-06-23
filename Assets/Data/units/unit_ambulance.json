@@ -66,19 +66,20 @@
    }
   }
  },
- "cargo": {
-  "unit": {
-   "space": {
-    "flat": 1
-   }
-  }
- },
  "PROPERTY_DISEASE": {
   "city": {
    "flat": -25
   },
   "plot": {
    "flat": -13
+  }
+ },
+ "cargo": {
+  "unit": {
+   "space": {
+    "unit": "IS_LAND",
+    "flat": 1
+   }
   }
  },
  "skills": {
@@ -132,7 +133,6 @@
    "MAPCATEGORY_EARTH"
   ],
   "cargo": {
-   "domain": "DOMAIN_LAND",
    "smNotSpecial": "SPECIALUNIT_VTOL"
   },
   "base": {

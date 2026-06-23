@@ -33,13 +33,6 @@
  "allowed": {
   "empire": 5
  },
- "cargo": {
-  "unit": {
-   "space": {
-    "flat": 2
-   }
-  }
- },
  "costs": {
   "empire": {
    "perInstance": {
@@ -63,6 +56,14 @@
     "UNITCOMBAT_WHEELED": {
      "percent": 50
     }
+   }
+  }
+ },
+ "cargo": {
+  "unit": {
+   "space": {
+    "unit": "IS_AIR",
+    "flat": 2
    }
   }
  },
@@ -120,7 +121,6 @@
    "MAPCATEGORY_EARTH"
   ],
   "cargo": {
-   "domain": "DOMAIN_AIR",
    "special": "SPECIALUNIT_FIGHTER",
    "smNotSpecial": "SPECIALUNIT_MISSILE"
   },

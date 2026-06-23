@@ -74,13 +74,6 @@
    }
   }
  },
- "cargo": {
-  "unit": {
-   "space": {
-    "flat": 1
-   }
-  }
- },
  "costs": {
   "empire": {
    "perInstance": {
@@ -98,6 +91,13 @@
   },
   "plot": {
    "flat": 10
+  }
+ },
+ "cargo": {
+  "unit": {
+   "space": {
+    "flat": 1
+   }
   }
  },
  "skills": {

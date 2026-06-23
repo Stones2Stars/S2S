@@ -54,6 +54,7 @@
  "cargo": {
   "unit": {
    "space": {
+    "unit": "IS_LAND",
     "flat": 2
    }
   }
@@ -126,9 +127,6 @@
    "TERRAIN_TRENCH_POLAR",
    "TERRAIN_TRENCH_TROPICAL"
   ],
-  "cargo": {
-   "domain": "DOMAIN_LAND"
-  },
   "base": {
    "combat": 3,
    "moves": 1,

@@ -36,13 +36,6 @@
    ]
   }
  },
- "cargo": {
-  "unit": {
-   "space": {
-    "flat": 1
-   }
-  }
- },
  "strength": {
   "unit": {
    "terrain": {
@@ -68,6 +61,14 @@
       "percent": 50
      }
     }
+   }
+  }
+ },
+ "cargo": {
+  "unit": {
+   "space": {
+    "unit": "IS_LAND",
+    "flat": 1
    }
   }
  },
@@ -147,7 +148,6 @@
    "TERRAIN_LAKE"
   ],
   "cargo": {
-   "domain": "DOMAIN_LAND",
    "special": "SPECIALUNIT_TROOP"
   },
   "base": {

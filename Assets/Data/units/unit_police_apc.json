@@ -91,19 +91,20 @@
    }
   }
  },
- "cargo": {
-  "unit": {
-   "space": {
-    "flat": 1
-   }
-  }
- },
  "PROPERTY_CRIME": {
   "city": {
    "flat": -30
   },
   "plot": {
    "flat": -16
+  }
+ },
+ "cargo": {
+  "unit": {
+   "space": {
+    "unit": "IS_LAND",
+    "flat": 1
+   }
   }
  },
  "skills": {
@@ -172,7 +173,6 @@
    "MAPCATEGORY_EARTH"
   ],
   "cargo": {
-   "domain": "DOMAIN_LAND",
    "special": "SPECIALUNIT_PEOPLE",
    "smNotSpecial": "SPECIALUNIT_VTOL"
   },

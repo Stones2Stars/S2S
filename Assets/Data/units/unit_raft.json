@@ -66,6 +66,7 @@
  "cargo": {
   "unit": {
    "space": {
+    "unit": "IS_LAND",
     "flat": 1
    }
   }
@@ -145,9 +146,6 @@
    "TERRAIN_TRENCH_POLAR",
    "TERRAIN_LAKE"
   ],
-  "cargo": {
-   "domain": "DOMAIN_LAND"
-  },
   "base": {
    "combat": 1,
    "moves": 1,

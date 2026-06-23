@@ -50,13 +50,6 @@
    }
   }
  },
- "cargo": {
-  "unit": {
-   "space": {
-    "flat": 3
-   }
-  }
- },
  "strength": {
   "unit": {
    "unitCombat": {
@@ -91,6 +84,14 @@
       "percent": 30
      }
     }
+   }
+  }
+ },
+ "cargo": {
+  "unit": {
+   "space": {
+    "unit": "IS_AIR",
+    "flat": 3
    }
   }
  },
@@ -155,7 +156,6 @@
    "MAPCATEGORY_EARTH"
   ],
   "cargo": {
-   "domain": "DOMAIN_AIR",
    "special": "SPECIALUNIT_MISSILE"
   },
   "base": {

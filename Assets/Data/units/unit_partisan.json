@@ -86,19 +86,19 @@
    }
   }
  },
- "cargo": {
-  "unit": {
-   "space": {
-    "flat": 1
-   }
-  }
- },
  "PROPERTY_CRIME": {
   "city": {
    "flat": 15
   },
   "plot": {
    "flat": 25
+  }
+ },
+ "cargo": {
+  "unit": {
+   "space": {
+    "flat": 1
+   }
   }
  },
  "skills": {

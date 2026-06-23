@@ -76,13 +76,6 @@
    "percent": 25
   }
  },
- "cargo": {
-  "unit": {
-   "space": {
-    "flat": 1
-   }
-  }
- },
  "costs": {
   "empire": {
    "perInstance": {
@@ -112,6 +105,14 @@
     "UNITCOMBAT_MELEE": {
      "percent": 100
     }
+   }
+  }
+ },
+ "cargo": {
+  "unit": {
+   "space": {
+    "unit": "IS_LAND",
+    "flat": 1
    }
   }
  },
@@ -183,7 +184,6 @@
    "MAPCATEGORY_EARTH"
   ],
   "cargo": {
-   "domain": "DOMAIN_LAND",
    "special": "SPECIALUNIT_TROOP"
   },
   "base": {

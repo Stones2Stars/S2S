@@ -138,7 +138,6 @@
    "UNIT_ATTACK_SUBMARINE"
   ],
   "cargo": {
-   "domain": "DOMAIN_AIR",
    "special": "SPECIALUNIT_MISSILE"
   },
   "base": {

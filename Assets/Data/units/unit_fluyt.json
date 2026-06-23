@@ -46,6 +46,7 @@
  "cargo": {
   "unit": {
    "space": {
+    "unit": "IS_LAND",
     "flat": 5
    }
   }
@@ -107,9 +108,6 @@
   "mapCategories": [
    "MAPCATEGORY_EARTH"
   ],
-  "cargo": {
-   "domain": "DOMAIN_LAND"
-  },
   "base": {
    "combat": 10,
    "moves": 3,

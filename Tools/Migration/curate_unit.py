@@ -87,8 +87,7 @@ UNIT_FAMILIES = {
     "iNumHealSupport": ("heal", "support", "flat"),
     "iDropRange": ("movement", "dropRange", "flat"),
     "iCultureGarrison": ("culture", "garrison", "flat"),
-    "iCargo": ("cargo", "space", "flat"),   # base cargo CAPACITY -> the `cargo` family's `space` member (matches
-                                            # promotion iCargoChange -> cargo.space; SizeMatters: space/smSpace/volume)
+    # iCargo is NOT a plain family entry — it combines with DomainCargo into cargo.space.{unit, flat} (see pass2).
 }
 # ---- capabilities (separate boolean group) — Unit's bools (some shared with Promotion's CAP vocab). ----
 CAP_BOOL = {
@@ -488,9 +487,20 @@ def pass2(typ, rec, store, fams, caps, grants, vision, identity):
         for k, v in _pairs(bpm):
             lst.append(OrderedDict([("value", v),
                                     ("enabled", OrderedDict([("type", k), ("scope", "city"), ("min", 1)]))]))
-    # cargo (which the unit carries) -> identity.cargo (capacity is base; the carry-kinds are config)
+    # cargo CAPACITY + what-it-carries -> cargo.unit.space.{unit: IS_<DOMAIN>?, flat}. A domain-restricted hold
+    # carries only that domain: a carrier is cargo.space.{unit: IS_AIR, flat} (you can't transport a plane on a
+    # landing craft); an unrestricted hold is just cargo.space.flat. Finer special-unit restrictions
+    # (Special/SMNotSpecial) stay in identity.cargo for now (folded later).
+    icargo = _int(rec, "iCargo")
+    if icargo:
+        space = OrderedDict()
+        dom = _txt(rec, "DomainCargo")
+        if dom and dom.startswith("DOMAIN_"):
+            space["unit"] = "IS_" + dom[len("DOMAIN_"):]
+        space["flat"] = icargo
+        fams.setdefault("cargo", OrderedDict()).setdefault("unit", OrderedDict())["space"] = space
     cargo = OrderedDict()
-    for tag, key in (("DomainCargo", "domain"), ("SpecialCargo", "special"), ("SMNotSpecialCargo", "smNotSpecial")):
+    for tag, key in (("SpecialCargo", "special"), ("SMNotSpecialCargo", "smNotSpecial")):
         v = _txt(rec, tag)
         if v:
             cargo[key] = v
@@ -567,10 +577,15 @@ def curate(typ, rec, store):
     if dcm:
         caps["dcmAirBomb"] = len(dcm)   # the tier = count of set levels
     # --- tags (derived classification; greenfield first pass — see TAG_BY_UNITAI) ---
-    if _bool(rec, "bMilitarySupport"):
-        tags["military"] = True   # IS_MILITARY signal (owner-verified: drives the military upkeep pool + count)
-    for t in TAG_BY_UNITAI.get(_txt(rec, "DefaultUnitAI"), ()):
-        tags[t] = True
+    # A specific DefaultUnitAI role (worker/spy/merchant/…) classifies the unit and SUPPRESSES `military` (owner:
+    # a spy just needs `spy`, not military — bMilitarySupport over-fires on non-combat roles). `military` (the
+    # IS_MILITARY signal) is the fallback for combat units that have no specific role.
+    uai = _txt(rec, "DefaultUnitAI")
+    if uai in TAG_BY_UNITAI:
+        for t in TAG_BY_UNITAI[uai]:
+            tags[t] = True
+    elif _bool(rec, "bMilitarySupport"):
+        tags["military"] = True
     # --- grants (lists) ---
     for tag, key in GRANT_LIST.items():
         lst = _typelist(rec, tag)

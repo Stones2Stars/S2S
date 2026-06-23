@@ -129,7 +129,6 @@
    "MAPCATEGORY_EARTH"
   ],
   "cargo": {
-   "domain": "DOMAIN_AIR",
    "special": "SPECIALUNIT_MISSILE"
   },
   "base": {

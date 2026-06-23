@@ -43,13 +43,6 @@
    }
   }
  },
- "cargo": {
-  "unit": {
-   "space": {
-    "flat": 3
-   }
-  }
- },
  "strength": {
   "unit": {
    "unitCombat": {
@@ -59,6 +52,14 @@
     "UNITCOMBAT_STEAM_SHIPS": {
      "percent": 40
     }
+   }
+  }
+ },
+ "cargo": {
+  "unit": {
+   "space": {
+    "unit": "IS_LAND",
+    "flat": 3
    }
   }
  },
@@ -122,7 +123,6 @@
    "MAPCATEGORY_EARTH"
   ],
   "cargo": {
-   "domain": "DOMAIN_LAND",
    "special": "SPECIALUNIT_TROOP"
   },
   "base": {

@@ -175,7 +175,6 @@
   "militaryTrade": true
  },
  "tags": {
-  "military": true,
   "merchant": true,
   "civilian": true
  },

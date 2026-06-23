@@ -33,13 +33,6 @@
    }
   }
  },
- "cargo": {
-  "unit": {
-   "space": {
-    "flat": 5
-   }
-  }
- },
  "strength": {
   "unit": {
    "feature": {
@@ -53,6 +46,14 @@
       "percent": -50
      }
     }
+   }
+  }
+ },
+ "cargo": {
+  "unit": {
+   "space": {
+    "unit": "IS_LAND",
+    "flat": 5
    }
   }
  },
@@ -113,7 +114,6 @@
    "MAPCATEGORY_EARTH"
   ],
   "cargo": {
-   "domain": "DOMAIN_LAND",
    "special": "SPECIALUNIT_TROOP"
   },
   "base": {

@@ -33,13 +33,6 @@
    }
   }
  },
- "cargo": {
-  "unit": {
-   "space": {
-    "flat": 10
-   }
-  }
- },
  "strength": {
   "unit": {
    "unitCombat": {
@@ -52,6 +45,14 @@
     "UNITCOMBAT_DIESEL_SHIPS": {
      "percent": 50
     }
+   }
+  }
+ },
+ "cargo": {
+  "unit": {
+   "space": {
+    "unit": "IS_LAND",
+    "flat": 10
    }
   }
  },
@@ -111,9 +112,6 @@
   "mapCategories": [
    "MAPCATEGORY_EARTH"
   ],
-  "cargo": {
-   "domain": "DOMAIN_LAND"
-  },
   "base": {
    "combat": 60,
    "moves": 10,

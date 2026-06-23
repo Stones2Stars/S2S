@@ -51,13 +51,6 @@
    ]
   }
  },
- "cargo": {
-  "unit": {
-   "space": {
-    "flat": 3
-   }
-  }
- },
  "costs": {
   "empire": {
    "perInstance": {
@@ -66,6 +59,14 @@
      "type": "SELF",
      "scope": "empire"
     }
+   }
+  }
+ },
+ "cargo": {
+  "unit": {
+   "space": {
+    "unit": "IS_LAND",
+    "flat": 3
    }
   }
  },
@@ -138,9 +139,6 @@
    "TERRAIN_TRENCH_POLAR",
    "TERRAIN_TRENCH_TROPICAL"
   ],
-  "cargo": {
-   "domain": "DOMAIN_LAND"
-  },
   "terrainPassableTechs": [
    {
     "TERRAIN_SEA_TROPICAL": "TECH_SEAFARING"

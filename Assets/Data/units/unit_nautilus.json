@@ -48,13 +48,6 @@
    "percent": 50
   }
  },
- "cargo": {
-  "unit": {
-   "space": {
-    "flat": 1
-   }
-  }
- },
  "costs": {
   "empire": {
    "perInstance": {
@@ -75,6 +68,14 @@
     "UNITCOMBAT_STEAM_SHIPS": {
      "percent": 50
     }
+   }
+  }
+ },
+ "cargo": {
+  "unit": {
+   "space": {
+    "unit": "IS_LAND",
+    "flat": 1
    }
   }
  },
@@ -147,7 +148,6 @@
    "MAPCATEGORY_EARTH"
   ],
   "cargo": {
-   "domain": "DOMAIN_LAND",
    "special": "SPECIALUNIT_PEOPLE"
   },
   "base": {

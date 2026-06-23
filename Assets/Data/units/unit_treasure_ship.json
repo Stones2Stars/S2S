@@ -55,13 +55,6 @@
    ]
   }
  },
- "cargo": {
-  "unit": {
-   "space": {
-    "flat": 8
-   }
-  }
- },
  "costs": {
   "empire": {
    "perInstance": {
@@ -70,6 +63,14 @@
      "type": "SELF",
      "scope": "empire"
     }
+   }
+  }
+ },
+ "cargo": {
+  "unit": {
+   "space": {
+    "unit": "IS_LAND",
+    "flat": 8
    }
   }
  },
@@ -128,9 +129,6 @@
   "mapCategories": [
    "MAPCATEGORY_EARTH"
   ],
-  "cargo": {
-   "domain": "DOMAIN_LAND"
-  },
   "base": {
    "combat": 17,
    "moves": 4,

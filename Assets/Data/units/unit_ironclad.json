@@ -122,7 +122,6 @@
    "TERRAIN_TRENCH_POLAR"
   ],
   "cargo": {
-   "domain": "DOMAIN_LAND",
    "special": "SPECIALUNIT_PEOPLE"
   },
   "base": {

@@ -31,13 +31,6 @@
    ]
   }
  },
- "cargo": {
-  "unit": {
-   "space": {
-    "flat": 3
-   }
-  }
- },
  "strength": {
   "unit": {
    "terrain": {
@@ -73,6 +66,14 @@
     "UNITCOMBAT_STEAM_SHIPS": {
      "percent": 20
     }
+   }
+  }
+ },
+ "cargo": {
+  "unit": {
+   "space": {
+    "unit": "IS_AIR",
+    "flat": 3
    }
   }
  },
@@ -132,7 +133,6 @@
    "MAPCATEGORY_EARTH"
   ],
   "cargo": {
-   "domain": "DOMAIN_AIR",
    "special": "SPECIALUNIT_FIGHTER",
    "smNotSpecial": "SPECIALUNIT_MISSILE"
   },

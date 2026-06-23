@@ -128,9 +128,6 @@
    "TERRAIN_TRENCH_POLAR",
    "TERRAIN_TRENCH_TROPICAL"
   ],
-  "cargo": {
-   "domain": "DOMAIN_LAND"
-  },
   "terrainPassableTechs": [
    {
     "TERRAIN_SEA_TROPICAL": "TECH_SEAFARING"

@@ -72,6 +72,7 @@
  "cargo": {
   "unit": {
    "space": {
+    "unit": "IS_LAND",
     "flat": 1
    }
   }
@@ -147,9 +148,6 @@
    "TERRAIN_TRENCH_TROPICAL",
    "TERRAIN_LAKE"
   ],
-  "cargo": {
-   "domain": "DOMAIN_LAND"
-  },
   "base": {
    "combat": 2,
    "moves": 1,
