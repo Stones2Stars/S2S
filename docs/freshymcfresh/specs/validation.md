@@ -17,8 +17,22 @@ engine's actual output**. Our calculator is the test; the engine is the oracle.
   (raw inputs only, no computed outputs).
 - **Oracle** — the engine's actual values from [`/extractor`](http-endpoints.md) (the yield-loaded state) and the
   [`/can/*`](http-endpoints.md) gate queries.
-- **Bar** — per entity/instance, **0 in-scope mismatches**. Out-of-scope (depends on a lower, not-yet-validated
-  layer — e.g. a tech needing a `BUILDING_` prereq) is **deferred: shown, never silently dropped**.
+- **Bar — PARITY, full stop (owner ruling 2026-06-23).** Per entity/instance, **0 in-scope mismatches** — *exact*,
+  not "close / same ballpark." There is **no tolerance band and no agent grading of acceptability** — that framing
+  (and the retired six-rung "care scale") was constantly abused to wave a mismatch through as good-enough. No bug has
+  surfaced in any actual legacy *calculation*, so the math matches; **a divergence is therefore a data-collection
+  gap** — a source the cascade didn't gather — never a formula difference. Map it to the named source and close it.
+  Out-of-scope (depends on a lower, not-yet-validated layer — e.g. a tech needing a `BUILDING_` prereq) is
+  **deferred: shown, never silently dropped**.
+
+## The shadow (the live counterpart)
+The dry-calc above is the **offline** test. Its **in-game** twin is the **shadow**: each legacy behaviour gets a
+surface (a `/shadow/*` endpoint + a per-turn `[TAG]` line via the [event spine](event-spine.md)) that computes the
+**cascade's** answer and diffs it against the **live engine's**, turn over turn, per scope-instance, **decomposed to
+named sources**. The legacy stays authoritative until its shadow is **clean (parity)**; then it is cut at an
+**atomic** cutover, never piecemeal. **Attribute, never guess:** a divergence is mapped to a named source with
+numbers on both sides — if the data to attribute it isn't emitted, the first step is to emit it (the
+[logging](logging.md) observability bar is the prerequisite).
 
 ## The three test levels
 - **Unit** — a single calc: one modifier value, one enabler gate, one tech's availability.
@@ -43,4 +57,4 @@ events carry the turn; the dry replay doesn't, and the cascade doesn't consume i
 ## See also
 - [http-endpoints.md](http-endpoints.md) — `/state` (inputs) vs `/extractor` (oracle); the verification flow.
 - [enabler.md](enabler.md) · [modifier.md](modifier.md) · [tally.md](tally.md) — the machines this rebuilds and proves.
-- [logging.md](logging.md) — the shadow / map-before-delete bar validation serves.
+- [logging.md](logging.md) — the observability surface the shadow reads from. [event-spine.md](event-spine.md) — the per-turn shadow `[TAG]` events.

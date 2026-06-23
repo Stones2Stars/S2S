@@ -3,10 +3,11 @@
 > The **goal** is *Orwellian* total-surveillance observability (§1); the doc is just **logging** now (all the old
 > logging is already nuked, so there is only one logging system to name).
 
-The **verification substrate** for the whole rework. The load-bearing rule is **map-before-delete**: you cannot
-safely delete a legacy maintainer you cannot fully observe, so every behaviour is **shadowed** against the live
-engine until clean, *then* cut. That demands reconstructing game state from the wire — never the screen. This doc
-is that surface, plus the **event spine** that feeds the machines and the logging.
+The **observability surface** for the whole rework — *what the game exposes*. The load-bearing rationale is
+**map-before-delete**: you cannot safely delete a legacy maintainer you cannot fully observe, so the game must be
+fully observable from the wire — never the screen. This doc specs **what to log**; the **event spine** it draws
+events from is [event-spine.md](event-spine.md), and how the cascade is **measured against legacy** (the shadow +
+the parity bar) is [validation.md](validation.md).
 
 It is not polish. Without total observability the cascade ([enabler](enabler.md)/[modifier](modifier.md)/
 [tally](tally.md)) cannot prove it replicates the legacy machinery it replaces — so it cannot safely replace it.
@@ -49,29 +50,13 @@ canonical and **supersedes the illustrative legacy names above**: `/players`/`/c
 
 ---
 
-## 4. The event spine & the `IEventConsumer` contract
+## 4. Logging is a consumer of the event spine
 
-The machines and the logging are fed by one dispatch primitive — the **event spine**: a caller `emit`s an event,
-and every consumer that registered interest in that event's KIND gets it. KIND is declared at the call site,
-never inferred.
-
-**KIND is the OOS firewall** (Civ4 multiplayer is deterministic lockstep — an authoritative count that differs
-per machine is a desync):
-
-| KIND | meaning | synced? | consumed by |
-|---|---|---|---|
-| **`DOMAIN`** | game **state** changed (building built, unit created, tech researched) | yes — deterministic | the **tally** (gate-eligible) + logging + grants |
-| **`DIAGNOSTIC`** | **code** ran (a function entered, a decision re-evaluated) | no — execution trace | **logging only** — never counted, never gates |
-| **`TRACE`** | fine-grained "every step" | no | logging only |
-
-So only `DOMAIN` events feed the authoritative [tally](tally.md) and the gate. The payload is **raw** (typed
-fields, never a pre-formatted string) so the costly index→text formatting defers to the gated logging consumer —
-when a gate is off, nothing expensive ran.
-
-Consumers attach through **one C++03 interface, `IEventConsumer`** (a pure-virtual base, no data members) — the
-spine, tally, `grants`, and logging are independent implementations pluggable behind it (the realized exemplar of
-the project's interface-contract pattern). Build order: **spine + accumulator → logging (broad) → tally
-(selective, `DOMAIN`-only) → grants → modifier → enabler**.
+Logging does **not** own the dispatch — it is one **`IEventConsumer`** behind the **[event spine](event-spine.md)**
+(so are the tally and grants). Logging is the **broad** consumer: it takes `DOMAIN`, `DIAGNOSTIC`, and `TRACE`
+events and formats the raw typed payload to text **only when its gate is on** (an off gate costs nothing), teeing
+to `/events`. The spine itself — the KIND firewall (`DOMAIN`/`DIAGNOSTIC`/`TRACE`), the `IEventConsumer` contract,
+the C++ shape — is specced in [event-spine.md](event-spine.md).
 
 ---
 
@@ -94,27 +79,9 @@ The two reliable live reads:
 
 ---
 
-## 6. The shadow — how a maintainer is proven before it's cut
-
-Each legacy behaviour gets a **shadow**: a `/diagnostic` surface (and per-turn `[TAG]` line) that computes the
-**cascade's** answer and diffs it against the **live engine's**, turn over turn, per scope-instance, decomposed
-to named sources. The legacy stays authoritative until its shadow is clean; then it is cut at an **atomic**
-cutover, never piecemeal.
-
-- **Attribute, never guess.** A divergence is mapped to a **named source with numbers** (emit the full
-  decomposition both sides); if the data to attribute it isn't emitted, the first step is to emit it.
-- **The bar is parity-*adjacent*, not parity.** The cascade deliberately corrects latent legacy bugs, so the end
-  state is "close, same ballpark," not byte-identical — and ±10% is **not** "adjacent," the bar is sharper. A
-  six-rung **care scale** — Fine · Rounding · Better · Weird · Bug · Meltdown (escalating: the first three are
-  acceptable as-is, the last three want a fix) — dispositions each surviving
-  divergence; the **owner** assigns the verdict — the shadow surfaces facts, it does not self-judge.
-
----
-
 ## See also
-- [http-endpoints.md](http-endpoints.md) — the clean endpoint catalogue (the `/diagnostic/*`, `/players`,
-  `/cities`, `/units`, `/events` structure) this surface publishes through.
-- [tally.md](tally.md) — the first authoritative `DOMAIN` consumer; its `DOMAIN`-only interest *is* the firewall
-  in action, and its rebuild-on-load complements the event stream.
-- [enabler.md](enabler.md) / [modifier.md](modifier.md) — the behaviours that get shadowed before their legacy
-  maintainers are cut.
+- [event-spine.md](event-spine.md) — the event source logging consumes. [validation.md](validation.md) — the shadow
+  + parity bar that *uses* this observability to prove a maintainer before it's cut.
+- [http-endpoints.md](http-endpoints.md) — the clean endpoint catalogue (`/state`, `/extractor`, `/shadow`,
+  `/decompose`, `/events`) this surface publishes through.
+- [tally.md](tally.md) — the first authoritative `DOMAIN` consumer; its `DOMAIN`-only interest *is* the KIND firewall in action.

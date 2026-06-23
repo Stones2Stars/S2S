@@ -45,11 +45,12 @@ folds a value in, `effective(base)` reads it out.
 float math desyncs. The single human→×100 conversion happened once in `readJson` ([json](json.md) §3.6); the
 slot does pure integer math and never sees the human boundary.
 
-> **Parity mode.** While a channel is being shadow-proven against the legacy engine, multiplier deposits are
-> treated as identity (skipped) so the cascade is additive-only — exactly matching legacy — to prove the
-> deposit-flow plumbing before the new multiplicative capability is switched on. Matching legacy is **not** the
-> end goal (the formula is a deliberate redesign that corrects latent legacy bugs); parity-mode is the
-> verification scaffold, not the target. See the shadow methodology ([logging](logging.md) §6) + [validation](validation.md).
+> **Parity is the bar (owner ruling 2026-06-23).** The cascade reproduces the legacy engine **exactly** — parity is
+> the only goal, and it is achievable: no bug has surfaced in any actual *calculation*, so the math matches. Any
+> mismatch is a **data-collection gap** (a source the cascade didn't gather), never a formula difference — so there
+> is no "close / same ballpark," no tolerance, no agent grading. While a channel is shadow-proven, multiplier
+> deposits are treated as identity so the cascade is additive — exactly matching legacy — and the work is completing
+> the gathered data until the diff is **0**. See [validation](validation.md).
 
 ---
 
