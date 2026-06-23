@@ -63,7 +63,7 @@
    }
   }
  },
- "capabilities": {
+ "skills": {
   "pillage": true,
   "canMoveImpassable": true,
   "ignoreBuildingDefense": true,

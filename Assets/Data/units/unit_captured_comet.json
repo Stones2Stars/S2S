@@ -16,7 +16,7 @@
    ]
   }
  },
- "capabilities": {
+ "skills": {
   "canMoveAllTerrain": true,
   "canMoveImpassable": true,
   "ignoreTerrainCost": true

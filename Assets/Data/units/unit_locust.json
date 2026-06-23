@@ -2,7 +2,7 @@
  "type": "UNIT_LOCUST",
  "description": "TXT_KEY_UNIT_LOCUST",
  "civilopedia": "TXT_KEY_UNIT_LOCUST_PEDIA",
- "capabilities": {
+ "skills": {
   "pillage": true,
   "onlyDefensive": true
  },

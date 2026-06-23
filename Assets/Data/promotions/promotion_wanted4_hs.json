@@ -2,7 +2,7 @@
  "type": "PROMOTION_WANTED4_HS",
  "description": "TXT_KEY_PROMOTION_WANTED4",
  "help": "TXT_KEY_PROMOTION_WANTED_HELP",
- "capabilities": {
+ "skills": {
   "upgradeAnywhere": true,
   "assassin": true
  },

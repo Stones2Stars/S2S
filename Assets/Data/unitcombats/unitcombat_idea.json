@@ -1,7 +1,7 @@
 {
  "type": "UNITCOMBAT_IDEA",
  "description": "TXT_KEY_UNITCOMBAT_IDEA",
- "capabilities": {
+ "skills": {
   "cannotMergeSplit": true,
   "alwaysInvisible": true
  },

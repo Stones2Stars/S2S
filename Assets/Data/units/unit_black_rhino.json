@@ -2,7 +2,7 @@
  "type": "UNIT_BLACK_RHINO",
  "description": "TXT_KEY_UNIT_BLACK_RHINO",
  "civilopedia": "TXT_KEY_UNIT_BLACK_RHINO_PEDIA",
- "capabilities": {
+ "skills": {
   "blendIntoCity": true
  },
  "outcomes": {

@@ -2,7 +2,7 @@
  "type": "UNIT_HUMPBACK_WHALE",
  "description": "TXT_KEY_UNIT_HUMPBACK_WHALE",
  "civilopedia": "TXT_KEY_UNIT_HUMPBACK_WHALE_PEDIA",
- "capabilities": {
+ "skills": {
   "noDefensiveBonus": true,
   "blendIntoCity": true,
   "onlyDefensive": true,

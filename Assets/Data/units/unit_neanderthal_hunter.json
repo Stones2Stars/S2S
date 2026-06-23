@@ -51,7 +51,7 @@
    }
   }
  },
- "capabilities": {
+ "skills": {
   "assassin": true,
   "targets": {
    "UNITCOMBAT_ANIMAL": true,

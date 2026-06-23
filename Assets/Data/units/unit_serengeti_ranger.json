@@ -75,7 +75,7 @@
    "flat": -5
   }
  },
- "capabilities": {
+ "skills": {
   "food": true,
   "onlyDefensive": true,
   "workerTrade": true

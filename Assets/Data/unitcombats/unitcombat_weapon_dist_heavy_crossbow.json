@@ -1,7 +1,7 @@
 {
  "type": "UNITCOMBAT_WEAPON_DIST_HEAVY_CROSSBOW",
  "description": "TXT_KEY_UNITCOMBAT_WEAPON_DIST_HEAVY_CROSSBOW",
- "capabilities": {
+ "skills": {
   "rBombardDirect": true
  },
  "ui": {

@@ -2,7 +2,7 @@
  "type": "UNIT_SPECTACLEDBEAR",
  "description": "TXT_KEY_UNIT_SPECTACLEDBEAR",
  "civilopedia": "TXT_KEY_UNIT_SPECTACLEDBEAR_PEDIA",
- "capabilities": {
+ "skills": {
   "assassin": true,
   "blendIntoCity": true,
   "onlyDefensive": true,

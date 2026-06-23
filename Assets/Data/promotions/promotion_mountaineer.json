@@ -1,7 +1,7 @@
 {
  "type": "PROMOTION_MOUNTAINEER",
  "description": "TXT_KEY_PROMOTION_MOUNTAINEER",
- "capabilities": {
+ "skills": {
   "canMovePeaks": true
  },
  "ui": {

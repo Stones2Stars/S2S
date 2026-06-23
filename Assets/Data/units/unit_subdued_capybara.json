@@ -3,7 +3,7 @@
  "description": "TXT_KEY_UNIT_SUBDUED_CAPYBARA",
  "civilopedia": "TXT_KEY_UNIT_CAPYBARA_PEDIA",
  "help": "TXT_KEY_UNIT_SUBDUED_ANIMALS_HELP",
- "capabilities": {
+ "skills": {
   "onlyDefensive": true,
   "militaryTrade": true
  },

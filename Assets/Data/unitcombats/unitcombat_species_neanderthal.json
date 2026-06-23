@@ -1,7 +1,7 @@
 {
  "type": "UNITCOMBAT_SPECIES_NEANDERTHAL",
  "description": "TXT_KEY_UNITCOMBAT_SPECIES_NEANDERTHAL",
- "capabilities": {
+ "skills": {
   "stealthDefense": true
  },
  "vision": {

@@ -1,7 +1,7 @@
 {
  "type": "PROMOTION_STALK_PREY",
  "description": "TXT_KEY_PROMOTION_STALK_PREY",
- "capabilities": {
+ "skills": {
   "immuneToFirstStrikes": true
  },
  "ui": {

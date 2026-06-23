@@ -2,7 +2,7 @@
  "type": "UNIT_ORCA",
  "description": "TXT_KEY_UNIT_ORCA",
  "civilopedia": "TXT_KEY_UNIT_ORCA_PEDIA",
- "capabilities": {
+ "skills": {
   "noDefensiveBonus": true,
   "blendIntoCity": true,
   "onlyDefensive": true,

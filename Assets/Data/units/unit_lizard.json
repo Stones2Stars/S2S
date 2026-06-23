@@ -2,7 +2,7 @@
  "type": "UNIT_LIZARD",
  "description": "TXT_KEY_UNIT_LIZARD",
  "civilopedia": "TXT_KEY_UNIT_LIZARD_PEDIA",
- "capabilities": {
+ "skills": {
   "blendIntoCity": true,
   "onlyDefensive": true,
   "animalIgnoresBorders": true

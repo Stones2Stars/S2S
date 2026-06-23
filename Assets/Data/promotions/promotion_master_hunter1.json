@@ -1,7 +1,7 @@
 {
  "type": "PROMOTION_MASTER_HUNTER1",
  "description": "TXT_KEY_PROMOTION_MASTER_HUNTER1",
- "capabilities": {
+ "skills": {
   "blitz": true
  },
  "vision": {

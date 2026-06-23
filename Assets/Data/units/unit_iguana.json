@@ -2,7 +2,7 @@
  "type": "UNIT_IGUANA",
  "description": "TXT_KEY_UNIT_IGUANA",
  "civilopedia": "TXT_KEY_UNIT_IGUANA_PEDIA",
- "capabilities": {
+ "skills": {
   "blendIntoCity": true,
   "onlyDefensive": true,
   "animalIgnoresBorders": true

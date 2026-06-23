@@ -2,7 +2,7 @@
  "type": "UNIT_MUSKOX",
  "description": "TXT_KEY_UNIT_MUSKOX",
  "civilopedia": "TXT_KEY_CONCEPT_SUBDUED_ANIMALS_PEDIA",
- "capabilities": {
+ "skills": {
   "blendIntoCity": true
  },
  "outcomes": {

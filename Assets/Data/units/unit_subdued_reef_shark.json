@@ -3,7 +3,7 @@
  "description": "TXT_KEY_UNIT_SUBDUED_REEF_SHARK",
  "civilopedia": "TXT_KEY_UNIT_REEF_SHARK_PEDIA",
  "help": "TXT_KEY_UNIT_SUBDUED_ANIMALS_HELP",
- "capabilities": {
+ "skills": {
   "onlyDefensive": true,
   "militaryTrade": true
  },

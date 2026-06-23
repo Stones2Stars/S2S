@@ -2,7 +2,7 @@
  "type": "PROMOTION_CANCER",
  "description": "TXT_KEY_PROMOTION_CANCER",
  "help": "TXT_KEY_PROMOTION_ASTRO_HELP",
- "capabilities": {
+ "skills": {
   "defensiveVictoryMove": true
  },
  "ui": {

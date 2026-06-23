@@ -2,7 +2,7 @@
  "type": "UNIT_SLOTHBEAR",
  "description": "TXT_KEY_UNIT_SLOTHBEAR",
  "civilopedia": "TXT_KEY_UNIT_SLOTHBEAR_PEDIA",
- "capabilities": {
+ "skills": {
   "blendIntoCity": true
  },
  "outcomes": {

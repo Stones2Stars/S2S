@@ -1,7 +1,7 @@
 {
  "type": "UNITCOMBAT_WEAPON_DIST_MASS_DRIVER",
  "description": "TXT_KEY_UNITCOMBAT_WEAPON_DIST_MASS_DRIVER",
- "capabilities": {
+ "skills": {
   "rBombardDirect": true
  },
  "ui": {

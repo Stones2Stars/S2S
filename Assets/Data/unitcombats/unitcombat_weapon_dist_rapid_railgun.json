@@ -1,7 +1,7 @@
 {
  "type": "UNITCOMBAT_WEAPON_DIST_RAPID_RAILGUN",
  "description": "TXT_KEY_UNITCOMBAT_WEAPON_DIST_RAPID_RAILGUN",
- "capabilities": {
+ "skills": {
   "rBombardDirect": true
  },
  "ui": {

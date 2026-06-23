@@ -2,7 +2,7 @@
  "type": "UNIT_GREAT_SPY",
  "description": "TXT_KEY_UNIT_GREAT_SPY",
  "civilopedia": "TXT_KEY_CONCEPT_GREAT_SPY_PEDIA",
- "capabilities": {
+ "skills": {
   "goldenAge": true,
   "alwaysInvisible": true,
   "rivalTerritory": true

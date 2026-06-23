@@ -1,7 +1,7 @@
 {
  "type": "UNITCOMBAT_SUBDUED",
  "description": "TXT_KEY_UNITCOMBAT_SUBDUED",
- "capabilities": {
+ "skills": {
   "cannotMergeSplit": true
  },
  "ui": {

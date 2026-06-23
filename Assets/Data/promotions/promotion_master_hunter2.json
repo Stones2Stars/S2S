@@ -1,7 +1,7 @@
 {
  "type": "PROMOTION_MASTER_HUNTER2",
  "description": "TXT_KEY_PROMOTION_MASTER_HUNTER2",
- "capabilities": {
+ "skills": {
   "river": true
  },
  "vision": {

@@ -1,7 +1,7 @@
 {
  "type": "UNITCOMBAT_PACIFIST",
  "description": "TXT_KEY_UNITCOMBAT_PACIFIST",
- "capabilities": {
+ "skills": {
   "cannotMergeSplit": true
  },
  "ui": {

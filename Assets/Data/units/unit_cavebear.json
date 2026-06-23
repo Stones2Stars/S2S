@@ -2,7 +2,7 @@
  "type": "UNIT_CAVEBEAR",
  "description": "TXT_KEY_UNIT_CAVE_BEAR",
  "civilopedia": "TXT_KEY_UNIT_CAVE_BEAR_PEDIA",
- "capabilities": {
+ "skills": {
   "blendIntoCity": true
  },
  "outcomes": {

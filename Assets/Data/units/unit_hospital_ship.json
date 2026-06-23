@@ -86,7 +86,7 @@
    "flat": -10
   }
  },
- "capabilities": {
+ "skills": {
   "ignoreTerrainCost": true,
   "mechanized": true,
   "onlyDefensive": true,

@@ -2,7 +2,7 @@
  "type": "UNIT_GREAT_STATESMAN",
  "description": "TXT_KEY_UNIT_GREAT_STATESMAN",
  "civilopedia": "TXT_KEY_CONCEPT_GREAT_STATESMAN_PEDIA",
- "capabilities": {
+ "skills": {
   "goldenAge": true,
   "ignoreBuildingDefense": true,
   "rivalTerritory": true

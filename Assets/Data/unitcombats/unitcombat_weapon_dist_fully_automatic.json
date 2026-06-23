@@ -1,7 +1,7 @@
 {
  "type": "UNITCOMBAT_WEAPON_DIST_FULLY_AUTOMATIC",
  "description": "TXT_KEY_UNITCOMBAT_WEAPON_DIST_FULLY_AUTOMATIC",
- "capabilities": {
+ "skills": {
   "rBombardDirect": true
  },
  "ui": {

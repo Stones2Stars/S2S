@@ -2,7 +2,7 @@
  "type": "UNIT_BADGER",
  "description": "TXT_KEY_UNIT_BADGER",
  "civilopedia": "TXT_KEY_UNIT_BADGER_PEDIA",
- "capabilities": {
+ "skills": {
   "blendIntoCity": true,
   "onlyDefensive": true,
   "animalIgnoresBorders": true

@@ -107,7 +107,7 @@
    }
   }
  },
- "capabilities": {
+ "skills": {
   "noDefensiveBonus": true,
   "pillage": true,
   "firstStrikeImmune": true,

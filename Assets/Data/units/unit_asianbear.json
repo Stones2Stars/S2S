@@ -2,7 +2,7 @@
  "type": "UNIT_ASIANBEAR",
  "description": "TXT_KEY_UNIT_ASIANBEAR",
  "civilopedia": "TXT_KEY_UNIT_ASIANBEAR_PEDIA",
- "capabilities": {
+ "skills": {
   "blendIntoCity": true,
   "onlyDefensive": true,
   "animalIgnoresBorders": true

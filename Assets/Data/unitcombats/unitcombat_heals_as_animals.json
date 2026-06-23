@@ -1,7 +1,7 @@
 {
  "type": "UNITCOMBAT_HEALS_AS_ANIMALS",
  "description": "TXT_KEY_UNITCOMBAT_HEALS_AS_ANIMALS",
- "capabilities": {
+ "skills": {
   "healsAs": true
  },
  "ui": {

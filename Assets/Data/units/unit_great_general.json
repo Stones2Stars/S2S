@@ -2,7 +2,7 @@
  "type": "UNIT_GREAT_GENERAL",
  "description": "TXT_KEY_UNIT_GREAT_GENERAL",
  "civilopedia": "TXT_KEY_CONCEPT_GREAT_GENERALS_PEDIA",
- "capabilities": {
+ "skills": {
   "greatGeneral": true
  },
  "outcomes": {

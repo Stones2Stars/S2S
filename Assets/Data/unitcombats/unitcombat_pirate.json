@@ -11,7 +11,7 @@
    }
   }
  },
- "capabilities": {
+ "skills": {
   "terrainDoubleMove": {
    "TERRAIN_COAST_POLAR": true,
    "TERRAIN_COAST": true,

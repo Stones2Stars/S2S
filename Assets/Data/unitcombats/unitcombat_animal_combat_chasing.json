@@ -1,7 +1,7 @@
 {
  "type": "UNITCOMBAT_ANIMAL_COMBAT_CHASING",
  "description": "TXT_KEY_UNITCOMBAT_ANIMAL_COMBAT_CHASING",
- "capabilities": {
+ "skills": {
   "stealthDefense": true
  },
  "ui": {

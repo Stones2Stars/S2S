@@ -1,7 +1,7 @@
 {
  "type": "UNITCOMBAT_CAPTIVE",
  "description": "TXT_KEY_UNITCOMBAT_CAPTIVE",
- "capabilities": {
+ "skills": {
   "cannotMergeSplit": true
  },
  "ui": {

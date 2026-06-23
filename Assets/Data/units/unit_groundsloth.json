@@ -2,7 +2,7 @@
  "type": "UNIT_GROUNDSLOTH",
  "description": "TXT_KEY_UNIT_GROUNDSLOTH",
  "civilopedia": "TXT_KEY_UNIT_GROUNDSLOTH_PEDIA",
- "capabilities": {
+ "skills": {
   "blendIntoCity": true,
   "onlyDefensive": true,
   "animalIgnoresBorders": true

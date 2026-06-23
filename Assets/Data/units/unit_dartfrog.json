@@ -2,7 +2,7 @@
  "type": "UNIT_DARTFROG",
  "description": "TXT_KEY_UNIT_DARTFROG",
  "civilopedia": "TXT_KEY_UNIT_DARTFROG_PEDIA",
- "capabilities": {
+ "skills": {
   "blendIntoCity": true,
   "onlyDefensive": true,
   "animalIgnoresBorders": true

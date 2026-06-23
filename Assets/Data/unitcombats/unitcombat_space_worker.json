@@ -1,7 +1,7 @@
 {
  "type": "UNITCOMBAT_SPACE_WORKER",
  "description": "TXT_KEY_UNITCOMBAT_SPACE_WORKER",
- "capabilities": {
+ "skills": {
   "cannotMergeSplit": true
  },
  "ui": {

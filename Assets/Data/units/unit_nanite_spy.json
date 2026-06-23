@@ -28,7 +28,7 @@
    }
   }
  },
- "capabilities": {
+ "skills": {
   "counterSpy": true,
   "destroy": true,
   "flatMovementCost": true,

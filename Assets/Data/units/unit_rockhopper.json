@@ -2,7 +2,7 @@
  "type": "UNIT_ROCKHOPPER",
  "description": "TXT_KEY_UNIT_ROCKHOPPER",
  "civilopedia": "TXT_KEY_UNIT_ROCKHOPPER_PEDIA",
- "capabilities": {
+ "skills": {
   "blendIntoCity": true,
   "onlyDefensive": true,
   "animalIgnoresBorders": true

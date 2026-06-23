@@ -46,7 +46,7 @@
    }
   }
  },
- "capabilities": {
+ "skills": {
   "canMoveAllTerrain": true,
   "ignoreBuildingDefense": true,
   "ignoreTerrainCost": true,

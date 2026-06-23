@@ -95,7 +95,7 @@
    }
   }
  },
- "capabilities": {
+ "skills": {
   "pillage": true,
   "ignoreBuildingDefense": true,
   "militaryHappiness": true,

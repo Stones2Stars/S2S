@@ -40,7 +40,7 @@
    }
   }
  },
- "capabilities": {
+ "skills": {
   "pillage": true,
   "mechanized": true,
   "renderBelowWater": true,

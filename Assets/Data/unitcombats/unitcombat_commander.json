@@ -1,7 +1,7 @@
 {
  "type": "UNITCOMBAT_COMMANDER",
  "description": "TXT_KEY_UNITCOMBAT_COMMANDER",
- "capabilities": {
+ "skills": {
   "cannotMergeSplit": true
  },
  "ui": {

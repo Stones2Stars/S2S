@@ -1,7 +1,7 @@
 {
  "type": "PROMOTION_FREEDOM_FIGHTER",
  "description": "TXT_KEY_PROMOTION_FREEDOM_FIGHTER",
- "capabilities": {
+ "skills": {
   "barbCoExist": true
  },
  "ui": {

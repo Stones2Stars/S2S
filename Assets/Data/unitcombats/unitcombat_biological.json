@@ -1,7 +1,7 @@
 {
  "type": "UNITCOMBAT_BIOLOGICAL",
  "description": "TXT_KEY_UNITCOMBAT_BIOLOGICAL",
- "capabilities": {
+ "skills": {
   "cannotMergeSplit": true
  },
  "ui": {

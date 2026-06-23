@@ -1,7 +1,7 @@
 {
  "type": "UNITCOMBAT_PRODIGY",
  "description": "TXT_KEY_UNITCOMBAT_PRODIGY",
- "capabilities": {
+ "skills": {
   "cannotMergeSplit": true
  },
  "ui": {

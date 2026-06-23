@@ -3,7 +3,7 @@
  "description": "TXT_KEY_UNIT_SUBDUED_PYGMYHIPPO",
  "civilopedia": "TXT_KEY_UNIT_PYGMYHIPPO_PEDIA",
  "help": "TXT_KEY_UNIT_SUBDUED_ANIMALS_HELP",
- "capabilities": {
+ "skills": {
   "onlyDefensive": true,
   "militaryTrade": true
  },

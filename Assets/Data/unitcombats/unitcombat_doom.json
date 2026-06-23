@@ -1,7 +1,7 @@
 {
  "type": "UNITCOMBAT_DOOM",
  "description": "TXT_KEY_UNITCOMBAT_DOOM",
- "capabilities": {
+ "skills": {
   "cannotMergeSplit": true
  },
  "ui": {

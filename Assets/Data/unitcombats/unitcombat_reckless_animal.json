@@ -1,7 +1,7 @@
 {
  "type": "UNITCOMBAT_RECKLESS_ANIMAL",
  "description": "TXT_KEY_UNITCOMBAT_RECKLESS_ANIMAL",
- "capabilities": {
+ "skills": {
   "animalIgnoresBorders": true,
   "defenseOnly": true
  },

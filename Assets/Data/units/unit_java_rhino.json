@@ -2,7 +2,7 @@
  "type": "UNIT_JAVA_RHINO",
  "description": "TXT_KEY_UNIT_JAVA_RHINO",
  "civilopedia": "TXT_KEY_UNIT_JAVA_RHINO_PEDIA",
- "capabilities": {
+ "skills": {
   "blendIntoCity": true
  },
  "outcomes": {

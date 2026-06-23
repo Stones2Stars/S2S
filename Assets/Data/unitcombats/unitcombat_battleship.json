@@ -1,7 +1,7 @@
 {
  "type": "UNITCOMBAT_BATTLESHIP",
  "description": "TXT_KEY_UNITCOMBAT_BATTLESHIP",
- "capabilities": {
+ "skills": {
   "terrainDoubleMove": {
    "TERRAIN_OCEAN_POLAR": true,
    "TERRAIN_OCEAN": true,

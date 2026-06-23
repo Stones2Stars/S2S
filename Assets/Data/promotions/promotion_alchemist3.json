@@ -1,7 +1,7 @@
 {
  "type": "PROMOTION_ALCHEMIST3",
  "description": "TXT_KEY_PROMOTION_ALCHEMIST3",
- "capabilities": {
+ "skills": {
   "amphib": true
  },
  "promotionLine": {

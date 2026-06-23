@@ -2,7 +2,7 @@
  "type": "UNIT_ANTEATER",
  "description": "TXT_KEY_UNIT_ANTEATER",
  "civilopedia": "TXT_KEY_UNIT_ANTEATER_PEDIA",
- "capabilities": {
+ "skills": {
   "blendIntoCity": true,
   "onlyDefensive": true,
   "animalIgnoresBorders": true

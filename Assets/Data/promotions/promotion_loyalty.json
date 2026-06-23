@@ -1,7 +1,7 @@
 {
  "type": "PROMOTION_LOYALTY",
  "description": "TXT_KEY_PROMOTION_LOYALTY",
- "capabilities": {
+ "skills": {
   "alwaysHeal": true
  },
  "ui": {

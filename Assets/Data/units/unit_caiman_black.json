@@ -2,7 +2,7 @@
  "type": "UNIT_CAIMAN_BLACK",
  "description": "TXT_KEY_UNIT_CAIMAN_BLACK",
  "civilopedia": "TXT_KEY_UNIT_CAIMAN_BLACK_PEDIA",
- "capabilities": {
+ "skills": {
   "assassin": true,
   "blendIntoCity": true,
   "targets": {

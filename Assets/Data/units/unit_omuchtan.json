@@ -49,7 +49,7 @@
    }
   }
  },
- "capabilities": {
+ "skills": {
   "pillage": true,
   "ignoreTerrainCost": true,
   "noBadGoodies": true,

@@ -3,7 +3,7 @@
  "description": "TXT_KEY_UNIT_TALESOF_COD",
  "civilopedia": "TXT_KEY_UNIT_COD_PEDIA",
  "help": "TXT_KEY_UNIT_SUBDUED_ANIMALS_HELP",
- "capabilities": {
+ "skills": {
   "militaryTrade": true
  },
  "grants": {

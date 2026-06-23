@@ -28,7 +28,7 @@
    ]
   }
  },
- "capabilities": {
+ "skills": {
   "canMoveImpassable": true,
   "mechanized": true,
   "renderBelowWater": true,

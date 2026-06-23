@@ -30,7 +30,7 @@
    }
   }
  },
- "capabilities": {
+ "skills": {
   "counterSpy": true,
   "ignoreTerrainCost": true,
   "investigate": true,

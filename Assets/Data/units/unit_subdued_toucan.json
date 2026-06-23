@@ -3,7 +3,7 @@
  "description": "TXT_KEY_UNIT_SUBDUED_TOUCAN",
  "civilopedia": "TXT_KEY_UNIT_TOUCAN_PEDIA",
  "help": "TXT_KEY_UNIT_SUBDUED_ANIMALS_HELP",
- "capabilities": {
+ "skills": {
   "onlyDefensive": true,
   "militaryTrade": true
  },

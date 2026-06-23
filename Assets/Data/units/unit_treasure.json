@@ -2,7 +2,7 @@
  "type": "UNIT_TREASURE",
  "description": "TXT_KEY_UNIT_TREASURE",
  "civilopedia": "TXT_KEY_UNIT_TREASURE_PEDIA",
- "capabilities": {
+ "skills": {
   "rivalTerritory": true
  },
  "grants": {

@@ -2,7 +2,7 @@
  "type": "UNIT_GREAT_ENGINEER",
  "description": "TXT_KEY_UNIT_GREAT_ENGINEER",
  "civilopedia": "TXT_KEY_CONCEPT_GREAT_PEOPLE_PEDIA",
- "capabilities": {
+ "skills": {
   "goldenAge": true
  },
  "outcomes": {

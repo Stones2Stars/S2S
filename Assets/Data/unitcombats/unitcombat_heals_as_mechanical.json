@@ -1,7 +1,7 @@
 {
  "type": "UNITCOMBAT_HEALS_AS_MECHANICAL",
  "description": "TXT_KEY_UNITCOMBAT_HEALS_AS_MECHANICAL",
- "capabilities": {
+ "skills": {
   "healsAs": true
  },
  "ui": {

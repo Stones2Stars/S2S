@@ -2,7 +2,7 @@
  "type": "UNIT_WHITE_RHINO",
  "description": "TXT_KEY_UNIT_WHITE_RHINO",
  "civilopedia": "TXT_KEY_UNIT_WHITE_RHINO_PEDIA",
- "capabilities": {
+ "skills": {
   "blendIntoCity": true,
   "onlyDefensive": true,
   "animalIgnoresBorders": true

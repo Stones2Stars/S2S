@@ -1,7 +1,7 @@
 {
  "type": "PROMOTION_FORESTRY",
  "description": "TXT_KEY_PROMOTION_FORESTRY",
- "capabilities": {
+ "skills": {
   "featureDoubleMove": {
    "FEATURE_JUNGLE": true,
    "FEATURE_FOREST": true,

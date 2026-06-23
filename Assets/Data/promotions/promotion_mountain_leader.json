@@ -1,7 +1,7 @@
 {
  "type": "PROMOTION_MOUNTAIN_LEADER",
  "description": "TXT_KEY_PROMOTION_MOUNTAIN_LEADER",
- "capabilities": {
+ "skills": {
   "canMovePeaks": true,
   "canLeadThroughPeaks": true
  },

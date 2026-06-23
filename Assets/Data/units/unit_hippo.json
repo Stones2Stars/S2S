@@ -2,7 +2,7 @@
  "type": "UNIT_HIPPO",
  "description": "TXT_KEY_UNIT_HIPPO",
  "civilopedia": "TXT_KEY_CONCEPT_SUBDUED_ANIMALS_PEDIA",
- "capabilities": {
+ "skills": {
   "blendIntoCity": true
  },
  "outcomes": {

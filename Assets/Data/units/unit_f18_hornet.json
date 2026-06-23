@@ -96,7 +96,7 @@
    }
   }
  },
- "capabilities": {
+ "skills": {
   "ignoreBuildingDefense": true,
   "mechanized": true,
   "dcmFighterEngage": true,

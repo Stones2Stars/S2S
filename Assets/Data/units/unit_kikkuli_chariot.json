@@ -119,7 +119,7 @@
    }
   }
  },
- "capabilities": {
+ "skills": {
   "noDefensiveBonus": true,
   "pillage": true,
   "militaryHappiness": true,

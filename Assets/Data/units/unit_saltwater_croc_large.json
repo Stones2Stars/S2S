@@ -2,7 +2,7 @@
  "type": "UNIT_SALTWATER_CROC_LARGE",
  "description": "TXT_KEY_UNIT_SALTWATER_CROC_LARGE",
  "civilopedia": "TXT_KEY_CONCEPT_SALTWATER_CROC_PEDIA",
- "capabilities": {
+ "skills": {
   "blendIntoCity": true
  },
  "outcomes": {

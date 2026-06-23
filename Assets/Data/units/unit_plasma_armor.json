@@ -77,7 +77,7 @@
    }
   }
  },
- "capabilities": {
+ "skills": {
   "noDefensiveBonus": true,
   "pillage": true,
   "ignoreBuildingDefense": true,

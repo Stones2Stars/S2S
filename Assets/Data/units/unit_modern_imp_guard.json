@@ -34,7 +34,7 @@
  "allowed": {
   "empire": 1
  },
- "capabilities": {
+ "skills": {
   "pillage": true,
   "unlimitedException": true,
   "militaryHappiness": true,

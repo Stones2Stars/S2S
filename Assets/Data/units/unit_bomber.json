@@ -60,7 +60,7 @@
    }
   }
  },
- "capabilities": {
+ "skills": {
   "ignoreBuildingDefense": true,
   "mechanized": true,
   "militaryProduction": true,

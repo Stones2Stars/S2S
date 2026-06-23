@@ -1,7 +1,7 @@
 {
  "type": "PROMOTION_STANDOUT_STATUS_HS_SM",
  "description": "TXT_KEY_PROMOTION_STANDOUT_STATUS",
- "capabilities": {
+ "skills": {
   "noInvisibility": true
  },
  "promotionLine": {

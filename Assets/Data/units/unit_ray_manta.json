@@ -2,7 +2,7 @@
  "type": "UNIT_RAY_MANTA",
  "description": "TXT_KEY_UNIT_RAY_MANTA",
  "civilopedia": "TXT_KEY_UNIT_RAY_MANTA_PEDIA",
- "capabilities": {
+ "skills": {
   "noDefensiveBonus": true,
   "blendIntoCity": true,
   "onlyDefensive": true,

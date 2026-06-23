@@ -1,7 +1,7 @@
 {
  "type": "UNITCOMBAT_MOTILITY_AERIAL",
  "description": "TXT_KEY_UNITCOMBAT_MOTILITY_AERIAL",
- "capabilities": {
+ "skills": {
   "fliesToMove": true
  },
  "vision": {

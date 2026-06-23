@@ -13,7 +13,7 @@
    }
   }
  },
- "capabilities": {
+ "skills": {
   "hillsDoubleMove": true,
   "featureDoubleMove": {
    "FEATURE_JUNGLE": true,

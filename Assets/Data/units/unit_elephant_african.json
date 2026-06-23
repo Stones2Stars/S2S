@@ -2,7 +2,7 @@
  "type": "UNIT_ELEPHANT_AFRICAN",
  "description": "TXT_KEY_UNIT_ELEPHANT_AFRICAN",
  "civilopedia": "TXT_KEY_UNIT_ELEPHANT_PEDIA",
- "capabilities": {
+ "skills": {
   "blendIntoCity": true,
   "onlyDefensive": true,
   "animalIgnoresBorders": true

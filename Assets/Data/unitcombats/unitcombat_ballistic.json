@@ -1,7 +1,7 @@
 {
  "type": "UNITCOMBAT_BALLISTIC",
  "description": "TXT_KEY_UNITCOMBAT_BALLISTIC",
- "capabilities": {
+ "skills": {
   "cannotMergeSplit": true
  },
  "ui": {

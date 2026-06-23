@@ -1,7 +1,7 @@
 {
  "type": "PROMOTION_HILLSMAN",
  "description": "TXT_KEY_PROMOTION_HILLSMAN",
- "capabilities": {
+ "skills": {
   "hillsDoubleMove": true,
   "terrainDoubleMove": {
    "TERRAIN_PEAK": true

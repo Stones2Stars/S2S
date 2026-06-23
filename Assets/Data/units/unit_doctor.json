@@ -2,7 +2,7 @@
  "type": "UNIT_DOCTOR",
  "description": "TXT_KEY_UNIT_DOCTOR",
  "civilopedia": "TXT_KEY_CONCEPT_GREAT_DOCTOR_PEDIA",
- "capabilities": {
+ "skills": {
   "goldenAge": true
  },
  "outcomes": {

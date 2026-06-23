@@ -20,7 +20,7 @@
  "allowed": {
   "world": 1
  },
- "capabilities": {
+ "skills": {
   "pillage": true,
   "militaryHappiness": true,
   "militaryProduction": true,

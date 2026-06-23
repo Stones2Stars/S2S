@@ -1,7 +1,7 @@
 {
  "type": "UNITCOMBAT_CRUISER",
  "description": "TXT_KEY_UNITCOMBAT_CRUISER",
- "capabilities": {
+ "skills": {
   "terrainDoubleMove": {
    "TERRAIN_OCEAN_POLAR": true,
    "TERRAIN_OCEAN": true,

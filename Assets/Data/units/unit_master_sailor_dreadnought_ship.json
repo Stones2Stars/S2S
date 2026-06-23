@@ -37,7 +37,7 @@
    }
   }
  },
- "capabilities": {
+ "skills": {
   "pillage": true,
   "ignoreBuildingDefense": true,
   "ignoreTerrainCost": true,

@@ -19,7 +19,7 @@
    }
   }
  },
- "capabilities": {
+ "skills": {
   "hillsDoubleMove": true,
   "terrainDoubleMove": {
    "TERRAIN_DESERT": true

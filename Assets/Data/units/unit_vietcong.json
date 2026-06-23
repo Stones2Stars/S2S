@@ -75,7 +75,7 @@
    }
   }
  },
- "capabilities": {
+ "skills": {
   "pillage": true,
   "onlyDefensive": true,
   "militaryHappiness": true,

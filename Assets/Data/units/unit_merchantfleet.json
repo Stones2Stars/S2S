@@ -2,7 +2,7 @@
  "type": "UNIT_MERCHANTFLEET",
  "description": "TXT_KEY_UNIT_MERCHANT_FLEET",
  "civilopedia": "TXT_KEY_CONCEPT_GREAT_PEOPLE_PEDIA",
- "capabilities": {
+ "skills": {
   "rivalTerritory": true
  },
  "grants": {

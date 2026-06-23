@@ -2,7 +2,7 @@
  "type": "UNIT_LOCUST_LARGE_SWARM",
  "description": "TXT_KEY_UNIT_LOCUST_LARGE_SWARM",
  "civilopedia": "TXT_KEY_UNIT_LOCUST_PEDIA",
- "capabilities": {
+ "skills": {
   "pillage": true,
   "onlyDefensive": true
  },

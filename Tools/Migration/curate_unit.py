@@ -254,6 +254,13 @@ def requires_unit(rec, store):
         allc.append(_atom(t, "team"))
     for x in _typelist_struct(rec, "TechTypes", "PrereqTech"):
         allc.append(_atom(x, "team"))
+    # EnabledCivilizationTypes: a civ-WHITELIST train gate (owner 2026-06-22) -- only the listed civ(s) may train it
+    # (CvCity::canTrain, getCivilizationType()==getEnabledCivilizationType(i).eCivilization, CvCity.cpp:2218; the
+    # civ-unique unit mechanism). -> requires.build.any OR-group of {type:CIVILIZATION_X, scope:empire} (empty =
+    # unrestricted). Was UN-MIGRATED: in REQUIRES_TAGS for the coverage check only, requires_unit() never read it.
+    civs = _typelist_struct(rec, "EnabledCivilizationTypes", "CivilizationType")
+    if civs:
+        anyc.append([_atom(x, "empire") for x in civs])
     # --- instance caps are NOT a requires SELF-atom (owner 2026-06-17): they move to the declarative `allowed`
     # cap (authored by allowed_unit() below). SELF leaves requires entirely; uniform with Building/Tech/CultureLevel.
     # enabler-spec §5a/§13.7. ---
@@ -627,7 +634,7 @@ def curate(typ, rec, store):
     for f in ordered:
         out[f] = fams[f]
     if caps:
-        out["capabilities"] = caps
+        out["skills"] = caps
     if vision:
         out["vision"] = vision
     if outcomes:
@@ -696,11 +703,11 @@ def main():
         print("COVERAGE: all XML tags handled or deferred (pass 2).")
 
     has = lambda k: sum(1 for o in results.values() if k in o)
-    STRUCT = {"type", "description", "civilopedia", "help", "enables", "obsoletes", "requires", "allowed", "capabilities",
+    STRUCT = {"type", "description", "civilopedia", "help", "enables", "obsoletes", "requires", "allowed", "skills",
               "vision", "outcomes", "grants", "succession", "cost", "ai", "loadPrune", "ui", "world", "sound", "identity"}
     seen = sorted({f for o in results.values() for f in o if f not in STRUCT})
     print("UnitInfo curated: %d  | SpecialUnitInfo: %d" % (n, len(su_results)))
-    for k in ("enables", "obsoletes", "requires", "allowed", "capabilities", "grants", "succession", "cost", "identity"):
+    for k in ("enables", "obsoletes", "requires", "allowed", "skills", "grants", "succession", "cost", "identity"):
         print("  with %-11s: %d" % (k, has(k)))
     print("  families seen: %s" % ", ".join(seen))
     if args.sample is not None:

@@ -35,7 +35,7 @@
    }
   }
  },
- "capabilities": {
+ "skills": {
   "pillage": true,
   "rivalTerritory": true,
   "unlimitedException": true,

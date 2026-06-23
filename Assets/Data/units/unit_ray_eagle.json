@@ -2,7 +2,7 @@
  "type": "UNIT_RAY_EAGLE",
  "description": "TXT_KEY_UNIT_RAY_EAGLE",
  "civilopedia": "TXT_KEY_UNIT_RAY_EAGLE_PEDIA",
- "capabilities": {
+ "skills": {
   "noDefensiveBonus": true,
   "blendIntoCity": true,
   "onlyDefensive": true,

@@ -2,7 +2,7 @@
  "type": "UNIT_GATOR_ASIAN",
  "description": "TXT_KEY_UNIT_GATOR_ASIAN",
  "civilopedia": "TXT_KEY_UNIT_GATOR_ASIAN_PEDIA",
- "capabilities": {
+ "skills": {
   "assassin": true,
   "blendIntoCity": true,
   "onlyDefensive": true,

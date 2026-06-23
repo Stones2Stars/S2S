@@ -2,7 +2,7 @@
  "type": "UNIT_GIRAFFE",
  "description": "TXT_KEY_UNIT_GIRAFFE",
  "civilopedia": "TXT_KEY_UNIT_GIRAFFE_PEDIA",
- "capabilities": {
+ "skills": {
   "blendIntoCity": true,
   "onlyDefensive": true,
   "animalIgnoresBorders": true

@@ -1,7 +1,7 @@
 {
  "type": "UNITCOMBAT_CORVETTE",
  "description": "TXT_KEY_UNITCOMBAT_CORVETTE",
- "capabilities": {
+ "skills": {
   "terrainDoubleMove": {
    "TERRAIN_COAST_POLAR": true,
    "TERRAIN_COAST": true,

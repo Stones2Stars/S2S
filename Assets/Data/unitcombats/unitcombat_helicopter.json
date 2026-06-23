@@ -1,7 +1,7 @@
 {
  "type": "UNITCOMBAT_HELICOPTER",
  "description": "TXT_KEY_UNITCOMBAT_HELICOPTER",
- "capabilities": {
+ "skills": {
   "fliesToMove": true
  },
  "ui": {

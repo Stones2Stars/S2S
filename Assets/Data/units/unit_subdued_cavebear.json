@@ -3,7 +3,7 @@
  "description": "TXT_KEY_UNIT_SUBDUED_CAVE_BEAR",
  "civilopedia": "TXT_KEY_UNIT_CAVE_BEAR_PEDIA",
  "help": "TXT_KEY_UNIT_SUBDUED_ANIMALS_HELP",
- "capabilities": {
+ "skills": {
   "onlyDefensive": true,
   "militaryTrade": true
  },

@@ -64,7 +64,7 @@
    }
   }
  },
- "capabilities": {
+ "skills": {
   "noDefensiveBonus": true,
   "pillage": true,
   "canMoveAllTerrain": true,

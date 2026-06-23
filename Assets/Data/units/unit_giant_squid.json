@@ -2,7 +2,7 @@
  "type": "UNIT_GIANT_SQUID",
  "description": "TXT_KEY_UNIT_GIANT_SQUID",
  "civilopedia": "TXT_KEY_UNIT_GIANT_SQUID_PEDIA",
- "capabilities": {
+ "skills": {
   "assassin": true,
   "blendIntoCity": true,
   "onlyDefensive": true,

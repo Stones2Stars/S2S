@@ -1,7 +1,7 @@
 {
  "type": "PROMOTION_SURPRISE_STATUS",
  "description": "TXT_KEY_PROMOTION_SURPRISE",
- "capabilities": {
+ "skills": {
   "stealthDefense": true
  },
  "promotionLine": {

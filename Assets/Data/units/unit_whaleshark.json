@@ -2,7 +2,7 @@
  "type": "UNIT_WHALESHARK",
  "description": "TXT_KEY_UNIT_WHALESHARK",
  "civilopedia": "TXT_KEY_UNIT_WHALESHARK_PEDIA",
- "capabilities": {
+ "skills": {
   "blendIntoCity": true
  },
  "outcomes": {

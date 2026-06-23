@@ -2,7 +2,7 @@
  "type": "UNIT_BLACKBEAR",
  "description": "TXT_KEY_UNIT_BLACKBEAR",
  "civilopedia": "TXT_KEY_UNIT_BLACKBEAR_PEDIA",
- "capabilities": {
+ "skills": {
   "blendIntoCity": true,
   "onlyDefensive": true,
   "animalIgnoresBorders": true

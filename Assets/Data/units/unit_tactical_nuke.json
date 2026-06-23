@@ -41,7 +41,7 @@
    }
   }
  },
- "capabilities": {
+ "skills": {
   "ignoreBuildingDefense": true,
   "mechanized": true,
   "suicide": true,

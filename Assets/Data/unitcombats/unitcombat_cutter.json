@@ -1,7 +1,7 @@
 {
  "type": "UNITCOMBAT_CUTTER",
  "description": "TXT_KEY_UNITCOMBAT_CUTTER",
- "capabilities": {
+ "skills": {
   "terrainDoubleMove": {
    "TERRAIN_COAST_POLAR": true,
    "TERRAIN_COAST": true,

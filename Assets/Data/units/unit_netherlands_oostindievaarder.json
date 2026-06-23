@@ -62,7 +62,7 @@
    }
   }
  },
- "capabilities": {
+ "skills": {
   "pillage": true,
   "ignoreBuildingDefense": true,
   "mechanized": true,

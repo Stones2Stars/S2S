@@ -5,7 +5,7 @@
  "allowed": {
   "empire": 0
  },
- "capabilities": {
+ "skills": {
   "found": true,
   "onlyDefensive": true,
   "unlimitedException": true

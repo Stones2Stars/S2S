@@ -15,7 +15,7 @@
  "allowed": {
   "empire": 1
  },
- "capabilities": {
+ "skills": {
   "food": true,
   "found": true,
   "unlimitedException": true

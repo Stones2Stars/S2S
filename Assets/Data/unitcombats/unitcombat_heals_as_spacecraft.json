@@ -1,7 +1,7 @@
 {
  "type": "UNITCOMBAT_HEALS_AS_SPACECRAFT",
  "description": "TXT_KEY_UNITCOMBAT_HEALS_AS_SPACECRAFT",
- "capabilities": {
+ "skills": {
   "healsAs": true
  },
  "ui": {

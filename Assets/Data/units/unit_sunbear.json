@@ -2,7 +2,7 @@
  "type": "UNIT_SUNBEAR",
  "description": "TXT_KEY_UNIT_SUNBEAR",
  "civilopedia": "TXT_KEY_UNIT_SUNBEAR_PEDIA",
- "capabilities": {
+ "skills": {
   "blendIntoCity": true
  },
  "outcomes": {

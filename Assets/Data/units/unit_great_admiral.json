@@ -2,7 +2,7 @@
  "type": "UNIT_GREAT_ADMIRAL",
  "description": "TXT_KEY_UNIT_GREAT_ADMIRAL",
  "civilopedia": "TXT_KEY_CONCEPT_GREAT_ADMIRALS_PEDIA",
- "capabilities": {
+ "skills": {
   "greatGeneral": true
  },
  "outcomes": {

@@ -50,7 +50,7 @@
    }
   }
  },
- "capabilities": {
+ "skills": {
   "pillage": true,
   "firstStrikeImmune": true,
   "ignoreBuildingDefense": true,

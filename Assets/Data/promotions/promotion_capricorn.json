@@ -2,7 +2,7 @@
  "type": "PROMOTION_CAPRICORN",
  "description": "TXT_KEY_PROMOTION_CAPRICORN",
  "help": "TXT_KEY_PROMOTION_ASTRO_HELP",
- "capabilities": {
+ "skills": {
   "amphib": true,
   "river": true
  },

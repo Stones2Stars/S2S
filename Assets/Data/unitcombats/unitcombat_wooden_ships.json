@@ -1,7 +1,7 @@
 {
  "type": "UNITCOMBAT_WOODEN_SHIPS",
  "description": "TXT_KEY_UNITCOMBAT_WOODEN_SHIPS",
- "capabilities": {
+ "skills": {
   "terrainDoubleMove": {
    "TERRAIN_COAST_POLAR": true,
    "TERRAIN_COAST": true,

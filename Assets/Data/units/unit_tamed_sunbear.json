@@ -43,7 +43,7 @@
    }
   }
  },
- "capabilities": {
+ "skills": {
   "noDefensiveBonus": true,
   "onlyDefensive": true,
   "militaryTrade": true

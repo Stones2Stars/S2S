@@ -1,7 +1,7 @@
 {
  "type": "PROMOTION_KI",
  "description": "TXT_KEY_PROMOTION_KI",
- "capabilities": {
+ "skills": {
   "immuneToFirstStrikes": true
  },
  "ui": {

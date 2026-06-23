@@ -1,7 +1,7 @@
 {
  "type": "UNITCOMBAT_SEA_WORKER",
  "description": "TXT_KEY_UNITCOMBAT_SEA_WORKER",
- "capabilities": {
+ "skills": {
   "cannotMergeSplit": true
  },
  "ui": {

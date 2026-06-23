@@ -227,7 +227,7 @@ def curate(typ, rec, store):
     for f in ordered:
         out[f] = fams[f]
     if caps:
-        out["capabilities"] = caps
+        out["skills"] = caps
     if vision:
         out["vision"] = vision
     if outcomes:
@@ -265,11 +265,11 @@ def main():
     print("COVERAGE: all XML tags handled." if not leftover else
           "UNHANDLED tags (count): %s" % ", ".join("%s=%d" % (t, c) for t, c in leftover.most_common()))
     has = lambda k: sum(1 for o in results.values() if k in o)
-    STRUCT = {"type", "description", "help", "obsoletes", "capabilities", "vision", "outcomes",
+    STRUCT = {"type", "description", "help", "obsoletes", "skills", "vision", "outcomes",
               "loadPrune", "identity"}
     seen = sorted({f for o in results.values() for f in o if f not in STRUCT})
     print("UnitCombatInfo curated: %d" % n)
-    for k in ("obsoletes", "capabilities", "vision", "outcomes", "loadPrune", "identity"):
+    for k in ("obsoletes", "skills", "vision", "outcomes", "loadPrune", "identity"):
         print("  with %-12s: %d" % (k, has(k)))
     print("  families seen: %s" % ", ".join(seen))
     if args.sample is not None:

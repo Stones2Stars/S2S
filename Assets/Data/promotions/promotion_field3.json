@@ -23,7 +23,7 @@
    }
   }
  },
- "capabilities": {
+ "skills": {
   "terrainDoubleMove": {
    "TERRAIN_PLAINS": true,
    "TERRAIN_GRASSLAND": true

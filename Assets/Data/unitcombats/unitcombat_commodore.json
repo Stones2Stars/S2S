@@ -1,7 +1,7 @@
 {
  "type": "UNITCOMBAT_COMMODORE",
  "description": "TXT_KEY_UNITCOMBAT_COMMODORE",
- "capabilities": {
+ "skills": {
   "cannotMergeSplit": true
  },
  "ui": {

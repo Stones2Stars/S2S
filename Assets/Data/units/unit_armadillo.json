@@ -2,7 +2,7 @@
  "type": "UNIT_ARMADILLO",
  "description": "TXT_KEY_UNIT_ARMADILLO",
  "civilopedia": "TXT_KEY_UNIT_ARMADILLO_PEDIA",
- "capabilities": {
+ "skills": {
   "blendIntoCity": true,
   "onlyDefensive": true,
   "animalIgnoresBorders": true

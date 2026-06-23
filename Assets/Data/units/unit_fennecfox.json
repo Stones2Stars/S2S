@@ -2,7 +2,7 @@
  "type": "UNIT_FENNECFOX",
  "description": "TXT_KEY_UNIT_FENNECFOX",
  "civilopedia": "TXT_KEY_UNIT_FENNECFOX_PEDIA",
- "capabilities": {
+ "skills": {
   "blendIntoCity": true,
   "onlyDefensive": true,
   "animalIgnoresBorders": true

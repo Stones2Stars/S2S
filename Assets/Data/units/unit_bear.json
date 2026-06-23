@@ -2,7 +2,7 @@
  "type": "UNIT_BEAR",
  "description": "TXT_KEY_UNIT_BROWN_BEAR",
  "civilopedia": "TXT_KEY_UNIT_BROWN_BEAR_PEDIA",
- "capabilities": {
+ "skills": {
   "assassin": true,
   "blendIntoCity": true,
   "targets": {

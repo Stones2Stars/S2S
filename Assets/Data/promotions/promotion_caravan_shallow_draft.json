@@ -1,7 +1,7 @@
 {
  "type": "PROMOTION_CARAVAN_SHALLOW_DRAFT",
  "description": "TXT_KEY_CARAVAN_SHALLOW_DRAFT",
- "capabilities": {
+ "skills": {
   "featureDoubleMove": {
    "FEATURE_REEF": true,
    "FEATURE_REEF_BEACON": true,

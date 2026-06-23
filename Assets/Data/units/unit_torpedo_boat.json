@@ -103,7 +103,7 @@
    }
   }
  },
- "capabilities": {
+ "skills": {
   "pillage": true,
   "canMoveImpassable": true,
   "mechanized": true,

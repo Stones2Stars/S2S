@@ -2,7 +2,7 @@
  "type": "UNIT_GHARIAL",
  "description": "TXT_KEY_UNIT_GHARIAL",
  "civilopedia": "TXT_KEY_CONCEPT_SUBDUED_ANIMALS_PEDIA",
- "capabilities": {
+ "skills": {
   "assassin": true,
   "blendIntoCity": true,
   "onlyDefensive": true,

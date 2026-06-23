@@ -2,7 +2,7 @@
  "type": "UNIT_BARBARYAPE",
  "description": "TXT_KEY_UNIT_BARBARYAPE",
  "civilopedia": "TXT_KEY_UNIT_BARBARYAPE_PEDIA",
- "capabilities": {
+ "skills": {
   "blendIntoCity": true
  },
  "outcomes": {

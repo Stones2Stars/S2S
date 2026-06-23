@@ -1,7 +1,7 @@
 {
  "type": "UNITCOMBAT_HEALTH_CARE",
  "description": "TXT_KEY_UNITCOMBAT_HEALTH_CARE",
- "capabilities": {
+ "skills": {
   "cannotMergeSplit": true
  },
  "ui": {

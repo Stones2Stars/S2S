@@ -1,7 +1,7 @@
 {
  "type": "UNITCOMBAT_MISSILE",
  "description": "TXT_KEY_UNITCOMBAT_MISSILE",
- "capabilities": {
+ "skills": {
   "cannotMergeSplit": true
  },
  "ui": {

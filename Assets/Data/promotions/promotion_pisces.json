@@ -2,7 +2,7 @@
  "type": "PROMOTION_PISCES",
  "description": "TXT_KEY_PROMOTION_PISCES",
  "help": "TXT_KEY_PROMOTION_ASTRO_HELP",
- "capabilities": {
+ "skills": {
   "oneUp": true
  },
  "ui": {

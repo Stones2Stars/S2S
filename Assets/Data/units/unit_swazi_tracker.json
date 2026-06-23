@@ -53,7 +53,7 @@
    }
   }
  },
- "capabilities": {
+ "skills": {
   "noBadGoodies": true,
   "targets": {
    "UNITCOMBAT_ANIMAL": true,

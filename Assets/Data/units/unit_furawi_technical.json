@@ -93,7 +93,7 @@
    }
   }
  },
- "capabilities": {
+ "skills": {
   "noDefensiveBonus": true,
   "militaryProduction": true,
   "militarySupport": true

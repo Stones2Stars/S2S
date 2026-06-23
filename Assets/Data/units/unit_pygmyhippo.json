@@ -2,7 +2,7 @@
  "type": "UNIT_PYGMYHIPPO",
  "description": "TXT_KEY_UNIT_PYGMYHIPPO",
  "civilopedia": "TXT_KEY_UNIT_PYGMYHIPPO_PEDIA",
- "capabilities": {
+ "skills": {
   "blendIntoCity": true,
   "onlyDefensive": true,
   "animalIgnoresBorders": true

@@ -3,7 +3,7 @@
  "description": "TXT_KEY_UNIT_CAPTIVE_CIVILIAN",
  "civilopedia": "TXT_KEY_UNIT_CAPTIVE_CIVILIAN_PEDIA",
  "help": "TXT_KEY_UNIT_CAPTIVE_CIVILIAN_HELP",
- "capabilities": {
+ "skills": {
   "onlyDefensive": true,
   "workerTrade": true
  },

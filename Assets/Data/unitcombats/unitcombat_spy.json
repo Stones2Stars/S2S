@@ -1,7 +1,7 @@
 {
  "type": "UNITCOMBAT_SPY",
  "description": "TXT_KEY_UNITCOMBAT_SPY",
- "capabilities": {
+ "skills": {
   "spy": true,
   "cannotMergeSplit": true
  },

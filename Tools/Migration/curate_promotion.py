@@ -491,7 +491,7 @@ def curate(typ, rec, store):
     for f in ordered:
         out[f] = fams[f]
     if caps:
-        out["capabilities"] = caps
+        out["skills"] = caps
     if vision:
         out["vision"] = vision
     if promo_lines:
@@ -535,11 +535,11 @@ def main():
     else:
         print("COVERAGE: all XML tags handled.")
     has = lambda k: sum(1 for o in results.values() if k in o)
-    STRUCT = {"type", "description", "help", "obsoletes", "capabilities", "vision", "promotionLine",
+    STRUCT = {"type", "description", "help", "obsoletes", "skills", "vision", "promotionLine",
               "grants", "ai", "loadPrune", "ui", "world", "sound", "identity"}
     seen_fams = sorted({f for o in results.values() for f in o if f not in STRUCT})
     print("PromotionInfo curated: %d" % n)
-    for k in ("obsoletes", "capabilities", "vision", "grants", "loadPrune", "identity"):
+    for k in ("obsoletes", "skills", "vision", "grants", "loadPrune", "identity"):
         print("  with %-12s: %d" % (k, has(k)))
     print("  families seen: %s" % ", ".join(seen_fams))
     if args.sample is not None:

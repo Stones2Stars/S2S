@@ -39,7 +39,7 @@
    }
   }
  },
- "capabilities": {
+ "skills": {
   "terrainDoubleMove": {
    "TERRAIN_TAIGA": true,
    "TERRAIN_TUNDRA": true,

@@ -17,7 +17,7 @@
    ]
   }
  },
- "capabilities": {
+ "skills": {
   "ignoreTerrainCost": true,
   "mechanized": true,
   "renderBelowWater": true,

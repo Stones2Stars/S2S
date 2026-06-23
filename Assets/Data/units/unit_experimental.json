@@ -30,7 +30,7 @@
    }
   }
  },
- "capabilities": {
+ "skills": {
   "ignoreBuildingDefense": true,
   "mechanized": true,
   "nukeImmune": true,

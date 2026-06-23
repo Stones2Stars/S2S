@@ -2,7 +2,7 @@
  "type": "UNIT_COD",
  "description": "TXT_KEY_UNIT_COD",
  "civilopedia": "TXT_KEY_UNIT_COD_PEDIA",
- "capabilities": {
+ "skills": {
   "noDefensiveBonus": true,
   "blendIntoCity": true,
   "onlyDefensive": true,

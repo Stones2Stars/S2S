@@ -30,7 +30,7 @@
    ]
   }
  },
- "capabilities": {
+ "skills": {
   "canMoveAllTerrain": true,
   "canMoveImpassable": true,
   "food": true
