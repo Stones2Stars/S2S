@@ -36,6 +36,13 @@
    ]
   }
  },
+ "cargo": {
+  "unit": {
+   "space": {
+    "flat": 3
+   }
+  }
+ },
  "strength": {
   "unit": {
    "terrain": {
@@ -130,7 +137,6 @@
   "base": {
    "combat": 75,
    "moves": 4,
-   "cargo": 3,
    "combatClass": "UNITCOMBAT_HOVERCRAFT"
   }
  }

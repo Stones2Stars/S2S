@@ -7,6 +7,9 @@
   "ignoreBuildingDefense": true,
   "rivalTerritory": true
  },
+ "tags": {
+  "spy": true
+ },
  "outcomes": {
   "actions": [
    {

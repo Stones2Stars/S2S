@@ -45,6 +45,13 @@
    }
   }
  },
+ "cargo": {
+  "unit": {
+   "space": {
+    "flat": 1
+   }
+  }
+ },
  "strength": {
   "unit": {
    "unitCombat": {
@@ -122,7 +129,6 @@
   "base": {
    "combat": 60,
    "moves": 7,
-   "cargo": 1,
    "combatClass": "UNITCOMBAT_DIESEL_SHIPS"
   }
  }

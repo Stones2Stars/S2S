@@ -43,6 +43,13 @@
    ]
   }
  },
+ "cargo": {
+  "unit": {
+   "space": {
+    "flat": 5
+   }
+  }
+ },
  "skills": {
   "pillage": true,
   "mechanized": true,
@@ -106,7 +113,6 @@
   "base": {
    "combat": 10,
    "moves": 3,
-   "cargo": 5,
    "combatClass": "UNITCOMBAT_WOODEN_SHIPS"
   }
  }

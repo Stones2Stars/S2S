@@ -48,6 +48,13 @@
    "percent": 50
   }
  },
+ "cargo": {
+  "unit": {
+   "space": {
+    "flat": 1
+   }
+  }
+ },
  "costs": {
   "empire": {
    "perInstance": {
@@ -146,7 +153,6 @@
   "base": {
    "combat": 34,
    "moves": 5,
-   "cargo": 1,
    "combatClass": "UNITCOMBAT_SUBMARINE"
   }
  }

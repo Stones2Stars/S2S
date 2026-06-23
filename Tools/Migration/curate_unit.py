@@ -39,7 +39,7 @@ from store import Store, REPO
 # ---- identity.base: the create-unit FOUNDATION (§0.6) ----
 BASE = {
     "iCombat": "combat", "iMoves": "moves", "iWorkRate": "workRate", "iAirCombat": "airCombat",
-    "iCargo": "cargo", "iCombatLimit": "combatLimit", "iAirCombatLimit": "airCombatLimit",
+    "iCombatLimit": "combatLimit", "iAirCombatLimit": "airCombatLimit",
     "iAirUnitCap": "airUnitCap",
 }
 # ---- §5 unit-scope combat-trait families (tag -> (family, member|None, unit)). REUSES the Promotion §5 vocab. ----
@@ -87,6 +87,8 @@ UNIT_FAMILIES = {
     "iNumHealSupport": ("heal", "support", "flat"),
     "iDropRange": ("movement", "dropRange", "flat"),
     "iCultureGarrison": ("culture", "garrison", "flat"),
+    "iCargo": ("cargo", "space", "flat"),   # base cargo CAPACITY -> the `cargo` family's `space` member (matches
+                                            # promotion iCargoChange -> cargo.space; SizeMatters: space/smSpace/volume)
 }
 # ---- capabilities (separate boolean group) — Unit's bools (some shared with Promotion's CAP vocab). ----
 CAP_BOOL = {
@@ -123,9 +125,13 @@ DCM_AIRBOMB = ["bDCMAirBomb1", "bDCMAirBomb2", "bDCMAirBomb3", "bDCMAirBomb4", "
 TAG_BY_UNITAI = {
     "UNITAI_WORKER":   ["worker", "civilian"], "UNITAI_WORKER_SEA": ["worker", "civilian"],
     "UNITAI_SETTLE":   ["settler", "civilian"], "UNITAI_MISSIONARY": ["missionary", "civilian"],
-    "UNITAI_MERCHANT": ["merchant", "civilian"],
-    # `spy` deferred: collides with the `spy` SKILL (bSpy) — tag-vs-skill ambiguity is a validation discussion.
-    # `entertainer` deferred: no clean DefaultUnitAI signal yet. Untagged is fine (owner: fix in validation).
+    "UNITAI_MERCHANT": ["merchant", "civilian"], "UNITAI_SPY": ["spy"],
+    # `civilian` is opt-in for genuinely-civilian units (workers, merchants — owner); `UNITAI_SPY` = the actual spy
+    # (only spies run espionage missions) but is NOT civilian. NB the `spy` SKILL (bSpy) is the same notion
+    # mis-filed as a skill; reconcile in post-migration (drop the skill, keep the tag). settler/missionary carry
+    # `civilian` provisionally (peaceful non-combatants) — confirm in validation.
+    # Deferred: `UNITAI_INFILTRATOR` = a criminal-type unit (hidden-nationality, alongside `exile`) — its own tag,
+    # not spy; `entertainer` (no clean signal). Untagged is fine (owner: fix in validation).
 }
 
 # ---- grants (one-shot, lists) ----

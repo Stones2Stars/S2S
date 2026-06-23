@@ -26,6 +26,13 @@
    ]
   }
  },
+ "cargo": {
+  "unit": {
+   "space": {
+    "flat": 7
+   }
+  }
+ },
  "skills": {
   "pillage": true,
   "ignoreBuildingDefense": true,
@@ -87,7 +94,6 @@
   "base": {
    "combat": 22,
    "moves": 5,
-   "cargo": 7,
    "combatClass": "UNITCOMBAT_STEAM_SHIPS"
   }
  }

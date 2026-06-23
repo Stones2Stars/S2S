@@ -33,6 +33,13 @@
    }
   }
  },
+ "cargo": {
+  "unit": {
+   "space": {
+    "flat": 5
+   }
+  }
+ },
  "strength": {
   "unit": {
    "feature": {
@@ -112,7 +119,6 @@
   "base": {
    "combat": 140,
    "moves": 3,
-   "cargo": 5,
    "combatClass": "UNITCOMBAT_HITECH"
   }
  }

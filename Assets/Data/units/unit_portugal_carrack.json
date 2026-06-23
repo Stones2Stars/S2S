@@ -47,6 +47,13 @@
    ]
   }
  },
+ "cargo": {
+  "unit": {
+   "space": {
+    "flat": 2
+   }
+  }
+ },
  "costs": {
   "empire": {
    "perInstance": {
@@ -121,7 +128,6 @@
   "base": {
    "combat": 9,
    "moves": 4,
-   "cargo": 2,
    "combatClass": "UNITCOMBAT_WOODEN_SHIPS"
   }
  }

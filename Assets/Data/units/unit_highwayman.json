@@ -100,6 +100,13 @@
    }
   }
  },
+ "cargo": {
+  "unit": {
+   "space": {
+    "flat": 2
+   }
+  }
+ },
  "costs": {
   "empire": {
    "perInstance": {
@@ -217,7 +224,6 @@
   "base": {
    "combat": 20,
    "moves": 3,
-   "cargo": 2,
    "combatClass": "UNITCOMBAT_RUFFIAN"
   }
  }

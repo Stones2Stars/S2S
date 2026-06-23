@@ -20,7 +20,8 @@
   "militarySupport": true
  },
  "tags": {
-  "military": true
+  "military": true,
+  "spy": true
  },
  "grants": {
   "promotions": [

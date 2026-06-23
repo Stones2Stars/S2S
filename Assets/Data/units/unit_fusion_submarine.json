@@ -45,6 +45,13 @@
    }
   }
  },
+ "cargo": {
+  "unit": {
+   "space": {
+    "flat": 5
+   }
+  }
+ },
  "strength": {
   "unit": {
    "unitCombat": {
@@ -143,7 +150,6 @@
   "base": {
    "combat": 120,
    "moves": 12,
-   "cargo": 5,
    "combatClass": "UNITCOMBAT_SUBMARINE"
   }
  }

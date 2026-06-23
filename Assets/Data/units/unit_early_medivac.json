@@ -75,6 +75,13 @@
    }
   }
  },
+ "cargo": {
+  "unit": {
+   "space": {
+    "flat": 2
+   }
+  }
+ },
  "PROPERTY_DISEASE": {
   "city": {
    "flat": -35
@@ -140,7 +147,6 @@
   "base": {
    "combat": 40,
    "moves": 4,
-   "cargo": 2,
    "combatClass": "UNITCOMBAT_HEALTH_CARE"
   }
  }

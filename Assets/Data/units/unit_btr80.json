@@ -38,6 +38,13 @@
    }
   }
  },
+ "cargo": {
+  "unit": {
+   "space": {
+    "flat": 2
+   }
+  }
+ },
  "strength": {
   "unit": {
    "feature": {
@@ -131,7 +138,6 @@
   "base": {
    "combat": 50,
    "moves": 2,
-   "cargo": 2,
    "combatClass": "UNITCOMBAT_WHEELED"
   }
  }

@@ -29,6 +29,13 @@
  "allowed": {
   "empire": 5
  },
+ "cargo": {
+  "unit": {
+   "space": {
+    "flat": 3
+   }
+  }
+ },
  "costs": {
   "empire": {
    "perInstance": {
@@ -120,7 +127,6 @@
   "base": {
    "combat": 2,
    "moves": 2,
-   "cargo": 3,
    "combatClass": "UNITCOMBAT_WOODEN_SHIPS"
   }
  }

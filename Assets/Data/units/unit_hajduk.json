@@ -106,6 +106,13 @@
    }
   }
  },
+ "cargo": {
+  "unit": {
+   "space": {
+    "flat": 1
+   }
+  }
+ },
  "costs": {
   "empire": {
    "perInstance": {
@@ -241,7 +248,6 @@
   "base": {
    "combat": 17,
    "moves": 3,
-   "cargo": 1,
    "combatClass": "UNITCOMBAT_CRIMINAL"
   }
  }

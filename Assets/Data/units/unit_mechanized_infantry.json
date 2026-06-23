@@ -43,6 +43,13 @@
    }
   }
  },
+ "cargo": {
+  "unit": {
+   "space": {
+    "flat": 3
+   }
+  }
+ },
  "skills": {
   "pillage": true,
   "militaryHappiness": true,
@@ -112,7 +119,6 @@
   "base": {
    "combat": 70,
    "moves": 2,
-   "cargo": 3,
    "combatClass": "UNITCOMBAT_TRACKED"
   }
  }

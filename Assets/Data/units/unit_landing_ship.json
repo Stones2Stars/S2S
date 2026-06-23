@@ -31,6 +31,13 @@
    ]
   }
  },
+ "cargo": {
+  "unit": {
+   "space": {
+    "flat": 9
+   }
+  }
+ },
  "skills": {
   "pillage": true,
   "ignoreBuildingDefense": true,
@@ -93,7 +100,6 @@
   "base": {
    "combat": 40,
    "moves": 6,
-   "cargo": 9,
    "combatClass": "UNITCOMBAT_DIESEL_SHIPS"
   }
  }

@@ -107,6 +107,13 @@
    }
   }
  },
+ "cargo": {
+  "unit": {
+   "space": {
+    "flat": 2
+   }
+  }
+ },
  "PROPERTY_CRIME": {
   "city": {
    "flat": 17
@@ -213,7 +220,6 @@
   "base": {
    "combat": 28,
    "moves": 3,
-   "cargo": 2,
    "combatClass": "UNITCOMBAT_RUFFIAN"
   }
  }

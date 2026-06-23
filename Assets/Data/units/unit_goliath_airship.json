@@ -33,6 +33,13 @@
  "allowed": {
   "empire": 5
  },
+ "cargo": {
+  "unit": {
+   "space": {
+    "flat": 2
+   }
+  }
+ },
  "costs": {
   "empire": {
    "perInstance": {
@@ -120,7 +127,6 @@
   "base": {
    "combat": 40,
    "moves": 2,
-   "cargo": 2,
    "combatClass": "UNITCOMBAT_BALLOON"
   }
  }

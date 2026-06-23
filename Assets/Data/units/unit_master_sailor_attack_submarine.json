@@ -41,6 +41,13 @@
    "percent": 70
   }
  },
+ "cargo": {
+  "unit": {
+   "space": {
+    "flat": 1
+   }
+  }
+ },
  "strength": {
   "unit": {
    "unitCombat": {
@@ -145,7 +152,6 @@
   "base": {
    "combat": 54,
    "moves": 7,
-   "cargo": 1,
    "combatClass": "UNITCOMBAT_SUBMARINE"
   }
  }

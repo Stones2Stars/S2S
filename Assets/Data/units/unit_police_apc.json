@@ -91,6 +91,13 @@
    }
   }
  },
+ "cargo": {
+  "unit": {
+   "space": {
+    "flat": 1
+   }
+  }
+ },
  "PROPERTY_CRIME": {
   "city": {
    "flat": -30
@@ -172,7 +179,6 @@
   "base": {
    "combat": 60,
    "moves": 2,
-   "cargo": 1,
    "combatClass": "UNITCOMBAT_LAW_ENFORCEMENT"
   }
  }

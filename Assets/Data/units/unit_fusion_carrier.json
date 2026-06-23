@@ -24,6 +24,13 @@
    }
   }
  },
+ "cargo": {
+  "unit": {
+   "space": {
+    "flat": 10
+   }
+  }
+ },
  "strength": {
   "unit": {
    "terrain": {
@@ -132,7 +139,6 @@
   "base": {
    "combat": 75,
    "moves": 8,
-   "cargo": 10,
    "combatClass": "UNITCOMBAT_NUCLEAR_SHIPS"
   }
  }

@@ -36,6 +36,13 @@
    ]
   }
  },
+ "cargo": {
+  "unit": {
+   "space": {
+    "flat": 5
+   }
+  }
+ },
  "strength": {
   "unit": {
    "terrain": {
@@ -137,7 +144,6 @@
   "base": {
    "combat": 40,
    "moves": 5,
-   "cargo": 5,
    "combatClass": "UNITCOMBAT_DIESEL_SHIPS"
   }
  }
