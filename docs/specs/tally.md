@@ -86,6 +86,10 @@ specialist) are not yet wired — a `requires`/`per` atom over those reads 0 unt
 one new count-domain value + its emit site + its rebuild-scan contribution + a shadow id). City/plot reads go
 direct to the live object regardless.
 
+The tally's `specialist` count domain (counting specialists, e.g. for `per:specialist` scaling) is DISTINCT from
+[modifier](modifier.md) §6's `freeSpecialists`/`allowedSpecialists` (which GRANT / CAP specialists — a deposit,
+not a count). No conflict — different mechanisms.
+
 ---
 
 ## See also

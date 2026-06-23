@@ -30,9 +30,10 @@ an upward cascade-walk. The reverse view ("who modifies me") is derived once at 
 hot path.
 
 **Three governing rules:** (a) **purely top-down** — sources deposit DOWN, targets read an O(1) accumulator; the
-reverse index is cold-path only. (b) **tech-inflation is a downward DEPOSIT, not an upward gate.** (c) **info DATA
-vs engine MACHINERY is a hard boundary** — JSON carries values/relationships only; producers, evaluators, and the
-tally are engine-side.
+reverse index is cold-path only. (b) **tech-inflation is a downward DEPOSIT, not an upward gate** — a researched
+tech deposits down onto everything below it (cheaper/better); the lower thing never reaches UP with a `hasTech`
+gate. (c) **info DATA vs engine MACHINERY is a hard boundary** — the JSON carries only values + relationships;
+the producers, evaluators, and tally that consume them are engine-side, so authoring stays declarative.
 
 ---
 
@@ -175,8 +176,9 @@ No bespoke host↔cargo family is needed. The full unit-stat family vocabulary
   bucket, a typed entry is auto-assigned. Leaf is a count (a list when conditioned). ⚠ Here `any` is a **count key**
   (an untyped specialist slot), **NOT** the [json](json.md) §3.4 condition combinator.
 - **`allowedSpecialists:{<scope>:{SPECIALIST_X:N}}`** — the manual-assign cap, per-type only (no `any`).
-- `free` lives ON TOP of `allowed` (independent). The leaf being a count-by-type is the one sanctioned departure
-  from the `.flat` leaf.
+- `free` lives ON TOP of `allowed` (independent). Normally a modifier leaf is `<scope>.<unit>` (e.g. a bare
+  number or `.flat`); specialist counts instead use a **count-by-type** leaf (the `SPECIALIST_*` type — or `any`
+  — IS the key, its value the count) — the one sanctioned exception, chosen for legibility.
 
 ---
 

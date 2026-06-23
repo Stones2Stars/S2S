@@ -136,6 +136,18 @@ is **evaluated against the deposit's target** and so carries **no `_PLOT`/`_UNIT
 context: `IS_WATER` on `plots` = a water tile, on `units` = a sea unit. An **unknown/missing predicate is
 IGNORED**, never treated as false — retiring a system never spuriously disables unrelated data.
 
+> **`IS_*` vs `HAS_*` — literal English (owner 2026-06-23).** Plain English picks the prefix: `IS_*` = whether the
+> target **is** something (a plot `IS_WATER`, a city `IS_CAPITAL`); `HAS_*` = whether it **has** something (a plot
+> `HAS_RIVER`, `HAS_PEAK`, `HAS_COAST`). These semantics span **every target group**, not just plots — a *unit*
+> `IS_MILITARY` (defined by the `military` [tag](tags.md)), a *city* `IS_CAPITAL` — so a **tag-backed predicate
+> reads its tag** (that is how a [tag](tags.md) is queried inside a condition). The `HAS_*` set is the
+> `<scope>.<target>` filter layer, so `HAS_COAST`
+> matches **any** coastal-adjacent plot (water *or* land). The **target is the plot**:
+> `HAS_PEAK` = the plot has a peak (a special case — a peak behaves as *both* a feature and a terrain, so a plot
+> could *in theory* carry a terrain **and** a peak, e.g. grassland+peak; it just doesn't happen in practice). ⏳ The
+> `HAS_COAST`/`HAS_RIVER`/`HAS_PEAK`/`HAS_HILLS` target-filters + `MAP_CATEGORY` are **not yet fully fleshed out**
+> (space-map-related, in-flight) — author against them with that caveat.
+
 - **bare** (parameter-free string), four groups:
   - **environment / domain** `IS_<where>` (target-relative): `IS_WATER` · `IS_LAND` · `IS_AIR` · `IS_SPACE` · `IS_LUNAR` · `IS_MARS`
     (extensible).
@@ -148,7 +160,7 @@ IGNORED**, never treated as false — retiring a system never spuriously disable
     `IS_CAPITAL` = "the city has a Palace / government-center building" (runtime-evaluated, not stored); palace-type
     buildings gate on `requires.build.disabled: "IS_CAPITAL"`.
 - **parameterized** `{ PREDICATE: param }`: `{HAS_FEATURE: FEATURE_X}` · `{HAS_TERRAIN: TERRAIN_X}` ·
-  `{HAS_BONUS: BONUS_X}` · `{HAS_RELIGION: RELIGION_X}` · `{STATE_RELIGION: RELIGION_X}` · `{HOLY_CITY: RELIGION_X}` ·
+  `{HAS_BONUS: BONUS_X}` · `{HAS_RELIGION: RELIGION_X}` · `{STATE_RELIGION: RELIGION_X}` · `{IS_HOLY_CITY: RELIGION_X}` ·
   `{HAS_CORPORATION: CORPORATION_X}` · `{latitude:{min,max}}` · `{existedFor:{min:N}}` (turns since built).
 - **membership sugar** `{ terrain|feature|bonus: [TYPE,…] }` = "the plot's terrain/feature/bonus is one of these";
   equivalent to an `any` of the matching `HAS_*` predicate.
@@ -156,6 +168,7 @@ IGNORED**, never treated as false — retiring a system never spuriously disable
   `{all:["IS_LAND","HAS_COAST"]}`; flat land = `IS_LAND` with no `HAS_HILLS`/`HAS_PEAK`. No bespoke
   "mars-peak"/"coastal-land" type.
 - **negation** uses the `disabled` twin (§3.9) or `noneOf` — never a `false` value.
+- (a `PROPERTY_*` band atom is the one exception to presence=`min:1` — absent `min` = no lower bound; §3.4.)
 
 ### 3.6 Units — what a modifier value *is*
 
@@ -215,6 +228,8 @@ Every deposit, grant, or conditioned value is the same shape:
 - **`enabled` is read before `disabled`** — the enable is evaluated first, the disable second; a `disabled`
   that holds **overrides** (the deposit is suppressed even if `enabled` was satisfied). Author them in that
   order: `enabled` first in the list, then `disabled`.
+- **There is no `enabled: false`** — to conditionally SUPPRESS a deposit use `disabled` (its twin); an absent
+  `enabled` means always-on.
 - A leaf is a single entry **or a LIST of entries** (several conditioned values into one slot):
 
 ```jsonc
@@ -425,9 +440,9 @@ promotion grant it?***
   fly-over-water, …). *Promotion-grantable ⇒ skill.* Glossary: [skills.md](skills.md).
 - **`tags`** — **immutable, type-derived** membership: set at creation, re-set on **upgrade**, **purely for
   accounting** — overlapping (`military`/`civilian`/`worker`/`spy`/`gunpowder`/`mechanized`/…), counted by the
-  engine/tally, **no behaviour or modifiers**. Tag membership is **accounting-only**; `IS_*` predicates are
-  **independent queries**, not tag-membership, though a predicate MAY be *defined* to encompass a tag (§3.7).
-  *Not* promotion-grantable (a swordsman must upgrade to a rifleman to gain `gunpowder`).
+  engine/tally, **no behaviour or modifiers**. A tag is **queried via its `IS_<TAG>` predicate** — a unit
+  `IS_MILITARY` ⟺ it has the `military` tag (§3.5) — while the *generic* `IS_*` predicates (`IS_WATER`) read game
+  state, not a tag. *Not* promotion-grantable (a swordsman must upgrade to a rifleman to gain `gunpowder`).
 - **`state`** — **transient** conditions (fired → counted down → over: `paralyze`/immobilise). **Greenfield** —
   never first-class; historically faked via pseudo-promotions + Python events.
 

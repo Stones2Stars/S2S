@@ -74,7 +74,9 @@ law-disable today is the per-civ Neanderthal research ban (`TECH_SEDENTARY_LIFES
 the [json](json.md) §3.4 combinator (a list of OR-groups), so a single OR of techs is authored as ONE group —
 `requires.build.any:[[T1,T2]]`, not a flat `[T1,T2]`. `enables` proposes
 the child from one parent, `requires.build` confirms all parents forward from HAVE. The curator must RETAIN
-`AndPreReqs`/`OrPreReqs` as `requires.build.all`/`.any` (dropped on inversion today). `requires.build` only —
+`AndPreReqs`/`OrPreReqs` as `requires.build.all`/`.any` **because the store's prereq-inversion flattens them
+into other techs' `enables` for generation and does not keep them on the child** — so the curator re-reads them
+off the child. `requires.build` only —
 techs are monotonic, no `operate`.
 
 **Empire/team-scope constructables need NO new machinery** (the scope spine already has team/empire): stage-gates
@@ -82,9 +84,10 @@ via `enables` (the space line), doctrine bans via `disables` + empire modifiers 
 autobuild clunk (~345 uses) with one empire-scope building. (INTERIM — a later issue; the per-city machinery
 still works.)
 
-> **Deferred detail:** the `disables` **law-vs-effect** fate (destroy-and-rebuild vs go-dormant) — specifically
-> *how a source declares which one it is* — is not yet pinned (it lands with the engine implementation). The two
-> fates and their intent are settled; only the declaration mechanism is open.
+> **Known-open design point (not your gap):** the `disables` **law-vs-effect** fate — the two fates themselves
+> (destroy-and-rebuild vs go-dormant) are **settled**; what is OPEN is **how a source declares which fate it
+> carries**. That declaration mechanism is the deferred/post-migration part (it lands with the engine
+> implementation), not the fates or their intent.
 
 ---
 
@@ -105,8 +108,9 @@ So the build-time gate = `build ∧ operate`; the ongoing dormancy gate = `opera
 **Pseudobuilding bands.** Legacy `CvPropertyInfo` `iMinValue`/`iMaxValue`/`BuildingType` + `checkPropertyBuildings`
 (each turn) adds/removes a building as the property value enters/leaves the band. End-state: retire the per-turn
 churn — model the band as uniform `requires.operate` dormancy (enabled once; toggles active/dormant); `notConstructible`
-is the interim. ⛔ **Bands REPLACE legacy parity (the Education ladder) — a higher band supersedes a lower one;
-do NOT stack.**
+(an `identity` flag, [json](json.md) §7) is the **interim** until the `requires.operate` dormancy end-state lands. ⛔ **Bands REPLACE legacy parity (the Education ladder) — a higher band supersedes a lower one;
+do NOT stack.** Bands are **bidirectional** — effect-buildings can spawn on the **negative** side, not just the
+positive ladder; a negative band is being considered for **every property** (education is the live case).
 
 **`requires.operate` on a UNIT** (FUTURE — e.g. tanks need fuel) would reversibly disable an existing unit while
 it stays on the map; the structure supports it, but it is not modelled now.

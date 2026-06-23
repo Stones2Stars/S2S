@@ -23,7 +23,7 @@ not yet ported (still authored in `Assets/XML`, referenced from JSON by id). Ver
 | `BONUS_` | a resource (bonus) | ✅ `bonuses/` |
 | `BONUSCLASS_` | a resource category (bonus class) | ✅ `bonusclasses/` |
 | `BUILD_` | a worker build action | ✅ `builds/` |
-| `BUILDING_` | a building | ✅ `buildings/` |
+| `BUILDING_` | a building (incl. `BUILDING_EFFECT_*` — the **property pseudo-buildings**: `BUILDING_` infotype, live in `buildings/`) | ✅ `buildings/` |
 | `C2C_ERA_` | an era | ✅ `eras/` |
 | `CIVIC_` | a civic | ✅ `civics/` |
 | `CIVICOPTION_` | a civic category / slot | ✅ `civicoptions/` |
