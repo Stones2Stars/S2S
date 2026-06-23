@@ -54,12 +54,31 @@ the other three **remove** from it.
 
 So **`CAN GET = union(enables) − (disables ∪ obsoletes ∪ replaces)`**, all over HAVE.
 
+**`obsoletes` vs `disables` kept SEPARATE for clear semantics** (progress-supersedes vs policy-forbids) + the
+pedia line ("Obsoleted by [tech]"). `disables` = a hard "be gone" (the source commands; the target gets no say);
+`obsoletes` = a soft signal — the instance's fate is authored on the TARGET via `whenObsolete` (wonders/walls
+lose their bonus but REMAIN as culture/tourism).
+
 **The fixed run order — `replaces` → `disables` → `enables` → `obsoletes`.** The *membership* of CAN GET is
 order-independent (set-difference is commutative); the fixed order matters only for two **propagation** effects:
 a possession change (if a law `disables` a building, anything that building `enables` must also drop) and
 instance-fate precedence (`replaces` wins over `obsoletes`). So: collapse succession chains, drop
 banned/destroyed things from HAVE, *then* generate from the corrected HAVE, *then* prune obsoleted candidates.
 **Tech is authored in `enables`** (a tech `enables` what it unlocks) — never as a generation driver in `requires`.
+
+**`disables` — worked cases.** `BUILDING_POLLUTION_BLACKENED_SKIES` disables telescope/observatory (dormant
+while blackened, reactivate when clear); a rat-catcher disables the disease pest band; the lone converted
+law-disable today is the per-civ Neanderthal research ban (`TECH_SEDENTARY_LIFESTYLE`, reversible).
+
+**Multi-parent tech.** A child tech carries `requires.build.all:[T1,T2]` (AND) or `.any` (OR); `enables` proposes
+the child from one parent, `requires.build` confirms all parents forward from HAVE. The curator must RETAIN
+`AndPreReqs`/`OrPreReqs` as `requires.build.all`/`.any` (dropped on inversion today). `requires.build` only —
+techs are monotonic, no `operate`.
+
+**Empire/team-scope constructables need NO new machinery** (the scope spine already has team/empire): stage-gates
+via `enables` (the space line), doctrine bans via `disables` + empire modifiers — replacing the `FreeBuilding`
+autobuild clunk (~345 uses) with one empire-scope building. (INTERIM — a later issue; the per-city machinery
+still works.)
 
 > **Deferred detail:** the `disables` **law-vs-effect** fate (destroy-and-rebuild vs go-dormant) — specifically
 > *how a source declares which one it is* — is not yet pinned (it lands with the engine implementation). The two
@@ -81,6 +100,20 @@ So the build-time gate = `build ∧ operate`; the ongoing dormancy gate = `opera
 **dormancy negative** ("dormant *while* X is present") — distinct from a source-side `disables` ban by fate
 (dormant-and-reversible vs destroyed-and-rebuilt) and author (the target vs the law).
 
+**Pseudobuilding bands.** Legacy `CvPropertyInfo` `iMinValue`/`iMaxValue`/`BuildingType` + `checkPropertyBuildings`
+(each turn) adds/removes a building as the property value enters/leaves the band. End-state: retire the per-turn
+churn — model the band as uniform `requires.operate` dormancy (enabled once; toggles active/dormant); `notConstructible`
+is the interim. ⛔ **Bands REPLACE legacy parity (the Education ladder) — a higher band supersedes a lower one;
+do NOT stack.**
+
+**`requires.operate` on a UNIT** (FUTURE — e.g. tanks need fuel) would reversibly disable an existing unit while
+it stays on the map; the structure supports it, but it is not modelled now.
+
+**VICINITY** (enabler-specific) = the city's current workable radius, which **grows with culture** (1→2→3 rings),
+NOT fixed; a plot can lie in two overlapping cities' vicinity (counts for both). The terrain/feature/improvement
+plot scan has NO ownership/worked filter — deliberately MORE permissive than the two legacy checks it replaces;
+`workedBy:SELF` is the tightening path if the overlap is later judged wrong.
+
 ### 3.1 The cache-friendly two-stage evaluation
 
 Every `requires` resolves the same way, so it's cacheable as a pure function of clause-shape + state:
@@ -90,6 +123,8 @@ Every `requires` resolves the same way, so it's cacheable as a pure function of 
 2. **conditions** — each leaf: a presence/count **atom** (`min`/`max` at a scope) or a **predicate**. A count at
    `city`/`plot` reads the live object; at `empire`/`team`/`world` it reads the [tally](tally.md). A missing
    predicate is **ignored**, never false (json §3.5) — so retiring a system never spuriously disables data.
+   **Tally-bucket routing is by TYPE PREFIX** (`BUILDING_`/`UNIT_`/`BONUS_`/…), no separate `kind` field; author
+   resource presence as `min(BONUS_X,1)` (the N=1 case) — volumetric-ready.
 
 ---
 
@@ -144,6 +179,16 @@ building A then builds B the same turn; religion spreads; a bonus connects; a ci
 cheap: the bounded two-pass over the affected scope is *less* work than the scattered legacy checks it replaces,
 which already re-scan the whole database constantly. Any caching is a separate optimization layer wrapped around
 the pure `HAVE → frontier` function, never leaking into the model.
+
+**Mid-turn HAVE-change triggers** also include **inquisition** (which retracts a RELIGION, not just a building —
+disproving "buildings-only" state-retraction), nuke, and `doAutobuild` add/remove.
+
+**Gather order — "right-then-down".** Pass 1 gathers in dependency order: sticky top (techs/civics) first, then
+volatile bottom (resources/bonuses/buildings), so derived have-entries resolve against what's already gathered.
+
+**Load-time gate — `loadPrune` (a separate axis).** LOAD-STABLE gates (`loadPrune`, the `CvInfoReplacements`
+swap, WorldBuilder/BUG, a per-civ research ban) resolve at load and never materialize if false; DYNAMIC gates
+(tech/civic/bonus presence) flip in play → matched each recompute.
 
 ---
 

@@ -117,6 +117,9 @@ and `scope`; the engine never infers them.
 - **count thresholds** — `min: N` (≥ N) and/or `max: N` (≤ N), both inclusive. Exact-N = `min` and `max` together.
 - `connection` (resources only) ∈ `"trade"` | `"vicinity"` | `"trade|vicinity"`. `vicinity` = present on any plot
   in the city's current workable radius.
+- **`PROPERTY_*` band atom** `{type:PROPERTY_X, scope, min?, max?}` — its "count" is the city's property value;
+  **absent `min` = no lower bound** (a max-only band), the one exception to the presence=`min:1` convention.
+  Authored in `requires.operate`.
 
 > **Counts vs caps.** `min`/`max` express what you **need** (a count of *some other* type, e.g. "≥12 Barracks").
 > "How many of THIS may exist" is **not** a condition — it is the [`allowed`](#44-allowed--caps) cap.
@@ -137,6 +140,8 @@ IGNORED**, never treated as false — retiring a system never spuriously disable
   - **plot city-relative state** (nested `VICINITY ⊇ WORKABLE ⊇ IS_WORKED`): `VICINITY` (in the city's workable
     radius) · `WORKABLE` (in radius and eligible to be worked) · `IS_WORKED` (a citizen works it this turn).
   - **city / player:** `IS_CAPITAL` · `HAS_POWER` · `HAS_STATE_RELIGION` · `STATE_RELIGION_IN_CITY`.
+    `IS_CAPITAL` = "the city has a Palace / government-center building" (runtime-evaluated, not stored); palace-type
+    buildings gate on `requires.build.disabled: "IS_CAPITAL"`.
 - **parameterized** `{ PREDICATE: param }`: `{HAS_FEATURE: FEATURE_X}` · `{HAS_TERRAIN: TERRAIN_X}` ·
   `{HAS_BONUS: BONUS_X}` · `{HAS_RELIGION: RELIGION_X}` · `{STATE_RELIGION: RELIGION_X}` · `{HOLY_CITY: RELIGION_X}` ·
   `{HAS_CORPORATION: CORPORATION_X}` · `{latitude:{min,max}}` · `{existedFor:{min:N}}` (turns since built).
@@ -282,6 +287,11 @@ count is below it. Absent ⇒ uncapped. Two shapes, told apart by the key:
 - **category count-cap** — a **wonder-category** key (`worldWonders`/`teamWonders`/`nationalWonders`; `totalWonders`
   reserved), on `CultureLevel`, caps how many of a category a *city* may hold.
 
+- **SpecialBuilding group cap** — each member authors `identity.specialBuildingType: SPECIALBUILDING_X`; the group
+  entity holds the cap (`allowed:{empire:N}`). Member→group is authored, group→members derived.
+- **Units have no `team` cap** (units belong to players) — unit caps are `world`/`empire` only; for units `world`
+  reads the lifetime-created count and `empire` the live count (buildings keep all three scopes).
+
 The engine owns ignoring caps under the relevant game options, era-scaling, and per-entity exceptions — you just
 declare the number. Enforcement reads the [tally](tally.md) count.
 
@@ -305,6 +315,8 @@ One-shot or recurring things an entity hands out (not per-turn modifiers).
 - **lists** — `buildings · units · techs · civics · specialists · promotions · traits · bonuses · freePromotions ·
   foundBuildings`.
 - **numeric pulses** — `grants.<channel>: value` (`grants.revolution: -100`, `grants.goldenAge`).
+- **`foundBuildings`** — entry shape `{ "building": BUILDING_X, "enabled"?: <condition> }` (absent `enabled` =
+  always placed).
 - **`repeatable`** — `[ { <payload>, interval, chance?, enabled? } ]`: fires each interval (a spawned unit, a
   heal), optionally gated by a rolled `chance` (which may scale with a `per`).
 
@@ -341,6 +353,8 @@ The full address of a deposit:
   every build); **`buildRate`** only speeds up *building a specific target*: `buildRate.self` (build **this**
   entity faster — the off-spine `self` scope), or keyed by what's built (`buildRate.<scope>.buildings.{BUILDING}`,
   or a category like `military`).
+- **`byEra.{C2C_ERA_*}`** value-table key inside a deposit is **cumulative-threshold**: every band whose era ≤
+  the current era applies (summed; not just the current era). Needs the ordered `world.eras` list.
 
 ### 6.1 Two ways a deposit picks WHAT it lands on
 
@@ -388,6 +402,8 @@ Empire-agnostic self-description. Read directly — never summed or cascaded.
 
 - **`identity`** — "what am I": all **TEXT** (`description`, `help`, `civilopedia`, `message`, `quote`, `strategy`,
   `adjective`, `shortDescription`) + intrinsic flags/values (radii, classifications, capability bools, base stats).
+  Two buildability flags: `notConstructible` (excluded from the player production queue; placed by another system)
+  and `autoBuild` (auto-placed in every city where `requires.build` holds); `autoBuild ⊂ notConstructible`.
 - **`cost`** — what it costs to make (`production`, and cost sub-fields).
 - **`ui`** — interface art/sound (icons, buttons, movies) · **`world`** — on-map 3D art · **`sound`** — audio assets.
 - **`ai`** — AI-only metadata (flavours, weights, personality); never affects rules, only AI behaviour.

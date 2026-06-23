@@ -34,6 +34,13 @@ named sources**. The legacy stays authoritative until its shadow is **clean (par
 numbers on both sides — if the data to attribute it isn't emitted, the first step is to emit it (the
 [logging](logging.md) observability bar is the prerequisite).
 
+## ⛔ Parity-pass results stay OUT of the docs (owner ruling 2026-06-23)
+Divergence counts, parity checklists, per-pass pilot numbers — **none of it belongs in the durable docs.** Stale
+results **poison contexts**: an agent fixates on a number and misdiagnoses (a ~1100-building enable diff was
+repeatedly misattributed to a band-model change it had nothing to do with). The spec says what the model **is**; the
+**curator code + the live shadow** prove it; the result is ephemeral and stays ephemeral. (This is why the migration
+verification collapses to **comments in the curators** — the old→new map — rather than a documented result set.)
+
 ## The three test levels
 - **Unit** — a single calc: one modifier value, one enabler gate, one tech's availability.
 - **Integration** — a subsystem: a city's full yield re-derived from its plots, a player's happiness.

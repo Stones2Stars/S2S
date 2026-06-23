@@ -29,6 +29,11 @@ This is purely top-down: a condition *inside* a deposit (`enabled`/`per`) is a f
 an upward cascade-walk. The reverse view ("who modifies me") is derived once at load for the pedia, never on the
 hot path.
 
+**Three governing rules:** (a) **purely top-down** — sources deposit DOWN, targets read an O(1) accumulator; the
+reverse index is cold-path only. (b) **tech-inflation is a downward DEPOSIT, not an upward gate.** (c) **info DATA
+vs engine MACHINERY is a hard boundary** — JSON carries values/relationships only; producers, evaluators, and the
+tally are engine-side.
+
 ---
 
 ## 2. The combine arithmetic
@@ -51,6 +56,11 @@ slot does pure integer math and never sees the human boundary.
 > is no "close / same ballpark," no tolerance, no agent grading. While a channel is shadow-proven, multiplier
 > deposits are treated as identity so the cascade is additive — exactly matching legacy — and the work is completing
 > the gathered data until the diff is **0**. See [validation](validation.md).
+
+**Three non-additive combine modes, declared as FAMILY metadata (never per-deposit):** a `min` member that floors
+the combined total (e.g. `defense`); `combine: max|min` for worst/best-across-sources (anarchy turns,
+`naturalDefense`); `polarity: signed-split` for good/bad accumulators (health/happiness — positive→good,
+negative→bad). Authors write signed values; the mode wires the combiner.
 
 ---
 
@@ -78,6 +88,8 @@ without being removed.
 - **`per`** scales the deposit by a count — local at `city`/`plot`, via the [tally](tally.md) at cross-city scopes.
 - Whole-entity availability (is this building active at all?) is the [enabler](enabler.md)'s `requires`, not a
   per-deposit condition: a dormant entity deposits nothing, so the modifier machine never special-cases it.
+- **Age-gated deposits** — legacy `CommerceChangeDoubleTimes` ("double after N turns") is **not** a timer/stage
+  but a SECOND deposit on the same slot with `enabled:{existedFor:{min:N}}` (no post-sum multiply).
 
 ---
 
@@ -105,6 +117,13 @@ reversible — it can be lost).
 **Data ≠ runtime.** The JSON is organised for a human (one home per relationship); `readJson` builds the links
 both ways at parse so the machine reads top-down. Any "land it on the target" is a **parse transform**, never an
 authored shape.
+
+**`production` vs `buildRate`.** `production` = `getYieldRate100(PRODUCTION)` (total city output — scales every
+build every turn; a flat ADD or city-wide percent). `buildRate` = `getProductionModifier(eItem)` (shrinks the
+COST of a SPECIFIC item, never a per-turn yield), sub-shapes `buildRate.self` /
+`.<scope>.{units|buildings|domains|unitCombats}.{TARGET}` (keyed) / `.<scope>.{military|space|worldWonder|teamWonder|nationalWonder}`
+(category). `militaryProduction`/`spaceProduction` fold into the `buildRate` categories. (The "Versailles bug" =
+filing an item discount under `production.city`.)
 
 ---
 
@@ -149,6 +168,14 @@ No bespoke host↔cargo family is needed. The full unit-stat family vocabulary
 > "deposit DOWN → O(1) summed read" shape. The plot-side base cost stays intrinsic on terrain/feature/route; only
 > the cascading *deltas* (tech route changes, promotion move bonuses) are real modifier families. (Detail: the
 > movement subsystem doc, pending.)
+
+### Specialist counts
+
+- **`freeSpecialists:{<scope>:{any:N, SPECIALIST_X:M, …}}`** — granted specialists; `any` = an assignable-slot
+  bucket, a typed entry is auto-assigned. Leaf is a count (a list when conditioned).
+- **`allowedSpecialists:{<scope>:{SPECIALIST_X:N}}`** — the manual-assign cap, per-type only (no `any`).
+- `free` lives ON TOP of `allowed` (independent). The leaf being a count-by-type is the one sanctioned departure
+  from the `.flat` leaf.
 
 ---
 
