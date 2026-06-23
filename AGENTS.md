@@ -389,16 +389,17 @@ re-sweep, try another) is the anti-pattern this rule kills: build the complete m
   the working tree; committing the current regen state keeps it sane). This does NOT loosen "commit
   only on explicit ask" for gameplay CODE — it means the derived JSONs ride along when you commit,
   and a regen never needs a prompt.
-- **Docs-only changes may be committed and pushed straight to `main`** (owner ruling
-  2026-06-12): the indexes (`indexes/DESPAIR_INDEX.*`, `indexes/REALISM_INDEX.*`), player docs,
+- **Docs-only changes go to `main` ONLY when the owner explicitly authorizes it** (owner ruling 2026-06-23,
+  tightening 2026-06-12 — an agent never unilaterally pushes docs to `main`; default is the working branch). When
+  authorized, eligible docs: the indexes (`indexes/DESPAIR_INDEX.*`, `indexes/REALISM_INDEX.*`), player docs,
   `docs/` notes, AGENTS.md — provided NOTHING else rides in the commit. Anything
   gameplay-affecting (C++ code, `Assets/XML` data, Python) keeps the careful path:
   branch + PR + playtest per the conventions above.
-  - **It is PERMISSIVE, not mandatory (owner clarification 2026-06-19): the allowance exists mostly to
-    avoid later MERGE CONFLICTS, so straight-to-`main` is a convenience for docs with no branch home —
-    not a rule that docs MUST go to main.** Docs that pertain to an in-flight branch's work (e.g. the
-    `#428/#430` cascade specs on `json-data-migration`) **belong with that work and commit on the
-    branch.** Use judgement: branch-coupled doc → its branch; cross-cutting/standalone doc → `main` (to
+  - **Promotion to `main` is the OWNER's explicit call, never the agent's judgement (owner ruling 2026-06-23).**
+    The allowance exists mostly to avoid later MERGE CONFLICTS — a convenience for docs with no branch home — but
+    absent an explicit say-so, docs commit on the working branch. Docs that pertain to an in-flight branch's work
+    (e.g. the `#428/#430` cascade specs on `json-data-migration`) **belong with that work and commit on the
+    branch.** Branch-coupled doc → its branch; a standalone doc the owner approves for `main` → `main` (to
     dodge the conflict). **The canonical "→ `main`" docs are the INDEXES** (owner 2026-06-19:
     `indexes/DESPAIR_INDEX.*`, `REALISM_INDEX.*`, the COMPLEXITY catalog) — they pertain to no single
     branch, so straight-to-`main` is exactly right for them. A cascade spec on `json-data-migration` is the

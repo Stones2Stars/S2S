@@ -25,6 +25,10 @@ engine's actual output**. Our calculator is the test; the engine is the oracle.
   Out-of-scope (depends on a lower, not-yet-validated layer — e.g. a tech needing a `BUILDING_` prereq) is
   **deferred: shown, never silently dropped**.
 
+> **Mirror, don't redesign (`DEC-mirror-then-redesign`).** The migration reproduces the engine's *existing*
+> behaviour exactly. Behavioural redesign — *should this behave this way at all?* (e.g. should blackened-skies dorm
+> an observatory) — is deferred to **post-migration**, never done during it.
+
 ## The shadow (the live counterpart)
 The dry-calc above is the **offline** test. Its **in-game** twin is the **shadow**: each legacy behaviour gets a
 surface (a `/shadow/*` endpoint + a per-turn `[TAG]` line via the [event spine](event-spine.md)) that computes the
