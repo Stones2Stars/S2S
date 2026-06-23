@@ -17,17 +17,17 @@ PLACEMENT -> `requires.build` (requires_fn), owner 2026-06-16 "double mapping": 
 ENABLE allowed builds, then `requires` reigns in; the IMPROVEMENT self-gates because EVENTS place improvements
 directly (no hard build link), so an event can't drop a disallowed improvement; BuildInfo also gates its action
 path (#23). Consumed SOLELY by CvPlot::canHaveImprovement (3010-3202), reading only the ImprovementInfo. Shape:
-  build.all   = mandatory AND : {type:TECH,scope:team} (PrereqTech) + bare plot predicates IS_WATER/IS_PEAK
+  build.all   = mandatory AND : {type:TECH,scope:team} (PrereqTech) + bare plot predicates IS_WATER/HAS_PEAK
                 (bWaterImprovement/bPeakImprovement domain), HAS_IRRIGATION (bRequiresIrrigation), IS_FLATLANDS
                 (bRequiresFlatlands), HAS_FEATURE (bRequiresFeature), HAS_RIVER (bRequiresRiverSide; the
-                one-improvement-per-river-side spacing nuance -> #430 FLAG), COASTAL_LAND (bCanMoveSeaUnits) +
+                one-improvement-per-river-side spacing nuance -> #430 FLAG), {IS_LAND,HAS_COAST} (bCanMoveSeaUnits, coastal land) +
                 {natureYield:{...}} (PrereqNatureYields min).
   build.any   = the make-valid OR-set (>=1 holds) as ONE OR-group: {terrain:[...]} (TerrainMakesValids),
-                {feature:[...]} (FeatureMakesValids), {bonus:[...]} (per-bonus bBonusMakesValid), IS_HILLS,
-                IS_FRESHWATER, HAS_RIVER (bRiverSideMakesValid), IS_PEAK (bPeakMakesValid).
-  build.noneOf= IS_FRESHWATER (bNoFreshWater).
-  New tokens (owner-approved 2026-06-16): bare IS_WATER/IS_PEAK/IS_FLATLANDS/IS_HILLS/IS_FRESHWATER/HAS_IRRIGATION/
-  HAS_FEATURE/COASTAL_LAND (+ existing HAS_RIVER); object {terrain|feature|bonus:[...]}, HAS_BONUS:{BONUS}, and the
+                {feature:[...]} (FeatureMakesValids), {bonus:[...]} (per-bonus bBonusMakesValid), HAS_HILLS,
+                HAS_FRESHWATER, HAS_RIVER (bRiverSideMakesValid), HAS_PEAK (bPeakMakesValid).
+  build.noneOf= HAS_FRESHWATER (bNoFreshWater).
+  New tokens (owner-approved 2026-06-16; predicate names updated 2026-06-22 to the IS_*/HAS_* split): bare IS_WATER/HAS_PEAK/IS_FLATLANDS/HAS_HILLS/HAS_FRESHWATER/HAS_IRRIGATION/
+  HAS_FEATURE/IS_LAND+HAS_COAST (+ existing HAS_RIVER); object {terrain|feature|bonus:[...]}, HAS_BONUS:{BONUS}, and the
   {natureYield:{...}} min-threshold atom. IS_RIVERSIDE rejected as redundant with HAS_RIVER (owner). Domain both-ways
   (a land improvement can't go on water) is a STRUCTURAL engine rule (#430), not an IS_LAND atom on every land record.
   FLAG: an empty `any` (graphical/event-only improvements with no make-valid source) — never-auto-valid vs anywhere
@@ -134,15 +134,16 @@ def requires_improvement(rec, store):
     if _bool(rec, "bWaterImprovement"):                          # domain (both-ways; non-match forbid is engine-structural #430)
         allc.append("IS_WATER")
     if _bool(rec, "bPeakImprovement"):
-        allc.append("IS_PEAK")
+        allc.append("HAS_PEAK")
     if _bool(rec, "bRequiresIrrigation"):
         allc.append(HAS_IRRIGATION)
     if _bool(rec, "bRequiresFlatlands"):
         allc.append("IS_FLATLANDS")
     if _bool(rec, "bRequiresFeature"):
         allc.append("HAS_FEATURE")
-    if _bool(rec, "bCanMoveSeaUnits"):
-        allc.append("COASTAL_LAND")
+    if _bool(rec, "bCanMoveSeaUnits"):                           # coastal land = IS_LAND ^ HAS_COAST (a land plot adjacent to water)
+        allc.append("IS_LAND")
+        allc.append("HAS_COAST")
     if _bool(rec, "bRequiresRiverSide"):                          # + one-per-river-side spacing nuance -> #430 FLAG
         allc.append(HAS_RIVER)
     pn = rec.find("PrereqNatureYields")
@@ -157,13 +158,13 @@ def requires_improvement(rec, store):
     if features:
         anyset.append(OrderedDict([("feature", features)]))
     if _bool(rec, "bHillsMakesValid"):
-        anyset.append("IS_HILLS")
+        anyset.append("HAS_HILLS")
     if _bool(rec, "bFreshWaterMakesValid"):
-        anyset.append("IS_FRESHWATER")
+        anyset.append("HAS_FRESHWATER")
     if _bool(rec, "bRiverSideMakesValid"):
         anyset.append(HAS_RIVER)
     if _bool(rec, "bPeakMakesValid"):
-        anyset.append("IS_PEAK")
+        anyset.append("HAS_PEAK")
     bts = rec.find("BonusTypeStructs")
     if bts is not None:
         mv = [engine.text(s.find("BonusType")) for s in bts.findall("BonusTypeStruct") if _bool(s, "bBonusMakesValid")]
@@ -171,7 +172,7 @@ def requires_improvement(rec, store):
         if mv:
             anyset.append(OrderedDict([("bonus", mv)]))
     if _bool(rec, "bNoFreshWater"):
-        none.append("IS_FRESHWATER")
+        none.append("HAS_FRESHWATER")
     build = OrderedDict()
     if allc:
         build["all"] = allc

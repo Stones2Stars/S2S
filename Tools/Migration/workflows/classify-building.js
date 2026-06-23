@@ -1,9 +1,9 @@
 export const meta = {
   name: 'classify-building',
-  description: 'Adversarially classify every CvBuildingInfo field for the #428 JSON migration (Building #32 + SpecialBuilding #31)',
+  description: 'Adversarially classify every CvBuildingInfo field for the #428 JSON migration (Building #32 + SpecialBuilding #31). NO GUESSING: a home is only assigned when verified from a live consumer; anything ambiguous -> needsRuling=NEEDS_OWNER_RULING (the owner rules it, never a guessed home).',
   phases: [
-    { title: 'Understand', detail: 'one agent per field-slice traces every field to its live C++/Python consumer + proposes a v3/v0.3 home' },
-    { title: 'Verify', detail: 'an adversary tries to REFUTE every disposition in the slice (dead-claims, scope, keep-on-source vs invert, missed consumers)' },
+    { title: 'Understand', detail: 'one agent per field-slice traces every field to its live C++/Python consumer + assigns a VERIFIED home, or needsRuling if not determinable' },
+    { title: 'Verify', detail: 'an adversary tries to REFUTE every disposition (dead-claims, scope, ownership, missed consumers) AND demotes any GUESSED home to needsRuling' },
   ],
 }
 
@@ -53,12 +53,15 @@ KEY RULES (apply, but verify against the specs):
 - grants: one-shot pulses (population/goldenAge/founding bursts) + entity provisions, fired on an event.
 - §8 four-way drop: (i) truly dead -> drop; (ii) unwired-but-intended modifier -> revive; (iii) unwired
   world-state feature -> separate issue; (iv) deliberate balance cut. Re-check 'dead' against Assets/Python
-  AND intent, not just C++. Building-specific revives: iPillageGoldModifier -> pillageGold.empire.percent.
-- SHOEHORN-RISK / "too insane" (owner, this pass): the standing rule is "drop dead STRUCTURE, never live
-  DATA; content-purge is a separate pass" — but for BUILDING the owner WILL drop genuinely-insane mechanics,
-  or ones that would need EXTENSIVE SHOEHORNING to fit the v3/v0.3 structure, CASE-BY-CASE. So do NOT silently
-  force-fit a field that resists the model: set shoehornRisk=true and home="SHOEHORN? <one-line reason>" to
-  surface it as an explicit OWNER-DECISION drop-candidate. Flag it; never contort the structure to swallow it.
+  AND intent, not just C++. Do NOT pre-assume a 'revive home' for an unwired field -> if its intended home is
+  not certain, needsRuling. (Drop a field ONLY when grep PROVES zero consumers in C++ AND Python.)
+- ⛔ NO GUESSING — ASK (owner HARD RULE): NEVER invent, best-fit, or "SHOEHORN?" a home. A home is assigned ONLY
+  when determined with HIGH confidence from a VERIFIED live consumer (the real getter grep'd to its read site). If the
+  correct home is NOT determinable that way — ambiguous, cross-domain, a creative/non-obvious mechanic, or a field that
+  resists the v3/v0.3 structure — set needsRuling=true, home="NEEDS_OWNER_RULING", and state in notes what is ambiguous
+  + the verified facts (real getter + consumer). Do NOT contort the structure to swallow a field; do NOT ship a guess.
+  The owner rules every needsRuling field. A guessed home is the EXACT failure (30 hours of guessed XML mappings, then
+  weeks of agents inheriting the guesses) this workflow exists to PREVENT.
 - CvBuildingInfo has ZERO DllExport (verified) -> data shape is UNCONSTRAINED (no EXE ABI on building getters).
 - SpecialBuilding (#31) RIDES this pass: a per-player-capped building GROUP (iMaxPlayerInstances ->
   isBuildingGroupMaxedOut/getBuildingGroupCount); shares building vocab.
@@ -82,16 +85,15 @@ const FIELD_SCHEMA = {
       items: {
         type: 'object',
         additionalProperties: false,
-        required: ['name', 'home', 'disposition', 'consumers', 'creativeMechanic', 'confidence', 'notes'],
+        required: ['name', 'home', 'disposition', 'consumers', 'needsRuling', 'confidence', 'notes'],
         properties: {
           name: { type: 'string', description: 'the XML tag / member name' },
-          home: { type: 'string', description: 'proposed JSON destination path, e.g. "happiness.city.flat" / "requires.build.all[bonus]" / "enables.units" / "grants" / "identity.X" / "DROP" / "keep-on-building keyed by IMPROVEMENT"' },
-          disposition: { type: 'string', enum: ['modifier', 'requires', 'enables-family', 'grants', 'identity', 'cost', 'property', 'art', 'drop', 'uncertain'] },
+          home: { type: 'string', description: 'the VERIFIED JSON destination path (e.g. "happiness.city.flat" / "requires.build.all[bonus]" / "enables.units" / "grants" / "identity.X" / "DROP"), OR the literal "NEEDS_OWNER_RULING" when needsRuling=true. NEVER a guess/best-fit/"SHOEHORN?" string.' },
+          disposition: { type: 'string', enum: ['modifier', 'requires', 'enables-family', 'grants', 'identity', 'cost', 'property', 'art', 'drop', 'needsRuling'] },
           scope: { type: 'string', description: 'world|team|empire|area|city|plot|building|specialist|unit, or "" if N/A' },
           unit: { type: 'string', description: 'flat|percent|multiplier|enabler|boolean|"" ' },
           consumers: { type: 'string', description: 'live C++ file:line getter usages + any Assets/Python consumer; or "NONE FOUND (grep evidence)"' },
-          creativeMechanic: { type: 'boolean', description: 'true if this is a non-obvious / creative-use-of-code-mechanics field needing owner attention' },
-          shoehornRisk: { type: 'boolean', description: 'true if fitting this into the v3/v0.3 structure needs extensive shoehorning / it may be too insane to keep -> surface as an OWNER-DECISION drop-candidate, do NOT force-fit' },
+          needsRuling: { type: 'boolean', description: 'TRUE when the correct home is NOT determinable with HIGH confidence from a verified live consumer (ambiguous / cross-domain / creative-mechanic / resists the v3 structure). When true, home MUST be "NEEDS_OWNER_RULING" and notes state what is ambiguous + the verified facts. NEVER invent/guess/force-fit a home -- the owner rules these. This replaces the old creativeMechanic/shoehornRisk guess flags (a guessed home is the exact failure this workflow exists to PREVENT).' },
           dropCategory: { type: 'string', description: 'if drop: i(dead)/ii(unwired-revive)/iii(world-state-issue)/iv(balance-cut); else ""' },
           confidence: { type: 'string', enum: ['high', 'med', 'low'] },
           notes: { type: 'string', description: '<=2 sentences: WHAT it means + why this home; flag spec-conflicts' },
@@ -134,9 +136,10 @@ iGoldenAgeModifier, iOccupationTimeModifier, iPopulationgrowthratepercentage, iG
 iHealthPercentPerPopulation, iHappinessPercentPerPopulation, iRevIdxLocal/National/DistanceModifier, iPillageGoldModifier,
 iInsidiousness, iInvestigation, iNational/LocalCaptureProbability/ResistanceModifier, iUnitUpgradePriceModifier.`,
     focus: `The bulk of the ~101 channels. Get SCOPE right (the mapping's player/city is often wrong; Area* = area
-scope; Global*/National* = empire). iStateReligionHappiness -> enabled:{STATE_RELIGION}. iPillageGoldModifier ->
-REVIVE as pillageGold.empire.percent (§8-ii). capture modifiers -> the capture family (gradient, §5). maintenance
-members -> grouped maintenance family (cost-style). Flag any that are actually enablers/identity not magnitudes.`,
+scope; Global*/National* = empire). iStateReligionHappiness -> enabled:{STATE_RELIGION}. iPillageGoldModifier is
+DEAD (getPillageGoldModifier has no C++/Python consumer) -> drop; the live pillage-gold modifier is the PROMOTION
+PillageChange, not this building field. capture modifiers -> the capture family. maintenance members -> grouped
+maintenance family (cost-style). Any field whose correct home is not certain -> needsRuling (never guess).`,
   },
   {
     key: 'defense-combat-military',
@@ -253,11 +256,11 @@ ${s.focus}
 TASK: for EVERY field above, (1) locate its member + tag in CvBuildingInfo (getDataMembers 1666-1923 or the
 hand-written read() remainder 1929+); (2) grep its getter across Sources/*.cpp AND Assets/Python to find the
 LIVE consumer(s) — if none, say so with the grep you ran; (3) assign the v3/v0.3 home (family.scope.member.unit,
-or requires/enables/grants/identity/cost/property/DROP, or "keep-on-building keyed by X"); (4) set
-creativeMechanic=true for any non-obvious / creative-use-of-mechanics field; (5) for DROP, set dropCategory;
-(6) set shoehornRisk=true for any field that resists the v3/v0.3 model or may be "too insane to keep" — home it
-as "SHOEHORN? <reason>" and surface it for owner decision, do NOT contort the structure to swallow it.
-Be exhaustive — skip no field. Trust the mapping for nothing. Return the structured object.`,
+or requires/enables/grants/identity/cost/property/DROP); (4) ⛔ NEVER guess a home — if the correct home is NOT
+determinable with HIGH confidence from the VERIFIED consumer (ambiguous / cross-domain / creative-mechanic /
+resists the model), set needsRuling=true + home="NEEDS_OWNER_RULING" and say in notes what is ambiguous + the
+verified facts; (5) DROP only when grep PROVES zero consumers (C++ AND Python), with dropCategory + the grep evidence.
+Be exhaustive — skip no field. Trust the mapping for nothing; NEVER invent/force-fit a home. Return the structured object.`,
     { label: `understand:${s.key}`, phase: 'Understand', agentType: 'Explore', schema: FIELD_SCHEMA }
   ),
   (understood, s) => agent(
@@ -274,9 +277,9 @@ Your job is to REFUTE, not rubber-stamp. For each field, actively try to break t
 - SCOPE: is city vs area vs empire vs plot right? (the mapping is often wrong; verify against the C++ accumulation site).
 - §6.1 OWNERSHIP: keep-on-building-keyed vs invert-onto-conditioner vs downward-from-tech — is it correct?
 - UNIT: is a percent really a percent (not multiplier), per the "datum's nature" rule?
-- CREATIVE MECHANICS: did they MISS flagging a creative/non-obvious mechanic? (owner: building is THE worst offender).
-- SHOEHORN-RISK: did they force-fit a field that actually resists the model? Set shoehornRisk=true + home
-  "SHOEHORN? <reason>" so the owner can decide to drop it case-by-case (owner WILL drop too-insane mechanics).
+- GUESSED HOMES (the worst sin): did they invent/best-fit/"SHOEHORN?" a home that is NOT high-confidence-verified
+  from a live consumer? That is a GUESS -> set needsRuling=true + home="NEEDS_OWNER_RULING" (the owner rules it; never
+  ship a guess). A non-obvious / creative / cross-domain mechanic whose home isn't certain is a needsRuling, not a best-fit.
 Return the corrected structured object (same schema) — fix every disposition you can refute, keep the rest,
 and in 'notes' prefix any change with "VERIFIER:". Keep notes <=2 sentences; cite file:line; never dump code.`,
     { label: `verify:${s.key}`, phase: 'Verify', agentType: 'Explore', schema: FIELD_SCHEMA }
@@ -285,9 +288,10 @@ and in 'notes' prefix any change with "VERIFIER:". Keep notes <=2 sentences; cit
 
 const slices = results.filter(Boolean)
 const totalFields = slices.reduce((n, r) => n + (r.fields ? r.fields.length : 0), 0)
-const creative = slices.flatMap(r => (r.fields || []).filter(f => f.creativeMechanic).map(f => `${r.slice}:${f.name}`))
-const shoehorn = slices.flatMap(r => (r.fields || []).filter(f => f.shoehornRisk).map(f => `${r.slice}:${f.name} — ${f.home}`))
-const lowConf = slices.flatMap(r => (r.fields || []).filter(f => f.confidence === 'low' || f.disposition === 'uncertain').map(f => `${r.slice}:${f.name}`))
-log(`Done: ${slices.length}/${SLICES.length} slices, ${totalFields} fields. ${creative.length} creative-mechanic flags, ${shoehorn.length} shoehorn/owner-decision drop-candidates, ${lowConf.length} low-confidence/uncertain.`)
+// The ASK list: fields the agents could NOT verify a home for -> the owner rules these (never guessed).
+const needsRuling = slices.flatMap(r => (r.fields || []).filter(f => f.needsRuling || f.disposition === 'needsRuling' || f.home === 'NEEDS_OWNER_RULING').map(f => `${r.slice}:${f.name} — ${f.notes || ''}`))
+const lowConf = slices.flatMap(r => (r.fields || []).filter(f => f.confidence === 'low').map(f => `${r.slice}:${f.name}`))
+log(`Done: ${slices.length}/${SLICES.length} slices, ${totalFields} fields. ${needsRuling.length} fields NEED AN OWNER RULING (home NOT guessed -- the ASK list); ${lowConf.length} low-confidence.`)
 
-return { slices, totalFields, creativeMechanics: creative, shoehornCandidates: shoehorn, lowConfidence: lowConf }
+// needsRuling is the headline output: the owner adjudicates these before any home is committed (ASK, never guess).
+return { slices, totalFields, needsRuling, lowConfidence: lowConf }

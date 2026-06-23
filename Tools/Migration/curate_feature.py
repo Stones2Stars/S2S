@@ -14,7 +14,10 @@ Modeling calls (verified vs CvFeatureInfo + CvPlot::calculateYield/movementCost/
                        river yield, compounding with the terrain's river bonus (enabler-spec §3; first HAS_RIVER use).
 - iHealthPercent    -> health.plot.percent (Feature OWNS health; Terrain dropped it precisely because it lives here).
 - iDefense          -> defense.plot.amount.percent (feature defense %, additive onto the plot).
-- iMovement         -> movement.plot.flat (extra move cost; additive onto the terrain-seeded cost).
+- iMovement         -> INTRINSIC `identity.movementCost` (resolver-subsystem, owner 2026-06-20; NOT a family).
+                       The feature's extra traversal cost is read per-(unit,edge) by the movement resolver
+                       (CvPlot::movementCost, additive onto terrain), not summed down a scope spine — matching
+                       curate_route.py / curate_terrain.py. Only cascading deltas (promotion discount/credit) are families.
 - iCultureDistance  -> cultureDistance.plot.flat (summed into the city culture-distance total).
 - iSeeThrough       -> `vision` block: vision.plot.seeThrough.flat (line-of-sight; grouped for the coming vision
                        rework — owner 2026-06-16; modifier-spec §0.8 dedicated-block rule).
@@ -45,7 +48,6 @@ FEATURE_FAMILIES = {
     "YieldChanges":     {"channel": "yield",          "scope": "plot", "kind": "flat", "valueKeys": engine.YIELDS},
     "iHealthPercent":   {"channel": "health",         "scope": "plot", "kind": "percent"},
     "iDefense":         {"channel": "defense",        "scope": "plot", "kind": "percent", "member": "amount"},
-    "iMovement":        {"channel": "movement",       "scope": "plot", "kind": "flat"},
     "iCultureDistance": {"channel": "cultureDistance","scope": "plot", "kind": "flat"},
     "iSeeThrough":      {"channel": "vision",         "scope": "plot", "kind": "flat", "member": "seeThrough"},
 }
@@ -55,7 +57,11 @@ FEATURE_FAMILIES = {
 # is dead. Prereqs (none) come from the mapping.
 FEATURE_DROP = ["iWarmingDefense", "RiverYieldChange", "PropertyManipulators"]
 
+# iMovement -> intrinsic `identity.movementCost` via to_identity (resolver-subsystem; matches terrain/route).
+# to_identity OVERRIDES the Feature mapping (which classifies iMovement as a movement/city channel) because
+# curate() checks to_identity BEFORE the channel mapping -- so iMovement lands intrinsic, not as a stray family.
 CFG = cc.EntityConfig("FeatureInfo", extra_drop=FEATURE_DROP, families=FEATURE_FAMILIES,
+                      to_identity={"iMovement": "movementCost"},
                       grants={"OnUnitChangeTo": "onUnitChangeTo"})
 
 # No inbound boosts: a feature is never the deliveryguy for another entity's modifier (modifier-spec §6.1).

@@ -11,8 +11,12 @@ Per-field dispositions: classifications/terrain-classification.json (adversarial
 Modeling calls (verified vs CvTerrainInfo + CvPlot::calculateYield/movementCost/getDefenseModifier + CvCity):
 - Yields            -> SPLIT base-yield families food/production/commerce, PLOT scope (CvPlot.cpp:8077, summed
                        into the tile's base yield). The grassland-food / hill-hammers base.
-- iMovement         -> `movement` family, PLOT scope (owner: "movement is a family"; terrain seeds the per-plot
-                       move cost, features/hills add on top — CvPlot.cpp:4555).
+- iMovement         -> INTRINSIC `identity.movementCost` (NOT a `movement`/`moveCost` family). moveCost is a
+                       RESOLVER SUBSYSTEM (owner ruling 2026-06-20): the per-tile traversal cost is read per-
+                       (unit,edge) by the movement resolver (CvPlot::movementCost — terrain+feature+hills+route-min+
+                       discount+double-move+floor), NOT summed down a scope spine like a yield. So the terrain's
+                       OWN base cost is an intrinsic own-stat (matching curate_route.py's movementCost); only the
+                       cascading DELTAS (tech route changes, promotion discount/credit) are modifier families.
 - iDefense          -> `defense.plot.amount.percent` (owner: a family, "improvable by a fort"; terrain seeds the
                        per-plot defense, feature/hills/peak add — CvPlot.cpp:4400; same `amount` member as
                        CultureLevel's defense.city.amount).
@@ -145,7 +149,6 @@ def post_process(typ, obj, rec, store):
 # terrain forms the plot's base, which features/improvements/routes then modify on top.
 TERRAIN_FAMILIES = {
     "Yields":           {"channel": "yield",           "scope": "plot", "kind": "flat", "valueKeys": engine.YIELDS},
-    "iMovement":        {"channel": "movement",        "scope": "plot", "kind": "flat"},
     "iDefense":         {"channel": "defense",         "scope": "plot", "kind": "percent", "member": "amount"},
     "iCultureDistance": {"channel": "cultureDistance", "scope": "plot", "kind": "flat"},
     "iBuildModifier":   {"channel": "buildTime",       "scope": "plot", "kind": "percent"},
@@ -157,8 +160,12 @@ TERRAIN_FAMILIES = {
 # Clearer identity key for the placement-category vector (MAPCATEGORY_* membership).
 TERRAIN_ID_RENAME = {"MapCategoryTypes": "mapCategories"}
 
+# iMovement -> intrinsic `identity.movementCost` via to_identity (resolver-subsystem; matches route/feature).
+# to_identity is checked BEFORE the channel mapping in curate(), so it OVERRIDES any mapping classification of
+# iMovement -- the robust way to force it intrinsic (id_rename would be skipped if the mapping channels it).
 CFG = cc.EntityConfig("TerrainInfo", extra_drop=["iHealthPercent"],
-                      families=TERRAIN_FAMILIES, id_rename=TERRAIN_ID_RENAME)
+                      families=TERRAIN_FAMILIES, id_rename=TERRAIN_ID_RENAME,
+                      to_identity={"iMovement": "movementCost"})
 
 # NO inbound boosts: a terrain is never the deliveryguy for another entity's modifier (owner 2026-06-16).
 TERRAIN_BOOSTS = []

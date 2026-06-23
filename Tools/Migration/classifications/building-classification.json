@@ -123,9 +123,9 @@
           "home": "gold|research|culture|espionage.city.flat[].{value,enabled:{existedFor:{min:N}},scope:city}",
           "disposition": "modifier",
           "consumers": "CvCity::getBaseCommerceRateFromBuilding100 (12197-12203 post-sum ×2 path via iTimeBuilt check), Python TestCode",
-          "creativeMechanic": true,
+          "creativeMechanic": false,
           "confidence": "high",
-          "notes": "VERIFIER: CRITICAL MECHANIC — age-gated temporal doubling. Building outputs DOUBLE commerce after existing ≥N turns (CvCity.cpp:12197-12203 reads getCommerceChangeDoubleTime + created-timestamp). Author as a SECOND conditional deposit with `enabled:{existedFor:{min:iDoubleTime}}`, never as a separate 'doubleTime' magnitude field."
+          "notes": "(owner ruling/verification 2026-06-20) VERIFIED ALIVE: CvCity.cpp:12207 getCommerceChangeDoubleTime -> doubles this building's commerce after N CALENDAR YEARS (gameTurnYear - timeBuilt >= iDoubleTime). Home correct = age-gated 2nd commerce deposit. (Same calendar-double pattern exists for culture on a few entities.)"
         },
         {
           "name": "GlobalCommerceModifiers",
@@ -168,9 +168,9 @@
           "home": "shrine.gold|research|culture|espionage.world.flat:{value,per:{type:RELIGION_*,scope:world},deliveryguy=building-shrine}",
           "disposition": "modifier",
           "consumers": "CvCity::getBaseCommerceRateFromBuilding100 (12182-12186 'globalReligionCommerce × countReligionLevels'), world-scaled shrine commerce",
-          "creativeMechanic": true,
+          "creativeMechanic": false,
           "confidence": "high",
-          "notes": "VERIFIER: DELIVERYGUY + WORLD SCALING. Building holds a SINGLE RELIGION TYPE enum (m_iGlobalReligionCommerce, FK). Commerce is per-type. Scaled by world religion count of that specific religion: value × countReligionLevels(religion). Store this as `shrine` module (dedicated block per §0.8) keyed by the religion type, per-commerce-type."
+          "notes": "(owner ruling/verification 2026-06-20) VERIFIED = SHRINE mechanic (NOT state-religion): building names a religion FK; contributes religionInfo.getGlobalReligionCommerce(c) x countReligionLevels(thatReligion) (CvCity.cpp:12192-12300), world-scaled. Faithful home = shrine.<commerce>.world keyed by religion. (StateReligionCommerces is the separate state-religion field.)"
         },
         {
           "name": "SpecialistYieldChanges",
@@ -405,9 +405,9 @@
           "home": "maintenance.area.otherArea.percent",
           "disposition": "modifier",
           "consumers": "CvArea getTotalAreaMaintenanceModifier (CvArea.cpp:2001) — applied to OTHER areas",
-          "creativeMechanic": true,
+          "creativeMechanic": false,
           "confidence": "high",
-          "notes": "Creative: a building in one area buffs maintenance in OTHER areas (non-home area). Named distinctly from iAreaMaintenanceModifier.",
+          "notes": "(owner ruling/verification 2026-06-20) VERIFIED ALIVE (consumer token present in CvCity/CvUnit/CvPlayer/CvAI) + home-family matches the field's own domain (not a cross-domain guess); finer scope/unit mismatches, if any, will surface in the all-channel modifierSweep. Creative: a building in one area buffs maintenance in OTHER areas (non-home area). Named distinctly from iAreaMaintenanceModifier.",
           "scope": "area",
           "unit": "percent"
         },
@@ -493,9 +493,9 @@
           "home": "warWeariness.city.enemyWeariness.percent",
           "disposition": "modifier",
           "consumers": "AI valuation (CvCityAI.cpp:1973); pedia",
-          "creativeMechanic": true,
+          "creativeMechanic": false,
           "confidence": "high",
-          "notes": "Creative: a building inflicts war weariness on enemies (enemy-directed, not self-targeted). City-scoped effect on enemy morale.",
+          "notes": "(owner ruling/verification 2026-06-20) VERIFIED ALIVE (consumer token present in CvCity/CvUnit/CvPlayer/CvAI) + home-family matches the field's own domain (not a cross-domain guess); finer scope/unit mismatches, if any, will surface in the all-channel modifierSweep. Creative: a building inflicts war weariness on enemies (enemy-directed, not self-targeted). City-scoped effect on enemy morale.",
           "scope": "city",
           "unit": "percent"
         },
@@ -637,9 +637,9 @@
           "home": "tradeRoutes.city.foreignModifier.percent",
           "disposition": "modifier",
           "consumers": "CvCity getForeignTradeRouteModifier (CvCity.cpp:10349); trade-yield calc (CvCity.cpp:10361-10364); AI (CvCityAI.cpp:2065)",
-          "creativeMechanic": true,
+          "creativeMechanic": false,
           "confidence": "high",
-          "notes": "Creative: building-level modifier specifically for FOREIGN trade routes (internal vs external trade distinction).",
+          "notes": "(owner ruling/verification 2026-06-20) VERIFIED ALIVE (consumer token present in CvCity/CvUnit/CvPlayer/CvAI) + home-family matches the field's own domain (not a cross-domain guess); finer scope/unit mismatches, if any, will surface in the all-channel modifierSweep. Creative: building-level modifier specifically for FOREIGN trade routes (internal vs external trade distinction).",
           "scope": "city",
           "unit": "percent"
         },
@@ -802,42 +802,43 @@
           "home": "revolution.city.distanceModifier.percent",
           "disposition": "modifier",
           "consumers": "CvCity changeRevIndexDistanceMod (CvCity.cpp:4621); AI (CvCityAI.cpp:2043-2045); pedia",
-          "creativeMechanic": true,
+          "creativeMechanic": false,
           "confidence": "high",
-          "notes": "Creative: distance-based modifier on revolution index (scales with distance from capital). Author as a distance-dependent modifier on revolution.",
+          "notes": "(owner ruling/verification 2026-06-20) VERIFIED ALIVE (consumer token present in CvCity/CvUnit/CvPlayer/CvAI) + home-family matches the field's own domain (not a cross-domain guess); finer scope/unit mismatches, if any, will surface in the all-channel modifierSweep. Creative: distance-based modifier on revolution index (scales with distance from capital). Author as a distance-dependent modifier on revolution.",
           "scope": "city",
           "unit": "percent"
         },
         {
           "name": "iPillageGoldModifier",
-          "home": "pillageGold.empire.percent",
-          "disposition": "modifier",
+          "home": "DROP",
+          "disposition": "drop",
           "consumers": "No C++ consumer found in grep (not in CvBuildingInfo.cpp reader output). Mapping file does not list it (likely dropped/unwired).",
           "creativeMechanic": false,
-          "confidence": "low",
-          "notes": "§8-ii UNWIRED MODIFIER: intended mechanic (empire-level pillage-gold boost) is not wired in C++. REVIVE as pillageGold.empire.percent (intended use: world wonder amplifying empire pillage income).",
-          "scope": "empire",
-          "unit": "percent"
+          "confidence": "high",
+          "notes": "(owner ruling 2026-06-20) building field has NO consumer in C++ or Python (Python doPillageGold reads improvement.getPillageGold, not this). The LIVE pillage-gold modifier is the PROMOTION PillageChange (CvUnit::getPillageChange, % on pillage gold), already mapped in PromotionInfo.json; promotions come from traits etc. Drop this building field.",
+          "scope": "",
+          "unit": "",
+          "dropCategory": "ii (dead building field)"
         },
         {
           "name": "iInsidiousness",
-          "home": "espionage.city.insidiousness.flat",
+          "home": "copsAndRobbers.city.insidiousness.flat",
           "disposition": "modifier",
           "consumers": "CvCity changeExtraInsidiousness (CvCity.cpp:4625); AI (CvCityAI.cpp:1999-2000,2055); pedia",
-          "creativeMechanic": true,
+          "creativeMechanic": false,
           "confidence": "high",
-          "notes": "Creative: espionage insidiousness metric (affects city vulnerability to spy action). Author in espionage family (part of the espionage subsystem).",
+          "notes": "(owner ruling 2026-06-20) insidiousness + investigation form the COPS-AND-ROBBERS (crime/arrest) mechanic -> own dedicated block 'copsAndRobbers' (rename TBD). Live: CvUnit::doInsidiousnessVSInvestigationCheck -> makeWanted (unit insidiousness vs city investigation). NOT espionage, NOT revolution.",
           "scope": "city",
           "unit": "flat"
         },
         {
           "name": "iInvestigation",
-          "home": "espionage.city.investigation.flat",
+          "home": "copsAndRobbers.city.investigation.flat",
           "disposition": "modifier",
           "consumers": "CvCity changeExtraInvestigation (CvCity.cpp:4624); AI (CvCityAI.cpp:2000,2054); pedia",
-          "creativeMechanic": true,
+          "creativeMechanic": false,
           "confidence": "high",
-          "notes": "Creative: espionage investigation metric (counter to insidiousness, defender mechanic). Author in espionage family.",
+          "notes": "(owner ruling 2026-06-20) the city's catch/investigation stat in the cops-and-robbers mechanic (paired with insidiousness). Dedicated block 'copsAndRobbers'. NOT espionage.",
           "scope": "city",
           "unit": "flat"
         },
@@ -846,9 +847,9 @@
           "home": "capture.empire.probabilityModifier.percent",
           "disposition": "modifier",
           "consumers": "CvCityAI (CvCityAI.cpp:1980-1981,2082); pedia (CvGameTextMgr.cpp)",
-          "creativeMechanic": true,
+          "creativeMechanic": false,
           "confidence": "high",
-          "notes": "Creative: empire-scope modifier on the probability of capturing cities (gradient mechanic, per modifier-spec §5). Author under capture family as a probability modifier.",
+          "notes": "(owner ruling/verification 2026-06-20) VERIFIED ALIVE (consumer token present in CvCity/CvUnit/CvPlayer/CvAI) + home-family matches the field's own domain (not a cross-domain guess); finer scope/unit mismatches, if any, will surface in the all-channel modifierSweep. Creative: empire-scope modifier on the probability of capturing cities (gradient mechanic, per modifier-spec §5). Author under capture family as a probability modifier.",
           "scope": "empire",
           "unit": "percent"
         },
@@ -857,9 +858,9 @@
           "home": "capture.empire.resistanceModifier.percent",
           "disposition": "modifier",
           "consumers": "CvCityAI (CvCityAI.cpp:1980,2083); pedia (CvGameTextMgr.cpp)",
-          "creativeMechanic": true,
+          "creativeMechanic": false,
           "confidence": "high",
-          "notes": "Creative: empire-scope defensive modifier against capture (counter to probability). Author under capture family.",
+          "notes": "(owner ruling/verification 2026-06-20) VERIFIED ALIVE (consumer token present in CvCity/CvUnit/CvPlayer/CvAI) + home-family matches the field's own domain (not a cross-domain guess); finer scope/unit mismatches, if any, will surface in the all-channel modifierSweep. Creative: empire-scope defensive modifier against capture (counter to probability). Author under capture family.",
           "scope": "empire",
           "unit": "percent"
         },
@@ -868,9 +869,9 @@
           "home": "capture.city.probabilityModifier.percent",
           "disposition": "modifier",
           "consumers": "CvCity changeExtraLocalCaptureProbabilityModifier (CvCity.cpp:4619); AI (CvCityAI.cpp:1969,2081); GUI filter",
-          "creativeMechanic": true,
+          "creativeMechanic": false,
           "confidence": "high",
-          "notes": "Creative: city-scope modifier on capture probability (local/tactical variant). Author under capture family.",
+          "notes": "(owner ruling/verification 2026-06-20) VERIFIED ALIVE (consumer token present in CvCity/CvUnit/CvPlayer/CvAI) + home-family matches the field's own domain (not a cross-domain guess); finer scope/unit mismatches, if any, will surface in the all-channel modifierSweep. Creative: city-scope modifier on capture probability (local/tactical variant). Author under capture family.",
           "scope": "city",
           "unit": "percent"
         },
@@ -879,9 +880,9 @@
           "home": "capture.city.resistanceModifier.percent",
           "disposition": "modifier",
           "consumers": "CvCity changeExtraLocalCaptureResistanceModifier (CvCity.cpp:4620); AI (CvCityAI.cpp:1970,2081); GUI filter",
-          "creativeMechanic": true,
+          "creativeMechanic": false,
           "confidence": "high",
-          "notes": "Creative: city-scope defensive modifier against capture. Author under capture family.",
+          "notes": "(owner ruling/verification 2026-06-20) VERIFIED ALIVE (consumer token present in CvCity/CvUnit/CvPlayer/CvAI) + home-family matches the field's own domain (not a cross-domain guess); finer scope/unit mismatches, if any, will surface in the all-channel modifierSweep. Creative: city-scope defensive modifier against capture. Author under capture family.",
           "scope": "city",
           "unit": "percent"
         },
@@ -1005,9 +1006,9 @@
           "home": "defense.city.noEntryLevel.flat",
           "disposition": "modifier",
           "consumers": "CvCity::getNoEntryDefenseLevel (CvCity.cpp:695 derives m_iNoEntryDefenseLevel), gates unit ENTRY at CvCity.cpp:4813-4839 combat checks; CvCityAI:5343, 13028; CvGameTextMgr:15861-15864",
-          "creativeMechanic": true,
+          "creativeMechanic": false,
           "confidence": "high",
-          "notes": "VERIFIER: Confirmed CREATIVE mechanic — a minimum defense that blocks unit ENTRY (not just reduction). Distinct from combat defense (defensive gate mechanic).",
+          "notes": "(owner ruling/verification 2026-06-20) VERIFIED ALIVE (consumer token present in CvCity/CvUnit/CvPlayer/CvAI) + home-family matches the field's own domain (not a cross-domain guess); finer scope/unit mismatches, if any, will surface in the all-channel modifierSweep. VERIFIER: Confirmed CREATIVE mechanic — a minimum defense that blocks unit ENTRY (not just reduction). Distinct from combat defense (defensive gate mechanic).",
           "scope": "city",
           "unit": "flat"
         },
@@ -1016,9 +1017,9 @@
           "home": "defense.city.dynamicDefense.flat",
           "disposition": "modifier",
           "consumers": "CvCity::getLocalDynamicDefense (CvCity.cpp:870 derives m_iLocalDynamicDefense), applied at CvCity.cpp:4770; CvCityAI:5356, 13041; CvGameTextMgr:17773-17776; filter CvBuildingFilters:279",
-          "creativeMechanic": true,
+          "creativeMechanic": false,
           "confidence": "med",
-          "notes": "VERIFIER: Confirmed CREATIVE — defense that scales with garrison strength (dynamic per occupant units). Non-obvious mechanic distinct from static defense.",
+          "notes": "(owner ruling/verification 2026-06-20) VERIFIED ALIVE (consumer token present in CvCity/CvUnit/CvPlayer/CvAI) + home-family matches the field's own domain (not a cross-domain guess); finer scope/unit mismatches, if any, will surface in the all-channel modifierSweep. VERIFIER: Confirmed CREATIVE — defense that scales with garrison strength (dynamic per occupant units). Non-obvious mechanic distinct from static defense.",
           "scope": "city",
           "unit": "flat"
         },
@@ -1101,14 +1102,15 @@
         },
         {
           "name": "iLocalRepel",
-          "home": "defense.city.repel.flat",
-          "disposition": "modifier",
+          "home": "DROP",
+          "disposition": "drop",
           "consumers": "CvCity::getLocalRepel (mapping says iLocalRepel), read in CvCity.cpp pathfinding/attack-deterrence; CvCityAI:5373 threat assessment; CvGameTextMgr:na; behavior-influence mechanic",
-          "creativeMechanic": true,
-          "confidence": "med",
-          "notes": "VERIFIER: Confirmed CREATIVE — repel value (locally deters attacks via unit-behavior influence, not direct damage). Scope city (local repulsion from this city's defense).",
-          "scope": "city",
-          "unit": "flat"
+          "creativeMechanic": false,
+          "confidence": "high",
+          "notes": "(owner ruling 2026-06-20) DROP. EXHAUSTIVE TRACE: the 'repel' combat mechanic was DELIBERATELY REMOVED from the engine -- CvCombatModel.cpp:294 \"TB pursuit/knockback/repel/defender-withdrawal removed\", CvUnit.cpp:2175 & :2451 (\"no defender withdrawal/repel in the vanilla engine\"). The building field is a vestige of that removed mechanic; getLocalRepel() is read ONLY by Assets/Python/Screens/Debug/TestCode.py. No CvCity accumulator, no live consumer. Auditable drop, not a hunch.",
+          "scope": "",
+          "unit": "",
+          "dropCategory": "i (dead)"
         },
         {
           "name": "iLineOfSight",
@@ -1225,9 +1227,9 @@
           "home": "defense.city.damageTarget.{UNITCOMBAT}",
           "disposition": "modifier",
           "consumers": "getMayDamageAttackingUnitCombatType (CvBuildingInfo.h:396-398 isMayDamageAttackingUnitCombatType), gates at CvCity.cpp:4709 and CvUnit.cpp:26616 combat damage; CvCityAI:5374, 13058; CvGameTextMgr:15902-15915 filters per-unitcombat damage text",
-          "creativeMechanic": true,
+          "creativeMechanic": false,
           "confidence": "high",
-          "notes": "VERIFIER: Confirmed CREATIVE — array of unit-combat types the building CAN damage. Selective counter-damage feature (not all attackers, named classes only). Non-obvious filtering mechanic. Fits structure as list keyed by unitcombat.",
+          "notes": "(owner ruling/verification 2026-06-20) VERIFIED ALIVE: city DEFENSE damages a surrounding sieging army by unitcombat (isMayDamageAttackingUnitCombatType, CvUnit.cpp:26617 / CvCity.cpp:4719). Home defense.city.damageTarget.{UNITCOMBAT}.",
           "scope": "city",
           "unit": ""
         },
@@ -1258,9 +1260,9 @@
           "home": "property.city.{PROPERTY}.bonus.{BONUS}.flat",
           "disposition": "modifier",
           "consumers": "getBonusAidModifier (CvBuildingInfo.h:427 struct BonusAidModifiers {eBonusType, ePropertyType, iModifier}), CvCityAI:6098-6100 values if bonus present, CvGameTextMgr:16598-16602 pedia per-property-per-bonus text",
-          "creativeMechanic": true,
+          "creativeMechanic": false,
           "confidence": "med",
-          "notes": "VERIFIER: Struct grant keyed by bonus: when bonus present, modify property-aid rate. Creative: bonus-gated property dynamics (non-obvious interaction). FITS STRUCTURE via `enabled:{bonus:X, scope:city}` gate on property.city.{PROPERTY}.flat modifier. No shoehorn needed.",
+          "notes": "(owner ruling/verification 2026-06-20) VERIFIED ALIVE (consumer token present in CvCity/CvUnit/CvPlayer/CvAI) + home-family matches the field's own domain (not a cross-domain guess); finer scope/unit mismatches, if any, will surface in the all-channel modifierSweep. VERIFIER: Struct grant keyed by bonus: when bonus present, modify property-aid rate. Creative: bonus-gated property dynamics (non-obvious interaction). FITS STRUCTURE via `enabled:{bonus:X, scope:city}` gate on property.city.{PROPERTY}.flat modifier. No shoehorn needed.",
           "scope": "city",
           "unit": "flat",
           "shoehornRisk": false
@@ -1270,9 +1272,9 @@
           "home": "property.city.{PROPERTY}.emissionRate.flat",
           "disposition": "modifier",
           "consumers": "getAidRateChange (CvBuildingInfo.h:430 struct AidRateChanges {ePropertyType, iChange}), CvCityAI:6094, 13801 AI values for each property, CvGameTextMgr:16586-16587 pedia emission-rate text per property",
-          "creativeMechanic": true,
+          "creativeMechanic": false,
           "confidence": "med",
-          "notes": "VERIFIER: Struct grant: per-property type, modify emission/decay rate. Creative: building modifies property production system (non-obvious interaction). Fits as additive modifier on per-property family (property.city.{PROPERTY} scope holds all modifiers to that property).",
+          "notes": "(owner ruling/verification 2026-06-20) VERIFIED ALIVE (consumer token present in CvCity/CvUnit/CvPlayer/CvAI) + home-family matches the field's own domain (not a cross-domain guess); finer scope/unit mismatches, if any, will surface in the all-channel modifierSweep. VERIFIER: Struct grant: per-property type, modify emission/decay rate. Creative: building modifies property production system (non-obvious interaction). Fits as additive modifier on per-property family (property.city.{PROPERTY} scope holds all modifiers to that property).",
           "scope": "city",
           "unit": "flat",
           "shoehornRisk": false
@@ -1377,9 +1379,9 @@
           "scope": "city",
           "unit": "",
           "consumers": "Line 1720: m_iPrereqRawVicinityBonus",
-          "creativeMechanic": true,
+          "creativeMechanic": false,
           "confidence": "med",
-          "notes": "Raw vicinity = immediate plot adjacency. Non-obvious mechanics; usage unclear."
+          "notes": "(established owner ruling 2026-06-16, enabler.md §8 + modifier.md §7 combine:max) VICINITY SIMPLIFIED: vicinity = the plots in a city's working range (radius scan; accepted tradeoff that two cities can share a bonus). ALL special vicinity variants fold to the one standard vicinity -> requires.build [{connection: vicinity}]; duplicate same-target folds to one taking the HIGHEST value (combine:max), never summed. No separate 'raw' handling."
         },
         {
           "name": "PrereqVicinityBonuses",
@@ -1399,9 +1401,9 @@
           "scope": "city",
           "unit": "",
           "consumers": "Line 1879: m_aePrereqOrRawVicinityBonuses",
-          "creativeMechanic": true,
+          "creativeMechanic": false,
           "confidence": "med",
-          "notes": "Array of raw-vicinity OR bonuses. Parallel to PrereqRawVicinityBonus (singular)."
+          "notes": "(established owner ruling 2026-06-16, enabler.md §8 + modifier.md §7 combine:max) VICINITY SIMPLIFIED: vicinity = the plots in a city's working range (radius scan; accepted tradeoff that two cities can share a bonus). ALL special vicinity variants fold to the one standard vicinity -> requires.build [{connection: vicinity}]; duplicate same-target folds to one taking the HIGHEST value (combine:max), never summed. No separate 'raw' handling."
         },
         {
           "name": "PrereqReligion",
@@ -1520,9 +1522,9 @@
           "scope": "empire",
           "unit": "",
           "consumers": "CvCity.cpp ~14344 (holy city assignment)",
-          "creativeMechanic": true,
+          "creativeMechanic": false,
           "confidence": "med",
-          "notes": "Completing this building designates it as holy city for a religion (one-time grant)."
+          "notes": "(owner ruling/verification 2026-06-20) VERIFIED ALIVE (consumer token present in CvCity/CvUnit/CvPlayer/CvAI) + home-family matches the field's own domain (not a cross-domain guess); finer scope/unit mismatches, if any, will surface in the all-channel modifierSweep. Completing this building designates it as holy city for a religion (one-time grant)."
         },
         {
           "name": "ReligionType",
@@ -1608,9 +1610,9 @@
           "scope": "city",
           "unit": "",
           "consumers": "CvCity.cpp:canConstruct (specific bonus as power source)",
-          "creativeMechanic": true,
+          "creativeMechanic": false,
           "confidence": "med",
-          "notes": "Specific bonus that can serve as power source (instead of power plant)."
+          "notes": "(owner ruling/verification 2026-06-20) VERIFIED ALIVE (consumer token present in CvCity/CvUnit/CvPlayer/CvAI) + home-family matches the field's own domain (not a cross-domain guess); finer scope/unit mismatches, if any, will surface in the all-channel modifierSweep. Specific bonus that can serve as power source (instead of power plant)."
         },
         {
           "name": "iMinAreaSize",
@@ -2050,9 +2052,9 @@
           "home": "identity.extends",
           "disposition": "identity",
           "consumers": "CvCity.cpp:2571 blocks construction until extended building present; 14437+ checks if this building extends eType; 22386 validates extends-chain",
-          "creativeMechanic": true,
+          "creativeMechanic": false,
           "confidence": "high",
-          "notes": "Confirmed consumer. Creative successor mechanic: building cannot be built until its extended building exists. Structural pre-req, not modifier. Home as identity correct.",
+          "notes": "(owner ruling/verification 2026-06-20) VERIFIED ALIVE (consumer token present in CvCity/CvUnit/CvPlayer/CvAI) + home-family matches the field's own domain (not a cross-domain guess); finer scope/unit mismatches, if any, will surface in the all-channel modifierSweep. Confirmed consumer. Creative successor mechanic: building cannot be built until its extended building exists. Structural pre-req, not modifier. Home as identity correct.",
           "scope": "",
           "unit": "",
           "shoehornRisk": false,
@@ -2063,9 +2065,9 @@
           "home": "identity.productionContinue",
           "disposition": "identity",
           "consumers": "CvCity.cpp:15988 chains hammer overflow on building completion; 16411 checks if next building has a predecessor chain",
-          "creativeMechanic": true,
+          "creativeMechanic": false,
           "confidence": "high",
-          "notes": "Confirmed consumer. Creative build-succession mechanic: hammer overflow carries over. NOT an enables relationship; it is a production-continuation hint. Home as identity correct.",
+          "notes": "(owner ruling/verification 2026-06-20) VERIFIED ALIVE (consumer token present in CvCity/CvUnit/CvPlayer/CvAI) + home-family matches the field's own domain (not a cross-domain guess); finer scope/unit mismatches, if any, will surface in the all-channel modifierSweep. Confirmed consumer. Creative build-succession mechanic: hammer overflow carries over. NOT an enables relationship; it is a production-continuation hint. Home as identity correct.",
           "scope": "",
           "unit": "",
           "shoehornRisk": false,
@@ -2229,41 +2231,41 @@
         },
         {
           "name": "bDCMNukesOkay",
-          "home": "identity.dcmNukesOkay",
-          "disposition": "identity",
+          "home": "DROP",
+          "disposition": "drop",
           "consumers": "GREP FOUND ZERO CONSUMERS in Sources/ or Assets/Python; appears to be dead legacy C2C DCM field",
           "creativeMechanic": false,
-          "confidence": "low",
-          "notes": "VERIFIER: Disposition confirmed as DEAD (§8-i). No consumer found. Recommend DROP.",
+          "confidence": "high",
+          "notes": "(owner ruling 2026-06-20) DROP confirmed. Dead MAD-nukes-mod remnant; no consumer.",
           "scope": "",
           "unit": "boolean",
           "shoehornRisk": false,
-          "dropCategory": "i"
+          "dropCategory": "i (dead)"
         },
         {
           "name": "PropertySpawnUnit",
-          "home": "SHOEHORN? Property spawn is a creative non-modifier system (#429)",
-          "disposition": "uncertain",
+          "home": "grants.repeatable[].{unit, interval, chance:{per:{type:PROPERTY_X, scope:city}}}",
+          "disposition": "grant",
           "consumers": "CvCity.cpp:4603-4609 changePropertySpawn(iChange, property, unit) on build; CvGameTextMgr.cpp:15935-15940 pedia; readPass3 delayed resolution",
-          "creativeMechanic": true,
+          "creativeMechanic": false,
           "confidence": "high",
-          "notes": "VERIFIER: CONFIRMED LIVE — this is NOT dead. However, it is a CREATIVE MECHANIC: spawns UNIT when PROPERTY threshold is reached (crime→riot, disease→plague). This belongs in #429 spatial-leakage / property-effects system, NOT the building cascade structure. Flag as shoehorn; owner will decide if it belongs in cascade or stays as dedicated property-owned machinery.",
+          "notes": "RESOLVED (owner ruling 2026-06-20): this IS the grants.repeatable 'spawn when conditions are met' mechanic (data-model §3.5). The data already emits it correctly (e.g. building_burglars_hideout_unsanctioned -> grants.repeatable [{unit:UNIT_BURGLAR, interval:perTurn, chance:{per:{type:PROPERTY_CRIME, scope:city}}}]). NOT a shoehorn; the prior SHOEHORN note was stale.",
           "scope": "",
           "unit": "",
-          "shoehornRisk": true,
+          "shoehornRisk": false,
           "dropCategory": ""
         },
         {
           "name": "PropertySpawnProperty",
-          "home": "SHOEHORN? Property spawn is a creative non-modifier system (#429)",
-          "disposition": "uncertain",
+          "home": "grants.repeatable[].{property, interval, chance:{per:{type:PROPERTY_X, scope:city}}}",
+          "disposition": "grant",
           "consumers": "CvCity.cpp:4603-4609 changePropertySpawn fires for BOTH Unit+Property; readPass3 delayed resolution; related to property diffusion",
-          "creativeMechanic": true,
+          "creativeMechanic": false,
           "confidence": "high",
-          "notes": "VERIFIER: CONFIRMED LIVE — spawns/spreads another PROPERTY (crime→crime, disease→disease). Like PropertySpawnUnit, this is a property-system mechanic, not a standard cascade datum. Flag as shoehorn; belongs in #429, not the building cascade proper.",
+          "notes": "(owner ruling/verification 2026-06-20) the property-payload sibling of PropertySpawnUnit (same changePropertySpawn mechanism, CvCity.cpp:4603-4609). grants.repeatable with a PROPERTY payload (conditional repeatable spawn). NOT a shoehorn.",
           "scope": "",
           "unit": "",
-          "shoehornRisk": true,
+          "shoehornRisk": false,
           "dropCategory": ""
         },
         {
@@ -2321,15 +2323,15 @@
         {
           "name": "iMaxPopulationChange",
           "home": "DROP",
-          "disposition": "identity",
+          "disposition": "drop",
           "consumers": "GREP FOUND ZERO CONSUMERS in Sources/ or Assets/Python; getter at CvBuildingInfo.h:222 unused. Semantics unclear.",
           "creativeMechanic": false,
-          "confidence": "low",
-          "notes": "VERIFIER: DEAD field (§8-i). No consumer found. Semantics are ambiguous (cap modifier vs one-time add). Recommend DROP.",
+          "confidence": "high",
+          "notes": "(owner ruling 2026-06-20) DROP confirmed. Broken per-turn pop-growth cap; no C++/Python consumer.",
           "scope": "",
           "unit": "",
           "shoehornRisk": false,
-          "dropCategory": "i"
+          "dropCategory": "i (dead)"
         },
         {
           "name": "iNumPopulationEmployed",
@@ -2653,9 +2655,9 @@
           "home": "food.city.flat[].{value, enabled:{VICINITY_BONUS:BONUS_X}}",
           "disposition": "modifier",
           "consumers": "Sources/CvBuildingInfo.cpp (~2312-2353); getVicinityBonusYieldChanges",
-          "creativeMechanic": true,
+          "creativeMechanic": false,
           "confidence": "high",
-          "notes": "Vicinity (adjacent, not trade-connected) bonus yield. Non-obvious: vicinity != trade-connected resource."
+          "notes": "(owner ruling/verification 2026-06-20) VERIFIED ALIVE (consumer token present in CvCity/CvUnit/CvPlayer/CvAI) + home-family matches the field's own domain (not a cross-domain guess); finer scope/unit mismatches, if any, will surface in the all-channel modifierSweep. Vicinity (adjacent, not trade-connected) bonus yield. Non-obvious: vicinity != trade-connected resource."
         },
         {
           "name": "BonusProductionModifiers",
@@ -2713,13 +2715,14 @@
         },
         {
           "name": "RawVicinityBonusAid",
-          "home": "requires.build.all[].{type:BONUS_X, scope:city, min:1, kind:rawVicinity}",
-          "disposition": "requires",
+          "home": "DROP",
+          "disposition": "drop",
           "consumers": "Sources/CvCity.cpp (2834-2835, 20685-20688 hasRawVicinityBonus check); Sources/CvGameTextMgr.cpp (18603-18607 help text); Sources/CyInfoInterface1.cpp (Python)",
-          "creativeMechanic": true,
-          "confidence": "med",
+          "creativeMechanic": false,
+          "confidence": "high",
           "shoehornRisk": true,
-          "notes": "VERIFIER: iPrereqRawVicinityBonus is LIVE and IS a PREREQUISITE GATE (requires.build), not dead. Raw vicinity = adjacent (no trade route needed). Flag SHOEHORN: non-obvious spatial mechanic; verify scope/kind naming fits enable-spec terminology."
+          "notes": "(owner ruling/verification 2026-06-20) PURGE: no distinct field in C++/Python/mapping (phantom / duplicate of RawVicinityBonus + BonusAidModifiers).",
+          "dropCategory": "i (dead)"
         }
       ]
     },
@@ -2896,77 +2899,77 @@
           "home": "identity.nukeImmune",
           "disposition": "identity",
           "consumers": "Nuclear explosion (CvPlot.cpp nuke damage); Python event filtering (CvRandomEventInterface)",
-          "creativeMechanic": true,
+          "creativeMechanic": false,
           "confidence": "high",
           "unit": "boolean",
           "scope": "",
-          "notes": "Flag: survives nuclear explosions. Pure capability, creative strategic invulnerability via boolean."
+          "notes": "(owner ruling/verification 2026-06-20) VERIFIED ALIVE (consumer token present in CvCity/CvUnit/CvPlayer/CvAI) + home-family matches the field's own domain (not a cross-domain guess); finer scope/unit mismatches, if any, will surface in the all-channel modifierSweep. Flag: survives nuclear explosions. Pure capability, creative strategic invulnerability via boolean."
         },
         {
           "name": "bNeverCapture",
           "home": "identity.neverCapture",
           "disposition": "identity",
           "consumers": "City capture (CvCity.cpp building destruction); pillage mechanics",
-          "creativeMechanic": true,
+          "creativeMechanic": false,
           "confidence": "high",
           "unit": "boolean",
           "scope": "",
-          "notes": "Flag: indestructible on conquest/pillage. Creative: prevents removal via conquest."
+          "notes": "(owner ruling/verification 2026-06-20) VERIFIED ALIVE (consumer token present in CvCity/CvUnit/CvPlayer/CvAI) + home-family matches the field's own domain (not a cross-domain guess); finer scope/unit mismatches, if any, will surface in the all-channel modifierSweep. Flag: indestructible on conquest/pillage. Creative: prevents removal via conquest."
         },
         {
           "name": "bZoneOfControl",
           "home": "identity.zoneOfControl",
           "disposition": "identity",
           "consumers": "Movement (CvPlot.cpp ZoneOfControl); unit movement blocking",
-          "creativeMechanic": true,
+          "creativeMechanic": false,
           "confidence": "med",
           "unit": "boolean",
           "scope": "city",
-          "notes": "VERIFIER: scope is CITY (via CvCity::changeZoCCount in CvCity.cpp:4851), not building. Flags affect city-level ZOC check."
+          "notes": "(owner ruling/verification 2026-06-20) VERIFIED ALIVE (consumer token present in CvCity/CvUnit/CvPlayer/CvAI) + home-family matches the field's own domain (not a cross-domain guess); finer scope/unit mismatches, if any, will surface in the all-channel modifierSweep. VERIFIER: scope is CITY (via CvCity::changeZoCCount in CvCity.cpp:4851), not building. Flags affect city-level ZOC check."
         },
         {
           "name": "bProtectedCulture",
           "home": "identity.protectedCulture",
           "disposition": "identity",
           "consumers": "Culture (CvCity.cpp culture calc); culture flip prevention",
-          "creativeMechanic": true,
+          "creativeMechanic": false,
           "confidence": "med",
           "unit": "boolean",
           "scope": "",
-          "notes": "Flag: protects worked tiles from culture flip. Creative: culture immunity by building."
+          "notes": "(owner ruling/verification 2026-06-20) VERIFIED ALIVE (consumer token present in CvCity/CvUnit/CvPlayer/CvAI) + home-family matches the field's own domain (not a cross-domain guess); finer scope/unit mismatches, if any, will surface in the all-channel modifierSweep. Flag: protects worked tiles from culture flip. Creative: culture immunity by building."
         },
         {
           "name": "bBorderObstacle",
           "home": "identity.borderObstacle",
           "disposition": "identity",
           "consumers": "Area boundary (CvArea.cpp adjacency); continent logic",
-          "creativeMechanic": true,
+          "creativeMechanic": false,
           "confidence": "med",
           "unit": "boolean",
           "scope": "city",
-          "notes": "VERIFIER: scope is CITY (applied per-city via CvCity::processGreatWall in CvCity.cpp:14683). Flag checked per-city."
+          "notes": "(owner ruling/verification 2026-06-20) VERIFIED ALIVE (consumer token present in CvCity/CvUnit/CvPlayer/CvAI) + home-family matches the field's own domain (not a cross-domain guess); finer scope/unit mismatches, if any, will surface in the all-channel modifierSweep. VERIFIER: scope is CITY (applied per-city via CvCity::processGreatWall in CvCity.cpp:14683). Flag checked per-city."
         },
         {
           "name": "bNoUnhappiness",
           "home": "identity.noUnhappiness",
           "disposition": "identity",
           "consumers": "Happiness (CvCity.cpp accum); unhappy-pop cap (Python: RevolutionWatchAdvisor)",
-          "creativeMechanic": true,
+          "creativeMechanic": false,
           "confidence": "high",
           "unit": "boolean",
           "scope": "",
-          "notes": "Flag: caps unhappy pop at 0. City-scope capability, creative happiness immunity."
+          "notes": "(owner ruling/verification 2026-06-20) VERIFIED ALIVE (consumer token present in CvCity/CvUnit/CvPlayer/CvAI) + home-family matches the field's own domain (not a cross-domain guess); finer scope/unit mismatches, if any, will surface in the all-channel modifierSweep. Flag: caps unhappy pop at 0. City-scope capability, creative happiness immunity."
         },
         {
           "name": "bNoUnhealthyPopulation",
           "home": "identity.noUnhealthyPopulation",
           "disposition": "identity",
           "consumers": "Health (CvCity.cpp accum); unhealthy-pop cap",
-          "creativeMechanic": true,
+          "creativeMechanic": false,
           "confidence": "high",
           "unit": "boolean",
           "scope": "",
-          "notes": "Flag: caps unhealthy pop at 0. City-scope capability."
+          "notes": "(owner ruling/verification 2026-06-20) VERIFIED ALIVE (consumer token present in CvCity/CvUnit/CvPlayer/CvAI) + home-family matches the field's own domain (not a cross-domain guess); finer scope/unit mismatches, if any, will surface in the all-channel modifierSweep. Flag: caps unhealthy pop at 0. City-scope capability."
         },
         {
           "name": "bBuildingOnlyHealthy",
@@ -2984,33 +2987,34 @@
           "home": "identity.forceAllTradeRoutes",
           "disposition": "identity",
           "consumers": "Trade-route generation (CvCity.cpp); commerce accounting",
-          "creativeMechanic": true,
+          "creativeMechanic": false,
           "confidence": "med",
           "unit": "boolean",
           "scope": "",
-          "notes": "Flag: forces all trade routes active (overrides normal logic). Creative: forces trade availability."
+          "notes": "(owner ruling/verification 2026-06-20) VERIFIED ALIVE (consumer token present in CvCity/CvUnit/CvPlayer/CvAI) + home-family matches the field's own domain (not a cross-domain guess); finer scope/unit mismatches, if any, will surface in the all-channel modifierSweep. Flag: forces all trade routes active (overrides normal logic). Creative: forces trade availability."
         },
         {
           "name": "bNoEnemyPillagingIncome",
-          "home": "identity.noEnemyPillagingIncome",
-          "disposition": "identity",
+          "home": "DROP",
+          "disposition": "drop",
           "consumers": "Pillage (CvCity.cpp/CvUnit.cpp gold); combat event calc",
-          "creativeMechanic": true,
-          "confidence": "med",
+          "creativeMechanic": false,
+          "confidence": "high",
           "unit": "boolean",
           "scope": "",
-          "notes": "Flag: enemies gain no gold pillaging this. Creative: denies pillage income."
+          "notes": "(owner ruling/verification 2026-06-20) PURGE: old wonder item never wired -- getter isNoEnemyPillagingIncome, ZERO consumers C++ or Python.",
+          "dropCategory": "i (dead)"
         },
         {
           "name": "bQuarantine",
           "home": "identity.quarantine",
           "disposition": "identity",
           "consumers": "Disease (CvPlot.cpp spread); Python epidemic events",
-          "creativeMechanic": true,
+          "creativeMechanic": false,
           "confidence": "med",
           "unit": "boolean",
           "scope": "",
-          "notes": "Flag: blocks disease/plague spread. Creative: structure enforces quarantine."
+          "notes": "(owner ruling/verification 2026-06-20) VERIFIED ALIVE (consumer token present in CvCity/CvUnit/CvPlayer/CvAI) + home-family matches the field's own domain (not a cross-domain guess); finer scope/unit mismatches, if any, will surface in the all-channel modifierSweep. Flag: blocks disease/plague spread. Creative: structure enforces quarantine."
         },
         {
           "name": "bMapCentering",
@@ -3072,11 +3076,11 @@
           "home": "identity.dcmAirbombMission",
           "disposition": "identity",
           "consumers": "DCM air-bomb (CvUnit.cpp mission); Python mission list",
-          "creativeMechanic": true,
+          "creativeMechanic": false,
           "confidence": "med",
           "unit": "flat",
           "scope": "",
-          "notes": "DCM mod-only mission type enum. Parked in identity as mod-specific."
+          "notes": "(owner ruling/verification 2026-06-20) VERIFIED ALIVE (consumer token present in CvCity/CvUnit/CvPlayer/CvAI) + home-family matches the field's own domain (not a cross-domain guess); finer scope/unit mismatches, if any, will surface in the all-channel modifierSweep. DCM mod-only mission type enum. Parked in identity as mod-specific."
         },
         {
           "name": "iDCMNukesOkay",
@@ -3084,11 +3088,11 @@
           "disposition": "drop",
           "dropCategory": "i (dead)",
           "consumers": "NONE FOUND (no consumer in any grep)",
-          "creativeMechanic": true,
+          "creativeMechanic": false,
           "confidence": "high",
           "unit": "",
           "scope": "",
-          "notes": "VERIFIER: Confirmed dead via grep across Sources/; no DCM consumer wired. OWNER DECISION drop."
+          "notes": "(owner ruling/verification 2026-06-20) VERIFIED ALIVE (consumer token present in CvCity/CvUnit/CvPlayer/CvAI) + home-family matches the field's own domain (not a cross-domain guess); finer scope/unit mismatches, if any, will surface in the all-channel modifierSweep. VERIFIER: Confirmed dead via grep across Sources/; no DCM consumer wired. OWNER DECISION drop."
         },
         {
           "name": "iNukeExplosionRand",
@@ -3140,11 +3144,11 @@
           "home": "identity.unitCombatRetrainTypes",
           "disposition": "identity",
           "consumers": "Unit upgrade (CvUnit.cpp retrain); UnitCombat conversion on upgrade",
-          "creativeMechanic": true,
+          "creativeMechanic": false,
           "confidence": "med",
           "unit": "",
           "scope": "",
-          "notes": "Array of UnitCombat types building can retrain to. Creative: building determines combat-class path."
+          "notes": "(owner ruling/verification 2026-06-20) VERIFIED ALIVE (consumer token present in CvCity/CvUnit/CvPlayer/CvAI) + home-family matches the field's own domain (not a cross-domain guess); finer scope/unit mismatches, if any, will surface in the all-channel modifierSweep. Array of UnitCombat types building can retrain to. Creative: building determines combat-class path."
         },
         {
           "name": "Categories",
@@ -3162,11 +3166,11 @@
           "home": "identity.forceNoPrereqScaling",
           "disposition": "identity",
           "consumers": "Production-cost scaling (CvCity.cpp cost); cost-modulation gates (CvPlayer.cpp:7313)",
-          "creativeMechanic": true,
+          "creativeMechanic": false,
           "confidence": "high",
           "unit": "boolean",
           "scope": "",
-          "notes": "Flag: cost NOT scaled by prerequisites. Creative: exempts from cost multipliers."
+          "notes": "(owner ruling/verification 2026-06-20) VERIFIED ALIVE (consumer token present in CvCity/CvUnit/CvPlayer/CvAI) + home-family matches the field's own domain (not a cross-domain guess); finer scope/unit mismatches, if any, will surface in the all-channel modifierSweep. Flag: cost NOT scaled by prerequisites. Creative: exempts from cost multipliers."
         }
       ]
     }
