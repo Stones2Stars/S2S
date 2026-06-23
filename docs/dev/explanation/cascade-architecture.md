@@ -126,4 +126,5 @@ is load-bearing: a breakdown screen that silently omits a source is as wrong to 
 ## See also
 - [`../architecture/north-star.md`](../architecture/north-star.md) — the front-and-center summary this expands.
 - [`../reference/cascade/fixed-point-and-scales.md`](../reference/cascade/fixed-point-and-scales.md) — the scale registry.
+- [`../json-migration/validation-architecture.md`](../json-migration/validation-architecture.md) — the .NET dry-calc that implements + validates this model offline (the tooling, not the model).
 - the cascade specs (old `docs/dev/plans/`, pending rebuild) — atom-level syntax + the demolition map.
