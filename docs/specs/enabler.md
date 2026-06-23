@@ -120,9 +120,12 @@ So the build-time gate = `build ∧ operate`; the ongoing dormancy gate = `opera
 **Pseudobuilding bands.** Legacy `CvPropertyInfo` `iMinValue`/`iMaxValue`/`BuildingType` + `checkPropertyBuildings`
 (each turn) adds/removes a building as the property value enters/leaves the band. End-state: retire the per-turn
 churn — model the band as uniform `requires.operate` dormancy (enabled once; toggles active/dormant); `notConstructible`
-(an `identity` flag, [json](json.md) §7) is the **interim** until the `requires.operate` dormancy end-state lands. ⛔ **Bands REPLACE legacy parity (the Education ladder) — a higher band supersedes a lower one;
-do NOT stack.** Bands are **bidirectional** — effect-buildings can spawn on the **negative** side, not just the
-positive ladder; a negative band is being considered for **every property** (education is the live case).
+(an `identity` flag, [json](json.md) §7) is the **interim** until the `requires.operate` dormancy end-state lands.
+Where the bands form a succession chain (the **Education ladder**) a higher band dorms the lower via
+`requires.operate.dormant` (only-highest-active, no stacking) — the **same uniform `ReplacementBuildings → dormant`
+mirror as §2, not a special case** (there is no separate "education" ruling); chainless bands (crime/disease/
+pollution) compound, every in-band band active. Bands are **bidirectional** — effect-buildings can spawn on the
+**negative** side, not just the positive ladder; a negative band is being considered for **every property**.
 
 **`requires.operate` on a UNIT** (FUTURE — e.g. tanks need fuel) would reversibly disable an existing unit while
 it stays on the map; the structure supports it, but it is not modelled now.
