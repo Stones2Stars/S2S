@@ -8,8 +8,18 @@ TraitTypes into this one table), and CvPlayer picks the list by GAMEOPTION_LEADE
 uniform `trait` surface. A trait is an EMPIRE-wide SOURCE/ENABLER (deposits via CvPlayer::processTrait into
 player-level accumulators) — so virtually every modifier is `empire` scope, and nothing ever TARGETS a trait.
 
+ROOT CAUSE + intended shape (owner 2026-06-21): the complex/replacement system exists only because the original
+author reached for a generic RUNTIME SWAP (`CvInfoReplacements`: a base trait carries a `ReplacementID` +
+`ReplacementCondition`, and the engine OVERWRITES the whole Info when a game option flips) instead of defining a
+complex trait as its OWN object on the same base abstraction. With no composition/inheritance/contract, "which
+trait set is active" became a condition buried in the data rather than a composition-root choice. Splitting
+simple/ + complex/ into two COMPLETE, INDEPENDENT sets (the complex set self-contains its effective values via
+the merge below) is the prerequisite for the proper end state: complex traits become their own Info type behind
+a shared trait CONTRACT, chosen at the composition root (`if(complexTraits)` inject the complex impl), NOT a
+roundabout replacement. The two systems must live fully separate before that code untangle is possible.
+
 Field dispositions verified by the classify-trait workflow (wf_cc8659b5: 3 ground-truth agents + 6 field
-slices, each adversarially verified, + a coverage/conflict/CREST/dev-leader audit) against CvTraitInfo.{h,cpp}
+slices, each adversarially verified, + a coverage/conflict/conditioned-on-source/dev-leader audit) against CvTraitInfo.{h,cpp}
 + CvPlayer::processTrait + CvCity/CvGameTextMgr consumers. Full analysis:
 Tools/Migration/classifications/trait-classification.json. Conventions MIRROR curate_civic.py (the first heavy
 entity owns them: production vs unitProduction split, the grouped `stateReligion` family, PropertyManipulators
@@ -27,12 +37,12 @@ parsed into per-PROPERTY_* families). OWNER RULINGS (2026-06-14) drive the struc
   * Categories -> DROP (dead: zero C++ readers; not authored in either trait XML; civic drops it too).
   * the culture-requirement progression (GAMEOPTION_NEXT_TRAIT_CULTURE_REQ_PERCENT) is a GAME OPTION, not a
     trait field -> not authored on the trait.
-- CREST: BonusHappinessChanges (the only fresh bonus-conditioner) is authored ON THE TRAIT (keep-on-source,
+- conditioned-on-source: BonusHappinessChanges (the only fresh bonus-conditioner) is authored ON THE TRAIT (keep-on-source,
   modifier-spec §6 — supersedes the old "fold onto the bonus" rule; a resource is never a target): the trait
   grants +N happiness while a specific bonus is present. The deposit is `happiness.empire.flat` (scope = the
   MODIFIER's: the trait benefits the player's cities); the condition is the agreed full+explicit enabler atom
   (enabler-spec §6.1/§13.7) `enabled:{type:BONUS_X, scope:empire, min:1}` ("we have ≥1", a tally count read).
-  TechResearchModifiers is crest-adjacent but the plan HANDOFF rules it STAYS trait-side (it surfaces on a tech
+  TechResearchModifiers is conditioned-on-source-adjacent but the plan HANDOFF rules it STAYS trait-side (it surfaces on a tech
   only as a derived boostedBy) -> kept as research.empire.byTech.{TECH}.percent.
 - GreatPeopleUnitType + GreatPeopleRateChange FOLD into greatPeopleRate.empire.units.{UNIT}.flat (the change is
   keyed by the GP unit; CvPlayer.cpp:28606-28610, only when >0).
@@ -41,7 +51,12 @@ parsed into per-PROPERTY_* families). OWNER RULINGS (2026-06-14) drive the struc
 - Double-author DROPs (specialist migrated first, curate_specialist.py:80-81): SpecialistYieldChanges +
   SpecialistCommerceChanges.
 - MaxAnarchy/MinAnarchy -> clean identity keys (maxAnarchy default -1 carried verbatim; min default 0).
-- x100 carried faithfully (#432); fRev* are floats carried verbatim.
+- SCALE (verified 2026-06-22 at the consumption site, scale-registry method): NO trait field is x100. Every
+  SCALAR deposits via CvPlayer::processTrait as `change<X>(iChange * get<X>())` -- multiplied ONLY by iChange (+/-1),
+  never x100; CvTraitInfo exposes ZERO `...100()` accessors; the lone x100 in processTrait is
+  `changeExtraCommerce100(100*iChange*getCommerceChange)`, whose explicit human->x100 scale-up PROVES those inputs
+  are human. So all SCALARs are emitted RAW (human) via _num(t) -- CORRECT, no PER100 descale (the #432 de-scale
+  does not apply to traits). fRev* are floats carried verbatim.
 
   python3 curate_trait.py --sample TRAIT_PHILOSOPHICAL TRAIT_FINANCIAL
   python3 curate_trait.py --write
@@ -157,7 +172,7 @@ SPLIT_ARRAY = {
     "YieldModifiers":           ("empire", "",          "percent",      YIELDS),
     "TradeYieldModifiers":      ("empire", "tradeRoute","percent",      YIELDS),
     "CapitalYieldModifiers":    ("empire", "capital",   "percent",      YIELDS),
-    "SeaPlotYieldChanges":      ("empire", "seaPlot",   "flat",         YIELDS),
+    # SeaPlotYieldChanges -> a PLOTS-TARGET fold (owner 2026-06-22): empire.plots.flat {IS_WATER}; handled in the apply loop.
     "SpecialistExtraYields":    ("empire", "specialist","perSpecialist",YIELDS),
     "GoldenAgeYieldChanges":    ("empire", "goldenAge", "flat",         YIELDS),
     "CommerceChanges":          ("empire", "",          "flat",         COMMERCES),
@@ -190,7 +205,7 @@ KEYED = {
     "UnitCombatFreeExperiences":          ("experience",     "empire", "unitCombats",    "flat",    None),
     "UnitCombatProductionModifiers":      ("buildRate",      "empire", "unitCombats",    "percent", None),
     "CivicOptionNoUpkeepTypes":           ("upkeep",         "empire", "civicOptions",   "enabler", None),
-    "TechResearchModifiers":              ("research",       "empire", "byTech",         "percent", None),  # CREST: stays (HANDOFF)
+    "TechResearchModifiers":              ("research",       "empire", "byTech",         "percent", None),  # conditioned-on-source: stays (HANDOFF)
 }
 
 # --- boolean policy/capability flags -> policies.{name}: true. ---
@@ -349,6 +364,20 @@ def curate(typ, rec, store):
             scope, member, unit, keys = SPLIT_ARRAY[tag]
             for ident, v in engine.named_array(c, keys).items():   # ident IS the family (split)
                 _put(fam, ident, scope, member, unit, v)
+        elif tag == "SeaPlotYieldChanges":
+            # PLOTS-TARGET fold (owner 2026-06-22): the empire sea-plot yield -> the explicit `plots` target {IS_WATER}
+            # (data-model §4.1/§6). Deposits onto every water plot worked in the empire; retires getSeaPlotYield + seaPlot.
+            for ident, v in engine.named_array(c, YIELDS).items():
+                if v:
+                    node = fam.setdefault(ident, {}).setdefault("empire", {}).setdefault("plots", {})
+                    entry = OrderedDict([("value", v), ("enabled", "IS_WATER")])
+                    cur = node.get("flat")
+                    if cur is None:
+                        node["flat"] = [entry]
+                    elif isinstance(cur, list):
+                        cur.append(entry)
+                    else:
+                        node["flat"] = [cur, entry]
         elif tag in GROUPED_YIELD_ARRAY:
             family, scope, unit, keys = GROUPED_YIELD_ARRAY[tag]
             for ident, v in engine.named_array(c, keys).items():   # yield is the MEMBER under the family

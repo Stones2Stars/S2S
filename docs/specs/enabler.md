@@ -48,7 +48,7 @@ the other three **remove** from it.
 | edge | nature | new builds | existing instances |
 |---|---|---|---|
 | **`enables`** | a permanent unlock | **added** to CAN GET | — (this *is* the unlock) |
-| **`disables`** | a reversible ban / effect | removed while the disabler is held | **destroyed** (a law) **or dormant** (an effect) — see json §4.2 |
+| **`disables`** | a **law / ban** (policy forbids) | removed while the disabler is held | **destroyed** — torn down; rebuilt on repeal. *(Dormancy is NOT a `disables` — it's the target's `requires.operate.dormant`, §3.)* |
 | **`obsoletes`** | passive supersession | removed | **persist** (an obsolete unit stays on the map); the target decides its own fate |
 | **`replaces`** | succession | removed | replaced by the successor (transitive chain) |
 
@@ -66,9 +66,13 @@ instance-fate precedence (`replaces` wins over `obsoletes`). So: collapse succes
 banned/destroyed things from HAVE, *then* generate from the corrected HAVE, *then* prune obsoleted candidates.
 **Tech is authored in `enables`** (a tech `enables` what it unlocks) — never as a generation driver in `requires`.
 
-**`disables` — worked cases.** `BUILDING_POLLUTION_BLACKENED_SKIES` disables telescope/observatory (dormant
-while blackened, reactivate when clear); a rat-catcher disables the disease pest band; the lone converted
-law-disable today is the per-civ Neanderthal research ban (`TECH_SEDENTARY_LIFESTYLE`, reversible).
+**`disables` — the worked case.** The lone law-disable today is the per-civ Neanderthal research ban
+(`TECH_SEDENTARY_LIFESTYLE`, reversible — bars the tech while active). **NB the blackened-skies → observatory case
+is NOT a `disables`:** blackened skies don't nuke the observatory from orbit — it goes **dormant** and wakes when the
+skies clear, so the *observatory* carries `requires.operate.dormant: BLACKENED_SKIES` (§3). (`BLACKENED_SKIES` is
+itself a tech-created pseudobuilding, dormant via its own air-pollution band until pollution gets *really* bad — only
+then does it dorm the observatory.) Dormancy is always the **target's `requires.operate.dormant`**, never a source
+`disables` (the disease-band / rat-catcher case is the same shape).
 
 **Multi-parent tech.** A child tech carries `requires.build.all:[T1,T2]` (AND) or `.any` (OR); the `.any` here **is**
 the [json](json.md) §3.4 combinator (a list of OR-groups), so a single OR of techs is authored as ONE group —
@@ -84,10 +88,9 @@ via `enables` (the space line), doctrine bans via `disables` + empire modifiers 
 autobuild clunk (~345 uses) with one empire-scope building. (INTERIM — a later issue; the per-city machinery
 still works.)
 
-> **Known-open design point (not your gap):** the `disables` **law-vs-effect** fate — the two fates themselves
-> (destroy-and-rebuild vs go-dormant) are **settled**; what is OPEN is **how a source declares which fate it
-> carries**. That declaration mechanism is the deferred/post-migration part (it lands with the engine
-> implementation), not the fates or their intent.
+> **The two fates are two mechanisms — nothing to declare (owner 2026-06-23).** `disables` = **destroy** (a law/ban
+> removes it; rebuilt on repeal); the target's `requires.operate.dormant` = **dormant** (it stays put,
+> inactive while the condition holds — §3). There is no flag on `disables`: the choice of *mechanism* IS the fate.
 
 ---
 
@@ -102,7 +105,7 @@ still works.)
   (Units carry `build` only; they're leaf actions that exit the model once built.)
 
 So the build-time gate = `build ∧ operate`; the ongoing dormancy gate = `operate` only. A `noneOf` clause is the
-**dormancy negative** ("dormant *while* X is present") — distinct from a source-side `disables` ban by fate
+**dormancy trigger** `requires.operate.dormant: X` ("dormant *while* X is present") — distinct from a source-side `disables` ban by fate
 (dormant-and-reversible vs destroyed-and-rebuilt) and author (the target vs the law).
 
 **Pseudobuilding bands.** Legacy `CvPropertyInfo` `iMinValue`/`iMaxValue`/`BuildingType` + `checkPropertyBuildings`

@@ -39,7 +39,7 @@ toolkit only (C++ readers come dead-last). The model below is LOCKED; read §0�
   `policies` section; `revolution` kept faithful (Python→C++ port pending); grouped `stateReligion`. Full detail
   - all rulings in the §7 "Civic" note. The big architecture work it triggered (the **cascade ontology** — one
   cascade, every per-turn-effect producer is a target, sources/enablers never targets, the coal test, the
-  stay-vs-invert rule, and the unresolved **"CREST"**) is recorded in **§0**.
+  stay-vs-invert rule, and the unresolved **"conditioned-on-source"**) is recorded in **§0**.
 - **Trait — SECOND HEAVY entity / "Mount Doom", DONE (2026-06-14): 390** (87 base + 240 developing-line + 63
   complex). ONE `CvTraitInfo` class for both trait systems (vanilla DefaultTraits vs developing DefaultComplexTraits,
   game-option-gated — assignment is consumer-side). The two-system link is the **`ReplacementID`/`CvInfoReplacements`
@@ -377,22 +377,11 @@ dropping that happens during the move. Don't make "should this entity exist" cal
       IMPROVEMENT it enables (the **mine on the coal**) is the target; the coal is never the target, it points
       DOWN at one. If a thing produces/aggregates a per-turn effect → target; if it merely unlocks or amplifies
       other things → source/enabler.
-    - **⚠ KNOWN UNRESOLVED "CREST" — codify when building/testing #430 (owner, 2026-06-14):** the stay-vs-invert
-      rule is NOT yet properly codified for the case where **source A's effect is conditioned/scaled by
-      POSSESSING source/enabler B** (e.g. Civic `BonusCommerceModifiers` = "+commerce per resource owned";
-      building/unit/project `BonusProductionModifiers` = "build faster with bonus Y"). Two valid slopes meet at
-      a ridge: (a) **fold onto B** keyed by A — the COMMITTED convention (curate_bonus folds building/unit/
-      project `BonusProductionModifiers` onto the bonus as `buildRate`); vs (b) **keep on A** with B as a
-      `byBonus` CONDITION (cleaner ownership — A owns its modifier, B stays a pure condition, never holding
-      another source's effect). Open sub-question: is **tech different** (a top-of-cascade UNLOCKER — "research X
-      → these get better" — genuinely a source, so `byTech` folds onto the tech and HOLD) vs a **bonus** (a
-      possessed CONDITION, so it reverses to (b))? **Not blocking the data migration** (the committed convention
-      stands; Civic `BonusCommerceModifiers` is empty in the data anyway). RESOLVE this when the cascading
-      enabler+modifier engine (#430) is built and tested end-to-end — that is what will actually pin the
-      boundary; until then, leave the committed folds as-is and revisit Bonus/Project if (b)/tech-split wins.
-      **Expect MORE of these crest cases at LEADER-TRAIT migration** (traits are sources/enablers like civics,
-      with many bonus/tech/state-conditioned effects) — gather the full set there before codifying the rule, so
-      the boundary is drawn against the complete pattern rather than this one instance.
+    - **The conditioned-on-source case — SETTLED: keep-on-source (owner; [modifier](../modifier.md) §6 /
+      DEC-deliveryguy).** Where **source A's effect is conditioned/scaled by POSSESSING source/enabler B** (e.g.
+      Civic `BonusCommerceModifiers` = "+commerce per resource owned"; building/unit/project
+      `BonusProductionModifiers` = "build faster with bonus Y"): **A keeps its modifier, B is a pure `enabled:`
+      condition** — never inverted onto B (a source is never a target). The old fold-onto-B `BONUS_BOOSTS` was removed.
 - **NOT a cascade — spatial/adjacency "leakage" (owner idea, 2026-06-14; FUTURE, separate system — tracked in #429):**
   a THIRD graph — **"sideways static influence"**: LATERAL peer↔adjacent-peer effects set by fixed map
   geometry (radius / adjacency), **orthogonal** to the two cascades' VERTICAL top-down flow, and ideally
@@ -894,13 +883,13 @@ Tooling under `Tools/Migration/`:
   full Type). Dead-drops (verified no consumer): `iProductionModifier`/`iHappinessChange`/`iHealthChange` (not
   top-level — value-elements of keyed maps), `Categories`, `isAnyImprovementYieldChange`. Double-author drops:
   `SpecialistYield/CommercePercentChanges` (already on the specialist). `BonusCommerceModifiers` → inverted onto
-  the bonus (new curate_bonus row; empty in data — see the §0 "CREST" note for the open ownership question).
+  the bonus (new curate_bonus row; empty in data — see the §0 "conditioned-on-source" note for the open ownership question).
   Smaller calls: `CivicAttitudeChanges`→`diplomacy` keyed by civic (the cosmetic per-edge `Description` label
   dropped), `iMaxConscript`→`conscript`, `iFreeSpecialist`→`freeSpecialists`, `iAnarchyLength`/`Upkeep`/
   `WeLoveTheKing`→identity. Store gains civic→building/unit enables (`PrereqCivic`/And/Or).
 - **Trait (heavy entity #2 — "Mount Doom", DONE 2026-06-14):** `curate_trait.py` (bespoke), classified by the
   `classify-trait` workflow (`wf_cc8659b5`: 3 ground-truth agents + 6 field slices, each adversarially verified,
-  - a coverage/conflict/CREST/dev-leader audit) against `CvTraitInfo` + `CvPlayer::processTrait` + the
+  - a coverage/conflict/conditioned-on-source/dev-leader audit) against `CvTraitInfo` + `CvPlayer::processTrait` + the
   CvCity/CvGameTextMgr consumers. Analysis saved to `Tools/Migration/classifications/trait-classification.json`.
   **ONE `CvTraitInfo` class serves BOTH trait systems** — the "developing/complex leaders" system is the SAME
   class, assigned differently: `CvLeaderHeadInfo` carries `DefaultTraits` AND `DefaultComplexTraits` (both lists of
@@ -931,14 +920,14 @@ Tooling under `Tools/Migration/`:
     progression (`GAMEOPTION_NEXT_TRAIT_CULTURE_REQ_PERCENT`) is a game option, NOT a trait field.
     `GreatPeopleUnitType`+`GreatPeopleRateChange` FOLD → `greatPeopleRate.empire.units.{UNIT}.flat` (keyed by the
     GP unit; CvPlayer.cpp:28606-28610, only when >0).
-  - **CREST:** `BonusHappinessChanges` (the ONLY fresh bonus-conditioner; 26 traits set it) FOLDS onto the bonus
+  - **conditioned-on-source:** `BonusHappinessChanges` (the ONLY fresh bonus-conditioner; 26 traits set it) FOLDS onto the bonus
     (new `curate_bonus` `BONUS_BOOSTS` row, `city` scope, keyed by trait — dropped trait-side; matches the
-    building/civic→bonus fold). `TechResearchModifiers` is crest-adjacent but STAYS trait-side per the HANDOFF
-    (`research.empire.byTech.{TECH}.percent`). NOTE: traits surfaced only TWO crest cases (not the volume §0
-    expected), so traits alone do NOT fully codify the crest boundary — revisit at #430 / Building/Unit.
+    building/civic→bonus fold). `TechResearchModifiers` is conditioned-on-source-adjacent but STAYS trait-side per the HANDOFF
+    (`research.empire.byTech.{TECH}.percent`). NOTE: traits surfaced only TWO conditioned-on-source cases (not the volume §0
+    expected), so traits alone do NOT fully codify the conditioned-on-source boundary — revisit at #430 / Building/Unit.
   - Smaller calls: **`cityFounding`** family for `CityStartCulture`/`BonusPopulationinNewCities` (standing empire
     accumulators applied at every founding, NOT one-shot grants). `GoldenAge{Yield,Commerce}Changes` → a
-    `goldenAge` condition-member (player STATE, NOT a crest). `MaxAnarchy`/`MinAnarchy` → clean identity keys
+    `goldenAge` condition-member (player STATE, NOT a conditioned-on-source). `MaxAnarchy`/`MinAnarchy` → clean identity keys
     (max default −1 carried verbatim). `fRev*` floats carried verbatim. Double-author DROP:
     `SpecialistYield/CommerceChanges` (the specialist owns them, `curate_specialist.py:80-81`).
   - **`workRate` is the standard worker-speed family (owner ruling):** TECH re-curated `workerSpeed`→`workRate`
@@ -967,7 +956,7 @@ Tooling under `Tools/Migration/`:
     (not two); the two systems differ only in ASSIGNMENT (consumer-side, game-option-gated). The real two-system
     link the workflow MISSED is the **`ReplacementID`/`CvInfoReplacements` conditional whole-Info replacement**
     (64 vanilla→complex pairs) — modeled as split Types + a `replacedBy` edge; `store.py` is now ReplacementID-aware
-    (was Frankenstein-merging). Crest was small (2 cases). Original caution kept below for history:
+    (was Frankenstein-merging). conditioned-on-source was small (2 cases). Original caution kept below for history:
   - **Trait** — TWO alternative trait SYSTEMS selected by a GAME OPTION (a game runs ONE or the other; a leader
     does NOT take one from each): the vanilla fixed leader-trait set (classic Civ4, easier) vs a
     developing-leaders system where traits ACCUMULATE over the game (harder). The GOAL is for both to express
@@ -978,7 +967,7 @@ Tooling under `Tools/Migration/`:
     "complex trait" class. The Trait workflow's FIRST job is to establish one-class-vs-two, then reconcile to a
     shared `trait` interface if they're separate — **both sets must align their authored surface in the code**
     (uniform `trait` definitions). (68 channels — big modifier surface.) Traits are SOURCES/ENABLERS (§0 cascade
-    ontology — never targets), so expect the conditioner **"CREST"** cases (§0) IN FORCE here; gather the full
+    ontology — never targets), so expect the conditioner **"conditioned-on-source"** cases (§0) IN FORCE here; gather the full
     set of them at this entity before codifying the stay-vs-invert boundary. **OWNER FRAMING (2026-06-14): this
     is Mount Doom — the HARDEST entity, worse than Building/Unit despite their far larger count**, because the
     pain is the TWO-SYSTEM reconciliation + TB-mega-mod decades-of-cruft, NOT the entry count (Building/Unit are

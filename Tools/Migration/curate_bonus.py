@@ -20,7 +20,7 @@ targets). So the bonus carries ONLY:
 this bonus is connected") is that SOURCE entity's own output, gated by the bonus via `enabled:{type:BONUS_X,
 scope, min:1}` / `per:{type:BONUS_X}` — authored ON the building/unit/project/civic/trait at THAT entity's pass,
 top-down only, NEVER inverted onto the bonus (modifier-spec §6 keep-on-source — supersedes the old pre-v3
-"invert onto the conditioner" rule; CREST RESOLVED). The prior `BONUS_BOOSTS` inversion table was that old
+"invert onto the conditioner" rule; conditioned-on-source RESOLVED). The prior `BONUS_BOOSTS` inversion table was that old
 approach and is removed.
 
 Tech edges are the tech's, dropped here: TechReveal/TechCityTrade -> tech.enables.bonuses (store PREREQ_FIELDS);

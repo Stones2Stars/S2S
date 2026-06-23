@@ -32,13 +32,13 @@ classes a unit gains/loses on upgrade (a swordsman → rifleman gains `gunpowder
 `mounted` upgrading to a helicopter). To be derived from **unitcombats** in the post-migration unitcombat pass,
 not the first cut.
 
-### Criminal-type — ⏳ deferred ("map the lunacy")
+### Criminal-type — `outlaw`
 The 13 `UNITAI_INFILTRATOR` units — `biker_gang` · `burglar` · `exile` · `gunfighter` · `hacker` · `mobster_car` ·
 `robber` · `rogue` · `scoundrel` · `street_gang` · `technarchist` · `thief` · `thug` — the hidden-nationality
-"criminal-but-not-criminal" group. Tag name(s) **TBD** (owner: a separate mapping pass).
+criminal / criminal-adjacent ruffian group → tag **`outlaw`** (owner 2026-06-23). Curator: `UNITAI_INFILTRATOR` → `outlaw`.
 
 ## Open
-- The **criminal-type** tag name(s) + the hidden-nationality nuance.
+- The hidden-nationality nuance of the `outlaw` group (how "criminal-but-not-criminal" reads in-game).
 - `gunpowder`/`mechanized`/… from **unitcombats** (post-migration).
 - **Completeness** — most units untagged for now (fine).
 - The **bSpy skill → `spy` tag** reconciliation (the spy notion is mis-filed as a skill too — drop the skill).

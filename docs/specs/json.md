@@ -262,9 +262,10 @@ Same per-kind bucket shape as `enables`.
 
 - **`obsoletes`** — supersession: new builds barred; **existing instances persist** (an obsolete unit stays on the map).
 - **`replaces`** — succession: a successor takes the predecessor's slot (transitive). Wins over `obsoletes`.
-- **`disables`** — a reversible removal whose fate is set by the **source's nature**: a **law/ban** source (a
-  policy forbidding a building) **destroys** the target (repeal ⇒ rebuild); an **effect** source (e.g. blackened
-  skies disabling telescopes) sends it **dormant** — parked, auto-resumes when the disabler clears, never rebuilt.
+- **`disables`** — a **law/ban** that **destroys** the target (a policy forbidding a building; repeal ⇒ rebuilt
+  from scratch). It is **not** the dormancy mechanism: a target that should go **dormant** while a condition holds
+  (e.g. an observatory under blackened skies — it parks and auto-resumes, never nuked-from-orbit) carries
+  `requires.operate.dormant` (§4.3), not a `disables`. The choice of *mechanism* IS the fate (enabler §2/§3).
 
 ### 4.3 `requires` — what this NEEDS (reversible, target-side)
 

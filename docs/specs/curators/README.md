@@ -27,7 +27,7 @@ curator's docstring + body. To read the map for an entity, **read its curator.**
 
 ## Contents
 - **building-cascade-conversion.md** — the locked cascade ontology model + the per-entity curator decisions
-  (stay-vs-invert, sources-never-targets, deferred edges, the post-migration purge backlog; **CREST** is still open).
+  (stay-vs-invert, sources-never-targets, deferred edges, the post-migration purge backlog).
 - **fixed-point-and-scales.md** — the curator de-scale registry: which Info fields are ×100 vs ×1 (the closed set of
   `…100()` accessors + the blind-spot fields). The fixed-point *model* lives in [json.md §3.6](../json.md).
 

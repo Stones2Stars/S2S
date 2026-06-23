@@ -92,7 +92,6 @@ Owner-ruled or curator-grounded with a clear meaning.
 | `rivalTerritory` | can enter rival territory |
 | `river` | attacks over a river without penalty (the river-only subset of `amphib`) |
 | `sabotage` | can perform sabotage |
-| `spy` | functions as a spy — ⏳ **being reclassified to the `spy` tag** (only spies run espionage missions); drop this skill, see [tags.md](tags.md) |
 | `stealPlans` | can steal plans (espionage mission) |
 | `suicide` | destroyed after attacking |
 | `tradable` | can be traded with another empire — consolidates the legacy `militaryTrade` + `workerTrade` (curator fold) |
