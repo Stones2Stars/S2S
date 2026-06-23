@@ -172,7 +172,8 @@ No bespoke host↔cargo family is needed. The full unit-stat family vocabulary
 ### Specialist counts
 
 - **`freeSpecialists:{<scope>:{any:N, SPECIALIST_X:M, …}}`** — granted specialists; `any` = an assignable-slot
-  bucket, a typed entry is auto-assigned. Leaf is a count (a list when conditioned).
+  bucket, a typed entry is auto-assigned. Leaf is a count (a list when conditioned). ⚠ Here `any` is a **count key**
+  (an untyped specialist slot), **NOT** the [json](json.md) §3.4 condition combinator.
 - **`allowedSpecialists:{<scope>:{SPECIALIST_X:N}}`** — the manual-assign cap, per-type only (no `any`).
 - `free` lives ON TOP of `allowed` (independent). The leaf being a count-by-type is the one sanctioned departure
   from the `.flat` leaf.

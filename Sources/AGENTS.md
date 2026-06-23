@@ -33,9 +33,10 @@ root `AGENTS.md`.
   run, so to verify anything in a FinalRelease run use the gated logging system (`[PERF]` via
   `gPerfLogLevel`/`Autolog__LogLevelPerf`, or a `log<Domain>AI` helper), which ships in every DLL —
   see `docs/reference/observability.md`.
-- `fbuild.bff` is the source-of-truth for compiled directories (the `.vcxproj` is IDE-only).
-  New `Sources/<Dir>/` must be added to `fbuild.bff`'s `.UnityInputPath` (~line 201) **and** the `.vcxproj`(+`.filters`),
-  or FastBuild fails at link with `LNK2001` while the IDE compiles fine.
+- `fbuild.bff` is the source-of-truth for compiled directories (the `.vcxproj` is IDE-only). **As of 2026-06-19
+  fbuild RECURSIVELY globs** every `.cpp` under `$SOURCE_DIR$`, so a new `Sources/<Dir>/` is compiled
+  **automatically — no `.UnityInputPath` edit needed** (regen the `.vcxproj`(+`.filters`) for IDE display only).
+  With recursive globbing an `LNK2001` now means a genuinely **missing definition**, not a missing `.UnityInputPath` entry.
 - Full dev bootstrap: `DevSetup.bat`. XML validation: `Tools/XmlValidator.exe -a`.
   Python callbacks: `Tools/XMLTools/verify-python-callbacks.py`.
 - See the root `AGENTS.md` for full build details.

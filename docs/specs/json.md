@@ -269,7 +269,7 @@ The means a target needs. Two timings:
 Each is an `all`/`any`/`noneOf` tree (§3.4). A single bare predicate may be given as a `disabled`/`enabled` clause:
 
 ```jsonc
-"requires": { "build": { "disabled": "IS_CAPITAL" } }   // can't build where a capital already exists
+"requires": { "build": { "disabled": "IS_CAPITAL" } }   // can't be built in a city that is already a capital
 ```
 
 `requires` holds genuine **needs** (resources, civics, religion, count thresholds of *other* types). It does not
@@ -350,7 +350,8 @@ The full address of a deposit:
 
 - **Split families** — one concept per key: yields are `food`/`production`/`commerce`; commerce splits into
   `gold`/`research`/`culture`/`espionage`; each property is its own family (`PROPERTY_CRIME`, …).
-- **Grouped families** keep `<member>` parts (`maintenance`, `defense`, …).
+- **Grouped families** keep `<member>` parts (`maintenance`, `defense`, …): `maintenance` uses a `distance`
+  member; `defense` uses an `amount` member (the additive defense %), with a `min` member for the floor.
 - The **unit plane** has its own family set (`strength`, `withdrawal`, `firstStrike`, `bombard`, `collateral`,
   `air`, `heal`, `movement`, `experience`, `workRate`, `cargo`, `vision`, `capture`, …); a `unit`-scope deposit is
   a self-accumulator.
@@ -423,9 +424,10 @@ promotion grant it?***
 - **`skills`** — **mutable** unit abilities, gained/lost via promotions (`blitz`, amphibious, walk-on-mountains,
   fly-over-water, …). *Promotion-grantable ⇒ skill.* Glossary: [skills.md](skills.md).
 - **`tags`** — **immutable, type-derived** membership: set at creation, re-set on **upgrade**, **purely for
-  accounting** — overlapping (`military`/`civilian`/`worker`/`spy`/`gunpowder`/`mechanized`/…), read by
-  `IS_<TAG>` predicates, **no behaviour or modifiers**. *Not* promotion-grantable (a swordsman must upgrade to a
-  rifleman to gain `gunpowder`).
+  accounting** — overlapping (`military`/`civilian`/`worker`/`spy`/`gunpowder`/`mechanized`/…), counted by the
+  engine/tally, **no behaviour or modifiers**. Tag membership is **accounting-only**; `IS_*` predicates are
+  **independent queries**, not tag-membership, though a predicate MAY be *defined* to encompass a tag (§3.7).
+  *Not* promotion-grantable (a swordsman must upgrade to a rifleman to gain `gunpowder`).
 - **`state`** — **transient** conditions (fired → counted down → over: `paralyze`/immobilise). **Greenfield** —
   never first-class; historically faked via pseudo-promotions + Python events.
 
@@ -439,7 +441,7 @@ The **section name carries the scope**, so the engine never guesses.
 "capabilities": { "moveOnWater": true }            // TEAM/empire
 ```
 
-Full glossaries: [skills.md](skills.md); the `tags` / `state` / `capabilities` glossaries are pending.
+Full glossaries: [skills.md](skills.md) · [tags.md](tags.md) · [state.md](state.md) · [capabilities.md](capabilities.md).
 
 ---
 

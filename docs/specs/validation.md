@@ -64,4 +64,4 @@ events carry the turn; the dry replay doesn't, and the cascade doesn't consume i
 ## See also
 - [http-endpoints.md](http-endpoints.md) — `/state` (inputs) vs `/extractor` (oracle); the verification flow.
 - [enabler.md](enabler.md) · [modifier.md](modifier.md) · [tally.md](tally.md) — the machines this rebuilds and proves.
-- [logging.md](logging.md) — the observability surface the shadow reads from. [event-spine.md](event-spine.md) — the per-turn shadow `[TAG]` events.
+- [event-spine.md](event-spine.md) — the per-turn `[TAG]` events the shadow reads from. [logging.md](logging.md) — the observability surface those events ride.

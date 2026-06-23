@@ -141,7 +141,7 @@ are grounded in the consuming code (high confidence unless noted), not general k
 | `pillageMarauder` | gains gold from pillaging / combat pillage |
 | `rBombardDirect` | (unit-combat) exempt from first-defender deprioritisation in ranged-bombard targeting |
 | `rBombardForceAbility` | lets a defensive-only unit still ranged-bombard (overrides `isOnlyDefensive`) |
-| `stampede` | can chain attacks after a kill while more defenders share the plot |
+| `stampede` | can chain attacks after a kill while more defenders share the plot (grant/revoke, §4) |
 | `stateReligion` | buildable only in a city that has the player's state religion |
 | `stealthDefense` | stealth ambusher — first-strike vs attackers, suppresses their move cost (option-gated, `COMBAT_WITHOUT_WARNING`) |
 | `triggerBeforeAttack` | ❌ **DEAD** — traps are a removed mechanic (owner); drop |

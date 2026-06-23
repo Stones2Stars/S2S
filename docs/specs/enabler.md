@@ -70,7 +70,9 @@ banned/destroyed things from HAVE, *then* generate from the corrected HAVE, *the
 while blackened, reactivate when clear); a rat-catcher disables the disease pest band; the lone converted
 law-disable today is the per-civ Neanderthal research ban (`TECH_SEDENTARY_LIFESTYLE`, reversible).
 
-**Multi-parent tech.** A child tech carries `requires.build.all:[T1,T2]` (AND) or `.any` (OR); `enables` proposes
+**Multi-parent tech.** A child tech carries `requires.build.all:[T1,T2]` (AND) or `.any` (OR); the `.any` here **is**
+the [json](json.md) §3.4 combinator (a list of OR-groups), so a single OR of techs is authored as ONE group —
+`requires.build.any:[[T1,T2]]`, not a flat `[T1,T2]`. `enables` proposes
 the child from one parent, `requires.build` confirms all parents forward from HAVE. The curator must RETAIN
 `AndPreReqs`/`OrPreReqs` as `requires.build.all`/`.any` (dropped on inversion today). `requires.build` only —
 techs are monotonic, no `operate`.

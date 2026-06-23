@@ -96,7 +96,7 @@ maintainer is cut, its sweep goes. `/extractor` is the durable shadow that remai
 ## `/decompose/*` — modifier source breakdown
 
 `/decompose/modifier` — a modifier value's **named-source decomposition** (every component attributed to a named
-source with numbers — the map-everything / no-guessing surface, [logging](logging.md) §6).
+source with numbers — the map-everything / no-guessing surface, [validation](validation.md)).
 NB the old `/diagnostic/cityInput` (pre-computed city yields) is **superseded by raw `/state/city/<id>/plots`**,
 per the raw-inputs principle above.
 

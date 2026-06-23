@@ -24,12 +24,13 @@ consumer — when a gate is off, nothing expensive ran.
 ## The `IEventConsumer` contract
 Consumers attach through **one C++03 interface, `IEventConsumer`** (a pure-virtual base, no data members) — the
 tally, `grants`, and logging are independent implementations pluggable behind it (the realized exemplar of the
-project's [interface-contract pattern](../architecture/patterns.md)). **Build order:** spine + accumulator →
+project's [interface-contract pattern](../architecture/patterns.md)). **Build order:** spine + accumulator (the scope/tally accumulator the [tally](tally.md) maintains) →
 logging (broad) → tally (selective, `DOMAIN`-only) → grants → [modifier](modifier.md) → [enabler](enabler.md).
 
 ## The C++ shape (`CvEventSpine.{h,cpp}`)
 - **`CvCascadeEvent`** is a POD with **two payload modes**: DOMAIN (`iType`/`iA`/`iB`/`iC`) vs logging
   (`iDomainTag`/`iEventId`/`aFields[]`, `SPINE_MAX_FIELDS = 16`). A field is `{int eTag; union{int i; float f; char* s; wchar_t* w;}}` (8B/POD).
+  The `iType`/`iA`/`iB`/`iC` mode is for **`DOMAIN`** events; the `aFields[]` mode is for **`DIAGNOSTIC`/`TRACE`** (logging) events.
 - **Per-domain isolation:** a domain registers via `spineRegisterDomain` (a line-prefix fn + a field-info fn with
   typed index kinds `SFT_BUILDING`/`UNIT`/`BONUS`/…); `cascadeRenderEventLine` formats. **Zero global field registry,
   zero shared edits per domain** — adding a domain touches only that domain.
