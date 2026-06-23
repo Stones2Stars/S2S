@@ -39,14 +39,15 @@ python Tools/Migration/curate_<entity>.py --write           # regenerate that en
 
 ## ⛔ FOOTGUNS — read before running anything
 
-- **NEVER run `engine.py --write` (or `--dry` then `--write`).** `engine.py` has a **dual
-  role**: it is (a) the **shared-helper module** every curator does `import engine` for
-  (`FIELD_RENAME`, text/generic helpers — alive and essential) AND (b) a **superseded
-  standalone mapping-driven emitter** whose `--write` rewrites the *whole* `Assets/Data/`
-  with **raw, un-curated shapes** (`cost:{iCost:…}`, `requires:null`, flat layout). Running
-  it **clobbers the entire curated database** (~9500 files) and litters untracked raw files.
-  Recovery: `git checkout -- Assets/Data && git clean -fd Assets/Data`. The curated data is
-  produced by the `curate_*.py` curators, **not** by `engine.py`. Import it; do not run it.
+- **Don't run `engine.py --write` for the curated DB — use the per-curator `curate_*.py`.**
+  `engine.py` has a **dual role**: (a) the **shared-helper module** every curator does
+  `import engine` for (`FIELD_RENAME`, text/generic helpers — alive and essential) AND (b) a
+  **superseded standalone mapping-driven emitter** whose `--write` rewrites the *whole*
+  `Assets/Data/` with the **OLD raw shapes** (`cost:{iCost:…}`, `prerequisites`, flat layout) —
+  not the curated `requires` shapes — so it produces the wrong (superseded) output over ~9500
+  files. **Not a catastrophe, though: regen is idempotent and takes seconds** — if you run it by
+  mistake just re-run the curators (or `git checkout -- Assets/Data`). The curated data is
+  produced by the `curate_*.py` curators, **not** by `engine.py`.
 - **`migrate_buildings.py` is SUPERSEDED** — the "first cut" whole-entity building converter,
   replaced by `curate_building.py`. Don't run it to (re)generate buildings; use
   `curate_building.py --write`.

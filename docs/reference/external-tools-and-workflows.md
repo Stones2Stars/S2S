@@ -115,7 +115,7 @@ The in-tree tooling this doc deliberately does **not** restate — go to its own
   1.32/1.55 + Python 2.4 stack locked by the closed Firaxis `.exe`), context for the boost.python crash
   signature above.
 - [`../../Tools/Migration/README.md`](../../Tools/Migration/README.md) — **the XML→JSON curators**
-  (`curate_<entity>.py --write`, `store.py`, `engine.py` and its ⛔ `--write` clobber footgun). The
+  (`curate_<entity>.py --write`, `store.py`, `engine.py` and its `--write` superseded-emitter footgun). The
   operational runner reference; the model lives in the cascade specs.
 - [`../specs/curators/fixed-point-and-scales.md`](../specs/curators/fixed-point-and-scales.md) — the ×100 fixed-point
   conversion and how the effective value is diffed against the live engine →

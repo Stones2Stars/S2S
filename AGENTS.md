@@ -225,7 +225,7 @@ re-sweep, try another) is the anti-pattern this rule kills: build the complete m
   truth (the live code, the actual data, the running game), not as settled. The owner explicitly
   flags their own statements as "trust but verify, not a confirmation." A stale doc line loses to
   the code; a guess that "looks obvious" has repeatedly produced regressions (and a whole-database
-  clobber when a tool's real behaviour wasn't checked first). Verify before you build on it, and
+  overwrite — running a superseded emitter — when a tool's real behaviour wasn't checked first). Verify before you build on it, and
   say what you verified it against.
 - **⛔ DO NOT GUESS, DO NOT INFER, DO NOT ASSUME — an assumption IS a shortcut (owner ruling 2026-06-20).**
   This is the conduct twin of trust-but-verify and THE NO-GUESSING RULE: where those say CONFIRM every claim and MAP
@@ -272,8 +272,9 @@ re-sweep, try another) is the anti-pattern this rule kills: build the complete m
   (a runner not documented, a footgun undocumented, a stale description), writing/correcting that
   doc is part of THE SAME work item — never "noted for the next agent." A lacking doc that bit you
   will bite the next contributor; close it in the same change. (Specific instance that prompted
-  this: the migration curators were undocumented and `engine.py`'s superseded `--write` clobbered
-  the curated DB → `Tools/Migration/README.md` written + the toolkit doc corrected.) This sharpens
+  this: the migration curators were undocumented and `engine.py`'s superseded `--write` raw-emitter was
+  a footgun — it overwrites the curated DB with old shapes (recoverable; regen is idempotent) →
+  `Tools/Migration/README.md` written + the toolkit doc corrected.) This sharpens
   the "keep knowledge in the repo" rule below: *encountering* a doc gap obligates *closing* it.
 - **KEEP THE SPECS CURRENT as the model changes — proactively, in the SAME change (owner ruling 2026-06-23).**
   When a model/mechanic changes, update its spec to match in the same work item; never leave the spec describing
