@@ -27,7 +27,7 @@ architecture rules that apply to DLL source.
 >
 > **Actual toolchain (from `fbuild.bff`):** the vendored **Microsoft Visual C++ Toolkit 2003 = MSVC 7.1 (VC2003)** compiler/linker
 > (`Build/deps/...`), **Python 2.4**, **Boost 1.32 / 1.55** (why BOTH Boosts coexist + why the whole stack is frozen by the
-> closed `.exe`: [`docs/dev/reference/engine/boost-situation.md`](docs/dev/reference/engine/boost-situation.md)). So the DLL is genuinely **C++03, 32-bit/x86** — *no* `std::thread`, *no* OpenMP,
+> closed `.exe`: [`docs/reference/engine.md`](docs/reference/engine.md)). So the DLL is genuinely **C++03, 32-bit/x86** — *no* `std::thread`, *no* OpenMP,
 > *no* C++11+. This is a hard compiler limit (the toolchain is locked to stay ABI/STL-compatible with the closed VC7.1 game `.exe`), **not**
 > a style convention. In-process threading means raw Win32 only. Do not modernize or replace the build chain/toolchain.
 
@@ -180,8 +180,8 @@ re-sweep, try another) is the anti-pattern this rule kills: build the complete m
   the state logic on the cascade + tally — you cannot safely delete a maintainer you cannot fully observe
   (map-before-delete). Every state behaviour (enabler-spec §14 H) gets a SHADOW that diffs the cascade's verdict
   against the live engine, turn over turn, until clean — *then* the legacy mechanism is deleted. Full ruling +
-  rationale: `docs/dev/reference/cascade/shadow.md` §1 + `docs/dev/explanation/cascade-architecture.md` §7.
-  Live surface: `docs/dev/reference/observability/http-server.md`
+  rationale: `docs/specs/validation.md` §1 + `docs/specs/logging.md` §7.
+  Live surface: `docs/reference/observability.md`
   (`/diagnostic/*` shadows incl. `sweep`/`placementSweep`; `[READJSON]`/`[PLACEMENT]` per-turn log lines).
 - **Delegate DATA-READING to the cheap `data-reader` sub-agent — never pull raw endpoint/log dumps into an expensive
   context (owner ruling 2026-06-18).** Reading the live surface at scale (a `placementSweep`/`sweep` dump is tens of KB;
@@ -195,71 +195,16 @@ re-sweep, try another) is the anti-pattern this rule kills: build the complete m
 
 ## Conventions
 
-- **Run the post-compaction reload hook — RECOMMENDED to mitigate context poisoning (owner ruling
-  2026-06-18).** Auto-compaction can silently drop this guide from context (the project-root
-  `CLAUDE.md` is re-read on compaction, but its `@AGENTS.md` / `Sources/AGENTS.md` content and
-  nested rules are NOT reliably re-injected), leaving an agent operating on a *poisoned* context that
-  looks complete but has lost the rules — the failure mode behind the recurring `.vcxproj`-is-truth
-  mistake. Mitigation, committed in the repo: a `SessionStart` hook (matcher `startup|clear|resume|compact`
-  in `.claude/settings.json`, via `.claude/hooks/session-start.ps1`) that re-injects
-  `.claude/post-compaction-reload.txt` — a short notice that orders a re-read of AGENTS.md and restates the
-  few absolute non-negotiables — AND lists the active read-gate docs (next bullet). It is the *digest*,
-  not a second source of truth; AGENTS.md stays authoritative. The hook runs the digest through
-  **PowerShell 7 (`pwsh`)**, which emits UTF-8 cleanly, so emoji/Unicode are fine — do NOT route it
-  through legacy Windows PowerShell 5.1 (`powershell.exe`), which mangles non-ASCII on stdout. This is
-  the harness-level twin of the in-file banners on the dead `.vcxproj`/`.sln`/`.filters`: put the
-  antidote where compaction can't summarize it away.
-- **Read-gates — the doc-read before touching a subsystem is MECHANICALLY ENFORCED, not exhorted (owner
-  ruling 2026-06-19).** *Why it is load-bearing:* this codebase is a cataclysmic clown fiesta — a
-  tightly-coupled, decades-deep Civ4/BTS/C2C tangle we are wrangling back to sanity — and **skipping a
-  subsystem's docs has routinely screwed agentic sessions** (an assumption reconstructed from stale code
-  or a context summary, then built on, then a regression). Every prior mitigation was an *exhortation*
-  ("read the docs first" — in `CLAUDE.md`, here, `MEMORY.md`, the `docs/dev/README.md` banner, the reload
-  hook), and exhortation FAILED: it leaves the stop-condition ("have I read enough?") to the agent's
-  judgement, which is biased toward getting to the task. So the read is now a **gate**, removing that
-  judgement. Two parts, committed:
-  - **Session-start read-first:** the `SessionStart` hook (above) lists, at every open/clear/resume/compact,
-    the docs of every read-gate marked `sessionStart` — with the directive *your first action is to Read
-    each in full before responding* (the owner: "when I open Claude or `/clear`, the first thing I want to
-    see is you reading docs — you can do it before accepting input").
-  - **PreToolUse hard-deny — ALL THREE touch-vectors gated (matcher `Edit|Write|MultiEdit|NotebookEdit|Task|Agent|Bash`;
-    owner ruling 2026-06-19 "close every loophole"):** `.claude/hooks/read-gate.ps1` parses the session transcript for
-    `Read` calls and **DENIES** until every gated doc was Read this session — across **(1) EDIT tools** to a gated
-    path, **(2) SUBAGENT launch** (`Task`/`Agent` — no dodging the gate by handing the gated edit to a minion), and
-    **(3) write-ish BASH** (a curator `--write`, or `>`/`tee`/`sed -i`/`cp`/`mv`/`rm`/`git checkout` into a gated path
-    — the curator-regen pipeline writes `Assets/Data` via a shell subprocess, which would otherwise bypass the edit
-    gate entirely). Read-only Bash passes. It catches the real recurring failure — *never opening the doc*
-    (comprehension can't be automated; "opened" can). It **fails OPEN, loudly** on its own errors. The way past the
-    gate is to **read the docs** — never to route around it. (Residuals trust-accepted: skim-`Read`, exotic
-    in-language file writes, and `.claude/` self-editing; `.claude/read-gates/README.md`.)
-  - **Where it lives:** one JSON manifest per subsystem in `.claude/read-gates/` (`docs`/`docsDirs` + trigger
-    `paths`); both hooks scan that dir, so adding a subsystem is a new JSON, no hook edits (`.claude/read-gates/README.md`).
-    The gate proves the docs were *opened*, not understood — but "never opened them" is the failure that keeps
-    happening, and that is fully gateable.
-  - **⛔ ALL DOCS, EVERY SESSION — until the OWNER declares the codebase under control (owner ruling 2026-06-19).**
-    *"I do not want per-issue select read list of docs. I want ALL the docs loaded into context, every time, until
-    such a time this codebase is under control — we do NOT need to be stingy on context."* A hand-curated `docs`
-    list DRIFTS (docs get added, the list doesn't → the gate goes green while the doc you need was never listed —
-    the recurring failure itself). So the gate now uses **`docsDirs` ENUMERATION** (`docs/dev/plans` +
-    `docs/dev/reference`, ~109 docs, recursive), complete by construction and self-maintaining. Selectivity right
-    now is *contributing to the problem, not solving it*; the owner — not the agent — *"will clearly and
-    unambiguously state when the codebase is under control,"* and only then does this relax. **Reading means
-    READING:** noting ≠ reading, skimming ≠ reading, grepping-instead-of-Read ≠ reading, deferring ≠ reading —
-    Read each gated doc IN FULL (all pages of a truncated large doc), never a partial/Grep substitute. **The ONLY
-    exception is a MINION** (below): a spawned sub-agent is given a clear, scoped instruction set and does NOT read
-    everything — the orchestrator (which has) briefs it with exactly the slice it needs.
-  - **MINION EXCEPTION (owner ruling 2026-06-19): a spawned sub-agent only needs the context it OPERATES
-    UNDER, not the full manifest.** The gate targets the **orchestrator** — the agent with broad edit authority
-    over the subsystem, which must hold the whole design. A minion is spawned for a NARROW slice; the orchestrator
-    (which HAS read the docs) briefs it with exactly the docs/excerpts/facts that slice needs and owns its
-    correctness, so forcing the minion to re-read all N docs is wrong (it also defeats the point of delegating to
-    a cheap, scoped context — e.g. the read-only `data-reader`/`Explore` minions). So: the session-start
-    read-first directive is for the MAIN session, and a minion is **exempt from the full-manifest read** — it
-    reads only what it was given to operate under. *(Enforcement note: the PreToolUse hook keys on the session
-    transcript; project minions today are overwhelmingly read-only so they don't hit the `Edit` gate. If an
-    edit-capable minion on gated paths ever becomes real, either brief it to Read the one doc its slice needs, or
-    refine the hook to recognize sub-agent context — a verify-then-change follow-up, since the hook stdin's
-    sub-agent signal is unconfirmed.)*
+> ⛔ **"Conventions" here means HARD RULES — binding by default, NOT norms to weigh.** The section label is
+> historical; the content is **law**. Every ruling below (and every `DEC-*` it links) is a rule you MUST obey unless
+> the **owner explicitly relaxes it** — never on an agent's own judgement. Each was paid for by an agent before you
+> charging ahead and getting its context **eaten by the kraken** (this codebase's standardless tangle), so reading
+> and obeying them up front is *far cheaper* than re-learning by failure (**"fast is slow, slow is fast"**). The
+> cross-cutting ones are indexed — with a front-and-centre binding banner — in the
+> [decisions ledger](docs/architecture/decisions.md); treat any pull toward *"this is just guidance / probably
+> fine / I'll infer it"* as the kraken's bait. *(Owner ruling 2026-06-22: the decisions are hard rules, not
+> suggestions; if a decision doc leaves that in any way unclear, the phrasing is wrong and gets redone.)*
+
 - **The real rule: `pwsh` == good, `powershell` == bad (owner ruling 2026-06-18).** `pwsh`
   (PowerShell 7) is the standard shell and the owner's primary shell; `powershell.exe` (Windows
   PowerShell 5.1) is the bad one — never invoke it, and never nest it inside a `pwsh` session. 5.1
@@ -292,7 +237,7 @@ re-sweep, try another) is the anti-pattern this rule kills: build the complete m
   not act past it — not the "obviously correct" part, not the "settled content" part — until they answer.** When you
   reach a gap, the only moves are VERIFY it against ground truth, or ASK; inventing the answer is the banned move.
   Minions carry the same rule in their base brief (`.claude/agents/data-reader.md`), and every minion you spawn must
-  be told it explicitly. Ledgered as [DEC-no-guessing](docs/dev/architecture/decisions.md#dec-no-guessing).
+  be told it explicitly. Ledgered as [DEC-no-guessing](docs/architecture/decisions.md#dec-no-guessing).
 - **"ALL" means EXHAUSTIVE — locust mode, not judgment-filtered (owner ruling 2026-06-20).** When the owner says do
   ALL of something (every source, every field, every call site), it means *"run over the codebase like locusts in a
   cornfield"*: enumerate EVERY item mechanically, **recursing into every aggregate down to its leaf sources**, and
@@ -307,22 +252,21 @@ re-sweep, try another) is the anti-pattern this rule kills: build the complete m
   load-bearing:* on the live-shadow parity path (the offline emulator was dropped) a single un-emitted source hides
   inside an aggregate → the divergence is unattributable → the guess/despair spiral. (Scoping is never a reason to
   skip a source: promote a private getter to public — there is zero sensitive data in a game mod.) Ledgered as
-  [DEC-all-means-all](docs/dev/architecture/decisions.md#dec-all-means-all).
+  [DEC-all-means-all](docs/architecture/decisions.md#dec-all-means-all).
 - **⛔ THE KRAKEN RULE — the OVERALL ruling these all serve (owner ruling 2026-06-20).** Skipping something,
   assuming something, guessing something, taking a shortcut, or in general **"perceived laziness" is the cardinal
   sin here, and the consequence is literal: the despair index.** *Why, stated plainly by the owner:* "this codebase
   is the kraken that will eat your ship, spit you out and crush you. It is **legendary in its lack of standard,
   coherence, or any reasonable consideration to common sense.** So we act accordingly." That is the WHY behind every
   rigor rule above — [[DEC-no-guessing]] (assumption = shortcut), [[DEC-all-means-all]] (more is always better than
-  less), "nothing is ever just a one-liner", the total-observability ("Orwell") bar, the read-gates. In a coherent
+  less), "nothing is ever just a one-liner", the total-observability ("Orwell") bar. In a coherent
   codebase a small assumption is usually harmless; in THIS one it is the move that gets your ship eaten, because there
   is no underlying standard to make the assumption safe. So the operating posture is **maximal rigor by default**:
   verify everything, enumerate exhaustively, take zero shortcuts, and treat any pull toward "this is probably fine /
   I don't need that / good enough" as the kraken's bait. **This is the STANDING default, not a phase of this task
   (owner ruling 2026-06-20):** the *earliest* the absolute completeness could relax is **AFTER a complete refactor
   has literally dropped ~half the existing lines** — and per the owner, *"honestly, maybe not even then."* Until the
-  owner **explicitly declares otherwise** (same shape as the read-gate's "all docs every session until the codebase
-  is under control"), maximal rigor stands by default. Ledgered as [DEC-kraken](docs/dev/architecture/decisions.md#dec-kraken).
+  owner **explicitly declares otherwise**, maximal rigor stands by default. Ledgered as [DEC-kraken](docs/architecture/decisions.md#dec-kraken).
 - **When documentation is lacking or wrong, FIX IT NOW — it is required, not a note-for-later
   (owner ruling 2026-06-17).** If you hit a gap, an ambiguity, or a misleading line in the docs
   (a runner not documented, a footgun undocumented, a stale description), writing/correcting that
@@ -331,8 +275,14 @@ re-sweep, try another) is the anti-pattern this rule kills: build the complete m
   this: the migration curators were undocumented and `engine.py`'s superseded `--write` clobbered
   the curated DB → `Tools/Migration/README.md` written + the toolkit doc corrected.) This sharpens
   the "keep knowledge in the repo" rule below: *encountering* a doc gap obligates *closing* it.
+- **KEEP THE SPECS CURRENT as the model changes — proactively, in the SAME change (owner ruling 2026-06-23).**
+  When a model/mechanic changes, update its spec to match in the same work item; never leave the spec describing
+  the old shape. *"Always endeavour to keep specs up to date; not doing so invites the kraken."* A stale spec is
+  **worse than none** — the next agent trusts it and builds on the wrong shape. This is the **proactive** twin of
+  fix-docs-now (which is reactive). (Instance: the cargo model grew `space`(carries-what)/`size`(footprint) and
+  `perUnit:`→`unit:` — specced in the same pass as the curator change.)
 - **ACTIVELY find, READ, and VERIFY the docs for whatever you are working on — BEFORE and WHILE you work,
-  not after being told (owner ruling 2026-06-18).** For ANY subsystem you touch: search `docs/dev/` for it
+  not after being told (owner ruling 2026-06-18).** For ANY subsystem you touch: search `docs/` for it
   (grep the topic; read the relevant spec/reference page end-to-end) and confirm the intended design FROM THE
   DOC. Do **not** reconstruct the model from the live code or from memory, and do **not** propose matching legacy
   behaviour before checking whether the spec deliberately diverges from it. **A HOLE in the docs is NOT the
@@ -349,20 +299,19 @@ re-sweep, try another) is the anti-pattern this rule kills: build the complete m
 - **⛔ "FAST IS SLOW, SLOW IS FAST" — read the docs FULLY; skimming is NEVER faster (owner ruling 2026-06-21, GLOBAL).**
   If you think reading a doc partially — or only the section you *assume* is relevant, or grepping a keyword instead of
   reading it end-to-end — is faster, **you are wrong.** The 5% "saved" by skimming routinely costs far more downstream:
-  re-derivation, wrong fixes built on a misread, and burned context. *Instance that prompted it:* skimming this very
-  file's read-gate doc `migration-renames.md` on the simple/complex **trait split** led to **five** rounds of
+  re-derivation, wrong fixes built on a misread, and burned context. *Instance that prompted it:* skimming
+  `migration-renames.md` on the simple/complex **trait split** led to **five** rounds of
   reverse-engineering a procedure that was already fully documented and "nailed" — ~half a context window wasted to save
   a few minutes of reading; the moment it was read in full the fix was obvious and landed at once. So **read each
-  gated/subsystem doc IN FULL before acting.** This is the conduct twin of the read-gate (which only proves a doc was
-  *opened*) and a sibling of THE KRAKEN RULE / no-guessing (skimming is a shortcut; a misread becomes an assumption).
-  Ledgered as [DEC-fast-is-slow](docs/dev/architecture/decisions.md#dec-fast-is-slow).
+  subsystem doc IN FULL before acting.** This is a sibling of THE KRAKEN RULE / no-guessing (skimming is a shortcut; a misread becomes an assumption).
+  Ledgered as [DEC-fast-is-slow](docs/architecture/decisions.md#dec-fast-is-slow).
 - **Nothing here is ever "just a one-liner" — expect hidden consequences.** This is a
   large, tightly-coupled Civ4/C2C codebase with non-obvious cross-cutting wiring (combat
   math shared across UI/AI/resolution, name-tagged save serialization, dual Python-enum
   registration, FastBuild unity grouping that exposes latent missing includes, graphics
   paths that run pre-init, the dead `.vcxproj`, etc. — see "Key Subsystem Knowledge"). Before
   any change, **read the relevant core docs first** (this file, the nearest `AGENTS.md`, and
-  the subsystem's `docs/dev/` notes), trace every caller/consumer of what you touch, and
+  the subsystem's `docs/` notes), trace every caller/consumer of what you touch, and
   assume a small edit has ripples until you've checked. Do not skip this because a change
   "looks trivial" — that assumption has repeatedly produced regressions and contradicted
   documented design.
@@ -387,11 +336,11 @@ re-sweep, try another) is the anti-pattern this rule kills: build the complete m
   can be made to define the structure and do ONE proper cleanup. **(2) Restating / inefficiency.** The owner
   is **not omnipotent and does not want to be treated as such** (trust-but-verify their words like any other),
   but gets frustrated by inefficiency and **having to restate the same thing repeatedly** — so capture a
-  ruling durably the first time it is given ([DEC-WF-rulings-to-repo](docs/dev/architecture/decisions.md#dec-wf-rulings-to-repo)
-  + the [decisions ledger](docs/dev/architecture/decisions.md)) and do the proper cleanup once instead of
+  ruling durably the first time it is given ([DEC-WF-rulings-to-repo](docs/architecture/decisions.md#dec-wf-rulings-to-repo)
+  + the [decisions ledger](docs/architecture/decisions.md)) and do the proper cleanup once instead of
   churning. The owner makes the structure call; your job is to surface the risk and the options efficiently
-  and not re-litigate settled ones. Conduct-level twin of [DEC-proper-once](docs/dev/architecture/decisions.md#dec-proper-once).
-  → [DEC-WF-surface-sprawl](docs/dev/architecture/decisions.md#dec-wf-surface-sprawl).
+  and not re-litigate settled ones. Conduct-level twin of [DEC-proper-once](docs/architecture/decisions.md#dec-proper-once).
+  → [DEC-WF-surface-sprawl](docs/architecture/decisions.md#dec-wf-surface-sprawl).
 - **ARCHITECTURAL NORTH-STAR — CLEAN ARCHITECTURE + interface-based contracts (owner is a .NET dev at core,
   2026-06-18).** The owner thinks in **Clean Architecture**: dependency inversion (depend on interfaces/contracts,
   not concretions), isolated layers with explicit boundaries, and a **functionality-based implementation approach**
@@ -432,15 +381,17 @@ re-sweep, try another) is the anti-pattern this rule kills: build the complete m
 - **The info JSONs (`Assets/Data/**`) are a DERIVED artifact — regenerate and commit them
   FREELY, never ask (owner ruling 2026-06-22).** They are curator OUTPUT, **never hand-edited**,
   so **right-or-wrong lives in the CURATOR, never in the JSON** — a stale-vs-curator JSON is not
-  a risk, only out-of-sync, fixed by `python curate_<x>.py --write`. Therefore: (a) **regenerating
-  the JSON is a just-do-it operation — never prompt for it**; (b) **commit the JSONs routinely**,
+  a risk, only out-of-sync, fixed by `python curate_<x>.py --write`. **Regeneration is IDEMPOTENT and CHEAP** — re-running `--write` reproduces the same files; nothing about it
+  is "heavy" or "dangerous." Therefore: (a) **regenerating the JSON is a just-do-it operation — never prompt for
+  it**, and it is the **routine step immediately after a verified curator change** (fix curator → `--sample`
+  verify → `--write` → **commit the regenerated data alongside the curator**, so the two never dangle apart); (b) **commit the JSONs routinely**,
   even mid-migration / "half done" (leaving the hundreds of modified JSONs uncommitted just bloats
   the working tree; committing the current regen state keeps it sane). This does NOT loosen "commit
   only on explicit ask" for gameplay CODE — it means the derived JSONs ride along when you commit,
   and a regen never needs a prompt.
 - **Docs-only changes may be committed and pushed straight to `main`** (owner ruling
-  2026-06-12): the indexes (`docs/indexes/DESPAIR_INDEX.*`, `docs/indexes/REALISM_INDEX.*`), player docs,
-  `docs/dev/` notes, AGENTS.md — provided NOTHING else rides in the commit. Anything
+  2026-06-12): the indexes (`indexes/DESPAIR_INDEX.*`, `indexes/REALISM_INDEX.*`), player docs,
+  `docs/` notes, AGENTS.md — provided NOTHING else rides in the commit. Anything
   gameplay-affecting (C++ code, `Assets/XML` data, Python) keeps the careful path:
   branch + PR + playtest per the conventions above.
   - **It is PERMISSIVE, not mandatory (owner clarification 2026-06-19): the allowance exists mostly to
@@ -449,7 +400,7 @@ re-sweep, try another) is the anti-pattern this rule kills: build the complete m
     `#428/#430` cascade specs on `json-data-migration`) **belong with that work and commit on the
     branch.** Use judgement: branch-coupled doc → its branch; cross-cutting/standalone doc → `main` (to
     dodge the conflict). **The canonical "→ `main`" docs are the INDEXES** (owner 2026-06-19:
-    `docs/indexes/DESPAIR_INDEX.*`, `REALISM_INDEX.*`, the COMPLEXITY catalog) — they pertain to no single
+    `indexes/DESPAIR_INDEX.*`, `REALISM_INDEX.*`, the COMPLEXITY catalog) — they pertain to no single
     branch, so straight-to-`main` is exactly right for them. A cascade spec on `json-data-migration` is the
     opposite case: branch-coupled, stays on the branch.
 - **Verify the current branch immediately before every commit.** Run
@@ -492,7 +443,7 @@ re-sweep, try another) is the anti-pattern this rule kills: build the complete m
   minimal and local — don't sprawl it or gratuitously refactor around it, because ripples bite (the
   no-one-liner rule). But this is **not** a brake on deliberate structural rework: the #428/#430 cascade,
   the docs rebuild, and dissolving the `Cv*AI` god-classes are **large by design** and never subordinate to
-  "minimal" — they answer to [DEC-proper-once](docs/dev/architecture/decisions.md#dec-proper-once). Same
+  "minimal" — they answer to [DEC-proper-once](docs/architecture/decisions.md#dec-proper-once). Same
   instinct, not opposites: don't make an edit bigger or riskier than its goal needs; when the goal *is* the
   structure, build it whole and right the first time. (The same clarification applies to the identical line
   in `Sources/AGENTS.md`.)
@@ -525,21 +476,24 @@ subsystem works, a design decision, a plan, a non-obvious "gotcha", the state of
 standing initiative — write it into the appropriate committed doc *in the same
 change*, so every contributor and every agent sees one shared source of truth:
 
-All documentation lives under **`docs/`**, split by audience (map: [`docs/README.md`](docs/README.md)):
-`docs/dev/` (engineers/agents), `docs/modders/` (data authoring), `docs/players/` (manuals/mechanics/FAQs),
-`docs/indexes/` (the hosted DESPAIR/REALISM/COMPLEXITY catalogs), `docs/crap/` (half-outdated holding pen).
-(Engine docs used to live under `Sources/docs/` — consolidated into `docs/dev/` on 2026-06-17.)
+All documentation lives under **`docs/`** (map: [`docs/README.md`](docs/README.md)) — the condensed spec surface
+rebuilt 2026-06-23: **`docs/specs/`** (the JSON data-model + the cascade/system specs — `json`/`naming`,
+`enabler`/`modifier`/`tally`, `event-spine`, `logging`, `validation`, the unit `skills`/`tags`/`state`/
+`capabilities`, `http-endpoints` — plus the transient `curators/`), **`docs/reference/`** (how the engine +
+subsystems behave today), **`docs/architecture/`** (the decisions ledger, `north-star`, `patterns`),
+**`docs/plans/`** (`structural-cleanup/` the cutover bulldozer + `parked/` un-killed intent). The hosted
+DESPAIR/REALISM/COMPLEXITY catalogs live at **`indexes/`** (repo root, served via Pages).
 
-- How existing code behaves → `docs/dev/reference/`.
-- A change or initiative you intend to make (plan, scope, rollout, removal) → `docs/dev/plans/`.
-- A superseded/killed dev idea → record it in `docs/dev/architecture/superseded-ideas.md` (what it was, why
+- How existing code behaves → `docs/reference/`.
+- A change or initiative you intend to make (plan, scope, rollout, removal) → `docs/plans/`.
+- A superseded/killed dev idea → record it in `docs/architecture/superseded-ideas.md` (what it was, why
   it's dead, what replaced it) so it isn't revived; don't carry the stale copy in the live set.
 - Cross-cutting, must-not-rediscover facts → "Key Subsystem Knowledge" above (or the nearest `AGENTS.md`).
-- Player-facing rules, manuals, FAQs → `docs/players/`. How to author data / mods → `docs/modders/`.
+- The mod's front-door / build-pipeline readme (the code repo's mirror) → `docs/MOD-README.md`.
 - A newly-found bug of exceptional absurdity may *additionally* earn an entry in
-  [`docs/indexes/DESPAIR_INDEX.md`](docs/indexes/DESPAIR_INDEX.md) (owner-sanctioned, lighthearted,
+  [`indexes/DESPAIR_INDEX.md`](indexes/DESPAIR_INDEX.md) (owner-sanctioned, lighthearted,
   optional — never a substitute for the real fix/issue/doc). Its sibling
-  [`docs/indexes/REALISM_INDEX.md`](docs/indexes/REALISM_INDEX.md) catalogues "super realistic" *mechanics*
+  [`indexes/REALISM_INDEX.md`](indexes/REALISM_INDEX.md) catalogues "super realistic" *mechanics*
   — absurdities working exactly as designed (same policy: optional, never a substitute
   for the real issue).
 - **Rules and conventions for agents/contributors → THIS file (`AGENTS.md`), always.**
@@ -550,7 +504,7 @@ All documentation lives under **`docs/`**, split by audience (map: [`docs/README
 Any per-developer assistant memory store is a personal *index/cache* only — it is
 **not** a substitute for the in-repo copy, and the in-repo copy is authoritative.
 If you record something locally, mirror the shareable part into the repo in the same
-change, and keep these docs current as the code moves. See `docs/dev/README.md`.
+change, and keep these docs current as the code moves. See `docs/README.md`.
 
 **Handovers are TRANSIENT one-time relays — nothing durable may hinge on one (owner ruling 2026-06-17).** A
 handover is **in essence a task list** — work done + work still upcoming — whose only job is to carry state to
@@ -558,7 +512,7 @@ the NEXT session; once that session has read it, it stops being a handover. (Wri
 is a fine practice; it just is never load-bearing.) Therefore:
 
 - **Nothing durable may hinge on data that lives ONLY in a handover.** Any fact, ruling, decision, or state that
-  matters beyond the next session MUST be captured in a durable doc (the relevant `docs/dev/` spec/reference, or
+  matters beyond the next session MUST be captured in a durable doc (the relevant `docs/` spec/reference, or
   this `AGENTS.md`) in the SAME change — never left only in the handover.
 - **A durable doc must NEVER reference a handover as "latest / read-first / resume here"** (that is literally the
   handover's own job), nor cite one as the home of a ruling or load-bearing detail. A durable doc must read
@@ -571,12 +525,12 @@ When the owner makes a ruling in conversation — a design decision, a workflow 
 relaxed or tightened constraint, a "from now on do X" — writing it to assistant memory is
 NOT enough and never the end state. In the SAME work item (same commit/PR, without being
 asked) write it into the right repo home: workflow/convention rulings → this file's
-Conventions; subsystem/design rulings → the relevant `docs/dev/` page. A ruling that
+Conventions; subsystem/design rulings → the relevant `docs/` page. A ruling that
 exists only in one developer's local memory is invisible to every other contributor and
 agent, and has repeatedly had to be re-requested — treat "saved to memory only" as an
 unfinished task.
 
-**The discoverability half of that rule: the DECISIONS LEDGER ([`docs/dev/architecture/decisions.md`](docs/dev/architecture/decisions.md))
+**The discoverability half of that rule: the DECISIONS LEDGER ([`docs/architecture/decisions.md`](docs/architecture/decisions.md))
 (owner ruling 2026-06-19).** Cross-cutting rulings kept getting re-stated doc-after-doc because of a
 self-reinforcing loop: the capture-immediately rule above is correct → but compaction wipes an agent's memory
 that it ever read the ruling → and there was no discoverable canonical home, so "is this already recorded?" was
@@ -586,7 +540,7 @@ breaks the loop: it is an **INDEX, not a re-statement** — one stable ID per ru
 summary, and a pointer to the authoritative home. **Operational rules:** (1) **before adding any cross-cutting
 ruling anywhere, grep the ledger's ID table first** — that one-grep existence check is the whole point; (2)
 capture a cross-cutting ruling by adding/seeing its line in the ledger and recording the full text in its home
-(this file's Conventions, or the relevant `docs/dev/` page), **never** by restating it in a second doc; (3) a
+(this file's Conventions, or the relevant `docs/` page), **never** by restating it in a second doc; (3) a
 doc that needs to invoke a ledgered ruling **links `[DEC-id]`**, it does not re-articulate it. The ledger does
 not replace this HARD RULE — it makes it cheap to obey and impossible to not-know-about.
 

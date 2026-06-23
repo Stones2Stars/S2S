@@ -9,7 +9,7 @@ reason to drop it. They are **not** superseded/killed (those go to
 [`../../architecture/superseded-ideas.md`](../../architecture/superseded-ideas.md)); they are simply *parked*.
 
 ## ⚠ These are carried AS-IS — not yet rebuilt to the docs2 grounding standard
-They came straight from the old `docs/dev/plans/` set, so they may carry **stale paths** (the `Sources/`
+They came straight from the old `docs/plans/` set, so they may carry **stale paths** (the `Sources/`
 reorg) and **stale status**. **Do not trust their detail as current.** Each gets the full grounding +
 consolidation treatment **when its initiative becomes active** — at which point it moves into the active
 [`../README.md`](../README.md) roadmap. Until then it preserves the *intent* only.

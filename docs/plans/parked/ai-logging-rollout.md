@@ -60,7 +60,7 @@ log function + instrument in place (no class).
 **Header taxonomy doc-comment** — every module documents its full tag table + level
 mapping in a doc-comment block (mirror `CvWorkerAI.h:74-103` / `CvDecisionAI.h`). If the
 module has no class, put the block atop the owning function or in a short
-`docs/dev/<domain>-ai-log.md`.
+`docs/<domain>-ai-log.md`.
 
 **Per-branch implementation checklist** (reference implementation = the CvDecisionAI work):
 
@@ -110,7 +110,7 @@ only `*AI` holdovers — already shipped, left unchanged. Lock this registry bef
 
 **`ai-logging/conventions`** (do first, tiny)
 
-- Add `docs/dev/ai-logging-conventions.md` capturing Section 1 (the registry + level
+- Add `docs/ai-logging-conventions.md` capturing Section 1 (the registry + level
   vocabulary). Single source of truth every other branch links to. No code.
 
 **`ai-logging/war`** — `[TAI]` → WarAI.log (gTeamLogLevel)

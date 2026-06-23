@@ -16,7 +16,7 @@ and mass-migration are NOT how we proceed).
 
 ### ⇒ RESUME — how to pick up the migration
 
-> This doc is **not** the resume entry point. Resume via the [`docs/dev/README.md`](../README.md) "re-read after
+> This doc is **not** the resume entry point. Resume via the [`docs/README.md`](../README.md) "re-read after
 > a compaction" banner + the **#428/#430 spec cluster** it lists (data-model / enabler / modifier / tally /
 > event-spine specs, cascade-engine-430, migration-renames) — read those first, then
 > work this doc top-down.
@@ -721,7 +721,7 @@ Tooling under `Tools/Migration/`:
   `grants` (+ `grants.ai`); advanced-start → `identity.advancedStart` (not a modifier, needs review); `Goodies`
   → `identity`. All 12 written, every tag classified. Scope = APPLICATION level (empire/team/world/city),
   DISTINCT from the SOURCING handicap (own vs game vs team — a consumption rule in
-  `docs/dev/reference/handicaps.md`: base ← own, `ai` ← game, EXCEPT `advancedStart.ai` ← own).
+  `docs/reference/handicaps.md`: base ← own, `ai` ← game, EXCEPT `advancedStart.ai` ← own).
   `maintenance` mirrors `CvCity::calculateBaseMaintenanceTimes100` (components each modified, then a
   whole-maintenance modifier = the future `all` member); GOLD-only, post-income; `maxColony` caps the colony
   component. Verified vs 3 ground truths: the hand-built prototype (value-for-value), `CvHandicapInfo.h`,

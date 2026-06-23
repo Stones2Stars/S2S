@@ -108,21 +108,21 @@ A separate **ASP.NET Core Razor Pages** dashboard at `c:\code\s2s\GameTracker` (
 
 The in-tree tooling this doc deliberately does **not** restate — go to its owner:
 
-- [`../../AGENTS.md`](../../../AGENTS.md) — **the build wrapper + validators.** `Tools/_Build.ps1` (FastBuild
+- [`../../AGENTS.md`](../../AGENTS.md) — **the build wrapper + validators.** `Tools/_Build.ps1` (FastBuild
   wrapper; configs/verbs), `Tools/XmlValidator.exe -a`, `Tools/XMLTools/verify-python-callbacks.py`, and the
   frozen VC7.1/C++03 toolchain facts all live in the root guide's "Build And Test" section.
-- [`engine/boost-situation.md`](engine/boost-situation.md) — **why the toolchain is frozen** (the dual Boost
+- [`engine.md`](engine.md) — **why the toolchain is frozen** (the dual Boost
   1.32/1.55 + Python 2.4 stack locked by the closed Firaxis `.exe`), context for the boost.python crash
   signature above.
-- [`../../Tools/Migration/README.md`](../../../Tools/Migration/README.md) — **the XML→JSON curators**
+- [`../../Tools/Migration/README.md`](../../Tools/Migration/README.md) — **the XML→JSON curators**
   (`curate_<entity>.py --write`, `store.py`, `engine.py` and its ⛔ `--write` clobber footgun). The
   operational runner reference; the model lives in the cascade specs.
-- [`cascade/fixed-point-and-scales.md`](cascade/fixed-point-and-scales.md) — references the **offline cascade
+- [`../specs/curators/fixed-point-and-scales.md`](../specs/curators/fixed-point-and-scales.md) — references the **offline cascade
   tester** `Tools/ModifierCalc/cascade_sim.py` (imports the human JSON, applies the ×100 conversion, diffs
   the effective value against the live engine) → [DEC-fixedpoint-x100](../architecture/decisions.md#dec-fixedpoint-x100).
   The `readjson` harness (`Tools/ReadJson/`) is the in-DLL JSON loader's offline driver, exercised by the
   same value-verification flow.
-- [`observability/README.md`](observability/README.md) — **the live surveillance surface** the crash/known-
+- [`observability.md`](observability.md) — **the live surveillance surface** the crash/known-
   issue debugging and GameTracker both read against (HTTP `127.0.0.1:7227`, `/events`, `/diagnostic/*`,
   gated logs) → [DEC-obs-scale](../architecture/decisions.md#dec-obs-scale). Delegate bulk data reads to the
   `data-reader` sub-agent rather than pulling raw dumps into context.

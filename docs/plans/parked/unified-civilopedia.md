@@ -39,8 +39,8 @@ we get there.
 ## 2. Content taxonomy & single sources (game-side)
 
 Three kinds of game content, each with exactly one authoritative home. (Developer reference —
-`docs/dev/` — is the fourth kind and is already single-sourced under
-[`docs/dev/README.md`](../README.md); not repeated here.)
+`docs/` — is the fourth kind and is already single-sourced under
+[`docs/README.md`](../README.md); not repeated here.)
 
 | Kind | Single source of truth | Surfaces it should feed (generated/rendered, never re-typed) |
 |---|---|---|
@@ -121,7 +121,7 @@ the mechanism the cleanup above feeds, and the reason the data becomes uniformly
    (every entity/concept key has GameText).
 4. **Don't port garbage.** A category is not declared "done" (or handed downstream) until it is
    clean and declarative. We never bless data we know is dead or malformed.
-5. **Docs governance is already the model.** [`docs/dev/README.md`](../README.md) + the
+5. **Docs governance is already the model.** [`docs/README.md`](../README.md) + the
    `AGENTS.md` "every owner ruling goes into the repo immediately" rule keep knowledge
    single-sourced; this plan extends the same discipline to game *content*.
 

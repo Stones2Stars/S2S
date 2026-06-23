@@ -107,8 +107,8 @@ intro + [json.md](specs/json.md) §8. **A unit carries three blocks; the empire 
   `/can/{construct,train,…}`, `/decompose/{city,modifier}`, the snapshots, `/extractor/*`.
 - **Launch:** tighten `docs/Civ4_BTS_LaunchParameters.md` to the verified S2S procedure + add an AGENTS.md note
   that agents may launch via `agentstart.bat` (reverses the old "agents don't start the game" rule).
-- **all-`docs/dev` cold-read purge-triage** (owner-chosen scope) — not started.
-- Minor: the modder-README / data-model footer cites stale `docs/dev/plans/` paths.
+- **all-`docs` cold-read purge-triage** (owner-chosen scope) — not started.
+- Minor: the modder-README / data-model footer cites stale `docs/plans/` paths.
 
 ## 5. Launch capability (BUILT + VERIFIED — working tree only, not committed)
 

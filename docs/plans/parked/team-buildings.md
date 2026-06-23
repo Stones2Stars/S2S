@@ -1,6 +1,6 @@
 # Unified effect-scope platform (driver: team buildings) — design sketch
 
-> **♻ RECOVERED + FACT-CHECKED 2026-06-17** (lost in the `Sources/docs → docs/dev` shuffle; no delete commit).
+> **♻ RECOVERED + FACT-CHECKED 2026-06-17** (lost in the `Sources/docs → docs` shuffle; no delete commit).
 > **The CONCEPT here is WANTED and current (owner 2026-06-17): empire/team-scope "buildings" as the replacement
 > for per-city autobuilds (`FreeBuilding` / `bAutoBuild`), with a shared hammer pool — #421.** This is its design
 > home. What's **superseded is the implementation vehicle**: the "unified effect-scope platform" = the #421/#423

@@ -1,6 +1,6 @@
 # Constructibility & the prerequisite model — the legacy "can I build/train this?" surface
 
-> **Status:** reference   ·   **Verified against:** as-shipped behaviour after #195 (carried from `docs/dev/reference/constructibility-and-prerequisites.md`; re-confirm against the named functions before relying on a detail).
+> **Status:** reference   ·   **Verified against:** as-shipped behaviour after #195 (carried from `docs/reference/constructibility-and-prerequisites.md`; re-confirm against the named functions before relying on a detail).
 > **Grounding:** the live DLL functions named below (`CvCity::canConstruct`, `CvPlayer::canTrain`, `cvInternalGlobals::buildConstructibilityEnablerIndex`, `CvBuildingInfo::buildConstructRequirements`, `CvGameTextMgr::buildBuildingRequiresString`). Citations are by **function name** — line numbers drift, so confirm the function, not any integer.
 > This is the **legacy** constructibility machinery (the introspectable `ConstructRequirement` model, the static enabler reverse-index, and the help-text consumers) and how it maps onto the cascade's enabler "can I?" surface. It is the as-shipped behaviour the cascade enabler is replacing — read this to understand the mechanism being shadowed/cut, not a description of the cascade itself.
 
