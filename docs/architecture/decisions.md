@@ -50,6 +50,7 @@
 | [DEC-fast-is-slow](#dec-fast-is-slow) | "Fast is slow, slow is fast" — reading the docs FULLY/completely is never the slower path; skimming to save 5% routinely costs far more downstream (re-derivation, wrong fixes, wasted context). Read gated/subsystem docs in full before acting | `AGENTS.md` |
 | [DEC-map-before-delete](#dec-map-before-delete) | You cannot delete a maintainer you cannot fully observe; shadow it until clean, then cut | `AGENTS.md`; old `cascade-mapping-inventory.md` §A |
 | [DEC-parity](#dec-parity) | **Parity is the ONLY goal** (reversed 2026-06-23) — exact match; no "adjacent"/tolerance/care-scale; a divergence is a data-collection gap, not a math difference | [`specs/validation.md`](../specs/validation.md) |
+| [DEC-no-parity-results-in-docs](#dec-no-parity-results-in-docs) | Parity-pass results (divergence counts, checklists, pilot numbers) stay OUT of the docs — stale results poison contexts | [`specs/validation.md`](../specs/validation.md) |
 | [DEC-tally-serializes-nothing](#dec-tally-serializes-nothing) | Tally + scope accumulators serialize NOTHING — rebuilt from loaded objects on load | [`reference/cascade/tally.md` §4](../reference/cascade/tally.md) |
 | [DEC-save-remove-is-soft](#dec-save-remove-is-soft) | Removing a serialized field/Type is SOFT in the name-keyed format; only 4 cases are HARD | [`reference/engine/save-load-format.md`](../reference/engine/save-load-format.md) |
 | [DEC-derived-never-trusted](#dec-derived-never-trusted) | Derived data is never trusted from a save; reset() marks dirty and recomputes | [`reference/engine/save-load-format.md`](../reference/engine/save-load-format.md) |
@@ -240,6 +241,15 @@ framing (and the retired six-rung "care scale") was constantly abused to wave mi
 bug has surfaced in any actual legacy *calculation*, so the math matches; a divergence is therefore a
 **data-collection gap** (a source the cascade didn't gather), never a formula difference — map it and close it.
 **Home:** [`specs/validation.md`](../specs/validation.md). Related: [[DEC-map-before-delete]], [[DEC-no-guessing]].
+
+### DEC-no-parity-results-in-docs
+**Parity-pass results stay out of the durable docs (owner ruling 2026-06-23).** Divergence counts, parity
+checklists, per-pass pilot numbers — none of it goes in the docs; stale results **poison contexts** (an agent
+fixates on a number and misdiagnoses — a ~1100-building enable diff was repeatedly misattributed to a band-model
+change it had nothing to do with). The spec says what the model **is**; the curator code + the live shadow prove it;
+the result is ephemeral. This is also why the migration-verification doc set is drastically reduced — the old→new
+map lives as **curator comments**, not a documented result. **Home:** [`specs/validation.md`](../specs/validation.md).
+Related: [[DEC-parity]], [[DEC-no-guessing]].
 
 ### DEC-tally-serializes-nothing
 The tally + scope accumulators serialize nothing — rebuilt from authoritative loaded objects on load; true
