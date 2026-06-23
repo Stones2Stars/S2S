@@ -756,6 +756,7 @@ public:
 	void updateYield();
 	int calculateYield(YieldTypes eIndex, bool bDisplay = false) const;
 	DllExport int getYield(YieldTypes eIndex) const;
+	int getExtraYield(YieldTypes eIndex) const { return m_aExtraYield[eIndex]; }  // stored per-plot extra yield (game event/effect state; calculateYield addend)
 	int calculateNatureYield(YieldTypes eIndex, TeamTypes eTeam, bool bIgnoreFeature = false) const;
 	int calculateBestNatureYield(YieldTypes eIndex, TeamTypes eTeam) const;
 	int calculateTotalBestNatureYield(TeamTypes eTeam) const;
