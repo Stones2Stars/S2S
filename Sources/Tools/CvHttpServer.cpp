@@ -4,6 +4,11 @@
 #include "CvBonusInfo.h" // bonus-name resolution in the /diagnostic/whyNot trace
 #include "CvImprovementInfo.h" // cityInput loadout: worked-plot improvement type
 #include "CvTraitInfo.h" // cityInput loadout: player trait list
+#include "CvYieldInfo.h" // /extractor world.config: per-yield trade-modifier base (YieldInfo.getTradeModifier)
+#include "CvGameOptionInfo.h" // /extractor world.options: active game-option type names
+#include "CvProjectInfo.h"    // /extractor team.projects: completed project type names
+#include "CvHeritageInfo.h"   // /extractor empire.heritages: owned heritage type names
+#include "CvEraInfo.h"        // /extractor empire.era: current era type name
 #include "Engine/CvCity.h"
 #include "Engine/CvPlot.h" // pCity->plot()->canTrain in the /diagnostic/whyNot trace
 #include "AI/CvGameAI.h"
@@ -742,8 +747,530 @@ namespace
 		r.iFinal = std::max(1, std::max(90, iRegular));
 	}
 
+	// ====================================================================================================
+	// /extractor -- the RAW game-state dump (world -> teams -> empires -> areas -> cities -> plots).
+	// CLEAN, raw-FACTS-ONLY extraction: NO calculated value ever appears here (DEC-calc-zero-ride-in). The
+	// only map-derived number is distanceFromCapital. This is the dedicated extraction surface -- read it
+	// directly, feed it to Tools/ModifierCalc/dry_calc.py, or build features on it. Spec:
+	// Tools/ModifierCalc/README.md. Runs on the game thread (mailbox), where every fact is readable.
+	// ====================================================================================================
+	picojson::value::object extractCity(CvPlayer& kPlayer, CvCity* pCity, int iTeam)
+	{
+		picojson::value::object c;
+		c["id"]          = picojson::value((double)pCity->getID());
+		c["name"]        = picojson::value(std::string(narrowToAscii(pCity->getName()).GetCString()));
+		c["population"]  = picojson::value((double)pCity->getPopulation());
+		c["isCapital"]   = picojson::value(pCity->isCapital());
+		c["isPowered"]   = picojson::value(pCity->isPower());
+		c["isGoldenAge"] = picojson::value(kPlayer.isGoldenAge());           // golden age is a player-level boolean
+		const CvCity* pCap = kPlayer.getCapitalCity();
+		c["distanceFromCapital"] = picojson::value((double)(pCap != NULL ?
+			plotDistance(pCity->getX(), pCity->getY(), pCap->getX(), pCap->getY()) : 0)); // the lone map-number
+		c["x"] = picojson::value((double)pCity->getX());                   // map coords -- for plotDistance (trade)
+		c["y"] = picojson::value((double)pCity->getY());
+		c["connectedToCapital"] = picojson::value(pCity->isConnectedToCapital()); // CAPITAL_TRADE_MODIFIER gate (raw fact)
+
+		// TRADE ROUTES -- the city's PICKED partners (m_paTradeCities), a per-city stored DECISION, exactly
+		// like worked-plots: we EXTRACT the decision and let the calc compute the profit/yield from raw inputs
+		// (partner pop/coords + deposit-modeled trade modifiers + the area/team/peace facts). We do NOT re-derive
+		// the selection (greedy best-N + plot-group connectivity + diplo) -- observing the result makes all that
+		// machinery irrelevant. Partner ref = (owner, id) since city ids are per-player.
+		picojson::value::array routes;
+		for (int ti = 0; ti < pCity->getMaxTradeRoutes(); ++ti)
+		{
+			const CvCity* pPartner = pCity->getTradeCity(ti);
+			if (pPartner == NULL) continue;
+			picojson::value::object rt;
+			rt["owner"] = picojson::value((double)pPartner->getOwner());
+			rt["id"]    = picojson::value((double)pPartner->getID());
+			rt["distance"] = picojson::value((double)plotDistance(pCity->getX(), pCity->getY(),
+				pPartner->getX(), pPartner->getY())); // map geometry (wrap-correct) -- the getBaseTradeProfit input
+			routes.push_back(picojson::value(rt));
+		}
+		c["tradeRoutePartners"] = picojson::value(routes);
+
+		// buildings PRESENT (hasBuilding) + the DISABLED subset = the exact gate getBuildingCommerceByBuilding uses
+		// to yield 0 (CvCity.cpp:12148 !isActiveBuilding  OR  12157 isReligiouslyLimitedBuilding). NB this is LOOSER
+		// than hasFullyActiveBuilding -- a resource-disabled building (e.g. a library missing its bonus) is NOT
+		// isActiveBuilding-disabled and STILL yields commerce, so it must stay IN. The value-calc consumes this
+		// engine ACTIVE set as state (like hasBuilding itself); the pure dormancy compute is the enabler's shadow.
+		picojson::value::array bldgs, dormant;
+		for (int b = 0; b < GC.getNumBuildingInfos(); ++b)
+			if (pCity->hasBuilding((BuildingTypes)b))
+			{
+				const char* szTb = GC.getBuildingInfo((BuildingTypes)b).getType();
+				bldgs.push_back(picojson::value(std::string(szTb)));
+				if (!pCity->isActiveBuilding((BuildingTypes)b) || pCity->isReligiouslyLimitedBuilding((BuildingTypes)b))
+					dormant.push_back(picojson::value(std::string(szTb)));
+			}
+		c["buildings"] = picojson::value(bldgs);
+		c["dormantBuildings"] = picojson::value(dormant);
+
+		// per-building AGE in game-years (getGameTurnYear - iTimeBuilt) -- the `existedFor` predicate input
+		// (CommerceChangeDoubleTimes -> 2nd age-gated deposit, CvCity.cpp:12207-12213). Legacy doubles only when
+		// iTimeBuilt != MIN_INT; emit age for those buildings (the calc compares age >= existedFor.min).
+		{
+			picojson::value::object bldgAges;
+			const int iYearNow = GC.getGame().getGameTurnYear();
+			for (int b = 0; b < GC.getNumBuildingInfos(); ++b)
+				if (pCity->hasBuilding((BuildingTypes)b))
+				{
+					const int iTB = pCity->getBuildingData((BuildingTypes)b).iTimeBuilt;
+					if (iTB != MIN_INT)
+						bldgAges[GC.getBuildingInfo((BuildingTypes)b).getType()] = picojson::value((double)(iYearNow - iTB));
+				}
+			c["buildingAges"] = picojson::value(bldgAges);
+		}
+
+		// specialist ASSIGNMENT counts (manual + free)
+		picojson::value::object specs;
+		for (int s = 0; s < GC.getNumSpecialistInfos(); ++s)
+		{
+			const int n = pCity->getSpecialistCount((SpecialistTypes)s) + pCity->getFreeSpecialistCount((SpecialistTypes)s);
+			if (n > 0) specs[GC.getSpecialistInfo((SpecialistTypes)s).getType()] = picojson::value((double)n);
+		}
+		c["specialists"] = picojson::value(specs);
+
+		// available bonuses = TRADE-connected/reachable (hasBonus) -- raw fact
+		picojson::value::array bonuses;
+		for (int b = 0; b < GC.getNumBonusInfos(); ++b)
+			if (pCity->hasBonus((BonusTypes)b))
+				bonuses.push_back(picojson::value(std::string(GC.getBonusInfo((BonusTypes)b).getType())));
+		c["bonuses"] = picojson::value(bonuses);
+
+		// VICINITY bonuses (hasVicinityBonus) -- physically in the city's workable radius, DISTINCT from the
+		// trade-connected `bonuses` (hasBonus). The cascade's connection:vicinity atoms read THIS set
+		// (CvCascadeCondition.cpp:114 CONN_VICINITY -> hasVicinityBonus); without it the calc cannot tell a
+		// vicinity bonus from a trade-connected one (the gatherer requires.operate bonus gate -- the 964-miss bug).
+		picojson::value::array vicinityBonuses;
+		for (int b = 0; b < GC.getNumBonusInfos(); ++b)
+			if (pCity->hasVicinityBonus((BonusTypes)b))
+				vicinityBonuses.push_back(picojson::value(std::string(GC.getBonusInfo((BonusTypes)b).getType())));
+		c["vicinityBonuses"] = picojson::value(vicinityBonuses);
+
+		// bonus COUNTS (getNumBonuses) -- the corp-output scaler (CommercesProduced x Sum getNumBonuses(prereqBonus))
+		picojson::value::object bonusCounts;
+		for (int b = 0; b < GC.getNumBonusInfos(); ++b)
+		{
+			const int n = pCity->getNumBonuses((BonusTypes)b);
+			if (n > 0) bonusCounts[GC.getBonusInfo((BonusTypes)b).getType()] = picojson::value((double)n);
+		}
+		c["bonusCounts"] = picojson::value(bonusCounts);
+
+		// /extractor city.cultureLevel: culture level TYPE -- drives the per-city wonder-category cap allowance
+		// (worldWonders/teamWonders/nationalWonders authored on the CultureLevel entity, data-model.md S3.4).
+		if (pCity->getCultureLevel() >= 0)
+			c["cultureLevel"] = picojson::value(std::string(GC.getCultureLevelInfo(pCity->getCultureLevel()).getType()));
+
+		// /extractor city.queuedBuildings / queuedUnits: the production order queue -- the engine drops a queued
+		// item from canConstruct/canTrain (build-queue exclusion), so the cascade must subtract these.
+		picojson::value::array queuedB, queuedU;
+		for (int iQ = 0; iQ < pCity->getOrderQueueLength(); ++iQ)
+		{
+			const OrderData od = pCity->getOrderAt(iQ);
+			if (od.getOrderType() == ORDER_CONSTRUCT)
+				queuedB.push_back(picojson::value(std::string(GC.getBuildingInfo(od.getBuildingType()).getType())));
+			else if (od.getOrderType() == ORDER_TRAIN)
+				queuedU.push_back(picojson::value(std::string(GC.getUnitInfo(od.getUnitType()).getType())));
+		}
+		c["queuedBuildings"] = picojson::value(queuedB);
+		c["queuedUnits"] = picojson::value(queuedU);
+
+		// /extractor city.canConstruct / canTrain: the engine's per-city buildability verdict -- the COMPARISON
+		// oracle for the cascade's isolated per-city buildable frontier (the TRUE set only).
+		picojson::value::array canCon;
+		for (int iB = 0; iB < GC.getNumBuildingInfos(); ++iB)
+			if (pCity->canConstruct((BuildingTypes)iB))
+				canCon.push_back(picojson::value(std::string(GC.getBuildingInfo((BuildingTypes)iB).getType())));
+		c["canConstruct"] = picojson::value(canCon);
+		picojson::value::array canTrn;
+		for (int iU = 0; iU < GC.getNumUnitInfos(); ++iU)
+			if (pCity->canTrain((UnitTypes)iU))
+				canTrn.push_back(picojson::value(std::string(GC.getUnitInfo((UnitTypes)iU).getType())));
+		c["canTrain"] = picojson::value(canTrn);
+
+		// ACTIVE corporations in the city (isActiveCorporation) -- per-city corp output/commerce applies only where active
+		picojson::value::array corps;
+		for (int cp = 0; cp < GC.getNumCorporationInfos(); ++cp)
+			if (pCity->isActiveCorporation((CorporationTypes)cp))
+				corps.push_back(picojson::value(std::string(GC.getCorporationInfo((CorporationTypes)cp).getType())));
+		c["corporations"] = picojson::value(corps);
+
+		// PRESENT corporations (isHasCorporation) -- a branch office can exist but be INACTIVE (e.g. lost its prereq
+		// bonus). The building corp-PREREQ dormancy (applyCorporationModifiers off setHasCorporation, CvCity.cpp:15193/
+		// 15226) gates on PRESENT, not active; so the enabler/active-set must read this set, NOT `corporations`.
+		picojson::value::array pcorps;
+		for (int cp = 0; cp < GC.getNumCorporationInfos(); ++cp)
+			if (pCity->isHasCorporation((CorporationTypes)cp))
+				pcorps.push_back(picojson::value(std::string(GC.getCorporationInfo((CorporationTypes)cp).getType())));
+		c["presentCorporations"] = picojson::value(pcorps);
+
+		// religions present in the city
+		picojson::value::array rels;
+		for (int r = 0; r < GC.getNumReligionInfos(); ++r)
+			if (pCity->isHasReligion((ReligionTypes)r))
+				rels.push_back(picojson::value(std::string(GC.getReligionInfo((ReligionTypes)r).getType())));
+		c["religions"] = picojson::value(rels);
+		// religions whose HOLY CITY is this city (gates HOLY_CITY religion deposits -- a real per-city fact,
+		// not "religion present"; the calc reads religion-entity deposits gated by HOLY_CITY/STATE_RELIGION).
+		picojson::value::array holy;
+		for (int r = 0; r < GC.getNumReligionInfos(); ++r)
+			if (pCity->isHolyCity((ReligionTypes)r))
+				holy.push_back(picojson::value(std::string(GC.getReligionInfo((ReligionTypes)r).getType())));
+		c["holyCity"] = picojson::value(holy);
+
+		// property CURRENT VALUES (crime/education/disease/pollution/...) -- the value, not its rate
+		picojson::value::object props;
+		const CvProperties* pProps = pCity->getPropertiesConst();
+		if (pProps != NULL)
+			for (int pp = 0; pp < pProps->getNumProperties(); ++pp)
+			{
+				const PropertyTypes eP = pProps->getProperty(pp);
+				props[GC.getPropertyInfo(eP).getType()] = picojson::value((double)pProps->getValueByProperty(eP));
+			}
+		c["properties"] = picojson::value(props);
+
+		// plots -- the worked-tile substrate (raw contents + worked flag; no yields)
+		picojson::value::array plots;
+		for (int pi = 0; pi < pCity->getNumCityPlots(); ++pi)
+		{
+			const CvPlot* pPlot = pCity->getCityIndexPlot(pi);
+			if (pPlot == NULL) continue;
+			picojson::value::object pl;
+			pl["worked"] = picojson::value(pCity->isWorkingPlot(pi));
+			const TerrainTypes eT = pPlot->getTerrainType();
+			if (eT != NO_TERRAIN) pl["terrain"] = picojson::value(std::string(GC.getTerrainInfo(eT).getType()));
+			const FeatureTypes eF = pPlot->getFeatureType();
+			if (eF != NO_FEATURE) pl["feature"] = picojson::value(std::string(GC.getFeatureInfo(eF).getType()));
+			const ImprovementTypes eI = pPlot->getImprovementType();
+			if (eI != NO_IMPROVEMENT) pl["improvement"] = picojson::value(std::string(GC.getImprovementInfo(eI).getType()));
+			const RouteTypes eR = pPlot->getRouteType();
+			if (eR != NO_ROUTE) pl["route"] = picojson::value(std::string(GC.getRouteInfo(eR).getType()));
+			const BonusTypes eB = pPlot->getBonusType((TeamTypes)iTeam);
+			if (eB != NO_BONUS) pl["bonus"] = picojson::value(std::string(GC.getBonusInfo(eB).getType()));
+			if (pPlot->isRiver())               pl["river"] = picojson::value(true);
+			if (pPlot->isIrrigationAvailable()) pl["irrig"] = picojson::value(true);
+			if (pPlot->isHills())               pl["hills"] = picojson::value(true);
+			if (pPlot->isPeak() || pPlot->isAsPeak()) pl["peak"] = picojson::value(true);
+			if (pPlot->isWater())               pl["water"] = picojson::value(true);
+			if (pPlot->isCoastalLand())         pl["coast"] = picojson::value(true);  // coastal land (HAS_COAST predicate)
+			if (pPlot->isCity())                pl["isCity"] = picojson::value(true);  // city-center plot (gets getCityChange)
+			// per-plot stored EXTRA yield (game event/effect state; a calculateYield addend not derivable from JSON)
+			const int exF = pPlot->getExtraYield(YIELD_FOOD), exP = pPlot->getExtraYield(YIELD_PRODUCTION), exC = pPlot->getExtraYield(YIELD_COMMERCE);
+			if (exF || exP || exC)
+			{
+				picojson::value::object ex;
+				if (exF) ex["food"] = picojson::value((double)exF);
+				if (exP) ex["production"] = picojson::value((double)exP);
+				if (exC) ex["commerce"] = picojson::value((double)exC);
+				pl["extraYield"] = picojson::value(ex);
+			}
+			plots.push_back(picojson::value(pl));
+		}
+		c["plots"] = picojson::value(plots);
+		return c;
+	}
+
+	// iPlayerFilter < 0 == ALL players; otherwise restrict to that one player (smaller dump).
+	CvString extractGameState(int iPlayerFilter)
+	{
+		CvGame& kGame = GC.getGame();
+		picojson::value::object world;
+
+		// world.religionLevels -- game-wide religion-level counts (the shrine WORLD-scope scaler)
+		picojson::value::object relLevels;
+		for (int r = 0; r < GC.getNumReligionInfos(); ++r)
+		{
+			const int n = kGame.countReligionLevels((ReligionTypes)r);
+			if (n > 0) relLevels[GC.getReligionInfo((ReligionTypes)r).getType()] = picojson::value((double)n);
+		}
+		world["religionLevels"] = picojson::value(relLevels);
+
+		// /extractor world.unitCreatedCounts: getUnitCreatedCount per unit type -- the lifetime-created HISTORICAL
+		// (increment-only, never decremented) the unit world-cap reads (tally.md S3.3). World scope.
+		picojson::value::object unitCreated;
+		for (int iU = 0; iU < GC.getNumUnitInfos(); ++iU)
+		{
+			const int n = GC.getGame().getUnitCreatedCount((UnitTypes)iU);
+			if (n > 0) unitCreated[GC.getUnitInfo((UnitTypes)iU).getType()] = picojson::value((double)n);
+		}
+		world["unitCreatedCounts"] = picojson::value(unitCreated);
+
+		// world.corporationLevels -- game-wide corporation-level counts (the HQ WORLD-scope scaler):
+		// corp HQ commerce = corp.<c>.empire.headquarters.perCorporationLevel x countCorporationLevels (CvCity.cpp:12200-12205).
+		picojson::value::object corpLevels;
+		for (int cp = 0; cp < GC.getNumCorporationInfos(); ++cp)
+		{
+			const int n = kGame.countCorporationLevels((CorporationTypes)cp);
+			if (n > 0) corpLevels[GC.getCorporationInfo((CorporationTypes)cp).getType()] = picojson::value((double)n);
+		}
+		world["corporationLevels"] = picojson::value(corpLevels);
+		// world CorporationMaintenancePercent -- the corp-OUTPUT scaler (CommercesProduced x bonusCount x maintPct/100,
+		// CvCity.cpp:12625, the WORLD one -- NOT the handicap maint% used by the corp-MAINTENANCE calc).
+		world["corporationMaintenancePercent"] = picojson::value((double)GC.getWorldInfo(GC.getMap().getWorldSize()).getCorporationMaintenancePercent());
+
+		// world teamsEverAlive -- countCivTeamsEverAlive(), the exact source of the TEAM count atom (CvBuildingInfo
+		// getNumTeamsPrereq gate, CvPlayer.cpp:6688). Emitted explicitly so the offline calc reads the ever-alive
+		// count, NOT an alive-only approximation (dead teams still count toward the prereq).
+		world["teamsEverAlive"] = picojson::value((double)GC.getGame().countCivTeamsEverAlive());
+
+		// world.config -- RAW game-define scalars the calc needs that are NOT entity data. Resolved game-side
+		// (authoritative; e.g. the world-size trade-profit % needs no world-size guess offline). The TRADE block
+		// feeds the trade-route profit/yield port (calc-map 9.5): the profit defines + the per-yield YieldInfo
+		// trade-modifier BASE that seeds getTradeYieldModifier (CvPlayer.cpp:397). The deposit-modeled trade
+		// modifiers (building/civic/trait/tech) are NOT here -- the cascade computes those from Assets/Data.
+		picojson::value::object config;
+		config["theirPopulationTradePercent"]   = picojson::value((double)GC.getTHEIR_POPULATION_TRADE_PERCENT());
+		config["tradeProfitPercent"]            = picojson::value((double)GC.getTRADE_PROFIT_PERCENT());
+		config["worldTradeProfitPercent"]       = picojson::value((double)GC.getWorldInfo(GC.getMap().getWorldSize()).getTradeProfitPercent());
+		config["capitalTradeModifier"]          = picojson::value((double)GC.getCAPITAL_TRADE_MODIFIER());
+		config["overseasTradeModifier"]         = picojson::value((double)GC.getOVERSEAS_TRADE_MODIFIER());
+		config["foreignTradeModifier"]          = picojson::value((double)GC.getFOREIGN_TRADE_MODIFIER());
+		config["foreignTradeFullCreditPeaceTurns"] = picojson::value((double)GC.getFOREIGN_TRADE_FULL_CREDIT_PEACE_TURNS());
+		config["ourPopulationTradeModifier"]    = picojson::value((double)GC.getOUR_POPULATION_TRADE_MODIFIER());
+		config["ourPopulationTradeModifierOffset"] = picojson::value((double)GC.getOUR_POPULATION_TRADE_MODIFIER_OFFSET());
+		picojson::value::object yieldTradeBase;
+		for (int y = 0; y < NUM_YIELD_TYPES; ++y)
+			yieldTradeBase[GC.getYieldInfo((YieldTypes)y).getType()] = picojson::value((double)GC.getYieldInfo((YieldTypes)y).getTradeModifier());
+		config["yieldTradeModifierBase"] = picojson::value(yieldTradeBase);
+		// city-CENTER plot yield: getCityChange (flat) + population/PopulationChangeDivisor (CvPlot::calculateYield)
+		picojson::value::object yCityChange, yPopDiv, yGAYield, yGAThresh;
+		for (int y = 0; y < NUM_YIELD_TYPES; ++y)
+		{
+			const char* yn = GC.getYieldInfo((YieldTypes)y).getType();
+			yCityChange[yn] = picojson::value((double)GC.getYieldInfo((YieldTypes)y).getCityChange());
+			yPopDiv[yn]     = picojson::value((double)GC.getYieldInfo((YieldTypes)y).getPopulationChangeDivisor());
+			// per-plot GOLDEN-AGE yield: +getGoldenAgeYield on each worked plot whose yield >= threshold (calculateYield)
+			yGAYield[yn]    = picojson::value((double)GC.getYieldInfo((YieldTypes)y).getGoldenAgeYield());
+			yGAThresh[yn]   = picojson::value((double)GC.getYieldInfo((YieldTypes)y).getGoldenAgeYieldThreshold());
+		}
+		config["yieldCityChange"] = picojson::value(yCityChange);
+		config["yieldPopulationChangeDivisor"] = picojson::value(yPopDiv);
+		config["yieldGoldenAgeYield"] = picojson::value(yGAYield);
+		config["yieldGoldenAgeThreshold"] = picojson::value(yGAThresh);
+		config["elapsedGameTurns"] = picojson::value((double)kGame.getElapsedGameTurns()); // getPeaceTradeModifier clause
+		world["config"] = picojson::value(config);
+
+		// world.options -- the ACTIVE game options (world-scope state). Option-gated behaviour (complex/pure
+		// traits, no-espionage, etc.) changes which deposits/definitions apply, so the calc must know them; e.g.
+		// GAMEOPTION_LEADER_COMPLEX_TRAITS selects the complex/pure trait definitions over the simple ones.
+		picojson::value::array options;
+		for (int oi = 0; oi < GC.getNumGameOptionInfos(); ++oi)
+			if (kGame.isOption((GameOptionTypes)oi))
+				options.push_back(picojson::value(std::string(GC.getGameOptionInfo((GameOptionTypes)oi).getType())));
+		world["options"] = picojson::value(options);
+
+		// world.eras -- the era types in canonical EraTypes order (heritage byEra is a CUMULATIVE threshold:
+		// a band applies for every era where currentEra >= band, so the calc needs the ordering to compare).
+		picojson::value::array eras;
+		for (int ei = 0; ei < GC.getNumEraInfos(); ++ei)
+			eras.push_back(picojson::value(std::string(GC.getEraInfo((EraTypes)ei).getType())));
+		world["eras"] = picojson::value(eras);
+
+		// world.diplomacy -- per team-pair diplomatic STATE the trade calc needs: the foreign-route peace
+		// modifier (getPeaceTradeModifier, CvCity.cpp) ramps with GET_TEAM(my).AI_getAtPeaceCounter(their) and
+		// zeroes at war. Not a deposit -- live state, extracted as raw facts (per-ordered-pair atWar + counter).
+		picojson::value::array diplomacy;
+		for (int da = 0; da < MAX_PC_TEAMS; ++da)
+		{
+			if (!GET_TEAM((TeamTypes)da).isAlive()) continue;
+			for (int db = 0; db < MAX_PC_TEAMS; ++db)
+			{
+				if (db == da || !GET_TEAM((TeamTypes)db).isAlive()) continue;
+				picojson::value::object dp;
+				dp["team"]           = picojson::value((double)da);
+				dp["otherTeam"]      = picojson::value((double)db);
+				dp["atWar"]          = picojson::value(GET_TEAM((TeamTypes)da).isAtWar((TeamTypes)db));
+				dp["atPeaceCounter"] = picojson::value((double)GET_TEAM((TeamTypes)da).AI_getAtPeaceCounter((TeamTypes)db));
+				diplomacy.push_back(picojson::value(dp));
+			}
+		}
+		world["diplomacy"] = picojson::value(diplomacy);
+
+		static const char* aCommName[4] = { "gold", "research", "culture", "espionage" };
+		const int aCommType[4] = { COMMERCE_GOLD, COMMERCE_RESEARCH, COMMERCE_CULTURE, COMMERCE_ESPIONAGE };
+
+		picojson::value::array teams;
+		for (int t = 0; t < MAX_PC_TEAMS; ++t)
+		{
+			CvTeam& kTeam = GET_TEAM((TeamTypes)t);
+			if (!kTeam.isAlive()) continue;
+
+			picojson::value::array empires;
+			for (int p = 0; p < MAX_PLAYERS; ++p)
+			{
+				CvPlayer& kPlayer = GET_PLAYER((PlayerTypes)p);
+				if (!kPlayer.isAlive() || (int)kPlayer.getTeam() != t) continue;
+				if (iPlayerFilter >= 0 && p != iPlayerFilter) continue;
+
+				picojson::value::object emp;
+				emp["id"] = picojson::value((double)p);
+
+				picojson::value::array civics;
+				for (int co = 0; co < GC.getNumCivicOptionInfos(); ++co)
+				{
+					const CivicTypes eC = kPlayer.getCivics((CivicOptionTypes)co);
+					if (eC != NO_CIVIC) civics.push_back(picojson::value(std::string(GC.getCivicInfo(eC).getType())));
+				}
+				emp["civics"] = picojson::value(civics);
+
+				picojson::value::array traits;
+				for (int tr = 0; tr < GC.getNumTraitInfos(); ++tr)
+					if (kPlayer.hasTrait((TraitTypes)tr))
+						traits.push_back(picojson::value(std::string(GC.getTraitInfo((TraitTypes)tr).getType())));
+				emp["traits"] = picojson::value(traits);
+
+				// current ERA (heritage byEra deposits resolve against it) + owned HERITAGES (their
+				// EraCommerceChanges feed the player's getExtraCommerce100 -- culture + research commerce).
+				emp["era"] = picojson::value(std::string(GC.getEraInfo(kPlayer.getCurrentEra()).getType()));
+				{
+					picojson::value::array herit;
+					const std::vector<HeritageTypes> vH = kPlayer.getHeritage();
+					for (std::vector<HeritageTypes>::const_iterator it = vH.begin(); it != vH.end(); ++it)
+						herit.push_back(picojson::value(std::string(GC.getHeritageInfo(*it).getType())));
+					emp["heritages"] = picojson::value(herit);
+				}
+
+				const ReligionTypes eState = kPlayer.getStateReligion();
+				if (eState != NO_RELIGION)
+					emp["stateReligion"] = picojson::value(std::string(GC.getReligionInfo(eState).getType()));
+				// Free-Church-style: EVERY present religion's stateReligionCommerce applies, not just the state one
+				// (getReligionCommerceByReligion: state==X || no-state || isNonStateReligionCommerce).
+				emp["nonStateReligionCommerce"] = picojson::value(kPlayer.isNonStateReligionCommerce());
+
+				// /extractor empire.availableTechs: the engine's canResearch verdict per player -- the COMPARISON
+				// oracle for the cascade's ISOLATED tech-availability set, NOT an input to that computation.
+				picojson::value::array availTechs;
+				for (int iT = 0; iT < GC.getNumTechInfos(); ++iT)
+					if (kPlayer.canResearch((TechTypes)iT))
+						availTechs.push_back(picojson::value(std::string(GC.getTechInfo((TechTypes)iT).getType())));
+				emp["availableTechs"] = picojson::value(availTechs);
+
+				// /extractor empire.availableCivics: the engine's canDoCivics verdict per player -- the COMPARISON
+				// oracle for the cascade's ISOLATED civic-availability set, NOT an input to that computation.
+				picojson::value::array availCivics;
+				for (int iC = 0; iC < GC.getNumCivicInfos(); ++iC)
+					if (kPlayer.canDoCivics((CivicTypes)iC))
+						availCivics.push_back(picojson::value(std::string(GC.getCivicInfo((CivicTypes)iC).getType())));
+				emp["availableCivics"] = picojson::value(availCivics);
+
+				// /extractor empire.availableBuilds: the BUILD-UNLOCK verdict per player -- the build's tech prereq
+				// is held (NOT per-plot canBuild; placement is out of scope -- "available", not "can do it here").
+				// COMPARISON oracle only.
+				picojson::value::array availBuilds;
+				for (int iB = 0; iB < GC.getNumBuildInfos(); ++iB)
+				{
+					const TechTypes ePrereq = (TechTypes)GC.getBuildInfo((BuildTypes)iB).getTechPrereq();
+					if (ePrereq == NO_TECH || GET_TEAM(kPlayer.getTeam()).isHasTech(ePrereq))
+						availBuilds.push_back(picojson::value(std::string(GC.getBuildInfo((BuildTypes)iB).getType())));
+				}
+				emp["availableBuilds"] = picojson::value(availBuilds);
+
+				picojson::value::object sliders;
+				for (int cc = 0; cc < 4; ++cc)
+					sliders[aCommName[cc]] = picojson::value((double)kPlayer.getCommercePercent((CommerceTypes)aCommType[cc]));
+				emp["sliders"] = picojson::value(sliders);
+
+				emp["cityCount"] = picojson::value((double)kPlayer.getNumCities());
+
+				// empire-wide TALLY -- the engine's own live per-player counters (CvPlayer::changeBuildingCount /
+				// changeUnitCount, maintained in handleBuildingCounts). This is the aggregate count for empire-scope
+				// `requires.build` count atoms (min(BUILDING_X,N) / min(UNIT_X,N)) the offline emulator cannot roll up
+				// without seeing every city; we emit the counter directly (no re-derivation).
+				picojson::value::object bldgCounts;
+				for (int bc = 0; bc < GC.getNumBuildingInfos(); ++bc)
+				{
+					const int n = kPlayer.getBuildingCount((BuildingTypes)bc);
+					if (n > 0) bldgCounts[GC.getBuildingInfo((BuildingTypes)bc).getType()] = picojson::value((double)n);
+				}
+				emp["buildingCounts"] = picojson::value(bldgCounts);
+				picojson::value::object unitCounts;
+				for (int uc = 0; uc < GC.getNumUnitInfos(); ++uc)
+				{
+					const int n = kPlayer.getUnitCount((UnitTypes)uc);
+					if (n > 0) unitCounts[GC.getUnitInfo((UnitTypes)uc).getType()] = picojson::value((double)n);
+				}
+				emp["unitCounts"] = picojson::value(unitCounts);
+
+				// areas: the empire's cities grouped by their area id (no std::map -- distinct-id, two pass)
+				std::vector<int> areaIds;
+				int iLoop;
+				for (CvCity* pCity = kPlayer.firstCity(&iLoop); pCity != NULL; pCity = kPlayer.nextCity(&iLoop))
+				{
+					const int iA = (pCity->area() != NULL) ? pCity->area()->getID() : -1;
+					bool bSeen = false;
+					for (size_t k = 0; k < areaIds.size(); ++k) if (areaIds[k] == iA) { bSeen = true; break; }
+					if (!bSeen) areaIds.push_back(iA);
+				}
+				picojson::value::array areas;
+				for (size_t ai = 0; ai < areaIds.size(); ++ai)
+				{
+					const int iA = areaIds[ai];
+					picojson::value::array cityArr;
+					int iSize = 0;
+					for (CvCity* pCity = kPlayer.firstCity(&iLoop); pCity != NULL; pCity = kPlayer.nextCity(&iLoop))
+					{
+						const int ca = (pCity->area() != NULL) ? pCity->area()->getID() : -1;
+						if (ca != iA) continue;
+						if (pCity->area() != NULL) iSize = pCity->area()->getNumTiles();
+						cityArr.push_back(picojson::value(extractCity(kPlayer, pCity, t)));
+					}
+					picojson::value::object area;
+					area["id"]       = picojson::value((double)iA);
+					area["areaSize"] = picojson::value((double)iSize);
+					area["cities"]   = picojson::value(cityArr);
+					areas.push_back(picojson::value(area));
+				}
+				emp["areas"] = picojson::value(areas);
+				empires.push_back(picojson::value(emp));
+			}
+			if (empires.empty()) continue;
+
+			picojson::value::object teamO;
+			teamO["id"] = picojson::value((double)t);
+			picojson::value::array techs;
+			for (int tc = 0; tc < GC.getNumTechInfos(); ++tc)
+				if (kTeam.isHasTech((TechTypes)tc))
+					techs.push_back(picojson::value(std::string(GC.getTechInfo((TechTypes)tc).getType())));
+			teamO["techs"]   = picojson::value(techs);
+			// team's OBSOLETE buildings (isObsoleteBuilding == tech-obsoleted team-wide) -- observability for the
+			// enabler: a building obsolete here is REMOVED from hasBuilding (CvCity.cpp:14838/14852), so this set
+			// lets the harness confirm hasBuilding excludes them, and is the input a v3-pure obsolescence compute
+			// would read (the engine has no getNumRealBuilding, so the raw built-incl-obsolete set is not available).
+			picojson::value::array obsoleteBldgs;
+			for (int ob = 0; ob < GC.getNumBuildingInfos(); ++ob)
+				if (kTeam.isObsoleteBuilding((BuildingTypes)ob))
+					obsoleteBldgs.push_back(picojson::value(std::string(GC.getBuildingInfo((BuildingTypes)ob).getType())));
+			teamO["obsoleteBuildings"] = picojson::value(obsoleteBldgs);
+			// completed PROJECTS (team-scope): their CommerceModifiers feed the player commerce rate
+			// (CvTeam::processProject -> changeCommerceRateModifierfromBuildings) -- a real deposit source.
+			picojson::value::array projects;
+			for (int pj = 0; pj < GC.getNumProjectInfos(); ++pj)
+				if (kTeam.getProjectCount((ProjectTypes)pj) > 0)
+					projects.push_back(picojson::value(std::string(GC.getProjectInfo((ProjectTypes)pj).getType())));
+			teamO["projects"] = picojson::value(projects);
+			// team CorporationRevenueModifier -- the corp-output revenue modifier (CvCity.cpp:12630,
+			// getModifiedIntValue(iCommerce, getCorporationRevenueModifier)).
+			teamO["corporationRevenueModifier"] = picojson::value((double)kTeam.getCorporationRevenueModifier());
+			teamO["empires"] = picojson::value(empires);
+			teams.push_back(picojson::value(teamO));
+		}
+		world["teams"] = picojson::value(teams);
+
+		picojson::value::object root;
+		root["schema"] = picojson::value(std::string("gamestate/1"));
+		root["turn"]   = picojson::value((double)kGame.getGameTurn());
+		root["world"]  = picojson::value(world);
+		return CvString(picojson::value(root).serialize().c_str());
+	}
+
 	CvString evaluateGate(const char* szAction, const char* szType, int iPlayer, int iCityReq)
 	{
+		// /extractor/gamestate -- the raw game-state dump; iPlayer < 0 == ALL players (runs before the
+		// single-player resolution below, so the "all players" walk is reachable).
+		if (strcmp(szAction, "gamestate") == 0)
+			return extractGameState(iPlayer);
+
 		picojson::value::object o;
 		o["action"] = picojson::value(std::string(szAction));
 		o["type"] = picojson::value(std::string(szType));
@@ -1476,6 +2003,7 @@ namespace
 					const CvCity* pWorkBY = pPlot->getWorkingCity();
 					const char* aYN[3]={"natF","natP","natC"}; const char* aYI[3]={"impF","impP","impC"};
 					const char* aYW[3]={"wcF","wcP","wcC"};    const char* aYT[3]={"terF","terP","terC"};
+					const char* aYS[3]={"seaF","seaP","seaC"}; const char* aYC[3]={"ccF","ccP","ccC"};
 					for (int yy=0; yy<3; ++yy)
 					{
 						const YieldTypes eYY=(YieldTypes)yy;
@@ -1483,10 +2011,22 @@ namespace
 						const int imp=(eI!=NO_IMPROVEMENT)?pPlot->calculateImprovementYieldChange(eI,eYY,ePlayerBY):0;
 						const int wcy=(pWorkBY!=NULL)?pWorkBY->getYieldChangeAt(pPlot,eYY):0;
 						const int ter=(ePlayerBY!=NO_PLAYER&&eT!=NO_TERRAIN)?GET_PLAYER(ePlayerBY).getTerrainYieldChange(eT,eYY):0;
+						// the components calculateYield adds that natC/impC/wcC/terC OMITTED (the unaccounted residual):
+						// player SEA-plot yield (water tiles) + the city-CENTER bonus (getCityChange + pop/divisor).
+						const int sea=(ePlayerBY!=NO_PLAYER&&pPlot->isWater())?GET_PLAYER(ePlayerBY).getSeaPlotYield(eYY):0;
+						int cc=0;
+						if (pPlot->isCity())
+						{
+							cc=GC.getYieldInfo(eYY).getCityChange();
+							const int div=GC.getYieldInfo(eYY).getPopulationChangeDivisor();
+							if (div!=0) cc+=pCity->getPopulation()/div;
+						}
 						if(nat) pl[aYN[yy]]=picojson::value((double)nat);
 						if(imp) pl[aYI[yy]]=picojson::value((double)imp);
 						if(wcy) pl[aYW[yy]]=picojson::value((double)wcy);
 						if(ter) pl[aYT[yy]]=picojson::value((double)ter);
+						if(sea) pl[aYS[yy]]=picojson::value((double)sea);
+						if(cc)  pl[aYC[yy]]=picojson::value((double)cc);
 					}
 					if(pPlot->isIrrigationAvailable()) pl["irrig"]=picojson::value(true);
 					if(pPlot->isRiverSide())          pl["riverside"]=picojson::value(true);
@@ -1505,6 +2045,67 @@ namespace
 					if(cnt>0) specs[GC.getSpecialistInfo((SpecialistTypes)s).getType()]=picojson::value((double)cnt);
 				}
 				o["specialists"]=picojson::value(specs);
+			}
+
+			// per-specialist COMMERCE breakdown -- the EXACT sources getSpecialistCommerce/getExtraSpecialistCommerce
+			// sum (CvCity.cpp:12477-12488 + the x(1+pct) at 5167): intrinsic (SpecialistInfo.getCommerceChange),
+			// perType (player getExtraSpecialistCommerce), local (city getLocalSpecialistExtraCommerce), all (player
+			// getSpecialistExtraCommerce), pct (player getSpecialistCommercePercentChanges). So the spec/xspec gap
+			// names its source per specialist, in EVERY city -- no manual in-game reads.
+			{
+				picojson::value::array sdet;
+				CvPlayer& kP = GET_PLAYER((PlayerTypes)iPlayer);
+				static const char* aCN[4] = { "gold", "research", "culture", "espionage" };
+				for (int s=0; s<GC.getNumSpecialistInfos(); ++s)
+				{
+					const int cnt=pCity->getSpecialistCount((SpecialistTypes)s)+pCity->getFreeSpecialistCount((SpecialistTypes)s);
+					if(cnt<=0) continue;
+					const CvSpecialistInfo& si=GC.getSpecialistInfo((SpecialistTypes)s);
+					picojson::value::object e;
+					e["type"]=picojson::value(std::string(si.getType()));
+					e["count"]=picojson::value((double)cnt);
+					for(int c=0;c<4;++c)
+					{
+						const CommerceTypes eC=(CommerceTypes)c;
+						const int intr=si.getCommerceChange(eC);
+						const int pt=kP.getExtraSpecialistCommerce((SpecialistTypes)s,eC);
+						const int lo=pCity->getLocalSpecialistExtraCommerce((SpecialistTypes)s,eC);
+						const int al=kP.getSpecialistExtraCommerce(eC);
+						const int pc=kP.getSpecialistCommercePercentChanges((SpecialistTypes)s,eC);
+						if(intr||pt||lo||al||pc)
+						{
+							picojson::value::object cc;
+							if(intr)cc["intrinsic"]=picojson::value((double)intr);
+							if(pt)cc["perType"]=picojson::value((double)pt);
+							if(lo)cc["local"]=picojson::value((double)lo);
+							if(al)cc["all"]=picojson::value((double)al);
+							if(pc)cc["pct"]=picojson::value((double)pc);
+							e[aCN[c]]=picojson::value(cc);
+						}
+					}
+					sdet.push_back(picojson::value(e));
+				}
+				o["specialistCommerceDetail"]=picojson::value(sdet);
+			}
+
+			// per-ACTIVE-corporation commerce breakdown (getCorporationCommerceByCorporation, CvCity.cpp:12606)
+			// so the corp-output gap attributes to a named corp+family. Only active corps emit.
+			{
+				picojson::value::array cdet;
+				for (int cp = 0; cp < GC.getNumCorporationInfos(); ++cp)
+				{
+					if (!pCity->isActiveCorporation((CorporationTypes)cp)) continue;
+					picojson::value::object e;
+					e["type"]=picojson::value(std::string(GC.getCorporationInfo((CorporationTypes)cp).getType()));
+					static const char* aCN2[4] = { "gold", "research", "culture", "espionage" };
+					for (int c=0;c<4;++c)
+					{
+						const int v=pCity->getCorporationCommerceByCorporation((CommerceTypes)c,(CorporationTypes)cp);
+						if (v) e[aCN2[c]]=picojson::value((double)v);
+					}
+					cdet.push_back(picojson::value(e));
+				}
+				o["corporationCommerceDetail"]=picojson::value(cdet);
 			}
 
 			CvCascadeContext kCtx(iPlayer, iCityId);
@@ -1543,6 +2144,22 @@ namespace
 				// EXTRA-bucket decomposition (getExtraYield100, CvCity.cpp:11323) -- flatExtra = extraYield100 - building - perPop×pop:
 				e["extraBuildingYield100"] = picojson::value((double)pCity->getBuildingExtraYield100(eY)); // per-building flat ×100
 				e["extraPerPopRate"]       = picojson::value((double)pCity->getBaseYieldPerPopRate(eY));   // per-pop rate (×pop in the bucket)
+				// per-building BuildingYieldChange breakdown -- m_aBuildingYieldChange feeds m_aiExtraYield (the NON-building
+				// part of the extra bucket: extraYield100 - extraBuildingYield100 - perPop, minus corp yield). Each entry is a
+				// yield-change set by bonus / vicinity-bonus / vote-source / event (setBuildingYieldChange, CvCity.cpp:19187).
+				// Emitted so the residual attributes to a NAMED building x source -- total observability, no guessing. x1.
+				{
+					picojson::value::object byc;
+					for (int bb = 0; bb < GC.getNumBuildingInfos(); ++bb)
+					{
+						const int v = pCity->getBuildingYieldChange((BuildingTypes)bb, eY);
+						if (v != 0) byc[GC.getBuildingInfo((BuildingTypes)bb).getType()] = picojson::value((double)v);
+					}
+					e["buildingYieldChange"] = picojson::value(byc);
+				}
+				// the OTHER m_aiExtraYield contributor: corp yield (getCorporationYield, CvCity.cpp:12556). With these two,
+				// (extraYield100 - extraBuildingYield100)/100 == corporationYield + Σ buildingYieldChange -- fully attributable.
+				e["corporationYield"] = picojson::value((double)pCity->getCorporationYield(eY));
 				e["legacy100"]     = picojson::value((double)pCity->getYieldRate100(eY));  // ground truth (x100)
 				// CASCADE seed (the current calc-flow, cascadeModifierApply):
 				e["cascadeFlat"]    = picojson::value((double)slot.iFlat);
@@ -1593,13 +2210,12 @@ namespace
 					const int pct = bi.getCommerceModifier(eC);
 					if (flat) { e[aCK[c][0]] = picojson::value((double)flat); bAny = true; }
 					if (pct)  { e[aCK[c][1]] = picojson::value((double)pct);  bAny = true; }
-					// RAW per-building commerce (no modifier) -- directly JSON-comparable; mirrors the per-building yield raw.
-					const int rawc = (bi.getCommerceChange(eC) + pCity->getBuildingCommerceChange((BuildingTypes)b, eC)) * 100
-					               + bi.getCommercePerPopChange(eC) * iPopBY
-					               + GET_TEAM(eTeamBY).getBuildingCommerceTechChange(eC, (BuildingTypes)b)
-					               + pCity->getBonusCommercePercentChanges(eC, (BuildingTypes)b);
-					static const char* aCKraw[4] = { "goldRaw100", "resRaw100", "culRaw100", "espRaw100" };
-					if (rawc) { e[aCKraw[c]] = picojson::value((double)rawc); bAny = true; }
+					// CLEAN per-building commerce BASE: exactly what updateBuildingCommerce() sums into getBuildingCommerce
+					// (same default args) so the Sum reconciles to bldgCommercePure100; returns 0 for an inactive building
+					// (isActiveBuilding gate, CvCity.cpp:12148) -- i.e. the per-building view of the COMMERCE active-set.
+					const int bldc = 100 * pCity->getBuildingCommerceByBuilding(eC, (BuildingTypes)b, false, false);
+					static const char* aCKbld[4] = { "goldBld100", "resBld100", "culBld100", "espBld100" };
+					if (bldc) { e[aCKbld[c]] = picojson::value((double)bldc); bAny = true; }
 				}
 				// HEALTH / HAPPINESS (realized per-building contribution) + FREE-XP
 				const int iHe = pCity->getBuildingHealth((BuildingTypes)b);
@@ -1649,7 +2265,32 @@ namespace
 				e["baseExtra100"]            = picojson::value((double)pCity->getBaseCommerceRateExtra(eC));  // realized x100
 				e["specialistCommerce"]      = picojson::value((double)pCity->getSpecialistCommerce(eC));       // x1
 				e["extraSpecialistCommerce"] = picojson::value((double)pCity->getExtraSpecialistCommerceTotal(eC)); // x1
+				// 3-way split of extraSpecialistCommerce (getExtraSpecialistCommerce, CvCity.cpp:11819 = count x
+				// (LOCAL building-per-type + PLAYER-per-type + PLAYER-all-type)) -- names which part the calc misses:
+				{
+					int iLocal = 0, iPerType = 0, iTotalSpec = 0;
+					for (int s = 0; s < GC.getNumSpecialistInfos(); ++s)
+					{
+						const int cnt = pCity->specialistCount((SpecialistTypes)s);
+						if (cnt <= 0) continue;
+						iTotalSpec += cnt;
+						iLocal   += cnt * pCity->getLocalSpecialistExtraCommerce((SpecialistTypes)s, eC);
+						iPerType += cnt * kPlayer.getExtraSpecialistCommerce((SpecialistTypes)s, eC);
+					}
+					e["xspecLocal"]   = picojson::value((double)iLocal);                                  // building per-type
+					e["xspecPerType"] = picojson::value((double)iPerType);                                // civic/trait per-type
+					e["xspecAll"]     = picojson::value((double)(iTotalSpec * kPlayer.getSpecialistExtraCommerce(eC))); // all-type x count
+				}
 				e["religionCommerce"]        = picojson::value((double)pCity->getReligionCommerce(eC));         // x1
+				{	// per-religion decomposition -- so the religion-commerce gap names the religion (holy/state)
+					picojson::value::object relC;
+					for (int r = 0; r < GC.getNumReligionInfos(); ++r)
+					{
+						const int v = pCity->getReligionCommerceByReligion(eC, (ReligionTypes)r);
+						if (v) relC[GC.getReligionInfo((ReligionTypes)r).getType()] = picojson::value((double)v);
+					}
+					e["religionCommerceByType"] = picojson::value(relC);
+				}
 				e["corporationCommerce"]     = picojson::value((double)pCity->getCorporationCommerce(eC));      // x1
 				e["buildingCommerce100"]     = picojson::value((double)pCity->getBuildingCommerce100(eC));      // x100 (aggregate; 4-way split below)
 				// buildingCommerce100 4-way decomposition (getBuildingCommerce100, CvCity.cpp:12131) -- so the missing
@@ -2113,6 +2754,18 @@ namespace
 				tr["tradeYieldFood"]       = picojson::value((double)pCity->getTradeYield(YIELD_FOOD));
 				tr["tradeYieldProduction"] = picojson::value((double)pCity->getTradeYield(YIELD_PRODUCTION));
 				tr["tradeYieldCommerce"]   = picojson::value((double)pCity->getTradeYield(YIELD_COMMERCE));
+				// LEGACY trade-MODIFIER accumulators (totalTradeModifier + getTradeYieldModifier components) -- so the
+				// offline calc compares its deposit-sum vs these legacy values per modifier and attributes any gap to a
+				// NAMED source (curator under-emit vs missing source), never guessing. (calc-map §9.5.)
+				tr["tradeYieldModFood"]        = picojson::value((double)kPlayer.getTradeYieldModifier(YIELD_FOOD));
+				tr["tradeYieldModProduction"]  = picojson::value((double)kPlayer.getTradeYieldModifier(YIELD_PRODUCTION));
+				tr["tradeYieldModCommerce"]    = picojson::value((double)kPlayer.getTradeYieldModifier(YIELD_COMMERCE));
+				tr["tradeRouteModifier"]       = picojson::value((double)pCity->getTradeRouteModifier());
+				tr["popTradeModifier"]         = picojson::value((double)pCity->getPopulationTradeModifier());
+				tr["teamTradeModifier"]        = picojson::value((double)GET_TEAM(pCity->getTeam()).getTradeModifier());
+				tr["cityForeignTradeRouteModifier"]   = picojson::value((double)pCity->getForeignTradeRouteModifier());
+				tr["playerForeignTradeRouteModifier"] = picojson::value((double)kPlayer.getForeignTradeRouteModifier());
+				tr["teamForeignTradeModifier"]        = picojson::value((double)GET_TEAM(pCity->getTeam()).getForeignTradeModifier());
 				o["tradeRoutes"] = picojson::value(tr);
 			}
 
@@ -3014,6 +3667,47 @@ namespace
 					sendResponse(sock, "503 Service Unavailable", "application/json",
 						CvString("{\"error\":\"eval busy or game thread not ticking; retry\"}\n"), snapshotTurn());
 				}
+			}
+		}
+		else if (strcmp(szTarget, "/extractor") == 0)
+		{
+			sendResponse(sock, "200 OK", "application/json", CvString(
+				"{\"endpoints\":["
+				"\"/extractor/gamestate[?player=N]\"],"
+				"\"note\":\"the RAW game-state as one document along the spine "
+				"world->teams->empires->areas->cities->plots. Raw facts only (no calculated values); the only "
+				"map-number is distanceFromCapital. ?player=N restricts to one player. Spec: "
+				"Tools/ModifierCalc/README.md\"}\n"), snapshotTurn());
+		}
+		else if (strncmp(szTarget, "/extractor/", 11) == 0)
+		{
+			const char* szSub = szTarget + 11; // e.g. "gamestate"
+			int iPlayer = -1;                  // -1 == ALL players
+			char* szTok = szQuery;
+			while (szTok != NULL && *szTok != '\0')
+			{
+				char* szNext = strchr(szTok, '&');
+				if (szNext != NULL) { *szNext = '\0'; ++szNext; }
+				if (strncmp(szTok, "player=", 7) == 0) iPlayer = atoi(szTok + 7);
+				szTok = szNext;
+			}
+			if (strcmp(szSub, "gamestate") == 0)
+			{
+				CvString szAnswer;
+				if (evalRequestBlocking("gamestate", "", iPlayer, -1, szAnswer))
+				{
+					sendResponse(sock, "200 OK", "application/json", szAnswer, snapshotTurn());
+				}
+				else
+				{
+					sendResponse(sock, "503 Service Unavailable", "application/json",
+						CvString("{\"error\":\"eval busy or game thread not ticking; retry\"}\n"), snapshotTurn());
+				}
+			}
+			else
+			{
+				sendResponse(sock, "404 Not Found", "application/json",
+					CvString("{\"error\":\"unknown extractor endpoint; see /extractor\"}\n"), snapshotTurn());
 			}
 		}
 		else

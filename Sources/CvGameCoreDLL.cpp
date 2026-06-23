@@ -77,8 +77,10 @@ BOOL APIENTRY DllMain(HANDLE hModule,
 				return FALSE;
 			}
 
-			// Don't attempt rebuild if debugger is connected, its annoying
-			if(!IsDebuggerPresent())
+			// Don't attempt rebuild if a debugger is connected (annoying), or if an
+			// automated/agent launcher set S2S_SKIP_BOOTCHECK (load the deployed DLL as-is,
+			// no recompile - see agentstart.bat).
+			if(!IsDebuggerPresent() && GetEnvironmentVariableA("S2S_SKIP_BOOTCHECK", NULL, 0) == 0)
 			{
 				if (!runProcess("cmd.exe /C \"" + git_dir + "\\Tools\\_BootDLLCheck.bat\" " + TOSTRING(BUILD_TARGET), git_dir + "\\Tools"))
 				{
