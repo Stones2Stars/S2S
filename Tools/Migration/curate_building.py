@@ -761,12 +761,13 @@ def requires_building(rec, store):
     if pb:
         bonus_all.append(_atom(pb, "city", connection="trade|vicinity", role="power"))   # operate/build by bAutoBuild
     # --- city / world counts + size (tally) ---
-    for tag, scope in (("iPrereqPopulation", "city"), ("iCitiesPrereq", "empire"), ("iTeamsPrereq", "world"),
-                       ("iLevelPrereq", "empire")):
+    # iLevelPrereq (the "empire has a unit of level >= N" gate, CvPlayer::canConstruct:6766 getHighestUnitLevel) is
+    # INTENTIONALLY DROPPED (owner ruling 2026-06-24): the gate is removed from the game (XML iLevelPrereq zeroed on
+    # the 6 MA_* academies, its only users) and from the model -- so parity holds with the requirement simply gone.
+    for tag, scope in (("iPrereqPopulation", "city"), ("iCitiesPrereq", "empire"), ("iTeamsPrereq", "world")):
         v = _int(rec, tag)
         if v and v > 0:
-            kind = {"iPrereqPopulation": "POPULATION", "iCitiesPrereq": "CITY", "iTeamsPrereq": "TEAM",
-                    "iLevelPrereq": "UNIT_LEVEL"}[tag]
+            kind = {"iPrereqPopulation": "POPULATION", "iCitiesPrereq": "CITY", "iTeamsPrereq": "TEAM"}[tag]
             build_all.append(_atom(kind, scope, min=v))
     # iMinAreaSize: a LAND building -> AREA_SIZE atom = the landmass tile count (area()->getNumTiles()). A WATER
     # building (bWater) means the SEA-BODY size (legacy isCoastal(N)), already covered by the IS_COASTAL it gets

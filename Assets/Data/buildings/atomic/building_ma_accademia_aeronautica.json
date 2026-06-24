@@ -10,11 +10,6 @@
      "scope": "city",
      "min": 15
     },
-    {
-     "type": "UNIT_LEVEL",
-     "scope": "empire",
-     "min": 12
-    },
     "BUILDING_MILITARY_ACADEMY",
     "TECH_AVIATION",
     {
