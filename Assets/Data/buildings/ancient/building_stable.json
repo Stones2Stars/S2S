@@ -43,10 +43,6 @@
     {
      "type": "MAPCATEGORY_EARTH",
      "scope": "plot"
-    },
-    {
-     "type": "CIVILIZATION_NPC_NEANDERTHAL",
-     "scope": "empire"
     }
    ]
   },
@@ -116,6 +112,9 @@
   "construct": "AS2D_BUILD_STABLE"
  },
  "identity": {
+  "enabledCivilizations": [
+   "CIVILIZATION_NPC_NEANDERTHAL"
+  ],
   "worth": 2,
   "militaryWorth": 2,
   "dcmAirbombMission": 2,

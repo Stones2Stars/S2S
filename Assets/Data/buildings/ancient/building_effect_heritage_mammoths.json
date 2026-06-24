@@ -20,10 +20,6 @@
     {
      "type": "MAPCATEGORY_EARTH",
      "scope": "plot"
-    },
-    {
-     "type": "CIVILIZATION_NPC_NEANDERTHAL",
-     "scope": "empire"
     }
    ]
   }
@@ -37,6 +33,9 @@
   "construct": "AS2D_BUILD_BARRACKS"
  },
  "identity": {
+  "enabledCivilizations": [
+   "CIVILIZATION_NPC_NEANDERTHAL"
+  ],
   "notConstructible": true,
   "neverCapture": true,
   "worth": 2,

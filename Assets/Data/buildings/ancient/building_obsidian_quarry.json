@@ -17,10 +17,6 @@
     {
      "type": "MAPCATEGORY_EARTH",
      "scope": "plot"
-    },
-    {
-     "type": "CIVILIZATION_NPC_NEANDERTHAL",
-     "scope": "empire"
     }
    ]
   },
@@ -70,6 +66,9 @@
   }
  },
  "identity": {
+  "enabledCivilizations": [
+   "CIVILIZATION_NPC_NEANDERTHAL"
+  ],
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

@@ -11,10 +11,6 @@
     {
      "type": "MAPCATEGORY_EARTH",
      "scope": "plot"
-    },
-    {
-     "type": "CIVILIZATION_NPC_NEANDERTHAL",
-     "scope": "empire"
     }
    ]
   },
@@ -90,6 +86,9 @@
   "construct": "AS2D_BUILD_SLAVE_MARKET"
  },
  "identity": {
+  "enabledCivilizations": [
+   "CIVILIZATION_NPC_NEANDERTHAL"
+  ],
   "notConstructible": true,
   "nukeImmune": true,
   "neverCapture": true,

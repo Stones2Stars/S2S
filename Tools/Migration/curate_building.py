@@ -891,14 +891,12 @@ def requires_building(rec, store):
     # operate (dormancy). Folded via the shared boolexpr converter (And/Or of Has over bonus/feature/tech/terrain/
     # building). owner 2026-06-16; renames §Building. ---
     boolexpr.merge_into(boolexpr.convert_field(rec.find("ConstructCondition")), build_all, build_any, build_none)
-    # EnabledCivilizationTypes: a civ-WHITELIST build gate (owner 2026-06-22) -- only the listed civ(s) may build it
-    # (CvCity::canConstruct, getCivilizationType()==getEnabledCivilizationType(i).eCivilization, CvCity.cpp:2560; the
-    # civ-unique building mechanism, 242 regular buildings + module). -> requires.build.any OR-group of
-    # {type:CIVILIZATION_X, scope:empire} (empty list = unrestricted). Was UN-MIGRATED: it sat in REQUIRES_TAGS for the
-    # coverage check only and requires_building() never read it -> emitted nothing.
-    civs = _typelist_struct(rec, "EnabledCivilizationTypes", "CivilizationType")
-    if civs:
-        build_any.append([_atom(c, "empire") for c in civs])
+    # EnabledCivilizationTypes is NOT a requires gate: CvCity::canConstruct:2557 applies it ONLY to an
+    # isStronglyRestricted() NPC civ (Neanderthal) -- a WHITELIST so the era-locked NPC may build a thing past its
+    # block (e.g. the buffalo trainer, which sits past SEDENTARY_LIFESTYLE). For a real civ the check is SKIPPED.
+    # So it is an IDENTITY field (identity.enabledCivilizations, emitted in curate()), IGNORED by the dry-calc (NPCs
+    # excluded); remodel post-rework (owner 2026-06-24). Was wrongly AND-ed into requires.build -> under-offered every
+    # real civ (the whole animal-trainer cluster).
 
     boolexpr.fold_or_groups(build_all, build_any)   # OR-groups -> nested {any} under all (any = ||, never list-of-groups)
     build = OrderedDict()
@@ -1114,6 +1112,10 @@ def curate(typ, rec, store):
     requires = requires_building(rec, store)
     allowed = allowed_building(rec)
     loadprune = loadprune_building(rec)
+    # EnabledCivilizationTypes -> identity whitelist (NPC-only gate; dry-calc ignores it; remodel post-rework).
+    _civs = _typelist_struct(rec, "EnabledCivilizationTypes", "CivilizationType")
+    if _civs:
+        identity["enabledCivilizations"] = _civs
 
     # --- PASS 2: keyed inversions (§6.1), properties, repeatable grants, one-shot grants, enables-from-XML ---
     pass2(typ, rec, store, fams, grants, repeatable, identity, enables)

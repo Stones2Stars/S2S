@@ -13,11 +13,7 @@
      "scope": "world",
      "min": 5
     },
-    "TECH_BOAT_BUILDING",
-    {
-     "type": "CIVILIZATION_NPC_NEANDERTHAL",
-     "scope": "empire"
-    }
+    "TECH_BOAT_BUILDING"
    ]
   }
  },
@@ -110,6 +106,9 @@
    "TERRAIN_TRENCH",
    "TERRAIN_TRENCH_POLAR",
    "TERRAIN_TRENCH_TROPICAL"
+  ],
+  "enabledCivilizations": [
+   "CIVILIZATION_NPC_NEANDERTHAL"
   ],
   "base": {
    "combat": 3,

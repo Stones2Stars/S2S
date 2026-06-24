@@ -18,10 +18,6 @@
     {
      "type": "MAPCATEGORY_EARTH",
      "scope": "plot"
-    },
-    {
-     "type": "CIVILIZATION_NPC_NEANDERTHAL",
-     "scope": "empire"
     }
    ]
   },
@@ -99,6 +95,9 @@
   "construct": "AS2D_BUILD_COURTHOUSE"
  },
  "identity": {
+  "enabledCivilizations": [
+   "CIVILIZATION_NPC_NEANDERTHAL"
+  ],
   "centerInCity": true,
   "worth": 4,
   "militaryWorth": 5,

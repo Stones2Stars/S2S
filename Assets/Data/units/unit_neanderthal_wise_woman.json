@@ -13,10 +13,6 @@
       "BUILDING_WILD_HERBS_GATHERER",
       "BUILDING_ANCIENT_CUSTOMS"
      ]
-    },
-    {
-     "type": "CIVILIZATION_NPC_NEANDERTHAL",
-     "scope": "empire"
     }
    ]
   }
@@ -92,6 +88,9 @@
   ],
   "mapCategories": [
    "MAPCATEGORY_EARTH"
+  ],
+  "enabledCivilizations": [
+   "CIVILIZATION_NPC_NEANDERTHAL"
   ],
   "base": {
    "combat": 2,

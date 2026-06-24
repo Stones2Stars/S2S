@@ -25,10 +25,6 @@
     {
      "type": "MAPCATEGORY_EARTH",
      "scope": "plot"
-    },
-    {
-     "type": "CIVILIZATION_NPC_NEANDERTHAL",
-     "scope": "empire"
     }
    ]
   }
@@ -134,6 +130,9 @@
   }
  },
  "identity": {
+  "enabledCivilizations": [
+   "CIVILIZATION_NPC_NEANDERTHAL"
+  ],
   "worth": 4,
   "conquestProbability": 70,
   "greatPeopleUnitType": "UNIT_SCIENTIST",

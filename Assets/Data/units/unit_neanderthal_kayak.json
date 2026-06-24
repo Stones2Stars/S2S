@@ -32,10 +32,6 @@
        "connection": "trade|vicinity"
       }
      ]
-    },
-    {
-     "type": "CIVILIZATION_NPC_NEANDERTHAL",
-     "scope": "empire"
     }
    ]
   }
@@ -128,6 +124,9 @@
    "TERRAIN_TRENCH",
    "TERRAIN_TRENCH_POLAR",
    "TERRAIN_TRENCH_TROPICAL"
+  ],
+  "enabledCivilizations": [
+   "CIVILIZATION_NPC_NEANDERTHAL"
   ],
   "base": {
    "combat": 2,

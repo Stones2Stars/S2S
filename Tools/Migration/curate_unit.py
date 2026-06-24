@@ -294,13 +294,10 @@ def requires_unit(rec, store):
         allc.append(_atom(t, "team"))
     for x in _typelist_struct(rec, "TechTypes", "PrereqTech"):
         allc.append(_atom(x, "team"))
-    # EnabledCivilizationTypes: a civ-WHITELIST train gate (owner 2026-06-22) -- only the listed civ(s) may train it
-    # (CvCity::canTrain, getCivilizationType()==getEnabledCivilizationType(i).eCivilization, CvCity.cpp:2218; the
-    # civ-unique unit mechanism). -> requires.build.any OR-group of {type:CIVILIZATION_X, scope:empire} (empty =
-    # unrestricted). Was UN-MIGRATED: in REQUIRES_TAGS for the coverage check only, requires_unit() never read it.
-    civs = _typelist_struct(rec, "EnabledCivilizationTypes", "CivilizationType")
-    if civs:
-        anyc.append([_atom(x, "empire") for x in civs])
+    # EnabledCivilizationTypes is NOT a train gate: CvCity::canTrain applies it ONLY to an isStronglyRestricted()
+    # NPC civ (the Neanderthal whitelist, same mechanism as buildings, CvCity.cpp:2218). Real civs SKIP it. So it is
+    # an identity whitelist (identity.enabledCivilizations, emitted in curate()), IGNORED by the dry-calc; remodel
+    # post-rework (owner 2026-06-24). Was wrongly AND-ed into requires -> under-offered every real civ.
     # --- instance caps are NOT a requires SELF-atom (owner 2026-06-17): they move to the declarative `allowed`
     # cap (authored by allowed_unit() below). SELF leaves requires entirely; uniform with Building/Tech/CultureLevel.
     # enabler-spec §5a/§13.7. ---
@@ -696,6 +693,10 @@ def curate(typ, rec, store):
     requires = requires_unit(rec, store)
     if requires:
         out["requires"] = requires
+    # EnabledCivilizationTypes -> identity whitelist (NPC-only train gate; dry-calc ignores it; remodel post-rework).
+    _civs = _typelist_struct(rec, "EnabledCivilizationTypes", "CivilizationType")
+    if _civs:
+        identity["enabledCivilizations"] = _civs
     allowed = allowed_unit(rec)
     if allowed:
         out["allowed"] = allowed

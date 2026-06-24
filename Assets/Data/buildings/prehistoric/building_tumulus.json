@@ -23,10 +23,6 @@
     {
      "type": "MAPCATEGORY_EARTH",
      "scope": "plot"
-    },
-    {
-     "type": "CIVILIZATION_NPC_NEANDERTHAL",
-     "scope": "empire"
     }
    ]
   },
@@ -75,6 +71,9 @@
   "construct": "AS2D_BUILD_BUDDHIST"
  },
  "identity": {
+  "enabledCivilizations": [
+   "CIVILIZATION_NPC_NEANDERTHAL"
+  ],
   "neverCapture": true,
   "centerInCity": true,
   "worth": 2,

@@ -7,11 +7,7 @@
    "all": [
     "BUILDING_C_AC_NEANDERTHAL",
     "BUILDING_C_L_NEANDERTHAL",
-    "TECH_SIMPLE_WOOD_WORKING",
-    {
-     "type": "CIVILIZATION_NPC_NEANDERTHAL",
-     "scope": "empire"
-    }
+    "TECH_SIMPLE_WOOD_WORKING"
    ]
   }
  },
@@ -86,6 +82,9 @@
   ],
   "mapCategories": [
    "MAPCATEGORY_EARTH"
+  ],
+  "enabledCivilizations": [
+   "CIVILIZATION_NPC_NEANDERTHAL"
   ],
   "base": {
    "combat": 4,

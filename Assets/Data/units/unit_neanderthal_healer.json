@@ -16,10 +16,6 @@
       "BUILDING_MEDICAL_CLINIC",
       "BUILDING_HEALTHCARE_MEGACOMPLEX"
      ]
-    },
-    {
-     "type": "CIVILIZATION_NPC_NEANDERTHAL",
-     "scope": "empire"
     }
    ]
   }
@@ -91,6 +87,9 @@
   ],
   "mapCategories": [
    "MAPCATEGORY_EARTH"
+  ],
+  "enabledCivilizations": [
+   "CIVILIZATION_NPC_NEANDERTHAL"
   ],
   "base": {
    "combat": 3,

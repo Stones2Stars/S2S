@@ -7,11 +7,7 @@
    "all": [
     "BUILDING_C_AC_NEANDERTHAL",
     "BUILDING_C_L_NEANDERTHAL",
-    "TECH_TRAILS",
-    {
-     "type": "CIVILIZATION_NPC_NEANDERTHAL",
-     "scope": "empire"
-    }
+    "TECH_TRAILS"
    ]
   }
  },
@@ -70,6 +66,9 @@
   ],
   "mapCategories": [
    "MAPCATEGORY_EARTH"
+  ],
+  "enabledCivilizations": [
+   "CIVILIZATION_NPC_NEANDERTHAL"
   ],
   "base": {
    "combat": 3,

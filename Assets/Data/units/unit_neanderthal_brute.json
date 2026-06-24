@@ -6,11 +6,7 @@
   "build": {
    "all": [
     "BUILDING_C_AC_NEANDERTHAL",
-    "BUILDING_C_L_NEANDERTHAL",
-    {
-     "type": "CIVILIZATION_NPC_NEANDERTHAL",
-     "scope": "empire"
-    }
+    "BUILDING_C_L_NEANDERTHAL"
    ]
   }
  },
@@ -77,6 +73,9 @@
   ],
   "mapCategories": [
    "MAPCATEGORY_EARTH"
+  ],
+  "enabledCivilizations": [
+   "CIVILIZATION_NPC_NEANDERTHAL"
   ],
   "base": {
    "combat": 2,

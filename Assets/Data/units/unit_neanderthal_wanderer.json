@@ -7,11 +7,7 @@
    "all": [
     "BUILDING_C_AC_NEANDERTHAL",
     "BUILDING_C_L_NEANDERTHAL",
-    "TECH_NOMADISM",
-    {
-     "type": "CIVILIZATION_NPC_NEANDERTHAL",
-     "scope": "empire"
-    }
+    "TECH_NOMADISM"
    ]
   }
  },
@@ -69,6 +65,9 @@
   ],
   "mapCategories": [
    "MAPCATEGORY_EARTH"
+  ],
+  "enabledCivilizations": [
+   "CIVILIZATION_NPC_NEANDERTHAL"
   ],
   "base": {
    "combat": 2,

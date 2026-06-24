@@ -7,11 +7,7 @@
    "all": [
     "BUILDING_C_AC_NEANDERTHAL",
     "BUILDING_C_L_NEANDERTHAL",
-    "TECH_FISHING",
-    {
-     "type": "CIVILIZATION_NPC_NEANDERTHAL",
-     "scope": "empire"
-    }
+    "TECH_FISHING"
    ]
   }
  },
@@ -92,6 +88,9 @@
    "TERRAIN_TRENCH",
    "TERRAIN_TRENCH_POLAR",
    "TERRAIN_TRENCH_TROPICAL"
+  ],
+  "enabledCivilizations": [
+   "CIVILIZATION_NPC_NEANDERTHAL"
   ],
   "base": {
    "moves": 1,

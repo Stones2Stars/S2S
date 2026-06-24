@@ -17,10 +17,6 @@
     {
      "type": "MAPCATEGORY_EARTH",
      "scope": "plot"
-    },
-    {
-     "type": "CIVILIZATION_NPC_NEANDERTHAL",
-     "scope": "empire"
     }
    ]
   },
@@ -108,6 +104,9 @@
   "construct": "AS2D_BUILD_WALLS"
  },
  "identity": {
+  "enabledCivilizations": [
+   "CIVILIZATION_NPC_NEANDERTHAL"
+  ],
   "militaryWorth": 2,
   "conquestProbability": 25,
   "dcmAirbombMission": 2,

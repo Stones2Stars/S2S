@@ -22,10 +22,6 @@
     {
      "type": "MAPCATEGORY_EARTH",
      "scope": "plot"
-    },
-    {
-     "type": "CIVILIZATION_NPC_NEANDERTHAL",
-     "scope": "empire"
     }
    ]
   },
@@ -92,6 +88,9 @@
   "construct": "AS2D_BUILD_GRANARY"
  },
  "identity": {
+  "enabledCivilizations": [
+   "CIVILIZATION_NPC_NEANDERTHAL"
+  ],
   "worth": 4,
   "militaryWorth": 6,
   "advisor": "ADVISOR_ECONOMY",

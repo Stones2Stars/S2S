@@ -22,10 +22,6 @@
       "HERITAGE_FOLKLORE_VIPER_CHAIN",
       "HERITAGE_FOLKLORE_VIPER_PIT"
      ]
-    },
-    {
-     "type": "CIVILIZATION_NPC_NEANDERTHAL",
-     "scope": "empire"
     }
    ]
   }
@@ -50,6 +46,9 @@
   }
  },
  "identity": {
+  "enabledCivilizations": [
+   "CIVILIZATION_NPC_NEANDERTHAL"
+  ],
   "worth": 2,
   "conquestProbability": 25,
   "advisor": "ADVISOR_CULTURE",

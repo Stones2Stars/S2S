@@ -22,10 +22,6 @@
     {
      "type": "MAPCATEGORY_EARTH",
      "scope": "plot"
-    },
-    {
-     "type": "CIVILIZATION_NPC_NEANDERTHAL",
-     "scope": "empire"
     }
    ]
   },
@@ -65,6 +61,9 @@
   "construct": "SND_AMB_HORSE_COBBLESTONES"
  },
  "identity": {
+  "enabledCivilizations": [
+   "CIVILIZATION_NPC_NEANDERTHAL"
+  ],
   "notConstructible": true,
   "worth": 3,
   "conquestProbability": 75,

@@ -12,11 +12,7 @@
     },
     "BUILDING_C_AC_NEANDERTHAL",
     "BUILDING_C_L_NEANDERTHAL",
-    "TECH_OBSIDIAN_WEAPONS",
-    {
-     "type": "CIVILIZATION_NPC_NEANDERTHAL",
-     "scope": "empire"
-    }
+    "TECH_OBSIDIAN_WEAPONS"
    ]
   }
  },
@@ -99,6 +95,9 @@
   ],
   "mapCategories": [
    "MAPCATEGORY_EARTH"
+  ],
+  "enabledCivilizations": [
+   "CIVILIZATION_NPC_NEANDERTHAL"
   ],
   "base": {
    "combat": 6,
