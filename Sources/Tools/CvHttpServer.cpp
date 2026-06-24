@@ -584,7 +584,7 @@ namespace
 			if (pPlot->isWater())               pl["water"] = picojson::value(true);
 			if (pPlot->isCoastalLand())         pl["coast"] = picojson::value(true);  // coastal land (HAS_COAST predicate)
 			if (pPlot->isFreshWater())          pl["freshwater"] = picojson::value(true);  // HAS_FRESHWATER (river OR adjacent lake)
-			if (pPlot->isCity())                pl["isCity"] = picojson::value(true);  // city-center plot (gets getCityChange)
+			if (pPlot == pCity->plot())         pl["isCity"] = picojson::value(true);  // THIS city's OWN centre plot (not a neighbour city-centre that overlaps the workable radius) -- the centre-plot facts HAS_RIVER/COAST/FRESHWATER/latitude read it
 			// per-plot stored EXTRA yield (game event/effect state; a calculateYield addend not derivable from JSON)
 			const int exF = pPlot->getExtraYield(YIELD_FOOD), exP = pPlot->getExtraYield(YIELD_PRODUCTION), exC = pPlot->getExtraYield(YIELD_COMMERCE);
 			if (exF || exP || exC)
