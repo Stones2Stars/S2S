@@ -399,6 +399,7 @@ namespace
 		c["globalId"]    = picojson::value(std::string(CvString::format("%02d-%d", pCity->getOwner(), pCity->getID()).GetCString()));
 		c["name"]        = picojson::value(std::string(narrowToAscii(pCity->getName()).GetCString()));
 		c["population"]  = picojson::value((double)pCity->getPopulation());
+		c["latitude"]    = picojson::value((double)pCity->plot()->getLatitude());  // building MinLatitude/MaxLatitude gate (canConstruct)
 		c["isCapital"]   = picojson::value(pCity->isCapital());
 		c["isPowered"]   = picojson::value(pCity->isPower());
 		c["isGoldenAge"] = picojson::value(kPlayer.isGoldenAge());           // golden age is a player-level boolean
@@ -666,6 +667,7 @@ namespace
 		config["theirPopulationTradePercent"]   = picojson::value((double)GC.getTHEIR_POPULATION_TRADE_PERCENT());
 		config["tradeProfitPercent"]            = picojson::value((double)GC.getTRADE_PROFIT_PERCENT());
 		config["worldTradeProfitPercent"]       = picojson::value((double)GC.getWorldInfo(GC.getMap().getWorldSize()).getTradeProfitPercent());
+		config["buildingPrereqModifier"]        = picojson::value((double)GC.getWorldInfo(GC.getMap().getWorldSize()).getBuildingPrereqModifier()); // PrereqNumOfBuildings scaling (CvPlayer::getBuildingPrereqBuilding)
 		config["capitalTradeModifier"]          = picojson::value((double)GC.getCAPITAL_TRADE_MODIFIER());
 		config["overseasTradeModifier"]         = picojson::value((double)GC.getOVERSEAS_TRADE_MODIFIER());
 		config["foreignTradeModifier"]          = picojson::value((double)GC.getFOREIGN_TRADE_MODIFIER());
