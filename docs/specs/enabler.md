@@ -130,9 +130,13 @@ pollution) compound, every in-band band active. Bands are **bidirectional** — 
 it stays on the map; the structure supports it, but it is not modelled now.
 
 **VICINITY** (enabler-specific) = the city's current workable radius, which **grows with culture** (1→2→3 rings),
-NOT fixed; a plot can lie in two overlapping cities' vicinity (counts for both). The terrain/feature/improvement
-plot scan has NO ownership/worked filter — deliberately MORE permissive than the two legacy checks it replaces;
-`workedBy:SELF` is the tightening path if the overlap is later judged wrong.
+NOT fixed; a plot can lie in two overlapping cities' vicinity (counts for both). The plot scan carries a
+**city-relative semantic** (`VICINITY ⊇ WORKABLE ⊇ IS_WORKED`, [json](json.md) §3.5): `VICINITY` = in the radius;
+`WORKABLE` = in radius **and owned/eligible-to-work**; `IS_WORKED` = a citizen works it. The engine's gates pick the
+level — `isValidTerrainForBuildings` requires an **owned** plot for terrain/improvement/peak/hill (= `WORKABLE`;
+a FEATURE prereq also accepts a neutral plot unless `EXP_STRICT_VICINITY`), and `hasVicinityBonus` requires the
+bonus **owned + valid + connected** (the obtained semantic) or supplied by an active building.
+*(The earlier "deliberately MORE permissive / no ownership filter" model is **DEAD** — owner ruling 2026-06-24.)*
 
 ### 3.1 The cache-friendly two-stage evaluation
 
