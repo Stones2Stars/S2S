@@ -582,6 +582,7 @@ namespace
 			if (pPlot->isPeak() || pPlot->isAsPeak()) pl["peak"] = picojson::value(true);
 			if (pPlot->isWater())               pl["water"] = picojson::value(true);
 			if (pPlot->isCoastalLand())         pl["coast"] = picojson::value(true);  // coastal land (HAS_COAST predicate)
+			if (pPlot->isFreshWater())          pl["freshwater"] = picojson::value(true);  // HAS_FRESHWATER (river OR adjacent lake)
 			if (pPlot->isCity())                pl["isCity"] = picojson::value(true);  // city-center plot (gets getCityChange)
 			// per-plot stored EXTRA yield (game event/effect state; a calculateYield addend not derivable from JSON)
 			const int exF = pPlot->getExtraYield(YIELD_FOOD), exP = pPlot->getExtraYield(YIELD_PRODUCTION), exC = pPlot->getExtraYield(YIELD_COMMERCE);
@@ -641,6 +642,20 @@ namespace
 		// getNumTeamsPrereq gate, CvPlayer.cpp:6688). Emitted explicitly so the offline calc reads the ever-alive
 		// count, NOT an alive-only approximation (dead teams still count toward the prereq).
 		world["teamsEverAlive"] = picojson::value((double)GC.getGame().countCivTeamsEverAlive());
+
+		// world buildingsCreated -- getBuildingCreatedCount per building (CvGame::isBuildingMaxedOut, the world-wonder
+		// cap gate, CvGame.cpp:5118). CUMULATIVE ever-created (persists past obsolescence/loss), NOT the current
+		// getBuildingCount -- a world wonder created then obsoleted still caps. Only non-zero emitted. The dry-calc's
+		// world-scope `allowed` cap reads THIS, not the sum of empires' current buildingCounts.
+		{
+			picojson::value::object created;
+			for (int iB = 0; iB < GC.getNumBuildingInfos(); ++iB)
+			{
+				const int n = GC.getGame().getBuildingCreatedCount((BuildingTypes)iB);
+				if (n > 0) created[GC.getBuildingInfo((BuildingTypes)iB).getType()] = picojson::value((double)n);
+			}
+			world["buildingsCreated"] = picojson::value(created);
+		}
 
 		// world.config -- RAW game-define scalars the calc needs that are NOT entity data. Resolved game-side
 		// (authoritative; e.g. the world-size trade-profit % needs no world-size guess offline). The TRADE block
