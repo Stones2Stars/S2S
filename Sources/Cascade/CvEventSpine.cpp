@@ -22,7 +22,6 @@
 #include "Infos/CvCivicInfo.h"
 #include "Infos/CvProjectInfo.h"
 #include "Infos/CvSpecialistInfo.h"
-#include "CvCascadeTally.h"   // register + seed the tally (the first selective DOMAIN consumer)
 
 // ===================== the spine =====================
 
@@ -299,10 +298,8 @@ void cascadeRegisterConsumers()
 	}
 	s_bRegistered = true;
 	eventSpine().registerConsumer(&s_cascadeLogConsumer);
-	// The TALLY: the first SELECTIVE (DOMAIN-only) consumer. Registration is once; the SEED (rebuild from the
-	// loaded objects, §9) happens at CvGame::onFinalInitialized on EVERY load/new-game -- NOT here -- so a stale
-	// tally can't gate before the first end-of-turn, and a 2nd in-session load reseeds. DOMAIN events maintain it.
-	eventSpine().registerConsumer(&cascadeTally());
+	// (The cascade tally was the first DOMAIN consumer; it + the rest of the shadow cascade were the initial
+	// prototype, removed pending a proper BoolExpr-routed readJson. Only the logging consumer remains here.)
 }
 
 void cascadeEmitNameChange(int iKind, int iOwner, int iEntityId)

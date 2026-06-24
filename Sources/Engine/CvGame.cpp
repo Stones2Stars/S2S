@@ -11,9 +11,6 @@
 #include "CvCity.h"
 #include "UI/CvEventReporter.h"
 #include "CvEventSpine.h"
-#include "CvCascadeSelfTest.h"
-#include "CvCascadeReadJson.h"
-#include "CvCascadeTally.h"
 #include "AI/CvGameAI.h"
 #include "Defines/CvGlobals.h"
 #include "Tools/CvHttpServer.h"
@@ -623,13 +620,10 @@ void CvGame::onFinalInitialized(const bool bNewGame)
 		}
 	}
 
-	// #430 cascade -- (re)SEED the tally from the freshly-loaded objects on EVERY load/new-game (this hook fires
-	// for both), so the authoritative count gates (allowed caps, requires count-thresholds) are correct from the
-	// FIRST gate read -- not only after the first end-of-turn (tally-cascade-spec.md §9). Without this, a stale/
-	// empty tally would read count=0 and briefly let capped wonders/units look buildable. Register the consumers
-	// (idempotent) then rebuild from live state; DOMAIN events maintain it thereafter. A 2nd in-session load reseeds.
+	// #430 event spine -- register the logging consumer (the poor-man's-DI composition root) so DOMAIN events
+	// stream to Cascade.log + /events. (The shadow cascade + its tally were the initial prototype, removed
+	// pending a proper BoolExpr-routed readJson; only the spine logging remains.)
 	cascadeRegisterConsumers();
-	cascadeTally().rebuild();
 
 	OutputDebugString("onFinalInitialized: End\n");
 }
@@ -5825,28 +5819,10 @@ void CvGame::doTurn()
 {
 	PROFILE_BEGIN("CvGame::doTurn()",DOTURN1);
 
-	// #430 cascade -- TEMPORARY self-test (PURGE before readJson wiring): register the spine consumers once,
-	// then run the test events + test tallies over the OLD/live data (gated by gPlayerLogLevel). Results stream
-	// to Cascade.log + the live /events feed. docs/dev/plans/event-spine-spec.md + Sources/Cascade/CvCascadeSelfTest.h
-	cascadeRegisterConsumers();
-	cascadeSelfTest();
-	// #430 option B -- the thin DLL-side readJson slice: parse two real building JSONs, run cascadeBuildable,
-	// shadow the `allowed` cap vs the engine + the live tally. Gated by gPlayerLogLevel. Sources/Cascade/CvCascadeReadJson.h
-	cascadeReadJsonSlice();
-	// #430 §14 H -- the AUTO-PLACEMENT shadow (B-i): the runtime twin of the buildability sweep. Per-turn, diff the
-	// cascade's would-place decision against the legacy maintainers' (bAutoBuild loop + property-band) realized
-	// presence, per city. [PLACEMENT] lines to Cascade.log + /events. Gated by gPlayerLogLevel.
-	cascadePlacementShadow();
-	// #430 §14 H -- the DORMANCY shadow (B-ii): per built building per city, diff cascade requires.operate (active/
-	// dormant) against legacy hasFullyActiveBuilding (resource/replacement/religious disabling). [DORMANCY] lines.
-	cascadeDormancyShadow();
-	// #430 modifier pilot (increment 3) -- the MAGNITUDE shadow: per alive player x city x yield channel, diff the
-	// cascade effective against legacy getYieldRate100, cause-tagged + care-graded. [MODSHADOW] lines. Gated by
-	// gPlayerLogLevel. modifier-cascade-shadow-spec.md §3.3.
-	cascadeModifierShadow();
-	// #430 observability -- the LIVE STATE FEED ("the cameras"): per-turn [STATE/game]/[STATE/fin]/[STATE/dip]/[STATE/city] lines so an autoplay
-	// session is fully narratable from /events + the logs (the total-observability bar). Gated by gPlayerLogLevel.
-	cascadeStateLog();
+	// #430 shadow cascade (self-test / readJson slice / placement / dormancy / modifier / state-log) REMOVED --
+	// it was the initial prototype, built on the botched AND-of-ORs predicates; pure shadow over the live engine,
+	// so removing it reverts to engine behaviour. To be redesigned properly (JSON parsed through BoolExpr) after
+	// the dry-calc (StoneBase) validation is done. Spine logging stays (registered above).
 
 	//	Turn-boundary accounting for the frame-driven span the doTurn tree does not cover:
 	//	turn.wall is the true wall-clock between consecutive turn boundaries (what a player's
