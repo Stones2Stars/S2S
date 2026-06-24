@@ -1,0 +1,20 @@
+meta {
+  name: computed/canDoCivics
+  type: http
+  seq: 7
+}
+
+get {
+  url: {{baseUrl}}/computed/canDoCivics?type=CIVIC_SLAVERY&player=0
+  body: none
+  auth: none
+}
+
+params:query {
+  type: CIVIC_SLAVERY
+  player: 0
+}
+
+docs {
+  Engine canDoCivics verdict.
+}

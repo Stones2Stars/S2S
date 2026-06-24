@@ -1,0 +1,19 @@
+meta {
+  name: computed/availableCivics
+  type: http
+  seq: 11
+}
+
+get {
+  url: {{baseUrl}}/computed/availableCivics?player=0
+  body: none
+  auth: none
+}
+
+params:query {
+  player: 0
+}
+
+docs {
+  Engine canDoCivics set for the player.
+}

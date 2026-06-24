@@ -1,0 +1,19 @@
+meta {
+  name: computed/players
+  type: http
+  seq: 3
+}
+
+get {
+  url: {{baseUrl}}/computed/players?player=0
+  body: none
+  auth: none
+}
+
+params:query {
+  player: 0
+}
+
+docs {
+  Empire economy: gold/science/upkeep/inflation/demographics.
+}

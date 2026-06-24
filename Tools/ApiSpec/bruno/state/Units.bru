@@ -1,0 +1,19 @@
+meta {
+  name: state/units
+  type: http
+  seq: 6
+}
+
+get {
+  url: {{baseUrl}}/state/units?player=0
+  body: none
+  auth: none
+}
+
+params:query {
+  player: 0
+}
+
+docs {
+  Raw unit facts (type/ai/pos/group/damage/level/promotions).
+}

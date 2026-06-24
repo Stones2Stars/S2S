@@ -1,0 +1,19 @@
+meta {
+  name: state/techs
+  type: http
+  seq: 3
+}
+
+get {
+  url: {{baseUrl}}/state/techs?player=0
+  body: none
+  auth: none
+}
+
+params:query {
+  player: 0
+}
+
+docs {
+  Every player's completed techs. Omit player for all players.
+}

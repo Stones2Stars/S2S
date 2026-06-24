@@ -1,0 +1,20 @@
+meta {
+  name: computed/canResearch
+  type: http
+  seq: 6
+}
+
+get {
+  url: {{baseUrl}}/computed/canResearch?type=TECH_BRONZE_WORKING&player=0
+  body: none
+  auth: none
+}
+
+params:query {
+  type: TECH_BRONZE_WORKING
+  player: 0
+}
+
+docs {
+  Engine canResearch verdict.
+}

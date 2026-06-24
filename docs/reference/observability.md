@@ -22,17 +22,20 @@ feed. Call-site census exists (WAI 43 sites, HAI 54, CTB 66, …). Dead sinks: `
 
 ## The live HTTP server (today)
 - Bind **`127.0.0.1:7227`**, GET-only HTTP/1.0 (405 otherwise). BUG option `Autolog__HttpServer` (default **off**).
-- Snapshot refresh: the game thread republishes every **5 s** (`publishIfDue`) — responses are ≤ 5 s stale.
-- **HARD CONSTRAINT:** the server thread NEVER touches live game objects — it reads only the immutable snapshot the
-  game thread publishes (why the server is read-only and the event-spine names no Boost type).
-- `gameId` on `/units` + `/players` = the persistent playtest identity (detects reload / new-game mid-session).
-- Live `/units` movement fields: `baseMoves`/`maxMoves`(×100 budget)/`movesLeft`/`moveDiscount`/`range`(air)/`domain`;
-  `/cities` carries live crime/education/disease + `corporations`/`presentCorporations`.
-- `/state` = **raw inputs only, no computed outputs** (the lone map number is `distanceFromCapital`); schema at
-  `Tools/RawStateExtractor/README.md`. This is the [validation](../specs/validation.md) "calc-zero-ride-in" guardrail —
-  the calculator's input side. `/extractor` is the opposite surface: the **yield-loaded COMPUTED state** (the game's
-  actual yields/outputs — the verification oracle the calculator is checked against), per
-  [http-endpoints](../specs/http-endpoints.md).
+- **Two data buckets, split on verification** (full map + the route table: [http-endpoints](../specs/http-endpoints.md)):
+  - **`/state/*`** — RAW inputs only, **no computed value** (no yields, no buildability verdicts). `/state/all`,
+    `/state/techs`, `/state/players`, `/state/cities`, `/state/units`. This is the calculator's input side.
+  - **`/computed/*`** — the engine's OWN answers (the verification ground-truth): `/computed/cities/yields`,
+    `/computed/players`, `/computed/can*`, `/computed/available*`, `/computed/tally`, `/computed/whyNot`, `/computed/game`.
+  - `/` (liveness), `/events` (SSE log stream). `/state` and `/computed` bare return their route index.
+- **HARD CONSTRAINT:** the server thread NEVER touches live game objects. `/state` + `/computed` read live state, so
+  they run on the **game thread via a single-slot mailbox** (`evalRequestBlocking` → `serviceEvalMailbox`, drained by
+  `publishIfDue`); the server thread only renders the answer + a tiny published `{turn,gameId}` header (refreshed every
+  ~5 s) for response metadata + the `/events` hello. A second concurrent data request gets `503` — retry once.
+- The single **route table** in `CvHttpServer.cpp::handleRequest` is the one place every endpoint is declared
+  (path → mailbox action → doc); the `/state` and `/computed` index pages are generated from it.
+- The dropped predecessors (`/units`/`/players`/`/cities` GameTracker, the `/diagnostic/*` grab-bag, the cascade-vs-legacy
+  `/shadow` sweeps) and the rationale are in [http-endpoints](../specs/http-endpoints.md) "What was dropped".
 
 ## The field census (event-spine migration input)
 The exhaustive raw-field census: ~196 gated log templates across 10 domains, each field's name + cType + a sample

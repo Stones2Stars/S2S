@@ -1,0 +1,20 @@
+meta {
+  name: computed/tally
+  type: http
+  seq: 13
+}
+
+get {
+  url: {{baseUrl}}/computed/tally?type=BUILDING_FORGE&player=0
+  body: none
+  auth: none
+}
+
+params:query {
+  type: BUILDING_FORGE
+  player: 0
+}
+
+docs {
+  Engine counts (empire live + world created + maxed-out flags).
+}

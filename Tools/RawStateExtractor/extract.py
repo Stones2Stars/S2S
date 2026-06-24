@@ -33,9 +33,11 @@ HOST, PORT = "127.0.0.1", 7227
 
 
 def fetch_live(player=None, timeout=20):
-    """GET /extractor/gamestate from the running game. Fails HONESTLY (never fabricates a clean document)."""
+    """GET /state/all from the running game (the whole raw state in one document). Fails HONESTLY (never
+    fabricates a clean document). NB the endpoint moved /extractor/gamestate -> /state/all in the HTTP-server
+    rework (docs/specs/http-endpoints.md); the document shape (schema gamestate/1, world/teams/...) is unchanged."""
     import urllib.request
-    url = "http://%s:%d/extractor/gamestate" % (HOST, PORT)
+    url = "http://%s:%d/state/all" % (HOST, PORT)
     if player is not None:
         url += "?player=%d" % player
     try:

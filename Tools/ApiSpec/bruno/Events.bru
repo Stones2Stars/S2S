@@ -1,0 +1,15 @@
+meta {
+  name: Events (SSE)
+  type: http
+  seq: 2
+}
+
+get {
+  url: {{baseUrl}}/events
+  body: none
+  auth: none
+}
+
+docs {
+  SSE stream of gated [TAG] log lines + turn-phase events. Connect BEFORE ending a turn.
+}

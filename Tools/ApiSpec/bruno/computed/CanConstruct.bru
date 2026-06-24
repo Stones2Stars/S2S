@@ -1,0 +1,20 @@
+meta {
+  name: computed/canConstruct
+  type: http
+  seq: 4
+}
+
+get {
+  url: {{baseUrl}}/computed/canConstruct?type=BUILDING_FORGE&globalId=00-8192
+  body: none
+  auth: none
+}
+
+params:query {
+  type: BUILDING_FORGE
+  globalId: 00-8192
+}
+
+docs {
+  Engine buildability verdict (+ first failing legacy gate). City by globalId (or player=&city=).
+}

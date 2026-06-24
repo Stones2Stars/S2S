@@ -3,50 +3,41 @@
 #ifndef CV_HTTP_SERVER_H
 #define CV_HTTP_SERVER_H
 
-// Minimal GET-only HTTP/1.0 dev server -- the live game-state endpoint (#387).
+// Minimal GET-only HTTP/1.0 dev server -- the live observability surface (#387).
 // Gated by the BUG option Autolog__HttpServer (Logging tab, off by default);
 // binds 127.0.0.1:7227 only, so it is never reachable from off-machine.
-// Endpoints (anything but GET gets 405, Allow: GET):
-//   GET /                           -> "hello world" (the smoke test)
-//   GET /units                      -> JSON array of every unit in the game
-//   GET /units?id=N                 -> filtered to one unit id
-//   GET /units?playerNumber=N       -> filtered to one player's units (combinable with id)
-//   GET /players                    -> JSON array of every alive player: score, era, tech
-//                                      count, current research, cities, population, units,
-//                                      gold(+rate), science rate, production, handicap
-//   GET /players?playerNumber=N     -> filtered to one player
-//   GET /cities                     -> JSON array of every city: position, name, population,
-//                                      yield rates, production head (+turns left), building
-//                                      count, culture level, capital flag, and the live
-//                                      property values: crime, education, disease
-//   GET /cities?id=N                -> filtered to one city id (combinable with playerNumber)
-//   GET /cities?playerNumber=N      -> filtered to one player's cities
-//   GET /events                     -> Server-Sent Events stream (#407): "hello" with the
-//                                      current turn + gameId on connect; "turnEnd" (old
-//                                      turn) / "turnStart" (new turn) bracketing every
-//                                      game-turn increment; "playerTurnStart" /
-//                                      "playerTurnEnd" for HUMAN players only (the live
-//                                      "human thinking vs AI processing" phase signal --
-//                                      turn DURATION analytics belong to the [PERF]
-//                                      logs); "log" events (#419) carrying RAW gated log
-//                                      lines at Autolog__LogLevelStream and below ("the
-//                                      counter-strike way" -- parse out of process
-//                                      against docs/reference/ai-logging-reference.md);
-//                                      ": keepalive" comments every ~15s.
-//                                      text/event-stream; the response never ends. At
-//                                      most 8 concurrent streams (503 beyond).
-// The /units and /players wrappers carry "gameId" (JSON string) -- CvGame::getGameId(),
-// the persistent playtest identity stamped at game creation (digits-only yyMMddHHmm local
-// time for new games; saves predating the format change carry "DD-MM-YYYY HH:MM:SS") --
-// so tooling can tell playtests apart and detect reloads/new games mid-session.
-// Responses carry X-S2S-Turn (the game turn the snapshot was taken on). Data is
-// "as of the last publish" -- the game thread refreshes it every few seconds via
-// publishIfDue(); unknown query parameters are ignored.
 //
-// Runs on its own Win32 thread. HARD CONSTRAINT: that thread NEVER touches live
-// game objects -- it only reads the immutable snapshot the game thread published
-// (the same publish-and-serve contract the derived-data repositories will use;
-// see docs/plans/derived-data-repository.md section 8b).
+// The surface has exactly two data buckets, split on the verification axis (full
+// route map + rationale: docs/specs/http-endpoints.md):
+//   GET /              -> "hello world" (the smoke test)
+//   GET /events        -> Server-Sent Events stream (#407/#419): "hello" with the
+//                         current turn + gameId on connect; turnStart/turnEnd and
+//                         playerTurnStart/playerTurnEnd phase signals; "log" frames
+//                         carrying RAW gated log lines at Autolog__LogLevelStream and
+//                         below; ": keepalive" every ~15s. text/event-stream, never
+//                         ends; <=8 concurrent streams (503 beyond).
+//   GET /state/*       -> the RAW, uncalculated game state (techs known, buildings
+//                         present, plots + contents/state, specialists, ...). NO yields,
+//                         NO computed verdicts -- the INPUT to a calculation.
+//   GET /computed/*    -> the engine's OWN computed answers (yield rates + per-source
+//                         decomposition, gate verdicts, availability oracles, counts,
+//                         victory state) -- the verification ground-truth the external
+//                         dry-calc checks itself against.
+// Anything but GET gets 405 (Allow: GET); unknown paths get 404. /state and /computed
+// list their slices when fetched bare. Every response carries X-S2S-Turn.
+//
+// City ids are NOT unique across empires -- every city object carries {owner,id,name,
+// x,y}; single-city fetches key on ?player=N&city=M (with ?name= as a convenience
+// lookup). See docs/specs/http-endpoints.md ("City identity").
+//
+// gameId is CvGame::getGameId(): the persistent playtest identity stamped at game
+// creation (digits-only yyMMddHHmm for new games; older saves carry "DD-MM-YYYY HH:MM:SS").
+//
+// Runs on its own Win32 thread. HARD CONSTRAINT: that thread NEVER touches live game
+// objects. /state and /computed read live state, so they are serviced ON THE GAME
+// THREAD via a single-slot mailbox (publishIfDue drains it); the server thread only
+// renders the answer the game thread produced and reads a tiny published {turn,gameId}
+// header for response metadata.
 namespace CvHttpServer
 {
 	// Start or stop the server thread to match the BUG option. Idempotent.

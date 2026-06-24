@@ -1,0 +1,19 @@
+meta {
+  name: state/players
+  type: http
+  seq: 4
+}
+
+get {
+  url: {{baseUrl}}/state/players?player=0
+  body: none
+  auth: none
+}
+
+params:query {
+  player: 0
+}
+
+docs {
+  Raw player facts (era/civics/traits/counts). No computed rates.
+}

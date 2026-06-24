@@ -1,0 +1,19 @@
+meta {
+  name: state/cities
+  type: http
+  seq: 5
+}
+
+get {
+  url: {{baseUrl}}/state/cities?globalId=00-8192
+  body: none
+  auth: none
+}
+
+params:query {
+  globalId: 00-8192
+}
+
+docs {
+  Raw city substrate: plots/buildings/specialists/bonuses. No yields. Select one city by globalId "<PP>-<id>" (or use player=&city=; omit both for all cities of a player via ?player=N).
+}

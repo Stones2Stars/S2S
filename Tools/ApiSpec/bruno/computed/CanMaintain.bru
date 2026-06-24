@@ -1,0 +1,20 @@
+meta {
+  name: computed/canMaintain
+  type: http
+  seq: 9
+}
+
+get {
+  url: {{baseUrl}}/computed/canMaintain?type=PROCESS_WEALTH&player=0
+  body: none
+  auth: none
+}
+
+params:query {
+  type: PROCESS_WEALTH
+  player: 0
+}
+
+docs {
+  Engine canMaintain verdict.
+}

@@ -18,10 +18,10 @@
 #include "Engine/CvSelectionGroup.h"
 #include "AI/CvTeamAI.h"
 #include "Engine/CvUnit.h"
-#include "CvCascadeReadJson.h" // cascadeReadJsonBuildingAvailability -- the /diagnostic/canConstruct cascade verdict
-#include "CvCascadeTally.h"    // cascadeTally / CountDomain / CountScope (CvEntityAvailability + cascadeBuildable via the above)
-#include "CvCascadeMovement.h" // cascadeResolveMoveCost -- the movementSweep cascade-vs-legacy shadow column
-#include "CvUnitCombatInfo.h"  // GC.getUnitCombatInfo().getType() -- the unit-plane per-source attribution
+#include "CvUnitCombatInfo.h" // /computed/cities/yields heal-per-unitcombat decomposition (getUnitCombatInfo().getType())
+// NB no Cascade headers: this surface serves RAW state (/state) and the ENGINE's own answers (/computed)
+// only -- the cascade-vs-legacy shadow comparison was retired (the cutover is validated by the external
+// dry-calc + logging). See docs/specs/http-endpoints.md.
 
 // Deliberately the winsock 1.1 header, NOT winsock2.h: some unity batches pull a
 // full-fat windows.h (no WIN32_LEAN_AND_MEAN) which includes winsock.h, and
@@ -48,87 +48,19 @@ namespace
 	HANDLE g_hThread = NULL;
 	volatile LONG g_iStopRequested = 0;
 
-	// --- Published snapshot -------------------------------------------------------
-	// Written by the game thread (publishIfDue), read by the server thread. The lock
-	// is initialized before the server thread can exist (setEnabled) and publish
-	// early-outs while the server is off, so neither side touches it uninitialized.
-	struct UnitSnap
-	{
-		int iID;
-		int iOwner;
-		int iX;
-		int iY;
-		int iGroup;
-		int iMissionAI;
-		int iActivity;
-		int iDamage;
-		int iLevel;
-		// Movement/range observability (#430 movement model -- the "observe" half of observe-then-shadow,
-		// modifier.md 6.6). All O(1) const reads off CvUnit; the data is landed-but-unconsumed, so these are
-		// the LEGACY effective values the movement/range converter is diffed against.
-		int iBaseMoves;    // baseMoves()           -- iMoves + extraMoves + team domain moves (small int)
-		int iMaxMoves;     // maxMoves()            -- baseMoves * MOVE_DENOMINATOR (the x100 per-turn budget)
-		int iMovesLeft;    // movesLeft()           -- remaining budget this turn (max(0, maxMoves - getMoves))
-		int iMoveDiscount; // getExtraMoveDiscount()-- unit-side -cost discount (commander/commodore-borrowed)
-		int iRange;        // airRange()            -- the unified range value (air-only today; 0 for ground)
-		int iDomain;       // getDomainType()       -- DOMAIN_* (explains the flat/air moveCost early-returns)
-		CvString szType; // XML key, e.g. UNIT_WARDOG
-		CvString szAI;   // XML key, e.g. UNITAI_HUNTER
-	};
-
-	struct PlayerSnap
-	{
-		int iID;
-		int iTeam;
-		int iHuman;
-		int iNPC;
-		int iScore;
-		int iEra;
-		int iTechs;
-		int iCities;
-		int iPopulation;
-		int iUnits;
-		int64_t iGold; // CvPlayer::getGold() is 64-bit
-		int iGoldRate;
-		int iScienceRate;
-		int iProduction;
-		CvString szCiv;      // XML key, e.g. CIVILIZATION_ENGLAND
-		CvString szName;     // sanitized to JSON-safe ASCII
-		CvString szResearch; // XML key of the current research, or NONE
-		CvString szHandicap; // XML key, e.g. HANDICAP_EMPEROR -- the per-player difficulty
-	};
-
-	struct CitySnap
-	{
-		int iID;
-		int iOwner;
-		int iX;
-		int iY;
-		int iPopulation;
-		int iFood;            // YIELD_FOOD rate
-		int iProduction;      // YIELD_PRODUCTION rate
-		int iCommerce;        // YIELD_COMMERCE rate
-		int iProducingTurns;  // turns left on the current production (0 when idle)
-		int iNumBuildings;
-		int iCultureLevel;
-		int iCapital;
-		// The property values worth tracking (owner ruling 2026-06-11: crime, education
-		// and disease carry real gameplay; flammability and the pollutions are dormant).
-		int iCrime;
-		int iEducation;
-		int iDisease;
-		CvString szName;      // sanitized to ASCII; escaped by picojson
-		CvString szProducing; // XML key of the production head, or NONE
-	};
-
+	// --- Published header ---------------------------------------------------------
+	// The server thread NEVER touches game objects, but it needs the current turn (the
+	// X-S2S-Turn response header) and gameId (the /events hello) without a mailbox
+	// round-trip. The game thread refreshes this tiny scalar pair every frame
+	// (publishIfDue); the server thread reads its own refcounted copy. All real data
+	// is served on the game thread via the mailbox -- there is no bulk snapshot anymore
+	// (the old units/players/cities snapshot existed only for the retired GameTracker
+	// endpoints; see docs/specs/http-endpoints.md "What was dropped").
 	struct GameSnapshot
 	{
 		GameSnapshot() : iTurn(-1) {}
 		int iTurn;
 		CvString szGameId; // playtest id (CvGame::getGameId; digits-only yyMMddHHmm for new games)
-		std::vector<UnitSnap> units;
-		std::vector<PlayerSnap> players;
-		std::vector<CitySnap> cities;
 	};
 
 	// Narrow a wide game string to ASCII for the snapshot; non-ASCII becomes '?'.
@@ -231,165 +163,9 @@ namespace
 		sendAll(sock, szBody.c_str(), (int)szBody.size());
 	}
 
-	// --- Request handling (server thread; snapshot reads only) ---------------------
-
-	// Renders the /units document from this thread's own snapshot reference.
-	// IMPORTANT: the document is assembled by CONCATENATION -- CvString::format's
-	// growth loop caps out around 82KB (40 x 2KB attempts in formatv) and silently
-	// returns an EMPTY string beyond that, and a full dump of a mature game is
-	// megabytes. format() is only safe here for the small per-unit pieces.
-	CvString renderUnits(bool bFilterId, int iId, bool bFilterOwner, int iOwner)
-	{
-		const bst::shared_ptr<const GameSnapshot> pSnap = grabSnapshot();
-		const int iTurn = pSnap ? pSnap->iTurn : -1;
-
-		CvString szItems;
-		int iCount = 0;
-		if (pSnap)
-		{
-			szItems.reserve(pSnap->units.size() * 160);
-			for (size_t i = 0; i < pSnap->units.size(); ++i)
-			{
-				const UnitSnap& u = pSnap->units[i];
-				if (bFilterId && u.iID != iId)
-				{
-					continue;
-				}
-				if (bFilterOwner && u.iOwner != iOwner)
-				{
-					continue;
-				}
-				if (iCount > 0)
-				{
-					szItems += ",";
-				}
-				szItems += CvString::format(
-					"\n{\"id\":%d,\"owner\":%d,\"x\":%d,\"y\":%d,\"type\":\"%s\",\"ai\":\"%s\","
-					"\"group\":%d,\"missionAI\":%d,\"activity\":%d,\"damage\":%d,\"level\":%d,"
-					"\"baseMoves\":%d,\"maxMoves\":%d,\"movesLeft\":%d,\"moveDiscount\":%d,\"range\":%d,\"domain\":%d}",
-					u.iID, u.iOwner, u.iX, u.iY, u.szType.c_str(), u.szAI.c_str(),
-					u.iGroup, u.iMissionAI, u.iActivity, u.iDamage, u.iLevel,
-					u.iBaseMoves, u.iMaxMoves, u.iMovesLeft, u.iMoveDiscount, u.iRange, u.iDomain);
-				iCount++;
-			}
-		}
-
-		// gameId is emitted as a JSON string: legacy saves carry the old timestamp format
-		// (digits, dashes, spaces, colons -- all JSON-string-safe without escaping).
-		CvString szBody = CvString::format(
-			"{\"turn\":%d,\"gameId\":\"%s\",\"count\":%d,\"units\":[",
-			iTurn, pSnap ? pSnap->szGameId.c_str() : "", iCount);
-		szBody += szItems;
-		szBody += "\n]}\n";
-		return szBody;
-	}
-
-	// Rendered through picojson, unlike /units: the name field is free text, and the
-	// documented rendering rule reserves hand-built JSON for flat ints + XML keys.
-	// The document is small (<= MAX_PLAYERS objects), so DOM + serialize costs nothing
-	// and is immune to CvString::format's ~82KB cap. picojson objects are std::maps,
-	// so fields serialize in alphabetical key order.
-	CvString renderPlayers(bool bFilterOwner, int iOwner)
-	{
-		const bst::shared_ptr<const GameSnapshot> pSnap = grabSnapshot();
-		const int iTurn = pSnap ? pSnap->iTurn : -1;
-
-		picojson::value::array players;
-		if (pSnap)
-		{
-			for (size_t i = 0; i < pSnap->players.size(); ++i)
-			{
-				const PlayerSnap& p = pSnap->players[i];
-				if (bFilterOwner && p.iID != iOwner)
-				{
-					continue;
-				}
-				picojson::value::object o;
-				o["id"] = picojson::value((double)p.iID);
-				o["team"] = picojson::value((double)p.iTeam);
-				o["civ"] = picojson::value(p.szCiv);
-				o["name"] = picojson::value(p.szName);
-				o["human"] = picojson::value(p.iHuman != 0);
-				o["npc"] = picojson::value(p.iNPC != 0);
-				o["score"] = picojson::value((double)p.iScore);
-				o["era"] = picojson::value((double)p.iEra);
-				o["techs"] = picojson::value((double)p.iTechs);
-				o["research"] = picojson::value(p.szResearch);
-				o["handicap"] = picojson::value(p.szHandicap);
-				o["cities"] = picojson::value((double)p.iCities);
-				o["population"] = picojson::value((double)p.iPopulation);
-				o["units"] = picojson::value((double)p.iUnits);
-				o["gold"] = picojson::value((double)p.iGold);
-				o["goldRate"] = picojson::value((double)p.iGoldRate);
-				o["scienceRate"] = picojson::value((double)p.iScienceRate);
-				o["production"] = picojson::value((double)p.iProduction);
-				players.push_back(picojson::value(o));
-			}
-		}
-
-		picojson::value::object root;
-		root["turn"] = picojson::value((double)iTurn);
-		root["gameId"] = picojson::value(pSnap ? pSnap->szGameId : CvString(""));
-		root["count"] = picojson::value((double)players.size());
-		root["players"] = picojson::value(players);
-
-		CvString szBody(picojson::value(root).serialize().c_str());
-		szBody += "\n";
-		return szBody;
-	}
-
-	// picojson-rendered like /players: the name field is free text.
-	CvString renderCities(bool bFilterId, int iId, bool bFilterOwner, int iOwner)
-	{
-		const bst::shared_ptr<const GameSnapshot> pSnap = grabSnapshot();
-		const int iTurn = pSnap ? pSnap->iTurn : -1;
-
-		picojson::value::array cities;
-		if (pSnap)
-		{
-			for (size_t i = 0; i < pSnap->cities.size(); ++i)
-			{
-				const CitySnap& c = pSnap->cities[i];
-				if (bFilterId && c.iID != iId)
-				{
-					continue;
-				}
-				if (bFilterOwner && c.iOwner != iOwner)
-				{
-					continue;
-				}
-				picojson::value::object o;
-				o["id"] = picojson::value((double)c.iID);
-				o["owner"] = picojson::value((double)c.iOwner);
-				o["x"] = picojson::value((double)c.iX);
-				o["y"] = picojson::value((double)c.iY);
-				o["name"] = picojson::value(c.szName);
-				o["population"] = picojson::value((double)c.iPopulation);
-				o["food"] = picojson::value((double)c.iFood);
-				o["production"] = picojson::value((double)c.iProduction);
-				o["commerce"] = picojson::value((double)c.iCommerce);
-				o["producing"] = picojson::value(c.szProducing);
-				o["producingTurns"] = picojson::value((double)c.iProducingTurns);
-				o["buildings"] = picojson::value((double)c.iNumBuildings);
-				o["cultureLevel"] = picojson::value((double)c.iCultureLevel);
-				o["capital"] = picojson::value(c.iCapital != 0);
-				o["crime"] = picojson::value((double)c.iCrime);
-				o["education"] = picojson::value((double)c.iEducation);
-				o["disease"] = picojson::value((double)c.iDisease);
-				cities.push_back(picojson::value(o));
-			}
-		}
-
-		picojson::value::object root;
-		root["turn"] = picojson::value((double)iTurn);
-		root["gameId"] = picojson::value(pSnap ? pSnap->szGameId : CvString(""));
-		root["count"] = picojson::value((double)cities.size());
-		root["cities"] = picojson::value(cities);
-
-		CvString szBody(picojson::value(root).serialize().c_str());
-		szBody += "\n";
-		return szBody;
-	}
+	// --- Request handling (server thread) -------------------------------------------
+	// The server thread renders only the {turn,gameId} header here; every /state and
+	// /computed document is produced ON THE GAME THREAD (evaluate(), via the mailbox).
 
 	int snapshotTurn()
 	{
@@ -466,36 +242,11 @@ namespace
 		}
 	}
 
-	// --- diagnostic gate-eval (#430 readJson testing) -------------------------------------
-	// GAME-THREAD ONLY: evaluate one engine gate (+ the cascade equivalent where wired) and render the JSON
-	// answer. Called from serviceEvalMailbox -- it reads live CvPlayer state, which the server thread may not.
-	// Add the building/unit cap shadow (parsed allowed vs the engine getMax*Instances vs the live tally).
-	void rjAddCapShadow(picojson::value::object& o, const CvEntityAvailability& kAvail, CountDomain eDomain,
-		int iIdx, const CvCascadeContext& kCtx)
-	{
-		if (kAvail.allowedCap < 0) return;
-		int iLegacyCap = -1; const char* szScope = "?";
-		// legacy cap accessor (building has all three; unit exposes global/player)
-		if (eDomain == COUNTDOMAIN_BUILDING)
-		{
-			const CvBuildingInfo& kInfo = GC.getBuildingInfo((BuildingTypes)iIdx);
-			switch (kAvail.allowedScope)
-			{
-			case COUNTSCOPE_WORLD:  iLegacyCap = kInfo.getMaxGlobalInstances(); szScope = "world";  break;
-			case COUNTSCOPE_TEAM:   iLegacyCap = kInfo.getMaxTeamInstances();   szScope = "team";   break;
-			case COUNTSCOPE_EMPIRE: iLegacyCap = kInfo.getMaxPlayerInstances(); szScope = "empire"; break;
-			default: break;
-			}
-		}
-		picojson::value::object cap;
-		cap["scope"] = picojson::value(std::string(szScope));
-		cap["json"] = picojson::value((double)kAvail.allowedCap);
-		cap["legacy"] = picojson::value((double)iLegacyCap);
-		cap["tally"] = picojson::value((double)cascadeTally().count(eDomain, iIdx, kAvail.allowedScope, kCtx.contextFor(kAvail.allowedScope)));
-		o["cap"] = picojson::value(cap);
-	}
+	// --- game-thread gate/state evaluation -----------------------------------------------
+	// GAME-THREAD ONLY: read live CvPlayer/CvCity/CvGame state and render the JSON answer for a
+	// /state or /computed route. Called from serviceEvalMailbox (the server thread may not touch game objects).
 
-	// Diagnostic: WHY does legacy canConstruct block eBuilding in pCity? Returns the FIRST failing legacy gate by
+	// WHY does the engine's canConstruct block eBuilding in pCity? Returns the FIRST failing legacy gate by
 	// CALLING the same legacy accessors canConstruct uses (no logic duplication) -- so cluster diagnosis stops
 	// reverse-engineering the failing clause from the data. Order roughly follows CvPlayer/CvCity::canConstructInternal.
 	const char* legacyBlockReason(const CvCity* pCity, BuildingTypes eBuilding)
@@ -629,124 +380,6 @@ namespace
 		return "other";
 	}
 
-	// Symmetric diagnostic: WHY does the CASCADE block eBuilding (the under-offer side -- legacy allows, cascade hides)?
-	// Mirrors the sweep's cascade verdict, broken into its clauses. On-demand only; holds no state.
-	const char* cascadeBlockReason(const CvEntityAvailability& kA, BuildingTypes iIdx, const CvCity* pCity, int iTeam, const CvCascadeContext& kCtx)
-	{
-		if (kA.notConstructible) return "notConstructible";
-		if (pCity != NULL && pCity->hasBuilding(iIdx)) return "alreadyBuilt";
-		if (cascadeIsObsoleteForTeam(COUNTDOMAIN_BUILDING, iIdx, iTeam)) return "obsolete";
-		if (cascadeIsReplacedInCity(iIdx, kCtx)) return "replaced";
-		if (!cascadeBuildingGroupAllows(iIdx, kCtx)) return "groupCap";
-		if (!cascadeEvalCondition(kA.requiresBuild, kCtx)) return "requiresBuild";
-		if (!cascadeEvalCondition(kA.requiresOperate, kCtx)) return "requiresOperate";
-		if (!cascadeWithinAllowed(COUNTDOMAIN_BUILDING, iIdx, kA.allowedScope, kA.allowedCap, kCtx)) return "allowedCap";
-		return "(buildable)";
-	}
-
-	// ---- movement-cost decomposition (the /diagnostic/movementSweep "observe" surface) ----------------------
-	// A FAITHFUL re-decomposition of CvPlot::movementCost (Sources/Engine/CvPlot.cpp::movementCost, verified
-	// 2026-06-20) that records every named component, so a future converter divergence is attributed to a SOURCE
-	// WITH NUMBERS rather than guessed (DEC-no-guessing). It is a MIRROR, not the authority: the sweep cross-checks
-	// `iFinal` against the engine's own movementCost() per edge and flags any drift -- the mirror exists only to
-	// explain the engine's number, never to replace it. Reproduces every branch incl. the route min-override
-	// (routeCost vs routeFlatCost), the additive terrain stack, the unit -cost discount, the /2|/4 double-move, and
-	// the hard floor of 90 (NOT the denominator) -- the facts modifier.md 6.6 under-specified.
-	struct MoveCostParts
-	{
-		int  iDenominator;     // GC.getMOVE_DENOMINATOR()
-		bool bEarlyFlat;       // flatMovementCost() || DOMAIN_AIR -> denominator (the one true early return)
-		bool bRouteBranch;     // both plots routed & (no river-cross OR bridge-building tech)
-		int  iRouteCost;       // route.getMovementCost() + team.getRouteChange() (max of from/to routes)
-		int  iRouteFlatCost;   // max(fromFlat,toFlat) * baseMoves -- the second min() term
-		bool bIgnoreTerrain;   // ignoreTerrainCost(), or reduced-to-<=1 by the discount
-		int  iTerrain, iFeature, iHills, iRiver, iPeak; // additive regular-branch adders (pre-denominator)
-		int  iDiscount;        // getExtraMoveDiscount()
-		int  iRegularPreDenom; // max(1, sum - discount), before the * denominator
-		int  iDoubleDiv;       // 1 | 2 | 4 (terrain/feature/hills double-move divisor)
-		int  iFinal;           // the recomposed final cost (floor 90 on the regular branch, then max(1))
-	};
-
-	void decomposeMoveCost(const CvPlot* pTo, const CvUnit* pUnit, const CvPlot* pFrom, MoveCostParts& r)
-	{
-		const int iDenom = GC.getMOVE_DENOMINATOR();
-		r.iDenominator = iDenom;
-		r.bEarlyFlat = false; r.bRouteBranch = false; r.bIgnoreTerrain = false;
-		r.iRouteCost = 0; r.iRouteFlatCost = 0;
-		r.iTerrain = 0; r.iFeature = 0; r.iHills = 0; r.iRiver = 0; r.iPeak = 0;
-		r.iDiscount = pUnit->getExtraMoveDiscount();
-		r.iRegularPreDenom = 0; r.iDoubleDiv = 1; r.iFinal = 0;
-
-		// 1) flat-cost / air units: the ONLY branch that returns without the trailing max(1).
-		if (pUnit->flatMovementCost() || pUnit->getDomainType() == DOMAIN_AIR)
-		{
-			r.bEarlyFlat = true; r.iFinal = iDenom; return;
-		}
-		// 2) human stepping into unrevealed, or invalid-domain-for-location: maxMoves(). 3) invalid-for-action: denom.
-		if (pUnit->isHuman() && !pTo->isRevealed(pUnit->getTeam(), false)) { r.iFinal = std::max(1, pUnit->maxMoves()); return; }
-		if (!pFrom->isValidDomainForLocation(*pUnit))                      { r.iFinal = std::max(1, pUnit->maxMoves()); return; }
-		if (!pTo->isValidDomainForAction(*pUnit))                          { r.iFinal = std::max(1, iDenom); return; }
-
-		const bool bRiverCross = pFrom->isRiverCrossing(directionXY(pFrom, pTo));
-
-		// 4) ROUTE OVERRIDE branch: cost = min(denom, min(routeCost, routeFlatCost)).
-		if (pFrom->isValidRoute(pUnit) && pTo->isValidRoute(pUnit)
-			&& (!bRiverCross || GET_TEAM(pUnit->getTeam()).isBridgeBuilding()))
-		{
-			r.bRouteBranch = true;
-			const RouteTypes eFrom = pFrom->getRouteType();
-			const RouteTypes eTo = pTo->getRouteType();
-			const CvRouteInfo& kFrom = GC.getRouteInfo(eFrom);
-			const CvRouteInfo& kTo = GC.getRouteInfo(eTo);
-			int iRoute = kFrom.getMovementCost() + GET_TEAM(pUnit->getTeam()).getRouteChange(eFrom);
-			if (eTo != eFrom)
-			{
-				const int iToCost = kTo.getMovementCost() + GET_TEAM(pUnit->getTeam()).getRouteChange(eTo);
-				if (iToCost > iRoute) iRoute = iToCost;
-			}
-			r.iRouteCost = iRoute;
-			r.iRouteFlatCost = std::max(kFrom.getFlatMovementCost(), kTo.getFlatMovementCost()) * pUnit->baseMoves();
-			r.iFinal = std::max(1, std::min(iDenom, std::min(r.iRouteCost, r.iRouteFlatCost)));
-			return;
-		}
-
-		// 5) REGULAR (terrain) branch: additive stack, -discount, *denom, double-move /2|/4, floor 90.
-		int iRegular;
-		bool bIgnore = pUnit->ignoreTerrainCost();
-		if (bIgnore)
-		{
-			iRegular = 1;
-		}
-		else
-		{
-			r.iTerrain = GC.getTerrainInfo(pTo->getTerrainType()).getMovementCost();
-			iRegular = r.iTerrain;
-			if (pTo->getFeatureType() != NO_FEATURE)
-			{
-				r.iFeature = GC.getFeatureInfo(pTo->getFeatureType()).getMovementCost();
-				iRegular += r.iFeature;
-			}
-			if (pTo->isHills()) { r.iHills = GC.getHILLS_EXTRA_MOVEMENT(); iRegular += r.iHills; }
-			if (bRiverCross)    { r.iRiver = GC.getRIVER_EXTRA_MOVEMENT(); iRegular += r.iRiver; }
-			if (pTo->isAsPeak())
-			{
-				if (!GET_TEAM(pUnit->getTeam()).isMoveFastPeaks()) { r.iPeak = GC.getPEAK_EXTRA_MOVEMENT(); iRegular += r.iPeak; }
-				r.iPeak += 3; iRegular += 3; // the literal "+3" the engine adds for peaks unconditionally
-			}
-		}
-		if (iRegular > 0) iRegular = std::max(1, iRegular - r.iDiscount);
-		if (iRegular <= 1) bIgnore = true; // discount drove it to the flat case
-		r.bIgnoreTerrain = bIgnore;
-		r.iRegularPreDenom = iRegular;
-		iRegular *= iDenom;
-		const bool bFeatDouble = ((pTo->getFeatureType() != NO_FEATURE && pUnit->isFeatureDoubleMove(pTo->getFeatureType()))
-			|| (pTo->isHills() && pUnit->isHillsDoubleMove()));
-		const bool bTerrDouble = pUnit->isTerrainDoubleMove(pTo->getTerrainType());
-		if (!bIgnore && bFeatDouble)                  { iRegular /= 4; r.iDoubleDiv = 4; }
-		else if (bTerrDouble || (bIgnore && bFeatDouble)) { iRegular /= 2; r.iDoubleDiv = 2; }
-		r.iFinal = std::max(1, std::max(90, iRegular));
-	}
-
 	// ====================================================================================================
 	// /extractor -- the RAW game-state dump (world -> teams -> empires -> areas -> cities -> plots).
 	// CLEAN, raw-FACTS-ONLY extraction: NO calculated value ever appears here (DEC-calc-zero-ride-in). The
@@ -757,7 +390,13 @@ namespace
 	picojson::value::object extractCity(CvPlayer& kPlayer, CvCity* pCity, int iTeam)
 	{
 		picojson::value::object c;
+		// City identity: id is unique only WITHIN a player, so always pair it with owner (the globally-unique
+		// tuple) + name + x/y, per docs/specs/http-endpoints.md "City identity". `globalId` is the derived
+		// "<PP>-<id>" snowflake (owner zero-padded to 2 digits) -- a single stable globally-unique reference for
+		// the API + the in-game hover tooltip; decode back to the (owner,id) tuple by splitting on '-'.
+		c["owner"]       = picojson::value((double)pCity->getOwner());
 		c["id"]          = picojson::value((double)pCity->getID());
+		c["globalId"]    = picojson::value(std::string(CvString::format("%02d-%d", pCity->getOwner(), pCity->getID()).GetCString()));
 		c["name"]        = picojson::value(std::string(narrowToAscii(pCity->getName()).GetCString()));
 		c["population"]  = picojson::value((double)pCity->getPopulation());
 		c["isCapital"]   = picojson::value(pCity->isCapital());
@@ -875,19 +514,8 @@ namespace
 		}
 		c["queuedBuildings"] = picojson::value(queuedB);
 		c["queuedUnits"] = picojson::value(queuedU);
-
-		// /extractor city.canConstruct / canTrain: the engine's per-city buildability verdict -- the COMPARISON
-		// oracle for the cascade's isolated per-city buildable frontier (the TRUE set only).
-		picojson::value::array canCon;
-		for (int iB = 0; iB < GC.getNumBuildingInfos(); ++iB)
-			if (pCity->canConstruct((BuildingTypes)iB))
-				canCon.push_back(picojson::value(std::string(GC.getBuildingInfo((BuildingTypes)iB).getType())));
-		c["canConstruct"] = picojson::value(canCon);
-		picojson::value::array canTrn;
-		for (int iU = 0; iU < GC.getNumUnitInfos(); ++iU)
-			if (pCity->canTrain((UnitTypes)iU))
-				canTrn.push_back(picojson::value(std::string(GC.getUnitInfo((UnitTypes)iU).getType())));
-		c["canTrain"] = picojson::value(canTrn);
+		// NB the per-city canConstruct/canTrain verdicts (a drycalc TARGET) are NOT emitted here -- /state is
+		// inputs only. They live on /computed/canConstruct?type=...&city=... (see docs/specs/http-endpoints.md).
 
 		// ACTIVE corporations in the city (isActiveCorporation) -- per-city corp output/commerce applies only where active
 		picojson::value::array corps;
@@ -1138,33 +766,8 @@ namespace
 				// (getReligionCommerceByReligion: state==X || no-state || isNonStateReligionCommerce).
 				emp["nonStateReligionCommerce"] = picojson::value(kPlayer.isNonStateReligionCommerce());
 
-				// /extractor empire.availableTechs: the engine's canResearch verdict per player -- the COMPARISON
-				// oracle for the cascade's ISOLATED tech-availability set, NOT an input to that computation.
-				picojson::value::array availTechs;
-				for (int iT = 0; iT < GC.getNumTechInfos(); ++iT)
-					if (kPlayer.canResearch((TechTypes)iT))
-						availTechs.push_back(picojson::value(std::string(GC.getTechInfo((TechTypes)iT).getType())));
-				emp["availableTechs"] = picojson::value(availTechs);
-
-				// /extractor empire.availableCivics: the engine's canDoCivics verdict per player -- the COMPARISON
-				// oracle for the cascade's ISOLATED civic-availability set, NOT an input to that computation.
-				picojson::value::array availCivics;
-				for (int iC = 0; iC < GC.getNumCivicInfos(); ++iC)
-					if (kPlayer.canDoCivics((CivicTypes)iC))
-						availCivics.push_back(picojson::value(std::string(GC.getCivicInfo((CivicTypes)iC).getType())));
-				emp["availableCivics"] = picojson::value(availCivics);
-
-				// /extractor empire.availableBuilds: the BUILD-UNLOCK verdict per player -- the build's tech prereq
-				// is held (NOT per-plot canBuild; placement is out of scope -- "available", not "can do it here").
-				// COMPARISON oracle only.
-				picojson::value::array availBuilds;
-				for (int iB = 0; iB < GC.getNumBuildInfos(); ++iB)
-				{
-					const TechTypes ePrereq = (TechTypes)GC.getBuildInfo((BuildTypes)iB).getTechPrereq();
-					if (ePrereq == NO_TECH || GET_TEAM(kPlayer.getTeam()).isHasTech(ePrereq))
-						availBuilds.push_back(picojson::value(std::string(GC.getBuildInfo((BuildTypes)iB).getType())));
-				}
-				emp["availableBuilds"] = picojson::value(availBuilds);
+				// NB the availability verdicts (canResearch / canDoCivics / build-unlock) are drycalc TARGETS, so they
+				// are NOT emitted on /state -- they live on /computed/availableTechs|availableCivics|availableBuilds.
 
 				picojson::value::object sliders;
 				for (int cc = 0; cc < 4; ++cc)
@@ -1264,12 +867,111 @@ namespace
 		return CvString(picojson::value(root).serialize().c_str());
 	}
 
+	// ---- /state slice renderers: RAW inputs only (no drycalc target ever). iPlayerFilter < 0 == all alive
+	// players; else just that one. City ids are not unique across empires, so each row carries owner+id (cities
+	// reuse extractCity, which stamps owner/id/name/x/y). See docs/specs/http-endpoints.md. ----
+	CvString stateSlice(const char* szAction, int iPlayerFilter, int iCityReq)
+	{
+		picojson::value::object root;
+		root["turn"] = picojson::value((double)GC.getGame().getGameTurn());
+		picojson::value::array arr;
+
+		for (int p = 0; p < MAX_PLAYERS; ++p)
+		{
+			CvPlayer& kPlayer = GET_PLAYER((PlayerTypes)p);
+			if (!kPlayer.isAlive()) continue;
+			if (iPlayerFilter >= 0 && p != iPlayerFilter) continue;
+			const int iTeam = (int)kPlayer.getTeam();
+
+			if (strcmp(szAction, "stateTechs") == 0)
+			{
+				picojson::value::object e;
+				e["player"] = picojson::value((double)p);
+				e["team"]   = picojson::value((double)iTeam);
+				picojson::value::array techs;
+				for (int t = 0; t < GC.getNumTechInfos(); ++t)
+					if (GET_TEAM((TeamTypes)iTeam).isHasTech((TechTypes)t))
+						techs.push_back(picojson::value(std::string(GC.getTechInfo((TechTypes)t).getType())));
+				e["techs"] = picojson::value(techs);
+				arr.push_back(picojson::value(e));
+			}
+			else if (strcmp(szAction, "statePlayers") == 0)
+			{
+				picojson::value::object e;
+				e["id"]        = picojson::value((double)p);
+				e["team"]      = picojson::value((double)iTeam);
+				e["era"]       = picojson::value(std::string(GC.getEraInfo(kPlayer.getCurrentEra()).getType()));
+				e["isHuman"]   = picojson::value(kPlayer.isHuman());
+				e["isNPC"]     = picojson::value(kPlayer.isNPC());
+				e["isAnarchy"] = picojson::value(kPlayer.isAnarchy());
+				e["isRebel"]   = picojson::value(kPlayer.isRebel());
+				e["cityCount"] = picojson::value((double)kPlayer.getNumCities());
+				picojson::value::array civics;
+				for (int co = 0; co < GC.getNumCivicOptionInfos(); ++co)
+				{
+					const CivicTypes eC = kPlayer.getCivics((CivicOptionTypes)co);
+					if (eC != NO_CIVIC) civics.push_back(picojson::value(std::string(GC.getCivicInfo(eC).getType())));
+				}
+				e["civics"] = picojson::value(civics);
+				picojson::value::array traits;
+				for (int tr = 0; tr < GC.getNumTraitInfos(); ++tr)
+					if (kPlayer.hasTrait((TraitTypes)tr))
+						traits.push_back(picojson::value(std::string(GC.getTraitInfo((TraitTypes)tr).getType())));
+				e["traits"] = picojson::value(traits);
+				const ReligionTypes eState = kPlayer.getStateReligion();
+				if (eState != NO_RELIGION) e["stateReligion"] = picojson::value(std::string(GC.getReligionInfo(eState).getType()));
+				arr.push_back(picojson::value(e));
+			}
+			else if (strcmp(szAction, "stateUnits") == 0)
+			{
+				foreach_(const CvUnit* pUnit, kPlayer.units())
+				{
+					picojson::value::object e;
+					const UnitTypes eUT = pUnit->getUnitType();
+					const UnitAITypes eAI = pUnit->AI_getUnitAIType();
+					const CvSelectionGroup* pGrp = pUnit->getGroup();
+					e["owner"]      = picojson::value((double)p);
+					e["id"]         = picojson::value((double)pUnit->getID());
+					e["type"]       = picojson::value(std::string(eUT != NO_UNIT ? GC.getUnitInfo(eUT).getType() : "NO_UNIT"));
+					e["ai"]         = picojson::value(std::string(eAI != NO_UNITAI ? GC.getUnitAIInfo(eAI).getType() : "NO_UNITAI"));
+					e["x"]          = picojson::value((double)pUnit->getX());
+					e["y"]          = picojson::value((double)pUnit->getY());
+					e["group"]      = picojson::value((double)(pGrp != NULL ? pGrp->getID() : -1));
+					e["damage"]     = picojson::value((double)pUnit->getDamage());
+					e["level"]      = picojson::value((double)pUnit->getLevel());
+					e["experience"] = picojson::value((double)pUnit->getExperience());
+					picojson::value::array promos;
+					for (int pr = 0; pr < GC.getNumPromotionInfos(); ++pr)
+						if (pUnit->isHasPromotion((PromotionTypes)pr))
+							promos.push_back(picojson::value(std::string(GC.getPromotionInfo((PromotionTypes)pr).getType())));
+					e["promotions"] = picojson::value(promos);
+					arr.push_back(picojson::value(e));
+				}
+			}
+			else if (strcmp(szAction, "stateCities") == 0)
+			{
+				int iLoop;
+				for (CvCity* pCity = kPlayer.firstCity(&iLoop); pCity != NULL; pCity = kPlayer.nextCity(&iLoop))
+				{
+					if (iCityReq >= 0 && pCity->getID() != iCityReq) continue;
+					arr.push_back(picojson::value(extractCity(kPlayer, pCity, iTeam)));
+				}
+			}
+		}
+		root["data"] = picojson::value(arr);
+		return CvString(picojson::value(root).serialize().c_str());
+	}
+
 	CvString evaluateGate(const char* szAction, const char* szType, int iPlayer, int iCityReq)
 	{
-		// /extractor/gamestate -- the raw game-state dump; iPlayer < 0 == ALL players (runs before the
+		// /state/all -- the entire raw game-state in one document; iPlayer < 0 == ALL players (runs before the
 		// single-player resolution below, so the "all players" walk is reachable).
 		if (strcmp(szAction, "gamestate") == 0)
 			return extractGameState(iPlayer);
+
+		// /state/* granular slices (raw inputs); also all-players-capable, so resolved before the single-player block.
+		if (strncmp(szAction, "state", 5) == 0)
+			return stateSlice(szAction, iPlayer, iCityReq);
 
 		picojson::value::object o;
 		o["action"] = picojson::value(std::string(szAction));
@@ -1292,576 +994,6 @@ namespace
 		CvCity* pCity = (iCityReq >= 0) ? kPlayer.getCity(iCityReq) : kPlayer.getCapitalCity();
 		const int iCityId = (pCity != NULL) ? pCity->getID() : -1;
 		const int iTeam = (int)kPlayer.getTeam();
-
-		// SWEEP: iterate a whole domain (szType = "units" | "buildings") and report cascade-vs-legacy
-		// divergences in one pass -- the large-surface lens. Runs on the game thread; the parsed-availability
-		// cache keeps a full-roster scan affordable.
-		if (strcmp(szAction, "sweep") == 0)
-		{
-			CvCascadeContext kCtx(iPlayer, iCityId);
-			const bool bUnits = (strcmp(szType, "units") == 0);
-			const int iN = bUnits ? GC.getNumUnitInfos() : GC.getNumBuildingInfos();
-			int iTotal = 0, iEval = 0, iNoJson = 0, iAgree = 0, iDiv = 0;
-			picojson::value::array kDiv;
-			for (int i = 0; i < iN; ++i)
-			{
-				++iTotal;
-				const char* szT = bUnits ? GC.getUnitInfo((UnitTypes)i).getType()
-				                         : GC.getBuildingInfo((BuildingTypes)i).getType();
-				CvEntityAvailability kA;
-				std::string sN;
-				if (!cascadeReadJsonAvailability(szT, kA, sN)) { ++iNoJson; continue; }
-				++iEval;
-				bool bC, bL;
-				if (bUnits)
-				{
-					bC = cascadeUnitTrainable(i, kCtx);
-					bL = (pCity != NULL) && pCity->canTrain((UnitTypes)i);
-				}
-				else
-				{
-					bC = cascadeBuildable(kA, COUNTDOMAIN_BUILDING, i, kCtx)
-					     && !kA.notConstructible                                                  // cost==-1: never player-constructible
-					     && (pCity == NULL || !pCity->hasBuilding((BuildingTypes)i))
-					     && !cascadeIsObsoleteForTeam(COUNTDOMAIN_BUILDING, i, iTeam)
-					     && !cascadeIsReplacedInCity(i, kCtx)                                      // a successor is active in the city
-					     && cascadeBuildingGroupAllows(i, kCtx);
-					bL = (pCity != NULL) && pCity->canConstruct((BuildingTypes)i);
-				}
-				if (bC == bL) { ++iAgree; }
-				else
-				{
-					++iDiv;
-					if (kDiv.size() < 250)
-					{
-						picojson::value::object e;
-						e["type"] = picojson::value(std::string(szT));
-						e["cascade"] = picojson::value(bC);
-						e["legacy"] = picojson::value(bL);
-						if (!bUnits && pCity != NULL)
-						{
-							e["reason"] = picojson::value(std::string(legacyBlockReason(pCity, (BuildingTypes)i)));
-							e["cascadeReason"] = picojson::value(std::string(cascadeBlockReason(kA, (BuildingTypes)i, pCity, iTeam, kCtx)));
-						}
-						kDiv.push_back(picojson::value(e));
-					}
-				}
-			}
-			o["domain"] = picojson::value(std::string(bUnits ? "units" : "buildings"));
-			o["city"] = picojson::value((double)iCityId);
-			o["total"] = picojson::value((double)iTotal);
-			o["evaluated"] = picojson::value((double)iEval);
-			o["noJson"] = picojson::value((double)iNoJson);
-			o["agree"] = picojson::value((double)iAgree);
-			o["diverge"] = picojson::value((double)iDiv);
-			o["divergences"] = picojson::value(kDiv);
-			return CvString(picojson::value(o).serialize().c_str());
-		}
-
-		// PLACEMENT SWEEP (§14 H auto-placement shadow, B-i): per (auto-placed building x the player's cities),
-		// cascade-would-place vs the legacy maintainers' realized presence. The full per-cell dump (type=full)
-		// reconstructs the ENTIRE auto-placement picture from the API alone (the render-from-API / total-observability
-		// bar); default returns the divergence triage list (cap 250) + summary. Game thread; parsed-availability cached.
-		if (strcmp(szAction, "placementSweep") == 0)
-		{
-			const bool bFull = (strcmp(szType, "full") == 0);
-			std::vector<int> aRoster, aKind;
-			cascadeAutoPlacedRoster(aRoster, aKind);
-
-			// Parse each roster building's availability ONCE, reuse across cities.
-			std::vector<CvEntityAvailability> aAvail(aRoster.size());
-			std::vector<char> aParsed(aRoster.size(), 0);
-			for (size_t i = 0; i < aRoster.size(); ++i)
-			{
-				std::string sN;
-				aParsed[i] = cascadeReadJsonAvailability(GC.getBuildingInfo((BuildingTypes)aRoster[i]).getType(), aAvail[i], sN) ? 1 : 0;
-			}
-
-			int iCities = 0, iCells = 0, iAgree = 0, iDiv = 0, iNoJson = 0;
-			picojson::value::array kDiv;   // divergence triage list (cap 250)
-			picojson::value::array kCells; // full per-cell state (type=full only; cap 4000)
-			std::map<std::string, int> kHist; // UNCAPPED divergence histogram by "kind:reason" (engine-computed; the trust + completeness fix)
-			int iCityIter = 0;
-			for (CvCity* pCity = kPlayer.firstCity(&iCityIter); pCity != NULL; pCity = kPlayer.nextCity(&iCityIter))
-			{
-				++iCities;
-				CvCascadeContext kCtx(iPlayer, pCity->getID());
-				for (size_t i = 0; i < aRoster.size(); ++i)
-				{
-					const int b = aRoster[i];
-					if (!aParsed[i]) { ++iNoJson; continue; }
-					++iCells;
-					bool bC = false;
-					const char* szReason = cascadePlacementReason(b, aAvail[i], kCtx, iTeam, bC);
-					const bool bL = pCity->hasBuilding((BuildingTypes)b);
-					const char* szT = GC.getBuildingInfo((BuildingTypes)b).getType();
-					if (bC == bL) ++iAgree; else { ++iDiv; kHist[CvString::format("%d:%s", aKind[i], szReason).c_str()]++; }
-
-					if (bFull && kCells.size() < 4000)
-					{
-						picojson::value::object c;
-						c["city"] = picojson::value((double)pCity->getID());
-						c["type"] = picojson::value(std::string(szT));
-						c["kind"] = picojson::value((double)aKind[i]); // bit0 bAutoBuild, bit1 property-band
-						c["cascade"] = picojson::value(bC);
-						c["legacy"] = picojson::value(bL);
-						c["reason"] = picojson::value(std::string(szReason));
-						kCells.push_back(picojson::value(c));
-					}
-					if (bC != bL && kDiv.size() < 250)
-					{
-						picojson::value::object e;
-						e["city"] = picojson::value((double)pCity->getID());
-						e["type"] = picojson::value(std::string(szT));
-						e["kind"] = picojson::value((double)aKind[i]);
-						e["cascade"] = picojson::value(bC);
-						e["legacy"] = picojson::value(bL);
-						e["reason"] = picojson::value(std::string(szReason));
-						kDiv.push_back(picojson::value(e));
-					}
-				}
-			}
-			o["roster"] = picojson::value((double)aRoster.size());
-			o["cities"] = picojson::value((double)iCities);
-			o["cells"] = picojson::value((double)iCells);
-			o["noJson"] = picojson::value((double)iNoJson);
-			o["agree"] = picojson::value((double)iAgree);
-			o["diverge"] = picojson::value((double)iDiv);
-			picojson::value::object kHistO;
-			for (std::map<std::string,int>::const_iterator it = kHist.begin(); it != kHist.end(); ++it)
-				kHistO[it->first] = picojson::value((double)it->second);
-			o["reasonHistogram"] = picojson::value(kHistO); // UNCAPPED: every divergence counted (not just the 250 sample)
-			o["divergences"] = picojson::value(kDiv);
-			if (bFull) o["all"] = picojson::value(kCells);
-			return CvString(picojson::value(o).serialize().c_str());
-		}
-
-		// DORMANCY SWEEP (§14 H B-ii): for each BUILT building x the player's cities, cascade-active (requires.operate)
-		// vs legacy hasFullyActiveBuilding (resource/replacement disabling + religious limit). `type=full` adds the full
-		// per-cell `all[]`; default = divergence triage (cap 250) + summary. Game thread; parsed-availability cached.
-		if (strcmp(szAction, "dormancySweep") == 0)
-		{
-			const bool bFull = (strcmp(szType, "full") == 0);
-			const int iNum = GC.getNumBuildingInfos();
-			std::vector<CvEntityAvailability> aAvail(iNum);
-			std::vector<char> aState(iNum, 0); // 0 not tried, 1 parsed, 2 no JSON
-
-			int iCities = 0, iCells = 0, iAgree = 0, iDiv = 0;
-			picojson::value::array kDiv, kCells;
-			std::map<std::string, int> kHist; // UNCAPPED divergence histogram by "cascade|legacy" reason pair
-			int iCityIter = 0;
-			for (CvCity* pCity = kPlayer.firstCity(&iCityIter); pCity != NULL; pCity = kPlayer.nextCity(&iCityIter))
-			{
-				++iCities;
-				CvCascadeContext kCtx(iPlayer, pCity->getID());
-				for (int b = 0; b < iNum; ++b)
-				{
-					if (!pCity->hasBuilding((BuildingTypes)b)) continue;
-					if (aState[b] == 0)
-					{
-						std::string sN;
-						aState[b] = cascadeReadJsonAvailability(GC.getBuildingInfo((BuildingTypes)b).getType(), aAvail[b], sN) ? 1 : 2;
-					}
-					if (aState[b] != 1) continue;
-					++iCells;
-					bool bCA = false;
-					const char* szCascade = cascadeDormancyReason(aAvail[b], kCtx, bCA);
-					const bool bLA = pCity->hasFullyActiveBuilding((BuildingTypes)b);
-					const char* szLegacy = cascadeDormancyLegacyReason(pCity, b);
-					const char* szT = GC.getBuildingInfo((BuildingTypes)b).getType();
-					if (bCA == bLA) ++iAgree; else { ++iDiv; kHist[std::string("cascade=") + szCascade + "|legacy=" + szLegacy]++; }
-
-					if (bFull && kCells.size() < 4000)
-					{
-						picojson::value::object c;
-						c["city"] = picojson::value((double)pCity->getID());
-						c["type"] = picojson::value(std::string(szT));
-						c["cascadeActive"] = picojson::value(bCA);
-						c["legacyActive"] = picojson::value(bLA);
-						c["cascadeReason"] = picojson::value(std::string(szCascade));
-						c["legacyReason"] = picojson::value(std::string(szLegacy));
-						kCells.push_back(picojson::value(c));
-					}
-					if (bCA != bLA && kDiv.size() < 250)
-					{
-						picojson::value::object e;
-						e["city"] = picojson::value((double)pCity->getID());
-						e["type"] = picojson::value(std::string(szT));
-						e["cascadeActive"] = picojson::value(bCA);
-						e["legacyActive"] = picojson::value(bLA);
-						e["cascadeReason"] = picojson::value(std::string(szCascade));
-						e["legacyReason"] = picojson::value(std::string(szLegacy));
-						kDiv.push_back(picojson::value(e));
-					}
-				}
-			}
-			o["cities"] = picojson::value((double)iCities);
-			o["builtCells"] = picojson::value((double)iCells);
-			o["agree"] = picojson::value((double)iAgree);
-			o["diverge"] = picojson::value((double)iDiv);
-			picojson::value::object kHistO;
-			for (std::map<std::string,int>::const_iterator it = kHist.begin(); it != kHist.end(); ++it)
-				kHistO[it->first] = picojson::value((double)it->second);
-			o["reasonHistogram"] = picojson::value(kHistO); // UNCAPPED divergence histogram
-			o["divergences"] = picojson::value(kDiv);
-			if (bFull) o["all"] = picojson::value(kCells);
-			return CvString(picojson::value(o).serialize().c_str());
-		}
-
-		// MODIFIER SWEEP (modifier-cascade-shadow-spec §3.2): per (the player's cities x PILOT yield family), the cascade
-		// effective vs legacy getYieldRate100 (both x1 realized), decomposed (flat/percent/mult), cause-tagged + care-graded
-		// (Fine..Meltdown). `type=full` = the COMPLETE per-cell array (render-the-whole-state / total-observability bar);
-		// default = the divergence triage list (delta!=0, cap 250) + the UNCAPPED cause + care histograms. `type=`food|
-		// production|commerce (or `channel=` folded into it by the dispatcher) scopes to one family. Game thread; the
-		// per-building modifier parse is cached inside CvCascadeModifier. NB pre-completion the histogram is dominated by
-		// missingDeposit/Bug -- only BUILDING deposits are wired (the expected parity work, §3.1a), not a real alarm yet.
-		if (strcmp(szAction, "modifierSweep") == 0)
-		{
-			const bool bFull = (strcmp(szType, "full") == 0);
-			int iOnly = -1; // channel scoping: type=<familyKey> (food|production|commerce|gold|...|greatPeople) -> just that family
-			for (int f = 0; f < NUM_MODIFIER_FAMILIES; ++f)
-				if (strcmp(szType, cascadeModifierFamilyInfo(f).szKey) == 0) iOnly = f;
-
-			int iCities = 0, iCells = 0, iAgree = 0, iDiv = 0;
-			int aCare[NUM_MODIFIER_CARE_LEVELS] = { 0 };
-			picojson::value::array kDiv, kCells;
-			std::map<std::string, int> kCause; // UNCAPPED divergence histogram by "cause:CareName"
-			int iCityIter = 0;
-			for (CvCity* pCity = kPlayer.firstCity(&iCityIter); pCity != NULL; pCity = kPlayer.nextCity(&iCityIter))
-			{
-				++iCities;
-				CvCascadeContext kCtx(iPlayer, pCity->getID());
-				for (int f = 0; f < NUM_MODIFIER_FAMILIES; ++f)
-				{
-					if (iOnly >= 0 && f != iOnly) continue;
-					++iCells;
-					CvModifierSlot slot;
-					int iBase = 0, iCascade = 0, iLegacy = 0;
-					cascadeModifierFamilyShadow(pCity, kCtx, f, slot, iBase, iCascade, iLegacy); // all-channel shadow (registry combine)
-					int iCare = 0;
-					const char* szCause = cascadeModifierClassify(iCascade, iLegacy, slot, iCare);
-					if (iCare >= 0 && iCare < NUM_MODIFIER_CARE_LEVELS) ++aCare[iCare];
-					if (iCascade == iLegacy) ++iAgree;
-					else { ++iDiv; kCause[CvString::format("%s:%s", szCause, cascadeModifierCareName(iCare)).c_str()]++; }
-
-					if (bFull && (int)kCells.size() < 4000)
-					{
-						picojson::value::object c;
-						c["city"]      = picojson::value((double)pCity->getID());
-						c["channel"]   = picojson::value(std::string(cascadeModifierFamilyInfo(f).szKey));
-						c["base"]      = picojson::value((double)iBase);
-						c["flat"]      = picojson::value((double)slot.iFlat);
-						c["percent"]   = picojson::value((double)slot.iPercent);
-						c["mult100"]   = picojson::value((double)slot.iMultiplierX100);
-						c["cascade"]   = picojson::value((double)iCascade);
-						c["legacy"]    = picojson::value((double)iLegacy);
-						c["delta"]     = picojson::value((double)(iCascade - iLegacy));
-						c["cause"]     = picojson::value(std::string(szCause));
-						c["care"]      = picojson::value((double)iCare);
-						c["careName"]  = picojson::value(std::string(cascadeModifierCareName(iCare)));
-						kCells.push_back(picojson::value(c));
-					}
-					if (iCascade != iLegacy && (int)kDiv.size() < 250)
-					{
-						picojson::value::object e;
-						e["city"]     = picojson::value((double)pCity->getID());
-						e["channel"]  = picojson::value(std::string(cascadeModifierFamilyInfo(f).szKey));
-						e["base"]     = picojson::value((double)iBase);
-						e["flat"]     = picojson::value((double)slot.iFlat);
-						e["percent"]  = picojson::value((double)slot.iPercent);
-						e["mult100"]  = picojson::value((double)slot.iMultiplierX100);
-						e["cascade"]  = picojson::value((double)iCascade);
-						e["legacy"]   = picojson::value((double)iLegacy);
-						e["delta"]    = picojson::value((double)(iCascade - iLegacy));
-						e["cause"]    = picojson::value(std::string(szCause));
-						e["care"]     = picojson::value((double)iCare);
-						e["careName"] = picojson::value(std::string(cascadeModifierCareName(iCare)));
-						kDiv.push_back(picojson::value(e));
-					}
-				}
-			}
-			o["parityMode"] = picojson::value(cascadeModifierParityMode);
-			o["calcFlow"]   = picojson::value((double)cascadeModifierCalcFlow);
-			o["channel"]    = picojson::value(std::string(iOnly >= 0 ? cascadeModifierFamilyInfo(iOnly).szKey : "all"));
-			o["cities"]     = picojson::value((double)iCities);
-			o["cells"]      = picojson::value((double)iCells);
-			o["agree"]      = picojson::value((double)iAgree);
-			o["diverge"]    = picojson::value((double)iDiv);
-			picojson::value::object kCareO;
-			for (int c = 0; c < NUM_MODIFIER_CARE_LEVELS; ++c)
-				kCareO[cascadeModifierCareName(c)] = picojson::value((double)aCare[c]);
-			o["careHistogram"] = picojson::value(kCareO);
-			picojson::value::object kCauseO;
-			for (std::map<std::string,int>::const_iterator it = kCause.begin(); it != kCause.end(); ++it)
-				kCauseO[it->first] = picojson::value((double)it->second);
-			o["causeHistogram"] = picojson::value(kCauseO); // UNCAPPED: every divergence counted (not just the 250 sample)
-			o["divergences"] = picojson::value(kDiv);
-			if (bFull) o["all"] = picojson::value(kCells);
-			return CvString(picojson::value(o).serialize().c_str());
-		}
-
-		// MOVEMENT/RANGE SWEEP (#430 movement model -- observe-then-shadow, modifier.md 6.6). Two layers now: the
-		// LEGACY decomposition dumped systematically (per-unit movement points + range; per-(unit,edge) moveCost),
-		// AND the CASCADE SHADOW column (cascadeCost/cascadeDelta/cascadeCause/cascadeCare per edge + the divergence
-		// + cause/care histograms). The cascade resolver (CvCascadeMovement) sources the PLOT-SUBSTRATE
-		// (terrain/feature/route moveCost) from the migrated JSON and reads the unit-side + globals from the engine
-		// (cut-1: the unit-plane is the next channel), so a divergence localises to the substrate migration. The
-		// shadow diffs the cascade against the FRESH legacy iFinal (`cost`), NEVER the AI-cached `engineCost`.
-		// LEGACY decomposition (kept as the authority the cascade mirrors), per-unit movement points + range; per-
-		// (unit, adjacent-edge) moveCost broken into terrain/feature/hills/river/peak/route-min/discount/double-move/
-		// floor) -- the magnitude analogue of /diagnostic/modifierSweep, the map that licenses the later cutover.
-		// Each edge is cross-checked against the engine's own CvPlot::movementCost (`engineCost`). The check is
-		// SPLIT human/non-human (the field `human`), because CvPlot::movementCost caches its result ONLY for
-		// non-human units, keyed by m_movementCharacteristicsHash -- and that hash folds in only the base-unit
-		// zobrist + promotions/unitcombats flagged changesMoveThroughPlots(), NOT getExtraMoveDiscount or
-		// baseMoves (CvUnit.cpp, verified 2026-06-20). So AI units that differ only in move-discount/base-moves
-		// COLLIDE on the cache and return each other's cost. Therefore: `edgeMismatchHuman` MUST be 0 (it is the
-		// clean decomposition-validity check, cache-free); `edgeMismatchNonHuman` is INFORMATIONAL -- a small count
-		// reflects the engine's AI movement-cost cache collision/staleness (a real legacy quirk, not a mirror bug;
-		// the future movement shadow must diff the FRESH `cost`, never the AI-cached `engineCost`). No type= needed.
-		if (strcmp(szAction, "movementSweep") == 0)
-		{
-			const bool bFull = (strcmp(szType, "full") == 0);
-			const int iUnitCap = bFull ? 100000 : 400;  // detail rows; histograms count ALL units regardless
-			const int iEdgeCap = bFull ? 20000 : 1500;  // per-(unit, neighbour) moveCost rows
-
-			int iUnits = 0, iEdges = 0, iEdgeMismatch = 0, iEdgeMismatchHuman = 0, iEdgeMismatchNonHuman = 0;
-			picojson::value::array kUnits, kEdges;
-			std::map<int, int> kBaseMovesHist; // baseMoves -> count (uncapped)
-			std::map<int, int> kRangeHist;     // range -> count, range>0 only (uncapped)
-			// CASCADE SHADOW (the cascade-vs-legacy diff column): the cascade resolver sources the PLOT-SUBSTRATE
-			// (terrain/feature/route moveCost) from the migrated JSON; a divergence vs the FRESH legacy iFinal
-			// (NOT the AI-cached engineCost) localises to that migration. Cut-1 scope (CvCascadeMovement.h).
-			int iCascadeDiverge = 0;
-			std::map<std::string, int> kCauseHist; // cause-tag -> count (uncapped)
-			std::map<std::string, int> kCareHist;  // care-name -> count (uncapped)
-			const CvMovementSubstrate& kSub = cascadeMovementSubstrate(); // also primes the parse-once cache
-			// the UNIT-PLANE shadow (the modifier-family channel): per-unit cascade-aggregated baseMoves/discount/
-			// range/caps vs the engine's MIGRATED parts, + per-source attribution (the Meta rung) in detail rows.
-			int iUnitDiverge = 0;
-			std::map<std::string, int> kUnitCauseHist, kUnitCareHist; // uncapped
-			const CvMovementUnitData& kUD = cascadeMovementUnitData(); // primes the unit-plane parse-once cache
-
-			foreach_(const CvUnit* pUnit, kPlayer.units())
-			{
-				++iUnits;
-				const UnitTypes eUT = pUnit->getUnitType();
-				const int iBaseMoves = pUnit->baseMoves();
-				const int iRange = pUnit->airRange();
-				const bool bHuman = pUnit->isHuman(); // cache-free path -> the clean decomposition check
-				kBaseMovesHist[iBaseMoves]++;
-				if (iRange > 0) kRangeHist[iRange]++;
-
-				// the UNIT-PLANE cascade shadow (every unit -> divergence count + histograms): aggregate the cascade
-				// migrated parts (type + held promos/combats) and diff vs the engine's migrated parts (UnitInfo +
-				// own getExtra*). The team/national scopes + commander cross-edge + flying runtime are engine-only
-				// (not migrated) -- excluded, so a delta isolates the unit-plane movement/range data migration.
-				CvUnitMoveAgg agg;
-				cascadeUnitMoveAgg(pUnit, agg);
-				const CvUnitInfo& kUI = GC.getUnitInfo(eUT);
-				// FULL engine values -- the cascade agg now folds team/empire scope, so the diff spans the whole
-				// baseMoves/airRange. The only residue is the commander/commodore cross-edge (getExtraMoves folds it,
-				// the cascade doesn't -> tagged commanderCrossEdge) and runtime grants (circumnavigate sea moves).
-				const int iEngMoves = pUnit->baseMoves();   // UnitInfo.getMoves + getExtraMoves(own+cmd) + team(domain)
-				const int iEngDisc  = pUnit->getExtraMoveDiscount();             // own + commander
-				const int iEngRange = pUnit->airRange();    // the full four-term (info + extra + team-AIR + national)
-				const int iDMoves = agg.iMovesMigrated - iEngMoves;
-				const int iDDisc  = agg.iMoveDiscount  - iEngDisc;
-				const int iDRange = agg.iRangeMigrated - iEngRange;
-				const bool bIgnoreMatch = (agg.bIgnoreTerrain == kUI.isIgnoreTerrainCost());
-				const bool bFlatMatch   = (agg.bFlatMoveCost  == kUI.isFlatMovementCost());
-				int iUCare = CARE_FINE; const char* szUCause = "match";
-				if (iDMoves != 0 || iDDisc != 0 || iDRange != 0 || !bIgnoreMatch || !bFlatMatch)
-				{
-					const bool bCmd = (!pUnit->isCommander() && pUnit->getCommander() != NULL)
-						|| (!pUnit->isCommodore() && pUnit->getCommodore() != NULL);
-					if ((iDMoves != 0 || iDDisc != 0) && bCmd) { szUCause = "commanderCrossEdge"; iUCare = CARE_WEIRD; }
-					else if (iDMoves != 0)   { szUCause = "moves";         iUCare = CARE_BUG; }
-					else if (iDDisc  != 0)   { szUCause = "moveDiscount";  iUCare = CARE_BUG; }
-					else if (iDRange != 0)   { szUCause = "range";         iUCare = CARE_BUG; }
-					else if (!bIgnoreMatch)  { szUCause = "ignoreTerrain"; iUCare = CARE_BUG; }
-					else                     { szUCause = "flatMoveCost";  iUCare = CARE_BUG; }
-					++iUnitDiverge;
-				}
-				kUnitCauseHist[szUCause]++;
-				kUnitCareHist[cascadeModifierCareName(iUCare)]++;
-
-				if ((int)kUnits.size() < iUnitCap)
-				{
-					picojson::value::object u;
-					u["id"]            = picojson::value((double)pUnit->getID());
-					u["type"]          = picojson::value(std::string(eUT != NO_UNIT ? GC.getUnitInfo(eUT).getType() : "NO_UNIT"));
-					u["domain"]        = picojson::value((double)(int)pUnit->getDomainType());
-					u["baseMoves"]     = picojson::value((double)iBaseMoves);
-					u["maxMoves"]      = picojson::value((double)pUnit->maxMoves());     // x100 budget
-					u["movesLeft"]     = picojson::value((double)pUnit->movesLeft());
-					u["moveDiscount"]  = picojson::value((double)pUnit->getExtraMoveDiscount());
-					u["range"]         = picojson::value((double)iRange);
-					u["flatMovement"]  = picojson::value(pUnit->flatMovementCost());
-					u["ignoreTerrain"] = picojson::value(pUnit->ignoreTerrainCost());
-					// --- the unit-plane cascade shadow (migrated parts vs engine) ---
-					u["cascadeMovesMigrated"] = picojson::value((double)agg.iMovesMigrated);
-					u["engineMovesMigrated"]  = picojson::value((double)iEngMoves);
-					u["cascadeMovesDelta"]    = picojson::value((double)iDMoves);
-					u["cascadeMoveDiscount"]  = picojson::value((double)agg.iMoveDiscount);
-					u["cascadeDiscountDelta"] = picojson::value((double)iDDisc);
-					u["cascadeRangeMigrated"] = picojson::value((double)agg.iRangeMigrated);
-					u["engineRangeMigrated"]  = picojson::value((double)iEngRange);
-					u["cascadeRangeDelta"]    = picojson::value((double)iDRange);
-					u["cascadeIgnoreTerrain"] = picojson::value(agg.bIgnoreTerrain);
-					u["cascadeFlatMoveCost"]  = picojson::value(agg.bFlatMoveCost);
-					u["cascadeHillsDoubleMove"]      = picojson::value(agg.bHillsDoubleMove);
-					u["cascadeTerrainDoubleMoveKeys"] = picojson::value((double)agg.aiTerrainDM.size());
-					u["cascadeFeatureDoubleMoveKeys"] = picojson::value((double)agg.aiFeatureDM.size());
-					u["cascadeUnitCause"] = picojson::value(std::string(szUCause));
-					u["cascadeUnitCare"]  = picojson::value(std::string(cascadeModifierCareName(iUCare)));
-					if (szUCause != std::string("match")) u["CASCADE_UNIT_DIVERGE"] = picojson::value(true);
-					// META: per-source attribution -- which type/promotion/unitcombat contributed what
-					picojson::value::array kSrc;
-					for (size_t si = 0; si < agg.sources.size(); ++si)
-					{
-						const CvMoveSourceRef& ref = agg.sources[si];
-						const CvMoveSourceProfile* p = ref.pProfile;
-						picojson::value::object s;
-						if (p != NULL) // unit / promotion / unitcombat -- the full per-source profile
-						{
-							const char* szKind = (ref.iKind == 0) ? "unit" : (ref.iKind == 1) ? "promotion" : "unitcombat";
-							const char* szT = (ref.iKind == 0) ? GC.getUnitInfo((UnitTypes)ref.iType).getType()
-								: (ref.iKind == 1) ? GC.getPromotionInfo((PromotionTypes)ref.iType).getType()
-								: GC.getUnitCombatInfo((UnitCombatTypes)ref.iType).getType();
-							s["kind"] = picojson::value(std::string(szKind));
-							s["type"] = picojson::value(std::string(szT));
-							if (p->iMoves != 0)        s["moves"]        = picojson::value((double)p->iMoves);
-							if (p->iMoveDiscount != 0) s["moveDiscount"] = picojson::value((double)p->iMoveDiscount);
-							if (p->iRange != 0)        s["range"]        = picojson::value((double)p->iRange);
-							if (p->bIgnoreTerrain)     s["ignoreTerrain"] = picojson::value(true);
-							if (p->bFlatMoveCost)      s["flatMoveCost"]  = picojson::value(true);
-							if (p->bHillsDoubleMove)   s["hillsDoubleMove"] = picojson::value(true);
-							if (!p->aiTerrainDM.empty()) s["terrainDoubleMove"] = picojson::value((double)p->aiTerrainDM.size());
-							if (!p->aiFeatureDM.empty()) s["featureDoubleMove"] = picojson::value((double)p->aiFeatureDM.size());
-						}
-						else // tech (team route/domain) / trait (national range) -- the team/empire-scope aggregate
-						{
-							s["kind"] = picojson::value(std::string(ref.iKind == 3 ? "team" : "empire"));
-							if (ref.iContribMoves != 0) s["moves"] = picojson::value((double)ref.iContribMoves);
-							if (ref.iContribRange != 0) s["range"] = picojson::value((double)ref.iContribRange);
-						}
-						kSrc.push_back(picojson::value(s));
-					}
-					u["cascadeSources"] = picojson::value(kSrc); // the Meta per-source decomposition
-					kUnits.push_back(picojson::value(u));
-				}
-
-				const CvPlot* pFrom = pUnit->plot();
-				if (pFrom == NULL) continue;
-				for (int d = 0; d < NUM_DIRECTION_TYPES && (int)kEdges.size() < iEdgeCap; ++d)
-				{
-					const CvPlot* pTo = plotDirection(pFrom->getX(), pFrom->getY(), (DirectionTypes)d);
-					if (pTo == NULL) continue;
-					++iEdges;
-					MoveCostParts mc;
-					decomposeMoveCost(pTo, pUnit, pFrom, mc);
-					const int iEngine = pTo->movementCost(pUnit, pFrom); // what the game uses (AI-CACHED for non-human)
-					const bool bMatch = (mc.iFinal == iEngine);
-					if (!bMatch) { ++iEdgeMismatch; if (bHuman) ++iEdgeMismatchHuman; else ++iEdgeMismatchNonHuman; }
-
-					// the cascade resolver, diffed against the FRESH legacy decomposition (mc.iFinal), never engineCost
-					CvCascadeMoveCost cc;
-					cascadeResolveMoveCost(pTo, pUnit, pFrom, cc);
-					const int iCascadeDelta = cc.iFinal - mc.iFinal;
-					int iCare = 0;
-					const char* szCause = cascadeMoveClassify(iCascadeDelta, cc, iCare);
-					if (iCascadeDelta != 0) ++iCascadeDiverge;
-					kCauseHist[szCause]++;
-					kCareHist[cascadeModifierCareName(iCare)]++;
-
-					picojson::value::object e;
-					e["unit"]            = picojson::value((double)pUnit->getID());
-					e["human"]           = picojson::value(bHuman);
-					e["fromX"]           = picojson::value((double)pFrom->getX());
-					e["fromY"]           = picojson::value((double)pFrom->getY());
-					e["toX"]             = picojson::value((double)pTo->getX());
-					e["toY"]             = picojson::value((double)pTo->getY());
-					e["denominator"]     = picojson::value((double)mc.iDenominator);
-					e["earlyFlat"]       = picojson::value(mc.bEarlyFlat);
-					e["routeBranch"]     = picojson::value(mc.bRouteBranch);
-					e["routeCost"]       = picojson::value((double)mc.iRouteCost);
-					e["routeFlatCost"]   = picojson::value((double)mc.iRouteFlatCost);
-					e["terrain"]         = picojson::value((double)mc.iTerrain);
-					e["feature"]         = picojson::value((double)mc.iFeature);
-					e["hills"]           = picojson::value((double)mc.iHills);
-					e["river"]           = picojson::value((double)mc.iRiver);
-					e["peak"]            = picojson::value((double)mc.iPeak);
-					e["discount"]        = picojson::value((double)mc.iDiscount);
-					e["regularPreDenom"] = picojson::value((double)mc.iRegularPreDenom);
-					e["doubleDiv"]       = picojson::value((double)mc.iDoubleDiv);
-					e["ignoreTerrain"]   = picojson::value(mc.bIgnoreTerrain);
-					e["cost"]            = picojson::value((double)mc.iFinal);  // recomposed from the parts above
-					e["engineCost"]      = picojson::value((double)iEngine);    // CvPlot::movementCost -- the authority
-					if (!bMatch) e["MISMATCH"] = picojson::value(true);
-					// the cascade shadow column (plot-substrate sourced from the migrated JSON; cut-1)
-					e["cascadeCost"]     = picojson::value((double)cc.iFinal);
-					e["cascadeDelta"]    = picojson::value((double)iCascadeDelta);  // cascade - legacy(FRESH)
-					e["cascadeCause"]    = picojson::value(std::string(szCause));
-					e["cascadeCare"]     = picojson::value(std::string(cascadeModifierCareName(iCare)));
-					if (cc.bSubstrateMiss)  e["cascadeSubstrateMiss"] = picojson::value(true);
-					if (iCascadeDelta != 0) e["CASCADE_DIVERGE"] = picojson::value(true);
-					kEdges.push_back(picojson::value(e));
-				}
-			}
-
-			o["units"]        = picojson::value((double)iUnits);
-			o["edges"]        = picojson::value((double)iEdges);
-			o["edgeMismatch"] = picojson::value((double)iEdgeMismatch); // total (human + non-human)
-			o["edgeMismatchHuman"]    = picojson::value((double)iEdgeMismatchHuman);    // MUST be 0 -- decomposition-validity check (cache-free)
-			o["edgeMismatchNonHuman"] = picojson::value((double)iEdgeMismatchNonHuman); // informational -- AI movementCost cache collision/staleness
-			o["moveDenominator"] = picojson::value((double)GC.getMOVE_DENOMINATOR());
-			// ---- the cascade shadow summary (plot-substrate channel) ----
-			o["cascadeDiverge"] = picojson::value((double)iCascadeDiverge); // edges where cascade != legacy(FRESH)
-			picojson::value::object kCause;
-			for (std::map<std::string, int>::const_iterator it = kCauseHist.begin(); it != kCauseHist.end(); ++it)
-				kCause[it->first] = picojson::value((double)it->second);
-			o["cascadeCauseHistogram"] = picojson::value(kCause);
-			picojson::value::object kCare;
-			for (std::map<std::string, int>::const_iterator it = kCareHist.begin(); it != kCareHist.end(); ++it)
-				kCare[it->first] = picojson::value((double)it->second);
-			o["cascadeCareHistogram"] = picojson::value(kCare);
-			picojson::value::object kSubO;
-			kSubO["terrainParsed"] = picojson::value((double)kSub.iTerrainParsed);
-			kSubO["featureParsed"] = picojson::value((double)kSub.iFeatureParsed);
-			kSubO["routeParsed"]   = picojson::value((double)kSub.iRouteParsed);
-			kSubO["missing"]       = picojson::value((double)kSub.iMissing); // entities with no cascade moveCost datum
-			o["cascadeSubstrate"] = picojson::value(kSubO);
-			// ---- the unit-plane shadow summary (the modifier-family channel) ----
-			o["cascadeUnitDiverge"] = picojson::value((double)iUnitDiverge); // units where a migrated part != engine
-			picojson::value::object kUCause;
-			for (std::map<std::string, int>::const_iterator it = kUnitCauseHist.begin(); it != kUnitCauseHist.end(); ++it)
-				kUCause[it->first] = picojson::value((double)it->second);
-			o["cascadeUnitCauseHistogram"] = picojson::value(kUCause);
-			picojson::value::object kUCare;
-			for (std::map<std::string, int>::const_iterator it = kUnitCareHist.begin(); it != kUnitCareHist.end(); ++it)
-				kUCare[it->first] = picojson::value((double)it->second);
-			o["cascadeUnitCareHistogram"] = picojson::value(kUCare);
-			picojson::value::object kUDO;
-			kUDO["unitParsed"]   = picojson::value((double)kUD.iUnitParsed);   // unit types with any movement/range/cap
-			kUDO["promoParsed"]  = picojson::value((double)kUD.iPromoParsed);  // promotions with any movement datum
-			kUDO["combatParsed"] = picojson::value((double)kUD.iCombatParsed); // unitcombats with any movement datum
-			kUDO["techRouteParsed"]  = picojson::value((double)kUD.iTechRouteParsed);  // tech->route moveCost deposits
-			kUDO["techDomainParsed"] = picojson::value((double)kUD.iTechDomainParsed); // tech->domain moves (curator gap: 0)
-			kUDO["traitRangeParsed"] = picojson::value((double)kUD.iTraitRangeParsed); // trait->national range deposits
-			o["cascadeUnitData"] = picojson::value(kUDO);
-			picojson::value::object kBM;
-			for (std::map<int, int>::const_iterator it = kBaseMovesHist.begin(); it != kBaseMovesHist.end(); ++it)
-				kBM[CvString::format("%d", it->first).c_str()] = picojson::value((double)it->second);
-			o["baseMovesHistogram"] = picojson::value(kBM);
-			picojson::value::object kRH;
-			for (std::map<int, int>::const_iterator it = kRangeHist.begin(); it != kRangeHist.end(); ++it)
-				kRH[CvString::format("%d", it->first).c_str()] = picojson::value((double)it->second);
-			o["rangeHistogram"] = picojson::value(kRH);
-			o["unitsDetailed"] = picojson::value(kUnits);
-			o["moveCostEdges"] = picojson::value(kEdges);
-			return CvString(picojson::value(o).serialize().c_str());
-		}
 
 		// GAME-STATE dump (§A victory-progress gap #1): end-detection + victory countdowns so an autoplay agent can tell
 		// the game is OVER and why -- without it the run has no terminal signal. No type needed. Game thread; const reads.
@@ -1909,6 +1041,7 @@ namespace
 				o["error"] = picojson::value(std::string("no city"));
 				return CvString(picojson::value(o).serialize().c_str());
 			}
+			o["globalId"] = picojson::value(std::string(CvString::format("%02d-%d", pCity->getOwner(), iCityId).GetCString())); // the "<PP>-<id>" snowflake (matches /state/cities)
 			o["cityName"] = picojson::value(std::string(narrowToAscii(pCity->getName()).GetCString()));
 			o["population"] = picojson::value((double)pCity->getPopulation());
 			o["cap"] = picojson::value((double)CITY_MAX_YIELD_RATE); // the getYieldRate100 clamp ceiling
@@ -2108,15 +1241,12 @@ namespace
 				o["corporationCommerceDetail"]=picojson::value(cdet);
 			}
 
-			CvCascadeContext kCtx(iPlayer, iCityId);
 			const int aFam[3] = { YIELD_FOOD, YIELD_PRODUCTION, YIELD_COMMERCE };
 			const char* aFamName[3] = { "food", "production", "commerce" };
 			picojson::value::array kYields;
 			for (int f = 0; f < 3; ++f)
 			{
 				const YieldTypes eY = (YieldTypes)aFam[f];
-				CvModifierSlot slot;
-				cascadeModifierCitySlot(aFam[f], kCtx, slot);
 				const int iBase = pCity->getBaseYieldRate(eY);
 				picojson::value::object e;
 				e["family"]        = picojson::value(std::string(aFamName[f]));
@@ -2161,11 +1291,6 @@ namespace
 				// (extraYield100 - extraBuildingYield100)/100 == corporationYield + Σ buildingYieldChange -- fully attributable.
 				e["corporationYield"] = picojson::value((double)pCity->getCorporationYield(eY));
 				e["legacy100"]     = picojson::value((double)pCity->getYieldRate100(eY));  // ground truth (x100)
-				// CASCADE seed (the current calc-flow, cascadeModifierApply):
-				e["cascadeFlat"]    = picojson::value((double)slot.iFlat);
-				e["cascadePercent"] = picojson::value((double)slot.iPercent);
-				e["cascadeMult100"] = picojson::value((double)slot.iMultiplierX100);
-				e["cascade"]        = picojson::value((double)cascadeModifierApply(slot, iBase));
 				kYields.push_back(picojson::value(e));
 			}
 			o["yields"] = picojson::value(kYields);
@@ -2836,62 +1961,6 @@ namespace
 			return CvString(picojson::value(o).serialize().c_str());
 		}
 
-		// MODIFIER (owner 2026-06-19) -- the magnitude analogue of the can* gates: for the requested city (else the
-		// capital), the cascade effective per PILOT yield family (food/production/commerce) + its flat/percent decomposition
-		// + the legacy getYieldRate100, so the modifier computation is verifiable ON DEMAND (no per-turn-tee timing). No
-		// type param. cascade = city-scope building contribution only (pilot, x1); legacy100 = full realized (x100) -- their
-		// diff is the parity work (sources not yet deposited), surfaced in full by /diagnostic/modifierSweep (increment 3).
-		if (strcmp(szAction, "modifier") == 0)
-		{
-			o["city"] = picojson::value((double)iCityId);
-			if (pCity == NULL)
-			{
-				o["error"] = picojson::value(std::string("no city"));
-				return CvString(picojson::value(o).serialize().c_str());
-			}
-			CvCascadeContext kCtx(iPlayer, iCityId);
-			// ALL families + the cascade's PER-SOURCE decomposition (owner ruling 2026-06-20: to extend the cascade we
-			// must know what we mirror -- set the cascade's deposits source-by-source against the legacy per-source dump).
-			// optional ?type=<familyKey> scopes to one family; else all NUM_MODIFIER_FAMILIES.
-			picojson::value::array kFam;
-			for (int f = 0; f < NUM_MODIFIER_FAMILIES; ++f)
-			{
-				const char* szKey = cascadeModifierFamilyInfo(f).szKey;
-				if (szType[0] != '\0' && strcmp(szType, szKey) != 0) continue;
-				CvModifierSlot slot; int iBase = 0, iCascade = 0, iLegacy = 0;
-				cascadeModifierFamilyShadow(pCity, kCtx, f, slot, iBase, iCascade, iLegacy);
-				picojson::value::object e;
-				e["family"]    = picojson::value(std::string(szKey));
-				e["base"]      = picojson::value((double)iBase);
-				e["flat"]      = picojson::value((double)slot.iFlat);
-				e["percent"]   = picojson::value((double)slot.iPercent);
-				e["mult100"]   = picojson::value((double)slot.iMultiplierX100);
-				e["cascade"]   = picojson::value((double)iCascade);
-				e["legacy"]    = picojson::value((double)iLegacy);
-				// PER-SOURCE: each active building (city) / civic (empire) deposit feeding this family's slot, so the
-				// cascade total is attributable source-by-source (the legacy per-source lives in cityInput.buildingYields).
-				std::vector<CvModifierSourceContribution> srcs;
-				cascadeModifierCitySources(f, kCtx, srcs);
-				picojson::value::array kSrc;
-				for (size_t s = 0; s < srcs.size(); ++s)
-				{
-					picojson::value::object se;
-					se["source"] = picojson::value(std::string(srcs[s].bCivic
-						? GC.getCivicInfo((CivicTypes)srcs[s].iEntity).getType()
-						: GC.getBuildingInfo((BuildingTypes)srcs[s].iEntity).getType()));
-					se["scope"]   = picojson::value(std::string(srcs[s].bCivic ? "empire" : "city"));
-					se["flat"]    = picojson::value((double)srcs[s].slot.iFlat);
-					se["percent"] = picojson::value((double)srcs[s].slot.iPercent);
-					se["mult100"] = picojson::value((double)srcs[s].slot.iMultiplierX100);
-					kSrc.push_back(picojson::value(se));
-				}
-				e["sources"] = picojson::value(kSrc);
-				kFam.push_back(picojson::value(e));
-			}
-			o["families"] = picojson::value(kFam);
-			return CvString(picojson::value(o).serialize().c_str());
-		}
-
 		// PLAYER-INPUT (calc-emulator §11): EMPIRE/player-scope value calcs -- gold-per-turn + science-per-turn
 		// (reproducible from components), power/assets/demographics (readings). No type/city. (legacy-value-calc-map §11.1/11.2)
 		if (strcmp(szAction, "playerInput") == 0)
@@ -3044,197 +2113,36 @@ namespace
 			return CvString(picojson::value(o).serialize().c_str());
 		}
 
-		// ---- UNIT-INPUT (legacy-value-calc-map §6 / §11.4 / §12 "ENTIRELY ABSENT") -- the unit-plane combat-stat
-		// decomposition, the one whole channel with NO endpoint. Per the player's units: baseCombat + the aggregate
-		// getExtra* stat set (CvUnit exposes AGGREGATE only -- per-source attribution is the promotion/unitcombat lists
-		// the emulator sums from the Info JSON, §11.4 "CRITICAL build constraint") + HP + the promotion/unitcombat
-		// membership. maxCombatStr is context-dependent (~730-line situational calc) -> NOT reproduced offline; the
-		// dump emits the offline-reproducible baseCombatStrPreCheck + the extras (§11.4). Detail-capped like the sweeps;
-		// the movement/range half lives in /diagnostic/movementSweep. ----
-		if (strcmp(szAction, "unitInput") == 0)
+		// /computed availability oracles (no type): the engine's per-player canResearch / canDoCivics / build-unlock
+		// sets -- drycalc TARGETS, so they live here (pulled out of the raw /state dump).
+		if (strcmp(szAction, "availableTechs") == 0)
 		{
-			const bool bFull = (strcmp(szType, "full") == 0);
-			const int iCap = bFull ? 100000 : 400;
-			picojson::value::array kUnits;
-			int iUnits = 0;
-			foreach_(const CvUnit* pUnit, kPlayer.units())
+			picojson::value::array a;
+			for (int iT = 0; iT < GC.getNumTechInfos(); ++iT)
+				if (kPlayer.canResearch((TechTypes)iT))
+					a.push_back(picojson::value(std::string(GC.getTechInfo((TechTypes)iT).getType())));
+			o["availableTechs"] = picojson::value(a);
+			return CvString(picojson::value(o).serialize().c_str());
+		}
+		if (strcmp(szAction, "availableCivics") == 0)
+		{
+			picojson::value::array a;
+			for (int iC = 0; iC < GC.getNumCivicInfos(); ++iC)
+				if (kPlayer.canDoCivics((CivicTypes)iC))
+					a.push_back(picojson::value(std::string(GC.getCivicInfo((CivicTypes)iC).getType())));
+			o["availableCivics"] = picojson::value(a);
+			return CvString(picojson::value(o).serialize().c_str());
+		}
+		if (strcmp(szAction, "availableBuilds") == 0)
+		{
+			picojson::value::array a;
+			for (int iB = 0; iB < GC.getNumBuildInfos(); ++iB)
 			{
-				++iUnits;
-				if ((int)kUnits.size() >= iCap) continue;
-				const UnitTypes eUT = pUnit->getUnitType();
-				picojson::value::object u;
-				u["id"]   = picojson::value((double)pUnit->getID());
-				u["type"] = picojson::value(std::string(eUT != NO_UNIT ? GC.getUnitInfo(eUT).getType() : "NO_UNIT"));
-				u["x"]    = picojson::value((double)pUnit->getX());
-				u["y"]    = picojson::value((double)pUnit->getY());
-				u["level"] = picojson::value((double)pUnit->getLevel());
-				u["experience"] = picojson::value((double)pUnit->getExperience());
-				// combat strength (the offline-reproducible base; maxCombatStr is situational -> not dumped):
-				u["baseCombatStr"]         = picojson::value((double)pUnit->baseCombatStr());
-				u["baseCombatStrPreCheck"] = picojson::value((double)pUnit->baseCombatStrPreCheck());
-				u["baseCombat"]            = picojson::value((double)pUnit->getBaseCombat()); // raw m_iBaseCombat (lossy in PreCheck)
-				u["damage"]                = picojson::value((double)pUnit->getDamage());    // HP = maxHP - damage
-				u["hp"]    = picojson::value((double)pUnit->getHP());
-				u["maxHP"] = picojson::value((double)pUnit->getMaxHP());
-				// the aggregate getExtra* stat set (the §11.4 dumpable set; per-source via the promo/combat lists below):
-				picojson::value::object ex;
-				ex["strength"]           = picojson::value((double)pUnit->getExtraStrength());
-				ex["strengthModifier"]   = picojson::value((double)pUnit->getExtraStrengthModifier());
-				ex["combatPercent"]      = picojson::value((double)pUnit->getExtraCombatPercent());
-				ex["cityAttackPercent"]  = picojson::value((double)pUnit->getExtraCityAttackPercent());
-				ex["cityDefensePercent"] = picojson::value((double)pUnit->getExtraCityDefensePercent());
-				ex["withdrawal"]         = picojson::value((double)pUnit->getExtraWithdrawal());
-				ex["collateralDamage"]   = picojson::value((double)pUnit->getExtraCollateralDamage());
-				ex["bombardRate"]        = picojson::value((double)pUnit->getExtraBombardRate());
-				ex["firstStrikes"]       = picojson::value((double)pUnit->getExtraFirstStrikes());
-				ex["chanceFirstStrikes"] = picojson::value((double)pUnit->getExtraChanceFirstStrikes());
-				ex["enemyHeal"]          = picojson::value((double)pUnit->getExtraEnemyHeal());
-				ex["neutralHeal"]        = picojson::value((double)pUnit->getExtraNeutralHeal());
-				ex["friendlyHeal"]       = picojson::value((double)pUnit->getExtraFriendlyHeal());
-				ex["visibilityRange"]    = picojson::value((double)pUnit->getExtraVisibilityRange());
-				ex["moves"]              = picojson::value((double)pUnit->getExtraMoves());
-				ex["moveDiscount"]       = picojson::value((double)pUnit->getExtraMoveDiscount());
-				// the REMAINING aggregate getExtra* set (CvUnit.h enumeration -- emit ALL, owner ruling 2026-06-20):
-				ex["noDefensiveBonus"]      = picojson::value((double)pUnit->getExtraNoDefensiveBonusCount());
-				ex["dropRange"]             = picojson::value((double)pUnit->getExtraDropRange());
-				ex["airRange"]              = picojson::value((double)pUnit->getExtraAirRange());
-				ex["intercept"]             = picojson::value((double)pUnit->getExtraIntercept());
-				ex["evasion"]               = picojson::value((double)pUnit->getExtraEvasion());
-				ex["religiousCombatMod"]    = picojson::value((double)pUnit->getExtraReligiousCombatModifier());
-				ex["extraUpkeep100"]        = picojson::value((double)pUnit->getExtraUpkeep100());
-				ex["hillsAttack"]           = picojson::value((double)pUnit->getExtraHillsAttackPercent());
-				ex["hillsDefense"]          = picojson::value((double)pUnit->getExtraHillsDefensePercent());
-				ex["combatModPerSizeMore"]  = picojson::value((double)pUnit->getExtraCombatModifierPerSizeMore());
-				ex["combatModPerSizeLess"]  = picojson::value((double)pUnit->getExtraCombatModifierPerSizeLess());
-				ex["combatModPerVolumeMore"]= picojson::value((double)pUnit->getExtraCombatModifierPerVolumeMore());
-				ex["combatModPerVolumeLess"]= picojson::value((double)pUnit->getExtraCombatModifierPerVolumeLess());
-				ex["maxHPExtra"]            = picojson::value((double)pUnit->getExtraMaxHP());
-				ex["quality"]               = picojson::value((double)pUnit->getExtraQuality());
-				ex["group"]                 = picojson::value((double)pUnit->getExtraGroup());
-				ex["size"]                  = picojson::value((double)pUnit->getExtraSize());
-				ex["cargoVolume"]           = picojson::value((double)pUnit->getExtraCargoVolume());
-				ex["rBombardDamage"]        = picojson::value((double)pUnit->getExtraRBombardDamage());
-				ex["rBombardDamageLimit"]   = picojson::value((double)pUnit->getExtraRBombardDamageLimit());
-				ex["rBombardDamageMaxUnits"]= picojson::value((double)pUnit->getExtraRBombardDamageMaxUnits());
-				ex["dcmBombRange"]          = picojson::value((double)pUnit->getExtraDCMBombRange());
-				ex["dcmBombAccuracy"]       = picojson::value((double)pUnit->getExtraDCMBombAccuracy());
-				ex["stealthStrikes"]        = picojson::value((double)pUnit->getExtraStealthStrikes());
-				ex["stealthCombatMod"]      = picojson::value((double)pUnit->getExtraStealthCombatModifier());
-				ex["trapDamageMax"]         = picojson::value((double)pUnit->getExtraTrapDamageMax());
-				ex["trapDamageMin"]         = picojson::value((double)pUnit->getExtraTrapDamageMin());
-				ex["trapComplexity"]        = picojson::value((double)pUnit->getExtraTrapComplexity());
-				ex["numTriggers"]           = picojson::value((double)pUnit->getExtraNumTriggers());
-				ex["gatherHerdCount"]       = picojson::value((double)pUnit->getExtraGatherHerdCount());
-				ex["attackCombatMod"]       = picojson::value((double)pUnit->getExtraAttackCombatModifier());
-				ex["defenseCombatMod"]      = picojson::value((double)pUnit->getExtraDefenseCombatModifier());
-				ex["vsBarbs"]               = picojson::value((double)pUnit->getExtraVSBarbs());
-				ex["damageModifier"]        = picojson::value((double)pUnit->getExtraDamageModifier());
-				ex["unnerve"]               = picojson::value((double)pUnit->getExtraUnnerve());
-				ex["enclose"]               = picojson::value((double)pUnit->getExtraEnclose());
-				ex["lunge"]                 = picojson::value((double)pUnit->getExtraLunge());
-				ex["dynamicDefense"]        = picojson::value((double)pUnit->getExtraDynamicDefense());
-				ex["endurance"]             = picojson::value((double)pUnit->getExtraEndurance());
-				ex["poisonProbabilityMod"]  = picojson::value((double)pUnit->getExtraPoisonProbabilityModifier());
-				u["extra"] = picojson::value(ex);
-				// per-unit upkeep: getUpkeep100 is the realized STORED x100 (calcUpkeep100 maintains it on init + every
-				// source mutation + recalculateUnitUpkeep -> event-driven FRESH, not stale). The calcUpkeep100 FORMULA
-				// sources (CvUnit.cpp): 100×baseUpkeep + extraUpkeep100, then ×upkeepModifier, then ×upkeepMultiplierSM; NPC skipped.
-				u["upkeep100"]          = picojson::value((double)pUnit->getUpkeep100());
-				u["baseUpkeep"]         = picojson::value((double)(eUT != NO_UNIT ? GC.getUnitInfo(eUT).getBaseUpkeep() : 0));
-				u["upkeepModifier"]     = picojson::value((double)pUnit->getUpkeepModifier());
-				u["upkeepMultiplierSM"] = picojson::value((double)pUnit->getUpkeepMultiplierSM());
-				u["isNPC"]              = picojson::value(pUnit->isNPC());
-				// per-KEYED getExtra* maps (non-zero only) -- the vs-keyed attribution the aggregate hides:
-				{
-					picojson::value::object kUC, kDom, kTerA, kTerD, kTerW, kFeaA, kFeaD, kFeaW, kFlank,
-					                        kTrapDis, kTrapAvoid, kTrapTrig, kInvVis, kInvInvis, kInvVisR, kBuildWork;
-					for (int uc = 0; uc < GC.getNumUnitCombatInfos(); ++uc)
-					{
-						const char* nm = GC.getUnitCombatInfo((UnitCombatTypes)uc).getType();
-						const int m = pUnit->getExtraUnitCombatModifier((UnitCombatTypes)uc);
-						const int fl = pUnit->getExtraFlankingStrengthbyUnitCombatType((UnitCombatTypes)uc);
-						const int td = pUnit->getExtraTrapDisableUnitCombatType((UnitCombatTypes)uc);
-						const int ta = pUnit->getExtraTrapAvoidanceUnitCombatType((UnitCombatTypes)uc);
-						const int tt = pUnit->getExtraTrapTriggerUnitCombatType((UnitCombatTypes)uc);
-						if (m)  kUC[nm]    = picojson::value((double)m);
-						if (fl) kFlank[nm] = picojson::value((double)fl);
-						if (td) kTrapDis[nm]   = picojson::value((double)td);
-						if (ta) kTrapAvoid[nm] = picojson::value((double)ta);
-						if (tt) kTrapTrig[nm]  = picojson::value((double)tt);
-					}
-					for (int dm = 0; dm < NUM_DOMAIN_TYPES; ++dm)
-					{
-						const int m = pUnit->getExtraDomainModifier((DomainTypes)dm);
-						if (m) kDom[GC.getDomainInfo((DomainTypes)dm).getType()] = picojson::value((double)m);
-					}
-					for (int t = 0; t < GC.getNumTerrainInfos(); ++t)
-					{
-						const char* nm = GC.getTerrainInfo((TerrainTypes)t).getType();
-						const int a = pUnit->getExtraTerrainAttackPercent((TerrainTypes)t);
-						const int d = pUnit->getExtraTerrainDefensePercent((TerrainTypes)t);
-						const int w = pUnit->getExtraTerrainWorkPercent((TerrainTypes)t);
-						if (a) kTerA[nm] = picojson::value((double)a);
-						if (d) kTerD[nm] = picojson::value((double)d);
-						if (w) kTerW[nm] = picojson::value((double)w);
-					}
-					for (int fe = 0; fe < GC.getNumFeatureInfos(); ++fe)
-					{
-						const char* nm = GC.getFeatureInfo((FeatureTypes)fe).getType();
-						const int a = pUnit->getExtraFeatureAttackPercent((FeatureTypes)fe);
-						const int d = pUnit->getExtraFeatureDefensePercent((FeatureTypes)fe);
-						const int w = pUnit->getExtraFeatureWorkPercent((FeatureTypes)fe);
-						if (a) kFeaA[nm] = picojson::value((double)a);
-						if (d) kFeaD[nm] = picojson::value((double)d);
-						if (w) kFeaW[nm] = picojson::value((double)w);
-					}
-					for (int iv = 0; iv < GC.getNumInvisibleInfos(); ++iv)
-					{
-						const char* nm = GC.getInvisibleInfo((InvisibleTypes)iv).getType();
-						const int vi = pUnit->getExtraVisibilityIntensityType((InvisibleTypes)iv);
-						const int ii = pUnit->getExtraInvisibilityIntensityType((InvisibleTypes)iv);
-						const int vr = pUnit->getExtraVisibilityIntensityRangeType((InvisibleTypes)iv);
-						if (vi) kInvVis[nm]   = picojson::value((double)vi);
-						if (ii) kInvInvis[nm] = picojson::value((double)ii);
-						if (vr) kInvVisR[nm]  = picojson::value((double)vr);
-					}
-					for (int bu = 0; bu < GC.getNumBuildInfos(); ++bu)
-					{
-						const int w = pUnit->getExtraWorkModForBuild((BuildTypes)bu);
-						if (w) kBuildWork[GC.getBuildInfo((BuildTypes)bu).getType()] = picojson::value((double)w);
-					}
-					if (!kUC.empty())   u["extraUnitCombatModifier"] = picojson::value(kUC);
-					if (!kFlank.empty())u["extraFlankingByUnitCombat"]= picojson::value(kFlank);
-					if (!kTrapDis.empty())   u["extraTrapDisableByUnitCombat"]   = picojson::value(kTrapDis);
-					if (!kTrapAvoid.empty()) u["extraTrapAvoidanceByUnitCombat"] = picojson::value(kTrapAvoid);
-					if (!kTrapTrig.empty())  u["extraTrapTriggerByUnitCombat"]   = picojson::value(kTrapTrig);
-					if (!kDom.empty())  u["extraDomainModifier"]     = picojson::value(kDom);
-					if (!kTerA.empty()) u["extraTerrainAttack"]      = picojson::value(kTerA);
-					if (!kTerD.empty()) u["extraTerrainDefense"]     = picojson::value(kTerD);
-					if (!kTerW.empty()) u["extraTerrainWork"]        = picojson::value(kTerW);
-					if (!kFeaA.empty()) u["extraFeatureAttack"]      = picojson::value(kFeaA);
-					if (!kFeaD.empty()) u["extraFeatureDefense"]     = picojson::value(kFeaD);
-					if (!kFeaW.empty()) u["extraFeatureWork"]        = picojson::value(kFeaW);
-					if (!kInvVis.empty())  u["extraVisibilityIntensity"]      = picojson::value(kInvVis);
-					if (!kInvInvis.empty())u["extraInvisibilityIntensity"]    = picojson::value(kInvInvis);
-					if (!kInvVisR.empty()) u["extraVisibilityIntensityRange"] = picojson::value(kInvVisR);
-					if (!kBuildWork.empty())u["extraWorkModForBuild"]         = picojson::value(kBuildWork);
-				}
-				// MEMBERSHIP (the per-source attribution axis -- the emulator sums each promotion/unitcombat's bundle
-				// from the Info JSON, since CvUnit exposes only the aggregate above, §11.4):
-				picojson::value::array kPromos;
-				for (int p = 0; p < GC.getNumPromotionInfos(); ++p)
-					if (pUnit->isHasPromotion((PromotionTypes)p))
-						kPromos.push_back(picojson::value(std::string(GC.getPromotionInfo((PromotionTypes)p).getType())));
-				u["promotions"] = picojson::value(kPromos);
-				picojson::value::array kCombats;
-				for (int c = 0; c < GC.getNumUnitCombatInfos(); ++c)
-					if (pUnit->isHasUnitCombat((UnitCombatTypes)c))
-						kCombats.push_back(picojson::value(std::string(GC.getUnitCombatInfo((UnitCombatTypes)c).getType())));
-				u["unitCombats"] = picojson::value(kCombats);
-				kUnits.push_back(picojson::value(u));
+				const TechTypes ePrereq = (TechTypes)GC.getBuildInfo((BuildTypes)iB).getTechPrereq();
+				if (ePrereq == NO_TECH || GET_TEAM(kPlayer.getTeam()).isHasTech(ePrereq))
+					a.push_back(picojson::value(std::string(GC.getBuildInfo((BuildTypes)iB).getType())));
 			}
-			o["units"] = picojson::value((double)iUnits);
-			o["unitsDetailed"] = picojson::value(kUnits);
+			o["availableBuilds"] = picojson::value(a);
 			return CvString(picojson::value(o).serialize().c_str());
 		}
 
@@ -3245,81 +2153,34 @@ namespace
 			return CvString(picojson::value(o).serialize().c_str());
 		}
 
-		CvEntityAvailability kAvail;
 		std::string sNotes;
-		const bool bParsed = cascadeReadJsonAvailability(szType, kAvail, sNotes);
 
 		if (strcmp(szAction, "canConstruct") == 0)
 		{
 			o["city"] = picojson::value((double)iCityId);
 			o["legacy"] = (pCity != NULL) ? picojson::value(pCity->canConstruct((BuildingTypes)iIdx)) : picojson::value();
 			o["legacyReason"] = (pCity != NULL) ? picojson::value(std::string(legacyBlockReason(pCity, (BuildingTypes)iIdx))) : picojson::value();
-			if (bParsed)
-			{
-				CvCascadeContext kCtx(iPlayer, iCityId);
-				bool bC = cascadeBuildable(kAvail, COUNTDOMAIN_BUILDING, iIdx, kCtx);
-				if (kAvail.notConstructible) bC = false;                                         // cost==-1: never player-constructible
-				if (pCity != NULL && pCity->hasBuilding((BuildingTypes)iIdx)) bC = false;        // generation: already built here
-				if (cascadeIsObsoleteForTeam(COUNTDOMAIN_BUILDING, iIdx, iTeam)) bC = false;      // generation: obsolete
-				if (cascadeIsReplacedInCity(iIdx, kCtx)) bC = false;                              // a successor is active in the city
-				if (!cascadeBuildingGroupAllows(iIdx, kCtx)) bC = false;                          // SpecialBuilding group cap
-				o["cascade"] = picojson::value(bC);
-				o["cascadeReason"] = picojson::value(std::string(cascadeBlockReason(kAvail, (BuildingTypes)iIdx, pCity, iTeam, kCtx)));
-				rjAddCapShadow(o, kAvail, COUNTDOMAIN_BUILDING, iIdx, kCtx);
-			}
-			else o["cascade"] = picojson::value();
 		}
 		else if (strcmp(szAction, "canTrain") == 0)
 		{
 			o["city"] = picojson::value((double)iCityId);
 			o["legacy"] = (pCity != NULL) ? picojson::value(pCity->canTrain((UnitTypes)iIdx)) : picojson::value();
-			if (bParsed)
-			{
-				CvCascadeContext kCtx(iPlayer, iCityId);
-				// all-branches-alive resolver: requires + cap + obsolete + the upgrade band (build-list model)
-				o["cascade"] = picojson::value(cascadeUnitTrainable(iIdx, kCtx));
-				rjAddCapShadow(o, kAvail, COUNTDOMAIN_UNIT, iIdx, kCtx);
-			}
-			else o["cascade"] = picojson::value();
 		}
 		else if (strcmp(szAction, "canResearch") == 0)
 		{
 			o["legacy"] = picojson::value(kPlayer.canResearch((TechTypes)iIdx));
-			if (bParsed)
-			{
-				CvCascadeContext kCtx(iPlayer, -1); // tech is team-scope -- no city
-				bool bC = cascadeEvalCondition(kAvail.requiresBuild, kCtx) && cascadeEvalCondition(kAvail.requiresOperate, kCtx);
-				if (GET_TEAM((TeamTypes)iTeam).isHasTech((TechTypes)iIdx)) bC = false;            // generation: already researched
-				o["cascade"] = picojson::value(bC);
-				if (kAvail.allowedCap >= 0) sNotes += " [cap pending: tech not tallied]";
-			}
-			else o["cascade"] = picojson::value();
 		}
 		else if (strcmp(szAction, "canDoCivics") == 0)
 		{
 			o["legacy"] = picojson::value(kPlayer.canDoCivics((CivicTypes)iIdx));
-			if (bParsed)
-			{
-				CvCascadeContext kCtx(iPlayer, -1);
-				o["cascade"] = picojson::value(cascadeEvalCondition(kAvail.requiresBuild, kCtx) && cascadeEvalCondition(kAvail.requiresOperate, kCtx));
-			}
-			else o["cascade"] = picojson::value();
 		}
 		else if (strcmp(szAction, "canCreate") == 0)
 		{
 			o["legacy"] = picojson::value(kPlayer.canCreate((ProjectTypes)iIdx));
-			if (bParsed)
-			{
-				CvCascadeContext kCtx(iPlayer, iCityId);
-				o["cascade"] = picojson::value(cascadeEvalCondition(kAvail.requiresBuild, kCtx) && cascadeEvalCondition(kAvail.requiresOperate, kCtx));
-			}
-			else o["cascade"] = picojson::value();
 		}
 		else if (strcmp(szAction, "canMaintain") == 0)
 		{
 			o["legacy"] = picojson::value(kPlayer.canMaintain((ProcessTypes)iIdx));
-			o["cascade"] = picojson::value();
-			sNotes = "cascade: no JSON requires surface for processes yet";
 		}
 		else if (strcmp(szAction, "whyNot") == 0)
 		{
@@ -3375,22 +2236,30 @@ namespace
 		}
 		else if (strcmp(szAction, "tally") == 0)
 		{
-			// COUNT reconstruction (state-mapping gap #2): the cascade tally's count for this BUILDING_/UNIT_ at all three
-			// cross-city scopes + the legacy engine count, so empire/team/world totals are point-in-time readable.
+			// Engine COUNT ground-truth for this BUILDING_/UNIT_: the per-empire live count + the world lifetime-created
+			// count, plus (buildings) the engine's own maxed-out flags at empire/team/world -- the cap-gate inputs.
 			const bool bUnit = (strncmp(szType, "UNIT_", 5) == 0);
-			const CountDomain eDom = bUnit ? COUNTDOMAIN_UNIT : COUNTDOMAIN_BUILDING;
-			CvCascadeContext kCtx(iPlayer, iCityId);
 			picojson::value::object t;
-			t["world"]  = picojson::value((double)cascadeTally().count(eDom, iIdx, COUNTSCOPE_WORLD,  kCtx.contextFor(COUNTSCOPE_WORLD)));
-			t["team"]   = picojson::value((double)cascadeTally().count(eDom, iIdx, COUNTSCOPE_TEAM,   kCtx.contextFor(COUNTSCOPE_TEAM)));
-			t["empire"] = picojson::value((double)cascadeTally().count(eDom, iIdx, COUNTSCOPE_EMPIRE, kCtx.contextFor(COUNTSCOPE_EMPIRE)));
+			if (bUnit)
+			{
+				t["empire"]       = picojson::value((double)kPlayer.getUnitCount((UnitTypes)iIdx));
+				t["worldCreated"] = picojson::value((double)GC.getGame().getUnitCreatedCount((UnitTypes)iIdx));
+			}
+			else
+			{
+				t["empire"]       = picojson::value((double)kPlayer.getBuildingCount((BuildingTypes)iIdx));
+				t["worldCreated"] = picojson::value((double)GC.getGame().getBuildingCreatedCount((BuildingTypes)iIdx));
+				t["maxedEmpire"]  = picojson::value(kPlayer.isBuildingMaxedOut((BuildingTypes)iIdx));
+				t["maxedTeam"]    = picojson::value(GET_TEAM((TeamTypes)iTeam).isBuildingMaxedOut((BuildingTypes)iIdx));
+				t["maxedWorld"]   = picojson::value(GC.getGame().isBuildingMaxedOut((BuildingTypes)iIdx));
+			}
 			o["domain"] = picojson::value(std::string(bUnit ? "unit" : "building"));
 			o["tally"] = picojson::value(t);
-			sNotes = "cascade tally counts at world/team/empire (this player's team/empire)";
+			sNotes = "engine counts: empire live count + world lifetime-created (+ building maxed-out flags)";
 		}
 		else
 		{
-			o["error"] = picojson::value(std::string("unknown diagnostic action"));
+			o["error"] = picojson::value(std::string("unknown computed action"));
 			return CvString(picojson::value(o).serialize().c_str());
 		}
 
@@ -3465,8 +2334,8 @@ namespace
 			return false;
 		}
 
-		// Extract the request target ("/units?id=123") -- everything between the
-		// method and the next space/CR, length-capped.
+		// Extract the request target ("/computed/canConstruct?type=BUILDING_FORGE&player=0") -- everything
+		// between the method and the next space/CR, length-capped.
 		char szTarget[TARGET_CAP + 1];
 		int iLen = 0;
 		for (const char* p = szRequest + 4; *p != '\0' && *p != ' ' && *p != '\r' && *p != '\n' && iLen < TARGET_CAP; ++p)
@@ -3483,237 +2352,115 @@ namespace
 			++szQuery;
 		}
 
+		// ---- the route table: the SINGLE place every endpoint is declared (path -> mailbox action + doc). ----
+		// A human (and the /state and /computed index pages) reads THIS to see the whole surface. /state actions
+		// emit RAW inputs; /computed actions emit the engine's own answers. Every data route is serviced on the
+		// game thread via the mailbox (evalRequestBlocking). See docs/specs/http-endpoints.md.
+		struct Route { const char* szPath; const char* szAction; const char* szDoc; };
+		static const Route ROUTES[] = {
+			{ "/state/all",     "gamestate",    "the entire raw state in one document (world/players/cities/plots)" },
+			{ "/state/techs",   "stateTechs",   "every player's completed techs" },
+			{ "/state/players", "statePlayers", "raw player facts (era/civics/traits/counts; no computed rates)" },
+			{ "/state/cities",  "stateCities",  "raw city substrate: plots/buildings/specialists/bonuses (no yields)" },
+			{ "/state/units",   "stateUnits",   "raw unit facts (type/ai/pos/group/damage/level/promotions)" },
+			{ "/computed/cities/yields",   "cityInput",      "getYieldRate100 per channel + full per-source decomposition" },
+			{ "/computed/players",         "playerInput",    "empire economy: gold/science/upkeep/inflation/demographics" },
+			{ "/computed/canConstruct",    "canConstruct",   "engine buildability verdict (type=BUILDING_X[&city=M])" },
+			{ "/computed/canTrain",        "canTrain",       "engine trainability verdict (type=UNIT_X[&city=M])" },
+			{ "/computed/canResearch",     "canResearch",    "engine canResearch verdict (type=TECH_X)" },
+			{ "/computed/canDoCivics",     "canDoCivics",    "engine canDoCivics verdict (type=CIVIC_X)" },
+			{ "/computed/canCreate",       "canCreate",      "engine canCreate verdict (type=PROJECT_X)" },
+			{ "/computed/canMaintain",     "canMaintain",    "engine canMaintain verdict (type=PROCESS_X)" },
+			{ "/computed/availableTechs",  "availableTechs", "engine canResearch set for the player" },
+			{ "/computed/availableCivics", "availableCivics","engine canDoCivics set for the player" },
+			{ "/computed/availableBuilds", "availableBuilds","engine build-unlock set for the player" },
+			{ "/computed/tally",           "tally",          "engine counts (type=BUILDING_X|UNIT_X)" },
+			{ "/computed/whyNot",          "whyNot",         "canTrain decision inputs (type=UNIT_X)" },
+			{ "/computed/game",            "game",           "turn / game-over / winner / victory countdowns" },
+		};
+		const int iNumRoutes = (int)(sizeof(ROUTES) / sizeof(ROUTES[0]));
+
+		// liveness + the SSE stream are served on THIS (server) thread; every data route goes through the mailbox.
 		if (strcmp(szTarget, "/") == 0)
 		{
 			sendResponse(sock, "200 OK", "text/plain", CvString("hello world\n"), snapshotTurn());
+			return false;
 		}
-		else if (strcmp(szTarget, "/units") == 0)
+		if (strcmp(szTarget, "/events") == 0)
 		{
-			// Parse the supported filters; unknown parameters are ignored.
-			bool bFilterId = false, bFilterOwner = false;
-			int iId = -1, iOwner = -1;
-			char* szTok = szQuery;
-			while (szTok != NULL && *szTok != '\0')
-			{
-				char* szNext = strchr(szTok, '&');
-				if (szNext != NULL)
-				{
-					*szNext = '\0';
-					++szNext;
-				}
-				if (strncmp(szTok, "id=", 3) == 0)
-				{
-					bFilterId = true;
-					iId = atoi(szTok + 3);
-				}
-				else if (strncmp(szTok, "playerNumber=", 13) == 0)
-				{
-					bFilterOwner = true;
-					iOwner = atoi(szTok + 13);
-				}
-				szTok = szNext;
-			}
-			sendResponse(sock, "200 OK", "application/json", renderUnits(bFilterId, iId, bFilterOwner, iOwner), snapshotTurn());
-		}
-		else if (strcmp(szTarget, "/players") == 0)
-		{
-			bool bFilterOwner = false;
-			int iOwner = -1;
-			char* szTok = szQuery;
-			while (szTok != NULL && *szTok != '\0')
-			{
-				char* szNext = strchr(szTok, '&');
-				if (szNext != NULL)
-				{
-					*szNext = '\0';
-					++szNext;
-				}
-				if (strncmp(szTok, "playerNumber=", 13) == 0)
-				{
-					bFilterOwner = true;
-					iOwner = atoi(szTok + 13);
-				}
-				szTok = szNext;
-			}
-			sendResponse(sock, "200 OK", "application/json", renderPlayers(bFilterOwner, iOwner), snapshotTurn());
-		}
-		else if (strcmp(szTarget, "/cities") == 0)
-		{
-			bool bFilterId = false, bFilterOwner = false;
-			int iId = -1, iOwner = -1;
-			char* szTok = szQuery;
-			while (szTok != NULL && *szTok != '\0')
-			{
-				char* szNext = strchr(szTok, '&');
-				if (szNext != NULL)
-				{
-					*szNext = '\0';
-					++szNext;
-				}
-				if (strncmp(szTok, "id=", 3) == 0)
-				{
-					bFilterId = true;
-					iId = atoi(szTok + 3);
-				}
-				else if (strncmp(szTok, "playerNumber=", 13) == 0)
-				{
-					bFilterOwner = true;
-					iOwner = atoi(szTok + 13);
-				}
-				szTok = szNext;
-			}
-			sendResponse(sock, "200 OK", "application/json", renderCities(bFilterId, iId, bFilterOwner, iOwner), snapshotTurn());
-		}
-		else if (strcmp(szTarget, "/events") == 0)
-		{
-			// SSE turn-event stream (#407): the response never ends and the socket
-			// joins the broadcast list (the caller must keep it open).
 			if (g_sseClients.size() >= SSE_CLIENT_CAP)
 			{
-				sendResponse(sock, "503 Service Unavailable", "application/json", CvString("{\"error\":\"too many event streams\"}\n"), snapshotTurn());
+				sendResponse(sock, "503 Service Unavailable", "application/json",
+					CvString("{\"error\":\"too many event streams\"}\n"), snapshotTurn());
+				return false;
 			}
-			else
-			{
-				beginEventStream(sock);
-				g_sseClients.push_back(sock);
-				return true;
-			}
+			beginEventStream(sock);
+			g_sseClients.push_back(sock);
+			return true; // keep the socket open for the broadcast loop
 		}
-		else if (strcmp(szTarget, "/diagnostic") == 0)
+
+		// /state and /computed (bare) -> the index of that bucket's routes, generated from the table above.
+		if (strcmp(szTarget, "/state") == 0 || strcmp(szTarget, "/computed") == 0)
 		{
-			sendResponse(sock, "200 OK", "application/json", CvString(
-				"{\"endpoints\":["
-				"\"/diagnostic/canConstruct?type=BUILDING_X&player=N\","
-				"\"/diagnostic/canTrain?type=UNIT_X&player=N\","
-				"\"/diagnostic/canResearch?type=TECH_X&player=N\","
-				"\"/diagnostic/canDoCivics?type=CIVIC_X&player=N\","
-				"\"/diagnostic/canCreate?type=PROJECT_X&player=N\","
-				"\"/diagnostic/canMaintain?type=PROCESS_X&player=N\","
-				"\"/diagnostic/sweep?type=buildings|units&player=N\","
-				"\"/diagnostic/placementSweep?type=full&player=N\","
-				"\"/diagnostic/dormancySweep?type=full&player=N\","
-				"\"/diagnostic/modifierSweep?type=full|food|production|commerce&player=N\","
-				"\"/diagnostic/movementSweep?type=full&player=N\","
-				"\"/diagnostic/game?player=N\","
-				"\"/diagnostic/modifier?player=N&city=M\","
-				"\"/diagnostic/cityInput?player=N&city=M\","
-				"\"/diagnostic/playerInput?player=N\","
-				"\"/diagnostic/tally?type=BUILDING_X|UNIT_X&player=N\"],"
-				"\"note\":\"player defaults to the active player; evaluated against the current game state, "
-				"no construction performed; canConstruct also returns the cascade verdict + cap shadow; "
-				"placementSweep is the auto-placement maintainer shadow (cascade-would-place vs legacy presence)\"}\n"),
-				snapshotTurn());
+			const size_t iPrefix = strlen(szTarget);
+			picojson::value::array eps;
+			for (int i = 0; i < iNumRoutes; ++i)
+				if (strncmp(ROUTES[i].szPath, szTarget, iPrefix) == 0 && ROUTES[i].szPath[iPrefix] == '/')
+				{
+					picojson::value::object e;
+					e["path"] = picojson::value(std::string(ROUTES[i].szPath));
+					e["doc"]  = picojson::value(std::string(ROUTES[i].szDoc));
+					eps.push_back(picojson::value(e));
+				}
+			picojson::value::object root;
+			root["endpoints"] = picojson::value(eps);
+			root["note"] = picojson::value(std::string(strcmp(szTarget, "/state") == 0
+				? "RAW inputs only (no drycalc target). ?player=N filters; cities also accept &city=M."
+				: "the engine's computed answers (verification ground-truth). ?player=N[&city=M]; gates need type=PREFIX_NAME."));
+			CvString szBody(picojson::value(root).serialize().c_str());
+			szBody += "\n";
+			sendResponse(sock, "200 OK", "application/json", szBody, snapshotTurn());
+			return false;
 		}
-		else if (strncmp(szTarget, "/diagnostic/", 12) == 0)
+
+		// Match a data route, parse the shared query params (type/player/city), and dispatch via the mailbox.
+		for (int i = 0; i < iNumRoutes; ++i)
 		{
-			const char* szAction = szTarget + 12; // e.g. "canConstruct"
-			char szType[96];
-			szType[0] = '\0';
-			int iPlayer = -1; // -1 == the active player (resolved on the game thread)
-			int iCity = -1;   // -1 == the player's capital (resolved on the game thread)
-			char* szTok = szQuery;
-			while (szTok != NULL && *szTok != '\0')
-			{
-				char* szNext = strchr(szTok, '&');
-				if (szNext != NULL)
-				{
-					*szNext = '\0';
-					++szNext;
-				}
-				if (strncmp(szTok, "type=", 5) == 0)
-				{
-					strncpy(szType, szTok + 5, sizeof(szType));
-					szType[sizeof(szType) - 1] = '\0';
-				}
-				else if (strncmp(szTok, "player=", 7) == 0)
-				{
-					iPlayer = atoi(szTok + 7);
-				}
-				else if (strncmp(szTok, "city=", 5) == 0)
-				{
-					iCity = atoi(szTok + 5);
-				}
-				else if (strncmp(szTok, "channel=", 8) == 0 && szType[0] == '\0')
-				{
-					// modifierSweep channel scoping (spec §3.2 `?channel=food|production|commerce`) -- folded into
-					// szType so the snapshot mailbox needs no extra param (only used when no explicit type= given).
-					strncpy(szType, szTok + 8, sizeof(szType));
-					szType[sizeof(szType) - 1] = '\0';
-				}
-				szTok = szNext;
-			}
-			// type= is required for the per-type gate actions; the roster sweeps + the game-state dump + the per-city
-			// modifier / cityInput dumps need none.
-			const bool bNoTypeAction = (strcmp(szAction, "placementSweep") == 0
-				|| strcmp(szAction, "dormancySweep") == 0 || strcmp(szAction, "modifierSweep") == 0
-				|| strcmp(szAction, "movementSweep") == 0
-				|| strcmp(szAction, "game") == 0
-				|| strcmp(szAction, "modifier") == 0 || strcmp(szAction, "cityInput") == 0
-				|| strcmp(szAction, "playerInput") == 0);
-			if (szType[0] == '\0' && !bNoTypeAction)
-			{
-				sendResponse(sock, "400 Bad Request", "application/json",
-					CvString("{\"error\":\"missing required query param: type=PREFIX_NAME\"}\n"), snapshotTurn());
-			}
-			else
-			{
-				CvString szAnswer;
-				if (evalRequestBlocking(szAction, szType, iPlayer, iCity, szAnswer))
-				{
-					sendResponse(sock, "200 OK", "application/json", szAnswer, snapshotTurn());
-				}
-				else
-				{
-					sendResponse(sock, "503 Service Unavailable", "application/json",
-						CvString("{\"error\":\"eval busy or game thread not ticking; retry\"}\n"), snapshotTurn());
-				}
-			}
-		}
-		else if (strcmp(szTarget, "/extractor") == 0)
-		{
-			sendResponse(sock, "200 OK", "application/json", CvString(
-				"{\"endpoints\":["
-				"\"/extractor/gamestate[?player=N]\"],"
-				"\"note\":\"the RAW game-state as one document along the spine "
-				"world->teams->empires->areas->cities->plots. Raw facts only (no calculated values); the only "
-				"map-number is distanceFromCapital. ?player=N restricts to one player. Spec: "
-				"Tools/ModifierCalc/README.md\"}\n"), snapshotTurn());
-		}
-		else if (strncmp(szTarget, "/extractor/", 11) == 0)
-		{
-			const char* szSub = szTarget + 11; // e.g. "gamestate"
-			int iPlayer = -1;                  // -1 == ALL players
+			if (strcmp(szTarget, ROUTES[i].szPath) != 0) continue;
+
+			char szType[96]; szType[0] = '\0';
+			int iPlayer = -1; // -1 == active player (/computed) or ALL players (/state), resolved game-side
+			int iCity = -1;   // -1 == the player's capital (/computed) or no city filter (/state)
 			char* szTok = szQuery;
 			while (szTok != NULL && *szTok != '\0')
 			{
 				char* szNext = strchr(szTok, '&');
 				if (szNext != NULL) { *szNext = '\0'; ++szNext; }
-				if (strncmp(szTok, "player=", 7) == 0) iPlayer = atoi(szTok + 7);
+				if (strncmp(szTok, "type=", 5) == 0) { strncpy(szType, szTok + 5, sizeof(szType)); szType[sizeof(szType) - 1] = '\0'; }
+				else if (strncmp(szTok, "player=", 7) == 0) iPlayer = atoi(szTok + 7);
+				else if (strncmp(szTok, "city=", 5) == 0) iCity = atoi(szTok + 5);
+				else if (strncmp(szTok, "globalId=", 9) == 0)
+				{
+					// the "<PP>-<id>" snowflake selector -> (player, city). atoi stops at '-' (leading zeros fine);
+					// the part after '-' is the engine city id. One param instead of player=&city=.
+					const char* v = szTok + 9;
+					const char* dash = strchr(v, '-');
+					if (dash != NULL) { iPlayer = atoi(v); iCity = atoi(dash + 1); }
+				}
 				szTok = szNext;
 			}
-			if (strcmp(szSub, "gamestate") == 0)
-			{
-				CvString szAnswer;
-				if (evalRequestBlocking("gamestate", "", iPlayer, -1, szAnswer))
-				{
-					sendResponse(sock, "200 OK", "application/json", szAnswer, snapshotTurn());
-				}
-				else
-				{
-					sendResponse(sock, "503 Service Unavailable", "application/json",
-						CvString("{\"error\":\"eval busy or game thread not ticking; retry\"}\n"), snapshotTurn());
-				}
-			}
+
+			CvString szAnswer;
+			if (evalRequestBlocking(ROUTES[i].szAction, szType, iPlayer, iCity, szAnswer))
+				sendResponse(sock, "200 OK", "application/json", szAnswer, snapshotTurn());
 			else
-			{
-				sendResponse(sock, "404 Not Found", "application/json",
-					CvString("{\"error\":\"unknown extractor endpoint; see /extractor\"}\n"), snapshotTurn());
-			}
+				sendResponse(sock, "503 Service Unavailable", "application/json",
+					CvString("{\"error\":\"eval busy or game thread not ticking; retry\"}\n"), snapshotTurn());
+			return false;
 		}
-		else
-		{
-			sendResponse(sock, "404 Not Found", "application/json", CvString("{\"error\":\"not found\"}\n"), snapshotTurn());
-		}
+
+		sendResponse(sock, "404 Not Found", "application/json",
+			CvString("{\"error\":\"not found; see /state and /computed\"}\n"), snapshotTurn());
 		return false;
 	}
 
@@ -3991,147 +2738,11 @@ void CvHttpServer::publishIfDue()
 	}
 	g_iLastPublishTick = iNow;
 
+	// Refresh the published header (turn + gameId) for the server thread's response metadata and the
+	// /events hello. No bulk walk: /state and /computed are served on this thread via the mailbox.
 	bst::shared_ptr<GameSnapshot> pNew(new GameSnapshot());
 	pNew->iTurn = GC.getGame().getGameTurn();
 	pNew->szGameId = GC.getGame().getGameId();
-	pNew->units.reserve(4096);
-	pNew->cities.reserve(256);
-
-	for (int iI = 0; iI < MAX_PLAYERS; iI++)
-	{
-		const CvPlayerAI& kPlayer = GET_PLAYER((PlayerTypes)iI);
-		if (!kPlayer.isAlive())
-		{
-			continue;
-		}
-		foreach_(const CvUnit* pLoopUnit, kPlayer.units())
-		{
-			UnitSnap snap;
-			snap.iID = pLoopUnit->getID();
-			snap.iOwner = pLoopUnit->getOwner();
-			snap.iX = pLoopUnit->getX();
-			snap.iY = pLoopUnit->getY();
-			snap.iDamage = pLoopUnit->getDamage();
-			snap.iLevel = pLoopUnit->getLevel();
-			snap.iBaseMoves = pLoopUnit->baseMoves();
-			snap.iMaxMoves = pLoopUnit->maxMoves();
-			snap.iMovesLeft = pLoopUnit->movesLeft();
-			snap.iMoveDiscount = pLoopUnit->getExtraMoveDiscount();
-			snap.iRange = pLoopUnit->airRange();
-			snap.iDomain = (int)pLoopUnit->getDomainType();
-
-			const UnitTypes eType = pLoopUnit->getUnitType();
-			snap.szType = eType != NO_UNIT ? GC.getUnitInfo(eType).getType() : "NO_UNIT";
-
-			const UnitAITypes eAI = pLoopUnit->AI_getUnitAIType();
-			snap.szAI = eAI != NO_UNITAI ? GC.getUnitAIInfo(eAI).getType() : "NO_UNITAI";
-
-			const CvSelectionGroup* pGroup = pLoopUnit->getGroup();
-			snap.iGroup = pGroup != NULL ? pGroup->getID() : -1;
-			snap.iMissionAI = pGroup != NULL ? pGroup->AI_getMissionAIType() : -1;
-			snap.iActivity = pGroup != NULL ? pGroup->getActivityType() : -1;
-
-			pNew->units.push_back(snap);
-		}
-	}
-
-	// Per-team tech counts, computed once per team and shared by its members.
-	std::vector<int> aiTeamTechs(MAX_TEAMS, -1);
-
-	pNew->players.reserve(MAX_PLAYERS);
-	for (int iI = 0; iI < MAX_PLAYERS; iI++)
-	{
-		const CvPlayerAI& kPlayer = GET_PLAYER((PlayerTypes)iI);
-		if (!kPlayer.isAlive())
-		{
-			continue;
-		}
-		const TeamTypes eTeam = kPlayer.getTeam();
-		if (aiTeamTechs[eTeam] == -1)
-		{
-			int iTechs = 0;
-			for (int iTech = 0; iTech < GC.getNumTechInfos(); iTech++)
-			{
-				if (GET_TEAM(eTeam).isHasTech((TechTypes)iTech))
-				{
-					iTechs++;
-				}
-			}
-			aiTeamTechs[eTeam] = iTechs;
-		}
-
-		PlayerSnap snap;
-		snap.iID = iI;
-		snap.iTeam = eTeam;
-		snap.iHuman = kPlayer.isHuman() ? 1 : 0;
-		snap.iNPC = kPlayer.isNPC() ? 1 : 0;
-		snap.iScore = GC.getGame().getPlayerScore((PlayerTypes)iI);
-		snap.iEra = kPlayer.getCurrentEra();
-		snap.iTechs = aiTeamTechs[eTeam];
-		snap.iCities = kPlayer.getNumCities();
-		snap.iPopulation = kPlayer.getTotalPopulation();
-		snap.iUnits = kPlayer.getNumUnits();
-		snap.iGold = kPlayer.getGold();
-		snap.iGoldRate = kPlayer.calculateGoldRate();
-		snap.iScienceRate = kPlayer.getCommerceRate(COMMERCE_RESEARCH);
-
-		// One walk over the player's cities: the player's production total and the
-		// /cities snapshot rows.
-		int iProduction = 0;
-		foreach_(const CvCity* pLoopCity, kPlayer.cities())
-		{
-			CitySnap city;
-			city.iID = pLoopCity->getID();
-			city.iOwner = iI;
-			city.iX = pLoopCity->getX();
-			city.iY = pLoopCity->getY();
-			city.iPopulation = pLoopCity->getPopulation();
-			city.iFood = pLoopCity->getYieldRate(YIELD_FOOD);
-			city.iProduction = pLoopCity->getYieldRate(YIELD_PRODUCTION);
-			city.iCommerce = pLoopCity->getYieldRate(YIELD_COMMERCE);
-			city.iNumBuildings = pLoopCity->getNumBuildings();
-			city.iCultureLevel = pLoopCity->getCultureLevel();
-			city.iCapital = pLoopCity->isCapital() ? 1 : 0;
-
-			const CvProperties* pProps = pLoopCity->getPropertiesConst();
-			const PropertyTypes eCrime = GC.getPROPERTY_CRIME();
-			const PropertyTypes eEducation = GC.getPROPERTY_EDUCATION();
-			const PropertyTypes eDisease = GC.getPROPERTY_DISEASE();
-			city.iCrime = eCrime > NO_PROPERTY ? pProps->getValueByProperty(eCrime) : 0;
-			city.iEducation = eEducation > NO_PROPERTY ? pProps->getValueByProperty(eEducation) : 0;
-			city.iDisease = eDisease > NO_PROPERTY ? pProps->getValueByProperty(eDisease) : 0;
-
-			const UnitTypes eProdUnit = pLoopCity->getProductionUnit();
-			const BuildingTypes eProdBuilding = pLoopCity->getProductionBuilding();
-			const ProjectTypes eProdProject = pLoopCity->getProductionProject();
-			const ProcessTypes eProdProcess = pLoopCity->getProductionProcess();
-			if (eProdUnit != NO_UNIT) city.szProducing = GC.getUnitInfo(eProdUnit).getType();
-			else if (eProdBuilding != NO_BUILDING) city.szProducing = GC.getBuildingInfo(eProdBuilding).getType();
-			else if (eProdProject != NO_PROJECT) city.szProducing = GC.getProjectInfo(eProdProject).getType();
-			else if (eProdProcess != NO_PROCESS) city.szProducing = GC.getProcessInfo(eProdProcess).getType();
-			else city.szProducing = "NONE";
-			city.iProducingTurns = city.szProducing != "NONE" && eProdProcess == NO_PROCESS
-				? pLoopCity->getProductionTurnsLeft() : 0;
-
-			city.szName = narrowToAscii(pLoopCity->getName());
-			pNew->cities.push_back(city);
-
-			iProduction += city.iProduction;
-		}
-		snap.iProduction = iProduction;
-
-		const CivilizationTypes eCiv = kPlayer.getCivilizationType();
-		snap.szCiv = eCiv != NO_CIVILIZATION ? GC.getCivilizationInfo(eCiv).getType() : "NO_CIVILIZATION";
-		snap.szName = narrowToAscii(kPlayer.getName());
-
-		const TechTypes eResearch = kPlayer.getCurrentResearch();
-		snap.szResearch = eResearch != NO_TECH ? GC.getTechInfo(eResearch).getType() : "NONE";
-
-		const HandicapTypes eHandicap = kPlayer.getHandicapType();
-		snap.szHandicap = eHandicap != NO_HANDICAP ? GC.getHandicapInfo(eHandicap).getType() : "NO_HANDICAP";
-
-		pNew->players.push_back(snap);
-	}
 
 	EnterCriticalSection(&g_snapshotLock);
 	g_pSnapshot = pNew;

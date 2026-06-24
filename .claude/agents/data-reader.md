@@ -34,18 +34,23 @@ project's bar (owner): reconstruct game state purely from endpoints + logs, neve
 - Don't editorialize on game design, the C++/cascade internals, or propose fixes — EVER (see the no-guess/no-infer rule at the top). Report the data.
 
 ## The live surface (source of truth: docs/dev/reference/http-server.md — read it only if you need detail)
-HTTP server at `http://127.0.0.1:7227` (enable in-game: BUG option `Autolog__HttpServer`). GET-only. Snapshot is ≤5s stale.
+HTTP server at `http://127.0.0.1:7227` (enable in-game: BUG option `Autolog__HttpServer`). GET-only. Two data
+buckets, split on verification (full map: `docs/specs/http-endpoints.md`): **`/state/*`** = raw inputs (no
+computed values), **`/computed/*`** = the engine's own answers. Fetch `/state` or `/computed` bare for the
+index of each bucket's routes.
 - `GET /` → `hello world` (smoke test — run this first; if it fails the server is off / game not running).
-- `GET /units` `?id=N` `?playerNumber=N` — every unit (id, owner, x/y, group, missionAI, activity, damage, level, type, unitAI).
-- `GET /players` `?playerNumber=N` — per player: score, era, tech count, research, cities, pop, units, gold(+rate), science, production, civ, name, handicap.
-- `GET /cities` `?id=N` `?playerNumber=N` — per city: pos, name, pop, food/prod/commerce rates, production head(+turns), building count, culture level, capital flag, **crime/education/disease** property values.
-- `GET /diagnostic` — lists the diagnostic gate endpoints.
-- `GET /diagnostic/canConstruct|canTrain|canResearch|canDoCivics|canCreate|canMaintain?type=PREFIX_NAME&player=N` — engine gate + cascade verdict + legacyReason/cascadeReason.
-- `GET /diagnostic/sweep?type=buildings|units&player=N` — full-roster buildability shadow: `{total,agree,diverge,divergences[cap 250]{type,cascade,legacy,reason,cascadeReason}}`.
-- `GET /diagnostic/placementSweep?type=summary|full&player=N` — §14 H auto-placement maintainer shadow: `{roster,cities,cells,agree,diverge,divergences[cap 250]{city,type,kind,cascade,legacy,reason}}`; `kind` bitmask 1=bAutoBuild loop, 2=property-band; `reason` ∈ place/noMarker/requiresBuild/requiresOperate/allowedCap/obsolete/replaced/groupCap. `type=full` adds `all[]` (cap 4000) for the complete per-cell dump. (Param `type=` is required by the router; pass `type=summary` for the summary view.)
+- **`GET /state/all` `?player=N`** — the entire raw state in one document (world / players / cities / plots).
+- `GET /state/techs` `?player=N` — every player's completed techs. · `GET /state/players` — raw player facts.
+- `GET /state/cities` `?player=N` `&city=M` — raw city substrate: plots (terrain/feature/improvement/route/bonus/state), buildings (+dormant), specialists, bonuses, corporations, religions, properties — **no yields**. Each city carries `{owner,id,name,x,y}` (ids are NOT unique across empires — key by `player`+`city`).
+- `GET /state/units` `?player=N` — raw unit facts (type, ai, x/y, group, damage, level, promotions).
+- `GET /computed/cities/yields?player=N&city=M` — `getYieldRate100` per channel + full per-source decomposition (the per-mechanic parity surface).
+- `GET /computed/players?player=N` — empire economy: gold/science/upkeep/inflation/demographics.
+- `GET /computed/canConstruct|canTrain|canResearch|canDoCivics|canCreate|canMaintain?type=PREFIX_NAME&player=N[&city=M]` — the engine verdict (+ first failing legacy gate for construct/train). No cascade column (retired).
+- `GET /computed/availableTechs|availableCivics|availableBuilds?player=N` — engine availability sets.
+- `GET /computed/tally?type=BUILDING_X|UNIT_X&player=N` — engine counts. · `GET /computed/whyNot?type=UNIT_X` · `GET /computed/game` — turn / game-over / victory state.
 - `GET /events` — SSE stream; collect a window with `curl -s --max-time 5 http://127.0.0.1:7227/events`. Carries `log` frames (the gated AI/cascade log lines: `[WAI]`/`[CIT]`/`[DAI]`/`[HAI]`/`[UNT]`/`[PERF]`/`[READJSON]`/`[PLACEMENT]`/`[SPINE/*]`).
 
-NB the `/diagnostic/*` calls use a single-slot game-thread mailbox: the FIRST call may return empty / `503` if one's in flight — retry once after ~1s. A second concurrent diagnostic request gets `503`.
+NB every `/state/*` and `/computed/*` call uses a single-slot game-thread mailbox: the FIRST call may return empty / `503` if one's in flight — retry once after ~1s. A second concurrent data request gets `503`.
 
 ## Game logs — ⛔ DO NOT read the `.log` files while the game is RUNNING (owner ruling 2026-06-18)
 **The running game holds its `.log` files OPEN, so a live read is UNRELIABLE** — the tail is buffered/unflushed and what

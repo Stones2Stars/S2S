@@ -5454,6 +5454,11 @@ void CvGameTextMgr::setCityBarHelp(CvWStringBuffer &szString, CvCity* pCity)
 
 	szString.append(pCity->getName());
 
+	// Globally-unique city reference -- the same "<PP>-<id>" snowflake the HTTP API emits as globalId (owner
+	// zero-padded to 2 digits). Shown on the city-bar hover so a value can be cross-referenced to an API read.
+	szTempBuffer.Format(L" [%02d-%d]", (int)pCity->getOwner(), pCity->getID());
+	szString.append(szTempBuffer);
+
 	// BUG - Health - start
 	if (getBugOptionBOOL("CityBar__Health", true, "BUG_CITYBAR_HEALTH"))
 	{
