@@ -577,6 +577,12 @@ namespace
 			if (eR != NO_ROUTE) pl["route"] = picojson::value(std::string(GC.getRouteInfo(eR).getType()));
 			const BonusTypes eB = pPlot->getBonusType((TeamTypes)iTeam);
 			if (eB != NO_BONUS) pl["bonus"] = picojson::value(std::string(GC.getBonusInfo(eB).getType()));
+			// bonusConnected: this plot's bonus counts toward hasVicinityBonus (the OBTAINED/improved semantic) --
+			// owned by the city + isHasValidBonus (revealed + tech + improvement) + isConnectedTo this city
+			// (CvCity::hasVicinityBonus:21110). The OWN-centre plot (isCity) counts unconditionally (handled cascade-side).
+			if (eB != NO_BONUS && pPlot->getOwner() == pCity->getOwner()
+				&& pPlot->isHasValidBonus() && pPlot->isConnectedTo(pCity))
+				pl["bonusConnected"] = picojson::value(true);
 			if (pPlot->isRiver())               pl["river"] = picojson::value(true);
 			if (pPlot->isIrrigationAvailable()) pl["irrig"] = picojson::value(true);
 			if (pPlot->isHills())               pl["hills"] = picojson::value(true);
