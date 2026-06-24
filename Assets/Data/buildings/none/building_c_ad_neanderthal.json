@@ -31,9 +31,6 @@
    ]
   }
  },
- "allowed": {
-  "empire": 1
- },
  "research": {
   "city": {
    "percent": -5

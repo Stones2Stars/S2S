@@ -1026,6 +1026,27 @@ namespace
 		// reached (it errors "type not loaded"). `modifier` was previously below the guard, making it unreachable
 		// without a dummy type despite its doc + bNoTypeAction listing -- relocated here 2026-06-19.
 
+		// CITY-BUILDABLE -- the engine's canConstruct TRUE-set for the city: the buildable ORACLE the external
+		// cascade is checked against (bulk; the per-type /computed/canConstruct is the single-entity gate). No
+		// type; city-relative. NB BUILDING_LEECH_CATCHER appears here -- a known engine lie; the cascade is
+		// CORRECT to omit it (owner ruling), so a Leech-Catcher-only divergence is expected, not a fail.
+		if (strcmp(szAction, "cityBuildable") == 0)
+		{
+			o["city"] = picojson::value((double)iCityId);
+			if (pCity == NULL)
+			{
+				o["error"] = picojson::value(std::string("no city"));
+				return CvString(picojson::value(o).serialize().c_str());
+			}
+			o["globalId"] = picojson::value(std::string(CvString::format("%02d-%d", pCity->getOwner(), iCityId).GetCString()));
+			picojson::value::array buildable;
+			for (int b = 0; b < GC.getNumBuildingInfos(); ++b)
+				if (pCity->canConstruct((BuildingTypes)b))
+					buildable.push_back(picojson::value(std::string(GC.getBuildingInfo((BuildingTypes)b).getType())));
+			o["buildable"] = picojson::value(buildable);
+			return CvString(picojson::value(o).serialize().c_str());
+		}
+
 		// CITY-INPUT (owner 2026-06-19; calc-emulator-spec.md §5) -- the LIVE game-dump that feeds the external calc
 		// emulator: a real city's full city-yields INPUT VECTOR + the live LEGACY and CASCADE outputs, so the offline
 		// emulator can (a) reproduce getYieldRate100 EXACTLY from these terms -- the fidelity credential that licenses
@@ -2364,6 +2385,7 @@ namespace
 			{ "/state/cities",  "stateCities",  "raw city substrate: plots/buildings/specialists/bonuses (no yields)" },
 			{ "/state/units",   "stateUnits",   "raw unit facts (type/ai/pos/group/damage/level/promotions)" },
 			{ "/computed/cities/yields",   "cityInput",      "getYieldRate100 per channel + full per-source decomposition" },
+			{ "/computed/cities/buildable","cityBuildable",  "the engine's canConstruct TRUE-set for the city (the buildable oracle)" },
 			{ "/computed/players",         "playerInput",    "empire economy: gold/science/upkeep/inflation/demographics" },
 			{ "/computed/canConstruct",    "canConstruct",   "engine buildability verdict (type=BUILDING_X[&city=M])" },
 			{ "/computed/canTrain",        "canTrain",       "engine trainability verdict (type=UNIT_X[&city=M])" },

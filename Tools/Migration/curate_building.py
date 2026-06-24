@@ -907,13 +907,15 @@ def requires_building(rec, store):
         build["any"] = build_any
     if build_none:
         build["noneOf"] = build_none
-    # PALACE-TYPE (government-center) buildings can't be player-BUILT where a government center already exists
-    # (CvCity.cpp:2654 isGovernmentCenter gate; Palace + the bGovernmentCenter pseudo-palaces). The negation twin
-    # `disabled: IS_CAPITAL` (owner 2026-06-16); IS_CAPITAL = "the city has a palace/palace-adjacent building".
+    # GOVERNMENT-CENTER buildings (Palace + the bGovernmentCenter pseudo-palaces) can't be player-BUILT where a
+    # government center already exists. The engine gate is EXACTLY `kBuilding.isGovernmentCenter() && isGovernmentCenter()`
+    # (CvCity.cpp:2664), where city isGovernmentCenter() == m_iGovernmentCenterCount>0 == "holds a gov-center building".
+    # So the disable predicate is IS_GOVERNMENT_CENTER, NOT IS_CAPITAL (verified 2026-06-24: canConstruct has NO
+    # isCapital gate; the two predicates are distinct and IS_CAPITAL was a mis-naming of this gov-center rule).
     # NB this is the PLAYER build gate only — the engine's FORCED relocation (capital falls) is an ungated actor
     # that bypasses requires (the #437 placement-gate invariant: gate the checked path, engine outcomes bypass).
-    if _bool(rec, "bCapital") or _bool(rec, "bGovernmentCenter"):
-        build["disabled"] = "IS_CAPITAL"
+    if _bool(rec, "bGovernmentCenter"):
+        build["disabled"] = "IS_GOVERNMENT_CENTER"
     out = OrderedDict()
     if build:
         out["build"] = build
@@ -938,6 +940,12 @@ def allowed_building(rec):
     getMaxGlobalInstances()!=-1). Absent => uncapped. The new canDoStuff gate enforces it (build while
     tally.count(SELF,scope) < N) and owns ignoring it (NO_WONDER_LIMIT/NO_NATIONAL_UNIT_LIMIT/CHALLENGE_ONE_CITY),
     era-scaling, and +extra — all engine, never the parser (enabler-spec §5/§13.7)."""
+    # bNoLimit OVERRIDES every max*Instances: the engine's isBuildingMaxedOut is short-circuited by it, so the
+    # building is genuinely UNCAPPED (e.g. PALACE -- noInstanceLimit + maxPlayerInstances:1, but you can always
+    # build it; it RELOCATES the capital, gated instead by requires.build.disabled:IS_CAPITAL). Emitting an `allowed`
+    # cap here wrongly excluded it in every non-capital city.
+    if _bool(rec, "bNoLimit"):
+        return None
     allowed = OrderedDict()
     for tag, scope in (("iMaxGlobalInstances", "world"), ("iMaxTeamInstances", "team"), ("iMaxPlayerInstances", "empire")):
         v = _int(rec, tag)
