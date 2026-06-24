@@ -91,24 +91,33 @@ lands on the scope object itself (the city — the common case). Full deposit sy
 
 ### 3.4 Conditions — `all` / `any` / `noneOf`
 
-A **flat, one-level** boolean shape — verified against the engine (`CvCascadeReadJson.cpp` parse +
-`CvCascadeCondition.cpp` eval) — identical wherever a condition is needed (`requires`, and a deposit's
-`enabled`/`disabled`). **There is no recursive nesting:** `all`/`noneOf` hold a flat list of **leaves**; `any`
-holds a list of **OR-groups**.
+A **recursive boolean tree** (owner ruling 2026-06-24 — the long-standing AND/OR mutilation, fixed here for good),
+identical wherever a condition is needed (`requires`, and a deposit's `enabled`/`disabled`). Three combinators;
+each holds a list of **children**, and a child is **either a leaf** (a count/presence atom or a predicate, §3.5)
+**or another combinator node** — nesting is allowed to any depth:
+
+- **`all`** = **AND** (`&&`) — every child must hold.
+- **`any`** = **OR** (`||`) — at least one child must hold. A plain OR over its **direct children** — *not*
+  "OR-groups AND-ed together".
+- **`noneOf`** = **NONE** — no child may hold.
 
 ```jsonc
-{ "all":    [ leaf, … ],              // AND  — every leaf must hold
-  "any":    [ [leaf, …], [leaf, …] ], // each inner array is an OR-GROUP — within a group ≥1 holds (OR),
-                                       //   and BETWEEN groups every group must hold (AND)
-  "noneOf": [ leaf, … ] }             // NONE — none of these may be present
+{ "all": [ leafA, { "any": [ leafB, leafC ] }, { "noneOf": [ leafD ] } ] }
+//  ≡  leafA && (leafB || leafC) && !leafD
 ```
 
-So **`any` is one-or-more OR-groups, AND-ed together.** A single group `any:[[BONUS_COPPER,BONUS_IRON]]` = "copper
-**or** iron"; two groups `any:[[BONUS_COPPER,BONUS_IRON],[BUILDING_FORGE,BUILDING_FOUNDRY]]` = "(copper or iron)
-**and** (forge or foundry)". **AND-of-ORs is `any`'s multiple groups — NOT** `{any}` nested inside `all`: the parser
-reads each `all` element as a **leaf** and would silently **skip** a nested combinator. (In practice nesting is
-avoided anyway — a second sequential `requires` clause or a `disabled` reads easier; owner ruling.) Each leaf is
-**either** a count/presence **atom** or a **predicate** (§3.5):
+So `any` is exactly `||` on what is directly below it:
+- `any: [BONUS_COPPER, BONUS_IRON]` = `copper || iron`.
+- `any: [ {all:[STONE,IRON]}, {any:[COPPER,WOOD]} ]` = `(stone && iron) || (copper || wood)`.
+
+To require BOTH "(copper or iron)" AND "(forge or foundry)", **nest two `any` nodes under an `all`** —
+`all: [ {any:[COPPER,IRON]}, {any:[FORGE,FOUNDRY]} ]`. The old `any:[[…],[…]]` "AND-of-ORs" shape is **RETIRED**:
+`any` never means AND. The tree maps 1:1 onto the engine's `BoolExpr` (`Sources/Infrastructure/BoolExpr`:
+`BoolExprAnd`/`BoolExprOr`/`BoolExprNot`, recursive) — **proper JSON predicate parsing routes through `BoolExpr`**, the
+one solid battle-tested and/or in this codebase (evaluating it is what made the whole JSON migration viable; see the
+initial migration issue). **Never reinvent it:** the retired `any:[[…]]` AND-of-ORs shape, and the **temporary**
+`CvCascadeReadJson`'s hand-rolled `vector<vector<leaf>>` (⛔ slated for purge), were exactly that mistake. Each leaf
+is **either** a count/presence **atom** or a **predicate** (§3.5):
 
 ```jsonc
 { "type": "BONUS_IRON", "scope": "city", "connection": "trade|vicinity" }   // an atom
@@ -162,9 +171,12 @@ IGNORED**, never treated as false — retiring a system never spuriously disable
     `HAS_IRRIGATION` · `HAS_FEATURE` ("has *any* feature").
   - **plot city-relative state** (nested `VICINITY ⊇ WORKABLE ⊇ IS_WORKED`): `VICINITY` (in the city's workable
     radius) · `WORKABLE` (in radius and eligible to be worked) · `IS_WORKED` (a citizen works it this turn).
-  - **city / player:** `IS_CAPITAL` · `HAS_POWER` · `HAS_STATE_RELIGION` · `STATE_RELIGION_IN_CITY`.
-    `IS_CAPITAL` = "the city has a Palace / government-center building" (runtime-evaluated, not stored); palace-type
-    buildings gate on `requires.build.disabled: "IS_CAPITAL"`.
+  - **city / player:** `IS_CAPITAL` · `IS_GOVERNMENT_CENTER` · `HAS_POWER` · `HAS_STATE_RELIGION` · `STATE_RELIGION_IN_CITY`.
+    These two are **DISTINCT** (owner ruling 2026-06-24): `IS_CAPITAL` = "the city is the player's capital" (engine
+    `isCapital()`); `IS_GOVERNMENT_CENTER` = "the city holds a government-center building — Palace or a pseudo-palace"
+    (engine `isGovernmentCenter()` == `m_iGovernmentCenterCount > 0`, runtime-evaluated, not stored). Government-center
+    buildings gate on `requires.build.disabled: "IS_GOVERNMENT_CENTER"` — verified against `CvCity::canConstruct`
+    (line 2664): it rejects a gov-center building where one already exists, and has **no `isCapital` gate**.
 - **parameterized** `{ PREDICATE: param }`: `{HAS_FEATURE: FEATURE_X}` · `{HAS_TERRAIN: TERRAIN_X}` ·
   `{HAS_BONUS: BONUS_X}` · `{HAS_RELIGION: RELIGION_X}` · `{STATE_RELIGION: RELIGION_X}` · `{IS_HOLY_CITY: RELIGION_X}` ·
   `{HAS_CORPORATION: CORPORATION_X}` · `{latitude:{min,max}}` · `{existedFor:{min:N}}` (turns since built).
@@ -564,7 +576,7 @@ marble; +10 culture, doubling after it has stood 1000 turns.*
 
 **Scope (singular)** — `world › team › empire › area › city › plot{improvement|feature|terrain|route} › building|specialist|unit` · off-spine `self` = the entity's own build
 **Target (plural)** — `plots · units · cities · areas · empires` = all of that kind in the scope, predicate-filtered
-**Combinators** — `all` (AND, flat leaves) · `any` (a list of OR-groups — within-group OR, between-group AND) · `noneOf` (NONE) · one level, no nesting
+**Combinators** — `all` (AND `&&`) · `any` (OR `||`) · `noneOf` (NONE), each over its direct children (leaf or nested node); a recursive tree ≡ engine `BoolExpr` And/Or/Not (route proper parsing through it, never reinvent)
 **Atom** — `{ type, scope, min?, max?, connection? }` · presence = `min:1`
 **Predicate** — bare (`IS_*`/`HAS_*`/`VICINITY`/`IS_CAPITAL`…), `{PREDICATE: param}`, or membership `{terrain|feature|bonus:[…]}`
 **Units** — `flat` (amount) · `percent` (+% delta) · `multiplier` (×, identity 100). Human-readable; ×100 is a bug.

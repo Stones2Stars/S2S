@@ -83,9 +83,8 @@ itself a tech-created pseudobuilding, dormant via its own air-pollution band unt
 then does it dorm the observatory.) Dormancy is always the **target's `requires.operate.dormant`**, never a source
 `disables` (the disease-band / rat-catcher case is the same shape).
 
-**Multi-parent tech.** A child tech carries `requires.build.all:[T1,T2]` (AND) or `.any` (OR); the `.any` here **is**
-the [json](json.md) §3.4 combinator (a list of OR-groups), so a single OR of techs is authored as ONE group —
-`requires.build.any:[[T1,T2]]`, not a flat `[T1,T2]`. `enables` proposes
+**Multi-parent tech.** A child tech carries `requires.build.all:[T1,T2]` (AND) or `.any:[T1,T2]` (OR — a plain `||`
+over its members, [json](json.md) §3.4; NOT a list-of-groups). `enables` proposes
 the child from one parent, `requires.build` confirms all parents forward from HAVE. The curator must RETAIN
 `AndPreReqs`/`OrPreReqs` as `requires.build.all`/`.any` **because the store's prereq-inversion flattens them
 into other techs' `enables` for generation and does not keep them on the child** — so the curator re-reads them
@@ -139,9 +138,11 @@ plot scan has NO ownership/worked filter — deliberately MORE permissive than t
 
 Every `requires` resolves the same way, so it's cacheable as a pure function of clause-shape + state:
 
-1. **combinator** — the `all`/`any`/`noneOf` structure ([json](json.md) §3.4), verified vs `CvCascadeCondition.cpp`:
-   **`all` = AND** (a flat list of leaves), **`any` = a list of OR-groups** (within a group OR, between groups AND),
-   **`noneOf` = NONE**. One level, no nesting — AND-of-ORs is `any`'s multiple groups (or a sequential `requires`/`disabled`).
+1. **combinator** — the `all`/`any`/`noneOf` structure ([json](json.md) §3.4): **`all` = AND** (`&&`), **`any` = OR**
+   (`||`), **`noneOf` = NONE**, each over its **direct children** (a leaf, or a nested `all`/`any`/`noneOf` node — a
+   recursive boolean tree). This maps 1:1 onto the engine's `BoolExpr` (`Sources/Infrastructure/BoolExpr`: And/Or/Not);
+   proper JSON predicate parsing routes through `BoolExpr` — never reinvent and/or (the retired AND-of-ORs `any:[[…]]`
+   shape, and the temporary `CvCascadeReadJson`'s hand-rolled `vector<vector<leaf>>`, were exactly that mistake).
 2. **conditions** — each leaf: a presence/count **atom** (`min`/`max` at a scope) or a **predicate**. A count at
    `city`/`plot` reads the live object; at `empire`/`team`/`world` it reads the [tally](tally.md). A missing
    predicate is **ignored**, never false (json §3.5) — so retiring a system never spuriously disables data.
