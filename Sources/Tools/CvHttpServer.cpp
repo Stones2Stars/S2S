@@ -591,6 +591,8 @@ namespace
 			if (pPlot->isCoastalLand())         pl["coast"] = picojson::value(true);  // coastal land (HAS_COAST predicate)
 			if (pPlot->isFreshWater())          pl["freshwater"] = picojson::value(true);  // HAS_FRESHWATER (river OR adjacent lake)
 			if (pPlot == pCity->plot())         pl["isCity"] = picojson::value(true);  // THIS city's OWN centre plot (not a neighbour city-centre that overlaps the workable radius) -- the centre-plot facts HAS_RIVER/COAST/FRESHWATER/latitude read it
+			if (pPlot->getTeam() == pCity->getTeam()) pl["owned"] = picojson::value(true);  // owned by the city's team -- isValidTerrainForBuildings counts a terrain/improvement/peak/hill plot only if owned (CvCity.cpp:20450/20526)
+			else if (pPlot->getTeam() == NO_TEAM) pl["neutral"] = picojson::value(true);  // unowned -- a FEATURE prereq counts a neutral plot too unless GAMEOPTION_EXP_STRICT_VICINITY (CvCity.cpp:20556)
 			// per-plot stored EXTRA yield (game event/effect state; a calculateYield addend not derivable from JSON)
 			const int exF = pPlot->getExtraYield(YIELD_FOOD), exP = pPlot->getExtraYield(YIELD_PRODUCTION), exC = pPlot->getExtraYield(YIELD_COMMERCE);
 			if (exF || exP || exC)
