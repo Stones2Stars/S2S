@@ -61,6 +61,12 @@
    ]
   }
  },
+ "provides": {
+  "bonuses": [
+   "BONUS_ANTI_GRAVITY_FIELD_GENERATORS",
+   "BONUS_LEVITATION_GENERATORS"
+  ]
+ },
  "production": {
   "city": {
    "flat": 5

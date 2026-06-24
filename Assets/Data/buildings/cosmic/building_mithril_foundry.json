@@ -23,6 +23,11 @@
  "allowed": {
   "world": 1
  },
+ "provides": {
+  "bonuses": [
+   "BONUS_MITHRIL"
+  ]
+ },
  "production": {
   "city": {
    "flat": 3

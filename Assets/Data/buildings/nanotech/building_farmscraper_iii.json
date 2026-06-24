@@ -27,6 +27,13 @@
    ]
   }
  },
+ "provides": {
+  "bonuses": [
+   "BONUS_DRIED_FRUIT",
+   "BONUS_FRUIT",
+   "BONUS_GRAINS"
+  ]
+ },
  "food": {
   "city": {
    "flat": 75

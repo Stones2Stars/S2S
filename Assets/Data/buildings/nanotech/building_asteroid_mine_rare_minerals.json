@@ -19,6 +19,13 @@
    ]
   }
  },
+ "provides": {
+  "bonuses": [
+   "BONUS_GOLD_ORE",
+   "BONUS_PLATINUM_ORE",
+   "BONUS_SILVER_ORE"
+  ]
+ },
  "production": {
   "city": {
    "flat": 10

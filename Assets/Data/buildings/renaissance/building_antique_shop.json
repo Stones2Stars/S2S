@@ -27,6 +27,13 @@
    ]
   }
  },
+ "provides": {
+  "bonuses": [
+   "BONUS_SCROLLS",
+   "BONUS_TABLETS",
+   "BONUS_STONE_TOOLS"
+  ]
+ },
  "production": {
   "city": {
    "flat": 3

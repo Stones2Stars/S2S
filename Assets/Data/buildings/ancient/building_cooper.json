@@ -63,6 +63,11 @@
    ]
   }
  },
+ "provides": {
+  "bonuses": [
+   "BONUS_BARRELS"
+  ]
+ },
  "production": {
   "city": {
    "improvements": {

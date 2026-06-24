@@ -1,7 +1,4 @@
 {
  "type": "SPECIALBUILDING_MONASTERY_II",
- "description": "TXT_KEY_SPECIALBUILDING_MONASTERY_II",
- "identity": {
-  "valid": true
- }
+ "description": "TXT_KEY_SPECIALBUILDING_MONASTERY_II"
 }

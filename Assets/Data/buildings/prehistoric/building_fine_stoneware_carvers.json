@@ -30,6 +30,11 @@
  "allowed": {
   "world": 1
  },
+ "provides": {
+  "bonuses": [
+   "BONUS_FINE_STONEWARE"
+  ]
+ },
  "commerce": {
   "city": {
    "flat": 1

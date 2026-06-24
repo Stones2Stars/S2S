@@ -43,6 +43,13 @@
    ]
   }
  },
+ "provides": {
+  "bonuses": [
+   "BONUS_ALGAE",
+   "BONUS_DRUGS",
+   "BONUS_VEGETABLES"
+  ]
+ },
  "food": {
   "city": {
    "flat": 120

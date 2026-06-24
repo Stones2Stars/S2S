@@ -56,6 +56,11 @@
    ]
   }
  },
+ "provides": {
+  "bonuses": [
+   "BONUS_DYE"
+  ]
+ },
  "commerce": {
   "city": {
    "flat": 1

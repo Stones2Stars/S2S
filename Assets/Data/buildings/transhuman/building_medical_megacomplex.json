@@ -23,6 +23,18 @@
    ]
   }
  },
+ "provides": {
+  "bonuses": [
+   "BONUS_CELLULASE_CAPSULES",
+   "BONUS_HYPOSPRAYS",
+   "BONUS_IMMUNITY_DRUGS",
+   "BONUS_MEDICAL_TRICORDERS",
+   "BONUS_NEUROIMPLANTS",
+   "BONUS_REPLACEMENT_ORGANS",
+   "BONUS_SMART_MEDICINE",
+   "BONUS_STIM_PACKS"
+  ]
+ },
  "food": {
   "city": {
    "flat": [

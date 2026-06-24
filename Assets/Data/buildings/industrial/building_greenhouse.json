@@ -48,6 +48,11 @@
    ]
   }
  },
+ "provides": {
+  "bonuses": [
+   "BONUS_FLOWERS"
+  ]
+ },
  "food": {
   "city": {
    "flat": 3

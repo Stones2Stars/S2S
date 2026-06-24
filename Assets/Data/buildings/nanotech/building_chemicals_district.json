@@ -37,6 +37,27 @@
    ]
   }
  },
+ "provides": {
+  "bonuses": [
+   "BONUS_BIOPOLYMERS",
+   "BONUS_CHEMICALS",
+   "BONUS_DYE",
+   "BONUS_ELECTROACTIVE_POLYMERS",
+   "BONUS_ELECTROLYTIC_CELLS",
+   "BONUS_ENZYMES",
+   "BONUS_HYDROGEN",
+   "BONUS_KEROSENE",
+   "BONUS_LYE",
+   "BONUS_OMEGA_FATTY_ACID",
+   "BONUS_ORGANIC_PHOTONIC_CELLS",
+   "BONUS_PERFUME",
+   "BONUS_PHARMACEUTICALS",
+   "BONUS_POISON",
+   "BONUS_ROCKET_FUEL",
+   "BONUS_SOAP",
+   "BONUS_TANNIN"
+  ]
+ },
  "production": {
   "city": {
    "flat": [

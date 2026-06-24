@@ -29,6 +29,11 @@
  "allowed": {
   "empire": 1
  },
+ "provides": {
+  "bonuses": [
+   "BONUS_HUMAN_MOD_DESIGNER_BABIES"
+  ]
+ },
  "cost": {
   "production": 7050
  },

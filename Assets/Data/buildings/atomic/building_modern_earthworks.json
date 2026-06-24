@@ -30,6 +30,27 @@
    ]
   }
  },
+ "provides": {
+  "bonuses": [
+   "BONUS_BORAX",
+   "BONUS_BRICKS",
+   "BONUS_CEMENT",
+   "BONUS_CHALK",
+   "BONUS_CINNABAR_ORE",
+   "BONUS_CLAY",
+   "BONUS_FLINT",
+   "BONUS_FOSSILS",
+   "BONUS_HAEMATITE_ORE",
+   "BONUS_OBSIDIAN",
+   "BONUS_PEAT",
+   "BONUS_POTASH",
+   "BONUS_PUMICE_STONE",
+   "BONUS_PYRITE",
+   "BONUS_SAND",
+   "BONUS_TAR",
+   "BONUS_WATERPROOF_CEMENT"
+  ]
+ },
  "production": {
   "city": {
    "flat": 40

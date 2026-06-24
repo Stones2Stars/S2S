@@ -20,6 +20,11 @@
  "allowed": {
   "world": 1
  },
+ "provides": {
+  "bonuses": [
+   "BONUS_CYBERPUNK"
+  ]
+ },
  "culture": {
   "city": {
    "flat": 1

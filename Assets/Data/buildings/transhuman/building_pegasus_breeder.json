@@ -43,6 +43,11 @@
  "allowed": {
   "empire": 1
  },
+ "provides": {
+  "bonuses": [
+   "BONUS_PEGASUS"
+  ]
+ },
  "gold": {
   "city": {
    "flat": 10

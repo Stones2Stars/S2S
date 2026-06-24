@@ -43,7 +43,7 @@ of them.
 | group | sections | what they are |
 |---|---|---|
 | **Availability** | `enables` · `obsoletes` · `replaces` · `disables` · `requires` · `allowed` | what this unlocks/removes; what it needs to be built & to keep running; the cap on how many may exist |
-| **Provisions** | `grants` | one-shot / recurring things this hands out (units, buildings, pulses) |
+| **Provisions** | `grants` · `provides` | `grants` = one-shot / recurring things this hands out (units, buildings, pulses); `provides` = a continuous in-vicinity SUPPLY while active (e.g. a building or map bonus that makes a `BONUS_*` available in the city) |
 | **Effects** | every **modifier family** key (`food`, `production`, `happiness`, …, one per `PROPERTY_*`) | per-turn magnitudes this deposits onto targets |
 | **Intrinsic** ("what am I") | `identity` (incl. all TEXT) · `cost` · `ui` · `world` · `sound` · `ai` | empire-agnostic self-description, art, audio, AI metadata |
 | **Classification** | `skills` (UNIT, mutable abilities) · `tags` (UNIT, immutable type membership) · `state` (UNIT, transient) · `capabilities` (TEAM, tech/civic-unlocked) | §8 — the four-block classification model; scope carried by the section name |
@@ -349,6 +349,25 @@ One-shot or recurring things an entity hands out (not per-turn modifiers).
   always placed).
 - **`repeatable`** — `[ { <payload>, interval, chance?, enabled? } ]`: fires each interval (a spawned unit, a
   heal), optionally gated by a rolled `chance` (which may scale with a `per`).
+
+---
+
+## 5a. `provides` — continuous in-vicinity supply
+
+What an entity makes AVAILABLE in its city *while active* — distinct from `grants` (a one-shot/recurring handout).
+The canonical case is a building or map bonus that supplies a `BONUS_*`: a tamed-animal herd / industrial farm
+supplies its animal bonus (legacy `ExtraFreeBonuses`/`getFreeBonuses`), and a map bonus on a workable plot supplies
+itself. One uniform surface, so a `connection:"vicinity"` requirement is satisfied by *any* provider in the city —
+plot bonus **or** active building.
+
+```jsonc
+"provides": { "bonuses": ["BONUS_CAMEL"] }
+```
+
+- **`bonuses`** — `BONUS_*` ids this supplies in-vicinity. A consumer's vicinity check unions, over the city radius,
+  every provider's `provides.bonuses` (active buildings; map bonuses providing themselves). **Active only** — a
+  building that is dormant/obsolete supplies nothing (the engine's `bonusAvailableFromBuildings` gates on
+  `isActiveBuilding`).
 
 ---
 

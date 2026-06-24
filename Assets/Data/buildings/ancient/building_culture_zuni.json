@@ -31,6 +31,11 @@
  "allowed": {
   "world": 1
  },
+ "provides": {
+  "bonuses": [
+   "BONUS_ZUNI"
+  ]
+ },
  "culture": {
   "city": {
    "flat": 5

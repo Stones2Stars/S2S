@@ -34,6 +34,25 @@
    ]
   }
  },
+ "provides": {
+  "bonuses": [
+   "BONUS_BERLINITE",
+   "BONUS_CAESIUM_ORE",
+   "BONUS_CHROMITE_ORE",
+   "BONUS_COBALT_ORE",
+   "BONUS_GEMSTONE",
+   "BONUS_GRAPHITE",
+   "BONUS_LAZULITE_ORE",
+   "BONUS_LITHIUM",
+   "BONUS_MAGNESIUM_ORE",
+   "BONUS_MANGANESE",
+   "BONUS_MASCAGNITE",
+   "BONUS_NICKEL_ORE",
+   "BONUS_RARE_EARTH_MINERALS",
+   "BONUS_TUNGSTEN",
+   "BONUS_ZINC_ORE"
+  ]
+ },
  "production": {
   "city": {
    "flat": 60

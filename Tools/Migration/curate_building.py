@@ -528,8 +528,9 @@ def pass2(typ, rec, store, fams, grants, repeatable, identity, enables):
                 if adj:
                     g["adjacentHeal"] = adj
                 repeatable.append(g)
-    # --- one-shot grants / pulses ---
-    for tag, key in (("ExtraFreeBonuses", "bonuses"), ("FreeTraitTypes", "traits")):
+    # --- one-shot grants / pulses --- (ExtraFreeBonuses is NOT a one-shot grant: it's a continuous while-active
+    # bonus supply -> provides.bonuses, handled in curate(). FreeTraitTypes stays a grant.)
+    for tag, key in (("FreeTraitTypes", "traits"),):
         lst = _typelist(rec, tag)
         if lst:
             grants[key] = lst
@@ -666,6 +667,22 @@ def _typelist(rec, wrapper):
     if node is None:
         return []
     return [t for t in (engine.text(c).strip() for c in node) if t and t != "NONE"]
+
+
+def _extra_free_bonuses(rec):
+    # ExtraFreeBonuses is NESTED: <ExtraFreeBonuses><ExtraFreeBonus><FreeBonus>BONUS_X</FreeBonus>
+    # <iNumFreeBonuses>N</iNumFreeBonuses></ExtraFreeBonus>...</ExtraFreeBonuses>. The engine's getFreeBonuses()
+    # makes the building supply these bonuses to its city while ACTIVE (bonusAvailableFromBuildings -> hasVicinityBonus),
+    # so they become a vicinity-bonus SOURCE -> provides.bonuses (uniform with a map bonus that provides itself).
+    node = rec.find("ExtraFreeBonuses")
+    if node is None:
+        return []
+    out = []
+    for efb in node.findall("ExtraFreeBonus"):
+        b = _txt(efb, "FreeBonus")
+        if b:
+            out.append(b)
+    return out
 
 
 def _default_scope(typ):
@@ -1076,6 +1093,13 @@ def curate(typ, rec, store):
 
     grants = OrderedDict()
     repeatable = []
+    # provides: bonuses this building SUPPLIES while active (XML ExtraFreeBonuses) -- a vicinity-bonus source,
+    # uniform with a map bonus that provides itself. The cascade's vicinity check unions plot bonuses + active
+    # buildings' provides.bonuses.
+    provides = OrderedDict()
+    _pb = _extra_free_bonuses(rec)
+    if _pb:
+        provides["bonuses"] = _pb
     requires = requires_building(rec, store)
     allowed = allowed_building(rec)
     loadprune = loadprune_building(rec)
@@ -1145,6 +1169,8 @@ def curate(typ, rec, store):
         out["requires"] = requires
     if allowed:
         out["allowed"] = allowed
+    if provides:
+        out["provides"] = provides
     ordered = [f for f in FAMILY_ORDER if f in fams] + [f for f in fams if f not in FAMILY_ORDER]
     for f in ordered:
         out[f] = fams[f]
@@ -1230,7 +1256,7 @@ HANDLED = (set(SCALAR_FAMILIES) | set(YIELD_FAMILIES) | set(CAP_IDENTITY) | set(
 PROPERTY_INFOS_XML = os.path.join(REPO, "Assets", "XML", "GameInfo", "CIV4PropertyInfos.xml")
 # top-level reserved (non-family) keys -- everything else on a band object is a modifier family to increment.
 RESERVED_NONFAMILY = {"type", "description", "civilopedia", "help", "enables", "obsoletedBy", "replacedBy", "requires",
-                      "allowed", "grants", "cost", "ai", "loadPrune", "ui", "world", "sound", "identity"}
+                      "allowed", "provides", "grants", "cost", "ai", "loadPrune", "ui", "world", "sound", "identity"}
 
 
 def property_band_buildings():
@@ -1381,7 +1407,7 @@ def main():
 
     has = lambda k: sum(1 for o in results.values() if k in o)
     STRUCT = {"type", "description", "civilopedia", "help", "enables", "obsoletes", "replaces", "requires",
-              "allowed", "cost", "ai", "loadPrune", "ui", "world", "sound", "identity"}
+              "allowed", "provides", "cost", "ai", "loadPrune", "ui", "world", "sound", "identity"}
     seen = sorted({f for o in results.values() for f in o if f not in STRUCT})
     print("BuildingInfo curated: %d" % n)
     for k in ("enables", "obsoletes", "replaces", "requires", "allowed", "cost", "ai", "loadPrune", "identity"):

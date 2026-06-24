@@ -47,6 +47,11 @@
    ]
   }
  },
+ "provides": {
+  "bonuses": [
+   "BONUS_TANKS"
+  ]
+ },
  "commerce": {
   "city": {
    "flat": [

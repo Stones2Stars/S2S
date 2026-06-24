@@ -38,6 +38,13 @@
    ]
   }
  },
+ "provides": {
+  "bonuses": [
+   "BONUS_CAT",
+   "BONUS_DOG",
+   "BONUS_LIZARDS"
+  ]
+ },
  "food": {
   "city": {
    "flat": 5

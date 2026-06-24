@@ -28,6 +28,11 @@
    ]
   }
  },
+ "provides": {
+  "bonuses": [
+   "BONUS_MOON_ROCKS"
+  ]
+ },
  "research": {
   "city": {
    "flat": 25

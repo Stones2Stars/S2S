@@ -37,6 +37,11 @@
    ]
   }
  },
+ "provides": {
+  "bonuses": [
+   "BONUS_CAMEL"
+  ]
+ },
  "food": {
   "city": {
    "flat": 2

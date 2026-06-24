@@ -29,6 +29,12 @@
    ]
   }
  },
+ "provides": {
+  "bonuses": [
+   "BONUS_HYDROGEN",
+   "BONUS_ROCKET_FUEL"
+  ]
+ },
  "gold": {
   "city": {
    "flat": [

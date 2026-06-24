@@ -66,6 +66,11 @@
    ]
   }
  },
+ "provides": {
+  "bonuses": [
+   "BONUS_BASKETS"
+  ]
+ },
  "commerce": {
   "city": {
    "flat": [

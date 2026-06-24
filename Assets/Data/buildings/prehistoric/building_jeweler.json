@@ -79,6 +79,11 @@
    ]
   }
  },
+ "provides": {
+  "bonuses": [
+   "BONUS_JEWELRY"
+  ]
+ },
  "commerce": {
   "city": {
    "flat": [

@@ -20,6 +20,12 @@
    ]
   }
  },
+ "provides": {
+  "bonuses": [
+   "BONUS_MARTIAN_FRUIT",
+   "BONUS_MARTIAN_VEGETABLES"
+  ]
+ },
  "food": {
   "city": {
    "flat": 20

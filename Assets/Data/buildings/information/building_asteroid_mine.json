@@ -24,6 +24,13 @@
    ]
   }
  },
+ "provides": {
+  "bonuses": [
+   "BONUS_IRON_ORE",
+   "BONUS_TIN_ORE",
+   "BONUS_TITANIUM_ORE"
+  ]
+ },
  "production": {
   "city": {
    "flat": 50

@@ -48,6 +48,11 @@
    ]
   }
  },
+ "provides": {
+  "bonuses": [
+   "BONUS_DISKETTES"
+  ]
+ },
  "commerce": {
   "city": {
    "flat": 3

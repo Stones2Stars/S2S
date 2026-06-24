@@ -41,6 +41,11 @@
    ]
   }
  },
+ "provides": {
+  "bonuses": [
+   "BONUS_TIN_WARES"
+  ]
+ },
  "production": {
   "city": {
    "flat": 1

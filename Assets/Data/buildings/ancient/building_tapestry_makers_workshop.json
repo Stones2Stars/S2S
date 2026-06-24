@@ -64,6 +64,11 @@
    ]
   }
  },
+ "provides": {
+  "bonuses": [
+   "BONUS_TAPESTRIES"
+  ]
+ },
  "commerce": {
   "city": {
    "flat": [

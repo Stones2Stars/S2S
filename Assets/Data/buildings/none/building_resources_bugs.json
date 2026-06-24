@@ -78,6 +78,11 @@
    ]
   }
  },
+ "provides": {
+  "bonuses": [
+   "BONUS_BUGS"
+  ]
+ },
  "world": {
   "art": {
    "icon": "ART_DEF_BUILDING_RESOURCES_BUGS"

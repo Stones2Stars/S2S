@@ -36,6 +36,11 @@
    ]
   }
  },
+ "provides": {
+  "bonuses": [
+   "BONUS_PEAT"
+  ]
+ },
  "production": {
   "city": {
    "flat": 2

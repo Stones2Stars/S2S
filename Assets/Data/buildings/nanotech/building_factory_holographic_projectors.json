@@ -47,6 +47,11 @@
    ]
   }
  },
+ "provides": {
+  "bonuses": [
+   "BONUS_HOLOGRAPHIC_PROJECTORS"
+  ]
+ },
  "gold": {
   "city": {
    "flat": 3

@@ -34,6 +34,11 @@
  "allowed": {
   "empire": 1
  },
+ "provides": {
+  "bonuses": [
+   "BONUS_HUMAN_MOD_INDEFINITE_LIFESPAN"
+  ]
+ },
  "cost": {
   "production": 12310
  },

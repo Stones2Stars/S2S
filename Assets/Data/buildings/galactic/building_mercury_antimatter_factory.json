@@ -28,6 +28,11 @@
  "allowed": {
   "world": 1
  },
+ "provides": {
+  "bonuses": [
+   "BONUS_ANTIMATTER"
+  ]
+ },
  "production": {
   "city": {
    "flat": 5

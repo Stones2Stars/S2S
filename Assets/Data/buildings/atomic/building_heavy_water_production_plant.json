@@ -28,6 +28,11 @@
  "allowed": {
   "empire": 1
  },
+ "provides": {
+  "bonuses": [
+   "BONUS_HEAVY_WATER"
+  ]
+ },
  "commerce": {
   "city": {
    "flat": 3

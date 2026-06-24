@@ -54,6 +54,11 @@
    ]
   }
  },
+ "provides": {
+  "bonuses": [
+   "BONUS_FIREARMS"
+  ]
+ },
  "commerce": {
   "city": {
    "flat": 3

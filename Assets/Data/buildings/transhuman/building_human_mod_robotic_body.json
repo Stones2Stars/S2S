@@ -32,6 +32,11 @@
  "allowed": {
   "empire": 1
  },
+ "provides": {
+  "bonuses": [
+   "BONUS_HUMAN_MOD_ROBOTIC_BODY"
+  ]
+ },
  "gold": {
   "empire": {
    "buildings": {

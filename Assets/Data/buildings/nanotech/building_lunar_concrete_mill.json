@@ -19,6 +19,11 @@
    ]
   }
  },
+ "provides": {
+  "bonuses": [
+   "BONUS_CEMENT"
+  ]
+ },
  "production": {
   "city": {
    "flat": 2,

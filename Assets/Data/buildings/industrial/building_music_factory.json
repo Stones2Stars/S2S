@@ -19,6 +19,14 @@
    ]
   }
  },
+ "provides": {
+  "bonuses": [
+   "BONUS_BRASS_INSTRUMENTS",
+   "BONUS_PERCUSSION_INSTRUMENTS",
+   "BONUS_STRING_INSTRUMENTS",
+   "BONUS_WOODWIND_INSTRUMENTS"
+  ]
+ },
  "commerce": {
   "city": {
    "flat": 5

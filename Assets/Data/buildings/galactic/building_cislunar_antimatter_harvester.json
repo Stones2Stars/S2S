@@ -21,6 +21,11 @@
  "allowed": {
   "empire": 1
  },
+ "provides": {
+  "bonuses": [
+   "BONUS_ANTIMATTER"
+  ]
+ },
  "gold": {
   "city": {
    "flat": 1200

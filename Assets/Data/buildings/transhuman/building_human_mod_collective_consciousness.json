@@ -40,6 +40,11 @@
  "allowed": {
   "empire": 1
  },
+ "provides": {
+  "bonuses": [
+   "BONUS_HUMAN_MOD_COLLECTIVE_CONSCIOUSNESS"
+  ]
+ },
  "cost": {
   "production": 13810
  },

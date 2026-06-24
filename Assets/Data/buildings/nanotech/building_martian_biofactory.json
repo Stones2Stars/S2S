@@ -42,6 +42,11 @@
    ]
   }
  },
+ "provides": {
+  "bonuses": [
+   "BONUS_MARTIAN_ALGAE"
+  ]
+ },
  "food": {
   "city": {
    "flat": 3

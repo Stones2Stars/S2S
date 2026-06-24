@@ -27,6 +27,11 @@
  "allowed": {
   "empire": 1
  },
+ "provides": {
+  "bonuses": [
+   "BONUS_HELIUM_3"
+  ]
+ },
  "production": {
   "city": {
    "flat": 2

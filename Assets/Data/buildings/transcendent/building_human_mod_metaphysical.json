@@ -35,6 +35,11 @@
  "allowed": {
   "empire": 1
  },
+ "provides": {
+  "bonuses": [
+   "BONUS_HUMAN_MOD_METAPHYSICAL"
+  ]
+ },
  "gold": {
   "empire": {
    "buildings": {

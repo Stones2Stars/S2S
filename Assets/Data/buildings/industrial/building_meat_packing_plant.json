@@ -42,6 +42,11 @@
    ]
   }
  },
+ "provides": {
+  "bonuses": [
+   "BONUS_RAW_MEAT"
+  ]
+ },
  "food": {
   "city": {
    "flat": [

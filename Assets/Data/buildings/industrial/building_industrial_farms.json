@@ -66,6 +66,36 @@
    ]
   }
  },
+ "provides": {
+  "bonuses": [
+   "BONUS_BISON",
+   "BONUS_BONE",
+   "BONUS_CAMEL",
+   "BONUS_CARCASS",
+   "BONUS_COW",
+   "BONUS_DEER",
+   "BONUS_DONKEY",
+   "BONUS_EGGS",
+   "BONUS_ELEPHANTS",
+   "BONUS_FEATHERS",
+   "BONUS_FISH_OIL",
+   "BONUS_FUR",
+   "BONUS_HIDE",
+   "BONUS_HORSE",
+   "BONUS_IVORY",
+   "BONUS_KANGAROO",
+   "BONUS_LLAMA",
+   "BONUS_MAMMOTH",
+   "BONUS_MILK",
+   "BONUS_OSTRICH_FEATHERS",
+   "BONUS_PELTS",
+   "BONUS_PIG",
+   "BONUS_POULTRY",
+   "BONUS_SHEEP",
+   "BONUS_WHALE_OIL",
+   "BONUS_WOOL"
+  ]
+ },
  "food": {
   "city": {
    "flat": 55,

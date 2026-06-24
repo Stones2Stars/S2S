@@ -34,6 +34,20 @@
    ]
   }
  },
+ "provides": {
+  "bonuses": [
+   "BONUS_CARPETS",
+   "BONUS_CLOTH",
+   "BONUS_CLOTHING",
+   "BONUS_COTTON_FIBERS",
+   "BONUS_FLAX_FIBERS",
+   "BONUS_HATS",
+   "BONUS_HEMP_FIBERS",
+   "BONUS_SHOES",
+   "BONUS_SILK_FIBERS",
+   "BONUS_TAPESTRIES"
+  ]
+ },
  "food": {
   "city": {
    "flat": 4

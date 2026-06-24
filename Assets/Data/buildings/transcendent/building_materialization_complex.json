@@ -19,6 +19,19 @@
    ]
   }
  },
+ "provides": {
+  "bonuses": [
+   "BONUS_ANTIMATTER",
+   "BONUS_GRAVITY_GENERATORS",
+   "BONUS_SOYLENT_GREEN",
+   "BONUS_MEGASTRONG_ALLOYS",
+   "BONUS_PERSONAL_SPACECRAFT",
+   "BONUS_COMPUTRONIUM",
+   "BONUS_FEMTOBOTS",
+   "BONUS_VIBRANIUM",
+   "BONUS_CHAOS_WANDS"
+  ]
+ },
  "food": {
   "city": {
    "percent": 5

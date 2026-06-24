@@ -42,6 +42,11 @@
    ]
   }
  },
+ "provides": {
+  "bonuses": [
+   "BONUS_ANDROIDS"
+  ]
+ },
  "production": {
   "city": {
    "percent": 20

@@ -45,6 +45,11 @@
    ]
   }
  },
+ "provides": {
+  "bonuses": [
+   "BONUS_SKIS"
+  ]
+ },
  "commerce": {
   "city": {
    "flat": 3

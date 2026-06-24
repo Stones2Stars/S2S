@@ -48,6 +48,11 @@
    ]
   }
  },
+ "provides": {
+  "bonuses": [
+   "BONUS_MICROGENERATORS"
+  ]
+ },
  "commerce": {
   "city": {
    "flat": [

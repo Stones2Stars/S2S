@@ -71,6 +71,13 @@
    ]
   }
  },
+ "provides": {
+  "bonuses": [
+   "BONUS_BIOFUEL",
+   "BONUS_PETROLEUM_PRODUCTS",
+   "BONUS_ULTRAFUEL"
+  ]
+ },
  "production": {
   "city": {
    "flat": 40,

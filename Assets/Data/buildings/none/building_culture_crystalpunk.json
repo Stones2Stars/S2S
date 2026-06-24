@@ -20,6 +20,11 @@
  "allowed": {
   "world": 1
  },
+ "provides": {
+  "bonuses": [
+   "BONUS_CRYSTALPUNK"
+  ]
+ },
  "culture": {
   "city": {
    "flat": 5

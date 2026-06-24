@@ -54,6 +54,11 @@
    ]
   }
  },
+ "provides": {
+  "bonuses": [
+   "BONUS_CELLPHONES"
+  ]
+ },
  "commerce": {
   "city": {
    "flat": 3

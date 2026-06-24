@@ -25,6 +25,14 @@
    ]
   }
  },
+ "provides": {
+  "bonuses": [
+   "BONUS_DRIED_FISH",
+   "BONUS_FISHING_NETS",
+   "BONUS_RAW_FISH",
+   "BONUS_SHELLFISH"
+  ]
+ },
  "food": {
   "city": {
    "flat": [

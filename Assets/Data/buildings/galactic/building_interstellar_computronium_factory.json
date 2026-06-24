@@ -22,6 +22,11 @@
    ]
   }
  },
+ "provides": {
+  "bonuses": [
+   "BONUS_COMPUTRONIUM"
+  ]
+ },
  "production": {
   "city": {
    "flat": 25

@@ -29,6 +29,11 @@
  "allowed": {
   "world": 1
  },
+ "provides": {
+  "bonuses": [
+   "BONUS_WINE_VINTAGE_WHITE"
+  ]
+ },
  "hurryCost": {
   "city": {
    "percent": 250

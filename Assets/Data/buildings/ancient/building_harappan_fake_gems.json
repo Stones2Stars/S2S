@@ -46,6 +46,11 @@
  "allowed": {
   "world": 1
  },
+ "provides": {
+  "bonuses": [
+   "BONUS_FAKE_GEMS"
+  ]
+ },
  "commerce": {
   "city": {
    "flat": 1

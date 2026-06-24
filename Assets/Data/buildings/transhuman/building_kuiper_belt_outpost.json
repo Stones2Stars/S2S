@@ -34,6 +34,12 @@
    ]
   }
  },
+ "provides": {
+  "bonuses": [
+   "BONUS_CARBON_DIOXIDE_ICE",
+   "BONUS_ROCKET_FUEL"
+  ]
+ },
  "food": {
   "city": {
    "flat": [

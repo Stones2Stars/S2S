@@ -92,6 +92,12 @@
    ]
   }
  },
+ "provides": {
+  "bonuses": [
+   "BONUS_HONEY",
+   "BONUS_WAX"
+  ]
+ },
  "food": {
   "city": {
    "flat": 1

@@ -29,6 +29,12 @@
    ]
   }
  },
+ "provides": {
+  "bonuses": [
+   "BONUS_PARTS",
+   "BONUS_REPLICATORS"
+  ]
+ },
  "production": {
   "city": {
    "flat": [

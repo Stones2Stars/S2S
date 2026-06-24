@@ -62,6 +62,11 @@
    ]
   }
  },
+ "provides": {
+  "bonuses": [
+   "BONUS_CLOTHING"
+  ]
+ },
  "commerce": {
   "city": {
    "flat": [

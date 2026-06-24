@@ -35,6 +35,11 @@
  "allowed": {
   "empire": 1
  },
+ "provides": {
+  "bonuses": [
+   "BONUS_HUMAN_MOD_HIGH_DIMENSIONAL"
+  ]
+ },
  "gold": {
   "empire": {
    "buildings": {

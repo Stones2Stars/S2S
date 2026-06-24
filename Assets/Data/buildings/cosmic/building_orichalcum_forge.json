@@ -26,6 +26,11 @@
  "allowed": {
   "world": 1
  },
+ "provides": {
+  "bonuses": [
+   "BONUS_ORICHALCUM"
+  ]
+ },
  "production": {
   "city": {
    "flat": 10

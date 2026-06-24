@@ -32,6 +32,19 @@
    ]
   }
  },
+ "provides": {
+  "bonuses": [
+   "BONUS_BAMBOO",
+   "BONUS_BARK",
+   "BONUS_BUGS",
+   "BONUS_GRASS",
+   "BONUS_OLIVE_OIL",
+   "BONUS_REEDS",
+   "BONUS_STRAW",
+   "BONUS_VINES",
+   "BONUS_WOOD"
+  ]
+ },
  "food": {
   "city": {
    "flat": 60

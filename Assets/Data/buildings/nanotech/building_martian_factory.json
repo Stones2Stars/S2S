@@ -38,6 +38,13 @@
    ]
   }
  },
+ "provides": {
+  "bonuses": [
+   "BONUS_COPPER_WARES",
+   "BONUS_MARTIAN_MANUFACTURED_GOODS",
+   "BONUS_PLASTIC"
+  ]
+ },
  "food": {
   "city": {
    "flat": 1

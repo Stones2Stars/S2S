@@ -30,6 +30,11 @@
  "allowed": {
   "world": 1
  },
+ "provides": {
+  "bonuses": [
+   "BONUS_HIT_SINGLES"
+  ]
+ },
  "culture": {
   "city": {
    "percent": 10

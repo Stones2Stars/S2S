@@ -29,6 +29,11 @@
    ]
   }
  },
+ "provides": {
+  "bonuses": [
+   "BONUS_TIME_CRYSTALS"
+  ]
+ },
  "gold": {
   "city": {
    "flat": [

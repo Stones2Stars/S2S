@@ -47,6 +47,11 @@
    ]
   }
  },
+ "provides": {
+  "bonuses": [
+   "BONUS_BORAX"
+  ]
+ },
  "production": {
   "city": {
    "flat": 1

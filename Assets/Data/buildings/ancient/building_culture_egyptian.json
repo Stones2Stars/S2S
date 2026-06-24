@@ -43,6 +43,11 @@
  "allowed": {
   "world": 1
  },
+ "provides": {
+  "bonuses": [
+   "BONUS_EGYPTIAN"
+  ]
+ },
  "culture": {
   "city": {
    "flat": 5

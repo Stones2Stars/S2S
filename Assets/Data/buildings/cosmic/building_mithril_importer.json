@@ -27,6 +27,11 @@
  "allowed": {
   "world": 1
  },
+ "provides": {
+  "bonuses": [
+   "BONUS_MITHRIL"
+  ]
+ },
  "gold": {
   "city": {
    "flat": 20

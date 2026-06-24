@@ -1,4 +1,7 @@
 {
  "type": "SPECIALBUILDING_CLONING_LABORATORY",
- "description": "TXT_KEY_SPECIALBUILDING_CLONING_LABORATORY"
+ "description": "TXT_KEY_SPECIALBUILDING_CLONING_LABORATORY",
+ "identity": {
+  "valid": false
+ }
 }

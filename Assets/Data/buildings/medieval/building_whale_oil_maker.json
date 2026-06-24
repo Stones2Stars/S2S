@@ -62,6 +62,11 @@
    ]
   }
  },
+ "provides": {
+  "bonuses": [
+   "BONUS_WHALE_OIL"
+  ]
+ },
  "commerce": {
   "city": {
    "flat": 1

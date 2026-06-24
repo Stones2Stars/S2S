@@ -25,6 +25,13 @@
    ]
   }
  },
+ "provides": {
+  "bonuses": [
+   "BONUS_COPPER_WARES",
+   "BONUS_NANOTUBES",
+   "BONUS_PLASTIC"
+  ]
+ },
  "production": {
   "city": {
    "flat": 20

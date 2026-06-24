@@ -63,6 +63,11 @@
  "allowed": {
   "empire": 1
  },
+ "provides": {
+  "bonuses": [
+   "BONUS_HUMAN_MOD_ALIEN_HYBRID"
+  ]
+ },
  "gold": {
   "empire": {
    "buildings": {

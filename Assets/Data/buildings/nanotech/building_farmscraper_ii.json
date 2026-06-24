@@ -24,6 +24,13 @@
    ]
   }
  },
+ "provides": {
+  "bonuses": [
+   "BONUS_BERRIES",
+   "BONUS_CANNED_FOOD",
+   "BONUS_NUTS"
+  ]
+ },
  "food": {
   "city": {
    "flat": [

@@ -36,6 +36,11 @@
  "allowed": {
   "world": 1
  },
+ "provides": {
+  "bonuses": [
+   "BONUS_JADE_DEATH_MASKS"
+  ]
+ },
  "commerce": {
   "city": {
    "flat": 1

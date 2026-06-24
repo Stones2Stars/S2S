@@ -55,6 +55,11 @@
  "allowed": {
   "world": 1
  },
+ "provides": {
+  "bonuses": [
+   "BONUS_VIKING"
+  ]
+ },
  "culture": {
   "city": {
    "flat": 5

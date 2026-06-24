@@ -39,6 +39,11 @@
  "allowed": {
   "world": 1
  },
+ "provides": {
+  "bonuses": [
+   "BONUS_SIBERIAN"
+  ]
+ },
  "culture": {
   "city": {
    "flat": 5

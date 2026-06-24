@@ -60,6 +60,18 @@
    ]
   }
  },
+ "provides": {
+  "bonuses": [
+   "BONUS_AIRCRAFT",
+   "BONUS_AMMUNITION",
+   "BONUS_FIREARMS",
+   "BONUS_HELICOPTERS",
+   "BONUS_HOVERCRAFTS",
+   "BONUS_JET_ENGINES",
+   "BONUS_TANKS",
+   "BONUS_UNMANNED_AIRCRAFTS"
+  ]
+ },
  "production": {
   "city": {
    "flat": [

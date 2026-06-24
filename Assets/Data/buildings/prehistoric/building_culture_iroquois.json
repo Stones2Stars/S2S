@@ -49,6 +49,11 @@
  "allowed": {
   "world": 1
  },
+ "provides": {
+  "bonuses": [
+   "BONUS_IROQUOIS"
+  ]
+ },
  "culture": {
   "city": {
    "flat": 5

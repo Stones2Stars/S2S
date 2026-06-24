@@ -28,6 +28,11 @@
    ]
   }
  },
+ "provides": {
+  "bonuses": [
+   "BONUS_MAGNESIUM_ORE"
+  ]
+ },
  "production": {
   "city": {
    "flat": 2

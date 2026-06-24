@@ -37,6 +37,11 @@
  "allowed": {
   "world": 1
  },
+ "provides": {
+  "bonuses": [
+   "BONUS_ZULU"
+  ]
+ },
  "culture": {
   "city": {
    "flat": 5

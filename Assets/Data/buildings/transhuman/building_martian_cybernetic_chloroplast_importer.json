@@ -21,6 +21,11 @@
    ]
   }
  },
+ "provides": {
+  "bonuses": [
+   "BONUS_CYBERNETIC_CHLOROPLASTS"
+  ]
+ },
  "commerce": {
   "city": {
    "flat": 1

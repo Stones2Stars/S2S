@@ -32,6 +32,11 @@
  "allowed": {
   "world": 1
  },
+ "provides": {
+  "bonuses": [
+   "BONUS_DAHOMEY"
+  ]
+ },
  "culture": {
   "city": {
    "flat": 5

@@ -53,6 +53,11 @@
    ]
   }
  },
+ "provides": {
+  "bonuses": [
+   "BONUS_NANOACTUATORS"
+  ]
+ },
  "gold": {
   "city": {
    "flat": 3

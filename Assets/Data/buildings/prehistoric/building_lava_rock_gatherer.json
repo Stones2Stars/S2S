@@ -67,6 +67,12 @@
    ]
   }
  },
+ "provides": {
+  "bonuses": [
+   "BONUS_OBSIDIAN",
+   "BONUS_PUMICE_STONE"
+  ]
+ },
  "production": {
   "city": {
    "flat": 1

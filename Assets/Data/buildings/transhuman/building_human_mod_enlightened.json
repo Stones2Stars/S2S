@@ -38,6 +38,11 @@
  "allowed": {
   "empire": 1
  },
+ "provides": {
+  "bonuses": [
+   "BONUS_HUMAN_MOD_ENLIGHTENED"
+  ]
+ },
  "cost": {
   "production": 10510
  },

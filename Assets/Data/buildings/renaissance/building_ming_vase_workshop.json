@@ -45,6 +45,11 @@
  "allowed": {
   "world": 1
  },
+ "provides": {
+  "bonuses": [
+   "BONUS_MING_VASE"
+  ]
+ },
  "commerce": {
   "city": {
    "flat": 1

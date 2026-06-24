@@ -50,6 +50,29 @@
    ]
   }
  },
+ "provides": {
+  "bonuses": [
+   "BONUS_ALCOHOL",
+   "BONUS_BREAD",
+   "BONUS_CANDY",
+   "BONUS_CHEESE",
+   "BONUS_DRIED_MEAT",
+   "BONUS_CHOCOLATE",
+   "BONUS_ENERGY_DRINK",
+   "BONUS_FLOUR",
+   "BONUS_HONEY",
+   "BONUS_ICE_CREAM",
+   "BONUS_MARZIPAN",
+   "BONUS_NUTELLA",
+   "BONUS_PASTA",
+   "BONUS_POTATO_CHIPS",
+   "BONUS_ROASTED_COFFEE",
+   "BONUS_SAUSAGE",
+   "BONUS_SEASONING",
+   "BONUS_SODA_POP",
+   "BONUS_WAX"
+  ]
+ },
  "food": {
   "city": {
    "flat": [

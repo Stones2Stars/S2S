@@ -19,6 +19,17 @@
    ]
   }
  },
+ "provides": {
+  "bonuses": [
+   "BONUS_ALGAE",
+   "BONUS_CLAM",
+   "BONUS_CRAB",
+   "BONUS_FISH",
+   "BONUS_LOBSTER",
+   "BONUS_SHRIMP",
+   "BONUS_WHALE"
+  ]
+ },
  "food": {
   "city": {
    "flat": 10

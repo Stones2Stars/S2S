@@ -48,6 +48,11 @@
    ]
   }
  },
+ "provides": {
+  "bonuses": [
+   "BONUS_KEVLAR"
+  ]
+ },
  "commerce": {
   "city": {
    "flat": 3

@@ -52,6 +52,11 @@
    ]
   }
  },
+ "provides": {
+  "bonuses": [
+   "BONUS_VIDEO_GAMES"
+  ]
+ },
  "commerce": {
   "city": {
    "flat": 25

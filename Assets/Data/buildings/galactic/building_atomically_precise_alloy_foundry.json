@@ -32,6 +32,11 @@
    ]
   }
  },
+ "provides": {
+  "bonuses": [
+   "BONUS_ATOMICALLY_PRECISE_ALLOYS"
+  ]
+ },
  "production": {
   "city": {
    "flat": 6

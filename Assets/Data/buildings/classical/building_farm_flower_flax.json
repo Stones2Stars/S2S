@@ -42,6 +42,11 @@
    ]
   }
  },
+ "provides": {
+  "bonuses": [
+   "BONUS_FLAX_FIBERS"
+  ]
+ },
  "food": {
   "city": {
    "flat": 2

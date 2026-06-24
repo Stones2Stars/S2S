@@ -46,6 +46,12 @@
    ]
   }
  },
+ "provides": {
+  "bonuses": [
+   "BONUS_IRON_WARES",
+   "BONUS_STEEL_WARES"
+  ]
+ },
  "production": {
   "city": {
    "flat": [

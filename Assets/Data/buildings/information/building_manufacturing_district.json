@@ -37,6 +37,37 @@
    ]
   }
  },
+ "provides": {
+  "bonuses": [
+   "BONUS_BARRELS",
+   "BONUS_BASKETS",
+   "BONUS_BEADS",
+   "BONUS_BICYCLES",
+   "BONUS_BOOKS",
+   "BONUS_CANDLES",
+   "BONUS_FIRECRACKERS",
+   "BONUS_FURNITURE",
+   "BONUS_GLASSWARE",
+   "BONUS_JEWELRY",
+   "BONUS_LACQUERWARE",
+   "BONUS_MASKS",
+   "BONUS_NEWSPAPERS",
+   "BONUS_PENCILS",
+   "BONUS_PHONOGRAPHS",
+   "BONUS_PORCELAIN",
+   "BONUS_POTTERY",
+   "BONUS_ROPE",
+   "BONUS_SADDLES",
+   "BONUS_SAILS",
+   "BONUS_SCULPTURES",
+   "BONUS_SKIS",
+   "BONUS_TERRACOTTA",
+   "BONUS_TIRES",
+   "BONUS_TOYS",
+   "BONUS_TYPEWRITERS",
+   "BONUS_WATER_BOTTLES"
+  ]
+ },
  "production": {
   "city": {
    "flat": 25

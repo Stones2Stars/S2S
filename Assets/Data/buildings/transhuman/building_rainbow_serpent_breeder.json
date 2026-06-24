@@ -43,6 +43,11 @@
  "allowed": {
   "empire": 1
  },
+ "provides": {
+  "bonuses": [
+   "BONUS_RAINBOW_SERPENT"
+  ]
+ },
  "culture": {
   "city": {
    "flat": 10

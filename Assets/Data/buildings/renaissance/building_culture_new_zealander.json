@@ -33,6 +33,11 @@
  "allowed": {
   "world": 1
  },
+ "provides": {
+  "bonuses": [
+   "BONUS_NEW_ZEALANDER"
+  ]
+ },
  "culture": {
   "city": {
    "flat": 5

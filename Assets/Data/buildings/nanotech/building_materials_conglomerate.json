@@ -24,6 +24,23 @@
    ]
   }
  },
+ "provides": {
+  "bonuses": [
+   "BONUS_CARBON_FIBER",
+   "BONUS_CERMET",
+   "BONUS_ECSTASY",
+   "BONUS_FERTILIZERS",
+   "BONUS_FIBERGLASS",
+   "BONUS_KEVLAR",
+   "BONUS_LSD",
+   "BONUS_METHAMPHETAMINE",
+   "BONUS_NYLON",
+   "BONUS_PLASTIC",
+   "BONUS_SALT",
+   "BONUS_SYNTHETIC_RUBBER",
+   "BONUS_VULCANIZED_RUBBER"
+  ]
+ },
  "production": {
   "city": {
    "flat": 15

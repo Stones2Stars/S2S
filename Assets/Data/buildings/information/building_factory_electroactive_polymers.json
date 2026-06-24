@@ -49,6 +49,11 @@
    ]
   }
  },
+ "provides": {
+  "bonuses": [
+   "BONUS_ELECTROACTIVE_POLYMERS"
+  ]
+ },
  "commerce": {
   "city": {
    "flat": 3
