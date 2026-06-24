@@ -88,6 +88,9 @@
    ]
   }
  },
+ "allowed": {
+  "world": 1
+ },
  "research": {
   "city": {
    "percent": -5

@@ -49,6 +49,9 @@
    ]
   }
  },
+ "allowed": {
+  "world": 1
+ },
  "provides": {
   "bonuses": [
    "BONUS_CANADIAN"
