@@ -11,21 +11,21 @@
      "connection": "trade|vicinity"
     },
     "BUILDING_GUARD_DOG_TRAINER",
-    "TECH_LEADERSHIP"
-   ],
-   "any": [
-    [
-     {
-      "type": "BONUS_COPPER_WARES",
-      "scope": "city",
-      "connection": "trade|vicinity"
-     },
-     {
-      "type": "BONUS_IRON_WARES",
-      "scope": "city",
-      "connection": "trade|vicinity"
-     }
-    ]
+    "TECH_LEADERSHIP",
+    {
+     "any": [
+      {
+       "type": "BONUS_COPPER_WARES",
+       "scope": "city",
+       "connection": "trade|vicinity"
+      },
+      {
+       "type": "BONUS_IRON_WARES",
+       "scope": "city",
+       "connection": "trade|vicinity"
+      }
+     ]
+    }
    ]
   }
  },

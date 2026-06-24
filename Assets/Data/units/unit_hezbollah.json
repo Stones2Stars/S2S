@@ -15,20 +15,18 @@
      "type": "BONUS_AMMUNITION",
      "scope": "city",
      "connection": "trade|vicinity"
+    },
+    {
+     "type": "BONUS_FIREARMS",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    {
+     "any": [
+      "BUILDING_METH_LAB",
+      "BUILDING_MATERIALS_CONGLOMERATE"
+     ]
     }
-   ],
-   "any": [
-    [
-     {
-      "type": "BONUS_FIREARMS",
-      "scope": "city",
-      "connection": "trade|vicinity"
-     }
-    ],
-    [
-     "BUILDING_METH_LAB",
-     "BUILDING_MATERIALS_CONGLOMERATE"
-    ]
    ]
   }
  },

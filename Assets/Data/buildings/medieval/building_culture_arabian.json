@@ -7,21 +7,15 @@
    "all": [
     "BUILDING_C_AC_MIDDLE_EASTERN",
     "BUILDING_C_L_MIDDLE_EASTERN",
-    "TECH_ARMORED_CAVALRY"
-   ],
-   "any": [
-    [
-     {
-      "type": "TERRAIN_DESERT",
-      "scope": "plot"
-     }
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_ARMORED_CAVALRY",
+    {
+     "type": "TERRAIN_DESERT",
+     "scope": "plot"
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

@@ -10,15 +10,11 @@
      "type": "BUILDING_FOLKLORE_GIANT_RHINOCEROS",
      "scope": "empire",
      "min": 3
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
     }
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
    ]
   }
  },

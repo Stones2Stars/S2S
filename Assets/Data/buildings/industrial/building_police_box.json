@@ -16,18 +16,12 @@
     "HAS_POWER",
     "BUILDING_TELEPHONE_NETWORK",
     "TECH_TELEPHONE",
-    "TECH_CRIMINOLOGY"
-   ],
-   "any": [
-    [
-     "BUILDING_POLICE_STATION"
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_CRIMINOLOGY",
+    "BUILDING_POLICE_STATION",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

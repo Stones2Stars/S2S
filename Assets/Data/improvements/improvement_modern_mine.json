@@ -8,41 +8,41 @@
     {
      "type": "TECH_MODERN_SEISMOLOGY",
      "scope": "team"
+    },
+    {
+     "any": [
+      {
+       "terrain": [
+        "TERRAIN_ROCKY",
+        "TERRAIN_BADLAND",
+        "TERRAIN_JAGGED"
+       ]
+      },
+      "HAS_HILLS",
+      {
+       "bonus": [
+        "BONUS_BAUXITE_ORE",
+        "BONUS_COAL",
+        "BONUS_COPPER_ORE",
+        "BONUS_GOLD_ORE",
+        "BONUS_IRON_ORE",
+        "BONUS_SILVER_ORE",
+        "BONUS_URANIUM",
+        "BONUS_SULPHUR",
+        "BONUS_LEAD_ORE",
+        "BONUS_AMBER",
+        "BONUS_RUBIES",
+        "BONUS_SAPPHIRES",
+        "BONUS_DIAMOND",
+        "BONUS_PLATINUM_ORE",
+        "BONUS_TIN_ORE",
+        "BONUS_TITANIUM_ORE",
+        "BONUS_GEODE",
+        "BONUS_MANGANESE"
+       ]
+      }
+     ]
     }
-   ],
-   "any": [
-    [
-     {
-      "terrain": [
-       "TERRAIN_ROCKY",
-       "TERRAIN_BADLAND",
-       "TERRAIN_JAGGED"
-      ]
-     },
-     "HAS_HILLS",
-     {
-      "bonus": [
-       "BONUS_BAUXITE_ORE",
-       "BONUS_COAL",
-       "BONUS_COPPER_ORE",
-       "BONUS_GOLD_ORE",
-       "BONUS_IRON_ORE",
-       "BONUS_SILVER_ORE",
-       "BONUS_URANIUM",
-       "BONUS_SULPHUR",
-       "BONUS_LEAD_ORE",
-       "BONUS_AMBER",
-       "BONUS_RUBIES",
-       "BONUS_SAPPHIRES",
-       "BONUS_DIAMOND",
-       "BONUS_PLATINUM_ORE",
-       "BONUS_TIN_ORE",
-       "BONUS_TITANIUM_ORE",
-       "BONUS_GEODE",
-       "BONUS_MANGANESE"
-      ]
-     }
-    ]
    ]
   }
  },

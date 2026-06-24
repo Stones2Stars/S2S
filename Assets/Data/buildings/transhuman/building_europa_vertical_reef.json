@@ -7,21 +7,15 @@
    "all": [
     "BUILDING_EUROPA_ECOSYSTEM",
     "TECH_SPECULATIVE_PHYSIOLOGY",
-    "TECH_GAIA_ECOLOGY"
-   ],
-   "any": [
-    [
-     {
-      "type": "TERRAIN_EUROPA",
-      "scope": "plot"
-     }
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_SOLAR_SYSTEM",
-      "scope": "plot"
-     }
-    ]
+    "TECH_GAIA_ECOLOGY",
+    {
+     "type": "TERRAIN_EUROPA",
+     "scope": "plot"
+    },
+    {
+     "type": "MAPCATEGORY_SOLAR_SYSTEM",
+     "scope": "plot"
+    }
    ]
   }
  },

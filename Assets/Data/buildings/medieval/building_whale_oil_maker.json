@@ -14,19 +14,17 @@
   "build": {
    "all": [
     "BUILDING_WHALERS_DOCK",
-    "TECH_COMMERCIAL_WHALING"
-   ],
-   "any": [
-    [
-     "BUILDING_TRADING_POST",
-     "BUILDING_SHOPPING_DISTRICT"
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_COMMERCIAL_WHALING",
+    {
+     "any": [
+      "BUILDING_TRADING_POST",
+      "BUILDING_SHOPPING_DISTRICT"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {
@@ -35,26 +33,26 @@
      "type": "BONUS_WHALE",
      "scope": "city",
      "connection": "trade|vicinity"
+    },
+    {
+     "any": [
+      {
+       "type": "BONUS_GLASSWARE",
+       "scope": "city",
+       "connection": "trade|vicinity"
+      },
+      {
+       "type": "BONUS_POTTERY",
+       "scope": "city",
+       "connection": "trade|vicinity"
+      },
+      {
+       "type": "BONUS_BARRELS",
+       "scope": "city",
+       "connection": "trade|vicinity"
+      }
+     ]
     }
-   ],
-   "any": [
-    [
-     {
-      "type": "BONUS_GLASSWARE",
-      "scope": "city",
-      "connection": "trade|vicinity"
-     },
-     {
-      "type": "BONUS_POTTERY",
-      "scope": "city",
-      "connection": "trade|vicinity"
-     },
-     {
-      "type": "BONUS_BARRELS",
-      "scope": "city",
-      "connection": "trade|vicinity"
-     }
-    ]
    ],
    "dormant": [
     "BUILDING_INDUSTRIAL_FARMS",

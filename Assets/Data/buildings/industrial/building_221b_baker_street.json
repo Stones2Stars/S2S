@@ -10,20 +10,18 @@
  "requires": {
   "build": {
    "all": [
-    "TECH_CRIMINOLOGY"
-   ],
-   "any": [
-    [
-     "BUILDING_POLICE_STATION",
-     "BUILDING_POLICE_PRECINCT",
-     "BUILDING_SCOTLAND_YARD"
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_CRIMINOLOGY",
+    {
+     "any": [
+      "BUILDING_POLICE_STATION",
+      "BUILDING_POLICE_PRECINCT",
+      "BUILDING_SCOTLAND_YARD"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   }
  },

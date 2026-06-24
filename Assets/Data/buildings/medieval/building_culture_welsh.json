@@ -7,15 +7,11 @@
    "all": [
     "BUILDING_C_AC_EUROPEAN",
     "BUILDING_C_L_EUROPEAN",
-    "TECH_YEOMANRY"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_YEOMANRY",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

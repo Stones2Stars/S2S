@@ -13,19 +13,17 @@
  "requires": {
   "build": {
    "all": [
-    "TECH_CHAOS_THEORY"
-   ],
-   "any": [
-    [
-     "BUILDING_HIGHWAY",
-     "BUILDING_SKYROAD_CONTROL_TOWER"
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_CHAOS_THEORY",
+    {
+     "any": [
+      "BUILDING_HIGHWAY",
+      "BUILDING_SKYROAD_CONTROL_TOWER"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

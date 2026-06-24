@@ -20,15 +20,11 @@
  "requires": {
   "build": {
    "all": [
-    "TECH_AVIATION"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_AVIATION",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

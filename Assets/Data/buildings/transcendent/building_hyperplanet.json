@@ -14,15 +14,11 @@
     "HAS_POWER",
     "BUILDING_HYPERFACTORY",
     "BUILDING_HYPERSPACE_PAN_DIMENSIONAL_CITY",
-    "TECH_EUCLIDEAN_5D_SPACE_GEOMETRY"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_HYPERSPACE",
-      "scope": "plot"
-     }
-    ]
+    "TECH_EUCLIDEAN_5D_SPACE_GEOMETRY",
+    {
+     "type": "MAPCATEGORY_HYPERSPACE",
+     "scope": "plot"
+    }
    ]
   }
  },

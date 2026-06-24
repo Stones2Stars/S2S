@@ -7,15 +7,11 @@
    "all": [
     "HAS_COAST",
     "BUILDING_OCEAN_CITY",
-    "TECH_SPECIES_UPLIFTING"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_SPECIES_UPLIFTING",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

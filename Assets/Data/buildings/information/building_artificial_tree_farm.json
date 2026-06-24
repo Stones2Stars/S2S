@@ -12,36 +12,34 @@
   "build": {
    "all": [
     "HAS_POWER",
-    "TECH_ECOLOGICAL_ENGINEERING"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_ECOLOGICAL_ENGINEERING",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {
-   "any": [
-    [
-     {
-      "type": "BONUS_STEEL_WARES",
-      "scope": "city",
-      "connection": "trade|vicinity"
-     },
-     {
-      "type": "BONUS_TITANIUM_WARES",
-      "scope": "city",
-      "connection": "trade|vicinity"
-     },
-     {
-      "type": "BONUS_NANOTUBES",
-      "scope": "city",
-      "connection": "trade|vicinity"
-     }
-    ]
+   "all": [
+    {
+     "any": [
+      {
+       "type": "BONUS_STEEL_WARES",
+       "scope": "city",
+       "connection": "trade|vicinity"
+      },
+      {
+       "type": "BONUS_TITANIUM_WARES",
+       "scope": "city",
+       "connection": "trade|vicinity"
+      },
+      {
+       "type": "BONUS_NANOTUBES",
+       "scope": "city",
+       "connection": "trade|vicinity"
+      }
+     ]
+    }
    ]
   }
  },

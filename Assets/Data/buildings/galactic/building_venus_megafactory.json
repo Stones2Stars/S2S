@@ -11,15 +11,11 @@
   "build": {
    "all": [
     "BUILDING_VENUS_FUSION_PLANT",
-    "TECH_FORGE_WORLDS"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_VENUSIAN",
-      "scope": "plot"
-     }
-    ]
+    "TECH_FORGE_WORLDS",
+    {
+     "type": "MAPCATEGORY_VENUSIAN",
+     "scope": "plot"
+    }
    ]
   }
  },

@@ -7,15 +7,11 @@
    "all": [
     "HAS_POWER",
     "BUILDING_HYPERFACTORY",
-    "TECH_3D_PROJECTIONS"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_HYPERSPACE",
-      "scope": "plot"
-     }
-    ]
+    "TECH_3D_PROJECTIONS",
+    {
+     "type": "MAPCATEGORY_HYPERSPACE",
+     "scope": "plot"
+    }
    ]
   }
  },

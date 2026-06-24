@@ -17,15 +17,11 @@
     "BUILDING_FACTORY",
     "BUILDING_POWER_LINES",
     "TECH_ELECTRICITY",
-    "TECH_ORGANIC_CHEMISTRY"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_ORGANIC_CHEMISTRY",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

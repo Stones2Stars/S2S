@@ -10,15 +10,11 @@
  "requires": {
   "build": {
    "all": [
-    "TECH_AESTHETICS"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_AESTHETICS",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   }
  },

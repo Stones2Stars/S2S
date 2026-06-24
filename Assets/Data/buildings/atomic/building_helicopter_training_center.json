@@ -14,31 +14,29 @@
   "build": {
    "all": [
     "BUILDING_MILITARY_BASE",
-    "TECH_VERTICAL_FLIGHT"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_VERTICAL_FLIGHT",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {
-   "any": [
-    [
-     {
-      "type": "BONUS_PETROLEUM_PRODUCTS",
-      "scope": "city",
-      "connection": "trade|vicinity"
-     },
-     {
-      "type": "BONUS_BIOFUEL",
-      "scope": "city",
-      "connection": "trade|vicinity"
-     }
-    ]
+   "all": [
+    {
+     "any": [
+      {
+       "type": "BONUS_PETROLEUM_PRODUCTS",
+       "scope": "city",
+       "connection": "trade|vicinity"
+      },
+      {
+       "type": "BONUS_BIOFUEL",
+       "scope": "city",
+       "connection": "trade|vicinity"
+      }
+     ]
+    }
    ],
    "dormant": [
     "BUILDING_HOLOGRAPHIC_SCHOOL"

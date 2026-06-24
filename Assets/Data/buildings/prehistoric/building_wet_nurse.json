@@ -6,28 +6,28 @@
   "build": {
    "all": [
     "TECH_COOPERATION",
-    "TECH_SHELTER_BUILDING"
-   ],
-   "any": [
-    [
-     "BUILDING_CHILDBIRTH_HUT",
-     "BUILDING_ANCIENT_CUSTOMS"
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_SHELTER_BUILDING",
+    {
+     "any": [
+      "BUILDING_CHILDBIRTH_HUT",
+      "BUILDING_ANCIENT_CUSTOMS"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {
-   "any": [
-    [
-     "CIVIC_COMMUNALISM",
-     "CIVIC_BARTER",
-     "CIVIC_SUBSISTENCE"
-    ]
+   "all": [
+    {
+     "any": [
+      "CIVIC_COMMUNALISM",
+      "CIVIC_BARTER",
+      "CIVIC_SUBSISTENCE"
+     ]
+    }
    ]
   }
  },

@@ -5,37 +5,37 @@
  "requires": {
   "build": {
    "all": [
-    "TECH_MASONRY"
-   ],
-   "any": [
-    [
-     "BUILDING_HOUSING_PUEBLOS",
-     "BUILDING_HOUSING_CLIFF_DWELLING",
-     "BUILDING_HOUSING_SLUMS",
-     "BUILDING_HOUSING_SHANTY_TOWN",
-     "BUILDING_HOUSING_GHETTOS",
-     "BUILDING_HOUSING_HIGHRISES",
-     "BUILDING_HOUSING_INNER_CITY",
-     "BUILDING_HOUSING_HIGH_TECH_HIGHRISES",
-     "BUILDING_HOUSING_COLONY_ARCOLOGY",
-     "BUILDING_LAUNCH_ARCOLOGY"
-    ],
-    [
-     {
-      "type": "TERRAIN_DESERT",
-      "scope": "plot"
-     },
-     {
-      "type": "TERRAIN_SCRUB",
-      "scope": "plot"
-     }
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_MASONRY",
+    {
+     "any": [
+      "BUILDING_HOUSING_PUEBLOS",
+      "BUILDING_HOUSING_CLIFF_DWELLING",
+      "BUILDING_HOUSING_SLUMS",
+      "BUILDING_HOUSING_SHANTY_TOWN",
+      "BUILDING_HOUSING_GHETTOS",
+      "BUILDING_HOUSING_HIGHRISES",
+      "BUILDING_HOUSING_INNER_CITY",
+      "BUILDING_HOUSING_HIGH_TECH_HIGHRISES",
+      "BUILDING_HOUSING_COLONY_ARCOLOGY",
+      "BUILDING_LAUNCH_ARCOLOGY"
+     ]
+    },
+    {
+     "any": [
+      {
+       "type": "TERRAIN_DESERT",
+       "scope": "plot"
+      },
+      {
+       "type": "TERRAIN_SCRUB",
+       "scope": "plot"
+      }
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {
@@ -45,16 +45,12 @@
      "scope": "city",
      "connection": "trade|vicinity"
     },
-    "CIVIC_FOLKLORE"
-   ],
-   "any": [
-    [
-     {
-      "type": "BONUS_BRICKS",
-      "scope": "city",
-      "connection": "trade|vicinity"
-     }
-    ]
+    "CIVIC_FOLKLORE",
+    {
+     "type": "BONUS_BRICKS",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    }
    ]
   }
  },

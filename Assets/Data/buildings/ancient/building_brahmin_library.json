@@ -6,19 +6,17 @@
   "build": {
    "all": [
     "TECH_WRITING",
-    "TECH_CASTE_SYSTEM"
-   ],
-   "any": [
-    [
-     "BUILDING_SCHOOL_OF_SCRIBES",
-     "BUILDING_LIBRARY"
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_CASTE_SYSTEM",
+    {
+     "any": [
+      "BUILDING_SCHOOL_OF_SCRIBES",
+      "BUILDING_LIBRARY"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

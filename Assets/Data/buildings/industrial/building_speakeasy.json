@@ -11,19 +11,17 @@
   "build": {
    "all": [
     "BUILDING_ORDINANCE_ALCOHOL_PROHIBITION",
-    "TECH_WOMENS_SUFFRAGE"
-   ],
-   "any": [
-    [
-     "BUILDING_TRADING_POST",
-     "BUILDING_SHOPPING_DISTRICT"
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_WOMENS_SUFFRAGE",
+    {
+     "any": [
+      "BUILDING_TRADING_POST",
+      "BUILDING_SHOPPING_DISTRICT"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

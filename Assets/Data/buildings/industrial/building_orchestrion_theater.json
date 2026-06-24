@@ -20,15 +20,11 @@
     },
     "BUILDING_OPERA_HOUSE",
     "TECH_REALISM",
-    "TECH_CLOCKPUNK"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_CLOCKPUNK",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

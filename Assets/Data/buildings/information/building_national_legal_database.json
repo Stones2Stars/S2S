@@ -13,15 +13,11 @@
     },
     "BUILDING_COMPUTER_NETWORK",
     "BUILDING_POLICE_PRECINCT",
-    "TECH_CLOUD_COMPUTING"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_CLOUD_COMPUTING",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

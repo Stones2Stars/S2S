@@ -6,15 +6,11 @@
   "build": {
    "all": [
     "BUILDING_CISLUNAR_FACTORY",
-    "TECH_SUPERSONIC_RAILS"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_CISLUNAR",
-      "scope": "plot"
-     }
-    ]
+    "TECH_SUPERSONIC_RAILS",
+    {
+     "type": "MAPCATEGORY_CISLUNAR",
+     "scope": "plot"
+    }
    ]
   }
  },

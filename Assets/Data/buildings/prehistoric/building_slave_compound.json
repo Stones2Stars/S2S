@@ -18,21 +18,15 @@
   "build": {
    "all": [
     "BUILDING_WORLDVIEW_SLAVERY_ACTIVE",
-    "TECH_SLAVERY"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ],
-    [
-     {
-      "type": "CIVILIZATION_NPC_NEANDERTHAL",
-      "scope": "empire"
-     }
-    ]
+    "TECH_SLAVERY",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    },
+    {
+     "type": "CIVILIZATION_NPC_NEANDERTHAL",
+     "scope": "empire"
+    }
    ]
   },
   "operate": {

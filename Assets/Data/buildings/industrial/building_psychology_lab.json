@@ -19,19 +19,17 @@
   "build": {
    "all": [
     "BUILDING_UNIVERSITY",
-    "TECH_PSYCHOLOGY"
-   ],
-   "any": [
-    [
-     "BUILDING_INSANE_ASYLUM",
-     "BUILDING_NEUROSCIENCE_CENTER"
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_PSYCHOLOGY",
+    {
+     "any": [
+      "BUILDING_INSANE_ASYLUM",
+      "BUILDING_NEUROSCIENCE_CENTER"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

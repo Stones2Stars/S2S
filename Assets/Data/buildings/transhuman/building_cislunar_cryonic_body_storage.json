@@ -7,15 +7,11 @@
    "all": [
     "BUILDING_CISLUNAR_COOLING_SYSTEM",
     "BUILDING_CISLUNAR_SPACEPORT",
-    "TECH_CRYONICS"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_CISLUNAR",
-      "scope": "plot"
-     }
-    ]
+    "TECH_CRYONICS",
+    {
+     "type": "MAPCATEGORY_CISLUNAR",
+     "scope": "plot"
+    }
    ]
   }
  },

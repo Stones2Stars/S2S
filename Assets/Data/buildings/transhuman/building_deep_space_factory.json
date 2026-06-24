@@ -19,15 +19,11 @@
     "HAS_POWER",
     "BUILDING_DEEP_SPACE_ONEILL_CYLINDER",
     "BUILDING_DEEP_SPACE_ASSEMBLER",
-    "TECH_ANIMAMATERIALS"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_SOLAR_SYSTEM",
-      "scope": "plot"
-     }
-    ]
+    "TECH_ANIMAMATERIALS",
+    {
+     "type": "MAPCATEGORY_SOLAR_SYSTEM",
+     "scope": "plot"
+    }
    ]
   }
  },

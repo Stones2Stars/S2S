@@ -5,19 +5,17 @@
  "requires": {
   "build": {
    "all": [
-    "TECH_ALCHEMY"
-   ],
-   "any": [
-    [
-     "BUILDING_WINERY",
-     "BUILDING_FOOD_MANUFACTURING_DISTRICT"
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_ALCHEMY",
+    {
+     "any": [
+      "BUILDING_WINERY",
+      "BUILDING_FOOD_MANUFACTURING_DISTRICT"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

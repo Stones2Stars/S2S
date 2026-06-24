@@ -7,19 +7,17 @@
    "all": [
     "HAS_POWER",
     "BUILDING_MEGATOWER_OFFICE_LEVEL",
-    "TECH_SUPERSONIC_RAILS"
-   ],
-   "any": [
-    [
-     "BUILDING_VACTRAIN_TERMINAL",
-     "BUILDING_GRAVITY_TRAIN"
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_SUPERSONIC_RAILS",
+    {
+     "any": [
+      "BUILDING_VACTRAIN_TERMINAL",
+      "BUILDING_GRAVITY_TRAIN"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   }
  },

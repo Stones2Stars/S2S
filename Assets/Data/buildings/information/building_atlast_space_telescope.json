@@ -6,15 +6,11 @@
   "build": {
    "all": [
     "BUILDING_ASTRONOMICAL_DATABASE",
-    "TECH_JOVIAN_EXPLORATION"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_JOVIAN_EXPLORATION",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

@@ -7,15 +7,11 @@
    "all": [
     "HAS_POWER",
     "BUILDING_VIRTUAL_WORLD",
-    "TECH_EXOCORTEX_NETWORKS"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_EXOCORTEX_NETWORKS",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   }
  },

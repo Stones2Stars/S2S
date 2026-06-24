@@ -12,19 +12,17 @@
    "all": [
     "TECH_HORSE_BREEDING",
     "TECH_ASTROLOGY",
-    "TECH_CLASSICAL_LIFESTYLE"
-   ],
-   "any": [
-    [
-     "BUILDING_ASTROLOGY_SCHOOL",
-     "BUILDING_OBSERVATORY"
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_CLASSICAL_LIFESTYLE",
+    {
+     "any": [
+      "BUILDING_ASTROLOGY_SCHOOL",
+      "BUILDING_OBSERVATORY"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   }
  },

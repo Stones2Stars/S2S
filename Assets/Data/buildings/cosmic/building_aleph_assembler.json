@@ -20,15 +20,11 @@
     "HAS_POWER",
     "BUILDING_OMEGA_ASSEMBLER",
     "BUILDING_QUANTUM_GRAVITY_SUPERCOMPUTER",
-    "TECH_ZEPTOTECHNOLOGY"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_ZEPTOTECHNOLOGY",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

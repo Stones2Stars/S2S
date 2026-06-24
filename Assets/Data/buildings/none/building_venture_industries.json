@@ -12,15 +12,11 @@
     },
     "BUILDING_LABORATORY",
     "BUILDING_INDUSTRIAL_PARK",
-    "TECH_ATOMPUNK"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_ATOMPUNK",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

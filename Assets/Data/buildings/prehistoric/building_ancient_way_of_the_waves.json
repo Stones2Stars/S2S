@@ -12,15 +12,11 @@
    "all": [
     "HAS_COAST",
     "TECH_BOAT_BUILDING",
-    "TECH_SEDENTARY_LIFESTYLE"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_SEDENTARY_LIFESTYLE",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   }
  },

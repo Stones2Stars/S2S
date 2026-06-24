@@ -19,18 +19,12 @@
   "build": {
    "all": [
     "BUILDING_COMMUNITY_GARDEN",
-    "TECH_GARDENING"
-   ],
-   "any": [
-    [
-     "BUILDING_CRICKET_GATHERER"
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_GARDENING",
+    "BUILDING_CRICKET_GATHERER",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

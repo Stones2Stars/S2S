@@ -5,15 +5,11 @@
  "requires": {
   "build": {
    "all": [
-    "TECH_PANPSYCHISM"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_PANPSYCHISM",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   }
  },

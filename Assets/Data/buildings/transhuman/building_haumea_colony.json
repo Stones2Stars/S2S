@@ -6,21 +6,15 @@
   "build": {
    "all": [
     "BUILDING_DEEP_SPACE_ECOSYSTEM",
-    "TECH_SOLAR_ORDNANCE"
-   ],
-   "any": [
-    [
-     {
-      "type": "TERRAIN_KUIPER_BELT_OBJECT",
-      "scope": "plot"
-     }
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_SOLAR_SYSTEM",
-      "scope": "plot"
-     }
-    ]
+    "TECH_SOLAR_ORDNANCE",
+    {
+     "type": "TERRAIN_KUIPER_BELT_OBJECT",
+     "scope": "plot"
+    },
+    {
+     "type": "MAPCATEGORY_SOLAR_SYSTEM",
+     "scope": "plot"
+    }
    ],
    "noneOf": [
     "BUILDING_MAKEMAKE_COLONY",

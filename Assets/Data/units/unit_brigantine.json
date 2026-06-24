@@ -17,16 +17,12 @@
      "min": 10
     },
     "TECH_METALLURGY",
-    "TECH_ASTROLABE"
-   ],
-   "any": [
-    [
-     {
-      "type": "BONUS_SULPHUR",
-      "scope": "city",
-      "connection": "trade|vicinity"
-     }
-    ]
+    "TECH_ASTROLABE",
+    {
+     "type": "BONUS_SULPHUR",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    }
    ]
   }
  },

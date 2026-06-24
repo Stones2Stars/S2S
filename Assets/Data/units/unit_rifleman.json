@@ -10,16 +10,12 @@
      "scope": "city",
      "connection": "trade|vicinity"
     },
-    "TECH_RIFLING"
-   ],
-   "any": [
-    [
-     {
-      "type": "BONUS_FIREARMS",
-      "scope": "city",
-      "connection": "trade|vicinity"
-     }
-    ]
+    "TECH_RIFLING",
+    {
+     "type": "BONUS_FIREARMS",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    }
    ]
   }
  },

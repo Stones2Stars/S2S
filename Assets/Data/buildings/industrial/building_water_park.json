@@ -15,15 +15,11 @@
    "all": [
     "HAS_FRESHWATER",
     "BUILDING_WATER_PIPES",
-    "TECH_PSYCHOLOGY"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_PSYCHOLOGY",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

@@ -6,14 +6,14 @@
  "requires": {
   "build": {
    "all": [
-    "TECH_DUALFLUX_QUANTUM_TEMPORAL_RIFT"
-   ],
-   "any": [
-    [
-     "BUILDING_INTERGALACTIC_TEMPORAL_RIFT",
-     "BUILDING_DISTANT_HYPERPORT",
-     "BUILDING_HYPERSPACE_EXPORTER"
-    ]
+    "TECH_DUALFLUX_QUANTUM_TEMPORAL_RIFT",
+    {
+     "any": [
+      "BUILDING_INTERGALACTIC_TEMPORAL_RIFT",
+      "BUILDING_DISTANT_HYPERPORT",
+      "BUILDING_HYPERSPACE_EXPORTER"
+     ]
+    }
    ]
   }
  },

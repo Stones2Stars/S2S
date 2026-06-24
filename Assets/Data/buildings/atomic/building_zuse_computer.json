@@ -17,15 +17,11 @@
      "min": 7
     },
     "TECH_EARLY_COMPUTING",
-    "TECH_DIESELPUNK"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_DIESELPUNK",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

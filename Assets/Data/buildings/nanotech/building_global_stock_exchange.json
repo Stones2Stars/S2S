@@ -11,15 +11,11 @@
      "min": 7
     },
     "BUILDING_STOCK_MARKET",
-    "TECH_MEGACORPORATIONS"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_MEGACORPORATIONS",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   }
  },

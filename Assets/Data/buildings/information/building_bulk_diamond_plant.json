@@ -15,15 +15,11 @@
    "all": [
     "HAS_POWER",
     "BUILDING_EPSILON_ASSEMBLER",
-    "TECH_GRAPHENE_ALLOYS"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_GRAPHENE_ALLOYS",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

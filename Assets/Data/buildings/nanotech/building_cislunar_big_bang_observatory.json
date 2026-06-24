@@ -8,15 +8,11 @@
     "BUILDING_CISLUNAR_FACTORY",
     "BUILDING_CISLUNAR_SATELLITE_FACTORY",
     "BUILDING_CISLUNAR_TELESCOPE",
-    "TECH_AMPLIFIED_WAVELENGTHS"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_CISLUNAR",
-      "scope": "plot"
-     }
-    ]
+    "TECH_AMPLIFIED_WAVELENGTHS",
+    {
+     "type": "MAPCATEGORY_CISLUNAR",
+     "scope": "plot"
+    }
    ]
   }
  },

@@ -13,15 +13,11 @@
    "all": [
     "HAS_POWER",
     "BUILDING_HYBRID_AIRSHIP_PORT",
-    "TECH_ANTI_GRAVITY_FIELDS"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_ANTI_GRAVITY_FIELDS",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   }
  },

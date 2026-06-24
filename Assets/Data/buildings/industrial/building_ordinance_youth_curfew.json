@@ -12,15 +12,11 @@
     },
     "BUILDING_POLICE_ACADEMY",
     "BUILDING_COURTHOUSE",
-    "TECH_COMPULSORY_EDUCATION"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_COMPULSORY_EDUCATION",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   }
  },

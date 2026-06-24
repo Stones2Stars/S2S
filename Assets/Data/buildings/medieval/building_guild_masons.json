@@ -16,20 +16,18 @@
      "min": 3
     },
     "TECH_ARCHITECTURE",
-    "TECH_GUILDS"
-   ],
-   "any": [
-    [
-     "BUILDING_BRICK_MASON",
-     "BUILDING_FACTORY_BRICKS",
-     "BUILDING_MODERN_EARTHWORKS"
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_GUILDS",
+    {
+     "any": [
+      "BUILDING_BRICK_MASON",
+      "BUILDING_FACTORY_BRICKS",
+      "BUILDING_MODERN_EARTHWORKS"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   }
  },

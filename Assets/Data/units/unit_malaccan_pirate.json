@@ -16,16 +16,16 @@
      "scope": "world",
      "min": 10
     },
-    "TECH_COAST_GUARD"
-   ],
-   "any": [
-    [
-     "CIVIC_MERCANTILISM",
-     "CIVIC_NATIONALIST",
-     "CIVIC_FEUDAL",
-     "CIVIC_MONARCHY",
-     "CIVIC_DESPOTISM"
-    ]
+    "TECH_COAST_GUARD",
+    {
+     "any": [
+      "CIVIC_MERCANTILISM",
+      "CIVIC_NATIONALIST",
+      "CIVIC_FEUDAL",
+      "CIVIC_MONARCHY",
+      "CIVIC_DESPOTISM"
+     ]
+    }
    ]
   }
  },

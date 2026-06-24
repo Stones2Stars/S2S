@@ -12,16 +12,12 @@
     },
     "BUILDING_BIVOUAC_GROUNDS",
     "TECH_LASER",
-    "TECH_GUERRILLA_WARFARE"
-   ],
-   "any": [
-    [
-     {
-      "type": "BONUS_AMMUNITION",
-      "scope": "city",
-      "connection": "trade|vicinity"
-     }
-    ]
+    "TECH_GUERRILLA_WARFARE",
+    {
+     "type": "BONUS_AMMUNITION",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    }
    ]
   }
  },

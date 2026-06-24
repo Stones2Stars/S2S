@@ -15,15 +15,11 @@
    "all": [
     "HAS_POWER",
     "BUILDING_HYBRID_AIRSHIP_PORT",
-    "TECH_ANTIMATTER_PRODUCTION"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_ANTIMATTER_PRODUCTION",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

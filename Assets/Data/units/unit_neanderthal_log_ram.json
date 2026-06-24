@@ -7,19 +7,17 @@
    "all": [
     "BUILDING_C_AC_NEANDERTHAL",
     "BUILDING_C_L_NEANDERTHAL",
-    "TECH_WARFARE"
-   ],
-   "any": [
-    [
-     "BUILDING_LUMBER_CAMP",
-     "BUILDING_AGROFOREST"
-    ],
-    [
-     {
-      "type": "CIVILIZATION_NPC_NEANDERTHAL",
-      "scope": "empire"
-     }
-    ]
+    "TECH_WARFARE",
+    {
+     "any": [
+      "BUILDING_LUMBER_CAMP",
+      "BUILDING_AGROFOREST"
+     ]
+    },
+    {
+     "type": "CIVILIZATION_NPC_NEANDERTHAL",
+     "scope": "empire"
+    }
    ]
   }
  },

@@ -5,15 +5,11 @@
  "requires": {
   "build": {
    "all": [
-    "TECH_COMMERCIAL_SPACEFLIGHT"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_COMMERCIAL_SPACEFLIGHT",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   }
  },

@@ -10,16 +10,12 @@
      "scope": "city",
      "connection": "trade|vicinity"
     },
-    "TECH_SPECIES_UPLIFTING"
-   ],
-   "any": [
-    [
-     {
-      "type": "BONUS_MECHS",
-      "scope": "city",
-      "connection": "trade|vicinity"
-     }
-    ]
+    "TECH_SPECIES_UPLIFTING",
+    {
+     "type": "BONUS_MECHS",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    }
    ]
   }
  },

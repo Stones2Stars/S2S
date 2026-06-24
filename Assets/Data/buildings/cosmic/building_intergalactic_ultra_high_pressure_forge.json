@@ -6,15 +6,11 @@
   "build": {
    "all": [
     "BUILDING_INTERGALACTIC_ZERO_POINT_PLANT",
-    "TECH_ELECTROWEAK_MATTER"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_UNIVERSAL",
-      "scope": "plot"
-     }
-    ]
+    "TECH_ELECTROWEAK_MATTER",
+    {
+     "type": "MAPCATEGORY_UNIVERSAL",
+     "scope": "plot"
+    }
    ]
   }
  },

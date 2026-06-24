@@ -14,19 +14,17 @@
   "build": {
    "all": [
     "TECH_SANITATION",
-    "TECH_ATHLETICS"
-   ],
-   "any": [
-    [
-     "BUILDING_AQUEDUCT",
-     "BUILDING_MODERN_WATERWORKS"
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_ATHLETICS",
+    {
+     "any": [
+      "BUILDING_AQUEDUCT",
+      "BUILDING_MODERN_WATERWORKS"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

@@ -6,15 +6,11 @@
   "build": {
    "all": [
     "BUILDING_INTERSTELLAR_BASE_CHTHONIAN_PLANET",
-    "TECH_POSTHUMANISM"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_PLASMA",
-      "scope": "plot"
-     }
-    ]
+    "TECH_POSTHUMANISM",
+    {
+     "type": "MAPCATEGORY_PLASMA",
+     "scope": "plot"
+    }
    ]
   }
  },

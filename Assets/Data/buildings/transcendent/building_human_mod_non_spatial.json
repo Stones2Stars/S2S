@@ -5,15 +5,11 @@
  "requires": {
   "build": {
    "all": [
-    "TECH_SPATIAL_TRANSCENDENCE"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_SPATIAL_TRANSCENDENCE",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

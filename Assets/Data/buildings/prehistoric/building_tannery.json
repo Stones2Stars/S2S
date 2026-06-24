@@ -18,25 +18,21 @@
  "requires": {
   "build": {
    "all": [
-    "TECH_TANNING"
-   ],
-   "any": [
-    [
-     "BUILDING_DRYING_FRAME",
-     "BUILDING_ANCIENT_CUSTOMS"
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ],
-    [
-     {
-      "type": "CIVILIZATION_NPC_NEANDERTHAL",
-      "scope": "empire"
-     }
-    ]
+    "TECH_TANNING",
+    {
+     "any": [
+      "BUILDING_DRYING_FRAME",
+      "BUILDING_ANCIENT_CUSTOMS"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    },
+    {
+     "type": "CIVILIZATION_NPC_NEANDERTHAL",
+     "scope": "empire"
+    }
    ]
   },
   "operate": {
@@ -45,16 +41,12 @@
      "type": "BONUS_HIDE",
      "scope": "city",
      "connection": "trade|vicinity"
+    },
+    {
+     "type": "BONUS_TANNIN",
+     "scope": "city",
+     "connection": "trade|vicinity"
     }
-   ],
-   "any": [
-    [
-     {
-      "type": "BONUS_TANNIN",
-      "scope": "city",
-      "connection": "trade|vicinity"
-     }
-    ]
    ],
    "dormant": [
     "BUILDING_FACTORY_LEATHER",

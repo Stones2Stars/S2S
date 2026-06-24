@@ -6,20 +6,18 @@
   "build": {
    "all": [
     "BUILDING_ZOROASTRIAN_FIRE_TEMPLE",
-    "TECH_MATHEMATICS"
-   ],
-   "any": [
-    [
-     "BUILDING_TOWN_HALL",
-     "BUILDING_CITY_COUNCIL",
-     "BUILDING_METROPOLITAN_ADMINISTRATION"
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_MATHEMATICS",
+    {
+     "any": [
+      "BUILDING_TOWN_HALL",
+      "BUILDING_CITY_COUNCIL",
+      "BUILDING_METROPOLITAN_ADMINISTRATION"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

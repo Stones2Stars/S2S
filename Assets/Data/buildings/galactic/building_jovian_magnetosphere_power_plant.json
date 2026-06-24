@@ -7,21 +7,15 @@
    "all": [
     "HAS_POWER",
     "BUILDING_DEEP_SPACE_BISHOP_RING",
-    "TECH_PLANET_ENGINEERING"
-   ],
-   "any": [
-    [
-     {
-      "type": "TERRAIN_JUPITER",
-      "scope": "plot"
-     }
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_SOLAR_SYSTEM",
-      "scope": "plot"
-     }
-    ]
+    "TECH_PLANET_ENGINEERING",
+    {
+     "type": "TERRAIN_JUPITER",
+     "scope": "plot"
+    },
+    {
+     "type": "MAPCATEGORY_SOLAR_SYSTEM",
+     "scope": "plot"
+    }
    ]
   }
  },

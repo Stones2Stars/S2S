@@ -14,15 +14,11 @@
   "build": {
    "all": [
     "BUILDING_HOSPITAL",
-    "TECH_ARTIFICIAL_EVOLUTION"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_ARTIFICIAL_EVOLUTION",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

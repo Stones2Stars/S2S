@@ -6,20 +6,18 @@
   "build": {
    "all": [
     "BUILDING_FOLKLORE_REQUIREMENT",
-    "TECH_TAXONOMY"
-   ],
-   "any": [
-    [
-     "BUILDING_FOLKLORE_GELADA_MONKEY",
-     "BUILDING_FOLKLORE_GORILLA",
-     "BUILDING_FOLKLORE_MANDRILL"
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_TAXONOMY",
+    {
+     "any": [
+      "BUILDING_FOLKLORE_GELADA_MONKEY",
+      "BUILDING_FOLKLORE_GORILLA",
+      "BUILDING_FOLKLORE_MANDRILL"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   }
  },

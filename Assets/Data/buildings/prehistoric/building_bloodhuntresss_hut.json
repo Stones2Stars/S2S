@@ -6,28 +6,28 @@
   "build": {
    "all": [
     "BUILDING_BLOOD_DANCE",
-    "TECH_TATTOOS"
-   ],
-   "any": [
-    [
-     "BUILDING_TATTOOER",
-     "BUILDING_TATTOO_PARLOR",
-     "BUILDING_HIGH_TECH_CULTURAL_ENRICHMENT"
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_TATTOOS",
+    {
+     "any": [
+      "BUILDING_TATTOOER",
+      "BUILDING_TATTOO_PARLOR",
+      "BUILDING_HIGH_TECH_CULTURAL_ENRICHMENT"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {
-   "any": [
-    [
-     "CIVIC_ANARCHISM",
-     "CIVIC_CHIEFDOM"
-    ]
+   "all": [
+    {
+     "any": [
+      "CIVIC_ANARCHISM",
+      "CIVIC_CHIEFDOM"
+     ]
+    }
    ]
   }
  },

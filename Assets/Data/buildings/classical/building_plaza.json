@@ -14,15 +14,11 @@
   "build": {
    "all": [
     "BUILDING_MOSAIC_WORKSHOP",
-    "TECH_MOSAIC_WORKING"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_MOSAIC_WORKING",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

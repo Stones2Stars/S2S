@@ -5,26 +5,20 @@
  "requires": {
   "build": {
    "all": [
-    "TECH_MASS_MEDIA"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_MASS_MEDIA",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {
-   "any": [
-    [
-     {
-      "type": "BONUS_HYDROGEN",
-      "scope": "city",
-      "connection": "trade|vicinity"
-     }
-    ]
+   "all": [
+    {
+     "type": "BONUS_HYDROGEN",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    }
    ]
   }
  },

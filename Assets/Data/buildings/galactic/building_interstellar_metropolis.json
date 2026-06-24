@@ -14,15 +14,11 @@
   "build": {
    "all": [
     "BUILDING_INTERSTELLAR_PLANETARY_LANDING",
-    "TECH_ADAPTIVE_ARCHITECTURE"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_PLASMA",
-      "scope": "plot"
-     }
-    ]
+    "TECH_ADAPTIVE_ARCHITECTURE",
+    {
+     "type": "MAPCATEGORY_PLASMA",
+     "scope": "plot"
+    }
    ]
   }
  },

@@ -5,21 +5,15 @@
  "requires": {
   "build": {
    "all": [
-    "TECH_FUSION_SPACECRAFT"
-   ],
-   "any": [
-    [
-     {
-      "type": "TERRAIN_UMBRIEL",
-      "scope": "plot"
-     }
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_SOLAR_SYSTEM",
-      "scope": "plot"
-     }
-    ]
+    "TECH_FUSION_SPACECRAFT",
+    {
+     "type": "TERRAIN_UMBRIEL",
+     "scope": "plot"
+    },
+    {
+     "type": "MAPCATEGORY_SOLAR_SYSTEM",
+     "scope": "plot"
+    }
    ]
   }
  },

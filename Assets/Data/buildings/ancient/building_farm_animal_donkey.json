@@ -20,32 +20,24 @@
  "requires": {
   "build": {
    "all": [
-    "TECH_EQUINE_DOMESTICATION"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ],
-    [
-     {
-      "type": "CIVILIZATION_NPC_NEANDERTHAL",
-      "scope": "empire"
-     }
-    ]
+    "TECH_EQUINE_DOMESTICATION",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    },
+    {
+     "type": "CIVILIZATION_NPC_NEANDERTHAL",
+     "scope": "empire"
+    }
    ]
   },
   "operate": {
-   "any": [
-    [
-     {
-      "type": "BONUS_DONKEY",
-      "scope": "city",
-      "connection": "vicinity"
-     }
-    ]
+   "all": [
+    {
+     "type": "BONUS_DONKEY",
+     "scope": "city",
+     "connection": "vicinity"
+    }
    ],
    "dormant": [
     "BUILDING_INDUSTRIAL_FARMS",

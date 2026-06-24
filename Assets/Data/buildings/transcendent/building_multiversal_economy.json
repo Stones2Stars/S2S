@@ -42,15 +42,11 @@
      "scope": "empire",
      "min": 1
     },
-    "TECH_REALITY_REPROGRAMMING"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_REALITY_REPROGRAMMING",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   }
  },

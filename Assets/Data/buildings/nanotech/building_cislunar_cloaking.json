@@ -7,15 +7,11 @@
    "all": [
     "BUILDING_CISLUNAR_AEROGEL_SHIELDING",
     "BUILDING_CISLUNAR_MATERIALS_LAB",
-    "TECH_CLOAKING"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_CISLUNAR",
-      "scope": "plot"
-     }
-    ]
+    "TECH_CLOAKING",
+    {
+     "type": "MAPCATEGORY_CISLUNAR",
+     "scope": "plot"
+    }
    ]
   }
  },

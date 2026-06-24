@@ -12,15 +12,11 @@
    "all": [
     "HAS_POWER",
     "BUILDING_SUBTERRANEAN_CITY",
-    "TECH_DEITIES"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_DEITIES",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   }
  },

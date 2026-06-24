@@ -8,33 +8,31 @@
     "HAS_COAST",
     "BUILDING_C_AC_ASIAN",
     "BUILDING_C_L_ASIAN",
-    "TECH_SMITHING"
-   ],
-   "any": [
-    [
-     {
-      "type": "FEATURE_FOREST_YOUNG",
-      "scope": "plot"
-     },
-     {
-      "type": "FEATURE_FOREST",
-      "scope": "plot"
-     },
-     {
-      "type": "FEATURE_FOREST_ANCIENT",
-      "scope": "plot"
-     },
-     {
-      "type": "FEATURE_FOREST_BURNT",
-      "scope": "plot"
-     }
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_SMITHING",
+    {
+     "any": [
+      {
+       "type": "FEATURE_FOREST_YOUNG",
+       "scope": "plot"
+      },
+      {
+       "type": "FEATURE_FOREST",
+       "scope": "plot"
+      },
+      {
+       "type": "FEATURE_FOREST_ANCIENT",
+       "scope": "plot"
+      },
+      {
+       "type": "FEATURE_FOREST_BURNT",
+       "scope": "plot"
+      }
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

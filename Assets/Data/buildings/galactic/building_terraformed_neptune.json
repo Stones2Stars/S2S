@@ -7,21 +7,15 @@
    "all": [
     "BUILDING_DEEP_SPACE_BISHOP_RING",
     "BUILDING_NEPTUNE_CHANDELIER_CITY",
-    "TECH_JOVIAN_TERRAFORMING"
-   ],
-   "any": [
-    [
-     {
-      "type": "TERRAIN_NEPTUNE",
-      "scope": "plot"
-     }
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_SOLAR_SYSTEM",
-      "scope": "plot"
-     }
-    ]
+    "TECH_JOVIAN_TERRAFORMING",
+    {
+     "type": "TERRAIN_NEPTUNE",
+     "scope": "plot"
+    },
+    {
+     "type": "MAPCATEGORY_SOLAR_SYSTEM",
+     "scope": "plot"
+    }
    ]
   }
  },

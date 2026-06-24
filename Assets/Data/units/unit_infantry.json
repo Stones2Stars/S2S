@@ -10,16 +10,12 @@
      "scope": "city",
      "connection": "trade|vicinity"
     },
-    "TECH_AUTOMATIC_WEAPONS"
-   ],
-   "any": [
-    [
-     {
-      "type": "BONUS_FIREARMS",
-      "scope": "city",
-      "connection": "trade|vicinity"
-     }
-    ]
+    "TECH_AUTOMATIC_WEAPONS",
+    {
+     "type": "BONUS_FIREARMS",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    }
    ]
   }
  },

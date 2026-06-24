@@ -6,15 +6,11 @@
   "build": {
    "all": [
     "HAS_POWER",
-    "TECH_ORGANIC_PHOTONICS"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_ORGANIC_PHOTONICS",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

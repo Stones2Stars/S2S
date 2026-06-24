@@ -6,15 +6,11 @@
   "build": {
    "all": [
     "BUILDING_INTERGALACTIC_CULTURE",
-    "TECH_IMMORTALITY"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_UNIVERSAL",
-      "scope": "plot"
-     }
-    ]
+    "TECH_IMMORTALITY",
+    {
+     "type": "MAPCATEGORY_UNIVERSAL",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

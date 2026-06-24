@@ -14,15 +14,11 @@
    "all": [
     "BUILDING_FOLKLORE_REQUIREMENT",
     "BUILDING_FOLKLORE_E_SEA",
-    "TECH_ORAL_TRADITION"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_ORAL_TRADITION",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   }
  },

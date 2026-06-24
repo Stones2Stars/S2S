@@ -5,15 +5,11 @@
  "requires": {
   "build": {
    "all": [
-    "TECH_HUMAN_TRANSMUTATION"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_HUMAN_TRANSMUTATION",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

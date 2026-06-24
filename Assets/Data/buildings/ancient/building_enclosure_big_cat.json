@@ -11,23 +11,19 @@
  "requires": {
   "build": {
    "all": [
-    "TECH_TRADE"
-   ],
-   "any": [
-    [
-     "BUILDING_GOVERNORS_MENAGERIE",
-     "BUILDING_CARNIVAL",
-     "BUILDING_ZOO"
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ],
-    [
-     "HERITAGE_TAXON_PANTHERINAE"
-    ]
+    "TECH_TRADE",
+    {
+     "any": [
+      "BUILDING_GOVERNORS_MENAGERIE",
+      "BUILDING_CARNIVAL",
+      "BUILDING_ZOO"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    },
+    "HERITAGE_TAXON_PANTHERINAE"
    ]
   }
  },

@@ -8,21 +8,15 @@
     "HAS_POWER",
     "BUILDING_DEEP_SPACE_FACTORY",
     "BUILDING_DEEP_SPACE_TELESCOPE",
-    "TECH_PHOTONIC_SATELLITES"
-   ],
-   "any": [
-    [
-     {
-      "type": "FEATURE_ASTEROIDS",
-      "scope": "plot"
-     }
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_SOLAR_SYSTEM",
-      "scope": "plot"
-     }
-    ]
+    "TECH_PHOTONIC_SATELLITES",
+    {
+     "type": "FEATURE_ASTEROIDS",
+     "scope": "plot"
+    },
+    {
+     "type": "MAPCATEGORY_SOLAR_SYSTEM",
+     "scope": "plot"
+    }
    ]
   }
  },

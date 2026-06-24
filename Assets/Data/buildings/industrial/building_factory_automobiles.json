@@ -22,15 +22,11 @@
  "requires": {
   "build": {
    "all": [
-    "TECH_MOTORIZED_TRANSPORTATION"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_MOTORIZED_TRANSPORTATION",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {
@@ -39,16 +35,12 @@
      "type": "BONUS_TIRES",
      "scope": "city",
      "connection": "trade|vicinity"
+    },
+    {
+     "type": "BONUS_PARTS",
+     "scope": "city",
+     "connection": "trade|vicinity"
     }
-   ],
-   "any": [
-    [
-     {
-      "type": "BONUS_PARTS",
-      "scope": "city",
-      "connection": "trade|vicinity"
-     }
-    ]
    ],
    "dormant": [
     "BUILDING_SELF_ASSEMBLY_FACTORY"

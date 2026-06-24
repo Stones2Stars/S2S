@@ -21,15 +21,11 @@
     "HAS_POWER",
     "BUILDING_PSYCHOLOGY_LAB",
     "BUILDING_NEUROSCIENCE_CENTER",
-    "TECH_MEDIA_PSYCHOLOGY"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_MEDIA_PSYCHOLOGY",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

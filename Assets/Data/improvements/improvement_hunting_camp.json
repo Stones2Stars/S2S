@@ -8,26 +8,22 @@
     {
      "type": "TECH_SEDENTARY_LIFESTYLE",
      "scope": "team"
+    },
+    {
+     "bonus": [
+      "BONUS_DEER",
+      "BONUS_BEAVERS",
+      "BONUS_GUINEA_PIGS",
+      "BONUS_ELEPHANTS",
+      "BONUS_KANGAROO",
+      "BONUS_BISON",
+      "BONUS_SEA_LION_AND_SEAL",
+      "BONUS_WALRUS",
+      "BONUS_MAMMOTH",
+      "BONUS_RABBIT",
+      "BONUS_PARROTS"
+     ]
     }
-   ],
-   "any": [
-    [
-     {
-      "bonus": [
-       "BONUS_DEER",
-       "BONUS_BEAVERS",
-       "BONUS_GUINEA_PIGS",
-       "BONUS_ELEPHANTS",
-       "BONUS_KANGAROO",
-       "BONUS_BISON",
-       "BONUS_SEA_LION_AND_SEAL",
-       "BONUS_WALRUS",
-       "BONUS_MAMMOTH",
-       "BONUS_RABBIT",
-       "BONUS_PARROTS"
-      ]
-     }
-    ]
    ]
   }
  },

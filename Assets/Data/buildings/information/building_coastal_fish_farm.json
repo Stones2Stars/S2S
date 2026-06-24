@@ -12,26 +12,26 @@
      }
     },
     "TECH_AQUACULTURE",
-    "BUILDING_FOLKLORE_T_FISH"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ],
-    [
-     "BUILDING_FOLKLORE_COD",
-     "BUILDING_FOLKLORE_MACKEREL",
-     "BUILDING_FOLKLORE_TUNA",
-     "BUILDING_FOLKLORE_MARLIN"
-    ],
-    [
-     "BUILDING_TOWN_HALL",
-     "BUILDING_CITY_COUNCIL",
-     "BUILDING_METROPOLITAN_ADMINISTRATION"
-    ]
+    "BUILDING_FOLKLORE_T_FISH",
+    {
+     "any": [
+      "BUILDING_FOLKLORE_COD",
+      "BUILDING_FOLKLORE_MACKEREL",
+      "BUILDING_FOLKLORE_TUNA",
+      "BUILDING_FOLKLORE_MARLIN"
+     ]
+    },
+    {
+     "any": [
+      "BUILDING_TOWN_HALL",
+      "BUILDING_CITY_COUNCIL",
+      "BUILDING_METROPOLITAN_ADMINISTRATION"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   }
  },

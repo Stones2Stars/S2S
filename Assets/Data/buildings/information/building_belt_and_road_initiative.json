@@ -5,20 +5,18 @@
  "requires": {
   "build": {
    "all": [
-    "TECH_MEGACITIES"
-   ],
-   "any": [
-    [
-     "BUILDING_INTERNATIONAL_PORT",
-     "BUILDING_OCEAN_ADMINISTRATION",
-     "BUILDING_HYBRID_AIRSHIP_PORT"
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_MEGACITIES",
+    {
+     "any": [
+      "BUILDING_INTERNATIONAL_PORT",
+      "BUILDING_OCEAN_ADMINISTRATION",
+      "BUILDING_HYBRID_AIRSHIP_PORT"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   }
  },

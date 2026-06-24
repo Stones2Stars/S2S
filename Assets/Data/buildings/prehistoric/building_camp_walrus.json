@@ -24,19 +24,17 @@
       "min": 40
      }
     },
-    "TECH_HARPOON_MAKING"
-   ],
-   "any": [
-    [
-     "BUILDING_HUNTERS_CAMP",
-     "BUILDING_ANCIENT_CUSTOMS"
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_HARPOON_MAKING",
+    {
+     "any": [
+      "BUILDING_HUNTERS_CAMP",
+      "BUILDING_ANCIENT_CUSTOMS"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

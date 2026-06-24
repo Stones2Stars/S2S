@@ -5,19 +5,17 @@
  "requires": {
   "build": {
    "all": [
-    "TECH_SUPERSONIC_FLIGHT"
-   ],
-   "any": [
-    [
-     "BUILDING_FACTORY_AIRCRAFT",
-     "BUILDING_MILITARY_INDUSTRIAL_COMPLEX"
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_SUPERSONIC_FLIGHT",
+    {
+     "any": [
+      "BUILDING_FACTORY_AIRCRAFT",
+      "BUILDING_MILITARY_INDUSTRIAL_COMPLEX"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   }
  },

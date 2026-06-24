@@ -13,15 +13,11 @@
  "requires": {
   "build": {
    "all": [
-    "TECH_BICYCLES"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_BICYCLES",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {
@@ -30,36 +26,36 @@
      "type": "BONUS_RUBBER",
      "scope": "city",
      "connection": "trade|vicinity"
+    },
+    {
+     "any": [
+      {
+       "type": "BONUS_COPPER_WARES",
+       "scope": "city",
+       "connection": "trade|vicinity"
+      },
+      {
+       "type": "BONUS_IRON_WARES",
+       "scope": "city",
+       "connection": "trade|vicinity"
+      },
+      {
+       "type": "BONUS_STEEL_WARES",
+       "scope": "city",
+       "connection": "trade|vicinity"
+      },
+      {
+       "type": "BONUS_ALUMINUM_WARES",
+       "scope": "city",
+       "connection": "trade|vicinity"
+      },
+      {
+       "type": "BONUS_TITANIUM_WARES",
+       "scope": "city",
+       "connection": "trade|vicinity"
+      }
+     ]
     }
-   ],
-   "any": [
-    [
-     {
-      "type": "BONUS_COPPER_WARES",
-      "scope": "city",
-      "connection": "trade|vicinity"
-     },
-     {
-      "type": "BONUS_IRON_WARES",
-      "scope": "city",
-      "connection": "trade|vicinity"
-     },
-     {
-      "type": "BONUS_STEEL_WARES",
-      "scope": "city",
-      "connection": "trade|vicinity"
-     },
-     {
-      "type": "BONUS_ALUMINUM_WARES",
-      "scope": "city",
-      "connection": "trade|vicinity"
-     },
-     {
-      "type": "BONUS_TITANIUM_WARES",
-      "scope": "city",
-      "connection": "trade|vicinity"
-     }
-    ]
    ],
    "dormant": [
     "BUILDING_MANUFACTURING_DISTRICT"

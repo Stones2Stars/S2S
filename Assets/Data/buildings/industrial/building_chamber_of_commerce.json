@@ -5,32 +5,30 @@
  "requires": {
   "build": {
    "all": [
-    "TECH_ASSEMBLY_LINE"
-   ],
-   "any": [
-    [
-     "BUILDING_MODERN_OFFICES",
-     "BUILDING_OFFICIUM"
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_ASSEMBLY_LINE",
+    {
+     "any": [
+      "BUILDING_MODERN_OFFICES",
+      "BUILDING_OFFICIUM"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {
    "all": [
-    "CIVIC_PRIVATIZED"
-   ],
-   "any": [
-    [
-     "CIVIC_CORPORATISM",
-     "CIVIC_FREE_MARKET",
-     "CIVIC_GREEN",
-     "CIVIC_REGULATED"
-    ]
+    "CIVIC_PRIVATIZED",
+    {
+     "any": [
+      "CIVIC_CORPORATISM",
+      "CIVIC_FREE_MARKET",
+      "CIVIC_GREEN",
+      "CIVIC_REGULATED"
+     ]
+    }
    ]
   }
  },

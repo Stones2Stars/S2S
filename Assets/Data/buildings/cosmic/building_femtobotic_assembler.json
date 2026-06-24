@@ -7,15 +7,11 @@
    "all": [
     "HAS_POWER",
     "BUILDING_OMEGA_ASSEMBLER",
-    "TECH_PARTICLE_GENETICS"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_PARTICLE_GENETICS",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

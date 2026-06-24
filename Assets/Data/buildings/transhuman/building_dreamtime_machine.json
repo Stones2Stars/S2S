@@ -8,15 +8,11 @@
     "HAS_POWER",
     "BUILDING_SOMATOSENSORY_MANIPULATOR_LAB",
     "BUILDING_DREAM_VISUALIZER",
-    "TECH_NEURON_ENGINEERING"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_NEURON_ENGINEERING",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

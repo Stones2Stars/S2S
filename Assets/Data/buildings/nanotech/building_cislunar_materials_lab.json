@@ -13,15 +13,11 @@
  "requires": {
   "build": {
    "all": [
-    "TECH_LIQUID_METALS"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_CISLUNAR",
-      "scope": "plot"
-     }
-    ]
+    "TECH_LIQUID_METALS",
+    {
+     "type": "MAPCATEGORY_CISLUNAR",
+     "scope": "plot"
+    }
    ]
   }
  },

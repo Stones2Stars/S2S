@@ -6,15 +6,11 @@
   "build": {
    "all": [
     "BUILDING_INDUSTRIAL_PARK",
-    "TECH_INDUSTRIAL_ECOLOGY"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_INDUSTRIAL_ECOLOGY",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   }
  },

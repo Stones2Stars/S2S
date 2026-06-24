@@ -7,21 +7,15 @@
    "all": [
     "HAS_POWER",
     "BUILDING_DEEP_SPACE_SUN_SCOOP",
-    "TECH_STAR_LIFTING"
-   ],
-   "any": [
-    [
-     {
-      "type": "TERRAIN_SUN",
-      "scope": "plot"
-     }
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_SOLAR_SYSTEM",
-      "scope": "plot"
-     }
-    ]
+    "TECH_STAR_LIFTING",
+    {
+     "type": "TERRAIN_SUN",
+     "scope": "plot"
+    },
+    {
+     "type": "MAPCATEGORY_SOLAR_SYSTEM",
+     "scope": "plot"
+    }
    ]
   }
  },

@@ -11,15 +11,11 @@
      "scope": "empire",
      "min": 1
     },
-    "TECH_STABLE_TIME_LOOPS"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_STABLE_TIME_LOOPS",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   }
  },

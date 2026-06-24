@@ -13,19 +13,17 @@
  "requires": {
   "build": {
    "all": [
-    "HAS_POWER"
-   ],
-   "any": [
-    [
-     "BUILDING_FACTORY_PLASTIC",
-     "BUILDING_PLASTIC_RECLAMATION_PLANT"
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "HAS_POWER",
+    {
+     "any": [
+      "BUILDING_FACTORY_PLASTIC",
+      "BUILDING_PLASTIC_RECLAMATION_PLANT"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

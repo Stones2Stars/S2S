@@ -10,15 +10,11 @@
      "scope": "city",
      "min": 3
     },
-    "TECH_EXPRESSIONISM"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_EXPRESSIONISM",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   }
  },

@@ -5,22 +5,16 @@
  "requires": {
   "build": {
    "all": [
-    "TECH_INDUSTRIALISM"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_INDUSTRIALISM",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {
-   "any": [
-    [
-     "CIVIC_WASTE_IMPORTATION"
-    ]
+   "all": [
+    "CIVIC_WASTE_IMPORTATION"
    ]
   }
  },

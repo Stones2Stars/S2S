@@ -8,19 +8,17 @@
     "HAS_POWER",
     "BUILDING_MEGATOWER",
     "TECH_HOLOGRAPHICS",
-    "TECH_NANO_ARCHITECTURE"
-   ],
-   "any": [
-    [
-     "BUILDING_HOLOGRAPHIC_NETWORKS",
-     "BUILDING_EXOCORTEX_NETWORKS"
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_NANO_ARCHITECTURE",
+    {
+     "any": [
+      "BUILDING_HOLOGRAPHIC_NETWORKS",
+      "BUILDING_EXOCORTEX_NETWORKS"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {
@@ -29,16 +27,12 @@
      "type": "BONUS_METAMATERIALS",
      "scope": "city",
      "connection": "trade|vicinity"
+    },
+    {
+     "type": "BONUS_HOLOGRAPHIC_PROJECTORS",
+     "scope": "city",
+     "connection": "trade|vicinity"
     }
-   ],
-   "any": [
-    [
-     {
-      "type": "BONUS_HOLOGRAPHIC_PROJECTORS",
-      "scope": "city",
-      "connection": "trade|vicinity"
-     }
-    ]
    ]
   }
  },

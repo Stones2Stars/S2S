@@ -6,15 +6,11 @@
   "build": {
    "all": [
     "BUILDING_STARPORT",
-    "TECH_COMPREHENSIVE_CYBERNETICS"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_COMPREHENSIVE_CYBERNETICS",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

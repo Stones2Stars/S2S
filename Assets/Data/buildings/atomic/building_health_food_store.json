@@ -14,15 +14,11 @@
   "build": {
    "all": [
     "BUILDING_SHOPPING_DISTRICT",
-    "TECH_GASTRONOMY"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_GASTRONOMY",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

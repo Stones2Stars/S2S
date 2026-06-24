@@ -11,21 +11,15 @@
   "build": {
    "all": [
     "BUILDING_DISTANT_COSMOPOLIS",
-    "TECH_TIME_REVERSAL"
-   ],
-   "any": [
-    [
-     {
-      "type": "TERRAIN_DISTANT_FUTURE",
-      "scope": "plot"
-     }
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_DISTANT",
-      "scope": "plot"
-     }
-    ]
+    "TECH_TIME_REVERSAL",
+    {
+     "type": "TERRAIN_DISTANT_FUTURE",
+     "scope": "plot"
+    },
+    {
+     "type": "MAPCATEGORY_DISTANT",
+     "scope": "plot"
+    }
    ]
   }
  },

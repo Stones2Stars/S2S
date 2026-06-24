@@ -8,16 +8,12 @@
     {
      "type": "TECH_SERICULTURE",
      "scope": "team"
+    },
+    {
+     "bonus": [
+      "BONUS_SILK"
+     ]
     }
-   ],
-   "any": [
-    [
-     {
-      "bonus": [
-       "BONUS_SILK"
-      ]
-     }
-    ]
    ]
   }
  },

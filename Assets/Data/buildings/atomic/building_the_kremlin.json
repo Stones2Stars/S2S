@@ -15,15 +15,11 @@
      "scope": "city",
      "min": 7
     },
-    "TECH_COMMUNISM"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_COMMUNISM",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   }
  },

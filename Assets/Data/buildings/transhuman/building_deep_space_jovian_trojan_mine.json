@@ -6,15 +6,11 @@
   "build": {
    "all": [
     "BUILDING_DEEP_SPACE_DOCKING_BAY",
-    "TECH_ASTEROID_EXTRACTION"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_SOLAR_SYSTEM",
-      "scope": "plot"
-     }
-    ]
+    "TECH_ASTEROID_EXTRACTION",
+    {
+     "type": "MAPCATEGORY_SOLAR_SYSTEM",
+     "scope": "plot"
+    }
    ]
   }
  },

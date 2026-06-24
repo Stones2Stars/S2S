@@ -5,15 +5,11 @@
  "requires": {
   "build": {
    "all": [
-    "TECH_LUMINAL_BEINGS"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_LUMINAL_BEINGS",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

@@ -12,15 +12,11 @@
      "min": 3
     },
     "BUILDING_PROTEIN_LAB",
-    "TECH_BIOPUNK"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_BIOPUNK",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

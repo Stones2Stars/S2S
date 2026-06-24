@@ -7,65 +7,61 @@
    "all": [
     "TECH_COOPERATION",
     "TECH_TOOL_MAKING",
-    "TECH_SHELTER_BUILDING"
-   ],
-   "any": [
-    [
-     "BUILDING_CHILDCARE_HUT",
-     "BUILDING_DAY_CARE_CENTER",
-     "BUILDING_HIGH_TECH_CULTURAL_ENRICHMENT"
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ],
-    [
-     {
-      "type": "CIVILIZATION_NPC_NEANDERTHAL",
-      "scope": "empire"
-     }
-    ]
+    "TECH_SHELTER_BUILDING",
+    {
+     "any": [
+      "BUILDING_CHILDCARE_HUT",
+      "BUILDING_DAY_CARE_CENTER",
+      "BUILDING_HIGH_TECH_CULTURAL_ENRICHMENT"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    },
+    {
+     "type": "CIVILIZATION_NPC_NEANDERTHAL",
+     "scope": "empire"
+    }
    ]
   },
   "operate": {
-   "any": [
-    [
-     {
-      "type": "BONUS_RAW_FISH",
-      "scope": "city",
-      "connection": "trade|vicinity"
-     },
-     {
-      "type": "BONUS_RAW_MEAT",
-      "scope": "city",
-      "connection": "trade|vicinity"
-     },
-     {
-      "type": "BONUS_EGGS",
-      "scope": "city",
-      "connection": "trade|vicinity"
-     },
-     {
-      "type": "BONUS_MUSHROOMS",
-      "scope": "city",
-      "connection": "trade|vicinity"
-     },
-     {
-      "type": "BONUS_KAVA",
-      "scope": "city",
-      "connection": "trade|vicinity"
-     },
-     {
-      "type": "BONUS_COCOA",
-      "scope": "city",
-      "connection": "trade|vicinity"
-     }
-    ],
-    [
-     "CIVIC_COMMUNAL"
-    ]
+   "all": [
+    {
+     "any": [
+      {
+       "type": "BONUS_RAW_FISH",
+       "scope": "city",
+       "connection": "trade|vicinity"
+      },
+      {
+       "type": "BONUS_RAW_MEAT",
+       "scope": "city",
+       "connection": "trade|vicinity"
+      },
+      {
+       "type": "BONUS_EGGS",
+       "scope": "city",
+       "connection": "trade|vicinity"
+      },
+      {
+       "type": "BONUS_MUSHROOMS",
+       "scope": "city",
+       "connection": "trade|vicinity"
+      },
+      {
+       "type": "BONUS_KAVA",
+       "scope": "city",
+       "connection": "trade|vicinity"
+      },
+      {
+       "type": "BONUS_COCOA",
+       "scope": "city",
+       "connection": "trade|vicinity"
+      }
+     ]
+    },
+    "CIVIC_COMMUNAL"
    ]
   }
  },

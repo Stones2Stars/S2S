@@ -19,54 +19,54 @@
   "build": {
    "all": [
     "BUILDING_GRAVEYARD",
-    "TECH_SCRIPTURES"
-   ],
-   "any": [
-    [
-     "BUILDING_PALACE",
-     "BUILDING_HOUSING_VILLAS",
-     "BUILDING_HOUSING_PALACES",
-     "BUILDING_HOUSING_MANORS",
-     "BUILDING_HOUSING_ESTATES",
-     "BUILDING_HOUSING_MANSIONS",
-     "BUILDING_HOUSING_CONDOMINIUMS",
-     "BUILDING_HOUSING_CHATEAU",
-     "BUILDING_HOUSING_HIGH_TECH_CONDOMINIUMS",
-     "BUILDING_HOUSING_COLONY_ARCOLOGY",
-     "BUILDING_LAUNCH_ARCOLOGY"
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_SCRIPTURES",
+    {
+     "any": [
+      "BUILDING_PALACE",
+      "BUILDING_HOUSING_VILLAS",
+      "BUILDING_HOUSING_PALACES",
+      "BUILDING_HOUSING_MANORS",
+      "BUILDING_HOUSING_ESTATES",
+      "BUILDING_HOUSING_MANSIONS",
+      "BUILDING_HOUSING_CONDOMINIUMS",
+      "BUILDING_HOUSING_CHATEAU",
+      "BUILDING_HOUSING_HIGH_TECH_CONDOMINIUMS",
+      "BUILDING_HOUSING_COLONY_ARCOLOGY",
+      "BUILDING_LAUNCH_ARCOLOGY"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {
-   "any": [
-    [
-     {
-      "type": "BONUS_STONE",
-      "scope": "city",
-      "connection": "trade|vicinity"
-     },
-     {
-      "type": "BONUS_BRICKS",
-      "scope": "city",
-      "connection": "trade|vicinity"
-     },
-     {
-      "type": "BONUS_MARBLE",
-      "scope": "city",
-      "connection": "trade|vicinity"
-     },
-     {
-      "type": "BONUS_CEMENT",
-      "scope": "city",
-      "connection": "trade|vicinity"
-     }
-    ]
+   "all": [
+    {
+     "any": [
+      {
+       "type": "BONUS_STONE",
+       "scope": "city",
+       "connection": "trade|vicinity"
+      },
+      {
+       "type": "BONUS_BRICKS",
+       "scope": "city",
+       "connection": "trade|vicinity"
+      },
+      {
+       "type": "BONUS_MARBLE",
+       "scope": "city",
+       "connection": "trade|vicinity"
+      },
+      {
+       "type": "BONUS_CEMENT",
+       "scope": "city",
+       "connection": "trade|vicinity"
+      }
+     ]
+    }
    ],
    "dormant": [
     "BUILDING_FUNERARY_SERVICES",

@@ -14,15 +14,11 @@
   "build": {
    "all": [
     "BUILDING_MINING_CAMP",
-    "TECH_GEOLOGY"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_GEOLOGY",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {
@@ -31,16 +27,12 @@
      "type": "BONUS_TIN_ORE",
      "scope": "city",
      "connection": "vicinity"
+    },
+    {
+     "type": "BONUS_IRON_ORE",
+     "scope": "city",
+     "connection": "vicinity"
     }
-   ],
-   "any": [
-    [
-     {
-      "type": "BONUS_IRON_ORE",
-      "scope": "city",
-      "connection": "vicinity"
-     }
-    ]
    ],
    "dormant": [
     "BUILDING_CORE_MINE"

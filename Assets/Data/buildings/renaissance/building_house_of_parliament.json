@@ -10,27 +10,25 @@
      "scope": "city",
      "min": 7
     },
-    "TECH_POLITICAL_PHILOSOPHY"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ],
-    [
-     {
-      "type": "BONUS_BRICKS",
-      "scope": "city",
-      "connection": "trade|vicinity"
-     },
-     {
-      "type": "BONUS_CEMENT",
-      "scope": "city",
-      "connection": "trade|vicinity"
-     }
-    ]
+    "TECH_POLITICAL_PHILOSOPHY",
+    {
+     "any": [
+      {
+       "type": "BONUS_BRICKS",
+       "scope": "city",
+       "connection": "trade|vicinity"
+      },
+      {
+       "type": "BONUS_CEMENT",
+       "scope": "city",
+       "connection": "trade|vicinity"
+      }
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ],
    "disabled": "IS_GOVERNMENT_CENTER"
   },
@@ -41,21 +39,21 @@
      "scope": "city",
      "connection": "trade|vicinity"
     },
-    "CIVIC_LEGISLATURE"
-   ],
-   "any": [
-    [
-     {
-      "type": "BONUS_FIBERGLASS",
-      "scope": "city",
-      "connection": "trade|vicinity"
-     },
-     {
-      "type": "BONUS_GLASSWARE",
-      "scope": "city",
-      "connection": "trade|vicinity"
-     }
-    ]
+    "CIVIC_LEGISLATURE",
+    {
+     "any": [
+      {
+       "type": "BONUS_FIBERGLASS",
+       "scope": "city",
+       "connection": "trade|vicinity"
+      },
+      {
+       "type": "BONUS_GLASSWARE",
+       "scope": "city",
+       "connection": "trade|vicinity"
+      }
+     ]
+    }
    ]
   }
  },

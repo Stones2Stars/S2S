@@ -14,26 +14,20 @@
   "build": {
    "all": [
     "HAS_RIVER",
-    "TECH_SEWING"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_SEWING",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {
-   "any": [
-    [
-     {
-      "type": "BONUS_CLOTHING",
-      "scope": "city",
-      "connection": "trade|vicinity"
-     }
-    ]
+   "all": [
+    {
+     "type": "BONUS_CLOTHING",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    }
    ],
    "dormant": [
     "BUILDING_HYPERMARKET"

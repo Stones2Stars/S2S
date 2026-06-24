@@ -6,21 +6,15 @@
   "build": {
    "all": [
     "BUILDING_KUIPER_BELT_OUTPOST",
-    "TECH_ADAPTIVE_RADIATION"
-   ],
-   "any": [
-    [
-     {
-      "type": "TERRAIN_KUIPER_BELT_OBJECT",
-      "scope": "plot"
-     }
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_SOLAR_SYSTEM",
-      "scope": "plot"
-     }
-    ]
+    "TECH_ADAPTIVE_RADIATION",
+    {
+     "type": "TERRAIN_KUIPER_BELT_OBJECT",
+     "scope": "plot"
+    },
+    {
+     "type": "MAPCATEGORY_SOLAR_SYSTEM",
+     "scope": "plot"
+    }
    ]
   }
  },

@@ -13,15 +13,11 @@
     "HAS_POWER",
     "BUILDING_LUNAR_ASSEMBLY_PLANT",
     "BUILDING_LUNAR_HYDROPONICS_FARM",
-    "TECH_LUNAR_TRADE"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_LUNAR",
-      "scope": "plot"
-     }
-    ]
+    "TECH_LUNAR_TRADE",
+    {
+     "type": "MAPCATEGORY_LUNAR",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

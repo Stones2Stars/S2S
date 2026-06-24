@@ -11,15 +11,11 @@
   "build": {
    "all": [
     "HAS_FRESHWATER",
-    "TECH_SANITATION"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_SANITATION",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {
@@ -28,16 +24,12 @@
      "type": "BONUS_WOOD",
      "scope": "city",
      "connection": "trade|vicinity"
+    },
+    {
+     "type": "BONUS_BRICKS",
+     "scope": "city",
+     "connection": "trade|vicinity"
     }
-   ],
-   "any": [
-    [
-     {
-      "type": "BONUS_BRICKS",
-      "scope": "city",
-      "connection": "trade|vicinity"
-     }
-    ]
    ],
    "dormant": [
     "BUILDING_HOUSING_COTTAGES",

@@ -16,15 +16,11 @@
    "all": [
     "HAS_POWER",
     "BUILDING_TELEPORT_BOOTH",
-    "TECH_COMPACT_WORMHOLES"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_COMPACT_WORMHOLES",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   }
  },

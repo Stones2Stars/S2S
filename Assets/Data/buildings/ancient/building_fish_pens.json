@@ -12,25 +12,25 @@
      }
     },
     "TECH_MASONRY",
-    "BUILDING_FOLKLORE_T_FISH"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ],
-    [
-     "BUILDING_TOWN_HALL",
-     "BUILDING_CITY_COUNCIL",
-     "BUILDING_METROPOLITAN_ADMINISTRATION"
-    ],
-    [
-     "BUILDING_FOLKLORE_COD",
-     "BUILDING_FOLKLORE_MACKEREL",
-     "BUILDING_FOLKLORE_TUNA"
-    ]
+    "BUILDING_FOLKLORE_T_FISH",
+    {
+     "any": [
+      "BUILDING_TOWN_HALL",
+      "BUILDING_CITY_COUNCIL",
+      "BUILDING_METROPOLITAN_ADMINISTRATION"
+     ]
+    },
+    {
+     "any": [
+      "BUILDING_FOLKLORE_COD",
+      "BUILDING_FOLKLORE_MACKEREL",
+      "BUILDING_FOLKLORE_TUNA"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   }
  },

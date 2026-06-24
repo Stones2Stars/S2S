@@ -16,25 +16,23 @@
      "min": 3
     },
     "BUILDING_LIBRARY",
-    "TECH_ASTRONOMY"
-   ],
-   "any": [
-    [
-     {
-      "type": "TERRAIN_HILL",
-      "scope": "plot"
-     },
-     {
-      "type": "TERRAIN_PEAK",
-      "scope": "plot"
-     }
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_ASTRONOMY",
+    {
+     "any": [
+      {
+       "type": "TERRAIN_HILL",
+       "scope": "plot"
+      },
+      {
+       "type": "TERRAIN_PEAK",
+       "scope": "plot"
+      }
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

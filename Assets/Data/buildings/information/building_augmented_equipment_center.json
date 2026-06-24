@@ -19,19 +19,17 @@
   "build": {
    "all": [
     "HAS_POWER",
-    "TECH_AUGMENTED_REALITY"
-   ],
-   "any": [
-    [
-     "BUILDING_HYPERMARKET",
-     "BUILDING_ELECTRONICS_STORE"
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_AUGMENTED_REALITY",
+    {
+     "any": [
+      "BUILDING_HYPERMARKET",
+      "BUILDING_ELECTRONICS_STORE"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {
@@ -40,16 +38,12 @@
      "type": "BONUS_COMPUTERS",
      "scope": "city",
      "connection": "trade|vicinity"
+    },
+    {
+     "type": "BONUS_FLASH_MEMORY_DEVICES",
+     "scope": "city",
+     "connection": "trade|vicinity"
     }
-   ],
-   "any": [
-    [
-     {
-      "type": "BONUS_FLASH_MEMORY_DEVICES",
-      "scope": "city",
-      "connection": "trade|vicinity"
-     }
-    ]
    ],
    "dormant": [
     "BUILDING_HIGH_TECH_CULTURAL_ENRICHMENT"

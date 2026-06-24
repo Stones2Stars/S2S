@@ -6,26 +6,20 @@
   "build": {
    "all": [
     "BUILDING_INTELLIGENCE_AGENCY",
-    "TECH_DECRYPTION_MACHINES"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_DECRYPTION_MACHINES",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {
-   "any": [
-    [
-     {
-      "type": "BONUS_PARTS",
-      "scope": "city",
-      "connection": "trade|vicinity"
-     }
-    ]
+   "all": [
+    {
+     "type": "BONUS_PARTS",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    }
    ]
   }
  },

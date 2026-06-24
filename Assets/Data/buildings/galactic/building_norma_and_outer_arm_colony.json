@@ -5,21 +5,15 @@
  "requires": {
   "build": {
    "all": [
-    "TECH_TRANSTANGIBLE_NEUTRINO_ACCELERATORS"
-   ],
-   "any": [
-    [
-     {
-      "type": "TERRAIN_MILKY_WAY",
-      "scope": "plot"
-     }
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_MILKY_WAY",
-      "scope": "plot"
-     }
-    ]
+    "TECH_TRANSTANGIBLE_NEUTRINO_ACCELERATORS",
+    {
+     "type": "TERRAIN_MILKY_WAY",
+     "scope": "plot"
+    },
+    {
+     "type": "MAPCATEGORY_MILKY_WAY",
+     "scope": "plot"
+    }
    ],
    "noneOf": [
     "BUILDING_PERSEUS_ARM_COLONY",

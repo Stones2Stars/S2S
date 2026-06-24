@@ -6,21 +6,15 @@
   "build": {
    "all": [
     "BUILDING_DEEP_SPACE_HOTEL",
-    "TECH_FUSION_SPACECRAFT"
-   ],
-   "any": [
-    [
-     {
-      "type": "FEATURE_PLANETARY_RING",
-      "scope": "plot"
-     }
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_SOLAR_SYSTEM",
-      "scope": "plot"
-     }
-    ]
+    "TECH_FUSION_SPACECRAFT",
+    {
+     "type": "FEATURE_PLANETARY_RING",
+     "scope": "plot"
+    },
+    {
+     "type": "MAPCATEGORY_SOLAR_SYSTEM",
+     "scope": "plot"
+    }
    ]
   }
  },

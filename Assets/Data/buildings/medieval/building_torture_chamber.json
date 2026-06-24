@@ -25,15 +25,11 @@
   "build": {
    "all": [
     "BUILDING_DUNGEON",
-    "TECH_TORTURE"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_TORTURE",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

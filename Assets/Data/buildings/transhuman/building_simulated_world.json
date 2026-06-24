@@ -14,15 +14,11 @@
    "all": [
     "HAS_POWER",
     "BUILDING_VIRTUAL_WORLD_DATA_ANALYSIS",
-    "TECH_SIMULATED_REALITY"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_SIMULATED_REALITY",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

@@ -8,21 +8,17 @@
     {
      "type": "TECH_ECOLOGY",
      "scope": "team"
+    },
+    {
+     "terrain": [
+      "TERRAIN_GRASSLAND",
+      "TERRAIN_MARSH",
+      "TERRAIN_SCRUB",
+      "TERRAIN_ROCKY",
+      "TERRAIN_LUSH",
+      "TERRAIN_MUDDY"
+     ]
     }
-   ],
-   "any": [
-    [
-     {
-      "terrain": [
-       "TERRAIN_GRASSLAND",
-       "TERRAIN_MARSH",
-       "TERRAIN_SCRUB",
-       "TERRAIN_ROCKY",
-       "TERRAIN_LUSH",
-       "TERRAIN_MUDDY"
-      ]
-     }
-    ]
    ]
   }
  },

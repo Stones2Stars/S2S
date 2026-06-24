@@ -25,15 +25,11 @@
     "BUILDING_CISLUNAR_GOVERNANCE",
     "BUILDING_CISLUNAR_BIOFACTORY",
     "BUILDING_EFFECT_CISLUNAR_ECONOMY",
-    "TECH_ORBITAL_MEGASTRUCTURES"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_CISLUNAR",
-      "scope": "plot"
-     }
-    ]
+    "TECH_ORBITAL_MEGASTRUCTURES",
+    {
+     "type": "MAPCATEGORY_CISLUNAR",
+     "scope": "plot"
+    }
    ]
   }
  },

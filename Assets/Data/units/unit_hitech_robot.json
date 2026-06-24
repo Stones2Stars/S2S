@@ -10,16 +10,12 @@
      "scope": "city",
      "connection": "trade|vicinity"
     },
-    "TECH_SENTIENT_EARTH"
-   ],
-   "any": [
-    [
-     {
-      "type": "BONUS_NANOTUBES",
-      "scope": "city",
-      "connection": "trade|vicinity"
-     }
-    ]
+    "TECH_SENTIENT_EARTH",
+    {
+     "type": "BONUS_NANOTUBES",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    }
    ]
   }
  },

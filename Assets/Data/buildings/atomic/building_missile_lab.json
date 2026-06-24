@@ -14,15 +14,11 @@
   "build": {
    "all": [
     "BUILDING_LABORATORY",
-    "TECH_ADVANCED_ROCKETRY"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_ADVANCED_ROCKETRY",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {
@@ -31,16 +27,12 @@
      "type": "BONUS_STEEL_WARES",
      "scope": "city",
      "connection": "trade|vicinity"
+    },
+    {
+     "type": "BONUS_CEMENT",
+     "scope": "city",
+     "connection": "trade|vicinity"
     }
-   ],
-   "any": [
-    [
-     {
-      "type": "BONUS_CEMENT",
-      "scope": "city",
-      "connection": "trade|vicinity"
-     }
-    ]
    ],
    "dormant": [
     "BUILDING_MILITARY_INDUSTRIAL_COMPLEX"

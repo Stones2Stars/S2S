@@ -7,21 +7,15 @@
    "all": [
     "BUILDING_C_AC_AFRICAN",
     "BUILDING_C_L_AFRICAN",
-    "TECH_COMMUNISM"
-   ],
-   "any": [
-    [
-     {
-      "type": "TERRAIN_PEAK",
-      "scope": "plot"
-     }
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_COMMUNISM",
+    {
+     "type": "TERRAIN_PEAK",
+     "scope": "plot"
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

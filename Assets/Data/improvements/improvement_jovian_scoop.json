@@ -8,19 +8,15 @@
     {
      "type": "TECH_COLONY_ARCOLOGY",
      "scope": "team"
+    },
+    {
+     "terrain": [
+      "TERRAIN_JUPITER",
+      "TERRAIN_SATURN",
+      "TERRAIN_URANUS",
+      "TERRAIN_NEPTUNE"
+     ]
     }
-   ],
-   "any": [
-    [
-     {
-      "terrain": [
-       "TERRAIN_JUPITER",
-       "TERRAIN_SATURN",
-       "TERRAIN_URANUS",
-       "TERRAIN_NEPTUNE"
-      ]
-     }
-    ]
    ]
   }
  },

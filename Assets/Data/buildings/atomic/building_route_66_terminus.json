@@ -11,15 +11,11 @@
  "requires": {
   "build": {
    "all": [
-    "TECH_HIGHWAY_SYSTEMS"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_HIGHWAY_SYSTEMS",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   }
  },

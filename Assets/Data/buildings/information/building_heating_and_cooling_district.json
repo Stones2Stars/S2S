@@ -5,18 +5,12 @@
  "requires": {
   "build": {
    "all": [
-    "TECH_INDUSTRIAL_ECOLOGY"
-   ],
-   "any": [
-    [
-     "BUILDING_METROPOLITAN_ADMINISTRATION"
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_INDUSTRIAL_ECOLOGY",
+    "BUILDING_METROPOLITAN_ADMINISTRATION",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   }
  },

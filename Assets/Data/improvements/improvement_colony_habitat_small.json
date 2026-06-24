@@ -9,28 +9,24 @@
      "type": "TECH_LUNAR_COLONIZATION",
      "scope": "team"
     },
-    "IS_FLATLANDS"
-   ],
-   "any": [
-    [
-     {
-      "terrain": [
-       "TERRAIN_LUNAR_DOME",
-       "TERRAIN_LUNAR_MARE",
-       "TERRAIN_LUNAR_HIGHLAND",
-       "TERRAIN_LUNAR_REGOLITH",
-       "TERRAIN_LUNAR_RILLE",
-       "TERRAIN_GREEN_MOON",
-       "TERRAIN_MARTIAN_ICE",
-       "TERRAIN_MARTIAN_PERMAFROST",
-       "TERRAIN_MARTIAN_DESERT",
-       "TERRAIN_MARTIAN_DUNES",
-       "TERRAIN_MARTIAN_BARREN",
-       "TERRAIN_MARTIAN_PLAINS",
-       "TERRAIN_GREEN_MARS"
-      ]
-     }
-    ]
+    "IS_FLATLANDS",
+    {
+     "terrain": [
+      "TERRAIN_LUNAR_DOME",
+      "TERRAIN_LUNAR_MARE",
+      "TERRAIN_LUNAR_HIGHLAND",
+      "TERRAIN_LUNAR_REGOLITH",
+      "TERRAIN_LUNAR_RILLE",
+      "TERRAIN_GREEN_MOON",
+      "TERRAIN_MARTIAN_ICE",
+      "TERRAIN_MARTIAN_PERMAFROST",
+      "TERRAIN_MARTIAN_DESERT",
+      "TERRAIN_MARTIAN_DUNES",
+      "TERRAIN_MARTIAN_BARREN",
+      "TERRAIN_MARTIAN_PLAINS",
+      "TERRAIN_GREEN_MARS"
+     ]
+    }
    ]
   }
  },

@@ -20,20 +20,18 @@
      "type": "BONUS_TOOLS",
      "scope": "city",
      "connection": "trade|vicinity"
+    },
+    {
+     "type": "BONUS_PARTS",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    {
+     "any": [
+      "BUILDING_FACTORY_AIRCRAFT",
+      "BUILDING_MILITARY_INDUSTRIAL_COMPLEX"
+     ]
     }
-   ],
-   "any": [
-    [
-     {
-      "type": "BONUS_PARTS",
-      "scope": "city",
-      "connection": "trade|vicinity"
-     }
-    ],
-    [
-     "BUILDING_FACTORY_AIRCRAFT",
-     "BUILDING_MILITARY_INDUSTRIAL_COMPLEX"
-    ]
    ]
   }
  },

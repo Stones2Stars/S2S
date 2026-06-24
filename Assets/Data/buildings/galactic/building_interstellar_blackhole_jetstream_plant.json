@@ -7,25 +7,23 @@
    "all": [
     "HAS_POWER",
     "BUILDING_INTERSTELLAR_INDUSTRIAL_PLANET",
-    "TECH_SINGULARITY_STABILIZATION"
-   ],
-   "any": [
-    [
-     {
-      "type": "FEATURE_BLACK_HOLE",
-      "scope": "plot"
-     },
-     {
-      "type": "FEATURE_SUPERMASSIVE_BLACK_HOLE",
-      "scope": "plot"
-     }
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_MILKY_WAY",
-      "scope": "plot"
-     }
-    ]
+    "TECH_SINGULARITY_STABILIZATION",
+    {
+     "any": [
+      {
+       "type": "FEATURE_BLACK_HOLE",
+       "scope": "plot"
+      },
+      {
+       "type": "FEATURE_SUPERMASSIVE_BLACK_HOLE",
+       "scope": "plot"
+      }
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_MILKY_WAY",
+     "scope": "plot"
+    }
    ]
   }
  },

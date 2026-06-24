@@ -6,15 +6,11 @@
   "build": {
    "all": [
     "BUILDING_EFFECT_UNIVERSAL_ECONOMY",
-    "TECH_CONTROLLED_VACUUM_COLLAPSE"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_CONTROLLED_VACUUM_COLLAPSE",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   }
  },

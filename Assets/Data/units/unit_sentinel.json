@@ -26,21 +26,21 @@
      "type": "BONUS_NANOTUBES",
      "scope": "city",
      "connection": "trade|vicinity"
+    },
+    {
+     "any": [
+      {
+       "type": "BONUS_LEVITATION_GENERATORS",
+       "scope": "city",
+       "connection": "trade|vicinity"
+      },
+      {
+       "type": "BONUS_ANTI_GRAVITY_FIELD_GENERATORS",
+       "scope": "city",
+       "connection": "trade|vicinity"
+      }
+     ]
     }
-   ],
-   "any": [
-    [
-     {
-      "type": "BONUS_LEVITATION_GENERATORS",
-      "scope": "city",
-      "connection": "trade|vicinity"
-     },
-     {
-      "type": "BONUS_ANTI_GRAVITY_FIELD_GENERATORS",
-      "scope": "city",
-      "connection": "trade|vicinity"
-     }
-    ]
    ]
   }
  },

@@ -14,15 +14,11 @@
   "build": {
    "all": [
     "BUILDING_MANUFACTURING_PLANT",
-    "TECH_SEMICONDUCTORS"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_SEMICONDUCTORS",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {
@@ -31,16 +27,12 @@
      "type": "BONUS_SAND",
      "scope": "city",
      "connection": "trade|vicinity"
+    },
+    {
+     "type": "BONUS_COPPER_WARES",
+     "scope": "city",
+     "connection": "trade|vicinity"
     }
-   ],
-   "any": [
-    [
-     {
-      "type": "BONUS_COPPER_WARES",
-      "scope": "city",
-      "connection": "trade|vicinity"
-     }
-    ]
    ],
    "dormant": [
     "BUILDING_ELECTRONICS_MANUFACTURING_DISTRICT"

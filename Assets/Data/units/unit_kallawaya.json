@@ -10,21 +10,19 @@
      "scope": "city",
      "connection": "trade|vicinity"
     },
-    "TECH_ELIXIRS_AND_TONICS"
-   ],
-   "any": [
-    [
-     {
-      "type": "BONUS_DRUGS",
-      "scope": "city",
-      "connection": "trade|vicinity"
-     }
-    ],
-    [
-     "BUILDING_SURGEONS_OFFICE",
-     "BUILDING_MEDICAL_CLINIC",
-     "BUILDING_HEALTHCARE_MEGACOMPLEX"
-    ]
+    "TECH_ELIXIRS_AND_TONICS",
+    {
+     "type": "BONUS_DRUGS",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    {
+     "any": [
+      "BUILDING_SURGEONS_OFFICE",
+      "BUILDING_MEDICAL_CLINIC",
+      "BUILDING_HEALTHCARE_MEGACOMPLEX"
+     ]
+    }
    ]
   }
  },

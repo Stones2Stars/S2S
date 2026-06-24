@@ -32,15 +32,11 @@
  "requires": {
   "build": {
    "all": [
-    "TECH_LAW_ENFORCEMENT"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_LAW_ENFORCEMENT",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

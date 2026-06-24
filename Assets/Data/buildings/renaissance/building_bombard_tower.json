@@ -19,15 +19,11 @@
   "build": {
    "all": [
     "BUILDING_CANNON_FORGE",
-    "TECH_GUNPOWDER"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_GUNPOWDER",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {
@@ -36,21 +32,21 @@
      "type": "BONUS_SULPHUR",
      "scope": "city",
      "connection": "trade|vicinity"
+    },
+    {
+     "any": [
+      {
+       "type": "BONUS_BRICKS",
+       "scope": "city",
+       "connection": "trade|vicinity"
+      },
+      {
+       "type": "BONUS_STONE",
+       "scope": "city",
+       "connection": "trade|vicinity"
+      }
+     ]
     }
-   ],
-   "any": [
-    [
-     {
-      "type": "BONUS_BRICKS",
-      "scope": "city",
-      "connection": "trade|vicinity"
-     },
-     {
-      "type": "BONUS_STONE",
-      "scope": "city",
-      "connection": "trade|vicinity"
-     }
-    ]
    ],
    "dormant": [
     "BUILDING_ARTILLERY_BATTERY",

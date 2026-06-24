@@ -6,20 +6,18 @@
   "build": {
    "all": [
     "TECH_ORGANIC_CHEMISTRY",
-    "TECH_CORPORATION"
-   ],
-   "any": [
-    [
-     "BUILDING_TRADING_POST",
-     "BUILDING_SHOPPING_DISTRICT",
-     "BUILDING_FACTORY"
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_CORPORATION",
+    {
+     "any": [
+      "BUILDING_TRADING_POST",
+      "BUILDING_SHOPPING_DISTRICT",
+      "BUILDING_FACTORY"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

@@ -5,20 +5,18 @@
  "requires": {
   "build": {
    "all": [
-    "TECH_PROPAGANDA"
-   ],
-   "any": [
-    [
-     "BUILDING_MODERN_OFFICES",
-     "BUILDING_TRADING_POST",
-     "BUILDING_SHOPPING_DISTRICT"
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_PROPAGANDA",
+    {
+     "any": [
+      "BUILDING_MODERN_OFFICES",
+      "BUILDING_TRADING_POST",
+      "BUILDING_SHOPPING_DISTRICT"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

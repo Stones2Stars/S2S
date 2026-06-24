@@ -18,15 +18,11 @@
  "requires": {
   "build": {
    "all": [
-    "TECH_RAILGUN"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_RAILGUN",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

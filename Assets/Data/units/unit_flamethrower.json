@@ -10,16 +10,12 @@
      "scope": "city",
      "connection": "trade|vicinity"
     },
-    "TECH_AUTOMATIC_WEAPONS"
-   ],
-   "any": [
-    [
-     {
-      "type": "BONUS_PETROLEUM_PRODUCTS",
-      "scope": "city",
-      "connection": "trade|vicinity"
-     }
-    ]
+    "TECH_AUTOMATIC_WEAPONS",
+    {
+     "type": "BONUS_PETROLEUM_PRODUCTS",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    }
    ]
   }
  },

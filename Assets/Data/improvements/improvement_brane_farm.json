@@ -8,16 +8,12 @@
     {
      "type": "TECH_BRANE_CONSTRUCTION",
      "scope": "team"
+    },
+    {
+     "terrain": [
+      "TERRAIN_BRANESPACE"
+     ]
     }
-   ],
-   "any": [
-    [
-     {
-      "terrain": [
-       "TERRAIN_BRANESPACE"
-      ]
-     }
-    ]
    ]
   }
  },

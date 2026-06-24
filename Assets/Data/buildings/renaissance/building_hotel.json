@@ -16,15 +16,11 @@
  "requires": {
   "build": {
    "all": [
-    "TECH_ECONOMICS"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_ECONOMICS",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {
@@ -33,21 +29,21 @@
      "type": "BONUS_FURNITURE",
      "scope": "city",
      "connection": "trade|vicinity"
+    },
+    {
+     "any": [
+      {
+       "type": "BONUS_BRICKS",
+       "scope": "city",
+       "connection": "trade|vicinity"
+      },
+      {
+       "type": "BONUS_CEMENT",
+       "scope": "city",
+       "connection": "trade|vicinity"
+      }
+     ]
     }
-   ],
-   "any": [
-    [
-     {
-      "type": "BONUS_BRICKS",
-      "scope": "city",
-      "connection": "trade|vicinity"
-     },
-     {
-      "type": "BONUS_CEMENT",
-      "scope": "city",
-      "connection": "trade|vicinity"
-     }
-    ]
    ]
   }
  },

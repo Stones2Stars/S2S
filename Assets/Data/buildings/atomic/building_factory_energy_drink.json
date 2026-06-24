@@ -16,15 +16,11 @@
     "HAS_FRESHWATER",
     "HAS_POWER",
     "BUILDING_FACTORY",
-    "TECH_GASTRONOMY"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_GASTRONOMY",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {
@@ -33,16 +29,12 @@
      "type": "BONUS_PLASTIC",
      "scope": "city",
      "connection": "trade|vicinity"
+    },
+    {
+     "type": "BONUS_SUGAR",
+     "scope": "city",
+     "connection": "trade|vicinity"
     }
-   ],
-   "any": [
-    [
-     {
-      "type": "BONUS_SUGAR",
-      "scope": "city",
-      "connection": "trade|vicinity"
-     }
-    ]
    ],
    "dormant": [
     "BUILDING_FOOD_MANUFACTURING_DISTRICT"

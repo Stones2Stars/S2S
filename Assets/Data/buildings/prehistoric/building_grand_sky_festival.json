@@ -11,26 +11,22 @@
      "min": 3
     },
     "BUILDING_FOLKLORE_E_SKY",
-    "TECH_CELEBRATION"
-   ],
-   "any": [
-    [
-     "BUILDING_MOON_DANCE",
-     "BUILDING_STARGAZERS_HUT",
-     "BUILDING_OBSERVATORY"
-    ],
-    [
-     {
-      "type": "TERRAIN_PEAK",
-      "scope": "plot"
-     }
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_CELEBRATION",
+    {
+     "any": [
+      "BUILDING_MOON_DANCE",
+      "BUILDING_STARGAZERS_HUT",
+      "BUILDING_OBSERVATORY"
+     ]
+    },
+    {
+     "type": "TERRAIN_PEAK",
+     "scope": "plot"
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ],
    "noneOf": [
     "BUILDING_GRAND_FIRE_FESTIVAL",
@@ -39,44 +35,46 @@
    ]
   },
   "operate": {
-   "any": [
-    [
-     {
-      "type": "BONUS_INCENSE",
-      "scope": "city",
-      "connection": "trade|vicinity"
-     },
-     {
-      "type": "BONUS_INDIGO",
-      "scope": "city",
-      "connection": "trade|vicinity"
-     },
-     {
-      "type": "BONUS_MUSHROOMS",
-      "scope": "city",
-      "connection": "trade|vicinity"
-     },
-     {
-      "type": "BONUS_TOBACCO",
-      "scope": "city",
-      "connection": "trade|vicinity"
-     },
-     {
-      "type": "BONUS_VANILLA",
-      "scope": "city",
-      "connection": "trade|vicinity"
-     },
-     {
-      "type": "BONUS_OPIUM",
-      "scope": "city",
-      "connection": "trade|vicinity"
-     },
-     {
-      "type": "BONUS_TEA",
-      "scope": "city",
-      "connection": "trade|vicinity"
-     }
-    ]
+   "all": [
+    {
+     "any": [
+      {
+       "type": "BONUS_INCENSE",
+       "scope": "city",
+       "connection": "trade|vicinity"
+      },
+      {
+       "type": "BONUS_INDIGO",
+       "scope": "city",
+       "connection": "trade|vicinity"
+      },
+      {
+       "type": "BONUS_MUSHROOMS",
+       "scope": "city",
+       "connection": "trade|vicinity"
+      },
+      {
+       "type": "BONUS_TOBACCO",
+       "scope": "city",
+       "connection": "trade|vicinity"
+      },
+      {
+       "type": "BONUS_VANILLA",
+       "scope": "city",
+       "connection": "trade|vicinity"
+      },
+      {
+       "type": "BONUS_OPIUM",
+       "scope": "city",
+       "connection": "trade|vicinity"
+      },
+      {
+       "type": "BONUS_TEA",
+       "scope": "city",
+       "connection": "trade|vicinity"
+      }
+     ]
+    }
    ],
    "dormant": [
     "BUILDING_POLLUTION_BLACKENED_SKIES"

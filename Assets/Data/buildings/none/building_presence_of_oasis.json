@@ -5,21 +5,15 @@
  "requires": {
   "build": {
    "all": [
-    "BUILDING_FOLKLORE_REQUIREMENT"
-   ],
-   "any": [
-    [
-     {
-      "type": "FEATURE_OASIS",
-      "scope": "plot"
-     }
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "BUILDING_FOLKLORE_REQUIREMENT",
+    {
+     "type": "FEATURE_OASIS",
+     "scope": "plot"
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   }
  },

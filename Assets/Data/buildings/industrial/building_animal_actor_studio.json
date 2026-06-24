@@ -19,23 +19,21 @@
      "min": 7
     },
     "BUILDING_MOVIE_STUDIO",
-    "TECH_MOTION_PICTURES"
-   ],
-   "any": [
-    [
-     "BUILDING_REPET",
-     "BUILDING_DOG_BREEDER",
-     "BUILDING_CAT_BREEDER",
-     "BUILDING_ANIMAL_TRAINER_HORSE",
-     "BUILDING_ANIMAL_TRAINER_ELEPHANT",
-     "BUILDING_MONKEY_BREEDER"
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_MOTION_PICTURES",
+    {
+     "any": [
+      "BUILDING_REPET",
+      "BUILDING_DOG_BREEDER",
+      "BUILDING_CAT_BREEDER",
+      "BUILDING_ANIMAL_TRAINER_HORSE",
+      "BUILDING_ANIMAL_TRAINER_ELEPHANT",
+      "BUILDING_MONKEY_BREEDER"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

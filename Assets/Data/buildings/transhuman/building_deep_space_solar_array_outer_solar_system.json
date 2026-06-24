@@ -12,53 +12,51 @@
    "all": [
     "HAS_POWER",
     "BUILDING_SPACE_COLONY_DEEP_SPACE",
-    "TECH_DEEP_SPACE_COLONIES"
-   ],
-   "any": [
-    [
-     {
-      "type": "TERRAIN_OUTER_SOLAR_SYSTEM",
-      "scope": "plot"
-     },
-     {
-      "type": "TERRAIN_JUPITER",
-      "scope": "plot"
-     },
-     {
-      "type": "TERRAIN_SATURN",
-      "scope": "plot"
-     },
-     {
-      "type": "TERRAIN_URANUS",
-      "scope": "plot"
-     },
-     {
-      "type": "TERRAIN_NEPTUNE",
-      "scope": "plot"
-     },
-     {
-      "type": "TERRAIN_EUROPA",
-      "scope": "plot"
-     },
-     {
-      "type": "TERRAIN_INNER_SOLAR_SYSTEM",
-      "scope": "plot"
-     },
-     {
-      "type": "TERRAIN_MERCURY",
-      "scope": "plot"
-     },
-     {
-      "type": "TERRAIN_ASTEROID_SURFACE",
-      "scope": "plot"
-     }
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_SOLAR_SYSTEM",
-      "scope": "plot"
-     }
-    ]
+    "TECH_DEEP_SPACE_COLONIES",
+    {
+     "any": [
+      {
+       "type": "TERRAIN_OUTER_SOLAR_SYSTEM",
+       "scope": "plot"
+      },
+      {
+       "type": "TERRAIN_JUPITER",
+       "scope": "plot"
+      },
+      {
+       "type": "TERRAIN_SATURN",
+       "scope": "plot"
+      },
+      {
+       "type": "TERRAIN_URANUS",
+       "scope": "plot"
+      },
+      {
+       "type": "TERRAIN_NEPTUNE",
+       "scope": "plot"
+      },
+      {
+       "type": "TERRAIN_EUROPA",
+       "scope": "plot"
+      },
+      {
+       "type": "TERRAIN_INNER_SOLAR_SYSTEM",
+       "scope": "plot"
+      },
+      {
+       "type": "TERRAIN_MERCURY",
+       "scope": "plot"
+      },
+      {
+       "type": "TERRAIN_ASTEROID_SURFACE",
+       "scope": "plot"
+      }
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_SOLAR_SYSTEM",
+     "scope": "plot"
+    }
    ]
   }
  },

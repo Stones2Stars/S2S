@@ -5,16 +5,12 @@
  "requires": {
   "build": {
    "all": [
-    "TECH_SMART_DUST"
-   ],
-   "any": [
-    [
-     {
-      "type": "BONUS_NANOBOTS",
-      "scope": "city",
-      "connection": "trade|vicinity"
-     }
-    ]
+    "TECH_SMART_DUST",
+    {
+     "type": "BONUS_NANOBOTS",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    }
    ]
   }
  },

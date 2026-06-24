@@ -5,15 +5,11 @@
  "requires": {
   "build": {
    "all": [
-    "TECH_PLANETARY_TERRAFORMING"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_VENUSIAN",
-      "scope": "plot"
-     }
-    ]
+    "TECH_PLANETARY_TERRAFORMING",
+    {
+     "type": "MAPCATEGORY_VENUSIAN",
+     "scope": "plot"
+    }
    ]
   }
  },

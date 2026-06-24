@@ -8,16 +8,12 @@
     {
      "type": "TECH_ASTEROID_MINING",
      "scope": "team"
+    },
+    {
+     "terrain": [
+      "TERRAIN_ORBIT"
+     ]
     }
-   ],
-   "any": [
-    [
-     {
-      "terrain": [
-       "TERRAIN_ORBIT"
-      ]
-     }
-    ]
    ]
   }
  },

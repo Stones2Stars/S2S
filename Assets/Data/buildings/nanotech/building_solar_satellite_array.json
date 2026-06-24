@@ -17,15 +17,11 @@
      "scope": "empire",
      "min": 1
     },
-    "TECH_LUNAR_MANUFACTURING"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_CISLUNAR",
-      "scope": "plot"
-     }
-    ]
+    "TECH_LUNAR_MANUFACTURING",
+    {
+     "type": "MAPCATEGORY_CISLUNAR",
+     "scope": "plot"
+    }
    ]
   }
  },

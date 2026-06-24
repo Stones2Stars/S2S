@@ -6,20 +6,18 @@
   "build": {
    "all": [
     "TECH_PRECISION_SOCIAL_ENGINEERING",
-    "TECH_CULTURAL_EVOLUTION"
-   ],
-   "any": [
-    [
-     "BUILDING_INTERSTELLAR_CULTURE_AGGRESSIVE",
-     "BUILDING_INTERSTELLAR_CULTURE_INDUSTRIOUS",
-     "BUILDING_INTERSTELLAR_CULTURE_OBEDIENT"
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_GALACTIC",
-      "scope": "plot"
-     }
-    ]
+    "TECH_CULTURAL_EVOLUTION",
+    {
+     "any": [
+      "BUILDING_INTERSTELLAR_CULTURE_AGGRESSIVE",
+      "BUILDING_INTERSTELLAR_CULTURE_INDUSTRIOUS",
+      "BUILDING_INTERSTELLAR_CULTURE_OBEDIENT"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_GALACTIC",
+     "scope": "plot"
+    }
    ]
   }
  },

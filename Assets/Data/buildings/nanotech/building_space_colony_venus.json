@@ -23,15 +23,11 @@
  "requires": {
   "build": {
    "all": [
-    "TECH_PLANETARY_COLONIZATION"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_VENUSIAN",
-      "scope": "plot"
-     }
-    ]
+    "TECH_PLANETARY_COLONIZATION",
+    {
+     "type": "MAPCATEGORY_VENUSIAN",
+     "scope": "plot"
+    }
    ]
   }
  },

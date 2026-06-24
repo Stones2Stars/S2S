@@ -77,15 +77,11 @@
      "type": "BONUS_RADIOS",
      "scope": "city",
      "connection": "trade|vicinity"
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
     }
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
    ]
   },
   "operate": {
@@ -94,16 +90,12 @@
      "type": "BONUS_FIREARMS",
      "scope": "city",
      "connection": "trade|vicinity"
+    },
+    {
+     "type": "BONUS_AMMUNITION",
+     "scope": "city",
+     "connection": "trade|vicinity"
     }
-   ],
-   "any": [
-    [
-     {
-      "type": "BONUS_AMMUNITION",
-      "scope": "city",
-      "connection": "trade|vicinity"
-     }
-    ]
    ]
   }
  },

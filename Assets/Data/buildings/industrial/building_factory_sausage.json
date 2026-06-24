@@ -15,26 +15,20 @@
    "all": [
     "HAS_POWER",
     "BUILDING_FACTORY",
-    "TECH_ASSEMBLY_LINE"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_ASSEMBLY_LINE",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {
-   "any": [
-    [
-     {
-      "type": "BONUS_RAW_MEAT",
-      "scope": "city",
-      "connection": "trade|vicinity"
-     }
-    ]
+   "all": [
+    {
+     "type": "BONUS_RAW_MEAT",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    }
    ],
    "dormant": [
     "BUILDING_FOOD_MANUFACTURING_DISTRICT"

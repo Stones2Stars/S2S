@@ -6,15 +6,11 @@
   "build": {
    "all": [
     "HAS_POWER",
-    "TECH_HYDROELECTRICITY"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_HYDROELECTRICITY",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   }
  },

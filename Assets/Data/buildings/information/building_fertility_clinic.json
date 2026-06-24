@@ -23,19 +23,17 @@
    "all": [
     "HAS_POWER",
     "BUILDING_STEM_CELL_LAB",
-    "TECH_GENETIC_BIOCHEMISTRY"
-   ],
-   "any": [
-    [
-     "BUILDING_MEDICAL_CLINIC",
-     "BUILDING_HEALTHCARE_MEGACOMPLEX"
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_GENETIC_BIOCHEMISTRY",
+    {
+     "any": [
+      "BUILDING_MEDICAL_CLINIC",
+      "BUILDING_HEALTHCARE_MEGACOMPLEX"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

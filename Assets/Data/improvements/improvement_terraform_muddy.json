@@ -8,16 +8,12 @@
     {
      "type": "TECH_WEATHER_CONTROL",
      "scope": "team"
+    },
+    {
+     "terrain": [
+      "TERRAIN_MARSH"
+     ]
     }
-   ],
-   "any": [
-    [
-     {
-      "terrain": [
-       "TERRAIN_MARSH"
-      ]
-     }
-    ]
    ]
   }
  },

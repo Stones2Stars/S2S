@@ -15,19 +15,17 @@
      "scope": "city",
      "min": 7
     },
-    "TECH_MODERN_ART"
-   ],
-   "any": [
-    [
-     "BUILDING_ENGINEERING_SCHOOL",
-     "BUILDING_UNIVERSITY"
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_MODERN_ART",
+    {
+     "any": [
+      "BUILDING_ENGINEERING_SCHOOL",
+      "BUILDING_UNIVERSITY"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   }
  },

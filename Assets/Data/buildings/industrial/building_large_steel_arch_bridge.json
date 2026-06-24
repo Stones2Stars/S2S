@@ -21,20 +21,18 @@
    "all": [
     "HAS_RIVER",
     "TECH_MOTORIZED_TRANSPORTATION",
-    "TECH_CIVIL_ENGINEERING"
-   ],
-   "any": [
-    [
-     "BUILDING_PAVED_ROADS",
-     "BUILDING_ASPHALT_ROADS",
-     "BUILDING_SKYROAD_CONTROL_TOWER"
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_CIVIL_ENGINEERING",
+    {
+     "any": [
+      "BUILDING_PAVED_ROADS",
+      "BUILDING_ASPHALT_ROADS",
+      "BUILDING_SKYROAD_CONTROL_TOWER"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

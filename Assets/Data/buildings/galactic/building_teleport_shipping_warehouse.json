@@ -14,15 +14,11 @@
     "HAS_POWER",
     "BUILDING_MODERN_WAREHOUSE",
     "BUILDING_TELEPORT_BOOTH",
-    "TECH_TELEPORTATION"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_TELEPORTATION",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   }
  },

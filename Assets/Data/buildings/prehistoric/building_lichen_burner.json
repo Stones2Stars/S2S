@@ -11,29 +11,27 @@
   "build": {
    "all": [
     "BUILDING_LICHEN_GATHERER",
-    "TECH_COOKING"
-   ],
-   "any": [
-    [
-     {
-      "type": "TERRAIN_TAIGA",
-      "scope": "plot"
-     },
-     {
-      "type": "TERRAIN_TUNDRA",
-      "scope": "plot"
-     },
-     {
-      "type": "TERRAIN_ICE",
-      "scope": "plot"
-     }
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_COOKING",
+    {
+     "any": [
+      {
+       "type": "TERRAIN_TAIGA",
+       "scope": "plot"
+      },
+      {
+       "type": "TERRAIN_TUNDRA",
+       "scope": "plot"
+      },
+      {
+       "type": "TERRAIN_ICE",
+       "scope": "plot"
+      }
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

@@ -13,15 +13,11 @@
   "build": {
    "all": [
     "BUILDING_UNIVERSITY",
-    "TECH_ANATOMY"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_ANATOMY",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   }
  },

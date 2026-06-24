@@ -6,23 +6,21 @@
   "build": {
    "all": [
     "BUILDING_KINGS_COUNCIL",
-    "TECH_PARLIAMENTS"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_PARLIAMENTS",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {
-   "any": [
-    [
-     "CIVIC_MONARCHY",
-     "CIVIC_FEUDAL"
-    ]
+   "all": [
+    {
+     "any": [
+      "CIVIC_MONARCHY",
+      "CIVIC_FEUDAL"
+     ]
+    }
    ]
   }
  },

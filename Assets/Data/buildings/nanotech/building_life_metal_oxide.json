@@ -5,21 +5,15 @@
  "requires": {
   "build": {
    "all": [
-    "TECH_HYPOTHETICAL_BIOCHEMISTRY"
-   ],
-   "any": [
-    [
-     {
-      "type": "TERRAIN_MERCURY",
-      "scope": "plot"
-     }
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_SOLAR_SYSTEM",
-      "scope": "plot"
-     }
-    ]
+    "TECH_HYPOTHETICAL_BIOCHEMISTRY",
+    {
+     "type": "TERRAIN_MERCURY",
+     "scope": "plot"
+    },
+    {
+     "type": "MAPCATEGORY_SOLAR_SYSTEM",
+     "scope": "plot"
+    }
    ]
   }
  },

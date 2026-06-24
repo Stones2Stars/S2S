@@ -5,19 +5,17 @@
  "requires": {
   "build": {
    "all": [
-    "TECH_SOLAR_PROPULSION"
-   ],
-   "any": [
-    [
-     "BUILDING_MILITARY_SATELLITES",
-     "BUILDING_MILITARY_SPACEPORT"
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_SOLAR_PROPULSION",
+    {
+     "any": [
+      "BUILDING_MILITARY_SATELLITES",
+      "BUILDING_MILITARY_SPACEPORT"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   }
  },

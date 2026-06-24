@@ -13,15 +13,11 @@
   "build": {
    "all": [
     "BUILDING_CISLUNAR_CONTROL_SYSTEM",
-    "TECH_BINARY_LEGISLATION"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_CISLUNAR",
-      "scope": "plot"
-     }
-    ]
+    "TECH_BINARY_LEGISLATION",
+    {
+     "type": "MAPCATEGORY_CISLUNAR",
+     "scope": "plot"
+    }
    ]
   }
  },

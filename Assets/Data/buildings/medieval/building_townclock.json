@@ -13,20 +13,18 @@
  "requires": {
   "build": {
    "all": [
-    "TECH_CLOCKWORKS"
-   ],
-   "any": [
-    [
-     "BUILDING_FORGE",
-     "BUILDING_FOUNDRY",
-     "BUILDING_METALS_MEGACOMPLEX"
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_CLOCKWORKS",
+    {
+     "any": [
+      "BUILDING_FORGE",
+      "BUILDING_FOUNDRY",
+      "BUILDING_METALS_MEGACOMPLEX"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   }
  },

@@ -11,15 +11,11 @@
     "TECH_PRIESTHOOD",
     {
      "STATE_RELIGION": "RELIGION_MESOPOTAMISM"
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
     }
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
    ]
   },
   "operate": {

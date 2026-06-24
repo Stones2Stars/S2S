@@ -21,22 +21,20 @@
   "build": {
    "all": [
     "HAS_COAST",
-    "TECH_SEAFARING"
-   ],
-   "any": [
-    [
-     "BUILDING_HARBOR",
-     "BUILDING_PORT",
-     "BUILDING_COMMERCIAL_PORT",
-     "BUILDING_INTERNATIONAL_PORT",
-     "BUILDING_OCEAN_ADMINISTRATION"
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_SEAFARING",
+    {
+     "any": [
+      "BUILDING_HARBOR",
+      "BUILDING_PORT",
+      "BUILDING_COMMERCIAL_PORT",
+      "BUILDING_INTERNATIONAL_PORT",
+      "BUILDING_OCEAN_ADMINISTRATION"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   }
  },

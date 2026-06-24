@@ -25,19 +25,17 @@
      "type": "VICTORY_DIPLOMATIC",
      "scope": "world"
     },
-    "TECH_MASS_MEDIA"
-   ],
-   "any": [
-    [
-     "BUILDING_MODERN_OFFICES",
-     "BUILDING_SKYSCRAPER"
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_MASS_MEDIA",
+    {
+     "any": [
+      "BUILDING_MODERN_OFFICES",
+      "BUILDING_SKYSCRAPER"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   }
  },

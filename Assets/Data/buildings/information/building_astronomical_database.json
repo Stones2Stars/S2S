@@ -12,15 +12,11 @@
    "all": [
     "BUILDING_UNIVERSITY",
     "BUILDING_PLANETARIUM",
-    "TECH_EXOPLANET_DISCOVERY"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_EXOPLANET_DISCOVERY",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

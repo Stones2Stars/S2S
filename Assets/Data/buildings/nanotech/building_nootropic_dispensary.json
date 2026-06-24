@@ -13,15 +13,11 @@
  "requires": {
   "build": {
    "all": [
-    "TECH_SMART_DRUGS"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_SMART_DRUGS",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

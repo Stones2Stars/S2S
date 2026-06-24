@@ -13,21 +13,19 @@
  "requires": {
   "build": {
    "all": [
-    "TECH_FIRE_MAKING"
-   ],
-   "any": [
-    [
-     "BUILDING_IMU",
-     "BUILDING_FIRE_PIT",
-     "BUILDING_BONFIRE",
-     "BUILDING_CHARCOAL_BURNER"
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_FIRE_MAKING",
+    {
+     "any": [
+      "BUILDING_IMU",
+      "BUILDING_FIRE_PIT",
+      "BUILDING_BONFIRE",
+      "BUILDING_CHARCOAL_BURNER"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

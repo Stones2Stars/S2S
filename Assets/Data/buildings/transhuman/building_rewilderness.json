@@ -14,15 +14,11 @@
     "HAS_POWER",
     "BUILDING_CHEMOSYNTHESIS_PLANT_FARM",
     "BUILDING_STATE_PARK",
-    "TECH_GAIA_ECOLOGY"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_GAIA_ECOLOGY",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   }
  },

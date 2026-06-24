@@ -11,19 +11,17 @@
   "build": {
    "all": [
     "BUILDING_FOLKLORE_T_RAPTORS",
-    "TECH_FALCONRY"
-   ],
-   "any": [
-    [
-     "BUILDING_MASTER_HUNTER",
-     "BUILDING_MASTER_HUNTER_TRADITION"
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_FALCONRY",
+    {
+     "any": [
+      "BUILDING_MASTER_HUNTER",
+      "BUILDING_MASTER_HUNTER_TRADITION"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   }
  },

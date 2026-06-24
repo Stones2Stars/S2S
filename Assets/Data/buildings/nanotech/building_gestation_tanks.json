@@ -21,15 +21,11 @@
     "HAS_POWER",
     "BUILDING_GENOTYPE_STUDIO",
     "BUILDING_CLONING_FACTORY",
-    "TECH_RAPID_RECUPERATION"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_RAPID_RECUPERATION",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

@@ -17,34 +17,28 @@
  "requires": {
   "build": {
    "all": [
-    "TECH_TRACKING"
-   ],
-   "any": [
-    [
-     "BUILDING_HUNTERS_CAMP"
-    ],
-    [
-     {
-      "type": "TERRAIN_TAIGA",
-      "scope": "plot"
-     },
-     {
-      "type": "TERRAIN_ICE",
-      "scope": "plot"
-     }
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ],
-    [
-     {
-      "type": "CIVILIZATION_NPC_NEANDERTHAL",
-      "scope": "empire"
-     }
-    ]
+    "TECH_TRACKING",
+    "BUILDING_HUNTERS_CAMP",
+    {
+     "any": [
+      {
+       "type": "TERRAIN_TAIGA",
+       "scope": "plot"
+      },
+      {
+       "type": "TERRAIN_ICE",
+       "scope": "plot"
+      }
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    },
+    {
+     "type": "CIVILIZATION_NPC_NEANDERTHAL",
+     "scope": "empire"
+    }
    ]
   },
   "operate": {

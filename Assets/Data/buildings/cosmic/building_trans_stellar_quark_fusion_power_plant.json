@@ -6,15 +6,11 @@
   "build": {
    "all": [
     "BUILDING_TRANSTELLAR_FUSION_MEGACOMPLEX",
-    "TECH_FEMTOTECHNOLOGY"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_INTERSTELLAR",
-      "scope": "plot"
-     }
-    ]
+    "TECH_FEMTOTECHNOLOGY",
+    {
+     "type": "MAPCATEGORY_INTERSTELLAR",
+     "scope": "plot"
+    }
    ]
   }
  },

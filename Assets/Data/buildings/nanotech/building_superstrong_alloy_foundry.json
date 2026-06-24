@@ -30,19 +30,17 @@
      "type": "BONUS_TITANIUM_WARES",
      "scope": "city",
      "connection": "trade|vicinity"
+    },
+    {
+     "any": [
+      "BUILDING_FOUNDRY",
+      "BUILDING_METALS_MEGACOMPLEX"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
     }
-   ],
-   "any": [
-    [
-     "BUILDING_FOUNDRY",
-     "BUILDING_METALS_MEGACOMPLEX"
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
    ]
   },
   "operate": {

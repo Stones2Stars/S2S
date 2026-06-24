@@ -11,35 +11,35 @@
  "requires": {
   "build": {
    "all": [
-    "TECH_LOGISTICS"
-   ],
-   "any": [
-    [
-     "BUILDING_AUTOMATED_FIRING_RANGE",
-     "BUILDING_ORBITAL_TARGETS"
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_LOGISTICS",
+    {
+     "any": [
+      "BUILDING_AUTOMATED_FIRING_RANGE",
+      "BUILDING_ORBITAL_TARGETS"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {
-   "any": [
-    [
-     {
-      "type": "BONUS_FIREARMS",
-      "scope": "city",
-      "connection": "trade|vicinity"
-     },
-     {
-      "type": "BONUS_AMMUNITION",
-      "scope": "city",
-      "connection": "trade|vicinity"
-     }
-    ]
+   "all": [
+    {
+     "any": [
+      {
+       "type": "BONUS_FIREARMS",
+       "scope": "city",
+       "connection": "trade|vicinity"
+      },
+      {
+       "type": "BONUS_AMMUNITION",
+       "scope": "city",
+       "connection": "trade|vicinity"
+      }
+     ]
+    }
    ]
   }
  },

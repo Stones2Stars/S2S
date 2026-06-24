@@ -6,27 +6,25 @@
   "build": {
    "all": [
     "BUILDING_EFFECT_CISLUNAR_ECONOMY",
-    "TECH_PHOTONIC_SATELLITES"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_PHOTONIC_SATELLITES",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {
-   "any": [
-    [
-     "CIVIC_INQUISITORIAL",
-     "CIVIC_TOTALITARIANISM",
-     "CIVIC_MARXIST",
-     "CIVIC_PROPAGANDA",
-     "CIVIC_SINGLE_PARTY",
-     "CIVIC_GRID"
-    ]
+   "all": [
+    {
+     "any": [
+      "CIVIC_INQUISITORIAL",
+      "CIVIC_TOTALITARIANISM",
+      "CIVIC_MARXIST",
+      "CIVIC_PROPAGANDA",
+      "CIVIC_SINGLE_PARTY",
+      "CIVIC_GRID"
+     ]
+    }
    ]
   }
  },

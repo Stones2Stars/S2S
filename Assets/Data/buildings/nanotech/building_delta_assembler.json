@@ -35,19 +35,17 @@
      "type": "BONUS_MICROGENERATORS",
      "scope": "city",
      "connection": "trade|vicinity"
+    },
+    {
+     "any": [
+      "BUILDING_FACTORY_EXOSKELETONS",
+      "BUILDING_NANOTECH_COMPLEX"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
     }
-   ],
-   "any": [
-    [
-     "BUILDING_FACTORY_EXOSKELETONS",
-     "BUILDING_NANOTECH_COMPLEX"
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
    ]
   }
  },

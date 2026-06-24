@@ -7,15 +7,11 @@
    "all": [
     "BUILDING_INTERSTELLAR_SPHEREWORLD",
     "BUILDING_EFFECT_MULTIVERSAL_ECONOMY",
-    "TECH_OMEGA_POINT"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_MILKY_WAY",
-      "scope": "plot"
-     }
-    ]
+    "TECH_OMEGA_POINT",
+    {
+     "type": "MAPCATEGORY_MILKY_WAY",
+     "scope": "plot"
+    }
    ]
   }
  },

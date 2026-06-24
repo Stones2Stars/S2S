@@ -6,15 +6,11 @@
   "build": {
    "all": [
     "BUILDING_CISLUNAR_SPACEPORT",
-    "TECH_UNIFICATION_PHYSICS"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_CISLUNAR",
-      "scope": "plot"
-     }
-    ]
+    "TECH_UNIFICATION_PHYSICS",
+    {
+     "type": "MAPCATEGORY_CISLUNAR",
+     "scope": "plot"
+    }
    ]
   }
  },

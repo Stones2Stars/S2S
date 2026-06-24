@@ -15,15 +15,11 @@
    "all": [
     "HAS_POWER",
     "BUILDING_COMPUTER_NETWORK",
-    "TECH_AUGMENTED_REALITY"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_AUGMENTED_REALITY",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

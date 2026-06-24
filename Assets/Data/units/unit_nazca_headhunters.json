@@ -10,16 +10,12 @@
      "scope": "city",
      "connection": "trade|vicinity"
     },
-    "TECH_OBSIDIAN_WEAPONS"
-   ],
-   "any": [
-    [
-     {
-      "type": "BONUS_OBSIDIAN",
-      "scope": "city",
-      "connection": "trade|vicinity"
-     }
-    ]
+    "TECH_OBSIDIAN_WEAPONS",
+    {
+     "type": "BONUS_OBSIDIAN",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    }
    ]
   }
  },

@@ -12,21 +12,15 @@
   "build": {
    "all": [
     "BUILDING_UMBRIEL_COLONY",
-    "TECH_SHIELDING"
-   ],
-   "any": [
-    [
-     {
-      "type": "TERRAIN_UMBRIEL",
-      "scope": "plot"
-     }
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_SOLAR_SYSTEM",
-      "scope": "plot"
-     }
-    ]
+    "TECH_SHIELDING",
+    {
+     "type": "TERRAIN_UMBRIEL",
+     "scope": "plot"
+    },
+    {
+     "type": "MAPCATEGORY_SOLAR_SYSTEM",
+     "scope": "plot"
+    }
    ]
   }
  },

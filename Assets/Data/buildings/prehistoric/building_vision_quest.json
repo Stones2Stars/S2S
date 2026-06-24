@@ -11,15 +11,11 @@
   "build": {
    "all": [
     "BUILDING_C_L_NORTH_AMERICAN",
-    "TECH_RITUALISM"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_RITUALISM",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   }
  },

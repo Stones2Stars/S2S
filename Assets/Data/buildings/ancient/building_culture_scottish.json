@@ -7,21 +7,15 @@
    "all": [
     "BUILDING_C_AC_EUROPEAN",
     "BUILDING_C_L_EUROPEAN",
-    "TECH_FOLK_MUSIC"
-   ],
-   "any": [
-    [
-     {
-      "type": "TERRAIN_HILL",
-      "scope": "plot"
-     }
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_FOLK_MUSIC",
+    {
+     "type": "TERRAIN_HILL",
+     "scope": "plot"
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

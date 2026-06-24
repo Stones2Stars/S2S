@@ -10,20 +10,18 @@
      "scope": "city",
      "connection": "trade|vicinity"
     },
-    "TECH_CLOCKWORKS"
-   ],
-   "any": [
-    [
-     {
-      "type": "BONUS_TOOLS",
-      "scope": "city",
-      "connection": "trade|vicinity"
-     }
-    ],
-    [
-     "BUILDING_WATCHMAKERS_SHOP",
-     "BUILDING_HYPERMARKET"
-    ]
+    "TECH_CLOCKWORKS",
+    {
+     "type": "BONUS_TOOLS",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    {
+     "any": [
+      "BUILDING_WATCHMAKERS_SHOP",
+      "BUILDING_HYPERMARKET"
+     ]
+    }
    ]
   }
  },

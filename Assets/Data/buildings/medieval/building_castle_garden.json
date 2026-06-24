@@ -13,20 +13,18 @@
  "requires": {
   "build": {
    "all": [
-    "TECH_PERSPECTIVE"
-   ],
-   "any": [
-    [
-     "BUILDING_CASTLE",
-     "BUILDING_STAR_FORT",
-     "BUILDING_IMPERIAL_FORTRESS"
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_PERSPECTIVE",
+    {
+     "any": [
+      "BUILDING_CASTLE",
+      "BUILDING_STAR_FORT",
+      "BUILDING_IMPERIAL_FORTRESS"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

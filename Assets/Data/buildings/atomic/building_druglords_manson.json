@@ -11,21 +11,19 @@
   "build": {
    "all": [
     "HAS_POWER",
-    "TECH_GLOBALIZATION"
-   ],
-   "any": [
-    [
-     "BUILDING_HOUSING_MANSIONS",
-     "BUILDING_HOUSING_CHATEAU",
-     "BUILDING_HOUSING_COLONY_ARCOLOGY",
-     "BUILDING_LAUNCH_ARCOLOGY"
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_GLOBALIZATION",
+    {
+     "any": [
+      "BUILDING_HOUSING_MANSIONS",
+      "BUILDING_HOUSING_CHATEAU",
+      "BUILDING_HOUSING_COLONY_ARCOLOGY",
+      "BUILDING_LAUNCH_ARCOLOGY"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

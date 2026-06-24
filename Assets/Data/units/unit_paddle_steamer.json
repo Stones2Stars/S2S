@@ -10,16 +10,12 @@
      "scope": "world",
      "min": 10
     },
-    "TECH_STEAM_POWER"
-   ],
-   "any": [
-    [
-     {
-      "type": "BONUS_COAL",
-      "scope": "city",
-      "connection": "trade|vicinity"
-     }
-    ]
+    "TECH_STEAM_POWER",
+    {
+     "type": "BONUS_COAL",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    }
    ]
   }
  },

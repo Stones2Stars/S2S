@@ -10,39 +10,35 @@
  "requires": {
   "build": {
    "all": [
-    "TECH_CAVE_DWELLING"
-   ],
-   "any": [
-    [
-     {
-      "type": "TERRAIN_ROCKY",
-      "scope": "plot"
-     },
-     {
-      "type": "TERRAIN_BADLAND",
-      "scope": "plot"
-     },
-     {
-      "type": "TERRAIN_JAGGED",
-      "scope": "plot"
-     },
-     {
-      "type": "TERRAIN_BARREN",
-      "scope": "plot"
-     }
-    ],
-    [
-     {
-      "type": "FEATURE_CAVES",
-      "scope": "plot"
-     }
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_CAVE_DWELLING",
+    {
+     "any": [
+      {
+       "type": "TERRAIN_ROCKY",
+       "scope": "plot"
+      },
+      {
+       "type": "TERRAIN_BADLAND",
+       "scope": "plot"
+      },
+      {
+       "type": "TERRAIN_JAGGED",
+       "scope": "plot"
+      },
+      {
+       "type": "TERRAIN_BARREN",
+       "scope": "plot"
+      }
+     ]
+    },
+    {
+     "type": "FEATURE_CAVES",
+     "scope": "plot"
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   }
  },

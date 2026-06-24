@@ -11,16 +11,12 @@
      "connection": "trade|vicinity"
     },
     "BUILDING_SIEGE_WEAPONS_WORKSHOP",
-    "TECH_CLOCKPUNK"
-   ],
-   "any": [
-    [
-     {
-      "type": "BONUS_PRIME_TIMBER",
-      "scope": "city",
-      "connection": "trade|vicinity"
-     }
-    ]
+    "TECH_CLOCKPUNK",
+    {
+     "type": "BONUS_PRIME_TIMBER",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    }
    ]
   }
  },

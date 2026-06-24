@@ -6,20 +6,18 @@
   "build": {
    "all": [
     "TECH_LOGISTICS",
-    "TECH_CORPORATION"
-   ],
-   "any": [
-    [
-     "BUILDING_MODERN_OFFICES",
-     "BUILDING_OFFICIUM",
-     "BUILDING_SKYSCRAPER"
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_CORPORATION",
+    {
+     "any": [
+      "BUILDING_MODERN_OFFICES",
+      "BUILDING_OFFICIUM",
+      "BUILDING_SKYSCRAPER"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

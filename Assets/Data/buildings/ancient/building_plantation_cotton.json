@@ -13,26 +13,20 @@
  "requires": {
   "build": {
    "all": [
-    "TECH_AGRICULTURE"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_AGRICULTURE",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {
-   "any": [
-    [
-     {
-      "type": "BONUS_COTTON",
-      "scope": "city",
-      "connection": "vicinity"
-     }
-    ]
+   "all": [
+    {
+     "type": "BONUS_COTTON",
+     "scope": "city",
+     "connection": "vicinity"
+    }
    ],
    "dormant": [
     "BUILDING_TEXTILE_MANUFACTURING_DISTRICT"

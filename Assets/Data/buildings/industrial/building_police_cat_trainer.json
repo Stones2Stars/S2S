@@ -17,19 +17,17 @@
     },
     "BUILDING_EFFECT_HERITAGE_BIG_CATS",
     "TECH_CRIMINOLOGY",
-    "TECH_MEGAFAUNA_DOMESTICATION"
-   ],
-   "any": [
-    [
-     "BUILDING_POLICE_STATION",
-     "BUILDING_POLICE_PRECINCT"
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_MEGAFAUNA_DOMESTICATION",
+    {
+     "any": [
+      "BUILDING_POLICE_STATION",
+      "BUILDING_POLICE_PRECINCT"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   }
  },

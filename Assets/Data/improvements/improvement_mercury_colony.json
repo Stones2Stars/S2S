@@ -8,16 +8,12 @@
     {
      "type": "TECH_THERMAL_NEGATION",
      "scope": "team"
+    },
+    {
+     "terrain": [
+      "TERRAIN_MERCURY"
+     ]
     }
-   ],
-   "any": [
-    [
-     {
-      "terrain": [
-       "TERRAIN_MERCURY"
-      ]
-     }
-    ]
    ]
   }
  },

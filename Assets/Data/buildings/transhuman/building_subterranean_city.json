@@ -17,15 +17,11 @@
    "all": [
     "HAS_POWER",
     "BUILDING_ADVANCED_SHIELDING",
-    "TECH_SUBTERRANEAN_EXPLORATION"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_SUBTERRANEAN_EXPLORATION",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   }
  },

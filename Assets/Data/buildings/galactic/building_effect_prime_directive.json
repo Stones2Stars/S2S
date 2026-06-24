@@ -5,15 +5,11 @@
  "requires": {
   "build": {
    "all": [
-    "TECH_ASTROIMPERIALISM"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_CISLUNAR",
-      "scope": "plot"
-     }
-    ]
+    "TECH_ASTROIMPERIALISM",
+    {
+     "type": "MAPCATEGORY_CISLUNAR",
+     "scope": "plot"
+    }
    ]
   }
  },

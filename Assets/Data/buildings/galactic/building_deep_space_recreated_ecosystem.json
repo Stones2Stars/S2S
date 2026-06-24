@@ -7,15 +7,11 @@
    "all": [
     "BUILDING_DEEP_SPACE_BISHOP_RING",
     "BUILDING_DEEP_SPACE_ADVANCED_RECYCLING",
-    "TECH_ECOSYNTHESIS"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_SOLAR_SYSTEM",
-      "scope": "plot"
-     }
-    ]
+    "TECH_ECOSYNTHESIS",
+    {
+     "type": "MAPCATEGORY_SOLAR_SYSTEM",
+     "scope": "plot"
+    }
    ]
   }
  },

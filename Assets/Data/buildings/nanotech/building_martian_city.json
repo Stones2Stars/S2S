@@ -25,15 +25,11 @@
    "all": [
     "HAS_POWER",
     "BUILDING_SPACE_COLONY_MARTIAN",
-    "TECH_SUPERCHARGED_CRYSTALLOGRAPHY"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_MARTIAN",
-      "scope": "plot"
-     }
-    ]
+    "TECH_SUPERCHARGED_CRYSTALLOGRAPHY",
+    {
+     "type": "MAPCATEGORY_MARTIAN",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {
@@ -42,16 +38,12 @@
      "type": "BONUS_MARTIAN_ELECTRONICS",
      "scope": "city",
      "connection": "trade|vicinity"
+    },
+    {
+     "type": "BONUS_MARTIAN_ALGAE",
+     "scope": "city",
+     "connection": "trade|vicinity"
     }
-   ],
-   "any": [
-    [
-     {
-      "type": "BONUS_MARTIAN_ALGAE",
-      "scope": "city",
-      "connection": "trade|vicinity"
-     }
-    ]
    ]
   }
  },

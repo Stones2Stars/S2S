@@ -15,19 +15,17 @@
    "all": [
     "HAS_POWER",
     "BUILDING_BEAUTY_SALON",
-    "TECH_GENESIS_BIOLOGY"
-   ],
-   "any": [
-    [
-     "BUILDING_MOLECULAR_BIOLOGY_LAB",
-     "BUILDING_CHEMICALS_DISTRICT"
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_GENESIS_BIOLOGY",
+    {
+     "any": [
+      "BUILDING_MOLECULAR_BIOLOGY_LAB",
+      "BUILDING_CHEMICALS_DISTRICT"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

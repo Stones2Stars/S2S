@@ -13,19 +13,17 @@
  "requires": {
   "build": {
    "all": [
-    "TECH_ENGINEERING"
-   ],
-   "any": [
-    [
-     "BUILDING_CASTLE",
-     "BUILDING_STAR_FORT"
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_ENGINEERING",
+    {
+     "any": [
+      "BUILDING_CASTLE",
+      "BUILDING_STAR_FORT"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

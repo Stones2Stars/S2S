@@ -14,15 +14,11 @@
    "all": [
     "HAS_POWER",
     "BUILDING_ANIMA_CHAMBER",
-    "TECH_ARTIFICIAL_LIFE"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_ARTIFICIAL_LIFE",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

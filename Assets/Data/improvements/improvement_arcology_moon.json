@@ -8,18 +8,14 @@
     {
      "type": "TECH_PLANET_ENGINEERING",
      "scope": "team"
+    },
+    {
+     "terrain": [
+      "TERRAIN_INNER_SOLAR_SYSTEM",
+      "TERRAIN_OUTER_SOLAR_SYSTEM",
+      "TERRAIN_TRANSNEPTUNIAN_SPACE"
+     ]
     }
-   ],
-   "any": [
-    [
-     {
-      "terrain": [
-       "TERRAIN_INNER_SOLAR_SYSTEM",
-       "TERRAIN_OUTER_SOLAR_SYSTEM",
-       "TERRAIN_TRANSNEPTUNIAN_SPACE"
-      ]
-     }
-    ]
    ]
   }
  },

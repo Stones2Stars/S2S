@@ -8,16 +8,12 @@
     {
      "type": "TECH_DARK_ENERGY_HARVESTING",
      "scope": "team"
+    },
+    {
+     "terrain": [
+      "TERRAIN_INTERGALACTIC_VOID"
+     ]
     }
-   ],
-   "any": [
-    [
-     {
-      "terrain": [
-       "TERRAIN_INTERGALACTIC_VOID"
-      ]
-     }
-    ]
    ]
   }
  },

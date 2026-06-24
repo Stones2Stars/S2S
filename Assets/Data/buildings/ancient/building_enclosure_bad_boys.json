@@ -5,23 +5,23 @@
  "requires": {
   "build": {
    "all": [
-    "TECH_TRADE"
-   ],
-   "any": [
-    [
-     "BUILDING_CARNIVAL",
-     "BUILDING_ZOO"
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ],
-    [
-     "HERITAGE_TAXON_CROCODILIA",
-     "HERITAGE_TAXON_MUSTELOIDEA"
-    ]
+    "TECH_TRADE",
+    {
+     "any": [
+      "BUILDING_CARNIVAL",
+      "BUILDING_ZOO"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    },
+    {
+     "any": [
+      "HERITAGE_TAXON_CROCODILIA",
+      "HERITAGE_TAXON_MUSTELOIDEA"
+     ]
+    }
    ]
   }
  },

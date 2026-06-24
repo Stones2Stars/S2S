@@ -13,21 +13,19 @@
  "requires": {
   "build": {
    "all": [
-    "TECH_ALCHEMY"
-   ],
-   "any": [
-    [
-     "BUILDING_HEALERS_HUT",
-     "BUILDING_DOCTORS_OFFICE",
-     "BUILDING_SURGEONS_OFFICE",
-     "BUILDING_MEDICAL_CLINIC"
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_ALCHEMY",
+    {
+     "any": [
+      "BUILDING_HEALERS_HUT",
+      "BUILDING_DOCTORS_OFFICE",
+      "BUILDING_SURGEONS_OFFICE",
+      "BUILDING_MEDICAL_CLINIC"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

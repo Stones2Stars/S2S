@@ -27,36 +27,34 @@
      "type": "BONUS_HUMAN_MOD_COLD_TOLERANCE",
      "scope": "city",
      "connection": "trade|vicinity"
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
     }
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
    ]
   },
   "operate": {
-   "any": [
-    [
-     {
-      "type": "BONUS_HUMAN_MOD_ZERO_G_ADAPTATION",
-      "scope": "city",
-      "connection": "trade|vicinity"
-     },
-     {
-      "type": "BONUS_HUMAN_MOD_LUNARIS",
-      "scope": "city",
-      "connection": "trade|vicinity"
-     },
-     {
-      "type": "BONUS_HUMAN_MOD_MARTIAN",
-      "scope": "city",
-      "connection": "trade|vicinity"
-     }
-    ]
+   "all": [
+    {
+     "any": [
+      {
+       "type": "BONUS_HUMAN_MOD_ZERO_G_ADAPTATION",
+       "scope": "city",
+       "connection": "trade|vicinity"
+      },
+      {
+       "type": "BONUS_HUMAN_MOD_LUNARIS",
+       "scope": "city",
+       "connection": "trade|vicinity"
+      },
+      {
+       "type": "BONUS_HUMAN_MOD_MARTIAN",
+       "scope": "city",
+       "connection": "trade|vicinity"
+      }
+     ]
+    }
    ]
   }
  },

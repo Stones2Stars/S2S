@@ -16,19 +16,17 @@
      "min": 3
     },
     "TECH_BANKING",
-    "TECH_GUILDS"
-   ],
-   "any": [
-    [
-     "BUILDING_JEWELER",
-     "BUILDING_MANUFACTURING_DISTRICT"
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_GUILDS",
+    {
+     "any": [
+      "BUILDING_JEWELER",
+      "BUILDING_MANUFACTURING_DISTRICT"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   }
  },

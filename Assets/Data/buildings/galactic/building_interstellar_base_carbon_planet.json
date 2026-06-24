@@ -6,21 +6,15 @@
   "build": {
    "all": [
     "BUILDING_INTERSTELLAR_PLANETARY_LANDING",
-    "TECH_PLANET_SCOUTING"
-   ],
-   "any": [
-    [
-     {
-      "type": "FEATURE_CARBON_PLANET",
-      "scope": "plot"
-     }
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_PLASMA",
-      "scope": "plot"
-     }
-    ]
+    "TECH_PLANET_SCOUTING",
+    {
+     "type": "FEATURE_CARBON_PLANET",
+     "scope": "plot"
+    },
+    {
+     "type": "MAPCATEGORY_PLASMA",
+     "scope": "plot"
+    }
    ]
   }
  },

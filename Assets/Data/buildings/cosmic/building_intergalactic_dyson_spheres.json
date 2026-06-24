@@ -18,15 +18,11 @@
     "BUILDING_INTERGALACTIC_GALACTIC_COLONY",
     "BUILDING_INTERGALACTIC_VON_NEUMANN_COLONIZERS",
     "TECH_GALACTIC_ENGINEERING",
-    "TECH_GALACTIC_ECOLOGY"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_UNIVERSAL",
-      "scope": "plot"
-     }
-    ]
+    "TECH_GALACTIC_ECOLOGY",
+    {
+     "type": "MAPCATEGORY_UNIVERSAL",
+     "scope": "plot"
+    }
    ]
   }
  },

@@ -20,35 +20,35 @@
    "all": [
     "BUILDING_BURIAL_TRADITION_FIRE",
     "TECH_CEREMONIAL_BURIAL",
-    "TECH_FIRE_MAKING"
-   ],
-   "any": [
-    [
-     "BUILDING_BONFIRE",
-     "BUILDING_CHARCOAL_BURNER"
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_FIRE_MAKING",
+    {
+     "any": [
+      "BUILDING_BONFIRE",
+      "BUILDING_CHARCOAL_BURNER"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {
-   "any": [
-    [
-     {
-      "type": "BONUS_WOOD",
-      "scope": "city",
-      "connection": "trade|vicinity"
-     },
-     {
-      "type": "BONUS_PRIME_TIMBER",
-      "scope": "city",
-      "connection": "trade|vicinity"
-     }
-    ]
+   "all": [
+    {
+     "any": [
+      {
+       "type": "BONUS_WOOD",
+       "scope": "city",
+       "connection": "trade|vicinity"
+      },
+      {
+       "type": "BONUS_PRIME_TIMBER",
+       "scope": "city",
+       "connection": "trade|vicinity"
+      }
+     ]
+    }
    ],
    "dormant": [
     "BUILDING_FUNERARY_SERVICES",

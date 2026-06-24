@@ -17,15 +17,11 @@
   "build": {
    "all": [
     "BUILDING_DEEP_SPACE_BISHOP_RING",
-    "TECH_PLANET_ENGINEERING"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_SOLAR_SYSTEM",
-      "scope": "plot"
-     }
-    ]
+    "TECH_PLANET_ENGINEERING",
+    {
+     "type": "MAPCATEGORY_SOLAR_SYSTEM",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {
@@ -34,16 +30,12 @@
      "type": "BONUS_NANOMORPHIC_HABITATS",
      "scope": "city",
      "connection": "trade|vicinity"
+    },
+    {
+     "type": "BONUS_ADVANCED_REPLICATORS",
+     "scope": "city",
+     "connection": "trade|vicinity"
     }
-   ],
-   "any": [
-    [
-     {
-      "type": "BONUS_ADVANCED_REPLICATORS",
-      "scope": "city",
-      "connection": "trade|vicinity"
-     }
-    ]
    ]
   }
  },

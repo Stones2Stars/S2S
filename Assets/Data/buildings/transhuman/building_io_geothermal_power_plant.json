@@ -6,21 +6,15 @@
   "build": {
    "all": [
     "BUILDING_IO_BASE",
-    "TECH_THERMAL_NEGATION"
-   ],
-   "any": [
-    [
-     {
-      "type": "TERRAIN_IO",
-      "scope": "plot"
-     }
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_SOLAR_SYSTEM",
-      "scope": "plot"
-     }
-    ]
+    "TECH_THERMAL_NEGATION",
+    {
+     "type": "TERRAIN_IO",
+     "scope": "plot"
+    },
+    {
+     "type": "MAPCATEGORY_SOLAR_SYSTEM",
+     "scope": "plot"
+    }
    ]
   }
  },

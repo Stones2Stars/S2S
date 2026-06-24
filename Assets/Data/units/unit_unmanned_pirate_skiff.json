@@ -16,28 +16,30 @@
      "scope": "world",
      "min": 10
     },
-    "TECH_DISASTER_ROBOTS"
-   ],
-   "any": [
-    [
-     {
-      "type": "BONUS_STEEL_WARES",
-      "scope": "city",
-      "connection": "trade|vicinity"
-     },
-     {
-      "type": "BONUS_ALUMINUM_WARES",
-      "scope": "city",
-      "connection": "trade|vicinity"
-     }
-    ],
-    [
-     "CIVIC_MERCANTILISM",
-     "CIVIC_NATIONALIST",
-     "CIVIC_FEUDAL",
-     "CIVIC_MONARCHY",
-     "CIVIC_DESPOTISM"
-    ]
+    "TECH_DISASTER_ROBOTS",
+    {
+     "any": [
+      {
+       "type": "BONUS_STEEL_WARES",
+       "scope": "city",
+       "connection": "trade|vicinity"
+      },
+      {
+       "type": "BONUS_ALUMINUM_WARES",
+       "scope": "city",
+       "connection": "trade|vicinity"
+      }
+     ]
+    },
+    {
+     "any": [
+      "CIVIC_MERCANTILISM",
+      "CIVIC_NATIONALIST",
+      "CIVIC_FEUDAL",
+      "CIVIC_MONARCHY",
+      "CIVIC_DESPOTISM"
+     ]
+    }
    ]
   }
  },

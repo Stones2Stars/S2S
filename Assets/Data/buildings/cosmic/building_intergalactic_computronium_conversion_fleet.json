@@ -6,15 +6,11 @@
   "build": {
    "all": [
     "BUILDING_INTERGALACTIC_VON_NEUMANN_COLONIZERS",
-    "TECH_COMPUTRONIUM_UNIVERSE"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_UNIVERSAL",
-      "scope": "plot"
-     }
-    ]
+    "TECH_COMPUTRONIUM_UNIVERSE",
+    {
+     "type": "MAPCATEGORY_UNIVERSAL",
+     "scope": "plot"
+    }
    ]
   }
  },

@@ -10,16 +10,12 @@
      "scope": "city",
      "connection": "trade|vicinity"
     },
-    "TECH_FLINTLOCK"
-   ],
-   "any": [
-    [
-     {
-      "type": "BONUS_FIREARMS",
-      "scope": "city",
-      "connection": "trade|vicinity"
-     }
-    ]
+    "TECH_FLINTLOCK",
+    {
+     "type": "BONUS_FIREARMS",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    }
    ]
   }
  },

@@ -13,15 +13,11 @@
    "all": [
     "HAS_POWER",
     "BUILDING_PHENOTYPE_STUDIO",
-    "TECH_GENE_JURISPRUDENCE"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_GENE_JURISPRUDENCE",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

@@ -6,15 +6,11 @@
   "build": {
    "all": [
     "BUILDING_INTERGALACTIC_COMMAND_CENTER",
-    "TECH_NOOGENESIS"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_UNIVERSAL",
-      "scope": "plot"
-     }
-    ]
+    "TECH_NOOGENESIS",
+    {
+     "type": "MAPCATEGORY_UNIVERSAL",
+     "scope": "plot"
+    }
    ]
   }
  },

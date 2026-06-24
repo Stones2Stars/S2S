@@ -12,33 +12,31 @@
    "all": [
     "HAS_POWER",
     "BUILDING_DEEP_SPACE_FACTORY",
-    "TECH_ANTIMATTER_PRODUCTION"
-   ],
-   "any": [
-    [
-     {
-      "type": "TERRAIN_JUPITER",
-      "scope": "plot"
-     },
-     {
-      "type": "TERRAIN_SATURN",
-      "scope": "plot"
-     },
-     {
-      "type": "TERRAIN_URANUS",
-      "scope": "plot"
-     },
-     {
-      "type": "TERRAIN_NEPTUNE",
-      "scope": "plot"
-     }
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_SOLAR_SYSTEM",
-      "scope": "plot"
-     }
-    ]
+    "TECH_ANTIMATTER_PRODUCTION",
+    {
+     "any": [
+      {
+       "type": "TERRAIN_JUPITER",
+       "scope": "plot"
+      },
+      {
+       "type": "TERRAIN_SATURN",
+       "scope": "plot"
+      },
+      {
+       "type": "TERRAIN_URANUS",
+       "scope": "plot"
+      },
+      {
+       "type": "TERRAIN_NEPTUNE",
+       "scope": "plot"
+      }
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_SOLAR_SYSTEM",
+     "scope": "plot"
+    }
    ]
   }
  },

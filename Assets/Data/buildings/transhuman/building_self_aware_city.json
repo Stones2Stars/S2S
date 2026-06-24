@@ -16,15 +16,11 @@
     "HAS_POWER",
     "BUILDING_LIVING_BUILDINGS",
     "BUILDING_ARTIFICIAL_INTELLIGENCE_CORE",
-    "TECH_TECHNOLOGICAL_SINGULARITY"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_TECHNOLOGICAL_SINGULARITY",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   }
  },

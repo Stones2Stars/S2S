@@ -11,15 +11,11 @@
  "requires": {
   "build": {
    "all": [
-    "TECH_FREE_ARTISTRY"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_FREE_ARTISTRY",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   }
  },

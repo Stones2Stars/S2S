@@ -20,19 +20,17 @@
    "all": [
     "HAS_COAST",
     "BUILDING_HARBORMASTERS_OFFICE",
-    "TECH_CITY_PLANNING"
-   ],
-   "any": [
-    [
-     "BUILDING_WAREHOUSE",
-     "BUILDING_MODERN_WAREHOUSE"
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_CITY_PLANNING",
+    {
+     "any": [
+      "BUILDING_WAREHOUSE",
+      "BUILDING_MODERN_WAREHOUSE"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

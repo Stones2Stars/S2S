@@ -14,19 +14,17 @@
  "requires": {
   "build": {
    "all": [
-    "TECH_JOURNALISM"
-   ],
-   "any": [
-    [
-     "BUILDING_OFFICIUM",
-     "BUILDING_MODERN_OFFICES"
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_JOURNALISM",
+    {
+     "any": [
+      "BUILDING_OFFICIUM",
+      "BUILDING_MODERN_OFFICES"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   }
  },

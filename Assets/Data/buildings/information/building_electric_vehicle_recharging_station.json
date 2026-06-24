@@ -15,15 +15,11 @@
    "all": [
     "HAS_POWER",
     "BUILDING_SHOPPING_DISTRICT",
-    "TECH_FUEL_CELLS"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_FUEL_CELLS",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

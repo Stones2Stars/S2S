@@ -11,15 +11,11 @@
      "scope": "empire",
      "min": 2
     },
-    "TECH_STELLAR_ENGINE"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_MILKY_WAY",
-      "scope": "plot"
-     }
-    ]
+    "TECH_STELLAR_ENGINE",
+    {
+     "type": "MAPCATEGORY_MILKY_WAY",
+     "scope": "plot"
+    }
    ]
   }
  },

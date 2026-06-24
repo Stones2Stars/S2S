@@ -6,15 +6,11 @@
   "build": {
    "all": [
     "BUILDING_C_AC_NEANDERTHAL",
-    "BUILDING_C_L_NEANDERTHAL"
-   ],
-   "any": [
-    [
-     {
-      "type": "CIVILIZATION_NPC_NEANDERTHAL",
-      "scope": "empire"
-     }
-    ]
+    "BUILDING_C_L_NEANDERTHAL",
+    {
+     "type": "CIVILIZATION_NPC_NEANDERTHAL",
+     "scope": "empire"
+    }
    ]
   }
  },

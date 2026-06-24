@@ -8,34 +8,30 @@
     {
      "type": "TECH_CALENDAR",
      "scope": "team"
+    },
+    {
+     "bonus": [
+      "BONUS_INCENSE",
+      "BONUS_SUGAR",
+      "BONUS_HEMP",
+      "BONUS_COCA",
+      "BONUS_COCOA",
+      "BONUS_COFFEE",
+      "BONUS_COTTON",
+      "BONUS_TOBACCO",
+      "BONUS_RUBBER",
+      "BONUS_TEA",
+      "BONUS_FLAX",
+      "BONUS_OPIUM",
+      "BONUS_PAPYRUS",
+      "BONUS_RESIN",
+      "BONUS_PEYOTE",
+      "BONUS_HENNA",
+      "BONUS_INDIGO",
+      "BONUS_VANILLA",
+      "BONUS_KAVA"
+     ]
     }
-   ],
-   "any": [
-    [
-     {
-      "bonus": [
-       "BONUS_INCENSE",
-       "BONUS_SUGAR",
-       "BONUS_HEMP",
-       "BONUS_COCA",
-       "BONUS_COCOA",
-       "BONUS_COFFEE",
-       "BONUS_COTTON",
-       "BONUS_TOBACCO",
-       "BONUS_RUBBER",
-       "BONUS_TEA",
-       "BONUS_FLAX",
-       "BONUS_OPIUM",
-       "BONUS_PAPYRUS",
-       "BONUS_RESIN",
-       "BONUS_PEYOTE",
-       "BONUS_HENNA",
-       "BONUS_INDIGO",
-       "BONUS_VANILLA",
-       "BONUS_KAVA"
-      ]
-     }
-    ]
    ]
   }
  },

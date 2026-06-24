@@ -16,19 +16,17 @@
      "min": 3
     },
     "TECH_GEARS",
-    "TECH_SUNDIAL"
-   ],
-   "any": [
-    [
-     "BUILDING_STARGAZERS_HUT",
-     "BUILDING_OBSERVATORY"
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_SUNDIAL",
+    {
+     "any": [
+      "BUILDING_STARGAZERS_HUT",
+      "BUILDING_OBSERVATORY"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

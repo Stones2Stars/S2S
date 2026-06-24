@@ -6,15 +6,11 @@
   "build": {
    "all": [
     "BUILDING_OBSERVATORY",
-    "TECH_SUPERSTRING_THEORY"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_SUPERSTRING_THEORY",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

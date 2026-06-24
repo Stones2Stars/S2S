@@ -13,15 +13,11 @@
    "all": [
     "HAS_POWER",
     "BUILDING_METEOROLOGY_LAB",
-    "TECH_CLIMATE_MODELS"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_CLIMATE_MODELS",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

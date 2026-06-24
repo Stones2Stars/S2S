@@ -8,15 +8,11 @@
     "HAS_POWER",
     "BUILDING_MARTIAN_ECOSYSTEM",
     "BUILDING_MARTIAN_MEGACITY",
-    "TECH_EXTRATERRESTRIAL_AGRICULTURE"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_MARTIAN",
-      "scope": "plot"
-     }
-    ]
+    "TECH_EXTRATERRESTRIAL_AGRICULTURE",
+    {
+     "type": "MAPCATEGORY_MARTIAN",
+     "scope": "plot"
+    }
    ]
   }
  },

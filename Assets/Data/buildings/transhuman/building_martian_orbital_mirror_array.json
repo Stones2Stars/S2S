@@ -7,15 +7,11 @@
    "all": [
     "HAS_POWER",
     "BUILDING_MARTIAN_MEGACITY",
-    "TECH_PHOTONIC_SATELLITES"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_MARTIAN",
-      "scope": "plot"
-     }
-    ]
+    "TECH_PHOTONIC_SATELLITES",
+    {
+     "type": "MAPCATEGORY_MARTIAN",
+     "scope": "plot"
+    }
    ]
   }
  },

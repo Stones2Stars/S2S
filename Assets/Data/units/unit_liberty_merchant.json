@@ -16,16 +16,12 @@
      "scope": "world",
      "min": 10
     },
-    "TECH_SUBMARINE_WARFARE"
-   ],
-   "any": [
-    [
-     {
-      "type": "BONUS_OIL",
-      "scope": "city",
-      "connection": "trade|vicinity"
-     }
-    ]
+    "TECH_SUBMARINE_WARFARE",
+    {
+     "type": "BONUS_OIL",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    }
    ]
   }
  },

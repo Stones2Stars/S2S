@@ -37,19 +37,19 @@
     {
      "type": "TECH_EXTRATERRESTRIAL_AGRICULTURE",
      "scope": "team"
+    },
+    {
+     "any": [
+      {
+       "type": "TECH_NUCLEAR_PULSE_PROPULSION",
+       "scope": "team"
+      },
+      {
+       "type": "TECH_NANOTROIDS",
+       "scope": "team"
+      }
+     ]
     }
-   ],
-   "any": [
-    [
-     {
-      "type": "TECH_NUCLEAR_PULSE_PROPULSION",
-      "scope": "team"
-     },
-     {
-      "type": "TECH_NANOTROIDS",
-      "scope": "team"
-     }
-    ]
    ]
   }
  },

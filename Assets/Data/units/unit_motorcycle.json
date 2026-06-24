@@ -11,21 +11,21 @@
      "connection": "trade|vicinity"
     },
     "TECH_MOTORIZED_TRANSPORTATION",
-    "TECH_SEMI_AUTOMATIC_WEAPONS"
-   ],
-   "any": [
-    [
-     {
-      "type": "BONUS_PETROLEUM_PRODUCTS",
-      "scope": "city",
-      "connection": "trade|vicinity"
-     },
-     {
-      "type": "BONUS_BIOFUEL",
-      "scope": "city",
-      "connection": "trade|vicinity"
-     }
-    ]
+    "TECH_SEMI_AUTOMATIC_WEAPONS",
+    {
+     "any": [
+      {
+       "type": "BONUS_PETROLEUM_PRODUCTS",
+       "scope": "city",
+       "connection": "trade|vicinity"
+      },
+      {
+       "type": "BONUS_BIOFUEL",
+       "scope": "city",
+       "connection": "trade|vicinity"
+      }
+     ]
+    }
    ]
   }
  },

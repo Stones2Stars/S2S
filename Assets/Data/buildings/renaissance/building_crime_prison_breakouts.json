@@ -5,21 +5,19 @@
  "requires": {
   "build": {
    "all": [
-    "TECH_CONSTITUTION"
-   ],
-   "any": [
-    [
-     "BUILDING_JAIL",
-     "BUILDING_SAFETY_ORBITAL_PRISON",
-     "BUILDING_MAXIMUM_SECURITY_PRISON",
-     "BUILDING_ALCATRAZ"
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_CONSTITUTION",
+    {
+     "any": [
+      "BUILDING_JAIL",
+      "BUILDING_SAFETY_ORBITAL_PRISON",
+      "BUILDING_MAXIMUM_SECURITY_PRISON",
+      "BUILDING_ALCATRAZ"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

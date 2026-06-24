@@ -6,15 +6,11 @@
   "build": {
    "all": [
     "BUILDING_MIXED_USE_DEVELOPMENT",
-    "TECH_AUTOMATED_TRAFFIC"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_AUTOMATED_TRAFFIC",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

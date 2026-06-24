@@ -17,15 +17,11 @@
   "build": {
    "all": [
     "BUILDING_SPACE_COLONY_MARTIAN",
-    "TECH_PLANETARY_MANUFACTURING"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_MARTIAN",
-      "scope": "plot"
-     }
-    ]
+    "TECH_PLANETARY_MANUFACTURING",
+    {
+     "type": "MAPCATEGORY_MARTIAN",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

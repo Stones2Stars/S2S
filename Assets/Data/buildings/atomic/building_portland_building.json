@@ -5,15 +5,11 @@
  "requires": {
   "build": {
    "all": [
-    "TECH_POSTMODERNISM"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_POSTMODERNISM",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   }
  },

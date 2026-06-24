@@ -5,26 +5,24 @@
  "requires": {
   "build": {
    "all": [
-    "TECH_CALENDAR"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_CALENDAR",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {
-   "any": [
-    [
-     "CIVIC_DESPOTISM",
-     "CIVIC_MONARCHY",
-     "CIVIC_FEUDAL",
-     "CIVIC_CHIEFDOM",
-     "CIVIC_SOVEREIGNTY"
-    ]
+   "all": [
+    {
+     "any": [
+      "CIVIC_DESPOTISM",
+      "CIVIC_MONARCHY",
+      "CIVIC_FEUDAL",
+      "CIVIC_CHIEFDOM",
+      "CIVIC_SOVEREIGNTY"
+     ]
+    }
    ]
   }
  },

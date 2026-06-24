@@ -12,19 +12,17 @@
   "build": {
    "all": [
     "HAS_POWER",
-    "TECH_CYBERIMMUNOLOGY"
-   ],
-   "any": [
-    [
-     "BUILDING_AUTODOCTOR",
-     "BUILDING_HEALTHCARE_MEGACOMPLEX"
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_CYBERIMMUNOLOGY",
+    {
+     "any": [
+      "BUILDING_AUTODOCTOR",
+      "BUILDING_HEALTHCARE_MEGACOMPLEX"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {
@@ -33,16 +31,12 @@
      "type": "BONUS_DIGITIZED_MEMBRANES",
      "scope": "city",
      "connection": "trade|vicinity"
+    },
+    {
+     "type": "BONUS_SMART_MEDICINE",
+     "scope": "city",
+     "connection": "trade|vicinity"
     }
-   ],
-   "any": [
-    [
-     {
-      "type": "BONUS_SMART_MEDICINE",
-      "scope": "city",
-      "connection": "trade|vicinity"
-     }
-    ]
    ]
   }
  },

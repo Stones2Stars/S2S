@@ -11,16 +11,12 @@
      "connection": "trade|vicinity"
     },
     "BUILDING_ARTIFICIAL_INTELLIGENCE_CORE",
-    "TECH_QUANTUM_COMPUTING"
-   ],
-   "any": [
-    [
-     {
-      "type": "BONUS_FLASH_MEMORY_DEVICES",
-      "scope": "city",
-      "connection": "trade|vicinity"
-     }
-    ]
+    "TECH_QUANTUM_COMPUTING",
+    {
+     "type": "BONUS_FLASH_MEMORY_DEVICES",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    }
    ]
   }
  },

@@ -15,15 +15,11 @@
    "all": [
     "HAS_POWER",
     "BUILDING_BETA_ASSEMBLER",
-    "TECH_FUSION_SPACECRAFT"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_FUSION_SPACECRAFT",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

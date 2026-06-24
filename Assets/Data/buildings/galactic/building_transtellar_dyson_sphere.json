@@ -11,15 +11,11 @@
   "build": {
    "all": [
     "BUILDING_TRANSTELLAR_ARTIFICIAL_RED_DWARF",
-    "TECH_ARTIFICIAL_STARS"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_INTERSTELLAR",
-      "scope": "plot"
-     }
-    ]
+    "TECH_ARTIFICIAL_STARS",
+    {
+     "type": "MAPCATEGORY_INTERSTELLAR",
+     "scope": "plot"
+    }
    ]
   }
  },

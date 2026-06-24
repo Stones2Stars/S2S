@@ -11,15 +11,11 @@
      "min": 13
     },
     "BUILDING_MUSEUM",
-    "TECH_RAILROAD"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_RAILROAD",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   }
  },

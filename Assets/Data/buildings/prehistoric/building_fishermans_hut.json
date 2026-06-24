@@ -19,23 +19,21 @@
   "build": {
    "all": [
     "HAS_COAST",
-    "TECH_TRAP_FISHING"
-   ],
-   "any": [
-    [
-     "BUILDING_STORAGE_PIT",
-     "BUILDING_GRANARY",
-     "BUILDING_MODERN_GRANARY",
-     "BUILDING_BARTER_POST",
-     "BUILDING_TRADING_POST",
-     "BUILDING_SHOPPING_DISTRICT"
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_TRAP_FISHING",
+    {
+     "any": [
+      "BUILDING_STORAGE_PIT",
+      "BUILDING_GRANARY",
+      "BUILDING_MODERN_GRANARY",
+      "BUILDING_BARTER_POST",
+      "BUILDING_TRADING_POST",
+      "BUILDING_SHOPPING_DISTRICT"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {
@@ -44,41 +42,41 @@
      "type": "BONUS_ROPE",
      "scope": "city",
      "connection": "trade|vicinity"
+    },
+    {
+     "any": [
+      {
+       "type": "BONUS_FISH",
+       "scope": "city",
+       "connection": "vicinity"
+      },
+      {
+       "type": "BONUS_CRAB",
+       "scope": "city",
+       "connection": "vicinity"
+      },
+      {
+       "type": "BONUS_LOBSTER",
+       "scope": "city",
+       "connection": "vicinity"
+      },
+      {
+       "type": "BONUS_CLAM",
+       "scope": "city",
+       "connection": "vicinity"
+      },
+      {
+       "type": "BONUS_SHRIMP",
+       "scope": "city",
+       "connection": "vicinity"
+      },
+      {
+       "type": "BONUS_PEARLS",
+       "scope": "city",
+       "connection": "vicinity"
+      }
+     ]
     }
-   ],
-   "any": [
-    [
-     {
-      "type": "BONUS_FISH",
-      "scope": "city",
-      "connection": "vicinity"
-     },
-     {
-      "type": "BONUS_CRAB",
-      "scope": "city",
-      "connection": "vicinity"
-     },
-     {
-      "type": "BONUS_LOBSTER",
-      "scope": "city",
-      "connection": "vicinity"
-     },
-     {
-      "type": "BONUS_CLAM",
-      "scope": "city",
-      "connection": "vicinity"
-     },
-     {
-      "type": "BONUS_SHRIMP",
-      "scope": "city",
-      "connection": "vicinity"
-     },
-     {
-      "type": "BONUS_PEARLS",
-      "scope": "city",
-      "connection": "vicinity"
-     }
-    ]
    ],
    "dormant": [
     "BUILDING_AQUAFARM"

@@ -113,7 +113,7 @@ def convert(node):
         parts = [p for p in (convert(c) for c in kids) if p is not None]
         if not parts:
             return None
-        return parts[0] if len(parts) == 1 else OrderedDict([("any", [parts])])
+        return parts[0] if len(parts) == 1 else OrderedDict([("any", parts)])   # any = || over its DIRECT children (NOT a list-of-OR-groups)
     if tag == "Not":
         parts = [p for p in (convert(c) for c in kids) if p is not None]
         if not parts:
@@ -149,9 +149,10 @@ def _is_structural(node):
 
 
 def merge_into(node, allc, anyc, none):
-    """Fold a converted condition node into EXISTING requires.build (`all`/`any`/`noneOf`) lists, IN PLACE.
-    Flattens top-level AND into allc; an OR-group goes to anyc (AND-ed with allc, per enabler-spec §3); a NOT to
-    none. A leaf (atom/predicate) appends to allc. (An Or-group MEMBER that is itself structural is kept as-is.)"""
+    """Fold a converted condition node into requires.build's `all`/`noneOf` lists, IN PLACE. Flattens top-level AND
+    into allc; an `any` (OR) node is appended WHOLE into allc as a NESTED `{any:[...]}` child (any = || over its
+    members, AND-ed with the rest of allc); a NOT goes to none; a leaf appends to allc. `anyc` is vestigial (the old
+    AND-of-ORs accumulator) and is no longer written -- OR-groups live nested under allc now."""
     if node is None:
         return
     if _is_structural(node):
@@ -159,8 +160,18 @@ def merge_into(node, allc, anyc, none):
             for m in node["all"]:
                 merge_into(m, allc, anyc, none)
         elif "any" in node:
-            anyc.extend(node["any"])
+            allc.append(node)          # nested {any:[...]} OR-group under the top-level AND
         else:
             none.extend(node["noneOf"])
     else:
         allc.append(node)
+
+
+def fold_or_groups(allc, anyc):
+    """Move a curator's accumulated OR-GROUPS (`anyc`: a list of groups, each a list of leaves -- the legacy
+    `build_any` accumulator) into `allc` as NESTED `{any:[...]}` children, so `any` is always a plain OR and the
+    top-level requires is a single AND tree (never the retired `any:[[...]]` list-of-groups). A single-member group
+    collapses to its bare leaf."""
+    for g in anyc:
+        allc.append(g[0] if len(g) == 1 else OrderedDict([("any", g)]))
+    del anyc[:]

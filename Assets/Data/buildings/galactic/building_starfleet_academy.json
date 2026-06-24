@@ -6,15 +6,11 @@
   "build": {
    "all": [
     "BUILDING_STARPORT",
-    "TECH_WEAPONIZED_DISINTEGRATION"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_WEAPONIZED_DISINTEGRATION",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   }
  },

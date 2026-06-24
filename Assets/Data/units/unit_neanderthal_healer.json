@@ -7,22 +7,20 @@
    "all": [
     "BUILDING_C_AC_NEANDERTHAL",
     "BUILDING_C_L_NEANDERTHAL",
-    "TECH_NATUROPATHY"
-   ],
-   "any": [
-    [
-     "BUILDING_HEALERS_HUT",
-     "BUILDING_DOCTORS_OFFICE",
-     "BUILDING_SURGEONS_OFFICE",
-     "BUILDING_MEDICAL_CLINIC",
-     "BUILDING_HEALTHCARE_MEGACOMPLEX"
-    ],
-    [
-     {
-      "type": "CIVILIZATION_NPC_NEANDERTHAL",
-      "scope": "empire"
-     }
-    ]
+    "TECH_NATUROPATHY",
+    {
+     "any": [
+      "BUILDING_HEALERS_HUT",
+      "BUILDING_DOCTORS_OFFICE",
+      "BUILDING_SURGEONS_OFFICE",
+      "BUILDING_MEDICAL_CLINIC",
+      "BUILDING_HEALTHCARE_MEGACOMPLEX"
+     ]
+    },
+    {
+     "type": "CIVILIZATION_NPC_NEANDERTHAL",
+     "scope": "empire"
+    }
    ]
   }
  },

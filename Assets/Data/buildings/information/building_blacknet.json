@@ -16,15 +16,11 @@
     "HAS_POWER",
     "BUILDING_NATIONAL_CYBERSECURITY_CENTER",
     "BUILDING_ENCRYPTED_FIREWALL",
-    "TECH_DIGITIZATION"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_DIGITIZATION",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

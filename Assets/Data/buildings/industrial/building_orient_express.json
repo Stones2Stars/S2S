@@ -15,19 +15,17 @@
      "scope": "city",
      "min": 7
     },
-    "TECH_RAILROAD"
-   ],
-   "any": [
-    [
-     "BUILDING_RAILROAD_STATION",
-     "BUILDING_TELEPORT_BOOTH"
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_RAILROAD",
+    {
+     "any": [
+      "BUILDING_RAILROAD_STATION",
+      "BUILDING_TELEPORT_BOOTH"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   }
  },

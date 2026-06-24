@@ -14,15 +14,11 @@
    "all": [
     "HAS_POWER",
     "BUILDING_MEGATOWER_EDUCATION_LEVEL",
-    "TECH_HOLOGRAPHICS"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_HOLOGRAPHICS",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

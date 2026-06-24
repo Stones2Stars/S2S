@@ -10,13 +10,13 @@
      "scope": "city",
      "connection": "trade|vicinity"
     },
-    "TECH_ENGINEERING"
-   ],
-   "any": [
-    [
-     "BUILDING_TRADING_POST",
-     "BUILDING_SHOPPING_DISTRICT"
-    ]
+    "TECH_ENGINEERING",
+    {
+     "any": [
+      "BUILDING_TRADING_POST",
+      "BUILDING_SHOPPING_DISTRICT"
+     ]
+    }
    ]
   }
  },

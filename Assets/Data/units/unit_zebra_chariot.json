@@ -6,13 +6,13 @@
   "build": {
    "all": [
     "TECH_CHARIOTRY",
-    "TECH_MEGAFAUNA_DOMESTICATION"
-   ],
-   "any": [
-    [
-     "BUILDING_EFFECT_HERITAGE_ZEBRAS",
-     "BUILDING_ANIMAL_TRAINER_ZEBRA"
-    ]
+    "TECH_MEGAFAUNA_DOMESTICATION",
+    {
+     "any": [
+      "BUILDING_EFFECT_HERITAGE_ZEBRAS",
+      "BUILDING_ANIMAL_TRAINER_ZEBRA"
+     ]
+    }
    ]
   }
  },

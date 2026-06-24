@@ -11,15 +11,11 @@
      "type": "BUILDING_C_L_MIDDLE_EASTERN",
      "scope": "empire",
      "min": 3
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
     }
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
    ],
    "noneOf": [
     "BUILDING_C_N_MIDDLE_EASTERN"

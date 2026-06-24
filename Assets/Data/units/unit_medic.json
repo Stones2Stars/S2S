@@ -10,13 +10,13 @@
      "scope": "city",
      "connection": "trade|vicinity"
     },
-    "TECH_MEDICINE"
-   ],
-   "any": [
-    [
-     "BUILDING_HOSPITAL",
-     "BUILDING_HEALTHCARE_MEGACOMPLEX"
-    ]
+    "TECH_MEDICINE",
+    {
+     "any": [
+      "BUILDING_HOSPITAL",
+      "BUILDING_HEALTHCARE_MEGACOMPLEX"
+     ]
+    }
    ]
   }
  },

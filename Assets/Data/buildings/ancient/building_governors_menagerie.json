@@ -13,15 +13,11 @@
   "build": {
    "all": [
     "BUILDING_GOVERNORS_PETS",
-    "TECH_MONARCHY"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_MONARCHY",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

@@ -6,15 +6,11 @@
   "build": {
    "all": [
     "BUILDING_DEEP_SPACE_ONEILL_CYLINDER",
-    "TECH_NANOMORPHICS"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_SOLAR_SYSTEM",
-      "scope": "plot"
-     }
-    ]
+    "TECH_NANOMORPHICS",
+    {
+     "type": "MAPCATEGORY_SOLAR_SYSTEM",
+     "scope": "plot"
+    }
    ]
   }
  },

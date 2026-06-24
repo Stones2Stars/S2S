@@ -14,15 +14,11 @@
   "build": {
    "all": [
     "BUILDING_SHOPPING_DISTRICT",
-    "TECH_BIOMATERIALS"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_BIOMATERIALS",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

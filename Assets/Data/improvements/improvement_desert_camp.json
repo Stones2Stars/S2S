@@ -9,24 +9,24 @@
      "type": "TECH_NATUROPATHY",
      "scope": "team"
     },
-    "HAS_IRRIGATION"
-   ],
-   "any": [
-    [
-     {
-      "terrain": [
-       "TERRAIN_DESERT",
-       "TERRAIN_DUNES",
-       "TERRAIN_SCRUB"
-      ]
-     },
-     {
-      "feature": [
-       "FEATURE_CACTUS",
-       "FEATURE_OASIS"
-      ]
-     }
-    ]
+    "HAS_IRRIGATION",
+    {
+     "any": [
+      {
+       "terrain": [
+        "TERRAIN_DESERT",
+        "TERRAIN_DUNES",
+        "TERRAIN_SCRUB"
+       ]
+      },
+      {
+       "feature": [
+        "FEATURE_CACTUS",
+        "FEATURE_OASIS"
+       ]
+      }
+     ]
+    }
    ]
   }
  },

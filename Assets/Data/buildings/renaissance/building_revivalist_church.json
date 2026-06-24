@@ -6,27 +6,23 @@
   "build": {
    "all": [
     "BUILDING_CHRISTIAN_TEMPLE",
-    "TECH_CRITICAL_THOUGHT"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_CRITICAL_THOUGHT",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {
    "all": [
-    "RELIGION_CHRISTIANITY"
-   ],
-   "any": [
-    [
-     "CIVIC_STATE_CHURCH",
-     "CIVIC_FREE_CHURCH",
-     "CIVIC_SECULARISM"
-    ]
+    "RELIGION_CHRISTIANITY",
+    {
+     "any": [
+      "CIVIC_STATE_CHURCH",
+      "CIVIC_FREE_CHURCH",
+      "CIVIC_SECULARISM"
+     ]
+    }
    ]
   }
  },

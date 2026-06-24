@@ -17,15 +17,11 @@
  "requires": {
   "build": {
    "all": [
-    "TECH_LUNAR_TRADE"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_CISLUNAR",
-      "scope": "plot"
-     }
-    ]
+    "TECH_LUNAR_TRADE",
+    {
+     "type": "MAPCATEGORY_CISLUNAR",
+     "scope": "plot"
+    }
    ]
   }
  },

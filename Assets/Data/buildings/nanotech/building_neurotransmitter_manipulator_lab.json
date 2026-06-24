@@ -13,15 +13,11 @@
    "all": [
     "HAS_POWER",
     "BUILDING_NEURON_REGENERATOR_LAB",
-    "TECH_CYBERIMMUNOLOGY"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_CYBERIMMUNOLOGY",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

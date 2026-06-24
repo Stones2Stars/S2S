@@ -22,21 +22,19 @@
      "min": 7
     },
     "TECH_MOTORIZED_TRANSPORTATION",
-    "TECH_CIVIL_ENGINEERING"
-   ],
-   "any": [
-    [
-     "BUILDING_LARGE_STEEL_ARCH_BRIDGE",
-     "BUILDING_SMALL_SUSPENSION_BRIDGE",
-     "BUILDING_LARGE_SUSPENSION_BRIDGE",
-     "BUILDING_TELEPORT_BOOTH"
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_CIVIL_ENGINEERING",
+    {
+     "any": [
+      "BUILDING_LARGE_STEEL_ARCH_BRIDGE",
+      "BUILDING_SMALL_SUSPENSION_BRIDGE",
+      "BUILDING_LARGE_SUSPENSION_BRIDGE",
+      "BUILDING_TELEPORT_BOOTH"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

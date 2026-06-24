@@ -16,16 +16,12 @@
      "scope": "world",
      "min": 10
     },
-    "TECH_URBAN_CULTURE"
-   ],
-   "any": [
-    [
-     {
-      "type": "BONUS_PETROLEUM_PRODUCTS",
-      "scope": "city",
-      "connection": "trade|vicinity"
-     }
-    ]
+    "TECH_URBAN_CULTURE",
+    {
+     "type": "BONUS_PETROLEUM_PRODUCTS",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    }
    ]
   }
  },

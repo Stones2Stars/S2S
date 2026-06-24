@@ -13,15 +13,11 @@
  "requires": {
   "build": {
    "all": [
-    "TECH_GUIDED_WEAPONS"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_GUIDED_WEAPONS",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

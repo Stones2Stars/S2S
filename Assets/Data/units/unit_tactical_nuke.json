@@ -10,16 +10,12 @@
      "scope": "city",
      "connection": "trade|vicinity"
     },
-    "TECH_ADVANCED_ROCKETRY"
-   ],
-   "any": [
-    [
-     {
-      "type": "BONUS_HEAVY_WATER",
-      "scope": "city",
-      "connection": "trade|vicinity"
-     }
-    ]
+    "TECH_ADVANCED_ROCKETRY",
+    {
+     "type": "BONUS_HEAVY_WATER",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    }
    ]
   }
  },

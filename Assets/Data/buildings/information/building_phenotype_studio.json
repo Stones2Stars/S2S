@@ -17,19 +17,17 @@
     "HAS_POWER",
     "BUILDING_BIOINFORMATICS_LAB",
     "BUILDING_TISSUE_ENGINEERING_LAB",
-    "TECH_BACTERIUM_ENGINEERING"
-   ],
-   "any": [
-    [
-     "BUILDING_FERTILITY_CLINIC",
-     "BUILDING_NANOMORPHIC_REPLICATOR"
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_BACTERIUM_ENGINEERING",
+    {
+     "any": [
+      "BUILDING_FERTILITY_CLINIC",
+      "BUILDING_NANOMORPHIC_REPLICATOR"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

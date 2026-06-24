@@ -11,15 +11,11 @@
   "build": {
    "all": [
     "HAS_FRESHWATER",
-    "TECH_SURVEYING"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_SURVEYING",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

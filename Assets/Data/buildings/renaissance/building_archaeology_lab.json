@@ -6,15 +6,11 @@
   "build": {
    "all": [
     "BUILDING_UNIVERSITY",
-    "TECH_ARCHEOLOGY"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_ARCHEOLOGY",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   }
  },

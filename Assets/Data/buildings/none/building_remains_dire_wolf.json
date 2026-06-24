@@ -5,24 +5,16 @@
  "requires": {
   "build": {
    "all": [
-    "BUILDING_FOLKLORE_REQUIREMENT"
-   ],
-   "any": [
-    [
-     {
-      "type": "FEATURE_FOREST_ANCIENT",
-      "scope": "plot"
-     }
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ],
-    [
-     "HERITAGE_FOLKLORE_WOLF_DIRE"
-    ]
+    "BUILDING_FOLKLORE_REQUIREMENT",
+    {
+     "type": "FEATURE_FOREST_ANCIENT",
+     "scope": "plot"
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    },
+    "HERITAGE_FOLKLORE_WOLF_DIRE"
    ]
   }
  },

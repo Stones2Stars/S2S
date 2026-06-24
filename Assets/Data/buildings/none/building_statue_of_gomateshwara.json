@@ -4,13 +4,11 @@
  "civilopedia": "TXT_KEY_BUILDING_STATUE_OF_GOMATESHWARA_PEDIA",
  "requires": {
   "build": {
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+   "all": [
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   }
  },

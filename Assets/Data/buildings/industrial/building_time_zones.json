@@ -6,19 +6,17 @@
   "build": {
    "all": [
     "HAS_POWER",
-    "TECH_MANAGEMENT"
-   ],
-   "any": [
-    [
-     "BUILDING_MODERN_OFFICES",
-     "BUILDING_COMPUTER_NETWORK"
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_MANAGEMENT",
+    {
+     "any": [
+      "BUILDING_MODERN_OFFICES",
+      "BUILDING_COMPUTER_NETWORK"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   }
  },

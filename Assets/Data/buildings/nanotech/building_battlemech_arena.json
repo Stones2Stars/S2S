@@ -8,15 +8,11 @@
     "HAS_POWER",
     "BUILDING_ANTHROPOMORPHICS_LAB",
     "BUILDING_ATHLETIC_MEGACOMPLEX",
-    "TECH_BATTLEFIELD_SPORTS"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_BATTLEFIELD_SPORTS",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   }
  },

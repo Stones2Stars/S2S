@@ -7,15 +7,11 @@
    "all": [
     "BUILDING_INTERGALACTIC_KOLMOGOROV_COMPRESSION",
     "BUILDING_INTERGALACTIC_ROMAN_RING",
-    "TECH_PURE_INFORMATION_SOCIETY"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_UNIVERSAL",
-      "scope": "plot"
-     }
-    ]
+    "TECH_PURE_INFORMATION_SOCIETY",
+    {
+     "type": "MAPCATEGORY_UNIVERSAL",
+     "scope": "plot"
+    }
    ]
   }
  },

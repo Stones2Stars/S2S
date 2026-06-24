@@ -8,19 +8,15 @@
     {
      "type": "TECH_ARTIFICIAL_PLANETS",
      "scope": "team"
+    },
+    {
+     "terrain": [
+      "TERRAIN_MILKY_WAY",
+      "TERRAIN_GALACTIC_CORE",
+      "TERRAIN_ORION_ARM",
+      "TERRAIN_TRANSTELLAR_SPACE"
+     ]
     }
-   ],
-   "any": [
-    [
-     {
-      "terrain": [
-       "TERRAIN_MILKY_WAY",
-       "TERRAIN_GALACTIC_CORE",
-       "TERRAIN_ORION_ARM",
-       "TERRAIN_TRANSTELLAR_SPACE"
-      ]
-     }
-    ]
    ]
   }
  },

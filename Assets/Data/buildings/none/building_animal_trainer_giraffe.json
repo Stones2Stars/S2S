@@ -26,21 +26,19 @@
       "max": 45
      }
     },
-    "TECH_MEGAFAUNA_DOMESTICATION"
-   ],
-   "any": [
-    [
-     "BUILDING_FOLKLORE_GIRAFFE",
-     "BUILDING_CAMP_GIRAFFE",
-     "BUILDING_BREEDING_PROGRAM_GIRAFFE",
-     "BUILDING_ANIMAL_PRESERVE"
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_MEGAFAUNA_DOMESTICATION",
+    {
+     "any": [
+      "BUILDING_FOLKLORE_GIRAFFE",
+      "BUILDING_CAMP_GIRAFFE",
+      "BUILDING_BREEDING_PROGRAM_GIRAFFE",
+      "BUILDING_ANIMAL_PRESERVE"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   }
  },

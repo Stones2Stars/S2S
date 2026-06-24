@@ -10,21 +10,17 @@
      "scope": "team"
     },
     "IS_WATER",
-    "HAS_FEATURE"
-   ],
-   "any": [
-    [
-     {
-      "feature": [
-       "FEATURE_CORAL_REEF_LIGHTHOUSE",
-       "FEATURE_REEF_LIGHTHOUSE",
-       "FEATURE_PLATY_GREAT_BARRIER",
-       "FEATURE_PLATY_NUKUORO",
-       "FEATURE_PLATY_SHARK_BAY",
-       "FEATURE_PLATY_SUGARLOAF"
-      ]
-     }
-    ]
+    "HAS_FEATURE",
+    {
+     "feature": [
+      "FEATURE_CORAL_REEF_LIGHTHOUSE",
+      "FEATURE_REEF_LIGHTHOUSE",
+      "FEATURE_PLATY_GREAT_BARRIER",
+      "FEATURE_PLATY_NUKUORO",
+      "FEATURE_PLATY_SHARK_BAY",
+      "FEATURE_PLATY_SUGARLOAF"
+     ]
+    }
    ]
   }
  },

@@ -12,19 +12,17 @@
   "build": {
    "all": [
     "BUILDING_UNIVERSITY",
-    "TECH_ANTIBIOTICS"
-   ],
-   "any": [
-    [
-     "BUILDING_HOSPITAL",
-     "BUILDING_HEALTHCARE_MEGACOMPLEX"
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_ANTIBIOTICS",
+    {
+     "any": [
+      "BUILDING_HOSPITAL",
+      "BUILDING_HEALTHCARE_MEGACOMPLEX"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   }
  },

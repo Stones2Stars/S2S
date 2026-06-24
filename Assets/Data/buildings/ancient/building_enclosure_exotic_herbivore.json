@@ -25,32 +25,34 @@
  "requires": {
   "build": {
    "all": [
-    "TECH_TRADE"
-   ],
-   "any": [
-    [
-     "BUILDING_CARNIVAL",
-     "BUILDING_ZOO"
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ],
-    [
-     "HERITAGE_TAXON_SUIDAE",
-     "HERITAGE_TAXON_ELEPHANTIDAE",
-     "HERITAGE_TAXON_TAPIRIDAE",
-     "HERITAGE_TAXON_HIPPOPOTAMIDAE",
-     "HERITAGE_TAXON_MONOTREMATA"
-    ],
-    [
-     "BUILDING_FOLKLORE_T_FLIGHTLESS_BIRDS",
-     "BUILDING_FOLKLORE_T_ANTELOPE",
-     "BUILDING_FOLKLORE_T_RHINOCEROSES",
-     "BUILDING_FOLKLORE_T_BULL"
-    ]
+    "TECH_TRADE",
+    {
+     "any": [
+      "BUILDING_FOLKLORE_T_FLIGHTLESS_BIRDS",
+      "BUILDING_FOLKLORE_T_ANTELOPE",
+      "BUILDING_FOLKLORE_T_RHINOCEROSES",
+      "BUILDING_FOLKLORE_T_BULL"
+     ]
+    },
+    {
+     "any": [
+      "BUILDING_CARNIVAL",
+      "BUILDING_ZOO"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    },
+    {
+     "any": [
+      "HERITAGE_TAXON_SUIDAE",
+      "HERITAGE_TAXON_ELEPHANTIDAE",
+      "HERITAGE_TAXON_TAPIRIDAE",
+      "HERITAGE_TAXON_HIPPOPOTAMIDAE",
+      "HERITAGE_TAXON_MONOTREMATA"
+     ]
+    }
    ]
   }
  },

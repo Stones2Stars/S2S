@@ -10,19 +10,17 @@
  "requires": {
   "build": {
    "all": [
-    "TECH_APICULTURE"
-   ],
-   "any": [
-    [
-     "BUILDING_APIARY",
-     "BUILDING_FOOD_MANUFACTURING_DISTRICT"
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_APICULTURE",
+    {
+     "any": [
+      "BUILDING_APIARY",
+      "BUILDING_FOOD_MANUFACTURING_DISTRICT"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

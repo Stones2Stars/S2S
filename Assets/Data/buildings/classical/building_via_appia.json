@@ -16,21 +16,19 @@
      "scope": "city",
      "min": 3
     },
-    "TECH_PAVED_ROADS"
-   ],
-   "any": [
-    [
-     "BUILDING_PAVED_ROADS",
-     "BUILDING_ASPHALT_ROADS",
-     "BUILDING_SKYROAD_CONTROL_TOWER",
-     "BUILDING_TELEPORT_BOOTH"
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_PAVED_ROADS",
+    {
+     "any": [
+      "BUILDING_PAVED_ROADS",
+      "BUILDING_ASPHALT_ROADS",
+      "BUILDING_SKYROAD_CONTROL_TOWER",
+      "BUILDING_TELEPORT_BOOTH"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

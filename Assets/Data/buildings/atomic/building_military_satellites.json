@@ -12,19 +12,17 @@
  "requires": {
   "build": {
    "all": [
-    "TECH_SATELLITES"
-   ],
-   "any": [
-    [
-     "BUILDING_EFFECT_LAUNCH_SITE",
-     "BUILDING_MILITARY_SPACEPORT"
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_SATELLITES",
+    {
+     "any": [
+      "BUILDING_EFFECT_LAUNCH_SITE",
+      "BUILDING_MILITARY_SPACEPORT"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   }
  },

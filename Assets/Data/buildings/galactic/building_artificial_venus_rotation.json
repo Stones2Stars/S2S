@@ -7,15 +7,11 @@
    "all": [
     "BUILDING_VENUS_ORBITAL_SOLAR_ARRAY",
     "BUILDING_VENUS_SKY_ARCOLOGY",
-    "TECH_GRAVITY_CONTROL"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_VENUSIAN",
-      "scope": "plot"
-     }
-    ]
+    "TECH_GRAVITY_CONTROL",
+    {
+     "type": "MAPCATEGORY_VENUSIAN",
+     "scope": "plot"
+    }
    ]
   }
  },

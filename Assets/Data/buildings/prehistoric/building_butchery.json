@@ -20,19 +20,17 @@
   "build": {
    "all": [
     "TECH_COOKING",
-    "TECH_SHELTER_BUILDING"
-   ],
-   "any": [
-    [
-     "BUILDING_SLAUGHTERHOUSE",
-     "BUILDING_INDUSTRIAL_FARMS"
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_SHELTER_BUILDING",
+    {
+     "any": [
+      "BUILDING_SLAUGHTERHOUSE",
+      "BUILDING_INDUSTRIAL_FARMS"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

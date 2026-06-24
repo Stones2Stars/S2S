@@ -6,19 +6,17 @@
   "build": {
    "all": [
     "HAS_POWER",
-    "TECH_ANTI_AGING_MEDICINE"
-   ],
-   "any": [
-    [
-     "BUILDING_MEDICAL_CLINIC",
-     "BUILDING_HEALTHCARE_MEGACOMPLEX"
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_ANTI_AGING_MEDICINE",
+    {
+     "any": [
+      "BUILDING_MEDICAL_CLINIC",
+      "BUILDING_HEALTHCARE_MEGACOMPLEX"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   }
  },

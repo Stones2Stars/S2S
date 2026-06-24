@@ -13,19 +13,17 @@
  "requires": {
   "build": {
    "all": [
-    "TECH_DRUG_TRADE"
-   ],
-   "any": [
-    [
-     "BUILDING_PLANTATION_TOBACCO",
-     "BUILDING_FARMSCRAPER_I"
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_DRUG_TRADE",
+    {
+     "any": [
+      "BUILDING_PLANTATION_TOBACCO",
+      "BUILDING_FARMSCRAPER_I"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

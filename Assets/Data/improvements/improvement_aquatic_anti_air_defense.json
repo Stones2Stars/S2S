@@ -10,35 +10,31 @@
      "type": "TECH_ORBITAL_FLIGHT",
      "scope": "team"
     },
-    "IS_WATER"
-   ],
-   "any": [
-    [
-     {
-      "terrain": [
-       "TERRAIN_COAST",
-       "TERRAIN_COAST_POLAR",
-       "TERRAIN_COAST_TROPICAL",
-       "TERRAIN_OCEAN",
-       "TERRAIN_OCEAN_POLAR",
-       "TERRAIN_OCEAN_TROPICAL",
-       "TERRAIN_SEA",
-       "TERRAIN_SEA_POLAR",
-       "TERRAIN_SEA_TROPICAL",
-       "TERRAIN_COAST_DEEP",
-       "TERRAIN_COAST_DEEP_POLAR",
-       "TERRAIN_COAST_DEEP_TROPICAL",
-       "TERRAIN_SEA_DEEP",
-       "TERRAIN_SEA_DEEP_POLAR",
-       "TERRAIN_SEA_DEEP_TROPICAL",
-       "TERRAIN_TRENCH",
-       "TERRAIN_TRENCH_POLAR",
-       "TERRAIN_TRENCH_TROPICAL",
-       "TERRAIN_LAKE_SHORE",
-       "TERRAIN_LAKE"
-      ]
-     }
-    ]
+    "IS_WATER",
+    {
+     "terrain": [
+      "TERRAIN_COAST",
+      "TERRAIN_COAST_POLAR",
+      "TERRAIN_COAST_TROPICAL",
+      "TERRAIN_OCEAN",
+      "TERRAIN_OCEAN_POLAR",
+      "TERRAIN_OCEAN_TROPICAL",
+      "TERRAIN_SEA",
+      "TERRAIN_SEA_POLAR",
+      "TERRAIN_SEA_TROPICAL",
+      "TERRAIN_COAST_DEEP",
+      "TERRAIN_COAST_DEEP_POLAR",
+      "TERRAIN_COAST_DEEP_TROPICAL",
+      "TERRAIN_SEA_DEEP",
+      "TERRAIN_SEA_DEEP_POLAR",
+      "TERRAIN_SEA_DEEP_TROPICAL",
+      "TERRAIN_TRENCH",
+      "TERRAIN_TRENCH_POLAR",
+      "TERRAIN_TRENCH_TROPICAL",
+      "TERRAIN_LAKE_SHORE",
+      "TERRAIN_LAKE"
+     ]
+    }
    ]
   }
  },

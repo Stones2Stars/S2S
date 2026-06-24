@@ -7,21 +7,15 @@
    "all": [
     "HAS_POWER",
     "BUILDING_KUIPER_BELT_OUTPOST",
-    "TECH_ASTEROID_EXTRACTION"
-   ],
-   "any": [
-    [
-     {
-      "type": "TERRAIN_KUIPER_BELT_OBJECT",
-      "scope": "plot"
-     }
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_SOLAR_SYSTEM",
-      "scope": "plot"
-     }
-    ]
+    "TECH_ASTEROID_EXTRACTION",
+    {
+     "type": "TERRAIN_KUIPER_BELT_OBJECT",
+     "scope": "plot"
+    },
+    {
+     "type": "MAPCATEGORY_SOLAR_SYSTEM",
+     "scope": "plot"
+    }
    ]
   }
  },

@@ -6,27 +6,19 @@
   "build": {
    "all": [
     "BUILDING_INTERGALACTIC_GALACTIC_COLONY",
-    "TECH_INTERGALACTIC_COLONIZATION"
-   ],
-   "any": [
-    [
-     {
-      "type": "TERRAIN_LOCAL_GROUP",
-      "scope": "plot"
-     }
-    ],
-    [
-     {
-      "type": "FEATURE_DWARF_GALAXY",
-      "scope": "plot"
-     }
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_UNIVERSAL",
-      "scope": "plot"
-     }
-    ]
+    "TECH_INTERGALACTIC_COLONIZATION",
+    {
+     "type": "TERRAIN_LOCAL_GROUP",
+     "scope": "plot"
+    },
+    {
+     "type": "FEATURE_DWARF_GALAXY",
+     "scope": "plot"
+    },
+    {
+     "type": "MAPCATEGORY_UNIVERSAL",
+     "scope": "plot"
+    }
    ],
    "noneOf": [
     "BUILDING_LARGE_MAGELLANIC_CLOUD_COLONY",

@@ -5,15 +5,11 @@
  "requires": {
   "build": {
    "all": [
-    "TECH_SYNTHETIC_SENTIENCE"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_SYNTHETIC_SENTIENCE",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

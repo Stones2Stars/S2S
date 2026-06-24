@@ -12,18 +12,18 @@
  },
  "requires": {
   "build": {
-   "any": [
-    [
-     "BUILDING_LL_KILGII_GWAAY",
-     "BUILDING_LL_MCCALLUM",
-     "BUILDING_SKINNER"
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+   "all": [
+    {
+     "any": [
+      "BUILDING_LL_KILGII_GWAAY",
+      "BUILDING_LL_MCCALLUM",
+      "BUILDING_SKINNER"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

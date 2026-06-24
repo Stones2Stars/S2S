@@ -8,15 +8,11 @@
     "HAS_POWER",
     "BUILDING_CLAYTRONIC_CITY",
     "BUILDING_QUANTUM_VACUUM_POWER_PLANT",
-    "TECH_OMEGA_POINT"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_OMEGA_POINT",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   }
  },

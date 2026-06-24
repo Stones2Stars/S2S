@@ -10,19 +10,17 @@
  "requires": {
   "build": {
    "all": [
-    "TECH_FEUDALISM"
-   ],
-   "any": [
-    [
-     "BUILDING_HAWKING_HUT",
-     "BUILDING_FOLKLORE_HAWK"
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_FEUDALISM",
+    {
+     "any": [
+      "BUILDING_HAWKING_HUT",
+      "BUILDING_FOLKLORE_HAWK"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   }
  },

@@ -8,12 +8,8 @@
     {
      "type": "TECH_WINDMILLS",
      "scope": "team"
-    }
-   ],
-   "any": [
-    [
-     "HAS_HILLS"
-    ]
+    },
+    "HAS_HILLS"
    ]
   }
  },

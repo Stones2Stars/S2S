@@ -12,15 +12,11 @@
      "scope": "empire",
      "min": 3
     },
-    "TECH_KNOWLEDGE_MANAGEMENT"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_KNOWLEDGE_MANAGEMENT",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   }
  },

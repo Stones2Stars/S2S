@@ -6,15 +6,11 @@
   "build": {
    "all": [
     "TECH_DIVINE_RIGHT",
-    "STATE_RELIGION_IN_CITY"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "STATE_RELIGION_IN_CITY",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ],
    "disabled": "IS_GOVERNMENT_CENTER"
   },

@@ -7,21 +7,15 @@
    "all": [
     "BUILDING_MERCURY_COLONY",
     "BUILDING_EFFECT_SOLAR_ECONOMY",
-    "TECH_ACNP_PROPULSION"
-   ],
-   "any": [
-    [
-     {
-      "type": "TERRAIN_MERCURY",
-      "scope": "plot"
-     }
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_SOLAR_SYSTEM",
-      "scope": "plot"
-     }
-    ]
+    "TECH_ACNP_PROPULSION",
+    {
+     "type": "TERRAIN_MERCURY",
+     "scope": "plot"
+    },
+    {
+     "type": "MAPCATEGORY_SOLAR_SYSTEM",
+     "scope": "plot"
+    }
    ]
   }
  },

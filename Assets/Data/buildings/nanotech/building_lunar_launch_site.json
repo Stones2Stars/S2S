@@ -12,15 +12,11 @@
    "all": [
     "HAS_POWER",
     "BUILDING_LUNAR_ROCK_QUARRY",
-    "TECH_LUNAR_COLONIZATION"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_LUNAR",
-      "scope": "plot"
-     }
-    ]
+    "TECH_LUNAR_COLONIZATION",
+    {
+     "type": "MAPCATEGORY_LUNAR",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

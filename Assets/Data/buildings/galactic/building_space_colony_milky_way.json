@@ -27,15 +27,11 @@
  "requires": {
   "build": {
    "all": [
-    "TECH_ADVANCED_SEEDSHIPS"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_MILKY_WAY",
-      "scope": "plot"
-     }
-    ]
+    "TECH_ADVANCED_SEEDSHIPS",
+    {
+     "type": "MAPCATEGORY_MILKY_WAY",
+     "scope": "plot"
+    }
    ]
   }
  },

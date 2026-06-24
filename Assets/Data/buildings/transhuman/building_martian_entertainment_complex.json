@@ -7,15 +7,11 @@
    "all": [
     "HAS_POWER",
     "BUILDING_MARTIAN_CITY",
-    "TECH_NEURON_ENGINEERING"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_MARTIAN",
-      "scope": "plot"
-     }
-    ]
+    "TECH_NEURON_ENGINEERING",
+    {
+     "type": "MAPCATEGORY_MARTIAN",
+     "scope": "plot"
+    }
    ]
   }
  },

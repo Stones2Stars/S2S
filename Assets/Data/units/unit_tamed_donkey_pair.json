@@ -11,14 +11,14 @@
      "scope": "city",
      "connection": "trade|vicinity"
     },
-    "TECH_THE_WHEEL"
-   ],
-   "any": [
-    [
-     "BUILDING_DONKEY_BREEDER",
-     "BUILDING_ANIMAL_TAMER_COMPLEX",
-     "BUILDING_CENTRAL_BREEDER_DONKEY"
-    ]
+    "TECH_THE_WHEEL",
+    {
+     "any": [
+      "BUILDING_DONKEY_BREEDER",
+      "BUILDING_ANIMAL_TAMER_COMPLEX",
+      "BUILDING_CENTRAL_BREEDER_DONKEY"
+     ]
+    }
    ]
   }
  },

@@ -10,13 +10,13 @@
      "scope": "city",
      "connection": "trade|vicinity"
     },
-    "TECH_OBSIDIAN_WEAPONS"
-   ],
-   "any": [
-    [
-     "BUILDING_MAPINGUARI_COMPOUND",
-     "BUILDING_MAPINGUARI_CHANGING_OF_THE_GUARD_CEREMONY"
-    ]
+    "TECH_OBSIDIAN_WEAPONS",
+    {
+     "any": [
+      "BUILDING_MAPINGUARI_COMPOUND",
+      "BUILDING_MAPINGUARI_CHANGING_OF_THE_GUARD_CEREMONY"
+     ]
+    }
    ]
   }
  },

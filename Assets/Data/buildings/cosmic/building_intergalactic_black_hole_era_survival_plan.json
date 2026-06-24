@@ -11,25 +11,23 @@
      "scope": "empire",
      "min": 1
     },
-    "TECH_PURE_INFORMATION_SOCIETY"
-   ],
-   "any": [
-    [
-     {
-      "type": "TERRAIN_VIRGO_SUPERCLUSTER",
-      "scope": "plot"
-     },
-     {
-      "type": "TERRAIN_OBSERVABLE_UNIVERSE",
-      "scope": "plot"
-     }
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_UNIVERSAL",
-      "scope": "plot"
-     }
-    ]
+    "TECH_PURE_INFORMATION_SOCIETY",
+    {
+     "any": [
+      {
+       "type": "TERRAIN_VIRGO_SUPERCLUSTER",
+       "scope": "plot"
+      },
+      {
+       "type": "TERRAIN_OBSERVABLE_UNIVERSE",
+       "scope": "plot"
+      }
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_UNIVERSAL",
+     "scope": "plot"
+    }
    ]
   }
  },

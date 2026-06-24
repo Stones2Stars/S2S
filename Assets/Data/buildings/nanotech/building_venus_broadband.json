@@ -6,15 +6,11 @@
   "build": {
    "all": [
     "BUILDING_SPACE_COLONY_VENUS",
-    "TECH_PHOTON_THERMODYNAMICS"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_VENUSIAN",
-      "scope": "plot"
-     }
-    ]
+    "TECH_PHOTON_THERMODYNAMICS",
+    {
+     "type": "MAPCATEGORY_VENUSIAN",
+     "scope": "plot"
+    }
    ]
   }
  },

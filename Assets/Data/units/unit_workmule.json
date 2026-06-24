@@ -5,25 +5,27 @@
  "requires": {
   "build": {
    "all": [
-    "TECH_PLOUGH"
-   ],
-   "any": [
-    [
-     {
-      "type": "BONUS_DONKEY",
-      "scope": "city",
-      "connection": "trade|vicinity"
-     },
-     {
-      "type": "BONUS_HORSE",
-      "scope": "city",
-      "connection": "trade|vicinity"
-     }
-    ],
-    [
-     "BUILDING_ANIMAL_TRAINER_DONKEY",
-     "BUILDING_ANIMAL_TRAINER_HORSE"
-    ]
+    "TECH_PLOUGH",
+    {
+     "any": [
+      {
+       "type": "BONUS_DONKEY",
+       "scope": "city",
+       "connection": "trade|vicinity"
+      },
+      {
+       "type": "BONUS_HORSE",
+       "scope": "city",
+       "connection": "trade|vicinity"
+      }
+     ]
+    },
+    {
+     "any": [
+      "BUILDING_ANIMAL_TRAINER_DONKEY",
+      "BUILDING_ANIMAL_TRAINER_HORSE"
+     ]
+    }
    ]
   }
  },

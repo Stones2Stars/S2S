@@ -7,32 +7,32 @@
    "all": [
     "BUILDING_EFFECT_HERITAGE_BIG_CATS",
     "TECH_MILITARY_TRAINING",
-    "TECH_MEGAFAUNA_DOMESTICATION"
-   ],
-   "any": [
-    [
-     {
-      "type": "BONUS_COPPER_WARES",
-      "scope": "city",
-      "connection": "trade|vicinity"
-     },
-     {
-      "type": "BONUS_IRON_WARES",
-      "scope": "city",
-      "connection": "trade|vicinity"
-     }
-    ],
-    [
-     "BUILDING_BARRACKS",
-     "BUILDING_GARRISON",
-     "BUILDING_MILITARY_BASE"
-    ],
-    [
-     {
-      "type": "CIVILIZATION_NPC_NEANDERTHAL",
-      "scope": "empire"
-     }
-    ]
+    "TECH_MEGAFAUNA_DOMESTICATION",
+    {
+     "any": [
+      {
+       "type": "BONUS_COPPER_WARES",
+       "scope": "city",
+       "connection": "trade|vicinity"
+      },
+      {
+       "type": "BONUS_IRON_WARES",
+       "scope": "city",
+       "connection": "trade|vicinity"
+      }
+     ]
+    },
+    {
+     "any": [
+      "BUILDING_BARRACKS",
+      "BUILDING_GARRISON",
+      "BUILDING_MILITARY_BASE"
+     ]
+    },
+    {
+     "type": "CIVILIZATION_NPC_NEANDERTHAL",
+     "scope": "empire"
+    }
    ]
   }
  },

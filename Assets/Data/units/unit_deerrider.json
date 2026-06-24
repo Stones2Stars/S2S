@@ -6,13 +6,13 @@
   "build": {
    "all": [
     "TECH_MEGAFAUNA_DOMESTICATION",
-    "TECH_ARCHERY"
-   ],
-   "any": [
-    [
-     "BUILDING_EFFECT_HERITAGE_DEER",
-     "BUILDING_ANIMAL_TRAINER_DEER"
-    ]
+    "TECH_ARCHERY",
+    {
+     "any": [
+      "BUILDING_EFFECT_HERITAGE_DEER",
+      "BUILDING_ANIMAL_TRAINER_DEER"
+     ]
+    }
    ]
   }
  },

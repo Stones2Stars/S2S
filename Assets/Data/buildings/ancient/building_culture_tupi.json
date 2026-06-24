@@ -7,21 +7,15 @@
    "all": [
     "BUILDING_C_AC_SOUTH_AMERICAN",
     "BUILDING_C_L_SOUTH_AMERICAN",
-    "TECH_ARCHERY"
-   ],
-   "any": [
-    [
-     {
-      "type": "FEATURE_JUNGLE",
-      "scope": "plot"
-     }
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_ARCHERY",
+    {
+     "type": "FEATURE_JUNGLE",
+     "scope": "plot"
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

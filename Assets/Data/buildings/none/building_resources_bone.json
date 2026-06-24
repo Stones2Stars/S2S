@@ -12,17 +12,17 @@
  },
  "requires": {
   "build": {
-   "any": [
-    [
-     "BUILDING_LL_BLACKWATER_DRAW",
-     "BUILDING_SLAUGHTERHOUSE"
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+   "all": [
+    {
+     "any": [
+      "BUILDING_LL_BLACKWATER_DRAW",
+      "BUILDING_SLAUGHTERHOUSE"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

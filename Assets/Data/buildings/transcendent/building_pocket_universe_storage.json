@@ -7,15 +7,11 @@
    "all": [
     "HAS_POWER",
     "BUILDING_STRINGWORKS",
-    "TECH_SUBDIMENSIONAL_UNIVERSE"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_SUBDIMENSIONAL_UNIVERSE",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

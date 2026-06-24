@@ -7,15 +7,11 @@
    "all": [
     "BUILDING_DISTANT_INFINITE_SPEED_TACHYON_GENERATOR",
     "BUILDING_DISTANT_LAYERED_REALITY",
-    "TECH_TRANSFINITE_COMPUTATION"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_DISTANT",
-      "scope": "plot"
-     }
-    ]
+    "TECH_TRANSFINITE_COMPUTATION",
+    {
+     "type": "MAPCATEGORY_DISTANT",
+     "scope": "plot"
+    }
    ]
   }
  },

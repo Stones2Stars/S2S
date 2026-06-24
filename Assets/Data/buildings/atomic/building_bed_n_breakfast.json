@@ -14,21 +14,19 @@
   "build": {
    "all": [
     "HAS_POWER",
-    "TECH_TOURISM"
-   ],
-   "any": [
-    [
-     "BUILDING_HOUSING_SUBURBS",
-     "BUILDING_HOUSING_SMART_HOMES",
-     "BUILDING_HOUSING_COLONY_ARCOLOGY",
-     "BUILDING_LAUNCH_ARCOLOGY"
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_TOURISM",
+    {
+     "any": [
+      "BUILDING_HOUSING_SUBURBS",
+      "BUILDING_HOUSING_SMART_HOMES",
+      "BUILDING_HOUSING_COLONY_ARCOLOGY",
+      "BUILDING_LAUNCH_ARCOLOGY"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

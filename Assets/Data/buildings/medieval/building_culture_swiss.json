@@ -7,21 +7,15 @@
    "all": [
     "BUILDING_C_AC_EUROPEAN",
     "BUILDING_C_L_EUROPEAN",
-    "TECH_ARMOR_CRAFTING"
-   ],
-   "any": [
-    [
-     {
-      "type": "TERRAIN_PEAK",
-      "scope": "plot"
-     }
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_ARMOR_CRAFTING",
+    {
+     "type": "TERRAIN_PEAK",
+     "scope": "plot"
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

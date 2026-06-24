@@ -6,15 +6,11 @@
   "build": {
    "all": [
     "BUILDING_PALACE",
-    "TECH_ASTROIMPERIALISM"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_ASTROIMPERIALISM",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   }
  },

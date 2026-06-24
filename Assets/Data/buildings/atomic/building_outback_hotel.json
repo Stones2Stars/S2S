@@ -14,25 +14,23 @@
   "build": {
    "all": [
     "BUILDING_HOTEL",
-    "TECH_TOURISM"
-   ],
-   "any": [
-    [
-     {
-      "type": "TERRAIN_DESERT",
-      "scope": "plot"
-     },
-     {
-      "type": "TERRAIN_SCRUB",
-      "scope": "plot"
-     }
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_TOURISM",
+    {
+     "any": [
+      {
+       "type": "TERRAIN_DESERT",
+       "scope": "plot"
+      },
+      {
+       "type": "TERRAIN_SCRUB",
+       "scope": "plot"
+      }
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

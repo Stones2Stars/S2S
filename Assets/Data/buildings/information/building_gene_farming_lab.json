@@ -12,19 +12,17 @@
   "build": {
    "all": [
     "BUILDING_LABORATORY",
-    "TECH_GENE_MANIPULATION"
-   ],
-   "any": [
-    [
-     "BUILDING_VACCINE_LAB",
-     "BUILDING_HEALTHCARE_MEGACOMPLEX"
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_GENE_MANIPULATION",
+    {
+     "any": [
+      "BUILDING_VACCINE_LAB",
+      "BUILDING_HEALTHCARE_MEGACOMPLEX"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   }
  },

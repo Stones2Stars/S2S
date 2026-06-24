@@ -6,15 +6,11 @@
   "build": {
    "all": [
     "BUILDING_CISLUNAR_ONEILL_CYLINDER",
-    "TECH_ATOMIZATION_FIELD"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_CISLUNAR",
-      "scope": "plot"
-     }
-    ]
+    "TECH_ATOMIZATION_FIELD",
+    {
+     "type": "MAPCATEGORY_CISLUNAR",
+     "scope": "plot"
+    }
    ]
   }
  },

@@ -6,15 +6,11 @@
   "build": {
    "all": [
     "BUILDING_TRANSTELLAR_ALDERSON_DISK",
-    "TECH_ULTIMA_ARCHITECTURE"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_INTERSTELLAR",
-      "scope": "plot"
-     }
-    ]
+    "TECH_ULTIMA_ARCHITECTURE",
+    {
+     "type": "MAPCATEGORY_INTERSTELLAR",
+     "scope": "plot"
+    }
    ]
   }
  },

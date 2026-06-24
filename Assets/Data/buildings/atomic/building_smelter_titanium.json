@@ -18,19 +18,17 @@
  "requires": {
   "build": {
    "all": [
-    "TECH_ADVANCED_METALLURGY"
-   ],
-   "any": [
-    [
-     "BUILDING_CORE_MINE",
-     "BUILDING_MINE_TITANIUM"
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_ADVANCED_METALLURGY",
+    {
+     "any": [
+      "BUILDING_CORE_MINE",
+      "BUILDING_MINE_TITANIUM"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

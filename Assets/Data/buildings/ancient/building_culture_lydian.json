@@ -7,15 +7,11 @@
    "all": [
     "BUILDING_C_AC_MIDDLE_EASTERN",
     "BUILDING_C_L_MIDDLE_EASTERN",
-    "TECH_TRADE"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_TRADE",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

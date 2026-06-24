@@ -12,15 +12,11 @@
    "all": [
     "BUILDING_DEEP_SPACE_DOCKING_BAY",
     "BUILDING_DEEP_SPACE_ONEILL_CYLINDER",
-    "TECH_ASTEROID_EXTRACTION"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_SOLAR_SYSTEM",
-      "scope": "plot"
-     }
-    ]
+    "TECH_ASTEROID_EXTRACTION",
+    {
+     "type": "MAPCATEGORY_SOLAR_SYSTEM",
+     "scope": "plot"
+    }
    ]
   }
  },

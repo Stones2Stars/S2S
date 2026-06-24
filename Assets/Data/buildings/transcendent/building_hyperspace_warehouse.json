@@ -6,15 +6,11 @@
   "build": {
    "all": [
     "BUILDING_HYPERSPACE_COMMERCIAL_CENTER",
-    "TECH_HYPERLANES"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_HYPERSPACE",
-      "scope": "plot"
-     }
-    ]
+    "TECH_HYPERLANES",
+    {
+     "type": "MAPCATEGORY_HYPERSPACE",
+     "scope": "plot"
+    }
    ]
   }
  },

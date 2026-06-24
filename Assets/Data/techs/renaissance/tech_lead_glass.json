@@ -17,26 +17,26 @@
     {
      "type": "TECH_FREE_ARTISTRY",
      "scope": "team"
+    },
+    {
+     "any": [
+      {
+       "type": "BUILDING_GLASSBLOWERS_WORKSHOP",
+       "scope": "empire",
+       "min": 1
+      },
+      {
+       "type": "BUILDING_FACTORY_GLASSWARE",
+       "scope": "empire",
+       "min": 1
+      },
+      {
+       "type": "BUILDING_MANUFACTURING_DISTRICT",
+       "scope": "empire",
+       "min": 1
+      }
+     ]
     }
-   ],
-   "any": [
-    [
-     {
-      "type": "BUILDING_GLASSBLOWERS_WORKSHOP",
-      "scope": "empire",
-      "min": 1
-     },
-     {
-      "type": "BUILDING_FACTORY_GLASSWARE",
-      "scope": "empire",
-      "min": 1
-     },
-     {
-      "type": "BUILDING_MANUFACTURING_DISTRICT",
-      "scope": "empire",
-      "min": 1
-     }
-    ]
    ]
   }
  },

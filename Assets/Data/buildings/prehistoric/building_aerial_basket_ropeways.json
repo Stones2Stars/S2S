@@ -10,28 +10,24 @@
  "requires": {
   "build": {
    "all": [
-    "TECH_ARITHMETIC"
-   ],
-   "any": [
-    [
-     "BUILDING_TRAVOIS_MAKER",
-     "BUILDING_WHEELWRIGHT",
-     "BUILDING_CARRIAGE_BUILDER",
-     "BUILDING_FACTORY_AUTOMOBILES",
-     "BUILDING_SELF_ASSEMBLY_FACTORY"
-    ],
-    [
-     {
-      "type": "FEATURE_JUNGLE",
-      "scope": "plot"
-     }
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_ARITHMETIC",
+    {
+     "any": [
+      "BUILDING_TRAVOIS_MAKER",
+      "BUILDING_WHEELWRIGHT",
+      "BUILDING_CARRIAGE_BUILDER",
+      "BUILDING_FACTORY_AUTOMOBILES",
+      "BUILDING_SELF_ASSEMBLY_FACTORY"
+     ]
+    },
+    {
+     "type": "FEATURE_JUNGLE",
+     "scope": "plot"
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {
@@ -40,21 +36,21 @@
      "type": "BONUS_BASKETS",
      "scope": "city",
      "connection": "trade|vicinity"
+    },
+    {
+     "any": [
+      {
+       "type": "BONUS_ROPE",
+       "scope": "city",
+       "connection": "trade|vicinity"
+      },
+      {
+       "type": "BONUS_VINES",
+       "scope": "city",
+       "connection": "trade|vicinity"
+      }
+     ]
     }
-   ],
-   "any": [
-    [
-     {
-      "type": "BONUS_ROPE",
-      "scope": "city",
-      "connection": "trade|vicinity"
-     },
-     {
-      "type": "BONUS_VINES",
-      "scope": "city",
-      "connection": "trade|vicinity"
-     }
-    ]
    ]
   }
  },

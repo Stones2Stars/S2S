@@ -15,20 +15,18 @@
      "type": "BONUS_AMMUNITION",
      "scope": "city",
      "connection": "trade|vicinity"
+    },
+    {
+     "type": "BONUS_FIREARMS",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    {
+     "any": [
+      "BUILDING_FACTORY_AMMUNITION",
+      "BUILDING_MILITARY_INDUSTRIAL_COMPLEX"
+     ]
     }
-   ],
-   "any": [
-    [
-     {
-      "type": "BONUS_FIREARMS",
-      "scope": "city",
-      "connection": "trade|vicinity"
-     }
-    ],
-    [
-     "BUILDING_FACTORY_AMMUNITION",
-     "BUILDING_MILITARY_INDUSTRIAL_COMPLEX"
-    ]
    ]
   }
  },

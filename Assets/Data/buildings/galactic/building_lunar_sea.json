@@ -8,15 +8,11 @@
     "HAS_POWER",
     "BUILDING_LUNAR_SOIL_GENERATOR",
     "TECH_ASTROECOLOGY",
-    "TECH_PARATERRAFORMING"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_LUNAR",
-      "scope": "plot"
-     }
-    ]
+    "TECH_PARATERRAFORMING",
+    {
+     "type": "MAPCATEGORY_LUNAR",
+     "scope": "plot"
+    }
    ]
   }
  },

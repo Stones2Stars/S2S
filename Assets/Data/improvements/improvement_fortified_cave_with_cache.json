@@ -8,16 +8,12 @@
     {
      "type": "TECH_POTTERY",
      "scope": "team"
+    },
+    {
+     "feature": [
+      "FEATURE_CAVES"
+     ]
     }
-   ],
-   "any": [
-    [
-     {
-      "feature": [
-       "FEATURE_CAVES"
-      ]
-     }
-    ]
    ]
   }
  },

@@ -7,15 +7,11 @@
    "all": [
     "HAS_POWER",
     "BUILDING_MILITARY_BASE",
-    "TECH_HOLOGRAPHICS"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_HOLOGRAPHICS",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

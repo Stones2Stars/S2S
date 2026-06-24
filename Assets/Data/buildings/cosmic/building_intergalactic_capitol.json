@@ -7,15 +7,11 @@
    "all": [
     "BUILDING_GALACTIC_PORT",
     "BUILDING_PALACE",
-    "TECH_INTERGALACTIC_EMPIRE"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_INTERGALACTIC_EMPIRE",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   }
  },

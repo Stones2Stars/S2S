@@ -8,57 +8,55 @@
     "BUILDING_DEEP_SPACE_ORBITAL_BASE",
     "BUILDING_DEEP_SPACE_ONEILL_CYLINDER",
     "BUILDING_DEEP_SPACE_SOCIAL_ENGINEERING",
-    "TECH_HUMAN_TRANSMUTATION"
-   ],
-   "any": [
-    [
-     {
-      "type": "TERRAIN_MERCURY",
-      "scope": "plot"
-     },
-     {
-      "type": "TERRAIN_ASTEROID_SURFACE",
-      "scope": "plot"
-     },
-     {
-      "type": "TERRAIN_CALLISTO",
-      "scope": "plot"
-     },
-     {
-      "type": "TERRAIN_EUROPA",
-      "scope": "plot"
-     },
-     {
-      "type": "TERRAIN_GANYMEDE",
-      "scope": "plot"
-     },
-     {
-      "type": "TERRAIN_IO",
-      "scope": "plot"
-     },
-     {
-      "type": "TERRAIN_ENCELADUS",
-      "scope": "plot"
-     },
-     {
-      "type": "TERRAIN_UMBRIEL",
-      "scope": "plot"
-     },
-     {
-      "type": "TERRAIN_TRITON",
-      "scope": "plot"
-     },
-     {
-      "type": "TERRAIN_KUIPER_BELT_OBJECT",
-      "scope": "plot"
-     }
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_SOLAR_SYSTEM",
-      "scope": "plot"
-     }
-    ]
+    "TECH_HUMAN_TRANSMUTATION",
+    {
+     "any": [
+      {
+       "type": "TERRAIN_MERCURY",
+       "scope": "plot"
+      },
+      {
+       "type": "TERRAIN_ASTEROID_SURFACE",
+       "scope": "plot"
+      },
+      {
+       "type": "TERRAIN_CALLISTO",
+       "scope": "plot"
+      },
+      {
+       "type": "TERRAIN_EUROPA",
+       "scope": "plot"
+      },
+      {
+       "type": "TERRAIN_GANYMEDE",
+       "scope": "plot"
+      },
+      {
+       "type": "TERRAIN_IO",
+       "scope": "plot"
+      },
+      {
+       "type": "TERRAIN_ENCELADUS",
+       "scope": "plot"
+      },
+      {
+       "type": "TERRAIN_UMBRIEL",
+       "scope": "plot"
+      },
+      {
+       "type": "TERRAIN_TRITON",
+       "scope": "plot"
+      },
+      {
+       "type": "TERRAIN_KUIPER_BELT_OBJECT",
+       "scope": "plot"
+      }
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_SOLAR_SYSTEM",
+     "scope": "plot"
+    }
    ]
   }
  },

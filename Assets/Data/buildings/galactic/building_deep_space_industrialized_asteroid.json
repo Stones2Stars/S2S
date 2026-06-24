@@ -9,15 +9,11 @@
     "BUILDING_DEEP_SPACE_DOCKING_BAY",
     "BUILDING_DEEP_SPACE_ONEILL_CYLINDER",
     "BUILDING_DEEP_SPACE_ASSEMBLER",
-    "TECH_PARATERRAFORMING"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_SOLAR_SYSTEM",
-      "scope": "plot"
-     }
-    ]
+    "TECH_PARATERRAFORMING",
+    {
+     "type": "MAPCATEGORY_SOLAR_SYSTEM",
+     "scope": "plot"
+    }
    ]
   }
  },

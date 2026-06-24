@@ -7,15 +7,11 @@
    "all": [
     "HAS_POWER",
     "BUILDING_EXOTIC_ARCHITECTURE",
-    "TECH_TESSERACT_CONSTRUCTION"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_TESSERACT_CONSTRUCTION",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   }
  },

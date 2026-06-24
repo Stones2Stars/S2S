@@ -13,15 +13,11 @@
     "HAS_POWER",
     "BUILDING_CLAYTRONIC_CITY",
     "BUILDING_CLAYTRONIC_FIRE_SUPPRESSION",
-    "TECH_PICOTECHNOLOGY"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_PICOTECHNOLOGY",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

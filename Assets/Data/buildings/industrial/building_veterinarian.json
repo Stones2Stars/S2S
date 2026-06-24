@@ -19,20 +19,18 @@
  "requires": {
   "build": {
    "all": [
-    "TECH_MEDICINE"
-   ],
-   "any": [
-    [
-     "BUILDING_DOG_BREEDER",
-     "BUILDING_CAT_BREEDER",
-     "BUILDING_REPET"
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_MEDICINE",
+    {
+     "any": [
+      "BUILDING_DOG_BREEDER",
+      "BUILDING_CAT_BREEDER",
+      "BUILDING_REPET"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

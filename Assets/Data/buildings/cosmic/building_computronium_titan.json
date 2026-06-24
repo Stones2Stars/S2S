@@ -7,15 +7,11 @@
    "all": [
     "BUILDING_TITAN_SUPERCOMPUTER",
     "BUILDING_TITAN_ARCOLOGY",
-    "TECH_COMPUTRONIUM_UNIVERSE"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_TITANIC",
-      "scope": "plot"
-     }
-    ]
+    "TECH_COMPUTRONIUM_UNIVERSE",
+    {
+     "type": "MAPCATEGORY_TITANIC",
+     "scope": "plot"
+    }
    ]
   }
  },

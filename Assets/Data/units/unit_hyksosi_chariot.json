@@ -11,16 +11,12 @@
      "connection": "trade|vicinity"
     },
     "BUILDING_CHARIOT_WORKSHOP",
-    "TECH_CHARIOTRY"
-   ],
-   "any": [
-    [
-     {
-      "type": "BONUS_HORSE",
-      "scope": "city",
-      "connection": "trade|vicinity"
-     }
-    ]
+    "TECH_CHARIOTRY",
+    {
+     "type": "BONUS_HORSE",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    }
    ]
   }
  },

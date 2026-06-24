@@ -8,35 +8,31 @@
     {
      "type": "TECH_SEDENTARY_LIFESTYLE",
      "scope": "team"
+    },
+    {
+     "bonus": [
+      "BONUS_HEMP",
+      "BONUS_COCA",
+      "BONUS_COFFEE",
+      "BONUS_COCOA",
+      "BONUS_COTTON",
+      "BONUS_INCENSE",
+      "BONUS_SUGAR",
+      "BONUS_TEA",
+      "BONUS_TOBACCO",
+      "BONUS_FLAX",
+      "BONUS_OPIUM",
+      "BONUS_PAPYRUS",
+      "BONUS_RESIN",
+      "BONUS_PEYOTE",
+      "BONUS_HENNA",
+      "BONUS_INDIGO",
+      "BONUS_VANILLA",
+      "BONUS_KAVA",
+      "BONUS_RUBBER",
+      "BONUS_SILK"
+     ]
     }
-   ],
-   "any": [
-    [
-     {
-      "bonus": [
-       "BONUS_HEMP",
-       "BONUS_COCA",
-       "BONUS_COFFEE",
-       "BONUS_COCOA",
-       "BONUS_COTTON",
-       "BONUS_INCENSE",
-       "BONUS_SUGAR",
-       "BONUS_TEA",
-       "BONUS_TOBACCO",
-       "BONUS_FLAX",
-       "BONUS_OPIUM",
-       "BONUS_PAPYRUS",
-       "BONUS_RESIN",
-       "BONUS_PEYOTE",
-       "BONUS_HENNA",
-       "BONUS_INDIGO",
-       "BONUS_VANILLA",
-       "BONUS_KAVA",
-       "BONUS_RUBBER",
-       "BONUS_SILK"
-      ]
-     }
-    ]
    ]
   }
  },

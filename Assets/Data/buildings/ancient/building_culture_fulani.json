@@ -7,21 +7,15 @@
    "all": [
     "BUILDING_C_AC_AFRICAN",
     "BUILDING_C_L_AFRICAN",
-    "TECH_CASTE_SYSTEM"
-   ],
-   "any": [
-    [
-     {
-      "type": "FEATURE_SAVANNA",
-      "scope": "plot"
-     }
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_CASTE_SYSTEM",
+    {
+     "type": "FEATURE_SAVANNA",
+     "scope": "plot"
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

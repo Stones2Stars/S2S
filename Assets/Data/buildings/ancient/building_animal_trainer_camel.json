@@ -31,33 +31,29 @@
  "requires": {
   "build": {
    "all": [
-    "TECH_CAMELID_DOMESTICATION"
-   ],
-   "any": [
-    [
-     "BUILDING_FARM_ANIMAL_CAMEL",
-     "BUILDING_HERD_CAMEL",
-     "BUILDING_CENTRAL_BREEDER_CAMEL",
-     "BUILDING_INDUSTRIAL_FARMS",
-     "BUILDING_MEAT_INDUSTRY_CONGLOMERATE"
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_CAMELID_DOMESTICATION",
+    {
+     "any": [
+      "BUILDING_FARM_ANIMAL_CAMEL",
+      "BUILDING_HERD_CAMEL",
+      "BUILDING_CENTRAL_BREEDER_CAMEL",
+      "BUILDING_INDUSTRIAL_FARMS",
+      "BUILDING_MEAT_INDUSTRY_CONGLOMERATE"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {
-   "any": [
-    [
-     {
-      "type": "BONUS_CAMEL",
-      "scope": "city",
-      "connection": "trade|vicinity"
-     }
-    ]
+   "all": [
+    {
+     "type": "BONUS_CAMEL",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    }
    ]
   }
  },

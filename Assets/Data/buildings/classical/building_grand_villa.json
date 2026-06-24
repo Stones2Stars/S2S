@@ -5,23 +5,21 @@
  "requires": {
   "build": {
    "all": [
-    "TECH_MATHEMATICS"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_MATHEMATICS",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {
-   "any": [
-    [
-     "CIVIC_MAGISTRATES",
-     "CIVIC_BOURGEOIS"
-    ]
+   "all": [
+    {
+     "any": [
+      "CIVIC_MAGISTRATES",
+      "CIVIC_BOURGEOIS"
+     ]
+    }
    ]
   }
  },

@@ -5,15 +5,11 @@
  "requires": {
   "build": {
    "all": [
-    "TECH_NANOTECH_LIFESTYLE"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_NANOTECH_LIFESTYLE",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

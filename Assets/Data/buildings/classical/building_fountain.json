@@ -21,15 +21,11 @@
     "HAS_FRESHWATER",
     "BUILDING_WATER_PIPES",
     "TECH_AESTHETICS",
-    "TECH_CANAL_SYSTEMS"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_CANAL_SYSTEMS",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

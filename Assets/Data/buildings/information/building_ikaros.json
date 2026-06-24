@@ -10,15 +10,11 @@
      "scope": "empire",
      "min": 1
     },
-    "TECH_SOLAR_PROPULSION"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_SOLAR_PROPULSION",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   }
  },

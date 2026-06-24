@@ -8,15 +8,11 @@
     "HAS_COAST",
     "BUILDING_C_AC_EUROPEAN",
     "BUILDING_C_L_EUROPEAN",
-    "TECH_SIEGE_WARFARE"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_SIEGE_WARFARE",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

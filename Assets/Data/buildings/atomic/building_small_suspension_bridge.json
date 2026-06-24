@@ -20,19 +20,17 @@
   "build": {
    "all": [
     "HAS_RIVER",
-    "TECH_HIGHWAY_SYSTEMS"
-   ],
-   "any": [
-    [
-     "BUILDING_ASPHALT_ROADS",
-     "BUILDING_SKYROAD_CONTROL_TOWER"
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_HIGHWAY_SYSTEMS",
+    {
+     "any": [
+      "BUILDING_ASPHALT_ROADS",
+      "BUILDING_SKYROAD_CONTROL_TOWER"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

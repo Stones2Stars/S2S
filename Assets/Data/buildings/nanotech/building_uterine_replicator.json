@@ -22,15 +22,11 @@
     "HAS_POWER",
     "BUILDING_ANTHROPOMORPHICS_LAB",
     "BUILDING_CYBERNETIC_ORGAN_LAB",
-    "TECH_CYBERNETICS"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_CYBERNETICS",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

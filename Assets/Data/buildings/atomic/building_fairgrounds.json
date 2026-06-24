@@ -19,15 +19,11 @@
   "build": {
    "all": [
     "BUILDING_SHOPPING_DISTRICT",
-    "TECH_TOURISM"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_TOURISM",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

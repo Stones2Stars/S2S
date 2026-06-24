@@ -14,15 +14,11 @@
     "BUILDING_STEM_CELL_LAB",
     "BUILDING_COMPUTER_NETWORK",
     "BUILDING_EVOLUTION_SIMULATOR",
-    "TECH_BIOMATHEMATICS"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_BIOMATHEMATICS",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

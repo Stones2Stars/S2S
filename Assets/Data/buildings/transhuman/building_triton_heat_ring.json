@@ -12,21 +12,15 @@
   "build": {
    "all": [
     "BUILDING_TRITON_GEOTHERMAL_POWER_PLANT",
-    "TECH_ADVANCED_SHIELDING"
-   ],
-   "any": [
-    [
-     {
-      "type": "TERRAIN_TRITON",
-      "scope": "plot"
-     }
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_SOLAR_SYSTEM",
-      "scope": "plot"
-     }
-    ]
+    "TECH_ADVANCED_SHIELDING",
+    {
+     "type": "TERRAIN_TRITON",
+     "scope": "plot"
+    },
+    {
+     "type": "MAPCATEGORY_SOLAR_SYSTEM",
+     "scope": "plot"
+    }
    ]
   }
  },

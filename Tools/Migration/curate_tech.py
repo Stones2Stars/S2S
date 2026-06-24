@@ -90,11 +90,11 @@ def requires_fn(rec, store):
             all_atoms.append(group[0])
         elif group:
             any_groups.append(group)
+    for g in any_groups:                                         # OR-groups -> nested {any} under all (any = ||, not a list-of-groups)
+        all_atoms.append(g[0] if len(g) == 1 else OrderedDict([("any", g)]))
     build = OrderedDict()
     if all_atoms:
         build["all"] = all_atoms
-    if any_groups:
-        build["any"] = any_groups
     return {"build": build} if build else None
 
 

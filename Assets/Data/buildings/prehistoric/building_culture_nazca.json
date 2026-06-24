@@ -7,21 +7,15 @@
    "all": [
     "BUILDING_C_AC_SOUTH_AMERICAN",
     "BUILDING_C_L_SOUTH_AMERICAN",
-    "TECH_OBSIDIAN_WEAPONS"
-   ],
-   "any": [
-    [
-     {
-      "type": "TERRAIN_BARREN",
-      "scope": "plot"
-     }
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_OBSIDIAN_WEAPONS",
+    {
+     "type": "TERRAIN_BARREN",
+     "scope": "plot"
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

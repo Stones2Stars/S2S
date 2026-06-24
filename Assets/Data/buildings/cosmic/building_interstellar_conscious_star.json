@@ -6,19 +6,19 @@
   "build": {
    "all": [
     "BUILDING_INTERSTELLAR_MATRIOSHKA_BRAIN",
-    "TECH_NOOGENESIS"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_PLASMA",
-      "scope": "plot"
-     },
-     {
-      "type": "MAPCATEGORY_MILKY_WAY",
-      "scope": "plot"
-     }
-    ]
+    "TECH_NOOGENESIS",
+    {
+     "any": [
+      {
+       "type": "MAPCATEGORY_PLASMA",
+       "scope": "plot"
+      },
+      {
+       "type": "MAPCATEGORY_MILKY_WAY",
+       "scope": "plot"
+      }
+     ]
+    }
    ]
   }
  },

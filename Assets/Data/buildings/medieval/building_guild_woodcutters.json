@@ -16,19 +16,17 @@
      "min": 3
     },
     "TECH_SURVEYING",
-    "TECH_GUILDS"
-   ],
-   "any": [
-    [
-     "BUILDING_LUMBER_CAMP",
-     "BUILDING_AGROFOREST"
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_GUILDS",
+    {
+     "any": [
+      "BUILDING_LUMBER_CAMP",
+      "BUILDING_AGROFOREST"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   }
  },

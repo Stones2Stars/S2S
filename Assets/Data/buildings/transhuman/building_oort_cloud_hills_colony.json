@@ -5,27 +5,19 @@
  "requires": {
   "build": {
    "all": [
-    "TECH_NUCLEAR_PULSE_PROPULSION"
-   ],
-   "any": [
-    [
-     {
-      "type": "TERRAIN_TRANSNEPTUNIAN_SPACE",
-      "scope": "plot"
-     }
-    ],
-    [
-     {
-      "type": "FEATURE_OORT_CLOUD",
-      "scope": "plot"
-     }
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_SOLAR_SYSTEM",
-      "scope": "plot"
-     }
-    ]
+    "TECH_NUCLEAR_PULSE_PROPULSION",
+    {
+     "type": "TERRAIN_TRANSNEPTUNIAN_SPACE",
+     "scope": "plot"
+    },
+    {
+     "type": "FEATURE_OORT_CLOUD",
+     "scope": "plot"
+    },
+    {
+     "type": "MAPCATEGORY_SOLAR_SYSTEM",
+     "scope": "plot"
+    }
    ]
   }
  },

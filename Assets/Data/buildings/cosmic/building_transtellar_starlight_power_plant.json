@@ -5,15 +5,11 @@
  "requires": {
   "build": {
    "all": [
-    "TECH_FEMTOTECHNOLOGY"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_INTERSTELLAR",
-      "scope": "plot"
-     }
-    ]
+    "TECH_FEMTOTECHNOLOGY",
+    {
+     "type": "MAPCATEGORY_INTERSTELLAR",
+     "scope": "plot"
+    }
    ]
   }
  },

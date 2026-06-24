@@ -15,15 +15,11 @@
    "all": [
     "HAS_POWER",
     "BUILDING_COMMERCIAL_AIRPORT",
-    "TECH_HYPERSONIC_FLIGHT"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_HYPERSONIC_FLIGHT",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

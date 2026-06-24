@@ -10,25 +10,23 @@
  "requires": {
   "build": {
    "all": [
-    "TECH_POTTERY"
-   ],
-   "any": [
-    [
-     {
-      "type": "TERRAIN_DESERT",
-      "scope": "plot"
-     },
-     {
-      "type": "TERRAIN_SCRUB",
-      "scope": "plot"
-     }
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_POTTERY",
+    {
+     "any": [
+      {
+       "type": "TERRAIN_DESERT",
+       "scope": "plot"
+      },
+      {
+       "type": "TERRAIN_SCRUB",
+       "scope": "plot"
+      }
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

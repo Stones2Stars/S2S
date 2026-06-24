@@ -11,36 +11,34 @@
   "build": {
    "all": [
     "HAS_COAST",
-    "TECH_FISHING"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_FISHING",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {
-   "any": [
-    [
-     {
-      "type": "BONUS_BAMBOO",
-      "scope": "city",
-      "connection": "vicinity"
-     },
-     {
-      "type": "BONUS_WOOD",
-      "scope": "city",
-      "connection": "vicinity"
-     },
-     {
-      "type": "BONUS_PRIME_TIMBER",
-      "scope": "city",
-      "connection": "vicinity"
-     }
-    ]
+   "all": [
+    {
+     "any": [
+      {
+       "type": "BONUS_BAMBOO",
+       "scope": "city",
+       "connection": "vicinity"
+      },
+      {
+       "type": "BONUS_WOOD",
+       "scope": "city",
+       "connection": "vicinity"
+      },
+      {
+       "type": "BONUS_PRIME_TIMBER",
+       "scope": "city",
+       "connection": "vicinity"
+      }
+     ]
+    }
    ],
    "dormant": [
     "BUILDING_HOUSING_HOGANS",

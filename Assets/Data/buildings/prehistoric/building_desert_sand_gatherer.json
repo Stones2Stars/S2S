@@ -18,25 +18,23 @@
  "requires": {
   "build": {
    "all": [
-    "TECH_NATURAL_PIGMENTS"
-   ],
-   "any": [
-    [
-     {
-      "type": "TERRAIN_DESERT",
-      "scope": "plot"
-     },
-     {
-      "type": "TERRAIN_DUNES",
-      "scope": "plot"
-     }
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_NATURAL_PIGMENTS",
+    {
+     "any": [
+      {
+       "type": "TERRAIN_DESERT",
+       "scope": "plot"
+      },
+      {
+       "type": "TERRAIN_DUNES",
+       "scope": "plot"
+      }
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

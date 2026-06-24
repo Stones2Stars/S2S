@@ -14,19 +14,17 @@
    "all": [
     "HAS_POWER",
     "BUILDING_MICROBIOLOGY_LAB",
-    "TECH_MOLECULAR_BIOLOGY"
-   ],
-   "any": [
-    [
-     "BUILDING_MOLECULAR_BIOLOGY_LAB",
-     "BUILDING_CHEMICALS_DISTRICT"
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_MOLECULAR_BIOLOGY",
+    {
+     "any": [
+      "BUILDING_MOLECULAR_BIOLOGY_LAB",
+      "BUILDING_CHEMICALS_DISTRICT"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   }
  },

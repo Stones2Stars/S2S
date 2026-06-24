@@ -12,15 +12,11 @@
   "build": {
    "all": [
     "TECH_MUMMIFICATION",
-    "TECH_PRIESTHOOD"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_PRIESTHOOD",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

@@ -7,15 +7,11 @@
    "all": [
     "BUILDING_C_AC_EUROPEAN",
     "BUILDING_C_L_EUROPEAN",
-    "TECH_FEUDALISM"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_FEUDALISM",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

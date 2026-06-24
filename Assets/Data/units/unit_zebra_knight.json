@@ -6,20 +6,18 @@
   "build": {
    "all": [
     "TECH_ARMORED_CAVALRY",
-    "TECH_MEGAFAUNA_DOMESTICATION"
-   ],
-   "any": [
-    [
-     {
-      "type": "BONUS_IRON_WARES",
-      "scope": "city",
-      "connection": "trade|vicinity"
-     }
-    ],
-    [
-     "BUILDING_EFFECT_HERITAGE_ZEBRAS",
-     "BUILDING_ANIMAL_TRAINER_ZEBRA"
-    ]
+    "TECH_MEGAFAUNA_DOMESTICATION",
+    {
+     "type": "BONUS_IRON_WARES",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    {
+     "any": [
+      "BUILDING_EFFECT_HERITAGE_ZEBRAS",
+      "BUILDING_ANIMAL_TRAINER_ZEBRA"
+     ]
+    }
    ]
   }
  },

@@ -8,16 +8,12 @@
     {
      "type": "TECH_VOLCANOLOGY",
      "scope": "team"
+    },
+    {
+     "bonus": [
+      "BONUS_GEOTHERMAL_ENERGY"
+     ]
     }
-   ],
-   "any": [
-    [
-     {
-      "bonus": [
-       "BONUS_GEOTHERMAL_ENERGY"
-      ]
-     }
-    ]
    ]
   }
  },

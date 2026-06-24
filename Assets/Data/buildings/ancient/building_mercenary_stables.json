@@ -15,15 +15,11 @@
     "BUILDING_MERCENARY_CAMP",
     "BUILDING_ANIMAL_TRAINER_HORSE",
     "TECH_BRONZE_WORKING",
-    "TECH_ANIMAL_RIDING"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_ANIMAL_RIDING",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

@@ -11,15 +11,11 @@
      "scope": "empire",
      "min": 3
     },
-    "TECH_IDEOGRAMS"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_IDEOGRAMS",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   }
  },

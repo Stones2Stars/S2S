@@ -5,15 +5,11 @@
  "requires": {
   "build": {
    "all": [
-    "TECH_DIVINE_RIGHT"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_DIVINE_RIGHT",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ],
    "disabled": "IS_GOVERNMENT_CENTER"
   }

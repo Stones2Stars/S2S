@@ -6,15 +6,11 @@
   "build": {
    "all": [
     "BUILDING_DEEP_SPACE_BISHOP_RING",
-    "TECH_ACNP_PROPULSION"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_SOLAR_SYSTEM",
-      "scope": "plot"
-     }
-    ]
+    "TECH_ACNP_PROPULSION",
+    {
+     "type": "MAPCATEGORY_SOLAR_SYSTEM",
+     "scope": "plot"
+    }
    ]
   }
  },

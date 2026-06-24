@@ -5,15 +5,11 @@
  "requires": {
   "build": {
    "all": [
-    "TECH_GERONTOCRACY"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_GALACTIC",
-      "scope": "plot"
-     }
-    ]
+    "TECH_GERONTOCRACY",
+    {
+     "type": "MAPCATEGORY_GALACTIC",
+     "scope": "plot"
+    }
    ]
   }
  },

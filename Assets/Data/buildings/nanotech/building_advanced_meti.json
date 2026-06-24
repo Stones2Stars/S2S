@@ -6,15 +6,11 @@
   "build": {
    "all": [
     "BUILDING_ASTROBIOLOGY_LAB",
-    "TECH_UNIVERSAL_TRANSLATOR"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_UNIVERSAL_TRANSLATOR",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   }
  },

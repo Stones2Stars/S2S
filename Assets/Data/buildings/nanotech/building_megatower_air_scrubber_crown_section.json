@@ -8,15 +8,11 @@
     "HAS_POWER",
     "BUILDING_MEGATOWER",
     "BUILDING_ARTIFICIAL_TREE_FARM",
-    "TECH_NANO_ARCHITECTURE"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_NANO_ARCHITECTURE",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

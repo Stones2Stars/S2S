@@ -7,15 +7,11 @@
    "all": [
     "HAS_POWER",
     "BUILDING_TIME_MACHINE",
-    "TECH_TIMELINE_RECTIFICATION"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_TIMELINE_RECTIFICATION",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   }
  },

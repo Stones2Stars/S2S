@@ -13,23 +13,21 @@
  "requires": {
   "build": {
    "all": [
-    "TECH_NATUROPATHY"
-   ],
-   "any": [
-    [
-     "BUILDING_HEALERS_HUT",
-     "BUILDING_DOCTORS_OFFICE",
-     "BUILDING_SURGEONS_OFFICE",
-     "BUILDING_MEDICAL_CLINIC",
-     "BUILDING_APOTHECARY_SHOP",
-     "BUILDING_PHARMACY"
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_NATUROPATHY",
+    {
+     "any": [
+      "BUILDING_HEALERS_HUT",
+      "BUILDING_DOCTORS_OFFICE",
+      "BUILDING_SURGEONS_OFFICE",
+      "BUILDING_MEDICAL_CLINIC",
+      "BUILDING_APOTHECARY_SHOP",
+      "BUILDING_PHARMACY"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

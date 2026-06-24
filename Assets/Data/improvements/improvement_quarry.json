@@ -8,52 +8,52 @@
     {
      "type": "TECH_MASONRY",
      "scope": "team"
+    },
+    {
+     "any": [
+      {
+       "terrain": [
+        "TERRAIN_ROCKY",
+        "TERRAIN_BADLAND",
+        "TERRAIN_JAGGED"
+       ]
+      },
+      {
+       "feature": [
+        "FEATURE_POLAR_ROCK_ARCH",
+        "FEATURE_POLAR_ROCK_ARCH2",
+        "FEATURE_POLAR_ROCK_FORM1",
+        "FEATURE_POLAR_ROCK_FORM2",
+        "FEATURE_POLAR_ROCK_FORM3",
+        "FEATURE_POLAR_ROCK_FORM4",
+        "FEATURE_DARK_ROCK_ARCH",
+        "FEATURE_DARK_ROCK_ARCH2",
+        "FEATURE_DARK_ROCK_FORM1",
+        "FEATURE_DARK_ROCK_FORM2",
+        "FEATURE_DARK_ROCK_FORM3",
+        "FEATURE_DARK_ROCK_FORM4",
+        "FEATURE_ROCK_ARCH",
+        "FEATURE_ROCK_ARCH2",
+        "FEATURE_ROCK_FORM1",
+        "FEATURE_ROCK_FORM2",
+        "FEATURE_ROCK_FORM3",
+        "FEATURE_ROCK_FORM4"
+       ]
+      },
+      {
+       "bonus": [
+        "BONUS_MARBLE",
+        "BONUS_STONE",
+        "BONUS_SALT",
+        "BONUS_NATRON",
+        "BONUS_OBSIDIAN",
+        "BONUS_FINE_CLAY",
+        "BONUS_TURQUOISE",
+        "BONUS_JADE"
+       ]
+      }
+     ]
     }
-   ],
-   "any": [
-    [
-     {
-      "terrain": [
-       "TERRAIN_ROCKY",
-       "TERRAIN_BADLAND",
-       "TERRAIN_JAGGED"
-      ]
-     },
-     {
-      "feature": [
-       "FEATURE_POLAR_ROCK_ARCH",
-       "FEATURE_POLAR_ROCK_ARCH2",
-       "FEATURE_POLAR_ROCK_FORM1",
-       "FEATURE_POLAR_ROCK_FORM2",
-       "FEATURE_POLAR_ROCK_FORM3",
-       "FEATURE_POLAR_ROCK_FORM4",
-       "FEATURE_DARK_ROCK_ARCH",
-       "FEATURE_DARK_ROCK_ARCH2",
-       "FEATURE_DARK_ROCK_FORM1",
-       "FEATURE_DARK_ROCK_FORM2",
-       "FEATURE_DARK_ROCK_FORM3",
-       "FEATURE_DARK_ROCK_FORM4",
-       "FEATURE_ROCK_ARCH",
-       "FEATURE_ROCK_ARCH2",
-       "FEATURE_ROCK_FORM1",
-       "FEATURE_ROCK_FORM2",
-       "FEATURE_ROCK_FORM3",
-       "FEATURE_ROCK_FORM4"
-      ]
-     },
-     {
-      "bonus": [
-       "BONUS_MARBLE",
-       "BONUS_STONE",
-       "BONUS_SALT",
-       "BONUS_NATRON",
-       "BONUS_OBSIDIAN",
-       "BONUS_FINE_CLAY",
-       "BONUS_TURQUOISE",
-       "BONUS_JADE"
-      ]
-     }
-    ]
    ]
   }
  },

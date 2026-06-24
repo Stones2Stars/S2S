@@ -11,15 +11,11 @@
      "min": 7
     },
     "BUILDING_MOVIE_THEATRE",
-    "TECH_MOTION_PICTURES"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_MOTION_PICTURES",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   }
  },

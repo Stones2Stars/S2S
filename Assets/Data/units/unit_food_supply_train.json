@@ -5,14 +5,14 @@
  "requires": {
   "build": {
    "all": [
-    "TECH_ENGINEERING"
-   ],
-   "any": [
-    [
-     "BUILDING_CASTLE",
-     "BUILDING_STAR_FORT",
-     "BUILDING_IMPERIAL_FORTRESS"
-    ]
+    "TECH_ENGINEERING",
+    {
+     "any": [
+      "BUILDING_CASTLE",
+      "BUILDING_STAR_FORT",
+      "BUILDING_IMPERIAL_FORTRESS"
+     ]
+    }
    ]
   }
  },

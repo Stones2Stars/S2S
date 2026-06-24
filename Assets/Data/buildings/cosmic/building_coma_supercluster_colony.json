@@ -6,21 +6,15 @@
   "build": {
    "all": [
     "BUILDING_INTERGALACTIC_SUPERCLUSTER_COLONY",
-    "TECH_INTERCLUSTER_TRAVEL"
-   ],
-   "any": [
-    [
-     {
-      "type": "TERRAIN_OBSERVABLE_UNIVERSE",
-      "scope": "plot"
-     }
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_UNIVERSAL",
-      "scope": "plot"
-     }
-    ]
+    "TECH_INTERCLUSTER_TRAVEL",
+    {
+     "type": "TERRAIN_OBSERVABLE_UNIVERSE",
+     "scope": "plot"
+    },
+    {
+     "type": "MAPCATEGORY_UNIVERSAL",
+     "scope": "plot"
+    }
    ],
    "noneOf": [
     "BUILDING_HYDRA_SUPERCLUSTER_COLONY",

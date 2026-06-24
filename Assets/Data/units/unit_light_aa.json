@@ -5,14 +5,14 @@
  "requires": {
   "build": {
    "all": [
-    "TECH_AUTOMATIC_WEAPONS"
-   ],
-   "any": [
-    [
-     "BUILDING_FACTORY_AMMUNITION",
-     "BUILDING_AMMUNITIONS_WORKSHOP",
-     "BUILDING_MILITARY_INDUSTRIAL_COMPLEX"
-    ]
+    "TECH_AUTOMATIC_WEAPONS",
+    {
+     "any": [
+      "BUILDING_FACTORY_AMMUNITION",
+      "BUILDING_AMMUNITIONS_WORKSHOP",
+      "BUILDING_MILITARY_INDUSTRIAL_COMPLEX"
+     ]
+    }
    ]
   }
  },

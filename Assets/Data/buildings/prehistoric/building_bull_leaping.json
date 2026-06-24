@@ -10,28 +10,26 @@
  "requires": {
   "build": {
    "all": [
-    "TECH_PREHISTORIC_DANCE"
-   ],
-   "any": [
-    [
-     "BUILDING_FOLKLORE_T_BULL",
-     "BUILDING_HERD_BISON",
-     "BUILDING_CAMP_BISON",
-     "BUILDING_HERD_COW",
-     "BUILDING_FARM_ANIMAL_COW",
-     "BUILDING_CAMP_GIANT_BISON",
-     "BUILDING_CAMP_AUROCHS",
-     "BUILDING_BREEDING_PROGRAM_BISON",
-     "BUILDING_ANIMAL_PRESERVE",
-     "BUILDING_INDUSTRIAL_FARMS",
-     "BUILDING_MEAT_INDUSTRY_CONGLOMERATE"
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_PREHISTORIC_DANCE",
+    {
+     "any": [
+      "BUILDING_FOLKLORE_T_BULL",
+      "BUILDING_HERD_BISON",
+      "BUILDING_CAMP_BISON",
+      "BUILDING_HERD_COW",
+      "BUILDING_FARM_ANIMAL_COW",
+      "BUILDING_CAMP_GIANT_BISON",
+      "BUILDING_CAMP_AUROCHS",
+      "BUILDING_BREEDING_PROGRAM_BISON",
+      "BUILDING_ANIMAL_PRESERVE",
+      "BUILDING_INDUSTRIAL_FARMS",
+      "BUILDING_MEAT_INDUSTRY_CONGLOMERATE"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   }
  },

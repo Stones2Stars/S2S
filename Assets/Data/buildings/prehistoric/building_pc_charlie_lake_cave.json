@@ -14,21 +14,15 @@
      "type": "TERRAIN_LAKE_SHORE",
      "scope": "plot"
     },
-    "TECH_CAVE_DWELLING"
-   ],
-   "any": [
-    [
-     {
-      "type": "FEATURE_CAVES",
-      "scope": "plot"
-     }
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_CAVE_DWELLING",
+    {
+     "type": "FEATURE_CAVES",
+     "scope": "plot"
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   }
  },

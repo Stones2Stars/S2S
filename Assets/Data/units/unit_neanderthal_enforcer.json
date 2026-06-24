@@ -7,25 +7,23 @@
    "all": [
     "BUILDING_C_AC_NEANDERTHAL",
     "BUILDING_C_L_NEANDERTHAL",
-    "TECH_CONDUCT"
-   ],
-   "any": [
-    [
-     "BUILDING_SENTRY_POST",
-     "BUILDING_TOWN_WATCH",
-     "BUILDING_TOWN_PATROL",
-     "BUILDING_GUARDHOUSE",
-     "BUILDING_GUARD_STATION",
-     "BUILDING_SHERIFFS_OFFICE",
-     "BUILDING_POLICE_STATION",
-     "BUILDING_POLICE_PRECINCT"
-    ],
-    [
-     {
-      "type": "CIVILIZATION_NPC_NEANDERTHAL",
-      "scope": "empire"
-     }
-    ]
+    "TECH_CONDUCT",
+    {
+     "any": [
+      "BUILDING_SENTRY_POST",
+      "BUILDING_TOWN_WATCH",
+      "BUILDING_TOWN_PATROL",
+      "BUILDING_GUARDHOUSE",
+      "BUILDING_GUARD_STATION",
+      "BUILDING_SHERIFFS_OFFICE",
+      "BUILDING_POLICE_STATION",
+      "BUILDING_POLICE_PRECINCT"
+     ]
+    },
+    {
+     "type": "CIVILIZATION_NPC_NEANDERTHAL",
+     "scope": "empire"
+    }
    ]
   }
  },

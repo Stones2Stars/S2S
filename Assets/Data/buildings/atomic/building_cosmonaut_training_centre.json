@@ -12,15 +12,11 @@
      "min": 7
     },
     "BUILDING_LABORATORY",
-    "TECH_ASTRO_ENVIRONMENTAL_SYSTEMS"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_ASTRO_ENVIRONMENTAL_SYSTEMS",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   }
  },

@@ -17,15 +17,11 @@
   "build": {
    "all": [
     "BUILDING_BANK",
-    "TECH_STOCK_BROKERING"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_STOCK_BROKERING",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   }
  },

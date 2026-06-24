@@ -5,15 +5,11 @@
  "requires": {
   "build": {
    "all": [
-    "TECH_MOLECULAR_ASSEMBLY"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_CISLUNAR",
-      "scope": "plot"
-     }
-    ]
+    "TECH_MOLECULAR_ASSEMBLY",
+    {
+     "type": "MAPCATEGORY_CISLUNAR",
+     "scope": "plot"
+    }
    ]
   }
  },

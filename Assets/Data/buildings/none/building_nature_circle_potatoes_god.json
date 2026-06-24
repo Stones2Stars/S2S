@@ -8,29 +8,21 @@
     "BUILDING_NATURE_CIRCLE_OF_POWER",
     {
      "STATE_RELIGION": "RELIGION_DRUIDIC_TRADITIONS"
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
     }
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
    ]
   },
   "operate": {
    "all": [
-    "RELIGION_DRUIDIC_TRADITIONS"
-   ],
-   "any": [
-    [
-     {
-      "type": "BONUS_POTATOES",
-      "scope": "city",
-      "connection": "vicinity"
-     }
-    ]
+    "RELIGION_DRUIDIC_TRADITIONS",
+    {
+     "type": "BONUS_POTATOES",
+     "scope": "city",
+     "connection": "vicinity"
+    }
    ]
   }
  },

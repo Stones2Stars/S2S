@@ -15,15 +15,11 @@
    "all": [
     "HAS_POWER",
     "BUILDING_ALEPH_ASSEMBLER",
-    "TECH_STABLE_TIME_LOOPS"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_STABLE_TIME_LOOPS",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   }
  },

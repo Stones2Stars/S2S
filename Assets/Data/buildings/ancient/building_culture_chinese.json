@@ -7,15 +7,11 @@
    "all": [
     "BUILDING_C_AC_ASIAN",
     "BUILDING_C_L_ASIAN",
-    "TECH_ANCESTOR_WORSHIP"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_ANCESTOR_WORSHIP",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

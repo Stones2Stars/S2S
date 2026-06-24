@@ -11,13 +11,13 @@
      "connection": "trade|vicinity"
     },
     "TECH_ARMORED_CAVALRY",
-    "TECH_MEGAFAUNA_DOMESTICATION"
-   ],
-   "any": [
-    [
-     "BUILDING_EFFECT_HERITAGE_MAMMOTHS",
-     "BUILDING_ANIMAL_TRAINER_MAMMOTH"
-    ]
+    "TECH_MEGAFAUNA_DOMESTICATION",
+    {
+     "any": [
+      "BUILDING_EFFECT_HERITAGE_MAMMOTHS",
+      "BUILDING_ANIMAL_TRAINER_MAMMOTH"
+     ]
+    }
    ]
   }
  },

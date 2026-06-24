@@ -8,22 +8,22 @@
     {
      "type": "TECH_INTERSTELLAR_TRADE",
      "scope": "team"
+    },
+    {
+     "any": [
+      {
+       "terrain": [
+        "TERRAIN_TRANSTELLAR_SPACE",
+        "TERRAIN_ORION_ARM"
+       ]
+      },
+      {
+       "bonus": [
+        "BONUS_ABANDONED_CIVILIZATION"
+       ]
+      }
+     ]
     }
-   ],
-   "any": [
-    [
-     {
-      "terrain": [
-       "TERRAIN_TRANSTELLAR_SPACE",
-       "TERRAIN_ORION_ARM"
-      ]
-     },
-     {
-      "bonus": [
-       "BONUS_ABANDONED_CIVILIZATION"
-      ]
-     }
-    ]
    ]
   }
  },

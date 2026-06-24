@@ -25,15 +25,11 @@
      "scope": "empire",
      "min": 5
     },
-    "TECH_JURISPRUDENCE"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_JURISPRUDENCE",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   }
  },

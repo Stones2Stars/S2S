@@ -7,15 +7,11 @@
    "all": [
     "BUILDING_UNIVERSITY",
     "BUILDING_CONVENTION_CENTRE",
-    "TECH_COMMUNICATION_NETWORKS"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_COMMUNICATION_NETWORKS",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   }
  },

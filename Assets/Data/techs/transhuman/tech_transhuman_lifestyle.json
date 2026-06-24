@@ -42,35 +42,35 @@
     {
      "type": "TECH_CYBERNETICS",
      "scope": "team"
+    },
+    {
+     "any": [
+      {
+       "type": "TECH_CLOAKING",
+       "scope": "team"
+      },
+      {
+       "type": "TECH_PERSONAL_ROBOTS",
+       "scope": "team"
+      },
+      {
+       "type": "TECH_LUNAR_TRADE",
+       "scope": "team"
+      },
+      {
+       "type": "TECH_SUPERCHARGED_CRYSTALLOGRAPHY",
+       "scope": "team"
+      },
+      {
+       "type": "TECH_DESIGNER_MICROBIOLOGY",
+       "scope": "team"
+      },
+      {
+       "type": "TECH_HYPOTHETICAL_BIOCHEMISTRY",
+       "scope": "team"
+      }
+     ]
     }
-   ],
-   "any": [
-    [
-     {
-      "type": "TECH_CLOAKING",
-      "scope": "team"
-     },
-     {
-      "type": "TECH_PERSONAL_ROBOTS",
-      "scope": "team"
-     },
-     {
-      "type": "TECH_LUNAR_TRADE",
-      "scope": "team"
-     },
-     {
-      "type": "TECH_SUPERCHARGED_CRYSTALLOGRAPHY",
-      "scope": "team"
-     },
-     {
-      "type": "TECH_DESIGNER_MICROBIOLOGY",
-      "scope": "team"
-     },
-     {
-      "type": "TECH_HYPOTHETICAL_BIOCHEMISTRY",
-      "scope": "team"
-     }
-    ]
    ]
   }
  },

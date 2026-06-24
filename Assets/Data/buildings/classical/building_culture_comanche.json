@@ -7,25 +7,23 @@
    "all": [
     "BUILDING_C_AC_NORTH_AMERICAN",
     "BUILDING_C_L_NORTH_AMERICAN",
-    "TECH_MOUNTED_ARCHERY"
-   ],
-   "any": [
-    [
-     {
-      "type": "TERRAIN_GRASSLAND",
-      "scope": "plot"
-     },
-     {
-      "type": "TERRAIN_PLAINS",
-      "scope": "plot"
-     }
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_MOUNTED_ARCHERY",
+    {
+     "any": [
+      {
+       "type": "TERRAIN_GRASSLAND",
+       "scope": "plot"
+      },
+      {
+       "type": "TERRAIN_PLAINS",
+       "scope": "plot"
+      }
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

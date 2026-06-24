@@ -5,25 +5,21 @@
  "requires": {
   "build": {
    "all": [
-    "TECH_HUNTING"
-   ],
-   "any": [
-    [
-     "BUILDING_MASTER_HUNTER",
-     "BUILDING_MASTER_HUNTER_TRADITION"
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ],
-    [
-     {
-      "type": "CIVILIZATION_NPC_NEANDERTHAL",
-      "scope": "empire"
-     }
-    ]
+    "TECH_HUNTING",
+    {
+     "any": [
+      "BUILDING_MASTER_HUNTER",
+      "BUILDING_MASTER_HUNTER_TRADITION"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    },
+    {
+     "type": "CIVILIZATION_NPC_NEANDERTHAL",
+     "scope": "empire"
+    }
    ]
   }
  },

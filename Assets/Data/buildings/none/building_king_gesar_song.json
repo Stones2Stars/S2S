@@ -8,15 +8,11 @@
     "BUILDING_SHAMANS_YURTA",
     {
      "STATE_RELIGION": "RELIGION_TENGRIISM"
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
     }
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
    ]
   },
   "operate": {

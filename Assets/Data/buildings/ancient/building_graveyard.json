@@ -18,18 +18,12 @@
  "requires": {
   "build": {
    "all": [
-    "TECH_SCRIPTURES"
-   ],
-   "any": [
-    [
-     "BUILDING_BURIAL_TRADITION_EARTH"
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_SCRIPTURES",
+    "BUILDING_BURIAL_TRADITION_EARTH",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

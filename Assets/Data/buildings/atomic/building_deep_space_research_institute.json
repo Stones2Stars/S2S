@@ -13,15 +13,11 @@
     },
     "BUILDING_MODERN_OFFICES",
     "BUILDING_LABORATORY",
-    "TECH_ASTRONAUTICS"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_ASTRONAUTICS",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   }
  },

@@ -11,16 +11,12 @@
      "connection": "trade|vicinity"
     },
     "BUILDING_SHAOLIN_TEMPLE",
-    "TECH_MARTIAL_ARTS"
-   ],
-   "any": [
-    [
-     {
-      "type": "BONUS_SCROLLS",
-      "scope": "city",
-      "connection": "trade|vicinity"
-     }
-    ]
+    "TECH_MARTIAL_ARTS",
+    {
+     "type": "BONUS_SCROLLS",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    }
    ]
   }
  },

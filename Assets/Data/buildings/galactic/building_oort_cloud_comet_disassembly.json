@@ -5,25 +5,23 @@
  "requires": {
   "build": {
    "all": [
-    "TECH_PLANET_CRACKING"
-   ],
-   "any": [
-    [
-     {
-      "type": "FEATURE_OORT_CLOUD",
-      "scope": "plot"
-     }
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_INTERSTELLAR",
-      "scope": "plot"
-     },
-     {
-      "type": "MAPCATEGORY_SOLAR_SYSTEM",
-      "scope": "plot"
-     }
-    ]
+    "TECH_PLANET_CRACKING",
+    {
+     "type": "FEATURE_OORT_CLOUD",
+     "scope": "plot"
+    },
+    {
+     "any": [
+      {
+       "type": "MAPCATEGORY_INTERSTELLAR",
+       "scope": "plot"
+      },
+      {
+       "type": "MAPCATEGORY_SOLAR_SYSTEM",
+       "scope": "plot"
+      }
+     ]
+    }
    ]
   }
  },

@@ -6,21 +6,15 @@
   "build": {
    "all": [
     "BUILDING_TRITON_HEAT_RING",
-    "TECH_LAUNCH_ARCOLOGY"
-   ],
-   "any": [
-    [
-     {
-      "type": "TERRAIN_TRITON",
-      "scope": "plot"
-     }
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_SOLAR_SYSTEM",
-      "scope": "plot"
-     }
-    ]
+    "TECH_LAUNCH_ARCOLOGY",
+    {
+     "type": "TERRAIN_TRITON",
+     "scope": "plot"
+    },
+    {
+     "type": "MAPCATEGORY_SOLAR_SYSTEM",
+     "scope": "plot"
+    }
    ]
   }
  },

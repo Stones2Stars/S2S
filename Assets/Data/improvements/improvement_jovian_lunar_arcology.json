@@ -8,28 +8,28 @@
     {
      "type": "TECH_LUNAR_MEGASTRUCTURES",
      "scope": "team"
+    },
+    {
+     "any": [
+      {
+       "terrain": [
+        "TERRAIN_IO",
+        "TERRAIN_GANYMEDE",
+        "TERRAIN_EUROPA",
+        "TERRAIN_CALLISTO",
+        "TERRAIN_TITAN",
+        "TERRAIN_ENCELADUS",
+        "TERRAIN_UMBRIEL",
+        "TERRAIN_TRITON"
+       ]
+      },
+      {
+       "feature": [
+        "FEATURE_SMALL_MOON"
+       ]
+      }
+     ]
     }
-   ],
-   "any": [
-    [
-     {
-      "terrain": [
-       "TERRAIN_IO",
-       "TERRAIN_GANYMEDE",
-       "TERRAIN_EUROPA",
-       "TERRAIN_CALLISTO",
-       "TERRAIN_TITAN",
-       "TERRAIN_ENCELADUS",
-       "TERRAIN_UMBRIEL",
-       "TERRAIN_TRITON"
-      ]
-     },
-     {
-      "feature": [
-       "FEATURE_SMALL_MOON"
-      ]
-     }
-    ]
    ]
   }
  },

@@ -6,18 +6,12 @@
   "build": {
    "all": [
     "BUILDING_FOLKLORE_REQUIREMENT",
-    "TECH_TAXONOMY"
-   ],
-   "any": [
-    [
-     "BUILDING_FOLKLORE_CAPUCHIN_MONKEY"
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_TAXONOMY",
+    "BUILDING_FOLKLORE_CAPUCHIN_MONKEY",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   }
  },

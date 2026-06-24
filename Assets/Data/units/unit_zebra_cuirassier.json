@@ -11,20 +11,18 @@
      "connection": "trade|vicinity"
     },
     "TECH_CAVALRY_TACTICS",
-    "TECH_MEGAFAUNA_DOMESTICATION"
-   ],
-   "any": [
-    [
-     {
-      "type": "BONUS_SULPHUR",
-      "scope": "city",
-      "connection": "trade|vicinity"
-     }
-    ],
-    [
-     "BUILDING_EFFECT_HERITAGE_ZEBRAS",
-     "BUILDING_ANIMAL_TRAINER_ZEBRA"
-    ]
+    "TECH_MEGAFAUNA_DOMESTICATION",
+    {
+     "type": "BONUS_SULPHUR",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    {
+     "any": [
+      "BUILDING_EFFECT_HERITAGE_ZEBRAS",
+      "BUILDING_ANIMAL_TRAINER_ZEBRA"
+     ]
+    }
    ]
   }
  },

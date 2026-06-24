@@ -12,19 +12,17 @@
    "all": [
     "HAS_POWER",
     "TECH_GENE_ENHANCEMENT",
-    "TECH_NANOGENERATORS"
-   ],
-   "any": [
-    [
-     "BUILDING_MEDICAL_PROSTHETICS_LAB",
-     "BUILDING_HEALTHCARE_MEGACOMPLEX"
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_NANOGENERATORS",
+    {
+     "any": [
+      "BUILDING_MEDICAL_PROSTHETICS_LAB",
+      "BUILDING_HEALTHCARE_MEGACOMPLEX"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

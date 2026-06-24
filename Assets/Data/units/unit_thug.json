@@ -11,16 +11,12 @@
      "connection": "trade|vicinity"
     },
     "TECH_LABOR_UNIONS",
-    "TECH_SEMI_AUTOMATIC_WEAPONS"
-   ],
-   "any": [
-    [
-     {
-      "type": "BONUS_AMMUNITION",
-      "scope": "city",
-      "connection": "trade|vicinity"
-     }
-    ]
+    "TECH_SEMI_AUTOMATIC_WEAPONS",
+    {
+     "type": "BONUS_AMMUNITION",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    }
    ]
   }
  },

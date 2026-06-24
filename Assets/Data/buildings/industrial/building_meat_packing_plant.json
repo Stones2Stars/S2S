@@ -21,19 +21,17 @@
    "all": [
     "HAS_POWER",
     "BUILDING_FACTORY",
-    "TECH_REFRIGERATION"
-   ],
-   "any": [
-    [
-     "BUILDING_SLAUGHTERHOUSE",
-     "BUILDING_INDUSTRIAL_FARMS"
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_REFRIGERATION",
+    {
+     "any": [
+      "BUILDING_SLAUGHTERHOUSE",
+      "BUILDING_INDUSTRIAL_FARMS"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

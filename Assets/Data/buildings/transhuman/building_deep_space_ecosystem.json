@@ -19,15 +19,11 @@
    "all": [
     "BUILDING_DEEP_SPACE_ONEILL_CYLINDER",
     "BUILDING_DEEP_SPACE_HYDROPONICS",
-    "TECH_GAIA_ECOLOGY"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_SOLAR_SYSTEM",
-      "scope": "plot"
-     }
-    ]
+    "TECH_GAIA_ECOLOGY",
+    {
+     "type": "MAPCATEGORY_SOLAR_SYSTEM",
+     "scope": "plot"
+    }
    ]
   }
  },

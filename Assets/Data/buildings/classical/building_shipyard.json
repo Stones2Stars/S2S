@@ -23,15 +23,11 @@
     "HAS_COAST",
     "BUILDING_SHIPWRIGHT",
     "BUILDING_HARBORMASTERS_OFFICE",
-    "TECH_SHIP_BUILDING"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_SHIP_BUILDING",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

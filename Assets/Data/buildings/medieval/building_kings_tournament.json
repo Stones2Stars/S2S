@@ -10,44 +10,46 @@
      "scope": "city",
      "min": 7
     },
-    "TECH_TOURNAMENTS"
-   ],
-   "any": [
-    [
-     "BUILDING_KNIGHTS_STABLE",
-     "BUILDING_MODERN_STABLE"
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_TOURNAMENTS",
+    {
+     "any": [
+      "BUILDING_KNIGHTS_STABLE",
+      "BUILDING_MODERN_STABLE"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {
-   "any": [
-    [
-     {
-      "type": "BONUS_HORSE",
-      "scope": "city",
-      "connection": "trade|vicinity"
-     },
-     {
-      "type": "BONUS_ELEPHANTS",
-      "scope": "city",
-      "connection": "trade|vicinity"
-     },
-     {
-      "type": "BONUS_CAMEL",
-      "scope": "city",
-      "connection": "trade|vicinity"
-     }
-    ],
-    [
-     "CIVIC_FEUDAL",
-     "CIVIC_VASSAL_LEVIES"
-    ]
+   "all": [
+    {
+     "any": [
+      {
+       "type": "BONUS_HORSE",
+       "scope": "city",
+       "connection": "trade|vicinity"
+      },
+      {
+       "type": "BONUS_ELEPHANTS",
+       "scope": "city",
+       "connection": "trade|vicinity"
+      },
+      {
+       "type": "BONUS_CAMEL",
+       "scope": "city",
+       "connection": "trade|vicinity"
+      }
+     ]
+    },
+    {
+     "any": [
+      "CIVIC_FEUDAL",
+      "CIVIC_VASSAL_LEVIES"
+     ]
+    }
    ]
   }
  },

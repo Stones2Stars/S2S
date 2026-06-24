@@ -10,28 +10,30 @@
      "scope": "city",
      "connection": "trade|vicinity"
     },
-    "TECH_FOLK_MEDICINE"
-   ],
-   "any": [
-    [
-     {
-      "type": "BONUS_ALCOHOL",
-      "scope": "city",
-      "connection": "trade|vicinity"
-     },
-     {
-      "type": "BONUS_SOAP",
-      "scope": "city",
-      "connection": "trade|vicinity"
-     }
-    ],
-    [
-     "BUILDING_HEALERS_HUT",
-     "BUILDING_DOCTORS_OFFICE",
-     "BUILDING_SURGEONS_OFFICE",
-     "BUILDING_MEDICAL_CLINIC",
-     "BUILDING_HEALTHCARE_MEGACOMPLEX"
-    ]
+    "TECH_FOLK_MEDICINE",
+    {
+     "any": [
+      {
+       "type": "BONUS_ALCOHOL",
+       "scope": "city",
+       "connection": "trade|vicinity"
+      },
+      {
+       "type": "BONUS_SOAP",
+       "scope": "city",
+       "connection": "trade|vicinity"
+      }
+     ]
+    },
+    {
+     "any": [
+      "BUILDING_HEALERS_HUT",
+      "BUILDING_DOCTORS_OFFICE",
+      "BUILDING_SURGEONS_OFFICE",
+      "BUILDING_MEDICAL_CLINIC",
+      "BUILDING_HEALTHCARE_MEGACOMPLEX"
+     ]
+    }
    ]
   }
  },

@@ -13,16 +13,12 @@
     "BUILDING_ANIMAL_TRAINER_CAMEL",
     "TECH_ANIMAL_RIDING",
     "TECH_CAMELID_DOMESTICATION",
-    "TECH_IRON_WORKING"
-   ],
-   "any": [
-    [
-     {
-      "type": "BONUS_CAMEL",
-      "scope": "city",
-      "connection": "trade|vicinity"
-     }
-    ]
+    "TECH_IRON_WORKING",
+    {
+     "type": "BONUS_CAMEL",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    }
    ]
   }
  },

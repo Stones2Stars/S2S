@@ -12,15 +12,11 @@
    "all": [
     "BUILDING_CISLUNAR_GOVERNANCE",
     "BUILDING_CISLUNAR_SPACEPORT",
-    "TECH_SOCIAL_CALCULUS"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_CISLUNAR",
-      "scope": "plot"
-     }
-    ]
+    "TECH_SOCIAL_CALCULUS",
+    {
+     "type": "MAPCATEGORY_CISLUNAR",
+     "scope": "plot"
+    }
    ]
   }
  },

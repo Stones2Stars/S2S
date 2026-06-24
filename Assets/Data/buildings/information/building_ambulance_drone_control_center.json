@@ -16,15 +16,11 @@
     "HAS_POWER",
     "BUILDING_CONTROL_CENTER",
     "BUILDING_MEDICAL_CLINIC",
-    "TECH_DISASTER_ROBOTS"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_DISASTER_ROBOTS",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

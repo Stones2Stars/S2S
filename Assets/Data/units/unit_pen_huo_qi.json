@@ -11,16 +11,12 @@
      "connection": "trade|vicinity"
     },
     "BUILDING_SIEGE_WEAPONS_WORKSHOP",
-    "TECH_INVENTION"
-   ],
-   "any": [
-    [
-     {
-      "type": "BONUS_TAR",
-      "scope": "city",
-      "connection": "trade|vicinity"
-     }
-    ]
+    "TECH_INVENTION",
+    {
+     "type": "BONUS_TAR",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    }
    ]
   }
  },

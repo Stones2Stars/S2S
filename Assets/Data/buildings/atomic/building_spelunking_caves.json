@@ -13,21 +13,15 @@
  "requires": {
   "build": {
    "all": [
-    "TECH_EXTREME_SPORTS"
-   ],
-   "any": [
-    [
-     {
-      "type": "FEATURE_CAVES",
-      "scope": "plot"
-     }
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_EXTREME_SPORTS",
+    {
+     "type": "FEATURE_CAVES",
+     "scope": "plot"
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

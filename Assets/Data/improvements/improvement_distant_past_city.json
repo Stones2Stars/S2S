@@ -8,16 +8,12 @@
     {
      "type": "TECH_TIME_REVERSAL",
      "scope": "team"
+    },
+    {
+     "terrain": [
+      "TERRAIN_DISTANT_PAST"
+     ]
     }
-   ],
-   "any": [
-    [
-     {
-      "terrain": [
-       "TERRAIN_DISTANT_PAST"
-      ]
-     }
-    ]
    ]
   }
  },

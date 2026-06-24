@@ -21,19 +21,17 @@
   "build": {
    "all": [
     "HAS_POWER",
-    "TECH_ROBOTICS"
-   ],
-   "any": [
-    [
-     "BUILDING_LABORATORY",
-     "BUILDING_UNIVERSITY"
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_ROBOTICS",
+    {
+     "any": [
+      "BUILDING_LABORATORY",
+      "BUILDING_UNIVERSITY"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

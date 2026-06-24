@@ -12,15 +12,11 @@
    "all": [
     "HAS_POWER",
     "BUILDING_HYPERSPACE_EKPYROTIC_UNIVERSE",
-    "TECH_MANIFOLD_COLONIZATION"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_HYPERSPACE",
-      "scope": "plot"
-     }
-    ]
+    "TECH_MANIFOLD_COLONIZATION",
+    {
+     "type": "MAPCATEGORY_HYPERSPACE",
+     "scope": "plot"
+    }
    ]
   }
  },

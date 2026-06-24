@@ -16,15 +16,11 @@
     "HAS_POWER",
     "BUILDING_GENEALOGY_CENTER",
     "BUILDING_COMPUTER_NETWORK",
-    "TECH_BIOINFORMATICS"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_BIOINFORMATICS",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

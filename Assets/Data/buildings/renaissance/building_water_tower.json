@@ -13,15 +13,11 @@
    "all": [
     "HAS_FRESHWATER",
     "BUILDING_WATER_PIPES",
-    "TECH_PHYSICS"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_PHYSICS",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   }
  },

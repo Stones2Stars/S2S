@@ -13,24 +13,22 @@
  "requires": {
   "build": {
    "all": [
-    "TECH_MEDITATION"
-   ],
-   "any": [
-    [
-     "BUILDING_WALLS",
-     "BUILDING_HIGH_WALLS",
-     "BUILDING_BARRICADES",
-     "BUILDING_CEMENT_BARRIER",
-     "BUILDING_METAMATERIAL_WALLS",
-     "BUILDING_SUPERSTRONG_ALLOY_WALLS",
-     "BUILDING_MEGASTRONG_ALLOY_WALLS"
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_MEDITATION",
+    {
+     "any": [
+      "BUILDING_WALLS",
+      "BUILDING_HIGH_WALLS",
+      "BUILDING_BARRICADES",
+      "BUILDING_CEMENT_BARRIER",
+      "BUILDING_METAMATERIAL_WALLS",
+      "BUILDING_SUPERSTRONG_ALLOY_WALLS",
+      "BUILDING_MEGASTRONG_ALLOY_WALLS"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

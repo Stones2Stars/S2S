@@ -30,15 +30,11 @@
      "scope": "empire",
      "min": 1
     },
-    "TECH_AMPLIFIED_WAVELENGTHS"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_AMPLIFIED_WAVELENGTHS",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

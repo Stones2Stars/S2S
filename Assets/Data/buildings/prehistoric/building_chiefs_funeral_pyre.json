@@ -6,20 +6,18 @@
   "build": {
    "all": [
     "BUILDING_CHIEFS_HUT",
-    "TECH_CHIEFDOM"
-   ],
-   "any": [
-    [
-     "BUILDING_FUNERAL_PYRE",
-     "BUILDING_FUNERARY_SERVICES",
-     "BUILDING_HIGH_TECH_CULTURAL_ENRICHMENT"
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_CHIEFDOM",
+    {
+     "any": [
+      "BUILDING_FUNERAL_PYRE",
+      "BUILDING_FUNERARY_SERVICES",
+      "BUILDING_HIGH_TECH_CULTURAL_ENRICHMENT"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

@@ -5,15 +5,11 @@
  "requires": {
   "build": {
    "all": [
-    "BUILDING_SHAMANS_YURTA"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "BUILDING_SHAMANS_YURTA",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

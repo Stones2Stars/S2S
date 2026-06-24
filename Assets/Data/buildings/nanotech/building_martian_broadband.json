@@ -6,15 +6,11 @@
   "build": {
    "all": [
     "BUILDING_SPACE_COLONY_MARTIAN",
-    "TECH_PHOTON_THERMODYNAMICS"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_MARTIAN",
-      "scope": "plot"
-     }
-    ]
+    "TECH_PHOTON_THERMODYNAMICS",
+    {
+     "type": "MAPCATEGORY_MARTIAN",
+     "scope": "plot"
+    }
    ]
   }
  },

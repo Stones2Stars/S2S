@@ -11,15 +11,11 @@
      "scope": "empire",
      "min": 1
     },
-    "TECH_POLITICAL_PHILOSOPHY"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_POLITICAL_PHILOSOPHY",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   }
  },

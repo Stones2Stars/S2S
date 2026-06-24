@@ -15,34 +15,34 @@
      "natureYield": {
       "food": 1
      }
+    },
+    {
+     "any": [
+      {
+       "terrain": [
+        "TERRAIN_GRASSLAND",
+        "TERRAIN_PLAINS",
+        "TERRAIN_MARSH",
+        "TERRAIN_LUSH",
+        "TERRAIN_SCRUB",
+        "TERRAIN_MUDDY"
+       ]
+      },
+      "HAS_FRESHWATER",
+      {
+       "bonus": [
+        "BONUS_CORN",
+        "BONUS_RICE",
+        "BONUS_WHEAT",
+        "BONUS_POTATOES",
+        "BONUS_BARLEY",
+        "BONUS_MELONS",
+        "BONUS_PUMPKIN",
+        "BONUS_SQUASH"
+       ]
+      }
+     ]
     }
-   ],
-   "any": [
-    [
-     {
-      "terrain": [
-       "TERRAIN_GRASSLAND",
-       "TERRAIN_PLAINS",
-       "TERRAIN_MARSH",
-       "TERRAIN_LUSH",
-       "TERRAIN_SCRUB",
-       "TERRAIN_MUDDY"
-      ]
-     },
-     "HAS_FRESHWATER",
-     {
-      "bonus": [
-       "BONUS_CORN",
-       "BONUS_RICE",
-       "BONUS_WHEAT",
-       "BONUS_POTATOES",
-       "BONUS_BARLEY",
-       "BONUS_MELONS",
-       "BONUS_PUMPKIN",
-       "BONUS_SQUASH"
-      ]
-     }
-    ]
    ]
   }
  },

@@ -15,15 +15,11 @@
    "all": [
     "HAS_POWER",
     "BUILDING_DELTA_ASSEMBLER",
-    "TECH_SUPERCHARGED_CRYSTALLOGRAPHY"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_SUPERCHARGED_CRYSTALLOGRAPHY",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {
@@ -32,16 +28,12 @@
      "type": "BONUS_SUPERSTRONG_ALLOYS",
      "scope": "city",
      "connection": "trade|vicinity"
+    },
+    {
+     "type": "BONUS_SYNTHETIC_DIAMOND",
+     "scope": "city",
+     "connection": "trade|vicinity"
     }
-   ],
-   "any": [
-    [
-     {
-      "type": "BONUS_SYNTHETIC_DIAMOND",
-      "scope": "city",
-      "connection": "trade|vicinity"
-     }
-    ]
    ],
    "dormant": [
     "BUILDING_PICOTECH_COMPLEX"

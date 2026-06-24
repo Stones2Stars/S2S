@@ -30,15 +30,11 @@
      "type": "BONUS_ORGANIC_PHOTONIC_CELLS",
      "scope": "city",
      "connection": "trade|vicinity"
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
     }
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
    ]
   },
   "operate": {

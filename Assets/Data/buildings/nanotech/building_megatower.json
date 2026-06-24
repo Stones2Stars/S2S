@@ -38,15 +38,11 @@
     "HAS_POWER",
     "BUILDING_SKYSCRAPER",
     "BUILDING_SHOPPING_DISTRICT",
-    "TECH_NANO_ARCHITECTURE"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_NANO_ARCHITECTURE",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

@@ -20,15 +20,11 @@
    "all": [
     "HAS_POWER",
     "BUILDING_MEDICAL_CLINIC",
-    "TECH_MOLECULAR_MEDICINE"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_MOLECULAR_MEDICINE",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

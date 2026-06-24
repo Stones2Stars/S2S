@@ -6,15 +6,11 @@
   "build": {
    "all": [
     "BUILDING_DEEP_SPACE_ECOSYSTEM",
-    "TECH_EXTRATERRESTRIAL_AGRICULTURE"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_SOLAR_SYSTEM",
-      "scope": "plot"
-     }
-    ]
+    "TECH_EXTRATERRESTRIAL_AGRICULTURE",
+    {
+     "type": "MAPCATEGORY_SOLAR_SYSTEM",
+     "scope": "plot"
+    }
    ]
   }
  },

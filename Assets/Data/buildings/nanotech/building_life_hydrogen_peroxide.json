@@ -5,15 +5,11 @@
  "requires": {
   "build": {
    "all": [
-    "TECH_HYPOTHETICAL_BIOCHEMISTRY"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_MARTIAN",
-      "scope": "plot"
-     }
-    ]
+    "TECH_HYPOTHETICAL_BIOCHEMISTRY",
+    {
+     "type": "MAPCATEGORY_MARTIAN",
+     "scope": "plot"
+    }
    ]
   }
  },

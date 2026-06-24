@@ -53,23 +53,21 @@
  "requires": {
   "build": {
    "all": [
-    "TECH_SPECIALIZATION"
-   ],
-   "any": [
-    [
-     "BUILDING_ANIMAL_TRAINER_CAMEL",
-     "BUILDING_ANIMAL_TRAINER_LLAMA",
-     "BUILDING_ANIMAL_TRAINER_BUFFALO",
-     "BUILDING_ANIMAL_TRAINER_DONKEY",
-     "BUILDING_ANIMAL_TRAINER_HORSE",
-     "BUILDING_ANIMAL_TRAINER_ELEPHANT"
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_SPECIALIZATION",
+    {
+     "any": [
+      "BUILDING_ANIMAL_TRAINER_CAMEL",
+      "BUILDING_ANIMAL_TRAINER_LLAMA",
+      "BUILDING_ANIMAL_TRAINER_BUFFALO",
+      "BUILDING_ANIMAL_TRAINER_DONKEY",
+      "BUILDING_ANIMAL_TRAINER_HORSE",
+      "BUILDING_ANIMAL_TRAINER_ELEPHANT"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   }
  },

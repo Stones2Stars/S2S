@@ -11,15 +11,11 @@
   "build": {
    "all": [
     "BUILDING_TITAN_HYDROCARBON_REFINERY",
-    "TECH_TERRA_COMPUTER"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_TITANIC",
-      "scope": "plot"
-     }
-    ]
+    "TECH_TERRA_COMPUTER",
+    {
+     "type": "MAPCATEGORY_TITANIC",
+     "scope": "plot"
+    }
    ]
   }
  },

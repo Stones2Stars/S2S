@@ -7,25 +7,23 @@
    "all": [
     "BUILDING_EFFECT_GALACTIC_ECONOMY",
     "BUILDING_INTERSTELLAR_BLACK_HOLE_COMPUTER",
-    "TECH_IMMORTALITY"
-   ],
-   "any": [
-    [
-     {
-      "type": "FEATURE_BLACK_HOLE",
-      "scope": "plot"
-     },
-     {
-      "type": "FEATURE_SUPERMASSIVE_BLACK_HOLE",
-      "scope": "plot"
-     }
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_MILKY_WAY",
-      "scope": "plot"
-     }
-    ]
+    "TECH_IMMORTALITY",
+    {
+     "any": [
+      {
+       "type": "FEATURE_BLACK_HOLE",
+       "scope": "plot"
+      },
+      {
+       "type": "FEATURE_SUPERMASSIVE_BLACK_HOLE",
+       "scope": "plot"
+      }
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_MILKY_WAY",
+     "scope": "plot"
+    }
    ]
   }
  },

@@ -6,21 +6,15 @@
   "build": {
    "all": [
     "BUILDING_UMBRIEL_COLONY",
-    "TECH_NUCLEAR_PULSE_PROPULSION"
-   ],
-   "any": [
-    [
-     {
-      "type": "TERRAIN_URANUS",
-      "scope": "plot"
-     }
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_SOLAR_SYSTEM",
-      "scope": "plot"
-     }
-    ]
+    "TECH_NUCLEAR_PULSE_PROPULSION",
+    {
+     "type": "TERRAIN_URANUS",
+     "scope": "plot"
+    },
+    {
+     "type": "MAPCATEGORY_SOLAR_SYSTEM",
+     "scope": "plot"
+    }
    ]
   }
  },

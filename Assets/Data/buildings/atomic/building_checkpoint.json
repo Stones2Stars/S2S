@@ -5,19 +5,17 @@
  "requires": {
   "build": {
    "all": [
-    "TECH_FASCISM"
-   ],
-   "any": [
-    [
-     "BUILDING_GARRISON",
-     "BUILDING_MILITARY_BASE"
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_FASCISM",
+    {
+     "any": [
+      "BUILDING_GARRISON",
+      "BUILDING_MILITARY_BASE"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

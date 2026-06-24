@@ -12,15 +12,11 @@
    "all": [
     "BUILDING_HYPERSPACE_IMPORTER",
     "BUILDING_HYPERSPACE_EXPORTER",
-    "TECH_TRANSDIMENSIONAL_COMMERCE"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_HYPERSPACE",
-      "scope": "plot"
-     }
-    ]
+    "TECH_TRANSDIMENSIONAL_COMMERCE",
+    {
+     "type": "MAPCATEGORY_HYPERSPACE",
+     "scope": "plot"
+    }
    ]
   }
  },

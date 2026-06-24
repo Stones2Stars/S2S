@@ -23,15 +23,11 @@
     "BUILDING_VIROTHERAPY_CLINIC",
     "BUILDING_PHENOTYPE_STUDIO",
     "BUILDING_INTUITIVE_ALGORITHMS",
-    "TECH_BACTERIUM_ENGINEERING"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_BACTERIUM_ENGINEERING",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {
@@ -40,16 +36,12 @@
      "type": "BONUS_ENZYMES",
      "scope": "city",
      "connection": "trade|vicinity"
+    },
+    {
+     "type": "BONUS_BIOPOLYMERS",
+     "scope": "city",
+     "connection": "trade|vicinity"
     }
-   ],
-   "any": [
-    [
-     {
-      "type": "BONUS_BIOPOLYMERS",
-      "scope": "city",
-      "connection": "trade|vicinity"
-     }
-    ]
    ]
   }
  },

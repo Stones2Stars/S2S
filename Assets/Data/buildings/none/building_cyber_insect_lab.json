@@ -17,15 +17,11 @@
      "min": 3
     },
     "BUILDING_BIOLOGY_LAB",
-    "TECH_CYBERPUNK"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_CYBERPUNK",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

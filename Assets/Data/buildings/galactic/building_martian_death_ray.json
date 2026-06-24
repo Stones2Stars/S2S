@@ -7,15 +7,11 @@
    "all": [
     "HAS_POWER",
     "BUILDING_MARTIAN_ARCOLOGY",
-    "TECH_WEAPONIZED_DISINTEGRATION"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_MARTIAN",
-      "scope": "plot"
-     }
-    ]
+    "TECH_WEAPONIZED_DISINTEGRATION",
+    {
+     "type": "MAPCATEGORY_MARTIAN",
+     "scope": "plot"
+    }
    ]
   }
  },

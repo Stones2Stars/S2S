@@ -12,15 +12,11 @@
    "all": [
     "HAS_COAST",
     "BUILDING_HARBORMASTERS_OFFICE",
-    "TECH_ASTROLABE"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_ASTROLABE",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   }
  },

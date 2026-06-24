@@ -7,15 +7,11 @@
    "all": [
     "HAS_POWER",
     "BUILDING_SPACE_COLONY_MARTIAN",
-    "TECH_PLANETARY_COLONIZATION"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_MARTIAN",
-      "scope": "plot"
-     }
-    ]
+    "TECH_PLANETARY_COLONIZATION",
+    {
+     "type": "MAPCATEGORY_MARTIAN",
+     "scope": "plot"
+    }
    ]
   }
  },

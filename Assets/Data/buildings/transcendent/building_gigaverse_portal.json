@@ -11,23 +11,25 @@
      "scope": "empire",
      "min": 1
     },
-    "TECH_MACROVERSE_TRAVERSAL"
-   ],
-   "any": [
-    [
-     "BUILDING_CISLUNAR_METAMORPHIC_STATION",
-     "BUILDING_LUNAR_ARCOLOGY"
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_CISLUNAR",
-      "scope": "plot"
-     },
-     {
-      "type": "MAPCATEGORY_LUNAR",
-      "scope": "plot"
-     }
-    ]
+    "TECH_MACROVERSE_TRAVERSAL",
+    {
+     "any": [
+      "BUILDING_CISLUNAR_METAMORPHIC_STATION",
+      "BUILDING_LUNAR_ARCOLOGY"
+     ]
+    },
+    {
+     "any": [
+      {
+       "type": "MAPCATEGORY_CISLUNAR",
+       "scope": "plot"
+      },
+      {
+       "type": "MAPCATEGORY_LUNAR",
+       "scope": "plot"
+      }
+     ]
+    }
    ]
   }
  },

@@ -11,15 +11,11 @@
      "scope": "empire",
      "min": 3
     },
-    "TECH_CULTURAL_LONGEVITY"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_CULTURAL_LONGEVITY",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   }
  },

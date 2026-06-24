@@ -12,15 +12,11 @@
     },
     "BUILDING_MUSEUM",
     "BUILDING_ART_GALLERY",
-    "TECH_MODERN_ART"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_MODERN_ART",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   }
  },

@@ -16,19 +16,17 @@
      "min": 3
     },
     "TECH_ARMORED_CAVALRY",
-    "TECH_GUILDS"
-   ],
-   "any": [
-    [
-     "BUILDING_KNIGHTS_STABLE",
-     "BUILDING_MODERN_STABLE"
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_GUILDS",
+    {
+     "any": [
+      "BUILDING_KNIGHTS_STABLE",
+      "BUILDING_MODERN_STABLE"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   }
  },

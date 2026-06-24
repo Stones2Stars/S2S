@@ -8,22 +8,22 @@
     {
      "type": "TECH_ENDLESS_EXPLORATION",
      "scope": "team"
+    },
+    {
+     "any": [
+      {
+       "terrain": [
+        "TERRAIN_DISTANT_COSMOS"
+       ]
+      },
+      {
+       "bonus": [
+        "BONUS_EXOTIC_LIFEFORMS",
+        "BONUS_ABANDONED_MEGASTRUCTURE"
+       ]
+      }
+     ]
     }
-   ],
-   "any": [
-    [
-     {
-      "terrain": [
-       "TERRAIN_DISTANT_COSMOS"
-      ]
-     },
-     {
-      "bonus": [
-       "BONUS_EXOTIC_LIFEFORMS",
-       "BONUS_ABANDONED_MEGASTRUCTURE"
-      ]
-     }
-    ]
    ]
   }
  },

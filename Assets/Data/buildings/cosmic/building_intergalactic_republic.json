@@ -6,15 +6,11 @@
   "build": {
    "all": [
     "BUILDING_INTERGALACTIC_GOVERNMENT",
-    "TECH_INTERGALACTIC_EMPIRE"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_UNIVERSAL",
-      "scope": "plot"
-     }
-    ]
+    "TECH_INTERGALACTIC_EMPIRE",
+    {
+     "type": "MAPCATEGORY_UNIVERSAL",
+     "scope": "plot"
+    }
    ],
    "noneOf": [
     "BUILDING_INTERGALACTIC_EMPIRE"

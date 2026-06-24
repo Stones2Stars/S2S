@@ -25,24 +25,22 @@
      "type": "BONUS_PERSONAL_ELECTRONICS",
      "scope": "city",
      "connection": "trade|vicinity"
+    },
+    {
+     "type": "BONUS_FIREARMS",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    {
+     "any": [
+      "BUILDING_3D_PRINTING_MILL",
+      "BUILDING_NANOBOTIC_PRINTING_MILL",
+      "BUILDING_MOLECULAR_ASSEMBLER",
+      "BUILDING_ATOMIC_ASSEMBLER",
+      "BUILDING_QUANTUM_ASSEMBLER",
+      "BUILDING_MATERIALIZER"
+     ]
     }
-   ],
-   "any": [
-    [
-     {
-      "type": "BONUS_FIREARMS",
-      "scope": "city",
-      "connection": "trade|vicinity"
-     }
-    ],
-    [
-     "BUILDING_3D_PRINTING_MILL",
-     "BUILDING_NANOBOTIC_PRINTING_MILL",
-     "BUILDING_MOLECULAR_ASSEMBLER",
-     "BUILDING_ATOMIC_ASSEMBLER",
-     "BUILDING_QUANTUM_ASSEMBLER",
-     "BUILDING_MATERIALIZER"
-    ]
    ]
   }
  },

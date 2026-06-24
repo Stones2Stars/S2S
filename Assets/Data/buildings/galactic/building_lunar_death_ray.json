@@ -7,15 +7,11 @@
    "all": [
     "HAS_POWER",
     "BUILDING_LUNAR_ARCOLOGY",
-    "TECH_WEAPONIZED_DISINTEGRATION"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_LUNAR",
-      "scope": "plot"
-     }
-    ]
+    "TECH_WEAPONIZED_DISINTEGRATION",
+    {
+     "type": "MAPCATEGORY_LUNAR",
+     "scope": "plot"
+    }
    ]
   }
  },

@@ -6,15 +6,11 @@
   "build": {
    "all": [
     "BUILDING_MATHEMATICS_DEPARTMENT",
-    "TECH_COMPUTER_SCIENCE"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_COMPUTER_SCIENCE",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   }
  },

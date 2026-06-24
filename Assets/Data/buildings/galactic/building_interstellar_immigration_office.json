@@ -6,15 +6,11 @@
   "build": {
    "all": [
     "BUILDING_STARPORT",
-    "TECH_ADVANCED_SEEDSHIPS"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_ADVANCED_SEEDSHIPS",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   }
  },

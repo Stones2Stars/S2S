@@ -15,24 +15,22 @@
       "max": 60
      }
     },
-    "TECH_FREE_ARTISTRY"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ],
-    [
-     "HERITAGE_FOLKLORE_BEAVER",
-     "HERITAGE_FOLKLORE_FOX_ARCTIC",
-     "HERITAGE_FOLKLORE_FOX_FENNEC",
-     "HERITAGE_FOLKLORE_FOX_RED",
-     "HERITAGE_FOLKLORE_KOALA",
-     "HERITAGE_FOLKLORE_OTTER_SEA",
-     "HERITAGE_FOLKLORE_PLATYPUS"
-    ]
+    "TECH_FREE_ARTISTRY",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    },
+    {
+     "any": [
+      "HERITAGE_FOLKLORE_BEAVER",
+      "HERITAGE_FOLKLORE_FOX_ARCTIC",
+      "HERITAGE_FOLKLORE_FOX_FENNEC",
+      "HERITAGE_FOLKLORE_FOX_RED",
+      "HERITAGE_FOLKLORE_KOALA",
+      "HERITAGE_FOLKLORE_OTTER_SEA",
+      "HERITAGE_FOLKLORE_PLATYPUS"
+     ]
+    }
    ]
   }
  },

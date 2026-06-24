@@ -21,15 +21,11 @@
     "BUILDING_HYPERSPACE_5D_ARTIFICIAL_GRAVITY",
     "BUILDING_HYPERSPACE_INFLATON_FIELD",
     "BUILDING_EFFECT_UNIVERSAL_ECONOMY",
-    "TECH_EXPERIMENTAL_COSMOLOGY"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_HYPERSPACE",
-      "scope": "plot"
-     }
-    ]
+    "TECH_EXPERIMENTAL_COSMOLOGY",
+    {
+     "type": "MAPCATEGORY_HYPERSPACE",
+     "scope": "plot"
+    }
    ]
   }
  },

@@ -10,15 +10,11 @@
  "requires": {
   "build": {
    "all": [
-    "TECH_CALENDAR"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_CALENDAR",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   }
  },

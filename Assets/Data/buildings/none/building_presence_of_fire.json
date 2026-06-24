@@ -5,50 +5,48 @@
  "requires": {
   "build": {
    "all": [
-    "BUILDING_FOLKLORE_REQUIREMENT"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ],
-    [
-     {
-      "HAS_TERRAIN": "TERRAIN_DUNES"
-     },
-     {
-      "HAS_TERRAIN": "TERRAIN_DESERT"
-     },
-     {
-      "HAS_TERRAIN": "TERRAIN_PLAINS"
-     },
-     {
-      "HAS_TERRAIN": "TERRAIN_SCRUB"
-     },
-     {
-      "HAS_TERRAIN": "TERRAIN_LUSH"
-     },
-     {
-      "HAS_FEATURE": "FEATURE_JUNGLE"
-     },
-     {
-      "HAS_FEATURE": "FEATURE_SAVANNA"
-     },
-     {
-      "HAS_FEATURE": "FEATURE_FOREST"
-     },
-     {
-      "HAS_FEATURE": "FEATURE_FOREST_ANCIENT"
-     },
-     {
-      "HAS_FEATURE": "FEATURE_FOREST_YOUNG"
-     },
-     {
-      "HAS_FEATURE": "FEATURE_FOREST_BURNT"
-     }
-    ]
+    "BUILDING_FOLKLORE_REQUIREMENT",
+    {
+     "any": [
+      {
+       "HAS_TERRAIN": "TERRAIN_DUNES"
+      },
+      {
+       "HAS_TERRAIN": "TERRAIN_DESERT"
+      },
+      {
+       "HAS_TERRAIN": "TERRAIN_PLAINS"
+      },
+      {
+       "HAS_TERRAIN": "TERRAIN_SCRUB"
+      },
+      {
+       "HAS_TERRAIN": "TERRAIN_LUSH"
+      },
+      {
+       "HAS_FEATURE": "FEATURE_JUNGLE"
+      },
+      {
+       "HAS_FEATURE": "FEATURE_SAVANNA"
+      },
+      {
+       "HAS_FEATURE": "FEATURE_FOREST"
+      },
+      {
+       "HAS_FEATURE": "FEATURE_FOREST_ANCIENT"
+      },
+      {
+       "HAS_FEATURE": "FEATURE_FOREST_YOUNG"
+      },
+      {
+       "HAS_FEATURE": "FEATURE_FOREST_BURNT"
+      }
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   }
  },

@@ -7,25 +7,23 @@
    "all": [
     "HAS_POWER",
     "BUILDING_MARTIAN_CITY",
-    "TECH_NOOGENESIS"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_MARTIAN",
-      "scope": "plot"
-     }
-    ]
+    "TECH_NOOGENESIS",
+    {
+     "type": "MAPCATEGORY_MARTIAN",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {
-   "any": [
-    [
-     "CIVIC_DIVINE_CULT",
-     "CIVIC_STATE_CHURCH",
-     "CIVIC_COSMIC_ENLIGHTENING",
-     "CIVIC_INQUISITORIAL"
-    ]
+   "all": [
+    {
+     "any": [
+      "CIVIC_DIVINE_CULT",
+      "CIVIC_STATE_CHURCH",
+      "CIVIC_COSMIC_ENLIGHTENING",
+      "CIVIC_INQUISITORIAL"
+     ]
+    }
    ]
   }
  },

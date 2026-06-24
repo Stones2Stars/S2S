@@ -14,37 +14,37 @@
   "build": {
    "all": [
     "TECH_TRAP_FISHING",
-    "TECH_DRYING"
-   ],
-   "any": [
-    [
-     "BUILDING_DRYING_FRAME",
-     "BUILDING_ANCIENT_CUSTOMS",
-     "BUILDING_SMOKEHOUSE",
-     "BUILDING_HYPERMARKET"
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_DRYING",
+    {
+     "any": [
+      "BUILDING_DRYING_FRAME",
+      "BUILDING_ANCIENT_CUSTOMS",
+      "BUILDING_SMOKEHOUSE",
+      "BUILDING_HYPERMARKET"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {
-   "any": [
-    [
-     {
-      "type": "BONUS_RAW_FISH",
-      "scope": "city",
-      "connection": "trade|vicinity"
-     },
-     {
-      "type": "BONUS_SHELLFISH",
-      "scope": "city",
-      "connection": "trade|vicinity"
-     }
-    ]
+   "all": [
+    {
+     "any": [
+      {
+       "type": "BONUS_RAW_FISH",
+       "scope": "city",
+       "connection": "trade|vicinity"
+      },
+      {
+       "type": "BONUS_SHELLFISH",
+       "scope": "city",
+       "connection": "trade|vicinity"
+      }
+     ]
+    }
    ],
    "dormant": [
     "BUILDING_AQUAFARM"

@@ -18,15 +18,11 @@
   "build": {
    "all": [
     "BUILDING_UNIVERSITY",
-    "TECH_STATISTICS"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_STATISTICS",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   }
  },

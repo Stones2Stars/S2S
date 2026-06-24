@@ -6,15 +6,11 @@
   "build": {
    "all": [
     "BUILDING_CISLUNAR_DILATON_GENERATOR",
-    "TECH_SINGULARITY_STABILIZATION"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_CISLUNAR",
-      "scope": "plot"
-     }
-    ]
+    "TECH_SINGULARITY_STABILIZATION",
+    {
+     "type": "MAPCATEGORY_CISLUNAR",
+     "scope": "plot"
+    }
    ]
   }
  },

@@ -9,16 +9,12 @@
      "type": "TECH_COMMERCIAL_WHALING",
      "scope": "team"
     },
-    "IS_WATER"
-   ],
-   "any": [
-    [
-     {
-      "bonus": [
-       "BONUS_WHALE"
-      ]
-     }
-    ]
+    "IS_WATER",
+    {
+     "bonus": [
+      "BONUS_WHALE"
+     ]
+    }
    ]
   }
  },

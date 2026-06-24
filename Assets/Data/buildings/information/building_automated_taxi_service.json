@@ -23,15 +23,11 @@
     "BUILDING_RIDESHARE",
     "BUILDING_EFFECT_GPS",
     "BUILDING_AUTOMATED_PARKING_GARAGE",
-    "TECH_AUTONOMOUS_VEHICLES"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_AUTONOMOUS_VEHICLES",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

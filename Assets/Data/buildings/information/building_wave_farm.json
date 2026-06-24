@@ -23,15 +23,11 @@
     "HAS_POWER",
     "BUILDING_FACTORY",
     "BUILDING_POWER_LINES",
-    "TECH_RENEWABLE_ENERGY"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_RENEWABLE_ENERGY",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {
@@ -40,16 +36,12 @@
      "type": "BONUS_ALUMINUM_WARES",
      "scope": "city",
      "connection": "trade|vicinity"
+    },
+    {
+     "type": "BONUS_STEEL_WARES",
+     "scope": "city",
+     "connection": "trade|vicinity"
     }
-   ],
-   "any": [
-    [
-     {
-      "type": "BONUS_STEEL_WARES",
-      "scope": "city",
-      "connection": "trade|vicinity"
-     }
-    ]
    ],
    "dormant": [
     "BUILDING_RENEWABLE_MEGACOMPLEX"

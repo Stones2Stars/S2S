@@ -20,23 +20,21 @@
  "requires": {
   "build": {
    "all": [
-    "TECH_CONTROLLED_FIRE"
-   ],
-   "any": [
-    [
-     "BUILDING_STICK_GATHERER",
-     "BUILDING_ANCIENT_CUSTOMS",
-     "BUILDING_LUMBER_CAMP",
-     "BUILDING_DRIFTWOOD_GATHERER",
-     "BUILDING_LUMBER_GATHERER",
-     "BUILDING_AGROFOREST"
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_CONTROLLED_FIRE",
+    {
+     "any": [
+      "BUILDING_STICK_GATHERER",
+      "BUILDING_ANCIENT_CUSTOMS",
+      "BUILDING_LUMBER_CAMP",
+      "BUILDING_DRIFTWOOD_GATHERER",
+      "BUILDING_LUMBER_GATHERER",
+      "BUILDING_AGROFOREST"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

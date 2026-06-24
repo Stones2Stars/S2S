@@ -10,15 +10,11 @@
  "requires": {
   "build": {
    "all": [
-    "TECH_CULTURAL_EVOLUTION"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_GALACTIC",
-      "scope": "plot"
-     }
-    ]
+    "TECH_CULTURAL_EVOLUTION",
+    {
+     "type": "MAPCATEGORY_GALACTIC",
+     "scope": "plot"
+    }
    ],
    "noneOf": [
     "BUILDING_INTERSTELLAR_CULTURE_AGGRESSIVE",

@@ -12,15 +12,11 @@
   "build": {
    "all": [
     "BUILDING_FARMSCRAPER_I",
-    "TECH_VERTICAL_FARMING"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_VERTICAL_FARMING",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   }
  },

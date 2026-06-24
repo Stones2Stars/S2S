@@ -11,16 +11,12 @@
      "connection": "trade|vicinity"
     },
     "BUILDING_CLONING_FACTORY",
-    "TECH_CYBERNETICS"
-   ],
-   "any": [
-    [
-     {
-      "type": "BONUS_NEUROIMPLANTS",
-      "scope": "city",
-      "connection": "trade|vicinity"
-     }
-    ]
+    "TECH_CYBERNETICS",
+    {
+     "type": "BONUS_NEUROIMPLANTS",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    }
    ]
   }
  },

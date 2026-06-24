@@ -11,20 +11,18 @@
   "build": {
    "all": [
     "HAS_COAST",
-    "TECH_GUNPOWDER"
-   ],
-   "any": [
-    [
-     "BUILDING_SHIPYARD",
-     "BUILDING_DRYDOCK",
-     "BUILDING_NAVAL_YARD"
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_GUNPOWDER",
+    {
+     "any": [
+      "BUILDING_SHIPYARD",
+      "BUILDING_DRYDOCK",
+      "BUILDING_NAVAL_YARD"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   }
  },

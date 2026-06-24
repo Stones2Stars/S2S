@@ -8,16 +8,12 @@
     {
      "type": "TECH_COSMIC_ENGINEERING",
      "scope": "team"
+    },
+    {
+     "terrain": [
+      "TERRAIN_OBSERVABLE_UNIVERSE"
+     ]
     }
-   ],
-   "any": [
-    [
-     {
-      "terrain": [
-       "TERRAIN_OBSERVABLE_UNIVERSE"
-      ]
-     }
-    ]
    ]
   }
  },

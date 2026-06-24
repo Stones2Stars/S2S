@@ -7,15 +7,11 @@
    "all": [
     "HAS_POWER",
     "BUILDING_MODERN_OFFICES",
-    "TECH_MINORITY_RIGHTS"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_MINORITY_RIGHTS",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   }
  },

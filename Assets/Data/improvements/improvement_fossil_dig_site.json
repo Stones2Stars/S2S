@@ -8,21 +8,21 @@
     {
      "type": "TECH_PALEONTOLOGY",
      "scope": "team"
+    },
+    {
+     "any": [
+      {
+       "feature": [
+        "FEATURE_TAR_PIT"
+       ]
+      },
+      {
+       "bonus": [
+        "BONUS_FOSSIL_BEDS"
+       ]
+      }
+     ]
     }
-   ],
-   "any": [
-    [
-     {
-      "feature": [
-       "FEATURE_TAR_PIT"
-      ]
-     },
-     {
-      "bonus": [
-       "BONUS_FOSSIL_BEDS"
-      ]
-     }
-    ]
    ]
   }
  },

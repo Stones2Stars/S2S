@@ -15,33 +15,31 @@
  "requires": {
   "build": {
    "all": [
-    "TECH_SCAVENGING"
-   ],
-   "any": [
-    [
-     {
-      "type": "TERRAIN_GRASSLAND",
-      "scope": "plot"
-     },
-     {
-      "type": "TERRAIN_LUSH",
-      "scope": "plot"
-     },
-     {
-      "type": "TERRAIN_MUDDY",
-      "scope": "plot"
-     },
-     {
-      "type": "TERRAIN_MARSH",
-      "scope": "plot"
-     }
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_SCAVENGING",
+    {
+     "any": [
+      {
+       "type": "TERRAIN_GRASSLAND",
+       "scope": "plot"
+      },
+      {
+       "type": "TERRAIN_LUSH",
+       "scope": "plot"
+      },
+      {
+       "type": "TERRAIN_MUDDY",
+       "scope": "plot"
+      },
+      {
+       "type": "TERRAIN_MARSH",
+       "scope": "plot"
+      }
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   }
  },

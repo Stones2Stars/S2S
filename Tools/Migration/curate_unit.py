@@ -307,11 +307,10 @@ def requires_unit(rec, store):
     # --- TrainCondition BoolExpr -> build (checked at canTrain, CvCity.cpp:1961-1963). Folded via the shared
     # boolexpr converter (And/Or of Has over bonus/building + the one ATTRIBUTE_POPULATION>=N case). owner 2026-06-16. ---
     boolexpr.merge_into(boolexpr.convert_field(rec.find("TrainCondition")), allc, anyc, none)
+    boolexpr.fold_or_groups(allc, anyc)   # OR-groups -> nested {any} under all (any = ||)
     build = OrderedDict()
     if allc:
         build["all"] = allc
-    if anyc:
-        build["any"] = anyc
     if none:
         build["noneOf"] = none
     return {"build": build} if build else None

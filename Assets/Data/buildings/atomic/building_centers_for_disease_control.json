@@ -16,19 +16,17 @@
      "scope": "empire",
      "min": 3
     },
-    "TECH_MODERN_HEALTH_CARE"
-   ],
-   "any": [
-    [
-     "BUILDING_HOSPITAL",
-     "BUILDING_HEALTHCARE_MEGACOMPLEX"
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_MODERN_HEALTH_CARE",
+    {
+     "any": [
+      "BUILDING_HOSPITAL",
+      "BUILDING_HEALTHCARE_MEGACOMPLEX"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   }
  },

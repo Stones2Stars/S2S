@@ -6,19 +6,19 @@
   "build": {
    "all": [
     "BUILDING_INTERSTELLAR_BANKS_ORBITAL",
-    "TECH_ULTIMA_ARCHITECTURE"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_PLASMA",
-      "scope": "plot"
-     },
-     {
-      "type": "MAPCATEGORY_MILKY_WAY",
-      "scope": "plot"
-     }
-    ]
+    "TECH_ULTIMA_ARCHITECTURE",
+    {
+     "any": [
+      {
+       "type": "MAPCATEGORY_PLASMA",
+       "scope": "plot"
+      },
+      {
+       "type": "MAPCATEGORY_MILKY_WAY",
+       "scope": "plot"
+      }
+     ]
+    }
    ]
   }
  },

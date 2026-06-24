@@ -7,18 +7,12 @@
    "all": [
     "HAS_POWER",
     "BUILDING_MEDICAL_DIAGNOSTAT",
-    "TECH_ARTIFICIAL_LIFE"
-   ],
-   "any": [
-    [
-     "BUILDING_NEUROTRANSMITTER_MANIPULATOR_LAB"
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_ARTIFICIAL_LIFE",
+    "BUILDING_NEUROTRANSMITTER_MANIPULATOR_LAB",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

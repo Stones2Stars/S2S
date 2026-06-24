@@ -12,21 +12,15 @@
   "build": {
    "all": [
     "BUILDING_DEEP_SPACE_ORBITAL_BASE",
-    "TECH_ADVANCED_WARMACHINES"
-   ],
-   "any": [
-    [
-     {
-      "type": "TERRAIN_NEPTUNE",
-      "scope": "plot"
-     }
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_SOLAR_SYSTEM",
-      "scope": "plot"
-     }
-    ]
+    "TECH_ADVANCED_WARMACHINES",
+    {
+     "type": "TERRAIN_NEPTUNE",
+     "scope": "plot"
+    },
+    {
+     "type": "MAPCATEGORY_SOLAR_SYSTEM",
+     "scope": "plot"
+    }
    ]
   }
  },

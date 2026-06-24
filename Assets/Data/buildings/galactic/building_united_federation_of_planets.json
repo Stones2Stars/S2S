@@ -7,15 +7,11 @@
    "all": [
     "BUILDING_STARPORT",
     "BUILDING_PALACE",
-    "TECH_GALACTIC_FEDERATION"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_GALACTIC_FEDERATION",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   }
  },

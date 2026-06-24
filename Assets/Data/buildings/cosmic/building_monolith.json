@@ -5,22 +5,16 @@
  "requires": {
   "build": {
    "all": [
-    "TECH_NOOGENESIS"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_NOOGENESIS",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {
-   "any": [
-    [
-     "CIVIC_COSMIC_ENLIGHTENING"
-    ]
+   "all": [
+    "CIVIC_COSMIC_ENLIGHTENING"
    ]
   }
  },

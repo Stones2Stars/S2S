@@ -19,15 +19,11 @@
  "requires": {
   "build": {
    "all": [
-    "TECH_ORCHARDS"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_ORCHARDS",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {
@@ -36,16 +32,12 @@
      "type": "BONUS_INDIGO",
      "scope": "city",
      "connection": "vicinity"
+    },
+    {
+     "type": "BONUS_PAPAYA",
+     "scope": "city",
+     "connection": "vicinity"
     }
-   ],
-   "any": [
-    [
-     {
-      "type": "BONUS_PAPAYA",
-      "scope": "city",
-      "connection": "vicinity"
-     }
-    ]
    ],
    "dormant": [
     "BUILDING_FARMSCRAPER_I"

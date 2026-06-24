@@ -14,15 +14,11 @@
   "build": {
    "all": [
     "BUILDING_COURTHOUSE",
-    "TECH_USURY"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_USURY",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

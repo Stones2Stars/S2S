@@ -12,15 +12,11 @@
   "build": {
    "all": [
     "BUILDING_SPACE_COLONY_TRANSTELLAR",
-    "TECH_INTERSTELLAR_TRADE"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_INTERSTELLAR",
-      "scope": "plot"
-     }
-    ]
+    "TECH_INTERSTELLAR_TRADE",
+    {
+     "type": "MAPCATEGORY_INTERSTELLAR",
+     "scope": "plot"
+    }
    ]
   }
  },

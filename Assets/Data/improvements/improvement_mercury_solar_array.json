@@ -8,16 +8,12 @@
     {
      "type": "TECH_DEEP_SPACE_COLONIES",
      "scope": "team"
+    },
+    {
+     "terrain": [
+      "TERRAIN_MERCURY"
+     ]
     }
-   ],
-   "any": [
-    [
-     {
-      "terrain": [
-       "TERRAIN_MERCURY"
-      ]
-     }
-    ]
    ]
   }
  },

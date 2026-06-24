@@ -18,19 +18,17 @@
      "scope": "city",
      "min": 7
     },
-    "TECH_DIESELPUNK"
-   ],
-   "any": [
-    [
-     "BUILDING_AIRPORT",
-     "BUILDING_COMMERCIAL_AIRPORT"
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_DIESELPUNK",
+    {
+     "any": [
+      "BUILDING_AIRPORT",
+      "BUILDING_COMMERCIAL_AIRPORT"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

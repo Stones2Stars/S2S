@@ -26,15 +26,11 @@
    "all": [
     "BUILDING_CLONING_LABORATORY",
     "BUILDING_SHOPPING_DISTRICT",
-    "TECH_MAINSTREAM_CLONING"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_MAINSTREAM_CLONING",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   }
  },

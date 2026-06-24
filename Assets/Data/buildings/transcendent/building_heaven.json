@@ -17,15 +17,11 @@
      "scope": "empire",
      "min": 1
     },
-    "TECH_OMEGA_POINT"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_DISTANT",
-      "scope": "plot"
-     }
-    ]
+    "TECH_OMEGA_POINT",
+    {
+     "type": "MAPCATEGORY_DISTANT",
+     "scope": "plot"
+    }
    ]
   }
  },

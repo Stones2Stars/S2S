@@ -5,19 +5,17 @@
  "requires": {
   "build": {
    "all": [
-    "TECH_SAPIENTROIDS"
-   ],
-   "any": [
-    [
-     "BUILDING_FACTORY_ANDROIDS",
-     "BUILDING_NANOTECH_COMPLEX"
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_SAPIENTROIDS",
+    {
+     "any": [
+      "BUILDING_FACTORY_ANDROIDS",
+      "BUILDING_NANOTECH_COMPLEX"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   }
  },

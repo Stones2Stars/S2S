@@ -12,18 +12,18 @@
  },
  "requires": {
   "build": {
-   "any": [
-    [
-     "BUILDING_GLASSBLOWERS_WORKSHOP",
-     "BUILDING_FACTORY_GLASSWARE",
-     "BUILDING_GLASS_RECLAMATION_PLANT"
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+   "all": [
+    {
+     "any": [
+      "BUILDING_GLASSBLOWERS_WORKSHOP",
+      "BUILDING_FACTORY_GLASSWARE",
+      "BUILDING_GLASS_RECLAMATION_PLANT"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

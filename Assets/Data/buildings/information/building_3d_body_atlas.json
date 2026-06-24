@@ -15,15 +15,11 @@
     "HAS_POWER",
     "BUILDING_SYSTEMS_BIOLOGY_SIMULATOR",
     "BUILDING_EFFECT_MEDICAL_DATABASE",
-    "TECH_BIOMATHEMATICS"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_BIOMATHEMATICS",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

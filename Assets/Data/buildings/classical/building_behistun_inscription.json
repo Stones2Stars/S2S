@@ -8,15 +8,11 @@
     "TECH_AESTHETICS",
     {
      "STATE_RELIGION": "RELIGION_ZOROASTRIANISM"
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
     }
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
    ]
   },
   "operate": {

@@ -18,26 +18,20 @@
  "requires": {
   "build": {
    "all": [
-    "TECH_DRUG_TRADE"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_DRUG_TRADE",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {
-   "any": [
-    [
-     {
-      "type": "BONUS_PEYOTE",
-      "scope": "city",
-      "connection": "vicinity"
-     }
-    ]
+   "all": [
+    {
+     "type": "BONUS_PEYOTE",
+     "scope": "city",
+     "connection": "vicinity"
+    }
    ],
    "dormant": [
     "BUILDING_FARMSCRAPER_I"

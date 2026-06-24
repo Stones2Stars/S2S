@@ -19,21 +19,15 @@
   "build": {
    "all": [
     "HAS_POWER",
-    "TECH_MOTORIZED_TRANSPORTATION"
-   ],
-   "any": [
-    [
-     {
-      "type": "TERRAIN_PEAK",
-      "scope": "plot"
-     }
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_MOTORIZED_TRANSPORTATION",
+    {
+     "type": "TERRAIN_PEAK",
+     "scope": "plot"
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

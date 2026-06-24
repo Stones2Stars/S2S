@@ -16,15 +16,11 @@
     "HAS_POWER",
     "BUILDING_E_BANK",
     "BUILDING_STOCK_MARKET",
-    "TECH_DIGITIZATION"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_DIGITIZATION",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

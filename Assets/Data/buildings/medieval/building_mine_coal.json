@@ -14,15 +14,11 @@
   "build": {
    "all": [
     "BUILDING_MINING_CAMP",
-    "TECH_COAL_MINING"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_COAL_MINING",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

@@ -8,22 +8,22 @@
     {
      "type": "TECH_REFINING",
      "scope": "team"
+    },
+    {
+     "any": [
+      {
+       "feature": [
+        "FEATURE_TAR_PIT"
+       ]
+      },
+      {
+       "bonus": [
+        "BONUS_OIL",
+        "BONUS_NATURAL_GAS"
+       ]
+      }
+     ]
     }
-   ],
-   "any": [
-    [
-     {
-      "feature": [
-       "FEATURE_TAR_PIT"
-      ]
-     },
-     {
-      "bonus": [
-       "BONUS_OIL",
-       "BONUS_NATURAL_GAS"
-      ]
-     }
-    ]
    ]
   }
  },

@@ -38,15 +38,11 @@
     "HAS_POWER",
     "BUILDING_MEAT_INDUSTRY_CONGLOMERATE",
     "BUILDING_EPSILON_ASSEMBLER",
-    "TECH_AUGMENTED_CONSUMABLES"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_AUGMENTED_CONSUMABLES",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   }
  },

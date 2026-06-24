@@ -14,15 +14,11 @@
   "build": {
    "all": [
     "BUILDING_C_L_ASIAN",
-    "TECH_FOLK_MEDICINE"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_FOLK_MEDICINE",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

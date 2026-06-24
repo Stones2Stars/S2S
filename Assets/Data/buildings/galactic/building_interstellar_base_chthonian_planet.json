@@ -11,21 +11,15 @@
   "build": {
    "all": [
     "BUILDING_INTERSTELLAR_PLANETARY_LANDING",
-    "TECH_POSTHUMANISM"
-   ],
-   "any": [
-    [
-     {
-      "type": "FEATURE_CHTHONIAN_PLANET",
-      "scope": "plot"
-     }
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_PLASMA",
-      "scope": "plot"
-     }
-    ]
+    "TECH_POSTHUMANISM",
+    {
+     "type": "FEATURE_CHTHONIAN_PLANET",
+     "scope": "plot"
+    },
+    {
+     "type": "MAPCATEGORY_PLASMA",
+     "scope": "plot"
+    }
    ]
   }
  },

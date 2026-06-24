@@ -7,15 +7,11 @@
    "all": [
     "BUILDING_INTERGALACTIC_ASTROPOLIS",
     "TECH_OMEGA_MINUS_ENGINEERING",
-    "TECH_SUPERSYMMETRIC_PARTICLE_CONSTRUCTION"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_UNIVERSAL",
-      "scope": "plot"
-     }
-    ]
+    "TECH_SUPERSYMMETRIC_PARTICLE_CONSTRUCTION",
+    {
+     "type": "MAPCATEGORY_UNIVERSAL",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

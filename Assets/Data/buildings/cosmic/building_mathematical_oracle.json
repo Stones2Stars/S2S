@@ -13,15 +13,11 @@
     "HAS_POWER",
     "BUILDING_SELF_AWARE_CITY",
     "BUILDING_OMEGA_ASSEMBLER",
-    "TECH_UNIFICATION_MATHEMATICS"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_UNIFICATION_MATHEMATICS",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

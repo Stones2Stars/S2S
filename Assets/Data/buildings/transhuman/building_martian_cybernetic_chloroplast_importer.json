@@ -9,15 +9,11 @@
     "BUILDING_EFFECT_MARS_CYCLER",
     "BUILDING_MARTIAN_CITY",
     "TECH_PLANETARY_TRADE",
-    "TECH_ARTIFICIAL_PHOTOSYNTHESIS"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_MARTIAN",
-      "scope": "plot"
-     }
-    ]
+    "TECH_ARTIFICIAL_PHOTOSYNTHESIS",
+    {
+     "type": "MAPCATEGORY_MARTIAN",
+     "scope": "plot"
+    }
    ]
   }
  },

@@ -20,15 +20,11 @@
  "requires": {
   "build": {
    "all": [
-    "TECH_FLORISTRY"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_FLORISTRY",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {
@@ -37,16 +33,12 @@
      "type": "BONUS_INDIGO",
      "scope": "city",
      "connection": "vicinity"
+    },
+    {
+     "type": "BONUS_TEA",
+     "scope": "city",
+     "connection": "vicinity"
     }
-   ],
-   "any": [
-    [
-     {
-      "type": "BONUS_TEA",
-      "scope": "city",
-      "connection": "vicinity"
-     }
-    ]
    ],
    "dormant": [
     "BUILDING_GREENHOUSE"

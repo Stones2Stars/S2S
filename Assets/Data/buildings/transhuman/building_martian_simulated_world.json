@@ -7,15 +7,11 @@
    "all": [
     "HAS_POWER",
     "BUILDING_MARTIAN_CITY",
-    "TECH_SIMULATED_REALITY"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_MARTIAN",
-      "scope": "plot"
-     }
-    ]
+    "TECH_SIMULATED_REALITY",
+    {
+     "type": "MAPCATEGORY_MARTIAN",
+     "scope": "plot"
+    }
    ]
   }
  },

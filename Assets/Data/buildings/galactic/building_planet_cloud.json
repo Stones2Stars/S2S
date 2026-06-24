@@ -17,15 +17,11 @@
      "scope": "empire",
      "min": 3
     },
-    "TECH_LAUNCH_ARCOLOGY"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_CISLUNAR",
-      "scope": "plot"
-     }
-    ]
+    "TECH_LAUNCH_ARCOLOGY",
+    {
+     "type": "MAPCATEGORY_CISLUNAR",
+     "scope": "plot"
+    }
    ]
   }
  },

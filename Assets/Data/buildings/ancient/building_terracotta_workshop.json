@@ -13,20 +13,18 @@
  "requires": {
   "build": {
    "all": [
-    "TECH_ORNAMENTATION"
-   ],
-   "any": [
-    [
-     "BUILDING_POTTERS_WORKSHOP",
-     "BUILDING_POTTERS_HUT",
-     "BUILDING_FACTORY_POTTERY"
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_ORNAMENTATION",
+    {
+     "any": [
+      "BUILDING_POTTERS_WORKSHOP",
+      "BUILDING_POTTERS_HUT",
+      "BUILDING_FACTORY_POTTERY"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {
@@ -35,16 +33,12 @@
      "type": "BONUS_FINE_CLAY",
      "scope": "city",
      "connection": "trade|vicinity"
+    },
+    {
+     "type": "BONUS_MARBLE",
+     "scope": "city",
+     "connection": "trade|vicinity"
     }
-   ],
-   "any": [
-    [
-     {
-      "type": "BONUS_MARBLE",
-      "scope": "city",
-      "connection": "trade|vicinity"
-     }
-    ]
    ],
    "dormant": [
     "BUILDING_MANUFACTURING_DISTRICT",

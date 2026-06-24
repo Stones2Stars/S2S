@@ -21,15 +21,11 @@
      "scope": "empire",
      "min": 3
     },
-    "TECH_HELIOCENTRISM"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_HELIOCENTRISM",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

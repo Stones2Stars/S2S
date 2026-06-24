@@ -15,21 +15,19 @@
      "type": "BONUS_AMMUNITION",
      "scope": "city",
      "connection": "trade|vicinity"
+    },
+    {
+     "type": "BONUS_FIREARMS",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    {
+     "any": [
+      "BUILDING_FIRING_RANGE",
+      "BUILDING_AUTOMATED_FIRING_RANGE",
+      "BUILDING_ORBITAL_TARGETS"
+     ]
     }
-   ],
-   "any": [
-    [
-     {
-      "type": "BONUS_FIREARMS",
-      "scope": "city",
-      "connection": "trade|vicinity"
-     }
-    ],
-    [
-     "BUILDING_FIRING_RANGE",
-     "BUILDING_AUTOMATED_FIRING_RANGE",
-     "BUILDING_ORBITAL_TARGETS"
-    ]
    ]
   }
  },

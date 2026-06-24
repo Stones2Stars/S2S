@@ -5,25 +5,23 @@
  "requires": {
   "build": {
    "all": [
-    "TECH_SUPERSTRONG_ALLOYS"
-   ],
-   "any": [
-    [
-     {
-      "type": "TERRAIN_PEAK",
-      "scope": "plot"
-     },
-     {
-      "type": "TERRAIN_HILL",
-      "scope": "plot"
-     }
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_SUPERSTRONG_ALLOYS",
+    {
+     "any": [
+      {
+       "type": "TERRAIN_PEAK",
+       "scope": "plot"
+      },
+      {
+       "type": "TERRAIN_HILL",
+       "scope": "plot"
+      }
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

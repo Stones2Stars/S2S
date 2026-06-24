@@ -7,21 +7,15 @@
    "all": [
     "HAS_POWER",
     "BUILDING_CLOUD_SERVER",
-    "TECH_UBIQUITOUS_COMPUTING"
-   ],
-   "any": [
-    [
-     {
-      "type": "FEATURE_ICE",
-      "scope": "plot"
-     }
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_UBIQUITOUS_COMPUTING",
+    {
+     "type": "FEATURE_ICE",
+     "scope": "plot"
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   }
  },

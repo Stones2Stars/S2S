@@ -12,29 +12,27 @@
    "all": [
     "HAS_POWER",
     "BUILDING_SPACE_COLONY_LUNAR_BASE",
-    "TECH_LUNAR_MANUFACTURING"
-   ],
-   "any": [
-    [
-     {
-      "type": "FEATURE_CRATER_MEDIUM",
-      "scope": "plot"
-     },
-     {
-      "type": "FEATURE_CRATER_LARGE",
-      "scope": "plot"
-     },
-     {
-      "type": "FEATURE_CRATER_SMALL",
-      "scope": "plot"
-     }
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_LUNAR",
-      "scope": "plot"
-     }
-    ]
+    "TECH_LUNAR_MANUFACTURING",
+    {
+     "any": [
+      {
+       "type": "FEATURE_CRATER_MEDIUM",
+       "scope": "plot"
+      },
+      {
+       "type": "FEATURE_CRATER_LARGE",
+       "scope": "plot"
+      },
+      {
+       "type": "FEATURE_CRATER_SMALL",
+       "scope": "plot"
+      }
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_LUNAR",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {
@@ -43,16 +41,12 @@
      "type": "BONUS_GLASSWARE",
      "scope": "city",
      "connection": "trade|vicinity"
+    },
+    {
+     "type": "BONUS_CEMENT",
+     "scope": "city",
+     "connection": "trade|vicinity"
     }
-   ],
-   "any": [
-    [
-     {
-      "type": "BONUS_CEMENT",
-      "scope": "city",
-      "connection": "trade|vicinity"
-     }
-    ]
    ]
   }
  },

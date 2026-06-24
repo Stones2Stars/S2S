@@ -12,19 +12,17 @@
    "all": [
     "HAS_POWER",
     "BUILDING_ANIMATION_STUDIO",
-    "TECH_3D_MODELLING"
-   ],
-   "any": [
-    [
-     "BUILDING_DESIGN_STUDIO",
-     "BUILDING_ELECTRONICS_MANUFACTURING_DISTRICT"
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_3D_MODELLING",
+    {
+     "any": [
+      "BUILDING_DESIGN_STUDIO",
+      "BUILDING_ELECTRONICS_MANUFACTURING_DISTRICT"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

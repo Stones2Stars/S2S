@@ -11,21 +11,15 @@
   "build": {
    "all": [
     "BUILDING_INTERGALACTIC_CORE_DYSON_SPHERE",
-    "TECH_GALACTIFORMING"
-   ],
-   "any": [
-    [
-     {
-      "type": "TERRAIN_OBSERVABLE_UNIVERSE",
-      "scope": "plot"
-     }
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_UNIVERSAL",
-      "scope": "plot"
-     }
-    ]
+    "TECH_GALACTIFORMING",
+    {
+     "type": "TERRAIN_OBSERVABLE_UNIVERSE",
+     "scope": "plot"
+    },
+    {
+     "type": "MAPCATEGORY_UNIVERSAL",
+     "scope": "plot"
+    }
    ]
   }
  },

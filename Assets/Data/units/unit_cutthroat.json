@@ -6,14 +6,14 @@
   "build": {
    "all": [
     "BUILDING_THIEVES_HIDEOUT",
-    "TECH_USURY"
-   ],
-   "any": [
-    [
-     "BUILDING_LOCKSMITH",
-     "BUILDING_ELECTRONIC_SECURITY_SYSTEM",
-     "BUILDING_BIOMETRIC_SECURITY_SYSTEM"
-    ]
+    "TECH_USURY",
+    {
+     "any": [
+      "BUILDING_LOCKSMITH",
+      "BUILDING_ELECTRONIC_SECURITY_SYSTEM",
+      "BUILDING_BIOMETRIC_SECURITY_SYSTEM"
+     ]
+    }
    ]
   }
  },

@@ -11,15 +11,11 @@
   "build": {
    "all": [
     "BUILDING_DISTANT_BLAZAR_FACTORY",
-    "TECH_DIRECTED_COSMIC_EVOLUTION"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_DISTANT",
-      "scope": "plot"
-     }
-    ]
+    "TECH_DIRECTED_COSMIC_EVOLUTION",
+    {
+     "type": "MAPCATEGORY_DISTANT",
+     "scope": "plot"
+    }
    ]
   }
  },

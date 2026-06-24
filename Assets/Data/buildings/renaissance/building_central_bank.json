@@ -16,27 +16,25 @@
      "scope": "empire",
      "min": 4
     },
-    "TECH_MERCANTILISM"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_MERCANTILISM",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {
-   "any": [
-    [
-     "CIVIC_CORPORATISM",
-     "CIVIC_GREEN",
-     "CIVIC_GUILDS",
-     "CIVIC_MERCANTILISM",
-     "CIVIC_PLANNED",
-     "CIVIC_REGULATED"
-    ]
+   "all": [
+    {
+     "any": [
+      "CIVIC_CORPORATISM",
+      "CIVIC_GREEN",
+      "CIVIC_GUILDS",
+      "CIVIC_MERCANTILISM",
+      "CIVIC_PLANNED",
+      "CIVIC_REGULATED"
+     ]
+    }
    ]
   }
  },

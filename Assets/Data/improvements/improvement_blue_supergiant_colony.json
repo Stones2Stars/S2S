@@ -8,16 +8,12 @@
     {
      "type": "TECH_APPLIED_RELATIVITY",
      "scope": "team"
+    },
+    {
+     "feature": [
+      "FEATURE_BLUE_SUPERGIANT"
+     ]
     }
-   ],
-   "any": [
-    [
-     {
-      "feature": [
-       "FEATURE_BLUE_SUPERGIANT"
-      ]
-     }
-    ]
    ]
   }
  },

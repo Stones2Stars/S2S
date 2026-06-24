@@ -8,16 +8,12 @@
     {
      "type": "TECH_GRAND_UNIFICATION_BIOLOGY",
      "scope": "team"
+    },
+    {
+     "terrain": [
+      "TERRAIN_NEUTRON_STAR"
+     ]
     }
-   ],
-   "any": [
-    [
-     {
-      "terrain": [
-       "TERRAIN_NEUTRON_STAR"
-      ]
-     }
-    ]
    ]
   }
  },

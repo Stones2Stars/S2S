@@ -13,19 +13,17 @@
  "requires": {
   "build": {
    "all": [
-    "TECH_BRASS_WORKING"
-   ],
-   "any": [
-    [
-     "BUILDING_FORGE",
-     "BUILDING_FOUNDRY"
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_BRASS_WORKING",
+    {
+     "any": [
+      "BUILDING_FORGE",
+      "BUILDING_FOUNDRY"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

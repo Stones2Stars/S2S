@@ -6,24 +6,22 @@
   "build": {
    "all": [
     "BUILDING_LANDFILL",
-    "TECH_MODERN_SANITATION"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_MODERN_SANITATION",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {
-   "any": [
-    [
-     "CIVIC_LANDFILLS",
-     "CIVIC_WASTE_IMPORTATION",
-     "CIVIC_WASTE_TO_ENERGY"
-    ]
+   "all": [
+    {
+     "any": [
+      "CIVIC_LANDFILLS",
+      "CIVIC_WASTE_IMPORTATION",
+      "CIVIC_WASTE_TO_ENERGY"
+     ]
+    }
    ]
   }
  },

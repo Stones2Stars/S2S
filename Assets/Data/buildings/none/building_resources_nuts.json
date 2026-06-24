@@ -12,30 +12,30 @@
  },
  "requires": {
   "build": {
-   "any": [
-    [
-     "BUILDING_GROVE_OAK",
-     "BUILDING_GROVE_ALMOND",
-     "BUILDING_GROVE_BRAZIL_NUT",
-     "BUILDING_GROVE_CASHEW",
-     "BUILDING_GROVE_CHESTNUT",
-     "BUILDING_PLANTATION_COCONUT",
-     "BUILDING_GROVE_GEVUINA",
-     "BUILDING_GROVE_HAZELNUT",
-     "BUILDING_GROVE_MACADAMIA",
-     "BUILDING_GROVE_MONGONGO",
-     "BUILDING_PLANTATION_PEANUT",
-     "BUILDING_GROVE_PECAN",
-     "BUILDING_GROVE_PINE_NUT",
-     "BUILDING_GROVE_PISTACHIO",
-     "BUILDING_GROVE_WALNUT"
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+   "all": [
+    {
+     "any": [
+      "BUILDING_GROVE_OAK",
+      "BUILDING_GROVE_ALMOND",
+      "BUILDING_GROVE_BRAZIL_NUT",
+      "BUILDING_GROVE_CASHEW",
+      "BUILDING_GROVE_CHESTNUT",
+      "BUILDING_PLANTATION_COCONUT",
+      "BUILDING_GROVE_GEVUINA",
+      "BUILDING_GROVE_HAZELNUT",
+      "BUILDING_GROVE_MACADAMIA",
+      "BUILDING_GROVE_MONGONGO",
+      "BUILDING_PLANTATION_PEANUT",
+      "BUILDING_GROVE_PECAN",
+      "BUILDING_GROVE_PINE_NUT",
+      "BUILDING_GROVE_PISTACHIO",
+      "BUILDING_GROVE_WALNUT"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

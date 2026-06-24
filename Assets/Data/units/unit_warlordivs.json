@@ -10,16 +10,12 @@
      "scope": "city",
      "connection": "trade|vicinity"
     },
-    "TECH_MILITARY_SCIENCE"
-   ],
-   "any": [
-    [
-     {
-      "type": "BONUS_SULPHUR",
-      "scope": "city",
-      "connection": "trade|vicinity"
-     }
-    ]
+    "TECH_MILITARY_SCIENCE",
+    {
+     "type": "BONUS_SULPHUR",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    }
    ]
   }
  },

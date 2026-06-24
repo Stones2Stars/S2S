@@ -11,69 +11,69 @@
      "min": 3
     },
     "BUILDING_FOLKLORE_E_SEA",
-    "TECH_CELEBRATION"
-   ],
-   "any": [
-    [
-     "BUILDING_RAIN_DANCE",
-     "BUILDING_FISHERMANS_HUT",
-     "BUILDING_SHIPYARD",
-     "BUILDING_DRYDOCK",
-     "BUILDING_NAVAL_YARD",
-     "BUILDING_AQUAFARM"
-    ],
-    [
-     {
-      "type": "FEATURE_KELP",
-      "scope": "plot"
-     },
-     {
-      "type": "FEATURE_SEA_GRASS",
-      "scope": "plot"
-     },
-     {
-      "type": "FEATURE_CORAL_REEF",
-      "scope": "plot"
-     },
-     {
-      "type": "FEATURE_CORAL_REEF_BEACON",
-      "scope": "plot"
-     },
-     {
-      "type": "FEATURE_CORAL_REEF_LIGHTHOUSE",
-      "scope": "plot"
-     },
-     {
-      "type": "FEATURE_REEF",
-      "scope": "plot"
-     },
-     {
-      "type": "FEATURE_REEF_BEACON",
-      "scope": "plot"
-     },
-     {
-      "type": "FEATURE_REEF_LIGHTHOUSE",
-      "scope": "plot"
-     },
-     {
-      "type": "FEATURE_PLATY_GREAT_BARRIER",
-      "scope": "plot"
-     },
-     {
-      "type": "FEATURE_GREAT_BARRIER_REEF_BEACON",
-      "scope": "plot"
-     },
-     {
-      "type": "FEATURE_GREAT_BARRIER_REEF_LIGHTHOUSE",
-      "scope": "plot"
-     }
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_CELEBRATION",
+    {
+     "any": [
+      "BUILDING_RAIN_DANCE",
+      "BUILDING_FISHERMANS_HUT",
+      "BUILDING_SHIPYARD",
+      "BUILDING_DRYDOCK",
+      "BUILDING_NAVAL_YARD",
+      "BUILDING_AQUAFARM"
+     ]
+    },
+    {
+     "any": [
+      {
+       "type": "FEATURE_KELP",
+       "scope": "plot"
+      },
+      {
+       "type": "FEATURE_SEA_GRASS",
+       "scope": "plot"
+      },
+      {
+       "type": "FEATURE_CORAL_REEF",
+       "scope": "plot"
+      },
+      {
+       "type": "FEATURE_CORAL_REEF_BEACON",
+       "scope": "plot"
+      },
+      {
+       "type": "FEATURE_CORAL_REEF_LIGHTHOUSE",
+       "scope": "plot"
+      },
+      {
+       "type": "FEATURE_REEF",
+       "scope": "plot"
+      },
+      {
+       "type": "FEATURE_REEF_BEACON",
+       "scope": "plot"
+      },
+      {
+       "type": "FEATURE_REEF_LIGHTHOUSE",
+       "scope": "plot"
+      },
+      {
+       "type": "FEATURE_PLATY_GREAT_BARRIER",
+       "scope": "plot"
+      },
+      {
+       "type": "FEATURE_GREAT_BARRIER_REEF_BEACON",
+       "scope": "plot"
+      },
+      {
+       "type": "FEATURE_GREAT_BARRIER_REEF_LIGHTHOUSE",
+       "scope": "plot"
+      }
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ],
    "noneOf": [
     "BUILDING_GRAND_SKY_FESTIVAL",
@@ -82,44 +82,46 @@
    ]
   },
   "operate": {
-   "any": [
-    [
-     {
-      "type": "BONUS_PEARLS",
-      "scope": "city",
-      "connection": "trade|vicinity"
-     },
-     {
-      "type": "BONUS_FISH",
-      "scope": "city",
-      "connection": "trade|vicinity"
-     },
-     {
-      "type": "BONUS_SHRIMP",
-      "scope": "city",
-      "connection": "trade|vicinity"
-     },
-     {
-      "type": "BONUS_LOBSTER",
-      "scope": "city",
-      "connection": "trade|vicinity"
-     },
-     {
-      "type": "BONUS_WHALE",
-      "scope": "city",
-      "connection": "trade|vicinity"
-     },
-     {
-      "type": "BONUS_CLAM",
-      "scope": "city",
-      "connection": "trade|vicinity"
-     },
-     {
-      "type": "BONUS_CRAB",
-      "scope": "city",
-      "connection": "trade|vicinity"
-     }
-    ]
+   "all": [
+    {
+     "any": [
+      {
+       "type": "BONUS_PEARLS",
+       "scope": "city",
+       "connection": "trade|vicinity"
+      },
+      {
+       "type": "BONUS_FISH",
+       "scope": "city",
+       "connection": "trade|vicinity"
+      },
+      {
+       "type": "BONUS_SHRIMP",
+       "scope": "city",
+       "connection": "trade|vicinity"
+      },
+      {
+       "type": "BONUS_LOBSTER",
+       "scope": "city",
+       "connection": "trade|vicinity"
+      },
+      {
+       "type": "BONUS_WHALE",
+       "scope": "city",
+       "connection": "trade|vicinity"
+      },
+      {
+       "type": "BONUS_CLAM",
+       "scope": "city",
+       "connection": "trade|vicinity"
+      },
+      {
+       "type": "BONUS_CRAB",
+       "scope": "city",
+       "connection": "trade|vicinity"
+      }
+     ]
+    }
    ]
   }
  },

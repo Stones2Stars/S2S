@@ -19,15 +19,11 @@
   "build": {
    "all": [
     "BUILDING_MINING_CAMP",
-    "TECH_MINING"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_MINING",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {
@@ -36,16 +32,12 @@
      "type": "BONUS_RUBIES",
      "scope": "city",
      "connection": "vicinity"
+    },
+    {
+     "type": "BONUS_SALT",
+     "scope": "city",
+     "connection": "vicinity"
     }
-   ],
-   "any": [
-    [
-     {
-      "type": "BONUS_SALT",
-      "scope": "city",
-      "connection": "vicinity"
-     }
-    ]
    ],
    "dormant": [
     "BUILDING_CORE_MINE"

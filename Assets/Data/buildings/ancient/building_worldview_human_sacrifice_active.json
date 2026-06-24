@@ -10,15 +10,11 @@
  "requires": {
   "build": {
    "all": [
-    "TECH_SACRIFICE_CULT"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_SACRIFICE_CULT",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

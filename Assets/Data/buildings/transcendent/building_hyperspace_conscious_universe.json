@@ -7,15 +7,11 @@
    "all": [
     "HAS_POWER",
     "BUILDING_HYPERSPACE_SIMULATED_UNIVERSE",
-    "TECH_UNIVERSAL_SINGULARITY"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_HYPERSPACE",
-      "scope": "plot"
-     }
-    ]
+    "TECH_UNIVERSAL_SINGULARITY",
+    {
+     "type": "MAPCATEGORY_HYPERSPACE",
+     "scope": "plot"
+    }
    ]
   }
  },

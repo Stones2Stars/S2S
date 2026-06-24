@@ -11,15 +11,11 @@
      "scope": "empire",
      "min": 2
     },
-    "TECH_WORMHOLE_HIVEMIND"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_MILKY_WAY",
-      "scope": "plot"
-     }
-    ]
+    "TECH_WORMHOLE_HIVEMIND",
+    {
+     "type": "MAPCATEGORY_MILKY_WAY",
+     "scope": "plot"
+    }
    ]
   }
  },

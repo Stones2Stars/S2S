@@ -12,17 +12,17 @@
  },
  "requires": {
   "build": {
-   "any": [
-    [
-     "BUILDING_CHEMICAL_PLANT",
-     "BUILDING_CHEMISTRY_LAB"
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+   "all": [
+    {
+     "any": [
+      "BUILDING_CHEMICAL_PLANT",
+      "BUILDING_CHEMISTRY_LAB"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

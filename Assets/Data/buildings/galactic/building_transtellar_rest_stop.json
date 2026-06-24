@@ -10,15 +10,11 @@
  "requires": {
   "build": {
    "all": [
-    "TECH_ASTROANTHROPOLOGY"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_INTERSTELLAR",
-      "scope": "plot"
-     }
-    ]
+    "TECH_ASTROANTHROPOLOGY",
+    {
+     "type": "MAPCATEGORY_INTERSTELLAR",
+     "scope": "plot"
+    }
    ]
   }
  },

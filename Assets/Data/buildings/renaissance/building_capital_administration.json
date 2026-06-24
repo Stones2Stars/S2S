@@ -12,15 +12,11 @@
     },
     "BUILDING_PALACE",
     "BUILDING_METROPOLITAN_ADMINISTRATION",
-    "TECH_SOCIAL_CONTRACT"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_SOCIAL_CONTRACT",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   }
  },

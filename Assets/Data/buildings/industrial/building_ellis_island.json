@@ -6,21 +6,19 @@
   "build": {
    "all": [
     "HAS_COAST",
-    "TECH_STEAM_POWER"
-   ],
-   "any": [
-    [
-     "BUILDING_PORT",
-     "BUILDING_COMMERCIAL_PORT",
-     "BUILDING_INTERNATIONAL_PORT",
-     "BUILDING_OCEAN_ADMINISTRATION"
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_STEAM_POWER",
+    {
+     "any": [
+      "BUILDING_PORT",
+      "BUILDING_COMMERCIAL_PORT",
+      "BUILDING_INTERNATIONAL_PORT",
+      "BUILDING_OCEAN_ADMINISTRATION"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

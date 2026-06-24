@@ -9,15 +9,11 @@
     "BUILDING_DEEP_SPACE_ADVANCED_RECYCLING",
     "BUILDING_DEEP_SPACE_MAGLEV",
     "BUILDING_DEEP_SPACE_ORGANIC_VOLATILE_EXTRACTION",
-    "TECH_FORGE_WORLDS"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_SOLAR_SYSTEM",
-      "scope": "plot"
-     }
-    ]
+    "TECH_FORGE_WORLDS",
+    {
+     "type": "MAPCATEGORY_SOLAR_SYSTEM",
+     "scope": "plot"
+    }
    ]
   }
  },

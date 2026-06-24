@@ -16,20 +16,18 @@
      "min": 3
     },
     "TECH_PAPER",
-    "TECH_GUILDS"
-   ],
-   "any": [
-    [
-     "BUILDING_PAPER_MAKER",
-     "BUILDING_FACTORY_PAPER",
-     "BUILDING_ELECTRONIC_PAPER_MAKER"
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_GUILDS",
+    {
+     "any": [
+      "BUILDING_PAPER_MAKER",
+      "BUILDING_FACTORY_PAPER",
+      "BUILDING_ELECTRONIC_PAPER_MAKER"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   }
  },

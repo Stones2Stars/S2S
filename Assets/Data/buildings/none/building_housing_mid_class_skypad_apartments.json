@@ -20,19 +20,17 @@
     "BUILDING_PUSHBUTTON_AUTOMAT",
     "BUILDING_SEWER_SYSTEM",
     "BUILDING_WATER_PIPES",
-    "TECH_ATOMPUNK"
-   ],
-   "any": [
-    [
-     "BUILDING_VIDEOPHONE_NETWORK",
-     "BUILDING_COMPUTER_NETWORK"
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_ATOMPUNK",
+    {
+     "any": [
+      "BUILDING_VIDEOPHONE_NETWORK",
+      "BUILDING_COMPUTER_NETWORK"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

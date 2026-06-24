@@ -17,15 +17,11 @@
      "scope": "empire",
      "min": 2
     },
-    "TECH_PLANETARY_MEGASTRUCTURES"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_PLANETARY_MEGASTRUCTURES",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   }
  },

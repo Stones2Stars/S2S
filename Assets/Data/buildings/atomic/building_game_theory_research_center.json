@@ -6,15 +6,11 @@
   "build": {
    "all": [
     "BUILDING_MATHEMATICS_DEPARTMENT",
-    "TECH_DECRYPTION_MACHINES"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_DECRYPTION_MACHINES",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   }
  },

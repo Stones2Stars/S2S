@@ -6,13 +6,13 @@
  "requires": {
   "build": {
    "all": [
-    "TECH_ADVANCED_ENVIRONMENTAL_SYSTEMS"
-   ],
-   "any": [
-    [
-     "BUILDING_CISLUNAR_FACTORY",
-     "BUILDING_SPACE_STATION"
-    ]
+    "TECH_ADVANCED_ENVIRONMENTAL_SYSTEMS",
+    {
+     "any": [
+      "BUILDING_CISLUNAR_FACTORY",
+      "BUILDING_SPACE_STATION"
+     ]
+    }
    ]
   }
  },

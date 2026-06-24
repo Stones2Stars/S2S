@@ -7,15 +7,11 @@
    "all": [
     "BUILDING_MANUFACTURING_PLANT",
     "TECH_MICROGENERATORS",
-    "TECH_CONTROLLED_PLASMA"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_CONTROLLED_PLASMA",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   }
  },

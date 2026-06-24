@@ -7,20 +7,18 @@
    "all": [
     "HAS_POWER",
     "BUILDING_DIGITAL_OFFICES",
-    "TECH_ONLINE_COMMUNITY"
-   ],
-   "any": [
-    [
-     "BUILDING_SOCIAL_NETWORKS",
-     "BUILDING_HOLOGRAPHIC_NETWORKS",
-     "BUILDING_EXOCORTEX_NETWORKS"
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_ONLINE_COMMUNITY",
+    {
+     "any": [
+      "BUILDING_SOCIAL_NETWORKS",
+      "BUILDING_HOLOGRAPHIC_NETWORKS",
+      "BUILDING_EXOCORTEX_NETWORKS"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

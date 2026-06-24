@@ -11,23 +11,25 @@
      "scope": "empire",
      "min": 1
     },
-    "TECH_MACROVERSE_TRAVERSAL"
-   ],
-   "any": [
-    [
-     "BUILDING_MARTIAN_STARPORT",
-     "BUILDING_VENUS_MEGAFACTORY"
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_MARTIAN",
-      "scope": "plot"
-     },
-     {
-      "type": "MAPCATEGORY_VENUSIAN",
-      "scope": "plot"
-     }
-    ]
+    "TECH_MACROVERSE_TRAVERSAL",
+    {
+     "any": [
+      "BUILDING_MARTIAN_STARPORT",
+      "BUILDING_VENUS_MEGAFACTORY"
+     ]
+    },
+    {
+     "any": [
+      {
+       "type": "MAPCATEGORY_MARTIAN",
+       "scope": "plot"
+      },
+      {
+       "type": "MAPCATEGORY_VENUSIAN",
+       "scope": "plot"
+      }
+     ]
+    }
    ]
   }
  },

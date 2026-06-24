@@ -13,21 +13,15 @@
  "requires": {
   "build": {
    "all": [
-    "TECH_IRON_WORKING"
-   ],
-   "any": [
-    [
-     {
-      "type": "FEATURE_PEAT_BOG",
-      "scope": "plot"
-     }
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_IRON_WORKING",
+    {
+     "type": "FEATURE_PEAT_BOG",
+     "scope": "plot"
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

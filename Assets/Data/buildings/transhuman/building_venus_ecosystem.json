@@ -11,15 +11,11 @@
   "build": {
    "all": [
     "BUILDING_SPACE_COLONY_VENUS",
-    "TECH_QUADRUPLE_HELIX"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_VENUSIAN",
-      "scope": "plot"
-     }
-    ]
+    "TECH_QUADRUPLE_HELIX",
+    {
+     "type": "MAPCATEGORY_VENUSIAN",
+     "scope": "plot"
+    }
    ]
   }
  },

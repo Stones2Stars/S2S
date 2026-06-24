@@ -8,15 +8,11 @@
     "BUILDING_DEEP_SPACE_HOUSING_MANAGEMENT",
     "BUILDING_DEEP_SPACE_SIMULATED_WORLD",
     "BUILDING_DEEP_SPACE_ONEILL_CYLINDER",
-    "TECH_MOLECULAR_SCANNING"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_SOLAR_SYSTEM",
-      "scope": "plot"
-     }
-    ]
+    "TECH_MOLECULAR_SCANNING",
+    {
+     "type": "MAPCATEGORY_SOLAR_SYSTEM",
+     "scope": "plot"
+    }
    ]
   }
  },

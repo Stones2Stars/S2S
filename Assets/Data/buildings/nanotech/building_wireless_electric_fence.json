@@ -14,15 +14,11 @@
   "build": {
    "all": [
     "HAS_POWER",
-    "TECH_WIRELESS_ELECTRICITY"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_WIRELESS_ELECTRICITY",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

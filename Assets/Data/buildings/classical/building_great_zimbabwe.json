@@ -11,15 +11,11 @@
  "requires": {
   "build": {
    "all": [
-    "TECH_CITY_PLANNING"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_CITY_PLANNING",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   }
  },

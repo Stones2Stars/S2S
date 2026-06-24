@@ -13,15 +13,11 @@
      "scope": "world",
      "min": 5
     },
-    "TECH_BOAT_BUILDING"
-   ],
-   "any": [
-    [
-     {
-      "type": "CIVILIZATION_NPC_NEANDERTHAL",
-      "scope": "empire"
-     }
-    ]
+    "TECH_BOAT_BUILDING",
+    {
+     "type": "CIVILIZATION_NPC_NEANDERTHAL",
+     "scope": "empire"
+    }
    ]
   }
  },

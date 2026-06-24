@@ -11,20 +11,18 @@
  "requires": {
   "build": {
    "all": [
-    "TECH_FEUDALISM"
-   ],
-   "any": [
-    [
-     "BUILDING_FORGE",
-     "BUILDING_FOUNDRY",
-     "BUILDING_METALS_MEGACOMPLEX"
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_FEUDALISM",
+    {
+     "any": [
+      "BUILDING_FORGE",
+      "BUILDING_FOUNDRY",
+      "BUILDING_METALS_MEGACOMPLEX"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

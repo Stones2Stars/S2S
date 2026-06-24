@@ -16,15 +16,11 @@
     "HAS_RIVER",
     "BUILDING_COURTHOUSE",
     "TECH_CODE_OF_LAWS",
-    "TECH_CURRENCY"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_CURRENCY",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

@@ -6,15 +6,11 @@
   "build": {
    "all": [
     "BUILDING_DEEP_SPACE_MCKENDREE_CYLINDER",
-    "TECH_QUANTUM_RAMJET"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_SOLAR_SYSTEM",
-      "scope": "plot"
-     }
-    ]
+    "TECH_QUANTUM_RAMJET",
+    {
+     "type": "MAPCATEGORY_SOLAR_SYSTEM",
+     "scope": "plot"
+    }
    ]
   }
  },

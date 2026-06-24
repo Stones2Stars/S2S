@@ -10,19 +10,17 @@
      "scope": "city",
      "min": 20
     },
-    "TECH_AUTOMATED_URBANIZATION"
-   ],
-   "any": [
-    [
-     "BUILDING_SELF_CONSTRUCTION_FIRM",
-     "BUILDING_INTERTEMPORAL_CONSTRUCTION_FIRM"
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_AUTOMATED_URBANIZATION",
+    {
+     "any": [
+      "BUILDING_SELF_CONSTRUCTION_FIRM",
+      "BUILDING_INTERTEMPORAL_CONSTRUCTION_FIRM"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   }
  },

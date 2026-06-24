@@ -14,15 +14,11 @@
     "BUILDING_CISLUNAR_FACTORY",
     "BUILDING_CISLUNAR_MATERIALS_LAB",
     "BUILDING_CISLUNAR_AGRICULTURAL_LAB",
-    "TECH_DYSTOPIA_PATHOGENS"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_CISLUNAR",
-      "scope": "plot"
-     }
-    ]
+    "TECH_DYSTOPIA_PATHOGENS",
+    {
+     "type": "MAPCATEGORY_CISLUNAR",
+     "scope": "plot"
+    }
    ]
   }
  },

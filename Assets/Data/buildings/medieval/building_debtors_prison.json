@@ -13,38 +13,38 @@
  "requires": {
   "build": {
    "all": [
-    "TECH_USURY"
-   ],
-   "any": [
-    [
-     "BUILDING_STOCKS",
-     "BUILDING_GALLOWS",
-     "BUILDING_GUILLOTINE",
-     "BUILDING_ELECTRIC_CHAIR",
-     "BUILDING_LETHAL_INJECTION"
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_USURY",
+    {
+     "any": [
+      "BUILDING_STOCKS",
+      "BUILDING_GALLOWS",
+      "BUILDING_GUILLOTINE",
+      "BUILDING_ELECTRIC_CHAIR",
+      "BUILDING_LETHAL_INJECTION"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {
-   "any": [
-    [
-     {
-      "type": "BONUS_BRICKS",
-      "scope": "city",
-      "connection": "trade|vicinity"
-     },
-     {
-      "type": "BONUS_STONE",
-      "scope": "city",
-      "connection": "trade|vicinity"
-     }
-    ]
+   "all": [
+    {
+     "any": [
+      {
+       "type": "BONUS_BRICKS",
+       "scope": "city",
+       "connection": "trade|vicinity"
+      },
+      {
+       "type": "BONUS_STONE",
+       "scope": "city",
+       "connection": "trade|vicinity"
+      }
+     ]
+    }
    ],
    "dormant": [
     "BUILDING_JAIL"

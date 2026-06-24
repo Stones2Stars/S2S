@@ -10,20 +10,18 @@
      "scope": "city",
      "connection": "trade|vicinity"
     },
-    "TECH_CRIMINOLOGY"
-   ],
-   "any": [
-    [
-     {
-      "type": "BONUS_AMMUNITION",
-      "scope": "city",
-      "connection": "trade|vicinity"
-     }
-    ],
-    [
-     "BUILDING_POLICE_STATION",
-     "BUILDING_POLICE_PRECINCT"
-    ]
+    "TECH_CRIMINOLOGY",
+    {
+     "type": "BONUS_AMMUNITION",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    {
+     "any": [
+      "BUILDING_POLICE_STATION",
+      "BUILDING_POLICE_PRECINCT"
+     ]
+    }
    ]
   }
  },

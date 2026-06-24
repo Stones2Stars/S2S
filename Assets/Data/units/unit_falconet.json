@@ -12,16 +12,12 @@
     },
     "BUILDING_CANNON_FORGE",
     "TECH_METALLURGY",
-    "TECH_MATCHLOCK"
-   ],
-   "any": [
-    [
-     {
-      "type": "BONUS_SULPHUR",
-      "scope": "city",
-      "connection": "trade|vicinity"
-     }
-    ]
+    "TECH_MATCHLOCK",
+    {
+     "type": "BONUS_SULPHUR",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    }
    ]
   }
  },

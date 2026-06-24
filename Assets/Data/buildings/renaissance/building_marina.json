@@ -12,29 +12,27 @@
    "all": [
     "HAS_COAST",
     "BUILDING_HARBORMASTERS_OFFICE",
-    "TECH_ASTROLABE"
-   ],
-   "any": [
-    [
-     {
-      "type": "IMPROVEMENT_FISHING_BOATS",
-      "scope": "plot"
-     },
-     {
-      "type": "IMPROVEMENT_WHALING_BOATS",
-      "scope": "plot"
-     },
-     {
-      "type": "IMPROVEMENT_WHALING_SHIPS",
-      "scope": "plot"
-     }
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_ASTROLABE",
+    {
+     "any": [
+      {
+       "type": "IMPROVEMENT_FISHING_BOATS",
+       "scope": "plot"
+      },
+      {
+       "type": "IMPROVEMENT_WHALING_BOATS",
+       "scope": "plot"
+      },
+      {
+       "type": "IMPROVEMENT_WHALING_SHIPS",
+       "scope": "plot"
+      }
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   }
  },

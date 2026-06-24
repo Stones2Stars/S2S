@@ -8,16 +8,12 @@
     {
      "type": "TECH_ION_BEAMS",
      "scope": "team"
+    },
+    {
+     "terrain": [
+      "TERRAIN_CISLUNAR_SPACE"
+     ]
     }
-   ],
-   "any": [
-    [
-     {
-      "terrain": [
-       "TERRAIN_CISLUNAR_SPACE"
-      ]
-     }
-    ]
    ]
   }
  },

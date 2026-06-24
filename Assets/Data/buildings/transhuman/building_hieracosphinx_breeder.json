@@ -12,15 +12,11 @@
     },
     "BUILDING_C_AC_AFRICAN",
     "BUILDING_C_L_AFRICAN",
-    "TECH_MYTHOLOGICAL_BESTIARY"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_MYTHOLOGICAL_BESTIARY",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ],
    "noneOf": [
     "BUILDING_JACKALOPE_BREEDER",

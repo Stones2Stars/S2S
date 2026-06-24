@@ -19,21 +19,15 @@
   "build": {
    "all": [
     "HAS_RIVER",
-    "TECH_CANAL_SYSTEMS"
-   ],
-   "any": [
-    [
-     {
-      "type": "TERRAIN_MARSH",
-      "scope": "plot"
-     }
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_CANAL_SYSTEMS",
+    {
+     "type": "TERRAIN_MARSH",
+     "scope": "plot"
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

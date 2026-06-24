@@ -6,15 +6,11 @@
   "build": {
    "all": [
     "BUILDING_HYPERSPACE_IMPORTER",
-    "TECH_ENDOGENOUS_EUCLIDEAN_PROPULSION"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_HYPERSPACE",
-      "scope": "plot"
-     }
-    ]
+    "TECH_ENDOGENOUS_EUCLIDEAN_PROPULSION",
+    {
+     "type": "MAPCATEGORY_HYPERSPACE",
+     "scope": "plot"
+    }
    ]
   }
  },

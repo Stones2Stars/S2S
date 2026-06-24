@@ -10,19 +10,17 @@
  "requires": {
   "build": {
    "all": [
-    "TECH_SUNDIAL"
-   ],
-   "any": [
-    [
-     "BUILDING_SUNDIAL",
-     "BUILDING_TOWNCLOCK"
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_SUNDIAL",
+    {
+     "any": [
+      "BUILDING_SUNDIAL",
+      "BUILDING_TOWNCLOCK"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {
@@ -31,16 +29,12 @@
      "type": "BONUS_SCULPTURES",
      "scope": "city",
      "connection": "trade|vicinity"
+    },
+    {
+     "type": "BONUS_STONE",
+     "scope": "city",
+     "connection": "trade|vicinity"
     }
-   ],
-   "any": [
-    [
-     {
-      "type": "BONUS_STONE",
-      "scope": "city",
-      "connection": "trade|vicinity"
-     }
-    ]
    ],
    "dormant": [
     "BUILDING_POLLUTION_BLACKENED_SKIES"

@@ -5,27 +5,25 @@
  "requires": {
   "build": {
    "all": [
-    "TECH_RESURRECTION"
-   ],
-   "any": [
-    [
-     "BUILDING_LOA_HWE",
-     "BUILDING_BUDDHIST_TEMPLE",
-     "BUILDING_HINDU_TEMPLE",
-     "BUILDING_CHRISTIAN_TEMPLE",
-     "BUILDING_ISLAMIC_TEMPLE",
-     "BUILDING_JEWISH_TEMPLE",
-     "BUILDING_HELLENIC_TEMPLE",
-     "BUILDING_TEMPLE_OF_RA",
-     "BUILDING_NATURE_ALTAR",
-     "BUILDING_CANAANITE_TEMPLE"
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_RESURRECTION",
+    {
+     "any": [
+      "BUILDING_LOA_HWE",
+      "BUILDING_BUDDHIST_TEMPLE",
+      "BUILDING_HINDU_TEMPLE",
+      "BUILDING_CHRISTIAN_TEMPLE",
+      "BUILDING_ISLAMIC_TEMPLE",
+      "BUILDING_JEWISH_TEMPLE",
+      "BUILDING_HELLENIC_TEMPLE",
+      "BUILDING_TEMPLE_OF_RA",
+      "BUILDING_NATURE_ALTAR",
+      "BUILDING_CANAANITE_TEMPLE"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   }
  },

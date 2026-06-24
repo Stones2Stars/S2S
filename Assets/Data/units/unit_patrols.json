@@ -5,17 +5,17 @@
  "requires": {
   "build": {
    "all": [
-    "TECH_LAW_ENFORCEMENT"
-   ],
-   "any": [
-    [
-     "BUILDING_TOWN_PATROL",
-     "BUILDING_GUARDHOUSE",
-     "BUILDING_GUARD_STATION",
-     "BUILDING_SHERIFFS_OFFICE",
-     "BUILDING_POLICE_STATION",
-     "BUILDING_POLICE_PRECINCT"
-    ]
+    "TECH_LAW_ENFORCEMENT",
+    {
+     "any": [
+      "BUILDING_TOWN_PATROL",
+      "BUILDING_GUARDHOUSE",
+      "BUILDING_GUARD_STATION",
+      "BUILDING_SHERIFFS_OFFICE",
+      "BUILDING_POLICE_STATION",
+      "BUILDING_POLICE_PRECINCT"
+     ]
+    }
    ]
   }
  },

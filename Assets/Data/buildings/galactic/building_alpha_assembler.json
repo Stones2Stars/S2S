@@ -20,15 +20,11 @@
     "BUILDING_FARMSCRAPER_III",
     "BUILDING_URBAN_PSYCHIC_INTEGRATION",
     "BUILDING_SELF_AWARE_CITY",
-    "TECH_ATOMIC_SCALE_ENGINEERING"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_ATOMIC_SCALE_ENGINEERING",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

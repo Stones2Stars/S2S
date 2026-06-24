@@ -18,20 +18,18 @@
     },
     "BUILDING_MODERN_OFFICES",
     "BUILDING_TV_STUDIO",
-    "TECH_TELEVISION"
-   ],
-   "any": [
-    [
-     "BUILDING_BROADCAST_TOWER",
-     "BUILDING_COMMUNICATION_TOWER",
-     "BUILDING_NETWORK_NODE"
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_TELEVISION",
+    {
+     "any": [
+      "BUILDING_BROADCAST_TOWER",
+      "BUILDING_COMMUNICATION_TOWER",
+      "BUILDING_NETWORK_NODE"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   }
  },

@@ -17,15 +17,11 @@
      "scope": "empire",
      "min": 4
     },
-    "TECH_SUPERCONDUCTORS"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_SUPERCONDUCTORS",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   }
  },

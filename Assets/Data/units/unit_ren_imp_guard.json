@@ -6,19 +6,13 @@
   "build": {
    "all": [
     "BUILDING_PALACE",
-    "TECH_FLINTLOCK"
-   ],
-   "any": [
-    [
-     {
-      "type": "BONUS_SULPHUR",
-      "scope": "city",
-      "connection": "trade|vicinity"
-     }
-    ],
-    [
-     "CIVIC_MONARCHY"
-    ]
+    "TECH_FLINTLOCK",
+    {
+     "type": "BONUS_SULPHUR",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    "CIVIC_MONARCHY"
    ]
   }
  },

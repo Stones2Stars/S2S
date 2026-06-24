@@ -10,35 +10,35 @@
  "requires": {
   "build": {
    "all": [
-    "TECH_CELEBRATION"
-   ],
-   "any": [
-    [
-     "BUILDING_FERTILITY_DANCE",
-     "BUILDING_EFFECT_FERTILITY_FESTIVAL"
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_CELEBRATION",
+    {
+     "any": [
+      "BUILDING_FERTILITY_DANCE",
+      "BUILDING_EFFECT_FERTILITY_FESTIVAL"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {
-   "any": [
-    [
-     {
-      "type": "BONUS_FUR",
-      "scope": "city",
-      "connection": "trade|vicinity"
-     },
-     {
-      "type": "BONUS_BASKETS",
-      "scope": "city",
-      "connection": "trade|vicinity"
-     }
-    ]
+   "all": [
+    {
+     "any": [
+      {
+       "type": "BONUS_FUR",
+       "scope": "city",
+       "connection": "trade|vicinity"
+      },
+      {
+       "type": "BONUS_BASKETS",
+       "scope": "city",
+       "connection": "trade|vicinity"
+      }
+     ]
+    }
    ]
   }
  },

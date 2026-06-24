@@ -11,25 +11,23 @@
      "min": 3
     },
     "TECH_ALGEBRA",
-    "STATE_RELIGION_IN_CITY"
-   ],
-   "any": [
-    [
-     {
-      "type": "TERRAIN_DESERT",
-      "scope": "plot"
-     },
-     {
-      "type": "TERRAIN_DUNES",
-      "scope": "plot"
-     }
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "STATE_RELIGION_IN_CITY",
+    {
+     "any": [
+      {
+       "type": "TERRAIN_DESERT",
+       "scope": "plot"
+      },
+      {
+       "type": "TERRAIN_DUNES",
+       "scope": "plot"
+      }
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   }
  },

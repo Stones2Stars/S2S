@@ -8,23 +8,23 @@
     {
      "type": "TECH_NATUROPATHY",
      "scope": "team"
+    },
+    {
+     "any": [
+      {
+       "terrain": [
+        "TERRAIN_MARSH",
+        "TERRAIN_MUDDY"
+       ]
+      },
+      {
+       "feature": [
+        "FEATURE_SWAMP",
+        "FEATURE_FLOOD_PLAINS"
+       ]
+      }
+     ]
     }
-   ],
-   "any": [
-    [
-     {
-      "terrain": [
-       "TERRAIN_MARSH",
-       "TERRAIN_MUDDY"
-      ]
-     },
-     {
-      "feature": [
-       "FEATURE_SWAMP",
-       "FEATURE_FLOOD_PLAINS"
-      ]
-     }
-    ]
    ]
   }
  },

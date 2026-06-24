@@ -6,21 +6,15 @@
   "build": {
    "all": [
     "BUILDING_MERCURY_COMETARY_BOMBARDMENT",
-    "TECH_PLANETARY_TERRAFORMING"
-   ],
-   "any": [
-    [
-     {
-      "type": "TERRAIN_MERCURY",
-      "scope": "plot"
-     }
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_SOLAR_SYSTEM",
-      "scope": "plot"
-     }
-    ]
+    "TECH_PLANETARY_TERRAFORMING",
+    {
+     "type": "TERRAIN_MERCURY",
+     "scope": "plot"
+    },
+    {
+     "type": "MAPCATEGORY_SOLAR_SYSTEM",
+     "scope": "plot"
+    }
    ]
   }
  },

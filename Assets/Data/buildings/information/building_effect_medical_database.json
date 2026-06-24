@@ -10,15 +10,11 @@
  "requires": {
   "build": {
    "all": [
-    "TECH_KNOWLEDGE_MANAGEMENT"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_KNOWLEDGE_MANAGEMENT",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   }
  },

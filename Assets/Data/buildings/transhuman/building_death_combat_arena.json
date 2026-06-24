@@ -7,19 +7,17 @@
    "all": [
     "HAS_POWER",
     "BUILDING_ATHLETIC_MEGACOMPLEX",
-    "TECH_TRANSHUMANISM"
-   ],
-   "any": [
-    [
-     "BUILDING_RESURRECTION_HUB",
-     "BUILDING_NANOMORPHIC_REPLICATOR"
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_TRANSHUMANISM",
+    {
+     "any": [
+      "BUILDING_RESURRECTION_HUB",
+      "BUILDING_NANOMORPHIC_REPLICATOR"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   }
  },

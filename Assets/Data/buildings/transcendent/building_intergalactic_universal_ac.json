@@ -11,15 +11,11 @@
      "scope": "empire",
      "min": 1
     },
-    "TECH_HYPERINTELLIGENCE"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_UNIVERSAL",
-      "scope": "plot"
-     }
-    ]
+    "TECH_HYPERINTELLIGENCE",
+    {
+     "type": "MAPCATEGORY_UNIVERSAL",
+     "scope": "plot"
+    }
    ]
   }
  },

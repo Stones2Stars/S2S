@@ -6,15 +6,11 @@
   "build": {
    "all": [
     "BUILDING_UNIVERSITY",
-    "TECH_PALEONTOLOGY"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_PALEONTOLOGY",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

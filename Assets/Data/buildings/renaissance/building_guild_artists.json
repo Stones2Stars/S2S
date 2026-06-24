@@ -22,15 +22,11 @@
      "min": 3
     },
     "TECH_FREE_ARTISTRY",
-    "TECH_GUILDS"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_GUILDS",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   }
  },

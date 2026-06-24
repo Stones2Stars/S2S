@@ -7,15 +7,11 @@
    "all": [
     "HAS_POWER",
     "BUILDING_MEGATOWER",
-    "TECH_BIOMIMETICS"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_BIOMIMETICS",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   }
  },

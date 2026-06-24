@@ -13,15 +13,11 @@
    "all": [
     "BUILDING_DEEP_SPACE_HOUSING_WORKERS",
     "BUILDING_DEEP_SPACE_ECOSYSTEM",
-    "TECH_CLOSED_ECONOMIES"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_SOLAR_SYSTEM",
-      "scope": "plot"
-     }
-    ]
+    "TECH_CLOSED_ECONOMIES",
+    {
+     "type": "MAPCATEGORY_SOLAR_SYSTEM",
+     "scope": "plot"
+    }
    ]
   }
  },

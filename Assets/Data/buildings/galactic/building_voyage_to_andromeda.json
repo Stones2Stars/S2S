@@ -6,15 +6,11 @@
   "build": {
    "all": [
     "BUILDING_INTERSTELLAR_STARPORT",
-    "TECH_FOLDING_SPACE"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_MILKY_WAY",
-      "scope": "plot"
-     }
-    ]
+    "TECH_FOLDING_SPACE",
+    {
+     "type": "MAPCATEGORY_MILKY_WAY",
+     "scope": "plot"
+    }
    ]
   }
  },

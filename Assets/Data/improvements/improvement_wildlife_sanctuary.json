@@ -8,26 +8,22 @@
     {
      "type": "TECH_TOURISM",
      "scope": "team"
+    },
+    {
+     "bonus": [
+      "BONUS_ELEPHANTS",
+      "BONUS_BEAVERS",
+      "BONUS_PARROTS",
+      "BONUS_SEA_LION_AND_SEAL",
+      "BONUS_WALRUS",
+      "BONUS_MAMMOTH",
+      "BONUS_BISON",
+      "BONUS_DEER",
+      "BONUS_GUINEA_PIGS",
+      "BONUS_KANGAROO",
+      "BONUS_RABBIT"
+     ]
     }
-   ],
-   "any": [
-    [
-     {
-      "bonus": [
-       "BONUS_ELEPHANTS",
-       "BONUS_BEAVERS",
-       "BONUS_PARROTS",
-       "BONUS_SEA_LION_AND_SEAL",
-       "BONUS_WALRUS",
-       "BONUS_MAMMOTH",
-       "BONUS_BISON",
-       "BONUS_DEER",
-       "BONUS_GUINEA_PIGS",
-       "BONUS_KANGAROO",
-       "BONUS_RABBIT"
-      ]
-     }
-    ]
    ]
   }
  },

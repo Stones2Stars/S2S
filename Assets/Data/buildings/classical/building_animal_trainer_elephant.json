@@ -31,39 +31,33 @@
  "requires": {
   "build": {
    "all": [
-    "TECH_MILITARY_TRAINING"
-   ],
-   "any": [
-    [
-     "BUILDING_FARM_ANIMAL_ELEPHANT",
-     "BUILDING_HERD_ELEPHANT",
-     "BUILDING_CENTRAL_BREEDER_ELEPHANT",
-     "BUILDING_INDUSTRIAL_FARMS",
-     "BUILDING_MEAT_INDUSTRY_CONGLOMERATE"
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ],
-    [
-     {
-      "type": "CIVILIZATION_NPC_NEANDERTHAL",
-      "scope": "empire"
-     }
-    ]
+    "TECH_MILITARY_TRAINING",
+    {
+     "any": [
+      "BUILDING_FARM_ANIMAL_ELEPHANT",
+      "BUILDING_HERD_ELEPHANT",
+      "BUILDING_CENTRAL_BREEDER_ELEPHANT",
+      "BUILDING_INDUSTRIAL_FARMS",
+      "BUILDING_MEAT_INDUSTRY_CONGLOMERATE"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    },
+    {
+     "type": "CIVILIZATION_NPC_NEANDERTHAL",
+     "scope": "empire"
+    }
    ]
   },
   "operate": {
-   "any": [
-    [
-     {
-      "type": "BONUS_ELEPHANTS",
-      "scope": "city",
-      "connection": "trade|vicinity"
-     }
-    ]
+   "all": [
+    {
+     "type": "BONUS_ELEPHANTS",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    }
    ]
   }
  },

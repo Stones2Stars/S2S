@@ -14,15 +14,11 @@
   "build": {
    "all": [
     "BUILDING_QUANTUM_LAB",
-    "TECH_QUANTUM_TELEPORTATION"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_QUANTUM_TELEPORTATION",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

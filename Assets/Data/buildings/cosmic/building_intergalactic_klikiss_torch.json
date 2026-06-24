@@ -5,15 +5,11 @@
  "requires": {
   "build": {
    "all": [
-    "TECH_MEGAWORMHOLES"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_UNIVERSAL",
-      "scope": "plot"
-     }
-    ]
+    "TECH_MEGAWORMHOLES",
+    {
+     "type": "MAPCATEGORY_UNIVERSAL",
+     "scope": "plot"
+    }
    ]
   }
  },

@@ -5,15 +5,11 @@
  "requires": {
   "build": {
    "all": [
-    "TECH_TIME_TRAVEL"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_TIME_TRAVEL",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

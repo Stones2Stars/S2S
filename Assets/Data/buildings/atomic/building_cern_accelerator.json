@@ -12,15 +12,11 @@
      "min": 7
     },
     "BUILDING_ACCELERATOR",
-    "TECH_LASER"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_LASER",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   }
  },

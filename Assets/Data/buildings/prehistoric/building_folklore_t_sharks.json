@@ -13,21 +13,19 @@
     "BUILDING_FOLKLORE_E_SEA",
     "BUILDING_FOLKLORE_REQUIREMENT",
     "TECH_ORAL_TRADITION",
-    "TECH_TAXONOMY"
-   ],
-   "any": [
-    [
-     "BUILDING_FOLKLORE_GREAT_WHITE_SHARK",
-     "BUILDING_FOLKLORE_HAMMERHEAD_SHARK",
-     "BUILDING_FOLKLORE_REEF_SHARK",
-     "BUILDING_FOLKLORE_WHALE_SHARK"
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_TAXONOMY",
+    {
+     "any": [
+      "BUILDING_FOLKLORE_GREAT_WHITE_SHARK",
+      "BUILDING_FOLKLORE_HAMMERHEAD_SHARK",
+      "BUILDING_FOLKLORE_REEF_SHARK",
+      "BUILDING_FOLKLORE_WHALE_SHARK"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   }
  },

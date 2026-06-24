@@ -8,16 +8,12 @@
     {
      "type": "TECH_NEUTRONIUM",
      "scope": "team"
+    },
+    {
+     "terrain": [
+      "TERRAIN_NEUTRON_STAR"
+     ]
     }
-   ],
-   "any": [
-    [
-     {
-      "terrain": [
-       "TERRAIN_NEUTRON_STAR"
-      ]
-     }
-    ]
    ]
   }
  },

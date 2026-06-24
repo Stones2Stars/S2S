@@ -5,15 +5,11 @@
  "requires": {
   "build": {
    "all": [
-    "TECH_MILITARY_ROBOTICS"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_MILITARY_ROBOTICS",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

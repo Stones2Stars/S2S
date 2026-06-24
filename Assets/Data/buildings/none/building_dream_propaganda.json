@@ -12,26 +12,20 @@
      "min": 3
     },
     "BUILDING_DREAM_SIMULATION_CENTER",
-    "TECH_CYBERPUNK"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_CYBERPUNK",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {
-   "any": [
-    [
-     {
-      "type": "BONUS_CYBERPUNK",
-      "scope": "city",
-      "connection": "trade|vicinity"
-     }
-    ]
+   "all": [
+    {
+     "type": "BONUS_CYBERPUNK",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    }
    ]
   }
  },

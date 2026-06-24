@@ -13,15 +13,11 @@
  "requires": {
   "build": {
    "all": [
-    "TECH_PETROGLYPHS"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_PETROGLYPHS",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

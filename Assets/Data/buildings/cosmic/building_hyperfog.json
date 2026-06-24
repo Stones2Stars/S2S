@@ -7,15 +7,11 @@
    "all": [
     "HAS_POWER",
     "BUILDING_ALEPH_ASSEMBLER",
-    "TECH_ZEPTOTECHNOLOGY"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_ZEPTOTECHNOLOGY",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   }
  },

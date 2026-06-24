@@ -12,15 +12,11 @@
    "all": [
     "BUILDING_TITAN_AIRPORT",
     "BUILDING_TITAN_BIOFACTORY",
-    "TECH_LUNAR_MEGASTRUCTURES"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_TITANIC",
-      "scope": "plot"
-     }
-    ]
+    "TECH_LUNAR_MEGASTRUCTURES",
+    {
+     "type": "MAPCATEGORY_TITANIC",
+     "scope": "plot"
+    }
    ]
   }
  },

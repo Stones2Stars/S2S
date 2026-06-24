@@ -8,18 +8,14 @@
     {
      "type": "TECH_TIME_REVERSAL",
      "scope": "team"
+    },
+    {
+     "terrain": [
+      "TERRAIN_HYPERSPACE",
+      "TERRAIN_DISTANT_FUTURE",
+      "TERRAIN_BRANESPACE"
+     ]
     }
-   ],
-   "any": [
-    [
-     {
-      "terrain": [
-       "TERRAIN_HYPERSPACE",
-       "TERRAIN_DISTANT_FUTURE",
-       "TERRAIN_BRANESPACE"
-      ]
-     }
-    ]
    ]
   }
  },

@@ -13,15 +13,11 @@
   "build": {
    "all": [
     "BUILDING_SPACE_COLONY_MARTIAN",
-    "TECH_ELECTROMAGNETIC_FIELD_SHIELDING"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_MARTIAN",
-      "scope": "plot"
-     }
-    ]
+    "TECH_ELECTROMAGNETIC_FIELD_SHIELDING",
+    {
+     "type": "MAPCATEGORY_MARTIAN",
+     "scope": "plot"
+    }
    ]
   }
  },

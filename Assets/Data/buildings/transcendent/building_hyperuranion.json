@@ -6,15 +6,11 @@
   "build": {
    "all": [
     "BUILDING_METAVERSE_VR_CENTER",
-    "TECH_ARCHETYPAL_VECTOR_SPACES"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_HYPERSPACE",
-      "scope": "plot"
-     }
-    ]
+    "TECH_ARCHETYPAL_VECTOR_SPACES",
+    {
+     "type": "MAPCATEGORY_HYPERSPACE",
+     "scope": "plot"
+    }
    ]
   }
  },

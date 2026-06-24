@@ -7,21 +7,15 @@
    "all": [
     "BUILDING_C_AC_MIDDLE_EASTERN",
     "BUILDING_C_L_MIDDLE_EASTERN",
-    "TECH_NATIONALISM"
-   ],
-   "any": [
-    [
-     {
-      "type": "TERRAIN_DESERT",
-      "scope": "plot"
-     }
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_NATIONALISM",
+    {
+     "type": "TERRAIN_DESERT",
+     "scope": "plot"
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

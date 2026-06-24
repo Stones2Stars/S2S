@@ -13,23 +13,21 @@
     "BUILDING_FOLKLORE_REQUIREMENT",
     "BUILDING_FOLKLORE_E_SEA",
     "TECH_ORAL_TRADITION",
-    "TECH_TAXONOMY"
-   ],
-   "any": [
-    [
-     "BUILDING_FOLKLORE_BELUGA",
-     "BUILDING_FOLKLORE_HUMPBACK_WHALE",
-     "BUILDING_FOLKLORE_MINKIE_WHALE",
-     "BUILDING_FOLKLORE_NARWHAL",
-     "BUILDING_FOLKLORE_ORCA",
-     "BUILDING_FOLKLORE_WHALE_SHARK"
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_TAXONOMY",
+    {
+     "any": [
+      "BUILDING_FOLKLORE_BELUGA",
+      "BUILDING_FOLKLORE_HUMPBACK_WHALE",
+      "BUILDING_FOLKLORE_MINKIE_WHALE",
+      "BUILDING_FOLKLORE_NARWHAL",
+      "BUILDING_FOLKLORE_ORCA",
+      "BUILDING_FOLKLORE_WHALE_SHARK"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   }
  },

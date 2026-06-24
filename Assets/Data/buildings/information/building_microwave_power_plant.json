@@ -17,15 +17,11 @@
     "BUILDING_FACTORY",
     "BUILDING_POWER_LINES",
     "BUILDING_SOLAR_POWER_SATELLITE",
-    "TECH_MICROWAVE_WEAPONRY"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_MICROWAVE_WEAPONRY",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {
@@ -34,16 +30,12 @@
      "type": "BONUS_MICROCHIPS",
      "scope": "city",
      "connection": "trade|vicinity"
+    },
+    {
+     "type": "BONUS_NANOTUBES",
+     "scope": "city",
+     "connection": "trade|vicinity"
     }
-   ],
-   "any": [
-    [
-     {
-      "type": "BONUS_NANOTUBES",
-      "scope": "city",
-      "connection": "trade|vicinity"
-     }
-    ]
    ],
    "dormant": [
     "BUILDING_RENEWABLE_MEGACOMPLEX"

@@ -7,15 +7,11 @@
    "all": [
     "BUILDING_INTERSTELLAR_CONTROLLED_BREEDING",
     "TECH_PRECISION_SOCIAL_ENGINEERING",
-    "TECH_COLONY_GOVERNANCE"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_GALACTIC",
-      "scope": "plot"
-     }
-    ]
+    "TECH_COLONY_GOVERNANCE",
+    {
+     "type": "MAPCATEGORY_GALACTIC",
+     "scope": "plot"
+    }
    ]
   }
  },

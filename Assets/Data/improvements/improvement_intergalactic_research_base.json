@@ -8,27 +8,27 @@
     {
      "type": "TECH_INTERGALACTIC_COLONIZATION",
      "scope": "team"
+    },
+    {
+     "any": [
+      {
+       "terrain": [
+        "TERRAIN_LOCAL_GROUP",
+        "TERRAIN_VIRGO_SUPERCLUSTER",
+        "TERRAIN_OBSERVABLE_UNIVERSE",
+        "TERRAIN_INTERGALACTIC_VOID"
+       ]
+      },
+      {
+       "bonus": [
+        "BONUS_XENOFLORA",
+        "BONUS_XENOFAUNA",
+        "BONUS_ABANDONED_CIVILIZATION",
+        "BONUS_ABANDONED_MEGASTRUCTURE"
+       ]
+      }
+     ]
     }
-   ],
-   "any": [
-    [
-     {
-      "terrain": [
-       "TERRAIN_LOCAL_GROUP",
-       "TERRAIN_VIRGO_SUPERCLUSTER",
-       "TERRAIN_OBSERVABLE_UNIVERSE",
-       "TERRAIN_INTERGALACTIC_VOID"
-      ]
-     },
-     {
-      "bonus": [
-       "BONUS_XENOFLORA",
-       "BONUS_XENOFAUNA",
-       "BONUS_ABANDONED_CIVILIZATION",
-       "BONUS_ABANDONED_MEGASTRUCTURE"
-      ]
-     }
-    ]
    ]
   }
  },

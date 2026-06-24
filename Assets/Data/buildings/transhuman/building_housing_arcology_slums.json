@@ -23,18 +23,12 @@
     "BUILDING_WATER_PIPES",
     "BUILDING_SEWER_SYSTEM",
     "BUILDING_TELEPHONE_NETWORK",
-    "TECH_MEGASTRUCTURE_ENGINEERING"
-   ],
-   "any": [
-    [
-     "BUILDING_ARCOLOGY"
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_MEGASTRUCTURE_ENGINEERING",
+    "BUILDING_ARCOLOGY",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

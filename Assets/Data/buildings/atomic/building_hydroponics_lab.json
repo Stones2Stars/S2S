@@ -17,15 +17,11 @@
     "BUILDING_LABORATORY",
     "BUILDING_GREENHOUSE",
     "BUILDING_WATER_PIPES",
-    "TECH_HYDROPONICS"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_HYDROPONICS",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   }
  },

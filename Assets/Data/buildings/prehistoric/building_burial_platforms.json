@@ -13,18 +13,12 @@
  "requires": {
   "build": {
    "all": [
-    "TECH_CEREMONIAL_BURIAL"
-   ],
-   "any": [
-    [
-     "BUILDING_BURIAL_TRADITION_SKY"
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_CEREMONIAL_BURIAL",
+    "BUILDING_BURIAL_TRADITION_SKY",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

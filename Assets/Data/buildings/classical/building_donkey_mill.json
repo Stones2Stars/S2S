@@ -18,21 +18,19 @@
  "requires": {
   "build": {
    "all": [
-    "TECH_MACHINERY"
-   ],
-   "any": [
-    [
-     "BUILDING_FARM_ANIMAL_DONKEY",
-     "BUILDING_HERD_DONKEY",
-     "BUILDING_INDUSTRIAL_FARMS",
-     "BUILDING_MEAT_INDUSTRY_CONGLOMERATE"
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_MACHINERY",
+    {
+     "any": [
+      "BUILDING_FARM_ANIMAL_DONKEY",
+      "BUILDING_HERD_DONKEY",
+      "BUILDING_INDUSTRIAL_FARMS",
+      "BUILDING_MEAT_INDUSTRY_CONGLOMERATE"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {
@@ -41,26 +39,26 @@
      "type": "BONUS_GRAINS",
      "scope": "city",
      "connection": "trade|vicinity"
+    },
+    {
+     "any": [
+      {
+       "type": "BONUS_WOOD",
+       "scope": "city",
+       "connection": "trade|vicinity"
+      },
+      {
+       "type": "BONUS_PRIME_TIMBER",
+       "scope": "city",
+       "connection": "trade|vicinity"
+      },
+      {
+       "type": "BONUS_BAMBOO",
+       "scope": "city",
+       "connection": "trade|vicinity"
+      }
+     ]
     }
-   ],
-   "any": [
-    [
-     {
-      "type": "BONUS_WOOD",
-      "scope": "city",
-      "connection": "trade|vicinity"
-     },
-     {
-      "type": "BONUS_PRIME_TIMBER",
-      "scope": "city",
-      "connection": "trade|vicinity"
-     },
-     {
-      "type": "BONUS_BAMBOO",
-      "scope": "city",
-      "connection": "trade|vicinity"
-     }
-    ]
    ],
    "dormant": [
     "BUILDING_MODERN_MILL",

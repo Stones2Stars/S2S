@@ -18,18 +18,12 @@
  "requires": {
   "build": {
    "all": [
-    "TECH_COMPULSORY_EDUCATION"
-   ],
-   "any": [
-    [
-     "BUILDING_HIGH_SCHOOL"
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_COMPULSORY_EDUCATION",
+    "BUILDING_HIGH_SCHOOL",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

@@ -10,17 +10,13 @@
      "scope": "team"
     },
     "IS_WATER",
-    "HAS_FEATURE"
-   ],
-   "any": [
-    [
-     {
-      "feature": [
-       "FEATURE_KELP",
-       "FEATURE_SEA_GRASS"
-      ]
-     }
-    ]
+    "HAS_FEATURE",
+    {
+     "feature": [
+      "FEATURE_KELP",
+      "FEATURE_SEA_GRASS"
+     ]
+    }
    ]
   }
  },

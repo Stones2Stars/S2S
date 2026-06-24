@@ -25,15 +25,11 @@
   "build": {
    "all": [
     "HAS_POWER",
-    "TECH_ELECTROMAGNETIC_VOLTAGE"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_ELECTROMAGNETIC_VOLTAGE",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

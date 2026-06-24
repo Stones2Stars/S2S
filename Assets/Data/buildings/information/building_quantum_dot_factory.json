@@ -13,18 +13,12 @@
  "requires": {
   "build": {
    "all": [
-    "TECH_QUANTUM_TELEPORTATION"
-   ],
-   "any": [
-    [
-     "BUILDING_NANO_RESEARCH_DEPARTMENT"
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_QUANTUM_TELEPORTATION",
+    "BUILDING_NANO_RESEARCH_DEPARTMENT",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

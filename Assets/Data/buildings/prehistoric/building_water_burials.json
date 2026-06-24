@@ -16,15 +16,11 @@
     "HAS_COAST",
     "BUILDING_BURIAL_TRADITION_SEA",
     "TECH_CEREMONIAL_BURIAL",
-    "TECH_RAFT_BUILDING"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_RAFT_BUILDING",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

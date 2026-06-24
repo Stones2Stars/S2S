@@ -7,27 +7,19 @@
    "all": [
     "BUILDING_C_AC_AFRICAN",
     "BUILDING_C_L_AFRICAN",
-    "TECH_POLYTHEISM"
-   ],
-   "any": [
-    [
-     {
-      "type": "TERRAIN_DESERT",
-      "scope": "plot"
-     }
-    ],
-    [
-     {
-      "type": "FEATURE_FLOOD_PLAINS",
-      "scope": "plot"
-     }
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_POLYTHEISM",
+    {
+     "type": "TERRAIN_DESERT",
+     "scope": "plot"
+    },
+    {
+     "type": "FEATURE_FLOOD_PLAINS",
+     "scope": "plot"
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

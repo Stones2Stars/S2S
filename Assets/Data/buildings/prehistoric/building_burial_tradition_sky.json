@@ -25,15 +25,11 @@
   "build": {
    "all": [
     "BUILDING_FOLKLORE_E_SKY",
-    "TECH_CEREMONIAL_BURIAL"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_CEREMONIAL_BURIAL",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ],
    "noneOf": [
     "BUILDING_BURIAL_TRADITION_CAVE",

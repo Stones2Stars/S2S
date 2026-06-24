@@ -18,15 +18,11 @@
  "requires": {
   "build": {
    "all": [
-    "TECH_NATURAL_PIGMENTS"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_NATURAL_PIGMENTS",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

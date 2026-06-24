@@ -17,16 +17,16 @@
      "scope": "world",
      "min": 10
     },
-    "TECH_SHIP_BUILDING"
-   ],
-   "any": [
-    [
-     "CIVIC_MERCANTILISM",
-     "CIVIC_NATIONALIST",
-     "CIVIC_FEUDAL",
-     "CIVIC_MONARCHY",
-     "CIVIC_DESPOTISM"
-    ]
+    "TECH_SHIP_BUILDING",
+    {
+     "any": [
+      "CIVIC_MERCANTILISM",
+      "CIVIC_NATIONALIST",
+      "CIVIC_FEUDAL",
+      "CIVIC_MONARCHY",
+      "CIVIC_DESPOTISM"
+     ]
+    }
    ]
   }
  },

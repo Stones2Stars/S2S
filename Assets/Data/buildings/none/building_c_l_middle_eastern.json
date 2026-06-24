@@ -68,15 +68,11 @@
  "requires": {
   "build": {
    "all": [
-    "BUILDING_C_AC_MIDDLE_EASTERN"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "BUILDING_C_AC_MIDDLE_EASTERN",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   }
  },

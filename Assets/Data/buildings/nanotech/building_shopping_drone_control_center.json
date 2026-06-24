@@ -16,15 +16,11 @@
     "HAS_POWER",
     "BUILDING_CONTROL_CENTER",
     "BUILDING_HYPERMARKET",
-    "TECH_AUTOMATED_URBANIZATION"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_AUTOMATED_URBANIZATION",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

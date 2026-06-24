@@ -10,13 +10,13 @@
      "scope": "city",
      "connection": "trade|vicinity"
     },
-    "TECH_MEGAFAUNA_DOMESTICATION"
-   ],
-   "any": [
-    [
-     "BUILDING_EFFECT_HERITAGE_BISON",
-     "BUILDING_ANIMAL_TRAINER_BISON"
-    ]
+    "TECH_MEGAFAUNA_DOMESTICATION",
+    {
+     "any": [
+      "BUILDING_EFFECT_HERITAGE_BISON",
+      "BUILDING_ANIMAL_TRAINER_BISON"
+     ]
+    }
    ]
   }
  },

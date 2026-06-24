@@ -29,15 +29,11 @@
     "HAS_POWER",
     "BUILDING_ENCRYPTED_FIREWALL",
     "BUILDING_MARKET_RESEARCH",
-    "TECH_HOLOGRAPHICS"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_HOLOGRAPHICS",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

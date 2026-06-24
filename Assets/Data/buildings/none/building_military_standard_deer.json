@@ -12,19 +12,17 @@
   "build": {
    "all": [
     "BUILDING_MILITARY_STANDARD_ANIMAL_MASCOT",
-    "TECH_MEGAFAUNA_DOMESTICATION"
-   ],
-   "any": [
-    [
-     "BUILDING_ANIMAL_TRAINER_DEER",
-     "BUILDING_EFFECT_HERITAGE_DEER"
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_MEGAFAUNA_DOMESTICATION",
+    {
+     "any": [
+      "BUILDING_ANIMAL_TRAINER_DEER",
+      "BUILDING_EFFECT_HERITAGE_DEER"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   }
  },

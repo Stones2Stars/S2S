@@ -16,19 +16,17 @@
      "scope": "city",
      "min": 3
     },
-    "TECH_SEAFARING"
-   ],
-   "any": [
-    [
-     "BUILDING_LIGHTHOUSE",
-     "BUILDING_OCEAN_ADMINISTRATION"
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_SEAFARING",
+    {
+     "any": [
+      "BUILDING_LIGHTHOUSE",
+      "BUILDING_OCEAN_ADMINISTRATION"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   }
  },

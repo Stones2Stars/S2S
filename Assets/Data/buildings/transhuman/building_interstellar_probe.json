@@ -6,15 +6,11 @@
   "build": {
    "all": [
     "BUILDING_STARPORT",
-    "TECH_ASTROGATION_CONSTELLATION"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_ASTROGATION_CONSTELLATION",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   }
  },

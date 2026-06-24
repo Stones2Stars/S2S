@@ -13,15 +13,11 @@
     "HAS_COAST",
     "HAS_POWER",
     "BUILDING_BACTERIUM_BIOFORGE",
-    "TECH_PROTOTYPED_PATHOGENS"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_PROTOTYPED_PATHOGENS",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   }
  },

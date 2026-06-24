@@ -21,15 +21,11 @@
     "HAS_POWER",
     "BUILDING_MODERN_GRANARY",
     "BUILDING_FACTORY",
-    "TECH_REFRIGERATION"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_REFRIGERATION",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

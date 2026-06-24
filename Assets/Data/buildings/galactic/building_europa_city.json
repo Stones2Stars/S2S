@@ -6,21 +6,15 @@
   "build": {
    "all": [
     "BUILDING_EUROPA_COLONY",
-    "TECH_COLONY_ARCOLOGY"
-   ],
-   "any": [
-    [
-     {
-      "type": "TERRAIN_EUROPA",
-      "scope": "plot"
-     }
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_SOLAR_SYSTEM",
-      "scope": "plot"
-     }
-    ]
+    "TECH_COLONY_ARCOLOGY",
+    {
+     "type": "TERRAIN_EUROPA",
+     "scope": "plot"
+    },
+    {
+     "type": "MAPCATEGORY_SOLAR_SYSTEM",
+     "scope": "plot"
+    }
    ]
   }
  },

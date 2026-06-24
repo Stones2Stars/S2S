@@ -15,20 +15,18 @@
   "build": {
    "all": [
     "HAS_COAST",
-    "TECH_MARINE_ARCHITECTURE"
-   ],
-   "any": [
-    [
-     "BUILDING_WAVE_FARM",
-     "BUILDING_OCEAN_THERMAL_POWER_PLANT",
-     "BUILDING_RENEWABLE_MEGACOMPLEX"
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_MARINE_ARCHITECTURE",
+    {
+     "any": [
+      "BUILDING_WAVE_FARM",
+      "BUILDING_OCEAN_THERMAL_POWER_PLANT",
+      "BUILDING_RENEWABLE_MEGACOMPLEX"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   }
  },

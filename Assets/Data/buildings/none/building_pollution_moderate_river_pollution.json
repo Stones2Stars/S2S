@@ -5,15 +5,11 @@
  "requires": {
   "build": {
    "all": [
-    "HAS_RIVER"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "HAS_RIVER",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

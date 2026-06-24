@@ -17,15 +17,11 @@
      "scope": "empire",
      "min": 3
     },
-    "TECH_FOLDING_SPACE"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_FOLDING_SPACE",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   }
  },

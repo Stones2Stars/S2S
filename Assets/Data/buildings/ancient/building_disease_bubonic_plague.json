@@ -16,15 +16,11 @@
      "min": 2
     },
     "BUILDING_PESTS_FLEAS",
-    "TECH_SEDENTARY_LIFESTYLE"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_SEDENTARY_LIFESTYLE",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

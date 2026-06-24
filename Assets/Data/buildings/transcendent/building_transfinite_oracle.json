@@ -11,15 +11,11 @@
   "build": {
    "all": [
     "BUILDING_HYPERINTELLIGENT_ORACLE",
-    "TECH_TRANSFINITE_COMPUTATION"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_TRANSFINITE_COMPUTATION",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   }
  },

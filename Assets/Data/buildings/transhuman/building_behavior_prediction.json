@@ -5,15 +5,11 @@
  "requires": {
   "build": {
    "all": [
-    "TECH_WHOLE_BRAIN_EMULATION"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_WHOLE_BRAIN_EMULATION",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   }
  },

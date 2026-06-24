@@ -19,26 +19,20 @@
   "build": {
    "all": [
     "BUILDING_RABBIT_BREEDER",
-    "TECH_AESTHETICS"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_AESTHETICS",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {
-   "any": [
-    [
-     {
-      "type": "BONUS_RABBIT",
-      "scope": "city",
-      "connection": "vicinity"
-     }
-    ]
+   "all": [
+    {
+     "type": "BONUS_RABBIT",
+     "scope": "city",
+     "connection": "vicinity"
+    }
    ],
    "dormant": [
     "BUILDING_INDUSTRIAL_FARMS",

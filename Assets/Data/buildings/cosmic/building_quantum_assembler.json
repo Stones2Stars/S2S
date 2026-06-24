@@ -24,15 +24,11 @@
    "all": [
     "HAS_POWER",
     "BUILDING_OMEGA_ASSEMBLER",
-    "TECH_MACROSCOPIC_SUPERPOSITION"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_MACROSCOPIC_SUPERPOSITION",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

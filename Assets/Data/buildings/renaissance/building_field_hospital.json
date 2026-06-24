@@ -18,15 +18,11 @@
  "requires": {
   "build": {
    "all": [
-    "TECH_BATTLEFIELD_MEDICINE"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_BATTLEFIELD_MEDICINE",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

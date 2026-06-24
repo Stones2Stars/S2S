@@ -12,16 +12,16 @@
      "scope": "world",
      "min": 10
     },
-    "TECH_ASTROLABE"
-   ],
-   "any": [
-    [
-     "CIVIC_MERCANTILISM",
-     "CIVIC_NATIONALIST",
-     "CIVIC_FEUDAL",
-     "CIVIC_MONARCHY",
-     "CIVIC_DESPOTISM"
-    ]
+    "TECH_ASTROLABE",
+    {
+     "any": [
+      "CIVIC_MERCANTILISM",
+      "CIVIC_NATIONALIST",
+      "CIVIC_FEUDAL",
+      "CIVIC_MONARCHY",
+      "CIVIC_DESPOTISM"
+     ]
+    }
    ]
   }
  },

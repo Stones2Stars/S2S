@@ -8,16 +8,12 @@
     {
      "type": "TECH_CONTROLLED_VACUUM_COLLAPSE",
      "scope": "team"
+    },
+    {
+     "terrain": [
+      "TERRAIN_INTERGALACTIC_VOID"
+     ]
     }
-   ],
-   "any": [
-    [
-     {
-      "terrain": [
-       "TERRAIN_INTERGALACTIC_VOID"
-      ]
-     }
-    ]
    ]
   }
  },

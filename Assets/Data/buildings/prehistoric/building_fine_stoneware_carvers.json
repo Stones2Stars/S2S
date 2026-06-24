@@ -6,15 +6,11 @@
   "build": {
    "all": [
     "BUILDING_C_L_MIDDLE_EASTERN",
-    "TECH_BARTER"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_BARTER",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

@@ -11,16 +11,12 @@
      "connection": "trade|vicinity"
     },
     "BUILDING_CANNON_FORGE",
-    "TECH_GUNPOWDER"
-   ],
-   "any": [
-    [
-     {
-      "type": "BONUS_SULPHUR",
-      "scope": "city",
-      "connection": "trade|vicinity"
-     }
-    ]
+    "TECH_GUNPOWDER",
+    {
+     "type": "BONUS_SULPHUR",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    }
    ]
   }
  },

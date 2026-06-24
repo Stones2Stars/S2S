@@ -18,24 +18,22 @@
  "requires": {
   "build": {
    "all": [
-    "TECH_MASS_TRANSIT"
-   ],
-   "any": [
-    [
-     "BUILDING_BUS_STATION",
-     "BUILDING_RAILROAD_STATION",
-     "BUILDING_SUBWAY_STATION",
-     "BUILDING_STREET_CARS",
-     "BUILDING_MAGLEV_STATION",
-     "BUILDING_SKYROAD_STATION",
-     "BUILDING_CABLE_CARS"
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_MASS_TRANSIT",
+    {
+     "any": [
+      "BUILDING_BUS_STATION",
+      "BUILDING_RAILROAD_STATION",
+      "BUILDING_SUBWAY_STATION",
+      "BUILDING_STREET_CARS",
+      "BUILDING_MAGLEV_STATION",
+      "BUILDING_SKYROAD_STATION",
+      "BUILDING_CABLE_CARS"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

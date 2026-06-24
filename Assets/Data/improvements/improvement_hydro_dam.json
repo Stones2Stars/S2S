@@ -10,12 +10,8 @@
      "scope": "team"
     },
     "IS_FLATLANDS",
+    "HAS_RIVER",
     "HAS_RIVER"
-   ],
-   "any": [
-    [
-     "HAS_RIVER"
-    ]
    ]
   }
  },

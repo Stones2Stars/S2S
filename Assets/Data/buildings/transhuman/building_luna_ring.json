@@ -7,15 +7,11 @@
    "all": [
     "HAS_POWER",
     "BUILDING_LUNAR_ARCOLOGY",
-    "TECH_LUNAR_MEGASTRUCTURES"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_LUNAR",
-      "scope": "plot"
-     }
-    ]
+    "TECH_LUNAR_MEGASTRUCTURES",
+    {
+     "type": "MAPCATEGORY_LUNAR",
+     "scope": "plot"
+    }
    ]
   }
  },

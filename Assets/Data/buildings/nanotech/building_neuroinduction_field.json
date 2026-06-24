@@ -15,15 +15,11 @@
    "all": [
     "HAS_POWER",
     "BUILDING_AUTODOCTOR",
-    "TECH_LEVITATION"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_LEVITATION",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

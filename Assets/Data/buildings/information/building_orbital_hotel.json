@@ -13,19 +13,17 @@
  "requires": {
   "build": {
    "all": [
-    "TECH_SPACE_TOURISM"
-   ],
-   "any": [
-    [
-     "BUILDING_EFFECT_LAUNCH_SITE",
-     "BUILDING_COMMERCIAL_SPACEPORT"
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_SPACE_TOURISM",
+    {
+     "any": [
+      "BUILDING_EFFECT_LAUNCH_SITE",
+      "BUILDING_COMMERCIAL_SPACEPORT"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

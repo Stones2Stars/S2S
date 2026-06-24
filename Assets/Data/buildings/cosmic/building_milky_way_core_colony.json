@@ -11,21 +11,15 @@
   "build": {
    "all": [
     "BUILDING_INTERSTELLAR_KUGELBLITZ_POWER_PLANT",
-    "TECH_APPLIED_RELATIVITY"
-   ],
-   "any": [
-    [
-     {
-      "type": "TERRAIN_GALACTIC_CORE",
-      "scope": "plot"
-     }
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_MILKY_WAY",
-      "scope": "plot"
-     }
-    ]
+    "TECH_APPLIED_RELATIVITY",
+    {
+     "type": "TERRAIN_GALACTIC_CORE",
+     "scope": "plot"
+    },
+    {
+     "type": "MAPCATEGORY_MILKY_WAY",
+     "scope": "plot"
+    }
    ]
   }
  },

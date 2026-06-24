@@ -18,19 +18,17 @@
  "requires": {
   "build": {
    "all": [
-    "TECH_TRAPPING"
-   ],
-   "any": [
-    [
-     "BUILDING_ANIMAL_SNARE_TRAPS",
-     "BUILDING_ANCIENT_CUSTOMS"
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_TRAPPING",
+    {
+     "any": [
+      "BUILDING_ANIMAL_SNARE_TRAPS",
+      "BUILDING_ANCIENT_CUSTOMS"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

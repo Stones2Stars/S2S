@@ -11,19 +11,17 @@
   "build": {
    "all": [
     "BUILDING_LABORATORY",
-    "TECH_NANOELECTRONICS"
-   ],
-   "any": [
-    [
-     "BUILDING_NANO_RESEARCH_DEPARTMENT",
-     "BUILDING_PICOTECH_COMPLEX"
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_NANOELECTRONICS",
+    {
+     "any": [
+      "BUILDING_NANO_RESEARCH_DEPARTMENT",
+      "BUILDING_PICOTECH_COMPLEX"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   }
  },

@@ -23,15 +23,11 @@
    "all": [
     "HAS_COAST",
     "BUILDING_OCEAN_ARCOLOGY",
-    "TECH_ABYSS_COLONIZATION"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_ABYSS_COLONIZATION",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   }
  },

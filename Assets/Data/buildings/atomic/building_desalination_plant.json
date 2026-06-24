@@ -21,15 +21,11 @@
     "HAS_COAST",
     "HAS_FRESHWATER",
     "BUILDING_WATER_PIPES",
-    "TECH_INDUSTRIALISM"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_INDUSTRIALISM",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

@@ -17,15 +17,11 @@
    "all": [
     "HAS_POWER",
     "BUILDING_ALEPH_ASSEMBLER",
-    "TECH_MATERIALIZATION"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_MATERIALIZATION",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   }
  },

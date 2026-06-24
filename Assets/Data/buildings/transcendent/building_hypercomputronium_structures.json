@@ -8,15 +8,11 @@
     "HAS_POWER",
     "BUILDING_HYPERPLANET",
     "BUILDING_HYPERSPACE_TRANSFINITE_STRUCTURES",
-    "TECH_TRANSFINITE_COMPUTATION"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_HYPERSPACE",
-      "scope": "plot"
-     }
-    ]
+    "TECH_TRANSFINITE_COMPUTATION",
+    {
+     "type": "MAPCATEGORY_HYPERSPACE",
+     "scope": "plot"
+    }
    ]
   }
  },

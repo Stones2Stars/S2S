@@ -11,16 +11,12 @@
      "connection": "trade|vicinity"
     },
     "BUILDING_CLONING_LABORATORY",
-    "TECH_BIONICS"
-   ],
-   "any": [
-    [
-     {
-      "type": "BONUS_FIREARMS",
-      "scope": "city",
-      "connection": "trade|vicinity"
-     }
-    ]
+    "TECH_BIONICS",
+    {
+     "type": "BONUS_FIREARMS",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    }
    ]
   }
  },

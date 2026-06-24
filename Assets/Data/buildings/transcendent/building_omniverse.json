@@ -13,15 +13,11 @@
      "scope": "empire",
      "min": 2
     },
-    "TECH_ALPHA_POINT"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_HYPERSPACE",
-      "scope": "plot"
-     }
-    ]
+    "TECH_ALPHA_POINT",
+    {
+     "type": "MAPCATEGORY_HYPERSPACE",
+     "scope": "plot"
+    }
    ]
   }
  },

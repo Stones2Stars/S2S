@@ -13,26 +13,20 @@
  "requires": {
   "build": {
    "all": [
-    "TECH_CHEMISTRY"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_CHEMISTRY",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {
-   "any": [
-    [
-     {
-      "type": "BONUS_RUBBER",
-      "scope": "city",
-      "connection": "vicinity"
-     }
-    ]
+   "all": [
+    {
+     "type": "BONUS_RUBBER",
+     "scope": "city",
+     "connection": "vicinity"
+    }
    ],
    "dormant": [
     "BUILDING_AGROFOREST"

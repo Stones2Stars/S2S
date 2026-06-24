@@ -19,20 +19,18 @@
   "build": {
    "all": [
     "HAS_COAST",
-    "TECH_MERCANTILISM"
-   ],
-   "any": [
-    [
-     "BUILDING_COMMERCIAL_PORT",
-     "BUILDING_INTERNATIONAL_PORT",
-     "BUILDING_OCEAN_ADMINISTRATION"
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_MERCANTILISM",
+    {
+     "any": [
+      "BUILDING_COMMERCIAL_PORT",
+      "BUILDING_INTERNATIONAL_PORT",
+      "BUILDING_OCEAN_ADMINISTRATION"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

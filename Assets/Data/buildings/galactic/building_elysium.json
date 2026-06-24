@@ -7,25 +7,23 @@
    "all": [
     "BUILDING_CISLUNAR_CONTROL_SYSTEM",
     "BUILDING_CISLUNAR_ONEILL_CYLINDER",
-    "TECH_LAUNCH_ARCOLOGY"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_CISLUNAR",
-      "scope": "plot"
-     }
-    ]
+    "TECH_LAUNCH_ARCOLOGY",
+    {
+     "type": "MAPCATEGORY_CISLUNAR",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {
-   "any": [
-    [
-     "CIVIC_DESPOTISM",
-     "CIVIC_MONARCHY",
-     "CIVIC_TOTALITARIANISM",
-     "CIVIC_SUPERHUMAN"
-    ]
+   "all": [
+    {
+     "any": [
+      "CIVIC_DESPOTISM",
+      "CIVIC_MONARCHY",
+      "CIVIC_TOTALITARIANISM",
+      "CIVIC_SUPERHUMAN"
+     ]
+    }
    ]
   }
  },

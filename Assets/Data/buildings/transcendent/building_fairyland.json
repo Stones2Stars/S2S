@@ -6,15 +6,11 @@
   "build": {
    "all": [
     "BUILDING_HYPERSPACE_INFLATON_FIELD",
-    "TECH_ATEMPORAL_BEINGS"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_HYPERSPACE",
-      "scope": "plot"
-     }
-    ]
+    "TECH_ATEMPORAL_BEINGS",
+    {
+     "type": "MAPCATEGORY_HYPERSPACE",
+     "scope": "plot"
+    }
    ]
   }
  },

@@ -5,15 +5,11 @@
  "requires": {
   "build": {
    "all": [
-    "TECH_AUTOMATIC_WEAPONS"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_AUTOMATIC_WEAPONS",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

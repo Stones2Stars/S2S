@@ -16,15 +16,11 @@
     "HAS_POWER",
     "BUILDING_UNMANNED_MARKET",
     "BUILDING_AUTOMATED_TAXI_SERVICE",
-    "TECH_AUTOMATED_TRAFFIC"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_AUTOMATED_TRAFFIC",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

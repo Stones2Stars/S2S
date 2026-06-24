@@ -15,15 +15,11 @@
      "scope": "city",
      "min": 7
     },
-    "TECH_INCANDESCENT_LIGHTING"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_INCANDESCENT_LIGHTING",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   }
  },

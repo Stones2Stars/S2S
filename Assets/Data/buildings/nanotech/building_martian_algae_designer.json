@@ -10,15 +10,11 @@
     "BUILDING_MARTIAN_BIOFACTORY",
     "TECH_DYSTOPIA_PATHOGENS",
     "TECH_DESIGNER_MICROBIOLOGY",
-    "TECH_SUPERCHARGED_CRYSTALLOGRAPHY"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_MARTIAN",
-      "scope": "plot"
-     }
-    ]
+    "TECH_SUPERCHARGED_CRYSTALLOGRAPHY",
+    {
+     "type": "MAPCATEGORY_MARTIAN",
+     "scope": "plot"
+    }
    ]
   }
  },

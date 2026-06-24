@@ -5,27 +5,29 @@
  "requires": {
   "build": {
    "all": [
-    "TECH_SPATIAL_TRANSCENDENCE"
-   ],
-   "any": [
-    [
-     "BUILDING_INTERGALACTIC_MORRIS_THORNE_WORMHOLE",
-     "BUILDING_DISTANT_PORTAL_TO_DIMENSION_X"
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_UNIVERSAL",
-      "scope": "plot"
-     },
-     {
-      "type": "MAPCATEGORY_DISTANT",
-      "scope": "plot"
-     },
-     {
-      "type": "MAPCATEGORY_HYPERSPACE",
-      "scope": "plot"
-     }
-    ]
+    "TECH_SPATIAL_TRANSCENDENCE",
+    {
+     "any": [
+      "BUILDING_INTERGALACTIC_MORRIS_THORNE_WORMHOLE",
+      "BUILDING_DISTANT_PORTAL_TO_DIMENSION_X"
+     ]
+    },
+    {
+     "any": [
+      {
+       "type": "MAPCATEGORY_UNIVERSAL",
+       "scope": "plot"
+      },
+      {
+       "type": "MAPCATEGORY_DISTANT",
+       "scope": "plot"
+      },
+      {
+       "type": "MAPCATEGORY_HYPERSPACE",
+       "scope": "plot"
+      }
+     ]
+    }
    ]
   }
  },

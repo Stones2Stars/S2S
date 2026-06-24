@@ -12,15 +12,11 @@
   "build": {
    "all": [
     "HAS_POWER",
-    "TECH_NOVUS_CHEMISTRY"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_NOVUS_CHEMISTRY",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

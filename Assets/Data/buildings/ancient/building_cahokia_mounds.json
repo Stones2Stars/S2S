@@ -15,19 +15,17 @@
      "scope": "city",
      "min": 3
     },
-    "TECH_COPPER_WORKING"
-   ],
-   "any": [
-    [
-     "BUILDING_TUMULUS",
-     "BUILDING_ANCIENT_CUSTOMS"
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_COPPER_WORKING",
+    {
+     "any": [
+      "BUILDING_TUMULUS",
+      "BUILDING_ANCIENT_CUSTOMS"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   }
  },

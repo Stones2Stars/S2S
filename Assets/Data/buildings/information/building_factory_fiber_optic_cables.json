@@ -14,15 +14,11 @@
   "build": {
    "all": [
     "BUILDING_FACTORY",
-    "TECH_FIBER_OPTICS"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_FIBER_OPTICS",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

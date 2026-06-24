@@ -7,21 +7,15 @@
    "all": [
     "BUILDING_C_AC_ASIAN",
     "BUILDING_C_L_ASIAN",
-    "TECH_SIEGE_WARFARE"
-   ],
-   "any": [
-    [
-     {
-      "type": "FEATURE_JUNGLE",
-      "scope": "plot"
-     }
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_SIEGE_WARFARE",
+    {
+     "type": "FEATURE_JUNGLE",
+     "scope": "plot"
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

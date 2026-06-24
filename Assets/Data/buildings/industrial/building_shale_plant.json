@@ -21,15 +21,11 @@
     "BUILDING_FACTORY",
     "BUILDING_POWER_LINES",
     "TECH_ELECTRICITY",
-    "TECH_REFINING"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_REFINING",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {
@@ -38,16 +34,12 @@
      "type": "BONUS_COAL",
      "scope": "city",
      "connection": "vicinity"
+    },
+    {
+     "type": "BONUS_STONE",
+     "scope": "city",
+     "connection": "vicinity"
     }
-   ],
-   "any": [
-    [
-     {
-      "type": "BONUS_STONE",
-      "scope": "city",
-      "connection": "vicinity"
-     }
-    ]
    ],
    "dormant": [
     "BUILDING_ULTRAFUEL_REFINERY"

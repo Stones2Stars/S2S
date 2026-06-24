@@ -11,15 +11,11 @@
  "requires": {
   "build": {
    "all": [
-    "TECH_DATA_ARCHIVAL"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_GALACTIC",
-      "scope": "plot"
-     }
-    ]
+    "TECH_DATA_ARCHIVAL",
+    {
+     "type": "MAPCATEGORY_GALACTIC",
+     "scope": "plot"
+    }
    ]
   }
  },

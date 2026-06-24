@@ -6,21 +6,15 @@
   "build": {
    "all": [
     "BUILDING_INTERGALACTIC_VOID_BASE",
-    "TECH_ENTROPY_REVERSAL"
-   ],
-   "any": [
-    [
-     {
-      "type": "TERRAIN_INTERGALACTIC_VOID",
-      "scope": "plot"
-     }
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_UNIVERSAL",
-      "scope": "plot"
-     }
-    ]
+    "TECH_ENTROPY_REVERSAL",
+    {
+     "type": "TERRAIN_INTERGALACTIC_VOID",
+     "scope": "plot"
+    },
+    {
+     "type": "MAPCATEGORY_UNIVERSAL",
+     "scope": "plot"
+    }
    ]
   }
  },

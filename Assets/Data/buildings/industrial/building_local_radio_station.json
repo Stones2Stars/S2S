@@ -18,20 +18,18 @@
  "requires": {
   "build": {
    "all": [
-    "TECH_RADIO"
-   ],
-   "any": [
-    [
-     "BUILDING_BROADCAST_TOWER",
-     "BUILDING_COMMUNICATION_TOWER",
-     "BUILDING_NETWORK_NODE"
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_RADIO",
+    {
+     "any": [
+      "BUILDING_BROADCAST_TOWER",
+      "BUILDING_COMMUNICATION_TOWER",
+      "BUILDING_NETWORK_NODE"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

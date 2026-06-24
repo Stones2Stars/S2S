@@ -15,26 +15,20 @@
  "requires": {
   "build": {
    "all": [
-    "TECH_CAMELID_DOMESTICATION"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_CAMELID_DOMESTICATION",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {
-   "any": [
-    [
-     {
-      "type": "BONUS_LLAMA",
-      "scope": "city",
-      "connection": "trade|vicinity"
-     }
-    ]
+   "all": [
+    {
+     "type": "BONUS_LLAMA",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    }
    ]
   }
  },

@@ -19,15 +19,11 @@
    "all": [
     "HAS_POWER",
     "BUILDING_MEDICAL_MEGACOMPLEX",
-    "TECH_NANOTROIDS"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_NANOTROIDS",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   }
  },

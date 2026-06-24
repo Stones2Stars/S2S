@@ -6,15 +6,11 @@
   "build": {
    "all": [
     "BUILDING_PRESS_AGENCY",
-    "TECH_PROPAGANDA"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_PROPAGANDA",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

@@ -15,21 +15,19 @@
      "scope": "empire",
      "min": 1
     },
-    "TECH_IRON_WORKING"
-   ],
-   "any": [
-    [
-     "BUILDING_POTTERS_HUT",
-     "BUILDING_POTTERS_WORKSHOP",
-     "BUILDING_FACTORY_POTTERY",
-     "BUILDING_MANUFACTURING_DISTRICT"
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_IRON_WORKING",
+    {
+     "any": [
+      "BUILDING_POTTERS_HUT",
+      "BUILDING_POTTERS_WORKSHOP",
+      "BUILDING_FACTORY_POTTERY",
+      "BUILDING_MANUFACTURING_DISTRICT"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {
@@ -38,16 +36,12 @@
      "type": "BONUS_FINE_CLAY",
      "scope": "city",
      "connection": "vicinity"
+    },
+    {
+     "type": "BONUS_ROMAN",
+     "scope": "city",
+     "connection": "trade|vicinity"
     }
-   ],
-   "any": [
-    [
-     {
-      "type": "BONUS_ROMAN",
-      "scope": "city",
-      "connection": "trade|vicinity"
-     }
-    ]
    ]
   }
  },

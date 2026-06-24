@@ -6,15 +6,11 @@
   "build": {
    "all": [
     "TECH_ANCIENT_MEDICINE",
-    "TECH_WRITING"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_WRITING",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   }
  },

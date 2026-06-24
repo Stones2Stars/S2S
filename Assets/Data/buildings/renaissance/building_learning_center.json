@@ -5,20 +5,18 @@
  "requires": {
   "build": {
    "all": [
-    "TECH_CORPORATION"
-   ],
-   "any": [
-    [
-     "BUILDING_HOLOGRAPHIC_SCHOOL",
-     "BUILDING_ELEMENTARY_SCHOOL",
-     "BUILDING_UNIVERSITY"
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_CORPORATION",
+    {
+     "any": [
+      "BUILDING_HOLOGRAPHIC_SCHOOL",
+      "BUILDING_ELEMENTARY_SCHOOL",
+      "BUILDING_UNIVERSITY"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

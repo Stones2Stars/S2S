@@ -16,42 +16,40 @@
      "min": 7
     },
     "TECH_FUNDAMENTALISM",
-    "STATE_RELIGION_IN_CITY"
-   ],
-   "any": [
-    [
-     {
-      "type": "TERRAIN_PEAK",
-      "scope": "plot"
-     }
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "STATE_RELIGION_IN_CITY",
+    {
+     "type": "TERRAIN_PEAK",
+     "scope": "plot"
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {
-   "any": [
-    [
-     {
-      "type": "BONUS_BRICKS",
-      "scope": "city",
-      "connection": "trade|vicinity"
-     },
-     {
-      "type": "BONUS_STONE",
-      "scope": "city",
-      "connection": "trade|vicinity"
-     }
-    ],
-    [
-     "CIVIC_DIVINE_CULT",
-     "CIVIC_STATE_CHURCH",
-     "CIVIC_INQUISITORIAL"
-    ]
+   "all": [
+    {
+     "any": [
+      {
+       "type": "BONUS_BRICKS",
+       "scope": "city",
+       "connection": "trade|vicinity"
+      },
+      {
+       "type": "BONUS_STONE",
+       "scope": "city",
+       "connection": "trade|vicinity"
+      }
+     ]
+    },
+    {
+     "any": [
+      "CIVIC_DIVINE_CULT",
+      "CIVIC_STATE_CHURCH",
+      "CIVIC_INQUISITORIAL"
+     ]
+    }
    ]
   }
  },

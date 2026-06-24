@@ -7,15 +7,11 @@
    "all": [
     "HAS_POWER",
     "BUILDING_NETWORK_NODE",
-    "TECH_SENTIENT_EARTH"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_SENTIENT_EARTH",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {
@@ -24,16 +20,12 @@
      "type": "BONUS_HUMAN_MOD_ROBOTIC_BODY",
      "scope": "city",
      "connection": "trade|vicinity"
+    },
+    {
+     "type": "BONUS_HUMAN_MOD_ENLIGHTENED",
+     "scope": "city",
+     "connection": "trade|vicinity"
     }
-   ],
-   "any": [
-    [
-     {
-      "type": "BONUS_HUMAN_MOD_ENLIGHTENED",
-      "scope": "city",
-      "connection": "trade|vicinity"
-     }
-    ]
    ]
   }
  },

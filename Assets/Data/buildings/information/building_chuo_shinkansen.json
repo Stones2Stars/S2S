@@ -10,20 +10,18 @@
      "scope": "city",
      "min": 20
     },
-    "TECH_MEGACITIES"
-   ],
-   "any": [
-    [
-     "BUILDING_MAGLEV_RAILS",
-     "BUILDING_VACTRAIN_TERMINAL",
-     "BUILDING_GRAVITY_TRAIN"
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_MEGACITIES",
+    {
+     "any": [
+      "BUILDING_MAGLEV_RAILS",
+      "BUILDING_VACTRAIN_TERMINAL",
+      "BUILDING_GRAVITY_TRAIN"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   }
  },

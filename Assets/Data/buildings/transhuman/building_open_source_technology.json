@@ -5,15 +5,11 @@
  "requires": {
   "build": {
    "all": [
-    "TECH_KNOWLEDGE_MERCANTILISM"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_KNOWLEDGE_MERCANTILISM",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   }
  },

@@ -10,21 +10,15 @@
  "requires": {
   "build": {
    "all": [
-    "TECH_SHELTER_BUILDING"
-   ],
-   "any": [
-    [
-     {
-      "type": "FEATURE_VERY_TALL_GRASS",
-      "scope": "plot"
-     }
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_SHELTER_BUILDING",
+    {
+     "type": "FEATURE_VERY_TALL_GRASS",
+     "scope": "plot"
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

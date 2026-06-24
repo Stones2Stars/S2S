@@ -5,21 +5,15 @@
  "requires": {
   "build": {
    "all": [
-    "TECH_SUPERCHARGED_CRYSTALLOGRAPHY"
-   ],
-   "any": [
-    [
-     {
-      "type": "TERRAIN_ASTEROID_SURFACE",
-      "scope": "plot"
-     }
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_SOLAR_SYSTEM",
-      "scope": "plot"
-     }
-    ]
+    "TECH_SUPERCHARGED_CRYSTALLOGRAPHY",
+    {
+     "type": "TERRAIN_ASTEROID_SURFACE",
+     "scope": "plot"
+    },
+    {
+     "type": "MAPCATEGORY_SOLAR_SYSTEM",
+     "scope": "plot"
+    }
    ]
   }
  },

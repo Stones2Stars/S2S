@@ -5,15 +5,11 @@
  "requires": {
   "build": {
    "all": [
-    "TECH_REPRESENTATIVE_DEMOCRACY"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_REPRESENTATIVE_DEMOCRACY",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

@@ -24,15 +24,11 @@
    "all": [
     "HAS_POWER",
     "BUILDING_OMEGA_ASSEMBLER",
-    "TECH_GRAVITRONICS"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_GRAVITRONICS",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

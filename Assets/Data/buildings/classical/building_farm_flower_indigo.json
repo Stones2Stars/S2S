@@ -20,19 +20,17 @@
  "requires": {
   "build": {
    "all": [
-    "TECH_FLORISTRY"
-   ],
-   "any": [
-    [
-     "BUILDING_FOOD_MANUFACTURING_DISTRICT",
-     "BUILDING_APIARY"
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_FLORISTRY",
+    {
+     "any": [
+      "BUILDING_FOOD_MANUFACTURING_DISTRICT",
+      "BUILDING_APIARY"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

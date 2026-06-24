@@ -12,18 +12,18 @@
  },
  "requires": {
   "build": {
-   "any": [
-    [
-     "BUILDING_HYDROCARBON_REFINERY",
-     "BUILDING_SHALE_PLANT",
-     "BUILDING_OIL_REFINERY"
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+   "all": [
+    {
+     "any": [
+      "BUILDING_HYDROCARBON_REFINERY",
+      "BUILDING_SHALE_PLANT",
+      "BUILDING_OIL_REFINERY"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

@@ -9,21 +9,15 @@
     "BUILDING_C_L_ASIAN",
     "BUILDING_C_AC_EUROPEAN",
     "BUILDING_C_L_EUROPEAN",
-    "TECH_FEUDALISM"
-   ],
-   "any": [
-    [
-     {
-      "type": "TERRAIN_TAIGA",
-      "scope": "plot"
-     }
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_FEUDALISM",
+    {
+     "type": "TERRAIN_TAIGA",
+     "scope": "plot"
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

@@ -5,17 +5,13 @@
  "requires": {
   "build": {
    "all": [
-    "IS_WATER"
-   ],
-   "any": [
-    [
-     {
-      "terrain": [
-       "TERRAIN_COAST",
-       "TERRAIN_LAKE_SHORE"
-      ]
-     }
-    ]
+    "IS_WATER",
+    {
+     "terrain": [
+      "TERRAIN_COAST",
+      "TERRAIN_LAKE_SHORE"
+     ]
+    }
    ]
   }
  },

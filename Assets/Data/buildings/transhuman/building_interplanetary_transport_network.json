@@ -6,15 +6,11 @@
   "build": {
    "all": [
     "BUILDING_SPACE_COLONY_CISLUNAR",
-    "TECH_ASTROGATION_CONSTELLATION"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_CISLUNAR",
-      "scope": "plot"
-     }
-    ]
+    "TECH_ASTROGATION_CONSTELLATION",
+    {
+     "type": "MAPCATEGORY_CISLUNAR",
+     "scope": "plot"
+    }
    ]
   }
  },

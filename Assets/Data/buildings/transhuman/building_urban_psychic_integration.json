@@ -12,19 +12,17 @@
    "all": [
     "HAS_POWER",
     "BUILDING_ARTIFICIAL_INTELLIGENCE_CORE",
-    "TECH_COMPREHENSIVE_CYBERNETICS"
-   ],
-   "any": [
-    [
-     "BUILDING_EMP_GRID",
-     "BUILDING_SUPERCONDUCTING_GRID"
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_COMPREHENSIVE_CYBERNETICS",
+    {
+     "any": [
+      "BUILDING_EMP_GRID",
+      "BUILDING_SUPERCONDUCTING_GRID"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   }
  },

@@ -9,16 +9,12 @@
      "type": "TECH_SAILING",
      "scope": "team"
     },
-    "IS_WATER"
-   ],
-   "any": [
-    [
-     {
-      "feature": [
-       "FEATURE_REEF"
-      ]
-     }
-    ]
+    "IS_WATER",
+    {
+     "feature": [
+      "FEATURE_REEF"
+     ]
+    }
    ]
   }
  },

@@ -13,15 +13,11 @@
  "requires": {
   "build": {
    "all": [
-    "TECH_ELIXIRS_AND_TONICS"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_ELIXIRS_AND_TONICS",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

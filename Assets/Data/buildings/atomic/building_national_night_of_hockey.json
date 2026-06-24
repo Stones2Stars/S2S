@@ -17,19 +17,17 @@
      "min": 7
     },
     "BUILDING_NATIONAL_SPORTS_LEAGUE",
-    "TECH_MODERN_SPORTS"
-   ],
-   "any": [
-    [
-     "BUILDING_HOCKEY_RINK",
-     "BUILDING_ATHLETIC_MEGACOMPLEX"
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_MODERN_SPORTS",
+    {
+     "any": [
+      "BUILDING_HOCKEY_RINK",
+      "BUILDING_ATHLETIC_MEGACOMPLEX"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   }
  },

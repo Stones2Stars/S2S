@@ -6,26 +6,20 @@
   "build": {
    "all": [
     "BUILDING_SPACE_COLONY_TRANSTELLAR",
-    "TECH_SPACEPUNK"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_INTERSTELLAR",
-      "scope": "plot"
-     }
-    ]
+    "TECH_SPACEPUNK",
+    {
+     "type": "MAPCATEGORY_INTERSTELLAR",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {
-   "any": [
-    [
-     {
-      "type": "BONUS_SPACEPUNK",
-      "scope": "city",
-      "connection": "trade|vicinity"
-     }
-    ]
+   "all": [
+    {
+     "type": "BONUS_SPACEPUNK",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    }
    ]
   }
  },

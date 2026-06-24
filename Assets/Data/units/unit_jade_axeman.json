@@ -10,16 +10,12 @@
      "scope": "city",
      "connection": "trade|vicinity"
     },
-    "TECH_AXE_MAKING"
-   ],
-   "any": [
-    [
-     {
-      "type": "BONUS_JADE",
-      "scope": "city",
-      "connection": "trade|vicinity"
-     }
-    ]
+    "TECH_AXE_MAKING",
+    {
+     "type": "BONUS_JADE",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    }
    ]
   }
  },

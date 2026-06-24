@@ -13,19 +13,17 @@
  "requires": {
   "build": {
    "all": [
-    "TECH_YEOMANRY"
-   ],
-   "any": [
-    [
-     "BUILDING_FLETCHERS_HUT",
-     "BUILDING_EFFECT_TRADITION_ARCHERY"
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_YEOMANRY",
+    {
+     "any": [
+      "BUILDING_FLETCHERS_HUT",
+      "BUILDING_EFFECT_TRADITION_ARCHERY"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

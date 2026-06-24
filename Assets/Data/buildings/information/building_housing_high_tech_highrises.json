@@ -31,15 +31,11 @@
     "BUILDING_TELEPHONE_NETWORK",
     "BUILDING_COMPUTER_NETWORK",
     "BUILDING_SKYSCRAPER",
-    "TECH_RAPID_PROTOTYPING"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_RAPID_PROTOTYPING",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

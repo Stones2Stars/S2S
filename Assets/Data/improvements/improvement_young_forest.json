@@ -8,23 +8,19 @@
     {
      "type": "TECH_GUILDS",
      "scope": "team"
+    },
+    {
+     "terrain": [
+      "TERRAIN_GRASSLAND",
+      "TERRAIN_PLAINS",
+      "TERRAIN_TAIGA",
+      "TERRAIN_SCRUB",
+      "TERRAIN_ROCKY",
+      "TERRAIN_LUSH",
+      "TERRAIN_MUDDY",
+      "TERRAIN_MARSH"
+     ]
     }
-   ],
-   "any": [
-    [
-     {
-      "terrain": [
-       "TERRAIN_GRASSLAND",
-       "TERRAIN_PLAINS",
-       "TERRAIN_TAIGA",
-       "TERRAIN_SCRUB",
-       "TERRAIN_ROCKY",
-       "TERRAIN_LUSH",
-       "TERRAIN_MUDDY",
-       "TERRAIN_MARSH"
-      ]
-     }
-    ]
    ]
   }
  },

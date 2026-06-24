@@ -13,15 +13,11 @@
    "all": [
     "HAS_POWER",
     "BUILDING_CLONING_FACTORY",
-    "TECH_ARTIFICIAL_LIFE"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_ARTIFICIAL_LIFE",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   }
  },

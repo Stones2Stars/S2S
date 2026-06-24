@@ -6,15 +6,11 @@
   "build": {
    "all": [
     "BUILDING_DISTANT_LAYERED_REALITY",
-    "TECH_SPIRITUAL_REALMS"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_DISTANT",
-      "scope": "plot"
-     }
-    ]
+    "TECH_SPIRITUAL_REALMS",
+    {
+     "type": "MAPCATEGORY_DISTANT",
+     "scope": "plot"
+    }
    ]
   }
  },

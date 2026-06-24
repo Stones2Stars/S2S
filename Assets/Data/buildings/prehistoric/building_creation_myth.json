@@ -5,20 +5,18 @@
  "requires": {
   "build": {
    "all": [
-    "TECH_ORAL_TRADITION"
-   ],
-   "any": [
-    [
-     "BUILDING_STORYTELLER",
-     "BUILDING_SCHOOL_OF_SCRIBES",
-     "BUILDING_LIBRARY"
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_ORAL_TRADITION",
+    {
+     "any": [
+      "BUILDING_STORYTELLER",
+      "BUILDING_SCHOOL_OF_SCRIBES",
+      "BUILDING_LIBRARY"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

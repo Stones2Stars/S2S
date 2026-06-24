@@ -16,19 +16,17 @@
      "scope": "city",
      "min": 3
     },
-    "TECH_IMPERIALISM"
-   ],
-   "any": [
-    [
-     "BUILDING_DRYDOCK",
-     "BUILDING_NAVAL_YARD"
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_IMPERIALISM",
+    {
+     "any": [
+      "BUILDING_DRYDOCK",
+      "BUILDING_NAVAL_YARD"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ],
    "noneOf": [
     "BUILDING_SCAPA_FLOW"

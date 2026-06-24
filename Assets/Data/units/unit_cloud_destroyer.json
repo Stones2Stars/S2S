@@ -11,16 +11,12 @@
      "connection": "trade|vicinity"
     },
     "TECH_BALLOON_WARFARE",
-    "TECH_STEAMPUNK"
-   ],
-   "any": [
-    [
-     {
-      "type": "BONUS_HYDROGEN",
-      "scope": "city",
-      "connection": "trade|vicinity"
-     }
-    ]
+    "TECH_STEAMPUNK",
+    {
+     "type": "BONUS_HYDROGEN",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    }
    ]
   }
  },

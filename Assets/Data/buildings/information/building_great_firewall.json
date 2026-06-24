@@ -7,30 +7,28 @@
    "all": [
     "HAS_POWER",
     "BUILDING_COMPUTER_NETWORK",
-    "TECH_CYBERWARFARE"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_CYBERWARFARE",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ],
    "noneOf": [
     "BUILDING_STATUE_OF_LIBERTY"
    ]
   },
   "operate": {
-   "any": [
-    [
-     "CIVIC_INQUISITORIAL",
-     "CIVIC_TOTALITARIANISM",
-     "CIVIC_MARXIST",
-     "CIVIC_PROPAGANDA",
-     "CIVIC_SINGLE_PARTY",
-     "CIVIC_GRID"
-    ]
+   "all": [
+    {
+     "any": [
+      "CIVIC_INQUISITORIAL",
+      "CIVIC_TOTALITARIANISM",
+      "CIVIC_MARXIST",
+      "CIVIC_PROPAGANDA",
+      "CIVIC_SINGLE_PARTY",
+      "CIVIC_GRID"
+     ]
+    }
    ]
   }
  },

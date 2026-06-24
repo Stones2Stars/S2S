@@ -14,15 +14,11 @@
     "HAS_POWER",
     "BUILDING_ARTIFICIAL_INTELLIGENCE_CORE",
     "BUILDING_MEGATOWER_POLICE_STATION_LEVEL",
-    "TECH_UTOPIA_DESTINY"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_UTOPIA_DESTINY",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   }
  },

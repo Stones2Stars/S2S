@@ -6,29 +6,27 @@
   "build": {
    "all": [
     "BUILDING_GEOLOGY_LAB",
-    "TECH_ASTROGEOLOGY"
-   ],
-   "any": [
-    [
-     {
-      "type": "FEATURE_CRATER",
-      "scope": "plot"
-     },
-     {
-      "type": "FEATURE_PLATY_BARRINGER_CRATER",
-      "scope": "plot"
-     },
-     {
-      "type": "FEATURE_PLATY_NGORONGORO_CRATER",
-      "scope": "plot"
-     }
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_ASTROGEOLOGY",
+    {
+     "any": [
+      {
+       "type": "FEATURE_CRATER",
+       "scope": "plot"
+      },
+      {
+       "type": "FEATURE_PLATY_BARRINGER_CRATER",
+       "scope": "plot"
+      },
+      {
+       "type": "FEATURE_PLATY_NGORONGORO_CRATER",
+       "scope": "plot"
+      }
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   }
  },

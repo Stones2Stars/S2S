@@ -7,15 +7,11 @@
    "all": [
     "HAS_POWER",
     "BUILDING_SPACESCRAPER",
-    "TECH_COMPUTRONIUM_UNIVERSE"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_COMPUTRONIUM_UNIVERSE",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

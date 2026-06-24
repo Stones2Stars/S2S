@@ -10,21 +10,15 @@
  "requires": {
   "build": {
    "all": [
-    "TECH_SHIELDING"
-   ],
-   "any": [
-    [
-     {
-      "type": "TERRAIN_ASTEROID_SURFACE",
-      "scope": "plot"
-     }
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_SOLAR_SYSTEM",
-      "scope": "plot"
-     }
-    ]
+    "TECH_SHIELDING",
+    {
+     "type": "TERRAIN_ASTEROID_SURFACE",
+     "scope": "plot"
+    },
+    {
+     "type": "MAPCATEGORY_SOLAR_SYSTEM",
+     "scope": "plot"
+    }
    ]
   }
  },

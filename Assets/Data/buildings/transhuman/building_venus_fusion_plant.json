@@ -14,15 +14,11 @@
    "all": [
     "HAS_POWER",
     "BUILDING_VENUS_SURFACE_CITY",
-    "TECH_ARTIFICIAL_NUCLEOSYNTHESIS"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_VENUSIAN",
-      "scope": "plot"
-     }
-    ]
+    "TECH_ARTIFICIAL_NUCLEOSYNTHESIS",
+    {
+     "type": "MAPCATEGORY_VENUSIAN",
+     "scope": "plot"
+    }
    ]
   }
  },

@@ -23,39 +23,35 @@
      "type": "BONUS_TERRACOTTA",
      "scope": "city",
      "connection": "trade|vicinity"
+    },
+    {
+     "any": [
+      "BUILDING_PALACE",
+      "BUILDING_HOUSING_VILLAS",
+      "BUILDING_HOUSING_PALACES",
+      "BUILDING_HOUSING_MANORS",
+      "BUILDING_HOUSING_ESTATES",
+      "BUILDING_HOUSING_MANSIONS",
+      "BUILDING_HOUSING_CONDOMINIUMS",
+      "BUILDING_HOUSING_CHATEAU",
+      "BUILDING_HOUSING_HIGH_TECH_CONDOMINIUMS",
+      "BUILDING_HOUSING_COLONY_ARCOLOGY",
+      "BUILDING_LAUNCH_ARCOLOGY"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
     }
-   ],
-   "any": [
-    [
-     "BUILDING_PALACE",
-     "BUILDING_HOUSING_VILLAS",
-     "BUILDING_HOUSING_PALACES",
-     "BUILDING_HOUSING_MANORS",
-     "BUILDING_HOUSING_ESTATES",
-     "BUILDING_HOUSING_MANSIONS",
-     "BUILDING_HOUSING_CONDOMINIUMS",
-     "BUILDING_HOUSING_CHATEAU",
-     "BUILDING_HOUSING_HIGH_TECH_CONDOMINIUMS",
-     "BUILDING_HOUSING_COLONY_ARCOLOGY",
-     "BUILDING_LAUNCH_ARCOLOGY"
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
    ]
   },
   "operate": {
-   "any": [
-    [
-     {
-      "type": "BONUS_FURNITURE",
-      "scope": "city",
-      "connection": "trade|vicinity"
-     }
-    ]
+   "all": [
+    {
+     "type": "BONUS_FURNITURE",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    }
    ],
    "dormant": [
     "BUILDING_HYPERMARKET"

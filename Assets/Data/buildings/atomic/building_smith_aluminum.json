@@ -13,19 +13,17 @@
  "requires": {
   "build": {
    "all": [
-    "TECH_INDUSTRIALISM"
-   ],
-   "any": [
-    [
-     "BUILDING_FORGE",
-     "BUILDING_FOUNDRY"
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_INDUSTRIALISM",
+    {
+     "any": [
+      "BUILDING_FORGE",
+      "BUILDING_FOUNDRY"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

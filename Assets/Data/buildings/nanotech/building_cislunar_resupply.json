@@ -18,15 +18,11 @@
      "min": 1
     },
     "TECH_MASS_DRIVER",
-    "TECH_ADVANCED_ENVIRONMENTAL_SYSTEMS"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_CISLUNAR",
-      "scope": "plot"
-     }
-    ]
+    "TECH_ADVANCED_ENVIRONMENTAL_SYSTEMS",
+    {
+     "type": "MAPCATEGORY_CISLUNAR",
+     "scope": "plot"
+    }
    ]
   }
  },

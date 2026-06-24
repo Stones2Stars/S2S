@@ -5,26 +5,22 @@
  "requires": {
   "build": {
    "all": [
-    "TECH_ALPHABET"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_ALPHABET",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {
-   "any": [
-    [
-     "CIVIC_CLOSED_BORDERS",
-     "CIVIC_SKILLED_WORKERS",
-     "CIVIC_SECURED_BORDERS"
-    ]
-   ],
    "all": [
+    {
+     "any": [
+      "CIVIC_CLOSED_BORDERS",
+      "CIVIC_SKILLED_WORKERS",
+      "CIVIC_SECURED_BORDERS"
+     ]
+    },
     {
      "type": "PROPERTY_CRIME",
      "scope": "city",

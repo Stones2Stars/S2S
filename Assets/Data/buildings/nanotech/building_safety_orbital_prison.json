@@ -10,15 +10,11 @@
  "requires": {
   "build": {
    "all": [
-    "TECH_ADVANCED_ENVIRONMENTAL_SYSTEMS"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_ADVANCED_ENVIRONMENTAL_SYSTEMS",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   }
  },

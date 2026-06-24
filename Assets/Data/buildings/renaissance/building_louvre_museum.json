@@ -5,15 +5,11 @@
  "requires": {
   "build": {
    "all": [
-    "TECH_SCIENTIFIC_METHOD"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_SCIENTIFIC_METHOD",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   }
  },

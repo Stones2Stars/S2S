@@ -18,19 +18,17 @@
  "requires": {
   "build": {
    "all": [
-    "TECH_FLORISTRY"
-   ],
-   "any": [
-    [
-     "BUILDING_APIARY",
-     "BUILDING_FOOD_MANUFACTURING_DISTRICT"
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_FLORISTRY",
+    {
+     "any": [
+      "BUILDING_APIARY",
+      "BUILDING_FOOD_MANUFACTURING_DISTRICT"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {
@@ -39,16 +37,12 @@
      "type": "BONUS_FLAX",
      "scope": "city",
      "connection": "vicinity"
+    },
+    {
+     "type": "BONUS_RICE",
+     "scope": "city",
+     "connection": "vicinity"
     }
-   ],
-   "any": [
-    [
-     {
-      "type": "BONUS_RICE",
-      "scope": "city",
-      "connection": "vicinity"
-     }
-    ]
    ],
    "dormant": [
     "BUILDING_GREENHOUSE"

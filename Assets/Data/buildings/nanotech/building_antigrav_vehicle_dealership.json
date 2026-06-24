@@ -24,19 +24,17 @@
      "type": "BONUS_NOVUS_CHEMICALS",
      "scope": "city",
      "connection": "trade|vicinity"
+    },
+    {
+     "any": [
+      "BUILDING_INTELLIGENT_PAVEMENT",
+      "BUILDING_TELEPORT_BOOTH"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
     }
-   ],
-   "any": [
-    [
-     "BUILDING_INTELLIGENT_PAVEMENT",
-     "BUILDING_TELEPORT_BOOTH"
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
    ]
   },
   "operate": {

@@ -6,15 +6,11 @@
   "build": {
    "all": [
     "BUILDING_INTERSTELLAR_DATA_COLLECTION",
-    "TECH_INTERSTELLAR_COMMUNICATION"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_INTERSTELLAR",
-      "scope": "plot"
-     }
-    ]
+    "TECH_INTERSTELLAR_COMMUNICATION",
+    {
+     "type": "MAPCATEGORY_INTERSTELLAR",
+     "scope": "plot"
+    }
    ]
   }
  },

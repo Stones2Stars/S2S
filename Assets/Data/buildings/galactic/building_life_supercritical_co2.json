@@ -7,15 +7,11 @@
    "all": [
     "BUILDING_INTERSTELLAR_BASE_SUPER_EARTH",
     "TECH_PLANET_ENGINEERING",
-    "TECH_ADAPTIVE_RADIATION"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_PLASMA",
-      "scope": "plot"
-     }
-    ]
+    "TECH_ADAPTIVE_RADIATION",
+    {
+     "type": "MAPCATEGORY_PLASMA",
+     "scope": "plot"
+    }
    ]
   }
  },

@@ -10,15 +10,11 @@
     "BUILDING_ANIMA_CHAMBER",
     "BUILDING_PARK_ARCOLOGY",
     "TECH_ARTIFICIAL_LIFE",
-    "TECH_ORGANIC_CITIES"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_ORGANIC_CITIES",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

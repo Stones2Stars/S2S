@@ -7,15 +7,11 @@
    "all": [
     "HAS_POWER",
     "BUILDING_BINARY_CONSCIOUSNESS_ALGORITHMS",
-    "TECH_WHOLE_BRAIN_EMULATION"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_WHOLE_BRAIN_EMULATION",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ],
    "noneOf": [
     "BUILDING_EM_CITIZENS"

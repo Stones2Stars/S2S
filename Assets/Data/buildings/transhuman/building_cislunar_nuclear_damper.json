@@ -7,15 +7,11 @@
    "all": [
     "BUILDING_CISLUNAR_SHIELDING",
     "BUILDING_CISLUNAR_ONEILL_CYLINDER",
-    "TECH_NANOSHIELDING"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_CISLUNAR",
-      "scope": "plot"
-     }
-    ]
+    "TECH_NANOSHIELDING",
+    {
+     "type": "MAPCATEGORY_CISLUNAR",
+     "scope": "plot"
+    }
    ]
   }
  },

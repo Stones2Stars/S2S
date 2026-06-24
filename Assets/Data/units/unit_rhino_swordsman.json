@@ -11,13 +11,13 @@
      "connection": "trade|vicinity"
     },
     "TECH_IRON_WORKING",
-    "TECH_MEGAFAUNA_DOMESTICATION"
-   ],
-   "any": [
-    [
-     "BUILDING_EFFECT_HERITAGE_RHINOS",
-     "BUILDING_ANIMAL_TRAINER_RHINOCEROS"
-    ]
+    "TECH_MEGAFAUNA_DOMESTICATION",
+    {
+     "any": [
+      "BUILDING_EFFECT_HERITAGE_RHINOS",
+      "BUILDING_ANIMAL_TRAINER_RHINOCEROS"
+     ]
+    }
    ]
   }
  },

@@ -19,22 +19,20 @@
  "requires": {
   "build": {
    "all": [
-    "TECH_EQUINE_DOMESTICATION"
-   ],
-   "any": [
-    [
-     "BUILDING_FARM_ANIMAL_DONKEY",
-     "BUILDING_HERD_DONKEY",
-     "BUILDING_CENTRAL_BREEDER_DONKEY",
-     "BUILDING_INDUSTRIAL_FARMS",
-     "BUILDING_MEAT_INDUSTRY_CONGLOMERATE"
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_EQUINE_DOMESTICATION",
+    {
+     "any": [
+      "BUILDING_FARM_ANIMAL_DONKEY",
+      "BUILDING_HERD_DONKEY",
+      "BUILDING_CENTRAL_BREEDER_DONKEY",
+      "BUILDING_INDUSTRIAL_FARMS",
+      "BUILDING_MEAT_INDUSTRY_CONGLOMERATE"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

@@ -13,15 +13,11 @@
  "requires": {
   "build": {
    "all": [
-    "TECH_CIVIL_SERVICE"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_CIVIL_SERVICE",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

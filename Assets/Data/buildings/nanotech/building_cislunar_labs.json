@@ -10,20 +10,18 @@
      "scope": "city",
      "min": 13
     },
-    "TECH_ADVANCED_ENVIRONMENTAL_SYSTEMS"
-   ],
-   "any": [
-    [
-     "BUILDING_EFFECT_LAUNCH_SITE",
-     "BUILDING_COMMERCIAL_SPACEPORT",
-     "BUILDING_MILITARY_SPACEPORT"
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_ADVANCED_ENVIRONMENTAL_SYSTEMS",
+    {
+     "any": [
+      "BUILDING_EFFECT_LAUNCH_SITE",
+      "BUILDING_COMMERCIAL_SPACEPORT",
+      "BUILDING_MILITARY_SPACEPORT"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   }
  },

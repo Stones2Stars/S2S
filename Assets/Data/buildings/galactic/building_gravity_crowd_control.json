@@ -7,15 +7,11 @@
    "all": [
     "HAS_POWER",
     "BUILDING_AI_POLICE_FORCE",
-    "TECH_WEAPONIZED_GRAVITY_FIELDS"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_WEAPONIZED_GRAVITY_FIELDS",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   }
  },

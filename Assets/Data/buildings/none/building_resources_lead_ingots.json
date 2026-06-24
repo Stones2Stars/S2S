@@ -12,18 +12,18 @@
  },
  "requires": {
   "build": {
-   "any": [
-    [
-     "BUILDING_LEAD_RECLAMATION_PLANT",
-     "BUILDING_NATIONAL_SMELTER_LEAD",
-     "BUILDING_SMELTER_LEAD"
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+   "all": [
+    {
+     "any": [
+      "BUILDING_LEAD_RECLAMATION_PLANT",
+      "BUILDING_NATIONAL_SMELTER_LEAD",
+      "BUILDING_SMELTER_LEAD"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

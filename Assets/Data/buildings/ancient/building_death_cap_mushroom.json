@@ -18,50 +18,44 @@
  "requires": {
   "build": {
    "all": [
-    "TECH_FUNGICULTURE"
-   ],
-   "any": [
-    [
-     {
-      "type": "FEATURE_FOREST_YOUNG",
-      "scope": "plot"
-     },
-     {
-      "type": "FEATURE_FOREST",
-      "scope": "plot"
-     },
-     {
-      "type": "FEATURE_FOREST_ANCIENT",
-      "scope": "plot"
-     },
-     {
-      "type": "FEATURE_FOREST_BURNT",
-      "scope": "plot"
-     }
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ],
-    [
-     {
-      "type": "CIVILIZATION_NPC_NEANDERTHAL",
-      "scope": "empire"
-     }
-    ]
+    "TECH_FUNGICULTURE",
+    {
+     "any": [
+      {
+       "type": "FEATURE_FOREST_YOUNG",
+       "scope": "plot"
+      },
+      {
+       "type": "FEATURE_FOREST",
+       "scope": "plot"
+      },
+      {
+       "type": "FEATURE_FOREST_ANCIENT",
+       "scope": "plot"
+      },
+      {
+       "type": "FEATURE_FOREST_BURNT",
+       "scope": "plot"
+      }
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    },
+    {
+     "type": "CIVILIZATION_NPC_NEANDERTHAL",
+     "scope": "empire"
+    }
    ]
   },
   "operate": {
-   "any": [
-    [
-     {
-      "type": "BONUS_INDIGO",
-      "scope": "city",
-      "connection": "vicinity"
-     }
-    ]
+   "all": [
+    {
+     "type": "BONUS_INDIGO",
+     "scope": "city",
+     "connection": "vicinity"
+    }
    ],
    "dormant": [
     "BUILDING_CHEMISTRY_LAB",

@@ -5,29 +5,21 @@
  "requires": {
   "build": {
    "all": [
-    "TECH_MERCANTILISM"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_MERCANTILISM",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {
    "all": [
-    "CIVIC_MERCANTILISM"
-   ],
-   "any": [
-    [
-     {
-      "type": "BONUS_SILVER_ORE",
-      "scope": "city",
-      "connection": "trade|vicinity"
-     }
-    ]
+    "CIVIC_MERCANTILISM",
+    {
+     "type": "BONUS_SILVER_ORE",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    }
    ]
   }
  },

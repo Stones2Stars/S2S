@@ -9,15 +9,11 @@
     "STATE_RELIGION_IN_CITY",
     {
      "STATE_RELIGION": "RELIGION_JUDAISM"
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
     }
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
    ]
   },
   "operate": {

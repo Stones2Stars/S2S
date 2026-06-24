@@ -7,15 +7,11 @@
    "all": [
     "HAS_POWER",
     "BUILDING_NETWORK_NODE",
-    "TECH_INTERSTELLAR_COMMUNICATION"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_INTERSTELLAR_COMMUNICATION",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   }
  },

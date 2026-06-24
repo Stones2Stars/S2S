@@ -15,15 +15,11 @@
    "all": [
     "HAS_POWER",
     "BUILDING_MEGATOWER_POLICE_STATION_LEVEL",
-    "TECH_ACOUSTIC_WEAPONRY"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_ACOUSTIC_WEAPONRY",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

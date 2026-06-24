@@ -16,16 +16,12 @@
      "min": 10
     },
     "TECH_STEEL",
-    "TECH_MILITARY_SCIENCE"
-   ],
-   "any": [
-    [
-     {
-      "type": "BONUS_IRON_WARES",
-      "scope": "city",
-      "connection": "trade|vicinity"
-     }
-    ]
+    "TECH_MILITARY_SCIENCE",
+    {
+     "type": "BONUS_IRON_WARES",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    }
    ]
   }
  },

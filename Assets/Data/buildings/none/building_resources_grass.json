@@ -12,17 +12,17 @@
  },
  "requires": {
   "build": {
-   "any": [
-    [
-     "BUILDING_GRASS_GATHERER",
-     "BUILDING_WONDER_OF_NATURE_BASALT_ORGAN"
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+   "all": [
+    {
+     "any": [
+      "BUILDING_GRASS_GATHERER",
+      "BUILDING_WONDER_OF_NATURE_BASALT_ORGAN"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

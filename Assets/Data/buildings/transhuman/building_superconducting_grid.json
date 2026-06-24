@@ -14,15 +14,11 @@
   "build": {
    "all": [
     "BUILDING_POWER_LINES",
-    "TECH_FRICTIONLESS_FLIGHT"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_FRICTIONLESS_FLIGHT",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

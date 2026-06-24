@@ -15,21 +15,15 @@
    "all": [
     "HAS_RIVER",
     "BUILDING_CHINAMPA",
-    "TECH_AGRICULTURAL_TOOLS"
-   ],
-   "any": [
-    [
-     {
-      "type": "TERRAIN_MARSH",
-      "scope": "plot"
-     }
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_AGRICULTURAL_TOOLS",
+    {
+     "type": "TERRAIN_MARSH",
+     "scope": "plot"
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

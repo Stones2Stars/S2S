@@ -29,20 +29,18 @@
      "type": "BONUS_PAPER",
      "scope": "city",
      "connection": "trade|vicinity"
+    },
+    {
+     "any": [
+      "BUILDING_FACTORY",
+      "BUILDING_TRADING_POST",
+      "BUILDING_SHOPPING_DISTRICT"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
     }
-   ],
-   "any": [
-    [
-     "BUILDING_FACTORY",
-     "BUILDING_TRADING_POST",
-     "BUILDING_SHOPPING_DISTRICT"
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
    ]
   },
   "operate": {

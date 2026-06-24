@@ -7,15 +7,11 @@
    "all": [
     "HAS_POWER",
     "BUILDING_CRYSTAL_JEWELLER",
-    "TECH_CRYSTALPUNK"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_CRYSTALPUNK",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

@@ -18,15 +18,11 @@
  "requires": {
   "build": {
    "all": [
-    "TECH_ELECTRIC_ARC_WEAPONRY"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_ELECTRIC_ARC_WEAPONRY",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

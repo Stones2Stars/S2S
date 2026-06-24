@@ -5,15 +5,11 @@
  "requires": {
   "build": {
    "all": [
-    "TECH_MUSICAL_NOTATION"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_MUSICAL_NOTATION",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

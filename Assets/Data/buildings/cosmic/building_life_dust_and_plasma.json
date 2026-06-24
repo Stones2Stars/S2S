@@ -6,15 +6,11 @@
   "build": {
    "all": [
     "BUILDING_TRANSTELLAR_HYDROGEN_MAP",
-    "TECH_DIRECTED_PANSPERMIA"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_INTERSTELLAR",
-      "scope": "plot"
-     }
-    ]
+    "TECH_DIRECTED_PANSPERMIA",
+    {
+     "type": "MAPCATEGORY_INTERSTELLAR",
+     "scope": "plot"
+    }
    ]
   }
  },

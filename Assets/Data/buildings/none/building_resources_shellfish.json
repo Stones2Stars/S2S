@@ -12,26 +12,26 @@
  },
  "requires": {
   "build": {
-   "any": [
-    [
-     "BUILDING_ABALONE_DIGGERS",
-     "BUILDING_CLAM_DIGGERS",
-     "BUILDING_CONCH_DIVER",
-     "BUILDING_NET_CRAB",
-     "BUILDING_GIANT_CLAM_DIVERS",
-     "BUILDING_NET_LOBSTER",
-     "BUILDING_MUREX_DIVER",
-     "BUILDING_PEARL_DIVER",
-     "BUILDING_NET_PRAWN",
-     "BUILDING_NET_SHRIMP",
-     "BUILDING_NET_SQUID"
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+   "all": [
+    {
+     "any": [
+      "BUILDING_ABALONE_DIGGERS",
+      "BUILDING_CLAM_DIGGERS",
+      "BUILDING_CONCH_DIVER",
+      "BUILDING_NET_CRAB",
+      "BUILDING_GIANT_CLAM_DIVERS",
+      "BUILDING_NET_LOBSTER",
+      "BUILDING_MUREX_DIVER",
+      "BUILDING_PEARL_DIVER",
+      "BUILDING_NET_PRAWN",
+      "BUILDING_NET_SHRIMP",
+      "BUILDING_NET_SQUID"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

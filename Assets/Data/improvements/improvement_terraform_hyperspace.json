@@ -8,18 +8,14 @@
     {
      "type": "TECH_DUALFLUX_QUANTUM_TEMPORAL_RIFT",
      "scope": "team"
+    },
+    {
+     "terrain": [
+      "TERRAIN_OBSERVABLE_UNIVERSE",
+      "TERRAIN_INTERGALACTIC_VOID",
+      "TERRAIN_DISTANT_COSMOS"
+     ]
     }
-   ],
-   "any": [
-    [
-     {
-      "terrain": [
-       "TERRAIN_OBSERVABLE_UNIVERSE",
-       "TERRAIN_INTERGALACTIC_VOID",
-       "TERRAIN_DISTANT_COSMOS"
-      ]
-     }
-    ]
    ]
   }
  },

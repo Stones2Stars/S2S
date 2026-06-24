@@ -24,15 +24,11 @@
    "all": [
     "HAS_POWER",
     "BUILDING_ENCRYPTED_FIREWALL",
-    "TECH_ONLINE_COMMUNITY"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_ONLINE_COMMUNITY",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

@@ -5,19 +5,17 @@
  "requires": {
   "build": {
    "all": [
-    "TECH_CHEMISTRY"
-   ],
-   "any": [
-    [
-     "BUILDING_CHEMISTRY_LAB",
-     "BUILDING_CHEMICALS_DISTRICT"
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_CHEMISTRY",
+    {
+     "any": [
+      "BUILDING_CHEMISTRY_LAB",
+      "BUILDING_CHEMICALS_DISTRICT"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   }
  },

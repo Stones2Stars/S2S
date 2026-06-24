@@ -5,93 +5,91 @@
  "requires": {
   "build": {
    "all": [
-    "BUILDING_FOLKLORE_REQUIREMENT"
-   ],
-   "any": [
-    [
-     {
-      "type": "FEATURE_POLAR_ROCK_ARCH",
-      "scope": "plot"
-     },
-     {
-      "type": "FEATURE_POLAR_ROCK_ARCH2",
-      "scope": "plot"
-     },
-     {
-      "type": "FEATURE_POLAR_ROCK_FORM1",
-      "scope": "plot"
-     },
-     {
-      "type": "FEATURE_POLAR_ROCK_FORM2",
-      "scope": "plot"
-     },
-     {
-      "type": "FEATURE_POLAR_ROCK_FORM3",
-      "scope": "plot"
-     },
-     {
-      "type": "FEATURE_POLAR_ROCK_FORM4",
-      "scope": "plot"
-     },
-     {
-      "type": "FEATURE_DARK_ROCK_ARCH",
-      "scope": "plot"
-     },
-     {
-      "type": "FEATURE_DARK_ROCK_ARCH2",
-      "scope": "plot"
-     },
-     {
-      "type": "FEATURE_DARK_ROCK_FORM1",
-      "scope": "plot"
-     },
-     {
-      "type": "FEATURE_DARK_ROCK_FORM2",
-      "scope": "plot"
-     },
-     {
-      "type": "FEATURE_DARK_ROCK_FORM3",
-      "scope": "plot"
-     },
-     {
-      "type": "FEATURE_DARK_ROCK_FORM4",
-      "scope": "plot"
-     },
-     {
-      "type": "FEATURE_ROCK_ARCH",
-      "scope": "plot"
-     },
-     {
-      "type": "FEATURE_ROCK_ARCH2",
-      "scope": "plot"
-     },
-     {
-      "type": "FEATURE_ROCK_FORM1",
-      "scope": "plot"
-     },
-     {
-      "type": "FEATURE_ROCK_FORM2",
-      "scope": "plot"
-     },
-     {
-      "type": "FEATURE_ROCK_FORM3",
-      "scope": "plot"
-     },
-     {
-      "type": "FEATURE_ROCK_FORM4",
-      "scope": "plot"
-     },
-     {
-      "type": "FEATURE_PLATY_DEVILS_TABLE",
-      "scope": "plot"
-     }
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "BUILDING_FOLKLORE_REQUIREMENT",
+    {
+     "any": [
+      {
+       "type": "FEATURE_POLAR_ROCK_ARCH",
+       "scope": "plot"
+      },
+      {
+       "type": "FEATURE_POLAR_ROCK_ARCH2",
+       "scope": "plot"
+      },
+      {
+       "type": "FEATURE_POLAR_ROCK_FORM1",
+       "scope": "plot"
+      },
+      {
+       "type": "FEATURE_POLAR_ROCK_FORM2",
+       "scope": "plot"
+      },
+      {
+       "type": "FEATURE_POLAR_ROCK_FORM3",
+       "scope": "plot"
+      },
+      {
+       "type": "FEATURE_POLAR_ROCK_FORM4",
+       "scope": "plot"
+      },
+      {
+       "type": "FEATURE_DARK_ROCK_ARCH",
+       "scope": "plot"
+      },
+      {
+       "type": "FEATURE_DARK_ROCK_ARCH2",
+       "scope": "plot"
+      },
+      {
+       "type": "FEATURE_DARK_ROCK_FORM1",
+       "scope": "plot"
+      },
+      {
+       "type": "FEATURE_DARK_ROCK_FORM2",
+       "scope": "plot"
+      },
+      {
+       "type": "FEATURE_DARK_ROCK_FORM3",
+       "scope": "plot"
+      },
+      {
+       "type": "FEATURE_DARK_ROCK_FORM4",
+       "scope": "plot"
+      },
+      {
+       "type": "FEATURE_ROCK_ARCH",
+       "scope": "plot"
+      },
+      {
+       "type": "FEATURE_ROCK_ARCH2",
+       "scope": "plot"
+      },
+      {
+       "type": "FEATURE_ROCK_FORM1",
+       "scope": "plot"
+      },
+      {
+       "type": "FEATURE_ROCK_FORM2",
+       "scope": "plot"
+      },
+      {
+       "type": "FEATURE_ROCK_FORM3",
+       "scope": "plot"
+      },
+      {
+       "type": "FEATURE_ROCK_FORM4",
+       "scope": "plot"
+      },
+      {
+       "type": "FEATURE_PLATY_DEVILS_TABLE",
+       "scope": "plot"
+      }
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   }
  },

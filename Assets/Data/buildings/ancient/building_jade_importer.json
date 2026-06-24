@@ -18,20 +18,18 @@
      "scope": "empire",
      "min": 1
     },
-    "TECH_TRADE"
-   ],
-   "any": [
-    [
-     "BUILDING_BAZAAR",
-     "BUILDING_MALL",
-     "BUILDING_HYPERMARKET"
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_TRADE",
+    {
+     "any": [
+      "BUILDING_BAZAAR",
+      "BUILDING_MALL",
+      "BUILDING_HYPERMARKET"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

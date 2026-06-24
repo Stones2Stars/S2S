@@ -13,15 +13,11 @@
      "scope": "empire",
      "min": 1
     },
-    "TECH_GAIA_ECOLOGY"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_VENUSIAN",
-      "scope": "plot"
-     }
-    ]
+    "TECH_GAIA_ECOLOGY",
+    {
+     "type": "MAPCATEGORY_VENUSIAN",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

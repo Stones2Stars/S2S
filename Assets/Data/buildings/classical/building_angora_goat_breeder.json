@@ -18,30 +18,26 @@
  "requires": {
   "build": {
    "all": [
-    "TECH_AESTHETICS"
-   ],
-   "any": [
-    [
-     "BUILDING_FARM_ANIMAL_GOAT",
-     "BUILDING_HERD_GOAT"
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_AESTHETICS",
+    {
+     "any": [
+      "BUILDING_FARM_ANIMAL_GOAT",
+      "BUILDING_HERD_GOAT"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {
-   "any": [
-    [
-     {
-      "type": "BONUS_SHEEP",
-      "scope": "city",
-      "connection": "vicinity"
-     }
-    ]
+   "all": [
+    {
+     "type": "BONUS_SHEEP",
+     "scope": "city",
+     "connection": "vicinity"
+    }
    ],
    "dormant": [
     "BUILDING_INDUSTRIAL_FARMS",

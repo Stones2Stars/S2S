@@ -5,15 +5,11 @@
  "requires": {
   "build": {
    "all": [
-    "TECH_COSMIC_WARFARE"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_HYPERSPACE",
-      "scope": "plot"
-     }
-    ]
+    "TECH_COSMIC_WARFARE",
+    {
+     "type": "MAPCATEGORY_HYPERSPACE",
+     "scope": "plot"
+    }
    ]
   }
  },

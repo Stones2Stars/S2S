@@ -6,15 +6,11 @@
   "build": {
    "all": [
     "BUILDING_C_L_AFRICAN",
-    "TECH_ORNAMENTATION"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_ORNAMENTATION",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

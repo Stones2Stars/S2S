@@ -8,16 +8,12 @@
     {
      "type": "TECH_CONTROLLED_INFLATION",
      "scope": "team"
+    },
+    {
+     "terrain": [
+      "TERRAIN_DISTANT_COSMOS"
+     ]
     }
-   ],
-   "any": [
-    [
-     {
-      "terrain": [
-       "TERRAIN_DISTANT_COSMOS"
-      ]
-     }
-    ]
    ]
   }
  },

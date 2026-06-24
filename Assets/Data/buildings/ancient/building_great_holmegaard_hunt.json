@@ -10,21 +10,19 @@
  "requires": {
   "build": {
    "all": [
-    "TECH_ARCHERY"
-   ],
-   "any": [
-    [
-     "BUILDING_FLETCHERS_HUT",
-     "BUILDING_EFFECT_TRADITION_ARCHERY",
-     "BUILDING_HUNTING_INSTRUCTIONS",
-     "BUILDING_MASTER_HUNTER_TRADITION"
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_ARCHERY",
+    {
+     "any": [
+      "BUILDING_FLETCHERS_HUT",
+      "BUILDING_EFFECT_TRADITION_ARCHERY",
+      "BUILDING_HUNTING_INSTRUCTIONS",
+      "BUILDING_MASTER_HUNTER_TRADITION"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {
@@ -33,21 +31,21 @@
      "type": "BONUS_BONE",
      "scope": "city",
      "connection": "trade|vicinity"
+    },
+    {
+     "any": [
+      {
+       "type": "BONUS_WOOD",
+       "scope": "city",
+       "connection": "trade|vicinity"
+      },
+      {
+       "type": "BONUS_PRIME_TIMBER",
+       "scope": "city",
+       "connection": "trade|vicinity"
+      }
+     ]
     }
-   ],
-   "any": [
-    [
-     {
-      "type": "BONUS_WOOD",
-      "scope": "city",
-      "connection": "trade|vicinity"
-     },
-     {
-      "type": "BONUS_PRIME_TIMBER",
-      "scope": "city",
-      "connection": "trade|vicinity"
-     }
-    ]
    ]
   }
  },

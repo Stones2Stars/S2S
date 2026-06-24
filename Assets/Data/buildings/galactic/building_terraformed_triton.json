@@ -6,21 +6,15 @@
   "build": {
    "all": [
     "BUILDING_TRITON_HEAT_RING",
-    "TECH_LUNAR_TERRAFORMING"
-   ],
-   "any": [
-    [
-     {
-      "type": "TERRAIN_TRITON",
-      "scope": "plot"
-     }
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_SOLAR_SYSTEM",
-      "scope": "plot"
-     }
-    ]
+    "TECH_LUNAR_TERRAFORMING",
+    {
+     "type": "TERRAIN_TRITON",
+     "scope": "plot"
+    },
+    {
+     "type": "MAPCATEGORY_SOLAR_SYSTEM",
+     "scope": "plot"
+    }
    ]
   }
  },

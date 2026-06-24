@@ -6,15 +6,11 @@
   "build": {
    "all": [
     "BUILDING_DISTANT_COSMOPOLIS",
-    "TECH_COSMIC_GOVERNANCE"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_DISTANT",
-      "scope": "plot"
-     }
-    ]
+    "TECH_COSMIC_GOVERNANCE",
+    {
+     "type": "MAPCATEGORY_DISTANT",
+     "scope": "plot"
+    }
    ]
   }
  },

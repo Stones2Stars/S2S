@@ -10,37 +10,31 @@
  "requires": {
   "build": {
    "all": [
-    "TECH_MEGALITH_CONSTRUCTION"
-   ],
-   "any": [
-    [
-     "BUILDING_SAGE",
-     "BUILDING_ALTERNATIVE_MEDICINE",
-     "BUILDING_HEALTHCARE_MEGACOMPLEX"
-    ],
-    [
-     {
-      "type": "TERRAIN_PEAK",
-      "scope": "plot"
-     }
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_MEGALITH_CONSTRUCTION",
+    {
+     "any": [
+      "BUILDING_SAGE",
+      "BUILDING_ALTERNATIVE_MEDICINE",
+      "BUILDING_HEALTHCARE_MEGACOMPLEX"
+     ]
+    },
+    {
+     "type": "TERRAIN_PEAK",
+     "scope": "plot"
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {
-   "any": [
-    [
-     {
-      "type": "BONUS_STONE",
-      "scope": "city",
-      "connection": "trade|vicinity"
-     }
-    ]
+   "all": [
+    {
+     "type": "BONUS_STONE",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    }
    ]
   }
  },

@@ -11,16 +11,12 @@
      "connection": "trade|vicinity"
     },
     "TECH_FISSION",
-    "TECH_AVIATION"
-   ],
-   "any": [
-    [
-     {
-      "type": "BONUS_HEAVY_WATER",
-      "scope": "city",
-      "connection": "trade|vicinity"
-     }
-    ]
+    "TECH_AVIATION",
+    {
+     "type": "BONUS_HEAVY_WATER",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    }
    ]
   }
  },

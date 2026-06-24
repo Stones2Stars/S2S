@@ -8,15 +8,11 @@
     "BUILDING_C_AC_SOUTH_AMERICAN",
     "BUILDING_C_L_SOUTH_AMERICAN",
     "BUILDING_C_AC_EUROPEAN",
-    "TECH_LEADERSHIP"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_LEADERSHIP",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

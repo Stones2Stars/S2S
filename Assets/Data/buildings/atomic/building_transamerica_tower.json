@@ -12,19 +12,17 @@
      "min": 7
     },
     "BUILDING_SKYSCRAPER",
-    "TECH_GLOBALIZATION"
-   ],
-   "any": [
-    [
-     "BUILDING_INSURANCE_OFFICE",
-     "BUILDING_BLOCKCHAIN_FINANCIAL_SERVICES"
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_GLOBALIZATION",
+    {
+     "any": [
+      "BUILDING_INSURANCE_OFFICE",
+      "BUILDING_BLOCKCHAIN_FINANCIAL_SERVICES"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {
@@ -33,16 +31,12 @@
      "type": "BONUS_CEMENT",
      "scope": "city",
      "connection": "trade|vicinity"
+    },
+    {
+     "type": "BONUS_STEEL_WARES",
+     "scope": "city",
+     "connection": "trade|vicinity"
     }
-   ],
-   "any": [
-    [
-     {
-      "type": "BONUS_STEEL_WARES",
-      "scope": "city",
-      "connection": "trade|vicinity"
-     }
-    ]
    ]
   }
  },

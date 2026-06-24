@@ -28,35 +28,35 @@
     {
      "type": "TECH_LUMINAL_BEINGS",
      "scope": "team"
+    },
+    {
+     "any": [
+      {
+       "type": "TECH_MENSIOKINESIS",
+       "scope": "team"
+      },
+      {
+       "type": "TECH_FANTASY_MATERIALS",
+       "scope": "team"
+      },
+      {
+       "type": "TECH_GRAND_UNIFICATION_BIOLOGY",
+       "scope": "team"
+      },
+      {
+       "type": "TECH_STABLE_TIME_LOOPS",
+       "scope": "team"
+      },
+      {
+       "type": "TECH_COSMIC_ENGINEERING",
+       "scope": "team"
+      },
+      {
+       "type": "TECH_TACHYON_COMMUNICATIONS",
+       "scope": "team"
+      }
+     ]
     }
-   ],
-   "any": [
-    [
-     {
-      "type": "TECH_MENSIOKINESIS",
-      "scope": "team"
-     },
-     {
-      "type": "TECH_FANTASY_MATERIALS",
-      "scope": "team"
-     },
-     {
-      "type": "TECH_GRAND_UNIFICATION_BIOLOGY",
-      "scope": "team"
-     },
-     {
-      "type": "TECH_STABLE_TIME_LOOPS",
-      "scope": "team"
-     },
-     {
-      "type": "TECH_COSMIC_ENGINEERING",
-      "scope": "team"
-     },
-     {
-      "type": "TECH_TACHYON_COMMUNICATIONS",
-      "scope": "team"
-     }
-    ]
    ]
   }
  },

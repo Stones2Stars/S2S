@@ -7,21 +7,15 @@
    "all": [
     "HAS_POWER",
     "BUILDING_STRATOSPHERIC_TOWER",
-    "TECH_CRYSTALPUNK"
-   ],
-   "any": [
-    [
-     {
-      "type": "FEATURE_ICE",
-      "scope": "plot"
-     }
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_CRYSTALPUNK",
+    {
+     "type": "FEATURE_ICE",
+     "scope": "plot"
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

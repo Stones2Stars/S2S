@@ -10,19 +10,17 @@
      "scope": "city",
      "min": 3
     },
-    "TECH_BOTANY"
-   ],
-   "any": [
-    [
-     "BUILDING_ARBORETUM",
-     "BUILDING_AGROFOREST"
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_BOTANY",
+    {
+     "any": [
+      "BUILDING_ARBORETUM",
+      "BUILDING_AGROFOREST"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   }
  },

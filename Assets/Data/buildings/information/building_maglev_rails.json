@@ -20,18 +20,12 @@
  "requires": {
   "build": {
    "all": [
-    "TECH_MAGNETIC_LEVITATION"
-   ],
-   "any": [
-    [
-     "BUILDING_METROPOLITAN_ADMINISTRATION"
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_MAGNETIC_LEVITATION",
+    "BUILDING_METROPOLITAN_ADMINISTRATION",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

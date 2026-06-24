@@ -13,15 +13,11 @@
     },
     "BUILDING_ANIMAL_DESIGNER",
     "BUILDING_ZOO",
-    "TECH_BIOPUNK"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_BIOPUNK",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

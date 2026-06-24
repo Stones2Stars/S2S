@@ -15,15 +15,11 @@
   "build": {
    "all": [
     "BUILDING_SPACE_COLONY_VENUS",
-    "TECH_ARTIFICIAL_PHOTOSYNTHESIS"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_VENUSIAN",
-      "scope": "plot"
-     }
-    ]
+    "TECH_ARTIFICIAL_PHOTOSYNTHESIS",
+    {
+     "type": "MAPCATEGORY_VENUSIAN",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

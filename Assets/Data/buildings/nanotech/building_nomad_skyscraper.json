@@ -7,19 +7,17 @@
    "all": [
     "HAS_POWER",
     "BUILDING_PEER_TO_PEER_RENTALS",
-    "TECH_MESH_NETWORKS"
-   ],
-   "any": [
-    [
-     "BUILDING_AUTOMATED_TAXI_SERVICE",
-     "BUILDING_TELEPORT_BOOTH"
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_MESH_NETWORKS",
+    {
+     "any": [
+      "BUILDING_AUTOMATED_TAXI_SERVICE",
+      "BUILDING_TELEPORT_BOOTH"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   }
  },

@@ -7,15 +7,11 @@
    "all": [
     "HAS_POWER",
     "BUILDING_MARTIAN_MEGACITY",
-    "TECH_ASTROECOLOGY"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_MARTIAN",
-      "scope": "plot"
-     }
-    ]
+    "TECH_ASTROECOLOGY",
+    {
+     "type": "MAPCATEGORY_MARTIAN",
+     "scope": "plot"
+    }
    ]
   }
  },

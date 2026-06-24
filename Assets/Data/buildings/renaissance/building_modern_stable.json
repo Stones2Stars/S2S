@@ -24,22 +24,20 @@
  "requires": {
   "build": {
    "all": [
-    "TECH_CAVALRY_TACTICS"
-   ],
-   "any": [
-    [
-     "BUILDING_ANIMAL_TRAINER_CAMEL",
-     "BUILDING_ANIMAL_TRAINER_DONKEY",
-     "BUILDING_ANIMAL_TRAINER_HORSE",
-     "BUILDING_ANIMAL_TRAINER_ELEPHANT",
-     "BUILDING_ANIMAL_TRAINER_LLAMA"
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_CAVALRY_TACTICS",
+    {
+     "any": [
+      "BUILDING_ANIMAL_TRAINER_CAMEL",
+      "BUILDING_ANIMAL_TRAINER_DONKEY",
+      "BUILDING_ANIMAL_TRAINER_HORSE",
+      "BUILDING_ANIMAL_TRAINER_ELEPHANT",
+      "BUILDING_ANIMAL_TRAINER_LLAMA"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

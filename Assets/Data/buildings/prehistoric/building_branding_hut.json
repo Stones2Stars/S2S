@@ -5,28 +5,24 @@
  "requires": {
   "build": {
    "all": [
-    "TECH_HEAT_TREATMENT"
-   ],
-   "any": [
-    [
-     "BUILDING_FIRE_PIT",
-     "BUILDING_IMU",
-     "BUILDING_BONFIRE",
-     "BUILDING_CHARCOAL_BURNER"
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_HEAT_TREATMENT",
+    {
+     "any": [
+      "BUILDING_FIRE_PIT",
+      "BUILDING_IMU",
+      "BUILDING_BONFIRE",
+      "BUILDING_CHARCOAL_BURNER"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {
-   "any": [
-    [
-     "CIVIC_OBEDIENCE"
-    ]
+   "all": [
+    "CIVIC_OBEDIENCE"
    ]
   }
  },

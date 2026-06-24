@@ -10,23 +10,21 @@
      "scope": "city",
      "connection": "trade|vicinity"
     },
-    "TECH_OBSIDIAN_WEAPONS"
-   ],
-   "any": [
-    [
-     {
-      "type": "BONUS_OBSIDIAN",
-      "scope": "city",
-      "connection": "trade|vicinity"
-     }
-    ],
-    [
-     "BUILDING_HEALERS_HUT",
-     "BUILDING_DOCTORS_OFFICE",
-     "BUILDING_SURGEONS_OFFICE",
-     "BUILDING_MEDICAL_CLINIC",
-     "BUILDING_HEALTHCARE_MEGACOMPLEX"
-    ]
+    "TECH_OBSIDIAN_WEAPONS",
+    {
+     "type": "BONUS_OBSIDIAN",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    {
+     "any": [
+      "BUILDING_HEALERS_HUT",
+      "BUILDING_DOCTORS_OFFICE",
+      "BUILDING_SURGEONS_OFFICE",
+      "BUILDING_MEDICAL_CLINIC",
+      "BUILDING_HEALTHCARE_MEGACOMPLEX"
+     ]
+    }
    ]
   }
  },

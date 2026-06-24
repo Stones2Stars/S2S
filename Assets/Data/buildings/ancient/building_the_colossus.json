@@ -16,20 +16,18 @@
      "scope": "city",
      "min": 3
     },
-    "TECH_BRONZE_WORKING"
-   ],
-   "any": [
-    [
-     "BUILDING_FORGE",
-     "BUILDING_FOUNDRY",
-     "BUILDING_METALS_MEGACOMPLEX"
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_BRONZE_WORKING",
+    {
+     "any": [
+      "BUILDING_FORGE",
+      "BUILDING_FOUNDRY",
+      "BUILDING_METALS_MEGACOMPLEX"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   }
  },

@@ -11,19 +11,17 @@
   "build": {
    "all": [
     "TECH_FELINE_DOMESTICATION",
-    "TECH_MEGAFAUNA_DOMESTICATION"
-   ],
-   "any": [
-    [
-     "BUILDING_FOLKLORE_SABRETOOTH",
-     "BUILDING_FOLKLORE_PALEOLITHIC_CAT"
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_MEGAFAUNA_DOMESTICATION",
+    {
+     "any": [
+      "BUILDING_FOLKLORE_SABRETOOTH",
+      "BUILDING_FOLKLORE_PALEOLITHIC_CAT"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

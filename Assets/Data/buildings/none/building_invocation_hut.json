@@ -21,15 +21,11 @@
  "requires": {
   "build": {
    "all": [
-    "BUILDING_SHAMANISTIC_TEMPLE"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "BUILDING_SHAMANISTIC_TEMPLE",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

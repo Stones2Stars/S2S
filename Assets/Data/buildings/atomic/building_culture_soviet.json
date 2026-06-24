@@ -7,39 +7,35 @@
    "all": [
     "BUILDING_C_AC_EUROPEAN",
     "BUILDING_C_L_EUROPEAN",
-    "TECH_COMMUNISM"
-   ],
-   "any": [
-    [
-     {
-      "type": "TERRAIN_TAIGA",
-      "scope": "plot"
-     }
-    ],
-    [
-     {
-      "type": "FEATURE_FOREST_YOUNG",
-      "scope": "plot"
-     },
-     {
-      "type": "FEATURE_FOREST",
-      "scope": "plot"
-     },
-     {
-      "type": "FEATURE_FOREST_ANCIENT",
-      "scope": "plot"
-     },
-     {
-      "type": "FEATURE_FOREST_BURNT",
-      "scope": "plot"
-     }
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_COMMUNISM",
+    {
+     "type": "TERRAIN_TAIGA",
+     "scope": "plot"
+    },
+    {
+     "any": [
+      {
+       "type": "FEATURE_FOREST_YOUNG",
+       "scope": "plot"
+      },
+      {
+       "type": "FEATURE_FOREST",
+       "scope": "plot"
+      },
+      {
+       "type": "FEATURE_FOREST_ANCIENT",
+       "scope": "plot"
+      },
+      {
+       "type": "FEATURE_FOREST_BURNT",
+       "scope": "plot"
+      }
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

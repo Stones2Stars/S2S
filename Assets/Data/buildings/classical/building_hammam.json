@@ -10,19 +10,17 @@
      "scope": "city",
      "min": 3
     },
-    "TECH_CANAL_SYSTEMS"
-   ],
-   "any": [
-    [
-     "BUILDING_AQUEDUCT",
-     "BUILDING_MODERN_WATERWORKS"
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_CANAL_SYSTEMS",
+    {
+     "any": [
+      "BUILDING_AQUEDUCT",
+      "BUILDING_MODERN_WATERWORKS"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   }
  },

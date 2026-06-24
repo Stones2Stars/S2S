@@ -6,19 +6,13 @@
   "build": {
    "all": [
     "BUILDING_PALACE",
-    "TECH_FEUDALISM"
-   ],
-   "any": [
-    [
-     {
-      "type": "BONUS_IRON_WARES",
-      "scope": "city",
-      "connection": "trade|vicinity"
-     }
-    ],
-    [
-     "CIVIC_MONARCHY"
-    ]
+    "TECH_FEUDALISM",
+    {
+     "type": "BONUS_IRON_WARES",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    "CIVIC_MONARCHY"
    ]
   }
  },

@@ -15,20 +15,18 @@
      "scope": "city",
      "min": 3
     },
-    "TECH_CHARIOTRY"
-   ],
-   "any": [
-    [
-     "BUILDING_HIPPODROME",
-     "BUILDING_ROYAL_TOURNAMENT",
-     "BUILDING_SPEEDWAY"
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_CHARIOTRY",
+    {
+     "any": [
+      "BUILDING_HIPPODROME",
+      "BUILDING_ROYAL_TOURNAMENT",
+      "BUILDING_SPEEDWAY"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   }
  },

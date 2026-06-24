@@ -10,15 +10,11 @@
      "scope": "empire",
      "min": 1
     },
-    "TECH_SUPERSTRING_THEORY"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_SUPERSTRING_THEORY",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   }
  },

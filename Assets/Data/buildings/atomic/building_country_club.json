@@ -13,20 +13,18 @@
  "requires": {
   "build": {
    "all": [
-    "TECH_TOURISM"
-   ],
-   "any": [
-    [
-     "BUILDING_TENNIS_COURT",
-     "BUILDING_GOLF_COURSE",
-     "BUILDING_POLO_FIELD"
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_TOURISM",
+    {
+     "any": [
+      "BUILDING_TENNIS_COURT",
+      "BUILDING_GOLF_COURSE",
+      "BUILDING_POLO_FIELD"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

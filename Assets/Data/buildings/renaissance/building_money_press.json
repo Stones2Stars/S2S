@@ -5,15 +5,11 @@
  "requires": {
   "build": {
    "all": [
-    "TECH_PRINTING_PRESS"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_PRINTING_PRESS",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

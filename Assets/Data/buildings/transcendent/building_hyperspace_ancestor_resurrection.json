@@ -7,15 +7,11 @@
    "all": [
     "HAS_POWER",
     "BUILDING_HYPERPLANET",
-    "TECH_TIMELINE_RECTIFICATION"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_HYPERSPACE",
-      "scope": "plot"
-     }
-    ]
+    "TECH_TIMELINE_RECTIFICATION",
+    {
+     "type": "MAPCATEGORY_HYPERSPACE",
+     "scope": "plot"
+    }
    ]
   }
  },

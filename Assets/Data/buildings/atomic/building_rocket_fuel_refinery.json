@@ -18,18 +18,12 @@
     "HAS_POWER",
     "BUILDING_HYDROGEN_GENERATOR",
     "BUILDING_INDUSTRIAL_PARK",
-    "TECH_ROCKETRY"
-   ],
-   "any": [
-    [
-     "BUILDING_CHEMICAL_PLANT"
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_ROCKETRY",
+    "BUILDING_CHEMICAL_PLANT",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

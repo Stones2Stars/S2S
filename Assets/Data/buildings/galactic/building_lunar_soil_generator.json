@@ -12,15 +12,11 @@
    "all": [
     "HAS_POWER",
     "BUILDING_LUNAR_ALGAE_FARM",
-    "TECH_PARATERRAFORMING"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_LUNAR",
-      "scope": "plot"
-     }
-    ]
+    "TECH_PARATERRAFORMING",
+    {
+     "type": "MAPCATEGORY_LUNAR",
+     "scope": "plot"
+    }
    ]
   }
  },

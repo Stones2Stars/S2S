@@ -5,21 +5,15 @@
  "requires": {
   "build": {
    "all": [
-    "TECH_STELLAR_ENGINE"
-   ],
-   "any": [
-    [
-     {
-      "type": "TERRAIN_STAR_CLUSTER",
-      "scope": "plot"
-     }
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_MILKY_WAY",
-      "scope": "plot"
-     }
-    ]
+    "TECH_STELLAR_ENGINE",
+    {
+     "type": "TERRAIN_STAR_CLUSTER",
+     "scope": "plot"
+    },
+    {
+     "type": "MAPCATEGORY_MILKY_WAY",
+     "scope": "plot"
+    }
    ],
    "noneOf": [
     "BUILDING_NGC_6811_COLONY"

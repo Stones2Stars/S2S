@@ -16,16 +16,12 @@
      "min": 10
     },
     "TECH_SEMICONDUCTORS",
-    "TECH_SONAR"
-   ],
-   "any": [
-    [
-     {
-      "type": "BONUS_PETROLEUM_PRODUCTS",
-      "scope": "city",
-      "connection": "trade|vicinity"
-     }
-    ]
+    "TECH_SONAR",
+    {
+     "type": "BONUS_PETROLEUM_PRODUCTS",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    }
    ]
   }
  },

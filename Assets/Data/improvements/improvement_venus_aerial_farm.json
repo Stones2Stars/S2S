@@ -8,18 +8,14 @@
     {
      "type": "TECH_BOTANICAL_ALCHEMY",
      "scope": "team"
+    },
+    {
+     "terrain": [
+      "TERRAIN_VENUS",
+      "TERRAIN_VENUS_HIGHLANDS",
+      "TERRAIN_VENUS_LOWLANDS"
+     ]
     }
-   ],
-   "any": [
-    [
-     {
-      "terrain": [
-       "TERRAIN_VENUS",
-       "TERRAIN_VENUS_HIGHLANDS",
-       "TERRAIN_VENUS_LOWLANDS"
-      ]
-     }
-    ]
    ]
   }
  },

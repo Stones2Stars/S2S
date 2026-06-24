@@ -7,15 +7,11 @@
    "all": [
     "BUILDING_MODERN_GRANARY",
     "BUILDING_FACTORY",
-    "TECH_MANUFACTURING"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_MANUFACTURING",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   }
  },

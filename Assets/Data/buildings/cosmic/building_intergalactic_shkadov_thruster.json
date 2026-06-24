@@ -8,15 +8,11 @@
     "BUILDING_INTERGALACTIC_CORE_DYSON_SPHERE",
     "BUILDING_INTERGALACTIC_DYSON_SPHERES",
     "BUILDING_INTERGALACTIC_YOTTAFACTORY",
-    "TECH_DARK_ENERGY_HARVESTING"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_UNIVERSAL",
-      "scope": "plot"
-     }
-    ]
+    "TECH_DARK_ENERGY_HARVESTING",
+    {
+     "type": "MAPCATEGORY_UNIVERSAL",
+     "scope": "plot"
+    }
    ]
   }
  },

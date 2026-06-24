@@ -7,15 +7,11 @@
    "all": [
     "BUILDING_OBSERVATORY",
     "BUILDING_PHYSICS_LAB",
-    "TECH_IMAGINARY_PHYSICS"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_IMAGINARY_PHYSICS",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

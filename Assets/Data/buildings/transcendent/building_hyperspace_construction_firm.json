@@ -11,15 +11,11 @@
      "scope": "empire",
      "min": 1
     },
-    "TECH_3D_PROJECTIONS"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_3D_PROJECTIONS",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   }
  },

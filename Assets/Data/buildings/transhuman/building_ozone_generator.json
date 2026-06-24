@@ -7,15 +7,11 @@
    "all": [
     "HAS_POWER",
     "BUILDING_INDUSTRIAL_PARK",
-    "TECH_WEATHER_CONTROL"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_WEATHER_CONTROL",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

@@ -7,15 +7,15 @@
   "build": {
    "all": [
     "BUILDING_DOG_KENNELS",
-    "TECH_THE_WHEEL"
-   ],
-   "any": [
-    [
-     "HERITAGE_FOLKLORE_WOLF",
-     "HERITAGE_FOLKLORE_WOLF_DIRE",
-     "HERITAGE_FOLKLORE_WOLF_ETHIOPIAN",
-     "HERITAGE_TAXON_CANIDAE"
-    ]
+    "TECH_THE_WHEEL",
+    {
+     "any": [
+      "HERITAGE_FOLKLORE_WOLF",
+      "HERITAGE_FOLKLORE_WOLF_DIRE",
+      "HERITAGE_FOLKLORE_WOLF_ETHIOPIAN",
+      "HERITAGE_TAXON_CANIDAE"
+     ]
+    }
    ]
   }
  },

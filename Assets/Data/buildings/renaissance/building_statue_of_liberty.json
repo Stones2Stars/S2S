@@ -11,20 +11,18 @@
      "scope": "city",
      "min": 7
     },
-    "TECH_REPRESENTATIVE_DEMOCRACY"
-   ],
-   "any": [
-    [
-     "BUILDING_SMELTER_STEEL",
-     "BUILDING_ADVANCED_IRONWORKS",
-     "BUILDING_METALS_MEGACOMPLEX"
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_REPRESENTATIVE_DEMOCRACY",
+    {
+     "any": [
+      "BUILDING_SMELTER_STEEL",
+      "BUILDING_ADVANCED_IRONWORKS",
+      "BUILDING_METALS_MEGACOMPLEX"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

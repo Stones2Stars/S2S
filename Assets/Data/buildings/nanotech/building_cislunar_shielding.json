@@ -10,15 +10,11 @@
  "requires": {
   "build": {
    "all": [
-    "TECH_ELECTROMAGNETIC_FIELD_SHIELDING"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_CISLUNAR",
-      "scope": "plot"
-     }
-    ]
+    "TECH_ELECTROMAGNETIC_FIELD_SHIELDING",
+    {
+     "type": "MAPCATEGORY_CISLUNAR",
+     "scope": "plot"
+    }
    ]
   }
  },

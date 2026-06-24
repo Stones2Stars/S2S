@@ -10,15 +10,11 @@
  "requires": {
   "build": {
    "all": [
-    "TECH_MOTORIZED_TRANSPORTATION"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_MOTORIZED_TRANSPORTATION",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {
@@ -29,20 +25,16 @@
      "connection": "trade|vicinity"
     },
     {
+     "type": "BONUS_AUTOMOBILES",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    {
      "type": "PROPERTY_CRIME",
      "scope": "city",
      "min": 200,
      "max": 100000
     }
-   ],
-   "any": [
-    [
-     {
-      "type": "BONUS_AUTOMOBILES",
-      "scope": "city",
-      "connection": "trade|vicinity"
-     }
-    ]
    ]
   }
  },

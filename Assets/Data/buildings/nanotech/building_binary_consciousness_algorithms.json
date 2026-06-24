@@ -15,15 +15,11 @@
     "HAS_POWER",
     "BUILDING_EVOLUTIONARY_ALGORITHMS",
     "TECH_EXOCORTEX_NETWORKS",
-    "TECH_ADVANCED_COMPUTERS"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_ADVANCED_COMPUTERS",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

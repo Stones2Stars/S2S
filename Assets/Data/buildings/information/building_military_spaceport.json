@@ -22,19 +22,17 @@
   "build": {
    "all": [
     "TECH_MILITARY_ROBOTICS",
-    "TECH_LUNAR_BASES"
-   ],
-   "any": [
-    [
-     "BUILDING_MILITARY_AIRBASE",
-     "BUILDING_AEROSPACE_COMPLEX"
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_LUNAR_BASES",
+    {
+     "any": [
+      "BUILDING_MILITARY_AIRBASE",
+      "BUILDING_AEROSPACE_COMPLEX"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {
@@ -43,16 +41,12 @@
      "type": "BONUS_ROCKET_FUEL",
      "scope": "city",
      "connection": "trade|vicinity"
+    },
+    {
+     "type": "BONUS_NANOTUBES",
+     "scope": "city",
+     "connection": "trade|vicinity"
     }
-   ],
-   "any": [
-    [
-     {
-      "type": "BONUS_NANOTUBES",
-      "scope": "city",
-      "connection": "trade|vicinity"
-     }
-    ]
    ]
   }
  },

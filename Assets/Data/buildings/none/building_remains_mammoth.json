@@ -5,23 +5,17 @@
  "requires": {
   "build": {
    "all": [
-    "BUILDING_FOLKLORE_REQUIREMENT"
-   ],
-   "any": [
-    [
-     "HERITAGE_FOLKLORE_MAMMOTH"
-    ]
+    "BUILDING_FOLKLORE_REQUIREMENT",
+    "HERITAGE_FOLKLORE_MAMMOTH"
    ]
   },
   "operate": {
-   "any": [
-    [
-     {
-      "type": "BONUS_MAMMOTH",
-      "scope": "city",
-      "connection": "vicinity"
-     }
-    ]
+   "all": [
+    {
+     "type": "BONUS_MAMMOTH",
+     "scope": "city",
+     "connection": "vicinity"
+    }
    ]
   }
  },

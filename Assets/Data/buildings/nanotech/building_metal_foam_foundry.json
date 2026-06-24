@@ -15,15 +15,11 @@
    "all": [
     "HAS_POWER",
     "BUILDING_EPSILON_ASSEMBLER",
-    "TECH_LIQUID_METALS"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_LIQUID_METALS",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

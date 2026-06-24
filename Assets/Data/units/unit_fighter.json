@@ -16,13 +16,13 @@
      "type": "BONUS_AIRCRAFT",
      "scope": "city",
      "connection": "trade|vicinity"
+    },
+    {
+     "any": [
+      "BUILDING_MILITARY_AIRBASE",
+      "BUILDING_AEROSPACE_COMPLEX"
+     ]
     }
-   ],
-   "any": [
-    [
-     "BUILDING_MILITARY_AIRBASE",
-     "BUILDING_AEROSPACE_COMPLEX"
-    ]
    ]
   }
  },

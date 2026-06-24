@@ -14,15 +14,11 @@
   "build": {
    "all": [
     "BUILDING_BANK",
-    "TECH_APPLIED_ECONOMICS"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_APPLIED_ECONOMICS",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

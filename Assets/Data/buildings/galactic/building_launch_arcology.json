@@ -26,15 +26,11 @@
   "build": {
    "all": [
     "HAS_POWER",
-    "TECH_INTERSTELLAR_COLONIZATION"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_INTERSTELLAR_COLONIZATION",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

@@ -11,15 +11,11 @@
      "scope": "empire",
      "min": 3
     },
-    "TECH_UTOPIA_DESTINY"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_UTOPIA_DESTINY",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   }
  },

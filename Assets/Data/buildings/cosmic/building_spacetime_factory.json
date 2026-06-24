@@ -13,15 +13,11 @@
    "all": [
     "HAS_POWER",
     "BUILDING_ALEPH_ASSEMBLER",
-    "TECH_OMEGA_MINUS_ENGINEERING"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_OMEGA_MINUS_ENGINEERING",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   }
  },

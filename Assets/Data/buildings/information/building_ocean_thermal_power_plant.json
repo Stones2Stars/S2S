@@ -23,21 +23,15 @@
     "HAS_POWER",
     "BUILDING_FACTORY",
     "BUILDING_POWER_LINES",
-    "TECH_MARINE_ARCHITECTURE"
-   ],
-   "any": [
-    [
-     {
-      "type": "TERRAIN_OCEAN_TROPICAL",
-      "scope": "plot"
-     }
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_MARINE_ARCHITECTURE",
+    {
+     "type": "TERRAIN_OCEAN_TROPICAL",
+     "scope": "plot"
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

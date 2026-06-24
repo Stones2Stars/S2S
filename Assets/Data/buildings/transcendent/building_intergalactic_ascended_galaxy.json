@@ -6,15 +6,11 @@
   "build": {
    "all": [
     "BUILDING_EFFECT_MULTIVERSAL_ECONOMY",
-    "TECH_OMEGA_POINT"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_UNIVERSAL",
-      "scope": "plot"
-     }
-    ]
+    "TECH_OMEGA_POINT",
+    {
+     "type": "MAPCATEGORY_UNIVERSAL",
+     "scope": "plot"
+    }
    ]
   }
  },

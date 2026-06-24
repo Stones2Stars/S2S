@@ -13,15 +13,11 @@
     "HAS_POWER",
     "BUILDING_CISLUNAR_NANOSATELLITE_CONSTELLATION",
     "BUILDING_CISLUNAR_ONEILL_CYLINDER",
-    "TECH_PHOTONIC_SATELLITES"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_CISLUNAR",
-      "scope": "plot"
-     }
-    ]
+    "TECH_PHOTONIC_SATELLITES",
+    {
+     "type": "MAPCATEGORY_CISLUNAR",
+     "scope": "plot"
+    }
    ]
   }
  },

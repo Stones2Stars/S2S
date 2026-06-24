@@ -5,15 +5,11 @@
  "requires": {
   "build": {
    "all": [
-    "TECH_PLANETARY_EXTRACTION"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_MARTIAN",
-      "scope": "plot"
-     }
-    ]
+    "TECH_PLANETARY_EXTRACTION",
+    {
+     "type": "MAPCATEGORY_MARTIAN",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

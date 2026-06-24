@@ -13,15 +13,11 @@
   "build": {
    "all": [
     "BUILDING_INTERGALACTIC_GALACTIC_COLONY",
-    "TECH_GALACTIC_ENGINEERING"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_UNIVERSAL",
-      "scope": "plot"
-     }
-    ]
+    "TECH_GALACTIC_ENGINEERING",
+    {
+     "type": "MAPCATEGORY_UNIVERSAL",
+     "scope": "plot"
+    }
    ]
   }
  },

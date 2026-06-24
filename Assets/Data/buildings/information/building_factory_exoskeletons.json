@@ -22,15 +22,11 @@
     "HAS_POWER",
     "BUILDING_FACTORY",
     "BUILDING_MECHATRONICS_LAB",
-    "TECH_POWERED_EXOSKELETON"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_POWERED_EXOSKELETON",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {
@@ -39,16 +35,12 @@
      "type": "BONUS_ELECTROLYTIC_CELLS",
      "scope": "city",
      "connection": "trade|vicinity"
+    },
+    {
+     "type": "BONUS_PLATINUM_WARES",
+     "scope": "city",
+     "connection": "trade|vicinity"
     }
-   ],
-   "any": [
-    [
-     {
-      "type": "BONUS_PLATINUM_WARES",
-      "scope": "city",
-      "connection": "trade|vicinity"
-     }
-    ]
    ],
    "dormant": [
     "BUILDING_NANOTECH_COMPLEX"

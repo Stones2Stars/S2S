@@ -24,19 +24,17 @@
   "build": {
    "all": [
     "HAS_POWER",
-    "TECH_REFRIGERATION"
-   ],
-   "any": [
-    [
-     "BUILDING_SHOPPING_DISTRICT",
-     "BUILDING_TRADING_POST"
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_REFRIGERATION",
+    {
+     "any": [
+      "BUILDING_SHOPPING_DISTRICT",
+      "BUILDING_TRADING_POST"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

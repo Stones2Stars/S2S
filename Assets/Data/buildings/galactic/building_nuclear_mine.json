@@ -6,15 +6,11 @@
   "build": {
    "all": [
     "BUILDING_CORE_MINE",
-    "TECH_GEOSCULPTING"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_GEOSCULPTING",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   }
  },

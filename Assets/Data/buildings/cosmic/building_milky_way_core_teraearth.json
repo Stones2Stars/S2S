@@ -6,21 +6,15 @@
   "build": {
    "all": [
     "BUILDING_MILKY_WAY_CORE_COLONY",
-    "TECH_EXOTIC_STARS"
-   ],
-   "any": [
-    [
-     {
-      "type": "TERRAIN_GALACTIC_CORE",
-      "scope": "plot"
-     }
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_MILKY_WAY",
-      "scope": "plot"
-     }
-    ]
+    "TECH_EXOTIC_STARS",
+    {
+     "type": "TERRAIN_GALACTIC_CORE",
+     "scope": "plot"
+    },
+    {
+     "type": "MAPCATEGORY_MILKY_WAY",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {
@@ -29,16 +23,12 @@
      "type": "BONUS_WARP_DRIVES",
      "scope": "city",
      "connection": "trade|vicinity"
+    },
+    {
+     "type": "BONUS_AB_MATTER",
+     "scope": "city",
+     "connection": "trade|vicinity"
     }
-   ],
-   "any": [
-    [
-     {
-      "type": "BONUS_AB_MATTER",
-      "scope": "city",
-      "connection": "trade|vicinity"
-     }
-    ]
    ]
   }
  },

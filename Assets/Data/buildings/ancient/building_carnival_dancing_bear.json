@@ -17,15 +17,11 @@
    "all": [
     "BUILDING_CARNIVAL",
     "BUILDING_FOLKLORE_T_BEAR",
-    "TECH_TRADE"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_TRADE",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   }
  },

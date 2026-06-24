@@ -6,15 +6,11 @@
   "build": {
    "all": [
     "BUILDING_EFFECT_CISLUNAR_ECONOMY",
-    "TECH_LUNAR_TRADE"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_LUNAR_TRADE",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   }
  },

@@ -6,21 +6,15 @@
   "build": {
    "all": [
     "BUILDING_INTERGALACTIC_GALACTIC_GROUP_COLONY",
-    "TECH_INTERGROUP_TRAVEL"
-   ],
-   "any": [
-    [
-     {
-      "type": "TERRAIN_VIRGO_SUPERCLUSTER",
-      "scope": "plot"
-     }
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_UNIVERSAL",
-      "scope": "plot"
-     }
-    ]
+    "TECH_INTERGROUP_TRAVEL",
+    {
+     "type": "TERRAIN_VIRGO_SUPERCLUSTER",
+     "scope": "plot"
+    },
+    {
+     "type": "MAPCATEGORY_UNIVERSAL",
+     "scope": "plot"
+    }
    ],
    "noneOf": [
     "BUILDING_MAFFEI_GROUP_COLONY",

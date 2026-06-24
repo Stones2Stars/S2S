@@ -13,15 +13,11 @@
     "HAS_POWER",
     "BUILDING_INTERGALACTIC_MECHANOSYNTHESIS_FACTORIES",
     "BUILDING_INTERGALACTIC_MINE",
-    "TECH_DARK_ENERGY_HARVESTING"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_UNIVERSAL",
-      "scope": "plot"
-     }
-    ]
+    "TECH_DARK_ENERGY_HARVESTING",
+    {
+     "type": "MAPCATEGORY_UNIVERSAL",
+     "scope": "plot"
+    }
    ]
   }
  },

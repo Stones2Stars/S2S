@@ -7,15 +7,11 @@
    "all": [
     "HAS_POWER",
     "BUILDING_HYPERSPACE_TRANSFINITE_STRUCTURES",
-    "TECH_ARCHETYPAL_VECTOR_SPACES"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_HYPERSPACE",
-      "scope": "plot"
-     }
-    ]
+    "TECH_ARCHETYPAL_VECTOR_SPACES",
+    {
+     "type": "MAPCATEGORY_HYPERSPACE",
+     "scope": "plot"
+    }
    ]
   }
  },

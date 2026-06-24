@@ -14,31 +14,25 @@
   "build": {
    "all": [
     "HAS_COAST",
-    "TECH_FISHING"
-   ],
-   "any": [
-    [
-     "BUILDING_CANOE_BUILDER",
-     "BUILDING_SHIPWRIGHT"
-    ],
-    [
-     {
-      "type": "IMPROVEMENT_FISHING_BOATS",
-      "scope": "plot"
-     }
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ],
-    [
-     {
-      "type": "CIVILIZATION_NPC_NEANDERTHAL",
-      "scope": "empire"
-     }
-    ]
+    "TECH_FISHING",
+    {
+     "any": [
+      "BUILDING_CANOE_BUILDER",
+      "BUILDING_SHIPWRIGHT"
+     ]
+    },
+    {
+     "type": "IMPROVEMENT_FISHING_BOATS",
+     "scope": "plot"
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    },
+    {
+     "type": "CIVILIZATION_NPC_NEANDERTHAL",
+     "scope": "empire"
+    }
    ]
   },
   "operate": {

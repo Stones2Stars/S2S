@@ -5,15 +5,11 @@
  "requires": {
   "build": {
    "all": [
-    "TECH_IMMORTALITY"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_IMMORTALITY",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {
@@ -22,16 +18,12 @@
      "type": "BONUS_HUMAN_MOD_TRANSAPIENT",
      "scope": "city",
      "connection": "trade|vicinity"
+    },
+    {
+     "type": "BONUS_HUMAN_MOD_INDEFINITE_LIFESPAN",
+     "scope": "city",
+     "connection": "trade|vicinity"
     }
-   ],
-   "any": [
-    [
-     {
-      "type": "BONUS_HUMAN_MOD_INDEFINITE_LIFESPAN",
-      "scope": "city",
-      "connection": "trade|vicinity"
-     }
-    ]
    ]
   }
  },

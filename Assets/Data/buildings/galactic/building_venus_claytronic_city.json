@@ -7,15 +7,11 @@
    "all": [
     "BUILDING_VENUS_SURFACE_FACTORY",
     "BUILDING_VENUS_FUSION_PLANT",
-    "TECH_NANOMORPHIC_TROIDS"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_VENUSIAN",
-      "scope": "plot"
-     }
-    ]
+    "TECH_NANOMORPHIC_TROIDS",
+    {
+     "type": "MAPCATEGORY_VENUSIAN",
+     "scope": "plot"
+    }
    ]
   }
  },

@@ -15,15 +15,11 @@
    "all": [
     "HAS_POWER",
     "BUILDING_GAMMA_ASSEMBLER",
-    "TECH_ANIMAMATERIALS"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_ANIMAMATERIALS",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

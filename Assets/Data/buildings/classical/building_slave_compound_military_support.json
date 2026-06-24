@@ -7,26 +7,22 @@
   "build": {
    "all": [
     "BUILDING_SLAVE_COMPOUND",
-    "TECH_MILITARY_TRAINING"
-   ],
-   "any": [
-    [
-     "BUILDING_GARRISON",
-     "BUILDING_BARRACKS",
-     "BUILDING_MILITARY_BASE"
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ],
-    [
-     {
-      "type": "CIVILIZATION_NPC_NEANDERTHAL",
-      "scope": "empire"
-     }
-    ]
+    "TECH_MILITARY_TRAINING",
+    {
+     "any": [
+      "BUILDING_GARRISON",
+      "BUILDING_BARRACKS",
+      "BUILDING_MILITARY_BASE"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    },
+    {
+     "type": "CIVILIZATION_NPC_NEANDERTHAL",
+     "scope": "empire"
+    }
    ]
   },
   "operate": {

@@ -11,15 +11,11 @@
      "scope": "city",
      "min": 12
     },
-    "TECH_MYTHOLOGICAL_BESTIARY"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_MYTHOLOGICAL_BESTIARY",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

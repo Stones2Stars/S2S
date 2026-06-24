@@ -19,29 +19,25 @@
   "build": {
    "all": [
     "HAS_FRESHWATER",
-    "TECH_NATURAL_PIGMENTS"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ],
-    [
-     {
-      "HAS_TERRAIN": "TERRAIN_MUDDY"
-     },
-     {
-      "HAS_FEATURE": "FEATURE_FLOOD_PLAINS"
-     }
-    ],
-    [
-     {
-      "type": "CIVILIZATION_NPC_NEANDERTHAL",
-      "scope": "empire"
-     }
-    ]
+    "TECH_NATURAL_PIGMENTS",
+    {
+     "any": [
+      {
+       "HAS_TERRAIN": "TERRAIN_MUDDY"
+      },
+      {
+       "HAS_FEATURE": "FEATURE_FLOOD_PLAINS"
+      }
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    },
+    {
+     "type": "CIVILIZATION_NPC_NEANDERTHAL",
+     "scope": "empire"
+    }
    ]
   },
   "operate": {

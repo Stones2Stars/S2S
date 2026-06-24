@@ -9,17 +9,13 @@
      "type": "TECH_PLASTICS",
      "scope": "team"
     },
-    "IS_WATER"
-   ],
-   "any": [
-    [
-     {
-      "bonus": [
-       "BONUS_OIL",
-       "BONUS_NATURAL_GAS"
-      ]
-     }
-    ]
+    "IS_WATER",
+    {
+     "bonus": [
+      "BONUS_OIL",
+      "BONUS_NATURAL_GAS"
+     ]
+    }
    ]
   }
  },

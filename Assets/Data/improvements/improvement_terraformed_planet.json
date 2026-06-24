@@ -8,29 +8,29 @@
     {
      "type": "TECH_ECOSYNTHESIS",
      "scope": "team"
+    },
+    {
+     "any": [
+      {
+       "feature": [
+        "FEATURE_CARBON_PLANET",
+        "FEATURE_CHTHONIAN_PLANET",
+        "FEATURE_DESERT_PLANET",
+        "FEATURE_ROGUE_PLANET",
+        "FEATURE_SUPER_EARTH",
+        "FEATURE_OCEAN_PLANET",
+        "FEATURE_HOT_JUPITER",
+        "FEATURE_MINI_NEPTUNE"
+       ]
+      },
+      {
+       "bonus": [
+        "BONUS_XENOFLORA",
+        "BONUS_XENOFAUNA"
+       ]
+      }
+     ]
     }
-   ],
-   "any": [
-    [
-     {
-      "feature": [
-       "FEATURE_CARBON_PLANET",
-       "FEATURE_CHTHONIAN_PLANET",
-       "FEATURE_DESERT_PLANET",
-       "FEATURE_ROGUE_PLANET",
-       "FEATURE_SUPER_EARTH",
-       "FEATURE_OCEAN_PLANET",
-       "FEATURE_HOT_JUPITER",
-       "FEATURE_MINI_NEPTUNE"
-      ]
-     },
-     {
-      "bonus": [
-       "BONUS_XENOFLORA",
-       "BONUS_XENOFAUNA"
-      ]
-     }
-    ]
    ]
   }
  },

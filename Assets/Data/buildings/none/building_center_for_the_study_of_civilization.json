@@ -7,15 +7,11 @@
    "all": [
     "HAS_POWER",
     "BUILDING_COMPUTATIONAL_METAPHYSICS_CENTER",
-    "TECH_SPACEPUNK"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_SPACEPUNK",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

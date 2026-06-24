@@ -20,23 +20,21 @@
    "all": [
     "HAS_POWER",
     "BUILDING_COMPUTER_NETWORK",
-    "TECH_CLOUD_COMPUTING"
-   ],
-   "any": [
-    [
-     "BUILDING_MODERN_WAREHOUSE",
-     "BUILDING_NAVAL_SHIPPING_WAREHOUSE",
-     "BUILDING_RAIL_SHIPPING_WAREHOUSE",
-     "BUILDING_TRUCK_SHIPPING_WAREHOUSE",
-     "BUILDING_AIR_SHIPPING_WAREHOUSE",
-     "BUILDING_SPACE_SHIPPING_WAREHOUSE"
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_CLOUD_COMPUTING",
+    {
+     "any": [
+      "BUILDING_MODERN_WAREHOUSE",
+      "BUILDING_NAVAL_SHIPPING_WAREHOUSE",
+      "BUILDING_RAIL_SHIPPING_WAREHOUSE",
+      "BUILDING_TRUCK_SHIPPING_WAREHOUSE",
+      "BUILDING_AIR_SHIPPING_WAREHOUSE",
+      "BUILDING_SPACE_SHIPPING_WAREHOUSE"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

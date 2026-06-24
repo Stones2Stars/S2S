@@ -11,15 +11,11 @@
   "build": {
    "all": [
     "BUILDING_VENUS_CITY",
-    "TECH_OPTRONICS"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_VENUSIAN",
-      "scope": "plot"
-     }
-    ]
+    "TECH_OPTRONICS",
+    {
+     "type": "MAPCATEGORY_VENUSIAN",
+     "scope": "plot"
+    }
    ]
   }
  },

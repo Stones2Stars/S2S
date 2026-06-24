@@ -10,15 +10,11 @@
  "requires": {
   "build": {
    "all": [
-    "TECH_MESH_NETWORKS"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_CISLUNAR",
-      "scope": "plot"
-     }
-    ]
+    "TECH_MESH_NETWORKS",
+    {
+     "type": "MAPCATEGORY_CISLUNAR",
+     "scope": "plot"
+    }
    ]
   }
  },

@@ -6,15 +6,11 @@
   "build": {
    "all": [
     "BUILDING_NAVAL_STANDARD_ANIMAL_MASCOT",
-    "TECH_SAILING"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_SAILING",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   }
  },

@@ -7,15 +7,11 @@
    "all": [
     "HAS_POWER",
     "BUILDING_LUNAR_SPACE_PORT",
-    "TECH_ASTEROID_EXTRACTION"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_LUNAR",
-      "scope": "plot"
-     }
-    ]
+    "TECH_ASTEROID_EXTRACTION",
+    {
+     "type": "MAPCATEGORY_LUNAR",
+     "scope": "plot"
+    }
    ]
   }
  },

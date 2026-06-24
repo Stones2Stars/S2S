@@ -7,15 +7,11 @@
    "all": [
     "HAS_POWER",
     "BUILDING_FOOD_MANUFACTURING_DISTRICT",
-    "TECH_AUGMENTED_CONSUMABLES"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_AUGMENTED_CONSUMABLES",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   }
  },

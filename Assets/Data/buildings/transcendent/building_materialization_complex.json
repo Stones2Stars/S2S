@@ -7,15 +7,11 @@
    "all": [
     "HAS_POWER",
     "BUILDING_MATERIALIZER",
-    "TECH_MATERIALIZATION"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_MATERIALIZATION",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   }
  },

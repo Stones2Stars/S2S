@@ -24,15 +24,11 @@
     "BUILDING_MANUFACTURING_PLANT",
     "BUILDING_MECHATRONICS_LAB",
     "BUILDING_GESTURE_RECOGNITION_SOFTWARE",
-    "TECH_BIOMECHANICAL_HARVESTING"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_BIOMECHANICAL_HARVESTING",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {
@@ -41,16 +37,12 @@
      "type": "BONUS_NANOTUBES",
      "scope": "city",
      "connection": "trade|vicinity"
+    },
+    {
+     "type": "BONUS_FLASH_MEMORY_DEVICES",
+     "scope": "city",
+     "connection": "trade|vicinity"
     }
-   ],
-   "any": [
-    [
-     {
-      "type": "BONUS_FLASH_MEMORY_DEVICES",
-      "scope": "city",
-      "connection": "trade|vicinity"
-     }
-    ]
    ]
   }
  },

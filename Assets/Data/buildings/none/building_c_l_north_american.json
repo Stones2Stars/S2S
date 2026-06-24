@@ -69,15 +69,11 @@
  "requires": {
   "build": {
    "all": [
-    "BUILDING_C_AC_NORTH_AMERICAN"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "BUILDING_C_AC_NORTH_AMERICAN",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   }
  },

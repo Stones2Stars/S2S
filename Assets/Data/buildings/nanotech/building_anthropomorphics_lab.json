@@ -17,15 +17,11 @@
     "HAS_POWER",
     "BUILDING_EVOLUTIONARY_ALGORITHMS",
     "TECH_BIONICS",
-    "TECH_WIRELESS_ELECTRICITY"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_WIRELESS_ELECTRICITY",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {
@@ -34,16 +30,12 @@
      "type": "BONUS_NANOACTUATORS",
      "scope": "city",
      "connection": "trade|vicinity"
+    },
+    {
+     "type": "BONUS_EXOSKELETONS",
+     "scope": "city",
+     "connection": "trade|vicinity"
     }
-   ],
-   "any": [
-    [
-     {
-      "type": "BONUS_EXOSKELETONS",
-      "scope": "city",
-      "connection": "trade|vicinity"
-     }
-    ]
    ]
   }
  },

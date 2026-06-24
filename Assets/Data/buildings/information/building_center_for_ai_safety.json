@@ -6,15 +6,11 @@
   "build": {
    "all": [
     "BUILDING_APPLIED_SOCIOLOGY_LAB",
-    "TECH_COMPUTATIONAL_SOCIOLOGY"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_COMPUTATIONAL_SOCIOLOGY",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   }
  },

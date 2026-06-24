@@ -6,19 +6,17 @@
   "build": {
    "all": [
     "BUILDING_ATOMIC_CLOCK",
-    "TECH_COMMUNICATION_NETWORKS"
-   ],
-   "any": [
-    [
-     "BUILDING_MILITARY_SATELLITES",
-     "BUILDING_MILITARY_SPACEPORT"
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_COMMUNICATION_NETWORKS",
+    {
+     "any": [
+      "BUILDING_MILITARY_SATELLITES",
+      "BUILDING_MILITARY_SPACEPORT"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   }
  },

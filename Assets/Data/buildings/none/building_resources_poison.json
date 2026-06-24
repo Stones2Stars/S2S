@@ -12,21 +12,21 @@
  },
  "requires": {
   "build": {
-   "any": [
-    [
-     "BUILDING_ENCLOSURE_AMPHIBIAN_POND",
-     "BUILDING_BELLADONNA",
-     "BUILDING_CURARE",
-     "BUILDING_DEATH_CAP_MUSHROOM",
-     "BUILDING_ALCHEMISTS_LAB",
-     "BUILDING_SNAKE_PIT"
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+   "all": [
+    {
+     "any": [
+      "BUILDING_ENCLOSURE_AMPHIBIAN_POND",
+      "BUILDING_BELLADONNA",
+      "BUILDING_CURARE",
+      "BUILDING_DEATH_CAP_MUSHROOM",
+      "BUILDING_ALCHEMISTS_LAB",
+      "BUILDING_SNAKE_PIT"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

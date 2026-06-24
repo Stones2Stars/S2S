@@ -7,15 +7,11 @@
    "all": [
     "HAS_POWER",
     "BUILDING_HYPERSPACE_PAN_DIMENSIONAL_CITY",
-    "TECH_DECOMPACTIFIED_SPACE"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_HYPERSPACE",
-      "scope": "plot"
-     }
-    ]
+    "TECH_DECOMPACTIFIED_SPACE",
+    {
+     "type": "MAPCATEGORY_HYPERSPACE",
+     "scope": "plot"
+    }
    ]
   }
  },

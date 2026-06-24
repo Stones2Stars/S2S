@@ -15,19 +15,17 @@
    "all": [
     "HAS_POWER",
     "BUILDING_SHOPPING_DISTRICT",
-    "TECH_HOLOGRAPHICS"
-   ],
-   "any": [
-    [
-     "BUILDING_HOLOGRAPHIC_NETWORKS",
-     "BUILDING_EXOCORTEX_NETWORKS"
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_HOLOGRAPHICS",
+    {
+     "any": [
+      "BUILDING_HOLOGRAPHIC_NETWORKS",
+      "BUILDING_EXOCORTEX_NETWORKS"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {
@@ -36,16 +34,12 @@
      "type": "BONUS_CLOTHING",
      "scope": "city",
      "connection": "trade|vicinity"
+    },
+    {
+     "type": "BONUS_HOLOGRAPHIC_PROJECTORS",
+     "scope": "city",
+     "connection": "trade|vicinity"
     }
-   ],
-   "any": [
-    [
-     {
-      "type": "BONUS_HOLOGRAPHIC_PROJECTORS",
-      "scope": "city",
-      "connection": "trade|vicinity"
-     }
-    ]
    ],
    "dormant": [
     "BUILDING_HIGH_TECH_CULTURAL_ENRICHMENT"

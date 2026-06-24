@@ -7,19 +7,17 @@
    "all": [
     "HAS_POWER",
     "BUILDING_SCIENTOLOGY_TEMPLE",
-    "TECH_MUSICAL_NOTATION"
-   ],
-   "any": [
-    [
-     "BUILDING_CITY_COUNCIL",
-     "BUILDING_METROPOLITAN_ADMINISTRATION"
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_MUSICAL_NOTATION",
+    {
+     "any": [
+      "BUILDING_CITY_COUNCIL",
+      "BUILDING_METROPOLITAN_ADMINISTRATION"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

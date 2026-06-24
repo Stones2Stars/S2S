@@ -7,21 +7,15 @@
    "all": [
     "BUILDING_C_AC_AFRICAN",
     "BUILDING_C_L_AFRICAN",
-    "TECH_TRADE"
-   ],
-   "any": [
-    [
-     {
-      "type": "TERRAIN_GRASSLAND",
-      "scope": "plot"
-     }
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_TRADE",
+    {
+     "type": "TERRAIN_GRASSLAND",
+     "scope": "plot"
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

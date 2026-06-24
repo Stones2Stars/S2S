@@ -15,18 +15,12 @@
    "all": [
     "HAS_POWER",
     "BUILDING_FACTORY",
-    "TECH_MOLECULAR_BIOLOGY"
-   ],
-   "any": [
-    [
-     "BUILDING_MOLECULAR_BIOLOGY_LAB"
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_MOLECULAR_BIOLOGY",
+    "BUILDING_MOLECULAR_BIOLOGY_LAB",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

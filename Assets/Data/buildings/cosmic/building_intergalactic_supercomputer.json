@@ -15,15 +15,11 @@
   "build": {
    "all": [
     "BUILDING_INTERGALACTIC_RESEARCH_BASE",
-    "TECH_ULTRACOMPUTING"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_UNIVERSAL",
-      "scope": "plot"
-     }
-    ]
+    "TECH_ULTRACOMPUTING",
+    {
+     "type": "MAPCATEGORY_UNIVERSAL",
+     "scope": "plot"
+    }
    ]
   }
  },

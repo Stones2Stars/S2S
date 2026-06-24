@@ -22,15 +22,11 @@
      "scope": "empire",
      "min": 1
     },
-    "TECH_MACROVERSE_TRAVERSAL"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_MILKY_WAY",
-      "scope": "plot"
-     }
-    ]
+    "TECH_MACROVERSE_TRAVERSAL",
+    {
+     "type": "MAPCATEGORY_MILKY_WAY",
+     "scope": "plot"
+    }
    ]
   }
  },

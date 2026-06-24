@@ -22,15 +22,11 @@
     "HAS_POWER",
     "BUILDING_NANITE_LAB",
     "BUILDING_DELTA_ASSEMBLER",
-    "TECH_NANOELECTRONICS"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_NANOELECTRONICS",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

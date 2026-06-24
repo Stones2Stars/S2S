@@ -5,15 +5,11 @@
  "requires": {
   "build": {
    "all": [
-    "TECH_LUNAR_EXPLORATION"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_LUNAR_EXPLORATION",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   }
  },

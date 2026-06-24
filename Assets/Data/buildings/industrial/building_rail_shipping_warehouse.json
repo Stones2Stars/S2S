@@ -19,20 +19,18 @@
   "build": {
    "all": [
     "BUILDING_MODERN_WAREHOUSE",
-    "TECH_RAILROAD"
-   ],
-   "any": [
-    [
-     "BUILDING_RAILROAD_STATION",
-     "BUILDING_MAGLEV_STATION",
-     "BUILDING_TELEPORT_BOOTH"
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_RAILROAD",
+    {
+     "any": [
+      "BUILDING_RAILROAD_STATION",
+      "BUILDING_MAGLEV_STATION",
+      "BUILDING_TELEPORT_BOOTH"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

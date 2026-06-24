@@ -6,15 +6,11 @@
   "build": {
    "all": [
     "BUILDING_MINING_CAMP",
-    "TECH_WEAPONIZED_LASERS"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_WEAPONIZED_LASERS",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   }
  },

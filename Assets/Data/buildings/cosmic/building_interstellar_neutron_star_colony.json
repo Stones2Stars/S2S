@@ -6,25 +6,23 @@
   "build": {
    "all": [
     "BUILDING_INTERSTELLAR_CAPTURED_NEUTRON_STARS",
-    "TECH_GRAND_UNIFICATION_BIOLOGY"
-   ],
-   "any": [
-    [
-     {
-      "type": "TERRAIN_NEUTRON_STAR",
-      "scope": "plot"
-     }
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_GALACTIC",
-      "scope": "plot"
-     },
-     {
-      "type": "MAPCATEGORY_MILKY_WAY",
-      "scope": "plot"
-     }
-    ]
+    "TECH_GRAND_UNIFICATION_BIOLOGY",
+    {
+     "type": "TERRAIN_NEUTRON_STAR",
+     "scope": "plot"
+    },
+    {
+     "any": [
+      {
+       "type": "MAPCATEGORY_GALACTIC",
+       "scope": "plot"
+      },
+      {
+       "type": "MAPCATEGORY_MILKY_WAY",
+       "scope": "plot"
+      }
+     ]
+    }
    ]
   }
  },

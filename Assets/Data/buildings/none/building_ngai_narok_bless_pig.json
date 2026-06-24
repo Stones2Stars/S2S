@@ -10,29 +10,21 @@
     "STATE_RELIGION_IN_CITY",
     {
      "STATE_RELIGION": "RELIGION_NGAIISM"
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
     }
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
    ]
   },
   "operate": {
    "all": [
-    "RELIGION_NGAIISM"
-   ],
-   "any": [
-    [
-     {
-      "type": "BONUS_PIG",
-      "scope": "city",
-      "connection": "vicinity"
-     }
-    ]
+    "RELIGION_NGAIISM",
+    {
+     "type": "BONUS_PIG",
+     "scope": "city",
+     "connection": "vicinity"
+    }
    ]
   }
  },

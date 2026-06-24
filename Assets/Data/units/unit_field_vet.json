@@ -11,13 +11,13 @@
      "connection": "trade|vicinity"
     },
     "BUILDING_ANIMAL_TRAINER_HORSE",
-    "TECH_BATTLEFIELD_MEDICINE"
-   ],
-   "any": [
-    [
-     "BUILDING_FIELD_HOSPITAL",
-     "BUILDING_HEALTHCARE_MEGACOMPLEX"
-    ]
+    "TECH_BATTLEFIELD_MEDICINE",
+    {
+     "any": [
+      "BUILDING_FIELD_HOSPITAL",
+      "BUILDING_HEALTHCARE_MEGACOMPLEX"
+     ]
+    }
    ]
   }
  },

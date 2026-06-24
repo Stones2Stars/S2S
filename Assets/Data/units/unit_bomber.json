@@ -10,16 +10,12 @@
      "scope": "city",
      "connection": "trade|vicinity"
     },
-    "TECH_ADVANCED_AVIATION"
-   ],
-   "any": [
-    [
-     {
-      "type": "BONUS_AIRCRAFT",
-      "scope": "city",
-      "connection": "trade|vicinity"
-     }
-    ]
+    "TECH_ADVANCED_AVIATION",
+    {
+     "type": "BONUS_AIRCRAFT",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    }
    ]
   }
  },

@@ -19,20 +19,18 @@
     "BUILDING_MODERN_OFFICES",
     "TECH_RADIO",
     "TECH_METEOROLOGY",
-    "TECH_CIVIL_ENGINEERING"
-   ],
-   "any": [
-    [
-     "BUILDING_BROADCAST_TOWER",
-     "BUILDING_COMMUNICATION_TOWER",
-     "BUILDING_NETWORK_NODE"
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_CIVIL_ENGINEERING",
+    {
+     "any": [
+      "BUILDING_BROADCAST_TOWER",
+      "BUILDING_COMMUNICATION_TOWER",
+      "BUILDING_NETWORK_NODE"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   }
  },

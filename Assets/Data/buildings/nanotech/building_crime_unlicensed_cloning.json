@@ -6,15 +6,11 @@
   "build": {
    "all": [
     "BUILDING_CLONING_FACTORY",
-    "TECH_MAINSTREAM_CLONING"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_MAINSTREAM_CLONING",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

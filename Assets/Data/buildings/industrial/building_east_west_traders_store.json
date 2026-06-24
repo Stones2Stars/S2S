@@ -6,19 +6,17 @@
   "build": {
    "all": [
     "TECH_CIVIL_ENGINEERING",
-    "TECH_CORPORATION"
-   ],
-   "any": [
-    [
-     "BUILDING_SHOPPING_DISTRICT",
-     "BUILDING_TRADING_POST"
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_CORPORATION",
+    {
+     "any": [
+      "BUILDING_SHOPPING_DISTRICT",
+      "BUILDING_TRADING_POST"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

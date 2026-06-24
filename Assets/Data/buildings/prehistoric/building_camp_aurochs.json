@@ -17,18 +17,12 @@
  "requires": {
   "build": {
    "all": [
-    "TECH_TRACKING"
-   ],
-   "any": [
-    [
-     "BUILDING_HUNTERS_CAMP"
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_TRACKING",
+    "BUILDING_HUNTERS_CAMP",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

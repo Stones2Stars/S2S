@@ -15,15 +15,11 @@
     "BUILDING_INTERGALACTIC_GALACTIC_COLONY",
     "BUILDING_INTERGALACTIC_COMMAND_CENTER",
     "TECH_CULTURAL_LONGEVITY",
-    "TECH_INTERGALACTIC_COLONIZATION"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_UNIVERSAL",
-      "scope": "plot"
-     }
-    ]
+    "TECH_INTERGALACTIC_COLONIZATION",
+    {
+     "type": "MAPCATEGORY_UNIVERSAL",
+     "scope": "plot"
+    }
    ]
   }
  },

@@ -9,15 +9,11 @@
     "BUILDING_C_AC_SOUTH_AMERICAN",
     "BUILDING_C_L_SOUTH_AMERICAN",
     "BUILDING_C_AC_EUROPEAN",
-    "TECH_FLINTLOCK"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_FLINTLOCK",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

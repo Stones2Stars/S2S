@@ -14,15 +14,11 @@
   "build": {
    "all": [
     "BUILDING_INTERGALACTIC_MORRIS_THORNE_WORMHOLE",
-    "TECH_DUALFLUX_QUANTUM_TEMPORAL_RIFT"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_UNIVERSAL",
-      "scope": "plot"
-     }
-    ]
+    "TECH_DUALFLUX_QUANTUM_TEMPORAL_RIFT",
+    {
+     "type": "MAPCATEGORY_UNIVERSAL",
+     "scope": "plot"
+    }
    ]
   }
  },

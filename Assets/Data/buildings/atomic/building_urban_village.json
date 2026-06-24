@@ -6,15 +6,11 @@
   "build": {
    "all": [
     "BUILDING_MIXED_USE_DEVELOPMENT",
-    "TECH_NEW_URBANISM"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_NEW_URBANISM",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   }
  },

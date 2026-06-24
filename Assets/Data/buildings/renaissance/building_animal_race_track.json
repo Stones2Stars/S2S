@@ -5,20 +5,18 @@
  "requires": {
   "build": {
    "all": [
-    "TECH_CAVALRY_TACTICS"
-   ],
-   "any": [
-    [
-     "BUILDING_STABLE",
-     "BUILDING_KNIGHTS_STABLE",
-     "BUILDING_MODERN_STABLE"
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_CAVALRY_TACTICS",
+    {
+     "any": [
+      "BUILDING_STABLE",
+      "BUILDING_KNIGHTS_STABLE",
+      "BUILDING_MODERN_STABLE"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   }
  },

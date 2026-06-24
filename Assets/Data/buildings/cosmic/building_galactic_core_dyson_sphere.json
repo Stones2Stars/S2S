@@ -6,27 +6,19 @@
   "build": {
    "all": [
     "BUILDING_GALACTIC_CORE_BASE",
-    "TECH_GALACTIC_ENGINEERING"
-   ],
-   "any": [
-    [
-     {
-      "type": "TERRAIN_GALACTIC_CORE",
-      "scope": "plot"
-     }
-    ],
-    [
-     {
-      "type": "FEATURE_SUPERMASSIVE_BLACK_HOLE",
-      "scope": "plot"
-     }
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_MILKY_WAY",
-      "scope": "plot"
-     }
-    ]
+    "TECH_GALACTIC_ENGINEERING",
+    {
+     "type": "TERRAIN_GALACTIC_CORE",
+     "scope": "plot"
+    },
+    {
+     "type": "FEATURE_SUPERMASSIVE_BLACK_HOLE",
+     "scope": "plot"
+    },
+    {
+     "type": "MAPCATEGORY_MILKY_WAY",
+     "scope": "plot"
+    }
    ]
   }
  },

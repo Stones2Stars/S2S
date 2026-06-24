@@ -14,15 +14,11 @@
   "build": {
    "all": [
     "BUILDING_SPACE_COLONY_HYPERSPACE_PORTAL",
-    "TECH_CONTROLLED_INFLATION"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_HYPERSPACE",
-      "scope": "plot"
-     }
-    ]
+    "TECH_CONTROLLED_INFLATION",
+    {
+     "type": "MAPCATEGORY_HYPERSPACE",
+     "scope": "plot"
+    }
    ]
   }
  },

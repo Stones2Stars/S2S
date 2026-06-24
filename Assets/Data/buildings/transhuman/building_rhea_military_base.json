@@ -5,27 +5,19 @@
  "requires": {
   "build": {
    "all": [
-    "TECH_PLANETARY_DEFENSES"
-   ],
-   "any": [
-    [
-     {
-      "type": "TERRAIN_SATURN",
-      "scope": "plot"
-     }
-    ],
-    [
-     {
-      "type": "FEATURE_SMALL_MOON",
-      "scope": "plot"
-     }
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_SOLAR_SYSTEM",
-      "scope": "plot"
-     }
-    ]
+    "TECH_PLANETARY_DEFENSES",
+    {
+     "type": "TERRAIN_SATURN",
+     "scope": "plot"
+    },
+    {
+     "type": "FEATURE_SMALL_MOON",
+     "scope": "plot"
+    },
+    {
+     "type": "MAPCATEGORY_SOLAR_SYSTEM",
+     "scope": "plot"
+    }
    ]
   }
  },

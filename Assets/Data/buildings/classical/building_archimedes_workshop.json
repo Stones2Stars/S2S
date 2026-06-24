@@ -11,15 +11,11 @@
   "build": {
    "all": [
     "TECH_MATHEMATICS",
-    "TECH_MILITARY_TRAINING"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_MILITARY_TRAINING",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   }
  },

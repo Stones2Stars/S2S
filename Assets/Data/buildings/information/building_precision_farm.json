@@ -15,15 +15,11 @@
    "all": [
     "BUILDING_GENE_FARMING_LAB",
     "BUILDING_EFFECT_GPS",
-    "TECH_AUTONOMOUS_VEHICLES"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_AUTONOMOUS_VEHICLES",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

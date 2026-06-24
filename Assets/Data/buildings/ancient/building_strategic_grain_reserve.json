@@ -6,19 +6,17 @@
   "build": {
    "all": [
     "HAS_RIVER",
-    "TECH_POTTERY"
-   ],
-   "any": [
-    [
-     "BUILDING_GRANARY",
-     "BUILDING_MODERN_GRANARY"
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_POTTERY",
+    {
+     "any": [
+      "BUILDING_GRANARY",
+      "BUILDING_MODERN_GRANARY"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   }
  },

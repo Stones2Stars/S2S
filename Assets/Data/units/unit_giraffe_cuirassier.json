@@ -11,20 +11,18 @@
      "connection": "trade|vicinity"
     },
     "TECH_MATCHLOCK",
-    "TECH_MEGAFAUNA_DOMESTICATION"
-   ],
-   "any": [
-    [
-     {
-      "type": "BONUS_FIREARMS",
-      "scope": "city",
-      "connection": "trade|vicinity"
-     }
-    ],
-    [
-     "BUILDING_EFFECT_HERITAGE_GIRAFFES",
-     "BUILDING_ANIMAL_TRAINER_GIRAFFE"
-    ]
+    "TECH_MEGAFAUNA_DOMESTICATION",
+    {
+     "type": "BONUS_FIREARMS",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    {
+     "any": [
+      "BUILDING_EFFECT_HERITAGE_GIRAFFES",
+      "BUILDING_ANIMAL_TRAINER_GIRAFFE"
+     ]
+    }
    ]
   }
  },

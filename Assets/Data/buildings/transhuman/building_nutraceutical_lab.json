@@ -20,15 +20,11 @@
    "all": [
     "HAS_POWER",
     "BUILDING_TRANSGENICS_LAB",
-    "TECH_NUTRACEUTICAL_ANIMALS"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_NUTRACEUTICAL_ANIMALS",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

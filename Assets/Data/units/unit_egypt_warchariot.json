@@ -12,16 +12,12 @@
     },
     "BUILDING_CHARIOT_WORKSHOP",
     "TECH_BRONZE_WORKING",
-    "TECH_CHARIOTRY"
-   ],
-   "any": [
-    [
-     {
-      "type": "BONUS_HORSE",
-      "scope": "city",
-      "connection": "trade|vicinity"
-     }
-    ]
+    "TECH_CHARIOTRY",
+    {
+     "type": "BONUS_HORSE",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    }
    ]
   }
  },

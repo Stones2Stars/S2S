@@ -10,18 +10,18 @@
      "scope": "city",
      "connection": "trade|vicinity"
     },
-    "TECH_DUALISM"
-   ],
-   "any": [
-    [
-     "BUILDING_TOWN_WATCH",
-     "BUILDING_TOWN_PATROL",
-     "BUILDING_GUARDHOUSE",
-     "BUILDING_GUARD_STATION",
-     "BUILDING_SHERIFFS_OFFICE",
-     "BUILDING_POLICE_STATION",
-     "BUILDING_POLICE_PRECINCT"
-    ]
+    "TECH_DUALISM",
+    {
+     "any": [
+      "BUILDING_TOWN_WATCH",
+      "BUILDING_TOWN_PATROL",
+      "BUILDING_GUARDHOUSE",
+      "BUILDING_GUARD_STATION",
+      "BUILDING_SHERIFFS_OFFICE",
+      "BUILDING_POLICE_STATION",
+      "BUILDING_POLICE_PRECINCT"
+     ]
+    }
    ]
   }
  },

@@ -7,15 +7,11 @@
    "all": [
     "HAS_POWER",
     "BUILDING_SHOPPING_DISTRICT",
-    "TECH_PERSONAL_ROBOTS"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_PERSONAL_ROBOTS",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

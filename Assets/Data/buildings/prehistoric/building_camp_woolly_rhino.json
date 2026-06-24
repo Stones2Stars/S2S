@@ -21,28 +21,24 @@
       "min": 40
      }
     },
-    "TECH_TRACKING"
-   ],
-   "any": [
-    [
-     "BUILDING_HUNTERS_CAMP"
-    ],
-    [
-     {
-      "type": "TERRAIN_TAIGA",
-      "scope": "plot"
-     },
-     {
-      "type": "TERRAIN_ICE",
-      "scope": "plot"
-     }
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_TRACKING",
+    "BUILDING_HUNTERS_CAMP",
+    {
+     "any": [
+      {
+       "type": "TERRAIN_TAIGA",
+       "scope": "plot"
+      },
+      {
+       "type": "TERRAIN_ICE",
+       "scope": "plot"
+      }
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {
@@ -51,16 +47,12 @@
      "type": "BONUS_MAMMOTH",
      "scope": "city",
      "connection": "vicinity"
+    },
+    {
+     "type": "BONUS_PIG",
+     "scope": "city",
+     "connection": "vicinity"
     }
-   ],
-   "any": [
-    [
-     {
-      "type": "BONUS_PIG",
-      "scope": "city",
-      "connection": "vicinity"
-     }
-    ]
    ]
   }
  },

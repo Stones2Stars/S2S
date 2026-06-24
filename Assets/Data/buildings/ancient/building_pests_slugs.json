@@ -15,36 +15,34 @@
      "scope": "city",
      "min": 5
     },
-    "TECH_PLOUGH"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_PLOUGH",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {
-   "any": [
-    [
-     {
-      "type": "BONUS_VEGETABLES",
-      "scope": "city",
-      "connection": "vicinity"
-     },
-     {
-      "type": "BONUS_FRUIT",
-      "scope": "city",
-      "connection": "vicinity"
-     },
-     {
-      "type": "BONUS_FLOWERS",
-      "scope": "city",
-      "connection": "vicinity"
-     }
-    ]
+   "all": [
+    {
+     "any": [
+      {
+       "type": "BONUS_VEGETABLES",
+       "scope": "city",
+       "connection": "vicinity"
+      },
+      {
+       "type": "BONUS_FRUIT",
+       "scope": "city",
+       "connection": "vicinity"
+      },
+      {
+       "type": "BONUS_FLOWERS",
+       "scope": "city",
+       "connection": "vicinity"
+      }
+     ]
+    }
    ]
   }
  },

@@ -14,20 +14,18 @@
   "build": {
    "all": [
     "HAS_POWER",
-    "TECH_WAR_SIMULATIONS"
-   ],
-   "any": [
-    [
-     "BUILDING_MILITARY_BASE",
-     "BUILDING_MILITARY_AIRBASE",
-     "BUILDING_AEROSPACE_COMPLEX"
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_WAR_SIMULATIONS",
+    {
+     "any": [
+      "BUILDING_MILITARY_BASE",
+      "BUILDING_MILITARY_AIRBASE",
+      "BUILDING_AEROSPACE_COMPLEX"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

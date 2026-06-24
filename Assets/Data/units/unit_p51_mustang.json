@@ -10,20 +10,18 @@
      "scope": "city",
      "connection": "trade|vicinity"
     },
-    "TECH_AVIATION"
-   ],
-   "any": [
-    [
-     {
-      "type": "BONUS_PETROLEUM_PRODUCTS",
-      "scope": "city",
-      "connection": "trade|vicinity"
-     }
-    ],
-    [
-     "BUILDING_MILITARY_AIRBASE",
-     "BUILDING_AEROSPACE_COMPLEX"
-    ]
+    "TECH_AVIATION",
+    {
+     "type": "BONUS_PETROLEUM_PRODUCTS",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    {
+     "any": [
+      "BUILDING_MILITARY_AIRBASE",
+      "BUILDING_AEROSPACE_COMPLEX"
+     ]
+    }
    ]
   }
  },

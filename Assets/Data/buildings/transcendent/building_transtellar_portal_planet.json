@@ -6,15 +6,11 @@
   "build": {
    "all": [
     "BUILDING_TRANSTELLAR_DYSON_SPHERE",
-    "TECH_HYPERLANES"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_INTERSTELLAR",
-      "scope": "plot"
-     }
-    ]
+    "TECH_HYPERLANES",
+    {
+     "type": "MAPCATEGORY_INTERSTELLAR",
+     "scope": "plot"
+    }
    ]
   }
  },

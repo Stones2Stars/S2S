@@ -11,21 +11,21 @@
      "connection": "trade|vicinity"
     },
     "BUILDING_CLOCKWORK_WORKSHOP",
-    "TECH_CLOCKPUNK"
-   ],
-   "any": [
-    [
-     {
-      "type": "BONUS_BRONZE_WARES",
-      "scope": "city",
-      "connection": "trade|vicinity"
-     },
-     {
-      "type": "BONUS_IRON_WARES",
-      "scope": "city",
-      "connection": "trade|vicinity"
-     }
-    ]
+    "TECH_CLOCKPUNK",
+    {
+     "any": [
+      {
+       "type": "BONUS_BRONZE_WARES",
+       "scope": "city",
+       "connection": "trade|vicinity"
+      },
+      {
+       "type": "BONUS_IRON_WARES",
+       "scope": "city",
+       "connection": "trade|vicinity"
+      }
+     ]
+    }
    ]
   }
  },

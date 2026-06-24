@@ -11,21 +11,15 @@
      "scope": "empire",
      "min": 1
     },
-    "TECH_PLANET_CRACKING"
-   ],
-   "any": [
-    [
-     {
-      "type": "TERRAIN_NEPTUNE",
-      "scope": "plot"
-     }
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_SOLAR_SYSTEM",
-      "scope": "plot"
-     }
-    ]
+    "TECH_PLANET_CRACKING",
+    {
+     "type": "TERRAIN_NEPTUNE",
+     "scope": "plot"
+    },
+    {
+     "type": "MAPCATEGORY_SOLAR_SYSTEM",
+     "scope": "plot"
+    }
    ]
   }
  },

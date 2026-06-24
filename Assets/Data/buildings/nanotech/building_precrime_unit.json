@@ -6,15 +6,11 @@
   "build": {
    "all": [
     "BUILDING_FORENSICS_LAB",
-    "TECH_MASS_SURVEILLANCE"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_MASS_SURVEILLANCE",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   }
  },

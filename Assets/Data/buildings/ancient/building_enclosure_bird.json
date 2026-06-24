@@ -11,25 +11,25 @@
  "requires": {
   "build": {
    "all": [
-    "TECH_TRADE"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ],
-    [
-     "BUILDING_GOVERNORS_MENAGERIE",
-     "BUILDING_CARNIVAL",
-     "BUILDING_ZOO"
-    ],
-    [
-     "BUILDING_FOLKLORE_T_BIRDS",
-     "BUILDING_FOLKLORE_T_FLIGHTLESS_BIRDS",
-     "BUILDING_FOLKLORE_T_RAPTORS"
-    ]
+    "TECH_TRADE",
+    {
+     "any": [
+      "BUILDING_GOVERNORS_MENAGERIE",
+      "BUILDING_CARNIVAL",
+      "BUILDING_ZOO"
+     ]
+    },
+    {
+     "any": [
+      "BUILDING_FOLKLORE_T_BIRDS",
+      "BUILDING_FOLKLORE_T_FLIGHTLESS_BIRDS",
+      "BUILDING_FOLKLORE_T_RAPTORS"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   }
  },

@@ -14,15 +14,11 @@
   "build": {
    "all": [
     "BUILDING_SPACE_COLONY_TITAN_BASE",
-    "TECH_ABYSS_COLONIZATION"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_TITANIC",
-      "scope": "plot"
-     }
-    ]
+    "TECH_ABYSS_COLONIZATION",
+    {
+     "type": "MAPCATEGORY_TITANIC",
+     "scope": "plot"
+    }
    ]
   }
  },

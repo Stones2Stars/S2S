@@ -6,20 +6,18 @@
   "build": {
    "all": [
     "BUILDING_C_L_OCEANIAN",
-    "TECH_PICTOGRAPHS"
-   ],
-   "any": [
-    [
-     "BUILDING_CAMP_EMU",
-     "BUILDING_BREEDING_PROGRAM_EMU",
-     "BUILDING_ANIMAL_PRESERVE"
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_PICTOGRAPHS",
+    {
+     "any": [
+      "BUILDING_CAMP_EMU",
+      "BUILDING_BREEDING_PROGRAM_EMU",
+      "BUILDING_ANIMAL_PRESERVE"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   }
  },

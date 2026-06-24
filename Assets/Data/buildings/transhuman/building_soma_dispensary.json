@@ -6,19 +6,17 @@
   "build": {
    "all": [
     "HAS_POWER",
-    "TECH_SYNTHETIC_SYNESTHESIA"
-   ],
-   "any": [
-    [
-     "BUILDING_NEUROSCIENCE_CENTER",
-     "BUILDING_HEALTHCARE_MEGACOMPLEX"
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_SYNTHETIC_SYNESTHESIA",
+    {
+     "any": [
+      "BUILDING_NEUROSCIENCE_CENTER",
+      "BUILDING_HEALTHCARE_MEGACOMPLEX"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   }
  },

@@ -7,15 +7,11 @@
    "all": [
     "HAS_POWER",
     "BUILDING_UNIVERSE_PORTAL",
-    "TECH_MACROVERSE_TRAVERSAL"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_MACROVERSE_TRAVERSAL",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   }
  },

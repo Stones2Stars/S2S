@@ -12,15 +12,11 @@
    "all": [
     "HAS_POWER",
     "BUILDING_MEGATOWER_RESEARCH_LEVEL",
-    "TECH_ARTIFICIAL_NUCLEOSYNTHESIS"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_ARTIFICIAL_NUCLEOSYNTHESIS",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   }
  },

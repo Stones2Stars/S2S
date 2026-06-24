@@ -12,21 +12,15 @@
   "build": {
    "all": [
     "BUILDING_URANIAN_LUNAR_HEATING",
-    "TECH_PLANETARY_DEFENSES"
-   ],
-   "any": [
-    [
-     {
-      "type": "TERRAIN_UMBRIEL",
-      "scope": "plot"
-     }
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_SOLAR_SYSTEM",
-      "scope": "plot"
-     }
-    ]
+    "TECH_PLANETARY_DEFENSES",
+    {
+     "type": "TERRAIN_UMBRIEL",
+     "scope": "plot"
+    },
+    {
+     "type": "MAPCATEGORY_SOLAR_SYSTEM",
+     "scope": "plot"
+    }
    ]
   }
  },

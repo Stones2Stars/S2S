@@ -20,15 +20,11 @@
    "all": [
     "HAS_POWER",
     "BUILDING_INTUITIVE_ALGORITHMS",
-    "TECH_CYBERSOCIAL_INTEGRATION"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_CYBERSOCIAL_INTEGRATION",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

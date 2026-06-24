@@ -10,15 +10,11 @@
      "scope": "empire",
      "min": 1
     },
-    "TECH_MAGNETIC_SAILS"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_MAGNETIC_SAILS",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   }
  },

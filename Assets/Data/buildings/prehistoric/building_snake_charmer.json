@@ -10,28 +10,24 @@
  "requires": {
   "build": {
    "all": [
-    "TECH_SIMPLE_WOOD_WORKING"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ],
-    [
-     "HERITAGE_FOLKLORE_ADDER_PUFF",
-     "HERITAGE_FOLKLORE_COBRA",
-     "HERITAGE_FOLKLORE_PYTHON_BALL",
-     "HERITAGE_FOLKLORE_VIPER_CHAIN",
-     "HERITAGE_FOLKLORE_VIPER_PIT"
-    ],
-    [
-     {
-      "type": "CIVILIZATION_NPC_NEANDERTHAL",
-      "scope": "empire"
-     }
-    ]
+    "TECH_SIMPLE_WOOD_WORKING",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    },
+    {
+     "any": [
+      "HERITAGE_FOLKLORE_ADDER_PUFF",
+      "HERITAGE_FOLKLORE_COBRA",
+      "HERITAGE_FOLKLORE_PYTHON_BALL",
+      "HERITAGE_FOLKLORE_VIPER_CHAIN",
+      "HERITAGE_FOLKLORE_VIPER_PIT"
+     ]
+    },
+    {
+     "type": "CIVILIZATION_NPC_NEANDERTHAL",
+     "scope": "empire"
+    }
    ]
   }
  },

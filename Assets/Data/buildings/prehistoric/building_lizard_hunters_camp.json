@@ -18,29 +18,21 @@
  "requires": {
   "build": {
    "all": [
-    "TECH_TRACKING"
-   ],
-   "any": [
-    [
-     "BUILDING_HUNTERS_CAMP"
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_TRACKING",
+    "BUILDING_HUNTERS_CAMP",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {
-   "any": [
-    [
-     {
-      "type": "BONUS_STONE",
-      "scope": "city",
-      "connection": "vicinity"
-     }
-    ]
+   "all": [
+    {
+     "type": "BONUS_STONE",
+     "scope": "city",
+     "connection": "vicinity"
+    }
    ],
    "dormant": [
     "BUILDING_REPET"

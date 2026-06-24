@@ -15,15 +15,11 @@
    "all": [
     "HAS_POWER",
     "BUILDING_MILITARY_BASE",
-    "TECH_WAR_SIMULATIONS"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_WAR_SIMULATIONS",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

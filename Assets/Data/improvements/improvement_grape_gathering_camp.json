@@ -8,16 +8,12 @@
     {
      "type": "TECH_GATHERING",
      "scope": "team"
+    },
+    {
+     "bonus": [
+      "BONUS_GRAPES"
+     ]
     }
-   ],
-   "any": [
-    [
-     {
-      "bonus": [
-       "BONUS_GRAPES"
-      ]
-     }
-    ]
    ]
   }
  },

@@ -11,16 +11,12 @@
      "connection": "trade|vicinity"
     },
     "TECH_MECHANIZED_WARFARE",
-    "TECH_ROCKETRY"
-   ],
-   "any": [
-    [
-     {
-      "type": "BONUS_AMMUNITION",
-      "scope": "city",
-      "connection": "trade|vicinity"
-     }
-    ]
+    "TECH_ROCKETRY",
+    {
+     "type": "BONUS_AMMUNITION",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    }
    ]
   }
  },

@@ -7,19 +7,19 @@
    "all": [
     "BUILDING_INTERSTELLAR_TRACTOR_BEAM",
     "BUILDING_INTERSTELLAR_GALACTIC_PORT",
-    "TECH_GRAVITRONICS"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_PLASMA",
-      "scope": "plot"
-     },
-     {
-      "type": "MAPCATEGORY_MILKY_WAY",
-      "scope": "plot"
-     }
-    ]
+    "TECH_GRAVITRONICS",
+    {
+     "any": [
+      {
+       "type": "MAPCATEGORY_PLASMA",
+       "scope": "plot"
+      },
+      {
+       "type": "MAPCATEGORY_MILKY_WAY",
+       "scope": "plot"
+      }
+     ]
+    }
    ]
   }
  },

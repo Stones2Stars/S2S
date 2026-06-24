@@ -15,23 +15,21 @@
      "scope": "world",
      "min": 10
     },
-    "TECH_ASSEMBLY_LINE"
-   ],
-   "any": [
-    [
-     {
-      "type": "BONUS_PETROLEUM_PRODUCTS",
-      "scope": "city",
-      "connection": "trade|vicinity"
-     }
-    ],
-    [
-     "CIVIC_MERCANTILISM",
-     "CIVIC_NATIONALIST",
-     "CIVIC_FEUDAL",
-     "CIVIC_MONARCHY",
-     "CIVIC_DESPOTISM"
-    ]
+    "TECH_ASSEMBLY_LINE",
+    {
+     "type": "BONUS_PETROLEUM_PRODUCTS",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    {
+     "any": [
+      "CIVIC_MERCANTILISM",
+      "CIVIC_NATIONALIST",
+      "CIVIC_FEUDAL",
+      "CIVIC_MONARCHY",
+      "CIVIC_DESPOTISM"
+     ]
+    }
    ]
   }
  },

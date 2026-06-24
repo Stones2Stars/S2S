@@ -16,21 +16,15 @@
      "scope": "empire",
      "min": 1
     },
-    "TECH_ADAPTIVE_ARCHITECTURE"
-   ],
-   "any": [
-    [
-     {
-      "type": "TERRAIN_NEPTUNE",
-      "scope": "plot"
-     }
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_SOLAR_SYSTEM",
-      "scope": "plot"
-     }
-    ]
+    "TECH_ADAPTIVE_ARCHITECTURE",
+    {
+     "type": "TERRAIN_NEPTUNE",
+     "scope": "plot"
+    },
+    {
+     "type": "MAPCATEGORY_SOLAR_SYSTEM",
+     "scope": "plot"
+    }
    ]
   }
  },

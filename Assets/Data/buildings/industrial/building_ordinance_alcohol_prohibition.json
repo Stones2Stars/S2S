@@ -10,15 +10,11 @@
  "requires": {
   "build": {
    "all": [
-    "TECH_WOMENS_SUFFRAGE"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_WOMENS_SUFFRAGE",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   }
  },

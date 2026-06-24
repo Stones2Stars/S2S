@@ -12,25 +12,23 @@
   "build": {
    "all": [
     "BUILDING_INTERSTELLAR_SHKADOV_THRUSTER",
-    "TECH_INDUCED_SUPERNOVA"
-   ],
-   "any": [
-    [
-     {
-      "type": "TERRAIN_NEUTRON_STAR",
-      "scope": "plot"
-     }
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_GALACTIC",
-      "scope": "plot"
-     },
-     {
-      "type": "MAPCATEGORY_MILKY_WAY",
-      "scope": "plot"
-     }
-    ]
+    "TECH_INDUCED_SUPERNOVA",
+    {
+     "type": "TERRAIN_NEUTRON_STAR",
+     "scope": "plot"
+    },
+    {
+     "any": [
+      {
+       "type": "MAPCATEGORY_GALACTIC",
+       "scope": "plot"
+      },
+      {
+       "type": "MAPCATEGORY_MILKY_WAY",
+       "scope": "plot"
+      }
+     ]
+    }
    ]
   }
  },

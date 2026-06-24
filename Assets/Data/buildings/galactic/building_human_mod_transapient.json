@@ -7,15 +7,11 @@
    "all": [
     "HAS_POWER",
     "BUILDING_OPTRONIC_SUPERCOMPUTER",
-    "TECH_STELLAR_COMPUTING"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_STELLAR_COMPUTING",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

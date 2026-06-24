@@ -8,20 +8,16 @@
     {
      "type": "TECH_ADVANCED_SEEDSHIPS",
      "scope": "team"
+    },
+    {
+     "terrain": [
+      "TERRAIN_ORION_ARM",
+      "TERRAIN_MILKY_WAY",
+      "TERRAIN_GALACTIC_CORE",
+      "TERRAIN_NEBULA",
+      "TERRAIN_STAR_CLUSTER"
+     ]
     }
-   ],
-   "any": [
-    [
-     {
-      "terrain": [
-       "TERRAIN_ORION_ARM",
-       "TERRAIN_MILKY_WAY",
-       "TERRAIN_GALACTIC_CORE",
-       "TERRAIN_NEBULA",
-       "TERRAIN_STAR_CLUSTER"
-      ]
-     }
-    ]
    ]
   }
  },

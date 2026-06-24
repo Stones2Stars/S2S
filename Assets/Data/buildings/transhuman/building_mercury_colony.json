@@ -13,21 +13,15 @@
   "build": {
    "all": [
     "BUILDING_DEEP_SPACE_ORBITAL_BASE",
-    "TECH_THERMAL_NEGATION"
-   ],
-   "any": [
-    [
-     {
-      "type": "TERRAIN_MERCURY",
-      "scope": "plot"
-     }
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_SOLAR_SYSTEM",
-      "scope": "plot"
-     }
-    ]
+    "TECH_THERMAL_NEGATION",
+    {
+     "type": "TERRAIN_MERCURY",
+     "scope": "plot"
+    },
+    {
+     "type": "MAPCATEGORY_SOLAR_SYSTEM",
+     "scope": "plot"
+    }
    ]
   }
  },

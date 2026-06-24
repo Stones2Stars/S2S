@@ -6,19 +6,17 @@
   "build": {
    "all": [
     "TECH_INDUSTRIALISM",
-    "TECH_CORPORATION"
-   ],
-   "any": [
-    [
-     "BUILDING_CANDY_SHOP",
-     "BUILDING_FOOD_MANUFACTURING_DISTRICT"
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_CORPORATION",
+    {
+     "any": [
+      "BUILDING_CANDY_SHOP",
+      "BUILDING_FOOD_MANUFACTURING_DISTRICT"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

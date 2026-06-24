@@ -6,15 +6,11 @@
   "build": {
    "all": [
     "BUILDING_TRANSTELLAR_REST_STOP",
-    "TECH_GALACTIC_FEDERATION"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_INTERSTELLAR",
-      "scope": "plot"
-     }
-    ]
+    "TECH_GALACTIC_FEDERATION",
+    {
+     "type": "MAPCATEGORY_INTERSTELLAR",
+     "scope": "plot"
+    }
    ]
   }
  },

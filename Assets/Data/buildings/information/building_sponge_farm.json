@@ -6,41 +6,39 @@
   "build": {
    "all": [
     "HAS_COAST",
-    "TECH_AQUACULTURE"
-   ],
-   "any": [
-    [
-     {
-      "type": "FEATURE_CORAL_REEF",
-      "scope": "plot"
-     },
-     {
-      "type": "FEATURE_CORAL_REEF_BEACON",
-      "scope": "plot"
-     },
-     {
-      "type": "FEATURE_CORAL_REEF_LIGHTHOUSE",
-      "scope": "plot"
-     },
-     {
-      "type": "FEATURE_PLATY_GREAT_BARRIER",
-      "scope": "plot"
-     },
-     {
-      "type": "FEATURE_GREAT_BARRIER_REEF_BEACON",
-      "scope": "plot"
-     },
-     {
-      "type": "FEATURE_GREAT_BARRIER_REEF_LIGHTHOUSE",
-      "scope": "plot"
-     }
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_AQUACULTURE",
+    {
+     "any": [
+      {
+       "type": "FEATURE_CORAL_REEF",
+       "scope": "plot"
+      },
+      {
+       "type": "FEATURE_CORAL_REEF_BEACON",
+       "scope": "plot"
+      },
+      {
+       "type": "FEATURE_CORAL_REEF_LIGHTHOUSE",
+       "scope": "plot"
+      },
+      {
+       "type": "FEATURE_PLATY_GREAT_BARRIER",
+       "scope": "plot"
+      },
+      {
+       "type": "FEATURE_GREAT_BARRIER_REEF_BEACON",
+       "scope": "plot"
+      },
+      {
+       "type": "FEATURE_GREAT_BARRIER_REEF_LIGHTHOUSE",
+       "scope": "plot"
+      }
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   }
  },

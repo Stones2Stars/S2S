@@ -10,26 +10,28 @@
      "scope": "city",
      "connection": "trade|vicinity"
     },
-    "TECH_MILITARY_ROBOTICS"
-   ],
-   "any": [
-    [
-     {
-      "type": "BONUS_PETROLEUM_PRODUCTS",
-      "scope": "city",
-      "connection": "trade|vicinity"
-     },
-     {
-      "type": "BONUS_BIOFUEL",
-      "scope": "city",
-      "connection": "trade|vicinity"
-     }
-    ],
-    [
-     "BUILDING_FACTORY_AMMUNITION",
-     "BUILDING_AMMUNITIONS_WORKSHOP",
-     "BUILDING_MILITARY_INDUSTRIAL_COMPLEX"
-    ]
+    "TECH_MILITARY_ROBOTICS",
+    {
+     "any": [
+      {
+       "type": "BONUS_PETROLEUM_PRODUCTS",
+       "scope": "city",
+       "connection": "trade|vicinity"
+      },
+      {
+       "type": "BONUS_BIOFUEL",
+       "scope": "city",
+       "connection": "trade|vicinity"
+      }
+     ]
+    },
+    {
+     "any": [
+      "BUILDING_FACTORY_AMMUNITION",
+      "BUILDING_AMMUNITIONS_WORKSHOP",
+      "BUILDING_MILITARY_INDUSTRIAL_COMPLEX"
+     ]
+    }
    ]
   }
  },

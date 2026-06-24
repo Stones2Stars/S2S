@@ -10,25 +10,23 @@
  "requires": {
   "build": {
    "all": [
-    "TECH_PORTABLE_SHELTERS"
-   ],
-   "any": [
-    [
-     {
-      "type": "TERRAIN_GRASSLAND",
-      "scope": "plot"
-     },
-     {
-      "type": "TERRAIN_PLAINS",
-      "scope": "plot"
-     }
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_PORTABLE_SHELTERS",
+    {
+     "any": [
+      {
+       "type": "TERRAIN_GRASSLAND",
+       "scope": "plot"
+      },
+      {
+       "type": "TERRAIN_PLAINS",
+       "scope": "plot"
+      }
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {
@@ -42,21 +40,21 @@
      "type": "BONUS_HORSE",
      "scope": "city",
      "connection": "vicinity"
+    },
+    {
+     "any": [
+      {
+       "type": "BONUS_CLOTH",
+       "scope": "city",
+       "connection": "trade|vicinity"
+      },
+      {
+       "type": "BONUS_LEATHER",
+       "scope": "city",
+       "connection": "trade|vicinity"
+      }
+     ]
     }
-   ],
-   "any": [
-    [
-     {
-      "type": "BONUS_CLOTH",
-      "scope": "city",
-      "connection": "trade|vicinity"
-     },
-     {
-      "type": "BONUS_LEATHER",
-      "scope": "city",
-      "connection": "trade|vicinity"
-     }
-    ]
    ],
    "dormant": [
     "BUILDING_HOUSING_PALACES",

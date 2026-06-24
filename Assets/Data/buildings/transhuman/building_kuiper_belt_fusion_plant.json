@@ -13,21 +13,15 @@
    "all": [
     "HAS_POWER",
     "BUILDING_KUIPER_BELT_OUTPOST",
-    "TECH_NUCLEAR_PULSE_PROPULSION"
-   ],
-   "any": [
-    [
-     {
-      "type": "TERRAIN_KUIPER_BELT_OBJECT",
-      "scope": "plot"
-     }
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_SOLAR_SYSTEM",
-      "scope": "plot"
-     }
-    ]
+    "TECH_NUCLEAR_PULSE_PROPULSION",
+    {
+     "type": "TERRAIN_KUIPER_BELT_OBJECT",
+     "scope": "plot"
+    },
+    {
+     "type": "MAPCATEGORY_SOLAR_SYSTEM",
+     "scope": "plot"
+    }
    ]
   }
  },

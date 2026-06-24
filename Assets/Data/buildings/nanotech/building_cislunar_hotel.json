@@ -7,15 +7,11 @@
    "all": [
     "BUILDING_CISLUNAR_DOCKING_BAY",
     "BUILDING_CISLUNAR_AGRICULTURAL_LAB",
-    "TECH_LUNAR_TOURISM"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_CISLUNAR",
-      "scope": "plot"
-     }
-    ]
+    "TECH_LUNAR_TOURISM",
+    {
+     "type": "MAPCATEGORY_CISLUNAR",
+     "scope": "plot"
+    }
    ]
   }
  },

@@ -7,15 +7,11 @@
    "all": [
     "HAS_POWER",
     "BUILDING_FOOD_MANUFACTURING_DISTRICT",
-    "TECH_DESIGNER_MICROBIOLOGY"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_DESIGNER_MICROBIOLOGY",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   }
  },

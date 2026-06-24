@@ -12,20 +12,20 @@
  },
  "requires": {
   "build": {
-   "any": [
-    [
-     "BUILDING_GROVE_BRAZILWOOD",
-     "BUILDING_DRIFTWOOD_GATHERER",
-     "BUILDING_LUMBER_GATHERER",
-     "BUILDING_LUMBER_CAMP",
-     "BUILDING_GROVE_TIMBER"
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+   "all": [
+    {
+     "any": [
+      "BUILDING_GROVE_BRAZILWOOD",
+      "BUILDING_DRIFTWOOD_GATHERER",
+      "BUILDING_LUMBER_GATHERER",
+      "BUILDING_LUMBER_CAMP",
+      "BUILDING_GROVE_TIMBER"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

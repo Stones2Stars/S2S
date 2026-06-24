@@ -7,15 +7,11 @@
    "all": [
     "BUILDING_DEEP_SPACE_ECOSYSTEM",
     "BUILDING_DEEP_SPACE_CONSCIOUS_STATION",
-    "TECH_ECOSYNTHESIS"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_SOLAR_SYSTEM",
-      "scope": "plot"
-     }
-    ]
+    "TECH_ECOSYNTHESIS",
+    {
+     "type": "MAPCATEGORY_SOLAR_SYSTEM",
+     "scope": "plot"
+    }
    ]
   }
  },

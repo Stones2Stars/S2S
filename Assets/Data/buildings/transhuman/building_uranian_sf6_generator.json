@@ -12,21 +12,15 @@
   "build": {
    "all": [
     "BUILDING_URANIAN_LUNAR_HEATING",
-    "TECH_ARTIFICIAL_NUCLEOSYNTHESIS"
-   ],
-   "any": [
-    [
-     {
-      "type": "TERRAIN_UMBRIEL",
-      "scope": "plot"
-     }
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_SOLAR_SYSTEM",
-      "scope": "plot"
-     }
-    ]
+    "TECH_ARTIFICIAL_NUCLEOSYNTHESIS",
+    {
+     "type": "TERRAIN_UMBRIEL",
+     "scope": "plot"
+    },
+    {
+     "type": "MAPCATEGORY_SOLAR_SYSTEM",
+     "scope": "plot"
+    }
    ]
   }
  },

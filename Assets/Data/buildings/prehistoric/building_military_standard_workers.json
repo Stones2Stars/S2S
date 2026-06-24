@@ -12,25 +12,25 @@
   "build": {
    "all": [
     "BUILDING_MILITARY_STANDARD_ANIMAL_MASCOT",
-    "TECH_CULTURAL_IDENTITY"
-   ],
-   "any": [
-    [
-     "BUILDING_FOLKLORE_NINE_BANDED_ARMADILLO",
-     "BUILDING_FOLKLORE_GLYPTODON",
-     "BUILDING_FOLKLORE_GROUND_SLOTH"
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ],
-    [
-     "HERITAGE_FOLKLORE_AARDVARK",
-     "HERITAGE_FOLKLORE_ANTEATER",
-     "HERITAGE_FOLKLORE_BEAVER"
-    ]
+    "TECH_CULTURAL_IDENTITY",
+    {
+     "any": [
+      "BUILDING_FOLKLORE_NINE_BANDED_ARMADILLO",
+      "BUILDING_FOLKLORE_GLYPTODON",
+      "BUILDING_FOLKLORE_GROUND_SLOTH"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    },
+    {
+     "any": [
+      "HERITAGE_FOLKLORE_AARDVARK",
+      "HERITAGE_FOLKLORE_ANTEATER",
+      "HERITAGE_FOLKLORE_BEAVER"
+     ]
+    }
    ]
   }
  },

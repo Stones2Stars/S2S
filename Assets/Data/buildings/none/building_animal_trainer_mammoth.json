@@ -23,23 +23,21 @@
       "min": 40
      }
     },
-    "TECH_MEGAFAUNA_DOMESTICATION"
-   ],
-   "any": [
-    [
-     "BUILDING_CAMP_MAMMOTH",
-     "BUILDING_HERD_MAMMOTH",
-     "BUILDING_BREEDING_PROGRAM_MAMMOTH",
-     "BUILDING_ANIMAL_PRESERVE",
-     "BUILDING_INDUSTRIAL_FARMS",
-     "BUILDING_MEAT_INDUSTRY_CONGLOMERATE"
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_MEGAFAUNA_DOMESTICATION",
+    {
+     "any": [
+      "BUILDING_CAMP_MAMMOTH",
+      "BUILDING_HERD_MAMMOTH",
+      "BUILDING_BREEDING_PROGRAM_MAMMOTH",
+      "BUILDING_ANIMAL_PRESERVE",
+      "BUILDING_INDUSTRIAL_FARMS",
+      "BUILDING_MEAT_INDUSTRY_CONGLOMERATE"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

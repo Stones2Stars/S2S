@@ -9,20 +9,16 @@
      "type": "TECH_SOLAR_POWER",
      "scope": "team"
     },
-    "IS_FLATLANDS"
-   ],
-   "any": [
-    [
-     {
-      "terrain": [
-       "TERRAIN_DESERT",
-       "TERRAIN_BARREN",
-       "TERRAIN_SCRUB",
-       "TERRAIN_DUNES",
-       "TERRAIN_SALT_FLATS"
-      ]
-     }
-    ]
+    "IS_FLATLANDS",
+    {
+     "terrain": [
+      "TERRAIN_DESERT",
+      "TERRAIN_BARREN",
+      "TERRAIN_SCRUB",
+      "TERRAIN_DUNES",
+      "TERRAIN_SALT_FLATS"
+     ]
+    }
    ]
   }
  },

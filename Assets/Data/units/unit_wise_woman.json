@@ -5,12 +5,8 @@
  "requires": {
   "build": {
    "all": [
-    "TECH_HERBALISM"
-   ],
-   "any": [
-    [
-     "BUILDING_WILD_HERBS_GATHERER"
-    ]
+    "TECH_HERBALISM",
+    "BUILDING_WILD_HERBS_GATHERER"
    ]
   }
  },

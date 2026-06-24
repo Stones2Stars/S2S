@@ -5,15 +5,11 @@
  "requires": {
   "build": {
    "all": [
-    "TECH_FROST_BEAMS"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_FROST_BEAMS",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   }
  },

@@ -12,15 +12,11 @@
    "all": [
     "HAS_POWER",
     "BUILDING_CLIMATOLOGY_LAB",
-    "TECH_CHAOS_THEORY"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_CHAOS_THEORY",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   }
  },

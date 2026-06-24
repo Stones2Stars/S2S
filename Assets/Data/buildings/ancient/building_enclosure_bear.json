@@ -23,20 +23,18 @@
   "build": {
    "all": [
     "BUILDING_FOLKLORE_T_BEAR",
-    "TECH_TRADE"
-   ],
-   "any": [
-    [
-     "BUILDING_CARNIVAL",
-     "BUILDING_ZOO",
-     "BUILDING_GOVERNORS_MENAGERIE"
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_TRADE",
+    {
+     "any": [
+      "BUILDING_CARNIVAL",
+      "BUILDING_ZOO",
+      "BUILDING_GOVERNORS_MENAGERIE"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   }
  },

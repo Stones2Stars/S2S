@@ -21,15 +21,11 @@
     },
     "BUILDING_DEPARTMENT_OF_MOTOR_VEHICLES",
     "BUILDING_COURTHOUSE",
-    "TECH_MOTORIZED_TRANSPORTATION"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_MOTORIZED_TRANSPORTATION",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

@@ -7,15 +7,11 @@
    "all": [
     "BUILDING_TRANSTELLAR_ARTIFICIAL_ROCKY_PLANET",
     "TECH_ORBITAL_ENGINEERING",
-    "TECH_ARTIFICIAL_PLANETS"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_INTERSTELLAR",
-      "scope": "plot"
-     }
-    ]
+    "TECH_ARTIFICIAL_PLANETS",
+    {
+     "type": "MAPCATEGORY_INTERSTELLAR",
+     "scope": "plot"
+    }
    ]
   }
  },

@@ -14,19 +14,17 @@
   "build": {
    "all": [
     "BUILDING_EFFECT_GPS",
-    "TECH_WEARABLE_COMPUTERS"
-   ],
-   "any": [
-    [
-     "BUILDING_FACTORY_CELLPHONES",
-     "BUILDING_ELECTRONICS_MANUFACTURING_DISTRICT"
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_WEARABLE_COMPUTERS",
+    {
+     "any": [
+      "BUILDING_FACTORY_CELLPHONES",
+      "BUILDING_ELECTRONICS_MANUFACTURING_DISTRICT"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

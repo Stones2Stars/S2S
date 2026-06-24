@@ -11,31 +11,27 @@
   "build": {
    "all": [
     "HAS_RIVER",
-    "TECH_WATERWHEELS"
-   ],
-   "any": [
-    [
-     "BUILDING_WATERMILL",
-     "BUILDING_MODERN_MILL",
-     "BUILDING_FOOD_MANUFACTURING_DISTRICT"
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_WATERWHEELS",
+    {
+     "any": [
+      "BUILDING_WATERMILL",
+      "BUILDING_MODERN_MILL",
+      "BUILDING_FOOD_MANUFACTURING_DISTRICT"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {
-   "any": [
-    [
-     {
-      "type": "BONUS_TOOLS",
-      "scope": "city",
-      "connection": "trade|vicinity"
-     }
-    ]
+   "all": [
+    {
+     "type": "BONUS_TOOLS",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    }
    ]
   }
  },

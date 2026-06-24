@@ -12,15 +12,11 @@
    "all": [
     "BUILDING_MARTIAN_FACTORY",
     "BUILDING_MARTIAN_RADIATION_SHIELD",
-    "TECH_DYSTOPIA_PATHOGENS"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_MARTIAN",
-      "scope": "plot"
-     }
-    ]
+    "TECH_DYSTOPIA_PATHOGENS",
+    {
+     "type": "MAPCATEGORY_MARTIAN",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {
@@ -29,16 +25,12 @@
      "type": "BONUS_CARBON_DIOXIDE_ICE",
      "scope": "city",
      "connection": "trade|vicinity"
+    },
+    {
+     "type": "BONUS_MARTIAN_MANUFACTURED_GOODS",
+     "scope": "city",
+     "connection": "trade|vicinity"
     }
-   ],
-   "any": [
-    [
-     {
-      "type": "BONUS_MARTIAN_MANUFACTURED_GOODS",
-      "scope": "city",
-      "connection": "trade|vicinity"
-     }
-    ]
    ]
   }
  },

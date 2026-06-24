@@ -8,15 +8,11 @@
     "HAS_POWER",
     "BUILDING_HYPERSPACE_SIMULATED_UNIVERSE",
     "TECH_COSMIC_GOVERNANCE",
-    "TECH_EXPERIMENTAL_COSMOLOGY"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_HYPERSPACE",
-      "scope": "plot"
-     }
-    ]
+    "TECH_EXPERIMENTAL_COSMOLOGY",
+    {
+     "type": "MAPCATEGORY_HYPERSPACE",
+     "scope": "plot"
+    }
    ]
   }
  },

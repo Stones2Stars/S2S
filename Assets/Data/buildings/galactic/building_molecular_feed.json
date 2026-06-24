@@ -7,15 +7,11 @@
    "all": [
     "HAS_POWER",
     "BUILDING_ALPHA_ASSEMBLER",
-    "TECH_MOLECULAR_ASSEMBLY"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_MOLECULAR_ASSEMBLY",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   }
  },

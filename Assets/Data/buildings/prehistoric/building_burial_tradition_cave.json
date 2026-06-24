@@ -22,21 +22,15 @@
  "requires": {
   "build": {
    "all": [
-    "TECH_CEREMONIAL_BURIAL"
-   ],
-   "any": [
-    [
-     {
-      "type": "FEATURE_CAVES",
-      "scope": "plot"
-     }
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_CEREMONIAL_BURIAL",
+    {
+     "type": "FEATURE_CAVES",
+     "scope": "plot"
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ],
    "noneOf": [
     "BUILDING_BURIAL_TRADITION_EARTH",

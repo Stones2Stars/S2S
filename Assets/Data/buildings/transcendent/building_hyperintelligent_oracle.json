@@ -11,15 +11,11 @@
   "build": {
    "all": [
     "BUILDING_CLOSED_TIMELIKE_CURVE_COMPUTER",
-    "TECH_HYPERINTELLIGENCE"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_HYPERINTELLIGENCE",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   }
  },

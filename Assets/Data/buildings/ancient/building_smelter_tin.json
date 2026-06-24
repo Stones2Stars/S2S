@@ -18,19 +18,17 @@
  "requires": {
   "build": {
    "all": [
-    "TECH_BRONZE_WORKING"
-   ],
-   "any": [
-    [
-     "BUILDING_CORE_MINE",
-     "BUILDING_MINE_TIN"
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_BRONZE_WORKING",
+    {
+     "any": [
+      "BUILDING_CORE_MINE",
+      "BUILDING_MINE_TIN"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

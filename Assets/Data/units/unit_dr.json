@@ -10,15 +10,15 @@
      "scope": "city",
      "connection": "trade|vicinity"
     },
-    "TECH_PLAGUE_MEDICINE"
-   ],
-   "any": [
-    [
-     "BUILDING_DOCTORS_OFFICE",
-     "BUILDING_SURGEONS_OFFICE",
-     "BUILDING_MEDICAL_CLINIC",
-     "BUILDING_HEALTHCARE_MEGACOMPLEX"
-    ]
+    "TECH_PLAGUE_MEDICINE",
+    {
+     "any": [
+      "BUILDING_DOCTORS_OFFICE",
+      "BUILDING_SURGEONS_OFFICE",
+      "BUILDING_MEDICAL_CLINIC",
+      "BUILDING_HEALTHCARE_MEGACOMPLEX"
+     ]
+    }
    ]
   }
  },

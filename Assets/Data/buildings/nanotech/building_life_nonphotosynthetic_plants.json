@@ -7,15 +7,11 @@
    "all": [
     "HAS_POWER",
     "BUILDING_TRANSGENICS_LAB",
-    "TECH_HYPOTHETICAL_BIOCHEMISTRY"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_HYPOTHETICAL_BIOCHEMISTRY",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   }
  },

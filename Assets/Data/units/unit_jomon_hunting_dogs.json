@@ -10,13 +10,13 @@
      "scope": "city",
      "connection": "trade|vicinity"
     },
-    "TECH_CANINE_DOMESTICATION"
-   ],
-   "any": [
-    [
-     "BUILDING_DOG_BREEDER",
-     "BUILDING_REPET"
-    ]
+    "TECH_CANINE_DOMESTICATION",
+    {
+     "any": [
+      "BUILDING_DOG_BREEDER",
+      "BUILDING_REPET"
+     ]
+    }
    ]
   }
  },

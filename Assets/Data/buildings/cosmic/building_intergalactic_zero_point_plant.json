@@ -12,15 +12,11 @@
   "build": {
    "all": [
     "BUILDING_INTERGALACTIC_MECHANOSYNTHESIS_FACTORIES",
-    "TECH_ZERO_POINT_ENERGY"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_UNIVERSAL",
-      "scope": "plot"
-     }
-    ]
+    "TECH_ZERO_POINT_ENERGY",
+    {
+     "type": "MAPCATEGORY_UNIVERSAL",
+     "scope": "plot"
+    }
    ]
   }
  },

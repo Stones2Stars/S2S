@@ -8,21 +8,15 @@
     "HAS_POWER",
     "BUILDING_DEEP_SPACE_MCKENDREE_CYLINDER",
     "BUILDING_DEEP_SPACE_SUN_SCOOP",
-    "TECH_FEMTOTECHNOLOGY"
-   ],
-   "any": [
-    [
-     {
-      "type": "TERRAIN_SUN",
-      "scope": "plot"
-     }
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_SOLAR_SYSTEM",
-      "scope": "plot"
-     }
-    ]
+    "TECH_FEMTOTECHNOLOGY",
+    {
+     "type": "TERRAIN_SUN",
+     "scope": "plot"
+    },
+    {
+     "type": "MAPCATEGORY_SOLAR_SYSTEM",
+     "scope": "plot"
+    }
    ]
   }
  },

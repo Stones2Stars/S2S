@@ -5,28 +5,24 @@
  "requires": {
   "build": {
    "all": [
-    "TECH_CANINE_DOMESTICATION"
-   ],
-   "any": [
-    [
-     "BUILDING_HUNTERS_CAMP",
-     "BUILDING_FURRIER",
-     "BUILDING_ANCIENT_CUSTOMS",
-     "BUILDING_INDUSTRIAL_FARMS",
-     "BUILDING_MEAT_INDUSTRY_CONGLOMERATE"
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ],
-    [
-     {
-      "type": "CIVILIZATION_NPC_NEANDERTHAL",
-      "scope": "empire"
-     }
-    ]
+    "TECH_CANINE_DOMESTICATION",
+    {
+     "any": [
+      "BUILDING_HUNTERS_CAMP",
+      "BUILDING_FURRIER",
+      "BUILDING_ANCIENT_CUSTOMS",
+      "BUILDING_INDUSTRIAL_FARMS",
+      "BUILDING_MEAT_INDUSTRY_CONGLOMERATE"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    },
+    {
+     "type": "CIVILIZATION_NPC_NEANDERTHAL",
+     "scope": "empire"
+    }
    ]
   },
   "operate": {

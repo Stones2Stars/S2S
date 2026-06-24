@@ -7,21 +7,15 @@
    "all": [
     "BUILDING_MERCURY_COMETARY_BOMBARDMENT",
     "TECH_PLANETARY_DEFENSES",
-    "TECH_ASTEROID_EXTRACTION"
-   ],
-   "any": [
-    [
-     {
-      "type": "TERRAIN_MERCURY",
-      "scope": "plot"
-     }
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_SOLAR_SYSTEM",
-      "scope": "plot"
-     }
-    ]
+    "TECH_ASTEROID_EXTRACTION",
+    {
+     "type": "TERRAIN_MERCURY",
+     "scope": "plot"
+    },
+    {
+     "type": "MAPCATEGORY_SOLAR_SYSTEM",
+     "scope": "plot"
+    }
    ]
   }
  },

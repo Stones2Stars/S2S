@@ -11,19 +11,17 @@
   "build": {
    "all": [
     "BUILDING_FOLKLORE_REQUIREMENT",
-    "TECH_TAXONOMY"
-   ],
-   "any": [
-    [
-     "BUILDING_FOLKLORE_MANTA_RAY",
-     "BUILDING_FOLKLORE_EAGLE_RAY"
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_TAXONOMY",
+    {
+     "any": [
+      "BUILDING_FOLKLORE_MANTA_RAY",
+      "BUILDING_FOLKLORE_EAGLE_RAY"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   }
  },

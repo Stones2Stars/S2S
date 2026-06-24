@@ -13,16 +13,12 @@
     "BUILDING_ANIMAL_TRAINER_HORSE",
     "TECH_INVENTION",
     "TECH_HORSE_BREEDING",
-    "TECH_HERALDRY"
-   ],
-   "any": [
-    [
-     {
-      "type": "BONUS_IRON_WARES",
-      "scope": "city",
-      "connection": "trade|vicinity"
-     }
-    ]
+    "TECH_HERALDRY",
+    {
+     "type": "BONUS_IRON_WARES",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    }
    ]
   }
  },

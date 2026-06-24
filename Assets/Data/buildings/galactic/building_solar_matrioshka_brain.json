@@ -11,15 +11,11 @@
      "scope": "empire",
      "min": 1
     },
-    "TECH_STELLAR_COMPUTING"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_SOLAR_SYSTEM",
-      "scope": "plot"
-     }
-    ]
+    "TECH_STELLAR_COMPUTING",
+    {
+     "type": "MAPCATEGORY_SOLAR_SYSTEM",
+     "scope": "plot"
+    }
    ]
   }
  },

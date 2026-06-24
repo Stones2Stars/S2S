@@ -6,15 +6,11 @@
   "build": {
    "all": [
     "BUILDING_CISLUNAR_ONEILL_CYLINDER",
-    "TECH_WEAPONIZED_ANTIMATTER"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_CISLUNAR",
-      "scope": "plot"
-     }
-    ]
+    "TECH_WEAPONIZED_ANTIMATTER",
+    {
+     "type": "MAPCATEGORY_CISLUNAR",
+     "scope": "plot"
+    }
    ]
   }
  },

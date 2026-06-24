@@ -6,15 +6,11 @@
   "build": {
    "all": [
     "BUILDING_DISTANT_EXPLORERS_BASE",
-    "TECH_TIMELINE_RECTIFICATION"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_DISTANT",
-      "scope": "plot"
-     }
-    ]
+    "TECH_TIMELINE_RECTIFICATION",
+    {
+     "type": "MAPCATEGORY_DISTANT",
+     "scope": "plot"
+    }
    ]
   }
  },

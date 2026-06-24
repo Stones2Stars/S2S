@@ -16,15 +16,11 @@
     "HAS_POWER",
     "BUILDING_FACTORY",
     "BUILDING_3D_BODY_ATLAS",
-    "TECH_PERSONALIZED_HEALTH"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_PERSONALIZED_HEALTH",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {
@@ -33,16 +29,12 @@
      "type": "BONUS_COMPUTERS",
      "scope": "city",
      "connection": "trade|vicinity"
+    },
+    {
+     "type": "BONUS_IMMUNITY_DRUGS",
+     "scope": "city",
+     "connection": "trade|vicinity"
     }
-   ],
-   "any": [
-    [
-     {
-      "type": "BONUS_IMMUNITY_DRUGS",
-      "scope": "city",
-      "connection": "trade|vicinity"
-     }
-    ]
    ],
    "dormant": [
     "BUILDING_MEDICAL_MEGACOMPLEX"

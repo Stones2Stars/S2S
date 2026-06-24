@@ -20,15 +20,11 @@
      "min": 3
     },
     "BUILDING_FACTORY",
-    "TECH_GRAVITY_CONTROL"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_GRAVITY_CONTROL",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

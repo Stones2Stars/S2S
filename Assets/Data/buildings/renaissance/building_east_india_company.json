@@ -10,15 +10,11 @@
  "requires": {
   "build": {
    "all": [
-    "TECH_NAVAL_CANNON"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_NAVAL_CANNON",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   }
  },

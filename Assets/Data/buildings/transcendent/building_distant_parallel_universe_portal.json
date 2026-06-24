@@ -11,15 +11,11 @@
   "build": {
    "all": [
     "BUILDING_DISTANT_PORTAL_TO_DIMENSION_X",
-    "TECH_MULTIVERSE_TRAVERSAL"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_DISTANT",
-      "scope": "plot"
-     }
-    ]
+    "TECH_MULTIVERSE_TRAVERSAL",
+    {
+     "type": "MAPCATEGORY_DISTANT",
+     "scope": "plot"
+    }
    ]
   }
  },

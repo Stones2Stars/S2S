@@ -7,21 +7,15 @@
    "all": [
     "BUILDING_C_AC_ASIAN",
     "BUILDING_C_L_ASIAN",
-    "TECH_CIVIL_SERVICE"
-   ],
-   "any": [
-    [
-     {
-      "type": "FEATURE_JUNGLE",
-      "scope": "plot"
-     }
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_CIVIL_SERVICE",
+    {
+     "type": "FEATURE_JUNGLE",
+     "scope": "plot"
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

@@ -12,15 +12,11 @@
   "build": {
    "all": [
     "BUILDING_DEEP_SPACE_HOUSING_MANAGEMENT",
-    "TECH_SOCIAL_CALCULUS"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_SOLAR_SYSTEM",
-      "scope": "plot"
-     }
-    ]
+    "TECH_SOCIAL_CALCULUS",
+    {
+     "type": "MAPCATEGORY_SOLAR_SYSTEM",
+     "scope": "plot"
+    }
    ]
   }
  },

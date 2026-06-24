@@ -7,15 +7,11 @@
    "all": [
     "HAS_POWER",
     "BUILDING_BODY_EXCHANGE_CLINIC",
-    "TECH_MENSIOKINESIS"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_MENSIOKINESIS",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   }
  },

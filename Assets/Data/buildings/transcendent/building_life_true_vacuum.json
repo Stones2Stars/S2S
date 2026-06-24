@@ -6,15 +6,11 @@
   "build": {
    "all": [
     "BUILDING_DISTANT_SPACE_WHALING_GUILD",
-    "TECH_NONSTANDARD_MATHEMATICS"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_DISTANT",
-      "scope": "plot"
-     }
-    ]
+    "TECH_NONSTANDARD_MATHEMATICS",
+    {
+     "type": "MAPCATEGORY_DISTANT",
+     "scope": "plot"
+    }
    ]
   }
  },

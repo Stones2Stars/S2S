@@ -5,19 +5,17 @@
  "requires": {
   "build": {
    "all": [
-    "TECH_EXOTIC_STARS"
-   ],
-   "any": [
-    [
-     "BUILDING_INTERGALACTIC_QUARK_STAR_BASE",
-     "BUILDING_INTERGALACTIC_ELECTROWEAK_STAR_BASE"
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_UNIVERSAL",
-      "scope": "plot"
-     }
-    ]
+    "TECH_EXOTIC_STARS",
+    {
+     "any": [
+      "BUILDING_INTERGALACTIC_QUARK_STAR_BASE",
+      "BUILDING_INTERGALACTIC_ELECTROWEAK_STAR_BASE"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_UNIVERSAL",
+     "scope": "plot"
+    }
    ]
   }
  },

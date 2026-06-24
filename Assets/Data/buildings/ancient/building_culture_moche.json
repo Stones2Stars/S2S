@@ -8,21 +8,15 @@
     "HAS_COAST",
     "BUILDING_C_AC_SOUTH_AMERICAN",
     "BUILDING_C_L_SOUTH_AMERICAN",
-    "TECH_SACRIFICE_CULT"
-   ],
-   "any": [
-    [
-     {
-      "type": "TERRAIN_PEAK",
-      "scope": "plot"
-     }
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_SACRIFICE_CULT",
+    {
+     "type": "TERRAIN_PEAK",
+     "scope": "plot"
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

@@ -8,22 +8,22 @@
     {
      "type": "TECH_INTERGALACTIC_COLONIZATION",
      "scope": "team"
+    },
+    {
+     "any": [
+      {
+       "terrain": [
+        "TERRAIN_VIRGO_SUPERCLUSTER"
+       ]
+      },
+      {
+       "feature": [
+        "FEATURE_DWARF_GALAXY",
+        "FEATURE_GALAXY"
+       ]
+      }
+     ]
     }
-   ],
-   "any": [
-    [
-     {
-      "terrain": [
-       "TERRAIN_VIRGO_SUPERCLUSTER"
-      ]
-     },
-     {
-      "feature": [
-       "FEATURE_DWARF_GALAXY",
-       "FEATURE_GALAXY"
-      ]
-     }
-    ]
    ]
   }
  },

@@ -7,15 +7,11 @@
    "all": [
     "HAS_POWER",
     "BUILDING_CHRONOPOLIS",
-    "TECH_OMNIBENEVOLENT_MANDATE"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_OMNIBENEVOLENT_MANDATE",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   }
  },

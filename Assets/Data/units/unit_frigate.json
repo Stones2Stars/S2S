@@ -17,16 +17,12 @@
      "min": 10
     },
     "TECH_NAVIGATION",
-    "TECH_NAVAL_CANNON"
-   ],
-   "any": [
-    [
-     {
-      "type": "BONUS_SULPHUR",
-      "scope": "city",
-      "connection": "trade|vicinity"
-     }
-    ]
+    "TECH_NAVAL_CANNON",
+    {
+     "type": "BONUS_SULPHUR",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    }
    ]
   }
  },

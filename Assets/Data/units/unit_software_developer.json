@@ -20,25 +20,27 @@
      "type": "BONUS_FIREARMS",
      "scope": "city",
      "connection": "trade|vicinity"
+    },
+    {
+     "any": [
+      {
+       "type": "BONUS_DISKETTES",
+       "scope": "city",
+       "connection": "trade|vicinity"
+      },
+      {
+       "type": "BONUS_FLASH_MEMORY_DEVICES",
+       "scope": "city",
+       "connection": "trade|vicinity"
+      }
+     ]
+    },
+    {
+     "any": [
+      "BUILDING_DESIGN_STUDIO",
+      "BUILDING_ELECTRONICS_MANUFACTURING_DISTRICT"
+     ]
     }
-   ],
-   "any": [
-    [
-     {
-      "type": "BONUS_DISKETTES",
-      "scope": "city",
-      "connection": "trade|vicinity"
-     },
-     {
-      "type": "BONUS_FLASH_MEMORY_DEVICES",
-      "scope": "city",
-      "connection": "trade|vicinity"
-     }
-    ],
-    [
-     "BUILDING_DESIGN_STUDIO",
-     "BUILDING_ELECTRONICS_MANUFACTURING_DISTRICT"
-    ]
    ]
   }
  },

@@ -9,29 +9,25 @@
      "type": "TECH_ECOLOGY",
      "scope": "team"
     },
-    "IS_WATER"
-   ],
-   "any": [
-    [
-     {
-      "terrain": [
-       "TERRAIN_COAST",
-       "TERRAIN_COAST_POLAR",
-       "TERRAIN_COAST_TROPICAL",
-       "TERRAIN_COAST_DEEP",
-       "TERRAIN_COAST_DEEP_POLAR",
-       "TERRAIN_COAST_DEEP_TROPICAL",
-       "TERRAIN_LAKE_SHORE",
-       "TERRAIN_SEA",
-       "TERRAIN_SEA_POLAR",
-       "TERRAIN_SEA_TROPICAL",
-       "TERRAIN_SEA_DEEP",
-       "TERRAIN_SEA_DEEP_POLAR",
-       "TERRAIN_SEA_DEEP_TROPICAL",
-       "TERRAIN_LAKE"
-      ]
-     }
-    ]
+    "IS_WATER",
+    {
+     "terrain": [
+      "TERRAIN_COAST",
+      "TERRAIN_COAST_POLAR",
+      "TERRAIN_COAST_TROPICAL",
+      "TERRAIN_COAST_DEEP",
+      "TERRAIN_COAST_DEEP_POLAR",
+      "TERRAIN_COAST_DEEP_TROPICAL",
+      "TERRAIN_LAKE_SHORE",
+      "TERRAIN_SEA",
+      "TERRAIN_SEA_POLAR",
+      "TERRAIN_SEA_TROPICAL",
+      "TERRAIN_SEA_DEEP",
+      "TERRAIN_SEA_DEEP_POLAR",
+      "TERRAIN_SEA_DEEP_TROPICAL",
+      "TERRAIN_LAKE"
+     ]
+    }
    ]
   }
  },

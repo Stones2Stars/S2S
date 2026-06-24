@@ -6,15 +6,11 @@
   "build": {
    "all": [
     "BUILDING_UTILITY_FOG",
-    "TECH_SMART_DUST"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_SMART_DUST",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   }
  },

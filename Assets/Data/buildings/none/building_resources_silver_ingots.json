@@ -12,18 +12,18 @@
  },
  "requires": {
   "build": {
-   "any": [
-    [
-     "BUILDING_NATIONAL_SMELTER_SILVER",
-     "BUILDING_SILVER_RECLAMATION_PLANT",
-     "BUILDING_SMELTER_SILVER"
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+   "all": [
+    {
+     "any": [
+      "BUILDING_NATIONAL_SMELTER_SILVER",
+      "BUILDING_SILVER_RECLAMATION_PLANT",
+      "BUILDING_SMELTER_SILVER"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

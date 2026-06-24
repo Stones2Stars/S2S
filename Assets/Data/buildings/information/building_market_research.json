@@ -16,15 +16,11 @@
     "BUILDING_MODERN_OFFICES",
     "BUILDING_COMPUTER_NETWORK",
     "BUILDING_SKYSCRAPER",
-    "TECH_MEDIA_PSYCHOLOGY"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_MEDIA_PSYCHOLOGY",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   }
  },

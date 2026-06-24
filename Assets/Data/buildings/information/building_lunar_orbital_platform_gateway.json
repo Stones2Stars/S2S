@@ -5,15 +5,11 @@
  "requires": {
   "build": {
    "all": [
-    "TECH_ASTEROID_BELT_PROBES"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_ASTEROID_BELT_PROBES",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   }
  },

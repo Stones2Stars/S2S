@@ -6,12 +6,8 @@
  "requires": {
   "build": {
    "all": [
-    "TECH_FUNDAMENTALISM"
-   ],
-   "any": [
-    [
-     "CIVIC_INQUISITORIAL"
-    ]
+    "TECH_FUNDAMENTALISM",
+    "CIVIC_INQUISITORIAL"
    ]
   }
  },

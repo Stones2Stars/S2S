@@ -5,14 +5,14 @@
  "requires": {
   "build": {
    "all": [
-    "TECH_PHASING"
-   ],
-   "any": [
-    [
-     "BUILDING_INTERSTELLAR_STARPORT",
-     "BUILDING_INTERGALACTIC_STARPORT",
-     "BUILDING_DISTANT_HORIZON_PORT"
-    ]
+    "TECH_PHASING",
+    {
+     "any": [
+      "BUILDING_INTERSTELLAR_STARPORT",
+      "BUILDING_INTERGALACTIC_STARPORT",
+      "BUILDING_DISTANT_HORIZON_PORT"
+     ]
+    }
    ]
   }
  },

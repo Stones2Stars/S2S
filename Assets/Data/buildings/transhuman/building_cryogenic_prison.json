@@ -6,15 +6,11 @@
   "build": {
    "all": [
     "HAS_POWER",
-    "TECH_CRYONICS"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_CRYONICS",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ],
    "noneOf": [
     "BUILDING_STATUE_OF_LIBERTY"
@@ -26,22 +22,20 @@
      "type": "BONUS_CHEMICALS",
      "scope": "city",
      "connection": "trade|vicinity"
+    },
+    {
+     "type": "BONUS_NANOTUBES",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    {
+     "any": [
+      "CIVIC_DESPOTISM",
+      "CIVIC_MONARCHY",
+      "CIVIC_TOTALITARIANISM",
+      "CIVIC_SUPERHUMAN"
+     ]
     }
-   ],
-   "any": [
-    [
-     {
-      "type": "BONUS_NANOTUBES",
-      "scope": "city",
-      "connection": "trade|vicinity"
-     }
-    ],
-    [
-     "CIVIC_DESPOTISM",
-     "CIVIC_MONARCHY",
-     "CIVIC_TOTALITARIANISM",
-     "CIVIC_SUPERHUMAN"
-    ]
    ]
   }
  },

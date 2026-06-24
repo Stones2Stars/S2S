@@ -7,15 +7,11 @@
    "all": [
     "HAS_POWER",
     "BUILDING_ALEPH_ASSEMBLER",
-    "TECH_ELECTROWEAK_MATTER"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_ELECTROWEAK_MATTER",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   }
  },

@@ -11,22 +11,16 @@
      "min": 7
     },
     "BUILDING_EFFECT_LAUNCH_SITE",
-    "TECH_ORBITAL_FLIGHT"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_ORBITAL_FLIGHT",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {
-   "any": [
-    [
-     "CIVIC_OFF_PLANET_DUMPING"
-    ]
+   "all": [
+    "CIVIC_OFF_PLANET_DUMPING"
    ]
   }
  },

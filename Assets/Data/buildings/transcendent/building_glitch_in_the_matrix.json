@@ -6,15 +6,11 @@
   "build": {
    "all": [
     "BUILDING_TRANSFINITE_ORACLE",
-    "TECH_SIMULATION_AWARENESS"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_SIMULATION_AWARENESS",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   }
  },

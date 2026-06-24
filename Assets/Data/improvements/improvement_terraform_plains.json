@@ -8,20 +8,16 @@
     {
      "type": "TECH_WEATHER_CONTROL",
      "scope": "team"
+    },
+    {
+     "terrain": [
+      "TERRAIN_LUSH",
+      "TERRAIN_GRASSLAND",
+      "TERRAIN_SCRUB",
+      "TERRAIN_TAIGA",
+      "TERRAIN_ROCKY"
+     ]
     }
-   ],
-   "any": [
-    [
-     {
-      "terrain": [
-       "TERRAIN_LUSH",
-       "TERRAIN_GRASSLAND",
-       "TERRAIN_SCRUB",
-       "TERRAIN_TAIGA",
-       "TERRAIN_ROCKY"
-      ]
-     }
-    ]
    ]
   }
  },

@@ -12,15 +12,11 @@
   "build": {
    "all": [
     "BUILDING_MAJOR_LEAGUE_STADIUM",
-    "TECH_SATELLITES"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_SATELLITES",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   }
  },

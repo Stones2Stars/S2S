@@ -11,41 +11,39 @@
   "build": {
    "all": [
     "BUILDING_GEOLOGY_LAB",
-    "TECH_VOLCANOLOGY"
-   ],
-   "any": [
-    [
-     {
-      "type": "FEATURE_VOLCANO_ACTIVE",
-      "scope": "plot"
-     },
-     {
-      "type": "FEATURE_VOLCANO_DORMANT",
-      "scope": "plot"
-     },
-     {
-      "type": "FEATURE_PLATY_FUJI",
-      "scope": "plot"
-     },
-     {
-      "type": "FEATURE_PLATY_SOPKA",
-      "scope": "plot"
-     },
-     {
-      "type": "FEATURE_PLATY_KRAKATOA",
-      "scope": "plot"
-     },
-     {
-      "type": "FEATURE_PLATY_KILIMANJARO",
-      "scope": "plot"
-     }
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_VOLCANOLOGY",
+    {
+     "any": [
+      {
+       "type": "FEATURE_VOLCANO_ACTIVE",
+       "scope": "plot"
+      },
+      {
+       "type": "FEATURE_VOLCANO_DORMANT",
+       "scope": "plot"
+      },
+      {
+       "type": "FEATURE_PLATY_FUJI",
+       "scope": "plot"
+      },
+      {
+       "type": "FEATURE_PLATY_SOPKA",
+       "scope": "plot"
+      },
+      {
+       "type": "FEATURE_PLATY_KRAKATOA",
+       "scope": "plot"
+      },
+      {
+       "type": "FEATURE_PLATY_KILIMANJARO",
+       "scope": "plot"
+      }
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   }
  },

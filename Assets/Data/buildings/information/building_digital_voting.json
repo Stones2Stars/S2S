@@ -7,22 +7,16 @@
    "all": [
     "HAS_POWER",
     "BUILDING_BLOCKCHAIN_AUTHENTICATION",
-    "TECH_DIRECT_MERCHANDISING"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_DIRECT_MERCHANDISING",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {
-   "any": [
-    [
-     "CIVIC_DEMOCRACY"
-    ]
+   "all": [
+    "CIVIC_DEMOCRACY"
    ]
   }
  },

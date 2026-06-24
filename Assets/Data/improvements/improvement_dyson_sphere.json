@@ -8,23 +8,19 @@
     {
      "type": "TECH_ASTROENGINEERING",
      "scope": "team"
+    },
+    {
+     "terrain": [
+      "TERRAIN_MILKY_WAY",
+      "TERRAIN_GALACTIC_CORE",
+      "TERRAIN_ORION_ARM",
+      "TERRAIN_STAR_CLUSTER",
+      "TERRAIN_NEBULA",
+      "TERRAIN_RED_GIANT",
+      "TERRAIN_SUN_LIKE_STAR",
+      "TERRAIN_RED_DWARF"
+     ]
     }
-   ],
-   "any": [
-    [
-     {
-      "terrain": [
-       "TERRAIN_MILKY_WAY",
-       "TERRAIN_GALACTIC_CORE",
-       "TERRAIN_ORION_ARM",
-       "TERRAIN_STAR_CLUSTER",
-       "TERRAIN_NEBULA",
-       "TERRAIN_RED_GIANT",
-       "TERRAIN_SUN_LIKE_STAR",
-       "TERRAIN_RED_DWARF"
-      ]
-     }
-    ]
    ]
   }
  },

@@ -32,15 +32,11 @@
     },
     "BUILDING_LABORATORY",
     "BUILDING_POWER_LINES",
-    "TECH_FUSION"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_FUSION",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

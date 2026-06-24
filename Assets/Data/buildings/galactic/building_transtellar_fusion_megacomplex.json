@@ -12,15 +12,11 @@
   "build": {
    "all": [
     "HAS_POWER",
-    "TECH_FORGE_WORLDS"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_INTERSTELLAR",
-      "scope": "plot"
-     }
-    ]
+    "TECH_FORGE_WORLDS",
+    {
+     "type": "MAPCATEGORY_INTERSTELLAR",
+     "scope": "plot"
+    }
    ]
   }
  },

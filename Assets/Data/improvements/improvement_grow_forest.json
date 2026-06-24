@@ -8,16 +8,12 @@
     {
      "type": "TECH_ECOLOGY",
      "scope": "team"
+    },
+    {
+     "feature": [
+      "FEATURE_FOREST_YOUNG"
+     ]
     }
-   ],
-   "any": [
-    [
-     {
-      "feature": [
-       "FEATURE_FOREST_YOUNG"
-      ]
-     }
-    ]
    ]
   }
  },

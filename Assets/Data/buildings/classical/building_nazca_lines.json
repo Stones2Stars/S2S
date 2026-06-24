@@ -8,21 +8,15 @@
    "all": [
     "BUILDING_FOLKLORE_E_SKY",
     "BUILDING_FOLKLORE_E_EARTH",
-    "TECH_MATHEMATICS"
-   ],
-   "any": [
-    [
-     {
-      "type": "TERRAIN_BARREN",
-      "scope": "plot"
-     }
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_MATHEMATICS",
+    {
+     "type": "TERRAIN_BARREN",
+     "scope": "plot"
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   }
  },

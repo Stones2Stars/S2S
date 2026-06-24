@@ -15,41 +15,39 @@
      "scope": "city",
      "min": 2
     },
-    "TECH_COOKING"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_COOKING",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {
-   "any": [
-    [
-     {
-      "type": "BONUS_RAW_MEAT",
-      "scope": "city",
-      "connection": "vicinity"
-     },
-     {
-      "type": "BONUS_RAW_FISH",
-      "scope": "city",
-      "connection": "vicinity"
-     },
-     {
-      "type": "BONUS_SHELLFISH",
-      "scope": "city",
-      "connection": "vicinity"
-     },
-     {
-      "type": "BONUS_FERTILIZERS",
-      "scope": "city",
-      "connection": "vicinity"
-     }
-    ]
+   "all": [
+    {
+     "any": [
+      {
+       "type": "BONUS_RAW_MEAT",
+       "scope": "city",
+       "connection": "vicinity"
+      },
+      {
+       "type": "BONUS_RAW_FISH",
+       "scope": "city",
+       "connection": "vicinity"
+      },
+      {
+       "type": "BONUS_SHELLFISH",
+       "scope": "city",
+       "connection": "vicinity"
+      },
+      {
+       "type": "BONUS_FERTILIZERS",
+       "scope": "city",
+       "connection": "vicinity"
+      }
+     ]
+    }
    ]
   }
  },

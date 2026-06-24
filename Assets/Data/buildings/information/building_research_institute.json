@@ -13,15 +13,11 @@
     },
     "BUILDING_LABORATORY",
     "BUILDING_MODERN_OFFICES",
-    "TECH_SUPERCONDUCTORS"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_SUPERCONDUCTORS",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   }
  },

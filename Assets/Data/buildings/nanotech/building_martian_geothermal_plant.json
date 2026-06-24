@@ -6,15 +6,11 @@
   "build": {
    "all": [
     "BUILDING_MARTIAN_MINE",
-    "TECH_PLANETARY_EXTRACTION"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_MARTIAN",
-      "scope": "plot"
-     }
-    ]
+    "TECH_PLANETARY_EXTRACTION",
+    {
+     "type": "MAPCATEGORY_MARTIAN",
+     "scope": "plot"
+    }
    ]
   }
  },

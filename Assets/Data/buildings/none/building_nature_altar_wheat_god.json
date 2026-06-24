@@ -5,29 +5,21 @@
  "requires": {
   "build": {
    "all": [
-    "BUILDING_NATURE_ALTAR"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "BUILDING_NATURE_ALTAR",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {
    "all": [
-    "RELIGION_DRUIDIC_TRADITIONS"
-   ],
-   "any": [
-    [
-     {
-      "type": "BONUS_WHEAT",
-      "scope": "city",
-      "connection": "vicinity"
-     }
-    ]
+    "RELIGION_DRUIDIC_TRADITIONS",
+    {
+     "type": "BONUS_WHEAT",
+     "scope": "city",
+     "connection": "vicinity"
+    }
    ]
   }
  },

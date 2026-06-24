@@ -9,16 +9,12 @@
      "type": "TECH_NATUROPATHY",
      "scope": "team"
     },
-    "HAS_FEATURE"
-   ],
-   "any": [
-    [
-     {
-      "feature": [
-       "FEATURE_JUNGLE"
-      ]
-     }
-    ]
+    "HAS_FEATURE",
+    {
+     "feature": [
+      "FEATURE_JUNGLE"
+     ]
+    }
    ]
   }
  },

@@ -7,19 +7,17 @@
    "all": [
     "HAS_POWER",
     "BUILDING_AERIAL_CITY",
-    "TECH_FANTASY_MATERIALS"
-   ],
-   "any": [
-    [
-     "BUILDING_SPACE_SHIPPING_WAREHOUSE",
-     "BUILDING_TELEPORT_SHIPPING_WAREHOUSE"
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_FANTASY_MATERIALS",
+    {
+     "any": [
+      "BUILDING_SPACE_SHIPPING_WAREHOUSE",
+      "BUILDING_TELEPORT_SHIPPING_WAREHOUSE"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   }
  },

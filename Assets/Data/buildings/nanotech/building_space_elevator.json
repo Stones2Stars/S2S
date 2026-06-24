@@ -14,15 +14,11 @@
      "type": "VICTORY_SPACE_RACE",
      "scope": "world"
     },
-    "TECH_SUPERSTRONG_ALLOYS"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_SUPERSTRONG_ALLOYS",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

@@ -15,20 +15,18 @@
    "all": [
     "HAS_POWER",
     "BUILDING_TV_STUDIO",
-    "TECH_TELEVISION"
-   ],
-   "any": [
-    [
-     "BUILDING_HOLOGRAPHIC_SCHOOL",
-     "BUILDING_UNIVERSITY",
-     "BUILDING_CITY_COLLEGE"
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_TELEVISION",
+    {
+     "any": [
+      "BUILDING_HOLOGRAPHIC_SCHOOL",
+      "BUILDING_UNIVERSITY",
+      "BUILDING_CITY_COLLEGE"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

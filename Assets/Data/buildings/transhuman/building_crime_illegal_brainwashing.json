@@ -5,15 +5,11 @@
  "requires": {
   "build": {
    "all": [
-    "TECH_MIND_UPLOADING"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_MIND_UPLOADING",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

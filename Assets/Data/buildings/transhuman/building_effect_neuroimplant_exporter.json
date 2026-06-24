@@ -10,15 +10,11 @@
  "requires": {
   "build": {
    "all": [
-    "TECH_COMPREHENSIVE_CYBERNETICS"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_COMPREHENSIVE_CYBERNETICS",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   }
  },

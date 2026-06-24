@@ -16,19 +16,17 @@
     "HAS_POWER",
     "BUILDING_FACTORY",
     "BUILDING_POWER_LINES",
-    "TECH_RENEWABLE_ENERGY"
-   ],
-   "any": [
-    [
-     "HAS_COAST",
-     "HAS_RIVER"
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_RENEWABLE_ENERGY",
+    {
+     "any": [
+      "HAS_COAST",
+      "HAS_RIVER"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

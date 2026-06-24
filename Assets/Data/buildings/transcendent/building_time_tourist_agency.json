@@ -6,20 +6,18 @@
   "build": {
    "all": [
     "HAS_POWER",
-    "TECH_ALTERNATE_HISTORY_EXPLORATION"
-   ],
-   "any": [
-    [
-     "BUILDING_HE3_FUSION_POWER_PLANT",
-     "BUILDING_ANTIMATTER_INITIATED_FUSION_PLANT",
-     "BUILDING_QUANTUM_VACUUM_POWER_PLANT"
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_ALTERNATE_HISTORY_EXPLORATION",
+    {
+     "any": [
+      "BUILDING_HE3_FUSION_POWER_PLANT",
+      "BUILDING_ANTIMATTER_INITIATED_FUSION_PLANT",
+      "BUILDING_QUANTUM_VACUUM_POWER_PLANT"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   }
  },

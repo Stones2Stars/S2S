@@ -30,13 +30,13 @@
      "type": "BONUS_RADIOS",
      "scope": "city",
      "connection": "trade|vicinity"
+    },
+    {
+     "any": [
+      "BUILDING_POLICE_STATION",
+      "BUILDING_POLICE_PRECINCT"
+     ]
     }
-   ],
-   "any": [
-    [
-     "BUILDING_POLICE_STATION",
-     "BUILDING_POLICE_PRECINCT"
-    ]
    ]
   }
  },

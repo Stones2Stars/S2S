@@ -15,15 +15,11 @@
      "scope": "city",
      "min": 7
     },
-    "TECH_MARTIAL_ARTS"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_MARTIAL_ARTS",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   }
  },

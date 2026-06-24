@@ -16,15 +16,11 @@
     "HAS_POWER",
     "BUILDING_FACTORY",
     "BUILDING_GENE_FARMING_LAB",
-    "TECH_MOLECULAR_MEDICINE"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_MOLECULAR_MEDICINE",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

@@ -14,21 +14,15 @@
     "HAS_POWER",
     "BUILDING_DEEP_SPACE_BISHOP_RING",
     "BUILDING_DEEP_SPACE_FOCUSED_SUNLIGHT_PLANT",
-    "TECH_STAR_LIFTING"
-   ],
-   "any": [
-    [
-     {
-      "type": "TERRAIN_SUN",
-      "scope": "plot"
-     }
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_SOLAR_SYSTEM",
-      "scope": "plot"
-     }
-    ]
+    "TECH_STAR_LIFTING",
+    {
+     "type": "TERRAIN_SUN",
+     "scope": "plot"
+    },
+    {
+     "type": "MAPCATEGORY_SOLAR_SYSTEM",
+     "scope": "plot"
+    }
    ]
   }
  },

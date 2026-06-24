@@ -12,21 +12,15 @@
    "all": [
     "BUILDING_INTERGALACTIC_MORRIS_THORNE_WORMHOLE",
     "BUILDING_INTERGALACTIC_COMMAND_CENTER",
-    "TECH_MEGAWORMHOLES"
-   ],
-   "any": [
-    [
-     {
-      "type": "TERRAIN_INTERGALACTIC_VOID",
-      "scope": "plot"
-     }
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_UNIVERSAL",
-      "scope": "plot"
-     }
-    ]
+    "TECH_MEGAWORMHOLES",
+    {
+     "type": "TERRAIN_INTERGALACTIC_VOID",
+     "scope": "plot"
+    },
+    {
+     "type": "MAPCATEGORY_UNIVERSAL",
+     "scope": "plot"
+    }
    ]
   }
  },

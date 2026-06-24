@@ -6,21 +6,19 @@
   "build": {
    "all": [
     "BUILDING_FOLKLORE_REQUIREMENT",
-    "TECH_TAXONOMY"
-   ],
-   "any": [
-    [
-     "BUILDING_FOLKLORE_BLUE_FOOTED_BOOBY",
-     "BUILDING_FOLKLORE_RAZORBILL",
-     "BUILDING_FOLKLORE_STELLERS_SEA_EAGLE",
-     "BUILDING_FOLKLORE_ARCTIC_TERN"
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_TAXONOMY",
+    {
+     "any": [
+      "BUILDING_FOLKLORE_BLUE_FOOTED_BOOBY",
+      "BUILDING_FOLKLORE_RAZORBILL",
+      "BUILDING_FOLKLORE_STELLERS_SEA_EAGLE",
+      "BUILDING_FOLKLORE_ARCTIC_TERN"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   }
  },

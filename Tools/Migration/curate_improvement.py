@@ -173,11 +173,11 @@ def requires_improvement(rec, store):
             anyset.append(OrderedDict([("bonus", mv)]))
     if _bool(rec, "bNoFreshWater"):
         none.append("HAS_FRESHWATER")
+    if anyset:                                                   # bonus-makes-valid OR-group -> nested {any} under all (any = ||)
+        allc.append(anyset[0] if len(anyset) == 1 else OrderedDict([("any", anyset)]))
     build = OrderedDict()
     if allc:
         build["all"] = allc
-    if anyset:
-        build["any"] = [anyset]                                  # ONE OR-group (modifier-spec §3 nested form)
     if none:
         build["noneOf"] = none
     return {"build": build} if build else None

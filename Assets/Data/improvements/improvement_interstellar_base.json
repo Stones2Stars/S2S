@@ -8,19 +8,15 @@
     {
      "type": "TECH_WEAPONIZED_GRAVITY_FIELDS",
      "scope": "team"
+    },
+    {
+     "terrain": [
+      "TERRAIN_ORION_ARM",
+      "TERRAIN_TRANSTELLAR_SPACE",
+      "TERRAIN_MILKY_WAY",
+      "TERRAIN_GALACTIC_CORE"
+     ]
     }
-   ],
-   "any": [
-    [
-     {
-      "terrain": [
-       "TERRAIN_ORION_ARM",
-       "TERRAIN_TRANSTELLAR_SPACE",
-       "TERRAIN_MILKY_WAY",
-       "TERRAIN_GALACTIC_CORE"
-      ]
-     }
-    ]
    ]
   }
  },

@@ -8,22 +8,22 @@
     {
      "type": "TECH_ASTEROID_MINING",
      "scope": "team"
+    },
+    {
+     "any": [
+      {
+       "feature": [
+        "FEATURE_ASTEROIDS"
+       ]
+      },
+      {
+       "bonus": [
+        "BONUS_METALLIC_ASTEROID",
+        "BONUS_ORGANIC_VOLATILES"
+       ]
+      }
+     ]
     }
-   ],
-   "any": [
-    [
-     {
-      "feature": [
-       "FEATURE_ASTEROIDS"
-      ]
-     },
-     {
-      "bonus": [
-       "BONUS_METALLIC_ASTEROID",
-       "BONUS_ORGANIC_VOLATILES"
-      ]
-     }
-    ]
    ]
   }
  },

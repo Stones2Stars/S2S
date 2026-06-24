@@ -7,21 +7,15 @@
    "all": [
     "BUILDING_C_AC_MIDDLE_EASTERN",
     "BUILDING_C_L_MIDDLE_EASTERN",
-    "TECH_ARCHERY"
-   ],
-   "any": [
-    [
-     {
-      "type": "FEATURE_FLOOD_PLAINS",
-      "scope": "plot"
-     }
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_ARCHERY",
+    {
+     "type": "FEATURE_FLOOD_PLAINS",
+     "scope": "plot"
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

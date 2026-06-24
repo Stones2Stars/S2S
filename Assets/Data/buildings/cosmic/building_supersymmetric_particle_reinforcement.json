@@ -7,15 +7,11 @@
    "all": [
     "HAS_POWER",
     "BUILDING_ADVANCED_SHIELDING",
-    "TECH_SUPERSYMMETRIC_PARTICLE_CONSTRUCTION"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_SUPERSYMMETRIC_PARTICLE_CONSTRUCTION",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   }
  },

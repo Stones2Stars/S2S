@@ -15,19 +15,17 @@
    "all": [
     "HAS_POWER",
     "BUILDING_MEGATOWER",
-    "TECH_NANO_ARCHITECTURE"
-   ],
-   "any": [
-    [
-     "BUILDING_POLICE_STATION",
-     "BUILDING_POLICE_PRECINCT"
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_NANO_ARCHITECTURE",
+    {
+     "any": [
+      "BUILDING_POLICE_STATION",
+      "BUILDING_POLICE_PRECINCT"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

@@ -25,15 +25,11 @@
     "HAS_POWER",
     "BUILDING_BIOLOGY_LAB",
     "BUILDING_CHEMISTRY_LAB",
-    "TECH_MOLECULAR_BIOLOGY"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_MOLECULAR_BIOLOGY",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

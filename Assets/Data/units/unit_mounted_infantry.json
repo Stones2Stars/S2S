@@ -11,21 +11,21 @@
      "connection": "trade|vicinity"
     },
     "BUILDING_ANIMAL_TRAINER_HORSE",
-    "TECH_HORSE_BREEDING"
-   ],
-   "any": [
-    [
-     {
-      "type": "BONUS_BRONZE_WARES",
-      "scope": "city",
-      "connection": "trade|vicinity"
-     },
-     {
-      "type": "BONUS_IRON_WARES",
-      "scope": "city",
-      "connection": "trade|vicinity"
-     }
-    ]
+    "TECH_HORSE_BREEDING",
+    {
+     "any": [
+      {
+       "type": "BONUS_BRONZE_WARES",
+       "scope": "city",
+       "connection": "trade|vicinity"
+      },
+      {
+       "type": "BONUS_IRON_WARES",
+       "scope": "city",
+       "connection": "trade|vicinity"
+      }
+     ]
+    }
    ]
   }
  },

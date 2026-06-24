@@ -10,15 +10,11 @@
      "type": "BUILDING_FOLKLORE_MOA",
      "scope": "empire",
      "min": 3
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
     }
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
    ]
   }
  },

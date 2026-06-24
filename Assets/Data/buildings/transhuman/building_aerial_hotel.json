@@ -7,15 +7,11 @@
    "all": [
     "HAS_POWER",
     "BUILDING_MEGATOWER_HOTEL_LEVEL",
-    "TECH_WEIGHTLESS_FLIGHT"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_WEIGHTLESS_FLIGHT",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   }
  },

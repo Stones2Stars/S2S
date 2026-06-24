@@ -14,19 +14,17 @@
    "all": [
     "BUILDING_HELLENIC_TEMPLE",
     "TECH_CITY_PLANNING",
-    "TECH_MATHEMATICS"
-   ],
-   "any": [
-    [
-     "BUILDING_CITY_COUNCIL",
-     "BUILDING_METROPOLITAN_ADMINISTRATION"
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_MATHEMATICS",
+    {
+     "any": [
+      "BUILDING_CITY_COUNCIL",
+      "BUILDING_METROPOLITAN_ADMINISTRATION"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

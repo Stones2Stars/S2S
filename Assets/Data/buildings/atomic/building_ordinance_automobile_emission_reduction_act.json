@@ -21,15 +21,11 @@
     },
     "BUILDING_DEPARTMENT_OF_MOTOR_VEHICLES",
     "BUILDING_COURTHOUSE",
-    "TECH_ECOLOGY"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_ECOLOGY",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

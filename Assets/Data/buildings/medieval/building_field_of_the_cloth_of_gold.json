@@ -11,23 +11,21 @@
      "scope": "city",
      "min": 3
     },
-    "TECH_TOURNAMENTS"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_TOURNAMENTS",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {
-   "any": [
-    [
-     "CIVIC_VASSAL_LEVIES",
-     "CIVIC_FEUDAL"
-    ]
+   "all": [
+    {
+     "any": [
+      "CIVIC_VASSAL_LEVIES",
+      "CIVIC_FEUDAL"
+     ]
+    }
    ]
   }
  },

@@ -25,15 +25,11 @@
      "scope": "world",
      "min": 3
     },
-    "TECH_GRAND_WAR"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_GRAND_WAR",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   }
  },

@@ -6,13 +6,13 @@
  "requires": {
   "build": {
    "all": [
-    "TECH_DEEP_SPACE_COLONIES"
-   ],
-   "any": [
-    [
-     "BUILDING_CISLUNAR_SPACEPORT",
-     "BUILDING_DEEP_SPACE_DOCKING_BAY"
-    ]
+    "TECH_DEEP_SPACE_COLONIES",
+    {
+     "any": [
+      "BUILDING_CISLUNAR_SPACEPORT",
+      "BUILDING_DEEP_SPACE_DOCKING_BAY"
+     ]
+    }
    ]
   }
  },

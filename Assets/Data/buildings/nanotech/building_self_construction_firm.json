@@ -20,15 +20,11 @@
    "all": [
     "HAS_POWER",
     "BUILDING_MEGATOWER_OFFICE_LEVEL",
-    "TECH_AUTOMATED_URBANIZATION"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_AUTOMATED_URBANIZATION",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

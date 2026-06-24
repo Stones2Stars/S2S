@@ -6,20 +6,18 @@
   "build": {
    "all": [
     "HAS_POWER",
-    "TECH_PERSONAL_ROBOTS"
-   ],
-   "any": [
-    [
-     "BUILDING_NIGHT_CLUB",
-     "BUILDING_CASINO",
-     "BUILDING_GALACTIC_CANTINA"
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_PERSONAL_ROBOTS",
+    {
+     "any": [
+      "BUILDING_NIGHT_CLUB",
+      "BUILDING_CASINO",
+      "BUILDING_GALACTIC_CANTINA"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

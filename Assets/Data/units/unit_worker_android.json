@@ -5,13 +5,13 @@
  "requires": {
   "build": {
    "all": [
-    "TECH_PERSONAL_ROBOTS"
-   ],
-   "any": [
-    [
-     "BUILDING_FACTORY_ANDROIDS",
-     "BUILDING_NANOTECH_COMPLEX"
-    ]
+    "TECH_PERSONAL_ROBOTS",
+    {
+     "any": [
+      "BUILDING_FACTORY_ANDROIDS",
+      "BUILDING_NANOTECH_COMPLEX"
+     ]
+    }
    ]
   }
  },

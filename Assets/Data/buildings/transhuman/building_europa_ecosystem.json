@@ -10,21 +10,15 @@
  "requires": {
   "build": {
    "all": [
-    "TECH_SPECULATIVE_PHYSIOLOGY"
-   ],
-   "any": [
-    [
-     {
-      "type": "TERRAIN_EUROPA",
-      "scope": "plot"
-     }
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_SOLAR_SYSTEM",
-      "scope": "plot"
-     }
-    ]
+    "TECH_SPECULATIVE_PHYSIOLOGY",
+    {
+     "type": "TERRAIN_EUROPA",
+     "scope": "plot"
+    },
+    {
+     "type": "MAPCATEGORY_SOLAR_SYSTEM",
+     "scope": "plot"
+    }
    ]
   }
  },

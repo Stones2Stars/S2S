@@ -9,29 +9,25 @@
      "type": "TECH_MANUFACTURING",
      "scope": "team"
     },
-    "IS_FLATLANDS"
-   ],
-   "any": [
-    [
-     {
-      "terrain": [
-       "TERRAIN_BARREN",
-       "TERRAIN_DESERT",
-       "TERRAIN_GRASSLAND",
-       "TERRAIN_ICE",
-       "TERRAIN_LUSH",
-       "TERRAIN_PLAINS",
-       "TERRAIN_MUDDY",
-       "TERRAIN_PERMAFROST",
-       "TERRAIN_ROCKY",
-       "TERRAIN_BADLAND",
-       "TERRAIN_JAGGED",
-       "TERRAIN_SCRUB",
-       "TERRAIN_TAIGA",
-       "TERRAIN_TUNDRA"
-      ]
-     }
-    ]
+    "IS_FLATLANDS",
+    {
+     "terrain": [
+      "TERRAIN_BARREN",
+      "TERRAIN_DESERT",
+      "TERRAIN_GRASSLAND",
+      "TERRAIN_ICE",
+      "TERRAIN_LUSH",
+      "TERRAIN_PLAINS",
+      "TERRAIN_MUDDY",
+      "TERRAIN_PERMAFROST",
+      "TERRAIN_ROCKY",
+      "TERRAIN_BADLAND",
+      "TERRAIN_JAGGED",
+      "TERRAIN_SCRUB",
+      "TERRAIN_TAIGA",
+      "TERRAIN_TUNDRA"
+     ]
+    }
    ]
   }
  },

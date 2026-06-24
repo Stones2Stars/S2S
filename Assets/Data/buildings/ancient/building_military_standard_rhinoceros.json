@@ -13,19 +13,17 @@
    "all": [
     "BUILDING_MILITARY_STANDARD_ANIMAL_MASCOT",
     "TECH_HERITAGE",
-    "TECH_MEGAFAUNA_DOMESTICATION"
-   ],
-   "any": [
-    [
-     "BUILDING_ANIMAL_TRAINER_RHINOCEROS",
-     "BUILDING_EFFECT_HERITAGE_RHINOS"
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_MEGAFAUNA_DOMESTICATION",
+    {
+     "any": [
+      "BUILDING_ANIMAL_TRAINER_RHINOCEROS",
+      "BUILDING_EFFECT_HERITAGE_RHINOS"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   }
  },

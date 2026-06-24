@@ -9,16 +9,12 @@
      "type": "TECH_IRON_WORKING",
      "scope": "team"
     },
-    "HAS_FEATURE"
-   ],
-   "any": [
-    [
-     {
-      "feature": [
-       "FEATURE_PEAT_BOG"
-      ]
-     }
-    ]
+    "HAS_FEATURE",
+    {
+     "feature": [
+      "FEATURE_PEAT_BOG"
+     ]
+    }
    ]
   }
  },

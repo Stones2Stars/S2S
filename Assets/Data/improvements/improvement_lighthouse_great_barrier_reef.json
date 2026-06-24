@@ -9,17 +9,13 @@
      "type": "TECH_ENGINEERING",
      "scope": "team"
     },
-    "IS_WATER"
-   ],
-   "any": [
-    [
-     {
-      "feature": [
-       "FEATURE_PLATY_GREAT_BARRIER",
-       "FEATURE_GREAT_BARRIER_REEF_BEACON"
-      ]
-     }
-    ]
+    "IS_WATER",
+    {
+     "feature": [
+      "FEATURE_PLATY_GREAT_BARRIER",
+      "FEATURE_GREAT_BARRIER_REEF_BEACON"
+     ]
+    }
    ]
   }
  },

@@ -7,15 +7,11 @@
    "all": [
     "BUILDING_CLOSED_TIMELIKE_CURVE_COMPUTER",
     "TECH_TACHYON_COMMUNICATIONS",
-    "TECH_STABLE_TIME_LOOPS"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_STABLE_TIME_LOOPS",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   }
  },

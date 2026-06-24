@@ -8,15 +8,11 @@
     "BUILDING_C_AC_NORTH_AMERICAN",
     "BUILDING_C_L_NORTH_AMERICAN",
     "BUILDING_C_AC_EUROPEAN",
-    "TECH_REPRESENTATIVE_DEMOCRACY"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_REPRESENTATIVE_DEMOCRACY",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

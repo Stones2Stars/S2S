@@ -13,21 +13,19 @@
  "requires": {
   "build": {
    "all": [
-    "TECH_MUSICAL_NOTATION"
-   ],
-   "any": [
-    [
-     "BUILDING_PALACE",
-     "BUILDING_FORBIDDEN_PALACE",
-     "BUILDING_CASTLE",
-     "BUILDING_STAR_FORT"
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_MUSICAL_NOTATION",
+    {
+     "any": [
+      "BUILDING_PALACE",
+      "BUILDING_FORBIDDEN_PALACE",
+      "BUILDING_CASTLE",
+      "BUILDING_STAR_FORT"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

@@ -16,15 +16,11 @@
     "HAS_POWER",
     "BUILDING_HOSPITAL",
     "BUILDING_LABORATORY",
-    "TECH_GENETICS"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_GENETICS",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

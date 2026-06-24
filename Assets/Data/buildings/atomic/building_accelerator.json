@@ -12,15 +12,11 @@
    "all": [
     "HAS_POWER",
     "BUILDING_UNIVERSITY",
-    "TECH_LASER"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_LASER",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   }
  },

@@ -39,15 +39,11 @@
   "build": {
    "all": [
     "BUILDING_UNIVERSITY",
-    "TECH_MODERN_PHYSICS"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_MODERN_PHYSICS",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   }
  },

@@ -4,26 +4,20 @@
  "civilopedia": "TXT_KEY_BUILDING_ALPHAGENDER_PEDIA",
  "requires": {
   "build": {
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ],
-    [
-     {
-      "type": "CIVILIZATION_NPC_NEANDERTHAL",
-      "scope": "empire"
-     }
-    ]
+   "all": [
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    },
+    {
+     "type": "CIVILIZATION_NPC_NEANDERTHAL",
+     "scope": "empire"
+    }
    ]
   },
   "operate": {
-   "any": [
-    [
-     "CIVIC_STRONGMAN"
-    ]
+   "all": [
+    "CIVIC_STRONGMAN"
    ]
   }
  },

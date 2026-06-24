@@ -9,15 +9,11 @@
     "STATE_RELIGION_IN_CITY",
     {
      "STATE_RELIGION": "RELIGION_JUDAISM"
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
     }
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
    ]
   },
   "operate": {
@@ -27,16 +23,12 @@
      "scope": "city",
      "connection": "trade|vicinity"
     },
-    "RELIGION_JUDAISM"
-   ],
-   "any": [
-    [
-     {
-      "type": "BONUS_PRIME_TIMBER",
-      "scope": "city",
-      "connection": "trade|vicinity"
-     }
-    ]
+    "RELIGION_JUDAISM",
+    {
+     "type": "BONUS_PRIME_TIMBER",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    }
    ]
   }
  },

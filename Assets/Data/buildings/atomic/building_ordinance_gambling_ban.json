@@ -5,15 +5,11 @@
  "requires": {
   "build": {
    "all": [
-    "TECH_LEGALIZED_GAMBLING"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_LEGALIZED_GAMBLING",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   }
  },

@@ -12,15 +12,11 @@
    "all": [
     "BUILDING_CISLUNAR_SANITATION_SYSTEM",
     "BUILDING_CISLUNAR_AGRICULTURAL_LAB",
-    "TECH_DESIGNER_MICROBIOLOGY"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_CISLUNAR",
-      "scope": "plot"
-     }
-    ]
+    "TECH_DESIGNER_MICROBIOLOGY",
+    {
+     "type": "MAPCATEGORY_CISLUNAR",
+     "scope": "plot"
+    }
    ]
   }
  },

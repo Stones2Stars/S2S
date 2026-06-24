@@ -14,15 +14,11 @@
   "build": {
    "all": [
     "BUILDING_STOCK_MARKET",
-    "TECH_DERIVATIVES"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_DERIVATIVES",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

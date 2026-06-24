@@ -12,19 +12,17 @@
    "all": [
     "HAS_RIVER",
     "TECH_WATERWHEELS",
-    "TECH_CALENDAR"
-   ],
-   "any": [
-    [
-     "BUILDING_WATERCLOCK",
-     "BUILDING_TOWNCLOCK"
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_CALENDAR",
+    {
+     "any": [
+      "BUILDING_WATERCLOCK",
+      "BUILDING_TOWNCLOCK"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   }
  },

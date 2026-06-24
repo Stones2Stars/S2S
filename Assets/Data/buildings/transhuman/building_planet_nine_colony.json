@@ -6,21 +6,15 @@
   "build": {
    "all": [
     "BUILDING_DEEP_SPACE_ECOSYSTEM",
-    "TECH_NUCLEAR_PULSE_PROPULSION"
-   ],
-   "any": [
-    [
-     {
-      "type": "FEATURE_SEDNOID",
-      "scope": "plot"
-     }
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_SOLAR_SYSTEM",
-      "scope": "plot"
-     }
-    ]
+    "TECH_NUCLEAR_PULSE_PROPULSION",
+    {
+     "type": "FEATURE_SEDNOID",
+     "scope": "plot"
+    },
+    {
+     "type": "MAPCATEGORY_SOLAR_SYSTEM",
+     "scope": "plot"
+    }
    ],
    "noneOf": [
     "BUILDING_SEDNA_COLONY"

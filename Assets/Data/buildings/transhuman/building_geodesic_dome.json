@@ -12,15 +12,11 @@
    "all": [
     "HAS_POWER",
     "BUILDING_MEGATOWER",
-    "TECH_SYNERGETICS"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_SYNERGETICS",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   }
  },

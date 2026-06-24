@@ -14,15 +14,11 @@
   "build": {
    "all": [
     "BUILDING_CARPENTER",
-    "TECH_PULLEY"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_PULLEY",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

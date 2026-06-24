@@ -7,21 +7,15 @@
    "all": [
     "BUILDING_URANUS_FLOATING_CITY",
     "BUILDING_DEEP_SPACE_BISHOP_RING",
-    "TECH_JOVIAN_TERRAFORMING"
-   ],
-   "any": [
-    [
-     {
-      "type": "TERRAIN_URANUS",
-      "scope": "plot"
-     }
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_SOLAR_SYSTEM",
-      "scope": "plot"
-     }
-    ]
+    "TECH_JOVIAN_TERRAFORMING",
+    {
+     "type": "TERRAIN_URANUS",
+     "scope": "plot"
+    },
+    {
+     "type": "MAPCATEGORY_SOLAR_SYSTEM",
+     "scope": "plot"
+    }
    ]
   }
  },

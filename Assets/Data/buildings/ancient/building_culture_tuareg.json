@@ -7,21 +7,15 @@
    "all": [
     "BUILDING_C_AC_AFRICAN",
     "BUILDING_C_L_AFRICAN",
-    "TECH_CAMELID_DOMESTICATION"
-   ],
-   "any": [
-    [
-     {
-      "type": "TERRAIN_DUNES",
-      "scope": "plot"
-     }
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_CAMELID_DOMESTICATION",
+    {
+     "type": "TERRAIN_DUNES",
+     "scope": "plot"
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

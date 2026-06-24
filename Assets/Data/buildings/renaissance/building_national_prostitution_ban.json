@@ -11,15 +11,11 @@
      "min": 7
     },
     "BUILDING_SUPREME_COURT",
-    "TECH_JURISPRUDENCE"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_JURISPRUDENCE",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   }
  },

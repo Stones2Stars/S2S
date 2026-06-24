@@ -5,29 +5,29 @@
  "requires": {
   "build": {
    "all": [
-    "TECH_GUILDS"
-   ],
-   "any": [
-    [
-     "BUILDING_TRADING_POST",
-     "BUILDING_SHOPPING_DISTRICT"
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_GUILDS",
+    {
+     "any": [
+      "BUILDING_TRADING_POST",
+      "BUILDING_SHOPPING_DISTRICT"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {
-   "any": [
-    [
-     "CIVIC_AGRICULTURAL_GUILDS",
-     "CIVIC_PRIVATE_OWNED",
-     "CIVIC_INCENTIVIZED",
-     "CIVIC_ORGANIC_FARMING"
-    ]
+   "all": [
+    {
+     "any": [
+      "CIVIC_AGRICULTURAL_GUILDS",
+      "CIVIC_PRIVATE_OWNED",
+      "CIVIC_INCENTIVIZED",
+      "CIVIC_ORGANIC_FARMING"
+     ]
+    }
    ]
   }
  },

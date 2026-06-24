@@ -8,17 +8,13 @@
     {
      "type": "TECH_PLANETARY_DEFENSES",
      "scope": "team"
+    },
+    {
+     "terrain": [
+      "TERRAIN_CISLUNAR_SPACE",
+      "TERRAIN_ORBIT"
+     ]
     }
-   ],
-   "any": [
-    [
-     {
-      "terrain": [
-       "TERRAIN_CISLUNAR_SPACE",
-       "TERRAIN_ORBIT"
-      ]
-     }
-    ]
    ]
   }
  },

@@ -9,15 +9,11 @@
      "type": "BUILDING_WORLDVIEW_CANNIBALISM",
      "scope": "empire",
      "min": 1
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
     }
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
    ]
   },
   "operate": {

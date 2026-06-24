@@ -10,20 +10,18 @@
      "scope": "city",
      "connection": "trade|vicinity"
     },
-    "TECH_GENE_ENHANCEMENT"
-   ],
-   "any": [
-    [
-     {
-      "type": "BONUS_FIREARMS",
-      "scope": "city",
-      "connection": "trade|vicinity"
-     }
-    ],
-    [
-     "BUILDING_FERTILITY_CLINIC",
-     "BUILDING_NANOMORPHIC_REPLICATOR"
-    ]
+    "TECH_GENE_ENHANCEMENT",
+    {
+     "type": "BONUS_FIREARMS",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    {
+     "any": [
+      "BUILDING_FERTILITY_CLINIC",
+      "BUILDING_NANOMORPHIC_REPLICATOR"
+     ]
+    }
    ]
   }
  },

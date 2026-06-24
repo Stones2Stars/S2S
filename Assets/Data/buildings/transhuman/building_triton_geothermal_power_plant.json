@@ -12,21 +12,15 @@
    "all": [
     "HAS_POWER",
     "BUILDING_TRITON_COLONY",
-    "TECH_ASTROGATION_CONSTELLATION"
-   ],
-   "any": [
-    [
-     {
-      "type": "TERRAIN_TRITON",
-      "scope": "plot"
-     }
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_SOLAR_SYSTEM",
-      "scope": "plot"
-     }
-    ]
+    "TECH_ASTROGATION_CONSTELLATION",
+    {
+     "type": "TERRAIN_TRITON",
+     "scope": "plot"
+    },
+    {
+     "type": "MAPCATEGORY_SOLAR_SYSTEM",
+     "scope": "plot"
+    }
    ]
   }
  },

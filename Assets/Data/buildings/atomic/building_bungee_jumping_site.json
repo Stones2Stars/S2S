@@ -13,25 +13,23 @@
  "requires": {
   "build": {
    "all": [
-    "TECH_EXTREME_SPORTS"
-   ],
-   "any": [
-    [
-     "BUILDING_MODERN_CRANE",
-     "BUILDING_HIGH_TECH_CRANE",
-     "BUILDING_SMALL_STEEL_ARCH_BRIDGE",
-     "BUILDING_LARGE_STEEL_ARCH_BRIDGE",
-     "BUILDING_SMALL_SUSPENSION_BRIDGE",
-     "BUILDING_LARGE_SUSPENSION_BRIDGE",
-     "BUILDING_GOLDEN_GATE_BRIDGE",
-     "BUILDING_TELEPORT_BOOTH"
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_EXTREME_SPORTS",
+    {
+     "any": [
+      "BUILDING_MODERN_CRANE",
+      "BUILDING_HIGH_TECH_CRANE",
+      "BUILDING_SMALL_STEEL_ARCH_BRIDGE",
+      "BUILDING_LARGE_STEEL_ARCH_BRIDGE",
+      "BUILDING_SMALL_SUSPENSION_BRIDGE",
+      "BUILDING_LARGE_SUSPENSION_BRIDGE",
+      "BUILDING_GOLDEN_GATE_BRIDGE",
+      "BUILDING_TELEPORT_BOOTH"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

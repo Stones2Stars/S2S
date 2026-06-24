@@ -5,31 +5,27 @@
  "requires": {
   "build": {
    "all": [
-    "TECH_MEGALITH_CONSTRUCTION"
-   ],
-   "any": [
-    [
-     {
-      "type": "TERRAIN_HILL",
-      "scope": "plot"
-     }
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_MEGALITH_CONSTRUCTION",
+    {
+     "type": "TERRAIN_HILL",
+     "scope": "plot"
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {
-   "any": [
-    [
-     "CIVIC_CHIEFDOM",
-     "CIVIC_DESPOTISM",
-     "CIVIC_MONARCHY",
-     "CIVIC_THEOCRACY"
-    ]
+   "all": [
+    {
+     "any": [
+      "CIVIC_CHIEFDOM",
+      "CIVIC_DESPOTISM",
+      "CIVIC_MONARCHY",
+      "CIVIC_THEOCRACY"
+     ]
+    }
    ]
   }
  },

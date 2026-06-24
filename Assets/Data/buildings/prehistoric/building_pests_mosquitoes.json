@@ -20,33 +20,31 @@
      "scope": "city",
      "min": 3
     },
-    "TECH_TRAP_FISHING"
-   ],
-   "any": [
-    [
-     {
-      "type": "FEATURE_FLOOD_PLAINS",
-      "scope": "plot"
-     },
-     {
-      "type": "FEATURE_SWAMP",
-      "scope": "plot"
-     },
-     {
-      "type": "FEATURE_PEAT_BOG",
-      "scope": "plot"
-     },
-     {
-      "type": "FEATURE_JUNGLE",
-      "scope": "plot"
-     }
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_TRAP_FISHING",
+    {
+     "any": [
+      {
+       "type": "FEATURE_FLOOD_PLAINS",
+       "scope": "plot"
+      },
+      {
+       "type": "FEATURE_SWAMP",
+       "scope": "plot"
+      },
+      {
+       "type": "FEATURE_PEAT_BOG",
+       "scope": "plot"
+      },
+      {
+       "type": "FEATURE_JUNGLE",
+       "scope": "plot"
+      }
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   }
  },

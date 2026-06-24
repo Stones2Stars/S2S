@@ -8,29 +8,29 @@
     {
      "type": "TECH_MINING",
      "scope": "team"
+    },
+    {
+     "any": [
+      {
+       "terrain": [
+        "TERRAIN_ROCKY",
+        "TERRAIN_BADLAND",
+        "TERRAIN_JAGGED"
+       ]
+      },
+      "HAS_HILLS",
+      {
+       "bonus": [
+        "BONUS_STONE",
+        "BONUS_OBSIDIAN",
+        "BONUS_MARBLE",
+        "BONUS_FINE_CLAY",
+        "BONUS_TURQUOISE",
+        "BONUS_JADE"
+       ]
+      }
+     ]
     }
-   ],
-   "any": [
-    [
-     {
-      "terrain": [
-       "TERRAIN_ROCKY",
-       "TERRAIN_BADLAND",
-       "TERRAIN_JAGGED"
-      ]
-     },
-     "HAS_HILLS",
-     {
-      "bonus": [
-       "BONUS_STONE",
-       "BONUS_OBSIDIAN",
-       "BONUS_MARBLE",
-       "BONUS_FINE_CLAY",
-       "BONUS_TURQUOISE",
-       "BONUS_JADE"
-      ]
-     }
-    ]
    ]
   }
  },

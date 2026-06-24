@@ -10,21 +10,21 @@
      "scope": "city",
      "connection": "trade|vicinity"
     },
-    "TECH_BRONZE_WORKING"
-   ],
-   "any": [
-    [
-     {
-      "type": "BONUS_COPPER_ORE",
-      "scope": "city",
-      "connection": "trade|vicinity"
-     },
-     {
-      "type": "BONUS_IRON_ORE",
-      "scope": "city",
-      "connection": "trade|vicinity"
-     }
-    ]
+    "TECH_BRONZE_WORKING",
+    {
+     "any": [
+      {
+       "type": "BONUS_COPPER_ORE",
+       "scope": "city",
+       "connection": "trade|vicinity"
+      },
+      {
+       "type": "BONUS_IRON_ORE",
+       "scope": "city",
+       "connection": "trade|vicinity"
+      }
+     ]
+    }
    ]
   }
  },

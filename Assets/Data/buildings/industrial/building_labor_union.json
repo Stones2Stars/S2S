@@ -10,15 +10,11 @@
      "scope": "city",
      "min": 3
     },
-    "TECH_LABOR_UNIONS"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_LABOR_UNIONS",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   }
  },

@@ -25,15 +25,11 @@
     "BUILDING_UTERINE_REPLICATOR",
     "BUILDING_ANIMA_STUDIO",
     "BUILDING_BODY_EXCHANGE_CLINIC",
-    "TECH_ARTIFICIAL_LIFE"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_ARTIFICIAL_LIFE",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

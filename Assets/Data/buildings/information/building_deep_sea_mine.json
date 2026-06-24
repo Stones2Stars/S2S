@@ -14,15 +14,11 @@
   "build": {
    "all": [
     "HAS_COAST",
-    "TECH_UNMANNED_NAVAL_VEHICLES"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_UNMANNED_NAVAL_VEHICLES",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

@@ -15,29 +15,33 @@
      "scope": "world",
      "min": 10
     },
-    "TECH_MOTORIZED_TRANSPORTATION"
-   ],
-   "any": [
-    [
-     {
-      "type": "BONUS_IRON_WARES",
-      "scope": "city",
-      "connection": "trade|vicinity"
-     },
-     {
-      "type": "BONUS_STEEL_WARES",
-      "scope": "city",
-      "connection": "trade|vicinity"
-     }
-    ],
-    [
-     "BUILDING_DRYDOCK",
-     "BUILDING_NAVAL_YARD"
-    ],
-    [
-     "BUILDING_HOSPITAL",
-     "BUILDING_HEALTHCARE_MEGACOMPLEX"
-    ]
+    "TECH_MOTORIZED_TRANSPORTATION",
+    {
+     "any": [
+      "BUILDING_HOSPITAL",
+      "BUILDING_HEALTHCARE_MEGACOMPLEX"
+     ]
+    },
+    {
+     "any": [
+      {
+       "type": "BONUS_IRON_WARES",
+       "scope": "city",
+       "connection": "trade|vicinity"
+      },
+      {
+       "type": "BONUS_STEEL_WARES",
+       "scope": "city",
+       "connection": "trade|vicinity"
+      }
+     ]
+    },
+    {
+     "any": [
+      "BUILDING_DRYDOCK",
+      "BUILDING_NAVAL_YARD"
+     ]
+    }
    ]
   }
  },

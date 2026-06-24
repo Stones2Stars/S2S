@@ -17,19 +17,17 @@
      "min": 7
     },
     "BUILDING_LABORATORY",
-    "TECH_SMART_DRUGS"
-   ],
-   "any": [
-    [
-     "BUILDING_HOSPITAL",
-     "BUILDING_HEALTHCARE_MEGACOMPLEX"
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_SMART_DRUGS",
+    {
+     "any": [
+      "BUILDING_HOSPITAL",
+      "BUILDING_HEALTHCARE_MEGACOMPLEX"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

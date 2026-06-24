@@ -18,21 +18,19 @@
  "requires": {
   "build": {
    "all": [
-    "TECH_CIVIL_SERVICE"
-   ],
-   "any": [
-    [
-     "BUILDING_PALACE",
-     "BUILDING_FORBIDDEN_PALACE",
-     "BUILDING_CASTLE",
-     "BUILDING_STAR_FORT"
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_CIVIL_SERVICE",
+    {
+     "any": [
+      "BUILDING_PALACE",
+      "BUILDING_FORBIDDEN_PALACE",
+      "BUILDING_CASTLE",
+      "BUILDING_STAR_FORT"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

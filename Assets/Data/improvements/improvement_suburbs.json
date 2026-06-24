@@ -13,21 +13,21 @@
      "natureYield": {
       "food": 1
      }
+    },
+    {
+     "any": [
+      {
+       "terrain": [
+        "TERRAIN_GRASSLAND",
+        "TERRAIN_PLAINS",
+        "TERRAIN_LUSH",
+        "TERRAIN_SCRUB",
+        "TERRAIN_MUDDY"
+       ]
+      },
+      "HAS_FRESHWATER"
+     ]
     }
-   ],
-   "any": [
-    [
-     {
-      "terrain": [
-       "TERRAIN_GRASSLAND",
-       "TERRAIN_PLAINS",
-       "TERRAIN_LUSH",
-       "TERRAIN_SCRUB",
-       "TERRAIN_MUDDY"
-      ]
-     },
-     "HAS_FRESHWATER"
-    ]
    ]
   }
  },

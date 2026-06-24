@@ -41,15 +41,11 @@
   "build": {
    "all": [
     "BUILDING_CLONING_LABORATORY",
-    "TECH_REPLACEMENT_ORGANS"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_REPLACEMENT_ORGANS",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   }
  },

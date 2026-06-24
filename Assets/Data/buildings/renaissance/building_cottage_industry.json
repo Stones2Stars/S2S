@@ -13,19 +13,17 @@
  "requires": {
   "build": {
    "all": [
-    "TECH_REPLACEABLE_PARTS"
-   ],
-   "any": [
-    [
-     "BUILDING_FOUNDRY",
-     "BUILDING_METALS_MEGACOMPLEX"
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_REPLACEABLE_PARTS",
+    {
+     "any": [
+      "BUILDING_FOUNDRY",
+      "BUILDING_METALS_MEGACOMPLEX"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

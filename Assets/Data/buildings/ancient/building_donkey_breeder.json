@@ -19,20 +19,18 @@
   "build": {
    "all": [
     "BUILDING_FOLKLORE_DONKEY",
-    "TECH_THE_WHEEL"
-   ],
-   "any": [
-    [
-     "BUILDING_FARM_ANIMAL_DONKEY",
-     "BUILDING_INDUSTRIAL_FARMS",
-     "BUILDING_MEAT_INDUSTRY_CONGLOMERATE"
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_THE_WHEEL",
+    {
+     "any": [
+      "BUILDING_FARM_ANIMAL_DONKEY",
+      "BUILDING_INDUSTRIAL_FARMS",
+      "BUILDING_MEAT_INDUSTRY_CONGLOMERATE"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

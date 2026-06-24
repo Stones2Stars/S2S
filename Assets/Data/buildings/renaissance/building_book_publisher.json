@@ -13,19 +13,17 @@
  "requires": {
   "build": {
    "all": [
-    "TECH_PRINTING_PRESS"
-   ],
-   "any": [
-    [
-     "BUILDING_OFFICIUM",
-     "BUILDING_MODERN_OFFICES"
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_PRINTING_PRESS",
+    {
+     "any": [
+      "BUILDING_OFFICIUM",
+      "BUILDING_MODERN_OFFICES"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

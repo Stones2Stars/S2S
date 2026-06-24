@@ -14,32 +14,26 @@
   "build": {
    "all": [
     "TECH_CARPENTRY",
-    "TECH_TANNING"
-   ],
-   "any": [
-    [
-     "BUILDING_TANNERY",
-     "BUILDING_FACTORY_LEATHER",
-     "BUILDING_MEAT_INDUSTRY_CONGLOMERATE"
-    ],
-    [
-     {
-      "type": "FEATURE_BAMBOO",
-      "scope": "plot"
-     }
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ],
-    [
-     {
-      "type": "CIVILIZATION_NPC_NEANDERTHAL",
-      "scope": "empire"
-     }
-    ]
+    "TECH_TANNING",
+    {
+     "any": [
+      "BUILDING_TANNERY",
+      "BUILDING_FACTORY_LEATHER",
+      "BUILDING_MEAT_INDUSTRY_CONGLOMERATE"
+     ]
+    },
+    {
+     "type": "FEATURE_BAMBOO",
+     "scope": "plot"
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    },
+    {
+     "type": "CIVILIZATION_NPC_NEANDERTHAL",
+     "scope": "empire"
+    }
    ]
   },
   "operate": {

@@ -23,36 +23,34 @@
       "max": 80
      }
     },
-    "TECH_SEDENTARY_LIFESTYLE"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_SEDENTARY_LIFESTYLE",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {
-   "any": [
-    [
-     {
-      "type": "BONUS_GRAINS",
-      "scope": "city",
-      "connection": "vicinity"
-     },
-     {
-      "type": "BONUS_CHEESE",
-      "scope": "city",
-      "connection": "vicinity"
-     },
-     {
-      "type": "BONUS_VEGETABLES",
-      "scope": "city",
-      "connection": "vicinity"
-     }
-    ]
+   "all": [
+    {
+     "any": [
+      {
+       "type": "BONUS_GRAINS",
+       "scope": "city",
+       "connection": "vicinity"
+      },
+      {
+       "type": "BONUS_CHEESE",
+       "scope": "city",
+       "connection": "vicinity"
+      },
+      {
+       "type": "BONUS_VEGETABLES",
+       "scope": "city",
+       "connection": "vicinity"
+      }
+     ]
+    }
    ],
    "dormant": [
     "BUILDING_RAT_CATCHER",

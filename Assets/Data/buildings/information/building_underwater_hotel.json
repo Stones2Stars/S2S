@@ -16,15 +16,11 @@
     "HAS_COAST",
     "HAS_POWER",
     "BUILDING_HOTEL",
-    "TECH_MARINE_ARCHITECTURE"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_MARINE_ARCHITECTURE",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

@@ -7,20 +7,18 @@
    "all": [
     "HAS_POWER",
     "BUILDING_GEODESIC_DOME",
-    "TECH_ORGANIC_CITIES"
-   ],
-   "any": [
-    [
-     "BUILDING_ARCOLOGY",
-     "BUILDING_HOUSING_COLONY_ARCOLOGY",
-     "BUILDING_LAUNCH_ARCOLOGY"
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_ORGANIC_CITIES",
+    {
+     "any": [
+      "BUILDING_ARCOLOGY",
+      "BUILDING_HOUSING_COLONY_ARCOLOGY",
+      "BUILDING_LAUNCH_ARCOLOGY"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   }
  },

@@ -13,15 +13,11 @@
      "scope": "world",
      "min": 5
     },
-    "TECH_HARPOON_MAKING"
-   ],
-   "any": [
-    [
-     {
-      "type": "CIVILIZATION_NPC_NEANDERTHAL",
-      "scope": "empire"
-     }
-    ]
+    "TECH_HARPOON_MAKING",
+    {
+     "type": "CIVILIZATION_NPC_NEANDERTHAL",
+     "scope": "empire"
+    }
    ]
   }
  },

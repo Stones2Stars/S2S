@@ -20,19 +20,17 @@
  "requires": {
   "build": {
    "all": [
-    "TECH_AUTOMATED_TRAFFIC"
-   ],
-   "any": [
-    [
-     "BUILDING_HIGHWAY",
-     "BUILDING_SKYROAD_CONTROL_TOWER"
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_AUTOMATED_TRAFFIC",
+    {
+     "any": [
+      "BUILDING_HIGHWAY",
+      "BUILDING_SKYROAD_CONTROL_TOWER"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

@@ -6,23 +6,21 @@
   "build": {
    "all": [
     "BUILDING_FOLKLORE_REQUIREMENT",
-    "TECH_TAXONOMY"
-   ],
-   "any": [
-    [
-     "BUILDING_FOLKLORE_CASSOWARY",
-     "BUILDING_FOLKLORE_EMU",
-     "BUILDING_FOLKLORE_MOA",
-     "BUILDING_FOLKLORE_PALEOLITHIC_BIRDS",
-     "BUILDING_FOLKLORE_OSTRICH",
-     "BUILDING_FOLKLORE_RHEA"
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_TAXONOMY",
+    {
+     "any": [
+      "BUILDING_FOLKLORE_CASSOWARY",
+      "BUILDING_FOLKLORE_EMU",
+      "BUILDING_FOLKLORE_MOA",
+      "BUILDING_FOLKLORE_PALEOLITHIC_BIRDS",
+      "BUILDING_FOLKLORE_OSTRICH",
+      "BUILDING_FOLKLORE_RHEA"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   }
  },

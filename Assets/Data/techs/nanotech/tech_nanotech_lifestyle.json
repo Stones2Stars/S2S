@@ -39,23 +39,23 @@
     {
      "type": "TECH_BRAIN_MACHINE_INTERFACE",
      "scope": "team"
+    },
+    {
+     "any": [
+      {
+       "type": "TECH_GENESIS_BIOLOGY",
+       "scope": "team"
+      },
+      {
+       "type": "TECH_GRAPHENE_ALLOYS",
+       "scope": "team"
+      },
+      {
+       "type": "TECH_DISASTER_ROBOTS",
+       "scope": "team"
+      }
+     ]
     }
-   ],
-   "any": [
-    [
-     {
-      "type": "TECH_GENESIS_BIOLOGY",
-      "scope": "team"
-     },
-     {
-      "type": "TECH_GRAPHENE_ALLOYS",
-      "scope": "team"
-     },
-     {
-      "type": "TECH_DISASTER_ROBOTS",
-      "scope": "team"
-     }
-    ]
    ]
   }
  },

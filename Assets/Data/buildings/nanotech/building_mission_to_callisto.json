@@ -7,15 +7,11 @@
    "all": [
     "HAS_POWER",
     "BUILDING_COMMERCIAL_SPACEPORT",
-    "TECH_ACCELERATED_GERMINATION"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_ACCELERATED_GERMINATION",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   }
  },

@@ -22,15 +22,11 @@
   "build": {
    "all": [
     "BUILDING_ASSEMBLY_PLANT",
-    "TECH_ADVANCED_METALLURGY"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_ADVANCED_METALLURGY",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

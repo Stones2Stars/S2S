@@ -12,16 +12,12 @@
      "connection": "trade|vicinity"
     },
     "BUILDING_EFFECT_LAUNCH_SITE",
-    "TECH_LUNAR_EXPLORATION"
-   ],
-   "any": [
-    [
-     {
-      "type": "BONUS_ROCKET_FUEL",
-      "scope": "city",
-      "connection": "trade|vicinity"
-     }
-    ]
+    "TECH_LUNAR_EXPLORATION",
+    {
+     "type": "BONUS_ROCKET_FUEL",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    }
    ]
   }
  },

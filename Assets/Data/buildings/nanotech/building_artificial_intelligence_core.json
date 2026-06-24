@@ -30,15 +30,11 @@
     "HAS_POWER",
     "BUILDING_BINARY_CONSCIOUSNESS_ALGORITHMS",
     "TECH_QUANTUM_COMPUTING",
-    "TECH_DROIDS"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_DROIDS",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

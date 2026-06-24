@@ -7,15 +7,11 @@
    "all": [
     "HAS_POWER",
     "BUILDING_EPSILON_ASSEMBLER",
-    "TECH_AUTOMATED_ROBOTICS"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_AUTOMATED_ROBOTICS",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   }
  },

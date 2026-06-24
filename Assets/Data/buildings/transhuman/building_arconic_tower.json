@@ -7,15 +7,11 @@
    "all": [
     "HAS_POWER",
     "BUILDING_STRATOSPHERIC_TOWER",
-    "TECH_HYPERMAGNETICS"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_HYPERMAGNETICS",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   }
  },

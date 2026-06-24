@@ -8,20 +8,16 @@
     {
      "type": "TECH_EXTRATERRESTRIAL_AGRICULTURE",
      "scope": "team"
+    },
+    {
+     "terrain": [
+      "TERRAIN_MARTIAN_ICE",
+      "TERRAIN_MARTIAN_PERMAFROST",
+      "TERRAIN_MARTIAN_BARREN",
+      "TERRAIN_MARTIAN_PLAINS",
+      "TERRAIN_GREEN_MARS"
+     ]
     }
-   ],
-   "any": [
-    [
-     {
-      "terrain": [
-       "TERRAIN_MARTIAN_ICE",
-       "TERRAIN_MARTIAN_PERMAFROST",
-       "TERRAIN_MARTIAN_BARREN",
-       "TERRAIN_MARTIAN_PLAINS",
-       "TERRAIN_GREEN_MARS"
-      ]
-     }
-    ]
    ]
   }
  },

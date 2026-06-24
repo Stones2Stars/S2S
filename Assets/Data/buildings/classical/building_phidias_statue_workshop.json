@@ -9,20 +9,18 @@
     "STATE_RELIGION_IN_CITY",
     {
      "STATE_RELIGION": "RELIGION_HELLENISM"
+    },
+    {
+     "any": [
+      "BUILDING_SCULPTORS_WORKSHOP",
+      "BUILDING_FACTORY_SCULPTURES",
+      "BUILDING_MANUFACTURING_DISTRICT"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
     }
-   ],
-   "any": [
-    [
-     "BUILDING_SCULPTORS_WORKSHOP",
-     "BUILDING_FACTORY_SCULPTURES",
-     "BUILDING_MANUFACTURING_DISTRICT"
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
    ]
   },
   "operate": {

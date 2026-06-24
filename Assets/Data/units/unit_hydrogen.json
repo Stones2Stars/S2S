@@ -10,16 +10,12 @@
      "scope": "city",
      "connection": "trade|vicinity"
     },
-    "TECH_MODERN_WARFARE"
-   ],
-   "any": [
-    [
-     {
-      "type": "BONUS_HEAVY_WATER",
-      "scope": "city",
-      "connection": "trade|vicinity"
-     }
-    ]
+    "TECH_MODERN_WARFARE",
+    {
+     "type": "BONUS_HEAVY_WATER",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    }
    ]
   }
  },

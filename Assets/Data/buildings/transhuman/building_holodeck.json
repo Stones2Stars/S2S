@@ -12,15 +12,11 @@
    "all": [
     "HAS_POWER",
     "BUILDING_SIMULATED_WORLD",
-    "TECH_NANOTROIDS"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_NANOTROIDS",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   }
  },

@@ -13,23 +13,21 @@
  "requires": {
   "build": {
    "all": [
-    "TECH_FLIGHT"
-   ],
-   "any": [
-    [
-     "BUILDING_AIRFIELD",
-     "BUILDING_AIRPORT",
-     "BUILDING_COMMERCIAL_AIRPORT",
-     "BUILDING_MILITARY_AIRBASE",
-     "BUILDING_AEROSPACE_COMPLEX",
-     "BUILDING_COMMERCIAL_SPACEPORT"
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_FLIGHT",
+    {
+     "any": [
+      "BUILDING_AIRFIELD",
+      "BUILDING_AIRPORT",
+      "BUILDING_COMMERCIAL_AIRPORT",
+      "BUILDING_MILITARY_AIRBASE",
+      "BUILDING_AEROSPACE_COMPLEX",
+      "BUILDING_COMMERCIAL_SPACEPORT"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

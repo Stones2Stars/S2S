@@ -12,18 +12,18 @@
  },
  "requires": {
   "build": {
-   "any": [
-    [
-     "BUILDING_BEACH_SAND_GATHERER",
-     "BUILDING_DESERT_SAND_GATHERER",
-     "BUILDING_ROCKDUST_GATHERER"
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+   "all": [
+    {
+     "any": [
+      "BUILDING_BEACH_SAND_GATHERER",
+      "BUILDING_DESERT_SAND_GATHERER",
+      "BUILDING_ROCKDUST_GATHERER"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

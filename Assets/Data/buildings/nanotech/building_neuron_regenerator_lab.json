@@ -15,19 +15,17 @@
    "all": [
     "HAS_POWER",
     "BUILDING_3D_BODY_ATLAS",
-    "TECH_EXOCORTEX_NETWORKS"
-   ],
-   "any": [
-    [
-     "BUILDING_APPLIED_PSYCHOLOGY_LAB",
-     "BUILDING_HEALTHCARE_MEGACOMPLEX"
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_EXOCORTEX_NETWORKS",
+    {
+     "any": [
+      "BUILDING_APPLIED_PSYCHOLOGY_LAB",
+      "BUILDING_HEALTHCARE_MEGACOMPLEX"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {
@@ -36,16 +34,12 @@
      "type": "BONUS_SMART_MEDICINE",
      "scope": "city",
      "connection": "trade|vicinity"
+    },
+    {
+     "type": "BONUS_NANOBOTS",
+     "scope": "city",
+     "connection": "trade|vicinity"
     }
-   ],
-   "any": [
-    [
-     {
-      "type": "BONUS_NANOBOTS",
-      "scope": "city",
-      "connection": "trade|vicinity"
-     }
-    ]
    ]
   }
  },

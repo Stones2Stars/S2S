@@ -6,25 +6,23 @@
   "build": {
    "all": [
     "BUILDING_INTERSTELLAR_STAR_CLUSTER_COLONY",
-    "TECH_ORBITAL_ENGINEERING"
-   ],
-   "any": [
-    [
-     {
-      "type": "TERRAIN_STAR_CLUSTER",
-      "scope": "plot"
-     }
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_GALACTIC",
-      "scope": "plot"
-     },
-     {
-      "type": "MAPCATEGORY_MILKY_WAY",
-      "scope": "plot"
-     }
-    ]
+    "TECH_ORBITAL_ENGINEERING",
+    {
+     "type": "TERRAIN_STAR_CLUSTER",
+     "scope": "plot"
+    },
+    {
+     "any": [
+      {
+       "type": "MAPCATEGORY_GALACTIC",
+       "scope": "plot"
+      },
+      {
+       "type": "MAPCATEGORY_MILKY_WAY",
+       "scope": "plot"
+      }
+     ]
+    }
    ]
   }
  },

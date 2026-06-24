@@ -26,15 +26,11 @@
      "type": "VICTORY_DIPLOMATIC",
      "scope": "world"
     },
-    "TECH_GLOBALIZATION"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_GLOBALIZATION",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   }
  },

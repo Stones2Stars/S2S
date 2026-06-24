@@ -6,15 +6,11 @@
   "build": {
    "all": [
     "BUILDING_DISTANT_DARK_FLOW_GENERATOR",
-    "TECH_BRANE_CONSTRUCTION"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_DISTANT",
-      "scope": "plot"
-     }
-    ]
+    "TECH_BRANE_CONSTRUCTION",
+    {
+     "type": "MAPCATEGORY_DISTANT",
+     "scope": "plot"
+    }
    ]
   }
  },

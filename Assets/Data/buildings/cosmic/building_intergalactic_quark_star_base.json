@@ -11,15 +11,11 @@
   "build": {
    "all": [
     "BUILDING_INTERGALACTIC_STARPORT",
-    "TECH_EXOTIC_STARS"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_UNIVERSAL",
-      "scope": "plot"
-     }
-    ]
+    "TECH_EXOTIC_STARS",
+    {
+     "type": "MAPCATEGORY_UNIVERSAL",
+     "scope": "plot"
+    }
    ]
   }
  },

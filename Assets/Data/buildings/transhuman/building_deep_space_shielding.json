@@ -11,15 +11,11 @@
   "build": {
    "all": [
     "BUILDING_DEEP_SPACE_ONEILL_CYLINDER",
-    "TECH_PLANETARY_DEFENSES"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_SOLAR_SYSTEM",
-      "scope": "plot"
-     }
-    ]
+    "TECH_PLANETARY_DEFENSES",
+    {
+     "type": "MAPCATEGORY_SOLAR_SYSTEM",
+     "scope": "plot"
+    }
    ]
   }
  },

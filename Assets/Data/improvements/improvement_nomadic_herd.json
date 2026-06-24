@@ -8,23 +8,19 @@
     {
      "type": "TECH_CANINE_DOMESTICATION",
      "scope": "team"
+    },
+    {
+     "bonus": [
+      "BONUS_COW",
+      "BONUS_PIG",
+      "BONUS_SHEEP",
+      "BONUS_HORSE",
+      "BONUS_CAMEL",
+      "BONUS_DONKEY",
+      "BONUS_LLAMA",
+      "BONUS_POULTRY"
+     ]
     }
-   ],
-   "any": [
-    [
-     {
-      "bonus": [
-       "BONUS_COW",
-       "BONUS_PIG",
-       "BONUS_SHEEP",
-       "BONUS_HORSE",
-       "BONUS_CAMEL",
-       "BONUS_DONKEY",
-       "BONUS_LLAMA",
-       "BONUS_POULTRY"
-      ]
-     }
-    ]
    ]
   }
  },

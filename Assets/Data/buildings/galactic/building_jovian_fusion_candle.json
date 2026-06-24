@@ -7,33 +7,31 @@
    "all": [
     "HAS_POWER",
     "BUILDING_DEEP_SPACE_FUSION_CORE",
-    "TECH_ORBITAL_ENGINEERING"
-   ],
-   "any": [
-    [
-     {
-      "type": "TERRAIN_JUPITER",
-      "scope": "plot"
-     },
-     {
-      "type": "TERRAIN_SATURN",
-      "scope": "plot"
-     },
-     {
-      "type": "TERRAIN_URANUS",
-      "scope": "plot"
-     },
-     {
-      "type": "TERRAIN_NEPTUNE",
-      "scope": "plot"
-     }
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_SOLAR_SYSTEM",
-      "scope": "plot"
-     }
-    ]
+    "TECH_ORBITAL_ENGINEERING",
+    {
+     "any": [
+      {
+       "type": "TERRAIN_JUPITER",
+       "scope": "plot"
+      },
+      {
+       "type": "TERRAIN_SATURN",
+       "scope": "plot"
+      },
+      {
+       "type": "TERRAIN_URANUS",
+       "scope": "plot"
+      },
+      {
+       "type": "TERRAIN_NEPTUNE",
+       "scope": "plot"
+      }
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_SOLAR_SYSTEM",
+     "scope": "plot"
+    }
    ]
   }
  },

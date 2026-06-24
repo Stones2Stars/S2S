@@ -16,15 +16,11 @@
     "HAS_POWER",
     "BUILDING_ROBOTICS_LAB",
     "TECH_BIOMECHANICAL_HARVESTING",
-    "TECH_MACHINE_LEARNING"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_MACHINE_LEARNING",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

@@ -6,15 +6,11 @@
   "build": {
    "all": [
     "BUILDING_VENUS_CITY",
-    "TECH_NANOMINING"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_VENUSIAN",
-      "scope": "plot"
-     }
-    ]
+    "TECH_NANOMINING",
+    {
+     "type": "MAPCATEGORY_VENUSIAN",
+     "scope": "plot"
+    }
    ]
   }
  },

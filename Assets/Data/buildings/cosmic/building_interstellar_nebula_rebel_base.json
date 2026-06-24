@@ -6,25 +6,23 @@
   "build": {
    "all": [
     "BUILDING_INTERSTELLAR_WORMHOLE_BEACON",
-    "TECH_GALACTIC_WARFARE"
-   ],
-   "any": [
-    [
-     {
-      "type": "TERRAIN_NEBULA",
-      "scope": "plot"
-     }
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_GALACTIC",
-      "scope": "plot"
-     },
-     {
-      "type": "MAPCATEGORY_MILKY_WAY",
-      "scope": "plot"
-     }
-    ]
+    "TECH_GALACTIC_WARFARE",
+    {
+     "type": "TERRAIN_NEBULA",
+     "scope": "plot"
+    },
+    {
+     "any": [
+      {
+       "type": "MAPCATEGORY_GALACTIC",
+       "scope": "plot"
+      },
+      {
+       "type": "MAPCATEGORY_MILKY_WAY",
+       "scope": "plot"
+      }
+     ]
+    }
    ]
   }
  },

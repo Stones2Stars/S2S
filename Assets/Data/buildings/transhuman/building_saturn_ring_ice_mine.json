@@ -5,21 +5,15 @@
  "requires": {
   "build": {
    "all": [
-    "TECH_KUIPER_BELT_EXPLORATION"
-   ],
-   "any": [
-    [
-     {
-      "type": "FEATURE_PLANETARY_RING",
-      "scope": "plot"
-     }
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_SOLAR_SYSTEM",
-      "scope": "plot"
-     }
-    ]
+    "TECH_KUIPER_BELT_EXPLORATION",
+    {
+     "type": "FEATURE_PLANETARY_RING",
+     "scope": "plot"
+    },
+    {
+     "type": "MAPCATEGORY_SOLAR_SYSTEM",
+     "scope": "plot"
+    }
    ]
   }
  },

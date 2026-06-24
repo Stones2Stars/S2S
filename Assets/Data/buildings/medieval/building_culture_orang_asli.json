@@ -8,15 +8,11 @@
     "HAS_COAST",
     "BUILDING_C_AC_OCEANIAN",
     "BUILDING_C_L_OCEANIAN",
-    "TECH_YEOMANRY"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_YEOMANRY",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

@@ -11,19 +11,17 @@
   "build": {
    "all": [
     "BUILDING_CARNIVAL",
-    "TECH_TRADE"
-   ],
-   "any": [
-    [
-     "BUILDING_FOLKLORE_SEA_LION",
-     "BUILDING_FOLKLORE_WALRUS"
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_TRADE",
+    {
+     "any": [
+      "BUILDING_FOLKLORE_SEA_LION",
+      "BUILDING_FOLKLORE_WALRUS"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   }
  },

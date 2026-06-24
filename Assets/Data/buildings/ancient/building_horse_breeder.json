@@ -19,18 +19,12 @@
   "build": {
    "all": [
     "BUILDING_ANIMAL_TRAINER_HORSE",
-    "TECH_THE_WHEEL"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ],
-    [
-     "HERITAGE_FOLKLORE_HORSE"
-    ]
+    "TECH_THE_WHEEL",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    },
+    "HERITAGE_FOLKLORE_HORSE"
    ]
   },
   "operate": {

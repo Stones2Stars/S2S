@@ -5,15 +5,11 @@
  "requires": {
   "build": {
    "all": [
-    "TECH_FANTASY_MATERIALS"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_FANTASY_MATERIALS",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   }
  },

@@ -13,27 +13,19 @@
  "requires": {
   "build": {
    "all": [
-    "TECH_WEAVING"
-   ],
-   "any": [
-    [
-     {
-      "type": "FEATURE_BAMBOO",
-      "scope": "plot"
-     }
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ],
-    [
-     {
-      "type": "CIVILIZATION_NPC_NEANDERTHAL",
-      "scope": "empire"
-     }
-    ]
+    "TECH_WEAVING",
+    {
+     "type": "FEATURE_BAMBOO",
+     "scope": "plot"
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    },
+    {
+     "type": "CIVILIZATION_NPC_NEANDERTHAL",
+     "scope": "empire"
+    }
    ]
   },
   "operate": {

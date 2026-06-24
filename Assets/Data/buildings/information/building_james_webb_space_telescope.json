@@ -11,15 +11,11 @@
      "scope": "empire",
      "min": 1
     },
-    "TECH_EXOPLANET_DISCOVERY"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_EXOPLANET_DISCOVERY",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

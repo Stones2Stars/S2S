@@ -18,25 +18,21 @@
  "requires": {
   "build": {
    "all": [
-    "TECH_WINDMILLS"
-   ],
-   "any": [
-    [
-     "BUILDING_GRANARY",
-     "BUILDING_MODERN_GRANARY"
-    ],
-    [
-     {
-      "type": "TERRAIN_HILL",
-      "scope": "plot"
-     }
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_WINDMILLS",
+    {
+     "any": [
+      "BUILDING_GRANARY",
+      "BUILDING_MODERN_GRANARY"
+     ]
+    },
+    {
+     "type": "TERRAIN_HILL",
+     "scope": "plot"
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

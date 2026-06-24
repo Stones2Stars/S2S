@@ -6,27 +6,27 @@
   "build": {
    "all": [
     "BUILDING_EFFECT_MULTIVERSAL_ECONOMY",
-    "TECH_OMEGA_POINT"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_SOLAR_SYSTEM",
-      "scope": "plot"
-     },
-     {
-      "type": "MAPCATEGORY_VENUSIAN",
-      "scope": "plot"
-     },
-     {
-      "type": "MAPCATEGORY_MARTIAN",
-      "scope": "plot"
-     },
-     {
-      "type": "MAPCATEGORY_TITANIC",
-      "scope": "plot"
-     }
-    ]
+    "TECH_OMEGA_POINT",
+    {
+     "any": [
+      {
+       "type": "MAPCATEGORY_SOLAR_SYSTEM",
+       "scope": "plot"
+      },
+      {
+       "type": "MAPCATEGORY_VENUSIAN",
+       "scope": "plot"
+      },
+      {
+       "type": "MAPCATEGORY_MARTIAN",
+       "scope": "plot"
+      },
+      {
+       "type": "MAPCATEGORY_TITANIC",
+       "scope": "plot"
+      }
+     ]
+    }
    ]
   }
  },

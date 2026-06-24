@@ -16,20 +16,18 @@
      "scope": "empire",
      "min": 3
     },
-    "TECH_ASTEROID_MINING"
-   ],
-   "any": [
-    [
-     "BUILDING_AEROSPACE_COMPLEX",
-     "BUILDING_MILITARY_SPACEPORT",
-     "BUILDING_COMMERCIAL_SPACEPORT"
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_ASTEROID_MINING",
+    {
+     "any": [
+      "BUILDING_AEROSPACE_COMPLEX",
+      "BUILDING_MILITARY_SPACEPORT",
+      "BUILDING_COMMERCIAL_SPACEPORT"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   }
  },

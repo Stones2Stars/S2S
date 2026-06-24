@@ -7,21 +7,15 @@
    "all": [
     "BUILDING_C_AC_NORTH_AMERICAN",
     "BUILDING_C_L_NORTH_AMERICAN",
-    "TECH_MATCHLOCK"
-   ],
-   "any": [
-    [
-     {
-      "type": "TERRAIN_DESERT",
-      "scope": "plot"
-     }
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_MATCHLOCK",
+    {
+     "type": "TERRAIN_DESERT",
+     "scope": "plot"
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

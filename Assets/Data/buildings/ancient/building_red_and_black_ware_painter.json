@@ -7,21 +7,19 @@
    "all": [
     "BUILDING_C_L_EUROPEAN",
     "BUILDING_GLAZE_MAKER",
-    "TECH_GLASS_BLOWING"
-   ],
-   "any": [
-    [
-     "BUILDING_POTTERS_HUT",
-     "BUILDING_POTTERS_WORKSHOP",
-     "BUILDING_FACTORY_POTTERY",
-     "BUILDING_MANUFACTURING_DISTRICT"
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_GLASS_BLOWING",
+    {
+     "any": [
+      "BUILDING_POTTERS_HUT",
+      "BUILDING_POTTERS_WORKSHOP",
+      "BUILDING_FACTORY_POTTERY",
+      "BUILDING_MANUFACTURING_DISTRICT"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

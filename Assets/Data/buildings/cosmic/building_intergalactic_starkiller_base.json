@@ -7,15 +7,11 @@
    "all": [
     "BUILDING_INTERGALACTIC_COMMAND_CENTER",
     "BUILDING_INTERGALACTIC_FUSION_PLANTS",
-    "TECH_EXTREME_ENERGY_WEAPONS"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_UNIVERSAL",
-      "scope": "plot"
-     }
-    ]
+    "TECH_EXTREME_ENERGY_WEAPONS",
+    {
+     "type": "MAPCATEGORY_UNIVERSAL",
+     "scope": "plot"
+    }
    ]
   }
  },

@@ -10,21 +10,19 @@
      "scope": "city",
      "connection": "trade|vicinity"
     },
-    "TECH_ANCIENT_MEDICINE"
-   ],
-   "any": [
-    [
-     {
-      "type": "BONUS_SCROLLS",
-      "scope": "city",
-      "connection": "trade|vicinity"
-     }
-    ],
-    [
-     "BUILDING_APOTHECARY_SHOP",
-     "BUILDING_PHARMACY",
-     "BUILDING_HEALTHCARE_MEGACOMPLEX"
-    ]
+    "TECH_ANCIENT_MEDICINE",
+    {
+     "type": "BONUS_SCROLLS",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    {
+     "any": [
+      "BUILDING_APOTHECARY_SHOP",
+      "BUILDING_PHARMACY",
+      "BUILDING_HEALTHCARE_MEGACOMPLEX"
+     ]
+    }
    ]
   }
  },

@@ -23,19 +23,17 @@
  "requires": {
   "build": {
    "all": [
-    "TECH_TRAP_FISHING"
-   ],
-   "any": [
-    [
-     "HAS_COAST",
-     "HAS_RIVER"
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_TRAP_FISHING",
+    {
+     "any": [
+      "HAS_COAST",
+      "HAS_RIVER"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

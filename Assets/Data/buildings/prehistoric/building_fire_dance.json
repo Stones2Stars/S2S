@@ -16,21 +16,19 @@
   "build": {
    "all": [
     "TECH_PREHISTORIC_DANCE",
-    "TECH_CONTROLLED_FIRE"
-   ],
-   "any": [
-    [
-     "BUILDING_IMU",
-     "BUILDING_FIRE_PIT",
-     "BUILDING_BONFIRE",
-     "BUILDING_CHARCOAL_BURNER"
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_CONTROLLED_FIRE",
+    {
+     "any": [
+      "BUILDING_IMU",
+      "BUILDING_FIRE_PIT",
+      "BUILDING_BONFIRE",
+      "BUILDING_CHARCOAL_BURNER"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   }
  },

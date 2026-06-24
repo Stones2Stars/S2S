@@ -22,15 +22,11 @@
    "all": [
     "HAS_POWER",
     "BUILDING_OMEGA_ASSEMBLER",
-    "TECH_ZERO_POINT_ENERGY"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_ZERO_POINT_ENERGY",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   }
  },

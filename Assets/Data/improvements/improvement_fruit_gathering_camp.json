@@ -8,30 +8,26 @@
     {
      "type": "TECH_GATHERING",
      "scope": "team"
+    },
+    {
+     "bonus": [
+      "BONUS_APPLE",
+      "BONUS_BANANA",
+      "BONUS_LEMONS",
+      "BONUS_SPICES",
+      "BONUS_ALMONDS",
+      "BONUS_FIG",
+      "BONUS_MANGO",
+      "BONUS_PAPAYA",
+      "BONUS_COCONUT",
+      "BONUS_DATES",
+      "BONUS_PISTACHIO",
+      "BONUS_POMEGRANATE",
+      "BONUS_PRICKLY_PEAR",
+      "BONUS_OLIVES",
+      "BONUS_GUAVAS"
+     ]
     }
-   ],
-   "any": [
-    [
-     {
-      "bonus": [
-       "BONUS_APPLE",
-       "BONUS_BANANA",
-       "BONUS_LEMONS",
-       "BONUS_SPICES",
-       "BONUS_ALMONDS",
-       "BONUS_FIG",
-       "BONUS_MANGO",
-       "BONUS_PAPAYA",
-       "BONUS_COCONUT",
-       "BONUS_DATES",
-       "BONUS_PISTACHIO",
-       "BONUS_POMEGRANATE",
-       "BONUS_PRICKLY_PEAR",
-       "BONUS_OLIVES",
-       "BONUS_GUAVAS"
-      ]
-     }
-    ]
    ]
   }
  },

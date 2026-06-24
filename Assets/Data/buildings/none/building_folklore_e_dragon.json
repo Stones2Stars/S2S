@@ -8,15 +8,11 @@
     "BUILDING_FOLKLORE_REQUIREMENT",
     "BUILDING_FOLKLORE_E_EARTH",
     "BUILDING_FOLKLORE_E_FIRE",
-    "TECH_ORAL_TRADITION"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_ORAL_TRADITION",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   }
  },

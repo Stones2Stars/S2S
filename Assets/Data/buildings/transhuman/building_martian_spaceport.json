@@ -16,15 +16,11 @@
     "HAS_POWER",
     "BUILDING_MARTIAN_METROPOLIS",
     "TECH_HYPERMAGNETICS",
-    "TECH_KUIPER_BELT_EXPLORATION"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_MARTIAN",
-      "scope": "plot"
-     }
-    ]
+    "TECH_KUIPER_BELT_EXPLORATION",
+    {
+     "type": "MAPCATEGORY_MARTIAN",
+     "scope": "plot"
+    }
    ]
   }
  },

@@ -19,15 +19,11 @@
   "build": {
    "all": [
     "BUILDING_MINE_IRON",
-    "TECH_IRON_WORKING"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_IRON_WORKING",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

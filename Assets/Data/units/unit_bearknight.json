@@ -11,13 +11,13 @@
      "connection": "trade|vicinity"
     },
     "TECH_ARMORED_CAVALRY",
-    "TECH_MEGAFAUNA_DOMESTICATION"
-   ],
-   "any": [
-    [
-     "BUILDING_EFFECT_HERITAGE_BEARS",
-     "BUILDING_ANIMAL_TRAINER_BEAR"
-    ]
+    "TECH_MEGAFAUNA_DOMESTICATION",
+    {
+     "any": [
+      "BUILDING_EFFECT_HERITAGE_BEARS",
+      "BUILDING_ANIMAL_TRAINER_BEAR"
+     ]
+    }
    ]
   }
  },

@@ -6,15 +6,11 @@
   "build": {
    "all": [
     "BUILDING_DISTANT_BUBBLE_TRANSFER_STATION",
-    "TECH_TRANSFINITE_STRUCTURES"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_DISTANT",
-      "scope": "plot"
-     }
-    ]
+    "TECH_TRANSFINITE_STRUCTURES",
+    {
+     "type": "MAPCATEGORY_DISTANT",
+     "scope": "plot"
+    }
    ]
   }
  },

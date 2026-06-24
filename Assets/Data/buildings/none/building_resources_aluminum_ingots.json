@@ -12,18 +12,18 @@
  },
  "requires": {
   "build": {
-   "any": [
-    [
-     "BUILDING_SMELTER_ALUMINUM",
-     "BUILDING_ALUMINUM_RECLAMATION_PLANT",
-     "BUILDING_NATIONAL_SMELTER_ALUMINUM"
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+   "all": [
+    {
+     "any": [
+      "BUILDING_SMELTER_ALUMINUM",
+      "BUILDING_ALUMINUM_RECLAMATION_PLANT",
+      "BUILDING_NATIONAL_SMELTER_ALUMINUM"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

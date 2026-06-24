@@ -14,15 +14,11 @@
   "build": {
    "all": [
     "BUILDING_MINING_CAMP",
-    "TECH_INDUSTRIALISM"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_INDUSTRIALISM",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {
@@ -31,16 +27,12 @@
      "type": "BONUS_BAUXITE_ORE",
      "scope": "city",
      "connection": "vicinity"
+    },
+    {
+     "type": "BONUS_DIAMOND",
+     "scope": "city",
+     "connection": "vicinity"
     }
-   ],
-   "any": [
-    [
-     {
-      "type": "BONUS_DIAMOND",
-      "scope": "city",
-      "connection": "vicinity"
-     }
-    ]
    ],
    "dormant": [
     "BUILDING_CORE_MINE"

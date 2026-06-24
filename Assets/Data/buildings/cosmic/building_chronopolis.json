@@ -12,15 +12,11 @@
    "all": [
     "HAS_POWER",
     "BUILDING_RATIONAL_CITY",
-    "TECH_TIME_TRAVEL"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_TIME_TRAVEL",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   }
  },

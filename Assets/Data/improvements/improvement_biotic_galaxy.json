@@ -8,19 +8,15 @@
     {
      "type": "TECH_GALACTIC_ECOLOGY",
      "scope": "team"
+    },
+    {
+     "terrain": [
+      "TERRAIN_LOCAL_GROUP",
+      "TERRAIN_VIRGO_SUPERCLUSTER",
+      "TERRAIN_OBSERVABLE_UNIVERSE",
+      "TERRAIN_DISTANT_COSMOS"
+     ]
     }
-   ],
-   "any": [
-    [
-     {
-      "terrain": [
-       "TERRAIN_LOCAL_GROUP",
-       "TERRAIN_VIRGO_SUPERCLUSTER",
-       "TERRAIN_OBSERVABLE_UNIVERSE",
-       "TERRAIN_DISTANT_COSMOS"
-      ]
-     }
-    ]
    ]
   }
  },

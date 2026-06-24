@@ -12,23 +12,23 @@
  },
  "requires": {
   "build": {
-   "any": [
-    [
-     "BUILDING_FARM_CROP_BEARBERRY",
-     "BUILDING_FARM_CROP_BLACKBERRY",
-     "BUILDING_FARM_CROP_BLUEBERRY",
-     "BUILDING_FARM_CROP_CRANBERRY",
-     "BUILDING_FARM_CROP_ELDERBERRY",
-     "BUILDING_FARM_CROP_GOOSEBERRY",
-     "BUILDING_FARM_CROP_RASPBERRY",
-     "BUILDING_FARM_CROP_STRAWBERRY"
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+   "all": [
+    {
+     "any": [
+      "BUILDING_FARM_CROP_BEARBERRY",
+      "BUILDING_FARM_CROP_BLACKBERRY",
+      "BUILDING_FARM_CROP_BLUEBERRY",
+      "BUILDING_FARM_CROP_CRANBERRY",
+      "BUILDING_FARM_CROP_ELDERBERRY",
+      "BUILDING_FARM_CROP_GOOSEBERRY",
+      "BUILDING_FARM_CROP_RASPBERRY",
+      "BUILDING_FARM_CROP_STRAWBERRY"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

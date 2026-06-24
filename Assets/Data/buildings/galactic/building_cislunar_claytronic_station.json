@@ -13,15 +13,11 @@
    "all": [
     "BUILDING_CISLUNAR_NANOSATELLITE_CONSTELLATION",
     "BUILDING_CISLUNAR_ONEILL_CYLINDER",
-    "TECH_NANOMORPHIC_TROIDS"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_CISLUNAR",
-      "scope": "plot"
-     }
-    ]
+    "TECH_NANOMORPHIC_TROIDS",
+    {
+     "type": "MAPCATEGORY_CISLUNAR",
+     "scope": "plot"
+    }
    ]
   }
  },

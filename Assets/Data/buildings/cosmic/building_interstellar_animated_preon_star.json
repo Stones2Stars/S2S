@@ -7,19 +7,19 @@
    "all": [
     "BUILDING_INTERSTELLAR_DYSON_SPHERE",
     "TECH_FANTASY_MATERIALS",
-    "TECH_SUPERSYMMETRIC_PARTICLE_CONSTRUCTION"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_PLASMA",
-      "scope": "plot"
-     },
-     {
-      "type": "MAPCATEGORY_MILKY_WAY",
-      "scope": "plot"
-     }
-    ]
+    "TECH_SUPERSYMMETRIC_PARTICLE_CONSTRUCTION",
+    {
+     "any": [
+      {
+       "type": "MAPCATEGORY_PLASMA",
+       "scope": "plot"
+      },
+      {
+       "type": "MAPCATEGORY_MILKY_WAY",
+       "scope": "plot"
+      }
+     ]
+    }
    ]
   },
   "operate": {

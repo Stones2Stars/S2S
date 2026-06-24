@@ -17,15 +17,11 @@
     "BUILDING_FACTORY",
     "BUILDING_POWER_LINES",
     "TECH_ELECTRICITY",
-    "TECH_COMBUSTION"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_COMBUSTION",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

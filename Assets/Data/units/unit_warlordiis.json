@@ -6,16 +6,12 @@
   "build": {
    "all": [
     "TECH_HERALDRY",
-    "TECH_SMITHING"
-   ],
-   "any": [
-    [
-     {
-      "type": "BONUS_IRON_WARES",
-      "scope": "city",
-      "connection": "trade|vicinity"
-     }
-    ]
+    "TECH_SMITHING",
+    {
+     "type": "BONUS_IRON_WARES",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    }
    ]
   }
  },

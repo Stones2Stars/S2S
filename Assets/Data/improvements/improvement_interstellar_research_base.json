@@ -8,32 +8,32 @@
     {
      "type": "TECH_PLANET_SCOUTING",
      "scope": "team"
+    },
+    {
+     "any": [
+      {
+       "terrain": [
+        "TERRAIN_MILKY_WAY",
+        "TERRAIN_GALACTIC_CORE",
+        "TERRAIN_ORION_ARM",
+        "TERRAIN_STAR_CLUSTER",
+        "TERRAIN_NEBULA",
+        "TERRAIN_RED_GIANT",
+        "TERRAIN_SUN_LIKE_STAR",
+        "TERRAIN_RED_DWARF",
+        "TERRAIN_TRANSTELLAR_SPACE"
+       ]
+      },
+      {
+       "bonus": [
+        "BONUS_XENOFLORA",
+        "BONUS_XENOFAUNA",
+        "BONUS_ABANDONED_CIVILIZATION",
+        "BONUS_ABANDONED_MEGASTRUCTURE"
+       ]
+      }
+     ]
     }
-   ],
-   "any": [
-    [
-     {
-      "terrain": [
-       "TERRAIN_MILKY_WAY",
-       "TERRAIN_GALACTIC_CORE",
-       "TERRAIN_ORION_ARM",
-       "TERRAIN_STAR_CLUSTER",
-       "TERRAIN_NEBULA",
-       "TERRAIN_RED_GIANT",
-       "TERRAIN_SUN_LIKE_STAR",
-       "TERRAIN_RED_DWARF",
-       "TERRAIN_TRANSTELLAR_SPACE"
-      ]
-     },
-     {
-      "bonus": [
-       "BONUS_XENOFLORA",
-       "BONUS_XENOFAUNA",
-       "BONUS_ABANDONED_CIVILIZATION",
-       "BONUS_ABANDONED_MEGASTRUCTURE"
-      ]
-     }
-    ]
    ]
   }
  },

@@ -8,20 +8,16 @@
     {
      "type": "TECH_MEGALITH_CONSTRUCTION",
      "scope": "team"
+    },
+    {
+     "terrain": [
+      "TERRAIN_BARREN",
+      "TERRAIN_DESERT",
+      "TERRAIN_LUSH",
+      "TERRAIN_GRASSLAND",
+      "TERRAIN_PLAINS"
+     ]
     }
-   ],
-   "any": [
-    [
-     {
-      "terrain": [
-       "TERRAIN_BARREN",
-       "TERRAIN_DESERT",
-       "TERRAIN_LUSH",
-       "TERRAIN_GRASSLAND",
-       "TERRAIN_PLAINS"
-      ]
-     }
-    ]
    ],
    "noneOf": [
     "HAS_FRESHWATER"

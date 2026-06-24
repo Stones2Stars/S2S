@@ -52,15 +52,11 @@
    "all": [
     "HAS_POWER",
     "BUILDING_HOLODECK",
-    "TECH_NANOTROIDS"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_NANOTROIDS",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   }
  },

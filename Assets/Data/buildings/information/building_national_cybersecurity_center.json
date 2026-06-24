@@ -12,15 +12,11 @@
    "all": [
     "HAS_POWER",
     "BUILDING_COMPUTER_NETWORK",
-    "TECH_CYBERWARFARE"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_CYBERWARFARE",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

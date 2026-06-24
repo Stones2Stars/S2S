@@ -5,13 +5,13 @@
  "requires": {
   "build": {
    "all": [
-    "TECH_WARFARE"
-   ],
-   "any": [
-    [
-     "BUILDING_LUMBER_CAMP",
-     "BUILDING_AGROFOREST"
-    ]
+    "TECH_WARFARE",
+    {
+     "any": [
+      "BUILDING_LUMBER_CAMP",
+      "BUILDING_AGROFOREST"
+     ]
+    }
    ]
   }
  },

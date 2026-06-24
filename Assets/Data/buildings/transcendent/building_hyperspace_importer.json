@@ -11,15 +11,11 @@
  "requires": {
   "build": {
    "all": [
-    "TECH_TRANSDIMENSIONAL_COMMERCE"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_HYPERSPACE",
-      "scope": "plot"
-     }
-    ]
+    "TECH_TRANSDIMENSIONAL_COMMERCE",
+    {
+     "type": "MAPCATEGORY_HYPERSPACE",
+     "scope": "plot"
+    }
    ]
   }
  },

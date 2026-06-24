@@ -5,21 +5,19 @@
  "requires": {
   "build": {
    "all": [
-    "TECH_MICROGENERATORS"
-   ],
-   "any": [
-    [
-     "BUILDING_SMART_GRID",
-     "BUILDING_WIRELESS_GRID",
-     "BUILDING_EMP_GRID",
-     "BUILDING_SUPERCONDUCTING_GRID"
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_MICROGENERATORS",
+    {
+     "any": [
+      "BUILDING_SMART_GRID",
+      "BUILDING_WIRELESS_GRID",
+      "BUILDING_EMP_GRID",
+      "BUILDING_SUPERCONDUCTING_GRID"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   }
  },

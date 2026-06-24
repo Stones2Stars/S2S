@@ -12,15 +12,11 @@
    "all": [
     "HAS_POWER",
     "BUILDING_VIRTUAL_WORLD_GUILD",
-    "TECH_CYBERSOCIAL_INTEGRATION"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_CYBERSOCIAL_INTEGRATION",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

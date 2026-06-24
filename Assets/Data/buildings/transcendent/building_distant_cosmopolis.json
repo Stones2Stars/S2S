@@ -14,15 +14,11 @@
  "requires": {
   "build": {
    "all": [
-    "TECH_HORIZON_BREAKING"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_DISTANT",
-      "scope": "plot"
-     }
-    ]
+    "TECH_HORIZON_BREAKING",
+    {
+     "type": "MAPCATEGORY_DISTANT",
+     "scope": "plot"
+    }
    ]
   }
  },

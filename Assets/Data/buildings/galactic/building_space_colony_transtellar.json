@@ -13,15 +13,11 @@
  "requires": {
   "build": {
    "all": [
-    "TECH_INTERSTELLAR_TRAVEL"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_INTERSTELLAR",
-      "scope": "plot"
-     }
-    ]
+    "TECH_INTERSTELLAR_TRAVEL",
+    {
+     "type": "MAPCATEGORY_INTERSTELLAR",
+     "scope": "plot"
+    }
    ]
   }
  },

@@ -13,27 +13,19 @@
  "requires": {
   "build": {
    "all": [
-    "TECH_ADHESIVES"
-   ],
-   "any": [
-    [
-     {
-      "type": "FEATURE_TAR_PIT",
-      "scope": "plot"
-     }
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ],
-    [
-     {
-      "type": "CIVILIZATION_NPC_NEANDERTHAL",
-      "scope": "empire"
-     }
-    ]
+    "TECH_ADHESIVES",
+    {
+     "type": "FEATURE_TAR_PIT",
+     "scope": "plot"
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    },
+    {
+     "type": "CIVILIZATION_NPC_NEANDERTHAL",
+     "scope": "empire"
+    }
    ]
   },
   "operate": {

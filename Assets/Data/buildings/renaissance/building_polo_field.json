@@ -18,20 +18,18 @@
  "requires": {
   "build": {
    "all": [
-    "TECH_TEAM_SPORTS"
-   ],
-   "any": [
-    [
-     "BUILDING_ANIMAL_TRAINER_HORSE",
-     "BUILDING_ANIMAL_TRAINER_CAMEL",
-     "BUILDING_ANIMAL_TRAINER_ELEPHANT"
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_TEAM_SPORTS",
+    {
+     "any": [
+      "BUILDING_ANIMAL_TRAINER_HORSE",
+      "BUILDING_ANIMAL_TRAINER_CAMEL",
+      "BUILDING_ANIMAL_TRAINER_ELEPHANT"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

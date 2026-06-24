@@ -68,15 +68,11 @@
  "requires": {
   "build": {
    "all": [
-    "BUILDING_C_AC_AFRICAN"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "BUILDING_C_AC_AFRICAN",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   }
  },

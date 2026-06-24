@@ -16,15 +16,11 @@
    "all": [
     "HAS_POWER",
     "BUILDING_NEURON_REGENERATOR_LAB",
-    "TECH_CYBERNETICS"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_CYBERNETICS",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

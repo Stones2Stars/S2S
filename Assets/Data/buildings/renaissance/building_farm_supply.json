@@ -13,29 +13,29 @@
  "requires": {
   "build": {
    "all": [
-    "TECH_CHEMISTRY"
-   ],
-   "any": [
-    [
-     "BUILDING_TRADING_POST",
-     "BUILDING_SHOPPING_DISTRICT"
-    ],
-    [
-     {
-      "type": "IMPROVEMENT_FARM",
-      "scope": "plot"
-     },
-     {
-      "type": "IMPROVEMENT_VERTICAL_FARM",
-      "scope": "plot"
-     }
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_CHEMISTRY",
+    {
+     "any": [
+      "BUILDING_TRADING_POST",
+      "BUILDING_SHOPPING_DISTRICT"
+     ]
+    },
+    {
+     "any": [
+      {
+       "type": "IMPROVEMENT_FARM",
+       "scope": "plot"
+      },
+      {
+       "type": "IMPROVEMENT_VERTICAL_FARM",
+       "scope": "plot"
+      }
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

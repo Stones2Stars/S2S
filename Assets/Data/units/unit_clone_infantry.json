@@ -11,16 +11,12 @@
      "connection": "trade|vicinity"
     },
     "BUILDING_CLONING_LABORATORY",
-    "TECH_MAINSTREAM_CLONING"
-   ],
-   "any": [
-    [
-     {
-      "type": "BONUS_FIREARMS",
-      "scope": "city",
-      "connection": "trade|vicinity"
-     }
-    ]
+    "TECH_MAINSTREAM_CLONING",
+    {
+     "type": "BONUS_FIREARMS",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    }
    ]
   }
  },

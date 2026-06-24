@@ -24,15 +24,11 @@
    "all": [
     "BUILDING_EFFECT_GALACTIC_ECONOMY",
     "BUILDING_SPACE_COLONY_EXTRAGALACTIC",
-    "TECH_INTERGALACTIC_COLONIZATION"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_UNIVERSAL",
-      "scope": "plot"
-     }
-    ]
+    "TECH_INTERGALACTIC_COLONIZATION",
+    {
+     "type": "MAPCATEGORY_UNIVERSAL",
+     "scope": "plot"
+    }
    ]
   }
  },

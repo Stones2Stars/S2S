@@ -12,15 +12,11 @@
    "all": [
     "BUILDING_CISLUNAR_ENHANCED_ALGAE_FARM",
     "BUILDING_CISLUNAR_SPACEPORT",
-    "TECH_BOTANICAL_ALCHEMY"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_CISLUNAR",
-      "scope": "plot"
-     }
-    ]
+    "TECH_BOTANICAL_ALCHEMY",
+    {
+     "type": "MAPCATEGORY_CISLUNAR",
+     "scope": "plot"
+    }
    ]
   }
  },

@@ -10,15 +10,11 @@
  "requires": {
   "build": {
    "all": [
-    "TECH_PLANET_SCANNING"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_INTERSTELLAR",
-      "scope": "plot"
-     }
-    ]
+    "TECH_PLANET_SCANNING",
+    {
+     "type": "MAPCATEGORY_INTERSTELLAR",
+     "scope": "plot"
+    }
    ]
   }
  },

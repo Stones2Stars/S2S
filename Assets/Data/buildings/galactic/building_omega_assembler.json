@@ -21,15 +21,11 @@
     "BUILDING_CLAYTRONIC_CITY",
     "BUILDING_SPACESCRAPER",
     "BUILDING_ALPHA_ASSEMBLER",
-    "TECH_PICOTECHNOLOGY"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_PICOTECHNOLOGY",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

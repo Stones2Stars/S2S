@@ -18,15 +18,11 @@
      "scope": "empire",
      "min": 2
     },
-    "TECH_PLANETARY_TERRAFORMING"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_VENUSIAN",
-      "scope": "plot"
-     }
-    ]
+    "TECH_PLANETARY_TERRAFORMING",
+    {
+     "type": "MAPCATEGORY_VENUSIAN",
+     "scope": "plot"
+    }
    ]
   }
  },

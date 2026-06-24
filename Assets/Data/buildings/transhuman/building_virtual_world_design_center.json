@@ -7,15 +7,11 @@
    "all": [
     "HAS_POWER",
     "BUILDING_VIRTUAL_GOVERNANCE",
-    "TECH_SOCIAL_CALCULUS"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_SOCIAL_CALCULUS",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   }
  },

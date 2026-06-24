@@ -15,15 +15,11 @@
    "all": [
     "HAS_POWER",
     "BUILDING_MODERN_OFFICES",
-    "TECH_POP_ART"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_POP_ART",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

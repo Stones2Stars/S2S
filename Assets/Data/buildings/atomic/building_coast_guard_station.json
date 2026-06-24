@@ -16,15 +16,11 @@
     "HAS_COAST",
     "BUILDING_HARBORMASTERS_OFFICE",
     "BUILDING_NAVAL_ACADEMY",
-    "TECH_COAST_GUARD"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_COAST_GUARD",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

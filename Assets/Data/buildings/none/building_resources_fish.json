@@ -12,29 +12,29 @@
  },
  "requires": {
   "build": {
-   "any": [
-    [
-     "BUILDING_NET_ANCHOVY",
-     "BUILDING_NETS_COD",
-     "BUILDING_NET_EEL",
-     "BUILDING_NET_FLOUNDER",
-     "BUILDING_MACKEREL_NETS",
-     "BUILDING_MARLIN_NETS",
-     "BUILDING_PARROTFISH_NETS",
-     "BUILDING_NET_SALMON",
-     "BUILDING_NET_SARDINE",
-     "BUILDING_NET_SEA_BASS",
-     "BUILDING_NET_SHARK",
-     "BUILDING_NET_SNAPPER",
-     "BUILDING_SWORDFISH_NETS",
-     "BUILDING_NET_TUNA"
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+   "all": [
+    {
+     "any": [
+      "BUILDING_NET_ANCHOVY",
+      "BUILDING_NETS_COD",
+      "BUILDING_NET_EEL",
+      "BUILDING_NET_FLOUNDER",
+      "BUILDING_MACKEREL_NETS",
+      "BUILDING_MARLIN_NETS",
+      "BUILDING_PARROTFISH_NETS",
+      "BUILDING_NET_SALMON",
+      "BUILDING_NET_SARDINE",
+      "BUILDING_NET_SEA_BASS",
+      "BUILDING_NET_SHARK",
+      "BUILDING_NET_SNAPPER",
+      "BUILDING_SWORDFISH_NETS",
+      "BUILDING_NET_TUNA"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

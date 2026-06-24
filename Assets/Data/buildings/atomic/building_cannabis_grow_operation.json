@@ -21,15 +21,11 @@
     "HAS_FRESHWATER",
     "HAS_POWER",
     "BUILDING_HYDROPONICS_LAB",
-    "TECH_HYDROPONICS"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_HYDROPONICS",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

@@ -16,15 +16,11 @@
      "min": 7
     },
     "BUILDING_UNIVERSITY",
-    "TECH_CALCULUS"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_CALCULUS",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   }
  },

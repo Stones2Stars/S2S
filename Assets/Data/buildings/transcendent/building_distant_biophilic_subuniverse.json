@@ -5,19 +5,17 @@
  "requires": {
   "build": {
    "all": [
-    "TECH_DIRECTED_COSMIC_EVOLUTION"
-   ],
-   "any": [
-    [
-     "BUILDING_DISTANT_ARTIFICIAL_SUPERMASSIVE_BLACK_HOLE",
-     "BUILDING_DISTANT_BLACK_HOLE_CONSTELLATION"
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_DISTANT",
-      "scope": "plot"
-     }
-    ]
+    "TECH_DIRECTED_COSMIC_EVOLUTION",
+    {
+     "any": [
+      "BUILDING_DISTANT_ARTIFICIAL_SUPERMASSIVE_BLACK_HOLE",
+      "BUILDING_DISTANT_BLACK_HOLE_CONSTELLATION"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_DISTANT",
+     "scope": "plot"
+    }
    ]
   }
  },

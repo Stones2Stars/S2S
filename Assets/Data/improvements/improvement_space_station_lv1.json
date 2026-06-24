@@ -8,16 +8,12 @@
     {
      "type": "TECH_SPACE_STATIONS",
      "scope": "team"
+    },
+    {
+     "terrain": [
+      "TERRAIN_ORBIT"
+     ]
     }
-   ],
-   "any": [
-    [
-     {
-      "terrain": [
-       "TERRAIN_ORBIT"
-      ]
-     }
-    ]
    ]
   }
  },

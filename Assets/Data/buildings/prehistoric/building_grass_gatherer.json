@@ -18,27 +18,19 @@
  "requires": {
   "build": {
    "all": [
-    "TECH_GATHERING"
-   ],
-   "any": [
-    [
-     {
-      "type": "FEATURE_VERY_TALL_GRASS",
-      "scope": "plot"
-     }
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ],
-    [
-     {
-      "type": "CIVILIZATION_NPC_NEANDERTHAL",
-      "scope": "empire"
-     }
-    ]
+    "TECH_GATHERING",
+    {
+     "type": "FEATURE_VERY_TALL_GRASS",
+     "scope": "plot"
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    },
+    {
+     "type": "CIVILIZATION_NPC_NEANDERTHAL",
+     "scope": "empire"
+    }
    ]
   },
   "operate": {

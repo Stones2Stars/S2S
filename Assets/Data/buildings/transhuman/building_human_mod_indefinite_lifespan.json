@@ -6,19 +6,17 @@
   "build": {
    "all": [
     "HAS_POWER",
-    "TECH_TRANSHUMANISM"
-   ],
-   "any": [
-    [
-     "BUILDING_RESURRECTION_HUB",
-     "BUILDING_NANOMORPHIC_REPLICATOR"
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_TRANSHUMANISM",
+    {
+     "any": [
+      "BUILDING_RESURRECTION_HUB",
+      "BUILDING_NANOMORPHIC_REPLICATOR"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

@@ -13,48 +13,48 @@
  "requires": {
   "build": {
    "all": [
-    "TECH_CEREMONIAL_BURIAL"
-   ],
-   "any": [
-    [
-     "BUILDING_BURIAL_TRADITION_CAVE",
-     "BUILDING_BURIAL_TRADITION_EARTH",
-     "BUILDING_BURIAL_TRADITION_FIRE",
-     "BUILDING_BURIAL_TRADITION_SKY",
-     "BUILDING_BURIAL_TRADITION_SEA"
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_CEREMONIAL_BURIAL",
+    {
+     "any": [
+      "BUILDING_BURIAL_TRADITION_CAVE",
+      "BUILDING_BURIAL_TRADITION_EARTH",
+      "BUILDING_BURIAL_TRADITION_FIRE",
+      "BUILDING_BURIAL_TRADITION_SKY",
+      "BUILDING_BURIAL_TRADITION_SEA"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {
-   "any": [
-    [
-     {
-      "type": "BONUS_STONE",
-      "scope": "city",
-      "connection": "trade|vicinity"
-     },
-     {
-      "type": "BONUS_MARBLE",
-      "scope": "city",
-      "connection": "trade|vicinity"
-     },
-     {
-      "type": "BONUS_BRICKS",
-      "scope": "city",
-      "connection": "trade|vicinity"
-     },
-     {
-      "type": "BONUS_CEMENT",
-      "scope": "city",
-      "connection": "trade|vicinity"
-     }
-    ]
+   "all": [
+    {
+     "any": [
+      {
+       "type": "BONUS_STONE",
+       "scope": "city",
+       "connection": "trade|vicinity"
+      },
+      {
+       "type": "BONUS_MARBLE",
+       "scope": "city",
+       "connection": "trade|vicinity"
+      },
+      {
+       "type": "BONUS_BRICKS",
+       "scope": "city",
+       "connection": "trade|vicinity"
+      },
+      {
+       "type": "BONUS_CEMENT",
+       "scope": "city",
+       "connection": "trade|vicinity"
+      }
+     ]
+    }
    ],
    "dormant": [
     "BUILDING_FUNERARY_SERVICES",

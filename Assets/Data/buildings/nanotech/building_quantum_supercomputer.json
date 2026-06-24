@@ -15,15 +15,11 @@
    "all": [
     "HAS_POWER",
     "BUILDING_ARTIFICIAL_INTELLIGENCE_CORE",
-    "TECH_QUANTUM_COMPUTING"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_QUANTUM_COMPUTING",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

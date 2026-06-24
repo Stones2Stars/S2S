@@ -8,34 +8,34 @@
     {
      "type": "TECH_TOOL_MAKING",
      "scope": "team"
+    },
+    {
+     "any": [
+      {
+       "terrain": [
+        "TERRAIN_ROCKY",
+        "TERRAIN_BADLAND",
+        "TERRAIN_JAGGED"
+       ]
+      },
+      "HAS_HILLS",
+      {
+       "bonus": [
+        "BONUS_GOLD_ORE",
+        "BONUS_TIN_ORE",
+        "BONUS_SILVER_ORE",
+        "BONUS_COPPER_ORE",
+        "BONUS_AMBER",
+        "BONUS_STONE",
+        "BONUS_OBSIDIAN",
+        "BONUS_MARBLE",
+        "BONUS_FINE_CLAY",
+        "BONUS_TURQUOISE",
+        "BONUS_JADE"
+       ]
+      }
+     ]
     }
-   ],
-   "any": [
-    [
-     {
-      "terrain": [
-       "TERRAIN_ROCKY",
-       "TERRAIN_BADLAND",
-       "TERRAIN_JAGGED"
-      ]
-     },
-     "HAS_HILLS",
-     {
-      "bonus": [
-       "BONUS_GOLD_ORE",
-       "BONUS_TIN_ORE",
-       "BONUS_SILVER_ORE",
-       "BONUS_COPPER_ORE",
-       "BONUS_AMBER",
-       "BONUS_STONE",
-       "BONUS_OBSIDIAN",
-       "BONUS_MARBLE",
-       "BONUS_FINE_CLAY",
-       "BONUS_TURQUOISE",
-       "BONUS_JADE"
-      ]
-     }
-    ]
    ]
   }
  },

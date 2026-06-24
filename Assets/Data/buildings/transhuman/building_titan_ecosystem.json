@@ -11,15 +11,11 @@
   "build": {
    "all": [
     "BUILDING_TITAN_BIOFACTORY",
-    "TECH_SPECULATIVE_PHYSIOLOGY"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_TITANIC",
-      "scope": "plot"
-     }
-    ]
+    "TECH_SPECULATIVE_PHYSIOLOGY",
+    {
+     "type": "MAPCATEGORY_TITANIC",
+     "scope": "plot"
+    }
    ]
   }
  },

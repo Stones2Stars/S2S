@@ -5,25 +5,23 @@
  "requires": {
   "build": {
    "all": [
-    "TECH_COMPUTRONIUM_UNIVERSE"
-   ],
-   "any": [
-    [
-     {
-      "type": "TERRAIN_NEUTRON_STAR",
-      "scope": "plot"
-     }
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_GALACTIC",
-      "scope": "plot"
-     },
-     {
-      "type": "MAPCATEGORY_MILKY_WAY",
-      "scope": "plot"
-     }
-    ]
+    "TECH_COMPUTRONIUM_UNIVERSE",
+    {
+     "type": "TERRAIN_NEUTRON_STAR",
+     "scope": "plot"
+    },
+    {
+     "any": [
+      {
+       "type": "MAPCATEGORY_GALACTIC",
+       "scope": "plot"
+      },
+      {
+       "type": "MAPCATEGORY_MILKY_WAY",
+       "scope": "plot"
+      }
+     ]
+    }
    ]
   }
  },

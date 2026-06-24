@@ -8,15 +8,11 @@
     "BUILDING_INTERGALACTIC_GALAXY_SCAN",
     "BUILDING_INTERGALACTIC_SUPERCOMPUTER",
     "BUILDING_INTERGALACTIC_WORMHOLE_COMMUNICATION_NETWORK",
-    "TECH_HYPERINTELLIGENCE"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_UNIVERSAL",
-      "scope": "plot"
-     }
-    ]
+    "TECH_HYPERINTELLIGENCE",
+    {
+     "type": "MAPCATEGORY_UNIVERSAL",
+     "scope": "plot"
+    }
    ]
   }
  },

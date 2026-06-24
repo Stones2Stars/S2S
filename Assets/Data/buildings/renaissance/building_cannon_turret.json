@@ -14,19 +14,17 @@
   "build": {
    "all": [
     "BUILDING_CANNON_FORGE",
-    "TECH_GUNPOWDER"
-   ],
-   "any": [
-    [
-     "BUILDING_CASTLE",
-     "BUILDING_STAR_FORT"
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_GUNPOWDER",
+    {
+     "any": [
+      "BUILDING_CASTLE",
+      "BUILDING_STAR_FORT"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {
@@ -35,16 +33,12 @@
      "type": "BONUS_IRON_WARES",
      "scope": "city",
      "connection": "trade|vicinity"
+    },
+    {
+     "type": "BONUS_SULPHUR",
+     "scope": "city",
+     "connection": "trade|vicinity"
     }
-   ],
-   "any": [
-    [
-     {
-      "type": "BONUS_SULPHUR",
-      "scope": "city",
-      "connection": "trade|vicinity"
-     }
-    ]
    ],
    "dormant": [
     "BUILDING_IMPERIAL_FORTRESS"

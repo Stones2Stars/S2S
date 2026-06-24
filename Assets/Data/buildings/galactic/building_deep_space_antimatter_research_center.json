@@ -7,15 +7,11 @@
    "all": [
     "HAS_POWER",
     "BUILDING_DEEP_SPACE_FUSION_CORE",
-    "TECH_ANTIMATTER_PRODUCTION"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_SOLAR_SYSTEM",
-      "scope": "plot"
-     }
-    ]
+    "TECH_ANTIMATTER_PRODUCTION",
+    {
+     "type": "MAPCATEGORY_SOLAR_SYSTEM",
+     "scope": "plot"
+    }
    ]
   }
  },

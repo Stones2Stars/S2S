@@ -5,15 +5,11 @@
  "requires": {
   "build": {
    "all": [
-    "BUILDING_WORLDVIEW_SLAVERY_ACTIVE"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "BUILDING_WORLDVIEW_SLAVERY_ACTIVE",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

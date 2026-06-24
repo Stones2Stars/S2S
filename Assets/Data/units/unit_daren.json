@@ -13,16 +13,12 @@
     "BUILDING_ANIMAL_TRAINER_HORSE",
     "TECH_ANIMAL_RIDING",
     "TECH_EQUINE_DOMESTICATION",
-    "TECH_ARCHERY"
-   ],
-   "any": [
-    [
-     {
-      "type": "BONUS_HORSE",
-      "scope": "city",
-      "connection": "trade|vicinity"
-     }
-    ]
+    "TECH_ARCHERY",
+    {
+     "type": "BONUS_HORSE",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    }
    ]
   }
  },

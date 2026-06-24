@@ -23,15 +23,11 @@
     "HAS_POWER",
     "BUILDING_MANUFACTURING_PLANT",
     "BUILDING_POWER_LINES",
-    "TECH_INDUSTRIAL_ECOLOGY"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_INDUSTRIAL_ECOLOGY",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

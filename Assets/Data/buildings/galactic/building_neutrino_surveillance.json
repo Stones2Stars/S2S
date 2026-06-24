@@ -7,15 +7,11 @@
    "all": [
     "HAS_POWER",
     "BUILDING_SUBTERRANEAN_CITY",
-    "TECH_NEUTRINO_COMMUNICATIONS"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_NEUTRINO_COMMUNICATIONS",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   }
  },

@@ -16,21 +16,19 @@
      "scope": "empire",
      "min": 1
     },
-    "TECH_ORNAMENTATION"
-   ],
-   "any": [
-    [
-     "BUILDING_BEADWORKER",
-     "BUILDING_BEADMAKERS_WORKSHOP",
-     "BUILDING_FACTORY_BEADS",
-     "BUILDING_MANUFACTURING_DISTRICT"
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_ORNAMENTATION",
+    {
+     "any": [
+      "BUILDING_BEADWORKER",
+      "BUILDING_BEADMAKERS_WORKSHOP",
+      "BUILDING_FACTORY_BEADS",
+      "BUILDING_MANUFACTURING_DISTRICT"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

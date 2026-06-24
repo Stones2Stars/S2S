@@ -6,15 +6,11 @@
   "build": {
    "all": [
     "BUILDING_DISTANT_COMPUTRONIUM_FILAMENT",
-    "TECH_EXPERIMENTAL_COSMOLOGY"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_DISTANT",
-      "scope": "plot"
-     }
-    ]
+    "TECH_EXPERIMENTAL_COSMOLOGY",
+    {
+     "type": "MAPCATEGORY_DISTANT",
+     "scope": "plot"
+    }
    ]
   }
  },

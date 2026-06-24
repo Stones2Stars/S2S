@@ -5,15 +5,11 @@
  "requires": {
   "build": {
    "all": [
-    "TECH_POLITICAL_PHILOSOPHY"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_POLITICAL_PHILOSOPHY",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

@@ -14,20 +14,18 @@
   "build": {
    "all": [
     "HAS_POWER",
-    "TECH_DIGITIZATION"
-   ],
-   "any": [
-    [
-     "BUILDING_SOCIAL_NETWORKS",
-     "BUILDING_HOLOGRAPHIC_NETWORKS",
-     "BUILDING_EXOCORTEX_NETWORKS"
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_DIGITIZATION",
+    {
+     "any": [
+      "BUILDING_SOCIAL_NETWORKS",
+      "BUILDING_HOLOGRAPHIC_NETWORKS",
+      "BUILDING_EXOCORTEX_NETWORKS"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

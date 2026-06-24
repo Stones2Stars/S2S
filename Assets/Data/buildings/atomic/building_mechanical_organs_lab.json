@@ -15,15 +15,11 @@
    "all": [
     "HAS_POWER",
     "BUILDING_MEDICAL_CLINIC",
-    "TECH_GENETICS"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_GENETICS",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

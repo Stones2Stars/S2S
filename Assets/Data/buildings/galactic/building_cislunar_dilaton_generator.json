@@ -12,15 +12,11 @@
    "all": [
     "BUILDING_CISLUNAR_ONEILL_CYLINDER",
     "BUILDING_CISLUNAR_ION_CANNON",
-    "TECH_SINGULARITY_STABILIZATION"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_CISLUNAR",
-      "scope": "plot"
-     }
-    ]
+    "TECH_SINGULARITY_STABILIZATION",
+    {
+     "type": "MAPCATEGORY_CISLUNAR",
+     "scope": "plot"
+    }
    ]
   }
  },

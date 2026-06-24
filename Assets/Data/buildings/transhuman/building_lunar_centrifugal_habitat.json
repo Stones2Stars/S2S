@@ -7,15 +7,11 @@
    "all": [
     "HAS_POWER",
     "BUILDING_LUNAR_MANUFACTURING_PLANT",
-    "TECH_HYPERMAGNETICS"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_LUNAR",
-      "scope": "plot"
-     }
-    ]
+    "TECH_HYPERMAGNETICS",
+    {
+     "type": "MAPCATEGORY_LUNAR",
+     "scope": "plot"
+    }
    ]
   }
  },

@@ -9,22 +9,18 @@
      "type": "TECH_STARGAZING",
      "scope": "team"
     },
-    "IS_FLATLANDS"
-   ],
-   "any": [
-    [
-     {
-      "terrain": [
-       "TERRAIN_BARREN",
-       "TERRAIN_DESERT",
-       "TERRAIN_SALT_FLATS",
-       "TERRAIN_SCRUB",
-       "TERRAIN_ROCKY",
-       "TERRAIN_BADLAND",
-       "TERRAIN_JAGGED"
-      ]
-     }
-    ]
+    "IS_FLATLANDS",
+    {
+     "terrain": [
+      "TERRAIN_BARREN",
+      "TERRAIN_DESERT",
+      "TERRAIN_SALT_FLATS",
+      "TERRAIN_SCRUB",
+      "TERRAIN_ROCKY",
+      "TERRAIN_BADLAND",
+      "TERRAIN_JAGGED"
+     ]
+    }
    ]
   }
  },

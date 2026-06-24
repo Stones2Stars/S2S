@@ -11,15 +11,11 @@
      "scope": "empire",
      "min": 3
     },
-    "TECH_INTERSTELLAR_COLONIZATION"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_INTERSTELLAR_COLONIZATION",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   }
  },

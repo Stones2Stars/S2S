@@ -7,15 +7,11 @@
    "all": [
     "HAS_POWER",
     "BUILDING_TIME_MACHINE",
-    "TECH_MULTIDIMENSIONAL_TIME"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_MULTIDIMENSIONAL_TIME",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   }
  },

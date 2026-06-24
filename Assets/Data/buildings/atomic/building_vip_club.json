@@ -14,21 +14,19 @@
   "build": {
    "all": [
     "HAS_POWER",
-    "TECH_MASS_MEDIA"
-   ],
-   "any": [
-    [
-     "BUILDING_NIGHT_CLUB",
-     "BUILDING_CASINO",
-     "BUILDING_DIVE_BAR",
-     "BUILDING_GALACTIC_CANTINA"
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_MASS_MEDIA",
+    {
+     "any": [
+      "BUILDING_NIGHT_CLUB",
+      "BUILDING_CASINO",
+      "BUILDING_DIVE_BAR",
+      "BUILDING_GALACTIC_CANTINA"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

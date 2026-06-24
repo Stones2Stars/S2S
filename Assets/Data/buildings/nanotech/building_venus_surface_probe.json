@@ -6,15 +6,11 @@
   "build": {
    "all": [
     "BUILDING_SPACE_COLONY_VENUS",
-    "TECH_SUPERSTRONG_ALLOYS"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_VENUSIAN",
-      "scope": "plot"
-     }
-    ]
+    "TECH_SUPERSTRONG_ALLOYS",
+    {
+     "type": "MAPCATEGORY_VENUSIAN",
+     "scope": "plot"
+    }
    ]
   }
  },

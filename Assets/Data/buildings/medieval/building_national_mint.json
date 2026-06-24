@@ -16,24 +16,22 @@
      "scope": "empire",
      "min": 5
     },
-    "TECH_BANKING"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_BANKING",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {
-   "any": [
-    [
-     "CIVIC_COINAGE",
-     "CIVIC_FREE_MARKET",
-     "CIVIC_MERCANTILISM"
-    ]
+   "all": [
+    {
+     "any": [
+      "CIVIC_COINAGE",
+      "CIVIC_FREE_MARKET",
+      "CIVIC_MERCANTILISM"
+     ]
+    }
    ]
   }
  },

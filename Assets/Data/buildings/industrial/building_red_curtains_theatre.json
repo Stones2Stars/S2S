@@ -7,15 +7,11 @@
    "all": [
     "BUILDING_MOVIE_THEATRE",
     "TECH_MOTION_PICTURES",
-    "TECH_CORPORATION"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_CORPORATION",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

@@ -15,15 +15,11 @@
     "HAS_POWER",
     "BUILDING_PROTEIN_LAB",
     "BUILDING_NUCLEIC_ACID_LAB",
-    "TECH_BIOINFORMATICS"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_BIOINFORMATICS",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

@@ -14,29 +14,27 @@
   "build": {
    "all": [
     "BUILDING_HOTEL",
-    "TECH_TOURISM"
-   ],
-   "any": [
-    [
-     {
-      "type": "TERRAIN_TAIGA",
-      "scope": "plot"
-     },
-     {
-      "type": "TERRAIN_TUNDRA",
-      "scope": "plot"
-     },
-     {
-      "type": "TERRAIN_ICE",
-      "scope": "plot"
-     }
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_TOURISM",
+    {
+     "any": [
+      {
+       "type": "TERRAIN_TAIGA",
+       "scope": "plot"
+      },
+      {
+       "type": "TERRAIN_TUNDRA",
+       "scope": "plot"
+      },
+      {
+       "type": "TERRAIN_ICE",
+       "scope": "plot"
+      }
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

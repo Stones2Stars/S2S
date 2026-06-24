@@ -20,14 +20,14 @@
      "type": "BONUS_SCROLLS",
      "scope": "city",
      "connection": "trade|vicinity"
+    },
+    {
+     "any": [
+      "BUILDING_APOTHECARY_SHOP",
+      "BUILDING_PHARMACY",
+      "BUILDING_HEALTHCARE_MEGACOMPLEX"
+     ]
     }
-   ],
-   "any": [
-    [
-     "BUILDING_APOTHECARY_SHOP",
-     "BUILDING_PHARMACY",
-     "BUILDING_HEALTHCARE_MEGACOMPLEX"
-    ]
    ]
   }
  },

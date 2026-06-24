@@ -6,19 +6,13 @@
   "build": {
    "all": [
     "BUILDING_PALACE",
-    "TECH_ANDROIDS"
-   ],
-   "any": [
-    [
-     {
-      "type": "BONUS_NANOTUBES",
-      "scope": "city",
-      "connection": "trade|vicinity"
-     }
-    ],
-    [
-     "CIVIC_MONARCHY"
-    ]
+    "TECH_ANDROIDS",
+    {
+     "type": "BONUS_NANOTUBES",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    "CIVIC_MONARCHY"
    ]
   }
  },

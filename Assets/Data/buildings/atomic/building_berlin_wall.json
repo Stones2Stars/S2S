@@ -11,15 +11,11 @@
      "min": 7
     },
     "TECH_AUTOMATIC_WEAPONS",
-    "TECH_FASCISM"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_FASCISM",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {
@@ -29,16 +25,12 @@
      "scope": "city",
      "connection": "trade|vicinity"
     },
-    "CIVIC_CLOSED_BORDERS"
-   ],
-   "any": [
-    [
-     {
-      "type": "BONUS_CEMENT",
-      "scope": "city",
-      "connection": "trade|vicinity"
-     }
-    ]
+    "CIVIC_CLOSED_BORDERS",
+    {
+     "type": "BONUS_CEMENT",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    }
    ]
   }
  },

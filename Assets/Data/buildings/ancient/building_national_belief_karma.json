@@ -5,23 +5,21 @@
  "requires": {
   "build": {
    "all": [
-    "TECH_KARMA"
-   ],
-   "any": [
-    [
-     "BUILDING_HINDU_TEMPLE",
-     "BUILDING_BUDDHIST_TEMPLE",
-     "BUILDING_TAOIST_TEMPLE",
-     "BUILDING_SHINTO_TEMPLE",
-     "BUILDING_SIKH_GURDWARA",
-     "BUILDING_JAIN_TEMPLE"
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_KARMA",
+    {
+     "any": [
+      "BUILDING_HINDU_TEMPLE",
+      "BUILDING_BUDDHIST_TEMPLE",
+      "BUILDING_TAOIST_TEMPLE",
+      "BUILDING_SHINTO_TEMPLE",
+      "BUILDING_SIKH_GURDWARA",
+      "BUILDING_JAIN_TEMPLE"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   }
  },

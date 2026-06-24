@@ -6,19 +6,17 @@
   "build": {
    "all": [
     "BUILDING_CONTROL_CENTER",
-    "TECH_MEDIA_HIVEMIND"
-   ],
-   "any": [
-    [
-     "BUILDING_LIQUID_METALS_FOUNDRY",
-     "BUILDING_PICOTECH_COMPLEX"
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_MEDIA_HIVEMIND",
+    {
+     "any": [
+      "BUILDING_LIQUID_METALS_FOUNDRY",
+      "BUILDING_PICOTECH_COMPLEX"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

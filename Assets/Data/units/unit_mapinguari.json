@@ -5,30 +5,32 @@
  "requires": {
   "build": {
    "all": [
-    "TECH_COPPER_WORKING"
-   ],
-   "any": [
-    [
-     {
-      "type": "BONUS_COPPER_WARES",
-      "scope": "city",
-      "connection": "trade|vicinity"
-     },
-     {
-      "type": "BONUS_BRONZE_WARES",
-      "scope": "city",
-      "connection": "trade|vicinity"
-     },
-     {
-      "type": "BONUS_IRON_WARES",
-      "scope": "city",
-      "connection": "trade|vicinity"
-     }
-    ],
-    [
-     "BUILDING_MAPINGUARI_COMPOUND",
-     "BUILDING_MAPINGUARI_CHANGING_OF_THE_GUARD_CEREMONY"
-    ]
+    "TECH_COPPER_WORKING",
+    {
+     "any": [
+      {
+       "type": "BONUS_COPPER_WARES",
+       "scope": "city",
+       "connection": "trade|vicinity"
+      },
+      {
+       "type": "BONUS_BRONZE_WARES",
+       "scope": "city",
+       "connection": "trade|vicinity"
+      },
+      {
+       "type": "BONUS_IRON_WARES",
+       "scope": "city",
+       "connection": "trade|vicinity"
+      }
+     ]
+    },
+    {
+     "any": [
+      "BUILDING_MAPINGUARI_COMPOUND",
+      "BUILDING_MAPINGUARI_CHANGING_OF_THE_GUARD_CEREMONY"
+     ]
+    }
    ]
   }
  },

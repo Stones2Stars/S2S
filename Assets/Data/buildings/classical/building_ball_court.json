@@ -13,15 +13,11 @@
  "requires": {
   "build": {
    "all": [
-    "TECH_COMBAT_SPORTS"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_COMBAT_SPORTS",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {
@@ -31,31 +27,31 @@
      "scope": "city",
      "connection": "trade|vicinity"
     },
-    "RELIGION_NAGHUALISM"
-   ],
-   "any": [
-    [
-     {
-      "type": "BONUS_MAYAN",
-      "scope": "city",
-      "connection": "trade|vicinity"
-     },
-     {
-      "type": "BONUS_AZTEC",
-      "scope": "city",
-      "connection": "trade|vicinity"
-     },
-     {
-      "type": "BONUS_OLMEC",
-      "scope": "city",
-      "connection": "trade|vicinity"
-     },
-     {
-      "type": "BONUS_ZAPOTEC",
-      "scope": "city",
-      "connection": "trade|vicinity"
-     }
-    ]
+    "RELIGION_NAGHUALISM",
+    {
+     "any": [
+      {
+       "type": "BONUS_MAYAN",
+       "scope": "city",
+       "connection": "trade|vicinity"
+      },
+      {
+       "type": "BONUS_AZTEC",
+       "scope": "city",
+       "connection": "trade|vicinity"
+      },
+      {
+       "type": "BONUS_OLMEC",
+       "scope": "city",
+       "connection": "trade|vicinity"
+      },
+      {
+       "type": "BONUS_ZAPOTEC",
+       "scope": "city",
+       "connection": "trade|vicinity"
+      }
+     ]
+    }
    ],
    "dormant": [
     "BUILDING_MINOR_LEAGUE_STADIUM",

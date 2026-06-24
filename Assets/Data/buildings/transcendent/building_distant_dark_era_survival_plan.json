@@ -11,15 +11,11 @@
      "scope": "empire",
      "min": 1
     },
-    "TECH_ENTROPY_REVERSAL"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_DISTANT",
-      "scope": "plot"
-     }
-    ]
+    "TECH_ENTROPY_REVERSAL",
+    {
+     "type": "MAPCATEGORY_DISTANT",
+     "scope": "plot"
+    }
    ]
   }
  },

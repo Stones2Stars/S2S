@@ -11,16 +11,12 @@
      "connection": "trade|vicinity"
     },
     "BUILDING_ANIMAL_TRAINER_CAMEL",
-    "TECH_ARMORED_CAVALRY"
-   ],
-   "any": [
-    [
-     {
-      "type": "BONUS_CAMEL",
-      "scope": "city",
-      "connection": "trade|vicinity"
-     }
-    ]
+    "TECH_ARMORED_CAVALRY",
+    {
+     "type": "BONUS_CAMEL",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    }
    ]
   }
  },

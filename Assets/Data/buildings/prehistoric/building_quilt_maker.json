@@ -13,32 +13,28 @@
  "requires": {
   "build": {
    "all": [
-    "TECH_SEWING"
-   ],
-   "any": [
-    [
-     "BUILDING_SEAMSTRESS",
-     "BUILDING_TEXTILE_MILL",
-     "BUILDING_FACTORY_CLOTHING",
-     "BUILDING_TEXTILE_MANUFACTURING_DISTRICT"
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_SEWING",
+    {
+     "any": [
+      "BUILDING_SEAMSTRESS",
+      "BUILDING_TEXTILE_MILL",
+      "BUILDING_FACTORY_CLOTHING",
+      "BUILDING_TEXTILE_MANUFACTURING_DISTRICT"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {
-   "any": [
-    [
-     {
-      "type": "BONUS_CLOTH",
-      "scope": "city",
-      "connection": "trade|vicinity"
-     }
-    ]
+   "all": [
+    {
+     "type": "BONUS_CLOTH",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    }
    ],
    "dormant": [
     "BUILDING_HYPERMARKET"

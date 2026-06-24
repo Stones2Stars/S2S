@@ -7,15 +7,11 @@
   "build": {
    "all": [
     "BUILDING_SLAVE_COMPOUND",
-    "TECH_SLAVERY"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_SLAVERY",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

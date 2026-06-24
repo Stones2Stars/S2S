@@ -9,15 +9,11 @@
     "BUILDING_CISLUNAR_BIOFACTORY",
     "BUILDING_CISLUNAR_SOCIAL_ENGINEERING",
     "TECH_BOTANICAL_ALCHEMY",
-    "TECH_EVOLVED_CONSTRUCTION"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_CISLUNAR",
-      "scope": "plot"
-     }
-    ]
+    "TECH_EVOLVED_CONSTRUCTION",
+    {
+     "type": "MAPCATEGORY_CISLUNAR",
+     "scope": "plot"
+    }
    ]
   }
  },

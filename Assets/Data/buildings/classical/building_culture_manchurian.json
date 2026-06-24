@@ -7,15 +7,11 @@
    "all": [
     "BUILDING_C_AC_ASIAN",
     "BUILDING_C_L_ASIAN",
-    "TECH_MOUNTED_ARCHERY"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_MOUNTED_ARCHERY",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

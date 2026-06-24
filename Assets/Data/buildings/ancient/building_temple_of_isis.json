@@ -8,15 +8,11 @@
     "TECH_PRIESTHOOD",
     {
      "STATE_RELIGION": "RELIGION_KEMETISM"
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
     }
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
    ],
    "noneOf": [
     "BUILDING_TEMPLE_OF_SETH",
@@ -30,16 +26,12 @@
      "scope": "city",
      "connection": "trade|vicinity"
     },
-    "RELIGION_KEMETISM"
-   ],
-   "any": [
-    [
-     {
-      "type": "BONUS_SCULPTURES",
-      "scope": "city",
-      "connection": "trade|vicinity"
-     }
-    ]
+    "RELIGION_KEMETISM",
+    {
+     "type": "BONUS_SCULPTURES",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    }
    ]
   }
  },

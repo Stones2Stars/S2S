@@ -14,43 +14,45 @@
  "requires": {
   "build": {
    "all": [
-    "TECH_PIRACY"
-   ],
-   "any": [
-    [
-     "BUILDING_TRADING_POST",
-     "BUILDING_SHOPPING_DISTRICT"
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_PIRACY",
+    {
+     "any": [
+      "BUILDING_TRADING_POST",
+      "BUILDING_SHOPPING_DISTRICT"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {
-   "any": [
-    [
-     {
-      "type": "BONUS_ALCOHOL",
-      "scope": "city",
-      "connection": "trade|vicinity"
-     },
-     {
-      "type": "BONUS_DRUGS",
-      "scope": "city",
-      "connection": "trade|vicinity"
-     }
-    ],
-    [
-     "CIVIC_DESPOTISM",
-     "CIVIC_MONARCHY",
-     "CIVIC_FEUDAL",
-     "CIVIC_NATIONALIST",
-     "CIVIC_MERCANTILISM",
-     "CIVIC_BANDITRY"
-    ]
+   "all": [
+    {
+     "any": [
+      {
+       "type": "BONUS_ALCOHOL",
+       "scope": "city",
+       "connection": "trade|vicinity"
+      },
+      {
+       "type": "BONUS_DRUGS",
+       "scope": "city",
+       "connection": "trade|vicinity"
+      }
+     ]
+    },
+    {
+     "any": [
+      "CIVIC_DESPOTISM",
+      "CIVIC_MONARCHY",
+      "CIVIC_FEUDAL",
+      "CIVIC_NATIONALIST",
+      "CIVIC_MERCANTILISM",
+      "CIVIC_BANDITRY"
+     ]
+    }
    ]
   }
  },

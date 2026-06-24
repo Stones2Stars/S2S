@@ -5,15 +5,11 @@
  "requires": {
   "build": {
    "all": [
-    "TECH_COLONY_GOVERNANCE"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_GALACTIC",
-      "scope": "plot"
-     }
-    ]
+    "TECH_COLONY_GOVERNANCE",
+    {
+     "type": "MAPCATEGORY_GALACTIC",
+     "scope": "plot"
+    }
    ],
    "noneOf": [
     "BUILDING_INTERSTELLAR_GOVERNMENT_HOLACRACY",

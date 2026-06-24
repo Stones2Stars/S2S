@@ -10,15 +10,11 @@
     "BUILDING_FARM_MECH_CONTROL_CENTER",
     "BUILDING_GENOTYPE_STUDIO",
     "TECH_INTERACTIVE_GLASS",
-    "TECH_ACCELERATED_GERMINATION"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_ACCELERATED_GERMINATION",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

@@ -5,20 +5,18 @@
  "requires": {
   "build": {
    "all": [
-    "TECH_PLANETARY_ECONOMICS"
-   ],
-   "any": [
-    [
-     "BUILDING_WIRELESS_GRID",
-     "BUILDING_EMP_GRID",
-     "BUILDING_SUPERCONDUCTING_GRID"
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_PLANETARY_ECONOMICS",
+    {
+     "any": [
+      "BUILDING_WIRELESS_GRID",
+      "BUILDING_EMP_GRID",
+      "BUILDING_SUPERCONDUCTING_GRID"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   }
  },

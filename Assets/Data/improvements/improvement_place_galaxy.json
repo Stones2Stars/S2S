@@ -8,17 +8,13 @@
     {
      "type": "TECH_GALACTIFORMING",
      "scope": "team"
+    },
+    {
+     "terrain": [
+      "TERRAIN_LOCAL_GROUP",
+      "TERRAIN_VIRGO_SUPERCLUSTER"
+     ]
     }
-   ],
-   "any": [
-    [
-     {
-      "terrain": [
-       "TERRAIN_LOCAL_GROUP",
-       "TERRAIN_VIRGO_SUPERCLUSTER"
-      ]
-     }
-    ]
    ]
   }
  },

@@ -11,18 +11,12 @@
   "build": {
    "all": [
     "BUILDING_CARNIVAL",
-    "TECH_TRADE"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ],
-    [
-     "HERITAGE_TAXON_MARSUPIALIA"
-    ]
+    "TECH_TRADE",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    },
+    "HERITAGE_TAXON_MARSUPIALIA"
    ]
   }
  },

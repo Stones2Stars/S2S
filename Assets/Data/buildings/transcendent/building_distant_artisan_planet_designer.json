@@ -6,15 +6,11 @@
   "build": {
    "all": [
     "BUILDING_DISTANT_BLAZAR_FACTORY",
-    "TECH_HYPERSTRUCTURE_ENGINEERING"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_DISTANT",
-      "scope": "plot"
-     }
-    ]
+    "TECH_HYPERSTRUCTURE_ENGINEERING",
+    {
+     "type": "MAPCATEGORY_DISTANT",
+     "scope": "plot"
+    }
    ]
   }
  },

@@ -16,21 +16,19 @@
      "min": 3
     },
     "TECH_HERALDRY",
-    "TECH_GUILDS"
-   ],
-   "any": [
-    [
-     "BUILDING_SEAMSTRESS",
-     "BUILDING_TEXTILE_MILL",
-     "BUILDING_FACTORY_CLOTHING",
-     "BUILDING_TEXTILE_MANUFACTURING_DISTRICT"
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_GUILDS",
+    {
+     "any": [
+      "BUILDING_SEAMSTRESS",
+      "BUILDING_TEXTILE_MILL",
+      "BUILDING_FACTORY_CLOTHING",
+      "BUILDING_TEXTILE_MANUFACTURING_DISTRICT"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   }
  },

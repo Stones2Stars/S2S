@@ -19,15 +19,11 @@
     "BUILDING_NATURAL_LANGUAGE_ALGORITHMS",
     "BUILDING_EVOLUTION_SIMULATOR",
     "TECH_NANOELECTRONICS",
-    "TECH_ONTOLOGICAL_ENGINEERING"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_ONTOLOGICAL_ENGINEERING",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

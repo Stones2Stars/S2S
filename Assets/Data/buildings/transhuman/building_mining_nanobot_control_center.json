@@ -12,15 +12,11 @@
    "all": [
     "HAS_POWER",
     "BUILDING_MINING_MECH_CONTROL_CENTER",
-    "TECH_NANOMINING"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_NANOMINING",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

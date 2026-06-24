@@ -17,31 +17,27 @@
      "min": 3
     },
     "TECH_ROAD_BUILDING",
-    "TECH_SERICULTURE"
-   ],
-   "any": [
-    [
-     "BUILDING_BAZAAR",
-     "BUILDING_MALL",
-     "BUILDING_HYPERMARKET"
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_SERICULTURE",
+    {
+     "any": [
+      "BUILDING_BAZAAR",
+      "BUILDING_MALL",
+      "BUILDING_HYPERMARKET"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {
-   "any": [
-    [
-     {
-      "type": "BONUS_SILK",
-      "scope": "city",
-      "connection": "trade|vicinity"
-     }
-    ]
+   "all": [
+    {
+     "type": "BONUS_SILK",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    }
    ]
   }
  },

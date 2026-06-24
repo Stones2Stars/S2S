@@ -12,15 +12,11 @@
    "all": [
     "HAS_POWER",
     "BUILDING_MEGATOWER",
-    "TECH_EVOLVED_CONSTRUCTION"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_EVOLVED_CONSTRUCTION",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   }
  },

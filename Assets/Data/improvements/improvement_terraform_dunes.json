@@ -8,16 +8,12 @@
     {
      "type": "TECH_WEATHER_CONTROL",
      "scope": "team"
+    },
+    {
+     "terrain": [
+      "TERRAIN_SALT_FLATS"
+     ]
     }
-   ],
-   "any": [
-    [
-     {
-      "terrain": [
-       "TERRAIN_SALT_FLATS"
-      ]
-     }
-    ]
    ]
   }
  },

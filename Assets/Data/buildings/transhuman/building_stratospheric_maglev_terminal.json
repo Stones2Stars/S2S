@@ -7,19 +7,17 @@
    "all": [
     "HAS_POWER",
     "BUILDING_STRATOSPHERIC_TOWER",
-    "TECH_FRICTIONLESS_FLIGHT"
-   ],
-   "any": [
-    [
-     "BUILDING_VACTRAIN_TERMINAL",
-     "BUILDING_GRAVITY_TRAIN"
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_FRICTIONLESS_FLIGHT",
+    {
+     "any": [
+      "BUILDING_VACTRAIN_TERMINAL",
+      "BUILDING_GRAVITY_TRAIN"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   }
  },

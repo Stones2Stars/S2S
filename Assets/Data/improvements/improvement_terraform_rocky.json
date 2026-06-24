@@ -8,18 +8,14 @@
     {
      "type": "TECH_WEATHER_CONTROL",
      "scope": "team"
+    },
+    {
+     "terrain": [
+      "TERRAIN_PLAINS",
+      "TERRAIN_BARREN",
+      "TERRAIN_JAGGED"
+     ]
     }
-   ],
-   "any": [
-    [
-     {
-      "terrain": [
-       "TERRAIN_PLAINS",
-       "TERRAIN_BARREN",
-       "TERRAIN_JAGGED"
-      ]
-     }
-    ]
    ]
   }
  },

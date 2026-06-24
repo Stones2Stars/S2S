@@ -12,20 +12,20 @@
  },
  "requires": {
   "build": {
-   "any": [
-    [
-     "BUILDING_DONKEY_MILL",
-     "BUILDING_OXEN_MILL",
-     "BUILDING_QUERN",
-     "BUILDING_WATERMILL",
-     "BUILDING_WINDMILL"
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+   "all": [
+    {
+     "any": [
+      "BUILDING_DONKEY_MILL",
+      "BUILDING_OXEN_MILL",
+      "BUILDING_QUERN",
+      "BUILDING_WATERMILL",
+      "BUILDING_WINDMILL"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

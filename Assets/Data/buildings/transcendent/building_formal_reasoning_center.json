@@ -8,15 +8,11 @@
     "HAS_POWER",
     "BUILDING_MATHEMATICAL_ORACLE",
     "BUILDING_COMPUTATIONAL_METAPHYSICS_CENTER",
-    "TECH_ARCHETYPAL_VECTOR_SPACES"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_ARCHETYPAL_VECTOR_SPACES",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   }
  },

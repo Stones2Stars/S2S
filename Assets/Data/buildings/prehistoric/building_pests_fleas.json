@@ -20,31 +20,29 @@
      "scope": "city",
      "min": 2
     },
-    "TECH_CANINE_DOMESTICATION"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_CANINE_DOMESTICATION",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {
-   "any": [
-    [
-     {
-      "type": "BONUS_DOG",
-      "scope": "city",
-      "connection": "vicinity"
-     },
-     {
-      "type": "BONUS_CAT",
-      "scope": "city",
-      "connection": "vicinity"
-     }
-    ]
+   "all": [
+    {
+     "any": [
+      {
+       "type": "BONUS_DOG",
+       "scope": "city",
+       "connection": "vicinity"
+      },
+      {
+       "type": "BONUS_CAT",
+       "scope": "city",
+       "connection": "vicinity"
+      }
+     ]
+    }
    ]
   }
  },

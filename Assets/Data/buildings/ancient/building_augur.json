@@ -5,25 +5,23 @@
  "requires": {
   "build": {
    "all": [
-    "TECH_DIVINATION"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_DIVINATION",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {
-   "any": [
-    [
-     "CIVIC_PROPHETS",
-     "CIVIC_STATE_CHURCH",
-     "CIVIC_FREE_CHURCH",
-     "CIVIC_RELIGIOUS"
-    ]
+   "all": [
+    {
+     "any": [
+      "CIVIC_PROPHETS",
+      "CIVIC_STATE_CHURCH",
+      "CIVIC_FREE_CHURCH",
+      "CIVIC_RELIGIOUS"
+     ]
+    }
    ]
   }
  },

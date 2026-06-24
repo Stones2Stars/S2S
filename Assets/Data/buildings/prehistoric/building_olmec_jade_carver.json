@@ -5,19 +5,17 @@
  "requires": {
   "build": {
    "all": [
-    "TECH_BARTER"
-   ],
-   "any": [
-    [
-     "BUILDING_JADE_IMPORTER",
-     "BUILDING_JADE_MERCHANT_LOCAL"
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_BARTER",
+    {
+     "any": [
+      "BUILDING_JADE_IMPORTER",
+      "BUILDING_JADE_MERCHANT_LOCAL"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {
@@ -26,16 +24,12 @@
      "type": "BONUS_JADE",
      "scope": "city",
      "connection": "trade|vicinity"
+    },
+    {
+     "type": "BONUS_OLMEC",
+     "scope": "city",
+     "connection": "trade|vicinity"
     }
-   ],
-   "any": [
-    [
-     {
-      "type": "BONUS_OLMEC",
-      "scope": "city",
-      "connection": "trade|vicinity"
-     }
-    ]
    ]
   }
  },

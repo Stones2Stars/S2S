@@ -9,21 +9,21 @@
      "type": "TECH_ADHESIVES",
      "scope": "team"
     },
-    "HAS_FEATURE"
-   ],
-   "any": [
-    [
-     {
-      "feature": [
-       "FEATURE_TAR_PIT"
-      ]
-     },
-     {
-      "bonus": [
-       "BONUS_OIL"
-      ]
-     }
-    ]
+    "HAS_FEATURE",
+    {
+     "any": [
+      {
+       "feature": [
+        "FEATURE_TAR_PIT"
+       ]
+      },
+      {
+       "bonus": [
+        "BONUS_OIL"
+       ]
+      }
+     ]
+    }
    ]
   }
  },

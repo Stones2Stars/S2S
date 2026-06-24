@@ -13,22 +13,20 @@
   "build": {
    "all": [
     "BUILDING_FOLKLORE_REQUIREMENT",
-    "TECH_TAXONOMY"
-   ],
-   "any": [
-    [
-     "BUILDING_FOLKLORE_BISON",
-     "BUILDING_FOLKLORE_CAPE_BUFFALO",
-     "BUILDING_FOLKLORE_AUROCHS",
-     "BUILDING_FOLKLORE_MUSKOX",
-     "BUILDING_FOLKLORE_WILDEBEEST"
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_TAXONOMY",
+    {
+     "any": [
+      "BUILDING_FOLKLORE_BISON",
+      "BUILDING_FOLKLORE_CAPE_BUFFALO",
+      "BUILDING_FOLKLORE_AUROCHS",
+      "BUILDING_FOLKLORE_MUSKOX",
+      "BUILDING_FOLKLORE_WILDEBEEST"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   }
  },

@@ -14,15 +14,11 @@
   "build": {
    "all": [
     "HAS_RIVER",
-    "TECH_STEAM_POWER"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_STEAM_POWER",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

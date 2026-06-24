@@ -6,25 +6,21 @@
   "build": {
    "all": [
     "BUILDING_WELFARE_OFFICE",
-    "TECH_LABOR_UNIONS"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_LABOR_UNIONS",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {
-   "any": [
-    [
-     "CIVIC_SOCIALIZED",
-     "CIVIC_ECO_FRIENDLY"
-    ]
-   ],
    "all": [
+    {
+     "any": [
+      "CIVIC_SOCIALIZED",
+      "CIVIC_ECO_FRIENDLY"
+     ]
+    },
     {
      "type": "PROPERTY_CRIME",
      "scope": "city",

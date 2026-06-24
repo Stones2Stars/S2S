@@ -12,18 +12,18 @@
  },
  "requires": {
   "build": {
-   "any": [
-    [
-     "BUILDING_NATIONAL_SMELTER_PLATINUM",
-     "BUILDING_PLATINUM_RECLAMATION_PLANT",
-     "BUILDING_SMELTER_PLATINUM"
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+   "all": [
+    {
+     "any": [
+      "BUILDING_NATIONAL_SMELTER_PLATINUM",
+      "BUILDING_PLATINUM_RECLAMATION_PLANT",
+      "BUILDING_SMELTER_PLATINUM"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

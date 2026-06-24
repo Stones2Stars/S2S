@@ -18,19 +18,17 @@
  "requires": {
   "build": {
    "all": [
-    "TECH_IRON_WORKING"
-   ],
-   "any": [
-    [
-     "BUILDING_CORE_MINE",
-     "BUILDING_MINE_PLATINUM"
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_IRON_WORKING",
+    {
+     "any": [
+      "BUILDING_CORE_MINE",
+      "BUILDING_MINE_PLATINUM"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

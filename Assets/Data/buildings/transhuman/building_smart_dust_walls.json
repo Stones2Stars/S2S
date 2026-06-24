@@ -6,15 +6,11 @@
   "build": {
    "all": [
     "HAS_POWER",
-    "TECH_SMART_DUST"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_SMART_DUST",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

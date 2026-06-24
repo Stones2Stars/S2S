@@ -9,28 +9,28 @@
      "type": "TECH_ECOLOGY",
      "scope": "team"
     },
-    "HAS_FEATURE"
-   ],
-   "any": [
-    [
-     {
-      "feature": [
-       "FEATURE_FOREST",
-       "FEATURE_FOREST_ANCIENT",
-       "FEATURE_BAMBOO",
-       "FEATURE_JUNGLE",
-       "FEATURE_MANGROVE"
-      ]
-     },
-     {
-      "bonus": [
-       "BONUS_APPLE",
-       "BONUS_HEMP",
-       "BONUS_RESIN",
-       "BONUS_PRIME_TIMBER"
-      ]
-     }
-    ]
+    "HAS_FEATURE",
+    {
+     "any": [
+      {
+       "feature": [
+        "FEATURE_FOREST",
+        "FEATURE_FOREST_ANCIENT",
+        "FEATURE_BAMBOO",
+        "FEATURE_JUNGLE",
+        "FEATURE_MANGROVE"
+       ]
+      },
+      {
+       "bonus": [
+        "BONUS_APPLE",
+        "BONUS_HEMP",
+        "BONUS_RESIN",
+        "BONUS_PRIME_TIMBER"
+       ]
+      }
+     ]
+    }
    ]
   }
  },

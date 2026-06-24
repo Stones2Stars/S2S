@@ -18,20 +18,18 @@
  "requires": {
   "build": {
    "all": [
-    "TECH_SKINNING"
-   ],
-   "any": [
-    [
-     "BUILDING_HUNTERS_CAMP",
-     "BUILDING_ANIMAL_SNARE_TRAPS",
-     "BUILDING_ANCIENT_CUSTOMS"
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_SKINNING",
+    {
+     "any": [
+      "BUILDING_HUNTERS_CAMP",
+      "BUILDING_ANIMAL_SNARE_TRAPS",
+      "BUILDING_ANCIENT_CUSTOMS"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

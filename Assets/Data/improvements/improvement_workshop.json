@@ -9,26 +9,26 @@
      "type": "TECH_MACHINERY",
      "scope": "team"
     },
-    "IS_FLATLANDS"
-   ],
-   "any": [
-    [
-     {
-      "terrain": [
-       "TERRAIN_GRASSLAND",
-       "TERRAIN_PLAINS",
-       "TERRAIN_LUSH",
-       "TERRAIN_SCRUB",
-       "TERRAIN_MUDDY",
-       "TERRAIN_BARREN",
-       "TERRAIN_ROCKY",
-       "TERRAIN_BADLAND",
-       "TERRAIN_JAGGED",
-       "TERRAIN_TAIGA"
-      ]
-     },
-     "HAS_FRESHWATER"
-    ]
+    "IS_FLATLANDS",
+    {
+     "any": [
+      {
+       "terrain": [
+        "TERRAIN_GRASSLAND",
+        "TERRAIN_PLAINS",
+        "TERRAIN_LUSH",
+        "TERRAIN_SCRUB",
+        "TERRAIN_MUDDY",
+        "TERRAIN_BARREN",
+        "TERRAIN_ROCKY",
+        "TERRAIN_BADLAND",
+        "TERRAIN_JAGGED",
+        "TERRAIN_TAIGA"
+       ]
+      },
+      "HAS_FRESHWATER"
+     ]
+    }
    ]
   }
  },

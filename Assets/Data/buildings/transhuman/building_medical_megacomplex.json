@@ -11,15 +11,11 @@
   "build": {
    "all": [
     "HAS_POWER",
-    "TECH_MOLECULAR_SCANNING"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_MOLECULAR_SCANNING",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   }
  },

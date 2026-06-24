@@ -6,21 +6,15 @@
   "build": {
    "all": [
     "BUILDING_INTERGALACTIC_MINE",
-    "TECH_OMEGA_MINUS_ENGINEERING"
-   ],
-   "any": [
-    [
-     {
-      "type": "FEATURE_QUASAR",
-      "scope": "plot"
-     }
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_UNIVERSAL",
-      "scope": "plot"
-     }
-    ]
+    "TECH_OMEGA_MINUS_ENGINEERING",
+    {
+     "type": "FEATURE_QUASAR",
+     "scope": "plot"
+    },
+    {
+     "type": "MAPCATEGORY_UNIVERSAL",
+     "scope": "plot"
+    }
    ]
   }
  },

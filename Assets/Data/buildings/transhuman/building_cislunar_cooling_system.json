@@ -13,15 +13,11 @@
    "all": [
     "BUILDING_CISLUNAR_SPACEPORT",
     "BUILDING_CISLUNAR_MATERIALS_LAB",
-    "TECH_FROST_BEAMS"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_CISLUNAR",
-      "scope": "plot"
-     }
-    ]
+    "TECH_FROST_BEAMS",
+    {
+     "type": "MAPCATEGORY_CISLUNAR",
+     "scope": "plot"
+    }
    ]
   }
  },

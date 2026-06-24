@@ -9,18 +9,14 @@
      "type": "TECH_ECOLOGY",
      "scope": "team"
     },
-    "IS_WATER"
-   ],
-   "any": [
-    [
-     {
-      "terrain": [
-       "TERRAIN_COAST",
-       "TERRAIN_COAST_POLAR",
-       "TERRAIN_COAST_TROPICAL"
-      ]
-     }
-    ]
+    "IS_WATER",
+    {
+     "terrain": [
+      "TERRAIN_COAST",
+      "TERRAIN_COAST_POLAR",
+      "TERRAIN_COAST_TROPICAL"
+     ]
+    }
    ]
   }
  },

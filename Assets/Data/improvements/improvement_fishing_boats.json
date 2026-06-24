@@ -9,22 +9,18 @@
      "type": "TECH_FISHING",
      "scope": "team"
     },
-    "IS_WATER"
-   ],
-   "any": [
-    [
-     {
-      "bonus": [
-       "BONUS_CLAM",
-       "BONUS_CRAB",
-       "BONUS_FISH",
-       "BONUS_MUREX",
-       "BONUS_PEARLS",
-       "BONUS_SHRIMP",
-       "BONUS_LOBSTER"
-      ]
-     }
-    ]
+    "IS_WATER",
+    {
+     "bonus": [
+      "BONUS_CLAM",
+      "BONUS_CRAB",
+      "BONUS_FISH",
+      "BONUS_MUREX",
+      "BONUS_PEARLS",
+      "BONUS_SHRIMP",
+      "BONUS_LOBSTER"
+     ]
+    }
    ]
   }
  },

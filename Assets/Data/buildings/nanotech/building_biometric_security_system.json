@@ -17,15 +17,11 @@
     "BUILDING_MEGATOWER_POLICE_STATION_LEVEL",
     "BUILDING_FACIAL_RECOGNITION_SOFTWARE",
     "TECH_BIOMETRIC_WARFARE",
-    "TECH_NANO_ARCHITECTURE"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_NANO_ARCHITECTURE",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   }
  },

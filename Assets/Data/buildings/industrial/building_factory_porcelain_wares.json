@@ -19,18 +19,12 @@
   "build": {
    "all": [
     "HAS_POWER",
-    "TECH_ASSEMBLY_LINE"
-   ],
-   "any": [
-    [
-     "BUILDING_FACTORY"
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_ASSEMBLY_LINE",
+    "BUILDING_FACTORY",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {
@@ -39,16 +33,12 @@
      "type": "BONUS_FINE_CLAY",
      "scope": "city",
      "connection": "vicinity"
+    },
+    {
+     "type": "BONUS_STONE",
+     "scope": "city",
+     "connection": "trade|vicinity"
     }
-   ],
-   "any": [
-    [
-     {
-      "type": "BONUS_STONE",
-      "scope": "city",
-      "connection": "trade|vicinity"
-     }
-    ]
    ],
    "dormant": [
     "BUILDING_MANUFACTURING_DISTRICT"

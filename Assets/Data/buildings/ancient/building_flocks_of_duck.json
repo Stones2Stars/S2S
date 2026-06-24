@@ -5,20 +5,18 @@
  "requires": {
   "build": {
    "all": [
-    "TECH_POULTRY_DOMESTICATION"
-   ],
-   "any": [
-    [
-     "BUILDING_HERD_POULTRY",
-     "BUILDING_INDUSTRIAL_FARMS",
-     "BUILDING_MEAT_INDUSTRY_CONGLOMERATE"
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_POULTRY_DOMESTICATION",
+    {
+     "any": [
+      "BUILDING_HERD_POULTRY",
+      "BUILDING_INDUSTRIAL_FARMS",
+      "BUILDING_MEAT_INDUSTRY_CONGLOMERATE"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   }
  },

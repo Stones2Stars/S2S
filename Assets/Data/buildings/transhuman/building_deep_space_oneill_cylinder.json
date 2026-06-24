@@ -24,15 +24,11 @@
    "all": [
     "BUILDING_EFFECT_CISLUNAR_ECONOMY",
     "BUILDING_SPACE_COLONY_DEEP_SPACE",
-    "TECH_ORBITAL_MEGASTRUCTURES"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_SOLAR_SYSTEM",
-      "scope": "plot"
-     }
-    ]
+    "TECH_ORBITAL_MEGASTRUCTURES",
+    {
+     "type": "MAPCATEGORY_SOLAR_SYSTEM",
+     "scope": "plot"
+    }
    ]
   }
  },

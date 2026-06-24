@@ -10,19 +10,17 @@
  "requires": {
   "build": {
    "all": [
-    "TECH_ADVANCED_ENVIRONMENTAL_SYSTEMS"
-   ],
-   "any": [
-    [
-     "BUILDING_CISLUNAR_DOCKING_BAY",
-     "BUILDING_CISLUNAR_RESUPPLY"
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_CISLUNAR",
-      "scope": "plot"
-     }
-    ]
+    "TECH_ADVANCED_ENVIRONMENTAL_SYSTEMS",
+    {
+     "any": [
+      "BUILDING_CISLUNAR_DOCKING_BAY",
+      "BUILDING_CISLUNAR_RESUPPLY"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_CISLUNAR",
+     "scope": "plot"
+    }
    ]
   }
  },

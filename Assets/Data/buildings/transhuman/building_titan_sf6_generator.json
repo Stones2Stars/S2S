@@ -12,15 +12,11 @@
   "build": {
    "all": [
     "BUILDING_TITAN_HYDROCARBON_REFINERY",
-    "TECH_ARTIFICIAL_NUCLEOSYNTHESIS"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_TITANIC",
-      "scope": "plot"
-     }
-    ]
+    "TECH_ARTIFICIAL_NUCLEOSYNTHESIS",
+    {
+     "type": "MAPCATEGORY_TITANIC",
+     "scope": "plot"
+    }
    ]
   }
  },

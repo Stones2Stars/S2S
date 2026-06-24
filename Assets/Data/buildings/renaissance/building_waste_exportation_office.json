@@ -5,22 +5,16 @@
  "requires": {
   "build": {
    "all": [
-    "TECH_ECONOMICS"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_ECONOMICS",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {
-   "any": [
-    [
-     "CIVIC_WASTE_EXPORTATION"
-    ]
+   "all": [
+    "CIVIC_WASTE_EXPORTATION"
    ]
   }
  },

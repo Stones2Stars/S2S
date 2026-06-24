@@ -30,19 +30,19 @@
     {
      "type": "TECH_SPECIES_AMALGAMATION",
      "scope": "team"
+    },
+    {
+     "any": [
+      {
+       "type": "TECH_NEUTRINO_COMMUNICATIONS",
+       "scope": "team"
+      },
+      {
+       "type": "TECH_FOLDING_SPACE",
+       "scope": "team"
+      }
+     ]
     }
-   ],
-   "any": [
-    [
-     {
-      "type": "TECH_NEUTRINO_COMMUNICATIONS",
-      "scope": "team"
-     },
-     {
-      "type": "TECH_FOLDING_SPACE",
-      "scope": "team"
-     }
-    ]
    ]
   }
  },

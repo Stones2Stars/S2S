@@ -11,15 +11,11 @@
   "build": {
    "all": [
     "HAS_POWER",
-    "BUILDING_MODERN_OFFICES"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "BUILDING_MODERN_OFFICES",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

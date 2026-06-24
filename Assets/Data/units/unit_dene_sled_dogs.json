@@ -10,20 +10,18 @@
      "scope": "city",
      "connection": "trade|vicinity"
     },
-    "TECH_CANINE_DOMESTICATION"
-   ],
-   "any": [
-    [
-     {
-      "type": "BONUS_DOG",
-      "scope": "city",
-      "connection": "trade|vicinity"
-     }
-    ],
-    [
-     "BUILDING_DOG_BREEDER",
-     "BUILDING_REPET"
-    ]
+    "TECH_CANINE_DOMESTICATION",
+    {
+     "type": "BONUS_DOG",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    {
+     "any": [
+      "BUILDING_DOG_BREEDER",
+      "BUILDING_REPET"
+     ]
+    }
    ]
   }
  },

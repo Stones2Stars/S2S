@@ -13,15 +13,11 @@
     "HAS_POWER",
     "TECH_KNOWLEDGE_MANAGEMENT",
     "TECH_SUPERCONDUCTORS",
-    "TECH_ATOMPUNK"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_ATOMPUNK",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

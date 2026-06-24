@@ -18,39 +18,35 @@
  "requires": {
   "build": {
    "all": [
-    "TECH_POISON_CRAFTING"
-   ],
-   "any": [
-    [
-     {
-      "type": "FEATURE_FOREST_YOUNG",
-      "scope": "plot"
-     },
-     {
-      "type": "FEATURE_FOREST",
-      "scope": "plot"
-     },
-     {
-      "type": "FEATURE_FOREST_ANCIENT",
-      "scope": "plot"
-     },
-     {
-      "type": "FEATURE_FOREST_BURNT",
-      "scope": "plot"
-     }
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ],
-    [
-     {
-      "type": "CIVILIZATION_NPC_NEANDERTHAL",
-      "scope": "empire"
-     }
-    ]
+    "TECH_POISON_CRAFTING",
+    {
+     "any": [
+      {
+       "type": "FEATURE_FOREST_YOUNG",
+       "scope": "plot"
+      },
+      {
+       "type": "FEATURE_FOREST",
+       "scope": "plot"
+      },
+      {
+       "type": "FEATURE_FOREST_ANCIENT",
+       "scope": "plot"
+      },
+      {
+       "type": "FEATURE_FOREST_BURNT",
+       "scope": "plot"
+      }
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    },
+    {
+     "type": "CIVILIZATION_NPC_NEANDERTHAL",
+     "scope": "empire"
+    }
    ]
   },
   "operate": {

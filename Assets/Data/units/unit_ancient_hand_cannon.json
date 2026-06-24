@@ -11,16 +11,12 @@
      "connection": "trade|vicinity"
     },
     "BUILDING_SIEGE_WEAPONS_WORKSHOP",
-    "TECH_ALCHEMY"
-   ],
-   "any": [
-    [
-     {
-      "type": "BONUS_IRON_WARES",
-      "scope": "city",
-      "connection": "trade|vicinity"
-     }
-    ]
+    "TECH_ALCHEMY",
+    {
+     "type": "BONUS_IRON_WARES",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    }
    ]
   }
  },

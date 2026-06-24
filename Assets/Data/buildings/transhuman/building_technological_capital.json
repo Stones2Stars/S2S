@@ -10,15 +10,11 @@
      "scope": "city",
      "min": 7
     },
-    "TECH_TERRA_COMPUTER"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_TERRA_COMPUTER",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   }
  },

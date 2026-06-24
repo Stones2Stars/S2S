@@ -17,15 +17,11 @@
      "scope": "empire",
      "min": 3
     },
-    "TECH_MARINE_BIOLOGY"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_MARINE_BIOLOGY",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ],
    "noneOf": [
     "BUILDING_CENTER_FOR_WHALE_STUDIES",

@@ -14,18 +14,12 @@
   "build": {
    "all": [
     "TECH_PRIESTHOOD",
-    "STATE_RELIGION_IN_CITY"
-   ],
-   "any": [
-    [
-     "BUILDING_BURIAL_TRADITION_SKY"
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "STATE_RELIGION_IN_CITY",
+    "BUILDING_BURIAL_TRADITION_SKY",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

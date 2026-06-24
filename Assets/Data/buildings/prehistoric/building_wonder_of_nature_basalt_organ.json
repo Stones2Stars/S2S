@@ -10,27 +10,19 @@
  "requires": {
   "build": {
    "all": [
-    "TECH_LANGUAGE"
-   ],
-   "any": [
-    [
-     {
-      "type": "FEATURE_PLATY_BASALT_ORGAN",
-      "scope": "plot"
-     }
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ],
-    [
-     {
-      "type": "CIVILIZATION_NPC_NEANDERTHAL",
-      "scope": "empire"
-     }
-    ]
+    "TECH_LANGUAGE",
+    {
+     "type": "FEATURE_PLATY_BASALT_ORGAN",
+     "scope": "plot"
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    },
+    {
+     "type": "CIVILIZATION_NPC_NEANDERTHAL",
+     "scope": "empire"
+    }
    ]
   }
  },

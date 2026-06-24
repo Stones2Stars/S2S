@@ -5,29 +5,21 @@
  "requires": {
   "build": {
    "all": [
-    "TECH_HARPOON_MAKING"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_HARPOON_MAKING",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {
    "all": [
-    "CIVIC_FOLKLORE"
-   ],
-   "any": [
-    [
-     {
-      "type": "BONUS_WHALE",
-      "scope": "city",
-      "connection": "vicinity"
-     }
-    ]
+    "CIVIC_FOLKLORE",
+    {
+     "type": "BONUS_WHALE",
+     "scope": "city",
+     "connection": "vicinity"
+    }
    ]
   }
  },

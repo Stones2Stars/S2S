@@ -50,15 +50,11 @@
  "requires": {
   "build": {
    "all": [
-    "BUILDING_C_AC_OCEANIAN"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "BUILDING_C_AC_OCEANIAN",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   }
  },

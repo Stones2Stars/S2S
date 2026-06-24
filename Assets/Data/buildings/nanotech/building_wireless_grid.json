@@ -22,15 +22,11 @@
    "all": [
     "HAS_POWER",
     "BUILDING_POWER_LINES",
-    "TECH_WIRELESS_ELECTRICITY"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_WIRELESS_ELECTRICITY",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

@@ -8,19 +8,15 @@
     {
      "type": "TECH_ASTEROID_BELT_PROBES",
      "scope": "team"
+    },
+    {
+     "terrain": [
+      "TERRAIN_CISLUNAR_SPACE",
+      "TERRAIN_INNER_SOLAR_SYSTEM",
+      "TERRAIN_OUTER_SOLAR_SYSTEM",
+      "TERRAIN_TRANSNEPTUNIAN_SPACE"
+     ]
     }
-   ],
-   "any": [
-    [
-     {
-      "terrain": [
-       "TERRAIN_CISLUNAR_SPACE",
-       "TERRAIN_INNER_SOLAR_SYSTEM",
-       "TERRAIN_OUTER_SOLAR_SYSTEM",
-       "TERRAIN_TRANSNEPTUNIAN_SPACE"
-      ]
-     }
-    ]
    ]
   }
  },

@@ -8,16 +8,12 @@
     {
      "type": "TECH_ARTIFICIAL_STARS",
      "scope": "team"
+    },
+    {
+     "feature": [
+      "FEATURE_BROWN_DWARF"
+     ]
     }
-   ],
-   "any": [
-    [
-     {
-      "feature": [
-       "FEATURE_BROWN_DWARF"
-      ]
-     }
-    ]
    ]
   }
  },

@@ -11,15 +11,11 @@
  "requires": {
   "build": {
    "all": [
-    "TECH_MATCHLOCK"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_MATCHLOCK",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {
@@ -28,23 +24,21 @@
      "type": "BONUS_HORSE",
      "scope": "city",
      "connection": "trade|vicinity"
+    },
+    {
+     "type": "BONUS_SULPHUR",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    {
+     "any": [
+      "CIVIC_DESPOTISM",
+      "CIVIC_MONARCHY",
+      "CIVIC_FEUDAL",
+      "CIVIC_NATIONALIST",
+      "CIVIC_MERCANTILISM"
+     ]
     }
-   ],
-   "any": [
-    [
-     {
-      "type": "BONUS_SULPHUR",
-      "scope": "city",
-      "connection": "trade|vicinity"
-     }
-    ],
-    [
-     "CIVIC_DESPOTISM",
-     "CIVIC_MONARCHY",
-     "CIVIC_FEUDAL",
-     "CIVIC_NATIONALIST",
-     "CIVIC_MERCANTILISM"
-    ]
    ]
   }
  },

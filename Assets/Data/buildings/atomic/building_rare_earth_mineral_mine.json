@@ -14,33 +14,31 @@
   "build": {
    "all": [
     "BUILDING_MODERN_EARTHWORKS",
-    "TECH_MODERN_SEISMOLOGY"
-   ],
-   "any": [
-    [
-     {
-      "type": "TERRAIN_ROCKY",
-      "scope": "plot"
-     },
-     {
-      "type": "TERRAIN_BADLAND",
-      "scope": "plot"
-     },
-     {
-      "type": "TERRAIN_JAGGED",
-      "scope": "plot"
-     },
-     {
-      "type": "TERRAIN_SCRUB",
-      "scope": "plot"
-     }
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_MODERN_SEISMOLOGY",
+    {
+     "any": [
+      {
+       "type": "TERRAIN_ROCKY",
+       "scope": "plot"
+      },
+      {
+       "type": "TERRAIN_BADLAND",
+       "scope": "plot"
+      },
+      {
+       "type": "TERRAIN_JAGGED",
+       "scope": "plot"
+      },
+      {
+       "type": "TERRAIN_SCRUB",
+       "scope": "plot"
+      }
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

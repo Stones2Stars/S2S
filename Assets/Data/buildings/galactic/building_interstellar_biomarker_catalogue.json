@@ -5,23 +5,25 @@
  "requires": {
   "build": {
    "all": [
-    "TECH_PLANET_SCANNING"
-   ],
-   "any": [
-    [
-     "BUILDING_INTERSTELLAR_DATA_COLLECTION",
-     "BUILDING_SPACE_COLONY_MILKY_WAY"
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_INTERSTELLAR",
-      "scope": "plot"
-     },
-     {
-      "type": "MAPCATEGORY_MILKY_WAY",
-      "scope": "plot"
-     }
-    ]
+    "TECH_PLANET_SCANNING",
+    {
+     "any": [
+      "BUILDING_INTERSTELLAR_DATA_COLLECTION",
+      "BUILDING_SPACE_COLONY_MILKY_WAY"
+     ]
+    },
+    {
+     "any": [
+      {
+       "type": "MAPCATEGORY_INTERSTELLAR",
+       "scope": "plot"
+      },
+      {
+       "type": "MAPCATEGORY_MILKY_WAY",
+       "scope": "plot"
+      }
+     ]
+    }
    ]
   }
  },

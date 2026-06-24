@@ -7,21 +7,15 @@
    "all": [
     "HAS_POWER",
     "BUILDING_DISTANT_BIG_BANG_PROBE",
-    "TECH_PARAMETER_TUNING"
-   ],
-   "any": [
-    [
-     {
-      "type": "TERRAIN_DISTANT_PAST",
-      "scope": "plot"
-     }
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_DISTANT",
-      "scope": "plot"
-     }
-    ]
+    "TECH_PARAMETER_TUNING",
+    {
+     "type": "TERRAIN_DISTANT_PAST",
+     "scope": "plot"
+    },
+    {
+     "type": "MAPCATEGORY_DISTANT",
+     "scope": "plot"
+    }
    ]
   }
  },

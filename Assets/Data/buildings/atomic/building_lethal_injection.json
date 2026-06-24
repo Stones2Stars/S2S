@@ -12,15 +12,11 @@
    "all": [
     "BUILDING_COURTHOUSE",
     "BUILDING_JAIL",
-    "TECH_MODERN_HEALTH_CARE"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_MODERN_HEALTH_CARE",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

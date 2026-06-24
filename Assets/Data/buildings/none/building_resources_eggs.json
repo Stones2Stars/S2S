@@ -12,23 +12,23 @@
  },
  "requires": {
   "build": {
-   "any": [
-    [
-     "BUILDING_CHICKEN_COOP",
-     "BUILDING_FARM_ANIMAL_DUCK",
-     "BUILDING_FARM_ANIMAL_GOOSE",
-     "BUILDING_NEST_THIEF",
-     "BUILDING_HERD_POULTRY",
-     "BUILDING_HERD_RATITE",
-     "BUILDING_SEA_TURTLE_EGG_GATHERER",
-     "BUILDING_FARM_ANIMAL_TURKEY"
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+   "all": [
+    {
+     "any": [
+      "BUILDING_CHICKEN_COOP",
+      "BUILDING_FARM_ANIMAL_DUCK",
+      "BUILDING_FARM_ANIMAL_GOOSE",
+      "BUILDING_NEST_THIEF",
+      "BUILDING_HERD_POULTRY",
+      "BUILDING_HERD_RATITE",
+      "BUILDING_SEA_TURTLE_EGG_GATHERER",
+      "BUILDING_FARM_ANIMAL_TURKEY"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

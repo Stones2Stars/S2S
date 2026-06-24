@@ -13,19 +13,17 @@
    "all": [
     "HAS_POWER",
     "TECH_MACHINE_LEARNING",
-    "TECH_ONLINE_COMMUNITY"
-   ],
-   "any": [
-    [
-     "BUILDING_DESIGN_STUDIO",
-     "BUILDING_ELECTRONICS_MANUFACTURING_DISTRICT"
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_ONLINE_COMMUNITY",
+    {
+     "any": [
+      "BUILDING_DESIGN_STUDIO",
+      "BUILDING_ELECTRONICS_MANUFACTURING_DISTRICT"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

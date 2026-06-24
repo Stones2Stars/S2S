@@ -6,15 +6,11 @@
   "build": {
    "all": [
     "BUILDING_EFFECT_LAUNCH_SITE",
-    "TECH_SATELLITES"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_SATELLITES",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   }
  },

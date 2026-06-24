@@ -5,16 +5,12 @@
  "requires": {
   "build": {
    "all": [
-    "TECH_NANOROBOTICS"
-   ],
-   "any": [
-    [
-     {
-      "type": "BONUS_NANOBOTS",
-      "scope": "city",
-      "connection": "trade|vicinity"
-     }
-    ]
+    "TECH_NANOROBOTICS",
+    {
+     "type": "BONUS_NANOBOTS",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    }
    ]
   }
  },

@@ -11,21 +11,15 @@
   "build": {
    "all": [
     "BUILDING_INTERSTELLAR_PLANETARY_LANDING",
-    "TECH_PLANET_SCOUTING"
-   ],
-   "any": [
-    [
-     {
-      "type": "TERRAIN_RED_DWARF",
-      "scope": "plot"
-     }
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_PLASMA",
-      "scope": "plot"
-     }
-    ]
+    "TECH_PLANET_SCOUTING",
+    {
+     "type": "TERRAIN_RED_DWARF",
+     "scope": "plot"
+    },
+    {
+     "type": "MAPCATEGORY_PLASMA",
+     "scope": "plot"
+    }
    ]
   }
  },

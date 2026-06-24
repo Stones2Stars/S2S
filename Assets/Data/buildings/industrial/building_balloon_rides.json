@@ -18,23 +18,21 @@
  "requires": {
   "build": {
    "all": [
-    "TECH_BALLOON_WARFARE"
-   ],
-   "any": [
-    [
-     "BUILDING_FAIRGROUNDS",
-     "BUILDING_CARNIVAL",
-     "BUILDING_AMUSEMENT_PARK",
-     "BUILDING_CITY_PARK",
-     "BUILDING_AIRFIELD",
-     "BUILDING_AEROSPACE_COMPLEX"
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_BALLOON_WARFARE",
+    {
+     "any": [
+      "BUILDING_FAIRGROUNDS",
+      "BUILDING_CARNIVAL",
+      "BUILDING_AMUSEMENT_PARK",
+      "BUILDING_CITY_PARK",
+      "BUILDING_AIRFIELD",
+      "BUILDING_AEROSPACE_COMPLEX"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

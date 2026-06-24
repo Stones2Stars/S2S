@@ -10,20 +10,18 @@
  "requires": {
   "build": {
    "all": [
-    "TECH_BONE_WORKING"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ],
-    [
-     "HERITAGE_FOLKLORE_TORTOISE_DESERT",
-     "HERITAGE_FOLKLORE_TORTOISE_GALAPAGOS",
-     "HERITAGE_FOLKLORE_TURTLE_SEA"
-    ]
+    "TECH_BONE_WORKING",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    },
+    {
+     "any": [
+      "HERITAGE_FOLKLORE_TORTOISE_DESERT",
+      "HERITAGE_FOLKLORE_TORTOISE_GALAPAGOS",
+      "HERITAGE_FOLKLORE_TURTLE_SEA"
+     ]
+    }
    ]
   }
  },

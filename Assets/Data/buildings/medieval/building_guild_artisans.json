@@ -16,20 +16,18 @@
      "min": 3
     },
     "TECH_INVENTION",
-    "TECH_GUILDS"
-   ],
-   "any": [
-    [
-     "BUILDING_CRAFTS_HUT",
-     "BUILDING_MALL",
-     "BUILDING_HYPERMARKET"
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_GUILDS",
+    {
+     "any": [
+      "BUILDING_CRAFTS_HUT",
+      "BUILDING_MALL",
+      "BUILDING_HYPERMARKET"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   }
  },

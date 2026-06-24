@@ -11,15 +11,11 @@
      "min": 20
     },
     "BUILDING_INDUSTRIAL_PARK",
-    "TECH_MEGACITIES"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_MEGACITIES",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   }
  },

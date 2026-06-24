@@ -6,19 +6,17 @@
   "build": {
    "all": [
     "TECH_PRECISION_SOCIAL_ENGINEERING",
-    "TECH_CULTURAL_EVOLUTION"
-   ],
-   "any": [
-    [
-     "BUILDING_INTERSTELLAR_CULTURE_COMMERCIAL",
-     "BUILDING_INTERSTELLAR_CULTURE_INDUSTRIOUS"
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_GALACTIC",
-      "scope": "plot"
-     }
-    ]
+    "TECH_CULTURAL_EVOLUTION",
+    {
+     "any": [
+      "BUILDING_INTERSTELLAR_CULTURE_COMMERCIAL",
+      "BUILDING_INTERSTELLAR_CULTURE_INDUSTRIOUS"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_GALACTIC",
+     "scope": "plot"
+    }
    ]
   }
  },

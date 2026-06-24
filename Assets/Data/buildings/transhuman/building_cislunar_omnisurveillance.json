@@ -7,15 +7,11 @@
    "all": [
     "BUILDING_CISLUNAR_CONTROL_SYSTEM",
     "BUILDING_CISLUNAR_ONEILL_CYLINDER",
-    "TECH_MOLECULAR_SCANNING"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_CISLUNAR",
-      "scope": "plot"
-     }
-    ]
+    "TECH_MOLECULAR_SCANNING",
+    {
+     "type": "MAPCATEGORY_CISLUNAR",
+     "scope": "plot"
+    }
    ]
   }
  },

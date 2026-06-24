@@ -19,19 +19,17 @@
   "build": {
    "all": [
     "HAS_POWER",
-    "TECH_MODERN_HEALTH_CARE"
-   ],
-   "any": [
-    [
-     "BUILDING_SHOPPING_DISTRICT",
-     "BUILDING_MODERN_OFFICES"
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_MODERN_HEALTH_CARE",
+    {
+     "any": [
+      "BUILDING_SHOPPING_DISTRICT",
+      "BUILDING_MODERN_OFFICES"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

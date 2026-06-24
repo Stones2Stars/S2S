@@ -30,20 +30,18 @@
      "type": "BONUS_TOOLS",
      "scope": "city",
      "connection": "trade|vicinity"
+    },
+    {
+     "type": "BONUS_FIREARMS",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    {
+     "any": [
+      "BUILDING_AUTO_REPAIR_SHOP",
+      "BUILDING_HYPERMARKET"
+     ]
     }
-   ],
-   "any": [
-    [
-     {
-      "type": "BONUS_FIREARMS",
-      "scope": "city",
-      "connection": "trade|vicinity"
-     }
-    ],
-    [
-     "BUILDING_AUTO_REPAIR_SHOP",
-     "BUILDING_HYPERMARKET"
-    ]
    ]
   }
  },

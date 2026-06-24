@@ -10,20 +10,18 @@
      "scope": "city",
      "connection": "trade|vicinity"
     },
-    "TECH_LASER"
-   ],
-   "any": [
-    [
-     {
-      "type": "BONUS_AMMUNITION",
-      "scope": "city",
-      "connection": "trade|vicinity"
-     }
-    ],
-    [
-     "BUILDING_AUTOMATED_FIRING_RANGE",
-     "BUILDING_ORBITAL_TARGETS"
-    ]
+    "TECH_LASER",
+    {
+     "type": "BONUS_AMMUNITION",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    {
+     "any": [
+      "BUILDING_AUTOMATED_FIRING_RANGE",
+      "BUILDING_ORBITAL_TARGETS"
+     ]
+    }
    ]
   }
  },

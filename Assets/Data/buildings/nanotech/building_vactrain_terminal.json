@@ -24,15 +24,11 @@
    "all": [
     "HAS_POWER",
     "BUILDING_MEGATOWER",
-    "TECH_SUPERSONIC_RAILS"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_SUPERSONIC_RAILS",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

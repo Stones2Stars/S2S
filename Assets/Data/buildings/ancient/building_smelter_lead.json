@@ -18,19 +18,17 @@
  "requires": {
   "build": {
    "all": [
-    "TECH_LEAD_WORKING"
-   ],
-   "any": [
-    [
-     "BUILDING_CORE_MINE",
-     "BUILDING_MINE_LEAD"
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_LEAD_WORKING",
+    {
+     "any": [
+      "BUILDING_CORE_MINE",
+      "BUILDING_MINE_LEAD"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

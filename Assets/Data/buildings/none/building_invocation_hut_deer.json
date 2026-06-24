@@ -8,29 +8,21 @@
     "BUILDING_INVOCATION_HUT",
     {
      "STATE_RELIGION": "RELIGION_SHAMANISM"
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
     }
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
    ]
   },
   "operate": {
    "all": [
-    "RELIGION_SHAMANISM"
-   ],
-   "any": [
-    [
-     {
-      "type": "BONUS_DEER",
-      "scope": "city",
-      "connection": "vicinity"
-     }
-    ]
+    "RELIGION_SHAMANISM",
+    {
+     "type": "BONUS_DEER",
+     "scope": "city",
+     "connection": "vicinity"
+    }
    ]
   }
  },

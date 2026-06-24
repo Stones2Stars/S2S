@@ -12,29 +12,29 @@
  },
  "requires": {
   "build": {
-   "any": [
-    [
-     "BUILDING_FARM_CROP_BARLEY",
-     "BUILDING_FARM_CROP_CORN",
-     "BUILDING_BARLEY_GATHERER",
-     "BUILDING_CORN_GATHERER",
-     "BUILDING_RICE_GATHERER",
-     "BUILDING_WHEAT_GATHERER",
-     "BUILDING_FARM_CROP_MILLET",
-     "BUILDING_FARM_CROP_OAT",
-     "BUILDING_FARM_CROP_QUINOA",
-     "BUILDING_RICE_PADDY",
-     "BUILDING_RICE_TERRACE",
-     "BUILDING_FARM_CROP_RYE",
-     "BUILDING_FARM_CROP_SORGHUM",
-     "BUILDING_FARM_CROP_WHEAT"
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+   "all": [
+    {
+     "any": [
+      "BUILDING_FARM_CROP_BARLEY",
+      "BUILDING_FARM_CROP_CORN",
+      "BUILDING_BARLEY_GATHERER",
+      "BUILDING_CORN_GATHERER",
+      "BUILDING_RICE_GATHERER",
+      "BUILDING_WHEAT_GATHERER",
+      "BUILDING_FARM_CROP_MILLET",
+      "BUILDING_FARM_CROP_OAT",
+      "BUILDING_FARM_CROP_QUINOA",
+      "BUILDING_RICE_PADDY",
+      "BUILDING_RICE_TERRACE",
+      "BUILDING_FARM_CROP_RYE",
+      "BUILDING_FARM_CROP_SORGHUM",
+      "BUILDING_FARM_CROP_WHEAT"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

@@ -15,20 +15,18 @@
    "all": [
     "HAS_POWER",
     "BUILDING_POWER_LINES",
-    "TECH_RENEWABLE_ENERGY"
-   ],
-   "any": [
-    [
-     "BUILDING_HIGHWAY",
-     "BUILDING_SKYROAD_CONTROL_TOWER",
-     "BUILDING_TELEPORT_BOOTH"
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_RENEWABLE_ENERGY",
+    {
+     "any": [
+      "BUILDING_HIGHWAY",
+      "BUILDING_SKYROAD_CONTROL_TOWER",
+      "BUILDING_TELEPORT_BOOTH"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {
@@ -37,16 +35,12 @@
      "type": "BONUS_ALUMINUM_WARES",
      "scope": "city",
      "connection": "trade|vicinity"
+    },
+    {
+     "type": "BONUS_STEEL_WARES",
+     "scope": "city",
+     "connection": "trade|vicinity"
     }
-   ],
-   "any": [
-    [
-     {
-      "type": "BONUS_STEEL_WARES",
-      "scope": "city",
-      "connection": "trade|vicinity"
-     }
-    ]
    ],
    "dormant": [
     "BUILDING_RENEWABLE_MEGACOMPLEX"

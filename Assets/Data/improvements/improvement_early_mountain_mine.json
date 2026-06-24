@@ -9,32 +9,28 @@
      "type": "TECH_MINING",
      "scope": "team"
     },
-    "HAS_PEAK"
-   ],
-   "any": [
-    [
-     {
-      "bonus": [
-       "BONUS_GOLD_ORE",
-       "BONUS_SILVER_ORE",
-       "BONUS_COPPER_ORE",
-       "BONUS_TIN_ORE",
-       "BONUS_LEAD_ORE",
-       "BONUS_PLATINUM_ORE",
-       "BONUS_IRON_ORE",
-       "BONUS_SULPHUR",
-       "BONUS_STONE",
-       "BONUS_OBSIDIAN",
-       "BONUS_MARBLE",
-       "BONUS_TURQUOISE",
-       "BONUS_JADE",
-       "BONUS_DIAMOND",
-       "BONUS_RUBIES",
-       "BONUS_SAPPHIRES",
-       "BONUS_COAL"
-      ]
-     }
-    ]
+    "HAS_PEAK",
+    {
+     "bonus": [
+      "BONUS_GOLD_ORE",
+      "BONUS_SILVER_ORE",
+      "BONUS_COPPER_ORE",
+      "BONUS_TIN_ORE",
+      "BONUS_LEAD_ORE",
+      "BONUS_PLATINUM_ORE",
+      "BONUS_IRON_ORE",
+      "BONUS_SULPHUR",
+      "BONUS_STONE",
+      "BONUS_OBSIDIAN",
+      "BONUS_MARBLE",
+      "BONUS_TURQUOISE",
+      "BONUS_JADE",
+      "BONUS_DIAMOND",
+      "BONUS_RUBIES",
+      "BONUS_SAPPHIRES",
+      "BONUS_COAL"
+     ]
+    }
    ]
   }
  },

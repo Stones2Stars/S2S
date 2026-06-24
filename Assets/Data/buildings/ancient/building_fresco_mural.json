@@ -10,20 +10,18 @@
  "requires": {
   "build": {
    "all": [
-    "TECH_IDEOGRAMS"
-   ],
-   "any": [
-    [
-     "BUILDING_ROCK_ART",
-     "BUILDING_EFFECT_LASCAUX_CAVES",
-     "BUILDING_ANCIENT_CUSTOMS"
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_IDEOGRAMS",
+    {
+     "any": [
+      "BUILDING_ROCK_ART",
+      "BUILDING_EFFECT_LASCAUX_CAVES",
+      "BUILDING_ANCIENT_CUSTOMS"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

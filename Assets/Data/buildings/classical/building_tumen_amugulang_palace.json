@@ -16,19 +16,17 @@
      "min": 3
     },
     "TECH_AESTHETICS",
-    "TECH_CANAL_SYSTEMS"
-   ],
-   "any": [
-    [
-     "BUILDING_FOUNTAIN",
-     "BUILDING_CITY_PARK"
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_CANAL_SYSTEMS",
+    {
+     "any": [
+      "BUILDING_FOUNTAIN",
+      "BUILDING_CITY_PARK"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {
@@ -37,16 +35,12 @@
      "type": "BONUS_SCULPTURES",
      "scope": "city",
      "connection": "trade|vicinity"
+    },
+    {
+     "type": "BONUS_SILVER_WARES",
+     "scope": "city",
+     "connection": "trade|vicinity"
     }
-   ],
-   "any": [
-    [
-     {
-      "type": "BONUS_SILVER_WARES",
-      "scope": "city",
-      "connection": "trade|vicinity"
-     }
-    ]
    ]
   }
  },

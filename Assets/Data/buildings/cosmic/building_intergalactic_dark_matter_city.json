@@ -7,15 +7,11 @@
    "all": [
     "BUILDING_INTERGALACTIC_ANCIENT_CIVILIZATION",
     "BUILDING_INTERGALACTIC_DARK_ENERGY_PLANT",
-    "TECH_LUMINAL_BEINGS"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_UNIVERSAL",
-      "scope": "plot"
-     }
-    ]
+    "TECH_LUMINAL_BEINGS",
+    {
+     "type": "MAPCATEGORY_UNIVERSAL",
+     "scope": "plot"
+    }
    ]
   }
  },

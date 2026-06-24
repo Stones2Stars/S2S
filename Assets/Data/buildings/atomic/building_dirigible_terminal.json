@@ -17,19 +17,17 @@
      "min": 7
     },
     "TECH_ZEPPELINS",
-    "TECH_DIESELPUNK"
-   ],
-   "any": [
-    [
-     "BUILDING_SKYSCRAPER",
-     "BUILDING_EMPIRE_STATE_BUILDING"
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_DIESELPUNK",
+    {
+     "any": [
+      "BUILDING_SKYSCRAPER",
+      "BUILDING_EMPIRE_STATE_BUILDING"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

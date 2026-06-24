@@ -12,15 +12,11 @@
   "build": {
    "all": [
     "BUILDING_FACTORY",
-    "TECH_MANAGEMENT"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_MANAGEMENT",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   }
  },

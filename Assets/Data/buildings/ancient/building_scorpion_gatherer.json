@@ -19,15 +19,11 @@
  "requires": {
   "build": {
    "all": [
-    "TECH_SERICULTURE"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_SERICULTURE",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {
@@ -36,16 +32,12 @@
      "type": "BONUS_SILK",
      "scope": "city",
      "connection": "vicinity"
+    },
+    {
+     "type": "BONUS_COCOA",
+     "scope": "city",
+     "connection": "vicinity"
     }
-   ],
-   "any": [
-    [
-     {
-      "type": "BONUS_COCOA",
-      "scope": "city",
-      "connection": "vicinity"
-     }
-    ]
    ],
    "dormant": [
     "BUILDING_ARBORETUM",

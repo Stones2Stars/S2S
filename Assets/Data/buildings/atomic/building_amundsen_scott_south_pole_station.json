@@ -5,21 +5,15 @@
  "requires": {
   "build": {
    "all": [
-    "TECH_CLIMATE_MODELS"
-   ],
-   "any": [
-    [
-     {
-      "type": "FEATURE_ICE",
-      "scope": "plot"
-     }
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_CLIMATE_MODELS",
+    {
+     "type": "FEATURE_ICE",
+     "scope": "plot"
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   }
  },

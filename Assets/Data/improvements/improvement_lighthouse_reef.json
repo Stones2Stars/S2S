@@ -9,17 +9,13 @@
      "type": "TECH_ENGINEERING",
      "scope": "team"
     },
-    "IS_WATER"
-   ],
-   "any": [
-    [
-     {
-      "feature": [
-       "FEATURE_REEF",
-       "FEATURE_REEF_BEACON"
-      ]
-     }
-    ]
+    "IS_WATER",
+    {
+     "feature": [
+      "FEATURE_REEF",
+      "FEATURE_REEF_BEACON"
+     ]
+    }
    ]
   }
  },

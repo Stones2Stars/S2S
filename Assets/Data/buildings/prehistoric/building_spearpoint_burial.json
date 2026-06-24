@@ -10,29 +10,21 @@
  "requires": {
   "build": {
    "all": [
-    "TECH_CEREMONIAL_BURIAL"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ],
-    [
-     "HERITAGE_FOLKLORE_MAMMOTH"
-    ]
+    "TECH_CEREMONIAL_BURIAL",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    },
+    "HERITAGE_FOLKLORE_MAMMOTH"
    ]
   },
   "operate": {
-   "any": [
-    [
-     {
-      "type": "BONUS_FLINT",
-      "scope": "city",
-      "connection": "trade|vicinity"
-     }
-    ]
+   "all": [
+    {
+     "type": "BONUS_FLINT",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    }
    ]
   }
  },

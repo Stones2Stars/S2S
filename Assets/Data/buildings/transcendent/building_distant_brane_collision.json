@@ -16,15 +16,11 @@
      "scope": "empire",
      "min": 1
     },
-    "TECH_BRANE_CROSSOVER"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_DISTANT",
-      "scope": "plot"
-     }
-    ]
+    "TECH_BRANE_CROSSOVER",
+    {
+     "type": "MAPCATEGORY_DISTANT",
+     "scope": "plot"
+    }
    ]
   }
  },

@@ -7,15 +7,11 @@
    "all": [
     "HAS_COAST",
     "BUILDING_OCEAN_FLOOR_CITY",
-    "TECH_ABYSS_COLONIZATION"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_ABYSS_COLONIZATION",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   }
  },

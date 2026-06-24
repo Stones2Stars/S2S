@@ -28,15 +28,11 @@
     "HAS_POWER",
     "BUILDING_POWER_LINES",
     "BUILDING_HELIUM_3_IMPORTER",
-    "TECH_ARTIFICIAL_NUCLEOSYNTHESIS"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_ARTIFICIAL_NUCLEOSYNTHESIS",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

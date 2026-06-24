@@ -23,19 +23,17 @@
       "min": 40
      }
     },
-    "TECH_HARPOON_MAKING"
-   ],
-   "any": [
-    [
-     "BUILDING_HUNTERS_CAMP",
-     "BUILDING_ANCIENT_CUSTOMS"
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_HARPOON_MAKING",
+    {
+     "any": [
+      "BUILDING_HUNTERS_CAMP",
+      "BUILDING_ANCIENT_CUSTOMS"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {
@@ -44,16 +42,12 @@
      "type": "BONUS_SEA_LION_AND_SEAL",
      "scope": "city",
      "connection": "vicinity"
+    },
+    {
+     "type": "BONUS_WHALE",
+     "scope": "city",
+     "connection": "vicinity"
     }
-   ],
-   "any": [
-    [
-     {
-      "type": "BONUS_WHALE",
-      "scope": "city",
-      "connection": "vicinity"
-     }
-    ]
    ],
    "dormant": [
     "BUILDING_BREEDING_PROGRAM_BELUGA",

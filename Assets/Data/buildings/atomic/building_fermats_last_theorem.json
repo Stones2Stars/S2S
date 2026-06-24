@@ -6,15 +6,11 @@
   "build": {
    "all": [
     "BUILDING_MATHEMATICS_DEPARTMENT",
-    "TECH_ABSTRACT_MATHEMATICS"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_ABSTRACT_MATHEMATICS",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   }
  },

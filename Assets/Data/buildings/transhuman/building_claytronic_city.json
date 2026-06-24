@@ -17,15 +17,11 @@
     "HAS_POWER",
     "BUILDING_SELF_AWARE_CITY",
     "BUILDING_CLAYTRONIC_TOWER",
-    "TECH_NANOTROIDS"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_NANOTROIDS",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   }
  },

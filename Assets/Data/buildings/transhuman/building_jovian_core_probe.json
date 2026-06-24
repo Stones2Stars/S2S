@@ -7,21 +7,15 @@
    "all": [
     "HAS_POWER",
     "BUILDING_DEEP_SPACE_FACTORY",
-    "TECH_NANOSHIELDING"
-   ],
-   "any": [
-    [
-     {
-      "type": "TERRAIN_JUPITER",
-      "scope": "plot"
-     }
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_SOLAR_SYSTEM",
-      "scope": "plot"
-     }
-    ]
+    "TECH_NANOSHIELDING",
+    {
+     "type": "TERRAIN_JUPITER",
+     "scope": "plot"
+    },
+    {
+     "type": "MAPCATEGORY_SOLAR_SYSTEM",
+     "scope": "plot"
+    }
    ]
   }
  },

@@ -7,15 +7,11 @@
    "all": [
     "HAS_POWER",
     "BUILDING_COMMERCIAL_SPACEPORT",
-    "TECH_REACTIONLESS_DRIVE"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_REACTIONLESS_DRIVE",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   }
  },

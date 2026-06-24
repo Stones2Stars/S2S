@@ -13,15 +13,11 @@
    "all": [
     "BUILDING_INTERGALACTIC_COMMAND_CENTER",
     "TECH_DIRECTED_PANSPERMIA",
-    "TECH_SPACE_CREASING"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_UNIVERSAL",
-      "scope": "plot"
-     }
-    ]
+    "TECH_SPACE_CREASING",
+    {
+     "type": "MAPCATEGORY_UNIVERSAL",
+     "scope": "plot"
+    }
    ]
   }
  },

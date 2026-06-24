@@ -20,19 +20,17 @@
    "all": [
     "HAS_COAST",
     "BUILDING_HARBORMASTERS_OFFICE",
-    "TECH_GLOBALIZATION"
-   ],
-   "any": [
-    [
-     "BUILDING_INTERNATIONAL_PORT",
-     "BUILDING_OCEAN_ADMINISTRATION"
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_GLOBALIZATION",
+    {
+     "any": [
+      "BUILDING_INTERNATIONAL_PORT",
+      "BUILDING_OCEAN_ADMINISTRATION"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   }
  },

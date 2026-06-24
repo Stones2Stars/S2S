@@ -12,16 +12,12 @@
     },
     "BUILDING_TEMPLE_OF_CHONS",
     "RELIGION_KEMETISM",
-    "TECH_CHIVALRY"
-   ],
-   "any": [
-    [
-     {
-      "type": "BONUS_IRON_WARES",
-      "scope": "city",
-      "connection": "trade|vicinity"
-     }
-    ]
+    "TECH_CHIVALRY",
+    {
+     "type": "BONUS_IRON_WARES",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    }
    ]
   }
  },

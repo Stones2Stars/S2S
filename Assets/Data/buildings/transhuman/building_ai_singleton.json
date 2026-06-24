@@ -7,22 +7,16 @@
    "all": [
     "HAS_POWER",
     "BUILDING_ARTIFICIAL_INTELLIGENCE_CORE",
-    "TECH_TECHNOLOGICAL_SINGULARITY"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_TECHNOLOGICAL_SINGULARITY",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {
-   "any": [
-    [
-     "CIVIC_MACHINE_RULE"
-    ]
+   "all": [
+    "CIVIC_MACHINE_RULE"
    ]
   }
  },

@@ -5,21 +5,15 @@
  "requires": {
   "build": {
    "all": [
-    "TECH_ACNP_PROPULSION"
-   ],
-   "any": [
-    [
-     {
-      "type": "TERRAIN_RED_DWARF",
-      "scope": "plot"
-     }
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_PLASMA",
-      "scope": "plot"
-     }
-    ]
+    "TECH_ACNP_PROPULSION",
+    {
+     "type": "TERRAIN_RED_DWARF",
+     "scope": "plot"
+    },
+    {
+     "type": "MAPCATEGORY_PLASMA",
+     "scope": "plot"
+    }
    ],
    "noneOf": [
     "BUILDING_GLIESE_667CC_COLONY",

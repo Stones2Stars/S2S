@@ -12,15 +12,11 @@
    "all": [
     "HAS_POWER",
     "BUILDING_STRATOSPHERIC_TOWER",
-    "TECH_THERMAL_NEGATION"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_THERMAL_NEGATION",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   }
  },

@@ -15,15 +15,11 @@
    "all": [
     "HAS_POWER",
     "BUILDING_SHOPPING_DISTRICT",
-    "TECH_COMMUNICATION_NETWORKS"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_COMMUNICATION_NETWORKS",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

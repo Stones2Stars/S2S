@@ -5,16 +5,12 @@
  "requires": {
   "build": {
    "all": [
-    "TECH_NANOTROIDS"
-   ],
-   "any": [
-    [
-     {
-      "type": "BONUS_NANOBOTS",
-      "scope": "city",
-      "connection": "trade|vicinity"
-     }
-    ]
+    "TECH_NANOTROIDS",
+    {
+     "type": "BONUS_NANOBOTS",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    }
    ]
   }
  },

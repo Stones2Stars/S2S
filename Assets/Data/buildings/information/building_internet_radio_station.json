@@ -16,15 +16,11 @@
     "HAS_POWER",
     "BUILDING_COMPUTER_NETWORK",
     "BUILDING_LOCAL_RADIO_STATION",
-    "TECH_CLOUD_COMPUTING"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_CLOUD_COMPUTING",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

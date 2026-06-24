@@ -9,29 +9,25 @@
      "type": "TECH_ASSEMBLY_LINE",
      "scope": "team"
     },
-    "IS_FLATLANDS"
-   ],
-   "any": [
-    [
-     {
-      "terrain": [
-       "TERRAIN_GRASSLAND",
-       "TERRAIN_PLAINS",
-       "TERRAIN_BARREN",
-       "TERRAIN_LUSH",
-       "TERRAIN_SCRUB",
-       "TERRAIN_MUDDY",
-       "TERRAIN_ROCKY",
-       "TERRAIN_BADLAND",
-       "TERRAIN_JAGGED",
-       "TERRAIN_TAIGA",
-       "TERRAIN_DESERT",
-       "TERRAIN_ICE",
-       "TERRAIN_PERMAFROST",
-       "TERRAIN_TUNDRA"
-      ]
-     }
-    ]
+    "IS_FLATLANDS",
+    {
+     "terrain": [
+      "TERRAIN_GRASSLAND",
+      "TERRAIN_PLAINS",
+      "TERRAIN_BARREN",
+      "TERRAIN_LUSH",
+      "TERRAIN_SCRUB",
+      "TERRAIN_MUDDY",
+      "TERRAIN_ROCKY",
+      "TERRAIN_BADLAND",
+      "TERRAIN_JAGGED",
+      "TERRAIN_TAIGA",
+      "TERRAIN_DESERT",
+      "TERRAIN_ICE",
+      "TERRAIN_PERMAFROST",
+      "TERRAIN_TUNDRA"
+     ]
+    }
    ]
   }
  },

@@ -7,26 +7,24 @@
    "all": [
     "HAS_POWER",
     "BUILDING_TV_STUDIO",
-    "TECH_TELEVISION"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_TELEVISION",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {
-   "any": [
-    [
-     "CIVIC_DIVINE_CULT",
-     "CIVIC_STATE_CHURCH",
-     "CIVIC_FREE_CHURCH",
-     "CIVIC_INQUISITORIAL",
-     "CIVIC_SECULARISM"
-    ]
+   "all": [
+    {
+     "any": [
+      "CIVIC_DIVINE_CULT",
+      "CIVIC_STATE_CHURCH",
+      "CIVIC_FREE_CHURCH",
+      "CIVIC_INQUISITORIAL",
+      "CIVIC_SECULARISM"
+     ]
+    }
    ]
   }
  },

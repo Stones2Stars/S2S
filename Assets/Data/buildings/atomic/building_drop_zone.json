@@ -13,19 +13,17 @@
  "requires": {
   "build": {
    "all": [
-    "TECH_EXTREME_SPORTS"
-   ],
-   "any": [
-    [
-     "BUILDING_AIRFIELD",
-     "BUILDING_AEROSPACE_COMPLEX"
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_EXTREME_SPORTS",
+    {
+     "any": [
+      "BUILDING_AIRFIELD",
+      "BUILDING_AEROSPACE_COMPLEX"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

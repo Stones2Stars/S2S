@@ -6,19 +6,17 @@
   "build": {
    "all": [
     "BUILDING_LABORATORY",
-    "TECH_MODERN_PHYSICS"
-   ],
-   "any": [
-    [
-     "BUILDING_PET_SHOP",
-     "BUILDING_REPET"
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_MODERN_PHYSICS",
+    {
+     "any": [
+      "BUILDING_PET_SHOP",
+      "BUILDING_REPET"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   }
  },

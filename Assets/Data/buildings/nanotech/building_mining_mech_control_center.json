@@ -14,15 +14,11 @@
     "BUILDING_MINING_BOT_CONTROL_CENTER",
     "BUILDING_EVOLUTIONARY_ALGORITHMS",
     "TECH_WARMACHINES",
-    "TECH_WIRELESS_ELECTRICITY"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_WIRELESS_ELECTRICITY",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

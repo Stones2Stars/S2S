@@ -12,21 +12,15 @@
   "build": {
    "all": [
     "BUILDING_DISTANT_HORIZON_PORT",
-    "TECH_EXPERIMENTAL_COSMOLOGY"
-   ],
-   "any": [
-    [
-     {
-      "type": "TERRAIN_DISTANT_PAST",
-      "scope": "plot"
-     }
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_DISTANT",
-      "scope": "plot"
-     }
-    ]
+    "TECH_EXPERIMENTAL_COSMOLOGY",
+    {
+     "type": "TERRAIN_DISTANT_PAST",
+     "scope": "plot"
+    },
+    {
+     "type": "MAPCATEGORY_DISTANT",
+     "scope": "plot"
+    }
    ]
   }
  },

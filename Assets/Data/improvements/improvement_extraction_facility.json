@@ -9,19 +9,15 @@
      "type": "TECH_SUPERSTRONG_ALLOYS",
      "scope": "team"
     },
-    "IS_WATER"
-   ],
-   "any": [
-    [
-     {
-      "bonus": [
-       "BONUS_OIL",
-       "BONUS_NATURAL_GAS",
-       "BONUS_METHANE_ICE",
-       "BONUS_HYDROTHERMAL_VENT"
-      ]
-     }
-    ]
+    "IS_WATER",
+    {
+     "bonus": [
+      "BONUS_OIL",
+      "BONUS_NATURAL_GAS",
+      "BONUS_METHANE_ICE",
+      "BONUS_HYDROTHERMAL_VENT"
+     ]
+    }
    ]
   }
  },

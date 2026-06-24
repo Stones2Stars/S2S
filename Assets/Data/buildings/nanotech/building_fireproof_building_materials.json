@@ -7,15 +7,11 @@
    "all": [
     "HAS_POWER",
     "BUILDING_MEGATOWER_FIRE_STATION_LEVEL",
-    "TECH_NOVUS_CHEMISTRY"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_NOVUS_CHEMISTRY",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

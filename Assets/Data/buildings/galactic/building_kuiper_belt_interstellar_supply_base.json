@@ -6,21 +6,15 @@
   "build": {
    "all": [
     "BUILDING_KUIPER_BELT_FUSION_PLANT",
-    "TECH_COSMIC_PERSPECTIVE"
-   ],
-   "any": [
-    [
-     {
-      "type": "TERRAIN_KUIPER_BELT_OBJECT",
-      "scope": "plot"
-     }
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_SOLAR_SYSTEM",
-      "scope": "plot"
-     }
-    ]
+    "TECH_COSMIC_PERSPECTIVE",
+    {
+     "type": "TERRAIN_KUIPER_BELT_OBJECT",
+     "scope": "plot"
+    },
+    {
+     "type": "MAPCATEGORY_SOLAR_SYSTEM",
+     "scope": "plot"
+    }
    ]
   }
  },

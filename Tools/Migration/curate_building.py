@@ -900,11 +900,10 @@ def requires_building(rec, store):
     if civs:
         build_any.append([_atom(c, "empire") for c in civs])
 
+    boolexpr.fold_or_groups(build_all, build_any)   # OR-groups -> nested {any} under all (any = ||, never list-of-groups)
     build = OrderedDict()
     if build_all:
         build["all"] = build_all
-    if build_any:
-        build["any"] = build_any
     if build_none:
         build["noneOf"] = build_none
     # GOVERNMENT-CENTER buildings (Palace + the bGovernmentCenter pseudo-palaces) can't be player-BUILT where a
@@ -919,12 +918,11 @@ def requires_building(rec, store):
     out = OrderedDict()
     if build:
         out["build"] = build
-    if op_all or op_any or op_dormant:
+    boolexpr.fold_or_groups(op_all, op_any)   # OR-groups -> nested {any} under all
+    if op_all or op_dormant:
         operate = OrderedDict()
         if op_all:
             operate["all"] = op_all
-        if op_any:
-            operate["any"] = op_any
         if op_dormant:
             operate["dormant"] = op_dormant   # dormant while ANY listed is present (the reversible-disable mirror)
         out["operate"] = operate

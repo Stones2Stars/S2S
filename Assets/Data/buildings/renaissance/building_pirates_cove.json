@@ -7,26 +7,24 @@
    "all": [
     "HAS_COAST",
     "TECH_NAVAL_CANNON",
-    "TECH_ASTRONOMY"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_ASTRONOMY",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {
-   "any": [
-    [
-     "CIVIC_DESPOTISM",
-     "CIVIC_MONARCHY",
-     "CIVIC_FEUDAL",
-     "CIVIC_NATIONALIST",
-     "CIVIC_MERCANTILISM"
-    ]
+   "all": [
+    {
+     "any": [
+      "CIVIC_DESPOTISM",
+      "CIVIC_MONARCHY",
+      "CIVIC_FEUDAL",
+      "CIVIC_NATIONALIST",
+      "CIVIC_MERCANTILISM"
+     ]
+    }
    ]
   }
  },

@@ -20,21 +20,15 @@
      "scope": "empire",
      "min": 1
     },
-    "TECH_MAINSTREAM_CLONING"
-   ],
-   "any": [
-    [
-     {
-      "type": "TERRAIN_TAIGA",
-      "scope": "plot"
-     }
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_MAINSTREAM_CLONING",
+    {
+     "type": "TERRAIN_TAIGA",
+     "scope": "plot"
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   }
  },

@@ -11,16 +11,12 @@
      "connection": "trade|vicinity"
     },
     "BUILDING_ANIMAL_TRAINER_HORSE",
-    "TECH_GUERRILLA_WARFARE"
-   ],
-   "any": [
-    [
-     {
-      "type": "BONUS_IRON_WARES",
-      "scope": "city",
-      "connection": "trade|vicinity"
-     }
-    ]
+    "TECH_GUERRILLA_WARFARE",
+    {
+     "type": "BONUS_IRON_WARES",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    }
    ]
   }
  },

@@ -6,29 +6,27 @@
   "build": {
    "all": [
     "BUILDING_STATE_PARK",
-    "TECH_ENVIRONMENTAL_ECONOMICS"
-   ],
-   "any": [
-    [
-     {
-      "type": "TERRAIN_DESERT",
-      "scope": "plot"
-     },
-     {
-      "type": "TERRAIN_DUNES",
-      "scope": "plot"
-     },
-     {
-      "type": "TERRAIN_ROCKY",
-      "scope": "plot"
-     }
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_ENVIRONMENTAL_ECONOMICS",
+    {
+     "any": [
+      {
+       "type": "TERRAIN_DESERT",
+       "scope": "plot"
+      },
+      {
+       "type": "TERRAIN_DUNES",
+       "scope": "plot"
+      },
+      {
+       "type": "TERRAIN_ROCKY",
+       "scope": "plot"
+      }
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   }
  },

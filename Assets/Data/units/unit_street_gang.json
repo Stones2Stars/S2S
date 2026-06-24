@@ -30,13 +30,13 @@
      "type": "BONUS_PETROLEUM_PRODUCTS",
      "scope": "city",
      "connection": "trade|vicinity"
+    },
+    {
+     "any": [
+      "BUILDING_METH_LAB",
+      "BUILDING_MATERIALS_CONGLOMERATE"
+     ]
     }
-   ],
-   "any": [
-    [
-     "BUILDING_METH_LAB",
-     "BUILDING_MATERIALS_CONGLOMERATE"
-    ]
    ]
   }
  },

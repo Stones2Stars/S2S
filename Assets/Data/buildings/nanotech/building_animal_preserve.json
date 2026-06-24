@@ -24,15 +24,11 @@
   "build": {
    "all": [
     "BUILDING_ZOO",
-    "TECH_PLANETARY_ECONOMICS"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_PLANETARY_ECONOMICS",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   }
  },

@@ -13,19 +13,17 @@
  "requires": {
   "build": {
    "all": [
-    "TECH_MINORITY_RIGHTS"
-   ],
-   "any": [
-    [
-     "BUILDING_ELEMENTARY_SCHOOL",
-     "BUILDING_HOLOGRAPHIC_SCHOOL"
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_MINORITY_RIGHTS",
+    {
+     "any": [
+      "BUILDING_ELEMENTARY_SCHOOL",
+      "BUILDING_HOLOGRAPHIC_SCHOOL"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

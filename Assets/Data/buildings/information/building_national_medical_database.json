@@ -12,19 +12,17 @@
      "min": 7
     },
     "BUILDING_COMPUTER_NETWORK",
-    "TECH_KNOWLEDGE_MANAGEMENT"
-   ],
-   "any": [
-    [
-     "BUILDING_HOSPITAL",
-     "BUILDING_HEALTHCARE_MEGACOMPLEX"
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_KNOWLEDGE_MANAGEMENT",
+    {
+     "any": [
+      "BUILDING_HOSPITAL",
+      "BUILDING_HEALTHCARE_MEGACOMPLEX"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   }
  },

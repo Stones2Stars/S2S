@@ -10,15 +10,11 @@
  "requires": {
   "build": {
    "all": [
-    "TECH_DUALFLUX_QUANTUM_TEMPORAL_RIFT"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_HYPERSPACE",
-      "scope": "plot"
-     }
-    ]
+    "TECH_DUALFLUX_QUANTUM_TEMPORAL_RIFT",
+    {
+     "type": "MAPCATEGORY_HYPERSPACE",
+     "scope": "plot"
+    }
    ]
   }
  },

@@ -22,21 +22,19 @@
   "build": {
    "all": [
     "BUILDING_ANIMAL_TRAINER_HORSE",
-    "TECH_CHARIOTRY"
-   ],
-   "any": [
-    [
-     "BUILDING_WHEELWRIGHT",
-     "BUILDING_CARRIAGE_BUILDER",
-     "BUILDING_FACTORY_AUTOMOBILES",
-     "BUILDING_SELF_ASSEMBLY_FACTORY"
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_CHARIOTRY",
+    {
+     "any": [
+      "BUILDING_WHEELWRIGHT",
+      "BUILDING_CARRIAGE_BUILDER",
+      "BUILDING_FACTORY_AUTOMOBILES",
+      "BUILDING_SELF_ASSEMBLY_FACTORY"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   }
  },

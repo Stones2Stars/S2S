@@ -8,27 +8,27 @@
     {
      "type": "TECH_PLANETARY_EXTRACTION",
      "scope": "team"
+    },
+    {
+     "any": [
+      {
+       "terrain": [
+        "TERRAIN_MARTIAN_DESERT",
+        "TERRAIN_MARTIAN_DUNES",
+        "TERRAIN_MARTIAN_BARREN",
+        "TERRAIN_MARTIAN_PLAINS",
+        "TERRAIN_MARTIAN_ROCKY",
+        "TERRAIN_GREEN_MARS"
+       ]
+      },
+      {
+       "bonus": [
+        "BONUS_EXTRATERRESTRIAL_MICROBES",
+        "BONUS_MARTIAN_BLUEBERRIES"
+       ]
+      }
+     ]
     }
-   ],
-   "any": [
-    [
-     {
-      "terrain": [
-       "TERRAIN_MARTIAN_DESERT",
-       "TERRAIN_MARTIAN_DUNES",
-       "TERRAIN_MARTIAN_BARREN",
-       "TERRAIN_MARTIAN_PLAINS",
-       "TERRAIN_MARTIAN_ROCKY",
-       "TERRAIN_GREEN_MARS"
-      ]
-     },
-     {
-      "bonus": [
-       "BONUS_EXTRATERRESTRIAL_MICROBES",
-       "BONUS_MARTIAN_BLUEBERRIES"
-      ]
-     }
-    ]
    ]
   }
  },

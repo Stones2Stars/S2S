@@ -6,19 +6,13 @@
   "build": {
    "all": [
     "BUILDING_PALACE",
-    "TECH_AUTOMATIC_WEAPONS"
-   ],
-   "any": [
-    [
-     {
-      "type": "BONUS_AMMUNITION",
-      "scope": "city",
-      "connection": "trade|vicinity"
-     }
-    ],
-    [
-     "CIVIC_MONARCHY"
-    ]
+    "TECH_AUTOMATIC_WEAPONS",
+    {
+     "type": "BONUS_AMMUNITION",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    "CIVIC_MONARCHY"
    ]
   }
  },

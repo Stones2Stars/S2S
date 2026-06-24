@@ -18,31 +18,27 @@
  "requires": {
   "build": {
    "all": [
-    "TECH_PETROGLYPHS"
-   ],
-   "any": [
-    [
-     "BUILDING_CLAY_PIT",
-     "BUILDING_CHALK_GATHERER",
-     "BUILDING_HEMATITE_GATHERER",
-     "BUILDING_MODERN_EARTHWORKS",
-     "BUILDING_FIRE_PIT",
-     "BUILDING_BONFIRE",
-     "BUILDING_IMU",
-     "BUILDING_CHARCOAL_BURNER"
-    ],
-    [
-     {
-      "type": "FEATURE_CAVES",
-      "scope": "plot"
-     }
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_PETROGLYPHS",
+    {
+     "any": [
+      "BUILDING_CLAY_PIT",
+      "BUILDING_CHALK_GATHERER",
+      "BUILDING_HEMATITE_GATHERER",
+      "BUILDING_MODERN_EARTHWORKS",
+      "BUILDING_FIRE_PIT",
+      "BUILDING_BONFIRE",
+      "BUILDING_IMU",
+      "BUILDING_CHARCOAL_BURNER"
+     ]
+    },
+    {
+     "type": "FEATURE_CAVES",
+     "scope": "plot"
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

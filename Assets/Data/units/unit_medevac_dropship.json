@@ -53,20 +53,18 @@
      "type": "BONUS_HYPOSPRAYS",
      "scope": "city",
      "connection": "trade|vicinity"
+    },
+    {
+     "type": "BONUS_PHARMACEUTICALS",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    {
+     "any": [
+      "BUILDING_MEGATOWER_MEDICAL_LEVEL",
+      "BUILDING_HEALTHCARE_MEGACOMPLEX"
+     ]
     }
-   ],
-   "any": [
-    [
-     {
-      "type": "BONUS_PHARMACEUTICALS",
-      "scope": "city",
-      "connection": "trade|vicinity"
-     }
-    ],
-    [
-     "BUILDING_MEGATOWER_MEDICAL_LEVEL",
-     "BUILDING_HEALTHCARE_MEGACOMPLEX"
-    ]
    ]
   }
  },

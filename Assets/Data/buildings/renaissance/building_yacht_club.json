@@ -15,29 +15,27 @@
    "all": [
     "HAS_COAST",
     "BUILDING_MARINA",
-    "TECH_SEXTANT"
-   ],
-   "any": [
-    [
-     {
-      "type": "IMPROVEMENT_FISHING_BOATS",
-      "scope": "plot"
-     },
-     {
-      "type": "IMPROVEMENT_WHALING_BOATS",
-      "scope": "plot"
-     },
-     {
-      "type": "IMPROVEMENT_WHALING_SHIPS",
-      "scope": "plot"
-     }
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_SEXTANT",
+    {
+     "any": [
+      {
+       "type": "IMPROVEMENT_FISHING_BOATS",
+       "scope": "plot"
+      },
+      {
+       "type": "IMPROVEMENT_WHALING_BOATS",
+       "scope": "plot"
+      },
+      {
+       "type": "IMPROVEMENT_WHALING_SHIPS",
+       "scope": "plot"
+      }
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

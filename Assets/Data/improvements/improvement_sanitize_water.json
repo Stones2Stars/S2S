@@ -9,17 +9,13 @@
      "type": "TECH_AQUACULTURE",
      "scope": "team"
     },
-    "IS_WATER"
-   ],
-   "any": [
-    [
-     {
-      "terrain": [
-       "TERRAIN_INFECTED_WATER",
-       "TERRAIN_PLAGUED_WATER"
-      ]
-     }
-    ]
+    "IS_WATER",
+    {
+     "terrain": [
+      "TERRAIN_INFECTED_WATER",
+      "TERRAIN_PLAGUED_WATER"
+     ]
+    }
    ]
   }
  },

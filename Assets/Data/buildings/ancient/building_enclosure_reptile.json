@@ -14,22 +14,18 @@
  "requires": {
   "build": {
    "all": [
-    "TECH_TRADE"
-   ],
-   "any": [
-    [
-     "BUILDING_CARNIVAL",
-     "BUILDING_ZOO"
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ],
-    [
-     "HERITAGE_TAXON_REPTILIA"
-    ]
+    "TECH_TRADE",
+    {
+     "any": [
+      "BUILDING_CARNIVAL",
+      "BUILDING_ZOO"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    },
+    "HERITAGE_TAXON_REPTILIA"
    ]
   }
  },

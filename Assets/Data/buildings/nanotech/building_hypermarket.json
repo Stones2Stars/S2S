@@ -36,15 +36,11 @@
   "build": {
    "all": [
     "BUILDING_SHOPPING_DISTRICT",
-    "TECH_PLASTIC_ELECTRONICS"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_PLASTIC_ELECTRONICS",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   }
  },

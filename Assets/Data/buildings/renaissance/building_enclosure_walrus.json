@@ -7,19 +7,17 @@
    "all": [
     "HAS_COAST",
     "BUILDING_FOLKLORE_WALRUS",
-    "TECH_ZOOLOGY"
-   ],
-   "any": [
-    [
-     "BUILDING_AQUARIUM",
-     "BUILDING_ZOO"
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_ZOOLOGY",
+    {
+     "any": [
+      "BUILDING_AQUARIUM",
+      "BUILDING_ZOO"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   }
  },

@@ -10,14 +10,14 @@
      "scope": "city",
      "connection": "trade|vicinity"
     },
-    "TECH_MICROMECHANICS"
-   ],
-   "any": [
-    [
-     "BUILDING_FACTORY_AMMUNITION",
-     "BUILDING_AMMUNITIONS_WORKSHOP",
-     "BUILDING_MILITARY_INDUSTRIAL_COMPLEX"
-    ]
+    "TECH_MICROMECHANICS",
+    {
+     "any": [
+      "BUILDING_FACTORY_AMMUNITION",
+      "BUILDING_AMMUNITIONS_WORKSHOP",
+      "BUILDING_MILITARY_INDUSTRIAL_COMPLEX"
+     ]
+    }
    ]
   }
  },

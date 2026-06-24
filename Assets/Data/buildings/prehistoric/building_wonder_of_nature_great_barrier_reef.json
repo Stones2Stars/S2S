@@ -5,35 +5,31 @@
  "requires": {
   "build": {
    "all": [
-    "TECH_LANGUAGE"
-   ],
-   "any": [
-    [
-     {
-      "type": "FEATURE_PLATY_GREAT_BARRIER",
-      "scope": "plot"
-     },
-     {
-      "type": "FEATURE_GREAT_BARRIER_REEF_BEACON",
-      "scope": "plot"
-     },
-     {
-      "type": "FEATURE_GREAT_BARRIER_REEF_LIGHTHOUSE",
-      "scope": "plot"
-     }
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ],
-    [
-     {
-      "type": "CIVILIZATION_NPC_NEANDERTHAL",
-      "scope": "empire"
-     }
-    ]
+    "TECH_LANGUAGE",
+    {
+     "any": [
+      {
+       "type": "FEATURE_PLATY_GREAT_BARRIER",
+       "scope": "plot"
+      },
+      {
+       "type": "FEATURE_GREAT_BARRIER_REEF_BEACON",
+       "scope": "plot"
+      },
+      {
+       "type": "FEATURE_GREAT_BARRIER_REEF_LIGHTHOUSE",
+       "scope": "plot"
+      }
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    },
+    {
+     "type": "CIVILIZATION_NPC_NEANDERTHAL",
+     "scope": "empire"
+    }
    ]
   }
  },

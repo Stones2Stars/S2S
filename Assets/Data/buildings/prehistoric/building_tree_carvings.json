@@ -10,37 +10,35 @@
  "requires": {
   "build": {
    "all": [
-    "TECH_CARVING"
-   ],
-   "any": [
-    [
-     {
-      "type": "FEATURE_FOREST_YOUNG",
-      "scope": "plot"
-     },
-     {
-      "type": "FEATURE_FOREST",
-      "scope": "plot"
-     },
-     {
-      "type": "FEATURE_FOREST_ANCIENT",
-      "scope": "plot"
-     },
-     {
-      "type": "FEATURE_FOREST_BURNT",
-      "scope": "plot"
-     },
-     {
-      "type": "FEATURE_JUNGLE",
-      "scope": "plot"
-     }
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_CARVING",
+    {
+     "any": [
+      {
+       "type": "FEATURE_FOREST_YOUNG",
+       "scope": "plot"
+      },
+      {
+       "type": "FEATURE_FOREST",
+       "scope": "plot"
+      },
+      {
+       "type": "FEATURE_FOREST_ANCIENT",
+       "scope": "plot"
+      },
+      {
+       "type": "FEATURE_FOREST_BURNT",
+       "scope": "plot"
+      },
+      {
+       "type": "FEATURE_JUNGLE",
+       "scope": "plot"
+      }
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   }
  },

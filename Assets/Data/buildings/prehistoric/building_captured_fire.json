@@ -10,18 +10,12 @@
  "requires": {
   "build": {
    "all": [
-    "TECH_CONTROLLED_FIRE"
-   ],
-   "any": [
-    [
-     "BUILDING_STICK_GATHERER"
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_CONTROLLED_FIRE",
+    "BUILDING_STICK_GATHERER",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   }
  },

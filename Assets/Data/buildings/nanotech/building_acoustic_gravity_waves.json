@@ -5,15 +5,11 @@
  "requires": {
   "build": {
    "all": [
-    "TECH_ACOUSTOPHORESIS"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_ACOUSTOPHORESIS",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   }
  },

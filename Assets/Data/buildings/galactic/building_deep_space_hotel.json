@@ -12,15 +12,11 @@
    "all": [
     "BUILDING_DEEP_SPACE_DOCKING_BAY",
     "BUILDING_DEEP_SPACE_BISHOP_RING",
-    "TECH_FUSION_SPACECRAFT"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_SOLAR_SYSTEM",
-      "scope": "plot"
-     }
-    ]
+    "TECH_FUSION_SPACECRAFT",
+    {
+     "type": "MAPCATEGORY_SOLAR_SYSTEM",
+     "scope": "plot"
+    }
    ]
   }
  },

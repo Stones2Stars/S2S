@@ -8,22 +8,18 @@
     {
      "type": "TECH_PLANETARY_TERRAFORMING",
      "scope": "team"
+    },
+    {
+     "terrain": [
+      "TERRAIN_MARTIAN_ICE",
+      "TERRAIN_MARTIAN_PERMAFROST",
+      "TERRAIN_MARTIAN_DESERT",
+      "TERRAIN_MARTIAN_DUNES",
+      "TERRAIN_MARTIAN_BARREN",
+      "TERRAIN_MARTIAN_PLAINS",
+      "TERRAIN_MARTIAN_ROCKY"
+     ]
     }
-   ],
-   "any": [
-    [
-     {
-      "terrain": [
-       "TERRAIN_MARTIAN_ICE",
-       "TERRAIN_MARTIAN_PERMAFROST",
-       "TERRAIN_MARTIAN_DESERT",
-       "TERRAIN_MARTIAN_DUNES",
-       "TERRAIN_MARTIAN_BARREN",
-       "TERRAIN_MARTIAN_PLAINS",
-       "TERRAIN_MARTIAN_ROCKY"
-      ]
-     }
-    ]
    ]
   }
  },

@@ -16,15 +16,11 @@
     "HAS_POWER",
     "BUILDING_FACTORY",
     "BUILDING_BACTERIUM_BIOFORGE",
-    "TECH_BACTERIUM_ENGINEERING"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_BACTERIUM_ENGINEERING",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

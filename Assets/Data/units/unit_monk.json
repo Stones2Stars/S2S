@@ -11,21 +11,19 @@
      "scope": "city",
      "connection": "trade|vicinity"
     },
-    "TECH_THEOLOGY"
-   ],
-   "any": [
-    [
-     {
-      "type": "BONUS_SCROLLS",
-      "scope": "city",
-      "connection": "trade|vicinity"
-     }
-    ],
-    [
-     "BUILDING_APOTHECARY_SHOP",
-     "BUILDING_PHARMACY",
-     "BUILDING_HEALTHCARE_MEGACOMPLEX"
-    ]
+    "TECH_THEOLOGY",
+    {
+     "type": "BONUS_SCROLLS",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    {
+     "any": [
+      "BUILDING_APOTHECARY_SHOP",
+      "BUILDING_PHARMACY",
+      "BUILDING_HEALTHCARE_MEGACOMPLEX"
+     ]
+    }
    ]
   }
  },

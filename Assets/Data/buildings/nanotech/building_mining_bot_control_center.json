@@ -12,19 +12,17 @@
    "all": [
     "HAS_POWER",
     "BUILDING_CONTROL_CENTER",
-    "TECH_BIOMETRIC_WARFARE"
-   ],
-   "any": [
-    [
-     "BUILDING_FACTORY_EXOSKELETONS",
-     "BUILDING_NANOTECH_COMPLEX"
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_BIOMETRIC_WARFARE",
+    {
+     "any": [
+      "BUILDING_FACTORY_EXOSKELETONS",
+      "BUILDING_NANOTECH_COMPLEX"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

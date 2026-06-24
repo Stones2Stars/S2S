@@ -18,15 +18,11 @@
    "all": [
     "HAS_POWER",
     "BUILDING_COMMERCIAL_SPACEPORT",
-    "TECH_MASS_DRIVER"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_MASS_DRIVER",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   }
  },

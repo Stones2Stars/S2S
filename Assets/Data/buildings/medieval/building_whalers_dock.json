@@ -19,15 +19,11 @@
  "requires": {
   "build": {
    "all": [
-    "TECH_COMMERCIAL_WHALING"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_COMMERCIAL_WHALING",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

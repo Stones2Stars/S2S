@@ -16,32 +16,24 @@
     "HAS_POWER",
     "BUILDING_FACTORY",
     "BUILDING_POWER_LINES",
-    "TECH_VOLCANOLOGY"
-   ],
-   "any": [
-    [
-     {
-      "type": "IMPROVEMENT_GEOTHERMAL_FACTORY",
-      "scope": "plot"
-     }
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_VOLCANOLOGY",
+    {
+     "type": "IMPROVEMENT_GEOTHERMAL_FACTORY",
+     "scope": "plot"
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {
-   "any": [
-    [
-     {
-      "type": "BONUS_GEOTHERMAL_ENERGY",
-      "scope": "city",
-      "connection": "vicinity"
-     }
-    ]
+   "all": [
+    {
+     "type": "BONUS_GEOTHERMAL_ENERGY",
+     "scope": "city",
+     "connection": "vicinity"
+    }
    ],
    "dormant": [
     "BUILDING_ENHANCED_GEOTHERMAL_SYSTEM",

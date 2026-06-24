@@ -12,15 +12,11 @@
    "all": [
     "HAS_POWER",
     "BUILDING_SPACE_COLONY_HYPERSPACE_PORTAL",
-    "TECH_TRANSVERSE_EUCLIDEAN_GEOMETRY"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_HYPERSPACE",
-      "scope": "plot"
-     }
-    ]
+    "TECH_TRANSVERSE_EUCLIDEAN_GEOMETRY",
+    {
+     "type": "MAPCATEGORY_HYPERSPACE",
+     "scope": "plot"
+    }
    ]
   }
  },

@@ -7,15 +7,11 @@
    "all": [
     "HAS_POWER",
     "BUILDING_NETWORK_NODE",
-    "TECH_PURE_INFORMATION_SOCIETY"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_PURE_INFORMATION_SOCIETY",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   }
  },

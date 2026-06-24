@@ -12,15 +12,11 @@
   "build": {
    "all": [
     "BUILDING_DISTANT_BLAZAR_FACTORY",
-    "TECH_BRANE_CONSTRUCTION"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_DISTANT",
-      "scope": "plot"
-     }
-    ]
+    "TECH_BRANE_CONSTRUCTION",
+    {
+     "type": "MAPCATEGORY_DISTANT",
+     "scope": "plot"
+    }
    ]
   }
  },

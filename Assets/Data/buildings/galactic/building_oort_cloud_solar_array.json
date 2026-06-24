@@ -12,25 +12,23 @@
      "scope": "empire",
      "min": 1
     },
-    "TECH_INTERSTELLAR_TRAVEL"
-   ],
-   "any": [
-    [
-     {
-      "type": "FEATURE_OORT_CLOUD",
-      "scope": "plot"
-     }
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_INTERSTELLAR",
-      "scope": "plot"
-     },
-     {
-      "type": "MAPCATEGORY_SOLAR_SYSTEM",
-      "scope": "plot"
-     }
-    ]
+    "TECH_INTERSTELLAR_TRAVEL",
+    {
+     "type": "FEATURE_OORT_CLOUD",
+     "scope": "plot"
+    },
+    {
+     "any": [
+      {
+       "type": "MAPCATEGORY_INTERSTELLAR",
+       "scope": "plot"
+      },
+      {
+       "type": "MAPCATEGORY_SOLAR_SYSTEM",
+       "scope": "plot"
+      }
+     ]
+    }
    ]
   }
  },

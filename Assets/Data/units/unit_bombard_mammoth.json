@@ -17,20 +17,18 @@
      "type": "BONUS_IRON_WARES",
      "scope": "city",
      "connection": "trade|vicinity"
+    },
+    {
+     "type": "BONUS_SULPHUR",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    {
+     "any": [
+      "BUILDING_EFFECT_HERITAGE_MAMMOTHS",
+      "BUILDING_ANIMAL_TRAINER_MAMMOTH"
+     ]
     }
-   ],
-   "any": [
-    [
-     {
-      "type": "BONUS_SULPHUR",
-      "scope": "city",
-      "connection": "trade|vicinity"
-     }
-    ],
-    [
-     "BUILDING_EFFECT_HERITAGE_MAMMOTHS",
-     "BUILDING_ANIMAL_TRAINER_MAMMOTH"
-    ]
    ]
   }
  },

@@ -7,15 +7,11 @@
    "all": [
     "BUILDING_HYPERSPACE_INFLATON_FIELD",
     "BUILDING_EFFECT_UNIVERSAL_ECONOMY",
-    "TECH_CONTROLLED_INFLATION"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_HYPERSPACE",
-      "scope": "plot"
-     }
-    ]
+    "TECH_CONTROLLED_INFLATION",
+    {
+     "type": "MAPCATEGORY_HYPERSPACE",
+     "scope": "plot"
+    }
    ]
   }
  },

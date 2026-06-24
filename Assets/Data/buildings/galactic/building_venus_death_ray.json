@@ -6,15 +6,11 @@
   "build": {
    "all": [
     "BUILDING_VENUS_FUSION_PLANT",
-    "TECH_WEAPONIZED_DISINTEGRATION"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_VENUSIAN",
-      "scope": "plot"
-     }
-    ]
+    "TECH_WEAPONIZED_DISINTEGRATION",
+    {
+     "type": "MAPCATEGORY_VENUSIAN",
+     "scope": "plot"
+    }
    ]
   }
  },

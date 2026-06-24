@@ -10,16 +10,12 @@
      "scope": "city",
      "connection": "trade|vicinity"
     },
-    "TECH_DIESELPUNK"
-   ],
-   "any": [
-    [
-     {
-      "type": "BONUS_DIESELPUNK",
-      "scope": "city",
-      "connection": "trade|vicinity"
-     }
-    ]
+    "TECH_DIESELPUNK",
+    {
+     "type": "BONUS_DIESELPUNK",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    }
    ]
   }
  },

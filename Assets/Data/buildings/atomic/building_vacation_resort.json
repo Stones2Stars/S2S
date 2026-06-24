@@ -16,15 +16,11 @@
     "HAS_COAST",
     "HAS_POWER",
     "BUILDING_COMMERCIAL_AIRPORT",
-    "TECH_TOURISM"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_TOURISM",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

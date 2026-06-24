@@ -11,19 +11,19 @@
   "build": {
    "all": [
     "BUILDING_INTERSTELLAR_PLANETARY_AWARENESS",
-    "TECH_NEUTRINO_COMMUNICATIONS"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_PLASMA",
-      "scope": "plot"
-     },
-     {
-      "type": "MAPCATEGORY_MILKY_WAY",
-      "scope": "plot"
-     }
-    ]
+    "TECH_NEUTRINO_COMMUNICATIONS",
+    {
+     "any": [
+      {
+       "type": "MAPCATEGORY_PLASMA",
+       "scope": "plot"
+      },
+      {
+       "type": "MAPCATEGORY_MILKY_WAY",
+       "scope": "plot"
+      }
+     ]
+    }
    ]
   }
  },

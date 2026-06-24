@@ -9,15 +9,11 @@
     "BUILDING_VENUS_TRADING_POST",
     "BUILDING_VENUS_HYDROGEN_GENERATOR",
     "TECH_PLANETARY_TRADE",
-    "TECH_ARTIFICIAL_PHOTOSYNTHESIS"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_VENUSIAN",
-      "scope": "plot"
-     }
-    ]
+    "TECH_ARTIFICIAL_PHOTOSYNTHESIS",
+    {
+     "type": "MAPCATEGORY_VENUSIAN",
+     "scope": "plot"
+    }
    ]
   }
  },

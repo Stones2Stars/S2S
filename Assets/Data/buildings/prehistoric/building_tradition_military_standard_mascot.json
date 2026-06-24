@@ -11,15 +11,11 @@
   "build": {
    "all": [
     "BUILDING_MILITARY_STANDARD_ANIMAL_MASCOT",
-    "TECH_CULTURAL_IDENTITY"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_CULTURAL_IDENTITY",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   }
  },

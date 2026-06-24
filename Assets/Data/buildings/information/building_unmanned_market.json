@@ -10,20 +10,18 @@
  "requires": {
   "build": {
    "all": [
-    "TECH_AUTONOMOUS_VEHICLES"
-   ],
-   "any": [
-    [
-     "BUILDING_SUPERMARKET",
-     "BUILDING_HYPERMARKET",
-     "BUILDING_MALL"
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_AUTONOMOUS_VEHICLES",
+    {
+     "any": [
+      "BUILDING_SUPERMARKET",
+      "BUILDING_HYPERMARKET",
+      "BUILDING_MALL"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   }
  },

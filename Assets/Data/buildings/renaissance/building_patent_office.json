@@ -8,15 +8,11 @@
     "BUILDING_BANK",
     "BUILDING_COURTHOUSE",
     "BUILDING_UNIVERSITY",
-    "TECH_PATENT_RIGHTS"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_PATENT_RIGHTS",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   }
  },

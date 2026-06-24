@@ -16,15 +16,11 @@
     "HAS_POWER",
     "BUILDING_CONSTRUCTION_FIRM",
     "BUILDING_CGI_ANIMATION_STUDIO",
-    "TECH_3D_MODELLING"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_3D_MODELLING",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

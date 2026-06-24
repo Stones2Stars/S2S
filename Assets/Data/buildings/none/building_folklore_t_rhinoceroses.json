@@ -11,22 +11,20 @@
   "build": {
    "all": [
     "BUILDING_FOLKLORE_REQUIREMENT",
-    "TECH_TAXONOMY"
-   ],
-   "any": [
-    [
-     "BUILDING_FOLKLORE_GIANT_RHINOCEROS",
-     "BUILDING_FOLKLORE_BLACK_RHINOCEROS",
-     "BUILDING_FOLKLORE_INDIAN_RHINOCEROS",
-     "BUILDING_FOLKLORE_JAVA_RHINOCEROS",
-     "BUILDING_FOLKLORE_WHITE_RHINOCEROS"
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_TAXONOMY",
+    {
+     "any": [
+      "BUILDING_FOLKLORE_GIANT_RHINOCEROS",
+      "BUILDING_FOLKLORE_BLACK_RHINOCEROS",
+      "BUILDING_FOLKLORE_INDIAN_RHINOCEROS",
+      "BUILDING_FOLKLORE_JAVA_RHINOCEROS",
+      "BUILDING_FOLKLORE_WHITE_RHINOCEROS"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   }
  },

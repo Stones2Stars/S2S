@@ -15,15 +15,11 @@
    "all": [
     "BUILDING_ICE_RINK",
     "TECH_REFRIGERATION",
-    "TECH_LAWN_SPORTS"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_LAWN_SPORTS",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

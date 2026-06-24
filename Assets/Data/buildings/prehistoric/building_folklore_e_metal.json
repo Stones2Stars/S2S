@@ -14,15 +14,11 @@
      "min": 1
     },
     "TECH_SOFT_HAMMER_PERCUSSION",
-    "TECH_ORAL_TRADITION"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_ORAL_TRADITION",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   }
  },

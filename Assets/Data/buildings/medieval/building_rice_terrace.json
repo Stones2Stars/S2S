@@ -19,35 +19,25 @@
   "build": {
    "all": [
     "HAS_RIVER",
-    "TECH_AGRICULTURAL_TOOLS"
-   ],
-   "any": [
-    [
-     "BUILDING_RICE_PADDY"
-    ],
-    [
-     {
-      "type": "TERRAIN_HILL",
-      "scope": "plot"
-     }
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_AGRICULTURAL_TOOLS",
+    "BUILDING_RICE_PADDY",
+    {
+     "type": "TERRAIN_HILL",
+     "scope": "plot"
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {
-   "any": [
-    [
-     {
-      "type": "BONUS_RICE",
-      "scope": "city",
-      "connection": "vicinity"
-     }
-    ]
+   "all": [
+    {
+     "type": "BONUS_RICE",
+     "scope": "city",
+     "connection": "vicinity"
+    }
    ],
    "dormant": [
     "BUILDING_FARMSCRAPER_III"

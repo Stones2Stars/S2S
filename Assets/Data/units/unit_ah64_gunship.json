@@ -11,16 +11,12 @@
      "connection": "trade|vicinity"
     },
     "TECH_MODERN_WARFARE",
-    "TECH_VERTICAL_FLIGHT"
-   ],
-   "any": [
-    [
-     {
-      "type": "BONUS_PETROLEUM_PRODUCTS",
-      "scope": "city",
-      "connection": "trade|vicinity"
-     }
-    ]
+    "TECH_VERTICAL_FLIGHT",
+    {
+     "type": "BONUS_PETROLEUM_PRODUCTS",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    }
    ]
   }
  },

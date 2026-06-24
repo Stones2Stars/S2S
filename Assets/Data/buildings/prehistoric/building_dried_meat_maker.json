@@ -13,21 +13,19 @@
  "requires": {
   "build": {
    "all": [
-    "TECH_DRYING"
-   ],
-   "any": [
-    [
-     "BUILDING_DRYING_FRAME",
-     "BUILDING_ANCIENT_CUSTOMS",
-     "BUILDING_SMOKEHOUSE",
-     "BUILDING_HYPERMARKET"
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_DRYING",
+    {
+     "any": [
+      "BUILDING_DRYING_FRAME",
+      "BUILDING_ANCIENT_CUSTOMS",
+      "BUILDING_SMOKEHOUSE",
+      "BUILDING_HYPERMARKET"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

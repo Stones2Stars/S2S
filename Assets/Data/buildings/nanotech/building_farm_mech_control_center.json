@@ -15,15 +15,11 @@
     "BUILDING_FARM_BOT_CONTROL_CENTER",
     "BUILDING_PHENOTYPE_STUDIO",
     "TECH_AUTOMATED_ROBOTICS",
-    "TECH_GENE_ENHANCEMENT"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_GENE_ENHANCEMENT",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

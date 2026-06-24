@@ -75,15 +75,11 @@
  "requires": {
   "build": {
    "all": [
-    "BUILDING_C_AC_ASIAN"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "BUILDING_C_AC_ASIAN",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   }
  },

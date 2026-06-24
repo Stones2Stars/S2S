@@ -11,21 +11,15 @@
   "build": {
    "all": [
     "BUILDING_EFFECT_SOLAR_ECONOMY",
-    "TECH_COLONY_ARCOLOGY"
-   ],
-   "any": [
-    [
-     {
-      "type": "TERRAIN_URANUS",
-      "scope": "plot"
-     }
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_SOLAR_SYSTEM",
-      "scope": "plot"
-     }
-    ]
+    "TECH_COLONY_ARCOLOGY",
+    {
+     "type": "TERRAIN_URANUS",
+     "scope": "plot"
+    },
+    {
+     "type": "MAPCATEGORY_SOLAR_SYSTEM",
+     "scope": "plot"
+    }
    ]
   }
  },

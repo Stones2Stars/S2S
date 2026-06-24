@@ -12,15 +12,11 @@
    "all": [
     "HAS_POWER",
     "BUILDING_HYPERSPACE_SIMULATED_UNIVERSE",
-    "TECH_PARAMETER_TUNING"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_HYPERSPACE",
-      "scope": "plot"
-     }
-    ]
+    "TECH_PARAMETER_TUNING",
+    {
+     "type": "MAPCATEGORY_HYPERSPACE",
+     "scope": "plot"
+    }
    ]
   }
  },

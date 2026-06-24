@@ -10,22 +10,20 @@
      "scope": "city",
      "min": 13
     },
-    "TECH_TOURISM"
-   ],
-   "any": [
-    [
-     "BUILDING_BROADWAY",
-     "BUILDING_HOLLYWOOD",
-     "BUILDING_ROCK_N_ROLL",
-     "BUILDING_WORLD_NEWS_NETWORK",
-     "BUILDING_NATIONAL_TV_STATION"
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_TOURISM",
+    {
+     "any": [
+      "BUILDING_BROADWAY",
+      "BUILDING_HOLLYWOOD",
+      "BUILDING_ROCK_N_ROLL",
+      "BUILDING_WORLD_NEWS_NETWORK",
+      "BUILDING_NATIONAL_TV_STATION"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   }
  },

@@ -6,25 +6,23 @@
   "build": {
    "all": [
     "BUILDING_INTERSTELLAR_BLACK_HOLE_COLONY",
-    "TECH_GRAVITRONICS"
-   ],
-   "any": [
-    [
-     {
-      "type": "FEATURE_BLACK_HOLE",
-      "scope": "plot"
-     },
-     {
-      "type": "FEATURE_SUPERMASSIVE_BLACK_HOLE",
-      "scope": "plot"
-     }
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_MILKY_WAY",
-      "scope": "plot"
-     }
-    ]
+    "TECH_GRAVITRONICS",
+    {
+     "any": [
+      {
+       "type": "FEATURE_BLACK_HOLE",
+       "scope": "plot"
+      },
+      {
+       "type": "FEATURE_SUPERMASSIVE_BLACK_HOLE",
+       "scope": "plot"
+      }
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_MILKY_WAY",
+     "scope": "plot"
+    }
    ]
   }
  },

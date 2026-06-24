@@ -9,33 +9,33 @@
      "type": "TECH_GATHERING",
      "scope": "team"
     },
-    "IS_FLATLANDS"
-   ],
-   "any": [
-    [
-     {
-      "terrain": [
-       "TERRAIN_GRASSLAND",
-       "TERRAIN_PLAINS",
-       "TERRAIN_LUSH",
-       "TERRAIN_SCRUB",
-       "TERRAIN_MUDDY",
-       "TERRAIN_DESERT"
-      ]
-     },
-     {
-      "bonus": [
-       "BONUS_WHEAT",
-       "BONUS_POTATOES",
-       "BONUS_RICE",
-       "BONUS_CORN",
-       "BONUS_BARLEY",
-       "BONUS_MELONS",
-       "BONUS_PUMPKIN",
-       "BONUS_SQUASH"
-      ]
-     }
-    ]
+    "IS_FLATLANDS",
+    {
+     "any": [
+      {
+       "terrain": [
+        "TERRAIN_GRASSLAND",
+        "TERRAIN_PLAINS",
+        "TERRAIN_LUSH",
+        "TERRAIN_SCRUB",
+        "TERRAIN_MUDDY",
+        "TERRAIN_DESERT"
+       ]
+      },
+      {
+       "bonus": [
+        "BONUS_WHEAT",
+        "BONUS_POTATOES",
+        "BONUS_RICE",
+        "BONUS_CORN",
+        "BONUS_BARLEY",
+        "BONUS_MELONS",
+        "BONUS_PUMPKIN",
+        "BONUS_SQUASH"
+       ]
+      }
+     ]
+    }
    ]
   }
  },

@@ -24,15 +24,11 @@
     "BUILDING_STEM_CELL_LAB",
     "BUILDING_MEDICAL_CLINIC",
     "TECH_NEURAL_NETWORKS",
-    "TECH_GENETIC_BIOCHEMISTRY"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_GENETIC_BIOCHEMISTRY",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

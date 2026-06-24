@@ -4,26 +4,24 @@
  "civilopedia": "TXT_KEY_BUILDING_FOLKLORE_ANIMAL_PEDIA",
  "requires": {
   "build": {
-   "any": [
-    [
-     {
-      "type": "FEATURE_OASIS",
-      "scope": "plot"
-     },
-     {
-      "type": "FEATURE_VERY_TALL_GRASS",
-      "scope": "plot"
-     }
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ],
-    [
-     "HERITAGE_FOLKLORE_PROCOPTODON"
-    ]
+   "all": [
+    {
+     "any": [
+      {
+       "type": "FEATURE_OASIS",
+       "scope": "plot"
+      },
+      {
+       "type": "FEATURE_VERY_TALL_GRASS",
+       "scope": "plot"
+      }
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    },
+    "HERITAGE_FOLKLORE_PROCOPTODON"
    ]
   }
  },

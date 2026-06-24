@@ -5,15 +5,11 @@
  "requires": {
   "build": {
    "all": [
-    "TECH_CODE_OF_LAWS"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_CODE_OF_LAWS",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   }
  },

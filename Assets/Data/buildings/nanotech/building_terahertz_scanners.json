@@ -7,15 +7,11 @@
    "all": [
     "HAS_POWER",
     "BUILDING_SECURITY_CENTER",
-    "TECH_AMPLIFIED_WAVELENGTHS"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_AMPLIFIED_WAVELENGTHS",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   }
  },

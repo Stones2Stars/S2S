@@ -15,15 +15,11 @@
    "all": [
     "HAS_POWER",
     "BUILDING_POWER_LINES",
-    "TECH_WEIGHTLESS_FLIGHT"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_WEIGHTLESS_FLIGHT",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

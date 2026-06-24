@@ -7,15 +7,11 @@
    "all": [
     "HAS_POWER",
     "BUILDING_ADVANCED_SHIELDING",
-    "TECH_PLANETARY_DEFENSES"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_PLANETARY_DEFENSES",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   }
  },

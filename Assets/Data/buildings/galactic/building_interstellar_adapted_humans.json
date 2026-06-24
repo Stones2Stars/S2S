@@ -10,19 +10,19 @@
  "requires": {
   "build": {
    "all": [
-    "TECH_ADAPTIVE_RADIATION"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_GALACTIC",
-      "scope": "plot"
-     },
-     {
-      "type": "MAPCATEGORY_UNIVERSAL",
-      "scope": "plot"
-     }
-    ]
+    "TECH_ADAPTIVE_RADIATION",
+    {
+     "any": [
+      {
+       "type": "MAPCATEGORY_GALACTIC",
+       "scope": "plot"
+      },
+      {
+       "type": "MAPCATEGORY_UNIVERSAL",
+       "scope": "plot"
+      }
+     ]
+    }
    ]
   }
  },

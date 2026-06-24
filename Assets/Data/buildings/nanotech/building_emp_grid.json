@@ -23,15 +23,11 @@
    "all": [
     "HAS_POWER",
     "BUILDING_POWER_LINES",
-    "TECH_ELECTROMAGNETIC_VOLTAGE"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_ELECTROMAGNETIC_VOLTAGE",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

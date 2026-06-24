@@ -7,29 +7,21 @@
    "all": [
     "BUILDING_TEMPLE_OF_KI",
     "TECH_POLYTHEISM",
-    "TECH_PRIESTHOOD"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_PRIESTHOOD",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {
    "all": [
-    "RELIGION_MESOPOTAMISM"
-   ],
-   "any": [
-    [
-     {
-      "type": "BONUS_RICE",
-      "scope": "city",
-      "connection": "vicinity"
-     }
-    ]
+    "RELIGION_MESOPOTAMISM",
+    {
+     "type": "BONUS_RICE",
+     "scope": "city",
+     "connection": "vicinity"
+    }
    ]
   }
  },

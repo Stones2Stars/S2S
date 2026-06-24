@@ -8,15 +8,11 @@
     "HAS_POWER",
     "BUILDING_LUNAR_WATER_EXTRACTION_FACILITY",
     "BUILDING_LUNAR_ORGANIC_POLYMERE_FACTORY",
-    "TECH_LUNAR_MANUFACTURING"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_LUNAR",
-      "scope": "plot"
-     }
-    ]
+    "TECH_LUNAR_MANUFACTURING",
+    {
+     "type": "MAPCATEGORY_LUNAR",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

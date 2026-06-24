@@ -13,21 +13,15 @@
  "requires": {
   "build": {
    "all": [
-    "TECH_FISHING"
-   ],
-   "any": [
-    [
-     {
-      "type": "FEATURE_KELP",
-      "scope": "plot"
-     }
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_FISHING",
+    {
+     "type": "FEATURE_KELP",
+     "scope": "plot"
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

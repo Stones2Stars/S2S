@@ -8,15 +8,11 @@
     "BUILDING_C_AC_AFRICAN",
     "BUILDING_C_L_AFRICAN",
     "BUILDING_C_AC_EUROPEAN",
-    "TECH_STEAM_POWER"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_STEAM_POWER",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

@@ -14,21 +14,15 @@
   "build": {
    "all": [
     "BUILDING_HOTEL",
-    "TECH_TOURISM"
-   ],
-   "any": [
-    [
-     {
-      "type": "FEATURE_SAVANNA",
-      "scope": "plot"
-     }
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_TOURISM",
+    {
+     "type": "FEATURE_SAVANNA",
+     "scope": "plot"
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

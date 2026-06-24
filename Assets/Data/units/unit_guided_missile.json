@@ -10,16 +10,12 @@
      "scope": "city",
      "connection": "trade|vicinity"
     },
-    "TECH_GUIDED_WEAPONS"
-   ],
-   "any": [
-    [
-     {
-      "type": "BONUS_ROCKET_FUEL",
-      "scope": "city",
-      "connection": "trade|vicinity"
-     }
-    ]
+    "TECH_GUIDED_WEAPONS",
+    {
+     "type": "BONUS_ROCKET_FUEL",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    }
    ]
   }
  },

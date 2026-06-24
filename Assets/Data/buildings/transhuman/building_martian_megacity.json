@@ -22,15 +22,11 @@
    "all": [
     "HAS_POWER",
     "BUILDING_MARTIAN_METROPOLIS",
-    "TECH_ANIMAMATERIALS"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_MARTIAN",
-      "scope": "plot"
-     }
-    ]
+    "TECH_ANIMAMATERIALS",
+    {
+     "type": "MAPCATEGORY_MARTIAN",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

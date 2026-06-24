@@ -8,16 +8,12 @@
     {
      "type": "TECH_STAR_LIFTING",
      "scope": "team"
+    },
+    {
+     "terrain": [
+      "TERRAIN_SUN"
+     ]
     }
-   ],
-   "any": [
-    [
-     {
-      "terrain": [
-       "TERRAIN_SUN"
-      ]
-     }
-    ]
    ]
   }
  },

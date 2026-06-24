@@ -7,15 +7,11 @@
    "all": [
     "HAS_POWER",
     "BUILDING_CYBERNETIC_ORGAN_LAB",
-    "TECH_COMPREHENSIVE_CYBERNETICS"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_COMPREHENSIVE_CYBERNETICS",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   }
  },

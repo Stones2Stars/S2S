@@ -7,15 +7,11 @@
    "all": [
     "BUILDING_DEEP_SPACE_SHIELDING",
     "BUILDING_DEEP_SPACE_BISHOP_RING",
-    "TECH_COLONY_ARCOLOGY"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_SOLAR_SYSTEM",
-      "scope": "plot"
-     }
-    ]
+    "TECH_COLONY_ARCOLOGY",
+    {
+     "type": "MAPCATEGORY_SOLAR_SYSTEM",
+     "scope": "plot"
+    }
    ]
   }
  },

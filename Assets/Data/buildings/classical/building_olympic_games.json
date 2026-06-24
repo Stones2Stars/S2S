@@ -17,20 +17,18 @@
     },
     "TECH_CONSTRUCTION",
     "TECH_ATHLETICS",
-    "TECH_COMBAT_SPORTS"
-   ],
-   "any": [
-    [
-     "BUILDING_COLOSSEUM",
-     "BUILDING_MINOR_LEAGUE_STADIUM",
-     "BUILDING_MAJOR_LEAGUE_STADIUM"
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_COMBAT_SPORTS",
+    {
+     "any": [
+      "BUILDING_COLOSSEUM",
+      "BUILDING_MINOR_LEAGUE_STADIUM",
+      "BUILDING_MAJOR_LEAGUE_STADIUM"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   }
  },

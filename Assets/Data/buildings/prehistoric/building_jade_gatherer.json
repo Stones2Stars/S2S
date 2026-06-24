@@ -18,15 +18,11 @@
  "requires": {
   "build": {
    "all": [
-    "TECH_SOFT_HAMMER_PERCUSSION"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_SOFT_HAMMER_PERCUSSION",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

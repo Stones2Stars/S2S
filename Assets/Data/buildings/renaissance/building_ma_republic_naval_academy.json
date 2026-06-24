@@ -16,15 +16,11 @@
      "min": 12
     },
     "BUILDING_MILITARY_ACADEMY",
-    "TECH_GRAND_WAR"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_GRAND_WAR",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   }
  },

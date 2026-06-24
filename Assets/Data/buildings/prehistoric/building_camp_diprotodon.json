@@ -15,18 +15,12 @@
  "requires": {
   "build": {
    "all": [
-    "TECH_TRACKING"
-   ],
-   "any": [
-    [
-     "BUILDING_HUNTERS_CAMP"
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_TRACKING",
+    "BUILDING_HUNTERS_CAMP",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {
@@ -35,16 +29,12 @@
      "type": "BONUS_MAMMOTH",
      "scope": "city",
      "connection": "vicinity"
+    },
+    {
+     "type": "BONUS_KANGAROO",
+     "scope": "city",
+     "connection": "vicinity"
     }
-   ],
-   "any": [
-    [
-     {
-      "type": "BONUS_KANGAROO",
-      "scope": "city",
-      "connection": "vicinity"
-     }
-    ]
    ]
   }
  },

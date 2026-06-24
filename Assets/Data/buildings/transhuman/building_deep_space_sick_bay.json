@@ -6,15 +6,11 @@
   "build": {
    "all": [
     "BUILDING_SPACE_COLONY_DEEP_SPACE",
-    "TECH_MOLECULAR_SCANNING"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_SOLAR_SYSTEM",
-      "scope": "plot"
-     }
-    ]
+    "TECH_MOLECULAR_SCANNING",
+    {
+     "type": "MAPCATEGORY_SOLAR_SYSTEM",
+     "scope": "plot"
+    }
    ]
   }
  },

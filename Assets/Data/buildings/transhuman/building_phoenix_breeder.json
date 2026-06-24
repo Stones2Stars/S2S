@@ -11,15 +11,11 @@
      "min": 12
     },
     "BUILDING_C_L_MIDDLE_EASTERN",
-    "TECH_MYTHOLOGICAL_BESTIARY"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_MYTHOLOGICAL_BESTIARY",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ],
    "noneOf": [
     "BUILDING_HIERACOSPHINX_BREEDER",

@@ -19,21 +19,15 @@
   "build": {
    "all": [
     "BUILDING_MINING_CAMP",
-    "TECH_SALT_PROCESSING"
-   ],
-   "any": [
-    [
-     {
-      "type": "TERRAIN_SALT_FLATS",
-      "scope": "plot"
-     }
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_SALT_PROCESSING",
+    {
+     "type": "TERRAIN_SALT_FLATS",
+     "scope": "plot"
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

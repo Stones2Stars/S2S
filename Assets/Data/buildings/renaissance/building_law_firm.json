@@ -14,18 +14,12 @@
   "build": {
    "all": [
     "BUILDING_COURTHOUSE",
-    "TECH_CORPORATION"
-   ],
-   "any": [
-    [
-     "BUILDING_LAW_SCHOOL"
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_CORPORATION",
+    "BUILDING_LAW_SCHOOL",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

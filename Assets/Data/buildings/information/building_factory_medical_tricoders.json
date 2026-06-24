@@ -17,15 +17,11 @@
     "BUILDING_FACTORY",
     "BUILDING_3D_BODY_ATLAS",
     "BUILDING_TISSUE_ENGINEERING_LAB",
-    "TECH_PERSONALIZED_HEALTH"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_PERSONALIZED_HEALTH",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

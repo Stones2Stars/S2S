@@ -17,19 +17,17 @@
      "min": 3
     },
     "TECH_RUDDER",
-    "TECH_GUILDS"
-   ],
-   "any": [
-    [
-     "BUILDING_FISHMONGER",
-     "BUILDING_HYPERMARKET"
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_GUILDS",
+    {
+     "any": [
+      "BUILDING_FISHMONGER",
+      "BUILDING_HYPERMARKET"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   }
  },

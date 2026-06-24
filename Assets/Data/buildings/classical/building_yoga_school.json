@@ -13,22 +13,20 @@
  "requires": {
   "build": {
    "all": [
-    "TECH_MEDITATION"
-   ],
-   "any": [
-    [
-     "BUILDING_BUDDHIST_TEMPLE",
-     "BUILDING_HINDU_TEMPLE",
-     "BUILDING_SIKH_GURDWARA",
-     "BUILDING_JAIN_TEMPLE",
-     "BUILDING_GYM"
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_MEDITATION",
+    {
+     "any": [
+      "BUILDING_BUDDHIST_TEMPLE",
+      "BUILDING_HINDU_TEMPLE",
+      "BUILDING_SIKH_GURDWARA",
+      "BUILDING_JAIN_TEMPLE",
+      "BUILDING_GYM"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

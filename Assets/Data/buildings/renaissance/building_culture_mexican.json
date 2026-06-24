@@ -8,15 +8,11 @@
     "BUILDING_C_AC_NORTH_AMERICAN",
     "BUILDING_C_L_NORTH_AMERICAN",
     "BUILDING_C_AC_EUROPEAN",
-    "TECH_CAVALRY_TACTICS"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_CAVALRY_TACTICS",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

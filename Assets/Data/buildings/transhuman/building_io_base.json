@@ -11,21 +11,15 @@
   "build": {
    "all": [
     "BUILDING_DEEP_SPACE_ORBITAL_BASE",
-    "TECH_SHIELDING"
-   ],
-   "any": [
-    [
-     {
-      "type": "TERRAIN_IO",
-      "scope": "plot"
-     }
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_SOLAR_SYSTEM",
-      "scope": "plot"
-     }
-    ]
+    "TECH_SHIELDING",
+    {
+     "type": "TERRAIN_IO",
+     "scope": "plot"
+    },
+    {
+     "type": "MAPCATEGORY_SOLAR_SYSTEM",
+     "scope": "plot"
+    }
    ]
   }
  },

@@ -11,13 +11,13 @@
      "scope": "city",
      "connection": "trade|vicinity"
     },
-    "TECH_HORIZON_BREAKING"
-   ],
-   "any": [
-    [
-     "BUILDING_INTERGALACTIC_MORRIS_THORNE_WORMHOLE",
-     "BUILDING_DISTANT_HORIZON_PORT"
-    ]
+    "TECH_HORIZON_BREAKING",
+    {
+     "any": [
+      "BUILDING_INTERGALACTIC_MORRIS_THORNE_WORMHOLE",
+      "BUILDING_DISTANT_HORIZON_PORT"
+     ]
+    }
    ]
   }
  },

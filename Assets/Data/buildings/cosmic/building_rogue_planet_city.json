@@ -6,25 +6,23 @@
   "build": {
    "all": [
     "BUILDING_ROGUE_PLANET_OUTPOST",
-    "TECH_DIRECTED_PANSPERMIA"
-   ],
-   "any": [
-    [
-     {
-      "type": "FEATURE_ROGUE_PLANET",
-      "scope": "plot"
-     }
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_INTERSTELLAR",
-      "scope": "plot"
-     },
-     {
-      "type": "MAPCATEGORY_PLASMA",
-      "scope": "plot"
-     }
-    ]
+    "TECH_DIRECTED_PANSPERMIA",
+    {
+     "type": "FEATURE_ROGUE_PLANET",
+     "scope": "plot"
+    },
+    {
+     "any": [
+      {
+       "type": "MAPCATEGORY_INTERSTELLAR",
+       "scope": "plot"
+      },
+      {
+       "type": "MAPCATEGORY_PLASMA",
+       "scope": "plot"
+      }
+     ]
+    }
    ]
   }
  },

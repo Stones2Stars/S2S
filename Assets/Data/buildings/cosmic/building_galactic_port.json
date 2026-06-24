@@ -16,15 +16,11 @@
   "build": {
    "all": [
     "BUILDING_STARPORT",
-    "TECH_SPACE_CREASING"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_SPACE_CREASING",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   }
  },

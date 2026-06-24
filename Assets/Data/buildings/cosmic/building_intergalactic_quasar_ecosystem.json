@@ -6,21 +6,15 @@
   "build": {
    "all": [
     "BUILDING_INTERGALACTIC_TERRAFORMING_BASE",
-    "TECH_GRAND_UNIFICATION_BIOLOGY"
-   ],
-   "any": [
-    [
-     {
-      "type": "FEATURE_QUASAR",
-      "scope": "plot"
-     }
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_UNIVERSAL",
-      "scope": "plot"
-     }
-    ]
+    "TECH_GRAND_UNIFICATION_BIOLOGY",
+    {
+     "type": "FEATURE_QUASAR",
+     "scope": "plot"
+    },
+    {
+     "type": "MAPCATEGORY_UNIVERSAL",
+     "scope": "plot"
+    }
    ]
   }
  },

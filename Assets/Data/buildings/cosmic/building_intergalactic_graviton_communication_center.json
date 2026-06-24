@@ -7,15 +7,11 @@
    "all": [
     "BUILDING_INTERGALACTIC_DYSON_SPHERES",
     "BUILDING_INTERGALACTIC_RESEARCH_BASE",
-    "TECH_LUMINAL_BEINGS"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_UNIVERSAL",
-      "scope": "plot"
-     }
-    ]
+    "TECH_LUMINAL_BEINGS",
+    {
+     "type": "MAPCATEGORY_UNIVERSAL",
+     "scope": "plot"
+    }
    ]
   }
  },

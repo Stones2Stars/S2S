@@ -6,22 +6,16 @@
   "build": {
    "all": [
     "BUILDING_MEMORY_TRANSFER_STATION",
-    "TECH_KNOWLEDGE_MERCANTILISM"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_KNOWLEDGE_MERCANTILISM",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {
-   "any": [
-    [
-     "CIVIC_INSTANT"
-    ]
+   "all": [
+    "CIVIC_INSTANT"
    ]
   }
  },

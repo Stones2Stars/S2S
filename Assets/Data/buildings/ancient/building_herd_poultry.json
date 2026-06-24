@@ -21,21 +21,19 @@
  "requires": {
   "build": {
    "all": [
-    "TECH_POULTRY_DOMESTICATION"
-   ],
-   "any": [
-    [
-     "BUILDING_FOLKLORE_PEACOCK",
-     "BUILDING_FOLKLORE_PHEASANT",
-     "BUILDING_FOLKLORE_WILD_TURKEY",
-     "BUILDING_FOLKLORE_DUCK"
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_POULTRY_DOMESTICATION",
+    {
+     "any": [
+      "BUILDING_FOLKLORE_PEACOCK",
+      "BUILDING_FOLKLORE_PHEASANT",
+      "BUILDING_FOLKLORE_WILD_TURKEY",
+      "BUILDING_FOLKLORE_DUCK"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

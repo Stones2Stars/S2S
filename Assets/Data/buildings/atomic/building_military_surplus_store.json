@@ -14,15 +14,11 @@
   "build": {
    "all": [
     "BUILDING_SHOPPING_DISTRICT",
-    "TECH_MODERN_WARFARE"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_MODERN_WARFARE",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

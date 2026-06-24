@@ -12,15 +12,11 @@
    "all": [
     "BUILDING_EFFECT_NEUROIMPLANT_EXPORTER",
     "BUILDING_SPACE_COLONY_DEEP_SPACE",
-    "TECH_NANOMORPHICS"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_SOLAR_SYSTEM",
-      "scope": "plot"
-     }
-    ]
+    "TECH_NANOMORPHICS",
+    {
+     "type": "MAPCATEGORY_SOLAR_SYSTEM",
+     "scope": "plot"
+    }
    ]
   }
  },

@@ -15,15 +15,11 @@
     "HAS_POWER",
     "BUILDING_INTUITIVE_ALGORITHMS",
     "TECH_UBIQUITOUS_COMPUTING",
-    "TECH_THOUGHT_SCANNING"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_THOUGHT_SCANNING",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

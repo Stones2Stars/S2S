@@ -12,15 +12,11 @@
   "build": {
    "all": [
     "BUILDING_INTERGALACTIC_FUSION_PLANTS",
-    "TECH_GALACTIC_ECOLOGY"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_UNIVERSAL",
-      "scope": "plot"
-     }
-    ]
+    "TECH_GALACTIC_ECOLOGY",
+    {
+     "type": "MAPCATEGORY_UNIVERSAL",
+     "scope": "plot"
+    }
    ]
   }
  },

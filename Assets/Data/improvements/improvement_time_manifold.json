@@ -8,17 +8,13 @@
     {
      "type": "TECH_MULTIDIMENSIONAL_TIME",
      "scope": "team"
+    },
+    {
+     "terrain": [
+      "TERRAIN_DISTANT_PAST",
+      "TERRAIN_DISTANT_FUTURE"
+     ]
     }
-   ],
-   "any": [
-    [
-     {
-      "terrain": [
-       "TERRAIN_DISTANT_PAST",
-       "TERRAIN_DISTANT_FUTURE"
-      ]
-     }
-    ]
    ]
   }
  },

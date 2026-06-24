@@ -19,19 +19,17 @@
   "build": {
    "all": [
     "BUILDING_FISH_TRAPS",
-    "TECH_TRAP_FISHING"
-   ],
-   "any": [
-    [
-     "HAS_COAST",
-     "HAS_RIVER"
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_TRAP_FISHING",
+    {
+     "any": [
+      "HAS_COAST",
+      "HAS_RIVER"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {
@@ -40,16 +38,12 @@
      "type": "BONUS_LOBSTER",
      "scope": "city",
      "connection": "vicinity"
+    },
+    {
+     "type": "BONUS_SHRIMP",
+     "scope": "city",
+     "connection": "vicinity"
     }
-   ],
-   "any": [
-    [
-     {
-      "type": "BONUS_SHRIMP",
-      "scope": "city",
-      "connection": "vicinity"
-     }
-    ]
    ],
    "dormant": [
     "BUILDING_AQUAFARM"

@@ -5,15 +5,11 @@
  "requires": {
   "build": {
    "all": [
-    "TECH_UTOPIA_DESTINY"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_UTOPIA_DESTINY",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {
@@ -22,16 +18,12 @@
      "type": "BONUS_HUMAN_MOD_DESIGNER_BABIES",
      "scope": "city",
      "connection": "trade|vicinity"
+    },
+    {
+     "type": "BONUS_HUMAN_MOD_DIGITAL_IDENTITY",
+     "scope": "city",
+     "connection": "trade|vicinity"
     }
-   ],
-   "any": [
-    [
-     {
-      "type": "BONUS_HUMAN_MOD_DIGITAL_IDENTITY",
-      "scope": "city",
-      "connection": "trade|vicinity"
-     }
-    ]
    ]
   }
  },

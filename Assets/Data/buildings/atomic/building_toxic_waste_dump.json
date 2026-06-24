@@ -10,15 +10,11 @@
      "scope": "city",
      "min": 3
     },
-    "TECH_NUCLEAR_POWER"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_NUCLEAR_POWER",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   }
  },

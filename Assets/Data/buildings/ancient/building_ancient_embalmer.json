@@ -13,21 +13,19 @@
  "requires": {
   "build": {
    "all": [
-    "TECH_MUMMIFICATION"
-   ],
-   "any": [
-    [
-     "BUILDING_BURIAL_TRADITION_CAVE",
-     "BUILDING_BURIAL_TRADITION_EARTH",
-     "BUILDING_BURIAL_TRADITION_SKY",
-     "BUILDING_BURIAL_TRADITION_SEA"
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_MUMMIFICATION",
+    {
+     "any": [
+      "BUILDING_BURIAL_TRADITION_CAVE",
+      "BUILDING_BURIAL_TRADITION_EARTH",
+      "BUILDING_BURIAL_TRADITION_SKY",
+      "BUILDING_BURIAL_TRADITION_SEA"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {
@@ -36,36 +34,36 @@
      "type": "BONUS_CLOTH",
      "scope": "city",
      "connection": "trade|vicinity"
+    },
+    {
+     "any": [
+      {
+       "type": "BONUS_TANNIN",
+       "scope": "city",
+       "connection": "trade|vicinity"
+      },
+      {
+       "type": "BONUS_SALT",
+       "scope": "city",
+       "connection": "trade|vicinity"
+      },
+      {
+       "type": "BONUS_OLIVE_OIL",
+       "scope": "city",
+       "connection": "trade|vicinity"
+      },
+      {
+       "type": "BONUS_PERFUME",
+       "scope": "city",
+       "connection": "trade|vicinity"
+      },
+      {
+       "type": "BONUS_INCENSE",
+       "scope": "city",
+       "connection": "trade|vicinity"
+      }
+     ]
     }
-   ],
-   "any": [
-    [
-     {
-      "type": "BONUS_TANNIN",
-      "scope": "city",
-      "connection": "trade|vicinity"
-     },
-     {
-      "type": "BONUS_SALT",
-      "scope": "city",
-      "connection": "trade|vicinity"
-     },
-     {
-      "type": "BONUS_OLIVE_OIL",
-      "scope": "city",
-      "connection": "trade|vicinity"
-     },
-     {
-      "type": "BONUS_PERFUME",
-      "scope": "city",
-      "connection": "trade|vicinity"
-     },
-     {
-      "type": "BONUS_INCENSE",
-      "scope": "city",
-      "connection": "trade|vicinity"
-     }
-    ]
    ],
    "dormant": [
     "BUILDING_FUNERARY_SERVICES",

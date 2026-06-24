@@ -6,24 +6,22 @@
   "build": {
    "all": [
     "BUILDING_FOLKLORE_REQUIREMENT",
-    "TECH_TAXONOMY"
-   ],
-   "any": [
-    [
-     "BUILDING_FOLKLORE_BONGO",
-     "BUILDING_FOLKLORE_THOMSONS_GAZELLE",
-     "BUILDING_FOLKLORE_GEMSBOK",
-     "BUILDING_FOLKLORE_GERENUK",
-     "BUILDING_FOLKLORE_IMPALA",
-     "BUILDING_FOLKLORE_SAIGA_ANTELOPE",
-     "BUILDING_FOLKLORE_WILDEBEEST"
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_TAXONOMY",
+    {
+     "any": [
+      "BUILDING_FOLKLORE_BONGO",
+      "BUILDING_FOLKLORE_THOMSONS_GAZELLE",
+      "BUILDING_FOLKLORE_GEMSBOK",
+      "BUILDING_FOLKLORE_GERENUK",
+      "BUILDING_FOLKLORE_IMPALA",
+      "BUILDING_FOLKLORE_SAIGA_ANTELOPE",
+      "BUILDING_FOLKLORE_WILDEBEEST"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   }
  },

@@ -10,25 +10,21 @@
  "requires": {
   "build": {
    "all": [
-    "TECH_LEADERSHIP"
-   ],
-   "any": [
-    [
-     "BUILDING_GARRISON",
-     "BUILDING_MILITARY_BASE"
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ],
-    [
-     {
-      "type": "CIVILIZATION_NPC_NEANDERTHAL",
-      "scope": "empire"
-     }
-    ]
+    "TECH_LEADERSHIP",
+    {
+     "any": [
+      "BUILDING_GARRISON",
+      "BUILDING_MILITARY_BASE"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    },
+    {
+     "type": "CIVILIZATION_NPC_NEANDERTHAL",
+     "scope": "empire"
+    }
    ]
   },
   "operate": {

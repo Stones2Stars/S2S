@@ -16,15 +16,11 @@
     "HAS_POWER",
     "BUILDING_ART_GALLERY",
     "BUILDING_MUSEUM",
-    "TECH_DIGITIZATION"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_DIGITIZATION",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

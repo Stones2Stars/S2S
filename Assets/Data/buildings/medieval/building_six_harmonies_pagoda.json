@@ -15,31 +15,27 @@
      "scope": "city",
      "min": 3
     },
-    "TECH_ENGINEERING"
-   ],
-   "any": [
-    [
-     "BUILDING_CONFUCIAN_TEMPLE",
-     "BUILDING_BUDDHIST_TEMPLE",
-     "BUILDING_TAOIST_TEMPLE"
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_ENGINEERING",
+    {
+     "any": [
+      "BUILDING_CONFUCIAN_TEMPLE",
+      "BUILDING_BUDDHIST_TEMPLE",
+      "BUILDING_TAOIST_TEMPLE"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {
-   "any": [
-    [
-     {
-      "type": "BONUS_STONE",
-      "scope": "city",
-      "connection": "trade|vicinity"
-     }
-    ]
+   "all": [
+    {
+     "type": "BONUS_STONE",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    }
    ]
   }
  },

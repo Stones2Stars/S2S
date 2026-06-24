@@ -10,21 +10,19 @@
      "scope": "city",
      "connection": "trade|vicinity"
     },
-    "TECH_MILITARY_SCIENCE"
-   ],
-   "any": [
-    [
-     {
-      "type": "BONUS_AMMUNITION",
-      "scope": "city",
-      "connection": "trade|vicinity"
-     }
-    ],
-    [
-     "BUILDING_FIRING_RANGE",
-     "BUILDING_AUTOMATED_FIRING_RANGE",
-     "BUILDING_ORBITAL_TARGETS"
-    ]
+    "TECH_MILITARY_SCIENCE",
+    {
+     "type": "BONUS_AMMUNITION",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    {
+     "any": [
+      "BUILDING_FIRING_RANGE",
+      "BUILDING_AUTOMATED_FIRING_RANGE",
+      "BUILDING_ORBITAL_TARGETS"
+     ]
+    }
    ]
   }
  },

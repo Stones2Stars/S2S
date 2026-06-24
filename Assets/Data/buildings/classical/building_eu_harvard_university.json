@@ -23,15 +23,11 @@
      "min": 4
     },
     "TECH_CODE_OF_LAWS",
-    "TECH_EDUCATION"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_EDUCATION",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   }
  },

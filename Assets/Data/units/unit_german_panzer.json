@@ -10,28 +10,26 @@
      "scope": "city",
      "connection": "trade|vicinity"
     },
-    "TECH_MECHANIZED_WARFARE"
-   ],
-   "any": [
-    [
-     {
-      "type": "BONUS_TANKS",
-      "scope": "city",
-      "connection": "trade|vicinity"
-     }
-    ],
-    [
-     {
-      "type": "BONUS_PETROLEUM_PRODUCTS",
-      "scope": "city",
-      "connection": "trade|vicinity"
-     },
-     {
-      "type": "BONUS_BIOFUEL",
-      "scope": "city",
-      "connection": "trade|vicinity"
-     }
-    ]
+    "TECH_MECHANIZED_WARFARE",
+    {
+     "any": [
+      {
+       "type": "BONUS_PETROLEUM_PRODUCTS",
+       "scope": "city",
+       "connection": "trade|vicinity"
+      },
+      {
+       "type": "BONUS_BIOFUEL",
+       "scope": "city",
+       "connection": "trade|vicinity"
+      }
+     ]
+    },
+    {
+     "type": "BONUS_TANKS",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    }
    ]
   }
  },

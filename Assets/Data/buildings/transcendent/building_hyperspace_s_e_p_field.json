@@ -5,15 +5,11 @@
  "requires": {
   "build": {
    "all": [
-    "TECH_REALITY_REPROGRAMMING"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_HYPERSPACE",
-      "scope": "plot"
-     }
-    ]
+    "TECH_REALITY_REPROGRAMMING",
+    {
+     "type": "MAPCATEGORY_HYPERSPACE",
+     "scope": "plot"
+    }
    ]
   }
  },

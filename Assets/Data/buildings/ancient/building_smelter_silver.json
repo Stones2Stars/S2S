@@ -18,19 +18,17 @@
  "requires": {
   "build": {
    "all": [
-    "TECH_METAL_CASTING"
-   ],
-   "any": [
-    [
-     "BUILDING_CORE_MINE",
-     "BUILDING_MINE_SILVER"
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_METAL_CASTING",
+    {
+     "any": [
+      "BUILDING_CORE_MINE",
+      "BUILDING_MINE_SILVER"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

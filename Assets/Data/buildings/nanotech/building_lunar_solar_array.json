@@ -8,15 +8,11 @@
     "HAS_POWER",
     "BUILDING_LUNAR_ASSEMBLY_PLANT",
     "BUILDING_LUNAR_SILICON_PROCESSING_FACILITY",
-    "TECH_LUNAR_MANUFACTURING"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_LUNAR",
-      "scope": "plot"
-     }
-    ]
+    "TECH_LUNAR_MANUFACTURING",
+    {
+     "type": "MAPCATEGORY_LUNAR",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {
@@ -25,16 +21,12 @@
      "type": "BONUS_PLASTIC",
      "scope": "city",
      "connection": "trade|vicinity"
+    },
+    {
+     "type": "BONUS_MICROCHIPS",
+     "scope": "city",
+     "connection": "trade|vicinity"
     }
-   ],
-   "any": [
-    [
-     {
-      "type": "BONUS_MICROCHIPS",
-      "scope": "city",
-      "connection": "trade|vicinity"
-     }
-    ]
    ]
   }
  },

@@ -10,20 +10,18 @@
      "scope": "city",
      "min": 3
     },
-    "TECH_DIVINE_RIGHT"
-   ],
-   "any": [
-    [
-     "BUILDING_FUNERARY_SERVICES",
-     "BUILDING_MAUSOLEUM",
-     "BUILDING_HIGH_TECH_CULTURAL_ENRICHMENT"
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_DIVINE_RIGHT",
+    {
+     "any": [
+      "BUILDING_FUNERARY_SERVICES",
+      "BUILDING_MAUSOLEUM",
+      "BUILDING_HIGH_TECH_CULTURAL_ENRICHMENT"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

@@ -12,15 +12,11 @@
  "requires": {
   "build": {
    "all": [
-    "TECH_PRECISION_SOCIAL_ENGINEERING"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_GALACTIC",
-      "scope": "plot"
-     }
-    ]
+    "TECH_PRECISION_SOCIAL_ENGINEERING",
+    {
+     "type": "MAPCATEGORY_GALACTIC",
+     "scope": "plot"
+    }
    ]
   }
  },

@@ -9,15 +9,11 @@
     "BUILDING_MARTIAN_WATER_EXTRACTION",
     "BUILDING_MARTIAN_METROPOLIS",
     "TECH_QUADRUPLE_HELIX",
-    "TECH_HYPERMAGNETICS"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_MARTIAN",
-      "scope": "plot"
-     }
-    ]
+    "TECH_HYPERMAGNETICS",
+    {
+     "type": "MAPCATEGORY_MARTIAN",
+     "scope": "plot"
+    }
    ]
   }
  },

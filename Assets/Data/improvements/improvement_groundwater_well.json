@@ -8,21 +8,17 @@
     {
      "type": "TECH_MODERN_SEISMOLOGY",
      "scope": "team"
+    },
+    {
+     "terrain": [
+      "TERRAIN_BARREN",
+      "TERRAIN_DESERT",
+      "TERRAIN_DUNES",
+      "TERRAIN_ROCKY",
+      "TERRAIN_BADLAND",
+      "TERRAIN_JAGGED"
+     ]
     }
-   ],
-   "any": [
-    [
-     {
-      "terrain": [
-       "TERRAIN_BARREN",
-       "TERRAIN_DESERT",
-       "TERRAIN_DUNES",
-       "TERRAIN_ROCKY",
-       "TERRAIN_BADLAND",
-       "TERRAIN_JAGGED"
-      ]
-     }
-    ]
    ]
   }
  },

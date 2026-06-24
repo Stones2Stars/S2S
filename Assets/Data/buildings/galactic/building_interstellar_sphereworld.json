@@ -15,19 +15,19 @@
     "BUILDING_INTERSTELLAR_DYSON_SPHERE",
     "BUILDING_INTERSTELLAR_ECUMENOPOLIS",
     "TECH_ASTROENGINEERING",
-    "TECH_ASTROIMPERIALISM"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_PLASMA",
-      "scope": "plot"
-     },
-     {
-      "type": "MAPCATEGORY_MILKY_WAY",
-      "scope": "plot"
-     }
-    ]
+    "TECH_ASTROIMPERIALISM",
+    {
+     "any": [
+      {
+       "type": "MAPCATEGORY_PLASMA",
+       "scope": "plot"
+      },
+      {
+       "type": "MAPCATEGORY_MILKY_WAY",
+       "scope": "plot"
+      }
+     ]
+    }
    ]
   }
  },

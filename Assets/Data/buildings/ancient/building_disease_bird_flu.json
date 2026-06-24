@@ -10,33 +10,29 @@
  "requires": {
   "build": {
    "all": [
-    "TECH_POULTRY_DOMESTICATION"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_POULTRY_DOMESTICATION",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {
-   "any": [
-    [
-     {
-      "type": "BONUS_POULTRY",
-      "scope": "city",
-      "connection": "trade|vicinity"
-     },
-     {
-      "type": "BONUS_PARROTS",
-      "scope": "city",
-      "connection": "trade|vicinity"
-     }
-    ]
-   ],
    "all": [
+    {
+     "any": [
+      {
+       "type": "BONUS_POULTRY",
+       "scope": "city",
+       "connection": "trade|vicinity"
+      },
+      {
+       "type": "BONUS_PARROTS",
+       "scope": "city",
+       "connection": "trade|vicinity"
+      }
+     ]
+    },
     {
      "type": "PROPERTY_DISEASE",
      "scope": "city",

@@ -8,16 +8,12 @@
     {
      "type": "TECH_GATHERING",
      "scope": "team"
+    },
+    {
+     "bonus": [
+      "BONUS_MUSHROOMS"
+     ]
     }
-   ],
-   "any": [
-    [
-     {
-      "bonus": [
-       "BONUS_MUSHROOMS"
-      ]
-     }
-    ]
    ]
   }
  },

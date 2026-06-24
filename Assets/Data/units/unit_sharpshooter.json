@@ -11,15 +11,15 @@
      "connection": "trade|vicinity"
     },
     "TECH_MATCHLOCK",
-    "TECH_LEADERSHIP"
-   ],
-   "any": [
-    [
-     "BUILDING_SHOOTING_CLUB",
-     "BUILDING_FIRING_RANGE",
-     "BUILDING_AUTOMATED_FIRING_RANGE",
-     "BUILDING_ORBITAL_TARGETS"
-    ]
+    "TECH_LEADERSHIP",
+    {
+     "any": [
+      "BUILDING_SHOOTING_CLUB",
+      "BUILDING_FIRING_RANGE",
+      "BUILDING_AUTOMATED_FIRING_RANGE",
+      "BUILDING_ORBITAL_TARGETS"
+     ]
+    }
    ]
   }
  },

@@ -21,15 +21,11 @@
     "BUILDING_SEWER_SYSTEM",
     "BUILDING_SKYSCRAPER",
     "TECH_CIVIL_ENGINEERING",
-    "TECH_TELEPHONE"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_TELEPHONE",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

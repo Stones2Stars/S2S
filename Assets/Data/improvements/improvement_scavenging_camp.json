@@ -8,34 +8,30 @@
     {
      "type": "TECH_SCAVENGING",
      "scope": "team"
+    },
+    {
+     "bonus": [
+      "BONUS_BISON",
+      "BONUS_DEER",
+      "BONUS_BEAVERS",
+      "BONUS_GUINEA_PIGS",
+      "BONUS_ELEPHANTS",
+      "BONUS_KANGAROO",
+      "BONUS_MAMMOTH",
+      "BONUS_RABBIT",
+      "BONUS_SEA_LION_AND_SEAL",
+      "BONUS_WALRUS",
+      "BONUS_POULTRY",
+      "BONUS_PARROTS",
+      "BONUS_COW",
+      "BONUS_PIG",
+      "BONUS_SHEEP",
+      "BONUS_HORSE",
+      "BONUS_CAMEL",
+      "BONUS_DONKEY",
+      "BONUS_LLAMA"
+     ]
     }
-   ],
-   "any": [
-    [
-     {
-      "bonus": [
-       "BONUS_BISON",
-       "BONUS_DEER",
-       "BONUS_BEAVERS",
-       "BONUS_GUINEA_PIGS",
-       "BONUS_ELEPHANTS",
-       "BONUS_KANGAROO",
-       "BONUS_MAMMOTH",
-       "BONUS_RABBIT",
-       "BONUS_SEA_LION_AND_SEAL",
-       "BONUS_WALRUS",
-       "BONUS_POULTRY",
-       "BONUS_PARROTS",
-       "BONUS_COW",
-       "BONUS_PIG",
-       "BONUS_SHEEP",
-       "BONUS_HORSE",
-       "BONUS_CAMEL",
-       "BONUS_DONKEY",
-       "BONUS_LLAMA"
-      ]
-     }
-    ]
    ]
   }
  },

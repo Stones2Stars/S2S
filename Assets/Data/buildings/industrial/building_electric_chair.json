@@ -22,15 +22,11 @@
     "BUILDING_COURTHOUSE",
     "BUILDING_JAIL",
     "TECH_CRIMINOLOGY",
-    "TECH_ELECTRICITY"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_ELECTRICITY",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

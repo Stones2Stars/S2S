@@ -7,15 +7,11 @@
    "all": [
     "HAS_COAST",
     "BUILDING_HARBORMASTERS_OFFICE",
-    "TECH_MACHINERY"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_MACHINERY",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   }
  },

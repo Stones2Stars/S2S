@@ -6,21 +6,19 @@
   "build": {
    "all": [
     "BUILDING_C_L_SOUTH_AMERICAN",
-    "TECH_PERSONAL_ADORNMENTS"
-   ],
-   "any": [
-    [
-     "BUILDING_JADE_CARVER",
-     "BUILDING_JADE_IMPORTER",
-     "BUILDING_JADE_MERCHANT_LOCAL",
-     "BUILDING_MANUFACTURING_DISTRICT"
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_PERSONAL_ADORNMENTS",
+    {
+     "any": [
+      "BUILDING_JADE_CARVER",
+      "BUILDING_JADE_IMPORTER",
+      "BUILDING_JADE_MERCHANT_LOCAL",
+      "BUILDING_MANUFACTURING_DISTRICT"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

@@ -15,20 +15,18 @@
      "scope": "city",
      "min": 3
     },
-    "TECH_GUILDS"
-   ],
-   "any": [
-    [
-     "BUILDING_BUTCHERY",
-     "BUILDING_MEAT_PACKING_PLANT",
-     "BUILDING_MEAT_INDUSTRY_CONGLOMERATE"
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_GUILDS",
+    {
+     "any": [
+      "BUILDING_BUTCHERY",
+      "BUILDING_MEAT_PACKING_PLANT",
+      "BUILDING_MEAT_INDUSTRY_CONGLOMERATE"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   }
  },

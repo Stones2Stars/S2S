@@ -8,25 +8,25 @@
     {
      "type": "TECH_PARATERRAFORMING",
      "scope": "team"
+    },
+    {
+     "any": [
+      {
+       "terrain": [
+        "TERRAIN_ASTEROID_SURFACE",
+        "TERRAIN_KUIPER_BELT_OBJECT"
+       ]
+      },
+      {
+       "feature": [
+        "FEATURE_SEDNOID",
+        "FEATURE_PLANETARY_RING",
+        "FEATURE_OORT_CLOUD",
+        "FEATURE_ASTEROIDS"
+       ]
+      }
+     ]
     }
-   ],
-   "any": [
-    [
-     {
-      "terrain": [
-       "TERRAIN_ASTEROID_SURFACE",
-       "TERRAIN_KUIPER_BELT_OBJECT"
-      ]
-     },
-     {
-      "feature": [
-       "FEATURE_SEDNOID",
-       "FEATURE_PLANETARY_RING",
-       "FEATURE_OORT_CLOUD",
-       "FEATURE_ASTEROIDS"
-      ]
-     }
-    ]
    ]
   }
  },

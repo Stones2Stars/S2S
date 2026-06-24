@@ -5,21 +5,15 @@
  "requires": {
   "build": {
    "all": [
-    "TECH_SPECULATIVE_PHYSIOLOGY"
-   ],
-   "any": [
-    [
-     {
-      "type": "TERRAIN_JUPITER",
-      "scope": "plot"
-     }
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_SOLAR_SYSTEM",
-      "scope": "plot"
-     }
-    ]
+    "TECH_SPECULATIVE_PHYSIOLOGY",
+    {
+     "type": "TERRAIN_JUPITER",
+     "scope": "plot"
+    },
+    {
+     "type": "MAPCATEGORY_SOLAR_SYSTEM",
+     "scope": "plot"
+    }
    ]
   }
  },

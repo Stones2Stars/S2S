@@ -6,21 +6,15 @@
   "build": {
    "all": [
     "BUILDING_DEEP_SPACE_ORBITAL_BASE",
-    "TECH_KUIPER_BELT_EXPLORATION"
-   ],
-   "any": [
-    [
-     {
-      "type": "TERRAIN_GANYMEDE",
-      "scope": "plot"
-     }
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_SOLAR_SYSTEM",
-      "scope": "plot"
-     }
-    ]
+    "TECH_KUIPER_BELT_EXPLORATION",
+    {
+     "type": "TERRAIN_GANYMEDE",
+     "scope": "plot"
+    },
+    {
+     "type": "MAPCATEGORY_SOLAR_SYSTEM",
+     "scope": "plot"
+    }
    ]
   }
  },

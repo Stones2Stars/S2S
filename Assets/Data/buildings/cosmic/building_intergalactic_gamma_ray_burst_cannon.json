@@ -14,15 +14,11 @@
   "build": {
    "all": [
     "BUILDING_INTERGALACTIC_COMMAND_CENTER",
-    "TECH_EXTREME_ENERGY_WEAPONS"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_UNIVERSAL",
-      "scope": "plot"
-     }
-    ]
+    "TECH_EXTREME_ENERGY_WEAPONS",
+    {
+     "type": "MAPCATEGORY_UNIVERSAL",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

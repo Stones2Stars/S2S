@@ -13,19 +13,17 @@
    "all": [
     "HAS_POWER",
     "BUILDING_BIOLOGY_LAB",
-    "TECH_VIRTUAL_REALITY"
-   ],
-   "any": [
-    [
-     "BUILDING_DESIGN_STUDIO",
-     "BUILDING_ELECTRONICS_MANUFACTURING_DISTRICT"
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_VIRTUAL_REALITY",
+    {
+     "any": [
+      "BUILDING_DESIGN_STUDIO",
+      "BUILDING_ELECTRONICS_MANUFACTURING_DISTRICT"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

@@ -12,17 +12,17 @@
  },
  "requires": {
   "build": {
-   "any": [
-    [
-     "BUILDING_LIZARD_HUNTERS_CAMP",
-     "BUILDING_ENCLOSURE_REPTILE"
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+   "all": [
+    {
+     "any": [
+      "BUILDING_LIZARD_HUNTERS_CAMP",
+      "BUILDING_ENCLOSURE_REPTILE"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

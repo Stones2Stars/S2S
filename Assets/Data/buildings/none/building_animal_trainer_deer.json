@@ -21,26 +21,24 @@
       "min": 45
      }
     },
-    "TECH_MEGAFAUNA_DOMESTICATION"
-   ],
-   "any": [
-    [
-     "BUILDING_FARM_ANIMAL_REINDEER",
-     "BUILDING_FOLKLORE_DEER",
-     "BUILDING_CAMP_DEER",
-     "BUILDING_HERD_DEER",
-     "BUILDING_CAMP_MEGALOCEROS",
-     "BUILDING_BREEDING_PROGRAM_DEER",
-     "BUILDING_ANIMAL_PRESERVE",
-     "BUILDING_INDUSTRIAL_FARMS",
-     "BUILDING_MEAT_INDUSTRY_CONGLOMERATE"
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_MEGAFAUNA_DOMESTICATION",
+    {
+     "any": [
+      "BUILDING_FARM_ANIMAL_REINDEER",
+      "BUILDING_FOLKLORE_DEER",
+      "BUILDING_CAMP_DEER",
+      "BUILDING_HERD_DEER",
+      "BUILDING_CAMP_MEGALOCEROS",
+      "BUILDING_BREEDING_PROGRAM_DEER",
+      "BUILDING_ANIMAL_PRESERVE",
+      "BUILDING_INDUSTRIAL_FARMS",
+      "BUILDING_MEAT_INDUSTRY_CONGLOMERATE"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

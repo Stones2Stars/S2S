@@ -5,23 +5,21 @@
  "requires": {
   "build": {
    "all": [
-    "TECH_MICROMECHANICS"
-   ],
-   "any": [
-    [
-     "BUILDING_3D_PRINTING_MILL",
-     "BUILDING_NANOBOTIC_PRINTING_MILL",
-     "BUILDING_MOLECULAR_ASSEMBLER",
-     "BUILDING_ATOMIC_ASSEMBLER",
-     "BUILDING_QUANTUM_ASSEMBLER",
-     "BUILDING_MATERIALIZER"
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_MICROMECHANICS",
+    {
+     "any": [
+      "BUILDING_3D_PRINTING_MILL",
+      "BUILDING_NANOBOTIC_PRINTING_MILL",
+      "BUILDING_MOLECULAR_ASSEMBLER",
+      "BUILDING_ATOMIC_ASSEMBLER",
+      "BUILDING_QUANTUM_ASSEMBLER",
+      "BUILDING_MATERIALIZER"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   }
  },

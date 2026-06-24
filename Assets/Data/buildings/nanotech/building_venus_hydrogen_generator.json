@@ -12,15 +12,11 @@
    "all": [
     "HAS_POWER",
     "BUILDING_SPACE_COLONY_VENUS",
-    "TECH_PLANETARY_MANUFACTURING"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_VENUSIAN",
-      "scope": "plot"
-     }
-    ]
+    "TECH_PLANETARY_MANUFACTURING",
+    {
+     "type": "MAPCATEGORY_VENUSIAN",
+     "scope": "plot"
+    }
    ]
   }
  },

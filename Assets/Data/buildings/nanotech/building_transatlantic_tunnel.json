@@ -6,20 +6,18 @@
   "build": {
    "all": [
     "HAS_COAST",
-    "TECH_SUPERSTRONG_ALLOYS"
-   ],
-   "any": [
-    [
-     "BUILDING_MAGLEV_RAILS",
-     "BUILDING_VACTRAIN_TERMINAL",
-     "BUILDING_GRAVITY_TRAIN"
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_SUPERSTRONG_ALLOYS",
+    {
+     "any": [
+      "BUILDING_MAGLEV_RAILS",
+      "BUILDING_VACTRAIN_TERMINAL",
+      "BUILDING_GRAVITY_TRAIN"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   }
  },

@@ -11,16 +11,12 @@
      "connection": "trade|vicinity"
     },
     "TECH_FIRE_SUPPRESSION",
-    "TECH_GUERRILLA_WARFARE"
-   ],
-   "any": [
-    [
-     {
-      "type": "BONUS_PETROLEUM_PRODUCTS",
-      "scope": "city",
-      "connection": "trade|vicinity"
-     }
-    ]
+    "TECH_GUERRILLA_WARFARE",
+    {
+     "type": "BONUS_PETROLEUM_PRODUCTS",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    }
    ]
   }
  },

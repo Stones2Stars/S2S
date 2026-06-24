@@ -15,32 +15,34 @@
      "type": "BONUS_ROPE",
      "scope": "city",
      "connection": "trade|vicinity"
+    },
+    {
+     "any": [
+      {
+       "type": "BONUS_RESIN",
+       "scope": "city",
+       "connection": "trade|vicinity"
+      },
+      {
+       "type": "BONUS_LACQUERWARE",
+       "scope": "city",
+       "connection": "trade|vicinity"
+      },
+      {
+       "type": "BONUS_TAR",
+       "scope": "city",
+       "connection": "trade|vicinity"
+      }
+     ]
+    },
+    {
+     "any": [
+      "BUILDING_WHEELWRIGHT",
+      "BUILDING_CARRIAGE_BUILDER",
+      "BUILDING_FACTORY_AUTOMOBILES",
+      "BUILDING_SELF_ASSEMBLY_FACTORY"
+     ]
     }
-   ],
-   "any": [
-    [
-     {
-      "type": "BONUS_RESIN",
-      "scope": "city",
-      "connection": "trade|vicinity"
-     },
-     {
-      "type": "BONUS_LACQUERWARE",
-      "scope": "city",
-      "connection": "trade|vicinity"
-     },
-     {
-      "type": "BONUS_TAR",
-      "scope": "city",
-      "connection": "trade|vicinity"
-     }
-    ],
-    [
-     "BUILDING_WHEELWRIGHT",
-     "BUILDING_CARRIAGE_BUILDER",
-     "BUILDING_FACTORY_AUTOMOBILES",
-     "BUILDING_SELF_ASSEMBLY_FACTORY"
-    ]
    ]
   }
  },

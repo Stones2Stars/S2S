@@ -6,15 +6,11 @@
   "build": {
    "all": [
     "BUILDING_VENUS_SURFACE_CITY",
-    "TECH_EXTRATERRESTRIAL_AGRICULTURE"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_VENUSIAN",
-      "scope": "plot"
-     }
-    ]
+    "TECH_EXTRATERRESTRIAL_AGRICULTURE",
+    {
+     "type": "MAPCATEGORY_VENUSIAN",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

@@ -14,15 +14,11 @@
     "BUILDING_C_L_NEANDERTHAL",
     "BUILDING_ANIMAL_TRAINER_ELEPHANT",
     "TECH_ANIMAL_RIDING",
-    "TECH_ELEPHANT_DOMESTICATION"
-   ],
-   "any": [
-    [
-     {
-      "type": "CIVILIZATION_NPC_NEANDERTHAL",
-      "scope": "empire"
-     }
-    ]
+    "TECH_ELEPHANT_DOMESTICATION",
+    {
+     "type": "CIVILIZATION_NPC_NEANDERTHAL",
+     "scope": "empire"
+    }
    ]
   }
  },

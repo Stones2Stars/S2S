@@ -7,15 +7,11 @@
    "all": [
     "HAS_POWER",
     "BUILDING_LUNAR_SPACE_PORT",
-    "TECH_LUNAR_TOURISM"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_LUNAR",
-      "scope": "plot"
-     }
-    ]
+    "TECH_LUNAR_TOURISM",
+    {
+     "type": "MAPCATEGORY_LUNAR",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

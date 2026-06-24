@@ -11,15 +11,11 @@
   "build": {
    "all": [
     "BUILDING_SPACE_COLONY_DISTANT",
-    "TECH_ENDLESS_EXPLORATION"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_DISTANT",
-      "scope": "plot"
-     }
-    ]
+    "TECH_ENDLESS_EXPLORATION",
+    {
+     "type": "MAPCATEGORY_DISTANT",
+     "scope": "plot"
+    }
    ]
   }
  },

@@ -14,27 +14,23 @@
  "requires": {
   "build": {
    "all": [
-    "TECH_EQUINE_DOMESTICATION"
-   ],
-   "any": [
-    [
-     "BUILDING_HERD_BUFFALO",
-     "BUILDING_FARM_ANIMAL_OXEN",
-     "BUILDING_INDUSTRIAL_FARMS",
-     "BUILDING_MEAT_INDUSTRY_CONGLOMERATE"
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ],
-    [
-     {
-      "type": "CIVILIZATION_NPC_NEANDERTHAL",
-      "scope": "empire"
-     }
-    ]
+    "TECH_EQUINE_DOMESTICATION",
+    {
+     "any": [
+      "BUILDING_HERD_BUFFALO",
+      "BUILDING_FARM_ANIMAL_OXEN",
+      "BUILDING_INDUSTRIAL_FARMS",
+      "BUILDING_MEAT_INDUSTRY_CONGLOMERATE"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    },
+    {
+     "type": "CIVILIZATION_NPC_NEANDERTHAL",
+     "scope": "empire"
+    }
    ]
   }
  },

@@ -15,16 +15,12 @@
      "scope": "world",
      "min": 10
     },
-    "TECH_GUIDED_WEAPONS"
-   ],
-   "any": [
-    [
-     {
-      "type": "BONUS_URANIUM",
-      "scope": "city",
-      "connection": "trade|vicinity"
-     }
-    ]
+    "TECH_GUIDED_WEAPONS",
+    {
+     "type": "BONUS_URANIUM",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    }
    ]
   }
  },

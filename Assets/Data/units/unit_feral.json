@@ -10,16 +10,12 @@
      "scope": "city",
      "connection": "trade|vicinity"
     },
-    "TECH_HOMO_SUPERIOR"
-   ],
-   "any": [
-    [
-     {
-      "type": "BONUS_NEUROIMPLANTS",
-      "scope": "city",
-      "connection": "trade|vicinity"
-     }
-    ]
+    "TECH_HOMO_SUPERIOR",
+    {
+     "type": "BONUS_NEUROIMPLANTS",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    }
    ]
   }
  },

@@ -10,36 +10,30 @@
  "requires": {
   "build": {
    "all": [
-    "TECH_WARFARE"
-   ],
-   "any": [
-    [
-     "BUILDING_STICK_GATHERER",
-     "BUILDING_HUNTERS_CAMP"
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ],
-    [
-     {
-      "type": "CIVILIZATION_NPC_NEANDERTHAL",
-      "scope": "empire"
-     }
-    ]
+    "TECH_WARFARE",
+    {
+     "any": [
+      "BUILDING_STICK_GATHERER",
+      "BUILDING_HUNTERS_CAMP"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    },
+    {
+     "type": "CIVILIZATION_NPC_NEANDERTHAL",
+     "scope": "empire"
+    }
    ]
   },
   "operate": {
-   "any": [
-    [
-     {
-      "type": "BONUS_WOOD",
-      "scope": "city",
-      "connection": "trade|vicinity"
-     }
-    ]
+   "all": [
+    {
+     "type": "BONUS_WOOD",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    }
    ]
   }
  },

@@ -22,15 +22,11 @@
     "HAS_POWER",
     "BUILDING_MODERN_WAREHOUSE",
     "BUILDING_COMMERCIAL_SPACEPORT",
-    "TECH_ORBITAL_FLIGHT"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_ORBITAL_FLIGHT",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

@@ -10,15 +10,11 @@
      "scope": "city",
      "min": 7
     },
-    "TECH_PERSPECTIVE"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_PERSPECTIVE",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   }
  },

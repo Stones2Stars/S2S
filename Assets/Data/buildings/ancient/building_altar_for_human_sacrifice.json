@@ -11,15 +11,11 @@
   "build": {
    "all": [
     "BUILDING_WORLDVIEW_HUMAN_SACRIFICE_ACTIVE",
-    "TECH_SACRIFICE_CULT"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_SACRIFICE_CULT",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   }
  },

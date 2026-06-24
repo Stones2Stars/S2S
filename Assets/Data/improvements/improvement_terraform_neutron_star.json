@@ -8,21 +8,21 @@
     {
      "type": "TECH_INDUCED_SUPERNOVA",
      "scope": "team"
+    },
+    {
+     "any": [
+      {
+       "terrain": [
+        "TERRAIN_STAR_CLUSTER"
+       ]
+      },
+      {
+       "feature": [
+        "FEATURE_BLUE_SUPERGIANT"
+       ]
+      }
+     ]
     }
-   ],
-   "any": [
-    [
-     {
-      "terrain": [
-       "TERRAIN_STAR_CLUSTER"
-      ]
-     },
-     {
-      "feature": [
-       "FEATURE_BLUE_SUPERGIANT"
-      ]
-     }
-    ]
    ]
   }
  },

@@ -7,15 +7,11 @@
    "all": [
     "BUILDING_DISTANT_BUBBLE_TRANSFER_STATION",
     "BUILDING_DISTANT_BRANE_ASSEMBLER",
-    "TECH_BRANE_CROSSOVER"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_DISTANT",
-      "scope": "plot"
-     }
-    ]
+    "TECH_BRANE_CROSSOVER",
+    {
+     "type": "MAPCATEGORY_DISTANT",
+     "scope": "plot"
+    }
    ]
   }
  },

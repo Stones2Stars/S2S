@@ -26,15 +26,11 @@
   "build": {
    "all": [
     "BUILDING_INDUSTRIAL_PARK",
-    "TECH_RECYCLING"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_RECYCLING",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   }
  },

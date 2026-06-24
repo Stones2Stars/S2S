@@ -9,17 +9,17 @@
      "type": "TECH_MOUNTAINEERING",
      "scope": "team"
     },
-    "HAS_PEAK"
-   ],
-   "any": [
-    [
-     {
-      "terrain": [
-       "TERRAIN_PEAK"
-      ]
-     },
-     "HAS_PEAK"
-    ]
+    "HAS_PEAK",
+    {
+     "any": [
+      {
+       "terrain": [
+        "TERRAIN_PEAK"
+       ]
+      },
+      "HAS_PEAK"
+     ]
+    }
    ]
   }
  },

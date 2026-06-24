@@ -11,47 +11,47 @@
      "min": 3
     },
     "BUILDING_FOLKLORE_E_FIRE",
-    "TECH_CELEBRATION"
-   ],
-   "any": [
-    [
-     "BUILDING_FIRE_DANCE",
-     "BUILDING_FORGE",
-     "BUILDING_FOUNDRY",
-     "BUILDING_METALS_MEGACOMPLEX"
-    ],
-    [
-     {
-      "type": "FEATURE_VOLCANO_DORMANT",
-      "scope": "plot"
-     },
-     {
-      "type": "FEATURE_VOLCANO_ACTIVE",
-      "scope": "plot"
-     },
-     {
-      "type": "FEATURE_PLATY_FUJI",
-      "scope": "plot"
-     },
-     {
-      "type": "FEATURE_PLATY_SOPKA",
-      "scope": "plot"
-     },
-     {
-      "type": "FEATURE_PLATY_KRAKATOA",
-      "scope": "plot"
-     },
-     {
-      "type": "FEATURE_PLATY_KILIMANJARO",
-      "scope": "plot"
-     }
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_CELEBRATION",
+    {
+     "any": [
+      "BUILDING_FIRE_DANCE",
+      "BUILDING_FORGE",
+      "BUILDING_FOUNDRY",
+      "BUILDING_METALS_MEGACOMPLEX"
+     ]
+    },
+    {
+     "any": [
+      {
+       "type": "FEATURE_VOLCANO_DORMANT",
+       "scope": "plot"
+      },
+      {
+       "type": "FEATURE_VOLCANO_ACTIVE",
+       "scope": "plot"
+      },
+      {
+       "type": "FEATURE_PLATY_FUJI",
+       "scope": "plot"
+      },
+      {
+       "type": "FEATURE_PLATY_SOPKA",
+       "scope": "plot"
+      },
+      {
+       "type": "FEATURE_PLATY_KRAKATOA",
+       "scope": "plot"
+      },
+      {
+       "type": "FEATURE_PLATY_KILIMANJARO",
+       "scope": "plot"
+      }
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ],
    "noneOf": [
     "BUILDING_GRAND_SKY_FESTIVAL",
@@ -60,44 +60,46 @@
    ]
   },
   "operate": {
-   "any": [
-    [
-     {
-      "type": "BONUS_PEAT",
-      "scope": "city",
-      "connection": "trade|vicinity"
-     },
-     {
-      "type": "BONUS_TAR",
-      "scope": "city",
-      "connection": "trade|vicinity"
-     },
-     {
-      "type": "BONUS_SULPHUR",
-      "scope": "city",
-      "connection": "trade|vicinity"
-     },
-     {
-      "type": "BONUS_OBSIDIAN",
-      "scope": "city",
-      "connection": "trade|vicinity"
-     },
-     {
-      "type": "BONUS_DIAMOND",
-      "scope": "city",
-      "connection": "trade|vicinity"
-     },
-     {
-      "type": "BONUS_SILVER_ORE",
-      "scope": "city",
-      "connection": "trade|vicinity"
-     },
-     {
-      "type": "BONUS_GOLD_ORE",
-      "scope": "city",
-      "connection": "trade|vicinity"
-     }
-    ]
+   "all": [
+    {
+     "any": [
+      {
+       "type": "BONUS_PEAT",
+       "scope": "city",
+       "connection": "trade|vicinity"
+      },
+      {
+       "type": "BONUS_TAR",
+       "scope": "city",
+       "connection": "trade|vicinity"
+      },
+      {
+       "type": "BONUS_SULPHUR",
+       "scope": "city",
+       "connection": "trade|vicinity"
+      },
+      {
+       "type": "BONUS_OBSIDIAN",
+       "scope": "city",
+       "connection": "trade|vicinity"
+      },
+      {
+       "type": "BONUS_DIAMOND",
+       "scope": "city",
+       "connection": "trade|vicinity"
+      },
+      {
+       "type": "BONUS_SILVER_ORE",
+       "scope": "city",
+       "connection": "trade|vicinity"
+      },
+      {
+       "type": "BONUS_GOLD_ORE",
+       "scope": "city",
+       "connection": "trade|vicinity"
+      }
+     ]
+    }
    ]
   }
  },

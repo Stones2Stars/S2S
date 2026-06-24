@@ -19,15 +19,11 @@
   "build": {
    "all": [
     "BUILDING_ROCK_GATHERER",
-    "TECH_PICTOGRAPHS"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_PICTOGRAPHS",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

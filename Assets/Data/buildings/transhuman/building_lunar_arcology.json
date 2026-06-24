@@ -17,15 +17,11 @@
     "HAS_POWER",
     "BUILDING_LUNAR_PARCOLOGY",
     "BUILDING_LUNAR_MANUFACTURING_PLANT",
-    "TECH_LUNAR_MEGASTRUCTURES"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_LUNAR",
-      "scope": "plot"
-     }
-    ]
+    "TECH_LUNAR_MEGASTRUCTURES",
+    {
+     "type": "MAPCATEGORY_LUNAR",
+     "scope": "plot"
+    }
    ]
   }
  },

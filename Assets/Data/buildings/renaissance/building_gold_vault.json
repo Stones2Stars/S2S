@@ -6,29 +6,21 @@
   "build": {
    "all": [
     "BUILDING_PALACE",
-    "TECH_NATIONALISM"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_NATIONALISM",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {
    "all": [
-    "CIVIC_GOLD_STANDARD"
-   ],
-   "any": [
-    [
-     {
-      "type": "BONUS_GOLD_ORE",
-      "scope": "city",
-      "connection": "trade|vicinity"
-     }
-    ]
+    "CIVIC_GOLD_STANDARD",
+    {
+     "type": "BONUS_GOLD_ORE",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    }
    ]
   }
  },

@@ -15,20 +15,18 @@
      "scope": "city",
      "min": 3
     },
-    "TECH_CHARTERS"
-   ],
-   "any": [
-    [
-     "BUILDING_MARKET",
-     "BUILDING_SUPERMARKET",
-     "BUILDING_HYPERMARKET"
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_CHARTERS",
+    {
+     "any": [
+      "BUILDING_MARKET",
+      "BUILDING_SUPERMARKET",
+      "BUILDING_HYPERMARKET"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ],
    "noneOf": [
     "BUILDING_SCARBOROUGH_FAIR"

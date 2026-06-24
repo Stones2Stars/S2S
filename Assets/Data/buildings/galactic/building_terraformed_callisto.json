@@ -6,21 +6,15 @@
   "build": {
    "all": [
     "BUILDING_CALLISTO_NOBLE_GAS_GENERATOR",
-    "TECH_LUNAR_TERRAFORMING"
-   ],
-   "any": [
-    [
-     {
-      "type": "TERRAIN_CALLISTO",
-      "scope": "plot"
-     }
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_SOLAR_SYSTEM",
-      "scope": "plot"
-     }
-    ]
+    "TECH_LUNAR_TERRAFORMING",
+    {
+     "type": "TERRAIN_CALLISTO",
+     "scope": "plot"
+    },
+    {
+     "type": "MAPCATEGORY_SOLAR_SYSTEM",
+     "scope": "plot"
+    }
    ]
   }
  },

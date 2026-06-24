@@ -11,20 +11,18 @@
      "min": 7
     },
     "TECH_RADIO",
-    "TECH_CIVIL_ENGINEERING"
-   ],
-   "any": [
-    [
-     "BUILDING_SMELTER_STEEL",
-     "BUILDING_ADVANCED_IRONWORKS",
-     "BUILDING_METALS_MEGACOMPLEX"
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_CIVIL_ENGINEERING",
+    {
+     "any": [
+      "BUILDING_SMELTER_STEEL",
+      "BUILDING_ADVANCED_IRONWORKS",
+      "BUILDING_METALS_MEGACOMPLEX"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   }
  },

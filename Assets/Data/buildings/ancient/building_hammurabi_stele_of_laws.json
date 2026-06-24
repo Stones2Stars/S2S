@@ -8,15 +8,11 @@
     "TECH_DUALISM",
     {
      "STATE_RELIGION": "RELIGION_MESOPOTAMISM"
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
     }
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
    ]
   },
   "operate": {

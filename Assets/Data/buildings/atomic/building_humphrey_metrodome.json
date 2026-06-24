@@ -16,15 +16,11 @@
      "min": 7
     },
     "BUILDING_MAJOR_LEAGUE_STADIUM",
-    "TECH_MODERN_SPORTS"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_MODERN_SPORTS",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   }
  },

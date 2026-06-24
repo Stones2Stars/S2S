@@ -10,21 +10,19 @@
      "scope": "city",
      "connection": "trade|vicinity"
     },
-    "TECH_VETERINARY_MEDICINE"
-   ],
-   "any": [
-    [
-     {
-      "type": "BONUS_SCROLLS",
-      "scope": "city",
-      "connection": "trade|vicinity"
-     }
-    ],
-    [
-     "BUILDING_ANCIENT_VETERINARIAN",
-     "BUILDING_VETERINARIAN",
-     "BUILDING_HEALTHCARE_MEGACOMPLEX"
-    ]
+    "TECH_VETERINARY_MEDICINE",
+    {
+     "type": "BONUS_SCROLLS",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    {
+     "any": [
+      "BUILDING_ANCIENT_VETERINARIAN",
+      "BUILDING_VETERINARIAN",
+      "BUILDING_HEALTHCARE_MEGACOMPLEX"
+     ]
+    }
    ]
   }
  },

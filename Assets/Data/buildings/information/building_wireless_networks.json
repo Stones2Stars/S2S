@@ -13,19 +13,17 @@
    "all": [
     "HAS_POWER",
     "BUILDING_COMMUNICATIONS_SATELLITE",
-    "TECH_COMMUNICATION_NETWORKS"
-   ],
-   "any": [
-    [
-     "BUILDING_COMMUNICATION_TOWER",
-     "BUILDING_NETWORK_NODE"
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_COMMUNICATION_NETWORKS",
+    {
+     "any": [
+      "BUILDING_COMMUNICATION_TOWER",
+      "BUILDING_NETWORK_NODE"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

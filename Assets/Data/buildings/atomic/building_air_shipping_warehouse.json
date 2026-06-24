@@ -19,19 +19,17 @@
   "build": {
    "all": [
     "BUILDING_MODERN_WAREHOUSE",
-    "TECH_FLIGHT"
-   ],
-   "any": [
-    [
-     "BUILDING_AIRPORT",
-     "BUILDING_COMMERCIAL_AIRPORT"
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_FLIGHT",
+    {
+     "any": [
+      "BUILDING_AIRPORT",
+      "BUILDING_COMMERCIAL_AIRPORT"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   },
   "operate": {

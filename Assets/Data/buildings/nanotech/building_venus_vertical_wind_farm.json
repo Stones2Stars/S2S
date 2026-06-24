@@ -7,15 +7,11 @@
    "all": [
     "HAS_POWER",
     "BUILDING_SPACE_COLONY_VENUS",
-    "TECH_PLANETARY_EXTRACTION"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_VENUSIAN",
-      "scope": "plot"
-     }
-    ]
+    "TECH_PLANETARY_EXTRACTION",
+    {
+     "type": "MAPCATEGORY_VENUSIAN",
+     "scope": "plot"
+    }
    ]
   }
  },

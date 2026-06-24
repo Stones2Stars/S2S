@@ -11,15 +11,11 @@
   "build": {
    "all": [
     "BUILDING_VENUS_CO2_REMOVAL",
-    "TECH_ASTROECOLOGY"
-   ],
-   "any": [
-    [
-     {
-      "type": "MAPCATEGORY_VENUSIAN",
-      "scope": "plot"
-     }
-    ]
+    "TECH_ASTROECOLOGY",
+    {
+     "type": "MAPCATEGORY_VENUSIAN",
+     "scope": "plot"
+    }
    ]
   }
  },

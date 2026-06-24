@@ -17,21 +17,21 @@
     {
      "type": "TECH_CONCRETE",
      "scope": "team"
+    },
+    {
+     "any": [
+      {
+       "type": "BUILDING_LAVA_ROCK_GATHERER",
+       "scope": "empire",
+       "min": 1
+      },
+      {
+       "type": "BUILDING_MODERN_EARTHWORKS",
+       "scope": "empire",
+       "min": 1
+      }
+     ]
     }
-   ],
-   "any": [
-    [
-     {
-      "type": "BUILDING_LAVA_ROCK_GATHERER",
-      "scope": "empire",
-      "min": 1
-     },
-     {
-      "type": "BUILDING_MODERN_EARTHWORKS",
-      "scope": "empire",
-      "min": 1
-     }
-    ]
    ]
   }
  },

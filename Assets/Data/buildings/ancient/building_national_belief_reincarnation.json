@@ -5,24 +5,22 @@
  "requires": {
   "build": {
    "all": [
-    "TECH_REINCARNATION"
-   ],
-   "any": [
-    [
-     "BUILDING_ANDEAN_TEMPLE",
-     "BUILDING_HINDU_TEMPLE",
-     "BUILDING_BUDDHIST_TEMPLE",
-     "BUILDING_TAOIST_TEMPLE",
-     "BUILDING_HELLENIC_TEMPLE",
-     "BUILDING_JAIN_TEMPLE",
-     "BUILDING_ASATRU_TEMPLE"
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_REINCARNATION",
+    {
+     "any": [
+      "BUILDING_ANDEAN_TEMPLE",
+      "BUILDING_HINDU_TEMPLE",
+      "BUILDING_BUDDHIST_TEMPLE",
+      "BUILDING_TAOIST_TEMPLE",
+      "BUILDING_HELLENIC_TEMPLE",
+      "BUILDING_JAIN_TEMPLE",
+      "BUILDING_ASATRU_TEMPLE"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   }
  },

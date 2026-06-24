@@ -11,16 +11,12 @@
      "connection": "trade|vicinity"
     },
     "BUILDING_ANIMAL_TRAINER_LLAMA",
-    "TECH_CAMELID_DOMESTICATION"
-   ],
-   "any": [
-    [
-     {
-      "type": "BONUS_LLAMA",
-      "scope": "city",
-      "connection": "trade|vicinity"
-     }
-    ]
+    "TECH_CAMELID_DOMESTICATION",
+    {
+     "type": "BONUS_LLAMA",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    }
    ]
   }
  },

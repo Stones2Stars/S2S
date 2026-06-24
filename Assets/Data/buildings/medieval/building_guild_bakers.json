@@ -16,19 +16,17 @@
      "min": 3
     },
     "TECH_AGRICULTURAL_TOOLS",
-    "TECH_GUILDS"
-   ],
-   "any": [
-    [
-     "BUILDING_BAKERY",
-     "BUILDING_FOOD_MANUFACTURING_DISTRICT"
-    ],
-    [
-     {
-      "type": "MAPCATEGORY_EARTH",
-      "scope": "plot"
-     }
-    ]
+    "TECH_GUILDS",
+    {
+     "any": [
+      "BUILDING_BAKERY",
+      "BUILDING_FOOD_MANUFACTURING_DISTRICT"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
    ]
   }
  },

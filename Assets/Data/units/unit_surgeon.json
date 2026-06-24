@@ -10,14 +10,14 @@
      "scope": "city",
      "connection": "trade|vicinity"
     },
-    "TECH_ELIXIRS_AND_TONICS"
-   ],
-   "any": [
-    [
-     "BUILDING_SURGEONS_OFFICE",
-     "BUILDING_MEDICAL_CLINIC",
-     "BUILDING_HEALTHCARE_MEGACOMPLEX"
-    ]
+    "TECH_ELIXIRS_AND_TONICS",
+    {
+     "any": [
+      "BUILDING_SURGEONS_OFFICE",
+      "BUILDING_MEDICAL_CLINIC",
+      "BUILDING_HEALTHCARE_MEGACOMPLEX"
+     ]
+    }
    ]
   }
  },
