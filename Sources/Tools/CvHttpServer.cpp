@@ -658,6 +658,16 @@ namespace
 			world["buildingsCreated"] = picojson::value(created);
 		}
 
+		// world victories -- the ENABLED victory conditions (isVictoryValid). A building's VictoryPrereq gate
+		// (CvCity::canConstruct, e.g. UN_MISSION needs the diplomatic victory enabled) reads this.
+		{
+			picojson::value::array vics;
+			for (int v = 0; v < GC.getNumVictoryInfos(); ++v)
+				if (GC.getGame().isVictoryValid((VictoryTypes)v))
+					vics.push_back(picojson::value(std::string(GC.getVictoryInfo((VictoryTypes)v).getType())));
+			world["victories"] = picojson::value(vics);
+		}
+
 		// world.config -- RAW game-define scalars the calc needs that are NOT entity data. Resolved game-side
 		// (authoritative; e.g. the world-size trade-profit % needs no world-size guess offline). The TRADE block
 		// feeds the trade-route profit/yield port (calc-map 9.5): the profit defines + the per-yield YieldInfo
