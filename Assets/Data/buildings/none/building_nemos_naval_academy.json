@@ -20,7 +20,8 @@
     {
      "type": "BUILDING_NAVAL_ACADEMY",
      "scope": "empire",
-     "min": 3
+     "min": 3,
+     "scaling": "amountBuildings"
     },
     "TECH_STEAMPUNK",
     {

@@ -10,42 +10,50 @@
     {
      "type": "BUILDING_MARTIAN_CO2_SUBLIMATION",
      "scope": "empire",
-     "min": 1
+     "min": 1,
+     "scaling": "amountBuildings"
     },
     {
      "type": "BUILDING_MARTIAN_BIOTIC_SEA",
      "scope": "empire",
-     "min": 2
+     "min": 2,
+     "scaling": "amountBuildings"
     },
     {
      "type": "BUILDING_MARTIAN_AMMONIA_BOMBARDMENT",
      "scope": "empire",
-     "min": 1
+     "min": 1,
+     "scaling": "amountBuildings"
     },
     {
      "type": "BUILDING_MARTIAN_CFC_GENERATOR",
      "scope": "empire",
-     "min": 1
+     "min": 1,
+     "scaling": "amountBuildings"
     },
     {
      "type": "BUILDING_MARTIAN_ECOPOIESIS_REACTOR",
      "scope": "empire",
-     "min": 3
+     "min": 3,
+     "scaling": "amountBuildings"
     },
     {
      "type": "BUILDING_MARTIAN_MAGNETIC_FIELD_GENERATOR",
      "scope": "empire",
-     "min": 2
+     "min": 2,
+     "scaling": "amountBuildings"
     },
     {
      "type": "BUILDING_MARTIAN_FARM",
      "scope": "empire",
-     "min": 2
+     "min": 2,
+     "scaling": "amountBuildings"
     },
     {
      "type": "BUILDING_MARTIAN_ORBITAL_MIRROR_ARRAY",
      "scope": "empire",
-     "min": 1
+     "min": 1,
+     "scaling": "amountBuildings"
     },
     "TECH_PLANETARY_TERRAFORMING",
     {

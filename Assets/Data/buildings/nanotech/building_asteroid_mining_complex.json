@@ -9,22 +9,26 @@
     {
      "type": "BUILDING_CISLUNAR_ASTEROID_MINE",
      "scope": "empire",
-     "min": 2
+     "min": 2,
+     "scaling": "amountBuildings"
     },
     {
      "type": "BUILDING_MAGLEV_LAUNCHER",
      "scope": "empire",
-     "min": 2
+     "min": 2,
+     "scaling": "amountBuildings"
     },
     {
      "type": "BUILDING_LUNAR_LAUNCH_SITE",
      "scope": "empire",
-     "min": 1
+     "min": 1,
+     "scaling": "amountBuildings"
     },
     {
      "type": "BUILDING_SKYHOOK",
      "scope": "empire",
-     "min": 1
+     "min": 1,
+     "scaling": "amountBuildings"
     },
     "TECH_LUNAR_TRADE",
     {

@@ -10,12 +10,14 @@
     {
      "type": "BUILDING_LUNAR_LAUNCH_SITE",
      "scope": "empire",
-     "min": 1
+     "min": 1,
+     "scaling": "amountBuildings"
     },
     {
      "type": "BUILDING_LUNAR_SILICON_PROCESSING_FACILITY",
      "scope": "empire",
-     "min": 1
+     "min": 1,
+     "scaling": "amountBuildings"
     },
     "TECH_LUNAR_MANUFACTURING",
     {

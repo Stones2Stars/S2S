@@ -11,7 +11,8 @@
     {
      "type": "BUILDING_HYPERSPACE_SIMULATED_UNIVERSE",
      "scope": "empire",
-     "min": 2
+     "min": 2,
+     "scaling": "amountBuildings"
     },
     "TECH_ALPHA_POINT",
     {

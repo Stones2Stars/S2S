@@ -9,7 +9,8 @@
     {
      "type": "BUILDING_LIFE_CRISPR_CAS9_BACTERIA",
      "scope": "empire",
-     "min": 1
+     "min": 1,
+     "scaling": "amountBuildings"
     },
     "TECH_PROTOTYPED_PATHOGENS",
     {

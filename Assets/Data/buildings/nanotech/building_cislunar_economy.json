@@ -9,22 +9,26 @@
     {
      "type": "BUILDING_COMMERCIAL_SPACEPORT",
      "scope": "empire",
-     "min": 5
+     "min": 5,
+     "scaling": "amountBuildings"
     },
     {
      "type": "BUILDING_MAGLEV_LAUNCHER",
      "scope": "empire",
-     "min": 2
+     "min": 2,
+     "scaling": "amountBuildings"
     },
     {
      "type": "BUILDING_SOLAR_POWER_SATELLITE",
      "scope": "empire",
-     "min": 3
+     "min": 3,
+     "scaling": "amountBuildings"
     },
     {
      "type": "BUILDING_ASTEROID_MINE",
      "scope": "empire",
-     "min": 1
+     "min": 1,
+     "scaling": "amountBuildings"
     },
     "TECH_LUNAR_TRADE",
     {

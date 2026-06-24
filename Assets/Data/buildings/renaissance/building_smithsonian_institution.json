@@ -14,7 +14,8 @@
     {
      "type": "BUILDING_MUSEUM",
      "scope": "empire",
-     "min": 3
+     "min": 3,
+     "scaling": "amountBuildings"
     },
     "TECH_SCIENTIFIC_METHOD",
     {

@@ -15,7 +15,8 @@
     {
      "type": "BUILDING_WIKIA",
      "scope": "empire",
-     "min": 3
+     "min": 3,
+     "scaling": "amountBuildings"
     },
     "TECH_ONLINE_COMMUNITY",
     {

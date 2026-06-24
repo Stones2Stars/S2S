@@ -10,12 +10,14 @@
     {
      "type": "BUILDING_SPACESCRAPER",
      "scope": "empire",
-     "min": 3
+     "min": 3,
+     "scaling": "amountBuildings"
     },
     {
      "type": "BUILDING_LAUNCH_ARCOLOGY",
      "scope": "empire",
-     "min": 3
+     "min": 3,
+     "scaling": "amountBuildings"
     },
     "TECH_FOLDING_SPACE",
     {

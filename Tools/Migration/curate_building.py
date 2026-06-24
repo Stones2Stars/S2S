@@ -792,7 +792,10 @@ def requires_building(rec, store):
     if orbld:
         build_any.append([_atom(x, "city") for x in orbld])
     for k, v in _amount_buildings(rec):
-        build_all.append(_atom(k, "empire", min=v))
+        # PrereqAmountBuildings: the required count SCALES (CvPlayer::getBuildingPrereqBuilding) --
+        # getModifiedIntValue(base, worldBuildingPrereqModifier) * (1 + count(SELF)), unless SELF/prereq is a limited
+        # wonder or SELF is forceNoPrereqScaling. `min` is the BASE; the enforcer (cascade) owns the scaling -> mark it.
+        build_all.append(_atom(k, "empire", min=v, scaling="amountBuildings"))
     anyone = _txt(rec, "PrereqAnyoneBuilding")
     if anyone:
         build_all.append(_atom(anyone, "world", min=1))

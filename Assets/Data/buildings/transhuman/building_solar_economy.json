@@ -10,12 +10,14 @@
     {
      "type": "BUILDING_STARPORT",
      "scope": "empire",
-     "min": 5
+     "min": 5,
+     "scaling": "amountBuildings"
     },
     {
      "type": "BUILDING_STRATOSPHERIC_TOWER",
      "scope": "empire",
-     "min": 2
+     "min": 2,
+     "scaling": "amountBuildings"
     },
     "TECH_PLANETARY_MEGASTRUCTURES",
     {

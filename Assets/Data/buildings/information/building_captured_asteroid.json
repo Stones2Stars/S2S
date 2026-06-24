@@ -14,7 +14,8 @@
     {
      "type": "BUILDING_COMMERCIAL_SPACEPORT",
      "scope": "empire",
-     "min": 3
+     "min": 3,
+     "scaling": "amountBuildings"
     },
     "TECH_ASTEROID_MINING",
     {

@@ -15,7 +15,8 @@
     {
      "type": "BUILDING_ACCELERATOR",
      "scope": "empire",
-     "min": 4
+     "min": 4,
+     "scaling": "amountBuildings"
     },
     "TECH_SUPERCONDUCTORS",
     {

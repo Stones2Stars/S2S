@@ -16,7 +16,8 @@
     {
      "type": "BUILDING_PARADISE_GARDEN",
      "scope": "empire",
-     "min": 4
+     "min": 4,
+     "scaling": "amountBuildings"
     },
     {
      "type": "VICTORY_SCIENTIFIC",

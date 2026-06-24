@@ -13,7 +13,8 @@
     {
      "type": "BUILDING_MOVIE_STUDIO",
      "scope": "empire",
-     "min": 1
+     "min": 1,
+     "scaling": "amountBuildings"
     },
     "TECH_MASS_MEDIA",
     {

@@ -14,7 +14,8 @@
     {
      "type": "BUILDING_DISTANT_BRANE_THRUSTER",
      "scope": "empire",
-     "min": 1
+     "min": 1,
+     "scaling": "amountBuildings"
     },
     "TECH_BRANE_CROSSOVER",
     {

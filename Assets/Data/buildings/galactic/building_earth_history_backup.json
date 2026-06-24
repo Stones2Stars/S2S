@@ -9,7 +9,8 @@
     {
      "type": "BUILDING_INTERSTELLAR_CARBON_12_13_CRYSTAL",
      "scope": "empire",
-     "min": 2
+     "min": 2,
+     "scaling": "amountBuildings"
     },
     "TECH_DATA_ARCHIVAL",
     {

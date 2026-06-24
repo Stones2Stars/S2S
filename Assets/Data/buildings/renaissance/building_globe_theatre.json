@@ -14,7 +14,8 @@
     {
      "type": "BUILDING_THEATRE",
      "scope": "empire",
-     "min": 4
+     "min": 4,
+     "scaling": "amountBuildings"
     },
     "TECH_FREE_ARTISTRY",
     {

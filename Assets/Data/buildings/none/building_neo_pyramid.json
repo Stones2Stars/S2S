@@ -13,7 +13,8 @@
     {
      "type": "BUILDING_THE_GREAT_PYRAMID",
      "scope": "empire",
-     "min": 1
+     "min": 1,
+     "scaling": "amountBuildings"
     },
     "TECH_STARPUNK",
     {

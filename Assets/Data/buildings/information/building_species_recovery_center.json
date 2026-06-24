@@ -14,7 +14,8 @@
     {
      "type": "BUILDING_BIOINFORMATICS_LAB",
      "scope": "empire",
-     "min": 10
+     "min": 10,
+     "scaling": "amountBuildings"
     },
     "TECH_GENESIS_BIOLOGY",
     {

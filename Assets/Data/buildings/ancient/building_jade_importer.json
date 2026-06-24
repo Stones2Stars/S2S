@@ -16,7 +16,8 @@
     {
      "type": "BUILDING_JADE_CARVER",
      "scope": "empire",
-     "min": 1
+     "min": 1,
+     "scaling": "amountBuildings"
     },
     "TECH_TRADE",
     {

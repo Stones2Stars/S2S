@@ -16,7 +16,8 @@
     {
      "type": "BUILDING_CONSTRUCTION_FIRM",
      "scope": "empire",
-     "min": 3
+     "min": 3,
+     "scaling": "amountBuildings"
     },
     "TECH_GLOBALIZATION",
     {

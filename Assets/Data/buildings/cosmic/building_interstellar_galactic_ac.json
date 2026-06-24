@@ -10,12 +10,14 @@
     {
      "type": "BUILDING_MULTIVAC",
      "scope": "empire",
-     "min": 1
+     "min": 1,
+     "scaling": "amountBuildings"
     },
     {
      "type": "BUILDING_DEEP_SPACE_MICROVAC",
      "scope": "empire",
-     "min": 1
+     "min": 1,
+     "scaling": "amountBuildings"
     },
     "TECH_UNIFICATION_MATHEMATICS",
     {

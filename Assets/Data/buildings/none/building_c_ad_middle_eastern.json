@@ -10,7 +10,8 @@
     {
      "type": "BUILDING_C_L_MIDDLE_EASTERN",
      "scope": "empire",
-     "min": 3
+     "min": 3,
+     "scaling": "amountBuildings"
     },
     {
      "type": "MAPCATEGORY_EARTH",

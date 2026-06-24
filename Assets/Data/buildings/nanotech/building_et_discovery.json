@@ -13,22 +13,26 @@
     {
      "type": "BUILDING_ASTRONOMICAL_DATABASE",
      "scope": "empire",
-     "min": 3
+     "min": 3,
+     "scaling": "amountBuildings"
     },
     {
      "type": "BUILDING_ASTROBIOLOGY_LAB",
      "scope": "empire",
-     "min": 1
+     "min": 1,
+     "scaling": "amountBuildings"
     },
     {
      "type": "BUILDING_KEPLER_SPACE_TELESCOPE",
      "scope": "empire",
-     "min": 1
+     "min": 1,
+     "scaling": "amountBuildings"
     },
     {
      "type": "BUILDING_SETI_PROGRAM",
      "scope": "empire",
-     "min": 1
+     "min": 1,
+     "scaling": "amountBuildings"
     },
     "TECH_AMPLIFIED_WAVELENGTHS",
     {

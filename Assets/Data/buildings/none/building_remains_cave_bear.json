@@ -9,7 +9,8 @@
     {
      "type": "BUILDING_FOLKLORE_CAVE_BEAR",
      "scope": "empire",
-     "min": 3
+     "min": 3,
+     "scaling": "amountBuildings"
     },
     {
      "type": "MAPCATEGORY_EARTH",

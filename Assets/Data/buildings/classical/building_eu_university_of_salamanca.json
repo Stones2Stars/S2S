@@ -15,12 +15,14 @@
     {
      "type": "BUILDING_UNIVERSITY",
      "scope": "empire",
-     "min": 4
+     "min": 4,
+     "scaling": "amountBuildings"
     },
     {
      "type": "BUILDING_COURTHOUSE",
      "scope": "empire",
-     "min": 4
+     "min": 4,
+     "scaling": "amountBuildings"
     },
     "TECH_CODE_OF_LAWS",
     "TECH_EDUCATION",

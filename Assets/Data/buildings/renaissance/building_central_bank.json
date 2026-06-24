@@ -14,7 +14,8 @@
     {
      "type": "BUILDING_BANK",
      "scope": "empire",
-     "min": 4
+     "min": 4,
+     "scaling": "amountBuildings"
     },
     "TECH_MERCANTILISM",
     {

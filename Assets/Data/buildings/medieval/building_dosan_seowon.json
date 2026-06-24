@@ -18,7 +18,8 @@
     {
      "type": "BUILDING_UNIVERSITY",
      "scope": "empire",
-     "min": 4
+     "min": 4,
+     "scaling": "amountBuildings"
     },
     "TECH_EDUCATION",
     "STATE_RELIGION_IN_CITY",

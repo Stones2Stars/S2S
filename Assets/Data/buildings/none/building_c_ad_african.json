@@ -10,7 +10,8 @@
     {
      "type": "BUILDING_C_L_AFRICAN",
      "scope": "empire",
-     "min": 3
+     "min": 3,
+     "scaling": "amountBuildings"
     },
     {
      "type": "MAPCATEGORY_EARTH",

@@ -13,12 +13,14 @@
     {
      "type": "BUILDING_THEATRE",
      "scope": "empire",
-     "min": 4
+     "min": 4,
+     "scaling": "amountBuildings"
     },
     {
      "type": "BUILDING_OPERA_HOUSE",
      "scope": "empire",
-     "min": 2
+     "min": 2,
+     "scaling": "amountBuildings"
     },
     "TECH_REALISM",
     {

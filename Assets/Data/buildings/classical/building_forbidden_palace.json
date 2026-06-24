@@ -23,7 +23,8 @@
     {
      "type": "BUILDING_COURTHOUSE",
      "scope": "empire",
-     "min": 4
+     "min": 4,
+     "scaling": "amountBuildings"
     },
     "TECH_CITY_PLANNING",
     {

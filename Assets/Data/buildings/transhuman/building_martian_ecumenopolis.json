@@ -10,7 +10,8 @@
     {
      "type": "BUILDING_MARTIAN_ARCOLOGY",
      "scope": "empire",
-     "min": 2
+     "min": 2,
+     "scaling": "amountBuildings"
     },
     "TECH_PLANETARY_MEGASTRUCTURES",
     {

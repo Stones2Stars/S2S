@@ -8,7 +8,8 @@
     {
      "type": "BUILDING_CAO_DAI_TEMPLE",
      "scope": "empire",
-     "min": 2
+     "min": 2,
+     "scaling": "amountBuildings"
     },
     "TECH_MUSICAL_NOTATION",
     {

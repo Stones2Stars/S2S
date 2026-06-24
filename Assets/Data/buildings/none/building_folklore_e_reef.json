@@ -11,7 +11,8 @@
     {
      "type": "BUILDING_PRESENCE_OF_REEF",
      "scope": "empire",
-     "min": 1
+     "min": 1,
+     "scaling": "amountBuildings"
     },
     "TECH_ORAL_TRADITION",
     {

@@ -11,7 +11,8 @@
     {
      "type": "BUILDING_PRESENCE_OF_METAL",
      "scope": "empire",
-     "min": 1
+     "min": 1,
+     "scaling": "amountBuildings"
     },
     "TECH_SOFT_HAMMER_PERCUSSION",
     "TECH_ORAL_TRADITION",

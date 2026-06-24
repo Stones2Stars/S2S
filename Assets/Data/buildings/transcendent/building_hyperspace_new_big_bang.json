@@ -10,7 +10,8 @@
     {
      "type": "BUILDING_DISTANT_DARK_ERA_SURVIVAL_PLAN",
      "scope": "empire",
-     "min": 1
+     "min": 1,
+     "scaling": "amountBuildings"
     },
     "TECH_REALITY_REPROGRAMMING",
     {

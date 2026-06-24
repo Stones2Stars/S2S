@@ -15,7 +15,8 @@
     {
      "type": "BUILDING_ADVERTISING_AGENCY",
      "scope": "empire",
-     "min": 6
+     "min": 6,
+     "scaling": "amountBuildings"
     },
     "TECH_CONSUMERISM",
     {

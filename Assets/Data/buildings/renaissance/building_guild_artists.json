@@ -19,7 +19,8 @@
     {
      "type": "BUILDING_ARTIST_COLONY",
      "scope": "empire",
-     "min": 3
+     "min": 3,
+     "scaling": "amountBuildings"
     },
     "TECH_FREE_ARTISTRY",
     "TECH_GUILDS",

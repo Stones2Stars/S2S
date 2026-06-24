@@ -9,7 +9,8 @@
     {
      "type": "BUILDING_FOLKLORE_GIANT_RHINOCEROS",
      "scope": "empire",
-     "min": 3
+     "min": 3,
+     "scaling": "amountBuildings"
     },
     {
      "type": "MAPCATEGORY_EARTH",

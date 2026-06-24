@@ -8,7 +8,8 @@
     {
      "type": "BUILDING_INTERSTELLAR_WORMHOLE_BEACON",
      "scope": "empire",
-     "min": 3
+     "min": 3,
+     "scaling": "amountBuildings"
     },
     "TECH_WORMHOLE_COMMUNICATIONS",
     {

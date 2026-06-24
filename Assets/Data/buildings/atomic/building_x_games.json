@@ -13,7 +13,8 @@
     {
      "type": "BUILDING_MAJOR_LEAGUE_STADIUM",
      "scope": "empire",
-     "min": 2
+     "min": 2,
+     "scaling": "amountBuildings"
     },
     "TECH_EXTREME_SPORTS",
     {

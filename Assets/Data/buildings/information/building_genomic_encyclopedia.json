@@ -14,12 +14,14 @@
     {
      "type": "BUILDING_BIOINFORMATICS_LAB",
      "scope": "empire",
-     "min": 10
+     "min": 10,
+     "scaling": "amountBuildings"
     },
     {
      "type": "BUILDING_COMPUTER_NETWORK",
      "scope": "empire",
-     "min": 10
+     "min": 10,
+     "scaling": "amountBuildings"
     },
     "TECH_GENOMIC_ENCYCLOPEDIA",
     {

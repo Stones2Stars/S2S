@@ -14,7 +14,8 @@
     {
      "type": "BUILDING_UNIVERSITY",
      "scope": "empire",
-     "min": 3
+     "min": 3,
+     "scaling": "amountBuildings"
     },
     "TECH_QUANTUM_TELEPORTATION",
     {

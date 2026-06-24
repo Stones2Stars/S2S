@@ -10,7 +10,8 @@
     {
      "type": "BUILDING_SECURITY_BUREAU",
      "scope": "empire",
-     "min": 3
+     "min": 3,
+     "scaling": "amountBuildings"
     },
     "TECH_FASCISM",
     {

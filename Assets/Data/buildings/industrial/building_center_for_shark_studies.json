@@ -15,7 +15,8 @@
     {
      "type": "BUILDING_MARINE_INSTITUTE",
      "scope": "empire",
-     "min": 3
+     "min": 3,
+     "scaling": "amountBuildings"
     },
     "TECH_MARINE_BIOLOGY",
     {

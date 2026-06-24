@@ -19,7 +19,8 @@
     {
      "type": "BUILDING_COURTHOUSE",
      "scope": "empire",
-     "min": 3
+     "min": 3,
+     "scaling": "amountBuildings"
     },
     "TECH_JURISPRUDENCE",
     {

@@ -8,7 +8,8 @@
     {
      "type": "BUILDING_PATTAKY_OF_OLOFIN",
      "scope": "empire",
-     "min": 1
+     "min": 1,
+     "scaling": "amountBuildings"
     },
     "TECH_PRIESTHOOD",
     "STATE_RELIGION_IN_CITY",

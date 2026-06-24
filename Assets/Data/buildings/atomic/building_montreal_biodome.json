@@ -11,7 +11,8 @@
     {
      "type": "BUILDING_ZOO",
      "scope": "empire",
-     "min": 4
+     "min": 4,
+     "scaling": "amountBuildings"
     },
     "TECH_ECOLOGY",
     {

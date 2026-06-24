@@ -15,7 +15,8 @@
     {
      "type": "BUILDING_MAGLEV_LAUNCHER",
      "scope": "empire",
-     "min": 2
+     "min": 2,
+     "scaling": "amountBuildings"
     },
     "TECH_HYPERMAGNETICS",
     {

@@ -8,7 +8,8 @@
     {
      "type": "BUILDING_LIFE_HYPERSPACE",
      "scope": "empire",
-     "min": 1
+     "min": 1,
+     "scaling": "amountBuildings"
     },
     "TECH_TRANSVERSE_EUCLIDEAN_GEOMETRY",
     {

@@ -14,7 +14,8 @@
     {
      "type": "BUILDING_NATURE_CIRCLE_OF_POWER",
      "scope": "empire",
-     "min": 2
+     "min": 2,
+     "scaling": "amountBuildings"
     },
     "TECH_MEGALITH_CONSTRUCTION",
     "STATE_RELIGION_IN_CITY",

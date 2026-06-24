@@ -9,7 +9,8 @@
     {
      "type": "BUILDING_RATIONAL_CITY",
      "scope": "empire",
-     "min": 3
+     "min": 3,
+     "scaling": "amountBuildings"
     },
     "TECH_UTOPIA_DESTINY",
     {

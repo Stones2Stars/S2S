@@ -9,7 +9,8 @@
     {
      "type": "BUILDING_SPIRITS_ALLIANCE",
      "scope": "empire",
-     "min": 2
+     "min": 2,
+     "scaling": "amountBuildings"
     },
     "TECH_MEGALITH_CONSTRUCTION",
     "STATE_RELIGION_IN_CITY",

@@ -14,7 +14,8 @@
     {
      "type": "BUILDING_STOCK_MARKET",
      "scope": "empire",
-     "min": 4
+     "min": 4,
+     "scaling": "amountBuildings"
     },
     "TECH_STOCK_BROKERING",
     {

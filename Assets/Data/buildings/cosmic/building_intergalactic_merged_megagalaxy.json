@@ -15,7 +15,8 @@
     {
      "type": "BUILDING_INTERGALACTIC_SHKADOV_THRUSTER",
      "scope": "empire",
-     "min": 2
+     "min": 2,
+     "scaling": "amountBuildings"
     },
     "TECH_COSMIC_ENGINEERING",
     {

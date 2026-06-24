@@ -15,12 +15,14 @@
     {
      "type": "BUILDING_UNIVERSITY",
      "scope": "empire",
-     "min": 4
+     "min": 4,
+     "scaling": "amountBuildings"
     },
     {
      "type": "BUILDING_ANATOMY_LAB",
      "scope": "empire",
-     "min": 4
+     "min": 4,
+     "scaling": "amountBuildings"
     },
     "TECH_ANATOMY",
     "TECH_EDUCATION",

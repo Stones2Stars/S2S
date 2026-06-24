@@ -14,7 +14,8 @@
     {
      "type": "BUILDING_BANK",
      "scope": "empire",
-     "min": 5
+     "min": 5,
+     "scaling": "amountBuildings"
     },
     "TECH_BANKING",
     {

@@ -9,7 +9,8 @@
     {
      "type": "BUILDING_SPACE_COLONY_INTERSTELLAR_MOTHERSHIP",
      "scope": "empire",
-     "min": 3
+     "min": 3,
+     "scaling": "amountBuildings"
     },
     "TECH_CULTURAL_LONGEVITY",
     {
