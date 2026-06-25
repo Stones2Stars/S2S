@@ -500,6 +500,26 @@ namespace
 		}
 		c["specialists"] = picojson::value(specs);
 
+		// FOLD-IN INPUT yields (out-of-scope for drycalc -> belong in /state per http-endpoints.md:42 "drycalc folds
+		// that yield in, it does not compute it"). Per-channel: the resolved trade-route yield (getTradeYield), the
+		// player free-city yield (getFreeCityYield), and the city's raw savegame event-granted extra (m_aiExtraYield,
+		// reconstructed = getExtraYield100 - building-flats100 - perPop*pop, /100 -- the only getExtraYield100 part the
+		// cascade does NOT compute itself). getYieldRate100 base = plot + trade + freeCity + goldenAge; extra bucket =
+		// cityExtraYield + buildingFlats + perPop (calc-map §1.1/§1.2).
+		picojson::value::object tradeY, freeCityY, cityExtraY;
+		for (int y = 0; y < NUM_YIELD_TYPES; ++y)
+		{
+			const char* yn = GC.getYieldInfo((YieldTypes)y).getType();
+			tradeY[yn]    = picojson::value((double)pCity->getTradeYield((YieldTypes)y));
+			freeCityY[yn] = picojson::value((double)kPlayer.getFreeCityYield((YieldTypes)y));
+			const int iRawExtra = (pCity->getExtraYield100((YieldTypes)y) - pCity->getBuildingExtraYield100((YieldTypes)y)
+			                       - pCity->getBaseYieldPerPopRate((YieldTypes)y) * pCity->getPopulation()) / 100;
+			cityExtraY[yn] = picojson::value((double)iRawExtra);
+		}
+		c["tradeYield"]     = picojson::value(tradeY);
+		c["freeCityYield"]  = picojson::value(freeCityY);
+		c["cityExtraYield"] = picojson::value(cityExtraY);
+
 		// available bonuses = TRADE-connected/reachable (hasBonus) -- raw fact
 		picojson::value::array bonuses;
 		for (int b = 0; b < GC.getNumBonusInfos(); ++b)
