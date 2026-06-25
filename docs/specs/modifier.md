@@ -142,22 +142,24 @@ authored shape.
 >   - **Simple/complex split** by `COMPLEX_TRAITS` — the two `DefaultTraits`/`DefaultComplexTraits` sets become
 >     `traits/simple/` + `traits/complex/`, each self-complete (base overwritten by its `Has(COMPLEX_TRAITS)`-gated
 >     replacement, blanks filled from base). The active set is chosen by the live option (callout above).
->   - **Developing-line collapse.** A `PromotionLine` is a tech-gated upgrade chain of trait *levels*
->     (`TRAIT_NOMAD1`→`TRAIT_NOMADIC2`→`…`, ordered by `iLinePriority`, each with a `PrereqTech` + `TraitPrereq`); at
->     runtime the held trait's Info is swapped to the highest level the player qualifies for. The curator FOLDS the
->     whole line into the held (entry) trait, emitting each level's value-set gated by a **mutually-exclusive clean
->     condition** — `enabled: {tech: L.prereq}` **and not** the next level's prereq tech — so exactly one level lights
->     for any tech state. (Worked example: England holds `TRAIT_NOMAD1` + `TECH_RENAISSANCE_LIFESTYLE` ⇒ effective
->     level `NOMADIC2`; its `lessYieldThreshold` production=0 replaces NOMAD1's 5.)
+>   - **Developing line — do NOT auto-develop (verified 2026-06-25).** A `PromotionLine` is a chain of trait *levels*
+>     (`TRAIT_NOMAD1`→`TRAIT_NOMADIC2`→`…`, ordered by `iLinePriority`, each with a `PrereqTech`+`TraitPrereq`), but
+>     **researching a level's `PrereqTech` does NOT advance the held trait** — proven by dump: a leader holding
+>     `TRAIT_INDUSTRIOUS1` reads `extraYieldThreshold=7` (level 1) despite holding `TECH_RENAISSANCE_LIFESTYLE`
+>     (the level-2 prereq, which would give 6). The **held trait `/state` reports IS the authoritative level**; the
+>     cascade uses its payload as-is. ⚠️ A tech-gated "collapse" that folds higher levels into the entry is the WRONG
+>     model (it re-levels traits the engine leaves alone) — it was tried and reverted. Levels advance by some other
+>     gameplay progression, not by tech alone; until that's mapped, trust `/state`.
 >   - **Complete, not pre-filtered.** The JSON carries ALL values — positive AND negative — plus the `negativeTrait`
 >     flag, so the runtime gates below have the full data to act on. The curator never bakes in a pure/no-negative pass.
 > - **CLEAN gates → cascade, at eval (its ordinary condition-eval, NOT hack emulation).**
->   - **Developing tech-gates** — the mutually-exclusive `enabled:{tech}` conditions above; normal `Applies` evaluation
->     picks the live level. (Every family reader must honor the gate — incl. the threshold readers.)
->   - **`PURE_TRAITS` gate** — when `GAMEOPTION_LEADER_PURE_TRAITS` is live, zero each trait value whose **sign opposes
->     the trait's alignment**: a `negativeTrait`'s positive values drop, a positive trait's negative values drop
->     (engine `CvTraitInfo::getHealth/getHappiness/…`, ~15 getters keyed on `isNegativeTrait()` + value sign). A clean
->     option+flag rule over the complete JSON.
+>   - **`PURE_TRAITS` gate (implemented)** — when `GAMEOPTION_LEADER_PURE_TRAITS` is live, drop each trait value whose
+>     alignment opposes the trait's: a `negativeTrait`'s **upside** values drop and a positive trait's **downside**
+>     values drop (engine `CvTraitInfo` getters keyed on `isNegativeTrait()` + sign). Concretely for thresholds: an
+>     `extraYieldThreshold` is an UPSIDE → dropped from a negative trait; a `lessYieldThreshold` is a DOWNSIDE →
+>     dropped from a positive trait (engine `getLessYieldThreshold` 2132-2147 sets it to −1). The cascade reads the
+>     `negativeTrait` flag (`NegativeTraits*` in the repo) + the live option. This is how "parity comes to us": a
+>     legacy behaviour we judge correct is reproduced by a clean gate, never re-implemented as the hack.
 
 **`production` vs `buildRate`.** `production` = `getYieldRate100(PRODUCTION)` (total city output — scales every
 build every turn; a flat ADD or city-wide percent). `buildRate` = `getProductionModifier(eItem)` (shrinks the
