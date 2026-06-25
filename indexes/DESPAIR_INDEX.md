@@ -156,7 +156,33 @@ layer above it nodded along.
 
 ---
 
-## 8. The Bear Patrol — 62 cp
+## 8. The Lumber Mill That Remembers When It Was Born — 70 cp
+
+A building's bonus/vicinity yield — *"+1 production for a Lumber Mill while you have Prime Timber
+nearby"* — depended not on whether you currently **had** the building and the bonus, but on whether the
+building happened to be standing at the **exact instant the bonus blinked into existence.**
+`doVicinityBonus()` was a poor-man's event: rather than ask each turn *"do I have both?"*, it fired a
+one-time **±1 stamp** only on the *transition* — the turn a bonus became present — onto whatever
+buildings were active right then, and persisted that stamp in the savegame forever. Connect the timber,
+*then* build the mill, and the transition had already fired with no mill to receive it: **+0,
+permanently.** Build the mill, *then* connect the timber: +1. Same city, same building, same resource —
+the yield decided by the **order** you acquired them, frozen into the save.
+
+The cherry: because the `−1` also only fired on the *loss* transition, against whoever was active *then*,
+a mill built after the bonus and still standing when it was later lost got stamped **−1** — docked
+production for a resource it had never once benefited from.
+
+And it corrupted the **base** yield — all three of food, production, commerce — so it quietly poisoned
+growth, build times, and the whole commerce→gold/research/culture split downstream. A slow, invisible,
+order-dependent rot. Same disease as #2: a cache whose invalidation was a vibe.
+
+*Status: fixed in the rework — the yield is now a pure function of current state (active building ×
+present bonus), recomputed every read, so construction order is irrelevant and the stamp's savegame
+ghost is abandoned as dead data.*
+
+---
+
+## 9. The Bear Patrol — 62 cp
 
 The world's city defenders kept abandoning their posts to duel wildlife. Garrison sorties
 fire at a **55% odds bar** against any "enemy" within reach — and in the prehistoric era,
@@ -177,7 +203,7 @@ The bears are now mostly unbothered, and exclusively by professionals.*
 
 ---
 
-## 9. Education Secedes From the Union — 61 cp
+## 10. Education Secedes From the Union — 61 cp
 
 Every property in the game runs on one rule: a building switches on when the property
 crosses a threshold and stays on — cumulatively, to infinity. Crime, disease, pollution,
@@ -206,7 +232,7 @@ crime; `BLACKENED_SKIES` disables instead of demolishing. The breakaway republic
 
 ---
 
-## 10. The Eternal Anesthesiologist — 60 cp
+## 11. The Eternal Anesthesiologist — 60 cp
 
 `AI_heal` returned `true` for a heal no-op when the unit *couldn't heal*, so units
 re-decided "heal in city" **49–196 times per turn** — and in rare alignments, the turn
@@ -219,7 +245,7 @@ pressing it 195 more times. Except occasionally the building never lets you leav
 
 ---
 
-## 11. The Wonder That Builds Character — 59 cp
+## 12. The Wonder That Builds Character — 59 cp
 
 A National Wonder reaches into your civilization and hands it a personality. Build the right
 one and you don't get a bonus — you acquire a *trait*, the same kind of thing a leader is
@@ -244,7 +270,7 @@ dares touch it. The wonder giveth a personality; the wrecking ball taketh it awa
 
 ---
 
-## 12. The Trait in a Trenchcoat — 58 cp
+## 13. The Trait in a Trenchcoat — 58 cp
 
 There is no such thing as a "complex trait." There are 64 ordinary traits, each of which is
 secretly *two* traits standing on each other's shoulders in one `<Type>`. The vanilla
@@ -287,7 +313,7 @@ the other's filing cabinet mid-sentence.*
 
 ---
 
-## 13. The Settler's Phantom Mortgage — 57 cp
+## 14. The Settler's Phantom Mortgage — 57 cp
 
 Open a settler's `UnitInfo`, change its production cost, build a settler. The price barely
 moves. The number you edited (`iCost`) is real, but it is a sliver — the *actual* cost of a
@@ -320,7 +346,7 @@ founder's `cost.production`). A settler has never once been priced by its own da
 
 ---
 
-## 14. International Civil Asset Forfeiture — 55 cp
+## 15. International Civil Asset Forfeiture — 55 cp
 
 Foreign police cars were observed parked on the human player's **resource tiles**, mission
 hover proudly reading *"Maintain property control."* The mechanism: when a property-control
@@ -342,7 +368,7 @@ fortified. The uranium has been returned.*
 
 ---
 
-## 15. The Merger With No Undo (Bring a Boat) — 54 cp
+## 16. The Merger With No Undo (Bring a Boat) — 54 cp
 
 Size Matters lets you fuse three units into one bigger one. The merge stamped the new unit
 with an *inhibit-split* flag — and the only line in the entire codebase that ever cleared it
@@ -367,7 +393,7 @@ oscillation ever returns. Boats are once more optional.*
 
 ---
 
-## 16. The .vcxproj of Lies — 47 cp
+## 17. The .vcxproj of Lies — 47 cp
 
 The Visual Studio project file confidently states `PlatformToolset: v142`. The actual
 compiler is the **Microsoft Visual C++ Toolkit 2003** (MSVC 7.1). The project file drives
