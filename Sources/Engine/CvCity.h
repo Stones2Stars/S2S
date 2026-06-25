@@ -1742,6 +1742,7 @@ protected:
 	int* m_aiRiverPlotYield;
 	int* m_aiBaseYieldRate;
 	int* m_buildingExtraYield100;
+	int* m_aiBuildingBonusVicinityYield100; // squirrelBanana: PURE-FUNCTION bonus/vicinity building yield (recomputed every read, NOT serialized, NOT the stale m_aiExtraYield edge-cache) -- #vicinity-build-order fix
 	int* m_buildingYieldMod;
 	int* m_buildingCommerceMod;
 	int* m_aiExtraYield;

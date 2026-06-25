@@ -58,6 +58,7 @@ CvCity::CvCity()
 	m_aiExtraYield = new int[NUM_YIELD_TYPES];
 	m_aiSpecialistYieldTotal = new int[NUM_YIELD_TYPES];
 	m_buildingExtraYield100 = new int[NUM_YIELD_TYPES];
+	m_aiBuildingBonusVicinityYield100 = new int[NUM_YIELD_TYPES];
 	m_buildingYieldMod = new int[NUM_YIELD_TYPES];
 	m_aiBaseYieldPerPopRate = new int[NUM_YIELD_TYPES];
 	m_aiYieldRateModifier = new int[NUM_YIELD_TYPES];
@@ -182,6 +183,7 @@ CvCity::~CvCity()
 	SAFE_DELETE_ARRAY(m_aiExtraYield);
 	SAFE_DELETE_ARRAY(m_aiSpecialistYieldTotal);
 	SAFE_DELETE_ARRAY(m_buildingExtraYield100);
+	SAFE_DELETE_ARRAY(m_aiBuildingBonusVicinityYield100);
 	SAFE_DELETE_ARRAY(m_buildingYieldMod);
 	SAFE_DELETE_ARRAY(m_buildingCommerceMod);
 	SAFE_DELETE_ARRAY(m_aiBaseYieldPerPopRate);
@@ -646,6 +648,7 @@ void CvCity::reset(int iID, PlayerTypes eOwner, int iX, int iY, bool bConstructo
 		m_aiExtraYield[iI] = 0;
 		m_aiSpecialistYieldTotal[iI] = 0;
 		m_buildingExtraYield100[iI] = 0;
+		m_aiBuildingBonusVicinityYield100[iI] = 0;
 		m_buildingYieldMod[iI] = 0;
 		m_aiBaseYieldPerPopRate[iI] = 0;
 		m_aiYieldRateModifier[iI] = 0;
@@ -11270,16 +11273,36 @@ void CvCity::changeBuildingExtraYield100(YieldTypes eYield, int iChange)
 int CvCity::getBuildingExtraYield100(YieldTypes eYield) const
 {
 	FASSERT_BOUNDS(0, NUM_YIELD_TYPES, eYield);
-	return m_buildingExtraYield100[eYield];
+	// squirrelBanana (#vicinity-build-order): the bonus/vicinity building yield as a PURE FUNCTION of current state,
+	// recomputed fresh here -- NOT read from the stale edge-cache (m_aBuildingYieldChange -> m_aiExtraYield), which is
+	// build-order-dependent (doVicinityBonus only stamped on a bonus-TRANSITION for already-active buildings, so a
+	// building constructed AFTER the bonus was connected was never credited -- forever). Pure recompute fixes that:
+	// active building x present (bonus|vicinity-bonus) x its yield change. Stored in a recompute-only holder (never
+	// serialized), so the legacy arrays stay as untouched dead data and the test save loads byte-identical.
+	int iBV = 0;
+	foreach_(const BuildingTypes eB, getHasBuildings())
+	{
+		if (!hasFullyActiveBuilding(eB)) continue;
+		const CvBuildingInfo& kB = GC.getBuildingInfo(eB);
+		for (int iBonus = 0; iBonus < GC.getNumBonusInfos(); ++iBonus)
+		{
+			if (hasBonus((BonusTypes)iBonus))         iBV += kB.getBonusYieldChanges((BonusTypes)iBonus, eYield);
+			if (hasVicinityBonus((BonusTypes)iBonus)) iBV += kB.getVicinityBonusYieldChanges((BonusTypes)iBonus, eYield);
+		}
+	}
+	m_aiBuildingBonusVicinityYield100[eYield] = iBV * 100;
+	return m_buildingExtraYield100[eYield] + m_aiBuildingBonusVicinityYield100[eYield];
 }
 
 
 int CvCity::getExtraYield100(YieldTypes eYield) const
 {
 	FASSERT_BOUNDS(0, NUM_YIELD_TYPES, eYield);
+	// m_aiExtraYield (the stale corp + event + edge-stamp munge) is DELIBERATELY NOT read -- see getBuildingExtraYield100
+	// / squirrelBanana. The bonus/vicinity building yield is the pure-function holder; corp/event city-yields ride in
+	// m_aiExtraYield and are dropped (acceptable: parity on a correct, build-order-independent base is the goal, and no
+	// event data sets building yields anyway).
 	return (
-		m_aiExtraYield[eYield] * 100
-		+
 		getBuildingExtraYield100(eYield)
 		+
 		getBaseYieldPerPopRate(eYield) * getPopulation()
@@ -22300,6 +22323,7 @@ void CvCity::clearModifierTotals()
 		m_aiExtraYield[iI] = 0;
 		m_aiSpecialistYieldTotal[iI] = 0;
 		m_buildingExtraYield100[iI] = 0;
+		m_aiBuildingBonusVicinityYield100[iI] = 0;
 		m_buildingYieldMod[iI] = 0;
 	}
 
