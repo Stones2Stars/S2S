@@ -1602,6 +1602,29 @@ namespace
 			}
 			o["yields"] = picojson::value(kYields);
 
+			// Per-trait PRODUCTION yield-threshold payload over the owner's HELD traits — maps a player
+			// extra/less-threshold accumulator (updateExtra/LessYieldThreshold = MIN positive over hasTrait)
+			// to its SOURCE trait, so a curated trait value can be diffed against the engine's trait payload.
+			{
+				const CvPlayer& kThP = GET_PLAYER(pCity->getOwner());
+				picojson::value::array traitThresh;
+				for (int t = 0; t < GC.getNumTraitInfos(); ++t)
+				{
+					if (!kThP.hasTrait((TraitTypes)t)) continue;
+					const CvTraitInfo& kTr = GC.getTraitInfo((TraitTypes)t);
+					const int iLes = kTr.getLessYieldThreshold(YIELD_PRODUCTION);
+					const int iExt = kTr.getExtraYieldThreshold(YIELD_PRODUCTION);
+					if (iLes == 0 && iExt == 0) continue;       // only traits carrying a production threshold
+					picojson::value::object te;
+					te["trait"]     = picojson::value(std::string(kTr.getType()));
+					te["lessProd"]  = picojson::value((double)iLes);
+					te["extraProd"] = picojson::value((double)iExt);
+					te["negative"]  = picojson::value(kTr.isNegativeTrait());
+					traitThresh.push_back(picojson::value(te));
+				}
+				o["ownerTraitThresholds"] = picojson::value(traitThresh);
+			}
+
 			// PER-BUILDING legacy yield decomposition (calc-emulator-spec §5): each ACTIVE building's flat
 			// contribution (getBaseYieldRateFromBuilding100, x100 = YieldChange*100 + perPop*pop + techChange +
 			// dynamic) and its static percent (getYieldModifier) per yield, so StoneBase ATTRIBUTES the
