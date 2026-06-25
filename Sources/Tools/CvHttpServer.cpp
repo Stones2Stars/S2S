@@ -1681,6 +1681,12 @@ namespace
 					const int pct = bi.getYieldModifier(eY);
 					e[aYK[f][0]] = picojson::value((double)flat);
 					e[aYK[f][1]] = picojson::value((double)pct);
+						if (f == 1) {   // PRODUCTION flat COMPONENT split (debug: static/dynamic/perPop/tech of a building-flat divergence)
+							e["prodStatic100"]  = picojson::value((double)(bi.getYieldChange(eY) * 100));
+							e["prodDynamic100"] = picojson::value((double)(pCity->getBuildingYieldChange((BuildingTypes)b, eY) * 100));
+							e["prodPerPop100"]  = picojson::value((double)(bi.getYieldPerPopChange(eY) * iPopBY));
+							e["prodTech100"]    = picojson::value((double)GET_TEAM(eTeamBY).getBuildingYieldTechChange(eY, (BuildingTypes)b));
+						}
 					if (flat || pct) bAny = true;
 				}
 				// COMMERCE SPLIT (gold/research/culture/espionage) flat100 + pct -- only non-zero
