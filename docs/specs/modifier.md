@@ -119,6 +119,16 @@ reversible — it can be lost).
 both ways at parse so the machine reads top-down. Any "land it on the target" is a **parse transform**, never an
 authored shape.
 
+> **⛔ Trait modifier sources — pick the active set by the OPTION, never the id (kraken-resilience, owner 2026-06-25).**
+> A leader's traits resolve to ONE `CvTraitInfo` table from *either* its simple set (`traits/simple/`, the
+> `DefaultTraits`) *or* its complex/Thunderbrd set (`traits/complex/`, the `DefaultComplexTraits`), chosen at runtime
+> by **`GAMEOPTION_LEADER_COMPLEX_TRAITS`** (the curator carries both, pruned by that option's `loadPrune`). The two
+> sets share **~64 colliding type ids**, so a consumer reading a trait's modifier families MUST select the active set
+> from the **live game option (asserted via `/state`)** — NEVER infer it from a trait id's spelling (a `…1`-suffixed id
+> is not "simple") nor from file load-order. Using the wrong file silently yields wrong magnitudes — this was the exact
+> `modPlayer` yield divergence that proved the rule. (The enabler is unaffected: it reads trait *presence*, which
+> `/state` already resolves to the active set; only the modifier cascade reads trait *family values*.)
+
 **`production` vs `buildRate`.** `production` = `getYieldRate100(PRODUCTION)` (total city output — scales every
 build every turn; a flat ADD or city-wide percent). `buildRate` = `getProductionModifier(eItem)` (shrinks the
 COST of a SPECIFIC item, never a per-turn yield), sub-shapes `buildRate.self` /

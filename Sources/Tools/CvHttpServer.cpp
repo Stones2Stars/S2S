@@ -983,6 +983,88 @@ namespace
 		return CvString(picojson::value(root).serialize().c_str());
 	}
 
+	// Decompose a city's getPlotYield (the basePlotYield base term) into the NAMED addends of CvPlot::calculateYield
+	// (CvPlot.cpp:8320; legacy-value-calc-map §10.1), each summed over the city's WORKED plots. Emitted on
+	// /computed/cities/yields so (a) the external calculator localises a basePlotYield divergence to ONE named source
+	// instead of guessing, and (b) the in-engine shadow knows exactly which addend it replaces at cutover. The `total`
+	// field equals getPlotYield(eYield) (the same plots, the same per-plot calc), so it reconciles the parts.
+	picojson::value::object workedPlotYieldDecomposition(const CvCity* pCity, YieldTypes eYield)
+	{
+		const TeamTypes eTeam = pCity->getTeam();
+		const CvPlayer& kOwner = GET_PLAYER(pCity->getOwner());
+		const CvYieldInfo& kYield = GC.getYieldInfo(eYield);
+
+		int natureYield = 0, extraYield = 0, cityCentreChange = 0, populationChange = 0;
+		int playerTerrainChange = 0, seaPlotYield = 0;
+		// workingCity (getYieldChangeAt, CvCity.cpp:10862) sub-decomposed into its four components, so a divergence
+		// localises to plot-type vs city-terrain vs river vs city-improvement rather than the lump.
+		int plotTypeChange = 0, cityTerrainChange = 0, riverPlotChange = 0, cityImprovementChange = 0;
+		int improvementChange = 0, routeChange = 0, goldenAgeYield = 0, total = 0;
+
+		for (int iPlot = 0; iPlot < pCity->getNumCityPlots(); ++iPlot)
+		{
+			if (!pCity->isWorkingPlot(iPlot)) continue;
+			const CvPlot* pPlot = pCity->getCityIndexPlot(iPlot);
+			if (pPlot == NULL || pPlot->getTerrainType() == NO_TERRAIN) continue;
+
+			total       += pPlot->calculateYield(eYield);
+			natureYield += pPlot->calculateNatureYield(eYield, eTeam);
+			extraYield  += pPlot->getExtraYield(eYield);
+
+			const bool bCityCentre = (pPlot == pCity->plot());
+			if (bCityCentre)
+			{
+				cityCentreChange += kYield.getCityChange();
+				if (kYield.getPopulationChangeDivisor() != 0)
+					populationChange += pCity->getPopulation() / kYield.getPopulationChangeDivisor();
+			}
+
+			if (pPlot->isRoute() || !pPlot->isImpassable(eTeam))
+			{
+				playerTerrainChange += kOwner.getTerrainYieldChange(pPlot->getTerrainType(), eYield);
+				if (pPlot->isWater()) seaPlotYield += kOwner.getSeaPlotYield(eYield);
+				const CvCity* pWorkingCity = pPlot->getWorkingCity();
+				if (pWorkingCity != NULL)
+				{
+					plotTypeChange    += pWorkingCity->getPlotYieldChange(pPlot->getPlotType(), eYield);
+					cityTerrainChange += pWorkingCity->getTerrainYieldChange(pPlot->getTerrainType(), eYield);
+					if (pPlot->isRiver()) riverPlotChange += pWorkingCity->getRiverPlotYield(eYield);
+					const ImprovementTypes eImp = pPlot->getImprovementType();
+					if (eImp != NO_IMPROVEMENT) cityImprovementChange += pWorkingCity->getImprovementYieldChange(eImp, eYield);
+				}
+			}
+
+			if (kOwner.isGoldenAge() && pPlot->calculateYield(eYield) >= kYield.getGoldenAgeYieldThreshold())
+				goldenAgeYield += kYield.getGoldenAgeYield();
+
+			if (!bCityCentre)
+			{
+				const ImprovementTypes eImprovement = pPlot->getImprovementType();
+				if (eImprovement != NO_IMPROVEMENT)
+					improvementChange += pPlot->calculateImprovementYieldChange(eImprovement, eYield, pCity->getOwner());
+				const RouteTypes eRoute = pPlot->getRouteType();
+				if (eRoute != NO_ROUTE) routeChange += GC.getRouteInfo(eRoute).getYieldChange(eYield);
+			}
+		}
+
+		picojson::value::object decomposition;
+		decomposition["total"]            = picojson::value((double)total);
+		decomposition["nature"]           = picojson::value((double)natureYield);
+		decomposition["extra"]            = picojson::value((double)extraYield);
+		decomposition["cityChange"]       = picojson::value((double)cityCentreChange);
+		decomposition["popChange"]        = picojson::value((double)populationChange);
+		decomposition["playerTerrain"]    = picojson::value((double)playerTerrainChange);
+		decomposition["seaPlot"]          = picojson::value((double)seaPlotYield);
+		decomposition["plotTypeChange"]   = picojson::value((double)plotTypeChange);
+		decomposition["cityTerrain"]      = picojson::value((double)cityTerrainChange);
+		decomposition["riverPlot"]        = picojson::value((double)riverPlotChange);
+		decomposition["cityImprovement"]  = picojson::value((double)cityImprovementChange);
+		decomposition["improvement"]      = picojson::value((double)improvementChange);
+		decomposition["route"]            = picojson::value((double)routeChange);
+		decomposition["goldenAge"]        = picojson::value((double)goldenAgeYield);
+		return decomposition;
+	}
+
 	// ---- /state slice renderers: RAW inputs only (no drycalc target ever). iPlayerFilter < 0 == all alive
 	// players; else just that one. City ids are not unique across empires, so each row carries owner+id (cities
 	// reuse extractCity, which stamps owner/id/name/x/y). See docs/specs/http-endpoints.md. ----
@@ -1449,6 +1531,9 @@ namespace
 				// (extraYield100 - extraBuildingYield100)/100 == corporationYield + Σ buildingYieldChange -- fully attributable.
 				e["corporationYield"] = picojson::value((double)pCity->getCorporationYield(eY));
 				e["legacy100"]     = picojson::value((double)pCity->getYieldRate100(eY));  // ground truth (x100)
+				// getPlotYield (basePlotYield) decomposed into its named CvPlot::calculateYield addends over worked
+				// plots, so the calculator localises a divergence to ONE source and the shadow knows what to replace.
+				e["plotDecomp"] = picojson::value(workedPlotYieldDecomposition(pCity, eY));
 				kYields.push_back(picojson::value(e));
 			}
 			o["yields"] = picojson::value(kYields);
