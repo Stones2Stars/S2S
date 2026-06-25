@@ -1004,6 +1004,12 @@ namespace
 		// divergence localises to base/riverSide/irrigated/route(improvement's per-route bump)/player(trait+civic+
 		// building-global accumulator)/team(improvement TechYieldChanges) rather than the lump.
 		int impBase = 0, impRiverSide = 0, impIrrigated = 0, impRoute = 0, impPlayer = 0, impTeam = 0, impBonus = 0;
+		// ExtraYield/LessYield player threshold (calculateYield 8393-8401): +/- EXTRA_YIELD per plot whose RUNNING
+		// pre-improvement yield clears the player's extra/less threshold (e.g. Industrious prod>=7 +1, Nomad prod>=5 -1).
+		int thresholdYield = 0;
+		const int iExtraYield = GC.getDefineINT("EXTRA_YIELD");
+		const int iExtraThreshold = kOwner.getExtraYieldThreshold(eYield);
+		const int iLessThreshold  = kOwner.getLessYieldThreshold(eYield);
 
 		for (int iPlot = 0; iPlot < pCity->getNumCityPlots(); ++iPlot)
 		{
@@ -1036,6 +1042,28 @@ namespace
 					const ImprovementTypes eImp = pPlot->getImprovementType();
 					if (eImp != NO_IMPROVEMENT) cityImprovementChange += pWorkingCity->getImprovementYieldChange(eImp, eYield);
 				}
+			}
+
+			// Player extra/less-yield threshold (8393-8401): replicate the RUNNING pre-improvement iYield (nature +
+			// extra + centre + reachable adds) and apply EXTRA_YIELD if it clears the player's threshold.
+			if (iExtraThreshold > 0 || iLessThreshold > 0)
+			{
+				int iRun = pPlot->calculateNatureYield(eYield, eTeam) + pPlot->getExtraYield(eYield);
+				if (bCityCentre)
+				{
+					iRun += kYield.getCityChange();
+					if (kYield.getPopulationChangeDivisor() != 0)
+						iRun += pCity->getPopulation() / kYield.getPopulationChangeDivisor();
+				}
+				if (pPlot->isRoute() || !pPlot->isImpassable(eTeam))
+				{
+					iRun += kOwner.getTerrainYieldChange(pPlot->getTerrainType(), eYield);
+					if (pPlot->isWater()) iRun += kOwner.getSeaPlotYield(eYield);
+					const CvCity* pWC = pPlot->getWorkingCity();
+					if (pWC != NULL) iRun += pWC->getYieldChangeAt(pPlot, eYield);
+				}
+				if (iExtraThreshold > 0 && iRun >= iExtraThreshold) thresholdYield += iExtraYield;
+				if (iLessThreshold  > 0 && iRun >= iLessThreshold)  thresholdYield -= iExtraYield;
 			}
 
 			if (kOwner.isGoldenAge() && pPlot->calculateYield(eYield) >= kYield.getGoldenAgeYieldThreshold())
@@ -1086,6 +1114,13 @@ namespace
 		decomposition["impBonus"]         = picojson::value((double)impBonus);
 		decomposition["route"]            = picojson::value((double)routeChange);
 		decomposition["goldenAge"]        = picojson::value((double)goldenAgeYield);
+		decomposition["threshold"]        = picojson::value((double)thresholdYield);
+		// Self-check: total minus every named addend. A non-zero residual = an un-decomposed calculateYield
+		// component (landmark / city min-floor / per-plot max(0) clamp on a net-negative plot) still to name.
+		const int named = natureYield + extraYield + cityCentreChange + populationChange + playerTerrainChange
+			+ seaPlotYield + plotTypeChange + cityTerrainChange + riverPlotChange + cityImprovementChange
+			+ improvementChange + routeChange + goldenAgeYield + thresholdYield;
+		decomposition["residual"]         = picojson::value((double)(total - named));
 		return decomposition;
 	}
 
