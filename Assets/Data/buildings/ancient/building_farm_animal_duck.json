@@ -37,12 +37,14 @@
     {
      "type": "BONUS_POULTRY",
      "scope": "city",
-     "connection": "vicinity"
+     "connection": "vicinity",
+     "vicinity": "connected"
     },
     {
      "type": "BONUS_APPLE",
      "scope": "city",
-     "connection": "vicinity"
+     "connection": "vicinity",
+     "vicinity": "connected"
     }
    ],
    "dormant": [

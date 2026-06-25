@@ -25,7 +25,8 @@
     {
      "type": "BONUS_OIL",
      "scope": "city",
-     "connection": "vicinity"
+     "connection": "vicinity",
+     "vicinity": "connected"
     },
     {
      "any": [

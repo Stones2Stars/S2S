@@ -67,7 +67,8 @@
       "type": "BONUS_COPPER_INGOTS",
       "scope": "city",
       "connection": "vicinity",
-      "min": 1
+      "min": 1,
+      "vicinity": "connected"
      }
     },
     {
@@ -76,7 +77,8 @@
       "type": "BONUS_LEAD_INGOTS",
       "scope": "city",
       "connection": "vicinity",
-      "min": 1
+      "min": 1,
+      "vicinity": "connected"
      }
     }
    ]

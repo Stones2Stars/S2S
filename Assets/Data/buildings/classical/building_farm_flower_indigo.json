@@ -38,7 +38,8 @@
     {
      "type": "BONUS_INDIGO",
      "scope": "city",
-     "connection": "vicinity"
+     "connection": "vicinity",
+     "vicinity": "connected"
     }
    ],
    "dormant": [

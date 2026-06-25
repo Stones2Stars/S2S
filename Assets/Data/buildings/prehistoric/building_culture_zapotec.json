@@ -43,7 +43,8 @@
     {
      "type": "BONUS_GOLD_ORE",
      "scope": "city",
-     "connection": "vicinity"
+     "connection": "vicinity",
+     "vicinity": "owned"
     }
    ]
   }

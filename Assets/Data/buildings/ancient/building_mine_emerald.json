@@ -31,12 +31,14 @@
     {
      "type": "BONUS_JADE",
      "scope": "city",
-     "connection": "vicinity"
+     "connection": "vicinity",
+     "vicinity": "connected"
     },
     {
      "type": "BONUS_LEAD_ORE",
      "scope": "city",
-     "connection": "vicinity"
+     "connection": "vicinity",
+     "vicinity": "owned"
     }
    ],
    "dormant": [

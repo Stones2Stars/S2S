@@ -13,7 +13,11 @@
     "TECH_STEAM_POWER",
     {
      "any": [
-      "HAS_COAST",
+      {
+       "HAS_COAST": {
+        "minArea": 10
+       }
+      },
       "HAS_RIVER"
      ]
     },

@@ -41,12 +41,14 @@
     {
      "type": "BONUS_ELEPHANTS",
      "scope": "city",
-     "connection": "vicinity"
+     "connection": "vicinity",
+     "vicinity": "connected"
     },
     {
      "type": "BONUS_BISON",
      "scope": "city",
-     "connection": "vicinity"
+     "connection": "vicinity",
+     "vicinity": "connected"
     }
    ],
    "dormant": [

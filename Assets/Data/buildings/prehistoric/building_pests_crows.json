@@ -37,12 +37,14 @@
       {
        "type": "BONUS_CARCASS",
        "scope": "city",
-       "connection": "vicinity"
+       "connection": "vicinity",
+       "vicinity": "connected"
       },
       {
        "type": "BONUS_GRAINS",
        "scope": "city",
-       "connection": "vicinity"
+       "connection": "vicinity",
+       "vicinity": "connected"
       }
      ]
     }

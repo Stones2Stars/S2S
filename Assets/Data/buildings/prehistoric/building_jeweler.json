@@ -92,7 +92,8 @@
       "type": "BONUS_TIN_WARES",
       "scope": "city",
       "connection": "vicinity",
-      "min": 1
+      "min": 1,
+      "vicinity": "connected"
      }
     },
     {
@@ -101,7 +102,8 @@
       "type": "BONUS_COPPER_WARES",
       "scope": "city",
       "connection": "vicinity",
-      "min": 1
+      "min": 1,
+      "vicinity": "connected"
      }
     },
     {
@@ -110,7 +112,8 @@
       "type": "BONUS_IVORY",
       "scope": "city",
       "connection": "vicinity",
-      "min": 1
+      "min": 1,
+      "vicinity": "connected"
      }
     },
     {
@@ -119,7 +122,8 @@
       "type": "BONUS_BEADS",
       "scope": "city",
       "connection": "vicinity",
-      "min": 1
+      "min": 1,
+      "vicinity": "connected"
      }
     },
     {
@@ -128,7 +132,8 @@
       "type": "BONUS_PEARLS",
       "scope": "city",
       "connection": "vicinity",
-      "min": 1
+      "min": 1,
+      "vicinity": "connected"
      }
     },
     {
@@ -137,7 +142,8 @@
       "type": "BONUS_BRASS_WARES",
       "scope": "city",
       "connection": "vicinity",
-      "min": 1
+      "min": 1,
+      "vicinity": "connected"
      }
     },
     {
@@ -146,7 +152,8 @@
       "type": "BONUS_SILVER_WARES",
       "scope": "city",
       "connection": "vicinity",
-      "min": 1
+      "min": 1,
+      "vicinity": "connected"
      }
     },
     {
@@ -155,7 +162,8 @@
       "type": "BONUS_GEMSTONE",
       "scope": "city",
       "connection": "vicinity",
-      "min": 1
+      "min": 1,
+      "vicinity": "connected"
      }
     },
     {
@@ -164,7 +172,8 @@
       "type": "BONUS_GOLD_WARES",
       "scope": "city",
       "connection": "vicinity",
-      "min": 1
+      "min": 1,
+      "vicinity": "connected"
      }
     },
     {
@@ -173,7 +182,8 @@
       "type": "BONUS_ELECTRUM_WARES",
       "scope": "city",
       "connection": "vicinity",
-      "min": 1
+      "min": 1,
+      "vicinity": "connected"
      }
     },
     {
@@ -182,7 +192,8 @@
       "type": "BONUS_PLATINUM_WARES",
       "scope": "city",
       "connection": "vicinity",
-      "min": 1
+      "min": 1,
+      "vicinity": "connected"
      }
     }
    ]

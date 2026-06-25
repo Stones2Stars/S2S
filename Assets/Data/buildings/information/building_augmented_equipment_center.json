@@ -60,7 +60,8 @@
       "type": "BONUS_MICROGENERATORS",
       "scope": "city",
       "connection": "vicinity",
-      "min": 1
+      "min": 1,
+      "vicinity": "connected"
      }
     },
     {
@@ -69,7 +70,8 @@
       "type": "BONUS_ORGANIC_PHOTONIC_CELLS",
       "scope": "city",
       "connection": "vicinity",
-      "min": 1
+      "min": 1,
+      "vicinity": "connected"
      }
     },
     {
@@ -78,7 +80,8 @@
       "type": "BONUS_NEUROIMPLANTS",
       "scope": "city",
       "connection": "vicinity",
-      "min": 1
+      "min": 1,
+      "vicinity": "connected"
      }
     },
     {
@@ -87,7 +90,8 @@
       "type": "BONUS_METAMATERIALS",
       "scope": "city",
       "connection": "vicinity",
-      "min": 1
+      "min": 1,
+      "vicinity": "connected"
      }
     }
    ]

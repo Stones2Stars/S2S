@@ -36,12 +36,14 @@
     {
      "type": "BONUS_POULTRY",
      "scope": "city",
-     "connection": "vicinity"
+     "connection": "vicinity",
+     "vicinity": "owned"
     },
     {
      "type": "BONUS_LLAMA",
      "scope": "city",
-     "connection": "vicinity"
+     "connection": "vicinity",
+     "vicinity": "owned"
     }
    ],
    "dormant": [

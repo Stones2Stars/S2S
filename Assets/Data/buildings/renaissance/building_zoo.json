@@ -99,7 +99,8 @@
       "type": "BONUS_DEER",
       "scope": "city",
       "connection": "vicinity",
-      "min": 1
+      "min": 1,
+      "vicinity": "connected"
      }
     },
     {
@@ -108,7 +109,8 @@
       "type": "BONUS_ELEPHANTS",
       "scope": "city",
       "connection": "vicinity",
-      "min": 1
+      "min": 1,
+      "vicinity": "connected"
      }
     },
     {
@@ -117,7 +119,8 @@
       "type": "BONUS_BEAVERS",
       "scope": "city",
       "connection": "vicinity",
-      "min": 1
+      "min": 1,
+      "vicinity": "connected"
      }
     },
     {
@@ -126,7 +129,8 @@
       "type": "BONUS_BISON",
       "scope": "city",
       "connection": "vicinity",
-      "min": 1
+      "min": 1,
+      "vicinity": "connected"
      }
     },
     {
@@ -135,7 +139,8 @@
       "type": "BONUS_CAMEL",
       "scope": "city",
       "connection": "vicinity",
-      "min": 1
+      "min": 1,
+      "vicinity": "connected"
      }
     },
     {
@@ -144,7 +149,8 @@
       "type": "BONUS_RABBIT",
       "scope": "city",
       "connection": "vicinity",
-      "min": 1
+      "min": 1,
+      "vicinity": "connected"
      }
     },
     {
@@ -153,7 +159,8 @@
       "type": "BONUS_MAMMOTH",
       "scope": "city",
       "connection": "vicinity",
-      "min": 1
+      "min": 1,
+      "vicinity": "connected"
      }
     },
     {
@@ -162,7 +169,8 @@
       "type": "BONUS_LLAMA",
       "scope": "city",
       "connection": "vicinity",
-      "min": 1
+      "min": 1,
+      "vicinity": "connected"
      }
     },
     {
@@ -171,7 +179,8 @@
       "type": "BONUS_KANGAROO",
       "scope": "city",
       "connection": "vicinity",
-      "min": 1
+      "min": 1,
+      "vicinity": "connected"
      }
     },
     {
@@ -180,7 +189,8 @@
       "type": "BONUS_PARROTS",
       "scope": "city",
       "connection": "vicinity",
-      "min": 1
+      "min": 1,
+      "vicinity": "connected"
      }
     },
     {
@@ -189,7 +199,8 @@
       "type": "BONUS_LIZARDS",
       "scope": "city",
       "connection": "vicinity",
-      "min": 1
+      "min": 1,
+      "vicinity": "connected"
      }
     }
    ]

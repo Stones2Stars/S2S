@@ -59,7 +59,8 @@
       "type": "BONUS_VEGETABLES",
       "scope": "city",
       "connection": "vicinity",
-      "min": 1
+      "min": 1,
+      "vicinity": "connected"
      }
     },
     {
@@ -68,7 +69,8 @@
       "type": "BONUS_FRUIT",
       "scope": "city",
       "connection": "vicinity",
-      "min": 1
+      "min": 1,
+      "vicinity": "connected"
      }
     },
     {
@@ -77,7 +79,8 @@
       "type": "BONUS_SAUSAGE",
       "scope": "city",
       "connection": "vicinity",
-      "min": 1
+      "min": 1,
+      "vicinity": "connected"
      }
     },
     {
@@ -86,7 +89,8 @@
       "type": "BONUS_BREAD",
       "scope": "city",
       "connection": "vicinity",
-      "min": 1
+      "min": 1,
+      "vicinity": "connected"
      }
     },
     {
@@ -95,7 +99,8 @@
       "type": "BONUS_RAW_FISH",
       "scope": "city",
       "connection": "vicinity",
-      "min": 1
+      "min": 1,
+      "vicinity": "connected"
      }
     },
     {
@@ -104,7 +109,8 @@
       "type": "BONUS_SHELLFISH",
       "scope": "city",
       "connection": "vicinity",
-      "min": 1
+      "min": 1,
+      "vicinity": "connected"
      }
     },
     {
@@ -113,7 +119,8 @@
       "type": "BONUS_SEASONING",
       "scope": "city",
       "connection": "vicinity",
-      "min": 1
+      "min": 1,
+      "vicinity": "connected"
      }
     },
     {
@@ -122,7 +129,8 @@
       "type": "BONUS_RAW_MEAT",
       "scope": "city",
       "connection": "vicinity",
-      "min": 1
+      "min": 1,
+      "vicinity": "connected"
      }
     },
     {
@@ -131,7 +139,8 @@
       "type": "BONUS_CHEESE",
       "scope": "city",
       "connection": "vicinity",
-      "min": 1
+      "min": 1,
+      "vicinity": "connected"
      }
     },
     {
@@ -140,7 +149,8 @@
       "type": "BONUS_EGGS",
       "scope": "city",
       "connection": "vicinity",
-      "min": 1
+      "min": 1,
+      "vicinity": "connected"
      }
     }
    ]

@@ -10,7 +10,11 @@
  "requires": {
   "build": {
    "all": [
-    "HAS_COAST",
+    {
+     "HAS_COAST": {
+      "minArea": 10
+     }
+    },
     "TECH_BOAT_BUILDING",
     "TECH_SEDENTARY_LIFESTYLE",
     {

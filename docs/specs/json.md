@@ -135,8 +135,23 @@ scope. **Forcing a redundant `{type, scope}` only invites authoring bugs.** *(Pl
 - **presence** = `min: 1` ("have ≥ 1"). Authoring presence this way keeps it future-proof if a resource later
   gains amounts.
 - **count thresholds** — `min: N` (≥ N) and/or `max: N` (≤ N), both inclusive. Exact-N = `min` and `max` together.
-- `connection` (resources only) ∈ `"trade"` | `"vicinity"` | `"trade|vicinity"`. `vicinity` = present on any plot
-  in the city's current workable radius.
+- `connection` (resources only) ∈ `"trade"` | `"vicinity"` | `"trade|vicinity"`. `trade` = the city has the bonus via
+  the trade network (engine `hasBonus`). `vicinity` = the bonus is on a tile in the city's radius.
+- **`vicinity` DISCRIMINATOR** (owner ruling 2026-06-24) — `vicinity` **as a whole encompasses ALL tiles in radius**;
+  an optional sibling `vicinity:` field puts a discriminator **on top** to tighten WHICH tiles count (the
+  `VICINITY ⊇ WORKABLE ⊇ IS_WORKED` nesting of §3.5, applied to a bonus):
+  - **absent** = any tile in the radius (the loosest).
+  - `"owned"` = a tile **owned** by the city (the engine's `hasRawVicinityBonus`: centre-or-owned tile, **no**
+    connection/improvement) — e.g. a `RawVicinityBonus` building like a fishing Net.
+  - `"worked"` = a tile a citizen **works** this turn (IS_WORKED).
+  - `"connected"` = the bonus is **obtained** — owned + valid + connected to the city (the engine's `hasVicinityBonus`)
+    — e.g. a `VicinityBonus` building like a Mine. *(`VicinityBonus` and `RawVicinityBonus` have OPPOSITE strictness,
+    so they are distinct discriminators, never folded.)*
+
+  ```jsonc
+  { "type": "BONUS_SHRIMP",   "scope": "city", "connection": "vicinity", "vicinity": "owned" }      // raw presence on an owned tile
+  { "type": "BONUS_GOLD_ORE", "scope": "city", "connection": "vicinity", "vicinity": "connected" }  // must be obtained
+  ```
 - **`PROPERTY_*` band atom** `{type:PROPERTY_X, scope, min?, max?}` — its "count" is the city's property value;
   **absent `min` = no lower bound** (a max-only band), the one exception to the presence=`min:1` convention.
   Authored in `requires.operate`.
@@ -171,6 +186,9 @@ IGNORED**, never treated as false — retiring a system never spuriously disable
     `HAS_IRRIGATION` · `HAS_FEATURE` ("has *any* feature").
   - **plot city-relative state** (nested `VICINITY ⊇ WORKABLE ⊇ IS_WORKED`): `VICINITY` (in the city's workable
     radius) · `WORKABLE` (in radius and eligible to be worked) · `IS_WORKED` (a citizen works it this turn).
+  - **world:** `NO_NUKES` (the world no-nukes verdict — engine `isNoNukes()`; true under the UN ban, false once nukes
+    are enabled by anyone building the Manhattan Project). A `bAllowsNukes` building (Manhattan) carries
+    `requires.build.disabled: "NO_NUKES"` — it can't be built while nukes are forbidden.
   - **city / player:** `IS_CAPITAL` · `IS_GOVERNMENT_CENTER` · `HAS_POWER` · `HAS_STATE_RELIGION` · `STATE_RELIGION_IN_CITY`.
     These two are **DISTINCT** (owner ruling 2026-06-24): `IS_CAPITAL` = "the city is the player's capital" (engine
     `isCapital()`); `IS_GOVERNMENT_CENTER` = "the city holds a government-center building — Palace or a pseudo-palace"
@@ -179,7 +197,10 @@ IGNORED**, never treated as false — retiring a system never spuriously disable
     (line 2664): it rejects a gov-center building where one already exists, and has **no `isCapital` gate**.
 - **parameterized** `{ PREDICATE: param }`: `{HAS_FEATURE: FEATURE_X}` · `{HAS_TERRAIN: TERRAIN_X}` ·
   `{HAS_BONUS: BONUS_X}` · `{HAS_RELIGION: RELIGION_X}` · `{STATE_RELIGION: RELIGION_X}` · `{IS_HOLY_CITY: RELIGION_X}` ·
-  `{HAS_CORPORATION: CORPORATION_X}` · `{latitude:{min,max}}` · `{existedFor:{min:N}}` (turns since built).
+  `{HAS_CORPORATION: CORPORATION_X}` · `{latitude:{min,max}}` · `{existedFor:{min:N}}` (turns since built) ·
+  `{HAS_COAST:{minArea:N}}` (the city is adjacent to a water body of **≥ N tiles** — the engine's `isCoastal(N)`; a
+  bare `HAS_COAST` is `isCoastal` at the default coast threshold, so a building that needs a *larger* sea body carries
+  the size here. Curated from a water building's `bWater`+`iMinAreaSize`).
 - **membership sugar** `{ terrain|feature|bonus: [TYPE,…] }` = "the plot's terrain/feature/bonus is one of these";
   equivalent to an `any` of the matching `HAS_*` predicate.
 - **composition is the win:** a Martian peak is `{all:["IS_MARS","HAS_PEAK"]}`; coastal land

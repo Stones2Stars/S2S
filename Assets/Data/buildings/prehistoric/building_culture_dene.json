@@ -43,7 +43,8 @@
     {
      "type": "BONUS_SEA_LION_AND_SEAL",
      "scope": "city",
-     "connection": "vicinity"
+     "connection": "vicinity",
+     "vicinity": "owned"
     }
    ]
   }

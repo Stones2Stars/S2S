@@ -50,7 +50,8 @@
       "type": "BONUS_HATS",
       "scope": "city",
       "connection": "vicinity",
-      "min": 1
+      "min": 1,
+      "vicinity": "connected"
      }
     },
     {
@@ -59,7 +60,8 @@
       "type": "BONUS_SHOES",
       "scope": "city",
       "connection": "vicinity",
-      "min": 1
+      "min": 1,
+      "vicinity": "connected"
      }
     },
     {
@@ -68,7 +70,8 @@
       "type": "BONUS_JEWELRY",
       "scope": "city",
       "connection": "vicinity",
-      "min": 1
+      "min": 1,
+      "vicinity": "connected"
      }
     },
     {
@@ -77,7 +80,8 @@
       "type": "BONUS_MASKS",
       "scope": "city",
       "connection": "vicinity",
-      "min": 1
+      "min": 1,
+      "vicinity": "connected"
      }
     },
     {
@@ -86,7 +90,8 @@
       "type": "BONUS_OSTRICH_FEATHERS",
       "scope": "city",
       "connection": "vicinity",
-      "min": 1
+      "min": 1,
+      "vicinity": "connected"
      }
     }
    ]

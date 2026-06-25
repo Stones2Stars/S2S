@@ -19,7 +19,8 @@
     {
      "type": "BONUS_OIL",
      "scope": "city",
-     "connection": "vicinity"
+     "connection": "vicinity",
+     "vicinity": "owned"
     }
    ]
   }

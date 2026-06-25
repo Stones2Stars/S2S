@@ -20,7 +20,8 @@
     {
      "type": "BONUS_COCONUT",
      "scope": "city",
-     "connection": "vicinity"
+     "connection": "vicinity",
+     "vicinity": "connected"
     },
     "RELIGION_DRUIDIC_TRADITIONS"
    ]

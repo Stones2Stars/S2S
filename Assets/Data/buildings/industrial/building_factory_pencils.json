@@ -63,7 +63,8 @@
       "type": "BONUS_DYE",
       "scope": "city",
       "connection": "vicinity",
-      "min": 1
+      "min": 1,
+      "vicinity": "connected"
      }
     },
     {
@@ -72,7 +73,8 @@
       "type": "BONUS_RUBBER",
       "scope": "city",
       "connection": "vicinity",
-      "min": 1
+      "min": 1,
+      "vicinity": "connected"
      }
     }
    ]

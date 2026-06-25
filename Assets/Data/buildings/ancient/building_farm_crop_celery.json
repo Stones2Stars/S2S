@@ -30,12 +30,14 @@
     {
      "type": "BONUS_RICE",
      "scope": "city",
-     "connection": "vicinity"
+     "connection": "vicinity",
+     "vicinity": "connected"
     },
     {
      "type": "BONUS_SUGAR",
      "scope": "city",
-     "connection": "vicinity"
+     "connection": "vicinity",
+     "vicinity": "owned"
     }
    ],
    "dormant": [

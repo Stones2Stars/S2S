@@ -17,7 +17,8 @@
     {
      "type": "BONUS_OLIVES",
      "scope": "city",
-     "connection": "vicinity"
+     "connection": "vicinity",
+     "vicinity": "connected"
     },
     "RELIGION_DRUIDIC_TRADITIONS"
    ]

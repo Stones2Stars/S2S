@@ -96799,9 +96799,9 @@
 			</ReplacementBuildings>
 			<ObsoletesToBuilding>BUILDING_ATHLETIC_MEGACOMPLEX</ObsoletesToBuilding>
 			<PrereqOrBuildings>
-				<BuildingType>BUILDING_ANIMAL_TRAINER_HORSE</BuildingType>
-				<BuildingType>BUILDING_ANIMAL_TRAINER_CAMEL</BuildingType>
-				<BuildingType>BUILDING_ANIMAL_TRAINER_ELEPHANT</BuildingType>
+				<BuildingType>BUILDING_STABLE</BuildingType>
+				<BuildingType>BUILDING_KNIGHTS_STABLE</BuildingType>
+				<BuildingType>BUILDING_MODERN_STABLE</BuildingType>
 			</PrereqOrBuildings>
 			<iCost>455</iCost>
 			<iCostSizeModifier>2</iCostSizeModifier>

@@ -24,7 +24,8 @@
     {
      "type": "BONUS_MUREX",
      "scope": "city",
-     "connection": "vicinity"
+     "connection": "vicinity",
+     "vicinity": "owned"
     }
    ]
   }

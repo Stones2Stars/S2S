@@ -26,7 +26,8 @@
     {
      "type": "BONUS_SALT",
      "scope": "city",
-     "connection": "vicinity"
+     "connection": "vicinity",
+     "vicinity": "owned"
     }
    ],
    "dormant": [

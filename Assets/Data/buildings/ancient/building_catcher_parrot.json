@@ -30,7 +30,8 @@
     {
      "type": "BONUS_PARROTS",
      "scope": "city",
-     "connection": "vicinity"
+     "connection": "vicinity",
+     "vicinity": "connected"
     }
    ],
    "dormant": [

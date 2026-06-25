@@ -19,7 +19,8 @@
     {
      "type": "BONUS_MARBLE",
      "scope": "city",
-     "connection": "vicinity"
+     "connection": "vicinity",
+     "vicinity": "owned"
     }
    ]
   }

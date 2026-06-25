@@ -25,12 +25,14 @@
     {
      "type": "BONUS_MUSHROOMS",
      "scope": "city",
-     "connection": "vicinity"
+     "connection": "vicinity",
+     "vicinity": "connected"
     },
     {
      "type": "BONUS_BANANA",
      "scope": "city",
-     "connection": "vicinity"
+     "connection": "vicinity",
+     "vicinity": "connected"
     }
    ],
    "dormant": [

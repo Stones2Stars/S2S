@@ -97,7 +97,8 @@
       "type": "BONUS_BAMBOO",
       "scope": "city",
       "connection": "vicinity",
-      "min": 1
+      "min": 1,
+      "vicinity": "connected"
      }
     },
     {
@@ -106,7 +107,8 @@
       "type": "BONUS_WOOL",
       "scope": "city",
       "connection": "vicinity",
-      "min": 1
+      "min": 1,
+      "vicinity": "connected"
      }
     },
     {
@@ -115,7 +117,8 @@
       "type": "BONUS_FLAX_FIBERS",
       "scope": "city",
       "connection": "vicinity",
-      "min": 1
+      "min": 1,
+      "vicinity": "connected"
      }
     },
     {
@@ -124,7 +127,8 @@
       "type": "BONUS_COTTON_FIBERS",
       "scope": "city",
       "connection": "vicinity",
-      "min": 1
+      "min": 1,
+      "vicinity": "connected"
      }
     },
     {
@@ -133,7 +137,8 @@
       "type": "BONUS_SILK_FIBERS",
       "scope": "city",
       "connection": "vicinity",
-      "min": 1
+      "min": 1,
+      "vicinity": "connected"
      }
     },
     {
@@ -142,7 +147,8 @@
       "type": "BONUS_HEMP_FIBERS",
       "scope": "city",
       "connection": "vicinity",
-      "min": 1
+      "min": 1,
+      "vicinity": "connected"
      }
     }
    ],

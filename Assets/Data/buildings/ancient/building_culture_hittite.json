@@ -19,7 +19,8 @@
     {
      "type": "BONUS_COW",
      "scope": "city",
-     "connection": "vicinity"
+     "connection": "vicinity",
+     "vicinity": "owned"
     }
    ]
   }

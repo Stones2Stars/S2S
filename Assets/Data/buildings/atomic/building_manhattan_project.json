@@ -22,7 +22,8 @@
      "type": "MAPCATEGORY_EARTH",
      "scope": "plot"
     }
-   ]
+   ],
+   "disabled": "NO_NUKES"
   },
   "operate": {
    "all": [

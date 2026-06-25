@@ -74,7 +74,8 @@
       "type": "BONUS_REFRIGERATORS",
       "scope": "city",
       "connection": "vicinity",
-      "min": 1
+      "min": 1,
+      "vicinity": "connected"
      }
     },
     {
@@ -83,7 +84,8 @@
       "type": "BONUS_MICROWAVE_OVENS",
       "scope": "city",
       "connection": "vicinity",
-      "min": 1
+      "min": 1,
+      "vicinity": "connected"
      }
     },
     {
@@ -92,7 +94,8 @@
       "type": "BONUS_BLENDER",
       "scope": "city",
       "connection": "vicinity",
-      "min": 1
+      "min": 1,
+      "vicinity": "connected"
      }
     },
     {
@@ -101,7 +104,8 @@
       "type": "BONUS_WASHER_DRYER",
       "scope": "city",
       "connection": "vicinity",
-      "min": 1
+      "min": 1,
+      "vicinity": "connected"
      }
     },
     {
@@ -110,7 +114,8 @@
       "type": "BONUS_DISHWASHERS",
       "scope": "city",
       "connection": "vicinity",
-      "min": 1
+      "min": 1,
+      "vicinity": "connected"
      }
     },
     {
@@ -119,7 +124,8 @@
       "type": "BONUS_VACUUM_CLEANERS",
       "scope": "city",
       "connection": "vicinity",
-      "min": 1
+      "min": 1,
+      "vicinity": "connected"
      }
     }
    ]

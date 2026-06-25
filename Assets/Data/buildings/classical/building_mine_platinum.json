@@ -31,7 +31,8 @@
     {
      "type": "BONUS_PLATINUM_ORE",
      "scope": "city",
-     "connection": "vicinity"
+     "connection": "vicinity",
+     "vicinity": "connected"
     }
    ],
    "dormant": [

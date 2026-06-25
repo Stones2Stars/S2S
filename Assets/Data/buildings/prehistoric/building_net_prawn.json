@@ -37,12 +37,14 @@
     {
      "type": "BONUS_LOBSTER",
      "scope": "city",
-     "connection": "vicinity"
+     "connection": "vicinity",
+     "vicinity": "owned"
     },
     {
      "type": "BONUS_SHRIMP",
      "scope": "city",
-     "connection": "vicinity"
+     "connection": "vicinity",
+     "vicinity": "owned"
     }
    ],
    "dormant": [

@@ -5,7 +5,11 @@
  "requires": {
   "build": {
    "all": [
-    "HAS_COAST",
+    {
+     "HAS_COAST": {
+      "minArea": 10
+     }
+    },
     "BUILDING_HELLENIC_PANTHEON",
     "TECH_AESTHETICS",
     "TECH_SHIP_BUILDING",

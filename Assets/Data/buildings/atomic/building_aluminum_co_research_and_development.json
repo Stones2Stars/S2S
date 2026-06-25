@@ -35,7 +35,8 @@
       "type": "BONUS_COAL",
       "scope": "city",
       "connection": "vicinity",
-      "min": 1
+      "min": 1,
+      "vicinity": "connected"
      }
     },
     {
@@ -44,7 +45,8 @@
       "type": "BONUS_BAUXITE_ORE",
       "scope": "city",
       "connection": "vicinity",
-      "min": 1
+      "min": 1,
+      "vicinity": "connected"
      }
     }
    ]

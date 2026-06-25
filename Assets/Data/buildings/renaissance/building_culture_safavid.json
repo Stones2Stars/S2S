@@ -20,7 +20,8 @@
     {
      "type": "BONUS_POMEGRANATE",
      "scope": "city",
-     "connection": "vicinity"
+     "connection": "vicinity",
+     "vicinity": "owned"
     }
    ]
   }

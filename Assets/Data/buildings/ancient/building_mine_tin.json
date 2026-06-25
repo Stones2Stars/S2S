@@ -31,7 +31,8 @@
     {
      "type": "BONUS_TIN_ORE",
      "scope": "city",
-     "connection": "vicinity"
+     "connection": "vicinity",
+     "vicinity": "connected"
     }
    ],
    "dormant": [

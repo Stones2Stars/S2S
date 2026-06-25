@@ -25,7 +25,8 @@
     {
      "type": "BONUS_COCOA",
      "scope": "city",
-     "connection": "vicinity"
+     "connection": "vicinity",
+     "vicinity": "connected"
     }
    ],
    "dormant": [

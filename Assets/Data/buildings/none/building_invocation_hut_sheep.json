@@ -21,7 +21,8 @@
     {
      "type": "BONUS_SHEEP",
      "scope": "city",
-     "connection": "vicinity"
+     "connection": "vicinity",
+     "vicinity": "owned"
     }
    ]
   }

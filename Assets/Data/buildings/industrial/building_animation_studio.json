@@ -60,7 +60,8 @@
       "type": "BONUS_TOYS",
       "scope": "city",
       "connection": "vicinity",
-      "min": 1
+      "min": 1,
+      "vicinity": "connected"
      }
     }
    ]

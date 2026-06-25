@@ -50,7 +50,8 @@
     {
      "type": "BONUS_GRAPES",
      "scope": "city",
-     "connection": "vicinity"
+     "connection": "vicinity",
+     "vicinity": "owned"
     }
    ],
    "dormant": [

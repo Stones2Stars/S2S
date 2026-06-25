@@ -346,7 +346,8 @@ def _enabled(ref_kind, ref, scope):
     if ref_kind == "bonus":
         return _atom(ref, "city", min=1)
     if ref_kind == "vicinityBonus":
-        return _atom(ref, "city", connection="vicinity", min=1)
+        # VicinityBonusYieldChanges keys off hasVicinityBonus (obtained) -> the "connected" discriminator (json.md S3.4).
+        return _atom(ref, "city", connection="vicinity", min=1, vicinity="connected")
     if ref_kind == "building":
         return _atom(ref, "empire" if scope == "empire" else "city")
     if ref_kind == "power":
@@ -732,24 +733,36 @@ def requires_building(rec, store):
     orb = _typelist(rec, "PrereqBonuses")
     if orb:
         bonus_any.append([_atom(x, "city", connection="trade|vicinity") for x in orb])
-    # RawVicinity FOLDS into normal vicinity (owner 2026-06-16: lose the adjacency strictness, simpler vocab).
-    for tag in ("VicinityBonus", "RawVicinityBonus"):
+    # Vicinity bonus REFINEMENT (owner ruling 2026-06-24, supersedes the 2026-06-16 "fold raw into vicinity"): bare
+    # `connection:"vicinity"` = the bonus on ANY radius tile; a `vicinity` DISCRIMINATOR tightens which tiles count.
+    # The engine has TWO flavors with OPPOSITE strictness, so they CANNOT fold to one (json.md S3.4):
+    #   VicinityBonus    -> hasVicinityBonus    (owned+valid+connected)  -> vicinity:"connected"  (the obtained semantic)
+    #   RawVicinityBonus -> hasRawVicinityBonus (centre OR owned radius tile, no connection) -> vicinity:"owned"
+    # (e.g. MINE_GOLD VicinityBonus needs the connected gate; NET_SHRIMP/MUREX RawVicinityBonus need only owned presence.)
+    for tag, disc in (("VicinityBonus", "connected"), ("RawVicinityBonus", "owned")):
         v = _txt(rec, tag)
         if v:
-            bonus_all.append(_atom(v, "city", connection="vicinity"))
-    for tag in ("PrereqVicinityBonuses", "PrereqRawVicinityBonuses"):
+            bonus_all.append(_atom(v, "city", connection="vicinity", vicinity=disc))
+    for tag, disc in (("PrereqVicinityBonuses", "connected"), ("PrereqRawVicinityBonuses", "owned")):
         lst = _typelist(rec, tag)
         if lst:
-            bonus_any.append([_atom(x, "city", connection="vicinity") for x in lst])
+            bonus_any.append([_atom(x, "city", connection="vicinity", vicinity=disc) for x in lst])
     # --- plot-state predicates (bare). bWater = the city is COASTAL, not the plot being water: legacy
     # isValidBuildingLocation (CvCity.cpp:18500-18506) gates bWater on isCoastal() (a city sits on LAND, so
     # IS_WATER/pl->isWater() is always false -> every coastal building wrongly hidden). With bRiver also set it is
     # coastal OR river (line 18502). bRiver-alone / bFreshWater stay plot predicates (lines 18507/18516). ---
     bw, br = _bool(rec, "bWater"), _bool(rec, "bRiver")
+    # A WATER building's bWater gate is legacy isCoastal(iMinAreaSize): the city must sit adjacent to a SEA-BODY of
+    # >= iMinAreaSize tiles (isValidBuildingLocation -> isCoastal -> isCoastalLand(N), CvCity.cpp). A BARE HAS_COAST is
+    # isCoastal at the DEFAULT coast threshold, which UNDER-constrains when the building demands a larger body (e.g.
+    # MONTREAL_BIODOME iMinAreaSize=10 over-offered on small seas) -> carry the size into {HAS_COAST:{minArea:N}}.
+    # (bRiver-alone / bFreshWater stay bare plot predicates.)
+    mas = _int(rec, "iMinAreaSize")
+    coast = OrderedDict([("HAS_COAST", OrderedDict([("minArea", mas)]))]) if (bw and mas and mas > 0) else "HAS_COAST"
     if bw and br:
-        build_any.append(["HAS_COAST", "HAS_RIVER"])   # city is coastal OR river (HAS_COAST @ city = isCoastal)
+        build_any.append([coast, "HAS_RIVER"])   # city is coastal OR on a river
     elif bw:
-        build_all.append("HAS_COAST")
+        build_all.append(coast)
     elif br:
         build_all.append("HAS_RIVER")
     if _bool(rec, "bFreshWater"):
@@ -769,10 +782,8 @@ def requires_building(rec, store):
         if v and v > 0:
             kind = {"iPrereqPopulation": "POPULATION", "iCitiesPrereq": "CITY", "iTeamsPrereq": "TEAM"}[tag]
             build_all.append(_atom(kind, scope, min=v))
-    # iMinAreaSize: a LAND building -> AREA_SIZE atom = the landmass tile count (area()->getNumTiles()). A WATER
-    # building (bWater) means the SEA-BODY size (legacy isCoastal(N)), already covered by the IS_COASTAL it gets
-    # from bWater -> skip the atom (all 32 current iMinAreaSize buildings are water; the land atom is the capability).
-    mas = _int(rec, "iMinAreaSize")
+    # iMinAreaSize for a LAND building -> AREA_SIZE atom = the landmass tile count (area()->getNumTiles()). For a
+    # WATER building it is the SEA-BODY size, folded into {HAS_COAST:{minArea:N}} above (legacy isCoastal(N)).
     if mas and mas > 0 and not bw:
         build_all.append(_atom("AREA_SIZE", "city", min=mas))
     lo, hi = _int(rec, "iMinLatitude"), _int(rec, "iMaxLatitude")
@@ -915,8 +926,19 @@ def requires_building(rec, store):
     # isCapital gate; the two predicates are distinct and IS_CAPITAL was a mis-naming of this gov-center rule).
     # NB this is the PLAYER build gate only — the engine's FORCED relocation (capital falls) is an ungated actor
     # that bypasses requires (the #437 placement-gate invariant: gate the checked path, engine outcomes bypass).
+    disabled = []
     if _bool(rec, "bGovernmentCenter"):
-        build["disabled"] = "IS_GOVERNMENT_CENTER"
+        disabled.append("IS_GOVERNMENT_CENTER")
+    # bAllowsNukes: the engine BARS an allowsNukes building (MANHATTAN_PROJECT) while isNoNukes() holds -- the UN
+    # no-nukes verdict (CvPlayer::canConstruct:6746). Model as a world-scope NO_NUKES disable (owner ruling 2026-06-24:
+    # "disabled.world.NO_NUKES"). isNoNukes() is false once nukes are enabled (anyone has built Manhattan), so the
+    # building re-enables then. (MANHATTAN also needs uranium|heavy_water -- already on operate.)
+    if _bool(rec, "bAllowsNukes"):
+        disabled.append("NO_NUKES")
+    if len(disabled) == 1:
+        build["disabled"] = disabled[0]
+    elif disabled:
+        build["disabled"] = OrderedDict([("any", disabled)])   # suppressed while ANY disable predicate holds
     out = OrderedDict()
     if build:
         out["build"] = build

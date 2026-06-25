@@ -34,12 +34,14 @@
       {
        "type": "BONUS_DOG",
        "scope": "city",
-       "connection": "vicinity"
+       "connection": "vicinity",
+       "vicinity": "connected"
       },
       {
        "type": "BONUS_CAT",
        "scope": "city",
-       "connection": "vicinity"
+       "connection": "vicinity",
+       "vicinity": "connected"
       }
      ]
     }

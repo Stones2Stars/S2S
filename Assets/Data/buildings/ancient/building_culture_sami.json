@@ -51,7 +51,8 @@
     {
      "type": "BONUS_DEER",
      "scope": "city",
-     "connection": "vicinity"
+     "connection": "vicinity",
+     "vicinity": "owned"
     }
    ]
   }

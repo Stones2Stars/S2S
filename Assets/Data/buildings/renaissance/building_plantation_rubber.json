@@ -25,7 +25,8 @@
     {
      "type": "BONUS_RUBBER",
      "scope": "city",
-     "connection": "vicinity"
+     "connection": "vicinity",
+     "vicinity": "connected"
     }
    ],
    "dormant": [

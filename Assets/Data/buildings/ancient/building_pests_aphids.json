@@ -32,17 +32,20 @@
       {
        "type": "BONUS_VEGETABLES",
        "scope": "city",
-       "connection": "vicinity"
+       "connection": "vicinity",
+       "vicinity": "connected"
       },
       {
        "type": "BONUS_FRUIT",
        "scope": "city",
-       "connection": "vicinity"
+       "connection": "vicinity",
+       "vicinity": "connected"
       },
       {
        "type": "BONUS_FLOWERS",
        "scope": "city",
-       "connection": "vicinity"
+       "connection": "vicinity",
+       "vicinity": "connected"
       }
      ]
     }

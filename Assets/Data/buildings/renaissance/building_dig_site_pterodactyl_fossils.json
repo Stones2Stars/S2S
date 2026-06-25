@@ -30,12 +30,14 @@
     {
      "type": "BONUS_OIL",
      "scope": "city",
-     "connection": "vicinity"
+     "connection": "vicinity",
+     "vicinity": "owned"
     },
     {
      "type": "BONUS_FOSSIL_BEDS",
      "scope": "city",
-     "connection": "vicinity"
+     "connection": "vicinity",
+     "vicinity": "connected"
     }
    ],
    "dormant": [

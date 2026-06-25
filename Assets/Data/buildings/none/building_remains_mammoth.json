@@ -14,7 +14,8 @@
     {
      "type": "BONUS_MAMMOTH",
      "scope": "city",
-     "connection": "vicinity"
+     "connection": "vicinity",
+     "vicinity": "owned"
     }
    ]
   }

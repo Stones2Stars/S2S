@@ -31,7 +31,8 @@
     {
      "type": "BONUS_SAPPHIRES",
      "scope": "city",
-     "connection": "vicinity"
+     "connection": "vicinity",
+     "vicinity": "connected"
     }
    ],
    "dormant": [

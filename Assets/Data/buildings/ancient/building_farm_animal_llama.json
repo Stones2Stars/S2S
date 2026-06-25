@@ -32,7 +32,8 @@
     {
      "type": "BONUS_LLAMA",
      "scope": "city",
-     "connection": "vicinity"
+     "connection": "vicinity",
+     "vicinity": "connected"
     }
    ],
    "dormant": [

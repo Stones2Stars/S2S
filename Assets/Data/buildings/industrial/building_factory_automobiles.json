@@ -62,7 +62,8 @@
       "type": "BONUS_CARBON_FIBER",
       "scope": "city",
       "connection": "vicinity",
-      "min": 1
+      "min": 1,
+      "vicinity": "connected"
      }
     }
    ]

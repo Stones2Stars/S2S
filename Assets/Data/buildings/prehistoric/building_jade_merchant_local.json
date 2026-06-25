@@ -26,7 +26,8 @@
     {
      "type": "BONUS_JADE",
      "scope": "city",
-     "connection": "vicinity"
+     "connection": "vicinity",
+     "vicinity": "connected"
     }
    ]
   }

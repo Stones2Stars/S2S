@@ -24,7 +24,8 @@
     {
      "type": "BONUS_SUGAR",
      "scope": "city",
-     "connection": "vicinity"
+     "connection": "vicinity",
+     "vicinity": "owned"
     }
    ]
   }

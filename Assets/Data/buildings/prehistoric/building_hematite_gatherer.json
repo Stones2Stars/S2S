@@ -30,7 +30,8 @@
     {
      "type": "BONUS_OBSIDIAN",
      "scope": "city",
-     "connection": "vicinity"
+     "connection": "vicinity",
+     "vicinity": "owned"
     }
    ],
    "dormant": [

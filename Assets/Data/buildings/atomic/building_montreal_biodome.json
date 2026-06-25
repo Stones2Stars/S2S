@@ -6,7 +6,11 @@
  "requires": {
   "build": {
    "all": [
-    "HAS_COAST",
+    {
+     "HAS_COAST": {
+      "minArea": 10
+     }
+    },
     "BUILDING_ZOO",
     {
      "type": "BUILDING_ZOO",

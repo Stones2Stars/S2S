@@ -5,7 +5,11 @@
  "requires": {
   "build": {
    "all": [
-    "HAS_COAST",
+    {
+     "HAS_COAST": {
+      "minArea": 10
+     }
+    },
     "TECH_STEAM_POWER",
     {
      "any": [

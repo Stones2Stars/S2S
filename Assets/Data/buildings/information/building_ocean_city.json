@@ -55,7 +55,8 @@
       "type": "BONUS_METALLIC_HYDROGEN",
       "scope": "city",
       "connection": "vicinity",
-      "min": 1
+      "min": 1,
+      "vicinity": "connected"
      }
     }
    ]
@@ -71,7 +72,8 @@
       "type": "BONUS_HUMAN_MOD_GILLS",
       "scope": "city",
       "connection": "vicinity",
-      "min": 1
+      "min": 1,
+      "vicinity": "connected"
      }
     }
    ]

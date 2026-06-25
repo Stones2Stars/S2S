@@ -99,7 +99,8 @@
       "type": "BONUS_ALCOHOL",
       "scope": "city",
       "connection": "vicinity",
-      "min": 1
+      "min": 1,
+      "vicinity": "connected"
      }
     },
     {
@@ -108,7 +109,8 @@
       "type": "BONUS_CHEESE",
       "scope": "city",
       "connection": "vicinity",
-      "min": 1
+      "min": 1,
+      "vicinity": "connected"
      }
     }
    ]

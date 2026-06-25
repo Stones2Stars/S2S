@@ -31,7 +31,8 @@
     {
      "type": "BONUS_KANGAROO",
      "scope": "city",
-     "connection": "vicinity"
+     "connection": "vicinity",
+     "vicinity": "connected"
     }
    ],
    "dormant": [

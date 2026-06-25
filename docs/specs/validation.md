@@ -29,6 +29,29 @@ engine's actual output**. Our calculator is the test; the engine is the oracle.
 > behaviour exactly. Behavioural redesign — *should this behave this way at all?* (e.g. should blackened-skies dorm
 > an observatory) — is deferred to **post-migration**, never done during it.
 
+## The tool — StoneBase (the reference dry-calc) & status
+
+The dry-calc is implemented as **StoneBase** (the `Sources`-mirroring .NET cascade at `http://localhost:8229`): it
+loads the curated `Assets/Data/**` JSON + the live `/state`, rebuilds the cascade with a typed, layered model
+(Domain `Condition` → `IConditionEvaluator` → `BuildingCascade`), and diffs its verdict against the engine oracle
+(`/computed/canConstruct`, `/extractor`). **StoneBase is now THE validation tool and the reference cascade
+implementation** (owner ruling 2026-06-25) — the earlier offline validator (the pre-StoneBase `Tools/ModifierCalc`
+dry-calc) is **obsolete / superseded** and was never exercised on units. StoneBase is the typed prototype the C++
+cascade port (#430) mirrors; only the parity-*test* role is the temporary part — the model it encodes persists.
+
+**Milestone — BUILDABLE parity ACHIEVED (2026-06-25).** `GET /parity/buildings/sweep` reports **185 / 185 real-civ
+cities clean, 0 divergences, 0 errors**: the cascade reproduces the engine's `canConstruct` TRUE-set *exactly* — every
+building type, every real city (NPCs id ≥ 40 excluded) — on the current testsave. This validates the [enabler](enabler.md)
+model + the JSON data spec; the semantics pinned along the way are authoritative ([json.md](json.md) §3.4/§3.5):
+GOM terrain/feature ConstructCondition = **IS_WORKED**; the **vicinity discriminator** (`owned` = `hasRawVicinityBonus`,
+`connected` = `hasVicinityBonus`, `worked`, bare = all-radius) vs `trade|vicinity` = `hasBonus`; `{HAS_COAST:{minArea}}`
+(= `isCoastal(N)`); the world-state `NO_NUKES` predicate (`disabled:NO_NUKES` for `bAllowsNukes`); the instance cap
+counting in-production (`buildingsMaking`). **Caveats:** one state snapshot (not all states); buildability only
+(modifiers/yields are a later target); engine-as-oracle incl. its quirks (the `LeechCatcher` carve-out, excluded on both sides).
+
+**Next parity target: UNITS** (`canTrain`), via the same StoneBase dry-calc — expected to be mostly curated-JSON
+spec-alignment (unit data not yet up to spec), not new cascade machinery.
+
 ## The shadow (the live counterpart)
 The dry-calc above is the **offline** test. Its **in-game** twin is the **shadow**: each legacy behaviour gets a
 surface (a `/shadow/*` endpoint + a per-turn `[TAG]` line via the [event spine](event-spine.md)) that computes the

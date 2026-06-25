@@ -23,7 +23,8 @@
     {
      "type": "BONUS_MANGO",
      "scope": "city",
-     "connection": "vicinity"
+     "connection": "vicinity",
+     "vicinity": "owned"
     }
    ]
   }

@@ -6,6 +6,7 @@
   "buildings": [
    "BUILDING_ANIMAL_RACE_TRACK",
    "BUILDING_GER",
+   "BUILDING_POLO_FIELD",
    "BUILDING_RIDING_SCHOOL"
   ],
   "units": [

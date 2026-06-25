@@ -291,7 +291,19 @@ namespace
 			const CorporationTypes ePC = (CorporationTypes)kB.getPrereqCorporation();
 			if (ePC != NO_CORPORATION && !pCity->isHasCorporation(ePC)) return "prereqCorp";
 		}
-		if (!pCity->isValidBuildingLocation(eBuilding)) return "location";
+		if (!pCity->isValidBuildingLocation(eBuilding))
+		{
+			// decompose isValidBuildingLocation (CvCity.cpp:18540) into its sub-gates so a "location" failure is attributable
+			if (kB.isWater())
+			{
+				if ((!kB.isRiver() || !pCity->plot()->isRiver()) && !pCity->isCoastal(kB.getMinAreaSize())) return "locCoastalArea";
+			}
+			else if (pCity->area()->getNumTiles() < kB.getMinAreaSize()) return "locLandArea";
+			else if (kB.isRiver() && !pCity->plot()->isRiver()) return "locRiver";
+			if (!pCity->isValidTerrainForBuildings(eBuilding)) return "locTerrain";
+			if (kB.isFreshWater() && !pCity->plot()->isFreshWater()) return "locFreshwater";
+			return "locMapCategory";
+		}
 		for (int i = 0; i < kB.getNumPrereqInCityBuildings(); i++)
 		{
 			const BuildingTypes eP = (BuildingTypes)kB.getPrereqInCityBuilding(i);
@@ -377,6 +389,23 @@ namespace
 			|| (kP.isModderOption(MODDEROPTION_HIDE_REPLACED_BUILDINGS) && pCity->canConstruct(eRepl, true, false, false, true)))
 				return "replaced";
 		}
+		// --- PLAYER-level gates (CvPlayer::canConstructInternal:6571 -- NOT replicated by the city-side checks above;
+		//     this residual otherwise collapses into "other") ---
+		if (kP.getNumCities() < kB.getNumCitiesPrereq()) return "numCities";
+		if (kP.getHighestUnitLevel() < kB.getUnitLevelPrereq()) return "unitLevel";
+		if (GC.getGame().isNoNukes() && kB.isAllowsNukes()) return "noNukes";
+		if (eSB != NO_SPECIALBUILDING && !GC.getGame().isSpecialBuildingValid(eSB)) return "specialBuildingInvalid";
+		if (!(*kP.getPropertiesConst() <= *(kB.getPrereqPlayerMaxProperties()))) return "playerMaxProperty";
+		if (!(*kP.getPropertiesConst() >= *(kB.getPrereqPlayerMinProperties()))) return "playerMinProperty";
+		if (kB.isPrereqPower() && !pCity->isPower()) return "prereqPower";
+		// making-count cap variants (canConstructInternal bTestVisible block; legacyBlockReason only had the no-making forms)
+		if (GC.getGame().isBuildingMaxedOut(eBuilding, kT.getBuildingMaking(eBuilding))
+		||  kT.isBuildingMaxedOut(eBuilding, kT.getBuildingMaking(eBuilding))
+		||  kP.isBuildingMaxedOut(eBuilding, kP.getBuildingMaking(eBuilding))) return "capMaking";
+		if (eSB != NO_SPECIALBUILDING && kP.isBuildingGroupMaxedOut(eSB, kP.getBuildingGroupMaking(eSB))) return "groupCapMaking";
+		// the GOM ConstructCondition BoolExpr (CvCity::canConstructInternal:2986) -- the one gate the typed re-walk above
+		// does NOT cover (CLAY_PIT-class). Evaluated against the city game-object exactly as the engine does.
+		if (kB.getConstructCondition() != NULL && !kB.getConstructCondition()->evaluate(pCity->getGameObject())) return "constructCondition";
 		return "other";
 	}
 
@@ -496,6 +525,24 @@ namespace
 			if (n > 0) bonusCounts[GC.getBonusInfo((BonusTypes)b).getType()] = picojson::value((double)n);
 		}
 		c["bonusCounts"] = picojson::value(bonusCounts);
+
+		// LOCATION model (isValidBuildingLocation, CvCity.cpp:18540): a bWater building needs isCoastal(minAreaSize)
+		// = an adjacent water area >= minAreaSize tiles; a non-water building needs the city's LAND area >= minAreaSize.
+		// Emit both so the cascade can evaluate the minAreaSize gate (cascade had only the boolean `coast`).
+		c["landArea"] = picojson::value((double)pCity->plot()->area()->getNumTiles());
+		{
+			int iMaxAdjWater = 0;
+			for (int d = 0; d < NUM_DIRECTION_TYPES; ++d)
+			{
+				const CvPlot* pAdj = plotDirection(pCity->getX(), pCity->getY(), (DirectionTypes)d);
+				if (pAdj != NULL && pAdj->isWater())
+				{
+					const int n = pAdj->area()->getNumTiles();
+					if (n > iMaxAdjWater) iMaxAdjWater = n;
+				}
+			}
+			c["maxAdjWater"] = picojson::value((double)iMaxAdjWater);
+		}
 
 		// /extractor city.cultureLevel: culture level TYPE -- drives the per-city wonder-category cap allowance
 		// (worldWonders/teamWonders/nationalWonders authored on the CultureLevel entity, data-model.md S3.4).
@@ -722,6 +769,10 @@ namespace
 			if (kGame.isOption((GameOptionTypes)oi))
 				options.push_back(picojson::value(std::string(GC.getGameOptionInfo((GameOptionTypes)oi).getType())));
 		world["options"] = picojson::value(options);
+		// world.noNukes -- the DYNAMIC no-nukes state (NOT the GAMEOPTION_NO_NUKES option; e.g. a UN resolution).
+		// CvPlayer::canConstruct rejects an isAllowsNukes building while isNoNukes() holds (CvPlayer.cpp:6746), so the
+		// cascade must drop allowsNukes buildings (MANHATTAN_PROJECT) when this is true.
+		world["noNukes"] = picojson::value(kGame.isNoNukes());
 
 		// world.eras -- the era types in canonical EraTypes order (heritage byEra is a CUMULATIVE threshold:
 		// a band applies for every era where currentEra >= band, so the calc needs the ordering to compare).
@@ -816,12 +867,16 @@ namespace
 				// `requires.build` count atoms (min(BUILDING_X,N) / min(UNIT_X,N)) the offline emulator cannot roll up
 				// without seeing every city; we emit the counter directly (no re-derivation).
 				picojson::value::object bldgCounts;
+				picojson::value::object bldgMaking;   // in-PRODUCTION count (getBuildingMaking) -- canConstruct counts these toward the instance cap (capMaking)
 				for (int bc = 0; bc < GC.getNumBuildingInfos(); ++bc)
 				{
 					const int n = kPlayer.getBuildingCount((BuildingTypes)bc);
 					if (n > 0) bldgCounts[GC.getBuildingInfo((BuildingTypes)bc).getType()] = picojson::value((double)n);
+					const int m = kPlayer.getBuildingMaking((BuildingTypes)bc);
+					if (m > 0) bldgMaking[GC.getBuildingInfo((BuildingTypes)bc).getType()] = picojson::value((double)m);
 				}
 				emp["buildingCounts"] = picojson::value(bldgCounts);
+				emp["buildingsMaking"] = picojson::value(bldgMaking);
 				picojson::value::object unitCounts;
 				for (int uc = 0; uc < GC.getNumUnitInfos(); ++uc)
 				{

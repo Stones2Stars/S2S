@@ -35,12 +35,14 @@
       {
        "type": "BONUS_RAW_FISH",
        "scope": "city",
-       "connection": "vicinity"
+       "connection": "vicinity",
+       "vicinity": "connected"
       },
       {
        "type": "BONUS_SHELLFISH",
        "scope": "city",
-       "connection": "vicinity"
+       "connection": "vicinity",
+       "vicinity": "connected"
       }
      ]
     }

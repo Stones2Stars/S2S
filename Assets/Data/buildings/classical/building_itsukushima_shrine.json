@@ -5,7 +5,11 @@
  "requires": {
   "build": {
    "all": [
-    "HAS_COAST",
+    {
+     "HAS_COAST": {
+      "minArea": 10
+     }
+    },
     "TECH_AESTHETICS",
     "STATE_RELIGION_IN_CITY",
     {

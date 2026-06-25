@@ -5,7 +5,11 @@
  "requires": {
   "build": {
    "all": [
-    "HAS_COAST",
+    {
+     "HAS_COAST": {
+      "minArea": 10
+     }
+    },
     "TECH_SUPERSTRONG_ALLOYS",
     {
      "any": [

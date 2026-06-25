@@ -28,7 +28,8 @@
       "type": "BONUS_ALUMINUM_WARES",
       "scope": "city",
       "connection": "vicinity",
-      "min": 1
+      "min": 1,
+      "vicinity": "connected"
      }
     },
     {
@@ -37,7 +38,8 @@
       "type": "BONUS_IRON_WARES",
       "scope": "city",
       "connection": "vicinity",
-      "min": 1
+      "min": 1,
+      "vicinity": "connected"
      }
     },
     {
@@ -46,7 +48,8 @@
       "type": "BONUS_COPPER_WARES",
       "scope": "city",
       "connection": "vicinity",
-      "min": 1
+      "min": 1,
+      "vicinity": "connected"
      }
     }
    ]
@@ -61,7 +64,8 @@
       "type": "BONUS_MICROCHIPS",
       "scope": "city",
       "connection": "vicinity",
-      "min": 1
+      "min": 1,
+      "vicinity": "connected"
      }
     }
    ]

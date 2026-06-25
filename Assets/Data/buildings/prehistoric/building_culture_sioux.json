@@ -31,7 +31,8 @@
     {
      "type": "BONUS_BISON",
      "scope": "city",
-     "connection": "vicinity"
+     "connection": "vicinity",
+     "vicinity": "owned"
     }
    ]
   }

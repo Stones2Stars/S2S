@@ -37,17 +37,20 @@
       {
        "type": "BONUS_GRAINS",
        "scope": "city",
-       "connection": "vicinity"
+       "connection": "vicinity",
+       "vicinity": "connected"
       },
       {
        "type": "BONUS_CHEESE",
        "scope": "city",
-       "connection": "vicinity"
+       "connection": "vicinity",
+       "vicinity": "connected"
       },
       {
        "type": "BONUS_VEGETABLES",
        "scope": "city",
-       "connection": "vicinity"
+       "connection": "vicinity",
+       "vicinity": "connected"
       }
      ]
     }

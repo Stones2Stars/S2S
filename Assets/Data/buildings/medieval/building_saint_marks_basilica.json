@@ -5,7 +5,11 @@
  "requires": {
   "build": {
    "all": [
-    "HAS_COAST",
+    {
+     "HAS_COAST": {
+      "minArea": 10
+     }
+    },
     "BUILDING_CHRISTIAN_CATHEDRAL",
     "TECH_ARCHITECTURE",
     "STATE_RELIGION_IN_CITY",

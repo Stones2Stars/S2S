@@ -24,7 +24,8 @@
     {
      "type": "BONUS_IRON_ORE",
      "scope": "city",
-     "connection": "vicinity"
+     "connection": "vicinity",
+     "vicinity": "connected"
     },
     {
      "type": "BONUS_ALGAE",

@@ -54,7 +54,8 @@
       "type": "BONUS_QUANTUM_DOTS",
       "scope": "city",
       "connection": "vicinity",
-      "min": 1
+      "min": 1,
+      "vicinity": "connected"
      }
     },
     {
@@ -63,7 +64,8 @@
       "type": "BONUS_GOLD_WARES",
       "scope": "city",
       "connection": "vicinity",
-      "min": 1
+      "min": 1,
+      "vicinity": "connected"
      }
     },
     {
@@ -72,7 +74,8 @@
       "type": "BONUS_NANOTUBES",
       "scope": "city",
       "connection": "vicinity",
-      "min": 1
+      "min": 1,
+      "vicinity": "connected"
      }
     },
     {
@@ -81,7 +84,8 @@
       "type": "BONUS_COPPER_WIRES",
       "scope": "city",
       "connection": "vicinity",
-      "min": 1
+      "min": 1,
+      "vicinity": "connected"
      }
     },
     {
@@ -90,7 +94,8 @@
       "type": "BONUS_FIBERGLASS",
       "scope": "city",
       "connection": "vicinity",
-      "min": 1
+      "min": 1,
+      "vicinity": "connected"
      }
     },
     {
@@ -99,7 +104,8 @@
       "type": "BONUS_ALUMINUM_WARES",
       "scope": "city",
       "connection": "vicinity",
-      "min": 1
+      "min": 1,
+      "vicinity": "connected"
      }
     }
    ]

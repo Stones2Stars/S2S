@@ -32,7 +32,8 @@
     {
      "type": "BONUS_DONKEY",
      "scope": "city",
-     "connection": "vicinity"
+     "connection": "vicinity",
+     "vicinity": "connected"
     }
    ],
    "dormant": [
