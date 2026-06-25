@@ -11284,10 +11284,15 @@ int CvCity::getBuildingExtraYield100(YieldTypes eYield) const
 	{
 		if (!hasFullyActiveBuilding(eB)) continue;
 		const CvBuildingInfo& kB = GC.getBuildingInfo(eB);
+		// has-any guard (getXxx(NO_BONUS, NO_YIELD) == "does this building define ANY such array") -- skips the
+		// per-bonus loop for the ~95% of buildings with no bonus/vicinity yields, so this stays cheap on the hot path.
+		const bool bBonus = kB.getBonusYieldChanges(NO_BONUS, NO_YIELD) != 0;
+		const bool bVic   = kB.getVicinityBonusYieldChanges(NO_BONUS, NO_YIELD) != 0;
+		if (!bBonus && !bVic) continue;
 		for (int iBonus = 0; iBonus < GC.getNumBonusInfos(); ++iBonus)
 		{
-			if (hasBonus((BonusTypes)iBonus))         iBV += kB.getBonusYieldChanges((BonusTypes)iBonus, eYield);
-			if (hasVicinityBonus((BonusTypes)iBonus)) iBV += kB.getVicinityBonusYieldChanges((BonusTypes)iBonus, eYield);
+			if (bBonus && hasBonus((BonusTypes)iBonus))         iBV += kB.getBonusYieldChanges((BonusTypes)iBonus, eYield);
+			if (bVic   && hasVicinityBonus((BonusTypes)iBonus)) iBV += kB.getVicinityBonusYieldChanges((BonusTypes)iBonus, eYield);
 		}
 	}
 	m_aiBuildingBonusVicinityYield100[eYield] = iBV * 100;
