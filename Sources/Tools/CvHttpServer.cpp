@@ -758,7 +758,7 @@ namespace
 			yieldTradeBase[GC.getYieldInfo((YieldTypes)y).getType()] = picojson::value((double)GC.getYieldInfo((YieldTypes)y).getTradeModifier());
 		config["yieldTradeModifierBase"] = picojson::value(yieldTradeBase);
 		// city-CENTER plot yield: getCityChange (flat) + population/PopulationChangeDivisor (CvPlot::calculateYield)
-		picojson::value::object yCityChange, yPopDiv, yGAYield, yGAThresh;
+		picojson::value::object yCityChange, yPopDiv, yGAYield, yGAThresh, yHills, yPeak;
 		for (int y = 0; y < NUM_YIELD_TYPES; ++y)
 		{
 			const char* yn = GC.getYieldInfo((YieldTypes)y).getType();
@@ -767,11 +767,17 @@ namespace
 			// per-plot GOLDEN-AGE yield: +getGoldenAgeYield on each worked plot whose yield >= threshold (calculateYield)
 			yGAYield[yn]    = picojson::value((double)GC.getYieldInfo((YieldTypes)y).getGoldenAgeYield());
 			yGAThresh[yn]   = picojson::value((double)GC.getYieldInfo((YieldTypes)y).getGoldenAgeYieldThreshold());
+			// PLOT-TYPE base yield: a PEAK plot gets getPeakChange, a HILLS plot getHillsChange -- part of
+			// getBaseYield -> calculateNatureYield (CvPlot::recalculateBaseYield, the nature addend).
+			yHills[yn]      = picojson::value((double)GC.getYieldInfo((YieldTypes)y).getHillsChange());
+			yPeak[yn]       = picojson::value((double)GC.getYieldInfo((YieldTypes)y).getPeakChange());
 		}
 		config["yieldCityChange"] = picojson::value(yCityChange);
 		config["yieldPopulationChangeDivisor"] = picojson::value(yPopDiv);
 		config["yieldGoldenAgeYield"] = picojson::value(yGAYield);
 		config["yieldGoldenAgeThreshold"] = picojson::value(yGAThresh);
+		config["yieldHillsChange"] = picojson::value(yHills);
+		config["yieldPeakChange"] = picojson::value(yPeak);
 		// +/- this on each worked plot whose RUNNING pre-improvement yield clears a player extra/less-yield
 		// threshold (CvPlot::calculateYield 8393-8401; the Industrious/Nomad-style trait mechanic). A single global define.
 		config["extraYield"] = picojson::value((double)GC.getDefineINT("EXTRA_YIELD"));
