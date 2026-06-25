@@ -1000,6 +1000,10 @@ namespace
 		// localises to plot-type vs city-terrain vs river vs city-improvement rather than the lump.
 		int plotTypeChange = 0, cityTerrainChange = 0, riverPlotChange = 0, cityImprovementChange = 0;
 		int improvementChange = 0, routeChange = 0, goldenAgeYield = 0, total = 0;
+		// improvement (calculateImprovementYieldChange, CvPlot.cpp:8247-8301) sub-split into its named addends so a
+		// divergence localises to base/riverSide/irrigated/route(improvement's per-route bump)/player(trait+civic+
+		// building-global accumulator)/team(improvement TechYieldChanges) rather than the lump.
+		int impBase = 0, impRiverSide = 0, impIrrigated = 0, impRoute = 0, impPlayer = 0, impTeam = 0, impBonus = 0;
 
 		for (int iPlot = 0; iPlot < pCity->getNumCityPlots(); ++iPlot)
 		{
@@ -1041,7 +1045,20 @@ namespace
 			{
 				const ImprovementTypes eImprovement = pPlot->getImprovementType();
 				if (eImprovement != NO_IMPROVEMENT)
+				{
 					improvementChange += pPlot->calculateImprovementYieldChange(eImprovement, eYield, pCity->getOwner());
+					// Mirror the engine's real-player branch (8247-8301; ePlayer set, not bOptimal) component by component.
+					const CvImprovementInfo& kImp = GC.getImprovementInfo(eImprovement);
+					impBase += kImp.getYieldChange(eYield);
+					if (pPlot->isRiverSide())          impRiverSide += kImp.getRiverSideYieldChange(eYield);
+					if (pPlot->isIrrigationAvailable()) impIrrigated += kImp.getIrrigatedYieldChange(eYield);
+					const RouteTypes eImpRoute = pPlot->getRouteType();
+					if (eImpRoute != NO_ROUTE)          impRoute += kImp.getRouteYieldChanges(eImpRoute, eYield);
+					impPlayer += kOwner.getImprovementYieldChange(eImprovement, eYield);
+					impTeam   += GET_TEAM(eTeam).getImprovementYieldChange(eImprovement, eYield);
+					const BonusTypes eImpBonus = pPlot->getBonusType(eTeam);   // improvement's per-bonus bump (8305-8310)
+					if (eImpBonus != NO_BONUS) impBonus += kImp.getImprovementBonusYield(eImpBonus, eYield);
+				}
 				const RouteTypes eRoute = pPlot->getRouteType();
 				if (eRoute != NO_ROUTE) routeChange += GC.getRouteInfo(eRoute).getYieldChange(eYield);
 			}
@@ -1060,6 +1077,13 @@ namespace
 		decomposition["riverPlot"]        = picojson::value((double)riverPlotChange);
 		decomposition["cityImprovement"]  = picojson::value((double)cityImprovementChange);
 		decomposition["improvement"]      = picojson::value((double)improvementChange);
+		decomposition["impBase"]          = picojson::value((double)impBase);
+		decomposition["impRiverSide"]     = picojson::value((double)impRiverSide);
+		decomposition["impIrrigated"]     = picojson::value((double)impIrrigated);
+		decomposition["impRoute"]         = picojson::value((double)impRoute);
+		decomposition["impPlayer"]        = picojson::value((double)impPlayer);
+		decomposition["impTeam"]          = picojson::value((double)impTeam);
+		decomposition["impBonus"]         = picojson::value((double)impBonus);
 		decomposition["route"]            = picojson::value((double)routeChange);
 		decomposition["goldenAge"]        = picojson::value((double)goldenAgeYield);
 		return decomposition;
