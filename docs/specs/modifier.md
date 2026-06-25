@@ -129,6 +129,36 @@ authored shape.
 > `modPlayer` yield divergence that proved the rule. (The enabler is unaffected: it reads trait *presence*, which
 > `/state` already resolves to the active set; only the modifier cascade reads trait *family values*.)
 
+> **⛔ Trait option resolution — the curator translates the CRAZY → sensible; the cascade applies only CLEAN gates
+> (owner ruling 2026-06-25; this is the volcano every agent rollerskates into — read it before touching trait values).**
+> Several `GAMEOPTION_LEADER_*` options can be live at once (complex, developing, pure, no-negative, …) and each
+> mutates a trait's *effective* values. The TB implementation is a runtime hack (`CvInfoReplacements`: a base trait
+> carries an inline `ReplacementID` + `ReplacementCondition` `BoolExpr`; `GC.updateReplacements()` swaps the WHOLE
+> `CvTraitInfo` in `aInfos[id]` for the first replacement whose condition holds — re-run on state changes). **We do
+> NOT emulate that hack anywhere in the cascade.** The split of responsibility is absolute:
+>
+> - **CRAZY → curator (`curate_trait`), offline, once.** The replacement/promotion-line machinery is dissolved into
+>   sensible JSON:
+>   - **Simple/complex split** by `COMPLEX_TRAITS` — the two `DefaultTraits`/`DefaultComplexTraits` sets become
+>     `traits/simple/` + `traits/complex/`, each self-complete (base overwritten by its `Has(COMPLEX_TRAITS)`-gated
+>     replacement, blanks filled from base). The active set is chosen by the live option (callout above).
+>   - **Developing-line collapse.** A `PromotionLine` is a tech-gated upgrade chain of trait *levels*
+>     (`TRAIT_NOMAD1`→`TRAIT_NOMADIC2`→`…`, ordered by `iLinePriority`, each with a `PrereqTech` + `TraitPrereq`); at
+>     runtime the held trait's Info is swapped to the highest level the player qualifies for. The curator FOLDS the
+>     whole line into the held (entry) trait, emitting each level's value-set gated by a **mutually-exclusive clean
+>     condition** — `enabled: {tech: L.prereq}` **and not** the next level's prereq tech — so exactly one level lights
+>     for any tech state. (Worked example: England holds `TRAIT_NOMAD1` + `TECH_RENAISSANCE_LIFESTYLE` ⇒ effective
+>     level `NOMADIC2`; its `lessYieldThreshold` production=0 replaces NOMAD1's 5.)
+>   - **Complete, not pre-filtered.** The JSON carries ALL values — positive AND negative — plus the `negativeTrait`
+>     flag, so the runtime gates below have the full data to act on. The curator never bakes in a pure/no-negative pass.
+> - **CLEAN gates → cascade, at eval (its ordinary condition-eval, NOT hack emulation).**
+>   - **Developing tech-gates** — the mutually-exclusive `enabled:{tech}` conditions above; normal `Applies` evaluation
+>     picks the live level. (Every family reader must honor the gate — incl. the threshold readers.)
+>   - **`PURE_TRAITS` gate** — when `GAMEOPTION_LEADER_PURE_TRAITS` is live, zero each trait value whose **sign opposes
+>     the trait's alignment**: a `negativeTrait`'s positive values drop, a positive trait's negative values drop
+>     (engine `CvTraitInfo::getHealth/getHappiness/…`, ~15 getters keyed on `isNegativeTrait()` + value sign). A clean
+>     option+flag rule over the complete JSON.
+
 **`production` vs `buildRate`.** `production` = `getYieldRate100(PRODUCTION)` (total city output — scales every
 build every turn; a flat ADD or city-wide percent). `buildRate` = `getProductionModifier(eItem)` (shrinks the
 COST of a SPECIFIC item, never a per-turn yield), sub-shapes `buildRate.self` /
