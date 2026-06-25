@@ -28,16 +28,31 @@ engine's actual output**. Our calculator is the test; the engine is the oracle.
 > **Mirror, don't redesign (`DEC-mirror-then-redesign`).** The migration reproduces the engine's *existing*
 > behaviour exactly. Behavioural redesign — *should this behave this way at all?* (e.g. should blackened-skies dorm
 > an observatory) — is deferred to **post-migration**, never done during it.
+>
+> **Why parity is non-negotiable *now* (owner 2026-06-25).** The pedantry exists so the initial port introduces
+> **zero side-effects** — the new cascade must do exactly what C2C did, no surprises. Once the migration is over the
+> ground truth FLIPS: the **JSON spec** (not the legacy engine) becomes authoritative, and *that* is when we — and
+> modders — deliberately **diverge from C2C**, with StoneBase guarding spec-compliance. So: mirror the engine to get
+> here; thereafter the spec leads.
 
 ## The tool — StoneBase (the reference dry-calc) & status
 
 The dry-calc is implemented as **StoneBase** (the `Sources`-mirroring .NET cascade at `http://localhost:8229`): it
 loads the curated `Assets/Data/**` JSON + the live `/state`, rebuilds the cascade with a typed, layered model
 (Domain `Condition` → `IConditionEvaluator` → `BuildingCascade`), and diffs its verdict against the engine oracle
-(`/computed/canConstruct`, `/extractor`). **StoneBase is now THE validation tool and the reference cascade
-implementation** (owner ruling 2026-06-25) — the earlier offline validator (the pre-StoneBase `Tools/ModifierCalc`
-dry-calc) is **obsolete / superseded** and was never exercised on units. StoneBase is the typed prototype the C++
-cascade port (#430) mirrors; only the parity-*test* role is the temporary part — the model it encodes persists.
+(`/computed/canConstruct`, `/extractor`). **StoneBase is THE — and only — validator** (owner ruling 2026-06-25).
+
+**The validation order, machine by machine:** the **cascading enabler** first (the "can I build/train?" gate —
+buildings ✓ below, then units, …), **then** the **cascading modifiers** (the "how much?" math). Each machine must
+reach **parity in StoneBase first** — *then* it is built inside the C++ codebase as a
+[shadow](#the-shadow-the-live-counterpart) (the in-engine twin) and cut over. StoneBase is the typed prototype that
+C++ shadow mirrors.
+
+**StoneBase's lasting role (beyond the migration):** it persists as the tool that validates the curated JSON against
+the live codebase, tracks discrepancies in general, and — ultimately — gives a **modder** a spec-compliance check:
+when they author/test a JSON, StoneBase tells them whether it **violates the spec**. It is the single tool for all of
+this — superseding **every** earlier attempt (the dead Python dry-calc variants, the first-version .NET validator) and
+the external GameTracker.
 
 **Milestone — BUILDABLE parity ACHIEVED (2026-06-25).** `GET /parity/buildings/sweep` reports **185 / 185 real-civ
 cities clean, 0 divergences, 0 errors**: the cascade reproduces the engine's `canConstruct` TRUE-set *exactly* — every
