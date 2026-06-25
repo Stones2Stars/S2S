@@ -11,6 +11,6 @@
    inverted onto it ([modifier](../specs/modifier.md) §6 resolves the pending cases). **Don't reinstate inversion**,
    even for Terrain/Improvement/Bonus targets.
 3. **Full legacy-calc-pipeline offline emulation** *(dead)* — emulating the whole gather+combine pipeline offline.
-   Retired: it proved easier to dump individual calcs from the game itself. Survivors: `dry_calc.py` (the zero-ride-in
-   per-scope calc — [DEC-calc-zero-ride-in], the [validation](../specs/validation.md) tool) + `cascade_sim.py` (the
-   combine comparator). **Don't confuse the surviving calculators with the dead full-pipeline idea.**
+   Retired: it proved easier to dump individual calcs from the game itself. The Python per-scope/combine calculators
+   that briefly carried it forward, and the first-version .NET validator, are **likewise dead** — **[StoneBase](../specs/validation.md)
+   is now the sole validation tool** (the zero-ride-in principle still holds: [DEC-calc-zero-ride-in]).

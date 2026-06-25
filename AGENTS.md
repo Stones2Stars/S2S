@@ -249,7 +249,7 @@ re-sweep, try another) is the anti-pattern this rule kills: build the complete m
   Two operational consequences: **(1)** go exhaustive **immediately** — partial passes / per-item asking / "do this
   subsection first" is the *"untold hours of infinite and endless wrangling"* anti-pattern the owner called out and
   is far slower than the sweep; **(2)** prove completeness **adversarially**, never by self-assertion. *Why it is
-  load-bearing:* on the live-shadow parity path (the offline emulator was dropped) a single un-emitted source hides
+  load-bearing:* on the live-shadow parity path (StoneBase validates against the live engine) a single un-emitted source hides
   inside an aggregate → the divergence is unattributable → the guess/despair spiral. (Scoping is never a reason to
   skip a source: promote a private getter to public — there is zero sensitive data in a game mod.) Ledgered as
   [DEC-all-means-all](docs/architecture/decisions.md#dec-all-means-all).

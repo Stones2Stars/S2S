@@ -9,7 +9,7 @@ downstream.
 **The website is NOT here.** The web Civilopedia — the XML⇄JSON converter, the JSON content
 store, the React frontend, the backend, accounts/forum/community — is a **separate project**
 planned in [`s2swebsite/unified-civilopedia-plan.md`](../../../../s2swebsite/unified-civilopedia-plan.md)
-(sibling of this repo, like GameTracker/FpkBuilder). That project is purely *downstream*; its
+(sibling of this repo, like FpkBuilder). That project is purely *downstream*; its
 only dependency on this repo is the **clean XML** the work below produces. This document owns
 the upstream half: the data model and its loading. Nothing about the website lives here.
 
@@ -52,7 +52,7 @@ Three kinds of game content, each with exactly one authoritative home. (Develope
 live separately. The audit lever: a key referenced by an entity with no GameText entry is a
 content bug (Tier-3 `TXT_KEY` audit, the dead-code / dead-XML pass).
 
-**Not a content kind here:** live game state / telemetry (`CvHttpServer`, GameTracker,
+**Not a content kind here:** live game state / telemetry (`CvHttpServer`,
 `Benchmarks/`) — internal dev tooling for monitoring AI behaviour, nothing to do with content.
 
 ---

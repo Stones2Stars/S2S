@@ -2,11 +2,11 @@
 
 > **Status:** reference   ·   **Verified against:** 2026-06-20 (working tree, `json-data-migration`)
 > **Grounding:** `Sources/Defines/CvGlobals.cpp`, `Tools/` listing, `Tools/CI/DeployBuild.bat`, the
-> external repos under `c:\code\s2s\` (FpkBuilder, GameTracker). Line numbers drift — confirm the named
+> external repos under `c:\code\s2s\` (FpkBuilder). Line numbers drift — confirm the named
 > function, not the integer.
 > Out-of-tree tooling and side-channel workflows used when developing S2S that are **not** part of the
 > in-tree build/validate loop and have no other home: offline crash-dump symbolization, one known-harmless
-> crash, and the sibling repos/binaries (`FpkBuilder`, `GameTracker`) that live outside this tree. For the
+> crash, and the sibling binary (`FpkBuilder`) that lives outside this tree. For the
 > in-tree tooling (build wrapper, validators, the migration curators, the cascade testers), this doc only
 > points — those are documented at their canonical homes; see [§ See also](#see-also).
 
@@ -69,8 +69,7 @@ same process** throws `RuntimeError: unidentifiable C++ exception` from `CvGame:
 ## External sibling repos / binaries
 
 These live **OUTSIDE this repo** (separate solutions under `c:\code\s2s\`) and are **not** built by the S2S
-build chain. They are vendored as prebuilt binaries into `Tools/` (FpkBuilder) or run standalone
-(GameTracker).
+build chain. They are vendored as prebuilt binaries into `Tools/` (FpkBuilder).
 
 ### FpkBuilder — the art-packing tool
 
@@ -88,21 +87,6 @@ build chain. They are vendored as prebuilt binaries into `Tools/` (FpkBuilder) o
   C# source) to stay under GitHub's 100 MB push limit.
 - **CI:** `Tools/CI/DeployBuild.bat` calls `Tools/FpkBuilder.exe` with no args; a commit message containing
   `FPKCLEAN` forces a from-scratch rebuild (`DeployBuild.bat:97`/`:105`).
-
-### GameTracker — the no-agent benchmark dashboard
-
-A separate **ASP.NET Core Razor Pages** dashboard at `c:\code\s2s\GameTracker` (repo
-`https://github.com/Stones2Stars/GameTracker`, private until tuned).
-
-- `dotnet run` → `localhost:5000` (auto-refresh 15s), polling the S2S dev HTTP endpoint (`127.0.0.1:7227`).
-- **Shows:** connection state, turn + gameId, census cards, score chart, standings, per-city
-  crime/education/disease.
-- **Records:** appends per-turn CSVs under `data/<gameId>/` (`players_timeseries.csv`,
-  `cities_timeseries.csv` — same schema as `Tools/BenchmarkCensusCollector.ps1` — plus
-  `census_timeseries.csv`).
-- **Purpose:** the no-agent path for playtesters to contribute benchmark data (zip `data/<gameId>/`;
-  conventions in `Benchmarks/README.md`). Benchmark games are dual-recorded when both the collector and
-  GameTracker run, keyed by `gameId`.
 
 ## See also
 
@@ -123,7 +107,7 @@ The in-tree tooling this doc deliberately does **not** restate — go to its own
   The `readjson` harness (`Tools/ReadJson/`) is the in-DLL JSON loader's offline driver, exercised by the
   same value-verification flow.
 - [`observability.md`](observability.md) — **the live surveillance surface** the crash/known-
-  issue debugging and GameTracker both read against (HTTP `127.0.0.1:7227`, `/events`, `/diagnostic/*`,
+  issue debugging reads against (HTTP `127.0.0.1:7227`, `/events`, `/diagnostic/*`,
   gated logs) → [DEC-obs-scale](../architecture/decisions.md#dec-obs-scale). Delegate bulk data reads to the
   `data-reader` sub-agent rather than pulling raw dumps into context.
 - [`../README.md`](../README.md) — the comprehension map (where every subsystem doc lives).

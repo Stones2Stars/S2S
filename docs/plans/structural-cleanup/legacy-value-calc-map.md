@@ -18,7 +18,7 @@
 >
 > This is the **per-calc DESTROY-pass map**: for each per-turn value the engine realizes, *which legacy
 > getter computes it, what components feed it, the x1/x100 + clamp gotchas, and what the diagnostic dump
-> must emit so the offline emulator reproduces it exactly.* You cannot delete a legacy calc you have not
+> must emit so StoneBase reproduces it exactly.* You cannot delete a legacy calc you have not
 > mapped ([DEC-map-before-delete](../../architecture/decisions.md#dec-map-before-delete)); this is that map.
 
 ## BLUF
@@ -295,7 +295,7 @@ inventory (§8) round it out. **The CALC map being complete is NOT the same as t
 ## 12. DUMP COVERAGE — the audited truth (VERIFIED 2026-06-19, 5-minion `CvHttpServer.cpp` vs legacy getters)
 
 The calc map above says what legacy COMPUTES; this section is the audited truth of what the DIAGNOSTIC DUMP
-actually EMITS (so the offline emulator has the data). **Where a per-§ "Dump:" line conflicts with this
+actually EMITS (so StoneBase has the data). **Where a per-§ "Dump:" line conflicts with this
 section, THIS section is ground truth.** Endpoints that exist: **`cityInput`** (city-scope), **`playerInput`**
 (player-scope). **No `unitInput` endpoint exists.**
 

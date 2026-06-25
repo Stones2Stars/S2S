@@ -177,7 +177,7 @@ enum CascadeDomainEvent
 
 //	Which entity's display name changed (the iType of a CASCADE_EVT_NAME_CHANGE event). The logging consumer resolves the
 //	NEW name LIVE (synchronous game-thread render -> exact), so the payload stays string-free; an out-of-process consumer
-//	(GameTracker / an agent) rebuilds its id->name table from the emitted lines -- REQUIRED for the total-observability
+//	(StoneBase / an agent) rebuilds its id->name table from the emitted lines -- REQUIRED for the total-observability
 //	("Orwell") bar (event-spine-spec.md section 8). CIV = the empire name (the civic-name-on-civic-change bug lever).
 enum NameChangeKind
 {

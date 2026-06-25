@@ -29,7 +29,7 @@ exist so an agent ends up with a correct model of the system, not a reverse-engi
 - **[reference/culture-religion-research.md](reference/culture-religion-research.md)** — culture, religion, research/tech, heritage, corporations.
 - **[reference/special-systems.md](reference/special-systems.md)** — espionage, great people, promotions/XP, vision, trade, diplomacy, victory.
 - **[reference/observability.md](reference/observability.md)** — the operational tag registry / gate knobs / live server / field census / PlotSnapshot.
-- **[reference/external-tools-and-workflows.md](reference/external-tools-and-workflows.md)** — crash-dump symbolization, FpkBuilder, GameTracker.
+- **[reference/external-tools-and-workflows.md](reference/external-tools-and-workflows.md)** — crash-dump symbolization, FpkBuilder.
 
 ## `architecture/` — the design compass
 - **[architecture/decisions.md](architecture/decisions.md)** — the **DECISIONS LEDGER** (the `DEC-*` index — grep it before adding any ruling).

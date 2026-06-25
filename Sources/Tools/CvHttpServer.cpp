@@ -54,7 +54,7 @@ namespace
 	// round-trip. The game thread refreshes this tiny scalar pair every frame
 	// (publishIfDue); the server thread reads its own refcounted copy. All real data
 	// is served on the game thread via the mailbox -- there is no bulk snapshot anymore
-	// (the old units/players/cities snapshot existed only for the retired GameTracker
+	// (the old units/players/cities snapshot existed only for the retired dashboard
 	// endpoints; see docs/specs/http-endpoints.md "What was dropped").
 	struct GameSnapshot
 	{
@@ -413,8 +413,8 @@ namespace
 	// /extractor -- the RAW game-state dump (world -> teams -> empires -> areas -> cities -> plots).
 	// CLEAN, raw-FACTS-ONLY extraction: NO calculated value ever appears here (DEC-calc-zero-ride-in). The
 	// only map-derived number is distanceFromCapital. This is the dedicated extraction surface -- read it
-	// directly, feed it to Tools/ModifierCalc/dry_calc.py, or build features on it. Spec:
-	// Tools/ModifierCalc/README.md. Runs on the game thread (mailbox), where every fact is readable.
+	// directly, feed it to StoneBase (the validator), or build features on it. Spec:
+	// docs/specs/json.md. Runs on the game thread (mailbox), where every fact is readable.
 	// ====================================================================================================
 	picojson::value::object extractCity(CvPlayer& kPlayer, CvCity* pCity, int iTeam)
 	{
@@ -864,7 +864,7 @@ namespace
 
 				// empire-wide TALLY -- the engine's own live per-player counters (CvPlayer::changeBuildingCount /
 				// changeUnitCount, maintained in handleBuildingCounts). This is the aggregate count for empire-scope
-				// `requires.build` count atoms (min(BUILDING_X,N) / min(UNIT_X,N)) the offline emulator cannot roll up
+				// `requires.build` count atoms (min(BUILDING_X,N) / min(UNIT_X,N)) StoneBase cannot roll up
 				// without seeing every city; we emit the counter directly (no re-derivation).
 				picojson::value::object bldgCounts;
 				picojson::value::object bldgMaking;   // in-PRODUCTION count (getBuildingMaking) -- canConstruct counts these toward the instance cap (capMaking)
@@ -1159,7 +1159,7 @@ namespace
 
 			// the ACTIVE-building loadout (the cascade deposit source). Owner 2026-06-19: emit the ACTIVE set
 			// (hasFullyActiveBuilding = present AND not resource/replacement-disabled AND not religiously-limited) so the
-			// offline tester reads the live active set directly rather than re-deriving dormancy -- legacy's yield modifier
+			// StoneBase reads the live active set directly rather than re-deriving dormancy -- legacy's yield modifier
 			// only includes active buildings, so this is the apples-to-apples deposit source. `dormant` is emitted apart
 			// for observability (present-but-inactive). NB bands (e.g. education) are CUMULATIVE -- all active, all counted.
 			picojson::value::array kBldgs, kDormant;
@@ -1367,7 +1367,7 @@ namespace
 				e["modifier"]      = picojson::value((double)pCity->getBaseYieldRateModifier(eY)); // full % == 100 + sum%
 				// MODIFIER BREAKDOWN (getBaseYieldRateModifier components, CvCity.cpp:11217) -- so the emulator
 				// attributes the percent gap to the missing source (bonus/power/area/capital/player-trait), since
-				// cascade_sim only sums building + civic %.
+				// StoneBase only sums building + civic %.
 				e["modBonus"]    = picojson::value((double)pCity->getBonusYieldRateModifier(eY));
 				e["modBuilding"] = picojson::value((double)pCity->getBuildingYieldModifier(eY));
 				e["modPlayer"]   = picojson::value((double)kPlayer.getYieldRateModifier(eY));
@@ -1408,7 +1408,7 @@ namespace
 
 			// PER-BUILDING legacy yield decomposition (calc-emulator-spec §5): each ACTIVE building's flat
 			// contribution (getBaseYieldRateFromBuilding100, x100 = YieldChange*100 + perPop*pop + techChange +
-			// dynamic) and its static percent (getYieldModifier) per yield, so the offline emulator ATTRIBUTES the
+			// dynamic) and its static percent (getYieldModifier) per yield, so StoneBase ATTRIBUTES the
 			// aggregate flat/percent divergence to NAMED buildings (compared vs the cascade's per-building JSON
 			// deposit) instead of guessing. Active set only (legacy's modifier includes only active buildings);
 			// buildings with zero contribution across all three yields are omitted to keep the dump lean.
@@ -1577,7 +1577,7 @@ namespace
 
 			// per-religion city count (countReligionLevels) -- the global count a SHRINE building scales its commerce
 			// by: religion.shrine.{commerce} x countReligionLevels(religion) at world scope (the #430 shrine assembly).
-			// Emitted so the offline emulator can reconstruct shrine commerce (the count is engine state, not in JSON).
+			// Emitted so StoneBase can reconstruct shrine commerce (the count is engine state, not in JSON).
 			{
 				picojson::value::object kRel;
 				for (int r = 0; r < GC.getNumReligionInfos(); ++r)

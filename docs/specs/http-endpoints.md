@@ -154,7 +154,7 @@ the external dry-calc + logging, not here).
 
 This surface is a deliberate **clean rebuild**; the following predecessors were dropped, not migrated:
 
-- **The flat GameTracker endpoints** (`/units` · `/players` · `/cities`) — a quick cobble-together that served
+- **The flat `/units` · `/players` · `/cities` endpoints** — a quick cobble-together that served
   computed values from a per-frame snapshot. To be re-created (if needed) as views over this coherent surface;
   the snapshot machinery they required is gone.
 - **The `/diagnostic/*` grab-bag and `/extractor/*`** — split cleanly into `/state` (raw) and `/computed`

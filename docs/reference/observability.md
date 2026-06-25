@@ -34,7 +34,7 @@ feed. Call-site census exists (WAI 43 sites, HAI 54, CTB 66, …). Dead sinks: `
   ~5 s) for response metadata + the `/events` hello. A second concurrent data request gets `503` — retry once.
 - The single **route table** in `CvHttpServer.cpp::handleRequest` is the one place every endpoint is declared
   (path → mailbox action → doc); the `/state` and `/computed` index pages are generated from it.
-- The dropped predecessors (`/units`/`/players`/`/cities` GameTracker, the `/diagnostic/*` grab-bag, the cascade-vs-legacy
+- The dropped predecessors (`/units`/`/players`/`/cities`, the `/diagnostic/*` grab-bag, the cascade-vs-legacy
   `/shadow` sweeps) and the rationale are in [http-endpoints](../specs/http-endpoints.md) "What was dropped".
 
 ## The field census (event-spine migration input)

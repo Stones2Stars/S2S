@@ -191,7 +191,7 @@ void cascadeRenderEventLine(char* szBuf, int iBufSize, const CvCascadeEvent& kEv
 			break;
 		case SFT_PLAYER:
 			// Instance name + raw id, BOTH (owner 2026-06-19): name=human readability, (id)=stable machine join-key for the
-			// primary consumers (AI agents during shadow-verify + GameTracker). Resolved LIVE here, which is exact + safe:
+			// primary consumers (AI agents during shadow-verify + StoneBase). Resolved LIVE here, which is exact + safe:
 			// onEvent renders synchronously on the GAME thread, so this touches no live object off-thread and captures the
 			// name as-of-emit. m_iID is serialized (stable across load), so keying on the id holds across a reload too.
 			m = _snprintf(szBuf + n, iBufSize - n, " %s=%S(%d)", szName,

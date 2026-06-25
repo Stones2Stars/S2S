@@ -51,21 +51,15 @@ C++ shadow mirrors.
 **StoneBase's lasting role (beyond the migration):** it persists as the tool that validates the curated JSON against
 the live codebase, tracks discrepancies in general, and — ultimately — gives a **modder** a spec-compliance check:
 when they author/test a JSON, StoneBase tells them whether it **violates the spec**. It is the single tool for all of
-this — superseding **every** earlier attempt (the dead Python dry-calc variants, the first-version .NET validator) and
-the external GameTracker.
+this — superseding **every** earlier attempt (the dead Python dry-calc variants, the first-version .NET validator).
 
-**Milestone — BUILDABLE parity ACHIEVED (2026-06-25).** `GET /parity/buildings/sweep` reports **185 / 185 real-civ
-cities clean, 0 divergences, 0 errors**: the cascade reproduces the engine's `canConstruct` TRUE-set *exactly* — every
-building type, every real city (NPCs id ≥ 40 excluded) — on the current testsave. This validates the [enabler](enabler.md)
-model + the JSON data spec; the semantics pinned along the way are authoritative ([json.md](json.md) §3.4/§3.5):
-GOM terrain/feature ConstructCondition = **IS_WORKED**; the **vicinity discriminator** (`owned` = `hasRawVicinityBonus`,
-`connected` = `hasVicinityBonus`, `worked`, bare = all-radius) vs `trade|vicinity` = `hasBonus`; `{HAS_COAST:{minArea}}`
-(= `isCoastal(N)`); the world-state `NO_NUKES` predicate (`disabled:NO_NUKES` for `bAllowsNukes`); the instance cap
-counting in-production (`buildingsMaking`). **Caveats:** one state snapshot (not all states); buildability only
-(modifiers/yields are a later target); engine-as-oracle incl. its quirks (the `LeechCatcher` carve-out, excluded on both sides).
-
-**Next parity target: UNITS** (`canTrain`), via the same StoneBase dry-calc — expected to be mostly curated-JSON
-spec-alignment (unit data not yet up to spec), not new cascade machinery.
+**Cascading-enabler (buildability) validation — done.** The buildable gate (`canConstruct`) is reproduced from the
+JSON + raw state and confirmed against the engine. The semantics this surfaced are pinned **durably** in
+[json.md](json.md) §3.4/§3.5 — the vicinity discriminator (`owned`/`worked`/`connected` vs bare, and `trade|vicinity`),
+the IS_WORKED GOM terrain/feature rule, `{HAS_COAST:{minArea}}`, the `NO_NUKES` world predicate, and the instance-cap
+making-count. **Next: the cascading enabler for UNITS** (`canTrain`) — expected to be mostly curated-JSON
+spec-alignment, not new machinery. *(Per the rule below, the sweep's pass/divergence numbers stay in the run, never in
+this doc.)*
 
 ## The shadow (the live counterpart)
 The dry-calc above is the **offline** test. Its **in-game** twin is the **shadow**: each legacy behaviour gets a
