@@ -6,7 +6,9 @@
   "build": {
    "all": [
     "BUILDING_HQ_WONKA_CONFECTIONERIES",
-    "CORPORATION_WONKA"
+    {
+     "HAS_CORPORATION": "CORPORATION_WONKA"
+    }
    ]
   }
  },

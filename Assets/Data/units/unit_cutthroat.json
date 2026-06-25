@@ -2,6 +2,11 @@
  "type": "UNIT_CUTTHROAT",
  "description": "TXT_KEY_UNIT_CUTTHROAT",
  "civilopedia": "TXT_KEY_CONCEPT_ESPIONAGE_PEDIA",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_RIFLING"
+  ]
+ },
  "requires": {
   "build": {
    "all": [
@@ -14,7 +19,13 @@
       "BUILDING_BIOMETRIC_SECURITY_SYSTEM"
      ]
     }
-   ]
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_SCOUNDREL",
+     "UNIT_PARTISAN"
+    ]
+   }
   }
  },
  "allowed": {

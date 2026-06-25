@@ -12,7 +12,12 @@
     },
     "BUILDING_ANIMAL_TRAINER_DONKEY",
     "TECH_PLOUGH"
-   ]
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_ADVENTURER"
+    ]
+   }
   }
  },
  "withdrawal": {

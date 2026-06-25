@@ -33,7 +33,13 @@
       "BUILDING_MATERIALIZER"
      ]
     }
-   ]
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_MECHANIC",
+     "UNIT_AVIATION_TECHNICIAN"
+    ]
+   }
   }
  },
  "heal": {

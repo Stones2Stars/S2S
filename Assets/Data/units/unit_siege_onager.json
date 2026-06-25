@@ -7,7 +7,12 @@
    "all": [
     "BUILDING_SIEGE_WEAPONS_WORKSHOP",
     "TECH_SIEGE_WARFARE"
-   ]
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_TREBUCHET"
+    ]
+   }
   }
  },
  "buildRate": {

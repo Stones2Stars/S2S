@@ -26,7 +26,13 @@
       }
      ]
     }
-   ]
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_LIGHT_TANK",
+     "UNIT_TANK"
+    ]
+   }
   }
  },
  "allowed": {

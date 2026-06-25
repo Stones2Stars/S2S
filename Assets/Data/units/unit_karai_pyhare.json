@@ -2,6 +2,11 @@
  "type": "UNIT_KARAI_PYHARE",
  "description": "TXT_KEY_UNIT_KARAI_PYHARE",
  "civilopedia": "TXT_KEY_UNIT_KARAI_PYHARE_PEDIA",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_RIFLING"
+  ]
+ },
  "requires": {
   "build": {
    "all": [
@@ -19,7 +24,13 @@
       "BUILDING_BIOMETRIC_SECURITY_SYSTEM"
      ]
     }
-   ]
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_SCOUNDREL",
+     "UNIT_PARTISAN"
+    ]
+   }
   }
  },
  "allowed": {

@@ -11,9 +11,9 @@
      "connection": "trade|vicinity"
     },
     {
-     "type": "AREA_SIZE",
-     "scope": "world",
-     "min": 10
+     "HAS_COAST": {
+      "minArea": 10
+     }
     },
     "TECH_ARTILLERY",
     {
@@ -30,7 +30,12 @@
       }
      ]
     }
-   ]
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_MASTER_SAILOR_WW1_DESTROYER"
+    ]
+   }
   }
  },
  "bombard": {

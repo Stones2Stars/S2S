@@ -13,7 +13,12 @@
       "BUILDING_ANIMAL_TRAINER_DEER"
      ]
     }
-   ]
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_DEER_LIGHT"
+    ]
+   }
   }
  },
  "allowed": {

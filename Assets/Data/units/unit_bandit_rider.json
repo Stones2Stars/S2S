@@ -2,6 +2,11 @@
  "type": "UNIT_BANDIT_RIDER",
  "description": "TXT_KEY_UNIT_BANDIT_RIDER",
  "civilopedia": "TXT_KEY_UNIT_BANDIT_RIDER_PEDIA",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_MATCHLOCK"
+  ]
+ },
  "requires": {
   "build": {
    "all": [
@@ -13,7 +18,12 @@
     "BUILDING_MERCENARY_STABLES",
     "TECH_BRONZE_WORKING",
     "TECH_ANIMAL_RIDING"
-   ]
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_HIGHWAYMAN"
+    ]
+   }
   }
  },
  "buildRate": {

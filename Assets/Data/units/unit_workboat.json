@@ -5,8 +5,14 @@
  "requires": {
   "build": {
    "all": [
+    "HAS_COAST",
     "TECH_FISHING"
-   ]
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_WORKBOAT_CLASSIC"
+    ]
+   }
   }
  },
  "skills": {

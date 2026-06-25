@@ -12,9 +12,9 @@
     },
     "BUILDING_REMOTE_NAVAL_TRAINING_CENTER",
     {
-     "type": "AREA_SIZE",
-     "scope": "world",
-     "min": 10
+     "HAS_COAST": {
+      "minArea": 10
+     }
     },
     "TECH_DISASTER_ROBOTS",
     {

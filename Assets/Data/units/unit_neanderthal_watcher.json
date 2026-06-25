@@ -2,6 +2,11 @@
  "type": "UNIT_NEANDERTHAL_WATCHER",
  "description": "TXT_KEY_UNIT_NEANDERTHAL_WATCHER",
  "civilopedia": "TXT_KEY_UNIT_WATCHER_PEDIA",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_SEDENTARY_LIFESTYLE"
+  ]
+ },
  "requires": {
   "build": {
    "all": [
@@ -21,7 +26,12 @@
       "BUILDING_POLICE_PRECINCT"
      ]
     }
-   ]
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_NEANDERTHAL_ENFORCER"
+    ]
+   }
   }
  },
  "culture": {

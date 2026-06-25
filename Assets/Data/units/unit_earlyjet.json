@@ -21,7 +21,13 @@
      "scope": "city",
      "connection": "trade|vicinity"
     }
-   ]
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_F111_AARDVARK",
+     "UNIT_F104_STARFIGHTER"
+    ]
+   }
   }
  },
  "bombard": {

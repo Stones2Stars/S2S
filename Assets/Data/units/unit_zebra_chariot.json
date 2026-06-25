@@ -13,7 +13,12 @@
       "BUILDING_ANIMAL_TRAINER_ZEBRA"
      ]
     }
-   ]
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_WAR_WAGON"
+    ]
+   }
   }
  },
  "allowed": {

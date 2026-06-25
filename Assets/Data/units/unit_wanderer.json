@@ -2,11 +2,23 @@
  "type": "UNIT_WANDERER",
  "description": "TXT_KEY_UNIT_WANDERER",
  "civilopedia": "TXT_KEY_UNIT_WANDERER_PEDIA",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_TRAILS"
+  ]
+ },
  "requires": {
   "build": {
    "all": [
     "TECH_NOMADISM"
-   ]
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_SCOUT",
+     "UNIT_CHASER",
+     "UNIT_NEANDERTHAL_WANDERER"
+    ]
+   }
   }
  },
  "withdrawal": {

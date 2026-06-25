@@ -11,9 +11,9 @@
      "connection": "trade|vicinity"
     },
     {
-     "type": "AREA_SIZE",
-     "scope": "world",
-     "min": 10
+     "HAS_COAST": {
+      "minArea": 10
+     }
     },
     "TECH_JET_PROPULSION",
     {
@@ -30,7 +30,12 @@
       }
      ]
     }
-   ]
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_NUCLEAR_CARRIER"
+    ]
+   }
   }
  },
  "strength": {

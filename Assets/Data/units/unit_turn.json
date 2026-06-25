@@ -6,8 +6,10 @@
   "build": {
    "all": [
     "BUILDING_MIND_CONTROL_CENTER",
-    "TECH_MIND_UPLOADING"
-   ]
+    "TECH_MIND_UPLOADING",
+    "GAMEOPTION_ADVANCED_NUKES"
+   ],
+   "disabled": "NO_NUKES"
   }
  },
  "allowed": {
@@ -40,11 +42,6 @@
  "cost": {
   "production": 6200,
   "upkeep": 6
- },
- "loadPrune": {
-  "onGameOptions": [
-   "GAMEOPTION_ADVANCED_NUKES"
-  ]
  },
  "identity": {
   "worth": 5,

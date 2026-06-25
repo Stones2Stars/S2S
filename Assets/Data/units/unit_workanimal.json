@@ -2,6 +2,11 @@
  "type": "UNIT_WORKANIMAL",
  "description": "TXT_KEY_UNIT_WORKANIMAL",
  "civilopedia": "TXT_KEY_UNIT_WORKER_PEDIA",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_LOGISTICS"
+  ]
+ },
  "requires": {
   "build": {
    "all": [
@@ -11,7 +16,12 @@
      "connection": "trade|vicinity"
     },
     "TECH_PLOUGH"
-   ]
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_WORKER_INDUSTRIAL"
+    ]
+   }
   }
  },
  "skills": {

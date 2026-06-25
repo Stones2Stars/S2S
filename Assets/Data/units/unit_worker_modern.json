@@ -2,11 +2,21 @@
  "type": "UNIT_WORKER_MODERN",
  "description": "TXT_KEY_UNIT_WORKER_MODERN",
  "civilopedia": "TXT_KEY_UNIT_WORKER_PEDIA",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_PERSONAL_ROBOTS"
+  ]
+ },
  "requires": {
   "build": {
    "all": [
     "TECH_LOGISTICS"
-   ]
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_CLONES"
+    ]
+   }
   }
  },
  "skills": {

@@ -2,11 +2,23 @@
  "type": "UNIT_SPIKED_CLUBMAN",
  "description": "TXT_KEY_UNIT_SPIKED_CLUBMAN",
  "civilopedia": "TXT_KEY_UNIT_SPIKED_CLUBMAN_PEDIA",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_FLINTLOCK"
+  ]
+ },
  "requires": {
   "build": {
    "all": [
     "TECH_SHARPENING"
-   ]
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_STONE_AXEMAN",
+     "UNIT_STONE_MACEMAN",
+     "UNIT_NEANDERTHAL_WARRIOR"
+    ]
+   }
   }
  },
  "buildRate": {

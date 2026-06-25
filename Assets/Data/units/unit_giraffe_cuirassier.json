@@ -23,7 +23,13 @@
       "BUILDING_ANIMAL_TRAINER_GIRAFFE"
      ]
     }
-   ]
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_GIRAFFE_CARABINIER",
+     "UNIT_GIRAFFE_DRAGOON"
+    ]
+   }
   }
  },
  "allowed": {

@@ -2,6 +2,11 @@
  "type": "UNIT_MAPINGUARI",
  "description": "TXT_KEY_UNIT_MAPINGUARI",
  "civilopedia": "TXT_KEY_UNIT_MAPINGUARI_PEDIA",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_GUNPOWDER"
+  ]
+ },
  "requires": {
   "build": {
    "all": [
@@ -31,7 +36,12 @@
       "BUILDING_MAPINGUARI_CHANGING_OF_THE_GUARD_CEREMONY"
      ]
     }
-   ]
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_MAPINGUARI_PIKE"
+    ]
+   }
   }
  },
  "allowed": {

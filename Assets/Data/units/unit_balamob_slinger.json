@@ -2,6 +2,11 @@
  "type": "UNIT_BALAMOB_SLINGER",
  "description": "TXT_KEY_UNIT_BALAMOB_SLINGER",
  "civilopedia": "TXT_KEY_UNIT_BALAMOB_SLINGER_PEDIA",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_FLINTLOCK"
+  ]
+ },
  "requires": {
   "build": {
    "all": [
@@ -11,7 +16,13 @@
      "connection": "trade|vicinity"
     },
     "TECH_ANCIENT_MACHINERY"
-   ]
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_LIGHT_CROSSBOWMAN",
+     "UNIT_SCORPION"
+    ]
+   }
   }
  },
  "allowed": {

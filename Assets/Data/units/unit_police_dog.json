@@ -12,7 +12,12 @@
     },
     "BUILDING_POLICE_DOG_TRAINER",
     "TECH_CRIMINOLOGY"
-   ]
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_CANIS_SUPERIOR"
+    ]
+   }
   }
  },
  "espionage": {

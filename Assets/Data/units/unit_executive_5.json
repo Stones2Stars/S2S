@@ -6,7 +6,9 @@
   "build": {
    "all": [
     "BUILDING_HQ_MINING_INC",
-    "CORPORATION_5"
+    {
+     "HAS_CORPORATION": "CORPORATION_5"
+    }
    ]
   }
  },

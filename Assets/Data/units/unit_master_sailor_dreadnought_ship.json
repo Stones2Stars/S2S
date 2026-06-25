@@ -2,17 +2,27 @@
  "type": "UNIT_MASTER_SAILOR_DREADNOUGHT_SHIP",
  "description": "TXT_KEY_UNIT_MASTER_SAILOR_DREADNOUGHT_SHIP",
  "civilopedia": "TXT_KEY_UNIT_DREADNOUGHT_SHIP_PEDIA",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_MECHANIZED_WARFARE"
+  ]
+ },
  "requires": {
   "build": {
    "all": [
     {
-     "type": "AREA_SIZE",
-     "scope": "world",
-     "min": 10
+     "HAS_COAST": {
+      "minArea": 10
+     }
     },
     "TECH_INDUSTRIALISM",
     "TECH_ARTILLERY"
-   ]
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_MASTER_SAILOR_WW2_BATTLESHIP"
+    ]
+   }
   }
  },
  "bombard": {

@@ -3,17 +3,27 @@
  "description": "TXT_KEY_UNIT_CARRACK_MERCHANT",
  "civilopedia": "TXT_KEY_UNIT_CARRACK_MERCHANT_PEDIA",
  "help": "TXT_KEY_UNIT_MERCHANT_SHIP_HELP",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_CHEMISTRY"
+  ]
+ },
  "requires": {
   "build": {
    "all": [
     "BUILDING_SHIPWRIGHT",
     {
-     "type": "AREA_SIZE",
-     "scope": "world",
-     "min": 10
+     "HAS_COAST": {
+      "minArea": 10
+     }
     },
     "TECH_ASTROLABE"
-   ]
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_CLIPPER_MERCHANT"
+    ]
+   }
   }
  },
  "skills": {

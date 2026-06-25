@@ -47,7 +47,12 @@
       }
      ]
     }
-   ]
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_NANITE_REPAIR_CLOUD"
+    ]
+   }
   }
  },
  "withdrawal": {

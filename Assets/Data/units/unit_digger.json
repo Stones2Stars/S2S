@@ -21,7 +21,13 @@
      "scope": "city",
      "connection": "trade|vicinity"
     }
-   ]
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_MODERN_MARINE",
+     "UNIT_SKI_PATROL"
+    ]
+   }
   }
  },
  "allowed": {

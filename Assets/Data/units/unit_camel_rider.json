@@ -13,7 +13,12 @@
     "BUILDING_ANIMAL_TRAINER_CAMEL",
     "TECH_ANIMAL_RIDING",
     "TECH_CAMELID_DOMESTICATION"
-   ]
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_CAMEL_KNIGHT"
+    ]
+   }
   }
  },
  "buildRate": {

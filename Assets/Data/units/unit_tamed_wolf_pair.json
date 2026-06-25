@@ -3,6 +3,11 @@
  "description": "TXT_KEY_UNIT_TAMED_WOLF_PAIR",
  "civilopedia": "TXT_KEY_UNIT_TAMED_ANIMAL_PEDIA",
  "help": "TXT_KEY_UNIT_TAMED_ANIMALS_HELP",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_SPECIALIZATION"
+  ]
+ },
  "requires": {
   "build": {
    "all": [
@@ -16,7 +21,12 @@
       "HERITAGE_TAXON_CANIDAE"
      ]
     }
-   ]
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_TAMED_WOLF"
+    ]
+   }
   }
  },
  "withdrawal": {

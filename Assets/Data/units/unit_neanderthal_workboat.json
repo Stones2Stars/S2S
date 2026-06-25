@@ -2,13 +2,24 @@
  "type": "UNIT_NEANDERTHAL_WORKBOAT",
  "description": "TXT_KEY_UNIT_NEANDERTHAL_WORKBOAT",
  "civilopedia": "TXT_KEY_UNIT_WORKBOAT_PEDIA",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_SEDENTARY_LIFESTYLE"
+  ]
+ },
  "requires": {
   "build": {
    "all": [
     "BUILDING_C_AC_NEANDERTHAL",
     "BUILDING_C_L_NEANDERTHAL",
+    "HAS_COAST",
     "TECH_FISHING"
-   ]
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_WORKBOAT_CLASSIC"
+    ]
+   }
   }
  },
  "skills": {

@@ -2,11 +2,21 @@
  "type": "UNIT_EARLY_FOOD_MERCHANT_C2C",
  "description": "TXT_KEY_UNIT_EARLY_FOOD_MERCHANT",
  "civilopedia": "TXT_KEY_CONCEPT_FOOD_CARAVAN_PEDIA",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_MOTORIZED_TRANSPORTATION"
+  ]
+ },
  "requires": {
   "build": {
    "all": [
     "TECH_BARTER"
-   ]
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_FOOD_CARAVAN"
+    ]
+   }
   }
  },
  "buildRate": {

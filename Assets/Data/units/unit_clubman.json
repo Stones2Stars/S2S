@@ -2,11 +2,23 @@
  "type": "UNIT_CLUBMAN",
  "description": "TXT_KEY_UNIT_CLUBMAN",
  "civilopedia": "TXT_KEY_UNIT_CLUBMAN_PEDIA",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_FLINTLOCK"
+  ]
+ },
  "requires": {
   "build": {
    "all": [
     "TECH_HARD_HAMMER_PERCUSSION"
-   ]
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_SPIKED_CLUBMAN",
+     "UNIT_WOODEN_SPEARMAN",
+     "UNIT_NEANDERTHAL"
+    ]
+   }
   }
  },
  "buildRate": {

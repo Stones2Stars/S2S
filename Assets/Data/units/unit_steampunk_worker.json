@@ -2,6 +2,11 @@
  "type": "UNIT_STEAMPUNK_WORKER",
  "description": "TXT_KEY_UNIT_STEAMPUNK_WORKER",
  "civilopedia": "TXT_KEY_UNIT_STEAMPUNK_WORKER_PEDIA",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_PERSONAL_ROBOTS"
+  ]
+ },
  "requires": {
   "build": {
    "all": [
@@ -40,7 +45,12 @@
       }
      ]
     }
-   ]
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_WORKER_MODERN"
+    ]
+   }
   }
  },
  "allowed": {

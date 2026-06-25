@@ -6,7 +6,9 @@
   "build": {
    "all": [
     "BUILDING_HQ_STANDARD_ETHANOL",
-    "CORPORATION_3"
+    {
+     "HAS_CORPORATION": "CORPORATION_3"
+    }
    ]
   }
  },

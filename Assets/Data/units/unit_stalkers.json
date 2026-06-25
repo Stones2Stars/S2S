@@ -2,13 +2,23 @@
  "type": "UNIT_STALKERS",
  "description": "TXT_KEY_UNIT_STALKERS",
  "civilopedia": "TXT_KEY_UNIT_STALKERS_PEDIA",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_MATCHLOCK"
+  ]
+ },
  "requires": {
   "build": {
    "all": [
     "BUILDING_POISON_CRAFTER",
     "TECH_EXPLORATION",
     "TECH_SACRIFICE_CULT"
-   ]
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_ASSASSIN"
+    ]
+   }
   }
  },
  "allowed": {

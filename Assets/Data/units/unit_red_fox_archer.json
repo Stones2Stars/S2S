@@ -2,6 +2,11 @@
  "type": "UNIT_RED_FOX_ARCHER",
  "description": "TXT_KEY_UNIT_RED_FOX_ARCHER",
  "civilopedia": "TXT_KEY_UNIT_RED_FOX_ARCHER_PEDIA",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_FLINTLOCK"
+  ]
+ },
  "requires": {
   "build": {
    "all": [
@@ -11,7 +16,12 @@
      "connection": "trade|vicinity"
     },
     "TECH_BRONZE_WORKING"
-   ]
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_LONGBOWMAN"
+    ]
+   }
   }
  },
  "allowed": {

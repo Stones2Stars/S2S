@@ -22,7 +22,12 @@
       "BUILDING_NANOMORPHIC_REPLICATOR"
      ]
     }
-   ]
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_CLONE_INFANTRY"
+    ]
+   }
   }
  },
  "skills": {

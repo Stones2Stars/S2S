@@ -23,7 +23,12 @@
       "BUILDING_ANIMAL_TRAINER_GIRAFFE"
      ]
     }
-   ]
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_LIGHT_TANK"
+    ]
+   }
   }
  },
  "allowed": {

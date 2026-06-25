@@ -11,7 +11,13 @@
      "connection": "trade|vicinity"
     },
     "TECH_CYBERNETICS"
-   ]
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_HITECH_ROBOT",
+     "UNIT_SENTINEL"
+    ]
+   }
   }
  },
  "strength": {

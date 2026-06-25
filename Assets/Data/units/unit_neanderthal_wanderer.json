@@ -2,13 +2,24 @@
  "type": "UNIT_NEANDERTHAL_WANDERER",
  "description": "TXT_KEY_UNIT_NEANDERTHAL_WANDERER",
  "civilopedia": "TXT_KEY_UNIT_WANDERER_PEDIA",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_PERSISTENCE_HUNTING"
+  ]
+ },
  "requires": {
   "build": {
    "all": [
     "BUILDING_C_AC_NEANDERTHAL",
     "BUILDING_C_L_NEANDERTHAL",
     "TECH_NOMADISM"
-   ]
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_NEANDERTHAL_SCOUT",
+     "UNIT_NEANDERTHAL_CHASER"
+    ]
+   }
   }
  },
  "withdrawal": {

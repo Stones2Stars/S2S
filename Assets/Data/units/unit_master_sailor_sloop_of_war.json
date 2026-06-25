@@ -2,16 +2,26 @@
  "type": "UNIT_MASTER_SAILOR_SLOOP_OF_WAR",
  "description": "TXT_KEY_UNIT_MASTER_SAILOR_SLOOP_OF_WAR",
  "civilopedia": "TXT_KEY_UNIT_SLOOP_OF_WAR_PEDIA",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_GRAND_WAR"
+  ]
+ },
  "requires": {
   "build": {
    "all": [
     {
-     "type": "AREA_SIZE",
-     "scope": "world",
-     "min": 10
+     "HAS_COAST": {
+      "minArea": 10
+     }
     },
     "TECH_COMPASS"
-   ]
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_MASTER_SAILOR_MANOWAR"
+    ]
+   }
   }
  },
  "bombard": {

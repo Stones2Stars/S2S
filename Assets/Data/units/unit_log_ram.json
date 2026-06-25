@@ -2,6 +2,11 @@
  "type": "UNIT_LOG_RAM",
  "description": "TXT_KEY_UNIT_LOG_RAM",
  "civilopedia": "TXT_KEY_UNIT_LOG_RAM_PEDIA",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_COPPER_WORKING"
+  ]
+ },
  "requires": {
   "build": {
    "all": [
@@ -12,7 +17,13 @@
       "BUILDING_AGROFOREST"
      ]
     }
-   ]
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_BATTERING_RAM",
+     "UNIT_NEANDERTHAL_LOG_RAM"
+    ]
+   }
   }
  },
  "buildRate": {

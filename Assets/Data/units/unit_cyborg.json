@@ -17,7 +17,13 @@
      "scope": "city",
      "connection": "trade|vicinity"
     }
-   ]
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_ANTHROID_INFANTRY",
+     "UNIT_FERAL"
+    ]
+   }
   }
  },
  "skills": {

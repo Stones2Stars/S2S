@@ -2,12 +2,22 @@
  "type": "UNIT_NEANDERTHAL_TRIBAL_GUARDIAN",
  "description": "TXT_KEY_UNIT_NEANDERTHAL_TRIBAL_GUARDIAN",
  "civilopedia": "TXT_KEY_UNIT_TRIBAL_GUARDIAN_PEDIA",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_SEDENTARY_LIFESTYLE"
+  ]
+ },
  "requires": {
   "build": {
    "all": [
     "BUILDING_C_AC_NEANDERTHAL",
     "BUILDING_C_L_NEANDERTHAL"
-   ]
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_PALACE_GUARD"
+    ]
+   }
   }
  },
  "strength": {

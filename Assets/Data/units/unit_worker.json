@@ -2,11 +2,26 @@
  "type": "UNIT_WORKER",
  "description": "TXT_KEY_UNIT_WORKER",
  "civilopedia": "TXT_KEY_UNIT_WORKER_PEDIA",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_NITROGLYCERIN"
+  ]
+ },
  "requires": {
   "build": {
    "all": [
     "TECH_SEDENTARY_LIFESTYLE"
-   ]
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_WORKANIMAL",
+     "UNIT_WORKBUFFALO",
+     "UNIT_WORKELEPHANT",
+     "UNIT_WORKMULE",
+     "UNIT_WORKLLAMA",
+     "UNIT_WORKCAMEL"
+    ]
+   }
   }
  },
  "buildRate": {

@@ -2,6 +2,18 @@
  "type": "UNIT_GREAT_ADMIRAL",
  "description": "TXT_KEY_UNIT_GREAT_ADMIRAL",
  "civilopedia": "TXT_KEY_CONCEPT_GREAT_ADMIRALS_PEDIA",
+ "requires": {
+  "build": {
+   "dormant": {
+    "all": [
+     "UNIT_MASTER_SAILOR_WAR_CANOE",
+     "UNIT_MASTER_SAILOR_KAYAK",
+     "UNIT_MASTER_SAILOR_UBOAT",
+     "UNIT_MASTER_SAILOR_EARLY_CARRIER"
+    ]
+   }
+  }
+ },
  "skills": {
   "greatGeneral": true
  },

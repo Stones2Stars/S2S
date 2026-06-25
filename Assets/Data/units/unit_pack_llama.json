@@ -12,7 +12,12 @@
     },
     "BUILDING_ANIMAL_TRAINER_LLAMA",
     "TECH_CAMELID_DOMESTICATION"
-   ]
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_ADVENTURER"
+    ]
+   }
   }
  },
  "withdrawal": {

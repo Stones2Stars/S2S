@@ -13,7 +13,12 @@
     "BUILDING_CHARIOT_WORKSHOP",
     "TECH_BRONZE_WORKING",
     "TECH_CHARIOTRY"
-   ]
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_CARROBALLISTA"
+    ]
+   }
   }
  },
  "buildRate": {

@@ -2,11 +2,22 @@
  "type": "UNIT_BELLYBOWMAN",
  "description": "TXT_KEY_UNIT_BELLYBOWMAN",
  "civilopedia": "TXT_KEY_UNIT_CROSSBOWMAN_PEDIA",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_FLINTLOCK"
+  ]
+ },
  "requires": {
   "build": {
    "all": [
     "TECH_ANCIENT_MACHINERY"
-   ]
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_LIGHT_CROSSBOWMAN",
+     "UNIT_SCORPION"
+    ]
+   }
   }
  },
  "firstStrike": {

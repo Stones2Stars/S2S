@@ -11,7 +11,12 @@
      "connection": "trade|vicinity"
     },
     "TECH_AVIATION"
-   ]
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_GUNSHIP"
+    ]
+   }
   }
  },
  "withdrawal": {

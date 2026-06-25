@@ -6,7 +6,9 @@
   "build": {
    "all": [
     "BUILDING_HQ_SIDS_SUSHI_CO",
-    "CORPORATION_2"
+    {
+     "HAS_CORPORATION": "CORPORATION_2"
+    }
    ]
   }
  },

@@ -2,6 +2,11 @@
  "type": "UNIT_BOLA_HUNTER",
  "description": "TXT_KEY_UNIT_BOLA_HUNTER",
  "civilopedia": "TXT_KEY_UNIT_BOLA_HUNTER_PEDIA",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_MATCHLOCK"
+  ]
+ },
  "requires": {
   "build": {
    "all": [
@@ -11,7 +16,12 @@
      "connection": "trade|vicinity"
     },
     "TECH_FEUDALISM"
-   ]
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_GAME_HUNTER"
+    ]
+   }
   }
  },
  "allowed": {

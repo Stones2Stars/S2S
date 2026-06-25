@@ -2,11 +2,22 @@
  "type": "UNIT_CHASER",
  "description": "TXT_KEY_UNIT_CHASER",
  "civilopedia": "TXT_KEY_UNIT_CHASER_PEDIA",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_TRACKING"
+  ]
+ },
  "requires": {
   "build": {
    "all": [
     "TECH_PERSISTENCE_HUNTING"
-   ]
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_TRACKER",
+     "UNIT_NEANDERTHAL_CHASER"
+    ]
+   }
   }
  },
  "strength": {

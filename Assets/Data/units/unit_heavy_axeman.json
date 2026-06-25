@@ -11,7 +11,12 @@
      "connection": "trade|vicinity"
     },
     "TECH_ARMOR_CRAFTING"
-   ]
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_MUSKETMAN"
+    ]
+   }
   }
  },
  "strength": {

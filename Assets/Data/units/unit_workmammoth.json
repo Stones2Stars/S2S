@@ -2,6 +2,11 @@
  "type": "UNIT_WORKMAMMOTH",
  "description": "TXT_KEY_UNIT_WORKMAMMOTH",
  "civilopedia": "TXT_KEY_UNIT_WORKER_PEDIA",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_MAINSTREAM_CLONING"
+  ]
+ },
  "requires": {
   "build": {
    "all": [
@@ -13,7 +18,12 @@
       "BUILDING_ANIMAL_TRAINER_MAMMOTH"
      ]
     }
-   ]
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_WORKER_INDUSTRIAL"
+    ]
+   }
   }
  },
  "skills": {

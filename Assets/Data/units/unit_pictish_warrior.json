@@ -30,7 +30,12 @@
       }
      ]
     }
-   ]
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_SWORDSMAN"
+    ]
+   }
   }
  },
  "allowed": {

@@ -21,7 +21,13 @@
      "scope": "city",
      "connection": "trade|vicinity"
     }
-   ]
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_MACHINE_GUN",
+     "UNIT_LIGHT_AA"
+    ]
+   }
   }
  },
  "allowed": {

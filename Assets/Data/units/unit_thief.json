@@ -2,12 +2,22 @@
  "type": "UNIT_THIEF",
  "description": "TXT_KEY_UNIT_THIEF",
  "civilopedia": "TXT_KEY_CONCEPT_ESPIONAGE_PEDIA",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_MATCHLOCK"
+  ]
+ },
  "requires": {
   "build": {
    "all": [
     "BUILDING_THIEVES_HIDEOUT",
     "TECH_THEFT"
-   ]
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_ROGUE"
+    ]
+   }
   }
  },
  "allowed": {

@@ -6,7 +6,9 @@
   "build": {
    "all": [
     "BUILDING_HQ_CIVILIZED_JEWELERS_INC",
-    "CORPORATION_7"
+    {
+     "HAS_CORPORATION": "CORPORATION_7"
+    }
    ]
   }
  },

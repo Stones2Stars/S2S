@@ -3,6 +3,11 @@
  "description": "TXT_KEY_UNIT_SUGAR_CLIPPER",
  "civilopedia": "TXT_KEY_UNIT_SUGAR_CLIPPER_PEDIA",
  "help": "TXT_KEY_UNIT_MERCHANT_SHIP_HELP",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_SUBMARINE_WARFARE"
+  ]
+ },
  "requires": {
   "build": {
    "all": [
@@ -13,12 +18,17 @@
     },
     "BUILDING_SHIPWRIGHT",
     {
-     "type": "AREA_SIZE",
-     "scope": "world",
-     "min": 10
+     "HAS_COAST": {
+      "minArea": 10
+     }
     },
     "TECH_CHEMISTRY"
-   ]
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_LIBERTY_MERCHANT"
+    ]
+   }
   }
  },
  "allowed": {

@@ -7,7 +7,12 @@
   "build": {
    "all": [
     "TECH_COLONIALISM"
-   ]
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_PIONEER"
+    ]
+   }
   }
  },
  "skills": {

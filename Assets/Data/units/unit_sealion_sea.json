@@ -2,6 +2,13 @@
  "type": "UNIT_SEALION_SEA",
  "description": "TXT_KEY_UNIT_SEALION",
  "civilopedia": "TXT_KEY_UNIT_SEALION_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    "HAS_COAST"
+   ]
+  }
+ },
  "withdrawal": {
   "unit": {
    "percent": 30

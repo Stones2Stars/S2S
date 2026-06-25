@@ -2,6 +2,11 @@
  "type": "UNIT_FORTY_NINER",
  "description": "TXT_KEY_UNIT_FORTY_NINER",
  "civilopedia": "TXT_KEY_UNIT_FORTY_NINER_PEDIA",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_PERSONAL_ROBOTS"
+  ]
+ },
  "requires": {
   "build": {
    "all": [
@@ -11,7 +16,12 @@
      "connection": "trade|vicinity"
     },
     "TECH_NITROGLYCERIN"
-   ]
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_WORKER_MODERN"
+    ]
+   }
   }
  },
  "allowed": {

@@ -2,6 +2,11 @@
  "type": "UNIT_TARKKA_AMPUJA",
  "description": "TXT_KEY_UNIT_TARKKA_AMPUJA",
  "civilopedia": "TXT_KEY_UNIT_TARKKA_AMPUJA_PEDIA",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_SUPERSTRONG_ALLOYS"
+  ]
+ },
  "requires": {
   "build": {
    "all": [
@@ -28,7 +33,12 @@
       "BUILDING_ORBITAL_TARGETS"
      ]
     }
-   ]
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_MSNIPER"
+    ]
+   }
   }
  },
  "allowed": {

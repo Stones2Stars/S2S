@@ -22,7 +22,13 @@
      "scope": "city",
      "connection": "trade|vicinity"
     }
-   ]
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_AUTOGYRO",
+     "UNIT_ARMORED_CAR"
+    ]
+   }
   }
  },
  "withdrawal": {

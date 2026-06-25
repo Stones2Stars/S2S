@@ -11,7 +11,12 @@
      "connection": "trade|vicinity"
     },
     "TECH_MANUFACTURING"
-   ]
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_UNMANNED_MACHINE_GUN"
+    ]
+   }
   }
  },
  "firstStrike": {

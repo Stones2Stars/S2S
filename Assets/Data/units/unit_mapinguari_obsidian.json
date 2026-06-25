@@ -2,6 +2,11 @@
  "type": "UNIT_MAPINGUARI_OBSIDIAN",
  "description": "TXT_KEY_UNIT_MAPINGUARI_OBSIDIAN",
  "civilopedia": "TXT_KEY_UNIT_MAPINGUARI_PEDIA",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_IRON_WORKING"
+  ]
+ },
  "requires": {
   "build": {
    "all": [
@@ -17,7 +22,12 @@
       "BUILDING_MAPINGUARI_CHANGING_OF_THE_GUARD_CEREMONY"
      ]
     }
-   ]
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_MAPINGUARI"
+    ]
+   }
   }
  },
  "allowed": {

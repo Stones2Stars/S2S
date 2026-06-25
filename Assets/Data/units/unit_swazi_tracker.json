@@ -2,6 +2,11 @@
  "type": "UNIT_SWAZI_TRACKER",
  "description": "TXT_KEY_UNIT_SWAZI_TRACKER",
  "civilopedia": "TXT_KEY_UNIT_SWAZI_TRACKER_PEDIA",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_MATCHLOCK"
+  ]
+ },
  "requires": {
   "build": {
    "all": [
@@ -11,7 +16,12 @@
      "connection": "trade|vicinity"
     },
     "TECH_IRON_WORKING"
-   ]
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_GAME_HUNTER"
+    ]
+   }
   }
  },
  "allowed": {

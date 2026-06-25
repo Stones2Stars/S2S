@@ -12,9 +12,9 @@
     },
     "BUILDING_SHIPWRIGHT",
     {
-     "type": "AREA_SIZE",
-     "scope": "world",
-     "min": 10
+     "HAS_COAST": {
+      "minArea": 10
+     }
     },
     "TECH_MERCANTILISM",
     "TECH_NAVAL_CANNON",
@@ -41,7 +41,12 @@
       "CIVIC_DESPOTISM"
      ]
     }
-   ]
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_ASSAULT_SHIP"
+    ]
+   }
   }
  },
  "allowed": {

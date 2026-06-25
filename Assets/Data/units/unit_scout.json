@@ -2,11 +2,22 @@
  "type": "UNIT_SCOUT",
  "description": "TXT_KEY_UNIT_SCOUT",
  "civilopedia": "TXT_KEY_UNIT_SCOUT_PEDIA",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_WRITING"
+  ]
+ },
  "requires": {
   "build": {
    "all": [
     "TECH_TRAILS"
-   ]
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_GUIDE",
+     "UNIT_NEANDERTHAL_SCOUT"
+    ]
+   }
   }
  },
  "withdrawal": {

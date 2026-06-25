@@ -11,7 +11,12 @@
      "connection": "trade|vicinity"
     },
     "TECH_WARMACHINES"
-   ]
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_WALKER_MECH"
+    ]
+   }
   }
  },
  "withdrawal": {

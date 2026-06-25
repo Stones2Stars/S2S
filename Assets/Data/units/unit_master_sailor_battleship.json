@@ -2,6 +2,11 @@
  "type": "UNIT_MASTER_SAILOR_BATTLESHIP",
  "description": "TXT_KEY_UNIT_MASTER_SAILOR_BATTLESHIP",
  "civilopedia": "TXT_KEY_UNIT_BATTLESHIP_PEDIA",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_ADVANCED_WARMACHINES"
+  ]
+ },
  "requires": {
   "build": {
    "all": [
@@ -11,9 +16,9 @@
      "connection": "trade|vicinity"
     },
     {
-     "type": "AREA_SIZE",
-     "scope": "world",
-     "min": 10
+     "HAS_COAST": {
+      "minArea": 10
+     }
     },
     "TECH_SEMICONDUCTORS",
     {
@@ -30,7 +35,12 @@
       }
      ]
     }
-   ]
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_MASTER_SAILOR_FUSION_BATTLESHIP"
+    ]
+   }
   }
  },
  "bombard": {

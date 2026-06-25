@@ -2,6 +2,13 @@
  "type": "UNIT_DOLPHIN",
  "description": "TXT_KEY_UNIT_DOLPHIN",
  "civilopedia": "TXT_KEY_CONCEPT_SUBDUED_ANIMALS_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    "HAS_COAST"
+   ]
+  }
+ },
  "withdrawal": {
   "unit": {
    "percent": 65

@@ -27,7 +27,12 @@
       "BUILDING_MATERIALS_CONGLOMERATE"
      ]
     }
-   ]
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_TECHNARCHIST"
+    ]
+   }
   }
  },
  "allowed": {

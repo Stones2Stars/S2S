@@ -6,7 +6,12 @@
   "build": {
    "all": [
     "TECH_ORAL_TRADITION"
-   ]
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_BARD"
+    ]
+   }
   }
  },
  "PROPERTY_EDUCATION": {

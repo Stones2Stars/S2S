@@ -3,17 +3,27 @@
  "description": "TXT_KEY_UNIT_COG_MERCHANT",
  "civilopedia": "TXT_KEY_UNIT_COG_MERCHANT_PEDIA",
  "help": "TXT_KEY_UNIT_MERCHANT_SHIP_HELP",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_ASTROLABE"
+  ]
+ },
  "requires": {
   "build": {
    "all": [
     {
-     "type": "AREA_SIZE",
-     "scope": "world",
-     "min": 10
+     "HAS_COAST": {
+      "minArea": 10
+     }
     },
     "TECH_WRITING",
     "TECH_PIRACY"
-   ]
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_CARRACK_MERCHANT"
+    ]
+   }
   }
  },
  "buildRate": {

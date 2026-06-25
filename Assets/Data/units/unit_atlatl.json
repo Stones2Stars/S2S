@@ -2,11 +2,21 @@
  "type": "UNIT_ATLATL",
  "description": "TXT_KEY_UNIT_ATLATL",
  "civilopedia": "TXT_KEY_UNIT_ATLATL_PEDIA",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_FLINTLOCK"
+  ]
+ },
  "requires": {
   "build": {
    "all": [
     "TECH_ATLATL_MAKING"
-   ]
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_JAVELINEER"
+    ]
+   }
   }
  },
  "buildRate": {

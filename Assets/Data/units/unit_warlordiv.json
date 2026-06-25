@@ -2,6 +2,11 @@
  "type": "UNIT_WARLORDIV",
  "description": "TXT_KEY_UNIT_WARLORDIV",
  "civilopedia": "TXT_KEY_CONCEPT_GREAT_GENERALS_PEDIA",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_LOGISTICS"
+  ]
+ },
  "requires": {
   "build": {
    "all": [
@@ -16,7 +21,12 @@
      "scope": "city",
      "connection": "trade|vicinity"
     }
-   ]
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_WARLORDV"
+    ]
+   }
   }
  },
  "allowed": {

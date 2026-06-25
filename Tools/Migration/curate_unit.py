@@ -162,8 +162,10 @@ ID_BOOL_GP = {}  # placeholder
 REQUIRES_TAGS = {
     "PrereqTech", "TechTypes", "BonusType", "PrereqBonuses", "VicinityBonusType", "PrereqVicinityBonuses",
     "PrereqReligion", "PrereqCorporation", "PrereqOrCivics", "PrereqAndBuildings", "PrereqOrBuildings",
-    "PrereqAndHeritage", "PrereqOrHeritage", "iMinAreaSize", "StateReligion", "EnabledCivilizationTypes",
+    "PrereqAndHeritage", "PrereqOrHeritage", "iMinAreaSize", "StateReligion", "bRequiresStateReligionInCity",
+    "HolyCity", "Domain", "EnabledCivilizationTypes",
     "TrainCondition", "PrereqGameOption", "NotGameOption", "iMaxGlobalInstances", "iMaxPlayerInstances",
+    "iMaxTeamInstances",
 }
 STORE_TAGS = {"ObsoleteTech"}
 # DEFERRED to pass 2 (keyed/outcome/GP/property) — shown as deferred in coverage.
@@ -254,12 +256,15 @@ def requires_unit(rec, store):
     orb = _typelist_struct(rec, "PrereqBonuses", "BonusType")
     if orb:
         anyc.append([_atom(x, "city", connection="trade|vicinity") for x in orb])
+    # Vicinity bonus = the engine's hasVicinityBonus (CvCity::canTrainInternal:2241 single, :2250 OR) -- the OBTAINED
+    # level (owned+valid+connected), so it carries the `vicinity:"connected"` discriminator (json.md §3.4), IDENTICAL
+    # to the building curator's VicinityBonus. (A bare `connection:"vicinity"` would loosely accept any radius tile.)
     vb = _txt(rec, "VicinityBonusType")
     if vb:
-        allc.append(_atom(vb, "city", connection="vicinity"))
+        allc.append(_atom(vb, "city", connection="vicinity", vicinity="connected"))
     ovb = _typelist_struct(rec, "PrereqVicinityBonuses", "BonusType")
     if ovb:
-        anyc.append([_atom(x, "city", connection="vicinity") for x in ovb])
+        anyc.append([_atom(x, "city", connection="vicinity", vicinity="connected") for x in ovb])
     for x in _typelist_struct(rec, "PrereqAndBuildings", "BuildingType"):
         allc.append(_atom(x, "city"))
     orbld = _typelist_struct(rec, "PrereqOrBuildings", "BuildingType")
@@ -275,15 +280,42 @@ def requires_unit(rec, store):
         allc.append(_atom(rel, "city"))
     corp = _txt(rec, "PrereqCorporation")
     if corp:
-        allc.append(_atom(corp, "city"))
+        # A UNIT's corp prereq needs the corp ACTIVE (engine CvCity::canTrainInternal:2186 isActiveCorporation) --
+        # NOT merely present. {HAS_CORPORATION: X} evaluates ACTIVE; a bare CORPORATION_X would (wrongly, for a unit)
+        # mean isHasCorporation/present, which is the BUILDING semantic (canConstruct:2631). So an executive in a city
+        # that has the corp present-but-inactive is correctly NOT trainable.
+        allc.append(OrderedDict([("HAS_CORPORATION", corp)]))
     orciv = _typelist_struct(rec, "PrereqOrCivics", "PrereqCivic") or _typelist(rec, "PrereqOrCivics")
     if orciv:
         anyc.append([_atom(x, "empire") for x in orciv])
-    if _bool(rec, "StateReligion"):
-        allc.append("HAS_STATE_RELIGION")
+    # State religion -- THREE distinct legacy fields, all BUILD gates (units have no operate; a trained unit never
+    # goes dormant on a religion switch), mirroring the building curator's STATE_RELIGION handling:
+    #   * bStateReligion (CvPlayer::canTrain:6498 player HAS a state religion + CvCity::isPlotTrainable:1935 the city
+    #     HAS it) and bRequiresStateReligionInCity (CvCity::canTrainInternal:2232 the city HAS the state religion) both
+    #     collapse to STATE_RELIGION_IN_CITY (the evaluator's predicate already means "player has one AND city has it").
+    #   * StateReligion (m_iStateReligion, a SPECIFIC religion; CvPlayer::canTrain:6417 player's state religion == it)
+    #     -> {STATE_RELIGION: RELIGION_X}.
+    if _bool(rec, "bStateReligion") or _bool(rec, "bRequiresStateReligionInCity"):
+        allc.append("STATE_RELIGION_IN_CITY")
+    sr = _txt(rec, "StateReligion")
+    if sr:
+        allc.append(OrderedDict([("STATE_RELIGION", sr)]))
+    # HolyCity (m_iHolyCity; CvCity::canTrainInternal:2190 isHolyCity) -- the city must be the holy city of that religion.
+    hc = _txt(rec, "HolyCity")
+    if hc:
+        allc.append(OrderedDict([("HOLY_CITY", hc)]))
+    # iMinAreaSize (CvPlot::canTrain, city case): a DOMAIN_SEA unit needs the city adjacent to a sea-body of >= N tiles
+    # (isCoastalLand(N)) -> {HAS_COAST:{minArea:N}}, same shape as a bWater building; any other domain needs the city's
+    # LANDMASS to be >= N tiles (area()->getNumTiles()) -> AREA_SIZE. (The old blanket AREA_SIZE wrongly gated sea units
+    # on land area and dropped their coastal requirement.)
     ms = _int(rec, "iMinAreaSize")
     if ms and ms > 0:
-        allc.append(_atom("AREA_SIZE", "world", min=ms))
+        if _txt(rec, "Domain") == "DOMAIN_SEA":
+            allc.append(OrderedDict([("HAS_COAST", OrderedDict([("minArea", ms)]))]))
+        else:
+            allc.append(_atom("AREA_SIZE", "city", min=ms))
+    elif _txt(rec, "Domain") == "DOMAIN_SEA":
+        allc.append("HAS_COAST")   # sea unit, no min sea-body size -> coastal at the default threshold
     # --- tech prereqs -> build.all (AND only: the single PrereqAndTech + every TechTypes entry; units have NO
     # OR-tech — only techs themselves model alternate tech-tree paths, owner 2026-06-17). The SOURCE->unit enable
     # edge is ALSO store-wired (generation/frontier proposal), but that edge cannot encode the multi-tech AND;
@@ -294,6 +326,17 @@ def requires_unit(rec, store):
         allc.append(_atom(t, "team"))
     for x in _typelist_struct(rec, "TechTypes", "PrereqTech"):
         allc.append(_atom(x, "team"))
+    # GAME-OPTION gates as DECLARATIVE requires.build conditions (owner ruling 2026-06-25), NOT loadPrune: a bare
+    # GAMEOPTION_X reference the cascade evaluates against the active options. This states the dependency clearly IN
+    # THE UNIT JSON (e.g. an inquisitor's GAMEOPTION_RELIGION_INQUISITIONS) so a modder's new option-gated unit needs
+    # NO engine special-case. PrereqGameOption (engine canEverTrain:6449 -- option must be ON) -> build.all;
+    # NotGameOption (:6454 -- option must be OFF) -> build.noneOf.
+    for x in (_typelist(rec, "PrereqGameOption") or ([_txt(rec, "PrereqGameOption")] if _txt(rec, "PrereqGameOption") else [])):
+        if x and x != "NONE":
+            allc.append(x)
+    for x in (_typelist(rec, "NotGameOption") or ([_txt(rec, "NotGameOption")] if _txt(rec, "NotGameOption") else [])):
+        if x and x != "NONE":
+            none.append(x)
     # EnabledCivilizationTypes is NOT a train gate: CvCity::canTrain applies it ONLY to an isStronglyRestricted()
     # NPC civ (the Neanderthal whitelist, same mechanism as buildings, CvCity.cpp:2218). Real civs SKIP it. So it is
     # an identity whitelist (identity.enabledCivilizations, emitted in curate()), IGNORED by the dry-calc; remodel
@@ -310,6 +353,12 @@ def requires_unit(rec, store):
         build["all"] = allc
     if none:
         build["noneOf"] = none
+    # iNukeRange != -1 marks a nuke unit; the engine bars it while the no-nukes verdict holds (CvPlayer::canTrain:6488
+    # !isNukesValid() && getNukeRange()!=-1) -- the UN ban, lifted once anyone builds Manhattan. Mirror the bAllowsNukes
+    # building: a world-scope NO_NUKES disable (the iNukeRange magnitude itself stays the air.nukeRange modifier).
+    nr = _int(rec, "iNukeRange")
+    if nr is not None and nr != -1:
+        build["disabled"] = "NO_NUKES"
     return {"build": build} if build else None
 
 
@@ -669,12 +718,9 @@ def curate(typ, rec, store):
     w = _int(rec, "iAIWeight")
     if w:
         ai.setdefault("behaviour", OrderedDict())["weight"] = w
-    # --- loadPrune (game options) ---
-    for tag, key in (("PrereqGameOption", "onGameOptions"), ("NotGameOption", "notOnGameOptions")):
-        lst = _typelist(rec, tag) or ([_txt(rec, tag)] if _txt(rec, tag) else [])
-        lst = [x for x in lst if x]
-        if lst:
-            loadprune[key] = lst
+    # --- game options: now DECLARATIVE requires.build conditions (GAMEOPTION_X in build.all / build.noneOf), authored
+    # in requires_unit() above -- NOT loadPrune. This states the option dependency clearly on the unit and lets the
+    # cascade evaluate it (modder-extensible, no engine special-case). loadPrune stays empty for units. ---
     # --- art ---
     for tag in ART:
         put_art(art_blocks, tag, engine.text(rec.find(tag)))
@@ -690,7 +736,24 @@ def curate(typ, rec, store):
     obsoletes = store.obsoletes_of(typ)
     if obsoletes:
         out["obsoletes"] = OrderedDict((k, obsoletes[k]) for k in sorted(obsoletes))
+    # ObsoleteTech -> TARGET-side obsoletedBy.techs, mirroring the building curator (owner 2026-06-22): the unit
+    # carries its own obsoleting tech so the cascade prunes it from the buildable set via the SAME obsoletedBy edge
+    # buildings use (engine CvPlayer::canTrain:6404 -- obsolete-tech held => not trainable). On-map persistence is out
+    # of scope (the cascade answers canTrain only); an obsolete unit simply leaves the buildable set.
+    ot = _txt(rec, "ObsoleteTech")
+    if ot:
+        out["obsoletedBy"] = OrderedDict([("techs", [ot])])
     requires = requires_unit(rec, store)
+    # UPGRADE DORMANCY (owner ruling 2026-06-25): a unit is dormant OUT of the buildable set when ALL of the units it
+    # DIRECTLY upgrades to are active -> requires.build.dormant.all = the IMMEDIATE upgradesTo (UnitUpgrades), NOT a
+    # transitive closure. The cascade recurses the chain ENGINE-SIDE, mirroring CvCity::allUpgradesAvailable (a unit
+    # hides only when EVERY direct upgrade resolves to a reachable-trainable unit), so authoring just the direct edges
+    # keeps it short (a swordsman's chain is huge) and matches the engine. `dormant` rides `build` (units have no
+    # operate; build/operate share conditionals) and is fail-safe (default not-dormant). Distinct from identity.spawnOnly.
+    ups_imm = [u for u in (_typelist_struct(rec, "UnitUpgrades", "UnitType") or _typelist(rec, "UnitUpgrades")) if u and u != "NONE"]
+    if ups_imm:
+        requires = requires or OrderedDict()
+        requires.setdefault("build", OrderedDict())["dormant"] = OrderedDict([("all", [_atom(u, "city") for u in ups_imm])])
     if requires:
         out["requires"] = requires
     # EnabledCivilizationTypes -> identity whitelist (NPC-only train gate; dry-calc ignores it; remodel post-rework).

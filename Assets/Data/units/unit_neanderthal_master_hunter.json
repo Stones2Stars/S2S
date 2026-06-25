@@ -2,13 +2,23 @@
  "type": "UNIT_NEANDERTHAL_MASTER_HUNTER",
  "description": "TXT_KEY_UNIT_NEANDERTHAL_MASTER_HUNTER",
  "civilopedia": "TXT_KEY_UNIT_MASTER_HUNTER_PEDIA",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_BRONZE_WORKING"
+  ]
+ },
  "requires": {
   "build": {
    "all": [
     "BUILDING_C_AC_NEANDERTHAL",
     "BUILDING_C_L_NEANDERTHAL",
     "TECH_HUNTING"
-   ]
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_MASTER_RANGER"
+    ]
+   }
   }
  },
  "allowed": {

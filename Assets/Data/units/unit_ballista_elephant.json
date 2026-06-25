@@ -15,7 +15,12 @@
     "TECH_SIEGE_WARFARE",
     "TECH_ELEPHANT_DOMESTICATION",
     "TECH_MOUNTED_ARCHERY"
-   ]
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_BOMBARD_ELEPHANT"
+    ]
+   }
   }
  },
  "strength": {

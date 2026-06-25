@@ -10,6 +10,7 @@
      "scope": "city",
      "connection": "trade|vicinity"
     },
+    "HAS_COAST",
     "TECH_MARINE_ARCHITECTURE"
    ]
   }

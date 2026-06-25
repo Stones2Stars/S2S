@@ -25,7 +25,13 @@
       }
      ]
     }
-   ]
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_SIEGE_DROID",
+     "UNIT_WALKER_ARTILLERY"
+    ]
+   }
   }
  },
  "strength": {

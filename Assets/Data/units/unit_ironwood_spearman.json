@@ -11,7 +11,12 @@
      "connection": "trade|vicinity"
     },
     "TECH_HEAT_TREATMENT"
-   ]
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_MACEMAN"
+    ]
+   }
   }
  },
  "allowed": {

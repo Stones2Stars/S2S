@@ -6,7 +6,12 @@
   "build": {
    "all": [
     "TECH_ASSEMBLY_LINE"
-   ]
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_MILITIA_MODERN"
+    ]
+   }
   }
  },
  "skills": {

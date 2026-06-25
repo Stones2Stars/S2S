@@ -2,6 +2,13 @@
  "type": "UNIT_SEAOTTER",
  "description": "TXT_KEY_UNIT_SEAOTTER",
  "civilopedia": "TXT_KEY_UNIT_SEAOTTER_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    "HAS_COAST"
+   ]
+  }
+ },
  "withdrawal": {
   "unit": {
    "percent": 60

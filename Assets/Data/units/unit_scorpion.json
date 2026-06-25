@@ -7,7 +7,12 @@
    "all": [
     "BUILDING_SIEGE_WEAPONS_WORKSHOP",
     "TECH_ANCIENT_BALLISTICS"
-   ]
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_BALLISTA"
+    ]
+   }
   }
  },
  "buildRate": {

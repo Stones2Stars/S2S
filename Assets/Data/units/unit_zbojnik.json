@@ -2,6 +2,11 @@
  "type": "UNIT_ZBOJNIK",
  "description": "TXT_KEY_UNIT_ZBOJNIK",
  "civilopedia": "TXT_KEY_UNIT_ZBOJNIK_PEDIA",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_MOTORIZED_TRANSPORTATION"
+  ]
+ },
  "requires": {
   "build": {
    "all": [
@@ -26,7 +31,12 @@
       }
      ]
     }
-   ]
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_OUTLAW"
+    ]
+   }
   }
  },
  "allowed": {

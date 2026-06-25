@@ -12,7 +12,12 @@
     },
     "BUILDING_ANIMAL_TRAINER_HORSE",
     "TECH_COMPASS"
-   ]
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_MOTORCYCLE"
+    ]
+   }
   }
  },
  "withdrawal": {

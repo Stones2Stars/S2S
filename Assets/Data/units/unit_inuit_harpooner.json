@@ -11,7 +11,12 @@
      "connection": "trade|vicinity"
     },
     "TECH_HARPOON_MAKING"
-   ]
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_SKIRMISHER"
+    ]
+   }
   }
  },
  "allowed": {

@@ -2,6 +2,11 @@
  "type": "UNIT_NEANDERTHAL_ENFORCER",
  "description": "TXT_KEY_UNIT_NEANDERTHAL_ENFORCER",
  "civilopedia": "TXT_KEY_UNIT_ENFORCERS_PEDIA",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_SEDENTARY_LIFESTYLE"
+  ]
+ },
  "requires": {
   "build": {
    "all": [
@@ -20,7 +25,12 @@
       "BUILDING_POLICE_PRECINCT"
      ]
     }
-   ]
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_TOWN_WATCHMEN"
+    ]
+   }
   }
  },
  "culture": {

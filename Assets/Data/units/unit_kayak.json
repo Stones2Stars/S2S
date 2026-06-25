@@ -2,14 +2,19 @@
  "type": "UNIT_KAYAK",
  "description": "TXT_KEY_UNIT_KAYAK",
  "civilopedia": "TXT_KEY_UNIT_KAYAK_PEDIA",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_OPTICS"
+  ]
+ },
  "requires": {
   "build": {
    "all": [
     "BUILDING_CANOE_BUILDER",
     {
-     "type": "AREA_SIZE",
-     "scope": "world",
-     "min": 5
+     "HAS_COAST": {
+      "minArea": 5
+     }
     },
     "TECH_BOAT_BUILDING",
     {
@@ -31,7 +36,13 @@
       }
      ]
     }
-   ]
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_OUTRIGGER",
+     "UNIT_NEANDERTHAL_KAYAK"
+    ]
+   }
   }
  },
  "buildRate": {

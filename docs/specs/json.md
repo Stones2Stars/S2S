@@ -322,7 +322,16 @@ The means a target needs. Two timings:
 
 - **`build`** — needed to construct it; **greyed** if missing. Checked once, at build.
 - **`operate`** — needed to construct **and** keep running; if lost later the built thing goes **dormant**
-  (inactive, not destroyed) and wakes when it returns. (Units carry `build` only.)
+  (inactive, not destroyed) and wakes when it returns.
+- **`build` and `operate` share the SAME conditional vocabulary** (owner ruling 2026-06-25) — including the
+  **`dormant`** sub-clause. **Units carry `build` only** (a trained unit never goes dormant on resource loss, and
+  what happens to a unit once on the map is out of the cascade's scope — it answers `canTrain` only). The one unit use
+  of `dormant` is therefore **`requires.build.dormant`**: a unit's **upgrade chain**. A unit is dormant *out of the
+  buildable set* while any successor in its **transitive** upgrade closure (`UnitUpgrades` ∪ `SupersedingUnits`, walked
+  to the top) is itself buildable — so a chained A→B→C keeps A out even when only C is available. The **named
+  `dormant` clause is fail-safe**: its default is *not*-dormant, so an engine that has not implemented unit-dormancy
+  leaves the unit buildable rather than wrongly disabling every upgradeable unit. *(Never-buildable spawned units —
+  `iCost == −1` — are a separate straight disable: `identity.spawnOnly`, §7, not a dormancy.)*
 
 Each is an `all`/`any`/`noneOf` tree (§3.4). A single bare predicate may be given as a `disabled`/`enabled` clause:
 

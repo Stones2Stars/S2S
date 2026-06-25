@@ -2,17 +2,27 @@
  "type": "UNIT_OUTRIGGER",
  "description": "TXT_KEY_UNIT_OUTRIGGER",
  "civilopedia": "TXT_KEY_UNIT_OUTRIGGER_PEDIA",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_COMPASS"
+  ]
+ },
  "requires": {
   "build": {
    "all": [
     "BUILDING_CANOE_BUILDER",
     {
-     "type": "AREA_SIZE",
-     "scope": "world",
-     "min": 5
+     "HAS_COAST": {
+      "minArea": 5
+     }
     },
     "TECH_SAILING"
-   ]
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_CARAVEL"
+    ]
+   }
   }
  },
  "buildRate": {

@@ -6,7 +6,9 @@
   "build": {
    "all": [
     "BUILDING_HQ_BURGERWORLD",
-    "CORPORATION_BURGERWORLD"
+    {
+     "HAS_CORPORATION": "CORPORATION_BURGERWORLD"
+    }
    ]
   }
  },

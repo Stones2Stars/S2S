@@ -2,11 +2,22 @@
  "type": "UNIT_STONE_SPEARMAN",
  "description": "TXT_KEY_UNIT_STONE_SPEARMAN",
  "civilopedia": "TXT_KEY_UNIT_STONE_SPEARMAN_PEDIA",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_FLINTLOCK"
+  ]
+ },
  "requires": {
   "build": {
    "all": [
     "TECH_SPEAR_MAKING"
-   ]
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_OBSIDIAN_SPEARMAN",
+     "UNIT_NEANDERTHAL_STONE_AGE_SPEARMAN"
+    ]
+   }
   }
  },
  "buildRate": {

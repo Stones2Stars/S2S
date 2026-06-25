@@ -2,11 +2,21 @@
  "type": "UNIT_CROSSBOWMAN",
  "description": "TXT_KEY_UNIT_CROSSBOWMAN",
  "civilopedia": "TXT_KEY_UNIT_CROSSBOWMAN_PEDIA",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_FLINTLOCK"
+  ]
+ },
  "requires": {
   "build": {
    "all": [
     "TECH_ENGINEERING"
-   ]
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_HEAVY_CROSSBOWMAN"
+    ]
+   }
   }
  },
  "firstStrike": {

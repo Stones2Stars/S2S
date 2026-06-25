@@ -2,6 +2,11 @@
  "type": "UNIT_RAPANUIWORKER",
  "description": "TXT_KEY_UNIT_RAPANUIWORKER",
  "civilopedia": "TXT_KEY_UNIT_RAPANUIWORKER_PEDIA",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_NITROGLYCERIN"
+  ]
+ },
  "requires": {
   "build": {
    "all": [
@@ -11,7 +16,12 @@
      "connection": "trade|vicinity"
     },
     "TECH_MEGALITH_CONSTRUCTION"
-   ]
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_WORKER_INDUSTRIAL"
+    ]
+   }
   }
  },
  "allowed": {

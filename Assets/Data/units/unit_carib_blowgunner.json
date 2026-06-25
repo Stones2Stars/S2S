@@ -2,6 +2,11 @@
  "type": "UNIT_CARIB_BLOWGUNNER",
  "description": "TXT_KEY_UNIT_CARIB_BLOWGUNNER",
  "civilopedia": "TXT_KEY_UNIT_CARIB_BLOWGUNNER_PEDIA",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_FLINTLOCK"
+  ]
+ },
  "requires": {
   "build": {
    "all": [
@@ -11,7 +16,12 @@
      "connection": "trade|vicinity"
     },
     "TECH_POISON_CRAFTING"
-   ]
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_ARCHER"
+    ]
+   }
   }
  },
  "allowed": {

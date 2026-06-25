@@ -11,7 +11,12 @@
      "connection": "trade|vicinity"
     },
     "TECH_WARFARE"
-   ]
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_EARLY_MACEMAN"
+    ]
+   }
   }
  },
  "allowed": {

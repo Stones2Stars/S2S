@@ -127,7 +127,19 @@ pollution) compound, every in-band band active. Bands are **bidirectional** — 
 **negative** side, not just the positive ladder; a negative band is being considered for **every property**.
 
 **`requires.operate` on a UNIT** (FUTURE — e.g. tanks need fuel) would reversibly disable an existing unit while
-it stays on the map; the structure supports it, but it is not modelled now.
+it stays on the map; the structure supports it, but it is not modelled now — **units carry `build` only** (a trained
+unit never goes dormant on resource loss, and on-map behaviour is out of the cascade's `canTrain` scope).
+
+**Units reuse this whole machine — only the inputs differ (owner ruling 2026-06-25).** `canTrain` is the same
+generate-then-gate over unit inputs: frontier (every unit) → prune `obsoletedBy.techs` (the target-side obsoleting
+tech, mirroring buildings; an obsolete unit leaves the buildable set but persists on the map, upgradeable) → exclude
+`identity.spawnOnly` (never-trainable; building/farm-improvement/vassalage-granted only) → the `allowed` instance cap
+(`world` = lifetime-created, `empire` = live count *era-scaled for a base of 5*; units have no `team` cap) →
+`requires.build` via the **same** condition evaluator. The **upgrade chain** is the one unit-specific shape: a unit is
+dormant *out of the buildable set* while any successor in its **transitive** upgrade closure is itself buildable,
+authored as **`requires.build.dormant`** (`build` and `operate` share the conditional vocabulary; the named `dormant`
+clause is fail-safe — its default is *not*-dormant, so an unimplemented engine leaves the unit buildable). No
+`canTrain` gate logic is re-mirrored from the engine — every divergence is a missing input mapped to its named source.
 
 **VICINITY** (enabler-specific) = the city's current workable radius, which **grows with culture** (1→2→3 rings),
 NOT fixed; a plot can lie in two overlapping cities' vicinity (counts for both). The plot scan carries a

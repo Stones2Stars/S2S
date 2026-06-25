@@ -31,7 +31,12 @@
       }
      ]
     }
-   ]
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_CHIVALRY"
+    ]
+   }
   }
  },
  "strength": {

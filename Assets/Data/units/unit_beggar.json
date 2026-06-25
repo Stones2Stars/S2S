@@ -2,6 +2,11 @@
  "type": "UNIT_BEGGAR",
  "description": "TXT_KEY_UNIT_BEGGAR",
  "civilopedia": "TXT_KEY_UNIT_BEGGAR_PEDIA",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_MATCHLOCK"
+  ]
+ },
  "requires": {
   "build": {
    "all": [
@@ -19,7 +24,12 @@
       "BUILDING_BIOMETRIC_SECURITY_SYSTEM"
      ]
     }
-   ]
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_ASSASSIN"
+    ]
+   }
   }
  },
  "allowed": {

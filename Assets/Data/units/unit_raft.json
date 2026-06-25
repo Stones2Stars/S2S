@@ -2,13 +2,18 @@
  "type": "UNIT_RAFT",
  "description": "TXT_KEY_UNIT_RAFT",
  "civilopedia": "TXT_KEY_UNIT_RAFT_PEDIA",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_OPTICS"
+  ]
+ },
  "requires": {
   "build": {
    "all": [
     {
-     "type": "AREA_SIZE",
-     "scope": "world",
-     "min": 5
+     "HAS_COAST": {
+      "minArea": 5
+     }
     },
     "TECH_RAFT_BUILDING",
     {
@@ -35,7 +40,14 @@
       }
      ]
     }
-   ]
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_CANOE",
+     "UNIT_WAR_CANOE",
+     "UNIT_NEANDERTHAL_RAFT"
+    ]
+   }
   }
  },
  "buildRate": {

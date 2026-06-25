@@ -2,6 +2,11 @@
  "type": "UNIT_NAVAJO_RIFLEMAN",
  "description": "TXT_KEY_UNIT_NAVAJO_RIFLEMAN",
  "civilopedia": "TXT_KEY_UNIT_NAVAJO_RIFLEMAN_PEDIA",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_SUPERSTRONG_ALLOYS"
+  ]
+ },
  "requires": {
   "build": {
    "all": [
@@ -21,7 +26,12 @@
      "scope": "city",
      "connection": "trade|vicinity"
     }
-   ]
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_GUERRILLA"
+    ]
+   }
   }
  },
  "allowed": {

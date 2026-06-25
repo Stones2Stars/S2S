@@ -2,6 +2,11 @@
  "type": "UNIT_HAJDUK",
  "description": "TXT_KEY_UNIT_HAJDUK",
  "civilopedia": "TXT_KEY_UNIT_HAJDUK_PEDIA",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_SEMI_AUTOMATIC_WEAPONS"
+  ]
+ },
  "requires": {
   "build": {
    "all": [
@@ -27,7 +32,13 @@
       }
      ]
     }
-   ]
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_GUNFIGHTER",
+     "UNIT_OUTLAW"
+    ]
+   }
   }
  },
  "allowed": {

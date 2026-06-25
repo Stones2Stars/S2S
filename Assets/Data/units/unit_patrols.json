@@ -16,7 +16,12 @@
       "BUILDING_POLICE_PRECINCT"
      ]
     }
-   ]
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_GUARD"
+    ]
+   }
   }
  },
  "culture": {

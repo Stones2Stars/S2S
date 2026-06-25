@@ -13,7 +13,12 @@
      "connection": "trade|vicinity"
     },
     "CIVIC_MONARCHY"
-   ]
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_MODERN_IMP_GUARD"
+    ]
+   }
   }
  },
  "allowed": {

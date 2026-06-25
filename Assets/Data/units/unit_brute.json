@@ -2,6 +2,21 @@
  "type": "UNIT_BRUTE",
  "description": "TXT_KEY_UNIT_BRUTE",
  "civilopedia": "TXT_KEY_UNIT_BRUTE_PEDIA",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_FLINTLOCK"
+  ]
+ },
+ "requires": {
+  "build": {
+   "dormant": {
+    "all": [
+     "UNIT_CLUBMAN",
+     "UNIT_NEANDERTHAL_BRUTE"
+    ]
+   }
+  }
+ },
  "strength": {
   "unit": {
    "vsBarbs": {

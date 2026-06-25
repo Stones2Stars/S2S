@@ -22,7 +22,12 @@
      "scope": "city",
      "connection": "trade|vicinity"
     }
-   ]
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_TRENCH_CAVALRY"
+    ]
+   }
   }
  },
  "withdrawal": {

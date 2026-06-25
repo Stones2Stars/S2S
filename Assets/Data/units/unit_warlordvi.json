@@ -11,7 +11,12 @@
      "connection": "trade|vicinity"
     },
     "TECH_MILITARY_ROBOTICS"
-   ]
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_WARLORDVII"
+    ]
+   }
   }
  },
  "allowed": {

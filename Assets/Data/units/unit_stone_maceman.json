@@ -2,11 +2,23 @@
  "type": "UNIT_STONE_MACEMAN",
  "description": "TXT_KEY_UNIT_STONE_MACEMAN",
  "civilopedia": "TXT_KEY_UNIT_STONE_MACEMAN_PEDIA",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_FLINTLOCK"
+  ]
+ },
  "requires": {
   "build": {
    "all": [
     "TECH_COMPOSITE_TOOLS"
-   ]
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_OBSIDIAN_MACEMAN",
+     "UNIT_OBSIDIAN_SWORDSMAN",
+     "UNIT_NEANDERTHAL_STONE_MACEMAN"
+    ]
+   }
   }
  },
  "buildRate": {

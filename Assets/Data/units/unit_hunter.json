@@ -2,11 +2,22 @@
  "type": "UNIT_HUNTER",
  "description": "TXT_KEY_UNIT_HUNTER",
  "civilopedia": "TXT_KEY_UNIT_HUNTER_PEDIA",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_BRONZE_WORKING"
+  ]
+ },
  "requires": {
   "build": {
    "all": [
     "TECH_HUNTING"
-   ]
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_RANGER",
+     "UNIT_NEANDERTHAL_HUNTER"
+    ]
+   }
   }
  },
  "buildRate": {

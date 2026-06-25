@@ -43,7 +43,12 @@
      "scope": "city",
      "connection": "trade|vicinity"
     }
-   ]
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_ANIMA_REPAIR_CLOUD"
+    ]
+   }
   }
  },
  "withdrawal": {

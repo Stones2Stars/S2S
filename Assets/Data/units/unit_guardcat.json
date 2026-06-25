@@ -28,7 +28,12 @@
       "BUILDING_GARRISON"
      ]
     }
-   ]
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_POLICE_CAT"
+    ]
+   }
   }
  },
  "allowed": {

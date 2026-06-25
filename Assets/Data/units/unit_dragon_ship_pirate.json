@@ -8,9 +8,9 @@
    "all": [
     "BUILDING_SMUGGLERS_SHANTY",
     {
-     "type": "AREA_SIZE",
-     "scope": "world",
-     "min": 10
+     "HAS_COAST": {
+      "minArea": 10
+     }
     },
     "TECH_SHIP_BUILDING",
     {
@@ -22,7 +22,12 @@
       "CIVIC_DESPOTISM"
      ]
     }
-   ]
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_BARBARY_CORSAIR"
+    ]
+   }
   }
  },
  "buildRate": {

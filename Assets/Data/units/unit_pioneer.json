@@ -7,7 +7,12 @@
   "build": {
    "all": [
     "TECH_STEAM_POWER"
-   ]
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_AIRSETTLER"
+    ]
+   }
   }
  },
  "skills": {

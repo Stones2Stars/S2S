@@ -2,11 +2,21 @@
  "type": "UNIT_BALLOON",
  "description": "TXT_KEY_UNIT_BALLOON",
  "civilopedia": "TXT_KEY_UNIT_BALLOON_PEDIA",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_ASTRONAUTICS"
+  ]
+ },
  "requires": {
   "build": {
    "all": [
     "TECH_HOT_AIR_BALLOON"
-   ]
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_BLIMP"
+    ]
+   }
   }
  },
  "withdrawal": {

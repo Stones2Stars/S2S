@@ -2,11 +2,21 @@
  "type": "UNIT_GAME_HUNTER",
  "description": "TXT_KEY_UNIT_GAME_HUNTER",
  "civilopedia": "TXT_KEY_UNIT_HUNTER_PEDIA",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_RIFLING"
+  ]
+ },
  "requires": {
   "build": {
    "all": [
     "TECH_MATCHLOCK"
-   ]
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_BIG_GAME_HUNTER"
+    ]
+   }
   }
  },
  "strength": {

@@ -6,7 +6,9 @@
   "build": {
    "all": [
     "BUILDING_HQ_MILEHIGH_TRAVELS_INTERNATIONAL",
-    "CORPORATION_MILEHIGH"
+    {
+     "HAS_CORPORATION": "CORPORATION_MILEHIGH"
+    }
    ]
   }
  },

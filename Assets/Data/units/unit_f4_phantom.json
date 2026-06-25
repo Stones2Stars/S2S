@@ -34,7 +34,12 @@
       "BUILDING_AEROSPACE_COMPLEX"
      ]
     }
-   ]
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_F18_HORNET"
+    ]
+   }
   }
  },
  "firstStrike": {

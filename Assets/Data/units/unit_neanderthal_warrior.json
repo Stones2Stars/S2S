@@ -2,13 +2,24 @@
  "type": "UNIT_NEANDERTHAL_WARRIOR",
  "description": "TXT_KEY_UNIT_NEANDERTHAL_WARRIOR",
  "civilopedia": "TXT_KEY_UNIT_NEANDERTHAL_WARRIOR_PEDIA",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_SEDENTARY_LIFESTYLE"
+  ]
+ },
  "requires": {
   "build": {
    "all": [
     "BUILDING_C_AC_NEANDERTHAL",
     "BUILDING_C_L_NEANDERTHAL",
     "TECH_SHARPENING"
-   ]
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_NEANDERTHAL_STONE_AGE_AXEMAN",
+     "UNIT_NEANDERTHAL_STONE_MACEMAN"
+    ]
+   }
   }
  },
  "costs": {

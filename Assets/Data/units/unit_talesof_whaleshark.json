@@ -3,6 +3,13 @@
  "description": "TXT_KEY_UNIT_TALESOF_WHALESHARK",
  "civilopedia": "TXT_KEY_UNIT_WHALESHARK_PEDIA",
  "help": "TXT_KEY_UNIT_SUBDUED_ANIMALS_HELP",
+ "requires": {
+  "build": {
+   "all": [
+    "HAS_COAST"
+   ]
+  }
+ },
  "skills": {
   "militaryTrade": true
  },

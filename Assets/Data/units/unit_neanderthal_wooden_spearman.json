@@ -2,13 +2,23 @@
  "type": "UNIT_NEANDERTHAL_WOODEN_SPEARMAN",
  "description": "TXT_KEY_UNIT_NEANDERTHAL_WOODEN_SPEARMAN",
  "civilopedia": "TXT_KEY_UNIT_WOODEN_SPEARMAN_PEDIA",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_SEDENTARY_LIFESTYLE"
+  ]
+ },
  "requires": {
   "build": {
    "all": [
     "BUILDING_C_AC_NEANDERTHAL",
     "BUILDING_C_L_NEANDERTHAL",
     "TECH_SIMPLE_WOOD_WORKING"
-   ]
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_NEANDERTHAL_STONE_AGE_SPEARMAN"
+    ]
+   }
   }
  },
  "buildRate": {

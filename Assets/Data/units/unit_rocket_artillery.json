@@ -18,7 +18,13 @@
       "BUILDING_MILITARY_INDUSTRIAL_COMPLEX"
      ]
     }
-   ]
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_NLOS_CANNON",
+     "UNIT_HOVER_ARTILLERY"
+    ]
+   }
   }
  },
  "bombard": {

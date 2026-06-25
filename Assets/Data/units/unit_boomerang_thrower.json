@@ -2,6 +2,11 @@
  "type": "UNIT_BOOMERANG_THROWER",
  "description": "TXT_KEY_UNIT_BOOMERANG_THROWER",
  "civilopedia": "TXT_KEY_UNIT_BOOMERANG_THROWER_PEDIA",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_FLINTLOCK"
+  ]
+ },
  "requires": {
   "build": {
    "all": [
@@ -11,7 +16,13 @@
      "connection": "trade|vicinity"
     },
     "TECH_SIMPLE_WOOD_WORKING"
-   ]
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_ARCHER",
+     "UNIT_ATLATL"
+    ]
+   }
   }
  },
  "allowed": {

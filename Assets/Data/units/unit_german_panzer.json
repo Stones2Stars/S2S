@@ -30,7 +30,12 @@
      "scope": "city",
      "connection": "trade|vicinity"
     }
-   ]
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_ARMOR_M60"
+    ]
+   }
   }
  },
  "allowed": {

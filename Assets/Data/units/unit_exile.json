@@ -2,12 +2,22 @@
  "type": "UNIT_EXILE",
  "description": "TXT_KEY_UNIT_EXILE",
  "civilopedia": "TXT_KEY_UNIT_EXILE_PEDIA",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_SEDENTARY_LIFESTYLE"
+  ]
+ },
  "requires": {
   "build": {
    "all": [
     "BUILDING_EXILE_PRACTICES",
     "TECH_DECEPTION"
-   ]
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_THIEF"
+    ]
+   }
   }
  },
  "allowed": {

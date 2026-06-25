@@ -6,7 +6,12 @@
   "build": {
    "all": [
     "TECH_PHOTOGRAPHY"
-   ]
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_SPECIAL_AGENT"
+    ]
+   }
   }
  },
  "skills": {

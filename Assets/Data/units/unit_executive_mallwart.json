@@ -6,7 +6,9 @@
   "build": {
    "all": [
     "BUILDING_HQ_MALLWART",
-    "CORPORATION_MALLWART"
+    {
+     "HAS_CORPORATION": "CORPORATION_MALLWART"
+    }
    ]
   }
  },

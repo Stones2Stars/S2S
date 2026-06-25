@@ -17,7 +17,13 @@
       "BUILDING_REPET"
      ]
     }
-   ]
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_WARDOG",
+     "UNIT_NEANDERTHAL_TRAINED_DOG"
+    ]
+   }
   }
  },
  "strength": {

@@ -2,6 +2,11 @@
  "type": "UNIT_RHINO_SWORDSMAN",
  "description": "TXT_KEY_UNIT_RHINO_SWORDSMAN",
  "civilopedia": "TXT_KEY_UNIT_RHINO_SWORDSMAN_PEDIA",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_ARMORED_CAVALRY"
+  ]
+ },
  "requires": {
   "build": {
    "all": [
@@ -18,7 +23,12 @@
       "BUILDING_ANIMAL_TRAINER_RHINOCEROS"
      ]
     }
-   ]
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_KNIGHT"
+    ]
+   }
   }
  },
  "allowed": {

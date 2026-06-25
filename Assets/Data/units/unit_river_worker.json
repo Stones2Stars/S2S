@@ -2,6 +2,11 @@
  "type": "UNIT_RIVER_WORKER",
  "description": "TXT_KEY_UNIT_RIVER_WORKER",
  "civilopedia": "TXT_KEY_UNIT_RIVER_WORKER_PEDIA",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_MOTORIZED_TRANSPORTATION"
+  ]
+ },
  "requires": {
   "build": {
    "all": [
@@ -11,7 +16,12 @@
      "connection": "trade|vicinity"
     },
     "TECH_PLOUGH"
-   ]
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_WORKER_INDUSTRIAL"
+    ]
+   }
   }
  },
  "allowed": {

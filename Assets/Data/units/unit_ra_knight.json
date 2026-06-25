@@ -12,13 +12,21 @@
     },
     "BUILDING_TEMPLE_OF_CHONS",
     "RELIGION_KEMETISM",
+    {
+     "STATE_RELIGION": "RELIGION_KEMETISM"
+    },
     "TECH_CHIVALRY",
     {
      "type": "BONUS_IRON_WARES",
      "scope": "city",
      "connection": "trade|vicinity"
     }
-   ]
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_CUIRASSIER"
+    ]
+   }
   }
  },
  "allowed": {

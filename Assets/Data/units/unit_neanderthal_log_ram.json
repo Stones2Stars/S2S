@@ -2,6 +2,11 @@
  "type": "UNIT_NEANDERTHAL_LOG_RAM",
  "description": "TXT_KEY_UNIT_NEANDERTHAL_LOG_RAM",
  "civilopedia": "TXT_KEY_UNIT_LOG_RAM_PEDIA",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_SEDENTARY_LIFESTYLE"
+  ]
+ },
  "requires": {
   "build": {
    "all": [
@@ -14,7 +19,12 @@
       "BUILDING_AGROFOREST"
      ]
     }
-   ]
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_BATTERING_RAM"
+    ]
+   }
   }
  },
  "buildRate": {

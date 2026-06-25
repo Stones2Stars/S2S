@@ -2,11 +2,21 @@
  "type": "UNIT_LIGHT_CROSSBOWMAN",
  "description": "TXT_KEY_UNIT_LIGHT_CROSSBOWMAN",
  "civilopedia": "TXT_KEY_UNIT_CROSSBOWMAN_PEDIA",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_FLINTLOCK"
+  ]
+ },
  "requires": {
   "build": {
    "all": [
     "TECH_ANCIENT_BALLISTICS"
-   ]
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_CROSSBOWMAN"
+    ]
+   }
   }
  },
  "firstStrike": {

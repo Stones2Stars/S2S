@@ -2,12 +2,22 @@
  "type": "UNIT_WORKBUFFALO",
  "description": "TXT_KEY_UNIT_WORKBUFFALO",
  "civilopedia": "TXT_KEY_UNIT_WORKER_PEDIA",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_LOGISTICS"
+  ]
+ },
  "requires": {
   "build": {
    "all": [
     "BUILDING_ANIMAL_TRAINER_BUFFALO",
     "TECH_PLOUGH"
-   ]
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_WORKER_INDUSTRIAL"
+    ]
+   }
   }
  },
  "skills": {

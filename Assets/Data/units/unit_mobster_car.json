@@ -2,6 +2,11 @@
  "type": "UNIT_MOBSTER_CAR",
  "description": "TXT_KEY_UNIT_MOBSTER_CAR",
  "civilopedia": "TXT_KEY_UNIT_MOBSTER_CAR_PEDIA",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_CONSUMERISM"
+  ]
+ },
  "requires": {
   "build": {
    "all": [
@@ -33,7 +38,12 @@
      "scope": "city",
      "connection": "trade|vicinity"
     }
-   ]
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_ROBBER"
+    ]
+   }
   }
  },
  "culture": {

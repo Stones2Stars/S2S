@@ -6,8 +6,14 @@
   "build": {
    "all": [
     "BUILDING_SHIPWRIGHT",
+    "HAS_COAST",
     "TECH_RUDDER"
-   ]
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_WORKBOAT_MODERN"
+    ]
+   }
   }
  },
  "skills": {

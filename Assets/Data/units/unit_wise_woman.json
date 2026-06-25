@@ -7,7 +7,14 @@
    "all": [
     "TECH_HERBALISM",
     "BUILDING_WILD_HERBS_GATHERER"
-   ]
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_HEALER",
+     "UNIT_SHEPHERD",
+     "UNIT_NEANDERTHAL_WISE_WOMAN"
+    ]
+   }
   }
  },
  "heal": {

@@ -6,7 +6,12 @@
   "build": {
    "all": [
     "TECH_WRITING"
-   ]
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_AGENT"
+    ]
+   }
   }
  },
  "skills": {

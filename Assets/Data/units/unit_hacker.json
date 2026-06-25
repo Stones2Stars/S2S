@@ -2,6 +2,11 @@
  "type": "UNIT_HACKER",
  "description": "TXT_KEY_UNIT_HACKER",
  "civilopedia": "TXT_KEY_UNIT_HACKER_PEDIA",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_COMPREHENSIVE_CYBERNETICS"
+  ]
+ },
  "requires": {
   "build": {
    "all": [
@@ -31,7 +36,12 @@
       }
      ]
     }
-   ]
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_TECHNARCHIST"
+    ]
+   }
   }
  },
  "allowed": {

@@ -2,6 +2,11 @@
  "type": "UNIT_KARAWETARI",
  "description": "TXT_KEY_UNIT_KARAWETARI",
  "civilopedia": "TXT_KEY_UNIT_KARAWETARI_PEDIA",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_FLINTLOCK"
+  ]
+ },
  "requires": {
   "build": {
    "all": [
@@ -11,7 +16,12 @@
      "connection": "trade|vicinity"
     },
     "TECH_BRONZE_WORKING"
-   ]
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_LONGBOWMAN"
+    ]
+   }
   }
  },
  "allowed": {

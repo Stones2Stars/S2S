@@ -6,9 +6,9 @@
   "build": {
    "all": [
     {
-     "type": "AREA_SIZE",
-     "scope": "world",
-     "min": 10
+     "HAS_COAST": {
+      "minArea": 10
+     }
     },
     "TECH_STEAM_POWER",
     {
@@ -16,7 +16,12 @@
      "scope": "city",
      "connection": "trade|vicinity"
     }
-   ]
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_TRANSPORT"
+    ]
+   }
   }
  },
  "cargo": {

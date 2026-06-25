@@ -2,6 +2,15 @@
  "type": "UNIT_GREAT_HUNTER",
  "description": "TXT_KEY_UNIT_GREAT_HUNTER",
  "civilopedia": "TXT_KEY_UNIT_GREAT_HUNTER_PEDIA",
+ "requires": {
+  "build": {
+   "dormant": {
+    "all": [
+     "UNIT_MASTER_CHASER"
+    ]
+   }
+  }
+ },
  "outcomes": {
   "actions": [
    {

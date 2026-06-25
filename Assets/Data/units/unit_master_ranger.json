@@ -2,11 +2,21 @@
  "type": "UNIT_MASTER_RANGER",
  "description": "TXT_KEY_UNIT_MASTER_RANGER",
  "civilopedia": "TXT_KEY_UNIT_MASTER_HUNTER_PEDIA",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_FEUDALISM"
+  ]
+ },
  "requires": {
   "build": {
    "all": [
     "TECH_BRONZE_WORKING"
-   ]
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_MASTER_WARDEN"
+    ]
+   }
   }
  },
  "allowed": {

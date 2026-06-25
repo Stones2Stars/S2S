@@ -12,7 +12,12 @@
     },
     "BUILDING_ANIMAL_TRAINER_CAMEL",
     "TECH_MOUNTED_ARCHERY"
-   ]
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_CAMEL_GUNNER"
+    ]
+   }
   }
  },
  "strength": {

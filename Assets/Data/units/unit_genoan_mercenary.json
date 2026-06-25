@@ -2,6 +2,11 @@
  "type": "UNIT_GENOAN_MERCENARY",
  "description": "TXT_KEY_UNIT_GENOAN_MERCENARY",
  "civilopedia": "TXT_KEY_UNIT_GENOAN_MERCENARY_PEDIA",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_FLINTLOCK"
+  ]
+ },
  "requires": {
   "build": {
    "all": [
@@ -11,7 +16,12 @@
      "connection": "trade|vicinity"
     },
     "TECH_METALLURGY"
-   ]
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_MUSKETMAN"
+    ]
+   }
   }
  },
  "allowed": {

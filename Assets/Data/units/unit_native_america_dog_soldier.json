@@ -11,7 +11,12 @@
      "connection": "trade|vicinity"
     },
     "TECH_AXE_MAKING"
-   ]
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_EARLY_MACEMAN"
+    ]
+   }
   }
  },
  "allowed": {

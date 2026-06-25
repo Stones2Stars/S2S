@@ -12,9 +12,17 @@
     },
     "BUILDING_HELLSMOUTH_SANCTUARY",
     "RELIGION_VOODOO",
+    {
+     "STATE_RELIGION": "RELIGION_VOODOO"
+    },
     "TECH_ALCHEMY",
     "TECH_FUNDAMENTALISM"
-   ]
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_POLICE_DOG"
+    ]
+   }
   }
  },
  "strength": {

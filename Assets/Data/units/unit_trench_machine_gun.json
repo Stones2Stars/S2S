@@ -11,7 +11,13 @@
      "connection": "trade|vicinity"
     },
     "TECH_TRENCH_WARFARE"
-   ]
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_MACHINE_GUN",
+     "UNIT_LIGHT_AA"
+    ]
+   }
   }
  },
  "firstStrike": {

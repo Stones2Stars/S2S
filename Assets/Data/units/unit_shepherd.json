@@ -90,7 +90,13 @@
       }
      ]
     }
-   ]
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_VET",
+     "UNIT_NEANDERTHAL_SHEPHERD"
+    ]
+   }
   }
  },
  "heal": {

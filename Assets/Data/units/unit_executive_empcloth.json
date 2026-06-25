@@ -6,7 +6,9 @@
   "build": {
    "all": [
     "BUILDING_HQ_EMPERORS_CLOTHING",
-    "CORPORATION_EMPCLOTH"
+    {
+     "HAS_CORPORATION": "CORPORATION_EMPCLOTH"
+    }
    ]
   }
  },

@@ -2,6 +2,11 @@
  "type": "UNIT_NEANDERTHAL_ELEPHANT_RIDER",
  "description": "TXT_KEY_UNIT_NEANDERTHAL_ELEPHANT_RIDER",
  "civilopedia": "TXT_KEY_UNIT_ELEPHANT_RIDER_PEDIA",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_SEDENTARY_LIFESTYLE"
+  ]
+ },
  "requires": {
   "build": {
    "all": [
@@ -15,7 +20,12 @@
     "BUILDING_ANIMAL_TRAINER_ELEPHANT",
     "TECH_ANIMAL_RIDING",
     "TECH_ELEPHANT_DOMESTICATION"
-   ]
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_WAR_ELEPHANT"
+    ]
+   }
   }
  },
  "strength": {

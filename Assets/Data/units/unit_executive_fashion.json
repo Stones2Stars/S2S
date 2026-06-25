@@ -6,7 +6,9 @@
   "build": {
    "all": [
     "BUILDING_HQ_FASHION_HOUSE",
-    "CORPORATION_FASHION"
+    {
+     "HAS_CORPORATION": "CORPORATION_FASHION"
+    }
    ]
   }
  },

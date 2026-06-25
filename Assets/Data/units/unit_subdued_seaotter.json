@@ -3,6 +3,13 @@
  "description": "TXT_KEY_UNIT_SUBDUED_SEAOTTER",
  "civilopedia": "TXT_KEY_UNIT_SEAOTTER_PEDIA",
  "help": "TXT_KEY_UNIT_SUBDUED_ANIMALS_HELP",
+ "requires": {
+  "build": {
+   "all": [
+    "HAS_COAST"
+   ]
+  }
+ },
  "skills": {
   "onlyDefensive": true,
   "militaryTrade": true

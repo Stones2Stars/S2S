@@ -2,11 +2,21 @@
  "type": "UNIT_NOBLE",
  "description": "TXT_KEY_UNIT_NOBLE",
  "civilopedia": "TXT_KEY_UNIT_NOBLE_PEDIA",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_VASSALAGE"
+  ]
+ },
  "requires": {
   "build": {
    "all": [
     "TECH_ARISTOCRACY"
-   ]
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_WARLORD_VASSAL"
+    ]
+   }
   }
  },
  "allowed": {

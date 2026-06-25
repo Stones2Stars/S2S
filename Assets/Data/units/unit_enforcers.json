@@ -18,7 +18,13 @@
       "BUILDING_POLICE_PRECINCT"
      ]
     }
-   ]
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_TOWN_WATCHMEN",
+     "UNIT_NEANDERTHAL_ENFORCER"
+    ]
+   }
   }
  },
  "culture": {

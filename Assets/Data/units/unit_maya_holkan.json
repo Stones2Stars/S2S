@@ -12,7 +12,12 @@
     },
     "TECH_OBSIDIAN_WEAPONS",
     "TECH_ATLATL_MAKING"
-   ]
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_SKIRMISHER"
+    ]
+   }
   }
  },
  "allowed": {

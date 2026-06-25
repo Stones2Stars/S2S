@@ -18,7 +18,13 @@
       "BUILDING_MILITARY_INDUSTRIAL_COMPLEX"
      ]
     }
-   ]
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_LEVITATION_ARTILLERY",
+     "UNIT_WALKER_ARTILLERY"
+    ]
+   }
   }
  },
  "bombard": {

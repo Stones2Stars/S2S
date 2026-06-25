@@ -36,7 +36,12 @@
       }
      ]
     }
-   ]
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_CHIVALRY"
+    ]
+   }
   }
  },
  "allowed": {

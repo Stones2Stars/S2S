@@ -2,13 +2,18 @@
  "type": "UNIT_MASTER_SAILOR_WAR_CANOE",
  "description": "TXT_KEY_UNIT_MASTER_SAILOR_WAR_CANOE",
  "civilopedia": "TXT_KEY_UNIT_WAR_CANOE_PEDIA",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_NAVAL_WARFARE"
+  ]
+ },
  "requires": {
   "build": {
    "all": [
     {
-     "type": "AREA_SIZE",
-     "scope": "world",
-     "min": 5
+     "HAS_COAST": {
+      "minArea": 5
+     }
     },
     {
      "any": [
@@ -29,7 +34,12 @@
       }
      ]
     }
-   ]
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_MASTER_SAILOR_WAR_GALLEY"
+    ]
+   }
   }
  },
  "skills": {

@@ -6,7 +6,9 @@
   "build": {
    "all": [
     "BUILDING_HQ_BULLSEYE",
-    "CORPORATION_BULLSEYE"
+    {
+     "HAS_CORPORATION": "CORPORATION_BULLSEYE"
+    }
    ]
   }
  },

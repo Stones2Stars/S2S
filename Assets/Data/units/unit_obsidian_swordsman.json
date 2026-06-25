@@ -11,7 +11,13 @@
      "connection": "trade|vicinity"
     },
     "TECH_OBSIDIAN_WEAPONS"
-   ]
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_LIGHT_SWORDSMAN",
+     "UNIT_NEANDERTHAL_OBSIDIAN_SWORDSMAN"
+    ]
+   }
   }
  },
  "buildRate": {

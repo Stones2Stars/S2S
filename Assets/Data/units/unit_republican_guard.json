@@ -21,7 +21,14 @@
      "scope": "city",
      "connection": "trade|vicinity"
     }
-   ]
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_TESLA_INFANTRY",
+     "UNIT_EXOARMORED_INFANTRY",
+     "UNIT_CHROME_INFANTRY"
+    ]
+   }
   }
  },
  "allowed": {

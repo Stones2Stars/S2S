@@ -2,6 +2,11 @@
  "type": "UNIT_YOLNGU_MESSENGER",
  "description": "TXT_KEY_UNIT_YOLNGU_MESSENGER",
  "civilopedia": "TXT_KEY_UNIT_YOLNGU_MESSENGER_PEDIA",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_ENGINEERING"
+  ]
+ },
  "requires": {
   "build": {
    "all": [
@@ -11,7 +16,12 @@
      "connection": "trade|vicinity"
     },
     "TECH_BARTER"
-   ]
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_TRADE_CARAVAN"
+    ]
+   }
   }
  },
  "allowed": {

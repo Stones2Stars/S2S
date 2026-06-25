@@ -17,7 +17,13 @@
       "BUILDING_HEALTHCARE_MEGACOMPLEX"
      ]
     }
-   ]
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_AMBULANCE",
+     "UNIT_MEDICAL_LAB_TECH"
+    ]
+   }
   }
  },
  "heal": {

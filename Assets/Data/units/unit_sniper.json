@@ -2,6 +2,11 @@
  "type": "UNIT_SNIPER",
  "description": "TXT_KEY_UNIT_SNIPER",
  "civilopedia": "TXT_KEY_UNIT_SNIPER_PEDIA",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_LASER"
+  ]
+ },
  "requires": {
   "build": {
    "all": [
@@ -23,7 +28,12 @@
       "BUILDING_ORBITAL_TARGETS"
      ]
     }
-   ]
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_MSNIPER"
+    ]
+   }
   }
  },
  "buildRate": {

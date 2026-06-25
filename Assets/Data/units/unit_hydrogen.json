@@ -11,12 +11,14 @@
      "connection": "trade|vicinity"
     },
     "TECH_MODERN_WARFARE",
+    "GAMEOPTION_ADVANCED_NUKES",
     {
      "type": "BONUS_HEAVY_WATER",
      "scope": "city",
      "connection": "trade|vicinity"
     }
-   ]
+   ],
+   "disabled": "NO_NUKES"
   }
  },
  "air": {
@@ -41,11 +43,6 @@
  "cost": {
   "production": 1843,
   "upkeep": 11
- },
- "loadPrune": {
-  "onGameOptions": [
-   "GAMEOPTION_ADVANCED_NUKES"
-  ]
  },
  "identity": {
   "worth": 5,

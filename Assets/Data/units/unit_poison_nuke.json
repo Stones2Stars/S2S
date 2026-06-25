@@ -6,8 +6,10 @@
   "build": {
    "all": [
     "BUILDING_BIOLOGICAL_WARFARE_LAB",
-    "TECH_GENE_MANIPULATION"
-   ]
+    "TECH_GENE_MANIPULATION",
+    "GAMEOPTION_ADVANCED_NUKES"
+   ],
+   "disabled": "NO_NUKES"
   }
  },
  "range": {
@@ -36,11 +38,6 @@
  "cost": {
   "production": 2030,
   "upkeep": 11
- },
- "loadPrune": {
-  "onGameOptions": [
-   "GAMEOPTION_ADVANCED_NUKES"
-  ]
  },
  "identity": {
   "worth": 4,

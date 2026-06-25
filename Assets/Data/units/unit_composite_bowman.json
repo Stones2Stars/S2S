@@ -2,11 +2,21 @@
  "type": "UNIT_COMPOSITE_BOWMAN",
  "description": "TXT_KEY_UNIT_COMPOSITE_BOWMAN",
  "civilopedia": "TXT_KEY_UNIT_ARCHER_PEDIA",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_FLINTLOCK"
+  ]
+ },
  "requires": {
   "build": {
    "all": [
     "TECH_BRONZE_WORKING"
-   ]
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_LONGBOWMAN"
+    ]
+   }
   }
  },
  "buildRate": {

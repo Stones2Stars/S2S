@@ -25,7 +25,13 @@
       "BUILDING_HEALTHCARE_MEGACOMPLEX"
      ]
     }
-   ]
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_SWORDSMAN",
+     "UNIT_APOTHECARY"
+    ]
+   }
   }
  },
  "allowed": {

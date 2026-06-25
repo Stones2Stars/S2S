@@ -14,7 +14,12 @@
     "TECH_ANIMAL_RIDING",
     "TECH_EQUINE_DOMESTICATION",
     "TECH_ARCHERY"
-   ]
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_MOUNTED_INFANTRY"
+    ]
+   }
   }
  },
  "allowed": {

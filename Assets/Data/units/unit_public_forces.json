@@ -61,7 +61,12 @@
       }
      ]
     }
-   ]
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_POLICE_MECH"
+    ]
+   }
   }
  },
  "allowed": {

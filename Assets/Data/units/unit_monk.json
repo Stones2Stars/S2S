@@ -11,6 +11,7 @@
      "scope": "city",
      "connection": "trade|vicinity"
     },
+    "STATE_RELIGION_IN_CITY",
     "TECH_THEOLOGY",
     {
      "type": "BONUS_SCROLLS",
@@ -24,7 +25,13 @@
       "BUILDING_HEALTHCARE_MEGACOMPLEX"
      ]
     }
-   ]
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_AMBULANCE",
+     "UNIT_MECHANIC"
+    ]
+   }
   }
  },
  "strength": {

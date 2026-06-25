@@ -6,7 +6,9 @@
   "build": {
    "all": [
     "BUILDING_HQ_EAST_WEST_TRADERS",
-    "CORPORATION_EWTRADE"
+    {
+     "HAS_CORPORATION": "CORPORATION_EWTRADE"
+    }
    ]
   }
  },

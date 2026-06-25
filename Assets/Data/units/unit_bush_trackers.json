@@ -2,6 +2,11 @@
  "type": "UNIT_BUSH_TRACKERS",
  "description": "TXT_KEY_UNIT_BUSH_TRACKERS",
  "civilopedia": "TXT_KEY_UNIT_BUSH_TRACKERS_PEDIA",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_RIFLING"
+  ]
+ },
  "requires": {
   "build": {
    "all": [
@@ -11,7 +16,12 @@
      "connection": "trade|vicinity"
     },
     "TECH_MATCHLOCK"
-   ]
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_BIG_GAME_HUNTER"
+    ]
+   }
   }
  },
  "allowed": {

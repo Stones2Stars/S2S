@@ -2,11 +2,21 @@
  "type": "UNIT_MASTER_HUNTER",
  "description": "TXT_KEY_UNIT_MASTER_HUNTER",
  "civilopedia": "TXT_KEY_UNIT_MASTER_HUNTER_PEDIA",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_BRONZE_WORKING"
+  ]
+ },
  "requires": {
   "build": {
    "all": [
     "TECH_HUNTING"
-   ]
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_MASTER_RANGER"
+    ]
+   }
   }
  },
  "allowed": {

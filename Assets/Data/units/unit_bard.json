@@ -6,7 +6,12 @@
   "build": {
    "all": [
     "TECH_LINGUISTICS"
-   ]
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_ENTERTAINER"
+    ]
+   }
   }
  },
  "PROPERTY_EDUCATION": {

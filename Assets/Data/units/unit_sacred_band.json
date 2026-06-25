@@ -30,7 +30,13 @@
       }
      ]
     }
-   ]
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_PIKEMAN",
+     "UNIT_LIGHT_SWORDSMAN"
+    ]
+   }
   }
  },
  "allowed": {

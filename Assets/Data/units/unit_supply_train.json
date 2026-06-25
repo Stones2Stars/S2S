@@ -2,6 +2,11 @@
  "type": "UNIT_SUPPLY_TRAIN",
  "description": "TXT_KEY_UNIT_SUPPLY_TRAIN",
  "civilopedia": "TXT_KEY_CONCEPT_TRADE_CARAVAN_PEDIA",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_MOTORIZED_TRANSPORTATION"
+  ]
+ },
  "requires": {
   "build": {
    "all": [
@@ -12,7 +17,12 @@
       "BUILDING_SHOPPING_DISTRICT"
      ]
     }
-   ]
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_FREIGHT"
+    ]
+   }
   }
  },
  "skills": {

@@ -12,9 +12,9 @@
     },
     "BUILDING_NEMOS_NAVAL_ACADEMY",
     {
-     "type": "AREA_SIZE",
-     "scope": "world",
-     "min": 10
+     "HAS_COAST": {
+      "minArea": 10
+     }
     },
     "TECH_STEAMPUNK",
     {
@@ -31,7 +31,12 @@
       }
      ]
     }
-   ]
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_ATTACK_SUBMARINE"
+    ]
+   }
   }
  },
  "allowed": {

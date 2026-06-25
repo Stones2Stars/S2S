@@ -2,17 +2,27 @@
  "type": "UNIT_MASTER_SAILOR_GALLEASS",
  "description": "TXT_KEY_UNIT_MASTER_SAILOR_GALLEASS",
  "civilopedia": "TXT_KEY_UNIT_GALLEASS_PEDIA",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_COMPASS"
+  ]
+ },
  "requires": {
   "build": {
    "all": [
     {
-     "type": "AREA_SIZE",
-     "scope": "world",
-     "min": 10
+     "HAS_COAST": {
+      "minArea": 10
+     }
     },
     "TECH_GUILDS",
     "TECH_RUDDER"
-   ]
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_MASTER_SAILOR_SLOOP_OF_WAR"
+    ]
+   }
   }
  },
  "bombard": {

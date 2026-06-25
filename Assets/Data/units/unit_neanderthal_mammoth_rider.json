@@ -2,6 +2,11 @@
  "type": "UNIT_NEANDERTHAL_MAMMOTH_RIDER",
  "description": "TXT_KEY_UNIT_NEANDERTHAL_MAMMOTH_RIDER",
  "civilopedia": "TXT_KEY_UNIT_TRAINED_MAMMOTH_PEDIA",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_SEDENTARY_LIFESTYLE"
+  ]
+ },
  "requires": {
   "build": {
    "all": [
@@ -19,7 +24,12 @@
       "BUILDING_ANIMAL_TRAINER_MAMMOTH"
      ]
     }
-   ]
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_WAR_MAMMOTH"
+    ]
+   }
   }
  },
  "allowed": {

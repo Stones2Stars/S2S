@@ -6,8 +6,10 @@
   "build": {
    "all": [
     "BUILDING_BIOLOGICAL_WARFARE_LAB",
-    "TECH_DNA_COMPUTING"
-   ]
+    "TECH_DNA_COMPUTING",
+    "GAMEOPTION_ADVANCED_NUKES"
+   ],
+   "disabled": "NO_NUKES"
   }
  },
  "allowed": {
@@ -50,11 +52,6 @@
  "cost": {
   "production": 5000,
   "upkeep": 21
- },
- "loadPrune": {
-  "onGameOptions": [
-   "GAMEOPTION_ADVANCED_NUKES"
-  ]
  },
  "identity": {
   "worth": 5,

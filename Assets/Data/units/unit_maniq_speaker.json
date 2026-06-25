@@ -34,7 +34,12 @@
       "BUILDING_HEALTHCARE_MEGACOMPLEX"
      ]
     }
-   ]
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_APOTHECARY"
+    ]
+   }
   }
  },
  "allowed": {

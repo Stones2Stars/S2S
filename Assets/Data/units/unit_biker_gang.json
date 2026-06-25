@@ -2,6 +2,11 @@
  "type": "UNIT_BIKER_GANG",
  "description": "TXT_KEY_UNIT_BIKER_GANG",
  "civilopedia": "TXT_KEY_UNIT_BIKER_GANG_PEDIA",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_COMPREHENSIVE_CYBERNETICS"
+  ]
+ },
  "requires": {
   "build": {
    "all": [
@@ -32,7 +37,12 @@
      "scope": "city",
      "connection": "trade|vicinity"
     }
-   ]
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_TECHNARCHIST"
+    ]
+   }
   }
  },
  "allowed": {

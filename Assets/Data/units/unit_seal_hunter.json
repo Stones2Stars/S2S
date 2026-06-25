@@ -2,6 +2,11 @@
  "type": "UNIT_SEAL_HUNTER",
  "description": "TXT_KEY_UNIT_SEAL_HUNTER",
  "civilopedia": "TXT_KEY_UNIT_SEAL_HUNTER_PEDIA",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_BRONZE_WORKING"
+  ]
+ },
  "requires": {
   "build": {
    "all": [
@@ -11,7 +16,12 @@
      "connection": "trade|vicinity"
     },
     "TECH_HUNTING"
-   ]
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_RANGER"
+    ]
+   }
   }
  },
  "allowed": {

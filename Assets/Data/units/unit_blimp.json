@@ -11,7 +11,12 @@
      "connection": "trade|vicinity"
     },
     "TECH_BALLOON_WARFARE"
-   ]
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_GUNSHIP"
+    ]
+   }
   }
  },
  "withdrawal": {

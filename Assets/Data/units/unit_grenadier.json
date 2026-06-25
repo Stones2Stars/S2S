@@ -11,7 +11,12 @@
      "connection": "trade|vicinity"
     },
     "TECH_EXPLOSIVES"
-   ]
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_MODERN_GRENADIER"
+    ]
+   }
   }
  },
  "strength": {

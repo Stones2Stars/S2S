@@ -2,11 +2,21 @@
  "type": "UNIT_WARLORD_VASSAL",
  "description": "TXT_KEY_UNIT_WARLORD_VASSAL",
  "civilopedia": "TXT_KEY_UNIT_WARLORD_VASSAL_PEDIA",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_CHIVALRY"
+  ]
+ },
  "requires": {
   "build": {
    "all": [
     "TECH_VASSALAGE"
-   ]
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_LORD"
+    ]
+   }
   }
  },
  "allowed": {

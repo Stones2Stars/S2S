@@ -17,7 +17,15 @@
      "scope": "city",
      "connection": "trade|vicinity"
     }
-   ]
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_CANNON",
+     "UNIT_GREAT_BOMBARD",
+     "UNIT_FALCONET",
+     "UNIT_CULVERIN"
+    ]
+   }
   }
  },
  "strength": {

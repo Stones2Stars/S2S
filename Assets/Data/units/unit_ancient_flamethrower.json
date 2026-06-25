@@ -12,7 +12,12 @@
     },
     "BUILDING_SIEGE_WEAPONS_WORKSHOP",
     "TECH_ALCHEMY"
-   ]
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_FLAMETHROWER"
+    ]
+   }
   }
  },
  "strength": {

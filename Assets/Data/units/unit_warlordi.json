@@ -2,6 +2,11 @@
  "type": "UNIT_WARLORDI",
  "description": "TXT_KEY_UNIT_WARLORDI",
  "civilopedia": "TXT_KEY_CONCEPT_GREAT_GENERALS_PEDIA",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_HERALDRY"
+  ]
+ },
  "requires": {
   "build": {
    "all": [
@@ -20,7 +25,12 @@
       }
      ]
     }
-   ]
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_WARLORDII"
+    ]
+   }
   }
  },
  "allowed": {

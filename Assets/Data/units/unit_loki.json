@@ -7,6 +7,9 @@
    "all": [
     "BUILDING_LOKI_SANCTUARY",
     "RELIGION_ASATRU",
+    {
+     "STATE_RELIGION": "RELIGION_ASATRU"
+    },
     "TECH_CIVIL_SERVICE",
     {
      "any": [
@@ -22,7 +25,12 @@
       }
      ]
     }
-   ]
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_MUSKETMAN"
+    ]
+   }
   }
  },
  "strength": {

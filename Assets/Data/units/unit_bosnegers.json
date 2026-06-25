@@ -2,6 +2,11 @@
  "type": "UNIT_BOSNEGERS",
  "description": "TXT_KEY_UNIT_BOSNEGERS",
  "civilopedia": "TXT_KEY_UNIT_BOSNEGERS_PEDIA",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_COMPREHENSIVE_CYBERNETICS"
+  ]
+ },
  "requires": {
   "build": {
    "all": [
@@ -22,7 +27,12 @@
      "scope": "city",
      "connection": "trade|vicinity"
     }
-   ]
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_STREET_GANG"
+    ]
+   }
   }
  },
  "allowed": {

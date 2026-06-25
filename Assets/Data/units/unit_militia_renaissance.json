@@ -6,7 +6,12 @@
   "build": {
    "all": [
     "TECH_GUNPOWDER"
-   ]
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_MILITIA_INDUSTRIAL"
+    ]
+   }
   }
  },
  "skills": {

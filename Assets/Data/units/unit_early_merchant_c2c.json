@@ -2,11 +2,21 @@
  "type": "UNIT_EARLY_MERCHANT_C2C",
  "description": "TXT_KEY_UNIT_EARLY_MERCHANT",
  "civilopedia": "TXT_KEY_CONCEPT_TRADE_CARAVAN_PEDIA",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_ENGINEERING"
+  ]
+ },
  "requires": {
   "build": {
    "all": [
     "TECH_BARTER"
-   ]
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_TRADE_CARAVAN"
+    ]
+   }
   }
  },
  "buildRate": {

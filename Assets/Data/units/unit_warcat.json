@@ -29,7 +29,12 @@
       "BUILDING_MILITARY_BASE"
      ]
     }
-   ]
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_GUARDCAT"
+    ]
+   }
   }
  },
  "allowed": {

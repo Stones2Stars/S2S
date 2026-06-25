@@ -2,6 +2,11 @@
  "type": "UNIT_NEANDERTHAL_SHEPHERD",
  "description": "TXT_KEY_UNIT_NEANDERTHAL_SHEPHERD",
  "civilopedia": "TXT_KEY_UNIT_SHEPHERD_PEDIA",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_SEDENTARY_LIFESTYLE"
+  ]
+ },
  "requires": {
   "build": {
    "all": [
@@ -92,7 +97,12 @@
       }
      ]
     }
-   ]
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_VET"
+    ]
+   }
   }
  },
  "heal": {

@@ -6,7 +6,12 @@
   "build": {
    "all": [
     "TECH_ROAD_BUILDING"
-   ]
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_ADVENTURER"
+    ]
+   }
   }
  },
  "withdrawal": {

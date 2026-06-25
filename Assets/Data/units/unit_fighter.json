@@ -23,7 +23,12 @@
       "BUILDING_AEROSPACE_COMPLEX"
      ]
     }
-   ]
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_F4_PHANTOM"
+    ]
+   }
   }
  },
  "bombard": {

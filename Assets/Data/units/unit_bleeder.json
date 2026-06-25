@@ -6,7 +6,12 @@
   "build": {
    "all": [
     "TECH_REGENERATIVE_MEDICINE"
-   ]
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_FERAL"
+    ]
+   }
   }
  },
  "skills": {

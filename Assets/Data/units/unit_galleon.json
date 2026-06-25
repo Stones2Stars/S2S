@@ -7,13 +7,18 @@
    "all": [
     "BUILDING_SHIPWRIGHT",
     {
-     "type": "AREA_SIZE",
-     "scope": "world",
-     "min": 10
+     "HAS_COAST": {
+      "minArea": 10
+     }
     },
     "TECH_NAVAL_CANNON",
     "TECH_ASTROLABE"
-   ]
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_PADDLE_STEAMER"
+    ]
+   }
   }
  },
  "buildRate": {

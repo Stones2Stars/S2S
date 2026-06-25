@@ -7,7 +7,8 @@
    "all": [
     "BUILDING_BIOLOGICAL_WARFARE_LAB",
     "TECH_GUIDED_WEAPONS"
-   ]
+   ],
+   "disabled": "NO_NUKES"
   }
  },
  "collateral": {

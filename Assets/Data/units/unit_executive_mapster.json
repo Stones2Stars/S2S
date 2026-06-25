@@ -6,7 +6,9 @@
   "build": {
    "all": [
     "BUILDING_HQ_MAPSTER",
-    "CORPORATION_MAPSTER"
+    {
+     "HAS_CORPORATION": "CORPORATION_MAPSTER"
+    }
    ]
   }
  },

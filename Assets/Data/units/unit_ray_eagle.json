@@ -2,6 +2,13 @@
  "type": "UNIT_RAY_EAGLE",
  "description": "TXT_KEY_UNIT_RAY_EAGLE",
  "civilopedia": "TXT_KEY_UNIT_RAY_EAGLE_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    "HAS_COAST"
+   ]
+  }
+ },
  "skills": {
   "noDefensiveBonus": true,
   "blendIntoCity": true,

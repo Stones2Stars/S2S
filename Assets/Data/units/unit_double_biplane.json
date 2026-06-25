@@ -16,7 +16,13 @@
      "scope": "city",
      "connection": "trade|vicinity"
     }
-   ]
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_EARLYJET",
+     "UNIT_A10_BOMBER"
+    ]
+   }
   }
  },
  "allowed": {

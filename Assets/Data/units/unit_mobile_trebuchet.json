@@ -12,7 +12,12 @@
     },
     "BUILDING_SIEGE_WEAPONS_WORKSHOP",
     "TECH_ENGINEERING"
-   ]
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_BOMBARD"
+    ]
+   }
   }
  },
  "allowed": {

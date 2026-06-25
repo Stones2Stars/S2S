@@ -2,12 +2,22 @@
  "type": "UNIT_CLONES",
  "description": "TXT_KEY_UNIT_CLONES",
  "civilopedia": "TXT_KEY_UNIT_CLONES_PEDIA",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_TRANSHUMAN_LIFESTYLE"
+  ]
+ },
  "requires": {
   "build": {
    "all": [
     "BUILDING_CLONING_LABORATORY",
     "TECH_MAINSTREAM_CLONING"
-   ]
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_WORKER_ANDROID"
+    ]
+   }
   }
  },
  "skills": {

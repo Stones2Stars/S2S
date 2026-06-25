@@ -2,13 +2,24 @@
  "type": "UNIT_NEANDERTHAL_STONE_MACEMAN",
  "description": "TXT_KEY_UNIT_NEANDERTHAL_STONE_MACEMAN",
  "civilopedia": "TXT_KEY_UNIT_STONE_MACEMAN_PEDIA",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_SEDENTARY_LIFESTYLE"
+  ]
+ },
  "requires": {
   "build": {
    "all": [
     "BUILDING_C_AC_NEANDERTHAL",
     "BUILDING_C_L_NEANDERTHAL",
     "TECH_COMPOSITE_TOOLS"
-   ]
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_NEANDERTHAL_OBSIDIAN_MACEMAN",
+     "UNIT_NEANDERTHAL_OBSIDIAN_SWORDSMAN"
+    ]
+   }
   }
  },
  "buildRate": {

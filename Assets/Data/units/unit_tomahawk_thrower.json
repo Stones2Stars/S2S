@@ -11,7 +11,13 @@
      "connection": "trade|vicinity"
     },
     "TECH_AXE_MAKING"
-   ]
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_AXEMAN",
+     "UNIT_JAVELINEER"
+    ]
+   }
   }
  },
  "allowed": {

@@ -11,7 +11,12 @@
      "connection": "trade|vicinity"
     },
     "TECH_ROAD_BUILDING"
-   ]
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_ADVENTURER"
+    ]
+   }
   }
  },
  "allowed": {

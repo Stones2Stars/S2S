@@ -21,7 +21,13 @@
      "scope": "city",
      "connection": "trade|vicinity"
     }
-   ]
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_FIGHTER",
+     "UNIT_P51_MUSTANG"
+    ]
+   }
   }
  },
  "bombard": {

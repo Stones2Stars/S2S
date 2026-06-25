@@ -11,7 +11,12 @@
      "connection": "trade|vicinity"
     },
     "TECH_FUSION"
-   ]
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_ANTI_PERSONNEL_MECH"
+    ]
+   }
   }
  },
  "strength": {

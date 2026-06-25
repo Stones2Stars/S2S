@@ -6,7 +6,9 @@
   "build": {
    "all": [
     "BUILDING_HQ_SAFARI_HUNTERS",
-    "CORPORATION_SAFARI"
+    {
+     "HAS_CORPORATION": "CORPORATION_SAFARI"
+    }
    ]
   }
  },

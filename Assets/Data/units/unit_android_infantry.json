@@ -27,7 +27,13 @@
      "scope": "city",
      "connection": "trade|vicinity"
     }
-   ]
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_CYBORG",
+     "UNIT_SENTROID_INFANTRY"
+    ]
+   }
   }
  },
  "strength": {

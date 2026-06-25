@@ -45,7 +45,13 @@
       }
      ]
     }
-   ]
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_GRENADIER",
+     "UNIT_ANCIENT_FLAMETHROWER"
+    ]
+   }
   }
  },
  "strength": {

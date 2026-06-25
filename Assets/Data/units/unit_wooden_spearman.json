@@ -2,11 +2,22 @@
  "type": "UNIT_WOODEN_SPEARMAN",
  "description": "TXT_KEY_UNIT_WOODEN_SPEARMAN",
  "civilopedia": "TXT_KEY_UNIT_WOODEN_SPEARMAN_PEDIA",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_FLINTLOCK"
+  ]
+ },
  "requires": {
   "build": {
    "all": [
     "TECH_SIMPLE_WOOD_WORKING"
-   ]
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_STONE_SPEARMAN",
+     "UNIT_NEANDERTHAL_WOODEN_SPEARMAN"
+    ]
+   }
   }
  },
  "buildRate": {

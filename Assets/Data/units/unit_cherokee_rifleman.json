@@ -25,7 +25,12 @@
       }
      ]
     }
-   ]
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_TRENCH_INFANTRY"
+    ]
+   }
   }
  },
  "allowed": {

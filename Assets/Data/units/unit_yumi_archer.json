@@ -11,7 +11,12 @@
      "connection": "trade|vicinity"
     },
     "TECH_YEOMANRY"
-   ]
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_ARQUEBUSIER"
+    ]
+   }
   }
  },
  "allowed": {

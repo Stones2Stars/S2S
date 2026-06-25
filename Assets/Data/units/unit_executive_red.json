@@ -6,7 +6,9 @@
   "build": {
    "all": [
     "BUILDING_HQ_RED_CURTAINS",
-    "CORPORATION_RED"
+    {
+     "HAS_CORPORATION": "CORPORATION_RED"
+    }
    ]
   }
  },

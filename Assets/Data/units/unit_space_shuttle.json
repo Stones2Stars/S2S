@@ -13,7 +13,12 @@
     },
     "BUILDING_EFFECT_LAUNCH_SITE",
     "TECH_SPACE_STATIONS"
-   ]
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_HEAVY_ROCKET"
+    ]
+   }
   }
  },
  "allowed": {

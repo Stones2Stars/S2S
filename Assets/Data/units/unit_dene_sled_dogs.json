@@ -22,7 +22,12 @@
       "BUILDING_REPET"
      ]
     }
-   ]
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_WARDOG"
+    ]
+   }
   }
  },
  "allowed": {

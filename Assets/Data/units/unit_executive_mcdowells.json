@@ -6,7 +6,9 @@
   "build": {
    "all": [
     "BUILDING_HQ_BIG_MCDOWELLS",
-    "CORPORATION_MCDOWELLS"
+    {
+     "HAS_CORPORATION": "CORPORATION_MCDOWELLS"
+    }
    ]
   }
  },

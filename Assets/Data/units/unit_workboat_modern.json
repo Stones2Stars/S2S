@@ -5,8 +5,14 @@
  "requires": {
   "build": {
    "all": [
+    "HAS_COAST",
     "TECH_SCREW_PROPELLER"
-   ]
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_CONSTRUCT_SHIP"
+    ]
+   }
   }
  },
  "skills": {

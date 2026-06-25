@@ -6,6 +6,7 @@
  "civilopedia": "TXT_KEY_CIVILIZATION_NPC_NEANDERTHAL_PEDIA",
  "grants": {
   "techs": [
+   "TECH_GAME_START",
    "TECH_CAVE_DWELLING",
    "TECH_GATHERING",
    "TECH_NOMADISM",

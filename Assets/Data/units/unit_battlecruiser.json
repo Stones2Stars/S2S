@@ -11,9 +11,9 @@
      "connection": "trade|vicinity"
     },
     {
-     "type": "AREA_SIZE",
-     "scope": "world",
-     "min": 10
+     "HAS_COAST": {
+      "minArea": 10
+     }
     },
     "TECH_INDUSTRIALISM",
     "TECH_ARTILLERY",
@@ -31,7 +31,13 @@
       }
      ]
     }
-   ]
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_CRUISER",
+     "UNIT_HEAVY_CRUISER"
+    ]
+   }
   }
  },
  "bombard": {

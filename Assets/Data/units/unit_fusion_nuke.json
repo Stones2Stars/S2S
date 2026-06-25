@@ -6,6 +6,7 @@
   "build": {
    "all": [
     "TECH_FUSION",
+    "GAMEOPTION_ADVANCED_NUKES",
     {
      "any": [
       "BUILDING_D_T_FUSION_POWER_PLANT",
@@ -15,7 +16,8 @@
       "BUILDING_QUANTUM_VACUUM_POWER_PLANT"
      ]
     }
-   ]
+   ],
+   "disabled": "NO_NUKES"
   }
  },
  "allowed": {
@@ -54,11 +56,6 @@
  "cost": {
   "production": 4056,
   "upkeep": 21
- },
- "loadPrune": {
-  "onGameOptions": [
-   "GAMEOPTION_ADVANCED_NUKES"
-  ]
  },
  "identity": {
   "worth": 5,

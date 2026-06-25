@@ -2,6 +2,13 @@
  "type": "UNIT_TUNA",
  "description": "TXT_KEY_UNIT_TUNA",
  "civilopedia": "TXT_KEY_UNIT_TUNA_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    "HAS_COAST"
+   ]
+  }
+ },
  "withdrawal": {
   "unit": {
    "percent": 15

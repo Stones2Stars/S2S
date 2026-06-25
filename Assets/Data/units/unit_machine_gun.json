@@ -11,7 +11,13 @@
      "connection": "trade|vicinity"
     },
     "TECH_AUTOMATIC_WEAPONS"
-   ]
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_SAM_INFANTRY",
+     "UNIT_MODERN_MACHINE_GUN"
+    ]
+   }
   }
  },
  "firstStrike": {

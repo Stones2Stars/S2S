@@ -1,0 +1,27 @@
+{
+  "type": "TECH_GAME_START",
+  "description": "TXT_KEY_TECH_GAME_START",
+  "civilopedia": "TXT_KEY_TECH_DUMMY_PEDIA",
+  "enables": {
+    "techs": [
+      "TECH_CAVE_DWELLING",
+      "TECH_NOMADISM",
+      "TECH_LANGUAGE"
+    ],
+    "units": [
+      "UNIT_BRUTE"
+    ],
+    "builds": [],
+    "improvements": [],
+    "promotions": []
+  },
+  "ui": {
+    "art": {
+      "icon": ",Art/Interface/Buttons/Process/Blank.dds,Art/Interface/Buttons/Beyond_the_Sword_Atlas.dds,8,5"
+    }
+  },
+  "identity": {
+    "era": "C2C_ERA_PREHISTORIC",
+    "disable": true
+  }
+}

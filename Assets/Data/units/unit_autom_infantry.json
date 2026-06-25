@@ -28,7 +28,12 @@
      "scope": "city",
      "connection": "trade|vicinity"
     }
-   ]
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_WARBOT_INFANTRY"
+    ]
+   }
   }
  },
  "strength": {

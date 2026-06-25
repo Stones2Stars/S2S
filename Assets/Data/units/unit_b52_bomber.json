@@ -28,7 +28,12 @@
       "BUILDING_AEROSPACE_COMPLEX"
      ]
     }
-   ]
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_B1_LANCER"
+    ]
+   }
   }
  },
  "bombard": {

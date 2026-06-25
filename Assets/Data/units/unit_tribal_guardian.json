@@ -2,12 +2,23 @@
  "type": "UNIT_TRIBAL_GUARDIAN",
  "description": "TXT_KEY_UNIT_TRIBAL_GUARDIAN",
  "civilopedia": "TXT_KEY_UNIT_TRIBAL_GUARDIAN_PEDIA",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_SEDENTARY_LIFESTYLE"
+  ]
+ },
  "requires": {
   "build": {
    "all": [
     "BUILDING_PALACE",
     "TECH_HARD_HAMMER_PERCUSSION"
-   ]
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_PALACE_GUARD",
+     "UNIT_NEANDERTHAL_TRIBAL_GUARDIAN"
+    ]
+   }
   }
  },
  "allowed": {

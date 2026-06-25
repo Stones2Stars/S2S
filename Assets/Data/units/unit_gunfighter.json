@@ -2,6 +2,11 @@
  "type": "UNIT_GUNFIGHTER",
  "description": "TXT_KEY_UNIT_GUNFIGHTER",
  "civilopedia": "TXT_KEY_CONCEPT_ESPIONAGE_PEDIA",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_SEMI_AUTOMATIC_WEAPONS"
+  ]
+ },
  "requires": {
   "build": {
    "all": [
@@ -17,7 +22,12 @@
      "scope": "city",
      "connection": "trade|vicinity"
     }
-   ]
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_THUG"
+    ]
+   }
   }
  },
  "allowed": {

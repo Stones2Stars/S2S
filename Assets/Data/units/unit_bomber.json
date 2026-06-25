@@ -16,7 +16,12 @@
      "scope": "city",
      "connection": "trade|vicinity"
     }
-   ]
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_B52_BOMBER"
+    ]
+   }
   }
  },
  "bombard": {

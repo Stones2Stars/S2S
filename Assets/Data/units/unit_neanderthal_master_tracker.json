@@ -2,13 +2,23 @@
  "type": "UNIT_NEANDERTHAL_MASTER_TRACKER",
  "description": "TXT_KEY_UNIT_NEANDERTHAL_MASTER_TRACKER",
  "civilopedia": "TXT_KEY_UNIT_MASTER_HUNTER_PEDIA",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_HUNTING"
+  ]
+ },
  "requires": {
   "build": {
    "all": [
     "BUILDING_C_AC_NEANDERTHAL",
     "BUILDING_C_L_NEANDERTHAL",
     "TECH_TRACKING"
-   ]
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_NEANDERTHAL_MASTER_HUNTER"
+    ]
+   }
   }
  },
  "allowed": {

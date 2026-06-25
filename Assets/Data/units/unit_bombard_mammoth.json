@@ -29,7 +29,12 @@
       "BUILDING_ANIMAL_TRAINER_MAMMOTH"
      ]
     }
-   ]
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_EARLY_TANK"
+    ]
+   }
   }
  },
  "allowed": {

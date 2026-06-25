@@ -7,7 +7,12 @@
    "all": [
     "BUILDING_CARPENTER",
     "TECH_THE_WHEEL"
-   ]
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_SIEGE_RAM"
+    ]
+   }
   }
  },
  "buildRate": {

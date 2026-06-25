@@ -2,12 +2,22 @@
  "type": "UNIT_TRADE_CARAVAN",
  "description": "TXT_KEY_UNIT_TRADE_CARAVAN",
  "civilopedia": "TXT_KEY_CONCEPT_TRADE_CARAVAN_PEDIA",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_ENGINEERING"
+  ]
+ },
  "requires": {
   "build": {
    "all": [
     "BUILDING_CARAVAN_POST",
     "TECH_TRADE"
-   ]
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_SUPPLY_TRAIN"
+    ]
+   }
   }
  },
  "buildRate": {

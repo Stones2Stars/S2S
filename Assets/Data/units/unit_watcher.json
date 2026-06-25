@@ -19,7 +19,13 @@
       "BUILDING_POLICE_PRECINCT"
      ]
     }
-   ]
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_ENFORCERS",
+     "UNIT_NEANDERTHAL_WATCHER"
+    ]
+   }
   }
  },
  "culture": {

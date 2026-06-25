@@ -3,6 +3,11 @@
  "description": "TXT_KEY_UNIT_GALLIOT",
  "civilopedia": "TXT_KEY_UNIT_GALLIOT_PEDIA",
  "help": "TXT_KEY_UNIT_MERCHANT_SHIP_HELP",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_ASTROLABE"
+  ]
+ },
  "requires": {
   "build": {
    "all": [
@@ -12,13 +17,18 @@
      "connection": "trade|vicinity"
     },
     {
-     "type": "AREA_SIZE",
-     "scope": "world",
-     "min": 10
+     "HAS_COAST": {
+      "minArea": 10
+     }
     },
     "TECH_WRITING",
     "TECH_PIRACY"
-   ]
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_CARRACK_MERCHANT"
+    ]
+   }
   }
  },
  "allowed": {

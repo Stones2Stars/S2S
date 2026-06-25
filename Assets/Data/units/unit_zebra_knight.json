@@ -18,7 +18,12 @@
       "BUILDING_ANIMAL_TRAINER_ZEBRA"
      ]
     }
-   ]
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_ZEBRA_CUIRASSIER"
+    ]
+   }
   }
  },
  "allowed": {

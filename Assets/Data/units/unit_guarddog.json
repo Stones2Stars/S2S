@@ -26,7 +26,12 @@
       }
      ]
     }
-   ]
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_POLICE_DOG"
+    ]
+   }
   }
  },
  "strength": {

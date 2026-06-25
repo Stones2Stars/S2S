@@ -2,6 +2,11 @@
  "type": "UNIT_NOK_MERCHANTS",
  "description": "TXT_KEY_UNIT_NOK_MERCHANTS",
  "civilopedia": "TXT_KEY_UNIT_NOK_MERCHANTS_PEDIA",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_ENGINEERING"
+  ]
+ },
  "requires": {
   "build": {
    "all": [
@@ -12,7 +17,12 @@
     },
     "BUILDING_CARAVAN_POST",
     "TECH_TRADE"
-   ]
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_SUPPLY_TRAIN"
+    ]
+   }
   }
  },
  "allowed": {

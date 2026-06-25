@@ -11,9 +11,9 @@
      "connection": "trade|vicinity"
     },
     {
-     "type": "AREA_SIZE",
-     "scope": "world",
-     "min": 10
+     "HAS_COAST": {
+      "minArea": 10
+     }
     },
     "TECH_MOTORIZED_TRANSPORTATION",
     {
@@ -42,7 +42,12 @@
       "BUILDING_NAVAL_YARD"
      ]
     }
-   ]
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_HOSPITAL_SHIP_2"
+    ]
+   }
   }
  },
  "withdrawal": {

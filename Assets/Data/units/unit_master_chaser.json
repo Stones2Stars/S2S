@@ -2,11 +2,21 @@
  "type": "UNIT_MASTER_CHASER",
  "description": "TXT_KEY_UNIT_MASTER_CHASER",
  "civilopedia": "TXT_KEY_UNIT_MASTER_HUNTER_PEDIA",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_TRACKING"
+  ]
+ },
  "requires": {
   "build": {
    "all": [
     "TECH_PERSISTENCE_HUNTING"
-   ]
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_MASTER_TRACKER"
+    ]
+   }
   }
  },
  "allowed": {

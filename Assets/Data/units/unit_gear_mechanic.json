@@ -22,7 +22,12 @@
       "BUILDING_HYPERMARKET"
      ]
     }
-   ]
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_MACHINIST"
+    ]
+   }
   }
  },
  "heal": {

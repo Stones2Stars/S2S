@@ -2,6 +2,11 @@
  "type": "UNIT_FIGURINE_POTTER",
  "description": "TXT_KEY_UNIT_FIGURINE_POTTER",
  "civilopedia": "TXT_KEY_UNIT_FIGURINE_POTTER_PEDIA",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_ENGINEERING"
+  ]
+ },
  "requires": {
   "build": {
    "all": [
@@ -11,7 +16,12 @@
      "connection": "trade|vicinity"
     },
     "TECH_BARTER"
-   ]
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_TRADE_CARAVAN"
+    ]
+   }
   }
  },
  "allowed": {

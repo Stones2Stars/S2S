@@ -11,9 +11,9 @@
      "connection": "trade|vicinity"
     },
     {
-     "type": "AREA_SIZE",
-     "scope": "world",
-     "min": 10
+     "HAS_COAST": {
+      "minArea": 10
+     }
     },
     "TECH_GUIDED_WEAPONS",
     {
@@ -21,7 +21,12 @@
      "scope": "city",
      "connection": "trade|vicinity"
     }
-   ]
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_MASTER_SAILOR_FUSION_SUBMARINE"
+    ]
+   }
   }
  },
  "withdrawal": {

@@ -6,7 +6,9 @@
   "build": {
    "all": [
     "BUILDING_HQ_MOBBY_MEATS_INTERNATIONAL",
-    "CORPORATION_MOBBY"
+    {
+     "HAS_CORPORATION": "CORPORATION_MOBBY"
+    }
    ]
   }
  },

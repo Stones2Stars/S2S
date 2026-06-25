@@ -2,6 +2,11 @@
  "type": "UNIT_HASHISHIN",
  "description": "TXT_KEY_UNIT_HASHISHIN",
  "civilopedia": "TXT_KEY_UNIT_HASHISHIN_PEDIA",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_MILITARY_SCIENCE"
+  ]
+ },
  "requires": {
   "build": {
    "all": [
@@ -12,7 +17,13 @@
     },
     "BUILDING_ALAMUT",
     "TECH_FUNDAMENTALISM"
-   ]
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_SHARPSHOOTER",
+     "UNIT_SCOUNDREL"
+    ]
+   }
   }
  },
  "allowed": {

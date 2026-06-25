@@ -2,13 +2,18 @@
  "type": "UNIT_MASTER_SAILOR_KAYAK",
  "description": "TXT_KEY_UNIT_MASTER_SAILOR_KAYAK",
  "civilopedia": "TXT_KEY_UNIT_KAYAK_PEDIA",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_OPTICS"
+  ]
+ },
  "requires": {
   "build": {
    "all": [
     {
-     "type": "AREA_SIZE",
-     "scope": "world",
-     "min": 5
+     "HAS_COAST": {
+      "minArea": 5
+     }
     },
     "TECH_BOAT_BUILDING",
     {
@@ -30,7 +35,12 @@
       }
      ]
     }
-   ]
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_MASTER_SAILOR_OUTRIGGER"
+    ]
+   }
   }
  },
  "withdrawal": {

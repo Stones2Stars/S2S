@@ -13,7 +13,13 @@
     "BUILDING_ANIMAL_TRAINER_LLAMA",
     "TECH_MOUNTED_ARCHERY",
     "TECH_MEGAFAUNA_DOMESTICATION"
-   ]
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_AUTOGYRO",
+     "UNIT_ARMORED_CAR"
+    ]
+   }
   }
  },
  "allowed": {

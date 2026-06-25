@@ -12,7 +12,12 @@
     },
     "TECH_METALLURGY",
     "TECH_CLOCKPUNK"
-   ]
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_MUSKETMAN"
+    ]
+   }
   }
  },
  "allowed": {

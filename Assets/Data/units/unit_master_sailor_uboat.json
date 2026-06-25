@@ -12,9 +12,9 @@
      "connection": "trade|vicinity"
     },
     {
-     "type": "AREA_SIZE",
-     "scope": "world",
-     "min": 10
+     "HAS_COAST": {
+      "minArea": 10
+     }
     },
     "TECH_SUBMARINE_WARFARE",
     {
@@ -31,7 +31,12 @@
       "CIVIC_DESPOTISM"
      ]
     }
-   ]
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_MASTER_SAILOR_ATTACK_SUBMARINE"
+    ]
+   }
   }
  },
  "withdrawal": {

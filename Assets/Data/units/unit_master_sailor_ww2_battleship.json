@@ -2,6 +2,11 @@
  "type": "UNIT_MASTER_SAILOR_WW2_BATTLESHIP",
  "description": "TXT_KEY_UNIT_MASTER_SAILOR_WW2_BATTLESHIP",
  "civilopedia": "TXT_KEY_UNIT_WW2_BATTLESHIP_PEDIA",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_SEMICONDUCTORS"
+  ]
+ },
  "requires": {
   "build": {
    "all": [
@@ -11,9 +16,9 @@
      "connection": "trade|vicinity"
     },
     {
-     "type": "AREA_SIZE",
-     "scope": "world",
-     "min": 10
+     "HAS_COAST": {
+      "minArea": 10
+     }
     },
     "TECH_MECHANIZED_WARFARE",
     {
@@ -21,7 +26,12 @@
      "scope": "city",
      "connection": "trade|vicinity"
     }
-   ]
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_MASTER_SAILOR_BATTLESHIP"
+    ]
+   }
   }
  },
  "bombard": {

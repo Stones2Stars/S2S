@@ -2,13 +2,23 @@
  "type": "UNIT_NEANDERTHAL_SLINGER",
  "description": "TXT_KEY_UNIT_NEANDERTHAL_SLINGER",
  "civilopedia": "TXT_KEY_UNIT_SLINGER_PEDIA",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_SEDENTARY_LIFESTYLE"
+  ]
+ },
  "requires": {
   "build": {
    "all": [
     "BUILDING_C_AC_NEANDERTHAL",
     "BUILDING_C_L_NEANDERTHAL",
     "TECH_BINDING"
-   ]
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_ARCHER"
+    ]
+   }
   }
  },
  "strength": {

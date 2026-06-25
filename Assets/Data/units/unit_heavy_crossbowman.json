@@ -2,11 +2,21 @@
  "type": "UNIT_HEAVY_CROSSBOWMAN",
  "description": "TXT_KEY_UNIT_HEAVY_CROSSBOWMAN",
  "civilopedia": "TXT_KEY_UNIT_CROSSBOWMAN_PEDIA",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_FLINTLOCK"
+  ]
+ },
  "requires": {
   "build": {
    "all": [
     "TECH_METALLURGY"
-   ]
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_MUSKETMAN"
+    ]
+   }
   }
  },
  "firstStrike": {

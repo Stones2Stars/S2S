@@ -7,7 +7,12 @@
    "all": [
     "BUILDING_PALACE",
     "TECH_CLASSICAL_LIFESTYLE"
-   ]
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_EARLY_IMP_GUARD"
+    ]
+   }
   }
  },
  "allowed": {

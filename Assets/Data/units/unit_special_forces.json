@@ -2,6 +2,11 @@
  "type": "UNIT_SPECIAL_FORCES",
  "description": "TXT_KEY_UNIT_SPECIAL_FORCES",
  "civilopedia": "TXT_KEY_UNIT_SPECIAL_FORCES_PEDIA",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_SUPERSTRONG_ALLOYS"
+  ]
+ },
  "requires": {
   "build": {
    "all": [
@@ -18,7 +23,13 @@
      "scope": "city",
      "connection": "trade|vicinity"
     }
-   ]
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_HTSNIPER",
+     "UNIT_SPECIAL_INFANTRY"
+    ]
+   }
   }
  },
  "allowed": {

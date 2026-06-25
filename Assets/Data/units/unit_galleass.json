@@ -7,13 +7,19 @@
    "all": [
     "BUILDING_SHIPWRIGHT",
     {
-     "type": "AREA_SIZE",
-     "scope": "world",
-     "min": 10
+     "HAS_COAST": {
+      "minArea": 10
+     }
     },
     "TECH_GUILDS",
     "TECH_RUDDER"
-   ]
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_SLOOP",
+     "UNIT_SLOOP_OF_WAR"
+    ]
+   }
   }
  },
  "buildRate": {

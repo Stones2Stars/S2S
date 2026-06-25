@@ -11,7 +11,12 @@
      "connection": "trade|vicinity"
     },
     "TECH_SIEGE_WARFARE"
-   ]
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_BOMBARD"
+    ]
+   }
   }
  },
  "allowed": {

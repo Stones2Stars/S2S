@@ -12,12 +12,17 @@
     },
     "BUILDING_SHIPWRIGHT",
     {
-     "type": "AREA_SIZE",
-     "scope": "world",
-     "min": 10
+     "HAS_COAST": {
+      "minArea": 10
+     }
     },
     "TECH_COMPASS"
-   ]
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_SLOOP"
+    ]
+   }
   }
  },
  "allowed": {

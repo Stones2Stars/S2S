@@ -2,6 +2,11 @@
  "type": "UNIT_MASTER_SAILOR_PRE_DREADNOUGHT",
  "description": "TXT_KEY_UNIT_MASTER_SAILOR_PRE_DREADNOUGHT",
  "civilopedia": "TXT_KEY_UNIT_PRE_DREADNOUGHT_PEDIA",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_INDUSTRIALISM"
+  ]
+ },
  "requires": {
   "build": {
    "all": [
@@ -11,9 +16,9 @@
      "connection": "trade|vicinity"
     },
     {
-     "type": "AREA_SIZE",
-     "scope": "world",
-     "min": 10
+     "HAS_COAST": {
+      "minArea": 10
+     }
     },
     "TECH_ARTILLERY",
     "TECH_COMBUSTION",
@@ -31,7 +36,12 @@
       }
      ]
     }
-   ]
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_MASTER_SAILOR_DREADNOUGHT_SHIP"
+    ]
+   }
   }
  },
  "bombard": {

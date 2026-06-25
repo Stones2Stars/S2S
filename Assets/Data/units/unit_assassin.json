@@ -2,12 +2,23 @@
  "type": "UNIT_ASSASSIN",
  "description": "TXT_KEY_UNIT_ASSASSIN",
  "civilopedia": "TXT_KEY_UNIT_ASSASSIN_PEDIA",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_MATCHLOCK"
+  ]
+ },
  "requires": {
   "build": {
    "all": [
     "BUILDING_ASSASSINS_DEN",
     "TECH_CODE_OF_LAWS"
-   ]
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_CUTTHROAT",
+     "UNIT_SHARPSHOOTER"
+    ]
+   }
   }
  },
  "allowed": {

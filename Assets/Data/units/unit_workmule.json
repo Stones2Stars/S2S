@@ -2,6 +2,11 @@
  "type": "UNIT_WORKMULE",
  "description": "TXT_KEY_UNIT_WORKMULE",
  "civilopedia": "TXT_KEY_UNIT_WORKER_PEDIA",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_LOGISTICS"
+  ]
+ },
  "requires": {
   "build": {
    "all": [
@@ -26,7 +31,12 @@
       "BUILDING_ANIMAL_TRAINER_HORSE"
      ]
     }
-   ]
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_WORKER_INDUSTRIAL"
+    ]
+   }
   }
  },
  "skills": {

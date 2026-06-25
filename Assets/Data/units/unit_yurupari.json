@@ -11,7 +11,12 @@
      "connection": "trade|vicinity"
     },
     "TECH_SPEAR_MAKING"
-   ]
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_SPEARMAN"
+    ]
+   }
   }
  },
  "allowed": {

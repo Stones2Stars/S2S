@@ -3,6 +3,11 @@
  "description": "TXT_KEY_UNIT_LIBERTY_MERCHANT",
  "civilopedia": "TXT_KEY_UNIT_LIBERTY_MERCHANT_PEDIA",
  "help": "TXT_KEY_UNIT_MERCHANT_SHIP_HELP",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_CONGLOMERATES"
+  ]
+ },
  "requires": {
   "build": {
    "all": [
@@ -12,9 +17,9 @@
      "connection": "trade|vicinity"
     },
     {
-     "type": "AREA_SIZE",
-     "scope": "world",
-     "min": 10
+     "HAS_COAST": {
+      "minArea": 10
+     }
     },
     "TECH_SUBMARINE_WARFARE",
     {
@@ -22,7 +27,12 @@
      "scope": "city",
      "connection": "trade|vicinity"
     }
-   ]
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_CARGO_SHIP"
+    ]
+   }
   }
  },
  "skills": {

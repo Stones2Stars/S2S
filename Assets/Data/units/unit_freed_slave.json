@@ -3,6 +3,15 @@
  "description": "TXT_KEY_UNIT_FREED_SLAVE",
  "civilopedia": "TXT_KEY_UNIT_FREED_SLAVE_PEDIA",
  "help": "TXT_KEY_UNIT_FREED_SLAVE_HELP",
+ "requires": {
+  "build": {
+   "dormant": {
+    "all": [
+     "UNIT_GATHERER"
+    ]
+   }
+  }
+ },
  "tags": {
   "worker": true,
   "civilian": true

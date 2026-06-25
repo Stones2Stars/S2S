@@ -6,7 +6,9 @@
  "requires": {
   "build": {
    "all": [
+    "STATE_RELIGION_IN_CITY",
     "TECH_FUNDAMENTALISM",
+    "GAMEOPTION_RELIGION_INQUISITIONS",
     "CIVIC_INQUISITORIAL"
    ]
   }
@@ -33,11 +35,6 @@
  "cost": {
   "production": 233,
   "upkeep": 1
- },
- "loadPrune": {
-  "onGameOptions": [
-   "GAMEOPTION_RELIGION_INQUISITIONS"
-  ]
  },
  "identity": {
   "worth": 1,

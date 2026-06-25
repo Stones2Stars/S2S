@@ -2,6 +2,11 @@
  "type": "UNIT_NEANDERTHAL_WAR_CANOE",
  "description": "TXT_KEY_UNIT_NEANDERTHAL_WAR_CANOE",
  "civilopedia": "TXT_KEY_UNIT_WAR_CANOE_PEDIA",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_SEDENTARY_LIFESTYLE"
+  ]
+ },
  "requires": {
   "build": {
    "all": [
@@ -9,12 +14,17 @@
     "BUILDING_C_L_NEANDERTHAL",
     "BUILDING_CANOE_BUILDER",
     {
-     "type": "AREA_SIZE",
-     "scope": "world",
-     "min": 5
+     "HAS_COAST": {
+      "minArea": 5
+     }
     },
     "TECH_HARPOON_MAKING"
-   ]
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_WARGALLEY"
+    ]
+   }
   }
  },
  "buildRate": {

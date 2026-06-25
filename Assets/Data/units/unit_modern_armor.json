@@ -31,7 +31,14 @@
       }
      ]
     }
-   ]
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_HEAVY_ARMOR",
+     "UNIT_THERMOBARIC_TANK",
+     "UNIT_DROID_TANK"
+    ]
+   }
   }
  },
  "firstStrike": {

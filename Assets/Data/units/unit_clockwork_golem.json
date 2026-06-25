@@ -2,6 +2,11 @@
  "type": "UNIT_CLOCKWORK_GOLEM",
  "description": "TXT_KEY_UNIT_CLOCKWORK_GOLEM",
  "civilopedia": "TXT_KEY_UNIT_CLOCKWORK_GOLEM_PEDIA",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_MODERN_WARFARE"
+  ]
+ },
  "requires": {
   "build": {
    "all": [

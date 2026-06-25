@@ -2,12 +2,25 @@
  "type": "UNIT_UNDEAD_WORKER",
  "description": "TXT_KEY_UNIT_UNDEAD_WORKER",
  "civilopedia": "TXT_KEY_UNIT_WORKER_PEDIA",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_MAINSTREAM_CLONING"
+  ]
+ },
  "requires": {
   "build": {
    "all": [
     "BUILDING_HOUNFOR",
-    "RELIGION_VOODOO"
-   ]
+    "RELIGION_VOODOO",
+    {
+     "STATE_RELIGION": "RELIGION_VOODOO"
+    }
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_WORKER_INDUSTRIAL"
+    ]
+   }
   }
  },
  "skills": {

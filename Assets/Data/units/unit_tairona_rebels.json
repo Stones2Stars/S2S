@@ -2,6 +2,11 @@
  "type": "UNIT_TAIRONA_REBELS",
  "description": "TXT_KEY_UNIT_TAIRONA_REBELS",
  "civilopedia": "TXT_KEY_UNIT_TAIRONA_REBELS_PEDIA",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_FLINTLOCK"
+  ]
+ },
  "requires": {
   "build": {
    "all": [
@@ -11,7 +16,12 @@
      "connection": "trade|vicinity"
     },
     "TECH_METALLURGY"
-   ]
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_MUSKETMAN"
+    ]
+   }
   }
  },
  "allowed": {

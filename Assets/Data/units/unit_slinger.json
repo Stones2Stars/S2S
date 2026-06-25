@@ -2,11 +2,22 @@
  "type": "UNIT_SLINGER",
  "description": "TXT_KEY_UNIT_SLINGER",
  "civilopedia": "TXT_KEY_UNIT_SLINGER_PEDIA",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_FLINTLOCK"
+  ]
+ },
  "requires": {
   "build": {
    "all": [
     "TECH_BINDING"
-   ]
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_ARCHER",
+     "UNIT_NEANDERTHAL_SLINGER"
+    ]
+   }
   }
  },
  "buildRate": {

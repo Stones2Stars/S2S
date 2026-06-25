@@ -2,6 +2,11 @@
  "type": "UNIT_GUERRILLA",
  "description": "TXT_KEY_UNIT_GUERRILLA",
  "civilopedia": "TXT_KEY_UNIT_GUERRILLA_PEDIA",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_SUPERSTRONG_ALLOYS"
+  ]
+ },
  "requires": {
   "build": {
    "all": [
@@ -17,7 +22,12 @@
      "scope": "city",
      "connection": "trade|vicinity"
     }
-   ]
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_MSNIPER"
+    ]
+   }
   }
  },
  "strength": {

@@ -23,7 +23,12 @@
       "BUILDING_MILITARY_INDUSTRIAL_COMPLEX"
      ]
     }
-   ]
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_MOBILE_SAM"
+    ]
+   }
   }
  },
  "withdrawal": {

@@ -2,11 +2,21 @@
  "type": "UNIT_TRIBE",
  "description": "TXT_KEY_UNIT_TRIBE",
  "civilopedia": "TXT_KEY_UNIT_TRIBE_PEDIA",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_SEDENTARY_LIFESTYLE"
+  ]
+ },
  "requires": {
   "build": {
    "all": [
     "TECH_TRIBALISM"
-   ]
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_SETTLER"
+    ]
+   }
   }
  },
  "allowed": {

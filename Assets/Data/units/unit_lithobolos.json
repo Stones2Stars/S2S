@@ -8,7 +8,12 @@
     "BUILDING_SIEGE_WEAPONS_WORKSHOP",
     "TECH_ANCIENT_MACHINERY",
     "TECH_IRON_WORKING"
-   ]
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_CATAPULT"
+    ]
+   }
   }
  },
  "buildRate": {

@@ -2,16 +2,26 @@
  "type": "UNIT_MASTER_SAILOR_OUTRIGGER",
  "description": "TXT_KEY_UNIT_MASTER_SAILOR_OUTRIGGER",
  "civilopedia": "TXT_KEY_UNIT_OUTRIGGER_PEDIA",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_COMPASS"
+  ]
+ },
  "requires": {
   "build": {
    "all": [
     {
-     "type": "AREA_SIZE",
-     "scope": "world",
-     "min": 5
+     "HAS_COAST": {
+      "minArea": 5
+     }
     },
     "TECH_SAILING"
-   ]
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_MASTER_SAILOR_CARAVEL"
+    ]
+   }
   }
  },
  "withdrawal": {

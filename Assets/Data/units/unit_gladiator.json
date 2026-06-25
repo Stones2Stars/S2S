@@ -2,6 +2,18 @@
  "type": "UNIT_GLADIATOR",
  "description": "TXT_KEY_UNIT_GLADIATOR",
  "civilopedia": "TXT_KEY_UNIT_GLADIATOR_PEDIA",
+ "requires": {
+  "build": {
+   "noneOf": [
+    "GAMEOPTION_NO_EVENTS"
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_MACEMAN"
+    ]
+   }
+  }
+ },
  "costs": {
   "empire": {
    "perInstance": {
@@ -49,11 +61,6 @@
  },
  "cost": {
   "upkeep": 1
- },
- "loadPrune": {
-  "notOnGameOptions": [
-   "GAMEOPTION_NO_EVENTS"
-  ]
  },
  "identity": {
   "spawnOnly": true,

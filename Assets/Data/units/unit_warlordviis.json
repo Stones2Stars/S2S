@@ -11,7 +11,12 @@
      "connection": "trade|vicinity"
     },
     "TECH_ADVANCED_WARMACHINES"
-   ]
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_WARLORDVIIIS"
+    ]
+   }
   }
  },
  "grants": {

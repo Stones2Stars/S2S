@@ -32,7 +32,12 @@
       "BUILDING_AEROSPACE_COMPLEX"
      ]
     }
-   ]
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_MODERN_FIGHTER"
+    ]
+   }
   }
  },
  "bombard": {

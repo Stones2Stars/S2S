@@ -19,7 +19,12 @@
       "BUILDING_ANIMAL_TRAINER_MAMMOTH"
      ]
     }
-   ]
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_BOMBARD_MAMMOTH"
+    ]
+   }
   }
  },
  "allowed": {

@@ -3,6 +3,11 @@
  "description": "TXT_KEY_UNIT_TAMED_DONKEY_PAIR",
  "civilopedia": "TXT_KEY_UNIT_TAMED_ANIMAL_PEDIA",
  "help": "TXT_KEY_UNIT_TAMED_ANIMALS_HELP",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_SPECIALIZATION"
+  ]
+ },
  "requires": {
   "build": {
    "all": [
@@ -19,7 +24,12 @@
       "BUILDING_CENTRAL_BREEDER_DONKEY"
      ]
     }
-   ]
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_TAMED_DONKEY"
+    ]
+   }
   }
  },
  "strength": {

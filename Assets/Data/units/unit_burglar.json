@@ -2,6 +2,11 @@
  "type": "UNIT_BURGLAR",
  "description": "TXT_KEY_UNIT_BURGLAR",
  "civilopedia": "TXT_KEY_CONCEPT_ESPIONAGE_PEDIA",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_MATCHLOCK"
+  ]
+ },
  "requires": {
   "build": {
    "all": [
@@ -14,7 +19,12 @@
       "BUILDING_BIOMETRIC_SECURITY_SYSTEM"
      ]
     }
-   ]
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_ASSASSIN"
+    ]
+   }
   }
  },
  "allowed": {

@@ -13,7 +13,12 @@
       "BUILDING_MILITARY_INDUSTRIAL_COMPLEX"
      ]
     }
-   ]
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_HALFTRACK"
+    ]
+   }
   }
  },
  "range": {

@@ -2,17 +2,28 @@
  "type": "UNIT_CANOE",
  "description": "TXT_KEY_UNIT_CANOE",
  "civilopedia": "TXT_KEY_UNIT_CANOE_PEDIA",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_OPTICS"
+  ]
+ },
  "requires": {
   "build": {
    "all": [
     "BUILDING_CANOE_BUILDER",
     {
-     "type": "AREA_SIZE",
-     "scope": "world",
-     "min": 5
+     "HAS_COAST": {
+      "minArea": 5
+     }
     },
     "TECH_BOAT_BUILDING"
-   ]
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_GALLEY",
+     "UNIT_NEANDERTHAL_CANOE"
+    ]
+   }
   }
  },
  "buildRate": {

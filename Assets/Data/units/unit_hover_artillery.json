@@ -31,7 +31,12 @@
       }
      ]
     }
-   ]
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_LEVITATION_ARTILLERY"
+    ]
+   }
   }
  },
  "strength": {

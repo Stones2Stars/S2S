@@ -21,7 +21,14 @@
      "scope": "city",
      "connection": "trade|vicinity"
     }
-   ]
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_MODERN_INFANTRY",
+     "UNIT_MARINE",
+     "UNIT_PARATROOPER"
+    ]
+   }
   }
  },
  "allowed": {

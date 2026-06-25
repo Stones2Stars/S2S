@@ -11,7 +11,13 @@
      "connection": "trade|vicinity"
     },
     "TECH_OBSIDIAN_WEAPONS"
-   ]
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_EARLY_MACEMAN",
+     "UNIT_NEANDERTHAL_OBSIDIAN_MACEMAN"
+    ]
+   }
   }
  },
  "buildRate": {

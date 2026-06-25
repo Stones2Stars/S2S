@@ -11,7 +11,12 @@
      "connection": "trade|vicinity"
     },
     "TECH_OBSIDIAN_WEAPONS"
-   ]
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_SWORDSMAN"
+    ]
+   }
   }
  },
  "allowed": {

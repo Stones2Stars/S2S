@@ -9,7 +9,12 @@
     "BUILDING_POLICE_CAT_TRAINER",
     "TECH_CRIMINOLOGY",
     "TECH_MEGAFAUNA_DOMESTICATION"
-   ]
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_FELINE_SUPERIOR"
+    ]
+   }
   }
  },
  "allowed": {

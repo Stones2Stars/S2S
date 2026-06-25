@@ -27,7 +27,12 @@
      "scope": "city",
      "connection": "trade|vicinity"
     }
-   ]
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_ANDROID_INFANTRY"
+    ]
+   }
   }
  },
  "strength": {

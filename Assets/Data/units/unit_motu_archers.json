@@ -2,6 +2,11 @@
  "type": "UNIT_MOTU_ARCHERS",
  "description": "TXT_KEY_UNIT_MOTU_ARCHERS",
  "civilopedia": "TXT_KEY_UNIT_MOTU_ARCHERS_PEDIA",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_FLINTLOCK"
+  ]
+ },
  "requires": {
   "build": {
    "all": [
@@ -11,7 +16,12 @@
      "connection": "trade|vicinity"
     },
     "TECH_BRONZE_WORKING"
-   ]
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_LONGBOWMAN"
+    ]
+   }
   }
  },
  "allowed": {

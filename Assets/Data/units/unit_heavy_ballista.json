@@ -7,7 +7,12 @@
    "all": [
     "BUILDING_SIEGE_WEAPONS_WORKSHOP",
     "TECH_ENGINEERING"
-   ]
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_FLAMING_ARROW"
+    ]
+   }
   }
  },
  "buildRate": {

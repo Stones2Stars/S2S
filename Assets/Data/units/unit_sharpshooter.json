@@ -2,6 +2,11 @@
  "type": "UNIT_SHARPSHOOTER",
  "description": "TXT_KEY_UNIT_SHARPSHOOTER",
  "civilopedia": "TXT_KEY_UNIT_SHARPSHOOTER_PEDIA",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_MILITARY_SCIENCE"
+  ]
+ },
  "requires": {
   "build": {
    "all": [
@@ -20,7 +25,12 @@
       "BUILDING_ORBITAL_TARGETS"
      ]
     }
-   ]
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_SNIPER"
+    ]
+   }
   }
  },
  "buildRate": {

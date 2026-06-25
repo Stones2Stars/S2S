@@ -42,7 +42,12 @@
       "BUILDING_HYPERMARKET"
      ]
     }
-   ]
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_REPLICATION_MECHANIC"
+    ]
+   }
   }
  },
  "withdrawal": {

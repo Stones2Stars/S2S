@@ -43,7 +43,12 @@
       "BUILDING_SELF_ASSEMBLY_FACTORY"
      ]
     }
-   ]
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_SIEGE_ENGINEER"
+    ]
+   }
   }
  },
  "heal": {

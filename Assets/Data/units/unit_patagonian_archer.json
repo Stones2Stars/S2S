@@ -2,6 +2,11 @@
  "type": "UNIT_PATAGONIAN_ARCHER",
  "description": "TXT_KEY_UNIT_PATAGONIAN_ARCHER",
  "civilopedia": "TXT_KEY_UNIT_PATAGONIAN_ARCHER_PEDIA",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_FLINTLOCK"
+  ]
+ },
  "requires": {
   "build": {
    "all": [
@@ -11,7 +16,12 @@
      "connection": "trade|vicinity"
     },
     "TECH_YEOMANRY"
-   ]
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_ARQUEBUSIER"
+    ]
+   }
   }
  },
  "allowed": {

@@ -11,7 +11,12 @@
      "connection": "trade|vicinity"
     },
     "TECH_WILDLIFE_CONSERVATION"
-   ]
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_ECOLOGIST"
+    ]
+   }
   }
  },
  "firstStrike": {

@@ -42,7 +42,12 @@
       "BUILDING_HYPERMARKET"
      ]
     }
-   ]
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_AUTO_ELECTRICIAN"
+    ]
+   }
   }
  },
  "withdrawal": {

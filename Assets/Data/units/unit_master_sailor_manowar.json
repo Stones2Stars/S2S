@@ -2,16 +2,26 @@
  "type": "UNIT_MASTER_SAILOR_MANOWAR",
  "description": "TXT_KEY_UNIT_MASTER_SAILOR_MANOWAR",
  "civilopedia": "TXT_KEY_UNIT_MANOWAR_PEDIA",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_COMBUSTION"
+  ]
+ },
  "requires": {
   "build": {
    "all": [
     {
-     "type": "AREA_SIZE",
-     "scope": "world",
-     "min": 10
+     "HAS_COAST": {
+      "minArea": 10
+     }
     },
     "TECH_GRAND_WAR"
-   ]
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_MASTER_SAILOR_PRE_DREADNOUGHT"
+    ]
+   }
   }
  },
  "withdrawal": {

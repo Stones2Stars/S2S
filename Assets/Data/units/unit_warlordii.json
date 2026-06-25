@@ -2,6 +2,11 @@
  "type": "UNIT_WARLORDII",
  "description": "TXT_KEY_UNIT_WARLORDII",
  "civilopedia": "TXT_KEY_CONCEPT_GREAT_GENERALS_PEDIA",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_LEADERSHIP"
+  ]
+ },
  "requires": {
   "build": {
    "all": [
@@ -12,7 +17,12 @@
      "scope": "city",
      "connection": "trade|vicinity"
     }
-   ]
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_WARLORDIII"
+    ]
+   }
   }
  },
  "allowed": {

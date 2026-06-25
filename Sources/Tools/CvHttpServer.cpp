@@ -713,6 +713,20 @@ namespace
 			world["buildingsCreated"] = picojson::value(created);
 		}
 
+		// world unitsCreated -- getUnitCreatedCount per unit (CvGame::isUnitMaxedOut world-cap gate, CvGame.cpp:5098:
+		// getUnitCreatedCount + iExtra >= getMaxGlobalInstances). CUMULATIVE lifetime-created (a hero born once then
+		// poofed still consumes its world slot -- tally.md), NOT the live unitCount. The dry-calc's world-scope unit
+		// `allowed` cap reads THIS. Only non-zero emitted.
+		{
+			picojson::value::object uCreated;
+			for (int iU = 0; iU < GC.getNumUnitInfos(); ++iU)
+			{
+				const int n = GC.getGame().getUnitCreatedCount((UnitTypes)iU);
+				if (n > 0) uCreated[GC.getUnitInfo((UnitTypes)iU).getType()] = picojson::value((double)n);
+			}
+			world["unitsCreated"] = picojson::value(uCreated);
+		}
+
 		// world victories -- the ENABLED victory conditions (isVictoryValid). A building's VictoryPrereq gate
 		// (CvCity::canConstruct, e.g. UN_MISSION needs the diplomatic victory enabled) reads this.
 		{
@@ -884,6 +898,18 @@ namespace
 					if (n > 0) unitCounts[GC.getUnitInfo((UnitTypes)uc).getType()] = picojson::value((double)n);
 				}
 				emp["unitCounts"] = picojson::value(unitCounts);
+				// unitsMaking -- in-PRODUCTION unit count (getUnitMaking); canTrain counts these toward the instance
+				// cap (CvPlayer::canTrain:6481-6482, empire = player's own making; world = the team's, summed offline).
+				picojson::value::object unitMaking;
+				for (int um = 0; um < GC.getNumUnitInfos(); ++um)
+				{
+					const int m = kPlayer.getUnitMaking((UnitTypes)um);
+					if (m > 0) unitMaking[GC.getUnitInfo((UnitTypes)um).getType()] = picojson::value((double)m);
+				}
+				emp["unitsMaking"] = picojson::value(unitMaking);
+				// era index -- the EMPIRE unit `allowed` cap is ERA-SCALED for a base of 5 (CvPlayer::isUnitMaxedOut
+				// :13584-13592: cap += era*5 when getMaxPlayerInstances()==5). The dry-calc needs the era to reproduce it.
+				emp["era"] = picojson::value((double)kPlayer.getCurrentEra());
 
 				// areas: the empire's cities grouped by their area id (no std::map -- distinct-id, two pass)
 				std::vector<int> areaIds;
@@ -1134,6 +1160,27 @@ namespace
 				if (pCity->canConstruct((BuildingTypes)b))
 					buildable.push_back(picojson::value(std::string(GC.getBuildingInfo((BuildingTypes)b).getType())));
 			o["buildable"] = picojson::value(buildable);
+			return CvString(picojson::value(o).serialize().c_str());
+		}
+
+		// CITY-TRAINABLE -- the engine's canTrain TRUE-set for the city: the trainability ORACLE the external cascade
+		// is checked against (bulk; the per-type /computed/canTrain is the single-entity gate). No type; city-relative.
+		// Default canTrain args (bContinue=false, bTestVisible=false, bIgnoreCost=false, bIgnoreUpgrades=false), so the
+		// upgrade-superseded units ARE excluded -- the cascade reproduces that via requires.build.dormant.
+		if (strcmp(szAction, "cityTrainable") == 0)
+		{
+			o["city"] = picojson::value((double)iCityId);
+			if (pCity == NULL)
+			{
+				o["error"] = picojson::value(std::string("no city"));
+				return CvString(picojson::value(o).serialize().c_str());
+			}
+			o["globalId"] = picojson::value(std::string(CvString::format("%02d-%d", pCity->getOwner(), iCityId).GetCString()));
+			picojson::value::array trainable;
+			for (int u = 0; u < GC.getNumUnitInfos(); ++u)
+				if (pCity->canTrain((UnitTypes)u))
+					trainable.push_back(picojson::value(std::string(GC.getUnitInfo((UnitTypes)u).getType())));
+			o["trainable"] = picojson::value(trainable);
 			return CvString(picojson::value(o).serialize().c_str());
 		}
 
@@ -2476,6 +2523,7 @@ namespace
 			{ "/state/units",   "stateUnits",   "raw unit facts (type/ai/pos/group/damage/level/promotions)" },
 			{ "/computed/cities/yields",   "cityInput",      "getYieldRate100 per channel + full per-source decomposition" },
 			{ "/computed/cities/buildable","cityBuildable",  "the engine's canConstruct TRUE-set for the city (the buildable oracle)" },
+			{ "/computed/cities/trainable","cityTrainable",  "the engine's canTrain TRUE-set for the city (the trainable oracle)" },
 			{ "/computed/players",         "playerInput",    "empire economy: gold/science/upkeep/inflation/demographics" },
 			{ "/computed/canConstruct",    "canConstruct",   "engine buildability verdict (type=BUILDING_X[&city=M])" },
 			{ "/computed/canTrain",        "canTrain",       "engine trainability verdict (type=UNIT_X[&city=M])" },

@@ -11,7 +11,12 @@
      "connection": "trade|vicinity"
     },
     "TECH_WOODWORKING"
-   ]
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_EARLY_MACEMAN"
+    ]
+   }
   }
  },
  "allowed": {

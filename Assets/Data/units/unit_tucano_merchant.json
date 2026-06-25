@@ -2,6 +2,11 @@
  "type": "UNIT_TUCANO_MERCHANT",
  "description": "TXT_KEY_UNIT_TUCANO_MERCHANT",
  "civilopedia": "TXT_KEY_UNIT_TUCANO_MERCHANT_PEDIA",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_ENGINEERING"
+  ]
+ },
  "requires": {
   "build": {
    "all": [
@@ -11,7 +16,12 @@
      "connection": "trade|vicinity"
     },
     "TECH_BARTER"
-   ]
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_TRADE_CARAVAN"
+    ]
+   }
   }
  },
  "allowed": {

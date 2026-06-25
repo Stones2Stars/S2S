@@ -13,7 +13,12 @@
     "BUILDING_ANIMAL_TRAINER_HORSE",
     "TECH_ANIMAL_RIDING",
     "TECH_EQUINE_DOMESTICATION"
-   ]
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_MOUNTED_INFANTRY"
+    ]
+   }
   }
  },
  "buildRate": {

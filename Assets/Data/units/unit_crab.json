@@ -2,6 +2,13 @@
  "type": "UNIT_CRAB",
  "description": "TXT_KEY_UNIT_CRAB",
  "civilopedia": "TXT_KEY_UNIT_CRAB_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    "HAS_COAST"
+   ]
+  }
+ },
  "skills": {
   "noDefensiveBonus": true,
   "blendIntoCity": true,

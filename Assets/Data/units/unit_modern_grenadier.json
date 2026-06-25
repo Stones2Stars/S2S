@@ -11,7 +11,12 @@
      "connection": "trade|vicinity"
     },
     "TECH_AUTOMATIC_WEAPONS"
-   ]
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_BAZOOKA"
+    ]
+   }
   }
  },
  "strength": {

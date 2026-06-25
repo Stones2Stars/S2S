@@ -2,6 +2,20 @@
  "type": "UNIT_BAND",
  "description": "TXT_KEY_UNIT_BAND",
  "civilopedia": "TXT_KEY_UNIT_BAND_PEDIA",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_TRIBALISM"
+  ]
+ },
+ "requires": {
+  "build": {
+   "dormant": {
+    "all": [
+     "UNIT_TRIBE"
+    ]
+   }
+  }
+ },
  "allowed": {
   "empire": 0
  },

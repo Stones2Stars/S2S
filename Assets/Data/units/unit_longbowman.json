@@ -2,11 +2,21 @@
  "type": "UNIT_LONGBOWMAN",
  "description": "TXT_KEY_UNIT_LONGBOWMAN",
  "civilopedia": "TXT_KEY_UNIT_LONGBOWMAN_PEDIA",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_FLINTLOCK"
+  ]
+ },
  "requires": {
   "build": {
    "all": [
     "TECH_YEOMANRY"
-   ]
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_ARQUEBUSIER"
+    ]
+   }
   }
  },
  "strength": {

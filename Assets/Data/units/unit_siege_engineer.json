@@ -12,7 +12,12 @@
     },
     "BUILDING_SIEGE_WEAPONS_WORKSHOP",
     "TECH_ANCIENT_MACHINERY"
-   ]
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_GEAR_MECHANIC"
+    ]
+   }
   }
  },
  "heal": {

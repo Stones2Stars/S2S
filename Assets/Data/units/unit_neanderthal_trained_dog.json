@@ -2,6 +2,11 @@
  "type": "UNIT_NEANDERTHAL_TRAINED_DOG",
  "description": "TXT_KEY_UNIT_NEANDERTHAL_TRAINED_DOG",
  "civilopedia": "TXT_KEY_UNIT_WARDOG_PEDIA",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_SEDENTARY_LIFESTYLE"
+  ]
+ },
  "requires": {
   "build": {
    "all": [
@@ -19,7 +24,12 @@
       "BUILDING_REPET"
      ]
     }
-   ]
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_WARDOG"
+    ]
+   }
   }
  },
  "strength": {

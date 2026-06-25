@@ -2,11 +2,22 @@
  "type": "UNIT_ARCHER",
  "description": "TXT_KEY_UNIT_ARCHER",
  "civilopedia": "TXT_KEY_UNIT_ARCHER_PEDIA",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_FLINTLOCK"
+  ]
+ },
  "requires": {
   "build": {
    "all": [
     "TECH_ARCHERY"
-   ]
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_COMPOSITE_BOWMAN",
+     "UNIT_BELLYBOWMAN"
+    ]
+   }
   }
  },
  "buildRate": {

@@ -6,7 +6,12 @@
   "build": {
    "all": [
     "TECH_EXPLORATION"
-   ]
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_EXPLORER"
+    ]
+   }
   }
  },
  "withdrawal": {

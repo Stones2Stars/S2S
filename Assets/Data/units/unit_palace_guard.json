@@ -7,7 +7,12 @@
    "all": [
     "BUILDING_PALACE",
     "TECH_SEDENTARY_LIFESTYLE"
-   ]
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_KINGS_GUARD"
+    ]
+   }
   }
  },
  "allowed": {

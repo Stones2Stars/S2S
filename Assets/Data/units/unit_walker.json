@@ -26,7 +26,14 @@
       }
      ]
     }
-   ]
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_ASSAULT_DROID",
+     "UNIT_SCOUT_MECH",
+     "UNIT_AUTOM_INFANTRY"
+    ]
+   }
   }
  },
  "strength": {

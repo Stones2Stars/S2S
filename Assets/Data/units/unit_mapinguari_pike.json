@@ -2,6 +2,11 @@
  "type": "UNIT_MAPINGUARI_PIKE",
  "description": "TXT_KEY_UNIT_MAPINGUARI_PIKE",
  "civilopedia": "TXT_KEY_UNIT_MAPINGUARI_PEDIA",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_GUNPOWDER"
+  ]
+ },
  "requires": {
   "build": {
    "all": [

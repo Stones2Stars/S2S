@@ -2,6 +2,11 @@
  "type": "UNIT_PUEBLO_REBEL",
  "description": "TXT_KEY_UNIT_PUEBLO_REBEL",
  "civilopedia": "TXT_KEY_UNIT_PUEBLO_REBEL_PEDIA",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_LASER"
+  ]
+ },
  "requires": {
   "build": {
    "all": [
@@ -34,7 +39,12 @@
       "BUILDING_ORBITAL_TARGETS"
      ]
     }
-   ]
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_SNIPER"
+    ]
+   }
   }
  },
  "allowed": {

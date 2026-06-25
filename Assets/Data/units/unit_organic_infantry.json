@@ -12,7 +12,12 @@
     },
     "BUILDING_BIOPUNK_LAB",
     "TECH_BIOPUNK"
-   ]
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_FERAL"
+    ]
+   }
   }
  },
  "allowed": {

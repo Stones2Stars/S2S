@@ -2,6 +2,11 @@
  "type": "UNIT_BLACKWOOD_ARCHER",
  "description": "TXT_KEY_UNIT_BLACKWOOD_ARCHER",
  "civilopedia": "TXT_KEY_UNIT_BLACKWOOD_ARCHER_PEDIA",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_FLINTLOCK"
+  ]
+ },
  "requires": {
   "build": {
    "all": [
@@ -11,7 +16,13 @@
      "connection": "trade|vicinity"
     },
     "TECH_ARCHERY"
-   ]
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_LONGBOWMAN",
+     "UNIT_LIGHT_CROSSBOWMAN"
+    ]
+   }
   }
  },
  "allowed": {

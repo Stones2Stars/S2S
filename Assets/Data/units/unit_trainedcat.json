@@ -8,7 +8,12 @@
     "BUILDING_EFFECT_HERITAGE_BIG_CATS",
     "TECH_MEGAFAUNA_DOMESTICATION",
     "TECH_FELINE_DOMESTICATION"
-   ]
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_WARCAT"
+    ]
+   }
   }
  },
  "allowed": {

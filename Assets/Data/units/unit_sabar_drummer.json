@@ -11,7 +11,12 @@
      "connection": "trade|vicinity"
     },
     "TECH_HERALDRY"
-   ]
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_CELEBRITY"
+    ]
+   }
   }
  },
  "allowed": {

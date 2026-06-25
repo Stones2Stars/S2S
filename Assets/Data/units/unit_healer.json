@@ -15,7 +15,13 @@
       "BUILDING_HEALTHCARE_MEGACOMPLEX"
      ]
     }
-   ]
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_MEDICINE_MAN",
+     "UNIT_NEANDERTHAL_HEALER"
+    ]
+   }
   }
  },
  "heal": {

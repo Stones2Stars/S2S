@@ -2,6 +2,11 @@
  "type": "UNIT_BALLESTER",
  "description": "TXT_KEY_UNIT_BALLESTER",
  "civilopedia": "TXT_KEY_UNIT_BALLESTER_PEDIA",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_FLINTLOCK"
+  ]
+ },
  "requires": {
   "build": {
    "all": [
@@ -11,7 +16,12 @@
      "connection": "trade|vicinity"
     },
     "TECH_ENGINEERING"
-   ]
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_HEAVY_CROSSBOWMAN"
+    ]
+   }
   }
  },
  "allowed": {

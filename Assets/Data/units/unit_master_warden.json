@@ -2,11 +2,21 @@
  "type": "UNIT_MASTER_WARDEN",
  "description": "TXT_KEY_UNIT_MASTER_WARDEN",
  "civilopedia": "TXT_KEY_UNIT_MASTER_HUNTER_PEDIA",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_MATCHLOCK"
+  ]
+ },
  "requires": {
   "build": {
    "all": [
     "TECH_FEUDALISM"
-   ]
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_MASTER_GAME_HUNTER"
+    ]
+   }
   }
  },
  "allowed": {

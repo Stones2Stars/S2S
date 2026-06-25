@@ -23,7 +23,12 @@
       "BUILDING_HEALTHCARE_MEGACOMPLEX"
      ]
     }
-   ]
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_FIELD_VET"
+    ]
+   }
   }
  },
  "heal": {

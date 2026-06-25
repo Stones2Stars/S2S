@@ -12,7 +12,13 @@
     },
     "BUILDING_CHARIOT_WORKSHOP",
     "TECH_CHARIOTRY"
-   ]
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_CHARIOT",
+     "UNIT_HORSE_ARCHER"
+    ]
+   }
   }
  },
  "buildRate": {

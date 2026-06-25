@@ -2,6 +2,11 @@
  "type": "UNIT_GARAMANTES",
  "description": "TXT_KEY_UNIT_GARAMANTES",
  "civilopedia": "TXT_KEY_UNIT_GARAMANTES_PEDIA",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_DEPUTIZATION"
+  ]
+ },
  "requires": {
   "build": {
    "all": [
@@ -18,7 +23,12 @@
      "scope": "city",
      "connection": "trade|vicinity"
     }
-   ]
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_HIGHWAYMAN"
+    ]
+   }
   }
  },
  "allowed": {

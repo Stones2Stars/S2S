@@ -2,12 +2,22 @@
  "type": "UNIT_AMBUSHER",
  "description": "TXT_KEY_UNIT_AMBUSHER",
  "civilopedia": "TXT_KEY_UNIT_AMBUSHER_PEDIA",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_CODE_OF_LAWS"
+  ]
+ },
  "requires": {
   "build": {
    "all": [
     "BUILDING_POISON_CRAFTER",
     "TECH_NOCTURNALISM"
-   ]
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_STALKERS"
+    ]
+   }
   }
  },
  "allowed": {

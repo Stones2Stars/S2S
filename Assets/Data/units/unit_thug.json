@@ -2,6 +2,11 @@
  "type": "UNIT_THUG",
  "description": "TXT_KEY_UNIT_THUG",
  "civilopedia": "TXT_KEY_CONCEPT_ESPIONAGE_PEDIA",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_COMPREHENSIVE_CYBERNETICS"
+  ]
+ },
  "requires": {
   "build": {
    "all": [
@@ -17,7 +22,12 @@
      "scope": "city",
      "connection": "trade|vicinity"
     }
-   ]
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_STREET_GANG"
+    ]
+   }
   }
  },
  "allowed": {

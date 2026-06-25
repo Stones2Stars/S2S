@@ -2,6 +2,15 @@
  "type": "UNIT_MILITIA_MEDIEVAL",
  "description": "TXT_KEY_UNIT_MILITIA_MEDIEVAL",
  "civilopedia": "TXT_KEY_UNIT_MILITIA_INDUSTRIAL_PEDIA",
+ "requires": {
+  "build": {
+   "dormant": {
+    "all": [
+     "UNIT_MILITIA_RENAISSANCE"
+    ]
+   }
+  }
+ },
  "skills": {
   "pillage": true,
   "militaryHappiness": true,

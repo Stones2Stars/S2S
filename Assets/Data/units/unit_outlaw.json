@@ -2,6 +2,11 @@
  "type": "UNIT_OUTLAW",
  "description": "TXT_KEY_UNIT_OUTLAW",
  "civilopedia": "TXT_KEY_UNIT_OUTLAW_PEDIA",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_MOTORIZED_TRANSPORTATION"
+  ]
+ },
  "requires": {
   "build": {
    "all": [
@@ -17,7 +22,12 @@
      "scope": "city",
      "connection": "trade|vicinity"
     }
-   ]
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_MOBSTER_CAR"
+    ]
+   }
   }
  },
  "espionage": {

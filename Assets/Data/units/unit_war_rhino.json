@@ -2,6 +2,11 @@
  "type": "UNIT_WAR_RHINO",
  "description": "TXT_KEY_UNIT_WAR_RHINO",
  "civilopedia": "TXT_KEY_UNIT_WAR_RHINO_PEDIA",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_IRON_WORKING"
+  ]
+ },
  "requires": {
   "build": {
    "all": [
@@ -12,7 +17,12 @@
       "BUILDING_EFFECT_HERITAGE_RHINOS"
      ]
     }
-   ]
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_RHINO_SWORDSMAN"
+    ]
+   }
   }
  },
  "allowed": {

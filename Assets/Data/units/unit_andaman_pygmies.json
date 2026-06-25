@@ -2,6 +2,11 @@
  "type": "UNIT_ANDAMAN_PYGMIES",
  "description": "TXT_KEY_UNIT_ANDAMAN_PYGMIES",
  "civilopedia": "TXT_KEY_UNIT_ANDAMAN_PYGMIES_PEDIA",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_FLINTLOCK"
+  ]
+ },
  "requires": {
   "build": {
    "all": [
@@ -11,7 +16,13 @@
      "connection": "trade|vicinity"
     },
     "TECH_ARCHERY"
-   ]
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_COMPOSITE_BOWMAN",
+     "UNIT_BELLYBOWMAN"
+    ]
+   }
   }
  },
  "allowed": {

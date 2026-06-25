@@ -2,6 +2,13 @@
  "type": "UNIT_MARLIN",
  "description": "TXT_KEY_UNIT_MARLIN",
  "civilopedia": "TXT_KEY_UNIT_MARLIN_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    "HAS_COAST"
+   ]
+  }
+ },
  "skills": {
   "assassin": true,
   "noDefensiveBonus": true,

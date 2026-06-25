@@ -33,7 +33,12 @@
       "BUILDING_AEROSPACE_COMPLEX"
      ]
     }
-   ]
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_JET_FIGHTER"
+    ]
+   }
   }
  },
  "bombard": {

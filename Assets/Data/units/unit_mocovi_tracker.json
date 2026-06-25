@@ -2,6 +2,11 @@
  "type": "UNIT_MOCOVI_TRACKER",
  "description": "TXT_KEY_UNIT_MOCOVI_TRACKER",
  "civilopedia": "TXT_KEY_UNIT_MOCOVI_TRACKER_PEDIA",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_SUPERSTRONG_ALLOYS"
+  ]
+ },
  "requires": {
   "build": {
    "all": [
@@ -28,7 +33,12 @@
       "BUILDING_ORBITAL_TARGETS"
      ]
     }
-   ]
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_MSNIPER"
+    ]
+   }
   }
  },
  "allowed": {

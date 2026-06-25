@@ -21,6 +21,9 @@
    "CIVIC_BORDERLESS",
    "CIVIC_HUNTER_GATHERING",
    "CIVIC_GARBAGE_ANYWHERE"
+  ],
+  "techs": [
+   "TECH_GAME_START"
   ]
  },
  "spawnRate": {

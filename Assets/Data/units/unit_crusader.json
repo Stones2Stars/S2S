@@ -3,12 +3,25 @@
  "description": "TXT_KEY_UNIT_CRUSADER",
  "civilopedia": "TXT_KEY_UNIT_CRUSADER_PEDIA",
  "help": "TXT_KEY_UNIT_CRUSADER_HELP",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_FLINTLOCK"
+  ]
+ },
  "requires": {
   "build": {
    "all": [
     "RELIGION_CHRISTIANITY",
+    {
+     "STATE_RELIGION": "RELIGION_CHRISTIANITY"
+    },
     "TECH_FUNDAMENTALISM"
-   ]
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_MUSKETMAN"
+    ]
+   }
   }
  },
  "skills": {

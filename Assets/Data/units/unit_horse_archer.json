@@ -12,7 +12,12 @@
     },
     "BUILDING_ANIMAL_TRAINER_HORSE",
     "TECH_MOUNTED_ARCHERY"
-   ]
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_CUIRASSIER"
+    ]
+   }
   }
  },
  "withdrawal": {

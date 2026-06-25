@@ -2,6 +2,13 @@
  "type": "UNIT_GREATWHITE",
  "description": "TXT_KEY_UNIT_GREATWHITE",
  "civilopedia": "TXT_KEY_UNIT_GREATWHITE_SHARK_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    "HAS_COAST"
+   ]
+  }
+ },
  "withdrawal": {
   "unit": {
    "percent": 40

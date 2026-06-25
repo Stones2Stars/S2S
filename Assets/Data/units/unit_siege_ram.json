@@ -21,7 +21,12 @@
       }
      ]
     }
-   ]
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_BOMBARD"
+    ]
+   }
   }
  },
  "buildRate": {

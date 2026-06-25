@@ -13,7 +13,12 @@
       "BUILDING_IMPERIAL_FORTRESS"
      ]
     }
-   ]
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_FOOD_FREIGHT"
+    ]
+   }
   }
  },
  "skills": {

@@ -6,7 +6,12 @@
   "build": {
    "all": [
     "TECH_GUERRILLA_WARFARE"
-   ]
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_MUSKETMAN"
+    ]
+   }
   }
  },
  "strength": {

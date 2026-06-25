@@ -7,13 +7,18 @@
    "all": [
     "BUILDING_SHIPWRIGHT",
     {
-     "type": "AREA_SIZE",
-     "scope": "world",
-     "min": 10
+     "HAS_COAST": {
+      "minArea": 10
+     }
     },
     "TECH_SEAFARING",
     "TECH_BRONZE_WORKING"
-   ]
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_QUINQUEREME2"
+    ]
+   }
   }
  },
  "buildRate": {

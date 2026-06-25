@@ -2,6 +2,11 @@
  "type": "UNIT_NEANDERTHAL_HEALER",
  "description": "TXT_KEY_UNIT_NEANDERTHAL_HEALER",
  "civilopedia": "TXT_KEY_UNIT_HEALER_PEDIA",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_SEDENTARY_LIFESTYLE"
+  ]
+ },
  "requires": {
   "build": {
    "all": [
@@ -17,7 +22,12 @@
       "BUILDING_HEALTHCARE_MEGACOMPLEX"
      ]
     }
-   ]
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_MEDICINE_MAN"
+    ]
+   }
   }
  },
  "heal": {

@@ -6,7 +6,9 @@
   "build": {
    "all": [
     "BUILDING_HQ_CREATIVE_CONSTRUCTIONS",
-    "CORPORATION_4"
+    {
+     "HAS_CORPORATION": "CORPORATION_4"
+    }
    ]
   }
  },

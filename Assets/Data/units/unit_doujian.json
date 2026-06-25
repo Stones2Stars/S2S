@@ -12,13 +12,18 @@
     },
     "BUILDING_SHIPWRIGHT",
     {
-     "type": "AREA_SIZE",
-     "scope": "world",
-     "min": 10
+     "HAS_COAST": {
+      "minArea": 10
+     }
     },
     "TECH_ANCIENT_MACHINERY",
     "TECH_SHIP_BUILDING"
-   ]
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_GALLEASS"
+    ]
+   }
   }
  },
  "allowed": {

@@ -2,6 +2,13 @@
  "type": "UNIT_ORCA",
  "description": "TXT_KEY_UNIT_ORCA",
  "civilopedia": "TXT_KEY_UNIT_ORCA_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    "HAS_COAST"
+   ]
+  }
+ },
  "skills": {
   "noDefensiveBonus": true,
   "blendIntoCity": true,

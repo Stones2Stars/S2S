@@ -10,8 +10,10 @@
      "scope": "city",
      "connection": "trade|vicinity"
     },
-    "TECH_JET_PROPULSION"
-   ]
+    "TECH_JET_PROPULSION",
+    "GAMEOPTION_ADVANCED_NUKES"
+   ],
+   "disabled": "NO_NUKES"
   }
  },
  "range": {
@@ -43,11 +45,6 @@
  "cost": {
   "production": 1600,
   "upkeep": 6
- },
- "loadPrune": {
-  "onGameOptions": [
-   "GAMEOPTION_ADVANCED_NUKES"
-  ]
  },
  "identity": {
   "worth": 5,

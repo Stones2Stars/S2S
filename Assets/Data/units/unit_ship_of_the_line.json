@@ -12,9 +12,9 @@
     },
     "BUILDING_SHIPWRIGHT",
     {
-     "type": "AREA_SIZE",
-     "scope": "world",
-     "min": 10
+     "HAS_COAST": {
+      "minArea": 10
+     }
     },
     "TECH_NAVAL_TACTICS",
     {
@@ -22,7 +22,13 @@
      "scope": "city",
      "connection": "trade|vicinity"
     }
-   ]
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_STEAM_DESTROYER",
+     "UNIT_PRE_DREADNOUGHT"
+    ]
+   }
   }
  },
  "buildRate": {

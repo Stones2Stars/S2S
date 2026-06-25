@@ -2,6 +2,11 @@
  "type": "UNIT_CIBOLA_PEASANT",
  "description": "TXT_KEY_UNIT_CIBOLA_PEASANT",
  "civilopedia": "TXT_KEY_UNIT_CIBOLA_PEASANT_PEDIA",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_MOTORIZED_TRANSPORTATION"
+  ]
+ },
  "requires": {
   "build": {
    "all": [
@@ -11,7 +16,12 @@
      "connection": "trade|vicinity"
     },
     "TECH_PLOUGH"
-   ]
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_WORKER_INDUSTRIAL"
+    ]
+   }
   }
  },
  "allowed": {

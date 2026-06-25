@@ -17,7 +17,13 @@
      "scope": "city",
      "connection": "trade|vicinity"
     }
-   ]
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_CITY_GUARD",
+     "UNIT_AMBULANCE"
+    ]
+   }
   }
  },
  "strength": {

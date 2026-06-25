@@ -2,6 +2,11 @@
  "type": "UNIT_NEANDERTHAL_KAYAK",
  "description": "TXT_KEY_UNIT_NEANDERTHAL_KAYAK",
  "civilopedia": "TXT_KEY_UNIT_KAYAK_PEDIA",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_SEDENTARY_LIFESTYLE"
+  ]
+ },
  "requires": {
   "build": {
    "all": [
@@ -9,9 +14,9 @@
     "BUILDING_C_L_NEANDERTHAL",
     "BUILDING_CANOE_BUILDER",
     {
-     "type": "AREA_SIZE",
-     "scope": "world",
-     "min": 5
+     "HAS_COAST": {
+      "minArea": 5
+     }
     },
     "TECH_BOAT_BUILDING",
     {
@@ -33,7 +38,12 @@
       }
      ]
     }
-   ]
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_OUTRIGGER"
+    ]
+   }
   }
  },
  "buildRate": {

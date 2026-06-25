@@ -2,12 +2,22 @@
  "type": "UNIT_WORKELEPHANT",
  "description": "TXT_KEY_UNIT_WORKELEPHANT",
  "civilopedia": "TXT_KEY_UNIT_WORKER_PEDIA",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_LOGISTICS"
+  ]
+ },
  "requires": {
   "build": {
    "all": [
     "BUILDING_ANIMAL_TRAINER_ELEPHANT",
     "TECH_PLOUGH"
-   ]
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_WORKER_INDUSTRIAL"
+    ]
+   }
   }
  },
  "skills": {

@@ -2,6 +2,11 @@
  "type": "UNIT_HERERO_REBEL",
  "description": "TXT_KEY_UNIT_HERERO_REBEL",
  "civilopedia": "TXT_KEY_UNIT_HERERO_REBEL_PEDIA",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_SUPERSTRONG_ALLOYS"
+  ]
+ },
  "requires": {
   "build": {
    "all": [
@@ -21,7 +26,12 @@
      "scope": "city",
      "connection": "trade|vicinity"
     }
-   ]
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_GUERRILLA"
+    ]
+   }
   }
  },
  "allowed": {

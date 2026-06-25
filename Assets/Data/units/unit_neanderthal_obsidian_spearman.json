@@ -2,6 +2,11 @@
  "type": "UNIT_NEANDERTHAL_OBSIDIAN_SPEARMAN",
  "description": "TXT_KEY_UNIT_NEANDERTHAL_OBSIDIAN_SPEARMAN",
  "civilopedia": "TXT_KEY_UNIT_OBSIDIAN_SPEARMAN_PEDIA",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_SEDENTARY_LIFESTYLE"
+  ]
+ },
  "requires": {
   "build": {
    "all": [
@@ -13,7 +18,12 @@
     "BUILDING_C_AC_NEANDERTHAL",
     "BUILDING_C_L_NEANDERTHAL",
     "TECH_OBSIDIAN_WEAPONS"
-   ]
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_SPEARMAN"
+    ]
+   }
   }
  },
  "buildRate": {

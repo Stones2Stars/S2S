@@ -17,7 +17,13 @@
      "scope": "city",
      "connection": "trade|vicinity"
     }
-   ]
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_CHARIOT",
+     "UNIT_HORSE_ARCHER"
+    ]
+   }
   }
  },
  "allowed": {

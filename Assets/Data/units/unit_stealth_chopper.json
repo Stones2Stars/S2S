@@ -16,7 +16,13 @@
      "scope": "city",
      "connection": "trade|vicinity"
     }
-   ]
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_HYBRID_GUNSHIP",
+     "UNIT_UNMANNED_HELICOPTER"
+    ]
+   }
   }
  },
  "withdrawal": {

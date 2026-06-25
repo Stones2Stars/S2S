@@ -2,11 +2,22 @@
  "type": "UNIT_TRACKER",
  "description": "TXT_KEY_UNIT_TRACKER",
  "civilopedia": "TXT_KEY_UNIT_HUNTER_PEDIA",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_HUNTING"
+  ]
+ },
  "requires": {
   "build": {
    "all": [
     "TECH_TRACKING"
-   ]
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_HUNTER",
+     "UNIT_NEANDERTHAL_TRACKER"
+    ]
+   }
   }
  },
  "buildRate": {

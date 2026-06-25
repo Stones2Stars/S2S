@@ -2,6 +2,11 @@
  "type": "UNIT_ZENU_GOLDSMITHS",
  "description": "TXT_KEY_UNIT_ZENU_GOLDSMITHS",
  "civilopedia": "TXT_KEY_UNIT_ZENU_GOLDSMITHS_PEDIA",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_MOTORIZED_TRANSPORTATION"
+  ]
+ },
  "requires": {
   "build": {
    "all": [
@@ -17,7 +22,12 @@
       "BUILDING_SHOPPING_DISTRICT"
      ]
     }
-   ]
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_FREIGHT"
+    ]
+   }
   }
  },
  "allowed": {

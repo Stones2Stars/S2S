@@ -96,8 +96,13 @@ def curate(typ, rec):
         vals = _list(rec, container, child)
         if vals:
             grants[key] = vals
-    if grants:
-        out["grants"] = grants
+    # Every civ starts with TECH_GAME_START -- the cascade's declarative clean START POINT (owner ruling 2026-06-25):
+    # a JSON-only root tech (no XML source -- a deliberate cascade construct) off which the cascade GENERATES the
+    # "stuff simply there at start" (palace, alpha male/female, brute, Neanderthal culture level) WITHOUT the old
+    # engine's "load everything with no deps" special-casing. Authored on the civ as a startup tech grant so the
+    # starts are DECLARATIVE (the canonical place to read "what every civ begins with"). Granted to ALL civilizations.
+    grants["techs"] = ["TECH_GAME_START"] + [t for t in grants.get("techs", []) if t != "TECH_GAME_START"]
+    out["grants"] = grants
     spawn = OrderedDict()
     for tag, member in SPAWN.items():
         v = engine.text(rec.find(tag))

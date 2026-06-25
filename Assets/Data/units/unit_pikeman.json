@@ -20,7 +20,12 @@
       }
      ]
     }
-   ]
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_HEAVY_PIKEMAN"
+    ]
+   }
   }
  },
  "strength": {

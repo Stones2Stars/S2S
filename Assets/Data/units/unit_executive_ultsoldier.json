@@ -6,7 +6,9 @@
   "build": {
    "all": [
     "BUILDING_HQ_ULTIMATE_SOLDIERS",
-    "CORPORATION_ULTSOLDIER"
+    {
+     "HAS_CORPORATION": "CORPORATION_ULTSOLDIER"
+    }
    ]
   }
  },

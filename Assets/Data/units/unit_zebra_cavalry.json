@@ -23,7 +23,13 @@
       "BUILDING_ANIMAL_TRAINER_ZEBRA"
      ]
     }
-   ]
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_AUTOGYRO",
+     "UNIT_ARMORED_CAR"
+    ]
+   }
   }
  },
  "allowed": {

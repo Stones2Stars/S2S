@@ -2,6 +2,11 @@
  "type": "UNIT_PARTISAN",
  "description": "TXT_KEY_UNIT_PARTISAN",
  "civilopedia": "TXT_KEY_UNIT_PARTISAN_PEDIA",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_GUERRILLA_WARFARE"
+  ]
+ },
  "requires": {
   "build": {
    "all": [
@@ -16,7 +21,12 @@
      "scope": "city",
      "connection": "trade|vicinity"
     }
-   ]
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_GUERRILLA"
+    ]
+   }
   }
  },
  "buildRate": {

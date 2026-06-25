@@ -31,7 +31,12 @@
      "scope": "city",
      "connection": "trade|vicinity"
     }
-   ]
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_F22_RAPTOR"
+    ]
+   }
   }
  },
  "bombard": {

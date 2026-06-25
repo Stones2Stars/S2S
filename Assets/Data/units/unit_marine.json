@@ -16,7 +16,12 @@
      "scope": "city",
      "connection": "trade|vicinity"
     }
-   ]
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_MODERN_MARINE"
+    ]
+   }
   }
  },
  "strength": {

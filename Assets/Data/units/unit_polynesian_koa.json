@@ -11,7 +11,12 @@
      "connection": "trade|vicinity"
     },
     "TECH_SEAFARING"
-   ]
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_SWORDSMAN"
+    ]
+   }
   }
  },
  "allowed": {

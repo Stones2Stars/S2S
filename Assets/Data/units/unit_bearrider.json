@@ -2,6 +2,11 @@
  "type": "UNIT_BEARRIDER",
  "description": "TXT_KEY_UNIT_BEARRIDER",
  "civilopedia": "TXT_KEY_UNIT_BEARRIDER_PEDIA",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_ARMORED_CAVALRY"
+  ]
+ },
  "requires": {
   "build": {
    "all": [
@@ -12,7 +17,12 @@
       "BUILDING_ANIMAL_TRAINER_BEAR"
      ]
     }
-   ]
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_BEARKNIGHT"
+    ]
+   }
   }
  },
  "allowed": {

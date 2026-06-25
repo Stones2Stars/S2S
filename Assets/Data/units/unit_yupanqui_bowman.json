@@ -2,6 +2,11 @@
  "type": "UNIT_YUPANQUI_BOWMAN",
  "description": "TXT_KEY_UNIT_YUPANQUI_BOWMAN",
  "civilopedia": "TXT_KEY_UNIT_YUPANQUI_BOWMAN_PEDIA",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_FLINTLOCK"
+  ]
+ },
  "requires": {
   "build": {
    "all": [
@@ -11,7 +16,12 @@
      "connection": "trade|vicinity"
     },
     "TECH_BRONZE_WORKING"
-   ]
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_LONGBOWMAN"
+    ]
+   }
   }
  },
  "allowed": {

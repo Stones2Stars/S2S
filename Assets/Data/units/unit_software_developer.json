@@ -2,6 +2,11 @@
  "type": "UNIT_SOFTWARE_DEVELOPER",
  "description": "TXT_KEY_UNIT_SOFTWARE_DEVELOPER",
  "civilopedia": "TXT_KEY_UNIT_SOFTWARE_DEVELOPER_PEDIA",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_COMPREHENSIVE_CYBERNETICS"
+  ]
+ },
  "requires": {
   "build": {
    "all": [
@@ -41,7 +46,12 @@
       "BUILDING_ELECTRONICS_MANUFACTURING_DISTRICT"
      ]
     }
-   ]
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_HACKER"
+    ]
+   }
   }
  },
  "heal": {

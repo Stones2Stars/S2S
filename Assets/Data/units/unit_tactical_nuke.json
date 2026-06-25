@@ -16,7 +16,8 @@
      "scope": "city",
      "connection": "trade|vicinity"
     }
-   ]
+   ],
+   "disabled": "NO_NUKES"
   }
  },
  "range": {
