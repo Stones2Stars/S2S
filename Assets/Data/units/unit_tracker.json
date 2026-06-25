@@ -7,6 +7,11 @@
    "TECH_HUNTING"
   ]
  },
+ "replacedBy": {
+  "units": [
+   "UNIT_NEANDERTHAL_GATHERER"
+  ]
+ },
  "requires": {
   "build": {
    "all": [
@@ -72,9 +77,6 @@
   "upgradesTo": [
    "UNIT_HUNTER",
    "UNIT_NEANDERTHAL_TRACKER"
-  ],
-  "supersededBy": [
-   "UNIT_NEANDERTHAL_GATHERER"
   ]
  },
  "cost": {

@@ -7,6 +7,11 @@
    "TECH_WRITING"
   ]
  },
+ "replacedBy": {
+  "units": [
+   "UNIT_NEANDERTHAL_SCOUT"
+  ]
+ },
  "requires": {
   "build": {
    "all": [
@@ -14,8 +19,7 @@
    ],
    "dormant": {
     "all": [
-     "UNIT_GUIDE",
-     "UNIT_NEANDERTHAL_SCOUT"
+     "UNIT_GUIDE"
     ]
    }
   }
@@ -34,9 +38,6 @@
  "succession": {
   "upgradesTo": [
    "UNIT_GUIDE",
-   "UNIT_NEANDERTHAL_SCOUT"
-  ],
-  "supersededBy": [
    "UNIT_NEANDERTHAL_SCOUT"
   ]
  },

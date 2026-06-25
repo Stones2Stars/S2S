@@ -2,6 +2,11 @@
  "type": "UNIT_OBSIDIAN_SWORDSMAN",
  "description": "TXT_KEY_UNIT_OBSIDIAN_SWORDSMAN",
  "civilopedia": "TXT_KEY_UNIT_OBSIDIAN_SWORDSMAN_PEDIA",
+ "replacedBy": {
+  "units": [
+   "UNIT_NEANDERTHAL_OBSIDIAN_SWORDSMAN"
+  ]
+ },
  "requires": {
   "build": {
    "all": [
@@ -14,8 +19,7 @@
    ],
    "dormant": {
     "all": [
-     "UNIT_LIGHT_SWORDSMAN",
-     "UNIT_NEANDERTHAL_OBSIDIAN_SWORDSMAN"
+     "UNIT_LIGHT_SWORDSMAN"
     ]
    }
   }
@@ -62,9 +66,6 @@
  "succession": {
   "upgradesTo": [
    "UNIT_LIGHT_SWORDSMAN",
-   "UNIT_NEANDERTHAL_OBSIDIAN_SWORDSMAN"
-  ],
-  "supersededBy": [
    "UNIT_NEANDERTHAL_OBSIDIAN_SWORDSMAN"
   ]
  },

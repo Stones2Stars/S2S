@@ -325,13 +325,19 @@ The means a target needs. Two timings:
   (inactive, not destroyed) and wakes when it returns.
 - **`build` and `operate` share the SAME conditional vocabulary** (owner ruling 2026-06-25) — including the
   **`dormant`** sub-clause. **Units carry `build` only** (a trained unit never goes dormant on resource loss, and
-  what happens to a unit once on the map is out of the cascade's scope — it answers `canTrain` only). The one unit use
-  of `dormant` is therefore **`requires.build.dormant`**: a unit's **upgrade chain**. A unit is dormant *out of the
-  buildable set* while any successor in its **transitive** upgrade closure (`UnitUpgrades` ∪ `SupersedingUnits`, walked
-  to the top) is itself buildable — so a chained A→B→C keeps A out even when only C is available. The **named
-  `dormant` clause is fail-safe**: its default is *not*-dormant, so an engine that has not implemented unit-dormancy
-  leaves the unit buildable rather than wrongly disabling every upgradeable unit. *(Never-buildable spawned units —
-  `iCost == −1` — are a separate straight disable: `identity.spawnOnly`, §7, not a dormancy.)*
+  what happens to a unit once on the map is out of the cascade's scope — it answers `canTrain` only). A unit's two
+  upgrade relationships are **distinct gates** (mirroring the engine — see [enabler](enabler.md)):
+  - **`requires.build.dormant.all`** = the unit's *direct* `UnitUpgrades` **minus** any that are also superseders. The
+    cascade recurses these (mirrors `allUpgradesAvailable`): dormant out of the buildable set only when **every** such
+    upgrade resolves to a reachable-trainable unit. Fail-safe (default *not*-dormant), so an unimplemented engine
+    leaves the unit buildable rather than disabling every upgradeable unit.
+  - **`replacedBy.units`** (the §4.2 `replaces` edge) = `SupersedingUnits`: a genuine **removal** — the unit drops from
+    buildable the moment any superseder is buildable. The engine skips superseders in the dormancy gate and handles
+    them here.
+
+  *(Never-buildable spawned units — `iCost == −1` — are a separate straight disable: `identity.spawnOnly`, §7, not a
+  dormancy. Game-option prereqs are declarative `GAMEOPTION_X` conditions in `requires.build`, not `loadPrune`; a unit's
+  corp prereq is `{HAS_CORPORATION:X}` = active, vs a building's bare `CORPORATION_` = present.)*
 
 Each is an `all`/`any`/`noneOf` tree (§3.4). A single bare predicate may be given as a `disabled`/`enabled` clause:
 

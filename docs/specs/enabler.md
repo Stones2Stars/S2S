@@ -50,12 +50,14 @@ the other three **remove** from it.
 | **`enables`** | a permanent unlock | **added** to CAN GET | — (this *is* the unlock) |
 | **`disables`** | a **law / ban** (policy forbids) | removed while the disabler is held | **destroyed** — torn down; rebuilt on repeal. *(Dormancy is NOT a `disables` — it's the target's `requires.operate.dormant`, §3.)* |
 | **`obsoletes`** | passive supersession | removed | **persist** (an obsolete unit stays on the map); the target decides its own fate |
-| **`replaces`** | succession — **defined but UNUSED** (see note) | removed | reserved for a future genuine removal-on-succession; the legacy `ReplacementBuildings` is *dormancy* (`requires.operate.dormant`, §3), not this |
+| **`replaces`** | succession — **used for UNIT succession** (`SupersedingUnits`; see note) | removed | a superseder removes the predecessor from buildable once itself buildable; the legacy *building* `ReplacementBuildings` is instead *dormancy* (`requires.operate.dormant`, §3) |
 
 So **`CAN GET = union(enables) − (disables ∪ obsoletes ∪ replaces)`**, all over HAVE (with `replaces` empty today).
 
-> **`replaces` is currently UNUSED — "replacement" is dormancy (owner 2026-06-23, engine-verified).** The legacy
-> `ReplacementBuildings` (A lists the buildings that supersede it) *looks* like removal, but the engine only
+> **`replaces` is the UNIT succession edge; building "replacement" is dormancy (owner 2026-06-23/25, engine-verified).**
+> A unit's `SupersedingUnits` ARE genuine removal-on-succession (the engine's `isSupersedingUnitAvailable` drops the
+> predecessor once a superseder is buildable) → modeled as the unit's `replacedBy.units` replace edge (§ units, below).
+> The legacy *building* `ReplacementBuildings` (A lists the buildings that supersede it) *looks* like removal, but the engine only
 > **disables** A while the successor is present (`setDisabledBuilding`, CvCity.cpp:14413) and re-enables it when the
 > successor is gone — reversible **dormancy**, never removed. So it is mirrored as the **target's
 > `requires.operate.dormant: [successor]`** (§3) and leaves CAN-GET membership untouched — *not* a `replaces` edge.
@@ -130,16 +132,27 @@ pollution) compound, every in-band band active. Bands are **bidirectional** — 
 it stays on the map; the structure supports it, but it is not modelled now — **units carry `build` only** (a trained
 unit never goes dormant on resource loss, and on-map behaviour is out of the cascade's `canTrain` scope).
 
-**Units reuse this whole machine — only the inputs differ (owner ruling 2026-06-25).** `canTrain` is the same
-generate-then-gate over unit inputs: frontier (every unit) → prune `obsoletedBy.techs` (the target-side obsoleting
-tech, mirroring buildings; an obsolete unit leaves the buildable set but persists on the map, upgradeable) → exclude
-`identity.spawnOnly` (never-trainable; building/farm-improvement/vassalage-granted only) → the `allowed` instance cap
-(`world` = lifetime-created, `empire` = live count *era-scaled for a base of 5*; units have no `team` cap) →
-`requires.build` via the **same** condition evaluator. The **upgrade chain** is the one unit-specific shape: a unit is
-dormant *out of the buildable set* while any successor in its **transitive** upgrade closure is itself buildable,
-authored as **`requires.build.dormant`** (`build` and `operate` share the conditional vocabulary; the named `dormant`
-clause is fail-safe — its default is *not*-dormant, so an unimplemented engine leaves the unit buildable). No
-`canTrain` gate logic is re-mirrored from the engine — every divergence is a missing input mapped to its named source.
+**Units reuse this whole machine — only the inputs differ (owner ruling 2026-06-25; verified to full `canTrain`
+parity).** `canTrain` is the same generate-then-gate over unit inputs: frontier (every unit) → prune
+`obsoletedBy.techs` (the target-side obsoleting tech, mirroring buildings; an obsolete unit leaves the buildable set
+but persists on the map, upgradeable) → exclude `identity.spawnOnly` (never-trainable; building/farm-improvement/
+vassalage-granted only) → the `allowed` instance cap (`world` = lifetime-created, `empire` = live count *era-scaled
+for a base of 5*; units have no `team` cap) → `requires.build` via the **same** condition evaluator. The two upgrade
+relationships are **distinct gates, mirroring the engine** (`build`/`operate` share the conditional vocabulary):
+- **`UnitUpgrades` → `requires.build.dormant.all`** = the unit's *direct* upgrades **minus** any that are also
+  superseders. The cascade recurses these engine-side (mirrors `allUpgradesAvailable`): hide the unit only when
+  **every** such upgrade resolves to a reachable-trainable unit (one dead branch keeps it buildable). The named
+  `dormant` clause is fail-safe (default *not*-dormant).
+- **`SupersedingUnits` → the `replaces` edge (`replacedBy.units`, §2)** = genuine **removal-on-succession**: the unit
+  drops from buildable the moment any superseder is itself buildable (mirrors `isSupersedingUnitAvailable`). The engine
+  SKIPS superseders in `allUpgradesAvailable`, so they live here, not in the dormancy gate. This is the first real use
+  of the long-reserved `replaces` family.
+
+Other gates fold into `requires.build` as **declarative conditions** (no engine special-case, modder-extensible):
+**game options** → a bare `GAMEOPTION_X` ref in `build.all`/`build.noneOf` (e.g. the inquisitor's
+`GAMEOPTION_RELIGION_INQUISITIONS`), evaluated against the active options — NOT `loadPrune`; a **unit** corp prereq →
+`{HAS_CORPORATION: X}` = **active** (`isActiveCorporation`), distinct from a building's bare `CORPORATION_` = present.
+No `canTrain` gate logic is re-mirrored from the engine — every divergence is a missing input mapped to its named source.
 
 **VICINITY** (enabler-specific) = the city's current workable radius, which **grows with culture** (1→2→3 rings),
 NOT fixed; a plot can lie in two overlapping cities' vicinity (counts for both). The plot scan carries a

@@ -7,6 +7,11 @@
    "TECH_FLINTLOCK"
   ]
  },
+ "replacedBy": {
+  "units": [
+   "UNIT_NEANDERTHAL"
+  ]
+ },
  "requires": {
   "build": {
    "all": [
@@ -15,8 +20,7 @@
    "dormant": {
     "all": [
      "UNIT_SPIKED_CLUBMAN",
-     "UNIT_WOODEN_SPEARMAN",
-     "UNIT_NEANDERTHAL"
+     "UNIT_WOODEN_SPEARMAN"
     ]
    }
   }
@@ -58,9 +62,6 @@
   "upgradesTo": [
    "UNIT_SPIKED_CLUBMAN",
    "UNIT_WOODEN_SPEARMAN",
-   "UNIT_NEANDERTHAL"
-  ],
-  "supersededBy": [
    "UNIT_NEANDERTHAL"
   ]
  },

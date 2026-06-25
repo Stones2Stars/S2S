@@ -7,6 +7,11 @@
    "TECH_BRONZE_WORKING"
   ]
  },
+ "replacedBy": {
+  "units": [
+   "UNIT_NEANDERTHAL_GATHERER"
+  ]
+ },
  "requires": {
   "build": {
    "all": [
@@ -78,9 +83,6 @@
   "upgradesTo": [
    "UNIT_RANGER",
    "UNIT_NEANDERTHAL_HUNTER"
-  ],
-  "supersededBy": [
-   "UNIT_NEANDERTHAL_GATHERER"
   ]
  },
  "cost": {

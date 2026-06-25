@@ -676,9 +676,11 @@ def curate(typ, rec, store):
     ups = _typelist_struct(rec, "UnitUpgrades", "UnitType") or _typelist(rec, "UnitUpgrades")
     if ups:
         succession["upgradesTo"] = ups
+    # SupersedingUnits = the genuine REPLACE edge (owner ruling 2026-06-25): a successor that REMOVES the predecessor
+    # from the buildable set once itself buildable (engine isSupersedingUnitAvailable). Modeled with the EXISTING
+    # `replacedBy` enabler edge (target-side, like obsoletedBy) -- NOT a bespoke supersededBy mechanism. Distinct from
+    # upgradesTo (the all-reachable dormancy). Emitted as out["replacedBy"] in the assembly below.
     sup = _typelist(rec, "SupersedingUnits")
-    if sup:
-        succession["supersededBy"] = sup
     # --- cost ---
     for tag, key in COST.items():
         if key is None:
@@ -743,6 +745,10 @@ def curate(typ, rec, store):
     ot = _txt(rec, "ObsoleteTech")
     if ot:
         out["obsoletedBy"] = OrderedDict([("techs", [ot])])
+    # SupersedingUnits -> the `replacedBy` replace edge (see succession note above): the unit is removed from
+    # buildable when a superseder is buildable. The existing replace mechanic, not a bespoke supersededBy.
+    if sup:
+        out["replacedBy"] = OrderedDict([("units", sup)])
     requires = requires_unit(rec, store)
     # UPGRADE DORMANCY (owner ruling 2026-06-25): a unit is dormant OUT of the buildable set when ALL of the units it
     # DIRECTLY upgrades to are active -> requires.build.dormant.all = the IMMEDIATE upgradesTo (UnitUpgrades), NOT a
@@ -750,7 +756,13 @@ def curate(typ, rec, store):
     # hides only when EVERY direct upgrade resolves to a reachable-trainable unit), so authoring just the direct edges
     # keeps it short (a swordsman's chain is huge) and matches the engine. `dormant` rides `build` (units have no
     # operate; build/operate share conditionals) and is fail-safe (default not-dormant). Distinct from identity.spawnOnly.
-    ups_imm = [u for u in (_typelist_struct(rec, "UnitUpgrades", "UnitType") or _typelist(rec, "UnitUpgrades")) if u and u != "NONE"]
+    # The dormant set is the immediate upgrades EXCLUDING any that are also SupersedingUnits: the engine's
+    # allUpgradesAvailable SKIPS a superseding upgrade (`if (isSupersedingUnit(eTempUnit)) continue`, CvCity.cpp:2055)
+    # -- those are the separate isSupersedingUnitAvailable gate, NOT the "all upgrades reachable" hide. Without this,
+    # a NEANDERTHAL_* variant (an unreachable, civ-restricted superseding upgrade) wrongly kept the base unit offered.
+    superseding = set(_typelist_struct(rec, "SupersedingUnits", "UnitType") or _typelist(rec, "SupersedingUnits"))
+    ups_imm = [u for u in (_typelist_struct(rec, "UnitUpgrades", "UnitType") or _typelist(rec, "UnitUpgrades"))
+               if u and u != "NONE" and u not in superseding]
     if ups_imm:
         requires = requires or OrderedDict()
         requires.setdefault("build", OrderedDict())["dormant"] = OrderedDict([("all", [_atom(u, "city") for u in ups_imm])])

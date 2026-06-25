@@ -2,6 +2,11 @@
  "type": "UNIT_TRAINEDDOG",
  "description": "TXT_KEY_UNIT_TRAINEDDOG",
  "civilopedia": "TXT_KEY_UNIT_WARDOG_PEDIA",
+ "replacedBy": {
+  "units": [
+   "UNIT_NEANDERTHAL_TRAINED_DOG"
+  ]
+ },
  "requires": {
   "build": {
    "all": [
@@ -20,8 +25,7 @@
    ],
    "dormant": {
     "all": [
-     "UNIT_WARDOG",
-     "UNIT_NEANDERTHAL_TRAINED_DOG"
+     "UNIT_WARDOG"
     ]
    }
   }
@@ -65,9 +69,6 @@
  "succession": {
   "upgradesTo": [
    "UNIT_WARDOG",
-   "UNIT_NEANDERTHAL_TRAINED_DOG"
-  ],
-  "supersededBy": [
    "UNIT_NEANDERTHAL_TRAINED_DOG"
   ]
  },

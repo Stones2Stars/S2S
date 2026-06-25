@@ -2,6 +2,11 @@
  "type": "UNIT_WATCHER",
  "description": "TXT_KEY_UNIT_WATCHER",
  "civilopedia": "TXT_KEY_UNIT_WATCHER_PEDIA",
+ "replacedBy": {
+  "units": [
+   "UNIT_NEANDERTHAL_WATCHER"
+  ]
+ },
  "requires": {
   "build": {
    "all": [
@@ -22,8 +27,7 @@
    ],
    "dormant": {
     "all": [
-     "UNIT_ENFORCERS",
-     "UNIT_NEANDERTHAL_WATCHER"
+     "UNIT_ENFORCERS"
     ]
    }
   }
@@ -87,9 +91,6 @@
  "succession": {
   "upgradesTo": [
    "UNIT_ENFORCERS",
-   "UNIT_NEANDERTHAL_WATCHER"
-  ],
-  "supersededBy": [
    "UNIT_NEANDERTHAL_WATCHER"
   ]
  },

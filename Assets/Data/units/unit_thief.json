@@ -7,6 +7,11 @@
    "TECH_MATCHLOCK"
   ]
  },
+ "replacedBy": {
+  "units": [
+   "UNIT_NEANDERTHAL_GATHERER"
+  ]
+ },
  "requires": {
   "build": {
    "all": [
@@ -153,9 +158,6 @@
  "succession": {
   "upgradesTo": [
    "UNIT_ROGUE"
-  ],
-  "supersededBy": [
-   "UNIT_NEANDERTHAL_GATHERER"
   ]
  },
  "cost": {

@@ -7,6 +7,11 @@
    "TECH_COPPER_WORKING"
   ]
  },
+ "replacedBy": {
+  "units": [
+   "UNIT_NEANDERTHAL_LOG_RAM"
+  ]
+ },
  "requires": {
   "build": {
    "all": [
@@ -20,8 +25,7 @@
    ],
    "dormant": {
     "all": [
-     "UNIT_BATTERING_RAM",
-     "UNIT_NEANDERTHAL_LOG_RAM"
+     "UNIT_BATTERING_RAM"
     ]
    }
   }
@@ -73,9 +77,6 @@
  "succession": {
   "upgradesTo": [
    "UNIT_BATTERING_RAM",
-   "UNIT_NEANDERTHAL_LOG_RAM"
-  ],
-  "supersededBy": [
    "UNIT_NEANDERTHAL_LOG_RAM"
   ]
  },

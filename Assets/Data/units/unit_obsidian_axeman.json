@@ -2,6 +2,11 @@
  "type": "UNIT_OBSIDIAN_AXEMAN",
  "description": "TXT_KEY_UNIT_OBSIDIAN_AXEMAN",
  "civilopedia": "TXT_KEY_UNIT_OBSIDIAN_AXEMAN_PEDIA",
+ "replacedBy": {
+  "units": [
+   "UNIT_NEANDERTHAL_OBSIDIAN_AXEMAN"
+  ]
+ },
  "requires": {
   "build": {
    "all": [
@@ -14,8 +19,7 @@
    ],
    "dormant": {
     "all": [
-     "UNIT_AXEMAN",
-     "UNIT_NEANDERTHAL_OBSIDIAN_AXEMAN"
+     "UNIT_AXEMAN"
     ]
    }
   }
@@ -64,9 +68,6 @@
  "succession": {
   "upgradesTo": [
    "UNIT_AXEMAN",
-   "UNIT_NEANDERTHAL_OBSIDIAN_AXEMAN"
-  ],
-  "supersededBy": [
    "UNIT_NEANDERTHAL_OBSIDIAN_AXEMAN"
   ]
  },

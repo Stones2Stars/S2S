@@ -2,6 +2,12 @@
  "type": "UNIT_WISE_WOMAN",
  "description": "TXT_KEY_UNIT_WISE_WOMAN",
  "civilopedia": "TXT_KEY_UNIT_WISE_WOMAN_PEDIA",
+ "replacedBy": {
+  "units": [
+   "UNIT_NEANDERTHAL_WISE_WOMAN",
+   "UNIT_HEALER"
+  ]
+ },
  "requires": {
   "build": {
    "all": [
@@ -10,9 +16,7 @@
    ],
    "dormant": {
     "all": [
-     "UNIT_HEALER",
-     "UNIT_SHEPHERD",
-     "UNIT_NEANDERTHAL_WISE_WOMAN"
+     "UNIT_SHEPHERD"
     ]
    }
   }
@@ -48,10 +52,6 @@
    "UNIT_HEALER",
    "UNIT_SHEPHERD",
    "UNIT_NEANDERTHAL_WISE_WOMAN"
-  ],
-  "supersededBy": [
-   "UNIT_NEANDERTHAL_WISE_WOMAN",
-   "UNIT_HEALER"
   ]
  },
  "cost": {

@@ -7,6 +7,11 @@
    "TECH_OPTICS"
   ]
  },
+ "replacedBy": {
+  "units": [
+   "UNIT_NEANDERTHAL_WAR_CANOE"
+  ]
+ },
  "requires": {
   "build": {
    "all": [
@@ -40,8 +45,7 @@
    ],
    "dormant": {
     "all": [
-     "UNIT_WARGALLEY",
-     "UNIT_NEANDERTHAL_WAR_CANOE"
+     "UNIT_WARGALLEY"
     ]
    }
   }
@@ -74,9 +78,6 @@
  "succession": {
   "upgradesTo": [
    "UNIT_WARGALLEY",
-   "UNIT_NEANDERTHAL_WAR_CANOE"
-  ],
-  "supersededBy": [
    "UNIT_NEANDERTHAL_WAR_CANOE"
   ]
  },

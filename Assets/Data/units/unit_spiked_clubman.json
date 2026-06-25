@@ -7,6 +7,11 @@
    "TECH_FLINTLOCK"
   ]
  },
+ "replacedBy": {
+  "units": [
+   "UNIT_NEANDERTHAL_WARRIOR"
+  ]
+ },
  "requires": {
   "build": {
    "all": [
@@ -15,8 +20,7 @@
    "dormant": {
     "all": [
      "UNIT_STONE_AXEMAN",
-     "UNIT_STONE_MACEMAN",
-     "UNIT_NEANDERTHAL_WARRIOR"
+     "UNIT_STONE_MACEMAN"
     ]
    }
   }
@@ -66,9 +70,6 @@
   "upgradesTo": [
    "UNIT_STONE_AXEMAN",
    "UNIT_STONE_MACEMAN",
-   "UNIT_NEANDERTHAL_WARRIOR"
-  ],
-  "supersededBy": [
    "UNIT_NEANDERTHAL_WARRIOR"
   ]
  },

@@ -7,6 +7,11 @@
    "TECH_SEDENTARY_LIFESTYLE"
   ]
  },
+ "replacedBy": {
+  "units": [
+   "UNIT_NEANDERTHAL_GATHERER"
+  ]
+ },
  "requires": {
   "build": {
    "all": [
@@ -57,9 +62,6 @@
  "succession": {
   "upgradesTo": [
    "UNIT_WORKER"
-  ],
-  "supersededBy": [
-   "UNIT_NEANDERTHAL_GATHERER"
   ]
  },
  "cost": {

@@ -2,6 +2,11 @@
  "type": "UNIT_OBSIDIAN_MACEMAN",
  "description": "TXT_KEY_UNIT_OBSIDIAN_MACEMAN",
  "civilopedia": "TXT_KEY_UNIT_OBSIDIAN_MACEMAN_PEDIA",
+ "replacedBy": {
+  "units": [
+   "UNIT_NEANDERTHAL_OBSIDIAN_MACEMAN"
+  ]
+ },
  "requires": {
   "build": {
    "all": [
@@ -14,8 +19,7 @@
    ],
    "dormant": {
     "all": [
-     "UNIT_EARLY_MACEMAN",
-     "UNIT_NEANDERTHAL_OBSIDIAN_MACEMAN"
+     "UNIT_EARLY_MACEMAN"
     ]
    }
   }
@@ -67,9 +71,6 @@
  "succession": {
   "upgradesTo": [
    "UNIT_EARLY_MACEMAN",
-   "UNIT_NEANDERTHAL_OBSIDIAN_MACEMAN"
-  ],
-  "supersededBy": [
    "UNIT_NEANDERTHAL_OBSIDIAN_MACEMAN"
   ]
  },

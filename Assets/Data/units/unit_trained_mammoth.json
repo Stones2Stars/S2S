@@ -2,6 +2,11 @@
  "type": "UNIT_TRAINED_MAMMOTH",
  "description": "TXT_KEY_UNIT_TRAINED_MAMMOTH",
  "civilopedia": "TXT_KEY_UNIT_TRAINED_MAMMOTH_PEDIA",
+ "replacedBy": {
+  "units": [
+   "UNIT_NEANDERTHAL_MAMMOTH_RIDER"
+  ]
+ },
  "requires": {
   "build": {
    "all": [
@@ -88,9 +93,6 @@
  "succession": {
   "upgradesTo": [
    "UNIT_WAR_MAMMOTH"
-  ],
-  "supersededBy": [
-   "UNIT_NEANDERTHAL_MAMMOTH_RIDER"
   ]
  },
  "cost": {

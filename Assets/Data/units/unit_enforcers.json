@@ -2,6 +2,11 @@
  "type": "UNIT_ENFORCERS",
  "description": "TXT_KEY_UNIT_ENFORCERS",
  "civilopedia": "TXT_KEY_UNIT_ENFORCERS_PEDIA",
+ "replacedBy": {
+  "units": [
+   "UNIT_NEANDERTHAL_ENFORCER"
+  ]
+ },
  "requires": {
   "build": {
    "all": [
@@ -21,8 +26,7 @@
    ],
    "dormant": {
     "all": [
-     "UNIT_TOWN_WATCHMEN",
-     "UNIT_NEANDERTHAL_ENFORCER"
+     "UNIT_TOWN_WATCHMEN"
     ]
    }
   }
@@ -89,9 +93,6 @@
  "succession": {
   "upgradesTo": [
    "UNIT_TOWN_WATCHMEN",
-   "UNIT_NEANDERTHAL_ENFORCER"
-  ],
-  "supersededBy": [
    "UNIT_NEANDERTHAL_ENFORCER"
   ]
  },

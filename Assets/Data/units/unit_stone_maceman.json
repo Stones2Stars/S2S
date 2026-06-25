@@ -7,6 +7,11 @@
    "TECH_FLINTLOCK"
   ]
  },
+ "replacedBy": {
+  "units": [
+   "UNIT_NEANDERTHAL_STONE_MACEMAN"
+  ]
+ },
  "requires": {
   "build": {
    "all": [
@@ -15,8 +20,7 @@
    "dormant": {
     "all": [
      "UNIT_OBSIDIAN_MACEMAN",
-     "UNIT_OBSIDIAN_SWORDSMAN",
-     "UNIT_NEANDERTHAL_STONE_MACEMAN"
+     "UNIT_OBSIDIAN_SWORDSMAN"
     ]
    }
   }
@@ -77,9 +81,6 @@
   "upgradesTo": [
    "UNIT_OBSIDIAN_MACEMAN",
    "UNIT_OBSIDIAN_SWORDSMAN",
-   "UNIT_NEANDERTHAL_STONE_MACEMAN"
-  ],
-  "supersededBy": [
    "UNIT_NEANDERTHAL_STONE_MACEMAN"
   ]
  },

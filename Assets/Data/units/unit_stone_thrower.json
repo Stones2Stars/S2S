@@ -7,6 +7,11 @@
    "TECH_BINDING"
   ]
  },
+ "replacedBy": {
+  "units": [
+   "UNIT_NEANDERTHAL_STONE_THROWER"
+  ]
+ },
  "requires": {
   "build": {
    "all": [
@@ -14,8 +19,7 @@
    ],
    "dormant": {
     "all": [
-     "UNIT_SLINGER",
-     "UNIT_NEANDERTHAL_STONE_THROWER"
+     "UNIT_SLINGER"
     ]
    }
   }
@@ -101,9 +105,6 @@
  "succession": {
   "upgradesTo": [
    "UNIT_SLINGER",
-   "UNIT_NEANDERTHAL_STONE_THROWER"
-  ],
-  "supersededBy": [
    "UNIT_NEANDERTHAL_STONE_THROWER"
   ]
  },

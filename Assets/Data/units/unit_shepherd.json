@@ -2,6 +2,11 @@
  "type": "UNIT_SHEPHERD",
  "description": "TXT_KEY_UNIT_SHEPHERD",
  "civilopedia": "TXT_KEY_UNIT_SHEPHERD_PEDIA",
+ "replacedBy": {
+  "units": [
+   "UNIT_NEANDERTHAL_SHEPHERD"
+  ]
+ },
  "requires": {
   "build": {
    "all": [
@@ -93,8 +98,7 @@
    ],
    "dormant": {
     "all": [
-     "UNIT_VET",
-     "UNIT_NEANDERTHAL_SHEPHERD"
+     "UNIT_VET"
     ]
    }
   }
@@ -126,9 +130,6 @@
  "succession": {
   "upgradesTo": [
    "UNIT_VET",
-   "UNIT_NEANDERTHAL_SHEPHERD"
-  ],
-  "supersededBy": [
    "UNIT_NEANDERTHAL_SHEPHERD"
   ]
  },

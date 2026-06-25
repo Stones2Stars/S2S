@@ -7,6 +7,11 @@
    "TECH_TRAILS"
   ]
  },
+ "replacedBy": {
+  "units": [
+   "UNIT_NEANDERTHAL_WANDERER"
+  ]
+ },
  "requires": {
   "build": {
    "all": [
@@ -15,8 +20,7 @@
    "dormant": {
     "all": [
      "UNIT_SCOUT",
-     "UNIT_CHASER",
-     "UNIT_NEANDERTHAL_WANDERER"
+     "UNIT_CHASER"
     ]
    }
   }
@@ -37,9 +41,6 @@
   "upgradesTo": [
    "UNIT_SCOUT",
    "UNIT_CHASER",
-   "UNIT_NEANDERTHAL_WANDERER"
-  ],
-  "supersededBy": [
    "UNIT_NEANDERTHAL_WANDERER"
   ]
  },

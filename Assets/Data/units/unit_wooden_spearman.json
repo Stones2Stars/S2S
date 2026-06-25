@@ -7,6 +7,11 @@
    "TECH_FLINTLOCK"
   ]
  },
+ "replacedBy": {
+  "units": [
+   "UNIT_NEANDERTHAL_WOODEN_SPEARMAN"
+  ]
+ },
  "requires": {
   "build": {
    "all": [
@@ -14,8 +19,7 @@
    ],
    "dormant": {
     "all": [
-     "UNIT_STONE_SPEARMAN",
-     "UNIT_NEANDERTHAL_WOODEN_SPEARMAN"
+     "UNIT_STONE_SPEARMAN"
     ]
    }
   }
@@ -64,9 +68,6 @@
  "succession": {
   "upgradesTo": [
    "UNIT_STONE_SPEARMAN",
-   "UNIT_NEANDERTHAL_WOODEN_SPEARMAN"
-  ],
-  "supersededBy": [
    "UNIT_NEANDERTHAL_WOODEN_SPEARMAN"
   ]
  },

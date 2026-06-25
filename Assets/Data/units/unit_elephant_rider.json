@@ -2,6 +2,11 @@
  "type": "UNIT_ELEPHANT_RIDER",
  "description": "TXT_KEY_UNIT_ELEPHANT_RIDER",
  "civilopedia": "TXT_KEY_UNIT_ELEPHANT_RIDER_PEDIA",
+ "replacedBy": {
+  "units": [
+   "UNIT_NEANDERTHAL_ELEPHANT_RIDER"
+  ]
+ },
  "requires": {
   "build": {
    "all": [
@@ -91,9 +96,6 @@
  "succession": {
   "upgradesTo": [
    "UNIT_WAR_ELEPHANT"
-  ],
-  "supersededBy": [
-   "UNIT_NEANDERTHAL_ELEPHANT_RIDER"
   ]
  },
  "cost": {

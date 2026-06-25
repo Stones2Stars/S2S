@@ -7,6 +7,11 @@
    "TECH_OPTICS"
   ]
  },
+ "replacedBy": {
+  "units": [
+   "UNIT_NEANDERTHAL_RAFT"
+  ]
+ },
  "requires": {
   "build": {
    "all": [
@@ -44,8 +49,7 @@
    "dormant": {
     "all": [
      "UNIT_CANOE",
-     "UNIT_WAR_CANOE",
-     "UNIT_NEANDERTHAL_RAFT"
+     "UNIT_WAR_CANOE"
     ]
    }
   }
@@ -95,9 +99,6 @@
   "upgradesTo": [
    "UNIT_CANOE",
    "UNIT_WAR_CANOE",
-   "UNIT_NEANDERTHAL_RAFT"
-  ],
-  "supersededBy": [
    "UNIT_NEANDERTHAL_RAFT"
   ]
  },

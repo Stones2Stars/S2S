@@ -7,6 +7,11 @@
    "TECH_FLINTLOCK"
   ]
  },
+ "replacedBy": {
+  "units": [
+   "UNIT_NEANDERTHAL_STONE_AGE_AXEMAN"
+  ]
+ },
  "requires": {
   "build": {
    "all": [
@@ -14,8 +19,7 @@
    ],
    "dormant": {
     "all": [
-     "UNIT_OBSIDIAN_AXEMAN",
-     "UNIT_NEANDERTHAL_STONE_AGE_AXEMAN"
+     "UNIT_OBSIDIAN_AXEMAN"
     ]
    }
   }
@@ -72,9 +76,6 @@
  "succession": {
   "upgradesTo": [
    "UNIT_OBSIDIAN_AXEMAN",
-   "UNIT_NEANDERTHAL_STONE_AGE_AXEMAN"
-  ],
-  "supersededBy": [
    "UNIT_NEANDERTHAL_STONE_AGE_AXEMAN"
   ]
  },

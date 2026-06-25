@@ -7,6 +7,11 @@
    "TECH_OPTICS"
   ]
  },
+ "replacedBy": {
+  "units": [
+   "UNIT_NEANDERTHAL_CANOE"
+  ]
+ },
  "requires": {
   "build": {
    "all": [
@@ -20,8 +25,7 @@
    ],
    "dormant": {
     "all": [
-     "UNIT_GALLEY",
-     "UNIT_NEANDERTHAL_CANOE"
+     "UNIT_GALLEY"
     ]
    }
   }
@@ -62,9 +66,6 @@
  "succession": {
   "upgradesTo": [
    "UNIT_GALLEY",
-   "UNIT_NEANDERTHAL_CANOE"
-  ],
-  "supersededBy": [
    "UNIT_NEANDERTHAL_CANOE"
   ]
  },

@@ -2,6 +2,11 @@
  "type": "UNIT_WORKBOAT",
  "description": "TXT_KEY_UNIT_WORKBOAT",
  "civilopedia": "TXT_KEY_UNIT_WORKBOAT_PEDIA",
+ "replacedBy": {
+  "units": [
+   "UNIT_NEANDERTHAL_WORKBOAT"
+  ]
+ },
  "requires": {
   "build": {
    "all": [
@@ -38,9 +43,6 @@
  "succession": {
   "upgradesTo": [
    "UNIT_WORKBOAT_CLASSIC"
-  ],
-  "supersededBy": [
-   "UNIT_NEANDERTHAL_WORKBOAT"
   ]
  },
  "cost": {

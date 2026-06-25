@@ -7,6 +7,11 @@
    "TECH_FLINTLOCK"
   ]
  },
+ "replacedBy": {
+  "units": [
+   "UNIT_NEANDERTHAL_STONE_AGE_SPEARMAN"
+  ]
+ },
  "requires": {
   "build": {
    "all": [
@@ -14,8 +19,7 @@
    ],
    "dormant": {
     "all": [
-     "UNIT_OBSIDIAN_SPEARMAN",
-     "UNIT_NEANDERTHAL_STONE_AGE_SPEARMAN"
+     "UNIT_OBSIDIAN_SPEARMAN"
     ]
    }
   }
@@ -80,9 +84,6 @@
  "succession": {
   "upgradesTo": [
    "UNIT_OBSIDIAN_SPEARMAN",
-   "UNIT_NEANDERTHAL_STONE_AGE_SPEARMAN"
-  ],
-  "supersededBy": [
    "UNIT_NEANDERTHAL_STONE_AGE_SPEARMAN"
   ]
  },

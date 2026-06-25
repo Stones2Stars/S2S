@@ -7,6 +7,11 @@
    "TECH_CODE_OF_LAWS"
   ]
  },
+ "replacedBy": {
+  "units": [
+   "UNIT_NEANDERTHAL_GATHERER"
+  ]
+ },
  "requires": {
   "build": {
    "all": [
@@ -137,9 +142,6 @@
  "succession": {
   "upgradesTo": [
    "UNIT_STALKERS"
-  ],
-  "supersededBy": [
-   "UNIT_NEANDERTHAL_GATHERER"
   ]
  },
  "cost": {

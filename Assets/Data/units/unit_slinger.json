@@ -7,6 +7,11 @@
    "TECH_FLINTLOCK"
   ]
  },
+ "replacedBy": {
+  "units": [
+   "UNIT_NEANDERTHAL_SLINGER"
+  ]
+ },
  "requires": {
   "build": {
    "all": [
@@ -14,8 +19,7 @@
    ],
    "dormant": {
     "all": [
-     "UNIT_ARCHER",
-     "UNIT_NEANDERTHAL_SLINGER"
+     "UNIT_ARCHER"
     ]
    }
   }
@@ -88,9 +92,6 @@
  "succession": {
   "upgradesTo": [
    "UNIT_ARCHER",
-   "UNIT_NEANDERTHAL_SLINGER"
-  ],
-  "supersededBy": [
    "UNIT_NEANDERTHAL_SLINGER"
   ]
  },

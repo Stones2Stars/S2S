@@ -7,6 +7,11 @@
    "TECH_OPTICS"
   ]
  },
+ "replacedBy": {
+  "units": [
+   "UNIT_NEANDERTHAL_KAYAK"
+  ]
+ },
  "requires": {
   "build": {
    "all": [
@@ -39,8 +44,7 @@
    ],
    "dormant": {
     "all": [
-     "UNIT_OUTRIGGER",
-     "UNIT_NEANDERTHAL_KAYAK"
+     "UNIT_OUTRIGGER"
     ]
    }
   }
@@ -80,9 +84,6 @@
  "succession": {
   "upgradesTo": [
    "UNIT_OUTRIGGER",
-   "UNIT_NEANDERTHAL_KAYAK"
-  ],
-  "supersededBy": [
    "UNIT_NEANDERTHAL_KAYAK"
   ]
  },
