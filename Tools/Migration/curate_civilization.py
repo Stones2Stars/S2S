@@ -9,8 +9,11 @@ pre-base ArtDefineTag merge) → a bespoke curator. Verdicts (light-four-classif
 - `grants` (one-shot, at game start; flat — landing scope implicit in the grant TYPE, consumer-side):
   `buildings` ← FreeBuildings (the capital: Palace + civ-class buildings, re-asserted on capital move),
   `civics` ← InitialCivics (empire: one starting civic per civic-option slot),
-  `techs` ← FreeTechs (team). **FreeTechs is Neanderthal-ONLY** (everyone else starts at base): only
-  CIVILIZATION_NPC_NEANDERTHAL grants CAVE_DWELLING/GATHERING/NOMADISM/SCAVENGING/LANGUAGE. Live (CvGame:1226).
+  `techs` ← FreeTechs (team) + **TECH_GAME_START granted to EVERY civ** (owner ruling 2026-06-25): the cascade's
+  declarative clean start point (a JSON-only root tech, no XML source) off which the cascade GENERATES the "stuff
+  simply there at start" without the old engine's load-everything-with-no-deps behaviour. The XML FreeTechs proper is
+  Neanderthal-ONLY (CIVILIZATION_NPC_NEANDERTHAL: CAVE_DWELLING/GATHERING/NOMADISM/SCAVENGING/LANGUAGE; CvGame:1226);
+  TECH_GAME_START rides ON TOP for all civs, prepended in curate() below.
 - `spawnRate.empire.{general,npcPeace}.percent` ← iSpawnRateModifier / iSpawnRateNPCPeaceModifier — the ONE
   cascade modifier (PERCENT, (100+mod)/100; CvGame:6359/6363). Barb/NPC civs only.
 - `policies` (booleans): `playable` / `aiPlayable` (can a human/AI pick this civ) + `stronglyRestricted` (NPC

@@ -112,19 +112,16 @@ So `any` is exactly `||` on what is directly below it:
 
 To require BOTH "(copper or iron)" AND "(forge or foundry)", **nest two `any` nodes under an `all`** —
 `all: [ {any:[COPPER,IRON]}, {any:[FORGE,FOUNDRY]} ]`. The old `any:[[…],[…]]` "AND-of-ORs" shape is **RETIRED**:
-`any` never means AND. The tree maps 1:1 onto the engine's `BoolExpr` (`Sources/Infrastructure/BoolExpr`:
-`BoolExprAnd`/`BoolExprOr`/`BoolExprNot`, recursive) — **proper JSON predicate parsing routes through `BoolExpr`**, the
-one solid battle-tested and/or in this codebase (evaluating it is what made the whole JSON migration viable; see the
-initial migration issue). **Never reinvent it:** the retired `any:[[…]]` AND-of-ORs shape, and the **temporary**
-`CvCascadeReadJson`'s hand-rolled `vector<vector<leaf>>` (⛔ slated for purge), were exactly that mistake. Each leaf
-is **either** a count/presence **atom** or a **predicate** (§3.5):
+`any` never means AND — it is a plain recursive boolean tree (`all`/`any`/`noneOf`, nestable to any depth). The
+retired `any:[[…]]` "AND-of-ORs" shape is gone; for "(A or B) AND (C or D)", nest two `any` nodes under an `all`.
+Each leaf is **either** a count/presence **atom** or a **predicate** (§3.5):
 
 ```jsonc
 { "type": "BONUS_IRON", "scope": "city", "connection": "trade|vicinity" }   // an atom
 ```
 
-An **atom** is `{ type, scope?, min?, max?, connection? }`. **Scope is IMPLIED from the type's domain** and the
-engine derives it from the ID — TECH→`team`, civic/heritage→`empire`, building/bonus/religion/corporation→`city`.
+An **atom** is `{ type, scope?, min?, max?, connection? }`. **Scope is IMPLIED from the type's domain** (derived from
+the ID prefix) — TECH→`team`, civic/heritage→`empire`, building/bonus/religion/corporation→`city`.
 State `scope` explicitly ONLY when it differs from that default (e.g. a `world`-scope victory, a `player`-scope tech).
 So a **plain default-scope presence collapses to a bare type-string** — author the common case as a simple string
 array: `"all": ["BUILDING_FORGE", "TECH_ASTRONOMY"]` ≡ `[{type:"BUILDING_FORGE"},{type:"TECH_ASTRONOMY",scope:"team"}]`.
@@ -136,17 +133,16 @@ scope. **Forcing a redundant `{type, scope}` only invites authoring bugs.** *(Pl
   gains amounts.
 - **count thresholds** — `min: N` (≥ N) and/or `max: N` (≤ N), both inclusive. Exact-N = `min` and `max` together.
 - `connection` (resources only) ∈ `"trade"` | `"vicinity"` | `"trade|vicinity"`. `trade` = the city has the bonus via
-  the trade network (engine `hasBonus`). `vicinity` = the bonus is on a tile in the city's radius.
+  the trade network. `vicinity` = the bonus is on a tile in the city's radius.
 - **`vicinity` DISCRIMINATOR** (owner ruling 2026-06-24) — `vicinity` **as a whole encompasses ALL tiles in radius**;
   an optional sibling `vicinity:` field puts a discriminator **on top** to tighten WHICH tiles count (the
   `VICINITY ⊇ WORKABLE ⊇ IS_WORKED` nesting of §3.5, applied to a bonus):
   - **absent** = any tile in the radius (the loosest).
-  - `"owned"` = a tile **owned** by the city (the engine's `hasRawVicinityBonus`: centre-or-owned tile, **no**
-    connection/improvement) — e.g. a `RawVicinityBonus` building like a fishing Net.
-  - `"worked"` = a tile a citizen **works** this turn (IS_WORKED).
-  - `"connected"` = the bonus is **obtained** — owned + valid + connected to the city (the engine's `hasVicinityBonus`)
-    — e.g. a `VicinityBonus` building like a Mine. *(`VicinityBonus` and `RawVicinityBonus` have OPPOSITE strictness,
-    so they are distinct discriminators, never folded.)*
+  - `"owned"` = the bonus is on a tile **owned** by the city (centre or owned radius tile; **no** connection or
+    improvement needed) — a raw owned-presence.
+  - `"worked"` = a tile a citizen **works** this turn.
+  - `"connected"` = the bonus is **obtained** — owned + valid + connected to the city. *(`owned` and `connected` have
+    OPPOSITE strictness — raw owned-presence vs a fully-obtained resource — so they are distinct, never folded.)*
 
   ```jsonc
   { "type": "BONUS_SHRIMP",   "scope": "city", "connection": "vicinity", "vicinity": "owned" }      // raw presence on an owned tile
@@ -186,21 +182,19 @@ IGNORED**, never treated as false — retiring a system never spuriously disable
     `HAS_IRRIGATION` · `HAS_FEATURE` ("has *any* feature").
   - **plot city-relative state** (nested `VICINITY ⊇ WORKABLE ⊇ IS_WORKED`): `VICINITY` (in the city's workable
     radius) · `WORKABLE` (in radius and eligible to be worked) · `IS_WORKED` (a citizen works it this turn).
-  - **world:** `NO_NUKES` (the world no-nukes verdict — engine `isNoNukes()`; true under the UN ban, false once nukes
-    are enabled by anyone building the Manhattan Project). A `bAllowsNukes` building (Manhattan) carries
-    `requires.build.disabled: "NO_NUKES"` — it can't be built while nukes are forbidden.
+  - **world:** `NO_NUKES` (the world no-nukes verdict — true under the UN ban, false once nukes are enabled by anyone
+    building the Manhattan Project). A nuke-enabling building (Manhattan) carries `requires.build.disabled: "NO_NUKES"`
+    — it can't be built while nukes are forbidden.
   - **city / player:** `IS_CAPITAL` · `IS_GOVERNMENT_CENTER` · `HAS_POWER` · `HAS_STATE_RELIGION` · `STATE_RELIGION_IN_CITY`.
-    These two are **DISTINCT** (owner ruling 2026-06-24): `IS_CAPITAL` = "the city is the player's capital" (engine
-    `isCapital()`); `IS_GOVERNMENT_CENTER` = "the city holds a government-center building — Palace or a pseudo-palace"
-    (engine `isGovernmentCenter()` == `m_iGovernmentCenterCount > 0`, runtime-evaluated, not stored). Government-center
-    buildings gate on `requires.build.disabled: "IS_GOVERNMENT_CENTER"` — verified against `CvCity::canConstruct`
-    (line 2664): it rejects a gov-center building where one already exists, and has **no `isCapital` gate**.
+    The first two are **DISTINCT**: `IS_CAPITAL` = the city is the player's capital; `IS_GOVERNMENT_CENTER` = the city
+    holds a government-center building (Palace or a pseudo-palace), runtime-evaluated. Government-center buildings gate
+    on `requires.build.disabled: "IS_GOVERNMENT_CENTER"` (one can't be built where a government center already exists —
+    a gov-center test, not an `IS_CAPITAL` one).
 - **parameterized** `{ PREDICATE: param }`: `{HAS_FEATURE: FEATURE_X}` · `{HAS_TERRAIN: TERRAIN_X}` ·
   `{HAS_BONUS: BONUS_X}` · `{HAS_RELIGION: RELIGION_X}` · `{STATE_RELIGION: RELIGION_X}` · `{IS_HOLY_CITY: RELIGION_X}` ·
   `{HAS_CORPORATION: CORPORATION_X}` · `{latitude:{min,max}}` · `{existedFor:{min:N}}` (turns since built) ·
-  `{HAS_COAST:{minArea:N}}` (the city is adjacent to a water body of **≥ N tiles** — the engine's `isCoastal(N)`; a
-  bare `HAS_COAST` is `isCoastal` at the default coast threshold, so a building that needs a *larger* sea body carries
-  the size here. Curated from a water building's `bWater`+`iMinAreaSize`).
+  `{HAS_COAST:{minArea:N}}` (the city is adjacent to a water body of **≥ N tiles**; a bare `HAS_COAST` is coastal at
+  the default threshold, so an entity needing a *larger* sea body carries the size here).
 - **membership sugar** `{ terrain|feature|bonus: [TYPE,…] }` = "the plot's terrain/feature/bonus is one of these";
   equivalent to an `any` of the matching `HAS_*` predicate.
 - **composition is the win:** a Martian peak is `{all:["IS_MARS","HAS_PEAK"]}`; coastal land
@@ -300,10 +294,11 @@ routes · votes · hurries · traits · specialists`. **Tech unlocks live here**
 Same per-kind bucket shape as `enables`.
 
 - **`obsoletes`** — supersession: new builds barred; **existing instances persist** (an obsolete unit stays on the map).
-- **`replaces`** — succession: a successor takes the predecessor's slot (transitive). **Defined but UNUSED today** —
-  the legacy `ReplacementBuildings` is *not* removal but reversible **dormancy** (engine `setDisabledBuilding`), so it
-  is mirrored as the predecessor's `requires.operate.dormant: [successor]` (§4.3), not a `replaces` edge. Reserved for
-  a future genuine-removal source. *(Distinct from §9 `replacedBy`, the whole-entity Info-swap.)*
+- **`replaces`** — succession removal: a successor takes the predecessor's slot, removing it from the buildable set
+  once the successor is itself buildable. Authored **target-side** as **`replacedBy.{kind}`** (the entities that
+  hard-replace this one, e.g. `replacedBy.units`), mirroring `obsoletedBy`. The §9 `replacedBy` (whole-entity Info-swap
+  under a culture-level / game-option) is the **same hard-replace mechanic** — one entity supersedes another — just a
+  different trigger. *(Distinct from dormancy, where the predecessor stays inactive-but-kept: `requires.operate.dormant`, §4.3.)*
 - **`disables`** — a **law/ban** that **destroys** the target (a policy forbidding a building; repeal ⇒ rebuilt
   from scratch). It is **not** the dormancy mechanism: a target that should go **dormant** while a condition holds
   (e.g. an observatory under blackened skies — it parks and auto-resumes, never nuked-from-orbit) carries
@@ -323,21 +318,17 @@ The means a target needs. Two timings:
 - **`build`** — needed to construct it; **greyed** if missing. Checked once, at build.
 - **`operate`** — needed to construct **and** keep running; if lost later the built thing goes **dormant**
   (inactive, not destroyed) and wakes when it returns.
-- **`build` and `operate` share the SAME conditional vocabulary** (owner ruling 2026-06-25) — including the
-  **`dormant`** sub-clause. **Units carry `build` only** (a trained unit never goes dormant on resource loss, and
-  what happens to a unit once on the map is out of the cascade's scope — it answers `canTrain` only). A unit's two
-  upgrade relationships are **distinct gates** (mirroring the engine — see [enabler](enabler.md)):
-  - **`requires.build.dormant.all`** = the unit's *direct* `UnitUpgrades` **minus** any that are also superseders. The
-    cascade recurses these (mirrors `allUpgradesAvailable`): dormant out of the buildable set only when **every** such
-    upgrade resolves to a reachable-trainable unit. Fail-safe (default *not*-dormant), so an unimplemented engine
-    leaves the unit buildable rather than disabling every upgradeable unit.
-  - **`replacedBy.units`** (the §4.2 `replaces` edge) = `SupersedingUnits`: a genuine **removal** — the unit drops from
-    buildable the moment any superseder is buildable. The engine skips superseders in the dormancy gate and handles
-    them here.
+- **`build` and `operate` share the SAME conditional vocabulary**, including the **`dormant`** sub-clause. **Units
+  carry `build` only** (a trained unit never goes dormant on resource loss; on-map behaviour is out of the cascade's
+  `canTrain` scope). A unit's two upgrade relationships are **distinct gates** (the machine: [enabler](enabler.md)):
+  - **`requires.build.dormant.all`** = the unit's *direct* upgrades (minus any that also `replace` it): dormant out of
+    the buildable set only when **every** one resolves to a reachable-trainable unit. Fail-safe — default *not*-dormant.
+  - **`replacedBy.units`** (the §4.2 `replaces` edge) = the superseders: a genuine removal, dropping the unit from
+    buildable the moment any superseder is buildable.
 
-  *(Never-buildable spawned units — `iCost == −1` — are a separate straight disable: `identity.spawnOnly`, §7, not a
-  dormancy. Game-option prereqs are declarative `GAMEOPTION_X` conditions in `requires.build`, not `loadPrune`; a unit's
-  corp prereq is `{HAS_CORPORATION:X}` = active, vs a building's bare `CORPORATION_` = present.)*
+  *(`identity.spawnOnly` (§7) is a separate never-buildable flag, not dormancy. A game-option prereq is a declarative
+  `GAMEOPTION_X` condition in `requires.build`; a unit's resource/corp prereq `{HAS_CORPORATION:X}` requires the corp
+  ACTIVE, vs a building's bare `CORPORATION_` = present.)*
 
 Each is an `all`/`any`/`noneOf` tree (§3.4). A single bare predicate may be given as a `disabled`/`enabled` clause:
 
@@ -404,9 +395,8 @@ One-shot or recurring things an entity hands out (not per-turn modifiers).
 
 What an entity makes AVAILABLE in its city *while active* — distinct from `grants` (a one-shot/recurring handout).
 The canonical case is a building or map bonus that supplies a `BONUS_*`: a tamed-animal herd / industrial farm
-supplies its animal bonus (legacy `ExtraFreeBonuses`/`getFreeBonuses`), and a map bonus on a workable plot supplies
-itself. One uniform surface, so a `connection:"vicinity"` requirement is satisfied by *any* provider in the city —
-plot bonus **or** active building.
+supplies its animal bonus, and a map bonus on a workable plot supplies itself. One uniform surface, so a
+`connection:"vicinity"` requirement is satisfied by *any* provider in the city — plot bonus **or** active building.
 
 ```jsonc
 "provides": { "bonuses": ["BONUS_CAMEL"] }
@@ -414,8 +404,7 @@ plot bonus **or** active building.
 
 - **`bonuses`** — `BONUS_*` ids this supplies in-vicinity. A consumer's vicinity check unions, over the city radius,
   every provider's `provides.bonuses` (active buildings; map bonuses providing themselves). **Active only** — a
-  building that is dormant/obsolete supplies nothing (the engine's `bonusAvailableFromBuildings` gates on
-  `isActiveBuilding`).
+  building that is dormant/obsolete supplies nothing.
 
 ---
 
@@ -612,7 +601,7 @@ marble; +10 culture, doubling after it has stood 1000 turns.*
 
 **Scope (singular)** — `world › team › empire › area › city › plot{improvement|feature|terrain|route} › building|specialist|unit` · off-spine `self` = the entity's own build
 **Target (plural)** — `plots · units · cities · areas · empires` = all of that kind in the scope, predicate-filtered
-**Combinators** — `all` (AND `&&`) · `any` (OR `||`) · `noneOf` (NONE), each over its direct children (leaf or nested node); a recursive tree ≡ engine `BoolExpr` And/Or/Not (route proper parsing through it, never reinvent)
+**Combinators** — `all` (AND `&&`) · `any` (OR `||`) · `noneOf` (NONE), each over its direct children (leaf or nested node); a recursive boolean tree, nestable to any depth
 **Atom** — `{ type, scope, min?, max?, connection? }` · presence = `min:1`
 **Predicate** — bare (`IS_*`/`HAS_*`/`VICINITY`/`IS_CAPITAL`…), `{PREDICATE: param}`, or membership `{terrain|feature|bonus:[…]}`
 **Units** — `flat` (amount) · `percent` (+% delta) · `multiplier` (×, identity 100). Human-readable; ×100 is a bug.

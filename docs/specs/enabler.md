@@ -50,7 +50,7 @@ the other three **remove** from it.
 | **`enables`** | a permanent unlock | **added** to CAN GET | — (this *is* the unlock) |
 | **`disables`** | a **law / ban** (policy forbids) | removed while the disabler is held | **destroyed** — torn down; rebuilt on repeal. *(Dormancy is NOT a `disables` — it's the target's `requires.operate.dormant`, §3.)* |
 | **`obsoletes`** | passive supersession | removed | **persist** (an obsolete unit stays on the map); the target decides its own fate |
-| **`replaces`** | succession — **used for UNIT succession** (`SupersedingUnits`; see note) | removed | a superseder removes the predecessor from buildable once itself buildable; the legacy *building* `ReplacementBuildings` is instead *dormancy* (`requires.operate.dormant`, §3) |
+| **`replaces`** | succession **removal** — a superseder removes the predecessor (`replacedBy`; e.g. a unit's `SupersedingUnits`) | removed | dropped from buildable once the superseder is itself buildable; the *building* `ReplacementBuildings` is instead *dormancy* (`requires.operate.dormant`, §3) |
 
 So **`CAN GET = union(enables) − (disables ∪ obsoletes ∪ replaces)`**, all over HAVE (with `replaces` empty today).
 

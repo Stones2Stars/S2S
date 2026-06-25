@@ -73,6 +73,15 @@ a formula difference. **Home:** [validation.md](../specs/validation.md).
 The migration reproduces the engine's existing behaviour exactly; behavioural redesign ("should it behave this way at
 all?") is deferred to post-migration, never done during it. **Home:** [validation.md](../specs/validation.md).
 
+### DEC-stonebase-follows-spec
+
+The validation authority chain is ONE-WAY — SPEC → StoneBase → engine-oracle: StoneBase *implements* the spec (the
+blueprint for the C++ port), never reverse-engineers the engine's internal procedure; the engine fixes only the
+RESULT (mirror phase). A divergence is a curated-data gap mapped to a named source, or a deliberate spec-change-FIRST
+— never a creative StoneBase tweak. Same-result is necessary but NOT sufficient (a green sweep over a spec-divergent
+impl is the trap); if StoneBase drift were used to judge the spec, the loop self-corrupts (the "multikraken").
+**Home:** [validation.md](../specs/validation.md).
+
 ### DEC-no-parity-results-in-docs
 
 Parity-pass results (divergence counts, checklists, pilot numbers) stay out of the durable docs. **Home:** [validation.md](../specs/validation.md).

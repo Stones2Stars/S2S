@@ -42,6 +42,21 @@ loads the curated `Assets/Data/**` JSON + the live `/state`, rebuilds the cascad
 (Domain `Condition` → `IConditionEvaluator` → `BuildingCascade`), and diffs its verdict against the engine oracle
 (`/computed/canConstruct`, `/extractor`). **StoneBase is THE — and only — validator** (owner ruling 2026-06-25).
 
+> **⛔ StoneBase FOLLOWS the spec — the authority chain is strictly ONE-WAY (owner ruling 2026-06-25).** The flow is
+> **SPEC → StoneBase → engine-oracle**, never reversed. The spec leads; StoneBase *implements* it (it is the
+> pseudo-code blueprint for the C++ port); the engine is only the **result-oracle** — it confirms that *StoneBase +
+> curated data* reproduce the engine's TRUE-set during the mirror phase ([`DEC-mirror-then-redesign`](../architecture/decisions.md#dec-mirror-then-redesign)).
+> The cascade is a **distinct model** from how the engine internally handles `enables`/`disables`/`replaces`/dormancy
+> — the spec's two-pass **GENERATE→GATE** machine vs the engine's flat `canTrain`/`canConstruct` procedure — so
+> StoneBase's STRUCTURE is taken from the spec and is **never** reverse-engineered from the engine's ordering (the
+> engine fixes only the *result*). It follows that a parity divergence is **never** resolved by a creative tweak in
+> StoneBase: it is a curated-data gap mapped to a named source, or — if the spec is genuinely incomplete — a **spec
+> change made FIRST, deliberately**, then re-implemented. **Same-result is necessary but NOT sufficient**: a green
+> sweep over a spec-divergent implementation is the trap (the unit `replacedBy` post-gate prune was exactly this —
+> output-equal yet structurally wrong; reined back to a GENERATE-pass removal). If StoneBase ever drifts from the
+> spec *and* its output is used to judge the spec, the validation loop self-corrupts and spec & impl diverge
+> endlessly — the **"multikraken."** Ledgered as [`DEC-stonebase-follows-spec`](../architecture/decisions.md#dec-stonebase-follows-spec).
+
 **The validation order, machine by machine:** the **cascading enabler** first (the "can I build/train?" gate —
 buildings ✓ below, then units, …), **then** the **cascading modifiers** (the "how much?" math). Each machine must
 reach **parity in StoneBase first** — *then* it is built inside the C++ codebase as a
@@ -53,13 +68,16 @@ the live codebase, tracks discrepancies in general, and — ultimately — gives
 when they author/test a JSON, StoneBase tells them whether it **violates the spec**. It is the single tool for all of
 this — superseding **every** earlier attempt (the dead Python dry-calc variants, the first-version .NET validator).
 
-**Cascading-enabler (buildability) validation — done.** The buildable gate (`canConstruct`) is reproduced from the
-JSON + raw state and confirmed against the engine. The semantics this surfaced are pinned **durably** in
-[json.md](json.md) §3.4/§3.5 — the vicinity discriminator (`owned`/`worked`/`connected` vs bare, and `trade|vicinity`),
-the IS_WORKED GOM terrain/feature rule, `{HAS_COAST:{minArea}}`, the `NO_NUKES` world predicate, and the instance-cap
-making-count. **Next: the cascading enabler for UNITS** (`canTrain`) — expected to be mostly curated-JSON
-spec-alignment, not new machinery. *(Per the rule below, the sweep's pass/divergence numbers stay in the run, never in
-this doc.)*
+**Cascading-enabler validation — done (buildings + units).** Both gates are reproduced from the JSON + raw state and
+confirmed against the engine. **Units (`canTrain`) reuse the building enabler wholesale** — only the inputs differ —
+so it was curated-JSON spec-alignment, not new machinery. The semantics this surfaced are pinned **durably**:
+[json.md](json.md) §3.4/§3.5 (the vicinity discriminator, the IS_WORKED GOM rule, `{HAS_COAST:{minArea}}`, the
+`NO_NUKES` predicate, the instance-cap making-count) and [enabler.md](enabler.md) (the unit enabler model:
+`requires.build`-only; `obsoletedBy`; `requires.build.dormant.all` = direct upgrades minus superseders mirroring
+`allUpgradesAvailable`; `SupersedingUnits` → the first real use of the **`replaces`** edge; declarative
+`GAMEOPTION_X` gates; active-corp `{HAS_CORPORATION}`; `TECH_GAME_START` as the per-civ cascade start point).
+**Next: the cascading MODIFIER pass** ("how much?") — the magnitude machine, on the validated enabler foundation.
+*(Per the rule below, sweep pass/divergence numbers stay in the run, never in this doc.)*
 
 ## The shadow (the live counterpart)
 The dry-calc above is the **offline** test. Its **in-game** twin is the **shadow**: each legacy behaviour gets a

@@ -618,7 +618,6 @@ def curate(typ, rec, store):
     cost = OrderedDict()
     ai = OrderedDict()
     art_blocks = OrderedDict()
-    loadprune = OrderedDict()
     vision = OrderedDict()
 
     # --- identity.base (create-unit foundation) ---
@@ -720,9 +719,9 @@ def curate(typ, rec, store):
     w = _int(rec, "iAIWeight")
     if w:
         ai.setdefault("behaviour", OrderedDict())["weight"] = w
-    # --- game options: now DECLARATIVE requires.build conditions (GAMEOPTION_X in build.all / build.noneOf), authored
-    # in requires_unit() above -- NOT loadPrune. This states the option dependency clearly on the unit and lets the
-    # cascade evaluate it (modder-extensible, no engine special-case). loadPrune stays empty for units. ---
+    # --- game options: DECLARATIVE requires.build conditions (GAMEOPTION_X in build.all / build.noneOf), authored in
+    # requires_unit() above -- NOT loadPrune. States the option dependency clearly on the unit and lets the cascade
+    # evaluate it (modder-extensible, no engine special-case). So units emit NO loadPrune block at all. ---
     # --- art ---
     for tag in ART:
         put_art(art_blocks, tag, engine.text(rec.find(tag)))
@@ -796,8 +795,6 @@ def curate(typ, rec, store):
         out["cost"] = cost
     if ai:
         out["ai"] = ai
-    if loadprune:
-        out["loadPrune"] = loadprune
     emit_art(out, art_blocks)
     if identity:
         out["identity"] = identity
