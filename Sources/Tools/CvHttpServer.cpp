@@ -772,6 +772,9 @@ namespace
 		config["yieldPopulationChangeDivisor"] = picojson::value(yPopDiv);
 		config["yieldGoldenAgeYield"] = picojson::value(yGAYield);
 		config["yieldGoldenAgeThreshold"] = picojson::value(yGAThresh);
+		// +/- this on each worked plot whose RUNNING pre-improvement yield clears a player extra/less-yield
+		// threshold (CvPlot::calculateYield 8393-8401; the Industrious/Nomad-style trait mechanic). A single global define.
+		config["extraYield"] = picojson::value((double)GC.getDefineINT("EXTRA_YIELD"));
 		config["elapsedGameTurns"] = picojson::value((double)kGame.getElapsedGameTurns()); // getPeaceTradeModifier clause
 		world["config"] = picojson::value(config);
 
@@ -1115,6 +1118,8 @@ namespace
 		decomposition["route"]            = picojson::value((double)routeChange);
 		decomposition["goldenAge"]        = picojson::value((double)goldenAgeYield);
 		decomposition["threshold"]        = picojson::value((double)thresholdYield);
+		decomposition["playerExtraThreshold"] = picojson::value((double)iExtraThreshold);   // engine kOwner.getExtraYieldThreshold
+		decomposition["playerLessThreshold"]  = picojson::value((double)iLessThreshold);    // engine kOwner.getLessYieldThreshold
 		// Self-check: total minus every named addend. A non-zero residual = an un-decomposed calculateYield
 		// component (landmark / city min-floor / per-plot max(0) clamp on a net-negative plot) still to name.
 		const int named = natureYield + extraYield + cityCentreChange + populationChange + playerTerrainChange
