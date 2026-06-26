@@ -1131,6 +1131,14 @@ namespace
 				pp["terrain"] = picojson::value(std::string(GC.getTerrainInfo(pPlot->getTerrainType()).getType()));
 				if (pPlot->getFeatureType() != NO_FEATURE) pp["feature"] = picojson::value(std::string(GC.getFeatureInfo(pPlot->getFeatureType()).getType()));
 				if (pPlot->getBonusType(eTeam) != NO_BONUS) pp["bonus"] = picojson::value(std::string(GC.getBonusInfo(pPlot->getBonusType(eTeam)).getType()));
+				// REVEAL: the TRUE bonus (ignoring reveal) + whether the team has discovered it. A bonus on a plot gives
+				// NO improvement bump until revealed (getBonusType(eTeam) -> NO_BONUS), so a divergence may be a reveal gap.
+				const BonusTypes eTrueBonusP = pPlot->getBonusType();
+				if (eTrueBonusP != NO_BONUS)
+				{
+					pp["trueBonus"] = picojson::value(std::string(GC.getBonusInfo(eTrueBonusP).getType()));
+					pp["bonusRevealed"] = picojson::value(pPlot->getBonusType(eTeam) != NO_BONUS);
+				}
 				const ImprovementTypes eImpP = pPlot->getImprovementType();
 				if (eImpP != NO_IMPROVEMENT) pp["improvement"] = picojson::value(std::string(GC.getImprovementInfo(eImpP).getType()));
 				pp["total"]  = picojson::value((double)pPlot->calculateYield(eYield));
@@ -1144,6 +1152,15 @@ namespace
 					const CvImprovementInfo& kI = GC.getImprovementInfo(eImpP);
 					pp["impBase"] = picojson::value((double)kI.getYieldChange(eYield));
 					if (pPlot->getBonusType(eTeam) != NO_BONUS) pp["impBonus"] = picojson::value((double)kI.getImprovementBonusYield(pPlot->getBonusType(eTeam), eYield));
+					// FULL per-plot improvement split so imp == impBase+impBonus+impRiverSide+impIrrigated+impRoute+impPlayer+impTeam
+					// exactly (no unattributed remainder). impTeam = the team's improvement-yield accumulator (reveal-tech-fed
+					// improvement TechYieldChanges); impPlayer = trait/civic/building-global accumulator.
+					if (pPlot->isRiverSide())            pp["impRiverSide"] = picojson::value((double)kI.getRiverSideYieldChange(eYield));
+					if (pPlot->isIrrigationAvailable())  pp["impIrrigated"] = picojson::value((double)kI.getIrrigatedYieldChange(eYield));
+					const RouteTypes eImpRouteP = pPlot->getRouteType();
+					if (eImpRouteP != NO_ROUTE)          pp["impRoute"]     = picojson::value((double)kI.getRouteYieldChanges(eImpRouteP, eYield));
+					pp["impPlayer"] = picojson::value((double)kOwner.getImprovementYieldChange(eImpP, eYield));
+					pp["impTeam"]   = picojson::value((double)GET_TEAM(eTeam).getImprovementYieldChange(eImpP, eYield));
 				}
 				pp["water"]  = picojson::value(pPlot->isWater());
 				pp["center"] = picojson::value(bCityCentre);
