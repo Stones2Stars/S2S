@@ -118,6 +118,21 @@ Shape: **`/state/<slice>`** for game-wide lists, **`/state/<entity>/...`** for e
   - `/state/cities?player=N&city=M` (or `?name=NAME`) — one city
   - isolated sub-slices: `/state/cities/plots` · `/state/cities/buildings` · `/state/cities/specialists`
     (same selectors) — *just* that list
+- **map scope**
+  - `/state/plots` — **every map plot by global index** (`idx` = `CvMap::plotNum(x,y)` — the World plot id a
+    consumer keys on): terrain, feature, improvement, route, bonus (+ `bonusConnected`), the predicate facts
+    (water / hills / peak / coast / river / freshwater / irrig), `isCity`, `ownerTeam`, the **`workingCity {owner,id}`**
+    link + `worked` flag, the **`radiusCities [{owner,id}…]`** membership, `area`, and the stored `extraYield`. Same
+    all-plots walk as `PlotSnapshot`. ⛔ raw only — no yields.
+    - **`workingCity`** = the single ASSIGNED city (`getWorkingCity`); **`radiusCities`** = EVERY city whose workable
+      radius (`getCityIndexPlot`) includes this plot — a many-to-many superset (overlapping fat crosses), the engine's
+      getCityIndexPlot **inverse**. A city's full workable-plot set (its VICINITY substrate) is "all plots whose
+      `radiusCities` contains it", so the per-city plot lists become fully derivable from this map. ⚠ `bonus` is revealed
+      to the **working** team, but a city's own plot list wants it revealed to **that city's** team — so a late-era
+      resource on a *foreign-owned* radius plot can read differently per asking city (it never counts for that city's
+      vicinity anyway: `hasVicinityBonus` needs owned + connected).
+    - The per-city plot lists (`/state/cities`) are being migrated to **reference these by `idx` id** instead of
+      duplicating the plot facts (in flight).
 - **unit scope**
   - `/state/units` · `/state/units?player=N` — raw unit facts: type, unitAI, position, group, mission/activity,
     damage, level, domain

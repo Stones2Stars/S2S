@@ -23,9 +23,11 @@ from store import Store, REPO
 # holder. The rest got proper curators or defer to their parent monster: CultureLevel->curate_culturelevel,
 # Hurry->curate_hurry, Victory->curate_victory, BonusClass->curate_bonusclass, and CivicOption->curate_civicoption
 # (split out at its Tier-A turn, info #10, 2026-06-15). PromotionLine->Promotion pass, SpecialBuilding->Building
-# pass — these two RIDE THEIR PARENT MONSTER and are NOT emitted here on their own turn; they remain mis-homed
-# placeholders until their parent re-curates them. So this batch now holds only the two deferred placeholders.
-POCOS = ["PromotionLineInfo", "SpecialBuildingInfo"]
+# pass — these RIDE THEIR PARENT MONSTER. SpecialBuilding is now emitted PROPERLY by curate_building.py
+# (curate_special: the per-player GROUP cap iMaxPlayerInstances -> allowed.empire, json §4.4) — it must NOT be
+# re-emitted here as a generic-identity placeholder, or the placeholder OVERWRITES the proper output (the group cap
+# silently lands in identity.maxPlayerInstances and never loads). PromotionLine remains the one deferred placeholder.
+POCOS = ["PromotionLineInfo"]
 
 
 def folder(entity):

@@ -134,13 +134,20 @@ scope. **Forcing a redundant `{type, scope}` only invites authoring bugs.** *(Pl
 - **count thresholds** — `min: N` (≥ N) and/or `max: N` (≤ N), both inclusive. Exact-N = `min` and `max` together.
 - `connection` (resources only) ∈ `"trade"` | `"vicinity"` | `"trade|vicinity"`. `trade` = the city has the bonus via
   the trade network. `vicinity` = the bonus is on a tile in the city's radius.
-- **`vicinity` DISCRIMINATOR** (owner ruling 2026-06-24) — `vicinity` **as a whole encompasses ALL tiles in radius**;
-  an optional sibling `vicinity:` field puts a discriminator **on top** to tighten WHICH tiles count (the
-  `VICINITY ⊇ WORKABLE ⊇ IS_WORKED` nesting of §3.5, applied to a bonus):
-  - **absent** = any tile in the radius (the loosest).
-  - `"owned"` = the bonus is on a tile **owned** by the city (centre or owned radius tile; **no** connection or
-    improvement needed) — a raw owned-presence.
-  - `"worked"` = a tile a citizen **works** this turn.
+- **`vicinity` DISCRIMINATOR** (owner ruling 2026-06-24; ownership tiers 2026-06-26) — `connection:"vicinity"` scopes a
+  bonus to the city's workable radius; the optional sibling `vicinity:` field selects WHICH tiles count. A radius tile's
+  ownership is one of three — and the distinction is load-bearing: **owned** (the city's team), **neutral** (unowned,
+  `NO_TEAM`), or **foreign** (another team). The ownership selectors nest `owned ⊂ owned+neutral ⊂ owned+neutral+foreign`:
+  - **absent** = **owned + neutral** — the **DEFAULT** (owner 2026-06-26): the city's own tiles plus unclaimed land,
+    but NOT another team's. This mirrors the engine's vicinity (feature prereqs count neutral tiles too — `neutral`
+    flag, `CvHttpServer.cpp`; terrain/improvement/peak/hill are `owned`-only via the next selector).
+  - `"owned"` = **owned only** — strictly the city's own tiles (centre or owned radius tile; **no** connection or
+    improvement needed), excluding even neutral. A raw owned-presence.
+  - `"crossBorder"` = owned + neutral + **foreign** (any ownership) — the opt-in that ADDS foreign tiles, counting
+    beyond the city's borders. **No current use-case, kept for completeness** (owner 2026-06-26). Name avoids the
+    `all`/`any`/`noneOf` combinators (§3.4). A foreign tile's bonus is revealed per its OWN team, so it can read
+    differently per asking city — exactly why foreign is gated behind this explicit opt-in rather than the default.
+  - `"worked"` = a tile a citizen **works** this turn (implies owned).
   - `"connected"` = the bonus is **obtained** — owned + valid + connected to the city. *(`owned` and `connected` have
     OPPOSITE strictness — raw owned-presence vs a fully-obtained resource — so they are distinct, never folded.)*
 
@@ -177,6 +184,9 @@ IGNORED**, never treated as false — retiring a system never spuriously disable
 - **bare** (parameter-free string), four groups:
   - **environment / domain** `IS_<where>` (target-relative): `IS_WATER` · `IS_LAND` · `IS_AIR` · `IS_SPACE` · `IS_LUNAR` · `IS_MARS`
     (extensible).
+  - **relief form** `IS_FLATLANDS` (owner 2026-06-26, canonized): a plot with **no relief** — neither hills nor peak.
+    It is relief-only (water is also relief-free), so **flat land** composes it with the domain: `{all:["IS_LAND","IS_FLATLANDS"]}`.
+    The engine's per-plot-TYPE `PLOT_LAND` accumulator maps to exactly that pair.
   - **plot attributes** `HAS_<attr>` (relief & adjacency a plot carries, orthogonal to environment so they
     compose): `HAS_PEAK` · `HAS_HILLS` · `HAS_COAST` (adjacent to water) · `HAS_RIVER` · `HAS_FRESHWATER` ·
     `HAS_IRRIGATION` · `HAS_FEATURE` ("has *any* feature").
@@ -185,12 +195,15 @@ IGNORED**, never treated as false — retiring a system never spuriously disable
   - **world:** `NO_NUKES` (the world no-nukes verdict — true under the UN ban, false once nukes are enabled by anyone
     building the Manhattan Project). A nuke-enabling building (Manhattan) carries `requires.build.disabled: "NO_NUKES"`
     — it can't be built while nukes are forbidden.
-  - **city / player:** `IS_CAPITAL` · `IS_GOVERNMENT_CENTER` · `HAS_POWER` · `HAS_STATE_RELIGION` · `STATE_RELIGION_IN_CITY`.
+  - **city / player:** `IS_CAPITAL` · `IS_GOVERNMENT_CENTER` · `HAS_POWER` · `HAS_STATE_RELIGION` · `STATE_RELIGION_IN_CITY` ·
+    `IS_GOLDEN_AGE` (the player is in a golden age — owner 2026-06-26, canonized from the cascade evaluator).
     The first two are **DISTINCT**: `IS_CAPITAL` = the city is the player's capital; `IS_GOVERNMENT_CENTER` = the city
     holds a government-center building (Palace or a pseudo-palace), runtime-evaluated. Government-center buildings gate
     on `requires.build.disabled: "IS_GOVERNMENT_CENTER"` (one can't be built where a government center already exists —
     a gov-center test, not an `IS_CAPITAL` one).
 - **parameterized** `{ PREDICATE: param }`: `{HAS_FEATURE: FEATURE_X}` · `{HAS_TERRAIN: TERRAIN_X}` ·
+  `{HAS_IMPROVEMENT: IMPROVEMENT_X}` (the plot carries that improvement — the plots-filter twin of terrain/feature; owner
+  2026-06-26, canonized from the cascade evaluator) ·
   `{HAS_BONUS: BONUS_X}` · `{HAS_RELIGION: RELIGION_X}` · `{STATE_RELIGION: RELIGION_X}` · `{IS_HOLY_CITY: RELIGION_X}` ·
   `{HAS_CORPORATION: CORPORATION_X}` · `{latitude:{min,max}}` · `{existedFor:{min:N}}` (turns since built) ·
   `{HAS_COAST:{minArea:N}}` (the city is adjacent to a water body of **≥ N tiles**; a bare `HAS_COAST` is coastal at
@@ -198,7 +211,7 @@ IGNORED**, never treated as false — retiring a system never spuriously disable
 - **membership sugar** `{ terrain|feature|bonus: [TYPE,…] }` = "the plot's terrain/feature/bonus is one of these";
   equivalent to an `any` of the matching `HAS_*` predicate.
 - **composition is the win:** a Martian peak is `{all:["IS_MARS","HAS_PEAK"]}`; coastal land
-  `{all:["IS_LAND","HAS_COAST"]}`; flat land = `IS_LAND` with no `HAS_HILLS`/`HAS_PEAK`. No bespoke
+  `{all:["IS_LAND","HAS_COAST"]}`; flat land = `{all:["IS_LAND","IS_FLATLANDS"]}` (domain + relief). No bespoke
   "mars-peak"/"coastal-land" type.
 - **negation** uses the `disabled` twin (§3.9) or `noneOf` — never a `false` value.
 - (a `PROPERTY_*` band atom is the one exception to presence=`min:1` — absent `min` = no lower bound; §3.4.)

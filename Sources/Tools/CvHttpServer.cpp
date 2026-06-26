@@ -11,6 +11,8 @@
 #include "CvEraInfo.h"        // /extractor empire.era: current era type name
 #include "Engine/CvCity.h"
 #include "Engine/CvPlot.h" // pCity->plot()->canTrain in the /diagnostic/whyNot trace
+#include "Engine/CvMap.h"  // /state/plots: the global all-plots walk (plotByIndex/numPlots)
+#include "Engine/CvArea.h" // /state/plots: per-plot area id
 #include "AI/CvGameAI.h"
 #include "Defines/CvGlobals.h"
 #include "CvInfos.h"
@@ -1039,6 +1041,8 @@ namespace
 		const int iExtraYield = GC.getDefineINT("EXTRA_YIELD");
 		const int iExtraThreshold = kOwner.getExtraYieldThreshold(eYield);
 		const int iLessThreshold  = kOwner.getLessYieldThreshold(eYield);
+		// PER-PLOT array (so a basePlotYield divergence localises to the exact plot+substrate, not the aggregate).
+		picojson::value::array perPlotArr;
 
 		for (int iPlot = 0; iPlot < pCity->getNumCityPlots(); ++iPlot)
 		{
@@ -1119,6 +1123,32 @@ namespace
 				const RouteTypes eRoute = pPlot->getRouteType();
 				if (eRoute != NO_ROUTE) routeChange += GC.getRouteInfo(eRoute).getYieldChange(eYield);
 			}
+
+			// per-plot row: substrate + the realized addends, so a basePlotYield -1 localises to THIS plot's terrain/
+			// feature/bonus/improvement vs the cascade's per-plot basePlotRows.
+			{
+				picojson::value::object pp;
+				pp["terrain"] = picojson::value(std::string(GC.getTerrainInfo(pPlot->getTerrainType()).getType()));
+				if (pPlot->getFeatureType() != NO_FEATURE) pp["feature"] = picojson::value(std::string(GC.getFeatureInfo(pPlot->getFeatureType()).getType()));
+				if (pPlot->getBonusType(eTeam) != NO_BONUS) pp["bonus"] = picojson::value(std::string(GC.getBonusInfo(pPlot->getBonusType(eTeam)).getType()));
+				const ImprovementTypes eImpP = pPlot->getImprovementType();
+				if (eImpP != NO_IMPROVEMENT) pp["improvement"] = picojson::value(std::string(GC.getImprovementInfo(eImpP).getType()));
+				pp["total"]  = picojson::value((double)pPlot->calculateYield(eYield));
+				pp["nature"] = picojson::value((double)pPlot->calculateNatureYield(eYield, eTeam));
+				pp["imp"]    = picojson::value((double)((!bCityCentre && eImpP != NO_IMPROVEMENT) ? pPlot->calculateImprovementYieldChange(eImpP, eYield, pCity->getOwner()) : 0));
+				// nature + improvement SUB-sources (pin a -1 to terrain/feature/bonus food, or impBase vs impBonus).
+				pp["terrainFood"] = picojson::value((double)GC.getTerrainInfo(pPlot->getTerrainType()).getYield(eYield));
+				if (pPlot->getFeatureType() != NO_FEATURE) pp["featureFood"] = picojson::value((double)GC.getFeatureInfo(pPlot->getFeatureType()).getYieldChange(eYield));
+				if (pPlot->getBonusType(eTeam) != NO_BONUS) pp["bonusFood"] = picojson::value((double)GC.getBonusInfo(pPlot->getBonusType(eTeam)).getYieldChange(eYield));
+				if (!bCityCentre && eImpP != NO_IMPROVEMENT) {
+					const CvImprovementInfo& kI = GC.getImprovementInfo(eImpP);
+					pp["impBase"] = picojson::value((double)kI.getYieldChange(eYield));
+					if (pPlot->getBonusType(eTeam) != NO_BONUS) pp["impBonus"] = picojson::value((double)kI.getImprovementBonusYield(pPlot->getBonusType(eTeam), eYield));
+				}
+				pp["water"]  = picojson::value(pPlot->isWater());
+				pp["center"] = picojson::value(bCityCentre);
+				perPlotArr.push_back(picojson::value(pp));
+			}
 		}
 
 		picojson::value::object decomposition;
@@ -1152,12 +1182,120 @@ namespace
 			+ seaPlotYield + plotTypeChange + cityTerrainChange + riverPlotChange + cityImprovementChange
 			+ improvementChange + routeChange + goldenAgeYield + thresholdYield;
 		decomposition["residual"]         = picojson::value((double)(total - named));
+		decomposition["plots"]            = picojson::value(perPlotArr);   // per-plot rows (food/yield divergence localiser)
 		return decomposition;
 	}
 
 	// ---- /state slice renderers: RAW inputs only (no drycalc target ever). iPlayerFilter < 0 == all alive
 	// players; else just that one. City ids are not unique across empires, so each row carries owner+id (cities
 	// reuse extractCity, which stamps owner/id/name/x/y). See docs/specs/http-endpoints.md. ----
+	// /state/plots -- the GLOBAL map (the World StoneBase keys on): every plot by its map INDEX, the same all-plots
+	// walk PlotSnapshot.cpp uses (idx == CvMap::plotNum(x,y)). Each plot carries its raw contents + the predicate
+	// facts the cascade reads + the city<->plot link (workingCity {owner,id} + worked). RAW inputs only -- no yields,
+	// no verdicts (http-endpoints "no drycalc TARGET"); the per-city /state plot lists carry only these idx ids.
+	CvString extractPlots()
+	{
+		const CvMap& kMap = GC.getMap();
+		picojson::value::object root;
+		root["turn"] = picojson::value((double)GC.getGame().getGameTurn());
+		root["mapW"] = picojson::value((double)kMap.getGridWidth());
+		root["mapH"] = picojson::value((double)kMap.getGridHeight());
+		picojson::value::array plots;
+		const int iNumPlots = kMap.numPlots();
+
+		// Inverse of getCityIndexPlot: which cities' WORKABLE RADIUS (geometric fat cross) includes each plot. The
+		// engine only exposes plot->getWorkingCity() (the single ASSIGNED city); the full radius is a many-to-many
+		// (overlapping crosses), so we build the plot->cities map once by walking every city's getCityIndexPlot. This
+		// is what lets StoneBase reconstruct each city's full EvalState.Plots (the VICINITY substrate) without
+		// re-deriving Civ4 city geometry -- the plot map carries the whole plot<->city relationship.
+		std::map<int, picojson::value::array> radiusByIdx;
+		for (int iP = 0; iP < MAX_PLAYERS; ++iP)
+		{
+			CvPlayer& kP = GET_PLAYER((PlayerTypes)iP);
+			if (!kP.isAlive()) continue;
+			int iLoop;
+			for (CvCity* pCity = kP.firstCity(&iLoop); pCity != NULL; pCity = kP.nextCity(&iLoop))
+				for (int pi = 0; pi < pCity->getNumCityPlots(); ++pi)
+				{
+					const CvPlot* pRP = pCity->getCityIndexPlot(pi);
+					if (pRP == NULL) continue;
+					picojson::value::object cref;
+					cref["owner"] = picojson::value((double)pCity->getOwner());
+					cref["id"]    = picojson::value((double)pCity->getID());
+					radiusByIdx[kMap.plotNum(pRP->getX(), pRP->getY())].push_back(picojson::value(cref));
+				}
+		}
+
+		for (int i = 0; i < iNumPlots; ++i)
+		{
+			const CvPlot* pPlot = kMap.plotByIndex(i);
+			if (pPlot == NULL) continue;
+			picojson::value::object pl;
+			pl["idx"] = picojson::value((double)i);                       // global map index == CvMap::plotNum(x,y) -- the World plot id
+			pl["x"]   = picojson::value((double)pPlot->getX());
+			pl["y"]   = picojson::value((double)pPlot->getY());
+			const TerrainTypes eT = pPlot->getTerrainType();
+			if (eT != NO_TERRAIN) pl["terrain"] = picojson::value(std::string(GC.getTerrainInfo(eT).getType()));
+			const FeatureTypes eF = pPlot->getFeatureType();
+			if (eF != NO_FEATURE) pl["feature"] = picojson::value(std::string(GC.getFeatureInfo(eF).getType()));
+			const ImprovementTypes eI = pPlot->getImprovementType();
+			if (eI != NO_IMPROVEMENT) pl["improvement"] = picojson::value(std::string(GC.getImprovementInfo(eI).getType()));
+			const RouteTypes eR = pPlot->getRouteType();
+			if (eR != NO_ROUTE) pl["route"] = picojson::value(std::string(GC.getRouteInfo(eR).getType()));
+			CvCity* pWork = pPlot->getWorkingCity();
+			// Bonus as REVEALED to the working city's team (getBonusType(team)) -- matches /state/cities + the engine's
+			// yield calc: an UNREVEALED late-era resource (methane ice / uranium / ...) contributes nothing until its tech.
+			const BonusTypes eB = pPlot->getBonusType(pWork != NULL ? pWork->getTeam() : NO_TEAM);
+			if (eB != NO_BONUS)
+			{
+				pl["bonus"] = picojson::value(std::string(GC.getBonusInfo(eB).getType()));
+				// vicinity-bonus (OBTAINED semantic): owned by the working city + valid + connected to it (CvCity::hasVicinityBonus)
+				if (pWork != NULL && pPlot->getOwner() == pWork->getOwner()
+					&& pPlot->isHasValidBonus() && pPlot->isConnectedTo(pWork))
+					pl["bonusConnected"] = picojson::value(true);
+			}
+			if (pPlot->isBeingWorked())         pl["worked"] = picojson::value(true);
+			if (pPlot->isRiver())               pl["river"] = picojson::value(true);
+			if (pPlot->isIrrigationAvailable()) pl["irrig"] = picojson::value(true);
+			if (pPlot->isHills())               pl["hills"] = picojson::value(true);
+			if (pPlot->isPeak() || pPlot->isAsPeak()) pl["peak"] = picojson::value(true);
+			if (pPlot->isWater())               pl["water"] = picojson::value(true);
+			if (pPlot->isCoastalLand())         pl["coast"] = picojson::value(true);
+			if (pPlot->isFreshWater())          pl["freshwater"] = picojson::value(true);
+			if (pPlot->isCity())                pl["isCity"] = picojson::value(true);
+			if (pPlot->getTeam() != NO_TEAM)    pl["ownerTeam"] = picojson::value((double)pPlot->getTeam());
+			if (pWork != NULL)
+			{
+				picojson::value::object wc;                              // canonical (owner,id) city handle (http-endpoints City identity)
+				wc["owner"] = picojson::value((double)pWork->getOwner());
+				wc["id"]    = picojson::value((double)pWork->getID());
+				pl["workingCity"] = picojson::value(wc);
+			}
+			// radiusCities -- EVERY city whose workable radius (getCityIndexPlot) includes this plot (a superset of
+			// workingCity; overlapping fat crosses make it many-to-many). The per-city EvalState.Plots is "all plots
+			// whose radiusCities contains me", so the per-city plot arrays become fully derivable from this map.
+			{
+				std::map<int, picojson::value::array>::iterator it = radiusByIdx.find(i);
+				if (it != radiusByIdx.end()) pl["radiusCities"] = picojson::value(it->second);
+			}
+			const CvArea* pArea = pPlot->area();
+			if (pArea != NULL) pl["area"] = picojson::value((double)pArea->getID());
+			// per-plot stored EXTRA yield (event/effect savegame state; a calculateYield addend, an INPUT not a TARGET)
+			const int exF = pPlot->getExtraYield(YIELD_FOOD), exP = pPlot->getExtraYield(YIELD_PRODUCTION), exC = pPlot->getExtraYield(YIELD_COMMERCE);
+			if (exF || exP || exC)
+			{
+				picojson::value::object ex;
+				if (exF) ex["food"] = picojson::value((double)exF);
+				if (exP) ex["production"] = picojson::value((double)exP);
+				if (exC) ex["commerce"] = picojson::value((double)exC);
+				pl["extraYield"] = picojson::value(ex);
+			}
+			plots.push_back(picojson::value(pl));
+		}
+		root["plots"] = picojson::value(plots);
+		return CvString(picojson::value(root).serialize().c_str());
+	}
+
 	CvString stateSlice(const char* szAction, int iPlayerFilter, int iCityReq)
 	{
 		picojson::value::object root;
@@ -1256,6 +1394,10 @@ namespace
 		// single-player resolution below, so the "all players" walk is reachable).
 		if (strcmp(szAction, "gamestate") == 0)
 			return extractGameState(iPlayer);
+
+		// /state/plots -- the GLOBAL map dump (not per-player); resolved before the per-player stateSlice below.
+		if (strcmp(szAction, "statePlots") == 0)
+			return extractPlots();
 
 		// /state/* granular slices (raw inputs); also all-players-capable, so resolved before the single-player block.
 		if (strncmp(szAction, "state", 5) == 0)
@@ -1571,6 +1713,47 @@ namespace
 				o["corporationCommerceDetail"]=picojson::value(cdet);
 			}
 
+			// per-specialist YIELD breakdown -- the EXACT 5 terms m_aiSpecialistYieldTotal sums (CvCity.cpp:5156 +
+			// getExtraSpecialistYield 11745-57): intrinsic (SpecialistInfo.getYieldChange), perType (player
+			// getExtraSpecialistYield(spec,y)), local (city getLocalSpecialistExtraYield), all (player
+			// getSpecialistExtraYield(y)), pct (player getSpecialistYieldPercentChanges, applied /100). Mirrors
+			// specialistCommerceDetail so a specialist-yield gap attributes to a NAMED engine term, no guessing.
+			{
+				picojson::value::array sydet;
+				CvPlayer& kPy = GET_PLAYER((PlayerTypes)iPlayer);
+				static const char* aYN[3] = { "food", "production", "commerce" };
+				for (int s=0; s<GC.getNumSpecialistInfos(); ++s)
+				{
+					const int cnt=pCity->getSpecialistCount((SpecialistTypes)s)+pCity->getFreeSpecialistCount((SpecialistTypes)s);
+					if(cnt<=0) continue;
+					const CvSpecialistInfo& si=GC.getSpecialistInfo((SpecialistTypes)s);
+					picojson::value::object e;
+					e["type"]=picojson::value(std::string(si.getType()));
+					e["count"]=picojson::value((double)cnt);
+					for(int y=0;y<3;++y)
+					{
+						const YieldTypes eY=(YieldTypes)y;
+						const int intr=si.getYieldChange(eY);
+						const int pt=kPy.getExtraSpecialistYield((SpecialistTypes)s,eY);
+						const int lo=pCity->getLocalSpecialistExtraYield((SpecialistTypes)s,eY);
+						const int al=kPy.getSpecialistExtraYield(eY);
+						const int pc=kPy.getSpecialistYieldPercentChanges((SpecialistTypes)s,eY);
+						if(intr||pt||lo||al||pc)
+						{
+							picojson::value::object yy;
+							if(intr)yy["intrinsic"]=picojson::value((double)intr);
+							if(pt)yy["perType"]=picojson::value((double)pt);
+							if(lo)yy["local"]=picojson::value((double)lo);
+							if(al)yy["all"]=picojson::value((double)al);
+							if(pc)yy["pct"]=picojson::value((double)pc);
+							e[aYN[y]]=picojson::value(yy);
+						}
+					}
+					sydet.push_back(picojson::value(e));
+				}
+				o["specialistYieldDetail"]=picojson::value(sydet);
+			}
+
 			const int aFam[3] = { YIELD_FOOD, YIELD_PRODUCTION, YIELD_COMMERCE };
 			const char* aFamName[3] = { "food", "production", "commerce" };
 			picojson::value::array kYields;
@@ -1594,6 +1777,60 @@ namespace
 				e["modPower"]    = picojson::value((double)(pCity->isPower() ? pCity->getPowerYieldRateModifier(eY) : 0));
 				e["modArea"]     = picojson::value((double)(pCity->area() != NULL ? pCity->area()->getYieldRateModifier(pCity->getOwner(), eY) : 0));
 				e["modCapital"]  = picojson::value((double)(pCity->isCapital() ? kPlayer.getCapitalYieldRateModifier(eY) : 0));
+				// modPlayer/modCapital PER-SOURCE (CvPlayer 7457/18063/28600) -- so a modifier divergence attributes to a
+				// NAMED civic/trait/building, no guessing. modPlayer = Σ civic.getYieldModifier + Σ trait.getYieldModifier
+				// + Σ building.getGlobalYieldModifier × countNumBuildings (PER INSTANCE -- the multi-instance accumulation
+				// the cascade's distinct-set undercounts); modCapital = Σ civic/trait getCapitalYieldModifier (capital only).
+				{
+					picojson::value::array civA, trA, bgA;
+					for (int co = 0; co < GC.getNumCivicOptionInfos(); ++co)
+					{
+						const CivicTypes eC = kPlayer.getCivics((CivicOptionTypes)co);
+						if (eC == NO_CIVIC) continue;
+						const CvCivicInfo& kC = GC.getCivicInfo(eC);
+						const int m = kC.getYieldModifier(eY), cm = kC.getCapitalYieldModifier(eY);
+						if (m || cm) { picojson::value::object o; o["type"]=picojson::value(std::string(kC.getType())); if(m)o["mod"]=picojson::value((double)m); if(cm)o["capMod"]=picojson::value((double)cm); civA.push_back(picojson::value(o)); }
+					}
+					for (int tr = 0; tr < GC.getNumTraitInfos(); ++tr)
+					{
+						if (!kPlayer.hasTrait((TraitTypes)tr)) continue;
+						const CvTraitInfo& kTr = GC.getTraitInfo((TraitTypes)tr);
+						const int m = kTr.getYieldModifier(eY), cm = kTr.getCapitalYieldModifier(eY);
+						if (m || cm) { picojson::value::object o; o["type"]=picojson::value(std::string(kTr.getType())); if(m)o["mod"]=picojson::value((double)m); if(cm)o["capMod"]=picojson::value((double)cm); trA.push_back(picojson::value(o)); }
+					}
+					for (int bb = 0; bb < GC.getNumBuildingInfos(); ++bb)
+					{
+						const CvBuildingInfo& kB = GC.getBuildingInfo((BuildingTypes)bb);
+						const int g = kB.getGlobalYieldModifier(eY);
+						if (!g) continue;
+						const int cnt = kPlayer.countNumBuildings((BuildingTypes)bb);
+						if (!cnt) continue;
+						picojson::value::object o; o["type"]=picojson::value(std::string(kB.getType())); o["globalMod"]=picojson::value((double)g); o["count"]=picojson::value((double)cnt); o["total"]=picojson::value((double)(g*cnt));
+						bgA.push_back(picojson::value(o));
+					}
+					picojson::value::object ms; ms["civics"]=picojson::value(civA); ms["traits"]=picojson::value(trA); ms["buildingGlobals"]=picojson::value(bgA);
+					e["modPlayerSources"] = picojson::value(ms);
+				}
+				// per-TRAIT specialist yield (which held trait gives a specialist its perType -- getSpecialistYieldChange,
+				// CvPlayer 28582) so the player-4 ARTIST gap attributes to a named trait, no store-vs-engine guessing.
+				{
+					picojson::value::array stA;
+					for (int tr = 0; tr < GC.getNumTraitInfos(); ++tr)
+					{
+						if (!kPlayer.hasTrait((TraitTypes)tr)) continue;
+						const CvTraitInfo& kTr = GC.getTraitInfo((TraitTypes)tr);
+						picojson::value::object specs;
+						for (int s = 0; s < GC.getNumSpecialistInfos(); ++s)
+						{
+							const int cnt = pCity->getSpecialistCount((SpecialistTypes)s)+pCity->getFreeSpecialistCount((SpecialistTypes)s);
+							if (cnt <= 0) continue;
+							const int v = kTr.getSpecialistYieldChange(s, eY);
+							if (v) specs[GC.getSpecialistInfo((SpecialistTypes)s).getType()] = picojson::value((double)v);
+						}
+						if (!specs.empty()) { picojson::value::object o; o["type"]=picojson::value(std::string(kTr.getType())); o["specialists"]=picojson::value(specs); stA.push_back(picojson::value(o)); }
+					}
+					e["specialistTraitDetail"] = picojson::value(stA);
+				}
 				e["extraYield"]    = picojson::value((double)pCity->getExtraYield(eY));    // x1 TRUNCATED -- the term the formula uses
 				e["extraYield100"] = picojson::value((double)pCity->getExtraYield100(eY)); // untruncated, for decompose
 				// BASE decomposition (getBaseYieldRate, CvCity.cpp:22906) -- the additive base's named sub-sources:
@@ -1681,11 +1918,25 @@ namespace
 					const int pct = bi.getYieldModifier(eY);
 					e[aYK[f][0]] = picojson::value((double)flat);
 					e[aYK[f][1]] = picojson::value((double)pct);
-						if (f == 1) {   // PRODUCTION flat COMPONENT split (debug: static/dynamic/perPop/tech of a building-flat divergence)
+						if (f == 1) {   // PRODUCTION flat COMPONENT split (debug: static/dynamic/perPop/tech/bonusVic of a building-flat divergence)
 							e["prodStatic100"]  = picojson::value((double)(bi.getYieldChange(eY) * 100));
 							e["prodDynamic100"] = picojson::value((double)(pCity->getBuildingYieldChange((BuildingTypes)b, eY) * 100));
 							e["prodPerPop100"]  = picojson::value((double)(bi.getYieldPerPopChange(eY) * iPopBY));
 							e["prodTech100"]    = picojson::value((double)GET_TEAM(eTeamBY).getBuildingYieldTechChange(eY, (BuildingTypes)b));
+							// the building's BONUS/VICINITY holder contribution (the squirrelBanana m_aiBuildingBonusVicinityYield100,
+							// getBuildingExtraYield100) -- the conditional flat the cascade curates as {bonus|vicinity} production.city.flat.
+							// REALIZED per-building flat = prodStatic+prodDynamic+prodPerPop+prodTech+prodBonusVic; without this the
+							// per-building view omits exactly the term a vicinity over-count rides on (the player-5 +100).
+							int iBV = 0;
+							const bool bHasBon = bi.getBonusYieldChanges(NO_BONUS, NO_YIELD) != 0;
+							const bool bHasVic = bi.getVicinityBonusYieldChanges(NO_BONUS, NO_YIELD) != 0;
+							if (bHasBon || bHasVic)
+								for (int iB = 0; iB < GC.getNumBonusInfos(); ++iB)
+								{
+									if (bHasBon && pCity->hasBonus((BonusTypes)iB))         iBV += bi.getBonusYieldChanges((BonusTypes)iB, eY);
+									if (bHasVic && pCity->hasVicinityBonus((BonusTypes)iB)) iBV += bi.getVicinityBonusYieldChanges((BonusTypes)iB, eY);
+								}
+							e["prodBonusVic100"] = picojson::value((double)(iBV * 100));
 						}
 					if (flat || pct) bAny = true;
 				}
@@ -2724,6 +2975,7 @@ namespace
 			{ "/state/techs",   "stateTechs",   "every player's completed techs" },
 			{ "/state/players", "statePlayers", "raw player facts (era/civics/traits/counts; no computed rates)" },
 			{ "/state/cities",  "stateCities",  "raw city substrate: plots/buildings/specialists/bonuses (no yields)" },
+			{ "/state/plots",   "statePlots",   "every map plot by global index: contents/facts + workingCity link (no yields)" },
 			{ "/state/units",   "stateUnits",   "raw unit facts (type/ai/pos/group/damage/level/promotions)" },
 			{ "/computed/cities/yields",   "cityInput",      "getYieldRate100 per channel + full per-source decomposition" },
 			{ "/computed/cities/buildable","cityBuildable",  "the engine's canConstruct TRUE-set for the city (the buildable oracle)" },
