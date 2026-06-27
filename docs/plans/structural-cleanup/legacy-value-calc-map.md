@@ -130,6 +130,34 @@ return min(CITY_MAX_YIELD_RATE, iRate)
 
 > ~~⚠ verify visibility of getBaseCommerceRateExtra / getTotalCommerceRateModifier / getProductionToCommerceModifier~~ — **STALE (§12): all three are public, called directly.**
 
+**StoneBase §2 implementation (2026-06-27) — `CommerceRateCascade`.** Reproduces `getCommerceRateTimes100` term-by-term,
+leaning on the already-parity'd §1 yield cascade: `yieldCommerce100` = `YieldRate100("commerce")`; `specialistCommerce`
+(+extra) = `SpecialistYieldTotal(channel)`; `buildingCommerce100` = `BuildingFlatYield100(channel)` **+ shrine + corp-HQ**
+(see below); `totalModifier` = `TotalYieldModifier(channel)`; `goldenAge` = `GoldenAgeYield(channel)`; `playerExtra` =
+trait `CommerceChanges` (empire.flat); slider from `/state` (`world`-plumbed `EvalState.CommerceSlider`); combine bit-exact
+to `CvCity.cpp:11969-11996`. gold/research/espionage reach near-parity; **culture is the open channel** (its own
+non-§2 sources below). Two §2 sub-mechanics that fold into per-building `buildingCommerce100` (the engine attributes them
+to the holding building via `getBaseCommerceRateFromBuilding100`), both modelled like the building's own flat:
+> - **Shrine commerce** — a building with `identity.shrine = RELIGION` adds `religion.shrine.{c} × countReligionLevels(R)`
+>   (the `shrine` bespoke section × the `world.religionLevels` tally). Verified exact (Church-of-the-Nativity gold 163).
+> - **Corp-HQ commerce** — a building with `identity.corporationHQ = CORP` adds `corp.{c}.empire.headquarters.perCorporationLevel
+>   × countCorporationLevels(C)` (`world.corporationLevels` tally). Verified exact (HQ_CEREAL_MILLS gold 44).
+
+> **⚠ FIXED-POINT (OOS): flat commerce must sum in ×100, not truncate (2026-06-27).** Fractional human commerce flats
+> (e.g. a Folklore building's research `[1, −0.6@TECH_LANGUAGE, −0.1@…×4]` → nets 0) MUST be summed as `Σ round(human×100)`,
+> never `(int)human × 100` (which truncates −0.6→0 and kept a phantom +1 ×93 buildings). The StoneBase reader is
+> `YieldModifierCascade.SumUnit100`. Yields are integer so unaffected; only commerce has fractional flats. This is the
+> [scale registry](../../specs/curators/fixed-point-and-scales.md) integer-math rule applied in the cascade.
+
+> **⚠ OPEN — culture-channel residual, source NOT yet identified (2026-06-27).** The culture channel under-counts vs the
+> engine on some buildings, e.g. `EDUCATION_ENLIGHTENED` reports engine `culFlat100 = 2100` (`culBld100 = 0`). **What is
+> proven:** the building's own JSON/XML carries no culture commerce; no tech or civic XML references it for commerce; its
+> `PropertyBuilding` band entry is a pure `iMinValue`/`iMaxValue` threshold (no commerce); and no `property_*.json`
+> defines a core commerce. **What is NOT proven:** where the engine value actually originates — it has NOT been traced to
+> a named source, and earlier guesses (tech-granted / non-static-Python / a different property like tourism) are
+> UNVERIFIED and must not be asserted. This is an open investigation; the source must be MAPPED before any cascade change.
+> (gold/research/espionage are near-parity and unaffected.)
+
 ## 3. HEALTH + HAPPINESS — good/bad signed-split
 
 `goodHealth()` (`CvCity.cpp` ~5831) = Σ `max(0, source)` over: freshWater, feature, bonus, totalGoodBuildingHealth, extraHealth, handicap, improvement/100, specialist/100, corporation, extraTechHealth, player.{extra,civic,civilization,world,project}Health. `badHealth()` (~5858) = `unhealthyPopulation − Σ min(0, source)` (same sources, negative parts) − espionageHealthCounter. `healthRate = min(0, good − bad)`.
