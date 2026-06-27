@@ -1589,6 +1589,13 @@ namespace
 			o["cityName"] = picojson::value(std::string(narrowToAscii(pCity->getName()).GetCString()));
 			o["population"] = picojson::value((double)pCity->getPopulation());
 			o["cap"] = picojson::value((double)CITY_MAX_YIELD_RATE); // the getYieldRate100 clamp ceiling
+			// FREE-SPECIALIST AMOUNT oracle (the static free-specialist slot count the cascade must COMPUTE from grants,
+			// then verify here — NOT a /state ride-in). totalFreeSpecialists = city(buildings' getFreeSpecialist) + area +
+			// player + Σ improvement freeSpecialists×plots + per-wonder; cityFreeSpecialist = the city building-sourced
+			// generic part only (getFreeSpecialist). These are the GENERIC "any" free specialists, distinct from the
+			// per-type assigned counts in /state.specialists (getSpecialistCount + getFreeSpecialistCount).
+			o["totalFreeSpecialists"] = picojson::value((double)pCity->totalFreeSpecialists());
+			o["cityFreeSpecialist"]   = picojson::value((double)pCity->getFreeSpecialist());
 
 			// the ACTIVE-building loadout (the cascade deposit source). Owner 2026-06-19: emit the ACTIVE set
 			// (hasFullyActiveBuilding = present AND not resource/replacement-disabled AND not religiously-limited) so the
