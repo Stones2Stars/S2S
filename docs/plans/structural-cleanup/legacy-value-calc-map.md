@@ -171,10 +171,21 @@ to the holding building via `getBaseCommerceRateFromBuilding100`), both modelled
 >   per-type count — the building generic ones are not.
 > - **The wall:** `getBestSpecialist` (`CvCityAI.cpp:12355`) picks the slot via `AI_specialistValue` — an AI heuristic,
 >   NOT a clean rule — so the *assignment* is not cleanly reproducible offline.
-> - **Decision (do not guess), settle before more commerce/yield residual work:** (a) EMIT the engine's resolved
->   free-specialist assignment per building/city via `/state` (engine already computed it — read, not reproduce);
->   (b) reproduce `getBestSpecialist`/`AI_specialistValue` in StoneBase (proper for the eventual C++ port, AI-hard);
->   or (c) a defined approximation.
+> - **Correction (owner 2026-06-27): free specialists are NOT normal-specialist assignment.** The `getBestSpecialist`/
+>   `AI_specialistValue` path is for assigning CITIZENS to specialist slots — a different mechanism. Free specialists are
+>   a **static GRANT amount** computed by `totalFreeSpecialists()` (`CvCity.cpp:5747`): `Σ building getFreeSpecialist
+>   (freeSpecialists.any) + area + player + Σ improvement freeSpecialists×improved-plots + per-wonder flags×wonder-counts`,
+>   `max(0,·)`. No AI valuation. **Assigned** specialists are read from `/state`; the **free** amount is computed; both
+>   **output into the same bucket**. Order (owner): get the static free amount right FIRST.
+> - **Oracle emitted + verified** (`/computed/cities/yields`, committed): `totalFreeSpecialists` (London = **59**) +
+>   `cityFreeSpecialist` (building-sourced generic part, London = **9**) — vs `/state` assigned 150. The 59 free
+>   specialists' output is what the cascade silently missed.
+> - **Build plan (StoneBase, foundational):** (1) compute the free-specialist amount from the grant sources above
+>   (the `freeSpecialists.any` count-leaf — modifier.md §6.7 — across active buildings + civic/trait empire grants +
+>   improvement×plots + per-wonder), diff vs `totalFreeSpecialists`; (2) resolve the OUTPUT typing (which specialist
+>   type the generic `any` free specialists produce as — `DEFAULT_SPECIALIST`? distributed? — verify, don't guess);
+>   (3) wire the free amount into the specialist output bucket (yields/commerce/GP-rate/happiness/health), watching the
+>   overlap with the per-type assigned counts already in `/state` to avoid double-count.
 
 ## 3. HEALTH + HAPPINESS — good/bad signed-split
 
