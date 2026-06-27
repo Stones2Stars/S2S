@@ -157,11 +157,24 @@ to the holding building via `getBaseCommerceRateFromBuilding100`), both modelled
 > `culBld100=0`) reports engine `culFlat100=2100` = its 3 free specialists × their per-spec culture. This was the
 > culture-channel residual: the cascade's `buildingCommerce100` (and the engine's per-building dump) attribute
 > free-specialist commerce to the BUILDING, but StoneBase's `CommerceRateCascade` only sums each building's OWN
-> flat — it does not yet add the building's free-specialist commerce. **Fix (next):** for each active building with
-> `freeSpecialists.any=N` (or typed free specialists), add N×(best specialist's per-channel commerce) to its building
-> commerce — reproducing `getBestSpecialist` (AI-value pick) is the hard part; the `freeSpecialists` count + specialist
-> per-channel commerce are already available. Watch for double-count vs the `specialist` term (building free specialists
-> may or may not be in `/state`'s specialist counts — verify before adding).
+> flat — it does not yet add the building's free-specialist commerce.
+>
+> **FOUNDATIONAL (owner ruling 2026-06-27): StoneBase must calculate FREE SPECIALISTS early, or chase ghosts forever.**
+> Free specialists feed many channels (specialist commerce, yields, GP-rate, happiness/health) — wrong here ⇒ every
+> downstream residual is a ghost. Grounded trace:
+> - A building's **generic** free specialists (`iFreeSpecialist` = JSON `freeSpecialists.any=N`) are **NOT stored** in the
+>   city specialist counts; they are computed **on-the-fly per building** in each `getXBySpecialist` getter
+>   (commerce `:12327`, yield `:11078`, GP-rate `:7288`, happiness `:9032/:9179`): `for iI in 1..getFreeSpecialist(): getBestSpecialist(iI)`.
+> - So `/state`'s specialist block (`getSpecialistCount + getFreeSpecialistCount`, per-type) **EXCLUDES** them (London
+>   reads 150; the engine has the building free specialists on top). NB the *unattributed* array
+>   `m_paiFreeSpecialistCountUnattributed` (`:22461`, Python/GP-joined) is a DIFFERENT thing and IS folded into the
+>   per-type count — the building generic ones are not.
+> - **The wall:** `getBestSpecialist` (`CvCityAI.cpp:12355`) picks the slot via `AI_specialistValue` — an AI heuristic,
+>   NOT a clean rule — so the *assignment* is not cleanly reproducible offline.
+> - **Decision (do not guess), settle before more commerce/yield residual work:** (a) EMIT the engine's resolved
+>   free-specialist assignment per building/city via `/state` (engine already computed it — read, not reproduce);
+>   (b) reproduce `getBestSpecialist`/`AI_specialistValue` in StoneBase (proper for the eventual C++ port, AI-hard);
+>   or (c) a defined approximation.
 
 ## 3. HEALTH + HAPPINESS — good/bad signed-split
 
