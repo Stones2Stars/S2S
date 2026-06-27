@@ -51,6 +51,18 @@ folds a value in, `effective(base)` reads it out.
 float math desyncs. The single human→×100 conversion happened once in `readJson` ([json](json.md) §3.6); the
 slot does pure integer math and never sees the human boundary.
 
+> **A plot's yield is ONE base package, resolved in isolation BEFORE the city modifiers (owner ruling 2026-06-27).**
+> All output from a single plot is computed in **complete isolation** as one base-yield package — `CvPlot::calculateYield`
+> per plot ([calc-map](../plans/structural-cleanup/legacy-value-calc-map.md) §10.1: `calculateNatureYield`(`getBaseYield`=
+> terrain+feature+river+hills/peak + bonus) + improvement (floored at `-nature`) + route + the keyed/plots flats,
+> `max(0,·)`) — and that result is passed **up the chain**: the city SUMS its worked-plot packages into the §1 `base`.
+> **The plot yields ARE "the base the rest is calculated from."** So anything that scales a *specific improvement or
+> plot component* resolves **inside** this per-plot package, **before** the city-level `(100+Σpercent)` stack ever runs.
+> Today every component-specific buff is **flat** (so the package is a pure sum); should a per-improvement *percentage*
+> ever be needed, it applies **here, inside the isolated plot calc** — **never** in the city `(100+Σpercent)` stack,
+> which only ever scales the already-summed base. Consequence: a `basePlotYield` divergence is *necessarily* a per-plot
+> **flat** miscount (missing or double-counted), because no city-level percentage exists that could move a single plot.
+
 > **Parity is the bar (owner ruling 2026-06-23).** The cascade reproduces the legacy engine **exactly** — parity is
 > the only goal, and it is achievable: no bug has surfaced in any actual *calculation*, so the math matches. Any
 > mismatch is a **data-collection gap** (a source the cascade didn't gather), never a formula difference — so there
@@ -122,12 +134,29 @@ authored shape.
 > **⛔ Trait modifier sources — pick the active set by the OPTION, never the id (kraken-resilience, owner 2026-06-25).**
 > A leader's traits resolve to ONE `CvTraitInfo` table from *either* its simple set (`traits/simple/`, the
 > `DefaultTraits`) *or* its complex/Thunderbrd set (`traits/complex/`, the `DefaultComplexTraits`), chosen at runtime
-> by **`GAMEOPTION_LEADER_COMPLEX_TRAITS`** (the curator carries both, pruned by that option's `loadPrune`). The two
+> by **`GAMEOPTION_LEADER_COMPLEX_TRAITS`**. The curator emits both as **two cleanly-separated, self-complete folders**
+> (`traits/simple/` + `traits/complex/`); a consumer **loads the one active folder** by the live game option — this is
+> NOT a `loadPrune` and NOT a mid-game swap (loadPrune is a load-time entity-DROP under an option, [json](json.md) §9 —
+> never reach for it to select a set's values; any WorldBuilder mid-game trait swap is a post-migration concern). The two
 > sets share **~64 colliding type ids**, so a consumer reading a trait's modifier families MUST select the active set
 > from the **live game option (asserted via `/state`)** — NEVER infer it from a trait id's spelling (a `…1`-suffixed id
 > is not "simple") nor from file load-order. Using the wrong file silently yields wrong magnitudes — this was the exact
 > `modPlayer` yield divergence that proved the rule. (The enabler is unaffected: it reads trait *presence*, which
 > `/state` already resolves to the active set; only the modifier cascade reads trait *family values*.)
+
+> **⛔ Inverted-onto-a-SHARED-entity boosts stay on the TRAIT, per set — the own-output carve-out (owner ruling 2026-06-25).**
+> The [deliveryguy rule](#4-ownership--the-deliveryguy-rule) normally puts a trait's boost of *another* entity's output
+> ON that entity as **own-output** (a trait boosting a Merchant's commerce → on the **specialist**, `enabled:{trait}`).
+> But a **specialist is ONE shared file**, while a split trait's `SpecialistYield/CommerceChange` has **different values
+> in the simple vs complex set** — so inverting it onto the specialist would force a single value across both systems and
+> break the clean separation. Therefore, for a TRAIT keyed to a specialist (or any shared sub-city target with a per-set
+> value), the deposit takes the **governing-deliverer** shape instead: it lives **on the trait, keyed by the target** —
+> `yield.empire.specialists.{SPECIALIST_X}.flat` (and `commerce.…`) — authored in **each set's folder** (simple = the
+> base value; complex = the **replacement's** value — a **whole-Info swap, NO base-fill** per the engine's
+> `CvInfoReplacements`, owner ruling 2026-06-25 superseding the 2026-06-21 fill-from-base: a field the replacement
+> omits is **0/absent** in the complex, never inherited from base — the base SPIRITUAL→PRIEST yield the complex drops
+> proved it). The cascade reads it from the **active** trait set and applies it × the city's count of that specialist. *(Building/civic specialist boosts have no
+> simple/complex split, so they keep the ordinary own-output inversion onto the specialist.)*
 
 > **⛔ Trait option resolution — the curator translates the CRAZY → sensible; the cascade applies only CLEAN gates
 > (owner ruling 2026-06-25; this is the volcano every agent rollerskates into — read it before touching trait values).**

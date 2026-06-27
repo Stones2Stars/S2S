@@ -1077,30 +1077,38 @@ namespace
 				}
 			}
 
-			// Player extra/less-yield threshold (8393-8401): replicate the RUNNING pre-improvement iYield (nature +
-			// extra + centre + reachable adds) and apply EXTRA_YIELD if it clears the player's threshold.
-			if (iExtraThreshold > 0 || iLessThreshold > 0)
+			// Pre-improvement RUNNING yield (8347-8401): nature + extra + centre + reachable adds + landmark -- the base
+			// that BOTH the extra/less threshold (8393) AND the golden-age threshold (8403) test, BEFORE improvement/
+			// route (8430/8435) are added. Computed ALWAYS (the golden-age check needs it even with no extra/less).
+			int iRun = pPlot->calculateNatureYield(eYield, eTeam) + pPlot->getExtraYield(eYield);
+			if (bCityCentre)
 			{
-				int iRun = pPlot->calculateNatureYield(eYield, eTeam) + pPlot->getExtraYield(eYield);
-				if (bCityCentre)
-				{
-					iRun += kYield.getCityChange();
-					if (kYield.getPopulationChangeDivisor() != 0)
-						iRun += pCity->getPopulation() / kYield.getPopulationChangeDivisor();
-				}
-				if (pPlot->isRoute() || !pPlot->isImpassable(eTeam))
-				{
-					iRun += kOwner.getTerrainYieldChange(pPlot->getTerrainType(), eYield);
-					if (pPlot->isWater()) iRun += kOwner.getSeaPlotYield(eYield);
-					const CvCity* pWC = pPlot->getWorkingCity();
-					if (pWC != NULL) iRun += pWC->getYieldChangeAt(pPlot, eYield);
-				}
-				if (iExtraThreshold > 0 && iRun >= iExtraThreshold) thresholdYield += iExtraYield;
-				if (iLessThreshold  > 0 && iRun >= iLessThreshold)  thresholdYield -= iExtraYield;
+				iRun += kYield.getCityChange();
+				if (kYield.getPopulationChangeDivisor() != 0)
+					iRun += pCity->getPopulation() / kYield.getPopulationChangeDivisor();
 			}
-
-			if (kOwner.isGoldenAge() && pPlot->calculateYield(eYield) >= kYield.getGoldenAgeYieldThreshold())
-				goldenAgeYield += kYield.getGoldenAgeYield();
+			if (pPlot->isRoute() || !pPlot->isImpassable(eTeam))
+			{
+				iRun += kOwner.getTerrainYieldChange(pPlot->getTerrainType(), eYield);
+				if (pPlot->isWater()) iRun += kOwner.getSeaPlotYield(eYield);
+				const CvCity* pWC = pPlot->getWorkingCity();
+				if (pWC != NULL) iRun += pWC->getYieldChangeAt(pPlot, eYield);
+			}
+			if (pPlot->getLandmarkType() != NO_LANDMARK && GC.getGame().isOption(GAMEOPTION_MAP_PERSONALIZED))
+				iRun += kOwner.getLandmarkYield(eYield);
+			// extra/less-yield threshold (8393-8401) modifies the running yield BEFORE the golden-age check
+			int iPlotThreshold = 0;
+			if (iExtraThreshold > 0 && iRun >= iExtraThreshold) iPlotThreshold += iExtraYield;
+			if (iLessThreshold  > 0 && iRun >= iLessThreshold)  iPlotThreshold -= iExtraYield;
+			thresholdYield += iPlotThreshold;
+			// GOLDEN AGE (8403): tests the POST-threshold, PRE-improvement/route running yield -- NOT calculateYield
+			// (the final yield). The earlier dump tested the final yield, which over-fires on tiles whose improvement
+			// pushes them past the threshold. iGoldenBase is the exact figure a cascade's per-plot golden-age must match.
+			const int iGoldenBase = iRun + iPlotThreshold;
+			int iPlotGolden = 0;
+			if (kOwner.isGoldenAge() && iGoldenBase >= kYield.getGoldenAgeYieldThreshold())
+				iPlotGolden = kYield.getGoldenAgeYield();
+			goldenAgeYield += iPlotGolden;
 
 			if (!bCityCentre)
 			{
@@ -1111,7 +1119,7 @@ namespace
 					// Mirror the engine's real-player branch (8247-8301; ePlayer set, not bOptimal) component by component.
 					const CvImprovementInfo& kImp = GC.getImprovementInfo(eImprovement);
 					impBase += kImp.getYieldChange(eYield);
-					if (pPlot->isRiverSide())          impRiverSide += kImp.getRiverSideYieldChange(eYield);
+					if (pPlot->getRiverCrossingCount() > 0) impRiverSide += kImp.getRiverSideYieldChange(eYield);
 					if (pPlot->isIrrigationAvailable()) impIrrigated += kImp.getIrrigatedYieldChange(eYield);
 					const RouteTypes eImpRoute = pPlot->getRouteType();
 					if (eImpRoute != NO_ROUTE)          impRoute += kImp.getRouteYieldChanges(eImpRoute, eYield);
@@ -1155,7 +1163,7 @@ namespace
 					// FULL per-plot improvement split so imp == impBase+impBonus+impRiverSide+impIrrigated+impRoute+impPlayer+impTeam
 					// exactly (no unattributed remainder). impTeam = the team's improvement-yield accumulator (reveal-tech-fed
 					// improvement TechYieldChanges); impPlayer = trait/civic/building-global accumulator.
-					if (pPlot->isRiverSide())            pp["impRiverSide"] = picojson::value((double)kI.getRiverSideYieldChange(eYield));
+					if (pPlot->getRiverCrossingCount() > 0) pp["impRiverSide"] = picojson::value((double)kI.getRiverSideYieldChange(eYield));
 					if (pPlot->isIrrigationAvailable())  pp["impIrrigated"] = picojson::value((double)kI.getIrrigatedYieldChange(eYield));
 					const RouteTypes eImpRouteP = pPlot->getRouteType();
 					if (eImpRouteP != NO_ROUTE)          pp["impRoute"]     = picojson::value((double)kI.getRouteYieldChanges(eImpRouteP, eYield));
@@ -1164,6 +1172,10 @@ namespace
 				}
 				pp["water"]  = picojson::value(pPlot->isWater());
 				pp["center"] = picojson::value(bCityCentre);
+				// the golden-age threshold base (pre-improvement/route, post-threshold) + the bonus it fired, so a
+				// cascade's per-plot golden-age decision is attributable tile-by-tile (8403).
+				pp["preImpBase"] = picojson::value((double)iGoldenBase);
+				pp["goldenAge"]  = picojson::value((double)iPlotGolden);
 				perPlotArr.push_back(picojson::value(pp));
 			}
 		}

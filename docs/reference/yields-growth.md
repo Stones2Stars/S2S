@@ -50,10 +50,11 @@
   `BUILDING_PRODUCTION_DECAY_PERCENT`% per `BUILDING_PRODUCTION_DECAY_TIME` turns (speed-scaled).
 
 ## Golden ages & era
-- **Golden age:** `m_iGoldenAgeTurns` (−1/turn). Length `max(1, GOLDEN_AGE_LENGTH(4)·speedPercent·(1+goldenAgeModifier/100)/100)`.
-  **Five triggers:** GP-unit sacrifice (kills units, adds length), building completion (length **+1**), trait-on-GP-birth,
-  random event `<bGoldenAge>`, Python/WorldBuilder. **Effects:** per-city golden-age yield/commerce, anarchy → 0,
-  `+GOLDEN_AGE_GREAT_PEOPLE_MODIFIER` GP rate, less food for growth, AI civic timer reset. Start clears anarchy.
+- **Golden age** — full reference: **[golden-age.md](golden-age.md)**. Yield-relevant summary: it adds yield in
+  **three** places, all in `base` (so all `× modifier`): the **per-plot** threshold bonus (`calculateYield` — tested on
+  the **PRE-improvement/route** running yield), the **player** golden-age yield, and golden-age **commerce**. Plus
+  anarchy → 0, `+GOLDEN_AGE_GREAT_PEOPLE_MODIFIER` GP rate, less food for growth. `m_iGoldenAgeTurns` (−1/turn),
+  length `max(1, GOLDEN_AGE_LENGTH·speedPercent·(1+goldenAgeModifier/100)/100)`.
 - **Era:** `m_eCurrentEra` advances **only** in `CvTeam::setHasTech` when `player era < tech.getEra()` (only
   increases). Side-effects: heritage commerce deltas, per-city free specialists, graphics. As a cascade input it
   gates `requires` atoms and scales anarchy/growth/event-prob + the AI per-era handicap bonus.

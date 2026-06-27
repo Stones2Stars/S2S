@@ -401,6 +401,14 @@ One-shot or recurring things an entity hands out (not per-turn modifiers).
   always placed).
 - **`repeatable`** — `[ { <payload>, interval, chance?, enabled? } ]`: fires each interval (a spawned unit, a
   heal), optionally gated by a rolled `chance` (which may scale with a `per`).
+- **property pulses** — a per-turn `PROPERTY_*` change an entity emits (the engine's `PropertyManipulator`) is a
+  `repeatable` entry carrying its **spatial intent**:
+  `{ "PROPERTY_AIR_POLLUTION": -5, "interval": "perTurn", "on": "plot", "relation": "near", "distance": 1 }`.
+  **Properties are first-class** (early design decision) — a property source is **never a parked raw block**; the
+  grant carries the `on`/`relation`/`distance` so the (#429) spatial distribution reads its target from here. A
+  scaling (non-`CONSTANT`) source carries a `per` count-scaler; a flat (`CONSTANT`) source is the bare amount.
+  *(Curator migration from the legacy parked `properties` array — `curate_improvement.py` et al. via the shared
+  property-source cleaner — is pending; tracked as curator-to-spec.)*
 
 ---
 

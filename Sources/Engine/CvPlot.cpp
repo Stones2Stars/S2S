@@ -8246,7 +8246,12 @@ int CvPlot::calculateImprovementYieldChange(ImprovementTypes eImprovement, Yield
 
 	int iYield = GC.getImprovementInfo(eImprovement).getYieldChange(eYield);
 
-	if (isRiverSide())
+	// owner ruling 2026-06-27: an improvement's RiverSideYieldChange ("next to a river" bonus) applies on ANY plot
+	// with a river crossing -- matching the native base river bonus (recalculateBaseYield adds YieldInfo.getRiverChange
+	// when getRiverCrossingCount()>0) -- NOT just the cardinal-edge isRiverSide(). Legacy's isRiverSide gate missed
+	// diagonal-river plots, so the improvement bonus failed to stack on the base river bonus there; this makes it
+	// consistent (the bonus now lands wherever the base river commerce does).
+	if (getRiverCrossingCount() > 0)
 	{
 		iYield += GC.getImprovementInfo(eImprovement).getRiverSideYieldChange(eYield);
 	}
