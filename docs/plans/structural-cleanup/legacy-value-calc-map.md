@@ -172,20 +172,46 @@ to the holding building via `getBaseCommerceRateFromBuilding100`), both modelled
 > - **The wall:** `getBestSpecialist` (`CvCityAI.cpp:12355`) picks the slot via `AI_specialistValue` — an AI heuristic,
 >   NOT a clean rule — so the *assignment* is not cleanly reproducible offline.
 > - **Correction (owner 2026-06-27): free specialists are NOT normal-specialist assignment.** The `getBestSpecialist`/
->   `AI_specialistValue` path is for assigning CITIZENS to specialist slots — a different mechanism. Free specialists are
->   a **static GRANT amount** computed by `totalFreeSpecialists()` (`CvCity.cpp:5747`): `Σ building getFreeSpecialist
->   (freeSpecialists.any) + area + player + Σ improvement freeSpecialists×improved-plots + per-wonder flags×wonder-counts`,
->   `max(0,·)`. No AI valuation. **Assigned** specialists are read from `/state`; the **free** amount is computed; both
->   **output into the same bucket**. Order (owner): get the static free amount right FIRST.
+>   `AI_specialistValue` path is for assigning CITIZENS to specialist slots — a different mechanism. No AI valuation
+>   enters the free amount.
+> - **⛔ Correction #2 (owner 2026-06-27): they are NOT a `grant` — they are the REVERSIBLE `freeSpecialists` MODIFIER
+>   family.** "Free specialists from buildings go away if the building goes away" — so by [json](../../specs/json.md) §5
+>   they are emphatically **not** `grants` (a `grant` PERSISTS — a granted unit survives its granter). They are a
+>   [modifier](../../specs/modifier.md) deposit: re-evaluated every recompute, contributing **only while the source is
+>   active (constructed, non-dormant)**, and removed the instant the source is. The engine proves the reversibility —
+>   `changeFreeSpecialist(kBuilding.getFreeSpecialist() × iChange)` runs with `iChange = −1` on removal (`CvCity.cpp:4639`),
+>   so `getFreeSpecialist()` is a maintained accumulator, not a one-shot. **The data is already correct** — the curator
+>   emits every building/civic source under the `freeSpecialists` *family*, never `grants` (verified
+>   `curate_building.py:93-95`, `curate_civic.py:78`); the word "grant" was a description mistake in THIS note, now fixed.
+> - **The COMPLETE source map of `totalFreeSpecialists()` (`CvCity.cpp:5747`), every term grounded to its JSON source:**
+>   `total = max(0, Σ of the below)`, and `0` if `pop < 1`. All are reversible modifier deposits from **ACTIVE** sources:
+>   - `getFreeSpecialist()` (city; London = **9**) = Σ active buildings' `iFreeSpecialist` → **`freeSpecialists.city.any`** (`:4639`).
+>   - `area()->getFreeSpecialist(owner)` = Σ active buildings' `iAreaFreeSpecialist` → **`freeSpecialists.area.any`** (`CvPlayer.cpp:7394`).
+>   - `player.getFreeSpecialist()` = Σ active buildings' `iGlobalFreeSpecialist` (→ **`freeSpecialists.empire.any`**, `CvPlayer.cpp:7395`)
+>     + Σ adopted civics' `iFreeSpecialist` (→ **`freeSpecialists.empire.any`**, `:18045`) + Σ active traits' `iFreeSpecialist` (→ **`freeSpecialists.empire.any`**, `:28515`).
+>   - improvement term = `Σ_imp getImprovementFreeSpecialists(imp) × countNumImprovedPlots(imp)`, where the per-improvement
+>     rate is Σ active buildings' `ImprovementFreeSpecialists[imp]` (`:4885`). ⚠ **VERIFIED CURATOR BUG** — the engine scales
+>     by the **count of improved plots** (a `per` count-scaler), but `curate_building.py:592-600` models it as a *presence*
+>     `enabled:{improvement}` flat (and self-flags it unverified at `:593`). Real fix: emit `freeSpecialists.city.any = n,
+>     per:{improvement count in city}`, not a presence gate. (Contributes only if London has such a building+improvement.)
+>   - per-wonder = `(anyTrait isFreeSpecialistperWorldWonder ? numWorldWonders : 0) + (…National ? numNationalWonders : 0)
+>     + (…TeamProject ? numTeamWonders : 0)` — trait flags (`CvPlayer.cpp:28559-28561`), × per-city wonder counts.
+> - **Typed free specialists are a SEPARATE ledger, already in `/state`.** `getFreeSpecialistCount(SPECIALIST_X)` (the
+>   `FreeSpecialistCounts` per-type family + the `Unattributed` array, `CvCity.cpp:14132`) is counted per-type in `/state`'s
+>   specialist block — NOT part of `totalFreeSpecialists`. The genuinely *persistent* grant-shaped ones (event `:19008`,
+>   era-advance `:12452`, GP-join/unit-disband `:8788`/`:2664`, all `bUnattributed`) live there; the generic city/area/
+>   empire/improvement/wonder ones (this note) do not.
+> - **Both output into the same bucket** (owner): the free amount + the `/state` assigned per-type counts feed the
+>   specialist yield/commerce/GP-rate/happiness/health output; watch the overlap to avoid double-count. Order (owner):
+>   get the free AMOUNT right FIRST.
 > - **Oracle emitted + verified** (`/computed/cities/yields`, committed): `totalFreeSpecialists` (London = **59**) +
->   `cityFreeSpecialist` (building-sourced generic part, London = **9**) — vs `/state` assigned 150. The 59 free
+>   `cityFreeSpecialist` (the `freeSpecialists.city.any` part, London = **9**) — vs `/state` assigned 150. The 59 free
 >   specialists' output is what the cascade silently missed.
-> - **Build plan (StoneBase, foundational):** (1) compute the free-specialist amount from the grant sources above
->   (the `freeSpecialists.any` count-leaf — modifier.md §6.7 — across active buildings + civic/trait empire grants +
->   improvement×plots + per-wonder), diff vs `totalFreeSpecialists`; (2) resolve the OUTPUT typing (which specialist
->   type the generic `any` free specialists produce as — `DEFAULT_SPECIALIST`? distributed? — verify, don't guess);
->   (3) wire the free amount into the specialist output bucket (yields/commerce/GP-rate/happiness/health), watching the
->   overlap with the per-type assigned counts already in `/state` to avoid double-count.
+> - **Build plan (StoneBase, foundational):** (1) compute the free amount by summing the `freeSpecialists.any` count-leaf
+>   over **active** buildings (city/area/empire) + adopted civics + active traits (empire) + the improvement `per`-scaler
+>   + per-wonder, diff vs `totalFreeSpecialists`; (2) resolve the OUTPUT typing (which specialist type the generic `any`
+>   free ones produce as — verify against the engine getters, don't guess); (3) wire the free amount into the specialist
+>   output bucket, avoiding double-count with the `/state` per-type assigned counts.
 
 ## 3. HEALTH + HAPPINESS — good/bad signed-split
 

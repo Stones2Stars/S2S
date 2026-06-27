@@ -79,21 +79,21 @@
    "any": [
     {
      "value": 1,
-     "enabled": {
+     "per": {
       "type": "IMPROVEMENT_HUNTING_CAMP",
       "scope": "city"
      }
     },
     {
      "value": 1,
-     "enabled": {
+     "per": {
       "type": "IMPROVEMENT_HUNTING_PRESERVE",
       "scope": "city"
      }
     },
     {
      "value": 1,
-     "enabled": {
+     "per": {
       "type": "IMPROVEMENT_WILDLIFE_SANCTUARY",
       "scope": "city"
      }

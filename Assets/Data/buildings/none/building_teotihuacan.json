@@ -32,14 +32,14 @@
    "any": [
     {
      "value": 1,
-     "enabled": {
+     "per": {
       "type": "IMPROVEMENT_QUARRY",
       "scope": "city"
      }
     },
     {
      "value": 1,
-     "enabled": {
+     "per": {
       "type": "IMPROVEMENT_CORE_MINE",
       "scope": "city"
      }

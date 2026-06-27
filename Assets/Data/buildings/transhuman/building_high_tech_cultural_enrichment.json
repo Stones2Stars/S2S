@@ -519,7 +519,7 @@
    "any": [
     {
      "value": 1,
-     "enabled": {
+     "per": {
       "type": "IMPROVEMENT_ARCHEOLOGICAL_SITE",
       "scope": "city"
      }

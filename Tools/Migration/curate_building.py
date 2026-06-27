@@ -367,6 +367,20 @@ def _inject_cond(fams, family, scope, unit, value, enabled):
         node[unit] = [cur, entry]
 
 
+def _inject_per(fams, family, scope, unit, value, per):
+    """Like _inject_cond but the deposit carries a `per` count-scaler (json.md S3.7) instead of an `enabled` gate:
+    effect = value * (count(per.type)/per.each). List-aware so it coexists with a plain count on the same leaf."""
+    node = fams.setdefault(family, OrderedDict()).setdefault(scope, OrderedDict())
+    entry = OrderedDict([("value", value), ("per", per)])
+    cur = node.get(unit)
+    if cur is None:
+        node[unit] = [entry]
+    elif isinstance(cur, list):
+        cur.append(entry)
+    else:
+        node[unit] = [cur, entry]
+
+
 def _inject_keyed(fams, family, scope, target_type, key, unit, value):
     node = fams.setdefault(family, OrderedDict()).setdefault(scope, OrderedDict())
     if target_type:
@@ -589,15 +603,17 @@ def pass2(typ, rec, store, fams, grants, repeatable, identity, enables):
                 for k, v in _pairs_generic(counts):
                     if v:
                         _inject_cond(fams, "allowedSpecialists", "city", k, v, pred)
-    # ImprovementFreeSpecialists -> free ANY specialist, CONDITIONED on the improvement's presence (modifier.md §6.7).
-    # FLAG: per-improvement-instance vs presence semantics unverified -> modeled as `enabled` presence for now.
+    # ImprovementFreeSpecialists -> free ANY specialist, SCALED BY the count of improved plots in the city.
+    # Engine (CvCity.cpp:5758): totalFreeSpecialists += getImprovementFreeSpecialists(imp) * countNumImprovedPlots(imp)
+    # -- a PER count-scaler (n free specialists per city plot carrying that improvement), NOT a presence gate.
+    # VERIFIED 2026-06-27, correcting the earlier unverified `enabled`-presence model (json.md §3.7 `per:{type,scope}`).
     ifs = rec.find("ImprovementFreeSpecialists")
     if ifs is not None:
         for entry in list(ifs):
             imp = _txt(entry, "ImprovementType")
             n = _int(entry, "iFreeSpecialistCount")
             if imp and n:
-                _inject_cond(fams, "freeSpecialists", "city", "any", n, OrderedDict([("type", imp), ("scope", "city")]))
+                _inject_per(fams, "freeSpecialists", "city", "any", n, OrderedDict([("type", imp), ("scope", "city")]))
     # --- enables-family authored on the building (FoundsCorporation / Hurrys / vote eligibility) ---
     fc = _txt(rec, "FoundsCorporation")
     if fc:

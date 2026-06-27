@@ -47,7 +47,7 @@
    "any": [
     {
      "value": 1,
-     "enabled": {
+     "per": {
       "type": "IMPROVEMENT_FISHING_BOATS",
       "scope": "city"
      }

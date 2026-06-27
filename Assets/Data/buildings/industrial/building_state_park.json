@@ -56,14 +56,14 @@
    "any": [
     {
      "value": 1,
-     "enabled": {
+     "per": {
       "type": "IMPROVEMENT_FOREST_PRESERVE",
       "scope": "city"
      }
     },
     {
      "value": 1,
-     "enabled": {
+     "per": {
       "type": "IMPROVEMENT_WILDLIFE_SANCTUARY",
       "scope": "city"
      }
