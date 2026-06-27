@@ -149,14 +149,19 @@ to the holding building via `getBaseCommerceRateFromBuilding100`), both modelled
 > `YieldModifierCascade.SumUnit100`. Yields are integer so unaffected; only commerce has fractional flats. This is the
 > [scale registry](../../specs/curators/fixed-point-and-scales.md) integer-math rule applied in the cascade.
 
-> **⚠ OPEN — culture-channel residual, source NOT yet identified (2026-06-27).** The culture channel under-counts vs the
-> engine on some buildings, e.g. `EDUCATION_ENLIGHTENED` reports engine `culFlat100 = 2100` (`culBld100 = 0`). **What is
-> proven:** the building's own JSON/XML carries no culture commerce; no tech or civic XML references it for commerce; its
-> `PropertyBuilding` band entry is a pure `iMinValue`/`iMaxValue` threshold (no commerce); and no `property_*.json`
-> defines a core commerce. **What is NOT proven:** where the engine value actually originates — it has NOT been traced to
-> a named source, and earlier guesses (tech-granted / non-static-Python / a different property like tourism) are
-> UNVERIFIED and must not be asserted. This is an open investigation; the source must be MAPPED before any cascade change.
-> (gold/research/espionage are near-parity and unaffected.)
+> **⚠ TODO — per-building FREE-SPECIALIST commerce (2026-06-27, TRACED).** `getBaseCommerceRateFromBuilding100`
+> (`CvCity.cpp`) folds a building's **free specialists' commerce** into that building's per-building commerce:
+> `for iI in 1..kBuilding.getFreeSpecialist(): += 100 × player.specialistCommerce(getBestSpecialist(iI), eIndex)`
+> (plus a typed `getFreeSpecialistCount` → `getAdditionalBaseCommerceRateBySpecialist` term). So a property
+> pseudo-building like `EDUCATION_ENLIGHTENED` (`iFreeSpecialist=3`, JSON `freeSpecialists.city.any=3`, no own commerce,
+> `culBld100=0`) reports engine `culFlat100=2100` = its 3 free specialists × their per-spec culture. This was the
+> culture-channel residual: the cascade's `buildingCommerce100` (and the engine's per-building dump) attribute
+> free-specialist commerce to the BUILDING, but StoneBase's `CommerceRateCascade` only sums each building's OWN
+> flat — it does not yet add the building's free-specialist commerce. **Fix (next):** for each active building with
+> `freeSpecialists.any=N` (or typed free specialists), add N×(best specialist's per-channel commerce) to its building
+> commerce — reproducing `getBestSpecialist` (AI-value pick) is the hard part; the `freeSpecialists` count + specialist
+> per-channel commerce are already available. Watch for double-count vs the `specialist` term (building free specialists
+> may or may not be in `/state`'s specialist counts — verify before adding).
 
 ## 3. HEALTH + HAPPINESS — good/bad signed-split
 
