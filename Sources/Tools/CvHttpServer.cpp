@@ -1170,6 +1170,18 @@ namespace
 					pp["impPlayer"] = picojson::value((double)kOwner.getImprovementYieldChange(eImpP, eYield));
 					pp["impTeam"]   = picojson::value((double)GET_TEAM(eTeam).getImprovementYieldChange(eImpP, eYield));
 				}
+				// per-plot getYieldChangeAt split (the working-city KEYED deposits: plotType + terrain + river +
+				// improvement) so a cascade `keyed` -1 pins to which member (terrain vs improvement vs plot-type) is short.
+				{
+					const CvCity* pWC = pPlot->getWorkingCity();
+					if (pWC != NULL)
+					{
+						pp["cityPlotType"] = picojson::value((double)pWC->getPlotYieldChange(pPlot->getPlotType(), eYield));
+						pp["cityTerrain"]  = picojson::value((double)pWC->getTerrainYieldChange(pPlot->getTerrainType(), eYield));
+						if (pPlot->isRiver()) pp["cityRiver"] = picojson::value((double)pWC->getRiverPlotYield(eYield));
+						if (eImpP != NO_IMPROVEMENT) pp["cityImprovement"] = picojson::value((double)pWC->getImprovementYieldChange(eImpP, eYield));
+					}
+				}
 				pp["water"]  = picojson::value(pPlot->isWater());
 				pp["center"] = picojson::value(bCityCentre);
 				// the golden-age threshold base (pre-improvement/route, post-threshold) + the bonus it fired, so a
