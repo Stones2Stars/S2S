@@ -303,7 +303,7 @@ def requires_unit(rec, store):
     # HolyCity (m_iHolyCity; CvCity::canTrainInternal:2190 isHolyCity) -- the city must be the holy city of that religion.
     hc = _txt(rec, "HolyCity")
     if hc:
-        allc.append(OrderedDict([("HOLY_CITY", hc)]))
+        allc.append(OrderedDict([("IS_HOLY_CITY", hc)]))
     # iMinAreaSize (CvPlot::canTrain, city case): a DOMAIN_SEA unit needs the city adjacent to a sea-body of >= N tiles
     # (isCoastalLand(N)) -> {HAS_COAST:{minArea:N}}, same shape as a bWater building; any other domain needs the city's
     # LANDMASS to be >= N tiles (area()->getNumTiles()) -> AREA_SIZE. (The old blanket AREA_SIZE wrongly gated sea units

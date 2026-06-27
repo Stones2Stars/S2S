@@ -46,7 +46,7 @@ from store import Store, REPO
 # PREDICATES (the city/player self-reports the runtime state the static Info can't hold). The data names the
 # predicate + the specific religion as the single conditional; the engine owns the compound logic (for
 # STATE_RELIGION the C++ relaxes to "present AND (is-state-religion OR no-state-religion OR non-state-commerce)").
-COMMERCE_PREDICATE = {"StateReligionCommerces": "STATE_RELIGION", "HolyCityCommerces": "HOLY_CITY"}
+COMMERCE_PREDICATE = {"StateReligionCommerces": "STATE_RELIGION", "HolyCityCommerces": "IS_HOLY_CITY"}
 # GlobalReligionCommerce is NOT a city gate — it's value x countReligionLevels(religion) (WORLD-scaled) consumed
 # through a shrine building. PARKED to the Building pass (the religion<->shrine-building routing + the world
 # religion-levels count token live there); the raw per-commerce values are kept faithfully in a `shrine` section.

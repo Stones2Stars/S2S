@@ -239,7 +239,10 @@ def accumulate_conditioned(store, config):
     for cfg in config:
         src_ent, fld, _ttype, family, keys, unit, scope = cfg[:7]
         scope = "empire" if scope == "player" else ("world" if scope == "game" else scope)
-        cond_scope = _COND_SCOPE.get(src_ent, scope)
+        # OPTIONAL 8th element = an explicit cond_scope override (the conditioner's PRESENCE scope), for the case where
+        # it differs from both _COND_SCOPE's default AND the deposit scope -- e.g. a NON-LOCAL building boost deposits
+        # EMPIRE-wide and its gate is "the player HAS the building anywhere" (empire), not the in-city default (city).
+        cond_scope = (cfg[7] if len(cfg) > 7 else None) or _COND_SCOPE.get(src_ent, scope)
         for cond_t, rec in store.table(src_ent).items():        # cond_t = the conditioner (building/civic/trait)
             node = rec.find(fld)
             if node is None:

@@ -24,7 +24,11 @@ tech.happiness/health.city.specialists.{SPECIALIST}.flat; authoring here too wou
 Inbound boosts (fold ONTO the specialist; the source entity drops them when curated, per the inversion
 convention — no double-authoring):
 - Building Specialist{Yield,Commerce}Change + Local variants (city, flat), Civic Specialist{Yield,Commerce}
-  PercentChanges (city, percent), Trait Specialist{Yield,Commerce}Change (empire, flat).
+  PercentChanges (city, percent).
+- ⛔ Trait Specialist{Yield,Commerce}Changes are NOT folded here — they STAY on the trait keyed by specialist
+  (curate_trait KEYED -> yield/commerce.empire.specialists.{SPEC}.flat), because the simple/complex sets carry
+  DIFFERENT per-set values for the same specialist and the specialist is ONE shared file (Option-B ruling
+  2026-06-25, modifier.md trait callout). The cascade reads the active trait set's specialists.{SPEC} × count.
 - FreeSpecialistCount (Civic/Tech/Event) is NOT folded here: it grants N free specialists of this type — a
   capability/grant that belongs on the SOURCE, not a per-turn modifier on the specialist (flagged).
 
@@ -71,18 +75,26 @@ DROP = {"TechHappinessTypes", "TechHealthTypes", "YieldChanges"}
 FAMILY_ORDER = ["food", "production", "commerce", "gold", "research", "culture", "espionage",
                 "greatPeopleRate", "health", "happiness", "experience", "investigation", "insidiousness"]
 
-# inbound entity-targeted modifiers: (sourceEntity, field, targetType, family, valueKeys, unit, scope)
+# inbound entity-targeted modifiers: (sourceEntity, field, targetType, family, valueKeys, unit, scope[, cond_scope])
 # NB the container tags are PLURAL (rec.find returns the container, _boost_entries iterates its entries);
 # C2C names them inconsistently but Building/Trait both wrap entries in <…Changes>.
+# ⛔ Building NON-LOCAL vs LOCAL specialist boost = EMPIRE vs CITY (owner ruling 2026-06-26, engine-verified):
+#   - getSpecialistYieldChange (non-local) -> CvPlayer::changeExtraSpecialistYield (7493), per BUILDING INSTANCE, applied
+#     to player.getExtraSpecialistYield in EVERY city -> deposit EMPIRE, gate = player HAS the building anywhere (empire).
+#   - getLocalSpecialistYieldChange (local) -> CvCity::changeLocalSpecialistExtraYield (4811), only THIS city -> deposit
+#     CITY, gate = this city has the building (city). Mirrors the building's getGlobalYieldModifier (empire) vs
+#     getYieldModifier (city) split. (BAUHAUS_SCHOOL gives ARTIST +2 empire-wide -> the player-4 Tenochtitlan gap.)
 SPECIALIST_BOOSTS = [
-    ("BuildingInfo", "SpecialistYieldChanges",          "buildings", "yield",    engine.YIELDS,    "flat",    "city"),
-    ("BuildingInfo", "SpecialistCommerceChanges",       "buildings", "commerce", engine.COMMERCES, "flat",    "city"),
+    ("BuildingInfo", "SpecialistYieldChanges",          "buildings", "yield",    engine.YIELDS,    "flat",    "empire", "empire"),
+    ("BuildingInfo", "SpecialistCommerceChanges",       "buildings", "commerce", engine.COMMERCES, "flat",    "empire", "empire"),
     ("BuildingInfo", "LocalSpecialistYieldChanges",     "buildings", "yield",    engine.YIELDS,    "flat",    "city"),
     ("BuildingInfo", "LocalSpecialistCommerceChanges",  "buildings", "commerce", engine.COMMERCES, "flat",    "city"),
     ("CivicInfo",    "SpecialistYieldPercentChanges",   "civics",    "yield",    engine.YIELDS,    "percent", "city"),
     ("CivicInfo",    "SpecialistCommercePercentChanges","civics",    "commerce", engine.COMMERCES, "percent", "city"),
-    ("TraitInfo",    "SpecialistYieldChanges",          "traits",    "yield",    engine.YIELDS,    "flat",    "empire"),
-    ("TraitInfo",    "SpecialistCommerceChanges",       "traits",    "commerce", engine.COMMERCES, "flat",    "empire"),
+    # NB: Trait Specialist{Yield,Commerce}Changes are NOT folded here -- they stay ON THE TRAIT keyed by specialist
+    # (curate_trait KEYED), because the simple/complex sets carry DIFFERENT per-set values for the same specialist and
+    # the specialist is ONE shared file (Option-B ruling 2026-06-25; modifier.md trait callout). The cascade reads the
+    # trait's specialists.{SPEC} from the ACTIVE set x count -- inverting onto the shared specialist here is wrong.
 ]
 
 

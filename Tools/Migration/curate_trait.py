@@ -48,8 +48,10 @@ parsed into per-PROPERTY_* families). OWNER RULINGS (2026-06-14) drive the struc
   keyed by the GP unit; CvPlayer.cpp:28606-28610, only when >0).
 - CityStartCulture + BonusPopulationinNewCities -> a `cityFounding` family (standing empire accumulators applied
   at every city founding, NOT one-shot grants).
-- Double-author DROPs (specialist migrated first, curate_specialist.py:80-81): SpecialistYieldChanges +
-  SpecialistCommerceChanges.
+- SpecialistYield/CommerceChanges -> KEEP trait-side, keyed by specialist (yield/commerce.empire.specialists.{SPEC}.flat,
+  governing-deliverer) -- NOT inverted onto the shared specialist, because the simple/complex sets carry different
+  per-set values for the same specialist (Option-B ruling 2026-06-25; see modifier.md trait callout). curate_specialist
+  no longer folds them in.
 - MaxAnarchy/MinAnarchy -> clean identity keys (maxAnarchy default -1 carried verbatim; min default 0).
 - SCALE (verified 2026-06-22 at the consumption site, scale-registry method): NO trait field is x100. Every
   SCALAR deposits via CvPlayer::processTrait as `change<X>(iChange * get<X>())` -- multiplied ONLY by iChange (+/-1),
@@ -206,6 +208,12 @@ KEYED = {
     "UnitCombatProductionModifiers":      ("buildRate",      "empire", "unitCombats",    "percent", None),
     "CivicOptionNoUpkeepTypes":           ("upkeep",         "empire", "civicOptions",   "enabler", None),
     "TechResearchModifiers":              ("research",       "empire", "byTech",         "percent", None),  # conditioned-on-source: stays (HANDOFF)
+    # Specialist yield/commerce boosts STAY on the trait, keyed by the specialist (governing-deliverer), NOT inverted
+    # onto the shared specialist -- the simple/complex sets carry DIFFERENT per-set values, so inverting onto the ONE
+    # specialist file would break the clean separation (modifier.md trait callout, owner ruling 2026-06-25). The
+    # simple folder gets the base value, complex the merged-effective; the cascade reads the active set x count.
+    "SpecialistYieldChanges":             (None,             "empire", "specialists",    "flat",    YIELDS),
+    "SpecialistCommerceChanges":          (None,             "empire", "specialists",    "flat",    COMMERCES),
 }
 
 # --- boolean policy/capability flags -> policies.{name}: true. ---
@@ -226,10 +234,11 @@ IDENTITY_FLAGS = {
     "bBarbarianSelectionOnly": "barbarianSelectionOnly",
 }
 TEXT = {"Description": "description", "Civilopedia": "civilopedia", "Help": "help", "Strategy": "strategy"}
-# DROPs: prereqs (-> store enables), double-author (-> curate_specialist), dead. (BonusHappinessChanges is NO
-# LONGER dropped — it is authored on the trait, gated by bonus presence; handled in the loop + merge below.)
-DROP = {"Type", "TraitPrereq", "TraitPrereqOr1", "TraitPrereqOr2", "PrereqTech",
-        "SpecialistYieldChanges", "SpecialistCommerceChanges", "Categories"}
+# DROPs: prereqs (-> store enables), dead. (BonusHappinessChanges is NO LONGER dropped — it is authored on the trait,
+# gated by bonus presence; handled in the loop + merge below.) SpecialistYield/CommerceChanges are NO LONGER dropped
+# either — they now STAY trait-side keyed by specialist (KEYED above), per the Option-B ruling (the simple/complex
+# per-set value cannot be inverted onto the one shared specialist file).
+DROP = {"Type", "TraitPrereq", "TraitPrereqOr1", "TraitPrereqOr2", "PrereqTech", "Categories"}
 FAMILY_ORDER = ["food", "production", "buildRate", "commerce", "gold", "research", "culture", "espionage",
                 "extraYieldThreshold", "lessYieldThreshold", "happiness", "health", "growth",
                 "greatPeopleRate", "greatGeneralRate", "freeSpecialists", "experience", "conscript",
@@ -574,17 +583,16 @@ def main():
             _write(folders[typ], typ, obj)                    # base/plain -> simple/ (or complex-only -> complex/)
             nwritten += 1
             if typ in repl_map:
-                # base trait WITH a complex replacement: emit the EFFECTIVE complex def, keyed by the BASE type
-                # (the type the player actually holds) so the calc can pick it by GAMEOPTION. Shallow top-level
-                # overwrite: the replacement's sections win (the engine's CvInfoReplacements is a whole-Info
-                # overwrite -- e.g. industrious's replacement `production` block has no tradeRoute -> 0), and the
-                # base fills only the sections the replacement omits (owner ruling 2026-06-21). This makes the
-                # complex/ set SELF-COMPLETE and fully INDEPENDENT of simple/ -- the two trait systems live
-                # completely separate, as they should. It COMPLETES the 2026-06-15 simple/complex split (each
-                # set a standalone, full trait set), it does NOT reverse it.
+                # base trait WITH a complex replacement: emit the complex def keyed by the BASE type (the type the
+                # player actually holds) so the calc picks it by GAMEOPTION. WHOLE-SWAP, NO base-fill (owner ruling
+                # 2026-06-25, SUPERSEDING the 2026-06-21 fill-from-base): the engine's CvInfoReplacements swaps the
+                # WHOLE CvTraitInfo, so a field the replacement OMITS is 0/absent in the engine -- it is NOT inherited
+                # from base. Matching that literally is required for parity (base SPIRITUAL gives PRIEST a specialist
+                # yield the complex replacement drops -> engine perType 0; fill-from-base wrongly kept it). So the
+                # complex/ def IS the replacement's curated Info ENTIRELY, merely re-keyed to the base type. The
+                # complex/ set stays SELF-COMPLETE + INDEPENDENT of simple/ (the replacement Info is itself complete).
                 rid = repl_map[typ]["replacement"]
-                merged = OrderedDict(obj)
-                merged.update(results.get(rid, OrderedDict()))
+                merged = OrderedDict(results.get(rid, OrderedDict()))
                 merged["type"] = typ
                 _write("complex", typ, merged)
                 nwritten += 1

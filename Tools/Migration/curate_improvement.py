@@ -188,9 +188,15 @@ CFG = cc.EntityConfig("ImprovementInfo", families=IMP_FAMILIES, id_rename=ID_REN
                       map_gen=["iUniqueRange", "iGoodyRange", "iTilesPerGoody", "bGoody"],
                       extra_drop=EXTRA_DROP, requires_fn=requires_improvement)
 
-# No inbound boosts: an improvement is never the deliveryguy for another entity's modifier; inbound improvement-keyed
-# yields (Building/Civic ImprovementYieldChanges) stay KEEP-ON-SOURCE, authored at those passes (modifier-spec §6.1).
-IMP_BOOSTS = []
+# Inbound boosts: Building/Civic ImprovementYieldChanges stay KEEP-ON-SOURCE (the cascade gathers those keyed from the
+# building/civic). The TECH's ImprovementYieldChanges is the exception (owner 2026-06-26): a tech BOOSTS an improvement's
+# tile yield (engine GET_TEAM::getImprovementYieldChange -> the impTeam addend of calculateImprovementYieldChange), and a
+# TECH conditions on the ENABLING axis -> OWN-OUTPUT on the improvement, plot-scope, `enabled` by the tech (modifier.md
+# §4). The cascade has no tech-keyed gather, so own-output (which SubstratePlotYield already reads, tech-gate honored) is
+# both the spec shape AND the only one the cascade sees. (The improvement's OWN TechYieldChanges is a separate keep-on-self.)
+IMP_BOOSTS = [
+    ("TechInfo", "ImprovementYieldChanges", "improvements", "yield", engine.YIELDS, "flat", "plot"),
+]
 
 
 def _inject(obj, family, scope, unit, value, enabled=None):

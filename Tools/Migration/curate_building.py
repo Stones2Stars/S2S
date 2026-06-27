@@ -378,8 +378,11 @@ def _inject_keyed(fams, family, scope, target_type, key, unit, value):
         node[unit] = value
 
 
-# PlotType key -> the plots-target predicate (the plotTypes fold, owner 2026-06-22).
-PLOT_PRED = {"PLOT_OCEAN": "IS_WATER", "PLOT_LAND": "IS_LAND", "PLOT_HILLS": "HAS_HILLS", "PLOT_PEAK": "HAS_PEAK"}
+# PlotType key -> the plots-target predicate (the plotTypes fold, owner 2026-06-22). PLOT_LAND is *flat land* (the plot
+# type is exclusive of hills/peak/ocean), so it is NOT bare IS_LAND (which the evaluator reads as !water -> matches
+# hills/peak); it is domain+relief {all:[IS_LAND, IS_FLATLANDS]} (owner 2026-06-26, json §3.5).
+PLOT_PRED = {"PLOT_OCEAN": "IS_WATER", "PLOT_LAND": OrderedDict([("all", ["IS_LAND", "IS_FLATLANDS"])]),
+             "PLOT_HILLS": "HAS_HILLS", "PLOT_PEAK": "HAS_PEAK"}
 
 
 def _inject_plots(fams, family, scope, unit, value, enabled):
@@ -447,6 +450,11 @@ def pass2(typ, rec, store, fams, grants, repeatable, identity, enables):
         for member, v in engine.named_array(rpy, engine.YIELDS).items():
             if v:
                 _inject_plots(fams, member, "city", "flat", v, "HAS_RIVER")
+    spy = rec.find("SeaPlotYieldChanges")        # LOCAL sea-plot yield (THIS city's water plots) -> <yield>.city.plots.flat {IS_WATER}
+    if spy is not None:                          # (distinct from GlobalSeaPlotYieldChanges = empire-wide; uniformity, no data today)
+        for member, v in engine.named_array(spy, engine.YIELDS).items():
+            if v:
+                _inject_plots(fams, member, "city", "flat", v, "IS_WATER")
     # --- PowerYieldModifiers: a DIRECT per-yield array (<iYield>..</iYield>), NOT entity-keyed -> emit each yield as a
     # city-scope `percent` deposit gated `enabled: HAS_POWER` (legacy getPowerYieldRateModifier, summed only when
     # isPower(), CvCity.cpp:11228). Was mis-classified in COND_KEYED (which expects a key-tag) -> silently dropped. ---
