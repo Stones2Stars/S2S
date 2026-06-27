@@ -114,13 +114,13 @@
  },
  "health": {
   "city": {
-   "flat": -150
+   "flat": -1.5
   }
  },
  "happiness": {
   "city": {
    "flat": [
-    -150,
+    -1.5,
     {
      "value": -1,
      "enabled": {

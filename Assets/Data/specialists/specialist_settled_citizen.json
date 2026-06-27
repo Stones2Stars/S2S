@@ -24,12 +24,12 @@
  },
  "health": {
   "city": {
-   "flat": -100
+   "flat": -1
   }
  },
  "happiness": {
   "city": {
-   "flat": -100
+   "flat": -1
   }
  },
  "experience": {

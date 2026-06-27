@@ -1,42 +1,64 @@
 #!/usr/bin/env python3
-"""Curate Specialist (#428) — a sub-city LEAF entity that, as a modifier SOURCE, deposits every effect at CITY
-scope (CvCity::processSpecialist, CvCity.cpp:5130-5198, applies each field per specialist-count). BESPOKE.
-Verified vs that consumer + the classify-light-batch workflow.
+"""Curate Specialist (#428) — rebuilt from scratch against the spec (2026-06-27).
 
-Own scope-wide families (all CITY / flat):
-- Yields / Commerces -> the SPLIT base-yield & base-commerce families.
-- iGreatPeopleRateChange -> greatPeopleRate (singleton).
-- iHealthPercent / iHappinessPercent -> health / happiness. CORRECTION: FLAT despite the "Percent" name —
-  CvCity.cpp:5169-5184 routes them to changeSpecialistGoodHealth/BadHealth & Happiness/Unhappiness as raw flat
-  adds split by sign; the /100 in CvCityAI is AI weighting only.
-- iInvestigation / iInsidiousness / iExperience -> their singleton families (the last two are module-rare).
+A specialist is a sub-city LEAF entity: as a modifier SOURCE it deposits its effects at CITY scope, applied
+per assigned specialist of that type (`CvCity::processSpecialist`, CvCity.cpp:5142-5211). It enables nothing,
+so there is no `enables` block. Every classification below is grounded in the consumer model
+(legacy-value-calc-map §1.5 for yields; CvCity.cpp for the rest), not in the field name.
 
-Own target-keyed modifier:
-- UnitCombatExperienceTypes -> experience.city.unitCombats.{UNITCOMBAT}.flat. The unitcombat is the TARGET that
-  gets free XP (not a conditioner), so per the model this stays on the SOURCE keyed by target (like a building's
-  unitProduction.percent.{UNIT}). The GAMEOPTION_UNIT_XP_FROM_SPECIALISTS Null-twin gate is a runtime rule; only
-  the real {unitCombat: modifier} pairs are authored.
+SCALE — the ONE non-trivial point (verified at the CONSUMER, not the store):
+  - intrinsic `iHealthPercent` / `iHappinessPercent` are stored RAW by processSpecialist (5184-5196) but the
+    REALIZED `goodHealth()`/`badHealth()`/`happyLevel()`/`unhappyLevel()` read them `/100`
+    (CvCity.cpp:5714/5848/5876/5654 — the legacy latent /100, scale-registry §4c). So they de-scale ÷100 →
+    human (celebrity 200→2, doctor 150→1.5, slave −40→−0.4). The "Percent" in the tag name is a misnomer:
+    after ÷100 the unit is FLAT (a flat happiness/health add split by sign at read), never a percent.
+  - EVERYTHING ELSE is ×1 human, emitted as-is: getYieldChange / getCommerceChange (engine multiplies by 100
+    on deposit — scale-registry §4a), getGreatPeopleRateChange, getExperience, getInsidiousness,
+    getInvestigation, UnitCombat iModifier, and the Tech happiness/health keep-on-self values (read RAW via
+    getExtraTech{Happiness,Health}Total — NO /100, CvCity.cpp:5719/5850).
 
-DROPPED (inverted onto their CONDITIONER tech — curate_tech already folds them via TECH_BOOSTS, authoring
-tech.happiness/health.city.specialists.{SPECIALIST}.flat; authoring here too would double-count):
-- TechHappinessTypes, TechHealthTypes.
+NEW KEY -> LEGACY FIELD (the old->new map IS this curator, curators/README):
+  yield.{food|production|commerce}.city.flat = `<Yields>`     (split base family; positional food/prod/commerce)
+  {gold|research|culture|espionage}.city.flat = `<Commerces>` (split base family; the commerce-type IS the family)
+  greatPeopleRate.city.flat                  = `iGreatPeopleRateChange`
+  health.city.flat                           = `iHealthPercent`     (÷100)
+  happiness.city.flat                        = `iHappinessPercent`  (÷100)
+  investigation.city.flat                    = `iInvestigation`
+  insidiousness.city.flat                    = `iInsidiousness`     (module-rare; absent in current data)
+  experience.city.flat                       = `iExperience`        (free unit XP; module-rare; absent today)
+  experience.city.unitCombats.{UC}.flat      = `UnitCombatExperienceTypes` (the UNITCOMBAT is the TARGET that
+                                               gets free XP, kept on the source keyed by target — modifier §5)
+  PROPERTY_*.<scope>.<unit>                  = `PropertyManipulators` (shared v3 converter; CONSTANT→flat,
+                                               DECAY→percent, attribute-scaled→per, Active→enabled)
 
-Inbound boosts (fold ONTO the specialist; the source entity drops them when curated, per the inversion
-convention — no double-authoring):
-- Building Specialist{Yield,Commerce}Change + Local variants (city, flat), Civic Specialist{Yield,Commerce}
-  PercentChanges (city, percent).
-- ⛔ Trait Specialist{Yield,Commerce}Changes are NOT folded here — they STAY on the trait keyed by specialist
-  (curate_trait KEYED -> yield/commerce.empire.specialists.{SPEC}.flat), because the simple/complex sets carry
-  DIFFERENT per-set values for the same specialist and the specialist is ONE shared file (Option-B ruling
-  2026-06-25, modifier.md trait callout). The cascade reads the active trait set's specialists.{SPEC} × count.
-- FreeSpecialistCount (Civic/Tech/Event) is NOT folded here: it grants N free specialists of this type — a
-  capability/grant that belongs on the SOURCE, not a per-turn modifier on the specialist (flagged).
+KEEP-ON-SELF, conditioned (modifier §6.5 — the specialist OWNS the output; the conditioner is the GIVER, never
+inverted onto it). Each lands as a {value, enabled} entry coexisting with the base (int|list-safe):
+  happiness/health.city.flat += `TechHappinessTypes`/`TechHealthTypes`  enabled {tech, scope:team}   (×1)
+  yield/commerce inbound boosts (SPECIALIST_BOOSTS below) folded from buildings/civics.
 
-PropertyManipulators -> per-PROPERTY_* family at CITY scope (gated list, like Heritage). GreatPeopleUnitType,
-Categories, bSlave, bVisible -> identity. Texture/Button -> art. Flavors -> ai. Runtime m_iMissionType not
-XML-backed. Specialists enable nothing (a leaf), so no `enables`.
+INBOUND BOOSTS folded onto this specialist (the source entity drops them when curated — no double-authoring):
+  - Building `SpecialistYieldChange`/`SpecialistCommerceChange` NON-LOCAL → EMPIRE flat, gate = player HAS the
+    building anywhere (`{BUILDING, scope:empire}`); `Local…` variants → CITY flat, gate = this city has it.
+    (owner ruling 2026-06-26, engine-verified: non-local → CvPlayer::changeExtraSpecialistYield empire-wide;
+    local → CvCity::changeLocalSpecialistExtraYield this-city. calc-map §1.5 "perType (building)"/"local".)
+  - Civic `Specialist{Yield,Commerce}PercentChanges` → CITY percent (read Σpercent/100 — calc-map §1.5 "pct").
 
-  python3 curate_specialist.py --sample SPECIALIST_MERCHANT SPECIALIST_SLAVES
+NOT folded here (deliberate):
+  - ⛔ Trait `Specialist{Yield,Commerce}Changes` STAY ON THE TRAIT keyed by specialist
+    (`{y}.empire.specialists.{SPEC}.flat`), because the simple/complex sets carry DIFFERENT per-set values for
+    the same specialist and the specialist is ONE shared file (Option-B ruling 2026-06-25, modifier.md trait
+    callout; calc-map §1.5 "perType (trait)"). curate_trait owns them.
+  - Civic/Trait `SpecialistExtraYields` (per ANY specialist) → on the civic/trait
+    (`{y}.empire.specialist.perSpecialist`, × the city's TOTAL specialists, calc-map §1.5 "all"). Not a
+    per-type fact about this specialist.
+  - `TechHappiness/HealthTypes` inverted onto the tech: NO — the specialist owns the output (keep-on-self above).
+  - `FreeSpecialistCount` (Civic/Tech/Event): a grant of N free specialists — a capability on the SOURCE, not a
+    per-turn modifier on the specialist.
+
+DEAD: `<YieldChanges>` — read() reads only `<Yields>` (addYields → m_piYieldChange); `<YieldChanges>` populates
+no member and is unread (1 stray occurrence). Dropped.
+
+  python3 curate_specialist.py --sample SPECIALIST_CELEBRITY SPECIALIST_SLAVES
   python3 curate_specialist.py --write
 """
 import argparse
@@ -49,64 +71,58 @@ import curate_common as cc
 from curate_common import de_i
 from store import Store, REPO
 
-# tag -> (family, scope, member, unit, valueKeys). valueKeys set => SPLIT base family (member = the identifier).
+# tag -> (family, valueKeys, descale).  valueKeys set => SPLIT base family (the identifier IS the family name).
+# descale=True => ÷100 (the latent-/100 intrinsic health/happiness); everything else is ×1 human.
+# All of these deposit scope-wide at CITY, unit `flat`.
 FAMILIES = {
-    "Yields":                ("yield",           "city", None, "flat", engine.YIELDS),
-    "Commerces":             ("commerce",        "city", None, "flat", engine.COMMERCES),
-    "iGreatPeopleRateChange":("greatPeopleRate", "city", None, "flat", None),
-    "iHealthPercent":        ("health",          "city", None, "flat", None),   # FLAT (corrected)
-    "iHappinessPercent":     ("happiness",       "city", None, "flat", None),   # FLAT (corrected)
-    "iInvestigation":        ("investigation",   "city", None, "flat", None),
-    "iInsidiousness":        ("insidiousness",   "city", None, "flat", None),
-    "iExperience":           ("experience",      "city", None, "flat", None),
+    "Yields":                 ("yield",           engine.YIELDS,    False),
+    "Commerces":              ("commerce",        engine.COMMERCES, False),
+    "iGreatPeopleRateChange": ("greatPeopleRate", None,             False),
+    "iHealthPercent":         ("health",          None,             True),   # ÷100 (latent /100)
+    "iHappinessPercent":      ("happiness",       None,             True),   # ÷100 (latent /100)
+    "iInvestigation":         ("investigation",   None,             False),
+    "iInsidiousness":         ("insidiousness",   None,             False),
+    "iExperience":            ("experience",      None,             False),
 }
 TEXT = {"Description": "description", "Civilopedia": "civilopedia", "Help": "help"}
-# Texture + Button -> ui.art.texture / ui.art.icon via ART_BLOCK (kept DISTINCT: 2 specialists differ; both UI).
-ART = {"Texture", "Button"}
+ART = {"Texture", "Button"}                                   # ui.art.texture / ui.art.icon (kept DISTINCT)
 IDENTITY = {"GreatPeopleUnitType": "greatPeopleUnit", "Categories": "categories"}
 BOOL_ID = {"bSlave": "slave", "bVisible": "visible"}
-SOURCE_UNIT = {"CONSTANT": "perTurn", "DECAY": "decay"}
-# TechHappiness/HealthTypes -> KEEP-ON-SELF (owner 2026-06-20, Phase-F): the specialist OWNS the output it
-# produces, so its tech-conditioned happiness/health bump rides on the specialist, city-scope, `enabled` by the
-# team-tech (the tech is the GIVER/enabler -- never inverted onto the tech). Read raw post-loop (still in DROP so the
-# default loop skips them; the explicit block below emits keep-on-self). YieldChanges is DEAD structure:
-# read() only reads <Yields> (addYields -> m_piYieldChange); <YieldChanges> populates no member and is unread.
+# Tech keep-on-self + the dead structure: skipped by the default loop, TechHappiness/Health handled explicitly below.
 DROP = {"TechHappinessTypes", "TechHealthTypes", "YieldChanges"}
 FAMILY_ORDER = ["food", "production", "commerce", "gold", "research", "culture", "espionage",
                 "greatPeopleRate", "health", "happiness", "experience", "investigation", "insidiousness"]
 
-# inbound entity-targeted modifiers: (sourceEntity, field, targetType, family, valueKeys, unit, scope[, cond_scope])
-# NB the container tags are PLURAL (rec.find returns the container, _boost_entries iterates its entries);
-# C2C names them inconsistently but Building/Trait both wrap entries in <…Changes>.
-# ⛔ Building NON-LOCAL vs LOCAL specialist boost = EMPIRE vs CITY (owner ruling 2026-06-26, engine-verified):
-#   - getSpecialistYieldChange (non-local) -> CvPlayer::changeExtraSpecialistYield (7493), per BUILDING INSTANCE, applied
-#     to player.getExtraSpecialistYield in EVERY city -> deposit EMPIRE, gate = player HAS the building anywhere (empire).
-#   - getLocalSpecialistYieldChange (local) -> CvCity::changeLocalSpecialistExtraYield (4811), only THIS city -> deposit
-#     CITY, gate = this city has the building (city). Mirrors the building's getGlobalYieldModifier (empire) vs
-#     getYieldModifier (city) split. (BAUHAUS_SCHOOL gives ARTIST +2 empire-wide -> the player-4 Tenochtitlan gap.)
+# Inbound conditioned boosts folded onto this specialist (accumulate_conditioned 7/8-tuple:
+# src_ent, field, _ttype, family, valueKeys, unit, deposit_scope[, cond_scope]). The cond_scope 8th element
+# overrides the conditioner's PRESENCE scope where it differs from the deposit scope (non-local building = empire).
 SPECIALIST_BOOSTS = [
-    ("BuildingInfo", "SpecialistYieldChanges",          "buildings", "yield",    engine.YIELDS,    "flat",    "empire", "empire"),
-    ("BuildingInfo", "SpecialistCommerceChanges",       "buildings", "commerce", engine.COMMERCES, "flat",    "empire", "empire"),
-    ("BuildingInfo", "LocalSpecialistYieldChanges",     "buildings", "yield",    engine.YIELDS,    "flat",    "city"),
-    ("BuildingInfo", "LocalSpecialistCommerceChanges",  "buildings", "commerce", engine.COMMERCES, "flat",    "city"),
-    ("CivicInfo",    "SpecialistYieldPercentChanges",   "civics",    "yield",    engine.YIELDS,    "percent", "city"),
-    ("CivicInfo",    "SpecialistCommercePercentChanges","civics",    "commerce", engine.COMMERCES, "percent", "city"),
-    # NB: Trait Specialist{Yield,Commerce}Changes are NOT folded here -- they stay ON THE TRAIT keyed by specialist
-    # (curate_trait KEYED), because the simple/complex sets carry DIFFERENT per-set values for the same specialist and
-    # the specialist is ONE shared file (Option-B ruling 2026-06-25; modifier.md trait callout). The cascade reads the
-    # trait's specialists.{SPEC} from the ACTIVE set x count -- inverting onto the shared specialist here is wrong.
+    ("BuildingInfo", "SpecialistYieldChanges",           "buildings", "yield",    engine.YIELDS,    "flat",    "empire", "empire"),
+    ("BuildingInfo", "SpecialistCommerceChanges",        "buildings", "commerce", engine.COMMERCES, "flat",    "empire", "empire"),
+    ("BuildingInfo", "LocalSpecialistYieldChanges",      "buildings", "yield",    engine.YIELDS,    "flat",    "city"),
+    ("BuildingInfo", "LocalSpecialistCommerceChanges",   "buildings", "commerce", engine.COMMERCES, "flat",    "city"),
+    ("CivicInfo",    "SpecialistYieldPercentChanges",    "civics",    "yield",    engine.YIELDS,    "percent", "city"),
+    ("CivicInfo",    "SpecialistCommercePercentChanges", "civics",    "commerce", engine.COMMERCES, "percent", "city"),
 ]
 
 
-def _put(fam, family, scope, member, unit, val):
-    node = fam.setdefault(family, {}).setdefault(scope, {})
+def _human(raw):
+    """÷100 de-scale → human number: int when whole (200→2), else 2-decimal float (150→1.5, −40→−0.4)."""
+    v = raw / 100.0
+    return int(v) if v == int(v) else round(v, 2)
+
+
+def _put(fam, family, member, unit, val):
+    """family.city[.member].unit = val (scope is always city for the scope-wide families)."""
+    node = fam.setdefault(family, OrderedDict()).setdefault("city", OrderedDict())
     if member:
-        node = node.setdefault(member, {})
+        node = node.setdefault(member, OrderedDict())
     node[unit] = val
 
 
 def _inject_cond(fam, family, scope, unit, value, enabled):
-    """Keep-on-self conditioned deposit: family.scope.unit gets [{value, enabled}, ...] (modifier.md §6.5)."""
+    """Keep-on-self conditioned deposit: family.scope.unit gets [{value, enabled}, ...] coexisting with the
+    base value (int|list-safe — modifier.md §6.5)."""
     node = fam.setdefault(family, OrderedDict()).setdefault(scope, OrderedDict())
     entry = OrderedDict([("value", value), ("enabled", enabled)])
     cur = node.get(unit)
@@ -118,31 +134,31 @@ def _inject_cond(fam, family, scope, unit, value, enabled):
         node[unit] = [cur, entry]
 
 
-def _apply_family(fam, spec, c):
-    family, scope, member, unit, keys = spec
-    if keys:                                   # SPLIT base family: the identifier IS the family name
+def _apply_family(fam, tag, c):
+    """Scope-wide CITY family from a top-level tag. SPLIT base (valueKeys) → each identifier is its own family."""
+    family, keys, descale = FAMILIES[tag]
+    if keys:                                          # SPLIT: the positional identifier IS the family name
         for ident, v in engine.named_array(c, keys).items():
-            _put(fam, ident, scope, None, unit, v)
+            _put(fam, ident, None, "flat", v)         # yields/commerce are ×1 (never de-scaled)
     else:
         t = engine.text(c)
         if engine.is_int(t) and int(t) != 0:
-            _put(fam, family, scope, member, unit, int(t))
+            _put(fam, family, None, "flat", _human(int(t)) if descale else int(t))
 
 
 def _unit_combat_xp(node, fam):
-    """UnitCombatExperienceTypes -> experience.city.unitCombats.{UNITCOMBAT}.flat (target-keyed)."""
+    """UnitCombatExperienceTypes → experience.city.unitCombats.{UNITCOMBAT}.flat (target-keyed, ×1)."""
     for entry in list(node):
         uc = engine.text(entry.find("UnitCombatType"))
         mod = engine.text(entry.find("iModifier"))
         if uc and engine.is_int(mod) and int(mod) != 0:
-            (fam.setdefault("experience", {}).setdefault("city", {}).setdefault("unitCombats", {})
-             .setdefault(uc, {}))["flat"] = int(mod)
+            (fam.setdefault("experience", OrderedDict()).setdefault("city", OrderedDict())
+             .setdefault("unitCombats", OrderedDict()).setdefault(uc, OrderedDict()))["flat"] = int(mod)
 
 
 def _properties(node, props):
-    """PropertyManipulators -> PROPERTY_X.<scope>.<unit> via the shared v3 converter (property = a yield-like family;
-    CONSTANT->flat, DECAY->percent, attribute-scaled->per [reduced], Active BoolExpr->enabled). Multiple sources to one
-    (prop,scope,unit) accumulate as a LIST of entries; a lone source stays a scalar."""
+    """PropertyManipulators → PROPERTY_X.<scope>.<unit> via the shared v3 converter. Multiple sources to one
+    (prop, scope, unit) accumulate as a LIST; a lone source stays scalar."""
     for src in node:
         if src.tag != "PropertySource":
             continue
@@ -160,7 +176,7 @@ def _properties(node, props):
 
 
 def curate(typ, rec, boosts):
-    text, fam, props, art_blocks, identity, ai, leftover = {}, {}, {}, {}, {}, {}, []
+    text, fam, props, art_blocks, identity, ai, leftover = {}, OrderedDict(), OrderedDict(), {}, {}, {}, []
     for c in rec:
         tag, t = c.tag, engine.text(c)
         if tag == "Type" or tag in DROP:
@@ -169,7 +185,7 @@ def curate(typ, rec, boosts):
             if t:
                 text[TEXT[tag]] = t
         elif tag in FAMILIES:
-            _apply_family(fam, FAMILIES[tag], c)
+            _apply_family(fam, tag, c)
         elif tag == "UnitCombatExperienceTypes":
             _unit_combat_xp(c, fam)
         elif tag == "PropertyManipulators":
@@ -179,7 +195,7 @@ def curate(typ, rec, boosts):
             if v:
                 ai["flavours"] = v
         elif tag in ART:
-            cc.put_art(art_blocks, tag, engine.generic(c))   # Texture->ui.art.texture, Button->ui.art.icon (ART_BLOCK)
+            cc.put_art(art_blocks, tag, engine.generic(c))     # Texture→ui.art.texture, Button→ui.art.icon
         elif tag in IDENTITY:
             if t or list(c):
                 identity[IDENTITY[tag]] = engine.generic(c)
@@ -191,17 +207,15 @@ def curate(typ, rec, boosts):
                 leftover.append(tag)
                 identity[engine.FIELD_RENAME.get(tag, de_i(tag))] = engine.generic(c)
 
-    # Tech-conditioned OWN happiness/health -> KEEP-ON-SELF (the specialist owns the output it produces; the tech
-    # is the enabling GIVER). city-scope, `enabled` by the team-tech. x1, no de-scale. (owner 2026-06-20, §6.5)
+    # Tech-conditioned OWN happiness/health → KEEP-ON-SELF (the specialist owns the output; the team-tech is the
+    # enabling GIVER). city-scope, ×1 (read RAW by getExtraTech…Total), `enabled` by the team-tech.
     for tag, family in (("TechHappinessTypes", "happiness"), ("TechHealthTypes", "health")):
         node = rec.find(tag)
         if node is not None:
             for tech, _u, val in cc._boost_entries(node, None, "flat"):
                 _inject_cond(fam, family, "city", "flat", val, OrderedDict([("type", tech), ("scope", "team")]))
 
-    # Conditioned keep-on-source deposits (building/civic/trait boosts -> THIS specialist's OWN output, `enabled` by
-    # the source's presence; modifier.md §6.5). INJECTED (not merged) so each lands as a {value, enabled} entry that
-    # coexists with the specialist's own base value (int|list-safe), instead of the old keyed-by-conditioner sub-scope.
+    # Inbound building/civic boosts → THIS specialist's OWN output, `enabled` by the source's presence.
     for fam_name, scope, unit, value, enabled in boosts:
         _inject_cond(fam, fam_name, scope, unit, value, enabled)
 
@@ -213,7 +227,7 @@ def curate(typ, rec, boosts):
     for family in FAMILY_ORDER:
         if family in fam:
             out[family] = fam[family]
-    for family in fam:
+    for family in fam:                                          # any family not in the explicit order
         if family not in out:
             out[family] = fam[family]
     for prop in sorted(props):

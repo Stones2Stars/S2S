@@ -19,12 +19,12 @@
  },
  "health": {
   "city": {
-   "flat": -40
+   "flat": -0.4
   }
  },
  "happiness": {
   "city": {
-   "flat": 150
+   "flat": 1.5
   }
  },
  "PROPERTY_CRIME": {
