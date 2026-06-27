@@ -2,6 +2,10 @@
  "type": "TRAIT_IMPERIALIST",
  "description": "TXT_KEY_TRAIT_COMPLEX_IMPERIALIST",
  "civilopedia": "TXT_KEY_TRAIT_COMPLEX_IMPERIALIST_PEDIA",
+ "strategy": "TXT_KEY_TRAIT_COMPLEX_IMPERIALIST_STRATEGY",
+ "excludes": [
+  "TRAIT_MEEK"
+ ],
  "buildRate": {
   "empire": {
    "buildings": {
@@ -73,110 +77,18 @@
    }
   }
  },
- "happiness": {
+ "commerce": {
   "empire": {
-   "perMilitaryUnit": {
-    "perMilitaryUnit": 1
-   }
-  }
- },
- "greatGeneralRate": {
-  "empire": {
-   "percent": 100
-  }
- },
- "experience": {
-  "empire": {
-   "unitCombats": {
-    "UNITCOMBAT_SIEGE": {
-     "flat": 2
+   "specialists": {
+    "SPECIALIST_GREAT_MILITARY_INSTRUCTOR": {
+     "flat": 1
+    },
+    "SPECIALIST_GREAT_ADMIRAL": {
+     "flat": 1
     }
-   },
-   "capital": {
-    "percent": 5
    }
   }
  },
- "combat": {
-  "empire": {
-   "captureProbability": {
-    "percent": 20
-   },
-   "captureResistance": {
-    "percent": 10
-   }
-  }
- },
- "upkeep": {
-  "empire": {
-   "freeMilitary": {
-    "perPopulation": 15
-   },
-   "upgradePrice": {
-    "percent": 20
-   }
-  }
- },
- "diplomacy": {
-  "empire": {
-   "attitude": {
-    "flat": -1
-   }
-  }
- },
- "revolution": {
-  "empire": {
-   "local": {
-    "flat": -1
-   },
-   "national": {
-    "flat": -1
-   }
-  }
- },
- "succession": {
-  "promotionLine": "PROMOTIONLINE_IMPERIALIST"
- },
- "ai": {
-  "flavours": [
-   {
-    "FLAVOR_MILITARY": 16
-   },
-   {
-    "FLAVOR_RELIGION": 0
-   },
-   {
-    "FLAVOR_PRODUCTION": 1
-   },
-   {
-    "FLAVOR_GOLD": 3
-   },
-   {
-    "FLAVOR_SCIENCE": 0
-   },
-   {
-    "FLAVOR_CULTURE": 0
-   },
-   {
-    "FLAVOR_GROWTH": -6
-   },
-   {
-    "FLAVOR_ESPIONAGE": 1
-   }
-  ]
- },
- "ui": {
-  "art": {
-   "icon": "art/Buttons/Traits/TraitImperialist.dds"
-  }
- },
- "identity": {
-  "impurePropertyManipulators": true
- },
- "strategy": "TXT_KEY_TRAIT_COMPLEX_IMPERIALIST_STRATEGY",
- "excludes": [
-  "TRAIT_MEEK"
- ],
  "research": {
   "empire": {
    "byTech": {
@@ -291,14 +203,55 @@
    }
   }
  },
+ "espionage": {
+  "empire": {
+   "specialists": {
+    "SPECIALIST_GREAT_MILITARY_INSTRUCTOR": {
+     "flat": 2
+    },
+    "SPECIALIST_GREAT_ADMIRAL": {
+     "flat": 2
+    }
+   }
+  }
+ },
+ "happiness": {
+  "empire": {
+   "perMilitaryUnit": {
+    "perMilitaryUnit": 1
+   }
+  }
+ },
  "greatPeopleRate": {
   "empire": {
    "percent": -10
   }
  },
+ "experience": {
+  "empire": {
+   "unitCombats": {
+    "UNITCOMBAT_SIEGE": {
+     "flat": 2
+    }
+   },
+   "capital": {
+    "percent": 5
+   }
+  }
+ },
  "conscript": {
   "empire": {
    "flat": 4
+  }
+ },
+ "combat": {
+  "empire": {
+   "captureProbability": {
+    "percent": 20
+   },
+   "captureResistance": {
+    "percent": 10
+   }
   }
  },
  "maintenance": {
@@ -308,6 +261,23 @@
    },
    "numCities": {
     "percent": -20
+   }
+  }
+ },
+ "upkeep": {
+  "empire": {
+   "freeMilitary": {
+    "perPopulation": 15
+   },
+   "upgradePrice": {
+    "percent": 20
+   }
+  }
+ },
+ "diplomacy": {
+  "empire": {
+   "attitude": {
+    "flat": -1
    }
   }
  },
@@ -332,5 +302,44 @@
     "UNITCOMBAT_COMBATANT"
    ]
   }
+ },
+ "succession": {
+  "promotionLine": "PROMOTIONLINE_IMPERIALIST"
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 16
+   },
+   {
+    "FLAVOR_RELIGION": 0
+   },
+   {
+    "FLAVOR_PRODUCTION": 1
+   },
+   {
+    "FLAVOR_GOLD": 3
+   },
+   {
+    "FLAVOR_SCIENCE": 0
+   },
+   {
+    "FLAVOR_CULTURE": 0
+   },
+   {
+    "FLAVOR_GROWTH": -6
+   },
+   {
+    "FLAVOR_ESPIONAGE": 1
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Traits/TraitImperialist.dds"
+  }
+ },
+ "identity": {
+  "impurePropertyManipulators": true
  }
 }

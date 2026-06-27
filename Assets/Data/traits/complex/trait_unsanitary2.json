@@ -6,6 +6,18 @@
  "excludes": [
   "TRAIT_MEDICAL1"
  ],
+ "production": {
+  "empire": {
+   "specialists": {
+    "SPECIALIST_SLAVES": {
+     "flat": -1
+    },
+    "SPECIALIST_SETTLED_SLAVE": {
+     "flat": -1
+    }
+   }
+  }
+ },
  "buildRate": {
   "empire": {
    "buildings": {
@@ -98,6 +110,18 @@
    }
   }
  },
+ "gold": {
+  "empire": {
+   "specialists": {
+    "SPECIALIST_DOCTOR": {
+     "flat": -1
+    },
+    "SPECIALIST_GREAT_DOCTOR": {
+     "flat": -1
+    }
+   }
+  }
+ },
  "research": {
   "empire": {
    "byTech": {
@@ -133,6 +157,18 @@
     },
     "TECH_GENETICS": {
      "percent": -20
+    }
+   }
+  }
+ },
+ "espionage": {
+  "empire": {
+   "specialists": {
+    "SPECIALIST_DOCTOR": {
+     "flat": -1
+    },
+    "SPECIALIST_GREAT_DOCTOR": {
+     "flat": -1
     }
    }
   }

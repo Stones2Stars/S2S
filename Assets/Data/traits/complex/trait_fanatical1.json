@@ -2,13 +2,51 @@
  "type": "TRAIT_FANATICAL1",
  "description": "TXT_KEY_TRAIT_ZEALOUS1",
  "civilopedia": "TXT_KEY_TRAIT_ZEALOUS1_PEDIA",
- "enables": {
-  "traits": [
-   "TRAIT_ZEALOUS2"
-  ]
+ "strategy": "TXT_KEY_TRAIT_ZEALOUS_STRATEGY",
+ "excludes": [
+  "TRAIT_ANTI_CLERICAL1",
+  "TRAIT_PIOUS1",
+  "TRAIT_SPIRITUAL1"
+ ],
+ "food": {
+  "empire": {
+   "specialists": {
+    "SPECIALIST_PRIEST": {
+     "flat": -1
+    },
+    "SPECIALIST_GREAT_PROPHET": {
+     "flat": -1
+    }
+   }
+  }
+ },
+ "commerce": {
+  "empire": {
+   "percent": -5
+  }
+ },
+ "gold": {
+  "empire": {
+   "specialists": {
+    "SPECIALIST_PRIEST": {
+     "flat": -1
+    },
+    "SPECIALIST_GREAT_PROPHET": {
+     "flat": -1
+    }
+   }
+  }
  },
  "research": {
   "empire": {
+   "specialists": {
+    "SPECIALIST_PRIEST": {
+     "flat": -1
+    },
+    "SPECIALIST_GREAT_PROPHET": {
+     "flat": -1
+    }
+   },
    "byTech": {
     "TECH_HINDUISM": {
      "percent": -25
@@ -104,6 +142,32 @@
    }
   }
  },
+ "greatGeneralRate": {
+  "empire": {
+   "percent": 5
+  }
+ },
+ "experience": {
+  "empire": {
+   "nonStateHolyCityXP": {
+    "percent": -5
+   }
+  }
+ },
+ "durations": {
+  "empire": {
+   "religiousAnarchy": {
+    "percent": 100
+   }
+  }
+ },
+ "diplomacy": {
+  "empire": {
+   "attitude": {
+    "flat": -1
+   }
+  }
+ },
  "stateReligion": {
   "empire": {
    "greatPeopleRate": {
@@ -114,9 +178,44 @@
    }
   }
  },
+ "revolution": {
+  "empire": {
+   "holyCityGood": {
+    "flat": 5
+   },
+   "holyCityBad": {
+    "flat": 10
+   },
+   "badReligionMod": {
+    "percent": 40
+   },
+   "goodReligionMod": {
+    "percent": 20
+   }
+  }
+ },
+ "policies": {
+  "allowInquisitions": true,
+  "bansNonStateReligions": true
+ },
+ "grants": {
+  "freePromotions": {
+   "PROMOTION_DEVOTION1": [
+    "UNITCOMBAT_CIVILIAN",
+    "UNITCOMBAT_COMBATANT",
+    "UNITCOMBAT_EXPLORER",
+    "UNITCOMBAT_NAVAL_COMBATANT"
+   ]
+  }
+ },
  "succession": {
   "promotionLine": "PROMOTIONLINE_ZEALOUS",
   "priority": -1
+ },
+ "loadPrune": {
+  "onGameOptions": [
+   "GAMEOPTION_LEADER_COMPLEX_TRAITS"
+  ]
  },
  "ai": {
   "flavours": [
@@ -154,77 +253,5 @@
  "identity": {
   "negativeTrait": true,
   "impurePromotions": true
- },
- "strategy": "TXT_KEY_TRAIT_ZEALOUS_STRATEGY",
- "excludes": [
-  "TRAIT_ANTI_CLERICAL1",
-  "TRAIT_PIOUS1",
-  "TRAIT_SPIRITUAL1"
- ],
- "commerce": {
-  "empire": {
-   "percent": -5
-  }
- },
- "greatGeneralRate": {
-  "empire": {
-   "percent": 5
-  }
- },
- "experience": {
-  "empire": {
-   "nonStateHolyCityXP": {
-    "percent": -5
-   }
-  }
- },
- "durations": {
-  "empire": {
-   "religiousAnarchy": {
-    "percent": 100
-   }
-  }
- },
- "diplomacy": {
-  "empire": {
-   "attitude": {
-    "flat": -1
-   }
-  }
- },
- "revolution": {
-  "empire": {
-   "holyCityGood": {
-    "flat": 5
-   },
-   "holyCityBad": {
-    "flat": 10
-   },
-   "badReligionMod": {
-    "percent": 40
-   },
-   "goodReligionMod": {
-    "percent": 20
-   }
-  }
- },
- "policies": {
-  "allowInquisitions": true,
-  "bansNonStateReligions": true
- },
- "grants": {
-  "freePromotions": {
-   "PROMOTION_DEVOTION1": [
-    "UNITCOMBAT_CIVILIAN",
-    "UNITCOMBAT_COMBATANT",
-    "UNITCOMBAT_EXPLORER",
-    "UNITCOMBAT_NAVAL_COMBATANT"
-   ]
-  }
- },
- "loadPrune": {
-  "onGameOptions": [
-   "GAMEOPTION_LEADER_COMPLEX_TRAITS"
-  ]
  }
 }

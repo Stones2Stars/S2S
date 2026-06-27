@@ -29,6 +29,11 @@
     "IMPROVEMENT_VERTICAL_FARM": {
      "flat": 1
     }
+   },
+   "specialists": {
+    "SPECIALIST_GREAT_HUNTER": {
+     "flat": 1
+    }
    }
   }
  },
@@ -633,6 +638,15 @@
     },
     "TECH_NEW_URBANISM": {
      "percent": -20
+    }
+   }
+  }
+ },
+ "espionage": {
+  "empire": {
+   "specialists": {
+    "SPECIALIST_GREAT_HUNTER": {
+     "flat": 2
     }
    }
   }

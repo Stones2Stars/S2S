@@ -7,6 +7,24 @@
    "TRAIT_ANTI_CLERICAL2"
   ]
  },
+ "production": {
+  "empire": {
+   "specialists": {
+    "SPECIALIST_PRIEST": {
+     "flat": -1
+    }
+   }
+  }
+ },
+ "espionage": {
+  "empire": {
+   "specialists": {
+    "SPECIALIST_PRIEST": {
+     "flat": 1
+    }
+   }
+  }
+ },
  "happiness": {
   "empire": {
    "buildings": {

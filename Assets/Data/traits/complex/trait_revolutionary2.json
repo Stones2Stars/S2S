@@ -13,6 +13,14 @@
  ],
  "food": {
   "empire": {
+   "specialists": {
+    "SPECIALIST_CITIZEN": {
+     "flat": 1
+    },
+    "SPECIALIST_SETTLED_CITIZEN": {
+     "flat": 1
+    }
+   },
    "capital": {
     "percent": 5
    }
@@ -46,6 +54,14 @@
   "empire": {
    "flat": 1,
    "percent": 5,
+   "specialists": {
+    "SPECIALIST_CITIZEN": {
+     "flat": 1
+    },
+    "SPECIALIST_SETTLED_CITIZEN": {
+     "flat": 1
+    }
+   },
    "capital": {
     "percent": 5
    }
@@ -55,6 +71,14 @@
   "empire": {
    "flat": 1,
    "percent": 5,
+   "specialists": {
+    "SPECIALIST_CITIZEN": {
+     "flat": 1
+    },
+    "SPECIALIST_SETTLED_CITIZEN": {
+     "flat": 1
+    }
+   },
    "capital": {
     "percent": 5
    }

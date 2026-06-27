@@ -37,7 +37,7 @@
     {
      "value": 4,
      "enabled": {
-      "HOLY_CITY": "RELIGION_SHAMANISM"
+      "IS_HOLY_CITY": "RELIGION_SHAMANISM"
      }
     },
     {

@@ -2,6 +2,46 @@
  "type": "TRAIT_POLITICIAN",
  "description": "TXT_KEY_TRAIT_COMPLEX_POLITICIAN",
  "civilopedia": "TXT_KEY_TRAIT_COMPLEX_POLITICIAN_PEDIA",
+ "strategy": "TXT_KEY_TRAIT_COMPLEX_POLITICIAN_STRATEGY",
+ "excludes": [
+  "TRAIT_FOREIGN"
+ ],
+ "food": {
+  "empire": {
+   "specialists": {
+    "SPECIALIST_NOBLE": {
+     "flat": 1
+    },
+    "SPECIALIST_LAWYER": {
+     "flat": 1
+    },
+    "SPECIALIST_GREAT_STATESMAN": {
+     "flat": 1
+    }
+   },
+   "capital": {
+    "percent": 5
+   }
+  }
+ },
+ "production": {
+  "empire": {
+   "specialists": {
+    "SPECIALIST_NOBLE": {
+     "flat": 1
+    },
+    "SPECIALIST_LAWYER": {
+     "flat": 1
+    },
+    "SPECIALIST_GREAT_STATESMAN": {
+     "flat": 1
+    }
+   },
+   "capital": {
+    "percent": 5
+   }
+  }
+ },
  "buildRate": {
   "empire": {
    "worldWonder": {
@@ -12,12 +52,96 @@
    }
   }
  },
- "happiness": {
+ "commerce": {
   "empire": {
-   "buildings": {
-    "BUILDING_POLIS_COUNCIL": {
+   "specialists": {
+    "SPECIALIST_NOBLE": {
+     "flat": 1
+    },
+    "SPECIALIST_LAWYER": {
+     "flat": 1
+    },
+    "SPECIALIST_GREAT_STATESMAN": {
      "flat": 1
     }
+   },
+   "capital": {
+    "percent": 5
+   }
+  }
+ },
+ "gold": {
+  "empire": {
+   "specialists": {
+    "SPECIALIST_SPY": {
+     "flat": 1
+    },
+    "SPECIALIST_GREAT_SPY": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "research": {
+  "empire": {
+   "specialists": {
+    "SPECIALIST_SPY": {
+     "flat": 1
+    },
+    "SPECIALIST_GREAT_SPY": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "culture": {
+  "empire": {
+   "flat": 1,
+   "percent": 5,
+   "specialists": {
+    "SPECIALIST_SPY": {
+     "flat": 1
+    },
+    "SPECIALIST_GREAT_SPY": {
+     "flat": 1
+    }
+   },
+   "capital": {
+    "percent": 10
+   }
+  }
+ },
+ "espionage": {
+  "empire": {
+   "flat": 1,
+   "percent": 5,
+   "specialists": {
+    "SPECIALIST_SPY": {
+     "flat": 1
+    },
+    "SPECIALIST_GREAT_SPY": {
+     "flat": 1
+    }
+   },
+   "capital": {
+    "percent": 10
+   }
+  }
+ },
+ "experience": {
+  "empire": {
+   "capital": {
+    "percent": 10
+   }
+  }
+ },
+ "maintenance": {
+  "empire": {
+   "distance": {
+    "percent": 20
+   },
+   "numCities": {
+    "percent": 20
    }
   }
  },
@@ -35,18 +159,26 @@
    }
   }
  },
- "revolution": {
+ "diplomacy": {
   "empire": {
-   "national": {
-    "flat": -1
+   "warWeariness": {
+    "percent": 20
+   },
+   "attitude": {
+    "flat": 2
    }
   }
  },
- "grants": {
-  "freePromotions": {
-   "PROMOTION_LOYALTY": [
-    "UNITCOMBAT_SPY"
-   ]
+ "PROPERTY_EDUCATION": {
+  "city": {
+   "flat": {
+    "value": -1,
+    "per": {
+     "type": "POPULATION",
+     "each": 4,
+     "scope": "city"
+    }
+   }
   }
  },
  "succession": {
@@ -87,87 +219,5 @@
  },
  "identity": {
   "impurePropertyManipulators": true
- },
- "strategy": "TXT_KEY_TRAIT_COMPLEX_POLITICIAN_STRATEGY",
- "excludes": [
-  "TRAIT_FOREIGN"
- ],
- "food": {
-  "empire": {
-   "capital": {
-    "percent": 5
-   }
-  }
- },
- "production": {
-  "empire": {
-   "capital": {
-    "percent": 5
-   }
-  }
- },
- "commerce": {
-  "empire": {
-   "capital": {
-    "percent": 5
-   }
-  }
- },
- "culture": {
-  "empire": {
-   "flat": 1,
-   "percent": 5,
-   "capital": {
-    "percent": 10
-   }
-  }
- },
- "espionage": {
-  "empire": {
-   "flat": 1,
-   "percent": 5,
-   "capital": {
-    "percent": 10
-   }
-  }
- },
- "experience": {
-  "empire": {
-   "capital": {
-    "percent": 10
-   }
-  }
- },
- "maintenance": {
-  "empire": {
-   "distance": {
-    "percent": 20
-   },
-   "numCities": {
-    "percent": 20
-   }
-  }
- },
- "diplomacy": {
-  "empire": {
-   "warWeariness": {
-    "percent": 20
-   },
-   "attitude": {
-    "flat": 2
-   }
-  }
- },
- "PROPERTY_EDUCATION": {
-  "city": {
-   "flat": {
-    "value": -1,
-    "per": {
-     "type": "POPULATION",
-     "each": 4,
-     "scope": "city"
-    }
-   }
-  }
  }
 }

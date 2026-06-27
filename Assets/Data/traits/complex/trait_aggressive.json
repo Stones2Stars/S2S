@@ -2,6 +2,22 @@
  "type": "TRAIT_AGGRESSIVE",
  "description": "TXT_KEY_TRAIT_COMPLEX_AGGRESSIVE",
  "civilopedia": "TXT_KEY_TRAIT_COMPLEX_AGGRESSIVE_PEDIA",
+ "strategy": "TXT_KEY_TRAIT_COMPLEX_AGGRESSIVE_STRATEGY",
+ "excludes": [
+  "TRAIT_TIMID"
+ ],
+ "production": {
+  "empire": {
+   "specialists": {
+    "SPECIALIST_GREAT_MILITARY_INSTRUCTOR": {
+     "flat": 1
+    },
+    "SPECIALIST_GREAT_ADMIRAL": {
+     "flat": 1
+    }
+   }
+  }
+ },
  "buildRate": {
   "empire": {
    "unitCombats": {
@@ -11,6 +27,26 @@
     "UNITCOMBAT_NAVAL_COMBATANT": {
      "percent": 20
     }
+   }
+  }
+ },
+ "gold": {
+  "empire": {
+   "specialists": {
+    "SPECIALIST_GREAT_MILITARY_INSTRUCTOR": {
+     "flat": 2
+    },
+    "SPECIALIST_GREAT_ADMIRAL": {
+     "flat": 2
+    }
+   }
+  }
+ },
+ "greatGeneralRate": {
+  "empire": {
+   "percent": 20,
+   "domestic": {
+    "percent": -20
    }
   }
  },
@@ -29,6 +65,37 @@
    }
   }
  },
+ "conscript": {
+  "empire": {
+   "flat": 2
+  }
+ },
+ "combat": {
+  "empire": {
+   "cityDefense": {
+    "percent": -10
+   },
+   "captureProbability": {
+    "percent": 10
+   },
+   "captureResistance": {
+    "percent": 20
+   }
+  }
+ },
+ "upkeep": {
+  "empire": {
+   "freeMilitary": {
+    "flat": 10
+   },
+   "unitMilitary": {
+    "percent": -10
+   },
+   "upgradePrice": {
+    "percent": 20
+   }
+  }
+ },
  "diplomacy": {
   "empire": {
    "warWeariness": {
@@ -39,18 +106,6 @@
    },
    "enemyWarWeariness": {
     "percent": 60
-   }
-  }
- },
- "PROPERTY_CRIME": {
-  "city": {
-   "flat": {
-    "value": 5,
-    "enabled": {
-     "type": "PROPERTY_CRIME",
-     "scope": "city",
-     "min": 301
-    }
    }
   }
  },
@@ -96,53 +151,6 @@
  "ui": {
   "art": {
    "icon": "art/Buttons/Traits/TraitAggressive.dds"
-  }
- },
- "identity": {
-  "shortDescription": "TXT_KEY_TRAIT_AGGRESSIVE_SHORT",
-  "impurePropertyManipulators": true
- },
- "strategy": "TXT_KEY_TRAIT_COMPLEX_AGGRESSIVE_STRATEGY",
- "excludes": [
-  "TRAIT_TIMID"
- ],
- "greatGeneralRate": {
-  "empire": {
-   "percent": 20,
-   "domestic": {
-    "percent": -20
-   }
-  }
- },
- "conscript": {
-  "empire": {
-   "flat": 2
-  }
- },
- "combat": {
-  "empire": {
-   "cityDefense": {
-    "percent": -10
-   },
-   "captureProbability": {
-    "percent": 10
-   },
-   "captureResistance": {
-    "percent": 20
-   }
-  }
- },
- "upkeep": {
-  "empire": {
-   "freeMilitary": {
-    "flat": 10
-   },
-   "unitMilitary": {
-    "percent": -10
-   },
-   "upgradePrice": {
-    "percent": 20
-   }
   }
  }
 }

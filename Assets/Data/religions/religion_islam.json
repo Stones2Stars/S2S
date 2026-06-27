@@ -24,7 +24,7 @@
     {
      "value": 2,
      "enabled": {
-      "HOLY_CITY": "RELIGION_ISLAM"
+      "IS_HOLY_CITY": "RELIGION_ISLAM"
      }
     },
     {
@@ -42,7 +42,7 @@
     {
      "value": 2,
      "enabled": {
-      "HOLY_CITY": "RELIGION_ISLAM"
+      "IS_HOLY_CITY": "RELIGION_ISLAM"
      }
     }
    ]
@@ -54,7 +54,7 @@
     {
      "value": 6,
      "enabled": {
-      "HOLY_CITY": "RELIGION_ISLAM"
+      "IS_HOLY_CITY": "RELIGION_ISLAM"
      }
     },
     {

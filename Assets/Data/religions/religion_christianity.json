@@ -25,7 +25,7 @@
     {
      "value": 2,
      "enabled": {
-      "HOLY_CITY": "RELIGION_CHRISTIANITY"
+      "IS_HOLY_CITY": "RELIGION_CHRISTIANITY"
      }
     }
    ]
@@ -37,7 +37,7 @@
     {
      "value": 6,
      "enabled": {
-      "HOLY_CITY": "RELIGION_CHRISTIANITY"
+      "IS_HOLY_CITY": "RELIGION_CHRISTIANITY"
      }
     },
     {

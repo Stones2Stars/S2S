@@ -13,6 +13,18 @@
   "TRAIT_FANATICAL1",
   "TRAIT_SPIRITUAL1"
  ],
+ "commerce": {
+  "empire": {
+   "specialists": {
+    "SPECIALIST_PRIEST": {
+     "flat": 1
+    },
+    "SPECIALIST_GREAT_PROPHET": {
+     "flat": 1
+    }
+   }
+  }
+ },
  "gold": {
   "empire": {
    "percent": -5
@@ -104,6 +116,30 @@
     },
     "TECH_SCIENTOLOGY": {
      "percent": -25
+    }
+   }
+  }
+ },
+ "culture": {
+  "empire": {
+   "specialists": {
+    "SPECIALIST_PRIEST": {
+     "flat": 1
+    },
+    "SPECIALIST_GREAT_PROPHET": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "espionage": {
+  "empire": {
+   "specialists": {
+    "SPECIALIST_PRIEST": {
+     "flat": 1
+    },
+    "SPECIALIST_GREAT_PROPHET": {
+     "flat": 1
     }
    }
   }

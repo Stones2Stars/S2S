@@ -270,10 +270,57 @@
    }
   }
  },
+ "commerce": {
+  "empire": {
+   "specialists": {
+    "SPECIALIST_SCIENTIST": {
+     "flat": -1
+    },
+    "SPECIALIST_GREAT_SCIENTIST": {
+     "flat": -1
+    },
+    "SPECIALIST_DOCTOR": {
+     "flat": -1
+    },
+    "SPECIALIST_GREAT_DOCTOR": {
+     "flat": -1
+    }
+   }
+  }
+ },
  "research": {
   "empire": {
    "flat": -2,
    "percent": -10,
+   "specialists": {
+    "SPECIALIST_SCIENTIST": {
+     "flat": -2
+    },
+    "SPECIALIST_GREAT_SCIENTIST": {
+     "flat": -2
+    },
+    "SPECIALIST_DOCTOR": {
+     "flat": -2
+    },
+    "SPECIALIST_GREAT_DOCTOR": {
+     "flat": -2
+    },
+    "SPECIALIST_CITIZEN": {
+     "flat": -1
+    },
+    "SPECIALIST_SLAVES": {
+     "flat": -1
+    },
+    "SPECIALIST_SETTLED_CITIZEN": {
+     "flat": -1
+    },
+    "SPECIALIST_SETTLED_SLAVE": {
+     "flat": -1
+    },
+    "SPECIALIST_ANDROID_WORKER": {
+     "flat": -1
+    }
+   },
    "capital": {
     "percent": -10
    },

@@ -44,7 +44,21 @@
  "research": {
   "empire": {
    "flat": 1,
-   "percent": 5
+   "percent": 5,
+   "specialists": {
+    "SPECIALIST_SCIENTIST": {
+     "flat": 1
+    },
+    "SPECIALIST_GREAT_SCIENTIST": {
+     "flat": 1
+    },
+    "SPECIALIST_DOCTOR": {
+     "flat": 1
+    },
+    "SPECIALIST_GREAT_DOCTOR": {
+     "flat": 1
+    }
+   }
   }
  },
  "happiness": {

@@ -2,11 +2,10 @@
  "type": "TRAIT_SCIENTIFIC1",
  "description": "TXT_KEY_TRAIT_COMPLEX_SCIENTIFIC1",
  "civilopedia": "TXT_KEY_TRAIT_COMPLEX_SCIENTIFIC1_PEDIA",
- "enables": {
-  "traits": [
-   "TRAIT_SCIENTIFIC2"
-  ]
- },
+ "strategy": "TXT_KEY_TRAIT_COMPLEX_SCIENTIFIC_STRATEGY",
+ "excludes": [
+  "TRAIT_TRADITIONAL1"
+ ],
  "buildRate": {
   "empire": {
    "teamWonder": {
@@ -79,10 +78,36 @@
    }
   }
  },
+ "commerce": {
+  "empire": {
+   "specialists": {
+    "SPECIALIST_SCIENTIST": {
+     "flat": 1
+    },
+    "SPECIALIST_GREAT_SCIENTIST": {
+     "flat": 1
+    }
+   }
+  }
+ },
  "research": {
   "empire": {
    "flat": 2,
    "percent": 5,
+   "specialists": {
+    "SPECIALIST_CITIZEN": {
+     "flat": 1
+    },
+    "SPECIALIST_SLAVES": {
+     "flat": 1
+    },
+    "SPECIALIST_SETTLED_CITIZEN": {
+     "flat": 1
+    },
+    "SPECIALIST_SETTLED_SLAVE": {
+     "flat": 1
+    }
+   },
    "capital": {
     "percent": 5
    },
@@ -136,12 +161,25 @@
    }
   }
  },
- "workRate": {
+ "health": {
   "empire": {
-   "builds": {
-    "BUILD_SOLAR_PANELS": {
-     "percent": 50
+   "flat": 1
+  }
+ },
+ "greatPeopleRate": {
+  "empire": {
+   "percent": 10,
+   "units": {
+    "UNIT_SCIENTIST": {
+     "flat": 2
     }
+   }
+  }
+ },
+ "durations": {
+  "empire": {
+   "religiousAnarchy": {
+    "percent": 50
    }
   }
  },
@@ -152,8 +190,39 @@
    }
   }
  },
- "policies": {
-  "upgradeAnywhere": true
+ "stateReligion": {
+  "empire": {
+   "spreadProbability": {
+    "percent": -10
+   },
+   "nonStateSpreadProbability": {
+    "percent": -10
+   }
+  }
+ },
+ "PROPERTY_AIR_POLLUTION": {
+  "city": {
+   "flat": {
+    "value": 1,
+    "per": {
+     "type": "POPULATION",
+     "each": 4,
+     "scope": "city"
+    }
+   }
+  }
+ },
+ "PROPERTY_EDUCATION": {
+  "city": {
+   "flat": {
+    "value": 1,
+    "per": {
+     "type": "POPULATION",
+     "each": 4,
+     "scope": "city"
+    }
+   }
+  }
  },
  "succession": {
   "promotionLine": "PROMOTIONLINE_SCIENTIFIC",
@@ -194,65 +263,5 @@
  },
  "identity": {
   "impurePropertyManipulators": true
- },
- "strategy": "TXT_KEY_TRAIT_COMPLEX_SCIENTIFIC_STRATEGY",
- "excludes": [
-  "TRAIT_TRADITIONAL1"
- ],
- "health": {
-  "empire": {
-   "flat": 1
-  }
- },
- "greatPeopleRate": {
-  "empire": {
-   "percent": 10,
-   "units": {
-    "UNIT_SCIENTIST": {
-     "flat": 2
-    }
-   }
-  }
- },
- "durations": {
-  "empire": {
-   "religiousAnarchy": {
-    "percent": 50
-   }
-  }
- },
- "stateReligion": {
-  "empire": {
-   "spreadProbability": {
-    "percent": -10
-   },
-   "nonStateSpreadProbability": {
-    "percent": -10
-   }
-  }
- },
- "PROPERTY_AIR_POLLUTION": {
-  "city": {
-   "flat": {
-    "value": 1,
-    "per": {
-     "type": "POPULATION",
-     "each": 4,
-     "scope": "city"
-    }
-   }
-  }
- },
- "PROPERTY_EDUCATION": {
-  "city": {
-   "flat": {
-    "value": 1,
-    "per": {
-     "type": "POPULATION",
-     "each": 4,
-     "scope": "city"
-    }
-   }
-  }
  }
 }

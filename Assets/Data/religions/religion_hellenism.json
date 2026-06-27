@@ -24,7 +24,7 @@
     {
      "value": 3,
      "enabled": {
-      "HOLY_CITY": "RELIGION_HELLENISM"
+      "IS_HOLY_CITY": "RELIGION_HELLENISM"
      }
     },
     {

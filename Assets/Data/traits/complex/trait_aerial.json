@@ -442,6 +442,11 @@
     "IMPROVEMENT_SOLAR_PANELS": {
      "flat": 2
     }
+   },
+   "specialists": {
+    "SPECIALIST_GREAT_MILITARY_INSTRUCTOR": {
+     "flat": 1
+    }
    }
   }
  },
@@ -672,6 +677,15 @@
     },
     "TECH_HYPERLANES": {
      "percent": 20
+    }
+   }
+  }
+ },
+ "espionage": {
+  "empire": {
+   "specialists": {
+    "SPECIALIST_GREAT_MILITARY_INSTRUCTOR": {
+     "flat": 2
     }
    }
   }

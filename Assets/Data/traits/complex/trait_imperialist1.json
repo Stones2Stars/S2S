@@ -2,11 +2,10 @@
  "type": "TRAIT_IMPERIALIST1",
  "description": "TXT_KEY_TRAIT_COMPLEX_IMPERIALIST1",
  "civilopedia": "TXT_KEY_TRAIT_COMPLEX_IMPERIALIST1_PEDIA",
- "enables": {
-  "traits": [
-   "TRAIT_IMPERIALIST2"
-  ]
- },
+ "strategy": "TXT_KEY_TRAIT_COMPLEX_IMPERIALIST_STRATEGY",
+ "excludes": [
+  "TRAIT_MEEK1"
+ ],
  "buildRate": {
   "empire": {
    "buildings": {
@@ -60,16 +59,54 @@
    }
   }
  },
- "happiness": {
+ "commerce": {
   "empire": {
-   "largestCity": {
-    "flat": 6
+   "specialists": {
+    "SPECIALIST_GREAT_MILITARY_INSTRUCTOR": {
+     "flat": 1
+    },
+    "SPECIALIST_GREAT_ADMIRAL": {
+     "flat": 1
+    }
    }
   }
  },
- "greatGeneralRate": {
+ "research": {
   "empire": {
-   "percent": 50
+   "byTech": {
+    "TECH_WOODWORKING": {
+     "percent": 20
+    },
+    "TECH_WARFARE": {
+     "percent": 20
+    },
+    "TECH_THE_WHEEL": {
+     "percent": 20
+    },
+    "TECH_MILITARY_TRAINING": {
+     "percent": 20
+    },
+    "TECH_ANCIENT_BALLISTICS": {
+     "percent": 20
+    },
+    "TECH_SIEGE_WARFARE": {
+     "percent": 20
+    },
+    "TECH_ENGINEERING": {
+     "percent": 20
+    },
+    "TECH_YEOMANRY": {
+     "percent": 20
+    },
+    "TECH_ALCHEMY": {
+     "percent": 20
+    }
+   }
+  }
+ },
+ "greatPeopleRate": {
+  "empire": {
+   "percent": -5
   }
  },
  "experience": {
@@ -84,6 +121,11 @@
    }
   }
  },
+ "conscript": {
+  "empire": {
+   "flat": 3
+  }
+ },
  "combat": {
   "empire": {
    "captureProbability": {
@@ -91,6 +133,16 @@
    },
    "captureResistance": {
     "percent": 10
+   }
+  }
+ },
+ "maintenance": {
+  "empire": {
+   "distance": {
+    "percent": -10
+   },
+   "numCities": {
+    "percent": -10
    }
   }
  },
@@ -111,14 +163,26 @@
    }
   }
  },
- "revolution": {
-  "empire": {
-   "local": {
-    "flat": -1
-   },
-   "national": {
-    "flat": -1
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": {
+    "value": 1,
+    "per": {
+     "type": "POPULATION",
+     "each": 2,
+     "scope": "city"
+    }
    }
+  }
+ },
+ "policies": {
+  "draftsOnCityCapture": true
+ },
+ "grants": {
+  "freePromotions": {
+   "PROMOTION_IMPERIALIST1": [
+    "UNITCOMBAT_COMBATANT"
+   ]
   }
  },
  "succession": {
@@ -160,84 +224,5 @@
  },
  "identity": {
   "impurePropertyManipulators": true
- },
- "strategy": "TXT_KEY_TRAIT_COMPLEX_IMPERIALIST_STRATEGY",
- "excludes": [
-  "TRAIT_MEEK1"
- ],
- "research": {
-  "empire": {
-   "byTech": {
-    "TECH_WOODWORKING": {
-     "percent": 20
-    },
-    "TECH_WARFARE": {
-     "percent": 20
-    },
-    "TECH_THE_WHEEL": {
-     "percent": 20
-    },
-    "TECH_MILITARY_TRAINING": {
-     "percent": 20
-    },
-    "TECH_ANCIENT_BALLISTICS": {
-     "percent": 20
-    },
-    "TECH_SIEGE_WARFARE": {
-     "percent": 20
-    },
-    "TECH_ENGINEERING": {
-     "percent": 20
-    },
-    "TECH_YEOMANRY": {
-     "percent": 20
-    },
-    "TECH_ALCHEMY": {
-     "percent": 20
-    }
-   }
-  }
- },
- "greatPeopleRate": {
-  "empire": {
-   "percent": -5
-  }
- },
- "conscript": {
-  "empire": {
-   "flat": 3
-  }
- },
- "maintenance": {
-  "empire": {
-   "distance": {
-    "percent": -10
-   },
-   "numCities": {
-    "percent": -10
-   }
-  }
- },
- "PROPERTY_CRIME": {
-  "city": {
-   "flat": {
-    "value": 1,
-    "per": {
-     "type": "POPULATION",
-     "each": 2,
-     "scope": "city"
-    }
-   }
-  }
- },
- "policies": {
-  "draftsOnCityCapture": true
- },
- "grants": {
-  "freePromotions": {
-   "PROMOTION_IMPERIALIST1": [
-    "UNITCOMBAT_COMBATANT"
-   ]
-  }
  }
 }

@@ -85,6 +85,14 @@
    "flat": -1,
    "capital": {
     "percent": -10
+   },
+   "specialists": {
+    "SPECIALIST_NOBLE": {
+     "flat": -1
+    },
+    "SPECIALIST_ARTIST": {
+     "flat": -1
+    }
    }
   }
  },

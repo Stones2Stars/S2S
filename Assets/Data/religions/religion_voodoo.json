@@ -22,7 +22,7 @@
     {
      "value": 3,
      "enabled": {
-      "HOLY_CITY": "RELIGION_VOODOO"
+      "IS_HOLY_CITY": "RELIGION_VOODOO"
      }
     }
    ]
@@ -34,7 +34,7 @@
     {
      "value": 2,
      "enabled": {
-      "HOLY_CITY": "RELIGION_VOODOO"
+      "IS_HOLY_CITY": "RELIGION_VOODOO"
      }
     },
     {

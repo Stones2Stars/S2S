@@ -23,6 +23,18 @@
    }
   }
  },
+ "commerce": {
+  "empire": {
+   "specialists": {
+    "SPECIALIST_GREAT_MILITARY_INSTRUCTOR": {
+     "flat": 1
+    },
+    "SPECIALIST_GREAT_ADMIRAL": {
+     "flat": 1
+    }
+   }
+  }
+ },
  "greatGeneralRate": {
   "empire": {
    "percent": 10

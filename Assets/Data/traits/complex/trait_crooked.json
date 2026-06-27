@@ -212,8 +212,52 @@
    }
   }
  },
+ "commerce": {
+  "empire": {
+   "specialists": {
+    "SPECIALIST_SPY": {
+     "flat": -1
+    },
+    "SPECIALIST_GREAT_SPY": {
+     "flat": -1
+    },
+    "SPECIALIST_INVESTIGATOR": {
+     "flat": -1
+    },
+    "SPECIALIST_GREAT_SLEUTH": {
+     "flat": -1
+    },
+    "SPECIALIST_LAWYER": {
+     "flat": -1
+    },
+    "SPECIALIST_GREAT_STATESMAN": {
+     "flat": -1
+    }
+   }
+  }
+ },
+ "gold": {
+  "empire": {
+   "specialists": {
+    "SPECIALIST_MERCHANT": {
+     "flat": -1
+    },
+    "SPECIALIST_GREAT_MERCHANT": {
+     "flat": -1
+    }
+   }
+  }
+ },
  "research": {
   "empire": {
+   "specialists": {
+    "SPECIALIST_LAWYER": {
+     "flat": -1
+    },
+    "SPECIALIST_GREAT_STATESMAN": {
+     "flat": -1
+    }
+   },
    "byTech": {
     "TECH_DECEPTION": {
      "percent": 20
@@ -311,6 +355,18 @@
  "culture": {
   "empire": {
    "flat": 1
+  }
+ },
+ "espionage": {
+  "empire": {
+   "specialists": {
+    "SPECIALIST_INVESTIGATOR": {
+     "flat": -1
+    },
+    "SPECIALIST_GREAT_SLEUTH": {
+     "flat": -1
+    }
+   }
   }
  },
  "happiness": {

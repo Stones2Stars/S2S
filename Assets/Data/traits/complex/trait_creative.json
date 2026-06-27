@@ -2,6 +2,25 @@
  "type": "TRAIT_CREATIVE",
  "description": "TXT_KEY_TRAIT_COMPLEX_CREATIVE",
  "civilopedia": "TXT_KEY_TRAIT_COMPLEX_CREATIVE_PEDIA",
+ "strategy": "TXT_KEY_TRAIT_COMPLEX_CREATIVE_STRATEGY",
+ "excludes": [
+  "TRAIT_UNREFINED"
+ ],
+ "production": {
+  "empire": {
+   "specialists": {
+    "SPECIALIST_ARTIST": {
+     "flat": 1
+    },
+    "SPECIALIST_CELEBRITY": {
+     "flat": 1
+    },
+    "SPECIALIST_GREAT_ARTIST": {
+     "flat": 1
+    }
+   }
+  }
+ },
  "buildRate": {
   "empire": {
    "worldWonder": {
@@ -344,10 +363,240 @@
    }
   }
  },
+ "commerce": {
+  "empire": {
+   "specialists": {
+    "SPECIALIST_ARTIST": {
+     "flat": 1
+    },
+    "SPECIALIST_CELEBRITY": {
+     "flat": 1
+    },
+    "SPECIALIST_GREAT_ARTIST": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "research": {
+  "empire": {
+   "byTech": {
+    "TECH_ORAL_TRADITION": {
+     "percent": 20
+    },
+    "TECH_PREHISTORIC_DANCE": {
+     "percent": 20
+    },
+    "TECH_PREHISTORIC_MUSIC": {
+     "percent": 20
+    },
+    "TECH_NATURAL_PIGMENTS": {
+     "percent": 20
+    },
+    "TECH_CULTURAL_IDENTITY": {
+     "percent": 20
+    },
+    "TECH_PETROGLYPHS": {
+     "percent": 20
+    },
+    "TECH_PERSONAL_ADORNMENTS": {
+     "percent": 20
+    },
+    "TECH_TATTOOS": {
+     "percent": 20
+    },
+    "TECH_SEWING": {
+     "percent": 20
+    },
+    "TECH_BEAD_MAKING": {
+     "percent": 20
+    },
+    "TECH_WOODWORKING": {
+     "percent": 20
+    },
+    "TECH_PICTOGRAPHS": {
+     "percent": 20
+    },
+    "TECH_IDEOGRAMS": {
+     "percent": 20
+    },
+    "TECH_FOLK_DANCE": {
+     "percent": 20
+    },
+    "TECH_FOLK_MUSIC": {
+     "percent": 20
+    },
+    "TECH_CEREMONY": {
+     "percent": 20
+    },
+    "TECH_TEXTILE_LOOM": {
+     "percent": 20
+    },
+    "TECH_SCULPTURE": {
+     "percent": 20
+    },
+    "TECH_ORNAMENTATION": {
+     "percent": 20
+    },
+    "TECH_FURNITURE_MAKING": {
+     "percent": 20
+    },
+    "TECH_CUISINE": {
+     "percent": 20
+    },
+    "TECH_GLASS_BLOWING": {
+     "percent": 20
+    },
+    "TECH_LITERATURE": {
+     "percent": 20
+    },
+    "TECH_CALLIGRAPHY": {
+     "percent": 20
+    },
+    "TECH_AESTHETICS": {
+     "percent": 20
+    },
+    "TECH_DRAMA": {
+     "percent": 20
+    },
+    "TECH_FLORISTRY": {
+     "percent": 20
+    },
+    "TECH_MOSAIC_WORKING": {
+     "percent": 20
+    },
+    "TECH_MUSICAL_NOTATION": {
+     "percent": 20
+    },
+    "TECH_POETRY": {
+     "percent": 20
+    },
+    "TECH_ARCHITECTURE": {
+     "percent": 20
+    },
+    "TECH_STAINED_GLASS": {
+     "percent": 20
+    },
+    "TECH_HERALDRY": {
+     "percent": 20
+    },
+    "TECH_PERSPECTIVE": {
+     "percent": 20
+    },
+    "TECH_ACOUSTICS": {
+     "percent": 20
+    },
+    "TECH_OIL_PAINTING": {
+     "percent": 20
+    },
+    "TECH_PRINTING_PRESS": {
+     "percent": 20
+    },
+    "TECH_FREE_ARTISTRY": {
+     "percent": 20
+    },
+    "TECH_LEAD_GLASS": {
+     "percent": 20
+    },
+    "TECH_PHOTOGRAPHY": {
+     "percent": 20
+    },
+    "TECH_ROMANTICISM": {
+     "percent": 20
+    },
+    "TECH_REALISM": {
+     "percent": 20
+    },
+    "TECH_IMPRESSIONISM": {
+     "percent": 20
+    },
+    "TECH_MOTION_PICTURES": {
+     "percent": 20
+    },
+    "TECH_ANIMATION": {
+     "percent": 20
+    },
+    "TECH_RADIO": {
+     "percent": 20
+    },
+    "TECH_MODERN_ART": {
+     "percent": 20
+    },
+    "TECH_TELEVISION": {
+     "percent": 20
+    },
+    "TECH_SURREALISM": {
+     "percent": 20
+    },
+    "TECH_MASS_MEDIA": {
+     "percent": 20
+    },
+    "TECH_POP_ART": {
+     "percent": 20
+    },
+    "TECH_POSTMODERNISM": {
+     "percent": 20
+    },
+    "TECH_COUNTERCULTURE": {
+     "percent": 20
+    },
+    "TECH_3D_MODELLING": {
+     "percent": 20
+    },
+    "TECH_URBAN_CULTURE": {
+     "percent": 20
+    },
+    "TECH_3D_PRINTING": {
+     "percent": 20
+    },
+    "TECH_VIRTUAL_REALITY": {
+     "percent": 20
+    },
+    "TECH_HOLOGRAPHICS": {
+     "percent": 20
+    },
+    "TECH_INTERACTIVE_GLASS": {
+     "percent": 20
+    },
+    "TECH_GEOSCULPTING": {
+     "percent": 20
+    },
+    "TECH_CULTURAL_EVOLUTION": {
+     "percent": 20
+    }
+   }
+  }
+ },
  "culture": {
   "empire": {
    "flat": 2,
    "percent": 10,
+   "specialists": {
+    "SPECIALIST_ARTIST": {
+     "flat": 2
+    },
+    "SPECIALIST_CELEBRITY": {
+     "flat": 2
+    },
+    "SPECIALIST_GREAT_ARTIST": {
+     "flat": 2
+    },
+    "SPECIALIST_CITIZEN": {
+     "flat": 1
+    },
+    "SPECIALIST_SLAVES": {
+     "flat": 1
+    },
+    "SPECIALIST_SETTLED_SLAVE": {
+     "flat": 1
+    },
+    "SPECIALIST_SETTLED_CITIZEN": {
+     "flat": 1
+    },
+    "SPECIALIST_ANDROID_WORKER": {
+     "flat": 1
+    }
+   },
    "capital": {
     "percent": 10
    },
@@ -650,15 +899,49 @@
    }
   }
  },
+ "experience": {
+  "empire": {
+   "unitCombats": {
+    "UNITCOMBAT_COMBATANT": {
+     "flat": -1
+    },
+    "UNITCOMBAT_NAVAL_COMBATANT": {
+     "flat": -1
+    }
+   }
+  }
+ },
  "conscript": {
   "empire": {
    "flat": -2
+  }
+ },
+ "combat": {
+  "empire": {
+   "bombardDefense": {
+    "percent": -10
+   },
+   "captureResistance": {
+    "percent": -20
+   }
   }
  },
  "upkeep": {
   "empire": {
    "civic": {
     "percent": 20
+   }
+  }
+ },
+ "workRate": {
+  "empire": {
+   "percent": -25
+  }
+ },
+ "cityFounding": {
+  "empire": {
+   "startCulture": {
+    "flat": 5
    }
   }
  },
@@ -706,236 +989,6 @@
  "ui": {
   "art": {
    "icon": "art/Buttons/Traits/TraitCreative.dds"
-  }
- },
- "identity": {
-  "shortDescription": "TXT_KEY_TRAIT_CREATIVE_SHORT"
- },
- "strategy": "TXT_KEY_TRAIT_COMPLEX_CREATIVE_STRATEGY",
- "excludes": [
-  "TRAIT_UNREFINED"
- ],
- "research": {
-  "empire": {
-   "byTech": {
-    "TECH_ORAL_TRADITION": {
-     "percent": 20
-    },
-    "TECH_PREHISTORIC_DANCE": {
-     "percent": 20
-    },
-    "TECH_PREHISTORIC_MUSIC": {
-     "percent": 20
-    },
-    "TECH_NATURAL_PIGMENTS": {
-     "percent": 20
-    },
-    "TECH_CULTURAL_IDENTITY": {
-     "percent": 20
-    },
-    "TECH_PETROGLYPHS": {
-     "percent": 20
-    },
-    "TECH_PERSONAL_ADORNMENTS": {
-     "percent": 20
-    },
-    "TECH_TATTOOS": {
-     "percent": 20
-    },
-    "TECH_SEWING": {
-     "percent": 20
-    },
-    "TECH_BEAD_MAKING": {
-     "percent": 20
-    },
-    "TECH_WOODWORKING": {
-     "percent": 20
-    },
-    "TECH_PICTOGRAPHS": {
-     "percent": 20
-    },
-    "TECH_IDEOGRAMS": {
-     "percent": 20
-    },
-    "TECH_FOLK_DANCE": {
-     "percent": 20
-    },
-    "TECH_FOLK_MUSIC": {
-     "percent": 20
-    },
-    "TECH_CEREMONY": {
-     "percent": 20
-    },
-    "TECH_TEXTILE_LOOM": {
-     "percent": 20
-    },
-    "TECH_SCULPTURE": {
-     "percent": 20
-    },
-    "TECH_ORNAMENTATION": {
-     "percent": 20
-    },
-    "TECH_FURNITURE_MAKING": {
-     "percent": 20
-    },
-    "TECH_CUISINE": {
-     "percent": 20
-    },
-    "TECH_GLASS_BLOWING": {
-     "percent": 20
-    },
-    "TECH_LITERATURE": {
-     "percent": 20
-    },
-    "TECH_CALLIGRAPHY": {
-     "percent": 20
-    },
-    "TECH_AESTHETICS": {
-     "percent": 20
-    },
-    "TECH_DRAMA": {
-     "percent": 20
-    },
-    "TECH_FLORISTRY": {
-     "percent": 20
-    },
-    "TECH_MOSAIC_WORKING": {
-     "percent": 20
-    },
-    "TECH_MUSICAL_NOTATION": {
-     "percent": 20
-    },
-    "TECH_POETRY": {
-     "percent": 20
-    },
-    "TECH_ARCHITECTURE": {
-     "percent": 20
-    },
-    "TECH_STAINED_GLASS": {
-     "percent": 20
-    },
-    "TECH_HERALDRY": {
-     "percent": 20
-    },
-    "TECH_PERSPECTIVE": {
-     "percent": 20
-    },
-    "TECH_ACOUSTICS": {
-     "percent": 20
-    },
-    "TECH_OIL_PAINTING": {
-     "percent": 20
-    },
-    "TECH_PRINTING_PRESS": {
-     "percent": 20
-    },
-    "TECH_FREE_ARTISTRY": {
-     "percent": 20
-    },
-    "TECH_LEAD_GLASS": {
-     "percent": 20
-    },
-    "TECH_PHOTOGRAPHY": {
-     "percent": 20
-    },
-    "TECH_ROMANTICISM": {
-     "percent": 20
-    },
-    "TECH_REALISM": {
-     "percent": 20
-    },
-    "TECH_IMPRESSIONISM": {
-     "percent": 20
-    },
-    "TECH_MOTION_PICTURES": {
-     "percent": 20
-    },
-    "TECH_ANIMATION": {
-     "percent": 20
-    },
-    "TECH_RADIO": {
-     "percent": 20
-    },
-    "TECH_MODERN_ART": {
-     "percent": 20
-    },
-    "TECH_TELEVISION": {
-     "percent": 20
-    },
-    "TECH_SURREALISM": {
-     "percent": 20
-    },
-    "TECH_MASS_MEDIA": {
-     "percent": 20
-    },
-    "TECH_POP_ART": {
-     "percent": 20
-    },
-    "TECH_POSTMODERNISM": {
-     "percent": 20
-    },
-    "TECH_COUNTERCULTURE": {
-     "percent": 20
-    },
-    "TECH_3D_MODELLING": {
-     "percent": 20
-    },
-    "TECH_URBAN_CULTURE": {
-     "percent": 20
-    },
-    "TECH_3D_PRINTING": {
-     "percent": 20
-    },
-    "TECH_VIRTUAL_REALITY": {
-     "percent": 20
-    },
-    "TECH_HOLOGRAPHICS": {
-     "percent": 20
-    },
-    "TECH_INTERACTIVE_GLASS": {
-     "percent": 20
-    },
-    "TECH_GEOSCULPTING": {
-     "percent": 20
-    },
-    "TECH_CULTURAL_EVOLUTION": {
-     "percent": 20
-    }
-   }
-  }
- },
- "experience": {
-  "empire": {
-   "unitCombats": {
-    "UNITCOMBAT_COMBATANT": {
-     "flat": -1
-    },
-    "UNITCOMBAT_NAVAL_COMBATANT": {
-     "flat": -1
-    }
-   }
-  }
- },
- "combat": {
-  "empire": {
-   "bombardDefense": {
-    "percent": -10
-   },
-   "captureResistance": {
-    "percent": -20
-   }
-  }
- },
- "workRate": {
-  "empire": {
-   "percent": -25
-  }
- },
- "cityFounding": {
-  "empire": {
-   "startCulture": {
-    "flat": 5
-   }
   }
  }
 }

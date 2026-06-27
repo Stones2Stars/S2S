@@ -55,6 +55,11 @@
     "IMPROVEMENT_CORE_MINE": {
      "flat": -1
     }
+   },
+   "specialists": {
+    "SPECIALIST_GREAT_ADMIRAL": {
+     "flat": 1
+    }
    }
   }
  },
@@ -135,6 +140,15 @@
     },
     "TECH_AQUACULTURE": {
      "percent": 20
+    }
+   }
+  }
+ },
+ "espionage": {
+  "empire": {
+   "specialists": {
+    "SPECIALIST_GREAT_ADMIRAL": {
+     "flat": 2
     }
    }
   }

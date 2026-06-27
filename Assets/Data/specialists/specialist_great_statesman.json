@@ -5,323 +5,36 @@
  "food": {
   "city": {
    "flat": 1
-  },
-  "empire": {
-   "flat": [
-    {
-     "value": 1,
-     "enabled": {
-      "type": "TRAIT_COMPLEX_POLITICIAN",
-      "scope": "empire"
-     }
-    },
-    {
-     "value": 1,
-     "enabled": {
-      "type": "TRAIT_POLITICIAN2",
-      "scope": "empire"
-     }
-    },
-    {
-     "value": -1,
-     "enabled": {
-      "type": "TRAIT_COMPLEX_FOREIGN",
-      "scope": "empire"
-     }
-    },
-    {
-     "value": -1,
-     "enabled": {
-      "type": "TRAIT_FOREIGN2",
-      "scope": "empire"
-     }
-    }
-   ]
   }
  },
  "production": {
   "city": {
    "flat": 1
-  },
-  "empire": {
-   "flat": [
-    {
-     "value": 1,
-     "enabled": {
-      "type": "TRAIT_COMPLEX_POLITICIAN",
-      "scope": "empire"
-     }
-    },
-    {
-     "value": 1,
-     "enabled": {
-      "type": "TRAIT_POLITICIAN2",
-      "scope": "empire"
-     }
-    },
-    {
-     "value": -1,
-     "enabled": {
-      "type": "TRAIT_COMPLEX_FOREIGN",
-      "scope": "empire"
-     }
-    },
-    {
-     "value": -1,
-     "enabled": {
-      "type": "TRAIT_FOREIGN2",
-      "scope": "empire"
-     }
-    },
-    {
-     "value": -1,
-     "enabled": {
-      "type": "TRAIT_CROOKED3",
-      "scope": "empire"
-     }
-    }
-   ]
   }
  },
  "commerce": {
   "city": {
    "flat": 1
-  },
-  "empire": {
-   "flat": [
-    {
-     "value": 1,
-     "enabled": {
-      "type": "TRAIT_EFFICIENT",
-      "scope": "empire"
-     }
-    },
-    {
-     "value": 1,
-     "enabled": {
-      "type": "TRAIT_EFFICIENT1",
-      "scope": "empire"
-     }
-    },
-    {
-     "value": 1,
-     "enabled": {
-      "type": "TRAIT_EFFICIENT2",
-      "scope": "empire"
-     }
-    },
-    {
-     "value": 1,
-     "enabled": {
-      "type": "TRAIT_EFFICIENT3",
-      "scope": "empire"
-     }
-    },
-    {
-     "value": -1,
-     "enabled": {
-      "type": "TRAIT_COMPLEX_EXCESSIVE",
-      "scope": "empire"
-     }
-    },
-    {
-     "value": -1,
-     "enabled": {
-      "type": "TRAIT_EXCESSIVE2",
-      "scope": "empire"
-     }
-    },
-    {
-     "value": -1,
-     "enabled": {
-      "type": "TRAIT_EXCESSIVE3",
-      "scope": "empire"
-     }
-    },
-    {
-     "value": 1,
-     "enabled": {
-      "type": "TRAIT_COMPLEX_PHILOSOPHICAL",
-      "scope": "empire"
-     }
-    },
-    {
-     "value": 1,
-     "enabled": {
-      "type": "TRAIT_PHILOSOPHICAL2",
-      "scope": "empire"
-     }
-    },
-    {
-     "value": -1,
-     "enabled": {
-      "type": "TRAIT_COMPLEX_POPULIST",
-      "scope": "empire"
-     }
-    },
-    {
-     "value": -1,
-     "enabled": {
-      "type": "TRAIT_POPULIST2",
-      "scope": "empire"
-     }
-    },
-    {
-     "value": 1,
-     "enabled": {
-      "type": "TRAIT_COMPLEX_POLITICIAN",
-      "scope": "empire"
-     }
-    },
-    {
-     "value": 1,
-     "enabled": {
-      "type": "TRAIT_POLITICIAN2",
-      "scope": "empire"
-     }
-    },
-    {
-     "value": -1,
-     "enabled": {
-      "type": "TRAIT_COMPLEX_FOREIGN",
-      "scope": "empire"
-     }
-    },
-    {
-     "value": -1,
-     "enabled": {
-      "type": "TRAIT_FOREIGN2",
-      "scope": "empire"
-     }
-    },
-    {
-     "value": 1,
-     "enabled": {
-      "type": "TRAIT_LAWFUL",
-      "scope": "empire"
-     }
-    },
-    {
-     "value": 1,
-     "enabled": {
-      "type": "TRAIT_LAWFUL3",
-      "scope": "empire"
-     }
-    },
-    {
-     "value": -1,
-     "enabled": {
-      "type": "TRAIT_CROOKED",
-      "scope": "empire"
-     }
-    }
-   ]
   }
  },
  "gold": {
   "city": {
    "flat": 1
-  },
-  "empire": {
-   "flat": [
-    {
-     "value": -1,
-     "enabled": {
-      "type": "TRAIT_PROLIFIC3",
-      "scope": "empire"
-     }
-    },
-    {
-     "value": 1,
-     "enabled": {
-      "type": "TRAIT_GRIM3",
-      "scope": "empire"
-     }
-    }
-   ]
   }
  },
  "research": {
   "city": {
    "flat": 1
-  },
-  "empire": {
-   "flat": [
-    {
-     "value": -1,
-     "enabled": {
-      "type": "TRAIT_EXPANSIVE3",
-      "scope": "empire"
-     }
-    },
-    {
-     "value": 1,
-     "enabled": {
-      "type": "TRAIT_MINIMALIST3",
-      "scope": "empire"
-     }
-    },
-    {
-     "value": 1,
-     "enabled": {
-      "type": "TRAIT_LAWFUL",
-      "scope": "empire"
-     }
-    },
-    {
-     "value": 1,
-     "enabled": {
-      "type": "TRAIT_LAWFUL3",
-      "scope": "empire"
-     }
-    },
-    {
-     "value": -1,
-     "enabled": {
-      "type": "TRAIT_CROOKED",
-      "scope": "empire"
-     }
-    }
-   ]
   }
  },
  "culture": {
   "city": {
    "flat": 1
-  },
-  "empire": {
-   "flat": [
-    {
-     "value": -1,
-     "enabled": {
-      "type": "TRAIT_ORGANIZED3",
-      "scope": "empire"
-     }
-    },
-    {
-     "value": 1,
-     "enabled": {
-      "type": "TRAIT_IMPULSIVE3",
-      "scope": "empire"
-     }
-    }
-   ]
   }
  },
  "espionage": {
   "city": {
    "flat": 1
-  },
-  "empire": {
-   "flat": [
-    {
-     "value": -1,
-     "enabled": {
-      "type": "TRAIT_CHARISMATIC2",
-      "scope": "empire"
-     }
-    }
-   ]
   }
  },
  "experience": {

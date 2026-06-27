@@ -21,7 +21,7 @@
     {
      "value": 2,
      "enabled": {
-      "HOLY_CITY": "RELIGION_ANDEANISM"
+      "IS_HOLY_CITY": "RELIGION_ANDEANISM"
      }
     },
     {
@@ -39,7 +39,7 @@
     {
      "value": 2,
      "enabled": {
-      "HOLY_CITY": "RELIGION_ANDEANISM"
+      "IS_HOLY_CITY": "RELIGION_ANDEANISM"
      }
     },
     {

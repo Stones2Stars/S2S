@@ -2,159 +2,6 @@
  "type": "TRAIT_SEAFARING1",
  "description": "TXT_KEY_TRAIT_COMPLEX_SEAFARING1",
  "civilopedia": "TXT_KEY_TRAIT_COMPLEX_SEAFARING1_PEDIA",
- "enables": {
-  "traits": [
-   "TRAIT_SEAFARING2"
-  ]
- },
- "buildRate": {
-  "empire": {
-   "domains": {
-    "DOMAIN_SEA": {
-     "percent": 10
-    }
-   }
-  }
- },
- "combat": {
-  "empire": {
-   "navalCargo": {
-    "flat": 1
-   }
-  }
- },
- "maintenance": {
-  "empire": {
-   "numCities": {
-    "percent": 10
-   }
-  }
- },
- "upkeep": {
-  "empire": {
-   "civic": {
-    "percent": 5
-   }
-  }
- },
- "tradeRoutes": {
-  "empire": {
-   "coastal": {
-    "flat": 1
-   }
-  }
- },
- "workRate": {
-  "empire": {
-   "builds": {
-    "BUILD_BREAK_ICE_KILL": {
-     "percent": 25
-    },
-    "BUILD_BREAK_ICE": {
-     "percent": 25
-    },
-    "BUILD_TUNNEL": {
-     "percent": 25
-    },
-    "BUILD_BEACON_CORAL": {
-     "percent": 25
-    },
-    "BUILD_BEACON_REEF": {
-     "percent": 25
-    },
-    "BUILD_HARVEST_KELP": {
-     "percent": 25
-    },
-    "BUILD_HARVEST_KELP_KILL": {
-     "percent": 25
-    },
-    "BUILD_LIGHTHOUSE_CORAL": {
-     "percent": 25
-    },
-    "BUILD_LIGHTHOUSE_REEF": {
-     "percent": 25
-    }
-   },
-   "percent": -25
-  }
- },
- "improvementUpgradeRate": {
-  "empire": {
-   "improvements": {
-    "IMPROVEMENT_BEACON_CORAL": {
-     "percent": 50
-    },
-    "IMPROVEMENT_BEACON_REEF": {
-     "percent": 50
-    }
-   }
-  }
- },
- "grants": {
-  "freePromotions": {
-   "PROMOTION_AMPHIBIOUS": [
-    "UNITCOMBAT_EXPLORER",
-    "UNITCOMBAT_MELEE",
-    "UNITCOMBAT_MOUNTED",
-    "UNITCOMBAT_THROWING"
-   ],
-   "PROMOTION_SEAFARING1": [
-    "UNITCOMBAT_DIESEL_SHIPS",
-    "UNITCOMBAT_DROID_SHIPS",
-    "UNITCOMBAT_GRAVITY_DRIVE_SHIPS",
-    "UNITCOMBAT_JET_SHIPS",
-    "UNITCOMBAT_LEVITATION_SHIPS",
-    "UNITCOMBAT_NUCLEAR_SHIPS",
-    "UNITCOMBAT_SHOCKWAVE_SHIPS",
-    "UNITCOMBAT_STEAM_SHIPS",
-    "UNITCOMBAT_TROID_SHIPS",
-    "UNITCOMBAT_WOODEN_SHIPS"
-   ]
-  }
- },
- "succession": {
-  "promotionLine": "PROMOTIONLINE_SEAFARING",
-  "priority": 1
- },
- "ai": {
-  "flavours": [
-   {
-    "FLAVOR_MILITARY": 11
-   },
-   {
-    "FLAVOR_RELIGION": 0
-   },
-   {
-    "FLAVOR_PRODUCTION": 1
-   },
-   {
-    "FLAVOR_GOLD": 1
-   },
-   {
-    "FLAVOR_SCIENCE": 2
-   },
-   {
-    "FLAVOR_CULTURE": 0
-   },
-   {
-    "FLAVOR_GROWTH": -3
-   },
-   {
-    "FLAVOR_ESPIONAGE": 0
-   }
-  ],
-  "behaviour": {
-   "coastalAIInfluence": true
-  }
- },
- "ui": {
-  "art": {
-   "icon": "art/Buttons/Traits/TraitSeafaring.dds"
-  }
- },
- "identity": {
-  "shortDescription": "TXT_KEY_TRAIT_SEAFARING_SHORT"
- },
  "strategy": "TXT_KEY_TRAIT_COMPLEX_SEAFARING_STRATEGY",
  "food": {
   "empire": {
@@ -179,6 +26,11 @@
     },
     "IMPROVEMENT_VERTICAL_FARM": {
      "flat": -1
+    }
+   },
+   "specialists": {
+    "SPECIALIST_GREAT_ADMIRAL": {
+     "flat": 1
     }
    }
   }
@@ -227,6 +79,15 @@
    }
   }
  },
+ "buildRate": {
+  "empire": {
+   "domains": {
+    "DOMAIN_SEA": {
+     "percent": 10
+    }
+   }
+  }
+ },
  "commerce": {
   "empire": {
    "improvements": {
@@ -250,6 +111,11 @@
  },
  "research": {
   "empire": {
+   "specialists": {
+    "SPECIALIST_GREAT_ADMIRAL": {
+     "flat": 2
+    }
+   },
    "byTech": {
     "TECH_RAFT_BUILDING": {
      "percent": 20
@@ -408,6 +274,142 @@
      "flat": 2
     }
    }
+  }
+ },
+ "combat": {
+  "empire": {
+   "navalCargo": {
+    "flat": 1
+   }
+  }
+ },
+ "maintenance": {
+  "empire": {
+   "numCities": {
+    "percent": 10
+   }
+  }
+ },
+ "upkeep": {
+  "empire": {
+   "civic": {
+    "percent": 5
+   }
+  }
+ },
+ "tradeRoutes": {
+  "empire": {
+   "coastal": {
+    "flat": 1
+   }
+  }
+ },
+ "workRate": {
+  "empire": {
+   "builds": {
+    "BUILD_BREAK_ICE_KILL": {
+     "percent": 25
+    },
+    "BUILD_BREAK_ICE": {
+     "percent": 25
+    },
+    "BUILD_TUNNEL": {
+     "percent": 25
+    },
+    "BUILD_BEACON_CORAL": {
+     "percent": 25
+    },
+    "BUILD_BEACON_REEF": {
+     "percent": 25
+    },
+    "BUILD_HARVEST_KELP": {
+     "percent": 25
+    },
+    "BUILD_HARVEST_KELP_KILL": {
+     "percent": 25
+    },
+    "BUILD_LIGHTHOUSE_CORAL": {
+     "percent": 25
+    },
+    "BUILD_LIGHTHOUSE_REEF": {
+     "percent": 25
+    }
+   },
+   "percent": -25
+  }
+ },
+ "improvementUpgradeRate": {
+  "empire": {
+   "improvements": {
+    "IMPROVEMENT_BEACON_CORAL": {
+     "percent": 50
+    },
+    "IMPROVEMENT_BEACON_REEF": {
+     "percent": 50
+    }
+   }
+  }
+ },
+ "grants": {
+  "freePromotions": {
+   "PROMOTION_AMPHIBIOUS": [
+    "UNITCOMBAT_EXPLORER",
+    "UNITCOMBAT_MELEE",
+    "UNITCOMBAT_MOUNTED",
+    "UNITCOMBAT_THROWING"
+   ],
+   "PROMOTION_SEAFARING1": [
+    "UNITCOMBAT_DIESEL_SHIPS",
+    "UNITCOMBAT_DROID_SHIPS",
+    "UNITCOMBAT_GRAVITY_DRIVE_SHIPS",
+    "UNITCOMBAT_JET_SHIPS",
+    "UNITCOMBAT_LEVITATION_SHIPS",
+    "UNITCOMBAT_NUCLEAR_SHIPS",
+    "UNITCOMBAT_SHOCKWAVE_SHIPS",
+    "UNITCOMBAT_STEAM_SHIPS",
+    "UNITCOMBAT_TROID_SHIPS",
+    "UNITCOMBAT_WOODEN_SHIPS"
+   ]
+  }
+ },
+ "succession": {
+  "promotionLine": "PROMOTIONLINE_SEAFARING",
+  "priority": 1
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 11
+   },
+   {
+    "FLAVOR_RELIGION": 0
+   },
+   {
+    "FLAVOR_PRODUCTION": 1
+   },
+   {
+    "FLAVOR_GOLD": 1
+   },
+   {
+    "FLAVOR_SCIENCE": 2
+   },
+   {
+    "FLAVOR_CULTURE": 0
+   },
+   {
+    "FLAVOR_GROWTH": -3
+   },
+   {
+    "FLAVOR_ESPIONAGE": 0
+   }
+  ],
+  "behaviour": {
+   "coastalAIInfluence": true
+  }
+ },
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Traits/TraitSeafaring.dds"
   }
  }
 }

@@ -8,6 +8,18 @@
   "TRAIT_FANATICAL1",
   "TRAIT_PIOUS1"
  ],
+ "food": {
+  "empire": {
+   "specialists": {
+    "SPECIALIST_PRIEST": {
+     "flat": 1
+    },
+    "SPECIALIST_GREAT_PROPHET": {
+     "flat": 1
+    }
+   }
+  }
+ },
  "buildRate": {
   "empire": {
    "unitCombats": {
@@ -43,6 +55,30 @@
     },
     "TECH_OMEGA_POINT": {
      "percent": 20
+    }
+   }
+  }
+ },
+ "culture": {
+  "empire": {
+   "specialists": {
+    "SPECIALIST_PRIEST": {
+     "flat": 1
+    },
+    "SPECIALIST_GREAT_PROPHET": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "espionage": {
+  "empire": {
+   "specialists": {
+    "SPECIALIST_PRIEST": {
+     "flat": 1
+    },
+    "SPECIALIST_GREAT_PROPHET": {
+     "flat": 1
     }
    }
   }

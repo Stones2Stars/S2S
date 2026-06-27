@@ -2,6 +2,46 @@
  "type": "TRAIT_FOREIGN",
  "description": "TXT_KEY_TRAIT_COMPLEX_FOREIGN",
  "civilopedia": "TXT_KEY_TRAIT_COMPLEX_FOREIGN_PEDIA",
+ "strategy": "TXT_KEY_TRAIT_COMPLEX_FOREIGN_STRATEGY",
+ "excludes": [
+  "TRAIT_POLITICIAN"
+ ],
+ "food": {
+  "empire": {
+   "specialists": {
+    "SPECIALIST_NOBLE": {
+     "flat": -1
+    },
+    "SPECIALIST_LAWYER": {
+     "flat": -1
+    },
+    "SPECIALIST_GREAT_STATESMAN": {
+     "flat": -1
+    }
+   },
+   "capital": {
+    "percent": -5
+   }
+  }
+ },
+ "production": {
+  "empire": {
+   "specialists": {
+    "SPECIALIST_NOBLE": {
+     "flat": -1
+    },
+    "SPECIALIST_LAWYER": {
+     "flat": -1
+    },
+    "SPECIALIST_GREAT_STATESMAN": {
+     "flat": -1
+    }
+   },
+   "capital": {
+    "percent": -5
+   }
+  }
+ },
  "buildRate": {
   "empire": {
    "worldWonder": {
@@ -17,20 +57,58 @@
  },
  "commerce": {
   "empire": {
+   "specialists": {
+    "SPECIALIST_NOBLE": {
+     "flat": -1
+    },
+    "SPECIALIST_LAWYER": {
+     "flat": -1
+    },
+    "SPECIALIST_GREAT_STATESMAN": {
+     "flat": -1
+    }
+   },
    "capital": {
     "percent": -5
    }
   }
  },
+ "gold": {
+  "empire": {
+   "specialists": {
+    "SPECIALIST_SPY": {
+     "flat": -1
+    },
+    "SPECIALIST_GREAT_SPY": {
+     "flat": -1
+    }
+   }
+  }
+ },
  "research": {
   "empire": {
-   "percent": -10
+   "specialists": {
+    "SPECIALIST_SPY": {
+     "flat": -1
+    },
+    "SPECIALIST_GREAT_SPY": {
+     "flat": -1
+    }
+   }
   }
  },
  "culture": {
   "empire": {
    "flat": -1,
    "percent": -5,
+   "specialists": {
+    "SPECIALIST_SPY": {
+     "flat": -1
+    },
+    "SPECIALIST_GREAT_SPY": {
+     "flat": -1
+    }
+   },
    "capital": {
     "percent": -10
    }
@@ -40,8 +118,45 @@
   "empire": {
    "flat": -1,
    "percent": -5,
+   "specialists": {
+    "SPECIALIST_SPY": {
+     "flat": -1
+    },
+    "SPECIALIST_GREAT_SPY": {
+     "flat": -1
+    }
+   },
    "capital": {
     "percent": -10
+   }
+  }
+ },
+ "happiness": {
+  "empire": {
+   "flat": -1
+  }
+ },
+ "greatGeneralRate": {
+  "empire": {
+   "percent": 10
+  }
+ },
+ "experience": {
+  "empire": {
+   "capital": {
+    "percent": -10
+   }
+  }
+ },
+ "conscript": {
+  "empire": {
+   "flat": -2
+  }
+ },
+ "maintenance": {
+  "empire": {
+   "corporation": {
+    "percent": -20
    }
   }
  },
@@ -52,11 +167,21 @@
    }
   }
  },
- "grants": {
-  "freePromotions": {
-   "PROMOTION_LOYALTY": [
-    "UNITCOMBAT_SPY"
-   ]
+ "durations": {
+  "empire": {
+   "civicAnarchy": {
+    "percent": 50
+   },
+   "religiousAnarchy": {
+    "percent": 50
+   }
+  }
+ },
+ "diplomacy": {
+  "empire": {
+   "attitude": {
+    "flat": 2
+   }
   }
  },
  "succession": {
@@ -97,69 +222,5 @@
  },
  "identity": {
   "negativeTrait": true
- },
- "strategy": "TXT_KEY_TRAIT_COMPLEX_FOREIGN_STRATEGY",
- "excludes": [
-  "TRAIT_POLITICIAN"
- ],
- "food": {
-  "empire": {
-   "capital": {
-    "percent": -5
-   }
-  }
- },
- "production": {
-  "empire": {
-   "capital": {
-    "percent": -5
-   }
-  }
- },
- "happiness": {
-  "empire": {
-   "flat": -1
-  }
- },
- "greatGeneralRate": {
-  "empire": {
-   "percent": 10
-  }
- },
- "experience": {
-  "empire": {
-   "capital": {
-    "percent": -10
-   }
-  }
- },
- "conscript": {
-  "empire": {
-   "flat": -2
-  }
- },
- "maintenance": {
-  "empire": {
-   "corporation": {
-    "percent": -20
-   }
-  }
- },
- "durations": {
-  "empire": {
-   "civicAnarchy": {
-    "percent": 50
-   },
-   "religiousAnarchy": {
-    "percent": 50
-   }
-  }
- },
- "diplomacy": {
-  "empire": {
-   "attitude": {
-    "flat": 2
-   }
-  }
  }
 }

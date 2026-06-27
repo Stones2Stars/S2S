@@ -41,7 +41,18 @@
  "research": {
   "empire": {
    "flat": -1,
-   "percent": -5
+   "percent": -5,
+   "specialists": {
+    "SPECIALIST_PRIEST": {
+     "flat": -1
+    },
+    "SPECIALIST_GREAT_PROPHET": {
+     "flat": -1
+    },
+    "SPECIALIST_NOBLE": {
+     "flat": -1
+    }
+   }
   }
  },
  "happiness": {

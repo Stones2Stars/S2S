@@ -20,6 +20,14 @@
  },
  "production": {
   "empire": {
+   "specialists": {
+    "SPECIALIST_CITIZEN": {
+     "flat": -1
+    },
+    "SPECIALIST_SETTLED_CITIZEN": {
+     "flat": -1
+    }
+   },
    "capital": {
     "percent": -5
    }

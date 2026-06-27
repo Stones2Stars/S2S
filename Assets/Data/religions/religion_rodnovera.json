@@ -18,7 +18,7 @@
     {
      "value": 3,
      "enabled": {
-      "HOLY_CITY": "RELIGION_RODNOVERA"
+      "IS_HOLY_CITY": "RELIGION_RODNOVERA"
      }
     },
     {

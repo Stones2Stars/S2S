@@ -40,6 +40,11 @@
      "flat": -1
     }
    },
+   "specialists": {
+    "SPECIALIST_GREAT_ADMIRAL": {
+     "flat": 1
+    }
+   },
    "plots": {
     "flat": [
      {
@@ -47,6 +52,15 @@
       "enabled": "IS_WATER"
      }
     ]
+   }
+  }
+ },
+ "gold": {
+  "empire": {
+   "specialists": {
+    "SPECIALIST_GREAT_ADMIRAL": {
+     "flat": 2
+    }
    }
   }
  },

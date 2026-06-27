@@ -2,10 +2,23 @@
  "type": "TRAIT_FOREIGN1",
  "description": "TXT_KEY_TRAIT_COMPLEX_FOREIGN1",
  "civilopedia": "TXT_KEY_TRAIT_COMPLEX_FOREIGN1_PEDIA",
- "enables": {
-  "traits": [
-   "TRAIT_FOREIGN2"
-  ]
+ "strategy": "TXT_KEY_TRAIT_COMPLEX_FOREIGN_STRATEGY",
+ "excludes": [
+  "TRAIT_POLITICIAN1"
+ ],
+ "food": {
+  "empire": {
+   "capital": {
+    "percent": -5
+   }
+  }
+ },
+ "production": {
+  "empire": {
+   "capital": {
+    "percent": -5
+   }
+  }
  },
  "buildRate": {
   "empire": {
@@ -27,15 +40,42 @@
    }
   }
  },
+ "gold": {
+  "empire": {
+   "specialists": {
+    "SPECIALIST_SPY": {
+     "flat": -1
+    },
+    "SPECIALIST_GREAT_SPY": {
+     "flat": -1
+    }
+   }
+  }
+ },
  "research": {
   "empire": {
-   "percent": -10
+   "specialists": {
+    "SPECIALIST_SPY": {
+     "flat": -1
+    },
+    "SPECIALIST_GREAT_SPY": {
+     "flat": -1
+    }
+   }
   }
  },
  "culture": {
   "empire": {
    "flat": -1,
    "percent": -5,
+   "specialists": {
+    "SPECIALIST_SPY": {
+     "flat": -1
+    },
+    "SPECIALIST_GREAT_SPY": {
+     "flat": -1
+    }
+   },
    "capital": {
     "percent": -10
    }
@@ -45,19 +85,41 @@
   "empire": {
    "flat": -1,
    "percent": -5,
+   "specialists": {
+    "SPECIALIST_SPY": {
+     "flat": -1
+    },
+    "SPECIALIST_GREAT_SPY": {
+     "flat": -1
+    }
+   },
    "capital": {
     "percent": -10
    }
   }
  },
- "happiness": {
+ "greatGeneralRate": {
+  "empire": {
+   "percent": 5
+  }
+ },
+ "experience": {
+  "empire": {
+   "capital": {
+    "percent": -5
+   }
+  }
+ },
+ "conscript": {
   "empire": {
    "flat": -1
   }
  },
- "greatPeopleRate": {
+ "maintenance": {
   "empire": {
-   "percent": -20
+   "corporation": {
+    "percent": -10
+   }
   }
  },
  "tradeRoutes": {
@@ -67,11 +129,21 @@
    }
   }
  },
- "grants": {
-  "freePromotions": {
-   "PROMOTION_LOYALTY": [
-    "UNITCOMBAT_SPY"
-   ]
+ "durations": {
+  "empire": {
+   "civicAnarchy": {
+    "percent": 50
+   },
+   "religiousAnarchy": {
+    "percent": 25
+   }
+  }
+ },
+ "diplomacy": {
+  "empire": {
+   "attitude": {
+    "flat": 1
+   }
   }
  },
  "succession": {
@@ -113,64 +185,5 @@
  },
  "identity": {
   "negativeTrait": true
- },
- "strategy": "TXT_KEY_TRAIT_COMPLEX_FOREIGN_STRATEGY",
- "excludes": [
-  "TRAIT_POLITICIAN1"
- ],
- "food": {
-  "empire": {
-   "capital": {
-    "percent": -5
-   }
-  }
- },
- "production": {
-  "empire": {
-   "capital": {
-    "percent": -5
-   }
-  }
- },
- "greatGeneralRate": {
-  "empire": {
-   "percent": 5
-  }
- },
- "experience": {
-  "empire": {
-   "capital": {
-    "percent": -5
-   }
-  }
- },
- "conscript": {
-  "empire": {
-   "flat": -1
-  }
- },
- "maintenance": {
-  "empire": {
-   "corporation": {
-    "percent": -10
-   }
-  }
- },
- "durations": {
-  "empire": {
-   "civicAnarchy": {
-    "percent": 50
-   },
-   "religiousAnarchy": {
-    "percent": 25
-   }
-  }
- },
- "diplomacy": {
-  "empire": {
-   "attitude": {
-    "flat": 1
-   }
-  }
  }
 }

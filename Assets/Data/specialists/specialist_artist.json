@@ -3,72 +3,12 @@
  "description": "TXT_KEY_SPECIALIST_ARTIST",
  "civilopedia": "TXT_KEY_CONCEPT_SPECIALISTS_PEDIA",
  "production": {
-  "city": {
+  "empire": {
    "flat": [
     {
      "value": 2,
      "enabled": {
       "type": "BUILDING_BAUHAUS_SCHOOL",
-      "scope": "city"
-     }
-    }
-   ]
-  },
-  "empire": {
-   "flat": [
-    {
-     "value": 1,
-     "enabled": {
-      "type": "TRAIT_COMPLEX_CREATIVE",
-      "scope": "empire"
-     }
-    },
-    {
-     "value": 1,
-     "enabled": {
-      "type": "TRAIT_COMPLEX_CREATIVE1",
-      "scope": "empire"
-     }
-    },
-    {
-     "value": -1,
-     "enabled": {
-      "type": "TRAIT_UNREFINED",
-      "scope": "empire"
-     }
-    },
-    {
-     "value": -1,
-     "enabled": {
-      "type": "TRAIT_UNREFINED1",
-      "scope": "empire"
-     }
-    },
-    {
-     "value": 1,
-     "enabled": {
-      "type": "TRAIT_NATURALIST",
-      "scope": "empire"
-     }
-    },
-    {
-     "value": 1,
-     "enabled": {
-      "type": "TRAIT_NATURALIST1",
-      "scope": "empire"
-     }
-    },
-    {
-     "value": -1,
-     "enabled": {
-      "type": "TRAIT_SLOB",
-      "scope": "empire"
-     }
-    },
-    {
-     "value": -1,
-     "enabled": {
-      "type": "TRAIT_SLOB1",
       "scope": "empire"
      }
     }
@@ -76,71 +16,19 @@
   }
  },
  "commerce": {
-  "city": {
+  "empire": {
    "flat": [
     {
      "value": 1,
      "enabled": {
       "type": "BUILDING_MADISON_AVENUE",
-      "scope": "city"
+      "scope": "empire"
      }
     },
     {
      "value": 2,
      "enabled": {
       "type": "BUILDING_WALK_OF_FAME",
-      "scope": "city"
-     }
-    }
-   ]
-  },
-  "empire": {
-   "flat": [
-    {
-     "value": 1,
-     "enabled": {
-      "type": "TRAIT_COMPLEX_CREATIVE",
-      "scope": "empire"
-     }
-    },
-    {
-     "value": 1,
-     "enabled": {
-      "type": "TRAIT_CREATIVE2",
-      "scope": "empire"
-     }
-    },
-    {
-     "value": -1,
-     "enabled": {
-      "type": "TRAIT_UNREFINED",
-      "scope": "empire"
-     }
-    },
-    {
-     "value": -1,
-     "enabled": {
-      "type": "TRAIT_UNREFINED2",
-      "scope": "empire"
-     }
-    }
-   ]
-  }
- },
- "gold": {
-  "empire": {
-   "flat": [
-    {
-     "value": 1,
-     "enabled": {
-      "type": "TRAIT_PHILOSOPHICAL",
-      "scope": "empire"
-     }
-    },
-    {
-     "value": 1,
-     "enabled": {
-      "type": "TRAIT_PHILOSOPHICAL1",
       "scope": "empire"
      }
     }
@@ -178,163 +66,6 @@
      "value": 50,
      "enabled": {
       "type": "CIVIC_CAPITALIST",
-      "scope": "empire"
-     }
-    }
-   ]
-  },
-  "empire": {
-   "flat": [
-    {
-     "value": 2,
-     "enabled": {
-      "type": "TRAIT_COMPLEX_CREATIVE",
-      "scope": "empire"
-     }
-    },
-    {
-     "value": 2,
-     "enabled": {
-      "type": "TRAIT_CREATIVE2",
-      "scope": "empire"
-     }
-    },
-    {
-     "value": -2,
-     "enabled": {
-      "type": "TRAIT_UNREFINED",
-      "scope": "empire"
-     }
-    },
-    {
-     "value": -2,
-     "enabled": {
-      "type": "TRAIT_UNREFINED2",
-      "scope": "empire"
-     }
-    },
-    {
-     "value": 1,
-     "enabled": {
-      "type": "TRAIT_COMPLEX_PHILOSOPHICAL",
-      "scope": "empire"
-     }
-    },
-    {
-     "value": 1,
-     "enabled": {
-      "type": "TRAIT_PHILOSOPHICAL3",
-      "scope": "empire"
-     }
-    },
-    {
-     "value": -1,
-     "enabled": {
-      "type": "TRAIT_COMPLEX_POPULIST",
-      "scope": "empire"
-     }
-    },
-    {
-     "value": -1,
-     "enabled": {
-      "type": "TRAIT_POPULIST3",
-      "scope": "empire"
-     }
-    },
-    {
-     "value": -1,
-     "enabled": {
-      "type": "TRAIT_COMPLEX_ORGANIZED1",
-      "scope": "empire"
-     }
-    },
-    {
-     "value": 1,
-     "enabled": {
-      "type": "TRAIT_IMPULSIVE1",
-      "scope": "empire"
-     }
-    },
-    {
-     "value": 1,
-     "enabled": {
-      "type": "TRAIT_NATURALIST",
-      "scope": "empire"
-     }
-    },
-    {
-     "value": 1,
-     "enabled": {
-      "type": "TRAIT_NATURALIST1",
-      "scope": "empire"
-     }
-    },
-    {
-     "value": -1,
-     "enabled": {
-      "type": "TRAIT_SLOB",
-      "scope": "empire"
-     }
-    },
-    {
-     "value": -1,
-     "enabled": {
-      "type": "TRAIT_SLOB1",
-      "scope": "empire"
-     }
-    },
-    {
-     "value": 1,
-     "enabled": {
-      "type": "TRAIT_PHILOSOPHICAL",
-      "scope": "empire"
-     }
-    },
-    {
-     "value": -1,
-     "enabled": {
-      "type": "TRAIT_ORGANIZED",
-      "scope": "empire"
-     }
-    },
-    {
-     "value": 2,
-     "enabled": {
-      "type": "TRAIT_CREATIVE",
-      "scope": "empire"
-     }
-    },
-    {
-     "value": 1,
-     "enabled": {
-      "type": "TRAIT_PHILOSOPHICAL1",
-      "scope": "empire"
-     }
-    },
-    {
-     "value": -1,
-     "enabled": {
-      "type": "TRAIT_ORGANIZED1",
-      "scope": "empire"
-     }
-    },
-    {
-     "value": 2,
-     "enabled": {
-      "type": "TRAIT_CREATIVE1",
-      "scope": "empire"
-     }
-    }
-   ]
-  }
- },
- "espionage": {
-  "empire": {
-   "flat": [
-    {
-     "value": -1,
-     "enabled": {
-      "type": "TRAIT_COMPLEX_CHARISMATIC1",
       "scope": "empire"
      }
     }

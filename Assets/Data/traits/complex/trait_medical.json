@@ -6,6 +6,30 @@
  "excludes": [
   "TRAIT_UNSANITARY"
  ],
+ "food": {
+  "empire": {
+   "specialists": {
+    "SPECIALIST_DOCTOR": {
+     "flat": 1
+    },
+    "SPECIALIST_GREAT_DOCTOR": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "production": {
+  "empire": {
+   "specialists": {
+    "SPECIALIST_DOCTOR": {
+     "flat": 1
+    },
+    "SPECIALIST_GREAT_DOCTOR": {
+     "flat": 1
+    }
+   }
+  }
+ },
  "buildRate": {
   "empire": {
    "buildings": {
@@ -296,8 +320,34 @@
    }
   }
  },
+ "commerce": {
+  "empire": {
+   "specialists": {
+    "SPECIALIST_DOCTOR": {
+     "flat": 1
+    },
+    "SPECIALIST_GREAT_DOCTOR": {
+     "flat": 1
+    }
+   }
+  }
+ },
  "research": {
   "empire": {
+   "specialists": {
+    "SPECIALIST_SCIENTIST": {
+     "flat": 1
+    },
+    "SPECIALIST_GREAT_SCIENTIST": {
+     "flat": 1
+    },
+    "SPECIALIST_DOCTOR": {
+     "flat": 1
+    },
+    "SPECIALIST_GREAT_DOCTOR": {
+     "flat": 1
+    }
+   },
    "byTech": {
     "TECH_HERBALISM": {
      "percent": 20

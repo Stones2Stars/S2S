@@ -30,8 +30,28 @@
    }
   }
  },
+ "commerce": {
+  "empire": {
+   "specialists": {
+    "SPECIALIST_PRIEST": {
+     "flat": -1
+    },
+    "SPECIALIST_GREAT_PROPHET": {
+     "flat": -1
+    }
+   }
+  }
+ },
  "research": {
   "empire": {
+   "specialists": {
+    "SPECIALIST_PRIEST": {
+     "flat": -1
+    },
+    "SPECIALIST_GREAT_PROPHET": {
+     "flat": -1
+    }
+   },
    "byTech": {
     "TECH_SIKHISM": {
      "percent": -20
@@ -53,6 +73,18 @@
     },
     "TECH_BAHAI": {
      "percent": -20
+    }
+   }
+  }
+ },
+ "espionage": {
+  "empire": {
+   "specialists": {
+    "SPECIALIST_PRIEST": {
+     "flat": -1
+    },
+    "SPECIALIST_GREAT_PROPHET": {
+     "flat": -1
     }
    }
   }

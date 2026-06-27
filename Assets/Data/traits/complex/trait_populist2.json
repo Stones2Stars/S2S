@@ -15,6 +15,14 @@
   "empire": {
    "specialist": {
     "perSpecialist": -1
+   },
+   "specialists": {
+    "SPECIALIST_LAWYER": {
+     "flat": -1
+    },
+    "SPECIALIST_GREAT_STATESMAN": {
+     "flat": -1
+    }
    }
   }
  },

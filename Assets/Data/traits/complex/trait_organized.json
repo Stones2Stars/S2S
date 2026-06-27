@@ -2,6 +2,17 @@
  "type": "TRAIT_ORGANIZED",
  "description": "TXT_KEY_TRAIT_COMPLEX_ORGANIZED",
  "civilopedia": "TXT_KEY_TRAIT_COMPLEX_ORGANIZED_PEDIA",
+ "strategy": "TXT_KEY_TRAIT_COMPLEX_ORGANIZED_STRATEGY",
+ "excludes": [
+  "TRAIT_IMPULSIVE"
+ ],
+ "production": {
+  "empire": {
+   "specialist": {
+    "perSpecialist": 1
+   }
+  }
+ },
  "buildRate": {
   "empire": {
    "teamWonder": {
@@ -12,17 +23,34 @@
    }
   }
  },
- "gold": {
+ "culture": {
   "empire": {
-   "capital": {
-    "percent": 20
+   "specialists": {
+    "SPECIALIST_CELEBRITY": {
+     "flat": -1
+    },
+    "SPECIALIST_NOBLE": {
+     "flat": -1
+    }
    }
   }
  },
- "culture": {
+ "happiness": {
   "empire": {
-   "capital": {
-    "percent": -10
+   "largestCity": {
+    "flat": 1
+   }
+  }
+ },
+ "greatGeneralRate": {
+  "empire": {
+   "percent": -10
+  }
+ },
+ "experience": {
+  "empire": {
+   "levelModifier": {
+    "percent": 5
    }
   }
  },
@@ -50,9 +78,28 @@
    }
   }
  },
+ "hurry": {
+  "empire": {
+   "cost": {
+    "percent": 25
+   }
+  }
+ },
  "workRate": {
   "empire": {
    "percent": 25
+  }
+ },
+ "improvementUpgradeRate": {
+  "empire": {
+   "percent": 100
+  }
+ },
+ "durations": {
+  "empire": {
+   "civicAnarchy": {
+    "percent": 30
+   }
   }
  },
  "succession": {
@@ -89,58 +136,6 @@
  "ui": {
   "art": {
    "icon": "art/Buttons/Traits/TraitOrganized.dds"
-  }
- },
- "identity": {
-  "shortDescription": "TXT_KEY_TRAIT_ORGANIZED_SHORT"
- },
- "strategy": "TXT_KEY_TRAIT_COMPLEX_ORGANIZED_STRATEGY",
- "excludes": [
-  "TRAIT_IMPULSIVE"
- ],
- "production": {
-  "empire": {
-   "specialist": {
-    "perSpecialist": 1
-   }
-  }
- },
- "happiness": {
-  "empire": {
-   "largestCity": {
-    "flat": 1
-   }
-  }
- },
- "greatGeneralRate": {
-  "empire": {
-   "percent": -10
-  }
- },
- "experience": {
-  "empire": {
-   "levelModifier": {
-    "percent": 5
-   }
-  }
- },
- "hurry": {
-  "empire": {
-   "cost": {
-    "percent": 25
-   }
-  }
- },
- "improvementUpgradeRate": {
-  "empire": {
-   "percent": 100
-  }
- },
- "durations": {
-  "empire": {
-   "civicAnarchy": {
-    "percent": 30
-   }
   }
  }
 }

@@ -129,6 +129,14 @@
   "empire": {
    "flat": 3,
    "percent": 20,
+   "specialists": {
+    "SPECIALIST_NOBLE": {
+     "flat": 2
+    },
+    "SPECIALIST_ARTIST": {
+     "flat": 2
+    }
+   },
    "capital": {
     "percent": 20
    }

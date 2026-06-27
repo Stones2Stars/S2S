@@ -2,86 +2,58 @@
  "type": "TRAIT_CRUEL",
  "description": "TXT_KEY_TRAIT_COMPLEX_CRUEL",
  "civilopedia": "TXT_KEY_TRAIT_COMPLEX_CRUEL_PEDIA",
- "culture": {
-  "empire": {
-   "percent": -5
-  }
- },
- "espionage": {
-  "empire": {
-   "percent": 15
-  }
- },
- "happiness": {
-  "empire": {
-   "flat": -1,
-   "largestCity": {
-    "flat": -2
-   }
-  }
- },
- "experience": {
-  "empire": {
-   "levelModifier": {
-    "percent": 20
-   }
-  }
- },
- "PROPERTY_CRIME": {
-  "city": {
-   "flat": {
-    "value": 1,
-    "per": {
-     "type": "POPULATION",
-     "each": 2,
-     "scope": "city"
-    }
-   }
-  }
- },
- "succession": {
-  "promotionLine": "PROMOTIONLINE_CRUEL"
- },
- "ai": {
-  "flavours": [
-   {
-    "FLAVOR_MILITARY": -3
-   },
-   {
-    "FLAVOR_RELIGION": 0
-   },
-   {
-    "FLAVOR_PRODUCTION": -5
-   },
-   {
-    "FLAVOR_GOLD": 1
-   },
-   {
-    "FLAVOR_SCIENCE": 0
-   },
-   {
-    "FLAVOR_CULTURE": 1
-   },
-   {
-    "FLAVOR_GROWTH": 21
-   },
-   {
-    "FLAVOR_ESPIONAGE": 0
-   }
-  ]
- },
- "ui": {
-  "art": {
-   "icon": "art/Buttons/Traits/TraitCruel.dds"
-  }
- },
- "identity": {
-  "negativeTrait": true
- },
  "strategy": "TXT_KEY_TRAIT_COMPLEX_CRUEL_STRATEGY",
  "excludes": [
   "TRAIT_HUMANITARIAN"
  ],
+ "food": {
+  "empire": {
+   "specialists": {
+    "SPECIALIST_PRIEST": {
+     "flat": -1
+    },
+    "SPECIALIST_GREAT_PROPHET": {
+     "flat": -1
+    },
+    "SPECIALIST_CITIZEN": {
+     "flat": -1
+    },
+    "SPECIALIST_SETTLED_CITIZEN": {
+     "flat": -1
+    },
+    "SPECIALIST_SLAVES": {
+     "flat": -1
+    },
+    "SPECIALIST_SETTLED_SLAVE": {
+     "flat": -1
+    }
+   }
+  }
+ },
+ "production": {
+  "empire": {
+   "specialists": {
+    "SPECIALIST_PRIEST": {
+     "flat": 1
+    },
+    "SPECIALIST_GREAT_PROPHET": {
+     "flat": 1
+    },
+    "SPECIALIST_CITIZEN": {
+     "flat": 1
+    },
+    "SPECIALIST_SETTLED_CITIZEN": {
+     "flat": 1
+    },
+    "SPECIALIST_SLAVES": {
+     "flat": 1
+    },
+    "SPECIALIST_SETTLED_SLAVE": {
+     "flat": 1
+    }
+   }
+  }
+ },
  "buildRate": {
   "empire": {
    "worldWonder": {
@@ -89,6 +61,74 @@
    },
    "military": {
     "percent": 10
+   }
+  }
+ },
+ "gold": {
+  "empire": {
+   "specialists": {
+    "SPECIALIST_CITIZEN": {
+     "flat": -1
+    },
+    "SPECIALIST_SETTLED_CITIZEN": {
+     "flat": -1
+    },
+    "SPECIALIST_SLAVES": {
+     "flat": -1
+    },
+    "SPECIALIST_SETTLED_SLAVE": {
+     "flat": -1
+    }
+   }
+  }
+ },
+ "research": {
+  "empire": {
+   "specialists": {
+    "SPECIALIST_DOCTOR": {
+     "flat": 1
+    },
+    "SPECIALIST_GREAT_DOCTOR": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "culture": {
+  "empire": {
+   "specialists": {
+    "SPECIALIST_CITIZEN": {
+     "flat": -1
+    },
+    "SPECIALIST_SETTLED_CITIZEN": {
+     "flat": -1
+    },
+    "SPECIALIST_SLAVES": {
+     "flat": -1
+    },
+    "SPECIALIST_SETTLED_SLAVE": {
+     "flat": -1
+    }
+   }
+  }
+ },
+ "espionage": {
+  "empire": {
+   "specialists": {
+    "SPECIALIST_DOCTOR": {
+     "flat": 1
+    },
+    "SPECIALIST_GREAT_DOCTOR": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "happiness": {
+  "empire": {
+   "flat": -1,
+   "largestCity": {
+    "flat": -2
    }
   }
  },
@@ -142,6 +182,18 @@
    }
   }
  },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": {
+    "value": 1,
+    "per": {
+     "type": "POPULATION",
+     "each": 2,
+     "scope": "city"
+    }
+   }
+  }
+ },
  "PROPERTY_DISEASE": {
   "city": {
    "flat": {
@@ -165,5 +217,44 @@
     "UNITCOMBAT_THROWING"
    ]
   }
+ },
+ "succession": {
+  "promotionLine": "PROMOTIONLINE_CRUEL"
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": -3
+   },
+   {
+    "FLAVOR_RELIGION": 0
+   },
+   {
+    "FLAVOR_PRODUCTION": -5
+   },
+   {
+    "FLAVOR_GOLD": 1
+   },
+   {
+    "FLAVOR_SCIENCE": 0
+   },
+   {
+    "FLAVOR_CULTURE": 1
+   },
+   {
+    "FLAVOR_GROWTH": 21
+   },
+   {
+    "FLAVOR_ESPIONAGE": 0
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Traits/TraitCruel.dds"
+  }
+ },
+ "identity": {
+  "negativeTrait": true
  }
 }

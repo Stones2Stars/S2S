@@ -2,6 +2,10 @@
  "type": "TRAIT_FINANCIAL",
  "description": "TXT_KEY_TRAIT_COMPLEX_FINANCIAL",
  "civilopedia": "TXT_KEY_TRAIT_COMPLEX_FINANCIAL_PEDIA",
+ "strategy": "TXT_KEY_TRAIT_COMPLEX_FINANCIAL_STRATEGY",
+ "excludes": [
+  "TRAIT_GREEDY"
+ ],
  "buildRate": {
   "empire": {
    "buildings": {
@@ -283,101 +287,49 @@
  },
  "commerce": {
   "empire": {
-   "tradeRoute": {
-    "percent": 10
-   },
-   "percent": 5
-  }
- },
- "extraYieldThreshold": {
-  "empire": {
-   "commerce": {
-    "flat": 4
+   "specialists": {
+    "SPECIALIST_MERCHANT": {
+     "flat": 1
+    },
+    "SPECIALIST_NOBLE": {
+     "flat": 1
+    },
+    "SPECIALIST_GREAT_MERCHANT": {
+     "flat": 1
+    }
    }
   }
  },
- "happiness": {
-  "empire": {
-   "flat": 1
-  }
- },
- "conscript": {
-  "empire": {
-   "flat": -10
-  }
- },
- "combat": {
-  "empire": {
-   "cityDefense": {
-    "percent": -10
-   },
-   "espionageDefense": {
-    "percent": -10
-   },
-   "bombardDefense": {
-    "percent": -10
-   }
-  }
- },
- "maintenance": {
-  "empire": {
-   "corporation": {
-    "percent": -20
-   }
-  }
- },
- "workRate": {
-  "empire": {
-   "percent": -25
-  }
- },
- "succession": {
-  "promotionLine": "PROMOTIONLINE_FINANCIAL"
- },
- "ai": {
-  "flavours": [
-   {
-    "FLAVOR_MILITARY": -4
-   },
-   {
-    "FLAVOR_RELIGION": 0
-   },
-   {
-    "FLAVOR_PRODUCTION": 2
-   },
-   {
-    "FLAVOR_GOLD": 18
-   },
-   {
-    "FLAVOR_SCIENCE": 1
-   },
-   {
-    "FLAVOR_CULTURE": 1
-   },
-   {
-    "FLAVOR_GROWTH": -2
-   },
-   {
-    "FLAVOR_ESPIONAGE": -1
-   }
-  ]
- },
- "ui": {
-  "art": {
-   "icon": "art/Buttons/Traits/TraitFinancial.dds"
-  }
- },
- "identity": {
-  "impurePropertyManipulators": true
- },
- "strategy": "TXT_KEY_TRAIT_COMPLEX_FINANCIAL_STRATEGY",
- "excludes": [
-  "TRAIT_GREEDY"
- ],
  "gold": {
   "empire": {
    "flat": 2,
    "percent": 10,
+   "specialists": {
+    "SPECIALIST_MERCHANT": {
+     "flat": 2
+    },
+    "SPECIALIST_NOBLE": {
+     "flat": 2
+    },
+    "SPECIALIST_GREAT_MERCHANT": {
+     "flat": 2
+    },
+    "SPECIALIST_CITIZEN": {
+     "flat": 1
+    },
+    "SPECIALIST_SLAVES": {
+     "flat": 1
+    },
+    "SPECIALIST_SETTLED_CITIZEN": {
+     "flat": 1
+    },
+    "SPECIALIST_SETTLED_SLAVE": {
+     "flat": 1
+    },
+    "SPECIALIST_ANDROID_WORKER": {
+     "flat": 1
+    }
+   },
    "capital": {
     "percent": 10
    },
@@ -560,6 +512,11 @@
    }
   }
  },
+ "happiness": {
+  "empire": {
+   "flat": 1
+  }
+ },
  "growth": {
   "empire": {
    "percent": 10
@@ -580,6 +537,26 @@
    "flat": -1
   }
  },
+ "combat": {
+  "empire": {
+   "cityDefense": {
+    "percent": -10
+   },
+   "espionageDefense": {
+    "percent": -10
+   },
+   "bombardDefense": {
+    "percent": -10
+   }
+  }
+ },
+ "maintenance": {
+  "empire": {
+   "corporation": {
+    "percent": -20
+   }
+  }
+ },
  "upkeep": {
   "empire": {
    "civic": {
@@ -592,6 +569,11 @@
    "cost": {
     "percent": -25
    }
+  }
+ },
+ "workRate": {
+  "empire": {
+   "percent": -25
   }
  },
  "improvementUpgradeRate": {
@@ -617,5 +599,44 @@
     }
    }
   }
+ },
+ "succession": {
+  "promotionLine": "PROMOTIONLINE_FINANCIAL"
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": -4
+   },
+   {
+    "FLAVOR_RELIGION": 0
+   },
+   {
+    "FLAVOR_PRODUCTION": 2
+   },
+   {
+    "FLAVOR_GOLD": 18
+   },
+   {
+    "FLAVOR_SCIENCE": 1
+   },
+   {
+    "FLAVOR_CULTURE": 1
+   },
+   {
+    "FLAVOR_GROWTH": -2
+   },
+   {
+    "FLAVOR_ESPIONAGE": -1
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Traits/TraitFinancial.dds"
+  }
+ },
+ "identity": {
+  "impurePropertyManipulators": true
  }
 }

@@ -7,6 +7,15 @@
    "TRAIT_SPIRITUAL2"
   ]
  },
+ "production": {
+  "empire": {
+   "specialists": {
+    "SPECIALIST_PRIEST": {
+     "flat": 1
+    }
+   }
+  }
+ },
  "buildRate": {
   "empire": {
    "buildings": {
@@ -77,6 +86,24 @@
     },
     "SPECIALBUILDING_PANTHEON": {
      "percent": 10
+    }
+   }
+  }
+ },
+ "commerce": {
+  "empire": {
+   "specialists": {
+    "SPECIALIST_PRIEST": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "research": {
+  "empire": {
+   "specialists": {
+    "SPECIALIST_SCIENTIST": {
+     "flat": -1
     }
    }
   }

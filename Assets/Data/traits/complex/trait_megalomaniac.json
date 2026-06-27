@@ -2,22 +2,48 @@
  "type": "TRAIT_MEGALOMANIAC",
  "description": "TXT_KEY_TRAIT_COMPLEX_MEGALOMANIAC",
  "civilopedia": "TXT_KEY_TRAIT_COMPLEX_MEGALOMANIAC_PEDIA",
+ "strategy": "TXT_KEY_TRAIT_COMPLEX_MEGALOMANIAC_STRATEGY",
+ "excludes": [
+  "TRAIT_HUMBLE"
+ ],
+ "food": {
+  "empire": {
+   "flat": -1,
+   "percent": -5
+  }
+ },
  "production": {
   "empire": {
    "flat": -1,
    "percent": -5
   }
  },
- "commerce": {
+ "buildRate": {
   "empire": {
-   "capital": {
-    "percent": 15
+   "worldWonder": {
+    "percent": 20
+   },
+   "teamWonder": {
+    "percent": -25
+   },
+   "nationalWonder": {
+    "percent": -25
+   },
+   "military": {
+    "percent": 20
    }
   }
  },
- "research": {
+ "gold": {
   "empire": {
-   "percent": 5
+   "flat": -1,
+   "percent": -5
+  }
+ },
+ "espionage": {
+  "empire": {
+   "flat": -1,
+   "percent": -5
   }
  },
  "happiness": {
@@ -25,10 +51,20 @@
    "flat": -1
   }
  },
- "maintenance": {
+ "greatPeopleRate": {
   "empire": {
-   "numCities": {
-    "percent": 20
+   "percent": 10
+  }
+ },
+ "greatGeneralRate": {
+  "empire": {
+   "percent": 10
+  }
+ },
+ "combat": {
+  "empire": {
+   "espionageDefense": {
+    "percent": -10
    }
   }
  },
@@ -36,6 +72,13 @@
   "empire": {
    "civic": {
     "percent": 10
+   }
+  }
+ },
+ "hurry": {
+  "empire": {
+   "anger": {
+    "percent": -25
    }
   }
  },
@@ -53,10 +96,15 @@
    }
   }
  },
- "revolution": {
-  "empire": {
-   "local": {
-    "flat": 1
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": {
+    "value": 1,
+    "per": {
+     "type": "POPULATION",
+     "each": 2,
+     "scope": "city"
+    }
    }
   }
  },
@@ -98,79 +146,5 @@
  },
  "identity": {
   "negativeTrait": true
- },
- "strategy": "TXT_KEY_TRAIT_COMPLEX_MEGALOMANIAC_STRATEGY",
- "excludes": [
-  "TRAIT_HUMBLE"
- ],
- "food": {
-  "empire": {
-   "flat": -1,
-   "percent": -5
-  }
- },
- "buildRate": {
-  "empire": {
-   "worldWonder": {
-    "percent": 20
-   },
-   "teamWonder": {
-    "percent": -25
-   },
-   "nationalWonder": {
-    "percent": -25
-   },
-   "military": {
-    "percent": 20
-   }
-  }
- },
- "gold": {
-  "empire": {
-   "flat": -1,
-   "percent": -5
-  }
- },
- "espionage": {
-  "empire": {
-   "flat": -1,
-   "percent": -5
-  }
- },
- "greatPeopleRate": {
-  "empire": {
-   "percent": 10
-  }
- },
- "greatGeneralRate": {
-  "empire": {
-   "percent": 10
-  }
- },
- "combat": {
-  "empire": {
-   "espionageDefense": {
-    "percent": -10
-   }
-  }
- },
- "hurry": {
-  "empire": {
-   "anger": {
-    "percent": -25
-   }
-  }
- },
- "PROPERTY_CRIME": {
-  "city": {
-   "flat": {
-    "value": 1,
-    "per": {
-     "type": "POPULATION",
-     "each": 2,
-     "scope": "city"
-    }
-   }
-  }
  }
 }

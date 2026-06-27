@@ -2,10 +2,16 @@
  "type": "TRAIT_ORGANIZED1",
  "description": "TXT_KEY_TRAIT_COMPLEX_ORGANIZED1",
  "civilopedia": "TXT_KEY_TRAIT_COMPLEX_ORGANIZED1_PEDIA",
- "enables": {
-  "traits": [
-   "TRAIT_ORGANIZED2"
-  ]
+ "strategy": "TXT_KEY_TRAIT_COMPLEX_ORGANIZED_STRATEGY",
+ "excludes": [
+  "TRAIT_IMPULSIVE1"
+ ],
+ "production": {
+  "empire": {
+   "specialist": {
+    "perSpecialist": 1
+   }
+  }
  },
  "buildRate": {
   "empire": {
@@ -17,24 +23,41 @@
    }
   }
  },
- "gold": {
-  "empire": {
-   "capital": {
-    "percent": 20
-   }
-  }
- },
  "culture": {
   "empire": {
-   "flat": -1,
-   "capital": {
-    "percent": -10
+   "specialists": {
+    "SPECIALIST_ARTIST": {
+     "flat": -1
+    },
+    "SPECIALIST_GREAT_ARTIST": {
+     "flat": -1
+    },
+    "SPECIALIST_SLAVES": {
+     "flat": -1
+    },
+    "SPECIALIST_SETTLED_SLAVE": {
+     "flat": -1
+    }
    }
   }
  },
- "greatPeopleRate": {
+ "happiness": {
   "empire": {
-   "percent": -25
+   "largestCity": {
+    "flat": 1
+   }
+  }
+ },
+ "greatGeneralRate": {
+  "empire": {
+   "percent": -5
+  }
+ },
+ "experience": {
+  "empire": {
+   "levelModifier": {
+    "percent": 5
+   }
   }
  },
  "maintenance": {
@@ -61,6 +84,18 @@
  "workRate": {
   "empire": {
    "percent": 25
+  }
+ },
+ "improvementUpgradeRate": {
+  "empire": {
+   "percent": 100
+  }
+ },
+ "durations": {
+  "empire": {
+   "civicAnarchy": {
+    "percent": 15
+   }
   }
  },
  "succession": {
@@ -98,51 +133,6 @@
  "ui": {
   "art": {
    "icon": "art/Buttons/Traits/TraitOrganized.dds"
-  }
- },
- "identity": {
-  "shortDescription": "TXT_KEY_TRAIT_ORGANIZED_SHORT"
- },
- "strategy": "TXT_KEY_TRAIT_COMPLEX_ORGANIZED_STRATEGY",
- "excludes": [
-  "TRAIT_IMPULSIVE1"
- ],
- "production": {
-  "empire": {
-   "specialist": {
-    "perSpecialist": 1
-   }
-  }
- },
- "happiness": {
-  "empire": {
-   "largestCity": {
-    "flat": 1
-   }
-  }
- },
- "greatGeneralRate": {
-  "empire": {
-   "percent": -5
-  }
- },
- "experience": {
-  "empire": {
-   "levelModifier": {
-    "percent": 5
-   }
-  }
- },
- "improvementUpgradeRate": {
-  "empire": {
-   "percent": 100
-  }
- },
- "durations": {
-  "empire": {
-   "civicAnarchy": {
-    "percent": 15
-   }
   }
  }
 }

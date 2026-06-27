@@ -2,10 +2,21 @@
  "type": "TRAIT_CREATIVE1",
  "description": "TXT_KEY_TRAIT_COMPLEX_CREATIVE1",
  "civilopedia": "TXT_KEY_TRAIT_COMPLEX_CREATIVE1_PEDIA",
- "enables": {
-  "traits": [
-   "TRAIT_CREATIVE2"
-  ]
+ "strategy": "TXT_KEY_TRAIT_COMPLEX_CREATIVE_STRATEGY",
+ "excludes": [
+  "TRAIT_UNREFINED1"
+ ],
+ "production": {
+  "empire": {
+   "specialists": {
+    "SPECIALIST_ARTIST": {
+     "flat": 1
+    },
+    "SPECIALIST_GREAT_ARTIST": {
+     "flat": 1
+    }
+   }
+  }
  },
  "buildRate": {
   "empire": {
@@ -193,10 +204,135 @@
    }
   }
  },
+ "research": {
+  "empire": {
+   "byTech": {
+    "TECH_ORAL_TRADITION": {
+     "percent": 20
+    },
+    "TECH_PREHISTORIC_DANCE": {
+     "percent": 20
+    },
+    "TECH_PREHISTORIC_MUSIC": {
+     "percent": 20
+    },
+    "TECH_NATURAL_PIGMENTS": {
+     "percent": 20
+    },
+    "TECH_CULTURAL_IDENTITY": {
+     "percent": 20
+    },
+    "TECH_PETROGLYPHS": {
+     "percent": 20
+    },
+    "TECH_PERSONAL_ADORNMENTS": {
+     "percent": 20
+    },
+    "TECH_TATTOOS": {
+     "percent": 20
+    },
+    "TECH_SEWING": {
+     "percent": 20
+    },
+    "TECH_BEAD_MAKING": {
+     "percent": 20
+    },
+    "TECH_WOODWORKING": {
+     "percent": 20
+    },
+    "TECH_PICTOGRAPHS": {
+     "percent": 20
+    },
+    "TECH_IDEOGRAMS": {
+     "percent": 20
+    },
+    "TECH_FOLK_DANCE": {
+     "percent": 20
+    },
+    "TECH_FOLK_MUSIC": {
+     "percent": 20
+    },
+    "TECH_CEREMONY": {
+     "percent": 20
+    },
+    "TECH_TEXTILE_LOOM": {
+     "percent": 20
+    },
+    "TECH_SCULPTURE": {
+     "percent": 20
+    },
+    "TECH_ORNAMENTATION": {
+     "percent": 20
+    },
+    "TECH_FURNITURE_MAKING": {
+     "percent": 20
+    },
+    "TECH_CUISINE": {
+     "percent": 20
+    },
+    "TECH_GLASS_BLOWING": {
+     "percent": 20
+    },
+    "TECH_LITERATURE": {
+     "percent": 20
+    },
+    "TECH_CALLIGRAPHY": {
+     "percent": 20
+    },
+    "TECH_AESTHETICS": {
+     "percent": 20
+    },
+    "TECH_DRAMA": {
+     "percent": 20
+    },
+    "TECH_FLORISTRY": {
+     "percent": 20
+    },
+    "TECH_MOSAIC_WORKING": {
+     "percent": 20
+    },
+    "TECH_MUSICAL_NOTATION": {
+     "percent": 20
+    },
+    "TECH_POETRY": {
+     "percent": 20
+    },
+    "TECH_ARCHITECTURE": {
+     "percent": 20
+    },
+    "TECH_STAINED_GLASS": {
+     "percent": 20
+    },
+    "TECH_HERALDRY": {
+     "percent": 20
+    },
+    "TECH_PERSPECTIVE": {
+     "percent": 20
+    },
+    "TECH_ACOUSTICS": {
+     "percent": 20
+    }
+   }
+  }
+ },
  "culture": {
   "empire": {
    "flat": 2,
    "percent": 5,
+   "specialists": {
+    "SPECIALIST_CITIZEN": {
+     "flat": 1
+    },
+    "SPECIALIST_SLAVES": {
+     "flat": 1
+    },
+    "SPECIALIST_SETTLED_SLAVE": {
+     "flat": 1
+    },
+    "SPECIALIST_SETTLED_CITIZEN": {
+     "flat": 1
+    }
+   },
    "capital": {
     "percent": 5
    },
@@ -339,9 +475,60 @@
    }
   }
  },
+ "greatPeopleRate": {
+  "empire": {
+   "percent": 10,
+   "units": {
+    "UNIT_ARTIST": {
+     "flat": 2
+    }
+   }
+  }
+ },
+ "experience": {
+  "empire": {
+   "unitCombats": {
+    "UNITCOMBAT_COMBATANT": {
+     "flat": -1
+    },
+    "UNITCOMBAT_NAVAL_COMBATANT": {
+     "flat": -1
+    }
+   }
+  }
+ },
  "conscript": {
   "empire": {
    "flat": -1
+  }
+ },
+ "combat": {
+  "empire": {
+   "bombardDefense": {
+    "percent": -5
+   },
+   "captureResistance": {
+    "percent": -10
+   }
+  }
+ },
+ "upkeep": {
+  "empire": {
+   "civic": {
+    "percent": 10
+   }
+  }
+ },
+ "workRate": {
+  "empire": {
+   "percent": -25
+  }
+ },
+ "cityFounding": {
+  "empire": {
+   "startCulture": {
+    "flat": 5
+   }
   }
  },
  "diplomacy": {
@@ -389,175 +576,6 @@
  "ui": {
   "art": {
    "icon": "art/Buttons/Traits/TraitCreative.dds"
-  }
- },
- "identity": {
-  "shortDescription": "TXT_KEY_TRAIT_CREATIVE_SHORT"
- },
- "strategy": "TXT_KEY_TRAIT_COMPLEX_CREATIVE_STRATEGY",
- "excludes": [
-  "TRAIT_UNREFINED1"
- ],
- "research": {
-  "empire": {
-   "byTech": {
-    "TECH_ORAL_TRADITION": {
-     "percent": 20
-    },
-    "TECH_PREHISTORIC_DANCE": {
-     "percent": 20
-    },
-    "TECH_PREHISTORIC_MUSIC": {
-     "percent": 20
-    },
-    "TECH_NATURAL_PIGMENTS": {
-     "percent": 20
-    },
-    "TECH_CULTURAL_IDENTITY": {
-     "percent": 20
-    },
-    "TECH_PETROGLYPHS": {
-     "percent": 20
-    },
-    "TECH_PERSONAL_ADORNMENTS": {
-     "percent": 20
-    },
-    "TECH_TATTOOS": {
-     "percent": 20
-    },
-    "TECH_SEWING": {
-     "percent": 20
-    },
-    "TECH_BEAD_MAKING": {
-     "percent": 20
-    },
-    "TECH_WOODWORKING": {
-     "percent": 20
-    },
-    "TECH_PICTOGRAPHS": {
-     "percent": 20
-    },
-    "TECH_IDEOGRAMS": {
-     "percent": 20
-    },
-    "TECH_FOLK_DANCE": {
-     "percent": 20
-    },
-    "TECH_FOLK_MUSIC": {
-     "percent": 20
-    },
-    "TECH_CEREMONY": {
-     "percent": 20
-    },
-    "TECH_TEXTILE_LOOM": {
-     "percent": 20
-    },
-    "TECH_SCULPTURE": {
-     "percent": 20
-    },
-    "TECH_ORNAMENTATION": {
-     "percent": 20
-    },
-    "TECH_FURNITURE_MAKING": {
-     "percent": 20
-    },
-    "TECH_CUISINE": {
-     "percent": 20
-    },
-    "TECH_GLASS_BLOWING": {
-     "percent": 20
-    },
-    "TECH_LITERATURE": {
-     "percent": 20
-    },
-    "TECH_CALLIGRAPHY": {
-     "percent": 20
-    },
-    "TECH_AESTHETICS": {
-     "percent": 20
-    },
-    "TECH_DRAMA": {
-     "percent": 20
-    },
-    "TECH_FLORISTRY": {
-     "percent": 20
-    },
-    "TECH_MOSAIC_WORKING": {
-     "percent": 20
-    },
-    "TECH_MUSICAL_NOTATION": {
-     "percent": 20
-    },
-    "TECH_POETRY": {
-     "percent": 20
-    },
-    "TECH_ARCHITECTURE": {
-     "percent": 20
-    },
-    "TECH_STAINED_GLASS": {
-     "percent": 20
-    },
-    "TECH_HERALDRY": {
-     "percent": 20
-    },
-    "TECH_PERSPECTIVE": {
-     "percent": 20
-    },
-    "TECH_ACOUSTICS": {
-     "percent": 20
-    }
-   }
-  }
- },
- "greatPeopleRate": {
-  "empire": {
-   "percent": 10,
-   "units": {
-    "UNIT_ARTIST": {
-     "flat": 2
-    }
-   }
-  }
- },
- "experience": {
-  "empire": {
-   "unitCombats": {
-    "UNITCOMBAT_COMBATANT": {
-     "flat": -1
-    },
-    "UNITCOMBAT_NAVAL_COMBATANT": {
-     "flat": -1
-    }
-   }
-  }
- },
- "combat": {
-  "empire": {
-   "bombardDefense": {
-    "percent": -5
-   },
-   "captureResistance": {
-    "percent": -10
-   }
-  }
- },
- "upkeep": {
-  "empire": {
-   "civic": {
-    "percent": 10
-   }
-  }
- },
- "workRate": {
-  "empire": {
-   "percent": -25
-  }
- },
- "cityFounding": {
-  "empire": {
-   "startCulture": {
-    "flat": 5
-   }
   }
  }
 }

@@ -2,6 +2,10 @@
  "type": "TRAIT_AGRICULTURAL",
  "description": "TXT_KEY_TRAIT_COMPLEX_AGRICULTURAL",
  "civilopedia": "TXT_KEY_TRAIT_COMPLEX_AGRICULTURAL_PEDIA",
+ "strategy": "TXT_KEY_TRAIT_COMPLEX_AGRICULTURAL_STRATEGY",
+ "excludes": [
+  "TRAIT_GLUTTONOUS"
+ ],
  "food": {
   "empire": {
    "improvements": {
@@ -85,208 +89,29 @@
     }
    },
    "flat": 1,
+   "specialists": {
+    "SPECIALIST_CITIZEN": {
+     "flat": 1
+    },
+    "SPECIALIST_SLAVES": {
+     "flat": 1
+    },
+    "SPECIALIST_ANDROID_WORKER": {
+     "flat": 1
+    },
+    "SPECIALIST_SETTLED_SLAVE": {
+     "flat": 1
+    },
+    "SPECIALIST_SETTLED_CITIZEN": {
+     "flat": 1
+    },
+    "SPECIALIST_NOBLE": {
+     "flat": 1
+    }
+   },
    "percent": 10
   }
  },
- "buildRate": {
-  "empire": {
-   "buildings": {
-    "BUILDING_GRANARY": {
-     "percent": 20
-    },
-    "BUILDING_MODERN_GRANARY": {
-     "percent": 20
-    },
-    "BUILDING_FOOD_PROCESSING_PLANT": {
-     "percent": 20
-    },
-    "BUILDING_WATERMILL": {
-     "percent": 20
-    },
-    "BUILDING_WINDMILL": {
-     "percent": 20
-    },
-    "BUILDING_DONKEY_MILL": {
-     "percent": 20
-    },
-    "BUILDING_OXEN_MILL": {
-     "percent": 20
-    },
-    "BUILDING_QUERN": {
-     "percent": 20
-    },
-    "BUILDING_BAKERY": {
-     "percent": 20
-    },
-    "BUILDING_FARM_ANIMAL_OXEN": {
-     "percent": 20
-    },
-    "BUILDING_TOWN_WELL": {
-     "percent": 20
-    },
-    "BUILDING_ARTESIAN_WELL": {
-     "percent": 20
-    },
-    "BUILDING_IRRIGATION_CANALS": {
-     "percent": 20
-    },
-    "BUILDING_CHINAMPA": {
-     "percent": 20
-    },
-    "BUILDING_GREAT_CHINAMPA": {
-     "percent": 20
-    },
-    "BUILDING_RICE_TERRACE": {
-     "percent": 20
-    },
-    "BUILDING_TERRACE": {
-     "percent": 20
-    },
-    "BUILDING_MODERN_MILL": {
-     "percent": 20
-    },
-    "BUILDING_FOOD_MANUFACTURING_DISTRICT": {
-     "percent": 20
-    },
-    "BUILDING_MEAT_INDUSTRY_CONGLOMERATE": {
-     "percent": 20
-    },
-    "BUILDING_INDUSTRIAL_FARMS": {
-     "percent": 20
-    },
-    "BUILDING_RIVER_ADMINISTRATION": {
-     "percent": 20
-    },
-    "BUILDING_FARMSCRAPER_III": {
-     "percent": 20
-    },
-    "BUILDING_MODERN_WATERWORKS": {
-     "percent": 20
-    },
-    "BUILDING_FARMSCRAPER_I": {
-     "percent": 20
-    },
-    "BUILDING_FARMSCRAPER_II": {
-     "percent": 20
-    }
-   }
-  }
- },
- "extraYieldThreshold": {
-  "empire": {
-   "food": {
-    "flat": 7
-   }
-  }
- },
- "combat": {
-  "empire": {
-   "cityDefense": {
-    "percent": -15
-   }
-  }
- },
- "maintenance": {
-  "empire": {
-   "numCities": {
-    "percent": -20
-   }
-  }
- },
- "workRate": {
-  "empire": {
-   "builds": {
-    "BUILD_SEED_CAMP_KILL": {
-     "percent": 25
-    },
-    "BUILD_SEED_CAMP": {
-     "percent": 25
-    },
-    "BUILD_FARM": {
-     "percent": 25
-    },
-    "BUILD_PLANTATION": {
-     "percent": 25
-    },
-    "BUILD_WINERY": {
-     "percent": 25
-    },
-    "BUILD_FRUIT_GATHERING_CAMP_KILL": {
-     "percent": 25
-    },
-    "BUILD_GRAPE_GATHERING_CAMP_KILL": {
-     "percent": 25
-    },
-    "BUILD_PLANT_GATHERING_CAMP_KILL": {
-     "percent": 25
-    },
-    "BUILD_FRUIT_PICKING_CAMP": {
-     "percent": 25
-    },
-    "BUILD_GRAPE_PICKING_CAMP": {
-     "percent": 25
-    },
-    "BUILD_PLANT_PICKING_CAMP": {
-     "percent": 25
-    },
-    "BUILD_ORCHARD": {
-     "percent": 25
-    },
-    "BUILD_MUSHROOM_GATHERER_KILL": {
-     "percent": 25
-    },
-    "BUILD_MUSHROOM_GATHERER": {
-     "percent": 25
-    },
-    "BUILD_VERTICAL_FARM": {
-     "percent": 25
-    }
-   }
-  }
- },
- "succession": {
-  "promotionLine": "PROMOTIONLINE_AGRICULTURAL"
- },
- "ai": {
-  "flavours": [
-   {
-    "FLAVOR_MILITARY": 1
-   },
-   {
-    "FLAVOR_RELIGION": 0
-   },
-   {
-    "FLAVOR_PRODUCTION": 1
-   },
-   {
-    "FLAVOR_GOLD": 1
-   },
-   {
-    "FLAVOR_SCIENCE": 1
-   },
-   {
-    "FLAVOR_CULTURE": 0
-   },
-   {
-    "FLAVOR_GROWTH": 11
-   },
-   {
-    "FLAVOR_ESPIONAGE": 0
-   }
-  ]
- },
- "ui": {
-  "art": {
-   "icon": "art/Buttons/Traits/TraitAgricultural.dds"
-  }
- },
- "identity": {
-  "impurePropertyManipulators": true
- },
- "strategy": "TXT_KEY_TRAIT_COMPLEX_AGRICULTURAL_STRATEGY",
- "excludes": [
-  "TRAIT_GLUTTONOUS"
- ],
  "research": {
   "empire": {
    "byTech": {
@@ -398,6 +223,13 @@
    }
   }
  },
+ "extraYieldThreshold": {
+  "empire": {
+   "food": {
+    "flat": 7
+   }
+  }
+ },
  "happiness": {
   "empire": {
    "flat": -1,
@@ -414,6 +246,64 @@
  "greatPeopleRate": {
   "empire": {
    "percent": -20
+  }
+ },
+ "maintenance": {
+  "empire": {
+   "numCities": {
+    "percent": -20
+   }
+  }
+ },
+ "workRate": {
+  "empire": {
+   "builds": {
+    "BUILD_SEED_CAMP_KILL": {
+     "percent": 25
+    },
+    "BUILD_SEED_CAMP": {
+     "percent": 25
+    },
+    "BUILD_FARM": {
+     "percent": 25
+    },
+    "BUILD_PLANTATION": {
+     "percent": 25
+    },
+    "BUILD_WINERY": {
+     "percent": 25
+    },
+    "BUILD_FRUIT_GATHERING_CAMP_KILL": {
+     "percent": 25
+    },
+    "BUILD_GRAPE_GATHERING_CAMP_KILL": {
+     "percent": 25
+    },
+    "BUILD_PLANT_GATHERING_CAMP_KILL": {
+     "percent": 25
+    },
+    "BUILD_FRUIT_PICKING_CAMP": {
+     "percent": 25
+    },
+    "BUILD_GRAPE_PICKING_CAMP": {
+     "percent": 25
+    },
+    "BUILD_PLANT_PICKING_CAMP": {
+     "percent": 25
+    },
+    "BUILD_ORCHARD": {
+     "percent": 25
+    },
+    "BUILD_MUSHROOM_GATHERER_KILL": {
+     "percent": 25
+    },
+    "BUILD_MUSHROOM_GATHERER": {
+     "percent": 25
+    },
+    "BUILD_VERTICAL_FARM": {
+     "percent": 25
+    }
+   }
   }
  },
  "improvementUpgradeRate": {
@@ -481,5 +371,44 @@
  },
  "policies": {
   "militaryFoodProduction": true
+ },
+ "succession": {
+  "promotionLine": "PROMOTIONLINE_AGRICULTURAL"
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 1
+   },
+   {
+    "FLAVOR_RELIGION": 0
+   },
+   {
+    "FLAVOR_PRODUCTION": 1
+   },
+   {
+    "FLAVOR_GOLD": 1
+   },
+   {
+    "FLAVOR_SCIENCE": 1
+   },
+   {
+    "FLAVOR_CULTURE": 0
+   },
+   {
+    "FLAVOR_GROWTH": 11
+   },
+   {
+    "FLAVOR_ESPIONAGE": 0
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Traits/TraitAgricultural.dds"
+  }
+ },
+ "identity": {
+  "impurePropertyManipulators": true
  }
 }

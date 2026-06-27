@@ -2,10 +2,21 @@
  "type": "TRAIT_EXPANSIVE1",
  "description": "TXT_KEY_TRAIT_COMPLEX_EXPANSIVE1",
  "civilopedia": "TXT_KEY_TRAIT_COMPLEX_EXPANSIVE1_PEDIA",
- "enables": {
-  "traits": [
-   "TRAIT_EXPANSIVE2"
-  ]
+ "strategy": "TXT_KEY_TRAIT_COMPLEX_EXPANSIVE_STRATEGY",
+ "excludes": [
+  "TRAIT_MINIMALIST1"
+ ],
+ "food": {
+  "empire": {
+   "flat": 1,
+   "percent": 5
+  }
+ },
+ "production": {
+  "empire": {
+   "flat": 1,
+   "percent": 5
+  }
  },
  "buildRate": {
   "empire": {
@@ -22,6 +33,26 @@
    }
   }
  },
+ "research": {
+  "empire": {
+   "flat": -1,
+   "percent": -5,
+   "specialists": {
+    "SPECIALIST_SCIENTIST": {
+     "flat": -1
+    },
+    "SPECIALIST_GREAT_SCIENTIST": {
+     "flat": -1
+    },
+    "SPECIALIST_DOCTOR": {
+     "flat": -1
+    },
+    "SPECIALIST_GREAT_DOCTOR": {
+     "flat": -1
+    }
+   }
+  }
+ },
  "happiness": {
   "empire": {
    "largestCity": {
@@ -29,22 +60,10 @@
    }
   }
  },
- "health": {
+ "combat": {
   "empire": {
-   "flat": 3
-  }
- },
- "greatGeneralRate": {
-  "empire": {
-   "domestic": {
-    "percent": -20
-   }
-  }
- },
- "experience": {
-  "empire": {
-   "inBorder": {
-    "percent": -25
+   "cityDefense": {
+    "percent": -5
    }
   }
  },
@@ -56,6 +75,23 @@
    "numCities": {
     "percent": -15
    }
+  }
+ },
+ "upkeep": {
+  "empire": {
+   "freeCivilian": {
+    "perPopulation": 15
+   }
+  }
+ },
+ "workRate": {
+  "empire": {
+   "percent": 35
+  }
+ },
+ "improvementUpgradeRate": {
+  "empire": {
+   "percent": 100
   }
  },
  "revolution": {
@@ -100,55 +136,6 @@
  "ui": {
   "art": {
    "icon": "art/Buttons/Traits/TraitExpansive.dds"
-  }
- },
- "identity": {
-  "shortDescription": "TXT_KEY_TRAIT_EXPANSIVE_SHORT"
- },
- "strategy": "TXT_KEY_TRAIT_COMPLEX_EXPANSIVE_STRATEGY",
- "excludes": [
-  "TRAIT_MINIMALIST1"
- ],
- "food": {
-  "empire": {
-   "flat": 1,
-   "percent": 5
-  }
- },
- "production": {
-  "empire": {
-   "flat": 1,
-   "percent": 5
-  }
- },
- "research": {
-  "empire": {
-   "flat": -1,
-   "percent": -5
-  }
- },
- "combat": {
-  "empire": {
-   "cityDefense": {
-    "percent": -5
-   }
-  }
- },
- "upkeep": {
-  "empire": {
-   "freeCivilian": {
-    "perPopulation": 15
-   }
-  }
- },
- "workRate": {
-  "empire": {
-   "percent": 35
-  }
- },
- "improvementUpgradeRate": {
-  "empire": {
-   "percent": 100
   }
  }
 }

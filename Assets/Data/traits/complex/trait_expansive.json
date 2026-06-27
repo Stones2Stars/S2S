@@ -2,6 +2,22 @@
  "type": "TRAIT_EXPANSIVE",
  "description": "TXT_KEY_TRAIT_COMPLEX_EXPANSIVE",
  "civilopedia": "TXT_KEY_TRAIT_COMPLEX_EXPANSIVE_PEDIA",
+ "strategy": "TXT_KEY_TRAIT_COMPLEX_EXPANSIVE_STRATEGY",
+ "excludes": [
+  "TRAIT_MINIMALIST"
+ ],
+ "food": {
+  "empire": {
+   "flat": 1,
+   "percent": 5
+  }
+ },
+ "production": {
+  "empire": {
+   "flat": 1,
+   "percent": 5
+  }
+ },
  "buildRate": {
   "empire": {
    "worldWonder": {
@@ -17,6 +33,20 @@
    }
   }
  },
+ "research": {
+  "empire": {
+   "flat": -2,
+   "percent": -10,
+   "specialists": {
+    "SPECIALIST_CELEBRITY": {
+     "flat": -1
+    },
+    "SPECIALIST_NOBLE": {
+     "flat": -1
+    }
+   }
+  }
+ },
  "happiness": {
   "empire": {
    "largestCity": {
@@ -24,22 +54,10 @@
    }
   }
  },
- "health": {
+ "combat": {
   "empire": {
-   "flat": 2
-  }
- },
- "greatGeneralRate": {
-  "empire": {
-   "domestic": {
-    "percent": -20
-   }
-  }
- },
- "experience": {
-  "empire": {
-   "inBorder": {
-    "percent": -25
+   "cityDefense": {
+    "percent": -10
    }
   }
  },
@@ -51,6 +69,23 @@
    "numCities": {
     "percent": -30
    }
+  }
+ },
+ "upkeep": {
+  "empire": {
+   "freeCivilian": {
+    "perPopulation": 15
+   }
+  }
+ },
+ "workRate": {
+  "empire": {
+   "percent": 50
+  }
+ },
+ "improvementUpgradeRate": {
+  "empire": {
+   "percent": 200
   }
  },
  "revolution": {
@@ -94,55 +129,6 @@
  "ui": {
   "art": {
    "icon": "art/Buttons/Traits/TraitExpansive.dds"
-  }
- },
- "identity": {
-  "shortDescription": "TXT_KEY_TRAIT_EXPANSIVE_SHORT"
- },
- "strategy": "TXT_KEY_TRAIT_COMPLEX_EXPANSIVE_STRATEGY",
- "excludes": [
-  "TRAIT_MINIMALIST"
- ],
- "food": {
-  "empire": {
-   "flat": 1,
-   "percent": 5
-  }
- },
- "production": {
-  "empire": {
-   "flat": 1,
-   "percent": 5
-  }
- },
- "research": {
-  "empire": {
-   "flat": -2,
-   "percent": -10
-  }
- },
- "combat": {
-  "empire": {
-   "cityDefense": {
-    "percent": -10
-   }
-  }
- },
- "upkeep": {
-  "empire": {
-   "freeCivilian": {
-    "perPopulation": 15
-   }
-  }
- },
- "workRate": {
-  "empire": {
-   "percent": 50
-  }
- },
- "improvementUpgradeRate": {
-  "empire": {
-   "percent": 200
   }
  }
 }

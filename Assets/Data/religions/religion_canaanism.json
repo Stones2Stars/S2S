@@ -19,7 +19,7 @@
     {
      "value": 4,
      "enabled": {
-      "HOLY_CITY": "RELIGION_CANAANISM"
+      "IS_HOLY_CITY": "RELIGION_CANAANISM"
      }
     },
     {

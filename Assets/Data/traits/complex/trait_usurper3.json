@@ -32,6 +32,14 @@
  },
  "commerce": {
   "empire": {
+   "specialists": {
+    "SPECIALIST_CITIZEN": {
+     "flat": -1
+    },
+    "SPECIALIST_SETTLED_CITIZEN": {
+     "flat": -1
+    }
+   },
    "capital": {
     "percent": -5
    }
@@ -46,12 +54,36 @@
    }
   }
  },
+ "research": {
+  "empire": {
+   "specialists": {
+    "SPECIALIST_CITIZEN": {
+     "flat": -1
+    },
+    "SPECIALIST_SETTLED_CITIZEN": {
+     "flat": -1
+    }
+   }
+  }
+ },
  "culture": {
   "empire": {
    "flat": -1,
    "percent": -5,
    "capital": {
     "percent": -5
+   }
+  }
+ },
+ "espionage": {
+  "empire": {
+   "specialists": {
+    "SPECIALIST_CITIZEN": {
+     "flat": -1
+    },
+    "SPECIALIST_SETTLED_CITIZEN": {
+     "flat": -1
+    }
    }
   }
  },

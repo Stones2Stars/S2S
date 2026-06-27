@@ -3,94 +3,46 @@
  "description": "TXT_KEY_SPECIALIST_SCIENTIST",
  "civilopedia": "TXT_KEY_CONCEPT_SPECIALISTS_PEDIA",
  "food": {
-  "city": {
+  "empire": {
    "flat": [
     {
      "value": 1,
      "enabled": {
       "type": "BUILDING_SVALBARD_GLOBAL_SEED_VAULT",
-      "scope": "city"
+      "scope": "empire"
      }
     }
    ]
   }
  },
  "production": {
-  "city": {
+  "empire": {
    "flat": [
     {
      "value": 1,
      "enabled": {
       "type": "BUILDING_EINSTEINS_LABORATORY",
-      "scope": "city"
+      "scope": "empire"
      }
     },
     {
      "value": 1,
      "enabled": {
       "type": "BUILDING_HIPPOCRATIC_OATH",
-      "scope": "city"
+      "scope": "empire"
      }
     },
     {
      "value": 1,
      "enabled": {
       "type": "BUILDING_ISAAC_NEWTONS_COLLEGE",
-      "scope": "city"
+      "scope": "empire"
      }
     },
     {
      "value": 1,
      "enabled": {
       "type": "BUILDING_ATOMIUM",
-      "scope": "city"
-     }
-    }
-   ]
-  }
- },
- "commerce": {
-  "empire": {
-   "flat": [
-    {
-     "value": 1,
-     "enabled": {
-      "type": "TRAIT_COMPLEX_SCIENTIFIC",
-      "scope": "empire"
-     }
-    },
-    {
-     "value": 1,
-     "enabled": {
-      "type": "TRAIT_COMPLEX_SCIENTIFIC1",
-      "scope": "empire"
-     }
-    },
-    {
-     "value": 1,
-     "enabled": {
-      "type": "TRAIT_SCIENTIFIC3",
-      "scope": "empire"
-     }
-    },
-    {
-     "value": -1,
-     "enabled": {
-      "type": "TRAIT_TRADITIONAL",
-      "scope": "empire"
-     }
-    },
-    {
-     "value": -1,
-     "enabled": {
-      "type": "TRAIT_TRADITIONAL1",
-      "scope": "empire"
-     }
-    },
-    {
-     "value": -1,
-     "enabled": {
-      "type": "TRAIT_TRADITIONAL3",
       "scope": "empire"
      }
     }
@@ -126,183 +78,6 @@
      "value": 50,
      "enabled": {
       "type": "CIVIC_CAPITALIST",
-      "scope": "empire"
-     }
-    }
-   ]
-  },
-  "empire": {
-   "flat": [
-    {
-     "value": 2,
-     "enabled": {
-      "type": "TRAIT_COMPLEX_SCIENTIFIC",
-      "scope": "empire"
-     }
-    },
-    {
-     "value": 2,
-     "enabled": {
-      "type": "TRAIT_SCIENTIFIC2",
-      "scope": "empire"
-     }
-    },
-    {
-     "value": -2,
-     "enabled": {
-      "type": "TRAIT_TRADITIONAL",
-      "scope": "empire"
-     }
-    },
-    {
-     "value": -2,
-     "enabled": {
-      "type": "TRAIT_TRADITIONAL2",
-      "scope": "empire"
-     }
-    },
-    {
-     "value": 1,
-     "enabled": {
-      "type": "TRAIT_COMPLEX_PHILOSOPHICAL",
-      "scope": "empire"
-     }
-    },
-    {
-     "value": 1,
-     "enabled": {
-      "type": "TRAIT_PHILOSOPHICAL3",
-      "scope": "empire"
-     }
-    },
-    {
-     "value": -1,
-     "enabled": {
-      "type": "TRAIT_COMPLEX_POPULIST",
-      "scope": "empire"
-     }
-    },
-    {
-     "value": -1,
-     "enabled": {
-      "type": "TRAIT_POPULIST3",
-      "scope": "empire"
-     }
-    },
-    {
-     "value": -1,
-     "enabled": {
-      "type": "TRAIT_COMPLEX_EXPANSIVE1",
-      "scope": "empire"
-     }
-    },
-    {
-     "value": 1,
-     "enabled": {
-      "type": "TRAIT_MINIMALIST1",
-      "scope": "empire"
-     }
-    },
-    {
-     "value": 1,
-     "enabled": {
-      "type": "TRAIT_MEDICAL",
-      "scope": "empire"
-     }
-    },
-    {
-     "value": -1,
-     "enabled": {
-      "type": "TRAIT_UNSANITARY",
-      "scope": "empire"
-     }
-    },
-    {
-     "value": -1,
-     "enabled": {
-      "type": "TRAIT_UNSANITARY3",
-      "scope": "empire"
-     }
-    },
-    {
-     "value": -1,
-     "enabled": {
-      "type": "TRAIT_SPIRITUAL",
-      "scope": "empire"
-     }
-    },
-    {
-     "value": 1,
-     "enabled": {
-      "type": "TRAIT_SCIENTIFIC",
-      "scope": "empire"
-     }
-    },
-    {
-     "value": -1,
-     "enabled": {
-      "type": "TRAIT_FANATICAL",
-      "scope": "empire"
-     }
-    },
-    {
-     "value": -1,
-     "enabled": {
-      "type": "TRAIT_SPIRITUAL1",
-      "scope": "empire"
-     }
-    },
-    {
-     "value": 1,
-     "enabled": {
-      "type": "TRAIT_SCIENTIFIC1",
-      "scope": "empire"
-     }
-    },
-    {
-     "value": -1,
-     "enabled": {
-      "type": "TRAIT_FANATICAL1",
-      "scope": "empire"
-     }
-    }
-   ]
-  }
- },
- "culture": {
-  "empire": {
-   "flat": [
-    {
-     "value": 1,
-     "enabled": {
-      "type": "TRAIT_MEDICAL3",
-      "scope": "empire"
-     }
-    },
-    {
-     "value": 1,
-     "enabled": {
-      "type": "TRAIT_PHILOSOPHICAL",
-      "scope": "empire"
-     }
-    },
-    {
-     "value": 1,
-     "enabled": {
-      "type": "TRAIT_PHILOSOPHICAL1",
-      "scope": "empire"
-     }
-    }
-   ]
-  }
- },
- "espionage": {
-  "empire": {
-   "flat": [
-    {
-     "value": -1,
-     "enabled": {
-      "type": "TRAIT_CHARISMATIC3",
       "scope": "empire"
      }
     }

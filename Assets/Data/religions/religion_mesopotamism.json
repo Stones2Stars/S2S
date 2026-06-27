@@ -29,7 +29,7 @@
     {
      "value": 4,
      "enabled": {
-      "HOLY_CITY": "RELIGION_MESOPOTAMISM"
+      "IS_HOLY_CITY": "RELIGION_MESOPOTAMISM"
      }
     },
     {

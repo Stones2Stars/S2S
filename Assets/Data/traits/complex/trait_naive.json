@@ -206,6 +206,24 @@
    }
   }
  },
+ "commerce": {
+  "empire": {
+   "specialists": {
+    "SPECIALIST_SPY": {
+     "flat": -1
+    },
+    "SPECIALIST_GREAT_SPY": {
+     "flat": -1
+    },
+    "SPECIALIST_INVESTIGATOR": {
+     "flat": -1
+    },
+    "SPECIALIST_GREAT_SLEUTH": {
+     "flat": -1
+    }
+   }
+  }
+ },
  "research": {
   "empire": {
    "byTech": {
@@ -342,6 +360,35 @@
   "empire": {
    "flat": -2,
    "percent": -10,
+   "specialists": {
+    "SPECIALIST_SPY": {
+     "flat": -2
+    },
+    "SPECIALIST_GREAT_SPY": {
+     "flat": -2
+    },
+    "SPECIALIST_INVESTIGATOR": {
+     "flat": -2
+    },
+    "SPECIALIST_GREAT_SLEUTH": {
+     "flat": -2
+    },
+    "SPECIALIST_CITIZEN": {
+     "flat": -1
+    },
+    "SPECIALIST_SLAVES": {
+     "flat": -1
+    },
+    "SPECIALIST_SETTLED_CITIZEN": {
+     "flat": -1
+    },
+    "SPECIALIST_SETTLED_SLAVE": {
+     "flat": -1
+    },
+    "SPECIALIST_ANDROID_WORKER": {
+     "flat": -1
+    }
+   },
    "capital": {
     "percent": -10
    },

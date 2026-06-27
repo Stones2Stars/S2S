@@ -6,6 +6,30 @@
  "excludes": [
   "TRAIT_MEDICAL"
  ],
+ "production": {
+  "empire": {
+   "specialists": {
+    "SPECIALIST_CITIZEN": {
+     "flat": -1
+    },
+    "SPECIALIST_SETTLED_CITIZEN": {
+     "flat": -1
+    },
+    "SPECIALIST_SLAVES": {
+     "flat": -1
+    },
+    "SPECIALIST_SETTLED_SLAVE": {
+     "flat": -1
+    },
+    "SPECIALIST_ENGINEER": {
+     "flat": -1
+    },
+    "SPECIALIST_GREAT_ENGINEER": {
+     "flat": -1
+    }
+   }
+  }
+ },
  "buildRate": {
   "empire": {
    "buildings": {
@@ -298,6 +322,20 @@
  },
  "research": {
   "empire": {
+   "specialists": {
+    "SPECIALIST_SCIENTIST": {
+     "flat": -1
+    },
+    "SPECIALIST_GREAT_SCIENTIST": {
+     "flat": -1
+    },
+    "SPECIALIST_DOCTOR": {
+     "flat": -1
+    },
+    "SPECIALIST_GREAT_DOCTOR": {
+     "flat": -1
+    }
+   },
    "byTech": {
     "TECH_HERBALISM": {
      "percent": -20

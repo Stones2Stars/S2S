@@ -26,7 +26,18 @@
  "gold": {
   "empire": {
    "flat": -1,
-   "percent": -5
+   "percent": -5,
+   "specialists": {
+    "SPECIALIST_MERCHANT": {
+     "flat": -1
+    },
+    "SPECIALIST_GREAT_MERCHANT": {
+     "flat": -1
+    },
+    "SPECIALIST_NOBLE": {
+     "flat": -1
+    }
+   }
   }
  },
  "health": {

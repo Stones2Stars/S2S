@@ -8,6 +8,15 @@
    "TRAIT_AERIAL2"
   ]
  },
+ "food": {
+  "empire": {
+   "specialists": {
+    "SPECIALIST_GREAT_MILITARY_INSTRUCTOR": {
+     "flat": 1
+    }
+   }
+  }
+ },
  "buildRate": {
   "empire": {
    "buildings": {
@@ -186,6 +195,11 @@
  },
  "research": {
   "empire": {
+   "specialists": {
+    "SPECIALIST_GREAT_MILITARY_INSTRUCTOR": {
+     "flat": 2
+    }
+   },
    "byTech": {
     "TECH_DRYING": {
      "percent": 20

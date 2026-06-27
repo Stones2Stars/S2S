@@ -37,10 +37,30 @@
    }
   }
  },
+ "gold": {
+  "empire": {
+   "specialists": {
+    "SPECIALIST_SPY": {
+     "flat": 1
+    },
+    "SPECIALIST_GREAT_SPY": {
+     "flat": 1
+    }
+   }
+  }
+ },
  "culture": {
   "empire": {
    "flat": 1,
    "percent": 5,
+   "specialists": {
+    "SPECIALIST_SPY": {
+     "flat": 1
+    },
+    "SPECIALIST_GREAT_SPY": {
+     "flat": 1
+    }
+   },
    "capital": {
     "percent": 10
    }

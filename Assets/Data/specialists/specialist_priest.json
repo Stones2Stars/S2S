@@ -2,206 +2,37 @@
  "type": "SPECIALIST_PRIEST",
  "description": "TXT_KEY_SPECIALIST_PRIEST",
  "civilopedia": "TXT_KEY_CONCEPT_SPECIALISTS_PEDIA",
- "food": {
+ "production": {
+  "city": {
+   "flat": 1
+  },
   "empire": {
    "flat": [
     {
      "value": 1,
      "enabled": {
-      "type": "TRAIT_COMPLEX_SPIRITUAL1",
-      "scope": "empire"
-     }
-    },
-    {
-     "value": 1,
-     "enabled": {
-      "type": "TRAIT_SPIRITUAL3",
-      "scope": "empire"
-     }
-    },
-    {
-     "value": -1,
-     "enabled": {
-      "type": "TRAIT_ANTI_CLERICAL3",
-      "scope": "empire"
-     }
-    },
-    {
-     "value": 1,
-     "enabled": {
-      "type": "TRAIT_PIOUS3",
-      "scope": "empire"
-     }
-    },
-    {
-     "value": -1,
-     "enabled": {
-      "type": "TRAIT_COMPLEX_ZEALOUS",
-      "scope": "empire"
-     }
-    },
-    {
-     "value": -1,
-     "enabled": {
-      "type": "TRAIT_COMPLEX_ZEALOUS1",
-      "scope": "empire"
-     }
-    },
-    {
-     "value": 1,
-     "enabled": {
-      "type": "TRAIT_COMPLEX_HUMANITARIAN",
-      "scope": "empire"
-     }
-    },
-    {
-     "value": 1,
-     "enabled": {
-      "type": "TRAIT_COMPLEX_HUMANITARIAN1",
-      "scope": "empire"
-     }
-    },
-    {
-     "value": -1,
-     "enabled": {
-      "type": "TRAIT_COMPLEX_CRUEL",
-      "scope": "empire"
-     }
-    },
-    {
-     "value": -1,
-     "enabled": {
-      "type": "TRAIT_COMPLEX_CRUEL1",
-      "scope": "empire"
-     }
-    }
-   ]
-  }
- },
- "production": {
-  "city": {
-   "flat": [
-    1,
-    {
-     "value": 1,
-     "enabled": {
       "type": "BUILDING_ANGKOR_WAT",
-      "scope": "city"
+      "scope": "empire"
      }
     },
     {
      "value": 1,
      "enabled": {
       "type": "BUILDING_ARK_OF_THE_COVENANT",
-      "scope": "city"
+      "scope": "empire"
      }
     },
     {
      "value": 1,
      "enabled": {
       "type": "BUILDING_MASADA",
-      "scope": "city"
+      "scope": "empire"
      }
     },
     {
      "value": 1,
      "enabled": {
       "type": "BUILDING_THE_NECROMANTEION",
-      "scope": "city"
-     }
-    }
-   ]
-  },
-  "empire": {
-   "flat": [
-    {
-     "value": -1,
-     "enabled": {
-      "type": "TRAIT_COMPLEX_ANTI_CLERICAL",
-      "scope": "empire"
-     }
-    },
-    {
-     "value": -1,
-     "enabled": {
-      "type": "TRAIT_COMPLEX_ANTI_CLERICAL1",
-      "scope": "empire"
-     }
-    },
-    {
-     "value": 1,
-     "enabled": {
-      "type": "TRAIT_PIOUS",
-      "scope": "empire"
-     }
-    },
-    {
-     "value": 1,
-     "enabled": {
-      "type": "TRAIT_PIOUS1",
-      "scope": "empire"
-     }
-    },
-    {
-     "value": -1,
-     "enabled": {
-      "type": "TRAIT_ZEALOUS3",
-      "scope": "empire"
-     }
-    },
-    {
-     "value": -1,
-     "enabled": {
-      "type": "TRAIT_COMPLEX_HUMANITARIAN",
-      "scope": "empire"
-     }
-    },
-    {
-     "value": -1,
-     "enabled": {
-      "type": "TRAIT_COMPLEX_HUMANITARIAN1",
-      "scope": "empire"
-     }
-    },
-    {
-     "value": 1,
-     "enabled": {
-      "type": "TRAIT_COMPLEX_CRUEL",
-      "scope": "empire"
-     }
-    },
-    {
-     "value": 1,
-     "enabled": {
-      "type": "TRAIT_COMPLEX_CRUEL1",
-      "scope": "empire"
-     }
-    },
-    {
-     "value": 1,
-     "enabled": {
-      "type": "TRAIT_SPIRITUAL",
-      "scope": "empire"
-     }
-    },
-    {
-     "value": -1,
-     "enabled": {
-      "type": "TRAIT_ANTI_CLERICAL",
-      "scope": "empire"
-     }
-    },
-    {
-     "value": 1,
-     "enabled": {
-      "type": "TRAIT_SPIRITUAL1",
-      "scope": "empire"
-     }
-    },
-    {
-     "value": -1,
-     "enabled": {
-      "type": "TRAIT_ANTI_CLERICAL1",
       "scope": "empire"
      }
     }
@@ -209,72 +40,12 @@
   }
  },
  "commerce": {
-  "city": {
-   "flat": [
-    {
-     "value": 1,
-     "enabled": {
-      "type": "BUILDING_THE_NECROMANTEION",
-      "scope": "city"
-     }
-    }
-   ]
-  },
   "empire": {
    "flat": [
     {
      "value": 1,
      "enabled": {
-      "type": "TRAIT_COMPLEX_SPIRITUAL",
-      "scope": "empire"
-     }
-    },
-    {
-     "value": 1,
-     "enabled": {
-      "type": "TRAIT_SPIRITUAL2",
-      "scope": "empire"
-     }
-    },
-    {
-     "value": -1,
-     "enabled": {
-      "type": "TRAIT_COMPLEX_ANTI_CLERICAL",
-      "scope": "empire"
-     }
-    },
-    {
-     "value": -1,
-     "enabled": {
-      "type": "TRAIT_ANTI_CLERICAL2",
-      "scope": "empire"
-     }
-    },
-    {
-     "value": 1,
-     "enabled": {
-      "type": "TRAIT_PIOUS2",
-      "scope": "empire"
-     }
-    },
-    {
-     "value": -1,
-     "enabled": {
-      "type": "TRAIT_ZEALOUS2",
-      "scope": "empire"
-     }
-    },
-    {
-     "value": 1,
-     "enabled": {
-      "type": "TRAIT_SPIRITUAL",
-      "scope": "empire"
-     }
-    },
-    {
-     "value": 1,
-     "enabled": {
-      "type": "TRAIT_SPIRITUAL1",
+      "type": "BUILDING_THE_NECROMANTEION",
       "scope": "empire"
      }
     }
@@ -283,16 +54,7 @@
  },
  "gold": {
   "city": {
-   "flat": [
-    1,
-    {
-     "value": -1,
-     "enabled": {
-      "type": "BUILDING_HOUSE_OF_WISDOM",
-      "scope": "city"
-     }
-    }
-   ],
+   "flat": 1,
    "percent": [
     {
      "value": 50,
@@ -327,79 +89,9 @@
   "empire": {
    "flat": [
     {
-     "value": 1,
-     "enabled": {
-      "type": "TRAIT_COMPLEX_SPIRITUAL",
-      "scope": "empire"
-     }
-    },
-    {
-     "value": 1,
-     "enabled": {
-      "type": "TRAIT_SPIRITUAL2",
-      "scope": "empire"
-     }
-    },
-    {
      "value": -1,
      "enabled": {
-      "type": "TRAIT_COMPLEX_ANTI_CLERICAL",
-      "scope": "empire"
-     }
-    },
-    {
-     "value": -1,
-     "enabled": {
-      "type": "TRAIT_ANTI_CLERICAL3",
-      "scope": "empire"
-     }
-    },
-    {
-     "value": 1,
-     "enabled": {
-      "type": "TRAIT_PIOUS",
-      "scope": "empire"
-     }
-    },
-    {
-     "value": 1,
-     "enabled": {
-      "type": "TRAIT_PIOUS1",
-      "scope": "empire"
-     }
-    },
-    {
-     "value": -1,
-     "enabled": {
-      "type": "TRAIT_COMPLEX_ZEALOUS",
-      "scope": "empire"
-     }
-    },
-    {
-     "value": -1,
-     "enabled": {
-      "type": "TRAIT_COMPLEX_ZEALOUS1",
-      "scope": "empire"
-     }
-    },
-    {
-     "value": -1,
-     "enabled": {
-      "type": "TRAIT_ZEALOUS2",
-      "scope": "empire"
-     }
-    },
-    {
-     "value": -1,
-     "enabled": {
-      "type": "TRAIT_ZEALOUS3",
-      "scope": "empire"
-     }
-    },
-    {
-     "value": -1,
-     "enabled": {
-      "type": "TRAIT_PROLIFIC3",
+      "type": "BUILDING_HOUSE_OF_WISDOM",
       "scope": "empire"
      }
     }
@@ -407,16 +99,18 @@
   }
  },
  "research": {
-  "city": {
+  "empire": {
    "flat": [
     {
      "value": 1,
      "enabled": {
       "type": "BUILDING_HOUSE_OF_WISDOM",
-      "scope": "city"
+      "scope": "empire"
      }
     }
-   ],
+   ]
+  },
+  "city": {
    "percent": [
     {
      "value": 25,
@@ -429,122 +123,6 @@
      "value": 25,
      "enabled": {
       "type": "CIVIC_APOTHEOSIS",
-      "scope": "empire"
-     }
-    }
-   ]
-  },
-  "empire": {
-   "flat": [
-    {
-     "value": 1,
-     "enabled": {
-      "type": "TRAIT_COMPLEX_SPIRITUAL",
-      "scope": "empire"
-     }
-    },
-    {
-     "value": 1,
-     "enabled": {
-      "type": "TRAIT_COMPLEX_SPIRITUAL1",
-      "scope": "empire"
-     }
-    },
-    {
-     "value": -1,
-     "enabled": {
-      "type": "TRAIT_COMPLEX_ANTI_CLERICAL",
-      "scope": "empire"
-     }
-    },
-    {
-     "value": -1,
-     "enabled": {
-      "type": "TRAIT_COMPLEX_ANTI_CLERICAL1",
-      "scope": "empire"
-     }
-    },
-    {
-     "value": -1,
-     "enabled": {
-      "type": "TRAIT_ANTI_CLERICAL2",
-      "scope": "empire"
-     }
-    },
-    {
-     "value": -1,
-     "enabled": {
-      "type": "TRAIT_ANTI_CLERICAL3",
-      "scope": "empire"
-     }
-    },
-    {
-     "value": 1,
-     "enabled": {
-      "type": "TRAIT_PIOUS",
-      "scope": "empire"
-     }
-    },
-    {
-     "value": 1,
-     "enabled": {
-      "type": "TRAIT_PIOUS3",
-      "scope": "empire"
-     }
-    },
-    {
-     "value": -1,
-     "enabled": {
-      "type": "TRAIT_COMPLEX_ZEALOUS",
-      "scope": "empire"
-     }
-    },
-    {
-     "value": -1,
-     "enabled": {
-      "type": "TRAIT_COMPLEX_ZEALOUS1",
-      "scope": "empire"
-     }
-    },
-    {
-     "value": -1,
-     "enabled": {
-      "type": "TRAIT_EXPANSIVE2",
-      "scope": "empire"
-     }
-    },
-    {
-     "value": 1,
-     "enabled": {
-      "type": "TRAIT_MINIMALIST2",
-      "scope": "empire"
-     }
-    },
-    {
-     "value": 1,
-     "enabled": {
-      "type": "TRAIT_MEDICAL1",
-      "scope": "empire"
-     }
-    },
-    {
-     "value": -1,
-     "enabled": {
-      "type": "TRAIT_UNSANITARY1",
-      "scope": "empire"
-     }
-    },
-    {
-     "value": 1,
-     "enabled": {
-      "type": "TRAIT_NATURALIST",
-      "scope": "empire"
-     }
-    },
-    {
-     "value": 1,
-     "enabled": {
-      "type": "TRAIT_NATURALIST1",
       "scope": "empire"
      }
     }
@@ -565,184 +143,6 @@
      "value": 100,
      "enabled": {
       "type": "CIVIC_FREE_CHURCH",
-      "scope": "empire"
-     }
-    }
-   ]
-  },
-  "empire": {
-   "flat": [
-    {
-     "value": 1,
-     "enabled": {
-      "type": "TRAIT_COMPLEX_SPIRITUAL",
-      "scope": "empire"
-     }
-    },
-    {
-     "value": 1,
-     "enabled": {
-      "type": "TRAIT_COMPLEX_SPIRITUAL1",
-      "scope": "empire"
-     }
-    },
-    {
-     "value": 1,
-     "enabled": {
-      "type": "TRAIT_SPIRITUAL3",
-      "scope": "empire"
-     }
-    },
-    {
-     "value": -1,
-     "enabled": {
-      "type": "TRAIT_COMPLEX_ANTI_CLERICAL",
-      "scope": "empire"
-     }
-    },
-    {
-     "value": -1,
-     "enabled": {
-      "type": "TRAIT_COMPLEX_ANTI_CLERICAL1",
-      "scope": "empire"
-     }
-    },
-    {
-     "value": 1,
-     "enabled": {
-      "type": "TRAIT_PIOUS",
-      "scope": "empire"
-     }
-    },
-    {
-     "value": 1,
-     "enabled": {
-      "type": "TRAIT_PIOUS2",
-      "scope": "empire"
-     }
-    },
-    {
-     "value": -1,
-     "enabled": {
-      "type": "TRAIT_COMPLEX_ZEALOUS",
-      "scope": "empire"
-     }
-    },
-    {
-     "value": -1,
-     "enabled": {
-      "type": "TRAIT_ZEALOUS2",
-      "scope": "empire"
-     }
-    },
-    {
-     "value": 2,
-     "enabled": {
-      "type": "TRAIT_CREATIVE1",
-      "scope": "empire"
-     }
-    }
-   ]
-  }
- },
- "espionage": {
-  "empire": {
-   "flat": [
-    {
-     "value": 1,
-     "enabled": {
-      "type": "TRAIT_COMPLEX_SPIRITUAL",
-      "scope": "empire"
-     }
-    },
-    {
-     "value": 1,
-     "enabled": {
-      "type": "TRAIT_SPIRITUAL2",
-      "scope": "empire"
-     }
-    },
-    {
-     "value": 1,
-     "enabled": {
-      "type": "TRAIT_SPIRITUAL3",
-      "scope": "empire"
-     }
-    },
-    {
-     "value": -1,
-     "enabled": {
-      "type": "TRAIT_COMPLEX_ANTI_CLERICAL",
-      "scope": "empire"
-     }
-    },
-    {
-     "value": -1,
-     "enabled": {
-      "type": "TRAIT_ANTI_CLERICAL2",
-      "scope": "empire"
-     }
-    },
-    {
-     "value": 1,
-     "enabled": {
-      "type": "TRAIT_PIOUS",
-      "scope": "empire"
-     }
-    },
-    {
-     "value": 1,
-     "enabled": {
-      "type": "TRAIT_PIOUS1",
-      "scope": "empire"
-     }
-    },
-    {
-     "value": 1,
-     "enabled": {
-      "type": "TRAIT_PIOUS2",
-      "scope": "empire"
-     }
-    },
-    {
-     "value": 1,
-     "enabled": {
-      "type": "TRAIT_PIOUS3",
-      "scope": "empire"
-     }
-    },
-    {
-     "value": -1,
-     "enabled": {
-      "type": "TRAIT_COMPLEX_ZEALOUS",
-      "scope": "empire"
-     }
-    },
-    {
-     "value": -1,
-     "enabled": {
-      "type": "TRAIT_ZEALOUS3",
-      "scope": "empire"
-     }
-    },
-    {
-     "value": 1,
-     "enabled": {
-      "type": "TRAIT_COMPLEX_CRUEL1",
-      "scope": "empire"
-     }
-    },
-    {
-     "value": 1,
-     "enabled": {
-      "type": "TRAIT_ANTI_CLERICAL",
-      "scope": "empire"
-     }
-    },
-    {
-     "value": 1,
-     "enabled": {
-      "type": "TRAIT_ANTI_CLERICAL1",
       "scope": "empire"
      }
     }

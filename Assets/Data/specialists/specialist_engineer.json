@@ -4,142 +4,42 @@
  "civilopedia": "TXT_KEY_CONCEPT_SPECIALISTS_PEDIA",
  "production": {
   "city": {
-   "flat": [
-    2,
-    {
-     "value": 1,
-     "enabled": {
-      "type": "BUILDING_ARCHIMEDES_WORKSHOP",
-      "scope": "city"
-     }
-    },
-    {
-     "value": 1,
-     "enabled": {
-      "type": "BUILDING_EDISONS_WORKSHOP",
-      "scope": "city"
-     }
-    },
-    {
-     "value": 1,
-     "enabled": {
-      "type": "BUILDING_GREAT_WALL_OF_CHINA",
-      "scope": "city"
-     }
-    },
-    {
-     "value": 1,
-     "enabled": {
-      "type": "BUILDING_HADRIANS_WALL",
-      "scope": "city"
-     }
-    },
-    {
-     "value": 1,
-     "enabled": {
-      "type": "BUILDING_LEONARDOS_WORKSHOP",
-      "scope": "city"
-     }
-    }
-   ]
+   "flat": 2
   },
   "empire": {
    "flat": [
     {
      "value": 1,
      "enabled": {
-      "type": "TRAIT_COMPLEX_INDUSTRIOUS",
+      "type": "BUILDING_ARCHIMEDES_WORKSHOP",
       "scope": "empire"
      }
     },
     {
      "value": 1,
      "enabled": {
-      "type": "TRAIT_COMPLEX_INDUSTRIOUS1",
+      "type": "BUILDING_EDISONS_WORKSHOP",
       "scope": "empire"
      }
     },
     {
      "value": 1,
      "enabled": {
-      "type": "TRAIT_INDUSTRIOUS2",
+      "type": "BUILDING_GREAT_WALL_OF_CHINA",
       "scope": "empire"
      }
     },
     {
      "value": 1,
      "enabled": {
-      "type": "TRAIT_INDUSTRIOUS3",
-      "scope": "empire"
-     }
-    },
-    {
-     "value": -1,
-     "enabled": {
-      "type": "TRAIT_LAZY",
-      "scope": "empire"
-     }
-    },
-    {
-     "value": -1,
-     "enabled": {
-      "type": "TRAIT_LAZY1",
-      "scope": "empire"
-     }
-    },
-    {
-     "value": -1,
-     "enabled": {
-      "type": "TRAIT_LAZY2",
-      "scope": "empire"
-     }
-    },
-    {
-     "value": -1,
-     "enabled": {
-      "type": "TRAIT_LAZY3",
+      "type": "BUILDING_HADRIANS_WALL",
       "scope": "empire"
      }
     },
     {
      "value": 1,
      "enabled": {
-      "type": "TRAIT_COMPLEX_PHILOSOPHICAL",
-      "scope": "empire"
-     }
-    },
-    {
-     "value": 1,
-     "enabled": {
-      "type": "TRAIT_COMPLEX_PHILOSOPHICAL1",
-      "scope": "empire"
-     }
-    },
-    {
-     "value": -1,
-     "enabled": {
-      "type": "TRAIT_COMPLEX_POPULIST",
-      "scope": "empire"
-     }
-    },
-    {
-     "value": -1,
-     "enabled": {
-      "type": "TRAIT_COMPLEX_POPULIST1",
-      "scope": "empire"
-     }
-    },
-    {
-     "value": -1,
-     "enabled": {
-      "type": "TRAIT_UNSANITARY",
-      "scope": "empire"
-     }
-    },
-    {
-     "value": -1,
-     "enabled": {
-      "type": "TRAIT_UNSANITARY3",
+      "type": "BUILDING_LEONARDOS_WORKSHOP",
       "scope": "empire"
      }
     }
@@ -147,60 +47,12 @@
   }
  },
  "commerce": {
-  "city": {
+  "empire": {
    "flat": [
     {
      "value": 2,
      "enabled": {
       "type": "BUILDING_LONDON_EYE",
-      "scope": "city"
-     }
-    }
-   ]
-  }
- },
- "gold": {
-  "empire": {
-   "flat": [
-    {
-     "value": -1,
-     "enabled": {
-      "type": "TRAIT_COMPLEX_INDUSTRIOUS",
-      "scope": "empire"
-     }
-    },
-    {
-     "value": -1,
-     "enabled": {
-      "type": "TRAIT_COMPLEX_INDUSTRIOUS1",
-      "scope": "empire"
-     }
-    },
-    {
-     "value": -1,
-     "enabled": {
-      "type": "TRAIT_INDUSTRIOUS2",
-      "scope": "empire"
-     }
-    },
-    {
-     "value": -1,
-     "enabled": {
-      "type": "TRAIT_INDUSTRIOUS3",
-      "scope": "empire"
-     }
-    },
-    {
-     "value": 1,
-     "enabled": {
-      "type": "TRAIT_GRIM",
-      "scope": "empire"
-     }
-    },
-    {
-     "value": 1,
-     "enabled": {
-      "type": "TRAIT_GRIM2",
       "scope": "empire"
      }
     }
@@ -208,16 +60,18 @@
   }
  },
  "research": {
-  "city": {
+  "empire": {
    "flat": [
     {
      "value": 1,
      "enabled": {
       "type": "BUILDING_ATOMIUM",
-      "scope": "city"
+      "scope": "empire"
      }
     }
-   ],
+   ]
+  },
+  "city": {
    "percent": [
     {
      "value": 200,
@@ -234,65 +88,15 @@
      }
     }
    ]
-  },
-  "empire": {
-   "flat": [
-    {
-     "value": 1,
-     "enabled": {
-      "type": "TRAIT_PROGRESSIST",
-      "scope": "empire"
-     }
-    },
-    {
-     "value": 1,
-     "enabled": {
-      "type": "TRAIT_PROGRESSIST1",
-      "scope": "empire"
-     }
-    }
-   ]
   }
  },
  "culture": {
-  "city": {
+  "empire": {
    "flat": [
     {
      "value": 2,
      "enabled": {
       "type": "BUILDING_BAUHAUS_SCHOOL",
-      "scope": "city"
-     }
-    }
-   ]
-  },
-  "empire": {
-   "flat": [
-    {
-     "value": 1,
-     "enabled": {
-      "type": "TRAIT_LAZY",
-      "scope": "empire"
-     }
-    },
-    {
-     "value": 1,
-     "enabled": {
-      "type": "TRAIT_LAZY1",
-      "scope": "empire"
-     }
-    },
-    {
-     "value": 1,
-     "enabled": {
-      "type": "TRAIT_LAZY2",
-      "scope": "empire"
-     }
-    },
-    {
-     "value": 1,
-     "enabled": {
-      "type": "TRAIT_LAZY3",
       "scope": "empire"
      }
     }

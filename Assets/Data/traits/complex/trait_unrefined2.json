@@ -157,6 +157,18 @@
    }
   }
  },
+ "commerce": {
+  "empire": {
+   "specialists": {
+    "SPECIALIST_ARTIST": {
+     "flat": -1
+    },
+    "SPECIALIST_GREAT_ARTIST": {
+     "flat": -1
+    }
+   }
+  }
+ },
  "research": {
   "empire": {
    "byTech": {
@@ -224,6 +236,14 @@
   "empire": {
    "flat": -4,
    "percent": -5,
+   "specialists": {
+    "SPECIALIST_ARTIST": {
+     "flat": -2
+    },
+    "SPECIALIST_GREAT_ARTIST": {
+     "flat": -2
+    }
+   },
    "capital": {
     "percent": -5
    },

@@ -2,11 +2,10 @@
  "type": "TRAIT_DECEIVER1",
  "description": "TXT_KEY_TRAIT_COMPLEX_DECEIVER1",
  "civilopedia": "TXT_KEY_TRAIT_COMPLEX_DECEIVER1_PEDIA",
- "enables": {
-  "traits": [
-   "TRAIT_DECEIVER2"
-  ]
- },
+ "strategy": "TXT_KEY_TRAIT_COMPLEX_DECEIVER_STRATEGY",
+ "excludes": [
+  "TRAIT_NAIVE1"
+ ],
  "buildRate": {
   "empire": {
    "buildings": {
@@ -144,15 +143,120 @@
    }
   }
  },
+ "commerce": {
+  "empire": {
+   "specialists": {
+    "SPECIALIST_SPY": {
+     "flat": 1
+    },
+    "SPECIALIST_GREAT_SPY": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "research": {
+  "empire": {
+   "byTech": {
+    "TECH_DUALISM": {
+     "percent": 20
+    },
+    "TECH_ORATORY": {
+     "percent": 20
+    },
+    "TECH_LOCKS": {
+     "percent": 20
+    },
+    "TECH_MONARCHY": {
+     "percent": 20
+    },
+    "TECH_CODE_OF_LAWS": {
+     "percent": 20
+    },
+    "TECH_DIPLOMACY": {
+     "percent": 20
+    },
+    "TECH_LAW_ENFORCEMENT": {
+     "percent": 20
+    },
+    "TECH_EXECUTIONS": {
+     "percent": 20
+    },
+    "TECH_USURY": {
+     "percent": 20
+    },
+    "TECH_TORTURE": {
+     "percent": 20
+    },
+    "TECH_PARLIAMENTS": {
+     "percent": 20
+    },
+    "TECH_WARRANTS_AND_DECREES": {
+     "percent": 20
+    }
+   }
+  }
+ },
  "espionage": {
   "empire": {
    "flat": 2,
    "percent": 5,
+   "specialists": {
+    "SPECIALIST_CITIZEN": {
+     "flat": 1
+    },
+    "SPECIALIST_SLAVES": {
+     "flat": 1
+    },
+    "SPECIALIST_SETTLED_CITIZEN": {
+     "flat": 1
+    },
+    "SPECIALIST_SETTLED_SLAVE": {
+     "flat": 1
+    }
+   },
    "capital": {
     "percent": 5
    },
    "specialist": {
     "perSpecialist": 1
+   }
+  }
+ },
+ "happiness": {
+  "empire": {
+   "flat": -1
+  }
+ },
+ "greatPeopleRate": {
+  "empire": {
+   "units": {
+    "UNIT_GREAT_SPY": {
+     "flat": 2
+    }
+   }
+  }
+ },
+ "experience": {
+  "empire": {
+   "unitCombats": {
+    "UNITCOMBAT_SPY": {
+     "flat": 2
+    }
+   }
+  }
+ },
+ "combat": {
+  "empire": {
+   "espionageDefense": {
+    "percent": 10
+   }
+  }
+ },
+ "durations": {
+  "empire": {
+   "civicAnarchy": {
+    "percent": 5
    }
   }
  },
@@ -166,13 +270,15 @@
    }
   }
  },
- "revolution": {
-  "empire": {
-   "local": {
-    "flat": -1
-   },
-   "national": {
-    "flat": -10
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": {
+    "value": 1,
+    "per": {
+     "type": "POPULATION",
+     "each": 4,
+     "scope": "city"
+    }
    }
   }
  },
@@ -222,100 +328,5 @@
  },
  "identity": {
   "impurePropertyManipulators": true
- },
- "strategy": "TXT_KEY_TRAIT_COMPLEX_DECEIVER_STRATEGY",
- "excludes": [
-  "TRAIT_NAIVE1"
- ],
- "research": {
-  "empire": {
-   "byTech": {
-    "TECH_DUALISM": {
-     "percent": 20
-    },
-    "TECH_ORATORY": {
-     "percent": 20
-    },
-    "TECH_LOCKS": {
-     "percent": 20
-    },
-    "TECH_MONARCHY": {
-     "percent": 20
-    },
-    "TECH_CODE_OF_LAWS": {
-     "percent": 20
-    },
-    "TECH_DIPLOMACY": {
-     "percent": 20
-    },
-    "TECH_LAW_ENFORCEMENT": {
-     "percent": 20
-    },
-    "TECH_EXECUTIONS": {
-     "percent": 20
-    },
-    "TECH_USURY": {
-     "percent": 20
-    },
-    "TECH_TORTURE": {
-     "percent": 20
-    },
-    "TECH_PARLIAMENTS": {
-     "percent": 20
-    },
-    "TECH_WARRANTS_AND_DECREES": {
-     "percent": 20
-    }
-   }
-  }
- },
- "happiness": {
-  "empire": {
-   "flat": -1
-  }
- },
- "greatPeopleRate": {
-  "empire": {
-   "units": {
-    "UNIT_GREAT_SPY": {
-     "flat": 2
-    }
-   }
-  }
- },
- "experience": {
-  "empire": {
-   "unitCombats": {
-    "UNITCOMBAT_SPY": {
-     "flat": 2
-    }
-   }
-  }
- },
- "combat": {
-  "empire": {
-   "espionageDefense": {
-    "percent": 10
-   }
-  }
- },
- "durations": {
-  "empire": {
-   "civicAnarchy": {
-    "percent": 5
-   }
-  }
- },
- "PROPERTY_CRIME": {
-  "city": {
-   "flat": {
-    "value": 1,
-    "per": {
-     "type": "POPULATION",
-     "each": 4,
-     "scope": "city"
-    }
-   }
-  }
  }
 }

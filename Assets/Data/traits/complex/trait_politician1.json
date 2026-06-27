@@ -2,10 +2,23 @@
  "type": "TRAIT_POLITICIAN1",
  "description": "TXT_KEY_TRAIT_COMPLEX_POLITICIAN1",
  "civilopedia": "TXT_KEY_TRAIT_COMPLEX_POLITICIAN1_PEDIA",
- "enables": {
-  "traits": [
-   "TRAIT_POLITICIAN2"
-  ]
+ "strategy": "TXT_KEY_TRAIT_COMPLEX_POLITICIAN_STRATEGY",
+ "excludes": [
+  "TRAIT_FOREIGN1"
+ ],
+ "food": {
+  "empire": {
+   "capital": {
+    "percent": 5
+   }
+  }
+ },
+ "production": {
+  "empire": {
+   "capital": {
+    "percent": 5
+   }
+  }
  },
  "buildRate": {
   "empire": {
@@ -17,12 +30,53 @@
    }
   }
  },
- "happiness": {
+ "commerce": {
   "empire": {
-   "buildings": {
-    "BUILDING_POLIS_COUNCIL": {
+   "capital": {
+    "percent": 5
+   }
+  }
+ },
+ "culture": {
+  "empire": {
+   "flat": 1,
+   "percent": 5,
+   "capital": {
+    "percent": 10
+   }
+  }
+ },
+ "espionage": {
+  "empire": {
+   "flat": 1,
+   "percent": 5,
+   "specialists": {
+    "SPECIALIST_SPY": {
+     "flat": 1
+    },
+    "SPECIALIST_GREAT_SPY": {
      "flat": 1
     }
+   },
+   "capital": {
+    "percent": 10
+   }
+  }
+ },
+ "experience": {
+  "empire": {
+   "capital": {
+    "percent": 5
+   }
+  }
+ },
+ "maintenance": {
+  "empire": {
+   "distance": {
+    "percent": 10
+   },
+   "numCities": {
+    "percent": 10
    }
   }
  },
@@ -40,18 +94,26 @@
    }
   }
  },
- "revolution": {
+ "diplomacy": {
   "empire": {
-   "national": {
-    "flat": -1
+   "warWeariness": {
+    "percent": 10
+   },
+   "attitude": {
+    "flat": 1
    }
   }
  },
- "grants": {
-  "freePromotions": {
-   "PROMOTION_LOYALTY": [
-    "UNITCOMBAT_SPY"
-   ]
+ "PROPERTY_EDUCATION": {
+  "city": {
+   "flat": {
+    "value": -1,
+    "per": {
+     "type": "POPULATION",
+     "each": 4,
+     "scope": "city"
+    }
+   }
   }
  },
  "succession": {
@@ -93,87 +155,5 @@
  },
  "identity": {
   "impurePropertyManipulators": true
- },
- "strategy": "TXT_KEY_TRAIT_COMPLEX_POLITICIAN_STRATEGY",
- "excludes": [
-  "TRAIT_FOREIGN1"
- ],
- "food": {
-  "empire": {
-   "capital": {
-    "percent": 5
-   }
-  }
- },
- "production": {
-  "empire": {
-   "capital": {
-    "percent": 5
-   }
-  }
- },
- "commerce": {
-  "empire": {
-   "capital": {
-    "percent": 5
-   }
-  }
- },
- "culture": {
-  "empire": {
-   "flat": 1,
-   "percent": 5,
-   "capital": {
-    "percent": 10
-   }
-  }
- },
- "espionage": {
-  "empire": {
-   "flat": 1,
-   "percent": 5,
-   "capital": {
-    "percent": 10
-   }
-  }
- },
- "experience": {
-  "empire": {
-   "capital": {
-    "percent": 5
-   }
-  }
- },
- "maintenance": {
-  "empire": {
-   "distance": {
-    "percent": 10
-   },
-   "numCities": {
-    "percent": 10
-   }
-  }
- },
- "diplomacy": {
-  "empire": {
-   "warWeariness": {
-    "percent": 10
-   },
-   "attitude": {
-    "flat": 1
-   }
-  }
- },
- "PROPERTY_EDUCATION": {
-  "city": {
-   "flat": {
-    "value": -1,
-    "per": {
-     "type": "POPULATION",
-     "each": 4,
-     "scope": "city"
-    }
-   }
-  }
  }
 }

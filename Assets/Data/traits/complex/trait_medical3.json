@@ -107,6 +107,18 @@
    }
   }
  },
+ "commerce": {
+  "empire": {
+   "specialists": {
+    "SPECIALIST_DOCTOR": {
+     "flat": 1
+    },
+    "SPECIALIST_GREAT_DOCTOR": {
+     "flat": 1
+    }
+   }
+  }
+ },
  "research": {
   "empire": {
    "byTech": {
@@ -166,6 +178,24 @@
     },
     "TECH_ARTIFICIAL_LIFE": {
      "percent": 20
+    }
+   }
+  }
+ },
+ "culture": {
+  "empire": {
+   "specialists": {
+    "SPECIALIST_DOCTOR": {
+     "flat": 1
+    },
+    "SPECIALIST_GREAT_DOCTOR": {
+     "flat": 1
+    },
+    "SPECIALIST_SCIENTIST": {
+     "flat": 1
+    },
+    "SPECIALIST_GREAT_SCIENTIST": {
+     "flat": 1
     }
    }
   }

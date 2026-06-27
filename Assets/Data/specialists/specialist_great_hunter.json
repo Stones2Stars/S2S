@@ -5,99 +5,11 @@
  "food": {
   "city": {
    "flat": 4
-  },
-  "empire": {
-   "flat": [
-    {
-     "value": 1,
-     "enabled": {
-      "type": "TRAIT_COMPLEX_NOMADIC1",
-      "scope": "empire"
-     }
-    },
-    {
-     "value": 1,
-     "enabled": {
-      "type": "TRAIT_NOMADIC2",
-      "scope": "empire"
-     }
-    }
-   ]
-  }
- },
- "production": {
-  "empire": {
-   "flat": [
-    {
-     "value": 1,
-     "enabled": {
-      "type": "TRAIT_COMPLEX_NOMADIC",
-      "scope": "empire"
-     }
-    }
-   ]
   }
  },
  "commerce": {
   "city": {
    "flat": 1
-  },
-  "empire": {
-   "flat": [
-    {
-     "value": 1,
-     "enabled": {
-      "type": "TRAIT_NOMADIC3",
-      "scope": "empire"
-     }
-    }
-   ]
-  }
- },
- "gold": {
-  "empire": {
-   "flat": [
-    {
-     "value": 2,
-     "enabled": {
-      "type": "TRAIT_NOMADIC3",
-      "scope": "empire"
-     }
-    }
-   ]
-  }
- },
- "research": {
-  "empire": {
-   "flat": [
-    {
-     "value": 2,
-     "enabled": {
-      "type": "TRAIT_COMPLEX_NOMADIC1",
-      "scope": "empire"
-     }
-    }
-   ]
-  }
- },
- "espionage": {
-  "empire": {
-   "flat": [
-    {
-     "value": 2,
-     "enabled": {
-      "type": "TRAIT_COMPLEX_NOMADIC",
-      "scope": "empire"
-     }
-    },
-    {
-     "value": 2,
-     "enabled": {
-      "type": "TRAIT_NOMADIC2",
-      "scope": "empire"
-     }
-    }
-   ]
   }
  },
  "experience": {

@@ -2,6 +2,7 @@
  "type": "TRAIT_NOMAD",
  "description": "TXT_KEY_TRAIT_COMPLEX_NOMADIC",
  "civilopedia": "TXT_KEY_TRAIT_COMPLEX_NOMADIC_PEDIA",
+ "strategy": "TXT_KEY_TRAIT_COMPLEX_NOMADIC_STRATEGY",
  "food": {
   "empire": {
    "improvements": {
@@ -48,6 +49,11 @@
      "flat": 1
     },
     "IMPROVEMENT_VERTICAL_FARM": {
+     "flat": 1
+    }
+   },
+   "specialists": {
+    "SPECIALIST_GREAT_HUNTER": {
      "flat": 1
     }
    }
@@ -520,259 +526,6 @@
    }
   }
  },
- "happiness": {
-  "empire": {
-   "flat": [
-    -1,
-    {
-     "value": 1,
-     "enabled": {
-      "type": "BONUS_CAMEL",
-      "scope": "empire",
-      "min": 1
-     }
-    },
-    {
-     "value": 1,
-     "enabled": {
-      "type": "BONUS_DONKEY",
-      "scope": "empire",
-      "min": 1
-     }
-    },
-    {
-     "value": 1,
-     "enabled": {
-      "type": "BONUS_HORSE",
-      "scope": "empire",
-      "min": 1
-     }
-    },
-    {
-     "value": 1,
-     "enabled": {
-      "type": "BONUS_LLAMA",
-      "scope": "empire",
-      "min": 1
-     }
-    },
-    {
-     "value": 1,
-     "enabled": {
-      "type": "BONUS_SHEEP",
-      "scope": "empire",
-      "min": 1
-     }
-    },
-    {
-     "value": 1,
-     "enabled": {
-      "type": "BONUS_BISON",
-      "scope": "empire",
-      "min": 1
-     }
-    },
-    {
-     "value": 1,
-     "enabled": {
-      "type": "BONUS_BEAVERS",
-      "scope": "empire",
-      "min": 1
-     }
-    },
-    {
-     "value": 1,
-     "enabled": {
-      "type": "BONUS_DEER",
-      "scope": "empire",
-      "min": 1
-     }
-    },
-    {
-     "value": 1,
-     "enabled": {
-      "type": "BONUS_ELEPHANTS",
-      "scope": "empire",
-      "min": 1
-     }
-    },
-    {
-     "value": 1,
-     "enabled": {
-      "type": "BONUS_GUINEA_PIGS",
-      "scope": "empire",
-      "min": 1
-     }
-    },
-    {
-     "value": 1,
-     "enabled": {
-      "type": "BONUS_KANGAROO",
-      "scope": "empire",
-      "min": 1
-     }
-    },
-    {
-     "value": 1,
-     "enabled": {
-      "type": "BONUS_MAMMOTH",
-      "scope": "empire",
-      "min": 1
-     }
-    },
-    {
-     "value": 1,
-     "enabled": {
-      "type": "BONUS_RABBIT",
-      "scope": "empire",
-      "min": 1
-     }
-    },
-    {
-     "value": 1,
-     "enabled": {
-      "type": "BONUS_SEA_LION_AND_SEAL",
-      "scope": "empire",
-      "min": 1
-     }
-    },
-    {
-     "value": 1,
-     "enabled": {
-      "type": "BONUS_WALRUS",
-      "scope": "empire",
-      "min": 1
-     }
-    }
-   ],
-   "largestCity": {
-    "flat": -1
-   }
-  }
- },
- "greatGeneralRate": {
-  "empire": {
-   "domestic": {
-    "percent": -10
-   }
-  }
- },
- "workRate": {
-  "empire": {
-   "builds": {
-    "BUILD_SCAVENGING_CAMP_KILL": {
-     "percent": 50
-    },
-    "BUILD_NOMADIC_HERD_KILL": {
-     "percent": 50
-    },
-    "BUILD_PASTURE": {
-     "percent": 50
-    },
-    "BUILD_HUNTING_CAMP": {
-     "percent": 50
-    },
-    "BUILD_HUNTING_PRESERVE": {
-     "percent": 50
-    },
-    "BUILD_FOREST_PRESERVE": {
-     "percent": 50
-    },
-    "BUILD_WILDLIFE_SANCTUARY": {
-     "percent": 50
-    },
-    "BUILD_JUNGLE_CAMP_KILL": {
-     "percent": 50
-    },
-    "BUILD_JUNGLE_CAMP": {
-     "percent": 50
-    },
-    "BUILD_DESERT_CAMP_KILL": {
-     "percent": 50
-    },
-    "BUILD_DESERT_CAMP": {
-     "percent": 50
-    },
-    "BUILD_WETLANDS_CAMP_KILL": {
-     "percent": 50
-    },
-    "BUILD_WETLANDS_CAMP": {
-     "percent": 50
-    },
-    "BUILD_NATURE_PRESERVE": {
-     "percent": 50
-    }
-   }
-  }
- },
- "PROPERTY_CRIME": {
-  "city": {
-   "flat": {
-    "value": 1,
-    "per": {
-     "type": "POPULATION",
-     "each": 3,
-     "scope": "city"
-    }
-   }
-  }
- },
- "policies": {
-  "upgradeAnywhere": true
- },
- "grants": {
-  "freePromotions": {
-   "PROMOTION_NOMADIC": [
-    "UNITCOMBAT_ANIMAL",
-    "UNITCOMBAT_EXPLORER",
-    "UNITCOMBAT_MOUNTED",
-    "UNITCOMBAT_NOMAD",
-    "UNITCOMBAT_TRADE",
-    "UNITCOMBAT_WHEELED"
-   ]
-  }
- },
- "succession": {
-  "promotionLine": "PROMOTIONLINE_NOMADIC"
- },
- "ai": {
-  "flavours": [
-   {
-    "FLAVOR_MILITARY": 9
-   },
-   {
-    "FLAVOR_RELIGION": 0
-   },
-   {
-    "FLAVOR_PRODUCTION": 1
-   },
-   {
-    "FLAVOR_GOLD": 5
-   },
-   {
-    "FLAVOR_SCIENCE": 0
-   },
-   {
-    "FLAVOR_CULTURE": 0
-   },
-   {
-    "FLAVOR_GROWTH": -1
-   },
-   {
-    "FLAVOR_ESPIONAGE": 1
-   }
-  ]
- },
- "ui": {
-  "art": {
-   "icon": "art/Buttons/Traits/TraitNomadic.dds"
-  }
- },
- "identity": {
-  "shortDescription": "TXT_KEY_TRAIT_NOMAD_SHORT",
-  "impurePropertyManipulators": true
- },
- "strategy": "TXT_KEY_TRAIT_COMPLEX_NOMADIC_STRATEGY",
  "research": {
   "empire": {
    "byTech": {
@@ -1253,6 +1006,15 @@
    }
   }
  },
+ "espionage": {
+  "empire": {
+   "specialists": {
+    "SPECIALIST_GREAT_HUNTER": {
+     "flat": 2
+    }
+   }
+  }
+ },
  "lessYieldThreshold": {
   "empire": {
    "food": {
@@ -1263,6 +1025,136 @@
    },
    "commerce": {
     "flat": 7
+   }
+  }
+ },
+ "happiness": {
+  "empire": {
+   "flat": [
+    -1,
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_CAMEL",
+      "scope": "empire",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_DONKEY",
+      "scope": "empire",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_HORSE",
+      "scope": "empire",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_LLAMA",
+      "scope": "empire",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_SHEEP",
+      "scope": "empire",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_BISON",
+      "scope": "empire",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_BEAVERS",
+      "scope": "empire",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_DEER",
+      "scope": "empire",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_ELEPHANTS",
+      "scope": "empire",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_GUINEA_PIGS",
+      "scope": "empire",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_KANGAROO",
+      "scope": "empire",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_MAMMOTH",
+      "scope": "empire",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_RABBIT",
+      "scope": "empire",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_SEA_LION_AND_SEAL",
+      "scope": "empire",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_WALRUS",
+      "scope": "empire",
+      "min": 1
+     }
+    }
+   ],
+   "largestCity": {
+    "flat": -1
    }
   }
  },
@@ -1318,6 +1210,54 @@
    }
   }
  },
+ "workRate": {
+  "empire": {
+   "builds": {
+    "BUILD_SCAVENGING_CAMP_KILL": {
+     "percent": 50
+    },
+    "BUILD_NOMADIC_HERD_KILL": {
+     "percent": 50
+    },
+    "BUILD_PASTURE": {
+     "percent": 50
+    },
+    "BUILD_HUNTING_CAMP": {
+     "percent": 50
+    },
+    "BUILD_HUNTING_PRESERVE": {
+     "percent": 50
+    },
+    "BUILD_FOREST_PRESERVE": {
+     "percent": 50
+    },
+    "BUILD_WILDLIFE_SANCTUARY": {
+     "percent": 50
+    },
+    "BUILD_JUNGLE_CAMP_KILL": {
+     "percent": 50
+    },
+    "BUILD_JUNGLE_CAMP": {
+     "percent": 50
+    },
+    "BUILD_DESERT_CAMP_KILL": {
+     "percent": 50
+    },
+    "BUILD_DESERT_CAMP": {
+     "percent": 50
+    },
+    "BUILD_WETLANDS_CAMP_KILL": {
+     "percent": 50
+    },
+    "BUILD_WETLANDS_CAMP": {
+     "percent": 50
+    },
+    "BUILD_NATURE_PRESERVE": {
+     "percent": 50
+    }
+   }
+  }
+ },
  "improvementUpgradeRate": {
   "empire": {
    "improvements": {
@@ -1337,6 +1277,54 @@
      "percent": 100
     }
    }
+  }
+ },
+ "grants": {
+  "freePromotions": {
+   "PROMOTION_NOMADIC": [
+    "UNITCOMBAT_ANIMAL",
+    "UNITCOMBAT_EXPLORER",
+    "UNITCOMBAT_MOUNTED",
+    "UNITCOMBAT_NOMAD",
+    "UNITCOMBAT_TRADE",
+    "UNITCOMBAT_WHEELED"
+   ]
+  }
+ },
+ "succession": {
+  "promotionLine": "PROMOTIONLINE_NOMADIC"
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 9
+   },
+   {
+    "FLAVOR_RELIGION": 0
+   },
+   {
+    "FLAVOR_PRODUCTION": 1
+   },
+   {
+    "FLAVOR_GOLD": 5
+   },
+   {
+    "FLAVOR_SCIENCE": 0
+   },
+   {
+    "FLAVOR_CULTURE": 0
+   },
+   {
+    "FLAVOR_GROWTH": -1
+   },
+   {
+    "FLAVOR_ESPIONAGE": 1
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Traits/TraitNomadic.dds"
   }
  }
 }

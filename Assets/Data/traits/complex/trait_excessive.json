@@ -2,71 +2,6 @@
  "type": "TRAIT_EXCESSIVE",
  "description": "TXT_KEY_TRAIT_COMPLEX_EXCESSIVE1",
  "civilopedia": "TXT_KEY_TRAIT_COMPLEX_EXCESSIVE1_PEDIA",
- "health": {
-  "empire": {
-   "flat": -1
-  }
- },
- "experience": {
-  "empire": {
-   "levelModifier": {
-    "percent": 20
-   }
-  }
- },
- "grants": {
-  "freePromotions": {
-   "PROMOTION_CITY_RAIDER1": [
-    "UNITCOMBAT_MELEE"
-   ],
-   "PROMOTION_IMPROVISE1": [
-    "UNITCOMBAT_SPY"
-   ],
-   "PROMOTION_IMPROVISE2": [
-    "UNITCOMBAT_SPY"
-   ]
-  }
- },
- "succession": {
-  "promotionLine": "PROMOTIONLINE_EXCESSIVE",
-  "priority": -1
- },
- "ai": {
-  "flavours": [
-   {
-    "FLAVOR_MILITARY": -1
-   },
-   {
-    "FLAVOR_RELIGION": 0
-   },
-   {
-    "FLAVOR_PRODUCTION": -1
-   },
-   {
-    "FLAVOR_GOLD": 2
-   },
-   {
-    "FLAVOR_SCIENCE": 3
-   },
-   {
-    "FLAVOR_CULTURE": 4
-   },
-   {
-    "FLAVOR_GROWTH": 1
-   },
-   {
-    "FLAVOR_ESPIONAGE": 4
-   }
-  ]
- },
- "ui": {
-  "art": {
-   "icon": "art/Buttons/Traits/TraitExcessive.dds"
-  }
- },
- "identity": {
-  "negativeTrait": true
- },
  "strategy": "TXT_KEY_TRAIT_COMPLEX_EXCESSIVE_STRATEGY",
  "excludes": [
   "TRAIT_EFFICIENT1"
@@ -128,6 +63,26 @@
     }
    },
    "flat": -1,
+   "specialists": {
+    "SPECIALIST_CITIZEN": {
+     "flat": -1
+    },
+    "SPECIALIST_SLAVES": {
+     "flat": -1
+    },
+    "SPECIALIST_LAWYER": {
+     "flat": -1
+    },
+    "SPECIALIST_GREAT_STATESMAN": {
+     "flat": -1
+    },
+    "SPECIALIST_SETTLED_SLAVE": {
+     "flat": -1
+    },
+    "SPECIALIST_SETTLED_CITIZEN": {
+     "flat": -1
+    }
+   },
    "percent": -5
   }
  },
@@ -214,5 +169,45 @@
  },
  "policies": {
   "extraGoody": true
+ },
+ "succession": {
+  "promotionLine": "PROMOTIONLINE_EXCESSIVE",
+  "priority": -1
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": -1
+   },
+   {
+    "FLAVOR_RELIGION": 0
+   },
+   {
+    "FLAVOR_PRODUCTION": -1
+   },
+   {
+    "FLAVOR_GOLD": 2
+   },
+   {
+    "FLAVOR_SCIENCE": 3
+   },
+   {
+    "FLAVOR_CULTURE": 4
+   },
+   {
+    "FLAVOR_GROWTH": 1
+   },
+   {
+    "FLAVOR_ESPIONAGE": 4
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Traits/TraitExcessive.dds"
+  }
+ },
+ "identity": {
+  "negativeTrait": true
  }
 }

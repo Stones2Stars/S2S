@@ -125,10 +125,30 @@
    }
   }
  },
+ "commerce": {
+  "empire": {
+   "specialists": {
+    "SPECIALIST_DOCTOR": {
+     "flat": -1
+    },
+    "SPECIALIST_GREAT_DOCTOR": {
+     "flat": -1
+    }
+   }
+  }
+ },
  "research": {
   "empire": {
    "flat": -4,
    "percent": -5,
+   "specialists": {
+    "SPECIALIST_SCIENTIST": {
+     "flat": -2
+    },
+    "SPECIALIST_GREAT_SCIENTIST": {
+     "flat": -2
+    }
+   },
    "capital": {
     "percent": -5
    },

@@ -2,69 +2,6 @@
  "type": "TRAIT_IDEALISTIC",
  "description": "TXT_KEY_TRAIT_COMPLEX_IDEALISTIC",
  "civilopedia": "TXT_KEY_TRAIT_COMPLEX_IDEALISTIC_PEDIA",
- "culture": {
-  "empire": {
-   "percent": -5
-  }
- },
- "greatPeopleRate": {
-  "empire": {
-   "percent": 25
-  }
- },
- "upkeep": {
-  "empire": {
-   "civic": {
-    "percent": -10
-   }
-  }
- },
- "durations": {
-  "empire": {
-   "civicAnarchy": {
-    "percent": 25
-   }
-  }
- },
- "succession": {
-  "promotionLine": "PROMOTIONLINE_IDEALISTIC"
- },
- "ai": {
-  "flavours": [
-   {
-    "FLAVOR_MILITARY": 4
-   },
-   {
-    "FLAVOR_RELIGION": 0
-   },
-   {
-    "FLAVOR_PRODUCTION": 3
-   },
-   {
-    "FLAVOR_GOLD": -1
-   },
-   {
-    "FLAVOR_SCIENCE": 3
-   },
-   {
-    "FLAVOR_CULTURE": 3
-   },
-   {
-    "FLAVOR_GROWTH": 0
-   },
-   {
-    "FLAVOR_ESPIONAGE": 3
-   }
-  ]
- },
- "ui": {
-  "art": {
-   "icon": "art/Buttons/Traits/TraitIdealistic.dds"
-  }
- },
- "identity": {
-  "negativeTrait": true
- },
  "strategy": "TXT_KEY_TRAIT_COMPLEX_IDEALISTIC_STRATEGY",
  "excludes": [
   "TRAIT_PRAGMATIC"
@@ -97,6 +34,11 @@
   }
  },
  "research": {
+  "empire": {
+   "percent": -5
+  }
+ },
+ "culture": {
   "empire": {
    "percent": -5
   }
@@ -139,6 +81,13 @@
    }
   }
  },
+ "upkeep": {
+  "empire": {
+   "civic": {
+    "percent": -10
+   }
+  }
+ },
  "PROPERTY_CRIME": {
   "city": {
    "flat": {
@@ -174,5 +123,44 @@
     }
    }
   }
+ },
+ "succession": {
+  "promotionLine": "PROMOTIONLINE_IDEALISTIC"
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 4
+   },
+   {
+    "FLAVOR_RELIGION": 0
+   },
+   {
+    "FLAVOR_PRODUCTION": 3
+   },
+   {
+    "FLAVOR_GOLD": -1
+   },
+   {
+    "FLAVOR_SCIENCE": 3
+   },
+   {
+    "FLAVOR_CULTURE": 3
+   },
+   {
+    "FLAVOR_GROWTH": 0
+   },
+   {
+    "FLAVOR_ESPIONAGE": 3
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Traits/TraitIdealistic.dds"
+  }
+ },
+ "identity": {
+  "negativeTrait": true
  }
 }

@@ -2,10 +2,15 @@
  "type": "TRAIT_BARBARIC1",
  "description": "TXT_KEY_TRAIT_COMPLEX_BARBARIC1",
  "civilopedia": "TXT_KEY_TRAIT_COMPLEX_BARBARIC1_PEDIA",
- "enables": {
-  "traits": [
-   "TRAIT_BARBARIC2"
-  ]
+ "strategy": "TXT_KEY_TRAIT_COMPLEX_BARBARIC_STRATEGY",
+ "excludes": [
+  "TRAIT_CIVILIZED1"
+ ],
+ "food": {
+  "empire": {
+   "flat": -1,
+   "percent": -5
+  }
  },
  "buildRate": {
   "empire": {
@@ -17,9 +22,27 @@
    }
   }
  },
- "culture": {
+ "commerce": {
   "empire": {
-   "percent": -25
+   "flat": -1,
+   "percent": -5
+  }
+ },
+ "research": {
+  "empire": {
+   "flat": -1,
+   "percent": -5
+  }
+ },
+ "espionage": {
+  "empire": {
+   "flat": -1,
+   "percent": -5
+  }
+ },
+ "greatPeopleRate": {
+  "empire": {
+   "percent": -5
   }
  },
  "experience": {
@@ -29,6 +52,43 @@
    }
   }
  },
+ "upkeep": {
+  "empire": {
+   "upgradePrice": {
+    "percent": 5
+   }
+  }
+ },
+ "hurry": {
+  "empire": {
+   "anger": {
+    "percent": -10
+   }
+  }
+ },
+ "workRate": {
+  "empire": {
+   "builds": {
+    "BUILD_TRAIL": {
+     "percent": -25
+    },
+    "BUILD_PATH": {
+     "percent": -25
+    },
+    "BUILD_ROAD": {
+     "percent": -25
+    },
+    "BUILD_PAVED_ROAD": {
+     "percent": -25
+    }
+   }
+  }
+ },
+ "improvementUpgradeRate": {
+  "empire": {
+   "percent": -50
+  }
+ },
  "diplomacy": {
   "empire": {
    "warWeariness": {
@@ -36,18 +96,6 @@
    },
    "attitude": {
     "flat": -1
-   }
-  }
- },
- "PROPERTY_CRIME": {
-  "city": {
-   "flat": {
-    "value": 1,
-    "per": {
-     "type": "POPULATION",
-     "each": 3,
-     "scope": "city"
-    }
    }
   }
  },
@@ -100,75 +148,5 @@
   "negativeTrait": true,
   "impurePromotions": true,
   "minAnarchy": 1
- },
- "strategy": "TXT_KEY_TRAIT_COMPLEX_BARBARIC_STRATEGY",
- "excludes": [
-  "TRAIT_CIVILIZED1"
- ],
- "food": {
-  "empire": {
-   "flat": -1,
-   "percent": -5
-  }
- },
- "commerce": {
-  "empire": {
-   "flat": -1,
-   "percent": -5
-  }
- },
- "research": {
-  "empire": {
-   "flat": -1,
-   "percent": -5
-  }
- },
- "espionage": {
-  "empire": {
-   "flat": -1,
-   "percent": -5
-  }
- },
- "greatPeopleRate": {
-  "empire": {
-   "percent": -5
-  }
- },
- "upkeep": {
-  "empire": {
-   "upgradePrice": {
-    "percent": 5
-   }
-  }
- },
- "hurry": {
-  "empire": {
-   "anger": {
-    "percent": -10
-   }
-  }
- },
- "workRate": {
-  "empire": {
-   "builds": {
-    "BUILD_TRAIL": {
-     "percent": -25
-    },
-    "BUILD_PATH": {
-     "percent": -25
-    },
-    "BUILD_ROAD": {
-     "percent": -25
-    },
-    "BUILD_PAVED_ROAD": {
-     "percent": -25
-    }
-   }
-  }
- },
- "improvementUpgradeRate": {
-  "empire": {
-   "percent": -50
-  }
  }
 }

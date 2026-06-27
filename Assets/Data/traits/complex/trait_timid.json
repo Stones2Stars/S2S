@@ -18,6 +18,18 @@
    }
   }
  },
+ "gold": {
+  "empire": {
+   "specialists": {
+    "SPECIALIST_GREAT_MILITARY_INSTRUCTOR": {
+     "flat": -2
+    },
+    "SPECIALIST_GREAT_ADMIRAL": {
+     "flat": -2
+    }
+   }
+  }
+ },
  "greatGeneralRate": {
   "empire": {
    "percent": -20,

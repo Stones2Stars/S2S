@@ -23,7 +23,7 @@
     {
      "value": 2,
      "enabled": {
-      "HOLY_CITY": "RELIGION_NGAIISM"
+      "IS_HOLY_CITY": "RELIGION_NGAIISM"
      }
     },
     {

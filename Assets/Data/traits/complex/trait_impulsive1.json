@@ -25,6 +25,24 @@
    }
   }
  },
+ "culture": {
+  "empire": {
+   "specialists": {
+    "SPECIALIST_ARTIST": {
+     "flat": 1
+    },
+    "SPECIALIST_GREAT_ARTIST": {
+     "flat": 1
+    },
+    "SPECIALIST_SLAVES": {
+     "flat": 1
+    },
+    "SPECIALIST_SETTLED_SLAVE": {
+     "flat": 1
+    }
+   }
+  }
+ },
  "happiness": {
   "empire": {
    "largestCity": {

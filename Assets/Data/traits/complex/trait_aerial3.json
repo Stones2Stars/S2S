@@ -3,6 +3,15 @@
  "description": "TXT_KEY_TRAIT_AERIAL3",
  "civilopedia": "TXT_KEY_TRAIT_AERIAL3_PEDIA",
  "strategy": "TXT_KEY_TRAIT_AERIAL_STRATEGY",
+ "production": {
+  "empire": {
+   "specialists": {
+    "SPECIALIST_GREAT_MILITARY_INSTRUCTOR": {
+     "flat": 1
+    }
+   }
+  }
+ },
  "buildRate": {
   "empire": {
    "buildings": {
@@ -139,6 +148,15 @@
    "domains": {
     "DOMAIN_AIR": {
      "percent": 20
+    }
+   }
+  }
+ },
+ "gold": {
+  "empire": {
+   "specialists": {
+    "SPECIALIST_GREAT_MILITARY_INSTRUCTOR": {
+     "flat": 2
     }
    }
   }

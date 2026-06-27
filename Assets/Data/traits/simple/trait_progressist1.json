@@ -37,6 +37,15 @@
    }
   }
  },
+ "research": {
+  "empire": {
+   "specialists": {
+    "SPECIALIST_ENGINEER": {
+     "flat": 1
+    }
+   }
+  }
+ },
  "maintenance": {
   "empire": {
    "corporation": {

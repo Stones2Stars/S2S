@@ -23,6 +23,24 @@
    }
   }
  },
+ "culture": {
+  "empire": {
+   "specialists": {
+    "SPECIALIST_LAWYER": {
+     "flat": 1
+    },
+    "SPECIALIST_GREAT_STATESMAN": {
+     "flat": 1
+    },
+    "SPECIALIST_INVESTIGATOR": {
+     "flat": 1
+    },
+    "SPECIALIST_GREAT_SLEUTH": {
+     "flat": 1
+    }
+   }
+  }
+ },
  "happiness": {
   "empire": {
    "largestCity": {

@@ -2,11 +2,10 @@
  "type": "TRAIT_ISOLATIONIST1",
  "description": "TXT_KEY_TRAIT_COMPLEX_ISOLATIONIST1",
  "civilopedia": "TXT_KEY_TRAIT_COMPLEX_ISOLATIONIST1_PEDIA",
- "enables": {
-  "traits": [
-   "TRAIT_ISOLATIONIST2"
-  ]
- },
+ "strategy": "TXT_KEY_TRAIT_COMPLEX_ISOLATIONIST_STRATEGY",
+ "excludes": [
+  "TRAIT_NEGOTIATOR1"
+ ],
  "food": {
   "empire": {
    "tradeRoute": {
@@ -21,16 +20,55 @@
    }
   }
  },
+ "buildRate": {
+  "empire": {
+   "nationalWonder": {
+    "percent": 10
+   },
+   "unitCombats": {
+    "UNITCOMBAT_TRADE": {
+     "percent": -10
+    }
+   }
+  }
+ },
  "commerce": {
   "empire": {
    "tradeRoute": {
     "percent": -20
+   },
+   "specialists": {
+    "SPECIALIST_MERCHANT": {
+     "flat": -1
+    },
+    "SPECIALIST_GREAT_MERCHANT": {
+     "flat": -1
+    }
    }
   }
  },
- "espionage": {
+ "greatGeneralRate": {
   "empire": {
-   "percent": -15
+   "domestic": {
+    "percent": 10
+   }
+  }
+ },
+ "experience": {
+  "empire": {
+   "unitCombats": {
+    "UNITCOMBAT_TRADE": {
+     "flat": -1
+    }
+   },
+   "inBorder": {
+    "percent": 10
+   }
+  }
+ },
+ "conscript": {
+  "empire": {
+   "flat": 1
   }
  },
  "combat": {
@@ -64,10 +102,29 @@
    }
   }
  },
- "revolution": {
+ "durations": {
   "empire": {
-   "national": {
-    "flat": 1
+   "civicAnarchy": {
+    "percent": 5
+   }
+  }
+ },
+ "diplomacy": {
+  "empire": {
+   "attitude": {
+    "flat": -1
+   }
+  }
+ },
+ "PROPERTY_TOURISM": {
+  "city": {
+   "flat": {
+    "value": -1,
+    "per": {
+     "type": "POPULATION",
+     "each": 4,
+     "scope": "city"
+    }
    }
   }
  },
@@ -110,71 +167,5 @@
  },
  "identity": {
   "negativeTrait": true
- },
- "strategy": "TXT_KEY_TRAIT_COMPLEX_ISOLATIONIST_STRATEGY",
- "excludes": [
-  "TRAIT_NEGOTIATOR1"
- ],
- "buildRate": {
-  "empire": {
-   "nationalWonder": {
-    "percent": 10
-   },
-   "unitCombats": {
-    "UNITCOMBAT_TRADE": {
-     "percent": -10
-    }
-   }
-  }
- },
- "greatGeneralRate": {
-  "empire": {
-   "domestic": {
-    "percent": 10
-   }
-  }
- },
- "experience": {
-  "empire": {
-   "unitCombats": {
-    "UNITCOMBAT_TRADE": {
-     "flat": -1
-    }
-   },
-   "inBorder": {
-    "percent": 10
-   }
-  }
- },
- "conscript": {
-  "empire": {
-   "flat": 1
-  }
- },
- "durations": {
-  "empire": {
-   "civicAnarchy": {
-    "percent": 5
-   }
-  }
- },
- "diplomacy": {
-  "empire": {
-   "attitude": {
-    "flat": -1
-   }
-  }
- },
- "PROPERTY_TOURISM": {
-  "city": {
-   "flat": {
-    "value": -1,
-    "per": {
-     "type": "POPULATION",
-     "each": 4,
-     "scope": "city"
-    }
-   }
-  }
  }
 }

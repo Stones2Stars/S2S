@@ -2,110 +2,20 @@
  "type": "TRAIT_REVOLUTIONARY",
  "description": "TXT_KEY_TRAIT_COMPLEX_REVOLUTIONARY",
  "civilopedia": "TXT_KEY_TRAIT_COMPLEX_REVOLUTIONARY_PEDIA",
- "gold": {
-  "empire": {
-   "flat": 1,
-   "percent": 5,
-   "capital": {
-    "percent": 10
-   }
-  }
- },
- "espionage": {
-  "empire": {
-   "flat": 1,
-   "percent": 20
-  }
- },
- "happiness": {
-  "empire": {
-   "flat": 1
-  }
- },
- "greatGeneralRate": {
-  "empire": {
-   "domestic": {
-    "percent": 30
-   }
-  }
- },
- "revolution": {
-  "empire": {
-   "local": {
-    "flat": -3
-   },
-   "national": {
-    "flat": -4
-   },
-   "distanceModifier": {
-    "percent": -30
-   }
-  }
- },
- "PROPERTY_CRIME": {
-  "city": {
-   "flat": {
-    "value": 1,
-    "per": {
-     "type": "POPULATION",
-     "each": 2,
-     "scope": "city"
-    }
-   }
-  }
- },
- "grants": {
-  "freePromotions": {
-   "PROMOTION_INSTIGATOR1": [
-    "UNITCOMBAT_SPY"
-   ]
-  }
- },
- "succession": {
-  "promotionLine": "PROMOTIONLINE_REVOLUTIONARY"
- },
- "ai": {
-  "flavours": [
-   {
-    "FLAVOR_MILITARY": 3
-   },
-   {
-    "FLAVOR_RELIGION": 0
-   },
-   {
-    "FLAVOR_PRODUCTION": 2
-   },
-   {
-    "FLAVOR_GOLD": 3
-   },
-   {
-    "FLAVOR_SCIENCE": 1
-   },
-   {
-    "FLAVOR_CULTURE": 6
-   },
-   {
-    "FLAVOR_GROWTH": -2
-   },
-   {
-    "FLAVOR_ESPIONAGE": 2
-   }
-  ]
- },
- "ui": {
-  "art": {
-   "icon": "art/Buttons/Traits/TraitRevolutionary.dds"
-  }
- },
- "identity": {
-  "impurePropertyManipulators": true
- },
  "strategy": "TXT_KEY_TRAIT_COMPLEX_REVOLUTIONARY_STRATEGY",
  "excludes": [
   "TRAIT_USURPER"
  ],
  "food": {
   "empire": {
+   "specialists": {
+    "SPECIALIST_CITIZEN": {
+     "flat": 1
+    },
+    "SPECIALIST_SETTLED_CITIZEN": {
+     "flat": 1
+    }
+   },
    "capital": {
     "percent": 5
    }
@@ -113,6 +23,14 @@
  },
  "production": {
   "empire": {
+   "specialists": {
+    "SPECIALIST_CITIZEN": {
+     "flat": 1
+    },
+    "SPECIALIST_SETTLED_CITIZEN": {
+     "flat": 1
+    }
+   },
    "capital": {
     "percent": 5
    }
@@ -130,8 +48,45 @@
  },
  "commerce": {
   "empire": {
+   "specialists": {
+    "SPECIALIST_CITIZEN": {
+     "flat": 1
+    },
+    "SPECIALIST_SETTLED_CITIZEN": {
+     "flat": 1
+    }
+   },
    "capital": {
     "percent": 5
+   }
+  }
+ },
+ "gold": {
+  "empire": {
+   "flat": 1,
+   "percent": 5,
+   "specialists": {
+    "SPECIALIST_CITIZEN": {
+     "flat": 1
+    },
+    "SPECIALIST_SETTLED_CITIZEN": {
+     "flat": 1
+    }
+   },
+   "capital": {
+    "percent": 10
+   }
+  }
+ },
+ "research": {
+  "empire": {
+   "specialists": {
+    "SPECIALIST_CITIZEN": {
+     "flat": 1
+    },
+    "SPECIALIST_SETTLED_CITIZEN": {
+     "flat": 1
+    }
    }
   }
  },
@@ -139,9 +94,34 @@
   "empire": {
    "flat": 1,
    "percent": 5,
+   "specialists": {
+    "SPECIALIST_CITIZEN": {
+     "flat": 1
+    },
+    "SPECIALIST_SETTLED_CITIZEN": {
+     "flat": 1
+    }
+   },
    "capital": {
     "percent": 10
    }
+  }
+ },
+ "espionage": {
+  "empire": {
+   "specialists": {
+    "SPECIALIST_CITIZEN": {
+     "flat": 1
+    },
+    "SPECIALIST_SETTLED_CITIZEN": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "happiness": {
+  "empire": {
+   "flat": 1
   }
  },
  "combat": {
@@ -191,5 +171,69 @@
     "flat": -1
    }
   }
+ },
+ "revolution": {
+  "empire": {
+   "local": {
+    "flat": -3
+   },
+   "national": {
+    "flat": -4
+   },
+   "distanceModifier": {
+    "percent": -30
+   }
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": {
+    "value": 1,
+    "per": {
+     "type": "POPULATION",
+     "each": 2,
+     "scope": "city"
+    }
+   }
+  }
+ },
+ "succession": {
+  "promotionLine": "PROMOTIONLINE_REVOLUTIONARY"
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 3
+   },
+   {
+    "FLAVOR_RELIGION": 0
+   },
+   {
+    "FLAVOR_PRODUCTION": 2
+   },
+   {
+    "FLAVOR_GOLD": 3
+   },
+   {
+    "FLAVOR_SCIENCE": 1
+   },
+   {
+    "FLAVOR_CULTURE": 6
+   },
+   {
+    "FLAVOR_GROWTH": -2
+   },
+   {
+    "FLAVOR_ESPIONAGE": 2
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Traits/TraitRevolutionary.dds"
+  }
+ },
+ "identity": {
+  "impurePropertyManipulators": true
  }
 }

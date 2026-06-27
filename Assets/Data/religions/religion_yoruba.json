@@ -21,7 +21,7 @@
     {
      "value": 4,
      "enabled": {
-      "HOLY_CITY": "RELIGION_YORUBA"
+      "IS_HOLY_CITY": "RELIGION_YORUBA"
      }
     },
     {

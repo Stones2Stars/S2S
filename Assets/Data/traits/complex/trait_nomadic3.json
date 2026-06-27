@@ -518,6 +518,20 @@
     "IMPROVEMENT_NATURE_PRESERVE": {
      "flat": 1
     }
+   },
+   "specialists": {
+    "SPECIALIST_GREAT_HUNTER": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "gold": {
+  "empire": {
+   "specialists": {
+    "SPECIALIST_GREAT_HUNTER": {
+     "flat": 2
+    }
    }
   }
  },

@@ -54,10 +54,30 @@
    }
   }
  },
+ "commerce": {
+  "empire": {
+   "specialists": {
+    "SPECIALIST_MERCHANT": {
+     "flat": -1
+    },
+    "SPECIALIST_GREAT_MERCHANT": {
+     "flat": -1
+    }
+   }
+  }
+ },
  "gold": {
   "empire": {
    "flat": -6,
    "percent": -5,
+   "specialists": {
+    "SPECIALIST_NOBLE": {
+     "flat": -2
+    },
+    "SPECIALIST_ANDROID_WORKER": {
+     "flat": -1
+    }
+   },
    "capital": {
     "percent": -5
    },

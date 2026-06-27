@@ -28,6 +28,18 @@
    }
   }
  },
+ "culture": {
+  "empire": {
+   "specialists": {
+    "SPECIALIST_NOBLE": {
+     "flat": 1
+    },
+    "SPECIALIST_CELEBRITY": {
+     "flat": 1
+    }
+   }
+  }
+ },
  "happiness": {
   "empire": {
    "largestCity": {

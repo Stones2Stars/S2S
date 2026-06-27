@@ -15,12 +15,35 @@
  },
  "production": {
   "empire": {
-   "flat": 1
+   "flat": 1,
+   "specialists": {
+    "SPECIALIST_ARTIST": {
+     "flat": -1
+    },
+    "SPECIALIST_GREAT_ARTIST": {
+     "flat": -1
+    }
+   }
   }
  },
  "commerce": {
   "empire": {
    "percent": 5
+  }
+ },
+ "culture": {
+  "empire": {
+   "specialists": {
+    "SPECIALIST_CELEBRITY": {
+     "flat": -1
+    },
+    "SPECIALIST_ARTIST": {
+     "flat": -1
+    },
+    "SPECIALIST_GREAT_ARTIST": {
+     "flat": -1
+    }
+   }
   }
  },
  "happiness": {

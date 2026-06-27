@@ -13,6 +13,17 @@
  ],
  "food": {
   "empire": {
+   "specialists": {
+    "SPECIALIST_NOBLE": {
+     "flat": 1
+    },
+    "SPECIALIST_LAWYER": {
+     "flat": 1
+    },
+    "SPECIALIST_GREAT_STATESMAN": {
+     "flat": 1
+    }
+   },
    "capital": {
     "percent": 5
    }
@@ -20,6 +31,17 @@
  },
  "production": {
   "empire": {
+   "specialists": {
+    "SPECIALIST_NOBLE": {
+     "flat": 1
+    },
+    "SPECIALIST_LAWYER": {
+     "flat": 1
+    },
+    "SPECIALIST_GREAT_STATESMAN": {
+     "flat": 1
+    }
+   },
    "capital": {
     "percent": 5
    }
@@ -37,8 +59,31 @@
  },
  "commerce": {
   "empire": {
+   "specialists": {
+    "SPECIALIST_NOBLE": {
+     "flat": 1
+    },
+    "SPECIALIST_LAWYER": {
+     "flat": 1
+    },
+    "SPECIALIST_GREAT_STATESMAN": {
+     "flat": 1
+    }
+   },
    "capital": {
     "percent": 5
+   }
+  }
+ },
+ "research": {
+  "empire": {
+   "specialists": {
+    "SPECIALIST_SPY": {
+     "flat": 1
+    },
+    "SPECIALIST_GREAT_SPY": {
+     "flat": 1
+    }
    }
   }
  },

@@ -291,10 +291,51 @@
    }
   }
  },
+ "commerce": {
+  "empire": {
+   "specialists": {
+    "SPECIALIST_MERCHANT": {
+     "flat": -1
+    },
+    "SPECIALIST_NOBLE": {
+     "flat": -1
+    },
+    "SPECIALIST_GREAT_MERCHANT": {
+     "flat": -1
+    }
+   }
+  }
+ },
  "gold": {
   "empire": {
    "flat": -2,
    "percent": -10,
+   "specialists": {
+    "SPECIALIST_MERCHANT": {
+     "flat": -2
+    },
+    "SPECIALIST_NOBLE": {
+     "flat": -2
+    },
+    "SPECIALIST_GREAT_MERCHANT": {
+     "flat": -2
+    },
+    "SPECIALIST_CITIZEN": {
+     "flat": -1
+    },
+    "SPECIALIST_SLAVES": {
+     "flat": -1
+    },
+    "SPECIALIST_SETTLED_CITIZEN": {
+     "flat": -1
+    },
+    "SPECIALIST_SETTLED_SLAVE": {
+     "flat": -1
+    },
+    "SPECIALIST_ANDROID_WORKER": {
+     "flat": -1
+    }
+   },
    "capital": {
     "percent": -10
    },

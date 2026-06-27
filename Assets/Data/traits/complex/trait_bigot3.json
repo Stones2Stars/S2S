@@ -6,6 +6,39 @@
  "excludes": [
   "TRAIT_PROGRESSIVE1"
  ],
+ "production": {
+  "empire": {
+   "specialists": {
+    "SPECIALIST_ANDROID_WORKER": {
+     "flat": 2
+    }
+   }
+  }
+ },
+ "gold": {
+  "empire": {
+   "specialists": {
+    "SPECIALIST_ANDROID_WORKER": {
+     "flat": 2
+    },
+    "SPECIALIST_SETTLED_SLAVE": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "culture": {
+  "empire": {
+   "specialists": {
+    "SPECIALIST_ANDROID_WORKER": {
+     "flat": 2
+    },
+    "SPECIALIST_SETTLED_SLAVE": {
+     "flat": 1
+    }
+   }
+  }
+ },
  "happiness": {
   "empire": {
    "flat": -1,

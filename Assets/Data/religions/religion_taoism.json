@@ -22,7 +22,7 @@
     {
      "value": 2,
      "enabled": {
-      "HOLY_CITY": "RELIGION_TAOISM"
+      "IS_HOLY_CITY": "RELIGION_TAOISM"
      }
     }
    ]

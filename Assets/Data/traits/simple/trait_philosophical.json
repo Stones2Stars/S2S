@@ -20,6 +20,27 @@
    }
   }
  },
+ "gold": {
+  "empire": {
+   "specialists": {
+    "SPECIALIST_ARTIST": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "culture": {
+  "empire": {
+   "specialists": {
+    "SPECIALIST_ARTIST": {
+     "flat": 1
+    },
+    "SPECIALIST_SCIENTIST": {
+     "flat": 1
+    }
+   }
+  }
+ },
  "greatPeopleRate": {
   "empire": {
    "percent": 100

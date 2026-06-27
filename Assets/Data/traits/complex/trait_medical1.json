@@ -12,6 +12,18 @@
  "excludes": [
   "TRAIT_UNSANITARY1"
  ],
+ "food": {
+  "empire": {
+   "specialists": {
+    "SPECIALIST_DOCTOR": {
+     "flat": 1
+    },
+    "SPECIALIST_GREAT_DOCTOR": {
+     "flat": 1
+    }
+   }
+  }
+ },
  "buildRate": {
   "empire": {
    "buildings": {
@@ -178,6 +190,20 @@
  },
  "research": {
   "empire": {
+   "specialists": {
+    "SPECIALIST_PRIEST": {
+     "flat": 1
+    },
+    "SPECIALIST_GREAT_PROPHET": {
+     "flat": 1
+    },
+    "SPECIALIST_DOCTOR": {
+     "flat": 1
+    },
+    "SPECIALIST_GREAT_DOCTOR": {
+     "flat": 1
+    }
+   },
    "byTech": {
     "TECH_HERBALISM": {
      "percent": 20

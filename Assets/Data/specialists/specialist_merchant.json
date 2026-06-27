@@ -2,184 +2,30 @@
  "type": "SPECIALIST_MERCHANT",
  "description": "TXT_KEY_SPECIALIST_MERCHANT",
  "civilopedia": "TXT_KEY_CONCEPT_SPECIALISTS_PEDIA",
- "food": {
-  "empire": {
-   "flat": [
-    {
-     "value": 1,
-     "enabled": {
-      "type": "TRAIT_NEGOTIATOR",
-      "scope": "empire"
-     }
-    },
-    {
-     "value": 1,
-     "enabled": {
-      "type": "TRAIT_NEGOTIATOR2",
-      "scope": "empire"
-     }
-    },
-    {
-     "value": -1,
-     "enabled": {
-      "type": "TRAIT_COMPLEX_ISOLATIONIST",
-      "scope": "empire"
-     }
-    },
-    {
-     "value": -1,
-     "enabled": {
-      "type": "TRAIT_ISOLATIONIST2",
-      "scope": "empire"
-     }
-    }
-   ]
-  }
- },
- "production": {
-  "empire": {
-   "flat": [
-    {
-     "value": 1,
-     "enabled": {
-      "type": "TRAIT_NEGOTIATOR",
-      "scope": "empire"
-     }
-    },
-    {
-     "value": 1,
-     "enabled": {
-      "type": "TRAIT_NEGOTIATOR3",
-      "scope": "empire"
-     }
-    },
-    {
-     "value": -1,
-     "enabled": {
-      "type": "TRAIT_COMPLEX_ISOLATIONIST",
-      "scope": "empire"
-     }
-    },
-    {
-     "value": -1,
-     "enabled": {
-      "type": "TRAIT_ISOLATIONIST3",
-      "scope": "empire"
-     }
-    }
-   ]
-  }
- },
  "commerce": {
   "city": {
-   "flat": [
-    3,
-    {
-     "value": 1,
-     "enabled": {
-      "type": "BUILDING_ADAM_SMITHS_TRADING_COMPANY",
-      "scope": "city"
-     }
-    },
-    {
-     "value": 1,
-     "enabled": {
-      "type": "BUILDING_MARCO_POLOS_EMBASSY",
-      "scope": "city"
-     }
-    },
-    {
-     "value": 1,
-     "enabled": {
-      "type": "BUILDING_SILK_ROAD",
-      "scope": "city"
-     }
-    }
-   ]
+   "flat": 3
   },
   "empire": {
    "flat": [
     {
      "value": 1,
      "enabled": {
-      "type": "TRAIT_COMPLEX_FINANCIAL",
+      "type": "BUILDING_ADAM_SMITHS_TRADING_COMPANY",
       "scope": "empire"
      }
     },
     {
      "value": 1,
      "enabled": {
-      "type": "TRAIT_COMPLEX_FINANCIAL1",
+      "type": "BUILDING_MARCO_POLOS_EMBASSY",
       "scope": "empire"
      }
     },
     {
      "value": 1,
      "enabled": {
-      "type": "TRAIT_FINANCIAL3",
-      "scope": "empire"
-     }
-    },
-    {
-     "value": -1,
-     "enabled": {
-      "type": "TRAIT_GREEDY",
-      "scope": "empire"
-     }
-    },
-    {
-     "value": -1,
-     "enabled": {
-      "type": "TRAIT_GREEDY1",
-      "scope": "empire"
-     }
-    },
-    {
-     "value": -1,
-     "enabled": {
-      "type": "TRAIT_GREEDY3",
-      "scope": "empire"
-     }
-    },
-    {
-     "value": 1,
-     "enabled": {
-      "type": "TRAIT_NEGOTIATOR",
-      "scope": "empire"
-     }
-    },
-    {
-     "value": 1,
-     "enabled": {
-      "type": "TRAIT_NEGOTIATOR1",
-      "scope": "empire"
-     }
-    },
-    {
-     "value": -1,
-     "enabled": {
-      "type": "TRAIT_COMPLEX_ISOLATIONIST",
-      "scope": "empire"
-     }
-    },
-    {
-     "value": -1,
-     "enabled": {
-      "type": "TRAIT_COMPLEX_ISOLATIONIST1",
-      "scope": "empire"
-     }
-    },
-    {
-     "value": 1,
-     "enabled": {
-      "type": "TRAIT_FINANCIAL",
-      "scope": "empire"
-     }
-    },
-    {
-     "value": 1,
-     "enabled": {
-      "type": "TRAIT_FINANCIAL1",
+      "type": "BUILDING_SILK_ROAD",
       "scope": "empire"
      }
     }
@@ -204,108 +50,6 @@
      }
     }
    ]
-  },
-  "empire": {
-   "flat": [
-    {
-     "value": 2,
-     "enabled": {
-      "type": "TRAIT_COMPLEX_FINANCIAL",
-      "scope": "empire"
-     }
-    },
-    {
-     "value": 2,
-     "enabled": {
-      "type": "TRAIT_FINANCIAL2",
-      "scope": "empire"
-     }
-    },
-    {
-     "value": -2,
-     "enabled": {
-      "type": "TRAIT_GREEDY",
-      "scope": "empire"
-     }
-    },
-    {
-     "value": -2,
-     "enabled": {
-      "type": "TRAIT_GREEDY2",
-      "scope": "empire"
-     }
-    },
-    {
-     "value": 1,
-     "enabled": {
-      "type": "TRAIT_COMPLEX_PHILOSOPHICAL",
-      "scope": "empire"
-     }
-    },
-    {
-     "value": 1,
-     "enabled": {
-      "type": "TRAIT_PHILOSOPHICAL3",
-      "scope": "empire"
-     }
-    },
-    {
-     "value": -1,
-     "enabled": {
-      "type": "TRAIT_COMPLEX_POPULIST",
-      "scope": "empire"
-     }
-    },
-    {
-     "value": -1,
-     "enabled": {
-      "type": "TRAIT_POPULIST3",
-      "scope": "empire"
-     }
-    },
-    {
-     "value": -1,
-     "enabled": {
-      "type": "TRAIT_PROLIFIC1",
-      "scope": "empire"
-     }
-    },
-    {
-     "value": 1,
-     "enabled": {
-      "type": "TRAIT_GRIM2",
-      "scope": "empire"
-     }
-    },
-    {
-     "value": 1,
-     "enabled": {
-      "type": "TRAIT_LAWFUL",
-      "scope": "empire"
-     }
-    },
-    {
-     "value": 1,
-     "enabled": {
-      "type": "TRAIT_LAWFUL1",
-      "scope": "empire"
-     }
-    },
-    {
-     "value": -1,
-     "enabled": {
-      "type": "TRAIT_CROOKED",
-      "scope": "empire"
-     }
-    },
-    {
-     "value": -1,
-     "enabled": {
-      "type": "TRAIT_CROOKED1",
-      "scope": "empire"
-     }
-    }
-   ]
   }
  },
  "research": {
@@ -315,19 +59,6 @@
      "value": 50,
      "enabled": {
       "type": "CIVIC_GUILDS",
-      "scope": "empire"
-     }
-    }
-   ]
-  }
- },
- "culture": {
-  "empire": {
-   "flat": [
-    {
-     "value": 2,
-     "enabled": {
-      "type": "TRAIT_CREATIVE1",
       "scope": "empire"
      }
     }

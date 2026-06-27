@@ -6,6 +6,18 @@
  "excludes": [
   "TRAIT_MEDICAL1"
  ],
+ "production": {
+  "empire": {
+   "specialists": {
+    "SPECIALIST_ENGINEER": {
+     "flat": -1
+    },
+    "SPECIALIST_GREAT_ENGINEER": {
+     "flat": -1
+    }
+   }
+  }
+ },
  "buildRate": {
   "empire": {
    "buildings": {
@@ -109,6 +121,14 @@
  },
  "research": {
   "empire": {
+   "specialists": {
+    "SPECIALIST_SCIENTIST": {
+     "flat": -1
+    },
+    "SPECIALIST_GREAT_SCIENTIST": {
+     "flat": -1
+    }
+   },
    "byTech": {
     "TECH_GASTRONOMY": {
      "percent": -20
@@ -166,6 +186,18 @@
     },
     "TECH_ARTIFICIAL_LIFE": {
      "percent": -20
+    }
+   }
+  }
+ },
+ "culture": {
+  "empire": {
+   "specialists": {
+    "SPECIALIST_DOCTOR": {
+     "flat": -1
+    },
+    "SPECIALIST_GREAT_DOCTOR": {
+     "flat": -1
     }
    }
   }

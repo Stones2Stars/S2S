@@ -23,7 +23,7 @@
     {
      "value": 4,
      "enabled": {
-      "HOLY_CITY": "RELIGION_BUDDHISM"
+      "IS_HOLY_CITY": "RELIGION_BUDDHISM"
      }
     },
     {
@@ -41,7 +41,7 @@
     {
      "value": 4,
      "enabled": {
-      "HOLY_CITY": "RELIGION_BUDDHISM"
+      "IS_HOLY_CITY": "RELIGION_BUDDHISM"
      }
     },
     {

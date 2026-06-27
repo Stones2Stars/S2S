@@ -2,6 +2,12 @@
  "type": "TRAIT_SPIRITUAL",
  "description": "TXT_KEY_TRAIT_COMPLEX_SPIRITUAL",
  "civilopedia": "TXT_KEY_TRAIT_COMPLEX_SPIRITUAL_PEDIA",
+ "strategy": "TXT_KEY_TRAIT_COMPLEX_SPIRITUAL_STRATEGY",
+ "excludes": [
+  "TRAIT_ANTI_CLERICAL",
+  "TRAIT_FANATICAL",
+  "TRAIT_PIOUS"
+ ],
  "buildRate": {
   "empire": {
    "unitCombats": {
@@ -14,100 +20,40 @@
    }
   }
  },
- "happiness": {
+ "commerce": {
   "empire": {
-   "nonStateReligion": {
-    "flat": 1
+   "specialists": {
+    "SPECIALIST_PRIEST": {
+     "flat": 1
+    },
+    "SPECIALIST_GREAT_PROPHET": {
+     "flat": 1
+    }
    }
   }
  },
- "durations": {
+ "gold": {
   "empire": {
-   "religiousAnarchy": {
-    "percent": -100
+   "specialists": {
+    "SPECIALIST_PRIEST": {
+     "flat": 1
+    },
+    "SPECIALIST_GREAT_PROPHET": {
+     "flat": 1
+    }
    }
   }
  },
- "stateReligion": {
-  "empire": {
-   "happiness": {
-    "flat": 1
-   },
-   "holyCityXP": {
-    "percent": 10
-   },
-   "spreadProbability": {
-    "percent": 10
-   },
-   "nonStateSpreadProbability": {
-    "percent": 10
-   }
-  }
- },
- "revolution": {
-  "empire": {
-   "holyCityGood": {
-    "flat": 5
-   },
-   "holyCityBad": {
-    "flat": -5
-   },
-   "badReligionMod": {
-    "percent": -20
-   },
-   "goodReligionMod": {
-    "percent": 20
-   }
-  }
- },
- "succession": {
-  "promotionLine": "PROMOTIONLINE_SPIRITUAL"
- },
- "ai": {
-  "flavours": [
-   {
-    "FLAVOR_MILITARY": -4
-   },
-   {
-    "FLAVOR_RELIGION": 21
-   },
-   {
-    "FLAVOR_PRODUCTION": -1
-   },
-   {
-    "FLAVOR_GOLD": 1
-   },
-   {
-    "FLAVOR_SCIENCE": 0
-   },
-   {
-    "FLAVOR_CULTURE": 0
-   },
-   {
-    "FLAVOR_GROWTH": -1
-   },
-   {
-    "FLAVOR_ESPIONAGE": -1
-   }
-  ]
- },
- "ui": {
-  "art": {
-   "icon": "art/Buttons/Traits/TraitSpiritual.dds"
-  }
- },
- "identity": {
-  "shortDescription": "TXT_KEY_TRAIT_SPIRITUAL_SHORT",
-  "maxAnarchy": 0
- },
- "strategy": "TXT_KEY_TRAIT_COMPLEX_SPIRITUAL_STRATEGY",
- "excludes": [
-  "TRAIT_ANTI_CLERICAL",
-  "TRAIT_FANATICAL",
-  "TRAIT_PIOUS"
- ],
  "research": {
   "empire": {
+   "specialists": {
+    "SPECIALIST_PRIEST": {
+     "flat": 1
+    },
+    "SPECIALIST_GREAT_PROPHET": {
+     "flat": 1
+    }
+   },
    "byTech": {
     "TECH_RITUALISM": {
      "percent": 20
@@ -292,6 +238,37 @@
    }
   }
  },
+ "culture": {
+  "empire": {
+   "specialists": {
+    "SPECIALIST_PRIEST": {
+     "flat": 1
+    },
+    "SPECIALIST_GREAT_PROPHET": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "espionage": {
+  "empire": {
+   "specialists": {
+    "SPECIALIST_PRIEST": {
+     "flat": 1
+    },
+    "SPECIALIST_GREAT_PROPHET": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "happiness": {
+  "empire": {
+   "nonStateReligion": {
+    "flat": 1
+   }
+  }
+ },
  "greatPeopleRate": {
   "empire": {
    "units": {
@@ -323,10 +300,49 @@
    "percent": -50
   }
  },
+ "durations": {
+  "empire": {
+   "religiousAnarchy": {
+    "percent": -100
+   }
+  }
+ },
  "diplomacy": {
   "empire": {
    "warWeariness": {
     "percent": 40
+   }
+  }
+ },
+ "stateReligion": {
+  "empire": {
+   "happiness": {
+    "flat": 1
+   },
+   "holyCityXP": {
+    "percent": 10
+   },
+   "spreadProbability": {
+    "percent": 10
+   },
+   "nonStateSpreadProbability": {
+    "percent": 10
+   }
+  }
+ },
+ "revolution": {
+  "empire": {
+   "holyCityGood": {
+    "flat": 5
+   },
+   "holyCityBad": {
+    "flat": -5
+   },
+   "badReligionMod": {
+    "percent": -20
+   },
+   "goodReligionMod": {
+    "percent": 20
    }
   }
  },
@@ -336,5 +352,41 @@
  },
  "grants": {
   "goldenAgeOnBirthOfGreatPerson": "UNIT_PROPHET"
+ },
+ "succession": {
+  "promotionLine": "PROMOTIONLINE_SPIRITUAL"
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": -4
+   },
+   {
+    "FLAVOR_RELIGION": 21
+   },
+   {
+    "FLAVOR_PRODUCTION": -1
+   },
+   {
+    "FLAVOR_GOLD": 1
+   },
+   {
+    "FLAVOR_SCIENCE": 0
+   },
+   {
+    "FLAVOR_CULTURE": 0
+   },
+   {
+    "FLAVOR_GROWTH": -1
+   },
+   {
+    "FLAVOR_ESPIONAGE": -1
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Traits/TraitSpiritual.dds"
+  }
  }
 }

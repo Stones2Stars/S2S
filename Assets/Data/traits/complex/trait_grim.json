@@ -28,7 +28,18 @@
  "gold": {
   "empire": {
    "flat": 2,
-   "percent": 10
+   "percent": 10,
+   "specialists": {
+    "SPECIALIST_ENGINEER": {
+     "flat": 1
+    },
+    "SPECIALIST_GREAT_ENGINEER": {
+     "flat": 1
+    },
+    "SPECIALIST_NOBLE": {
+     "flat": 1
+    }
+   }
   }
  },
  "happiness": {

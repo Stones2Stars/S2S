@@ -22,7 +22,7 @@
     {
      "value": 4,
      "enabled": {
-      "HOLY_CITY": "RELIGION_JUDAISM"
+      "IS_HOLY_CITY": "RELIGION_JUDAISM"
      }
     },
     {
@@ -40,7 +40,7 @@
     {
      "value": 4,
      "enabled": {
-      "HOLY_CITY": "RELIGION_JUDAISM"
+      "IS_HOLY_CITY": "RELIGION_JUDAISM"
      }
     },
     {

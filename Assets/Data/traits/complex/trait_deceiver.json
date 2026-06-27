@@ -2,6 +2,10 @@
  "type": "TRAIT_DECEIVER",
  "description": "TXT_KEY_TRAIT_COMPLEX_DECEIVER",
  "civilopedia": "TXT_KEY_TRAIT_COMPLEX_DECEIVER_PEDIA",
+ "strategy": "TXT_KEY_TRAIT_COMPLEX_DECEIVER_STRATEGY",
+ "excludes": [
+  "TRAIT_NAIVE"
+ ],
  "buildRate": {
   "empire": {
    "buildings": {
@@ -202,88 +206,24 @@
    }
   }
  },
- "espionage": {
+ "commerce": {
   "empire": {
-   "flat": 2,
-   "percent": 10,
-   "capital": {
-    "percent": 10
-   },
-   "specialist": {
-    "perSpecialist": 1
+   "specialists": {
+    "SPECIALIST_SPY": {
+     "flat": 1
+    },
+    "SPECIALIST_GREAT_SPY": {
+     "flat": 1
+    },
+    "SPECIALIST_INVESTIGATOR": {
+     "flat": 1
+    },
+    "SPECIALIST_GREAT_SLEUTH": {
+     "flat": 1
+    }
    }
   }
  },
- "diplomacy": {
-  "empire": {
-   "attitude": {
-    "flat": -1
-   },
-   "enemyWarWeariness": {
-    "percent": -20
-   }
-  }
- },
- "revolution": {
-  "empire": {
-   "local": {
-    "flat": -1
-   },
-   "national": {
-    "flat": -10
-   }
-  }
- },
- "grants": {
-  "freePromotions": {
-   "PROMOTION_DECEIVER": [
-    "UNITCOMBAT_SPY"
-   ]
-  }
- },
- "succession": {
-  "promotionLine": "PROMOTIONLINE_DECEIVER"
- },
- "ai": {
-  "flavours": [
-   {
-    "FLAVOR_MILITARY": -2
-   },
-   {
-    "FLAVOR_RELIGION": 0
-   },
-   {
-    "FLAVOR_PRODUCTION": 1
-   },
-   {
-    "FLAVOR_GOLD": 0
-   },
-   {
-    "FLAVOR_SCIENCE": 1
-   },
-   {
-    "FLAVOR_CULTURE": 0
-   },
-   {
-    "FLAVOR_GROWTH": -7
-   },
-   {
-    "FLAVOR_ESPIONAGE": 22
-   }
-  ]
- },
- "ui": {
-  "art": {
-   "icon": "art/Buttons/Traits/TraitDeceiver.dds"
-  }
- },
- "identity": {
-  "impurePropertyManipulators": true
- },
- "strategy": "TXT_KEY_TRAIT_COMPLEX_DECEIVER_STRATEGY",
- "excludes": [
-  "TRAIT_NAIVE"
- ],
  "research": {
   "empire": {
    "byTech": {
@@ -416,6 +356,47 @@
    }
   }
  },
+ "espionage": {
+  "empire": {
+   "flat": 2,
+   "percent": 10,
+   "specialists": {
+    "SPECIALIST_SPY": {
+     "flat": 2
+    },
+    "SPECIALIST_GREAT_SPY": {
+     "flat": 2
+    },
+    "SPECIALIST_INVESTIGATOR": {
+     "flat": 2
+    },
+    "SPECIALIST_GREAT_SLEUTH": {
+     "flat": 2
+    },
+    "SPECIALIST_CITIZEN": {
+     "flat": 1
+    },
+    "SPECIALIST_SLAVES": {
+     "flat": 1
+    },
+    "SPECIALIST_SETTLED_CITIZEN": {
+     "flat": 1
+    },
+    "SPECIALIST_SETTLED_SLAVE": {
+     "flat": 1
+    },
+    "SPECIALIST_ANDROID_WORKER": {
+     "flat": 1
+    }
+   },
+   "capital": {
+    "percent": 10
+   },
+   "specialist": {
+    "perSpecialist": 1
+   }
+  }
+ },
  "happiness": {
   "empire": {
    "flat": -1
@@ -456,6 +437,16 @@
    }
   }
  },
+ "diplomacy": {
+  "empire": {
+   "attitude": {
+    "flat": -1
+   },
+   "enemyWarWeariness": {
+    "percent": -20
+   }
+  }
+ },
  "PROPERTY_CRIME": {
   "city": {
    "flat": {
@@ -479,5 +470,51 @@
     }
    }
   }
+ },
+ "grants": {
+  "freePromotions": {
+   "PROMOTION_DECEIVER": [
+    "UNITCOMBAT_SPY"
+   ]
+  }
+ },
+ "succession": {
+  "promotionLine": "PROMOTIONLINE_DECEIVER"
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": -2
+   },
+   {
+    "FLAVOR_RELIGION": 0
+   },
+   {
+    "FLAVOR_PRODUCTION": 1
+   },
+   {
+    "FLAVOR_GOLD": 0
+   },
+   {
+    "FLAVOR_SCIENCE": 1
+   },
+   {
+    "FLAVOR_CULTURE": 0
+   },
+   {
+    "FLAVOR_GROWTH": -7
+   },
+   {
+    "FLAVOR_ESPIONAGE": 22
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Traits/TraitDeceiver.dds"
+  }
+ },
+ "identity": {
+  "impurePropertyManipulators": true
  }
 }

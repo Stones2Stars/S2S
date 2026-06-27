@@ -2,10 +2,23 @@
  "type": "TRAIT_PROTECTIVE1",
  "description": "TXT_KEY_TRAIT_COMPLEX_PROTECTIVE1",
  "civilopedia": "TXT_KEY_TRAIT_COMPLEX_PROTECTIVE1_PEDIA",
- "enables": {
-  "traits": [
-   "TRAIT_PROTECTIVE2"
-  ]
+ "strategy": "TXT_KEY_TRAIT_COMPLEX_PROTECTIVE_STRATEGY",
+ "excludes": [
+  "TRAIT_NEGLIGENT1"
+ ],
+ "food": {
+  "empire": {
+   "goldenAge": {
+    "flat": -2
+   }
+  }
+ },
+ "production": {
+  "empire": {
+   "goldenAge": {
+    "flat": -2
+   }
+  }
  },
  "buildRate": {
   "empire": {
@@ -139,6 +152,84 @@
    }
   }
  },
+ "commerce": {
+  "empire": {
+   "goldenAge": {
+    "flat": -2
+   }
+  }
+ },
+ "gold": {
+  "empire": {
+   "goldenAge": {
+    "flat": -1
+   }
+  }
+ },
+ "research": {
+  "empire": {
+   "byTech": {
+    "TECH_SIMPLE_WOOD_WORKING": {
+     "percent": 20
+    },
+    "TECH_CARPENTRY": {
+     "percent": 20
+    },
+    "TECH_FIRE_MAKING": {
+     "percent": 20
+    },
+    "TECH_MEGALITH_CONSTRUCTION": {
+     "percent": 20
+    },
+    "TECH_MASONRY": {
+     "percent": 20
+    },
+    "TECH_ENGINEERING": {
+     "percent": 20
+    },
+    "TECH_MATHEMATICS": {
+     "percent": 20
+    },
+    "TECH_SIEGE_WARFARE": {
+     "percent": 20
+    },
+    "TECH_MACHINERY": {
+     "percent": 20
+    },
+    "TECH_FEUDALISM": {
+     "percent": 20
+    },
+    "TECH_YEOMANRY": {
+     "percent": 20
+    }
+   },
+   "goldenAge": {
+    "flat": -1
+   }
+  }
+ },
+ "culture": {
+  "empire": {
+   "specialists": {
+    "SPECIALIST_GREAT_MILITARY_INSTRUCTOR": {
+     "flat": 2
+    },
+    "SPECIALIST_GREAT_ADMIRAL": {
+     "flat": 2
+    }
+   },
+   "goldenAge": {
+    "flat": -1
+   }
+  }
+ },
+ "espionage": {
+  "empire": {
+   "goldenAge": {
+    "flat": -1
+   }
+  }
+ },
  "happiness": {
   "empire": {
    "buildings": {
@@ -263,6 +354,18 @@
    }
   }
  },
+ "experience": {
+  "empire": {
+   "inBorder": {
+    "percent": 10
+   }
+  }
+ },
+ "conscript": {
+  "empire": {
+   "flat": 3
+  }
+ },
  "combat": {
   "empire": {
    "cityDefense": {
@@ -286,38 +389,22 @@
    }
   }
  },
- "workRate": {
+ "upkeep": {
   "empire": {
-   "builds": {
-    "BUILD_FORT": {
-     "percent": 50
-    }
+   "freeCivilian": {
+    "perPopulation": 15
    }
+  }
+ },
+ "goldenAge": {
+  "empire": {
+   "percent": -10
   }
  },
  "diplomacy": {
   "empire": {
    "warWeariness": {
     "percent": 5
-   }
-  }
- },
- "revolution": {
-  "empire": {
-   "local": {
-    "flat": -1
-   }
-  }
- },
- "PROPERTY_CRIME": {
-  "city": {
-   "flat": {
-    "value": -1,
-    "per": {
-     "type": "POPULATION",
-     "each": 2,
-     "scope": "city"
-    }
    }
   }
  },
@@ -363,121 +450,6 @@
  "ui": {
   "art": {
    "icon": "art/Buttons/Traits/TraitProtective.dds"
-  }
- },
- "identity": {
-  "shortDescription": "TXT_KEY_TRAIT_PROTECTIVE_SHORT"
- },
- "strategy": "TXT_KEY_TRAIT_COMPLEX_PROTECTIVE_STRATEGY",
- "excludes": [
-  "TRAIT_NEGLIGENT1"
- ],
- "food": {
-  "empire": {
-   "goldenAge": {
-    "flat": -2
-   }
-  }
- },
- "production": {
-  "empire": {
-   "goldenAge": {
-    "flat": -2
-   }
-  }
- },
- "commerce": {
-  "empire": {
-   "goldenAge": {
-    "flat": -2
-   }
-  }
- },
- "gold": {
-  "empire": {
-   "goldenAge": {
-    "flat": -1
-   }
-  }
- },
- "research": {
-  "empire": {
-   "byTech": {
-    "TECH_SIMPLE_WOOD_WORKING": {
-     "percent": 20
-    },
-    "TECH_CARPENTRY": {
-     "percent": 20
-    },
-    "TECH_FIRE_MAKING": {
-     "percent": 20
-    },
-    "TECH_MEGALITH_CONSTRUCTION": {
-     "percent": 20
-    },
-    "TECH_MASONRY": {
-     "percent": 20
-    },
-    "TECH_ENGINEERING": {
-     "percent": 20
-    },
-    "TECH_MATHEMATICS": {
-     "percent": 20
-    },
-    "TECH_SIEGE_WARFARE": {
-     "percent": 20
-    },
-    "TECH_MACHINERY": {
-     "percent": 20
-    },
-    "TECH_FEUDALISM": {
-     "percent": 20
-    },
-    "TECH_YEOMANRY": {
-     "percent": 20
-    }
-   },
-   "goldenAge": {
-    "flat": -1
-   }
-  }
- },
- "culture": {
-  "empire": {
-   "goldenAge": {
-    "flat": -1
-   }
-  }
- },
- "espionage": {
-  "empire": {
-   "goldenAge": {
-    "flat": -1
-   }
-  }
- },
- "experience": {
-  "empire": {
-   "inBorder": {
-    "percent": 10
-   }
-  }
- },
- "conscript": {
-  "empire": {
-   "flat": 3
-  }
- },
- "upkeep": {
-  "empire": {
-   "freeCivilian": {
-    "perPopulation": 15
-   }
-  }
- },
- "goldenAge": {
-  "empire": {
-   "percent": -10
   }
  }
 }

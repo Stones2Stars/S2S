@@ -21,7 +21,7 @@
     {
      "value": 3,
      "enabled": {
-      "HOLY_CITY": "RELIGION_CONFUCIANISM"
+      "IS_HOLY_CITY": "RELIGION_CONFUCIANISM"
      }
     },
     {
@@ -39,7 +39,7 @@
     {
      "value": 4,
      "enabled": {
-      "HOLY_CITY": "RELIGION_CONFUCIANISM"
+      "IS_HOLY_CITY": "RELIGION_CONFUCIANISM"
      }
     }
    ]
@@ -51,7 +51,7 @@
     {
      "value": 4,
      "enabled": {
-      "HOLY_CITY": "RELIGION_CONFUCIANISM"
+      "IS_HOLY_CITY": "RELIGION_CONFUCIANISM"
      }
     },
     {

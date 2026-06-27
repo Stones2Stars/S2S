@@ -2,10 +2,21 @@
  "type": "TRAIT_AGGRESSIVE1",
  "description": "TXT_KEY_TRAIT_COMPLEX_AGGRESSIVE1",
  "civilopedia": "TXT_KEY_TRAIT_COMPLEX_AGGRESSIVE1_PEDIA",
- "enables": {
-  "traits": [
-   "TRAIT_AGGRESSIVE2"
-  ]
+ "strategy": "TXT_KEY_TRAIT_COMPLEX_AGGRESSIVE_STRATEGY",
+ "excludes": [
+  "TRAIT_TIMID1"
+ ],
+ "production": {
+  "empire": {
+   "specialists": {
+    "SPECIALIST_GREAT_MILITARY_INSTRUCTOR": {
+     "flat": 1
+    },
+    "SPECIALIST_GREAT_ADMIRAL": {
+     "flat": 1
+    }
+   }
+  }
  },
  "buildRate": {
   "empire": {
@@ -19,84 +30,6 @@
    }
   }
  },
- "diplomacy": {
-  "empire": {
-   "warWeariness": {
-    "percent": -20
-   },
-   "attitude": {
-    "flat": -1
-   },
-   "enemyWarWeariness": {
-    "percent": 30
-   }
-  }
- },
- "PROPERTY_CRIME": {
-  "city": {
-   "flat": {
-    "value": 5,
-    "enabled": {
-     "type": "PROPERTY_CRIME",
-     "scope": "city",
-     "min": 301
-    }
-   }
-  }
- },
- "grants": {
-  "freePromotions": {
-   "PROMOTION_AGGRESSIVE1": [
-    "UNITCOMBAT_COMBATANT",
-    "UNITCOMBAT_NAVAL_COMBATANT"
-   ]
-  }
- },
- "succession": {
-  "promotionLine": "PROMOTIONLINE_AGGRESSIVE",
-  "priority": 1
- },
- "ai": {
-  "flavours": [
-   {
-    "FLAVOR_MILITARY": 14
-   },
-   {
-    "FLAVOR_RELIGION": 0
-   },
-   {
-    "FLAVOR_PRODUCTION": 0
-   },
-   {
-    "FLAVOR_GOLD": -1
-   },
-   {
-    "FLAVOR_SCIENCE": 0
-   },
-   {
-    "FLAVOR_CULTURE": 0
-   },
-   {
-    "FLAVOR_GROWTH": -1
-   },
-   {
-    "FLAVOR_ESPIONAGE": 0
-   }
-  ]
- },
- "ui": {
-  "art": {
-   "icon": "art/Buttons/Traits/TraitAggressive.dds"
-  }
- },
- "identity": {
-  "shortDescription": "TXT_KEY_TRAIT_AGGRESSIVE_SHORT",
-  "impurePropertyManipulators": true
- },
- "strategy": "TXT_KEY_TRAIT_COMPLEX_AGGRESSIVE_STRATEGY",
- "excludes": [
-  "TRAIT_TIMID1"
- ],
  "greatGeneralRate": {
   "empire": {
    "percent": 10,
@@ -149,6 +82,64 @@
    "upgradePrice": {
     "percent": 20
    }
+  }
+ },
+ "diplomacy": {
+  "empire": {
+   "warWeariness": {
+    "percent": -20
+   },
+   "attitude": {
+    "flat": -1
+   },
+   "enemyWarWeariness": {
+    "percent": 30
+   }
+  }
+ },
+ "grants": {
+  "freePromotions": {
+   "PROMOTION_AGGRESSIVE1": [
+    "UNITCOMBAT_COMBATANT",
+    "UNITCOMBAT_NAVAL_COMBATANT"
+   ]
+  }
+ },
+ "succession": {
+  "promotionLine": "PROMOTIONLINE_AGGRESSIVE",
+  "priority": 1
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 14
+   },
+   {
+    "FLAVOR_RELIGION": 0
+   },
+   {
+    "FLAVOR_PRODUCTION": 0
+   },
+   {
+    "FLAVOR_GOLD": -1
+   },
+   {
+    "FLAVOR_SCIENCE": 0
+   },
+   {
+    "FLAVOR_CULTURE": 0
+   },
+   {
+    "FLAVOR_GROWTH": -1
+   },
+   {
+    "FLAVOR_ESPIONAGE": 0
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Traits/TraitAggressive.dds"
   }
  }
 }

@@ -8,6 +8,18 @@
   "TRAIT_PIOUS1",
   "TRAIT_SPIRITUAL1"
  ],
+ "food": {
+  "empire": {
+   "specialists": {
+    "SPECIALIST_PRIEST": {
+     "flat": -1
+    },
+    "SPECIALIST_GREAT_PROPHET": {
+     "flat": -1
+    }
+   }
+  }
+ },
  "buildRate": {
   "empire": {
    "unitCombats": {
@@ -25,8 +37,28 @@
    "flat": 1
   }
  },
+ "gold": {
+  "empire": {
+   "specialists": {
+    "SPECIALIST_PRIEST": {
+     "flat": -1
+    },
+    "SPECIALIST_GREAT_PROPHET": {
+     "flat": -1
+    }
+   }
+  }
+ },
  "research": {
   "empire": {
+   "specialists": {
+    "SPECIALIST_PRIEST": {
+     "flat": -1
+    },
+    "SPECIALIST_GREAT_PROPHET": {
+     "flat": -1
+    }
+   },
    "byTech": {
     "TECH_DEITIES": {
      "percent": -20

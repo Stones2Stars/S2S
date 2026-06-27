@@ -2,6 +2,24 @@
  "type": "TRAIT_ANTI_CLERICAL",
  "description": "TXT_KEY_TRAIT_ANTI_CLERICAL",
  "civilopedia": "TXT_KEY_TRAIT_ANTI_CLERICAL_PEDIA",
+ "production": {
+  "empire": {
+   "specialists": {
+    "SPECIALIST_PRIEST": {
+     "flat": -1
+    }
+   }
+  }
+ },
+ "espionage": {
+  "empire": {
+   "specialists": {
+    "SPECIALIST_PRIEST": {
+     "flat": 1
+    }
+   }
+  }
+ },
  "happiness": {
   "empire": {
    "buildings": {

@@ -2,29 +2,119 @@
  "type": "TRAIT_POPULIST",
  "description": "TXT_KEY_TRAIT_COMPLEX_POPULIST",
  "civilopedia": "TXT_KEY_TRAIT_COMPLEX_POPULIST_PEDIA",
- "food": {
-  "empire": {
-   "tradeRoute": {
-    "percent": 60
-   }
-  }
- },
+ "strategy": "TXT_KEY_TRAIT_COMPLEX_POPULIST_STRATEGY",
+ "excludes": [
+  "TRAIT_PHILOSOPHICAL"
+ ],
  "production": {
   "empire": {
-   "percent": -5
+   "specialists": {
+    "SPECIALIST_ENGINEER": {
+     "flat": -1
+    },
+    "SPECIALIST_GREAT_ENGINEER": {
+     "flat": -1
+    }
+   }
   }
  },
  "commerce": {
   "empire": {
    "specialist": {
     "perSpecialist": -1
+   },
+   "specialists": {
+    "SPECIALIST_LAWYER": {
+     "flat": -1
+    },
+    "SPECIALIST_GREAT_STATESMAN": {
+     "flat": -1
+    },
+    "SPECIALIST_CITIZEN": {
+     "flat": 1
+    },
+    "SPECIALIST_SLAVES": {
+     "flat": 1
+    },
+    "SPECIALIST_SETTLED_CITIZEN": {
+     "flat": 1
+    },
+    "SPECIALIST_SETTLED_SLAVE": {
+     "flat": 1
+    },
+    "SPECIALIST_ANDROID_WORKER": {
+     "flat": 1
+    }
    }
   }
  },
- "extraYieldThreshold": {
+ "gold": {
   "empire": {
-   "food": {
-    "flat": 8
+   "flat": -1,
+   "percent": -5,
+   "specialists": {
+    "SPECIALIST_MERCHANT": {
+     "flat": -1
+    },
+    "SPECIALIST_GREAT_MERCHANT": {
+     "flat": -1
+    },
+    "SPECIALIST_NOBLE": {
+     "flat": -1
+    }
+   }
+  }
+ },
+ "research": {
+  "empire": {
+   "flat": -1,
+   "percent": -5,
+   "specialists": {
+    "SPECIALIST_SCIENTIST": {
+     "flat": -1
+    },
+    "SPECIALIST_GREAT_SCIENTIST": {
+     "flat": -1
+    },
+    "SPECIALIST_DOCTOR": {
+     "flat": -1
+    },
+    "SPECIALIST_GREAT_DOCTOR": {
+     "flat": -1
+    }
+   }
+  }
+ },
+ "culture": {
+  "empire": {
+   "specialists": {
+    "SPECIALIST_ARTIST": {
+     "flat": -1
+    },
+    "SPECIALIST_GREAT_ARTIST": {
+     "flat": -1
+    },
+    "SPECIALIST_CELEBRITY": {
+     "flat": -1
+    }
+   }
+  }
+ },
+ "espionage": {
+  "empire": {
+   "specialists": {
+    "SPECIALIST_SPY": {
+     "flat": -1
+    },
+    "SPECIALIST_GREAT_SPY": {
+     "flat": -1
+    },
+    "SPECIALIST_INVESTIGATOR": {
+     "flat": -1
+    },
+    "SPECIALIST_GREAT_SLEUTH": {
+     "flat": -1
+    }
    }
   }
  },
@@ -35,16 +125,24 @@
    }
   }
  },
- "health": {
+ "growth": {
   "empire": {
-   "flat": -1
+   "percent": -10
   }
  },
- "combat": {
+ "greatPeopleRate": {
   "empire": {
-   "cityDefense": {
-    "percent": -10
-   }
+   "percent": -40
+  }
+ },
+ "freeSpecialists": {
+  "empire": {
+   "any": -1
+  }
+ },
+ "conscript": {
+  "empire": {
+   "flat": 4
   }
  },
  "upkeep": {
@@ -54,13 +152,34 @@
    }
   }
  },
- "revolution": {
+ "durations": {
   "empire": {
-   "local": {
-    "flat": -1
-   },
-   "national": {
-    "flat": 1
+   "civicAnarchy": {
+    "percent": -10
+   }
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": {
+    "value": -1,
+    "per": {
+     "type": "POPULATION",
+     "each": 4,
+     "scope": "city"
+    }
+   }
+  }
+ },
+ "PROPERTY_EDUCATION": {
+  "city": {
+   "flat": {
+    "value": -1,
+    "per": {
+     "type": "POPULATION",
+     "each": 2,
+     "scope": "city"
+    }
    }
   }
  },
@@ -103,72 +222,5 @@
  "identity": {
   "negativeTrait": true,
   "impurePropertyManipulators": true
- },
- "strategy": "TXT_KEY_TRAIT_COMPLEX_POPULIST_STRATEGY",
- "excludes": [
-  "TRAIT_PHILOSOPHICAL"
- ],
- "gold": {
-  "empire": {
-   "flat": -1,
-   "percent": -5
-  }
- },
- "research": {
-  "empire": {
-   "flat": -1,
-   "percent": -5
-  }
- },
- "growth": {
-  "empire": {
-   "percent": -10
-  }
- },
- "greatPeopleRate": {
-  "empire": {
-   "percent": -40
-  }
- },
- "freeSpecialists": {
-  "empire": {
-   "any": -1
-  }
- },
- "conscript": {
-  "empire": {
-   "flat": 4
-  }
- },
- "durations": {
-  "empire": {
-   "civicAnarchy": {
-    "percent": -10
-   }
-  }
- },
- "PROPERTY_CRIME": {
-  "city": {
-   "flat": {
-    "value": -1,
-    "per": {
-     "type": "POPULATION",
-     "each": 4,
-     "scope": "city"
-    }
-   }
-  }
- },
- "PROPERTY_EDUCATION": {
-  "city": {
-   "flat": {
-    "value": -1,
-    "per": {
-     "type": "POPULATION",
-     "each": 2,
-     "scope": "city"
-    }
-   }
-  }
  }
 }

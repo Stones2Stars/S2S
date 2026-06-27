@@ -27,7 +27,7 @@
     {
      "value": 1,
      "enabled": {
-      "HOLY_CITY": "RELIGION_KEMETISM"
+      "IS_HOLY_CITY": "RELIGION_KEMETISM"
      }
     }
    ]
@@ -39,7 +39,7 @@
     {
      "value": 1,
      "enabled": {
-      "HOLY_CITY": "RELIGION_KEMETISM"
+      "IS_HOLY_CITY": "RELIGION_KEMETISM"
      }
     },
     {

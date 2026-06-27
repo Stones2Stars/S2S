@@ -73,6 +73,18 @@
    }
   }
  },
+ "commerce": {
+  "empire": {
+   "specialists": {
+    "SPECIALIST_INVESTIGATOR": {
+     "flat": 1
+    },
+    "SPECIALIST_GREAT_SLEUTH": {
+     "flat": 1
+    }
+   }
+  }
+ },
  "research": {
   "empire": {
    "byTech": {
@@ -116,6 +128,14 @@
   "empire": {
    "flat": 4,
    "percent": 5,
+   "specialists": {
+    "SPECIALIST_SPY": {
+     "flat": 2
+    },
+    "SPECIALIST_GREAT_SPY": {
+     "flat": 2
+    }
+   },
    "capital": {
     "percent": 5
    },

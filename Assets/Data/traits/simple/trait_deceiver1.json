@@ -81,7 +81,12 @@
  },
  "espionage": {
   "empire": {
-   "flat": 3
+   "flat": 3,
+   "specialists": {
+    "SPECIALIST_SPY": {
+     "flat": 1
+    }
+   }
   }
  },
  "diplomacy": {

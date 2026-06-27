@@ -142,6 +142,18 @@
    }
   }
  },
+ "commerce": {
+  "empire": {
+   "specialists": {
+    "SPECIALIST_INVESTIGATOR": {
+     "flat": 1
+    },
+    "SPECIALIST_GREAT_SLEUTH": {
+     "flat": 1
+    }
+   }
+  }
+ },
  "research": {
   "empire": {
    "byTech": {
@@ -193,6 +205,18 @@
  "culture": {
   "empire": {
    "flat": -1
+  }
+ },
+ "espionage": {
+  "empire": {
+   "specialists": {
+    "SPECIALIST_INVESTIGATOR": {
+     "flat": 1
+    },
+    "SPECIALIST_GREAT_SLEUTH": {
+     "flat": 1
+    }
+   }
   }
  },
  "happiness": {

@@ -5,51 +5,6 @@
  "gold": {
   "city": {
    "flat": 1
-  },
-  "empire": {
-   "flat": [
-    {
-     "value": -1,
-     "enabled": {
-      "type": "TRAIT_COMPLEX_HUMANITARIAN",
-      "scope": "empire"
-     }
-    },
-    {
-     "value": -1,
-     "enabled": {
-      "type": "TRAIT_COMPLEX_HUMANITARIAN1",
-      "scope": "empire"
-     }
-    },
-    {
-     "value": -1,
-     "enabled": {
-      "type": "TRAIT_HUMANITARIAN3",
-      "scope": "empire"
-     }
-    }
-   ]
-  }
- },
- "culture": {
-  "empire": {
-   "flat": [
-    {
-     "value": -1,
-     "enabled": {
-      "type": "TRAIT_COMPLEX_HUMANITARIAN",
-      "scope": "empire"
-     }
-    },
-    {
-     "value": -1,
-     "enabled": {
-      "type": "TRAIT_HUMANITARIAN2",
-      "scope": "empire"
-     }
-    }
-   ]
   }
  },
  "experience": {

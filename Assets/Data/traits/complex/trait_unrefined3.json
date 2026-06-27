@@ -6,6 +6,15 @@
  "excludes": [
   "TRAIT_CREATIVE1"
  ],
+ "production": {
+  "empire": {
+   "specialists": {
+    "SPECIALIST_CELEBRITY": {
+     "flat": -1
+    }
+   }
+  }
+ },
  "buildRate": {
   "empire": {
    "worldWonder": {
@@ -74,6 +83,15 @@
    }
   }
  },
+ "commerce": {
+  "empire": {
+   "specialists": {
+    "SPECIALIST_CELEBRITY": {
+     "flat": -1
+    }
+   }
+  }
+ },
  "research": {
   "empire": {
    "byTech": {
@@ -105,6 +123,14 @@
   "empire": {
    "flat": -6,
    "percent": -5,
+   "specialists": {
+    "SPECIALIST_CELEBRITY": {
+     "flat": -2
+    },
+    "SPECIALIST_ANDROID_WORKER": {
+     "flat": -1
+    }
+   },
    "capital": {
     "percent": -5
    },

@@ -2,141 +2,30 @@
  "type": "SPECIALIST_CELEBRITY",
  "description": "TXT_KEY_SPECIALIST_CELEBRITY",
  "civilopedia": "TXT_KEY_CONCEPT_SPECIALISTS_PEDIA",
- "production": {
-  "empire": {
-   "flat": [
-    {
-     "value": 1,
-     "enabled": {
-      "type": "TRAIT_COMPLEX_CREATIVE",
-      "scope": "empire"
-     }
-    },
-    {
-     "value": 1,
-     "enabled": {
-      "type": "TRAIT_CREATIVE3",
-      "scope": "empire"
-     }
-    },
-    {
-     "value": -1,
-     "enabled": {
-      "type": "TRAIT_UNREFINED",
-      "scope": "empire"
-     }
-    },
-    {
-     "value": -1,
-     "enabled": {
-      "type": "TRAIT_UNREFINED3",
-      "scope": "empire"
-     }
-    }
-   ]
-  }
- },
  "commerce": {
   "city": {
-   "flat": [
-    2,
-    {
-     "value": 1,
-     "enabled": {
-      "type": "BUILDING_GLOBE_THEATRE",
-      "scope": "city"
-     }
-    },
-    {
-     "value": 1,
-     "enabled": {
-      "type": "BUILDING_ROCK_N_ROLL",
-      "scope": "city"
-     }
-    },
-    {
-     "value": 2,
-     "enabled": {
-      "type": "BUILDING_WALK_OF_FAME",
-      "scope": "city"
-     }
-    }
-   ]
+   "flat": 2
   },
   "empire": {
    "flat": [
     {
      "value": 1,
      "enabled": {
-      "type": "TRAIT_COMPLEX_CREATIVE",
+      "type": "BUILDING_GLOBE_THEATRE",
       "scope": "empire"
      }
     },
     {
      "value": 1,
      "enabled": {
-      "type": "TRAIT_CREATIVE3",
+      "type": "BUILDING_ROCK_N_ROLL",
       "scope": "empire"
      }
     },
     {
-     "value": -1,
+     "value": 2,
      "enabled": {
-      "type": "TRAIT_UNREFINED",
-      "scope": "empire"
-     }
-    },
-    {
-     "value": -1,
-     "enabled": {
-      "type": "TRAIT_UNREFINED3",
-      "scope": "empire"
-     }
-    }
-   ]
-  }
- },
- "gold": {
-  "empire": {
-   "flat": [
-    {
-     "value": -1,
-     "enabled": {
-      "type": "TRAIT_PROLIFIC",
-      "scope": "empire"
-     }
-    }
-   ]
-  }
- },
- "research": {
-  "empire": {
-   "flat": [
-    {
-     "value": -1,
-     "enabled": {
-      "type": "TRAIT_COMPLEX_EXPANSIVE",
-      "scope": "empire"
-     }
-    },
-    {
-     "value": -1,
-     "enabled": {
-      "type": "TRAIT_EXPANSIVE3",
-      "scope": "empire"
-     }
-    },
-    {
-     "value": 1,
-     "enabled": {
-      "type": "TRAIT_MINIMALIST",
-      "scope": "empire"
-     }
-    },
-    {
-     "value": 1,
-     "enabled": {
-      "type": "TRAIT_MINIMALIST3",
+      "type": "BUILDING_WALK_OF_FAME",
       "scope": "empire"
      }
     }
@@ -146,142 +35,6 @@
  "culture": {
   "city": {
    "flat": 2
-  },
-  "empire": {
-   "flat": [
-    {
-     "value": 2,
-     "enabled": {
-      "type": "TRAIT_COMPLEX_CREATIVE",
-      "scope": "empire"
-     }
-    },
-    {
-     "value": 2,
-     "enabled": {
-      "type": "TRAIT_CREATIVE3",
-      "scope": "empire"
-     }
-    },
-    {
-     "value": -2,
-     "enabled": {
-      "type": "TRAIT_UNREFINED",
-      "scope": "empire"
-     }
-    },
-    {
-     "value": -2,
-     "enabled": {
-      "type": "TRAIT_UNREFINED3",
-      "scope": "empire"
-     }
-    },
-    {
-     "value": 1,
-     "enabled": {
-      "type": "TRAIT_COMPLEX_PHILOSOPHICAL",
-      "scope": "empire"
-     }
-    },
-    {
-     "value": 1,
-     "enabled": {
-      "type": "TRAIT_PHILOSOPHICAL3",
-      "scope": "empire"
-     }
-    },
-    {
-     "value": -1,
-     "enabled": {
-      "type": "TRAIT_COMPLEX_POPULIST",
-      "scope": "empire"
-     }
-    },
-    {
-     "value": -1,
-     "enabled": {
-      "type": "TRAIT_POPULIST3",
-      "scope": "empire"
-     }
-    },
-    {
-     "value": -1,
-     "enabled": {
-      "type": "TRAIT_COMPLEX_ORGANIZED",
-      "scope": "empire"
-     }
-    },
-    {
-     "value": -1,
-     "enabled": {
-      "type": "TRAIT_ORGANIZED2",
-      "scope": "empire"
-     }
-    },
-    {
-     "value": 1,
-     "enabled": {
-      "type": "TRAIT_IMPULSIVE",
-      "scope": "empire"
-     }
-    },
-    {
-     "value": 1,
-     "enabled": {
-      "type": "TRAIT_IMPULSIVE2",
-      "scope": "empire"
-     }
-    },
-    {
-     "value": 1,
-     "enabled": {
-      "type": "TRAIT_NATURALIST",
-      "scope": "empire"
-     }
-    },
-    {
-     "value": 1,
-     "enabled": {
-      "type": "TRAIT_NATURALIST1",
-      "scope": "empire"
-     }
-    },
-    {
-     "value": -1,
-     "enabled": {
-      "type": "TRAIT_SLOB",
-      "scope": "empire"
-     }
-    },
-    {
-     "value": -1,
-     "enabled": {
-      "type": "TRAIT_SLOB1",
-      "scope": "empire"
-     }
-    }
-   ]
-  }
- },
- "espionage": {
-  "empire": {
-   "flat": [
-    {
-     "value": -1,
-     "enabled": {
-      "type": "TRAIT_COMPLEX_CHARISMATIC",
-      "scope": "empire"
-     }
-    },
-    {
-     "value": -1,
-     "enabled": {
-      "type": "TRAIT_CHARISMATIC3",
-      "scope": "empire"
-     }
-    }
-   ]
   }
  },
  "happiness": {

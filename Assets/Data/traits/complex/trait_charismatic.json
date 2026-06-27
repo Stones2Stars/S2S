@@ -2,15 +2,33 @@
  "type": "TRAIT_CHARISMATIC",
  "description": "TXT_KEY_TRAIT_COMPLEX_CHARISMATIC",
  "civilopedia": "TXT_KEY_TRAIT_COMPLEX_CHARISMATIC_PEDIA",
- "buildRate": {
+ "strategy": "TXT_KEY_TRAIT_COMPLEX_CHARISMATIC_STRATEGY",
+ "excludes": [
+  "TRAIT_TEMPERAMENTAL"
+ ],
+ "production": {
   "empire": {
-   "buildings": {
-    "BUILDING_RECRUITMENT_CENTER": {
-     "percent": 20
+   "flat": 1,
+   "percent": 5
+  }
+ },
+ "commerce": {
+  "empire": {
+   "flat": 1,
+   "percent": 5
+  }
+ },
+ "espionage": {
+  "empire": {
+   "flat": -2,
+   "percent": -10,
+   "specialists": {
+    "SPECIALIST_NOBLE": {
+     "flat": -1
+    },
+    "SPECIALIST_CELEBRITY": {
+     "flat": -1
     }
-   },
-   "military": {
-    "percent": -15
    }
   }
  },
@@ -29,6 +47,23 @@
    }
   }
  },
+ "conscript": {
+  "empire": {
+   "flat": 2
+  }
+ },
+ "combat": {
+  "empire": {
+   "espionageDefense": {
+    "percent": -20
+   }
+  }
+ },
+ "goldenAge": {
+  "empire": {
+   "percent": 10
+  }
+ },
  "diplomacy": {
   "empire": {
    "warWeariness": {
@@ -36,13 +71,6 @@
    },
    "attitude": {
     "flat": 2
-   }
-  }
- },
- "revolution": {
-  "empire": {
-   "national": {
-    "flat": -5
    }
   }
  },
@@ -80,48 +108,6 @@
  "ui": {
   "art": {
    "icon": "art/Buttons/Traits/TraitCharismatic.dds"
-  }
- },
- "identity": {
-  "shortDescription": "TXT_KEY_TRAIT_CHARISMATIC_SHORT"
- },
- "strategy": "TXT_KEY_TRAIT_COMPLEX_CHARISMATIC_STRATEGY",
- "excludes": [
-  "TRAIT_TEMPERAMENTAL"
- ],
- "production": {
-  "empire": {
-   "flat": 1,
-   "percent": 5
-  }
- },
- "commerce": {
-  "empire": {
-   "flat": 1,
-   "percent": 5
-  }
- },
- "espionage": {
-  "empire": {
-   "flat": -2,
-   "percent": -10
-  }
- },
- "conscript": {
-  "empire": {
-   "flat": 2
-  }
- },
- "combat": {
-  "empire": {
-   "espionageDefense": {
-    "percent": -20
-   }
-  }
- },
- "goldenAge": {
-  "empire": {
-   "percent": 10
   }
  }
 }

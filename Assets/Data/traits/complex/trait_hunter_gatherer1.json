@@ -2,14 +2,15 @@
  "type": "TRAIT_HUNTER_GATHERER1",
  "description": "TXT_KEY_TRAIT_COMPLEX_HUNTER_GATHERER1",
  "civilopedia": "TXT_KEY_TRAIT_COMPLEX_HUNTER_GATHERER1_PEDIA",
- "enables": {
-  "traits": [
-   "TRAIT_HUNTER_GATHERER2"
-  ]
- },
+ "strategy": "TXT_KEY_TRAIT_COMPLEX_HUNTER_GATHERER_STRATEGY",
  "food": {
   "empire": {
    "percent": 5
+  }
+ },
+ "production": {
+  "empire": {
+   "percent": -5
   }
  },
  "buildRate": {
@@ -25,79 +26,18 @@
    }
   }
  },
- "culture": {
-  "empire": {
-   "flat": -1,
-   "percent": -4
-  }
- },
- "extraYieldThreshold": {
-  "empire": {
-   "food": {
-    "flat": 6
-   }
-  }
- },
- "upkeep": {
-  "empire": {
-   "civic": {
-    "percent": 10
-   }
-  }
- },
- "succession": {
-  "promotionLine": "PROMOTIONLINE_HUNTER_GATHERER",
-  "priority": -1
- },
- "ai": {
-  "flavours": [
-   {
-    "FLAVOR_MILITARY": 0
-   },
-   {
-    "FLAVOR_RELIGION": 0
-   },
-   {
-    "FLAVOR_PRODUCTION": 4
-   },
-   {
-    "FLAVOR_GOLD": 2
-   },
-   {
-    "FLAVOR_SCIENCE": 3
-   },
-   {
-    "FLAVOR_CULTURE": 3
-   },
-   {
-    "FLAVOR_GROWTH": -1
-   },
-   {
-    "FLAVOR_ESPIONAGE": 1
-   }
-  ]
- },
- "ui": {
-  "art": {
-   "icon": "art/Buttons/Traits/TraitHunterGatherer.dds"
-  }
- },
- "identity": {
-  "negativeTrait": true,
-  "impurePropertyManipulators": true
- },
- "strategy": "TXT_KEY_TRAIT_COMPLEX_HUNTER_GATHERER_STRATEGY",
- "production": {
-  "empire": {
-   "percent": -5
-  }
- },
  "gold": {
   "empire": {
    "percent": -4
   }
  },
  "research": {
+  "empire": {
+   "flat": -1,
+   "percent": -4
+  }
+ },
+ "culture": {
   "empire": {
    "flat": -1,
    "percent": -4
@@ -168,5 +108,46 @@
     }
    }
   }
+ },
+ "succession": {
+  "promotionLine": "PROMOTIONLINE_HUNTER_GATHERER",
+  "priority": -1
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 0
+   },
+   {
+    "FLAVOR_RELIGION": 0
+   },
+   {
+    "FLAVOR_PRODUCTION": 4
+   },
+   {
+    "FLAVOR_GOLD": 2
+   },
+   {
+    "FLAVOR_SCIENCE": 3
+   },
+   {
+    "FLAVOR_CULTURE": 3
+   },
+   {
+    "FLAVOR_GROWTH": -1
+   },
+   {
+    "FLAVOR_ESPIONAGE": 1
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Traits/TraitHunterGatherer.dds"
+  }
+ },
+ "identity": {
+  "negativeTrait": true,
+  "impurePropertyManipulators": true
  }
 }

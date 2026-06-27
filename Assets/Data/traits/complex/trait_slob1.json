@@ -11,9 +11,36 @@
  "excludes": [
   "TRAIT_NATURALIST1"
  ],
+ "production": {
+  "empire": {
+   "specialists": {
+    "SPECIALIST_ARTIST": {
+     "flat": -1
+    },
+    "SPECIALIST_GREAT_ARTIST": {
+     "flat": -1
+    }
+   }
+  }
+ },
  "commerce": {
   "empire": {
    "percent": 2
+  }
+ },
+ "culture": {
+  "empire": {
+   "specialists": {
+    "SPECIALIST_CELEBRITY": {
+     "flat": -1
+    },
+    "SPECIALIST_ARTIST": {
+     "flat": -1
+    },
+    "SPECIALIST_GREAT_ARTIST": {
+     "flat": -1
+    }
+   }
   }
  },
  "happiness": {

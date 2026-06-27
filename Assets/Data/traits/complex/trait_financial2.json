@@ -11,6 +11,15 @@
  "excludes": [
   "TRAIT_GREEDY1"
  ],
+ "production": {
+  "empire": {
+   "specialists": {
+    "SPECIALIST_NOBLE": {
+     "flat": 1
+    }
+   }
+  }
+ },
  "buildRate": {
   "empire": {
    "buildings": {
@@ -110,10 +119,27 @@
    }
   }
  },
+ "commerce": {
+  "empire": {
+   "specialists": {
+    "SPECIALIST_NOBLE": {
+     "flat": 1
+    }
+   }
+  }
+ },
  "gold": {
   "empire": {
    "flat": 4,
    "percent": 5,
+   "specialists": {
+    "SPECIALIST_MERCHANT": {
+     "flat": 2
+    },
+    "SPECIALIST_GREAT_MERCHANT": {
+     "flat": 2
+    }
+   },
    "capital": {
     "percent": 5
    },

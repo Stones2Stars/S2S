@@ -2,111 +2,46 @@
  "type": "TRAIT_POPULIST1",
  "description": "TXT_KEY_TRAIT_COMPLEX_POPULIST1",
  "civilopedia": "TXT_KEY_TRAIT_COMPLEX_POPULIST1_PEDIA",
- "enables": {
-  "traits": [
-   "TRAIT_POPULIST2"
-  ]
- },
- "food": {
-  "empire": {
-   "tradeRoute": {
-    "percent": 60
-   }
-  }
- },
+ "strategy": "TXT_KEY_TRAIT_COMPLEX_POPULIST_STRATEGY",
+ "excludes": [
+  "TRAIT_PHILOSOPHICAL1"
+ ],
  "production": {
   "empire": {
-   "percent": -5
+   "specialists": {
+    "SPECIALIST_ENGINEER": {
+     "flat": -1
+    },
+    "SPECIALIST_GREAT_ENGINEER": {
+     "flat": -1
+    }
+   }
   }
  },
  "commerce": {
   "empire": {
    "specialist": {
     "perSpecialist": -1
+   },
+   "specialists": {
+    "SPECIALIST_CITIZEN": {
+     "flat": 1
+    },
+    "SPECIALIST_SLAVES": {
+     "flat": 1
+    },
+    "SPECIALIST_SETTLED_CITIZEN": {
+     "flat": 1
+    },
+    "SPECIALIST_SETTLED_SLAVE": {
+     "flat": 1
+    },
+    "SPECIALIST_ANDROID_WORKER": {
+     "flat": 1
+    }
    }
   }
  },
- "extraYieldThreshold": {
-  "empire": {
-   "food": {
-    "flat": 8
-   }
-  }
- },
- "happiness": {
-  "empire": {
-   "largestCity": {
-    "flat": 1
-   }
-  }
- },
- "health": {
-  "empire": {
-   "flat": -1
-  }
- },
- "combat": {
-  "empire": {
-   "cityDefense": {
-    "percent": -10
-   }
-  }
- },
- "revolution": {
-  "empire": {
-   "local": {
-    "flat": -1
-   },
-   "national": {
-    "flat": 1
-   }
-  }
- },
- "succession": {
-  "promotionLine": "PROMOTIONLINE_POPULIST",
-  "priority": -1
- },
- "ai": {
-  "flavours": [
-   {
-    "FLAVOR_MILITARY": -1
-   },
-   {
-    "FLAVOR_RELIGION": 0
-   },
-   {
-    "FLAVOR_PRODUCTION": 1
-   },
-   {
-    "FLAVOR_GOLD": 2
-   },
-   {
-    "FLAVOR_SCIENCE": 3
-   },
-   {
-    "FLAVOR_CULTURE": 1
-   },
-   {
-    "FLAVOR_GROWTH": 5
-   },
-   {
-    "FLAVOR_ESPIONAGE": 1
-   }
-  ]
- },
- "ui": {
-  "art": {
-   "icon": "art/Buttons/Traits/TraitPopulist.dds"
-  }
- },
- "identity": {
-  "negativeTrait": true,
-  "impurePropertyManipulators": true
- },
- "strategy": "TXT_KEY_TRAIT_COMPLEX_POPULIST_STRATEGY",
- "excludes": [
-  "TRAIT_PHILOSOPHICAL1"
- ],
  "gold": {
   "empire": {
    "flat": -1,
@@ -117,6 +52,13 @@
   "empire": {
    "flat": -1,
    "percent": -5
+  }
+ },
+ "happiness": {
+  "empire": {
+   "largestCity": {
+    "flat": 1
+   }
   }
  },
  "growth": {
@@ -176,5 +118,46 @@
     }
    }
   }
+ },
+ "succession": {
+  "promotionLine": "PROMOTIONLINE_POPULIST",
+  "priority": -1
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": -1
+   },
+   {
+    "FLAVOR_RELIGION": 0
+   },
+   {
+    "FLAVOR_PRODUCTION": 1
+   },
+   {
+    "FLAVOR_GOLD": 2
+   },
+   {
+    "FLAVOR_SCIENCE": 3
+   },
+   {
+    "FLAVOR_CULTURE": 1
+   },
+   {
+    "FLAVOR_GROWTH": 5
+   },
+   {
+    "FLAVOR_ESPIONAGE": 1
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Traits/TraitPopulist.dds"
+  }
+ },
+ "identity": {
+  "negativeTrait": true,
+  "impurePropertyManipulators": true
  }
 }

@@ -2,22 +2,125 @@
  "type": "TRAIT_PHILOSOPHICAL",
  "description": "TXT_KEY_TRAIT_COMPLEX_PHILOSOPHICAL",
  "civilopedia": "TXT_KEY_TRAIT_COMPLEX_PHILOSOPHICAL_PEDIA",
- "buildRate": {
+ "strategy": "TXT_KEY_TRAIT_COMPLEX_PHILOSOPHICAL_STRATEGY",
+ "excludes": [
+  "TRAIT_POPULIST"
+ ],
+ "production": {
   "empire": {
-   "buildings": {
-    "BUILDING_CLONING_LABORATORY": {
-     "percent": 20
+   "specialists": {
+    "SPECIALIST_ENGINEER": {
+     "flat": 1
     },
-    "BUILDING_CONVENTION_CENTRE": {
-     "percent": 20
-    },
-    "BUILDING_UNIVERSITY": {
-     "percent": 20
-    },
-    "BUILDING_BATH_HOUSE": {
-     "percent": 20
+    "SPECIALIST_GREAT_ENGINEER": {
+     "flat": 1
     }
    }
+  }
+ },
+ "commerce": {
+  "empire": {
+   "specialist": {
+    "perSpecialist": 1
+   },
+   "specialists": {
+    "SPECIALIST_LAWYER": {
+     "flat": 1
+    },
+    "SPECIALIST_GREAT_STATESMAN": {
+     "flat": 1
+    },
+    "SPECIALIST_CITIZEN": {
+     "flat": -1
+    },
+    "SPECIALIST_SLAVES": {
+     "flat": -1
+    },
+    "SPECIALIST_SETTLED_CITIZEN": {
+     "flat": -1
+    },
+    "SPECIALIST_SETTLED_SLAVE": {
+     "flat": -1
+    },
+    "SPECIALIST_ANDROID_WORKER": {
+     "flat": -1
+    }
+   }
+  }
+ },
+ "gold": {
+  "empire": {
+   "flat": 1,
+   "percent": 5,
+   "specialists": {
+    "SPECIALIST_MERCHANT": {
+     "flat": 1
+    },
+    "SPECIALIST_GREAT_MERCHANT": {
+     "flat": 1
+    },
+    "SPECIALIST_NOBLE": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "research": {
+  "empire": {
+   "flat": 1,
+   "percent": 5,
+   "specialists": {
+    "SPECIALIST_SCIENTIST": {
+     "flat": 1
+    },
+    "SPECIALIST_GREAT_SCIENTIST": {
+     "flat": 1
+    },
+    "SPECIALIST_DOCTOR": {
+     "flat": 1
+    },
+    "SPECIALIST_GREAT_DOCTOR": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "culture": {
+  "empire": {
+   "specialists": {
+    "SPECIALIST_ARTIST": {
+     "flat": 1
+    },
+    "SPECIALIST_GREAT_ARTIST": {
+     "flat": 1
+    },
+    "SPECIALIST_CELEBRITY": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "espionage": {
+  "empire": {
+   "specialists": {
+    "SPECIALIST_SPY": {
+     "flat": 1
+    },
+    "SPECIALIST_GREAT_SPY": {
+     "flat": 1
+    },
+    "SPECIALIST_INVESTIGATOR": {
+     "flat": 1
+    },
+    "SPECIALIST_GREAT_SLEUTH": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "growth": {
+  "empire": {
+   "percent": 10
   }
  },
  "greatPeopleRate": {
@@ -25,9 +128,18 @@
    "percent": 50
   }
  },
- "goldenAge": {
+ "upkeep": {
   "empire": {
-   "percent": 25
+   "civic": {
+    "percent": 20
+   }
+  }
+ },
+ "hurry": {
+  "empire": {
+   "anger": {
+    "percent": 25
+   }
   }
  },
  "durations": {
@@ -37,12 +149,21 @@
    }
   }
  },
- "diplomacy": {
-  "empire": {
-   "warWeariness": {
-    "percent": 20
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": {
+    "value": 1,
+    "per": {
+     "type": "POPULATION",
+     "each": 2,
+     "scope": "city"
+    }
    }
   }
+ },
+ "policies": {
+  "freeSpecialistPerNationalWonder": true,
+  "freeSpecialistPerWorldWonder": true
  },
  "succession": {
   "promotionLine": "PROMOTIONLINE_PHILOSOPHICAL"
@@ -82,63 +203,5 @@
  },
  "identity": {
   "impurePropertyManipulators": true
- },
- "strategy": "TXT_KEY_TRAIT_COMPLEX_PHILOSOPHICAL_STRATEGY",
- "excludes": [
-  "TRAIT_POPULIST"
- ],
- "commerce": {
-  "empire": {
-   "specialist": {
-    "perSpecialist": 1
-   }
-  }
- },
- "gold": {
-  "empire": {
-   "flat": 1,
-   "percent": 5
-  }
- },
- "research": {
-  "empire": {
-   "flat": 1,
-   "percent": 5
-  }
- },
- "growth": {
-  "empire": {
-   "percent": 10
-  }
- },
- "upkeep": {
-  "empire": {
-   "civic": {
-    "percent": 20
-   }
-  }
- },
- "hurry": {
-  "empire": {
-   "anger": {
-    "percent": 25
-   }
-  }
- },
- "PROPERTY_CRIME": {
-  "city": {
-   "flat": {
-    "value": 1,
-    "per": {
-     "type": "POPULATION",
-     "each": 2,
-     "scope": "city"
-    }
-   }
-  }
- },
- "policies": {
-  "freeSpecialistPerNationalWonder": true,
-  "freeSpecialistPerWorldWonder": true
  }
 }
