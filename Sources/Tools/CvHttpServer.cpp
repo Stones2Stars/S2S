@@ -656,6 +656,11 @@ namespace
 			if (pPlot->isIrrigationAvailable()) pl["irrig"] = picojson::value(true);
 			if (pPlot->isHills())               pl["hills"] = picojson::value(true);
 			if (pPlot->isPeak() || pPlot->isAsPeak()) pl["peak"] = picojson::value(true);
+			// relief = REAL plotType (getPlotType): getBaseYield keys getPeakChange/getHillsChange on THIS, not on
+			// isPeak()||isAsPeak() -- a feature-induced as-peak (Kilimanjaro on flat land) is PLOT_LAND, no relief base yield.
+			{ const PlotTypes eRel = pPlot->getPlotType();
+			  if (eRel == PLOT_PEAK)       pl["relief"] = picojson::value(std::string("PEAK"));
+			  else if (eRel == PLOT_HILLS) pl["relief"] = picojson::value(std::string("HILLS")); }
 			if (pPlot->isWater())               pl["water"] = picojson::value(true);
 			if (pPlot->isCoastalLand())         pl["coast"] = picojson::value(true);  // coastal land (HAS_COAST predicate)
 			if (pPlot->isFreshWater())          pl["freshwater"] = picojson::value(true);  // HAS_FRESHWATER (river OR adjacent lake)
@@ -780,7 +785,7 @@ namespace
 			yieldTradeBase[GC.getYieldInfo((YieldTypes)y).getType()] = picojson::value((double)GC.getYieldInfo((YieldTypes)y).getTradeModifier());
 		config["yieldTradeModifierBase"] = picojson::value(yieldTradeBase);
 		// city-CENTER plot yield: getCityChange (flat) + population/PopulationChangeDivisor (CvPlot::calculateYield)
-		picojson::value::object yCityChange, yPopDiv, yGAYield, yGAThresh, yHills, yPeak;
+		picojson::value::object yCityChange, yPopDiv, yGAYield, yGAThresh, yHills, yPeak, yMinCity;
 		for (int y = 0; y < NUM_YIELD_TYPES; ++y)
 		{
 			const char* yn = GC.getYieldInfo((YieldTypes)y).getType();
@@ -793,6 +798,8 @@ namespace
 			// getBaseYield -> calculateNatureYield (CvPlot::recalculateBaseYield, the nature addend).
 			yHills[yn]      = picojson::value((double)GC.getYieldInfo((YieldTypes)y).getHillsChange());
 			yPeak[yn]       = picojson::value((double)GC.getYieldInfo((YieldTypes)y).getPeakChange());
+			// city-CENTRE floor: CvPlot::calculateYield does max(getMinCity, yield) on the isCity() plot (calc-map §10.1)
+			yMinCity[yn]    = picojson::value((double)GC.getYieldInfo((YieldTypes)y).getMinCity());
 		}
 		config["yieldCityChange"] = picojson::value(yCityChange);
 		config["yieldPopulationChangeDivisor"] = picojson::value(yPopDiv);
@@ -800,6 +807,7 @@ namespace
 		config["yieldGoldenAgeThreshold"] = picojson::value(yGAThresh);
 		config["yieldHillsChange"] = picojson::value(yHills);
 		config["yieldPeakChange"] = picojson::value(yPeak);
+		config["yieldMinCity"] = picojson::value(yMinCity);
 		// +/- this on each worked plot whose RUNNING pre-improvement yield clears a player extra/less-yield
 		// threshold (CvPlot::calculateYield 8393-8401; the Industrious/Nomad-style trait mechanic). A single global define.
 		config["extraYield"] = picojson::value((double)GC.getDefineINT("EXTRA_YIELD"));
@@ -1014,6 +1022,24 @@ namespace
 		return CvString(picojson::value(root).serialize().c_str());
 	}
 
+	// The per-plot building->improvement keyed contribution summed FRESH over the working city's ACTIVE buildings -- what
+	// getYield (the plot cache) now uses, vs the stale getImprovementYieldChange city cache. Used so plotDecomp's total
+	// and cityImprovement match the engine's real (fresh) basePlotYield = getPlotYield = Σ getYield. (owner ruling 2026-06-27)
+	int freshCityImprovement(const CvPlot* pPlot, YieldTypes eYield)
+	{
+		const CvCity* pWC = pPlot->getWorkingCity();
+		const ImprovementTypes eImp = pPlot->getImprovementType();
+		if (pWC == NULL || eImp == NO_IMPROVEMENT || !(pPlot->isRoute() || !pPlot->isImpassable(pWC->getTeam()))) return 0;
+		int iFresh = 0;
+		foreach_(const BuildingTypes eB, pWC->getHasBuildings())
+		{
+			if (pWC->isDisabledBuilding(eB)) continue;
+			foreach_(const ImprovementArray& pr, GC.getBuildingInfo(eB).getImprovementYieldChanges())
+				if ((ImprovementTypes)pr.first == eImp) { iFresh += pr.second[eYield]; break; }
+		}
+		return iFresh;
+	}
+
 	// Decompose a city's getPlotYield (the basePlotYield base term) into the NAMED addends of CvPlot::calculateYield
 	// (CvPlot.cpp:8320; legacy-value-calc-map §10.1), each summed over the city's WORKED plots. Emitted on
 	// /computed/cities/yields so (a) the external calculator localises a basePlotYield divergence to ONE named source
@@ -1050,7 +1076,7 @@ namespace
 			const CvPlot* pPlot = pCity->getCityIndexPlot(iPlot);
 			if (pPlot == NULL || pPlot->getTerrainType() == NO_TERRAIN) continue;
 
-			total       += pPlot->calculateYield(eYield);
+			total       += pPlot->getYield(eYield);   // the plot cache (fresh, building->improvement summed live) = the engine's real base yield
 			natureYield += pPlot->calculateNatureYield(eYield, eTeam);
 			extraYield  += pPlot->getExtraYield(eYield);
 
@@ -1073,7 +1099,7 @@ namespace
 					cityTerrainChange += pWorkingCity->getTerrainYieldChange(pPlot->getTerrainType(), eYield);
 					if (pPlot->isRiver()) riverPlotChange += pWorkingCity->getRiverPlotYield(eYield);
 					const ImprovementTypes eImp = pPlot->getImprovementType();
-					if (eImp != NO_IMPROVEMENT) cityImprovementChange += pWorkingCity->getImprovementYieldChange(eImp, eYield);
+					if (eImp != NO_IMPROVEMENT) cityImprovementChange += freshCityImprovement(pPlot, eYield);   // fresh active-buildings sum (what getYield uses), not the stale cache
 				}
 			}
 
@@ -1149,7 +1175,7 @@ namespace
 				}
 				const ImprovementTypes eImpP = pPlot->getImprovementType();
 				if (eImpP != NO_IMPROVEMENT) pp["improvement"] = picojson::value(std::string(GC.getImprovementInfo(eImpP).getType()));
-				pp["total"]  = picojson::value((double)pPlot->calculateYield(eYield));
+				pp["total"]  = picojson::value((double)pPlot->getYield(eYield));   // the plot cache (fresh) -- the engine's real per-plot yield
 				pp["nature"] = picojson::value((double)pPlot->calculateNatureYield(eYield, eTeam));
 				pp["imp"]    = picojson::value((double)((!bCityCentre && eImpP != NO_IMPROVEMENT) ? pPlot->calculateImprovementYieldChange(eImpP, eYield, pCity->getOwner()) : 0));
 				// nature + improvement SUB-sources (pin a -1 to terrain/feature/bonus food, or impBase vs impBonus).
@@ -1179,7 +1205,7 @@ namespace
 						pp["cityPlotType"] = picojson::value((double)pWC->getPlotYieldChange(pPlot->getPlotType(), eYield));
 						pp["cityTerrain"]  = picojson::value((double)pWC->getTerrainYieldChange(pPlot->getTerrainType(), eYield));
 						if (pPlot->isRiver()) pp["cityRiver"] = picojson::value((double)pWC->getRiverPlotYield(eYield));
-						if (eImpP != NO_IMPROVEMENT) pp["cityImprovement"] = picojson::value((double)pWC->getImprovementYieldChange(eImpP, eYield));
+						if (eImpP != NO_IMPROVEMENT) pp["cityImprovement"] = picojson::value((double)freshCityImprovement(pPlot, eYield));   // fresh active-buildings sum (what getYield uses)
 					}
 				}
 				pp["water"]  = picojson::value(pPlot->isWater());
@@ -1300,6 +1326,11 @@ namespace
 			if (pPlot->isIrrigationAvailable()) pl["irrig"] = picojson::value(true);
 			if (pPlot->isHills())               pl["hills"] = picojson::value(true);
 			if (pPlot->isPeak() || pPlot->isAsPeak()) pl["peak"] = picojson::value(true);
+			// relief = REAL plotType (getPlotType): getBaseYield keys getPeakChange/getHillsChange on THIS, not on
+			// isPeak()||isAsPeak() -- a feature-induced as-peak (Kilimanjaro on flat land) is PLOT_LAND, no relief base yield.
+			{ const PlotTypes eRel = pPlot->getPlotType();
+			  if (eRel == PLOT_PEAK)       pl["relief"] = picojson::value(std::string("PEAK"));
+			  else if (eRel == PLOT_HILLS) pl["relief"] = picojson::value(std::string("HILLS")); }
 			if (pPlot->isWater())               pl["water"] = picojson::value(true);
 			if (pPlot->isCoastalLand())         pl["coast"] = picojson::value(true);
 			if (pPlot->isFreshWater())          pl["freshwater"] = picojson::value(true);
@@ -1678,6 +1709,12 @@ namespace
 					if(pPlot->isRiverSide())          pl["riverside"]=picojson::value(true);
 					if(pPlot->isHills())              pl["hills"]=picojson::value(true);
 					if(pPlot->isPeak()||pPlot->isAsPeak()) pl["peak"]=picojson::value(true);
+					// relief = the REAL plotType (getPlotType). getBaseYield keys getPeakChange/getHillsChange on THIS,
+					// NOT on isPeak()||isAsPeak() -- a feature-induced as-peak (e.g. Kilimanjaro on flat land) is PLOT_LAND
+					// and gets NO relief base yield, while the "peak" predicate flag above still counts it for HAS_PEAK.
+					{ const PlotTypes eRel=pPlot->getPlotType();
+					  if(eRel==PLOT_PEAK)       pl["relief"]=picojson::value(std::string("PEAK"));
+					  else if(eRel==PLOT_HILLS) pl["relief"]=picojson::value(std::string("HILLS")); }
 				}
 				kPlots.push_back(picojson::value(pl));
 			}
@@ -1875,7 +1912,7 @@ namespace
 				e["extraYield"]    = picojson::value((double)pCity->getExtraYield(eY));    // x1 TRUNCATED -- the term the formula uses
 				e["extraYield100"] = picojson::value((double)pCity->getExtraYield100(eY)); // untruncated, for decompose
 				// BASE decomposition (getBaseYieldRate, CvCity.cpp:22906) -- the additive base's named sub-sources:
-				e["basePlotYield"]      = picojson::value((double)pCity->getPlotYield(eY));        // summed worked-plot yields
+				e["basePlotYield"]      = picojson::value((double)pCity->getPlotYield(eY));        // getPlotYield now PULLs Σ worked-plot getYield (the fresh plot cache) -- the real engine base yield
 				e["baseTradeYield"]     = picojson::value((double)pCity->getTradeYield(eY));       // trade-route yield
 				e["baseFreeCityYield"]  = picojson::value((double)kPlayer.getFreeCityYield(eY));   // player free-city yield
 				e["baseGoldenAgeYield"] = picojson::value((double)(kPlayer.isGoldenAge() ? kPlayer.getGoldenAgeYield(eY) : 0)); // golden-age yield

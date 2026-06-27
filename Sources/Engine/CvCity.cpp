@@ -11214,7 +11214,20 @@ int CvCity::getYieldRate100(const YieldTypes eYield) const
 int CvCity::getPlotYield(YieldTypes eIndex)	const
 {
 	FASSERT_BOUNDS(0, NUM_YIELD_TYPES, eIndex);
-	return m_aiBaseYieldRate[eIndex];
+	// PULL (owner ruling 2026-06-27): sum the current worked plots' yields straight from the plot cache -- the single
+	// source of a plot's yield -- replacing the old push-maintained m_aiBaseYieldRate. Each plot's getYield is O(1)
+	// once its (recompute-only, never-serialized) cache is clean; a dirty plot recomputes its own fresh sum on read.
+	int iYield = 0;
+	for (int iI = 0; iI < getNumCityPlots(); iI++)
+	{
+		if (!isWorkingPlot(iI)) continue;
+		const CvPlot* pPlot = getCityIndexPlot(iI);
+		if (pPlot != NULL)
+		{
+			iYield += pPlot->getYield(eIndex);
+		}
+	}
+	return iYield;
 }
 
 void CvCity::changePlotYield(YieldTypes eIndex, int iChange)
@@ -11273,17 +11286,26 @@ void CvCity::changeBuildingExtraYield100(YieldTypes eYield, int iChange)
 int CvCity::getBuildingExtraYield100(YieldTypes eYield) const
 {
 	FASSERT_BOUNDS(0, NUM_YIELD_TYPES, eYield);
-	// squirrelBanana (#vicinity-build-order): the bonus/vicinity building yield as a PURE FUNCTION of current state,
-	// recomputed fresh here -- NOT read from the stale edge-cache (m_aBuildingYieldChange -> m_aiExtraYield), which is
-	// build-order-dependent (doVicinityBonus only stamped on a bonus-TRANSITION for already-active buildings, so a
-	// building constructed AFTER the bonus was connected was never credited -- forever). Pure recompute fixes that:
-	// active building x present (bonus|vicinity-bonus) x its yield change. Stored in a recompute-only holder (never
-	// serialized), so the legacy arrays stay as untouched dead data and the test save loads byte-identical.
-	int iBV = 0;
+	// squirrelBanana (#vicinity-build-order): the per-building extra yield as a PURE FUNCTION of current state,
+	// recomputed fresh here -- NOT read from the stale edge-cache (m_buildingExtraYield100, m_aBuildingYieldChange ->
+	// m_aiExtraYield), which is build-order-dependent. Two staleness classes, both fixed by the fresh recompute:
+	//  (a) bonus/vicinity: doVicinityBonus only stamped on a bonus-TRANSITION for already-active buildings, so a
+	//      building constructed AFTER the bonus connected was never credited (forever).
+	//  (b) tech: processBuilding (4677) adds only static+dynamic to m_buildingExtraYield100; the TECH yield enters
+	//      solely via CvTeam on tech RESEARCH (5247), so a building constructed AFTER its prereq tech never gets its
+	//      getBuildingYieldTechChange into the cache (the player-5 +100). The fresh sum (static + dynamic + tech +
+	//      bonus/vicinity) over active buildings is the build-order-INDEPENDENT truth. Stored in a recompute-only
+	//      holder (never serialized), so the legacy arrays stay untouched dead data and the test save loads byte-identical.
+	const CvTeam& kTeam = GET_TEAM(getTeam());
+	int iFresh = 0, iBV = 0;
 	foreach_(const BuildingTypes eB, getHasBuildings())
 	{
 		if (!hasFullyActiveBuilding(eB)) continue;
 		const CvBuildingInfo& kB = GC.getBuildingInfo(eB);
+		// static (getYieldChange ×100) + tech (getBuildingYieldTechChange, already ×100), per building -- exactly what
+		// m_buildingExtraYield100 SHOULD hold. The per-city DYNAMIC (getBuildingYieldChange, event/bonus-set) is NOT
+		// here: it lives in m_aiExtraYield (the cascade reads it as CityExtraYield) -- adding it would double-count.
+		iFresh += 100 * kB.getYieldChange(eYield) + kTeam.getBuildingYieldTechChange(eYield, eB);
 		// has-any guard (getXxx(NO_BONUS, NO_YIELD) == "does this building define ANY such array") -- skips the
 		// per-bonus loop for the ~95% of buildings with no bonus/vicinity yields, so this stays cheap on the hot path.
 		const bool bBonus = kB.getBonusYieldChanges(NO_BONUS, NO_YIELD) != 0;
@@ -11296,7 +11318,7 @@ int CvCity::getBuildingExtraYield100(YieldTypes eYield) const
 		}
 	}
 	m_aiBuildingBonusVicinityYield100[eYield] = iBV * 100;
-	return m_buildingExtraYield100[eYield] + m_aiBuildingBonusVicinityYield100[eYield];
+	return iFresh + iBV * 100;
 }
 
 
@@ -14279,10 +14301,9 @@ void CvCity::processWorkingPlot(int iPlot, int iChange, bool yieldsOnly)
 			}
 		}
 
-		for (int iI = 0; iI < NUM_YIELD_TYPES; iI++)
-		{
-			changePlotYield((YieldTypes)iI, iChange * pPlot->getYield((YieldTypes)iI));
-		}
+		// PULL model (owner ruling 2026-06-27): getPlotYield re-sums the current worked plots from the plot cache, so
+		// working/un-working a plot needs no push -- just fire the downstream trigger the old changePlotYield carried.
+		onYieldChange();
 	}
 
 	if (isCitySelected())

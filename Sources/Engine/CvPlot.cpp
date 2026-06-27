@@ -117,6 +117,7 @@ CvPlot::CvPlot()
 
 	m_baseYields = new short[NUM_YIELD_TYPES]();
 	m_aiYield = new short[NUM_YIELD_TYPES]();
+	m_bYieldDirty = true;   // recompute-only cache: dirty on construct AND load (never serialized) -> first read recomputes
 
 	// Plot danger cache
 	m_borderDangerCache = new bool[MAX_TEAMS];
@@ -8142,12 +8143,14 @@ void CvPlot::setExtraYield(YieldTypes eYield, short iExtraYield)
 
 short* CvPlot::getYield() const
 {
+	if (m_bYieldDirty) recomputeYield();
 	return m_aiYield;
 }
 
 int CvPlot::getYield(YieldTypes eIndex) const
 {
 	FASSERT_BOUNDS(0, NUM_YIELD_TYPES, eIndex);
+	if (m_bYieldDirty) recomputeYield();
 	return m_aiYield[eIndex];
 }
 
@@ -8157,36 +8160,60 @@ void CvPlot::updateYield()
 
 	if (!area()) return;
 
-	bool bChange = false;
+	// TRIGGER ONLY (owner ruling 2026-06-27): flag the yield cache dirty; the fresh sum runs lazily in getYield. We no
+	// longer recompute eagerly here, and we no longer PUSH a delta into the working city -- the city PULLs Σ getYield
+	// (the plot cache is the single source of a plot's yield). m_aiYield + m_bYieldDirty are never serialized, so a
+	// loaded game is dirty-by-default and recomputes from current state -- never stale-from-save.
+	m_bYieldDirty = true;
+
 	CvCity* pWorkingCity = getWorkingCity();
-	const bool bWorked = pWorkingCity ? pWorkingCity->isWorkingPlot(this) : false;
-
-	for (int iI = 0; iI < NUM_YIELD_TYPES; ++iI)
+	if (pWorkingCity != NULL)
 	{
-		const int iNewYield = calculateYield((YieldTypes)iI);
-		const int iOldYield = m_aiYield[iI];
+		pWorkingCity->AI_setAssignWorkDirty(true);
+		pWorkingCity->onYieldChange();   // downstream (commerce/UI) dirty -- was fired via the removed changePlotYield push
+	}
+	updateSymbols();
+}
 
-		if (iOldYield != iNewYield)
+// The actual fresh yield sum -- run lazily by getYield when m_bYieldDirty is set (so the expensive sum happens once per
+// change-then-read, not per change and never per read). const: it writes only the recompute-only cache + the flag.
+void CvPlot::recomputeYield() const
+{
+	if (!area()) { m_bYieldDirty = false; return; }
+
+	// The building->improvement keyed buff is summed FRESH over the working city's ACTIVE buildings (the squirrelBanana
+	// treatment for the keyed channel) instead of read from the stale getImprovementYieldChange cache, which the
+	// "buildings buff a yield on an improvement" feature is intentionally not carried by. Everything else = calculateYield.
+	const CvCity* pWC = getWorkingCity();
+	const ImprovementTypes eImp = getImprovementType();
+	const bool bKeyed = pWC != NULL && eImp != NO_IMPROVEMENT && (isRoute() || !isImpassable(pWC->getTeam()));
+
+	int aiFreshImp[NUM_YIELD_TYPES];
+	for (int j = 0; j < NUM_YIELD_TYPES; ++j) aiFreshImp[j] = 0;
+	if (bKeyed)
+	{
+		foreach_(const BuildingTypes eB, pWC->getHasBuildings())
 		{
-			FASSERT_NOT_NEGATIVE(iNewYield);
-
-			m_aiYield[iI] = iNewYield;
-
-			if (bWorked)
-			{
-				pWorkingCity->changePlotYield((YieldTypes)iI, iNewYield - iOldYield);
-			}
-			bChange = true;
+			if (pWC->isDisabledBuilding(eB)) continue;
+			foreach_(const ImprovementArray& pr, GC.getBuildingInfo(eB).getImprovementYieldChanges())
+				if ((ImprovementTypes)pr.first == eImp)
+				{
+					for (int j = 0; j < NUM_YIELD_TYPES; ++j) aiFreshImp[j] += pr.second[j];
+					break;
+				}
 		}
 	}
-	if (bChange)
+	for (int i = 0; i < NUM_YIELD_TYPES; ++i)
 	{
-		if (pWorkingCity)
+		int iY = calculateYield((YieldTypes)i);
+		if (bKeyed)
 		{
-			pWorkingCity->AI_setAssignWorkDirty(true);
+			iY -= pWC->getImprovementYieldChange(eImp, (YieldTypes)i);   // drop the stale cache contribution
+			iY += aiFreshImp[i];                                         // add the fresh active-buildings sum
 		}
-		updateSymbols();
+		m_aiYield[i] = (short)(iY < 0 ? 0 : iY);
 	}
+	m_bYieldDirty = false;
 }
 
 
@@ -11184,7 +11211,11 @@ void CvPlot::read(FDataStreamBase* pStream)
 	WRAPPER_READ(wrapper, "CvPlot", (int*)&m_workingCityOverride.eOwner);
 	WRAPPER_READ(wrapper, "CvPlot", &m_workingCityOverride.iID);
 
-	WRAPPER_READ_ARRAY(wrapper, "CvPlot", NUM_YIELD_TYPES, m_aiYield);
+	// m_aiYield is a recompute-only cache -- NOT serialized. SkipElement consumes its bytes from an OLD save (by name,
+	// so nothing after it shifts and the save still loads) and is a no-op on a new save that never wrote it. m_bYieldDirty
+	// is itself never serialized and stays true from construction, so the first getYield after load recomputes from
+	// current state -- never stale-from-save.
+	WRAPPER_SKIP_ELEMENT(wrapper, "CvPlot", m_aiYield, SAVE_VALUE_TYPE_SHORT_ARRAY);
 
 	m_iActivePlayerSafeRangeCache = -1;
 	m_iActivePlayerSafeRangeCacheTestMoves = -1;
@@ -11665,7 +11696,7 @@ void CvPlot::write(FDataStreamBase* pStream)
 	WRAPPER_WRITE(wrapper, "CvPlot", m_workingCityOverride.eOwner);
 	WRAPPER_WRITE(wrapper, "CvPlot", m_workingCityOverride.iID);
 
-	WRAPPER_WRITE_ARRAY(wrapper, "CvPlot", NUM_YIELD_TYPES, m_aiYield);
+	// m_aiYield is NOT written -- recompute-only cache (the read side SkipElements any copy left in an old save).
 
 	if (m_aiCulture.empty())
 	{

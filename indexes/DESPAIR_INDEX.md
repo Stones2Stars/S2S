@@ -176,9 +176,18 @@ And it corrupted the **base** yield — all three of food, production, commerce 
 growth, build times, and the whole commerce→gold/research/culture split downstream. A slow, invisible,
 order-dependent rot. Same disease as #2: a cache whose invalidation was a vibe.
 
-*Status: fixed in the rework — the yield is now a pure function of current state (active building ×
-present bonus), recomputed every read, so construction order is irrelevant and the stamp's savegame
-ghost is abandoned as dead data.*
+**The mill has a twin born of the same disease — the school that forgot it learned.** A building's
+**tech-boosted** yield (a workshop that gains +1 production once you research Metallurgy) entered the
+`m_buildingExtraYield100` cache by the *exact same* one-time transition: the cache was stamped only when
+the **tech was researched** (`CvTeam`), against whatever buildings stood at that instant. Research the
+tech, *then* build the workshop, and the stamp had already fired with no workshop to catch it — its
+tech-yield **never** entered the cache, forever. Same city, same building, same tech — credited or not by
+the **order** you acquired them. (The bonus/vicinity twin above lost on connect-then-build; this one loses
+on research-then-build. One bug, two acquisition orders.)
+
+*Status: both classes fixed in the rework — `getBuildingExtraYield100` is now a pure function of current
+state (active building × present bonus × current tech), recomputed every read, so construction order is
+irrelevant and the stamps' savegame ghosts are abandoned as dead data.*
 
 ---
 

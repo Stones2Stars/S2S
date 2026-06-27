@@ -753,7 +753,8 @@ public:
 
 	void setExtraYield(YieldTypes eYield, short iExtraYield);
 	short* getYield() const;
-	void updateYield();
+	void updateYield();              // the TRIGGER: marks the yield cache dirty (+ AI/symbol notify); does NOT recompute
+	void recomputeYield() const;    // the actual fresh yield sum -- run lazily by getYield when m_bYieldDirty is set
 	int calculateYield(YieldTypes eIndex, bool bDisplay = false) const;
 	DllExport int getYield(YieldTypes eIndex) const;
 	int getExtraYield(YieldTypes eIndex) const { return m_aExtraYield[eIndex]; }  // stored per-plot extra yield (game event/effect state; calculateYield addend)
@@ -1017,7 +1018,8 @@ protected:
 	// Super Forts end
 
 	short* m_baseYields;
-	short* m_aiYield;
+	short* m_aiYield;                // recompute-only yield cache (NOT serialized) -- the single source for a plot's yield
+	mutable bool m_bYieldDirty;      // NOT serialized: defaults dirty on construct/load so getYield recomputes from current state, never stale-from-save
 	bst::array<short, NUM_YIELD_TYPES> m_aExtraYield;
 	std::vector<std::pair<PlayerTypes,int> > m_aiCulture;
 	std::vector<PlotTeamVisibilityIntensity> m_aPlotTeamVisibilityIntensity;

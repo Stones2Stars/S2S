@@ -121,9 +121,15 @@ Shape: **`/state/<slice>`** for game-wide lists, **`/state/<entity>/...`** for e
 - **map scope**
   - `/state/plots` — **every map plot by global index** (`idx` = `CvMap::plotNum(x,y)` — the World plot id a
     consumer keys on): terrain, feature, improvement, route, bonus (+ `bonusConnected`), the predicate facts
-    (water / hills / peak / coast / river / freshwater / irrig), `isCity`, `ownerTeam`, the **`workingCity {owner,id}`**
+    (water / hills / peak / coast / river / freshwater / irrig), `relief`, `isCity`, `ownerTeam`, the **`workingCity {owner,id}`**
     link + `worked` flag, the **`radiusCities [{owner,id}…]`** membership, `area`, and the stored `extraYield`. Same
     all-plots walk as `PlotSnapshot`. ⛔ raw only — no yields.
+    - **`relief`** (`"PEAK"`/`"HILLS"`, absent = flat/ocean) = the REAL plot-type from `getPlotType()` — **distinct from
+      the `peak`/`hills` predicate flags**, which are `isHills()` / `isPeak()||isAsPeak()` and therefore count a
+      feature-induced *as-peak* (e.g. a Kilimanjaro on flat land). The plot-type **base yield** (`getPeakChange`/
+      `getHillsChange`, `CvPlot::recalculateBaseYield`) keys on `getPlotType()`, so a consumer computing nature yield
+      must read `relief`, not `peak`/`hills` — an as-peak gets `relief` absent and so no relief base yield. The `peak`/
+      `hills` flags stay for the `HAS_PEAK`/`HAS_HILLS` predicates (which *should* count as-peaks).
     - **`workingCity`** = the single ASSIGNED city (`getWorkingCity`); **`radiusCities`** = EVERY city whose workable
       radius (`getCityIndexPlot`) includes this plot — a many-to-many superset (overlapping fat crosses), the engine's
       getCityIndexPlot **inverse**. A city's full workable-plot set (its VICINITY substrate) is "all plots whose

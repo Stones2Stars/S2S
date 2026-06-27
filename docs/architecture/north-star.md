@@ -30,3 +30,9 @@ behind it) is the realized exemplar.
 **Standing goals:** dissolve `CvCityAI`/`CvUnitAI` into interface-bounded composition (the graft-onto-derived lane);
 a pluggable external AI backend; retire the `CvInfos.h` umbrella; keep converting imperative maintainers into
 interface-bounded machines.
+
+**Engine state** follows the same discipline: a domain object's *derived* data (yields, commerce, …) lives in a
+**recompute-only, dirty-flagged, never-serialized** cache that is the single **PULL** source up the chain — the
+[state-repositories](state-repositories.md) pattern (the plot-yield cache is the landed first instance). The unified
+`dataChanged` trigger it builds toward is the missing primitive behind the entire "stale cache" bug class. `CvPlot`/
+`CvCity` stay as the domain objects; only the derived layer and `Cv*AI` change.

@@ -95,6 +95,15 @@ precision is lost (the documented x1-truncation gotcha; the `×100` is the proof
 Sources: flat extra-yield, per-building extra yields (already ×100), per-pop yields × population.
 
 ### 1.5 `getSpecialistYieldTotal(y)` (`:11351`) = `m_aiSpecialistYieldTotal[y]` — a maintained accumulator of specialist yields (city-modified, see 1.2).
+Per assigned specialist of type X, `count[X] ×` the **FIVE** engine terms (`processSpecialist` :5156 + `getExtraSpecialistYield` :11745-57) — each with its curated home (own-output on the specialist unless noted):
+| term | engine source | curated home (scope) |
+|---|---|---|
+| **intrinsic** | `SpecialistInfo.getYieldChange` | specialist `{y}.city.flat` (base) |
+| **local** | `getLocalSpecialistExtraYield` ← building `LocalSpecialistYieldChange` (`CvCity` :4811, THIS city) | specialist `{y}.city.flat`, gated by the building **in-city** |
+| **perType (building)** | `player.getExtraSpecialistYield` ← building `getSpecialistYieldChange` **non-local** (`CvPlayer` :7493, per instance, EMPIRE-wide) | specialist `{y}.empire.flat`, gated by the player **HAVING the building** (`{BUILDING, scope:empire}`) — mirrors `getGlobalYieldModifier`(empire) vs `getYieldModifier`(city) |
+| **perType (trait)** | `player.getExtraSpecialistYield` ← trait `getSpecialistYieldChange` (`CvPlayer` :28582) | on the **TRAIT**, keyed by specialist (`{y}.empire.specialists.{SPEC}.flat`, governing-deliverer; active set, PURE-filtered — the trait simple/complex callout, [modifier](../../specs/modifier.md)) |
+| **all** | `player.getSpecialistExtraYield` ← civic/trait `SpecialistExtraYields` (per ANY specialist) | civic/trait `{y}.empire.specialist.perSpecialist`, × the city's TOTAL specialists |
+| **pct** | `player.getSpecialistYieldPercentChanges` ← civic `SpecialistYieldPercentChanges` (applied `/100` INTEGER, additive) | specialist `{y}.city.percent`, read as `Σpercent/100` |
 
 **Dump:** base, specialist, modifier + the full 7-way breakdown (`modBonus/modBuilding/modPlayer/modEvent/modPower/modArea/modCapital`), extraYield (x1), extraYield100, legacy100, cap. **DONE + verified live** (London 3/3).
 
