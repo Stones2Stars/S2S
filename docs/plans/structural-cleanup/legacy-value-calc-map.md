@@ -121,20 +121,29 @@ Per assigned specialist of type X, `count[X] ×` the **FIVE** engine terms (`pro
 > GENERIC free specialists (the `totalFreeSpecialists` amount) are NOT in `specialistCount` and produce NO individual
 > output in the cascade (their engine output is AI-typed via `getBestSpecialist` → out of scope, like trade yield).
 
-> **✅ STREAMLINE DONE (owner 2026-06-28; engine + cascade built, pending Release deploy+reload to verify live): YIELD and
-> COMMERCE specialist caches are now UNIFORM clean deterministic recomputes** on the plot-cache pattern (recalc on load +
-> on change), replacing the stale incremental accumulators. Formula (uniform): the specialist's INTRINSIC
-> `getYield/CommerceChange × (100+pct)/100` (×100 fixed-point, ÷100 once); local/perType/perAll get NO percent; a percent
-> on a zero-intrinsic specialist adds nothing. The count-frozen flat-per-specialist add-on is dropped (balance later).
-> - **Commerce:** `m_aiSpecialistCommerce100` fed by `updateSpecialistCommerce()` (from `updateExtraSpecialistCommerce()` —
->   covers specialist add/remove `:5179`, load/recalc `:23305`, player-wide `:29230`) + per-city from
->   `changeSpecialistCommercePercentChanges`. Removed the stale `processSpecialist` commerce block + `CvPlayer:27896`.
-> - **Yield:** `m_aiSpecialistYieldTotal` fully recomputed in `updateExtraSpecialistYield` = intrinsic (multiplicative) +
->   extra. Removed the stale `processSpecialist:5156` + `CvPlayer:27926`.
+> **✅ STREAMLINE COMMITTED (owner 2026-06-28; engine + cascade built, pending Release deploy+reload to verify live): YIELD
+> and COMMERCE specialist values are now UNIFORM deterministic recomputes**, replacing the stale incremental accumulators.
+> Formula (uniform): the specialist's INTRINSIC `getYield/CommerceChange × (100+pct)/100` (×100 fixed-point, ÷100 once);
+> local/perType/perAll get NO percent; a percent on a zero-intrinsic specialist adds nothing. The count-frozen
+> flat-per-specialist add-on is dropped (balance later).
+> - **Getters are RECOMPUTE-ON-READ (the committed form).** `getSpecialistCommerce` + `getSpecialistYieldTotal` recompute
+>   from current state on every read (intrinsic loop; yield adds the eager `m_aiExtraSpecialistYield`). Per
+>   [state-repositories.md](../../architecture/state-repositories.md) this is the **acknowledged WORKAROUND form** (the
+>   "squirrelBanana" recompute-every-read — correct, but pays the full cost per read); the **proper** end state is the
+>   lazy dirty-flagged cache, to be delivered by the **standardized "cached array" component** (owner ruling 2026-06-28),
+>   which formalizes that doc's pattern and is applied to plot + specialist + future caches. Until then the eager
+>   `updateSpecialist{Commerce}`/`updateExtraSpecialistYield` machinery remains only to fire the rate-dirty trigger
+>   (`setCommerceDirty`/`onYieldChange`) — its cache writes are vestigial (the getter ignores them).
+> - **Stale save-read SKIPPED.** `m_aiSpecialistCommerce100` / `m_aiSpecialistYieldTotal` are `WRAPPER_SKIP_ELEMENT` on
+>   read (the [DEC-save-remove-is-soft](../../architecture/decisions.md) soft-remove) so the old drift never loads —
+>   the [state-repositories.md](../../architecture/state-repositories.md) "ignore save read + recompute" technique.
+> - **Stale writers removed:** `processSpecialist` commerce block + `CvPlayer:27896` (commerce); `processSpecialist:5156`
+>   + `CvPlayer:27926` (yield).
 > - **Cascade:** dropped the yield-vs-commerce branch in `SpecialistYieldTotal` — multiplicative for ALL channels. Yield
 >   sweep stays **555/555** (no specialist yield pct active in-save → no number change).
-> - **Remaining:** Release build + deploy + reload, then the commerce specialist sweep should be clean (engine now computes
->   the same deterministic value as the cascade). ⚠ Will shift commerce numbers off their old stale values (authorized).
+> - **Remaining:** (1) Release build + deploy + reload → commerce specialist sweep should be clean (engine now recomputes
+>   the same deterministic value as the cascade; ⚠ commerce numbers shift off their old stale values, authorized).
+>   (2) The standardized cached-array component (upgrade recompute-on-read → lazy dirty cache; migrate plot + specialist).
 >
 > **⛔ The specialist-commerce PERCENT (`SpecialistCommercePercentChanges`) is a balance-tweaked, buggy, STALE,
 > non-deterministic engine value — FULL mechanism mapped 2026-06-28 (supersedes the earlier "stale cache / recalc fixes
