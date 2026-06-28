@@ -121,24 +121,35 @@ Per assigned specialist of type X, `count[X] ×` the **FIVE** engine terms (`pro
 > GENERIC free specialists (the `totalFreeSpecialists` amount) are NOT in `specialistCount` and produce NO individual
 > output in the cascade (their engine output is AI-typed via `getBestSpecialist` → out of scope, like trade yield).
 
-> **⛔ The "pct" term is MULTIPLICATIVE for COMMERCE, ADDITIVE for YIELD — and the engine's commerce value is
-> STALE-CACHED (verified 2026-06-28).** `SpecialistCommercePercentChanges` (civic, per `(specialist, commerce)` —
-> CONFEDERACY = Merchant gold 50, etc.) is applied by `processSpecialist` as `getCommerceChange × (100+pct)/100`
-> (MULTIPLICATIVE on the specialist's OWN intrinsic only, guarded `if getCommerceChange != 0`; `CvCity.cpp:5168-73`).
-> The YIELD twin (`SpecialistYieldPercentChanges`, `:5156`) is ADDITIVE (`getYieldChange + pct/100`, no intrinsic guard).
-> The cascade had borrowed the additive form for both → wrong for commerce (a percent on a zero-intrinsic specialist,
-> e.g. a Merchant's civic gold% with no base gold, must add NOTHING). **Cascade now:** commerce → `intrinsic×(100+pct)/100`
-> (×100 accumulate, ÷100 once); yield → additive (unchanged). `local`/`perType`/`perAll` get NO percent.
+> **⛔ The specialist-commerce PERCENT (`SpecialistCommercePercentChanges`) is a balance-tweaked, buggy, STALE,
+> non-deterministic engine value — FULL mechanism mapped 2026-06-28 (supersedes the earlier "stale cache / recalc fixes
+> it" note, which was incomplete).** There are TWO engine writers to `m_aiSpecialistCommerce100`:
+> 1. **`processSpecialist` (`CvCity.cpp:5168-73`)** — per specialist with a nonzero OWN commerce (`getCommerceChange != 0`):
+>    `getCommerceChange × (100 + pct)/100` (the pct MULTIPLIES the intrinsic). Guarded — zero-intrinsic specs get nothing here.
+> 2. **`changeSpecialistCommercePercentChanges` (`CvPlayer.cpp:27883-27900`)** — when a civic CHANGES the pct, it adds
+>    `(getSpecialistCount + getFreeSpecialistCount)(spec) × Δpct` to every city. This is a **FLAT `pct/100` per specialist,
+>    INDEPENDENT of the specialist's base** and applied to ALL specialists of that type — so FREE_CHURCH's "+100% PRIEST
+>    culture" gives **+1 flat culture per priest even though priests have 0 base culture** (the "+%" is really a flat add).
+>    It OVERLAPS path 1 for a spec that has both intrinsic and pct (double application).
 >
-> **⚠ The engine ORACLE for this term is unreliable — `getSpecialistCommerce` is a STALE cache.** `m_aiSpecialistCommerce100`
-> (`CvCity.cpp:5163-5167` warns of this explicitly) is written ONLY incrementally by `processSpecialist` (bakes in the pct
-> AT ASSIGNMENT time), is serialized, and is NEVER cleanly recomputed — so when a civic changes `SpecialistCommercePercentChanges`
-> after specialists were assigned, the cache drifts and save/load preserves the drift. **Broad sweep (185 cities, the
-> engine's own `specialistCommerceDetail`):** `extraSpecialistCommerce` (local+perType+all) is **100% clean**; the
-> `specialistCommerce` term diverges **only where `pct≠0`** (98.7%), direction varying by each player's civic history.
-> So the cascade computes the **recalc-CORRECT** value and does NOT mirror the staleness (fresh-cache cities — pct=0 —
-> are exact). Parity vs the stale oracle for pct≠0 cities can only be confirmed after an **in-game recalc** refreshes the
-> cache; this is a genuine ENGINE bug, an exception to "no calculation bugs, only data gaps". *(Open: 6 gold cities
+> **It is STALE + non-deterministic:** path 2 freezes the `specialistCount` AT THE MOMENT the civic was adopted; later
+> assignment changes are never reflected (save/load preserves it; an in-game recalc did NOT fix it — city 49164: 9 priests
+> now but only ~2 priests' worth cached). So the oracle's `getSpecialistCommerce` depends on civic/assignment HISTORY and
+> cannot be deterministically reproduced. (`extraSpecialistCommerce` = local+perType+all is a SEPARATE, clean cache —
+> 100%/185 cities; only this `specialistCommerce` pct term is affected.)
+>
+> **Balance-tweak history (owner 2026-06-28):** this whole "are specialist flat outputs part of the base that percentage
+> buffs act on" area was tweaked over the years — in the old days ALL flat outputs fed the % base → **too much production**,
+> which the tweaks curbed. So this is accreted balance cruft, not clean design. The YIELD side is settled (specialist is
+> INSIDE the ×modifier term, #317; yield specialist sweep 555/555 clean); only the COMMERCE pct sub-term is this mess.
+>
+> **⏳ OPEN DESIGN DECISION (cascade cannot mirror a non-deterministic buggy value):** what should the cascade compute?
+> Candidate clean/deterministic model = `Σ count×intrinsic×(100+pct)/100 + Σ count×pct/100` (current counts) — reproduces
+> the engine's INTENT (priests do gain culture from FREE_CHURCH) deterministically; e.g. p0 c8192 culture → 10 + 14 = 24
+> (oracle 25, the +1 = stale drift). Sub-questions for the owner: (a) mirror the flat-`pct/100`-per-specialist behavior, or
+> read the "+%" as a true percent OF the base (→ 0 for zero-base specs)? (b) for a spec with both intrinsic & pct, mirror
+> the engine's double-apply or apply once? This is a post-migration-redesign-flavored call; until decided, the cascade's
+> specialist-commerce pct term is PARKED (the rest of §2 is deterministic and proceeds). *(Also open: 6 gold cities
 > mismatch at pct=0 — a separate small deterministic gap, TBD.)*
 
 **Dump:** base, specialist, modifier + the full 7-way breakdown (`modBonus/modBuilding/modPlayer/modEvent/modPower/modArea/modCapital`), extraYield (x1), extraYield100, legacy100, cap. **DONE + verified live** (London 3/3).
