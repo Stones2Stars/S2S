@@ -13010,8 +13010,29 @@ void CvCity::changeBuildingCommerceModifier(CommerceTypes eIndex, int iChange)
 
 int CvCity::getBuildingCommerceModifier(CommerceTypes eIndex) const
 {
+	PROFILE_EXTRA_FUNC();
 	FASSERT_BOUNDS(0, NUM_COMMERCE_TYPES, eIndex);
-	return m_buildingCommerceMod[eIndex];
+	// RECOMPUTE-ON-READ from CURRENT state (deterministic; owner ruling 2026-06-28 caching pattern, same as
+	// getBuildingCommerce100/getSpecialistCommerce). The incremental m_buildingCommerceMod was captured at building-BUILD
+	// time (processBuilding:4710 + the tech-modifier loop:4996) and NOT re-derived when a civic was later adopted (the
+	// player accumulator owner.getBuildingCommerceModifier DID update) or a tech researched -> it went stale and
+	// build-order-dependent. Recompute fresh: Σ over the city's ACTIVE buildings of own getCommerceModifier + the player
+	// building-keyed modifier (civic) + the building's TechCommerceModifiers the team currently HAS. (Perf: a dirty-flagged
+	// cache is the follow-up, like getBuildingCommerce100; the upstream getTotalCommerceRateModifier cache bounds calls.)
+	const CvPlayer& kOwner = GET_PLAYER(getOwner());
+	const CvTeam& kTeam = GET_TEAM(getTeam());
+	int iMod = 0;
+	for (int iB = 0; iB < GC.getNumBuildingInfos(); ++iB)
+	{
+		const BuildingTypes eB = (BuildingTypes)iB;
+		if (!isActiveBuilding(eB)) continue;
+		const CvBuildingInfo& kB = GC.getBuildingInfo(eB);
+		iMod += kB.getCommerceModifier(eIndex) + kOwner.getBuildingCommerceModifier(eB, eIndex);
+		foreach_(const TechCommerceArray& pair, kB.getTechCommerceModifiers())
+			if (kTeam.isHasTech(pair.first))
+				iMod += pair.second[eIndex];
+	}
+	return iMod;
 }
 
 
