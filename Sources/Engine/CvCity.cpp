@@ -5156,27 +5156,13 @@ void CvCity::processSpecialist(SpecialistTypes eSpecialist, int iChange)
 		changeSpecialistYieldTotal((YieldTypes)iI, (GC.getSpecialistInfo(eSpecialist).getYieldChange(iI) + GET_PLAYER(getOwner()).getSpecialistYieldPercentChanges(eSpecialist, (YieldTypes)iI) / 100) * iChange);
 	}
 
-	for (int iI = 0; iI < NUM_COMMERCE_TYPES; iI++)
-	{
-		//changeSpecialistCommerce(((CommerceTypes)iI), (GC.getSpecialistInfo(eSpecialist).getCommerceChange(iI) * iChange));
-		//TB Adjustment note: this makes the math a bit more accurate to the intention.  However, in this and the previous version
-		//there is a potential for small mathematical error that is easily righted via a recalc.  IF a Player's SpecialistCommercePercentChanges adjusts since
-		//the specialist was initially processed in and the specialist is then processed out, you will get an incorrect removal because the
-		//commerce the specialist added was not updated when the Player's percent modifier to that value changed.  Again, small error and easily righted via a recalc.
-		//If this proves to become a bigger issue than I think it will, we'll need to call a mini-recalculation on this value in each city for the player
-		//every time an adjustment to SpecialistCommercePercentChanges takes place.  That would be the patient and correct way to address this.
-		if (GC.getSpecialistInfo(eSpecialist).getCommerceChange(iI) != 0)
-		{
-			int iCommerceChangeTotal = (100 * GC.getSpecialistInfo(eSpecialist).getCommerceChange(iI));
-			int iCommerceChangeModifierTotal = (iCommerceChangeTotal * GET_PLAYER(getOwner()).getSpecialistCommercePercentChanges(eSpecialist, (CommerceTypes)iI)) / 100;
-			iCommerceChangeTotal += iCommerceChangeModifierTotal;
-			changeSpecialistCommerceTimes100(((CommerceTypes)iI), iCommerceChangeTotal * iChange);
-		}
-		//Without reanalyzing, it looks like the above will omit Specialist Extra Commerce values from % modifiers to commerce percent changes?  hmm...  I think something may be fishy here.
-	}
+	// STREAMLINED 2026-06-28: the per-specialist commerce (intrinsic × (100+pct)) is no longer accumulated incrementally
+	// here (that was the stale-cache source the old TB note below warned about — drift when SpecialistCommercePercentChanges
+	// changed after assignment). It is now recomputed cleanly by updateSpecialistCommerce() (called from
+	// updateExtraSpecialistCommerce() just below), the plot-cache pattern: recalc on load + on change.
 
 	updateExtraSpecialistYield();
-	updateExtraSpecialistCommerce();
+	updateExtraSpecialistCommerce();   // ALSO recomputes the specialist-commerce cache (updateSpecialistCommerce, streamlined)
 	updateSpecialistHappinessHealthFromTech();
 
 	if (GC.getSpecialistInfo(eSpecialist).getHealthPercent() > 0)
@@ -11850,6 +11836,7 @@ void CvCity::updateExtraSpecialistCommerce()
 	{
 		updateExtraSpecialistCommerce((CommerceTypes)iI);
 	}
+	updateSpecialistCommerce();   // streamlined: keep the (intrinsic×pct) specialist-commerce cache fresh on the SAME events (specialist add/remove, load/recalc, player-wide) — replaces the stale incremental accumulator
 
 	setCommerceDirty();
 
@@ -12445,20 +12432,28 @@ void CvCity::updateBuildingCommerce()
 
 int CvCity::getSpecialistCommerce(CommerceTypes eIndex)	const
 {
-	PROFILE_EXTRA_FUNC();
 	FASSERT_BOUNDS(0, NUM_COMMERCE_TYPES, eIndex);
-	// STREAMLINED 2026-06-28: computed ON-DEMAND from current state, NOT the stale incremental m_aiSpecialistCommerce100
-	// cache. The legacy cache baked in the percent (processSpecialist :5168) AND the specialist COUNT at civic-change
-	// time (changeSpecialistCommercePercentChanges, CvPlayer :27896) — so it drifted with reassignment and survived
-	// save/load + recalc, making the value non-deterministic and unreproducible offline (see docs/specs/validation.md +
-	// legacy-value-calc-map §1.5). This keeps the EXISTING primary formula — the intrinsic commerce percent-modified,
-	// `getCommerceChange × (100 + SpecialistCommercePercentChanges)/100` — but evaluates it deterministically each read
-	// (×100 fixed-point, ÷100 once). The buggy COUNT-frozen flat-per-specialist add-on is dropped (balance pass later).
+	return m_aiSpecialistCommerce100[eIndex] / 100;
+}
+
+// STREAMLINED 2026-06-28: m_aiSpecialistCommerce100 is now a CLEANLY-RECOMPUTED cache (the plot-cache pattern:
+// recalc on load + on change), NOT the old stale incremental accumulator. The legacy code wrote it incrementally
+// from processSpecialist (intrinsic×(100+pct) at assignment time) AND from changeSpecialistCommercePercentChanges
+// (CvPlayer:27896, specialistCount×Δpct frozen at civic-change time) — so it drifted with reassignment and survived
+// save/load + recalc, making getSpecialistCommerce non-deterministic (see docs/specs/validation.md +
+// legacy-value-calc-map §1.5). This recompute is the EXISTING primary formula evaluated deterministically:
+// Σ specialistCount(spec) × getCommerceChange(spec) × (100 + SpecialistCommercePercentChanges(spec)), ×100 fixed-point
+// (÷100 at the getter). The buggy count-frozen flat-per-specialist add-on is dropped (balance pass later). Called from
+// updateExtraSpecialistCommerce() (specialist add/remove, load/recalc, player-wide) + the pct-change path.
+void CvCity::updateSpecialistCommerce(CommerceTypes eCommerce)
+{
+	PROFILE_EXTRA_FUNC();
+	FASSERT_BOUNDS(0, NUM_COMMERCE_TYPES, eCommerce);
 	const CvPlayer& kPlayer = GET_PLAYER(getOwner());
-	int iValue100 = 0;
+	int iNew100 = 0;
 	for (int iI = 0; iI < GC.getNumSpecialistInfos(); iI++)
 	{
-		const int iIntrinsic = GC.getSpecialistInfo((SpecialistTypes)iI).getCommerceChange(eIndex);
+		const int iIntrinsic = GC.getSpecialistInfo((SpecialistTypes)iI).getCommerceChange(eCommerce);
 		if (iIntrinsic == 0)
 		{
 			continue;
@@ -12466,10 +12461,23 @@ int CvCity::getSpecialistCommerce(CommerceTypes eIndex)	const
 		const int iCount = specialistCount((SpecialistTypes)iI);
 		if (iCount != 0)
 		{
-			iValue100 += iCount * iIntrinsic * (100 + kPlayer.getSpecialistCommercePercentChanges((SpecialistTypes)iI, eIndex));
+			iNew100 += iCount * iIntrinsic * (100 + kPlayer.getSpecialistCommercePercentChanges((SpecialistTypes)iI, eCommerce));
 		}
 	}
-	return iValue100 / 100;
+	if (m_aiSpecialistCommerce100[eCommerce] != iNew100)
+	{
+		m_aiSpecialistCommerce100[eCommerce] = iNew100;
+		setCommerceDirty(eCommerce);
+	}
+}
+
+void CvCity::updateSpecialistCommerce()
+{
+	PROFILE_EXTRA_FUNC();
+	for (int iI = 0; iI < NUM_COMMERCE_TYPES; iI++)
+	{
+		updateSpecialistCommerce((CommerceTypes)iI);
+	}
 }
 
 

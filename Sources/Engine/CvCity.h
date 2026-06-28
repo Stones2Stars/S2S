@@ -897,6 +897,8 @@ public:
 	int getExtraSpecialistCommerce(CommerceTypes eIndex, SpecialistTypes eSpecialist) const;
 	void updateExtraSpecialistCommerce(CommerceTypes eCommerce);
 	void updateExtraSpecialistCommerce();
+	void updateSpecialistCommerce(CommerceTypes eCommerce);   // streamlined: clean recompute of m_aiSpecialistCommerce100 (recalc on load + change)
+	void updateSpecialistCommerce();
 
 	int getCommerceRate(CommerceTypes eIndex) const;
 	int getCommerceRateTimes100(CommerceTypes eIndex) const;

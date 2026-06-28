@@ -27888,14 +27888,15 @@ void CvPlayer::changeSpecialistCommercePercentChanges(SpecialistTypes eIndex1, C
 
 	if (iChange != 0)
 	{
-		const int iOldValue = getSpecialistCommercePercentChanges(eIndex1, eIndex2);
 		m_ppiSpecialistCommercePercentChanges[eIndex1][eIndex2] += iChange;
 
+		// STREAMLINED 2026-06-28: recompute the specialist-commerce cache cleanly per city (plot-cache pattern) rather
+		// than the old incremental specialistCount×Δpct delta — which froze the specialist COUNT at civic-change time and
+		// went stale on later reassignment (survived save/load + recalc; the non-deterministic value documented in
+		// docs/specs/validation.md + legacy-value-calc-map §1.5). updateSpecialistCommerce reads the CURRENT count + pct.
 		foreach_(CvCity* pLoopCity, cities())
 		{
-			const int iExistingValue = (pLoopCity->getFreeSpecialistCount(eIndex1) + pLoopCity->getSpecialistCount(eIndex1)) * (getSpecialistCommercePercentChanges(eIndex1, eIndex2) - iOldValue);
-			// set the new
-			pLoopCity->changeSpecialistCommerceTimes100(eIndex2, iExistingValue);
+			pLoopCity->updateSpecialistCommerce(eIndex2);
 		}
 	}
 }
