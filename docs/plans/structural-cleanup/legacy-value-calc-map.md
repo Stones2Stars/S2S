@@ -121,8 +121,9 @@ Per assigned specialist of type X, `count[X] ×` the **FIVE** engine terms (`pro
 > GENERIC free specialists (the `totalFreeSpecialists` amount) are NOT in `specialistCount` and produce NO individual
 > output in the cascade (their engine output is AI-typed via `getBestSpecialist` → out of scope, like trade yield).
 
-> **✅ STREAMLINE COMMITTED (owner 2026-06-28; engine + cascade built, pending Release deploy+reload to verify live): YIELD
-> and COMMERCE specialist values are now UNIFORM deterministic recomputes**, replacing the stale incremental accumulators.
+> **✅ STREAMLINE DONE + VERIFIED LIVE (owner 2026-06-28; Release deployed + reloaded — specialist commerce AND yield
+> parity confirmed CLEAN against the engine oracle): YIELD and COMMERCE specialist values are now UNIFORM deterministic
+> recomputes**, replacing the stale incremental accumulators.
 > Formula (uniform): the specialist's INTRINSIC `getYield/CommerceChange × (100+pct)/100` (×100 fixed-point, ÷100 once);
 > local/perType/perAll get NO percent; a percent on a zero-intrinsic specialist adds nothing. The count-frozen
 > flat-per-specialist add-on is dropped (balance later).
@@ -140,9 +141,9 @@ Per assigned specialist of type X, `count[X] ×` the **FIVE** engine terms (`pro
 > - **Stale writers removed:** `processSpecialist` commerce block + `CvPlayer:27896` (commerce); `processSpecialist:5156`
 >   + `CvPlayer:27926` (yield).
 > - **Cascade:** dropped the yield-vs-commerce branch in `SpecialistYieldTotal` — multiplicative for ALL channels. Yield
->   sweep stays **555/555** (no specialist yield pct active in-save → no number change).
-> - **Remaining:** (1) Release build + deploy + reload → commerce specialist sweep should be clean (engine now recomputes
->   the same deterministic value as the cascade; ⚠ commerce numbers shift off their old stale values, authorized).
+>   parity holds clean (no specialist yield pct active in-save → no number change); commerce parity now clean too
+>   (engine recomputes the same deterministic value as the cascade; commerce numbers shifted off their old stale values, authorized).
+> - **Remaining:** only (2) below — the deploy+verify (1) is DONE.
 >   (2) The standardized `CvDerivedCache` component (upgrade recompute-on-read → lazy dirty cache; migrate plot +
 >   specialist) — **formalized, deferred to shadow / final-migration time** (owner 2026-06-28); design +
 >   chosen C++03 mechanism (templated value-holder + member-fn-ptr recompute) in
