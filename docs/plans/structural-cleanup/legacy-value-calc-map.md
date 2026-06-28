@@ -102,8 +102,24 @@ Per assigned specialist of type X, `count[X] ×` the **FIVE** engine terms (`pro
 | **local** | `getLocalSpecialistExtraYield` ← building `LocalSpecialistYieldChange` (`CvCity` :4811, THIS city) | specialist `{y}.city.flat`, gated by the building **in-city** |
 | **perType (building)** | `player.getExtraSpecialistYield` ← building `getSpecialistYieldChange` **non-local** (`CvPlayer` :7493, per instance, EMPIRE-wide) | specialist `{y}.empire.flat`, gated by the player **HAVING the building** (`{BUILDING, scope:empire}`) — mirrors `getGlobalYieldModifier`(empire) vs `getYieldModifier`(city) |
 | **perType (trait)** | `player.getExtraSpecialistYield` ← trait `getSpecialistYieldChange` (`CvPlayer` :28582) | on the **TRAIT**, keyed by specialist (`{y}.empire.specialists.{SPEC}.flat`, governing-deliverer; active set, PURE-filtered — the trait simple/complex callout, [modifier](../../specs/modifier.md)) |
-| **all** | `player.getSpecialistExtraYield` ← civic/trait `SpecialistExtraYields` (per ANY specialist) | civic/trait `{y}.empire.specialist.perSpecialist`, × the city's TOTAL specialists |
+| **all** | `player.getSpecialistExtra{Yield,Commerce}` ← **building**/civic/trait `SpecialistExtra{Yields,Commerces}` (per ANY specialist) | **building**/civic/trait `{y}.empire.specialist.perSpecialist`, × the city's TOTAL specialists |
 | **pct** | `player.getSpecialistYieldPercentChanges` ← civic `SpecialistYieldPercentChanges` (applied `/100` INTEGER, additive) | specialist `{y}.city.percent`, read as `Σpercent/100` |
+
+> **The "all" (perSpecialist) source is EMPIRE-WIDE incl. BUILDINGS (verified + owner ruling 2026-06-28).** A wonder's
+> `SpecialistExtraCommerces` (Sistine = +2 culture/specialist) feeds the **player** accumulator (`CvPlayer.cpp:7471` →
+> `getSpecialistExtraCommerce`), applied to **every** city's specialists (`CvCity.cpp:11823`/`:12490`) — so a wonder in
+> one city boosts every city's specialists empire-wide (the classic Sistine effect; pedia key
+> `TXT_KEY_BUILDINGHELP_PER_SPECIALIST_ALL_CITIES`). The curator's `empire.specialist.perSpecialist` mirrors it; the
+> cascade sums it over the player's **empire buildings** (not just the local city). **Owner ruling: mirror the
+> empire-wide scope faithfully now; the (arguably insane) magnitude is a BALANCE question for post-migration** —
+> empire-wide culture-per-specialist (+ Creative) is a prime driver of late-game culture runaway.
+>
+> **The perSpecialist multiplier = `specialistCount(spec)` = `getSpecialistCount + getFreeSpecialistCount`** (assigned +
+> TYPED-free, `CvCity.cpp:23291`) — EXACTLY what `/state` reports per type. So the cascade takes assigned+typed-free
+> counts from `/state` and computes the output (owner ruling 2026-06-28: *SpecialistInfo gives per-type production; we
+> fetch how many of each type the AI assigned and calculate the output — we never reproduce the AI's assignment*). The
+> GENERIC free specialists (the `totalFreeSpecialists` amount) are NOT in `specialistCount` and produce NO individual
+> output in the cascade (their engine output is AI-typed via `getBestSpecialist` → out of scope, like trade yield).
 
 **Dump:** base, specialist, modifier + the full 7-way breakdown (`modBonus/modBuilding/modPlayer/modEvent/modPower/modArea/modCapital`), extraYield (x1), extraYield100, legacy100, cap. **DONE + verified live** (London 3/3).
 
