@@ -121,20 +121,20 @@ Per assigned specialist of type X, `count[X] ×` the **FIVE** engine terms (`pro
 > GENERIC free specialists (the `totalFreeSpecialists` amount) are NOT in `specialistCount` and produce NO individual
 > output in the cascade (their engine output is AI-typed via `getBestSpecialist` → out of scope, like trade yield).
 
-> **⛔ STREAMLINE IN PROGRESS (owner 2026-06-28): YIELD and COMMERCE specialist percents must be UNIFORM.** The two
-> engine paths are currently INCONSISTENT — yield (`processSpecialist:5156`) is ADDITIVE (`getYieldChange + pct/100`),
-> commerce (`:5168-73`) is MULTIPLICATIVE (`getCommerceChange × (100+pct)/100`). The streamline makes BOTH the same
-> deterministic, on-demand `intrinsic × (100+pct)/100` rule (a percent multiplies its base; zero-base spec → 0; the
-> stale count-frozen flat-per-spec add-on is dropped, balance later). **Step 1 DONE:** `getSpecialistCommerce`
-> (`CvCity.cpp`) rewritten to the on-demand deterministic form (no stale `m_aiSpecialistCommerce100`); StoneBase cascade
-> commerce specialist term is multiplicative to match (interim on-demand). **Remaining:**
-> 1. **CACHE PATTERN (owner 2026-06-28) — same as the PLOT cache: RECALCULATE ON LOAD, then recalc ON CHANGE** (specialist
->    assign/unassign, civic/pct change), not per-read, since it's a hot calc. Keep `m_aiSpecialistCommerce100` but feed it
->    from a clean `updateSpecialistCommerce()` (mirroring `updateExtraSpecialistCommerce`) wired to load + the change sites,
->    replacing the broken incremental `:5170` / `CvPlayer:27896` deltas. The on-demand getter is the correct interim until this lands.
-> 2. **UNIFORM YIELD twin:** `m_aiSpecialistYieldTotal` / `processSpecialist:5156` (+ any `CvPlayer` yield-pct path) gets the
->    identical treatment; the cascade drops its yield-vs-commerce branch (uniform multiplicative). Then re-verify both sweeps + deploy.
->    ⚠ Changes yield numbers where a specialist yield percent exists (was additive) — authorized (streamline > stale legacy numbers).
+> **✅ STREAMLINE DONE (owner 2026-06-28; engine + cascade built, pending Release deploy+reload to verify live): YIELD and
+> COMMERCE specialist caches are now UNIFORM clean deterministic recomputes** on the plot-cache pattern (recalc on load +
+> on change), replacing the stale incremental accumulators. Formula (uniform): the specialist's INTRINSIC
+> `getYield/CommerceChange × (100+pct)/100` (×100 fixed-point, ÷100 once); local/perType/perAll get NO percent; a percent
+> on a zero-intrinsic specialist adds nothing. The count-frozen flat-per-specialist add-on is dropped (balance later).
+> - **Commerce:** `m_aiSpecialistCommerce100` fed by `updateSpecialistCommerce()` (from `updateExtraSpecialistCommerce()` —
+>   covers specialist add/remove `:5179`, load/recalc `:23305`, player-wide `:29230`) + per-city from
+>   `changeSpecialistCommercePercentChanges`. Removed the stale `processSpecialist` commerce block + `CvPlayer:27896`.
+> - **Yield:** `m_aiSpecialistYieldTotal` fully recomputed in `updateExtraSpecialistYield` = intrinsic (multiplicative) +
+>   extra. Removed the stale `processSpecialist:5156` + `CvPlayer:27926`.
+> - **Cascade:** dropped the yield-vs-commerce branch in `SpecialistYieldTotal` — multiplicative for ALL channels. Yield
+>   sweep stays **555/555** (no specialist yield pct active in-save → no number change).
+> - **Remaining:** Release build + deploy + reload, then the commerce specialist sweep should be clean (engine now computes
+>   the same deterministic value as the cascade). ⚠ Will shift commerce numbers off their old stale values (authorized).
 >
 > **⛔ The specialist-commerce PERCENT (`SpecialistCommercePercentChanges`) is a balance-tweaked, buggy, STALE,
 > non-deterministic engine value — FULL mechanism mapped 2026-06-28 (supersedes the earlier "stale cache / recalc fixes
