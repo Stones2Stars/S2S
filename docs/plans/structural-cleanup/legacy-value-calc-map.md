@@ -190,12 +190,19 @@ to the holding building via `getBaseCommerceRateFromBuilding100`), both modelled
 >   - `player.getFreeSpecialist()` = Σ active buildings' `iGlobalFreeSpecialist` (→ **`freeSpecialists.empire.any`**, `CvPlayer.cpp:7395`)
 >     + Σ adopted civics' `iFreeSpecialist` (→ **`freeSpecialists.empire.any`**, `:18045`) + Σ active traits' `iFreeSpecialist` (→ **`freeSpecialists.empire.any`**, `:28515`).
 >   - improvement term = `Σ_imp getImprovementFreeSpecialists(imp) × countNumImprovedPlots(imp)`, where the per-improvement
->     rate is Σ active buildings' `ImprovementFreeSpecialists[imp]` (`:4885`). ⚠ **VERIFIED CURATOR BUG** — the engine scales
->     by the **count of improved plots** (a `per` count-scaler), but `curate_building.py:592-600` models it as a *presence*
->     `enabled:{improvement}` flat (and self-flags it unverified at `:593`). Real fix: emit `freeSpecialists.city.any = n,
->     per:{improvement count in city}`, not a presence gate. (Contributes only if London has such a building+improvement.)
->   - per-wonder = `(anyTrait isFreeSpecialistperWorldWonder ? numWorldWonders : 0) + (…National ? numNationalWonders : 0)
->     + (…TeamProject ? numTeamWonders : 0)` — trait flags (`CvPlayer.cpp:28559-28561`), × per-city wonder counts.
+>     rate is Σ active buildings' `ImprovementFreeSpecialists[imp]` (`:4885`). ✅ **CURATOR FIXED** (`curate_building.py`,
+>     `_inject_per`): emitted as a `per` count-scaler `freeSpecialists.city.any = {value:n, per:{type:IMPROVEMENT, scope:city}}`,
+>     NOT the old presence `enabled:{improvement}` flat. `countNumImprovedPlots` = plots whose **working city is this** AND
+>     carry the improvement (`CvCity.cpp:1822` — the `Assigned`/`getWorkingCity()==this` domain, worked or not).
+>   - per-wonder = `(any active trait isFreeSpecialistperWorldWonder ? numWorldWonders : 0) + (…National ? numNationalWonders : 0)
+>     + (…TeamProject ? numTeamWonders : 0)` — a **player-level OR** (each wonder-category count added ONCE if ANY held trait
+>     grants it; `CvPlayer.cpp:28559-28561` → `CvCity.cpp:5764-5775`), NOT summed per trait. The trait flags are authored in
+>     the trait's **`policies` block** (`policies.freeSpecialistPer{World,National}Wonder`/`…TeamProject`), set ONLY in the
+>     **complex** set (PHILOSOPHICAL/PROGRESSIVE and their levels) — so the term is live only under `GAMEOPTION_LEADER_COMPLEX_TRAITS`.
+>     ⚠ Per-LEVEL: the level-1 traits (`…1`) carry only `PerNationalWonder`; World/Team appear on higher levels. Wonder counts
+>     (`getNumWorldWonders`/`Team`/`National`) = present buildings (incl. dormant) by `allowed` self-cap scope, precedence
+>     **world > team > national** (`isWorldWonder` ⟺ `allowed.world`, etc.; `handleBuildingCounts`). NOT pure-gated (the flag
+>     is a bool capability, set unconditionally in `processTrait`).
 > - **Typed free specialists are a SEPARATE ledger, already in `/state`.** `getFreeSpecialistCount(SPECIALIST_X)` (the
 >   `FreeSpecialistCounts` per-type family + the `Unattributed` array, `CvCity.cpp:14132`) is counted per-type in `/state`'s
 >   specialist block — NOT part of `totalFreeSpecialists`. The genuinely *persistent* grant-shaped ones (event `:19008`,
@@ -207,11 +214,16 @@ to the holding building via `getBaseCommerceRateFromBuilding100`), both modelled
 > - **Oracle emitted + verified** (`/computed/cities/yields`, committed): `totalFreeSpecialists` (London = **59**) +
 >   `cityFreeSpecialist` (the `freeSpecialists.city.any` part, London = **9**) — vs `/state` assigned 150. The 59 free
 >   specialists' output is what the cascade silently missed.
-> - **Build plan (StoneBase, foundational):** (1) compute the free amount by summing the `freeSpecialists.any` count-leaf
->   over **active** buildings (city/area/empire) + adopted civics + active traits (empire) + the improvement `per`-scaler
->   + per-wonder, diff vs `totalFreeSpecialists`; (2) resolve the OUTPUT typing (which specialist type the generic `any`
->   free ones produce as — verify against the engine getters, don't guess); (3) wire the free amount into the specialist
->   output bucket, avoiding double-count with the `/state` per-type assigned counts.
+> - **Build status (StoneBase, foundational):** ✅ **(1) the AMOUNT is reproduced to PARITY** — `FreeSpecialistAmountCascade`
+>   + `/parity/freeSpecialists` sum the `freeSpecialists.any` count-leaf over active buildings (city/area/empire) + civics +
+>   active-set traits + the improvement `per`-scaler + the per-wonder term, matching the engine `totalFreeSpecialists` oracle
+>   (and `cityFreeSpecialist` for the bare-city sub-term). The parser was extended for the count-leaf LIST shape
+>   (`ModifierFamilyParser`: an array under `any`/SPECIALIST → `count` magnitudes). Engine per-term decomposition emitted
+>   for attribution (`/computed/cities/yields`: area/player/improvement/wonder + raw wonder counts). **NEXT (the OUTPUT,
+>   not yet built):** (2) resolve the OUTPUT typing — which specialist type the generic `any` free ones produce as (verify
+>   against the engine `getXBySpecialist` getters' `getBestSpecialist(iI)` loop, don't guess); (3) wire the free amount into
+>   the specialist output bucket (yield/commerce/GP-rate/happiness/health), avoiding double-count with the `/state` per-type
+>   assigned counts.
 
 ## 3. HEALTH + HAPPINESS — good/bad signed-split
 
