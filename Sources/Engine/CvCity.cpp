@@ -11340,7 +11340,25 @@ int CvCity::getExtraYield(YieldTypes eYield) const
 int CvCity::getSpecialistYieldTotal(YieldTypes eYield) const
 {
 	FASSERT_BOUNDS(0, NUM_YIELD_TYPES, eYield);
-	return m_aiSpecialistYieldTotal[eYield];
+	// STREAMLINED 2026-06-28: recompute-on-read = INTRINSIC (current state, multiplicative) + EXTRA (m_aiExtraSpecialistYield,
+	// eager-maintained, not stale). Never the stale serialized m_aiSpecialistYieldTotal (skip-read on load). Uniform with
+	// getSpecialistCommerce: getYieldChange × (100+pct)/100, ×100 fixed-point ÷100. (Dirty-flagged cache = perf follow-up.)
+	const CvPlayer& kPlayer = GET_PLAYER(getOwner());
+	int iIntrinsic100 = 0;
+	for (int iI = 0; iI < GC.getNumSpecialistInfos(); iI++)
+	{
+		const int iYieldChange = GC.getSpecialistInfo((SpecialistTypes)iI).getYieldChange(eYield);
+		if (iYieldChange == 0)
+		{
+			continue;
+		}
+		const int iCount = specialistCount((SpecialistTypes)iI);
+		if (iCount != 0)
+		{
+			iIntrinsic100 += iCount * iYieldChange * (100 + kPlayer.getSpecialistYieldPercentChanges((SpecialistTypes)iI, eYield));
+		}
+	}
+	return iIntrinsic100 / 100 + m_aiExtraSpecialistYield[eYield];
 }
 
 void CvCity::changeSpecialistYieldTotal(YieldTypes eYield, int iChange)
@@ -12450,7 +12468,26 @@ void CvCity::updateBuildingCommerce()
 int CvCity::getSpecialistCommerce(CommerceTypes eIndex)	const
 {
 	FASSERT_BOUNDS(0, NUM_COMMERCE_TYPES, eIndex);
-	return m_aiSpecialistCommerce100[eIndex] / 100;
+	// STREAMLINED 2026-06-28: recompute-on-read from CURRENT state (never the stale serialized m_aiSpecialistCommerce100,
+	// which is now skip-read on load). Deterministic + always fresh on load AND change — the old incremental/count-frozen
+	// drift is gone. Intrinsic getCommerceChange × (100+pct)/100, ×100 fixed-point, ÷100 once. (A dirty-flagged cache —
+	// the standardized cached-array refactor — is the perf follow-up; the upstream getCommerceRate cache bounds calls.)
+	const CvPlayer& kPlayer = GET_PLAYER(getOwner());
+	int iValue100 = 0;
+	for (int iI = 0; iI < GC.getNumSpecialistInfos(); iI++)
+	{
+		const int iIntrinsic = GC.getSpecialistInfo((SpecialistTypes)iI).getCommerceChange(eIndex);
+		if (iIntrinsic == 0)
+		{
+			continue;
+		}
+		const int iCount = specialistCount((SpecialistTypes)iI);
+		if (iCount != 0)
+		{
+			iValue100 += iCount * iIntrinsic * (100 + kPlayer.getSpecialistCommercePercentChanges((SpecialistTypes)iI, eIndex));
+		}
+	}
+	return iValue100 / 100;
 }
 
 // STREAMLINED 2026-06-28: m_aiSpecialistCommerce100 is now a CLEANLY-RECOMPUTED cache (the plot-cache pattern:
@@ -17232,7 +17269,11 @@ void CvCity::read(FDataStreamBase* pStream)
 	WRAPPER_READ_ARRAY(wrapper, "CvCity", NUM_COMMERCE_TYPES, m_aiCommerceRate);
 	WRAPPER_READ_ARRAY(wrapper, "CvCity", NUM_COMMERCE_TYPES, m_aiProductionToCommerceModifier);
 	WRAPPER_READ_ARRAY(wrapper, "CvCity", NUM_COMMERCE_TYPES, m_aiBuildingCommerce);
-	WRAPPER_READ_ARRAY(wrapper, "CvCity", NUM_COMMERCE_TYPES, m_aiSpecialistCommerce100);
+	// STREAMLINED 2026-06-28: SKIP the save read — m_aiSpecialistCommerce100 is now a clean DERIVED cache (recalc on load
+	// + on change, the universal cached-array technique). Loading the serialized value would restore the OLD stale drift;
+	// instead recalculateModifiers repopulates it fresh on load (via processSpecialist → updateExtraSpecialistCommerce →
+	// updateSpecialistCommerce). Mirrors the LocalSpecialistExtra* skip pattern below. (Still WRITTEN for save-format compat.)
+	WRAPPER_SKIP_ELEMENT(wrapper, "CvCity", m_aiSpecialistCommerce100, SAVE_VALUE_TYPE_INT_ARRAY);
 	WRAPPER_READ_ARRAY(wrapper, "CvCity", NUM_COMMERCE_TYPES, m_aiReligionCommerce);
 	WRAPPER_READ_ARRAY(wrapper, "CvCity", NUM_COMMERCE_TYPES, m_aiCorporationCommerce);
 	WRAPPER_READ_ARRAY(wrapper, "CvCity", NUM_COMMERCE_TYPES, m_aiCommerceRateModifier);
@@ -17522,7 +17563,10 @@ void CvCity::read(FDataStreamBase* pStream)
 	WRAPPER_READ_ARRAY(wrapper, "CvCity", NUM_YIELD_TYPES, m_aiExtraYield);
 	// Absent in older saves (stays 0; specialists are then still baked flat into m_aiExtraYield
 	// until a modifier recalculation rebuilds both arrays).
-	WRAPPER_READ_ARRAY(wrapper, "CvCity", NUM_YIELD_TYPES, m_aiSpecialistYieldTotal);
+	// STREAMLINED 2026-06-28: SKIP the save read — m_aiSpecialistYieldTotal is a clean DERIVED cache (recalc on load +
+	// change). recalculateModifiers repopulates it fresh on load (processSpecialist → updateExtraSpecialistYield). Loading
+	// the serialized value would restore stale drift. (Still WRITTEN for save-format compat.) Uniform with commerce above.
+	WRAPPER_SKIP_ELEMENT(wrapper, "CvCity", m_aiSpecialistYieldTotal, SAVE_VALUE_TYPE_INT_ARRAY);
 	WRAPPER_READ_ARRAY(wrapper, "CvCity", NUM_COMMERCE_TYPES, m_aiBuildingCommerceTechChange);
 
 	WRAPPER_READ_ARRAY(wrapper, "CvCity", NUM_COMMERCE_TYPES, m_commercePerPopFromBuildings);
