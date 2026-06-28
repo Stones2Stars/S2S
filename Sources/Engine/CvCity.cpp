@@ -72,6 +72,8 @@ CvCity::CvCity()
 	m_abCommerceRateDirty = new bool[NUM_COMMERCE_TYPES];
 	m_aiProductionToCommerceModifier = new int[NUM_COMMERCE_TYPES];
 	m_aiBuildingCommerce = new int[NUM_COMMERCE_TYPES];
+	m_aiBuildingCommerce100 = new int[NUM_COMMERCE_TYPES];
+	m_abBuildingCommerce100Dirty = new bool[NUM_COMMERCE_TYPES];
 	m_aiSpecialistCommerce100 = new int[NUM_COMMERCE_TYPES];
 	m_aiReligionCommerce = new int[NUM_COMMERCE_TYPES];
 	m_aiCorporationCommerce = new int[NUM_COMMERCE_TYPES];
@@ -199,6 +201,8 @@ CvCity::~CvCity()
 	SAFE_DELETE_ARRAY(m_abCommerceRateDirty);
 	SAFE_DELETE_ARRAY(m_aiProductionToCommerceModifier);
 	SAFE_DELETE_ARRAY(m_aiBuildingCommerce);
+	SAFE_DELETE_ARRAY(m_aiBuildingCommerce100);
+	SAFE_DELETE_ARRAY(m_abBuildingCommerce100Dirty);
 	SAFE_DELETE_ARRAY(m_aiSpecialistCommerce100);
 	SAFE_DELETE_ARRAY(m_aiReligionCommerce);
 	SAFE_DELETE_ARRAY(m_aiCorporationCommerce);
@@ -669,6 +673,8 @@ void CvCity::reset(int iID, PlayerTypes eOwner, int iX, int iY, bool bConstructo
 		m_abCommerceRateDirty[iI] = false;
 		m_aiProductionToCommerceModifier[iI] = 0;
 		m_aiBuildingCommerce[iI] = 0;
+		m_aiBuildingCommerce100[iI] = 0;
+		m_abBuildingCommerce100Dirty[iI] = true;   // recompute-only cache: dirty on construct + load ⇒ rebuilt fresh on first read
 		m_aiSpecialistCommerce100[iI] = 0;
 		m_aiReligionCommerce[iI] = 0;
 		m_aiCorporationCommerce[iI] = 0;
@@ -12077,6 +12083,7 @@ void CvCity::setCommerceDirty(CommerceTypes eCommerce)
 	else
 	{
 		m_abCommerceRateDirty[eCommerce] = true;
+		m_abBuildingCommerce100Dirty[eCommerce] = true;   // rebuild the building-commerce recompute-cache on the SAME trigger (obvious + unmissable)
 		if (getOwner() != NO_PLAYER)
 		{
 			GET_PLAYER(getOwner()).setCommerceDirty(eCommerce, true);
@@ -12156,12 +12163,34 @@ int CvCity::getBuildingCommerce(CommerceTypes eIndex) const
 
 int CvCity::getBuildingCommerce100(CommerceTypes eIndex) const
 {
-	return (
-		100 * getBuildingCommerce(eIndex)
-		+ getBonusCommercePercentChanges(eIndex)
-		+ getBuildingCommerceTechChange(eIndex)
-		+ getCommercePerPopFromBuildings(eIndex) * getPopulation()
-	);
+	FASSERT_BOUNDS(0, NUM_COMMERCE_TYPES, eIndex);
+	// RECOMPUTE-ONLY dirty-flagged cache (the plot/specialist cache-rebuild mechanism; owner ruling 2026-06-28). The
+	// REBUILD POINT IS OBVIOUS: the dirty flag is flipped only by setCommerceDirty (the single trigger every building /
+	// tech / bonus / pop change funnels through), and the value is recomputed FRESH right here on the next read; neither
+	// the cache nor the flag is serialized (dirty on construct/load ⇒ rebuilt fresh). This is build-order-INDEPENDENT —
+	// it kills the build-after-tech (legacy m_aiBuildingCommerceTechChange entered only on tech RESEARCH) and the
+	// build-after-bonus (bonus-transition-only) staleness, uniform with squirrelBanana (getBuildingExtraYield100). Each
+	// sub-term is summed fresh over the city's buildings, matching the legacy active-semantics: base via
+	// getBuildingCommerceByBuilding (its own isActiveBuilding + religiously-limited guard == the old m_aiBuildingCommerce
+	// sum); tech/bonus/perPop over hasFullyActiveBuilding (the squirrelBanana guard).
+	if (m_abBuildingCommerce100Dirty[eIndex])
+	{
+		const CvTeam& kTeam = GET_TEAM(getTeam());
+		int iBase = 0, iTech100 = 0, iBonus100 = 0, iPerPop = 0;
+		foreach_(const BuildingTypes eB, getHasBuildings())
+		{
+			iBase += getBuildingCommerceByBuilding(eIndex, eB);   // base (active-checked inside; == updateBuildingCommerce sum)
+			if (hasFullyActiveBuilding(eB))
+			{
+				iTech100  += kTeam.getBuildingCommerceTechChange(eIndex, eB);
+				iBonus100 += getBonusCommercePercentChanges(eIndex, eB);
+				iPerPop   += GC.getBuildingInfo(eB).getCommercePerPopChange(eIndex);
+			}
+		}
+		m_aiBuildingCommerce100[eIndex] = 100 * iBase + iTech100 + iBonus100 + iPerPop * getPopulation();
+		m_abBuildingCommerce100Dirty[eIndex] = false;
+	}
+	return m_aiBuildingCommerce100[eIndex];
 }
 
 int CvCity::getBuildingCommerceByBuilding(CommerceTypes eIndex, BuildingTypes eBuilding, const bool bFull, const bool bTestVisible) const
@@ -22451,6 +22480,8 @@ void CvCity::clearModifierTotals()
 		m_abCommerceRateDirty[iI] = false;
 		m_aiProductionToCommerceModifier[iI] = 0;
 		m_aiBuildingCommerce[iI] = 0;
+		m_aiBuildingCommerce100[iI] = 0;
+		m_abBuildingCommerce100Dirty[iI] = true;   // recompute-only cache: dirty on construct + load ⇒ rebuilt fresh on first read
 		m_aiSpecialistCommerce100[iI] = 0;
 		m_aiReligionCommerce[iI] = 0;
 		m_aiCorporationCommerce[iI] = 0;

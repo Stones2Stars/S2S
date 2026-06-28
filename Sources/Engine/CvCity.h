@@ -1761,6 +1761,12 @@ protected:
 	mutable bool* m_abCommerceRateDirty;
 	int* m_aiProductionToCommerceModifier;
 	int* m_aiBuildingCommerce;
+	// STREAMLINED 2026-06-28: getBuildingCommerce100 is now a RECOMPUTE-ONLY, dirty-flagged cache (the plot/specialist
+	// cache-rebuild mechanism, owner ruling). m_aiBuildingCommerce100 holds the fresh ×100 value; m_abBuildingCommerce100Dirty
+	// is flipped by setCommerceDirty (the single trigger) so the rebuild point is OBVIOUS; NEITHER is serialized — dirty on
+	// construct ⇒ rebuilt fresh on load. Kills the build-after-tech / build-after-bonus staleness uniformly with squirrelBanana.
+	mutable int* m_aiBuildingCommerce100;
+	mutable bool* m_abBuildingCommerce100Dirty;
 	int* m_aiSpecialistCommerce100;
 	int* m_aiReligionCommerce;
 	int* m_aiCorporationCommerce;
