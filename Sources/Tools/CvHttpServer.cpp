@@ -2155,6 +2155,11 @@ namespace
 				{
 					const CvPlayer& kOwnerB = GET_PLAYER(pCity->getOwner());
 					int iPureOwn = 0, iPureChg = 0, iPureSR = 0, iPureShrine = 0, iPureCorpHQ = 0, iPureDbl = 0;
+					// The getBuildingCommerce100 parts ADDED OUTSIDE getBuildingCommerceByBuilding (CvCity.cpp:12207-12209,
+					// gated hasFullyActiveBuilding): tech-change + bonus-percent (both ×100 native) + perPop (×100, ×pop). So
+					// buildingCommerce100 = 100*Σ(iBase pure parts) + iTech100 + iBonus100 + iPerPop*pop fully reconstructs.
+					int iPureTech100 = 0, iPureBonus100 = 0, iPurePerPop = 0;
+					const CvTeam& kTeamB = GET_TEAM(pCity->getTeam());
 					for (int bb = 0; bb < GC.getNumBuildingInfos(); ++bb)
 					{
 						const BuildingTypes eBB = (BuildingTypes)bb;
@@ -2193,7 +2198,16 @@ namespace
 							const int iTB = pCity->getBuildingData(eBB).iTimeBuilt;
 							if (iTB != MIN_INT && GC.getGame().getGameTurnYear() - iTB >= iDT) iPureDbl += iBuild;   // ×2 doubles iBuild => +iBuild extra
 						}
+						if (pCity->hasFullyActiveBuilding(eBB))
+						{
+							iPureTech100  += kTeamB.getBuildingCommerceTechChange(eC, eBB);   // ×100 native
+							iPureBonus100 += pCity->getBonusCommercePercentChanges(eC, eBB);  // ×100 native
+							iPurePerPop   += kBB.getCommercePerPopChange(eC);                 // ×100 native; ×pop on emit
+						}
 					}
+					e["bldgTech100"]   = picojson::value((double)iPureTech100);
+					e["bldgBonus100"]  = picojson::value((double)iPureBonus100);
+					e["bldgPerPop100"] = picojson::value((double)(iPurePerPop * pCity->getPopulation()));
 					e["bldgPureOwnFlat100"]        = picojson::value((double)(100 * iPureOwn));
 					e["bldgPureBuildingChange100"] = picojson::value((double)(100 * iPureChg));
 					e["bldgPureStateRel100"]       = picojson::value((double)(100 * iPureSR));
