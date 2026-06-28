@@ -12445,8 +12445,31 @@ void CvCity::updateBuildingCommerce()
 
 int CvCity::getSpecialistCommerce(CommerceTypes eIndex)	const
 {
+	PROFILE_EXTRA_FUNC();
 	FASSERT_BOUNDS(0, NUM_COMMERCE_TYPES, eIndex);
-	return m_aiSpecialistCommerce100[eIndex] / 100;
+	// STREAMLINED 2026-06-28: computed ON-DEMAND from current state, NOT the stale incremental m_aiSpecialistCommerce100
+	// cache. The legacy cache baked in the percent (processSpecialist :5168) AND the specialist COUNT at civic-change
+	// time (changeSpecialistCommercePercentChanges, CvPlayer :27896) — so it drifted with reassignment and survived
+	// save/load + recalc, making the value non-deterministic and unreproducible offline (see docs/specs/validation.md +
+	// legacy-value-calc-map §1.5). This keeps the EXISTING primary formula — the intrinsic commerce percent-modified,
+	// `getCommerceChange × (100 + SpecialistCommercePercentChanges)/100` — but evaluates it deterministically each read
+	// (×100 fixed-point, ÷100 once). The buggy COUNT-frozen flat-per-specialist add-on is dropped (balance pass later).
+	const CvPlayer& kPlayer = GET_PLAYER(getOwner());
+	int iValue100 = 0;
+	for (int iI = 0; iI < GC.getNumSpecialistInfos(); iI++)
+	{
+		const int iIntrinsic = GC.getSpecialistInfo((SpecialistTypes)iI).getCommerceChange(eIndex);
+		if (iIntrinsic == 0)
+		{
+			continue;
+		}
+		const int iCount = specialistCount((SpecialistTypes)iI);
+		if (iCount != 0)
+		{
+			iValue100 += iCount * iIntrinsic * (100 + kPlayer.getSpecialistCommercePercentChanges((SpecialistTypes)iI, eIndex));
+		}
+	}
+	return iValue100 / 100;
 }
 
 

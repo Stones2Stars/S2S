@@ -121,6 +121,21 @@ Per assigned specialist of type X, `count[X] ×` the **FIVE** engine terms (`pro
 > GENERIC free specialists (the `totalFreeSpecialists` amount) are NOT in `specialistCount` and produce NO individual
 > output in the cascade (their engine output is AI-typed via `getBestSpecialist` → out of scope, like trade yield).
 
+> **⛔ STREAMLINE IN PROGRESS (owner 2026-06-28): YIELD and COMMERCE specialist percents must be UNIFORM.** The two
+> engine paths are currently INCONSISTENT — yield (`processSpecialist:5156`) is ADDITIVE (`getYieldChange + pct/100`),
+> commerce (`:5168-73`) is MULTIPLICATIVE (`getCommerceChange × (100+pct)/100`). The streamline makes BOTH the same
+> deterministic, on-demand `intrinsic × (100+pct)/100` rule (a percent multiplies its base; zero-base spec → 0; the
+> stale count-frozen flat-per-spec add-on is dropped, balance later). **Step 1 DONE:** `getSpecialistCommerce`
+> (`CvCity.cpp`) rewritten to the on-demand deterministic form (no stale `m_aiSpecialistCommerce100`); StoneBase cascade
+> commerce specialist term is multiplicative to match (interim on-demand). **Remaining:**
+> 1. **CACHE PATTERN (owner 2026-06-28) — same as the PLOT cache: RECALCULATE ON LOAD, then recalc ON CHANGE** (specialist
+>    assign/unassign, civic/pct change), not per-read, since it's a hot calc. Keep `m_aiSpecialistCommerce100` but feed it
+>    from a clean `updateSpecialistCommerce()` (mirroring `updateExtraSpecialistCommerce`) wired to load + the change sites,
+>    replacing the broken incremental `:5170` / `CvPlayer:27896` deltas. The on-demand getter is the correct interim until this lands.
+> 2. **UNIFORM YIELD twin:** `m_aiSpecialistYieldTotal` / `processSpecialist:5156` (+ any `CvPlayer` yield-pct path) gets the
+>    identical treatment; the cascade drops its yield-vs-commerce branch (uniform multiplicative). Then re-verify both sweeps + deploy.
+>    ⚠ Changes yield numbers where a specialist yield percent exists (was additive) — authorized (streamline > stale legacy numbers).
+>
 > **⛔ The specialist-commerce PERCENT (`SpecialistCommercePercentChanges`) is a balance-tweaked, buggy, STALE,
 > non-deterministic engine value — FULL mechanism mapped 2026-06-28 (supersedes the earlier "stale cache / recalc fixes
 > it" note, which was incomplete).** There are TWO engine writers to `m_aiSpecialistCommerce100`:
