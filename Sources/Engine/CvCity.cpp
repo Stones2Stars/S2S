@@ -59,6 +59,8 @@ CvCity::CvCity()
 	m_aiSpecialistYieldTotal = new int[NUM_YIELD_TYPES];
 	m_buildingExtraYield100 = new int[NUM_YIELD_TYPES];
 	m_aiBuildingBonusVicinityYield100 = new int[NUM_YIELD_TYPES];
+	m_aiBuildingExtraYield100Cache = new int[NUM_YIELD_TYPES];
+	m_abBuildingExtraYield100Dirty = new bool[NUM_YIELD_TYPES];
 	m_buildingYieldMod = new int[NUM_YIELD_TYPES];
 	m_aiBaseYieldPerPopRate = new int[NUM_YIELD_TYPES];
 	m_aiYieldRateModifier = new int[NUM_YIELD_TYPES];
@@ -186,6 +188,8 @@ CvCity::~CvCity()
 	SAFE_DELETE_ARRAY(m_aiSpecialistYieldTotal);
 	SAFE_DELETE_ARRAY(m_buildingExtraYield100);
 	SAFE_DELETE_ARRAY(m_aiBuildingBonusVicinityYield100);
+	SAFE_DELETE_ARRAY(m_aiBuildingExtraYield100Cache);
+	SAFE_DELETE_ARRAY(m_abBuildingExtraYield100Dirty);
 	SAFE_DELETE_ARRAY(m_buildingYieldMod);
 	SAFE_DELETE_ARRAY(m_buildingCommerceMod);
 	SAFE_DELETE_ARRAY(m_aiBaseYieldPerPopRate);
@@ -653,6 +657,8 @@ void CvCity::reset(int iID, PlayerTypes eOwner, int iX, int iY, bool bConstructo
 		m_aiSpecialistYieldTotal[iI] = 0;
 		m_buildingExtraYield100[iI] = 0;
 		m_aiBuildingBonusVicinityYield100[iI] = 0;
+		m_aiBuildingExtraYield100Cache[iI] = 0;
+		m_abBuildingExtraYield100Dirty[iI] = true;   // recompute-only cache: dirty on construct + load ⇒ rebuilt fresh on first read
 		m_buildingYieldMod[iI] = 0;
 		m_aiBaseYieldPerPopRate[iI] = 0;
 		m_aiYieldRateModifier[iI] = 0;
@@ -11287,6 +11293,13 @@ int CvCity::getBuildingExtraYield100(YieldTypes eYield) const
 	//      getBuildingYieldTechChange into the cache (the player-5 +100). The fresh sum (static + dynamic + tech +
 	//      bonus/vicinity) over active buildings is the build-order-INDEPENDENT truth. Stored in a recompute-only
 	//      holder (never serialized), so the legacy arrays stay untouched dead data and the test save loads byte-identical.
+	// STREAMLINED 2026-06-28: now a RECOMPUTE-ONLY dirty-flagged cache (uniform with building-commerce + plot + specialist).
+	// The fresh sum runs ONLY when dirty (flipped by onYieldChange — the single yield trigger, so the rebuild point is
+	// OBVIOUS), cached between yield changes; was recompute-EVERY-read (getYieldRate100 is uncached, so a real hot-path cost).
+	if (!m_abBuildingExtraYield100Dirty[eYield])
+	{
+		return m_aiBuildingExtraYield100Cache[eYield];
+	}
 	const CvTeam& kTeam = GET_TEAM(getTeam());
 	int iFresh = 0, iBV = 0;
 	foreach_(const BuildingTypes eB, getHasBuildings())
@@ -11309,7 +11322,9 @@ int CvCity::getBuildingExtraYield100(YieldTypes eYield) const
 		}
 	}
 	m_aiBuildingBonusVicinityYield100[eYield] = iBV * 100;
-	return iFresh + iBV * 100;
+	m_aiBuildingExtraYield100Cache[eYield] = iFresh + iBV * 100;
+	m_abBuildingExtraYield100Dirty[eYield] = false;
+	return m_aiBuildingExtraYield100Cache[eYield];
 }
 
 
@@ -11384,6 +11399,12 @@ void CvCity::onYieldChange()
 #ifdef YIELD_VALUE_CACHING
 	ClearYieldValueCache();
 #endif
+	// Rebuild the building-extra-yield recompute-cache on the SAME yield trigger (obvious + unmissable), uniform with
+	// the building-commerce cache hung off setCommerceDirty.
+	for (int iI = 0; iI < NUM_YIELD_TYPES; iI++)
+	{
+		m_abBuildingExtraYield100Dirty[iI] = true;
+	}
 	setCommerceDirty();
 
 	if (getTeam() == GC.getGame().getActiveTeam())
@@ -22471,6 +22492,8 @@ void CvCity::clearModifierTotals()
 		m_aiSpecialistYieldTotal[iI] = 0;
 		m_buildingExtraYield100[iI] = 0;
 		m_aiBuildingBonusVicinityYield100[iI] = 0;
+		m_aiBuildingExtraYield100Cache[iI] = 0;
+		m_abBuildingExtraYield100Dirty[iI] = true;   // recompute-only cache: dirty on construct + load ⇒ rebuilt fresh on first read
 		m_buildingYieldMod[iI] = 0;
 	}
 

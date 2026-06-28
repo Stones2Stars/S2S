@@ -1745,6 +1745,13 @@ protected:
 	int* m_aiBaseYieldRate;
 	int* m_buildingExtraYield100;
 	int* m_aiBuildingBonusVicinityYield100; // squirrelBanana: PURE-FUNCTION bonus/vicinity building yield (recomputed every read, NOT serialized, NOT the stale m_aiExtraYield edge-cache) -- #vicinity-build-order fix
+	// STREAMLINED 2026-06-28: getBuildingExtraYield100 (squirrelBanana) is now a RECOMPUTE-ONLY, dirty-flagged cache
+	// (uniform with the building-commerce + plot + specialist caches). Was recompute-EVERY-read (getYieldRate100 is
+	// uncached, so it ran on every yield read — a real hot-path cost). m_abBuildingExtraYield100Dirty is flipped by
+	// onYieldChange (the single yield trigger) so the rebuild point is OBVIOUS; NEITHER is serialized — dirty on
+	// construct/load ⇒ rebuilt fresh. Same build-order-independent fresh sum, now cached between yield changes.
+	mutable int* m_aiBuildingExtraYield100Cache;
+	mutable bool* m_abBuildingExtraYield100Dirty;
 	int* m_buildingYieldMod;
 	int* m_buildingCommerceMod;
 	int* m_aiExtraYield;
