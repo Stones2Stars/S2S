@@ -1,7 +1,10 @@
 # State repositories — recompute-only caches with a dirty trigger
 
-**Status:** first instance landed (the plot-yield cache, 2026-06-27). The pattern is the cure for a whole class of
-"stale cache" bugs; the plot cache is the proof, and the model the rest of the engine's derived state should follow.
+**Status:** landed for the plot-yield cache (2026-06-27) and extended to the **specialist** commerce/yield getters and
+the **building** commerce + yield (squirrelBanana) caches (2026-06-28, all verified live-parity-clean). The pattern is
+the cure for a whole class of "stale cache" bugs; the plot cache is the proof, and the model the rest of the engine's
+derived state should follow. The reusable [`CvDerivedCache`](#the-standardized-cvderivedcache-component-formalized-2026-06-28-built-at-shadow--final-migration-time)
+component (below) formalizes the hand-rolled instances; building it + migrating them onto it is deferred to shadow/final-migration time.
 
 `CvPlot` and `CvCity` are **domain objects** — the in-game data entities — and they **stay**. This is not about
 dissolving them (that's `CvCityAI`'s eventual job, the AI/behaviour tangle riding on top). It is about how their
