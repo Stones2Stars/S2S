@@ -522,6 +522,25 @@ namespace
 		c["freeCityYield"]  = picojson::value(freeCityY);
 		c["cityExtraYield"] = picojson::value(cityExtraY);
 
+		// Building commerce CHANGE (Σ over active buildings of getBuildingCommerceChange) — a RUNTIME/savegame value set
+		// ONLY by Python + random events (CvEventManager Nazca, CvRandomEventInterface; every DATA feeder — civic/
+		// vote-source/GlobalBuildingCommerceChanges — is empty), folded by the engine into buildingCommerce100
+		// (getBuildingCommerceByBuilding:12254). Out-of-scope for drycalc to derive (event/RNG history) → a /state INPUT
+		// the cascade folds into buildingCommerce100, like tradeYield. Keyed by commerce-channel name (gold/research/…).
+		{
+			static const char* aCN[NUM_COMMERCE_TYPES] = { "gold", "research", "culture", "espionage" };
+			picojson::value::object bldgCommChange;
+			for (int cc = 0; cc < NUM_COMMERCE_TYPES; ++cc)
+			{
+				int iTot = 0;
+				for (int b = 0; b < GC.getNumBuildingInfos(); ++b)
+					if (pCity->isActiveBuilding((BuildingTypes)b))
+						iTot += pCity->getBuildingCommerceChange((BuildingTypes)b, (CommerceTypes)cc);
+				if (iTot != 0) bldgCommChange[aCN[cc]] = picojson::value((double)iTot);
+			}
+			c["buildingCommerceChange"] = picojson::value(bldgCommChange);
+		}
+
 		// available bonuses = TRADE-connected/reachable (hasBonus) -- raw fact
 		picojson::value::array bonuses;
 		for (int b = 0; b < GC.getNumBonusInfos(); ++b)
