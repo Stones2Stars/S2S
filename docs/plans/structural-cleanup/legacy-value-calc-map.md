@@ -121,6 +121,26 @@ Per assigned specialist of type X, `count[X] ×` the **FIVE** engine terms (`pro
 > GENERIC free specialists (the `totalFreeSpecialists` amount) are NOT in `specialistCount` and produce NO individual
 > output in the cascade (their engine output is AI-typed via `getBestSpecialist` → out of scope, like trade yield).
 
+> **⛔ The "pct" term is MULTIPLICATIVE for COMMERCE, ADDITIVE for YIELD — and the engine's commerce value is
+> STALE-CACHED (verified 2026-06-28).** `SpecialistCommercePercentChanges` (civic, per `(specialist, commerce)` —
+> CONFEDERACY = Merchant gold 50, etc.) is applied by `processSpecialist` as `getCommerceChange × (100+pct)/100`
+> (MULTIPLICATIVE on the specialist's OWN intrinsic only, guarded `if getCommerceChange != 0`; `CvCity.cpp:5168-73`).
+> The YIELD twin (`SpecialistYieldPercentChanges`, `:5156`) is ADDITIVE (`getYieldChange + pct/100`, no intrinsic guard).
+> The cascade had borrowed the additive form for both → wrong for commerce (a percent on a zero-intrinsic specialist,
+> e.g. a Merchant's civic gold% with no base gold, must add NOTHING). **Cascade now:** commerce → `intrinsic×(100+pct)/100`
+> (×100 accumulate, ÷100 once); yield → additive (unchanged). `local`/`perType`/`perAll` get NO percent.
+>
+> **⚠ The engine ORACLE for this term is unreliable — `getSpecialistCommerce` is a STALE cache.** `m_aiSpecialistCommerce100`
+> (`CvCity.cpp:5163-5167` warns of this explicitly) is written ONLY incrementally by `processSpecialist` (bakes in the pct
+> AT ASSIGNMENT time), is serialized, and is NEVER cleanly recomputed — so when a civic changes `SpecialistCommercePercentChanges`
+> after specialists were assigned, the cache drifts and save/load preserves the drift. **Broad sweep (185 cities, the
+> engine's own `specialistCommerceDetail`):** `extraSpecialistCommerce` (local+perType+all) is **100% clean**; the
+> `specialistCommerce` term diverges **only where `pct≠0`** (98.7%), direction varying by each player's civic history.
+> So the cascade computes the **recalc-CORRECT** value and does NOT mirror the staleness (fresh-cache cities — pct=0 —
+> are exact). Parity vs the stale oracle for pct≠0 cities can only be confirmed after an **in-game recalc** refreshes the
+> cache; this is a genuine ENGINE bug, an exception to "no calculation bugs, only data gaps". *(Open: 6 gold cities
+> mismatch at pct=0 — a separate small deterministic gap, TBD.)*
+
 **Dump:** base, specialist, modifier + the full 7-way breakdown (`modBonus/modBuilding/modPlayer/modEvent/modPower/modArea/modCapital`), extraYield (x1), extraYield100, legacy100, cap. **DONE + verified live** (London 3/3).
 
 ## 2. COMMERCE split — `CvCity::getCommerceRateTimes100`
