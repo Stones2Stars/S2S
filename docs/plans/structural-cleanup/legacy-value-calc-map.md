@@ -214,16 +214,25 @@ to the holding building via `getBaseCommerceRateFromBuilding100`), both modelled
 > - **Oracle emitted + verified** (`/computed/cities/yields`, committed): `totalFreeSpecialists` (London = **59**) +
 >   `cityFreeSpecialist` (the `freeSpecialists.city.any` part, London = **9**) — vs `/state` assigned 150. The 59 free
 >   specialists' output is what the cascade silently missed.
-> - **Build status (StoneBase, foundational):** ✅ **(1) the AMOUNT is reproduced to PARITY** — `FreeSpecialistAmountCascade`
->   + `/parity/freeSpecialists` sum the `freeSpecialists.any` count-leaf over active buildings (city/area/empire) + civics +
->   active-set traits + the improvement `per`-scaler + the per-wonder term, matching the engine `totalFreeSpecialists` oracle
->   (and `cityFreeSpecialist` for the bare-city sub-term). The parser was extended for the count-leaf LIST shape
->   (`ModifierFamilyParser`: an array under `any`/SPECIALIST → `count` magnitudes). Engine per-term decomposition emitted
->   for attribution (`/computed/cities/yields`: area/player/improvement/wonder + raw wonder counts). **NEXT (the OUTPUT,
->   not yet built):** (2) resolve the OUTPUT typing — which specialist type the generic `any` free ones produce as (verify
->   against the engine `getXBySpecialist` getters' `getBestSpecialist(iI)` loop, don't guess); (3) wire the free amount into
->   the specialist output bucket (yield/commerce/GP-rate/happiness/health), avoiding double-count with the `/state` per-type
->   assigned counts.
+> - **Build status (StoneBase, foundational):** ✅ **(1) the AMOUNT is reproduced to PARITY over EVERY real-civ city, all
+>   players** (`/parity/freeSpecialists` + `/parity/freeSpecialists/sweep`). `FreeSpecialistAmountCascade` sums the
+>   `freeSpecialists.any` count-leaf over active buildings (city/area/empire) + civics + active-set traits + the improvement
+>   `per`-scaler + the per-wonder term, matching the engine `totalFreeSpecialists` oracle. Two cross-cutting facts the sweep
+>   surfaced (both fixed):
+>   - **AREA scope is CROSS-CITY:** `freeSpecialists.area.any` (Gateway Arch / Statue of Liberty) = engine
+>     `area()->getFreeSpecialist(owner)`, shared by every city in the player's CvArea — NOT derivable from one city. Resolved
+>     by tagging each city with its `Area` (CvArea id from `/state/all`) and summing the area-peer cities' active `area.any`
+>     at projection into `EvalState.AreaFreeSpecialists`. (This is the same area-scope cross-city accumulation the yield
+>     cascade's `AreaYieldModifier` TODO needs — `City.Area` now exists for it.)
+>   - **A trait's free-spec COUNT is PURE_TRAITS-gated** (a signed value): the engine `CvTraitInfo::getFreeSpecialist`
+>     drops a positive trait's negative downside / a negative trait's positive upside under `GAMEOPTION_LEADER_PURE_TRAITS`
+>     (e.g. GLORIOUS1's `−1`). The cascade applies the same alignment filter. (Civics/buildings carry no alignment.)
+>   The parser was extended for the count-leaf LIST shape (`ModifierFamilyParser`: an array under `any`/SPECIALIST →
+>   `count` magnitudes). Engine per-term decomposition emitted for attribution (`/computed/cities/yields`:
+>   area/player/improvement/wonder + raw wonder counts). **NEXT (the OUTPUT, not yet built):** (2) resolve the OUTPUT
+>   typing — which specialist type the generic `any` free ones produce as (verify against the engine `getXBySpecialist`
+>   getters' `getBestSpecialist(iI)` loop, don't guess); (3) wire the free amount into the specialist output bucket
+>   (yield/commerce/GP-rate/happiness/health), avoiding double-count with the `/state` per-type assigned counts.
 
 ## 3. HEALTH + HAPPINESS — good/bad signed-split
 
