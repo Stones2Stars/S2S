@@ -326,10 +326,23 @@ to the holding building via `getBaseCommerceRateFromBuilding100`), both modelled
 >     (e.g. GLORIOUS1's `−1`). The cascade applies the same alignment filter. (Civics/buildings carry no alignment.)
 >   The parser was extended for the count-leaf LIST shape (`ModifierFamilyParser`: an array under `any`/SPECIALIST →
 >   `count` magnitudes). Engine per-term decomposition emitted for attribution (`/computed/cities/yields`:
->   area/player/improvement/wonder + raw wonder counts). **NEXT (the OUTPUT, not yet built):** (2) resolve the OUTPUT
->   typing — which specialist type the generic `any` free ones produce as (verify against the engine `getXBySpecialist`
->   getters' `getBestSpecialist(iI)` loop, don't guess); (3) wire the free amount into the specialist output bucket
->   (yield/commerce/GP-rate/happiness/health), avoiding double-count with the `/state` per-type assigned counts.
+>   area/player/improvement/wonder + raw wonder counts).
+> - **⛔ OUTPUT TYPING — owner ruling 2026-06-28: `AI_specialistValue` is NOT reproducible offline, so the cascade does
+>   NOT compute which type the generic free specialists become — it READS the per-type specialist amounts STRAIGHT FROM
+>   `/state`.** The engine assigns each generic free slot a type via `getBestSpecialist(iI)` = `AI_specialistValue`
+>   (`CvCityAI.cpp:12355`) — a runtime AI heuristic we cannot and will not re-derive (it would mean reproducing the whole
+>   AI valuation). So the engine is the authority on the *type*; the cascade takes the resolved per-type counts as a
+>   `/state` INPUT (the savegame-state pattern, like event-granted extra yield) and computes the OUTPUT from curated
+>   specialist data. **Implication for `/state`:** the current `specialists` block (`CvHttpServer.cpp:500`) emits only
+>   `getSpecialistCount + getFreeSpecialistCount` — it EXCLUDES the generic free specialists (the `getFreeSpecialist()`/
+>   `totalFreeSpecialists` ones resolved by `getBestSpecialist`). To honour this ruling `/state` must additionally emit
+>   those generic free specialists **by their engine-resolved type** (the engine runs its own `getBestSpecialist`), so the
+>   cascade reads one inclusive per-type count and feeds the existing `SpecialistYieldTotal`. **Attribution caveat:** the
+>   engine attributes the generic free-spec commerce to `buildingCommerce100` (inside `getBaseCommerceRateFromBuilding100`,
+>   `CvCity.cpp:12397`), whereas the cascade — taking the counts from `/state` — attributes it to `specialistCommerce`.
+>   The two offset, so the **realized total matches** even though the per-term split differs; parity is judged on the
+>   realized commerce, with the specialist/building split treated as attribution. (Engine `/state` emit + cascade wiring:
+>   the remaining foundational step — needs a DLL rebuild to verify.)
 
 ## 3. HEALTH + HAPPINESS — good/bad signed-split
 
