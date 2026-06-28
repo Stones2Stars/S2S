@@ -1596,6 +1596,30 @@ namespace
 			// per-type assigned counts in /state.specialists (getSpecialistCount + getFreeSpecialistCount).
 			o["totalFreeSpecialists"] = picojson::value((double)pCity->totalFreeSpecialists());
 			o["cityFreeSpecialist"]   = picojson::value((double)pCity->getFreeSpecialist());
+			// PER-TERM decomposition of totalFreeSpecialists (CvCity::totalFreeSpecialists, CvCity.cpp:5747) — emitted so a
+			// divergence ATTRIBUTES to a NAMED term (area/player/improvement/wonder), never a guessed aggregate (THE NO-
+			// GUESSING RULE / total-observability). total = max(0, city + area + player + improvement + wonder) [0 if pop<1].
+			{
+				const CvPlayer& kFsPlayer = GET_PLAYER(pCity->getOwner());
+				o["areaFreeSpecialist"]   = picojson::value((double)pCity->area()->getFreeSpecialist(pCity->getOwner()));
+				o["playerFreeSpecialist"] = picojson::value((double)kFsPlayer.getFreeSpecialist());
+				int iImpFree = 0;
+				for (int iFsI = 0; iFsI < GC.getNumImprovementInfos(); ++iFsI)
+				{
+					const int iFsRate = pCity->getImprovementFreeSpecialists((ImprovementTypes)iFsI);
+					if (iFsRate != 0) iImpFree += iFsRate * pCity->countNumImprovedPlots((ImprovementTypes)iFsI);
+				}
+				o["improvementFreeSpecialists"] = picojson::value((double)iImpFree);
+				int iWonderFree = 0;
+				if (kFsPlayer.hasFreeSpecialistperWorldWonder())    iWonderFree += pCity->getNumWorldWonders();
+				if (kFsPlayer.hasFreeSpecialistperNationalWonder()) iWonderFree += pCity->getNumNationalWonders();
+				if (kFsPlayer.hasFreeSpecialistperTeamProject())    iWonderFree += pCity->getNumTeamWonders();
+				o["wonderFreeSpecialist"] = picojson::value((double)iWonderFree);
+				// raw per-city wonder counts (so the cascade can verify its allowed-scope wonder-count derivation directly).
+				o["numWorldWonders"]    = picojson::value((double)pCity->getNumWorldWonders());
+				o["numNationalWonders"] = picojson::value((double)pCity->getNumNationalWonders());
+				o["numTeamWonders"]     = picojson::value((double)pCity->getNumTeamWonders());
+			}
 
 			// the ACTIVE-building loadout (the cascade deposit source). Owner 2026-06-19: emit the ACTIVE set
 			// (hasFullyActiveBuilding = present AND not resource/replacement-disabled AND not religiously-limited) so the
