@@ -11923,12 +11923,13 @@ int CvCity::getCommerceRateTimes100(CommerceTypes eIndex) const
 {
 	PROFILE_FUNC();
 	FASSERT_BOUNDS(0, NUM_COMMERCE_TYPES, eIndex);
-
-	if (m_abCommerceRateDirty[eIndex])
-	{
-		updateCommerce(eIndex);
-	}
-	return m_aiCommerceRate[eIndex];
+	// RECOMPUTE-ON-READ from the CURRENT slider (deterministic; owner ruling 2026-06-28 caching pattern, same as
+	// getBuildingCommerce100/getSpecialistCommerce). The cached m_aiCommerceRate went stale when the slider
+	// (getCommercePercent) / yield / modifier changed without setCommerceDirty firing -> the returned rate lagged the
+	// real state (slider-order-dependent). Recompute fresh via getCommerceRateAtSliderPercent, which handles isDisorder,
+	// runs the full combine, AND refreshes m_aiCommerceRate on its own dirty path. Order-independent. (Perf: a
+	// correctly-dirtied cache is the follow-up.)
+	return getCommerceRateAtSliderPercent(eIndex, GET_PLAYER(getOwner()).getCommercePercent(eIndex));
 }
 
 
