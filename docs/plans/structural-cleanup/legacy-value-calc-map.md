@@ -140,13 +140,15 @@ Per assigned specialist of type X, `count[X] ×` the **FIVE** engine terms (`pro
 > TYPED-free, `CvCity.cpp:23291`) — EXACTLY what `/state` reports per type. So the cascade takes assigned+typed-free
 > counts from `/state` and computes the output (owner ruling 2026-06-28: *SpecialistInfo gives per-type production; we
 > fetch how many of each type the AI assigned and calculate the output — we never reproduce the AI's assignment*).
-> **⛔ The split is ASSIGNMENT vs OUTPUT (owner ruling 2026-06-28): computing the AI's *assignment* of specialists to
-> types (`getBestSpecialist`=`AI_specialistValue`) is OUTSIDE/AI-half; computing the specialists' actual *output*
-> (yield/commerce) is very much PARITY WORK.** So the GENERIC free specialists (the `totalFreeSpecialists` amount) DO
-> produce output that the cascade must reproduce — we just take their AI-resolved per-type counts from `/state` (the
-> engine's assignment result) and compute the output like any other specialist. They are NOT currently in
-> `specialistCount`/`/state.specialists`, so honouring this needs `/state` to emit the generic free specialists by their
-> engine-resolved type (see §2 free-spec note); then the existing per-type output calc covers them.
+> **The split is ASSIGNMENT vs OUTPUT — this is the foundational [pollution guardrail](../../specs/validation.md#-the-pollution-guardrail--structural-not-disciplinary)
+> (raw `/state` INPUTS vs cascade-COMPUTED outputs), present since the start of parity work, NOT a new ruling.** The AI's
+> *assignment* of specialists to types (`getBestSpecialist`=`AI_specialistValue`) is a stored STATE fact the cascade
+> READS from `/state` (an input, never recomputed); the specialists' actual *output* (yield/commerce) is what the
+> cascade COMPUTES (parity work). So the GENERIC free specialists (the `totalFreeSpecialists` amount) DO produce output
+> the cascade must reproduce — take their AI-resolved per-type counts from `/state` and compute output like any other
+> specialist. They are NOT currently in `specialistCount`/`/state.specialists`, so honouring it needs `/state` to emit
+> the generic free specialists by their engine-resolved type (a raw state fact, see §2 free-spec note); then the existing
+> per-type output calc covers them.
 
 > **✅ STREAMLINE DONE + VERIFIED LIVE (owner 2026-06-28; Release deployed + reloaded — specialist commerce AND yield
 > parity confirmed CLEAN against the engine oracle): YIELD and COMMERCE specialist values are now UNIFORM deterministic
@@ -332,9 +334,10 @@ to the holding building via `getBaseCommerceRateFromBuilding100`), both modelled
 >   The parser was extended for the count-leaf LIST shape (`ModifierFamilyParser`: an array under `any`/SPECIALIST →
 >   `count` magnitudes). Engine per-term decomposition emitted for attribution (`/computed/cities/yields`:
 >   area/player/improvement/wonder + raw wonder counts).
-> - **OUTPUT — the generic free specialists' output IS parity work (owner ruling 2026-06-28: ASSIGNMENT is outside,
->   OUTPUT is parity).** Computing *which type* the engine assigned each generic free slot (`getBestSpecialist` =
->   `AI_specialistValue`, `CvCityAI.cpp:12355`) is the AI half — outside, NOT reproduced. But the *actual output* those
+> - **OUTPUT — the generic free specialists' output IS parity work (the foundational ASSIGNMENT-vs-OUTPUT split / the
+>   [pollution guardrail](../../specs/validation.md#-the-pollution-guardrail--structural-not-disciplinary), present from
+>   the start — see §1.5).** Computing *which type* the engine assigned each generic free slot (`getBestSpecialist` =
+>   `AI_specialistValue`, `CvCityAI.cpp:12355`) is read as a state INPUT, NOT reproduced. But the *actual output* those
 >   specialists produce (yield/commerce) is squarely data-half parity: the engine folds it into
 >   `getBaseCommerceRateFromBuilding100:12397` / `getBaseYieldRateFromBuilding:11073` (per-building `getFreeSpecialist`
 >   loop), so it IS part of building output and thus total city output. The cascade reproduces it the SAME way it does
