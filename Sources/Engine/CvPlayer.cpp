@@ -27916,14 +27916,15 @@ void CvPlayer::changeSpecialistYieldPercentChanges(SpecialistTypes eIndex1, Yiel
 
 	if (iChange != 0)
 	{
-		const int iOldValue = getSpecialistYieldPercentChanges(eIndex1, eIndex2);
 		m_ppiSpecialistYieldPercentChanges[eIndex1][eIndex2] += iChange;
 
+		// STREAMLINED 2026-06-28: recompute the specialist-yield total cleanly per city (plot-cache pattern) rather than
+		// the stale incremental specialistCount×Δpct/100 delta (count frozen at civic-change time → drift on later
+		// reassignment). updateExtraSpecialistYield rebuilds intrinsic(current count×pct) + extra for that yield. Uniform
+		// with the commerce pct-change path (changeSpecialistCommercePercentChanges).
 		foreach_(CvCity* pLoopCity, cities())
 		{
-			const int iExistingValue = pLoopCity->getSpecialistCount(eIndex1) * (getSpecialistYieldPercentChanges(eIndex1, eIndex2) - iOldValue) / 100;
-			// set the new
-			pLoopCity->changeSpecialistYieldTotal(eIndex2, iExistingValue);
+			pLoopCity->updateExtraSpecialistYield(eIndex2);
 		}
 	}
 }

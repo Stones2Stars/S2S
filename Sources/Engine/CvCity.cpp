@@ -5151,10 +5151,9 @@ void CvCity::processSpecialist(SpecialistTypes eSpecialist, int iChange)
 
 	changeBaseGreatPeopleRate(GC.getSpecialistInfo(eSpecialist).getGreatPeopleRateChange() * iChange);
 
-	for (int iI = 0; iI < NUM_YIELD_TYPES; iI++)
-	{
-		changeSpecialistYieldTotal((YieldTypes)iI, (GC.getSpecialistInfo(eSpecialist).getYieldChange(iI) + GET_PLAYER(getOwner()).getSpecialistYieldPercentChanges(eSpecialist, (YieldTypes)iI) / 100) * iChange);
-	}
+	// STREAMLINED 2026-06-28: the per-specialist YIELD total is no longer accumulated incrementally here (additive
+	// getYieldChange + pct/100, baked at assignment — the same stale pattern as commerce). It is recomputed cleanly by
+	// updateExtraSpecialistYield() (called just below), UNIFORM with the specialist-commerce recompute.
 
 	// STREAMLINED 2026-06-28: the per-specialist commerce (intrinsic × (100+pct)) is no longer accumulated incrementally
 	// here (that was the stale-cache source the old TB note below warned about — drift when SpecialistCommercePercentChanges
@@ -11770,19 +11769,37 @@ void CvCity::updateExtraSpecialistYield(YieldTypes eYield)
 	PROFILE_EXTRA_FUNC();
 	FASSERT_BOUNDS(0, NUM_YIELD_TYPES, eYield);
 
-	const int iOldYield = getExtraSpecialistYield(eYield);
-	int iNewYield = 0;
-
+	int iNewExtra = 0;
 	for (int iI = 0; iI < GC.getNumSpecialistInfos(); iI++)
 	{
-		iNewYield += getExtraSpecialistYield(eYield, (SpecialistTypes)iI);
+		iNewExtra += getExtraSpecialistYield(eYield, (SpecialistTypes)iI);
 	}
+	m_aiExtraSpecialistYield[eYield] = iNewExtra;
 
-	if (iOldYield != iNewYield)
+	// STREAMLINED 2026-06-28: fully recompute the specialist-yield TOTAL = INTRINSIC (clean, multiplicative) + EXTRA,
+	// the plot-cache pattern (recalc on load + on change), replacing the stale incremental intrinsic (processSpecialist
+	// :5156, additive) + count-frozen pct (CvPlayer:27926). UNIFORM with getSpecialistCommerce — the percent multiplies
+	// the intrinsic getYieldChange: getYieldChange × (100 + SpecialistYieldPercentChanges)/100, ×100 fixed-point ÷100.
+	const CvPlayer& kPlayer = GET_PLAYER(getOwner());
+	int iIntrinsic100 = 0;
+	for (int iI = 0; iI < GC.getNumSpecialistInfos(); iI++)
 	{
-		m_aiExtraSpecialistYield[eYield] = iNewYield;
-
-		changeSpecialistYieldTotal(eYield, iNewYield - iOldYield);
+		const int iYieldChange = GC.getSpecialistInfo((SpecialistTypes)iI).getYieldChange(eYield);
+		if (iYieldChange == 0)
+		{
+			continue;
+		}
+		const int iCount = specialistCount((SpecialistTypes)iI);
+		if (iCount != 0)
+		{
+			iIntrinsic100 += iCount * iYieldChange * (100 + kPlayer.getSpecialistYieldPercentChanges((SpecialistTypes)iI, eYield));
+		}
+	}
+	const int iNewTotal = iIntrinsic100 / 100 + iNewExtra;
+	if (m_aiSpecialistYieldTotal[eYield] != iNewTotal)
+	{
+		m_aiSpecialistYieldTotal[eYield] = iNewTotal;
+		onYieldChange();
 	}
 }
 
