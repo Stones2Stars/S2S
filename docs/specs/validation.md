@@ -35,17 +35,23 @@ engine's actual output**. Our calculator is the test; the engine is the oracle.
 > modders — deliberately **diverge from C2C**, with StoneBase guarding spec-compliance. So: mirror the engine to get
 > here; thereafter the spec leads.
 >
-> **Parity is the COMPLETENESS test, not the goal (owner 2026-06-28).** *"The true reason for parity matching is to
-> make sure that cascade evaluates everything legacy does, and parity overall is the best way to ensure that."* Parity
-> is the *instrument* that proves the cascade gathers every source the legacy engine does — a green sweep means nothing
-> was forgotten. So when a legacy value is **non-deterministically computed or buggy** (a stale incremental cache, a
-> history-dependent accumulator) such that no offline calc can match it, the answer is **STREAMLINE THE LEGACY
-> handling first** (make the engine compute it deterministically / sanely on-demand), THEN reach parity on the
-> streamlined version, and **balance at the very end**. **Changing the legacy NUMBERS is explicitly allowed when it is
-> needed to streamline and keep things sane (owner 2026-06-28)** — fixing the legacy to be deterministic is in-bounds,
-> not a forbidden behavioural redesign; the redesign bar is about *gameplay intent*, not cleaning up a non-reproducible
-> implementation. (First instance: the specialist-commerce PERCENT — a stale dual-path count-frozen cache; the fix is
-> to make `getSpecialistCommerce` an on-demand deterministic recompute, then parity, then balance. See
+> **Parity is the COMPLETENESS test (owner 2026-06-28) — which RAISES the bar, it does not lower it.** *"The true
+> reason for parity matching is to make sure that cascade evaluates everything legacy does, and parity overall is the
+> best way to ensure that."* Parity is the *instrument* that proves the cascade gathers every source the legacy engine
+> does. **So a divergence is your signal that you have NOT yet found a source the engine uses — the job is to FIND it
+> (map it to a named legacy source with numbers on both sides), exactly per [`DEC-parity`](#) above.** "It doesn't
+> reconcile, so I'll change the legacy/curator/numbers instead" is the **banned shortcut** — the kraken's bait — and
+> 99% of the time the value DOES reconcile once the missing source is found (the path here was a string of *wrong*
+> "it's stale / it's a bug" guesses that each dissolved when the next source was mapped — `CvPlayer:27896` was the
+> real source, found only by reading ALL the writers).
+>
+> **⛔ Touching legacy is a LAST RESORT, never an agent's judgement call.** Only after the source is FULLY mapped —
+> every writer read, the value reproduced offline and shown to be **genuinely non-deterministic** (history/order-
+> dependent: a stale incremental cache that survives a recalc, demonstrated across MANY instances, with the engine
+> code proving why) — may "streamline the legacy to be deterministic, then parity, then balance" even be *proposed*.
+> It then requires **explicit owner authorization for that specific case** (as given 2026-06-28 for the
+> specialist-commerce percent stale cache). It is NOT a general licence to change numbers, and the existence of this
+> exception must never be cited to skip the mapping work. (The one sanctioned instance + its full evidence:
 > [legacy-value-calc-map §1.5](../plans/structural-cleanup/legacy-value-calc-map.md).)
 
 ## The tool — StoneBase (the reference dry-calc) & status
