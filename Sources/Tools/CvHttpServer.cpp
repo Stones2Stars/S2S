@@ -2159,6 +2159,7 @@ namespace
 					// gated hasFullyActiveBuilding): tech-change + bonus-percent (both ×100 native) + perPop (×100, ×pop). So
 					// buildingCommerce100 = 100*Σ(iBase pure parts) + iTech100 + iBonus100 + iPerPop*pop fully reconstructs.
 					int iPureTech100 = 0, iPureBonus100 = 0, iPurePerPop = 0;
+					int iDblBaseOnly = 0;   // what the CURATOR's doubleExtra models: +base only (vs the engine's ×2 of the WHOLE iBuild)
 					const CvTeam& kTeamB = GET_TEAM(pCity->getTeam());
 					for (int bb = 0; bb < GC.getNumBuildingInfos(); ++bb)
 					{
@@ -2196,7 +2197,8 @@ namespace
 						if (iDT != 0)
 						{
 							const int iTB = pCity->getBuildingData(eBB).iTimeBuilt;
-							if (iTB != MIN_INT && GC.getGame().getGameTurnYear() - iTB >= iDT) iPureDbl += iBuild;   // ×2 doubles iBuild => +iBuild extra
+							if (iTB != MIN_INT && GC.getGame().getGameTurnYear() - iTB >= iDT)
+							{ iPureDbl += iBuild; iDblBaseOnly += kBB.getCommerceChange(eC); }   // engine doubles the WHOLE iBuild; curator only +base
 						}
 						if (pCity->hasFullyActiveBuilding(eBB))
 						{
@@ -2214,6 +2216,7 @@ namespace
 					e["bldgPureShrine100"]         = picojson::value((double)(100 * iPureShrine));
 					e["bldgPureCorpHQ100"]         = picojson::value((double)(100 * iPureCorpHQ));
 					e["bldgPureDoubleExtra100"]    = picojson::value((double)(100 * iPureDbl));
+					e["bldgDblBaseOnly100"]        = picojson::value((double)(100 * iDblBaseOnly));   // curator-model doubleExtra (+base only); gap to bldgPureDoubleExtra100 = the shrine/corpHQ-doubling the cascade misses
 				}
 				e["mintedCommerce100"]     = picojson::value((double)(eC == COMMERCE_GOLD ? pCity->getMintedCommerceTimes100() : 0)); // gold only ×100
 				e["goldenAgeCommerce"]     = picojson::value((double)(kPlayer.isGoldenAge() ? kPlayer.getGoldenAgeCommerce(eC) : 0));  // x1, golden-age base commerce
