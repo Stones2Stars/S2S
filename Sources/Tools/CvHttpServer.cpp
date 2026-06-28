@@ -2148,6 +2148,59 @@ namespace
 				e["bldgCommerceBonus100"]  = picojson::value((double)pCity->getBonusCommercePercentChanges(eC)); // bonus-gated building commerce ×100
 				e["bldgCommerceTech100"]   = picojson::value((double)pCity->getBuildingCommerceTechChange(eC));  // tech-gated building commerce ×100
 				e["bldgCommercePerPop100"] = picojson::value((double)(pCity->getCommercePerPopFromBuildings(eC) * pCity->getPopulation())); // per-pop building commerce ×100
+				// PURE (getBuildingCommerce) per-SOURCE decomposition (no-guessing rule): mirror getBuildingCommerceByBuilding's
+				// pure part (CvCity.cpp:12233-12289, EXCL the bFull bonus/tech/perPop emitted above), summed over active
+				// buildings, ×100. doubleTime (×2 after N turns, :12283) emitted as the doubled-EXTRA. The six sum to
+				// bldgCommercePure100, so a `pure` gap attributes to a NAMED sub-source (ownFlat/buildingChange/stateRel/shrine/corpHQ/doubleExtra).
+				{
+					const CvPlayer& kOwnerB = GET_PLAYER(pCity->getOwner());
+					int iPureOwn = 0, iPureChg = 0, iPureSR = 0, iPureShrine = 0, iPureCorpHQ = 0, iPureDbl = 0;
+					for (int bb = 0; bb < GC.getNumBuildingInfos(); ++bb)
+					{
+						const BuildingTypes eBB = (BuildingTypes)bb;
+						if (!pCity->isActiveBuilding(eBB)) continue;
+						const CvBuildingInfo& kBB = GC.getBuildingInfo(eBB);
+						int iBuild = 0;
+						if (!pCity->isReligiouslyLimitedBuilding(eBB))
+						{
+							int iBase = kBB.getCommerceChange(eC);
+							if (eC == COMMERCE_GOLD && iBase < 0 && GC.getTREAT_NEGATIVE_GOLD_AS_MAINTENANCE()) iBase = 0;
+							if (iBase != 0)
+							{
+								if (kBB.isOrbital())
+								{
+									const int iOrb = kOwnerB.countNumCitiesWithOrbitalInfrastructure();
+									const int iVal = std::min(iBase * iOrb, pCity->getPopulation());
+									const int iAdd = pCity->hasOrbitalInfrastructure() ? iVal : (iVal / 2);
+									iPureOwn += iAdd; iBuild += iAdd;
+								}
+								else { iPureOwn += iBase; iBuild += iBase; }
+							}
+							const int iBC = pCity->getBuildingCommerceChange(eBB, eC); iPureChg += iBC; iBuild += iBC;
+							const ReligionTypes eRelB = (ReligionTypes)kBB.getReligionType();
+							if (eRelB != NO_RELIGION && eRelB == kOwnerB.getStateReligion())
+							{ const int iSR = kOwnerB.getStateReligionBuildingCommerce(eC); iPureSR += iSR; iBuild += iSR; }
+							const ReligionTypes eGRelB = (ReligionTypes)kBB.getGlobalReligionCommerce();
+							if (eGRelB != NO_RELIGION)
+							{ const int iSh = GC.getReligionInfo(eGRelB).getGlobalReligionCommerce(eC) * GC.getGame().countReligionLevels(eGRelB); iPureShrine += iSh; iBuild += iSh; }
+						}
+						const CorporationTypes eGCorpB = (CorporationTypes)kBB.getGlobalCorporationCommerce();
+						if (eGCorpB != NO_CORPORATION)
+						{ const int iCH = GC.getCorporationInfo(eGCorpB).getHeadquarterCommerce(eC) * GC.getGame().countCorporationLevels(eGCorpB); iPureCorpHQ += iCH; iBuild += iCH; }
+						const int iDT = kBB.getCommerceChangeDoubleTime(eC);
+						if (iDT != 0)
+						{
+							const int iTB = pCity->getBuildingData(eBB).iTimeBuilt;
+							if (iTB != MIN_INT && GC.getGame().getGameTurnYear() - iTB >= iDT) iPureDbl += iBuild;   // ×2 doubles iBuild => +iBuild extra
+						}
+					}
+					e["bldgPureOwnFlat100"]        = picojson::value((double)(100 * iPureOwn));
+					e["bldgPureBuildingChange100"] = picojson::value((double)(100 * iPureChg));
+					e["bldgPureStateRel100"]       = picojson::value((double)(100 * iPureSR));
+					e["bldgPureShrine100"]         = picojson::value((double)(100 * iPureShrine));
+					e["bldgPureCorpHQ100"]         = picojson::value((double)(100 * iPureCorpHQ));
+					e["bldgPureDoubleExtra100"]    = picojson::value((double)(100 * iPureDbl));
+				}
 				e["mintedCommerce100"]     = picojson::value((double)(eC == COMMERCE_GOLD ? pCity->getMintedCommerceTimes100() : 0)); // gold only ×100
 				e["goldenAgeCommerce"]     = picojson::value((double)(kPlayer.isGoldenAge() ? kPlayer.getGoldenAgeCommerce(eC) : 0));  // x1, golden-age base commerce
 				e["stateReligionBuildingCommerce"] = picojson::value((double)kPlayer.getStateReligionBuildingCommerce(eC)); // x1
