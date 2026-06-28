@@ -143,7 +143,10 @@ Per assigned specialist of type X, `count[X] ×` the **FIVE** engine terms (`pro
 >   sweep stays **555/555** (no specialist yield pct active in-save → no number change).
 > - **Remaining:** (1) Release build + deploy + reload → commerce specialist sweep should be clean (engine now recomputes
 >   the same deterministic value as the cascade; ⚠ commerce numbers shift off their old stale values, authorized).
->   (2) The standardized cached-array component (upgrade recompute-on-read → lazy dirty cache; migrate plot + specialist).
+>   (2) The standardized `CvDerivedCache` component (upgrade recompute-on-read → lazy dirty cache; migrate plot +
+>   specialist) — **formalized, deferred to shadow / final-migration time** (owner 2026-06-28); design +
+>   chosen C++03 mechanism (templated value-holder + member-fn-ptr recompute) in
+>   [state-repositories.md](../../architecture/state-repositories.md#the-standardized-cvderivedcache-component-formalized-2026-06-28-built-at-shadow--final-migration-time).
 >
 > **⛔ The specialist-commerce PERCENT (`SpecialistCommercePercentChanges`) is a balance-tweaked, buggy, STALE,
 > non-deterministic engine value — FULL mechanism mapped 2026-06-28 (supersedes the earlier "stale cache / recalc fixes

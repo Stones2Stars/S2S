@@ -79,3 +79,39 @@ bypass — the fresh sum runs only on recompute (change-then-read), never per re
 - This is the Clean-Architecture north-star applied to engine state: the repository **is** the contract, and it is the
   lever for thinning the `Cv*` god-classes without touching the closed-EXE-bound `CvPlot`/`CvCity` layout. See
   [north-star](north-star.md).
+
+## The standardized `CvDerivedCache` component (formalized 2026-06-28; BUILT at shadow / final-migration time)
+
+> **Decision (owner 2026-06-28):** the pattern above gets **formalized into ONE reusable C++03 component** rather than
+> hand-rolled per cache (the plot-yield cache's `m_aiYield`+`mutable m_bYieldDirty`+`recomputeYield`, and the interim
+> recompute-on-read getters for specialist commerce/yield, are each the same shape written by hand). **It is NOT built
+> now** — it is captured here so it is ready when we **build the shadow and do the final migration**; the current
+> recompute-on-read getters stand in until then (correct, just the per-read-cost workaround §"Why this is the right fix").
+
+**Chosen mechanism — a templated value-holder with the recompute injected as a member-function-pointer** (the one part
+that genuinely needs owner state stays owner-side; everything else — storage, dirty flag, pull-on-read, trigger — is the
+reusable contract). Poor-man's-DI-adjacent ([patterns](patterns.md)): the recompute is the injected dependency.
+
+```cpp
+template <class TOwner, class T, int N>
+class CvDerivedCache {                       // recompute-only, dirty-flagged, NEVER serialized; the single PULL source
+    mutable T    m_data[N];
+    mutable bool m_dirty;
+    TOwner*      m_owner;
+    void (TOwner::*m_recompute)(T*) const;   // fills m_data from CURRENT state (needs owner; stays owner-side)
+public:
+    void bind(TOwner* o, void (TOwner::*fn)(T*) const) { m_owner = o; m_recompute = fn; m_dirty = true; }
+    void markDirty() { m_dirty = true; }     // the trigger — call at every input-change site (no eager recompute, no push)
+    T    get(int i) const { if (m_dirty) { (m_owner->*m_recompute)(m_data); m_dirty = false; } return m_data[i]; }
+};
+// e.g. int CvCity::getSpecialistCommerce(CommerceTypes e) const { return m_specCommerceCache.get(e) / 100; }
+```
+
+- **It is a DATA MEMBER** on `CvCity`/`CvPlot` — fine: data members are added routinely (`m_bYieldDirty` was just added
+  to `CvPlot`); the [patterns](patterns.md) guardrail bars adding vtable *bases* to EXE-bound classes, **not** data members.
+- **Never serialized.** The owner's `read()` does `WRAPPER_SKIP_ELEMENT` for the legacy field (the
+  [DEC-save-remove-is-soft](decisions.md#dec-save-remove-is-soft) soft-remove); the cache is dirty-on-construct, so a
+  loaded game recomputes on first read — never stale-from-save.
+- **Apply to** (at build time): migrate the hand-rolled **plot-yield** cache onto it; convert the **specialist-commerce**
+  and **specialist-yield** recompute-on-read getters onto it; then the future **commerce / health** city caches — one
+  pattern everywhere. This is the concrete form of the unified `dataChanged` trigger named in "The direction" above.
