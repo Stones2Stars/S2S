@@ -36,10 +36,23 @@ The split is **not** "raw vs. computed" — it is **"does drycalc compute this?"
   *yield* those routes give: drycalc folds that yield in, it does not compute it). These engine results are served
   as inputs.
 
-> ⛔ **The hard rule: `/state` must never contain a drycalc TARGET.** That — not "any engine-derived value" — is
-> where the calculator (or an agent) "cheats" by reading the answer instead of deriving it. `/computed` may freely
-> carry raw state too; the asymmetry is one-directional. An out-of-scope engine-derived value (even a *yield*, like
-> the trade-route yield) is an INPUT and belongs in `/state`.
+> ⛔ **The hard rule: `/state` must never contain a drycalc TARGET, and the calc must never CONSUME live yield/commerce
+> except trade-route yield (owner ruling 2026-06-28).** That — not "any engine-derived value" — is where the
+> calculator (or an agent) "cheats" by reading the answer instead of deriving it. `/computed` may freely carry raw
+> state too; the asymmetry is one-directional.
+>
+> **The ONE live-yield calc input is trade-route yield** — a *clean addition at the very end* of the base, a component
+> the cascade never claims to compute (it can't re-derive the trade network), so folding it in compromises nothing.
+> **Every OTHER engine yield/commerce value is forbidden from the calc**, and the distinction is whether folding it
+> would land inside a drycalc TARGET:
+> - **Derivable values are TARGETS — compute them, never read them.** `freeCityYield` (= Σ trait `getYieldChange`) is
+>   derivable from trait JSON; consuming the live value means the trait→yield derivation is *not validated*. Compute it.
+> - **Un-derivable event/effect-granted values (`m_aiExtraYield` city/plot extra, `getBuildingCommerceChange`) must
+>   NOT be folded into a target.** They land *inside* `buildingCommerce100` / the yield base — both drycalc targets —
+>   so folding live data there is the exact cheat the hard rule forbids (it was done once, with `buildingCommerceChange`,
+>   and reverted). The cascade computes the derivable part; cities touched by those events **diverge honestly**, and
+>   the `/state` value is read ONLY at the audit/comparison boundary to attribute that diff — never fed back into the calc.
+> - **If we pull live yield into the cascade calc, we are not validating the cascade at all.**
 
 > **`/state` is held to API standards.** It is a real, stable, legible API with two consumers — the **validator**
 > (the calculator's input) and the **frontend/website** (the thing that *displays* state). It is targeted and
