@@ -34,6 +34,19 @@ engine's actual output**. Our calculator is the test; the engine is the oracle.
 > ground truth FLIPS: the **JSON spec** (not the legacy engine) becomes authoritative, and *that* is when we — and
 > modders — deliberately **diverge from C2C**, with StoneBase guarding spec-compliance. So: mirror the engine to get
 > here; thereafter the spec leads.
+>
+> **Parity is the COMPLETENESS test, not the goal (owner 2026-06-28).** *"The true reason for parity matching is to
+> make sure that cascade evaluates everything legacy does, and parity overall is the best way to ensure that."* Parity
+> is the *instrument* that proves the cascade gathers every source the legacy engine does — a green sweep means nothing
+> was forgotten. So when a legacy value is **non-deterministically computed or buggy** (a stale incremental cache, a
+> history-dependent accumulator) such that no offline calc can match it, the answer is **STREAMLINE THE LEGACY
+> handling first** (make the engine compute it deterministically / sanely on-demand), THEN reach parity on the
+> streamlined version, and **balance at the very end**. **Changing the legacy NUMBERS is explicitly allowed when it is
+> needed to streamline and keep things sane (owner 2026-06-28)** — fixing the legacy to be deterministic is in-bounds,
+> not a forbidden behavioural redesign; the redesign bar is about *gameplay intent*, not cleaning up a non-reproducible
+> implementation. (First instance: the specialist-commerce PERCENT — a stale dual-path count-frozen cache; the fix is
+> to make `getSpecialistCommerce` an on-demand deterministic recompute, then parity, then balance. See
+> [legacy-value-calc-map §1.5](../plans/structural-cleanup/legacy-value-calc-map.md).)
 
 ## The tool — StoneBase (the reference dry-calc) & status
 
