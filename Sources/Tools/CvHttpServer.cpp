@@ -774,6 +774,7 @@ namespace
 		config["tradeProfitPercent"]            = picojson::value((double)GC.getTRADE_PROFIT_PERCENT());
 		config["worldTradeProfitPercent"]       = picojson::value((double)GC.getWorldInfo(GC.getMap().getWorldSize()).getTradeProfitPercent());
 		config["buildingPrereqModifier"]        = picojson::value((double)GC.getWorldInfo(GC.getMap().getWorldSize()).getBuildingPrereqModifier()); // PrereqNumOfBuildings scaling (CvPlayer::getBuildingPrereqBuilding)
+		config["targetNumCities"]               = picojson::value((double)GC.getWorldInfo(GC.getMap().getWorldSize()).getTargetNumCities()); // TARGET_NUM_CITIES token (largest-cities ranked selection, json §3.3)
 		config["capitalTradeModifier"]          = picojson::value((double)GC.getCAPITAL_TRADE_MODIFIER());
 		config["overseasTradeModifier"]         = picojson::value((double)GC.getOVERSEAS_TRADE_MODIFIER());
 		config["foreignTradeModifier"]          = picojson::value((double)GC.getFOREIGN_TRADE_MODIFIER());
@@ -1334,6 +1335,7 @@ namespace
 			if (pPlot->isWater())               pl["water"] = picojson::value(true);
 			if (pPlot->isCoastalLand())         pl["coast"] = picojson::value(true);
 			if (pPlot->isFreshWater())          pl["freshwater"] = picojson::value(true);
+			if (pPlot->getLandmarkType() != NO_LANDMARK) pl["landmark"] = picojson::value(true); // HAS_LANDMARK (geographic landmark; landmark-yield, MAP_PERSONALIZED-gated)
 			if (pPlot->isCity())                pl["isCity"] = picojson::value(true);
 			if (pPlot->getTeam() != NO_TEAM)    pl["ownerTeam"] = picojson::value((double)pPlot->getTeam());
 			if (pWork != NULL)

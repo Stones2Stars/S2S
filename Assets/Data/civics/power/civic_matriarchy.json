@@ -34,17 +34,23 @@
  },
  "research": {
   "empire": {
-   "capital": {
-    "percent": 1
-   }
+   "percent": [
+    {
+     "value": 1,
+     "enabled": "IS_CAPITAL"
+    }
+   ]
   }
  },
  "culture": {
   "empire": {
-   "percent": 2,
-   "capital": {
-    "percent": 1
-   }
+   "percent": [
+    2,
+    {
+     "value": 1,
+     "enabled": "IS_CAPITAL"
+    }
+   ]
   }
  },
  "growth": {

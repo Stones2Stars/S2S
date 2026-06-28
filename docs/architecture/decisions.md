@@ -147,3 +147,15 @@ never skip/drop/invent a mechanic to fit the data. **Home:** [validation.md](../
 
 Parity is verified mechanic-by-mechanic against the engine's per-mechanic value, never by comparing or averaging
 aggregate outputs. **Home:** [validation.md](../specs/validation.md).
+
+### DEC-conditions-are-predicates
+
+A deposit's condition is expressed as a **PREDICATE** in `enabled`/`disabled`/`requires` (the predicate registry is
+**EXTENSIBLE — define new predicates freely** when one isn't named verbatim yet); it is **NEVER** encoded as a
+bespoke sub-scope **MEMBER** (`empire.capital`, `perMilitaryUnit`, …). Adding a predicate
+*extends* the model within the existing structure; inventing a condition-carrying member *changes the core
+structure* — the kraken way (owner ruling 2026-06-28). A condition-like member that crept in is an agent invention
+to retire (the `byEra` / `empire.capital` class), per [DEC-stonebase-follows-spec]. **Exception:** golden age
+(`empire.goldenAge`) stays a member-mirror, **deferred** — it is engine-core, not data-defined, so predicate-modelling
+it is post-migration work (see [modifier.md §3](../specs/modifier.md) / [golden-age.md](../reference/golden-age.md)).
+**Home:** [modifier.md §3](../specs/modifier.md), [json.md §3.5](../specs/json.md).

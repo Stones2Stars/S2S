@@ -508,32 +508,9 @@
    }
   }
  },
- "commerce": {
+ "researchRate": {
   "empire": {
-   "improvements": {
-    "IMPROVEMENT_HUNTING_PRESERVE": {
-     "flat": 1
-    },
-    "IMPROVEMENT_WILDLIFE_SANCTUARY": {
-     "flat": 1
-    },
-    "IMPROVEMENT_FOREST_PRESERVE": {
-     "flat": 1
-    },
-    "IMPROVEMENT_NATURE_PRESERVE": {
-     "flat": 1
-    }
-   }
-  }
- },
- "research": {
-  "empire": {
-   "specialists": {
-    "SPECIALIST_GREAT_HUNTER": {
-     "flat": 2
-    }
-   },
-   "byTech": {
+   "techs": {
     "TECH_NOMADISM": {
      "percent": 20
     },
@@ -779,6 +756,33 @@
     },
     "TECH_COAL_MINING": {
      "percent": -20
+    }
+   }
+  }
+ },
+ "commerce": {
+  "empire": {
+   "improvements": {
+    "IMPROVEMENT_HUNTING_PRESERVE": {
+     "flat": 1
+    },
+    "IMPROVEMENT_WILDLIFE_SANCTUARY": {
+     "flat": 1
+    },
+    "IMPROVEMENT_FOREST_PRESERVE": {
+     "flat": 1
+    },
+    "IMPROVEMENT_NATURE_PRESERVE": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "research": {
+  "empire": {
+   "specialists": {
+    "SPECIALIST_GREAT_HUNTER": {
+     "flat": 2
     }
    }
   }

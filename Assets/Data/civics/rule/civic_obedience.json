@@ -10,23 +10,32 @@
  },
  "gold": {
   "empire": {
-   "capital": {
-    "percent": -2
-   }
+   "percent": [
+    {
+     "value": -2,
+     "enabled": "IS_CAPITAL"
+    }
+   ]
   }
  },
  "research": {
   "empire": {
-   "capital": {
-    "percent": -2
-   }
+   "percent": [
+    {
+     "value": -2,
+     "enabled": "IS_CAPITAL"
+    }
+   ]
   }
  },
  "culture": {
   "empire": {
-   "capital": {
-    "percent": -2
-   }
+   "percent": [
+    {
+     "value": -2,
+     "enabled": "IS_CAPITAL"
+    }
+   ]
   }
  },
  "combat": {

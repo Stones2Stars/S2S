@@ -5,10 +5,13 @@
  "strategy": "TXT_KEY_CIVIC_METALS_STRATEGY",
  "food": {
   "empire": {
-   "percent": 1,
-   "capital": {
-    "percent": 1
-   },
+   "percent": [
+    1,
+    {
+     "value": 1,
+     "enabled": "IS_CAPITAL"
+    }
+   ],
    "tradeRoute": {
     "percent": 1
    }
@@ -16,18 +19,24 @@
  },
  "production": {
   "empire": {
-   "percent": 1,
-   "capital": {
-    "percent": 1
-   }
+   "percent": [
+    1,
+    {
+     "value": 1,
+     "enabled": "IS_CAPITAL"
+    }
+   ]
   }
  },
  "commerce": {
   "empire": {
-   "percent": 1,
-   "capital": {
-    "percent": 2
-   },
+   "percent": [
+    1,
+    {
+     "value": 2,
+     "enabled": "IS_CAPITAL"
+    }
+   ],
    "tradeRoute": {
     "percent": 2
    },
@@ -49,26 +58,35 @@
  },
  "gold": {
   "empire": {
-   "percent": 1,
-   "capital": {
-    "percent": 2
-   }
+   "percent": [
+    1,
+    {
+     "value": 2,
+     "enabled": "IS_CAPITAL"
+    }
+   ]
   }
  },
  "research": {
   "empire": {
-   "percent": 1,
-   "capital": {
-    "percent": 1
-   }
+   "percent": [
+    1,
+    {
+     "value": 1,
+     "enabled": "IS_CAPITAL"
+    }
+   ]
   }
  },
  "culture": {
   "empire": {
-   "percent": 1,
-   "capital": {
-    "percent": 2
-   }
+   "percent": [
+    1,
+    {
+     "value": 2,
+     "enabled": "IS_CAPITAL"
+    }
+   ]
   }
  },
  "maintenance": {

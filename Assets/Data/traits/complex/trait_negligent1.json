@@ -157,23 +157,9 @@
    }
   }
  },
- "commerce": {
+ "researchRate": {
   "empire": {
-   "goldenAge": {
-    "flat": 2
-   }
-  }
- },
- "gold": {
-  "empire": {
-   "goldenAge": {
-    "flat": 1
-   }
-  }
- },
- "research": {
-  "empire": {
-   "byTech": {
+   "techs": {
     "TECH_SIMPLE_WOOD_WORKING": {
      "percent": -20
     },
@@ -207,7 +193,25 @@
     "TECH_YEOMANRY": {
      "percent": -20
     }
-   },
+   }
+  }
+ },
+ "commerce": {
+  "empire": {
+   "goldenAge": {
+    "flat": 2
+   }
+  }
+ },
+ "gold": {
+  "empire": {
+   "goldenAge": {
+    "flat": 1
+   }
+  }
+ },
+ "research": {
+  "empire": {
    "goldenAge": {
     "flat": 1
    }

@@ -20,34 +20,9 @@
    }
   }
  },
- "commerce": {
+ "researchRate": {
   "empire": {
-   "percent": -5
-  }
- },
- "gold": {
-  "empire": {
-   "specialists": {
-    "SPECIALIST_PRIEST": {
-     "flat": -1
-    },
-    "SPECIALIST_GREAT_PROPHET": {
-     "flat": -1
-    }
-   }
-  }
- },
- "research": {
-  "empire": {
-   "specialists": {
-    "SPECIALIST_PRIEST": {
-     "flat": -1
-    },
-    "SPECIALIST_GREAT_PROPHET": {
-     "flat": -1
-    }
-   },
-   "byTech": {
+   "techs": {
     "TECH_HINDUISM": {
      "percent": -25
     },
@@ -135,6 +110,35 @@
    }
   }
  },
+ "commerce": {
+  "empire": {
+   "percent": -5
+  }
+ },
+ "gold": {
+  "empire": {
+   "specialists": {
+    "SPECIALIST_PRIEST": {
+     "flat": -1
+    },
+    "SPECIALIST_GREAT_PROPHET": {
+     "flat": -1
+    }
+   }
+  }
+ },
+ "research": {
+  "empire": {
+   "specialists": {
+    "SPECIALIST_PRIEST": {
+     "flat": -1
+    },
+    "SPECIALIST_GREAT_PROPHET": {
+     "flat": -1
+    }
+   }
+  }
+ },
  "happiness": {
   "empire": {
    "nonStateReligion": {
@@ -149,9 +153,17 @@
  },
  "experience": {
   "empire": {
-   "nonStateHolyCityXP": {
-    "percent": -5
-   }
+   "percent": [
+    {
+     "value": -5,
+     "enabled": {
+      "all": [
+       "IS_HOLY_CITY",
+       "!IS_STATE_RELIGION_HOLY_CITY"
+      ]
+     }
+    }
+   ]
   }
  },
  "durations": {

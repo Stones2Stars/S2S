@@ -19,9 +19,12 @@
      "flat": 1
     }
    },
-   "capital": {
-    "percent": 5
-   }
+   "percent": [
+    {
+     "value": 5,
+     "enabled": "IS_CAPITAL"
+    }
+   ]
   }
  },
  "production": {
@@ -37,9 +40,12 @@
      "flat": 1
     }
    },
-   "capital": {
-    "percent": 5
-   }
+   "percent": [
+    {
+     "value": 5,
+     "enabled": "IS_CAPITAL"
+    }
+   ]
   }
  },
  "buildRate": {
@@ -65,9 +71,12 @@
      "flat": 1
     }
    },
-   "capital": {
-    "percent": 5
-   }
+   "percent": [
+    {
+     "value": 5,
+     "enabled": "IS_CAPITAL"
+    }
+   ]
   }
  },
  "gold": {
@@ -97,7 +106,13 @@
  "culture": {
   "empire": {
    "flat": 1,
-   "percent": 5,
+   "percent": [
+    5,
+    {
+     "value": 10,
+     "enabled": "IS_CAPITAL"
+    }
+   ],
    "specialists": {
     "SPECIALIST_SPY": {
      "flat": 1
@@ -105,16 +120,19 @@
     "SPECIALIST_GREAT_SPY": {
      "flat": 1
     }
-   },
-   "capital": {
-    "percent": 10
    }
   }
  },
  "espionage": {
   "empire": {
    "flat": 1,
-   "percent": 5,
+   "percent": [
+    5,
+    {
+     "value": 10,
+     "enabled": "IS_CAPITAL"
+    }
+   ],
    "specialists": {
     "SPECIALIST_SPY": {
      "flat": 1
@@ -122,17 +140,17 @@
     "SPECIALIST_GREAT_SPY": {
      "flat": 1
     }
-   },
-   "capital": {
-    "percent": 10
    }
   }
  },
  "experience": {
   "empire": {
-   "capital": {
-    "percent": 10
-   }
+   "percent": [
+    {
+     "value": 10,
+     "enabled": "IS_CAPITAL"
+    }
+   ]
   }
  },
  "maintenance": {

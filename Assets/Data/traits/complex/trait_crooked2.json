@@ -133,21 +133,9 @@
    }
   }
  },
- "commerce": {
+ "researchRate": {
   "empire": {
-   "specialists": {
-    "SPECIALIST_INVESTIGATOR": {
-     "flat": -1
-    },
-    "SPECIALIST_GREAT_SLEUTH": {
-     "flat": -1
-    }
-   }
-  }
- },
- "research": {
-  "empire": {
-   "byTech": {
+   "techs": {
     "TECH_POLITICAL_PHILOSOPHY": {
      "percent": 20
     },
@@ -189,6 +177,18 @@
     },
     "TECH_COUNTERCULTURE": {
      "percent": 20
+    }
+   }
+  }
+ },
+ "commerce": {
+  "empire": {
+   "specialists": {
+    "SPECIALIST_INVESTIGATOR": {
+     "flat": -1
+    },
+    "SPECIALIST_GREAT_SLEUTH": {
+     "flat": -1
     }
    }
   }
@@ -247,8 +247,10 @@
      }
     }
    ],
-   "largestCity": {
-    "flat": -1
+   "cities": {
+    "flat": -1,
+    "max": "TARGET_NUM_CITIES",
+    "orderedByDescending": "CITY_SIZE"
    }
   }
  },

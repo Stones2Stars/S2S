@@ -87,9 +87,9 @@
    "percent": -5
   }
  },
- "research": {
+ "researchRate": {
   "empire": {
-   "byTech": {
+   "techs": {
     "TECH_METALLURGY": {
      "percent": -20
     },

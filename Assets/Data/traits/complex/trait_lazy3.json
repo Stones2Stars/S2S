@@ -55,9 +55,9 @@
    "percent": -5
   }
  },
- "research": {
+ "researchRate": {
   "empire": {
-   "byTech": {
+   "techs": {
     "TECH_3D_PRINTING": {
      "percent": -20
     },

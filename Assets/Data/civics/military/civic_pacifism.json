@@ -15,26 +15,35 @@
  },
  "research": {
   "empire": {
-   "percent": 1,
-   "capital": {
-    "percent": 1
-   }
+   "percent": [
+    1,
+    {
+     "value": 1,
+     "enabled": "IS_CAPITAL"
+    }
+   ]
   }
  },
  "culture": {
   "empire": {
-   "percent": 5,
-   "capital": {
-    "percent": 3
-   }
+   "percent": [
+    5,
+    {
+     "value": 3,
+     "enabled": "IS_CAPITAL"
+    }
+   ]
   }
  },
  "espionage": {
   "empire": {
-   "percent": -2,
-   "capital": {
-    "percent": -5
-   }
+   "percent": [
+    -2,
+    {
+     "value": -5,
+     "enabled": "IS_CAPITAL"
+    }
+   ]
   }
  },
  "happiness": {

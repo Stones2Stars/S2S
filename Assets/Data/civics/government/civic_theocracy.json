@@ -13,34 +13,46 @@
  },
  "food": {
   "empire": {
-   "percent": 3,
-   "capital": {
-    "percent": 2
-   }
+   "percent": [
+    3,
+    {
+     "value": 2,
+     "enabled": "IS_CAPITAL"
+    }
+   ]
   }
  },
  "production": {
   "empire": {
-   "percent": 3,
-   "capital": {
-    "percent": 2
-   }
+   "percent": [
+    3,
+    {
+     "value": 2,
+     "enabled": "IS_CAPITAL"
+    }
+   ]
   }
  },
  "commerce": {
   "empire": {
-   "percent": 3,
-   "capital": {
-    "percent": 5
-   }
+   "percent": [
+    3,
+    {
+     "value": 5,
+     "enabled": "IS_CAPITAL"
+    }
+   ]
   }
  },
  "gold": {
   "empire": {
-   "percent": 4,
-   "capital": {
-    "percent": 4
-   },
+   "percent": [
+    4,
+    {
+     "value": 4,
+     "enabled": "IS_CAPITAL"
+    }
+   ],
    "buildings": {
     "BUILDING_TEOTIHUACAN": {
      "percent": 10
@@ -119,10 +131,13 @@
  },
  "research": {
   "empire": {
-   "percent": 3,
-   "capital": {
-    "percent": 1
-   },
+   "percent": [
+    3,
+    {
+     "value": 1,
+     "enabled": "IS_CAPITAL"
+    }
+   ],
    "buildings": {
     "BUILDING_THE_STATUE_OF_ZEUS": {
      "percent": 20
@@ -144,10 +159,13 @@
  },
  "culture": {
   "empire": {
-   "percent": 5,
-   "capital": {
-    "percent": 5
-   },
+   "percent": [
+    5,
+    {
+     "value": 5,
+     "enabled": "IS_CAPITAL"
+    }
+   ],
    "buildings": {
     "BUILDING_TEOTIHUACAN": {
      "percent": 20
@@ -193,10 +211,13 @@
  },
  "espionage": {
   "empire": {
-   "percent": 4,
-   "capital": {
-    "percent": 5
-   }
+   "percent": [
+    4,
+    {
+     "value": 5,
+     "enabled": "IS_CAPITAL"
+    }
+   ]
   }
  },
  "happiness": {

@@ -4,14 +4,17 @@
  "civilopedia": "TXT_KEY_TRAIT_FANATICAL_PEDIA",
  "research": {
   "empire": {
-   "percent": -10,
+   "percent": [
+    -10,
+    {
+     "value": -10,
+     "enabled": "IS_CAPITAL"
+    }
+   ],
    "specialists": {
     "SPECIALIST_SCIENTIST": {
      "flat": -1
     }
-   },
-   "capital": {
-    "percent": -10
    }
   }
  },

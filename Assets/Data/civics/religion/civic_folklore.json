@@ -27,8 +27,18 @@
      "flat": 1
     }
    },
-   "landmark": {
-    "flat": 1
+   "plots": {
+    "flat": [
+     {
+      "value": 1,
+      "enabled": {
+       "all": [
+        "GAMEOPTION_MAP_PERSONALIZED",
+        "HAS_LANDMARK"
+       ]
+      }
+     }
+    ]
    }
   }
  },
@@ -39,10 +49,13 @@
  },
  "culture": {
   "empire": {
-   "percent": 1,
-   "capital": {
-    "percent": 1
-   },
+   "percent": [
+    1,
+    {
+     "value": 1,
+     "enabled": "IS_CAPITAL"
+    }
+   ],
    "buildings": {
     "BUILDING_HIERACOSPHINX_BREEDER": {
      "percent": 200
@@ -81,9 +94,12 @@
      "flat": 1
     }
    },
-   "landmark": {
-    "flat": 1
-   }
+   "flat": [
+    {
+     "value": 1,
+     "enabled": "GAMEOPTION_MAP_PERSONALIZED"
+    }
+   ]
   }
  },
  "greatPeopleRate": {

@@ -120,40 +120,9 @@
    }
   }
  },
- "commerce": {
+ "researchRate": {
   "empire": {
-   "specialists": {
-    "SPECIALIST_SCIENTIST": {
-     "flat": -1
-    },
-    "SPECIALIST_GREAT_SCIENTIST": {
-     "flat": -1
-    }
-   }
-  }
- },
- "research": {
-  "empire": {
-   "flat": -6,
-   "percent": -5,
-   "specialists": {
-    "SPECIALIST_DOCTOR": {
-     "flat": -2
-    },
-    "SPECIALIST_GREAT_DOCTOR": {
-     "flat": -2
-    },
-    "SPECIALIST_ANDROID_WORKER": {
-     "flat": -1
-    }
-   },
-   "capital": {
-    "percent": -5
-   },
-   "specialist": {
-    "perSpecialist": -1
-   },
-   "byTech": {
+   "techs": {
     "TECH_GASTRONOMY": {
      "percent": -20
     },
@@ -250,6 +219,44 @@
     "TECH_SIMULATION_AWARENESS": {
      "percent": -20
     }
+   }
+  }
+ },
+ "commerce": {
+  "empire": {
+   "specialists": {
+    "SPECIALIST_SCIENTIST": {
+     "flat": -1
+    },
+    "SPECIALIST_GREAT_SCIENTIST": {
+     "flat": -1
+    }
+   }
+  }
+ },
+ "research": {
+  "empire": {
+   "flat": -6,
+   "percent": [
+    -5,
+    {
+     "value": -5,
+     "enabled": "IS_CAPITAL"
+    }
+   ],
+   "specialists": {
+    "SPECIALIST_DOCTOR": {
+     "flat": -2
+    },
+    "SPECIALIST_GREAT_DOCTOR": {
+     "flat": -2
+    },
+    "SPECIALIST_ANDROID_WORKER": {
+     "flat": -1
+    }
+   },
+   "specialist": {
+    "perSpecialist": -1
    }
   }
  },

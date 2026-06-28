@@ -88,9 +88,12 @@
      "flat": 1
     }
    },
-   "landmark": {
-    "flat": 1
-   }
+   "flat": [
+    {
+     "value": 1,
+     "enabled": "GAMEOPTION_MAP_PERSONALIZED"
+    }
+   ]
   }
  },
  "health": {

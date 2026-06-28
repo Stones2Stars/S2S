@@ -174,9 +174,9 @@
    }
   }
  },
- "research": {
+ "researchRate": {
   "empire": {
-   "byTech": {
+   "techs": {
     "TECH_GATHERING": {
      "percent": 20
     },

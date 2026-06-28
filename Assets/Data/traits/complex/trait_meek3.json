@@ -23,9 +23,9 @@
    }
   }
  },
- "research": {
+ "researchRate": {
   "empire": {
-   "byTech": {
+   "techs": {
     "TECH_WAR_SIMULATIONS": {
      "percent": -20
     },

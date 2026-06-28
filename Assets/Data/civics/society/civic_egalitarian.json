@@ -61,18 +61,24 @@
  },
  "culture": {
   "empire": {
-   "percent": 5,
-   "capital": {
-    "percent": 2
-   }
+   "percent": [
+    5,
+    {
+     "value": 2,
+     "enabled": "IS_CAPITAL"
+    }
+   ]
   }
  },
  "espionage": {
   "empire": {
-   "percent": -2,
-   "capital": {
-    "percent": -2
-   }
+   "percent": [
+    -2,
+    {
+     "value": -2,
+     "enabled": "IS_CAPITAL"
+    }
+   ]
   }
  },
  "happiness": {

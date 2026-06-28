@@ -20,26 +20,35 @@
  },
  "gold": {
   "empire": {
-   "percent": -5,
-   "capital": {
-    "percent": -5
-   }
+   "percent": [
+    -5,
+    {
+     "value": -5,
+     "enabled": "IS_CAPITAL"
+    }
+   ]
   }
  },
  "research": {
   "empire": {
-   "percent": -5,
-   "capital": {
-    "percent": -5
-   }
+   "percent": [
+    -5,
+    {
+     "value": -5,
+     "enabled": "IS_CAPITAL"
+    }
+   ]
   }
  },
  "culture": {
   "empire": {
-   "percent": -5,
-   "capital": {
-    "percent": -5
-   }
+   "percent": [
+    -5,
+    {
+     "value": -5,
+     "enabled": "IS_CAPITAL"
+    }
+   ]
   }
  },
  "happiness": {

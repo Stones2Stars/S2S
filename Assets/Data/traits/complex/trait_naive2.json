@@ -73,21 +73,9 @@
    }
   }
  },
- "commerce": {
+ "researchRate": {
   "empire": {
-   "specialists": {
-    "SPECIALIST_INVESTIGATOR": {
-     "flat": -1
-    },
-    "SPECIALIST_GREAT_SLEUTH": {
-     "flat": -1
-    }
-   }
-  }
- },
- "research": {
-  "empire": {
-   "byTech": {
+   "techs": {
     "TECH_POLITICAL_PHILOSOPHY": {
      "percent": -20
     },
@@ -124,10 +112,28 @@
    }
   }
  },
+ "commerce": {
+  "empire": {
+   "specialists": {
+    "SPECIALIST_INVESTIGATOR": {
+     "flat": -1
+    },
+    "SPECIALIST_GREAT_SLEUTH": {
+     "flat": -1
+    }
+   }
+  }
+ },
  "espionage": {
   "empire": {
    "flat": -4,
-   "percent": -5,
+   "percent": [
+    -5,
+    {
+     "value": -5,
+     "enabled": "IS_CAPITAL"
+    }
+   ],
    "specialists": {
     "SPECIALIST_SPY": {
      "flat": -2
@@ -135,9 +141,6 @@
     "SPECIALIST_GREAT_SPY": {
      "flat": -2
     }
-   },
-   "capital": {
-    "percent": -5
    },
    "specialist": {
     "perSpecialist": -1

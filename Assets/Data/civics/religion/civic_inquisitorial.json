@@ -24,32 +24,44 @@
  },
  "gold": {
   "empire": {
-   "capital": {
-    "percent": 5
-   }
+   "percent": [
+    {
+     "value": 5,
+     "enabled": "IS_CAPITAL"
+    }
+   ]
   }
  },
  "research": {
   "empire": {
-   "capital": {
-    "percent": 1
-   }
+   "percent": [
+    {
+     "value": 1,
+     "enabled": "IS_CAPITAL"
+    }
+   ]
   }
  },
  "culture": {
   "empire": {
-   "percent": -2,
-   "capital": {
-    "percent": -1
-   }
+   "percent": [
+    -2,
+    {
+     "value": -1,
+     "enabled": "IS_CAPITAL"
+    }
+   ]
   }
  },
  "espionage": {
   "empire": {
-   "percent": 5,
-   "capital": {
-    "percent": 5
-   }
+   "percent": [
+    5,
+    {
+     "value": 5,
+     "enabled": "IS_CAPITAL"
+    }
+   ]
   }
  },
  "happiness": {

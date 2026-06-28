@@ -8,16 +8,22 @@
  ],
  "food": {
   "empire": {
-   "capital": {
-    "percent": -15
-   }
+   "percent": [
+    {
+     "value": -15,
+     "enabled": "IS_CAPITAL"
+    }
+   ]
   }
  },
  "production": {
   "empire": {
-   "capital": {
-    "percent": -15
-   }
+   "percent": [
+    {
+     "value": -15,
+     "enabled": "IS_CAPITAL"
+    }
+   ]
   }
  },
  "buildRate": {
@@ -29,37 +35,52 @@
  },
  "commerce": {
   "empire": {
-   "capital": {
-    "percent": -15
-   }
+   "percent": [
+    {
+     "value": -15,
+     "enabled": "IS_CAPITAL"
+    }
+   ]
   }
  },
  "gold": {
   "empire": {
-   "capital": {
-    "percent": -15
-   }
+   "percent": [
+    {
+     "value": -15,
+     "enabled": "IS_CAPITAL"
+    }
+   ]
   }
  },
  "research": {
   "empire": {
-   "capital": {
-    "percent": -15
-   }
+   "percent": [
+    {
+     "value": -15,
+     "enabled": "IS_CAPITAL"
+    }
+   ]
   }
  },
  "culture": {
   "empire": {
-   "capital": {
-    "percent": -15
-   }
+   "percent": [
+    {
+     "value": -15,
+     "enabled": "IS_CAPITAL"
+    }
+   ]
   }
  },
  "espionage": {
   "empire": {
-   "capital": {
-    "percent": -15
-   }
+   "percent": [
+    {
+     "value": -15,
+     "enabled": "IS_CAPITAL"
+    }
+   ]
   }
  },
  "happiness": {
@@ -159,8 +180,10 @@
      "flat": -1
     }
    },
-   "largestCity": {
-    "flat": -2
+   "cities": {
+    "flat": -2,
+    "max": "TARGET_NUM_CITIES",
+    "orderedByDescending": "CITY_SIZE"
    }
   }
  },
@@ -176,12 +199,21 @@
    "inBorder": {
     "percent": -15
    },
-   "capital": {
-    "percent": -20
-   },
-   "nonStateHolyCityXP": {
-    "percent": -15
-   }
+   "percent": [
+    {
+     "value": -20,
+     "enabled": "IS_CAPITAL"
+    },
+    {
+     "value": -15,
+     "enabled": {
+      "all": [
+       "IS_HOLY_CITY",
+       "!IS_STATE_RELIGION_HOLY_CITY"
+      ]
+     }
+    }
+   ]
   }
  },
  "maintenance": {

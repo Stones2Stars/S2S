@@ -75,17 +75,23 @@
  },
  "gold": {
   "empire": {
-   "capital": {
-    "percent": 20
-   }
+   "percent": [
+    {
+     "value": 20,
+     "enabled": "IS_CAPITAL"
+    }
+   ]
   }
  },
  "culture": {
   "empire": {
    "flat": -1,
-   "capital": {
-    "percent": -10
-   },
+   "percent": [
+    {
+     "value": -10,
+     "enabled": "IS_CAPITAL"
+    }
+   ],
    "specialists": {
     "SPECIALIST_NOBLE": {
      "flat": -1

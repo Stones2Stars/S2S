@@ -28,10 +28,13 @@
  },
  "gold": {
   "empire": {
-   "percent": 2,
-   "capital": {
-    "percent": 4
-   },
+   "percent": [
+    2,
+    {
+     "value": 4,
+     "enabled": "IS_CAPITAL"
+    }
+   ],
    "buildings": {
     "BUILDING_TEOTIHUACAN": {
      "percent": 15
@@ -119,10 +122,13 @@
  },
  "research": {
   "empire": {
-   "percent": 1,
-   "capital": {
-    "percent": 1
-   },
+   "percent": [
+    1,
+    {
+     "value": 1,
+     "enabled": "IS_CAPITAL"
+    }
+   ],
    "buildings": {
     "BUILDING_THE_STATUE_OF_ZEUS": {
      "percent": 15
@@ -135,10 +141,13 @@
  },
  "culture": {
   "empire": {
-   "percent": 2,
-   "capital": {
-    "percent": 2
-   },
+   "percent": [
+    2,
+    {
+     "value": 2,
+     "enabled": "IS_CAPITAL"
+    }
+   ],
    "buildings": {
     "BUILDING_TEOTIHUACAN": {
      "percent": 20
@@ -187,10 +196,13 @@
  },
  "espionage": {
   "empire": {
-   "percent": 1,
-   "capital": {
-    "percent": 4
-   }
+   "percent": [
+    1,
+    {
+     "value": 4,
+     "enabled": "IS_CAPITAL"
+    }
+   ]
   }
  },
  "happiness": {

@@ -152,18 +152,9 @@
    }
   }
  },
- "gold": {
+ "researchRate": {
   "empire": {
-   "specialists": {
-    "SPECIALIST_GREAT_MILITARY_INSTRUCTOR": {
-     "flat": 2
-    }
-   }
-  }
- },
- "research": {
-  "empire": {
-   "byTech": {
+   "techs": {
     "TECH_STEALTH": {
      "percent": 20
     },
@@ -257,10 +248,21 @@
    }
   }
  },
+ "gold": {
+  "empire": {
+   "specialists": {
+    "SPECIALIST_GREAT_MILITARY_INSTRUCTOR": {
+     "flat": 2
+    }
+   }
+  }
+ },
  "happiness": {
   "empire": {
-   "largestCity": {
-    "flat": -1
+   "cities": {
+    "flat": -1,
+    "max": "TARGET_NUM_CITIES",
+    "orderedByDescending": "CITY_SIZE"
    }
   }
  },

@@ -42,8 +42,12 @@ parsed into per-PROPERTY_* families). OWNER RULINGS (2026-06-14) drive the struc
   grants +N happiness while a specific bonus is present. The deposit is `happiness.empire.flat` (scope = the
   MODIFIER's: the trait benefits the player's cities); the condition is the agreed full+explicit enabler atom
   (enabler-spec §6.1/§13.7) `enabled:{type:BONUS_X, scope:empire, min:1}` ("we have ≥1", a tally count read).
-  TechResearchModifiers is conditioned-on-source-adjacent but the plan HANDOFF rules it STAYS trait-side (it surfaces on a tech
-  only as a derived boostedBy) -> kept as research.empire.byTech.{TECH}.percent.
+  TechResearchModifiers -> `researchRate.empire.techs.{TECH}.percent` (TARGET-KEYED by tech). researchRate is the
+  research-RATE analogue of buildRate (owner 2026-06-28): "+% beakers when researching tech X", a research-RATE/beaker
+  modifier (getNationalTechResearchModifier -> calculateBaseNetResearch, CvPlayer.cpp:8214) — DISTINCT from the
+  commerce `research` family (the commerce cascade reads commerce `research`, never `researchRate`). Keyed exactly like
+  buildRate.empire.buildings.{X}. (A 2026-06-28 mis-retire into commerce research.empire.percent inflated the commerce
+  modifier ~10x and was reverted.)
 - GreatPeopleUnitType + GreatPeopleRateChange FOLD into greatPeopleRate.empire.units.{UNIT}.flat (the change is
   keyed by the GP unit; CvPlayer.cpp:28606-28610, only when >0).
 - CityStartCulture + BonusPopulationinNewCities -> a `cityFounding` family (standing empire accumulators applied
@@ -80,7 +84,6 @@ SCALAR = {
     # wellbeing
     "iHealth":                         ("health", "empire", "", "flat"),
     "iHappiness":                      ("happiness", "empire", "", "flat"),
-    "iLargestCityHappiness":           ("happiness", "empire", "largestCity", "flat"),
     "iNonStateReligionHappiness":      ("happiness", "empire", "nonStateReligion", "flat"),
     "iHappyPerMilitaryUnit":           ("happiness", "empire", "perMilitaryUnit", "perMilitaryUnit"),
     "iGlobalPopulationgrowthratepercentage": ("growth", "empire", "", "percent"),
@@ -122,8 +125,6 @@ SCALAR = {
     "iFreeExperience":                 ("experience", "empire", "", "flat"),
     "iLevelExperienceModifier":        ("experience", "empire", "levelModifier", "percent"),
     "iExpInBorderModifier":            ("experience", "empire", "inBorder", "percent"),
-    "iCapitalXPModifier":              ("experience", "empire", "capital", "percent"),
-    "iHolyCityofNonStateReligionXPModifier": ("experience", "empire", "nonStateHolyCityXP", "percent"),
     # combat / defense
     "iCityDefenseBonus":               ("combat", "empire", "cityDefense", "percent"),
     "iBombardDefense":                 ("combat", "empire", "bombardDefense", "percent"),
@@ -173,15 +174,28 @@ SPLIT_ARRAY = {
     "YieldChanges":             ("empire", "",          "flat",         YIELDS),
     "YieldModifiers":           ("empire", "",          "percent",      YIELDS),
     "TradeYieldModifiers":      ("empire", "tradeRoute","percent",      YIELDS),
-    "CapitalYieldModifiers":    ("empire", "capital",   "percent",      YIELDS),
     # SeaPlotYieldChanges -> a PLOTS-TARGET fold (owner 2026-06-22): empire.plots.flat {IS_WATER}; handled in the apply loop.
     "SpecialistExtraYields":    ("empire", "specialist","perSpecialist",YIELDS),
     "GoldenAgeYieldChanges":    ("empire", "goldenAge", "flat",         YIELDS),
     "CommerceChanges":          ("empire", "",          "flat",         COMMERCES),
     "CommerceModifiers":        ("empire", "",          "percent",      COMMERCES),
-    "CapitalCommerceModifiers": ("empire", "capital",   "percent",      COMMERCES),
     "SpecialistExtraCommerces": ("empire", "specialist","perSpecialist",COMMERCES),
     "GoldenAgeCommerceChanges": ("empire", "goldenAge", "flat",         COMMERCES),
+}
+# --- CONDITIONED arrays/scalars: emit {family}.<scope>.<unit> as a list entry {value, enabled:<predicate>} instead of
+# a bespoke sub-scope member ([DEC-conditions-are-predicates], owner 2026-06-28). Capital-only modifiers were the
+# legacy `empire.capital` member -> now empire.percent + enabled:"IS_CAPITAL" (cascade evaluates the predicate per
+# city). (GoldenAge* stays a `goldenAge` member — deferred engine-core exception, golden-age.md.) ---
+SPLIT_ARRAY_COND = {
+    "CapitalYieldModifiers":    ("empire", "percent", YIELDS,    "IS_CAPITAL"),
+    "CapitalCommerceModifiers": ("empire", "percent", COMMERCES, "IS_CAPITAL"),
+}
+SCALAR_COND = {
+    "iCapitalXPModifier": ("experience", "empire", "percent", "IS_CAPITAL"),
+    # holy city of a NON-state religion (engine CvCity.cpp:3250 = isHolyCity() && !isHolyCity(stateReligion)) ->
+    # composed predicate via the `!` NOT operator (owner 2026-06-28), retiring the bespoke `nonStateHolyCityXP` member.
+    "iHolyCityofNonStateReligionXPModifier": ("experience", "empire", "percent",
+        OrderedDict([("all", ["IS_HOLY_CITY", "!IS_STATE_RELIGION_HOLY_CITY"])])),
 }
 # --- positional yield arrays kept GROUPED under their own family (yield is the member, not the family). ---
 GROUPED_YIELD_ARRAY = {
@@ -192,7 +206,11 @@ GROUPED_YIELD_ARRAY = {
 # --- entity-keyed (target-keyed) maps: tag -> (family, scope, targetType, unit, valueKeys|None). ---
 #   keys != None  => SPLIT (each named yield/commerce becomes its own top-level family).
 #   unit "enabler" => the entry value is a bool flag -> emit true.
-#   TechResearchModifiers: tech is a CONDITIONER (byTech), kept trait-side per the HANDOFF.
+#   TechResearchModifiers -> researchRate.empire.techs.{TECH}.percent (target-keyed by tech). researchRate is the
+#   research-RATE analogue of buildRate (owner 2026-06-28): it feeds the beaker rate via getNationalTechResearchModifier
+#   -> calculateBaseNetResearch (CvPlayer.cpp:8214), DISTINCT from the commerce `research` family — so the commerce
+#   cascade never reads it (no regression; a 2026-06-28 mis-retire into commerce research.empire.percent inflated the
+#   modifier ~10x and was reverted). Target-keyed exactly as buildRate.empire.buildings.{X} — not a bespoke member.
 KEYED = {
     "ImprovementYieldChanges":            (None,             "empire", "improvements",   "flat",    YIELDS),
     "ImprovementUpgradeModifierTypes":    ("improvementUpgradeRate", "empire", "improvements", "percent", None),
@@ -207,7 +225,7 @@ KEYED = {
     "UnitCombatFreeExperiences":          ("experience",     "empire", "unitCombats",    "flat",    None),
     "UnitCombatProductionModifiers":      ("buildRate",      "empire", "unitCombats",    "percent", None),
     "CivicOptionNoUpkeepTypes":           ("upkeep",         "empire", "civicOptions",   "enabler", None),
-    "TechResearchModifiers":              ("research",       "empire", "byTech",         "percent", None),  # conditioned-on-source: stays (HANDOFF)
+    "TechResearchModifiers":              ("researchRate",   "empire", "techs",          "percent", None),  # research-RATE "+% to research tech X" — researchRate is the research analogue of buildRate (owner 2026-06-28), TARGET-KEYED by tech (researchRate.empire.techs.{TECH}.percent) exactly as buildRate.empire.buildings.{X}; DISTINCT from commerce `research` (cascade never reads researchRate). Retires the `byTech` member invention.
     # Specialist yield/commerce boosts STAY on the trait, keyed by the specialist (governing-deliverer), NOT inverted
     # onto the shared specialist -- the simple/complex sets carry DIFFERENT per-set values, so inverting onto the ONE
     # specialist file would break the clean separation (modifier.md trait callout, owner ruling 2026-06-25). The
@@ -239,7 +257,7 @@ TEXT = {"Description": "description", "Civilopedia": "civilopedia", "Help": "hel
 # either — they now STAY trait-side keyed by specialist (KEYED above), per the Option-B ruling (the simple/complex
 # per-set value cannot be inverted onto the one shared specialist file).
 DROP = {"Type", "TraitPrereq", "TraitPrereqOr1", "TraitPrereqOr2", "PrereqTech", "Categories"}
-FAMILY_ORDER = ["food", "production", "buildRate", "commerce", "gold", "research", "culture", "espionage",
+FAMILY_ORDER = ["food", "production", "buildRate", "researchRate", "commerce", "gold", "research", "culture", "espionage",
                 "extraYieldThreshold", "lessYieldThreshold", "happiness", "health", "growth",
                 "greatPeopleRate", "greatGeneralRate", "freeSpecialists", "experience", "conscript",
                 "combat", "unitProduction", "maintenance", "upkeep", "tradeRoutes", "hurry", "workRate",
@@ -261,7 +279,27 @@ def _put(fam, family, scope, member, unit, val):
     node = fam.setdefault(family, {}).setdefault(scope, {})
     if member:
         node = node.setdefault(member, {})
-    node[unit] = val
+    cur = node.get(unit)
+    if isinstance(cur, list):            # a conditioned entry already landed here -> keep the leaf a LIST (json §3.9),
+        node[unit] = [val] + cur         # unconditioned scalar FIRST (enabled-absent before conditioned, §3.9 order)
+    else:
+        node[unit] = val
+
+
+def _put_cond(fam, family, scope, unit, value, enabled):
+    """Append a CONDITIONED deposit {value, enabled:<predicate>} to a scope-wide leaf, merging with any unconditioned
+    scalar already there into a list (json §3.9) — the same shape as the SeaPlotYieldChanges IS_WATER fold below. The
+    doc-covered shape for a state-gated modifier ([DEC-conditions-are-predicates]): a capital-only modifier is
+    empire.percent + enabled:"IS_CAPITAL", NOT a bespoke empire.capital member."""
+    node = fam.setdefault(family, {}).setdefault(scope, {})
+    entry = OrderedDict([("value", value), ("enabled", enabled)])
+    cur = node.get(unit)
+    if cur is None:
+        node[unit] = [entry]
+    elif isinstance(cur, list):
+        cur.append(entry)
+    else:
+        node[unit] = [cur, entry]
 
 
 def _keyed_entries(node, keys):
@@ -364,6 +402,16 @@ def curate(typ, rec, store):
             if v not in (None, 0, 0.0):
                 family, scope, member, unit = SCALAR[tag]
                 _put(fam, family, scope, member, unit, v)
+        elif tag == "iLargestCityHappiness":
+            v = _num(t)
+            if v not in (None, 0, 0.0):   # happiness in the empire's LARGEST cities -> ranked `cities` target (top-N by
+                node = fam.setdefault("happiness", {}).setdefault("empire", {}).setdefault("cities", {})  # population),
+                node["flat"] = v; node["max"] = "TARGET_NUM_CITIES"; node["orderedByDescending"] = "CITY_SIZE"  # json §3.3, retires the bespoke `largestCity` member ([DEC-conditions-are-predicates])
+        elif tag in SCALAR_COND:
+            v = _num(t)
+            if v not in (None, 0, 0.0):
+                family, scope, unit, pred = SCALAR_COND[tag]
+                _put_cond(fam, family, scope, unit, v, pred)
         elif tag in STATE_RELIGION:
             v = _num(t)
             if v not in (None, 0, 0.0):
@@ -373,6 +421,10 @@ def curate(typ, rec, store):
             scope, member, unit, keys = SPLIT_ARRAY[tag]
             for ident, v in engine.named_array(c, keys).items():   # ident IS the family (split)
                 _put(fam, ident, scope, member, unit, v)
+        elif tag in SPLIT_ARRAY_COND:
+            scope, unit, keys, pred = SPLIT_ARRAY_COND[tag]
+            for ident, v in engine.named_array(c, keys).items():   # ident IS the family (split); predicate-gated deposit
+                _put_cond(fam, ident, scope, unit, v, pred)
         elif tag == "SeaPlotYieldChanges":
             # PLOTS-TARGET fold (owner 2026-06-22): the empire sea-plot yield -> the explicit `plots` target {IS_WATER}
             # (data-model §4.1/§6). Deposits onto every water plot worked in the empire; retires getSeaPlotYield + seaPlot.

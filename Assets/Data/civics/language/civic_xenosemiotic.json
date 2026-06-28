@@ -5,9 +5,12 @@
  "strategy": "TXT_KEY_CIVIC_XENOSEMIOTIC_STRATEGY",
  "commerce": {
   "empire": {
-   "capital": {
-    "percent": 5
-   }
+   "percent": [
+    {
+     "value": 5,
+     "enabled": "IS_CAPITAL"
+    }
+   ]
   }
  },
  "gold": {

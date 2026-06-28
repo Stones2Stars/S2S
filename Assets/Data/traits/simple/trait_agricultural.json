@@ -4,10 +4,13 @@
  "civilopedia": "TXT_KEY_TRAIT_AGRICULTURAL_PEDIA",
  "food": {
   "empire": {
-   "percent": 5,
-   "capital": {
-    "percent": 5
-   }
+   "percent": [
+    5,
+    {
+     "value": 5,
+     "enabled": "IS_CAPITAL"
+    }
+   ]
   }
  },
  "buildRate": {

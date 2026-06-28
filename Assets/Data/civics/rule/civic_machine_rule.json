@@ -15,26 +15,35 @@
  },
  "production": {
   "empire": {
-   "percent": 10,
-   "capital": {
-    "percent": 5
-   }
+   "percent": [
+    10,
+    {
+     "value": 5,
+     "enabled": "IS_CAPITAL"
+    }
+   ]
   }
  },
  "culture": {
   "empire": {
-   "percent": -10,
-   "capital": {
-    "percent": -5
-   }
+   "percent": [
+    -10,
+    {
+     "value": -5,
+     "enabled": "IS_CAPITAL"
+    }
+   ]
   }
  },
  "espionage": {
   "empire": {
-   "percent": 15,
-   "capital": {
-    "percent": 10
-   }
+   "percent": [
+    15,
+    {
+     "value": 10,
+     "enabled": "IS_CAPITAL"
+    }
+   ]
   }
  },
  "combat": {

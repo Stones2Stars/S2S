@@ -10,10 +10,13 @@
  },
  "food": {
   "empire": {
-   "percent": 2,
-   "capital": {
-    "percent": 3
-   },
+   "percent": [
+    2,
+    {
+     "value": 3,
+     "enabled": "IS_CAPITAL"
+    }
+   ],
    "tradeRoute": {
     "percent": 3
    }
@@ -21,10 +24,13 @@
  },
  "production": {
   "empire": {
-   "percent": 3,
-   "capital": {
-    "percent": 3
-   },
+   "percent": [
+    3,
+    {
+     "value": 3,
+     "enabled": "IS_CAPITAL"
+    }
+   ],
    "tradeRoute": {
     "percent": 3
    }
@@ -32,10 +38,13 @@
  },
  "commerce": {
   "empire": {
-   "percent": 2,
-   "capital": {
-    "percent": 3
-   },
+   "percent": [
+    2,
+    {
+     "value": 3,
+     "enabled": "IS_CAPITAL"
+    }
+   ],
    "tradeRoute": {
     "percent": 2
    }

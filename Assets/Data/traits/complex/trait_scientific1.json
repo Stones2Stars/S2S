@@ -78,43 +78,9 @@
    }
   }
  },
- "commerce": {
+ "researchRate": {
   "empire": {
-   "specialists": {
-    "SPECIALIST_SCIENTIST": {
-     "flat": 1
-    },
-    "SPECIALIST_GREAT_SCIENTIST": {
-     "flat": 1
-    }
-   }
-  }
- },
- "research": {
-  "empire": {
-   "flat": 2,
-   "percent": 5,
-   "specialists": {
-    "SPECIALIST_CITIZEN": {
-     "flat": 1
-    },
-    "SPECIALIST_SLAVES": {
-     "flat": 1
-    },
-    "SPECIALIST_SETTLED_CITIZEN": {
-     "flat": 1
-    },
-    "SPECIALIST_SETTLED_SLAVE": {
-     "flat": 1
-    }
-   },
-   "capital": {
-    "percent": 5
-   },
-   "specialist": {
-    "perSpecialist": 1
-   },
-   "byTech": {
+   "techs": {
     "TECH_LANGUAGE": {
      "percent": 20
     },
@@ -151,6 +117,47 @@
     "TECH_ANATOMY": {
      "percent": 20
     }
+   }
+  }
+ },
+ "commerce": {
+  "empire": {
+   "specialists": {
+    "SPECIALIST_SCIENTIST": {
+     "flat": 1
+    },
+    "SPECIALIST_GREAT_SCIENTIST": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "research": {
+  "empire": {
+   "flat": 2,
+   "percent": [
+    5,
+    {
+     "value": 5,
+     "enabled": "IS_CAPITAL"
+    }
+   ],
+   "specialists": {
+    "SPECIALIST_CITIZEN": {
+     "flat": 1
+    },
+    "SPECIALIST_SLAVES": {
+     "flat": 1
+    },
+    "SPECIALIST_SETTLED_CITIZEN": {
+     "flat": 1
+    },
+    "SPECIALIST_SETTLED_SLAVE": {
+     "flat": 1
+    }
+   },
+   "specialist": {
+    "perSpecialist": 1
    }
   }
  },

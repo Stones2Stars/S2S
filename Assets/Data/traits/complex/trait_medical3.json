@@ -107,21 +107,9 @@
    }
   }
  },
- "commerce": {
+ "researchRate": {
   "empire": {
-   "specialists": {
-    "SPECIALIST_DOCTOR": {
-     "flat": 1
-    },
-    "SPECIALIST_GREAT_DOCTOR": {
-     "flat": 1
-    }
-   }
-  }
- },
- "research": {
-  "empire": {
-   "byTech": {
+   "techs": {
     "TECH_GASTRONOMY": {
      "percent": 20
     },
@@ -182,6 +170,18 @@
    }
   }
  },
+ "commerce": {
+  "empire": {
+   "specialists": {
+    "SPECIALIST_DOCTOR": {
+     "flat": 1
+    },
+    "SPECIALIST_GREAT_DOCTOR": {
+     "flat": 1
+    }
+   }
+  }
+ },
  "culture": {
   "empire": {
    "specialists": {
@@ -202,8 +202,10 @@
  },
  "happiness": {
   "empire": {
-   "largestCity": {
-    "flat": 2
+   "cities": {
+    "flat": 2,
+    "max": "TARGET_NUM_CITIES",
+    "orderedByDescending": "CITY_SIZE"
    }
   }
  },

@@ -27,41 +27,63 @@
  },
  "commerce": {
   "empire": {
-   "landmark": {
-    "flat": 2
+   "plots": {
+    "flat": [
+     {
+      "value": 2,
+      "enabled": {
+       "all": [
+        "GAMEOPTION_MAP_PERSONALIZED",
+        "HAS_LANDMARK"
+       ]
+      }
+     }
+    ]
    }
   }
  },
  "gold": {
   "empire": {
-   "percent": 4,
-   "capital": {
-    "percent": 3
-   }
+   "percent": [
+    4,
+    {
+     "value": 3,
+     "enabled": "IS_CAPITAL"
+    }
+   ]
   }
  },
  "research": {
   "empire": {
-   "percent": 4,
-   "capital": {
-    "percent": 4
-   }
+   "percent": [
+    4,
+    {
+     "value": 4,
+     "enabled": "IS_CAPITAL"
+    }
+   ]
   }
  },
  "culture": {
   "empire": {
-   "percent": 4,
-   "capital": {
-    "percent": 4
-   }
+   "percent": [
+    4,
+    {
+     "value": 4,
+     "enabled": "IS_CAPITAL"
+    }
+   ]
   }
  },
  "espionage": {
   "empire": {
-   "percent": 4,
-   "capital": {
-    "percent": 4
-   },
+   "percent": [
+    4,
+    {
+     "value": 4,
+     "enabled": "IS_CAPITAL"
+    }
+   ],
    "specialist": {
     "perSpecialist": 1
    }
@@ -69,7 +91,13 @@
  },
  "happiness": {
   "empire": {
-   "flat": -2,
+   "flat": [
+    -2,
+    {
+     "value": 1,
+     "enabled": "GAMEOPTION_MAP_PERSONALIZED"
+    }
+   ],
    "civicAnger": {
     "percent": -20
    },
@@ -113,9 +141,6 @@
     "BUILDING_MAGINOT_LINE": {
      "flat": 2
     }
-   },
-   "landmark": {
-    "flat": 1
    },
    "foreignerUnhappy": {
     "percent": 10

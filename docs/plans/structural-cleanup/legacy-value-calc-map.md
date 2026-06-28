@@ -36,7 +36,29 @@ of scope, not gameplay-affecting per owner); STATEFUL/event-driven → live read
 property solver, golden-age/anarchy timers); stochastic → spawnRate (not a value-channel); float/OOS-care →
 populationGrowthRate; nonexistent → `byCargo`; dead → `pillageGold` (building).
 
+> **LANDMARK — verified 2026-06-28 (investigation, owner-requested).** Landmarks are **NOT natural wonders**. A
+> "landmark" is an **auto-detected geographic type** a plot gets from its terrain/feature/relief — the `LANDMARK`
+> enum (`CvEnums.h:3169-3177`) is `BAY/FOREST/JUNGLE/PEAK/MOUNTAIN_RANGE/DESERT/LAKE` — used for **map naming/signs**
+> (`CvCity.cpp:263`). Both landmark effects are gated on **`GAMEOPTION_MAP_PERSONALIZED`**, which is **OFF in the live
+> game** (absent from `/state/all` options) → both are **inert**. (No `NATURAL_WONDER`/`bNaturalWonder` code concept
+> exists; natural wonders, if present, are separate special-feature/terrain DATA — not landmarks.)
+> - **landmark-HAPPINESS** — retired ✓ (`happiness.empire.flat` + `enabled:"GAMEOPTION_MAP_PERSONALIZED"`, engine `:5718`).
+> - **landmark-YIELD** (`LandmarkYieldChanges`, `CvPlot.cpp:8420` = per-plot yield iff `getLandmarkType()!=NO_LANDMARK
+>   && MAP_PERSONALIZED`) — fits existing predicates: `{yield}.empire.plots.flat` gated on
+>   `all:["GAMEOPTION_MAP_PERSONALIZED", any:[<landmark terrain/features: FEATURE_FOREST/FEATURE_JUNGLE, HAS_PEAK,
+>   TERRAIN_DESERT, lake/bay…>]]` (map the exact set from `getLandmarkType()`). Low-stakes (option off); not deferred-as-impossible — just pending the type→predicate mapping.
+
 **The calc map is COMPLETE; the dump is NOT.** §12 is the actionable add-list.
+
+> **⛔ REVOLUTION — NOT parity-modeled, just PARSED correctly; full rework is POST-migration (owner ruling 2026-06-28).**
+> The revolution index is Python-authoritative (the `Assets/Python/Revolution/` mod consumes the `revolution.*` family
+> via the Cy getters); the cascade does **not** compute or validate it, and **revolution needs an extensive rework —
+> moved into C++ — which is post-rework.** So the `revolution` family is **exempt from the
+> [DEC-conditions-are-predicates](../../architecture/decisions.md#dec-conditions-are-predicates) invention-retirement**:
+> its bespoke members (`holyCityGood`/`holyCityBad`, `distanceModifier`, `local`/`national`, …) **stay as authored** —
+> the only bar is that the data **parses correctly** (a valid `family.scope.member.unit` shape, which it is). Do NOT
+> map revolution good/bad semantics into predicates; there is no parity payoff and the whole system is slated for a
+> post-migration C++ rework.
 
 > **Scales.** Every ×100 / per-100 / human / multiplier claim in this doc is governed by the
 > [scale registry](../../specs/curators/fixed-point-and-scales.md) — that is the single source of truth for scales

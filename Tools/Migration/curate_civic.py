@@ -78,8 +78,6 @@ SCALAR = {
     "iFreeSpecialist":                 ("freeSpecialists", "empire", "", "any"),
     # wellbeing
     "iCivicHappiness":                 ("happiness", "empire", "",            "flat"),
-    "iLargestCityHappiness":           ("happiness", "empire", "largestCity", "flat"),
-    "iLandmarkHappiness":              ("happiness", "empire", "landmark",    "flat"),
     "iNonStateReligionHappiness":      ("happiness", "empire", "nonStateReligion", "flat"),
     "iCityLimit":                      ("happiness", "empire", "cityLimit",    "flat"),
     "iCityOverLimitUnhappy":           ("happiness", "empire", "cityOverLimit","flat"),
@@ -124,11 +122,24 @@ STATE_RELIGION = {
 # --- flat (no-key) split arrays: tag -> (scope, member, unit, valueKeys). member "" => no condition. ---
 SPLIT_ARRAY = {
     "YieldModifiers":          ("empire", "",           "percent",      YIELDS),
-    "CapitalYieldModifiers":   ("empire", "capital",    "percent",      YIELDS),
     "TradeYieldModifiers":     ("empire", "tradeRoute", "percent",      YIELDS),
     "CommerceModifiers":       ("empire", "",           "percent",      COMMERCES),
-    "CapitalCommerceModifiers":("empire", "capital",    "percent",      COMMERCES),
     "SpecialistExtraCommerces":("empire", "specialist", "perSpecialist",COMMERCES),
+}
+# --- CONDITIONED split arrays: emit {family}.<scope>.<unit> as a list entry {value, enabled:<predicate>} instead of a
+# bespoke sub-scope member ([DEC-conditions-are-predicates], owner 2026-06-28). Capital-only modifiers were the legacy
+# `empire.capital` member; they are now empire.percent + enabled:"IS_CAPITAL" (the cascade evaluates the predicate per
+# city). tag -> (scope, unit, valueKeys, predicate). ---
+SPLIT_ARRAY_COND = {
+    "CapitalYieldModifiers":    ("empire", "percent", YIELDS,    "IS_CAPITAL"),
+    "CapitalCommerceModifiers": ("empire", "percent", COMMERCES, "IS_CAPITAL"),
+}
+# --- CONDITIONED scalar families: emit {family}.<scope>.<unit> as a conditioned {value, enabled:<predicate>} entry
+# ([DEC-conditions-are-predicates], owner 2026-06-28). tag -> (family, scope, unit, predicate). ---
+SCALAR_COND = {
+    # Landmark happiness: BOTH signs gated on GAMEOPTION_MAP_PERSONALIZED (engine CvCity.cpp:5718 happy + :5665-5671
+    # unhappy, same option block) — signed-split handles +/-. Retires the bespoke `landmark` member.
+    "iLandmarkHappiness": ("happiness", "empire", "flat", "GAMEOPTION_MAP_PERSONALIZED"),
 }
 
 # --- entity-keyed (target-keyed) maps: tag -> (family, scope, targetType, unit, valueKeys|None). ---
@@ -192,7 +203,27 @@ def _put(fam, family, scope, member, unit, val):
     node = fam.setdefault(family, {}).setdefault(scope, {})
     if member:
         node = node.setdefault(member, {})
-    node[unit] = val
+    cur = node.get(unit)
+    if isinstance(cur, list):            # a conditioned entry already landed here -> keep the leaf a LIST (json §3.9),
+        node[unit] = [val] + cur         # unconditioned scalar FIRST (enabled-absent before conditioned, §3.9 order)
+    else:
+        node[unit] = val
+
+
+def _put_cond(fam, family, scope, unit, value, enabled):
+    """Append a CONDITIONED deposit {value, enabled:<predicate>} to a scope-wide leaf, merging with any unconditioned
+    scalar already there into a list (json §3.9). The doc-covered shape for a state-gated modifier
+    ([DEC-conditions-are-predicates]): a capital-only modifier is empire.percent + enabled:"IS_CAPITAL", NOT a bespoke
+    empire.capital member — the cascade's normal scope walk evaluates the predicate per-city."""
+    node = fam.setdefault(family, {}).setdefault(scope, {})
+    entry = OrderedDict([("value", value), ("enabled", enabled)])
+    cur = node.get(unit)
+    if cur is None:
+        node[unit] = [entry]
+    elif isinstance(cur, list):
+        cur.append(entry)
+    else:
+        node[unit] = [cur, entry]
 
 
 def _keyed_entries(node, keys):
@@ -262,6 +293,16 @@ def curate(typ, rec, store):
             if v not in (None, 0, 0.0):
                 family, scope, member, unit = SCALAR[tag]
                 _put(fam, family, scope, member, unit, v)
+        elif tag == "iLargestCityHappiness":
+            v = _num(t)
+            if v not in (None, 0, 0.0):   # happiness in the empire's LARGEST cities -> ranked `cities` target (top-N by
+                node = fam.setdefault("happiness", {}).setdefault("empire", {}).setdefault("cities", {})  # population),
+                node["flat"] = v; node["max"] = "TARGET_NUM_CITIES"; node["orderedByDescending"] = "CITY_SIZE"  # json §3.3, retires the bespoke `largestCity` member ([DEC-conditions-are-predicates])
+        elif tag in SCALAR_COND:
+            v = _num(t)
+            if v not in (None, 0, 0.0):
+                family, scope, unit, pred = SCALAR_COND[tag]
+                _put_cond(fam, family, scope, unit, v, pred)
         elif tag in STATE_RELIGION:
             v = _num(t)
             if v not in (None, 0, 0.0):
@@ -271,6 +312,10 @@ def curate(typ, rec, store):
             scope, member, unit, keys = SPLIT_ARRAY[tag]
             for ident, v in engine.named_array(c, keys).items():   # ident IS the family (split)
                 _put(fam, ident, scope, member, unit, v)
+        elif tag in SPLIT_ARRAY_COND:
+            scope, unit, keys, pred = SPLIT_ARRAY_COND[tag]
+            for ident, v in engine.named_array(c, keys).items():   # ident IS the family (split); predicate-gated deposit
+                _put_cond(fam, ident, scope, unit, v, pred)
         elif tag in KEYED:
             family, scope, tt, unit, keys = KEYED[tag]
             for target, val in _keyed_entries(c, keys).items():
@@ -282,8 +327,21 @@ def curate(typ, rec, store):
                     (fam.setdefault(family, {}).setdefault(scope, {}).setdefault(tt, {})
                      .setdefault(target, {}))[unit] = val
         elif tag == LANDMARK_YIELD:
+            # yield on LANDMARK plots (geographic landmark types — bay/forest/jungle/peak/...), gated on the
+            # MAP_PERSONALIZED option AND the plot being a landmark (engine CvPlot.cpp:8420). A `plots`-target deposit
+            # gated by HAS_LANDMARK + the option — retires the bespoke `landmark` yield member ([DEC-conditions-are-predicates]).
             for ident, v in engine.named_array(c, YIELDS).items():
-                _put(fam, ident, "empire", "landmark", "flat", v)
+                if v:
+                    node = fam.setdefault(ident, {}).setdefault("empire", {}).setdefault("plots", {})
+                    entry = OrderedDict([("value", v),
+                                         ("enabled", OrderedDict([("all", ["GAMEOPTION_MAP_PERSONALIZED", "HAS_LANDMARK"])]))])
+                    cur = node.get("flat")
+                    if cur is None:
+                        node["flat"] = [entry]
+                    elif isinstance(cur, list):
+                        cur.append(entry)
+                    else:
+                        node["flat"] = [cur, entry]
         elif tag in POLICIES:
             if t in ("1", "true", "True"):
                 policies[POLICIES[tag]] = True

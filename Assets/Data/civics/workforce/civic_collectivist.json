@@ -29,10 +29,13 @@
  },
  "research": {
   "empire": {
-   "percent": 1,
-   "capital": {
-    "percent": 1
-   }
+   "percent": [
+    1,
+    {
+     "value": 1,
+     "enabled": "IS_CAPITAL"
+    }
+   ]
   }
  },
  "happiness": {

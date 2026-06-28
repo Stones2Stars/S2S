@@ -239,16 +239,9 @@
    }
   }
  },
- "commerce": {
+ "researchRate": {
   "empire": {
-   "tradeRoute": {
-    "percent": -10
-   }
-  }
- },
- "research": {
-  "empire": {
-   "byTech": {
+   "techs": {
     "TECH_GATHERING": {
      "percent": 20
     },
@@ -384,6 +377,13 @@
     "TECH_ALTERNATE_HISTORY_EXPLORATION": {
      "percent": 20
     }
+   }
+  }
+ },
+ "commerce": {
+  "empire": {
+   "tradeRoute": {
+    "percent": -10
    }
   }
  },

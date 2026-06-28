@@ -39,9 +39,9 @@
    }
   }
  },
- "research": {
+ "researchRate": {
   "empire": {
-   "byTech": {
+   "techs": {
     "TECH_COMMUNICATION_NETWORKS": {
      "percent": 20
     },
@@ -93,9 +93,12 @@
    "inBorder": {
     "percent": 10
    },
-   "capital": {
-    "percent": 15
-   }
+   "percent": [
+    {
+     "value": 15,
+     "enabled": "IS_CAPITAL"
+    }
+   ]
   }
  },
  "combat": {

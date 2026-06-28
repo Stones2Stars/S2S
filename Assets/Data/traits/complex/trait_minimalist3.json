@@ -55,8 +55,10 @@
  },
  "happiness": {
   "empire": {
-   "largestCity": {
-    "flat": -3
+   "cities": {
+    "flat": -3,
+    "max": "TARGET_NUM_CITIES",
+    "orderedByDescending": "CITY_SIZE"
    }
   }
  },

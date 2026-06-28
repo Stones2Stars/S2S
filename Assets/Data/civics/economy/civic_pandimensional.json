@@ -22,8 +22,18 @@
    "tradeRoute": {
     "percent": 5
    },
-   "landmark": {
-    "flat": 1
+   "plots": {
+    "flat": [
+     {
+      "value": 1,
+      "enabled": {
+       "all": [
+        "GAMEOPTION_MAP_PERSONALIZED",
+        "HAS_LANDMARK"
+       ]
+      }
+     }
+    ]
    }
   }
  },

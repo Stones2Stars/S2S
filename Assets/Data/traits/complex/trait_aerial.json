@@ -427,32 +427,9 @@
    }
   }
  },
- "commerce": {
+ "researchRate": {
   "empire": {
-   "improvements": {
-    "IMPROVEMENT_WINDMILL": {
-     "flat": 2
-    },
-    "IMPROVEMENT_MODERN_WINDMILL": {
-     "flat": 2
-    },
-    "IMPROVEMENT_SEA_MILL": {
-     "flat": 2
-    },
-    "IMPROVEMENT_SOLAR_PANELS": {
-     "flat": 2
-    }
-   },
-   "specialists": {
-    "SPECIALIST_GREAT_MILITARY_INSTRUCTOR": {
-     "flat": 1
-    }
-   }
-  }
- },
- "research": {
-  "empire": {
-   "byTech": {
+   "techs": {
     "TECH_DRYING": {
      "percent": 20
     },
@@ -681,6 +658,29 @@
    }
   }
  },
+ "commerce": {
+  "empire": {
+   "improvements": {
+    "IMPROVEMENT_WINDMILL": {
+     "flat": 2
+    },
+    "IMPROVEMENT_MODERN_WINDMILL": {
+     "flat": 2
+    },
+    "IMPROVEMENT_SEA_MILL": {
+     "flat": 2
+    },
+    "IMPROVEMENT_SOLAR_PANELS": {
+     "flat": 2
+    }
+   },
+   "specialists": {
+    "SPECIALIST_GREAT_MILITARY_INSTRUCTOR": {
+     "flat": 1
+    }
+   }
+  }
+ },
  "espionage": {
   "empire": {
    "specialists": {
@@ -692,8 +692,10 @@
  },
  "happiness": {
   "empire": {
-   "largestCity": {
-    "flat": -1
+   "cities": {
+    "flat": -1,
+    "max": "TARGET_NUM_CITIES",
+    "orderedByDescending": "CITY_SIZE"
    },
    "flat": [
     {

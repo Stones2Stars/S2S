@@ -16,9 +16,12 @@
      "flat": 1
     }
    },
-   "capital": {
-    "percent": 5
-   }
+   "percent": [
+    {
+     "value": 5,
+     "enabled": "IS_CAPITAL"
+    }
+   ]
   }
  },
  "production": {
@@ -31,9 +34,12 @@
      "flat": 1
     }
    },
-   "capital": {
-    "percent": 5
-   }
+   "percent": [
+    {
+     "value": 5,
+     "enabled": "IS_CAPITAL"
+    }
+   ]
   }
  },
  "buildRate": {
@@ -56,15 +62,24 @@
      "flat": 1
     }
    },
-   "capital": {
-    "percent": 5
-   }
+   "percent": [
+    {
+     "value": 5,
+     "enabled": "IS_CAPITAL"
+    }
+   ]
   }
  },
  "gold": {
   "empire": {
    "flat": 1,
-   "percent": 5,
+   "percent": [
+    5,
+    {
+     "value": 10,
+     "enabled": "IS_CAPITAL"
+    }
+   ],
    "specialists": {
     "SPECIALIST_CITIZEN": {
      "flat": 1
@@ -72,9 +87,6 @@
     "SPECIALIST_SETTLED_CITIZEN": {
      "flat": 1
     }
-   },
-   "capital": {
-    "percent": 10
    }
   }
  },
@@ -93,7 +105,13 @@
  "culture": {
   "empire": {
    "flat": 1,
-   "percent": 5,
+   "percent": [
+    5,
+    {
+     "value": 10,
+     "enabled": "IS_CAPITAL"
+    }
+   ],
    "specialists": {
     "SPECIALIST_CITIZEN": {
      "flat": 1
@@ -101,9 +119,6 @@
     "SPECIALIST_SETTLED_CITIZEN": {
      "flat": 1
     }
-   },
-   "capital": {
-    "percent": 10
    }
   }
  },

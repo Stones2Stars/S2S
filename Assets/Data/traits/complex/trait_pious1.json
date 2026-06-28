@@ -25,22 +25,9 @@
    }
   }
  },
- "gold": {
+ "researchRate": {
   "empire": {
-   "percent": -5,
-   "specialists": {
-    "SPECIALIST_PRIEST": {
-     "flat": 1
-    },
-    "SPECIALIST_GREAT_PROPHET": {
-     "flat": 1
-    }
-   }
-  }
- },
- "research": {
-  "empire": {
-   "byTech": {
+   "techs": {
     "TECH_HINDUISM": {
      "percent": -25
     },
@@ -124,6 +111,19 @@
     },
     "TECH_SCIENTOLOGY": {
      "percent": -25
+    }
+   }
+  }
+ },
+ "gold": {
+  "empire": {
+   "percent": -5,
+   "specialists": {
+    "SPECIALIST_PRIEST": {
+     "flat": 1
+    },
+    "SPECIALIST_GREAT_PROPHET": {
+     "flat": 1
     }
    }
   }

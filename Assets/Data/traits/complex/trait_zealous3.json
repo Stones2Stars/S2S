@@ -68,9 +68,17 @@
  },
  "experience": {
   "empire": {
-   "nonStateHolyCityXP": {
-    "percent": -15
-   }
+   "percent": [
+    {
+     "value": -15,
+     "enabled": {
+      "all": [
+       "IS_HOLY_CITY",
+       "!IS_STATE_RELIGION_HOLY_CITY"
+      ]
+     }
+    }
+   ]
   }
  },
  "durations": {

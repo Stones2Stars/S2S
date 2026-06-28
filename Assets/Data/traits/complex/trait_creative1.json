@@ -204,9 +204,9 @@
    }
   }
  },
- "research": {
+ "researchRate": {
   "empire": {
-   "byTech": {
+   "techs": {
     "TECH_ORAL_TRADITION": {
      "percent": 20
     },
@@ -318,7 +318,13 @@
  "culture": {
   "empire": {
    "flat": 2,
-   "percent": 5,
+   "percent": [
+    5,
+    {
+     "value": 5,
+     "enabled": "IS_CAPITAL"
+    }
+   ],
    "specialists": {
     "SPECIALIST_CITIZEN": {
      "flat": 1
@@ -332,9 +338,6 @@
     "SPECIALIST_SETTLED_CITIZEN": {
      "flat": 1
     }
-   },
-   "capital": {
-    "percent": 5
    },
    "specialist": {
     "perSpecialist": 1

@@ -38,10 +38,13 @@
  },
  "food": {
   "empire": {
-   "percent": 3,
-   "capital": {
-    "percent": 4
-   },
+   "percent": [
+    3,
+    {
+     "value": 4,
+     "enabled": "IS_CAPITAL"
+    }
+   ],
    "improvements": {
     "IMPROVEMENT_FARM": {
      "flat": 1
@@ -54,18 +57,24 @@
  },
  "production": {
   "empire": {
-   "percent": 3,
-   "capital": {
-    "percent": 3
-   }
+   "percent": [
+    3,
+    {
+     "value": 3,
+     "enabled": "IS_CAPITAL"
+    }
+   ]
   }
  },
  "commerce": {
   "empire": {
-   "percent": 1,
-   "capital": {
-    "percent": 5
-   },
+   "percent": [
+    1,
+    {
+     "value": 5,
+     "enabled": "IS_CAPITAL"
+    }
+   ],
    "improvements": {
     "IMPROVEMENT_FARM": {
      "flat": 1
@@ -78,34 +87,46 @@
  },
  "gold": {
   "empire": {
-   "percent": 2,
-   "capital": {
-    "percent": 4
-   }
+   "percent": [
+    2,
+    {
+     "value": 4,
+     "enabled": "IS_CAPITAL"
+    }
+   ]
   }
  },
  "research": {
   "empire": {
-   "percent": 2,
-   "capital": {
-    "percent": -2
-   }
+   "percent": [
+    2,
+    {
+     "value": -2,
+     "enabled": "IS_CAPITAL"
+    }
+   ]
   }
  },
  "culture": {
   "empire": {
-   "percent": 2,
-   "capital": {
-    "percent": -1
-   }
+   "percent": [
+    2,
+    {
+     "value": -1,
+     "enabled": "IS_CAPITAL"
+    }
+   ]
   }
  },
  "espionage": {
   "empire": {
-   "percent": 2,
-   "capital": {
-    "percent": 2
-   }
+   "percent": [
+    2,
+    {
+     "value": 2,
+     "enabled": "IS_CAPITAL"
+    }
+   ]
   }
  },
  "happiness": {

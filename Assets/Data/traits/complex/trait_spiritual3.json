@@ -32,9 +32,9 @@
    }
   }
  },
- "research": {
+ "researchRate": {
   "empire": {
-   "byTech": {
+   "techs": {
     "TECH_DEITIES": {
      "percent": 20
     },
@@ -111,9 +111,17 @@
      "flat": -1
     }
    },
-   "nonStateHolyCityXP": {
-    "percent": 20
-   }
+   "percent": [
+    {
+     "value": 20,
+     "enabled": {
+      "all": [
+       "IS_HOLY_CITY",
+       "!IS_STATE_RELIGION_HOLY_CITY"
+      ]
+     }
+    }
+   ]
   }
  },
  "upkeep": {

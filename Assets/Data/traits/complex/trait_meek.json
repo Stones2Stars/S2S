@@ -77,9 +77,9 @@
    }
   }
  },
- "research": {
+ "researchRate": {
   "empire": {
-   "byTech": {
+   "techs": {
     "TECH_WOODWORKING": {
      "percent": -20
     },

@@ -52,9 +52,9 @@
    }
   }
  },
- "research": {
+ "researchRate": {
   "empire": {
-   "byTech": {
+   "techs": {
     "TECH_SPECIES_UPLIFTING": {
      "percent": 20
     },

@@ -98,3 +98,12 @@ Golden age touches the yield path in **three** places, all inside `base` (so all
 **per-plot** threshold bonus (in `basePlotYield`), the **player** golden-age yield, and the **golden-age
 commerce** — plus faster growth, faster great people, and zero-anarchy civic swaps elsewhere. The one parity
 gotcha is the per-plot bonus's **pre-improvement/pre-route** threshold test (`CvPlot.cpp:8403`).
+
+> **⏳ Cascade representation — deferred member-mirror, NOT a now-retire invention (owner ruling 2026-06-28).**
+> [DEC-conditions-are-predicates](../architecture/decisions.md#dec-conditions-are-predicates) retires condition-as-member
+> shapes (`empire.capital` → `enabled:IS_CAPITAL`). **Golden age is the standing exception:** its yield/commerce is
+> applied by the **core engine** and is **not defined as data anywhere**, so modelling it through the `IS_GOLDEN_AGE`
+> predicate would mean authoring it virtually everywhere it fires. The cascade therefore keeps mirroring it as the
+> `empire.goldenAge` member for now. The `IS_GOLDEN_AGE` predicate ([json](../specs/json.md) §3.5) exists and is
+> **reserved for when golden age is extracted from the engine core and moved where it belongs — post-migration**
+> ([DEC-mirror-then-redesign](../architecture/decisions.md#dec-mirror-then-redesign)).

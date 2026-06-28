@@ -320,35 +320,9 @@
    }
   }
  },
- "commerce": {
+ "researchRate": {
   "empire": {
-   "specialists": {
-    "SPECIALIST_DOCTOR": {
-     "flat": 1
-    },
-    "SPECIALIST_GREAT_DOCTOR": {
-     "flat": 1
-    }
-   }
-  }
- },
- "research": {
-  "empire": {
-   "specialists": {
-    "SPECIALIST_SCIENTIST": {
-     "flat": 1
-    },
-    "SPECIALIST_GREAT_SCIENTIST": {
-     "flat": 1
-    },
-    "SPECIALIST_DOCTOR": {
-     "flat": 1
-    },
-    "SPECIALIST_GREAT_DOCTOR": {
-     "flat": 1
-    }
-   },
-   "byTech": {
+   "techs": {
     "TECH_HERBALISM": {
      "percent": 20
     },
@@ -499,10 +473,42 @@
    }
   }
  },
+ "commerce": {
+  "empire": {
+   "specialists": {
+    "SPECIALIST_DOCTOR": {
+     "flat": 1
+    },
+    "SPECIALIST_GREAT_DOCTOR": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "research": {
+  "empire": {
+   "specialists": {
+    "SPECIALIST_SCIENTIST": {
+     "flat": 1
+    },
+    "SPECIALIST_GREAT_SCIENTIST": {
+     "flat": 1
+    },
+    "SPECIALIST_DOCTOR": {
+     "flat": 1
+    },
+    "SPECIALIST_GREAT_DOCTOR": {
+     "flat": 1
+    }
+   }
+  }
+ },
  "happiness": {
   "empire": {
-   "largestCity": {
-    "flat": 1
+   "cities": {
+    "flat": 1,
+    "max": "TARGET_NUM_CITIES",
+    "orderedByDescending": "CITY_SIZE"
    }
   }
  },

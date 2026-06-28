@@ -148,21 +148,9 @@
    }
   }
  },
- "commerce": {
+ "researchRate": {
   "empire": {
-   "specialists": {
-    "SPECIALIST_SPY": {
-     "flat": -1
-    },
-    "SPECIALIST_GREAT_SPY": {
-     "flat": -1
-    }
-   }
-  }
- },
- "research": {
-  "empire": {
-   "byTech": {
+   "techs": {
     "TECH_DUALISM": {
      "percent": -20
     },
@@ -202,10 +190,28 @@
    }
   }
  },
+ "commerce": {
+  "empire": {
+   "specialists": {
+    "SPECIALIST_SPY": {
+     "flat": -1
+    },
+    "SPECIALIST_GREAT_SPY": {
+     "flat": -1
+    }
+   }
+  }
+ },
  "espionage": {
   "empire": {
    "flat": -2,
-   "percent": -5,
+   "percent": [
+    -5,
+    {
+     "value": -5,
+     "enabled": "IS_CAPITAL"
+    }
+   ],
    "specialists": {
     "SPECIALIST_CITIZEN": {
      "flat": -1
@@ -219,9 +225,6 @@
     "SPECIALIST_SETTLED_SLAVE": {
      "flat": -1
     }
-   },
-   "capital": {
-    "percent": -5
    },
    "specialist": {
     "perSpecialist": -1

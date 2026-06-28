@@ -110,21 +110,9 @@
    }
   }
  },
- "gold": {
+ "researchRate": {
   "empire": {
-   "specialists": {
-    "SPECIALIST_DOCTOR": {
-     "flat": -1
-    },
-    "SPECIALIST_GREAT_DOCTOR": {
-     "flat": -1
-    }
-   }
-  }
- },
- "research": {
-  "empire": {
-   "byTech": {
+   "techs": {
     "TECH_BATTLEFIELD_MEDICINE": {
      "percent": -20
     },
@@ -161,6 +149,18 @@
    }
   }
  },
+ "gold": {
+  "empire": {
+   "specialists": {
+    "SPECIALIST_DOCTOR": {
+     "flat": -1
+    },
+    "SPECIALIST_GREAT_DOCTOR": {
+     "flat": -1
+    }
+   }
+  }
+ },
  "espionage": {
   "empire": {
    "specialists": {
@@ -176,8 +176,10 @@
  "happiness": {
   "empire": {
    "flat": -1,
-   "largestCity": {
-    "flat": -1
+   "cities": {
+    "flat": -1,
+    "max": "TARGET_NUM_CITIES",
+    "orderedByDescending": "CITY_SIZE"
    }
   }
  },

@@ -250,33 +250,9 @@
    }
   }
  },
- "commerce": {
+ "researchRate": {
   "empire": {
-   "specialists": {
-    "SPECIALIST_SPY": {
-     "flat": 1
-    },
-    "SPECIALIST_GREAT_SPY": {
-     "flat": 1
-    }
-   }
-  }
- },
- "gold": {
-  "empire": {
-   "specialists": {
-    "SPECIALIST_MERCHANT": {
-     "flat": 1
-    },
-    "SPECIALIST_GREAT_MERCHANT": {
-     "flat": 1
-    }
-   }
-  }
- },
- "research": {
-  "empire": {
-   "byTech": {
+   "techs": {
     "TECH_DECEPTION": {
      "percent": 20
     },
@@ -352,6 +328,30 @@
    }
   }
  },
+ "commerce": {
+  "empire": {
+   "specialists": {
+    "SPECIALIST_SPY": {
+     "flat": 1
+    },
+    "SPECIALIST_GREAT_SPY": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "gold": {
+  "empire": {
+   "specialists": {
+    "SPECIALIST_MERCHANT": {
+     "flat": 1
+    },
+    "SPECIALIST_GREAT_MERCHANT": {
+     "flat": 1
+    }
+   }
+  }
+ },
  "culture": {
   "empire": {
    "flat": -1
@@ -413,8 +413,10 @@
    "perMilitaryUnit": {
     "perMilitaryUnit": 1
    },
-   "largestCity": {
-    "flat": 1
+   "cities": {
+    "flat": 1,
+    "max": "TARGET_NUM_CITIES",
+    "orderedByDescending": "CITY_SIZE"
    }
   }
  },

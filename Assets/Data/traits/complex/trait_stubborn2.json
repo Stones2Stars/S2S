@@ -101,16 +101,9 @@
    }
   }
  },
- "commerce": {
+ "researchRate": {
   "empire": {
-   "tradeRoute": {
-    "percent": 10
-   }
-  }
- },
- "research": {
-  "empire": {
-   "byTech": {
+   "techs": {
     "TECH_LEADERSHIP": {
      "percent": -20
     },
@@ -171,6 +164,13 @@
     "TECH_TRANSHUMAN_LIFESTYLE": {
      "percent": -20
     }
+   }
+  }
+ },
+ "commerce": {
+  "empire": {
+   "tradeRoute": {
+    "percent": 10
    }
   }
  },

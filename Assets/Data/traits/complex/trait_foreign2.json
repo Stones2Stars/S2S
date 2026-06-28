@@ -24,9 +24,12 @@
      "flat": -1
     }
    },
-   "capital": {
-    "percent": -5
-   }
+   "percent": [
+    {
+     "value": -5,
+     "enabled": "IS_CAPITAL"
+    }
+   ]
   }
  },
  "production": {
@@ -42,9 +45,12 @@
      "flat": -1
     }
    },
-   "capital": {
-    "percent": -5
-   }
+   "percent": [
+    {
+     "value": -5,
+     "enabled": "IS_CAPITAL"
+    }
+   ]
   }
  },
  "buildRate": {
@@ -73,27 +79,36 @@
      "flat": -1
     }
    },
-   "capital": {
-    "percent": -5
-   }
+   "percent": [
+    {
+     "value": -5,
+     "enabled": "IS_CAPITAL"
+    }
+   ]
   }
  },
  "culture": {
   "empire": {
    "flat": -1,
-   "percent": -5,
-   "capital": {
-    "percent": -10
-   }
+   "percent": [
+    -5,
+    {
+     "value": -10,
+     "enabled": "IS_CAPITAL"
+    }
+   ]
   }
  },
  "espionage": {
   "empire": {
    "flat": -1,
-   "percent": -5,
-   "capital": {
-    "percent": -10
-   }
+   "percent": [
+    -5,
+    {
+     "value": -10,
+     "enabled": "IS_CAPITAL"
+    }
+   ]
   }
  },
  "happiness": {
@@ -108,9 +123,12 @@
  },
  "experience": {
   "empire": {
-   "capital": {
-    "percent": -5
-   }
+   "percent": [
+    {
+     "value": -5,
+     "enabled": "IS_CAPITAL"
+    }
+   ]
   }
  },
  "conscript": {

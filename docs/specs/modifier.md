@@ -85,6 +85,22 @@ predicates — so a conditioned deposit is, in essence, **a `requires`-shaped ga
 enabler resolves that shape to *availability* ("can I?"), the modifier resolves the *same* shape to a *magnitude*
 ("how much?").
 
+> **⛔ A condition is a PREDICATE, never a bespoke sub-scope MEMBER ([DEC-conditions-are-predicates], owner ruling
+> 2026-06-28).** A deposit that applies only under some game state — only in the capital, only during a golden age,
+> per military unit — carries that state as a **predicate** in its `enabled`/`disabled` (or a `per`/`unit:` scaler,
+> §[json](json.md) §3.7), at the deposit's normal scope: `{family}.empire.percent` + `enabled:"IS_CAPITAL"`, NOT a
+> bespoke `{family}.empire.capital.percent` member. **The predicate registry is EXTENSIBLE** — if the condition has
+> no predicate named verbatim yet ([json](json.md) §3.5), **define a new one** (spec + evaluator + the `/state` fact
+> it reads); that *extends* the model. Encoding the condition as a new **member** instead *changes the core
+> structure* — the kraken way, and the exact shape (`byEra`, `empire.capital`, `perMilitaryUnit`) agents keep
+> re-inventing. Retire any such member to a predicate-gated deposit.
+>
+> **⏳ Exception — golden age (owner ruling 2026-06-28).** Golden-age yield/commerce is applied by the **core
+> engine** and is **not defined as data anywhere** — modelling it via `IS_GOLDEN_AGE` would mean authoring it
+> virtually everywhere it fires. So `empire.goldenAge` **stays a member-mirror for now**, a deferred special case
+> (NOT a retire-now invention). The `IS_GOLDEN_AGE` predicate exists ([json](json.md) §3.5) and is **reserved for
+> when golden age is extracted from the engine core and moved where it belongs — post-migration** ([golden-age](../reference/golden-age.md)).
+
 **But they are SEPARATE FIELDS, not one condition** — because a thing can **require one condition yet gate its
 effect (a buff *or* a nerf) on another**: a Forge `requires` connected iron to *operate*, but its +1 happiness is
 `enabled` by *power*, not iron — and the magnitude can equally be negative (e.g. −production while polluted). So

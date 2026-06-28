@@ -29,10 +29,13 @@
  },
  "gold": {
   "empire": {
-   "percent": 5,
-   "capital": {
-    "percent": 2
-   },
+   "percent": [
+    5,
+    {
+     "value": 2,
+     "enabled": "IS_CAPITAL"
+    }
+   ],
    "buildings": {
     "BUILDING_BANK": {
      "percent": 5
@@ -45,16 +48,22 @@
  },
  "research": {
   "empire": {
-   "capital": {
-    "percent": 1
-   }
+   "percent": [
+    {
+     "value": 1,
+     "enabled": "IS_CAPITAL"
+    }
+   ]
   }
  },
  "culture": {
   "empire": {
-   "capital": {
-    "percent": 2
-   },
+   "percent": [
+    {
+     "value": 2,
+     "enabled": "IS_CAPITAL"
+    }
+   ],
    "buildings": {
     "BUILDING_BANK": {
      "percent": -2
@@ -67,10 +76,13 @@
  },
  "espionage": {
   "empire": {
-   "percent": 1,
-   "capital": {
-    "percent": 2
-   }
+   "percent": [
+    1,
+    {
+     "value": 2,
+     "enabled": "IS_CAPITAL"
+    }
+   ]
   }
  },
  "maintenance": {

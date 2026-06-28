@@ -206,47 +206,9 @@
    }
   }
  },
- "commerce": {
+ "researchRate": {
   "empire": {
-   "specialists": {
-    "SPECIALIST_MERCHANT": {
-     "flat": -1
-    },
-    "SPECIALIST_GREAT_MERCHANT": {
-     "flat": -1
-    }
-   }
-  }
- },
- "gold": {
-  "empire": {
-   "flat": -2,
-   "percent": -5,
-   "specialists": {
-    "SPECIALIST_CITIZEN": {
-     "flat": -1
-    },
-    "SPECIALIST_SLAVES": {
-     "flat": -1
-    },
-    "SPECIALIST_SETTLED_CITIZEN": {
-     "flat": -1
-    },
-    "SPECIALIST_SETTLED_SLAVE": {
-     "flat": -1
-    }
-   },
-   "capital": {
-    "percent": -5
-   },
-   "specialist": {
-    "perSpecialist": -1
-   }
-  }
- },
- "research": {
-  "empire": {
-   "byTech": {
+   "techs": {
     "TECH_CARVING": {
      "percent": -20
     },
@@ -310,6 +272,47 @@
     "TECH_BANKING": {
      "percent": -20
     }
+   }
+  }
+ },
+ "commerce": {
+  "empire": {
+   "specialists": {
+    "SPECIALIST_MERCHANT": {
+     "flat": -1
+    },
+    "SPECIALIST_GREAT_MERCHANT": {
+     "flat": -1
+    }
+   }
+  }
+ },
+ "gold": {
+  "empire": {
+   "flat": -2,
+   "percent": [
+    -5,
+    {
+     "value": -5,
+     "enabled": "IS_CAPITAL"
+    }
+   ],
+   "specialists": {
+    "SPECIALIST_CITIZEN": {
+     "flat": -1
+    },
+    "SPECIALIST_SLAVES": {
+     "flat": -1
+    },
+    "SPECIALIST_SETTLED_CITIZEN": {
+     "flat": -1
+    },
+    "SPECIALIST_SETTLED_SLAVE": {
+     "flat": -1
+    }
+   },
+   "specialist": {
+    "perSpecialist": -1
    }
   }
  },

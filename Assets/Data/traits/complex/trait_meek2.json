@@ -40,9 +40,9 @@
    }
   }
  },
- "research": {
+ "researchRate": {
   "empire": {
-   "byTech": {
+   "techs": {
     "TECH_GUNPOWDER": {
      "percent": -20
     },

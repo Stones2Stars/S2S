@@ -20,25 +20,34 @@
  },
  "gold": {
   "empire": {
-   "capital": {
-    "percent": 2
-   }
+   "percent": [
+    {
+     "value": 2,
+     "enabled": "IS_CAPITAL"
+    }
+   ]
   }
  },
  "research": {
   "empire": {
-   "percent": 5,
-   "capital": {
-    "percent": 5
-   }
+   "percent": [
+    5,
+    {
+     "value": 5,
+     "enabled": "IS_CAPITAL"
+    }
+   ]
   }
  },
  "culture": {
   "empire": {
-   "percent": 3,
-   "capital": {
-    "percent": 5
-   }
+   "percent": [
+    3,
+    {
+     "value": 5,
+     "enabled": "IS_CAPITAL"
+    }
+   ]
   }
  },
  "buildRate": {

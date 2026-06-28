@@ -83,23 +83,9 @@
    }
   }
  },
- "commerce": {
+ "researchRate": {
   "empire": {
-   "goldenAge": {
-    "flat": -2
-   }
-  }
- },
- "gold": {
-  "empire": {
-   "goldenAge": {
-    "flat": -1
-   }
-  }
- },
- "research": {
-  "empire": {
-   "byTech": {
+   "techs": {
     "TECH_CYBERWARFARE": {
      "percent": 20
     },
@@ -142,7 +128,25 @@
     "TECH_MEGASTRONG_ALLOYS": {
      "percent": 20
     }
-   },
+   }
+  }
+ },
+ "commerce": {
+  "empire": {
+   "goldenAge": {
+    "flat": -2
+   }
+  }
+ },
+ "gold": {
+  "empire": {
+   "goldenAge": {
+    "flat": -1
+   }
+  }
+ },
+ "research": {
+  "empire": {
    "goldenAge": {
     "flat": -1
    }

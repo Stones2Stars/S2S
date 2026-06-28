@@ -8,16 +8,22 @@
  ],
  "food": {
   "empire": {
-   "capital": {
-    "percent": 5
-   }
+   "percent": [
+    {
+     "value": 5,
+     "enabled": "IS_CAPITAL"
+    }
+   ]
   }
  },
  "production": {
   "empire": {
-   "capital": {
-    "percent": 5
-   }
+   "percent": [
+    {
+     "value": 5,
+     "enabled": "IS_CAPITAL"
+    }
+   ]
   }
  },
  "buildRate": {
@@ -40,18 +46,24 @@
      "flat": 1
     }
    },
-   "capital": {
-    "percent": 5
-   }
+   "percent": [
+    {
+     "value": 5,
+     "enabled": "IS_CAPITAL"
+    }
+   ]
   }
  },
  "gold": {
   "empire": {
    "flat": 1,
-   "percent": 5,
-   "capital": {
-    "percent": 5
-   }
+   "percent": [
+    5,
+    {
+     "value": 5,
+     "enabled": "IS_CAPITAL"
+    }
+   ]
   }
  },
  "research": {
@@ -69,10 +81,13 @@
  "culture": {
   "empire": {
    "flat": 1,
-   "percent": 5,
-   "capital": {
-    "percent": 5
-   }
+   "percent": [
+    5,
+    {
+     "value": 5,
+     "enabled": "IS_CAPITAL"
+    }
+   ]
   }
  },
  "espionage": {

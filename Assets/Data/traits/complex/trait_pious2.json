@@ -13,26 +13,9 @@
   "TRAIT_FANATICAL1",
   "TRAIT_SPIRITUAL1"
  ],
- "commerce": {
+ "researchRate": {
   "empire": {
-   "specialists": {
-    "SPECIALIST_PRIEST": {
-     "flat": 1
-    },
-    "SPECIALIST_GREAT_PROPHET": {
-     "flat": 1
-    }
-   }
-  }
- },
- "gold": {
-  "empire": {
-   "percent": -5
-  }
- },
- "research": {
-  "empire": {
-   "byTech": {
+   "techs": {
     "TECH_HINDUISM": {
      "percent": -25
     },
@@ -120,6 +103,23 @@
    }
   }
  },
+ "commerce": {
+  "empire": {
+   "specialists": {
+    "SPECIALIST_PRIEST": {
+     "flat": 1
+    },
+    "SPECIALIST_GREAT_PROPHET": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "gold": {
+  "empire": {
+   "percent": -5
+  }
+ },
  "culture": {
   "empire": {
    "specialists": {
@@ -146,9 +146,17 @@
  },
  "experience": {
   "empire": {
-   "nonStateHolyCityXP": {
-    "percent": -5
-   }
+   "percent": [
+    {
+     "value": -5,
+     "enabled": {
+      "all": [
+       "IS_HOLY_CITY",
+       "!IS_STATE_RELIGION_HOLY_CITY"
+      ]
+     }
+    }
+   ]
   }
  },
  "durations": {

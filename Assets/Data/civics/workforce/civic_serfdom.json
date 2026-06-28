@@ -37,9 +37,12 @@
  },
  "gold": {
   "empire": {
-   "capital": {
-    "percent": 2
-   },
+   "percent": [
+    {
+     "value": 2,
+     "enabled": "IS_CAPITAL"
+    }
+   ],
    "specialist": {
     "perSpecialist": 1
    }
@@ -47,10 +50,13 @@
  },
  "research": {
   "empire": {
-   "percent": 1,
-   "capital": {
-    "percent": 2
-   }
+   "percent": [
+    1,
+    {
+     "value": 2,
+     "enabled": "IS_CAPITAL"
+    }
+   ]
   }
  },
  "health": {

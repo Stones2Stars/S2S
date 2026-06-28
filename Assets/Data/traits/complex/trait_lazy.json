@@ -133,9 +133,9 @@
    "percent": -10
   }
  },
- "research": {
+ "researchRate": {
   "empire": {
-   "byTech": {
+   "techs": {
     "TECH_TOOL_MAKING": {
      "percent": -20
     },

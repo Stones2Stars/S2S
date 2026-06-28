@@ -4,16 +4,22 @@
  "civilopedia": "TXT_KEY_TRAIT_MEGALOMANIAC_PEDIA",
  "production": {
   "empire": {
-   "capital": {
-    "percent": 10
-   }
+   "percent": [
+    {
+     "value": 10,
+     "enabled": "IS_CAPITAL"
+    }
+   ]
   }
  },
  "commerce": {
   "empire": {
-   "capital": {
-    "percent": 15
-   }
+   "percent": [
+    {
+     "value": 15,
+     "enabled": "IS_CAPITAL"
+    }
+   ]
   }
  },
  "research": {

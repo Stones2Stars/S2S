@@ -10,10 +10,13 @@
  },
  "commerce": {
   "empire": {
-   "percent": 5,
-   "capital": {
-    "percent": 15
-   }
+   "percent": [
+    5,
+    {
+     "value": 15,
+     "enabled": "IS_CAPITAL"
+    }
+   ]
   }
  },
  "gold": {
@@ -23,10 +26,13 @@
  },
  "research": {
   "empire": {
-   "percent": 10,
-   "capital": {
-    "percent": 20
-   }
+   "percent": [
+    10,
+    {
+     "value": 20,
+     "enabled": "IS_CAPITAL"
+    }
+   ]
   }
  },
  "culture": {

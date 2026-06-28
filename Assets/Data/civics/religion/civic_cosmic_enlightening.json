@@ -14,9 +14,12 @@
  },
  "gold": {
   "empire": {
-   "capital": {
-    "percent": 10
-   }
+   "percent": [
+    {
+     "value": 10,
+     "enabled": "IS_CAPITAL"
+    }
+   ]
   }
  },
  "research": {

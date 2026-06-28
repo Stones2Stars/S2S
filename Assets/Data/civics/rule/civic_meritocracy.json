@@ -5,58 +5,79 @@
  "strategy": "TXT_KEY_CIVIC_MERITOCRACY_STRATEGY",
  "food": {
   "empire": {
-   "percent": 3,
-   "capital": {
-    "percent": 3
-   }
+   "percent": [
+    3,
+    {
+     "value": 3,
+     "enabled": "IS_CAPITAL"
+    }
+   ]
   }
  },
  "production": {
   "empire": {
-   "percent": 3,
-   "capital": {
-    "percent": 3
-   }
+   "percent": [
+    3,
+    {
+     "value": 3,
+     "enabled": "IS_CAPITAL"
+    }
+   ]
   }
  },
  "commerce": {
   "empire": {
-   "percent": 3,
-   "capital": {
-    "percent": 3
-   }
+   "percent": [
+    3,
+    {
+     "value": 3,
+     "enabled": "IS_CAPITAL"
+    }
+   ]
   }
  },
  "gold": {
   "empire": {
-   "percent": 2,
-   "capital": {
-    "percent": 2
-   }
+   "percent": [
+    2,
+    {
+     "value": 2,
+     "enabled": "IS_CAPITAL"
+    }
+   ]
   }
  },
  "research": {
   "empire": {
-   "percent": 2,
-   "capital": {
-    "percent": 2
-   }
+   "percent": [
+    2,
+    {
+     "value": 2,
+     "enabled": "IS_CAPITAL"
+    }
+   ]
   }
  },
  "culture": {
   "empire": {
-   "percent": 2,
-   "capital": {
-    "percent": 2
-   }
+   "percent": [
+    2,
+    {
+     "value": 2,
+     "enabled": "IS_CAPITAL"
+    }
+   ]
   }
  },
  "espionage": {
   "empire": {
-   "percent": 2,
-   "capital": {
-    "percent": 2
-   }
+   "percent": [
+    2,
+    {
+     "value": 2,
+     "enabled": "IS_CAPITAL"
+    }
+   ]
   }
  },
  "happiness": {

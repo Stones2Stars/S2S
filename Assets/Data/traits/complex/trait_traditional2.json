@@ -125,37 +125,9 @@
    }
   }
  },
- "commerce": {
+ "researchRate": {
   "empire": {
-   "specialists": {
-    "SPECIALIST_DOCTOR": {
-     "flat": -1
-    },
-    "SPECIALIST_GREAT_DOCTOR": {
-     "flat": -1
-    }
-   }
-  }
- },
- "research": {
-  "empire": {
-   "flat": -4,
-   "percent": -5,
-   "specialists": {
-    "SPECIALIST_SCIENTIST": {
-     "flat": -2
-    },
-    "SPECIALIST_GREAT_SCIENTIST": {
-     "flat": -2
-    }
-   },
-   "capital": {
-    "percent": -5
-   },
-   "specialist": {
-    "perSpecialist": -1
-   },
-   "byTech": {
+   "techs": {
     "TECH_ASTRONOMY": {
      "percent": -20
     },
@@ -237,6 +209,41 @@
     "TECH_ASTROGEOLOGY": {
      "percent": -20
     }
+   }
+  }
+ },
+ "commerce": {
+  "empire": {
+   "specialists": {
+    "SPECIALIST_DOCTOR": {
+     "flat": -1
+    },
+    "SPECIALIST_GREAT_DOCTOR": {
+     "flat": -1
+    }
+   }
+  }
+ },
+ "research": {
+  "empire": {
+   "flat": -4,
+   "percent": [
+    -5,
+    {
+     "value": -5,
+     "enabled": "IS_CAPITAL"
+    }
+   ],
+   "specialists": {
+    "SPECIALIST_SCIENTIST": {
+     "flat": -2
+    },
+    "SPECIALIST_GREAT_SCIENTIST": {
+     "flat": -2
+    }
+   },
+   "specialist": {
+    "perSpecialist": -1
    }
   }
  },

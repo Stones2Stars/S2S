@@ -87,36 +87,9 @@
    "percent": 5
   }
  },
- "gold": {
+ "researchRate": {
   "empire": {
-   "specialists": {
-    "SPECIALIST_CITIZEN": {
-     "flat": -1
-    },
-    "SPECIALIST_SLAVES": {
-     "flat": -1
-    },
-    "SPECIALIST_ENGINEER": {
-     "flat": -1
-    },
-    "SPECIALIST_GREAT_ENGINEER": {
-     "flat": -1
-    },
-    "SPECIALIST_ANDROID_WORKER": {
-     "flat": -1
-    },
-    "SPECIALIST_SETTLED_SLAVE": {
-     "flat": -1
-    },
-    "SPECIALIST_SETTLED_CITIZEN": {
-     "flat": -1
-    }
-   }
-  }
- },
- "research": {
-  "empire": {
-   "byTech": {
+   "techs": {
     "TECH_METALLURGY": {
      "percent": 20
     },
@@ -152,6 +125,33 @@
     },
     "TECH_MANUFACTURING": {
      "percent": 20
+    }
+   }
+  }
+ },
+ "gold": {
+  "empire": {
+   "specialists": {
+    "SPECIALIST_CITIZEN": {
+     "flat": -1
+    },
+    "SPECIALIST_SLAVES": {
+     "flat": -1
+    },
+    "SPECIALIST_ENGINEER": {
+     "flat": -1
+    },
+    "SPECIALIST_GREAT_ENGINEER": {
+     "flat": -1
+    },
+    "SPECIALIST_ANDROID_WORKER": {
+     "flat": -1
+    },
+    "SPECIALIST_SETTLED_SLAVE": {
+     "flat": -1
+    },
+    "SPECIALIST_SETTLED_CITIZEN": {
+     "flat": -1
     }
    }
   }

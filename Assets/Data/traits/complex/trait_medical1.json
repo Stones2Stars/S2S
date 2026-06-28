@@ -188,23 +188,9 @@
    }
   }
  },
- "research": {
+ "researchRate": {
   "empire": {
-   "specialists": {
-    "SPECIALIST_PRIEST": {
-     "flat": 1
-    },
-    "SPECIALIST_GREAT_PROPHET": {
-     "flat": 1
-    },
-    "SPECIALIST_DOCTOR": {
-     "flat": 1
-    },
-    "SPECIALIST_GREAT_DOCTOR": {
-     "flat": 1
-    }
-   },
-   "byTech": {
+   "techs": {
     "TECH_HERBALISM": {
      "percent": 20
     },
@@ -261,6 +247,24 @@
     },
     "TECH_ANATOMY": {
      "percent": 20
+    }
+   }
+  }
+ },
+ "research": {
+  "empire": {
+   "specialists": {
+    "SPECIALIST_PRIEST": {
+     "flat": 1
+    },
+    "SPECIALIST_GREAT_PROPHET": {
+     "flat": 1
+    },
+    "SPECIALIST_DOCTOR": {
+     "flat": 1
+    },
+    "SPECIALIST_GREAT_DOCTOR": {
+     "flat": 1
     }
    }
   }

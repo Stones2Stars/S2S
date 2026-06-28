@@ -198,9 +198,9 @@
    }
   }
  },
- "research": {
+ "researchRate": {
   "empire": {
-   "byTech": {
+   "techs": {
     "TECH_TATTOOS": {
      "percent": 20
     },
@@ -339,9 +339,12 @@
    "inBorder": {
     "percent": 20
    },
-   "capital": {
-    "percent": 25
-   }
+   "percent": [
+    {
+     "value": 25,
+     "enabled": "IS_CAPITAL"
+    }
+   ]
   }
  },
  "combat": {

@@ -77,9 +77,9 @@
    }
   }
  },
- "research": {
+ "researchRate": {
   "empire": {
-   "byTech": {
+   "techs": {
     "TECH_GUNPOWDER": {
      "percent": 20
     },
@@ -152,9 +152,12 @@
    "inBorder": {
     "percent": 10
    },
-   "capital": {
-    "percent": 10
-   }
+   "percent": [
+    {
+     "value": 10,
+     "enabled": "IS_CAPITAL"
+    }
+   ]
   }
  },
  "combat": {

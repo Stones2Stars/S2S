@@ -29,10 +29,13 @@
  },
  "gold": {
   "empire": {
-   "percent": 1,
-   "capital": {
-    "percent": 5
-   }
+   "percent": [
+    1,
+    {
+     "value": 5,
+     "enabled": "IS_CAPITAL"
+    }
+   ]
   }
  },
  "happiness": {

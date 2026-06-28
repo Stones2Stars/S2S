@@ -125,38 +125,9 @@
    }
   }
  },
- "commerce": {
+ "researchRate": {
   "empire": {
-   "specialists": {
-    "SPECIALIST_NOBLE": {
-     "flat": -1
-    }
-   }
-  }
- },
- "gold": {
-  "empire": {
-   "flat": -4,
-   "percent": -5,
-   "specialists": {
-    "SPECIALIST_MERCHANT": {
-     "flat": -2
-    },
-    "SPECIALIST_GREAT_MERCHANT": {
-     "flat": -2
-    }
-   },
-   "capital": {
-    "percent": -5
-   },
-   "specialist": {
-    "perSpecialist": -1
-   }
-  }
- },
- "research": {
-  "empire": {
-   "byTech": {
+   "techs": {
     "TECH_PRINTING_PRESS": {
      "percent": -20
     },
@@ -199,6 +170,38 @@
     "TECH_LEGALIZED_GAMBLING": {
      "percent": -20
     }
+   }
+  }
+ },
+ "commerce": {
+  "empire": {
+   "specialists": {
+    "SPECIALIST_NOBLE": {
+     "flat": -1
+    }
+   }
+  }
+ },
+ "gold": {
+  "empire": {
+   "flat": -4,
+   "percent": [
+    -5,
+    {
+     "value": -5,
+     "enabled": "IS_CAPITAL"
+    }
+   ],
+   "specialists": {
+    "SPECIALIST_MERCHANT": {
+     "flat": -2
+    },
+    "SPECIALIST_GREAT_MERCHANT": {
+     "flat": -2
+    }
+   },
+   "specialist": {
+    "perSpecialist": -1
    }
   }
  },

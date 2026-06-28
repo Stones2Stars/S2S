@@ -32,6 +32,33 @@
    }
   }
  },
+ "researchRate": {
+  "empire": {
+   "techs": {
+    "TECH_DEITIES": {
+     "percent": -20
+    },
+    "TECH_ASCENSION": {
+     "percent": -20
+    },
+    "TECH_SPIRITUAL_REALMS": {
+     "percent": -20
+    },
+    "TECH_REALITY_REPROGRAMMING": {
+     "percent": -20
+    },
+    "TECH_SIMULATION_AWARENESS": {
+     "percent": -20
+    },
+    "TECH_ALPHA_POINT": {
+     "percent": -20
+    },
+    "TECH_OMEGA_POINT": {
+     "percent": -20
+    }
+   }
+  }
+ },
  "commerce": {
   "empire": {
    "flat": 1
@@ -57,29 +84,6 @@
     },
     "SPECIALIST_GREAT_PROPHET": {
      "flat": -1
-    }
-   },
-   "byTech": {
-    "TECH_DEITIES": {
-     "percent": -20
-    },
-    "TECH_ASCENSION": {
-     "percent": -20
-    },
-    "TECH_SPIRITUAL_REALMS": {
-     "percent": -20
-    },
-    "TECH_REALITY_REPROGRAMMING": {
-     "percent": -20
-    },
-    "TECH_SIMULATION_AWARENESS": {
-     "percent": -20
-    },
-    "TECH_ALPHA_POINT": {
-     "percent": -20
-    },
-    "TECH_OMEGA_POINT": {
-     "percent": -20
     }
    }
   }
@@ -109,9 +113,17 @@
  "experience": {
   "empire": {
    "flat": 1,
-   "nonStateHolyCityXP": {
-    "percent": -10
-   }
+   "percent": [
+    {
+     "value": -10,
+     "enabled": {
+      "all": [
+       "IS_HOLY_CITY",
+       "!IS_STATE_RELIGION_HOLY_CITY"
+      ]
+     }
+    }
+   ]
   }
  },
  "durations": {

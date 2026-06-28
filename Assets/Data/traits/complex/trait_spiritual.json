@@ -20,41 +20,9 @@
    }
   }
  },
- "commerce": {
+ "researchRate": {
   "empire": {
-   "specialists": {
-    "SPECIALIST_PRIEST": {
-     "flat": 1
-    },
-    "SPECIALIST_GREAT_PROPHET": {
-     "flat": 1
-    }
-   }
-  }
- },
- "gold": {
-  "empire": {
-   "specialists": {
-    "SPECIALIST_PRIEST": {
-     "flat": 1
-    },
-    "SPECIALIST_GREAT_PROPHET": {
-     "flat": 1
-    }
-   }
-  }
- },
- "research": {
-  "empire": {
-   "specialists": {
-    "SPECIALIST_PRIEST": {
-     "flat": 1
-    },
-    "SPECIALIST_GREAT_PROPHET": {
-     "flat": 1
-    }
-   },
-   "byTech": {
+   "techs": {
     "TECH_RITUALISM": {
      "percent": 20
     },
@@ -238,6 +206,42 @@
    }
   }
  },
+ "commerce": {
+  "empire": {
+   "specialists": {
+    "SPECIALIST_PRIEST": {
+     "flat": 1
+    },
+    "SPECIALIST_GREAT_PROPHET": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "gold": {
+  "empire": {
+   "specialists": {
+    "SPECIALIST_PRIEST": {
+     "flat": 1
+    },
+    "SPECIALIST_GREAT_PROPHET": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "research": {
+  "empire": {
+   "specialists": {
+    "SPECIALIST_PRIEST": {
+     "flat": 1
+    },
+    "SPECIALIST_GREAT_PROPHET": {
+     "flat": 1
+    }
+   }
+  }
+ },
  "culture": {
   "empire": {
    "specialists": {
@@ -290,9 +294,17 @@
      "flat": -1
     }
    },
-   "nonStateHolyCityXP": {
-    "percent": 10
-   }
+   "percent": [
+    {
+     "value": 10,
+     "enabled": {
+      "all": [
+       "IS_HOLY_CITY",
+       "!IS_STATE_RELIGION_HOLY_CITY"
+      ]
+     }
+    }
+   ]
   }
  },
  "goldenAge": {

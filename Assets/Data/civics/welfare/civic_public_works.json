@@ -11,17 +11,23 @@
  },
  "gold": {
   "empire": {
-   "capital": {
-    "percent": -3
-   }
+   "percent": [
+    {
+     "value": -3,
+     "enabled": "IS_CAPITAL"
+    }
+   ]
   }
  },
  "research": {
   "empire": {
-   "percent": 1,
-   "capital": {
-    "percent": 2
-   }
+   "percent": [
+    1,
+    {
+     "value": 2,
+     "enabled": "IS_CAPITAL"
+    }
+   ]
   }
  },
  "culture": {
@@ -31,8 +37,10 @@
  },
  "happiness": {
   "empire": {
-   "largestCity": {
-    "flat": 1
+   "cities": {
+    "flat": 1,
+    "max": "TARGET_NUM_CITIES",
+    "orderedByDescending": "CITY_SIZE"
    },
    "buildings": {
     "BUILDING_NATIONAL_COURIER_SYSTEM": {

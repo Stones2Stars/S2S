@@ -65,7 +65,9 @@ modifier targets — **not separate shapes.** Learn them once.
   simple trait, `TRAIT_COMPLEX_` = complex, …) is the **[naming spec](naming.md)**.
 - **Catch-all tokens** — engine concepts that aren't data Types: `TURN`, `POPULATION`, `MILITARY`, `CITY`,
   `TEAM`, `UNIT_LEVEL`, `AREA_SIZE`, **`ERA`** (the player's current era as a plain **counter 1…X** — the era
-  sequence; eras are ordered data defined in `Assets/Data/eras/`), … (an engine-resolved, extensible registry).
+  sequence; eras are ordered data defined in `Assets/Data/eras/`), **`TARGET_NUM_CITIES`** (the world-size's
+  expected city count — `CvWorldInfo.getTargetNumCities`, e.g. 2/3/4/6/8/11/14/18 per world size; a runtime-resolved
+  world constant, used as a `max:` in ranked selection §3.3), … (an engine-resolved, extensible registry).
 - **`SELF`** — "this entity's own type," resolved per-entity. Used only in a `per` count-scaler ("per how many of
   me exist"). It is **not** used in `requires` — a "one of me" cap is [`allowed`](#44-allowed--caps), not a
   condition.
@@ -90,6 +92,20 @@ that kind in the scope**, filtered by an optional predicate. So `empire` (singul
 and `plots`/`units` (plural) the *receivers*, even when a root is shared. A deposit with **no** plural target
 lands on the scope object itself (the city — the common case). Full deposit syntax: §6.
 
+> **Ranked subset — `orderedBy` / `orderedByDescending` + `max:` (owner ruling 2026-06-28).** A plural target may be
+> narrowed to the **top-N (or bottom-N) by a metric** via an ordering qualifier plus the existing `max:` count:
+> `cities.{ max: 5, orderedByDescending: CITY_SIZE }` = the **5 largest cities** (by population). `orderedBy` =
+> ascending, `orderedByDescending` = descending (the standardized LINQ-style spelling); `max: N` caps the selection
+> to N after ordering. This is a pure **extension** of `max:` (which both `grants` and conditions already use) — a
+> bare `max:` with no ordering stays a plain count threshold, so nothing existing changes. Usable in **grants,
+> conditions, and modifier targets**. **Metrics** are an extensible registry, `CITY_SIZE` (population) first. `N` is a
+> literal (`max: 5`) or a world **token** when it tracks an engine constant — the *largest-cities* case is
+> `max: "TARGET_NUM_CITIES"` (the world-size target city count; engine `getLargestCityHappiness` =
+> `findPopulationRank() ≤ TargetNumCities`, i.e. the empire's largest *cities*, plural — **not** the single largest).
+> Engine note: the cascade adds the sort/select step in **parsing**, one place for all ranking metrics; the
+> `TARGET_NUM_CITIES` token needs a `/state` scalar not emitted today (batched engine add) — until then the
+> largest-cities selection is inert. *(Status + open impl items: [plans/parked/ranked-target-selection.md](../plans/parked/ranked-target-selection.md).)*
+
 ### 3.4 Conditions — `all` / `any` / `noneOf`
 
 A **recursive boolean tree** (owner ruling 2026-06-24 — the long-standing AND/OR mutilation, fixed here for good),
@@ -101,10 +117,16 @@ each holds a list of **children**, and a child is **either a leaf** (a count/pre
 - **`any`** = **OR** (`||`) — at least one child must hold. A plain OR over its **direct children** — *not*
   "OR-groups AND-ed together".
 - **`noneOf`** = **NONE** — no child may hold.
+- **`!` prefix** = **NOT** on a single leaf-string (owner ruling 2026-06-28) — `"!IS_STATE_RELIGION"` negates the
+  predicate inline, so `all: ["IS_HOLY_CITY", "!IS_STATE_RELIGION"]` reads naturally ("a holy city that is NOT the
+  state religion"). It is pure **shorthand for `noneOf:[X]`** on one leaf (the parser rewrites `"!X"` → `noneOf:[X]`),
+  reusing the boolean tree — for negating a *group*, use `noneOf` with a nested node. (Less obvious at a glance than
+  `noneOf`, but the standardized terse form; documented here.)
 
 ```jsonc
 { "all": [ leafA, { "any": [ leafB, leafC ] }, { "noneOf": [ leafD ] } ] }
 //  ≡  leafA && (leafB || leafC) && !leafD
+{ "all": [ "IS_HOLY_CITY", "!IS_STATE_RELIGION" ] }   // ≡ all:[ "IS_HOLY_CITY", {noneOf:["IS_STATE_RELIGION"]} ]
 ```
 
 So `any` is exactly `||` on what is directly below it:
@@ -170,6 +192,14 @@ is **evaluated against the deposit's target** and so carries **no `_PLOT`/`_UNIT
 context: `IS_WATER` on `plots` = a water tile, on `units` = a sea unit. An **unknown/missing predicate is
 IGNORED**, never treated as false — retiring a system never spuriously disables unrelated data.
 
+> **The predicate registry is EXTENSIBLE — and a condition is ALWAYS a predicate, never a bespoke member
+> ([DEC-conditions-are-predicates], owner 2026-06-28).** When a deposit's condition has no predicate named verbatim
+> below yet, **define a new predicate** (add it here, wire it in the evaluator, and emit the `/state` fact it reads).
+> Adding a predicate *extends* the model within the structure. What you must NOT do is encode the condition as a new
+> sub-scope **member** (`{family}.empire.capital.percent`, `perMilitaryUnit`) — that changes the core structure (the
+> kraken way; see [modifier.md §3](modifier.md), which also notes the **golden-age exception**: `empire.goldenAge`
+> stays a member-mirror, deferred to post-migration, because golden age is engine-core and not data-defined).
+
 > **`IS_*` vs `HAS_*` — literal English (owner 2026-06-23).** Plain English picks the prefix: `IS_*` = whether the
 > target **is** something (a plot `IS_WATER`, a city `IS_CAPITAL`); `HAS_*` = whether it **has** something (a plot
 > `HAS_RIVER`, `HAS_PEAK`, `HAS_COAST`). These semantics span **every target group**, not just plots — a *unit*
@@ -190,14 +220,21 @@ IGNORED**, never treated as false — retiring a system never spuriously disable
     The engine's per-plot-TYPE `PLOT_LAND` accumulator maps to exactly that pair.
   - **plot attributes** `HAS_<attr>` (relief & adjacency a plot carries, orthogonal to environment so they
     compose): `HAS_PEAK` · `HAS_HILLS` · `HAS_COAST` (adjacent to water) · `HAS_RIVER` · `HAS_FRESHWATER` ·
-    `HAS_IRRIGATION` · `HAS_FEATURE` ("has *any* feature").
+    `HAS_IRRIGATION` · `HAS_FEATURE` ("has *any* feature") · `HAS_LANDMARK` (the plot is an auto-detected geographic
+    **landmark** — `getLandmarkType() != NO_LANDMARK`, i.e. bay/forest/jungle/peak/mountain-range/desert/lake; used by
+    landmark-yield, which is also `GAMEOPTION_MAP_PERSONALIZED`-gated. NOT a natural wonder).
   - **plot city-relative state** (nested `VICINITY ⊇ WORKABLE ⊇ IS_WORKED`): `VICINITY` (in the city's workable
     radius) · `WORKABLE` (in radius and eligible to be worked) · `IS_WORKED` (a citizen works it this turn).
   - **world:** `NO_NUKES` (the world no-nukes verdict — true under the UN ban, false once nukes are enabled by anyone
     building the Manhattan Project). A nuke-enabling building (Manhattan) carries `requires.build.disabled: "NO_NUKES"`
     — it can't be built while nukes are forbidden.
   - **city / player:** `IS_CAPITAL` · `IS_GOVERNMENT_CENTER` · `HAS_POWER` · `HAS_STATE_RELIGION` · `STATE_RELIGION_IN_CITY` ·
-    `IS_GOLDEN_AGE` (the player is in a golden age — owner 2026-06-26, canonized from the cascade evaluator).
+    `IS_GOLDEN_AGE` (the player is in a golden age — owner 2026-06-26, canonized from the cascade evaluator) ·
+    **`IS_HOLY_CITY`** (the *bare* form = the city is a holy city of **any** religion — `CvCity::isHolyCity()`; the
+    parameterized `{IS_HOLY_CITY: RELIGION_X}` below keys a specific religion) · **`IS_STATE_RELIGION_HOLY_CITY`** (the
+    city is the holy city **of the player's state religion** — `isHolyCity(stateReligion)`; distinct from
+    `STATE_RELIGION_IN_CITY`, which is merely *present*). *(The composed "holy city of a NON-state religion" — engine
+    `isHolyCity() && !isHolyCity(stateReligion)` — is `all: ["IS_HOLY_CITY", "!IS_STATE_RELIGION_HOLY_CITY"]`, the canonical use of the `!` operator §3.4.)*
     The first two are **DISTINCT**: `IS_CAPITAL` = the city is the player's capital; `IS_GOVERNMENT_CENTER` = the city
     holds a government-center building (Palace or a pseudo-palace), runtime-evaluated. Government-center buildings gate
     on `requires.build.disabled: "IS_GOVERNMENT_CENTER"` (one can't be built where a government center already exists —

@@ -21,10 +21,13 @@
  },
  "production": {
   "empire": {
-   "percent": 1,
-   "capital": {
-    "percent": 3
-   },
+   "percent": [
+    1,
+    {
+     "value": 3,
+     "enabled": "IS_CAPITAL"
+    }
+   ],
    "tradeRoute": {
     "percent": 3
    }
@@ -32,10 +35,13 @@
  },
  "commerce": {
   "empire": {
-   "percent": 2,
-   "capital": {
-    "percent": 4
-   },
+   "percent": [
+    2,
+    {
+     "value": 4,
+     "enabled": "IS_CAPITAL"
+    }
+   ],
    "tradeRoute": {
     "percent": 3
    }

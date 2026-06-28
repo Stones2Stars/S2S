@@ -102,38 +102,9 @@
    }
   }
  },
- "commerce": {
+ "researchRate": {
   "empire": {
-   "improvements": {
-    "IMPROVEMENT_COTTAGE": {
-     "flat": -1
-    },
-    "IMPROVEMENT_HAMLET": {
-     "flat": -1
-    },
-    "IMPROVEMENT_VILLAGE": {
-     "flat": -1
-    },
-    "IMPROVEMENT_TOWN": {
-     "flat": -1
-    },
-    "IMPROVEMENT_SUBURBS": {
-     "flat": -1
-    }
-   },
-   "plots": {
-    "flat": [
-     {
-      "value": 1,
-      "enabled": "IS_WATER"
-     }
-    ]
-   }
-  }
- },
- "research": {
-  "empire": {
-   "byTech": {
+   "techs": {
     "TECH_RAFT_BUILDING": {
      "percent": 20
     },
@@ -242,6 +213,35 @@
    }
   }
  },
+ "commerce": {
+  "empire": {
+   "improvements": {
+    "IMPROVEMENT_COTTAGE": {
+     "flat": -1
+    },
+    "IMPROVEMENT_HAMLET": {
+     "flat": -1
+    },
+    "IMPROVEMENT_VILLAGE": {
+     "flat": -1
+    },
+    "IMPROVEMENT_TOWN": {
+     "flat": -1
+    },
+    "IMPROVEMENT_SUBURBS": {
+     "flat": -1
+    }
+   },
+   "plots": {
+    "flat": [
+     {
+      "value": 1,
+      "enabled": "IS_WATER"
+     }
+    ]
+   }
+  }
+ },
  "culture": {
   "empire": {
    "specialists": {
@@ -253,8 +253,10 @@
  },
  "happiness": {
   "empire": {
-   "largestCity": {
-    "flat": -1
+   "cities": {
+    "flat": -1,
+    "max": "TARGET_NUM_CITIES",
+    "orderedByDescending": "CITY_SIZE"
    },
    "flat": [
     {

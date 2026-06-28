@@ -147,9 +147,12 @@
      "flat": 2
     }
    },
-   "capital": {
-    "percent": 20
-   }
+   "percent": [
+    {
+     "value": 20,
+     "enabled": "IS_CAPITAL"
+    }
+   ]
   }
  },
  "happiness": {
@@ -177,8 +180,10 @@
      "flat": 1
     }
    },
-   "largestCity": {
-    "flat": 2
+   "cities": {
+    "flat": 2,
+    "max": "TARGET_NUM_CITIES",
+    "orderedByDescending": "CITY_SIZE"
    }
   }
  },

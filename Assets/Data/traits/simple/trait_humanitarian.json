@@ -79,8 +79,10 @@
      "flat": 1
     }
    },
-   "largestCity": {
-    "flat": 2
+   "cities": {
+    "flat": 2,
+    "max": "TARGET_NUM_CITIES",
+    "orderedByDescending": "CITY_SIZE"
    }
   }
  },

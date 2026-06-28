@@ -33,6 +33,36 @@
    }
   }
  },
+ "researchRate": {
+  "empire": {
+   "techs": {
+    "TECH_UNMANNED_NAVAL_VEHICLES": {
+     "percent": 20
+    },
+    "TECH_MARINE_ARCHITECTURE": {
+     "percent": 20
+    },
+    "TECH_INTERNAL_SHOCKWAVE_ENGINE": {
+     "percent": 20
+    },
+    "TECH_LEVITATION": {
+     "percent": 20
+    },
+    "TECH_CLOAKING": {
+     "percent": 20
+    },
+    "TECH_ANTI_GRAVITY_FIELDS": {
+     "percent": 20
+    },
+    "TECH_ABYSS_COLONIZATION": {
+     "percent": 20
+    },
+    "TECH_GRAVITY_CONTROL": {
+     "percent": 20
+    }
+   }
+  }
+ },
  "commerce": {
   "empire": {
    "improvements": {
@@ -64,40 +94,12 @@
    }
   }
  },
- "research": {
-  "empire": {
-   "byTech": {
-    "TECH_UNMANNED_NAVAL_VEHICLES": {
-     "percent": 20
-    },
-    "TECH_MARINE_ARCHITECTURE": {
-     "percent": 20
-    },
-    "TECH_INTERNAL_SHOCKWAVE_ENGINE": {
-     "percent": 20
-    },
-    "TECH_LEVITATION": {
-     "percent": 20
-    },
-    "TECH_CLOAKING": {
-     "percent": 20
-    },
-    "TECH_ANTI_GRAVITY_FIELDS": {
-     "percent": 20
-    },
-    "TECH_ABYSS_COLONIZATION": {
-     "percent": 20
-    },
-    "TECH_GRAVITY_CONTROL": {
-     "percent": 20
-    }
-   }
-  }
- },
  "happiness": {
   "empire": {
-   "largestCity": {
-    "flat": -1
+   "cities": {
+    "flat": -1,
+    "max": "TARGET_NUM_CITIES",
+    "orderedByDescending": "CITY_SIZE"
    }
   }
  },
