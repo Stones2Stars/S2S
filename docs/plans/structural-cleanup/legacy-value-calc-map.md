@@ -327,22 +327,19 @@ to the holding building via `getBaseCommerceRateFromBuilding100`), both modelled
 >   The parser was extended for the count-leaf LIST shape (`ModifierFamilyParser`: an array under `any`/SPECIALIST →
 >   `count` magnitudes). Engine per-term decomposition emitted for attribution (`/computed/cities/yields`:
 >   area/player/improvement/wonder + raw wonder counts).
-> - **⛔ OUTPUT TYPING — owner ruling 2026-06-28: `AI_specialistValue` is NOT reproducible offline, so the cascade does
->   NOT compute which type the generic free specialists become — it READS the per-type specialist amounts STRAIGHT FROM
->   `/state`.** The engine assigns each generic free slot a type via `getBestSpecialist(iI)` = `AI_specialistValue`
->   (`CvCityAI.cpp:12355`) — a runtime AI heuristic we cannot and will not re-derive (it would mean reproducing the whole
->   AI valuation). So the engine is the authority on the *type*; the cascade takes the resolved per-type counts as a
->   `/state` INPUT (the savegame-state pattern, like event-granted extra yield) and computes the OUTPUT from curated
->   specialist data. **Implication for `/state`:** the current `specialists` block (`CvHttpServer.cpp:500`) emits only
->   `getSpecialistCount + getFreeSpecialistCount` — it EXCLUDES the generic free specialists (the `getFreeSpecialist()`/
->   `totalFreeSpecialists` ones resolved by `getBestSpecialist`). To honour this ruling `/state` must additionally emit
->   those generic free specialists **by their engine-resolved type** (the engine runs its own `getBestSpecialist`), so the
->   cascade reads one inclusive per-type count and feeds the existing `SpecialistYieldTotal`. **Attribution caveat:** the
->   engine attributes the generic free-spec commerce to `buildingCommerce100` (inside `getBaseCommerceRateFromBuilding100`,
->   `CvCity.cpp:12397`), whereas the cascade — taking the counts from `/state` — attributes it to `specialistCommerce`.
->   The two offset, so the **realized total matches** even though the per-term split differs; parity is judged on the
->   realized commerce, with the specialist/building split treated as attribution. (Engine `/state` emit + cascade wiring:
->   the remaining foundational step — needs a DLL rebuild to verify.)
+> - **OUTPUT — the generic free specialists produce NO individual output in the cascade; it is the AI HALF, out of scope
+>   (owner ruling 2026-06-28, the data-storage/AI split).** This is the same ruling as §1.5 (line ~143): the cascade models
+>   the **data-storage half** — it takes the `getSpecialistCount + getFreeSpecialistCount` (assigned + TYPED-free) per-type
+>   counts from `/state` and computes their output from curated `SpecialistInfo`, *"we never reproduce the AI's assignment."*
+>   The **GENERIC** free specialists (`getFreeSpecialist`/`totalFreeSpecialists`) are assigned a *type* at runtime by
+>   `getBestSpecialist(iI)` = `AI_specialistValue` (`CvCityAI.cpp:12355`) — that is the **AI half, a separate beast**, and
+>   like trade yield it is **out of scope** for the data-storage cascade. So their engine output (folded into
+>   `getBaseCommerceRateFromBuilding100`/`getBaseYieldRateFromBuilding` via `getBestSpecialist`) is **expected to diverge**
+>   and is NOT a data-half parity gap — e.g. the London research `buildingCommerce100 −1100` is exactly this AI-typed
+>   generic free-spec commerce. The free-spec **AMOUNT** (count) IS the data half and is done + at parity
+>   (`FreeSpecialistAmountCascade`); the AI-typed **output** is deferred — *to fix the AI half we need the consistent data
+>   half down first (owner)*. (So: do NOT emit the generic free specialists' resolved type in `/state` to chase this — it
+>   is correctly out of scope; revisit only when the AI half is built on top of the settled data half.)
 
 ## 3. HEALTH + HAPPINESS — good/bad signed-split
 
