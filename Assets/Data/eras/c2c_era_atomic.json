@@ -96,6 +96,7 @@
   "unitDefeat": "AS2D_LOSS_LATE"
  },
  "identity": {
+  "order": 7,
   "advancedStart": 32000,
   "historicalStartYear": 1900,
   "historicalEndYear": 1990,

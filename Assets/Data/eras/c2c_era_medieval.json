@@ -113,6 +113,7 @@
   "unitDefeat": "AS2D_LOSS_MIDDLE"
  },
  "identity": {
+  "order": 4,
   "advancedStart": 4000,
   "historicalStartYear": 450,
   "historicalEndYear": 1400,

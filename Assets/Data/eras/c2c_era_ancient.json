@@ -104,6 +104,7 @@
   "unitDefeat": "AS2D_LOSS_EARLY"
  },
  "identity": {
+  "order": 2,
   "advancedStart": 1000,
   "historicalStartYear": -12000,
   "historicalEndYear": -1200,

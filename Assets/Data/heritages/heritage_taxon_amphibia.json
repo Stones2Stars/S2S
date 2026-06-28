@@ -4,44 +4,84 @@
  "civilopedia": "TXT_KEY_HERITAGE_TAXON_AMPHIBIA_PEDIA",
  "research": {
   "empire": {
-   "byEra": {
-    "C2C_ERA_ANCIENT": {
-     "flat": 0.4
+   "flat": [
+    {
+     "value": 0.4,
+     "enabled": {
+      "type": "ERA",
+      "min": 2
+     }
     },
-    "C2C_ERA_CLASSICAL": {
-     "flat": -0.1
+    {
+     "value": -0.1,
+     "enabled": {
+      "type": "ERA",
+      "min": 3
+     }
     },
-    "C2C_ERA_MEDIEVAL": {
-     "flat": -0.1
+    {
+     "value": -0.1,
+     "enabled": {
+      "type": "ERA",
+      "min": 4
+     }
     },
-    "C2C_ERA_RENAISSANCE": {
-     "flat": -0.1
+    {
+     "value": -0.1,
+     "enabled": {
+      "type": "ERA",
+      "min": 5
+     }
     },
-    "C2C_ERA_INDUSTRIAL": {
-     "flat": -0.1
+    {
+     "value": -0.1,
+     "enabled": {
+      "type": "ERA",
+      "min": 6
+     }
     }
-   }
+   ]
   }
  },
  "culture": {
   "empire": {
-   "byEra": {
-    "C2C_ERA_ANCIENT": {
-     "flat": 0.1
+   "flat": [
+    {
+     "value": 0.1,
+     "enabled": {
+      "type": "ERA",
+      "min": 2
+     }
     },
-    "C2C_ERA_CLASSICAL": {
-     "flat": 0.1
+    {
+     "value": 0.1,
+     "enabled": {
+      "type": "ERA",
+      "min": 3
+     }
     },
-    "C2C_ERA_MEDIEVAL": {
-     "flat": 0.1
+    {
+     "value": 0.1,
+     "enabled": {
+      "type": "ERA",
+      "min": 4
+     }
     },
-    "C2C_ERA_RENAISSANCE": {
-     "flat": 0.1
+    {
+     "value": 0.1,
+     "enabled": {
+      "type": "ERA",
+      "min": 5
+     }
     },
-    "C2C_ERA_INDUSTRIAL": {
-     "flat": 0.1
+    {
+     "value": 0.1,
+     "enabled": {
+      "type": "ERA",
+      "min": 6
+     }
     }
-   }
+   ]
   }
  },
  "PROPERTY_EDUCATION": {

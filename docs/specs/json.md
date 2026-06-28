@@ -64,7 +64,8 @@ modifier targets — **not separate shapes.** Learn them once.
   prefix identifies the kind and routes the reference; the full prefix glossary (`UNIT_` = unit, `TRAIT_` =
   simple trait, `TRAIT_COMPLEX_` = complex, …) is the **[naming spec](naming.md)**.
 - **Catch-all tokens** — engine concepts that aren't data Types: `TURN`, `POPULATION`, `MILITARY`, `CITY`,
-  `TEAM`, `UNIT_LEVEL`, `AREA_SIZE`, … (an engine-resolved, extensible registry).
+  `TEAM`, `UNIT_LEVEL`, `AREA_SIZE`, **`ERA`** (the player's current era as a plain **counter 1…X** — the era
+  sequence; eras are ordered data defined in `Assets/Data/eras/`), … (an engine-resolved, extensible registry).
 - **`SELF`** — "this entity's own type," resolved per-entity. Used only in a `per` count-scaler ("per how many of
   me exist"). It is **not** used in `requires` — a "one of me" cap is [`allowed`](#44-allowed--caps), not a
   condition.
@@ -461,8 +462,13 @@ The full address of a deposit:
   every build); **`buildRate`** only speeds up *building a specific target*: `buildRate.self` (build **this**
   entity faster — the off-spine `self` scope), or keyed by what's built (`buildRate.<scope>.buildings.{BUILDING}`,
   or a category like `military`).
-- **`byEra.{C2C_ERA_*}`** value-table key inside a deposit is **cumulative-threshold**: every band whose era ≤
-  the current era applies (summed; not just the current era). Needs the ordered `world.eras` list.
+- **Era-dependent values use the `ERA` COUNTER, not a bespoke key (owner ruling 2026-06-28).** Era is a plain
+  counter (1…X, §3.1) like `POPULATION`/`TURN`; a value that changes with era is authored as ordinary conditioned
+  deposits gated on an `ERA` count-threshold — `flat: [ {value, enabled:{type:ERA, min:N}}, … ]` — so the bands
+  **accumulate for free** through normal deposit summation (every entry whose `min` ≤ the current era applies). No
+  special resolver, no `world.eras` lookup. *(The earlier agent-invented `byEra.{C2C_ERA_*}` value-table key is
+  **RETIRED** — it did not fit the counter/condition vocabulary every other quantity uses; the curator converts a
+  legacy `EraCommerceChanges` band-table into era-threshold flats, mapping each era Type to its counter index.)*
 
 ### 6.1 Two ways a deposit picks WHAT it lands on
 

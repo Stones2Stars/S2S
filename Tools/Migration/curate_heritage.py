@@ -44,25 +44,37 @@ DROP = {"PrereqTech", "PrereqOrHeritage"}
 FAMILY_ORDER = ["gold", "research", "culture", "espionage"]
 
 
-def _era_key(era):
-    # The era Type verbatim (C2C_ERA_*) — a data-driven Type, referenced like BONUS_*/TECH_* (owner convention),
-    # consistent with how techs carry `era: C2C_ERA_*`. (Was a short stem matching neither Type nor filename.)
-    return era
+_ERA_ORDINAL = None
+
+
+def _era_ordinal(era):
+    """era Type (C2C_ERA_*) -> its 1-based counter index (1..X), the engine era sequence (Store/XML order)."""
+    global _ERA_ORDINAL
+    if _ERA_ORDINAL is None:
+        _ERA_ORDINAL = {typ: i + 1 for i, typ in enumerate(Store().table("EraInfo"))}
+    return _ERA_ORDINAL.get(era)
 
 
 def _era_commerce(node, fam):
-    """EraCommerceChanges -> <commerce>.empire.byEra.<era>.flat (CentiCommerce x100 -> human de-scaled, zeros dropped)."""
+    """EraCommerceChanges -> <commerce>.empire.flat conditioned on the ERA COUNTER (owner ruling 2026-06-28: era is a
+    plain counter 1..X, NOT a bespoke byEra key). processHeritage applies a band for every era >= it (CvPlayer:30984),
+    so each band becomes a flat gated `enabled:{type:ERA, min:<era ordinal>}`; they ACCUMULATE through normal deposit
+    summation (every entry whose min <= the current era applies). CentiCommerce x100 -> human de-scaled, zeros dropped."""
     for entry in list(node):
         era = engine.text(entry.find("EraType"))
         centi = entry.find("CentiCommerce")
         if not era or centi is None:
             continue
+        ordinal = _era_ordinal(era)
+        if ordinal is None:
+            continue
         for member, v in engine.named_array(centi, engine.COMMERCES).items():
             v = cc.descale100(v)                          # one-time x100 -> human (cascade-fixed-point.md §2)
             if not v:
                 continue
-            (fam.setdefault(member, {}).setdefault("empire", {}).setdefault("byEra", {})
-             .setdefault(_era_key(era), {}))["flat"] = v
+            lst = fam.setdefault(member, {}).setdefault("empire", {}).setdefault("flat", [])
+            lst.append(OrderedDict([("value", v),
+                                    ("enabled", OrderedDict([("type", "ERA"), ("min", ordinal)]))]))
 
 
 def _properties(node, props):

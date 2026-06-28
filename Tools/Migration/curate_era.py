@@ -87,8 +87,10 @@ def _put(fam, family, scope, member, unit, val):
     node[unit] = val
 
 
-def curate(typ, rec):
+def curate(typ, rec, order):
     text, fam, grants, art_blocks, identity, leftover = {}, {}, {}, {}, {}, []
+    identity["order"] = order   # the era's sequence index (engine enum / XML order) — eras are ORDERED data, defined
+    #                              in the JSON so consumers resolve era-thresholds (byEra cumulative) from curated data, not /state.
     for c in rec:
         tag, t = c.tag, engine.text(c)
         if tag == "Type" or tag in DROP:
@@ -148,8 +150,8 @@ def main():
     args = ap.parse_args()
     table = Store().table("EraInfo")
     results, all_leftover = OrderedDict(), set()
-    for typ, rec in table.items():
-        obj, leftover = curate(typ, rec)
+    for order, (typ, rec) in enumerate(table.items(), start=1):   # 1-based: era is a counter 1..X (owner ruling 2026-06-28)
+        obj, leftover = curate(typ, rec, order)
         results[typ] = obj
         all_leftover.update(leftover)
     print("EraInfo curated: %d" % len(results))
