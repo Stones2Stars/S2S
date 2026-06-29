@@ -171,8 +171,13 @@ add real handling per `json.md` §5 (grants: lists, numeric pulses, `foundBuildi
    families are walked. **Verified live via the `[READJSON/mod]` renders + `[READJSON/mod-survey]`** (×100 confirmed:
    `+1`→`100`, `-1`→`-100`, `+3`→`300`); no `multiplier` is authored anywhere (the combine is additive in practice,
    modifier.md §2a). The persistent deposit structure the modifier machine reads is built at the cutover.
-4. **`enables`-family + `requires` + `allowed`** — the buckets, the `build`/`operate` split, the caps. Feeds the
-   **enabler**.
+4. **`enables`-family + `requires` + `allowed`** ✅ **DONE (+ survey)** — `rj_walkEnableEdge` parses each
+   `enables`/`obsoletes`/`replaces`/`disables` edge's per-kind id buckets (json.md §4.1) and FK-resolves the referenced
+   ids; `rj_walkAllowed` counts the `allowed` caps (scope self-cap + wonder-category, §4.4). `requires` build/operate is
+   already translated (increment 2). **Verified live via `[READJSON/edge]` renders + `[READJSON/edge-survey]`** — the
+   bucket ids resolve cleanly bar a few by-design non-resolvers (`PROMOTION_COMPLEX_AGGRESSIVE`, a `COMPLEX_` option
+   variant; `FORCE_TEAM_ELIGIBLE`, a non-infotype vote token); all json.md §4.1 bucket kinds + the scope/wonder cap
+   kinds seen. The persistent buckets the enabler's GENERATE pass reads are built at the cutover.
 5. **`grants`** (real grammar — the harness's light-touch gap) + the remaining intrinsic/classification blocks
    (`identity`/`skills`/`tags`/`capabilities`) as their consumers need them.
 6. **The cutover seam** — serve the EXE accessor surface from the fresh structures; delete the XML `read()` path. (Last,

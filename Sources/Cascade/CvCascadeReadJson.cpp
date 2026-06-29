@@ -456,6 +456,59 @@ static void rj_walkModNode(const std::string& path, const picojson::value& v, Rj
 	}
 }
 
+// ===================== INCREMENT 4: the enables-family + allowed availability parse =====================
+// The availability sections (json.md §4 / enabler.md §2,§4): enables/obsoletes/replaces/disables are per-kind id-bucket
+// lists (buildings/units/techs/…) the enabler's GENERATE pass reads; `allowed` is the cap (a scope or wonder-category
+// key → a number). `requires` build/operate is already translated (increment 2). This is the SURVEY probe: parse +
+// FK-resolve the bucket ids + count the caps; the persistent buckets the enabler reads are built at the cutover.
+
+static const char* RJ_EDGES[] = { "enables", "obsoletes", "replaces", "disables", 0 };
+
+struct RjEnableStats
+{
+	int edges, bucketEntries, resolved, unresolved, allowedClauses, sampleCount;
+	std::set<std::string> bucketKinds, capKinds, unresolvedIds;
+	std::string curType;
+	RjEnableStats() : edges(0), bucketEntries(0), resolved(0), unresolved(0), allowedClauses(0), sampleCount(0) {}
+};
+
+static void rj_walkEnableEdge(const std::string& edge, const picojson::value& v, RjEnableStats& st)
+{
+	if (!v.is<picojson::object>()) return;
+	const picojson::object& o = v.get<picojson::object>();
+	++st.edges;
+	for (picojson::object::const_iterator it = o.begin(); it != o.end(); ++it)
+	{
+		st.bucketKinds.insert(it->first);                       // buildings/units/techs/civics/… (json.md §4.1)
+		if (!it->second.is<picojson::array>()) continue;
+		const picojson::array& a = it->second.get<picojson::array>();
+		for (size_t i = 0; i < a.size(); ++i)
+		{
+			if (!a[i].is<std::string>()) continue;
+			++st.bucketEntries;
+			const std::string id = a[i].get<std::string>();
+			const int rid = GC.getInfoTypeForString(id.c_str(), true);
+			if (rid >= 0) ++st.resolved;
+			else { ++st.unresolved; if (st.unresolvedIds.size() < 24) st.unresolvedIds.insert(id); }
+			if (st.sampleCount < 8)
+			{
+				char b[1024];
+				sprintf(b, "[READJSON/edge] %s %s.%s += %s (%s)", st.curType.c_str(), edge.c_str(), it->first.c_str(), id.c_str(), rid >= 0 ? "ok" : "UNRESOLVED");
+				gDLL->logMsg("Cascade.log", b); streamLogTee(1, b); ++st.sampleCount;
+			}
+		}
+	}
+}
+
+// `allowed` (json.md §4.4): a scope key (world/team/empire = self-cap) or a wonder-category key
+// (worldWonders/teamWonders/nationalWonders) → a number. Just count the clauses + record the cap kinds.
+static void rj_walkAllowed(const picojson::value& v, RjEnableStats& st)
+{
+	if (!v.is<picojson::object>()) return;
+	const picojson::object& o = v.get<picojson::object>();
+	for (picojson::object::const_iterator it = o.begin(); it != o.end(); ++it) { ++st.allowedClauses; st.capKinds.insert(it->first); }
+}
+
 void cascadeReadJsonProbe()
 {
 	static bool s_done = false;
@@ -478,6 +531,7 @@ void cascadeReadJsonProbe()
 	std::vector<RjEntity> store;
 	RjCondStats cond;
 	RjModStats mod;
+	RjEnableStats en;
 	char szBuf[1024];
 
 	for (size_t i = 0; i < files.size(); ++i)
@@ -501,9 +555,12 @@ void cascadeReadJsonProbe()
 		else { ++iUnresolved; if (iShownUnres < 16) { sprintf(szBuf, "[READJSON/unresolved] type=%s", type.c_str()); gDLL->logMsg("Cascade.log", szBuf); streamLogTee(1, szBuf); ++iShownUnres; } }
 
 		mod.curType = type;
+		en.curType = type;
 		for (picojson::object::const_iterator it = o.begin(); it != o.end(); ++it)
 		{
 			const std::string& k = it->first;
+			if (rj_in(RJ_EDGES, k)) { rj_walkEnableEdge(k, it->second, en); continue; }   // INCREMENT 4: GENERATE buckets
+			if (k == "allowed") { rj_walkAllowed(it->second, en); continue; }              // INCREMENT 4: the cap
 			if (rj_in(RJ_CASCADE_SECTIONS, k) || rj_in(RJ_INTRINSIC, k)) continue;
 			if (it->second.is<picojson::object>())
 			{
@@ -556,4 +613,13 @@ void cascadeReadJsonProbe()
 		mod.families, (int)mod.familyNames.size(), mod.magnitudes, mod.unitFlat, mod.unitPercent, mod.unitMult, mod.unitOther,
 		mod.conditioned, mod.perScaled, mod.bareValues, mod.embeddedCond.leaves, mod.embeddedCond.mapped);
 	gDLL->logMsg("Cascade.log", szBuf); streamLogTee(1, szBuf);
+	// INCREMENT 4 survey: the enables-family edges + the allowed cap (the enabler's GENERATE buckets + cap).
+	sprintf(szBuf, "[READJSON/edge-survey] edges=%d bucketEntries=%d resolved=%d unresolved=%d bucketKinds=%d allowedClauses=%d capKinds=%d",
+		en.edges, en.bucketEntries, en.resolved, en.unresolved, (int)en.bucketKinds.size(), en.allowedClauses, (int)en.capKinds.size());
+	gDLL->logMsg("Cascade.log", szBuf); streamLogTee(1, szBuf);
+	for (std::set<std::string>::const_iterator it = en.unresolvedIds.begin(); it != en.unresolvedIds.end(); ++it)
+	{
+		sprintf(szBuf, "[READJSON/edge-unresolved] %s", it->c_str());
+		gDLL->logMsg("Cascade.log", szBuf); streamLogTee(1, szBuf);
+	}
 }
