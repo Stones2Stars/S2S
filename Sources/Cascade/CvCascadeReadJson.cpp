@@ -17,6 +17,7 @@
 #include <sstream>
 #include <vector>
 #include <set>
+#include <map>
 #include <string>
 
 // --- vocabulary (json.md §1/§2; the cascade-section + intrinsic/aux sets the increment-1 classification needs) ---
@@ -509,6 +510,78 @@ static void rj_walkAllowed(const picojson::value& v, RjEnableStats& st)
 	for (picojson::object::const_iterator it = o.begin(); it != o.end(); ++it) { ++st.allowedClauses; st.capKinds.insert(it->first); }
 }
 
+// ===================== INCREMENT 5: the grants grammar =====================
+// `grants` (json.md §5) is the harness's light-touch gap — MIXED shapes under one section: id LISTS
+// (buildings/units/techs/…), numeric PULSES (`grants.<channel>: value`, e.g. revolution/goldenAge/population),
+// `foundBuildings` ([{building, enabled?}] — a founder settle-time seed), and `repeatable` ([{<payload>, interval,
+// chance?, enabled?}] — incl. the property pulses carrying on/relation/distance). SURVEY probe: classify each key by
+// shape + FK-resolve the list ids + surface any unhandled grant key (no-guessing — an unknown shape is reported, not
+// dropped). The persistent grant provisions are built at the cutover.
+
+struct RjGrantStats
+{
+	int entities, listEntries, resolved, unresolved, pulses, flags, entryArrays, objects, sampleCount;
+	std::set<std::string> listKinds, pulseChannels, flagKinds, unresolvedIds;
+	std::string curType;
+	RjGrantStats() : entities(0), listEntries(0), resolved(0), unresolved(0), pulses(0), flags(0), entryArrays(0), objects(0), sampleCount(0) {}
+};
+
+static void rj_grantResolve(const std::string& bucket, const std::string& id, RjGrantStats& st)
+{
+	++st.listEntries;
+	const int rid = GC.getInfoTypeForString(id.c_str(), true);
+	if (rid >= 0) ++st.resolved;
+	else { ++st.unresolved; if (st.unresolvedIds.size() < 24) st.unresolvedIds.insert(id); }
+	if (st.sampleCount < 8)
+	{
+		char b[1024];
+		sprintf(b, "[READJSON/grant] %s grants.%s += %s (%s)", st.curType.c_str(), bucket.c_str(), id.c_str(), rid >= 0 ? "ok" : "UNRESOLVED");
+		gDLL->logMsg("Cascade.log", b); streamLogTee(1, b); ++st.sampleCount;
+	}
+}
+
+// GENERIC by value-shape (the grant section has many keys; classify each by its JSON shape, like the modifier parser
+// — the consumer assigns semantics). array-of-strings → an id LIST (FK-resolve each); array-of-objects → entry list
+// (foundBuildings/repeatable/property-pulse — resolve any single id field); number → a numeric pulse; bare string →
+// a single-id grant; bool → a flag; object → a structured grant. NOTHING is "unknown" — every shape is handled.
+static void rj_walkGrants(const picojson::value& v, RjGrantStats& st)
+{
+	if (!v.is<picojson::object>()) return;
+	const picojson::object& o = v.get<picojson::object>();
+	++st.entities;
+	static const char* ID_FIELDS[] = { "building", "unit", "type", "bonus", "tech", "promotion", "specialist", 0 };
+	for (picojson::object::const_iterator it = o.begin(); it != o.end(); ++it)
+	{
+		const std::string& k = it->first;
+		const picojson::value& val = it->second;
+		if (val.is<picojson::array>())
+		{
+			const picojson::array& a = val.get<picojson::array>();
+			bool allStr = true;
+			for (size_t i = 0; i < a.size(); ++i) if (!a[i].is<std::string>()) { allStr = false; break; }
+			if (allStr) { st.listKinds.insert(k); for (size_t i = 0; i < a.size(); ++i) rj_grantResolve(k, a[i].get<std::string>(), st); }
+			else                                            // array of entry-objects (foundBuildings/repeatable/property-pulse)
+			{
+				++st.entryArrays;
+				for (size_t i = 0; i < a.size(); ++i)
+				{
+					if (!a[i].is<picojson::object>()) continue;
+					const picojson::object& eo = a[i].get<picojson::object>();
+					for (int f = 0; ID_FIELDS[f]; ++f)      // resolve the entry's single id field, if any
+					{
+						picojson::object::const_iterator fi = eo.find(ID_FIELDS[f]);
+						if (fi != eo.end() && fi->second.is<std::string>()) { rj_grantResolve(k, fi->second.get<std::string>(), st); break; }
+					}
+				}
+			}
+		}
+		else if (val.is<double>()) { ++st.pulses; st.pulseChannels.insert(k); }       // numeric pulse grants.<channel>: value
+		else if (val.is<std::string>()) { st.listKinds.insert(k); rj_grantResolve(k, val.get<std::string>(), st); } // single-id grant
+		else if (val.is<bool>()) { ++st.flags; st.flagKinds.insert(k); }              // a flag grant
+		else if (val.is<picojson::object>()) ++st.objects;                            // a structured grant (counted)
+	}
+}
+
 void cascadeReadJsonProbe()
 {
 	static bool s_done = false;
@@ -528,10 +601,12 @@ void cascadeReadJsonProbe()
 	int iFailed = 0, iEntities = 0, iResolved = 0, iUnresolved = 0, iShownUnres = 0;
 	int iConds = 0, iCondsFull = 0, iCondSample = 0;
 	std::set<std::string> families, flags;
+	std::map<std::string, int> topKeys;   // FULL-COVERAGE census: every top-level key kind -> count
 	std::vector<RjEntity> store;
 	RjCondStats cond;
 	RjModStats mod;
 	RjEnableStats en;
+	RjGrantStats gr;
 	char szBuf[1024];
 
 	for (size_t i = 0; i < files.size(); ++i)
@@ -556,11 +631,15 @@ void cascadeReadJsonProbe()
 
 		mod.curType = type;
 		en.curType = type;
+		gr.curType = type;
 		for (picojson::object::const_iterator it = o.begin(); it != o.end(); ++it)
 		{
 			const std::string& k = it->first;
+			++topKeys[k];                                                                 // full-coverage census
 			if (rj_in(RJ_EDGES, k)) { rj_walkEnableEdge(k, it->second, en); continue; }   // INCREMENT 4: GENERATE buckets
 			if (k == "allowed") { rj_walkAllowed(it->second, en); continue; }              // INCREMENT 4: the cap
+			if (k == "grants") { rj_walkGrants(it->second, gr); continue; }                // INCREMENT 5: the grants grammar
+			if (k == "provides") { rj_walkEnableEdge("provides", it->second, en); continue; } // §5a: continuous in-vicinity supply
 			if (rj_in(RJ_CASCADE_SECTIONS, k) || rj_in(RJ_INTRINSIC, k)) continue;
 			if (it->second.is<picojson::object>())
 			{
@@ -620,6 +699,28 @@ void cascadeReadJsonProbe()
 	for (std::set<std::string>::const_iterator it = en.unresolvedIds.begin(); it != en.unresolvedIds.end(); ++it)
 	{
 		sprintf(szBuf, "[READJSON/edge-unresolved] %s", it->c_str());
+		gDLL->logMsg("Cascade.log", szBuf); streamLogTee(1, szBuf);
+	}
+	// INCREMENT 5 survey: the grants grammar (lists / numeric pulses / foundBuildings / repeatable).
+	sprintf(szBuf, "[READJSON/grant-survey] entities=%d listEntries=%d resolved=%d unresolved=%d listKinds=%d pulses=%d pulseChannels=%d flags=%d entryArrays=%d objects=%d",
+		gr.entities, gr.listEntries, gr.resolved, gr.unresolved, (int)gr.listKinds.size(), gr.pulses, (int)gr.pulseChannels.size(), gr.flags, gr.entryArrays, gr.objects);
+	gDLL->logMsg("Cascade.log", szBuf); streamLogTee(1, szBuf);
+	for (std::set<std::string>::const_iterator it = gr.unresolvedIds.begin(); it != gr.unresolvedIds.end(); ++it)
+	{
+		sprintf(szBuf, "[READJSON/grant-unresolved] %s", it->c_str());
+		gDLL->logMsg("Cascade.log", szBuf); streamLogTee(1, szBuf);
+	}
+	// FULL-COVERAGE census: every top-level key kind across all entities + its handler class — the single holistic
+	// completeness check (nothing silently unhandled). UNCLASSIFIED kinds (if any) are the thing to investigate.
+	for (std::map<std::string, int>::const_iterator it = topKeys.begin(); it != topKeys.end(); ++it)
+	{
+		const std::string& k = it->first;
+		const char* cls =
+			rj_in(RJ_EDGES, k) ? "edge" :
+			(k == "allowed") ? "allowed" : (k == "grants") ? "grants" : (k == "requires") ? "requires" : (k == "provides") ? "provides" :
+			rj_in(RJ_INTRINSIC, k) ? "intrinsic" :
+			families.count(k) ? "family" : flags.count(k) ? "flag" : "UNCLASSIFIED";
+		sprintf(szBuf, "[READJSON/key] %-26s %6d  %s", k.c_str(), it->second, cls);
 		gDLL->logMsg("Cascade.log", szBuf); streamLogTee(1, szBuf);
 	}
 }

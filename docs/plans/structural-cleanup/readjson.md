@@ -178,8 +178,17 @@ add real handling per `json.md` §5 (grants: lists, numeric pulses, `foundBuildi
    bucket ids resolve cleanly bar a few by-design non-resolvers (`PROMOTION_COMPLEX_AGGRESSIVE`, a `COMPLEX_` option
    variant; `FORCE_TEAM_ELIGIBLE`, a non-infotype vote token); all json.md §4.1 bucket kinds + the scope/wonder cap
    kinds seen. The persistent buckets the enabler's GENERATE pass reads are built at the cutover.
-5. **`grants`** (real grammar — the harness's light-touch gap) + the remaining intrinsic/classification blocks
-   (`identity`/`skills`/`tags`/`capabilities`) as their consumers need them.
+5. **`grants` + `provides` + full-coverage census** ✅ **DONE** — `rj_walkGrants` is GENERIC by value-shape (id
+   lists / numeric pulses / single-id grants / flags / entry-arrays = `foundBuildings`+`repeatable`+property-pulse /
+   structured objects), FK-resolving every id — **no shape is "unknown."** `provides` (§5a) rides the edge walker (its
+   `bonuses` bucket). A full top-level-key **CENSUS** (`[READJSON/key]`) classifies every key kind across all entities
+   (edge/allowed/grants/requires/provides/intrinsic/family/flag) — **verified live: 0 `UNCLASSIFIED` (complete spec
+   coverage).** The intrinsic/classification/auxiliary blocks (§7–§9) are recognized + censused; their **deep** parse
+   is their own systems' job (json.md §2/§5.5). By-design non-resolvers (`TECH_GAME_START`, `COMPLEX_` variants,
+   non-infotype tokens) surface in the unresolved lists as expected.
+   - **NB the readers are SPEC + StoneBase-proven (owner ruling 2026-06-29):** each reader mirrors the parity-proven
+     StoneBase parser, so they are NOT re-verified in isolation per-segment — the spec/StoneBase IS the proof; the live
+     probe confirms coverage + FK-resolution holistically, in one pass.
 6. **The cutover seam** — serve the EXE accessor surface from the fresh structures; delete the XML `read()` path. (Last,
    atomic — `cascade-engine-430.md` §2/§3.)
 
