@@ -434,6 +434,7 @@ namespace
 		c["isCapital"]   = picojson::value(pCity->isCapital());
 		c["isPowered"]   = picojson::value(pCity->isPower());
 		c["isGoldenAge"] = picojson::value(kPlayer.isGoldenAge());           // golden age is a player-level boolean
+		c["isDisorder"]  = picojson::value(pCity->isDisorder());             // civil disorder -> getCommerceRateTimes100 returns 0 (CvCity:12010); a pure-state flag like isPowered
 		const CvCity* pCap = kPlayer.getCapitalCity();
 		c["distanceFromCapital"] = picojson::value((double)(pCap != NULL ?
 			plotDistance(pCity->getX(), pCity->getY(), pCap->getX(), pCap->getY()) : 0)); // the lone map-number
