@@ -116,8 +116,14 @@ add real handling per `json.md` §5 (grants: lists, numeric pulses, `foundBuildi
 
 ## 5. Build increments (each compiles + is validated before the next)
 
-1. **Entity-reader skeleton** — picojson load of one `Assets/Data/<type>/*.json` → a fresh per-entity record; the
-   `walk_entity` top-level dispatch; type-registry FK resolution. Prove: ids resolve to the same indices the engine holds.
+1. **Entity-reader skeleton** ✅ **DONE** — `Sources/Cascade/CvCascadeReadJson.{h,cpp}`: picojson load of every
+   `Assets/Data/**/*.json` (located via `gDLL->getModName(true)` + a recursive Win32 walk) → a fresh per-entity record;
+   the top-level `walk_entity` classification; type-registry FK resolution via `GC.getInfoTypeForString`. A one-shot,
+   gated `[READJSON]` probe at `doTurn` proves it. **Verified live: 13,473 files parsed (0 failures), 13,470/13,473
+   type ids resolve.** The **3 by-design non-resolvers** (the probe surfacing them is the point, not a bug) are
+   curated-only constructs the engine registry doesn't carry as primary entries: `TECH_GAME_START` (the synthetic
+   cascade start node, validation.md), `CULTURELEVEL_ALT_POOR` (a `replacedBy` alternate Info, json.md §9), and
+   `PROMOTION_COMPLEX_AGGRESSIVE` (a `COMPLEX_` option-selected variant). Next increments populate the fresh record.
 2. **The conditional translator** — `all`/`any`/`noneOf` (recursive tree, spec §3.4) + atoms + bare/parameterized
    predicates + membership desugar → `BoolExpr`. Prove against the harness `--render` for a spread of `requires` trees.
 3. **Modifier families** — the deposit-address parse (`<family>.<scope>[.…].<unit>`) + the ×100 leaf conversion + the

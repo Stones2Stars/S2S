@@ -12,6 +12,7 @@
 #include "UI/CvEventReporter.h"
 #include "CvEventSpine.h"
 #include "CvCascadeTally.h"
+#include "CvCascadeReadJson.h"
 #include "AI/CvGameAI.h"
 #include "Defines/CvGlobals.h"
 #include "Tools/CvHttpServer.h"
@@ -5830,6 +5831,10 @@ void CvGame::doTurn()
 	// diff the event-maintained counts vs the live engine each turn as a gated [TALLY] line (cascade-vs-legacy).
 	// Pure shadow -- gated off in normal play, no behaviour change.
 	cascadeTallyShadow();
+
+	// #430 readJson increment 1 -- one-shot entity-reader probe: parse the curated Assets/Data set, walk + FK-resolve
+	// every entity's type vs the engine registry, emit the [READJSON] summary. Self-guarding + gated; no behaviour change.
+	cascadeReadJsonProbe();
 
 	//	Turn-boundary accounting for the frame-driven span the doTurn tree does not cover:
 	//	turn.wall is the true wall-clock between consecutive turn boundaries (what a player's
