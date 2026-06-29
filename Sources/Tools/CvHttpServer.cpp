@@ -482,16 +482,19 @@ namespace
 		// (CommerceChangeDoubleTimes -> 2nd age-gated deposit, CvCity.cpp:12207-12213). Legacy doubles only when
 		// iTimeBuilt != MIN_INT; emit age for those buildings (the calc compares age >= existedFor.min).
 		{
-			picojson::value::object bldgAges;
-			const int iYearNow = GC.getGame().getGameTurnYear();
+			// per-building BUILT YEAR (iTimeBuilt) -- the STABLE pure-state operand for the CommerceChangeDoubleTime gate;
+			// the drycalc computes age = world.gameTurnYear - builtYear itself (>= the building's commerceDoubleTime
+			// threshold => the engine doubles its whole commerce, CvCity:12288). Buildings with iTimeBuilt == MIN_INT
+			// (built-year unknown) never double, so they are omitted (a missing built-year => no doubling).
+			picojson::value::object bldgBuilt;
 			for (int b = 0; b < GC.getNumBuildingInfos(); ++b)
 				if (pCity->hasBuilding((BuildingTypes)b))
 				{
 					const int iTB = pCity->getBuildingData((BuildingTypes)b).iTimeBuilt;
 					if (iTB != MIN_INT)
-						bldgAges[GC.getBuildingInfo((BuildingTypes)b).getType()] = picojson::value((double)(iYearNow - iTB));
+						bldgBuilt[GC.getBuildingInfo((BuildingTypes)b).getType()] = picojson::value((double)iTB);
 				}
-			c["buildingAges"] = picojson::value(bldgAges);
+			c["buildingBuiltYears"] = picojson::value(bldgBuilt);
 		}
 
 		// specialist ASSIGNMENT counts (manual + free)
@@ -726,6 +729,7 @@ namespace
 		// getNumTeamsPrereq gate, CvPlayer.cpp:6688). Emitted explicitly so the offline calc reads the ever-alive
 		// count, NOT an alive-only approximation (dead teams still count toward the prereq).
 		world["teamsEverAlive"] = picojson::value((double)GC.getGame().countCivTeamsEverAlive());
+		world["gameTurnYear"]   = picojson::value((double)GC.getGame().getGameTurnYear());   // current calendar YEAR -- the drycalc derives building age (year - builtYear) for the CommerceChangeDoubleTime gate
 
 		// world buildingsCreated -- getBuildingCreatedCount per building (CvGame::isBuildingMaxedOut, the world-wonder
 		// cap gate, CvGame.cpp:5118). CUMULATIVE ever-created (persists past obsolescence/loss), NOT the current
