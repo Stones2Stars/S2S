@@ -9,6 +9,7 @@
 #include "AI/BetterBTSAI.h"            // gPlayerLogLevel + streamLogTee
 #include "Defines/CvGlobals.h"         // GC.getInfoTypeForString -- the type registry (FK resolution)
 #include "Infrastructure/BoolExpr.h"   // the translation target (And/Or/Not/Has/Is) -- the engine's condition evaluator
+#include "Infrastructure/IntExpr.h"    // value atoms: IntExprProperty / IntExprAttribute / IntExprConstant (count/band)
 #include <fstream>
 #include <sstream>
 #include <vector>
@@ -143,6 +144,37 @@ static const BoolExpr* rj_leafType(const std::string& type, RjCondStats& st)
 	return new BoolExprConstant(true);
 }
 
+// INCREMENT 3: count/value atoms -> IntExpr comparisons. The "count" token POPULATION maps to an engine ATTRIBUTE;
+// a PROPERTY_* atom reads the city's property VALUE. CITY/TEAM + a count threshold over a real INFOTYPE (>=N of a
+// building) are the cross-city TALLY-backed counts -- a new IntExpr leaf, the focused next sub-increment (3b).
+static AttributeTypes rj_attrForToken(const std::string& t)
+{
+	if (t == "POPULATION") return ATTRIBUTE_POPULATION;
+	if (t == "HEALTH")     return ATTRIBUTE_HEALTH;
+	if (t == "HAPPINESS")  return ATTRIBUTE_HAPPINESS;
+	return NO_ATTRIBUTE;
+}
+
+// A fresh value IntExpr (property value or attribute) -- built per comparison, since each BoolExprComp OWNS and
+// deletes its IntExpr operands (sharing one would double-free).
+static const IntExpr* rj_makeVal(PropertyTypes eProp, AttributeTypes eAttr)
+{
+	if (eProp != NO_PROPERTY) return new IntExprProperty(eProp);
+	return new IntExprAttribute(eAttr);
+}
+
+// Build a band BoolExpr from a value source + optional min/max: min -> value >= min (GreaterEqual); max -> value <= max
+// (Not(Greater)); both -> And; neither -> value >= 1 (presence). json.md §3.4: a PROPERTY band absent min = max-only.
+static const BoolExpr* rj_valueBand(PropertyTypes eProp, AttributeTypes eAttr, bool bMin, int iMin, bool bMax, int iMax)
+{
+	const BoolExpr* lo = bMin ? (const BoolExpr*)new BoolExprGreaterEqual(rj_makeVal(eProp, eAttr), new IntExprConstant(iMin)) : NULL;
+	const BoolExpr* hi = bMax ? (const BoolExpr*)new BoolExprNot(new BoolExprGreater(rj_makeVal(eProp, eAttr), new IntExprConstant(iMax))) : NULL;
+	if (lo && hi) return new BoolExprAnd(lo, hi);
+	if (lo) return lo;
+	if (hi) return hi;
+	return new BoolExprGreaterEqual(rj_makeVal(eProp, eAttr), new IntExprConstant(1));
+}
+
 static const BoolExpr* rj_translate(const picojson::value& v, RjCondStats& st);
 
 // Left-fold a child list with binary And/Or. Empty all->true, empty any->false (identity elements).
@@ -191,10 +223,32 @@ static const BoolExpr* rj_translate(const picojson::value& v, RjCondStats& st)
 	}
 	if ((it = o.find("type")) != o.end() && it->second.is<std::string>())        // atom {type, scope, min, max, connection}
 	{
+		const std::string atype = it->second.get<std::string>();
 		picojson::object::const_iterator mn = o.find("min"), mx = o.find("max");
-		if ((mn != o.end() && mn->second.is<double>() && mn->second.get<double>() > 1) || mx != o.end())
-			++st.countThreshold;                       // a count threshold -> deferred IntExpr comparison (recorded)
-		return rj_leafType(it->second.get<std::string>(), st);   // presence (min:1) -> Has; threshold approximated as presence
+		const bool bMin = (mn != o.end() && mn->second.is<double>());
+		const bool bMax = (mx != o.end() && mx->second.is<double>());
+		const int iMin = bMin ? (int)mn->second.get<double>() : 0;
+		const int iMax = bMax ? (int)mx->second.get<double>() : 0;
+		// PROPERTY_* band -> the city's property VALUE compared (IntExprProperty).
+		if (rj_starts(atype, "PROPERTY_"))
+		{
+			++st.leaves;
+			const int pid = GC.getInfoTypeForString(atype.c_str(), true);
+			if (pid < 0) { st.note(atype); return new BoolExprConstant(true); }
+			++st.mapped;
+			return rj_valueBand((PropertyTypes)pid, NO_ATTRIBUTE, bMin, iMin, bMax, iMax);
+		}
+		// engine ATTRIBUTE token (POPULATION/HEALTH/HAPPINESS) -> attribute value compared.
+		const AttributeTypes attr = rj_attrForToken(atype);
+		if (attr != NO_ATTRIBUTE)
+		{
+			++st.leaves; ++st.mapped;
+			return rj_valueBand(NO_PROPERTY, attr, bMin, iMin, bMax, iMax);
+		}
+		// a real INFOTYPE: presence -> Has; a count threshold (>=N>1 / <=max) is the cross-city TALLY-backed count
+		// (the new IntExpr leaf, increment 3b) -- recorded + presence-approximated for now.
+		if ((bMin && iMin > 1) || bMax) ++st.countThreshold;
+		return rj_leafType(atype, st);
 	}
 	if (o.size() == 1)                                                          // membership {t|f|b:[…]} OR {PRED:param}
 	{

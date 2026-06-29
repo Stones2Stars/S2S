@@ -138,6 +138,13 @@ add real handling per `json.md` §5 (grants: lists, numeric pulses, `foundBuildi
    structural: the `dormant` clause (handle as `requires.operate.dormant`, enabler.md §3, not a leaf). Unmapped leaves
    stand in as a `true` constant for the SURVEY ONLY (json.md: an unknown predicate is ignored) — a placeholder, not
    the design.
+   - **Gap-closing (2.a) ✅** — bucket **(a)** value/band atoms: `PROPERTY_*` → `IntExprProperty` and `POPULATION`/
+     `HEALTH`/`HAPPINESS` → `IntExprAttribute`, each compared `≥min` (`BoolExprGreaterEqual`) / `≤max`
+     (`Not(BoolExprGreater)`) / both (`And`); via the existing engine `IntExpr` leaves. Removes the `PROPERTY_*` +
+     `POPULATION` gaps.
+   - **Gap-closing (2.b) ⏭** — the **cross-city TALLY-backed count**: a fresh `IntExpr` leaf reading `cascadeTally()`
+     for `≥N`-of-a-type (and the `CITY`/`TEAM` count tokens) — the point where readJson consumes the live tally machine.
+   - Remaining gap buckets: (b) plot-`TagTypes`, (c) city/player-state predicates, (d) GOM-less kinds, (e) `dormant`.
 3. **Modifier families** — the deposit-address parse (`<family>.<scope>[.…].<unit>`) + the ×100 leaf conversion + the
    `enabled`/`disabled`/`per` conditioning. This is what the **modifier** machine consumes; cross-check leaf values
    against StoneBase.
