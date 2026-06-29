@@ -5,8 +5,8 @@ description: >
   from the running game's HTTP endpoints (127.0.0.1:7227) or from the game logs and report back — instead of pulling
   raw dumps into an expensive (Opus/Sonnet) context. It curls/greps, parses, AGGREGATES, and returns a COMPACT
   distilled summary (counts, histograms, divergence cause-tags, anomalies) — never the raw bytes. Examples: "summarize
-  /diagnostic/placementSweep divergences for player 1", "histogram the [PLACEMENT] lines in Cascade.log this session",
-  "what's diverging in /diagnostic/sweep?type=buildings and why". Reading the full data is its job, so the big tokens
+  /computed/cities/yields for player 1's cities", "which buildings are dormant in /state/cities?player=0",
+  "what's diverging in the StoneBase /parity/commerce/sweep and why". Reading the full data is its job, so the big tokens
   burn on Haiku, not on the orchestrator. ALWAYS prefer this over reading endpoint/log output directly.
 tools: Bash, Read, Grep, Glob
 model: haiku

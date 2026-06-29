@@ -41,8 +41,9 @@ Every observability hook is one of these — cheap, gated, **off by default**:
 1. **Snapshot field** — a read-only field on the `/players` | `/cities` | `/units` snapshot (a game-thread copy).
 2. **Gated `[TAG]` log line** — emitted under a log-level gate (`gPlayerLogLevel`/`gCityLogLevel`/…) and teed to
    `/events` so it streams live.
-3. **Mailbox `/diagnostic/*` endpoint** — an on-demand snapshot computed on the game thread (the
-   `/diagnostic/sweep` pattern), depending on **no** log file or gate.
+3. **Mailbox snapshot endpoint** — an on-demand snapshot computed on the game thread via the single-slot mailbox (the
+   `/state/*` + `/computed/*` pattern), depending on **no** log file or gate. *(The old `/diagnostic/*` sweep names are
+   retired — split into `/state` + `/computed`; see [http-endpoints.md](http-endpoints.md).)*
 
 The redesigned endpoint catalogue is [http-endpoints.md](http-endpoints.md).
 
@@ -65,7 +66,7 @@ the C++ shape — is specced in [event-spine.md](event-spine.md).
 
 The two reliable live reads:
 
-- **`/diagnostic/*` endpoints** — an on-demand snapshot via the game-thread mailbox; depends on no log file and
+- **`/state/*` + `/computed/*` endpoints** — an on-demand snapshot via the game-thread mailbox; depends on no log file and
   no gate. The most reliable read — when in doubt about a value, hit the endpoint.
 - **`/events` SSE stream** — the gated `[TAG]` lines, live. The per-turn shadow lines burst at the **top of
   `doTurn`**, so you must **connect *before* the turn ticks** (connect-then-end-turn).

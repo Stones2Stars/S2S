@@ -15,8 +15,8 @@ engine's actual output**. Our calculator is the test; the engine is the oracle.
 
 - **Inputs** — the curated `Assets/Data/**` JSON + the raw game state from [`/state`](http-endpoints.md)
   (raw inputs only, no computed outputs).
-- **Oracle** — the engine's actual values from [`/extractor`](http-endpoints.md) (the yield-loaded state) and the
-  [`/can/*`](http-endpoints.md) gate queries.
+- **Oracle** — the engine's actual values from [`/computed/*`](http-endpoints.md): the per-source yield/commerce
+  decomposition (`/computed/cities/yields`) + the `/computed/can*` gate verdicts.
 - **Bar — PARITY, full stop (owner ruling 2026-06-23).** Per entity/instance, **0 in-scope mismatches** — *exact*,
   not "close / same ballpark." There is **no tolerance band and no agent grading of acceptability** — that framing
   (and the retired six-rung "care scale") was constantly abused to wave a mismatch through as good-enough. No bug has
@@ -59,7 +59,7 @@ engine's actual output**. Our calculator is the test; the engine is the oracle.
 The dry-calc is implemented as **StoneBase** (the `Sources`-mirroring .NET cascade at `http://localhost:8229`): it
 loads the curated `Assets/Data/**` JSON + the live `/state`, rebuilds the cascade with a typed, layered model
 (Domain `Condition` → `IConditionEvaluator` → `BuildingCascade`), and diffs its verdict against the engine oracle
-(`/computed/canConstruct`, `/extractor`). **StoneBase is THE — and only — validator** (owner ruling 2026-06-25).
+(`/computed/canConstruct`, `/computed/cities/yields`). **StoneBase is THE — and only — validator** (owner ruling 2026-06-25).
 
 > **⛔ StoneBase FOLLOWS the spec — the authority chain is strictly ONE-WAY (owner ruling 2026-06-25).** The flow is
 > **SPEC → StoneBase → engine-oracle**, never reversed. The spec leads; StoneBase *implements* it (it is the
@@ -99,10 +99,13 @@ so it was curated-JSON spec-alignment, not new machinery. The semantics this sur
 *(Per the rule below, sweep pass/divergence numbers stay in the run, never in this doc.)*
 
 ## The shadow (the live counterpart)
-The dry-calc above is the **offline** test. Its **in-game** twin is the **shadow**: each legacy behaviour gets a
-surface (a `/shadow/*` endpoint + a per-turn `[TAG]` line via the [event spine](event-spine.md)) that computes the
-**cascade's** answer and diffs it against the **live engine's**, turn over turn, per scope-instance, **decomposed to
-named sources**. The legacy stays authoritative until its shadow is **clean (parity)**; then it is cut at an
+The dry-calc above is the **offline** PARITY leg (external StoneBase vs `/computed`). Its **in-game** twin is the
+**SHADOW**: each legacy behaviour gets a per-turn `[TAG]` diff line via the [event spine](event-spine.md) that computes
+the **cascade's** answer and diffs it against the **live engine's**, turn over turn, per scope-instance, **decomposed to
+named sources**. These are **two distinct legs, never mixed** — PARITY is a separate process (StoneBase vs `/computed`);
+SHADOW is in-DLL (cascade-vs-legacy via the spine/gated logging). *(There is **no `/shadow/*` endpoint** — an earlier
+attempt conflated the two legs into one route surface and was retired; the shadow rides the gated logging, not a
+dedicated endpoint.)* The legacy stays authoritative until its shadow is **clean (parity)**; then it is cut at an
 **atomic** cutover, never piecemeal. **Attribute, never guess:** a divergence is mapped to a named source with
 numbers on both sides — if the data to attribute it isn't emitted, the first step is to emit it (the
 [logging](logging.md) observability bar is the prerequisite).
@@ -135,6 +138,6 @@ the same spine, with a value outcome instead of a true/false. The only live-vs-d
 events carry the turn; the dry replay doesn't, and the cascade doesn't consume it).
 
 ## See also
-- [http-endpoints.md](http-endpoints.md) — `/state` (inputs) vs `/extractor` (oracle); the verification flow.
+- [http-endpoints.md](http-endpoints.md) — `/state` (inputs) vs `/computed` (oracle); the verification flow.
 - [enabler.md](enabler.md) · [modifier.md](modifier.md) · [tally.md](tally.md) — the machines this rebuilds and proves.
 - [event-spine.md](event-spine.md) — the per-turn `[TAG]` events the shadow reads from. [logging.md](logging.md) — the observability surface those events ride.

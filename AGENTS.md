@@ -166,14 +166,16 @@ re-sweep, try another) is the anti-pattern this rule kills: build the complete m
   agents EVERY time).** While the game is running, `Documents/My Games/Beyond The Sword/Logs/*.log` (incl. `Cascade.log`,
   `BuildEvaluation.log`, …) are held open by the process, so tailing/reading them mid-session is unreliable and gives
   stale/empty/partial results — do **not** do it, and do **not** infer "logging is off" from a quiet log file. The live
-  reads are: **(1) the `/events` SSE stream** (`curl -sN http://127.0.0.1:7227/events`) — but the per-turn shadow lines
-  (`[MODSHADOW]`/`[PLACEMENT]`/`[DORMANCY]`/`[STATE/*]`/`[READJSON]`) **burst at the TOP of `doTurn`, so you must be
-  CONNECTED BEFORE the turn ticks** (connect-then-end-turn); and **(2) the `/diagnostic/*` endpoints** (e.g.
-  `/diagnostic/modifierSweep`, `/diagnostic/sweep`), which compute an on-demand snapshot via the mailbox and **do NOT
-  depend on `gPlayerLogLevel` or on any log file** — the most reliable read, no timing games. Gates are separate:
-  `gPlayerLogLevel ≥ 1` makes the per-turn shadows *generate* their lines (to `Cascade.log`), and the `/events` tee is a
-  *further* gate — so a line can be in `Cascade.log` yet absent from `/events`. When in doubt about a magnitude/state,
-  hit the endpoint, not the log.
+  reads are: **(1) the `/events` SSE stream** (`curl -sN http://127.0.0.1:7227/events`) — the gated per-turn `[TAG]`
+  lines (the surviving AI-trace domains, e.g. `[STATE/game]`; ⚠ the cascade-shadow tags
+  `[MODSHADOW]`/`[PLACEMENT]`/`[DORMANCY]`/`[READJSON]` were the PURGED prototype's and **no longer emit**) — which
+  **burst at the TOP of `doTurn`, so you must be CONNECTED BEFORE the turn ticks** (connect-then-end-turn); and
+  **(2) the on-demand mailbox-snapshot endpoints `/computed/*` + `/state/*`**, which compute a game-thread snapshot via
+  the single-slot mailbox and **do NOT depend on `gPlayerLogLevel` or on any log file** — the most reliable read, no
+  timing games (⚠ the old `/diagnostic/*` sweep endpoints were RETIRED → split into `/state`+`/computed`, see
+  `docs/specs/http-endpoints.md`). Gates are separate: `gPlayerLogLevel ≥ 1` makes the per-turn `[TAG]` lines
+  *generate* (to the per-domain `.log`), and the `/events` tee is a *further* gate — so a line can be in the log yet
+  absent from `/events`. When in doubt about a magnitude/state, hit the endpoint, not the log.
 - **The events + logging + diagnostics must make the running game FULLY surveilled (owner ruling 2026-06-18).** The
   bar: *map an accurate game state purely from the endpoints + `/events` + the gated logs — open the game, but never
   look at the SCREEN.* This is **non-negotiable and load-bearing**, not polish: it is the ONLY way to reliably REBUILD
@@ -181,8 +183,9 @@ re-sweep, try another) is the anti-pattern this rule kills: build the complete m
   (map-before-delete). Every state behaviour (enabler-spec §14 H) gets a SHADOW that diffs the cascade's verdict
   against the live engine, turn over turn, until clean — *then* the legacy mechanism is deleted. Full ruling +
   rationale: `docs/specs/validation.md` §1 + `docs/specs/logging.md` §7.
-  Live surface: `docs/reference/observability.md`
-  (`/diagnostic/*` shadows incl. `sweep`/`placementSweep`; `[READJSON]`/`[PLACEMENT]` per-turn log lines).
+  Live surface: `docs/specs/http-endpoints.md` (the live `/state` + `/computed` + `/events` surface) +
+  `docs/reference/observability.md`. ⚠ The `/diagnostic/*` sweeps + the `[MODSHADOW]`/`[PLACEMENT]`/`[READJSON]`
+  cascade-shadow tags are GONE (purged prototype); only `CvEventSpine` (AI-trace `[TAG]` logging) survives.
 - **Delegate DATA-READING to the cheap `data-reader` sub-agent — never pull raw endpoint/log dumps into an expensive
   context (owner ruling 2026-06-18).** Reading the live surface at scale (a `placementSweep`/`sweep` dump is tens of KB;
   logs are larger) *"will nuke credits"* if the Opus/Sonnet orchestrator ingests the raw bytes. Use the read-only

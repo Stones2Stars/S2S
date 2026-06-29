@@ -107,7 +107,7 @@ The in-tree tooling this doc deliberately does **not** restate — go to its own
   The `readjson` harness (`Tools/ReadJson/`) is the in-DLL JSON loader's offline driver, exercised by the
   same value-verification flow.
 - [`observability.md`](observability.md) — **the live surveillance surface** the crash/known-
-  issue debugging reads against (HTTP `127.0.0.1:7227`, `/events`, `/diagnostic/*`,
+  issue debugging reads against (HTTP `127.0.0.1:7227`, `/events`, `/state/*` + `/computed/*`,
   gated logs) → [DEC-obs-scale](../architecture/decisions.md#dec-obs-scale). Delegate bulk data reads to the
   `data-reader` sub-agent rather than pulling raw dumps into context.
 - [`../README.md`](../README.md) — the comprehension map (where every subsystem doc lives).
