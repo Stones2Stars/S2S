@@ -77,6 +77,64 @@ negative→bad). Authors write signed values; the mode wires the combiner.
 
 ---
 
+## 2a. The realized RATE — what is BASE, what is added AFTER the percentages
+
+The §2-combine above is the *generic* slot. A city's **per-channel yield/commerce RATE** — the engine's
+`getYieldRate100` (§1) and `getCommerceRateTimes100` (§2), the value a citizen's worked output finally becomes — is
+that combine applied with a **sharp two-tier shape**. This is the model the rate computation must reproduce, and the
+order is load-bearing (it decides what the percent stack scales and what it doesn't):
+
+> **`rate100 = (BASE + specialists) × modifier⁄100  +  100 × ⌊EXTRA100 ⁄ 100⌋`**
+>
+> `modifier = max(0, 100 + Σpercent)` (so `×modifier⁄100` ≡ `×(1 + Σ%)`). Everything is ×100 fixed-point integer.
+
+### TIER 1 — BASE (everything the percent stack MULTIPLIES)
+
+| BASE source | origin | base vs computed |
+|---|---|---|
+| **worked-plot yields** (`basePlotYield`) | Σ over the city's worked plots of each plot's ONE isolated base package (§2 plot-as-base): `max(0, terrain+feature+bonus)` nature + improvement (floored at −nature) + route + keyed building/civic/trait `plot`-flats + `plots`-target + city-centre constant + threshold/golden-age per-plot | **computed** from the curated plot substrate + `/state/plots` |
+| **trade-route yield** (`tradeYield`) | `/state` input | **input** — out-of-scope (the trade network); the calc *folds it in*, never derives it. The ONE live-yield input (see [http-endpoints](http-endpoints.md)) |
+| **free-city yield** (`freeCityYield`) | Σ the player's active traits' `YieldChanges` (`{ch}.empire.flat`) | **computed** (was a `/state` read; now derived — [http-endpoints](http-endpoints.md)) |
+| **golden-age yield** | trait `goldenAge` member (`{ch}.empire.goldenAge.flat`) while in golden age | **computed** (`empire.goldenAge` member-mirror, §3 golden-age carve-out) |
+| **specialist yields** (`specialist`) | per assigned specialist: `intrinsic × (100 + specialist-%)⁄100` + building-local (gated `city.flat`) + per-type (`empire.flat`) + perAll + trait governing-deliverer | **computed**. NOTE the specialist carries its **own** percent layer (its intrinsic ×`(100+specialist-%)`) *before* it joins BASE and takes the city `modifier` — two distinct percent stacks |
+
+### TIER 2 — EXTRA (flat, added AFTER the percentages, NEVER multiplied)
+
+| EXTRA source | origin |
+|---|---|
+| **building flat yields** (`BuildingFlatYield100`) | Σ active (non-dormant) buildings' `{ch}.city.flat` + `{ch}.city.perPopulation` × population |
+
+The EXTRA is held ×100; the `100 × ⌊EXTRA100⁄100⌋` **truncates it to whole units** before re-scaling (the engine's
+`getExtraYield100` order — a documented integer-truncation gotcha, not a rounding choice).
+
+> For **§2 commerce** the same two-tier shape holds with the channel's own pieces: BASE = the COMMERCE-yield
+> (`getYieldRate100(COMMERCE)`) × the channel slider + the §2 baseExtra sub-terms (religion, corporation, golden-age,
+> state-religion pool, player-extra, the building-commerce block); EXTRA (post-modifier) = `production × prodToCommerce`.
+> The building-commerce block is itself a pure per-building sum (own-flat + tech + bonus + perPop + shrine + corp-HQ +
+> the `CommerceChangeDoubleTime` whole-doubling). Civil disorder forces the whole rate to 0 before any of this.
+
+### How the percentages "smash together" — ONE additive stack
+
+`modifier` is **a single additive sum** — every active source's `{channel}.<scope>.percent`, added together, then
+`max(0,·)`:
+
+- **active buildings** (this city, non-dormant): `city.percent` + `area.percent`
+- **empire buildings** (every building the player owns anywhere — rolls DOWN to each city): `empire.percent`
+- **adopted civics**: `empire.percent`
+- **the player's active traits** (the option-selected set, pure-filtered §4): `empire.percent`
+- **projects** (commerce channels only; yields find none): `empire.percent`
+
+They are **purely additive** — `+30% +20% −10% = +40%`, applied **once** as `×140⁄100`. The engine keeps these in
+*separate accumulators* (`modBuilding`, `modPlayer`, `modCapital`, `modBonus`, `modFromBuildings`, …); the cascade
+**unifies them into this one sum** because addition is associative — the per-accumulator split changes nothing the
+result can see. `multiplier` deposits (`Π(multiplier⁄100)`, §2) exist in the generic model but are **identity here**:
+no yield/commerce source authors a multiplier, so the stack is additive-only and matches legacy exactly.
+
+The two tiers + the single additive stack ARE the coherent shape: a BASE assembled from its sources, scaled **once**
+by the unified percent total, with the building FLATs bolted on **after** — never inside — the percentages.
+
+---
+
 ## 3. Conditioning — re-evaluated every recompute (the dormancy model)
 
 A deposit may carry `enabled` / `disabled` / `per` ([json](json.md) §3.7, §3.9). A deposit's condition uses the
