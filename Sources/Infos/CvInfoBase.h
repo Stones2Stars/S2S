@@ -23,6 +23,7 @@
 #include "Infrastructure/BoolExpr.h"
 //#include "Infrastructure/IntExpr.h"
 #include "Infrastructure/IDValueMap.h"
+#include "Cascade/CvCascadeData.h"   // #430: the JSON-mapped cascade data hung off every info (m_pCascade)
 #include <boost/python/list.hpp>
 
 extern bool shouldHaveType;
@@ -91,6 +92,11 @@ public:
 	virtual void getCheckSum(uint32_t&) const { }
 	virtual void doPostLoadCaching(uint32_t) { }
 	virtual const wchar_t* getExtraHoverText() const { return L""; }
+
+	// #430 cascade data, mapped from this entity's curated JSON by readJson (the mapping/cutover model). PUBLIC by
+	// design during the build/shadow phase (owner 2026-06-29 — encapsulation would only add read-only, deferred to
+	// cutover). NULL until mapped; owns its BoolExpr trees; freed in ~CvInfoBase.
+	CvCascadeData* m_pCascade;
 
 protected:
 

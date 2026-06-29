@@ -28,14 +28,16 @@
 //
 //------------------------------------------------------------------------------------------------------
 CvInfoBase::CvInfoBase() :
-m_bGraphicalOnly(false)
+m_bGraphicalOnly(false),
+m_pCascade(NULL)
 {
 }
 
 
 CvInfoBase::CvInfoBase(const char* szType) :
 m_bGraphicalOnly(false),
-m_szType(szType)
+m_szType(szType),
+m_pCascade(NULL)
 {
 }
 
@@ -49,6 +51,7 @@ m_szType(szType)
 //------------------------------------------------------------------------------------------------------
 CvInfoBase::~CvInfoBase()
 {
+	delete m_pCascade;   // #430: free the JSON-mapped cascade data (NULL if never mapped)
 }
 
 
