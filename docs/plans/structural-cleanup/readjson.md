@@ -148,7 +148,19 @@ add real handling per `json.md` §5 (grants: lists, numeric pulses, `foundBuildi
      798 → 10** (the building/unit thresholds now map; the 10 are non-tally-domain counts). EMPIRE scope; team/world
      rollup, city-local, the `CITY`/`TEAM` tokens, and non-building/unit domains remain follow-ons. NOT yet evaluated
      in a live gate (the enabler is later) — the probe builds + renders it.
-   - Remaining gap buckets: (b) plot-`TagTypes`, (c) city/player-state predicates, (d) GOM-less kinds, (e) `dormant`.
+   - **Gap-closing (2.e) ✅** — the structural **`dormant`** clause (`requires.operate.dormant: X`, enabler.md §3 /
+     json.md §4.3): "go dormant WHILE X present" → the clause contributes `AND NOT(trigger)`. `rj_translateClause`
+     peels `dormant` (it is NOT a predicate — it was being mis-surveyed as one), folds `Not(translate(trigger))`, and
+     handles it as a sibling of `all`/`any`, the sole key, or a tree (the unit `requires.build.dormant.all`).
+     **Verified live: `dormant` gap GONE, unmappedKinds 35→34, fullyMapped +530** (the trigger leaves now map).
+   - **Remaining gaps are by design, NOT readJson's to close** (re-grounded against json.md §3.5 + enabler.md §3.1):
+     an unknown predicate is **ignored, never false** (so an unmapped leaf is spec-correct), and predicate EVALUATION
+     belongs to the **enabler** machine (it evaluates conditions against the `CvGameObject` target), not readJson's
+     translation. Buckets **(b)** plot relief/adjacency (`HAS_RIVER`/`HAS_IRRIGATION`/`HAS_FEATURE`/`HAS_COAST{minArea}`)
+     + **(d)** `MAPCATEGORY_*` are **spec-flagged in-flight** (json.md line 212 — "not yet fully fleshed out,
+     space-map-related"); **(c)** city/player-state (`HAS_POWER`/`STATE_RELIGION`/…) + `CULTURELEVEL_*`/`VICTORY_*` +
+     `CITY`/`TEAM`/`latitude`/`natureYield` are predicate-evaluator work that lands with the enabler. Do NOT extend
+     `TagTypes` speculatively for these.
 3. **Modifier families** — the deposit-address parse (`<family>.<scope>[.…].<unit>`) + the ×100 leaf conversion + the
    `enabled`/`disabled`/`per` conditioning. This is what the **modifier** machine consumes; cross-check leaf values
    against StoneBase.

@@ -336,6 +336,28 @@ static const BoolExpr* rj_translate(const picojson::value& v, RjCondStats& st)
 	return new BoolExprConstant(true);
 }
 
+// INCREMENT 2.e: a requires.build / requires.operate CLAUSE -- the positive condition tree PLUS the structural
+// `dormant` sub-key (enabler.md §3 / json.md §4.3). `requires.operate.dormant: X` = "go dormant WHILE X is present":
+// the clause is operable only while the trigger is ABSENT, so it contributes `AND NOT(trigger)`. `dormant` is NOT a
+// predicate (it was being mis-surveyed as one) -- it is peeled here and the trigger folded as Not(...). It may sit
+// beside all/any/noneOf, be the sole key, or itself hold a tree (the unit `requires.build.dormant.all` of upgrades).
+static const BoolExpr* rj_translateClause(const picojson::value& v, RjCondStats& st)
+{
+	if (!v.is<picojson::object>()) return rj_translate(v, st);   // a bare-string clause (e.g. a single predicate)
+	const picojson::object& o = v.get<picojson::object>();
+	picojson::object::const_iterator dm = o.find("dormant");
+	bool bHasPositive = false;
+	for (picojson::object::const_iterator it = o.begin(); it != o.end(); ++it)
+		if (it->first != "dormant") { bHasPositive = true; break; }
+	const BoolExpr* positive = bHasPositive ? rj_translate(v, st) : NULL;   // all/any/noneOf/atom (ignores the dormant sibling)
+	if (dm != o.end())
+	{
+		const BoolExpr* notDorm = new BoolExprNot(rj_translate(dm->second, st)); // operable only while the trigger is absent
+		positive = positive ? (const BoolExpr*)new BoolExprAnd(positive, notDorm) : notDorm;
+	}
+	return positive ? positive : (const BoolExpr*)new BoolExprConstant(true);
+}
+
 void cascadeReadJsonProbe()
 {
 	static bool s_done = false;
@@ -396,7 +418,7 @@ void cascadeReadJsonProbe()
 			{
 				++iConds;
 				const int beforeGaps = cond.unmappedPred + cond.countThreshold;
-				const BoolExpr* e = rj_translate(sub->second, cond);
+				const BoolExpr* e = rj_translateClause(sub->second, cond); // 2.e: peels the structural `dormant` sub-key
 				if (cond.unmappedPred + cond.countThreshold == beforeGaps) ++iCondsFull; // every leaf mapped, no deferred
 				if (iCondSample < 6 && e != NULL)
 				{
