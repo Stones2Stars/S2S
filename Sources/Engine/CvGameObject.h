@@ -142,6 +142,7 @@ class CvGameObjectPlayer : public CvGameObject
 {
 public:
 	explicit CvGameObjectPlayer(CvPlayer* pPlayer);
+	CvPlayer* getPlayer() const { return m_pPlayer; }   // #430: the wrapped player, for the cascade tally-count IntExpr
 	virtual GameObjectTypes getGameObjectType() const;
 	virtual CvProperties* getProperties() const;
 	virtual const CvProperties* getPropertiesConst() const;

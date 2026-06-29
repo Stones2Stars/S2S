@@ -142,8 +142,12 @@ add real handling per `json.md` §5 (grants: lists, numeric pulses, `foundBuildi
      `HEALTH`/`HAPPINESS` → `IntExprAttribute`, each compared `≥min` (`BoolExprGreaterEqual`) / `≤max`
      (`Not(BoolExprGreater)`) / both (`And`); via the existing engine `IntExpr` leaves. Removes the `PROPERTY_*` +
      `POPULATION` gaps.
-   - **Gap-closing (2.b) ⏭** — the **cross-city TALLY-backed count**: a fresh `IntExpr` leaf reading `cascadeTally()`
-     for `≥N`-of-a-type (and the `CITY`/`TEAM` count tokens) — the point where readJson consumes the live tally machine.
+   - **Gap-closing (2.b) ✅** — the **cross-city TALLY-backed count**: a fresh `IntExprCascadeCount` leaf reads
+     `cascadeTally()` for the evaluated object's owner (`CvGameObjectPlayer::getPlayer()`, a new accessor) — `≥N`-of-a-
+     building/unit-type → `BoolExprGreaterEqual`/`Not(Greater)` over the tally count. **Verified live: countThresholds
+     798 → 10** (the building/unit thresholds now map; the 10 are non-tally-domain counts). EMPIRE scope; team/world
+     rollup, city-local, the `CITY`/`TEAM` tokens, and non-building/unit domains remain follow-ons. NOT yet evaluated
+     in a live gate (the enabler is later) — the probe builds + renders it.
    - Remaining gap buckets: (b) plot-`TagTypes`, (c) city/player-state predicates, (d) GOM-less kinds, (e) `dormant`.
 3. **Modifier families** — the deposit-address parse (`<family>.<scope>[.…].<unit>`) + the ×100 leaf conversion + the
    `enabled`/`disabled`/`per` conditioning. This is what the **modifier** machine consumes; cross-check leaf values

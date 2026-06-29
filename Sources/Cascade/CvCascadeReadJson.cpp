@@ -10,6 +10,9 @@
 #include "Defines/CvGlobals.h"         // GC.getInfoTypeForString -- the type registry (FK resolution)
 #include "Infrastructure/BoolExpr.h"   // the translation target (And/Or/Not/Has/Is) -- the engine's condition evaluator
 #include "Infrastructure/IntExpr.h"    // value atoms: IntExprProperty / IntExprAttribute / IntExprConstant (count/band)
+#include "Engine/CvGameObject.h"       // CvGameObjectPlayer -- the evaluated object's owner (2.b tally-count leaf)
+#include "Engine/CvPlayer.h"           // CvPlayer::getID -- the tally key
+#include "CvCascadeTally.h"            // cascadeTally() -- the cross-city count source (the live tally machine)
 #include <fstream>
 #include <sstream>
 #include <vector>
@@ -175,6 +178,44 @@ static const BoolExpr* rj_valueBand(PropertyTypes eProp, AttributeTypes eAttr, b
 	return new BoolExprGreaterEqual(rj_makeVal(eProp, eAttr), new IntExprConstant(1));
 }
 
+// INCREMENT 2.b: the tally-backed COUNT IntExpr -- the cross-city (empire) count of a building|unit type for the
+// evaluated object's owner, read from the live cascade TALLY (the count machine). This is where readJson consumes the
+// tally. EMPIRE scope (the tally's domain); team/world rollup, city-local counts, and non-building/unit domains are
+// follow-ons (return 0 until added). NOT YET evaluated in a live gate (the enabler that uses it is a later increment);
+// the probe only builds + renders it, so its evaluate() is dormant for now -- written correct + null-guarded regardless.
+class IntExprCascadeCount : public IntExpr
+{
+public:
+	IntExprCascadeCount(GOMTypes eGOM, int iID) : m_eGOM(eGOM), m_iID(iID) {}
+	virtual int evaluate(const CvGameObject* pObject) const
+	{
+		if (pObject == NULL) return 0;
+		CvGameObjectPlayer* pOwner = pObject->getOwner();
+		if (pOwner == NULL || pOwner->getPlayer() == NULL) return 0;
+		const int iPlayer = pOwner->getPlayer()->getID();
+		if (m_eGOM == GOM_BUILDING) return cascadeTally().buildingCount(iPlayer, m_iID);
+		if (m_eGOM == GOM_UNITTYPE) return cascadeTally().unitCount(iPlayer, m_iID);
+		return 0; // domain not in the tally yet
+	}
+	virtual void getCheckSum(uint32_t& iSum) const { iSum = iSum * 31u + (uint32_t)m_eGOM; iSum = iSum * 31u + (uint32_t)m_iID; }
+	virtual void buildDisplayString(CvWStringBuffer& szBuffer) const { szBuffer.append(CvWString(L"tallyCount")); }
+	virtual int getBindingStrength() const { return 100; }
+private:
+	GOMTypes m_eGOM;
+	int m_iID;
+};
+
+// A count band over the tally-backed count leaf (fresh leaf per comparison -- BoolExprComp owns + deletes its operands).
+static const BoolExpr* rj_countBand(GOMTypes eGOM, int iID, bool bMin, int iMin, bool bMax, int iMax)
+{
+	const BoolExpr* lo = bMin ? (const BoolExpr*)new BoolExprGreaterEqual(new IntExprCascadeCount(eGOM, iID), new IntExprConstant(iMin)) : NULL;
+	const BoolExpr* hi = bMax ? (const BoolExpr*)new BoolExprNot(new BoolExprGreater(new IntExprCascadeCount(eGOM, iID), new IntExprConstant(iMax))) : NULL;
+	if (lo && hi) return new BoolExprAnd(lo, hi);
+	if (lo) return lo;
+	if (hi) return hi;
+	return new BoolExprGreaterEqual(new IntExprCascadeCount(eGOM, iID), new IntExprConstant(1));
+}
+
 static const BoolExpr* rj_translate(const picojson::value& v, RjCondStats& st);
 
 // Left-fold a child list with binary And/Or. Empty all->true, empty any->false (identity elements).
@@ -245,9 +286,19 @@ static const BoolExpr* rj_translate(const picojson::value& v, RjCondStats& st)
 			++st.leaves; ++st.mapped;
 			return rj_valueBand(NO_PROPERTY, attr, bMin, iMin, bMax, iMax);
 		}
-		// a real INFOTYPE: presence -> Has; a count threshold (>=N>1 / <=max) is the cross-city TALLY-backed count
-		// (the new IntExpr leaf, increment 3b) -- recorded + presence-approximated for now.
-		if ((bMin && iMin > 1) || bMax) ++st.countThreshold;
+		// a real INFOTYPE: a count THRESHOLD (>=N>1 / <=max) over a tally domain (building|unit) -> the tally-backed
+		// count leaf (2.b); a plain presence (min:1 / unbounded) -> Has; a count over a non-tally domain stays deferred.
+		if ((bMin && iMin > 1) || bMax)
+		{
+			const GOMTypes cgom = rj_gomForType(atype);
+			const int cid = GC.getInfoTypeForString(atype.c_str(), true);
+			if ((cgom == GOM_BUILDING || cgom == GOM_UNITTYPE) && cid >= 0)
+			{
+				++st.leaves; ++st.mapped;
+				return rj_countBand(cgom, cid, bMin, iMin, bMax, iMax);
+			}
+			++st.countThreshold;   // count over a non-tally domain (tech/civic/…) -- still deferred
+		}
 		return rj_leafType(atype, st);
 	}
 	if (o.size() == 1)                                                          // membership {t|f|b:[…]} OR {PRED:param}
