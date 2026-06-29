@@ -27,12 +27,18 @@ defines the shape. One shape, parsed here, read by tally/modifier/enabler.
 
 ---
 
-## 2. The grammar reference — mirror the proven harness, emit `BoolExpr` instead of text
+## 2. The grammar reference — mirror `json.md` + StoneBase's parser, emit `BoolExpr` + fresh structures
 
-`Tools/ReadJson/readjson.cpp` (487 lines, C++03, picojson) already walks the **entire** authoring grammar offline. The
-in-DLL `readJson` mirrors its **traversal** but replaces its text renderer with a `BoolExpr`/fresh-structure builder.
+**The authoritative grammar reference is [`json.md`](../../specs/json.md) + StoneBase's live parser** (`ConditionParser`,
+`ModifierFamilyParser`, the typed `Condition`/`ModifierFamily` model + the `/render` renderer) — the spec-current,
+parity-proven model the C++ port is the blueprint *of*. **The C++ `Tools/ReadJson/readjson.cpp` harness is FROZEN**
+(owner ruling 2026-06-29 — its render role moved to StoneBase `/render`, its conformance role is done) and is **stale**
+(its `any` is the retired OR-of-AND-groups shape). Use it ONLY as a **C++03/picojson traversal skeleton** reference —
+never as the grammar truth; follow `json.md` + StoneBase on every shape.
 
-**Lift directly (the harness is the authoritative grammar surface):**
+The in-DLL `readJson` mirrors that traversal but emits a `BoolExpr` tree + fresh runtime structures (not text).
+
+**Lift the SKELETON only (the frozen harness as a C++03/picojson example):**
 - The **picojson traversal idiom** (`v.is<picojson::object>()` / `.get<>()` / `picojson::array` walks; the `mget`
   safe-lookup at `readjson.cpp:267`) — the DLL already links picojson (via the PCH umbrella `CvGameCoreDLL.h:310`,
   header `Sources/include/picojson.h`), so the parse + traversal skeleton ports unchanged.
@@ -94,8 +100,10 @@ add real handling per `json.md` §5 (grants: lists, numeric pulses, `foundBuildi
 
 ## 4. Validation — the same two legs, never mixed
 
-- **Intent surface (offline):** `readjson.exe --render TYPE` (the harness, `readjson.cpp:325`) states in plain English
-  what a file *says* it does. Keep it current for entities under active wiring — it is the third leg beside the two below.
+- **Intent surface:** StoneBase **`GET /render?type=<TYPE>`** (`src/Application/Features/Render/RenderEntity.cs`) states
+  in plain English what a file *says* it does (enables / requires / allowed / modifiers / cost) — the modder "is this
+  what I meant?" check + pedia seed, read from the same parsed model the cascade uses. (This replaces the frozen
+  `readjson.exe --render`; §2.) It is the third leg beside the two below.
 - **PARITY (offline):** StoneBase already validates the curated JSON → cascade values vs `/computed` to the cent
   (yields/commerce). `readJson` feeding the in-engine machines must reproduce the SAME values StoneBase computes from
   the SAME JSON — StoneBase is the blueprint.
