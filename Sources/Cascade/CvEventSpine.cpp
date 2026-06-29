@@ -5,6 +5,7 @@
 
 #include "CvGameCoreDLL.h"
 #include "CvEventSpine.h"
+#include "CvCascadeTally.h"   // the SELECTIVE DOMAIN consumer (counts) registered at the composition root below
 #include "AI/BetterBTSAI.h"   // gPlayerLogLevel (reused as the slice-1 gate; dedicated gate/BUG option + the live
                            // CvHttpServer feed come next)
 #include "Defines/CvGlobals.h"        // GC -- resolve raw Type indices to readable names in the (gated) consumer
@@ -297,9 +298,11 @@ void cascadeRegisterConsumers()
 		return;
 	}
 	s_bRegistered = true;
+	// The poor-man's-DI composition root: the BROAD logging consumer + the SELECTIVE tally (DOMAIN counts only).
 	eventSpine().registerConsumer(&s_cascadeLogConsumer);
-	// (The cascade tally was the first DOMAIN consumer; it + the rest of the shadow cascade were the initial
-	// prototype, removed pending a proper BoolExpr-routed readJson. Only the logging consumer remains here.)
+	eventSpine().registerConsumer(&cascadeTally());
+	// The tally is SEEDED from the loaded objects by cascadeTally().rebuild() at onFinalInitialized (every load),
+	// then maintained incrementally by the DOMAIN count events; its shadow runs per-turn in CvGame::doTurn.
 }
 
 void cascadeEmitNameChange(int iKind, int iOwner, int iEntityId)

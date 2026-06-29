@@ -11,6 +11,7 @@
 #include "CvCity.h"
 #include "UI/CvEventReporter.h"
 #include "CvEventSpine.h"
+#include "CvCascadeTally.h"
 #include "AI/CvGameAI.h"
 #include "Defines/CvGlobals.h"
 #include "Tools/CvHttpServer.h"
@@ -620,10 +621,11 @@ void CvGame::onFinalInitialized(const bool bNewGame)
 		}
 	}
 
-	// #430 event spine -- register the logging consumer (the poor-man's-DI composition root) so DOMAIN events
-	// stream to Cascade.log + /events. (The shadow cascade + its tally were the initial prototype, removed
-	// pending a proper BoolExpr-routed readJson; only the spine logging remains.)
+	// #430 event spine -- register the cascade consumers at the poor-man's-DI composition root (logging + the tally),
+	// then SEED the tally from the loaded objects (every load; the tally serializes nothing -- tally.md §4). DOMAIN
+	// events keep it in step thereafter; its per-turn shadow runs in doTurn.
 	cascadeRegisterConsumers();
+	cascadeTally().rebuild();
 
 	OutputDebugString("onFinalInitialized: End\n");
 }
@@ -5823,6 +5825,11 @@ void CvGame::doTurn()
 	// it was the initial prototype, built on the botched AND-of-ORs predicates; pure shadow over the live engine,
 	// so removing it reverts to engine behaviour. To be redesigned properly (JSON parsed through BoolExpr) after
 	// the dry-calc (StoneBase) validation is done. Spine logging stays (registered above).
+	//
+	// #430 TALLY shadow -- the first machine of the rebuilt cascade, re-introduced on a proper footing (tally.md):
+	// diff the event-maintained counts vs the live engine each turn as a gated [TALLY] line (cascade-vs-legacy).
+	// Pure shadow -- gated off in normal play, no behaviour change.
+	cascadeTallyShadow();
 
 	//	Turn-boundary accounting for the frame-driven span the doTurn tree does not cover:
 	//	turn.wall is the true wall-clock between consecutive turn boundaries (what a player's
