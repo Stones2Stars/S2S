@@ -36,10 +36,8 @@
    ]
   }
  },
- "extraWaterSeeFrom": {
-  "team": {
-   "enabler": true
-  }
+ "capabilities": {
+  "extraWaterSeeFrom": true
  },
  "cost": {
   "research": 1445

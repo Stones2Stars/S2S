@@ -22,10 +22,8 @@
    ]
   }
  },
- "mapTrading": {
-  "team": {
-   "enabler": true
-  }
+ "capabilities": {
+  "mapTrading": true
  },
  "cost": {
   "research": 1688

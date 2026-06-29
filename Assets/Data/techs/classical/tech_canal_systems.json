@@ -79,10 +79,8 @@
    ]
   }
  },
- "irrigation": {
-  "team": {
-   "enabler": true
-  }
+ "capabilities": {
+  "irrigation": true
  },
  "cost": {
   "research": 679

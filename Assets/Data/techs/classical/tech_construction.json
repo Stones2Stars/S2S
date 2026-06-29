@@ -53,10 +53,8 @@
    ]
   }
  },
- "bridgeBuilding": {
-  "team": {
-   "enabler": true
-  }
+ "capabilities": {
+  "bridgeBuilding": true
  },
  "cost": {
   "research": 554

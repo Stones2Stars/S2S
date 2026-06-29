@@ -21,10 +21,8 @@
    ]
   }
  },
- "openBordersTrading": {
-  "team": {
-   "enabler": true
-  }
+ "capabilities": {
+  "openBordersTrading": true
  },
  "cost": {
   "research": 144

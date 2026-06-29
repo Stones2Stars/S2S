@@ -111,7 +111,8 @@ def allowed_fn(rec, store):
 
 
 CFG = cc.EntityConfig("TechInfo", cost_rename={"iCost": "research"}, grants=GRANTS, era_fn=era_fn,
-                      requires_fn=requires_fn, allowed_fn=allowed_fn, extra_drop={"bGlobal"})
+                      requires_fn=requires_fn, allowed_fn=allowed_fn, extra_drop={"bGlobal"},
+                      enabler_block="capabilities")   # tech enabler channels are empire CAPABILITIES (owner 2026-06-29)
 
 if __name__ == "__main__":
     cc.main(CFG, TECH_BOOSTS, os.path.join(REPO, "Assets", "Data", "techs"))

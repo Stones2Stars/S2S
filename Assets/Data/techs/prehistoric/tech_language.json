@@ -50,10 +50,8 @@
    "flat": 1
   }
  },
- "language": {
-  "team": {
-   "enabler": true
-  }
+ "capabilities": {
+  "language": true
  },
  "cost": {
   "research": 3

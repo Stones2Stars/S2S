@@ -25,10 +25,8 @@
    ]
   }
  },
- "canFoundOnPeaks": {
-  "team": {
-   "enabler": true
-  }
+ "capabilities": {
+  "canFoundOnPeaks": true
  },
  "cost": {
   "research": 1960

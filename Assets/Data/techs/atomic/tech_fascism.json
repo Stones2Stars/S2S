@@ -44,10 +44,8 @@
    ]
   }
  },
- "permanentAllianceTrading": {
-  "team": {
-   "enabler": true
-  }
+ "capabilities": {
+  "permanentAllianceTrading": true
  },
  "grants": {
   "firstFreeUnit": "UNIT_GREAT_GENERAL"

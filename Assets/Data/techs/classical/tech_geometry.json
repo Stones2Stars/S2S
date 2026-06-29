@@ -29,10 +29,8 @@
    "percent": 50
   }
  },
- "mapCentering": {
-  "team": {
-   "enabler": true
-  }
+ "capabilities": {
+  "mapCentering": true
  },
  "cost": {
   "research": 499

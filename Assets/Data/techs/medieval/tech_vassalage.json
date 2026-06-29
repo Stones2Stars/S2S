@@ -38,10 +38,8 @@
    ]
   }
  },
- "vassalTrading": {
-  "team": {
-   "enabler": true
-  }
+ "capabilities": {
+  "vassalTrading": true
  },
  "cost": {
   "research": 1132

@@ -36,10 +36,8 @@
    ]
   }
  },
- "riverTrade": {
-  "team": {
-   "enabler": true
-  }
+ "capabilities": {
+  "riverTrade": true
  },
  "cost": {
   "research": 20

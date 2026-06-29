@@ -27,10 +27,8 @@
    ]
   }
  },
- "rebaseAnywhere": {
-  "empire": {
-   "enabler": true
-  }
+ "capabilities": {
+  "rebaseAnywhere": true
  },
  "cost": {
   "research": 13181

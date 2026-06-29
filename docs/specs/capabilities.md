@@ -4,8 +4,13 @@ The catalogue of **empire/team-wide, tech-unlocked abilities** — the **empire 
 [skills](skills.md)**. This is the **glossary** (the namings); the **system** is the [json spec](json.md) §8.
 Sibling of skills.md.
 
-> **Started, not complete.** A first list from the known team-wide flags; the full set + clean names still need
-> grounding against the engine/data.
+> **Started; tech-curated (owner 2026-06-29).** The empire capabilities are the **tech `enabler` channels** (a tech
+> *unlocks* the ability); `curate_tech.py` now folds them into the `capabilities` block (`enabler_block="capabilities"`
+> in `curate_common.apply_channel` — `{cap: true}`, scope implied), so a tech reads `"capabilities": {techTrading: true,
+> …}` instead of a top-level `techTrading: {team:{enabler:true}}` family. The **civic** `enabler` channels are the
+> sibling case — **policies enacted by a civic** → the `policies` block (already emitted by `curate_civic`). Entity-level
+> boolean gates that are neither (a building's `damageAllAttackers`, a wonder's `buildingOnlyHealthy`) stay as-is. The
+> full clean-name list still needs grounding against the engine team-flags.
 
 ## What a capability is (recap)
 - **Team / empire scope** — applies to the whole civilization, not one unit (the section name carries the scope).

@@ -90,15 +90,9 @@
    ]
   }
  },
- "embassyTrading": {
-  "team": {
-   "enabler": true
-  }
- },
- "techTrading": {
-  "team": {
-   "enabler": true
-  }
+ "capabilities": {
+  "embassyTrading": true,
+  "techTrading": true
  },
  "grants": {
   "freeTechs": 1

@@ -35,10 +35,8 @@
    ]
   }
  },
- "ignoreIrrigation": {
-  "team": {
-   "enabler": true
-  }
+ "capabilities": {
+  "ignoreIrrigation": true
  },
  "cost": {
   "research": 3484

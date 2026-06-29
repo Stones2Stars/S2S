@@ -47,10 +47,8 @@
    ]
   }
  },
- "defensivePactTrading": {
-  "team": {
-   "enabler": true
-  }
+ "capabilities": {
+  "defensivePactTrading": true
  },
  "cost": {
   "research": 2528

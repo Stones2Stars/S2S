@@ -34,10 +34,8 @@
    ]
   }
  },
- "moveFastPeaks": {
-  "team": {
-   "enabler": true
-  }
+ "capabilities": {
+  "moveFastPeaks": true
  },
  "cost": {
   "research": 2701

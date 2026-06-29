@@ -40,10 +40,8 @@
    ]
   }
  },
- "goldTrading": {
-  "team": {
-   "enabler": true
-  }
+ "capabilities": {
+  "goldTrading": true
  },
  "cost": {
   "research": 499

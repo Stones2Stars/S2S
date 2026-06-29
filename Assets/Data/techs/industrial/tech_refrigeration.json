@@ -58,10 +58,8 @@
    ]
   }
  },
- "desertFarming": {
-  "team": {
-   "enabler": true
-  }
+ "capabilities": {
+  "desertFarming": true
  },
  "cost": {
   "research": 7008

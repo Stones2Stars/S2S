@@ -37,10 +37,8 @@
    ]
   }
  },
- "mapVisible": {
-  "team": {
-   "enabler": true
-  }
+ "capabilities": {
+  "mapVisible": true
  },
  "cost": {
   "research": 13724

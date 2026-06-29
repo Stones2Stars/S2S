@@ -45,10 +45,8 @@
    ]
   }
  },
- "dcmAirBomb2": {
-  "team": {
-   "enabler": true
-  }
+ "capabilities": {
+  "dcmAirBomb2": true
  },
  "cost": {
   "research": 15474

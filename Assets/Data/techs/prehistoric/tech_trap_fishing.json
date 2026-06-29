@@ -50,10 +50,8 @@
    ]
   }
  },
- "waterWork": {
-  "team": {
-   "enabler": true
-  }
+ "capabilities": {
+  "waterWork": true
  },
  "cost": {
   "research": 17

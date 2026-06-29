@@ -47,10 +47,8 @@
    ]
   }
  },
- "canPassPeaks": {
-  "team": {
-   "enabler": true
-  }
+ "capabilities": {
+  "canPassPeaks": true
  },
  "cost": {
   "research": 1820

@@ -256,7 +256,7 @@ def accumulate_conditioned(store, config):
     return out
 
 
-def apply_channel(families, spec, c):
+def apply_channel(families, spec, c, enabler_block=None):
     """Deposit a scope-wide modifier into its FAMILY (flat-family layout, §3): <family>.<scope>[.<member>].<unit>.
     The mapping `channel` IS the family; named valueKeys (food/gold/…) are members; a scalar has no member."""
     scope = spec.get("scope", "city")
@@ -287,6 +287,9 @@ def apply_channel(families, spec, c):
     if kind == "enabler":
         if engine.text(c) not in ("1", "true", "True"):
             return
+        if enabler_block:                          # owner 2026-06-29: a tech enabler is an empire CAPABILITY (it
+            families.setdefault(enabler_block, {})[family] = True   # unlocks), a civic enabler a POLICY — not a
+            return                                 # scoped modifier family. Route to the capabilities/policies block.
         val = True
     elif keys:
         val = engine.named_array(c, keys)
@@ -314,9 +317,13 @@ def apply_channel(families, spec, c):
 class EntityConfig:
     """Per-entity config, mostly read from mapping/<Entity>.json (channels/cost/art/prereqs)."""
     def __init__(self, entity, cost_rename=None, grants=None, era_fn=None, extra_drop=None, map_gen=None,
-                 families=None, id_rename=None, to_identity=None, requires_fn=None, art_rename=None, allowed_fn=None):
+                 families=None, id_rename=None, to_identity=None, requires_fn=None, art_rename=None, allowed_fn=None,
+                 enabler_block=None):
         m = json.load(open(os.path.join(MAPDIR, entity + ".json")))
         self.entity = entity
+        # owner 2026-06-29: where this entity's `kind:"enabler"` boolean channels land — "capabilities" (tech
+        # unlocks) / "policies" (civic-enacted). None (default) = the legacy top-level {scope:{enabler:true}} family.
+        self.enabler_block = enabler_block
         # `families` = verified per-field modifier specs (from the classification) that OVERRIDE the first-pass
         # mapping channels — the mapping under-classified real gameplay, so the curator carries the truth.
         self.channels = dict(m.get("channels", {}))
@@ -371,7 +378,7 @@ def curate(typ, rec, cfg, store, boosts):
             elif list(c) or t:
                 _set_path(identity, cfg.to_identity[tag], engine.generic(c))
         elif tag in cfg.channels:
-            apply_channel(families, cfg.channels[tag], c)
+            apply_channel(families, cfg.channels[tag], c, cfg.enabler_block)
         elif tag in cfg.grants:
             grants[cfg.grants[tag]] = int(t) if engine.is_int(t) else (t or engine.generic(c))
         elif tag in cfg.cost_fields:
