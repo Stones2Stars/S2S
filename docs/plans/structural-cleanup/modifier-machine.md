@@ -64,9 +64,16 @@ authoritative until the shadow is clean, then are cut (atomic, with the cutover)
 
 ## 5. Build increments (each compiles + shadows before the next)
 
-1. **The percent stack** — `cvModifierPercentStack` + `CvCascadeModifierMath::SumUnitAtScope` (the deposit summation
-   with `enabled`/`disabled` eval). Shadow `modifier` vs legacy `getBaseYieldRateModifier(yield)` per city/yield.
-   The smallest end-to-end slice (active-source iteration → deposit sum → BoolExpr eval → diff). **← increment 1.**
+1. **The percent stack** ✅ **DONE (shadow established)** — `Sources/Cascade/CvCascadeModifierMath.{h,cpp}`: `mm_sumPercent`
+   (sum a channel's scope-wide `percent` deposits off the mapped `CvCascadeData`, gated by each deposit's `enabled`/
+   `disabled` BoolExpr evaluated against the city's `getGameObject()`; ×100→human via `/100`) + `mm_percentStack`
+   (`max(0,100+Σ)` over active city buildings city+area, empire buildings, adopted civics, active traits). Hooked at
+   `CvGame::doTurn` after the readJson map as `cvCascadeModifierShadow` — a gated one-shot diff vs legacy
+   `getBaseYieldRateModifier`. **Verified live: the stack computes close to legacy with small systematic divergences**
+   (the deferred sources below + not-yet-modelled events + always-true deferred predicates), surfaced per city/channel.
+   - **1b (next) — drive to parity:** add the **sub-term attribution** (building/empire/civic/trait/project buckets, à
+     la StoneBase `PercentStack.BySource`) to localize each divergence, then map it to its named legacy source. Fold in
+     the deferred sources: the **PURE_TRAITS** filter, the **civic building-keyed** percent, and **projects**.
 2. **The AFTER tier** — building flat yields (×100, the truncation gotcha). Shadow vs `getExtraYield100`.
 3. **The BASE tier** — plot package (worked-plot isolated base, calc-map §10.1) + specialists + trade + free-city +
    golden-age. The largest piece (the plot calc).

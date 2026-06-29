@@ -13,6 +13,7 @@
 #include "CvEventSpine.h"
 #include "CvCascadeTally.h"
 #include "CvCascadeReadJson.h"
+#include "CvCascadeModifierMath.h"
 #include "AI/CvGameAI.h"
 #include "Defines/CvGlobals.h"
 #include "Tools/CvHttpServer.h"
@@ -5832,9 +5833,14 @@ void CvGame::doTurn()
 	// Pure shadow -- gated off in normal play, no behaviour change.
 	cascadeTallyShadow();
 
-	// #430 readJson increment 1 -- one-shot entity-reader probe: parse the curated Assets/Data set, walk + FK-resolve
-	// every entity's type vs the engine registry, emit the [READJSON] summary. Self-guarding + gated; no behaviour change.
+	// #430 readJson -- parse the curated Assets/Data set + MAP each entity's JSON onto its game object (the side-table);
+	// emit the [READJSON] surveys + map read-back. Self-guarding + gated; no behaviour change.
 	cascadeReadJsonProbe();
+
+	// #430 MODIFIER machine increment 1 -- the percent stack shadow: diff the cascade's per-channel
+	// max(0,100+Σ%) (read off the mapped CvCascadeData) vs legacy getBaseYieldRateModifier. Runs AFTER readJson (which
+	// maps the data it reads). Self-guarding + gated; no behaviour change.
+	cvCascadeModifierShadow();
 
 	//	Turn-boundary accounting for the frame-driven span the doTurn tree does not cover:
 	//	turn.wall is the true wall-clock between consecutive turn boundaries (what a player's
