@@ -119,18 +119,18 @@ add real handling per `json.md` §5 (grants: lists, numeric pulses, `foundBuildi
 1. **Entity-reader skeleton** ✅ **DONE** — `Sources/Cascade/CvCascadeReadJson.{h,cpp}`: picojson load of every
    `Assets/Data/**/*.json` (located via `gDLL->getModName(true)` + a recursive Win32 walk) → a fresh per-entity record;
    the top-level `walk_entity` classification; type-registry FK resolution via `GC.getInfoTypeForString`. A one-shot,
-   gated `[READJSON]` probe at `doTurn` proves it. **Verified live: 13,473 files parsed (0 failures), 13,470/13,473
-   type ids resolve.** The **3 by-design non-resolvers** (the probe surfacing them is the point, not a bug) are
-   curated-only constructs the engine registry doesn't carry as primary entries: `TECH_GAME_START` (the synthetic
+   gated `[READJSON]` probe at `doTurn` proves it. **Verified live: every file parses and all type ids resolve, save a
+   few by-design non-resolvers** (the probe surfacing them is the point, not a bug) — curated-only constructs the
+   engine registry doesn't carry as primary entries: `TECH_GAME_START` (the synthetic
    cascade start node, validation.md), `CULTURELEVEL_ALT_POOR` (a `replacedBy` alternate Info, json.md §9), and
    `PROMOTION_COMPLEX_AGGRESSIVE` (a `COMPLEX_` option-selected variant). Next increments populate the fresh record.
 2. **The conditional translator** ✅ **DONE (+ gap survey)** — `rj_translate` maps a JSON condition onto the engine
    `BoolExpr` tree: `all`/`any`/`noneOf`→`And`/`Or`/`Not` (binary, left-folded); type atom / type-param predicate →
    `BoolExprHas(GOM,id)` (GOM by infotype prefix); relief/water/city predicate → `BoolExprIs(TAG)`; membership
-   `{terrain|feature|bonus:[…]}` → `Or` of `Has`; `!X` → `Not`. Proven live via `buildDisplayString` renders.
-   **Verified: 11,475 requires-conditions, 27,824/35,904 leaves (77%) map cleanly.** The remaining 23% (8,080 leaves /
-   42 kinds) are SURVEYED (`[READJSON/cond-gap]`), in **5 buckets** that drive the next increments: **(a)** count/value
-   thresholds (`POPULATION`/`CITY`/`TEAM` + 798 thresholds + `PROPERTY_*` bands) → `BoolExprGreaterEqual`+`IntExpr`,
+   `{terrain|feature|bonus:[…]}` → `Or` of `Has`; `!X` → `Not`. Proven live via `buildDisplayString` renders; the bulk
+   of leaves map cleanly. The unmapped leaves are SURVEYED (`[READJSON/cond-gap]`), in **5 buckets** that drive the
+   next increments: **(a)** count/value thresholds (`POPULATION`/`CITY`/`TEAM` + count thresholds + `PROPERTY_*`
+   bands) → `BoolExprGreaterEqual`+`IntExpr`,
    the counts reading the **tally** → **increment 3**; **(b)** plot predicates with no `TagTypes`
    (`HAS_RIVER`/`HAS_IRRIGATION`/`HAS_FEATURE`/`HAS_COAST{minArea}`/`latitude`/`natureYield`) → extend `TagTypes`;
    **(c)** city/player state (`HAS_POWER`/`STATE_RELIGION`/`STATE_RELIGION_IN_CITY`) → new leaf / predicate-eval;
@@ -144,15 +144,15 @@ add real handling per `json.md` §5 (grants: lists, numeric pulses, `foundBuildi
      `POPULATION` gaps.
    - **Gap-closing (2.b) ✅** — the **cross-city TALLY-backed count**: a fresh `IntExprCascadeCount` leaf reads
      `cascadeTally()` for the evaluated object's owner (`CvGameObjectPlayer::getPlayer()`, a new accessor) — `≥N`-of-a-
-     building/unit-type → `BoolExprGreaterEqual`/`Not(Greater)` over the tally count. **Verified live: countThresholds
-     798 → 10** (the building/unit thresholds now map; the 10 are non-tally-domain counts). EMPIRE scope; team/world
+     building/unit-type → `BoolExprGreaterEqual`/`Not(Greater)` over the tally count. **Verified live: the building/unit
+     count thresholds now map via the tally leaf** (the residual are non-tally-domain counts). EMPIRE scope; team/world
      rollup, city-local, the `CITY`/`TEAM` tokens, and non-building/unit domains remain follow-ons. NOT yet evaluated
      in a live gate (the enabler is later) — the probe builds + renders it.
    - **Gap-closing (2.e) ✅** — the structural **`dormant`** clause (`requires.operate.dormant: X`, enabler.md §3 /
      json.md §4.3): "go dormant WHILE X present" → the clause contributes `AND NOT(trigger)`. `rj_translateClause`
      peels `dormant` (it is NOT a predicate — it was being mis-surveyed as one), folds `Not(translate(trigger))`, and
      handles it as a sibling of `all`/`any`, the sole key, or a tree (the unit `requires.build.dormant.all`).
-     **Verified live: `dormant` gap GONE, unmappedKinds 35→34, fullyMapped +530** (the trigger leaves now map).
+     **Verified live: the `dormant` gap is gone and its trigger leaves now map.**
    - **Remaining gaps are by design, NOT readJson's to close** (re-grounded against json.md §3.5 + enabler.md §3.1):
      an unknown predicate is **ignored, never false** (so an unmapped leaf is spec-correct), and predicate EVALUATION
      belongs to the **enabler** machine (it evaluates conditions against the `CvGameObject` target), not readJson's
@@ -161,9 +161,16 @@ add real handling per `json.md` §5 (grants: lists, numeric pulses, `foundBuildi
      space-map-related"); **(c)** city/player-state (`HAS_POWER`/`STATE_RELIGION`/…) + `CULTURELEVEL_*`/`VICTORY_*` +
      `CITY`/`TEAM`/`latitude`/`natureYield` are predicate-evaluator work that lands with the enabler. Do NOT extend
      `TagTypes` speculatively for these.
-3. **Modifier families** — the deposit-address parse (`<family>.<scope>[.…].<unit>`) + the ×100 leaf conversion + the
-   `enabled`/`disabled`/`per` conditioning. This is what the **modifier** machine consumes; cross-check leaf values
-   against StoneBase.
+3. **Modifier families** ✅ **DONE (+ survey)** — `rj_walkModNode`/`rj_parseMag` parse a modifier-family key into a
+   GENERIC deposit-address tree (mirroring StoneBase's `ModifierFamilyParser`: scope/target/member/entity-key are
+   opaque child nodes; only the fixed magnitude `Units` set — `flat`/`percent`/`multiplier`/`postMultiplier`/
+   `rawPercent`/`perPopulation`/`perSpecialist`/`perCorporationLevel` — become leaves). Each leaf does the single
+   human→×100 conversion (`rj_x100`, a BLANKET ×100 per fixed-point-and-scales.md §1/§3.2); `enabled`/`disabled`
+   reuse the condition translator; `per` + count-by-type bare leaves (`freeSpecialists`/`allowedSpecialists`)
+   recognized. Classification tightened — `tags`/`state` (§8) + `provides` (§5a) added to the skip set so only true
+   families are walked. **Verified live via the `[READJSON/mod]` renders + `[READJSON/mod-survey]`** (×100 confirmed:
+   `+1`→`100`, `-1`→`-100`, `+3`→`300`); no `multiplier` is authored anywhere (the combine is additive in practice,
+   modifier.md §2a). The persistent deposit structure the modifier machine reads is built at the cutover.
 4. **`enables`-family + `requires` + `allowed`** — the buckets, the `build`/`operate` split, the caps. Feeds the
    **enabler**.
 5. **`grants`** (real grammar — the harness's light-touch gap) + the remaining intrinsic/classification blocks

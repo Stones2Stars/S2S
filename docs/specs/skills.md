@@ -22,13 +22,13 @@ The catalogue of a unit's **innate boolean abilities** — the `blitz`/`amphibio
 > The **empire** counterpart to unit `skills` is **`capabilities`**. This file is the `skills` glossary only;
 > `state`, `tags`, and `capabilities` get their own sibling glossaries (json.md §8 = the model).
 
-> **⚠ Naming in flux — `capabilities` → `skills`.** The model renames the **unit-level** ability block to
-> **`skills`**, to avoid colliding with the **empire-level `capabilities`** (a deliberate judgement call). The
-> migrated **data has not caught up** — it still authors these under a `capabilities` block on units / promotions
-> / unit-combats (82 distinct keys under `capabilities`, 0 under `skills`). So renaming the unit block
-> `capabilities` → `skills` is a **curator fold**. **Authoring today:** the data + curator still emit `capabilities`
-> for unit abilities until the fold runs, so new units/promotions use that live key for now. The separate
-> **empire `capabilities`** abilities get their **own glossary** — not here.
+> **`capabilities` = empire, `skills` = unit — the rule, and the curator fold is DONE (verified 2026-06-29).** The
+> unit-level ability block is **`skills`**; the empire-level block is **`capabilities`**
+> ([capabilities.md](capabilities.md)). The curators already emit accordingly — `curate_unit.py` / `curate_promotion.py`
+> / `curate_unitcombat.py` each write `out["skills"] = caps` (the internal `CAP_*` table names are legacy XML-bool
+> spellings, not the output key) — and the data confirms it: **every unit / promotion / unit-combat ability block is
+> `skills`, with ZERO `capabilities` blocks anywhere in `Assets/Data`** (`capabilities` is reserved for the empire
+> block, which is not yet curated). Do **not** re-muddy the rule with migration history — there is no pending rename.
 
 **Grounding:** entries come from the curator capability tables (`CAP_BOOL`/`CAP_PAIR`/`CAP_COUNT`/`CAP_LIST` in
 `curate_promotion.py`/`curate_unit.py`/`curate_unitcombat.py`) and owner rulings. Meanings are **not** asserted

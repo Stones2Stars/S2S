@@ -20,12 +20,12 @@
 #include <string>
 
 // --- vocabulary (json.md §1/§2; the cascade-section + intrinsic/aux sets the increment-1 classification needs) ---
-static const char* RJ_CASCADE_SECTIONS[] = { "requires", "allowed", "enables", "obsoletes", "replaces", "disables", "grants", 0 };
+static const char* RJ_CASCADE_SECTIONS[] = { "requires", "allowed", "enables", "obsoletes", "replaces", "disables", "grants", "provides", 0 };
 static const char* RJ_INTRINSIC[] = {
 	"type", "text", "description", "help", "civilopedia", "message", "quote", "strategy", "adjective", "shortDescription",
 	"cost", "ui", "world", "sound", "identity", "ai",
 	"loadPrune", "policies", "succession", "excludes", "produces", "condition", "effect",
-	"vision", "outcomes", "mapGeneration", "replacedBy", "capabilities", "skills",
+	"vision", "outcomes", "mapGeneration", "replacedBy", "capabilities", "skills", "tags", "state",
 	"promotionLine", "buildUp", "shrine", "properties", "voteSource", "threshold", "role", "victory",
 	"targetLevel", "conversion", "cityFounding", "unitCapability", 0
 };
@@ -358,6 +358,104 @@ static const BoolExpr* rj_translateClause(const picojson::value& v, RjCondStats&
 	return positive ? positive : (const BoolExpr*)new BoolExprConstant(true);
 }
 
+// ===================== INCREMENT 3: the modifier-family deposit-address parse =====================
+// Mirrors StoneBase's ModifierFamilyParser (the parity-proven reference): the address tree is GENERIC -- scope /
+// target / member / entity-key are ALL just opaque child keys; only the recognized magnitude UNITS become leaves, and
+// the CONSUMER (the modifier machine, later) interprets which child is a scope vs target vs member. Each magnitude
+// leaf converts human -> x100 ONCE here (json.md §3.6; fixed-point-and-scales.md §1/§2: V100 = round(human*100), a
+// BLANKET conversion -- readJson has ZERO per-field scale knowledge), and its enabled/disabled reuse the SAME
+// condition translator the enabler uses ("a modifier is a requires gate + an output", modifier.md). `per`/`scope`/
+// `ai`/`value` are entry fields, not units. This increment is the SURVEY probe (parse + count + render); the
+// persistent deposit structure the machine reads is built at the cutover.
+
+static const char* RJ_MOD_UNITS[] = { "flat", "percent", "multiplier", "postMultiplier", "rawPercent",
+	"perPopulation", "perSpecialist", "perCorporationLevel", 0 };
+
+// The single human -> x100 fixed-point conversion (round half away from zero). 7 -> 700, 1.5 -> 150, -10 -> -1000.
+static int rj_x100(double h) { return (int)(h >= 0 ? h * 100.0 + 0.5 : h * 100.0 - 0.5); }
+
+struct RjModStats
+{
+	int families, magnitudes, conditioned, perScaled, bareValues;
+	int unitFlat, unitPercent, unitMult, unitOther;
+	int sampleCount;
+	std::set<std::string> familyNames;
+	RjCondStats embeddedCond;     // the enabled/disabled conditions carried INSIDE modifier deposits
+	std::string curType;          // the entity currently being walked (for sample labels)
+	RjModStats() : families(0), magnitudes(0), conditioned(0), perScaled(0), bareValues(0),
+		unitFlat(0), unitPercent(0), unitMult(0), unitOther(0), sampleCount(0) {}
+};
+
+static const int RJ_MOD_SAMPLES = 10;
+
+// A magnitude leaf: a bare number, an entry object {value, scope?, enabled?, disabled?, per?, ai?}, or a LIST of
+// either (json.md §3.9 -- several conditioned values into one slot).
+static void rj_parseMag(const std::string& unit, const picojson::value& v, const std::string& path, RjModStats& st)
+{
+	if (v.is<picojson::array>())
+	{
+		const picojson::array& a = v.get<picojson::array>();
+		for (size_t i = 0; i < a.size(); ++i) rj_parseMag(unit, a[i], path, st);
+		return;
+	}
+	int value100 = 0;
+	bool conditioned = false, perScaled = false;
+	if (v.is<double>())
+	{
+		value100 = rj_x100(v.get<double>());
+	}
+	else if (v.is<picojson::object>())
+	{
+		const picojson::object& o = v.get<picojson::object>();
+		picojson::object::const_iterator it;
+		if ((it = o.find("value")) != o.end() && it->second.is<double>()) value100 = rj_x100(it->second.get<double>());
+		if ((it = o.find("enabled")) != o.end())  { const BoolExpr* e = rj_translate(it->second, st.embeddedCond); delete e; conditioned = true; }
+		if ((it = o.find("disabled")) != o.end()) { const BoolExpr* e = rj_translate(it->second, st.embeddedCond); delete e; conditioned = true; }
+		if (o.find("per") != o.end()) perScaled = true;
+	}
+	else return;
+
+	++st.magnitudes;
+	if (unit == "flat") ++st.unitFlat; else if (unit == "percent") ++st.unitPercent;
+	else if (unit == "multiplier") ++st.unitMult; else ++st.unitOther;
+	if (conditioned) ++st.conditioned;
+	if (perScaled) ++st.perScaled;
+	if (st.sampleCount < RJ_MOD_SAMPLES)
+	{
+		char b[1024];
+		sprintf(b, "[READJSON/mod] %s %s = %d (%s)%s%s", st.curType.c_str(), path.c_str(), value100, unit.c_str(),
+			conditioned ? " [conditioned]" : "", perScaled ? " [per]" : "");
+		gDLL->logMsg("Cascade.log", b); streamLogTee(1, b); ++st.sampleCount;
+	}
+}
+
+// Walk a modifier-family node: a unit-keyed child is a magnitude leaf; every other child is a deeper address segment;
+// a bare number is a count leaf (e.g. allowedSpecialists.<scope>.SPECIALIST_X: N); an array is a count-leaf list.
+static void rj_walkModNode(const std::string& path, const picojson::value& v, RjModStats& st)
+{
+	const bool wantPath = st.sampleCount < RJ_MOD_SAMPLES;   // only build the path string while still sampling
+	if (v.is<double>())
+	{
+		++st.bareValues;
+		if (st.sampleCount < RJ_MOD_SAMPLES)
+		{
+			char b[1024];
+			sprintf(b, "[READJSON/mod] %s %s = %d (count)", st.curType.c_str(), path.c_str(), rj_x100(v.get<double>()));
+			gDLL->logMsg("Cascade.log", b); streamLogTee(1, b); ++st.sampleCount;
+		}
+		return;
+	}
+	if (v.is<picojson::array>()) { rj_parseMag("count", v, path, st); return; }   // a conditioned count-leaf list
+	if (!v.is<picojson::object>()) return;
+	const picojson::object& o = v.get<picojson::object>();
+	for (picojson::object::const_iterator it = o.begin(); it != o.end(); ++it)
+	{
+		const std::string child = wantPath ? (path + "." + it->first) : path;
+		if (rj_in(RJ_MOD_UNITS, it->first)) rj_parseMag(it->first, it->second, child, st);
+		else rj_walkModNode(child, it->second, st);
+	}
+}
+
 void cascadeReadJsonProbe()
 {
 	static bool s_done = false;
@@ -379,6 +477,7 @@ void cascadeReadJsonProbe()
 	std::set<std::string> families, flags;
 	std::vector<RjEntity> store;
 	RjCondStats cond;
+	RjModStats mod;
 	char szBuf[1024];
 
 	for (size_t i = 0; i < files.size(); ++i)
@@ -401,11 +500,17 @@ void cascadeReadJsonProbe()
 		if (rec.typeId >= 0) ++iResolved;
 		else { ++iUnresolved; if (iShownUnres < 16) { sprintf(szBuf, "[READJSON/unresolved] type=%s", type.c_str()); gDLL->logMsg("Cascade.log", szBuf); streamLogTee(1, szBuf); ++iShownUnres; } }
 
+		mod.curType = type;
 		for (picojson::object::const_iterator it = o.begin(); it != o.end(); ++it)
 		{
 			const std::string& k = it->first;
 			if (rj_in(RJ_CASCADE_SECTIONS, k) || rj_in(RJ_INTRINSIC, k)) continue;
-			if (it->second.is<picojson::object>()) families.insert(k);
+			if (it->second.is<picojson::object>())
+			{
+				families.insert(k);
+				++mod.families; mod.familyNames.insert(k);
+				rj_walkModNode(k, it->second, mod);   // INCREMENT 3: parse the modifier-family deposit tree
+			}
 			else flags.insert(k);
 		}
 
@@ -446,4 +551,9 @@ void cascadeReadJsonProbe()
 		sprintf(szBuf, "[READJSON/cond-gap] %s", it->c_str());
 		gDLL->logMsg("Cascade.log", szBuf); streamLogTee(1, szBuf);
 	}
+	// INCREMENT 3 survey: the modifier-family deposit-address parse (the structure the modifier machine consumes).
+	sprintf(szBuf, "[READJSON/mod-survey] families=%d familyKinds=%d magnitudes=%d flat=%d percent=%d mult=%d other=%d conditioned=%d perScaled=%d bareValues=%d condLeaves=%d condMapped=%d",
+		mod.families, (int)mod.familyNames.size(), mod.magnitudes, mod.unitFlat, mod.unitPercent, mod.unitMult, mod.unitOther,
+		mod.conditioned, mod.perScaled, mod.bareValues, mod.embeddedCond.leaves, mod.embeddedCond.mapped);
+	gDLL->logMsg("Cascade.log", szBuf); streamLogTee(1, szBuf);
 }
