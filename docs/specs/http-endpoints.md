@@ -47,11 +47,19 @@ The split is **not** "raw vs. computed" — it is **"does drycalc compute this?"
 > would land inside a drycalc TARGET:
 > - **Derivable values are TARGETS — compute them, never read them.** `freeCityYield` (= Σ trait `getYieldChange`) is
 >   derivable from trait JSON; consuming the live value means the trait→yield derivation is *not validated*. Compute it.
-> - **Un-derivable event/effect-granted values (`m_aiExtraYield` city/plot extra, `getBuildingCommerceChange`) must
->   NOT be folded into a target.** They land *inside* `buildingCommerce100` / the yield base — both drycalc targets —
->   so folding live data there is the exact cheat the hard rule forbids (it was done once, with `buildingCommerceChange`,
->   and reverted). The cascade computes the derivable part; cities touched by those events **diverge honestly**, and
->   the `/state` value is read ONLY at the audit/comparison boundary to attribute that diff — never fed back into the calc.
+> - **Un-derivable event/effect-granted values (`m_aiExtraYield` city/plot extra) must NOT be folded into a target.**
+>   They land *inside* the yield base — a drycalc target — so folding live data there is the exact cheat the hard rule
+>   forbids. The cascade computes the derivable part; cities touched by those events **diverge honestly**, and the
+>   `/state` value is read ONLY at the audit/comparison boundary to attribute that diff — never fed back into the calc.
+> - **⚠ `getBuildingCommerceChange` / `m_aiBuildingCommerceChange` is MIXED, not wholesale-underivable (corrected
+>   2026-06-29).** Reading the *live aggregate* was rightly reverted — but only because it conflates a **DERIVABLE bulk**
+>   (`GlobalBuildingExtraCommerces`: a building granting commerce to OTHER building types empire-wide, static JSON —
+>   engine `CvCity.cpp:5050`→`4708`) with an **un-derivable remainder** (game-event grants `:19221` + vote-source
+>   resolution grants `:15336`). The fix is to **reproduce the derivable `GlobalBuildingExtraCommerces` from the curated
+>   `{c}.empire.buildings.{B}.flat`** (`BuildingKeyedEmpireCommerce100`), never to read the live value; only the
+>   event/vote remainder diverges honestly. The earlier blanket "un-derivable, out of scope" was a **mis-map** — the
+>   source's feeders were never traced (it accounted for the entire gold `buildingCommerce100` divergence, e.g. P6/C8192
+>   −137 gold = exactly its `GlobalBuildingExtraCommerces`).
 > - **If we pull live yield into the cascade calc, we are not validating the cascade at all.**
 
 > **`/state` is held to API standards.** It is a real, stable, legible API with two consumers — the **validator**

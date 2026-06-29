@@ -1463,6 +1463,7 @@ public:
 
 	int getBuildingCommerceChange(BuildingTypes building, CommerceTypes CommerceType) const;
 	void changeBuildingCommerceChange(BuildingTypes building, CommerceTypes CommerceType, int iChange);
+	void recomputeBuildingCommerceChange() const;   // recompute-from-source empire ledger (state-repositories pattern, hand-rolled)
 
 	int getBonusCommerceModifier(BonusTypes eBonus, CommerceTypes eIndex) const;
 	void changeBonusCommerceModifier(BonusTypes eBonus, CommerceTypes eIndex, int iChange);
@@ -1576,6 +1577,7 @@ protected:
 	int** m_ppaaiTerrainYieldChange;
 	int** m_ppiBuildingCommerceModifier;
 	int** m_ppiBuildingCommerceChange;
+	mutable bool m_bBuildingCommerceChangeDirty;   // recompute-only: dirty on construct/load (never serialized) -> recompute-from-source on first read
 	int** m_ppiBonusCommerceModifier;
 	bool* m_pabAutomatedCanBuild;
 	int* m_paiResourceConsumption;

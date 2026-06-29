@@ -246,6 +246,31 @@ to the holding building via `getBaseCommerceRateFromBuilding100`), both modelled
 >   (the `shrine` bespoke section × the `world.religionLevels` tally). Verified exact (Church-of-the-Nativity gold 163).
 > - **Corp-HQ commerce** — a building with `identity.corporationHQ = CORP` adds `corp.{c}.empire.headquarters.perCorporationLevel
 >   × countCorporationLevels(C)` (`world.corporationLevels` tally). Verified exact (HQ_CEREAL_MILLS gold 44).
+> - **Building-keyed commerce (`GlobalBuildingExtraCommerces`) — DERIVABLE, reproduced 2026-06-29.** The engine's
+>   `getBuildingCommerceChange`/`m_aiBuildingCommerceChange` (added at `getBaseCommerceRateFromBuilding100:12364`) is
+>   **MIXED**: its dominant feeder is `GlobalBuildingExtraCommerces` — a building granting commerce to OTHER building
+>   TYPES empire-wide (`CvCity.cpp:5050` → player ledger scaled by the granter's empire COUNT → realized per active
+>   building in the city `:4708`), **static curated JSON** (`curate_building` → `{c}.empire.buildings.{B}.flat`), so it
+>   is reproduced: `BuildingKeyedEmpireCommerce100` = Σ over the city's active buildings B of (Σ_G count(G) ×
+>   G.`{c}.empire.buildings.{B}.flat`). ⚠ The earlier blanket "`getBuildingCommerceChange` = un-derivable, out of
+>   scope" was a **mis-map** (a rollerskate — the feeders were never traced); only its event (`:19221`) + vote-source
+>   (`:15336`) feeders are genuinely un-derivable and diverge honestly.
+> - **The residual was an ENGINE BUILD-ORDER DOUBLE-COUNT — engine streamlined to recompute-from-source 2026-06-29 (the
+>   cascade was right all along).** After the curated grant was reproduced, a gap remained (P6/C8192 gold ledger engine
+>   13700 vs cascade 8900) — NOT a cascade miss but the **engine over-counting**: `m_ppiBuildingCommerceChange` was a
+>   *serialized incremental accumulator* (`CvCity:5054` player ledger + `:4708` per-receiver snapshot + `CvPlayer:27477`
+>   per-city push) that **replayed onto the loaded value on load/recalc**, so a `+5` guild grant became `+10` on receivers
+>   built after the guild (CARPENTER 1000 vs 500). Per [validation §"touching legacy"](../../specs/validation.md) +
+>   [state-repositories](../../architecture/state-repositories.md), fully mapped (every writer) + shown non-deterministic,
+>   then (owner-authorized) **streamlined to recompute-from-source**: `getBuildingCommerceChange` recomputes Σ over the
+>   player's `getHasBuildings → getGlobalBuildingCommerceChanges` on a dedicated dirty flag (never serialized,
+>   `WRAPPER_SKIP`), trigger-only writer, cities PULL it. Engine now == cascade (8900); P6/C8192 gold commerce parity
+>   CLEAN; commerce sweep 722/740 clean (guild double-count gone, no regression). **Event/vote grants are kept OUT of the
+>   cache (owner ruling: one-shot genuine state, not derivable — "events in the cache is lunacy")**: a SEPARATELY
+>   PERSISTED `CvCity::m_aBuildingCommerceChangeEvents`, read normally; the reader = `player-recompute(empire) + city
+>   event/vote(persisted)`. `@SAVEBREAK` (`m_ppiBuildingCommerceChange` no longer serialized; old `m_aBuildingCommerceChange`
+>   retired consume-don't-keep; event/vote migrated to the new uniquely-tagged field — old-save grants lost once). Full
+>   mechanism + the save-safe how: [state-repositories.md](../../architecture/state-repositories.md).
 
 > **⚠ FIXED-POINT (OOS): flat commerce must sum in ×100, not truncate (2026-06-27).** Fractional human commerce flats
 > (e.g. a Folklore building's research `[1, −0.6@TECH_LANGUAGE, −0.1@…×4]` → nets 0) MUST be summed as `Σ round(human×100)`,
@@ -351,6 +376,22 @@ to the holding building via `getBaseCommerceRateFromBuilding100`), both modelled
 >   `/state`) books it under `specialistCommerce` — the two offset, so realized total matches; parity is judged on
 >   realized commerce / total city output, with the building/specialist split treated as attribution. (Engine `/state`
 >   emit + cascade verify needs a DLL rebuild.)
+>
+> **⛔ OWNER RULING 2026-06-29 — a free specialist is a free specialist; commerce parity CALLED (forced diff).** The
+> legacy building-fold (attributing a building's free specialists' output to the BUILDING via
+> `getBaseCommerceRateFromBuilding100`, and — `CvCity.cpp:4732` + `:12398-12400` — **DOUBLE-counting the building's TYPED
+> free**: once in the city `m_paiFreeSpecialistCount` ledger via `:4732` AND again folded into the building at `:12400`)
+> "just muddles the water" and is a deliberately-dropped quirk (it was likely meant to "simulate a labour force at the
+> building" — "but no, just no"). **The model going forward: a building's free specialists are FREE TYPED SPECIALISTS
+> like all others — the same bucket, NOT a building-derived bucket.** IMPLEMENTED 2026-06-29: `/state`
+> (`CvHttpServer.cpp:500`) emits the GENERIC building-free (the `getBestSpecialist(iI)` per-active-building resolution, a
+> read-only state fact) MERGED into the per-type free-specialist counts; the existing `SpecialistYieldTotal`/
+> `SpecialistCommerce` covers them (the typed building-free is already in the ledger via `:4732`). **Consequence
+> (owner-expected + endorsed 2026-06-29): as full free typed specialists they now collect the per-specialist "all" bonus
+> (`SpecialistExtraCommerces`, Sistine-style) that the engine's building-fold WITHHOLDS, so realized diverges UPWARD on
+> cities with an "all" source (P0/C8192 culture −4460 → +7582).** The building-fold-without-"all" was a balance hack —
+> "not the way to balance" (balance is a post-migration concern); the diff is **forced** and **commerce parity is CALLED**.
+> The other residuals (religion-culture + realized-rounding, ~17 cities) are likewise forced.
 
 ## 3. HEALTH + HAPPINESS — good/bad signed-split
 
@@ -430,6 +471,17 @@ specialists/events/handicap/era/cultureLevel/…).
 ## 9. Wave-2 channel maps
 
 ### 9.1 PROPERTY (each `PROPERTY_*`) — a STATEFUL SOLVER, not a sum
+
+> **⛔ PARITY SCOPE (owner ruling 2026-06-29): ONLY the PROVIDERS (sources).** We care that the curators DEFINE every
+> property source and the cascade PICKS IT UP, so none is lost (→ no severe lopside vs past). We do **NOT** touch the
+> property engine; the solver (interactions / spatial propagators #429) and the accumulated city/plot VALUES are
+> explicitly out of scope ("dealt with later"). Verified by the **property-source completeness sweep**
+> (`/parity/properties/sweep`, `CheckPropertySweep`) over BOTH provider kinds: **buildings** — city `getProperties` +
+> empire `getPropertiesAllCities` + `getPropertyManipulators` (per-building dump); and **units** (owner: units emit to
+> their city too, RELATION_SAME_PLOT) — `getPropertyManipulators`, emitted read-only as the global `unitPropertySources`
+> block (`CvHttpServer.cpp`). Both diffed against the curated `PROPERTY_*` modifier families (picked up by
+> `ModifierFamilyParser`; `UnitInfo` gained a `Modifiers` map so unit families are now parsed too). Set-level (which
+> properties); magnitudes are an available refinement.
 
 Realized value getter: `CvProperties::getValueByProperty(eProp)` (`CvProperties.cpp` ~101) — **RAW INT, no x100** (a CRIME value of 50 is 50). Per-turn value = `CvPropertySolver::gatherAndSolve` (`CvPropertySolver.cpp` ~421) — **3 phases, each predict→computePredict→correct→apply**: **(1) Propagators** (cross-OBJECT spread/gather/diffuse), **(2) Interactions** (cross-PROPERTY convert-constant/convert-percent/inhibited-growth), **(3) Sources**.
 - **Sources (the yield-like deposits):** `CONSTANT` (`iAmountPerTurn`), `CONSTANT_LIMITED` (cap to `iLimit`), `DECAY` (`-(iPercent * max(|v| - iNoDecayAmount, 0)) / 100`, gated off below the no-decay threshold), `ATTRIBUTE_CONSTANT` (`object.getAttribute(eAttr) * iAmountPerTurn`, e.g. ×population). Authored on `CvPropertyInfo::m_PropertyManipulators` (+ per-object manipulators), NOT on the building directly.

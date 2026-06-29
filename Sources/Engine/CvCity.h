@@ -1185,6 +1185,8 @@ public:
 	int getBuildingCommerceChange(BuildingTypes eType, CommerceTypes eCommerce) const;
 	void setBuildingCommerceChange(BuildingTypes eType, CommerceTypes eCommerce, int iChange);
 	void changeBuildingCommerceChange(BuildingTypes eType, CommerceTypes eCommerce, int iChange);
+	int getBuildingCommerceChangeEvents(BuildingTypes eType, CommerceTypes eCommerce) const;       // event/vote store (persisted, NOT cached)
+	void changeBuildingCommerceChangeEvents(BuildingTypes eType, CommerceTypes eCommerce, int iChange);
 	int getBuildingHappyChange(BuildingTypes eType) const;
 	void setBuildingHappyChange(BuildingTypes eType, int iChange);
 	int getBuildingHealthChange(BuildingTypes eType) const;
@@ -1838,7 +1840,8 @@ protected:
 
 	std::vector<EventTypes> m_aEventsOccured;
 	std::vector<BuildingYieldChange> m_aBuildingYieldChange;
-	std::vector<BuildingCommerceChange> m_aBuildingCommerceChange;
+	std::vector<BuildingCommerceChange> m_aBuildingCommerceChange;           // RETIRED (empire part moved to the player recompute ledger); read consume-don't-keep, no writers
+	std::vector<BuildingCommerceChange> m_aBuildingCommerceChangeEvents;     // event/vote-granted per-building commerce: SEPARATELY PERSISTED genuine state, outside the recompute-from-source empire path
 	BuildingChangeArray m_aBuildingHappyChange;
 	BuildingChangeArray m_aBuildingHealthChange;
 

@@ -212,6 +212,7 @@ m_cachedBonusCount(NULL)
 	m_paiFreeSpecialistCount = NULL;
 	m_ppiBuildingCommerceModifier = NULL;
 	m_ppiBuildingCommerceChange = NULL;
+	m_bBuildingCommerceChangeDirty = true;   // recompute-from-source on first read (never serialized)
 	m_ppiSpecialistCommercePercentChanges = NULL;
 	m_ppiSpecialistYieldPercentChanges = NULL;
 	m_ppiBonusCommerceModifier = NULL;
@@ -18601,7 +18602,9 @@ void CvPlayer::read(FDataStreamBase* pStream)
 
 			if ( iI != -1 )
 			{
-				WRAPPER_READ_ARRAY(wrapper, "CvPlayer", NUM_COMMERCE_TYPES, m_ppiBuildingCommerceChange[iI]);
+				// recompute-from-source cache: SKIP the old serialized accumulator (it double-counted) -- consumes old-save
+				// bytes by name, no-op on a new save. Dirty-on-construct => recomputed fresh on first read.
+				WRAPPER_SKIP_ELEMENT(wrapper, "CvPlayer", m_ppiBuildingCommerceChange[iI], SAVE_VALUE_TYPE_INT_ARRAY);
 			}
 			else
 			{
@@ -19927,10 +19930,8 @@ void CvPlayer::write(FDataStreamBase* pStream)
 		{
 			WRAPPER_WRITE_ARRAY(wrapper, "CvPlayer", NUM_COMMERCE_TYPES, m_ppiBuildingCommerceModifier[i]);
 		}
-		for (int i = 0; i < GC.getNumBuildingInfos(); ++i)
-		{
-			WRAPPER_WRITE_ARRAY(wrapper, "CvPlayer", NUM_COMMERCE_TYPES, m_ppiBuildingCommerceChange[i]);
-		}
+		// m_ppiBuildingCommerceChange NOT written: recompute-from-source cache (state-repositories / DEC-derived-never-trusted).
+		// The read SKIPs any old-save bytes by name (no-op on new saves), and it recomputes fresh on first read.
 		for (int i = 0; i < GC.getNumBonusInfos(); ++i)
 		{
 			WRAPPER_WRITE_ARRAY(wrapper, "CvPlayer", NUM_COMMERCE_TYPES, m_ppiBonusCommerceModifier[i]);
@@ -22161,7 +22162,7 @@ void CvPlayer::applyEvent(EventTypes eEvent, int iEventTriggeredId, bool bUpdate
 		{
 			foreach_(CvCity* pLoopCity, cities())
 			{
-				pLoopCity->changeBuildingCommerceChange(cc.eBuilding, cc.eCommerce, cc.iChange);
+				pLoopCity->changeBuildingCommerceChangeEvents(cc.eBuilding, cc.eCommerce, cc.iChange);   // event grant -> separately-persisted store, not the recompute cache
 			}
 		}
 
@@ -27457,6 +27458,7 @@ int CvPlayer::getBuildingCommerceChange(BuildingTypes eType, CommerceTypes Comme
 {
 	FASSERT_BOUNDS(0, GC.getNumBuildingInfos(), eType);
 	FASSERT_BOUNDS(0, NUM_COMMERCE_TYPES, CommerceType);
+	if (m_bBuildingCommerceChangeDirty) recomputeBuildingCommerceChange();
 	return m_ppiBuildingCommerceChange[eType][CommerceType];
 }
 
@@ -27466,19 +27468,47 @@ void CvPlayer::changeBuildingCommerceChange(BuildingTypes eType, CommerceTypes C
 	FASSERT_BOUNDS(0, GC.getNumBuildingInfos(), eType);
 	FASSERT_BOUNDS(0, NUM_COMMERCE_TYPES, CommerceType);
 
+	// TRIGGER ONLY (new-spec recompute-from-source, hand-rolled "old way" until shadow/CvDerivedCache): a granter
+	// building change just dirties the empire ledger (recomputed fresh in getBuildingCommerceChange) and the cities'
+	// commerce caches, which PULL it. The old incremental accumulate + per-city push was the build-order double-count
+	// (it replayed onto the serialized accumulator on load/recalc -- DEC-derived-never-trusted).
 	if (iChange != 0)
 	{
-		m_ppiBuildingCommerceChange[eType][CommerceType] += iChange;
-
-		foreach_(CvCity* cityX, cities())
-		{
-			if (cityX->hasFullyActiveBuilding(eType))
-			{
-				cityX->changeBuildingCommerceChange(eType, CommerceType, iChange);
-			}
-		}
+		m_bBuildingCommerceChangeDirty = true;
 		setCommerceDirty();
 	}
+}
+
+// Rebuild the empire per-building commerce-change ledger FRESH from source (the player's buildings'
+// GlobalBuildingExtraCommerces) -- build-order-INDEPENDENT, the deterministic value the cascade computes. Runs lazily
+// from getBuildingCommerceChange when dirty (dirty on construct/load => never stale/doubled-from-save). const: writes
+// only the recompute-only ledger + the flag.
+void CvPlayer::recomputeBuildingCommerceChange() const
+{
+	PROFILE_EXTRA_FUNC();
+	for (int iI = 0; iI < GC.getNumBuildingInfos(); iI++)
+	{
+		for (int iJ = 0; iJ < NUM_COMMERCE_TYPES; iJ++)
+		{
+			m_ppiBuildingCommerceChange[iI][iJ] = 0;
+		}
+	}
+	foreach_(const CvCity* cityX, cities())
+	{
+		foreach_(const BuildingTypes eG, cityX->getHasBuildings())
+		{
+			foreach_(const BuildingCommerce& kChange, GC.getBuildingInfo(eG).getGlobalBuildingCommerceChanges())
+			{
+				for (int i = 0; i < NUM_COMMERCE_TYPES; i++)
+				{
+					m_ppiBuildingCommerceChange[kChange.first][i] += kChange.second[i];
+				}
+			}
+		}
+	}
+	// (Civic BuildingCommerceChanges are inert in current data -- no civic uses the tag; if one ever does, sum its
+	//  getBuildingCommerceChange over the player's active civics here, mirroring CvPlayer processing :18154.)
+	m_bBuildingCommerceChangeDirty = false;
 }
 
 int CvPlayer::getBuildingCommerceModifier(BuildingTypes eType, CommerceTypes eCommerce) const
@@ -28324,6 +28354,7 @@ void CvPlayer::clearModifierTotals()
 			m_ppiBuildingCommerceChange[iI][iJ] = 0;
 		}
 	}
+	m_bBuildingCommerceChangeDirty = true;   // recompute-from-source on first read (never serialized; dirty on construct/load)
 
 	for (int iI = 0; iI < GC.getNumSpecialBuildingInfos(); iI++)
 	{

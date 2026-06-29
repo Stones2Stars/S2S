@@ -725,6 +725,7 @@ void CvCity::reset(int iID, PlayerTypes eOwner, int iX, int iY, bool bConstructo
 	m_aEventsOccured.clear();
 	m_aBuildingYieldChange.clear();
 	m_aBuildingCommerceChange.clear();
+	m_aBuildingCommerceChangeEvents.clear();
 	m_aBuildingHappyChange.clear();
 	m_aBuildingHealthChange.clear();
 	m_buildingProductionMod.clear();
@@ -4705,7 +4706,9 @@ void CvCity::processBuilding(const BuildingTypes eBuilding, const int iChange, c
 
 		changeCommercePerPopFromBuildings(eCommerceX, iChange * kBuilding.getCommercePerPopChange(iI));
 
-		changeBuildingCommerceChange(eBuilding, eCommerceX, iChange * owner.getBuildingCommerceChange(eBuilding, eCommerceX));
+		// path-1 REMOVED (was half the build-order double-count): the per-building empire commerce-change is now
+		// recompute-from-source on the PLAYER ledger, PULLed by getBuildingCommerceByBuilding. The city ledger holds
+		// only city-LOCAL (vote-source/event) change now. (The player ledger dirties on the granter's processBuilding.)
 
 		changeBuildingCommerceModifier(eCommerceX, iChange * (kBuilding.getCommerceModifier(iI) + owner.getBuildingCommerceModifier(eBuilding, eCommerceX)));
 
@@ -12252,7 +12255,10 @@ int CvCity::getBuildingCommerceByBuilding(CommerceTypes eIndex, BuildingTypes eB
 			}
 		}
 
-		iCommerce += getBuildingCommerceChange(eBuilding, eIndex);
+		// PULL the empire grant from the recompute-from-source player ledger (build-order-independent; the cascade's
+		// value) + this city's LOCAL (vote-source/event) change. Reading only the city ledger double-counted (the
+		// serialized incremental accumulator replayed on load/recalc -- DEC-derived-never-trusted).
+		iCommerce += kOwner.getBuildingCommerceChange(eBuilding, eIndex) + getBuildingCommerceChangeEvents(eBuilding, eIndex);
 
 		if (bFull)
 		{
@@ -12361,7 +12367,7 @@ int CvCity::getBaseCommerceRateFromBuilding100(CommerceTypes eIndex, BuildingTyp
 	{
 		iExtraRate100 = 0;
 	}
-	iExtraRate100 += 100 * getBuildingCommerceChange(eBuilding, eIndex);
+	iExtraRate100 += 100 * (GET_PLAYER(getOwner()).getBuildingCommerceChange(eBuilding, eIndex) + getBuildingCommerceChangeEvents(eBuilding, eIndex));
 
 	if (kBuilding.getReligionType() != NO_RELIGION
 	&& kBuilding.getReligionType() == GET_PLAYER(getOwner()).getStateReligion())
@@ -15335,7 +15341,7 @@ void CvCity::processVoteSourceBonus(VoteSourceTypes eVoteSource, bool bActive)
 				{
 					foreach_(const BuildingTypes eBuilding, BuildingsRepo::get().byReligion(eReligion))
 					{
-						changeBuildingCommerceChange(eBuilding, (CommerceTypes)iCommerce, iChange);
+						changeBuildingCommerceChangeEvents(eBuilding, (CommerceTypes)iCommerce, iChange);
 					}
 				}
 			}
@@ -17503,13 +17509,26 @@ void CvCity::read(FDataStreamBase* pStream)
 		m_aBuildingYieldChange.push_back(kChange);
 	}
 
+	// RETIRED field: consume the old bytes but DROP them. Its empire part is now recompute-from-source on the player
+	// ledger (the old serialized accumulator double-counted on load/recalc replay); its event/vote part migrates to the
+	// separately-persisted m_aBuildingCommerceChangeEvents below (old-save event/vote grants are lost ONCE on this @SAVEBREAK).
 	WRAPPER_READ(wrapper, "CvCity", &iNumElts);
 	m_aBuildingCommerceChange.clear();
 	for (unsigned int i = 0; i < iNumElts; ++i)
 	{
 		BuildingCommerceChange kChange;
 		kChange.read(pStream);
-		m_aBuildingCommerceChange.push_back(kChange);
+	}
+	// Event/vote-granted per-building commerce -- SEPARATELY PERSISTED (genuine one-shot state). Uniquely-tagged so an
+	// OLD save (no such tag) reads 0 -> empty (WRAPPER is name-tagged); the raw element reads are gated by the tagged count.
+	unsigned int iNumEltsEvents = 0;
+	WRAPPER_READ_DECORATED(wrapper, "CvCity", &iNumEltsEvents, "iNumEltsBCCEvents");
+	m_aBuildingCommerceChangeEvents.clear();
+	for (unsigned int i = 0; i < iNumEltsEvents; ++i)
+	{
+		BuildingCommerceChange kChange;
+		kChange.read(pStream);
+		m_aBuildingCommerceChangeEvents.push_back(kChange);
 	}
 
 	WRAPPER_READ(wrapper, "CvCity", &iNumElts);
@@ -18180,6 +18199,11 @@ void CvCity::write(FDataStreamBase* pStream)
 
 	WRAPPER_WRITE_DECORATED(wrapper, "CvCity", m_aBuildingCommerceChange.size(), "iNumElts");
 	foreach_(BuildingCommerceChange& pChange, m_aBuildingCommerceChange)
+	{
+		pChange.write(pStream);
+	}
+	WRAPPER_WRITE_DECORATED(wrapper, "CvCity", m_aBuildingCommerceChangeEvents.size(), "iNumEltsBCCEvents");
+	foreach_(BuildingCommerceChange& pChange, m_aBuildingCommerceChangeEvents)
 	{
 		pChange.write(pStream);
 	}
@@ -19220,7 +19244,7 @@ void CvCity::applyEvent(EventTypes eEvent, const EventTriggeredData* pTriggeredD
 
 	foreach_(const BuildingCommerceChange& cc, kEvent.getBuildingCommerceChanges())
 	{
-		changeBuildingCommerceChange(cc.eBuilding, cc.eCommerce, cc.iChange);
+		changeBuildingCommerceChangeEvents(cc.eBuilding, cc.eCommerce, cc.iChange);
 	}
 
 	if (kEvent.getNumBuildingHappyChanges() > 0)
@@ -19468,6 +19492,50 @@ void CvCity::setBuildingCommerceChange(BuildingTypes eBuilding, CommerceTypes eC
 void CvCity::changeBuildingCommerceChange(BuildingTypes eBuilding, CommerceTypes eCommerce, int iChange)
 {
 	setBuildingCommerceChange(eBuilding, eCommerce, getBuildingCommerceChange(eBuilding, eCommerce) + iChange);
+}
+
+int CvCity::getBuildingCommerceChangeEvents(BuildingTypes eBuilding, CommerceTypes eCommerce) const
+{
+	PROFILE_EXTRA_FUNC();
+	foreach_(const BuildingCommerceChange& it, m_aBuildingCommerceChangeEvents)
+	{
+		if (it.eBuilding == eBuilding && it.eCommerce == eCommerce)
+		{
+			return it.iChange;
+		}
+	}
+	return 0;
+}
+
+// Event/vote-granted per-building commerce -- a SEPARATELY PERSISTED store (genuine one-shot state: applyEvent /
+// vote-source activation), kept OUT of the recompute-from-source empire ledger (which would wipe it -- DEC-derived-
+// never-trusted is for DERIVED data; this is not derivable). Find/update/erase like the retired ledger, then dirty the
+// commerce recompute so getBuildingCommerce100 picks it up (it PULLs getBuildingCommerceChangeEvents).
+void CvCity::changeBuildingCommerceChangeEvents(BuildingTypes eBuilding, CommerceTypes eCommerce, int iChange)
+{
+	PROFILE_EXTRA_FUNC();
+	if (iChange == 0) return;
+	int iCount = 0;
+	for (std::vector<BuildingCommerceChange>::iterator it = m_aBuildingCommerceChangeEvents.begin();
+		it != m_aBuildingCommerceChangeEvents.end(); ++it, ++iCount)
+	{
+		if (it->eBuilding == eBuilding && it->eCommerce == eCommerce)
+		{
+			it->iChange += iChange;
+			if (it->iChange == 0)
+			{
+				m_aBuildingCommerceChangeEvents.erase(m_aBuildingCommerceChangeEvents.begin() + iCount);
+			}
+			setCommerceDirty(eCommerce);
+			return;
+		}
+	}
+	BuildingCommerceChange kChange;
+	kChange.eBuilding = eBuilding;
+	kChange.eCommerce = eCommerce;
+	kChange.iChange = iChange;
+	m_aBuildingCommerceChangeEvents.push_back(kChange);
+	setCommerceDirty(eCommerce);
 }
 
 
@@ -22551,6 +22619,7 @@ void CvCity::clearModifierTotals()
 	m_freeAreaBuildingCount.clear();
 	m_aBuildingYieldChange.clear();
 	m_aBuildingCommerceChange.clear();
+	m_aBuildingCommerceChangeEvents.clear();
 	m_aBuildingHappyChange.clear();
 	m_aBuildingHealthChange.clear();
 	m_buildingProductionMod.clear();

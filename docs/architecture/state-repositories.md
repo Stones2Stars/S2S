@@ -1,7 +1,9 @@
 # State repositories — recompute-only caches with a dirty trigger
 
 **Status:** landed for the plot-yield cache (2026-06-27) and extended to the **specialist** commerce/yield getters and
-the **building** commerce + yield (squirrelBanana) caches (2026-06-28, all verified live-parity-clean). The pattern is
+the **building** commerce + yield (squirrelBanana) caches (2026-06-28), and the **per-building empire commerce-change
+ledger** (`getBuildingCommerceChange`/`m_ppiBuildingCommerceChange`, 2026-06-29 — recompute-from-source replacing a
+**build-order-double-counting** serialized accumulator; live-parity-clean, see below) — all verified live-parity-clean. The pattern is
 the cure for a whole class of "stale cache" bugs; the plot cache is the proof, and the model the rest of the engine's
 derived state should follow. The reusable [`CvDerivedCache`](#the-standardized-cvderivedcache-component-formalized-2026-06-28-built-at-shadow--final-migration-time)
 component (below) formalizes the hand-rolled instances; building it + migrating them onto it is deferred to shadow/final-migration time.
@@ -75,6 +77,38 @@ bypass — the fresh sum runs only on recompute (change-then-read), never per re
 - **Build out the trigger.** Today `updateYield`'s many call sites are the de-facto trigger; the destination is a
   unified `dataChanged`/dirty propagation (plot dirty → city dirty → commerce dirty) so every derived layer is a thin
   recompute-only cache over the one below.
+- **The trigger IS the event spine — ALL caches must use the ONE pattern (owner ruling 2026-06-29).** When the cascade
+  is wired through the [event spine](../specs/event-spine.md), cache invalidation rides its triggers: a `DOMAIN` event
+  (building built, civic adopted, …) marks the affected derived caches dirty, uniformly. This only works if **every**
+  derived cache is the same `CvDerivedCache` shape — so the currently-MIXED patterns must converge:
+  recompute-on-read (specialist commerce/yield), the hand-rolled dirty cache (plot-yield squirrelBanana), **and the
+  incremental-accumulate-and-propagate ledgers** — e.g. `getBuildingCommerceChange`/`m_ppiBuildingCommerceChange` (a
+  player ledger that `CvPlayer::changeBuildingCommerceChange` pushed to every city at change-time, serialized).
+- **`getBuildingCommerceChange` — the incremental-accumulate ledger was BUILD-ORDER-DOUBLE-COUNTING; converted to
+  recompute-from-source 2026-06-29.** The "third bespoke pattern" above was *not* "fresh" as first assumed: the
+  serialized player accumulator (`m_ppiBuildingCommerceChange`, fed by `GlobalBuildingExtraCommerces` at `CvCity:5054`)
+  plus the per-receiver snapshot (`CvCity:4708`) **replayed onto the loaded value on load/recalc**, so a guild's `+5`
+  grant landed as `+10` on receivers built after the guild (e.g. P6/C8192 gold ledger 13700 vs the correct 8900;
+  CARPENTER 1000 vs 500). Fixed the **established way** (`CvPlot`/specialist precedent, hand-rolled until the
+  shadow-phase `CvDerivedCache`): `m_ppiBuildingCommerceChange` is now a **recompute-from-source** cache —
+  `recomputeBuildingCommerceChange()` sums Σ over the player's `getHasBuildings → getGlobalBuildingCommerceChanges` when
+  a dedicated `m_bBuildingCommerceChangeDirty` is set (dirty on construct/load, **never serialized**;
+  `WRAPPER_SKIP_ELEMENT` on read, write dropped); `changeBuildingCommerceChange` is **trigger-only** (no accumulate, no
+  per-city push); the cities **PULL** it (`getBuildingCommerceByBuilding` = `kOwner.getBuildingCommerceChange + city event/vote`).
+- **Event/vote grants are NOT cached — they are a SEPARATELY PERSISTED store (owner ruling 2026-06-29).** The
+  per-building commerce change has TWO sources of fundamentally different nature: the **empire** grant
+  (`GlobalBuildingExtraCommerces`, civics) is DERIVABLE → the recompute-from-source cache above; the **event/vote**
+  grant (`applyEvent` `getBuildingCommerceChanges` fires ONCE; vote-source on activation toggle) is **genuine one-shot
+  state, NOT derivable** — *"having events just be stored in the cache is lunacy"* (a recompute/consume cache would wipe
+  them). So they live in their own serialized field `CvCity::m_aBuildingCommerceChangeEvents`, written by 15338/19223/22161,
+  **outside the recompute path**, read normally. The reader sums `player-recompute (empire) + city event/vote (persisted)`.
+- **`@SAVEBREAK`:** `m_ppiBuildingCommerceChange` is no longer serialized (`WRAPPER_SKIP` + write dropped); the old
+  `CvCity::m_aBuildingCommerceChange` is **retired** (consume-don't-keep on load — drops the old empire-polluted
+  accumulator; its event/vote part migrates to the new uniquely-tagged `m_aBuildingCommerceChangeEvents`, which an old
+  save lacks → reads empty, so old-save event/vote grants are lost **ONCE** on migration). Result: engine == cascade
+  (8900), P6/C8192 gold commerce parity CLEAN; commerce sweep 722/740 clean (the guild double-count gone, no regression).
+  This is the new spec applied the old way — both fields still collapse onto the eventspine-dirty `CvDerivedCache` (cache)
+  + a clean persisted store (events) at shadow/migration, with ONE invalidation mechanism.
 - **City layer pulls plots.** `getPlotYield` is the first pull; the city's other derived caches (commerce, health) get
   the same treatment, pulling through the plot/city repository contract.
 - **Retire the workarounds.** squirrelBanana and any remaining recompute-every-read getters collapse to a trustworthy

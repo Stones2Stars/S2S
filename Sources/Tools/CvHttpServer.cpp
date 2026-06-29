@@ -1,6 +1,7 @@
 #include "CvGameCoreDLL.h"
 #include "CvHttpServer.h"
 #include "CvBuildingInfo.h"
+#include "Engine/CvPropertySource.h" // property-source completeness oracle: getSource()->getProperty()
 #include "CvBonusInfo.h" // bonus-name resolution in the /diagnostic/whyNot trace
 #include "CvImprovementInfo.h" // cityInput loadout: worked-plot improvement type
 #include "CvTraitInfo.h" // cityInput loadout: player trait list
@@ -497,11 +498,28 @@ namespace
 			c["buildingBuiltYears"] = picojson::value(bldgBuilt);
 		}
 
-		// specialist ASSIGNMENT counts (manual + free)
+		// specialist ASSIGNMENT counts (manual + typed-free) + building-granted GENERIC free specialists by the engine's
+		// resolved type (getBestSpecialist, a read-only AI assignment we SURFACE so the cascade treats a building's free
+		// specialists as free typed specialists like all others -- owner ruling 2026-06-29: "a free specialist is a free
+		// specialist". The TYPED building-free is already in getFreeSpecialistCount (processBuilding CvCity:4732); only the
+		// GENERIC (kBuilding.getFreeSpecialist -> getBestSpecialist, computed on-the-fly per building) is added here, so it
+		// is not lost. Mirrors the per-active-building loop in getBaseCommerceRateFromBuilding100:12404.)
+		std::vector<int> aBldgFreeGeneric(GC.getNumSpecialistInfos(), 0);
+		foreach_(const BuildingTypes eBFs, pCity->getHasBuildings())
+		{
+			if (!pCity->isActiveBuilding(eBFs)) continue;
+			const int iFree = GC.getBuildingInfo(eBFs).getFreeSpecialist();
+			for (int iI = 1; iI < iFree + 1; iI++)
+			{
+				const SpecialistTypes eS = pCity->getBestSpecialist(iI);
+				if (eS == NO_SPECIALIST) break;
+				aBldgFreeGeneric[eS]++;
+			}
+		}
 		picojson::value::object specs;
 		for (int s = 0; s < GC.getNumSpecialistInfos(); ++s)
 		{
-			const int n = pCity->getSpecialistCount((SpecialistTypes)s) + pCity->getFreeSpecialistCount((SpecialistTypes)s);
+			const int n = pCity->getSpecialistCount((SpecialistTypes)s) + pCity->getFreeSpecialistCount((SpecialistTypes)s) + aBldgFreeGeneric[s];
 			if (n > 0) specs[GC.getSpecialistInfo((SpecialistTypes)s).getType()] = picojson::value((double)n);
 		}
 		c["specialists"] = picojson::value(specs);
@@ -2070,6 +2088,12 @@ namespace
 					const int bldc = 100 * pCity->getBuildingCommerceByBuilding(eC, (BuildingTypes)b, false, false);
 					static const char* aCKbld[4] = { "goldBld100", "resBld100", "culBld100", "espBld100" };
 					if (bldc) { e[aCKbld[c]] = picojson::value((double)bldc); bAny = true; }
+					// The getBuildingCommerceChange LEDGER alone (the guild/civic/event/vote per-building change, CvCity.cpp:12364),
+					// isolated from the other getBaseCommerceRateFromBuilding100 components -- so the cascade's
+					// BuildingKeyedEmpireCommerce reconciles per-building exactly (no goldFlat100 component-conflation).
+					const int chg = 100 * (GET_PLAYER(pCity->getOwner()).getBuildingCommerceChange((BuildingTypes)b, eC) + pCity->getBuildingCommerceChangeEvents((BuildingTypes)b, eC));
+					static const char* aCKchg[4] = { "goldChg100", "resChg100", "culChg100", "espChg100" };
+					if (chg) { e[aCKchg[c]] = picojson::value((double)chg); bAny = true; }
 				}
 				// HEALTH / HAPPINESS (realized per-building contribution) + FREE-XP
 				const int iHe = pCity->getBuildingHealth((BuildingTypes)b);
@@ -2078,7 +2102,11 @@ namespace
 				if (iHe) { e["health"] = picojson::value((double)iHe); bAny = true; }
 				if (iHa) { e["happiness"] = picojson::value((double)iHa); bAny = true; }
 				if (iXp) { e["freeXp"] = picojson::value((double)iXp); bAny = true; }
-				// PROPERTIES -- the building's per-turn property deposits ({PROPERTY_X: change})
+				// PROPERTY SOURCE DEFINITIONS (provider-completeness oracle, §9.1 "providers"): the building's CITY
+				// constant deposits (getProperties), EMPIRE constant deposits (getPropertiesAllCities), and the
+				// manipulator-touched properties (getPropertyManipulators: CONSTANT/LIMITED/DECAY/ATTRIBUTE, incl.
+				// conditional). The cascade must DEFINE + pick up every one so none is LOST (-> no lopside); the solver
+				// (interactions / spatial propagators #429) + accumulated values are explicitly out of scope.
 				const CvProperties* pProps = bi.getProperties();
 				if (pProps != NULL)
 				{
@@ -2092,11 +2120,58 @@ namespace
 					}
 					if (!kp.empty()) { e["properties"] = picojson::value(kp); bAny = true; }
 				}
+				const CvProperties* pPropsEmp = bi.getPropertiesAllCities();
+				if (pPropsEmp != NULL)
+				{
+					picojson::value::object kpe;
+					for (int pi = 0; pi < pPropsEmp->getNumProperties(); ++pi)
+					{
+						const PropertyTypes eP = pPropsEmp->getProperty(pi);
+						const int iVal = pPropsEmp->getValue(pi);
+						if (eP != NO_PROPERTY && iVal != 0)
+							kpe[GC.getPropertyInfo(eP).getType()] = picojson::value((double)iVal);
+					}
+					if (!kpe.empty()) { e["propertiesEmpire"] = picojson::value(kpe); bAny = true; }
+				}
+				const CvPropertyManipulators* pPM = bi.getPropertyManipulators();
+				if (pPM != NULL)
+				{
+					picojson::value::array km;
+					for (int mi = 0; mi < pPM->getNumSources(); ++mi)
+					{
+						const CvPropertySource* pSrc = pPM->getSource(mi);
+						if (pSrc != NULL && pSrc->getProperty() != NO_PROPERTY)
+							km.push_back(picojson::value(std::string(GC.getPropertyInfo(pSrc->getProperty()).getType())));
+					}
+					if (!km.empty()) { e["propertyManip"] = picojson::value(km); bAny = true; }
+				}
 				if (!bAny) continue;
 				e["type"] = picojson::value(std::string(bi.getType()));
 				kBldgYield.push_back(picojson::value(e));
 			}
 			o["buildingYields"] = picojson::value(kBldgYield);
+
+			// UNIT property-source PROVIDERS (owner 2026-06-29: units can impact a city's property too -- the
+			// RELATION_SAME_PLOT unit->city crime/disease/education emission via getPropertyManipulators). Per unit TYPE
+			// the manipulator-touched properties; GLOBAL (static per unit-info), emitted at the response root for the
+			// property-source completeness sweep (the cascade must DEFINE + pick up every unit provider, like buildings).
+			{
+				picojson::value::object kUnitProps;
+				for (int u = 0; u < GC.getNumUnitInfos(); ++u)
+				{
+					const CvPropertyManipulators* pUM = GC.getUnitInfo((UnitTypes)u).getPropertyManipulators();
+					if (pUM == NULL) continue;
+					picojson::value::array km;
+					for (int mi = 0; mi < pUM->getNumSources(); ++mi)
+					{
+						const CvPropertySource* pSrc = pUM->getSource(mi);
+						if (pSrc != NULL && pSrc->getProperty() != NO_PROPERTY)
+							km.push_back(picojson::value(std::string(GC.getPropertyInfo(pSrc->getProperty()).getType())));
+					}
+					if (!km.empty()) kUnitProps[GC.getUnitInfo((UnitTypes)u).getType()] = picojson::value(km);
+				}
+				o["unitPropertySources"] = picojson::value(kUnitProps);
+			}
 
 			// ---- CH.2 COMMERCE split (legacy-value-calc-map §2; reproduce getCommerceRateAtSliderPercent) ----
 			// City-level inputs (shared by all four commerces) + the clamp consts the emulator needs:
@@ -2187,7 +2262,7 @@ namespace
 								}
 								else { iPureOwn += iBase; iBuild += iBase; }
 							}
-							const int iBC = pCity->getBuildingCommerceChange(eBB, eC); iPureChg += iBC; iBuild += iBC;
+							const int iBC = kOwnerB.getBuildingCommerceChange(eBB, eC) + pCity->getBuildingCommerceChangeEvents(eBB, eC); iPureChg += iBC; iBuild += iBC;
 							const ReligionTypes eRelB = (ReligionTypes)kBB.getReligionType();
 							if (eRelB != NO_RELIGION && eRelB == kOwnerB.getStateReligion())
 							{ const int iSR = kOwnerB.getStateReligionBuildingCommerce(eC); iPureSR += iSR; iBuild += iSR; }
