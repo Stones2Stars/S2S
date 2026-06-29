@@ -13,6 +13,31 @@
 #include "Engine/CvGameObject.h"       // CvGameObjectPlayer -- the evaluated object's owner (2.b tally-count leaf)
 #include "Engine/CvPlayer.h"           // CvPlayer::getID -- the tally key
 #include "CvCascadeTally.h"            // cascadeTally() -- the cross-city count source (the live tally machine)
+#include "CvCascadeData.h"             // the JSON-mapped cascade data attached to each game object (m_pCascade)
+// The cascade-relevant info homes (for rj_infoForType's prefix dispatch -> CvInfoBase*). One-per-class headers
+// (specific, not the retired CvInfos.h umbrella).
+#include "Infos/CvBuildingInfo.h"
+#include "Infos/CvUnitInfo.h"
+#include "Infos/CvTechInfo.h"
+#include "Infos/CvCivicInfo.h"
+#include "Infos/CvCivicOptionInfo.h"
+#include "Infos/CvTraitInfo.h"
+#include "Infos/CvSpecialistInfo.h"
+#include "Infos/CvBonusInfo.h"
+#include "Infos/CvReligionInfo.h"
+#include "Infos/CvCorporationInfo.h"
+#include "Infos/CvPromotionInfo.h"
+#include "Infos/CvPromotionLineInfo.h"
+#include "Infos/CvImprovementInfo.h"
+#include "Infos/CvFeatureInfo.h"
+#include "Infos/CvTerrainInfo.h"
+#include "Infos/CvRouteInfo.h"
+#include "Infos/CvProjectInfo.h"
+#include "Infos/CvProcessInfo.h"
+#include "Infos/CvHeritageInfo.h"
+#include "Infos/CvCultureLevelInfo.h"
+#include "Infos/CvUnitCombatInfo.h"
+#include "Infos/CvBuildInfo.h"
 #include <fstream>
 #include <sstream>
 #include <vector>
@@ -45,6 +70,12 @@ static bool rj_starts(const std::string& s, const char* p)
 
 // A fresh per-entity record (increment 1: type + resolved engine index; richer fields come in later increments).
 struct RjEntity { std::string type; int typeId; };
+
+// The MAPPING target for the CURRENT entity being walked (owner 2026-06-29: map JSON -> new vars on the game object).
+// The walkers populate this CvCascadeData while they also count the survey stats; the probe sets it per entity and
+// attaches it to the resolved CvInfo (or frees it if there is no info home). File-static keeps the existing walker
+// signatures untouched (this probe is transient — the cutover rewrites the load path).
+static CvCascadeData* s_rjData = NULL;
 
 static bool rj_readFile(const std::string& path, std::string& out)
 {
@@ -401,6 +432,8 @@ static void rj_parseMag(const std::string& unit, const picojson::value& v, const
 	}
 	int value100 = 0;
 	bool conditioned = false, perScaled = false;
+	const BoolExpr* en = NULL;
+	const BoolExpr* dis = NULL;
 	if (v.is<double>())
 	{
 		value100 = rj_x100(v.get<double>());
@@ -410,8 +443,8 @@ static void rj_parseMag(const std::string& unit, const picojson::value& v, const
 		const picojson::object& o = v.get<picojson::object>();
 		picojson::object::const_iterator it;
 		if ((it = o.find("value")) != o.end() && it->second.is<double>()) value100 = rj_x100(it->second.get<double>());
-		if ((it = o.find("enabled")) != o.end())  { const BoolExpr* e = rj_translate(it->second, st.embeddedCond); delete e; conditioned = true; }
-		if ((it = o.find("disabled")) != o.end()) { const BoolExpr* e = rj_translate(it->second, st.embeddedCond); delete e; conditioned = true; }
+		if ((it = o.find("enabled")) != o.end())  { en = rj_translate(it->second, st.embeddedCond); conditioned = true; }
+		if ((it = o.find("disabled")) != o.end()) { dis = rj_translate(it->second, st.embeddedCond); conditioned = true; }
 		if (o.find("per") != o.end()) perScaled = true;
 	}
 	else return;
@@ -424,26 +457,37 @@ static void rj_parseMag(const std::string& unit, const picojson::value& v, const
 	if (st.sampleCount < RJ_MOD_SAMPLES)
 	{
 		char b[1024];
-		sprintf(b, "[READJSON/mod] %s %s = %d (%s)%s%s", st.curType.c_str(), path.c_str(), value100, unit.c_str(),
+		sprintf(b, "[READJSON/mod] %s %s.%s = %d%s%s", st.curType.c_str(), path.c_str(), unit.c_str(), value100,
 			conditioned ? " [conditioned]" : "", perScaled ? " [per]" : "");
 		gDLL->logMsg("Cascade.log", b); streamLogTee(1, b); ++st.sampleCount;
 	}
+	// MAP: store the deposit on the current entity (address = the dotted parent path; unit is the leaf kind). The
+	// conditions are OWNED by the deposit (freed via ~CvCascadeData). No info home -> free them.
+	if (s_rjData)
+	{
+		CvCascadeDeposit d;
+		d.address = path; d.unit = unit; d.value100 = value100;
+		d.enabled = en; d.disabled = dis; d.hasPer = perScaled;
+		s_rjData->deposits.push_back(d);
+	}
+	else { delete en; delete dis; }
 }
 
 // Walk a modifier-family node: a unit-keyed child is a magnitude leaf; every other child is a deeper address segment;
 // a bare number is a count leaf (e.g. allowedSpecialists.<scope>.SPECIALIST_X: N); an array is a count-leaf list.
 static void rj_walkModNode(const std::string& path, const picojson::value& v, RjModStats& st)
 {
-	const bool wantPath = st.sampleCount < RJ_MOD_SAMPLES;   // only build the path string while still sampling
-	if (v.is<double>())
+	if (v.is<double>())   // a bare count leaf (e.g. allowedSpecialists.<scope>.SPECIALIST_X: N)
 	{
 		++st.bareValues;
+		const int value100 = rj_x100(v.get<double>());
 		if (st.sampleCount < RJ_MOD_SAMPLES)
 		{
 			char b[1024];
-			sprintf(b, "[READJSON/mod] %s %s = %d (count)", st.curType.c_str(), path.c_str(), rj_x100(v.get<double>()));
+			sprintf(b, "[READJSON/mod] %s %s = %d (count)", st.curType.c_str(), path.c_str(), value100);
 			gDLL->logMsg("Cascade.log", b); streamLogTee(1, b); ++st.sampleCount;
 		}
+		if (s_rjData) { CvCascadeDeposit d; d.address = path; d.unit = "count"; d.value100 = value100; s_rjData->deposits.push_back(d); }
 		return;
 	}
 	if (v.is<picojson::array>()) { rj_parseMag("count", v, path, st); return; }   // a conditioned count-leaf list
@@ -451,9 +495,8 @@ static void rj_walkModNode(const std::string& path, const picojson::value& v, Rj
 	const picojson::object& o = v.get<picojson::object>();
 	for (picojson::object::const_iterator it = o.begin(); it != o.end(); ++it)
 	{
-		const std::string child = wantPath ? (path + "." + it->first) : path;
-		if (rj_in(RJ_MOD_UNITS, it->first)) rj_parseMag(it->first, it->second, child, st);
-		else rj_walkModNode(child, it->second, st);
+		if (rj_in(RJ_MOD_UNITS, it->first)) rj_parseMag(it->first, it->second, path, st);   // unit leaf: address = parent path
+		else rj_walkModNode(path + "." + it->first, it->second, st);                         // descend, extend the address
 	}
 }
 
@@ -493,6 +536,7 @@ static void rj_walkEnableEdge(const std::string& edge, const picojson::value& v,
 			const int rid = GC.getInfoTypeForString(id.c_str(), true);
 			if (rid >= 0) ++st.resolved;
 			else { ++st.unresolved; if (st.unresolvedIds.size() < 24) st.unresolvedIds.insert(id); }
+			if (rid >= 0 && s_rjData) s_rjData->edges[edge + "." + it->first].push_back(rid);   // MAP
 			if (st.sampleCount < 8)
 			{
 				char b[1024];
@@ -509,7 +553,11 @@ static void rj_walkAllowed(const picojson::value& v, RjEnableStats& st)
 {
 	if (!v.is<picojson::object>()) return;
 	const picojson::object& o = v.get<picojson::object>();
-	for (picojson::object::const_iterator it = o.begin(); it != o.end(); ++it) { ++st.allowedClauses; st.capKinds.insert(it->first); }
+	for (picojson::object::const_iterator it = o.begin(); it != o.end(); ++it)
+	{
+		++st.allowedClauses; st.capKinds.insert(it->first);
+		if (s_rjData && it->second.is<double>()) s_rjData->allowed[it->first] = (int)it->second.get<double>();   // MAP
+	}
 }
 
 // ===================== INCREMENT 5: the grants grammar =====================
@@ -534,6 +582,7 @@ static void rj_grantResolve(const std::string& bucket, const std::string& id, Rj
 	const int rid = GC.getInfoTypeForString(id.c_str(), true);
 	if (rid >= 0) ++st.resolved;
 	else { ++st.unresolved; if (st.unresolvedIds.size() < 24) st.unresolvedIds.insert(id); }
+	if (rid >= 0 && s_rjData) s_rjData->grantLists[bucket].push_back(rid);   // MAP
 	if (st.sampleCount < 8)
 	{
 		char b[1024];
@@ -577,11 +626,42 @@ static void rj_walkGrants(const picojson::value& v, RjGrantStats& st)
 				}
 			}
 		}
-		else if (val.is<double>()) { ++st.pulses; st.pulseChannels.insert(k); }       // numeric pulse grants.<channel>: value
+		else if (val.is<double>()) { ++st.pulses; st.pulseChannels.insert(k); if (s_rjData) s_rjData->grantPulses[k] = rj_x100(val.get<double>()); } // numeric pulse grants.<channel>: value (MAP)
 		else if (val.is<std::string>()) { st.listKinds.insert(k); rj_grantResolve(k, val.get<std::string>(), st); } // single-id grant
 		else if (val.is<bool>()) { ++st.flags; st.flagKinds.insert(k); }              // a flag grant
 		else if (val.is<picojson::object>()) ++st.objects;                            // a structured grant (counted)
 	}
+}
+
+// Prefix dispatch: a resolved type-id (per-class index) -> the game object (CvInfoBase*), so readJson can ATTACH the
+// mapped CvCascadeData. Covers the cascade-relevant info types; others (handicap/gamespeed/era/vote/hurry/…) have no
+// cascade home this pass and return NULL (their mapped data is freed, not attached). Longer prefixes are tested first.
+static CvInfoBase* rj_infoForType(const std::string& t, int id)
+{
+	if (id < 0) return NULL;
+	if (rj_starts(t, "BUILDING_"))      return &GC.getBuildingInfo((BuildingTypes)id);
+	if (rj_starts(t, "UNITCOMBAT_"))    return &GC.getUnitCombatInfo((UnitCombatTypes)id);   // before UNIT_
+	if (rj_starts(t, "UNIT_"))          return &GC.getUnitInfo((UnitTypes)id);
+	if (rj_starts(t, "TECH_"))          return &GC.getTechInfo((TechTypes)id);
+	if (rj_starts(t, "CIVICOPTION_"))   return &GC.getCivicOptionInfo((CivicOptionTypes)id); // before CIVIC_
+	if (rj_starts(t, "CIVIC_"))         return &GC.getCivicInfo((CivicTypes)id);
+	if (rj_starts(t, "TRAIT_"))         return &GC.getTraitInfo((TraitTypes)id);             // covers TRAIT_COMPLEX_
+	if (rj_starts(t, "SPECIALIST_"))    return &GC.getSpecialistInfo((SpecialistTypes)id);
+	if (rj_starts(t, "BONUS_"))         return &GC.getBonusInfo((BonusTypes)id);
+	if (rj_starts(t, "RELIGION_"))      return &GC.getReligionInfo((ReligionTypes)id);
+	if (rj_starts(t, "CORPORATION_"))   return &GC.getCorporationInfo((CorporationTypes)id);
+	if (rj_starts(t, "PROMOTIONLINE_")) return &GC.getPromotionLineInfo((PromotionLineTypes)id); // before PROMOTION_
+	if (rj_starts(t, "PROMOTION_"))     return &GC.getPromotionInfo((PromotionTypes)id);
+	if (rj_starts(t, "IMPROVEMENT_"))   return &GC.getImprovementInfo((ImprovementTypes)id);
+	if (rj_starts(t, "FEATURE_"))       return &GC.getFeatureInfo((FeatureTypes)id);
+	if (rj_starts(t, "TERRAIN_"))       return &GC.getTerrainInfo((TerrainTypes)id);
+	if (rj_starts(t, "ROUTE_"))         return &GC.getRouteInfo((RouteTypes)id);
+	if (rj_starts(t, "PROJECT_"))       return &GC.getProjectInfo((ProjectTypes)id);
+	if (rj_starts(t, "PROCESS_"))       return &GC.getProcessInfo((ProcessTypes)id);
+	if (rj_starts(t, "HERITAGE_"))      return &GC.getHeritageInfo((HeritageTypes)id);
+	if (rj_starts(t, "CULTURELEVEL_"))  return &GC.getCultureLevelInfo((CultureLevelTypes)id);
+	if (rj_starts(t, "BUILD_"))         return &GC.getBuildInfo((BuildTypes)id);
+	return NULL;
 }
 
 void cascadeReadJsonProbe()
@@ -631,6 +711,12 @@ void cascadeReadJsonProbe()
 		if (rec.typeId >= 0) ++iResolved;
 		else { ++iUnresolved; if (iShownUnres < 16) { sprintf(szBuf, "[READJSON/unresolved] type=%s", type.c_str()); gDLL->logMsg("Cascade.log", szBuf); streamLogTee(1, szBuf); ++iShownUnres; } }
 
+		// MAP: attach a fresh CvCascadeData to the game object (owner 2026-06-29). Allocate only when there is an info
+		// home -> when there is none (by-design non-resolvers), data is NULL and the walkers skip population (no leak).
+		CvInfoBase* rjInfo = rj_infoForType(type, rec.typeId);
+		CvCascadeData* data = rjInfo ? new CvCascadeData() : NULL;
+		s_rjData = data;
+		if (rjInfo) cascadeAttach(rjInfo, data);   // attach via the side-table (walkers fill it via s_rjData)
 		mod.curType = type;
 		en.curType = type;
 		gr.curType = type;
@@ -670,7 +756,10 @@ void cascadeReadJsonProbe()
 					sprintf(szBuf, "[READJSON/cond] %s.%s = %S", type.c_str(), sub->first.c_str(), buf.getCString());
 					gDLL->logMsg("Cascade.log", szBuf); streamLogTee(1, szBuf); ++iCondSample;
 				}
-				delete e; // free the translated tree (probe-only; the cutover keeps it on the entity record)
+				// MAP: store the requires tree on the entity (owned by data, freed via ~CvCascadeData).
+				if (data && sub->first == "build") data->requiresBuild = e;
+				else if (data && sub->first == "operate") data->requiresOperate = e;
+				else delete e;
 			}
 		}
 	}
@@ -725,4 +814,25 @@ void cascadeReadJsonProbe()
 		sprintf(szBuf, "[READJSON/key] %-26s %6d  %s", k.c_str(), it->second, cls);
 		gDLL->logMsg("Cascade.log", szBuf); streamLogTee(1, szBuf);
 	}
+	// MAP read-back: prove the cascade data is on the GAME OBJECTS (round-trip from the CvInfo's m_pCascade, not the
+	// probe's transient buffers). Counts how many entities got it + renders a few.
+	int iAttached = 0, iMapSample = 0;
+	for (size_t s = 0; s < store.size(); ++s)
+	{
+		CvInfoBase* info = rj_infoForType(store[s].type, store[s].typeId);
+		CvCascadeData* cdp = info ? cascadeForInfo(info) : NULL;
+		if (cdp == NULL) continue;
+		++iAttached;
+		if (iMapSample < 8)
+		{
+			const CvCascadeData& cd = *cdp;
+			sprintf(szBuf, "[READJSON/map] %s deposits=%d requires=%d/%d edges=%d allowed=%d grantLists=%d grantPulses=%d",
+				store[s].type.c_str(), (int)cd.deposits.size(), cd.requiresBuild ? 1 : 0, cd.requiresOperate ? 1 : 0,
+				(int)cd.edges.size(), (int)cd.allowed.size(), (int)cd.grantLists.size(), (int)cd.grantPulses.size());
+			gDLL->logMsg("Cascade.log", szBuf); streamLogTee(1, szBuf); ++iMapSample;
+		}
+	}
+	sprintf(szBuf, "[READJSON/map-summary] entitiesWithCascadeData=%d", iAttached);
+	gDLL->logMsg("Cascade.log", szBuf); streamLogTee(1, szBuf);
+	s_rjData = NULL;
 }

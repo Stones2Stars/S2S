@@ -35,7 +35,7 @@ status record of built cascade code (there is almost none — see the table).
 | **Modifier** | ❌ **NOT BUILT (purged)** | Design = `modifier.md`; reference impl = StoneBase (`src/Application/Features/Calc/*` over `ModifierMath`, parity-proven). Legacy accumulators fully present + untouched (§4). **NEXT machine** — consumes readJson's modifier-family deposits; needs the scope-accumulator substrate (§1.0). |
 | **Enabler** | ❌ **NOT BUILT (purged)** | Design = `enabler.md`. Legacy `can*` gates fully present + untouched (§4). The `#195` `ConstructRequirement` reverse-index overlay survives (`Engine/ConstructRequirement.h`; built in `Defines/CvGlobals.cpp`, consumed `AI/CvCityAI.cpp:12965`) and is the seed of the `enables` generation index. |
 | **Grants** | ❌ **ABSENT** | No grants consumer (never built). |
-| **readJson** | ✅ **BUILT — PARSE/SURVEY (full json.md coverage); ⛔ does NOT yet MAP to runtime data** | `Sources/Cascade/CvCascadeReadJson.{h,cpp}`: a one-shot gated probe (`cascadeReadJsonProbe`, at `doTurn`) that parses EVERY `Assets/Data` entity through BoolExpr — `rj_translate` (conditions, incl. `IntExpr` value/tally-count bands + the `dormant` clause); `rj_walkModNode` (×100 modifier-family deposits); `rj_walkEnableEdge` (enables/obsoletes/replaces/disables/obsoletedBy/provides); `rj_walkAllowed`; `rj_walkGrants` (generic by shape) — FK-resolving all ids. **Verified live: 0 `UNCLASSIFIED` top-level keys (complete coverage), all resolved bar 3 by-design.** ⛔ It **SURVEYS** (parses → counts → frees); it does NOT yet build the **persistent runtime structures** the modifier/enabler consume (and that the cutover serves the EXE accessors from). That structure-mapping is built WITH each consuming machine. Standalone `Tools/ReadJson/readjson.cpp` harness is FROZEN. |
+| **readJson** | ✅ **BUILT — PARSE/SURVEY (full json.md coverage); ⛔ does NOT yet MAP to runtime data** | `Sources/Cascade/CvCascadeReadJson.{h,cpp}`: a one-shot gated probe (`cascadeReadJsonProbe`, at `doTurn`) that parses EVERY `Assets/Data` entity through BoolExpr — `rj_translate` (conditions, incl. `IntExpr` value/tally-count bands + the `dormant` clause); `rj_walkModNode` (×100 modifier-family deposits); `rj_walkEnableEdge` (enables/obsoletes/replaces/disables/obsoletedBy/provides); `rj_walkAllowed`; `rj_walkGrants` (generic by shape) — FK-resolving all ids. **Verified live: 0 `UNCLASSIFIED` top-level keys (complete coverage), all resolved bar 3 by-design.** ✅ It now **MAPS** the parse to a `CvCascadeData` per entity (deposits/requires/edges/allowed/grants) and attaches it via the ABI-safe **side-table** (`cascadeForInfo`/`cascadeAttach`, keyed by `CvInfoBase*` — NOT a `CvInfo` member; CvInfoBase is EXE-layout-bound, §3). Live read-back round-trips it (`[READJSON/map-summary] entitiesWithCascadeData≈13k`). The modifier/enabler calc reads this mapped data. Standalone `Tools/ReadJson/readjson.cpp` harness is FROZEN. |
 
 **The honest #430 roadmap.** Build the cascade FRESH per the specs, porting from the parity-proven StoneBase reference,
 in spec build order: **`readJson` (BoolExpr-routed) + the scope-accumulator substrate → tally → modifier → enabler →
@@ -177,14 +177,22 @@ surface is retired, `CvHttpServer.cpp:26`):
 - **`readJson` will be a FRESH reader** (picojson → fresh runtime structures), NOT a reuse of `CvInfoUtil`/`CvXMLLoadUtility`/
   the old `read()` path. It runs IN ADDITION to the XML load during shadow; at cutover the XML path (`SetGlobalClassInfo`
   → `read()`, `Infrastructure/CvXMLLoadUtilitySet.cpp:1588`) is deleted. (`read()` is NOT DllExport — `Infos/CvInfoBase.h:78/85/133/154`.)
-- **★ THE MAPPING/CUTOVER MODEL (owner ruling 2026-06-29).** `readJson` maps each entity's JSON onto **NEW member
-  variables on the game object** (the `CvInfo` class — `CvBuildingInfo`/`CvUnitInfo`/`CvTechInfo`/…: the cascade
-  deposit lists, the `BoolExpr` requires/enables structures, the grant provisions). The **new calc implementations**
-  (modifier/enabler/grants) read those NEW variables. The **OLD Info variables** (the XML-populated `m_ai*`/`m_ab*`
-  members) are **cut only AFTER** (a) the new variables are mapped, (b) the new calc is built, and (c) the per-machine
-  SHADOW reaches parity. **Until all three hold, the XML load + old Info variables stay authoritative — cutting them
-  now would literally break the game (nothing maps JSON→engine data yet).** The cut is the atomic last step. So the
-  near-term work is, per machine: map JSON→new vars on the game objects → build the calc on them → shadow to parity.
+- **★ THE MAPPING/CUTOVER MODEL (owner ruling 2026-06-29; ABI-corrected after a load-crash).** `readJson` maps each
+  entity's JSON to a fresh **`CvCascadeData`** (deposit lists, the `BoolExpr` requires/enables structures, the grant
+  provisions) — the **new calc implementations** (modifier/enabler/grants) read it; the **OLD Info variables**
+  (XML-populated `m_ai*`/`m_ab*`) are **cut only AFTER** (a) the data is mapped, (b) the new calc is built, and (c) the
+  per-machine SHADOW reaches parity. Until all three hold the XML load stays authoritative (cutting now breaks the game
+  — nothing maps JSON→engine data yet); the cut is the atomic last step.
+  - **⛔ HOME = a SIDE-TABLE keyed by `CvInfoBase*` (`cascadeForInfo`/`cascadeAttach` in `Cascade/CvCascadeData`), NOT a
+    member on `CvInfo`.** The first attempt added `m_pCascade` to `CvInfoBase` and **crashed the EXE on load** — the
+    closed Firaxis EXE binds `CvInfoBase`'s layout (it reads the type-string member by a **hardcoded offset**; the
+    minidump showed a `memcpy` AV inside `std::string::assign` off a shifted member). So `CvInfoBase` **cannot be
+    widened** (even appending shifts every derived class's members), and a base virtual getter is out too (vtable is
+    EXE-bound). The side-table is the ABI-safe home and keeps the cascade data **isolated** from the EXE-bound `CvInfo`.
+    Physical on-object placement, if ever wanted, is a **per-derived-class append at cutover** — never a base change.
+  - **Status: ✅ DONE + verified** — `readJson` populates a `CvCascadeData` per entity and attaches it via `cascadeAttach`;
+    the live read-back (`[READJSON/map]`/`[READJSON/map-summary]`) round-trips it back out by game object; the game loads
+    clean, all surveys + `[TALLY/shadow] diverging=0` hold. **Next: build the modifier calc on this mapped data.**
 - **The shared/kept pieces (EXE-bound):** the **type registry** `GC.getInfoTypeForString` (`Defines/CvGlobals.cpp:2682`,
   decl `CvGlobals.h:1418`) / `setInfoTypeFromString` (`CvGlobals.cpp:2708`, decl `:252`) over `m_infosMap`
   (`CvGlobals.h:929`) — `readJson` uses it for FK resolution because the EXE binds the same indices; and the **EXE-bound
