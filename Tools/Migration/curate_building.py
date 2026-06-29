@@ -488,14 +488,16 @@ def pass2(typ, rec, store, fams, grants, repeatable, identity, enables):
     srh = _int(rec, "iStateReligionHappiness")
     if srh:
         _inject_cond(fams, "happiness", "city", "flat", srh, "HAS_STATE_RELIGION")
-    # --- CommerceChangeDoubleTimes: a SECOND age-gated commerce deposit (existedFor), pairing the base CommerceChanges ---
+    # --- CommerceChangeDoubleTimes: the engine DOUBLES the building's WHOLE per-building commerce (base + shrine +
+    # corpHQ + event + stateRel) once it has existed >= N game-years (getBuildingCommerceByBuilding iCommerce*=2,
+    # CvCity.cpp:12284-12290). A +base-only second flat UNDER-doubles a building that is also a shrine/corp-HQ, so emit
+    # a clean per-channel MARKER (the age threshold) the cascade uses to double the building's FULL computed commerce.
+    # `identity.commerceDoubleTime: {commerce: years}` (mirrors identity.shrine -- a per-building relationship/marker). ---
     cdt = rec.find("CommerceChangeDoubleTimes")
     if cdt is not None:
-        base = engine.named_array(rec.find("CommerceChanges"), engine.COMMERCES) if rec.find("CommerceChanges") is not None else {}
-        for member, turns in engine.named_array(cdt, engine.COMMERCES).items():
-            if member in base:
-                _inject_cond(fams, member, "city", "flat", base[member],
-                             OrderedDict([("existedFor", OrderedDict([("min", turns)]))]))
+        dbl = OrderedDict((member, turns) for member, turns in engine.named_array(cdt, engine.COMMERCES).items() if turns)
+        if dbl:
+            identity["commerceDoubleTime"] = dbl
     # --- CommerceHappinesses: happiness GAINED per unit of each commerce produced -> a grouped commerceHappiness family ---
     ch = rec.find("CommerceHappinesses")
     if ch is not None:

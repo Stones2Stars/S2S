@@ -26,17 +26,7 @@
  },
  "culture": {
   "city": {
-   "flat": [
-    4,
-    {
-     "value": 4,
-     "enabled": {
-      "existedFor": {
-       "min": 1000
-      }
-     }
-    }
-   ],
+   "flat": 4,
    "percent": 5
   }
  },
@@ -155,6 +145,9 @@
   "construct": "AS2D_BUILD_BUDDHIST"
  },
  "identity": {
+  "commerceDoubleTime": {
+   "culture": 1000
+  },
   "worth": 2,
   "conquestProbability": 100,
   "greatPeopleUnitType": "UNIT_PROPHET",

@@ -29,17 +29,7 @@
  },
  "culture": {
   "city": {
-   "flat": [
-    6,
-    {
-     "value": 6,
-     "enabled": {
-      "existedFor": {
-       "min": 1000
-      }
-     }
-    }
-   ]
+   "flat": 6
   }
  },
  "buildRate": {
@@ -108,6 +98,9 @@
   "construct": "AS2D_BUILD_BARRACKS"
  },
  "identity": {
+  "commerceDoubleTime": {
+   "culture": 1000
+  },
   "nukeImmune": true,
   "teamShare": true,
   "worth": 14,

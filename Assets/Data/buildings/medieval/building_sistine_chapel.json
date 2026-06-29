@@ -28,14 +28,6 @@
     {
      "value": 5,
      "enabled": "HAS_STATE_RELIGION"
-    },
-    {
-     "value": 10,
-     "enabled": {
-      "existedFor": {
-       "min": 1000
-      }
-     }
     }
    ]
   },
@@ -100,6 +92,9 @@
   }
  },
  "identity": {
+  "commerceDoubleTime": {
+   "culture": 1000
+  },
   "nukeImmune": true,
   "teamShare": true,
   "worth": 14,

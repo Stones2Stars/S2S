@@ -55,17 +55,7 @@
  },
  "culture": {
   "city": {
-   "flat": [
-    2,
-    {
-     "value": 2,
-     "enabled": {
-      "existedFor": {
-       "min": 1000
-      }
-     }
-    }
-   ]
+   "flat": 2
   }
  },
  "maintenance": {
@@ -127,6 +117,9 @@
   "construct": "AS2D_BUILD_OBSERVATORY"
  },
  "identity": {
+  "commerceDoubleTime": {
+   "culture": 1000
+  },
   "nukeImmune": true,
   "teamShare": true,
   "worth": 12,

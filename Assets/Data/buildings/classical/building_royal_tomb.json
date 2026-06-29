@@ -41,32 +41,12 @@
  },
  "culture": {
   "city": {
-   "flat": [
-    4,
-    {
-     "value": 4,
-     "enabled": {
-      "existedFor": {
-       "min": 1000
-      }
-     }
-    }
-   ]
+   "flat": 4
   }
  },
  "espionage": {
   "city": {
-   "flat": [
-    2,
-    {
-     "value": 2,
-     "enabled": {
-      "existedFor": {
-       "min": 1000
-      }
-     }
-    }
-   ]
+   "flat": 2
   }
  },
  "buildRate": {
@@ -149,6 +129,10 @@
   "construct": "AS2D_BUILD_GRANARY"
  },
  "identity": {
+  "commerceDoubleTime": {
+   "culture": 1000,
+   "espionage": 1000
+  },
   "neverCapture": true,
   "worth": 8,
   "greatPeopleUnitType": "UNIT_ARTIST",

@@ -46,17 +46,7 @@
  },
  "culture": {
   "city": {
-   "flat": [
-    8,
-    {
-     "value": 8,
-     "enabled": {
-      "existedFor": {
-       "min": 1000
-      }
-     }
-    }
-   ]
+   "flat": 8
   }
  },
  "defense": {
@@ -113,6 +103,9 @@
   "construct": "SND_BUILD_SHINTO"
  },
  "identity": {
+  "commerceDoubleTime": {
+   "culture": 1000
+  },
   "nukeImmune": true,
   "teamShare": true,
   "worth": 12,

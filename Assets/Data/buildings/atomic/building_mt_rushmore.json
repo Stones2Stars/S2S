@@ -22,17 +22,7 @@
  },
  "culture": {
   "city": {
-   "flat": [
-    4,
-    {
-     "value": 4,
-     "enabled": {
-      "existedFor": {
-       "min": 1000
-      }
-     }
-    }
-   ]
+   "flat": 4
   }
  },
  "buildRate": {
@@ -95,6 +85,9 @@
   }
  },
  "identity": {
+  "commerceDoubleTime": {
+   "culture": 1000
+  },
   "worth": 8,
   "militaryWorth": 4,
   "conquestProbability": 100,

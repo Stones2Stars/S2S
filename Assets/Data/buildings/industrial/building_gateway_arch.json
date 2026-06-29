@@ -32,17 +32,7 @@
  },
  "culture": {
   "city": {
-   "flat": [
-    2,
-    {
-     "value": 2,
-     "enabled": {
-      "existedFor": {
-       "min": 1000
-      }
-     }
-    }
-   ]
+   "flat": 2
   }
  },
  "freeSpecialists": {
@@ -96,6 +86,9 @@
   }
  },
  "identity": {
+  "commerceDoubleTime": {
+   "culture": 1000
+  },
   "nukeImmune": true,
   "worth": 8,
   "militaryWorth": 8,

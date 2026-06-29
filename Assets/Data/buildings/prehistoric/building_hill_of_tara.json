@@ -34,17 +34,7 @@
  },
  "culture": {
   "city": {
-   "flat": [
-    4,
-    {
-     "value": 4,
-     "enabled": {
-      "existedFor": {
-       "min": 1000
-      }
-     }
-    }
-   ]
+   "flat": 4
   }
  },
  "happiness": {
@@ -91,6 +81,9 @@
   }
  },
  "identity": {
+  "commerceDoubleTime": {
+   "culture": 1000
+  },
   "worth": 10,
   "conquestProbability": 100,
   "greatPeopleUnitType": "UNIT_PROPHET",

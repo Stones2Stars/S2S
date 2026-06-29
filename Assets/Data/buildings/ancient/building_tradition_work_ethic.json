@@ -23,17 +23,7 @@
  },
  "culture": {
   "city": {
-   "flat": [
-    1,
-    {
-     "value": 1,
-     "enabled": {
-      "existedFor": {
-       "min": 1000
-      }
-     }
-    }
-   ]
+   "flat": 1
   }
  },
  "ui": {
@@ -49,6 +39,9 @@
   }
  },
  "identity": {
+  "commerceDoubleTime": {
+   "culture": 1000
+  },
   "notConstructible": true,
   "nukeImmune": true,
   "neverCapture": true,

@@ -56,17 +56,7 @@
  },
  "culture": {
   "city": {
-   "flat": [
-    10,
-    {
-     "value": 10,
-     "enabled": {
-      "existedFor": {
-       "min": 1000
-      }
-     }
-    }
-   ]
+   "flat": 10
   }
  },
  "buildRate": {
@@ -122,6 +112,9 @@
   }
  },
  "identity": {
+  "commerceDoubleTime": {
+   "culture": 1000
+  },
   "nukeImmune": true,
   "teamShare": true,
   "worth": 12,

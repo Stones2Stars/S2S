@@ -14,17 +14,7 @@
  },
  "culture": {
   "city": {
-   "flat": [
-    4,
-    {
-     "value": 4,
-     "enabled": {
-      "existedFor": {
-       "min": 1000
-      }
-     }
-    }
-   ]
+   "flat": 4
   },
   "empire": {
    "percent": 2
@@ -66,6 +56,9 @@
   "construct": "AS2D_BUILD_ISLAMIC"
  },
  "identity": {
+  "commerceDoubleTime": {
+   "culture": 1000
+  },
   "shrine": "RELIGION_ZOROASTRIANISM",
   "notConstructible": true,
   "nukeImmune": true,

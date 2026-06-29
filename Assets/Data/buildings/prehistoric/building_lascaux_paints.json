@@ -34,17 +34,7 @@
  },
  "culture": {
   "city": {
-   "flat": [
-    4,
-    {
-     "value": 4,
-     "enabled": {
-      "existedFor": {
-       "min": 8000
-      }
-     }
-    }
-   ]
+   "flat": 4
   }
  },
  "buildRate": {
@@ -106,6 +96,9 @@
   "construct": "AS2D_BUILD_STONEHENGE"
  },
  "identity": {
+  "commerceDoubleTime": {
+   "culture": 8000
+  },
   "nukeImmune": true,
   "centerInCity": true,
   "worth": 6,

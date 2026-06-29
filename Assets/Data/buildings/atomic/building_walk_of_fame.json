@@ -32,17 +32,7 @@
  },
  "culture": {
   "city": {
-   "flat": [
-    12,
-    {
-     "value": 12,
-     "enabled": {
-      "existedFor": {
-       "min": 1000
-      }
-     }
-    }
-   ]
+   "flat": 12
   }
  },
  "greatPeopleRate": {
@@ -77,6 +67,9 @@
   }
  },
  "identity": {
+  "commerceDoubleTime": {
+   "culture": 1000
+  },
   "nukeImmune": true,
   "worth": 10,
   "conquestProbability": 100,

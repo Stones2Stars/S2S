@@ -39,17 +39,7 @@
  },
  "culture": {
   "city": {
-   "flat": [
-    15,
-    {
-     "value": 15,
-     "enabled": {
-      "existedFor": {
-       "min": 100
-      }
-     }
-    }
-   ]
+   "flat": 15
   }
  },
  "happiness": {
@@ -96,6 +86,9 @@
   }
  },
  "identity": {
+  "commerceDoubleTime": {
+   "culture": 100
+  },
   "nukeImmune": true,
   "worth": 10,
   "conquestProbability": 100,

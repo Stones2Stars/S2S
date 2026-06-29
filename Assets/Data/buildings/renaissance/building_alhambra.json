@@ -41,17 +41,7 @@
  },
  "culture": {
   "city": {
-   "flat": [
-    4,
-    {
-     "value": 4,
-     "enabled": {
-      "existedFor": {
-       "min": 300
-      }
-     }
-    }
-   ]
+   "flat": 4
   }
  },
  "defense": {
@@ -131,6 +121,9 @@
   "construct": "AS2D_BUILD_ISLAMIC"
  },
  "identity": {
+  "commerceDoubleTime": {
+   "culture": 300
+  },
   "nukeImmune": true,
   "teamShare": true,
   "governmentCenter": true,

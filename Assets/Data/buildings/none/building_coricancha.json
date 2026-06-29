@@ -24,17 +24,7 @@
  },
  "culture": {
   "city": {
-   "flat": [
-    2,
-    {
-     "value": 2,
-     "enabled": {
-      "existedFor": {
-       "min": 1000
-      }
-     }
-    }
-   ]
+   "flat": 2
   }
  },
  "greatPeopleRate": {
@@ -68,6 +58,9 @@
   "construct": "AS2D_BUILD_ANDEAN"
  },
  "identity": {
+  "commerceDoubleTime": {
+   "culture": 1000
+  },
   "shrine": "RELIGION_ANDEANISM",
   "notConstructible": true,
   "nukeImmune": true,

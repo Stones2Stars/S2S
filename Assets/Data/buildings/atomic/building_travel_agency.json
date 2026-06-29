@@ -152,6 +152,9 @@
   "construct": "AS2D_BUILD_EARLY_AIRPORT"
  },
  "identity": {
+  "commerceDoubleTime": {
+   "gold": 100
+  },
   "neverCapture": true,
   "worth": 2,
   "greatPeopleUnitType": "UNIT_MERCHANT",

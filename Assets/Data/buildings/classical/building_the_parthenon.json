@@ -58,14 +58,6 @@
      "enabled": {
       "STATE_RELIGION": "RELIGION_HELLENISM"
      }
-    },
-    {
-     "value": 10,
-     "enabled": {
-      "existedFor": {
-       "min": 1000
-      }
-     }
     }
    ]
   }
@@ -129,6 +121,9 @@
   "construct": "AS2D_BUILD_PARTHENON"
  },
  "identity": {
+  "commerceDoubleTime": {
+   "culture": 1000
+  },
   "nukeImmune": true,
   "teamShare": true,
   "worth": 10,

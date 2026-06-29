@@ -37,17 +37,7 @@
  },
  "culture": {
   "city": {
-   "flat": [
-    8,
-    {
-     "value": 8,
-     "enabled": {
-      "existedFor": {
-       "min": 1000
-      }
-     }
-    }
-   ]
+   "flat": 8
   },
   "empire": {
    "buildings": {
@@ -127,6 +117,9 @@
   }
  },
  "identity": {
+  "commerceDoubleTime": {
+   "culture": 1000
+  },
   "nukeImmune": true,
   "worth": 10,
   "conquestProbability": 100,

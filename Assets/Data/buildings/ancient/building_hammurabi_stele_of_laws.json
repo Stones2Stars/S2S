@@ -31,17 +31,7 @@
  },
  "culture": {
   "city": {
-   "flat": [
-    6,
-    {
-     "value": 6,
-     "enabled": {
-      "existedFor": {
-       "min": 1000
-      }
-     }
-    }
-   ]
+   "flat": 6
   }
  },
  "buildRate": {
@@ -113,6 +103,9 @@
   "construct": "AS2D_BUILD_BUDDHIST"
  },
  "identity": {
+  "commerceDoubleTime": {
+   "culture": 1000
+  },
   "worth": 2,
   "conquestProbability": 100,
   "religion": "RELIGION_MESOPOTAMISM",

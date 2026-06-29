@@ -36,17 +36,7 @@
  },
  "culture": {
   "city": {
-   "flat": [
-    4,
-    {
-     "value": 4,
-     "enabled": {
-      "existedFor": {
-       "min": 1000
-      }
-     }
-    }
-   ]
+   "flat": 4
   }
  },
  "buildRate": {
@@ -142,6 +132,9 @@
   "construct": "AS2D_BUILD_COLOSSEUM"
  },
  "identity": {
+  "commerceDoubleTime": {
+   "culture": 1000
+  },
   "worth": 2,
   "conquestProbability": 100,
   "greatPeopleUnitType": "UNIT_GREAT_ENGINEER",

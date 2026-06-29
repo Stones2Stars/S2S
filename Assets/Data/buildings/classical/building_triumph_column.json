@@ -27,17 +27,7 @@
  },
  "culture": {
   "city": {
-   "flat": [
-    2,
-    {
-     "value": 2,
-     "enabled": {
-      "existedFor": {
-       "min": 1000
-      }
-     }
-    }
-   ]
+   "flat": 2
   }
  },
  "buildRate": {
@@ -116,6 +106,9 @@
   "construct": "AS2D_BUILD_OBELISK"
  },
  "identity": {
+  "commerceDoubleTime": {
+   "culture": 1000
+  },
   "neverCapture": true,
   "worth": 2,
   "greatPeopleUnitType": "UNIT_ARTIST",

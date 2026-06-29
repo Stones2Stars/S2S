@@ -29,17 +29,7 @@
  },
  "culture": {
   "city": {
-   "flat": [
-    6,
-    {
-     "value": 6,
-     "enabled": {
-      "existedFor": {
-       "min": 100
-      }
-     }
-    }
-   ]
+   "flat": 6
   }
  },
  "freeSpecialists": {
@@ -101,6 +91,9 @@
   "construct": "AS2D_BUILD_UNIVERSITY"
  },
  "identity": {
+  "commerceDoubleTime": {
+   "culture": 100
+  },
   "nukeImmune": true,
   "teamShare": true,
   "worth": 12,

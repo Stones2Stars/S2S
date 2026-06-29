@@ -35,17 +35,7 @@
  },
  "culture": {
   "city": {
-   "flat": [
-    3,
-    {
-     "value": 3,
-     "enabled": {
-      "existedFor": {
-       "min": 1000
-      }
-     }
-    }
-   ]
+   "flat": 3
   }
  },
  "buildRate": {
@@ -121,6 +111,9 @@
   "construct": "AS2D_BUILD_ANDEAN"
  },
  "identity": {
+  "commerceDoubleTime": {
+   "culture": 1000
+  },
   "nukeImmune": true,
   "teamShare": true,
   "worth": 10,

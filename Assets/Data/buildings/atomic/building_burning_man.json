@@ -22,17 +22,7 @@
  },
  "culture": {
   "city": {
-   "flat": [
-    10,
-    {
-     "value": 10,
-     "enabled": {
-      "existedFor": {
-       "min": 1000
-      }
-     }
-    }
-   ]
+   "flat": 10
   }
  },
  "greatPeopleRate": {
@@ -74,6 +64,9 @@
   }
  },
  "identity": {
+  "commerceDoubleTime": {
+   "culture": 1000
+  },
   "worth": 10,
   "conquestProbability": 100,
   "greatPeopleUnitType": "UNIT_ARTIST",

@@ -40,17 +40,7 @@
  },
  "culture": {
   "city": {
-   "flat": [
-    2,
-    {
-     "value": 2,
-     "enabled": {
-      "existedFor": {
-       "min": 1000
-      }
-     }
-    }
-   ]
+   "flat": 2
   },
   "empire": {
    "percent": 2
@@ -136,6 +126,9 @@
   "construct": "AS2D_UNIT_BUILD_RA_MISSIONARY"
  },
  "identity": {
+  "commerceDoubleTime": {
+   "culture": 1000
+  },
   "neverCapture": true,
   "worth": 6,
   "advisor": "ADVISOR_RELIGION",

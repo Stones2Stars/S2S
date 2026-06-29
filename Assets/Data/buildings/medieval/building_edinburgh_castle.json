@@ -39,17 +39,7 @@
  },
  "culture": {
   "city": {
-   "flat": [
-    4,
-    {
-     "value": 4,
-     "enabled": {
-      "existedFor": {
-       "min": 100
-      }
-     }
-    }
-   ]
+   "flat": 4
   }
  },
  "espionage": {
@@ -121,6 +111,9 @@
   "construct": "AS2D_BUILD_CASTLE"
  },
  "identity": {
+  "commerceDoubleTime": {
+   "culture": 100
+  },
   "nukeImmune": true,
   "teamShare": true,
   "governmentCenter": true,

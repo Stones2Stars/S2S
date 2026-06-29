@@ -40,17 +40,7 @@
  },
  "culture": {
   "city": {
-   "flat": [
-    2,
-    {
-     "value": 2,
-     "enabled": {
-      "existedFor": {
-       "min": 1000
-      }
-     }
-    }
-   ]
+   "flat": 2
   }
  },
  "greatPeopleRate": {
@@ -67,6 +57,9 @@
   "construct": "AS2D_BUILD_BANK"
  },
  "identity": {
+  "commerceDoubleTime": {
+   "culture": 1000
+  },
   "corporationHQ": "CORPORATION_2",
   "notConstructible": true,
   "nukeImmune": true,
