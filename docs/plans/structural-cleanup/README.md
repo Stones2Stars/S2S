@@ -15,7 +15,9 @@
   components (what the cascade reproduces, then deletes).
 - **constructibility.md** — the legacy `canConstruct` / `canTrain` + reverse-index machinery the enabler replaces.
 - **cascade-engine-430.md** — the engine-side build / demolition map (function-level deletion targets) + the
-  build-wholesale ruling.
+  build-wholesale ruling. (Status table rebuilt 2026-06-29 to post-purge truth.)
+- **readjson.md** — the `readJson` BoolExpr-routed reader build plan (the first #430 build item; the data-feed
+  prerequisite for the modifier + enabler).
 
 *(Lifted intact — transient bulldozer docs, not condensed. Their internal links still point at pre-move paths;
 part of the reference-sweep follow-up. The build-wholesale ruling inside `cascade-engine-430.md` should also get a

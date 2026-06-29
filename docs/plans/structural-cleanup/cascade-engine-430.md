@@ -92,7 +92,7 @@ the modifier families `<family>.<scope>[.<member>].<unit>`; `grants`; the predic
 the runtime structures the three machines consume. The JSON conditionals are **routed through `BoolExpr`** (§2b) — the
 prior prototype's hand-rolled `vector<vector<leaf>>` was exactly the AND-of-ORs mistake `enabler.md` §3.1 warns against.
 `readJson` is a pure CONSUMER of the modder-authored shape (defined by `json.md`, not by `readJson`). **(NOT BUILT —
-prototype purged; this is the first build item.)**
+prototype purged; this is the first build item — detailed build plan: [`readjson.md`](readjson.md).)**
 
 **Build order: `readJson` + substrate → tally → modifier → enabler → grants.** Each interface-bounded, each deleting
 its slice of the demolition map (§4) as it lands and passes its shadow.
@@ -116,9 +116,13 @@ surface is retired, `CvHttpServer.cpp:26`):
 
 - **Atomic-deliverable rule:** the DATA cutover stays atomic (one flip at the very end); the ENGINE is developed
   incrementally and shadow-validated first. The new paths are gated instrumentation until the flip.
-- **Shadow data source during development = the current (XML-loaded) info objects** (apples-to-apples new-vs-old). The
-  JSON becomes the source only at the FINAL cutover, when `readJson`'s fresh structures serve the EXE-bound accessor
-  surface (§3). Build FRESH; actively AVOID `CvInfoUtil`/the old `read()` path (§2b).
+- **Shadow data source = PER MACHINE (corrected 2026-06-29).** The **tally** reads raw object counts
+  (`m_paiBuildingCount`, …) + the spine's `DOMAIN` events — **no JSON** — so it shadows directly against the live
+  objects (apples-to-apples, isolating the count-machine logic; it needs no `readJson`). The **modifier + enabler**
+  read `readJson`'s JSON-parsed structures (they consume the family/tree vocabulary the XML objects don't carry) — and
+  the JSON-vs-XML data equivalence is exactly what the StoneBase dry-calc already proved offline, so this is sound. The
+  XML `read()` path stays authoritative for the EXE-bound accessor surface until the atomic cutover (§3). Build FRESH;
+  actively AVOID `CvInfoUtil`/the old `read()` path (§2b).
 - **Exact parity IS the success metric** ([DEC-parity](../../architecture/decisions.md#dec-parity) /
   [DEC-mirror-then-redesign](../../architecture/decisions.md#dec-mirror-then-redesign)): the migration MIRRORS the
   engine exactly. A surviving divergence is a data-collection gap (or a new-side bug), mapped to its named source and
@@ -256,9 +260,12 @@ curated-set model as part of this migration. The current mechanism (mapped 2026-
 ## 7. NEXT
 
 1. **`readJson` (BoolExpr-routed) + the scope-accumulator substrate**, fresh and interface-bounded, wired at the
-   composition root (`cascadeRegisterConsumers`).
-2. **Tally** (player-leaf, rebuild-on-load), its first authoritative `DOMAIN` consumer — running in SHADOW with a
-   gated `[TAG]` diff against the legacy cross-city count scans (§4), validated to parity, then those scans deleted.
+   composition root (`cascadeRegisterConsumers`). **Detailed build plan: [`readjson.md`](readjson.md).** (Critical path:
+   it unblocks the modifier + enabler.)
+2. **Tally** (player-leaf, rebuild-on-load), its first authoritative `DOMAIN` consumer — the **cheap PARALLEL
+   first-shadow: it needs NO `readJson`** (rolls up raw object counts), so it can land alongside item 1. Running in
+   SHADOW with a gated `[TAG]` diff against the legacy cross-city count scans (§4), validated to parity, then those
+   scans deleted.
 3. **Modifier**, porting the parity-proven StoneBase `Calc` packages + `ModifierMath`; shadow per channel vs the legacy
    accumulators, drive to parity, cut.
 4. **Enabler** (generate-then-gate, on the validated tally) + **grants**.
