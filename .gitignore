@@ -100,3 +100,9 @@ Tools/ReadJson/testOutput/
 Tools/ReadJson/_conformance.txt
 Tools/ReadJson/_render.txt
 Sources/sweep_tmp
+
+# Stray scratchpad junk: when a tool writes to the Windows scratchpad path "C:\Users\...\AppData\Local\Temp\claude\
+# ...\scratchpad\X" inside a Bash/Unix context, the backslashes are stripped + the drive colon mangled, so the whole
+# path lands as a literal filename in the repo root. Guard so they never pile up in git status / get committed. (Real
+# fix: tools must write temp files via a forward-slash path or mktemp, never a backslash Windows path under Bash.)
+*AppDataLocalTempclaude*
