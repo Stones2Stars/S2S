@@ -281,11 +281,11 @@ curated-set model as part of this migration. The current mechanism (mapped 2026-
    WITH each consuming machine (below). The scope-accumulator substrate (§1.0) is still to build (the tally has its own).
 2. **Tally** ✅ **DONE** (buildings + units) — player-leaf, rebuild-on-load, first `DOMAIN` consumer; live `[TAG]`
    shadow `diverging=0` against the legacy count scans. Other count domains pending (`tally.md` §5).
-3. **Modifier** ← **THE NEXT MACHINE.** Build the scope-accumulator substrate + the readJson→deposit structure-mapping
-   it consumes, then port the parity-proven StoneBase `Calc` packages + `ModifierMath` (the §2a two-tier rate); shadow
-   per channel vs the legacy CvCity accumulators (§4), drive to parity, then cut. ⛔ Cutting any legacy is gated on the
-   shadow being clean — and the XML load stays authoritative until the atomic cutover (§3): nothing maps JSON→engine
-   data yet, so removing XML now would break the game.
+3. **Modifier** ← **THE NEXT MACHINE — detailed build plan: [`modifier-machine.md`](modifier-machine.md).** The
+   readJson→`CvCascadeData` mapping it consumes is DONE (the side-table); now port the parity-proven StoneBase `Calc`
+   packages + `ModifierMath` (the §2a two-tier rate) onto that mapped data, shadow per channel vs the legacy CvCity
+   accumulators (§4), drive to parity, then cut. First increment: the **percent stack** (the smallest end-to-end slice).
+   ⛔ Cutting any legacy is gated on the shadow being clean — the XML load stays authoritative until the atomic cutover (§3).
 4. **Enabler** (generate-then-gate, on the validated tally) + **grants**.
 5. **The trait simple/complex engine fix (§6)** — retire the `CvInfoReplacements` trait swap for option-selected
    injection — sequenced with the modifier/enabler work (it changes which trait values both read).
