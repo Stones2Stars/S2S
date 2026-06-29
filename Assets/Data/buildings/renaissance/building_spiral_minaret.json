@@ -26,16 +26,6 @@
  "allowed": {
   "world": 1
  },
- "gold": {
-  "city": {
-   "flat": [
-    {
-     "value": 2,
-     "enabled": "HAS_STATE_RELIGION"
-    }
-   ]
-  }
- },
  "culture": {
   "city": {
    "flat": 8
@@ -96,6 +86,9 @@
   }
  },
  "identity": {
+  "stateReligionCommerce": {
+   "gold": 2
+  },
   "commerceDoubleTime": {
    "culture": 1000
   },

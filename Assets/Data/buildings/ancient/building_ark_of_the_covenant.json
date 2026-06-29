@@ -35,18 +35,6 @@
  "allowed": {
   "world": 1
  },
- "gold": {
-  "city": {
-   "flat": [
-    {
-     "value": 1,
-     "enabled": {
-      "STATE_RELIGION": "RELIGION_JUDAISM"
-     }
-    }
-   ]
-  }
- },
  "happiness": {
   "empire": {
    "flat": 1
@@ -96,6 +84,9 @@
   "construct": "AS2D_BUILD_OBELISK"
  },
  "identity": {
+  "stateReligionCommerce": {
+   "gold": 1
+  },
   "nukeImmune": true,
   "teamShare": true,
   "worth": 10,

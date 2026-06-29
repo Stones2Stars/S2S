@@ -28,13 +28,7 @@
  },
  "research": {
   "city": {
-   "flat": [
-    25,
-    {
-     "value": 2,
-     "enabled": "HAS_STATE_RELIGION"
-    }
-   ]
+   "flat": 25
   }
  },
  "culture": {
@@ -107,6 +101,9 @@
   }
  },
  "identity": {
+  "stateReligionCommerce": {
+   "research": 2
+  },
   "commerceDoubleTime": {
    "culture": 1000
   },

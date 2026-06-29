@@ -477,13 +477,17 @@ def pass2(typ, rec, store, fams, grants, repeatable, identity, enables):
         for member, v in engine.named_array(pym, engine.YIELDS).items():
             if v:
                 _inject_cond(fams, member, "city", "percent", v, "HAS_POWER")
-    # --- StateReligionCommerces: per-commerce, gated on the building's religion being the state religion ---
+    # --- StateReligionCommerces: the engine accumulates each building's value into a PLAYER POOL
+    # (kPlayer.getStateReligionBuildingCommerce = Σ ALL the player's buildings' StateReligionCommerces, CvPlayer:7472),
+    # then adds the WHOLE pool ONCE PER city building whose religion == the state religion (getBuildingCommerceByBuilding
+    # :12266 -- a pool × matching-count cross-multiplication). A per-building gated flat models neither, so emit a clean
+    # per-channel MARKER (the raw value); the cascade pools it over the player's buildings and applies it per matching
+    # building (its religion = identity.religion). ---
     src = rec.find("StateReligionCommerces")
     if src is not None:
-        relig = _txt(rec, "ReligionType")
-        pred = OrderedDict([("STATE_RELIGION", relig)]) if relig else "HAS_STATE_RELIGION"
-        for member, v in engine.named_array(src, engine.COMMERCES).items():
-            _inject_cond(fams, member, "city", "flat", v, pred)
+        srb = OrderedDict((member, v) for member, v in engine.named_array(src, engine.COMMERCES).items() if v)
+        if srb:
+            identity["stateReligionCommerce"] = srb
     # --- iStateReligionHappiness: happiness while the city follows the state religion ---
     srh = _int(rec, "iStateReligionHappiness")
     if srh:

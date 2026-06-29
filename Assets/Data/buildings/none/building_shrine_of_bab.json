@@ -12,18 +12,6 @@
    ]
   }
  },
- "research": {
-  "city": {
-   "flat": [
-    {
-     "value": 1,
-     "enabled": {
-      "STATE_RELIGION": "RELIGION_BAHAI"
-     }
-    }
-   ]
-  }
- },
  "culture": {
   "city": {
    "flat": 4
@@ -62,6 +50,9 @@
   }
  },
  "identity": {
+  "stateReligionCommerce": {
+   "research": 1
+  },
   "commerceDoubleTime": {
    "culture": 1000
   },

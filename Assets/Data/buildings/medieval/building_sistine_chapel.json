@@ -23,13 +23,7 @@
  },
  "culture": {
   "city": {
-   "flat": [
-    10,
-    {
-     "value": 5,
-     "enabled": "HAS_STATE_RELIGION"
-    }
-   ]
+   "flat": 10
   },
   "empire": {
    "specialist": {
@@ -92,6 +86,9 @@
   }
  },
  "identity": {
+  "stateReligionCommerce": {
+   "culture": 5
+  },
   "commerceDoubleTime": {
    "culture": 1000
   },

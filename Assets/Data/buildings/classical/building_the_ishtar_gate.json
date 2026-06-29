@@ -52,18 +52,6 @@
    "flat": 8
   }
  },
- "espionage": {
-  "city": {
-   "flat": [
-    {
-     "value": 1,
-     "enabled": {
-      "STATE_RELIGION": "RELIGION_MESOPOTAMISM"
-     }
-    }
-   ]
-  }
- },
  "buildRate": {
   "self": {
    "percent": [
@@ -128,6 +116,9 @@
   }
  },
  "identity": {
+  "stateReligionCommerce": {
+   "espionage": 1
+  },
   "commerceDoubleTime": {
    "culture": 1000
   },

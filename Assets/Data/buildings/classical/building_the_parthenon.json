@@ -37,29 +37,9 @@
  "allowed": {
   "world": 1
  },
- "research": {
-  "city": {
-   "flat": [
-    {
-     "value": 1,
-     "enabled": {
-      "STATE_RELIGION": "RELIGION_HELLENISM"
-     }
-    }
-   ]
-  }
- },
  "culture": {
   "city": {
-   "flat": [
-    10,
-    {
-     "value": 1,
-     "enabled": {
-      "STATE_RELIGION": "RELIGION_HELLENISM"
-     }
-    }
-   ]
+   "flat": 10
   }
  },
  "greatPeopleRate": {
@@ -121,6 +101,10 @@
   "construct": "AS2D_BUILD_PARTHENON"
  },
  "identity": {
+  "stateReligionCommerce": {
+   "research": 1,
+   "culture": 1
+  },
   "commerceDoubleTime": {
    "culture": 1000
   },
