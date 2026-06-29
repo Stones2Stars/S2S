@@ -463,7 +463,9 @@ static void rj_walkModNode(const std::string& path, const picojson::value& v, Rj
 // key → a number). `requires` build/operate is already translated (increment 2). This is the SURVEY probe: parse +
 // FK-resolve the bucket ids + count the caps; the persistent buckets the enabler reads are built at the cutover.
 
-static const char* RJ_EDGES[] = { "enables", "obsoletes", "replaces", "disables", 0 };
+// Source edges (enables/obsoletes/replaces/disables) + the target-side `obsoletedBy` (json.md §4.2 — the reverse
+// obsolete edge, same per-kind bucket shape; the enabler reads it forward from the target). All parse identically.
+static const char* RJ_EDGES[] = { "enables", "obsoletes", "replaces", "disables", "obsoletedBy", 0 };
 
 struct RjEnableStats
 {
