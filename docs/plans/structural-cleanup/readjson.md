@@ -124,8 +124,20 @@ add real handling per `json.md` §5 (grants: lists, numeric pulses, `foundBuildi
    curated-only constructs the engine registry doesn't carry as primary entries: `TECH_GAME_START` (the synthetic
    cascade start node, validation.md), `CULTURELEVEL_ALT_POOR` (a `replacedBy` alternate Info, json.md §9), and
    `PROMOTION_COMPLEX_AGGRESSIVE` (a `COMPLEX_` option-selected variant). Next increments populate the fresh record.
-2. **The conditional translator** — `all`/`any`/`noneOf` (recursive tree, spec §3.4) + atoms + bare/parameterized
-   predicates + membership desugar → `BoolExpr`. Prove against the harness `--render` for a spread of `requires` trees.
+2. **The conditional translator** ✅ **DONE (+ gap survey)** — `rj_translate` maps a JSON condition onto the engine
+   `BoolExpr` tree: `all`/`any`/`noneOf`→`And`/`Or`/`Not` (binary, left-folded); type atom / type-param predicate →
+   `BoolExprHas(GOM,id)` (GOM by infotype prefix); relief/water/city predicate → `BoolExprIs(TAG)`; membership
+   `{terrain|feature|bonus:[…]}` → `Or` of `Has`; `!X` → `Not`. Proven live via `buildDisplayString` renders.
+   **Verified: 11,475 requires-conditions, 27,824/35,904 leaves (77%) map cleanly.** The remaining 23% (8,080 leaves /
+   42 kinds) are SURVEYED (`[READJSON/cond-gap]`), in **5 buckets** that drive the next increments: **(a)** count/value
+   thresholds (`POPULATION`/`CITY`/`TEAM` + 798 thresholds + `PROPERTY_*` bands) → `BoolExprGreaterEqual`+`IntExpr`,
+   the counts reading the **tally** → **increment 3**; **(b)** plot predicates with no `TagTypes`
+   (`HAS_RIVER`/`HAS_IRRIGATION`/`HAS_FEATURE`/`HAS_COAST{minArea}`/`latitude`/`natureYield`) → extend `TagTypes`;
+   **(c)** city/player state (`HAS_POWER`/`STATE_RELIGION`/`STATE_RELIGION_IN_CITY`) → new leaf / predicate-eval;
+   **(d)** type-kinds with no GOM (`CULTURELEVEL_*`, `MAPCATEGORY_*` (space, not-fleshed), `VICTORY_*`); **(e)**
+   structural: the `dormant` clause (handle as `requires.operate.dormant`, enabler.md §3, not a leaf). Unmapped leaves
+   stand in as a `true` constant for the SURVEY ONLY (json.md: an unknown predicate is ignored) — a placeholder, not
+   the design.
 3. **Modifier families** — the deposit-address parse (`<family>.<scope>[.…].<unit>`) + the ×100 leaf conversion + the
    `enabled`/`disabled`/`per` conditioning. This is what the **modifier** machine consumes; cross-check leaf values
    against StoneBase.
