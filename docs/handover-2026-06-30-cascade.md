@@ -37,8 +37,13 @@ The cascade rebuild is well underway, on a proper footing (the first prototype w
    unit skills especially.** (cascade-engine-430 §7 item 3a.)
 4. **Enabler — build EARLY, a CO-REQUISITE with the modifier (not later).** Without it the cascade doesn't know what's
    ACTIVE (which bonuses are connected, which buildings non-dormant), which the modifier's `enabled:{HAS_BONUS}` /
-   `connection` / dormancy conditions depend on. (Shadow reads the live engine's active state; the enabler makes the
-   cascade self-contained for post-cutover.) Then **grants**; the **trait simple/complex** fix (§6); the atomic **cutover** LAST.
+   `connection` / dormancy conditions depend on. ⛔ **The modifier shadow must read the ENABLER's active state, NOT the
+   live engine** (so the cascade is self-contained post-cutover); the **enabler's active state is independently shadowed
+   vs the engine to prove they are EQUAL** (StoneBase proved this). ⛔ **NEVER read legacy COMPUTED/active outputs as a
+   cascade INPUT** (the pollution anti-pattern — the repeated pre-StoneBase mistake; validation.md pollution guardrail).
+   The current percent-stack reads the live engine's computed-active state (`isActiveBuilding`, connected-bonus eval) —
+   that is **DEBT that commits the anti-pattern**, to be replaced by reading the enabler (modifier-machine §2). Then
+   **grants**; the **trait simple/complex** fix (§6); the atomic **cutover** LAST.
 
 ## Working cadence (so the next session doesn't relearn it)
 - Build: `powershell.exe -NoProfile -ExecutionPolicy Bypass -File "../Tools/_Build.ps1" Assert build` from `Sources/`

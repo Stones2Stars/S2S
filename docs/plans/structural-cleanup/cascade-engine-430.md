@@ -297,9 +297,11 @@ curated-set model as part of this migration. The current mechanism (mapped 2026-
 4. **Enabler** (generate-then-gate, on the validated tally) + **grants** — **build EARLY, a CO-REQUISITE with the
    modifier (owner ruling 2026-06-30), not a later step.** Without the enabler the cascade does not know **what is
    ACTIVE** — which bonuses are connected/available, which buildings are non-dormant — and the modifier's conditions
-   (`enabled:{HAS_BONUS}`, `connection:vicinity`, dormancy) depend on exactly that. (During shadow the modifier reads
-   the LIVE engine's active state via `BoolExpr::evaluate`; the enabler is what makes the cascade SELF-CONTAINED — its
-   own model of active state — which the modifier must read post-cutover.) So sequence enabler alongside the modifier.
+   (`enabled:{HAS_BONUS}`, `connection:vicinity`, dormancy) depend on exactly that. **The modifier shadow must read the
+   ENABLER's active state, NOT the live engine (owner ruling 2026-06-30)** — so the cascade is self-contained (it must
+   keep working after the legacy state is cut); the enabler's active state is **independently shadowed vs the engine to
+   prove they are EQUAL** (StoneBase proved this is achievable). (The current percent-stack reads the live engine as an
+   INTERIM shim until the enabler exists — modifier-machine §2.) So sequence the enabler alongside the modifier.
 5. **The trait simple/complex engine fix (§6)** — retire the `CvInfoReplacements` trait swap for option-selected
    injection — sequenced with the modifier/enabler work (it changes which trait values both read).
 6. **The atomic cutover** — `readJson` replaces `readXml`; the demolished machinery (§4) is deleted in one landing.

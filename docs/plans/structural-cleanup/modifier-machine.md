@@ -38,16 +38,30 @@ rate100 = min(CAP, max(100, (Σ BASE + specialist) × max(0, modifier) + 100·�
 - **Commerce (§2)** is the same shape a second time on the COMMERCE-yield × the channel slider + its own baseExtra
   sub-terms; disorder forces the whole rate to 0 first.
 
-## 2. The input — mapped data + live state (NOT a re-parse)
+## 2. The input — mapped data + the ENABLER's active state (NOT the live engine)
 
 - **Per-source effect data:** the entity's `CvCascadeData` via `cascadeForInfo(&GC.get*Info(id))` — its `deposits`
   (`address` = dotted `family.scope[.target][.member]`, `unit`, `value100`, `enabled`/`disabled` BoolExpr, `hasPer`).
-- **The active-source SETS come from the LIVE engine** (not the static data): a city's active (non-dormant) buildings,
-  the player's empire-wide buildings, adopted civics, the player's active trait set (option-selected — modifier.md §4
-  `ActiveTraitSet`, pure-filtered), projects. The calc iterates these, looks up each one's `CvCascadeData`, and sums
-  the channel's deposits at the relevant scope.
-- **Plot/specialist/trade inputs:** the worked plots (`/state` equivalent — the live `CvPlot`s the city works) +
-  assigned specialists; trade-route yield is the one live-yield INPUT (folded in, not derived).
+- **⛔ The ACTIVE-SOURCE state comes from the cascade ENABLER, NOT the live engine (owner ruling 2026-06-30).** What
+  is *active* — which buildings are non-dormant, which bonuses are connected/available, which civics/traits hold — and
+  the `enabled`/`disabled`/`connection` condition evaluation must read the **cascade enabler's** HAVE/active model, so
+  the modifier (and the whole cascade) is **self-contained** — it must keep working after the legacy state is cut. The
+  enabler's active state is **independently SHADOWED vs the live engine** to prove they are equal (StoneBase proved this
+  is achievable). This is *why* the enabler is a co-requisite, built alongside the modifier (cascade-engine-430 §7.4).
+  - **⛔ NEVER read legacy COMPUTED/active outputs as a cascade INPUT (owner ruling 2026-06-30, load-bearing).** That
+    is the **pollution anti-pattern** — the cascade depending on the very state it replaces — and it is *the* mistake
+    that had to be corrected repeatedly before StoneBase got it right (validation.md's pollution guardrail: engine-
+    calculated data enters ONLY at the comparison boundary, never as an input). Legacy reads are allowed ONLY when
+    **explicitly designated**: (a) the comparison boundary (the shadow diff vs the oracle), and (b) named raw INPUTs
+    (the saved/base state — buildings built, bonuses present, civics adopted, the trade-route yield input). A legacy
+    **computed** output (`isActiveBuilding`/dormancy, connected-bonus resolution, `getBaseYieldRateModifier`) is OFF
+    LIMITS as input — the cascade computes active state itself (the **enabler** from raw), and the modifier reads that.
+  - **⏳ DEBT (increment 1):** the percent stack currently reads the live engine's *computed active* state
+    (`isActiveBuilding`; `BoolExpr::evaluate` against the live `CvGameObject`, which resolves connected bonuses) — i.e.
+    it commits the anti-pattern above. It proved the math (building tier bit-exact), but it is **debt to remove**: the
+    enabler (co-requisite) must provide the active state, and the modifier switches to reading the enabler. Enabler-first.
+- **Plot/specialist/trade inputs:** the worked plots + assigned specialists; trade-route yield is the one live-yield
+  INPUT (folded in, not derived).
 
 ## 3. The port — StoneBase `Calc` → C++ (no god-class; a kernel + per-term functions)
 
