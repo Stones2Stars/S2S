@@ -28,6 +28,18 @@ The cascade rebuild is well underway, on a proper footing (the first prototype w
 
 ## What's next (owner direction, 2026-06-30) — get it ALL in, then compare vs StoneBase
 
+0. **★ THE FOUNDATIONAL GAP — the scope-spine cascading is NOT mapped at all yet.** The actual containment cascade
+   **game → world → team → player(empire) → area → city → plot → building|specialist|unit** — a deposit at one scope
+   flowing **DOWN** the spine into the instance accumulators, and the tally rolling **UP** — is the **unbuilt
+   scope-accumulator substrate** (cascade-engine-430 §1.0). The current modifier percent-stack **fakes** it (sums
+   `empire.percent` straight onto a city by scope-*name*, no real down-propagation). This substrate underlies the
+   modifier, enabler, and tally — build it first / alongside. The accumulators are the per-instance nodes (the two-homes
+   ruling §3): definitions on infos, the spine accumulators on the instance objects.
+   - ⚠ **PLOT is a special case** — not a clean single-parent `city → plot`: a plot may be inside a city, in **no** city
+     (neutral/unowned), or in **multiple** cities' vicinity, so its enabling can live **outside or inside** a city. The
+     vicinity/ownership model (json.md §3.4 — owned/neutral/foreign, the radius scan, a plot counting for two cities)
+     governs the plot↔city edge, not strict containment.
+
 1. **Port the WHOLE modifier `Calc` in, THEN compare the in-DLL shadow vs StoneBase's results** — do NOT chase
    per-increment parity. StoneBase mapped every source + is parity-proven; the in-DLL job is **port fidelity** (does the
    C++ reproduce StoneBase's numbers?). Remaining packages: BASE (plot/specialist/trade/free-city/golden-age), AFTER

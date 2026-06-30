@@ -207,6 +207,14 @@ surface is retired, `CvHttpServer.cpp:26`):
     StoneBase dicts). It WORKS + is verified (`[READJSON/map-summary]` round-trips, game loads clean,
     `[TALLY/shadow] diverging=0`), but it is the slow/opaque shim. Redesign → real `modifiers`/`enables` structs as
     appended base members on `CvInfoBase` (+ per-derived for type-specific), read directly.
+  - **★ TWO HOMES — definitions on infos, ACCUMULATED STATE on instances (owner ruling 2026-06-30).** The static
+    **definitions** (the `modifiers`/`enables` structs from JSON) live on the **infos** (above). The runtime
+    **accumulated state** — the cascade accumulators (a city's summed per-`(family,scope)` totals) + the **tally**
+    counts — naturally lives on the **game INSTANCE objects** (city / player / unit). Per §2b those go on the
+    **DLL-internal derived** instance classes (`CvCityAI`/`CvPlayerAI`/`CvUnitAI`), **never** the EXE-bound bases
+    (`CvCity`/`CvPlayer`/`CvUnit`). **NO dictionaries/side-tables** (a StoneBase offline-ism — it had no engine
+    objects; the DLL does, so state lives ON them). ⏳ This retires BOTH current dict-interims: the modifier
+    **side-table** (→ onto the infos) AND the **tally** singleton-maps (→ onto the player instances).
 - **The shared/kept pieces (EXE-bound):** the **type registry** `GC.getInfoTypeForString` (`Defines/CvGlobals.cpp:2682`,
   decl `CvGlobals.h:1418`) / `setInfoTypeFromString` (`CvGlobals.cpp:2708`, decl `:252`) over `m_infosMap`
   (`CvGlobals.h:929`) — `readJson` uses it for FK resolution because the EXE binds the same indices; and the **EXE-bound
