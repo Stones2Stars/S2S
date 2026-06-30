@@ -24,6 +24,16 @@ engine's actual output**. Our calculator is the test; the engine is the oracle.
   gap** — a source the cascade didn't gather — never a formula difference. Map it to the named source and close it.
   Out-of-scope (depends on a lower, not-yet-validated layer — e.g. a tech needing a `BUILDING_` prereq) is
   **deferred: shown, never silently dropped**.
+- **⛔ PARITY = full ATTRIBUTION + a showable diff, NOT bit-exact (owner clarification 2026-06-30).** "Parity" does
+  **not** mean the cascade reproduces the legacy number to the bit. It means **every source is ATTRIBUTED** — we can
+  name where each value comes from on both sides — and **any diff is SHOWABLE** (total-observability). **Bit-exact is
+  impossible by design** where the model deliberately diverges: e.g. building free-specialists were **moved into the
+  specialists bucket** (instead of riding along with buildings as legacy does), an accepted structural change with a
+  known commerce overshoot. **StoneBase PROVED we can reach parity in this sense** (every source attributed, every diff
+  named) — that is the achievable bar, and the in-DLL shadow's job is to **reproduce StoneBase's attribution + its
+  (accepted, intentional) diffs**, not to drive a bit-exact 0 over a model that intentionally differs. So: the `0` of
+  "0 in-scope mismatches" is for the **faithful-mirror** sources; the **intentional** model changes are out-of-scope
+  diffs that are attributed + shown, never chased to zero.
 
 > **Mirror, don't redesign (`DEC-mirror-then-redesign`).** The migration reproduces the engine's *existing*
 > behaviour exactly. Behavioural redesign — *should this behave this way at all?* (e.g. should blackened-skies dorm

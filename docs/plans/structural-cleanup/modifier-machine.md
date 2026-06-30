@@ -10,6 +10,17 @@
 
 ---
 
+## 0. Strategy — PORT IT ALL IN, then compare vs StoneBase (owner ruling 2026-06-30)
+
+**Do NOT chase parity per-increment.** StoneBase has already **mapped every source** and is **parity-proven** (bit-exact
+yields + commerce vs `/computed`). So the job here is to **port the WHOLE calc in** (all the §1 packages + the assembler +
+the §2 commerce stage — faithfully reproducing StoneBase's `Calc`/`ModifierMath`), and **THEN check whether the in-engine
+shadow produces the SAME results StoneBase did.** The verification question is **port fidelity** — "does the C++ shadow
+reproduce StoneBase's numbers?" — not an independent per-increment drive to legacy parity. A divergence the in-DLL shadow
+shows that StoneBase did NOT is a **port bug** (the C++ doesn't match the C#); a divergence BOTH show is a known StoneBase
+residual. So: get it all in, run the holistic shadow, diff the in-DLL result against the StoneBase result. (Per-source
+parity-chasing — the percent-stack residuals in §5.1b — is therefore **deferred**: get the full calc in first.)
+
 ## 1. The realized rate (the target — modifier.md §2a)
 
 A city's per-channel rate is a **two-tier** combine (`StoneBase Calc/YieldRate.cs`, the assembler):

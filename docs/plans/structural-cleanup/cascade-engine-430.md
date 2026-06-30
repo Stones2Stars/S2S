@@ -276,16 +276,24 @@ curated-set model as part of this migration. The current mechanism (mapped 2026-
 
 ## 7. NEXT
 
-1. **`readJson` (BoolExpr-routed)** ✅ **PARSE DONE** — full json.md coverage proven live (status table; build plan
-   [`readjson.md`](readjson.md)). ⛔ It surveys, it does **not yet map JSON→runtime structures** — that mapping is built
-   WITH each consuming machine (below). The scope-accumulator substrate (§1.0) is still to build (the tally has its own).
+1. **`readJson` (BoolExpr-routed)** ✅ **PARSE + MAP DONE** — full json.md coverage; maps each entity's JSON to a
+   `CvCascadeData` attached by game object via the ABI-safe side-table (`cascadeForInfo`). ⛔ **NOT yet mapped: the
+   classification blocks** (`skills`/`tags`/`capabilities`/`state`, json.md §8) — currently recognized + skipped. See the
+   classification-wiring item below.
 2. **Tally** ✅ **DONE** (buildings + units) — player-leaf, rebuild-on-load, first `DOMAIN` consumer; live `[TAG]`
    shadow `diverging=0` against the legacy count scans. Other count domains pending (`tally.md` §5).
-3. **Modifier** ← **THE NEXT MACHINE — detailed build plan: [`modifier-machine.md`](modifier-machine.md).** The
-   readJson→`CvCascadeData` mapping it consumes is DONE (the side-table); now port the parity-proven StoneBase `Calc`
-   packages + `ModifierMath` (the §2a two-tier rate) onto that mapped data, shadow per channel vs the legacy CvCity
-   accumulators (§4), drive to parity, then cut. First increment: the **percent stack** (the smallest end-to-end slice).
-   ⛔ Cutting any legacy is gated on the shadow being clean — the XML load stays authoritative until the atomic cutover (§3).
+3. **Modifier** — build plan [`modifier-machine.md`](modifier-machine.md). The readJson→`CvCascadeData` mapping is DONE;
+   the **percent stack** (increment 1) is in + attributed (building tier bit-exact). **Strategy (owner ruling 2026-06-30):
+   port the WHOLE StoneBase `Calc` in, THEN compare the in-DLL shadow vs StoneBase's parity-proven results** (port
+   fidelity) — do NOT chase per-increment parity. **Parity = full ATTRIBUTION + a showable diff, NOT bit-exact**
+   (validation.md; the specialist-bucket move makes bit-exact impossible; StoneBase proved attribution-parity is reachable).
+3a. **★ WIRE THE NEW CLASSIFICATION + POLICY BLOCKS so the engine consumes them exactly as it uses the legacy flags
+   today (owner ruling 2026-06-30 — SUPER IMPORTANT: these easily get LOST, and a wrong/missing one DETERIORATES the
+   game experience).** Map `skills` / `tags` / `capabilities` (json.md §8) + `policies` (§9, civic law toggles) onto the
+   game object as the new arrays, and make each engine SYSTEM read the new array the same way it reads the legacy
+   per-flag: a unit's `skills.blitz` → multiple-attacks (as the legacy blitz); empire `capabilities` → the team ability;
+   `policies.noForeignTrade` → the trade-route engine; unit `tags` → the `IS_<TAG>` accounting. **empire capabilities +
+   unit skills especially.** The classification blocks are currently parsed-but-skipped (not mapped) — this is the wiring.
 4. **Enabler** (generate-then-gate, on the validated tally) + **grants**.
 5. **The trait simple/complex engine fix (§6)** — retire the `CvInfoReplacements` trait swap for option-selected
    injection — sequenced with the modifier/enabler work (it changes which trait values both read).
