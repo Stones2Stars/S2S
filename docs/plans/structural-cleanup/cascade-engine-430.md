@@ -183,25 +183,30 @@ surface is retired, `CvHttpServer.cpp:26`):
   (XML-populated `m_ai*`/`m_ab*`) are **cut only AFTER** (a) the data is mapped, (b) the new calc is built, and (c) the
   per-machine SHADOW reaches parity. Until all three hold the XML load stays authoritative (cutting now breaks the game
   — nothing maps JSON→engine data yet); the cut is the atomic last step.
-  - **⛔ HOME = NEW FIELDS on the CORRECT, SPECIFIC `CvInfo` classes (owner ruling 2026-06-30) — a PER-DERIVED append,
-    NOT a `CvInfoBase` member and NOT a side-table-for-everything.** The genuinely-new cascade data (deposits/requires/
-    edges/…) is mapped to its specific info (`CvBuildingInfo`/`CvUnitInfo`/`CvTechInfo`/…) as a **new appended member**;
-    the standard EXE-required fields (`type`/description/the DllExport getters) are **reused** from that info, never
-    duplicated. **Why per-derived is the answer + the base is not:** widening **`CvInfoBase`** crashes the EXE on load
-    (the closed EXE binds the *base* layout — reads the type-string by a hardcoded offset; the minidump showed a `memcpy`
-    AV in `std::string::assign` off a shifted member), because a base change shifts *every* derived class's members. But
-    **appending to the END of a DERIVED class is ABI-safe** — the EXE accesses each `CvInfo`'s existing members at their
-    original offsets; a member after them is untouched (the standard C2C way of extending `CvInfo`). Access is **typed**
-    (readJson + the machines already dispatch by type — `GC.get*Info(id)`), so no base virtual getter is needed.
-  - **⏳ CURRENT (interim) — a side-table.** Today readJson maps into a `CvCascadeData` held in a side-table keyed by
-    `CvInfoBase*` (`cascadeForInfo`/`cascadeAttach`) — the over-correction taken after the base-widening crash (concluded
-    "no `CvInfo` member at all" instead of "no *base* member"), which also **echoed StoneBase's dictionaries**. But
-    StoneBase used dictionaries only because it is an **offline** validator (perf secondary) **with no engine base
-    objects** — it builds its own typed model. **The DLL HAS the real base objects**, so it should map **onto them**
-    (per-derived members), NOT carry the dictionary pattern over. The side-table WORKS + is verified
-    (`[READJSON/map-summary]` round-trips, game loads clean, `[TALLY/shadow] diverging=0`), but the proper design is the
-    per-derived fields above: move `CvCascadeData` to an appended member on each specific info, populated by the prefix
-    dispatch, read typed.
+  - **⛔ HOME = real indexed structs on the INFO objects (owner ruling 2026-06-30).** Terminology (the owner pinned it):
+    **`CvInfoBase`** is the base of the **JSON-data-derived objects** — the infos (`CvBuildingInfo`/…), where the
+    type-data maps; **`GameObject`/`CvGameObjectCity`** is the base of the runtime **INSTANCES** (city/unit), which
+    conditions EVALUATE against (the active-state side). The cascade **type-data lives on the infos**:
+    - **Universal structures every info needs — `modifiers` + `enables` — are BASE members on `CvInfoBase`** (appended);
+      type-specific data is **per-derived** (`CvBuildingInfo`/…). The standard EXE-required info fields (`type`/
+      description/the DllExport getters) are **REUSED** from the info, never duplicated — this carries only new data.
+    - **They are REAL indexed structs/classes that GIVE THE ANSWER directly** — `modifiers` keyed by family/scope/unit,
+      `enables` by bucket — NOT a flat list linear-scanned everywhere (that is StoneBase's `ModifierFamily` *tree* shape,
+      which the interim flattened). The machine asks the struct and gets the value; no full-list walk per access.
+  - **ABI — the load crash was a MID-CLASS insertion, NOT appending.** Adding `m_pCascade` *before* the existing
+    `CvInfoBase` members shifted `m_szType` (which the EXE reads by a hardcoded offset) → the `memcpy` AV in
+    `std::string::assign`. **Appending to the END preserves every existing offset** (the standard C2C way of extending an
+    info), so base members on `CvInfoBase` are viable — **confirm with an append-test** (a base append also shifts the
+    *derived* members; safe iff the EXE reads those via getters, not by offset — verify). Access is **typed** (readJson +
+    the machines dispatch by `GC.get*Info(id)`), so no base virtual getter is needed.
+  - **Why NOT the side-table/dictionaries:** StoneBase used dictionaries only because it is **offline** (perf secondary)
+    with **no engine base objects** — it builds its own typed model. **The DLL HAS the real info objects**, so map ONTO
+    them: a direct member is **faster** (no map lookup in the modifier's hot loops) and makes **provenance obvious**.
+  - **⏳ CURRENT (interim, to replace):** `CvCascadeData` is a **flat deposit vector** in a `CvInfoBase*`-keyed
+    **side-table** (`cascadeForInfo`/`cascadeAttach`) — the over-correction after the mid-class crash (+ echoing the
+    StoneBase dicts). It WORKS + is verified (`[READJSON/map-summary]` round-trips, game loads clean,
+    `[TALLY/shadow] diverging=0`), but it is the slow/opaque shim. Redesign → real `modifiers`/`enables` structs as
+    appended base members on `CvInfoBase` (+ per-derived for type-specific), read directly.
 - **The shared/kept pieces (EXE-bound):** the **type registry** `GC.getInfoTypeForString` (`Defines/CvGlobals.cpp:2682`,
   decl `CvGlobals.h:1418`) / `setInfoTypeFromString` (`CvGlobals.cpp:2708`, decl `:252`) over `m_infosMap`
   (`CvGlobals.h:929`) — `readJson` uses it for FK resolution because the EXE binds the same indices; and the **EXE-bound

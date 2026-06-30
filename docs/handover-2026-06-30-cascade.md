@@ -12,11 +12,14 @@ The cascade rebuild is well underway, on a proper footing (the first prototype w
   (deposits ×100 + enabled/disabled `BoolExpr`, requires build/operate, the enables/provides edges, allowed caps,
   grants), attached **by game object** via the ABI-safe **side-table** (`cascadeForInfo`/`cascadeAttach`). 13,159
   entities mapped; read-back round-trips.
-  - ⛔ **ABI:** widening the **base** `CvInfoBase` crashes the EXE on load (minidump-proven — it binds the base layout).
-    But **appending a member to a DERIVED info class is ABI-safe** (standard C2C). So the **target home = a new appended
-    member on each SPECIFIC info** (`CvBuildingInfo`/…), reusing the standard fields — faster + clearer than a map. The
-    current side-table (`cascadeForInfo`) is the **INTERIM over-correction** ("no `CvInfo` member" instead of "no *base*
-    member"); **next task: redesign it to per-derived members** (cascade-engine-430 §3, CvCascadeData.h).
+  - ⛔ **Data-model correction (full model: cascade-engine-430 §3).** The cascade type-data belongs on the **INFO**
+    objects (`CvInfoBase`-derived; `GameObject`/`CvGameObjectCity` is the *instance* base, the eval target — distinct).
+    Target: **real indexed structs that give the answer directly** — the **universal** `modifiers` + `enables` as
+    **appended BASE members on `CvInfoBase`** (every info needs them), type-specific data **per-derived**; **reuse** the
+    standard info fields (`type`/…), don't duplicate. The load crash was a **MID-CLASS insertion** (shifted `m_szType`);
+    **appending to the END preserves offsets** (standard C2C) → base members viable, **confirm with an append-test**.
+    The current **flat-vector side-table** (`cascadeForInfo`) is the verified **INTERIM** (echoed StoneBase's dicts,
+    which it used only because offline + no base objects); **next task: redesign to the real structs above.**
 - **Mistake-hunt** ✅ — `obsoletedBy`→edge; tech capabilities→`capabilities` block (curator fold).
 - **Modifier machine — percent stack** ✅ (`CvCascadeModifierMath`): `max(0,100+Σ%)` off the mapped deposits, BoolExpr
   gated, shadowed vs legacy `getBaseYieldRateModifier` with sub-term attribution. **Building tier is bit-exact**
