@@ -183,16 +183,25 @@ surface is retired, `CvHttpServer.cpp:26`):
   (XML-populated `m_ai*`/`m_ab*`) are **cut only AFTER** (a) the data is mapped, (b) the new calc is built, and (c) the
   per-machine SHADOW reaches parity. Until all three hold the XML load stays authoritative (cutting now breaks the game
   — nothing maps JSON→engine data yet); the cut is the atomic last step.
-  - **⛔ HOME = a SIDE-TABLE keyed by `CvInfoBase*` (`cascadeForInfo`/`cascadeAttach` in `Cascade/CvCascadeData`), NOT a
-    member on `CvInfo`.** The first attempt added `m_pCascade` to `CvInfoBase` and **crashed the EXE on load** — the
-    closed Firaxis EXE binds `CvInfoBase`'s layout (it reads the type-string member by a **hardcoded offset**; the
-    minidump showed a `memcpy` AV inside `std::string::assign` off a shifted member). So `CvInfoBase` **cannot be
-    widened** (even appending shifts every derived class's members), and a base virtual getter is out too (vtable is
-    EXE-bound). The side-table is the ABI-safe home and keeps the cascade data **isolated** from the EXE-bound `CvInfo`.
-    Physical on-object placement, if ever wanted, is a **per-derived-class append at cutover** — never a base change.
-  - **Status: ✅ DONE + verified** — `readJson` populates a `CvCascadeData` per entity and attaches it via `cascadeAttach`;
-    the live read-back (`[READJSON/map]`/`[READJSON/map-summary]`) round-trips it back out by game object; the game loads
-    clean, all surveys + `[TALLY/shadow] diverging=0` hold. **Next: build the modifier calc on this mapped data.**
+  - **⛔ HOME = NEW FIELDS on the CORRECT, SPECIFIC `CvInfo` classes (owner ruling 2026-06-30) — a PER-DERIVED append,
+    NOT a `CvInfoBase` member and NOT a side-table-for-everything.** The genuinely-new cascade data (deposits/requires/
+    edges/…) is mapped to its specific info (`CvBuildingInfo`/`CvUnitInfo`/`CvTechInfo`/…) as a **new appended member**;
+    the standard EXE-required fields (`type`/description/the DllExport getters) are **reused** from that info, never
+    duplicated. **Why per-derived is the answer + the base is not:** widening **`CvInfoBase`** crashes the EXE on load
+    (the closed EXE binds the *base* layout — reads the type-string by a hardcoded offset; the minidump showed a `memcpy`
+    AV in `std::string::assign` off a shifted member), because a base change shifts *every* derived class's members. But
+    **appending to the END of a DERIVED class is ABI-safe** — the EXE accesses each `CvInfo`'s existing members at their
+    original offsets; a member after them is untouched (the standard C2C way of extending `CvInfo`). Access is **typed**
+    (readJson + the machines already dispatch by type — `GC.get*Info(id)`), so no base virtual getter is needed.
+  - **⏳ CURRENT (interim) — a side-table.** Today readJson maps into a `CvCascadeData` held in a side-table keyed by
+    `CvInfoBase*` (`cascadeForInfo`/`cascadeAttach`) — the over-correction taken after the base-widening crash (concluded
+    "no `CvInfo` member at all" instead of "no *base* member"), which also **echoed StoneBase's dictionaries**. But
+    StoneBase used dictionaries only because it is an **offline** validator (perf secondary) **with no engine base
+    objects** — it builds its own typed model. **The DLL HAS the real base objects**, so it should map **onto them**
+    (per-derived members), NOT carry the dictionary pattern over. The side-table WORKS + is verified
+    (`[READJSON/map-summary]` round-trips, game loads clean, `[TALLY/shadow] diverging=0`), but the proper design is the
+    per-derived fields above: move `CvCascadeData` to an appended member on each specific info, populated by the prefix
+    dispatch, read typed.
 - **The shared/kept pieces (EXE-bound):** the **type registry** `GC.getInfoTypeForString` (`Defines/CvGlobals.cpp:2682`,
   decl `CvGlobals.h:1418`) / `setInfoTypeFromString` (`CvGlobals.cpp:2708`, decl `:252`) over `m_infosMap`
   (`CvGlobals.h:929`) — `readJson` uses it for FK resolution because the EXE binds the same indices; and the **EXE-bound

@@ -9,12 +9,20 @@
 //	deposits (§6), the requires BoolExpr trees (§4.3), the enables-family + provides edges (§4.1/§5a), the allowed caps
 //	(§4.4), and the grants provisions (§5).
 //
-//	⛔ HOME = a SIDE-TABLE keyed by the game object (`cascadeForInfo`), NOT a member on `CvInfoBase` (owner ruling
-//	2026-06-29, ABI-forced): the closed Firaxis EXE binds `CvInfoBase`'s layout (it reads the type-string member by a
-//	hardcoded offset), so widening `CvInfoBase` -- even appending -- shifts member offsets and crashes the EXE on load
-//	(proven: a memcpy AV in `std::string::assign` off a shifted `CvInfoBase` member). The side-table keeps the cascade
-//	data fully ISOLATED from the EXE-bound `CvInfo` (cleaner anyway). Physical on-object placement, if ever wanted, is
-//	a per-derived-class append at cutover -- not a base member.
+//	⛔ HOME (target, owner ruling 2026-06-30) = a NEW APPENDED MEMBER on each CORRECT, SPECIFIC info class
+//	(`CvBuildingInfo`/`CvUnitInfo`/…), NOT a side-table and NOT a `CvInfoBase` member. The standard EXE-required fields
+//	(`type`/description/the DllExport getters) are REUSED from the info, never duplicated here; this struct holds ONLY
+//	the genuinely-new data. Why: (a) widening the **base** `CvInfoBase` crashes the EXE (it binds the base layout — a
+//	memcpy AV in `std::string::assign` off a shifted member), but **appending to a DERIVED class is ABI-safe** (the EXE
+//	reads each info's existing members at their original offsets; a trailing member is untouched — the standard C2C way);
+//	(b) a direct member is **faster** than a side-table map lookup in the modifier's hot per-source loops; (c) it makes
+//	**provenance obvious** (`info->…` vs a separate map). Access is TYPED (readJson + the machines dispatch by type via
+//	`GC.get*Info(id)`), so no base virtual getter is needed.
+//
+//	⏳ CURRENT (interim, to be replaced): readJson maps into this struct held in a SIDE-TABLE keyed by `CvInfoBase*`
+//	(`cascadeForInfo`/`cascadeAttach`) — the over-correction taken after the base-widening crash ("no `CvInfo` member"
+//	instead of "no *base* member"). It works + is verified, but it is the slower/less-discoverable shim; the redesign
+//	moves this onto the per-derived appended members above.
 //
 //	⚠ PUBLIC fields BY DESIGN (owner 2026-06-29): direct access during the build/shadow phase. Owns its BoolExpr trees
 //	(freed in the dtor) -- NONCOPYABLE.
@@ -48,6 +56,11 @@ class CvCascadeData
 public:
 	CvCascadeData() : requiresBuild(NULL), requiresOperate(NULL) {}
 	~CvCascadeData();
+
+	// ⛔ This holds ONLY the genuinely-NEW cascade data (no legacy home). It does NOT duplicate the standard fields the
+	// game object already carries (owner ruling 2026-06-30): the EXE-required `CvInfo` fields — `type` (getType()),
+	// description, button, the DllExport-backed getters — are REUSED from the keyed `CvInfo`, never copied here. The
+	// side-table is keyed by `CvInfoBase*`, so every consumer already has the info (and thus its `type`/standard fields).
 
 	// --- Effects (modifier families, §6) ---
 	std::vector<CvCascadeDeposit> deposits;

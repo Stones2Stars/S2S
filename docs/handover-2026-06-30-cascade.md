@@ -12,8 +12,11 @@ The cascade rebuild is well underway, on a proper footing (the first prototype w
   (deposits ×100 + enabled/disabled `BoolExpr`, requires build/operate, the enables/provides edges, allowed caps,
   grants), attached **by game object** via the ABI-safe **side-table** (`cascadeForInfo`/`cascadeAttach`). 13,159
   entities mapped; read-back round-trips.
-  - ⛔ **`CvInfoBase` is EXE-layout-bound** — adding a member crashes the EXE on load (minidump-proven). The cascade
-    data lives in the side-table, NOT a `CvInfo` member. Never widen `CvInfoBase`. (cascade-engine-430 §3.)
+  - ⛔ **ABI:** widening the **base** `CvInfoBase` crashes the EXE on load (minidump-proven — it binds the base layout).
+    But **appending a member to a DERIVED info class is ABI-safe** (standard C2C). So the **target home = a new appended
+    member on each SPECIFIC info** (`CvBuildingInfo`/…), reusing the standard fields — faster + clearer than a map. The
+    current side-table (`cascadeForInfo`) is the **INTERIM over-correction** ("no `CvInfo` member" instead of "no *base*
+    member"); **next task: redesign it to per-derived members** (cascade-engine-430 §3, CvCascadeData.h).
 - **Mistake-hunt** ✅ — `obsoletedBy`→edge; tech capabilities→`capabilities` block (curator fold).
 - **Modifier machine — percent stack** ✅ (`CvCascadeModifierMath`): `max(0,100+Σ%)` off the mapped deposits, BoolExpr
   gated, shadowed vs legacy `getBaseYieldRateModifier` with sub-term attribution. **Building tier is bit-exact**
