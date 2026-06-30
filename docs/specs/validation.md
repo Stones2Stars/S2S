@@ -141,6 +141,14 @@ Clean-Architecture layering: the cascade domain physically **cannot reference th
 composition root reads the snapshot (translating it into events + the player→team map). The no-rollerskating rule
 is the **project graph**, not discipline.
 
+> **⛔ In the in-DLL shadow it is DISCIPLINE, not the graph — so be SUPER-PEDANTIC (owner ruling 2026-06-30).** The
+> in-engine cascade has **direct access** to every live object + computed getter; the structural wall StoneBase enjoys
+> **does not exist** here, so nothing *stops* it reading a legacy COMPUTED output as an input. Therefore the in-DLL
+> shadow must follow **StoneBase's exact input rules + implementation**, enforced by **manual pedantry**: only the
+> named raw INPUTs + the comparison boundary; **never** a legacy computed output (`isActiveBuilding`/dormancy,
+> connected-bonus resolution, `getYieldRate100`, …) as a cascade input — the modifier reads the **enabler's** active
+> state, not the engine's. Direct access makes this trivial to violate by accident; the extra vigilance IS the guardrail.
+
 ## Build order (per the model)
 Replay events to populate the [tally](tally.md) **fully first**, *then* run the [enabler](enabler.md) (its required
 side reads aggregated counts — correct only once the tally is complete). The [modifier](modifier.md) machine rides
