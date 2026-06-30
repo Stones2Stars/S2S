@@ -12,7 +12,7 @@ architecture.
 - **enabler** — 2-pass generate-then-gate; narrows via enabled/replaced/obsoleted/disabled; `requires` checks only
   the "can get" subset via a `require` callback **UP** the chain (the AND mechanism — *why it is bidirectional*; a
   down-only model expresses OR but not AND and forces maintainers to the top of the chain) ([enabler](../specs/enabler.md)).
-- **tally** — counts roll UP; serializes nothing; rebuilt on load ([tally](../specs/tally.md)).
+- **tally** — counts roll UP; a read-only accessor over the object-owned counts (no store/seed/shadow) ([tally](../specs/tally.md)).
 
 The engine is **bidirectional**: modifiers down, tally counts + `require` callbacks up. A down-only mental model is wrong.
 

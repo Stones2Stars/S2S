@@ -10,11 +10,13 @@
 #include "Defines/CvGlobals.h"         // GC.getInfoTypeForString -- the type registry (FK resolution)
 #include "Infrastructure/BoolExpr.h"   // the translation target (And/Or/Not/Has/Is) -- the engine's condition evaluator
 #include "Infrastructure/IntExpr.h"    // value atoms: IntExprProperty / IntExprAttribute / IntExprConstant (count/band)
-#include "Engine/CvGameObject.h"       // CvGameObjectPlayer -- the evaluated object's owner (2.b tally-count leaf)
-#include "Engine/CvPlayer.h"           // CvPlayer::getID -- the tally key
-#include "CvCascadeTally.h"            // cascadeTally() -- the cross-city count source (the live tally machine)
-#include "CvCascadeData.h"             // the JSON-mapped cascade data attached to each game object (m_pCascade)
-// The cascade-relevant info homes (for rj_infoForType's prefix dispatch -> CvInfoBase*). One-per-class headers
+#include "CvCascadeCountExpr.h"        // IntExprCascadeCount -- the tally-backed count LEAF, constructed here as static
+                                       // data; its instance-walking evaluate() lives on the live-game-state side, so
+                                       // readJson never includes CvGameObject / CvPlayer / the tally (owner 2026-06-30)
+#include "CvJsonInfo.h"                // the JSON-mapped info data each entity maps into (CvJsonInfo + CvCascadeDeposit)
+#include "Repos/InfoRepo.h"            // the per-info-type home for the CvJsonInfo (InfoRepo<CvXInfo>) -- replaces the
+                                       // retired CvInfoBase*-keyed side-table; readJson edit()s, the machines get()
+// The cascade-relevant info classes (the InfoRepo<CvXInfo> tags for the RJ_REPO_DISPATCH prefix dispatch). One-per-class headers
 // (specific, not the retired CvInfos.h umbrella).
 #include "Infos/CvBuildingInfo.h"
 #include "Infos/CvUnitInfo.h"
@@ -71,11 +73,11 @@ static bool rj_starts(const std::string& s, const char* p)
 // A fresh per-entity record (increment 1: type + resolved engine index; richer fields come in later increments).
 struct RjEntity { std::string type; int typeId; };
 
-// The MAPPING target for the CURRENT entity being walked (owner 2026-06-29: map JSON -> new vars on the game object).
-// The walkers populate this CvCascadeData while they also count the survey stats; the probe sets it per entity and
-// attaches it to the resolved CvInfo (or frees it if there is no info home). File-static keeps the existing walker
-// signatures untouched (this probe is transient — the cutover rewrites the load path).
-static CvCascadeData* s_rjData = NULL;
+// The MAPPING target for the CURRENT entity being walked: its CvJsonInfo in the per-type InfoRepo (owner 2026-06-30).
+// The walkers populate this while they also count the survey stats; the probe points it at the entity's repo entry per
+// entity (NULL for non-cascade types -> the walkers skip population). File-static keeps the existing walker signatures
+// untouched (this probe is transient — the cutover rewrites the load path).
+static CvJsonInfo* s_rjData = NULL;
 
 static bool rj_readFile(const std::string& path, std::string& out)
 {
@@ -210,32 +212,10 @@ static const BoolExpr* rj_valueBand(PropertyTypes eProp, AttributeTypes eAttr, b
 	return new BoolExprGreaterEqual(rj_makeVal(eProp, eAttr), new IntExprConstant(1));
 }
 
-// INCREMENT 2.b: the tally-backed COUNT IntExpr -- the cross-city (empire) count of a building|unit type for the
-// evaluated object's owner, read from the live cascade TALLY (the count machine). This is where readJson consumes the
-// tally. EMPIRE scope (the tally's domain); team/world rollup, city-local counts, and non-building/unit domains are
-// follow-ons (return 0 until added). NOT YET evaluated in a live gate (the enabler that uses it is a later increment);
-// the probe only builds + renders it, so its evaluate() is dormant for now -- written correct + null-guarded regardless.
-class IntExprCascadeCount : public IntExpr
-{
-public:
-	IntExprCascadeCount(GOMTypes eGOM, int iID) : m_eGOM(eGOM), m_iID(iID) {}
-	virtual int evaluate(const CvGameObject* pObject) const
-	{
-		if (pObject == NULL) return 0;
-		CvGameObjectPlayer* pOwner = pObject->getOwner();
-		if (pOwner == NULL || pOwner->getPlayer() == NULL) return 0;
-		const int iPlayer = pOwner->getPlayer()->getID();
-		if (m_eGOM == GOM_BUILDING) return cascadeTally().buildingCount(iPlayer, m_iID);
-		if (m_eGOM == GOM_UNITTYPE) return cascadeTally().unitCount(iPlayer, m_iID);
-		return 0; // domain not in the tally yet
-	}
-	virtual void getCheckSum(uint32_t& iSum) const { iSum = iSum * 31u + (uint32_t)m_eGOM; iSum = iSum * 31u + (uint32_t)m_iID; }
-	virtual void buildDisplayString(CvWStringBuffer& szBuffer) const { szBuffer.append(CvWString(L"tallyCount")); }
-	virtual int getBindingStrength() const { return 100; }
-private:
-	GOMTypes m_eGOM;
-	int m_iID;
-};
+// INCREMENT 2.b: the tally-backed COUNT IntExpr (IntExprCascadeCount) is the cross-city (empire) count of a
+// building|unit type for the evaluated object's owner, read from the live cascade TALLY. readJson CONSTRUCTS it below
+// as static data, but its instance-walking evaluate() lives on the live-game-state side (CvCascadeCountExpr.{h,cpp}) so
+// the static reader never touches a CvGameObject (owner ruling 2026-06-30) -- see that header for the why.
 
 // A count band over the tally-backed count leaf (fresh leaf per comparison -- BoolExprComp owns + deletes its operands).
 static const BoolExpr* rj_countBand(GOMTypes eGOM, int iID, bool bMin, int iMin, bool bMax, int iMax)
@@ -462,7 +442,7 @@ static void rj_parseMag(const std::string& unit, const picojson::value& v, const
 		gDLL->logMsg("Cascade.log", b); streamLogTee(1, b); ++st.sampleCount;
 	}
 	// MAP: store the deposit on the current entity (address = the dotted parent path; unit is the leaf kind). The
-	// conditions are OWNED by the deposit (freed via ~CvCascadeData). No info home -> free them.
+	// conditions are OWNED by the deposit (freed via ~CvJsonInfo). No info home -> free them.
 	if (s_rjData)
 	{
 		CvCascadeDeposit d;
@@ -633,35 +613,86 @@ static void rj_walkGrants(const picojson::value& v, RjGrantStats& st)
 	}
 }
 
-// Prefix dispatch: a resolved type-id (per-class index) -> the game object (CvInfoBase*), so readJson can ATTACH the
-// mapped CvCascadeData. Covers the cascade-relevant info types; others (handicap/gamespeed/era/vote/hurry/…) have no
-// cascade home this pass and return NULL (their mapped data is freed, not attached). Longer prefixes are tested first.
-static CvInfoBase* rj_infoForType(const std::string& t, int id)
+// The cascade info-type table (X-macro): (type-prefix, CvXInfo class). ONE source of truth, expanded for the readJson
+// prefix dispatch (edit + get) AND the clear-all -- so a new cascade info type is added in exactly ONE place, with no
+// dispatch-vs-clear drift (cascade-engine-430.md §3 care-point (d)). Order MATTERS for dispatch: longer/more-specific
+// prefixes FIRST (UNITCOMBAT_ before UNIT_, CIVICOPTION_ before CIVIC_, PROMOTIONLINE_ before PROMOTION_; TRAIT_ covers
+// TRAIT_COMPLEX_). Types not listed (handicap/gamespeed/era/vote/hurry/…) have no cascade home -> NULL. (The
+// InfoRepo<TTag> tag is the engine info class, purely the per-type singleton discriminator -- the repo never touches it.)
+#define RJ_REPO_TYPES(X)                     \
+	X("BUILDING_",      CvBuildingInfo)       \
+	X("UNITCOMBAT_",    CvUnitCombatInfo)     \
+	X("UNIT_",          CvUnitInfo)           \
+	X("TECH_",          CvTechInfo)           \
+	X("CIVICOPTION_",   CvCivicOptionInfo)    \
+	X("CIVIC_",         CvCivicInfo)          \
+	X("TRAIT_",         CvTraitInfo)          \
+	X("SPECIALIST_",    CvSpecialistInfo)     \
+	X("BONUS_",         CvBonusInfo)          \
+	X("RELIGION_",      CvReligionInfo)       \
+	X("CORPORATION_",   CvCorporationInfo)    \
+	X("PROMOTIONLINE_", CvPromotionLineInfo)  \
+	X("PROMOTION_",     CvPromotionInfo)      \
+	X("IMPROVEMENT_",   CvImprovementInfo)    \
+	X("FEATURE_",       CvFeatureInfo)        \
+	X("TERRAIN_",       CvTerrainInfo)        \
+	X("ROUTE_",         CvRouteInfo)          \
+	X("PROJECT_",       CvProjectInfo)        \
+	X("PROCESS_",       CvProcessInfo)        \
+	X("HERITAGE_",      CvHeritageInfo)       \
+	X("CULTURELEVEL_",  CvCultureLevelInfo)   \
+	X("BUILD_",         CvBuildInfo)
+
+// get-or-create the entity's CvJsonInfo (readJson populates it); NULL for non-cascade types.
+static CvJsonInfo* rj_jsonEdit(const std::string& t, int id)
 {
 	if (id < 0) return NULL;
-	if (rj_starts(t, "BUILDING_"))      return &GC.getBuildingInfo((BuildingTypes)id);
-	if (rj_starts(t, "UNITCOMBAT_"))    return &GC.getUnitCombatInfo((UnitCombatTypes)id);   // before UNIT_
-	if (rj_starts(t, "UNIT_"))          return &GC.getUnitInfo((UnitTypes)id);
-	if (rj_starts(t, "TECH_"))          return &GC.getTechInfo((TechTypes)id);
-	if (rj_starts(t, "CIVICOPTION_"))   return &GC.getCivicOptionInfo((CivicOptionTypes)id); // before CIVIC_
-	if (rj_starts(t, "CIVIC_"))         return &GC.getCivicInfo((CivicTypes)id);
-	if (rj_starts(t, "TRAIT_"))         return &GC.getTraitInfo((TraitTypes)id);             // covers TRAIT_COMPLEX_
-	if (rj_starts(t, "SPECIALIST_"))    return &GC.getSpecialistInfo((SpecialistTypes)id);
-	if (rj_starts(t, "BONUS_"))         return &GC.getBonusInfo((BonusTypes)id);
-	if (rj_starts(t, "RELIGION_"))      return &GC.getReligionInfo((ReligionTypes)id);
-	if (rj_starts(t, "CORPORATION_"))   return &GC.getCorporationInfo((CorporationTypes)id);
-	if (rj_starts(t, "PROMOTIONLINE_")) return &GC.getPromotionLineInfo((PromotionLineTypes)id); // before PROMOTION_
-	if (rj_starts(t, "PROMOTION_"))     return &GC.getPromotionInfo((PromotionTypes)id);
-	if (rj_starts(t, "IMPROVEMENT_"))   return &GC.getImprovementInfo((ImprovementTypes)id);
-	if (rj_starts(t, "FEATURE_"))       return &GC.getFeatureInfo((FeatureTypes)id);
-	if (rj_starts(t, "TERRAIN_"))       return &GC.getTerrainInfo((TerrainTypes)id);
-	if (rj_starts(t, "ROUTE_"))         return &GC.getRouteInfo((RouteTypes)id);
-	if (rj_starts(t, "PROJECT_"))       return &GC.getProjectInfo((ProjectTypes)id);
-	if (rj_starts(t, "PROCESS_"))       return &GC.getProcessInfo((ProcessTypes)id);
-	if (rj_starts(t, "HERITAGE_"))      return &GC.getHeritageInfo((HeritageTypes)id);
-	if (rj_starts(t, "CULTURELEVEL_"))  return &GC.getCultureLevelInfo((CultureLevelTypes)id);
-	if (rj_starts(t, "BUILD_"))         return &GC.getBuildInfo((BuildTypes)id);
+#define X(PFX, T) if (rj_starts(t, PFX)) return InfoRepo<T>::get().editPtr(id);
+	RJ_REPO_TYPES(X)
+#undef X
 	return NULL;
+}
+
+// the entity's CvJsonInfo if mapped, else NULL (read-back).
+static const CvJsonInfo* rj_jsonGet(const std::string& t, int id)
+{
+	if (id < 0) return NULL;
+#define X(PFX, T) if (rj_starts(t, PFX)) return InfoRepo<T>::get().get(id);
+	RJ_REPO_TYPES(X)
+#undef X
+	return NULL;
+}
+
+// Clear every cascade InfoRepo (free all CvJsonInfo) BEFORE (re)mapping, so a re-run can't DOUBLE the deposit vectors
+// (cascade-engine-430.md §3 care-point (a): edit() get-or-creates + the walkers push_back, so re-populating without a
+// clear would duplicate). A no-op on the one-shot first run (clears empty repos); makes the map re-run-safe ahead of
+// the unconditional load-time map at cutover.
+static void rj_clearAllRepos()
+{
+#define X(PFX, T) InfoRepo<T>::get().clear();
+	RJ_REPO_TYPES(X)
+#undef X
+	cascadeStartNode().clear();   // the synthetic TECH_GAME_START root lives off the InfoRepo -- reset it too
+}
+
+// §8 empire capabilities: the `capabilities:{name:true}` block (techs grant team abilities -- techTrading, foundOnPeaks,
+// …). Map each true-valued name onto the entity's CvJsonInfo; the empire's ACTIVE set is the union over held grantors,
+// derived live where consumed (canFound/canBuild + the team-ability systems). Was parsed-but-SKIPPED; now mapped.
+struct RjCapStats { int entities, caps; std::set<std::string> names; RjCapStats() : entities(0), caps(0) {} };
+static void rj_walkCapabilities(const picojson::value& v, RjCapStats& st)
+{
+	if (!v.is<picojson::object>()) return;
+	const picojson::object& o = v.get<picojson::object>();
+	bool bAny = false;
+	for (picojson::object::const_iterator it = o.begin(); it != o.end(); ++it)
+	{
+		if (it->second.is<bool>() && it->second.get<bool>())
+		{
+			if (s_rjData) s_rjData->capabilities.insert(it->first);
+			++st.caps; st.names.insert(it->first); bAny = true;
+		}
+	}
+	if (bAny) ++st.entities;
 }
 
 void cascadeReadJsonProbe()
@@ -672,6 +703,10 @@ void cascadeReadJsonProbe()
 		return; // one-shot, and only while logging is on (shadow testing) -- zero cost in normal play
 	}
 	s_done = true;
+
+	// care-point (a): clear the InfoRepos before (re)mapping so a re-run can't double the deposit vectors. No-op on this
+	// one-shot first run; the guardrail that makes the map re-run-safe ahead of the cutover (cascade-engine-430.md §3).
+	rj_clearAllRepos();
 
 	std::string base = gDLL->getModName(true);
 	if (!base.empty() && base[base.size() - 1] != '\\' && base[base.size() - 1] != '/') base += "\\";
@@ -689,6 +724,7 @@ void cascadeReadJsonProbe()
 	RjModStats mod;
 	RjEnableStats en;
 	RjGrantStats gr;
+	RjCapStats cap;
 	char szBuf[1024];
 
 	for (size_t i = 0; i < files.size(); ++i)
@@ -711,12 +747,12 @@ void cascadeReadJsonProbe()
 		if (rec.typeId >= 0) ++iResolved;
 		else { ++iUnresolved; if (iShownUnres < 16) { sprintf(szBuf, "[READJSON/unresolved] type=%s", type.c_str()); gDLL->logMsg("Cascade.log", szBuf); streamLogTee(1, szBuf); ++iShownUnres; } }
 
-		// MAP: attach a fresh CvCascadeData to the game object (owner 2026-06-29). Allocate only when there is an info
-		// home -> when there is none (by-design non-resolvers), data is NULL and the walkers skip population (no leak).
-		CvInfoBase* rjInfo = rj_infoForType(type, rec.typeId);
-		CvCascadeData* data = rjInfo ? new CvCascadeData() : NULL;
+		// MAP: get-or-create this entity's CvJsonInfo in its type's InfoRepo (the home; owner ruling 2026-06-30). NULL
+		// for non-cascade types (by-design non-resolvers) -> the walkers skip population (no leak). The InfoRepo owns it.
+		// SPECIAL CASE: TECH_GAME_START is the synthetic no-tech-prereq ROOT (XML-less by design, so a non-resolver with
+		// id -1) -> it has no InfoRepo home; map it into the dedicated cascadeStartNode() instead so its enables survive.
+		CvJsonInfo* data = (type == "TECH_GAME_START") ? &cascadeStartNode() : rj_jsonEdit(type, rec.typeId);
 		s_rjData = data;
-		if (rjInfo) cascadeAttach(rjInfo, data);   // attach via the side-table (walkers fill it via s_rjData)
 		mod.curType = type;
 		en.curType = type;
 		gr.curType = type;
@@ -728,6 +764,7 @@ void cascadeReadJsonProbe()
 			if (k == "allowed") { rj_walkAllowed(it->second, en); continue; }              // INCREMENT 4: the cap
 			if (k == "grants") { rj_walkGrants(it->second, gr); continue; }                // INCREMENT 5: the grants grammar
 			if (k == "provides") { rj_walkEnableEdge("provides", it->second, en); continue; } // §5a: continuous in-vicinity supply
+			if (k == "capabilities") { rj_walkCapabilities(it->second, cap); continue; }     // §8: empire capabilities (was skipped)
 			if (rj_in(RJ_CASCADE_SECTIONS, k) || rj_in(RJ_INTRINSIC, k)) continue;
 			if (it->second.is<picojson::object>())
 			{
@@ -756,7 +793,7 @@ void cascadeReadJsonProbe()
 					sprintf(szBuf, "[READJSON/cond] %s.%s = %S", type.c_str(), sub->first.c_str(), buf.getCString());
 					gDLL->logMsg("Cascade.log", szBuf); streamLogTee(1, szBuf); ++iCondSample;
 				}
-				// MAP: store the requires tree on the entity (owned by data, freed via ~CvCascadeData).
+				// MAP: store the requires tree on the entity (owned by data, freed via ~CvJsonInfo).
 				if (data && sub->first == "build") data->requiresBuild = e;
 				else if (data && sub->first == "operate") data->requiresOperate = e;
 				else delete e;
@@ -814,24 +851,32 @@ void cascadeReadJsonProbe()
 		sprintf(szBuf, "[READJSON/key] %-26s %6d  %s", k.c_str(), it->second, cls);
 		gDLL->logMsg("Cascade.log", szBuf); streamLogTee(1, szBuf);
 	}
-	// MAP read-back: prove the cascade data is on the GAME OBJECTS (round-trip from the CvInfo's m_pCascade, not the
-	// probe's transient buffers). Counts how many entities got it + renders a few.
+	// MAP read-back: prove the JSON data round-trips from the InfoRepo (the home -- read back via rj_jsonGet by
+	// type+id, not the probe's transient buffers). Counts how many entities got it + renders a few.
 	int iAttached = 0, iMapSample = 0;
 	for (size_t s = 0; s < store.size(); ++s)
 	{
-		CvInfoBase* info = rj_infoForType(store[s].type, store[s].typeId);
-		CvCascadeData* cdp = info ? cascadeForInfo(info) : NULL;
+		const CvJsonInfo* cdp = rj_jsonGet(store[s].type, store[s].typeId);
 		if (cdp == NULL) continue;
 		++iAttached;
 		if (iMapSample < 8)
 		{
-			const CvCascadeData& cd = *cdp;
+			const CvJsonInfo& cd = *cdp;
 			sprintf(szBuf, "[READJSON/map] %s deposits=%d requires=%d/%d edges=%d allowed=%d grantLists=%d grantPulses=%d",
 				store[s].type.c_str(), (int)cd.deposits.size(), cd.requiresBuild ? 1 : 0, cd.requiresOperate ? 1 : 0,
 				(int)cd.edges.size(), (int)cd.allowed.size(), (int)cd.grantLists.size(), (int)cd.grantPulses.size());
 			gDLL->logMsg("Cascade.log", szBuf); streamLogTee(1, szBuf); ++iMapSample;
 		}
 	}
+	// §8 capabilities survey: how many entities grant capabilities + the distinct names mapped (verifies the block maps).
+	sprintf(szBuf, "[READJSON/cap-survey] grantingEntities=%d capGrants=%d distinctNames=%d", cap.entities, cap.caps, (int)cap.names.size());
+	gDLL->logMsg("Cascade.log", szBuf); streamLogTee(1, szBuf);
+	for (std::set<std::string>::const_iterator it = cap.names.begin(); it != cap.names.end(); ++it)
+	{
+		sprintf(szBuf, "[READJSON/cap] %s", it->c_str());
+		gDLL->logMsg("Cascade.log", szBuf); streamLogTee(1, szBuf);
+	}
+
 	sprintf(szBuf, "[READJSON/map-summary] entitiesWithCascadeData=%d", iAttached);
 	gDLL->logMsg("Cascade.log", szBuf); streamLogTee(1, szBuf);
 	s_rjData = NULL;

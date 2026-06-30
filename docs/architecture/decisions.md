@@ -88,7 +88,9 @@ Parity-pass results (divergence counts, checklists, pilot numbers) stay out of t
 
 ### DEC-tally-serializes-nothing
 
-The tally and scope accumulators serialize nothing — rebuilt from loaded objects on load. **Home:** [tally.md §4](../specs/tally.md).
+The modifier scope accumulators serialize nothing — rebuilt from loaded state. The **tally** serializes AND stores
+nothing: it is a read-only accessor over the object-owned counts (`CvPlayer::getBuildingCount`, …) rolled up the spine
+— no duplicate store, no seed, no shadow (a count shadow would be tautological). **Home:** [tally.md](../specs/tally.md).
 
 ### DEC-save-remove-is-soft
 
@@ -147,6 +149,15 @@ never skip/drop/invent a mechanic to fit the data. **Home:** [validation.md](../
 
 Parity is verified mechanic-by-mechanic against the engine's per-mechanic value, never by comparing or averaging
 aggregate outputs. **Home:** [validation.md](../specs/validation.md).
+
+### DEC-structure-before-shadow
+
+Stand up the proper, spec-faithful cascade STRUCTURE first; a per-change in-game shadow can FALSELY confirm a wrong
+structure (the gameobject side-table shadowed green yet was structurally wrong). LOAD verifies the static + initial
+setup (readJson mapped at load + the tally reading the object-owned counts — loading a save suffices); END TURN
+verifies only LIVE integration (surviving engine sees the data; the to-be-replaced gates `canTrain`/`canConstruct` +
+modifier rates shadowed in the AI's real calls, with the new build lists logged at the Python consumer layer before the
+enabler swap). Structure is gated by spec-fidelity, never by a green shadow. **Home:** [validation.md](../specs/validation.md).
 
 ### DEC-conditions-are-predicates
 

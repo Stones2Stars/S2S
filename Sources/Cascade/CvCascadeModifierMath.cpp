@@ -14,7 +14,8 @@
 
 #include "CvGameCoreDLL.h"
 #include "CvCascadeModifierMath.h"
-#include "CvCascadeData.h"             // CvCascadeData + cascadeForInfo
+#include "CvJsonInfo.h"                // CvJsonInfo + CvCascadeDeposit
+#include "Repos/InfoRepo.h"            // InfoRepo<CvXInfo>::get().get(id) -- the JSON info home (replaces cascadeForInfo)
 #include "AI/BetterBTSAI.h"            // gPlayerLogLevel + streamLogTee
 #include "Defines/CvGlobals.h"
 #include "Engine/CvCity.h"
@@ -36,7 +37,7 @@ static bool mm_applies(const BoolExpr* enabled, const BoolExpr* disabled, const 
 }
 
 // Sum a channel's SCOPE-WIDE percent deposits (address == "<family>.<scope>", unit "percent"), gated, as HUMAN percent.
-static int mm_sumPercent(const CvCascadeData* d, const std::string& wantAddress, const CvGameObject* ctx)
+static int mm_sumPercent(const CvJsonInfo* d, const std::string& wantAddress, const CvGameObject* ctx)
 {
 	int sum = 0;
 	for (size_t i = 0; i < d->deposits.size(); ++i)
@@ -69,7 +70,7 @@ static int mm_percentStack(const std::string& channel, const CvCity* pCity, MMBr
 		const bool active = pCity->isActiveBuilding(eB);          // non-dormant, in this city
 		const bool owned = player.getBuildingCount(eB) > 0;       // anywhere in the empire
 		if (!active && !owned) continue;
-		const CvCascadeData* d = cascadeForInfo(&GC.getBuildingInfo(eB));
+		const CvJsonInfo* d = InfoRepo<CvBuildingInfo>::get().get((int)eB);
 		if (d == NULL) continue;
 		if (active) { bk.bCity += mm_sumPercent(d, wantCity, ctx); bk.bArea += mm_sumPercent(d, wantArea, ctx); }
 		if (owned) bk.bEmpire += mm_sumPercent(d, wantEmpire, ctx);
@@ -78,13 +79,13 @@ static int mm_percentStack(const std::string& channel, const CvCity* pCity, MMBr
 	{
 		const CivicTypes c = player.getCivics((CivicOptionTypes)co);
 		if (c == NO_CIVIC) continue;
-		const CvCascadeData* d = cascadeForInfo(&GC.getCivicInfo(c));
+		const CvJsonInfo* d = InfoRepo<CvCivicInfo>::get().get((int)c);
 		if (d != NULL) bk.civic += mm_sumPercent(d, wantEmpire, ctx);
 	}
 	for (int t = 0; t < GC.getNumTraitInfos(); ++t)
 	{
 		if (!player.hasTrait((TraitTypes)t)) continue;
-		const CvCascadeData* d = cascadeForInfo(&GC.getTraitInfo((TraitTypes)t));
+		const CvJsonInfo* d = InfoRepo<CvTraitInfo>::get().get(t);
 		if (d != NULL) bk.trait += mm_sumPercent(d, wantEmpire, ctx);
 	}
 	return std::max(0, 100 + bk.bCity + bk.bArea + bk.bEmpire + bk.civic + bk.trait);

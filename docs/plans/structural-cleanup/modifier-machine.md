@@ -1,7 +1,7 @@
 # The modifier machine — in-DLL build plan ("how much?")
 
-> The next cascade machine after the tally + readJson mapping. It reads the **mapped `CvCascadeData`** (the deposits
-> readJson attached per game object, side-table `cascadeForInfo`) + the **live engine state**, computes each city's
+> The next cascade machine after the tally + readJson mapping. It reads the **mapped `CvJsonInfo`** (the deposits
+> readJson mapped into the per-type `InfoRepo<CvXInfo>`, `Repos/InfoRepo.h`) + the **live engine state**, computes each city's
 > per-channel yield/commerce **rate**, and **shadows** it against the legacy `CvCity` accumulators until `diverging=0`.
 > Design authority: [`modifier.md`](../../specs/modifier.md) (§2 combine, §2a the realized two-tier rate). Reference
 > implementation to PORT: **StoneBase** `src/Application/Features/Calc/*` over `src/CascadingModifier/ModifierMath.cs`
@@ -40,7 +40,7 @@ rate100 = min(CAP, max(100, (Σ BASE + specialist) × max(0, modifier) + 100·�
 
 ## 2. The input — mapped data + the ENABLER's active state (NOT the live engine)
 
-- **Per-source effect data:** the entity's `CvCascadeData` via `cascadeForInfo(&GC.get*Info(id))` — its `deposits`
+- **Per-source effect data:** the entity's `CvJsonInfo` via `InfoRepo<CvXInfo>::get().get(id)` — its `deposits`
   (`address` = dotted `family.scope[.target][.member]`, `unit`, `value100`, `enabled`/`disabled` BoolExpr, `hasPer`).
 - **⛔ The ACTIVE-SOURCE state comes from the cascade ENABLER, NOT the live engine (owner ruling 2026-06-30).** What
   is *active* — which buildings are non-dormant, which bonuses are connected/available, which civics/traits hold — and
@@ -67,7 +67,7 @@ rate100 = min(CAP, max(100, (Σ BASE + specialist) × max(0, modifier) + 100·�
 
 | StoneBase | C++ port |
 |---|---|
-| `ModifierMath.cs` (the leaf kernel: `SumUnitAtScope`, `Families`, `ActiveTraitSet`, `PureFilter`, the constants) | `CvCascadeModifierMath.{h,cpp}` — free functions over `CvCascadeData.deposits` + a `CvCity*`/`CvPlot*` context; `enabled`/`disabled` evaluated via the deposit's `BoolExpr::evaluate(CvGameObject*)` |
+| `ModifierMath.cs` (the leaf kernel: `SumUnitAtScope`, `Families`, `ActiveTraitSet`, `PureFilter`, the constants) | `CvCascadeModifierMath.{h,cpp}` — free functions over `CvJsonInfo.deposits` + a `CvCity*`/`CvPlot*` context; `enabled`/`disabled` evaluated via the deposit's `BoolExpr::evaluate(CvGameObject*)` |
 | `PercentStack.cs` (modifier = max(0,100+Σ%)) | `cvModifierPercentStack(channel, city)` — iterate the city's active buildings + empire buildings + civics + traits + projects, sum `<channel>.<scope>.percent` |
 | `YieldBasePackages.cs` / `PlotPackage` (basePlotYield) | `cvModifierBasePlot(channel, city)` — Σ worked plots' isolated base package (calc-map §10.1) |
 | `SpecialistPackage` / `BuildingPackage` (AFTER ×100) | `cvModifierSpecialist(...)` / `cvModifierBuildingFlat(...)` |
@@ -90,7 +90,7 @@ authoritative until the shadow is clean, then are cut (atomic, with the cutover)
 ## 5. Build increments (each compiles + shadows before the next)
 
 1. **The percent stack** ✅ **DONE (shadow established)** — `Sources/Cascade/CvCascadeModifierMath.{h,cpp}`: `mm_sumPercent`
-   (sum a channel's scope-wide `percent` deposits off the mapped `CvCascadeData`, gated by each deposit's `enabled`/
+   (sum a channel's scope-wide `percent` deposits off the mapped `CvJsonInfo`, gated by each deposit's `enabled`/
    `disabled` BoolExpr evaluated against the city's `getGameObject()`; ×100→human via `/100`) + `mm_percentStack`
    (`max(0,100+Σ)` over active city buildings city+area, empire buildings, adopted civics, active traits). Hooked at
    `CvGame::doTurn` after the readJson map as `cvCascadeModifierShadow` — a gated one-shot diff vs legacy

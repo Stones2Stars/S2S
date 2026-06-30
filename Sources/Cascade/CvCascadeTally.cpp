@@ -1,13 +1,12 @@
 //
-//	CvCascadeTally -- the #430 count machine (tally.md) + its in-engine shadow. See CvCascadeTally.h for the model.
+//	CvCascadeTally -- the standardized aggregate-count access surface. See CvCascadeTally.h for the model: it READS the
+//	object-owned counts (CvPlayer's O(1) maintained aggregates) and rolls them UP the scope spine. No store, no event
+//	consumption, no load-time seed, no shadow (the object IS the authoritative source -- a shadow would be tautological).
 //
 
 #include "CvGameCoreDLL.h"
 #include "CvCascadeTally.h"
-#include "AI/BetterBTSAI.h"        // gPlayerLogLevel + streamLogTee (the shared /events tee + the slice-1 gate)
-#include "Defines/CvGlobals.h"     // GC -- resolve Type indices to names in the (gated) shadow line
-#include "CvBuildingInfo.h"
-#include "CvUnitInfo.h"
+#include "AI/CvPlayerAI.h"   // GET_PLAYER + getBuildingCount/getUnitCount (the object-owned aggregate) + getTeam/isAlive
 
 CvCascadeTally& cascadeTally()
 {
@@ -15,184 +14,66 @@ CvCascadeTally& cascadeTally()
 	return s_tally;
 }
 
-void cascadeTallyShadow()
+// Does this alive player contribute to a roll-up at (eScope, iEntity)? EMPIRE = the one player; TEAM = the team's
+// players; WORLD = all. The single place the spine roll-up membership is decided.
+static bool tallyPlayerInScope(const CvPlayer& kPlayer, CascadeCountScope eScope, int iEntity)
 {
-	cascadeTally().shadowDiff();
+	if (!kPlayer.isAlive())
+	{
+		return false;
+	}
+	switch (eScope)
+	{
+	case CASCADE_COUNT_EMPIRE: return (int)kPlayer.getID() == iEntity;
+	case CASCADE_COUNT_TEAM:   return (int)kPlayer.getTeam() == iEntity;
+	case CASCADE_COUNT_WORLD:  return true;
+	}
+	return false;
 }
 
-// ===================== the accumulator (player-leaf, only nonzero entries) =====================
-
-void CvCascadeTally::setCount(std::map<int, CountMap>& kDomain, int iPlayer, int iType, int iCount)
+int CvCascadeTally::buildingCount(int iEntity, int iBuilding, CascadeCountScope eScope) const
 {
-	if (iPlayer < 0 || iType < 0)
-	{
-		return;
-	}
-	if (iCount > 0)
-	{
-		kDomain[iPlayer][iType] = iCount;
-	}
-	else // a count of 0 drops the entry (kept sparse) -- the empire no longer has any
-	{
-		std::map<int, CountMap>::iterator it = kDomain.find(iPlayer);
-		if (it != kDomain.end())
-		{
-			it->second.erase(iType);
-		}
-	}
-}
-
-int CvCascadeTally::getCount(const std::map<int, CountMap>& kDomain, int iPlayer, int iType)
-{
-	std::map<int, CountMap>::const_iterator it = kDomain.find(iPlayer);
-	if (it == kDomain.end())
+	if (iBuilding < 0)
 	{
 		return 0;
 	}
-	CountMap::const_iterator jt = it->second.find(iType);
-	return jt == it->second.end() ? 0 : jt->second;
-}
-
-int CvCascadeTally::buildingCount(int iPlayer, int iBuilding) const { return getCount(m_buildings, iPlayer, iBuilding); }
-int CvCascadeTally::unitCount(int iPlayer, int iUnit) const { return getCount(m_units, iPlayer, iUnit); }
-
-// ===================== incremental maintenance from DOMAIN events =====================
-
-void CvCascadeTally::onEvent(const CvCascadeEvent& kEvent)
-{
-	if (kEvent.eKind != EVENTKIND_DOMAIN)
+	const BuildingTypes eBuilding = (BuildingTypes)iBuilding;
+	// EMPIRE is the hot, common case -> the player's own O(1) aggregate directly (no scan).
+	if (eScope == CASCADE_COUNT_EMPIRE)
 	{
-		return;
+		return (iEntity >= 0 && iEntity < MAX_PLAYERS) ? GET_PLAYER((PlayerTypes)iEntity).getBuildingCount(eBuilding) : 0;
 	}
-	// The count events carry the AUTHORITATIVE new empire count in iA (= getBuildingCount/getUnitCount at emit), the
-	// player in iC, the type in iType -- so we SET (idempotent), never accumulate a delta. NAME_CHANGE et al are not
-	// counts (tally.md: only counted DOMAIN events feed the tally), so the switch default ignores them.
-	switch (kEvent.iEventId)
-	{
-	case CASCADE_EVT_BUILDING_COUNT: setCount(m_buildings, kEvent.iC, kEvent.iType, kEvent.iA); break;
-	case CASCADE_EVT_UNIT_COUNT:     setCount(m_units,     kEvent.iC, kEvent.iType, kEvent.iA); break;
-	default: break;
-	}
-}
-
-// ===================== object scan (candidate key discovery) =====================
-
-void CvCascadeTally::gather(const CvPlayer& kPlayer, std::set<int>& kBuildings, std::set<int>& kUnits)
-{
-	int iLoop = 0;
-	for (const CvCity* pCity = kPlayer.firstCity(&iLoop); pCity != NULL; pCity = kPlayer.nextCity(&iLoop))
-	{
-		const std::vector<BuildingTypes> aHas = pCity->getHasBuildings();
-		for (std::vector<BuildingTypes>::const_iterator it = aHas.begin(); it != aHas.end(); ++it)
-		{
-			kBuildings.insert((int)*it);
-		}
-	}
-	for (const CvUnit* pUnit = kPlayer.firstUnit(&iLoop); pUnit != NULL; pUnit = kPlayer.nextUnit(&iLoop))
-	{
-		kUnits.insert((int)pUnit->getUnitType());
-	}
-}
-
-// ===================== rebuild-on-load (deterministic seed) =====================
-
-void CvCascadeTally::rebuild()
-{
-	m_buildings.clear();
-	m_units.clear();
+	int iSum = 0;
 	for (int iP = 0; iP < MAX_PLAYERS; ++iP)
 	{
 		const CvPlayer& kP = GET_PLAYER((PlayerTypes)iP);
-		if (!kP.isEverAlive())
+		if (tallyPlayerInScope(kP, eScope, iEntity))
 		{
-			continue;
-		}
-		std::set<int> kB, kU;
-		gather(kP, kB, kU);
-		// Seed each candidate type to the AUTHORITATIVE legacy empire count -> the tally starts exactly == the engine
-		// (a clean shadow at load), then DOMAIN events keep it in step.
-		for (std::set<int>::const_iterator it = kB.begin(); it != kB.end(); ++it)
-		{
-			setCount(m_buildings, iP, *it, kP.getBuildingCount((BuildingTypes)*it));
-		}
-		for (std::set<int>::const_iterator it = kU.begin(); it != kU.end(); ++it)
-		{
-			setCount(m_units, iP, *it, kP.getUnitCount((UnitTypes)*it));
+			iSum += kP.getBuildingCount(eBuilding);
 		}
 	}
+	return iSum;
 }
 
-// ===================== the in-engine SHADOW (cascade-vs-legacy) =====================
-
-void CvCascadeTally::shadowDiff() const
+int CvCascadeTally::unitCount(int iEntity, int iUnit, CascadeCountScope eScope) const
 {
-	if (gPlayerLogLevel < 1)
+	if (iUnit < 0)
 	{
-		return; // gated like the logging consumer -- off in normal play, no cost
+		return 0;
 	}
-
-	int iChecked = 0, iDiverging = 0, iShown = 0;
-	const int iMaxShown = 12;
-	char szBuf[512];
-
+	const UnitTypes eUnit = (UnitTypes)iUnit;
+	if (eScope == CASCADE_COUNT_EMPIRE)
+	{
+		return (iEntity >= 0 && iEntity < MAX_PLAYERS) ? GET_PLAYER((PlayerTypes)iEntity).getUnitCount(eUnit) : 0;
+	}
+	int iSum = 0;
 	for (int iP = 0; iP < MAX_PLAYERS; ++iP)
 	{
 		const CvPlayer& kP = GET_PLAYER((PlayerTypes)iP);
-		if (!kP.isEverAlive())
+		if (tallyPlayerInScope(kP, eScope, iEntity))
 		{
-			continue;
-		}
-		std::set<int> kB, kU;
-		gather(kP, kB, kU);
-		// Union the tally's OWN keys too, so a STALE entry (event-tally still holds a type the engine no longer does)
-		// is caught as well, not only a missing / short one.
-		{
-			std::map<int, CountMap>::const_iterator it = m_buildings.find(iP);
-			if (it != m_buildings.end())
-				for (CountMap::const_iterator jt = it->second.begin(); jt != it->second.end(); ++jt) kB.insert(jt->first);
-			it = m_units.find(iP);
-			if (it != m_units.end())
-				for (CountMap::const_iterator jt = it->second.begin(); jt != it->second.end(); ++jt) kU.insert(jt->first);
-		}
-		for (std::set<int>::const_iterator it = kB.begin(); it != kB.end(); ++it)
-		{
-			++iChecked;
-			const int iTally = buildingCount(iP, *it);
-			const int iLegacy = kP.getBuildingCount((BuildingTypes)*it);
-			if (iTally != iLegacy)
-			{
-				++iDiverging;
-				if (iShown < iMaxShown && *it >= 0 && *it < GC.getNumBuildingInfos())
-				{
-					sprintf(szBuf, "[TALLY/diff] player=%d building=%s tally=%d legacy=%d",
-						iP, GC.getBuildingInfo((BuildingTypes)*it).getType(), iTally, iLegacy);
-					gDLL->logMsg("Cascade.log", szBuf);
-					streamLogTee(1, szBuf);
-					++iShown;
-				}
-			}
-		}
-		for (std::set<int>::const_iterator it = kU.begin(); it != kU.end(); ++it)
-		{
-			++iChecked;
-			const int iTally = unitCount(iP, *it);
-			const int iLegacy = kP.getUnitCount((UnitTypes)*it);
-			if (iTally != iLegacy)
-			{
-				++iDiverging;
-				if (iShown < iMaxShown && *it >= 0 && *it < GC.getNumUnitInfos())
-				{
-					sprintf(szBuf, "[TALLY/diff] player=%d unit=%s tally=%d legacy=%d",
-						iP, GC.getUnitInfo((UnitTypes)*it).getType(), iTally, iLegacy);
-					gDLL->logMsg("Cascade.log", szBuf);
-					streamLogTee(1, szBuf);
-					++iShown;
-				}
-			}
+			iSum += kP.getUnitCount(eUnit);
 		}
 	}
-
-	sprintf(szBuf, "[TALLY/shadow] turn=%d checked=%d diverging=%d", GC.getGame().getGameTurn(), iChecked, iDiverging);
-	gDLL->logMsg("Cascade.log", szBuf);
-	streamLogTee(1, szBuf);
+	return iSum;
 }

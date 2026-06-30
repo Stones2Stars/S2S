@@ -83,4 +83,5 @@ The two reliable live reads:
   + parity bar that *uses* this observability to prove a maintainer before it's cut.
 - [http-endpoints.md](http-endpoints.md) — the clean endpoint catalogue (`/state`, `/extractor`, `/shadow`,
   `/decompose`, `/events`) this surface publishes through.
-- [tally.md](tally.md) — the first authoritative `DOMAIN` consumer; its `DOMAIN`-only interest *is* the KIND firewall in action.
+- [tally.md](tally.md) — the read-only count accessor (reads the object-owned counts; NOT a spine consumer). The KIND
+  firewall (`DOMAIN` vs `DIAGNOSTIC`/`TRACE`) is still load-bearing for the synced-vs-unsynced split that logging + the offline replay ride.

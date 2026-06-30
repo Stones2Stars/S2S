@@ -12,6 +12,13 @@ Sibling of skills.md.
 > boolean gates that are neither (a building's `damageAllAttackers`, a wonder's `buildingOnlyHealthy`) stay as-is. The
 > full clean-name list still needs grounding against the engine team-flags.
 
+> **✅ MAPPED into the cascade (2026-06-30).** readJson now maps the `capabilities` block onto the entity's `CvJsonInfo`
+> (`std::set<std::string> capabilities` — the granted names; `[READJSON/cap]`); it was previously parsed-but-skipped.
+> Verified live: the block appears on **24 techs** (e.g. `techTrading`, `openBordersTrading`, `permanentAllianceTrading`,
+> `dcmAirBomb2`). The empire's **ACTIVE** capability set is the union over the team's held grantor techs — **derived
+> where consumed** (the enabler's `canFound`/`canBuild` gates + the team-ability systems), per the static(info)/live(state)
+> split; it is not stored on a team object. Wiring those consumers is the next step.
+
 ## What a capability is (recap)
 - **Team / empire scope** — applies to the whole civilization, not one unit (the section name carries the scope).
 - **Tech-unlocked** — granted by a tech (or civic); monotonic (once unlocked, kept).

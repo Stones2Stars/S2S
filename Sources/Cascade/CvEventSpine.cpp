@@ -5,10 +5,13 @@
 
 #include "CvGameCoreDLL.h"
 #include "CvEventSpine.h"
-#include "CvCascadeTally.h"   // the SELECTIVE DOMAIN consumer (counts) registered at the composition root below
 #include "AI/BetterBTSAI.h"   // gPlayerLogLevel (reused as the slice-1 gate; dedicated gate/BUG option + the live
                            // CvHttpServer feed come next)
 #include "Defines/CvGlobals.h"        // GC -- resolve raw Type indices to readable names in the (gated) consumer
+#include "AI/CvPlayerAI.h"            // GET_PLAYER (the CvPlayerAI::getPlayer macro) + CvPlayer::getName() in the
+                                      // SFT_PLAYER consumer render (line ~202) -- imported DIRECTLY (was a latent
+                                      // missing include masked by a unity batch-mate until readJson stopped pulling
+                                      // CvPlayer.h; unity builds hide missing includes -- structural-cleanup.md §2)
 #include "CvBuildingInfo.h"
 #include "CvUnitInfo.h"
 // typeIndex name-resolution in the consumer: the Info headers for each SFT_ kind (so GC.getXInfo(i).getType() compiles).
@@ -298,11 +301,10 @@ void cascadeRegisterConsumers()
 		return;
 	}
 	s_bRegistered = true;
-	// The poor-man's-DI composition root: the BROAD logging consumer + the SELECTIVE tally (DOMAIN counts only).
+	// The poor-man's-DI composition root: the BROAD logging consumer. The tally is NOT a consumer -- it READS the
+	// object-owned counts on demand (CvCascadeTally.h), so it neither registers here nor needs a load-time seed. The
+	// DOMAIN count events still flow to logging (observability) + the future invalidation/offline consumers.
 	eventSpine().registerConsumer(&s_cascadeLogConsumer);
-	eventSpine().registerConsumer(&cascadeTally());
-	// The tally is SEEDED from the loaded objects by cascadeTally().rebuild() at onFinalInitialized (every load),
-	// then maintained incrementally by the DOMAIN count events; its shadow runs per-turn in CvGame::doTurn.
 }
 
 void cascadeEmitNameChange(int iKind, int iOwner, int iEntityId)

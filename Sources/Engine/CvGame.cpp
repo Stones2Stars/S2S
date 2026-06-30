@@ -11,9 +11,9 @@
 #include "CvCity.h"
 #include "UI/CvEventReporter.h"
 #include "CvEventSpine.h"
-#include "CvCascadeTally.h"
 #include "CvCascadeReadJson.h"
 #include "CvCascadeModifierMath.h"
+#include "CvCascadeEnabler.h"
 #include "AI/CvGameAI.h"
 #include "Defines/CvGlobals.h"
 #include "Tools/CvHttpServer.h"
@@ -623,11 +623,12 @@ void CvGame::onFinalInitialized(const bool bNewGame)
 		}
 	}
 
-	// #430 event spine -- register the cascade consumers at the poor-man's-DI composition root (logging + the tally),
-	// then SEED the tally from the loaded objects (every load; the tally serializes nothing -- tally.md §4). DOMAIN
-	// events keep it in step thereafter; its per-turn shadow runs in doTurn.
+	// #430 cascade LOAD-TIME setup. Register the spine consumers (logging) at the poor-man's-DI composition root; the
+	// tally is NOT seeded -- it READS the object-owned counts on demand (CvCascadeTally.h). Then map the curated JSON
+	// to the cascade's STATIC info data at LOAD (readJson; moved here from doTurn) so that simply LOADING a save
+	// establishes + verifies it -- readJson is static data, only the live shadows need a turn (validation.md cadence).
 	cascadeRegisterConsumers();
-	cascadeTally().rebuild();
+	cascadeReadJsonProbe();
 
 	OutputDebugString("onFinalInitialized: End\n");
 }
@@ -5828,19 +5829,19 @@ void CvGame::doTurn()
 	// so removing it reverts to engine behaviour. To be redesigned properly (JSON parsed through BoolExpr) after
 	// the dry-calc (StoneBase) validation is done. Spine logging stays (registered above).
 	//
-	// #430 TALLY shadow -- the first machine of the rebuilt cascade, re-introduced on a proper footing (tally.md):
-	// diff the event-maintained counts vs the live engine each turn as a gated [TALLY] line (cascade-vs-legacy).
-	// Pure shadow -- gated off in normal play, no behaviour change.
-	cascadeTallyShadow();
-
-	// #430 readJson -- parse the curated Assets/Data set + MAP each entity's JSON onto its game object (the side-table);
-	// emit the [READJSON] surveys + map read-back. Self-guarding + gated; no behaviour change.
-	cascadeReadJsonProbe();
-
-	// #430 MODIFIER machine increment 1 -- the percent stack shadow: diff the cascade's per-channel
-	// max(0,100+Σ%) (read off the mapped CvCascadeData) vs legacy getBaseYieldRateModifier. Runs AFTER readJson (which
-	// maps the data it reads). Self-guarding + gated; no behaviour change.
+	// #430 NOTE: the TALLY no longer shadows here -- it READS the object-owned counts (no duplicate store), so a
+	// cascade-vs-legacy count diff would be tautological (owner ruling 2026-06-30, tally.md). readJson now MAPS the
+	// static info data at LOAD (onFinalInitialized), not here -- loading a save verifies it (validation.md cadence).
+	//
+	// #430 MODIFIER machine increment 1 -- the percent stack shadow: diff the cascade's per-channel max(0,100+Σ%)
+	// (read off the mapped CvJsonInfo in the InfoRepo) vs legacy getBaseYieldRateModifier. A LIVE shadow of a to-be-replaced part,
+	// so it stays here (an end turn drives it). Self-guarding + gated; no behaviour change.
 	cvCascadeModifierShadow();
+
+	// #430 ENABLER machine FIRST CUT -- the "can I?" gate: GENERATE the canConstruct/canTrain frontier from the InfoRepo
+	// enables edges over HAVE, GATE by requires + allowed, and shadow each verdict vs the live engine. A LIVE shadow of
+	// the to-be-replaced gates, in the AI's per-turn path. Self-guarding + gated; no behaviour change.
+	cvCascadeEnablerShadow();
 
 	//	Turn-boundary accounting for the frame-driven span the doTurn tree does not cover:
 	//	turn.wall is the true wall-clock between consecutive turn boundaries (what a player's

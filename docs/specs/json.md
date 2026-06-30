@@ -436,7 +436,13 @@ One-shot or recurring things an entity hands out (not per-turn modifiers).
   foundBuildings`.
 - **numeric pulses** — `grants.<channel>: value` (`grants.revolution: -100`, `grants.goldenAge`).
 - **`foundBuildings`** — entry shape `{ "building": BUILDING_X, "enabled"?: <condition> }` (absent `enabled` =
-  always placed).
+  always placed). Lives on the **settler-type unit** (the founder), NOT on the civ. ⚠ **Owner note (2026-06-30):**
+  `foundBuildings` is technically an **agent invention** — plain `grants.buildings` on the settler would suffice (the
+  engine iterates the founder's buildings at settle-time); the owner *tolerates* the clean `foundBuildings` form, but
+  it is not load-bearing. **Curator follow-up:** `BUILDING_PALACE` (+ the other founder buildings) is currently *also*
+  in ~48 **civilizations'** `grants.buildings` — the **wrong/redundant** placement; the settler's `foundBuildings`
+  already carries it, so the civ-grant duplicate should be dropped. (Does NOT affect the enabler: the engine realizes
+  the palace into the capital regardless, so the cascade's HAVE sees it either way.)
 - **`repeatable`** — `[ { <payload>, interval, chance?, enabled? } ]`: fires each interval (a spawned unit, a
   heal), optionally gated by a rolled `chance` (which may scale with a `per`).
 - **property pulses** — a per-turn `PROPERTY_*` change an entity emits (the engine's `PropertyManipulator`) is a

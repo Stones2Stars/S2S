@@ -120,6 +120,27 @@ dedicated endpoint.)* The legacy stays authoritative until its shadow is **clean
 numbers on both sides — if the data to attribute it isn't emitted, the first step is to emit it (the
 [logging](logging.md) observability bar is the prerequisite).
 
+## Validation cadence — what LOAD verifies vs what END TURN verifies (owner ruling 2026-06-30)
+
+The static/live split — **readJson = static info data**; the **game object = live state** (the cascade runtime: tally,
+event spine, accumulators, all condition *evaluation*) — dictates *when* each thing is verified, and it is the cure for
+the false-confirmation trap below:
+
+- **LOAD verifies the STATIC + initial setup.** readJson maps the info-level data at load (it never touches a
+  `CvGameObject`); the **tally** is a read-only accessor over the object-owned counts ([tally.md](tally.md) — no seed,
+  no store); the **enabler**'s HAVE set is established from the loaded objects. So **loading a save** is enough to
+  confirm readJson did its job and the cascade's static/initial state is correct + inspectable. **No turn needed.**
+- **END TURN verifies LIVE integration — and ONLY that.** Two cases: **(1)** the engine parts we will **not** replace
+  can **see** the new cascade data; **(2)** the parts we **will** replace — `canTrain`/`canConstruct` and the modifier
+  rates — are **shadowed in the AI's real per-turn calls** (end-turn so the AI calls them). **Before the enabler is
+  swapped over, its new build lists are LOGGED at the PYTHON consumer layer** (the AI/UI's view of buildability), so the
+  cutover is proven against what the actual consumers see — not just the C++ shadow.
+- **⛔ An end turn does NOT confirm a STRUCTURE.** A per-change game shadow produces **false confirmation even on a
+  wrong structure** — the gameobject side-table shadowed green (`TALLY diverging=0`, building tier bit-exact) yet was on
+  the wrong structural path. So **stand up the proper, spec-faithful structure FIRST**; the shadows then verify
+  *behaviour through the surviving/replaced engine*, never *structure*. Structure is gated by **fidelity to the spec**,
+  not by a green shadow. Ledgered as [DEC-structure-before-shadow](../architecture/decisions.md#dec-structure-before-shadow).
+
 ## ⛔ Parity-pass results stay OUT of the docs (owner ruling 2026-06-23)
 Divergence counts, parity checklists, per-pass pilot numbers — **none of it belongs in the durable docs.** Stale
 results **poison contexts**: an agent fixates on a number and misdiagnoses (a ~1100-building enable diff was
@@ -150,10 +171,12 @@ is the **project graph**, not discipline.
 > state, not the engine's. Direct access makes this trivial to violate by accident; the extra vigilance IS the guardrail.
 
 ## Build order (per the model)
-Replay events to populate the [tally](tally.md) **fully first**, *then* run the [enabler](enabler.md) (its required
-side reads aggregated counts — correct only once the tally is complete). The [modifier](modifier.md) machine rides
-the same spine, with a value outcome instead of a true/false. The only live-vs-dry difference is **"when"** (live
-events carry the turn; the dry replay doesn't, and the cascade doesn't consume it).
+The counts must be available **before** the [enabler](enabler.md) runs (its required side reads aggregated counts). The
+two legs reach that differently: **offline (StoneBase)** has no engine objects, so it **replays the `DOMAIN` events to
+populate its own count model first**, then runs the enabler; the **in-engine** [tally](tally.md) **reads the
+object-owned counts** (always available — no replay/seed needed). The [modifier](modifier.md) machine rides the same
+data, with a value outcome instead of a true/false. The only live-vs-dry difference is **"when"** (live events carry the
+turn; the dry replay doesn't, and the cascade doesn't consume it).
 
 ## See also
 - [http-endpoints.md](http-endpoints.md) — `/state` (inputs) vs `/computed` (oracle); the verification flow.

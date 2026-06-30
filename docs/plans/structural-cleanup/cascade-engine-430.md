@@ -31,11 +31,11 @@ status record of built cascade code (there is almost none — see the table).
 |---|---|---|
 | **Event spine** | ✅ **BUILT (spine + logging only)** | `Sources/Cascade/CvEventSpine.{h,cpp}`: `IEventConsumer` (`CvEventSpine.h:197`), `CvEventSpine` (`:208`), `eventSpine()` (`:224`), `cascadeRegisterConsumers()` (`:229`) registers ONLY the log consumer (`CvEventSpine.cpp:300`). KINDs `DOMAIN`/`DIAGNOSTIC`/`TRACE` (`:28`). **The only DOMAIN (counted) events** = `CASCADE_EVT_BUILDING_COUNT`/`UNIT_COUNT`/`NAME_CHANGE` (`:171`), emitted at `Engine/CvPlayer.cpp:13737` / `:13642` and `Engine/CvCity.cpp:13391`. The `[TAG]` logging domains (`SpineDomainTag`, `:73`) are mostly pre-allocated; only AI-trace domains (hunter/worker/war/…) self-register today. |
 | **Scoped accumulator** | ❌ **NOT BUILT (purged)** | The prototype's `CvScopedAccumulator` was removed; no such file exists. Design = the additive scope-accumulator substrate (§1.0). |
-| **Tally** | ✅ **BUILT (buildings + units, shadow-green)** | `Sources/Cascade/CvCascadeTally.{h,cpp}`: `IEventConsumer` with `wantedKinds()=1<<EVENTKIND_DOMAIN`; `rebuild()` seeds from the live objects, `onEvent` maintains it, `shadowDiff()` emits per-turn `[TALLY/shadow]` (verified `diverging=0`). Registered at `cascadeRegisterConsumers()`. Player-leaf model (`tally.md` §2). Building/unit domains only; other domains pending (`tally.md` §5). |
+| **Tally** | ✅ **BUILT (read-only accessor, buildings + units)** | `Sources/Cascade/CvCascadeTally.{h,cpp}`: a stateless standardized aggregate-count surface — `buildingCount`/`unitCount(iEntity, type, scope)` READ the object-owned counts (`CvPlayer::getBuildingCount`/`getUnitCount`) and roll UP the spine (empire / team / world). **NOT** a store/consumer: no `IEventConsumer`, no `rebuild`/`onEvent`/`shadowDiff` (all removed — a count shadow would be tautological). Reading a raw count is a raw INPUT, not pollution. Building/unit domains; others read from their object owner when added (`tally.md` §5). |
 | **Modifier** | ❌ **NOT BUILT (purged)** | Design = `modifier.md`; reference impl = StoneBase (`src/Application/Features/Calc/*` over `ModifierMath`, parity-proven). Legacy accumulators fully present + untouched (§4). **NEXT machine** — consumes readJson's modifier-family deposits; needs the scope-accumulator substrate (§1.0). |
 | **Enabler** | ❌ **NOT BUILT (purged)** | Design = `enabler.md`. Legacy `can*` gates fully present + untouched (§4). The `#195` `ConstructRequirement` reverse-index overlay survives (`Engine/ConstructRequirement.h`; built in `Defines/CvGlobals.cpp`, consumed `AI/CvCityAI.cpp:12965`) and is the seed of the `enables` generation index. |
 | **Grants** | ❌ **ABSENT** | No grants consumer (never built). |
-| **readJson** | ✅ **BUILT — PARSE/SURVEY (full json.md coverage); ⛔ does NOT yet MAP to runtime data** | `Sources/Cascade/CvCascadeReadJson.{h,cpp}`: a one-shot gated probe (`cascadeReadJsonProbe`, at `doTurn`) that parses EVERY `Assets/Data` entity through BoolExpr — `rj_translate` (conditions, incl. `IntExpr` value/tally-count bands + the `dormant` clause); `rj_walkModNode` (×100 modifier-family deposits); `rj_walkEnableEdge` (enables/obsoletes/replaces/disables/obsoletedBy/provides); `rj_walkAllowed`; `rj_walkGrants` (generic by shape) — FK-resolving all ids. **Verified live: 0 `UNCLASSIFIED` top-level keys (complete coverage), all resolved bar 3 by-design.** ✅ It now **MAPS** the parse to a `CvCascadeData` per entity (deposits/requires/edges/allowed/grants) and attaches it via the ABI-safe **side-table** (`cascadeForInfo`/`cascadeAttach`, keyed by `CvInfoBase*` — NOT a `CvInfo` member; CvInfoBase is EXE-layout-bound, §3). Live read-back round-trips it (`[READJSON/map-summary] entitiesWithCascadeData≈13k`). The modifier/enabler calc reads this mapped data. Standalone `Tools/ReadJson/readjson.cpp` harness is FROZEN. |
+| **readJson** | ✅ **BUILT — PARSE + MAP (full json.md coverage), runs at LOAD** | `Sources/Cascade/CvCascadeReadJson.{h,cpp}`: a one-shot gated probe (`cascadeReadJsonProbe`, at **`onFinalInitialized`** — load-time) that parses EVERY `Assets/Data` entity through BoolExpr — `rj_translate` (conditions, incl. `IntExpr` value/tally-count bands + the `dormant` clause); `rj_walkModNode` (×100 modifier-family deposits); `rj_walkEnableEdge` (enables/obsoletes/replaces/disables/obsoletedBy/provides); `rj_walkAllowed`; `rj_walkGrants` (generic by shape) — FK-resolving all ids. **Verified live: 0 `UNCLASSIFIED` top-level keys, all resolved bar 3 by-design.** ✅ It **MAPS** each entity to a **`CvJsonInfo`** (deposits/requires/edges/allowed/grants) held in the entity's per-type **`InfoRepo<CvXInfo>`** (`Repos/InfoRepo.h`) — a parallel layer, NOT on the info objects; the side-table is **RETIRED** (§3). readJson is **static-data-only** (no `CvGameObject`). The modifier/enabler read it via `InfoRepo<…>::get().get(id)`. Standalone `Tools/ReadJson/readjson.cpp` harness is FROZEN. |
 
 **The honest #430 roadmap.** Build the cascade FRESH per the specs, porting from the parity-proven StoneBase reference,
 in spec build order: **`readJson` (BoolExpr-routed) + the scope-accumulator substrate → tally → modifier → enabler →
@@ -66,10 +66,11 @@ event spine of §1.0 is built.)
 
 ### 1. Tally — counts, roll UP  *(build FIRST after substrate; spec: `tally.md`)*
 
-Per-type had-counts, additive roll-up the spine. Serves: `requires` count-thresholds (`min(BUILDING_X,12)`,
-empire/team) + the higher-scope HAS sets, the modifier's cross-city `per` count-scaler, and demographics/AI/score.
-First because the enabler depends on it (`tally.md` §2/§3). **Player-leaf** stored model (`tally.md` §2). Serializes
-nothing — rebuilt on load (`tally.md` §4).
+Per-type counts, **READ** from the object-owned aggregates (`CvPlayer::getBuildingCount`, …) and rolled UP the spine.
+Serves: `requires` count-thresholds (`min(BUILDING_X,12)`, empire/team) + the higher-scope HAS sets, the modifier's
+cross-city `per` count-scaler, and demographics/AI/score. First because the enabler depends on it (`tally.md` §2/§3). A
+**read-only accessor — no store** (`tally.md` §1): serializes AND stores nothing, so there is nothing to seed, rebuild,
+or shadow (`tally.md` §4).
 
 ### 2. Modifier — magnitudes, deposit DOWN
 
@@ -177,44 +178,87 @@ surface is retired, `CvHttpServer.cpp:26`):
 - **`readJson` will be a FRESH reader** (picojson → fresh runtime structures), NOT a reuse of `CvInfoUtil`/`CvXMLLoadUtility`/
   the old `read()` path. It runs IN ADDITION to the XML load during shadow; at cutover the XML path (`SetGlobalClassInfo`
   → `read()`, `Infrastructure/CvXMLLoadUtilitySet.cpp:1588`) is deleted. (`read()` is NOT DllExport — `Infos/CvInfoBase.h:78/85/133/154`.)
-- **★ THE MAPPING/CUTOVER MODEL (owner ruling 2026-06-29; ABI-corrected after a load-crash).** `readJson` maps each
-  entity's JSON to a fresh **`CvCascadeData`** (deposit lists, the `BoolExpr` requires/enables structures, the grant
+- **★ THE MAPPING/CUTOVER MODEL (owner ruling 2026-06-29; home finalized 2026-06-30).** `readJson` maps each
+  entity's JSON to a fresh **`CvJsonInfo`** (deposit lists, the `BoolExpr` requires/enables structures, the grant
   provisions) — the **new calc implementations** (modifier/enabler/grants) read it; the **OLD Info variables**
   (XML-populated `m_ai*`/`m_ab*`) are **cut only AFTER** (a) the data is mapped, (b) the new calc is built, and (c) the
   per-machine SHADOW reaches parity. Until all three hold the XML load stays authoritative (cutting now breaks the game
   — nothing maps JSON→engine data yet); the cut is the atomic last step.
-  - **⛔ HOME = real indexed structs on the INFO objects (owner ruling 2026-06-30).** Terminology (the owner pinned it):
-    **`CvInfoBase`** is the base of the **JSON-data-derived objects** — the infos (`CvBuildingInfo`/…), where the
-    type-data maps; **`GameObject`/`CvGameObjectCity`** is the base of the runtime **INSTANCES** (city/unit), which
-    conditions EVALUATE against (the active-state side). The cascade **type-data lives on the infos**:
-    - **Universal structures every info needs — `modifiers` + `enables` — are BASE members on `CvInfoBase`** (appended);
-      type-specific data is **per-derived** (`CvBuildingInfo`/…). The standard EXE-required info fields (`type`/
-      description/the DllExport getters) are **REUSED** from the info, never duplicated — this carries only new data.
-    - **They are REAL indexed structs/classes that GIVE THE ANSWER directly** — `modifiers` keyed by family/scope/unit,
-      `enables` by bucket — NOT a flat list linear-scanned everywhere (that is StoneBase's `ModifierFamily` *tree* shape,
-      which the interim flattened). The machine asks the struct and gets the value; no full-list walk per access.
-  - **ABI — the load crash was a MID-CLASS insertion, NOT appending.** Adding `m_pCascade` *before* the existing
-    `CvInfoBase` members shifted `m_szType` (which the EXE reads by a hardcoded offset) → the `memcpy` AV in
-    `std::string::assign`. **Appending to the END preserves every existing offset** (the standard C2C way of extending an
-    info), so base members on `CvInfoBase` are viable — **confirm with an append-test** (a base append also shifts the
-    *derived* members; safe iff the EXE reads those via getters, not by offset — verify). Access is **typed** (readJson +
-    the machines dispatch by `GC.get*Info(id)`), so no base virtual getter is needed.
-  - **Why NOT the side-table/dictionaries:** StoneBase used dictionaries only because it is **offline** (perf secondary)
-    with **no engine base objects** — it builds its own typed model. **The DLL HAS the real info objects**, so map ONTO
-    them: a direct member is **faster** (no map lookup in the modifier's hot loops) and makes **provenance obvious**.
-  - **⏳ CURRENT (interim, to replace):** `CvCascadeData` is a **flat deposit vector** in a `CvInfoBase*`-keyed
-    **side-table** (`cascadeForInfo`/`cascadeAttach`) — the over-correction after the mid-class crash (+ echoing the
-    StoneBase dicts). It WORKS + is verified (`[READJSON/map-summary]` round-trips, game loads clean,
-    `[TALLY/shadow] diverging=0`), but it is the slow/opaque shim. Redesign → real `modifiers`/`enables` structs as
-    appended base members on `CvInfoBase` (+ per-derived for type-specific), read directly.
-  - **★ TWO HOMES — definitions on infos, ACCUMULATED STATE on instances (owner ruling 2026-06-30).** The static
-    **definitions** (the `modifiers`/`enables` structs from JSON) live on the **infos** (above). The runtime
-    **accumulated state** — the cascade accumulators (a city's summed per-`(family,scope)` totals) + the **tally**
-    counts — naturally lives on the **game INSTANCE objects** (city / player / unit). Per §2b those go on the
-    **DLL-internal derived** instance classes (`CvCityAI`/`CvPlayerAI`/`CvUnitAI`), **never** the EXE-bound bases
-    (`CvCity`/`CvPlayer`/`CvUnit`). **NO dictionaries/side-tables** (a StoneBase offline-ism — it had no engine
-    objects; the DLL does, so state lives ON them). ⏳ This retires BOTH current dict-interims: the modifier
-    **side-table** (→ onto the infos) AND the **tally** singleton-maps (→ onto the player instances).
+  - **⛔ HOME = the per-info-type `InfoRepo`, a SEPARATE parallel layer — NOT on the info objects (owner ruling
+    2026-06-30, superseding the earlier "on `CvInfoBase`" sketch). ✅ DONE.** Terminology (owner-pinned): **`CvInfoBase`**
+    is the base of the engine's XML-derived **info** objects; **`GameObject`/`CvGameObjectCity`** is the base of the
+    runtime **INSTANCES** the conditions EVALUATE against. The JSON-mapped data is a **`CvJsonInfo`** (`Cascade/CvJsonInfo.h`
+    — the JSON counterpart to a `CvXInfo`), held in a **per-info-type `InfoRepo<CvXInfo>`** (`Repos/InfoRepo.h`): a
+    `get()` singleton per type holding a `std::vector<CvJsonInfo*>` **PARALLEL to `GC.m_pa<X>Info`**, indexed by the
+    same id → O(1). readJson `edit()`s the entry; the machines `get()` it.
+    - **Why a SEPARATE parallel layer, not a member on the info:** it keeps the migration boundary clean (the engine's
+      XML info stays pure; the XML-vs-JSON shadow is **two structures**, swapped cleanly at cutover), it is **immune to
+      the `CvInfoReplacements` info-pointer swap** (an array indexed by id stays put while `aInfos[id]` is overwritten),
+      access is standardized, and it touches no foundational header. It also **establishes the proper repository
+      pattern** the codebase lacked (the old `BuildingsRepo`-style "repos" were experiments; reality was bare arrays
+      looped over) — *"it just makes overall structuring more uniform."*
+    - **The standard EXE-required fields** (`type`/getType(), description, the DllExport getters) are **NOT duplicated** —
+      they stay on the engine `CvXInfo` at the same id; a consumer holding a `CvJsonInfo` (by domain+id) reads them there.
+    - **Scope:** the InfoRepo is established as the home for the JSON data; retrofitting the existing engine arrays+loops
+      onto the pattern is a separate, later initiative.
+  - **⚠ BLAST RADIUS — the trade-off to be careful about (owner ruling 2026-06-30).** The separate parallel layer gives
+    **clean drop candidates** at cutover (the engine's XML `m_ai*`/`m_ab*` members drop cleanly — nothing of theirs is
+    intermingled with the new data) **but** is a **bigger blast radius** to keep correct. The named care points:
+    - **(a) re-map safety ✅ HARDENED.** The hazard: `InfoRepo::edit()` get-or-**creates** without clearing + the walkers
+      `push_back`, so re-populating would **DOUBLE** every deposit vector. readJson now calls **`rj_clearAllRepos()`**
+      (frees every InfoRepo) before mapping, so the map is **re-run-safe** — no longer relying on the one-shot guard,
+      ready for the unconditional load-time map at cutover. (No-op on the one-shot first run.)
+    - **(b) index alignment.** `InfoRepo[id]` mirrors `GC.m_pa<X>Info` by id — correct only because the map runs AFTER
+      all infos load and resolves ids via `getInfoTypeForString` (the same id space). Breaks if anything reorders the
+      info arrays post-map.
+    - **(c) the cutover IS the real blast radius.** Every engine site reading an XML info member switches to the
+      InfoRepo at once — the clean separation makes each *drop* clean, but the *switch* is the largest atomic change
+      (map-before-delete, per-machine shadow-to-parity, atomic).
+    - **(d) new info types** must be added to readJson's **`RJ_REPO_TYPES`** X-macro or they silently get no InfoRepo.
+      That table is now the **single source** driving edit + get + clear-all together (no dispatch-vs-clear drift) — so
+      it's one place to add a type, but still a place that can be *forgotten* (the quiet corner below).
+    - **Mitigant — misses mostly YELL LOUDLY (owner 2026-06-30).** The cutover is the *least* dangerous in this sense: a
+      site still reading a **deleted** XML member is a **compile error** (loudest possible — it can't build), and
+      doubled/wrong values surface as **shadow divergences**. So most of the blast radius is self-announcing. The **one
+      QUIET corner is (d)**: a missing `RJ_REPO_DISPATCH` entry (or a silently-empty repo) just makes that entity
+      **contribute nothing** — no crash, only a shadow divergence on *that* entity. Watch newly-added / un-dispatched types.
+  - **ABI — Infos are NOT EXE-ABI-sensitive (owner-asserted + verified 2026-06-30).** The infos are DLL-allocated,
+    stored as `vector<CvXInfo*>` (`CvGlobals.h:1006`), and reached only via the `DllExport` getters — the EXE never
+    sizes / value-copies / offset-reads them (a DLL-compiled `getType()` reads `m_szType` wherever it sits; brand-new
+    info classes inheriting `CvInfoBase` have been added without trouble). So the earlier "mid-class crash / append-only
+    / append-test" caution was **over-drawn** — that crash was a DLL-internal / stale-build artifact, not an EXE-offset
+    constraint. (The InfoRepo was chosen over an on-`CvInfoBase` member for the SEPARATION reasons above, not for ABI.)
+  - **⏳ NEXT (refinement, within the InfoRepo home):** `CvJsonInfo` is still a flat deposit vector internally; indexing
+    it (`modifiers` keyed by family/scope/unit, `enables` by bucket — StoneBase's typed `ModifierFamily` shape) so the
+    machine asks the struct and gets the value without a per-access list walk is a follow-up.
+  - **★ TWO HOMES — definitions in the InfoRepo, ACCUMULATED STATE on instances (owner ruling 2026-06-30).** The static
+    **definitions** (the `CvJsonInfo` from JSON) live in the **per-type InfoRepo** (above). The runtime **accumulated
+    state** — the cascade modifier accumulators (a city's summed per-`(family,scope)` totals) — lives on the **game
+    INSTANCE objects**. Per §2b those go on the **DLL-internal derived** instance classes (`CvCityAI`/`CvPlayerAI`/
+    `CvUnitAI`), **never** the EXE-bound bases (`CvCity`/`CvPlayer`/`CvUnit`). ⏳ The modifier **side-table** is retired
+    (→ the InfoRepo, DONE); the modifier's runtime accumulators move onto the instances when that machine is built.
+  - **★ The TALLY is the exception — it is a READ-ONLY accessor, NOT new instance state (owner ruling 2026-06-30).**
+    Counts are NOT a separate accumulator to home on the instances: the OBJECT already owns its count, O(1)
+    (`CvPlayer::getBuildingCount` = `m_paiBuildingCount`, maintained + already emitting its `DOMAIN` event;
+    `getUnitCount`; techs on `CvTeam`). So the tally **reads** those and rolls UP the spine (empire/team/world) — a
+    standardized accessor, no store, no seed, no shadow. Its old player-leaf singleton-maps are **retired entirely**
+    (not relocated): *"creating something new when we already have it is pointless — better to standardize and make
+    access predictable."* Reading a raw count is a raw INPUT, not the pollution anti-pattern. ✅ DONE
+    (`Cascade/CvCascadeTally.{h,cpp}` is now the read+roll-up surface; the `IEventConsumer` store/`rebuild`/`shadowDiff`
+    are gone). Full model: [tally.md](../../specs/tally.md).
+  - **★ readJson is STATIC-DATA-ONLY; the game object is LIVE STATE (owner ruling 2026-06-30).** readJson maps JSON →
+    the **`CvJsonInfo` in the InfoRepo** (above) and **never references `CvGameObject`**. Building the BoolExpr condition *trees* is the
+    deliberate reuse (a tree IS static data); but a leaf that *evaluates* against a live instance (the tally-count leaf)
+    lives on the **live-state** side (`Cascade/CvCascadeCountExpr.{h,cpp}`) — readJson constructs it as a data node, the
+    **engine** evaluates it, converting info→gameobject when it needs to. (This was the gameobject-vs-info conflation: a
+    static reader must not own instance-walking evaluation.) ⟹ **LOAD-time setup:** readJson maps the static info data
+    at **load** (`onFinalInitialized`, moved off `doTurn`), and the **tally** is a read-only accessor over the
+    object-owned counts (no seed — the bullet above / [tally.md §4](../../specs/tally.md)); the **enabler**'s HAVE set
+    is likewise established from the loaded objects. So **loading a save verifies the static cascade state**
+    ([validation.md](../../specs/validation.md) cadence,
+    [DEC-structure-before-shadow](../../architecture/decisions.md#dec-structure-before-shadow)); only the live shadows
+    of the surviving/replaced engine (`canTrain`/`canConstruct` + modifier rates, with the new build lists logged at the
+    **Python consumer layer** before the enabler swap) need an end turn.
 - **The shared/kept pieces (EXE-bound):** the **type registry** `GC.getInfoTypeForString` (`Defines/CvGlobals.cpp:2682`,
   decl `CvGlobals.h:1418`) / `setInfoTypeFromString` (`CvGlobals.cpp:2708`, decl `:252`) over `m_infosMap`
   (`CvGlobals.h:929`) — `readJson` uses it for FK resolution because the EXE binds the same indices; and the **EXE-bound
@@ -255,11 +299,13 @@ do not exist — removed/never-present; the real building-yield getters are `get
 *(Active-rework signal: `m_aiBuildingBonusVicinityYield100` (`CvCity.h:1749`) is a newly-added recompute-only,
 non-serialized field — the vicinity-build-order fix; this accumulator block is being reworked, not frozen.)*
 
-**Tally (→ §1.1 machine):** the cross-city `getNum*` prereq count loops inside the gate functions
-(`CvPlayer::getBuildingPrereqBuilding` `:7306` using `getBuildingCount` `:7329`; call sites `CvPlayer.cpp:6718`/`:6783`,
-`CvCity.cpp:1504`) + the demographics/score scans (`CvPlayer::calculateScore` `:4417`, `getPopScore`/`getLandScore`/
-`getWondersScore`/`getTechScore` `:11506`/`:11546`/`:11587`/`:11610`) become reads of the one tally **(target machine
-not yet built — this clause names the legacy code the tally will subsume, not existing tally consumers).**
+**Tally (→ §1.1 machine):** the cross-city `getNum*` prereq count **loops** inside the gate functions
+(`CvPlayer::getBuildingPrereqBuilding` `:7306`; call sites `CvPlayer.cpp:6718`/`:6783`, `CvCity.cpp:1504`) + the
+demographics/score scans (`CvPlayer::calculateScore` `:4417`, `getPopScore`/`getLandScore`/`getWondersScore`/
+`getTechScore` `:11506`/`:11546`/`:11587`/`:11610`) collapse to reads of the one tally accessor. ⚠ The object-owned
+count itself (`getBuildingCount` = `m_paiBuildingCount` `:7329`, `getUnitCount`, `CvTeam` techs) **STAYS** — the object
+"cares about itself", and the tally *reads* it (it is the source, not demolition fodder). Only the scattered re-scan
+**loops** are subsumed, not the aggregates they read.
 
 ---
 
@@ -299,12 +345,19 @@ curated-set model as part of this migration. The current mechanism (mapped 2026-
 ## 7. NEXT
 
 1. **`readJson` (BoolExpr-routed)** ✅ **PARSE + MAP DONE** — full json.md coverage; maps each entity's JSON to a
-   `CvCascadeData` attached by game object via the ABI-safe side-table (`cascadeForInfo`). ⛔ **NOT yet mapped: the
-   classification blocks** (`skills`/`tags`/`capabilities`/`state`, json.md §8) — currently recognized + skipped. See the
-   classification-wiring item below.
-2. **Tally** ✅ **DONE** (buildings + units) — player-leaf, rebuild-on-load, first `DOMAIN` consumer; live `[TAG]`
-   shadow `diverging=0` against the legacy count scans. Other count domains pending (`tally.md` §5).
-3. **Modifier** — build plan [`modifier-machine.md`](modifier-machine.md). The readJson→`CvCascadeData` mapping is DONE;
+   **`CvJsonInfo`** held in the entity's per-type **`InfoRepo<CvXInfo>`** (`Repos/InfoRepo.h`) — the side-table is
+   **RETIRED** (§3 home). ✅ **readJson is now STATIC-DATA-ONLY** — the instance-walking tally-count leaf moved to the
+   live-state side (`Cascade/CvCascadeCountExpr.{h,cpp}`); readJson no longer includes `CvGameObject`/`CvPlayer`/the
+   tally (§3 boundary). ✅ **readJson now maps at LOAD** (`onFinalInitialized`, moved off `doTurn`) — loading a save
+   verifies it (validation.md cadence). ⛔ **NOT yet mapped: the classification blocks** (`skills`/`tags`/`capabilities`/
+   `state`, json.md §8) — currently recognized + skipped. See the classification-wiring item below. ⏳ **NEXT
+   (refinement):** index `CvJsonInfo` internally (vs the current flat deposit vector), §3.
+2. **Tally** ✅ **DONE — reworked to a READ-ONLY accessor (owner ruling 2026-06-30)** (buildings + units). It READS the
+   object-owned counts (`CvPlayer::getBuildingCount`/`getUnitCount`) and rolls UP the spine (empire/team/world) — no
+   store, no `IEventConsumer`, no `rebuild`/`onEvent`/`shadowDiff` (a count shadow was tautological — the duplicate-store
+   model is retired; `tally.md`). The standardized DOMAIN event emitters stay (observability/invalidation/offline). Other
+   count domains read from their object owner when added (`tally.md` §5).
+3. **Modifier** — build plan [`modifier-machine.md`](modifier-machine.md). The readJson→`CvJsonInfo` (InfoRepo) mapping is DONE;
    the **percent stack** (increment 1) is in + attributed (building tier bit-exact). **Strategy (owner ruling 2026-06-30):
    port the WHOLE StoneBase `Calc` in, THEN compare the in-DLL shadow vs StoneBase's parity-proven results** (port
    fidelity) — do NOT chase per-increment parity. **Parity = full ATTRIBUTION + a showable diff, NOT bit-exact**
@@ -316,7 +369,29 @@ curated-set model as part of this migration. The current mechanism (mapped 2026-
    per-flag: a unit's `skills.blitz` → multiple-attacks (as the legacy blitz); empire `capabilities` → the team ability;
    `policies.noForeignTrade` → the trade-route engine; unit `tags` → the `IS_<TAG>` accounting. **empire capabilities +
    unit skills especially.** The classification blocks are currently parsed-but-skipped (not mapped) — this is the wiring.
-4. **Enabler** (generate-then-gate, on the validated tally) + **grants** — **build EARLY, a CO-REQUISITE with the
+4. **Enabler** (generate-then-gate, on the validated tally) + **grants**. ✅ **FRONTIER GATES BUILT — the 6 same-shape
+   gates** (`Cascade/CvCascadeEnabler.{h,cpp}`): **city-scope** `canConstruct`/`canTrain`/`canCreate`/`canMaintain`
+   + **player-scope** `canResearch`/`canDoCivics`. ONE GENERATE→GATE primitive over a **bucket-keyed** `enables`
+   collection: GENERATE `CAN GET` from the InfoRepo `enables.<bucket>` over HAVE (team techs + adopted civics [+ the
+   city's buildings for city-scope]) minus obsoletes/replaces/disables (+ the target-side `obsoletedBy.techs` prune),
+   then GATE by `requires` (BoolExpr vs the city/player game object) + `allowed` (tally cap). Emits the available set per
+   gate, shadowed vs the live engine (`[ENABLER/shadow]`/`[ENABLER/diff]` at doTurn). Kept structurally two-pass (NOT a
+   per-entity output-match — [DEC-stonebase-follows-spec]); names mirror the existing engine gates. ✅ **+
+   `canAcquirePromotion`** — the per-UNIT shape (HAVE = the unit's held promotions + team techs + unitcombat → GENERATE
+   enables.promotions → GATE `requires` vs the unit game object; shadowed vs `isPromotionValid`). So **7 gates built**.
+   ✅ **+ `canBuild`(worker)** — the PLOT-scope shape: GENERATE the owner's `enables.builds` (techs) → GATE the build's
+   `requires` vs the **plot** game object (terrain predicates), over sampled owned non-city plots; shadow vs
+   `CvPlot::canBuild`. So **8 gates built**. ✅ The `capabilities` block is **MAPPED + QUERYABLE**:
+   `CvJsonInfo.capabilities` (per-tech grant names; `[READJSON/cap]`) + `en_empireHasCapability(team, cap)` (union over
+   the team's held techs). **Verified by a clean CAPABILITY shadow** — `canFoundOnPeaks` (granted by **TECH_ALGEBRA**, a
+   tech *capability* — corrected: NOT a policy / external source) vs the engine `CvTeam::isCanFoundOnPeaks` flag
+   (`[ENABLER/shadow] cap:canFoundOnPeaks`). ⏳ **`canFound` DEFERRED (owner ruling 2026-06-30)** — its capability half is
+   done (above); the remainder is the founding **RULE** (nearby-city distance, area, water/peak validity), whose engine
+   logic is *"a bit all over the place"* + not cleanly spec'd — a look-at-later gate, not modelled now.
+   (`found`/`foundCoast`/`foundFreshWater` are unit `skills`, a separate axis.) ⏳ **Then PARITY** — run the shadow, attribute
+   the diffs, close the gaps (remaining HAVE sources, CultureLevel category caps, requires-vs-enabler-active-state) across
+   all gates **in one go** (owner ruling 2026-06-30: set the machine up to spec first, verify the pieces together).
+   **Build EARLY, a CO-REQUISITE with the
    modifier (owner ruling 2026-06-30), not a later step.** Without the enabler the cascade does not know **what is
    ACTIVE** — which bonuses are connected/available, which buildings are non-dormant — and the modifier's conditions
    (`enabled:{HAS_BONUS}`, `connection:vicinity`, dormancy) depend on exactly that. **The modifier shadow must read the
