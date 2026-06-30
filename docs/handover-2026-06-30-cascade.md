@@ -35,7 +35,10 @@ The cascade rebuild is well underway, on a proper footing (the first prototype w
    uses the legacy flag: **unit `skills.blitz` → multiple-attacks**, **empire `capabilities` → the team ability**,
    **`policies.noForeignTrade` → the trade-route engine**, unit `tags` → `IS_<TAG>` accounting. **Empire capabilities +
    unit skills especially.** (cascade-engine-430 §7 item 3a.)
-4. Then the **enabler** (generate→gate) + **grants**; the **trait simple/complex** engine fix (§6); the atomic **cutover** LAST.
+4. **Enabler — build EARLY, a CO-REQUISITE with the modifier (not later).** Without it the cascade doesn't know what's
+   ACTIVE (which bonuses are connected, which buildings non-dormant), which the modifier's `enabled:{HAS_BONUS}` /
+   `connection` / dormancy conditions depend on. (Shadow reads the live engine's active state; the enabler makes the
+   cascade self-contained for post-cutover.) Then **grants**; the **trait simple/complex** fix (§6); the atomic **cutover** LAST.
 
 ## Working cadence (so the next session doesn't relearn it)
 - Build: `powershell.exe -NoProfile -ExecutionPolicy Bypass -File "../Tools/_Build.ps1" Assert build` from `Sources/`

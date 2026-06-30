@@ -294,7 +294,12 @@ curated-set model as part of this migration. The current mechanism (mapped 2026-
    per-flag: a unit's `skills.blitz` → multiple-attacks (as the legacy blitz); empire `capabilities` → the team ability;
    `policies.noForeignTrade` → the trade-route engine; unit `tags` → the `IS_<TAG>` accounting. **empire capabilities +
    unit skills especially.** The classification blocks are currently parsed-but-skipped (not mapped) — this is the wiring.
-4. **Enabler** (generate-then-gate, on the validated tally) + **grants**.
+4. **Enabler** (generate-then-gate, on the validated tally) + **grants** — **build EARLY, a CO-REQUISITE with the
+   modifier (owner ruling 2026-06-30), not a later step.** Without the enabler the cascade does not know **what is
+   ACTIVE** — which bonuses are connected/available, which buildings are non-dormant — and the modifier's conditions
+   (`enabled:{HAS_BONUS}`, `connection:vicinity`, dormancy) depend on exactly that. (During shadow the modifier reads
+   the LIVE engine's active state via `BoolExpr::evaluate`; the enabler is what makes the cascade SELF-CONTAINED — its
+   own model of active state — which the modifier must read post-cutover.) So sequence enabler alongside the modifier.
 5. **The trait simple/complex engine fix (§6)** — retire the `CvInfoReplacements` trait swap for option-selected
    injection — sequenced with the modifier/enabler work (it changes which trait values both read).
 6. **The atomic cutover** — `readJson` replaces `readXml`; the demolished machinery (§4) is deleted in one landing.
