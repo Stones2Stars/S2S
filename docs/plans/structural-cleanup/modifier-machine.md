@@ -71,9 +71,17 @@ authoritative until the shadow is clean, then are cut (atomic, with the cutover)
    `CvGame::doTurn` after the readJson map as `cvCascadeModifierShadow` — a gated one-shot diff vs legacy
    `getBaseYieldRateModifier`. **Verified live: the stack computes close to legacy with small systematic divergences**
    (the deferred sources below + not-yet-modelled events + always-true deferred predicates), surfaced per city/channel.
-   - **1b (next) — drive to parity:** add the **sub-term attribution** (building/empire/civic/trait/project buckets, à
-     la StoneBase `PercentStack.BySource`) to localize each divergence, then map it to its named legacy source. Fold in
-     the deferred sources: the **PURE_TRAITS** filter, the **civic building-keyed** percent, and **projects**.
+   - **1b ✅ DONE (attribution) — divergences localized.** The `[MODIFIER/diff]` line now emits the cascade buckets
+     (`bC/bA/bE/civ/tr`) vs the legacy sub-terms (`bld/bon/pow/evt/ply/cap`, the `getBaseYieldRateModifier` parts).
+     Verified live: **the BUILDING tier is bit-exact** — `bC` == `bld + bon + pow` in every diverging city (the
+     `city.percent` + the bonus- and power-conditioned percents all evaluate correctly; the dominant term is the bulk
+     of the value). The residual is **two small, named issues in the player tier** (cascade `bE+civ+tr` vs legacy
+     `ply+cap`): **(i)** the **capital term** (`getCapitalYieldRateModifier`) is unmodelled — diverges only in capitals
+     — needs the `IS_CAPITAL` predicate on a civic/trait `empire.percent` (a currently-deferred predicate); **(ii)** a
+     **player-tier production↔commerce ~5 swap** (cascade slightly high on commerce / low on production, every city) —
+     one mis-channeled source, to pin with PER-SOURCE attribution.
+   - **1c (next) — drive to parity:** add per-civic/per-trait attribution to pin issue (ii); add the `IS_CAPITAL`
+     predicate for (i); fold in the still-deferred sources (PURE_TRAITS filter, civic building-keyed percent, projects).
 2. **The AFTER tier** — building flat yields (×100, the truncation gotcha). Shadow vs `getExtraYield100`.
 3. **The BASE tier** — plot package (worked-plot isolated base, calc-map §10.1) + specialists + trade + free-city +
    golden-age. The largest piece (the plot calc).
