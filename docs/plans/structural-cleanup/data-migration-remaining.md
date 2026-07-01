@@ -80,8 +80,11 @@ The whitelist completeness sweep found exactly two, both now ruled and landed:
   `DefaultTraits`, `DefaultComplexTraits` — simple AND complex) is dropped from the JSON; **no leader carries traits**.
   The leader↔trait mapping (incl. simple→complex) goes to a dedicated POST-MIGRATION pass (which re-adds a
   `grants.traits` emit). Safe pre-cutover (the game runs traits off XML meanwhile). 118 leaderheads regenerated.
-- **era**: `bNoGoodies`/`bNoBarbUnits`/`bNoBarbCities` → `identity` (live world-gen gates, no destination model; safe
-  only because currently all-zero).
+- **era — DONE (owner ruling 2026-07-01):** `bNoGoodies`/`bNoBarbUnits`/`bNoBarbCities` → a bespoke **`worldGen`** block
+  (LIVE C++ world-RULE gates: goody/barb placement — "bespoke worldgen works better", not identity/modifiers). All-false
+  in every era today → mapping migrated, 0 output change (zero-drop).
+- **handicap — DONE (owner ruling 2026-07-01):** `advancedStart` (`iAdvancedStartPointsMod`, `iAIAdvancedStartPercent`)
+  **stays `identity`** (owner: "can stay where it is") — pre-game points config, no consumer wired, handicap-intrinsic.
 - **tech**: `TechMovementChanges`/`TechSpecialistChanges` inverted onto tech where no consumer reads (non-functional).
 - **corporation** (owner rulings 2026-07-01): `iSpread`→`identity.spreadFactor` (concept-parallel to religion's
   spread), `iSpreadFactor`→`identity.competingSpreadCostPercent` (fix the misnomer — it's a competing-corp spread-cost

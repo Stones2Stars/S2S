@@ -76,6 +76,10 @@ ART = {"Button", "AudioUnitVictoryScript", "AudioUnitDefeatScript", "EraInfoSoun
        "CitySoundscapes", "iSoundtrackSpace", "bFirstSoundtrackFirst"}
 IDENTITY = {"iHistoricalStartYear": "historicalStartYear", "iHistoricalEndYear": "historicalEndYear",
             "iNormalSpeedTurns": "normalSpeedTurns", "iAdvancedStartPoints": "advancedStart"}
+# barbarian/goody WORLD-STATE gates -> a bespoke `worldGen` block (owner 2026-07-01): LIVE C++ world-RULE gates
+# (goody/barb placement), NOT identity/modifiers. 0/false in every era today -> not emitted (zero-drop); the
+# mapping routes them to worldGen so future data lands there.
+WORLDGEN = {"bNoGoodies": "noGoodies", "bNoBarbUnits": "noBarbUnits", "bNoBarbCities": "noBarbCities"}
 DROP = {"bNoAnimals"}
 FAMILY_ORDER = ["costs", "growth", "greatPeopleRate", "durations", "eventChance", "maintenance"]
 
@@ -88,7 +92,7 @@ def _put(fam, family, scope, member, unit, val):
 
 
 def curate(typ, rec, order):
-    text, fam, grants, art_blocks, identity, leftover = {}, {}, {}, {}, {}, []
+    text, fam, grants, art_blocks, identity, world_gen, leftover = {}, {}, {}, {}, {}, {}, []
     identity["order"] = order   # the era's sequence index (engine enum / XML order) — eras are ORDERED data, defined
     #                              in the JSON so consumers resolve era-thresholds (byEra cumulative) from curated data, not /state.
     for c in rec:
@@ -114,6 +118,9 @@ def curate(typ, rec, order):
         elif tag in IDENTITY:
             if t or list(c):
                 identity[IDENTITY[tag]] = engine.generic(c)
+        elif tag in WORLDGEN:
+            if t in ("1", "true", "True"):                 # world-RULE gate ON -> worldGen (0/false today -> zero-drop)
+                world_gen[WORLDGEN[tag]] = True
         else:
             if list(c) or t:                              # boolean world-gates land here if ever set (default false -> skip)
                 if tag[:1] == "b":
@@ -137,6 +144,8 @@ def curate(typ, rec, order):
             out[family] = fam[family]
     if grants:
         out["grants"] = grants
+    if world_gen:
+        out["worldGen"] = world_gen
     cc.emit_art(out, art_blocks)
     if identity:
         out["identity"] = identity
