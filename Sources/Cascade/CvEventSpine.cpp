@@ -14,6 +14,7 @@
                                       // CvPlayer.h; unity builds hide missing includes -- structural-cleanup.md §2)
 #include "CvBuildingInfo.h"
 #include "CvUnitInfo.h"
+#include "CvCascadeGrants.h"   // the #430 GRANTS consumer -- registered at the composition root below
 // typeIndex name-resolution in the consumer: the Info headers for each SFT_ kind (so GC.getXInfo(i).getType() compiles).
 // Imported DIRECTLY (no CvInfos.h umbrella -- owner 2026-06-18: that umbrella should be retired, import directly).
 #include "CvBonusInfo.h"
@@ -305,6 +306,10 @@ void cascadeRegisterConsumers()
 	// object-owned counts on demand (CvCascadeTally.h), so it neither registers here nor needs a load-time seed. The
 	// DOMAIN count events still flow to logging (observability) + the future invalidation/offline consumers.
 	eventSpine().registerConsumer(&s_cascadeLogConsumer);
+	// The #430 GRANTS machine: a SELECTIVE DOMAIN consumer -- on a building-built / unit-created event it resolves the
+	// source entity's genuine grants off the mapped CvJsonInfo and emits a [GRANTS] shadow diagnostic (resolution only,
+	// un-run parity). The tally stays a non-consumer (reads object-owned counts).
+	cascadeRegisterGrants();
 }
 
 void cascadeEmitNameChange(int iKind, int iOwner, int iEntityId)

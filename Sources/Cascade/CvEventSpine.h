@@ -94,6 +94,7 @@ enum SpineDomainTag
 	SD_READJSON,   // [READJSON] the JSON->InfoRepo load survey (CvCascadeReadJson)
 	SD_ENABLER,    // [ENABLER] the "can I?" gate shadow (CvCascadeEnabler)
 	SD_MODIFIER,   // [MODIFIER] the "how much?" percent-stack shadow (CvCascadeModifierMath)
+	SD_GRANTS,     // [GRANTS] the "provisions" consumer (CvCascadeGrants) -- resolves an entity's genuine grants on a DOMAIN event
 	NUM_SPINE_DOMAINS
 };
 

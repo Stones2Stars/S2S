@@ -1,0 +1,55 @@
+# The grants machine — in-DLL build plan ("provisions")
+
+> The cascade's **provisions** consumer: an `IEventConsumer` on the event spine ([event-spine.md](../../specs/event-spine.md))
+> that, on a `DOMAIN` state-change, resolves the **source entity's genuine grants** off the mapped `CvJsonInfo`
+> (`grantLists`/`grantPulses` in the per-type `InfoRepo`) and — eventually — applies/shadows them. Design authority:
+> [json.md](../../specs/json.md) §5 (`grants`). The **classification pass** (2026-07-01, [data-migration-remaining.md](data-migration-remaining.md))
+> cleaned the surface: `grants` now holds **only genuine provisions handed out on a trigger** — the mis-homed keys
+> moved out, and the unit activated-MISSION keys are deferred to the **missions pass** ([mission-outcome-system.md](../reference/mission-outcome-system.md)).
+
+## The genuine grant inventory (post-classification) — trigger + legacy apply-site
+
+| grant (holder) | trigger (→ DOMAIN event) | legacy apply-site | shape |
+|---|---|---|---|
+| unit `promotions` | unit created | `CvUnit::init`→`doSetFreePromotions` | one-shot on-create |
+| unit `foundBuildings` | city founded | `CvPlayer::found` (NewCityFree) | one-shot on-settle |
+| building `repeatable` (spawn/heal) | per-turn | `CvCity::doPropertyUnitSpawn` / `doUnitFullHeal` | recurring |
+| building `freePromotions` | end-turn | `assignPromotionsFromBuildingChecked` | recurring |
+| building `freeTechs` / `population` / `goldenAge` | first build | `CvCity` `bFirst` block (:14803/:14724/:14764) | one-shot |
+| trait `freePromotions`(dict) / `goldenAgeOnBirthOfGreatPerson` / `eraAdvanceFreeSpecialist` | unit-init / GP-birth / era-advance | `CvPlayer` trait paths | recurring/pulse |
+| civic `revolution` | civic switch | RevolutionDCM **Python** (no DLL apply) | one-shot pulse |
+| civ `civics` / `techs` / `buildings` | game start / first city | `CvPlayer` init / `CvCity::init` | game-start |
+| tech `firstFreeUnit` / `firstFreeProphet` / `freeTechs` | first to discover | `CvTeam::setHasTech` (5452+) | one-shot on-discover |
+| religion `numFreeUnits` / `freeUnit` | religion founding | `CvPlayer::setHolyCity` block | one-shot on-found |
+| era / handicap `starting*` / `freePopulation` / `ai` | game start | `CvPlayer::initFreeUnits`/`initFreeState` | game-start |
+| property `buildings` | property present | (#430 pending — auto-built) | continuous |
+| feature/improvement property-pulses | per-turn | `CvPropertySolver::doTurn` (spatial, #429) | recurring |
+
+## The machine — `CvCascadeGrants` (`Sources/Cascade/CvCascadeGrants.{h,cpp}`)
+
+An `IEventConsumer` (`wantedKinds` = DOMAIN), registered at the composition root (`cascadeRegisterConsumers` →
+`cascadeRegisterGrants`). `onEvent` dispatches by the DOMAIN event, resolves the source entity's genuine grants off
+`InfoRepo<CvXInfo>::get().get(id)` (`grantLists`/`grantPulses`, the deferred mission-keys simply not read), and emits a
+`[GRANTS]` diagnostic via the spine (`SD_GRANTS`). **Resolution only — it does NOT apply** (legacy applies); un-run
+parity (owner: no live parity until everything is in).
+
+## Build increments (each compiles before the next)
+
+1. **Slice-1 ✅ DONE** — the consumer + the `[GRANTS]` domain + resolution over the DOMAIN events the spine emits
+   **today** (building-built `CASCADE_EVT_BUILDING_COUNT` delta>0, unit-created `CASCADE_EVT_UNIT_COUNT` delta>0):
+   building genuine grants (`repeatable`/`freePromotions`/`freeTechs`) + unit genuine grants (`promotions`/
+   `foundBuildings`). Emits `[GRANTS/building]` / `[GRANTS/unit]` (gated). Assert green.
+2. **The richer grant MAPPING** — `rj_walkGrants` (readJson) today **skips bool grants** (`goldenAge`) + **dict grants**
+   (`population {city|empire:N}`) and **drops the `repeatable` structure** (interval / chance / the property-pulse
+   `on`/`relation`/`distance`). Extend the mapping to a structured grant representation so the full grant set is resolvable.
+3. **The remaining DOMAIN triggers** — the spine emits only building/unit-count + name-change today. Add the events the
+   inventory needs: per-turn (recurring `repeatable`/`freePromotions`), tech first-discover, civ-start, religion-founded,
+   civic-adopted, city-founded (`foundBuildings`), game-start (era/handicap). Each is a new synced `DOMAIN` event.
+4. **The true diff-vs-legacy shadow** — grants are event-driven side-effects; the shadow compares the cascade's resolved
+   grant-set against what legacy applied (hooking the legacy apply-sites above), per channel. Un-run until everything is in.
+5. **Apply + cutover** — replace the legacy grant application; the grants machine applies. Atomic with the cascade cutover.
+
+## See also
+- [json.md](../../specs/json.md) §5 (`grants`) · [event-spine.md](../../specs/event-spine.md) (the `IEventConsumer` front door) ·
+  [mission-outcome-system.md](../reference/mission-outcome-system.md) (the deferred mission-keys, NOT grants) ·
+  [data-migration-remaining.md](data-migration-remaining.md) (the classification pass).
