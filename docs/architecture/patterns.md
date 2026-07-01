@@ -27,3 +27,58 @@ No DI container exists (C++03/VC7.1; the EXE binds concretes), so:
   without a container ("no container" is never an excuse to `#include` the concrete into the consumer); the
   composition root is the **only** place that names concretes (a leaked concrete = the root is no longer the single
   wiring point).
+
+## DRY — one implementation per calculation / evaluation (the single-source law)
+
+> The law that keeps the cascade from becoming C2C again. C2C's decades-old disease is **N evaluators computing the
+> same thing slightly differently**; this rule forbids it. Grounded in the reference impl: **StoneBase already has this
+> separation** (one exposed unit per `Calc/*` package, one `ConditionEvaluator`) — the C++ port must carry it over, not
+> flatten it. Binding: [DEC-single-implementation](decisions.md#dec-single-implementation).
+
+**The law.** Every calculation and every evaluation exists **exactly once**, as a **pure static function fed its
+inputs** (data + context → value), reachable by every consumer. No machine reimplements another's logic; a machine that
+needs a fact FEEDS it to the one function, it never re-derives it.
+
+1. **One evaluator for conditions/predicates.** `cascadeEvalCondition` is the **sole** place a condition/predicate is
+   evaluated. The enabler and the modifier **delegate** to it (`en_requiresMet`, `mm_applies` are thin wrappers) — they
+   never re-read a predicate. A machine that needs a fact the evaluator uses (`hasVicinityBonus`/`isGovernmentCenter`/
+   active-building) **supplies it through the eval context** (the AugmentState facts), never evaluates it itself.
+   *(State: ✅ holds today — one evaluator, both machines delegate; the old `BoolExpr` duplicate was deleted.)*
+2. **One function per calculation**, mirroring StoneBase's `src/Application/Features/Calc/*` packages **1:1**:
+   `PercentStack` · `YieldBasePackages` · `YieldRate` · `YieldSplit` · `CommerceSplit` · `CommercePackages` ·
+   `BuildingPackage` · `CalcContributions`. No parallel or near-duplicate calc anywhere.
+3. **Pure static functions, no hidden state.** A calculator/evaluator takes everything it needs as parameters and
+   returns a value; it holds **no data members** — data lives in the `InfoRepo`, counts in the tally. That purity is
+   *why* one implementation is callable everywhere: it **is** the DRY guarantee. **Grouping them is fine and encouraged**
+   — as a **purely-organizational static-methods class** (a named holder, à la StoneBase's `static class PercentStack`):
+   **no data members, never instantiated, no per-instance state.** **Use a static-methods class, NOT a namespace**
+   (owner 2026-07-01): namespaces can produce funky name-mangling under the frozen VC7.1 toolchain + Boost / `boost::python`
+   bindings + the closed EXE ABI; a static class sidesteps it. The container is *organization only*. Forbidden: an
+   instance, any member field, a namespace grouping, or a file-`static` function no other unit can reach.
+4. **Exposed, never file-`static`-hidden.** Each calculator/evaluator is a **declared surface** (a header) reachable by
+   every consumer. **A file-`static` calculator is a DRY hazard**: the next consumer can't see it, so it reimplements it
+   — the exact mechanism of the C2C rot. *(State: ✅ DONE (2026-07-01) — BOTH data-machines split into per-package
+   static-methods classes: the **modifier** (`MMKernel` / `PercentStack` / `YieldBasePackages` / `BuildingPackage` /
+   `YieldRate` / `CommerceCalc`, mirroring StoneBase `Calc/*`) and the **enabler** (`EnablerKernel` + `TechCascade` /
+   `BuildingCascade` / `UnitCascade`, mirroring StoneBase `CascadingEnabler/*`), each `CvCascade<X>.{h,cpp}`.
+   `CvCascadeModifierMath.cpp` + `CvCascadeEnabler.cpp` are now just the shadow harnesses that CONSUME those classes.)*
+5. **Harness ≠ calc.** The shadow/parity harness and the spine logging are **separate consumers** of the calc surface,
+   never folded into the calc functions.
+6. **Single source of "active".** "Is X active / available / connected / non-dormant" is computed **once, by the
+   enabler**; the modifier **reads** it — it never recomputes from the live engine, and above all never reads the
+   engine's *dormancy verdict* (the camouflaged ride-in, [DEC-calc-zero-ride-in](decisions.md#dec-calc-zero-ride-in)).
+   *(State: ✅ building active/dormant DONE (2026-07-01) — `EnablerKernel::computeActiveBuildings` derives it from
+   `requires.operate` + dormant triggers into `CvCascadeEvalCtx::activeBuildings` (the precomputed-fact pattern, twin of
+   `waivedPrereqBuildings`); the modifier + evaluator read `cascadeIsBuildingActive`, never `isActiveBuilding`. ⏳ Next
+   analogous case: the connected-bonus read (`hasVicinityBonus`) — the same "raw input or derived?" question.)*
+7. **The legacy shadow is the ONE sanctioned duplication.** During migration the cascade runs *alongside* legacy and is
+   diffed — a deliberate, temporary double with a **defined death** (deleted at the atomic cutover, [DEC-map-before-delete](decisions.md#dec-map-before-delete)).
+   It is not a DRY violation *because* it is scheduled to die. **No other duplication is sanctioned.**
+8. **Composition root names concretes** ([DEC-interface-contracts](decisions.md#dec-interface-contracts)) — the
+   active-set / game-option swaps are picked there; a leaked concrete `#include` into a consumer breaks the single wiring point.
+
+**Enforcement (how to keep certainty).** The `Sources/Cascade/` tree should read like `StoneBase/src` — one unit per
+`Calc` package, one evaluator. To verify: grep for a second implementation of any calc/predicate; confirm every
+machine's condition gate routes through `cascadeEvalCondition`; confirm no calculator holds state. **A new
+"does-the-same-thing" function is the failure** — reuse the existing one, or lift it to the shared surface. This is the
+anti-rollerskate check an agent runs before adding cascade calc/eval code.

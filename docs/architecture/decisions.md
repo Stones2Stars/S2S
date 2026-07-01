@@ -47,7 +47,15 @@ gold-commerce; `maintenance` is its own family. **Home:** [economy.md](../refere
 ### DEC-calc-zero-ride-in
 
 The dry-calc computes every value from JSON + game state with zero legacy-computed ride-in; engine-computed data
-enters only at the comparison boundary, never as a cascade input. **Home:** [validation.md](../specs/validation.md).
+enters only at the comparison boundary, never as a cascade input. **⚠ THE CAMOUFLAGED CASE (owner 2026-07-01):** a
+DERIVED value that MASQUERADES as a raw state input is the ride-in that slips every guard — above all a building's
+**ACTIVE / DORMANT** state, which is **100% a function of `requires.operate`** (the operate enablers + their dormant
+triggers). It **must be COMPUTED**, never read from the engine (`isActiveBuilding` / `isDisabledBuilding`) nor taken as
+a `/state` field (`dormantBuildings` — StoneBase's own oversight). Dormancy wears the costume of a stored flag, so it
+walks past a guard aimed only at computed RATE outputs (`getBaseYieldRateModifier`, …); the guard must name it. Root
+cause of the recurring pollution (owner): agents chasing "parity now" + "incremental deployment" — both **banned**; the
+cascade is a full REPLACEMENT (similar outcomes, different by design), so it reads only raw saved state and computes
+the rest. **Home:** [validation.md](../specs/validation.md).
 
 ### DEC-kraken
 
@@ -170,3 +178,13 @@ to retire (the `byEra` / `empire.capital` class), per [DEC-stonebase-follows-spe
 (`empire.goldenAge`) stays a member-mirror, **deferred** — it is engine-core, not data-defined, so predicate-modelling
 it is post-migration work (see [modifier.md §3](../specs/modifier.md) / [golden-age.md](../reference/golden-age.md)).
 **Home:** [modifier.md §3](../specs/modifier.md), [json.md §3.5](../specs/json.md).
+
+### DEC-single-implementation
+
+Every cascade calculation/evaluation exists **exactly once**, as a **pure static function fed its inputs** and exposed
+as a **shared surface** (a purely-organizational **static-methods class** — no state, no instances, **never**
+file-`static`-hidden; NOT a namespace — namespaces risk VC7.1 / Boost / `boost::python` / EXE-ABI name-mangling). **ONE** evaluator (`cascadeEvalCondition`) evaluates all conditions/predicates — the enabler and
+modifier delegate to it and feed it facts, never re-evaluate. Calculators mirror StoneBase's `Calc/*` packages 1:1. A
+file-`static`-hidden calc is a DRY hazard: the next consumer can't reach it, so it reimplements it — the C2C
+"N-evaluators-of-one-thing" disease. The legacy shadow is the ONLY sanctioned duplication (scheduled to die at the
+atomic cutover). **Home:** [patterns.md § DRY](patterns.md).

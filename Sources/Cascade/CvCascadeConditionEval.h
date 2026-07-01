@@ -34,7 +34,12 @@ struct CvCascadeEvalCtx
 	// a BUILDING prereq atom in this set is SKIPPED by EvalGroup (the engine PrereqInCity/OrBuilding waiver). Computed by
 	// the cascade's AugmentState and pointed-to here; NULL = no waivers (the evaluator stays decoupled from InfoRepo).
 	const std::set<int>* waivedPrereqBuildings;
-	CvCascadeEvalCtx() : city(NULL), player(NULL), team(NULL), plot(NULL), unit(NULL), waivedPrereqBuildings(NULL) {}
+	// The cascade-COMPUTED ACTIVE (present ∧ operate-holds ∧ ¬dormant-trigger) building ids for `city`; filled by
+	// EnablerKernel::computeActiveBuildings. The evaluator READS it (stays decoupled from InfoRepo). Dormancy is 100%
+	// governed by operate enablers -- DERIVED here, NEVER read from the engine active-building/`/state` (DEC-calc-zero-ride-in).
+	// NULL = fall back to raw presence (hasBuilding).
+	const std::set<int>* activeBuildings;
+	CvCascadeEvalCtx() : city(NULL), player(NULL), team(NULL), plot(NULL), unit(NULL), waivedPrereqBuildings(NULL), activeBuildings(NULL) {}
 };
 
 // Evaluator flags (StoneBase's init-only props). For a `requires.build` gate set strictStateReligionForBuild=true.
@@ -47,6 +52,11 @@ struct CvCascadeEvalFlags
 	CvCascadeEvalFlags()
 		: strictStateReligionForBuild(false), ignorePlotScope(false), ignoreDisabled(false), bonusFromPlot(false) {}
 };
+
+// Is a building ACTIVE for `ec.city`? Reads the cascade-computed `ec.activeBuildings` set (present ∧ operate-holds ∧
+// ¬dormant), or -- when that precompute is absent -- falls back to raw PRESENCE (hasBuilding, a raw input, NOT
+// the engine active-building state). The shared read helper for every modifier calc + the evaluator (single source).
+bool cascadeIsBuildingActive(int eBuilding, const CvCascadeEvalCtx& ec);
 
 // Evaluate the condition tree against the live engine. `c == NULL` -> true (vacuous).
 bool cascadeEvalCondition(const CvCascadeCondition* c, const CvCascadeEvalCtx& ctx, const CvCascadeEvalFlags& flags);

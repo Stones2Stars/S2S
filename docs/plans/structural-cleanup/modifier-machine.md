@@ -56,26 +56,45 @@ rate100 = min(CAP, max(100, (Σ BASE + specialist) × max(0, modifier) + 100·�
     (the saved/base state — buildings built, bonuses present, civics adopted, the trade-route yield input). A legacy
     **computed** output (`isActiveBuilding`/dormancy, connected-bonus resolution, `getBaseYieldRateModifier`) is OFF
     LIMITS as input — the cascade computes active state itself (the **enabler** from raw), and the modifier reads that.
-  - **⏳ DEBT (increment 1):** the percent stack currently reads the live engine's *computed active* state
-    (`isActiveBuilding`; `BoolExpr::evaluate` against the live `CvGameObject`, which resolves connected bonuses) — i.e.
-    it commits the anti-pattern above. It proved the math (building tier bit-exact), but it is **debt to remove**: the
-    enabler (co-requisite) must provide the active state, and the modifier switches to reading the enabler. Enabler-first.
+  - **✅ DONE (2026-07-01) — building active/dormant no longer rides in.** The old debt (the percent stack read the
+    engine's `isActiveBuilding` = present ∧ ¬`isDisabledBuilding`, a *computed dormancy verdict*) is removed: dormancy is
+    now DERIVED by the cascade from `requires.operate` + dormant triggers (`EnablerKernel::computeActiveBuildings` →
+    `CvCascadeEvalCtx::activeBuildings`, read via `cascadeIsBuildingActive`). Only raw presence (`hasBuilding`) is read.
+    Governed by [DEC-calc-zero-ride-in](../../architecture/decisions.md#dec-calc-zero-ride-in)'s camouflaged-case clause.
+  - **VICINITY (owner ruling 2026-07-01) — split by kind:** vicinity **geometry is already CALCULATED** from plot state
+    (`ev_vicinityHas` scans the workable radius: `getCityIndexPlot`/`getBonusType`/`getOwner`/`isBeingWorked` for the
+    owned/neutral/worked/crossBorder discriminators — no engine read); **trade-connection is accepted STATE** (`hasBonus`
+    — we don't model roads/connected cities, so "connected" is a raw input, not derived). Both correct as-is.
+  - **⏳ REMAINING (parked — trivial, but needs the fact-wiring done once):** two `hasVicinityBonus` reads survive in
+    `ev_vicinityHas`. (a) The **building-`provides` supply** fallback (a herd/tamed-animal building supplies e.g. horse
+    in-vicinity, json §5a — horse units gate on it): this is trivially DERIVED from JSON — the union of *active*
+    buildings' `provides.bonuses` (edge `provides.bonuses`), so it becomes a precomputed `vicinityProvidedBonuses` ctx
+    fact (twin of `activeBuildings`), not `hasVicinityBonus`. (b) The **`CONNECTED` discriminator** — the route/trade
+    "obtained" case — stays STATE (per the vicinity ruling). Do (a) as ONE "eval-context facts" pass that computes
+    `activeBuildings` + `vicinityProvidedBonuses` per city and feeds BOTH machines (closing the gap that `activeBuildings`
+    is currently wired only into the modifier's eval path, not the enabler's `requires`-eval) — never a modifier-only bolt-on.
 - **Plot/specialist/trade inputs:** the worked plots + assigned specialists; trade-route yield is the one live-yield
   INPUT (folded in, not derived).
 
 ## 3. The port — StoneBase `Calc` → C++ (no god-class; a kernel + per-term functions)
 
-| StoneBase | C++ port |
+| StoneBase | C++ port — per-package static-methods class (2026-07-01) |
 |---|---|
-| `ModifierMath.cs` (the leaf kernel: `SumUnitAtScope`, `Families`, `ActiveTraitSet`, `PureFilter`, the constants) | `CvCascadeModifierMath.{h,cpp}` — free functions over `CvJsonInfo.deposits` + a `CvCity*`/`CvPlot*` context; `enabled`/`disabled` evaluated via the deposit's `BoolExpr::evaluate(CvGameObject*)` |
-| `PercentStack.cs` (modifier = max(0,100+Σ%)) | `cvModifierPercentStack(channel, city)` — iterate the city's active buildings + empire buildings + civics + traits + projects, sum `<channel>.<scope>.percent` |
-| `YieldBasePackages.cs` / `PlotPackage` (basePlotYield) | `cvModifierBasePlot(channel, city)` — Σ worked plots' isolated base package (calc-map §10.1) |
-| `SpecialistPackage` / `BuildingPackage` (AFTER ×100) | `cvModifierSpecialist(...)` / `cvModifierBuildingFlat(...)` |
-| `YieldRate.cs` (the assembler) | `cvModifierYieldRate100(channel, city)` — the §1 formula |
-| `CommercePackages.cs` / `CommerceSplit.cs` / `YieldSplit.cs` | the §2 commerce second-stage |
+| `ModifierMath.cs` (the leaf kernel: `SumUnitAtScope`, `Families`, `ActiveTraitSet`, `PureFilter`, the constants) | **`MMKernel`** (`CvCascadeMMKernel.{h,cpp}`) — static methods over `CvJsonInfo.deposits` + a `CvCity*`/`CvPlot*` context; `enabled`/`disabled` evaluated via `cascadeEvalCondition` (the typed evaluator, not `BoolExpr`) |
+| `PercentStack.cs` (modifier = max(0,100+Σ%)) | **`PercentStack::percentStack(channel, city, MMBreak&)`** — city active buildings + empire buildings + civics + traits, Σ `<channel>.<scope>.percent` |
+| `YieldBasePackages.cs` / `PlotPackage` (basePlotYield) | **`YieldBasePackages::basePlot(...)`** (+ `tradeRoute` / `freeCity` / `goldenAge` / `specialist`) |
+| `BuildingPackage` (AFTER ×100) | **`BuildingPackage::buildingFlat(...)`** |
+| `YieldRate.cs` (the assembler) | **`YieldRate::yieldRate100(channel, city)`** — the §1 formula |
+| `CommercePackages.cs` / `CommerceSplit.cs` / `YieldSplit.cs` | **`CommerceCalc`** — the §2 commerce second stage (`commerceRate100` + the per-source terms) |
 
-Home: `Sources/Cascade/`. Interface-bounded; wired at the composition root. Multiplier deposits are **identity**
-(no source authors one — verified in the readJson survey `mult=0`), so the stack is additive, matching legacy exactly.
+Home: `Sources/Cascade/`. Interface-bounded; wired at the composition root. **Each `Calc` package is a single EXPOSED
+surface — a purely-organizational static-methods class (NOT a namespace: mangling risk with VC7.1/Boost/python/EXE-ABI;
+NOT a file-static monolith). ✅ DONE 2026-07-01: `MMKernel`/`PercentStack`/`YieldBasePackages`/`BuildingPackage`/
+`YieldRate`/`CommerceCalc` (`CvCascade<X>.{h,cpp}`); `CvCascadeModifierMath.cpp` is now just the shadow harness** — the
+binding DRY law ([DEC-single-implementation](../../architecture/decisions.md#dec-single-implementation) /
+[patterns.md § DRY](../../architecture/patterns.md)); the current `CvCascadeModifierMath.cpp` monolith is the gap to
+close (split per StoneBase `Calc/*`). Multiplier deposits are **identity** (no source authors one — verified in the
+readJson survey `mult=0`), so the stack is additive, matching legacy exactly.
 
 ## 4. Validation — the in-engine SHADOW (per channel, per city)
 

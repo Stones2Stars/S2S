@@ -31,10 +31,11 @@ static bool ev_hasCivic(const CvPlayer* pl, int eCivic)
 	return false;
 }
 
-// A BUILDING prereq must be ACTIVE (engine PrereqInCity/OrBuilding use isActiveBuilding) -- present AND not dormant.
-static bool ev_hasActiveBuilding(const CvCity* c, int eBuilding)
+// A BUILDING prereq must be ACTIVE -- present AND not dormant. Dormancy is CASCADE-COMPUTED (governed 100% by operate
+// enablers, DEC-calc-zero-ride-in), never read from the engine; cascadeIsBuildingActive reads that precomputed fact.
+static bool ev_hasActiveBuilding(const CvCascadeEvalCtx& ctx, int eBuilding)
 {
-	return c != NULL && eBuilding >= 0 && c->isActiveBuilding((BuildingTypes)eBuilding);
+	return cascadeIsBuildingActive(eBuilding, ctx);
 }
 
 // VICINITY scan helper: walk the city's workable plots and test `pred`. (Mirrors StoneBase PlotHas over s.Plots.)
@@ -135,7 +136,7 @@ static bool ev_present(const CvCascadeEvalCtx& ctx, const CvCascadeCondition* a)
 	if (en_starts(t, "RELIGION_")) return ctx.city != NULL && id >= 0 && ctx.city->isHasReligion((ReligionTypes)id);
 	if (en_starts(t, "HERITAGE_")) return ctx.player != NULL && id >= 0 && ctx.player->hasHeritage((HeritageTypes)id);
 	if (en_starts(t, "PROJECT_"))  return ctx.team != NULL && id >= 0 && ctx.team->getProjectCount((ProjectTypes)id) > 0;
-	if (en_starts(t, "BUILDING_")) return ev_hasActiveBuilding(ctx.city, id);
+	if (en_starts(t, "BUILDING_")) return ev_hasActiveBuilding(ctx, id);
 	if (en_starts(t, "CORPORATION_")) return ctx.city != NULL && id >= 0 && ctx.city->isHasCorporation((CorporationTypes)id);
 	if (en_starts(t, "VICTORY_"))  return id >= 0 && GC.getGame().isVictoryValid((VictoryTypes)id);
 	if (en_starts(t, "GAMEOPTION_")) return id >= 0 && GC.getGame().isOption((GameOptionTypes)id);
@@ -273,6 +274,14 @@ static bool ev_isWaivedPrereq(const CvCascadeEvalCtx& ctx, const CvCascadeCondit
 {
 	if (c == NULL || c->kind != CASC_COND_PRESENCE || !en_starts(c->type, "BUILDING_") || c->id < 0) return false;
 	return ctx.waivedPrereqBuildings != NULL && ctx.waivedPrereqBuildings->count(c->id) != 0;
+}
+
+// Reads the cascade-computed ACTIVE set, or -- absent it -- falls back to raw PRESENCE (hasBuilding, a raw
+// input; NOT the engine active-building read, the ride-in dormancy we replaced). See the header + DEC-calc-zero-ride-in.
+bool cascadeIsBuildingActive(int eBuilding, const CvCascadeEvalCtx& ec)
+{
+	return ec.activeBuildings != NULL ? (ec.activeBuildings->count(eBuilding) != 0)
+	                                  : (ec.city != NULL && eBuilding >= 0 && ec.city->hasBuilding((BuildingTypes)eBuilding));
 }
 
 bool cascadeEvalCondition(const CvCascadeCondition* c, const CvCascadeEvalCtx& ctx, const CvCascadeEvalFlags& flags)
