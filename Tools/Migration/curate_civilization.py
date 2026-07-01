@@ -104,6 +104,10 @@ def curate(typ, rec):
     grants = OrderedDict()
     for container, (child, key) in GRANTS.items():
         vals = _list(rec, container, child)
+        if key == "buildings":
+            # BUILDING_PALACE is redundant in grants.buildings (json.md §5, owner 2026-06-30): the settler unit's
+            # foundBuildings already seeds it and the engine realizes it into the capital regardless. Drop only it.
+            vals = [v for v in vals if v != "BUILDING_PALACE"]
         if vals:
             grants[key] = vals
     # Every civ starts with TECH_GAME_START -- the cascade's declarative clean START POINT (owner ruling 2026-06-25):

@@ -64,8 +64,7 @@
   "pillage": true,
   "mechanized": true,
   "rivalTerritory": true,
-  "renderBelowWater": true,
-  "militaryProduction": true
+  "renderBelowWater": true
  },
  "cost": {
   "production": 1050,

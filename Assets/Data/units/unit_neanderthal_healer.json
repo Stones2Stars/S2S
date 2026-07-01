@@ -54,7 +54,6 @@
  "skills": {
   "noCapture": true,
   "onlyDefensive": true,
-  "militaryProduction": true,
   "militaryTrade": true
  },
  "succession": {

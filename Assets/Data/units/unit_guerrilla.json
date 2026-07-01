@@ -93,8 +93,6 @@
   "stealPlans": true,
   "upgradeAnywhere": true,
   "ignoreNoEntryLevel": true,
-  "militaryProduction": true,
-  "militarySupport": true,
   "targets": {
    "UNITCOMBAT_EXPLORER": true,
    "UNITCOMBAT_CIVILIAN": true,

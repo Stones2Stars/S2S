@@ -90,9 +90,7 @@
   "pillage": true,
   "canMoveImpassable": true,
   "mechanized": true,
-  "renderBelowWater": true,
-  "militaryProduction": true,
-  "militarySupport": true
+  "renderBelowWater": true
  },
  "tags": {
   "military": true

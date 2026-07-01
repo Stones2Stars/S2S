@@ -93,7 +93,6 @@
   "mechanized": true,
   "rivalTerritory": true,
   "renderBelowWater": true,
-  "militaryProduction": true,
   "militaryTrade": true,
   "unitTargets": {
    "UNIT_FLUYT": true,

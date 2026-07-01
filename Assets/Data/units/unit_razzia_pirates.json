@@ -100,8 +100,7 @@
   "hiddenNationality": true,
   "pillage": true,
   "mechanized": true,
-  "renderBelowWater": true,
-  "militaryProduction": true
+  "renderBelowWater": true
  },
  "grants": {
   "promotions": [

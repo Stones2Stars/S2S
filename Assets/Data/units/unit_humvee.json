@@ -75,9 +75,7 @@
   }
  },
  "skills": {
-  "noDefensiveBonus": true,
-  "militaryProduction": true,
-  "militarySupport": true
+  "noDefensiveBonus": true
  },
  "tags": {
   "military": true

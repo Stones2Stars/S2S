@@ -73,10 +73,7 @@
  "skills": {
   "hiddenNationality": true,
   "pillage": true,
-  "counterSpy": true,
-  "militaryHappiness": true,
-  "militaryProduction": true,
-  "militarySupport": true
+  "counterSpy": true
  },
  "tags": {
   "military": true

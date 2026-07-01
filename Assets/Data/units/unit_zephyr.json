@@ -72,8 +72,6 @@
   "ignoreTerrainCost": true,
   "mechanized": true,
   "dcmFighterEngage": true,
-  "militaryProduction": true,
-  "militarySupport": true,
   "militaryTrade": true
  },
  "tags": {

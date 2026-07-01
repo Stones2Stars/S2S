@@ -76,8 +76,7 @@
   "pillage": true,
   "mechanized": true,
   "rivalTerritory": true,
-  "renderBelowWater": true,
-  "militaryProduction": true
+  "renderBelowWater": true
  },
  "grants": {
   "promotions": [

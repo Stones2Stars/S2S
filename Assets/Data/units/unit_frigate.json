@@ -68,8 +68,6 @@
   "ignoreBuildingDefense": true,
   "mechanized": true,
   "renderBelowWater": true,
-  "militaryProduction": true,
-  "militarySupport": true,
   "militaryTrade": true
  },
  "tags": {

@@ -135,9 +135,6 @@
   "sabotage": true,
   "stealPlans": true,
   "ignoreNoEntryLevel": true,
-  "militaryHappiness": true,
-  "militaryProduction": true,
-  "militarySupport": true,
   "targets": {
    "UNITCOMBAT_EXPLORER": true,
    "UNITCOMBAT_CANINE": true,

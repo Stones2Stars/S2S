@@ -51,9 +51,6 @@
   "ignoreBuildingDefense": true,
   "ignoreTerrainCost": true,
   "mechanized": true,
-  "militaryHappiness": true,
-  "militaryProduction": true,
-  "militarySupport": true,
   "militaryTrade": true
  },
  "tags": {

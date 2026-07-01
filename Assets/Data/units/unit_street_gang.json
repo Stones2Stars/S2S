@@ -133,7 +133,6 @@
   "ignoreZoneOfControl": true,
   "stealPlans": true,
   "upgradeAnywhere": true,
-  "militaryProduction": true,
   "targets": {
    "UNITCOMBAT_TRADE": true,
    "UNITCOMBAT_CRIMINAL": true,

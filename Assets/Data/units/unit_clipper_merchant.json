@@ -28,9 +28,7 @@
   "mechanized": true,
   "onlyDefensive": true,
   "rivalTerritory": true,
-  "renderBelowWater": true,
-  "militaryProduction": true,
-  "militarySupport": true
+  "renderBelowWater": true
  },
  "tags": {
   "military": true

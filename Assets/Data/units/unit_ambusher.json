@@ -109,8 +109,6 @@
   "sabotage": true,
   "stealPlans": true,
   "ignoreNoEntryLevel": true,
-  "militaryProduction": true,
-  "militarySupport": true,
   "militaryTrade": true,
   "targets": {
    "UNITCOMBAT_EXPLORER": true,

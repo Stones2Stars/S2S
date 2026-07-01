@@ -164,9 +164,6 @@
  "skills": {
   "pillage": true,
   "ignoreBuildingDefense": true,
-  "militaryHappiness": true,
-  "militaryProduction": true,
-  "militarySupport": true,
   "militaryTrade": true
  },
  "tags": {

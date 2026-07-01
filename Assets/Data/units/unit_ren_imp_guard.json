@@ -38,10 +38,7 @@
  },
  "skills": {
   "pillage": true,
-  "unlimitedException": true,
-  "militaryHappiness": true,
-  "militaryProduction": true,
-  "militarySupport": true
+  "unlimitedException": true
  },
  "tags": {
   "military": true

@@ -28,9 +28,7 @@
   }
  },
  "skills": {
-  "pillage": true,
-  "militaryHappiness": true,
-  "militaryProduction": true
+  "pillage": true
  },
  "succession": {
   "upgradesTo": [

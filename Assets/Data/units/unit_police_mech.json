@@ -90,8 +90,6 @@
   "counterSpy": true,
   "mechanized": true,
   "passage": true,
-  "militaryHappiness": true,
-  "militaryProduction": true,
   "militaryTrade": true,
   "targets": {
    "UNITCOMBAT_CRIMINAL": true

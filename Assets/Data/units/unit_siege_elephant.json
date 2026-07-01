@@ -84,9 +84,6 @@
  },
  "skills": {
   "pillage": true,
-  "militaryHappiness": true,
-  "militaryProduction": true,
-  "militarySupport": true,
   "targets": {
    "UNITCOMBAT_MOUNTED": true
   }

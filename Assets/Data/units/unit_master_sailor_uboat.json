@@ -70,8 +70,7 @@
   "mechanized": true,
   "noBadGoodies": true,
   "rivalTerritory": true,
-  "renderBelowWater": true,
-  "militaryProduction": true
+  "renderBelowWater": true
  },
  "vision": {
   "invisible": "INVISIBLE_SUBMARINE"

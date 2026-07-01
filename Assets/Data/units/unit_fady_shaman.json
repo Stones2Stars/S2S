@@ -74,8 +74,6 @@
  "skills": {
   "noCapture": true,
   "onlyDefensive": true,
-  "militaryProduction": true,
-  "militarySupport": true,
   "militaryTrade": true
  },
  "tags": {

@@ -115,8 +115,6 @@
   "ignoreZoneOfControl": true,
   "stealPlans": true,
   "upgradeAnywhere": true,
-  "militaryProduction": true,
-  "militarySupport": true,
   "targets": {
    "UNITCOMBAT_TRADE": true,
    "UNITCOMBAT_EXPLORER": true,

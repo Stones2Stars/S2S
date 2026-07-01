@@ -62,8 +62,6 @@
   "canMoveAllTerrain": true,
   "ignoreBuildingDefense": true,
   "ignoreTerrainCost": true,
-  "militaryProduction": true,
-  "militarySupport": true,
   "militaryTrade": true
  },
  "tags": {

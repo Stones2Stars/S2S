@@ -143,9 +143,6 @@
   "noCapture": true,
   "counterSpy": true,
   "mechanized": true,
-  "militaryHappiness": true,
-  "militaryProduction": true,
-  "militarySupport": true,
   "militaryTrade": true,
   "targets": {
    "UNITCOMBAT_CRIMINAL": true

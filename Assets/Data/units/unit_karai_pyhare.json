@@ -125,8 +125,6 @@
   "ignoreZoneOfControl": true,
   "stealPlans": true,
   "upgradeAnywhere": true,
-  "militaryProduction": true,
-  "militarySupport": true,
   "targets": {
    "UNITCOMBAT_EXPLORER": true,
    "UNITCOMBAT_HEALTH_CARE": true,

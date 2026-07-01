@@ -50,8 +50,7 @@
   }
  },
  "skills": {
-  "onlyDefensive": true,
-  "militaryProduction": true
+  "onlyDefensive": true
  },
  "succession": {
   "upgradesTo": [

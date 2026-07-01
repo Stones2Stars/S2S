@@ -15,8 +15,7 @@
  "skills": {
   "counterSpy": true,
   "alwaysInvisible": true,
-  "rivalTerritory": true,
-  "militarySupport": true
+  "rivalTerritory": true
  },
  "tags": {
   "spy": true

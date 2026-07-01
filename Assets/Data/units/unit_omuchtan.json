@@ -46,9 +46,7 @@
   "pillage": true,
   "ignoreTerrainCost": true,
   "noBadGoodies": true,
-  "onlyDefensive": true,
-  "militaryProduction": true,
-  "militarySupport": true
+  "onlyDefensive": true
  },
  "tags": {
   "military": true

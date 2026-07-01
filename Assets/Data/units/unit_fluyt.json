@@ -53,8 +53,6 @@
   "mechanized": true,
   "rivalTerritory": true,
   "renderBelowWater": true,
-  "militaryProduction": true,
-  "militarySupport": true,
   "militaryTrade": true
  },
  "tags": {

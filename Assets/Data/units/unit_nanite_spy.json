@@ -28,8 +28,7 @@
   "alwaysInvisible": true,
   "rivalTerritory": true,
   "sabotage": true,
-  "stealPlans": true,
-  "militarySupport": true
+  "stealPlans": true
  },
  "tags": {
   "spy": true

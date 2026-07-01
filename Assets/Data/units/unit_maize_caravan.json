@@ -55,8 +55,7 @@
   "noCapture": true,
   "noNonTypeProdMods": true,
   "onlyDefensive": true,
-  "rivalTerritory": true,
-  "militarySupport": true
+  "rivalTerritory": true
  },
  "tags": {
   "merchant": true,

@@ -137,11 +137,6 @@ FAMILIES = {
     "iRevoltProtection":            ("revoltProtection", None, "percent"),
     "iPillageChange":               ("pillage", None, "flat"),
     "iSurvivorChance":              ("survivor", None, "percent"),
-    # trap sub-system (dedicated block, §0.8)
-    "iTrapDamageMax":               ("trap", "damageMax", "flat"),
-    "iTrapDamageMin":               ("trap", "damageMin", "flat"),
-    "iTrapComplexity":              ("trap", "complexity", "flat"),
-    "iNumTriggers":                 ("trap", "numTriggers", "flat"),
 }
 # vs-keyed pair-lists: tag -> (family, "<keyword>.{TYPE}.<member>", unit). member None => family.unit.<kw>.{TYPE}.<unit>.
 VS_KEYED = {
@@ -155,9 +150,6 @@ VS_KEYED = {
     "TerrainWorks":     ("workRate", "terrain", None, "percent"),
     "FeatureWorks":     ("workRate", "feature", None, "percent"),
     "BuildWorkRateModifierChangeTypes": ("workRate", "build", None, "percent"),
-    "TrapDisableUnitCombatTypes":   ("trap", "disable", None, "flat"),
-    "TrapAvoidanceUnitCombatTypes": ("trap", "avoidance", None, "flat"),
-    "TrapTriggerUnitCombatTypes":   ("trap", "trigger", None, "flat"),
 }
 # CAPABILITIES (separate boolean group). plain bool -> name:true.
 CAP_BOOL = {
@@ -190,13 +182,10 @@ CAP_COUNT = {
     "iUpgradeAnywhereChange": "upgradeAnywhere", "iHiddenNationalityChange": "hiddenNationality",
     "iAssassinChange": "assassin", "iStealthDefenseChange": "stealthDefense",
     "iDefenseOnlyChange": "defenseOnly", "iNoInvisibilityChange": "noInvisibility",
-    "iTriggerBeforeAttackChange": "triggerBeforeAttack",
 }
 # per-type capability LISTS (simple list -> {TYPE: true}) and pair-lists handled in VS_KEYED above.
 CAP_LIST = {
     "TerrainDoubleMoves": "terrainDoubleMove", "FeatureDoubleMoves": "featureDoubleMove",
-    "TrapImmunityUnitCombatTypes": "trapImmunity", "TargetUnitCombatTypes": "trapTarget",
-    "TrapSetWithPromotionTypes": "trapSetWith",
 }
 # VISION / LOS RESOLVER (non-cascade, §7): pair-lists (InvisibleType -> intensity) + struct-vectors.
 VISION_PAIRS = {
@@ -244,7 +233,12 @@ DROP = {"Type", "Description", "Help", "Sound", "Button",
         "iDamageperTurn", "iStrAdjperTurn", "iWeakenperTurn",  # BATTLEWORN (nuked, owner)
         "Categories",                                       # dead
         "iStealthCombatModifier",                           # XML typo (engine reads ...Change); ignored in-game (2 recs)
-        "QualifiedUnitCombatTypes", "DisqualifiedUnitCombatTypes"}  # pedia-derived (doPostLoadCaching)
+        "QualifiedUnitCombatTypes", "DisqualifiedUnitCombatTypes",  # pedia-derived (doPostLoadCaching)
+        # trap sub-system -- DEAD (traps removed from the game)
+        "iTrapDamageMax", "iTrapDamageMin", "iTrapComplexity", "iNumTriggers",
+        "TrapDisableUnitCombatTypes", "TrapAvoidanceUnitCombatTypes", "TrapTriggerUnitCombatTypes",
+        "TrapImmunityUnitCombatTypes", "TargetUnitCombatTypes", "TrapSetWithPromotionTypes",
+        "iTriggerBeforeAttackChange"}
 
 
 def _txt(rec, tag):

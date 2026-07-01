@@ -190,7 +190,6 @@
   "noCapture": true,
   "onlyDefensive": true,
   "rivalTerritory": true,
-  "militarySupport": true,
   "militaryTrade": true
  },
  "tags": {

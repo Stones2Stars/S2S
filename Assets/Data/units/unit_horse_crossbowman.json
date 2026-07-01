@@ -98,10 +98,7 @@
  "skills": {
   "noDefensiveBonus": true,
   "pillage": true,
-  "firstStrikeImmune": true,
-  "militaryHappiness": true,
-  "militaryProduction": true,
-  "militarySupport": true
+  "firstStrikeImmune": true
  },
  "tags": {
   "military": true

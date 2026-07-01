@@ -85,7 +85,6 @@
   "destroy": true,
   "ignoreTerrainCost": true,
   "stealPlans": true,
-  "militaryProduction": true,
   "targets": {
    "UNITCOMBAT_TRADE": true,
    "UNITCOMBAT_PROMOTED_ARMED_GUARD": true

@@ -36,9 +36,7 @@
   "barbCoExist": true,
   "ignoreTerrainCost": true,
   "noBadGoodies": true,
-  "passage": true,
-  "militaryProduction": true,
-  "militarySupport": true
+  "passage": true
  },
  "tags": {
   "military": true

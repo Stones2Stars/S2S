@@ -111,9 +111,6 @@
   "ignoreZoneOfControl": true,
   "noNonOwnedCityEntry": true,
   "ignoreNoEntryLevel": true,
-  "militaryHappiness": true,
-  "militaryProduction": true,
-  "militarySupport": true,
   "targets": {
    "UNITCOMBAT_STRIKE_TEAM": true,
    "UNITCOMBAT_CRIMINAL": true,

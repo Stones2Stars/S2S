@@ -69,8 +69,7 @@
   "canMoveImpassable": true,
   "mechanized": true,
   "rivalTerritory": true,
-  "renderBelowWater": true,
-  "militaryProduction": true
+  "renderBelowWater": true
  },
  "vision": {
   "invisible": "INVISIBLE_SUBMARINE"

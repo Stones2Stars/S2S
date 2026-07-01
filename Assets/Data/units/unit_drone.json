@@ -49,8 +49,6 @@
   "firstStrikeImmune": true,
   "mechanized": true,
   "onlyDefensive": true,
-  "militaryProduction": true,
-  "militarySupport": true,
   "militaryTrade": true
  },
  "tags": {

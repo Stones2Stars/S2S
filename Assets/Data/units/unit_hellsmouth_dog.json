@@ -68,10 +68,7 @@
  "skills": {
   "noCapture": true,
   "noDefensiveBonus": true,
-  "ignoreTerrainCost": true,
-  "militaryHappiness": true,
-  "militaryProduction": true,
-  "militarySupport": true
+  "ignoreTerrainCost": true
  },
  "tags": {
   "military": true

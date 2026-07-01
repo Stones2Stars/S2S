@@ -48,8 +48,6 @@
   "noBadGoodies": true,
   "passage": true,
   "upgradeAnywhere": true,
-  "militaryProduction": true,
-  "militarySupport": true,
   "militaryTrade": true
  },
  "tags": {

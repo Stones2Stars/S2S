@@ -31,7 +31,6 @@
  "skills": {
   "noDefensiveBonus": true,
   "onlyDefensive": true,
-  "militaryProduction": true,
   "militaryTrade": true
  },
  "grants": {

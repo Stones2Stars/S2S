@@ -71,9 +71,7 @@
  },
  "skills": {
   "mechanized": true,
-  "onlyDefensive": true,
-  "militaryProduction": true,
-  "militarySupport": true
+  "onlyDefensive": true
  },
  "tags": {
   "military": true

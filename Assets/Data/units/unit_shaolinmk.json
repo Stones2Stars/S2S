@@ -76,9 +76,7 @@
   "noCapture": true,
   "pillage": true,
   "onlyDefensive": true,
-  "ignoreNoEntryLevel": true,
-  "militaryHappiness": true,
-  "militaryProduction": true
+  "ignoreNoEntryLevel": true
  },
  "vision": {
   "visibilityIntensity": {

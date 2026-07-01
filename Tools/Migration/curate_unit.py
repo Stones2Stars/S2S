@@ -108,8 +108,7 @@ CAP_BOOL = {
     "bUpgradeAnywhere": "upgradeAnywhere", "bWorkerTrade": "workerTrade", "bAttackOnlyCities": "attackOnlyCities",
     "bIgnoreNoEntryLevel": "ignoreNoEntryLevel", "bFliesToMove": "fliesToMove", "bFreeDrop": "freeDrop",
     "bDCMFighterEngage": "dcmFighterEngage", "bRenderBelowWater": "renderBelowWater",
-    "bMilitaryHappiness": "militaryHappiness", "bMilitaryProduction": "militaryProduction",
-    "bMilitarySupport": "militarySupport", "bMilitaryTrade": "militaryTrade",
+    "bMilitaryTrade": "militaryTrade",
 }
 # count-int capabilities (>0 -> has it)
 CAP_COUNT = {"iAnimalIgnoresBorders": "animalIgnoresBorders"}
@@ -823,7 +822,10 @@ HANDLED = (set(BASE) | set(UNIT_FAMILIES) | set(CAP_BOOL) | set(CAP_COUNT) | set
            | set(COST) | set(ID_SCALAR) | set(ID_LIST) | set(TEXT) | set(ART) | REQUIRES_TAGS | STORE_TAGS
            | PASS2_TAGS | {"Type", "Combat", "Flavors", "iAIWeight", "iInstanceCostModifier", "bGoldenAge",
                            "DefaultUnitAI", "UnitMeshGroups", "FreePromotions",
-                           "bSpy"})   # dropped: redundant with the 'spy' tag (every bSpy unit is UNITAI_SPY); spy isn't a skill (owner 2026-06-23)
+                           "bSpy",   # dropped: redundant with the 'spy' tag (every bSpy unit is UNITAI_SPY); spy isn't a skill (owner 2026-06-23)
+                           # reclassified to IS_MILITARY (json §3.5) -- military-ness is the `military` tag, not a skill
+                           # (bMilitarySupport's IS_MILITARY tag-signal read at ~656 stays intact -- only its skill emit is dropped)
+                           "bMilitaryHappiness", "bMilitaryProduction", "bMilitarySupport"})
 
 
 def main():

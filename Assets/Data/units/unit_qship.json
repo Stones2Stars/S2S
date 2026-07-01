@@ -47,9 +47,7 @@
   "pillage": true,
   "ignoreBuildingDefense": true,
   "mechanized": true,
-  "renderBelowWater": true,
-  "militaryProduction": true,
-  "militarySupport": true
+  "renderBelowWater": true
  },
  "tags": {
   "military": true

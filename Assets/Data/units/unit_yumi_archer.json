@@ -49,10 +49,7 @@
   }
  },
  "skills": {
-  "pillage": true,
-  "militaryHappiness": true,
-  "militaryProduction": true,
-  "militarySupport": true
+  "pillage": true
  },
  "tags": {
   "military": true

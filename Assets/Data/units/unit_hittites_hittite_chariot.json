@@ -114,9 +114,6 @@
   "pillage": true,
   "firstStrikeImmune": true,
   "ignoreTerrainCost": true,
-  "militaryHappiness": true,
-  "militaryProduction": true,
-  "militarySupport": true,
   "militaryTrade": true
  },
  "tags": {

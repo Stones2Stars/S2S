@@ -45,9 +45,7 @@
   "noDefensiveBonus": true,
   "pillage": true,
   "firstStrikeImmune": true,
-  "unlimitedException": true,
-  "militaryHappiness": true,
-  "militaryProduction": true
+  "unlimitedException": true
  },
  "grants": {
   "promotions": [

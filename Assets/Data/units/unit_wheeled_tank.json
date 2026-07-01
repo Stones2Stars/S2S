@@ -113,9 +113,6 @@
   "pillage": true,
   "ignoreBuildingDefense": true,
   "mechanized": true,
-  "militaryHappiness": true,
-  "militaryProduction": true,
-  "militarySupport": true,
   "militaryTrade": true
  },
  "tags": {

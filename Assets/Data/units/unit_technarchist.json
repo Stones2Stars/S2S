@@ -107,7 +107,6 @@
   "sabotage": true,
   "stealPlans": true,
   "upgradeAnywhere": true,
-  "militaryProduction": true,
   "targets": {
    "UNITCOMBAT_SPECIES_AI": true,
    "UNITCOMBAT_HITECH": true,

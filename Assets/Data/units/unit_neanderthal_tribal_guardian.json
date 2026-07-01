@@ -26,10 +26,7 @@
   }
  },
  "skills": {
-  "onlyDefensive": true,
-  "militaryHappiness": true,
-  "militaryProduction": true,
-  "militarySupport": true
+  "onlyDefensive": true
  },
  "tags": {
   "military": true

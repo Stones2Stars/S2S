@@ -35,10 +35,7 @@
  "skills": {
   "pillage": true,
   "rivalTerritory": true,
-  "unlimitedException": true,
-  "militaryHappiness": true,
-  "militaryProduction": true,
-  "militarySupport": true
+  "unlimitedException": true
  },
  "tags": {
   "military": true

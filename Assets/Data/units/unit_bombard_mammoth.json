@@ -67,9 +67,6 @@
  "skills": {
   "noDefensiveBonus": true,
   "pillage": true,
-  "militaryHappiness": true,
-  "militaryProduction": true,
-  "militarySupport": true,
   "militaryTrade": true,
   "unitTargets": {
    "UNIT_MOUNTED_INFANTRY": true

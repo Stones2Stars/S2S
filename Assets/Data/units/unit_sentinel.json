@@ -121,8 +121,6 @@
   "mechanized": true,
   "passage": true,
   "fliesToMove": true,
-  "militaryHappiness": true,
-  "militaryProduction": true,
   "militaryTrade": true,
   "targets": {
    "UNITCOMBAT_CRIMINAL": true

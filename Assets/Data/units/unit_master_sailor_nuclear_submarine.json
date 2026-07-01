@@ -74,8 +74,6 @@
   "noBadGoodies": true,
   "rivalTerritory": true,
   "renderBelowWater": true,
-  "militaryProduction": true,
-  "militarySupport": true,
   "militaryTrade": true,
   "unitTargets": {
    "UNIT_FLUYT": true,

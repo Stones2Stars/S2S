@@ -47,8 +47,6 @@
   "mechanized": true,
   "nukeImmune": true,
   "suicide": true,
-  "militaryProduction": true,
-  "militarySupport": true,
   "militaryTrade": true
  },
  "tags": {

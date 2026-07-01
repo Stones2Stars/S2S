@@ -39,8 +39,6 @@
   "ignoreTerrainCost": true,
   "onlyDefensive": true,
   "dcmFighterEngage": true,
-  "militaryProduction": true,
-  "militarySupport": true,
   "militaryTrade": true
  },
  "tags": {

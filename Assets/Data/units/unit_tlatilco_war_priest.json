@@ -89,9 +89,6 @@
  },
  "skills": {
   "pillage": true,
-  "militaryHappiness": true,
-  "militaryProduction": true,
-  "militarySupport": true,
   "militaryTrade": true
  },
  "tags": {

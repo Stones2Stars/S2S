@@ -84,7 +84,6 @@
   "noCapture": true,
   "mechanized": true,
   "onlyDefensive": true,
-  "militaryProduction": true,
   "militaryTrade": true
  },
  "succession": {

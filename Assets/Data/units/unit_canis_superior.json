@@ -70,8 +70,6 @@
   "counterSpy": true,
   "ignoreTerrainCost": true,
   "passage": true,
-  "militaryHappiness": true,
-  "militaryProduction": true,
   "militaryTrade": true,
   "targets": {
    "UNITCOMBAT_CRIMINAL": true

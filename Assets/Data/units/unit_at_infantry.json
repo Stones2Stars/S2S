@@ -47,9 +47,6 @@
  "skills": {
   "pillage": true,
   "ignoreBuildingDefense": true,
-  "militaryHappiness": true,
-  "militaryProduction": true,
-  "militarySupport": true,
   "targets": {
    "UNITCOMBAT_WHEELED": true,
    "UNITCOMBAT_TRACKED": true

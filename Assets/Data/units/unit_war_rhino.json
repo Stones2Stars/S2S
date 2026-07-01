@@ -54,9 +54,6 @@
   "noDefensiveBonus": true,
   "pillage": true,
   "stampede": true,
-  "militaryHappiness": true,
-  "militaryProduction": true,
-  "militarySupport": true,
   "militaryTrade": true
  },
  "tags": {

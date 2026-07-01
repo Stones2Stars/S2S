@@ -82,8 +82,6 @@
  "skills": {
   "ignoreBuildingDefense": true,
   "mechanized": true,
-  "militaryProduction": true,
-  "militarySupport": true,
   "militaryTrade": true,
   "dcmAirBomb": 5
  },

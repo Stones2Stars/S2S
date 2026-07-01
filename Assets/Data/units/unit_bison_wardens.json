@@ -50,9 +50,6 @@
  },
  "skills": {
   "assassin": true,
-  "militaryHappiness": true,
-  "militaryProduction": true,
-  "militarySupport": true,
   "targets": {
    "UNITCOMBAT_ANIMAL": true,
    "UNITCOMBAT_PROMOTED_ARMED_GUARD": true

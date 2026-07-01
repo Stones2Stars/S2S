@@ -35,9 +35,7 @@
   "ignoreBuildingDefense": true,
   "ignoreTerrainCost": true,
   "mechanized": true,
-  "renderBelowWater": true,
-  "militaryProduction": true,
-  "militarySupport": true
+  "renderBelowWater": true
  },
  "tags": {
   "military": true

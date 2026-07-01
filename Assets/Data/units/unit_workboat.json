@@ -20,9 +20,7 @@
  },
  "skills": {
   "mechanized": true,
-  "renderBelowWater": true,
-  "militaryProduction": true,
-  "militarySupport": true
+  "renderBelowWater": true
  },
  "tags": {
   "worker": true,

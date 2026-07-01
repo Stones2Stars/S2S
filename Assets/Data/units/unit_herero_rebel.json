@@ -141,8 +141,6 @@
   "noNonOwnedCityEntry": true,
   "stealthDefense": true,
   "upgradeAnywhere": true,
-  "militaryProduction": true,
-  "militarySupport": true,
   "targets": {
    "UNITCOMBAT_GUN": true
   }

@@ -40,8 +40,6 @@
   "ignoreBuildingDefense": true,
   "mechanized": true,
   "suicide": true,
-  "militaryProduction": true,
-  "militarySupport": true,
   "militaryTrade": true
  },
  "tags": {

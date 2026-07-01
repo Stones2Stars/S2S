@@ -13,10 +13,7 @@
   }
  },
  "skills": {
-  "ignoreBuildingDefense": true,
-  "militaryHappiness": true,
-  "militaryProduction": true,
-  "militarySupport": true
+  "ignoreBuildingDefense": true
  },
  "tags": {
   "military": true

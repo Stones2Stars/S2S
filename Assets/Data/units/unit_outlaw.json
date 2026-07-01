@@ -131,7 +131,6 @@
   "ignoreTerrainCost": true,
   "ignoreZoneOfControl": true,
   "upgradeAnywhere": true,
-  "militaryProduction": true,
   "targets": {
    "UNITCOMBAT_TRADE": true,
    "UNITCOMBAT_PROMOTED_ARMED_GUARD": true

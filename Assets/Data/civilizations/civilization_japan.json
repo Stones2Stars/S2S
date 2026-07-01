@@ -2,7 +2,6 @@
  "type": "CIVILIZATION_JAPAN",
  "grants": {
   "buildings": [
-   "BUILDING_PALACE",
    "BUILDING_C_N_ASIAN",
    "BUILDING_C_AC_ASIAN",
    "BUILDING_STORAGE_EMPIRE"

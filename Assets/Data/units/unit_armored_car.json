@@ -85,10 +85,7 @@
   }
  },
  "skills": {
-  "noDefensiveBonus": true,
-  "militaryHappiness": true,
-  "militaryProduction": true,
-  "militarySupport": true
+  "noDefensiveBonus": true
  },
  "tags": {
   "military": true

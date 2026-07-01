@@ -147,7 +147,6 @@
   "ignoreZoneOfControl": true,
   "stealPlans": true,
   "upgradeAnywhere": true,
-  "militaryProduction": true,
   "targets": {
    "UNITCOMBAT_EXPLORER": true,
    "UNITCOMBAT_CANINE": true,

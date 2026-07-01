@@ -61,9 +61,7 @@
   "pillage": true,
   "mechanized": true,
   "noBadGoodies": true,
-  "renderBelowWater": true,
-  "militaryProduction": true,
-  "militarySupport": true
+  "renderBelowWater": true
  },
  "tags": {
   "military": true

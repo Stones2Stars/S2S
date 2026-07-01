@@ -33,8 +33,6 @@
   "nukeImmune": true,
   "suicide": true,
   "unlimitedException": true,
-  "militaryProduction": true,
-  "militarySupport": true,
   "militaryTrade": true
  },
  "tags": {

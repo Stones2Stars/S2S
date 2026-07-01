@@ -85,8 +85,6 @@
   "ignoreBuildingDefense": true,
   "mechanized": true,
   "dcmFighterEngage": true,
-  "militaryProduction": true,
-  "militarySupport": true,
   "dcmAirBomb": 2
  },
  "tags": {

@@ -74,10 +74,7 @@
   "pillage": true,
   "canMoveAllTerrain": true,
   "ignoreBuildingDefense": true,
-  "mechanized": true,
-  "militaryHappiness": true,
-  "militaryProduction": true,
-  "militarySupport": true
+  "mechanized": true
  },
  "tags": {
   "military": true

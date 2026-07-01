@@ -113,8 +113,6 @@
   "ignoreZoneOfControl": true,
   "noNonOwnedCityEntry": true,
   "ignoreNoEntryLevel": true,
-  "militaryProduction": true,
-  "militarySupport": true,
   "targets": {
    "UNITCOMBAT_STRIKE_TEAM": true
   }

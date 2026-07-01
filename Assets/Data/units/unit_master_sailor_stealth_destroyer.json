@@ -77,8 +77,6 @@
   "mechanized": true,
   "noBadGoodies": true,
   "renderBelowWater": true,
-  "militaryProduction": true,
-  "militarySupport": true,
   "militaryTrade": true
  },
  "tags": {

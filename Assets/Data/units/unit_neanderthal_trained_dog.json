@@ -54,8 +54,6 @@
   "noDefensiveBonus": true,
   "ignoreTerrainCost": true,
   "passage": true,
-  "militaryProduction": true,
-  "militarySupport": true,
   "militaryTrade": true
  },
  "tags": {

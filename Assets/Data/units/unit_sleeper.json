@@ -28,9 +28,7 @@
   "food": true,
   "investigate": true,
   "alwaysInvisible": true,
-  "rivalTerritory": true,
-  "militaryProduction": true,
-  "militarySupport": true
+  "rivalTerritory": true
  },
  "tags": {
   "spy": true
