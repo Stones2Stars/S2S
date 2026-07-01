@@ -25,7 +25,8 @@ So the "hidden data" question is closed: the only un-migrated data is the enumer
 > project, era, handicap, promotion/celebrity, unit-cargo). What remains is only the **BLOCKED/deferred** tier below
 > (prerequisite-gated: state/paralyze, unitcombat→tags, NPC civs, corp-system rework, ranked-target, leaderhead trait
 > remap, the unit **`missions`**/`CvOutcome` migration [grants-pass discovery]) + the **post-migration engine follow-ups**
-> (e.g. the celebrity-skill CvCity scan, the enabler `IS_HOLY_CITY` eval + `enables.traits`→HAVE from the grants pass). Per [DEC-data-first] the
+> (e.g. the celebrity-skill CvCity scan, the `enables.traits`→HAVE self-containment step from the grants pass — the
+> `IS_HOLY_CITY` eval is already wired). Per [DEC-data-first] the
 > data foundation is now complete — the machine backlog can proceed on solid data.
 
 ---
@@ -53,8 +54,11 @@ So the "hidden data" question is closed: the only un-migrated data is the enumer
   `CJK_INTRINSIC_KEYS` + `CvJsonUnitInfo` parse); building `holyCity`→**`requires.build`** (`IS_HOLY_CITY` predicate, a
   build gate not a setter — verified `CvCity.cpp:2728`) + `traits`→**`enables.traits`** (held-trait — `owner.setHasTrait`
   while active); `freePromotions`→**`repeatable`**. All 0-stale, new-home counts == originals; json.md §5/§8 updated;
-  Assert green. **Consumer-wiring follow-ups** (not data, deferred): the enabler's `IS_HOLY_CITY` eval + the
-  `enables.traits`→empire-active-trait HAVE contribution.
+  Assert green. **Consumer-wiring:** the enabler `IS_HOLY_CITY` eval is ALREADY wired (verified — parser
+  `CASC_PRED_IS_HOLY_CITY` + evaluator `ev_evalPredicate` `CvCascadeConditionEval.cpp:246`), so the `holyCity` gate
+  works out of the box. The one remaining follow-up is the self-contained **`enables.traits`→empire-active-trait HAVE**
+  computation (today the modifier reads engine `hasTrait`, which already includes the building's `setHasTrait`, so the
+  effect flows; the cascade-computed active-trait set is a cutover self-containment step, not a data gap).
 - **⏳ DEFERRED (grants-pass discovery) — unit `missions` + the `CvOutcome` system.** The grants pass found the unit
   *activated-mission* keys — `buildings` (MISSION_CONSTRUCT), `greatPersonAction`, `goldenAge` — are **missions**, NOT
   grants (a `skill` is a permanent property; a **mission** is an action producing an OUTCOME, often consuming the unit),
@@ -62,7 +66,11 @@ So the "hidden data" question is closed: the only un-migrated data is the enumer
   wrapper)"*) is **entirely un-migrated**. Owner ruling: a **`missions`** block (json §8) unifies the hardcoded mission-
   abilities AND CvOutcome, and **a mission carries its `grants`** as its outcome payload. These keys STAY in `grants`
   untouched for now; a dedicated **missions pass** migrates them + CvOutcome. `greatPeople` (join-eligibility) settles in
-  that pass (`tag` vs mission).
+  that pass (`tag` vs mission). **⚠ It is a MAJOR subsystem migration, not a key-move** — `CvOutcome` is a rich
+  probabilistic system (100 gate-only `OutcomeInfo` types + per-carrier effect payloads + `IntExpr`/`BoolExpr` trees +
+  weighted one-of-N rolls with tier-replacement + dual carriers unit×unitcombat) plus 18+ parallel hardcoded
+  mission-abilities. The **full map + the 7 open design questions** (owner-design-gated) are captured in
+  [`../../reference/mission-outcome-system.md`](../../reference/mission-outcome-system.md).
 
 ---
 
