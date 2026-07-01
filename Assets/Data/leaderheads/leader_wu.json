@@ -1,15 +1,5 @@
 {
  "type": "LEADER_WU",
- "grants": {
-  "traits": [
-   "TRAIT_ORGANIZED",
-   "TRAIT_CHARISMATIC",
-   "TRAIT_TEMPERAMENTAL",
-   "TRAIT_ORGANIZED1",
-   "TRAIT_CHARISMATIC1",
-   "TRAIT_TEMPERAMENTAL1"
-  ]
- },
  "ai": {
   "flavours": [
    {

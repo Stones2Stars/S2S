@@ -1,15 +1,5 @@
 {
  "type": "LEADER_LOUIS_XIV",
- "grants": {
-  "traits": [
-   "TRAIT_INDUSTRIOUS",
-   "TRAIT_CREATIVE",
-   "TRAIT_EXCESSIVE",
-   "TRAIT_INDUSTRIOUS1",
-   "TRAIT_CREATIVE1",
-   "TRAIT_EXCESSIVE1"
-  ]
- },
  "ai": {
   "flavours": [
    {

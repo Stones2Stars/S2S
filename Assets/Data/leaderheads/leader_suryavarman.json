@@ -1,15 +1,5 @@
 {
  "type": "LEADER_SURYAVARMAN",
- "grants": {
-  "traits": [
-   "TRAIT_EXPANSIVE",
-   "TRAIT_SEAFARING",
-   "TRAIT_CRUEL",
-   "TRAIT_EXPANSIVE1",
-   "TRAIT_SEAFARING1",
-   "TRAIT_CRUEL1"
-  ]
- },
  "ai": {
   "flavours": [
    {

@@ -30,19 +30,12 @@ Non-ai:
 - bNPC                         -> ai.npc (barbarian/NPC leader; an AI classification; 3 leaders).
 - Description / Civilopedia    -> text.
 
-TRAITS -> `grants` (the leader grants its traits to the player at game start), CONDITIONAL on game options —
-but the SELECTION/FILTERING (GAMEOPTION_LEADER_{COMPLEX_TRAITS,DEVELOPING,START_NO_POSITIVE_TRAITS,PURE_TRAITS}
-+ isValidTrait + LinePriority) is the create-player subroutine = ENGINE machinery (§0.6), NOT data conditions.
-The data carries the LISTS faithfully:
-- Traits              -> grants.traits          (the leader's base assignment; 118 leaders)
-- DefaultTraits       -> grants.developingTraits (core-default fallback; 2 NPC leaders)
-- DefaultComplexTraits-> grants.complexTraits    (under the complex-traits option; 2 NPC leaders)
-⚑ DEFERRED (owner 2026-06-16): the simple->complex MIRRORING (deriving complexTraits for the 117 base-only
-leaders by name-matching TRAIT_X <-> TRAIT_COMPLEX_X; "developing" = an original trait with no complex twin) is a
-DERIVATION that depends on the simple<->complex trait correspondence the TRAIT pass deliberately dropped (two
-separate Info types behind a shared interface, resolved at the coding pass #430). It is NOT done here (faithful
-lists only); resolve it at the trait-system coding pass. (Mid-game trait-type swapping is also catastrophic — see
-WorldBuilder-safe-swap ticket #438.)
+TRAITS -> STRIPPED for now (owner ruling 2026-07-01). ALL leader trait assignments — `Traits`, `DefaultTraits`,
+`DefaultComplexTraits` (simple AND complex) — are DROPPED; **no leader carries traits in the JSON**. The
+leader<->trait mapping (incl. the simple->complex mirroring, which depends on the simple<->complex correspondence
+the TRAIT pass deliberately dropped) is handed to a dedicated POST-MIGRATION pass; whoever does it re-adds a
+`grants.traits` emit here. Pre-cutover the game still runs traits off XML, so stripping the JSON assignments is
+safe — it just marks them TODO. (Mid-game trait-type swapping is also catastrophic — see WorldBuilder-safe-swap #438.)
 
   python3 curate_leaderhead.py --sample LEADER_ALEXANDER LEADER_GANDHI LEADER_BARBARIAN
   python3 curate_leaderhead.py --write
@@ -127,8 +120,9 @@ FAVORITES = {"FavoriteCivic": "civic", "FavoriteReligion": "religion"}
 MUSIC = {"DiplomacyIntroMusicPeace": "diploIntroMusicPeace", "DiplomacyMusicPeace": "diploMusicPeace",
          "DiplomacyIntroMusicWar": "diploIntroMusicWar", "DiplomacyMusicWar": "diploMusicWar"}
 TEXT = {"Description": "description", "Civilopedia": "civilopedia"}
-TRAITS = {"Traits": "traits", "DefaultTraits": "developingTraits", "DefaultComplexTraits": "complexTraits"}
-DROP = {"Type"}
+# ALL leader trait assignments STRIPPED for now (owner 2026-07-01) -> DROP; the leader<->trait mapping is a
+# post-migration pass (re-add a `grants.traits` emit + the TRAITS map then). No leader carries traits meanwhile.
+DROP = {"Type", "Traits", "DefaultTraits", "DefaultComplexTraits"}
 
 AI_ORDER = ["npc", "flavours", "personality", "war", "victory", "trade", "attitude", "refuse",
             "memory", "contact", "noWarProb", "unitWeights", "improvementWeights", "favorites"]
@@ -230,10 +224,6 @@ def curate(typ, rec):
             m = _music(c)
             if m:
                 sound[MUSIC[tag]] = m
-        elif tag in TRAITS:
-            vals = _list(c)
-            if vals:
-                grants[TRAITS[tag]] = vals
         elif tag == "ArtDefineTag":
             cc.put_art(art_blocks, tag, engine.generic(c))   # -> world.art.icon
         elif tag == "bNPC":

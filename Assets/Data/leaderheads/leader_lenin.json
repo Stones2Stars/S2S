@@ -1,15 +1,5 @@
 {
  "type": "LEADER_LENIN",
- "grants": {
-  "traits": [
-   "TRAIT_PHILOSOPHICAL",
-   "TRAIT_ORGANIZED",
-   "TRAIT_REVOLUTIONARY",
-   "TRAIT_PHILOSOPHICAL1",
-   "TRAIT_ORGANIZED1",
-   "TRAIT_REVOLUTIONARY1"
-  ]
- },
  "ai": {
   "flavours": [
    {

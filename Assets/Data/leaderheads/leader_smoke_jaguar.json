@@ -1,15 +1,5 @@
 {
  "type": "LEADER_SMOKE_JAGUAR",
- "grants": {
-  "traits": [
-   "TRAIT_AGGRESSIVE",
-   "TRAIT_HUNTER_GATHERER",
-   "TRAIT_INDUSTRIOUS",
-   "TRAIT_AGGRESSIVE1",
-   "TRAIT_HUNTER_GATHERER1",
-   "TRAIT_INDUSTRIOUS1"
-  ]
- },
  "ai": {
   "flavours": [
    {

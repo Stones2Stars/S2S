@@ -1,15 +1,5 @@
 {
  "type": "LEADER_HADRIAN",
- "grants": {
-  "traits": [
-   "TRAIT_PROTECTIVE",
-   "TRAIT_HUMANITARIAN",
-   "TRAIT_IDEALISTIC",
-   "TRAIT_PROTECTIVE1",
-   "TRAIT_HUMANITARIAN1",
-   "TRAIT_IDEALISTIC1"
-  ]
- },
  "ai": {
   "flavours": [
    {

@@ -1,15 +1,5 @@
 {
  "type": "LEADER_ABUBAKR",
- "grants": {
-  "traits": [
-   "TRAIT_SPIRITUAL",
-   "TRAIT_ORGANIZED",
-   "TRAIT_FANATICAL",
-   "TRAIT_SPIRITUAL1",
-   "TRAIT_ORGANIZED1",
-   "TRAIT_FANATICAL1"
-  ]
- },
  "ai": {
   "flavours": [
    {

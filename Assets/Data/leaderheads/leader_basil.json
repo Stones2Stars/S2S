@@ -1,15 +1,5 @@
 {
  "type": "LEADER_BASIL",
- "grants": {
-  "traits": [
-   "TRAIT_EXPANSIVE",
-   "TRAIT_INDUSTRIOUS",
-   "TRAIT_POPULIST",
-   "TRAIT_EXPANSIVE1",
-   "TRAIT_INDUSTRIOUS1",
-   "TRAIT_POPULIST1"
-  ]
- },
  "ai": {
   "flavours": [
    {

@@ -1,15 +1,5 @@
 {
  "type": "LEADER_CHARLES_V",
- "grants": {
-  "traits": [
-   "TRAIT_ORGANIZED",
-   "TRAIT_IMPERIALIST",
-   "TRAIT_FOREIGN",
-   "TRAIT_ORGANIZED1",
-   "TRAIT_IMPERIALIST1",
-   "TRAIT_FOREIGN1"
-  ]
- },
  "ai": {
   "flavours": [
    {

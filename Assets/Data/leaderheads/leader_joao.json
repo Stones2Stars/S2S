@@ -1,15 +1,5 @@
 {
  "type": "LEADER_JOAO",
- "grants": {
-  "traits": [
-   "TRAIT_IMPERIALIST",
-   "TRAIT_SEAFARING",
-   "TRAIT_FOREIGN",
-   "TRAIT_IMPERIALIST1",
-   "TRAIT_SEAFARING1",
-   "TRAIT_FOREIGN1"
-  ]
- },
  "ai": {
   "flavours": [
    {

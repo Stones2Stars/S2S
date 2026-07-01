@@ -1,15 +1,5 @@
 {
  "type": "LEADER_HATSHEPSUT",
- "grants": {
-  "traits": [
-   "TRAIT_SCIENTIFIC",
-   "TRAIT_AGRICULTURAL",
-   "TRAIT_EXCESSIVE",
-   "TRAIT_SCIENTIFIC1",
-   "TRAIT_AGRICULTURAL1",
-   "TRAIT_EXCESSIVE1"
-  ]
- },
  "ai": {
   "flavours": [
    {

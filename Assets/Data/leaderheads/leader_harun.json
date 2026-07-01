@@ -1,15 +1,5 @@
 {
  "type": "LEADER_HARUN",
- "grants": {
-  "traits": [
-   "TRAIT_CREATIVE",
-   "TRAIT_FINANCIAL",
-   "TRAIT_POPULIST",
-   "TRAIT_CREATIVE1",
-   "TRAIT_FINANCIAL1",
-   "TRAIT_POPULIST1"
-  ]
- },
  "ai": {
   "flavours": [
    {

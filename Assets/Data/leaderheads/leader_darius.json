@@ -1,15 +1,5 @@
 {
  "type": "LEADER_DARIUS",
- "grants": {
-  "traits": [
-   "TRAIT_FINANCIAL",
-   "TRAIT_EXPANSIVE",
-   "TRAIT_FANATICAL",
-   "TRAIT_FINANCIAL1",
-   "TRAIT_EXPANSIVE1",
-   "TRAIT_FANATICAL1"
-  ]
- },
  "ai": {
   "flavours": [
    {

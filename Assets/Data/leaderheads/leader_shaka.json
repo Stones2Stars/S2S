@@ -1,15 +1,5 @@
 {
  "type": "LEADER_SHAKA",
- "grants": {
-  "traits": [
-   "TRAIT_DECEIVER",
-   "TRAIT_EXPANSIVE",
-   "TRAIT_BARBARIC",
-   "TRAIT_DECEIVER1",
-   "TRAIT_EXPANSIVE1",
-   "TRAIT_BARBARIC1"
-  ]
- },
  "ai": {
   "flavours": [
    {

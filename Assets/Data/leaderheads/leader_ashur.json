@@ -1,15 +1,5 @@
 {
  "type": "LEADER_ASHUR",
- "grants": {
-  "traits": [
-   "TRAIT_EXPANSIVE",
-   "TRAIT_CREATIVE",
-   "TRAIT_BARBARIC",
-   "TRAIT_EXPANSIVE1",
-   "TRAIT_CREATIVE1",
-   "TRAIT_BARBARIC1"
-  ]
- },
  "ai": {
   "flavours": [
    {

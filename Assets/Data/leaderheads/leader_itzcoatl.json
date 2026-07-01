@@ -1,15 +1,5 @@
 {
  "type": "LEADER_ITZCOATL",
- "grants": {
-  "traits": [
-   "TRAIT_INDUSTRIOUS",
-   "TRAIT_POLITICIAN",
-   "TRAIT_FOREIGN",
-   "TRAIT_INDUSTRIOUS1",
-   "TRAIT_POLITICIAN1",
-   "TRAIT_FOREIGN1"
-  ]
- },
  "ai": {
   "flavours": [
    {

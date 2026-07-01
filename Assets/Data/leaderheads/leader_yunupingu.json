@@ -1,15 +1,5 @@
 {
  "type": "LEADER_YUNUPINGU",
- "grants": {
-  "traits": [
-   "TRAIT_POLITICIAN",
-   "TRAIT_AGRICULTURAL",
-   "TRAIT_IDEALISTIC",
-   "TRAIT_POLITICIAN1",
-   "TRAIT_AGRICULTURAL1",
-   "TRAIT_IDEALISTIC1"
-  ]
- },
  "ai": {
   "flavours": [
    {

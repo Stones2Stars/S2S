@@ -1,15 +1,5 @@
 {
  "type": "LEADER_VICTORIA",
- "grants": {
-  "traits": [
-   "TRAIT_IMPERIALIST",
-   "TRAIT_SEAFARING",
-   "TRAIT_MEGALOMANIAC",
-   "TRAIT_IMPERIALIST1",
-   "TRAIT_SEAFARING1",
-   "TRAIT_MEGALOMANIAC1"
-  ]
- },
  "ai": {
   "flavours": [
    {

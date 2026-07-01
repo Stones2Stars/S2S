@@ -1,15 +1,5 @@
 {
  "type": "LEADER_AUGUSTUS",
- "grants": {
-  "traits": [
-   "TRAIT_PHILOSOPHICAL",
-   "TRAIT_IMPERIALIST",
-   "TRAIT_MEGALOMANIAC",
-   "TRAIT_PHILOSOPHICAL1",
-   "TRAIT_IMPERIALIST1",
-   "TRAIT_MEGALOMANIAC1"
-  ]
- },
  "ai": {
   "flavours": [
    {

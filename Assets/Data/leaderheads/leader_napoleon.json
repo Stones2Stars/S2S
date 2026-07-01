@@ -1,15 +1,5 @@
 {
  "type": "LEADER_NAPOLEON",
- "grants": {
-  "traits": [
-   "TRAIT_EXPANSIVE",
-   "TRAIT_CHARISMATIC",
-   "TRAIT_MEGALOMANIAC",
-   "TRAIT_EXPANSIVE1",
-   "TRAIT_CHARISMATIC1",
-   "TRAIT_MEGALOMANIAC1"
-  ]
- },
  "ai": {
   "flavours": [
    {

@@ -1,15 +1,5 @@
 {
  "type": "LEADER_HTN",
- "grants": {
-  "traits": [
-   "TRAIT_FINANCIAL",
-   "TRAIT_SEAFARING",
-   "TRAIT_POPULIST",
-   "TRAIT_FINANCIAL1",
-   "TRAIT_SEAFARING1",
-   "TRAIT_POPULIST1"
-  ]
- },
  "ai": {
   "flavours": [
    {

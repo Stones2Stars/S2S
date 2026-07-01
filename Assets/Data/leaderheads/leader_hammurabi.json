@@ -1,15 +1,5 @@
 {
  "type": "LEADER_HAMMURABI",
- "grants": {
-  "traits": [
-   "TRAIT_ORGANIZED",
-   "TRAIT_AGGRESSIVE",
-   "TRAIT_ISOLATIONIST",
-   "TRAIT_ORGANIZED1",
-   "TRAIT_AGGRESSIVE1",
-   "TRAIT_ISOLATIONIST1"
-  ]
- },
  "ai": {
   "flavours": [
    {

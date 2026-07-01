@@ -1,15 +1,5 @@
 {
  "type": "LEADER_RED_CLOUD",
- "grants": {
-  "traits": [
-   "TRAIT_NOMAD",
-   "TRAIT_HUMANITARIAN",
-   "TRAIT_HUNTER_GATHERER",
-   "TRAIT_NOMAD1",
-   "TRAIT_HUMANITARIAN1",
-   "TRAIT_HUNTER_GATHERER1"
-  ]
- },
  "ai": {
   "flavours": [
    {

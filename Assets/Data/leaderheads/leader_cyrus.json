@@ -1,15 +1,5 @@
 {
  "type": "LEADER_CYRUS",
- "grants": {
-  "traits": [
-   "TRAIT_HUMANITARIAN",
-   "TRAIT_IMPERIALIST",
-   "TRAIT_MEGALOMANIAC",
-   "TRAIT_HUMANITARIAN1",
-   "TRAIT_IMPERIALIST1",
-   "TRAIT_MEGALOMANIAC1"
-  ]
- },
  "ai": {
   "flavours": [
    {

@@ -1,15 +1,5 @@
 {
  "type": "LEADER_WASHINGTON",
- "grants": {
-  "traits": [
-   "TRAIT_PROTECTIVE",
-   "TRAIT_CHARISMATIC",
-   "TRAIT_REVOLUTIONARY",
-   "TRAIT_PROTECTIVE1",
-   "TRAIT_CHARISMATIC1",
-   "TRAIT_REVOLUTIONARY1"
-  ]
- },
  "ai": {
   "flavours": [
    {

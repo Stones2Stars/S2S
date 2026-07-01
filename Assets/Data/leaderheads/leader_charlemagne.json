@@ -1,15 +1,5 @@
 {
  "type": "LEADER_CHARLEMAGNE",
- "grants": {
-  "traits": [
-   "TRAIT_IMPERIALIST",
-   "TRAIT_PROTECTIVE",
-   "TRAIT_ISOLATIONIST",
-   "TRAIT_IMPERIALIST1",
-   "TRAIT_PROTECTIVE1",
-   "TRAIT_ISOLATIONIST1"
-  ]
- },
  "ai": {
   "flavours": [
    {

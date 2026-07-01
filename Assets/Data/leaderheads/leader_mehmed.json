@@ -1,15 +1,5 @@
 {
  "type": "LEADER_MEHMED",
- "grants": {
-  "traits": [
-   "TRAIT_INDUSTRIOUS",
-   "TRAIT_EXPANSIVE",
-   "TRAIT_FANATICAL",
-   "TRAIT_INDUSTRIOUS1",
-   "TRAIT_EXPANSIVE1",
-   "TRAIT_FANATICAL1"
-  ]
- },
  "ai": {
   "flavours": [
    {

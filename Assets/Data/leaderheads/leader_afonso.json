@@ -1,15 +1,5 @@
 {
  "type": "LEADER_AFONSO",
- "grants": {
-  "traits": [
-   "TRAIT_AGGRESSIVE",
-   "TRAIT_EXPANSIVE",
-   "TRAIT_POPULIST",
-   "TRAIT_AGGRESSIVE1",
-   "TRAIT_EXPANSIVE1",
-   "TRAIT_POPULIST1"
-  ]
- },
  "ai": {
   "flavours": [
    {

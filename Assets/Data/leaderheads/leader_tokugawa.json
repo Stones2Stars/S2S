@@ -1,15 +1,5 @@
 {
  "type": "LEADER_TOKUGAWA",
- "grants": {
-  "traits": [
-   "TRAIT_DECEIVER",
-   "TRAIT_PHILOSOPHICAL",
-   "TRAIT_ISOLATIONIST",
-   "TRAIT_DECEIVER1",
-   "TRAIT_PHILOSOPHICAL1",
-   "TRAIT_ISOLATIONIST1"
-  ]
- },
  "ai": {
   "flavours": [
    {

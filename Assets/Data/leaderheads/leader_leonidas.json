@@ -1,15 +1,5 @@
 {
  "type": "LEADER_LEONIDAS",
- "grants": {
-  "traits": [
-   "TRAIT_AGRICULTURAL",
-   "TRAIT_PROTECTIVE",
-   "TRAIT_CRUEL",
-   "TRAIT_AGRICULTURAL1",
-   "TRAIT_PROTECTIVE1",
-   "TRAIT_CRUEL1"
-  ]
- },
  "ai": {
   "flavours": [
    {

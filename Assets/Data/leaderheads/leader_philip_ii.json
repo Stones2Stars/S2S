@@ -1,15 +1,5 @@
 {
  "type": "LEADER_PHILIP_II",
- "grants": {
-  "traits": [
-   "TRAIT_IMPERIALIST",
-   "TRAIT_SPIRITUAL",
-   "TRAIT_FANATICAL",
-   "TRAIT_IMPERIALIST1",
-   "TRAIT_SPIRITUAL1",
-   "TRAIT_FANATICAL1"
-  ]
- },
  "ai": {
   "flavours": [
    {

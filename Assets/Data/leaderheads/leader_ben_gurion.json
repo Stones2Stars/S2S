@@ -1,15 +1,5 @@
 {
  "type": "LEADER_BEN_GURION",
- "grants": {
-  "traits": [
-   "TRAIT_PROGRESSIST",
-   "TRAIT_PROTECTIVE",
-   "TRAIT_EXCESSIVE",
-   "TRAIT_PROGRESSIST1",
-   "TRAIT_PROTECTIVE1",
-   "TRAIT_EXCESSIVE1"
-  ]
- },
  "ai": {
   "flavours": [
    {

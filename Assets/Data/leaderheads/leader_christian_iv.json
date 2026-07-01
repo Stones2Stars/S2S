@@ -1,15 +1,5 @@
 {
  "type": "LEADER_CHRISTIAN_IV",
- "grants": {
-  "traits": [
-   "TRAIT_AGGRESSIVE",
-   "TRAIT_INDUSTRIOUS",
-   "TRAIT_TEMPERAMENTAL",
-   "TRAIT_AGGRESSIVE1",
-   "TRAIT_INDUSTRIOUS1",
-   "TRAIT_TEMPERAMENTAL1"
-  ]
- },
  "ai": {
   "flavours": [
    {

@@ -1,15 +1,5 @@
 {
  "type": "LEADER_SEJONG",
- "grants": {
-  "traits": [
-   "TRAIT_PHILOSOPHICAL",
-   "TRAIT_CREATIVE",
-   "TRAIT_IDEALISTIC",
-   "TRAIT_PHILOSOPHICAL1",
-   "TRAIT_CREATIVE1",
-   "TRAIT_IDEALISTIC1"
-  ]
- },
  "ai": {
   "flavours": [
    {

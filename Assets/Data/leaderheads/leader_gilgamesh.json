@@ -1,15 +1,5 @@
 {
  "type": "LEADER_GILGAMESH",
- "grants": {
-  "traits": [
-   "TRAIT_PROTECTIVE",
-   "TRAIT_AGRICULTURAL",
-   "TRAIT_TEMPERAMENTAL",
-   "TRAIT_PROTECTIVE1",
-   "TRAIT_AGRICULTURAL1",
-   "TRAIT_TEMPERAMENTAL1"
-  ]
- },
  "ai": {
   "flavours": [
    {

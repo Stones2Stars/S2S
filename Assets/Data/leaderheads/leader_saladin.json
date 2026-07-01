@@ -1,15 +1,5 @@
 {
  "type": "LEADER_SALADIN",
- "grants": {
-  "traits": [
-   "TRAIT_PROTECTIVE",
-   "TRAIT_SPIRITUAL",
-   "TRAIT_FOREIGN",
-   "TRAIT_PROTECTIVE1",
-   "TRAIT_SPIRITUAL1",
-   "TRAIT_FOREIGN1"
-  ]
- },
  "ai": {
   "flavours": [
    {

@@ -76,17 +76,21 @@ The whitelist completeness sweep found exactly two, both now ruled and landed:
   - DROP (confirmed DEAD): the aid mechanic (`BonusAidModifiers`/`AidRateChanges` — city arrays saved but ZERO
     write-from-building + ZERO read-for-effect; only AI-valuation/pedia read the raw Info) + the `DROP_DEAD`/`DROP_MODULE` set.
   - `EnabledCivilizationTypes` → identity interim (→ `requires.build` when NPC civs wired); `bAllowsNukes` → `requires.build.disabled` (done).
-- **leaderhead**: simple→complex trait mirroring deferred — **117 leaders get NO `complexTraits` under the complex
-  option until this lands.** (Largest single gap.)
+- **leaderhead — DONE (owner ruling 2026-07-01): ALL traits stripped.** Every leader trait assignment (`Traits`,
+  `DefaultTraits`, `DefaultComplexTraits` — simple AND complex) is dropped from the JSON; **no leader carries traits**.
+  The leader↔trait mapping (incl. simple→complex) goes to a dedicated POST-MIGRATION pass (which re-adds a
+  `grants.traits` emit). Safe pre-cutover (the game runs traits off XML meanwhile). 118 leaderheads regenerated.
 - **era**: `bNoGoodies`/`bNoBarbUnits`/`bNoBarbCities` → `identity` (live world-gen gates, no destination model; safe
   only because currently all-zero).
 - **tech**: `TechMovementChanges`/`TechSpecialistChanges` inverted onto tech where no consumer reads (non-functional).
 - **corporation**: `iSpread`/`iSpreadFactor`/`CompetingCorporations` → `identity`.
 - **improvement**: `iAirBombDefense`/`iFeatureGrowth`/`iCultureRange`/per-bonus `depletionRand` → `identity`.
 - **project**: `AnyonePrereqProject` dropped, per-edge `iNeeded` count lost.
-- **unit**: `EnabledCivilizationTypes` → `identity` (ignored by train gate); `iCargo` still **UNHANDLED on 90 units**
-  → `cargo.space.flat` (+ `DomainCargo`→`cargo.space.{unit:IS_<domain>}`), part of the unit-stat family (modifier §6);
-  cargo restriction → `identity`.
+- **unit**: `iCargo` → **`cargo.space.flat`** (+ `DomainCargo`→`cargo.space.{unit:IS_<domain>}`, modifier §6) —
+  owner-RULED 2026-07-01, **DO-NOW** (currently UNHANDLED on 90 units). `EnabledCivilizationTypes` is **NOT** the
+  unique-unit system (that's UnitClass/CivilizationInfo) — the train gate fires ONLY under
+  `isNPC() && isStronglyRestricted()` (`CvCity.cpp:2231`), inert for real civs — so it folds with `stronglyRestricted`
+  (Tier 3, → `requires.build` when NPC civs wired); stays `identity` interim. cargo restriction → `identity`.
 - **promotion**: `iCelebrityHappy` → `identity` (real happiness mod); `iPoisonProbabilityModifierChange` inert (kept).
 - **handicap**: `advancedStart` (`iAdvancedStartPointsMod`, `iAIAdvancedStartPercent`) → `identity`, no consumer wired.
 

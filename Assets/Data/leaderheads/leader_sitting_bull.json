@@ -1,15 +1,5 @@
 {
  "type": "LEADER_SITTING_BULL",
- "grants": {
-  "traits": [
-   "TRAIT_NOMAD",
-   "TRAIT_PROTECTIVE",
-   "TRAIT_EXCESSIVE",
-   "TRAIT_NOMAD1",
-   "TRAIT_PROTECTIVE1",
-   "TRAIT_EXCESSIVE1"
-  ]
- },
  "ai": {
   "flavours": [
    {

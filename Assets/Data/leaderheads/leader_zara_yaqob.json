@@ -1,15 +1,5 @@
 {
  "type": "LEADER_ZARA_YAQOB",
- "grants": {
-  "traits": [
-   "TRAIT_CREATIVE",
-   "TRAIT_ORGANIZED",
-   "TRAIT_CRUEL",
-   "TRAIT_CREATIVE1",
-   "TRAIT_ORGANIZED1",
-   "TRAIT_CRUEL1"
-  ]
- },
  "ai": {
   "flavours": [
    {

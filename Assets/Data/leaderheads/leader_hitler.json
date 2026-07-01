@@ -1,15 +1,5 @@
 {
  "type": "LEADER_HITLER",
- "grants": {
-  "traits": [
-   "TRAIT_AGGRESSIVE",
-   "TRAIT_INDUSTRIOUS",
-   "TRAIT_MEGALOMANIAC",
-   "TRAIT_AGGRESSIVE1",
-   "TRAIT_INDUSTRIOUS1",
-   "TRAIT_MEGALOMANIAC1"
-  ]
- },
  "ai": {
   "flavours": [
    {

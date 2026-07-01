@@ -1,15 +1,5 @@
 {
  "type": "LEADER_PACHACUTI",
- "grants": {
-  "traits": [
-   "TRAIT_IMPERIALIST",
-   "TRAIT_FINANCIAL",
-   "TRAIT_TEMPERAMENTAL",
-   "TRAIT_IMPERIALIST1",
-   "TRAIT_FINANCIAL1",
-   "TRAIT_TEMPERAMENTAL1"
-  ]
- },
  "ai": {
   "flavours": [
    {

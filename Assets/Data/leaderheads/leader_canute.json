@@ -1,15 +1,5 @@
 {
  "type": "LEADER_CANUTE",
- "grants": {
-  "traits": [
-   "TRAIT_SPIRITUAL",
-   "TRAIT_ORGANIZED",
-   "TRAIT_ANTI_CLERICAL",
-   "TRAIT_SPIRITUAL1",
-   "TRAIT_ORGANIZED1",
-   "TRAIT_ANTI_CLERICAL1"
-  ]
- },
  "ai": {
   "flavours": [
    {

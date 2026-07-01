@@ -1,15 +1,5 @@
 {
  "type": "LEADER_MEIJI",
- "grants": {
-  "traits": [
-   "TRAIT_SEAFARING",
-   "TRAIT_IMPERIALIST",
-   "TRAIT_FOREIGN",
-   "TRAIT_SEAFARING1",
-   "TRAIT_IMPERIALIST1",
-   "TRAIT_FOREIGN1"
-  ]
- },
  "ai": {
   "flavours": [
    {

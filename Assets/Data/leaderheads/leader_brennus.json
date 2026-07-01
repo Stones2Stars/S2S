@@ -1,15 +1,5 @@
 {
  "type": "LEADER_BRENNUS",
- "grants": {
-  "traits": [
-   "TRAIT_PROTECTIVE",
-   "TRAIT_FINANCIAL",
-   "TRAIT_BARBARIC",
-   "TRAIT_PROTECTIVE1",
-   "TRAIT_FINANCIAL1",
-   "TRAIT_BARBARIC1"
-  ]
- },
  "ai": {
   "flavours": [
    {

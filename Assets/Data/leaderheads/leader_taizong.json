@@ -1,15 +1,5 @@
 {
  "type": "LEADER_TAIZONG",
- "grants": {
-  "traits": [
-   "TRAIT_FINANCIAL",
-   "TRAIT_IMPERIALIST",
-   "TRAIT_CRUEL",
-   "TRAIT_FINANCIAL1",
-   "TRAIT_IMPERIALIST1",
-   "TRAIT_CRUEL1"
-  ]
- },
  "ai": {
   "flavours": [
    {

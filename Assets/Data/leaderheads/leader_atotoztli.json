@@ -1,15 +1,5 @@
 {
  "type": "LEADER_ATOTOZTLI",
- "grants": {
-  "traits": [
-   "TRAIT_PROGRESSIST",
-   "TRAIT_CHARISMATIC",
-   "TRAIT_ISOLATIONIST",
-   "TRAIT_PROGRESSIST1",
-   "TRAIT_CHARISMATIC1",
-   "TRAIT_ISOLATIONIST1"
-  ]
- },
  "ai": {
   "flavours": [
    {

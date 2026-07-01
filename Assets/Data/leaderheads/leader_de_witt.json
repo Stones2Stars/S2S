@@ -1,15 +1,5 @@
 {
  "type": "LEADER_DE_WITT",
- "grants": {
-  "traits": [
-   "TRAIT_HUMANITARIAN",
-   "TRAIT_POLITICIAN",
-   "TRAIT_IDEALISTIC",
-   "TRAIT_HUMANITARIAN1",
-   "TRAIT_POLITICIAN1",
-   "TRAIT_IDEALISTIC1"
-  ]
- },
  "ai": {
   "flavours": [
    {

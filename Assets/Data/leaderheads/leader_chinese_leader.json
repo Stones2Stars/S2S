@@ -1,15 +1,5 @@
 {
  "type": "LEADER_CHINESE_LEADER",
- "grants": {
-  "traits": [
-   "TRAIT_PROGRESSIST",
-   "TRAIT_POLITICIAN",
-   "TRAIT_CRUEL",
-   "TRAIT_PROGRESSIST1",
-   "TRAIT_POLITICIAN1",
-   "TRAIT_CRUEL1"
-  ]
- },
  "ai": {
   "flavours": [
    {

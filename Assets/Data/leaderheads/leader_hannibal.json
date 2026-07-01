@@ -1,15 +1,5 @@
 {
  "type": "LEADER_HANNIBAL",
- "grants": {
-  "traits": [
-   "TRAIT_EXPANSIVE",
-   "TRAIT_ORGANIZED",
-   "TRAIT_POPULIST",
-   "TRAIT_EXPANSIVE1",
-   "TRAIT_ORGANIZED1",
-   "TRAIT_POPULIST1"
-  ]
- },
  "ai": {
   "flavours": [
    {

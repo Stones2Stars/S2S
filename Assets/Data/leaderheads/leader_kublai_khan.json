@@ -1,15 +1,5 @@
 {
  "type": "LEADER_KUBLAI_KHAN",
- "grants": {
-  "traits": [
-   "TRAIT_NOMAD",
-   "TRAIT_IMPERIALIST",
-   "TRAIT_MEGALOMANIAC",
-   "TRAIT_NOMAD1",
-   "TRAIT_IMPERIALIST1",
-   "TRAIT_MEGALOMANIAC1"
-  ]
- },
  "ai": {
   "flavours": [
    {

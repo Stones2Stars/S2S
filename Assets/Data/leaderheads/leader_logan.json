@@ -1,15 +1,5 @@
 {
  "type": "LEADER_LOGAN",
- "grants": {
-  "traits": [
-   "TRAIT_PHILOSOPHICAL",
-   "TRAIT_ORGANIZED",
-   "TRAIT_TEMPERAMENTAL",
-   "TRAIT_PHILOSOPHICAL1",
-   "TRAIT_ORGANIZED1",
-   "TRAIT_TEMPERAMENTAL1"
-  ]
- },
  "ai": {
   "flavours": [
    {

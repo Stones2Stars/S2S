@@ -1,15 +1,5 @@
 {
  "type": "LEADER_FRANCO",
- "grants": {
-  "traits": [
-   "TRAIT_DECEIVER",
-   "TRAIT_IMPERIALIST",
-   "TRAIT_CRUEL",
-   "TRAIT_DECEIVER1",
-   "TRAIT_IMPERIALIST1",
-   "TRAIT_CRUEL1"
-  ]
- },
  "ai": {
   "flavours": [
    {

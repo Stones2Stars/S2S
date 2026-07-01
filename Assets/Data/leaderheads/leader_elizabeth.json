@@ -1,15 +1,5 @@
 {
  "type": "LEADER_ELIZABETH",
- "grants": {
-  "traits": [
-   "TRAIT_SEAFARING",
-   "TRAIT_FINANCIAL",
-   "TRAIT_ANTI_CLERICAL",
-   "TRAIT_SEAFARING1",
-   "TRAIT_FINANCIAL1",
-   "TRAIT_ANTI_CLERICAL1"
-  ]
- },
  "ai": {
   "flavours": [
    {

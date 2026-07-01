@@ -1,15 +1,5 @@
 {
  "type": "LEADER_HENRY_VIII",
- "grants": {
-  "traits": [
-   "TRAIT_DECEIVER",
-   "TRAIT_PROTECTIVE",
-   "TRAIT_CRUEL",
-   "TRAIT_DECEIVER1",
-   "TRAIT_PROTECTIVE1",
-   "TRAIT_CRUEL1"
-  ]
- },
  "ai": {
   "flavours": [
    {

@@ -1,15 +1,5 @@
 {
  "type": "LEADER_BOUDICA",
- "grants": {
-  "traits": [
-   "TRAIT_CHARISMATIC",
-   "TRAIT_DECEIVER",
-   "TRAIT_EXCESSIVE",
-   "TRAIT_CHARISMATIC1",
-   "TRAIT_DECEIVER1",
-   "TRAIT_EXCESSIVE1"
-  ]
- },
  "ai": {
   "flavours": [
    {

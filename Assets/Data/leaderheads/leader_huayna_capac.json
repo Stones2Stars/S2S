@@ -1,15 +1,5 @@
 {
  "type": "LEADER_HUAYNA_CAPAC",
- "grants": {
-  "traits": [
-   "TRAIT_FINANCIAL",
-   "TRAIT_FOREIGN",
-   "TRAIT_AGRICULTURAL",
-   "TRAIT_FINANCIAL1",
-   "TRAIT_FOREIGN1",
-   "TRAIT_AGRICULTURAL1"
-  ]
- },
  "ai": {
   "flavours": [
    {

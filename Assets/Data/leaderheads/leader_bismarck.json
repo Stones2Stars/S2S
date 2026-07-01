@@ -1,15 +1,5 @@
 {
  "type": "LEADER_BISMARCK",
- "grants": {
-  "traits": [
-   "TRAIT_CHARISMATIC",
-   "TRAIT_POLITICIAN",
-   "TRAIT_EXCESSIVE",
-   "TRAIT_CHARISMATIC1",
-   "TRAIT_POLITICIAN1",
-   "TRAIT_EXCESSIVE1"
-  ]
- },
  "ai": {
   "flavours": [
    {

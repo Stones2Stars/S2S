@@ -1,15 +1,5 @@
 {
  "type": "LEADER_DE_GAULLE",
- "grants": {
-  "traits": [
-   "TRAIT_PROTECTIVE",
-   "TRAIT_POLITICIAN",
-   "TRAIT_POPULIST",
-   "TRAIT_PROTECTIVE1",
-   "TRAIT_POLITICIAN1",
-   "TRAIT_POPULIST1"
-  ]
- },
  "ai": {
   "flavours": [
    {

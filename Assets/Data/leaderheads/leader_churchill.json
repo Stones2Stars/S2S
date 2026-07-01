@@ -1,15 +1,5 @@
 {
  "type": "LEADER_CHURCHILL",
- "grants": {
-  "traits": [
-   "TRAIT_CHARISMATIC",
-   "TRAIT_PROTECTIVE",
-   "TRAIT_FOREIGN",
-   "TRAIT_CHARISMATIC1",
-   "TRAIT_PROTECTIVE1",
-   "TRAIT_FOREIGN1"
-  ]
- },
  "ai": {
   "flavours": [
    {

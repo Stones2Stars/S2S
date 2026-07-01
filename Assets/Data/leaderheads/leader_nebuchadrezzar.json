@@ -1,15 +1,5 @@
 {
  "type": "LEADER_NEBUCHADREZZAR",
- "grants": {
-  "traits": [
-   "TRAIT_SCIENTIFIC",
-   "TRAIT_INDUSTRIOUS",
-   "TRAIT_REVOLUTIONARY",
-   "TRAIT_SCIENTIFIC1",
-   "TRAIT_INDUSTRIOUS1",
-   "TRAIT_REVOLUTIONARY1"
-  ]
- },
  "ai": {
   "flavours": [
    {

@@ -1,15 +1,5 @@
 {
  "type": "LEADER_HEKE",
- "grants": {
-  "traits": [
-   "TRAIT_POLITICIAN",
-   "TRAIT_PROGRESSIST",
-   "TRAIT_EXCESSIVE",
-   "TRAIT_POLITICIAN1",
-   "TRAIT_PROGRESSIST1",
-   "TRAIT_EXCESSIVE1"
-  ]
- },
  "ai": {
   "flavours": [
    {

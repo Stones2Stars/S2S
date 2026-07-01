@@ -1,15 +1,5 @@
 {
  "type": "LEADER_YAGAN",
- "grants": {
-  "traits": [
-   "TRAIT_AGGRESSIVE",
-   "TRAIT_SPIRITUAL",
-   "TRAIT_HUNTER_GATHERER",
-   "TRAIT_AGGRESSIVE1",
-   "TRAIT_SPIRITUAL1",
-   "TRAIT_HUNTER_GATHERER1"
-  ]
- },
  "ai": {
   "flavours": [
    {

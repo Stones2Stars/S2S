@@ -1,15 +1,5 @@
 {
  "type": "LEADER_NEFERTITI",
- "grants": {
-  "traits": [
-   "TRAIT_AGRICULTURAL",
-   "TRAIT_CHARISMATIC",
-   "TRAIT_ISOLATIONIST",
-   "TRAIT_AGRICULTURAL1",
-   "TRAIT_CHARISMATIC1",
-   "TRAIT_ISOLATIONIST1"
-  ]
- },
  "ai": {
   "flavours": [
    {

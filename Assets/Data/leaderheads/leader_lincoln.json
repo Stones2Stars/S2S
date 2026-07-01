@@ -1,15 +1,5 @@
 {
  "type": "LEADER_LINCOLN",
- "grants": {
-  "traits": [
-   "TRAIT_SCIENTIFIC",
-   "TRAIT_HUMANITARIAN",
-   "TRAIT_IDEALISTIC",
-   "TRAIT_SCIENTIFIC1",
-   "TRAIT_HUMANITARIAN1",
-   "TRAIT_IDEALISTIC1"
-  ]
- },
  "ai": {
   "flavours": [
    {

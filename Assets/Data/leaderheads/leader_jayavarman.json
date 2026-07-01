@@ -1,15 +1,5 @@
 {
  "type": "LEADER_JAYAVARMAN",
- "grants": {
-  "traits": [
-   "TRAIT_IMPERIALIST",
-   "TRAIT_SPIRITUAL",
-   "TRAIT_POPULIST",
-   "TRAIT_IMPERIALIST1",
-   "TRAIT_SPIRITUAL1",
-   "TRAIT_POPULIST1"
-  ]
- },
  "ai": {
   "flavours": [
    {

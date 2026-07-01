@@ -1,15 +1,5 @@
 {
  "type": "LEADER_WILHELMINA",
- "grants": {
-  "traits": [
-   "TRAIT_HUMANITARIAN",
-   "TRAIT_CHARISMATIC",
-   "TRAIT_POPULIST",
-   "TRAIT_HUMANITARIAN1",
-   "TRAIT_CHARISMATIC1",
-   "TRAIT_POPULIST1"
-  ]
- },
  "ai": {
   "flavours": [
    {

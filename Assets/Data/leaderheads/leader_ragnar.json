@@ -1,15 +1,5 @@
 {
  "type": "LEADER_RAGNAR",
- "grants": {
-  "traits": [
-   "TRAIT_SEAFARING",
-   "TRAIT_PROGRESSIST",
-   "TRAIT_BARBARIC",
-   "TRAIT_SEAFARING1",
-   "TRAIT_PROGRESSIST1",
-   "TRAIT_BARBARIC1"
-  ]
- },
  "ai": {
   "flavours": [
    {

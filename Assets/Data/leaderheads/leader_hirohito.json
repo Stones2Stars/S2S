@@ -1,15 +1,5 @@
 {
  "type": "LEADER_HIROHITO",
- "grants": {
-  "traits": [
-   "TRAIT_IMPERIALIST",
-   "TRAIT_PROTECTIVE",
-   "TRAIT_CRUEL",
-   "TRAIT_IMPERIALIST1",
-   "TRAIT_PROTECTIVE1",
-   "TRAIT_CRUEL1"
-  ]
- },
  "ai": {
   "flavours": [
    {

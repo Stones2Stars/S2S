@@ -1,15 +1,5 @@
 {
  "type": "LEADER_FREDERICK",
- "grants": {
-  "traits": [
-   "TRAIT_PROGRESSIST",
-   "TRAIT_SCIENTIFIC",
-   "TRAIT_MEGALOMANIAC",
-   "TRAIT_PROGRESSIST1",
-   "TRAIT_SCIENTIFIC1",
-   "TRAIT_MEGALOMANIAC1"
-  ]
- },
  "ai": {
   "flavours": [
    {

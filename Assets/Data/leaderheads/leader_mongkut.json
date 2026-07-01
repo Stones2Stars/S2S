@@ -1,15 +1,5 @@
 {
  "type": "LEADER_MONGKUT",
- "grants": {
-  "traits": [
-   "TRAIT_CREATIVE",
-   "TRAIT_PHILOSOPHICAL",
-   "TRAIT_FOREIGN",
-   "TRAIT_CREATIVE1",
-   "TRAIT_PHILOSOPHICAL1",
-   "TRAIT_FOREIGN1"
-  ]
- },
  "ai": {
   "flavours": [
    {

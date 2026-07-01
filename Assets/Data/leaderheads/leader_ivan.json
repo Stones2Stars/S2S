@@ -1,15 +1,5 @@
 {
  "type": "LEADER_IVAN",
- "grants": {
-  "traits": [
-   "TRAIT_AGGRESSIVE",
-   "TRAIT_AGRICULTURAL",
-   "TRAIT_CRUEL",
-   "TRAIT_AGGRESSIVE1",
-   "TRAIT_AGRICULTURAL1",
-   "TRAIT_CRUEL1"
-  ]
- },
  "ai": {
   "flavours": [
    {

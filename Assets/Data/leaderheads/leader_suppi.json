@@ -1,15 +1,5 @@
 {
  "type": "LEADER_SUPPI",
- "grants": {
-  "traits": [
-   "TRAIT_EXPANSIVE",
-   "TRAIT_IMPERIALIST",
-   "TRAIT_EXCESSIVE",
-   "TRAIT_EXPANSIVE1",
-   "TRAIT_IMPERIALIST1",
-   "TRAIT_EXCESSIVE1"
-  ]
- },
  "ai": {
   "flavours": [
    {

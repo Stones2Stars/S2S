@@ -1,15 +1,5 @@
 {
  "type": "LEADER_CLEOPATRA",
- "grants": {
-  "traits": [
-   "TRAIT_PROTECTIVE",
-   "TRAIT_CHARISMATIC",
-   "TRAIT_FOREIGN",
-   "TRAIT_PROTECTIVE1",
-   "TRAIT_CHARISMATIC1",
-   "TRAIT_FOREIGN1"
-  ]
- },
  "ai": {
   "flavours": [
    {

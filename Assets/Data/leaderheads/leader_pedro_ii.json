@@ -1,15 +1,5 @@
 {
  "type": "LEADER_PEDRO_II",
- "grants": {
-  "traits": [
-   "TRAIT_SCIENTIFIC",
-   "TRAIT_CREATIVE",
-   "TRAIT_EXCESSIVE",
-   "TRAIT_SCIENTIFIC1",
-   "TRAIT_CREATIVE1",
-   "TRAIT_EXCESSIVE1"
-  ]
- },
  "ai": {
   "flavours": [
    {

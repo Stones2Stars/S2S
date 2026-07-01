@@ -1,15 +1,5 @@
 {
  "type": "LEADER_QIN_SHI_HUANG",
- "grants": {
-  "traits": [
-   "TRAIT_INDUSTRIOUS",
-   "TRAIT_PROTECTIVE",
-   "TRAIT_ISOLATIONIST",
-   "TRAIT_INDUSTRIOUS1",
-   "TRAIT_PROTECTIVE1",
-   "TRAIT_ISOLATIONIST1"
-  ]
- },
  "ai": {
   "flavours": [
    {

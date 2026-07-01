@@ -1,15 +1,5 @@
 {
  "type": "LEADER_MENZIES",
- "grants": {
-  "traits": [
-   "TRAIT_POLITICIAN",
-   "TRAIT_FINANCIAL",
-   "TRAIT_EXCESSIVE",
-   "TRAIT_POLITICIAN1",
-   "TRAIT_FINANCIAL1",
-   "TRAIT_EXCESSIVE1"
-  ]
- },
  "ai": {
   "flavours": [
    {

@@ -1,16 +1,5 @@
 {
  "type": "LEADER_NEANDERTHAL",
- "grants": {
-  "traits": [
-   "TRAIT_BARBARIC"
-  ],
-  "developingTraits": [
-   "TRAIT_BARBARIC"
-  ],
-  "complexTraits": [
-   "TRAIT_BARBARIC"
-  ]
- },
  "ai": {
   "npc": true,
   "personality": {

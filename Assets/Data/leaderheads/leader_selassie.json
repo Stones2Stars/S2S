@@ -1,15 +1,5 @@
 {
  "type": "LEADER_SELASSIE",
- "grants": {
-  "traits": [
-   "TRAIT_PHILOSOPHICAL",
-   "TRAIT_PROGRESSIST",
-   "TRAIT_IDEALISTIC",
-   "TRAIT_PHILOSOPHICAL1",
-   "TRAIT_PROGRESSIST1",
-   "TRAIT_IDEALISTIC1"
-  ]
- },
  "ai": {
   "flavours": [
    {

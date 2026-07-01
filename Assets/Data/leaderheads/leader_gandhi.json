@@ -1,15 +1,5 @@
 {
  "type": "LEADER_GANDHI",
- "grants": {
-  "traits": [
-   "TRAIT_HUMANITARIAN",
-   "TRAIT_PHILOSOPHICAL",
-   "TRAIT_IDEALISTIC",
-   "TRAIT_HUMANITARIAN1",
-   "TRAIT_PHILOSOPHICAL1",
-   "TRAIT_IDEALISTIC1"
-  ]
- },
  "ai": {
   "flavours": [
    {

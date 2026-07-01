@@ -1,15 +1,5 @@
 {
  "type": "LEADER_WANGKON",
- "grants": {
-  "traits": [
-   "TRAIT_DECEIVER",
-   "TRAIT_PROTECTIVE",
-   "TRAIT_TEMPERAMENTAL",
-   "TRAIT_DECEIVER1",
-   "TRAIT_PROTECTIVE1",
-   "TRAIT_TEMPERAMENTAL1"
-  ]
- },
  "ai": {
   "flavours": [
    {

@@ -1,15 +1,5 @@
 {
  "type": "LEADER_MENELIK",
- "grants": {
-  "traits": [
-   "TRAIT_PROTECTIVE",
-   "TRAIT_TEMPERAMENTAL",
-   "TRAIT_CHARISMATIC",
-   "TRAIT_PROTECTIVE1",
-   "TRAIT_TEMPERAMENTAL1",
-   "TRAIT_CHARISMATIC1"
-  ]
- },
  "ai": {
   "flavours": [
    {

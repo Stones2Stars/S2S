@@ -1,15 +1,5 @@
 {
  "type": "LEADER_SALAMASINA",
- "grants": {
-  "traits": [
-   "TRAIT_ORGANIZED",
-   "TRAIT_SCIENTIFIC",
-   "TRAIT_CRUEL",
-   "TRAIT_ORGANIZED1",
-   "TRAIT_SCIENTIFIC1",
-   "TRAIT_CRUEL1"
-  ]
- },
  "ai": {
   "flavours": [
    {

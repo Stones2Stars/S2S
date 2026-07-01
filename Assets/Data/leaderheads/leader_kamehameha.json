@@ -1,15 +1,5 @@
 {
  "type": "LEADER_KAMEHAMEHA",
- "grants": {
-  "traits": [
-   "TRAIT_SEAFARING",
-   "TRAIT_PROTECTIVE",
-   "TRAIT_ANTI_CLERICAL",
-   "TRAIT_SEAFARING1",
-   "TRAIT_PROTECTIVE1",
-   "TRAIT_ANTI_CLERICAL1"
-  ]
- },
  "ai": {
   "flavours": [
    {

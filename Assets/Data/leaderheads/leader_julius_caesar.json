@@ -1,15 +1,5 @@
 {
  "type": "LEADER_JULIUS_CAESAR",
- "grants": {
-  "traits": [
-   "TRAIT_ORGANIZED",
-   "TRAIT_POLITICIAN",
-   "TRAIT_POPULIST",
-   "TRAIT_ORGANIZED1",
-   "TRAIT_POLITICIAN1",
-   "TRAIT_POPULIST1"
-  ]
- },
  "ai": {
   "flavours": [
    {

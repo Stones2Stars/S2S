@@ -1,15 +1,5 @@
 {
  "type": "LEADER_CATHERINE",
- "grants": {
-  "traits": [
-   "TRAIT_CREATIVE",
-   "TRAIT_IMPERIALIST",
-   "TRAIT_FOREIGN",
-   "TRAIT_CREATIVE1",
-   "TRAIT_IMPERIALIST1",
-   "TRAIT_FOREIGN1"
-  ]
- },
  "ai": {
   "flavours": [
    {

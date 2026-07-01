@@ -1,15 +1,5 @@
 {
  "type": "LEADER_MANSA_MUSA",
- "grants": {
-  "traits": [
-   "TRAIT_SCIENTIFIC",
-   "TRAIT_FINANCIAL",
-   "TRAIT_EXCESSIVE",
-   "TRAIT_SCIENTIFIC1",
-   "TRAIT_FINANCIAL1",
-   "TRAIT_EXCESSIVE1"
-  ]
- },
  "ai": {
   "flavours": [
    {

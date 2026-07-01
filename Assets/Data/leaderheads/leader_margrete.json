@@ -1,15 +1,5 @@
 {
  "type": "LEADER_MARGRETE",
- "grants": {
-  "traits": [
-   "TRAIT_CHARISMATIC",
-   "TRAIT_INDUSTRIOUS",
-   "TRAIT_ISOLATIONIST",
-   "TRAIT_CHARISMATIC1",
-   "TRAIT_INDUSTRIOUS1",
-   "TRAIT_ISOLATIONIST1"
-  ]
- },
  "ai": {
   "flavours": [
    {

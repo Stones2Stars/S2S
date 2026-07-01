@@ -1,15 +1,5 @@
 {
  "type": "LEADER_SOLOMON",
- "grants": {
-  "traits": [
-   "TRAIT_SPIRITUAL",
-   "TRAIT_SCIENTIFIC",
-   "TRAIT_TEMPERAMENTAL",
-   "TRAIT_SPIRITUAL1",
-   "TRAIT_SCIENTIFIC1",
-   "TRAIT_TEMPERAMENTAL1"
-  ]
- },
  "ai": {
   "flavours": [
    {

@@ -1,15 +1,5 @@
 {
  "type": "LEADER_DIDO",
- "grants": {
-  "traits": [
-   "TRAIT_CHARISMATIC",
-   "TRAIT_AGRICULTURAL",
-   "TRAIT_FOREIGN",
-   "TRAIT_CHARISMATIC1",
-   "TRAIT_AGRICULTURAL1",
-   "TRAIT_FOREIGN1"
-  ]
- },
  "ai": {
   "flavours": [
    {

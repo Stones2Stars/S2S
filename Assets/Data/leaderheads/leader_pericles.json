@@ -1,15 +1,5 @@
 {
  "type": "LEADER_PERICLES",
- "grants": {
-  "traits": [
-   "TRAIT_PHILOSOPHICAL",
-   "TRAIT_CREATIVE",
-   "TRAIT_POPULIST",
-   "TRAIT_PHILOSOPHICAL1",
-   "TRAIT_CREATIVE1",
-   "TRAIT_POPULIST1"
-  ]
- },
  "ai": {
   "flavours": [
    {

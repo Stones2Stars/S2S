@@ -1,15 +1,5 @@
 {
  "type": "LEADER_CUNHAMBEBE",
- "grants": {
-  "traits": [
-   "TRAIT_POLITICIAN",
-   "TRAIT_PROGRESSIST",
-   "TRAIT_HUNTER_GATHERER",
-   "TRAIT_POLITICIAN1",
-   "TRAIT_PROGRESSIST1",
-   "TRAIT_HUNTER_GATHERER1"
-  ]
- },
  "ai": {
   "flavours": [
    {

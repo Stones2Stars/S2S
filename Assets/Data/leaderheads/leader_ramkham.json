@@ -1,15 +1,5 @@
 {
  "type": "LEADER_RAMKHAM",
- "grants": {
-  "traits": [
-   "TRAIT_EXPANSIVE",
-   "TRAIT_INDUSTRIOUS",
-   "TRAIT_FANATICAL",
-   "TRAIT_EXPANSIVE1",
-   "TRAIT_INDUSTRIOUS1",
-   "TRAIT_FANATICAL1"
-  ]
- },
  "ai": {
   "flavours": [
    {

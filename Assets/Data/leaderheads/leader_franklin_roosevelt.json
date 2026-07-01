@@ -1,15 +1,5 @@
 {
  "type": "LEADER_FRANKLIN_ROOSEVELT",
- "grants": {
-  "traits": [
-   "TRAIT_INDUSTRIOUS",
-   "TRAIT_ORGANIZED",
-   "TRAIT_POPULIST",
-   "TRAIT_INDUSTRIOUS1",
-   "TRAIT_ORGANIZED1",
-   "TRAIT_POPULIST1"
-  ]
- },
  "ai": {
   "flavours": [
    {

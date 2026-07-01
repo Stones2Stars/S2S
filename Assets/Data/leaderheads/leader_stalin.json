@@ -1,15 +1,5 @@
 {
  "type": "LEADER_STALIN",
- "grants": {
-  "traits": [
-   "TRAIT_DECEIVER",
-   "TRAIT_POLITICIAN",
-   "TRAIT_CRUEL",
-   "TRAIT_DECEIVER1",
-   "TRAIT_POLITICIAN1",
-   "TRAIT_CRUEL1"
-  ]
- },
  "ai": {
   "flavours": [
    {

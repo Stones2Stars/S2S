@@ -1,15 +1,5 @@
 {
  "type": "LEADER_DEGANAWIDA",
- "grants": {
-  "traits": [
-   "TRAIT_ORGANIZED",
-   "TRAIT_CREATIVE",
-   "TRAIT_ISOLATIONIST",
-   "TRAIT_ORGANIZED1",
-   "TRAIT_CREATIVE1",
-   "TRAIT_ISOLATIONIST1"
-  ]
- },
  "ai": {
   "flavours": [
    {

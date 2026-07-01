@@ -1,15 +1,5 @@
 {
  "type": "LEADER_CETSHWAYO",
- "grants": {
-  "traits": [
-   "TRAIT_AGGRESSIVE",
-   "TRAIT_ORGANIZED",
-   "TRAIT_REVOLUTIONARY",
-   "TRAIT_AGGRESSIVE1",
-   "TRAIT_ORGANIZED1",
-   "TRAIT_REVOLUTIONARY1"
-  ]
- },
  "ai": {
   "flavours": [
    {

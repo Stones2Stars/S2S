@@ -1,15 +1,5 @@
 {
  "type": "LEADER_WILLEM_VAN_ORANJE",
- "grants": {
-  "traits": [
-   "TRAIT_SEAFARING",
-   "TRAIT_FINANCIAL",
-   "TRAIT_REVOLUTIONARY",
-   "TRAIT_SEAFARING1",
-   "TRAIT_FINANCIAL1",
-   "TRAIT_REVOLUTIONARY1"
-  ]
- },
  "ai": {
   "flavours": [
    {
