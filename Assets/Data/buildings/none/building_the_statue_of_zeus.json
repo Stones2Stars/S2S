@@ -42,6 +42,11 @@
  "grants": {
   "holyCity": "RELIGION_HELLENISM"
  },
+ "shrine": "RELIGION_HELLENISM",
+ "attributes": {
+  "nukeImmune": true,
+  "teamShare": true
+ },
  "ui": {
   "art": {
    "movie": {
@@ -60,10 +65,7 @@
   "commerceDoubleTime": {
    "culture": 1000
   },
-  "shrine": "RELIGION_HELLENISM",
   "notConstructible": true,
-  "nukeImmune": true,
-  "teamShare": true,
   "worth": 8,
   "militaryWorth": 4,
   "conquestProbability": 100,

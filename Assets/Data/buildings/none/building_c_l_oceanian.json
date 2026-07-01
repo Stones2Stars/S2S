@@ -122,6 +122,11 @@
    ]
   }
  },
+ "grants": {
+  "freePromotions": [
+   "PROMOTION_CULTURE_OCEANIAN"
+  ]
+ },
  "cost": {
   "production": 100
  },
@@ -132,6 +137,9 @@
    }
   ]
  },
+ "attributes": {
+  "nukeImmune": true
+ },
  "world": {
   "art": {
    "icon": "ART_DEF_BUILDING_CULTURE_OCEANIAN"
@@ -141,7 +149,6 @@
   "description": "TXT_KEY_BUILDING_C_L_OCEANIAN",
   "civilopedia": "TXT_KEY_BUILDING_C_L_PEDIA",
   "help": "TXT_KEY_BUILDING_C_L_HELP",
-  "nukeImmune": true,
   "conquestProbability": 85,
   "mapCategories": [
    "MAPCATEGORY_EARTH"

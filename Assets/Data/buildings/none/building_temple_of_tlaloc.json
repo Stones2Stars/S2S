@@ -115,6 +115,9 @@
    }
   ]
  },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
  "world": {
   "art": {
    "icon": "ART_DEF_BUILDING_TEMPLE_OF_TLALOC"
@@ -126,7 +129,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_TEMPLE_OF_TLALOC",
   "civilopedia": "TXT_KEY_BUILDING_TEMPLE_OF_TLALOC_PEDIA",
-  "neverCapture": true,
   "worth": 6,
   "specialBuildingType": "SPECIALBUILDING_PANTHEON",
   "religion": "RELIGION_NAGHUALISM",

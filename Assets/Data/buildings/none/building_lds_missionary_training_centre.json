@@ -59,6 +59,9 @@
    }
   ]
  },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
  "world": {
   "art": {
    "icon": "ART_DEF_BUILDING_LDS_MISSIONARY_TRAINING_CENTRE"
@@ -73,7 +76,6 @@
   "commerceDoubleTime": {
    "culture": 1000
   },
-  "neverCapture": true,
   "worth": 3,
   "religion": "RELIGION_MORMON",
   "advisor": "ADVISOR_RELIGION",

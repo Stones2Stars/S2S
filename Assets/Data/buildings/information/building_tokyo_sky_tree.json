@@ -69,6 +69,9 @@
   "materialsModifier": 1,
   "complexityModifier": 1
  },
+ "attributes": {
+  "nukeImmune": true
+ },
  "ui": {
   "art": {
    "movie": {
@@ -84,7 +87,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_TOKYO_SKY_TREE",
   "civilopedia": "TXT_KEY_BUILDING_TOKYO_SKY_TREE_PEDIA",
-  "nukeImmune": true,
   "worth": 10,
   "conquestProbability": 100,
   "sightRange": 3,

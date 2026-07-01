@@ -16,6 +16,10 @@
    ]
   }
  },
+ "attributes": {
+  "nukeImmune": true,
+  "destroyedOnCapture": true
+ },
  "world": {
   "art": {
    "icon": "ART_DEF_BUILDING_CIVIC_EGALITARIAN"
@@ -25,8 +29,6 @@
   "description": "TXT_KEY_BUILDING_CIVIC_EGALITARIAN",
   "civilopedia": "TXT_KEY_BUILDING_CIVIC_EGALITARIAN_PEDIA",
   "notConstructible": true,
-  "nukeImmune": true,
-  "neverCapture": true,
   "autoBuild": true,
   "mapCategories": [
    "MAPCATEGORY_EARTH"

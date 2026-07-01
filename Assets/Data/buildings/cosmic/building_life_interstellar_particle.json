@@ -41,6 +41,9 @@
  "cost": {
   "production": 16547
  },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
  "world": {
   "art": {
    "icon": "ART_DEF_BUILDING_LIFE_INTERSTELLAR_PARTICLE"
@@ -49,7 +52,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_LIFE_INTERSTELLAR_PARTICLE",
   "civilopedia": "TXT_KEY_BUILDING_LIFE_INTERSTELLAR_PARTICLE_PEDIA",
-  "neverCapture": true,
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

@@ -55,6 +55,9 @@
    "flat": -1
   }
  },
+ "attributes": {
+  "nukeImmune": true
+ },
  "world": {
   "art": {
    "icon": "ART_DEF_BUILDING_PROPERTYWATERPOLLUTION"
@@ -64,7 +67,6 @@
   "description": "TXT_KEY_BUILDING_POLLUTION_MINOR_GROUNDWATER_POLLUTION",
   "civilopedia": "TXT_KEY_BUILDING_WATER_POLLUTION_PEDIA",
   "notConstructible": true,
-  "nukeImmune": true,
   "conquestProbability": 100,
   "mapCategories": [
    "MAPCATEGORY_EARTH"

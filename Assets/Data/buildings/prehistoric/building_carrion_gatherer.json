@@ -175,6 +175,9 @@
   "production": 30,
   "countModifier": 1
  },
+ "attributes": {
+  "nukeImmune": true
+ },
  "world": {
   "art": {
    "icon": "ART_DEF_BUILDING_CARRION_GATHERER"
@@ -183,7 +186,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_CARRION_GATHERER",
   "civilopedia": "TXT_KEY_BUILDING_CARRION_GATHERER_PEDIA",
-  "nukeImmune": true,
   "advisor": "ADVISOR_GROWTH",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

@@ -85,6 +85,9 @@
    }
   ]
  },
+ "attributes": {
+  "nukeImmune": true
+ },
  "world": {
   "art": {
    "icon": "ART_DEF_BUILDING_REBEL_CAMP"
@@ -93,7 +96,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_REBEL_CAMP",
   "civilopedia": "TXT_KEY_BUILDING_REBEL_CAMP_PEDIA",
-  "nukeImmune": true,
   "militaryWorth": 1,
   "advisor": "ADVISOR_ECONOMY",
   "visibilityPriority": 1,

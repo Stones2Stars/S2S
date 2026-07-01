@@ -26,6 +26,10 @@
    "flat": -25
   }
  },
+ "attributes": {
+  "nukeImmune": true,
+  "destroyedOnCapture": true
+ },
  "world": {
   "art": {
    "icon": "ART_DEF_BUILDING_ORDINANCE_TIRE_RECYCLING_PROGRAM"
@@ -35,8 +39,6 @@
   "description": "TXT_KEY_BUILDING_ORDINANCE_EFFECT_TIRE_RECYCLING_PROGRAM",
   "civilopedia": "TXT_KEY_BUILDING_ORDINANCE_EFFECT_TIRE_RECYCLING_PROGRAM_PEDIA",
   "notConstructible": true,
-  "nukeImmune": true,
-  "neverCapture": true,
   "mapCategories": [
    "MAPCATEGORY_EARTH"
   ]

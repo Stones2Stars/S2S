@@ -81,6 +81,11 @@
    }
   ]
  },
+ "attributes": {
+  "nukeImmune": true,
+  "orbital": true,
+  "destroyedOnCapture": true
+ },
  "world": {
   "art": {
    "icon": "ART_DEF_BUILDING_CISLUNAR_FACTORY"
@@ -92,9 +97,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_CISLUNAR_FACTORY",
   "civilopedia": "TXT_KEY_BUILDING_CISLUNAR_FACTORY_PEDIA",
-  "nukeImmune": true,
-  "neverCapture": true,
-  "orbital": true,
   "worth": 6,
   "militaryWorth": 20,
   "advisor": "ADVISOR_GROWTH",

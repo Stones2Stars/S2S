@@ -102,6 +102,9 @@
    }
   ]
  },
+ "attributes": {
+  "nukeImmune": true
+ },
  "world": {
   "art": {
    "icon": "ART_DEF_BUILDING_ASSASSINS_DEN"
@@ -110,7 +113,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_ASSASSINS_DEN",
   "civilopedia": "TXT_KEY_BUILDING_ASSASSINS_DEN_PEDIA",
-  "nukeImmune": true,
   "militaryWorth": 1,
   "advisor": "ADVISOR_ECONOMY",
   "visibilityPriority": 1,

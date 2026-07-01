@@ -70,6 +70,9 @@
    "flat": -1
   }
  },
+ "attributes": {
+  "nukeImmune": true
+ },
  "world": {
   "art": {
    "icon": "ART_DEF_BUILDING_PESTS_APHIDS"
@@ -79,7 +82,6 @@
   "description": "TXT_KEY_BUILDING_PESTS_APHIDS",
   "civilopedia": "TXT_KEY_BUILDING_PESTS_PEDIA",
   "notConstructible": true,
-  "nukeImmune": true,
   "autoBuild": true,
   "conquestProbability": 100,
   "mapCategories": [

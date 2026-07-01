@@ -39,6 +39,10 @@
    "flat": -25
   }
  },
+ "attributes": {
+  "nukeImmune": true,
+  "destroyedOnCapture": true
+ },
  "world": {
   "art": {
    "icon": "ART_DEF_BUILDING_ORDINANCE_CARPOOL"
@@ -48,8 +52,6 @@
   "description": "TXT_KEY_BUILDING_ORDINANCE_EFFECT_CARPOOL",
   "civilopedia": "TXT_KEY_BUILDING_ORDINANCE_EFFECT_CARPOOL_PEDIA",
   "notConstructible": true,
-  "nukeImmune": true,
-  "neverCapture": true,
   "mapCategories": [
    "MAPCATEGORY_EARTH"
   ]

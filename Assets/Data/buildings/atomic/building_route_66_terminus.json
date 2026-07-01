@@ -24,6 +24,9 @@
    }
   }
  },
+ "attributes": {
+  "nukeImmune": true
+ },
  "world": {
   "art": {
    "icon": "ART_DEF_BUILDING_ROUTE_66_TERMINUS"
@@ -34,7 +37,6 @@
   "civilopedia": "TXT_KEY_BUILDING_ROUTE_66_PEDIA",
   "help": "TXT_KEY_BUILDING_ROUTE_66_TERMINUS_HELP",
   "notConstructible": true,
-  "nukeImmune": true,
   "worth": 10,
   "conquestProbability": 100,
   "mapCategories": [

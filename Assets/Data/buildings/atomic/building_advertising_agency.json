@@ -50,6 +50,9 @@
   "materialsModifier": 1,
   "complexityModifier": 1
  },
+ "attributes": {
+  "nukeImmune": true
+ },
  "world": {
   "art": {
    "icon": "ART_DEF_BUILDING_ADVERTISING_AGENCY"
@@ -58,7 +61,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_ADVERTISING_AGENCY",
   "civilopedia": "TXT_KEY_BUILDING_ADVERTISING_AGENCY_PEDIA",
-  "nukeImmune": true,
   "worth": 2,
   "conquestProbability": 100,
   "advisor": "ADVISOR_ECONOMY",

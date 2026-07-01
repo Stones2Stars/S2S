@@ -94,6 +94,9 @@
    }
   ]
  },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
  "world": {
   "art": {
    "icon": "ART_DEF_BUILDING_CAVE_PAINTINGS"
@@ -102,7 +105,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_CAVE_PAINTINGS",
   "civilopedia": "TXT_KEY_BUILDING_CAVE_PAINTINGS_PEDIA",
-  "neverCapture": true,
   "centerInCity": true,
   "worth": 2,
   "conquestProbability": 66,

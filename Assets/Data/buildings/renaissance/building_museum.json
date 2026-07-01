@@ -115,6 +115,9 @@
    }
   ]
  },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
  "world": {
   "art": {
    "icon": "ART_DEF_BUILDING_MUSEUM"
@@ -126,7 +129,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_MUSEUM",
   "civilopedia": "TXT_KEY_BUILDING_MUSEUM_PEDIA",
-  "neverCapture": true,
   "worth": 3,
   "dcmAirbombMission": 2,
   "advisor": "ADVISOR_SCIENCE",

@@ -31,6 +31,10 @@
    "flat": -10
   }
  },
+ "attributes": {
+  "nukeImmune": true,
+  "destroyedOnCapture": true
+ },
  "world": {
   "art": {
    "icon": "ART_DEF_BUILDING_BELIEF_RESURRECTION"
@@ -40,8 +44,6 @@
   "description": "TXT_KEY_BUILDING_BELIEF_RESURRECTION",
   "civilopedia": "TXT_KEY_BUILDING_BELIEF_RESURRECTION_PEDIA",
   "notConstructible": true,
-  "nukeImmune": true,
-  "neverCapture": true,
   "mapCategories": [
    "MAPCATEGORY_EARTH"
   ]

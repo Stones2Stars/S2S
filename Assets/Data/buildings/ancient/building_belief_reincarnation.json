@@ -31,6 +31,10 @@
    "flat": -5
   }
  },
+ "attributes": {
+  "nukeImmune": true,
+  "destroyedOnCapture": true
+ },
  "world": {
   "art": {
    "icon": "ART_DEF_BUILDING_BELIEF_REINCARNATION"
@@ -40,8 +44,6 @@
   "description": "TXT_KEY_BUILDING_BELIEF_REINCARNATION",
   "civilopedia": "TXT_KEY_BUILDING_BELIEF_REINCARNATION_PEDIA",
   "notConstructible": true,
-  "nukeImmune": true,
-  "neverCapture": true,
   "mapCategories": [
    "MAPCATEGORY_EARTH"
   ]

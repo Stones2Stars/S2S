@@ -57,6 +57,9 @@
   "sizeModifier": 1,
   "materialsModifier": 1
  },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
  "ui": {
   "art": {
    "movie": {
@@ -72,7 +75,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_CHIEFS_FUNERAL_PYRE",
   "civilopedia": "TXT_KEY_BUILDING_CHIEFS_FUNERAL_PYRE_PEDIA",
-  "neverCapture": true,
   "centerInCity": true,
   "worth": 10,
   "advisor": "ADVISOR_GROWTH",

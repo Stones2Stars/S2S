@@ -77,6 +77,9 @@
    }
   ]
  },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
  "world": {
   "art": {
    "icon": "ART_DEF_BUILDING_ZOROASTRIAN_FIRE_TEMPLE"
@@ -88,7 +91,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_ZOROASTRIAN_FIRE_TEMPLE",
   "civilopedia": "TXT_KEY_BUILDING_ZOROASTRIAN_FIRE_TEMPLE_PEDIA",
-  "neverCapture": true,
   "worth": 4,
   "specialBuildingType": "SPECIALBUILDING_TEMPLE",
   "religion": "RELIGION_ZOROASTRIANISM",

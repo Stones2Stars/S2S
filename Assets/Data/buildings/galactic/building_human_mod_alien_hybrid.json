@@ -79,6 +79,9 @@
  "cost": {
   "production": 26310
  },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
  "world": {
   "art": {
    "icon": "ART_DEF_BUILDING_HUMAN_MOD_ALIEN_HYBRID"
@@ -87,7 +90,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_HUMAN_MOD_ALIEN_HYBRID",
   "civilopedia": "TXT_KEY_BUILDING_HUMAN_MOD_ALIEN_HYBRID_PEDIA",
-  "neverCapture": true,
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

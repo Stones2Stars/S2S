@@ -81,6 +81,9 @@
  "cost": {
   "production": 2850
  },
+ "attributes": {
+  "nukeImmune": true
+ },
  "world": {
   "art": {
    "icon": "ART_DEF_BUILDING_CULTURE_CANADIAN"
@@ -89,7 +92,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_CULTURE_CANADIAN",
   "civilopedia": "TXT_KEY_BUILDING_CULTURE_CANADIAN_PEDIA",
-  "nukeImmune": true,
   "noInstanceLimit": true,
   "conquestProbability": 100,
   "specialBuildingType": "SPECIALBUILDING_C2C_CULTURE",

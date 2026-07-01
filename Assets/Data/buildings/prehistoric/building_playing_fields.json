@@ -49,6 +49,9 @@
   "sizeModifier": 3,
   "countModifier": 1
  },
+ "attributes": {
+  "nukeImmune": true
+ },
  "world": {
   "art": {
    "icon": "ART_DEF_BUILDING_PLAYING_FIELDS"
@@ -60,7 +63,6 @@
   "enabledCivilizations": [
    "CIVILIZATION_NPC_NEANDERTHAL"
   ],
-  "nukeImmune": true,
   "worth": 1,
   "conquestProbability": 100,
   "advisor": "ADVISOR_GROWTH",

@@ -65,6 +65,9 @@
    }
   ]
  },
+ "attributes": {
+  "protectedCulture": true
+ },
  "world": {
   "art": {
    "icon": "ART_DEF_BUILDING_CASTLE_KEEP"
@@ -76,7 +79,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_CASTLE_KEEP",
   "civilopedia": "TXT_KEY_BUILDING_CASTLE_KEEP_PEDIA",
-  "protectedCulture": true,
   "worth": 15,
   "militaryWorth": 25,
   "advisor": "ADVISOR_MILITARY",

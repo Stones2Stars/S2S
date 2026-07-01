@@ -16,6 +16,10 @@
    "flat": -25
   }
  },
+ "attributes": {
+  "nukeImmune": true,
+  "destroyedOnCapture": true
+ },
  "world": {
   "art": {
    "icon": "ART_DEF_BUILDING_SAFETY_POLICE_ACADEMY"
@@ -25,8 +29,6 @@
   "description": "TXT_KEY_BUILDING_SAFETY_POLICE_ACADEMY",
   "civilopedia": "TXT_KEY_BUILDING_SAFETY_POLICE_ACADEMY_PEDIA",
   "notConstructible": true,
-  "nukeImmune": true,
-  "neverCapture": true,
   "mapCategories": [
    "MAPCATEGORY_EARTH"
   ]

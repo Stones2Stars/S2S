@@ -34,6 +34,11 @@
    "flat": 5
   }
  },
+ "grants": {
+  "freePromotions": [
+   "PROMOTION_PATRIOTIC1"
+  ]
+ },
  "cost": {
   "production": 10110,
   "sizeModifier": 3,
@@ -46,6 +51,9 @@
     "FLAVOR_MILITARY": 10
    }
   ]
+ },
+ "attributes": {
+  "nukeImmune": true
  },
  "ui": {
   "art": {
@@ -66,7 +74,6 @@
   "commerceDoubleTime": {
    "culture": 1000
   },
-  "nukeImmune": true,
   "worth": 16,
   "militaryWorth": 8,
   "conquestProbability": 100,

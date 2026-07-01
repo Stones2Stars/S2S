@@ -76,6 +76,9 @@
    }
   ]
  },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
  "ui": {
   "art": {
    "movie": {
@@ -94,7 +97,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_SPACE_LABORATORY",
   "civilopedia": "TXT_KEY_BUILDING_SPACE_LABORATORY_PEDIA",
-  "neverCapture": true,
   "worth": 6,
   "dcmAirbombMission": 2,
   "specialBuildingType": "SPECIALBUILDING_SPACE_LABORATORY",

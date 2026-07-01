@@ -56,6 +56,9 @@
    }
   ]
  },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
  "world": {
   "art": {
    "icon": "ART_DEF_BUILDING_MADRASSA"
@@ -67,7 +70,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_MADRASSA",
   "civilopedia": "TXT_KEY_BUILDING_MADRASSA_PEDIA",
-  "neverCapture": true,
   "worth": 5,
   "dcmAirbombMission": 2,
   "advisor": "ADVISOR_SCIENCE",

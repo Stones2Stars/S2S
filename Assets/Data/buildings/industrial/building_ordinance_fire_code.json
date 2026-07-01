@@ -35,6 +35,10 @@
    }
   ]
  },
+ "attributes": {
+  "nukeImmune": true,
+  "destroyedOnCapture": true
+ },
  "world": {
   "art": {
    "icon": "ART_DEF_BUILDING_ORDINANCE_FIRE_CODE"
@@ -46,8 +50,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_ORDINANCE_FIRE_CODE",
   "civilopedia": "TXT_KEY_BUILDING_ORDINANCE_FIRE_CODE_PEDIA",
-  "nukeImmune": true,
-  "neverCapture": true,
   "worth": 10,
   "advisor": "ADVISOR_GROWTH",
   "mapCategories": [

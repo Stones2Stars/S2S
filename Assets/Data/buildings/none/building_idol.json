@@ -91,6 +91,9 @@
    }
   ]
  },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
  "world": {
   "art": {
    "icon": "ART_DEF_BUILDING_IDOL"
@@ -102,7 +105,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_IDOL",
   "civilopedia": "TXT_KEY_BUILDING_IDOL_PEDIA",
-  "neverCapture": true,
   "worth": 3,
   "specialBuildingType": "SPECIALBUILDING_MONASTERY",
   "religion": "RELIGION_RODNOVERA",

@@ -31,6 +31,9 @@
    "flat": -1
   }
  },
+ "attributes": {
+  "nukeImmune": true
+ },
  "world": {
   "art": {
    "icon": "ART_DEF_BUILDING_PESTS_ANTS"
@@ -40,7 +43,6 @@
   "description": "TXT_KEY_BUILDING_PESTS_ANTS",
   "civilopedia": "TXT_KEY_BUILDING_PESTS_PEDIA",
   "notConstructible": true,
-  "nukeImmune": true,
   "autoBuild": true,
   "conquestProbability": 100,
   "mapCategories": [

@@ -44,6 +44,10 @@
    "flat": 5
   }
  },
+ "attributes": {
+  "nukeImmune": true,
+  "destroyedOnCapture": true
+ },
  "ui": {
   "art": {
    "movie": {
@@ -60,8 +64,6 @@
   "description": "TXT_KEY_BUILDING_THE_NATIONAL_STANDARD_OF_MEASUREMENT",
   "civilopedia": "TXT_KEY_BUILDING_THE_NATIONAL_STANDARD_OF_MEASUREMENT_PEDIA",
   "notConstructible": true,
-  "nukeImmune": true,
-  "neverCapture": true,
   "worth": 10,
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [

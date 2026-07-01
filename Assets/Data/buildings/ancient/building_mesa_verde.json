@@ -86,6 +86,11 @@
    "SPECIALIST_ENGINEER": 1
   }
  },
+ "grants": {
+  "freePromotions": [
+   "PROMOTION_WARMTH1"
+  ]
+ },
  "cost": {
   "production": 1038,
   "sizeModifier": 3,

@@ -77,6 +77,9 @@
   "materialsModifier": 1,
   "complexityModifier": 2
  },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
  "ui": {
   "art": {
    "movie": {
@@ -92,7 +95,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_DEPARTMENT_OF_FOREIGN_POLICY",
   "civilopedia": "TXT_KEY_BUILDING_DEPARTMENT_OF_FOREIGN_POLICY_PEDIA",
-  "neverCapture": true,
   "advisor": "ADVISOR_SCIENCE",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

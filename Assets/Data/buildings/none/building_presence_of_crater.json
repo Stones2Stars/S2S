@@ -27,6 +27,9 @@
    ]
   }
  },
+ "attributes": {
+  "nukeImmune": true
+ },
  "world": {
   "art": {
    "icon": "ART_DEF_BUILDING_CREATION_MYTH"
@@ -36,7 +39,6 @@
   "description": "TXT_KEY_BUILDING_PRESENCE_OF_CRATER",
   "civilopedia": "TXT_KEY_BUILDING_FOLKLORE_PRESENCE_OF_ORIGIN_PEDIA",
   "notConstructible": true,
-  "nukeImmune": true,
   "autoBuild": true,
   "mapCategories": [
    "MAPCATEGORY_EARTH"

@@ -51,6 +51,9 @@
    }
   ]
  },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
  "ui": {
   "art": {
    "movie": {
@@ -69,7 +72,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_MIND_STORAGE",
   "civilopedia": "TXT_KEY_BUILDING_MIND_STORAGE_PEDIA",
-  "neverCapture": true,
   "centerInCity": true,
   "worth": 10,
   "dcmAirbombMission": 2,

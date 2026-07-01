@@ -48,6 +48,11 @@
    "percent": 100
   }
  },
+ "grants": {
+  "freePromotions": [
+   "PROMOTION_BAMBOO_ARMOR"
+  ]
+ },
  "cost": {
   "production": 68,
   "sizeModifier": 1,
@@ -66,7 +71,6 @@
   "enabledCivilizations": [
    "CIVILIZATION_NPC_NEANDERTHAL"
   ],
-  "applyFreePromotionOnMove": true,
   "advisor": "ADVISOR_MILITARY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

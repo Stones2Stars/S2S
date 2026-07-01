@@ -78,6 +78,9 @@
    }
   ]
  },
+ "attributes": {
+  "nukeImmune": true
+ },
  "world": {
   "art": {
    "icon": "ART_DEF_BUILDING_CAPTURE_THE_FLAG"
@@ -89,7 +92,6 @@
   "enabledCivilizations": [
    "CIVILIZATION_NPC_NEANDERTHAL"
   ],
-  "nukeImmune": true,
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

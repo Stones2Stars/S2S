@@ -188,6 +188,9 @@
    }
   ]
  },
+ "attributes": {
+  "nukeImmune": true
+ },
  "world": {
   "art": {
    "icon": "ART_DEF_BUILDING_DRUGLORDS_MANSON"
@@ -196,7 +199,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_DRUGLORDS_MANSON",
   "civilopedia": "TXT_KEY_BUILDING_DRUGLORDS_MANSON_PEDIA",
-  "nukeImmune": true,
   "militaryWorth": 1,
   "advisor": "ADVISOR_ECONOMY",
   "visibilityPriority": 1,

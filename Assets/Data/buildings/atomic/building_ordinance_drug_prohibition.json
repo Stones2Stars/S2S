@@ -16,6 +16,10 @@
    "flat": 5
   }
  },
+ "attributes": {
+  "nukeImmune": true,
+  "destroyedOnCapture": true
+ },
  "world": {
   "art": {
    "icon": "ART_DEF_BUILDING_ORDINANCE_DRUG_PROHIBITION"
@@ -25,8 +29,6 @@
   "description": "TXT_KEY_BUILDING_ORDINANCE_DRUG_PROHIBITION",
   "civilopedia": "TXT_KEY_BUILDING_ORDINANCE_DRUG_PROHIBITION_PEDIA",
   "notConstructible": true,
-  "nukeImmune": true,
-  "neverCapture": true,
   "mapCategories": [
    "MAPCATEGORY_EARTH"
   ]

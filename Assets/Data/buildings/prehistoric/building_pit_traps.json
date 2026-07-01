@@ -48,11 +48,20 @@
    "amount": {
     "percent": 5
    },
-   "damageAttackerChance": {
-    "flat": 20
-   },
-   "damageToAttacker": {
-    "flat": 5
+   "counterDamage": {
+    "damage": 5,
+    "chance": 20,
+    "units": {
+     "unitCombats": [
+      "UNITCOMBAT_ARCHER",
+      "UNITCOMBAT_GUN",
+      "UNITCOMBAT_MELEE",
+      "UNITCOMBAT_MOUNTED",
+      "UNITCOMBAT_SIEGE",
+      "UNITCOMBAT_THROWING",
+      "UNITCOMBAT_WHEELED"
+     ]
+    }
    }
   }
  },
@@ -88,15 +97,6 @@
   "civilopedia": "TXT_KEY_BUILDING_PIT_TRAPS_PEDIA",
   "enabledCivilizations": [
    "CIVILIZATION_NPC_NEANDERTHAL"
-  ],
-  "damageAttackingUnitCombats": [
-   "UNITCOMBAT_ARCHER",
-   "UNITCOMBAT_GUN",
-   "UNITCOMBAT_MELEE",
-   "UNITCOMBAT_MOUNTED",
-   "UNITCOMBAT_SIEGE",
-   "UNITCOMBAT_THROWING",
-   "UNITCOMBAT_WHEELED"
   ],
   "militaryWorth": 1,
   "advisor": "ADVISOR_MILITARY",

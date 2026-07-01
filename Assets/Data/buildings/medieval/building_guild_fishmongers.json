@@ -75,6 +75,9 @@
   "materialsModifier": 1,
   "complexityModifier": 1
  },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
  "ui": {
   "art": {
    "movie": {
@@ -90,7 +93,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_GUILD_FISHMONGERS",
   "civilopedia": "TXT_KEY_BUILDING_GUILDS_PEDIA",
-  "neverCapture": true,
   "greatPeopleUnitType": "UNIT_MERCHANT",
   "specialBuildingType": "SPECIALBUILDING_GUILD",
   "advisor": "ADVISOR_GROWTH",

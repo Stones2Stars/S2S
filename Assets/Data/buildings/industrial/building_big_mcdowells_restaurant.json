@@ -142,6 +142,9 @@
    }
   ]
  },
+ "attributes": {
+  "nukeImmune": true
+ },
  "world": {
   "art": {
    "icon": "ART_DEF_BUILDING_BIG_MCDOWELLS_RESTAURANT"
@@ -153,7 +156,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_BIG_MCDOWELLS_RESTAURANT",
   "civilopedia": "TXT_KEY_BUILDING_BIG_MCDOWELLS_RESTAURANT_PEDIA",
-  "nukeImmune": true,
   "worth": 8,
   "conquestProbability": 100,
   "specialBuildingType": "SPECIALBUILDING_CORPORATION",

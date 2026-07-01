@@ -24,6 +24,10 @@
    "flat": 1
   }
  },
+ "attributes": {
+  "nukeImmune": true,
+  "destroyedOnCapture": true
+ },
  "ui": {
   "art": {
    "movie": {
@@ -43,8 +47,6 @@
    "culture": 1000
   },
   "notConstructible": true,
-  "nukeImmune": true,
-  "neverCapture": true,
   "worth": 6,
   "advisor": "ADVISOR_GROWTH",
   "mapCategories": [

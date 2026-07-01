@@ -31,6 +31,9 @@
  "cost": {
   "production": 53910
  },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
  "world": {
   "art": {
    "icon": "ART_DEF_BUILDING_HUMAN_MOD_ATEMPORAL"
@@ -39,7 +42,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_HUMAN_MOD_ATEMPORAL",
   "civilopedia": "TXT_KEY_BUILDING_HUMAN_MOD_ATEMPORAL_PEDIA",
-  "neverCapture": true,
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

@@ -59,6 +59,11 @@
    "flat": 6
   }
  },
+ "grants": {
+  "freePromotions": [
+   "PROMOTION_MORALE"
+  ]
+ },
  "cost": {
   "production": 1860,
   "sizeModifier": 2,

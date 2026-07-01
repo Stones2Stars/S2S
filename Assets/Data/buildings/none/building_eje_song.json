@@ -60,6 +60,11 @@
    "SPECIALIST_PRIEST": 2
   }
  },
+ "grants": {
+  "freePromotions": [
+   "PROMOTION_WIND_HORSE"
+  ]
+ },
  "cost": {
   "production": 98,
   "sizeModifier": 1,
@@ -74,6 +79,9 @@
    }
   ]
  },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
  "world": {
   "art": {
    "icon": "ART_DEF_BUILDING_EJE_SONG"
@@ -85,7 +93,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_EJE_SONG",
   "civilopedia": "TXT_KEY_BUILDING_EJE_SONG_PEDIA",
-  "neverCapture": true,
   "worth": 6,
   "religion": "RELIGION_TENGRIISM",
   "advisor": "ADVISOR_RELIGION",

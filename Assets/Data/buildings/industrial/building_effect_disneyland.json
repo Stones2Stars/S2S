@@ -16,6 +16,10 @@
    "flat": 1
   }
  },
+ "attributes": {
+  "nukeImmune": true,
+  "destroyedOnCapture": true
+ },
  "world": {
   "art": {
    "icon": "ART_DEF_BUILDING_DISNEYLAND"
@@ -25,8 +29,6 @@
   "description": "TXT_KEY_BUILDING_EFFECT_DISNEYLAND",
   "civilopedia": "TXT_KEY_BUILDING_EFFECT_DISNEYLAND_PEDIA",
   "notConstructible": true,
-  "nukeImmune": true,
-  "neverCapture": true,
   "mapCategories": [
    "MAPCATEGORY_EARTH"
   ]

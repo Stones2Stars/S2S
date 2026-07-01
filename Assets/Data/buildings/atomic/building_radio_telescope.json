@@ -99,6 +99,9 @@
    }
   ]
  },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
  "ui": {
   "art": {
    "movie": {
@@ -117,7 +120,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_RADIO_TELESCOPE",
   "civilopedia": "TXT_KEY_BUILDING_RADIO_TELESCOPE_PEDIA",
-  "neverCapture": true,
   "worth": 8,
   "greatPeopleUnitType": "UNIT_SCIENTIST",
   "advisor": "ADVISOR_SCIENCE",

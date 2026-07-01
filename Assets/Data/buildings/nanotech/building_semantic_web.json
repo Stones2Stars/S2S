@@ -38,6 +38,9 @@
   "production": 7330,
   "complexityModifier": 2
  },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
  "ui": {
   "art": {
    "movie": {
@@ -53,7 +56,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_SEMANTIC_WEB",
   "civilopedia": "TXT_KEY_BUILDING_SEMANTIC_WEB_PEDIA",
-  "neverCapture": true,
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

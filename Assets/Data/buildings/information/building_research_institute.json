@@ -88,6 +88,9 @@
    }
   ]
  },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
  "ui": {
   "art": {
    "movie": {
@@ -106,7 +109,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_RESEARCH_INSTITUTE",
   "civilopedia": "TXT_KEY_BUILDING_RESEARCH_INSTITUTE_PEDIA",
-  "neverCapture": true,
   "worth": 8,
   "dcmAirbombMission": 2,
   "greatPeopleUnitType": "UNIT_SCIENTIST",

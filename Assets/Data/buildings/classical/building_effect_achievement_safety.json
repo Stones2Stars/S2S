@@ -26,6 +26,10 @@
    "flat": -10
   }
  },
+ "attributes": {
+  "nukeImmune": true,
+  "destroyedOnCapture": true
+ },
  "world": {
   "art": {
    "icon": "ART_DEF_BUILDING_EFFECT_ACHIEVEMENT_SAFETY"
@@ -35,8 +39,6 @@
   "description": "TXT_KEY_BUILDING_EFFECT_ACHIEVEMENT_SAFETY",
   "civilopedia": "TXT_KEY_BUILDING_EFFECT_ACHIEVEMENT_SAFETY_PEDIA",
   "notConstructible": true,
-  "nukeImmune": true,
-  "neverCapture": true,
   "mapCategories": [
    "MAPCATEGORY_EARTH"
   ]

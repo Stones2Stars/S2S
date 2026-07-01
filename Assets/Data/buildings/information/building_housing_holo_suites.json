@@ -64,6 +64,10 @@
    "flat": 2
   }
  },
+ "attributes": {
+  "nukeImmune": true,
+  "destroyedOnCapture": true
+ },
  "world": {
   "art": {
    "icon": "ART_DEF_BUILDING_HOUSING_HOLO_SUITES"
@@ -73,8 +77,6 @@
   "description": "TXT_KEY_BUILDING_HOUSING_HOLO_SUITES",
   "civilopedia": "TXT_KEY_BUILDING_HOUSING_HOLO_SUITES_PEDIA",
   "notConstructible": true,
-  "nukeImmune": true,
-  "neverCapture": true,
   "autoBuild": true,
   "mapCategories": [
    "MAPCATEGORY_EARTH"

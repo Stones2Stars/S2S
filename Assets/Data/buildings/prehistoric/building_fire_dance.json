@@ -50,6 +50,9 @@
    "flat": 1
   }
  },
+ "attributes": {
+  "nukeImmune": true
+ },
  "world": {
   "art": {
    "icon": "ART_DEF_BUILDING_FIRE_DANCE"
@@ -59,7 +62,6 @@
   "description": "TXT_KEY_BUILDING_FIRE_DANCE",
   "civilopedia": "TXT_KEY_BUILDING_FIRE_DANCE_PEDIA",
   "notConstructible": true,
-  "nukeImmune": true,
   "worth": 1,
   "conquestProbability": 70,
   "advisor": "ADVISOR_CULTURE",

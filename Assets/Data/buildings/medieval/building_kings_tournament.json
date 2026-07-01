@@ -118,6 +118,10 @@
    }
   ]
  },
+ "attributes": {
+  "nukeImmune": true,
+  "destroyedOnCapture": true
+ },
  "ui": {
   "art": {
    "movie": {
@@ -139,8 +143,6 @@
   "commerceDoubleTime": {
    "culture": 1000
   },
-  "nukeImmune": true,
-  "neverCapture": true,
   "worth": 10,
   "militaryWorth": 3,
   "greatPeopleUnitType": "UNIT_ARTIST",

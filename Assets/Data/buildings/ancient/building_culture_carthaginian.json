@@ -49,6 +49,9 @@
  "cost": {
   "production": 876
  },
+ "attributes": {
+  "nukeImmune": true
+ },
  "world": {
   "art": {
    "icon": "ART_DEF_BUILDING_CULTURE_CARTHAGINIAN"
@@ -57,7 +60,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_CULTURE_CARTHAGINIAN",
   "civilopedia": "TXT_KEY_BUILDING_CULTURE_CARTHAGINIAN_PEDIA",
-  "nukeImmune": true,
   "noInstanceLimit": true,
   "conquestProbability": 100,
   "specialBuildingType": "SPECIALBUILDING_C2C_CULTURE",

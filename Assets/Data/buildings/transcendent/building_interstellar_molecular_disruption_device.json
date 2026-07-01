@@ -22,11 +22,9 @@
  },
  "defense": {
   "city": {
-   "damageAttackerChance": {
-    "flat": 50
-   },
-   "damageToAttacker": {
-    "flat": 50
+   "counterDamage": {
+    "damage": 50,
+    "chance": 50
    }
   }
  },
@@ -46,7 +44,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_INTERSTELLAR_MOLECULAR_DISRUPTION_DEVICE",
   "civilopedia": "TXT_KEY_BUILDING_INTERSTELLAR_MOLECULAR_DISRUPTION_DEVICE_PEDIA",
-  "damageAllAttackers": true,
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

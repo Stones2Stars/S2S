@@ -54,6 +54,9 @@
   "production": 2005,
   "complexityModifier": 2
  },
+ "attributes": {
+  "nukeImmune": true
+ },
  "world": {
   "art": {
    "icon": "ART_DEF_BUILDING_ENCRYPTED_FIREWALL"
@@ -62,7 +65,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_ENCRYPTED_FIREWALL",
   "civilopedia": "TXT_KEY_BUILDING_ENCRYPTED_FIREWALL_PEDIA",
-  "nukeImmune": true,
   "advisor": "ADVISOR_MILITARY",
   "visibilityPriority": 1,
   "mapCategories": [

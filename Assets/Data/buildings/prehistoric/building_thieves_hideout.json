@@ -81,6 +81,9 @@
   }
  },
  "grants": {
+  "freePromotions": [
+   "PROMOTION_LOOTER"
+  ],
   "repeatable": [
    {
     "unit": "UNIT_THIEF",

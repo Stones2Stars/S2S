@@ -165,6 +165,11 @@
    ]
   }
  },
+ "grants": {
+  "freePromotions": [
+   "PROMOTION_CULTURE_EUROPEAN"
+  ]
+ },
  "cost": {
   "production": 100
  },
@@ -175,6 +180,9 @@
    }
   ]
  },
+ "attributes": {
+  "nukeImmune": true
+ },
  "world": {
   "art": {
    "icon": "ART_DEF_BUILDING_CULTURE_EUROPEAN"
@@ -184,7 +192,6 @@
   "description": "TXT_KEY_BUILDING_C_L_EUROPEAN",
   "civilopedia": "TXT_KEY_BUILDING_C_L_PEDIA",
   "help": "TXT_KEY_BUILDING_C_L_HELP",
-  "nukeImmune": true,
   "conquestProbability": 85,
   "mapCategories": [
    "MAPCATEGORY_EARTH"

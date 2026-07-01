@@ -60,6 +60,9 @@
    }
   ]
  },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
  "world": {
   "art": {
    "icon": "ART_DEF_BUILDING_CENTRAL_BREEDER_LLAMA"
@@ -71,7 +74,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_CENTRAL_BREEDER_LLAMA",
   "civilopedia": "TXT_KEY_BUILDING_CENTRAL_BREEDER_LLAMA_PEDIA",
-  "neverCapture": true,
   "worth": 4,
   "militaryWorth": 1,
   "advisor": "ADVISOR_ECONOMY",

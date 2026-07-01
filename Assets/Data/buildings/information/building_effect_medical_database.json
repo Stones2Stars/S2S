@@ -31,6 +31,10 @@
    "flat": -20
   }
  },
+ "attributes": {
+  "nukeImmune": true,
+  "destroyedOnCapture": true
+ },
  "world": {
   "art": {
    "icon": "ART_DEF_BUILDING_EFFECT_MEDICAL_DATABASE"
@@ -40,8 +44,6 @@
   "description": "TXT_KEY_BUILDING_EFFECT_MEDICAL_DATABASE",
   "civilopedia": "TXT_KEY_BUILDING_EFFECT_MEDICAL_DATABASE_PEDIA",
   "notConstructible": true,
-  "nukeImmune": true,
-  "neverCapture": true,
   "greatPeopleUnitType": "UNIT_DOCTOR",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

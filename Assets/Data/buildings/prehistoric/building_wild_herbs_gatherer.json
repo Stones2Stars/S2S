@@ -62,6 +62,9 @@
   "countModifier": 1,
   "complexityModifier": 1
  },
+ "attributes": {
+  "nukeImmune": true
+ },
  "world": {
   "art": {
    "icon": "ART_DEF_BUILDING_WILD_HERBS_GATHERER"
@@ -73,7 +76,6 @@
   "enabledCivilizations": [
    "CIVILIZATION_NPC_NEANDERTHAL"
   ],
-  "nukeImmune": true,
   "advisor": "ADVISOR_GROWTH",
   "freeStartEra": "C2C_ERA_ANCIENT",
   "mapCategories": [

@@ -51,6 +51,10 @@
    }
   }
  },
+ "attributes": {
+  "nukeImmune": true,
+  "destroyedOnCapture": true
+ },
  "world": {
   "art": {
    "icon": "ART_DEF_BUILDING_LASCAUX_PAINTS"
@@ -60,8 +64,6 @@
   "description": "TXT_KEY_BUILDING_EFFECT_LASCAUX_CAVES",
   "civilopedia": "TXT_KEY_BUILDING_LASCAUX_PAINTS_PEDIA",
   "notConstructible": true,
-  "nukeImmune": true,
-  "neverCapture": true,
   "mapCategories": [
    "MAPCATEGORY_EARTH"
   ]

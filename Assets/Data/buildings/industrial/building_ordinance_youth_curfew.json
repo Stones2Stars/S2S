@@ -32,6 +32,10 @@
    }
   ]
  },
+ "attributes": {
+  "nukeImmune": true,
+  "destroyedOnCapture": true
+ },
  "world": {
   "art": {
    "icon": "ART_DEF_BUILDING_ORDINANCE_YOUTH_CURFEW"
@@ -43,8 +47,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_ORDINANCE_YOUTH_CURFEW",
   "civilopedia": "TXT_KEY_BUILDING_ORDINANCE_YOUTH_CURFEW_PEDIA",
-  "nukeImmune": true,
-  "neverCapture": true,
   "worth": 1,
   "advisor": "ADVISOR_MILITARY",
   "mapCategories": [

@@ -68,6 +68,9 @@
  "cost": {
   "production": 480
  },
+ "attributes": {
+  "nukeImmune": true
+ },
  "world": {
   "art": {
    "icon": "ART_DEF_BUILDING_CULTURE_ZAPOTEC"
@@ -76,7 +79,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_CULTURE_ZAPOTEC",
   "civilopedia": "TXT_KEY_BUILDING_CULTURE_ZAPOTEC_PEDIA",
-  "nukeImmune": true,
   "noInstanceLimit": true,
   "conquestProbability": 100,
   "specialBuildingType": "SPECIALBUILDING_C2C_CULTURE",

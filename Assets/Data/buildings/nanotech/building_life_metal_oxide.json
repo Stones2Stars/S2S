@@ -45,6 +45,9 @@
  "cost": {
   "production": 1744
  },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
  "world": {
   "art": {
    "icon": "ART_DEF_BUILDING_LIFE_METAL_OXIDE"
@@ -53,7 +56,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_LIFE_METAL_OXIDE",
   "civilopedia": "TXT_KEY_BUILDING_LIFE_METAL_OXIDE_PEDIA",
-  "neverCapture": true,
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

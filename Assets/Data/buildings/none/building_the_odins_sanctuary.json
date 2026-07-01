@@ -44,6 +44,10 @@
  "grants": {
   "holyCity": "RELIGION_ASATRU"
  },
+ "shrine": "RELIGION_ASATRU",
+ "attributes": {
+  "nukeImmune": true
+ },
  "ui": {
   "art": {
    "movie": {
@@ -65,9 +69,7 @@
   "commerceDoubleTime": {
    "culture": 1000
   },
-  "shrine": "RELIGION_ASATRU",
   "notConstructible": true,
-  "nukeImmune": true,
   "worth": 8,
   "conquestProbability": 100,
   "greatPeopleUnitType": "UNIT_PROPHET",

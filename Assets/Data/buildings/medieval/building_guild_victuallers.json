@@ -83,6 +83,9 @@
   "materialsModifier": 1,
   "complexityModifier": 1
  },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
  "ui": {
   "art": {
    "movie": {
@@ -98,7 +101,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_GUILD_VICTUALLERS",
   "civilopedia": "TXT_KEY_BUILDING_GUILDS_PEDIA",
-  "neverCapture": true,
   "greatPeopleUnitType": "UNIT_MERCHANT",
   "specialBuildingType": "SPECIALBUILDING_GUILD",
   "advisor": "ADVISOR_ECONOMY",

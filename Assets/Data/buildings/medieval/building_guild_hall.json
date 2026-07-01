@@ -80,6 +80,9 @@
    }
   ]
  },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
  "world": {
   "art": {
    "icon": "ART_DEF_BUILDING_GUILD_HALL"
@@ -91,7 +94,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_GUILD_HALL",
   "civilopedia": "TXT_KEY_BUILDING_GUILD_HALL_PEDIA",
-  "neverCapture": true,
   "worth": 4,
   "militaryWorth": 5,
   "dcmAirbombMission": 2,

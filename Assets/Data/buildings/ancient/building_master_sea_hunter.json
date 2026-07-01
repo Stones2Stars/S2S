@@ -33,6 +33,11 @@
    }
   }
  },
+ "grants": {
+  "freePromotions": [
+   "PROMOTION_SEA_HUNTER1"
+  ]
+ },
  "world": {
   "art": {
    "icon": "ART_DEF_BUILDING_MASTER_SEA_HUNTER"

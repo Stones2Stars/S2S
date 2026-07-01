@@ -92,6 +92,9 @@
    }
   ]
  },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
  "ui": {
   "art": {
    "movie": {
@@ -110,7 +113,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_DUTCH_DIKE",
   "civilopedia": "TXT_KEY_BUILDING_DUTCH_DIKE_PEDIA",
-  "neverCapture": true,
   "worth": 4,
   "militaryWorth": 2,
   "dcmAirbombMission": 2,

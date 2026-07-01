@@ -17,6 +17,10 @@
    ]
   }
  },
+ "attributes": {
+  "nukeImmune": true,
+  "destroyedOnCapture": true
+ },
  "world": {
   "art": {
    "icon": "ART_DEF_BUILDING_NATIONAL_DRUG_PROHIBITION"
@@ -26,8 +30,6 @@
   "description": "TXT_KEY_BUILDING_NATIONAL_DRUG_PROHIBITION",
   "civilopedia": "TXT_KEY_BUILDING_NATIONAL_DRUG_PROHIBITION_PEDIA",
   "notConstructible": true,
-  "nukeImmune": true,
-  "neverCapture": true,
   "advisor": "ADVISOR_GROWTH",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

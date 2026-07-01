@@ -45,6 +45,9 @@
   "materialsModifier": 1,
   "complexityModifier": 2
  },
+ "attributes": {
+  "nukeImmune": true
+ },
  "world": {
   "art": {
    "icon": "ART_DEF_BUILDING_CULTURE_CETACEA_SAPIEN"
@@ -53,7 +56,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_CULTURE_CETACEA_SAPIEN",
   "civilopedia": "TXT_KEY_BUILDING_CULTURE_CETACEA_SAPIEN_PEDIA",
-  "nukeImmune": true,
   "noInstanceLimit": true,
   "conquestProbability": 100,
   "advisor": "ADVISOR_CULTURE",

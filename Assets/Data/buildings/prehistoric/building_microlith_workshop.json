@@ -55,6 +55,9 @@
    }
   ]
  },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
  "ui": {
   "art": {
    "movie": {
@@ -73,7 +76,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_MICROLITH_WORKSHOP",
   "civilopedia": "TXT_KEY_BUILDING_MICROLITH_WORKSHOP_PEDIA",
-  "neverCapture": true,
   "worth": 2,
   "militaryWorth": 6,
   "advisor": "ADVISOR_ECONOMY",

@@ -112,6 +112,9 @@
    }
   ]
  },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
  "world": {
   "art": {
    "icon": "ART_DEF_BUILDING_ANDEAN_CATHEDRAL"
@@ -123,7 +126,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_ANDEAN_CATHEDRAL",
   "civilopedia": "TXT_KEY_BUILDING_ANDEAN_CATHEDRAL_PEDIA",
-  "neverCapture": true,
   "worth": 6,
   "specialBuildingType": "SPECIALBUILDING_CATHEDRAL",
   "religion": "RELIGION_ANDEANISM",

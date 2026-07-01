@@ -61,6 +61,11 @@
    }
   }
  },
+ "grants": {
+  "freePromotions": [
+   "PROMOTION_MJOLNIR"
+  ]
+ },
  "cost": {
   "production": 225,
   "sizeModifier": 2,

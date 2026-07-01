@@ -88,6 +88,9 @@
    }
   ]
  },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
  "world": {
   "art": {
    "icon": "ART_DEF_BUILDING_MIND_CONTROL_CENTER"
@@ -99,7 +102,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_MIND_CONTROL_CENTER",
   "civilopedia": "TXT_KEY_BUILDING_MIND_CONTROL_CENTER_PEDIA",
-  "neverCapture": true,
   "worth": 3,
   "dcmAirbombMission": 3,
   "advisor": "ADVISOR_CULTURE",

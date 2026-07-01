@@ -45,6 +45,9 @@
  "cost": {
   "production": 2970
  },
+ "attributes": {
+  "nukeImmune": true
+ },
  "world": {
   "art": {
    "icon": "ART_DEF_BUILDING_CULTURE_IRISH"
@@ -53,7 +56,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_CULTURE_IRISH",
   "civilopedia": "TXT_KEY_BUILDING_CULTURE_IRISH_PEDIA",
-  "nukeImmune": true,
   "noInstanceLimit": true,
   "conquestProbability": 100,
   "specialBuildingType": "SPECIALBUILDING_C2C_CULTURE",

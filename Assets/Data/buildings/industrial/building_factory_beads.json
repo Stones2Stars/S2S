@@ -170,6 +170,9 @@
    }
   ]
  },
+ "attributes": {
+  "nukeImmune": true
+ },
  "world": {
   "art": {
    "icon": "ART_DEF_BUILDING_FACTORY_BEADS"
@@ -181,7 +184,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_FACTORY_BEADS",
   "civilopedia": "TXT_KEY_BUILDING_FACTORY_BEADS_PEDIA",
-  "nukeImmune": true,
   "conquestProbability": 80,
   "advisor": "ADVISOR_ECONOMY",
   "visibilityPriority": 1,

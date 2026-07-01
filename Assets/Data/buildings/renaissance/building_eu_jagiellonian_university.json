@@ -99,6 +99,11 @@
    "SPECIALIST_ARTIST": 3
   }
  },
+ "grants": {
+  "freePromotions": [
+   "PROMOTION_INSPIRE1"
+  ]
+ },
  "cost": {
   "production": 1700,
   "sizeModifier": 3,

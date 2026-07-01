@@ -70,6 +70,9 @@
   "production": 30,
   "countModifier": 1
  },
+ "attributes": {
+  "nukeImmune": true
+ },
  "world": {
   "art": {
    "icon": "ART_DEF_BUILDING_LUMBER_GATHERER"
@@ -81,7 +84,6 @@
   "enabledCivilizations": [
    "CIVILIZATION_NPC_NEANDERTHAL"
   ],
-  "nukeImmune": true,
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

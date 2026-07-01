@@ -21,6 +21,10 @@
    "flat": -15
   }
  },
+ "attributes": {
+  "nukeImmune": true,
+  "destroyedOnCapture": true
+ },
  "world": {
   "art": {
    "icon": "ART_DEF_BUILDING_SAFETY_NATIONAL_LEGAL_DATABASE"
@@ -30,8 +34,6 @@
   "description": "TXT_KEY_BUILDING_SAFETY_NATIONAL_LEGAL_DATABASE",
   "civilopedia": "TXT_KEY_BUILDING_SAFETY_NATIONAL_LEGAL_DATABASE_PEDIA",
   "notConstructible": true,
-  "nukeImmune": true,
-  "neverCapture": true,
   "mapCategories": [
    "MAPCATEGORY_EARTH"
   ]

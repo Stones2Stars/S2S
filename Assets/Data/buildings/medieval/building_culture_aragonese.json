@@ -45,6 +45,9 @@
  "cost": {
   "production": 1860
  },
+ "attributes": {
+  "nukeImmune": true
+ },
  "world": {
   "art": {
    "icon": "ART_DEF_BUILDING_CULTURE_ARAGONESE"
@@ -53,7 +56,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_CULTURE_ARAGONESE",
   "civilopedia": "TXT_KEY_BUILDING_CULTURE_ARAGONESE_PEDIA",
-  "nukeImmune": true,
   "noInstanceLimit": true,
   "conquestProbability": 100,
   "specialBuildingType": "SPECIALBUILDING_C2C_CULTURE",

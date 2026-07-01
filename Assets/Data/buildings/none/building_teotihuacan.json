@@ -55,6 +55,10 @@
  "grants": {
   "holyCity": "RELIGION_NAGHUALISM"
  },
+ "shrine": "RELIGION_NAGHUALISM",
+ "attributes": {
+  "nukeImmune": true
+ },
  "ui": {
   "art": {
    "movie": {
@@ -76,9 +80,7 @@
   "commerceDoubleTime": {
    "culture": 1000
   },
-  "shrine": "RELIGION_NAGHUALISM",
   "notConstructible": true,
-  "nukeImmune": true,
   "worth": 8,
   "conquestProbability": 100,
   "greatPeopleUnitType": "UNIT_PROPHET",

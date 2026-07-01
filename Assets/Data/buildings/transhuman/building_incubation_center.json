@@ -40,6 +40,11 @@
    "percent": 100
   }
  },
+ "grants": {
+  "freePromotions": [
+   "PROMOTION_SELF_HEAL1"
+  ]
+ },
  "cost": {
   "production": 5455,
   "sizeModifier": 1,

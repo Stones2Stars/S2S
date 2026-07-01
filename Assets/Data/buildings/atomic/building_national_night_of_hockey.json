@@ -94,6 +94,9 @@
   "production": 7380,
   "complexityModifier": 1
  },
+ "attributes": {
+  "nukeImmune": true
+ },
  "ui": {
   "art": {
    "movie": {
@@ -109,7 +112,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_NATIONAL_NIGHT_OF_HOCKEY",
   "civilopedia": "TXT_KEY_BUILDING_NATIONAL_NIGHT_OF_HOCKEY_PEDIA",
-  "nukeImmune": true,
   "worth": 10,
   "conquestProbability": 100,
   "greatPeopleUnitType": "UNIT_ARTIST",

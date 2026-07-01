@@ -116,6 +116,9 @@
    }
   ]
  },
+ "attributes": {
+  "nukeImmune": true
+ },
  "world": {
   "art": {
    "icon": "ART_DEF_BUILDING_WHEELWRIGHT"
@@ -127,7 +130,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_WHEELWRIGHT",
   "civilopedia": "TXT_KEY_BUILDING_WHEELWRIGHT_PEDIA",
-  "nukeImmune": true,
   "conquestProbability": 33,
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [

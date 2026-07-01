@@ -113,6 +113,9 @@
    }
   ]
  },
+ "attributes": {
+  "providesFreshWater": true
+ },
  "world": {
   "art": {
    "icon": "ART_DEF_BUILDING_AQUEDUCT"
@@ -125,7 +128,6 @@
   "description": "TXT_KEY_BUILDING_AQUEDUCT",
   "civilopedia": "TXT_KEY_BUILDING_AQUEDUCT_PEDIA",
   "centerInCity": true,
-  "providesFreshWater": true,
   "worth": 4,
   "conquestProbability": 75,
   "dcmAirbombMission": 2,

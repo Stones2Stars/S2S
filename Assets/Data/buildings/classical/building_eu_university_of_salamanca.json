@@ -107,6 +107,11 @@
    "SPECIALIST_LAWYER": 3
   }
  },
+ "grants": {
+  "freePromotions": [
+   "PROMOTION_POLICING1"
+  ]
+ },
  "cost": {
   "production": 1472,
   "sizeModifier": 3,

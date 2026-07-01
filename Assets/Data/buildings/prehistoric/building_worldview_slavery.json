@@ -74,6 +74,10 @@
    }
   }
  },
+ "attributes": {
+  "nukeImmune": true,
+  "destroyedOnCapture": true
+ },
  "world": {
   "art": {
    "icon": "ART_DEF_BUILDING_WORLDVIEW_SLAVERY"
@@ -90,8 +94,6 @@
    "CIVILIZATION_NPC_NEANDERTHAL"
   ],
   "notConstructible": true,
-  "nukeImmune": true,
-  "neverCapture": true,
   "worth": 3,
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [

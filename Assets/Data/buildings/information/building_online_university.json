@@ -57,6 +57,9 @@
   "production": 4810,
   "complexityModifier": 2
  },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
  "ui": {
   "art": {
    "movie": {
@@ -72,7 +75,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_ONLINE_UNIVERSITY",
   "civilopedia": "TXT_KEY_BUILDING_ONLINE_UNIVERSITY_PEDIA",
-  "neverCapture": true,
   "advisor": "ADVISOR_SCIENCE",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

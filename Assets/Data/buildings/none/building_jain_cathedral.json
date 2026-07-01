@@ -102,6 +102,9 @@
    }
   ]
  },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
  "world": {
   "art": {
    "icon": "ART_DEF_BUILDING_JAIN_CATHEDRAL"
@@ -110,7 +113,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_JAIN_CATHEDRAL",
   "civilopedia": "TXT_KEY_BUILDING_JAIN_CATHEDRAL_PEDIA",
-  "neverCapture": true,
   "worth": 6,
   "specialBuildingType": "SPECIALBUILDING_CATHEDRAL",
   "religion": "RELIGION_JAINISM",

@@ -60,6 +60,11 @@
    }
   ]
  },
+ "attributes": {
+  "nukeImmune": true,
+  "forceAllTradeRoutes": true,
+  "teamShare": true
+ },
  "ui": {
   "art": {
    "movie": {
@@ -78,9 +83,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_ADAM_SMITHS_TRADING_COMPANY",
   "civilopedia": "TXT_KEY_BUILDING_ADAM_SMITHS_TRADING_COMPANY_PEDIA",
-  "nukeImmune": true,
-  "forceAllTradeRoutes": true,
-  "teamShare": true,
   "worth": 8,
   "conquestProbability": 100,
   "greatPeopleUnitType": "UNIT_MERCHANT",

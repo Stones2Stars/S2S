@@ -108,6 +108,9 @@
    }
   ]
  },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
  "ui": {
   "art": {
    "movie": {
@@ -129,7 +132,6 @@
   "commerceDoubleTime": {
    "culture": 1000
   },
-  "neverCapture": true,
   "worth": 6,
   "advisor": "ADVISOR_RELIGION",
   "visibilityPriority": 1,

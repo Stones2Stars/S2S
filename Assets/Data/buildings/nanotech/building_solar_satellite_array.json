@@ -41,6 +41,9 @@
  "cost": {
   "production": 2106
  },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
  "ui": {
   "art": {
    "movie": {
@@ -56,7 +59,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_SOLAR_SATELLITE_ARRAY",
   "civilopedia": "TXT_KEY_BUILDING_SOLAR_SATELLITE_ARRAY_PEDIA",
-  "neverCapture": true,
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

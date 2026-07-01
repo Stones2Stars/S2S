@@ -62,6 +62,9 @@
    }
   ]
  },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
  "world": {
   "art": {
    "icon": "ART_DEF_BUILDING_TEMPLE_OF_KI_WHEAT"
@@ -73,7 +76,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_TEMPLE_OF_KI_WHEAT",
   "civilopedia": "TXT_KEY_BUILDING_KI_PEDIA",
-  "neverCapture": true,
   "worth": 4,
   "specialBuildingType": "SPECIALBUILDING_TEMPLE",
   "advisor": "ADVISOR_RELIGION",

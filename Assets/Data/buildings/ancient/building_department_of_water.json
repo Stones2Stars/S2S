@@ -71,6 +71,9 @@
   "materialsModifier": 1,
   "complexityModifier": 2
  },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
  "ui": {
   "art": {
    "movie": {
@@ -86,7 +89,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_DEPARTMENT_OF_WATER",
   "civilopedia": "TXT_KEY_BUILDING_DEPARTMENT_OF_WATER_PEDIA",
-  "neverCapture": true,
   "advisor": "ADVISOR_GROWTH",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

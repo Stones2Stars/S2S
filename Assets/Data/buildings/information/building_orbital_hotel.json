@@ -63,6 +63,9 @@
    }
   ]
  },
+ "attributes": {
+  "orbital": true
+ },
  "world": {
   "art": {
    "icon": "ART_DEF_BUILDING_ORBITAL_HOTEL"
@@ -75,7 +78,6 @@
   "description": "TXT_KEY_BUILDING_ORBITAL_HOTEL",
   "civilopedia": "TXT_KEY_BUILDING_ORBITAL_HOTEL_PEDIA",
   "centerInCity": true,
-  "orbital": true,
   "worth": 6,
   "advisor": "ADVISOR_CULTURE",
   "visibilityPriority": 1,

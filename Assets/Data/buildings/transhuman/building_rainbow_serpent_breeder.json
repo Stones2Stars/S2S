@@ -62,6 +62,9 @@
   "sizeModifier": 1,
   "complexityModifier": 1
  },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
  "world": {
   "art": {
    "icon": "ART_DEF_BUILDING_RAINBOW_SERPENT_BREEDER"
@@ -70,7 +73,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_RAINBOW_SERPENT_BREEDER",
   "civilopedia": "TXT_KEY_BUILDING_MYTHICAL_BREEDER_PEDIA",
-  "neverCapture": true,
   "worth": 10,
   "advisor": "ADVISOR_SCIENCE",
   "mapCategories": [

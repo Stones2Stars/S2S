@@ -46,6 +46,9 @@
  "cost": {
   "production": 4733
  },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
  "world": {
   "art": {
    "icon": "ART_DEF_BUILDING_LIFE_SULFURIC_ACID"
@@ -54,7 +57,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_LIFE_SULFURIC_ACID",
   "civilopedia": "TXT_KEY_BUILDING_LIFE_SULFURIC_ACID_PEDIA",
-  "neverCapture": true,
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

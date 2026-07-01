@@ -35,6 +35,7 @@
  "grants": {
   "holyCity": "RELIGION_DRUIDIC_TRADITIONS"
  },
+ "shrine": "RELIGION_DRUIDIC_TRADITIONS",
  "ui": {
   "art": {
    "movie": {
@@ -56,7 +57,6 @@
   "commerceDoubleTime": {
    "culture": 1000
   },
-  "shrine": "RELIGION_DRUIDIC_TRADITIONS",
   "notConstructible": true,
   "worth": 8,
   "conquestProbability": 100,

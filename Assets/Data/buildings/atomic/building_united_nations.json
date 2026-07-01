@@ -51,6 +51,10 @@
   "materialsModifier": 1,
   "complexityModifier": 2
  },
+ "attributes": {
+  "nukeImmune": true,
+  "teamShare": true
+ },
  "ui": {
   "art": {
    "movie": {
@@ -66,8 +70,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_UNITED_NATIONS",
   "civilopedia": "TXT_KEY_BUILDING_UNITED_NATIONS_PEDIA",
-  "nukeImmune": true,
-  "teamShare": true,
   "worth": 20,
   "conquestProbability": 100,
   "greatPeopleUnitType": "UNIT_MERCHANT",

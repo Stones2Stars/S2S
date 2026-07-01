@@ -40,6 +40,10 @@
  "grants": {
   "holyCity": "RELIGION_KEMETISM"
  },
+ "shrine": "RELIGION_KEMETISM",
+ "attributes": {
+  "nukeImmune": true
+ },
  "ui": {
   "art": {
    "movie": {
@@ -61,9 +65,7 @@
   "commerceDoubleTime": {
    "culture": 1000
   },
-  "shrine": "RELIGION_KEMETISM",
   "notConstructible": true,
-  "nukeImmune": true,
   "worth": 8,
   "conquestProbability": 100,
   "greatPeopleUnitType": "UNIT_PROPHET",

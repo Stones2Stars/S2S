@@ -91,6 +91,10 @@
   "production": 250,
   "complexityModifier": 2
  },
+ "attributes": {
+  "nukeImmune": true,
+  "destroyedOnCapture": true
+ },
  "world": {
   "art": {
    "icon": "ART_DEF_BUILDING_FOLKLORE_T_RHINOCEROSES"
@@ -99,8 +103,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_FOLKLORE_T_RHINOCEROSES",
   "civilopedia": "TXT_KEY_BUILDING_FOLKLORE_ANIMAL_PEDIA",
-  "nukeImmune": true,
-  "neverCapture": true,
   "specialBuildingType": "SPECIALBUILDING_FOLKLORE_TAXONOMY",
   "advisor": "ADVISOR_SCIENCE",
   "mapCategories": [

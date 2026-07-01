@@ -152,6 +152,9 @@
    }
   ]
  },
+ "attributes": {
+  "nukeImmune": true
+ },
  "world": {
   "art": {
    "icon": "ART_DEF_BUILDING_BURGERWORLD_RESTAURANT"
@@ -163,7 +166,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_BURGERWORLD_RESTAURANT",
   "civilopedia": "TXT_KEY_BUILDING_BURGERWORLD_RESTAURANT_PEDIA",
-  "nukeImmune": true,
   "worth": 8,
   "conquestProbability": 100,
   "specialBuildingType": "SPECIALBUILDING_CORPORATION",

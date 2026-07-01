@@ -79,6 +79,9 @@
    }
   ]
  },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
  "world": {
   "art": {
    "icon": "ART_DEF_BUILDING_ANDEAN_TEMPLE"
@@ -90,7 +93,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_ANDEAN_TEMPLE",
   "civilopedia": "TXT_KEY_BUILDING_ANDEAN_TEMPLE_PEDIA",
-  "neverCapture": true,
   "worth": 4,
   "specialBuildingType": "SPECIALBUILDING_TEMPLE",
   "religion": "RELIGION_ANDEANISM",

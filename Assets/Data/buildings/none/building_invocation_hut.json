@@ -85,6 +85,9 @@
    }
   ]
  },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
  "world": {
   "art": {
    "icon": "ART_DEF_BUILDING_INVOCATION_HUT"
@@ -96,7 +99,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_INVOCATION_HUT",
   "civilopedia": "TXT_KEY_BUILDING_INVOCATION_HUT_PEDIA",
-  "neverCapture": true,
   "worth": 3,
   "specialBuildingType": "SPECIALBUILDING_MONASTERY_II",
   "religion": "RELIGION_SHAMANISM",

@@ -57,6 +57,9 @@
  "cost": {
   "production": 1296
  },
+ "attributes": {
+  "nukeImmune": true
+ },
  "world": {
   "art": {
    "icon": "ART_DEF_BUILDING_CULTURE_TIBETAN"
@@ -65,7 +68,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_CULTURE_TIBETAN",
   "civilopedia": "TXT_KEY_BUILDING_CULTURE_TIBETAN_PEDIA",
-  "nukeImmune": true,
   "noInstanceLimit": true,
   "conquestProbability": 100,
   "specialBuildingType": "SPECIALBUILDING_C2C_CULTURE",

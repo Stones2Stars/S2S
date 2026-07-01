@@ -45,6 +45,9 @@
  "cost": {
   "production": 2064
  },
+ "attributes": {
+  "nukeImmune": true
+ },
  "world": {
   "art": {
    "icon": "ART_DEF_BUILDING_CULTURE_SENNAR"
@@ -53,7 +56,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_CULTURE_SENNAR",
   "civilopedia": "TXT_KEY_BUILDING_CULTURE_SENNAR_PEDIA",
-  "nukeImmune": true,
   "noInstanceLimit": true,
   "conquestProbability": 100,
   "specialBuildingType": "SPECIALBUILDING_C2C_CULTURE",

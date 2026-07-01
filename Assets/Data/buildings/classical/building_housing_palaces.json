@@ -76,6 +76,10 @@
    "flat": 3
   }
  },
+ "attributes": {
+  "nukeImmune": true,
+  "destroyedOnCapture": true
+ },
  "world": {
   "art": {
    "icon": "ART_DEF_BUILDING_HOUSING_PALACES"
@@ -85,8 +89,6 @@
   "description": "TXT_KEY_BUILDING_HOUSING_PALACES",
   "civilopedia": "TXT_KEY_BUILDING_HOUSING_PALACES_PEDIA",
   "notConstructible": true,
-  "nukeImmune": true,
-  "neverCapture": true,
   "autoBuild": true,
   "mapCategories": [
    "MAPCATEGORY_EARTH"

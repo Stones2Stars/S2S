@@ -33,6 +33,9 @@
  "cost": {
   "production": 10269
  },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
  "world": {
   "art": {
    "icon": "ART_DEF_BUILDING_LIFE_TRUE_VACUUM"
@@ -41,7 +44,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_LIFE_TRUE_VACUUM",
   "civilopedia": "TXT_KEY_BUILDING_LIFE_TRUE_VACUUM_PEDIA",
-  "neverCapture": true,
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

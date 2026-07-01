@@ -87,6 +87,9 @@
    }
   ]
  },
+ "attributes": {
+  "nukeImmune": true
+ },
  "world": {
   "art": {
    "icon": "ART_DEF_BUILDING_EARTHWORM_GATHERER"
@@ -95,7 +98,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_EARTHWORM_GATHERER",
   "civilopedia": "TXT_KEY_BUILDING_EARTHWORM_GATHERER_PEDIA",
-  "nukeImmune": true,
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

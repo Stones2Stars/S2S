@@ -42,6 +42,9 @@
  "cost": {
   "production": 24310
  },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
  "world": {
   "art": {
    "icon": "ART_DEF_BUILDING_HUMAN_MOD_TRANSAPIENT"
@@ -50,7 +53,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_HUMAN_MOD_TRANSAPIENT",
   "civilopedia": "TXT_KEY_BUILDING_HUMAN_MOD_TRANSAPIENT_PEDIA",
-  "neverCapture": true,
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

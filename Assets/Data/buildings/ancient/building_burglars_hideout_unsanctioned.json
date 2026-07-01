@@ -61,6 +61,9 @@
    }
   ]
  },
+ "attributes": {
+  "nukeImmune": true
+ },
  "world": {
   "art": {
    "icon": "ART_DEF_BUILDING_THIEVES_HIDEOUT"
@@ -70,7 +73,6 @@
   "description": "TXT_KEY_BUILDING_BURGLARS_HIDEOUT_UNSANCTIONED",
   "civilopedia": "TXT_KEY_BUILDING_THIEVES_HIDEOUT_PEDIA",
   "notConstructible": true,
-  "nukeImmune": true,
   "conquestProbability": 100,
   "mapCategories": [
    "MAPCATEGORY_EARTH"

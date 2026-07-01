@@ -66,6 +66,9 @@
   "materialsModifier": 2,
   "complexityModifier": 2
  },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
  "ui": {
   "art": {
    "movie": {
@@ -81,7 +84,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_MOVIE_STUDIO",
   "civilopedia": "TXT_KEY_BUILDING_MOVIE_STUDIO_PEDIA",
-  "neverCapture": true,
   "greatPeopleUnitType": "UNIT_ARTIST",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [

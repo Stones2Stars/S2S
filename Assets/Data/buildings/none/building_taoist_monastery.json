@@ -91,6 +91,9 @@
   }
  },
  "grants": {
+  "freePromotions": [
+   "PROMOTION_MARTIAL_ARTS"
+  ],
   "repeatable": [
    {
     "unitCombat": "UNITCOMBAT_HEALS_AS_PEOPLE",
@@ -113,6 +116,9 @@
    }
   ]
  },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
  "world": {
   "art": {
    "icon": "ART_DEF_BUILDING_TAOIST_MONASTERY"
@@ -124,7 +130,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_TAOIST_MONASTERY",
   "civilopedia": "TXT_KEY_BUILDING_TAOIST_MONASTERY_PEDIA",
-  "neverCapture": true,
   "worth": 3,
   "specialBuildingType": "SPECIALBUILDING_MONASTERY",
   "religion": "RELIGION_TAOISM",

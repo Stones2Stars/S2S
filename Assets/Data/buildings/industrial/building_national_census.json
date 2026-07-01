@@ -39,6 +39,9 @@
   "production": 1260,
   "complexityModifier": 2
  },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
  "ui": {
   "art": {
    "movie": {
@@ -54,7 +57,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_NATIONAL_CENSUS",
   "civilopedia": "TXT_KEY_BUILDING_NATIONAL_CENSUS_PEDIA",
-  "neverCapture": true,
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

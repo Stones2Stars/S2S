@@ -58,6 +58,10 @@
    "flat": 1
   }
  },
+ "attributes": {
+  "nukeImmune": true,
+  "destroyedOnCapture": true
+ },
  "world": {
   "art": {
    "icon": "ART_DEF_BUILDING_HOUSING_DOMUS"
@@ -67,8 +71,6 @@
   "description": "TXT_KEY_BUILDING_HOUSING_DOMUS",
   "civilopedia": "TXT_KEY_BUILDING_HOUSING_DOMUS_PEDIA",
   "notConstructible": true,
-  "nukeImmune": true,
-  "neverCapture": true,
   "autoBuild": true,
   "mapCategories": [
    "MAPCATEGORY_EARTH"

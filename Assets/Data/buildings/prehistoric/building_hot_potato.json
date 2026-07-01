@@ -57,6 +57,9 @@
    }
   ]
  },
+ "attributes": {
+  "nukeImmune": true
+ },
  "world": {
   "art": {
    "icon": "ART_DEF_BUILDING_HOT_POTATO"
@@ -65,7 +68,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_HOT_POTATO",
   "civilopedia": "TXT_KEY_BUILDING_HOT_POTATO_PEDIA",
-  "nukeImmune": true,
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

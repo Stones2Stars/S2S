@@ -86,6 +86,10 @@
   "production": 30,
   "complexityModifier": 2
  },
+ "attributes": {
+  "nukeImmune": true,
+  "destroyedOnCapture": true
+ },
  "world": {
   "art": {
    "icon": "ART_DEF_BUILDING_FOLKLORE_E_METAL"
@@ -94,8 +98,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_FOLKLORE_E_METAL",
   "civilopedia": "TXT_KEY_BUILDING_FOLKLORE_ELEMENTAL_PEDIA",
-  "nukeImmune": true,
-  "neverCapture": true,
   "forceNoPrereqScaling": true,
   "specialBuildingType": "SPECIALBUILDING_FOLKLORE_EXPLORATION",
   "advisor": "ADVISOR_SCIENCE",

@@ -91,6 +91,9 @@
    }
   ]
  },
+ "attributes": {
+  "nukeImmune": true
+ },
  "world": {
   "art": {
    "icon": "ART_DEF_BUILDING_ULTIMATE_SOLDIERS_TRAINER"
@@ -102,7 +105,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_ULTIMATE_SOLDIERS_TRAINER",
   "civilopedia": "TXT_KEY_BUILDING_ULTIMATE_SOLDIERS_TRAINER_PEDIA",
-  "nukeImmune": true,
   "worth": 8,
   "conquestProbability": 100,
   "specialBuildingType": "SPECIALBUILDING_CORPORATION",

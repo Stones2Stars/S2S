@@ -86,6 +86,9 @@
    }
   ]
  },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
  "world": {
   "art": {
    "icon": "ART_DEF_BUILDING_CALMACEC"
@@ -97,7 +100,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_CALMACEC",
   "civilopedia": "TXT_KEY_BUILDING_CALMACEC_PEDIA",
-  "neverCapture": true,
   "worth": 3,
   "specialBuildingType": "SPECIALBUILDING_MONASTERY",
   "religion": "RELIGION_NAGHUALISM",

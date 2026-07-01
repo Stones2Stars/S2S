@@ -41,6 +41,9 @@
   "sizeModifier": 1,
   "countModifier": 1
  },
+ "attributes": {
+  "nukeImmune": true
+ },
  "world": {
   "art": {
    "icon": "ART_DEF_BUILDING_COMMUNITY_DISCUSSIONS"
@@ -49,7 +52,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_COMMUNITY_DISCUSSIONS",
   "civilopedia": "TXT_KEY_BUILDING_COMMUNITY_DISCUSSIONS_PEDIA",
-  "nukeImmune": true,
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

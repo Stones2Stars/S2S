@@ -43,11 +43,26 @@
    "amount": {
     "percent": 30
    },
-   "damageAttackerChance": {
-    "flat": 35
-   },
-   "damageToAttacker": {
-    "flat": 35
+   "counterDamage": {
+    "damage": 35,
+    "chance": 35,
+    "units": {
+     "unitCombats": [
+      "UNITCOMBAT_ARCHER",
+      "UNITCOMBAT_ASSAULT_MECH",
+      "UNITCOMBAT_DREADNOUGHT",
+      "UNITCOMBAT_GUN",
+      "UNITCOMBAT_HITECH",
+      "UNITCOMBAT_HOVERCRAFT",
+      "UNITCOMBAT_MELEE",
+      "UNITCOMBAT_MOUNTED",
+      "UNITCOMBAT_ROBOT",
+      "UNITCOMBAT_SIEGE",
+      "UNITCOMBAT_THROWING",
+      "UNITCOMBAT_TRACKED",
+      "UNITCOMBAT_WHEELED"
+     ]
+    }
    }
   }
  },
@@ -89,21 +104,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_GERM_TRAPS",
   "civilopedia": "TXT_KEY_BUILDING_GERM_TRAPS_PEDIA",
-  "damageAttackingUnitCombats": [
-   "UNITCOMBAT_ARCHER",
-   "UNITCOMBAT_ASSAULT_MECH",
-   "UNITCOMBAT_DREADNOUGHT",
-   "UNITCOMBAT_GUN",
-   "UNITCOMBAT_HITECH",
-   "UNITCOMBAT_HOVERCRAFT",
-   "UNITCOMBAT_MELEE",
-   "UNITCOMBAT_MOUNTED",
-   "UNITCOMBAT_ROBOT",
-   "UNITCOMBAT_SIEGE",
-   "UNITCOMBAT_THROWING",
-   "UNITCOMBAT_TRACKED",
-   "UNITCOMBAT_WHEELED"
-  ],
   "militaryWorth": 7,
   "advisor": "ADVISOR_MILITARY",
   "visibilityPriority": 1,

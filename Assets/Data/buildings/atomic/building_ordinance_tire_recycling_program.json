@@ -34,6 +34,10 @@
   "materialsModifier": 1,
   "complexityModifier": 2
  },
+ "attributes": {
+  "nukeImmune": true,
+  "destroyedOnCapture": true
+ },
  "world": {
   "art": {
    "icon": "ART_DEF_BUILDING_ORDINANCE_TIRE_RECYCLING_PROGRAM"
@@ -42,8 +46,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_ORDINANCE_TIRE_RECYCLING_PROGRAM",
   "civilopedia": "TXT_KEY_BUILDING_ORDINANCE_TIRE_RECYCLING_PROGRAM_PEDIA",
-  "nukeImmune": true,
-  "neverCapture": true,
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

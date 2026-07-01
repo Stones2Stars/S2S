@@ -51,6 +51,10 @@
    "flat": -2
   }
  },
+ "attributes": {
+  "nukeImmune": true,
+  "destroyedOnCapture": true
+ },
  "world": {
   "art": {
    "icon": "ART_DEF_BUILDING_HOUSING_BONE_HUTS"
@@ -60,8 +64,6 @@
   "description": "TXT_KEY_BUILDING_HOUSING_BONE_HUTS",
   "civilopedia": "TXT_KEY_BUILDING_HOUSING_BONE_HUTS_PEDIA",
   "notConstructible": true,
-  "nukeImmune": true,
-  "neverCapture": true,
   "autoBuild": true,
   "mapCategories": [
    "MAPCATEGORY_EARTH"

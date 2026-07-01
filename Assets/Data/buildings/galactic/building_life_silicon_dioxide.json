@@ -56,6 +56,9 @@
  "cost": {
   "production": 8568
  },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
  "world": {
   "art": {
    "icon": "ART_DEF_BUILDING_LIFE_SILICON_DIOXIDE"
@@ -64,7 +67,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_LIFE_SILICON_DIOXIDE",
   "civilopedia": "TXT_KEY_BUILDING_LIFE_SILICON_DIOXIDE_PEDIA",
-  "neverCapture": true,
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

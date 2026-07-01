@@ -70,6 +70,9 @@
    }
   ]
  },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
  "world": {
   "art": {
    "icon": "ART_DEF_BUILDING_PARADISE"
@@ -81,7 +84,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_PARADISE_GARDEN",
   "civilopedia": "TXT_KEY_BUILDING_PARADISE_GARDEN_PEDIA",
-  "neverCapture": true,
   "worth": 3,
   "conquestProbability": 30,
   "dcmAirbombMission": 2,

@@ -60,6 +60,11 @@
    "SPECIALIST_SCIENTIST": 1
   }
  },
+ "grants": {
+  "freePromotions": [
+   "PROMOTION_MOBILITY"
+  ]
+ },
  "cost": {
   "production": 1410,
   "sizeModifier": 1,

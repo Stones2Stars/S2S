@@ -64,6 +64,9 @@
  "cost": {
   "production": 40
  },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
  "ui": {
   "art": {
    "movie": {
@@ -82,7 +85,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_CAPTURED_FIRE",
   "civilopedia": "TXT_KEY_BUILDING_CAPTURED_FIRE_PEDIA",
-  "neverCapture": true,
   "advisor": "ADVISOR_GROWTH",
   "visibilityPriority": 1,
   "mapCategories": [

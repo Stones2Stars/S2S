@@ -44,6 +44,9 @@
    }
   ]
  },
+ "attributes": {
+  "nukeImmune": true
+ },
  "ui": {
   "art": {
    "movie": {
@@ -59,7 +62,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_NATIONAL_SHIELD",
   "civilopedia": "TXT_KEY_BUILDING_NATIONAL_SHIELD_PEDIA",
-  "nukeImmune": true,
   "worth": 10,
   "conquestProbability": 100,
   "greatPeopleUnitType": "UNIT_GREAT_ENGINEER",

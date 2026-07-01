@@ -98,6 +98,9 @@
    }
   ]
  },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
  "world": {
   "art": {
    "icon": "ART_DEF_BUILDING_JAIN_TEMPLE"
@@ -106,7 +109,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_JAIN_TEMPLE",
   "civilopedia": "TXT_KEY_BUILDING_JAIN_TEMPLE_PEDIA",
-  "neverCapture": true,
   "worth": 4,
   "specialBuildingType": "SPECIALBUILDING_TEMPLE",
   "religion": "RELIGION_JAINISM",

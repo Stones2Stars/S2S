@@ -26,6 +26,10 @@
    "flat": -10
   }
  },
+ "attributes": {
+  "nukeImmune": true,
+  "destroyedOnCapture": true
+ },
  "world": {
   "art": {
    "icon": "ART_DEF_BUILDING_BELIEF_KARMA"
@@ -35,8 +39,6 @@
   "description": "TXT_KEY_BUILDING_BELIEF_KARMA",
   "civilopedia": "TXT_KEY_BUILDING_BELIEF_KARMA_PEDIA",
   "notConstructible": true,
-  "nukeImmune": true,
-  "neverCapture": true,
   "mapCategories": [
    "MAPCATEGORY_EARTH"
   ]

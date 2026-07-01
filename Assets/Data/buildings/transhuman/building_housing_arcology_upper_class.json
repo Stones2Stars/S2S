@@ -64,6 +64,10 @@
    "flat": 1
   }
  },
+ "attributes": {
+  "nukeImmune": true,
+  "destroyedOnCapture": true
+ },
  "world": {
   "art": {
    "icon": "ART_DEF_BUILDING_HOUSING_ARCOLOGY_UPPER_CLASS"
@@ -73,8 +77,6 @@
   "description": "TXT_KEY_BUILDING_HOUSING_ARCOLOGY_UPPER_CLASS",
   "civilopedia": "TXT_KEY_BUILDING_HOUSING_ARCOLOGY_UPPER_CLASS_PEDIA",
   "notConstructible": true,
-  "nukeImmune": true,
-  "neverCapture": true,
   "autoBuild": true,
   "mapCategories": [
    "MAPCATEGORY_EARTH"

@@ -30,6 +30,10 @@
    "flat": 1
   }
  },
+ "attributes": {
+  "nukeImmune": true,
+  "destroyedOnCapture": true
+ },
  "world": {
   "art": {
    "icon": "ART_DEF_BUILDING_WONDERS_OF_THE_DEEP"
@@ -42,8 +46,6 @@
   "description": "TXT_KEY_BUILDING_WONDERS_OF_THE_DEEP",
   "civilopedia": "TXT_KEY_BUILDING_WONDERS_OF_THE_DEEP_PEDIA",
   "notConstructible": true,
-  "nukeImmune": true,
-  "neverCapture": true,
   "worth": 3,
   "advisor": "ADVISOR_MILITARY",
   "freeStartEra": "C2C_ERA_MEDIEVAL",

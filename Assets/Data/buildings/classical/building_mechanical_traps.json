@@ -66,11 +66,20 @@
    "amount": {
     "percent": 15
    },
-   "damageAttackerChance": {
-    "flat": 25
-   },
-   "damageToAttacker": {
-    "flat": 15
+   "counterDamage": {
+    "damage": 15,
+    "chance": 25,
+    "units": {
+     "unitCombats": [
+      "UNITCOMBAT_ARCHER",
+      "UNITCOMBAT_GUN",
+      "UNITCOMBAT_MELEE",
+      "UNITCOMBAT_MOUNTED",
+      "UNITCOMBAT_SIEGE",
+      "UNITCOMBAT_THROWING",
+      "UNITCOMBAT_WHEELED"
+     ]
+    }
    }
   }
  },
@@ -103,15 +112,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_MECHANICAL_TRAPS",
   "civilopedia": "TXT_KEY_BUILDING_MECHANICAL_TRAPS_PEDIA",
-  "damageAttackingUnitCombats": [
-   "UNITCOMBAT_ARCHER",
-   "UNITCOMBAT_GUN",
-   "UNITCOMBAT_MELEE",
-   "UNITCOMBAT_MOUNTED",
-   "UNITCOMBAT_SIEGE",
-   "UNITCOMBAT_THROWING",
-   "UNITCOMBAT_WHEELED"
-  ],
   "militaryWorth": 3,
   "advisor": "ADVISOR_MILITARY",
   "visibilityPriority": 1,

@@ -101,6 +101,11 @@
    "SPECIALIST_PRIEST": 2
   }
  },
+ "grants": {
+  "freePromotions": [
+   "PROMOTION_BUSHIDO"
+  ]
+ },
  "cost": {
   "production": 280,
   "sizeModifier": 1,
@@ -115,6 +120,9 @@
    }
   ]
  },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
  "world": {
   "art": {
    "icon": "ART_DEF_BUILDING_SHINTO_JINGU"
@@ -126,7 +134,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_SHINTO_JINGU",
   "civilopedia": "TXT_KEY_BUILDING_SHINTO_JINGU_PEDIA",
-  "neverCapture": true,
   "worth": 6,
   "specialBuildingType": "SPECIALBUILDING_CATHEDRAL",
   "religion": "RELIGION_SHINTO",

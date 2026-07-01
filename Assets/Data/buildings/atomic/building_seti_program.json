@@ -85,6 +85,10 @@
    }
   ]
  },
+ "attributes": {
+  "nukeImmune": true,
+  "teamShare": true
+ },
  "ui": {
   "art": {
    "movie": {
@@ -106,8 +110,6 @@
   "commerceDoubleTime": {
    "research": 100
   },
-  "nukeImmune": true,
-  "teamShare": true,
   "worth": 20,
   "conquestProbability": 100,
   "greatPeopleUnitType": "UNIT_SCIENTIST",

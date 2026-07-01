@@ -87,6 +87,9 @@
    }
   ]
  },
+ "attributes": {
+  "nukeImmune": true
+ },
  "world": {
   "art": {
    "icon": "ART_DEF_BUILDING_CHOP_SHOP"
@@ -95,7 +98,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_CHOP_SHOP",
   "civilopedia": "TXT_KEY_BUILDING_CHOP_SHOP_PEDIA",
-  "nukeImmune": true,
   "militaryWorth": 1,
   "advisor": "ADVISOR_ECONOMY",
   "visibilityPriority": 1,

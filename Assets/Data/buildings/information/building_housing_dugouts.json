@@ -45,6 +45,10 @@
    "flat": 4
   }
  },
+ "attributes": {
+  "nukeImmune": true,
+  "destroyedOnCapture": true
+ },
  "world": {
   "art": {
    "icon": "ART_DEF_BUILDING_HOUSING_DUGOUTS"
@@ -54,8 +58,6 @@
   "description": "TXT_KEY_BUILDING_HOUSING_DUGOUTS",
   "civilopedia": "TXT_KEY_BUILDING_HOUSING_DUGOUTS_PEDIA",
   "notConstructible": true,
-  "nukeImmune": true,
-  "neverCapture": true,
   "autoBuild": true,
   "mapCategories": [
    "MAPCATEGORY_EARTH"

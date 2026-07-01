@@ -102,6 +102,9 @@
    }
   ]
  },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
  "world": {
   "art": {
    "icon": "ART_DEF_BUILDING_BUDDHIST_TEMPLE"
@@ -113,7 +116,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_BUDDHIST_TEMPLE",
   "civilopedia": "TXT_KEY_BUILDING_BUDDHIST_TEMPLE_PEDIA",
-  "neverCapture": true,
   "worth": 4,
   "specialBuildingType": "SPECIALBUILDING_TEMPLE",
   "religion": "RELIGION_BUDDHISM",

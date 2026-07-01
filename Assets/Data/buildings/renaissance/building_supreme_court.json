@@ -82,6 +82,9 @@
    }
   ]
  },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
  "ui": {
   "art": {
    "movie": {
@@ -100,7 +103,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_SUPREME_COURT",
   "civilopedia": "TXT_KEY_BUILDING_SUPREME_COURT_PEDIA",
-  "neverCapture": true,
   "worth": 4,
   "advisor": "ADVISOR_ECONOMY",
   "visibilityPriority": 1,

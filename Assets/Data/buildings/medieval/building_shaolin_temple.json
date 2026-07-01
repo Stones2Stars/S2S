@@ -49,11 +49,21 @@
    "flat": 6
   }
  },
+ "grants": {
+  "freePromotions": [
+   "PROMOTION_MARTIAL_ARTS",
+   "PROMOTION_MARTIAL_ARTS2",
+   "PROMOTION_MARTIAL_ARTS3"
+  ]
+ },
  "cost": {
   "production": 2064,
   "sizeModifier": 2,
   "materialsModifier": 1,
   "complexityModifier": 1
+ },
+ "attributes": {
+  "nukeImmune": true
  },
  "ui": {
   "art": {
@@ -73,7 +83,6 @@
   "commerceDoubleTime": {
    "culture": 1000
   },
-  "nukeImmune": true,
   "conquestProbability": 100,
   "greatPeopleUnitType": "UNIT_PROPHET",
   "advisor": "ADVISOR_MILITARY",

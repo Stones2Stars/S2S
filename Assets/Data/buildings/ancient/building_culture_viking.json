@@ -80,6 +80,9 @@
  "cost": {
   "production": 792
  },
+ "attributes": {
+  "nukeImmune": true
+ },
  "world": {
   "art": {
    "icon": "ART_DEF_BUILDING_CULTURE_VIKING"
@@ -88,7 +91,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_CULTURE_VIKING",
   "civilopedia": "TXT_KEY_BUILDING_CULTURE_VIKING_PEDIA",
-  "nukeImmune": true,
   "noInstanceLimit": true,
   "conquestProbability": 100,
   "specialBuildingType": "SPECIALBUILDING_C2C_CULTURE",

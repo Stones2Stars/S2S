@@ -126,6 +126,9 @@
    }
   ]
  },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
  "world": {
   "art": {
    "icon": "ART_DEF_BUILDING_SIKH_GURDWARA"
@@ -134,7 +137,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_SIKH_GURDWARA",
   "civilopedia": "TXT_KEY_BUILDING_SIKH_GURDWARA_PEDIA",
-  "neverCapture": true,
   "worth": 4,
   "specialBuildingType": "SPECIALBUILDING_MONASTERY_II",
   "religion": "RELIGION_SIKHISM",

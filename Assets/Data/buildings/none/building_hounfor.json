@@ -90,6 +90,9 @@
    }
   ]
  },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
  "world": {
   "art": {
    "icon": "ART_DEF_BUILDING_HOUNFOR"
@@ -101,7 +104,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_HOUNFOR",
   "civilopedia": "TXT_KEY_BUILDING_HOUNFOR_PEDIA",
-  "neverCapture": true,
   "worth": 3,
   "specialBuildingType": "SPECIALBUILDING_MONASTERY",
   "religion": "RELIGION_VOODOO",

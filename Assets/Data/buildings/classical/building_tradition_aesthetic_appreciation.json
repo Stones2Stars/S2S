@@ -24,6 +24,10 @@
    "percent": 2
   }
  },
+ "attributes": {
+  "nukeImmune": true,
+  "destroyedOnCapture": true
+ },
  "ui": {
   "art": {
    "movie": {
@@ -40,8 +44,6 @@
   "description": "TXT_KEY_BUILDING_TRADITION_AESTHETIC_APPRECIATION",
   "civilopedia": "TXT_KEY_BUILDING_TRADITION_AESTHETIC_APPRECIATION_PEDIA",
   "notConstructible": true,
-  "nukeImmune": true,
-  "neverCapture": true,
   "worth": 6,
   "advisor": "ADVISOR_CULTURE",
   "mapCategories": [

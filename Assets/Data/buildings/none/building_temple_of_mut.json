@@ -101,6 +101,9 @@
    }
   ]
  },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
  "world": {
   "art": {
    "icon": "ART_DEF_BUILDING_EGYPTIAN_MYTH_CATHEDRAL"
@@ -112,7 +115,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_TEMPLE_OF_MUT",
   "civilopedia": "TXT_KEY_BUILDING_TEMPLE_OF_MUT_PEDIA",
-  "neverCapture": true,
   "worth": 6,
   "specialBuildingType": "SPECIALBUILDING_PANTHEON",
   "religion": "RELIGION_KEMETISM",

@@ -56,6 +56,9 @@
    "flat": 4
   }
  },
+ "attributes": {
+  "nukeImmune": true
+ },
  "world": {
   "art": {
    "icon": "ART_DEF_BUILDING_PROPERTYTOURISM"
@@ -65,7 +68,6 @@
   "description": "TXT_KEY_BUILDING_TOURISM_LEVEL_6",
   "civilopedia": "TXT_KEY_BUILDING_TOURISM_PEDIA",
   "notConstructible": true,
-  "nukeImmune": true,
   "conquestProbability": 100,
   "mapCategories": [
    "MAPCATEGORY_EARTH"

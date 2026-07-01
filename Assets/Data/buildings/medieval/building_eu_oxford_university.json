@@ -108,6 +108,11 @@
    "SPECIALIST_MERCHANT": 3
   }
  },
+ "grants": {
+  "freePromotions": [
+   "PROMOTION_INSPIRE1"
+  ]
+ },
  "cost": {
   "production": 1472,
   "sizeModifier": 3,

@@ -97,6 +97,9 @@
    }
   ]
  },
+ "attributes": {
+  "nukeImmune": true
+ },
  "world": {
   "art": {
    "icon": "ART_DEF_BUILDING_STORAGE_PIT"
@@ -108,7 +111,6 @@
   "enabledCivilizations": [
    "CIVILIZATION_NPC_NEANDERTHAL"
   ],
-  "nukeImmune": true,
   "conquestProbability": 80,
   "advisor": "ADVISOR_GROWTH",
   "visibilityPriority": 1,

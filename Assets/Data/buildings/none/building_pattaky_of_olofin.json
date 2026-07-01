@@ -68,6 +68,9 @@
    }
   ]
  },
+ "attributes": {
+  "nukeImmune": true
+ },
  "world": {
   "art": {
    "icon": "ART_DEF_BUILDING_PATTAKY_OF_OLOFIN"
@@ -79,7 +82,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_PATTAKY_OF_OLOFIN",
   "civilopedia": "TXT_KEY_BUILDING_PATTAKY_OF_OLOFIN_PEDIA",
-  "nukeImmune": true,
   "worth": 8,
   "conquestProbability": 100,
   "greatPeopleUnitType": "UNIT_PROPHET",

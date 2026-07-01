@@ -43,6 +43,9 @@
  "cost": {
   "production": 13310
  },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
  "world": {
   "art": {
    "icon": "ART_DEF_BUILDING_HUMAN_MOD_COLD_TOLERANCE"
@@ -51,7 +54,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_HUMAN_MOD_COLD_TOLERANCE",
   "civilopedia": "TXT_KEY_BUILDING_HUMAN_MOD_COLD_TOLERANCE_PEDIA",
-  "neverCapture": true,
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

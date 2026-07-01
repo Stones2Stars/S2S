@@ -37,6 +37,9 @@
  "cost": {
   "production": 9926
  },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
  "ui": {
   "art": {
    "movie": {
@@ -52,7 +55,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_URANUS_HELIUM_3_MINE",
   "civilopedia": "TXT_KEY_BUILDING_URANUS_HELIUM_3_MINE_PEDIA",
-  "neverCapture": true,
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

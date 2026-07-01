@@ -136,6 +136,9 @@
   "materialsModifier": 1,
   "complexityModifier": 1
  },
+ "attributes": {
+  "orbitalInfrastructure": true
+ },
  "world": {
   "art": {
    "icon": "ART_DEF_BUILDING_STARPORT"
@@ -144,7 +147,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_STARPORT",
   "civilopedia": "TXT_KEY_BUILDING_STARPORT_PEDIA",
-  "orbitalInfrastructure": true,
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

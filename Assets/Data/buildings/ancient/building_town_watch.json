@@ -100,6 +100,9 @@
    }
   ]
  },
+ "attributes": {
+  "nukeImmune": true
+ },
  "world": {
   "art": {
    "icon": "ART_DEF_BUILDING_TOWN_WATCH"
@@ -108,7 +111,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_TOWN_WATCH",
   "civilopedia": "TXT_KEY_BUILDING_TOWN_WATCH_PEDIA",
-  "nukeImmune": true,
   "militaryWorth": 2,
   "advisor": "ADVISOR_MILITARY",
   "visibilityPriority": 1,

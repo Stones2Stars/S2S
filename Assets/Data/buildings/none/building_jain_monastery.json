@@ -98,6 +98,9 @@
    }
   ]
  },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
  "world": {
   "art": {
    "icon": "ART_DEF_BUILDING_JAIN_MONASTERY"
@@ -106,7 +109,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_JAIN_MONASTERY",
   "civilopedia": "TXT_KEY_BUILDING_JAIN_MONASTERY_PEDIA",
-  "neverCapture": true,
   "worth": 3,
   "specialBuildingType": "SPECIALBUILDING_MONASTERY",
   "religion": "RELIGION_JAINISM",

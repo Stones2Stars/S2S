@@ -67,6 +67,9 @@
    }
   ]
  },
+ "attributes": {
+  "nukeImmune": true
+ },
  "ui": {
   "art": {
    "movie": {
@@ -83,7 +86,6 @@
   "description": "TXT_KEY_BUILDING_CLEOPATRAS_NEEDLE",
   "civilopedia": "TXT_KEY_BUILDING_CLEOPATRAS_NEEDLE_PEDIA",
   "help": "TXT_KEY_BUILDING_CLEOPATRAS_NEEDLE_HELP",
-  "nukeImmune": true,
   "worth": 10,
   "conquestProbability": 100,
   "greatPeopleUnitType": "UNIT_ARTIST",

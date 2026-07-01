@@ -73,6 +73,9 @@
    }
   ]
  },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
  "ui": {
   "art": {
    "movie": {
@@ -91,7 +94,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_NATIONAL_WEATHER_SERVICE",
   "civilopedia": "TXT_KEY_BUILDING_NATIONAL_WEATHER_SERVICE_PEDIA",
-  "neverCapture": true,
   "worth": 8,
   "militaryWorth": 10,
   "greatPeopleUnitType": "UNIT_SCIENTIST",

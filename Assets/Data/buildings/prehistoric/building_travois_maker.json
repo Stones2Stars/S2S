@@ -97,6 +97,9 @@
   "materialsModifier": 2,
   "complexityModifier": 1
  },
+ "attributes": {
+  "nukeImmune": true
+ },
  "world": {
   "art": {
    "icon": "ART_DEF_BUILDING_TRAVOIS_MAKER"
@@ -111,7 +114,6 @@
   "enabledCivilizations": [
    "CIVILIZATION_NPC_NEANDERTHAL"
   ],
-  "nukeImmune": true,
   "conquestProbability": 33,
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [

@@ -57,6 +57,9 @@
   "production": 148,
   "countModifier": 1
  },
+ "attributes": {
+  "nukeImmune": true
+ },
  "world": {
   "art": {
    "icon": "ART_DEF_BUILDING_AMBER_GATHERER"
@@ -65,7 +68,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_AMBER_GATHERER",
   "civilopedia": "TXT_KEY_BUILDING_AMBER_GATHERER_PEDIA",
-  "nukeImmune": true,
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

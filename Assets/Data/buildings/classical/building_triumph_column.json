@@ -88,6 +88,9 @@
    }
   ]
  },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
  "ui": {
   "art": {
    "movie": {
@@ -109,7 +112,6 @@
   "commerceDoubleTime": {
    "culture": 1000
   },
-  "neverCapture": true,
   "worth": 2,
   "greatPeopleUnitType": "UNIT_ARTIST",
   "advisor": "ADVISOR_CULTURE",

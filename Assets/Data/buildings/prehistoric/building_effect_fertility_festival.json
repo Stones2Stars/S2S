@@ -41,6 +41,10 @@
    "percent": 5
   }
  },
+ "attributes": {
+  "nukeImmune": true,
+  "destroyedOnCapture": true
+ },
  "world": {
   "art": {
    "icon": "ART_DEF_BUILDING_FERTILITY_FESTIVAL"
@@ -50,8 +54,6 @@
   "description": "TXT_KEY_BUILDING_EFFECT_FERTILITY_FESTIVAL",
   "civilopedia": "TXT_KEY_BUILDING_FERTILITY_FESTIVAL_PEDIA",
   "notConstructible": true,
-  "nukeImmune": true,
-  "neverCapture": true,
   "mapCategories": [
    "MAPCATEGORY_EARTH"
   ]

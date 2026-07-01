@@ -55,6 +55,9 @@
  "cost": {
   "production": 57510
  },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
  "world": {
   "art": {
    "icon": "ART_DEF_BUILDING_HUMAN_MOD_METAPHYSICAL"
@@ -63,7 +66,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_HUMAN_MOD_METAPHYSICAL",
   "civilopedia": "TXT_KEY_BUILDING_HUMAN_MOD_METAPHYSICAL_PEDIA",
-  "neverCapture": true,
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

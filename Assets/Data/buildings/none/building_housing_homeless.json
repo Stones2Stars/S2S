@@ -66,6 +66,10 @@
    "flat": -5
   }
  },
+ "attributes": {
+  "nukeImmune": true,
+  "destroyedOnCapture": true
+ },
  "world": {
   "art": {
    "icon": "ART_DEF_BUILDING_HOUSING_HOMELESS"
@@ -75,8 +79,6 @@
   "description": "TXT_KEY_BUILDING_HOUSING_HOMELESS",
   "civilopedia": "TXT_KEY_BUILDING_HOUSING_HOMELESS_PEDIA",
   "notConstructible": true,
-  "nukeImmune": true,
-  "neverCapture": true,
   "autoBuild": true,
   "mapCategories": [
    "MAPCATEGORY_EARTH"

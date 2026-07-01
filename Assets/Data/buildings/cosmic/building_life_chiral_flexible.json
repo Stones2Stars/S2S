@@ -43,6 +43,9 @@
  "cost": {
   "production": 12738
  },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
  "world": {
   "art": {
    "icon": "ART_DEF_BUILDING_LIFE_CHIRAL_FLEXIBLE"
@@ -51,7 +54,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_LIFE_CHIRAL_FLEXIBLE",
   "civilopedia": "TXT_KEY_BUILDING_LIFE_CHIRAL_FLEXIBLE_PEDIA",
-  "neverCapture": true,
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

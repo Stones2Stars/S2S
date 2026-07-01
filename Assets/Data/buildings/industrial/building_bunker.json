@@ -76,6 +76,9 @@
    }
   ]
  },
+ "attributes": {
+  "nukeImmune": true
+ },
  "world": {
   "art": {
    "icon": "ART_DEF_BUILDING_BUNKER"
@@ -87,7 +90,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_BUNKER",
   "civilopedia": "TXT_KEY_BUILDING_BUNKER_PEDIA",
-  "nukeImmune": true,
   "worth": 1,
   "conquestProbability": 75,
   "advisor": "ADVISOR_MILITARY",

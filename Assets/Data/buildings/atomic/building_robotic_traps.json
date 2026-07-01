@@ -49,11 +49,9 @@
    "amount": {
     "percent": 35
    },
-   "damageAttackerChance": {
-    "flat": 35
-   },
-   "damageToAttacker": {
-    "flat": 35
+   "counterDamage": {
+    "damage": 35,
+    "chance": 35
    }
   }
  },
@@ -97,7 +95,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_ROBOTIC_TRAPS",
   "civilopedia": "TXT_KEY_BUILDING_ROBOTIC_TRAPS_PEDIA",
-  "damageAllAttackers": true,
   "militaryWorth": 6,
   "advisor": "ADVISOR_MILITARY",
   "visibilityPriority": 1,

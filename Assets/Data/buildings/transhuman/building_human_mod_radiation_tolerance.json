@@ -40,6 +40,9 @@
  "cost": {
   "production": 13810
  },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
  "world": {
   "art": {
    "icon": "ART_DEF_BUILDING_HUMAN_MOD_RADIATION_TOLERANCE"
@@ -48,7 +51,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_HUMAN_MOD_RADIATION_TOLERANCE",
   "civilopedia": "TXT_KEY_BUILDING_HUMAN_MOD_RADIATION_TOLERANCE_PEDIA",
-  "neverCapture": true,
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

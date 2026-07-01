@@ -103,6 +103,9 @@
    "flat": -4
   }
  },
+ "attributes": {
+  "nukeImmune": true
+ },
  "world": {
   "art": {
    "icon": "ART_DEF_BUILDING_PROPERTYCRIME"
@@ -112,7 +115,6 @@
   "description": "TXT_KEY_BUILDING_CRIME_LOOTING",
   "civilopedia": "TXT_KEY_BUILDING_CRIME_LOOTING_PEDIA",
   "notConstructible": true,
-  "nukeImmune": true,
   "conquestProbability": 100,
   "mapCategories": [
    "MAPCATEGORY_EARTH"

@@ -16,6 +16,10 @@
    "flat": -5
   }
  },
+ "attributes": {
+  "nukeImmune": true,
+  "destroyedOnCapture": true
+ },
  "world": {
   "art": {
    "icon": "ART_DEF_BUILDING_SAFETY_AESOPS_FABLES"
@@ -25,8 +29,6 @@
   "description": "TXT_KEY_BUILDING_SAFETY_AESOPS_FABLES",
   "civilopedia": "TXT_KEY_BUILDING_SAFETY_AESOPS_FABLES_PEDIA",
   "notConstructible": true,
-  "nukeImmune": true,
-  "neverCapture": true,
   "mapCategories": [
    "MAPCATEGORY_EARTH"
   ]

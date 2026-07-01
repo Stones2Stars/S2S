@@ -57,6 +57,9 @@
    "flat": 2
   }
  },
+ "attributes": {
+  "nukeImmune": true
+ },
  "world": {
   "art": {
    "icon": "ART_DEF_BUILDING_BLOOD_DANCE"
@@ -66,7 +69,6 @@
   "description": "TXT_KEY_BUILDING_BLOOD_DANCE",
   "civilopedia": "TXT_KEY_BUILDING_BLOOD_DANCE_PEDIA",
   "notConstructible": true,
-  "nukeImmune": true,
   "worth": 1,
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [

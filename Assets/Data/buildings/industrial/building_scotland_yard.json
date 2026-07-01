@@ -54,6 +54,10 @@
    "flat": -33
   }
  },
+ "attributes": {
+  "nukeImmune": true,
+  "destroyedOnCapture": true
+ },
  "ui": {
   "art": {
    "movie": {
@@ -70,8 +74,6 @@
   "description": "TXT_KEY_BUILDING_SCOTLAND_YARD",
   "civilopedia": "TXT_KEY_BUILDING_SCOTLAND_YARD_PEDIA",
   "notConstructible": true,
-  "nukeImmune": true,
-  "neverCapture": true,
   "worth": 10,
   "militaryWorth": 5,
   "advisor": "ADVISOR_MILITARY",

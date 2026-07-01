@@ -53,6 +53,9 @@
  "cost": {
   "production": 2904
  },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
  "world": {
   "art": {
    "icon": "ART_DEF_BUILDING_LIFE_AMMONIA_BASED"
@@ -61,7 +64,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_LIFE_AMMONIA_BASED",
   "civilopedia": "TXT_KEY_BUILDING_LIFE_AMMONIA_BASED_PEDIA",
-  "neverCapture": true,
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

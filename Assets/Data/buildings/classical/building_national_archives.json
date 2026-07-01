@@ -74,6 +74,10 @@
    }
   ]
  },
+ "attributes": {
+  "nukeImmune": true,
+  "destroyedOnCapture": true
+ },
  "ui": {
   "art": {
    "movie": {
@@ -89,8 +93,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_NATIONAL_ARCHIVES",
   "civilopedia": "TXT_KEY_BUILDING_NATIONAL_ARCHIVES_PEDIA",
-  "nukeImmune": true,
-  "neverCapture": true,
   "worth": 10,
   "greatPeopleUnitType": "UNIT_SCIENTIST",
   "advisor": "ADVISOR_GROWTH",

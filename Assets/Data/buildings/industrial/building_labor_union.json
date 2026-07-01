@@ -50,6 +50,9 @@
    }
   ]
  },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
  "ui": {
   "art": {
    "movie": {
@@ -68,7 +71,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_LABOR_UNION",
   "civilopedia": "TXT_KEY_BUILDING_LABOR_UNION_PEDIA",
-  "neverCapture": true,
   "worth": 5,
   "advisor": "ADVISOR_GROWTH",
   "visibilityPriority": 1,

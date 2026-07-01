@@ -57,6 +57,9 @@
  "cost": {
   "production": 7608
  },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
  "world": {
   "art": {
    "icon": "ART_DEF_BUILDING_LIFE_SUPERCRITICAL_CO2"
@@ -65,7 +68,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_LIFE_SUPERCRITICAL_CO2",
   "civilopedia": "TXT_KEY_BUILDING_LIFE_SUPERCRITICAL_CO2_PEDIA",
-  "neverCapture": true,
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

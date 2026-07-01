@@ -65,6 +65,9 @@
    }
   ]
  },
+ "attributes": {
+  "nukeImmune": true
+ },
  "world": {
   "art": {
    "icon": "ART_DEF_BUILDING_INHERITANCE"
@@ -73,7 +76,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_KNOWLEDGE_INHERITANCE",
   "civilopedia": "TXT_KEY_BUILDING_KNOWLEDGE_INHERITANCE_PEDIA",
-  "nukeImmune": true,
   "worth": 1,
   "conquestProbability": 15,
   "advisor": "ADVISOR_SCIENCE",

@@ -112,6 +112,10 @@
    ]
   }
  },
+ "attributes": {
+  "nukeImmune": true,
+  "destroyedOnCapture": true
+ },
  "world": {
   "art": {
    "icon": "ART_DEF_BUILDING_CULTURE_EUROPEAN"
@@ -122,8 +126,6 @@
   "civilopedia": "TXT_KEY_BUILDING_C_AC_PEDIA",
   "help": "TXT_KEY_BUILDING_C_AC_HELP",
   "notConstructible": true,
-  "nukeImmune": true,
-  "neverCapture": true,
   "mapCategories": [
    "MAPCATEGORY_EARTH"
   ]

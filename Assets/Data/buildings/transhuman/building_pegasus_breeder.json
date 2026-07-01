@@ -72,6 +72,9 @@
   "sizeModifier": 1,
   "complexityModifier": 2
  },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
  "world": {
   "art": {
    "icon": "ART_DEF_BUILDING_PEGASUS_BREEDER"
@@ -80,7 +83,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_PEGASUS_BREEDER",
   "civilopedia": "TXT_KEY_BUILDING_MYTHICAL_BREEDER_PEDIA",
-  "neverCapture": true,
   "worth": 10,
   "advisor": "ADVISOR_SCIENCE",
   "mapCategories": [

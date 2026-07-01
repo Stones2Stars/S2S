@@ -27,6 +27,9 @@
   "materialsModifier": 2,
   "complexityModifier": 2
  },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
  "world": {
   "art": {
    "icon": "ART_DEF_BUILDING_LIFE_STRUCTURAL_BACTERIA"
@@ -35,7 +38,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_LIFE_STRUCTURAL_BACTERIA",
   "civilopedia": "TXT_KEY_BUILDING_LIFE_STRUCTURAL_BACTERIA_PEDIA",
-  "neverCapture": true,
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

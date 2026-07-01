@@ -33,6 +33,9 @@
    "flat": 5
   }
  },
+ "attributes": {
+  "nukeImmune": true
+ },
  "world": {
   "art": {
    "icon": "ART_DEF_BUILDING_CHEOMSEONGDAE"
@@ -42,7 +45,6 @@
   "description": "TXT_KEY_BUILDING_RELIC_CHEOMSEONGDAE",
   "civilopedia": "TXT_KEY_BUILDING_CHEOMSEONGDAE_PEDIA",
   "notConstructible": true,
-  "nukeImmune": true,
   "noInstanceLimit": true,
   "worth": 4,
   "conquestProbability": 100,

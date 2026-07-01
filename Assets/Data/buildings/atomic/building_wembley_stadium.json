@@ -53,6 +53,10 @@
    }
   ]
  },
+ "attributes": {
+  "nukeImmune": true,
+  "destroyedOnCapture": true
+ },
  "ui": {
   "art": {
    "movie": {
@@ -69,8 +73,6 @@
   "description": "TXT_KEY_BUILDING_WEMBLEY_STADIUM",
   "civilopedia": "TXT_KEY_BUILDING_WEMBLEY_STADIUM_PEDIA",
   "help": "TXT_KEY_BUILDING_WEMBLEY_STADIUM_HELP",
-  "nukeImmune": true,
-  "neverCapture": true,
   "worth": 10,
   "greatPeopleUnitType": "UNIT_MERCHANT",
   "advisor": "ADVISOR_ECONOMY",

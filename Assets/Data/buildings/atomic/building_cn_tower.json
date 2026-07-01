@@ -78,6 +78,9 @@
    }
   ]
  },
+ "attributes": {
+  "nukeImmune": true
+ },
  "ui": {
   "art": {
    "movie": {
@@ -96,7 +99,6 @@
   "commerceDoubleTime": {
    "culture": 1000
   },
-  "nukeImmune": true,
   "worth": 8,
   "militaryWorth": 4,
   "conquestProbability": 100,

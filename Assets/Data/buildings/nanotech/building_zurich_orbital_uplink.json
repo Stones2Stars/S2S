@@ -58,6 +58,9 @@
   "materialsModifier": 1,
   "complexityModifier": 2
  },
+ "attributes": {
+  "nukeImmune": true
+ },
  "world": {
   "art": {
    "icon": "ART_DEF_BUILDING_ZURICH_ORBITAL_UPLINK"
@@ -66,7 +69,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_ZURICH_ORBITAL_UPLINK",
   "civilopedia": "TXT_KEY_BUILDING_ZURICH_ORBITAL_UPLINK_PEDIA",
-  "nukeImmune": true,
   "worth": 5,
   "conquestProbability": 100,
   "advisor": "ADVISOR_ECONOMY",

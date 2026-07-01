@@ -51,6 +51,11 @@
    "percent": 100
   }
  },
+ "grants": {
+  "freePromotions": [
+   "PROMOTION_MAMMOTH_HUNTER1"
+  ]
+ },
  "cost": {
   "production": 86,
   "countModifier": 1
@@ -70,7 +75,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_SPEARPOINT_BURIAL",
   "civilopedia": "TXT_KEY_BUILDING_SPEARPOINT_BURIAL_PEDIA",
-  "applyFreePromotionOnMove": true,
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

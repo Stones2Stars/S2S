@@ -75,6 +75,9 @@
    }
   ]
  },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
  "world": {
   "art": {
    "icon": "ART_DEF_BUILDING_TOTEM_POLE"
@@ -86,7 +89,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_TOTEM_POLE",
   "civilopedia": "TXT_KEY_BUILDING_TOTEM_POLE_PEDIA",
-  "neverCapture": true,
   "centerInCity": true,
   "worth": 2,
   "militaryWorth": 1,

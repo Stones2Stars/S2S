@@ -35,6 +35,10 @@
    }
   ]
  },
+ "attributes": {
+  "nukeImmune": true,
+  "destroyedOnCapture": true
+ },
  "world": {
   "art": {
    "icon": "ART_DEF_BUILDING_ORDINANCE_NEIGHBORHOOD_WATCH"
@@ -46,8 +50,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_ORDINANCE_NEIGHBORHOOD_WATCH",
   "civilopedia": "TXT_KEY_BUILDING_ORDINANCE_NEIGHBORHOOD_WATCH_PEDIA",
-  "nukeImmune": true,
-  "neverCapture": true,
   "worth": 1,
   "advisor": "ADVISOR_MILITARY",
   "mapCategories": [

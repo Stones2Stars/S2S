@@ -60,6 +60,11 @@
    "flat": 2
   }
  },
+ "grants": {
+  "freePromotions": [
+   "PROMOTION_MARTIAL_ARTS"
+  ]
+ },
  "cost": {
   "production": 344,
   "sizeModifier": 2,

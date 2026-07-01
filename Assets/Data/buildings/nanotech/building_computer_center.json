@@ -90,6 +90,9 @@
    }
   ]
  },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
  "ui": {
   "art": {
    "movie": {
@@ -108,7 +111,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_COMPUTER_CENTER",
   "civilopedia": "TXT_KEY_BUILDING_COMPUTER_CENTER_PEDIA",
-  "neverCapture": true,
   "worth": 6,
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,

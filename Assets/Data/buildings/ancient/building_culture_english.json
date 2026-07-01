@@ -113,6 +113,9 @@
  "cost": {
   "production": 1200
  },
+ "attributes": {
+  "nukeImmune": true
+ },
  "world": {
   "art": {
    "icon": "ART_DEF_BUILDING_CULTURE_ENGLISH"
@@ -121,7 +124,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_CULTURE_ENGLISH",
   "civilopedia": "TXT_KEY_BUILDING_CULTURE_ENGLISH_PEDIA",
-  "nukeImmune": true,
   "noInstanceLimit": true,
   "conquestProbability": 100,
   "specialBuildingType": "SPECIALBUILDING_C2C_CULTURE",

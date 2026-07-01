@@ -42,6 +42,9 @@
  "cost": {
   "production": 25310
  },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
  "ui": {
   "art": {
    "movie": {
@@ -57,7 +60,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_SECTION_31",
   "civilopedia": "TXT_KEY_BUILDING_SECTION_31_PEDIA",
-  "neverCapture": true,
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

@@ -73,6 +73,9 @@
    }
   ]
  },
+ "attributes": {
+  "nukeImmune": true
+ },
  "world": {
   "art": {
    "icon": "ART_DEF_BUILDING_NEST_THIEF"
@@ -81,7 +84,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_NEST_THIEF",
   "civilopedia": "TXT_KEY_BUILDING_NEST_THIEF_PEDIA",
-  "nukeImmune": true,
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

@@ -72,6 +72,11 @@
    "flat": 4
   }
  },
+ "grants": {
+  "freePromotions": [
+   "PROMOTION_NAVIGATION1"
+  ]
+ },
  "cost": {
   "production": 2640,
   "materialsModifier": 2,
@@ -86,6 +91,9 @@
     "FLAVOR_GROWTH": 8
    }
   ]
+ },
+ "attributes": {
+  "nukeImmune": true
  },
  "ui": {
   "art": {
@@ -105,7 +113,6 @@
   "commerceDoubleTime": {
    "culture": 1000
   },
-  "nukeImmune": true,
   "worth": 14,
   "conquestProbability": 100,
   "greatPeopleUnitType": "UNIT_MERCHANT",

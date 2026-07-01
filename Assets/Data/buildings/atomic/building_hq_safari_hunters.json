@@ -45,6 +45,10 @@
    "flat": 1
   }
  },
+ "headquarters": "CORPORATION_SAFARI",
+ "attributes": {
+  "nukeImmune": true
+ },
  "world": {
   "art": {
    "icon": "ART_DEF_BUILDING_HQ_SAFARI_HUNTERS"
@@ -56,9 +60,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_HQ_SAFARI_HUNTERS",
   "civilopedia": "TXT_KEY_BUILDING_CORPORATION_SAFARI_PEDIA",
-  "corporationHQ": "CORPORATION_SAFARI",
   "notConstructible": true,
-  "nukeImmune": true,
   "worth": 8,
   "conquestProbability": 100,
   "greatPeopleUnitType": "UNIT_GREAT_GENERAL",

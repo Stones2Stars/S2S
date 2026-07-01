@@ -90,6 +90,9 @@
    }
   ]
  },
+ "attributes": {
+  "nukeImmune": true
+ },
  "world": {
   "art": {
    "icon": "ART_DEF_BUILDING_LOOKOUT_POST"
@@ -98,7 +101,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_LOOKOUT_POST",
   "civilopedia": "TXT_KEY_BUILDING_LOOKOUT_POST_PEDIA",
-  "nukeImmune": true,
   "militaryWorth": 2,
   "advisor": "ADVISOR_MILITARY",
   "visibilityPriority": 1,

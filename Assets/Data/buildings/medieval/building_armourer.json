@@ -85,6 +85,11 @@
    "SPECIALIST_ENGINEER": 1
   }
  },
+ "grants": {
+  "freePromotions": [
+   "PROMOTION_BAMBOO_ARMOR"
+  ]
+ },
  "cost": {
   "production": 300,
   "sizeModifier": 2,
@@ -110,7 +115,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_ARMOURER",
   "civilopedia": "TXT_KEY_BUILDING_ARMOURER_PEDIA",
-  "applyFreePromotionOnMove": true,
   "worth": 4,
   "militaryWorth": 5,
   "conquestProbability": 75,

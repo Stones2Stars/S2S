@@ -67,6 +67,9 @@
    }
   ]
  },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
  "world": {
   "art": {
    "icon": "ART_DEF_BUILDING_ANTI_MISSILE_BATTERIES"
@@ -75,7 +78,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_ANTI_MISSILE_BATTERIES",
   "civilopedia": "TXT_KEY_BUILDING_ANTI_MISSILE_BATTERIES_PEDIA",
-  "neverCapture": true,
   "worth": 1,
   "dcmAirbombMission": 2,
   "advisor": "ADVISOR_MILITARY",

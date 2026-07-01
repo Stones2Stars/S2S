@@ -66,6 +66,9 @@
   "materialsModifier": 1,
   "complexityModifier": 2
  },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
  "ui": {
   "art": {
    "movie": {
@@ -81,7 +84,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_NATIONAL_AQUARIUM",
   "civilopedia": "TXT_KEY_BUILDING_NATIONAL_AQUARIUM_PEDIA",
-  "neverCapture": true,
   "centerInCity": true,
   "worth": 10,
   "greatPeopleUnitType": "UNIT_SCIENTIST",

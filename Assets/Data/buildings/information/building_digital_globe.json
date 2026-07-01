@@ -77,6 +77,11 @@
    "flat": 3
   }
  },
+ "grants": {
+  "freePromotions": [
+   "PROMOTION_RANGE1"
+  ]
+ },
  "cost": {
   "production": 2105,
   "complexityModifier": 2

@@ -71,6 +71,9 @@
    "flat": -8
   }
  },
+ "attributes": {
+  "nukeImmune": true
+ },
  "world": {
   "art": {
    "icon": "ART_DEF_BUILDING_PROPERTYCRIME"
@@ -80,7 +83,6 @@
   "description": "TXT_KEY_BUILDING_CRIME_HUMAN_TRAFFICKING",
   "civilopedia": "TXT_KEY_BUILDING_CRIME_HUMAN_TRAFFICKING_PEDIA",
   "notConstructible": true,
-  "nukeImmune": true,
   "conquestProbability": 100,
   "mapCategories": [
    "MAPCATEGORY_EARTH"

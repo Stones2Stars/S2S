@@ -66,6 +66,11 @@
    }
   }
  },
+ "grants": {
+  "freePromotions": [
+   "PROMOTION_COMBAT1"
+  ]
+ },
  "cost": {
   "production": 2460,
   "sizeModifier": 3,
@@ -81,6 +86,9 @@
     "FLAVOR_GROWTH": 8
    }
   ]
+ },
+ "attributes": {
+  "nukeImmune": true
  },
  "ui": {
   "art": {
@@ -100,7 +108,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_VENETIAN_ARSENAL",
   "civilopedia": "TXT_KEY_BUILDING_VENETIAN_ARSENAL_PEDIA",
-  "nukeImmune": true,
   "worth": 13,
   "conquestProbability": 100,
   "greatPeopleUnitType": "UNIT_MERCHANT",

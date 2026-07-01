@@ -81,6 +81,9 @@
    }
   ]
  },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
  "world": {
   "art": {
    "icon": "ART_DEF_BUILDING_D_T_FUSION_POWER_PLANT"
@@ -92,7 +95,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_D_T_FUSION_POWER_PLANT",
   "civilopedia": "TXT_KEY_BUILDING_D_T_FUSION_POWER_PLANT_PEDIA",
-  "neverCapture": true,
   "dcmAirbombMission": 3,
   "specialBuildingType": "SPECIALBUILDING_D_T_FUSION_POWER_PLANT",
   "advisor": "ADVISOR_ECONOMY",

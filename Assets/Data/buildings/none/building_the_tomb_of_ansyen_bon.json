@@ -28,6 +28,10 @@
  "grants": {
   "holyCity": "RELIGION_VOODOO"
  },
+ "shrine": "RELIGION_VOODOO",
+ "attributes": {
+  "nukeImmune": true
+ },
  "ui": {
   "art": {
    "movie": {
@@ -49,9 +53,7 @@
   "commerceDoubleTime": {
    "culture": 1000
   },
-  "shrine": "RELIGION_VOODOO",
   "notConstructible": true,
-  "nukeImmune": true,
   "worth": 8,
   "conquestProbability": 100,
   "greatPeopleUnitType": "UNIT_PROPHET",

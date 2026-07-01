@@ -71,6 +71,9 @@
    }
   ]
  },
+ "attributes": {
+  "nukeImmune": true
+ },
  "world": {
   "art": {
    "icon": "ART_DEF_BUILDING_HOPSCOTCH"
@@ -79,7 +82,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_HOPSCOTCH",
   "civilopedia": "TXT_KEY_BUILDING_HOPSCOTCH_PEDIA",
-  "nukeImmune": true,
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

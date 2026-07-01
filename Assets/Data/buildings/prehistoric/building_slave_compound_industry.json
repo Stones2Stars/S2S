@@ -32,6 +32,9 @@
    "SPECIALIST_SLAVES": 1
   }
  },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
  "world": {
   "art": {
    "icon": "ART_DEF_BUILDING_SLAVE_COMPOUND_INDUSTRY"
@@ -48,7 +51,6 @@
    "CIVILIZATION_NPC_NEANDERTHAL"
   ],
   "notConstructible": true,
-  "neverCapture": true,
   "worth": 2,
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [

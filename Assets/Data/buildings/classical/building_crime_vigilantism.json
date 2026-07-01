@@ -68,6 +68,9 @@
    "flat": 1
   }
  },
+ "attributes": {
+  "nukeImmune": true
+ },
  "world": {
   "art": {
    "icon": "ART_DEF_BUILDING_PROPERTYCRIME"
@@ -77,7 +80,6 @@
   "description": "TXT_KEY_BUILDING_CRIME_VIGILANTISM",
   "civilopedia": "TXT_KEY_BUILDING_CRIME_VIGILANTISM_PEDIA",
   "notConstructible": true,
-  "nukeImmune": true,
   "conquestProbability": 100,
   "mapCategories": [
    "MAPCATEGORY_EARTH"

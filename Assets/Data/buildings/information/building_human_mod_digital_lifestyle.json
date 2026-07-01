@@ -40,6 +40,9 @@
  "cost": {
   "production": 4210
  },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
  "world": {
   "art": {
    "icon": "ART_DEF_BUILDING_HUMAN_MOD_DIGITAL_LIFESTYLE"
@@ -48,7 +51,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_HUMAN_MOD_DIGITAL_LIFESTYLE",
   "civilopedia": "TXT_KEY_BUILDING_HUMAN_MOD_DIGITAL_LIFESTYLE_PEDIA",
-  "neverCapture": true,
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

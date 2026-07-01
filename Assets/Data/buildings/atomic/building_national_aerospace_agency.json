@@ -101,6 +101,9 @@
    }
   ]
  },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
  "ui": {
   "art": {
    "movie": {
@@ -116,7 +119,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_NATIONAL_AEROSPACE_AGENCY",
   "civilopedia": "TXT_KEY_BUILDING_NATIONAL_AEROSPACE_AGENCY_PEDIA",
-  "neverCapture": true,
   "worth": 8,
   "militaryWorth": 8,
   "airlift": 1,

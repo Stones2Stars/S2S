@@ -22,6 +22,9 @@
    ]
   }
  },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
  "world": {
   "art": {
    "icon": "ART_DEF_BUILDING_HERITAGE_DEER"
@@ -35,7 +38,6 @@
   "civilopedia": "TXT_KEY_BUILDING_ANIMAL_TRAINER_DEER_PEDIA",
   "help": "TXT_KEY_BUILDING_EFFECT_HERITAGE_DEER_HELP",
   "notConstructible": true,
-  "neverCapture": true,
   "worth": 2,
   "specialBuildingType": "SPECIALBUILDING_PUNK_MEGAFAUNA",
   "advisor": "ADVISOR_MILITARY",

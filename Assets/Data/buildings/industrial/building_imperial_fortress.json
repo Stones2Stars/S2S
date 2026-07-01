@@ -236,6 +236,9 @@
   "materialsModifier": 1,
   "complexityModifier": 1
  },
+ "attributes": {
+  "protectedCulture": true
+ },
  "world": {
   "art": {
    "icon": "ART_DEF_BUILDING_IMPERIAL_FORTRESS"
@@ -244,7 +247,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_IMPERIAL_FORTRESS",
   "civilopedia": "TXT_KEY_BUILDING_IMPERIAL_FORTRESS_PEDIA",
-  "protectedCulture": true,
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

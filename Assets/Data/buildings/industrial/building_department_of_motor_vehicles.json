@@ -84,11 +84,19 @@
    "flat": 4
   }
  },
+ "grants": {
+  "freePromotions": [
+   "PROMOTION_URBAN_TACTICS1"
+  ]
+ },
  "cost": {
   "production": 1660,
   "sizeModifier": 2,
   "materialsModifier": 1,
   "complexityModifier": 1
+ },
+ "attributes": {
+  "destroyedOnCapture": true
  },
  "ui": {
   "art": {
@@ -105,7 +113,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_DEPARTMENT_OF_MOTOR_VEHICLES",
   "civilopedia": "TXT_KEY_BUILDING_DEPARTMENT_OF_MOTOR_VEHICLES_PEDIA",
-  "neverCapture": true,
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

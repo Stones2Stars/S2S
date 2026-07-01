@@ -40,6 +40,10 @@
    "flat": 1
   }
  },
+ "headquarters": "CORPORATION_ULTSOLDIER",
+ "attributes": {
+  "nukeImmune": true
+ },
  "world": {
   "art": {
    "icon": "ART_DEF_BUILDING_HQ_ULTIMATE_SOLDIERS"
@@ -51,9 +55,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_HQ_ULTIMATE_SOLDIERS",
   "civilopedia": "TXT_KEY_BUILDING_CORPORATION_ULTSOLDIER_PEDIA",
-  "corporationHQ": "CORPORATION_ULTSOLDIER",
   "notConstructible": true,
-  "nukeImmune": true,
   "worth": 8,
   "conquestProbability": 100,
   "greatPeopleUnitType": "UNIT_GREAT_GENERAL",

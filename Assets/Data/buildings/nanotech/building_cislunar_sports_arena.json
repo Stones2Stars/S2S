@@ -89,6 +89,9 @@
    }
   ]
  },
+ "attributes": {
+  "orbital": true
+ },
  "world": {
   "art": {
    "icon": "ART_DEF_BUILDING_CISLUNAR_SPORTS_ARENA"
@@ -100,7 +103,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_CISLUNAR_SPORTS_ARENA",
   "civilopedia": "TXT_KEY_BUILDING_CISLUNAR_SPORTS_ARENA_PEDIA",
-  "orbital": true,
   "worth": 12,
   "militaryWorth": 5,
   "dcmAirbombMission": 2,

@@ -45,6 +45,14 @@
    "percent": -5
   }
  },
+ "grants": {
+  "freePromotions": [
+   "PROMOTION_WAR_CRY"
+  ]
+ },
+ "attributes": {
+  "nukeImmune": true
+ },
  "world": {
   "art": {
    "icon": "ART_DEF_BUILDING_WAR_DANCE"
@@ -54,7 +62,6 @@
   "description": "TXT_KEY_BUILDING_WAR_DANCE",
   "civilopedia": "TXT_KEY_BUILDING_WAR_DANCE_PEDIA",
   "notConstructible": true,
-  "nukeImmune": true,
   "worth": 1,
   "advisor": "ADVISOR_CULTURE",
   "mapCategories": [

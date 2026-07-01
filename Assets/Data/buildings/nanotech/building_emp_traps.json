@@ -48,11 +48,9 @@
    "amount": {
     "percent": 40
    },
-   "damageAttackerChance": {
-    "flat": 40
-   },
-   "damageToAttacker": {
-    "flat": 40
+   "counterDamage": {
+    "damage": 40,
+    "chance": 40
    }
   }
  },
@@ -91,7 +89,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_EMP_TRAPS",
   "civilopedia": "TXT_KEY_BUILDING_EMP_TRAPS_PEDIA",
-  "damageAllAttackers": true,
   "militaryWorth": 7,
   "advisor": "ADVISOR_MILITARY",
   "visibilityPriority": 1,

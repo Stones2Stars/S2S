@@ -45,6 +45,10 @@
    "flat": 1
   }
  },
+ "headquarters": "CORPORATION_FASHION",
+ "attributes": {
+  "nukeImmune": true
+ },
  "world": {
   "art": {
    "icon": "ART_DEF_BUILDING_HQ_FASHION_HOUSE"
@@ -59,9 +63,7 @@
   "commerceDoubleTime": {
    "culture": 1000
   },
-  "corporationHQ": "CORPORATION_FASHION",
   "notConstructible": true,
-  "nukeImmune": true,
   "worth": 8,
   "conquestProbability": 100,
   "greatPeopleUnitType": "UNIT_ARTIST",

@@ -42,6 +42,9 @@
  "cost": {
   "production": 48710
  },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
  "world": {
   "art": {
    "icon": "ART_DEF_BUILDING_HUMAN_MOD_ARCHAILECT"
@@ -50,7 +53,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_HUMAN_MOD_ARCHAILECT",
   "civilopedia": "TXT_KEY_BUILDING_HUMAN_MOD_ARCHAILECT_PEDIA",
-  "neverCapture": true,
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

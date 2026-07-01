@@ -95,6 +95,9 @@
    }
   ]
  },
+ "attributes": {
+  "nukeImmune": true
+ },
  "world": {
   "art": {
    "icon": "ART_DEF_BUILDING_PATTAKY_OF_OGGUN"
@@ -106,7 +109,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_PATTAKY_OF_OGGUN",
   "civilopedia": "TXT_KEY_BUILDING_PATTAKY_OF_OGGUN_PEDIA",
-  "nukeImmune": true,
   "worth": 8,
   "conquestProbability": 100,
   "greatPeopleUnitType": "UNIT_PROPHET",

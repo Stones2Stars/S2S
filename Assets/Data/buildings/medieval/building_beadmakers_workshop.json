@@ -166,6 +166,9 @@
    }
   ]
  },
+ "attributes": {
+  "nukeImmune": true
+ },
  "world": {
   "art": {
    "icon": "ART_DEF_BUILDING_BEADMAKERS_WORKSHOP"
@@ -177,7 +180,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_BEADMAKERS_WORKSHOP",
   "civilopedia": "TXT_KEY_BUILDING_BEADMAKERS_WORKSHOP_PEDIA",
-  "nukeImmune": true,
   "conquestProbability": 80,
   "advisor": "ADVISOR_ECONOMY",
   "visibilityPriority": 1,

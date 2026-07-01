@@ -123,6 +123,9 @@
    }
   ]
  },
+ "attributes": {
+  "nukeImmune": true
+ },
  "world": {
   "art": {
    "icon": "ART_DEF_BUILDING_SCULPTORS_WORKSHOP"
@@ -134,7 +137,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_SCULPTORS_WORKSHOP",
   "civilopedia": "TXT_KEY_BUILDING_SCULPTORS_WORKSHOP_PEDIA",
-  "nukeImmune": true,
   "conquestProbability": 80,
   "advisor": "ADVISOR_CULTURE",
   "visibilityPriority": 1,

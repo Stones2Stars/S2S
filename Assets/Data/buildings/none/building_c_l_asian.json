@@ -147,6 +147,11 @@
    ]
   }
  },
+ "grants": {
+  "freePromotions": [
+   "PROMOTION_CULTURE_ASIAN"
+  ]
+ },
  "cost": {
   "production": 100
  },
@@ -157,6 +162,9 @@
    }
   ]
  },
+ "attributes": {
+  "nukeImmune": true
+ },
  "world": {
   "art": {
    "icon": "ART_DEF_BUILDING_CULTURE_ASIAN"
@@ -166,7 +174,6 @@
   "description": "TXT_KEY_BUILDING_C_L_ASIAN",
   "civilopedia": "TXT_KEY_BUILDING_C_L_PEDIA",
   "help": "TXT_KEY_BUILDING_C_L_HELP",
-  "nukeImmune": true,
   "conquestProbability": 85,
   "mapCategories": [
    "MAPCATEGORY_EARTH"

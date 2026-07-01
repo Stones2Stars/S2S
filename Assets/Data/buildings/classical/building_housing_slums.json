@@ -68,6 +68,10 @@
    "flat": -2
   }
  },
+ "attributes": {
+  "nukeImmune": true,
+  "destroyedOnCapture": true
+ },
  "world": {
   "art": {
    "icon": "ART_DEF_BUILDING_HOUSING_SLUMS"
@@ -77,8 +81,6 @@
   "description": "TXT_KEY_BUILDING_HOUSING_SLUMS",
   "civilopedia": "TXT_KEY_BUILDING_HOUSING_SLUMS_PEDIA",
   "notConstructible": true,
-  "nukeImmune": true,
-  "neverCapture": true,
   "autoBuild": true,
   "mapCategories": [
    "MAPCATEGORY_EARTH"

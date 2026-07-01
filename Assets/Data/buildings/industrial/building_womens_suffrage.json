@@ -43,6 +43,10 @@
   "production": 4800,
   "complexityModifier": 2
  },
+ "attributes": {
+  "nukeImmune": true,
+  "teamShare": true
+ },
  "ui": {
   "art": {
    "movie": {
@@ -58,8 +62,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_WOMENS_SUFFRAGE",
   "civilopedia": "TXT_KEY_BUILDING_WOMENS_SUFFRAGE_PEDIA",
-  "nukeImmune": true,
-  "teamShare": true,
   "worth": 15,
   "conquestProbability": 100,
   "advisor": "ADVISOR_MILITARY",

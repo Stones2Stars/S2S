@@ -90,6 +90,9 @@
    }
   ]
  },
+ "attributes": {
+  "nukeImmune": true
+ },
  "world": {
   "art": {
    "icon": "ART_DEF_BUILDING_MOTORCYCLE_CLUB"
@@ -99,7 +102,6 @@
   "description": "TXT_KEY_BUILDING_MOTORCYCLE_CLUB_UNSANCTIONED",
   "civilopedia": "TXT_KEY_BUILDING_MOTORCYCLE_CLUB_PEDIA",
   "notConstructible": true,
-  "nukeImmune": true,
   "conquestProbability": 100,
   "mapCategories": [
    "MAPCATEGORY_EARTH"

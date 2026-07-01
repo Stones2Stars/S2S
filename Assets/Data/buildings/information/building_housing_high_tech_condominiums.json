@@ -70,6 +70,10 @@
    "flat": 8
   }
  },
+ "attributes": {
+  "nukeImmune": true,
+  "destroyedOnCapture": true
+ },
  "world": {
   "art": {
    "icon": "ART_DEF_BUILDING_HOUSING_HIGH_TECH_CONDOMINIUMS"
@@ -79,8 +83,6 @@
   "description": "TXT_KEY_BUILDING_HOUSING_HIGH_TECH_CONDOMINIUMS",
   "civilopedia": "TXT_KEY_BUILDING_HOUSING_HIGH_TECH_CONDOMINIUMS_PEDIA",
   "notConstructible": true,
-  "nukeImmune": true,
-  "neverCapture": true,
   "autoBuild": true,
   "mapCategories": [
    "MAPCATEGORY_EARTH"

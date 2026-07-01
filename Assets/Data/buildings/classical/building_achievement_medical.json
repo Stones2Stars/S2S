@@ -25,6 +25,10 @@
    "flat": 2
   }
  },
+ "attributes": {
+  "nukeImmune": true,
+  "destroyedOnCapture": true
+ },
  "ui": {
   "art": {
    "movie": {
@@ -41,8 +45,6 @@
   "description": "TXT_KEY_BUILDING_ACHIEVEMENT_MEDICAL",
   "civilopedia": "TXT_KEY_BUILDING_ACHIEVEMENT_MEDICAL_PEDIA",
   "notConstructible": true,
-  "nukeImmune": true,
-  "neverCapture": true,
   "worth": 10,
   "specialBuildingType": "SPECIALBUILDING_ACHIEVEMENT",
   "advisor": "ADVISOR_GROWTH",

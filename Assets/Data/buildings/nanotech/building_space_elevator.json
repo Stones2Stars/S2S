@@ -97,6 +97,10 @@
    }
   ]
  },
+ "attributes": {
+  "nukeImmune": true,
+  "teamShare": true
+ },
  "ui": {
   "art": {
    "movie": {
@@ -112,8 +116,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_SPACE_ELEVATOR",
   "civilopedia": "TXT_KEY_BUILDING_SPACE_ELEVATOR_PEDIA",
-  "nukeImmune": true,
-  "teamShare": true,
   "worth": 20,
   "conquestProbability": 100,
   "greatPeopleUnitType": "UNIT_SCIENTIST",

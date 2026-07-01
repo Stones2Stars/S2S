@@ -77,6 +77,9 @@
  "cost": {
   "production": 4010
  },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
  "ui": {
   "art": {
    "movie": {
@@ -92,7 +95,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_NUCLEAR_POWERCOMPLEX",
   "civilopedia": "TXT_KEY_BUILDING_NUCLEAR_POWERCOMPLEX_PEDIA",
-  "neverCapture": true,
   "specialBuildingType": "SPECIALBUILDING_PUNK_ATOM",
   "advisor": "ADVISOR_ECONOMY",
   "visibilityPriority": "1.0",

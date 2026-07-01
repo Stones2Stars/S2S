@@ -68,6 +68,9 @@
  "cost": {
   "production": 7330
  },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
  "ui": {
   "art": {
    "movie": {
@@ -83,7 +86,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_DESIGNED_ANIMAL_SHOW",
   "civilopedia": "TXT_KEY_BUILDING_DESIGNED_ANIMAL_SHOW_PEDIA",
-  "neverCapture": true,
   "specialBuildingType": "SPECIALBUILDING_PUNK_BIO",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": "1.0",

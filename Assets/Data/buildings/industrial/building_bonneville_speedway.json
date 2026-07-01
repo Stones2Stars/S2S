@@ -72,6 +72,11 @@
    "SPECIALIST_ENGINEER": 1
   }
  },
+ "grants": {
+  "freePromotions": [
+   "PROMOTION_SPEED"
+  ]
+ },
  "cost": {
   "production": 5220,
   "sizeModifier": 3

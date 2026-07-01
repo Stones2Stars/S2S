@@ -81,6 +81,10 @@
    }
   ]
  },
+ "attributes": {
+  "nukeImmune": true,
+  "teamShare": true
+ },
  "ui": {
   "art": {
    "movie": {
@@ -102,8 +106,6 @@
   "commerceDoubleTime": {
    "culture": 1000
   },
-  "nukeImmune": true,
-  "teamShare": true,
   "worth": 12,
   "conquestProbability": 100,
   "greatPeopleUnitType": "UNIT_ARTIST",

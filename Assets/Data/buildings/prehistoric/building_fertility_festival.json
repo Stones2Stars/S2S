@@ -60,6 +60,9 @@
   "production": 184,
   "sizeModifier": 1
  },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
  "ui": {
   "art": {
    "movie": {
@@ -75,7 +78,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_FERTILITY_FESTIVAL",
   "civilopedia": "TXT_KEY_BUILDING_FERTILITY_FESTIVAL_PEDIA",
-  "neverCapture": true,
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

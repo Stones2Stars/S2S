@@ -85,6 +85,10 @@
   "production": 20,
   "complexityModifier": 2
  },
+ "attributes": {
+  "nukeImmune": true,
+  "destroyedOnCapture": true
+ },
  "world": {
   "art": {
    "icon": "ART_DEF_BUILDING_FOLKLORE_E_CORAL_REEF"
@@ -93,8 +97,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_FOLKLORE_E_CORAL_REEF",
   "civilopedia": "TXT_KEY_BUILDING_FOLKLORE_E_LANDFORM_PEDIA",
-  "nukeImmune": true,
-  "neverCapture": true,
   "forceNoPrereqScaling": true,
   "specialBuildingType": "SPECIALBUILDING_FOLKLORE_EXPLORATION",
   "advisor": "ADVISOR_SCIENCE",

@@ -29,6 +29,10 @@
    "percent": 25
   }
  },
+ "attributes": {
+  "nukeImmune": true,
+  "destroyedOnCapture": true
+ },
  "ui": {
   "art": {
    "movie": {
@@ -45,8 +49,6 @@
   "description": "TXT_KEY_BUILDING_ACHIEVEMENT_MILITARY",
   "civilopedia": "TXT_KEY_BUILDING_ACHIEVEMENT_PEDIA",
   "notConstructible": true,
-  "nukeImmune": true,
-  "neverCapture": true,
   "worth": 10,
   "specialBuildingType": "SPECIALBUILDING_ACHIEVEMENT",
   "advisor": "ADVISOR_MILITARY",

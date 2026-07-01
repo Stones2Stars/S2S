@@ -60,6 +60,9 @@
  "cost": {
   "production": 1512
  },
+ "attributes": {
+  "nukeImmune": true
+ },
  "world": {
   "art": {
    "icon": "ART_DEF_BUILDING_CULTURE_KHMER"
@@ -68,7 +71,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_CULTURE_KHMER",
   "civilopedia": "TXT_KEY_BUILDING_CULTURE_KHMER_PEDIA",
-  "nukeImmune": true,
   "noInstanceLimit": true,
   "conquestProbability": 100,
   "specialBuildingType": "SPECIALBUILDING_C2C_CULTURE",

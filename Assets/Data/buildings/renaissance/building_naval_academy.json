@@ -43,6 +43,11 @@
    "flat": 15
   }
  },
+ "grants": {
+  "freePromotions": [
+   "PROMOTION_NAVIGATION1"
+  ]
+ },
  "cost": {
   "production": 475,
   "sizeModifier": 3,

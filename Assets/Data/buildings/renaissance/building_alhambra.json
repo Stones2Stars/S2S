@@ -103,6 +103,11 @@
    }
   ]
  },
+ "attributes": {
+  "nukeImmune": true,
+  "teamShare": true,
+  "governmentCenter": true
+ },
  "ui": {
   "art": {
    "movie": {
@@ -124,9 +129,6 @@
   "commerceDoubleTime": {
    "culture": 300
   },
-  "nukeImmune": true,
-  "teamShare": true,
-  "governmentCenter": true,
   "worth": 10,
   "conquestProbability": 100,
   "greatPeopleUnitType": "UNIT_PROPHET",

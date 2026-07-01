@@ -120,6 +120,9 @@
    }
   ]
  },
+ "attributes": {
+  "nukeImmune": true
+ },
  "world": {
   "art": {
    "icon": "ART_DEF_BUILDING_PATTAKY_OF_OSHOSI"
@@ -131,7 +134,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_PATTAKY_OF_OSHOSI",
   "civilopedia": "TXT_KEY_BUILDING_PATTAKY_OF_OSHOSI_PEDIA",
-  "nukeImmune": true,
   "worth": 8,
   "conquestProbability": 100,
   "greatPeopleUnitType": "UNIT_PROPHET",

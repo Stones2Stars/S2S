@@ -68,6 +68,9 @@
    }
   ]
  },
+ "attributes": {
+  "nukeImmune": true
+ },
  "world": {
   "art": {
    "icon": "ART_DEF_BUILDING_BOMB_SHELTERS"
@@ -76,7 +79,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_BOMB_SHELTERS",
   "civilopedia": "TXT_KEY_BUILDING_BOMB_SHELTERS_PEDIA",
-  "nukeImmune": true,
   "worth": 1,
   "conquestProbability": 75,
   "advisor": "ADVISOR_MILITARY",

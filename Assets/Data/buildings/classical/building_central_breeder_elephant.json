@@ -65,6 +65,9 @@
    }
   ]
  },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
  "ui": {
   "art": {
    "movie": {
@@ -83,7 +86,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_CENTRAL_BREEDER_ELEPHANT",
   "civilopedia": "TXT_KEY_BUILDING_CENTRAL_BREEDER_ELEPHANT_PEDIA",
-  "neverCapture": true,
   "worth": 4,
   "militaryWorth": 6,
   "advisor": "ADVISOR_ECONOMY",

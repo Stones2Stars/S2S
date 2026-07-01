@@ -103,6 +103,9 @@
    }
   ]
  },
+ "attributes": {
+  "nukeImmune": true
+ },
  "world": {
   "art": {
    "icon": "ART_DEF_BUILDING_STEAM_CRANE"
@@ -114,7 +117,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_STEAM_CRANE",
   "civilopedia": "TXT_KEY_BUILDING_STEAM_CRANE_PEDIA",
-  "nukeImmune": true,
   "conquestProbability": 70,
   "advisor": "ADVISOR_ECONOMY",
   "visibilityPriority": 1,

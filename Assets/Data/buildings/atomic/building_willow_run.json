@@ -71,6 +71,9 @@
   "materialsModifier": 1,
   "complexityModifier": 2
  },
+ "attributes": {
+  "nukeImmune": true
+ },
  "ui": {
   "art": {
    "movie": {
@@ -86,7 +89,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_WILLOW_RUN",
   "civilopedia": "TXT_KEY_BUILDING_WILLOW_RUN_PEDIA",
-  "nukeImmune": true,
   "worth": 10,
   "conquestProbability": 100,
   "greatPeopleUnitType": "UNIT_GREAT_ENGINEER",

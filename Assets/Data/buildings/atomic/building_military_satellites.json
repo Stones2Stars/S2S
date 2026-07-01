@@ -61,6 +61,9 @@
    }
   ]
  },
+ "attributes": {
+  "orbital": true
+ },
  "world": {
   "art": {
    "icon": "ART_DEF_BUILDING_MILITARY_SATELLITES"
@@ -72,7 +75,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_MILITARY_SATELLITES",
   "civilopedia": "TXT_KEY_BUILDING_MILITARY_SATELLITES_PEDIA",
-  "orbital": true,
   "worth": 6,
   "militaryWorth": 1,
   "advisor": "ADVISOR_GROWTH",

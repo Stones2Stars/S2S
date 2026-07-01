@@ -48,6 +48,9 @@
    }
   ]
  },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
  "ui": {
   "art": {
    "movie": {
@@ -66,7 +69,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_TREASURY",
   "civilopedia": "TXT_KEY_BUILDING_TREASURY_PEDIA",
-  "neverCapture": true,
   "worth": 3,
   "advisor": "ADVISOR_ECONOMY",
   "visibilityPriority": 100,

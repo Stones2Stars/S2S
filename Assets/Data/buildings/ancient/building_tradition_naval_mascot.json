@@ -15,6 +15,10 @@
  "allowed": {
   "empire": 1
  },
+ "attributes": {
+  "nukeImmune": true,
+  "destroyedOnCapture": true
+ },
  "ui": {
   "art": {
    "movie": {
@@ -31,8 +35,6 @@
   "description": "TXT_KEY_BUILDING_TRADITION_NAVAL_MASCOT",
   "civilopedia": "TXT_KEY_BUILDING_NAVAL_STANDARD_ANIMAL_MASCOT_PEDIA",
   "notConstructible": true,
-  "nukeImmune": true,
-  "neverCapture": true,
   "worth": 1,
   "advisor": "ADVISOR_MILITARY",
   "mapCategories": [

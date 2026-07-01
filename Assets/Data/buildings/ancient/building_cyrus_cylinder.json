@@ -37,6 +37,9 @@
  "cost": {
   "production": 1200
  },
+ "attributes": {
+  "nukeImmune": true
+ },
  "ui": {
   "art": {
    "movie": {
@@ -53,7 +56,6 @@
   "description": "TXT_KEY_BUILDING_CYRUS_CYLINDER",
   "civilopedia": "TXT_KEY_BUILDING_CYRUS_CYLINDER_PEDIA",
   "help": "TXT_KEY_BUILDING_CYRUS_CYLINDER_HELP",
-  "nukeImmune": true,
   "worth": 6,
   "militaryWorth": 3,
   "conquestProbability": 100,

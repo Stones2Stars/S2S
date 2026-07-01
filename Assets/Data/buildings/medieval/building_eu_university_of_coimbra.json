@@ -103,6 +103,11 @@
    "SPECIALIST_DOCTOR": 3
   }
  },
+ "grants": {
+  "freePromotions": [
+   "PROMOTION_DISEASE_CONTROL1"
+  ]
+ },
  "cost": {
   "production": 1520,
   "sizeModifier": 3,

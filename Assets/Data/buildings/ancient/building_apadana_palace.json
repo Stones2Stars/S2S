@@ -60,6 +60,11 @@
    "flat": 5
   }
  },
+ "grants": {
+  "freePromotions": [
+   "PROMOTION_ORDER_OF_ORMAZD"
+  ]
+ },
  "cost": {
   "production": 1152,
   "sizeModifier": 3,
@@ -75,6 +80,11 @@
     "FLAVOR_GOLD": 4
    }
   ]
+ },
+ "attributes": {
+  "nukeImmune": true,
+  "teamShare": true,
+  "governmentCenter": true
  },
  "ui": {
   "art": {
@@ -94,9 +104,6 @@
   "commerceDoubleTime": {
    "culture": 1000
   },
-  "nukeImmune": true,
-  "teamShare": true,
-  "governmentCenter": true,
   "worth": 10,
   "conquestProbability": 100,
   "greatPeopleUnitType": "UNIT_ARTIST",

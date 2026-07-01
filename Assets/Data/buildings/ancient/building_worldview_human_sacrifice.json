@@ -17,6 +17,10 @@
    ]
   }
  },
+ "attributes": {
+  "nukeImmune": true,
+  "destroyedOnCapture": true
+ },
  "world": {
   "art": {
    "icon": "ART_DEF_BUILDING_WORLDVIEW_HUMAN_SACRIFICE"
@@ -30,8 +34,6 @@
   "civilopedia": "TXT_KEY_BUILDING_WORLDVIEW_HUMAN_SACRIFICE_PEDIA",
   "help": "TXT_KEY_BUILDING_WORLDVIEW_HUMAN_SACRIFICE_HELP",
   "notConstructible": true,
-  "nukeImmune": true,
-  "neverCapture": true,
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

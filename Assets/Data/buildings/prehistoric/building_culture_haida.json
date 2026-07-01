@@ -65,6 +65,9 @@
  "cost": {
   "production": 624
  },
+ "attributes": {
+  "nukeImmune": true
+ },
  "world": {
   "art": {
    "icon": "ART_DEF_BUILDING_CULTURE_HAIDA"
@@ -73,7 +76,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_CULTURE_HAIDA",
   "civilopedia": "TXT_KEY_BUILDING_CULTURE_HAIDA_PEDIA",
-  "nukeImmune": true,
   "noInstanceLimit": true,
   "conquestProbability": 100,
   "specialBuildingType": "SPECIALBUILDING_C2C_CULTURE",

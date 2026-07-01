@@ -91,6 +91,9 @@
   "materialsModifier": 1,
   "complexityModifier": 1
  },
+ "attributes": {
+  "nukeImmune": true
+ },
  "world": {
   "art": {
    "icon": "ART_DEF_BUILDING_LACQUERWARE_WORKSHOP"
@@ -99,7 +102,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_LACQUERWARE_WORKSHOP",
   "civilopedia": "TXT_KEY_BUILDING_LACQUERWARE_WORKSHOP_PEDIA",
-  "nukeImmune": true,
   "conquestProbability": 80,
   "advisor": "ADVISOR_ECONOMY",
   "visibilityPriority": 1,

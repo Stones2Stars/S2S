@@ -275,6 +275,11 @@
    "flat": 4
   }
  },
+ "grants": {
+  "freePromotions": [
+   "PROMOTION_SENTRY"
+  ]
+ },
  "cost": {
   "production": 570,
   "sizeModifier": 2,

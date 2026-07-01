@@ -78,6 +78,10 @@
    }
   ]
  },
+ "attributes": {
+  "governmentCenter": true,
+  "destroyedOnCapture": true
+ },
  "ui": {
   "art": {
    "movie": {
@@ -96,8 +100,6 @@
   "commerceDoubleTime": {
    "culture": 1000
   },
-  "neverCapture": true,
-  "governmentCenter": true,
   "worth": 8,
   "greatPeopleUnitType": "UNIT_GREAT_SPY",
   "advisor": "ADVISOR_ECONOMY",

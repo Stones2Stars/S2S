@@ -79,6 +79,9 @@
  "cost": {
   "production": 918
  },
+ "attributes": {
+  "nukeImmune": true
+ },
  "world": {
   "art": {
    "icon": "ART_DEF_BUILDING_CULTURE_KOREAN"
@@ -87,7 +90,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_CULTURE_KOREAN",
   "civilopedia": "TXT_KEY_BUILDING_CULTURE_KOREAN_PEDIA",
-  "nukeImmune": true,
   "noInstanceLimit": true,
   "conquestProbability": 100,
   "specialBuildingType": "SPECIALBUILDING_C2C_CULTURE",

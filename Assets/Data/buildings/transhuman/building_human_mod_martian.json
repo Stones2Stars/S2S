@@ -56,6 +56,9 @@
  "cost": {
   "production": 10910
  },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
  "world": {
   "art": {
    "icon": "ART_DEF_BUILDING_HUMAN_MOD_MARTIAN"
@@ -64,7 +67,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_HUMAN_MOD_MARTIAN",
   "civilopedia": "TXT_KEY_BUILDING_HUMAN_MOD_MARTIAN_PEDIA",
-  "neverCapture": true,
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

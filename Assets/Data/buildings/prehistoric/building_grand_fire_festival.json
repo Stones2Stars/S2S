@@ -260,6 +260,11 @@
    "flat": 4
   }
  },
+ "grants": {
+  "freePromotions": [
+   "PROMOTION_SHOCK"
+  ]
+ },
  "cost": {
   "production": 570,
   "sizeModifier": 1,

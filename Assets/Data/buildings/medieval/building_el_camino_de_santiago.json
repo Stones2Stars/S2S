@@ -28,7 +28,8 @@
      "type": "MAPCATEGORY_EARTH",
      "scope": "plot"
     }
-   ]
+   ],
+   "disabled": "IS_HOLY_CITY"
   }
  },
  "allowed": {
@@ -73,6 +74,9 @@
   "sizeModifier": 3,
   "countModifier": 1
  },
+ "attributes": {
+  "nukeImmune": true
+ },
  "ui": {
   "art": {
    "movie": {
@@ -91,8 +95,6 @@
   "commerceDoubleTime": {
    "culture": 1000
   },
-  "nukeImmune": true,
-  "noHolyCity": true,
   "worth": 10,
   "conquestProbability": 100,
   "greatPeopleUnitType": "UNIT_PROPHET",

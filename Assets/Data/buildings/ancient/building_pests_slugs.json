@@ -62,6 +62,9 @@
    "flat": -1
   }
  },
+ "attributes": {
+  "nukeImmune": true
+ },
  "world": {
   "art": {
    "icon": "ART_DEF_BUILDING_PESTS_SLUGS"
@@ -71,7 +74,6 @@
   "description": "TXT_KEY_BUILDING_PESTS_SLUGS",
   "civilopedia": "TXT_KEY_BUILDING_PESTS_PEDIA",
   "notConstructible": true,
-  "nukeImmune": true,
   "autoBuild": true,
   "conquestProbability": 100,
   "mapCategories": [

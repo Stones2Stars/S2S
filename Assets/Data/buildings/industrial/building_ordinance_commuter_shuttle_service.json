@@ -39,6 +39,10 @@
   "materialsModifier": 1,
   "complexityModifier": 2
  },
+ "attributes": {
+  "nukeImmune": true,
+  "destroyedOnCapture": true
+ },
  "world": {
   "art": {
    "icon": "ART_DEF_BUILDING_ORDINANCE_COMMUTER_SHUTTLE_SERVICE"
@@ -47,8 +51,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_ORDINANCE_COMMUTER_SHUTTLE_SERVICE",
   "civilopedia": "TXT_KEY_BUILDING_ORDINANCE_COMMUTER_SHUTTLE_SERVICE_PEDIA",
-  "nukeImmune": true,
-  "neverCapture": true,
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

@@ -113,6 +113,9 @@
    }
   ]
  },
+ "attributes": {
+  "nukeImmune": true
+ },
  "world": {
   "art": {
    "icon": "ART_DEF_BUILDING_STAR_FORT"
@@ -124,7 +127,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_STAR_FORT",
   "civilopedia": "TXT_KEY_BUILDING_STAR_FORT_PEDIA",
-  "nukeImmune": true,
   "worth": 2,
   "militaryWorth": 4,
   "conquestProbability": 100,

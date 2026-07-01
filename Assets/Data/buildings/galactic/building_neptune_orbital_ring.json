@@ -37,6 +37,9 @@
  "cost": {
   "production": 23432
  },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
  "ui": {
   "art": {
    "movie": {
@@ -52,7 +55,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_NEPTUNE_ORBITAL_RING",
   "civilopedia": "TXT_KEY_BUILDING_NEPTUNE_ORBITAL_RING_PEDIA",
-  "neverCapture": true,
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

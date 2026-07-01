@@ -62,6 +62,10 @@
    "flat": 2
   }
  },
+ "attributes": {
+  "nukeImmune": true,
+  "destroyedOnCapture": true
+ },
  "world": {
   "art": {
    "icon": "ART_DEF_BUILDING_HOUSING_PENTHOUSE_SUITES"
@@ -71,8 +75,6 @@
   "description": "TXT_KEY_BUILDING_HOUSING_PENTHOUSE_SUITES",
   "civilopedia": "TXT_KEY_BUILDING_HOUSING_PENTHOUSE_SUITES_PEDIA",
   "notConstructible": true,
-  "nukeImmune": true,
-  "neverCapture": true,
   "autoBuild": true,
   "mapCategories": [
    "MAPCATEGORY_EARTH"

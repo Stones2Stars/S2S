@@ -50,6 +50,9 @@
  "cost": {
   "production": 100
  },
+ "attributes": {
+  "providesFreshWater": true
+ },
  "world": {
   "art": {
    "icon": "ART_DEF_BUILDING_LUNAR_WATER_EXTRACTION_FACILITY"
@@ -58,7 +61,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_LUNAR_WATER_EXTRACTION_FACILITY",
   "civilopedia": "TXT_KEY_BUILDING_LUNAR_WATER_EXTRACTION_FACILITY_PEDIA",
-  "providesFreshWater": true,
   "conquestProbability": 100,
   "advisor": "ADVISOR_GROWTH",
   "mapCategories": [

@@ -59,6 +59,9 @@
    }
   ]
  },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
  "world": {
   "art": {
    "icon": "ART_DEF_BUILDING_SCIENTOLOGY_MONASTERY"
@@ -70,7 +73,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_SCIENTOLOGY_MONASTERY",
   "civilopedia": "TXT_KEY_BUILDING_SCIENTOLOGY_MONASTERY_PEDIA",
-  "neverCapture": true,
   "worth": 3,
   "religion": "RELIGION_SCIENTOLOGY",
   "advisor": "ADVISOR_RELIGION",

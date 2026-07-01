@@ -16,6 +16,10 @@
    "flat": -50
   }
  },
+ "attributes": {
+  "nukeImmune": true,
+  "destroyedOnCapture": true
+ },
  "world": {
   "art": {
    "icon": "ART_DEF_BUILDING_SAFETY_ALCATRAZ"
@@ -25,8 +29,6 @@
   "description": "TXT_KEY_BUILDING_SAFETY_ALCATRAZ",
   "civilopedia": "TXT_KEY_BUILDING_SAFETY_ALCATRAZ_PEDIA",
   "notConstructible": true,
-  "nukeImmune": true,
-  "neverCapture": true,
   "mapCategories": [
    "MAPCATEGORY_EARTH"
   ]

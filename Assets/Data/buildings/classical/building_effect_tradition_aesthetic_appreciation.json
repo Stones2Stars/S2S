@@ -26,6 +26,15 @@
    "flat": -2
   }
  },
+ "grants": {
+  "freePromotions": [
+   "PROMOTION_TRADITION_ASTHETIC_APPRECIATION"
+  ]
+ },
+ "attributes": {
+  "nukeImmune": true,
+  "destroyedOnCapture": true
+ },
  "world": {
   "art": {
    "icon": "ART_DEF_BUILDING_TRADITION_AESTHETIC_APPRECIATION"
@@ -35,9 +44,6 @@
   "description": "TXT_KEY_BUILDING_EFFECT_TRADITION_AESTHETIC_APPRECIATION",
   "civilopedia": "TXT_KEY_BUILDING_TRADITION_AESTHETIC_APPRECIATION_PEDIA",
   "notConstructible": true,
-  "nukeImmune": true,
-  "neverCapture": true,
-  "applyFreePromotionOnMove": true,
   "mapCategories": [
    "MAPCATEGORY_EARTH"
   ]

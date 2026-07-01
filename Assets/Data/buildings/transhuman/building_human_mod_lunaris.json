@@ -49,6 +49,9 @@
  "cost": {
   "production": 10910
  },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
  "world": {
   "art": {
    "icon": "ART_DEF_BUILDING_HUMAN_MOD_LUNARIS"
@@ -57,7 +60,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_HUMAN_MOD_LUNARIS",
   "civilopedia": "TXT_KEY_BUILDING_HUMAN_MOD_LUNARIS_PEDIA",
-  "neverCapture": true,
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

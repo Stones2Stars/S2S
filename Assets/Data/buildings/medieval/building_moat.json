@@ -59,6 +59,9 @@
    }
   ]
  },
+ "attributes": {
+  "zoneOfControl": true
+ },
  "world": {
   "art": {
    "icon": "ART_DEF_BUILDING_MOAT"
@@ -70,7 +73,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_MOAT",
   "civilopedia": "TXT_KEY_BUILDING_MOAT_PEDIA",
-  "zoneOfControl": true,
   "worth": 4,
   "militaryWorth": 8,
   "conquestProbability": 90,

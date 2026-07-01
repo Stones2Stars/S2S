@@ -32,6 +32,15 @@
    }
   }
  },
+ "grants": {
+  "freePromotions": [
+   "PROMOTION_ARCHER_TRADITION"
+  ]
+ },
+ "attributes": {
+  "nukeImmune": true,
+  "destroyedOnCapture": true
+ },
  "world": {
   "art": {
    "icon": "ART_DEF_BUILDING_EFFECT_TRADITION_ARCHERY"
@@ -41,9 +50,6 @@
   "description": "TXT_KEY_BUILDING_EFFECT_TRADITION_ARCHERY",
   "civilopedia": "TXT_KEY_BUILDING_EFFECT_TRADITION_ARCHERY_PEDIA",
   "notConstructible": true,
-  "nukeImmune": true,
-  "neverCapture": true,
-  "applyFreePromotionOnMove": true,
   "militaryWorth": 1,
   "mapCategories": [
    "MAPCATEGORY_EARTH"

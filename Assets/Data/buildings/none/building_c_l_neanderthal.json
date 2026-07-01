@@ -132,6 +132,11 @@
    ]
   }
  },
+ "grants": {
+  "freePromotions": [
+   "PROMOTION_CULTURE_NEANDERTHAL"
+  ]
+ },
  "cost": {
   "production": 100
  },
@@ -141,6 +146,9 @@
     "FLAVOR_CULTURE": 1
    }
   ]
+ },
+ "attributes": {
+  "nukeImmune": true
  },
  "world": {
   "art": {
@@ -154,7 +162,6 @@
   "enabledCivilizations": [
    "CIVILIZATION_NPC_NEANDERTHAL"
   ],
-  "nukeImmune": true,
   "conquestProbability": 85,
   "mapCategories": [
    "MAPCATEGORY_EARTH"

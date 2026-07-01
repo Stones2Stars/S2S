@@ -62,6 +62,9 @@
    }
   ]
  },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
  "world": {
   "art": {
    "icon": "ART_DEF_BUILDING_TENGRII_HORSE_TRAINER"
@@ -73,7 +76,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_TENGRII_HORSE_TRAINER",
   "civilopedia": "TXT_KEY_BUILDING_TENGRII_HORSE_TRAINER_PEDIA",
-  "neverCapture": true,
   "worth": 4,
   "religion": "RELIGION_TENGRIISM",
   "advisor": "ADVISOR_RELIGION",

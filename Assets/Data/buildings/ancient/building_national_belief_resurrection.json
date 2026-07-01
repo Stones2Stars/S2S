@@ -28,6 +28,10 @@
  "allowed": {
   "empire": 1
  },
+ "attributes": {
+  "nukeImmune": true,
+  "destroyedOnCapture": true
+ },
  "world": {
   "art": {
    "icon": "ART_DEF_BUILDING_NATIONAL_BELIEF_RESURRECTION"
@@ -37,8 +41,6 @@
   "description": "TXT_KEY_BUILDING_NATIONAL_BELIEF_RESURRECTION",
   "civilopedia": "TXT_KEY_BUILDING_NATIONAL_BELIEF_RESURRECTION_PEDIA",
   "notConstructible": true,
-  "nukeImmune": true,
-  "neverCapture": true,
   "worth": 10,
   "advisor": "ADVISOR_RELIGION",
   "mapCategories": [

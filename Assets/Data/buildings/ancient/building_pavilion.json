@@ -65,6 +65,9 @@
    }
   ]
  },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
  "world": {
   "art": {
    "icon": "ART_DEF_BUILDING_PAVILION"
@@ -76,7 +79,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_PAVILION",
   "civilopedia": "TXT_KEY_BUILDING_PAVILION_PEDIA",
-  "neverCapture": true,
   "worth": 4,
   "dcmAirbombMission": 2,
   "advisor": "ADVISOR_CULTURE",

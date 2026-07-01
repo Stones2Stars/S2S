@@ -20,6 +20,10 @@
  "allowed": {
   "empire": 1
  },
+ "attributes": {
+  "nukeImmune": true,
+  "destroyedOnCapture": true
+ },
  "ui": {
   "art": {
    "movie": {
@@ -39,8 +43,6 @@
    "CIVILIZATION_NPC_NEANDERTHAL"
   ],
   "notConstructible": true,
-  "nukeImmune": true,
-  "neverCapture": true,
   "worth": 1,
   "advisor": "ADVISOR_MILITARY",
   "mapCategories": [

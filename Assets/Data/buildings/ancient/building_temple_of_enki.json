@@ -75,6 +75,9 @@
   }
  },
  "grants": {
+  "freePromotions": [
+   "PROMOTION_ENKI"
+  ],
   "repeatable": [
    {
     "unitCombat": "UNITCOMBAT_HEALS_AS_NAVAL",
@@ -97,6 +100,9 @@
    }
   ]
  },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
  "world": {
   "art": {
    "icon": "ART_DEF_BUILDING_TEMPLE_OF_ENKI"
@@ -108,7 +114,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_TEMPLE_OF_ENKI",
   "civilopedia": "TXT_KEY_BUILDING_TEMPLE_OF_ENKI_PEDIA",
-  "neverCapture": true,
   "worth": 4,
   "greatPeopleUnitType": "UNIT_PROPHET",
   "specialBuildingType": "SPECIALBUILDING_TEMPLE",

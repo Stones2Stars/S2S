@@ -60,6 +60,12 @@
    "percent": 100
   }
  },
+ "grants": {
+  "freePromotions": [
+   "PROMOTION_HUNTER1",
+   "PROMOTION_HUNTER2"
+  ]
+ },
  "cost": {
   "production": 236,
   "sizeModifier": 1,
@@ -71,6 +77,9 @@
     "FLAVOR_GROWTH": 2
    }
   ]
+ },
+ "attributes": {
+  "destroyedOnCapture": true
  },
  "ui": {
   "art": {
@@ -87,7 +96,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_GREAT_HOLMEGAARD_HUNT",
   "civilopedia": "TXT_KEY_BUILDING_GREAT_HOLMEGAARD_HUNT_PEDIA",
-  "neverCapture": true,
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

@@ -136,6 +136,9 @@
    }
   ]
  },
+ "attributes": {
+  "nukeImmune": true
+ },
  "world": {
   "art": {
    "icon": "ART_DEF_BUILDING_MARCOS_CATHEDRAL"
@@ -150,7 +153,6 @@
   "commerceDoubleTime": {
    "culture": 1000
   },
-  "nukeImmune": true,
   "worth": 5,
   "militaryWorth": 10,
   "conquestProbability": 100,

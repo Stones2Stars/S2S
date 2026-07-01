@@ -34,6 +34,10 @@
    "empire": 1
   }
  },
+ "attributes": {
+  "nukeImmune": true,
+  "destroyedOnCapture": true
+ },
  "ui": {
   "art": {
    "movie": {
@@ -51,8 +55,6 @@
   "civilopedia": "TXT_KEY_BUILDING_UNIVERSAL_HEALTH_CARE_PEDIA",
   "help": "TXT_KEY_BUILDING_UNIVERSAL_HEALTH_CARE_HELP",
   "notConstructible": true,
-  "nukeImmune": true,
-  "neverCapture": true,
   "worth": 10,
   "greatPeopleUnitType": "UNIT_DOCTOR",
   "advisor": "ADVISOR_GROWTH",

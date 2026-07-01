@@ -39,6 +39,10 @@
   "materialsModifier": 1,
   "complexityModifier": 1
  },
+ "attributes": {
+  "nukeImmune": true,
+  "destroyedOnCapture": true
+ },
  "world": {
   "art": {
    "icon": "ART_DEF_BUILDING_ORDINANCE_CARPOOL"
@@ -47,8 +51,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_ORDINANCE_CARPOOL",
   "civilopedia": "TXT_KEY_BUILDING_ORDINANCE_CARPOOL_PEDIA",
-  "nukeImmune": true,
-  "neverCapture": true,
   "advisor": "ADVISOR_GROWTH",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

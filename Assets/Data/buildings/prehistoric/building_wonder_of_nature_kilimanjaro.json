@@ -89,6 +89,9 @@
   "materialsModifier": 1,
   "complexityModifier": 1
  },
+ "attributes": {
+  "providesFreshWater": true
+ },
  "world": {
   "art": {
    "icon": "ART_DEF_BUILDING_WONDER_OF_NATURE_KILIMANJARO"
@@ -100,7 +103,6 @@
   "enabledCivilizations": [
    "CIVILIZATION_NPC_NEANDERTHAL"
   ],
-  "providesFreshWater": true,
   "worth": 4,
   "conquestProbability": 70,
   "greatPeopleUnitType": "UNIT_PROPHET",

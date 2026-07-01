@@ -66,6 +66,10 @@
    "flat": 2
   }
  },
+ "attributes": {
+  "nukeImmune": true,
+  "destroyedOnCapture": true
+ },
  "world": {
   "art": {
    "icon": "ART_DEF_BUILDING_HOUSING_CHATEAU"
@@ -75,8 +79,6 @@
   "description": "TXT_KEY_BUILDING_HOUSING_CHATEAU",
   "civilopedia": "TXT_KEY_BUILDING_HOUSING_CHATEAU_PEDIA",
   "notConstructible": true,
-  "nukeImmune": true,
-  "neverCapture": true,
   "autoBuild": true,
   "mapCategories": [
    "MAPCATEGORY_EARTH"

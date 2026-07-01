@@ -46,8 +46,8 @@ of them.
 | **Provisions** | `grants` · `provides` | `grants` = one-shot / recurring things this hands out (units, buildings, pulses); `provides` = a continuous in-vicinity SUPPLY while active (e.g. a building or map bonus that makes a `BONUS_*` available in the city) |
 | **Effects** | every **modifier family** key (`food`, `production`, `happiness`, …, one per `PROPERTY_*`) | per-turn magnitudes this deposits onto targets |
 | **Intrinsic** ("what am I") | `identity` (incl. all TEXT) · `cost` · `ui` · `world` · `sound` · `ai` | empire-agnostic self-description, art, audio, AI metadata |
-| **Classification** | `skills` (UNIT, mutable abilities) · `tags` (UNIT, immutable type membership) · `state` (UNIT, transient) · `capabilities` (TEAM, tech/civic-unlocked) | §8 — the four-block classification model; scope carried by the section name |
-| **Auxiliary / bespoke** | `loadPrune` · `policies` · `succession` · `excludes` · `produces` · `condition` · `effect` · `vision` · `outcomes` · `mapGeneration` · `replacedBy` · `promotionLine` · `buildUp` · `shrine` · `properties` · `voteSource` · `threshold` · `role` · `victory` · `targetLevel` · `conversion` · `cityFounding` · `unitCapability` | data read by their own systems, not the cascade |
+| **Classification** | `skills` (UNIT, mutable abilities) · `tags` (UNIT, immutable type membership) · `state` (UNIT, transient) · `attributes` (BUILDING, held city-scope intrinsics) · `capabilities` (TEAM, grantor-provided) | §8 — the classification model; scope carried by the section name |
+| **Auxiliary / bespoke** | `loadPrune` · `policies` · `succession` · `excludes` · `produces` · `condition` · `effect` · `vision` · `outcomes` · `mapGeneration` · `replacedBy` · `promotionLine` · `buildUp` · `shrine` · `headquarters` · `properties` · `voteSource` · `threshold` · `role` · `victory` · `targetLevel` · `conversion` · `cityFounding` · `unitCapability` | data read by their own systems, not the cascade |
 
 `type` (the entity's own id, e.g. `"BUILDING_FORGE"`) and the TEXT fields are present where relevant.
 
@@ -437,6 +437,9 @@ One-shot or recurring things an entity hands out (not per-turn modifiers).
 
 - **lists** — `buildings · units · techs · civics · specialists · promotions · traits · bonuses · freePromotions ·
   foundBuildings`.
+- **`freePromotions`** (a building) — promotions granted at **END-TURN to every unit present in the city** (owner
+  ruling 2026-07-01). One mechanism, no on-move flag: a unit trained there is present at end-turn, and a unit that
+  walks in and stays is covered the **same** way — there is no separate mid-turn/on-move trigger.
 - **numeric pulses** — `grants.<channel>: value` (`grants.revolution: -100`, `grants.goldenAge`).
 - **`foundBuildings`** — entry shape `{ "building": BUILDING_X, "enabled"?: <condition> }` (absent `enabled` =
   always placed). Lives on the **settler-type unit** (the founder), NOT on the civ. ⚠ **Owner note (2026-06-30):**
@@ -573,7 +576,7 @@ Empire-agnostic self-description. Read directly — never summed or cascaded.
 
 ---
 
-## 8. Unit classification — `skills`, `tags`, `state` (& empire `capabilities`)
+## 8. Classification — unit `skills`/`tags`/`state`, building `attributes` & empire `capabilities`
 
 A unit's classification splits into **three blocks, distinguished by lifecycle**. The **operative test: *can a
 promotion grant it?***
@@ -588,14 +591,27 @@ promotion grant it?***
 - **`state`** — **transient** conditions (fired → counted down → over: `paralyze`/immobilise). **Greenfield** —
   never first-class; historically faked via pseudo-promotions + Python events.
 
-The **empire** counterpart to unit `skills` is **`capabilities`** — **team-wide, tech/civic-unlocked** civilization
-abilities (found-on-peaks, pass-peaks, move-on-water, tech-trading, irrigation, bridge-building, river-trade).
-The **section name carries the scope**, so the engine never guesses.
+The **empire** counterpart to unit `skills` is **`capabilities`** — **team-wide, unlocked** civilization
+abilities (found-on-peaks, pass-peaks, move-on-water, tech-trading, irrigation, bridge-building, river-trade,
+and the commerce sliders `setScienceRate`/`setCultureRate`/`setEspionageRate`). **Capabilities are empire-HELD but
+grantor-PROVIDED** — a **tech**, a **civic**, or a **building** *provides* one, and the empire then *holds* it. A
+grantor **provides**, never **holds**; a capability appears in a grantor's `capabilities` block to mean "I hand this
+to the empire." (This is exactly parallel to a tech granting an ability — the same block, three grantor kinds.) The
+**section name carries the scope**, so the engine never guesses.
+
+A **building** additionally has its own **`attributes`** block — the building's **HELD**, immutable, **city-scope**
+intrinsic capabilities: `nukeImmune`, `zoneOfControl`, `governmentCenter`, `providesFreshWater`, `borderObstacle`, …
+Plain booleans, like `skills`/`capabilities`, and again the section name carries the scope (building). The
+**hold-vs-provide distinction is load-bearing**: `attributes` are what the building *is/does itself* (held), while
+its `capabilities` are what it *hands to the empire* (provided) — the opposite direction. So a building's
+`nukeImmune` is an `attribute` (the building holds it), but its `setCultureRate` is a `capability` (the building
+provides the slider to the empire).
 
 ```jsonc
 "skills": { "amphibious": true, "blitz": true },   // UNIT, mutable
 "tags":   { "military": true, "gunpowder": true }, // UNIT, immutable (type)
-"capabilities": { "moveOnWater": true }            // TEAM/empire
+"attributes":   { "nukeImmune": true, "zoneOfControl": true }, // BUILDING, held city-scope intrinsic
+"capabilities": { "moveOnWater": true, "setCultureRate": true } // empire-HELD, grantor-PROVIDED (tech/civic/building)
 ```
 
 Full glossaries: [skills.md](skills.md) · [tags.md](tags.md) · [state.md](state.md) · [capabilities.md](capabilities.md).
@@ -628,8 +644,15 @@ Data read by a specific system, not the cascade. Use only when the entity needs 
   `CULTURELEVEL_ALT_POOR`). *(NOT the building `ReplacementBuildings`, which is reversible dormancy → `requires.operate.dormant`, §4.2/§4.3.)*
 - **`condition`** (Victory) · **`effect`** (Vote) · **`vision`** (line-of-sight) · **`outcomes`** (mission
   results) · **`mapGeneration`** (placement/spawn config).
-- **bespoke** object-sections, each read by its own system: `promotionLine` · `buildUp` · `shrine` · `properties` ·
-  `voteSource` · `threshold` · `role` · `victory` · `targetLevel` · `conversion` · `cityFounding` · `unitCapability`.
+- **`shrine`** — the building is a religion's SHRINE: `shrine: RELIGION_X` (the religion FK). The per-commerce
+  VALUES live on the **religion** (`religion.shrine`), scaled per city holding the religion; the building declares
+  only the relationship. A top-level section, not an `identity` marker — the shrine relationship IS the data.
+- **`headquarters`** — the corp-HQ analog of `shrine`: the building is a corporation's HEADQUARTERS,
+  `headquarters: CORPORATION_X` (the corporation FK). The per-commerce values live on the **corporation**, scaled
+  per corporation presence. Same FK-relationship shape as `shrine`, one for religion and one for corporation.
+- **bespoke** object-sections, each read by its own system: `promotionLine` · `buildUp` · `shrine` · `headquarters` ·
+  `properties` · `voteSource` · `threshold` · `role` · `victory` · `targetLevel` · `conversion` · `cityFounding` ·
+  `unitCapability`.
 
 A dedicated system's data lives in its **own block** — a module is "on" iff its block exists and is non-empty — so
 a system can be added, swapped, or removed as a unit.
@@ -685,8 +708,8 @@ marble; +10 culture, doubling after it has stood 1000 turns.*
 ## 11. Quick reference
 
 **Top-level keys** — `type` · `identity` · `cost` · `ui` · `world` · `sound` · `ai` · `enables` · `obsoletes` ·
-`replaces` · `disables` · `requires` · `allowed` · `grants` · `skills` · `tags` · `state` · `capabilities` · *(modifier families)* ·
-*(auxiliary/bespoke, §9)*
+`replaces` · `disables` · `requires` · `allowed` · `grants` · `skills` · `tags` · `state` · `attributes` · `capabilities` ·
+`shrine` · `headquarters` · *(modifier families)* · *(auxiliary/bespoke, §9)*
 
 **Scope (singular)** — `world › team › empire › area › city › plot{improvement|feature|terrain|route} › building|specialist|unit` · off-spine `self` = the entity's own build
 **Target (plural)** — `plots · units · cities · areas · empires` = all of that kind in the scope, predicate-filtered

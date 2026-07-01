@@ -11,11 +11,17 @@ OWNER RULINGS folded in (handover #6):
 - §6.1 DELIVERYGUY: the 22 "inversions" KEEP-ON-BUILDING keyed by target (NOT inverted). Tech/Bonus/Building gated via
   `enabled`; Improvement/Terrain/Plot yields target-keyed (food.city.improvements.{IMP}.flat). Tech ones PROVISIONAL (Phase F).
 - `grants.repeatable[]` + `interval` (modifier-spec §4.1): PropertySpawn (chance via `per`) + iNumUnitFullHeal/HealUnitCombat.
-- shrine (GlobalReligionCommerce) -> `per`-scaled commerce MODIFIER (per city holding the religion), not a block.
+- shrine (GlobalReligionCommerce, a RELIGION FK) -> the TOP-LEVEL `shrine` bespoke section (values live on the religion);
+  headquarters (GlobalCorporationCommerce, a CORPORATION FK) -> the TOP-LEVEL `headquarters` bespoke section (json §9,
+  owner 2026-07-01, un-nested from identity).
 - CommerceChangeDoubleTimes -> 2nd age-gated deposit `enabled:{existedFor:{min:N}}`.
 - cityCapture = its OWN family (capturing CITIES, distinct from the §5 unit `capture` gradient).
-- capability bools -> identity (revisit Phase F); EXCEPTIONS to enables-family: bForceTeamVoteEligible->enables.votes,
-  Hurrys->enables.hurries, FoundsCorporation->enables.corporations.
+- capability bools split (owner 2026-07-01, json §8): the 16 HELD city-scope intrinsics -> the `attributes` block
+  (CAP_ATTRIBUTES); buildability/placement markers stay in identity (CAP_IDENTITY). CommerceFlexibles -> the
+  `capabilities` block (PROVIDED to the empire: setCultureRate/setScienceRate/setEspionageRate). noHolyCity ->
+  requires.build.disabled:IS_HOLY_CITY; applyFreePromotionOnMove -> grants.freePromotionsOnPresence; counter-damage
+  (bDamageAllAttackers + MayDamageAttackingUnitCombatTypes) -> defense.city.counterDamage. EXCEPTIONS to enables-family:
+  bForceTeamVoteEligible->enables.votes, Hurrys->enables.hurries, FoundsCorporation->enables.corporations.
 - DROP (dead §8-i): iMaxPopulationAllowed, iMaxPopulationChange, iDCMNukesOkay/bDCMNukesOkay.
 - iNukeExplosionRand: NOT emitted (live code, but only the EXCLUDED Bad_Karma/Building_Meltdown module populates it).
 
@@ -150,19 +156,33 @@ YIELD_FAMILIES = {
     "SpecialistExtraCommerces": ("empire", engine.COMMERCES, "perSpecialist", "specialist"),
 }
 
-# capability bools -> identity (owner: revisit Phase F). Plain b-flag -> clean name: true (false omitted).
-CAP_IDENTITY = {
-    "bNukeImmune": "nukeImmune", "bNeverCapture": "neverCapture", "bZoneOfControl": "zoneOfControl",
+# building `attributes` block (json §8, owner ruling 2026-07-01): the building's OWN HELD, immutable, city-scope
+# intrinsic capability bools. HELD (the building is/does this itself) — the opposite of `capabilities` (PROVIDED to
+# the empire). Plain b-flag -> clean name: true (false omitted). Emitted under the `attributes` section.
+CAP_ATTRIBUTES = {
+    "bNukeImmune": "nukeImmune", "bZoneOfControl": "zoneOfControl",
     "bProtectedCulture": "protectedCulture", "bBorderObstacle": "borderObstacle", "bNoUnhappiness": "noUnhappiness",
     "bNoUnhealthyPopulation": "noUnhealthyPopulation", "bBuildingOnlyHealthy": "buildingOnlyHealthy",
     "bForceAllTradeRoutes": "forceAllTradeRoutes",
-    "bQuarantine": "quarantine", "bMapCentering": "mapCentering", "bCenterInCity": "centerInCity",
+    "bQuarantine": "quarantine", "bMapCentering": "mapCentering",
     "bTeamShare": "teamShare", "bOrbital": "orbital", "bOrbitalInfrastructure": "orbitalInfrastructure",
-    "bGovernmentCenter": "governmentCenter", "bCapital": "capital", "bAllowsNukes": "allowsNukes",
-    "bProvidesFreshWater": "providesFreshWater", "bNoHolyCity": "noHolyCity", "bAutoBuild": "autoBuild",
-    "bNoLimit": "noInstanceLimit", "bForceNoPrereqScaling": "forceNoPrereqScaling",
-    "bApplyFreePromotionOnMove": "applyFreePromotionOnMove",
-    "bDamageAllAttackers": "damageAllAttackers",  # derives m_bDamageAttackerCapable (recompute-on-load)
+    "bGovernmentCenter": "governmentCenter", "bCapital": "capital",
+    "bProvidesFreshWater": "providesFreshWater",  # fresh water is NOT a BONUS_, so an attribute, NOT `provides`
+    # bNeverCapture (the 17th attribute, owner ruling 2026-07-01): the building is destroyed/not-transferred when its
+    # city is captured (CvPlayer.cpp:2565) -- a real HELD building attribute, RENAMED for clarity to `destroyedOnCapture`.
+    "bNeverCapture": "destroyedOnCapture",
+}
+# capability/marker bools that STAY in identity (owner ruling 2026-07-01):
+#  - autoBuild/noInstanceLimit/forceNoPrereqScaling/centerInCity: buildability/placement markers (json §7), NOT
+#    held capabilities.
+#  - allowsNukes: also drives `requires.build.disabled: NO_NUKES` (authored in requires_building); kept as an
+#    identity marker here (not named in the attribute list).
+# NOTE: bNoHolyCity -> requires.build.disabled:IS_HOLY_CITY, bApplyFreePromotionOnMove -> DROPPED (redundant; all
+#       freePromotions are end-turn-stay by definition, owner 2026-07-01), and bDamageAllAttackers -> defense family
+#       are handled specially (NOT in a bool table).
+CAP_IDENTITY = {
+    "bCenterInCity": "centerInCity", "bAllowsNukes": "allowsNukes",
+    "bAutoBuild": "autoBuild", "bNoLimit": "noInstanceLimit", "bForceNoPrereqScaling": "forceNoPrereqScaling",
 }
 # identity scalars: tag -> key (non-zero int OR non-empty string).
 ID_SCALAR = {
@@ -415,9 +435,10 @@ def _inject_plots(fams, family, scope, unit, value, enabled):
         node[unit] = [cur, entry]
 
 
-def pass2(typ, rec, store, fams, grants, repeatable, identity, enables):
+def pass2(typ, rec, store, fams, grants, repeatable, identity, enables, capabilities, bespoke):
     """The custom-shape layer: keyed inversions (§6.1), properties, repeatable grants, one-shot grants/pulses,
-    enables-from-XML, the conditional/temporal deposits. Mutates the passed-in collections."""
+    enables-from-XML, the conditional/temporal deposits. Mutates the passed-in collections. `capabilities` collects
+    empire-PROVIDED bools (commerce sliders); `bespoke` collects top-level sections (shrine/headquarters)."""
     # --- CONDITION-gated keyed deposits (Tech/Bonus/Building/Power conditioners) ---
     for tag, (family, scope, vkeys, unit, kind) in COND_KEYED.items():
         node = rec.find(tag)
@@ -507,14 +528,16 @@ def pass2(typ, rec, store, fams, grants, repeatable, identity, enables):
     if ch is not None:
         for member, v in engine.named_array(ch, engine.COMMERCES).items():
             fams.setdefault("commerceHappiness", OrderedDict()).setdefault("city", OrderedDict()).setdefault(member, OrderedDict())["flat"] = v
-    # --- shrine (GlobalReligionCommerce = a single RELIGION FK, getDataMembers enumAsInt): the building is the
-    # SHRINE for that religion. The per-commerce VALUES live on the Religion (parked religion.shrine, #15); the
-    # full modifier = religion.shrine.{commerce} x countReligionLevels(religion) at world scope is assembled at #430.
-    # The building just declares the shrine relationship -> `shrine: RELIGION` (owner: shrine is a `per`-scaled
-    # commerce modifier; the building provides the religion ref, the religion provides the values). ---
+    # --- shrine (GlobalReligionCommerce = a single RELIGION FK, addEnumAsInt): the building is the SHRINE for that
+    # religion. The per-commerce VALUES live on the Religion (ReligionInfo::getGlobalReligionCommerce, parked
+    # religion.shrine #15); the full modifier = religion.shrine.{commerce} x countReligionLevels(religion) is
+    # assembled at #430 (CvCity.cpp:12378-12384). The building declares only the shrine RELATIONSHIP (the FK) ->
+    # the TOP-LEVEL `shrine` bespoke section (json §9), un-nested from identity (owner 2026-07-01: the shrine
+    # relationship IS the data). ⚑ NB the FK is the building's ONLY shrine data — the commerce {culture:...} lives
+    # on the religion, NOT the building (verified addEnumAsInt + CvCity.cpp:12275-12284). ---
     shrine = _txt(rec, "GlobalReligionCommerce")
     if shrine:
-        identity["shrine"] = shrine
+        bespoke["shrine"] = shrine
 
     # --- CvProperties: Properties (city) / PropertiesAllCities (empire) -> per-PROPERTY family deposits ---
     for tag, scope in (("Properties", "city"), ("PropertiesAllCities", "empire")):
@@ -586,9 +609,15 @@ def pass2(typ, rec, store, fams, grants, repeatable, identity, enables):
         for k, v in _pairs_generic(fsc):
             if v:
                 node[k] = v
-    promos = _typelist(rec, "FreePromoTypes")
+    # FreePromoTypes -> grants.freePromotions (the §5 grant bucket). ONE mechanism (owner ruling 2026-07-01): the
+    # promotions are granted at END-TURN to units PRESENT in the city -- a unit trained there is present at end-turn;
+    # a unit that walks in and stays is covered the same way. The legacy bApplyFreePromotionOnMove flag (a funky/racy
+    # mid-turn/on-move re-apply) is DROPPED as redundant -- all freePromotions are end-turn-stay by definition.
+    # NB FreePromoTypes is a STRUCT-list (<FreePromoType><PromotionType>...); read the PromotionType child (a bare
+    # _typelist yielded '' and silently dropped every promo -- a pre-existing latent bug, fixed here 2026-07-01).
+    promos = _typelist_struct(rec, "FreePromoTypes", "PromotionType")
     if promos:
-        grants["promotions"] = promos
+        grants["freePromotions"] = promos
     # SpecialistCounts (capacity/slots) -> allowedSpecialists COUNT family, keyed by specialist type (the cap on
     # manual assignment, modifier.md §6.7 (A)).
     scn = rec.find("SpecialistCounts")
@@ -634,28 +663,64 @@ def pass2(typ, rec, store, fams, grants, repeatable, identity, enables):
     # the settler "carries buildings into settling"; gated by each building's NewCityFree BoolExpr -> a tech-gated
     # building unavailable at settle time is not pre-built). curate_unit.found_buildings() reads NewCityFree off the
     # store's BuildingInfo table + the boolexpr converter; nothing is emitted building-side now. (renames §Unit.) ---
-    # --- CommerceFlexibles -> identity.commerceFlexible (capability: which commerce SLIDERS this building unlocks;
-    # CvPlayer::changeCommerceFlexibleCount on build -> isCommerceFlexible gates slider-setting — owner 2026-06-16). ---
+    # --- CommerceFlexibles -> the building's `capabilities` block, PROVIDED to the empire (owner ruling 2026-07-01,
+    # json §8): which commerce SLIDERS this building unlocks (CvPlayer::changeCommerceFlexibleCount on build ->
+    # isCommerceFlexible gates slider-setting). Positional per-commerce array (engine.COMMERCES order). Emitted as
+    # discrete `setXRate` bools, uniform with tech/civic capabilities. COMMERCE_GOLD has no slider -> flagged/skipped
+    # (never present in data; ⚑ FLAG if it ever appears). ---
+    COMMERCE_SLIDER_CAP = {"research": "setScienceRate", "culture": "setCultureRate", "espionage": "setEspionageRate"}
     cfn = rec.find("CommerceFlexibles")
     if cfn is not None:
-        flex = [engine.COMMERCES[i] for i, c in enumerate(list(cfn))
-                if i < len(engine.COMMERCES) and engine.text(c) in ("1", "true", "True")]
-        if flex:
-            identity["commerceFlexible"] = flex
-    # --- GlobalCorporationCommerce: park the corp FK (the building is corp X's HQ; the per-commerce
-    # HeadquarterCommerce VALUES live on the corporation #16, x world countCorporationLevels assembled at #430 — the
-    # corp-HQ ANALOG of the shrine, owner 2026-06-16). ---
+        for i, c in enumerate(list(cfn)):
+            if i >= len(engine.COMMERCES) or engine.text(c) not in ("1", "true", "True"):
+                continue
+            commerce = engine.COMMERCES[i]
+            cap = COMMERCE_SLIDER_CAP.get(commerce)
+            if cap:
+                capabilities[cap] = True
+            # else: gold has no slider -> intentionally skipped (see comment).
+    # --- headquarters (GlobalCorporationCommerce = a single CORPORATION FK, addEnumAsInt): the building is that
+    # corporation's HEADQUARTERS -> the TOP-LEVEL `headquarters` bespoke section (json §9), the corp-HQ ANALOG of
+    # `shrine`. The per-commerce HeadquarterCommerce VALUES live on the corporation (CorporationInfo, #16), x world
+    # countCorporationLevels assembled at #430 (CvCity.cpp:12386-12391); the building declares only the FK
+    # relationship. (owner 2026-07-01: un-nested from identity, mirror of shrine.) ---
     corphq = _txt(rec, "GlobalCorporationCommerce")
     if corphq:
-        identity["corporationHQ"] = corphq
-    # --- MayDamageAttackingUnitCombatTypes: the selective counter-damage list (pairs with the defense family +
-    # bDamageAllAttackers/iDamageToAttacker) -> identity capability list. ---
+        bespoke["headquarters"] = corphq
+    # --- COUNTER-DAMAGE fold (owner ruling 2026-07-01; ⚑ DESIGNED shape, flagged for review): the building damages
+    # attacking units. ONE mechanic, ONE home: fold the amount + chance (already in defense.city via SCALAR_FAMILIES:
+    # damageToAttacker/damageAttackerChance) TOGETHER with the "who" selector into a single `defense.city.counterDamage`
+    # member. Engine (CvUnit.cpp:26595-26653, verified): per attacking unit whose combat type is damagable, roll
+    # getDamageAttackerChance()% -> deal getDamageToAttacker() damage; the WHO is bDamageAllAttackers (ALL attackers)
+    # else the MayDamageAttackingUnitCombatTypes list. Shape:
+    #     defense.city.counterDamage = { damage:N, chance:N, units?:{unitCombats:[...]} }
+    # `units` selector ABSENT => all attackers (bDamageAllAttackers); a `unitCombats` membership list => selective.
+    # (Uses the §6.1 units-target / §3.7 unit-selector vocabulary; a plural `units` target narrowed by a unitCombats
+    # membership list, not the identity list the old code parked.) ---
+    dc = fams.get("defense", {}).get("city") if isinstance(fams.get("defense"), dict) else None
+    dmg = dc.pop("damageToAttacker", None) if isinstance(dc, dict) else None
+    chance = dc.pop("damageAttackerChance", None) if isinstance(dc, dict) else None
     md = _typelist(rec, "MayDamageAttackingUnitCombatTypes")
-    if md:
-        identity["damageAttackingUnitCombats"] = md
-    # AidRateChanges / BonusAidModifiers: DROPPED (owner 2026-06-16) — an UNWIRED property "aid" mechanic with NO
-    # gameplay effect (city arrays m_paiAidRate/m_ppaaiExtraBonusAidModifier allocated+saved but never written-from-
-    # building or read-for-effect); only AI building-valuation (CvCityAI /3) + pedia read the raw values. Not emitted.
+    all_attackers = _bool(rec, "bDamageAllAttackers")
+    if dmg is not None or chance is not None or md or all_attackers:
+        cd = OrderedDict()
+        if isinstance(dmg, dict) and "flat" in dmg:
+            cd["damage"] = dmg["flat"]
+        if isinstance(chance, dict) and "flat" in chance:
+            cd["chance"] = chance["flat"]
+        if md and not all_attackers:                 # selective: a unitCombats membership list
+            cd["units"] = OrderedDict([("unitCombats", md)])
+        # all_attackers (or no list) => `units` omitted = applies to EVERY attacker.
+        if cd:
+            dc["counterDamage"] = cd
+        if isinstance(dc, dict) and not dc:          # cleanup: defense.city emptied
+            fams["defense"].pop("city", None)
+            if not fams["defense"]:
+                fams.pop("defense", None)
+    # AidRateChanges / BonusAidModifiers: DROPPED — DEAD: city arrays saved but ZERO write-from-building + ZERO
+    # read-for-effect (only AI-valuation/pedia read the raw Info). (owner-confirmed 2026-06-16, rationale corrected
+    # 2026-07-01: m_paiAidRate/m_ppaaiExtraBonusAidModifier are allocated+saved but never written from a building nor
+    # read for any gameplay effect; the sole readers are CvCityAI building-valuation and the civilopedia.) Not emitted.
 
 
 def _intval(node):
@@ -959,6 +1024,11 @@ def requires_building(rec, store):
     disabled = []
     if _bool(rec, "bGovernmentCenter"):
         disabled.append("IS_GOVERNMENT_CENTER")
+    # bNoHolyCity: a BUILD gate (greying), NOT an attribute -- the engine bars building it IN a holy city
+    # (CvCity::canConstruct:2591, verified 2026-07-01: `!bExposed && kBuilding.isNoHolyCity() && isHolyCity()` ->
+    # can't construct; it does NOT prevent the city BECOMING a holy city). So -> requires.build.disabled: IS_HOLY_CITY.
+    if _bool(rec, "bNoHolyCity"):
+        disabled.append("IS_HOLY_CITY")
     # bAllowsNukes: the engine BARS an allowsNukes building (MANHATTAN_PROJECT) while isNoNukes() holds -- the UN
     # no-nukes verdict (CvPlayer::canConstruct:6746). Model as a world-scope NO_NUKES disable (owner ruling 2026-06-24:
     # "disabled.world.NO_NUKES"). isNoNukes() is false once nukes are enabled (anyone has built Manhattan), so the
@@ -1107,6 +1177,7 @@ def curate(typ, rec, store):
 
     fams = OrderedDict()
     identity = OrderedDict()
+    capabilities = OrderedDict()   # PROVIDED to the empire (commerce sliders, json §8) — populated in pass2
     cost = OrderedDict()
     art_blocks = OrderedDict()
     ai = OrderedDict()
@@ -1174,7 +1245,8 @@ def curate(typ, rec, store):
         identity["enabledCivilizations"] = _civs
 
     # --- PASS 2: keyed inversions (§6.1), properties, repeatable grants, one-shot grants, enables-from-XML ---
-    pass2(typ, rec, store, fams, grants, repeatable, identity, enables)
+    bespoke = OrderedDict()   # top-level bespoke sections (shrine/headquarters, json §9)
+    pass2(typ, rec, store, fams, grants, repeatable, identity, enables, capabilities, bespoke)
     if repeatable:
         grants["repeatable"] = repeatable
 
@@ -1198,10 +1270,19 @@ def curate(typ, rec, store):
     if _int(rec, "iCost") in (None, -1):
         identity["notConstructible"] = True
 
-    # --- capabilities -> identity ---
+    # --- attributes (HELD city-scope intrinsics, json §8) + the remaining identity markers ---
+    attributes = OrderedDict()
+    for tag, name in CAP_ATTRIBUTES.items():
+        if _bool(rec, tag):
+            attributes[name] = True
     for tag, name in CAP_IDENTITY.items():
         if _bool(rec, tag):
             identity[name] = True
+    # bNoHolyCity is a BUILD gate, NOT an attribute (verified CvCity.cpp:2591: canConstruct returns false when
+    # kBuilding.isNoHolyCity() && isHolyCity() -- "can't be built IN a holy city"), authored in requires_building
+    # as requires.build.disabled: IS_HOLY_CITY.
+    # bApplyFreePromotionOnMove -> a grants pulse (folded with FreePromoTypes), authored in pass2.
+    # bDamageAllAttackers + MayDamageAttackingUnitCombatTypes -> the defense counter-damage target, authored in pass2.
     # --- identity scalars / lists ---
     for tag, key in ID_SCALAR.items():
         iv = _int(rec, tag)
@@ -1245,12 +1326,19 @@ def curate(typ, rec, store):
         out[f] = fams[f]
     if grants:
         out["grants"] = grants
+    for k in ("shrine", "headquarters"):          # top-level bespoke FK sections (json §9)
+        if k in bespoke:
+            out[k] = bespoke[k]
     if cost:
         out["cost"] = cost
     if ai:
         out["ai"] = ai
     if loadprune:
         out["loadPrune"] = loadprune
+    if attributes:
+        out["attributes"] = attributes           # BUILDING held city-scope intrinsics (json §8)
+    if capabilities:
+        out["capabilities"] = capabilities        # PROVIDED to the empire (commerce sliders, json §8)
     emit_art(out, art_blocks)
     if identity:
         out["identity"] = identity
@@ -1299,9 +1387,13 @@ def _generic_list(rec, tag):
     return g if isinstance(g, list) else ([g] if g else [])
 
 
-HANDLED = (set(SCALAR_FAMILIES) | set(YIELD_FAMILIES) | set(CAP_IDENTITY) | set(ID_SCALAR) | set(ID_LIST)
-           | set(COST) | set(TEXT) | set(ART) | REQUIRES_TAGS | STORE_TAGS | DROP_DEAD | DROP_MODULE | PASS2_TAGS
-           | {"Type", "Flavors", "iAIWeight"})
+HANDLED = (set(SCALAR_FAMILIES) | set(YIELD_FAMILIES) | set(CAP_ATTRIBUTES) | set(CAP_IDENTITY) | set(ID_SCALAR)
+           | set(ID_LIST) | set(COST) | set(TEXT) | set(ART) | REQUIRES_TAGS | STORE_TAGS | DROP_DEAD | DROP_MODULE
+           | PASS2_TAGS | {"Type", "Flavors", "iAIWeight"}
+           # consciously routed/dropped, not in a bool table: noHolyCity -> requires.build.disabled;
+           # damageAllAttackers -> defense.counterDamage; applyFreePromotionOnMove -> DROPPED (redundant, all
+           # freePromotions are end-turn-stay; owner 2026-07-01).
+           | {"bNoHolyCity", "bApplyFreePromotionOnMove", "bDamageAllAttackers"})
 
 
 # ============================ PROPERTY-BAND REALIGNMENT (owner 2026-06-23) ============================
@@ -1327,7 +1419,8 @@ HANDLED = (set(SCALAR_FAMILIES) | set(YIELD_FAMILIES) | set(CAP_IDENTITY) | set(
 PROPERTY_INFOS_XML = os.path.join(REPO, "Assets", "XML", "GameInfo", "CIV4PropertyInfos.xml")
 # top-level reserved (non-family) keys -- everything else on a band object is a modifier family to increment.
 RESERVED_NONFAMILY = {"type", "description", "civilopedia", "help", "enables", "obsoletedBy", "replacedBy", "requires",
-                      "allowed", "provides", "grants", "cost", "ai", "loadPrune", "ui", "world", "sound", "identity"}
+                      "allowed", "provides", "grants", "cost", "ai", "loadPrune", "ui", "world", "sound", "identity",
+                      "attributes", "capabilities", "shrine", "headquarters"}
 
 
 def property_band_buildings():
@@ -1478,7 +1571,8 @@ def main():
 
     has = lambda k: sum(1 for o in results.values() if k in o)
     STRUCT = {"type", "description", "civilopedia", "help", "enables", "obsoletes", "replaces", "requires",
-              "allowed", "provides", "cost", "ai", "loadPrune", "ui", "world", "sound", "identity"}
+              "allowed", "provides", "cost", "ai", "loadPrune", "ui", "world", "sound", "identity",
+              "attributes", "capabilities", "shrine", "headquarters", "grants", "obsoletedBy"}
     seen = sorted({f for o in results.values() for f in o if f not in STRUCT})
     print("BuildingInfo curated: %d" % n)
     for k in ("enables", "obsoletes", "replaces", "requires", "allowed", "cost", "ai", "loadPrune", "identity"):

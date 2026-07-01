@@ -52,6 +52,10 @@
    "flat": -1
   }
  },
+ "attributes": {
+  "nukeImmune": true,
+  "destroyedOnCapture": true
+ },
  "world": {
   "art": {
    "icon": "ART_DEF_BUILDING_HOUSING_SHACKS"
@@ -61,8 +65,6 @@
   "description": "TXT_KEY_BUILDING_HOUSING_SHACKS",
   "civilopedia": "TXT_KEY_BUILDING_HOUSING_SHACKS_PEDIA",
   "notConstructible": true,
-  "nukeImmune": true,
-  "neverCapture": true,
   "autoBuild": true,
   "mapCategories": [
    "MAPCATEGORY_EARTH"

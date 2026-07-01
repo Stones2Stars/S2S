@@ -74,6 +74,9 @@
    }
   ]
  },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
  "world": {
   "art": {
    "icon": "ART_DEF_BUILDING_NGAI_NAROK_BLESS_SHEEP"
@@ -85,7 +88,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_NGAI_NAROK_BLESS_SHEEP",
   "civilopedia": "TXT_KEY_BUILDING_NGAI_NAROK_BLESS_PEDIA",
-  "neverCapture": true,
   "specialBuildingType": "SPECIALBUILDING_TEMPLE",
   "religion": "RELIGION_NGAIISM",
   "advisor": "ADVISOR_RELIGION",

@@ -99,6 +99,11 @@
    "SPECIALIST_PRIEST": 2
   }
  },
+ "grants": {
+  "freePromotions": [
+   "PROMOTION_COASTAL_GUARD1"
+  ]
+ },
  "cost": {
   "production": 1566,
   "sizeModifier": 2,

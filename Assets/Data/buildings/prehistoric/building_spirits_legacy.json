@@ -70,6 +70,11 @@
    "SPECIALIST_PRIEST": 2
   }
  },
+ "grants": {
+  "freePromotions": [
+   "PROMOTION_WOODSMAN1"
+  ]
+ },
  "cost": {
   "production": 104,
   "sizeModifier": 3,
@@ -83,6 +88,9 @@
    }
   ]
  },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
  "world": {
   "art": {
    "icon": "ART_DEF_BUILDING_SPIRITS_LEGACY"
@@ -94,7 +102,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_SPIRITS_LEGACY",
   "civilopedia": "TXT_KEY_BUILDING_SPIRITS_LEGACY_PEDIA",
-  "neverCapture": true,
   "worth": 6,
   "specialBuildingType": "SPECIALBUILDING_CATHEDRAL_II",
   "religion": "RELIGION_SHAMANISM",

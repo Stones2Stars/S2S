@@ -38,6 +38,9 @@
  "cost": {
   "production": 4010
  },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
  "ui": {
   "art": {
    "movie": {
@@ -53,7 +56,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_SENTINEL",
   "civilopedia": "TXT_KEY_BUILDING_SENTINEL_PEDIA",
-  "neverCapture": true,
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

@@ -31,6 +31,9 @@
  "cost": {
   "production": 7050
  },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
  "world": {
   "art": {
    "icon": "ART_DEF_BUILDING_HUMAN_MOD_DESIGNER_BABIES"
@@ -39,7 +42,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_HUMAN_MOD_DESIGNER_BABIES",
   "civilopedia": "TXT_KEY_BUILDING_HUMAN_MOD_DESIGNER_BABIES_PEDIA",
-  "neverCapture": true,
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

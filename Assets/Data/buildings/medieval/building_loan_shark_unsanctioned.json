@@ -61,6 +61,9 @@
    }
   ]
  },
+ "attributes": {
+  "nukeImmune": true
+ },
  "world": {
   "art": {
    "icon": "ART_DEF_BUILDING_LOAN_SHARK"
@@ -70,7 +73,6 @@
   "description": "TXT_KEY_BUILDING_LOAN_SHARK_UNSANCTIONED",
   "civilopedia": "TXT_KEY_BUILDING_LOAN_SHARK_PEDIA",
   "notConstructible": true,
-  "nukeImmune": true,
   "worth": 1,
   "conquestProbability": 100,
   "mapCategories": [

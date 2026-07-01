@@ -16,6 +16,10 @@
    ]
   }
  },
+ "attributes": {
+  "nukeImmune": true,
+  "destroyedOnCapture": true
+ },
  "world": {
   "art": {
    "icon": "ART_DEF_BUILDING_WORLDVIEW_CANNIBALISM"
@@ -29,8 +33,6 @@
   "civilopedia": "TXT_KEY_BUILDING_WORLDVIEW_CANNIBALISM_PEDIA",
   "help": "TXT_KEY_BUILDING_WORLDVIEW_CANNIBALISM_HELP",
   "notConstructible": true,
-  "nukeImmune": true,
-  "neverCapture": true,
   "worth": 3,
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [

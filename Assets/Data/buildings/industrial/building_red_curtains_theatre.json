@@ -85,6 +85,9 @@
    }
   ]
  },
+ "attributes": {
+  "nukeImmune": true
+ },
  "world": {
   "art": {
    "icon": "ART_DEF_BUILDING_RED_CURTAINS_THEATRE"
@@ -96,7 +99,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_RED_CURTAINS_THEATRE",
   "civilopedia": "TXT_KEY_BUILDING_RED_CURTAINS_THEATRE_PEDIA",
-  "nukeImmune": true,
   "worth": 8,
   "conquestProbability": 100,
   "greatPeopleUnitType": "UNIT_ARTIST",

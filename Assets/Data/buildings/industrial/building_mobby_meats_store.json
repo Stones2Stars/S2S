@@ -142,6 +142,9 @@
    }
   ]
  },
+ "attributes": {
+  "nukeImmune": true
+ },
  "world": {
   "art": {
    "icon": "ART_DEF_BUILDING_MOBBY_MEATS_STORE"
@@ -153,7 +156,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_MOBBY_MEATS_STORE",
   "civilopedia": "TXT_KEY_BUILDING_MOBBY_MEATS_STORE_PEDIA",
-  "nukeImmune": true,
   "worth": 8,
   "conquestProbability": 100,
   "specialBuildingType": "SPECIALBUILDING_CORPORATION",

@@ -44,6 +44,9 @@
   "production": 70,
   "countModifier": 1
  },
+ "attributes": {
+  "nukeImmune": true
+ },
  "world": {
   "art": {
    "icon": "ART_DEF_BUILDING_BEACH_SAND_GATHERER"
@@ -52,7 +55,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_BEACH_SAND_GATHERER",
   "civilopedia": "TXT_KEY_BUILDING_BEACH_SAND_GATHERER_PEDIA",
-  "nukeImmune": true,
   "advisor": "ADVISOR_ECONOMY",
   "freeStartEra": "C2C_ERA_ANCIENT",
   "mapCategories": [

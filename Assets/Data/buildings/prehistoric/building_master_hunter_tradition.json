@@ -214,6 +214,11 @@
    "flat": 1
   }
  },
+ "grants": {
+  "freePromotions": [
+   "PROMOTION_ENTRAPMENT1"
+  ]
+ },
  "world": {
   "art": {
    "icon": "ART_DEF_BUILDING_MASTER_HUNTER"
@@ -223,7 +228,6 @@
   "description": "TXT_KEY_BUILDING_MASTER_HUNTER_TRADITION",
   "civilopedia": "TXT_KEY_BUILDING_MASTER_HUNTER_TRADITION_PEDIA",
   "notConstructible": true,
-  "applyFreePromotionOnMove": true,
   "worth": 1,
   "militaryWorth": 4,
   "conquestProbability": 100,

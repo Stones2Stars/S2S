@@ -41,6 +41,9 @@
  "cost": {
   "production": 3245
  },
+ "attributes": {
+  "orbital": true
+ },
  "world": {
   "art": {
    "icon": "ART_DEF_BUILDING_CISLUNAR_LABS"
@@ -52,7 +55,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_CISLUNAR_LABS",
   "civilopedia": "TXT_KEY_BUILDING_CISLUNAR_LABS_PEDIA",
-  "orbital": true,
   "worth": 6,
   "advisor": "ADVISOR_GROWTH",
   "visibilityPriority": 1,

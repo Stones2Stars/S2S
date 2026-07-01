@@ -72,6 +72,10 @@
    }
   ]
  },
+ "attributes": {
+  "nukeImmune": true,
+  "teamShare": true
+ },
  "ui": {
   "art": {
    "movie": {
@@ -87,8 +91,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_THE_KREMLIN",
   "civilopedia": "TXT_KEY_BUILDING_THE_KREMLIN_PEDIA",
-  "nukeImmune": true,
-  "teamShare": true,
   "worth": 16,
   "conquestProbability": 100,
   "greatPeopleUnitType": "UNIT_GREAT_SPY",

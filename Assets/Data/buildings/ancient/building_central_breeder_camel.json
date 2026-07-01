@@ -59,6 +59,9 @@
    }
   ]
  },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
  "ui": {
   "art": {
    "movie": {
@@ -77,7 +80,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_CENTRAL_BREEDER_CAMEL",
   "civilopedia": "TXT_KEY_BUILDING_CENTRAL_BREEDER_CAMEL_PEDIA",
-  "neverCapture": true,
   "worth": 4,
   "militaryWorth": 1,
   "advisor": "ADVISOR_ECONOMY",

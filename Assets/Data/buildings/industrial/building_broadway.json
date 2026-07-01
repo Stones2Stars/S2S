@@ -63,6 +63,10 @@
    }
   ]
  },
+ "attributes": {
+  "nukeImmune": true,
+  "teamShare": true
+ },
  "ui": {
   "art": {
    "movie": {
@@ -78,8 +82,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_BROADWAY",
   "civilopedia": "TXT_KEY_BUILDING_BROADWAY_PEDIA",
-  "nukeImmune": true,
-  "teamShare": true,
   "worth": 18,
   "conquestProbability": 100,
   "greatPeopleUnitType": "UNIT_ARTIST",

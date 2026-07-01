@@ -171,6 +171,10 @@
    "SPECIALIST_SLAVES": 3
   }
  },
+ "attributes": {
+  "nukeImmune": true,
+  "destroyedOnCapture": true
+ },
  "world": {
   "art": {
    "icon": "ART_DEF_BUILDING_WORLDVIEW_SLAVERY"
@@ -183,8 +187,6 @@
    "CIVILIZATION_NPC_NEANDERTHAL"
   ],
   "notConstructible": true,
-  "nukeImmune": true,
-  "neverCapture": true,
   "mapCategories": [
    "MAPCATEGORY_EARTH"
   ]

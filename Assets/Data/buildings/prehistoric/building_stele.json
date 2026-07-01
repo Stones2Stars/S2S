@@ -99,6 +99,9 @@
    }
   ]
  },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
  "world": {
   "art": {
    "icon": "ART_DEF_BUILDING_STELE"
@@ -110,7 +113,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_STELE",
   "civilopedia": "TXT_KEY_BUILDING_STELE_PEDIA",
-  "neverCapture": true,
   "centerInCity": true,
   "worth": 2,
   "advisor": "ADVISOR_CULTURE",

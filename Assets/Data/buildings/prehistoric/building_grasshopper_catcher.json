@@ -62,6 +62,9 @@
    }
   ]
  },
+ "attributes": {
+  "nukeImmune": true
+ },
  "world": {
   "art": {
    "icon": "ART_DEF_BUILDING_GRASSHOPPER_CATCHER"
@@ -70,7 +73,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_GRASSHOPPER_CATCHER",
   "civilopedia": "TXT_KEY_BUILDING_GRASSHOPPER_CATCHER_PEDIA",
-  "nukeImmune": true,
   "advisor": "ADVISOR_GROWTH",
   "visibilityPriority": 1,
   "freeStartEra": "C2C_ERA_ANCIENT",

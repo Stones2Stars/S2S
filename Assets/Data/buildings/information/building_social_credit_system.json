@@ -40,6 +40,9 @@
   "production": 4810,
   "complexityModifier": 2
  },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
  "ui": {
   "art": {
    "movie": {
@@ -55,7 +58,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_SOCIAL_CREDIT_SYSTEM",
   "civilopedia": "TXT_KEY_BUILDING_SOCIAL_CREDIT_SYSTEM_PEDIA",
-  "neverCapture": true,
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

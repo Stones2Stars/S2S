@@ -50,6 +50,10 @@
    "flat": -1
   }
  },
+ "attributes": {
+  "nukeImmune": true,
+  "destroyedOnCapture": true
+ },
  "world": {
   "art": {
    "icon": "ART_DEF_BUILDING_HOUSING_TRAILER_PARK"
@@ -59,8 +63,6 @@
   "description": "TXT_KEY_BUILDING_HOUSING_TRAILER_PARK",
   "civilopedia": "TXT_KEY_BUILDING_HOUSING_TRAILER_PARK_PEDIA",
   "notConstructible": true,
-  "nukeImmune": true,
-  "neverCapture": true,
   "autoBuild": true,
   "mapCategories": [
    "MAPCATEGORY_EARTH"

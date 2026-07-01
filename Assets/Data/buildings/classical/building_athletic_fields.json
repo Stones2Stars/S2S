@@ -37,6 +37,9 @@
   "countModifier": 1,
   "materialsModifier": 1
  },
+ "attributes": {
+  "nukeImmune": true
+ },
  "world": {
   "art": {
    "icon": "ART_DEF_BUILDING_ATHLETIC_FIELDS"
@@ -45,7 +48,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_ATHLETIC_FIELDS",
   "civilopedia": "TXT_KEY_BUILDING_ATHLETIC_FIELDS_PEDIA",
-  "nukeImmune": true,
   "worth": 1,
   "conquestProbability": 100,
   "advisor": "ADVISOR_GROWTH",

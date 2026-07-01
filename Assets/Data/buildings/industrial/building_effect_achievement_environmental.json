@@ -21,6 +21,10 @@
    "flat": -10
   }
  },
+ "attributes": {
+  "nukeImmune": true,
+  "destroyedOnCapture": true
+ },
  "world": {
   "art": {
    "icon": "ART_DEF_BUILDING_ACHIEVEMENT_ENVIRONMENTAL_EFFECT"
@@ -30,8 +34,6 @@
   "description": "TXT_KEY_BUILDING_EFFECT_ACHIEVEMENT_ENVIRONMENTAL",
   "civilopedia": "TXT_KEY_BUILDING_EFFECT_ACHIEVEMENT_ENVIRONMENTAL_PEDIA",
   "notConstructible": true,
-  "nukeImmune": true,
-  "neverCapture": true,
   "mapCategories": [
    "MAPCATEGORY_EARTH"
   ]

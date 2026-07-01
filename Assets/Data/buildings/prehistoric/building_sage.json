@@ -100,6 +100,9 @@
    }
   ]
  },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
  "world": {
   "art": {
    "icon": "ART_DEF_BUILDING_SAGE"
@@ -111,7 +114,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_SAGE",
   "civilopedia": "TXT_KEY_BUILDING_SAGE_PEDIA",
-  "neverCapture": true,
   "worth": 2,
   "conquestProbability": 66,
   "advisor": "ADVISOR_GROWTH",

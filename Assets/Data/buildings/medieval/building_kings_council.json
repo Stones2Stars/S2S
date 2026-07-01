@@ -62,6 +62,9 @@
   "materialsModifier": 1,
   "complexityModifier": 1
  },
+ "attributes": {
+  "nukeImmune": true
+ },
  "world": {
   "art": {
    "icon": "ART_DEF_BUILDING_KINGS_COUNCIL"
@@ -70,7 +73,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_KINGS_COUNCIL",
   "civilopedia": "TXT_KEY_BUILDING_KINGS_COUNCIL_PEDIA",
-  "nukeImmune": true,
   "worth": 5,
   "conquestProbability": 100,
   "advisor": "ADVISOR_ECONOMY",

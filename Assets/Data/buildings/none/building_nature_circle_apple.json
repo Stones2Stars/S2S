@@ -49,6 +49,9 @@
    }
   ]
  },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
  "world": {
   "art": {
    "icon": "ART_DEF_BUILDING_NATURE_CIRCLE_APPLE"
@@ -60,7 +63,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_NATURE_CIRCLE_APPLE",
   "civilopedia": "TXT_KEY_BUILDING_NATURE_CIRCLE_OF_POWER_PEDIA",
-  "neverCapture": true,
   "worth": 3,
   "religion": "RELIGION_DRUIDIC_TRADITIONS",
   "advisor": "ADVISOR_RELIGION",

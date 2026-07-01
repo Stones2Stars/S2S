@@ -42,6 +42,11 @@
    "flat": 5
   }
  },
+ "grants": {
+  "freePromotions": [
+   "PROMOTION_FANATIC"
+  ]
+ },
  "cost": {
   "production": 990,
   "sizeModifier": 2,

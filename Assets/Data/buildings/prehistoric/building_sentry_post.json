@@ -94,6 +94,9 @@
    }
   ]
  },
+ "attributes": {
+  "nukeImmune": true
+ },
  "world": {
   "art": {
    "icon": "ART_DEF_BUILDING_SENTRY_POST"
@@ -105,7 +108,6 @@
   "enabledCivilizations": [
    "CIVILIZATION_NPC_NEANDERTHAL"
   ],
-  "nukeImmune": true,
   "militaryWorth": 2,
   "advisor": "ADVISOR_MILITARY",
   "visibilityPriority": 1,

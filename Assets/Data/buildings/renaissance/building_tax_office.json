@@ -47,6 +47,9 @@
    }
   ]
  },
+ "attributes": {
+  "nukeImmune": true
+ },
  "world": {
   "art": {
    "icon": "ART_DEF_BUILDING_TAX_OFFICE"
@@ -58,7 +61,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_TAX_OFFICE",
   "civilopedia": "TXT_KEY_BUILDING_TAX_OFFICE_PEDIA",
-  "nukeImmune": true,
   "advisor": "ADVISOR_ECONOMY",
   "visibilityPriority": 1,
   "mapCategories": [

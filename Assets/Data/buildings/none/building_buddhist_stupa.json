@@ -105,6 +105,9 @@
    }
   ]
  },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
  "world": {
   "art": {
    "icon": "ART_DEF_BUILDING_BUDDHIST_STUPA"
@@ -116,7 +119,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_BUDDHIST_STUPA",
   "civilopedia": "TXT_KEY_BUILDING_BUDDHIST_STUPA_PEDIA",
-  "neverCapture": true,
   "worth": 6,
   "specialBuildingType": "SPECIALBUILDING_CATHEDRAL",
   "religion": "RELIGION_BUDDHISM",

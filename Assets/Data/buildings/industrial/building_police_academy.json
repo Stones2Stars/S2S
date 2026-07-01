@@ -96,6 +96,9 @@
    }
   ]
  },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
  "ui": {
   "art": {
    "movie": {
@@ -114,7 +117,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_POLICE_ACADEMY",
   "civilopedia": "TXT_KEY_BUILDING_POLICE_ACADEMY_PEDIA",
-  "neverCapture": true,
   "worth": 1,
   "dcmAirbombMission": 2,
   "advisor": "ADVISOR_MILITARY",

@@ -75,6 +75,9 @@
    }
   ]
  },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
  "world": {
   "art": {
    "icon": "ART_DEF_BUILDING_ALTAR_FOR_HUMAN_SACRIFICE"
@@ -86,7 +89,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_ALTAR_FOR_HUMAN_SACRIFICE",
   "civilopedia": "TXT_KEY_BUILDING_ALTAR_FOR_HUMAN_SACRIFICE_PEDIA",
-  "neverCapture": true,
   "worth": 4,
   "advisor": "ADVISOR_RELIGION",
   "mapCategories": [

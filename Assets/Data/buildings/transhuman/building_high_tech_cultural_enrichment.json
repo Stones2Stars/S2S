@@ -597,6 +597,14 @@
    "SPECIALIST_SCIENTIST": 3
   }
  },
+ "grants": {
+  "freePromotions": [
+   "PROMOTION_TATTOO",
+   "PROMOTION_DECEPTION1",
+   "PROMOTION_RANGE1",
+   "PROMOTION_RANGE2"
+  ]
+ },
  "cost": {
   "production": 6155,
   "sizeModifier": 1,
@@ -612,7 +620,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_HIGH_TECH_CULTURAL_ENRICHMENT",
   "civilopedia": "TXT_KEY_BUILDING_HIGH_TECH_CULTURAL_ENRICHMENT_PEDIA",
-  "applyFreePromotionOnMove": true,
   "greatPeopleUnitType": "UNIT_PROPHET",
   "advisor": "ADVISOR_CULTURE",
   "mapCategories": [

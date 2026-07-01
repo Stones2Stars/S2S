@@ -32,6 +32,9 @@
   "production": 250,
   "countModifier": 2
  },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
  "world": {
   "art": {
    "icon": "ART_DEF_BUILDING_FLOCKS_OF_DUCK"
@@ -43,7 +46,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_FLOCKS_OF_DUCK",
   "civilopedia": "TXT_KEY_BUILDING_FLOCKS_OF_DUCK_PEDIA",
-  "neverCapture": true,
   "worth": 2,
   "militaryWorth": 2,
   "advisor": "ADVISOR_MILITARY",

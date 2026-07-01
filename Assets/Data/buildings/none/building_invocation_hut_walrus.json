@@ -58,6 +58,9 @@
    }
   ]
  },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
  "world": {
   "art": {
    "icon": "ART_DEF_BUILDING_INVOCATION_HUT_WALRUS"
@@ -69,7 +72,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_INVOCATION_HUT_WALRUS",
   "civilopedia": "TXT_KEY_BUILDING_INVOCATION_HUT_PEDIA",
-  "neverCapture": true,
   "worth": 3,
   "religion": "RELIGION_SHAMANISM",
   "advisor": "ADVISOR_RELIGION",

@@ -23,6 +23,10 @@
  "grants": {
   "holyCity": "RELIGION_TENGRIISM"
  },
+ "shrine": "RELIGION_TENGRIISM",
+ "attributes": {
+  "nukeImmune": true
+ },
  "ui": {
   "art": {
    "movie": {
@@ -44,9 +48,7 @@
   "commerceDoubleTime": {
    "culture": 1000
   },
-  "shrine": "RELIGION_TENGRIISM",
   "notConstructible": true,
-  "nukeImmune": true,
   "worth": 8,
   "conquestProbability": 100,
   "greatPeopleUnitType": "UNIT_PROPHET",

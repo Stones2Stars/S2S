@@ -48,6 +48,9 @@
    }
   ]
  },
+ "attributes": {
+  "orbital": true
+ },
  "world": {
   "art": {
    "icon": "ART_DEF_BUILDING_COMMUNICATIONS_SATELLITE"
@@ -59,7 +62,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_COMMUNICATIONS_SATELLITE",
   "civilopedia": "TXT_KEY_BUILDING_COMMUNICATIONS_SATELLITE_PEDIA",
-  "orbital": true,
   "worth": 6,
   "advisor": "ADVISOR_GROWTH",
   "visibilityPriority": 1,

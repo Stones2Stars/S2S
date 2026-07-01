@@ -115,6 +115,9 @@
    }
   ]
  },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
  "ui": {
   "art": {
    "movie": {
@@ -133,7 +136,6 @@
   "commerceDoubleTime": {
    "culture": 1000
   },
-  "neverCapture": true,
   "worth": 5,
   "militaryWorth": 10,
   "greatPeopleUnitType": "UNIT_GREAT_SPY",

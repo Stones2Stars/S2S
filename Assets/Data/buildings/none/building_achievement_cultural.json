@@ -27,6 +27,10 @@
    "percent": 25
   }
  },
+ "attributes": {
+  "nukeImmune": true,
+  "destroyedOnCapture": true
+ },
  "ui": {
   "art": {
    "movie": {
@@ -43,8 +47,6 @@
   "description": "TXT_KEY_BUILDING_ACHIEVEMENT_CULTURAL",
   "civilopedia": "TXT_KEY_BUILDING_ACHIEVEMENT_PEDIA",
   "notConstructible": true,
-  "nukeImmune": true,
-  "neverCapture": true,
   "specialBuildingType": "SPECIALBUILDING_ACHIEVEMENT",
   "advisor": "ADVISOR_CULTURE",
   "mapCategories": [

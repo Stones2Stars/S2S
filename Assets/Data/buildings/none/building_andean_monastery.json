@@ -78,6 +78,9 @@
    }
   ]
  },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
  "world": {
   "art": {
    "icon": "ART_DEF_BUILDING_ANDEAN_MONASTERY"
@@ -89,7 +92,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_ANDEAN_MONASTERY",
   "civilopedia": "TXT_KEY_BUILDING_ANDEAN_MONASTERY_PEDIA",
-  "neverCapture": true,
   "worth": 3,
   "specialBuildingType": "SPECIALBUILDING_MONASTERY",
   "religion": "RELIGION_ANDEANISM",

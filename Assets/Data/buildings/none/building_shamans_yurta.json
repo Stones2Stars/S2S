@@ -100,6 +100,9 @@
    }
   ]
  },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
  "world": {
   "art": {
    "icon": "ART_DEF_BUILDING_SHAMANS_YURTA"
@@ -111,7 +114,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_SHAMANS_YURTA",
   "civilopedia": "TXT_KEY_BUILDING_SHAMANS_YURTA_PEDIA",
-  "neverCapture": true,
   "worth": 4,
   "specialBuildingType": "SPECIALBUILDING_MONASTERY_II",
   "religion": "RELIGION_TENGRIISM",

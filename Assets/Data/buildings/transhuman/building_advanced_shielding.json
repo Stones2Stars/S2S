@@ -73,6 +73,9 @@
    }
   ]
  },
+ "attributes": {
+  "nukeImmune": true
+ },
  "world": {
   "art": {
    "icon": "ART_DEF_BUILDING_ADVANCED_SHIELDING"
@@ -84,7 +87,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_ADVANCED_SHIELDING",
   "civilopedia": "TXT_KEY_BUILDING_ADVANCED_SHIELDING_PEDIA",
-  "nukeImmune": true,
   "worth": 2,
   "militaryWorth": 5,
   "conquestProbability": 75,

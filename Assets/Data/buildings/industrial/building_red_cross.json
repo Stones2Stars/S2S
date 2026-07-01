@@ -51,6 +51,9 @@
   }
  },
  "grants": {
+  "freePromotions": [
+   "PROMOTION_FIRST_AID_PEOPLE1"
+  ],
   "repeatable": [
    {
     "unitCombat": "UNITCOMBAT_HEALS_AS_PEOPLE",
@@ -65,6 +68,10 @@
   "countModifier": 2,
   "materialsModifier": 1,
   "complexityModifier": 2
+ },
+ "attributes": {
+  "nukeImmune": true,
+  "destroyedOnCapture": true
  },
  "ui": {
   "art": {
@@ -84,8 +91,6 @@
   "commerceDoubleTime": {
    "culture": 1000
   },
-  "nukeImmune": true,
-  "neverCapture": true,
   "worth": 8,
   "militaryWorth": 4,
   "greatPeopleUnitType": "UNIT_DOCTOR",

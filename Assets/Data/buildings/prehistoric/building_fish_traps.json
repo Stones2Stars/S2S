@@ -124,6 +124,9 @@
    }
   ]
  },
+ "attributes": {
+  "nukeImmune": true
+ },
  "world": {
   "art": {
    "icon": "ART_DEF_BUILDING_FISH_TRAPS"
@@ -135,7 +138,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_FISH_TRAPS",
   "civilopedia": "TXT_KEY_BUILDING_FISH_TRAPS_PEDIA",
-  "nukeImmune": true,
   "conquestProbability": 95,
   "advisor": "ADVISOR_ECONOMY",
   "visibilityPriority": 1,

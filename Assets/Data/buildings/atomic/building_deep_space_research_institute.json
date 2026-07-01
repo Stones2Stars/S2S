@@ -67,6 +67,9 @@
    }
   ]
  },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
  "ui": {
   "art": {
    "movie": {
@@ -85,7 +88,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_DEEP_SPACE_RESEARCH_INSTITUTE",
   "civilopedia": "TXT_KEY_BUILDING_DEEP_SPACE_RESEARCH_INSTITUTE_PEDIA",
-  "neverCapture": true,
   "worth": 6,
   "dcmAirbombMission": 2,
   "specialBuildingType": "SPECIALBUILDING_DEEP_SPACE_RESEARCH_INSTITUTE",

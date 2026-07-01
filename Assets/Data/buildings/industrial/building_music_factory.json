@@ -56,6 +56,11 @@
    "flat": 5
   }
  },
+ "grants": {
+  "freePromotions": [
+   "PROMOTION_CACOPHONY"
+  ]
+ },
  "cost": {
   "production": 710,
   "sizeModifier": 3,

@@ -69,6 +69,9 @@
   "materialsModifier": 1,
   "complexityModifier": 1
  },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
  "ui": {
   "art": {
    "movie": {
@@ -87,7 +90,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_NATIONAL_SPORTS_LEAGUE",
   "civilopedia": "TXT_KEY_BUILDING_NATIONAL_SPORTS_LEAGUE_PEDIA",
-  "neverCapture": true,
   "worth": 5,
   "militaryWorth": 10,
   "greatPeopleUnitType": "UNIT_MERCHANT",

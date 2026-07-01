@@ -50,6 +50,9 @@
   "materialsModifier": 2,
   "complexityModifier": 2
  },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
  "ui": {
   "art": {
    "movie": {
@@ -65,7 +68,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_GARDEN_CITY",
   "civilopedia": "TXT_KEY_BUILDING_GARDEN_CITY_PEDIA",
-  "neverCapture": true,
   "greatPeopleUnitType": "UNIT_DOCTOR",
   "advisor": "ADVISOR_GROWTH",
   "mapCategories": [

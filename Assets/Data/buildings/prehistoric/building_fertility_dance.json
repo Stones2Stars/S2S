@@ -48,6 +48,9 @@
    "flat": 1
   }
  },
+ "attributes": {
+  "nukeImmune": true
+ },
  "world": {
   "art": {
    "icon": "ART_DEF_BUILDING_FERTILITY_DANCE"
@@ -57,7 +60,6 @@
   "description": "TXT_KEY_BUILDING_FERTILITY_DANCE",
   "civilopedia": "TXT_KEY_BUILDING_FERTILITY_DANCE_PEDIA",
   "notConstructible": true,
-  "nukeImmune": true,
   "worth": 1,
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [

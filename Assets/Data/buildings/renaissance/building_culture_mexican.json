@@ -54,6 +54,9 @@
  "cost": {
   "production": 2850
  },
+ "attributes": {
+  "nukeImmune": true
+ },
  "world": {
   "art": {
    "icon": "ART_DEF_BUILDING_CULTURE_MEXICAN"
@@ -62,7 +65,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_CULTURE_MEXICAN",
   "civilopedia": "TXT_KEY_BUILDING_CULTURE_MEXICAN_PEDIA",
-  "nukeImmune": true,
   "noInstanceLimit": true,
   "conquestProbability": 100,
   "specialBuildingType": "SPECIALBUILDING_C2C_CULTURE",

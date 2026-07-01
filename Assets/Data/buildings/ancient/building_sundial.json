@@ -81,6 +81,9 @@
    }
   ]
  },
+ "attributes": {
+  "nukeImmune": true
+ },
  "world": {
   "art": {
    "icon": "ART_DEF_BUILDING_SUNDIAL"
@@ -92,7 +95,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_SUNDIAL",
   "civilopedia": "TXT_KEY_BUILDING_SUNDIAL_PEDIA",
-  "nukeImmune": true,
   "conquestProbability": 80,
   "advisor": "ADVISOR_ECONOMY",
   "visibilityPriority": 1,

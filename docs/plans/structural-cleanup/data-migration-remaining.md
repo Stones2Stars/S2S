@@ -54,10 +54,28 @@ The whitelist completeness sweep found exactly two, both now ruled and landed:
 
 ### Real data parked in `identity` / dropped (from the curator-code audit — need is-it-live + home)
 
-- **building**: ~30 capability bools (`nukeImmune`, `zoneOfControl`, `borderObstacle`, `governmentCenter`,
-  `providesFreshWater`, …) → `identity` "revisit Phase F"; commerce markers (`stateReligionCommerce`,
-  `commerceDoubleTime`, `shrine`/GlobalReligionCommerce, `commerceFlexible`, `corporationHQ`,
-  `damageAttackingUnitCombats`) → `identity`; **`BonusAidModifiers`/`AidRateChanges` DROPPED** (real C2C "aid" mechanic).
+- **building — DONE (owner rulings 2026-07-01, executed):**
+  - NEW **`attributes`** block (json §8) — building-**HELD** city-scope capability bools (16): `nukeImmune`,
+    `borderObstacle`, `protectedCulture`, `noUnhappiness`, `noUnhealthyPopulation`, `buildingOnlyHealthy`,
+    `forceAllTradeRoutes`, `quarantine`, `mapCentering`, `teamShare`, `orbital`, `orbitalInfrastructure`,
+    `governmentCenter`, `capital`, `zoneOfControl`, `providesFreshWater` (fresh water is NOT a `BONUS_`, so NOT `provides`).
+  - `noHolyCity` → `requires.build.disabled: IS_HOLY_CITY` (a placement predicate, not an attribute).
+  - `applyFreePromotionOnMove` → `grants` pulse (folds with the building's `FreePromotions`: a unit that stays in the
+    city gets the promotion).
+  - `commerceFlexible` → **`capabilities` PROVIDED to the empire**, as discrete booleans `setCultureRate`/
+    `setEspionageRate` (and `setScienceRate`, which rides `TECH_GAME_START` — every civ has it). **Capabilities are
+    empire-HELD, grantor-PROVIDED** (tech/civic/**building**); a building **provides**, never **holds** — the opposite of
+    `attributes` (which the building holds). json §8 to state this distinction.
+  - `shrine` (GlobalReligionCommerce) → promote to the top-level **`shrine`** bespoke section (json §9 reserves it).
+  - `corporationHQ` (GlobalCorporationCommerce) → NEW **`headquarters`** bespoke section (mirror of `shrine`).
+  - counter-damage (`bDamageAllAttackers` + `damageAttackingUnitCombats`) → fold into the **`defense`** family with the
+    already-migrated `iDamageToAttacker`/`iDamageAttackerChance` (one mechanic, one home).
+  - KEEP as cascade markers in identity: `stateReligionCommerce`, `commerceDoubleTime` (a flat family provably can't
+    model the pool×count / whole-commerce doubling — documented + cascade-read).
+  - STAY in identity (buildability/placement, json §7): `autoBuild`, `noInstanceLimit`, `forceNoPrereqScaling`, `centerInCity`.
+  - DROP (confirmed DEAD): the aid mechanic (`BonusAidModifiers`/`AidRateChanges` — city arrays saved but ZERO
+    write-from-building + ZERO read-for-effect; only AI-valuation/pedia read the raw Info) + the `DROP_DEAD`/`DROP_MODULE` set.
+  - `EnabledCivilizationTypes` → identity interim (→ `requires.build` when NPC civs wired); `bAllowsNukes` → `requires.build.disabled` (done).
 - **leaderhead**: simple→complex trait mirroring deferred — **117 leaders get NO `complexTraits` under the complex
   option until this lands.** (Largest single gap.)
 - **era**: `bNoGoodies`/`bNoBarbUnits`/`bNoBarbCities` → `identity` (live world-gen gates, no destination model; safe

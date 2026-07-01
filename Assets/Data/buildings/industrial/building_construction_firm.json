@@ -62,6 +62,9 @@
    }
   ]
  },
+ "attributes": {
+  "nukeImmune": true
+ },
  "world": {
   "art": {
    "icon": "ART_DEF_BUILDING_CONSTRUCTION_FIRM"
@@ -73,7 +76,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_CONSTRUCTION_FIRM",
   "civilopedia": "TXT_KEY_BUILDING_CONSTRUCTION_FIRM_PEDIA",
-  "nukeImmune": true,
   "advisor": "ADVISOR_ECONOMY",
   "visibilityPriority": 1,
   "mapCategories": [

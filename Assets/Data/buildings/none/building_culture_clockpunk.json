@@ -42,6 +42,9 @@
  "cost": {
   "production": 2280
  },
+ "attributes": {
+  "nukeImmune": true
+ },
  "world": {
   "art": {
    "icon": "ART_DEF_BUILDING_CULTURE_CLOCKPUNK"
@@ -50,7 +53,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_CULTURE_CLOCKPUNK",
   "civilopedia": "TXT_KEY_BUILDING_CULTURE_CLOCKPUNK_PEDIA",
-  "nukeImmune": true,
   "noInstanceLimit": true,
   "worth": 5,
   "conquestProbability": 100,

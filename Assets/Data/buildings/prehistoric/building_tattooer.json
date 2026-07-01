@@ -83,6 +83,11 @@
    "percent": 100
   }
  },
+ "grants": {
+  "freePromotions": [
+   "PROMOTION_TATTOO"
+  ]
+ },
  "cost": {
   "production": 62,
   "sizeModifier": 1,
@@ -101,7 +106,6 @@
   "enabledCivilizations": [
    "CIVILIZATION_NPC_NEANDERTHAL"
   ],
-  "applyFreePromotionOnMove": true,
   "advisor": "ADVISOR_CULTURE",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

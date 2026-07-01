@@ -22,6 +22,9 @@
    ]
   }
  },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
  "world": {
   "art": {
    "icon": "ART_DEF_BUILDING_EFFECT_HERITAGE_MAMMOTHS"
@@ -37,7 +40,6 @@
    "CIVILIZATION_NPC_NEANDERTHAL"
   ],
   "notConstructible": true,
-  "neverCapture": true,
   "worth": 2,
   "specialBuildingType": "SPECIALBUILDING_PUNK_MEGAFAUNA",
   "advisor": "ADVISOR_MILITARY",

@@ -127,6 +127,14 @@
    "flat": 1
   }
  },
+ "grants": {
+  "freePromotions": [
+   "PROMOTION_SPEED",
+   "PROMOTION_SPEED",
+   "PROMOTION_SPEED",
+   "PROMOTION_SPEED"
+  ]
+ },
  "cost": {
   "production": 146,
   "sizeModifier": 2,

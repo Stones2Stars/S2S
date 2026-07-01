@@ -60,6 +60,9 @@
    }
   ]
  },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
  "world": {
   "art": {
    "icon": "ART_DEF_BUILDING_TUMULUS"
@@ -74,7 +77,6 @@
   "enabledCivilizations": [
    "CIVILIZATION_NPC_NEANDERTHAL"
   ],
-  "neverCapture": true,
   "centerInCity": true,
   "worth": 2,
   "conquestProbability": 66,

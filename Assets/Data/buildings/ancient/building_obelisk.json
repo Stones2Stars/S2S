@@ -74,6 +74,9 @@
    }
   ]
  },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
  "world": {
   "art": {
    "icon": "ART_DEF_BUILDING_OBELISK"
@@ -85,7 +88,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_OBELISK",
   "civilopedia": "TXT_KEY_BUILDING_OBELISK_PEDIA",
-  "neverCapture": true,
   "centerInCity": true,
   "worth": 3,
   "advisor": "ADVISOR_CULTURE",

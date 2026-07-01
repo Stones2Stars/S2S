@@ -34,6 +34,9 @@
   "sizeModifier": 1,
   "countModifier": 1
  },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
  "world": {
   "art": {
    "icon": "ART_DEF_BUILDING_FLOCKS_OF_PEACOCK"
@@ -45,7 +48,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_FLOCKS_OF_PEACOCK",
   "civilopedia": "TXT_KEY_BUILDING_FLOCKS_OF_PEACOCK_PEDIA",
-  "neverCapture": true,
   "worth": 2,
   "militaryWorth": 2,
   "advisor": "ADVISOR_MILITARY",

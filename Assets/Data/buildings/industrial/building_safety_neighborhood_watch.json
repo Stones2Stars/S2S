@@ -26,6 +26,10 @@
    "flat": -50
   }
  },
+ "attributes": {
+  "nukeImmune": true,
+  "destroyedOnCapture": true
+ },
  "world": {
   "art": {
    "icon": "ART_DEF_BUILDING_SAFETY_NEIGHBORHOOD_WATCH"
@@ -35,8 +39,6 @@
   "description": "TXT_KEY_BUILDING_SAFETY_NEIGHBORHOOD_WATCH",
   "civilopedia": "TXT_KEY_BUILDING_SAFETY_NEIGHBORHOOD_WATCH_PEDIA",
   "notConstructible": true,
-  "nukeImmune": true,
-  "neverCapture": true,
   "mapCategories": [
    "MAPCATEGORY_EARTH"
   ]

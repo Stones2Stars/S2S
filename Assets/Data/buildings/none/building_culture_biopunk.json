@@ -32,6 +32,9 @@
  "cost": {
   "production": 21990
  },
+ "attributes": {
+  "nukeImmune": true
+ },
  "world": {
   "art": {
    "icon": "ART_DEF_BUILDING_CULTURE_BIOPUNK"
@@ -40,7 +43,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_CULTURE_BIOPUNK",
   "civilopedia": "TXT_KEY_BUILDING_CULTURE_BIOPUNK_PEDIA",
-  "nukeImmune": true,
   "noInstanceLimit": true,
   "conquestProbability": 100,
   "specialBuildingType": "SPECIALBUILDING_PUNK_BIO",

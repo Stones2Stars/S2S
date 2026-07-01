@@ -131,6 +131,9 @@
    }
   ]
  },
+ "attributes": {
+  "nukeImmune": true
+ },
  "world": {
   "art": {
    "icon": "ART_DEF_BUILDING_BASKETMAKER"
@@ -139,7 +142,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_BASKETMAKER",
   "civilopedia": "TXT_KEY_BUILDING_BASKETMAKER_PEDIA",
-  "nukeImmune": true,
   "conquestProbability": 80,
   "advisor": "ADVISOR_ECONOMY",
   "visibilityPriority": 1,

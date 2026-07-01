@@ -57,6 +57,9 @@
   "production": 30,
   "countModifier": 1
  },
+ "attributes": {
+  "nukeImmune": true
+ },
  "world": {
   "art": {
    "icon": "ART_DEF_BUILDING_TIDEPOOL_SCAVENGER"
@@ -65,7 +68,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_TIDEPOOL_SCAVENGER",
   "civilopedia": "TXT_KEY_BUILDING_TIDEPOOL_SCAVENGER_PEDIA",
-  "nukeImmune": true,
   "advisor": "ADVISOR_GROWTH",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

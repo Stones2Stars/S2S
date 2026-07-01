@@ -46,6 +46,10 @@
    "SPECIALIST_SPY": 3
   }
  },
+ "attributes": {
+  "nukeImmune": true,
+  "destroyedOnCapture": true
+ },
  "world": {
   "art": {
    "icon": "ART_DEF_BUILDING_SAFETY_ORBITAL_PRISON"
@@ -55,8 +59,6 @@
   "description": "TXT_KEY_BUILDING_SAFETY_ORBITAL_PRISON",
   "civilopedia": "TXT_KEY_BUILDING_SAFETY_ORBITAL_PRISON_PEDIA",
   "notConstructible": true,
-  "nukeImmune": true,
-  "neverCapture": true,
   "mapCategories": [
    "MAPCATEGORY_EARTH"
   ]

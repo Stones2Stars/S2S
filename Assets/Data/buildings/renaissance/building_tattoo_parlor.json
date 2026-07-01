@@ -111,6 +111,11 @@
    "percent": 100
   }
  },
+ "grants": {
+  "freePromotions": [
+   "PROMOTION_TATTOO"
+  ]
+ },
  "cost": {
   "production": 580,
   "sizeModifier": 1,
@@ -126,7 +131,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_TATTOO_PARLOR",
   "civilopedia": "TXT_KEY_BUILDING_TATTOO_PARLOR_PEDIA",
-  "applyFreePromotionOnMove": true,
   "advisor": "ADVISOR_CULTURE",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

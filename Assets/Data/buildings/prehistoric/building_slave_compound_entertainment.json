@@ -54,6 +54,9 @@
    "SPECIALIST_SLAVES": 1
   }
  },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
  "world": {
   "art": {
    "icon": "ART_DEF_BUILDING_SLAVE_COMPOUND_ENTERTAINMENT"
@@ -67,7 +70,6 @@
   "civilopedia": "TXT_KEY_BUILDING_SLAVE_COMPOUND_PEDIA",
   "help": "TXT_KEY_BUILDING_SLAVE_COMPOUND_HELP",
   "notConstructible": true,
-  "neverCapture": true,
   "worth": 2,
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [

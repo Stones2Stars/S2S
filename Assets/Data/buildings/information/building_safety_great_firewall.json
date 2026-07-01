@@ -62,6 +62,10 @@
    "SPECIALIST_SPY": 1
   }
  },
+ "attributes": {
+  "nukeImmune": true,
+  "destroyedOnCapture": true
+ },
  "world": {
   "art": {
    "icon": "ART_DEF_BUILDING_SAFETY_GREAT_FIREWALL"
@@ -71,8 +75,6 @@
   "description": "TXT_KEY_BUILDING_SAFETY_GREAT_FIREWALL",
   "civilopedia": "TXT_KEY_BUILDING_SAFETY_GREAT_FIREWALL_PEDIA",
   "notConstructible": true,
-  "nukeImmune": true,
-  "neverCapture": true,
   "mapCategories": [
    "MAPCATEGORY_EARTH"
   ]

@@ -98,9 +98,17 @@
    "percent": 100
   }
  },
+ "grants": {
+  "freePromotions": [
+   "PROMOTION_HAKA"
+  ]
+ },
  "cost": {
   "production": 60,
   "complexityModifier": 1
+ },
+ "attributes": {
+  "nukeImmune": true
  },
  "world": {
   "art": {
@@ -110,7 +118,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_DANCE_HAKA",
   "civilopedia": "TXT_KEY_BUILDING_DANCE_HAKA_PEDIA",
-  "nukeImmune": true,
   "advisor": "ADVISOR_CULTURE",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

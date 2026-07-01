@@ -33,6 +33,9 @@
    "flat": 200
   }
  },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
  "world": {
   "art": {
    "icon": "ART_DEF_BUILDING_POWER_NUCLEAR"
@@ -42,7 +45,6 @@
   "description": "TXT_KEY_BUILDING_POWER_NUCLEAR",
   "civilopedia": "TXT_KEY_BUILDING_POWER_NUCLEAR_PEDIA",
   "notConstructible": true,
-  "neverCapture": true,
   "specialBuildingType": "SPECIALBUILDING_PUNK_ATOM",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

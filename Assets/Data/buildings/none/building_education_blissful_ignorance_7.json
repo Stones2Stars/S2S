@@ -34,6 +34,10 @@
    "percent": -35
   }
  },
+ "attributes": {
+  "nukeImmune": true,
+  "destroyedOnCapture": true
+ },
  "world": {
   "art": {
    "icon": "ART_DEF_BUILDING_PROPERTYEDUCATION"
@@ -43,8 +47,6 @@
   "description": "TXT_KEY_BUILDING_EDUCATION_BLISSFUL_IGNORANCE_7",
   "civilopedia": "TXT_KEY_BUILDING_EQ_PEDIA",
   "notConstructible": true,
-  "nukeImmune": true,
-  "neverCapture": true,
   "mapCategories": [
    "MAPCATEGORY_EARTH"
   ]

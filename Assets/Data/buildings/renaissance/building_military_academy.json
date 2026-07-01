@@ -39,6 +39,9 @@
    "flat": 15
   }
  },
+ "attributes": {
+  "nukeImmune": true
+ },
  "world": {
   "art": {
    "icon": "ART_DEF_BUILDING_MILITARY_ACADEMY"
@@ -48,7 +51,6 @@
   "description": "TXT_KEY_BUILDING_MILITARY_ACADEMY",
   "civilopedia": "TXT_KEY_BUILDING_MILITARY_ACADEMY_PEDIA",
   "notConstructible": true,
-  "nukeImmune": true,
   "worth": 6,
   "militaryWorth": 6,
   "conquestProbability": 80,

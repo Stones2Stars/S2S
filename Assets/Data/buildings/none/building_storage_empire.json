@@ -10,6 +10,10 @@
    ]
   }
  },
+ "attributes": {
+  "nukeImmune": true,
+  "destroyedOnCapture": true
+ },
  "world": {
   "art": {
    "icon": "ART_DEF_BUILDING_STORAGE_PIT"
@@ -20,8 +24,6 @@
   "civilopedia": "TXT_KEY_BUILDING_ECONOMY_PEDIA",
   "help": "TXT_KEY_BUILDING_ECONOMY_HELP",
   "notConstructible": true,
-  "nukeImmune": true,
-  "neverCapture": true,
   "mapCategories": [
    "MAPCATEGORY_EARTH"
   ]

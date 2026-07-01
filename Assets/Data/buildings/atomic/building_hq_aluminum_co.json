@@ -45,6 +45,10 @@
    "flat": 1
   }
  },
+ "headquarters": "CORPORATION_6",
+ "attributes": {
+  "nukeImmune": true
+ },
  "world": {
   "art": {
    "icon": "ART_DEF_BUILDING_CORPORATION_6"
@@ -59,9 +63,7 @@
   "commerceDoubleTime": {
    "culture": 1000
   },
-  "corporationHQ": "CORPORATION_6",
   "notConstructible": true,
-  "nukeImmune": true,
   "worth": 8,
   "conquestProbability": 100,
   "greatPeopleUnitType": "UNIT_SCIENTIST",

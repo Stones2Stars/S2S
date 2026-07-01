@@ -60,6 +60,10 @@
    "flat": 6
   }
  },
+ "attributes": {
+  "nukeImmune": true,
+  "destroyedOnCapture": true
+ },
  "world": {
   "art": {
    "icon": "ART_DEF_BUILDING_HOUSING_CONDOMINIUMS"
@@ -69,8 +73,6 @@
   "description": "TXT_KEY_BUILDING_HOUSING_CONDOMINIUMS",
   "civilopedia": "TXT_KEY_BUILDING_HOUSING_CONDOMINIUMS_PEDIA",
   "notConstructible": true,
-  "nukeImmune": true,
-  "neverCapture": true,
   "autoBuild": true,
   "mapCategories": [
    "MAPCATEGORY_EARTH"

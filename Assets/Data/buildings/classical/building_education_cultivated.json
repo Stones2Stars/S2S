@@ -96,6 +96,9 @@
    "flat": -6
   }
  },
+ "attributes": {
+  "nukeImmune": true
+ },
  "world": {
   "art": {
    "icon": "ART_DEF_BUILDING_PROPERTYEDUCATION"
@@ -105,7 +108,6 @@
   "description": "TXT_KEY_BUILDING_EDUCATION_CULTIVATED",
   "civilopedia": "TXT_KEY_BUILDING_EQ_PEDIA",
   "notConstructible": true,
-  "nukeImmune": true,
   "conquestProbability": 100,
   "mapCategories": [
    "MAPCATEGORY_EARTH"

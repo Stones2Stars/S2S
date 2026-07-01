@@ -38,6 +38,9 @@
   "materialsModifier": 2,
   "complexityModifier": 2
  },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
  "world": {
   "art": {
    "icon": "ART_DEF_BUILDING_LIFE_NONPHOTOSYNTHETIC_PLANTS"
@@ -46,7 +49,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_LIFE_NONPHOTOSYNTHETIC_PLANTS",
   "civilopedia": "TXT_KEY_BUILDING_LIFE_NONPHOTOSYNTHETIC_PLANTS_PEDIA",
-  "neverCapture": true,
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

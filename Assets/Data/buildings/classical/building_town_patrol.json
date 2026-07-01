@@ -110,6 +110,9 @@
    }
   ]
  },
+ "attributes": {
+  "nukeImmune": true
+ },
  "world": {
   "art": {
    "icon": "ART_DEF_BUILDING_TOWN_PATROL"
@@ -118,7 +121,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_TOWN_PATROL",
   "civilopedia": "TXT_KEY_BUILDING_TOWN_PATROL_PEDIA",
-  "nukeImmune": true,
   "militaryWorth": 2,
   "advisor": "ADVISOR_MILITARY",
   "visibilityPriority": 1,

@@ -113,6 +113,9 @@
   "materialsModifier": 1,
   "complexityModifier": 1
  },
+ "attributes": {
+  "nukeImmune": true
+ },
  "world": {
   "art": {
    "icon": "ART_DEF_BUILDING_FACTORY_SCULPTURES"
@@ -121,7 +124,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_FACTORY_SCULPTURES",
   "civilopedia": "TXT_KEY_BUILDING_FACTORY_SCULPTURES_PEDIA",
-  "nukeImmune": true,
   "conquestProbability": 80,
   "advisor": "ADVISOR_CULTURE",
   "visibilityPriority": 1,

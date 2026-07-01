@@ -15,6 +15,15 @@
    ]
   }
  },
+ "grants": {
+  "freePromotions": [
+   "PROMOTION_MARAUDER"
+  ]
+ },
+ "attributes": {
+  "nukeImmune": true,
+  "destroyedOnCapture": true
+ },
  "world": {
   "art": {
    "icon": "ART_DEF_BUILDING_CIVIC_BANDITRY"
@@ -24,8 +33,6 @@
   "description": "TXT_KEY_BUILDING_CIVIC_BANDITRY",
   "civilopedia": "TXT_KEY_BUILDING_CIVIC_BANDITRY_PEDIA",
   "notConstructible": true,
-  "nukeImmune": true,
-  "neverCapture": true,
   "autoBuild": true,
   "mapCategories": [
    "MAPCATEGORY_EARTH"

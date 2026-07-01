@@ -48,6 +48,9 @@
  "cost": {
   "production": 6490
  },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
  "ui": {
   "art": {
    "movie": {
@@ -63,7 +66,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_ORBITAL_PRISON",
   "civilopedia": "TXT_KEY_BUILDING_ORBITAL_PRISON_PEDIA",
-  "neverCapture": true,
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

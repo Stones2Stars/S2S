@@ -139,6 +139,9 @@
    }
   ]
  },
+ "attributes": {
+  "nukeImmune": true
+ },
  "world": {
   "art": {
    "icon": "ART_DEF_BUILDING_MOONBEAN_COFFEESHOP"
@@ -150,7 +153,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_MOONBEAN_COFFEESHOP",
   "civilopedia": "TXT_KEY_BUILDING_MOONBEAN_COFFEESHOP_PEDIA",
-  "nukeImmune": true,
   "worth": 8,
   "conquestProbability": 100,
   "specialBuildingType": "SPECIALBUILDING_CORPORATION",

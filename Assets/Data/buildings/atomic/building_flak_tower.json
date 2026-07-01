@@ -73,6 +73,9 @@
    }
   ]
  },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
  "ui": {
   "art": {
    "movie": {
@@ -91,7 +94,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_FLAK_TOWER",
   "civilopedia": "TXT_KEY_BUILDING_FLAK_TOWER_PEDIA",
-  "neverCapture": true,
   "worth": 8,
   "militaryWorth": 5,
   "advisor": "ADVISOR_MILITARY",

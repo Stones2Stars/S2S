@@ -49,6 +49,9 @@
    }
   }
  },
+ "attributes": {
+  "nukeImmune": true
+ },
  "world": {
   "art": {
    "icon": "ART_DEF_BUILDING_FOLKLORE_SABRETOOTH"
@@ -58,7 +61,6 @@
   "description": "TXT_KEY_BUILDING_REMAINS_SABRETOOTH",
   "civilopedia": "TXT_KEY_BUILDING_FOLKLORE_ANIMAL_PEDIA",
   "notConstructible": true,
-  "nukeImmune": true,
   "worth": 1,
   "conquestProbability": 90,
   "advisor": "ADVISOR_MILITARY",

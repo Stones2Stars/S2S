@@ -79,6 +79,10 @@
    "flat": -2
   }
  },
+ "attributes": {
+  "nukeImmune": true,
+  "destroyedOnCapture": true
+ },
  "world": {
   "art": {
    "icon": "ART_DEF_BUILDING_HOUSING_TREEHOUSES"
@@ -88,8 +92,6 @@
   "description": "TXT_KEY_BUILDING_HOUSING_TREEHOUSES",
   "civilopedia": "TXT_KEY_BUILDING_HOUSING_TREEHOUSES_PEDIA",
   "notConstructible": true,
-  "nukeImmune": true,
-  "neverCapture": true,
   "autoBuild": true,
   "mapCategories": [
    "MAPCATEGORY_EARTH"

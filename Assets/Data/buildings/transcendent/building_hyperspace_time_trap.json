@@ -16,11 +16,9 @@
    "amount": {
     "percent": 30
    },
-   "damageAttackerChance": {
-    "flat": 30
-   },
-   "damageToAttacker": {
-    "flat": 30
+   "counterDamage": {
+    "damage": 30,
+    "chance": 30
    }
   }
  },
@@ -45,7 +43,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_HYPERSPACE_TIME_TRAP",
   "civilopedia": "TXT_KEY_BUILDING_HYPERSPACE_TIME_TRAP_PEDIA",
-  "damageAllAttackers": true,
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

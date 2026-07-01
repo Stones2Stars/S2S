@@ -61,6 +61,10 @@
    }
   ]
  },
+ "attributes": {
+  "nukeImmune": true,
+  "teamShare": true
+ },
  "ui": {
   "art": {
    "movie": {
@@ -79,8 +83,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_SILICON_VALLEY",
   "civilopedia": "TXT_KEY_BUILDING_SILICON_VALLEY_PEDIA",
-  "nukeImmune": true,
-  "teamShare": true,
   "worth": 20,
   "conquestProbability": 100,
   "greatPeopleUnitType": "UNIT_SCIENTIST",

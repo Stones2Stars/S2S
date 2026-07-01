@@ -56,6 +56,10 @@
   "materialsModifier": 2,
   "complexityModifier": 2
  },
+ "attributes": {
+  "nukeImmune": true,
+  "destroyedOnCapture": true
+ },
  "ui": {
   "art": {
    "movie": {
@@ -71,8 +75,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_UN_MISSION",
   "civilopedia": "TXT_KEY_BUILDING_UN_MISSION_PEDIA",
-  "nukeImmune": true,
-  "neverCapture": true,
   "worth": 10,
   "militaryWorth": 5,
   "greatPeopleUnitType": "UNIT_GREAT_SPY",

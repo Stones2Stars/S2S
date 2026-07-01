@@ -55,6 +55,9 @@
    }
   ]
  },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
  "ui": {
   "art": {
    "movie": {
@@ -73,7 +76,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_TOXIC_WASTE_DUMP",
   "civilopedia": "TXT_KEY_BUILDING_TOXIC_WASTE_DUMP_PEDIA",
-  "neverCapture": true,
   "worth": 5,
   "militaryWorth": 5,
   "advisor": "ADVISOR_GROWTH",

@@ -58,6 +58,11 @@
    "SPECIALIST_PRIEST": 1
   }
  },
+ "grants": {
+  "freePromotions": [
+   "PROMOTION_GUARDIAN"
+  ]
+ },
  "cost": {
   "production": 176,
   "sizeModifier": 1,
@@ -72,6 +77,9 @@
    }
   ]
  },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
  "world": {
   "art": {
    "icon": "ART_DEF_BUILDING_NAITERU_KOB_BLESS"
@@ -83,7 +91,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_NAITERU_KOB_BLESS",
   "civilopedia": "TXT_KEY_BUILDING_NAITERU_KOB_BLESS_PEDIA",
-  "neverCapture": true,
   "worth": 4,
   "specialBuildingType": "SPECIALBUILDING_TEMPLE",
   "religion": "RELIGION_NGAIISM",

@@ -93,6 +93,9 @@
   "materialsModifier": 2,
   "complexityModifier": 2
  },
+ "attributes": {
+  "orbitalInfrastructure": true
+ },
  "world": {
   "art": {
    "icon": "ART_DEF_BUILDING_COMMERCIAL_SPACEPORT"
@@ -104,7 +107,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_COMMERCIAL_SPACEPORT",
   "civilopedia": "TXT_KEY_BUILDING_COMMERCIAL_SPACEPORT_PEDIA",
-  "orbitalInfrastructure": true,
   "worth": 6,
   "advisor": "ADVISOR_GROWTH",
   "visibilityPriority": 1,

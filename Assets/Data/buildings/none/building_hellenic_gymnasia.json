@@ -80,6 +80,9 @@
   }
  },
  "grants": {
+  "freePromotions": [
+   "PROMOTION_PANKRATION"
+  ],
   "repeatable": [
    {
     "unitCombat": "UNITCOMBAT_HEALS_AS_PEOPLE",
@@ -102,6 +105,9 @@
    }
   ]
  },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
  "world": {
   "art": {
    "icon": "ART_DEF_BUILDING_HELLENIC_GYMNASIA"
@@ -113,7 +119,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_HELLENIC_GYMNASIA",
   "civilopedia": "TXT_KEY_BUILDING_HELLENIC_GYMNASIA_PEDIA",
-  "neverCapture": true,
   "worth": 3,
   "specialBuildingType": "SPECIALBUILDING_MONASTERY",
   "religion": "RELIGION_HELLENISM",

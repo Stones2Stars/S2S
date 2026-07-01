@@ -42,6 +42,9 @@
  "cost": {
   "production": 8070
  },
+ "attributes": {
+  "nukeImmune": true
+ },
  "world": {
   "art": {
    "icon": "ART_DEF_BUILDING_CULTURE_ATOMPUNK"
@@ -50,7 +53,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_CULTURE_ATOMPUNK",
   "civilopedia": "TXT_KEY_BUILDING_CULTURE_ATOMPUNK_PEDIA",
-  "nukeImmune": true,
   "noInstanceLimit": true,
   "conquestProbability": 100,
   "specialBuildingType": "SPECIALBUILDING_PUNK_ATOM",

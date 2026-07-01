@@ -44,6 +44,9 @@
  "cost": {
   "production": 28230
  },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
  "ui": {
   "art": {
    "movie": {
@@ -59,7 +62,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_GALACTIC_CORE_BASE",
   "civilopedia": "TXT_KEY_BUILDING_GALACTIC_CORE_BASE_PEDIA",
-  "neverCapture": true,
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

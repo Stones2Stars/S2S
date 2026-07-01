@@ -47,6 +47,9 @@
   "production": 12030,
   "complexityModifier": 2
  },
+ "attributes": {
+  "nukeImmune": true
+ },
  "ui": {
   "art": {
    "movie": {
@@ -62,7 +65,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_GREAT_FIREWALL",
   "civilopedia": "TXT_KEY_BUILDING_GREAT_FIREWALL_PEDIA",
-  "nukeImmune": true,
   "militaryWorth": 5,
   "conquestProbability": 100,
   "advisor": "ADVISOR_MILITARY",

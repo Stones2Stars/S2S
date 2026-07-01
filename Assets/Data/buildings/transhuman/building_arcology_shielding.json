@@ -79,6 +79,9 @@
    }
   ]
  },
+ "attributes": {
+  "nukeImmune": true
+ },
  "world": {
   "art": {
    "icon": "ART_DEF_BUILDING_ARCOLOGY_SHIELDED"
@@ -90,7 +93,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_ARCOLOGY_SHIELDING",
   "civilopedia": "TXT_KEY_BUILDING_ARCOLOGY_SHIELDING_PEDIA",
-  "nukeImmune": true,
   "worth": 2,
   "militaryWorth": 4,
   "conquestProbability": 75,

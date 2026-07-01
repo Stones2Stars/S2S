@@ -45,6 +45,9 @@
   "materialsModifier": 2,
   "complexityModifier": 2
  },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
  "ui": {
   "art": {
    "movie": {
@@ -60,7 +63,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_ADVANCED_METI",
   "civilopedia": "TXT_KEY_BUILDING_ADVANCED_METI_PEDIA",
-  "neverCapture": true,
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

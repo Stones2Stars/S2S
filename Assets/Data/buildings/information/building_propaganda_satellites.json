@@ -76,6 +76,9 @@
   "materialsModifier": 2,
   "complexityModifier": 2
  },
+ "attributes": {
+  "orbital": true
+ },
  "world": {
   "art": {
    "icon": "ART_DEF_BUILDING_PROPAGANDA_SATELLITES"
@@ -87,7 +90,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_PROPAGANDA_SATELLITES",
   "civilopedia": "TXT_KEY_BUILDING_PROPAGANDA_SATELLITES_PEDIA",
-  "orbital": true,
   "worth": 6,
   "advisor": "ADVISOR_GROWTH",
   "visibilityPriority": 1,

@@ -62,6 +62,9 @@
  "cost": {
   "production": 3245
  },
+ "attributes": {
+  "orbital": true
+ },
  "world": {
   "art": {
    "icon": "ART_DEF_BUILDING_CISLUNAR_MICROSATELLITE_CONSTELLATION"
@@ -70,7 +73,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_CISLUNAR_MICROSATELLITE_CONSTELLATION",
   "civilopedia": "TXT_KEY_BUILDING_CISLUNAR_MICROSATELLITE_CONSTELLATION_PEDIA",
-  "orbital": true,
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

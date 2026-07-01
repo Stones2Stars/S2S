@@ -48,6 +48,9 @@
   "materialsModifier": 1,
   "complexityModifier": 2
  },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
  "ui": {
   "art": {
    "movie": {
@@ -63,7 +66,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_DEPARTMENT_OF_ENERGY",
   "civilopedia": "TXT_KEY_BUILDING_DEPARTMENT_OF_ENERGY_PEDIA",
-  "neverCapture": true,
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

@@ -80,6 +80,9 @@
    }
   ]
  },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
  "ui": {
   "art": {
    "movie": {
@@ -101,7 +104,6 @@
   "commerceDoubleTime": {
    "gold": 200
   },
-  "neverCapture": true,
   "worth": 5,
   "greatPeopleUnitType": "UNIT_MERCHANT",
   "advisor": "ADVISOR_ECONOMY",

@@ -44,6 +44,9 @@
  "cost": {
   "production": 1800
  },
+ "attributes": {
+  "nukeImmune": true
+ },
  "world": {
   "art": {
    "icon": "ART_DEF_BUILDING_CULTURE_CROATIAN"
@@ -52,7 +55,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_CULTURE_CROATIAN",
   "civilopedia": "TXT_KEY_BUILDING_CULTURE_CROATIAN_PEDIA",
-  "nukeImmune": true,
   "noInstanceLimit": true,
   "conquestProbability": 100,
   "specialBuildingType": "SPECIALBUILDING_C2C_CULTURE",

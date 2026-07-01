@@ -26,6 +26,10 @@
    "percent": 2
   }
  },
+ "attributes": {
+  "nukeImmune": true,
+  "destroyedOnCapture": true
+ },
  "world": {
   "art": {
    "icon": "ART_DEF_BUILDING_MERCANTILISM_BONUS_SILVER"
@@ -35,8 +39,6 @@
   "description": "TXT_KEY_BUILDING_MERCANTILISM_BONUS_SILVER",
   "civilopedia": "TXT_KEY_BUILDING_MERCANTILISM_BONUS_SILVER_PEDIA",
   "notConstructible": true,
-  "nukeImmune": true,
-  "neverCapture": true,
   "autoBuild": true,
   "worth": 1,
   "mapCategories": [

@@ -60,6 +60,9 @@
    }
   ]
  },
+ "attributes": {
+  "nukeImmune": true
+ },
  "world": {
   "art": {
    "icon": "ART_DEF_BUILDING_BATHING_RITUAL"
@@ -68,7 +71,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_BATHING_RITUAL",
   "civilopedia": "TXT_KEY_BUILDING_BATHING_RITUAL_PEDIA",
-  "nukeImmune": true,
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

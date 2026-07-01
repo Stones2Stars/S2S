@@ -68,6 +68,9 @@
  "cost": {
   "production": 552
  },
+ "attributes": {
+  "nukeImmune": true
+ },
  "world": {
   "art": {
    "icon": "ART_DEF_BUILDING_CULTURE_DENE"
@@ -76,7 +79,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_CULTURE_DENE",
   "civilopedia": "TXT_KEY_BUILDING_CULTURE_DENE_PEDIA",
-  "nukeImmune": true,
   "noInstanceLimit": true,
   "conquestProbability": 100,
   "specialBuildingType": "SPECIALBUILDING_C2C_CULTURE",

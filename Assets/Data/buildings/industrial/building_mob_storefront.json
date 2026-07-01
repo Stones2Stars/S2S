@@ -141,6 +141,9 @@
    }
   ]
  },
+ "attributes": {
+  "nukeImmune": true
+ },
  "world": {
   "art": {
    "icon": "ART_DEF_BUILDING_MOB_STOREFRONT"
@@ -149,7 +152,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_MOB_STOREFRONT",
   "civilopedia": "TXT_KEY_BUILDING_MOB_STOREFRONT_PEDIA",
-  "nukeImmune": true,
   "militaryWorth": 1,
   "advisor": "ADVISOR_ECONOMY",
   "visibilityPriority": 1,

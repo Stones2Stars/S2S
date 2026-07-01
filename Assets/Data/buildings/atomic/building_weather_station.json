@@ -30,6 +30,13 @@
    "percent": 100
   }
  },
+ "grants": {
+  "freePromotions": [
+   "PROMOTION_WEATHER_FORECAST_LAND",
+   "PROMOTION_WEATHER_FORECAST_AIR",
+   "PROMOTION_WEATHER_FORECAST_NAVAL"
+  ]
+ },
  "cost": {
   "production": 1475,
   "sizeModifier": 1,
@@ -45,7 +52,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_WEATHER_STATION",
   "civilopedia": "TXT_KEY_BUILDING_WEATHER_STATION_PEDIA",
-  "applyFreePromotionOnMove": true,
   "worth": 5,
   "advisor": "ADVISOR_SCIENCE",
   "mapCategories": [

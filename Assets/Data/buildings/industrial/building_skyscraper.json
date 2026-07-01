@@ -129,6 +129,9 @@
    }
   ]
  },
+ "attributes": {
+  "teamShare": true
+ },
  "world": {
   "art": {
    "icon": "ART_DEF_BUILDING_SKYSCRAPER"
@@ -140,7 +143,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_SKYSCRAPER",
   "civilopedia": "TXT_KEY_BUILDING_SKYSCRAPER_PEDIA",
-  "teamShare": true,
   "worth": 10,
   "dcmAirbombMission": 2,
   "advisor": "ADVISOR_GROWTH",

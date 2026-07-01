@@ -89,6 +89,9 @@
    }
   ]
  },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
  "world": {
   "art": {
    "icon": "ART_DEF_BUILDING_CEREMONIAL_ALTAR"
@@ -100,7 +103,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_SACRIFICIAL_ALTAR",
   "civilopedia": "TXT_KEY_BUILDING_SACRIFICIAL_ALTAR_PEDIA",
-  "neverCapture": true,
   "worth": 4,
   "specialBuildingType": "SPECIALBUILDING_TEMPLE",
   "advisor": "ADVISOR_RELIGION",

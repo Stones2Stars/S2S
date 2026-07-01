@@ -101,6 +101,11 @@
    "percent": 100
   }
  },
+ "grants": {
+  "freePromotions": [
+   "PROMOTION_CACOPHONY"
+  ]
+ },
  "cost": {
   "production": 125,
   "sizeModifier": 1,

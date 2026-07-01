@@ -42,6 +42,9 @@
   "sizeModifier": 1,
   "countModifier": 1
  },
+ "attributes": {
+  "nukeImmune": true
+ },
  "world": {
   "art": {
    "icon": "ART_DEF_BUILDING_WALKABOUT"
@@ -50,7 +53,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_WALKABOUT",
   "civilopedia": "TXT_KEY_BUILDING_WALKABOUT_PEDIA",
-  "nukeImmune": true,
   "conquestProbability": 70,
   "advisor": "ADVISOR_CULTURE",
   "visibilityPriority": 1,

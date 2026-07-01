@@ -75,6 +75,9 @@
    }
   ]
  },
+ "attributes": {
+  "nukeImmune": true
+ },
  "ui": {
   "art": {
    "movie": {
@@ -94,7 +97,6 @@
   "description": "TXT_KEY_BUILDING_NANITE_DEFUSER",
   "civilopedia": "TXT_KEY_BUILDING_NANITE_DEFUSER_PEDIA",
   "help": "TXT_KEY_BUILDING_NANITE_DEFUSER_HELP",
-  "nukeImmune": true,
   "centerInCity": true,
   "worth": 100,
   "militaryWorth": 100,

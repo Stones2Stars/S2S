@@ -95,6 +95,9 @@
   "sizeModifier": 1,
   "countModifier": 2
  },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
  "ui": {
   "art": {
    "movie": {
@@ -113,7 +116,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_BULL_LEAPING",
   "civilopedia": "TXT_KEY_BUILDING_BULL_LEAPING_PEDIA",
-  "neverCapture": true,
   "worth": 1,
   "militaryWorth": 2,
   "greatPeopleUnitType": "UNIT_ARTIST",

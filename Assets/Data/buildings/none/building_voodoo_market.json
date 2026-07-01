@@ -107,6 +107,9 @@
    }
   ]
  },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
  "world": {
   "art": {
    "icon": "ART_DEF_BUILDING_VOODOO_MARKET"
@@ -118,7 +121,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_VOODOO_MARKET",
   "civilopedia": "TXT_KEY_BUILDING_VOODOO_MARKET_PEDIA",
-  "neverCapture": true,
   "worth": 6,
   "specialBuildingType": "SPECIALBUILDING_CATHEDRAL",
   "religion": "RELIGION_VOODOO",

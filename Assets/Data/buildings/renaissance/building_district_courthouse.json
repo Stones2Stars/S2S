@@ -73,6 +73,9 @@
    }
   ]
  },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
  "ui": {
   "art": {
    "movie": {
@@ -91,7 +94,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_DISTRICT_COURTHOUSE",
   "civilopedia": "TXT_KEY_BUILDING_DISTRICT_COURTHOUSE_PEDIA",
-  "neverCapture": true,
   "worth": 4,
   "advisor": "ADVISOR_ECONOMY",
   "visibilityPriority": 1,

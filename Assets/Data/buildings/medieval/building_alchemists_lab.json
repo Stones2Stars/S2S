@@ -97,6 +97,9 @@
    }
   ]
  },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
  "world": {
   "art": {
    "icon": "ART_DEF_BUILDING_ALCHEMISTS_LAB"
@@ -108,7 +111,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_ALCHEMISTS_LAB",
   "civilopedia": "TXT_KEY_BUILDING_ALCHEMISTS_LAB_PEDIA",
-  "neverCapture": true,
   "worth": 4,
   "dcmAirbombMission": 2,
   "advisor": "ADVISOR_SCIENCE",

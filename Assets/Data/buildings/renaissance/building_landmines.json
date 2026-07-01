@@ -74,11 +74,25 @@
    "amount": {
     "percent": 20
    },
-   "damageAttackerChance": {
-    "flat": 30
-   },
-   "damageToAttacker": {
-    "flat": 25
+   "counterDamage": {
+    "damage": 25,
+    "chance": 30,
+    "units": {
+     "unitCombats": [
+      "UNITCOMBAT_ARCHER",
+      "UNITCOMBAT_ASSAULT_MECH",
+      "UNITCOMBAT_DREADNOUGHT",
+      "UNITCOMBAT_GUN",
+      "UNITCOMBAT_HITECH",
+      "UNITCOMBAT_MELEE",
+      "UNITCOMBAT_MOUNTED",
+      "UNITCOMBAT_ROBOT",
+      "UNITCOMBAT_SIEGE",
+      "UNITCOMBAT_THROWING",
+      "UNITCOMBAT_TRACKED",
+      "UNITCOMBAT_WHEELED"
+     ]
+    }
    }
   }
  },
@@ -117,20 +131,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_LANDMINES",
   "civilopedia": "TXT_KEY_BUILDING_LANDMINES_PEDIA",
-  "damageAttackingUnitCombats": [
-   "UNITCOMBAT_ARCHER",
-   "UNITCOMBAT_ASSAULT_MECH",
-   "UNITCOMBAT_DREADNOUGHT",
-   "UNITCOMBAT_GUN",
-   "UNITCOMBAT_HITECH",
-   "UNITCOMBAT_MELEE",
-   "UNITCOMBAT_MOUNTED",
-   "UNITCOMBAT_ROBOT",
-   "UNITCOMBAT_SIEGE",
-   "UNITCOMBAT_THROWING",
-   "UNITCOMBAT_TRACKED",
-   "UNITCOMBAT_WHEELED"
-  ],
   "militaryWorth": 5,
   "advisor": "ADVISOR_MILITARY",
   "visibilityPriority": 1,

@@ -58,6 +58,9 @@
    }
   ]
  },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
  "ui": {
   "art": {
    "movie": {
@@ -76,7 +79,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_CAPITAL_ADMINISTRATION",
   "civilopedia": "TXT_KEY_BUILDING_CAPITAL_ADMINISTRATION_PEDIA",
-  "neverCapture": true,
   "centerInCity": true,
   "worth": 4,
   "militaryWorth": 5,

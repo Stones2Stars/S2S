@@ -50,6 +50,10 @@
    "flat": 1
   }
  },
+ "headquarters": "CORPORATION_MILEHIGH",
+ "attributes": {
+  "nukeImmune": true
+ },
  "world": {
   "art": {
    "icon": "ART_DEF_BUILDING_HQ_MILEHIGH_TRAVELS_INTERNATIONAL"
@@ -64,9 +68,7 @@
   "commerceDoubleTime": {
    "culture": 1000
   },
-  "corporationHQ": "CORPORATION_MILEHIGH",
   "notConstructible": true,
-  "nukeImmune": true,
   "worth": 8,
   "conquestProbability": 100,
   "greatPeopleUnitType": "UNIT_SCIENTIST",

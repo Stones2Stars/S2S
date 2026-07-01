@@ -56,6 +56,9 @@
    "flat": 3
   }
  },
+ "attributes": {
+  "nukeImmune": true
+ },
  "world": {
   "art": {
    "icon": "ART_DEF_BUILDING_PESTS_TICKS"
@@ -65,7 +68,6 @@
   "description": "TXT_KEY_BUILDING_PESTS_TICKS",
   "civilopedia": "TXT_KEY_BUILDING_PESTS_PEDIA",
   "notConstructible": true,
-  "nukeImmune": true,
   "autoBuild": true,
   "conquestProbability": 100,
   "mapCategories": [

@@ -136,6 +136,9 @@
    }
   ]
  },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
  "world": {
   "art": {
    "icon": "ART_DEF_BUILDING_THEATRE"
@@ -147,7 +150,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_THEATRE",
   "civilopedia": "TXT_KEY_BUILDING_THEATRE_PEDIA",
-  "neverCapture": true,
   "worth": 3,
   "dcmAirbombMission": 2,
   "advisor": "ADVISOR_CULTURE",

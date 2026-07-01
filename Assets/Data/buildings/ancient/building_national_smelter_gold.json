@@ -70,6 +70,9 @@
   "materialsModifier": 1,
   "complexityModifier": 1
  },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
  "ui": {
   "art": {
    "movie": {
@@ -85,7 +88,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_NATIONAL_SMELTER_GOLD",
   "civilopedia": "TXT_KEY_BUILDING_NATIONAL_SMELTER_PEDIA",
-  "neverCapture": true,
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

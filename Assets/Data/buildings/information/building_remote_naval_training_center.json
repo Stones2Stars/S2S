@@ -47,6 +47,9 @@
   }
  },
  "grants": {
+  "freePromotions": [
+   "PROMOTION_PROJECTION1"
+  ],
   "repeatable": [
    {
     "unitCombat": "UNITCOMBAT_HEALS_AS_NAVAL",

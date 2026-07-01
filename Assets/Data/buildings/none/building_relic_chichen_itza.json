@@ -28,6 +28,9 @@
    "flat": 8
   }
  },
+ "attributes": {
+  "nukeImmune": true
+ },
  "world": {
   "art": {
    "icon": "ART_DEF_BUILDING_CHICHEN_ITZA"
@@ -37,7 +40,6 @@
   "description": "TXT_KEY_BUILDING_RELIC_CHICHEN_ITZA",
   "civilopedia": "TXT_KEY_BUILDING_CHICHEN_ITZA_PEDIA",
   "notConstructible": true,
-  "nukeImmune": true,
   "noInstanceLimit": true,
   "worth": 5,
   "conquestProbability": 100,

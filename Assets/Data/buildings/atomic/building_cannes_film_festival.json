@@ -71,6 +71,9 @@
   "materialsModifier": 1,
   "complexityModifier": 1
  },
+ "attributes": {
+  "nukeImmune": true
+ },
  "ui": {
   "art": {
    "movie": {
@@ -86,7 +89,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_CANNES_FILM_FESTIVAL",
   "civilopedia": "TXT_KEY_BUILDING_CANNES_FILM_FESTIVAL_PEDIA",
-  "nukeImmune": true,
   "worth": 10,
   "conquestProbability": 100,
   "greatPeopleUnitType": "UNIT_ARTIST",

@@ -43,6 +43,9 @@
    }
   }
  },
+ "attributes": {
+  "nukeImmune": true
+ },
  "world": {
   "art": {
    "icon": "ART_DEF_BUILDING_PROPERTYDISEASE"
@@ -52,7 +55,6 @@
   "description": "TXT_KEY_BUILDING_DISEASE_COMMON_COLD",
   "civilopedia": "TXT_KEY_BUILDING_DISEASE_PEDIA",
   "notConstructible": true,
-  "nukeImmune": true,
   "conquestProbability": 100,
   "mapCategories": [
    "MAPCATEGORY_EARTH"

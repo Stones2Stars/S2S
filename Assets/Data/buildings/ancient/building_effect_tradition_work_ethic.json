@@ -16,6 +16,15 @@
    ]
   }
  },
+ "grants": {
+  "freePromotions": [
+   "PROMOTION_TRADITION_WORK_ETHIC"
+  ]
+ },
+ "attributes": {
+  "nukeImmune": true,
+  "destroyedOnCapture": true
+ },
  "world": {
   "art": {
    "icon": "ART_DEF_BUILDING_TRADITION"
@@ -25,9 +34,6 @@
   "description": "TXT_KEY_BUILDING_EFFECT_TRADITION_WORK_ETHIC",
   "civilopedia": "TXT_KEY_BUILDING_TRADITION_WORK_ETHIC_PEDIA",
   "notConstructible": true,
-  "nukeImmune": true,
-  "neverCapture": true,
-  "applyFreePromotionOnMove": true,
   "mapCategories": [
    "MAPCATEGORY_EARTH"
   ]

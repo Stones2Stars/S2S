@@ -73,6 +73,11 @@
    "SPECIALIST_PRIEST": 1
   }
  },
+ "grants": {
+  "freePromotions": [
+   "PROMOTION_ENLIL"
+  ]
+ },
  "cost": {
   "production": 160,
   "sizeModifier": 1,
@@ -87,6 +92,9 @@
    }
   ]
  },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
  "world": {
   "art": {
    "icon": "ART_DEF_BUILDING_TEMPLE_OF_ENLIL"
@@ -98,7 +106,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_TEMPLE_OF_ENLIL",
   "civilopedia": "TXT_KEY_BUILDING_TEMPLE_OF_ENLIL_PEDIA",
-  "neverCapture": true,
   "worth": 4,
   "greatPeopleUnitType": "UNIT_PROPHET",
   "specialBuildingType": "SPECIALBUILDING_TEMPLE",

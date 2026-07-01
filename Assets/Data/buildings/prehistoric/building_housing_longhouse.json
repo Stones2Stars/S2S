@@ -69,6 +69,10 @@
    "flat": -1
   }
  },
+ "attributes": {
+  "nukeImmune": true,
+  "destroyedOnCapture": true
+ },
  "world": {
   "art": {
    "icon": "ART_DEF_BUILDING_HOUSING_LONGHOUSE"
@@ -78,8 +82,6 @@
   "description": "TXT_KEY_BUILDING_HOUSING_LONGHOUSE",
   "civilopedia": "TXT_KEY_BUILDING_HOUSING_LONGHOUSE_PEDIA",
   "notConstructible": true,
-  "nukeImmune": true,
-  "neverCapture": true,
   "autoBuild": true,
   "visibilityPriority": "2.8",
   "mapCategories": [

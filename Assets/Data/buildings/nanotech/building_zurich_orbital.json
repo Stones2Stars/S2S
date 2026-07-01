@@ -68,6 +68,10 @@
   "materialsModifier": 2,
   "complexityModifier": 2
  },
+ "attributes": {
+  "nukeImmune": true,
+  "orbital": true
+ },
  "ui": {
   "art": {
    "movie": {
@@ -83,8 +87,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_ZURICH_ORBITAL",
   "civilopedia": "TXT_KEY_BUILDING_ZURICH_ORBITAL_PEDIA",
-  "nukeImmune": true,
-  "orbital": true,
   "worth": 20,
   "conquestProbability": 100,
   "greatPeopleUnitType": "UNIT_MERCHANT",

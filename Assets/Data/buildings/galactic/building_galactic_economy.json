@@ -31,6 +31,9 @@
  "cost": {
   "production": 26310
  },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
  "ui": {
   "art": {
    "movie": {
@@ -46,7 +49,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_GALACTIC_ECONOMY",
   "civilopedia": "TXT_KEY_BUILDING_GALACTIC_ECONOMY_PEDIA",
-  "neverCapture": true,
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

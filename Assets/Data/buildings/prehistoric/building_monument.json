@@ -89,6 +89,9 @@
    }
   ]
  },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
  "world": {
   "art": {
    "icon": "ART_DEF_BUILDING_MONUMENT"
@@ -100,7 +103,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_MONUMENT",
   "civilopedia": "TXT_KEY_BUILDING_MONUMENT_PEDIA",
-  "neverCapture": true,
   "centerInCity": true,
   "worth": 2,
   "advisor": "ADVISOR_CULTURE",

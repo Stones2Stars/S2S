@@ -91,6 +91,9 @@
    }
   ]
  },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
  "ui": {
   "art": {
    "movie": {
@@ -109,7 +112,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_MAXIMUM_SECURITY_PRISON",
   "civilopedia": "TXT_KEY_BUILDING_MAXIMUM_SECURITY_PRISON_PEDIA",
-  "neverCapture": true,
   "worth": 4,
   "militaryWorth": 6,
   "advisor": "ADVISOR_MILITARY",

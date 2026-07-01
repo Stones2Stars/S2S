@@ -46,6 +46,10 @@
    "flat": 1
   }
  },
+ "headquarters": "CORPORATION_2",
+ "attributes": {
+  "nukeImmune": true
+ },
  "world": {
   "art": {
    "icon": "ART_DEF_BUILDING_CORPORATION_2"
@@ -60,9 +64,7 @@
   "commerceDoubleTime": {
    "culture": 1000
   },
-  "corporationHQ": "CORPORATION_2",
   "notConstructible": true,
-  "nukeImmune": true,
   "worth": 8,
   "conquestProbability": 100,
   "greatPeopleUnitType": "UNIT_MERCHANT",

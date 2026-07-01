@@ -36,11 +36,9 @@
    "amount": {
     "percent": 50
    },
-   "damageAttackerChance": {
-    "flat": 50
-   },
-   "damageToAttacker": {
-    "flat": 50
+   "counterDamage": {
+    "damage": 50,
+    "chance": 50
    }
   }
  },
@@ -79,7 +77,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_GRAVITY_TRAPS",
   "civilopedia": "TXT_KEY_BUILDING_GRAVITY_TRAPS_PEDIA",
-  "damageAllAttackers": true,
   "militaryWorth": 7,
   "advisor": "ADVISOR_MILITARY",
   "visibilityPriority": 1,

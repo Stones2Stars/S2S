@@ -116,6 +116,9 @@
   "materialsModifier": 2,
   "complexityModifier": 1
  },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
  "ui": {
   "art": {
    "movie": {
@@ -131,7 +134,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_NATIONAL_AIRCRAFT_MUSEUM",
   "civilopedia": "TXT_KEY_BUILDING_NATIONAL_AIRCRAFT_MUSEUM_PEDIA",
-  "neverCapture": true,
   "greatPeopleUnitType": "UNIT_GREAT_ENGINEER",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [

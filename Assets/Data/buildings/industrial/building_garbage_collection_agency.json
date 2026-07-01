@@ -87,6 +87,9 @@
    }
   ]
  },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
  "ui": {
   "art": {
    "movie": {
@@ -105,7 +108,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_GARBAGE_COLLECTION_AGENCY",
   "civilopedia": "TXT_KEY_BUILDING_GARBAGE_COLLECTION_AGENCY_PEDIA",
-  "neverCapture": true,
   "worth": 2,
   "militaryWorth": 2,
   "advisor": "ADVISOR_GROWTH",

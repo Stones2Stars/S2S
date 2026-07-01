@@ -37,6 +37,9 @@
  "cost": {
   "production": 4456
  },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
  "world": {
   "art": {
    "icon": "ART_DEF_BUILDING_LIFE_HYPERSPACE"
@@ -45,7 +48,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_LIFE_HYPERSPACE",
   "civilopedia": "TXT_KEY_BUILDING_LIFE_HYPERSPACE_PEDIA",
-  "neverCapture": true,
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

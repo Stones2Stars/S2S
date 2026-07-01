@@ -78,6 +78,9 @@
    }
   ]
  },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
  "world": {
   "art": {
    "icon": "ART_DEF_BUILDING_HIPPODROME"
@@ -89,7 +92,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_HIPPODROME",
   "civilopedia": "TXT_KEY_BUILDING_HIPPODROME_PEDIA",
-  "neverCapture": true,
   "worth": 4,
   "dcmAirbombMission": 2,
   "advisor": "ADVISOR_ECONOMY",

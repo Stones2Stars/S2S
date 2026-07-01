@@ -51,6 +51,9 @@
  "cost": {
   "production": 1918
  },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
  "world": {
   "art": {
    "icon": "ART_DEF_BUILDING_LIFE_HYDROGEN_SULFIDE"
@@ -59,7 +62,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_LIFE_HYDROGEN_SULFIDE",
   "civilopedia": "TXT_KEY_BUILDING_LIFE_HYDROGEN_SULFIDE_PEDIA",
-  "neverCapture": true,
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

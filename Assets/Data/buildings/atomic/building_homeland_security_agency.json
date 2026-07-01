@@ -63,6 +63,10 @@
    }
   ]
  },
+ "attributes": {
+  "nukeImmune": true,
+  "destroyedOnCapture": true
+ },
  "ui": {
   "art": {
    "movie": {
@@ -81,8 +85,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_HOMELAND_SECURITY_AGENCY",
   "civilopedia": "TXT_KEY_BUILDING_HOMELAND_SECURITY_AGENCY_PEDIA",
-  "nukeImmune": true,
-  "neverCapture": true,
   "worth": 5,
   "greatPeopleUnitType": "UNIT_GREAT_SPY",
   "advisor": "ADVISOR_MILITARY",

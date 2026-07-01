@@ -59,6 +59,9 @@
   "materialsModifier": 1,
   "complexityModifier": 2
  },
+ "attributes": {
+  "nukeImmune": true
+ },
  "ui": {
   "art": {
    "movie": {
@@ -74,7 +77,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_EMPIRE_STATE_BUILDING",
   "civilopedia": "TXT_KEY_BUILDING_EMPIRE_STATE_BUILDING_PEDIA",
-  "nukeImmune": true,
   "worth": 15,
   "conquestProbability": 100,
   "greatPeopleUnitType": "UNIT_MERCHANT",

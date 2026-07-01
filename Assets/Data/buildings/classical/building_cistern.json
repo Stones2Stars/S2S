@@ -92,6 +92,9 @@
   "materialsModifier": 1,
   "complexityModifier": 2
  },
+ "attributes": {
+  "providesFreshWater": true
+ },
  "world": {
   "art": {
    "icon": "ART_DEF_BUILDING_CISTERN"
@@ -100,7 +103,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_CISTERN",
   "civilopedia": "TXT_KEY_BUILDING_CISTERN_PEDIA",
-  "providesFreshWater": true,
   "advisor": "ADVISOR_GROWTH",
   "mapCategories": [
    "MAPCATEGORY_EARTH"
