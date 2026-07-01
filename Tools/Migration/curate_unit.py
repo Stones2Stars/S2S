@@ -171,7 +171,7 @@ STORE_TAGS = {"ObsoleteTech"}
 PASS2_TAGS = {
     "TerrainAttacks", "TerrainDefenses", "FeatureAttacks", "FeatureDefenses", "UnitCombatMods", "DomainMods",
     "FlankingStrikes", "FlankingStrikesbyUnitCombat", "UnitAttackMods", "UnitDefenseMods", "UnitCombatTargets",
-    "UnitCombatDefenders", "UnitCombatCollateralImmunes", "UnitTargets", "DefendAgainstUnit", "DomainCargo",
+    "UnitCombatDefenders", "UnitCombatCollateralImmunes", "UnitTargets", "DefendAgainstUnit", "iCargo", "DomainCargo",
     "SpecialCargo", "SMNotSpecialCargo", "HealUnitCombatTypes", "PropertyManipulators", "BonusProductionModifiers",
     "KillOutcomes", "Actions", "Action", "Invisible", "SeeInvisible", "InvisibilityIntensityTypes",
     "VisibilityIntensityTypes", "InvisibleFeatureChanges", "InvisibleTerrainChanges", "FeaturePassableTechs",
