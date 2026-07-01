@@ -1,23 +1,27 @@
 //
-//	CvCascadeReadJson -- the fresh BoolExpr-routed reader of the curated Assets/Data JSON. See the header for the
-//	build plan + scope. INCREMENT 1: the entity-reader skeleton + FK resolution. INCREMENT 2: the condition ->
-//	BoolExpr translator + a coverage survey (which predicates map to a GOM/Tag leaf, which need a strategy).
+//	CvCascadeReadJson -- the fresh reader of the curated Assets/Data JSON. See the header for the build plan + scope.
+//
+//	AUDIT 2026-07-01 (owner): the reader is now a THIN ORCHESTRATOR, not a god-function that knows every type. It:
+//	  (1) finds + parses each Assets/Data/*.json,
+//	  (2) resolves the entity's type id + selects its per-type InfoRepo (prefix dispatch, RJ_REPO_TYPES),
+//	  (3) calls `data->mapFrom(v)` -- VIRTUAL dispatch: the info "loads itself" (the base parses the common cascade
+//	      sections; each per-type CvJson*Info subclass adds its ONE extension block -- skills/tags/capabilities/policies/
+//	      identity), drawing shared primitives from CvCascadeJsonParse,
+//	  (4) runs a SEPARATE generic CENSUS that classifies every top-level key (cascadeJsonClassifyKey) to prove 0
+//	      UNCLASSIFIED, surfaces every unresolved FK id (cascadeJsonUnresolvedIds), and reads the mapped data back for
+//	      the survey counts. The per-type parsing that used to live here (rj_walk{Capabilities,Policies,Identity,Shrine,
+//	      Mod,EnableEdge,...} + s_rjData) has MOVED onto the types -- the reader no longer re-hand-rolls it.
 //
 
-#include "CvGameCoreDLL.h"             // PCH umbrella -- picojson, windows.h, gDLL, GC, CvWStringBuffer, GOM/Tag enums
+#include "CvGameCoreDLL.h"             // PCH umbrella -- picojson, windows.h, gDLL, GC
 #include "CvCascadeReadJson.h"
-#include "AI/BetterBTSAI.h"            // gPlayerLogLevel + streamLogTee
-#include "Defines/CvGlobals.h"         // GC.getInfoTypeForString -- the type registry (FK resolution)
-#include "Infrastructure/BoolExpr.h"   // the translation target (And/Or/Not/Has/Is) -- the engine's condition evaluator
-#include "Infrastructure/IntExpr.h"    // value atoms: IntExprProperty / IntExprAttribute / IntExprConstant (count/band)
-#include "CvCascadeCountExpr.h"        // IntExprCascadeCount -- the tally-backed count LEAF, constructed here as static
-                                       // data; its instance-walking evaluate() lives on the live-game-state side, so
-                                       // readJson never includes CvGameObject / CvPlayer / the tally (owner 2026-06-30)
-#include "CvJsonInfo.h"                // the JSON-mapped info data each entity maps into (CvJsonInfo + CvCascadeDeposit)
-#include "Repos/InfoRepo.h"            // the per-info-type home for the CvJsonInfo (InfoRepo<CvXInfo>) -- replaces the
-                                       // retired CvInfoBase*-keyed side-table; readJson edit()s, the machines get()
-// The cascade-relevant info classes (the InfoRepo<CvXInfo> tags for the RJ_REPO_DISPATCH prefix dispatch). One-per-class headers
-// (specific, not the retired CvInfos.h umbrella).
+#include "Defines/CvGlobals.h"         // GC.getInfoTypeForString -- the type registry (entity id resolution)
+#include "CvEventSpine.h"              // the #430 dispatch spine -- the [READJSON] census rides it as a CONSUMER
+#include "CvCascadeJsonParse.h"        // cascadeJsonClassifyKey / cascadeJsonUnresolvedIds -- shared vocabulary + FK diag
+#include "CvJsonInfo.h"                // CvJsonInfo (+ cascadeStartNode) -- the mapped info data + the TECH_GAME_START root
+#include "CvJsonTechInfo.h"            // CvJsonTechInfo -- for the capabilities read-back survey
+#include "Repos/InfoRepo.h"            // the per-info-type home (InfoRepo<CvXInfo>) -- readJson edit()s, mapFrom populates
+// The cascade info classes = the InfoRepo<CvXInfo> tags for the RJ_REPO_TYPES prefix dispatch (specific headers, not the umbrella).
 #include "Infos/CvBuildingInfo.h"
 #include "Infos/CvUnitInfo.h"
 #include "Infos/CvTechInfo.h"
@@ -47,21 +51,120 @@
 #include <map>
 #include <string>
 
-// --- vocabulary (json.md §1/§2; the cascade-section + intrinsic/aux sets the increment-1 classification needs) ---
-static const char* RJ_CASCADE_SECTIONS[] = { "requires", "allowed", "enables", "obsoletes", "replaces", "disables", "grants", "provides", 0 };
-static const char* RJ_INTRINSIC[] = {
-	"type", "text", "description", "help", "civilopedia", "message", "quote", "strategy", "adjective", "shortDescription",
-	"cost", "ui", "world", "sound", "identity", "ai",
-	"loadPrune", "policies", "succession", "excludes", "produces", "condition", "effect",
-	"vision", "outcomes", "mapGeneration", "replacedBy", "capabilities", "skills", "tags", "state",
-	"promotionLine", "buildUp", "shrine", "properties", "voteSource", "threshold", "role", "victory",
-	"targetLevel", "conversion", "cityFounding", "unitCapability", 0
+// ===================== [READJSON] spine domain (logging.md §4: logging is a spine CONSUMER) =====================
+enum RjEvt
+{
+	RJE_UNRESOLVED = 1, RJE_MOD, RJE_EDGE, RJE_GRANT, RJE_DIR, RJE_PROBE, RJE_COND_SURVEY, RJE_MOD_SURVEY,
+	RJE_EDGE_SURVEY, RJE_EDGE_UNRES, RJE_GRANT_SURVEY, RJE_GRANT_UNRES, RJE_KEY, RJE_MAP, RJE_CAP_SURVEY,
+	RJE_CAP, RJE_MAP_SUMMARY
 };
 
-static bool rj_in(const char** a, const std::string& k)
+// DOMAIN-LOCAL field tags, shared by name across lines where a field recurs.
+enum RjFld
 {
-	for (int i = 0; a[i]; ++i) if (k == a[i]) return true;
-	return false;
+	RJF_TYPE = 1, RJF_ADDR, RJF_UNIT, RJF_VAL, RJF_COND, RJF_PER, RJF_EDGE, RJF_BUCKET, RJF_ID, RJF_STATUS, RJF_DIR,
+	RJF_FILES, RJF_PARSED, RJF_FAILED, RJF_ENTITIES, RJF_RESOLVED, RJF_UNRESOLVED, RJF_FAMILYKINDS, RJF_FLAGKINDS,
+	RJF_REQCLAUSES, RJF_FAMILIES, RJF_MAGNITUDES, RJF_FLAT, RJF_PERCENT, RJF_MULT, RJF_OTHER, RJF_CONDITIONED,
+	RJF_PERSCALED, RJF_BAREVALUES, RJF_EDGES, RJF_BUCKETENTRIES, RJF_BUCKETKINDS, RJF_ALLOWEDCLAUSES, RJF_CAPKINDS,
+	RJF_LISTENTRIES, RJF_LISTKINDS, RJF_PULSES, RJF_PULSECHANNELS, RJF_FLAGS, RJF_ENTRYARRAYS, RJF_OBJECTS,
+	RJF_KEY, RJF_COUNT, RJF_CLASS, RJF_DEPOSITS, RJF_REQBUILD, RJF_REQOPERATE, RJF_ALLOWED, RJF_GRANTLISTS,
+	RJF_GRANTPULSES, RJF_GRANTING, RJF_CAPGRANTS, RJF_DISTINCTNAMES, RJF_NAME, RJF_WITHDATA
+};
+
+static const char* rj_prefix(int evt)
+{
+	switch (evt)
+	{
+	case RJE_UNRESOLVED:   return "[READJSON/unresolved]";
+	case RJE_MOD:          return "[READJSON/mod]";
+	case RJE_EDGE:         return "[READJSON/edge]";
+	case RJE_GRANT:        return "[READJSON/grant]";
+	case RJE_DIR:          return "[READJSON/dir]";
+	case RJE_PROBE:        return "[READJSON/probe]";
+	case RJE_COND_SURVEY:  return "[READJSON/cond-survey]";
+	case RJE_MOD_SURVEY:   return "[READJSON/mod-survey]";
+	case RJE_EDGE_SURVEY:  return "[READJSON/edge-survey]";
+	case RJE_EDGE_UNRES:   return "[READJSON/unresolved-fk]";
+	case RJE_GRANT_SURVEY: return "[READJSON/grant-survey]";
+	case RJE_GRANT_UNRES:  return "[READJSON/grant-unresolved]";
+	case RJE_KEY:          return "[READJSON/key]";
+	case RJE_MAP:          return "[READJSON/map]";
+	case RJE_CAP_SURVEY:   return "[READJSON/cap-survey]";
+	case RJE_CAP:          return "[READJSON/cap]";
+	case RJE_MAP_SUMMARY:  return "[READJSON/map-summary]";
+	default:               return "[READJSON]";
+	}
+}
+
+static const char* rj_field(int tag, SpineFieldType* peType)
+{
+	*peType = SFT_INT;
+	switch (tag)
+	{
+	case RJF_TYPE:          *peType = SFT_STR; return "type";
+	case RJF_ADDR:          *peType = SFT_STR; return "addr";
+	case RJF_UNIT:          *peType = SFT_STR; return "unit";
+	case RJF_VAL:           return "val";
+	case RJF_COND:          return "conditioned";
+	case RJF_PER:           return "per";
+	case RJF_EDGE:          *peType = SFT_STR; return "edge";
+	case RJF_BUCKET:        *peType = SFT_STR; return "bucket";
+	case RJF_ID:            *peType = SFT_STR; return "id";
+	case RJF_STATUS:        *peType = SFT_STR; return "status";
+	case RJF_DIR:           *peType = SFT_STR; return "dir";
+	case RJF_FILES:         return "files";
+	case RJF_PARSED:        return "parsed";
+	case RJF_FAILED:        return "failed";
+	case RJF_ENTITIES:      return "entities";
+	case RJF_RESOLVED:      return "resolved";
+	case RJF_UNRESOLVED:    return "unresolved";
+	case RJF_FAMILYKINDS:   return "familyKinds";
+	case RJF_FLAGKINDS:     return "flagKinds";
+	case RJF_REQCLAUSES:    return "requiresClauses";
+	case RJF_FAMILIES:      return "families";
+	case RJF_MAGNITUDES:    return "magnitudes";
+	case RJF_FLAT:          return "flat";
+	case RJF_PERCENT:       return "percent";
+	case RJF_MULT:          return "mult";
+	case RJF_OTHER:         return "other";
+	case RJF_CONDITIONED:   return "conditioned";
+	case RJF_PERSCALED:     return "perScaled";
+	case RJF_BAREVALUES:    return "bareValues";
+	case RJF_EDGES:         return "edges";
+	case RJF_BUCKETENTRIES: return "bucketEntries";
+	case RJF_BUCKETKINDS:   return "bucketKinds";
+	case RJF_ALLOWEDCLAUSES:return "allowedClauses";
+	case RJF_CAPKINDS:      return "capKinds";
+	case RJF_LISTENTRIES:   return "listEntries";
+	case RJF_LISTKINDS:     return "listKinds";
+	case RJF_PULSES:        return "pulses";
+	case RJF_PULSECHANNELS: return "pulseChannels";
+	case RJF_FLAGS:         return "flags";
+	case RJF_ENTRYARRAYS:   return "entryArrays";
+	case RJF_OBJECTS:       return "objects";
+	case RJF_KEY:           *peType = SFT_STR; return "key";
+	case RJF_COUNT:         return "count";
+	case RJF_CLASS:         *peType = SFT_STR; return "class";
+	case RJF_DEPOSITS:      return "deposits";
+	case RJF_REQBUILD:      return "reqBuild";
+	case RJF_REQOPERATE:    return "reqOperate";
+	case RJF_ALLOWED:       return "allowed";
+	case RJF_GRANTLISTS:    return "grantLists";
+	case RJF_GRANTPULSES:   return "grantPulses";
+	case RJF_GRANTING:      return "grantingEntities";
+	case RJF_CAPGRANTS:     return "capGrants";
+	case RJF_DISTINCTNAMES: return "distinctNames";
+	case RJF_NAME:          *peType = SFT_STR; return "name";
+	case RJF_WITHDATA:      return "entitiesWithCascadeData";
+	default:                return NULL;
+	}
+}
+
+// Self-register the SD_READJSON domain once (idempotent) -- so the spine stays domain-agnostic (it never names readJson).
+static void rj_registerDomain()
+{
+	static bool s_reg = false;
+	if (!s_reg) { spineRegisterDomain(SD_READJSON, rj_prefix, "Cascade.log", rj_field); s_reg = true; }
 }
 
 static bool rj_starts(const std::string& s, const char* p)
@@ -69,15 +172,6 @@ static bool rj_starts(const std::string& s, const char* p)
 	const std::string ps(p);
 	return s.size() >= ps.size() && s.compare(0, ps.size(), ps) == 0;
 }
-
-// A fresh per-entity record (increment 1: type + resolved engine index; richer fields come in later increments).
-struct RjEntity { std::string type; int typeId; };
-
-// The MAPPING target for the CURRENT entity being walked: its CvJsonInfo in the per-type InfoRepo (owner 2026-06-30).
-// The walkers populate this while they also count the survey stats; the probe points it at the entity's repo entry per
-// entity (NULL for non-cascade types -> the walkers skip population). File-static keeps the existing walker signatures
-// untouched (this probe is transient — the cutover rewrites the load path).
-static CvJsonInfo* s_rjData = NULL;
 
 static bool rj_readFile(const std::string& path, std::string& out)
 {
@@ -87,7 +181,7 @@ static bool rj_readFile(const std::string& path, std::string& out)
 	return true;
 }
 
-// Recursive *.json walk under a dir (the harness's proven find_json; Assets/Data is per-type subdirs). Win32, C++03.
+// Recursive *.json walk under a dir (Assets/Data is per-type subdirs). Win32, C++03.
 static void rj_find(const std::string& dir, std::vector<std::string>& out)
 {
 	const std::string pattern = dir + "\\*";
@@ -105,520 +199,10 @@ static void rj_find(const std::string& dir, std::vector<std::string>& out)
 	FindClose(h);
 }
 
-// ===================== INCREMENT 2: the condition -> BoolExpr translator + coverage survey =====================
-// Maps a JSON condition (json.md §3.4/§3.5) onto the engine's BoolExpr tree (the SAME evaluator legacy
-// constructCondition uses): all/any/noneOf -> And/Or/Not (binary, left-folded); a type atom / type-param predicate ->
-// BoolExprHas(GOM,id); a relief/water/city predicate -> BoolExprIs(TAG); membership {terrain|feature|bonus:[…]} ->
-// Or of Has. The translator is GROUNDED in the GOM/Tag enums -- no guessing.
-//
-// ⛔ DESIGN FORK SURFACED (not decided here): a chunk of json.md's predicate registry (IS_CAPITAL / HAS_POWER /
-// HAS_STATE_RELIGION / IS_GOLDEN_AGE / vicinity-connection / count thresholds via IntExpr) has NO GOM/Tag leaf. Those
-// leaves are RECORDED (named + counted) and stand in as a true CONSTANT for the SURVEY only (json.md: an unknown
-// predicate is IGNORED, never false) -- a placeholder, NOT the design. The survey data drives the next decision
-// (extend TagTypes / add a BoolExpr leaf / a cascade-side predicate evaluator). Count thresholds (min>1/max) are
-// likewise recorded as a deferred IntExpr-comparison case.
-
-struct RjCondStats
-{
-	int leaves, mapped, unmappedPred, countThreshold;
-	std::set<std::string> unmappedTokens;
-	RjCondStats() : leaves(0), mapped(0), unmappedPred(0), countThreshold(0) {}
-	void note(const std::string& tok) { ++unmappedPred; if (unmappedTokens.size() < 64) unmappedTokens.insert(tok); }
-};
-
-static GOMTypes rj_gomForType(const std::string& t)
-{
-	if (rj_starts(t, "BUILDING_"))     return GOM_BUILDING;
-	if (rj_starts(t, "UNITCOMBAT_"))   return GOM_UNITCOMBAT;   // before UNIT_
-	if (rj_starts(t, "UNIT_"))         return GOM_UNITTYPE;
-	if (rj_starts(t, "TECH_"))         return GOM_TECH;
-	if (rj_starts(t, "BONUS_"))        return GOM_BONUS;
-	if (rj_starts(t, "CIVIC_"))        return GOM_CIVIC;
-	if (rj_starts(t, "RELIGION_"))     return GOM_RELIGION;
-	if (rj_starts(t, "CORPORATION_"))  return GOM_CORPORATION;
-	if (rj_starts(t, "PROMOTION_"))    return GOM_PROMOTION;
-	if (rj_starts(t, "TRAIT_"))        return GOM_TRAIT;
-	if (rj_starts(t, "FEATURE_"))      return GOM_FEATURE;
-	if (rj_starts(t, "TERRAIN_"))      return GOM_TERRAIN;
-	if (rj_starts(t, "ROUTE_"))        return GOM_ROUTE;
-	if (rj_starts(t, "IMPROVEMENT_"))  return GOM_IMPROVEMENT;
-	if (rj_starts(t, "HERITAGE_"))     return GOM_HERITAGE;
-	if (rj_starts(t, "GAMEOPTION_"))   return GOM_OPTION;
-	return NO_GOM;
-}
-
-static TagTypes rj_tagForPredicate(const std::string& p)
-{
-	if (p == "IS_WATER")        return TAG_WATER;
-	if (p == "HAS_FRESHWATER")  return TAG_FRESH_WATER;
-	if (p == "HAS_PEAK")        return TAG_PEAK;
-	if (p == "HAS_HILLS")       return TAG_HILL;
-	if (p == "IS_FLATLANDS")    return TAG_FLATLAND;
-	if (p == "HAS_COAST")       return TAG_COASTAL;
-	if (p == "IS_CITY")         return TAG_CITY;
-	return NO_TAG;
-}
-
-static GOMTypes rj_gomForParamPred(const std::string& k)
-{
-	if (k == "HAS_BONUS")        return GOM_BONUS;
-	if (k == "HAS_TERRAIN")      return GOM_TERRAIN;
-	if (k == "HAS_FEATURE")      return GOM_FEATURE;
-	if (k == "HAS_IMPROVEMENT")  return GOM_IMPROVEMENT;
-	if (k == "HAS_RELIGION")     return GOM_RELIGION;
-	if (k == "HAS_CORPORATION")  return GOM_CORPORATION;
-	return NO_GOM;
-}
-
-// A type-string presence leaf -> Has(GOM,id) if it resolves; records + true-constant otherwise.
-static const BoolExpr* rj_leafType(const std::string& type, RjCondStats& st)
-{
-	++st.leaves;
-	const GOMTypes gom = rj_gomForType(type);
-	const int id = GC.getInfoTypeForString(type.c_str(), true);
-	if (gom != NO_GOM && id >= 0) { ++st.mapped; return new BoolExprHas(gom, id); }
-	st.note(type);
-	return new BoolExprConstant(true);
-}
-
-// INCREMENT 3: count/value atoms -> IntExpr comparisons. The "count" token POPULATION maps to an engine ATTRIBUTE;
-// a PROPERTY_* atom reads the city's property VALUE. CITY/TEAM + a count threshold over a real INFOTYPE (>=N of a
-// building) are the cross-city TALLY-backed counts -- a new IntExpr leaf, the focused next sub-increment (3b).
-static AttributeTypes rj_attrForToken(const std::string& t)
-{
-	if (t == "POPULATION") return ATTRIBUTE_POPULATION;
-	if (t == "HEALTH")     return ATTRIBUTE_HEALTH;
-	if (t == "HAPPINESS")  return ATTRIBUTE_HAPPINESS;
-	return NO_ATTRIBUTE;
-}
-
-// A fresh value IntExpr (property value or attribute) -- built per comparison, since each BoolExprComp OWNS and
-// deletes its IntExpr operands (sharing one would double-free).
-static const IntExpr* rj_makeVal(PropertyTypes eProp, AttributeTypes eAttr)
-{
-	if (eProp != NO_PROPERTY) return new IntExprProperty(eProp);
-	return new IntExprAttribute(eAttr);
-}
-
-// Build a band BoolExpr from a value source + optional min/max: min -> value >= min (GreaterEqual); max -> value <= max
-// (Not(Greater)); both -> And; neither -> value >= 1 (presence). json.md §3.4: a PROPERTY band absent min = max-only.
-static const BoolExpr* rj_valueBand(PropertyTypes eProp, AttributeTypes eAttr, bool bMin, int iMin, bool bMax, int iMax)
-{
-	const BoolExpr* lo = bMin ? (const BoolExpr*)new BoolExprGreaterEqual(rj_makeVal(eProp, eAttr), new IntExprConstant(iMin)) : NULL;
-	const BoolExpr* hi = bMax ? (const BoolExpr*)new BoolExprNot(new BoolExprGreater(rj_makeVal(eProp, eAttr), new IntExprConstant(iMax))) : NULL;
-	if (lo && hi) return new BoolExprAnd(lo, hi);
-	if (lo) return lo;
-	if (hi) return hi;
-	return new BoolExprGreaterEqual(rj_makeVal(eProp, eAttr), new IntExprConstant(1));
-}
-
-// INCREMENT 2.b: the tally-backed COUNT IntExpr (IntExprCascadeCount) is the cross-city (empire) count of a
-// building|unit type for the evaluated object's owner, read from the live cascade TALLY. readJson CONSTRUCTS it below
-// as static data, but its instance-walking evaluate() lives on the live-game-state side (CvCascadeCountExpr.{h,cpp}) so
-// the static reader never touches a CvGameObject (owner ruling 2026-06-30) -- see that header for the why.
-
-// A count band over the tally-backed count leaf (fresh leaf per comparison -- BoolExprComp owns + deletes its operands).
-static const BoolExpr* rj_countBand(GOMTypes eGOM, int iID, bool bMin, int iMin, bool bMax, int iMax)
-{
-	const BoolExpr* lo = bMin ? (const BoolExpr*)new BoolExprGreaterEqual(new IntExprCascadeCount(eGOM, iID), new IntExprConstant(iMin)) : NULL;
-	const BoolExpr* hi = bMax ? (const BoolExpr*)new BoolExprNot(new BoolExprGreater(new IntExprCascadeCount(eGOM, iID), new IntExprConstant(iMax))) : NULL;
-	if (lo && hi) return new BoolExprAnd(lo, hi);
-	if (lo) return lo;
-	if (hi) return hi;
-	return new BoolExprGreaterEqual(new IntExprCascadeCount(eGOM, iID), new IntExprConstant(1));
-}
-
-static const BoolExpr* rj_translate(const picojson::value& v, RjCondStats& st);
-
-// Left-fold a child list with binary And/Or. Empty all->true, empty any->false (identity elements).
-static const BoolExpr* rj_fold(const picojson::array& a, bool bAnd, RjCondStats& st)
-{
-	const BoolExpr* acc = NULL;
-	for (size_t i = 0; i < a.size(); ++i)
-	{
-		const BoolExpr* e = rj_translate(a[i], st);
-		if (e == NULL) continue;
-		if (acc == NULL) acc = e;
-		else acc = bAnd ? (const BoolExpr*)new BoolExprAnd(acc, e) : (const BoolExpr*)new BoolExprOr(acc, e);
-	}
-	return acc != NULL ? acc : (const BoolExpr*)new BoolExprConstant(bAnd);
-}
-
-static const BoolExpr* rj_translate(const picojson::value& v, RjCondStats& st)
-{
-	if (v.is<bool>()) return new BoolExprConstant(v.get<bool>());
-	if (v.is<std::string>())
-	{
-		const std::string s = v.get<std::string>();
-		if (!s.empty() && s[0] == '!') return new BoolExprNot(rj_translate(picojson::value(s.substr(1)), st));
-		const TagTypes tag = rj_tagForPredicate(s);
-		if (tag != NO_TAG) { ++st.leaves; ++st.mapped; return new BoolExprIs(tag); }
-		if (rj_gomForType(s) != NO_GOM) return rj_leafType(s, st);
-		++st.leaves; st.note(s);                       // an unmapped bare predicate (IS_CAPITAL/HAS_POWER/…)
-		return new BoolExprConstant(true);
-	}
-	if (!v.is<picojson::object>()) return new BoolExprConstant(true);
-	const picojson::object& o = v.get<picojson::object>();
-	picojson::object::const_iterator it;
-	if ((it = o.find("all")) != o.end() && it->second.is<picojson::array>())    return rj_fold(it->second.get<picojson::array>(), true, st);
-	if ((it = o.find("any")) != o.end() && it->second.is<picojson::array>())    return rj_fold(it->second.get<picojson::array>(), false, st);
-	if ((it = o.find("noneOf")) != o.end() && it->second.is<picojson::array>()) return new BoolExprNot(rj_fold(it->second.get<picojson::array>(), false, st));
-	if (o.find("enabled") != o.end() || o.find("disabled") != o.end())          // a gate: enabled AND NOT disabled
-	{
-		const BoolExpr* acc = NULL;
-		if ((it = o.find("enabled")) != o.end()) acc = rj_translate(it->second, st);
-		if ((it = o.find("disabled")) != o.end())
-		{
-			const BoolExpr* dis = new BoolExprNot(rj_translate(it->second, st));
-			acc = acc ? (const BoolExpr*)new BoolExprAnd(acc, dis) : dis;
-		}
-		return acc ? acc : (const BoolExpr*)new BoolExprConstant(true);
-	}
-	if ((it = o.find("type")) != o.end() && it->second.is<std::string>())        // atom {type, scope, min, max, connection}
-	{
-		const std::string atype = it->second.get<std::string>();
-		picojson::object::const_iterator mn = o.find("min"), mx = o.find("max");
-		const bool bMin = (mn != o.end() && mn->second.is<double>());
-		const bool bMax = (mx != o.end() && mx->second.is<double>());
-		const int iMin = bMin ? (int)mn->second.get<double>() : 0;
-		const int iMax = bMax ? (int)mx->second.get<double>() : 0;
-		// PROPERTY_* band -> the city's property VALUE compared (IntExprProperty).
-		if (rj_starts(atype, "PROPERTY_"))
-		{
-			++st.leaves;
-			const int pid = GC.getInfoTypeForString(atype.c_str(), true);
-			if (pid < 0) { st.note(atype); return new BoolExprConstant(true); }
-			++st.mapped;
-			return rj_valueBand((PropertyTypes)pid, NO_ATTRIBUTE, bMin, iMin, bMax, iMax);
-		}
-		// engine ATTRIBUTE token (POPULATION/HEALTH/HAPPINESS) -> attribute value compared.
-		const AttributeTypes attr = rj_attrForToken(atype);
-		if (attr != NO_ATTRIBUTE)
-		{
-			++st.leaves; ++st.mapped;
-			return rj_valueBand(NO_PROPERTY, attr, bMin, iMin, bMax, iMax);
-		}
-		// a real INFOTYPE: a count THRESHOLD (>=N>1 / <=max) over a tally domain (building|unit) -> the tally-backed
-		// count leaf (2.b); a plain presence (min:1 / unbounded) -> Has; a count over a non-tally domain stays deferred.
-		if ((bMin && iMin > 1) || bMax)
-		{
-			const GOMTypes cgom = rj_gomForType(atype);
-			const int cid = GC.getInfoTypeForString(atype.c_str(), true);
-			if ((cgom == GOM_BUILDING || cgom == GOM_UNITTYPE) && cid >= 0)
-			{
-				++st.leaves; ++st.mapped;
-				return rj_countBand(cgom, cid, bMin, iMin, bMax, iMax);
-			}
-			++st.countThreshold;   // count over a non-tally domain (tech/civic/…) -- still deferred
-		}
-		return rj_leafType(atype, st);
-	}
-	if (o.size() == 1)                                                          // membership {t|f|b:[…]} OR {PRED:param}
-	{
-		const std::string k = o.begin()->first;
-		const picojson::value& p = o.begin()->second;
-		if ((k == "terrain" || k == "feature" || k == "bonus") && p.is<picojson::array>())
-		{
-			const GOMTypes gom = (k == "terrain") ? GOM_TERRAIN : (k == "feature") ? GOM_FEATURE : GOM_BONUS;
-			const picojson::array& a = p.get<picojson::array>();
-			const BoolExpr* acc = NULL;
-			for (size_t i = 0; i < a.size(); ++i) if (a[i].is<std::string>())
-			{
-				++st.leaves;
-				const int id = GC.getInfoTypeForString(a[i].get<std::string>().c_str(), true);
-				const BoolExpr* e;
-				if (id >= 0) { ++st.mapped; e = new BoolExprHas(gom, id); }
-				else { st.note(a[i].get<std::string>()); e = new BoolExprConstant(true); }
-				acc = acc ? (const BoolExpr*)new BoolExprOr(acc, e) : e;
-			}
-			return acc ? acc : (const BoolExpr*)new BoolExprConstant(false);
-		}
-		const GOMTypes gom = rj_gomForParamPred(k);
-		if (gom != NO_GOM && p.is<std::string>())
-		{
-			++st.leaves;
-			const int id = GC.getInfoTypeForString(p.get<std::string>().c_str(), true);
-			if (id >= 0) { ++st.mapped; return new BoolExprHas(gom, id); }
-			st.note(k);
-			return new BoolExprConstant(true);
-		}
-		++st.leaves; st.note(k);                       // unmapped param predicate ({HAS_COAST:{minArea}}, latitude, …)
-		return new BoolExprConstant(true);
-	}
-	return new BoolExprConstant(true);
-}
-
-// INCREMENT 2.e: a requires.build / requires.operate CLAUSE -- the positive condition tree PLUS the structural
-// `dormant` sub-key (enabler.md §3 / json.md §4.3). `requires.operate.dormant: X` = "go dormant WHILE X is present":
-// the clause is operable only while the trigger is ABSENT, so it contributes `AND NOT(trigger)`. `dormant` is NOT a
-// predicate (it was being mis-surveyed as one) -- it is peeled here and the trigger folded as Not(...). It may sit
-// beside all/any/noneOf, be the sole key, or itself hold a tree (the unit `requires.build.dormant.all` of upgrades).
-static const BoolExpr* rj_translateClause(const picojson::value& v, RjCondStats& st)
-{
-	if (!v.is<picojson::object>()) return rj_translate(v, st);   // a bare-string clause (e.g. a single predicate)
-	const picojson::object& o = v.get<picojson::object>();
-	picojson::object::const_iterator dm = o.find("dormant");
-	bool bHasPositive = false;
-	for (picojson::object::const_iterator it = o.begin(); it != o.end(); ++it)
-		if (it->first != "dormant") { bHasPositive = true; break; }
-	const BoolExpr* positive = bHasPositive ? rj_translate(v, st) : NULL;   // all/any/noneOf/atom (ignores the dormant sibling)
-	if (dm != o.end())
-	{
-		const BoolExpr* notDorm = new BoolExprNot(rj_translate(dm->second, st)); // operable only while the trigger is absent
-		positive = positive ? (const BoolExpr*)new BoolExprAnd(positive, notDorm) : notDorm;
-	}
-	return positive ? positive : (const BoolExpr*)new BoolExprConstant(true);
-}
-
-// ===================== INCREMENT 3: the modifier-family deposit-address parse =====================
-// Mirrors StoneBase's ModifierFamilyParser (the parity-proven reference): the address tree is GENERIC -- scope /
-// target / member / entity-key are ALL just opaque child keys; only the recognized magnitude UNITS become leaves, and
-// the CONSUMER (the modifier machine, later) interprets which child is a scope vs target vs member. Each magnitude
-// leaf converts human -> x100 ONCE here (json.md §3.6; fixed-point-and-scales.md §1/§2: V100 = round(human*100), a
-// BLANKET conversion -- readJson has ZERO per-field scale knowledge), and its enabled/disabled reuse the SAME
-// condition translator the enabler uses ("a modifier is a requires gate + an output", modifier.md). `per`/`scope`/
-// `ai`/`value` are entry fields, not units. This increment is the SURVEY probe (parse + count + render); the
-// persistent deposit structure the machine reads is built at the cutover.
-
-static const char* RJ_MOD_UNITS[] = { "flat", "percent", "multiplier", "postMultiplier", "rawPercent",
-	"perPopulation", "perSpecialist", "perCorporationLevel", 0 };
-
-// The single human -> x100 fixed-point conversion (round half away from zero). 7 -> 700, 1.5 -> 150, -10 -> -1000.
-static int rj_x100(double h) { return (int)(h >= 0 ? h * 100.0 + 0.5 : h * 100.0 - 0.5); }
-
-struct RjModStats
-{
-	int families, magnitudes, conditioned, perScaled, bareValues;
-	int unitFlat, unitPercent, unitMult, unitOther;
-	int sampleCount;
-	std::set<std::string> familyNames;
-	RjCondStats embeddedCond;     // the enabled/disabled conditions carried INSIDE modifier deposits
-	std::string curType;          // the entity currently being walked (for sample labels)
-	RjModStats() : families(0), magnitudes(0), conditioned(0), perScaled(0), bareValues(0),
-		unitFlat(0), unitPercent(0), unitMult(0), unitOther(0), sampleCount(0) {}
-};
-
-static const int RJ_MOD_SAMPLES = 10;
-
-// A magnitude leaf: a bare number, an entry object {value, scope?, enabled?, disabled?, per?, ai?}, or a LIST of
-// either (json.md §3.9 -- several conditioned values into one slot).
-static void rj_parseMag(const std::string& unit, const picojson::value& v, const std::string& path, RjModStats& st)
-{
-	if (v.is<picojson::array>())
-	{
-		const picojson::array& a = v.get<picojson::array>();
-		for (size_t i = 0; i < a.size(); ++i) rj_parseMag(unit, a[i], path, st);
-		return;
-	}
-	int value100 = 0;
-	bool conditioned = false, perScaled = false;
-	const BoolExpr* en = NULL;
-	const BoolExpr* dis = NULL;
-	if (v.is<double>())
-	{
-		value100 = rj_x100(v.get<double>());
-	}
-	else if (v.is<picojson::object>())
-	{
-		const picojson::object& o = v.get<picojson::object>();
-		picojson::object::const_iterator it;
-		if ((it = o.find("value")) != o.end() && it->second.is<double>()) value100 = rj_x100(it->second.get<double>());
-		if ((it = o.find("enabled")) != o.end())  { en = rj_translate(it->second, st.embeddedCond); conditioned = true; }
-		if ((it = o.find("disabled")) != o.end()) { dis = rj_translate(it->second, st.embeddedCond); conditioned = true; }
-		if (o.find("per") != o.end()) perScaled = true;
-	}
-	else return;
-
-	++st.magnitudes;
-	if (unit == "flat") ++st.unitFlat; else if (unit == "percent") ++st.unitPercent;
-	else if (unit == "multiplier") ++st.unitMult; else ++st.unitOther;
-	if (conditioned) ++st.conditioned;
-	if (perScaled) ++st.perScaled;
-	if (st.sampleCount < RJ_MOD_SAMPLES)
-	{
-		char b[1024];
-		sprintf(b, "[READJSON/mod] %s %s.%s = %d%s%s", st.curType.c_str(), path.c_str(), unit.c_str(), value100,
-			conditioned ? " [conditioned]" : "", perScaled ? " [per]" : "");
-		gDLL->logMsg("Cascade.log", b); streamLogTee(1, b); ++st.sampleCount;
-	}
-	// MAP: store the deposit on the current entity (address = the dotted parent path; unit is the leaf kind). The
-	// conditions are OWNED by the deposit (freed via ~CvJsonInfo). No info home -> free them.
-	if (s_rjData)
-	{
-		CvCascadeDeposit d;
-		d.address = path; d.unit = unit; d.value100 = value100;
-		d.enabled = en; d.disabled = dis; d.hasPer = perScaled;
-		s_rjData->deposits.push_back(d);
-	}
-	else { delete en; delete dis; }
-}
-
-// Walk a modifier-family node: a unit-keyed child is a magnitude leaf; every other child is a deeper address segment;
-// a bare number is a count leaf (e.g. allowedSpecialists.<scope>.SPECIALIST_X: N); an array is a count-leaf list.
-static void rj_walkModNode(const std::string& path, const picojson::value& v, RjModStats& st)
-{
-	if (v.is<double>())   // a bare count leaf (e.g. allowedSpecialists.<scope>.SPECIALIST_X: N)
-	{
-		++st.bareValues;
-		const int value100 = rj_x100(v.get<double>());
-		if (st.sampleCount < RJ_MOD_SAMPLES)
-		{
-			char b[1024];
-			sprintf(b, "[READJSON/mod] %s %s = %d (count)", st.curType.c_str(), path.c_str(), value100);
-			gDLL->logMsg("Cascade.log", b); streamLogTee(1, b); ++st.sampleCount;
-		}
-		if (s_rjData) { CvCascadeDeposit d; d.address = path; d.unit = "count"; d.value100 = value100; s_rjData->deposits.push_back(d); }
-		return;
-	}
-	if (v.is<picojson::array>()) { rj_parseMag("count", v, path, st); return; }   // a conditioned count-leaf list
-	if (!v.is<picojson::object>()) return;
-	const picojson::object& o = v.get<picojson::object>();
-	for (picojson::object::const_iterator it = o.begin(); it != o.end(); ++it)
-	{
-		if (rj_in(RJ_MOD_UNITS, it->first)) rj_parseMag(it->first, it->second, path, st);   // unit leaf: address = parent path
-		else rj_walkModNode(path + "." + it->first, it->second, st);                         // descend, extend the address
-	}
-}
-
-// ===================== INCREMENT 4: the enables-family + allowed availability parse =====================
-// The availability sections (json.md §4 / enabler.md §2,§4): enables/obsoletes/replaces/disables are per-kind id-bucket
-// lists (buildings/units/techs/…) the enabler's GENERATE pass reads; `allowed` is the cap (a scope or wonder-category
-// key → a number). `requires` build/operate is already translated (increment 2). This is the SURVEY probe: parse +
-// FK-resolve the bucket ids + count the caps; the persistent buckets the enabler reads are built at the cutover.
-
-// Source edges (enables/obsoletes/replaces/disables) + the target-side `obsoletedBy` (json.md §4.2 — the reverse
-// obsolete edge, same per-kind bucket shape; the enabler reads it forward from the target). All parse identically.
-static const char* RJ_EDGES[] = { "enables", "obsoletes", "replaces", "disables", "obsoletedBy", 0 };
-
-struct RjEnableStats
-{
-	int edges, bucketEntries, resolved, unresolved, allowedClauses, sampleCount;
-	std::set<std::string> bucketKinds, capKinds, unresolvedIds;
-	std::string curType;
-	RjEnableStats() : edges(0), bucketEntries(0), resolved(0), unresolved(0), allowedClauses(0), sampleCount(0) {}
-};
-
-static void rj_walkEnableEdge(const std::string& edge, const picojson::value& v, RjEnableStats& st)
-{
-	if (!v.is<picojson::object>()) return;
-	const picojson::object& o = v.get<picojson::object>();
-	++st.edges;
-	for (picojson::object::const_iterator it = o.begin(); it != o.end(); ++it)
-	{
-		st.bucketKinds.insert(it->first);                       // buildings/units/techs/civics/… (json.md §4.1)
-		if (!it->second.is<picojson::array>()) continue;
-		const picojson::array& a = it->second.get<picojson::array>();
-		for (size_t i = 0; i < a.size(); ++i)
-		{
-			if (!a[i].is<std::string>()) continue;
-			++st.bucketEntries;
-			const std::string id = a[i].get<std::string>();
-			const int rid = GC.getInfoTypeForString(id.c_str(), true);
-			if (rid >= 0) ++st.resolved;
-			else { ++st.unresolved; if (st.unresolvedIds.size() < 24) st.unresolvedIds.insert(id); }
-			if (rid >= 0 && s_rjData) s_rjData->edges[edge + "." + it->first].push_back(rid);   // MAP
-			if (st.sampleCount < 8)
-			{
-				char b[1024];
-				sprintf(b, "[READJSON/edge] %s %s.%s += %s (%s)", st.curType.c_str(), edge.c_str(), it->first.c_str(), id.c_str(), rid >= 0 ? "ok" : "UNRESOLVED");
-				gDLL->logMsg("Cascade.log", b); streamLogTee(1, b); ++st.sampleCount;
-			}
-		}
-	}
-}
-
-// `allowed` (json.md §4.4): a scope key (world/team/empire = self-cap) or a wonder-category key
-// (worldWonders/teamWonders/nationalWonders) → a number. Just count the clauses + record the cap kinds.
-static void rj_walkAllowed(const picojson::value& v, RjEnableStats& st)
-{
-	if (!v.is<picojson::object>()) return;
-	const picojson::object& o = v.get<picojson::object>();
-	for (picojson::object::const_iterator it = o.begin(); it != o.end(); ++it)
-	{
-		++st.allowedClauses; st.capKinds.insert(it->first);
-		if (s_rjData && it->second.is<double>()) s_rjData->allowed[it->first] = (int)it->second.get<double>();   // MAP
-	}
-}
-
-// ===================== INCREMENT 5: the grants grammar =====================
-// `grants` (json.md §5) is the harness's light-touch gap — MIXED shapes under one section: id LISTS
-// (buildings/units/techs/…), numeric PULSES (`grants.<channel>: value`, e.g. revolution/goldenAge/population),
-// `foundBuildings` ([{building, enabled?}] — a founder settle-time seed), and `repeatable` ([{<payload>, interval,
-// chance?, enabled?}] — incl. the property pulses carrying on/relation/distance). SURVEY probe: classify each key by
-// shape + FK-resolve the list ids + surface any unhandled grant key (no-guessing — an unknown shape is reported, not
-// dropped). The persistent grant provisions are built at the cutover.
-
-struct RjGrantStats
-{
-	int entities, listEntries, resolved, unresolved, pulses, flags, entryArrays, objects, sampleCount;
-	std::set<std::string> listKinds, pulseChannels, flagKinds, unresolvedIds;
-	std::string curType;
-	RjGrantStats() : entities(0), listEntries(0), resolved(0), unresolved(0), pulses(0), flags(0), entryArrays(0), objects(0), sampleCount(0) {}
-};
-
-static void rj_grantResolve(const std::string& bucket, const std::string& id, RjGrantStats& st)
-{
-	++st.listEntries;
-	const int rid = GC.getInfoTypeForString(id.c_str(), true);
-	if (rid >= 0) ++st.resolved;
-	else { ++st.unresolved; if (st.unresolvedIds.size() < 24) st.unresolvedIds.insert(id); }
-	if (rid >= 0 && s_rjData) s_rjData->grantLists[bucket].push_back(rid);   // MAP
-	if (st.sampleCount < 8)
-	{
-		char b[1024];
-		sprintf(b, "[READJSON/grant] %s grants.%s += %s (%s)", st.curType.c_str(), bucket.c_str(), id.c_str(), rid >= 0 ? "ok" : "UNRESOLVED");
-		gDLL->logMsg("Cascade.log", b); streamLogTee(1, b); ++st.sampleCount;
-	}
-}
-
-// GENERIC by value-shape (the grant section has many keys; classify each by its JSON shape, like the modifier parser
-// — the consumer assigns semantics). array-of-strings → an id LIST (FK-resolve each); array-of-objects → entry list
-// (foundBuildings/repeatable/property-pulse — resolve any single id field); number → a numeric pulse; bare string →
-// a single-id grant; bool → a flag; object → a structured grant. NOTHING is "unknown" — every shape is handled.
-static void rj_walkGrants(const picojson::value& v, RjGrantStats& st)
-{
-	if (!v.is<picojson::object>()) return;
-	const picojson::object& o = v.get<picojson::object>();
-	++st.entities;
-	static const char* ID_FIELDS[] = { "building", "unit", "type", "bonus", "tech", "promotion", "specialist", 0 };
-	for (picojson::object::const_iterator it = o.begin(); it != o.end(); ++it)
-	{
-		const std::string& k = it->first;
-		const picojson::value& val = it->second;
-		if (val.is<picojson::array>())
-		{
-			const picojson::array& a = val.get<picojson::array>();
-			bool allStr = true;
-			for (size_t i = 0; i < a.size(); ++i) if (!a[i].is<std::string>()) { allStr = false; break; }
-			if (allStr) { st.listKinds.insert(k); for (size_t i = 0; i < a.size(); ++i) rj_grantResolve(k, a[i].get<std::string>(), st); }
-			else                                            // array of entry-objects (foundBuildings/repeatable/property-pulse)
-			{
-				++st.entryArrays;
-				for (size_t i = 0; i < a.size(); ++i)
-				{
-					if (!a[i].is<picojson::object>()) continue;
-					const picojson::object& eo = a[i].get<picojson::object>();
-					for (int f = 0; ID_FIELDS[f]; ++f)      // resolve the entry's single id field, if any
-					{
-						picojson::object::const_iterator fi = eo.find(ID_FIELDS[f]);
-						if (fi != eo.end() && fi->second.is<std::string>()) { rj_grantResolve(k, fi->second.get<std::string>(), st); break; }
-					}
-				}
-			}
-		}
-		else if (val.is<double>()) { ++st.pulses; st.pulseChannels.insert(k); if (s_rjData) s_rjData->grantPulses[k] = rj_x100(val.get<double>()); } // numeric pulse grants.<channel>: value (MAP)
-		else if (val.is<std::string>()) { st.listKinds.insert(k); rj_grantResolve(k, val.get<std::string>(), st); } // single-id grant
-		else if (val.is<bool>()) { ++st.flags; st.flagKinds.insert(k); }              // a flag grant
-		else if (val.is<picojson::object>()) ++st.objects;                            // a structured grant (counted)
-	}
-}
-
-// The cascade info-type table (X-macro): (type-prefix, CvXInfo class). ONE source of truth, expanded for the readJson
-// prefix dispatch (edit + get) AND the clear-all -- so a new cascade info type is added in exactly ONE place, with no
-// dispatch-vs-clear drift (cascade-engine-430.md §3 care-point (d)). Order MATTERS for dispatch: longer/more-specific
-// prefixes FIRST (UNITCOMBAT_ before UNIT_, CIVICOPTION_ before CIVIC_, PROMOTIONLINE_ before PROMOTION_; TRAIT_ covers
-// TRAIT_COMPLEX_). Types not listed (handicap/gamespeed/era/vote/hurry/…) have no cascade home -> NULL. (The
-// InfoRepo<TTag> tag is the engine info class, purely the per-type singleton discriminator -- the repo never touches it.)
+// The cascade info-type table (X-macro): (type-prefix, CvXInfo class) -- ONE source of truth for the per-type InfoRepo
+// selection (edit + clear-all), so a new cascade info type is added in exactly ONE place (cascade-engine-430.md §3
+// care-point (d)). Order MATTERS: longer/more-specific prefixes FIRST (UNITCOMBAT_ before UNIT_, CIVICOPTION_ before
+// CIVIC_, PROMOTIONLINE_ before PROMOTION_; TRAIT_ covers TRAIT_COMPLEX_). Unlisted types -> NULL (no cascade home).
 #define RJ_REPO_TYPES(X)                     \
 	X("BUILDING_",      CvBuildingInfo)       \
 	X("UNITCOMBAT_",    CvUnitCombatInfo)     \
@@ -643,7 +227,7 @@ static void rj_walkGrants(const picojson::value& v, RjGrantStats& st)
 	X("CULTURELEVEL_",  CvCultureLevelInfo)   \
 	X("BUILD_",         CvBuildInfo)
 
-// get-or-create the entity's CvJsonInfo (readJson populates it); NULL for non-cascade types.
+// get-or-create the entity's CvJsonInfo (the reader calls mapFrom on it); NULL for non-cascade types.
 static CvJsonInfo* rj_jsonEdit(const std::string& t, int id)
 {
 	if (id < 0) return NULL;
@@ -653,60 +237,33 @@ static CvJsonInfo* rj_jsonEdit(const std::string& t, int id)
 	return NULL;
 }
 
-// the entity's CvJsonInfo if mapped, else NULL (read-back).
-static const CvJsonInfo* rj_jsonGet(const std::string& t, int id)
-{
-	if (id < 0) return NULL;
-#define X(PFX, T) if (rj_starts(t, PFX)) return InfoRepo<T>::get().get(id);
-	RJ_REPO_TYPES(X)
-#undef X
-	return NULL;
-}
-
 // Clear every cascade InfoRepo (free all CvJsonInfo) BEFORE (re)mapping, so a re-run can't DOUBLE the deposit vectors
-// (cascade-engine-430.md §3 care-point (a): edit() get-or-creates + the walkers push_back, so re-populating without a
-// clear would duplicate). A no-op on the one-shot first run (clears empty repos); makes the map re-run-safe ahead of
-// the unconditional load-time map at cutover.
+// (cascade-engine-430.md §3 care-point (a)). No-op on the one-shot first run; makes the map re-run-safe at cutover.
 static void rj_clearAllRepos()
 {
 #define X(PFX, T) InfoRepo<T>::get().clear();
 	RJ_REPO_TYPES(X)
 #undef X
-	cascadeStartNode().clear();   // the synthetic TECH_GAME_START root lives off the InfoRepo -- reset it too
+	InfoRepo<CvComplexTraitTag>::get().clear();   // the complex trait set's own repo (off the RJ_REPO_TYPES dispatch)
+	cascadeStartNode().clear();                   // the synthetic TECH_GAME_START root lives off the InfoRepo
 }
 
-// §8 empire capabilities: the `capabilities:{name:true}` block (techs grant team abilities -- techTrading, foundOnPeaks,
-// …). Map each true-valued name onto the entity's CvJsonInfo; the empire's ACTIVE set is the union over held grantors,
-// derived live where consumed (canFound/canBuild + the team-ability systems). Was parsed-but-SKIPPED; now mapped.
-struct RjCapStats { int entities, caps; std::set<std::string> names; RjCapStats() : entities(0), caps(0) {} };
-static void rj_walkCapabilities(const picojson::value& v, RjCapStats& st)
-{
-	if (!v.is<picojson::object>()) return;
-	const picojson::object& o = v.get<picojson::object>();
-	bool bAny = false;
-	for (picojson::object::const_iterator it = o.begin(); it != o.end(); ++it)
-	{
-		if (it->second.is<bool>() && it->second.get<bool>())
-		{
-			if (s_rjData) s_rjData->capabilities.insert(it->first);
-			++st.caps; st.names.insert(it->first); bAny = true;
-		}
-	}
-	if (bAny) ++st.entities;
-}
+// One walked entity: its type string, engine id, and the CvJsonInfo it mapped into (a stable pointer -- the InfoRepo /
+// start node / complex repo own it and outlive this call -- so the census reads it straight back).
+struct RjEntity { std::string type; int typeId; CvJsonInfo* data; };
 
-void cascadeReadJsonProbe()
+void cascadeLoadJson()
 {
+	// ONE-SHOT per process: the static JSON->InfoRepo map is built ONCE, at the SAME load point as the XML infos
+	// (cvInternalGlobals::doPostLoadCaching). UNCONDITIONAL: it must NOT depend on gPlayerLogLevel (cold this early) --
+	// the [READJSON/*] census rides the event spine (SD_READJSON; the CvCascadeLogConsumer gates it per level).
 	static bool s_done = false;
-	if (s_done || gPlayerLogLevel < 1)
-	{
-		return; // one-shot, and only while logging is on (shadow testing) -- zero cost in normal play
-	}
+	if (s_done) return;
 	s_done = true;
-
-	// care-point (a): clear the InfoRepos before (re)mapping so a re-run can't double the deposit vectors. No-op on this
-	// one-shot first run; the guardrail that makes the map re-run-safe ahead of the cutover (cascade-engine-430.md §3).
-	rj_clearAllRepos();
+	cascadeRegisterConsumers();   // register the spine's logging CONSUMER (idempotent) before the census emits
+	rj_registerDomain();
+	rj_clearAllRepos();           // care-point (a): re-map-safe (no-op first run)
+	cascadeJsonResetDiag();       // reset the FK-unresolved accumulator (surfaced below)
 
 	std::string base = gDLL->getModName(true);
 	if (!base.empty() && base[base.size() - 1] != '\\' && base[base.size() - 1] != '/') base += "\\";
@@ -716,16 +273,10 @@ void cascadeReadJsonProbe()
 	rj_find(dataDir, files);
 
 	int iFailed = 0, iEntities = 0, iResolved = 0, iUnresolved = 0, iShownUnres = 0;
-	int iConds = 0, iCondsFull = 0, iCondSample = 0;
-	std::set<std::string> families, flags;
-	std::map<std::string, int> topKeys;   // FULL-COVERAGE census: every top-level key kind -> count
+	std::set<std::string> familyKinds, flagKinds;
+	std::map<std::string, int> topKeys;                       // FULL-COVERAGE census: every top-level key kind -> count
+	std::map<std::string, CascJsonKeyClass> keyClass;         // key -> its class (for the RJE_KEY completeness line)
 	std::vector<RjEntity> store;
-	RjCondStats cond;
-	RjModStats mod;
-	RjEnableStats en;
-	RjGrantStats gr;
-	RjCapStats cap;
-	char szBuf[1024];
 
 	for (size_t i = 0; i < files.size(); ++i)
 	{
@@ -740,144 +291,108 @@ void cascadeReadJsonProbe()
 		if (t == o.end() || !t->second.is<std::string>()) continue;
 		++iEntities;
 		const std::string type = t->second.get<std::string>();
-		RjEntity rec;
-		rec.type = type;
-		rec.typeId = GC.getInfoTypeForString(type.c_str(), true);
-		store.push_back(rec);
-		if (rec.typeId >= 0) ++iResolved;
-		else { ++iUnresolved; if (iShownUnres < 16) { sprintf(szBuf, "[READJSON/unresolved] type=%s", type.c_str()); gDLL->logMsg("Cascade.log", szBuf); streamLogTee(1, szBuf); ++iShownUnres; } }
+		const int typeId = GC.getInfoTypeForString(type.c_str(), true);   // entity id (separate from the FK diag)
+		if (typeId >= 0) ++iResolved;
+		else { ++iUnresolved; if (iShownUnres < 16) { eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_READJSON, RJE_UNRESOLVED, 1).addStr(RJF_TYPE, type.c_str())); ++iShownUnres; } }
 
-		// MAP: get-or-create this entity's CvJsonInfo in its type's InfoRepo (the home; owner ruling 2026-06-30). NULL
-		// for non-cascade types (by-design non-resolvers) -> the walkers skip population (no leak). The InfoRepo owns it.
-		// SPECIAL CASE: TECH_GAME_START is the synthetic no-tech-prereq ROOT (XML-less by design, so a non-resolver with
-		// id -1) -> it has no InfoRepo home; map it into the dedicated cascadeStartNode() instead so its enables survive.
-		CvJsonInfo* data = (type == "TECH_GAME_START") ? &cascadeStartNode() : rj_jsonEdit(type, rec.typeId);
-		s_rjData = data;
-		mod.curType = type;
-		en.curType = type;
-		gr.curType = type;
+		// SELECT the per-type InfoRepo + MAP: the info loads itself (virtual mapFrom). TECH_GAME_START is the synthetic
+		// no-prereq root (XML-less -> id -1) homed off the InfoRepo in cascadeStartNode(); complex traits collide on the
+		// engine id with the simple set -> their OWN repo (folder path `\complex\` is the discriminator).
+		const bool bComplexTrait = typeId >= 0 && rj_starts(type, "TRAIT_") && files[i].find("\\complex\\") != std::string::npos;
+		CvJsonInfo* data = (type == "TECH_GAME_START") ? &cascadeStartNode()
+			: bComplexTrait ? InfoRepo<CvComplexTraitTag>::get().editPtr(typeId)
+			: rj_jsonEdit(type, typeId);
+		if (data != NULL) data->mapFrom(v);
+
+		RjEntity rec; rec.type = type; rec.typeId = typeId; rec.data = data;
+		store.push_back(rec);
+
+		// CENSUS: classify every top-level key (the SAME cascadeJsonClassifyKey the base mapFrom dispatches on) -> the
+		// 0-UNCLASSIFIED completeness proof, independent of the per-type parsing.
 		for (picojson::object::const_iterator it = o.begin(); it != o.end(); ++it)
 		{
-			const std::string& k = it->first;
-			++topKeys[k];                                                                 // full-coverage census
-			if (rj_in(RJ_EDGES, k)) { rj_walkEnableEdge(k, it->second, en); continue; }   // INCREMENT 4: GENERATE buckets
-			if (k == "allowed") { rj_walkAllowed(it->second, en); continue; }              // INCREMENT 4: the cap
-			if (k == "grants") { rj_walkGrants(it->second, gr); continue; }                // INCREMENT 5: the grants grammar
-			if (k == "provides") { rj_walkEnableEdge("provides", it->second, en); continue; } // §5a: continuous in-vicinity supply
-			if (k == "capabilities") { rj_walkCapabilities(it->second, cap); continue; }     // §8: empire capabilities (was skipped)
-			if (rj_in(RJ_CASCADE_SECTIONS, k) || rj_in(RJ_INTRINSIC, k)) continue;
-			if (it->second.is<picojson::object>())
-			{
-				families.insert(k);
-				++mod.families; mod.familyNames.insert(k);
-				rj_walkModNode(k, it->second, mod);   // INCREMENT 3: parse the modifier-family deposit tree
-			}
-			else flags.insert(k);
-		}
-
-		// INCREMENT 2: translate requires.build / requires.operate -> BoolExpr (the condition translator + survey).
-		picojson::object::const_iterator rq = o.find("requires");
-		if (rq != o.end() && rq->second.is<picojson::object>())
-		{
-			const picojson::object& ro = rq->second.get<picojson::object>();
-			for (picojson::object::const_iterator sub = ro.begin(); sub != ro.end(); ++sub)
-			{
-				++iConds;
-				const int beforeGaps = cond.unmappedPred + cond.countThreshold;
-				const BoolExpr* e = rj_translateClause(sub->second, cond); // 2.e: peels the structural `dormant` sub-key
-				if (cond.unmappedPred + cond.countThreshold == beforeGaps) ++iCondsFull; // every leaf mapped, no deferred
-				if (iCondSample < 6 && e != NULL)
-				{
-					CvWStringBuffer buf;
-					e->buildDisplayString(buf);
-					sprintf(szBuf, "[READJSON/cond] %s.%s = %S", type.c_str(), sub->first.c_str(), buf.getCString());
-					gDLL->logMsg("Cascade.log", szBuf); streamLogTee(1, szBuf); ++iCondSample;
-				}
-				// MAP: store the requires tree on the entity (owned by data, freed via ~CvJsonInfo).
-				if (data && sub->first == "build") data->requiresBuild = e;
-				else if (data && sub->first == "operate") data->requiresOperate = e;
-				else delete e;
-			}
+			++topKeys[it->first];
+			const CascJsonKeyClass c = cascadeJsonClassifyKey(it->first, it->second.is<picojson::object>());
+			keyClass[it->first] = c;
+			if (c == CJK_FAMILY) familyKinds.insert(it->first);
+			else if (c == CJK_FLAG) flagKinds.insert(it->first);
 		}
 	}
 
-	sprintf(szBuf, "[READJSON/dir] %s", dataDir.c_str());
-	gDLL->logMsg("Cascade.log", szBuf); streamLogTee(1, szBuf);
-	sprintf(szBuf, "[READJSON/probe] files=%d parsed=%d failed=%d entities=%d resolved=%d unresolved=%d familyKinds=%d flagKinds=%d",
-		(int)files.size(), (int)files.size() - iFailed, iFailed, iEntities, iResolved, iUnresolved, (int)families.size(), (int)flags.size());
-	gDLL->logMsg("Cascade.log", szBuf); streamLogTee(1, szBuf);
-	// INCREMENT 2 survey: how much of the requires-condition surface translates to a BoolExpr leaf today.
-	sprintf(szBuf, "[READJSON/cond-survey] conditions=%d fullyMapped=%d leaves=%d mapped=%d unmappedLeaves=%d countThresholds=%d unmappedKinds=%d",
-		iConds, iCondsFull, cond.leaves, cond.mapped, cond.unmappedPred, cond.countThreshold, (int)cond.unmappedTokens.size());
-	gDLL->logMsg("Cascade.log", szBuf); streamLogTee(1, szBuf);
-	for (std::set<std::string>::const_iterator it = cond.unmappedTokens.begin(); it != cond.unmappedTokens.end(); ++it)
-	{
-		sprintf(szBuf, "[READJSON/cond-gap] %s", it->c_str());
-		gDLL->logMsg("Cascade.log", szBuf); streamLogTee(1, szBuf);
-	}
-	// INCREMENT 3 survey: the modifier-family deposit-address parse (the structure the modifier machine consumes).
-	sprintf(szBuf, "[READJSON/mod-survey] families=%d familyKinds=%d magnitudes=%d flat=%d percent=%d mult=%d other=%d conditioned=%d perScaled=%d bareValues=%d condLeaves=%d condMapped=%d",
-		mod.families, (int)mod.familyNames.size(), mod.magnitudes, mod.unitFlat, mod.unitPercent, mod.unitMult, mod.unitOther,
-		mod.conditioned, mod.perScaled, mod.bareValues, mod.embeddedCond.leaves, mod.embeddedCond.mapped);
-	gDLL->logMsg("Cascade.log", szBuf); streamLogTee(1, szBuf);
-	// INCREMENT 4 survey: the enables-family edges + the allowed cap (the enabler's GENERATE buckets + cap).
-	sprintf(szBuf, "[READJSON/edge-survey] edges=%d bucketEntries=%d resolved=%d unresolved=%d bucketKinds=%d allowedClauses=%d capKinds=%d",
-		en.edges, en.bucketEntries, en.resolved, en.unresolved, (int)en.bucketKinds.size(), en.allowedClauses, (int)en.capKinds.size());
-	gDLL->logMsg("Cascade.log", szBuf); streamLogTee(1, szBuf);
-	for (std::set<std::string>::const_iterator it = en.unresolvedIds.begin(); it != en.unresolvedIds.end(); ++it)
-	{
-		sprintf(szBuf, "[READJSON/edge-unresolved] %s", it->c_str());
-		gDLL->logMsg("Cascade.log", szBuf); streamLogTee(1, szBuf);
-	}
-	// INCREMENT 5 survey: the grants grammar (lists / numeric pulses / foundBuildings / repeatable).
-	sprintf(szBuf, "[READJSON/grant-survey] entities=%d listEntries=%d resolved=%d unresolved=%d listKinds=%d pulses=%d pulseChannels=%d flags=%d entryArrays=%d objects=%d",
-		gr.entities, gr.listEntries, gr.resolved, gr.unresolved, (int)gr.listKinds.size(), gr.pulses, (int)gr.pulseChannels.size(), gr.flags, gr.entryArrays, gr.objects);
-	gDLL->logMsg("Cascade.log", szBuf); streamLogTee(1, szBuf);
-	for (std::set<std::string>::const_iterator it = gr.unresolvedIds.begin(); it != gr.unresolvedIds.end(); ++it)
-	{
-		sprintf(szBuf, "[READJSON/grant-unresolved] %s", it->c_str());
-		gDLL->logMsg("Cascade.log", szBuf); streamLogTee(1, szBuf);
-	}
-	// FULL-COVERAGE census: every top-level key kind across all entities + its handler class — the single holistic
-	// completeness check (nothing silently unhandled). UNCLASSIFIED kinds (if any) are the thing to investigate.
-	for (std::map<std::string, int>::const_iterator it = topKeys.begin(); it != topKeys.end(); ++it)
-	{
-		const std::string& k = it->first;
-		const char* cls =
-			rj_in(RJ_EDGES, k) ? "edge" :
-			(k == "allowed") ? "allowed" : (k == "grants") ? "grants" : (k == "requires") ? "requires" : (k == "provides") ? "provides" :
-			rj_in(RJ_INTRINSIC, k) ? "intrinsic" :
-			families.count(k) ? "family" : flags.count(k) ? "flag" : "UNCLASSIFIED";
-		sprintf(szBuf, "[READJSON/key] %-26s %6d  %s", k.c_str(), it->second, cls);
-		gDLL->logMsg("Cascade.log", szBuf); streamLogTee(1, szBuf);
-	}
-	// MAP read-back: prove the JSON data round-trips from the InfoRepo (the home -- read back via rj_jsonGet by
-	// type+id, not the probe's transient buffers). Counts how many entities got it + renders a few.
-	int iAttached = 0, iMapSample = 0;
+	eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_READJSON, RJE_DIR, 1).addStr(RJF_DIR, dataDir.c_str()));
+	eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_READJSON, RJE_PROBE, 1)
+		.addI(RJF_FILES, (int)files.size()).addI(RJF_PARSED, (int)files.size() - iFailed).addI(RJF_FAILED, iFailed)
+		.addI(RJF_ENTITIES, iEntities).addI(RJF_RESOLVED, iResolved).addI(RJF_UNRESOLVED, iUnresolved)
+		.addI(RJF_FAMILYKINDS, (int)familyKinds.size()).addI(RJF_FLAGKINDS, (int)flagKinds.size()));
+
+	// FK diagnostics (Orwell bar): every distinct unresolved REFERENCED id (edges/grants/atoms/dormant) collected by
+	// cascadeJsonResolveId during the maps -- surfaced so a data typo never hides.
+	const std::set<std::string>& unres = cascadeJsonUnresolvedIds();
+	for (std::set<std::string>::const_iterator it = unres.begin(); it != unres.end(); ++it)
+		eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_READJSON, RJE_EDGE_UNRES, 1).addStr(RJF_ID, it->c_str()));
+
+	// READ-BACK survey: reconstruct the modifier-deposit stats + per-entity structure counts from the MAPPED data (the
+	// home), proving the map round-trips (deposits ×100'd, requires/edges/allowed/grants populated).
+	int iAttached = 0, iMapSample = 0, iModSample = 0;
+	int mMag = 0, mFlat = 0, mPercent = 0, mMult = 0, mOther = 0, mCond = 0, mPer = 0;
 	for (size_t s = 0; s < store.size(); ++s)
 	{
-		const CvJsonInfo* cdp = rj_jsonGet(store[s].type, store[s].typeId);
-		if (cdp == NULL) continue;
+		const CvJsonInfo* cd = store[s].data;
+		if (cd == NULL) continue;
 		++iAttached;
+		for (size_t d = 0; d < cd->deposits.size(); ++d)
+		{
+			const CvCascadeDeposit& dep = cd->deposits[d];
+			++mMag;
+			if (dep.unit == "flat") ++mFlat; else if (dep.unit == "percent") ++mPercent;
+			else if (dep.unit == "multiplier") ++mMult; else ++mOther;
+			if (dep.enabled || dep.disabled) ++mCond;
+			if (dep.hasPer) ++mPer;
+			if (iModSample < 10)   // concrete value samples -- proves the single human->×100 conversion at the leaf
+			{
+				eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_READJSON, RJE_MOD, 1)
+					.addStr(RJF_TYPE, store[s].type.c_str()).addStr(RJF_ADDR, dep.address.c_str())
+					.addStr(RJF_UNIT, dep.unit.c_str()).addI(RJF_VAL, dep.value100));
+				++iModSample;
+			}
+		}
 		if (iMapSample < 8)
 		{
-			const CvJsonInfo& cd = *cdp;
-			sprintf(szBuf, "[READJSON/map] %s deposits=%d requires=%d/%d edges=%d allowed=%d grantLists=%d grantPulses=%d",
-				store[s].type.c_str(), (int)cd.deposits.size(), cd.requiresBuild ? 1 : 0, cd.requiresOperate ? 1 : 0,
-				(int)cd.edges.size(), (int)cd.allowed.size(), (int)cd.grantLists.size(), (int)cd.grantPulses.size());
-			gDLL->logMsg("Cascade.log", szBuf); streamLogTee(1, szBuf); ++iMapSample;
+			eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_READJSON, RJE_MAP, 1)
+				.addStr(RJF_TYPE, store[s].type.c_str()).addI(RJF_DEPOSITS, (int)cd->deposits.size())
+				.addI(RJF_REQBUILD, cd->requiresBuild ? 1 : 0).addI(RJF_REQOPERATE, cd->requiresOperate ? 1 : 0)
+				.addI(RJF_EDGES, (int)cd->edges.size()).addI(RJF_ALLOWED, (int)cd->allowed.size())
+				.addI(RJF_GRANTLISTS, (int)cd->grantLists.size()).addI(RJF_GRANTPULSES, (int)cd->grantPulses.size()));
+			++iMapSample;
 		}
 	}
-	// §8 capabilities survey: how many entities grant capabilities + the distinct names mapped (verifies the block maps).
-	sprintf(szBuf, "[READJSON/cap-survey] grantingEntities=%d capGrants=%d distinctNames=%d", cap.entities, cap.caps, (int)cap.names.size());
-	gDLL->logMsg("Cascade.log", szBuf); streamLogTee(1, szBuf);
-	for (std::set<std::string>::const_iterator it = cap.names.begin(); it != cap.names.end(); ++it)
-	{
-		sprintf(szBuf, "[READJSON/cap] %s", it->c_str());
-		gDLL->logMsg("Cascade.log", szBuf); streamLogTee(1, szBuf);
-	}
+	eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_READJSON, RJE_MOD_SURVEY, 1)
+		.addI(RJF_MAGNITUDES, mMag).addI(RJF_FLAT, mFlat).addI(RJF_PERCENT, mPercent).addI(RJF_MULT, mMult)
+		.addI(RJF_OTHER, mOther).addI(RJF_CONDITIONED, mCond).addI(RJF_PERSCALED, mPer).addI(RJF_FAMILYKINDS, (int)familyKinds.size()));
 
-	sprintf(szBuf, "[READJSON/map-summary] entitiesWithCascadeData=%d", iAttached);
-	gDLL->logMsg("Cascade.log", szBuf); streamLogTee(1, szBuf);
-	s_rjData = NULL;
+	// §8 capabilities read-back survey (now on CvJsonTechInfo -- techs are the only grantor). Verifies the block maps.
+	int capEntities = 0, capGrants = 0;
+	std::set<std::string> capNames;
+	for (size_t s = 0; s < store.size(); ++s)
+	{
+		if (store[s].data == NULL || !rj_starts(store[s].type, "TECH_")) continue;
+		const CvJsonTechInfo* tech = static_cast<const CvJsonTechInfo*>(store[s].data);
+		if (tech->capabilities.empty()) continue;
+		++capEntities;
+		for (std::set<std::string>::const_iterator it = tech->capabilities.begin(); it != tech->capabilities.end(); ++it)
+		{ ++capGrants; capNames.insert(*it); }
+	}
+	eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_READJSON, RJE_CAP_SURVEY, 1)
+		.addI(RJF_GRANTING, capEntities).addI(RJF_CAPGRANTS, capGrants).addI(RJF_DISTINCTNAMES, (int)capNames.size()));
+	for (std::set<std::string>::const_iterator it = capNames.begin(); it != capNames.end(); ++it)
+		eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_READJSON, RJE_CAP, 1).addStr(RJF_NAME, it->c_str()));
+
+	// FULL-COVERAGE census line: every top-level key kind + its class -- UNCLASSIFIED (impossible: classify always
+	// returns family/flag for an unknown) is the thing to investigate.
+	for (std::map<std::string, int>::const_iterator it = topKeys.begin(); it != topKeys.end(); ++it)
+		eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_READJSON, RJE_KEY, 1)
+			.addStr(RJF_KEY, it->first.c_str()).addI(RJF_COUNT, it->second)
+			.addStr(RJF_CLASS, cascadeJsonKeyClassName(keyClass[it->first])));
+
+	eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_READJSON, RJE_MAP_SUMMARY, 1).addI(RJF_WITHDATA, iAttached));
 }

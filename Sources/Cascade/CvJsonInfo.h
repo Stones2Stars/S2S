@@ -6,7 +6,7 @@
 //	CvJsonInfo -- the data mapped FROM an entity's curated JSON: the JSON counterpart to the engine's XML `CvXInfo`
 //	objects. readJson parses each `Assets/Data/<type>/*.json` into one of these; the cascade machines (modifier /
 //	enabler) consume it. Shape mirrors json.md + StoneBase's typed model: modifier-family deposits (§6), the requires
-//	BoolExpr trees (§4.3), the enables-family + provides edges (§4.1/§5a), the allowed caps (§4.4), the grants (§5).
+//	condition trees (§4.3), the enables-family + provides edges (§4.1/§5a), the allowed caps (§4.4), the grants (§5).
 //
 //	⛔ HOME (owner ruling 2026-06-30) = the per-info-type **InfoRepo** (`Repos/InfoRepo.h`): a `get()` singleton per
 //	info type holding a `std::vector<CvJsonInfo*>` PARALLEL to the engine's `GC.m_pa<X>Info`, indexed by the same id.
@@ -17,19 +17,21 @@
 //	ONLY the genuinely-new JSON data; the standard fields (`type`, description, …) stay on the engine `CvXInfo`, reached
 //	via its `DllExport` getters at the same id -- never duplicated here.
 //
-//	⚠ PUBLIC fields BY DESIGN (owner 2026-06-29): direct access during the build/shadow phase. Owns its BoolExpr trees
-//	(freed in the dtor) -- NONCOPYABLE.
+//	⚠ PUBLIC fields BY DESIGN (owner 2026-06-29): direct access during the build/shadow phase. Owns its typed condition
+//	trees (freed in the dtor) -- NONCOPYABLE.
 //
 
-#include "Infrastructure/BoolExpr.h"
+#include "CvCascadeCondition.h"   // CvCascadeCondition -- the StoneBase-ported typed condition tree (was BoolExpr)
 #include <string>
 #include <vector>
 #include <map>
-#include <set>
+
+namespace picojson { class value; }   // mapFrom's input -- full definition only in the .cpp (via the PCH umbrella)
 
 // A modifier-family deposit (json.md §6): `<family>.<scope>[.<target>|.<targetType>.{TARGET}][.<member>].<unit>` =
 // value (×100 at the leaf). The address segments are kept as strings (the modifier machine resolves them); the
-// conditioning (`enabled`/`disabled`) is a BoolExpr; `per` is flagged (the count-scaler is resolved by the machine).
+// conditioning (`enabled`/`disabled`) is a typed CvCascadeCondition (the StoneBase port); `per` is flagged (the
+// count-scaler is resolved by the machine).
 struct CvCascadeDeposit
 {
 	// The deposit ADDRESS as a dotted path `<family>.<scope>[.<target>|.<targetType>.{TARGET}][.<member>]` — kept
@@ -37,9 +39,10 @@ struct CvCascadeDeposit
 	std::string address;    // e.g. "food.city", "production.empire.plots", "food.city.improvements.IMPROVEMENT_FARM"
 	std::string unit;       // flat / percent / multiplier / perPopulation / ...
 	int value100;           // the single human->×100 leaf value
-	const BoolExpr* enabled;   // NULL = always-on
-	const BoolExpr* disabled;  // NULL = never-suppressed
+	CvCascadeCondition* enabled;   // NULL = always-on
+	CvCascadeCondition* disabled;  // NULL = never-suppressed
 	bool hasPer;            // a per count-scaler is present (resolved by the modifier machine)
+	std::vector<int> perAnyOf;   // per:{anyOf:[...]} resolved type ids (e.g. the corp CommercesProduced prereq-bonus scaler)
 	CvCascadeDeposit() : value100(0), enabled(NULL), disabled(NULL), hasPer(false) {}
 };
 
@@ -47,8 +50,16 @@ class CvJsonInfo
 {
 public:
 	CvJsonInfo() : requiresBuild(NULL), requiresOperate(NULL) {}
-	~CvJsonInfo();
-	void clear();   // free the owned BoolExpr trees + reset every container (for re-map safety of a persistent instance)
+	virtual ~CvJsonInfo();   // virtual: the per-type subclasses below are owned + deleted via this CvJsonInfo* base (InfoRepo)
+	void clear();   // free the owned condition trees + reset every container (for re-map safety of a persistent instance)
+
+	// Load THIS info from its curated JSON entity object -- "the info loads itself" (audit 2026-07-01, owner). The BASE
+	// parses the COMMON cascade sections shared by every entity: the modifier-family deposits (§6), the enables-family +
+	// provides edges (§4.1/§4.2/§5a), the allowed caps (§4.4), the grants (§5), and requires.build/operate + dormant
+	// (§4.3). A per-type SUBCLASS overrides this to call CvJsonInfo::mapFrom(entity) FIRST, then parse its ONE extension
+	// block (unit skills/tags, tech capabilities, civic policies, building identity, ...). So the reader stops being a
+	// god-function that knows every type -- each type owns its own parsing, drawing shared primitives from CvCascadeJsonParse.
+	virtual void mapFrom(const picojson::value& entity);
 
 	// Holds ONLY the genuinely-NEW JSON data. The standard EXE-required fields (`type`/getType(), description, button,
 	// the DllExport getters) are NOT duplicated -- they stay on the engine `CvXInfo` at the same id; a consumer that has
@@ -58,26 +69,35 @@ public:
 	std::vector<CvCascadeDeposit> deposits;
 
 	// --- Availability (§4) ---
-	const BoolExpr* requiresBuild;                         // requires.build tree (NULL if none)  -- greys
-	const BoolExpr* requiresOperate;                       // requires.operate tree (NULL if none) -- greys + dormancy
+	CvCascadeCondition* requiresBuild;                     // requires.build tree (NULL if none)  -- greys
+	CvCascadeCondition* requiresOperate;                   // requires.operate tree (NULL if none) -- greys + dormancy
 	std::map<std::string, std::vector<int> > edges;        // "<edge>.<bucket>" -> [resolved ids]: enables/obsoletes/
 	                                                       // replaces/disables/obsoletedBy/provides (§4.1/§4.2/§5a)
 	std::map<std::string, int> allowed;                    // cap kind (world/team/empire/worldWonders/...) -> N (§4.4)
+	std::vector<int> dormantTriggers;                      // the requires.{operate|build}.dormant trigger ids (StoneBase
+	                                                       // DormantTriggers): buildings = the successor buildings whose
+	                                                       // presence dorms this; units = the direct upgrades (§4.3).
+	                                                       // Extracted SEPARATELY -- the condition parser drops `dormant`.
 
 	// --- Provisions (grants, §5) ---
 	std::map<std::string, std::vector<int> > grantLists;   // "<bucket>" -> [resolved ids] (techs/units/foundBuildings/...)
 	std::map<std::string, int> grantPulses;                // numeric pulse channel -> value (×100 at leaf)
 
-	// --- Classification: empire capabilities (json.md §8) ---
-	// The team/empire abilities this entity GRANTS when held (tech-unlocked; e.g. techTrading, foundOnPeaks). The
-	// empire's ACTIVE capability set is the union over the team's held grantors -- derived (live) where consumed
-	// (canFound/canBuild + the team-ability systems), not stored here.
-	std::set<std::string> capabilities;                    // granted capability names (the `capabilities:{name:true}` block)
+	// NB the CLASSIFICATION blocks are NOT on the base -- each lives on the ONE type that owns it (group-unambiguity,
+	// owner 2026-07-01): empire `capabilities` -> CvJsonTechInfo (§8); unit `skills`/`tags` -> CvJsonUnitInfo (§8);
+	// `skills` -> CvJson{Promotion,UnitCombat}Info; `policies` (pure empire STATE, §9) -> CvJsonCivicInfo / CvJsonTraitInfo.
 
 private:
-	CvJsonInfo(const CvJsonInfo&);                         // noncopyable -- owns the BoolExpr trees
+	CvJsonInfo(const CvJsonInfo&);                         // noncopyable -- owns the condition trees
 	CvJsonInfo& operator=(const CvJsonInfo&);
 };
+
+// Per-type cascade info SUBCLASSES (owner ruling 2026-06-30; ONE class per file, mirroring StoneBase's Domain/Infos): the
+// type-specific JSON data lives on the type's OWN class -- the cascade NEVER reads the engine CvXInfo for it (ESPECIALLY
+// CvTraitInfo: its runtime CvInfoReplacements swap can't represent the clean simple/complex split). Each in its own header:
+//   CvJsonTraitInfo.h (+ CvJsonSimpleTraitInfo.h / CvJsonComplexTraitInfo.h), CvJsonBuildingInfo.h, CvJsonReligionInfo.h,
+//   CvJsonCorporationInfo.h, CvJsonUnitInfo.h.
+// InfoRepo creates the right subclass per type (Repos/InfoRepo.h JsonPayload).
 
 // The synthetic `TECH_GAME_START` root (json/naming: deliberately NOT in the engine XML -- the unified way to define
 // what is available at start with NO tech prereq, avoiding special-case reverse-lookup `requires`). It has no engine

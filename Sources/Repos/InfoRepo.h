@@ -2,7 +2,17 @@
 #ifndef INFO_REPO_H
 #define INFO_REPO_H
 
-#include "CvJsonInfo.h"   // the payload (the JSON-parsed info data); the Cascade layer is on /I -> bare include
+#include "CvJsonInfo.h"   // the payload base (the JSON-parsed info data); the Cascade layer is on /I -> bare include
+#include "CvJsonSimpleTraitInfo.h"    // the per-type payload subclasses (referenced by JsonPayload below); each pulls its base
+#include "CvJsonComplexTraitInfo.h"   // + CvComplexTraitTag (the complex-set repo discriminator)
+#include "CvJsonBuildingInfo.h"
+#include "CvJsonReligionInfo.h"
+#include "CvJsonCorporationInfo.h"
+#include "CvJsonUnitInfo.h"
+#include "CvJsonTechInfo.h"
+#include "CvJsonPromotionInfo.h"
+#include "CvJsonUnitCombatInfo.h"
+#include "CvJsonCivicInfo.h"
 #include <vector>
 
 //
@@ -24,6 +34,26 @@
 //
 //	C++03 / VC7.1: a header-only template; the per-`TTag` `static` in `get()` gives one instance per info type.
 //
+// The engine info TAGS (phantom per-type discriminators) -- forward-declared for the JsonPayload map below.
+class CvTraitInfo; class CvBuildingInfo; class CvReligionInfo; class CvCorporationInfo; class CvUnitInfo;
+class CvTechInfo; class CvPromotionInfo; class CvUnitCombatInfo; class CvCivicInfo;
+
+// JsonPayload<TTag> -- the type-specific CvJson*Info subclass each repo creates (owner ruling 2026-06-30, mirroring
+// StoneBase's per-type Domain/Infos). Default = the generic CvJsonInfo; specialized for the types carrying type-specific
+// data. Keeps creation CONSISTENT: InfoRepo<CvTraitInfo> ALWAYS makes a CvJsonSimpleTraitInfo regardless of the caller,
+// so readJson + the machines never disagree about the concrete type they delete/read.
+template <class TTag> struct JsonPayload { typedef CvJsonInfo type; };
+template <> struct JsonPayload<CvTraitInfo>       { typedef CvJsonSimpleTraitInfo  type; };
+template <> struct JsonPayload<CvComplexTraitTag> { typedef CvJsonComplexTraitInfo type; };
+template <> struct JsonPayload<CvBuildingInfo>    { typedef CvJsonBuildingInfo     type; };
+template <> struct JsonPayload<CvReligionInfo>    { typedef CvJsonReligionInfo     type; };
+template <> struct JsonPayload<CvCorporationInfo> { typedef CvJsonCorporationInfo  type; };
+template <> struct JsonPayload<CvUnitInfo>         { typedef CvJsonUnitInfo         type; };
+template <> struct JsonPayload<CvTechInfo>         { typedef CvJsonTechInfo         type; };
+template <> struct JsonPayload<CvPromotionInfo>    { typedef CvJsonPromotionInfo    type; };
+template <> struct JsonPayload<CvUnitCombatInfo>   { typedef CvJsonUnitCombatInfo   type; };
+template <> struct JsonPayload<CvCivicInfo>        { typedef CvJsonCivicInfo        type; };
+
 template <class TTag>
 class InfoRepo
 {
@@ -43,7 +73,7 @@ public:
 		}
 		if (m_data[iId] == NULL)
 		{
-			m_data[iId] = new CvJsonInfo();
+			m_data[iId] = new typename JsonPayload<TTag>::type();   // the per-type subclass (StoneBase-mirrored), upcast to base
 		}
 		return *m_data[iId];
 	}
