@@ -24,7 +24,7 @@
 #include "AI/CvPlayerAI.h"             // GET_PLAYER
 #include "AI/CvTeamAI.h"              // GET_TEAM -- the eval ctx's team
 #include "CvCascadeConditionEval.h"   // CvCascadeEvalCtx
-#include "CvCascadeEnablerKernel.h"   // EnablerKernel::computeActiveBuildings -- the cascade-computed active-building set
+#include "CvCascadeEnablerKernel.h"   // EnablerKernel::computeCityBuildingFacts -- the cascade-computed active-building set + vicinity provides
 #include "CvEventSpine.h"             // the #430 dispatch spine -- the shadow diff rides it (SD_MODIFIER), NOT direct gDLL->logMsg
 #include <set>
 
@@ -139,8 +139,9 @@ void cvCascadeModifierShadow()
 				// real verification, modifier-machine §0: judged after the WHOLE calc is in, port-fidelity vs StoneBase).
 				CvCascadeEvalCtx rec;
 				rec.city = pCity; rec.player = &player; rec.team = &GET_TEAM(player.getTeam());
-				std::set<int> recActiveB;   // cascade-COMPUTED active set (dormancy derived from operate, not the engine)
-				EnablerKernel::computeActiveBuildings(pCity, rec, recActiveB); rec.activeBuildings = &recActiveB;
+				std::set<int> recActiveB, recProvB;   // cascade-COMPUTED active set + in-vicinity provides (dormancy derived from operate, not the engine)
+				EnablerKernel::computeCityBuildingFacts(pCity, rec, recActiveB, recProvB);
+				rec.activeBuildings = &recActiveB; rec.vicinityProvidedBonuses = &recProvB;
 				const long cascRate = YieldRate::yieldRate100(aszChannel[y], eY, pCity, rec);
 				const int legRate = pCity->getYieldRate100(eY);
 				if (cascRate != (long)legRate)
@@ -176,8 +177,9 @@ void cvCascadeModifierShadow()
 			++iCityN;
 			CvCascadeEvalCtx cec;
 			cec.city = pCity; cec.player = &player; cec.team = &GET_TEAM(player.getTeam());
-			std::set<int> cecActiveB;   // cascade-COMPUTED active set (dormancy derived from operate, not the engine) -- alive for the whole city's calc
-			EnablerKernel::computeActiveBuildings(pCity, cec, cecActiveB); cec.activeBuildings = &cecActiveB;
+			std::set<int> cecActiveB, cecProvB;   // cascade-COMPUTED active set + in-vicinity provides (dormancy derived from operate) -- alive for the whole city's calc
+			EnablerKernel::computeCityBuildingFacts(pCity, cec, cecActiveB, cecProvB);
+			cec.activeBuildings = &cecActiveB; cec.vicinityProvidedBonuses = &cecProvB;
 			// Precompute the §1 commerce-yield + production-rate ONCE per city (the 4 commerce types share them) -- this is
 			// the big perf fix (was 8 redundant full §1 rate computes per city; now 2).
 			const long yc100 = YieldRate::yieldRate100("commerce", YIELD_COMMERCE, pCity, cec);

@@ -86,6 +86,9 @@ static bool ev_vicinityHas(const CvCascadeEvalCtx& ctx, int eBonus, CvCascVicini
 {
 	const CvCity* c = ctx.city;
 	if (c == NULL) return false;
+	// An ACTIVE building in this city that `provides` eBonus supplies it IN-VICINITY (json §5a) -- computed from JSON
+	// (the enabler's vicinityProvidedBonuses set), NEVER read from the engine's hasVicinityBonus (DEC-calc-zero-ride-in).
+	if (ctx.vicinityProvidedBonuses != NULL && ctx.vicinityProvidedBonuses->count(eBonus) != 0) return true;
 	// CONNECTED = the engine's OBTAINED-in-vicinity (json §3.4: owned+valid+connected). CvCity::hasVicinityBonus
 	// (CvCity.cpp:21353) encodes EXACTLY that -- hasBonus-gated, then centre OR an owned+valid+`isConnectedTo(this)`
 	// radius plot OR a building-provided supply -- so defer to it wholesale (StoneBase's per-plot `BonusConnected`
@@ -107,7 +110,7 @@ static bool ev_vicinityHas(const CvCascadeEvalCtx& ctx, int eBonus, CvCascVicini
 		default:                 if (bCenter || bOwned || bNeutral) return true; break;   // owned+neutral (the DEFAULT)
 		}
 	}
-	return c->hasVicinityBonus((BonusTypes)eBonus);   // a building-provided in-vicinity supply (provides.bonuses) fallback
+	return false;   // the building-provided supply is handled up-front from vicinityProvidedBonuses (json §5a), NOT the engine
 }
 
 static bool ev_bonusPresent(const CvCascadeEvalCtx& ctx, int eBonus, CvCascConnection conn, CvCascVicinity vic)

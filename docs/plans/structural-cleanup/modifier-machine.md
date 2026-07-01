@@ -65,14 +65,16 @@ rate100 = min(CAP, max(100, (Σ BASE + specialist) × max(0, modifier) + 100·�
     (`ev_vicinityHas` scans the workable radius: `getCityIndexPlot`/`getBonusType`/`getOwner`/`isBeingWorked` for the
     owned/neutral/worked/crossBorder discriminators — no engine read); **trade-connection is accepted STATE** (`hasBonus`
     — we don't model roads/connected cities, so "connected" is a raw input, not derived). Both correct as-is.
-  - **⏳ REMAINING (parked — trivial, but needs the fact-wiring done once):** two `hasVicinityBonus` reads survive in
-    `ev_vicinityHas`. (a) The **building-`provides` supply** fallback (a herd/tamed-animal building supplies e.g. horse
-    in-vicinity, json §5a — horse units gate on it): this is trivially DERIVED from JSON — the union of *active*
-    buildings' `provides.bonuses` (edge `provides.bonuses`), so it becomes a precomputed `vicinityProvidedBonuses` ctx
-    fact (twin of `activeBuildings`), not `hasVicinityBonus`. (b) The **`CONNECTED` discriminator** — the route/trade
-    "obtained" case — stays STATE (per the vicinity ruling). Do (a) as ONE "eval-context facts" pass that computes
-    `activeBuildings` + `vicinityProvidedBonuses` per city and feeds BOTH machines (closing the gap that `activeBuildings`
-    is currently wired only into the modifier's eval path, not the enabler's `requires`-eval) — never a modifier-only bolt-on.
+  - **✅ (a) DONE (2026-07-01) — building-`provides` supply is computed.** Rule (owner): an ACTIVE building that
+    `provides` a bonus in the same city ⇒ that bonus is IN-VICINITY (json §5a — a herd/tamed-animal building supplies
+    e.g. HORSE; horse units gate on it). `EnablerKernel::computeCityBuildingFacts` fills `activeBuildings` +
+    `vicinityProvidedBonuses` in ONE per-city pass (the union of active buildings' `provides.bonuses` edge), wired into
+    BOTH machines' eval ctxs — the modifier calc AND the enabler's `BuildingCascade`/`UnitCascade`/city-gate ctxs, which
+    ALSO closed the pre-existing gap that `activeBuildings` was only in the modifier path. `ev_vicinityHas` reads the
+    provides set; the `hasVicinityBonus` provides-fallback is GONE. A horse unit's `requires {BONUS, connection:vicinity}`
+    now trains when an active building provides HORSE.
+  - **(b) `CONNECTED` discriminator — STAYS state** (per the vicinity ruling): the route/trade "obtained" case is the
+    ONE remaining `hasVicinityBonus` read (`CvCascadeConditionEval.cpp:96`), accepted — we don't model roads/connected cities.
 - **Plot/specialist/trade inputs:** the worked plots + assigned specialists; trade-route yield is the one live-yield
   INPUT (folded in, not derived).
 

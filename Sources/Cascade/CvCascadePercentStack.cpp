@@ -17,7 +17,7 @@
 #include "AI/CvPlayerAI.h"             // GET_PLAYER
 #include "AI/CvTeamAI.h"              // GET_TEAM
 #include "CvCascadeConditionEval.h"    // CvCascadeEvalCtx + cascadeIsBuildingActive
-#include "CvCascadeEnablerKernel.h"    // EnablerKernel::computeActiveBuildings (the cascade-computed active set)
+#include "CvCascadeEnablerKernel.h"    // EnablerKernel::computeCityBuildingFacts (the cascade-computed active set + vicinity provides)
 
 // The percent stack for one channel at one city: max(0, 100 + Σ percent) over active city buildings (city+area),
 // empire buildings (empire), adopted civics (empire), and the player's active traits (empire). Fills the breakdown.
@@ -26,9 +26,9 @@ int PercentStack::percentStack(const std::string& channel, const CvCity* pCity, 
 	const CvPlayer& player = GET_PLAYER(pCity->getOwner());
 	CvCascadeEvalCtx ec;                               // the live-engine eval target for the deposit conditions
 	ec.city = pCity; ec.player = &player; ec.team = &GET_TEAM(player.getTeam());
-	std::set<int> activeB;                             // cascade-COMPUTED active set (dormancy derived from operate, not the engine)
-	EnablerKernel::computeActiveBuildings(pCity, ec, activeB);
-	ec.activeBuildings = &activeB;
+	std::set<int> activeB, provB;                      // cascade-COMPUTED active set + in-vicinity provides (dormancy derived from operate, not the engine)
+	EnablerKernel::computeCityBuildingFacts(pCity, ec, activeB, provB);
+	ec.activeBuildings = &activeB; ec.vicinityProvidedBonuses = &provB;
 	const std::string wantCity = channel + ".city";
 	const std::string wantArea = channel + ".area";
 	const std::string wantEmpire = channel + ".empire";

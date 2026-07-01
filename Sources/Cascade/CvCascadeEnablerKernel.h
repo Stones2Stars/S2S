@@ -61,11 +61,13 @@ public:
 	static void gateSet(const std::string& bucket, const EnBucketSets& cand, const CvCascadeEvalCtx& ec,
 		const CvPlayer& kPlayer, const CvTeam& kTeam, bool bUnit, std::set<int>& avail);
 
-	// COMPUTE the ACTIVE (present ∧ operate-holds ∧ ¬dormant-trigger) building ids for pCity into `out`. DORMANCY is
-	// DERIVED from `requires.operate` + its dormant triggers (the successor buildings whose presence dorms this) --
-	// never the engine active-building/`/state` (DEC-calc-zero-ride-in; dormancy is 100% governed by operate enablers).
-	// Feeds CvCascadeEvalCtx::activeBuildings, which cascadeIsBuildingActive reads.
-	static void computeActiveBuildings(const CvCity* pCity, const CvCascadeEvalCtx& ec, std::set<int>& out);
+	// COMPUTE the two per-city building facts in ONE pass. `activeOut` = the ACTIVE (present ∧ operate-holds ∧
+	// ¬dormant-trigger) building ids for pCity. DORMANCY is DERIVED from `requires.operate` + its dormant triggers (the
+	// successor buildings whose presence dorms this) -- never the engine active-building/`/state` (DEC-calc-zero-ride-in;
+	// dormancy is 100% governed by operate enablers). `providedOut` = the union of every ACTIVE building's
+	// `provides.bonuses` -- the BONUS ids that building supply makes present IN-VICINITY (json §5a). Feeds
+	// CvCascadeEvalCtx::activeBuildings (read by cascadeIsBuildingActive) + ::vicinityProvidedBonuses (read by ev_vicinityHas).
+	static void computeCityBuildingFacts(const CvCity* pCity, const CvCascadeEvalCtx& ec, std::set<int>& activeOut, std::set<int>& providedOut);
 };
 
 #endif // CV_CASCADE_ENABLER_KERNEL_H

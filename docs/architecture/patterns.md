@@ -69,8 +69,10 @@ needs a fact FEEDS it to the one function, it never re-derives it.
    engine's *dormancy verdict* (the camouflaged ride-in, [DEC-calc-zero-ride-in](decisions.md#dec-calc-zero-ride-in)).
    *(State: ✅ building active/dormant DONE (2026-07-01) — `EnablerKernel::computeActiveBuildings` derives it from
    `requires.operate` + dormant triggers into `CvCascadeEvalCtx::activeBuildings` (the precomputed-fact pattern, twin of
-   `waivedPrereqBuildings`); the modifier + evaluator read `cascadeIsBuildingActive`, never `isActiveBuilding`. ⏳ Next
-   analogous case: the connected-bonus read (`hasVicinityBonus`) — the same "raw input or derived?" question.)*
+   `waivedPrereqBuildings`); the modifier + evaluator read `cascadeIsBuildingActive`, never `isActiveBuilding`. ✅ And
+   vicinity-`provides` (an active building providing a bonus ⇒ in-vicinity, json §5a) is likewise computed —
+   `vicinityProvidedBonuses`, filled with `activeBuildings` in one `computeCityBuildingFacts` pass feeding both machines.
+   Only the route/trade `CONNECTED` "obtained" case stays raw state — the network we don't model.)*
 7. **The legacy shadow is the ONE sanctioned duplication.** During migration the cascade runs *alongside* legacy and is
    diffed — a deliberate, temporary double with a **defined death** (deleted at the atomic cutover, [DEC-map-before-delete](decisions.md#dec-map-before-delete)).
    It is not a DRY violation *because* it is scheduled to die. **No other duplication is sanctioned.**

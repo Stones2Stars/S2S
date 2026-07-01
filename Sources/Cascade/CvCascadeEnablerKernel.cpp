@@ -185,13 +185,15 @@ void EnablerKernel::gateSet(const std::string& bucket, const EnBucketSets& cand,
 	}
 }
 
-// COMPUTE the ACTIVE buildings for pCity (present ∧ operate-holds ∧ ¬dormant-trigger). DORMANCY is DERIVED from
-// `requires.operate` + its dormant triggers (the successor buildings whose presence dorms this) -- NEVER the engine
-// active-building/`/state` read (DEC-calc-zero-ride-in; owner: dormancy is 100% governed by operate enablers). Present is
-// the raw input hasBuilding (the un-dormancy-gated presence). `ecOp` = a COPY of ec with activeBuildings=NULL so a BUILDING_ predicate INSIDE an
+// COMPUTE the two per-city building facts in ONE pass. `activeOut` = the ACTIVE buildings for pCity (present ∧
+// operate-holds ∧ ¬dormant-trigger). DORMANCY is DERIVED from `requires.operate` + its dormant triggers (the successor
+// buildings whose presence dorms this) -- NEVER the engine active-building/`/state` read (DEC-calc-zero-ride-in; owner:
+// dormancy is 100% governed by operate enablers). Present is the raw input hasBuilding (the un-dormancy-gated presence).
+// `providedOut` = every ACTIVE building's `provides.bonuses` unioned -- the in-vicinity bonus supply (json §5a),
+// computed from JSON, not the engine. `ecOp` = a COPY of ec with activeBuildings=NULL so a BUILDING_ predicate INSIDE an
 // operate condition resolves via raw presence -- this breaks any recursion (operate conditions reference resources/
 // civics in practice, not building-active).
-void EnablerKernel::computeActiveBuildings(const CvCity* pCity, const CvCascadeEvalCtx& ec, std::set<int>& out)
+void EnablerKernel::computeCityBuildingFacts(const CvCity* pCity, const CvCascadeEvalCtx& ec, std::set<int>& activeOut, std::set<int>& providedOut)
 {
 	if (pCity == NULL) return;
 	CvCascadeEvalCtx ecOp = ec;
@@ -210,6 +212,13 @@ void EnablerKernel::computeActiveBuildings(const CvCity* pCity, const CvCascadeE
 			for (size_t i = 0; i < j->dormantTriggers.size(); ++i)
 				if (pCity->hasBuilding((BuildingTypes)j->dormantTriggers[i])) { dormant = true; break; }
 		if (dormant) continue;
-		out.insert(b);   // active
+		activeOut.insert(b);   // active
+		// This ACTIVE building's `provides.bonuses` supply those bonuses IN-VICINITY (json §5a).
+		if (j != NULL)
+		{
+			std::map<std::string, std::vector<int> >::const_iterator pit = j->edges.find("provides.bonuses");
+			if (pit != j->edges.end())
+				for (size_t i = 0; i < pit->second.size(); ++i) providedOut.insert(pit->second[i]);
+		}
 	}
 }

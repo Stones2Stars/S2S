@@ -238,6 +238,10 @@ void cvCascadeEnablerShadow()
 			EnablerKernel::generate(kPlayer, pCity, candC);
 			CvCascadeEvalCtx cec;                          // CITY-scope eval ctx
 			cec.city = pCity; cec.player = &kPlayer; cec.team = &kTeam;
+			// The two per-city building facts (active set + in-vicinity `provides` supply, json §5a) for the projects/
+			// processes gateSet requires-eval -- computed from the cascade, not the engine (DEC-calc-zero-ride-in).
+			std::set<int> cecActiveB, cecProvB; EnablerKernel::computeCityBuildingFacts(pCity, cec, cecActiveB, cecProvB);
+			cec.activeBuildings = &cecActiveB; cec.vicinityProvidedBonuses = &cecProvB;
 			std::set<int> avB, avU, avPr, avProc;
 			BuildingCascade::buildable(pCity, kPlayer, kTeam, avB);   // BuildingCascade port (all-buildings frontier)
 			UnitCascade::trainable(pCity, kPlayer, kTeam, avU);       // UnitCascade port (generate-then-gate)
