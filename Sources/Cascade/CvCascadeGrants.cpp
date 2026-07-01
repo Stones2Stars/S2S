@@ -12,19 +12,21 @@
 #include "Repos/InfoRepo.h"        // InfoRepo<CvXInfo>::get().get(id) -> the mapped CvJsonInfo*
 #include "CvBuildingInfo.h"        // InfoRepo<CvBuildingInfo>
 #include "CvUnitInfo.h"            // InfoRepo<CvUnitInfo>
+#include "CvTechInfo.h"           // InfoRepo<CvTechInfo> (tech first-discover grants)
 #include "AI/BetterBTSAI.h"        // gPlayerLogLevel -- the slice-1 observe gate
 #include <map>
 #include <string>
 #include <vector>
 
 // ===================== [GRANTS] spine domain (logging.md §4: logging is a spine CONSUMER) =====================
-enum GrEvt { GRE_BUILDING = 1, GRE_UNIT };
+enum GrEvt { GRE_BUILDING = 1, GRE_UNIT, GRE_TECH };
 enum GrFld
 {
-	GF_PLAYER = 1, GF_BUILDING, GF_UNIT,
+	GF_PLAYER = 1, GF_BUILDING, GF_UNIT, GF_TECH,
 	GF_PROMOTIONS, GF_FOUNDBUILDINGS,                        // unit genuine grants
 	GF_REPEATABLE, GF_FREEPROMOS, GF_FREETECHS,              // building genuine grants
-	GF_GOLDENAGE, GF_POPULATION                              // building flag + scoped-pulse grants (increment 2)
+	GF_GOLDENAGE, GF_POPULATION,                             // building flag + scoped-pulse grants (increment 2)
+	GF_FIRSTUNIT, GF_FIRSTPROPHET                            // tech first-discover grants (increment 3)
 };
 static const char* gr_prefix(int evt)
 {
@@ -32,6 +34,7 @@ static const char* gr_prefix(int evt)
 	{
 	case GRE_BUILDING: return "[GRANTS/building]";
 	case GRE_UNIT:     return "[GRANTS/unit]";
+	case GRE_TECH:     return "[GRANTS/tech]";
 	default:           return "[GRANTS]";
 	}
 }
@@ -43,6 +46,9 @@ static const char* gr_field(int tag, SpineFieldType* peType)
 	case GF_PLAYER:         *peType = SFT_PLAYER;   return "player";
 	case GF_BUILDING:       *peType = SFT_BUILDING; return "building";
 	case GF_UNIT:           *peType = SFT_UNIT;     return "unit";
+	case GF_TECH:           *peType = SFT_TECH;     return "tech";
+	case GF_FIRSTUNIT:      *peType = SFT_UNIT;     return "firstFreeUnit";
+	case GF_FIRSTPROPHET:   *peType = SFT_UNIT;     return "firstFreeProphet";
 	case GF_PROMOTIONS:     return "promotions";
 	case GF_FOUNDBUILDINGS: return "foundBuildings";
 	case GF_REPEATABLE:     return "repeatable";
@@ -113,13 +119,35 @@ static void gr_resolveUnit(int iUnit, int iPlayer)
 		.addI(GF_PROMOTIONS, nPromos).addI(GF_FOUNDBUILDINGS, nFound));
 }
 
+static int gr_firstId(const CvJsonInfo* j, const char* szBucket)   // a single-id grant bucket's id (-1 if absent)
+{
+	std::map<std::string, std::vector<int> >::const_iterator it = j->grantLists.find(szBucket);
+	return (it != j->grantLists.end() && !it->second.empty()) ? it->second[0] : -1;
+}
+
+static void gr_resolveTech(int iTech, int iPlayer)
+{
+	const CvJsonInfo* j = InfoRepo<CvTechInfo>::get().get(iTech);
+	if (j == NULL) return;
+	const int iFirstUnit    = gr_firstId(j, "firstFreeUnit");     // first-discover free unit id (-1 none)
+	const int iFirstProphet = gr_firstId(j, "firstFreeProphet");  // first-discover free prophet id (option-gated)
+	const int nFreeTechs    = gr_pulse(j, "freeTechs");          // first-discover free tech picks (count)
+	if (iFirstUnit < 0 && iFirstProphet < 0 && nFreeTechs == 0) return;
+	eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_GRANTS, GRE_TECH, 1)
+		.addI(GF_PLAYER, iPlayer).addI(GF_TECH, iTech)
+		.addI(GF_FIRSTUNIT, iFirstUnit).addI(GF_FIRSTPROPHET, iFirstProphet).addI(GF_FREETECHS, nFreeTechs));
+}
+
 void CvCascadeGrants::onEvent(const CvCascadeEvent& e)
 {
-	// Slice-1: observe-only (un-run shadow) -- free when logging is off. The DOMAIN interest-guard already dispatched us.
-	if (gPlayerLogLevel < 1) return;
-	if (e.eKind != EVENTKIND_DOMAIN || e.iB <= 0) return;   // iB = delta; only on ADD (built/created), not remove
-	if (e.iEventId == CASCADE_EVT_BUILDING_COUNT)  gr_resolveBuilding(e.iType, e.iC);   // iType=building, iC=player
-	else if (e.iEventId == CASCADE_EVT_UNIT_COUNT) gr_resolveUnit(e.iType, e.iC);       // iType=unit,     iC=player
+	// Observe-only (un-run shadow) -- free when logging is off. The DOMAIN interest-guard already dispatched us.
+	if (gPlayerLogLevel < 1 || e.eKind != EVENTKIND_DOMAIN) return;
+	switch (e.iEventId)
+	{
+	case CASCADE_EVT_BUILDING_COUNT: if (e.iB > 0) gr_resolveBuilding(e.iType, e.iC); break;  // iB = delta; only on ADD (built)
+	case CASCADE_EVT_UNIT_COUNT:     if (e.iB > 0) gr_resolveUnit(e.iType, e.iC);     break;  // only on ADD (created)
+	case CASCADE_EVT_TECH_ACQUIRED:  gr_resolveTech(e.iType, e.iC);                   break;  // first-discover only (iC = discoverer)
+	}
 }
 
 static CvCascadeGrants s_cascadeGrants;

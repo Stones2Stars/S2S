@@ -4,6 +4,7 @@
 #include "Tools/FProfiler.h"
 
 #include "CvGameCoreDLL.h"
+#include "CvEventSpine.h"   // #430: emit the tech first-discover DOMAIN event (the grants trigger)
 #include "CvArea.h"
 #include "CvBuildingInfo.h"
 #include "CvBonusInfo.h"
@@ -5449,6 +5450,10 @@ void CvTeam::setHasTech(TechTypes eTech, bool bNewValue, PlayerTypes ePlayer, bo
 
 		if (bFirst && GC.getGame().countKnownTechNumTeams(eTech) == 1)
 		{
+			// #430 cascade: the tech's first-discoverer grants (firstFreeUnit / firstFreeProphet / freeTechs) fire in
+			// this block -> emit the DOMAIN trigger so the grants machine resolves them (synced, deterministic).
+			eventSpine().emit(CvCascadeEvent(EVENTKIND_DOMAIN, CASCADE_EVT_TECH_ACQUIRED, (int)eTech, 1, 0, (int)ePlayer));
+
 			const UnitTypes eFreeUnit = (UnitTypes)kTech.getFirstFreeUnit();
 			if (eFreeUnit != NO_UNIT)
 			{

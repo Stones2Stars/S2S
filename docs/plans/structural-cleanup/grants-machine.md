@@ -51,9 +51,14 @@ parity (owner: no live parity until everything is in).
      the 26 `{unit}` spawns resolved). `[GRANTS/building]` `repeatable` now counts the full structured set. Pure readJson.
      *(Deferred: `heal:"full"` + property-amount ×100 vs raw is followed for consistency; the enabler/#429 consumers
      that ACT on these — the per-turn spawn/heal apply + the spatial property distribution — are increments 3/5.)*
-3. **The remaining DOMAIN triggers** — the spine emits only building/unit-count + name-change today. Add the events the
-   inventory needs: per-turn (recurring `repeatable`/`freePromotions`), tech first-discover, civ-start, religion-founded,
-   civic-adopted, city-founded (`foundBuildings`), game-start (era/handicap). Each is a new synced `DOMAIN` event.
+3. **The remaining DOMAIN triggers** — the spine emitted only building/unit-count + name-change; the grant inventory
+   needs more. Each is a new synced `DOMAIN` event emitted from a deterministic engine state-change site.
+   - **3a ✅ DONE — tech first-discover** (`CASCADE_EVT_TECH_ACQUIRED`): emitted from `CvTeam::setHasTech` inside the
+     `bFirst && countKnownTechNumTeams==1` block (the exact site where `firstFreeUnit`/`firstFreeProphet`/`freeTechs`
+     fire), carrying the tech + discovering player. The machine resolves them → `[GRANTS/tech]`.
+   - **3b (remaining triggers):** religion-founded, civic-adopted, city-founded (`foundBuildings`), civ-start /
+     game-start (era/handicap civ grants), and the **per-turn recurring** scan (`repeatable` spawn/heal + `freePromotions`
+     — not a state-change event but a turn-cycle hook).
 4. **The true diff-vs-legacy shadow** — grants are event-driven side-effects; the shadow compares the cascade's resolved
    grant-set against what legacy applied (hooking the legacy apply-sites above), per channel. Un-run until everything is in.
 5. **Apply + cutover** — replace the legacy grant application; the grants machine applies. Atomic with the cascade cutover.
