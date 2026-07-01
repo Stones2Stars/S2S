@@ -19,6 +19,7 @@ class CvJsonInfo;
 class CvJsonTraitInfo;
 class CvPlot;
 class CvPlayer;
+class CvCity;
 
 // The C++ flat-deposit model: each CvCascadeDeposit's `address` IS the dotted "<channel>.<scope>[.<member>[.<KEY>]]" path
 // (readJson built it), `unit` the leaf kind, `value100` the ×100 magnitude. So a StoneBase tree-walk
@@ -83,10 +84,17 @@ public:
 	static int substratePlotYield(const std::string& channel, const CvJsonInfo* d, const CvPlot* p, TeamTypes eTeam,
 		const std::vector<std::string>& directImpKeys, const CvCascadeEvalCtx& ec);
 
-	// The player's effective extra/less-yield threshold for a channel: MIN positive over active traits + civics'
-	// {thresholdFamily}.empire.{channel}.flat. 0 -> no threshold. (⏳ interim trait read + no PURE_TRAITS -- §6; per-source
-	// sum used as the source's threshold -- exact for the common single-deposit case.)
+	// The player's effective extra/less-yield threshold for a channel: MIN over the POSITIVE per-DEPOSIT magnitudes of
+	// {thresholdFamily}.empire.{channel}.flat across the player's active traits + civics (StoneBase MinPositiveThreshold --
+	// MINs individual magnitudes, NOT a per-source sum). 0 -> no threshold. Applies the StoneBase PURE_TRAITS threshold-family
+	// gate (a lessYieldThreshold dropped from a non-negative trait, an extraYieldThreshold from a negative one; civics unfiltered).
 	static int minPosThreshold(const char* thresholdFamily, const std::string& channel, const CvPlayer& player, const CvCascadeEvalCtx& ec);
+
+	// Σ CIVIC BUILDING-KEYED percent for the city's ACTIVE (non-dormant constructed) buildings -- the engine's
+	// owner.getBuildingCommerceModifier (civic-fed) folded into modBuilding per built building (StoneBase
+	// BuildingKeyedSourcePercent): for each active building B in the city, Σ each adopted civic's
+	// <channel>.empire.buildings.<B_TYPE>.percent deposit (gated). Civic-only; channel-parameterized (serves yield + commerce).
+	static int buildingKeyedSourcePercent(const std::string& channel, const CvCity* pCity, const CvCascadeEvalCtx& ec);
 
 	// getModifiedIntValue port (CvGameCoreDLL.cpp:691): mod>0 -> v×(100+mod)/100; mod<0 -> v×100/(100-mod); else v.
 	static int modifiedInt(int v, int mod);

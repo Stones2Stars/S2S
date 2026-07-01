@@ -12,6 +12,8 @@
 #include "Defines/CvGlobals.h"
 #include "Engine/CvPlot.h"
 #include "Engine/CvPlayer.h"
+#include "Engine/CvCity.h"             // building-keyed percent iterates the city's active buildings
+#include "Infos/CvBuildingInfo.h"      // GC.getBuildingInfo(b).getType() -- the address key for building-keyed deposits
 #include "Engine/CvGame.h"             // GC.getGame().isOption (the trait-set option gate)
 #include "Infos/CvTerrainInfo.h"
 #include "Infos/CvFeatureInfo.h"
@@ -51,8 +53,8 @@ int MMKernel::sumPercent(const CvJsonInfo* d, const std::string& wantAddress, co
 // The C++ flat-deposit model: each CvCascadeDeposit's `address` IS the dotted "<channel>.<scope>[.<member>[.<KEY>]]" path
 // (readJson built it), `unit` the leaf kind, `value100` the ×100 magnitude. So a StoneBase tree-walk
 // (fam.Root.Children[scope]...Magnitudes) is an address-string match here. These mirror ModifierMath.cs.
-// (⏳ INTERIM: the trait set is read via player.hasTrait + InfoRepo<CvTraitInfo>, NOT the option-gated simple/complex
-//  ActiveTraitSet -- that is the §6 trait engine fix; PURE_TRAITS likewise pending. Flagged where it matters.)
+// The active trait set IS option-gated (traitData() picks the SIMPLE vs COMPLEX repo by GAMEOPTION_LEADER_COMPLEX_TRAITS,
+// StoneBase ActiveTraitSet) and PURE_TRAITS IS applied (sumTrait/sumTrait100 drop off-alignment values, StoneBase PureFilter).
 
 // Σ a unit at a scope-wide address as a HUMAN int (value100/100; StoneBase SumUnitAtScope = Σ (int)m.Value), gated.
 int MMKernel::sumUnit(const CvJsonInfo* d, const std::string& wantAddress, const char* unit, const CvCascadeEvalCtx& ec)
@@ -223,18 +225,37 @@ int MMKernel::substratePlotYield(const std::string& channel, const CvJsonInfo* d
 	     + keyedPlotYield(channel, d, "plot", p, eTeam, directImpKeys, ec, true);
 }
 
-// The player's effective extra/less-yield threshold for a channel: MIN positive over active traits + civics'
-// {thresholdFamily}.empire.{channel}.flat. 0 -> no threshold. (⏳ interim trait read + no PURE_TRAITS -- §6; per-source
-// sum used as the source's threshold -- exact for the common single-deposit case.)
+// The player's effective extra/less-yield threshold for a channel: the engine takes the MIN over the POSITIVE per-DEPOSIT
+// magnitudes of {thresholdFamily}.empire.{channel}.flat across the player's active traits + civics (StoneBase
+// MinPositiveThreshold: `if (v>0 && (best==0 || v<best)) best=v` over INDIVIDUAL magnitudes, NOT a per-source sum). 0 ->
+// no threshold. PURE_TRAITS gate (StoneBase): a source-level filter by threshold FAMILY -- a lessYieldThreshold is a
+// DOWNSIDE (dropped from a non-negative trait), an extraYieldThreshold is an UPSIDE (dropped from a negative trait);
+// civics carry no alignment (never filtered).
 int MMKernel::minPosThreshold(const char* thresholdFamily, const std::string& channel, const CvPlayer& player, const CvCascadeEvalCtx& ec)
 {
 	const std::string wantAddr = std::string(thresholdFamily) + ".empire." + channel;
+	const bool bPure = GC.getGame().isOption(GAMEOPTION_LEADER_PURE_TRAITS);
+	const bool bLess = (std::string(thresholdFamily) == "lessYieldThreshold");
+	const bool bExtra = (std::string(thresholdFamily) == "extraYieldThreshold");
 	int best = 0;
 	for (int t = 0; t < GC.getNumTraitInfos(); ++t)
 	{
 		if (!player.hasTrait((TraitTypes)t)) continue;
-		const int v = sumTrait(traitData(t), wantAddr, "flat", ec);   // active set + PURE_TRAITS (StoneBase MinPositiveThreshold)
-		if (v > 0 && (best == 0 || v < best)) best = v;
+		const CvJsonTraitInfo* d = traitData(t);   // the option-gated active set (simple/complex), StoneBase ActiveTraitSet
+		if (d == NULL) continue;
+		if (bPure)   // StoneBase threshold-family pure gate (source-level, by family), NOT the value-sign sumTrait filter
+		{
+			if (bLess && !d->negativeTrait) continue;   // a downside threshold is removed from a non-negative trait
+			if (bExtra && d->negativeTrait) continue;    // an upside threshold is removed from a negative trait
+		}
+		for (size_t i = 0; i < d->deposits.size(); ++i)   // per-DEPOSIT MIN over the family's magnitudes (StoneBase)
+		{
+			const CvCascadeDeposit& dep = d->deposits[i];
+			if (dep.unit != "flat" || dep.address != wantAddr) continue;
+			if (!applies(dep.enabled, dep.disabled, ec)) continue;
+			const int v = dep.value100 / 100;
+			if (v > 0 && (best == 0 || v < best)) best = v;
+		}
 	}
 	for (int co = 0; co < GC.getNumCivicOptionInfos(); ++co)
 	{
@@ -242,10 +263,47 @@ int MMKernel::minPosThreshold(const char* thresholdFamily, const std::string& ch
 		if (c == NO_CIVIC) continue;
 		const CvJsonInfo* d = InfoRepo<CvCivicInfo>::get().get((int)c);
 		if (d == NULL) continue;
-		const int v = sumUnit(d, wantAddr, "flat", ec);
-		if (v > 0 && (best == 0 || v < best)) best = v;
+		for (size_t i = 0; i < d->deposits.size(); ++i)   // civics: no alignment, no pure filter
+		{
+			const CvCascadeDeposit& dep = d->deposits[i];
+			if (dep.unit != "flat" || dep.address != wantAddr) continue;
+			if (!applies(dep.enabled, dep.disabled, ec)) continue;
+			const int v = dep.value100 / 100;
+			if (v > 0 && (best == 0 || v < best)) best = v;
+		}
 	}
 	return best;
+}
+
+// Σ CIVIC BUILDING-KEYED percent for the city's ACTIVE buildings -- the engine's owner.getBuildingCommerceModifier
+// (civic-fed) folded into modBuilding per built building (StoneBase BuildingKeyedSourcePercent): for each active
+// (non-dormant constructed) building B in the city, Σ each adopted civic's <channel>.empire.buildings.<B_TYPE>.percent
+// deposit, gated. Civic-only; the channel parameter serves BOTH the yield and commerce percent stacks.
+int MMKernel::buildingKeyedSourcePercent(const std::string& channel, const CvCity* pCity, const CvCascadeEvalCtx& ec)
+{
+	const CvPlayer& player = GET_PLAYER(pCity->getOwner());
+	const int nB = GC.getNumBuildingInfos();
+	int sum = 0;
+	for (int b = 0; b < nB; ++b)
+	{
+		if (!cascadeIsBuildingActive(b, ec)) continue;   // non-dormant constructed (StoneBase ConstructedBuildings \ Dormant)
+		const std::string wantAddr = channel + ".empire.buildings." + GC.getBuildingInfo((BuildingTypes)b).getType();
+		for (int co = 0; co < GC.getNumCivicOptionInfos(); ++co)
+		{
+			const CivicTypes c = player.getCivics((CivicOptionTypes)co);
+			if (c == NO_CIVIC) continue;
+			const CvJsonInfo* d = InfoRepo<CvCivicInfo>::get().get((int)c);
+			if (d == NULL) continue;
+			for (size_t i = 0; i < d->deposits.size(); ++i)   // Σ the civic's percent deposit at this building's address
+			{
+				const CvCascadeDeposit& dep = d->deposits[i];
+				if (dep.unit != "percent" || dep.address != wantAddr) continue;
+				if (!applies(dep.enabled, dep.disabled, ec)) continue;
+				sum += dep.value100 / 100;
+			}
+		}
+	}
+	return sum;
 }
 
 // getModifiedIntValue port (CvGameCoreDLL.cpp:691): mod>0 -> v×(100+mod)/100; mod<0 -> v×100/(100-mod); else v.

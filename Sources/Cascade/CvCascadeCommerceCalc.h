@@ -10,10 +10,10 @@
 //	docs/plans/structural-cleanup/modifier-machine.md.
 //
 //	Purely-organizational static-methods class: NO data members, never instantiated, no per-instance state.
-//	⏳ PARTIAL: the BULK packages are ported (specialist/religion/golden-age/building-flat/player-extra, reusing §1); the
-//	shrine / corp-HQ / double-time / state-religion / corporation / building-keyed packages are STUBBED 0 -- they need
-//	readJson to map the `shrine`/`identity` intrinsic blocks + verified corp/heritage/built-year engine state (the next
-//	sub-tasks). So a commerce-rate diff is EXPECTED until they land (owner: port it all, then compare). Flagged, not dropped.
+//	All §2 packages are IMPLEMENTED: the reused §1 packages (specialist/religion/golden-age/building-flat/player-extra)
+//	AND shrine / corp-HQ / double-time / state-religion / corporation / building-keyed (the .cpp fully computes each from
+//	the cascade identity structs + engine counts). A few still read Info CONFIG interim (shrine/corpHQ/double/corp -- the
+//	`shrine`/`identity` intrinsic blocks are a readJson-mapping cleanliness follow-up, NOT a correctness gap; flagged per-fn).
 //
 
 #include "CvCascadeConditionEval.h"   // CvCascadeEvalCtx -- the eval target for deposit conditions
@@ -32,7 +32,8 @@ public:
 	static int religion(const std::string& channel, const CvCity* pCity, const CvCascadeEvalCtx& ec);
 
 	// §2 BASE: player-extra commerce ×100 -- trait CommerceChanges + heritage EraCommerceChanges, both {ch}.empire.flat (the
-	// heritage era-counter gate `enabled:{ERA,min}` is evaluated by MMKernel::applies). (⏳ interim trait read -- §6.)
+	// heritage era-counter gate `enabled:{ERA,min}` is evaluated by MMKernel::applies). (Traits: option-gated active set +
+	// PURE_TRAITS via sumTrait100/traitData.)
 	static long playerExtra(const std::string& channel, const CvPlayer& player, const CvCascadeEvalCtx& ec);
 
 	// §2 BASE: building-keyed commerce ×100 (GlobalBuildingExtraCommerces, BuildingKeyedCommercePackage) -- a building G

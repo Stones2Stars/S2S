@@ -14,6 +14,7 @@
 #include "Engine/CvPlayer.h"
 #include "Infos/CvBuildingInfo.h"
 #include "Infos/CvCivicInfo.h"
+#include "Infos/CvProjectInfo.h"      // InfoRepo<CvProjectInfo> tag + ProjectTypes (the projects empire.percent loop)
 #include "AI/CvPlayerAI.h"             // GET_PLAYER
 #include "AI/CvTeamAI.h"              // GET_TEAM
 #include "CvCascadeConditionEval.h"    // CvCascadeEvalCtx + cascadeIsBuildingActive
@@ -56,6 +57,19 @@ int PercentStack::percentStack(const std::string& channel, const CvCity* pCity, 
 	{
 		if (!player.hasTrait((TraitTypes)t)) continue;
 		bk.trait += MMKernel::sumTrait(MMKernel::traitData(t), wantEmpire, "percent", ec);
+	}
+	// CIVIC BUILDING-KEYED percent (owner.getBuildingCommerceModifier, StoneBase BuildingKeyedSourcePercent): folded into
+	// modBuilding per active building -> the city/building tier (bCity), matching StoneBase's ModifierBreakdown bucket.
+	bk.bCity += MMKernel::buildingKeyedSourcePercent(channel, pCity, ec);
+	// PROJECT empire-scope percent (StoneBase projectEmpire; the engine's project modifier accumulator, empire-scope rolls
+	// down to every city). Projects are TEAM-owned in the engine -> read the team's project count. Yield channels find none
+	// (commerce-impacting only). Projects are mapped into InfoRepo<CvProjectInfo> (generic CvJsonInfo deposits) by readJson.
+	const CvTeam& team = GET_TEAM(player.getTeam());
+	for (int pj = 0; pj < GC.getNumProjectInfos(); ++pj)
+	{
+		if (team.getProjectCount((ProjectTypes)pj) <= 0) continue;
+		const CvJsonInfo* d = InfoRepo<CvProjectInfo>::get().get(pj);
+		if (d != NULL) bk.bEmpire += MMKernel::sumPercent(d, wantEmpire, ec);
 	}
 	return std::max(0, 100 + bk.bCity + bk.bArea + bk.bEmpire + bk.civic + bk.trait);
 }

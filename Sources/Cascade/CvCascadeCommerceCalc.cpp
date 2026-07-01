@@ -47,7 +47,8 @@ int CommerceCalc::religion(const std::string& channel, const CvCity* pCity, cons
 }
 
 // §2 BASE: player-extra commerce ×100 -- trait CommerceChanges + heritage EraCommerceChanges, both {ch}.empire.flat (the
-// heritage era-counter gate `enabled:{ERA,min}` is evaluated by MMKernel::applies). (⏳ interim trait read -- §6.)
+// heritage era-counter gate `enabled:{ERA,min}` is evaluated by MMKernel::applies). (Traits: option-gated active set +
+// PURE_TRAITS via sumTrait100/traitData.)
 long CommerceCalc::playerExtra(const std::string& channel, const CvPlayer& player, const CvCascadeEvalCtx& ec)
 {
 	const std::string wantEmpire = channel + ".empire";
