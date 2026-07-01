@@ -29,9 +29,11 @@ is still being shaped, owner). OnGameOptions/NotOnGameOptions -> loadPrune.
 grants: SubCombatChangeTypes (confers a unitcombat), RemovesUnitCombatTypes, FreetoUnitCombats, AddsBuildTypes,
 setSpecialUnit -> things the promotion confers on the unit.
 identity: PromotionLine+linePriority (the chain), command (controlPoints/commandRange/commandType/leader),
-RenamesUnitTo, ReplacesUnitCombat, layerAnimationPath, the status-promotion flags, celebrityHappy (a city
-happiness modifier -> structured properly at the Unit pass, byOccupant §5), zeroesXP (the XP-reset cost of a
-quality upgrade), + the parked availability gates above.
+RenamesUnitTo, ReplacesUnitCombat, layerAnimationPath, the status-promotion flags, zeroesXP (the XP-reset cost
+of a quality upgrade), + the parked availability gates above.
+celebrity: the numeric per-unit celebrity-happiness AMOUNT (iCelebrityHappy) is DROPPED (owner 2026-07-01: "not a
+random field on a unit"); celebrity becomes a boolean SKILL (skills.celebrity=true when iCelebrityHappy != 0),
+and CvCity is fixed POST-MIGRATION to scan for celebrity-skilled units and award the happiness itself.
 art: Button -> ui.art.icon ; Sound -> sound.sound. ObsoleteTech -> store tech.obsoletes.promotions (new edge).
 
 DROPS: BATTLEWORN trio iDamageperTurn/iStrAdjperTurn/iWeakenperTurn (nuked, owner — not even applied in
@@ -210,7 +212,7 @@ GRANT_LIST = {"SubCombatChangeTypes": "unitCombats", "RemovesUnitCombatTypes": "
 # identity (parked): availability/plot/state gates (deferred to the unit-plane enabling pass) + config flags.
 ID_SCALAR = {"iControlPoints": "controlPoints", "iCommandRange": "commandRange",
              "LayerAnimationPath": "layerAnimationPath", "RenamesUnitTo": "renamesUnitTo",
-             "ReplacesUnitCombat": "replacesUnitCombat", "iCelebrityHappy": "celebrityHappy",
+             "ReplacesUnitCombat": "replacesUnitCombat",
              "StateReligionPrereq": "stateReligionPrereq", "MinEraType": "minEra", "MaxEraType": "maxEra",
              "iLevelPrereq": "levelPrereq", "DomainCargoChange": "domainCargoChange",
              "SpecialCargoChange": "specialCargoChange", "SpecialCargoPrereq": "specialCargoPrereq",
@@ -357,6 +359,11 @@ def curate(typ, rec, store):
         if node is not None:
             for k in _simple_list(node):
                 caps.setdefault(name, OrderedDict())[k] = True
+    # celebrity: iCelebrityHappy is NUMERIC (a per-unit city-happiness amount), so it can't ride CAP_BOOL; the
+    # AMOUNT is DROPPED (owner 2026-07-01: "not a random field on a unit") -> a boolean skill when non-zero.
+    # CvCity is fixed POST-MIGRATION to scan for celebrity-skilled units and award the happiness itself.
+    if _int(rec, "iCelebrityHappy"):
+        caps["celebrity"] = True
 
     # --- vision / LOS resolver ---
     for tag, name in VISION_PAIRS.items():
@@ -518,7 +525,8 @@ def main():
                | set(GRANT_LIST) | set(ID_SCALAR) | set(ID_LIST) | set(ID_BOOL) | DROP
                | {"PropertyManipulators", "HealUnitCombatChangeTypes", "NegatesInvisibilityTypes",
                   "SetSpecialUnit", "OnGameOptions", "NotOnGameOptions", "iCommandType",
-                  "AIWeightbyUnitCombatTypes", "PromotionLine", "iLinePriority"})
+                  "AIWeightbyUnitCombatTypes", "PromotionLine", "iLinePriority",
+                  "iCelebrityHappy"})   # -> skills.celebrity (boolean), amount dropped (owner 2026-07-01)
     from collections import Counter
     leftover = Counter()
     for _typ, rec in table.items():

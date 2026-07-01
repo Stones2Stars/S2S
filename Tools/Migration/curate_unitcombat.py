@@ -22,6 +22,9 @@ UnitCombat-SPECIFIC:
   flagged: their proper homes — enabler? grants? — settle at the unit-plane enabling / Unit pass).
 - Extra capability bools: spy/cannotMergeSplit/rBombardDirect/rBombardForceAbility/alwaysInvisible(bInvisible)/
   healsAs ; extra count: noCapture.
+celebrity: iCelebrityHappy's numeric AMOUNT is DROPPED (owner 2026-07-01: "not a random field on a unit") ->
+  a boolean base SKILL (skills.celebrity=true when non-zero); CvCity is fixed POST-MIGRATION to scan for
+  celebrity-skilled units and award the happiness itself. (Getter/XML-reader exist in-engine; 0 UCs set it today.)
 DROP: Categories (dead).
 
   python3 curate_unitcombat.py --sample UNITCOMBAT_MELEE UNITCOMBAT_ARCHER UNITCOMBAT_ANIMAL
@@ -134,6 +137,13 @@ def curate(typ, rec, store):
         if node is not None:
             for k in _simple_list(node):
                 caps.setdefault(name, OrderedDict())[k] = True
+    # celebrity: a unit-combat defines a unit's BASE abilities, so celebrity is a base SKILL here too. The numeric
+    # iCelebrityHappy amount is DROPPED (owner 2026-07-01: "not a random field on a unit") -> boolean skill when
+    # non-zero. CvCity is fixed POST-MIGRATION to scan for celebrity-skilled units and award the happiness itself.
+    # (The CvUnitCombatInfo.getCelebrityHappy() getter + XML reader exist in-engine; no UC in the current data
+    #  actually sets it, but the field is consumed here consciously so it can never surface as UNHANDLED.)
+    if _int(rec, "iCelebrityHappy"):
+        caps["celebrity"] = True
 
     # --- vision / LOS resolver (shared pairs + UC SameTile + shared struct-vectors) ---
     for tag, name in dict(VISION_PAIRS, **VISION_PAIRS_X).items():
@@ -256,7 +266,8 @@ def main():
                | set(VISION_PAIRS_X) | set(VISION_STRUCTS) | set(BASE_SENTINEL10) | set(BASE_PLAIN)
                | set(ID_REF) | set(ID_BOOL) | set(ID_LIST) | DROP
                | {"PropertyManipulators", "KillOutcomes", "Actions", "OnGameOptions", "NotOnGameOptions",
-                  "Button"})
+                  "Button",
+                  "iCelebrityHappy"})   # -> skills.celebrity (boolean), amount dropped (owner 2026-07-01)
     from collections import Counter
     leftover = Counter()
     for _typ, rec in table.items():

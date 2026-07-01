@@ -5,6 +5,9 @@
    "percent": 10
   }
  },
+ "skills": {
+  "celebrity": true
+ },
  "promotionLine": {
   "PROMOTIONLINE_INSPIRE": 9
  },
@@ -17,7 +20,6 @@
   "sound": "AS2D_IF_LEVELUP"
  },
  "identity": {
-  "description": "TXT_KEY_PROMOTION_INSPIRE9",
-  "celebrityHappy": 1
+  "description": "TXT_KEY_PROMOTION_INSPIRE9"
  }
 }

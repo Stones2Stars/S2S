@@ -109,7 +109,11 @@ The whitelist completeness sweep found exactly two, both now ruled and landed:
   unique-unit system (that's UnitClass/CivilizationInfo) — the train gate fires ONLY under
   `isNPC() && isStronglyRestricted()` (`CvCity.cpp:2231`), inert for real civs — so it folds with `stronglyRestricted`
   (Tier 3, → `requires.build` when NPC civs wired); stays `identity` interim. cargo restriction → `identity`.
-- **promotion**: `iCelebrityHappy` → `identity` (real happiness mod); `iPoisonProbabilityModifierChange` inert (kept).
+- **promotion — DONE (owner ruling 2026-07-01):** `iCelebrityHappy` (the numeric per-unit celebrity-happiness stat) →
+  a boolean **`skills.celebrity`** (3 promotions: INSPIRE3/6/9; unit-combats carry the same field → `skills.celebrity`
+  too, 0 today). The AMOUNT is dropped ("not a random field on a unit"); ⏳ **POST-MIGRATION engine fix:** `CvCity`
+  scans for celebrity-skilled units and owns the happiness (replacing the `CvCity.cpp:5718` per-unit-stat sum).
+  `iPoisonProbabilityModifierChange` inert (kept).
 - **handicap**: `advancedStart` (`iAdvancedStartPointsMod`, `iAIAdvancedStartPercent`) → `identity`, no consumer wired.
 
 ---
