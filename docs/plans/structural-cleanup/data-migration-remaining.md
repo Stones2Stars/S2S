@@ -23,11 +23,14 @@ So the "hidden data" question is closed: the only un-migrated data is the enumer
 > **STATUS — the DECISION-NEEDED (🔴) tier is CLEARED (owner rulings, 2026-07-01).** Every parked/dropped field across
 > every entity has been ruled and migrated (buildings, leaderhead, corp/route/tech, property-pulses, improvement,
 > project, era, handicap, promotion/celebrity, unit-cargo). What remains is only the **BLOCKED/deferred** tier below
-> (prerequisite-gated: state/paralyze, unitcombat→tags, NPC civs, corp-system rework, ranked-target, leaderhead trait
-> remap, the unit **`missions`**/`CvOutcome` migration [grants-pass discovery]) + the **post-migration engine follow-ups**
-> (e.g. the celebrity-skill CvCity scan, the `enables.traits`→HAVE self-containment step from the grants pass — the
-> `IS_HOLY_CITY` eval is already wired). Per [DEC-data-first] the
-> data foundation is now complete — the machine backlog can proceed on solid data.
+> (prerequisite-gated: state/paralyze, unitcombat→tags, NPC civs, corp-system rework, ranked-target; and the unit
+> **`missions`**/`CvOutcome` migration — a GROUND-UP REWORK kept out of #430) + the **post-migration engine follow-ups**
+> (e.g. the celebrity-skill CvCity scan, the `enables.traits`→HAVE self-containment step — the `IS_HOLY_CITY` eval is
+> already wired). Per [DEC-data-first] the data foundation is complete — the machine backlog proceeds on solid data.
+> **The CUTOVER scope** — what's left before the cascade replaces legacy + pushes to `main` — is written up in
+> [`cutover.md`](cutover.md): shadow-parity for the 3 machines + the **classification-consumption rewiring** (the long
+> pole) + the self-containment audit + the grants apply-loop. **⏳ Leaderhead trait remap is POST-CUTOVER, after `main`**
+> (leaders work without traits; another modder does it on the merged cascade — see cutover.md).
 
 ---
 
