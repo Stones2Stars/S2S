@@ -17,10 +17,10 @@ class CvJsonBuildingInfo : public CvJsonInfo
 public:
 	CvJsonBuildingInfo() : notConstructible(false), governmentCenter(false), forceNoPrereqScaling(false),
 		shrineReligion(-1), corpHQ(-1), religion(-1) {}
-	bool notConstructible, governmentCenter, forceNoPrereqScaling;   // StoneBase BuildingInfo flags
+	bool notConstructible, governmentCenter, forceNoPrereqScaling;   // notConstructible/forceNoPrereqScaling <- identity; governmentCenter <- `attributes` (IS_GOVERNMENT_CENTER)
 	std::string specialBuildingType;
-	int shrineReligion;                                  // identity.shrine -> religion FK
-	int corpHQ;                                          // identity.corporationHQ -> corporation FK
+	int shrineReligion;                                  // top-level `shrine` -> religion FK
+	int corpHQ;                                          // top-level `headquarters` -> corporation FK
 	int religion;                                        // identity.religion -> religion FK (state-religion match)
 	std::map<std::string, int> stateReligionCommerce;    // identity.stateReligionCommerce {channel:value}
 	std::map<std::string, int> commerceDoubleTime;       // identity.commerceDoubleTime {channel:years}

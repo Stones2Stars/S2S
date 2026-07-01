@@ -48,13 +48,14 @@ void cascadeJsonCommerceMap(const picojson::value& v, std::map<std::string, int>
 // The enables-family source + target-side edges (§4.1/§4.2). `provides` (§5a) is a sibling edge dispatched separately.
 static const char* CJK_EDGES[] = { "enables", "obsoletes", "replaces", "disables", "obsoletedBy", 0 };
 // Intrinsic (§7) + auxiliary/bespoke (§9) + the §8 classification blocks -- everything the base SKIPS (a subclass /
-// another system owns it). `policies`/`capabilities`/`skills`/`tags`/`state` sit here so the base leaves them alone.
+// another system owns it). `policies`/`capabilities`/`skills`/`tags`/`state`/`attributes` (building §8) sit here so
+// the base leaves them alone; the bespoke `shrine`/`headquarters` FK sections + era `worldGen` likewise.
 static const char* CJK_INTRINSIC_KEYS[] = {
 	"type", "text", "description", "help", "civilopedia", "message", "quote", "strategy", "adjective", "shortDescription",
 	"cost", "ui", "world", "sound", "identity", "ai",
 	"loadPrune", "policies", "succession", "excludes", "produces", "condition", "effect",
-	"vision", "outcomes", "mapGeneration", "replacedBy", "capabilities", "skills", "tags", "state",
-	"promotionLine", "buildUp", "shrine", "properties", "voteSource", "threshold", "role", "victory",
+	"vision", "outcomes", "mapGeneration", "replacedBy", "capabilities", "skills", "tags", "state", "attributes",
+	"promotionLine", "buildUp", "shrine", "headquarters", "worldGen", "properties", "voteSource", "threshold", "role", "victory",
 	"targetLevel", "conversion", "cityFounding", "unitCapability", 0
 };
 
