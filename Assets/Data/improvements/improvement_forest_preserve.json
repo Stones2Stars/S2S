@@ -38,16 +38,17 @@
    ]
   }
  },
- "properties": [
-  {
-   "source": "CONSTANT",
-   "property": "PROPERTY_AIR_POLLUTION",
-   "on": "GAMEOBJECT_PLOT",
-   "relation": "RELATION_NEAR",
-   "distance": 1,
-   "amountPerTurn": -5
-  }
- ],
+ "grants": {
+  "repeatable": [
+   {
+    "PROPERTY_AIR_POLLUTION": -5,
+    "interval": "perTurn",
+    "on": "plot",
+    "relation": "near",
+    "distance": 1
+   }
+  ]
+ },
  "world": {
   "art": {
    "icon": "ART_DEF_IMPROVEMENT_FOREST_PRESERVE"

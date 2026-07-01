@@ -22,16 +22,17 @@
    }
   }
  },
- "properties": [
-  {
-   "source": "CONSTANT",
-   "property": "PROPERTY_WATER_POLLUTION",
-   "on": "GAMEOBJECT_PLOT",
-   "relation": "RELATION_NEAR",
-   "distance": 1,
-   "amountPerTurn": -5
-  }
- ],
+ "grants": {
+  "repeatable": [
+   {
+    "PROPERTY_WATER_POLLUTION": -5,
+    "interval": "perTurn",
+    "on": "plot",
+    "relation": "near",
+    "distance": 1
+   }
+  ]
+ },
  "world": {
   "art": {
    "icon": "ART_DEF_FEATURE_CORAL_REEF"

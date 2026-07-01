@@ -90,7 +90,9 @@ The whitelist completeness sweep found exactly two, both now ruled and landed:
   **NB: the corporation SYSTEM deserves a principle-level rework later** (owner 2026-07-01: "don't like how corporations
   work in principle") — that is POST-migration ([DEC-mirror-then-redesign]: migrate faithfully now, redesign the corp
   model after); the corp-HQ revenue (`HeadquarterCommerces`) rides that rework.
-- **improvement**: `iAirBombDefense`/`iFeatureGrowth`/`iCultureRange`/per-bonus `depletionRand` → `identity`.
+- **improvement** (owner ruling 2026-07-01): `iAirBombDefense` → **`defense.air`** (the `defense` family, `air` member).
+  ⏳ still to rule: `iFeatureGrowth`, `iCultureRange`, per-bonus `depletionRand`. (Improvement-field edits BATCH after
+  the property-pulse cleaner, which is concurrently editing `curate_improvement.py`.)
 - **project**: `AnyonePrereqProject` dropped, per-edge `iNeeded` count lost.
 - **unit**: `iCargo` → **`cargo.space.flat`** (+ `DomainCargo`→`cargo.space.{unit:IS_<domain>}`, modifier §6) —
   owner-RULED 2026-07-01, **DO-NOW** (currently UNHANDLED on 90 units). `EnabledCivilizationTypes` is **NOT** the

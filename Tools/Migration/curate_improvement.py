@@ -58,7 +58,8 @@ YieldChanges). RouteYieldChanges -> stays folded onto the ROUTE (curate_route:46
 improvements it upgrades (owner 2026-06-20), the one human-governance inversion that's correct.
 DROPPED: iHealthPercent -> drop, BALANCE-CUT as a source from improvements (capability kept globally). Categories /
 root iDepletionRand / Button (no improvement button — it lives on the worker Build) / MapCategoryTypes (0/266) -> drop.
-RNG: iAirBombDefense / iFeatureGrowth -> identity. PropertyManipulators -> parked raw `properties` (#429).
+RNG: iAirBombDefense / iFeatureGrowth -> identity. PropertyManipulators -> grants.repeatable (json.md §5; owner
+2026-07-01): the RELATION_NEAR pollution pulse becomes a per-turn spatial property grant (#429 reads its target).
 
 EXE-link: 3 DllExport (isGoody, isRequiresRiverSide, getArtInfo) -> bGoody + bRequiresRiverSide EXE-constrained.
 
@@ -269,12 +270,14 @@ def post_process(typ, obj, rec, store):
                 bonuses[b] = rb
         if bonuses:
             obj.setdefault("identity", OrderedDict()).setdefault("bonuses", OrderedDict()).update(bonuses)
-    # PropertyManipulators -> PARK raw (RELATION_NEAR pollution = #429 spatial leakage; preserve, don't drop).
+    # PropertyManipulators -> grants.repeatable (json.md §5; owner 2026-07-01 "property pulses are repeatable grants").
+    # The improvement's RELATION_NEAR pollution pulse becomes a §5 spatial repeatable grant carrying on/relation/
+    # distance; the (#429) spatial-distribution engine reads its target from there. No longer a parked raw block.
     pm = rec.find("PropertyManipulators")
     if pm is not None:
-        sources = [engine.clean_property_source(s) for s in pm if s.tag == "PropertySource"]
-        if sources:
-            obj["properties"] = sources   # FLAG #429
+        pulses = [g for g in (engine.property_source_repeatable(s) for s in pm if s.tag == "PropertySource") if g]
+        if pulses:
+            obj.setdefault("grants", OrderedDict()).setdefault("repeatable", []).extend(pulses)
     _reorder(obj)
 
 

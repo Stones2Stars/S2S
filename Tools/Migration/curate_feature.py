@@ -23,8 +23,10 @@ Modeling calls (verified vs CvFeatureInfo + CvPlot::calculateYield/movementCost/
                        rework — owner 2026-06-16; modifier-spec §0.8 dedicated-block rule).
 - iWarmingDefense   -> DROP. Dead: GLOBAL_WARMING is `// #define`d out (compiled out); a future global-warming
                        system gets its OWN base object, not a feature field (owner; issue #436, global-warming-mod.md).
-- PropertyManipulators -> PARKED raw in `properties` (RELATION_NEAR pollution = spatial leakage -> #429; the cutover
-                       replaces the XML, so preserve-don't-drop until #429 redesigns it).
+- PropertyManipulators -> grants.repeatable (json.md §5; owner 2026-07-01): the RELATION_NEAR pollution pulse is a
+                       per-turn SPATIAL PROPERTY GRANT { PROPERTY_X: N, interval:"perTurn", on, relation, distance },
+                       via engine.property_source_repeatable. The (#429) spatial-distribution engine reads its target
+                       from the grant. (Replaces the former parked raw `properties` block.)
 - iAppearance/iDisappearance/iGrowth/iSpread/iPopDestroys + bCanGrow.../bRequires.../bNo.../placement flags
                     -> identity (world-gen RNG / lifecycle / placement config). bGraphicalOnly -> identity flag.
 - ArtDefineTag (on-map art) / EffectType / iEffectProbability / GrowthSound / FootstepSounds / WorldSoundscape -> art.
@@ -53,8 +55,8 @@ FEATURE_FAMILIES = {
 }
 
 # RiverYieldChange + PropertyManipulators are dropped from the DEFAULT path and rebuilt in post_process (the first
-# is HAS_RIVER-conditional, which apply_channel can't express; the second is parked raw for #429). iWarmingDefense
-# is dead. Prereqs (none) come from the mapping.
+# is HAS_RIVER-conditional, which apply_channel can't express; the second becomes grants.repeatable, §5).
+# iWarmingDefense is dead. Prereqs (none) come from the mapping.
 FEATURE_DROP = ["iWarmingDefense", "RiverYieldChange", "PropertyManipulators"]
 
 # iMovement -> intrinsic `identity.movementCost` via to_identity (resolver-subsystem; matches terrain/route).
@@ -109,12 +111,14 @@ def post_process(typ, obj, rec, store):
     if node is not None:
         for y, v in engine.named_array(node, engine.YIELDS).items():
             _inject(obj, y, "plot", "flat", v, HAS_RIVER)
-    # PropertyManipulators -> PARK raw (RELATION_NEAR pollution = #429 spatial leakage; preserve, don't drop).
+    # PropertyManipulators -> grants.repeatable (json.md §5; owner 2026-07-01 "property pulses are repeatable grants").
+    # The feature's RELATION_NEAR pollution pulse becomes a §5 spatial repeatable grant carrying its on/relation/
+    # distance; the (#429) spatial-distribution engine reads its target from there. No longer a parked raw block.
     pm = rec.find("PropertyManipulators")
     if pm is not None:
-        sources = [engine.clean_property_source(s) for s in pm if s.tag == "PropertySource"]
-        if sources:
-            obj["properties"] = sources   # FLAG #429: spatial-leakage sources parked verbatim, not yet modelled
+        pulses = [g for g in (engine.property_source_repeatable(s) for s in pm if s.tag == "PropertySource") if g]
+        if pulses:
+            obj.setdefault("grants", OrderedDict()).setdefault("repeatable", []).extend(pulses)
     _reorder(obj)
 
 

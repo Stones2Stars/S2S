@@ -161,7 +161,12 @@ def property_source_v3(src):
     # building emitting onto the plot/city it occupies — crime/disease/education unit->city emission) are both the
     # cascade CONTAINMENT DEFAULT: the deposit lands at its GameObjectType scope (plot/city) and cascades down via
     # containment, so the relation is dropped and scope comes from GameObjectType (owner 2026-06-16: "scoped like
-    # other property yields, like a modifier"). Any OTHER relation (e.g. RELATION_NEAR = spatial leakage -> #429) raises.
+    # other property yields, like a modifier").
+    # RELATION_NEAR (spatial leakage) is NOT a self-deposit modifier — it is a SPATIAL PROPERTY PULSE, handled by the
+    # sibling property_source_repeatable() -> grants.repeatable (json.md §5; owner 2026-07-01). Return None here so a
+    # caller that homes self-deposits (building/unit/property) skips it; the spatial caller reads it via the sibling.
+    if rel in PROP_RELATION:
+        return None
     if rel and rel not in ("NONE", "RELATION_ASSOCIATED", "RELATION_SAME_PLOT"):
         raise ValueError("property_source_v3: unhandled RelationType %r on %s" % (rel, prop))
     stype = text(src.find("PropertySourceType"))
@@ -229,6 +234,99 @@ def property_source_v3(src):
             else:
                 value = OrderedDict([("value", value), ("enabled", gate)])
     return prop, scope, unit, value
+
+
+# --- spatial property-pulse converter (#430, owner 2026-07-01 "property pulses are in essence repeatable grants") ---
+# The SPATIAL SIBLING of property_source_v3. A PropertySource that LEAKS onto NEARBY objects (RELATION_NEAR — a
+# feature/improvement depositing pollution onto plots within iDistance) is NOT a self-deposit modifier; it is a
+# per-turn PROPERTY PULSE carrying a SPATIAL INTENT, authored as a `grants.repeatable` entry (json.md §5):
+#   { "PROPERTY_AIR_POLLUTION": -5, "interval": "perTurn", "on": "plot", "relation": "near", "distance": 1 }
+# The (#429) spatial-distribution engine reads its target (on/relation/distance) from HERE — properties are
+# first-class, never a parked raw block. A flat (CONSTANT) source is the bare amount; a scaling (non-CONSTANT/
+# attribute-scaled) source carries a `per` count-scaler (same reduce-to-lowest-terms rule as property_source_v3).
+#
+# LEGACY -> §5 mapping (faithful; the exact map this migration used):
+#   PropertyType         -> the entry KEY (PROPERTY_X: amount)
+#   iAmountPerTurn        -> the amount (the value; per-turn is inherent -> interval:"perTurn")
+#   GameObjectType        -> `on`       (GAMEOBJECT_PLOT->"plot", _CITY->"city", _UNIT->"unit", _AREA->"area", _PLAYER->"empire")
+#   RelationType          -> `relation` (RELATION_NEAR->"near"; the ONLY spatial relation in the data)
+#   iDistance             -> `distance` (the radius in plots; all current data = 1)
+# NON-spatial relations (NONE / ASSOCIATED / SAME_PLOT) are the containment default -> NOT a spatial pulse: this
+# returns None for them (they route to property_source_v3 as a self-deposit modifier). DECAY (a self-decay unit)
+# never carries NEAR, so it too returns None here.
+PROP_RELATION = {"RELATION_NEAR": "near"}   # extend as further spatial relations are modelled (#429)
+
+
+def property_source_repeatable(src):
+    """Convert one <PropertySource> that LEAKS spatially (RELATION_NEAR) to a §5 `grants.repeatable` dict, else None.
+    Returns an OrderedDict { PROPERTY_X: amount, interval, on, relation, distance } (+ `per` when attribute-scaled),
+    or None when the source is not a spatial pulse (NONE/ASSOCIATED/SAME_PLOT containment-default, or empty/zero)."""
+    prop = text(src.find("PropertyType"))
+    if not prop or prop == "NONE":
+        return None
+    rel = text(src.find("RelationType"))
+    relation = PROP_RELATION.get(rel)
+    if relation is None:                        # not a spatial relation -> self-deposit (property_source_v3), not here
+        return None
+    on = PROP_SCOPE.get(text(src.find("GameObjectType")), "plot")   # spatial pulses target the plot by default
+    # amount: flat scalar, or attribute-scaled (Mult/Div/AttributeType) -> a `per` count-scaler (v3's reduce rule).
+    stype = text(src.find("PropertySourceType"))
+    amt = src.find("iAmountPerTurn")
+    if amt is None:
+        amt = src.find("iAmount")
+    per_type, each, value = None, 1, None
+    attr = src.find("AttributeType")
+    if attr is not None:                                   # ATTRIBUTE_CONSTANT: value=amount, per=attribute
+        per_type = text(attr)
+        value = int(text(amt)) if (amt is not None and is_int(text(amt))) else None
+    elif amt is not None and amt.find("Div") is not None:  # Div(...) -> per (each = the divisor)
+        div = amt.find("Div")
+        mult = div.find("Mult")
+        dcon = div.find("Constant")
+        each = int(text(dcon)) if (dcon is not None and is_int(text(dcon))) else 1
+        if mult is not None:                               # Div(Mult(attr,C), D): value=C, each=D
+            per_type = text(mult.find("AttributeType"))
+            c = text(mult.find("Constant"))
+            value = int(c) if is_int(c) else None
+        elif div.find("AttributeType") is not None:        # Div(attr, D): 1 per D of attr
+            per_type = text(div.find("AttributeType"))
+            value = 1
+        else:
+            raise ValueError("property_source_repeatable: unhandled Div shape on %s" % prop)
+    elif amt is not None and amt.find("Mult") is not None:  # Mult(attribute, constant)
+        mult = amt.find("Mult")
+        per_type = text(mult.find("AttributeType"))
+        c = text(mult.find("Constant"))
+        value = int(c) if is_int(c) else None
+    else:                                                  # plain scalar per-turn amount (the CONSTANT case)
+        value = int(text(amt)) if (amt is not None and is_int(text(amt))) else None
+    if value is None or value == 0:
+        return None
+    out = OrderedDict()
+    out[prop] = value                                       # PROPERTY_X: amount  (the pulse magnitude)
+    out["interval"] = "perTurn"                             # iAmountPerTurn is inherently per-turn
+    out["on"] = on
+    out["relation"] = relation
+    dist = text(src.find("iDistance"))
+    if is_int(dist):
+        out["distance"] = int(dist)
+    if per_type:                                            # scaling source -> a `per` count-scaler (reduce to lowest terms)
+        if each < 0:
+            value, each = -value, -each
+        if each:
+            from math import gcd
+            g = gcd(abs(value), each) or 1
+            value, each = value // g, each // g
+        out[prop] = value
+        out["per"] = OrderedDict([("type", per_type.replace("ATTRIBUTE_", "")), ("each", each), ("scope", on)])
+    # Active gate (a BoolExpr the source fires under) -> `enabled` (uniform with property_source_v3).
+    active = src.find("Active")
+    if active is not None and len(active):
+        import boolexpr
+        gate = boolexpr.convert_field(active)
+        if gate is not None:
+            out["enabled"] = gate
+    return out
 
 
 def named_array(elem, keys):
