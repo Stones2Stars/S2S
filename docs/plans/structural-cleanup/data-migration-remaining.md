@@ -20,6 +20,13 @@ completeness sweeps for hidden/lost data:
 
 So the "hidden data" question is closed: the only un-migrated data is the enumerated list below.
 
+> **STATUS — the DECISION-NEEDED (🔴) tier is CLEARED (owner rulings, 2026-07-01).** Every parked/dropped field across
+> every entity has been ruled and migrated (buildings, leaderhead, corp/route/tech, property-pulses, improvement,
+> project, era, handicap, promotion/celebrity, unit-cargo). What remains is only the **BLOCKED/deferred** tier below
+> (prerequisite-gated: state/paralyze, unitcombat→tags, NPC civs, corp-system rework, ranked-target, leaderhead trait
+> remap) + the **post-migration engine follow-ups** (e.g. the celebrity-skill CvCity scan). Per [DEC-data-first] the
+> data foundation is now complete — the machine backlog can proceed on solid data.
+
 ---
 
 ## Tier 1 — DONE (committed)
