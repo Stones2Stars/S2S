@@ -3,10 +3,13 @@
 > How the engine's unit **action → outcome** subsystem behaves today, mapped in full (2026-07-01). It is
 > **un-wrappered** (`CvUnitInfo.cpp:2569` — *"outcome system (no wrapper)"*).
 >
-> **⛔ Owner ruling (2026-07-01) — the outcome model is NOT ported; missions are a CLEAN POST-MIGRATION pass.** The
-> CvOutcome outcomes/payloads **stay in the old XML** and **legacy keeps applying them** (too gnarly to be worth
-> porting; the whole subsystem — like the random-events system — is isolated enough to leave for a clean pass *after*
-> the #430 migration). When missions are eventually done, the cascade `missions` block is just a **LIST of which
+> **⛔ Owner ruling (2026-07-01) — the mission concept is slated for a GROUND-UP REWORK; NOT ported in #430.** The real
+> reason missions/CvOutcome are kept out of the migration is that **the entire mission concept is being redesigned from
+> scratch** (a new design, NOT a port) — so porting the old CvOutcome model would be **throwaway work**. The outcomes/
+> payloads therefore **stay in the old XML** and **legacy keeps applying them** meanwhile; the subsystem is isolated
+> enough to defer cleanly, same posture as the random-events system (also a ground-up rework, also kept out). This doc
+> is the behaviour reference for **the old system the rework replaces**. When the rework lands, the cascade `missions`
+> block is (at minimum) a **LIST of which
 > missions a unit can use** (the outcome-mission references + the hardcoded mission-abilities) — **no payload
 > migration**, no probabilistic/expression/`grants`-as-outcome model. The earlier full-port sketch (the "7 design
 > questions" below) is **SCRAPPED** — kept only as a record of what NOT to do. This doc stays the behaviour reference

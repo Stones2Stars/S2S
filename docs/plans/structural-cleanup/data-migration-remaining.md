@@ -64,9 +64,11 @@ So the "hidden data" question is closed: the only un-migrated data is the enumer
   grants (a `skill` is a permanent property; a **mission** is an action producing an OUTCOME, often consuming the unit),
   and the engine's **`CvOutcome`** system (`CvUnitInfo` `KillOutcomes` + `m_aOutcomeMissions` — *"outcome system (no
   wrapper)"*) is **entirely un-migrated**. Owner ruling: a **`missions`** block (json §8) unifies the hardcoded mission-
-  abilities AND CvOutcome. **Owner ruling (updated 2026-07-01): the CvOutcome outcome model is NOT ported** — the
-  outcomes stay in the OLD XML and legacy keeps applying them (too gnarly to port); the whole subsystem, **like the
-  random-events system**, is **isolated enough to leave for a CLEAN PASS AFTER #430**. When it runs, the `missions`
+  abilities AND CvOutcome. **Owner ruling (updated 2026-07-01): the mission concept is a GROUND-UP REWORK, not ported.**
+  The entire mission concept is being **redesigned from scratch**, so porting the old CvOutcome model would be
+  **throwaway work** — hence kept entirely OUT of #430. The outcomes stay in the OLD XML and legacy keeps applying them
+  meanwhile; the subsystem, **like the random-events system** (also a ground-up rework, also kept out), is isolated
+  enough to defer cleanly. When it runs, the `missions`
   block just **LISTS which missions a unit can use** — BOTH the data-driven outcome-missions (`<Actions>`) and the
   hardcoded mission-abilities (`greatPeople` included); the `greatPersonAction` `base`/`multiplier` magnitudes are
   **left as-is** (used-or-not TBD). Until the pass runs, the four deferred keys stay in `grants` untouched (the grants
