@@ -38,7 +38,7 @@ status record of built cascade code (there is almost none — see the table).
 | **readJson** | ✅ **BUILT — PARSE + MAP (full json.md coverage), runs at LOAD** | `Sources/Cascade/CvCascadeReadJson.{h,cpp}`: a one-shot gated probe (`cascadeReadJsonProbe`, at **`onFinalInitialized`** — load-time) that parses EVERY `Assets/Data` entity through BoolExpr — `rj_translate` (conditions, incl. `IntExpr` value/tally-count bands + the `dormant` clause); `rj_walkModNode` (×100 modifier-family deposits); `rj_walkEnableEdge` (enables/obsoletes/replaces/disables/obsoletedBy/provides); `rj_walkAllowed`; `rj_walkGrants` (generic by shape) — FK-resolving all ids. **Verified live: 0 `UNCLASSIFIED` top-level keys, all resolved bar 3 by-design.** ✅ It **MAPS** each entity to a **`CvJsonInfo`** (deposits/requires/edges/allowed/grants) held in the entity's per-type **`InfoRepo<CvXInfo>`** (`Repos/InfoRepo.h`) — a parallel layer, NOT on the info objects; the side-table is **RETIRED** (§3). readJson is **static-data-only** (no `CvGameObject`). The modifier/enabler read it via `InfoRepo<…>::get().get(id)`. Standalone `Tools/ReadJson/readjson.cpp` harness is FROZEN. |
 
 **The honest #430 roadmap.** Build the cascade FRESH per the specs, porting from the parity-proven StoneBase reference,
-in spec build order: **`readJson` (BoolExpr-routed) + the scope-accumulator substrate → tally → modifier → enabler →
+in spec build order: **`readJson` (typed-condition port) + the scope-accumulator substrate → tally → modifier → enabler →
 grants** (§1). Each is interface-bounded and wired at the composition root (§2b). Validation has **two distinct legs,
 never mixed** (§2): the **external StoneBase dry-calc** (offline PARITY oracle — done for yields/commerce) and, per
 machine, an **in-engine SHADOW** (the cascade computed alongside legacy, diffed per-turn via spine `[TAG]` lines — NOT
@@ -91,8 +91,9 @@ gather **HAS** (reads the tally for higher scopes) → generate **CAN GET** (the
 
 A FRESH picojson reader that parses the full new vocabulary (`enables`/`obsoletes`/`requires` trees — plus `replaces`;
 the modifier families `<family>.<scope>[.<member>].<unit>`; `grants`; the predicate tokens; count atoms; scopes) into
-the runtime structures the three machines consume. The JSON conditionals are **routed through `BoolExpr`** (§2b) — the
-prior prototype's hand-rolled `vector<vector<leaf>>` was exactly the AND-of-ORs mistake `enabler.md` §3.1 warns against.
+the runtime structures the three machines consume. The JSON conditionals are **parsed into the typed `CvCascadeCondition`
+tree** (the StoneBase `Condition` port, §2b) — the prior prototype's hand-rolled `vector<vector<leaf>>` was exactly the
+AND-of-ORs mistake `enabler.md` §3.1 warns against.
 `readJson` is a pure CONSUMER of the modder-authored shape (defined by `json.md`, not by `readJson`). **(NOT BUILT —
 prototype purged; this is the first build item — detailed build plan: [`readjson.md`](readjson.md).)**
 
@@ -157,11 +158,20 @@ surface is retired, `CvHttpServer.cpp:26`):
   simple/complex split (§7).
 - **`picojson` for JSON** (header-only) — `Sources/include/picojson.h`, included via the PCH umbrella
   (`CvGameCoreDLL.h:310`), already proven (it backs `CvHttpServer`). Reuse it; don't bend the XML machinery to JSON.
-- **`BoolExpr` for the conditionals (DELIBERATE REUSE).** The JSON conditionals (`all`/`any`/`noneOf` over atoms +
-  predicates) are isomorphic to the engine's `BoolExpr` (And/Or/Not over Has(GOM)/Is(tag)) — `Sources/Infrastructure/BoolExpr.{h,cpp}`
-  (classes at `BoolExpr.h:91/113/143/164`; parsed at `CvXMLLoadUtilitySet.cpp:1579`; widely used, ~44 files). `readJson`
-  translates a JSON conditional directly into a `BoolExpr` tree. The isolated `Tools/ReadJson/` harness can't link
-  `BoolExpr`, so it proves the same parse by rendering to clear text. One conditional shape, two back-ends.
+- **★ THE CONDITIONS/EVALUATORS ARE A FAITHFUL C++ PORT OF STONEBASE — this is the BASIS, not a footnote (owner ruling
+  2026-06-30).** "The logic works because of StoneBase; we just port the C# code." So the cascade's condition vocabulary
+  + predicate evaluation are a **direct transcription of StoneBase's parity-proven `Domain/Conditions/Condition.cs` +
+  `CascadingEnabler/ConditionEvaluator.cs`** (`StoneBase/` is a sibling repo at `/c/code/s2s/StoneBase`): the **typed
+  `Condition` tree** (`Cascade/CvCascadeCondition.{h,cpp}` — group/presence/predicate, a C++03 tagged struct, which
+  StoneBase was explicitly written to translate to) + the **`ConditionEvaluator` walk** (`Cascade/CvCascadeConditionEval.{h,cpp}`),
+  reading the LIVE engine (`CvCity`/`CvPlayer`/`CvPlot`/`CvTeam`) where the C# reads `EvalState`. There are **no design
+  decisions to make** — every predicate's semantics (vicinity discriminator, `STATE_RELIGION` strict-vs-lenient, the
+  obsolete/civic-waived-prereq filter, `CountOf`) is already decided + validated in the C#; porting wrong is the only
+  failure mode. This **supersedes the earlier "`BoolExpr` deliberate reuse"** sketch (`readjson.md`): routing JSON
+  through the engine's `BoolExpr` (`And`/`Or`/`Not` over `Has(GOM)`/`Is(tag)`) was a DETOUR — it forced the predicate
+  registry into `TagTypes`/`GOM` slots that don't exist for half of json.md §3.5 (`IS_CAPITAL`/`HAS_POWER`/state-
+  religion/properties/…), surfacing as the readjson §5.2.c "design fork." The fork is RESOLVED: port StoneBase's
+  evaluator; `BoolExpr` is not the condition back-end. `picojson` parses the JSON into the typed `Condition` tree.
 - **The derived-data REPOSITORY (`Engine/CvDerivedData.h` — classes `CvDataRepository<T>` / `CvGameDataRepository` /
   `TLazy`; the *file* is `CvDerivedData.h`, there is no class of that name) is NOT built upon — and NOT removed yet.**
   Its `init()`/`reset()` are still wired in the lifecycle (`CvGame.cpp:62`/`:898`, `CvPlayer.cpp:160`/`:763`,
@@ -179,7 +189,7 @@ surface is retired, `CvHttpServer.cpp:26`):
   the old `read()` path. It runs IN ADDITION to the XML load during shadow; at cutover the XML path (`SetGlobalClassInfo`
   → `read()`, `Infrastructure/CvXMLLoadUtilitySet.cpp:1588`) is deleted. (`read()` is NOT DllExport — `Infos/CvInfoBase.h:78/85/133/154`.)
 - **★ THE MAPPING/CUTOVER MODEL (owner ruling 2026-06-29; home finalized 2026-06-30).** `readJson` maps each
-  entity's JSON to a fresh **`CvJsonInfo`** (deposit lists, the `BoolExpr` requires/enables structures, the grant
+  entity's JSON to a fresh **`CvJsonInfo`** (deposit lists, the typed `CvCascadeCondition` requires structures, the grant
   provisions) — the **new calc implementations** (modifier/enabler/grants) read it; the **OLD Info variables**
   (XML-populated `m_ai*`/`m_ab*`) are **cut only AFTER** (a) the data is mapped, (b) the new calc is built, and (c) the
   per-machine SHADOW reaches parity. Until all three hold the XML load stays authoritative (cutting now breaks the game
@@ -246,12 +256,14 @@ surface is retired, `CvHttpServer.cpp:26`):
     access predictable."* Reading a raw count is a raw INPUT, not the pollution anti-pattern. ✅ DONE
     (`Cascade/CvCascadeTally.{h,cpp}` is now the read+roll-up surface; the `IEventConsumer` store/`rebuild`/`shadowDiff`
     are gone). Full model: [tally.md](../../specs/tally.md).
-  - **★ readJson is STATIC-DATA-ONLY; the game object is LIVE STATE (owner ruling 2026-06-30).** readJson maps JSON →
-    the **`CvJsonInfo` in the InfoRepo** (above) and **never references `CvGameObject`**. Building the BoolExpr condition *trees* is the
-    deliberate reuse (a tree IS static data); but a leaf that *evaluates* against a live instance (the tally-count leaf)
-    lives on the **live-state** side (`Cascade/CvCascadeCountExpr.{h,cpp}`) — readJson constructs it as a data node, the
-    **engine** evaluates it, converting info→gameobject when it needs to. (This was the gameobject-vs-info conflation: a
-    static reader must not own instance-walking evaluation.) ⟹ **LOAD-time setup:** readJson maps the static info data
+  - **★ readJson is STATIC-DATA-ONLY; the live engine is LIVE STATE (owner ruling 2026-06-30).** readJson maps JSON →
+    the **`CvJsonInfo` in the InfoRepo** (above) and **never references `CvCity`/`CvPlayer`/the tally**. It parses each
+    conditional into the typed **`CvCascadeCondition` tree** (a tree IS static data — `cascadeParseCondition`, the
+    StoneBase port); the instance-walking EVALUATION lives entirely on the live-state side in the
+    **`cascadeEvalCondition`** evaluator (`Cascade/CvCascadeConditionEval.{h,cpp}`), which the shadow gates call against
+    the live engine. (This was the gameobject-vs-info conflation: a static reader must not own instance-walking
+    evaluation. The earlier `BoolExpr` trees + the `CvCascadeCountExpr` count leaf are DELETED — the count folded into
+    the evaluator's `ev_countOf` tally read.) ⟹ **LOAD-time setup:** readJson maps the static info data
     at **load** (`onFinalInitialized`, moved off `doTurn`), and the **tally** is a read-only accessor over the
     object-owned counts (no seed — the bullet above / [tally.md §4](../../specs/tally.md)); the **enabler**'s HAVE set
     is likewise established from the loaded objects. So **loading a save verifies the static cascade state**
@@ -344,14 +356,19 @@ curated-set model as part of this migration. The current mechanism (mapped 2026-
 
 ## 7. NEXT
 
-1. **`readJson` (BoolExpr-routed)** ✅ **PARSE + MAP DONE** — full json.md coverage; maps each entity's JSON to a
+1. **`readJson` (typed-condition port)** ✅ **PARSE + MAP DONE** — full json.md coverage; maps each entity's JSON to a
    **`CvJsonInfo`** held in the entity's per-type **`InfoRepo<CvXInfo>`** (`Repos/InfoRepo.h`) — the side-table is
-   **RETIRED** (§3 home). ✅ **readJson is now STATIC-DATA-ONLY** — the instance-walking tally-count leaf moved to the
-   live-state side (`Cascade/CvCascadeCountExpr.{h,cpp}`); readJson no longer includes `CvGameObject`/`CvPlayer`/the
-   tally (§3 boundary). ✅ **readJson now maps at LOAD** (`onFinalInitialized`, moved off `doTurn`) — loading a save
-   verifies it (validation.md cadence). ⛔ **NOT yet mapped: the classification blocks** (`skills`/`tags`/`capabilities`/
-   `state`, json.md §8) — currently recognized + skipped. See the classification-wiring item below. ⏳ **NEXT
-   (refinement):** index `CvJsonInfo` internally (vs the current flat deposit vector), §3.
+   **RETIRED** (§3 home). ✅ **Conditionals are the StoneBase `Condition` port (2026-06-30)** — `cascadeParseCondition`
+   parses each `requires`/`enabled`/`disabled` into a typed **`CvCascadeCondition`** tree (NOT `BoolExpr`), evaluated by
+   `cascadeEvalCondition` against the live engine in the shadow gates; the `BoolExpr` translator + `CvCascadeCountExpr`
+   are DELETED (the count folded into the evaluator's tally read). ✅ **readJson is STATIC-DATA-ONLY** — it no longer
+   includes `CvCity`/`CvPlayer`/the tally (§3 boundary). ✅ **readJson now maps at LOAD** (`onFinalInitialized`, moved off `doTurn`) — loading a save
+   verifies it (validation.md cadence). ✅ The synthetic **`TECH_GAME_START`** root (the XML-less no-tech-prereq node — a
+   non-resolver with no engine id) is homed in **`cascadeStartNode()`** (off the InfoRepo) so its `enables` survive the
+   map (json.md §5 / readjson.md §5.1). ⛔ **NOT yet mapped: the classification blocks** (`skills`/`tags`/`state`,
+   json.md §8 — `capabilities` **IS** mapped, see the enabler item below) — currently recognized + skipped. See the
+   classification-wiring item below. ⏳ **NEXT (refinement):** index `CvJsonInfo` internally (vs the current flat deposit
+   vector), §3.
 2. **Tally** ✅ **DONE — reworked to a READ-ONLY accessor (owner ruling 2026-06-30)** (buildings + units). It READS the
    object-owned counts (`CvPlayer::getBuildingCount`/`getUnitCount`) and rolls UP the spine (empire/team/world) — no
    store, no `IEventConsumer`, no `rebuild`/`onEvent`/`shadowDiff` (a count shadow was tautological — the duplicate-store
@@ -369,19 +386,60 @@ curated-set model as part of this migration. The current mechanism (mapped 2026-
    per-flag: a unit's `skills.blitz` → multiple-attacks (as the legacy blitz); empire `capabilities` → the team ability;
    `policies.noForeignTrade` → the trade-route engine; unit `tags` → the `IS_<TAG>` accounting. **empire capabilities +
    unit skills especially.** The classification blocks are currently parsed-but-skipped (not mapped) — this is the wiring.
-4. **Enabler** (generate-then-gate, on the validated tally) + **grants**. ✅ **FRONTIER GATES BUILT — the 6 same-shape
+4. **Enabler** (generate-then-gate, on the validated tally) + **grants**.
+   ✅ **StoneBase CascadingEnabler PORTED for tech/building/unit (2026-06-30)** — `en_techAvailable` (TechCascade),
+   `en_buildingBuildable` (BuildingCascade + the AugmentState facts, which the live evaluator reads directly via
+   `hasVicinityBonus`/`isGovernmentCenter`), and `en_unitTrainable` (UnitCascade: GATE-availability → GENERATE-frontier
+   minus `replaces` → GATE not-dormant via the reachable upgrade closure) **REPLACE the first-cut enables-frontier for
+   their domains.** Per StoneBase: the FRONTIER is the **WHOLE domain** (all techs / all buildings / all units) gated by
+   `requires`, NOT an enables-frontier — the engine's canConstruct/canTrain have none, and an enables-frontier
+   under-offers a no-enabler entity (PALACE). ✅ **SELF-CONTAINMENT (2026-07-01):** the never-buildable exclude reads the
+   cascade's OWN JSON flags — building `identity.notConstructible` (`CvJsonBuildingInfo::notConstructible`) and unit
+   `identity.spawnOnly` (`CvJsonUnitInfo::spawnOnly`) — matching StoneBase (`NotConstructible` set / `u.SpawnOnly`), NOT the
+   engine `productionCost<0`/`isAutoBuild()` markers (DEC-calc-zero-ride-in; the cascade must stand after legacy is cut).
+   VALUE-EQUIVALENT on current data (spot-checked): the curator sets `identity.notConstructible` when `iCost==-1`
+   (== `productionCost<0`), and **all 181 `autoBuild:true` buildings carry `notConstructible:true`** (json §7
+   `autoBuild ⊂ notConstructible`), so `productionCost<0 || isAutoBuild()` == `notConstructible`; **525 units** carry
+   `identity.spawnOnly:true` (== `productionCost<0`). (Also fixed the `CvJsonUnitInfo::mapFrom` parse: `spawnOnly` reads
+   from `identity`, `unlimitedException` from `skills` — both were mis-read at top-level and silently found nothing.)
+   Dormant triggers are extracted into `CvJsonInfo.dormantTriggers` (the `requires.{operate|build}.dormant` key the
+   condition parser drops). The tech oracle moved `canEverResearch`→**`canResearch`** (the all-techs+requires set is
+   "researchable now"). ✅ **PORTED (2026-06-30/07-01):** prereq-AMOUNT scaling (`ScaledPrereq`, verbatim), the
+   multi-queue exclude (this city's `ORDER_CONSTRUCT` queue), the civic-special-building waiver
+   (`enables.specialBuildingsWaived`) + the obsolete-by-held-tech prereq waiver (`AugmentState`), and the SpecialBuilding
+   group cap at **PLAYER scope**. ⏳ **SpecialBuilding team/world group caps — BLOCKED (2026-07-01):** needs a
+   group→members index + the group's `allowed` available to the cascade (StoneBase `SpecialBuildingGroup` team+world caps),
+   but `SPECIALBUILDING_` is not in readJson's `RJ_REPO_TYPES` (no `InfoRepo<CvSpecialBuildingInfo>` / group `allowed` /
+   members index parsed). **DATA-BENIGN:** all 7 group special-buildings are `allowed.empire:1` only — no team/world group
+   cap exists, so the player-scope check is complete for current data. ⏳ **CultureLevel category caps — correctly
+   DEFERRED:** a post-port spec feature StoneBase itself lacks (the wonder-category `allowed` keys, e.g. `worldWonders`);
+   adding it now would DIVERGE from StoneBase. ⏳ **`MAPCATEGORY_` gate — DEFERRED:** XML-only, not yet in the JSON data
+   (in-flight per json §3.5). **Builds stay the per-plot `canBuild` gate** (it subsumes BuildCascade's unlock set); civics/projects/
+   processes/promotions/hurries keep the generic enables-frontier `en_gateSet` (no StoneBase reference).
+   ✅ **FRONTIER GATES BUILT — the 6 same-shape
    gates** (`Cascade/CvCascadeEnabler.{h,cpp}`): **city-scope** `canConstruct`/`canTrain`/`canCreate`/`canMaintain`
    + **player-scope** `canResearch`/`canDoCivics`. ONE GENERATE→GATE primitive over a **bucket-keyed** `enables`
    collection: GENERATE `CAN GET` from the InfoRepo `enables.<bucket>` over HAVE (team techs + adopted civics [+ the
-   city's buildings for city-scope]) minus obsoletes/replaces/disables (+ the target-side `obsoletedBy.techs` prune),
-   then GATE by `requires` (BoolExpr vs the city/player game object) + `allowed` (tally cap). Emits the available set per
-   gate, shadowed vs the live engine (`[ENABLER/shadow]`/`[ENABLER/diff]` at doTurn). Kept structurally two-pass (NOT a
+   city's buildings for city-scope] **+ the universal `TECH_GAME_START` start-node `cascadeStartNode`, seeded for every
+   player — the no-tech-prereq root, since every civ grants it via `grants.techs`; closes the start-tech `canResearch`
+   diffs** and is the home for the no-prereq starting set across buckets) minus obsoletes/replaces/disables (+ the
+   target-side `obsoletedBy.techs` prune), then GATE by `requires` (the typed-condition evaluator vs the city/player/unit/plot live ctx) + `allowed`
+   (tally cap). Emits the available set per gate, shadowed vs the live engine (`[ENABLER/shadow]` per-gate
+   diverging/checked + **per-gate-capped** `[ENABLER/diff]` samples, at doTurn). Kept structurally two-pass (NOT a
    per-entity output-match — [DEC-stonebase-follows-spec]); names mirror the existing engine gates. ✅ **+
    `canAcquirePromotion`** — the per-UNIT shape (HAVE = the unit's held promotions + team techs + unitcombat → GENERATE
    enables.promotions → GATE `requires` vs the unit game object; shadowed vs `isPromotionValid`). So **7 gates built**.
    ✅ **+ `canBuild`(worker)** — the PLOT-scope shape: GENERATE the owner's `enables.builds` (techs) → GATE the build's
    `requires` vs the **plot** game object (terrain predicates), over sampled owned non-city plots; shadow vs
-   `CvPlot::canBuild`. So **8 gates built**. ✅ The `capabilities` block is **MAPPED + QUERYABLE**:
+   `CvPlot::canBuild`. So **8 gates built**. ✅ **+ 2 more PLAYER-scope gates (so 10 built), both clean parity first try:**
+   **`canHurry`** (GENERATE `enables.hurries` over HAVE — mostly civics; the player-level "is the hurry type enabled" gate
+   that lights the two Python hurry buttons / the AI check; the city-level gold/slavery AMOUNT is runtime; shadow vs
+   `CvPlayer::canHurry`=`getHurryCount>0`); and **`canFoundReligion`** — a **player-wide STATE predicate** (≥1 city, not
+   NPC, not first-3-turns, the `RELIGION_LIMITED` holy-city rule), reproduced from raw state (not a JSON frontier) and
+   shadowed vs the engine. ⏳ **`canAddHeritage` is a SEPARATE move** (traced 2026-06-30): `CvPlayer::canAddHeritage` is only
+   a **permissive prereq-check** — the tech-rooted 22 heritages invert cleanly (`TECH_TAXONOMY`/`TECH_ORAL_TRADITION` →
+   `enables.heritages`, verified), but the ~91 no-prereq folklore heritages are *really* gated by the subdued-animal
+   `MISSION_HERITAGE` / `CvOutcome` (a misnomer — the actual MISSION system), unmodeled. Done with the outcome/mission system, not the frontier. ✅ The `capabilities` block is **MAPPED + QUERYABLE**:
    `CvJsonInfo.capabilities` (per-tech grant names; `[READJSON/cap]`) + `en_empireHasCapability(team, cap)` (union over
    the team's held techs). **Verified by a clean CAPABILITY shadow** — `canFoundOnPeaks` (granted by **TECH_ALGEBRA**, a
    tech *capability* — corrected: NOT a policy / external source) vs the engine `CvTeam::isCanFoundOnPeaks` flag

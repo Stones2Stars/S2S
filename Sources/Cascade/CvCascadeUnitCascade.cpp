@@ -10,6 +10,7 @@
 #include "CvCascadeEnablerKernel.h"     // EnablerKernel::obsoletedByHeldTech
 #include "CvCascadeBuildingCascade.h"   // BuildingCascade::augmentWaived (shared AugmentState waiver)
 #include "CvJsonInfo.h"
+#include "CvJsonUnitInfo.h"           // spawnOnly (the cascade's own never-trained flag; self-containment)
 #include "Repos/InfoRepo.h"
 #include "CvCascadeTally.h"
 #include "AI/CvPlayerAI.h"            // GET_PLAYER
@@ -62,8 +63,9 @@ bool UnitCascade::reachable(int v, const std::set<int>& available, std::map<int,
 }
 
 // --- UnitCascade.cs: the city's TRAINABLE set (the engine canTrain TRUE-set), GENERATE-then-GATE. Units REUSE the
-// building machinery -- only the inputs differ. (1) GATE availability: all units minus spawnOnly (cost<0, never built --
-// owner 2026-06-30) / tech-obsoleted / instance-capped, then requires.build (STRICT). (2) GENERATE frontier: all units
+// building machinery -- only the inputs differ. (1) GATE availability: all units minus spawnOnly (identity.spawnOnly, the
+// cascade's OWN flag -- never player-trained; self-containment, StoneBase u.SpawnOnly) / tech-obsoleted / instance-capped,
+// then requires.build (STRICT). (2) GENERATE frontier: all units
 // minus spawnOnly/obsoleted/replaced-when-the-replacer-is-available (the `replaces` edge -- source-side, inverted;
 // inert today, enabler.md §2). (3) GATE the frontier: LISTED = available AND not dormant (requires.build.dormant.all =
 // the direct-upgrade closure: a unit hides only when EVERY direct upgrade is reachable-trainable; one dead branch keeps
@@ -86,8 +88,10 @@ void UnitCascade::trainable(const CvCity* pCity, const CvPlayer& kPlayer, const 
 	std::set<int> available;
 	for (int u = 0; u < nU; ++u)
 	{
-		if (GC.getUnitInfo((UnitTypes)u).getProductionCost() < 0) continue;   // spawnOnly: never built (outside canTrain)
 		const CvJsonInfo* j = InfoRepo<CvUnitInfo>::get().get(u);
+		// spawnOnly: never player-trained (StoneBase u.SpawnOnly = identity.spawnOnly). Read the cascade's OWN flag, NOT
+		// the engine productionCost<0 marker (self-containment, DEC-calc-zero-ride-in). Value-equivalent on current data.
+		if (j != NULL && ((const CvJsonUnitInfo*)j)->spawnOnly) continue;
 		if (EnablerKernel::obsoletedByHeldTech(j, kTeam)) continue;
 		if (capped(j, u, kPlayer, noNationalLimit)) continue;
 		if (j != NULL && j->requiresBuild != NULL && !cascadeEvalCondition(j->requiresBuild, ec, flags)) continue;
@@ -110,8 +114,8 @@ void UnitCascade::trainable(const CvCity* pCity, const CvPlayer& kPlayer, const 
 	std::set<int> frontier;
 	for (int u = 0; u < nU; ++u)
 	{
-		if (GC.getUnitInfo((UnitTypes)u).getProductionCost() < 0) continue;
 		const CvJsonInfo* j = InfoRepo<CvUnitInfo>::get().get(u);
+		if (j != NULL && ((const CvJsonUnitInfo*)j)->spawnOnly) continue;   // spawnOnly (cascade's own flag; self-containment)
 		if (EnablerKernel::obsoletedByHeldTech(j, kTeam)) continue;
 		if (replacedUnits.count(u) != 0) continue;
 		frontier.insert(u);

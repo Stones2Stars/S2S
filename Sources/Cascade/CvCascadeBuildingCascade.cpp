@@ -9,6 +9,7 @@
 #include "CvCascadeBuildingCascade.h"
 #include "CvCascadeEnablerKernel.h"    // EnablerKernel::obsoletedByHeldTech
 #include "CvJsonInfo.h"
+#include "CvJsonBuildingInfo.h"       // notConstructible (the cascade's own never-buildable flag; self-containment)
 #include "Repos/InfoRepo.h"
 #include "CvCascadeTally.h"
 #include "AI/CvPlayerAI.h"            // GET_PLAYER
@@ -136,12 +137,26 @@ void BuildingCascade::buildable(const CvCity* pCity, const CvPlayer& kPlayer, co
 		if (EnablerKernel::obsoletedByHeldTech(j, kTeam)) continue;      // PRUNE: tech-obsolescence (obsoletedBy.techs)
 		if (pCity->hasBuilding(eB)) continue;                           // EXCLUDE: already built in this city
 		if (queued.count(b) != 0) continue;                             // EXCLUDE: already in this city's production queue
-		// EXCLUDE never-buildable: productionCost < 0 = the engine's "can never be built" marker (notConstructible,
-		// OUTSIDE canConstruct -- owner ruling 2026-06-30), as is an auto-placed building.
-		if (bi.getProductionCost() < 0 || bi.isAutoBuild()) continue;
+		// EXCLUDE never-buildable: the cascade's OWN identity.notConstructible flag (StoneBase reads exactly this JSON
+		// flag -- IReadOnlySet NotConstructible), NOT the engine's productionCost<0/isAutoBuild markers (self-containment,
+		// DEC-calc-zero-ride-in: the cascade must stand after legacy is cut). VALUE-EQUIVALENT on current data: the
+		// curator sets identity.notConstructible when iCost==-1 (== productionCost<0), and every autoBuild:true building
+		// (181/181) also carries notConstructible:true, so `productionCost<0 || isAutoBuild()` == notConstructible here
+		// (json §7 autoBuild ⊂ notConstructible). NULL j (no cascade info) => not-notConstructible (matches engine default).
+		{
+			const CvJsonBuildingInfo* jb = (const CvJsonBuildingInfo*)j;
+			if (jb != NULL && jb->notConstructible) continue;
+		}
 		if (capped(j, b, kPlayer)) continue;                            // INSTANCE CAP (created + making >= allowed)
-		// SPECIALBUILDING GROUP CAP: a member leaves buildable once its group count >= getMaxPlayerInstances (engine
-		// special buildings have only a player cap; -1 = uncapped).
+		// SPECIALBUILDING GROUP CAP (PLAYER scope only): a member leaves buildable once its group count >=
+		// getMaxPlayerInstances. StoneBase's GroupCount gates player/team/world from the group's `allowed.{empire,team,
+		// world}`; here only the PLAYER scope is checked, against the engine getMaxPlayerInstances (value-equivalent to
+		// the group's allowed.empire -- the curator maps iMaxPlayerInstances -> allowed.empire).
+		// TODO(port): SpecialBuilding team/world group cap needs a group->members index + group `allowed` available to
+		// the cascade (StoneBase SpecialBuildingGroup / its team+world caps). BLOCKED today: SPECIALBUILDING_ is not in
+		// readJson's RJ_REPO_TYPES, so no InfoRepo<CvSpecialBuildingInfo> (group allowed) nor a group->members index is
+		// parsed. DATA-BENIGN: all 7 group special-buildings are allowed.empire:1 only -- no team/world group cap exists,
+		// so the player-scope check is complete for current data. Wire the group InfoRepo + members index to lift this.
 		const SpecialBuildingTypes sb = bi.getSpecialBuilding();
 		if (sb != NO_SPECIALBUILDING)
 		{
