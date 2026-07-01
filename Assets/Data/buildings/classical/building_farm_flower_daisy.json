@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_FARM_FLOWER_DAISY",
- "description": "TXT_KEY_BUILDING_FARM_FLOWER_DAISY",
- "civilopedia": "TXT_KEY_BUILDING_FARM_FLOWER_DAISY_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_RESOURCES_FLOWERS"
@@ -77,6 +75,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_FARM_FLOWER_DAISY",
+  "civilopedia": "TXT_KEY_BUILDING_FARM_FLOWER_DAISY_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

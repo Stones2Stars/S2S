@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_RESERVOIR",
- "description": "TXT_KEY_BUILDING_RESERVOIR",
- "civilopedia": "TXT_KEY_BUILDING_RESERVOIR_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_MODERN_WATERWORKS"
@@ -98,6 +96,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_RESERVOIR",
+  "civilopedia": "TXT_KEY_BUILDING_RESERVOIR_PEDIA",
   "providesFreshWater": true,
   "advisor": "ADVISOR_GROWTH",
   "mapCategories": [

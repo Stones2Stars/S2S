@@ -1,7 +1,5 @@
 {
  "type": "BONUS_MELANESIAN",
- "description": "TXT_KEY_BONUS_MELANESIAN",
- "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
  "enables": {
   "units": [
    "UNIT_MOTU_ARCHERS",
@@ -14,6 +12,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_MELANESIAN",
+  "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
   "bonusClassType": "BONUSCLASS_CULTURE"
  }
 }

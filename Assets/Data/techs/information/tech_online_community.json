@@ -1,8 +1,5 @@
 {
  "type": "TECH_ONLINE_COMMUNITY",
- "description": "TXT_KEY_TECH_ONLINE_COMMUNITY",
- "civilopedia": "TXT_KEY_TECH_ONLINE_COMMUNITY_PEDIA",
- "quote": "TXT_KEY_TECH_ONLINE_COMMUNITY_QUOTE",
  "enables": {
   "bonuses": [
    "BONUS_HUMAN_MOD_DIGITAL_LIFESTYLE"
@@ -70,6 +67,9 @@
   "soundMP": "AS2D_TECH_ONLINE_COMMUNITY"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_ONLINE_COMMUNITY",
+  "civilopedia": "TXT_KEY_TECH_ONLINE_COMMUNITY_PEDIA",
+  "quote": "TXT_KEY_TECH_ONLINE_COMMUNITY_QUOTE",
   "era": "C2C_ERA_INFORMATION",
   "worth": 14,
   "tradeable": true,

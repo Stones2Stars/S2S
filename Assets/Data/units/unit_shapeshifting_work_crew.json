@@ -1,7 +1,5 @@
 {
  "type": "UNIT_SHAPESHIFTING_WORK_CREW",
- "description": "TXT_KEY_UNIT_SHAPESHIFTING_WORK_CREW",
- "civilopedia": "TXT_KEY_UNIT_SHAPESHIFTING_WORK_CREW_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -32,6 +30,8 @@
   "hurryCostModifier": 10000
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_SHAPESHIFTING_WORK_CREW",
+  "civilopedia": "TXT_KEY_UNIT_SHAPESHIFTING_WORK_CREW_PEDIA",
   "worth": 1,
   "domain": "DOMAIN_LAND",
   "defaultUnitAI": "UNITAI_WORKER",

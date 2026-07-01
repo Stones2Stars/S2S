@@ -1,8 +1,5 @@
 {
  "type": "TECH_LEAD_GLASS",
- "description": "TXT_KEY_TECH_LEAD_GLASS",
- "civilopedia": "TXT_KEY_TECH_LEAD_GLASS_PEDIA",
- "quote": "TXT_KEY_TECH_LEAD_GLASS_QUOTE",
  "enables": {
   "bonuses": [
    "BONUS_CRYSTAL_GLASSWARE"
@@ -76,6 +73,9 @@
   "soundMP": "AS2D_TECH_LEAD_GLASS"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_LEAD_GLASS",
+  "civilopedia": "TXT_KEY_TECH_LEAD_GLASS_PEDIA",
+  "quote": "TXT_KEY_TECH_LEAD_GLASS_QUOTE",
   "era": "C2C_ERA_RENAISSANCE",
   "worth": 16,
   "militaryWorth": 4,

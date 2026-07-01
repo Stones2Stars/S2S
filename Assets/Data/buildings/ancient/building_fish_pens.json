@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_FISH_PENS",
- "description": "TXT_KEY_BUILDING_FISH_PENS",
- "civilopedia": "TXT_KEY_BUILDING_FISH_PENS_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -60,6 +58,8 @@
   "construct": "AS2D_BUILD_GRANARY"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_FISH_PENS",
+  "civilopedia": "TXT_KEY_BUILDING_FISH_PENS_PEDIA",
   "worth": 2,
   "conquestProbability": 75,
   "advisor": "ADVISOR_ECONOMY",

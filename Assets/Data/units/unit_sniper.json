@@ -1,7 +1,5 @@
 {
  "type": "UNIT_SNIPER",
- "description": "TXT_KEY_UNIT_SNIPER",
- "civilopedia": "TXT_KEY_UNIT_SNIPER_PEDIA",
  "obsoletedBy": {
   "techs": [
    "TECH_LASER"
@@ -192,6 +190,8 @@
   ]
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_SNIPER",
+  "civilopedia": "TXT_KEY_UNIT_SNIPER_PEDIA",
   "worth": 8,
   "militaryWorth": 20,
   "xpValueAttack": 8,

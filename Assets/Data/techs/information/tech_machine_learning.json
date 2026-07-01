@@ -1,8 +1,5 @@
 {
  "type": "TECH_MACHINE_LEARNING",
- "description": "TXT_KEY_TECH_MACHINE_LEARNING",
- "civilopedia": "TXT_KEY_TECH_MACHINE_LEARNING_PEDIA",
- "quote": "TXT_KEY_TECH_MACHINE_LEARNING_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_DIGITAL_ADVERTISING_FIRM",
@@ -69,6 +66,9 @@
   "soundMP": "AS2D_TECH_MACHINE_LEARNING"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_MACHINE_LEARNING",
+  "civilopedia": "TXT_KEY_TECH_MACHINE_LEARNING_PEDIA",
+  "quote": "TXT_KEY_TECH_MACHINE_LEARNING_QUOTE",
   "era": "C2C_ERA_INFORMATION",
   "worth": 48,
   "tradeable": true,

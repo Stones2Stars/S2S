@@ -1,8 +1,5 @@
 {
  "type": "TRAIT_PIOUS",
- "description": "TXT_KEY_TRAIT_PIOUS",
- "civilopedia": "TXT_KEY_TRAIT_PIOUS_PEDIA",
- "strategy": "TXT_KEY_TRAIT_PIOUS_STRATEGY",
  "excludes": [
   "TRAIT_ANTI_CLERICAL",
   "TRAIT_FANATICAL",
@@ -306,5 +303,10 @@
   "art": {
    "icon": "art/Buttons/Traits/TraitPious.dds"
   }
+ },
+ "identity": {
+  "description": "TXT_KEY_TRAIT_PIOUS",
+  "civilopedia": "TXT_KEY_TRAIT_PIOUS_PEDIA",
+  "strategy": "TXT_KEY_TRAIT_PIOUS_STRATEGY"
  }
 }

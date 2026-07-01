@@ -1,13 +1,13 @@
 {
  "type": "BONUS_TAPESTRIES",
- "description": "TXT_KEY_BONUS_TAPESTRIES",
- "civilopedia": "TXT_KEY_BONUS_TAPESTRIES_PEDIA",
  "world": {
   "art": {
    "icon": "ART_DEF_BONUS_TAPESTRIES"
   }
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_TAPESTRIES",
+  "civilopedia": "TXT_KEY_BONUS_TAPESTRIES_PEDIA",
   "bonusClassType": "BONUSCLASS_MANUFACTURED"
  }
 }

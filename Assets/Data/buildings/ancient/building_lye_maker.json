@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_LYE_MAKER",
- "description": "TXT_KEY_BUILDING_LYE_MAKER",
- "civilopedia": "TXT_KEY_BUILDING_LYE_MAKER_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_FACTORY_LYE"
@@ -108,6 +106,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_LYE_MAKER",
+  "civilopedia": "TXT_KEY_BUILDING_LYE_MAKER_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

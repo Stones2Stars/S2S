@@ -1,8 +1,5 @@
 {
  "type": "TECH_PARTICLE_GENETICS",
- "description": "TXT_KEY_TECH_PARTICLE_GENETICS",
- "civilopedia": "TXT_KEY_TECH_PARTICLE_GENETICS_PEDIA",
- "quote": "TXT_KEY_TECH_PARTICLE_GENETICS_QUOTE",
  "enables": {
   "bonuses": [
    "BONUS_FEMTOBOTS"
@@ -56,6 +53,9 @@
   "soundMP": "AS2D_TECH_GENERIC"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_PARTICLE_GENETICS",
+  "civilopedia": "TXT_KEY_TECH_PARTICLE_GENETICS_PEDIA",
+  "quote": "TXT_KEY_TECH_PARTICLE_GENETICS_QUOTE",
   "era": "C2C_ERA_COSMIC",
   "worth": 48,
   "tradeable": true,

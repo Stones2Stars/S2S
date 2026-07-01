@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_CAMP_MOUFLON",
- "description": "TXT_KEY_BUILDING_CAMP_MOUFLON",
- "civilopedia": "TXT_KEY_BUILDING_CAMP_MOUFLON_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_RESOURCES_CARCASS"
@@ -84,6 +82,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_CAMP_MOUFLON",
+  "civilopedia": "TXT_KEY_BUILDING_CAMP_MOUFLON_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

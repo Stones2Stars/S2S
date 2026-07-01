@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_PESTS_SLUGS",
- "description": "TXT_KEY_BUILDING_PESTS_SLUGS",
- "civilopedia": "TXT_KEY_BUILDING_PESTS_PEDIA",
  "obsoletedBy": {
   "techs": [
    "TECH_ENVIRONMENTAL_ECONOMICS"
@@ -70,6 +68,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_PESTS_SLUGS",
+  "civilopedia": "TXT_KEY_BUILDING_PESTS_PEDIA",
   "notConstructible": true,
   "nukeImmune": true,
   "autoBuild": true,

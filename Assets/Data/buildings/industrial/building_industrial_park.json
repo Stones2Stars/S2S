@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_INDUSTRIAL_PARK",
- "description": "TXT_KEY_BUILDING_INDUSTRIAL_PARK",
- "civilopedia": "TXT_KEY_BUILDING_INDUSTRIAL_PARK_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_ARCOLOGY",
@@ -112,6 +110,8 @@
   "construct": "AS2D_BUILD_FACTORY"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_INDUSTRIAL_PARK",
+  "civilopedia": "TXT_KEY_BUILDING_INDUSTRIAL_PARK_PEDIA",
   "worth": 6,
   "militaryWorth": 35,
   "conquestProbability": 75,

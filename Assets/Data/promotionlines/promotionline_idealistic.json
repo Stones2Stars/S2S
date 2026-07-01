@@ -1,9 +1,11 @@
 {
  "type": "PROMOTIONLINE_IDEALISTIC",
- "description": "TXT_KEY_PROMOTIONLINE_IDEALISTIC",
  "ui": {
   "art": {
    "icon": "art/Buttons/Traits/TraitPolitician.dds"
   }
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTIONLINE_IDEALISTIC"
  }
 }

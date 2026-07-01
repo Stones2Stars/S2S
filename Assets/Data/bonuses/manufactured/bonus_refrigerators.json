@@ -1,7 +1,5 @@
 {
  "type": "BONUS_REFRIGERATORS",
- "description": "TXT_KEY_BONUS_REFRIGERATORS",
- "civilopedia": "TXT_KEY_BONUS_REFRIGERATORS_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_APPLIANCE_STORE",
@@ -16,6 +14,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_REFRIGERATORS",
+  "civilopedia": "TXT_KEY_BONUS_REFRIGERATORS_PEDIA",
   "bonusClassType": "BONUSCLASS_MANUFACTURED"
  }
 }

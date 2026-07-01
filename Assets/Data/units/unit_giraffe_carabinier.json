@@ -1,7 +1,5 @@
 {
  "type": "UNIT_GIRAFFE_CARABINIER",
- "description": "TXT_KEY_UNIT_GIRAFFE_CARABINIER",
- "civilopedia": "TXT_KEY_UNIT_GIRAFFE_ARCHER_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -159,6 +157,8 @@
   "production": 475
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_GIRAFFE_CARABINIER",
+  "civilopedia": "TXT_KEY_UNIT_GIRAFFE_ARCHER_PEDIA",
   "worth": 4,
   "militaryWorth": 21,
   "xpValueAttack": 6,

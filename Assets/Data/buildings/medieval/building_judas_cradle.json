@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_JUDAS_CRADLE",
- "description": "TXT_KEY_BUILDING_JUDAS_CRADLE",
- "civilopedia": "TXT_KEY_BUILDING_JUDAS_CRADLE_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_JAIL"
@@ -74,6 +72,8 @@
   "construct": "AS2D_BUILD_JAIL"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_JUDAS_CRADLE",
+  "civilopedia": "TXT_KEY_BUILDING_JUDAS_CRADLE_PEDIA",
   "worth": 4,
   "militaryWorth": 4,
   "advisor": "ADVISOR_MILITARY",

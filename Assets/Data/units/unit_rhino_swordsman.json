@@ -1,7 +1,5 @@
 {
  "type": "UNIT_RHINO_SWORDSMAN",
- "description": "TXT_KEY_UNIT_RHINO_SWORDSMAN",
- "civilopedia": "TXT_KEY_UNIT_RHINO_SWORDSMAN_PEDIA",
  "obsoletedBy": {
   "techs": [
    "TECH_ARMORED_CAVALRY"
@@ -86,6 +84,8 @@
   "production": 225
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_RHINO_SWORDSMAN",
+  "civilopedia": "TXT_KEY_UNIT_RHINO_SWORDSMAN_PEDIA",
   "worth": 2,
   "militaryWorth": 3,
   "xpValueAttack": 4,

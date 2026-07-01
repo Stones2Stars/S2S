@@ -1,8 +1,5 @@
 {
  "type": "TECH_SPACE_CREASING",
- "description": "TXT_KEY_TECH_SPACE_CREASING",
- "civilopedia": "TXT_KEY_TECH_SPACE_CREASING_PEDIA",
- "quote": "TXT_KEY_TECH_SPACE_CREASING_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_GALACTIC_PORT",
@@ -72,6 +69,9 @@
   "soundMP": "AS2D_TECH_SPACE_CREASING"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_SPACE_CREASING",
+  "civilopedia": "TXT_KEY_TECH_SPACE_CREASING_PEDIA",
+  "quote": "TXT_KEY_TECH_SPACE_CREASING_QUOTE",
   "era": "C2C_ERA_COSMIC",
   "worth": 48,
   "militaryWorth": 4,

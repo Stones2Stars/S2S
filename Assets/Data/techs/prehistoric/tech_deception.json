@@ -1,8 +1,5 @@
 {
  "type": "TECH_DECEPTION",
- "description": "TXT_KEY_TECH_DECEPTION",
- "civilopedia": "TXT_KEY_TECH_DECEPTION_PEDIA",
- "quote": "TXT_KEY_TECH_DECEPTION_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_CRIME_LYING",
@@ -68,6 +65,9 @@
   "soundMP": "AS2D_TECH_DECEPTION"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_DECEPTION",
+  "civilopedia": "TXT_KEY_TECH_DECEPTION_PEDIA",
+  "quote": "TXT_KEY_TECH_DECEPTION_QUOTE",
   "era": "C2C_ERA_PREHISTORIC",
   "worth": 2,
   "militaryWorth": 1,

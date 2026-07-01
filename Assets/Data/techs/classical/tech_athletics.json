@@ -1,8 +1,5 @@
 {
  "type": "TECH_ATHLETICS",
- "description": "TXT_KEY_TECH_ATHLETICS",
- "civilopedia": "TXT_KEY_TECH_ATHLETICS_PEDIA",
- "quote": "TXT_KEY_TECH_ATHLETICS_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_ATHLETIC_FIELDS",
@@ -48,6 +45,9 @@
   "soundMP": "AS2D_TECH_ATHLETICS"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_ATHLETICS",
+  "civilopedia": "TXT_KEY_TECH_ATHLETICS_PEDIA",
+  "quote": "TXT_KEY_TECH_ATHLETICS_QUOTE",
   "era": "C2C_ERA_CLASSICAL",
   "worth": 10,
   "militaryWorth": 10,

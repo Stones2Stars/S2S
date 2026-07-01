@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_SHIMIZU_MEGA_CITY_PYRAMID",
- "description": "TXT_KEY_BUILDING_SHIMIZU_MEGA_CITY_PYRAMID",
- "civilopedia": "TXT_KEY_BUILDING_SHIMIZU_MEGA_CITY_PYRAMID_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -76,6 +74,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_SHIMIZU_MEGA_CITY_PYRAMID",
+  "civilopedia": "TXT_KEY_BUILDING_SHIMIZU_MEGA_CITY_PYRAMID_PEDIA",
   "conquestProbability": 100,
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,

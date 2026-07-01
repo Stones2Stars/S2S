@@ -1,8 +1,5 @@
 {
  "type": "TECH_POTTERY",
- "description": "TXT_KEY_TECH_POTTERY",
- "civilopedia": "TXT_KEY_TECH_POTTERY_PEDIA",
- "quote": "TXT_KEY_TECH_POTTERY_QUOTE",
  "enables": {
   "bonuses": [
    "BONUS_POTTERY"
@@ -89,6 +86,9 @@
   "soundMP": "AS2D_TECH_MP_POTTERY"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_POTTERY",
+  "civilopedia": "TXT_KEY_TECH_POTTERY_PEDIA",
+  "quote": "TXT_KEY_TECH_POTTERY_QUOTE",
   "era": "C2C_ERA_ANCIENT",
   "worth": 8,
   "tradeable": true,

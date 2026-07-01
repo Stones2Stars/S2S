@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_GROVE_GEVUINA",
- "description": "TXT_KEY_BUILDING_GROVE_GEVUINA",
- "civilopedia": "TXT_KEY_BUILDING_GROVE_GEVUINA_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_RESOURCES_NUTS"
@@ -77,6 +75,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_GROVE_GEVUINA",
+  "civilopedia": "TXT_KEY_BUILDING_GROVE_GEVUINA_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

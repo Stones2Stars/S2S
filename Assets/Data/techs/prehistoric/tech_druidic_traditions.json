@@ -1,8 +1,5 @@
 {
  "type": "TECH_DRUIDIC_TRADITIONS",
- "description": "TXT_KEY_TECH_DRUIDIC_TRADITIONS",
- "civilopedia": "TXT_KEY_TECH_DRUIDIC_TRADITIONS_PEDIA",
- "quote": "TXT_KEY_TECH_DRUIDIC_TRADITIONS_QUOTE",
  "enables": {
   "religions": [
    "RELIGION_DRUIDIC_TRADITIONS"
@@ -51,6 +48,9 @@
   "soundMP": "AS2D_TECH_GENERIC"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_DRUIDIC_TRADITIONS",
+  "civilopedia": "TXT_KEY_TECH_DRUIDIC_TRADITIONS_PEDIA",
+  "quote": "TXT_KEY_TECH_DRUIDIC_TRADITIONS_QUOTE",
   "era": "C2C_ERA_PREHISTORIC",
   "worth": 8,
   "gridX": 18,

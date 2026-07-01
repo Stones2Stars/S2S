@@ -1,7 +1,5 @@
 {
  "type": "UNIT_GUNFIGHTER",
- "description": "TXT_KEY_UNIT_GUNFIGHTER",
- "civilopedia": "TXT_KEY_CONCEPT_ESPIONAGE_PEDIA",
  "obsoletedBy": {
   "techs": [
    "TECH_SEMI_AUTOMATIC_WEAPONS"
@@ -203,6 +201,8 @@
   ]
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_GUNFIGHTER",
+  "civilopedia": "TXT_KEY_CONCEPT_ESPIONAGE_PEDIA",
   "worth": 8,
   "militaryWorth": 20,
   "xpValueAttack": 8,

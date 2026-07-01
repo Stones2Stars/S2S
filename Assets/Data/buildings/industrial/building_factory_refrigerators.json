@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_FACTORY_REFRIGERATORS",
- "description": "TXT_KEY_BUILDING_FACTORY_REFRIGERATORS",
- "civilopedia": "TXT_KEY_BUILDING_FACTORY_REFRIGERATORS_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_ELECTRONICS_MANUFACTURING_DISTRICT"
@@ -118,6 +116,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_FACTORY_REFRIGERATORS",
+  "civilopedia": "TXT_KEY_BUILDING_FACTORY_REFRIGERATORS_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

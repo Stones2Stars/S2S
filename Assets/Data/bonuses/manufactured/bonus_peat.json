@@ -1,7 +1,5 @@
 {
  "type": "BONUS_PEAT",
- "description": "TXT_KEY_BONUS_PEAT",
- "civilopedia": "TXT_KEY_BONUS_PEAT_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_GRAND_FIRE_FESTIVAL",
@@ -14,6 +12,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_PEAT",
+  "civilopedia": "TXT_KEY_BONUS_PEAT_PEDIA",
   "bonusClassType": "BONUSCLASS_MANUFACTURED"
  }
 }

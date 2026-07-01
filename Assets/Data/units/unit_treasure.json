@@ -1,7 +1,5 @@
 {
  "type": "UNIT_TREASURE",
- "description": "TXT_KEY_UNIT_TREASURE",
- "civilopedia": "TXT_KEY_UNIT_TREASURE_PEDIA",
  "requires": {
   "build": {
    "noneOf": [
@@ -41,6 +39,8 @@
   ]
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_TREASURE",
+  "civilopedia": "TXT_KEY_UNIT_TREASURE_PEDIA",
   "spawnOnly": true,
   "worth": 1,
   "domain": "DOMAIN_LAND",

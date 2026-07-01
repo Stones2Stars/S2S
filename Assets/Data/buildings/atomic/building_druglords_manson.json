@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_DRUGLORDS_MANSON",
- "description": "TXT_KEY_BUILDING_DRUGLORDS_MANSON",
- "civilopedia": "TXT_KEY_BUILDING_DRUGLORDS_MANSON_PEDIA",
  "obsoletedBy": {
   "techs": [
    "TECH_SMART_DRUGS"
@@ -196,6 +194,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_DRUGLORDS_MANSON",
+  "civilopedia": "TXT_KEY_BUILDING_DRUGLORDS_MANSON_PEDIA",
   "nukeImmune": true,
   "militaryWorth": 1,
   "advisor": "ADVISOR_ECONOMY",

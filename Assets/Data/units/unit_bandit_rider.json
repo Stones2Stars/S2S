@@ -1,7 +1,5 @@
 {
  "type": "UNIT_BANDIT_RIDER",
- "description": "TXT_KEY_UNIT_BANDIT_RIDER",
- "civilopedia": "TXT_KEY_UNIT_BANDIT_RIDER_PEDIA",
  "obsoletedBy": {
   "techs": [
    "TECH_MATCHLOCK"
@@ -165,6 +163,8 @@
   "upkeep": 5
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_BANDIT_RIDER",
+  "civilopedia": "TXT_KEY_UNIT_BANDIT_RIDER_PEDIA",
   "worth": 2,
   "militaryWorth": 8,
   "xpValueAttack": 3,

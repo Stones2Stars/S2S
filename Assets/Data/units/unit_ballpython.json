@@ -1,7 +1,5 @@
 {
  "type": "UNIT_BALLPYTHON",
- "description": "TXT_KEY_UNIT_BALLPYTHON",
- "civilopedia": "TXT_KEY_UNIT_BALLPYTHON_PEDIA",
  "skills": {
   "blendIntoCity": true,
   "onlyDefensive": true,
@@ -36,6 +34,8 @@
   ]
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_BALLPYTHON",
+  "civilopedia": "TXT_KEY_UNIT_BALLPYTHON_PEDIA",
   "spawnOnly": true,
   "xpValueAttack": 2,
   "xpValueDefense": 1,

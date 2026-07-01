@@ -1,7 +1,5 @@
 {
  "type": "C2C_ERA_RENAISSANCE",
- "description": "TXT_KEY_ERA_RENAISSANCE",
- "strategy": "TXT_KEY_ERA_RENAISSANCE_STRATEGY",
  "costs": {
   "world": {
    "train": {
@@ -100,6 +98,8 @@
   "unitDefeat": "AS2D_LOSS_MIDDLE"
  },
  "identity": {
+  "description": "TXT_KEY_ERA_RENAISSANCE",
+  "strategy": "TXT_KEY_ERA_RENAISSANCE_STRATEGY",
   "order": 5,
   "advancedStart": 8000,
   "historicalStartYear": 1400,

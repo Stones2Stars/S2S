@@ -1,6 +1,5 @@
 {
  "type": "PROMOTION_LAND_WARRIOR2",
- "description": "TXT_KEY_PROMOTION_LAND_WARRIOR2",
  "firstStrike": {
   "unit": {
    "chance": {
@@ -30,5 +29,8 @@
  },
  "sound": {
   "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_LAND_WARRIOR2"
  }
 }

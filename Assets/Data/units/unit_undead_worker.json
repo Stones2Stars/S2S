@@ -1,7 +1,5 @@
 {
  "type": "UNIT_UNDEAD_WORKER",
- "description": "TXT_KEY_UNIT_UNDEAD_WORKER",
- "civilopedia": "TXT_KEY_UNIT_WORKER_PEDIA",
  "obsoletedBy": {
   "techs": [
    "TECH_MAINSTREAM_CLONING"
@@ -109,6 +107,8 @@
   "upkeep": 1
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_UNDEAD_WORKER",
+  "civilopedia": "TXT_KEY_UNIT_WORKER_PEDIA",
   "worth": 3,
   "domain": "DOMAIN_LAND",
   "defaultUnitAI": "UNITAI_WORKER",

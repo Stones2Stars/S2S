@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_HYDROCARBON_REFINERY",
- "description": "TXT_KEY_BUILDING_HYDROCARBON_REFINERY",
- "civilopedia": "TXT_KEY_BUILDING_HYDROCARBON_REFINERY_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_RESOURCES_PETROLEUM_PRODUCTS"
@@ -92,6 +90,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_HYDROCARBON_REFINERY",
+  "civilopedia": "TXT_KEY_BUILDING_HYDROCARBON_REFINERY_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

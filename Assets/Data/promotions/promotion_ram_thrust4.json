@@ -1,6 +1,5 @@
 {
  "type": "PROMOTION_RAM_THRUST4",
- "description": "TXT_KEY_PROMOTION_RAM_THRUST4",
  "strength": {
   "unit": {
    "breakdownChance": {
@@ -18,5 +17,8 @@
  },
  "sound": {
   "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_RAM_THRUST4"
  }
 }

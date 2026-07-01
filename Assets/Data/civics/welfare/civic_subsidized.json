@@ -1,8 +1,5 @@
 {
  "type": "CIVIC_SUBSIDIZED",
- "description": "TXT_KEY_CIVIC_SUBSIDIZED",
- "civilopedia": "TXT_KEY_CIVIC_SUBSIDIZED_PEDIA",
- "strategy": "TXT_KEY_CIVIC_SUBSIDIZED_STRATEGY",
  "enables": {
   "buildings": [
    "BUILDING_SOCIAL_SERVICES"
@@ -148,6 +145,9 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_CIVIC_SUBSIDIZED",
+  "civilopedia": "TXT_KEY_CIVIC_SUBSIDIZED_PEDIA",
+  "strategy": "TXT_KEY_CIVIC_SUBSIDIZED_STRATEGY",
   "civicOption": "CIVICOPTION_WELFARE",
   "upkeepLevel": "UPKEEP_HIGH"
  }

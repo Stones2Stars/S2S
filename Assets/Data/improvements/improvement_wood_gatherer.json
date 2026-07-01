@@ -1,7 +1,5 @@
 {
  "type": "IMPROVEMENT_WOOD_GATHERER",
- "description": "TXT_KEY_IMPROVEMENT_WOOD_GATHERER",
- "civilopedia": "TXT_KEY_IMPROVEMENT_LUMBERYARD_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -76,6 +74,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_IMPROVEMENT_WOOD_GATHERER",
+  "civilopedia": "TXT_KEY_IMPROVEMENT_LUMBERYARD_PEDIA",
   "upgradeTime": 5,
   "pillageGold": 5,
   "upgradesTo": "IMPROVEMENT_LUMBERJACK",

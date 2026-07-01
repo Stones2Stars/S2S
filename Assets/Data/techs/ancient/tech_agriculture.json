@@ -1,8 +1,5 @@
 {
  "type": "TECH_AGRICULTURE",
- "description": "TXT_KEY_TECH_AGRICULTURE",
- "civilopedia": "TXT_KEY_TECH_AGRICULTURE_PEDIA",
- "quote": "TXT_KEY_TECH_AGRICULTURE_QUOTE",
  "enables": {
   "bonuses": [
    "BONUS_COTTON_FIBERS",
@@ -89,6 +86,9 @@
   "soundMP": "AS2D_TECH_MP_AGRICULTURE"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_AGRICULTURE",
+  "civilopedia": "TXT_KEY_TECH_AGRICULTURE_PEDIA",
+  "quote": "TXT_KEY_TECH_AGRICULTURE_QUOTE",
   "era": "C2C_ERA_ANCIENT",
   "worth": 8,
   "tradeable": true,

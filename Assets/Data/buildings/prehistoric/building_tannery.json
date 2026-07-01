@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_TANNERY",
- "description": "TXT_KEY_BUILDING_TANNERY",
- "civilopedia": "TXT_KEY_BUILDING_TANNERY_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_BAMBOO_ARMOURER"
@@ -143,6 +141,8 @@
   "construct": "AS2D_BUILD_TANNERY"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_TANNERY",
+  "civilopedia": "TXT_KEY_BUILDING_TANNERY_PEDIA",
   "enabledCivilizations": [
    "CIVILIZATION_NPC_NEANDERTHAL"
   ],

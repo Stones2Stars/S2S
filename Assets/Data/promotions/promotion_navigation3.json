@@ -1,6 +1,5 @@
 {
  "type": "PROMOTION_NAVIGATION3",
- "description": "TXT_KEY_PROMOTION_NAVIGATION3",
  "movement": {
   "unit": {
    "moves": {
@@ -20,6 +19,7 @@
   "sound": "AS2D_IF_LEVELUP"
  },
  "identity": {
+  "description": "TXT_KEY_PROMOTION_NAVIGATION3",
   "notOnDomains": [
    "DOMAIN_AIR",
    "DOMAIN_LAND"

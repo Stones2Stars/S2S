@@ -1,6 +1,5 @@
 {
  "type": "PROMOTION_SPLIT_INTO_MULTITUDES",
- "description": "TXT_KEY_PROMOTION_SPLIT_INTO_MULTITUDES",
  "strength": {
   "unit": {
    "group": {
@@ -30,6 +29,7 @@
   "sound": "AS2D_IF_LEVELUP"
  },
  "identity": {
+  "description": "TXT_KEY_PROMOTION_SPLIT_INTO_MULTITUDES",
   "replacesUnitCombat": "UNITCOMBAT_GROUP_MILLIONS",
   "forOffset": true
  }

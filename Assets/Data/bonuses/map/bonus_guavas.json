@@ -1,7 +1,5 @@
 {
  "type": "BONUS_GUAVAS",
- "description": "TXT_KEY_BONUS_GUAVAS",
- "civilopedia": "TXT_KEY_BONUS_GUAVAS_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_GROVE_GEVUINA",
@@ -59,6 +57,8 @@
   ]
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_GUAVAS",
+  "civilopedia": "TXT_KEY_BONUS_GUAVAS_PEDIA",
   "bonusClassType": "BONUSCLASS_CROP"
  }
 }

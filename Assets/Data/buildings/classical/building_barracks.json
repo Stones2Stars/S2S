@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_BARRACKS",
- "description": "TXT_KEY_BUILDING_BARRACKS",
- "civilopedia": "TXT_KEY_BUILDING_BARRACKS_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_MILITARY_SCHOOL",
@@ -92,6 +90,8 @@
   "construct": "AS2D_BUILD_BARRACKS"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_BARRACKS",
+  "civilopedia": "TXT_KEY_BUILDING_BARRACKS_PEDIA",
   "worth": 2,
   "militaryWorth": 3,
   "dcmAirbombMission": 2,

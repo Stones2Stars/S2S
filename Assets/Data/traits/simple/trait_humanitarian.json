@@ -1,7 +1,5 @@
 {
  "type": "TRAIT_HUMANITARIAN",
- "description": "TXT_KEY_TRAIT_HUMANITARIAN",
- "civilopedia": "TXT_KEY_TRAIT_HUMANITARIAN_PEDIA",
  "buildRate": {
   "empire": {
    "buildings": {
@@ -164,6 +162,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_TRAIT_HUMANITARIAN",
+  "civilopedia": "TXT_KEY_TRAIT_HUMANITARIAN_PEDIA",
   "shortDescription": "TXT_KEY_TRAIT_HUMANITARIAN_SHORT"
  }
 }

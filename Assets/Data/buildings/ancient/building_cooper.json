@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_COOPER",
- "description": "TXT_KEY_BUILDING_COOPER",
- "civilopedia": "TXT_KEY_BUILDING_COOPER_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_FACTORY_BARRELS"
@@ -108,6 +106,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_COOPER",
+  "civilopedia": "TXT_KEY_BUILDING_COOPER_PEDIA",
   "conquestProbability": 70,
   "advisor": "ADVISOR_ECONOMY",
   "visibilityPriority": 1,

@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_CHILD_LABOR_CREW",
- "description": "TXT_KEY_BUILDING_CHILD_LABOR_CREW",
- "civilopedia": "TXT_KEY_BUILDING_CHILD_LABOR_CREW_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -133,6 +131,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_CHILD_LABOR_CREW",
+  "civilopedia": "TXT_KEY_BUILDING_CHILD_LABOR_CREW_PEDIA",
   "enabledCivilizations": [
    "CIVILIZATION_NPC_NEANDERTHAL"
   ],

@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_ZETTAVERSE_PORTAL",
- "description": "TXT_KEY_BUILDING_ZETTAVERSE_PORTAL",
- "civilopedia": "TXT_KEY_BUILDING_ZETTAVERSE_PORTAL_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -50,6 +48,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_ZETTAVERSE_PORTAL",
+  "civilopedia": "TXT_KEY_BUILDING_ZETTAVERSE_PORTAL_PEDIA",
   "forceNoPrereqScaling": true,
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,

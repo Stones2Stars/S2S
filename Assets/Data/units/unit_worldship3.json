@@ -1,8 +1,5 @@
 {
  "type": "UNIT_WORLDSHIP3",
- "description": "TXT_KEY_UNIT_WORLDSHIP3",
- "civilopedia": "TXT_KEY_UNIT_SETTLER_PEDIA",
- "help": "TXT_KEY_UNIT_WORLDSHIP3_HELP",
  "requires": {
   "build": {
    "all": [
@@ -56,6 +53,9 @@
   "hurryCostModifier": 10000
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_WORLDSHIP3",
+  "civilopedia": "TXT_KEY_UNIT_SETTLER_PEDIA",
+  "help": "TXT_KEY_UNIT_WORLDSHIP3_HELP",
   "worth": 1,
   "domain": "DOMAIN_LAND",
   "defaultUnitAI": "UNITAI_SETTLE",

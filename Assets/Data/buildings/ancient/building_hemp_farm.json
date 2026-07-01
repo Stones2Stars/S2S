@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_HEMP_FARM",
- "description": "TXT_KEY_BUILDING_HEMP_FARM",
- "civilopedia": "TXT_KEY_BUILDING_HEMP_FARM_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_TEXTILE_MANUFACTURING_DISTRICT"
@@ -65,6 +63,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_HEMP_FARM",
+  "civilopedia": "TXT_KEY_BUILDING_HEMP_FARM_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

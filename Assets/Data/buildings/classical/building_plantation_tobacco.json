@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_PLANTATION_TOBACCO",
- "description": "TXT_KEY_BUILDING_PLANTATION_TOBACCO",
- "civilopedia": "TXT_KEY_BUILDING_PLANTATION_TOBACCO_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_CIGAR_ROLLERS_SHOP",
@@ -77,6 +75,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_PLANTATION_TOBACCO",
+  "civilopedia": "TXT_KEY_BUILDING_PLANTATION_TOBACCO_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

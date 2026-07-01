@@ -1,7 +1,5 @@
 {
  "type": "SPECIALIST_ARTIST",
- "description": "TXT_KEY_SPECIALIST_ARTIST",
- "civilopedia": "TXT_KEY_CONCEPT_SPECIALISTS_PEDIA",
  "production": {
   "empire": {
    "flat": [
@@ -93,6 +91,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_SPECIALIST_ARTIST",
+  "civilopedia": "TXT_KEY_CONCEPT_SPECIALISTS_PEDIA",
   "visible": true,
   "categories": [
    "CATEGORY_ASSIGNABLE_SPECIALISTS",

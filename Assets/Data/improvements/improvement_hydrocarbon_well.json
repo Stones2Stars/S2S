@@ -1,7 +1,5 @@
 {
  "type": "IMPROVEMENT_HYDROCARBON_WELL",
- "description": "TXT_KEY_IMPROVEMENT_HYDROCARBON_WELL",
- "civilopedia": "TXT_KEY_IMPROVEMENT_HYDROCARBON_WELL_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -123,6 +121,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_IMPROVEMENT_HYDROCARBON_WELL",
+  "civilopedia": "TXT_KEY_IMPROVEMENT_HYDROCARBON_WELL_PEDIA",
   "pillageTo": "IMPROVEMENT_TAR_GATHERER",
   "advancedStart": {
    "cost": 60

@@ -1,8 +1,5 @@
 {
  "type": "TECH_MAINSTREAM_CLONING",
- "description": "TXT_KEY_TECH_MAINSTREAM_CLONING",
- "civilopedia": "TXT_KEY_TECH_MAINSTREAM_CLONING_PEDIA",
- "quote": "TXT_KEY_TECH_MAINSTREAM_CLONING_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_CLONING_FACTORY",
@@ -75,6 +72,9 @@
   "soundMP": "AS2D_TECH_MAINSTREAM_CLONING"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_MAINSTREAM_CLONING",
+  "civilopedia": "TXT_KEY_TECH_MAINSTREAM_CLONING_PEDIA",
+  "quote": "TXT_KEY_TECH_MAINSTREAM_CLONING_QUOTE",
   "era": "C2C_ERA_NANOTECH",
   "worth": 48,
   "militaryWorth": 4,

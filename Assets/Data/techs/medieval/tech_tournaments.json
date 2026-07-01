@@ -1,8 +1,5 @@
 {
  "type": "TECH_TOURNAMENTS",
- "description": "TXT_KEY_TECH_TOURNAMENTS",
- "civilopedia": "TXT_KEY_TECH_TOURNAMENTS_PEDIA",
- "quote": "TXT_KEY_TECH_TOURNAMENTS_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_FIELD_OF_THE_CLOTH_OF_GOLD",
@@ -57,6 +54,9 @@
   "soundMP": "AS2D_TECH_TOURNAMENTS"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_TOURNAMENTS",
+  "civilopedia": "TXT_KEY_TECH_TOURNAMENTS_PEDIA",
+  "quote": "TXT_KEY_TECH_TOURNAMENTS_QUOTE",
   "era": "C2C_ERA_MEDIEVAL",
   "worth": 24,
   "militaryWorth": 10,

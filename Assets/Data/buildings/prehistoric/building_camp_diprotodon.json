@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_CAMP_DIPROTODON",
- "description": "TXT_KEY_BUILDING_CAMP_DIPROTODON",
- "civilopedia": "TXT_KEY_BUILDING_CAMP_DIPROTODON_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_RESOURCES_CARCASS"
@@ -68,6 +66,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_CAMP_DIPROTODON",
+  "civilopedia": "TXT_KEY_BUILDING_CAMP_DIPROTODON_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

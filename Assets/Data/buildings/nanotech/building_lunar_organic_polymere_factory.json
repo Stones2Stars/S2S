@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_LUNAR_ORGANIC_POLYMERE_FACTORY",
- "description": "TXT_KEY_BUILDING_LUNAR_ORGANIC_POLYMERE_FACTORY",
- "civilopedia": "TXT_KEY_BUILDING_LUNAR_ORGANIC_POLYMERE_FACTORY_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_LUNAR_ROCKET_FUEL_REFINERY"
@@ -90,6 +88,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_LUNAR_ORGANIC_POLYMERE_FACTORY",
+  "civilopedia": "TXT_KEY_BUILDING_LUNAR_ORGANIC_POLYMERE_FACTORY_PEDIA",
   "conquestProbability": 70,
   "advisor": "ADVISOR_ECONOMY",
   "visibilityPriority": "1.0",

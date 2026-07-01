@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_DIVINE_MONUMENT",
- "description": "TXT_KEY_BUILDING_DIVINE_MONUMENT",
- "civilopedia": "TXT_KEY_BUILDING_DIVINE_MONUMENT_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -66,6 +64,8 @@
   "construct": "AS2D_BUILD_DIVINE_MONUMENT"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_DIVINE_MONUMENT",
+  "civilopedia": "TXT_KEY_BUILDING_DIVINE_MONUMENT_PEDIA",
   "enabledCivilizations": [
    "CIVILIZATION_NPC_NEANDERTHAL"
   ],

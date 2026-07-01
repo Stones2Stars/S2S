@@ -1,6 +1,5 @@
 {
  "type": "PROMOTION_AIR_DEFENSE3",
- "description": "TXT_KEY_PROMOTION_AIR_DEFENSE3",
  "air": {
   "unit": {
    "intercept": {
@@ -27,5 +26,8 @@
  },
  "sound": {
   "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_AIR_DEFENSE3"
  }
 }

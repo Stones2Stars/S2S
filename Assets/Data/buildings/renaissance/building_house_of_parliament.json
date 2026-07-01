@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_HOUSE_OF_PARLIAMENT",
- "description": "TXT_KEY_BUILDING_HOUSE_OF_PARLIAMENT",
- "civilopedia": "TXT_KEY_BUILDING_HOUSE_OF_PARLIAMENT_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -109,6 +107,8 @@
   "construct": "AS2D_BUILD_COURTHOUSE"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_HOUSE_OF_PARLIAMENT",
+  "civilopedia": "TXT_KEY_BUILDING_HOUSE_OF_PARLIAMENT_PEDIA",
   "nukeImmune": true,
   "neverCapture": true,
   "governmentCenter": true,

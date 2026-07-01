@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_HELLENIC_GYMNASIA",
- "description": "TXT_KEY_BUILDING_HELLENIC_GYMNASIA",
- "civilopedia": "TXT_KEY_BUILDING_HELLENIC_GYMNASIA_PEDIA",
  "enables": {
   "units": [
    "UNIT_HELLENIC_MISSIONARY"
@@ -113,6 +111,8 @@
   "construct": "AS2D_BUILD_CHRISTIAN"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_HELLENIC_GYMNASIA",
+  "civilopedia": "TXT_KEY_BUILDING_HELLENIC_GYMNASIA_PEDIA",
   "neverCapture": true,
   "worth": 3,
   "specialBuildingType": "SPECIALBUILDING_MONASTERY",

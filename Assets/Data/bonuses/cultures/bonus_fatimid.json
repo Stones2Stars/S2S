@@ -1,7 +1,5 @@
 {
  "type": "BONUS_FATIMID",
- "description": "TXT_KEY_BONUS_FATIMID",
- "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
  "enables": {
   "units": [
    "UNIT_AL_MAHDI_BILLAH",
@@ -14,6 +12,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_FATIMID",
+  "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
   "bonusClassType": "BONUSCLASS_CULTURE"
  }
 }

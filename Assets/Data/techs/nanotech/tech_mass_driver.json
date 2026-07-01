@@ -1,8 +1,5 @@
 {
  "type": "TECH_MASS_DRIVER",
- "description": "TXT_KEY_TECH_MASS_DRIVER",
- "civilopedia": "TXT_KEY_TECH_MASS_DRIVER_PEDIA",
- "quote": "TXT_KEY_TECH_MASS_DRIVER_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_CISLUNAR_RESUPPLY",
@@ -63,6 +60,9 @@
   "soundMP": "AS2D_TECH_MASS_DRIVER"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_MASS_DRIVER",
+  "civilopedia": "TXT_KEY_TECH_MASS_DRIVER_PEDIA",
+  "quote": "TXT_KEY_TECH_MASS_DRIVER_QUOTE",
   "era": "C2C_ERA_NANOTECH",
   "worth": 48,
   "militaryWorth": 4,

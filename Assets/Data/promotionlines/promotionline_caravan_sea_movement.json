@@ -1,12 +1,12 @@
 {
  "type": "PROMOTIONLINE_CARAVAN_SEA_MOVEMENT",
- "description": "TXT_KEY_PROMOTIONLINE_CARAVAN_SEA_MOVEMENT",
  "ui": {
   "art": {
    "icon": "Art/Interface/Buttons/Promotions/CaravanSeaMovement_PromotionLINE.dds"
   }
  },
  "identity": {
+  "description": "TXT_KEY_PROMOTIONLINE_CARAVAN_SEA_MOVEMENT",
   "unitCombats": [
    "UNITCOMBAT_TRADE"
   ],

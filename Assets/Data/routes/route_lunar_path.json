@@ -1,12 +1,12 @@
 {
  "type": "ROUTE_LUNAR_PATH",
- "description": "TXT_KEY_ROUTE_LUNAR_PATH",
  "ui": {
   "art": {
    "icon": "Art/Interface/Buttons/Builds/buildlunarpath.dds"
   }
  },
  "identity": {
+  "description": "TXT_KEY_ROUTE_LUNAR_PATH",
   "value": 1,
   "advancedStart": {
    "cost": 30

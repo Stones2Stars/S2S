@@ -1,8 +1,5 @@
 {
  "type": "TECH_MACHINE_TOOLS",
- "description": "TXT_KEY_TECH_MACHINE_TOOLS",
- "civilopedia": "TXT_KEY_TECH_MACHINE_TOOLS_PEDIA",
- "quote": "TXT_KEY_TECH_MACHINE_TOOLS_QUOTE",
  "enables": {
   "bonuses": [
    "BONUS_PARTS",
@@ -69,6 +66,9 @@
   "soundMP": "AS2D_TECH_MACHINETOOLS"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_MACHINE_TOOLS",
+  "civilopedia": "TXT_KEY_TECH_MACHINE_TOOLS_PEDIA",
+  "quote": "TXT_KEY_TECH_MACHINE_TOOLS_QUOTE",
   "era": "C2C_ERA_INDUSTRIAL",
   "worth": 40,
   "militaryWorth": 10,

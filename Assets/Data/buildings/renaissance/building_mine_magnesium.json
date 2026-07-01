@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_MINE_MAGNESIUM",
- "description": "TXT_KEY_BUILDING_MINE_MAGNESIUM",
- "civilopedia": "TXT_KEY_BUILDING_MINE_MAGNESIUM_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_CORE_MINE"
@@ -81,6 +79,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_MINE_MAGNESIUM",
+  "civilopedia": "TXT_KEY_BUILDING_MINE_MAGNESIUM_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_CAMP_BOAR",
- "description": "TXT_KEY_BUILDING_CAMP_BOAR",
- "civilopedia": "TXT_KEY_BUILDING_CAMP_BOAR_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_RESOURCES_CARCASS"
@@ -84,6 +82,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_CAMP_BOAR",
+  "civilopedia": "TXT_KEY_BUILDING_CAMP_BOAR_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

@@ -1,6 +1,5 @@
 {
  "type": "PROMOTION_TACTICS4",
- "description": "TXT_KEY_PROMOTION_TACTICS4",
  "upkeep": {
   "unit": {
    "modifier": {
@@ -33,5 +32,8 @@
  },
  "sound": {
   "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_TACTICS4"
  }
 }

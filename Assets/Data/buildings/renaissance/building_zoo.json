@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_ZOO",
- "description": "TXT_KEY_BUILDING_ZOO",
- "civilopedia": "TXT_KEY_BUILDING_ZOO_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_ANIMAL_PRESERVE",
@@ -275,6 +273,8 @@
   "construct": "AS2D_BUILD_ZOO"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_ZOO",
+  "civilopedia": "TXT_KEY_BUILDING_ZOO_PEDIA",
   "centerInCity": true,
   "worth": 8,
   "militaryWorth": 4,

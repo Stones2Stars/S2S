@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_MEGATOWER_BIODOME_PARK_CROWN_SECTION",
- "description": "TXT_KEY_BUILDING_MEGATOWER_BIODOME_PARK_CROWN_SECTION",
- "civilopedia": "TXT_KEY_BUILDING_MEGATOWER_BIODOME_PARK_CROWN_SECTION_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -77,6 +75,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_MEGATOWER_BIODOME_PARK_CROWN_SECTION",
+  "civilopedia": "TXT_KEY_BUILDING_MEGATOWER_BIODOME_PARK_CROWN_SECTION_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

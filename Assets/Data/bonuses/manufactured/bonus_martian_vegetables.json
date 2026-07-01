@@ -1,13 +1,13 @@
 {
  "type": "BONUS_MARTIAN_VEGETABLES",
- "description": "TXT_KEY_BONUS_MARTIAN_VEGETABLES",
- "civilopedia": "TXT_KEY_BONUS_MARTIAN_VEGETABLES_PEDIA",
  "world": {
   "art": {
    "icon": "ART_DEF_BONUS_MARTIAN_VEGETABLES"
   }
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_MARTIAN_VEGETABLES",
+  "civilopedia": "TXT_KEY_BONUS_MARTIAN_VEGETABLES_PEDIA",
   "bonusClassType": "BONUSCLASS_MANUFACTURED"
  }
 }

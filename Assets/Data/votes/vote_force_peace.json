@@ -1,6 +1,5 @@
 {
  "type": "VOTE_FORCE_PEACE",
- "description": "TXT_KEY_VOTE_FORCE_PEACE",
  "voteSource": [
   "DIPLOVOTE_POPE"
  ],
@@ -11,5 +10,8 @@
  },
  "effect": {
   "forcePeace": true
+ },
+ "identity": {
+  "description": "TXT_KEY_VOTE_FORCE_PEACE"
  }
 }

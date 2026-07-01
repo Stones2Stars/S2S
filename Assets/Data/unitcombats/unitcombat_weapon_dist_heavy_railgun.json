@@ -1,6 +1,5 @@
 {
  "type": "UNITCOMBAT_WEAPON_DIST_HEAVY_RAILGUN",
- "description": "TXT_KEY_UNITCOMBAT_WEAPON_DIST_HEAVY_RAILGUN",
  "skills": {
   "rBombardDirect": true
  },
@@ -10,6 +9,7 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_UNITCOMBAT_WEAPON_DIST_HEAVY_RAILGUN",
   "base": {
    "rangedBombardDamage": 125,
    "rangedBombardLimit": 100,

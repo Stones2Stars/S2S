@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_ICE_RINK",
- "description": "TXT_KEY_BUILDING_ICE_RINK",
- "civilopedia": "TXT_KEY_BUILDING_ICE_RINK_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_CURLING_SHEET",
@@ -73,6 +71,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_ICE_RINK",
+  "civilopedia": "TXT_KEY_BUILDING_ICE_RINK_PEDIA",
   "worth": 5,
   "militaryWorth": 4,
   "advisor": "ADVISOR_GROWTH",

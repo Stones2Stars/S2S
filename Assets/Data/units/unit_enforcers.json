@@ -1,7 +1,5 @@
 {
  "type": "UNIT_ENFORCERS",
- "description": "TXT_KEY_UNIT_ENFORCERS",
- "civilopedia": "TXT_KEY_UNIT_ENFORCERS_PEDIA",
  "replacedBy": {
   "units": [
    "UNIT_NEANDERTHAL_ENFORCER"
@@ -101,6 +99,8 @@
   "upkeep": 2
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_ENFORCERS",
+  "civilopedia": "TXT_KEY_UNIT_ENFORCERS_PEDIA",
   "worth": 3,
   "militaryWorth": 4,
   "xpValueAttack": 1,

@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_CULTURE_ZAPOTEC",
- "description": "TXT_KEY_BUILDING_CULTURE_ZAPOTEC",
- "civilopedia": "TXT_KEY_BUILDING_CULTURE_ZAPOTEC_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -76,6 +74,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_CULTURE_ZAPOTEC",
+  "civilopedia": "TXT_KEY_BUILDING_CULTURE_ZAPOTEC_PEDIA",
   "nukeImmune": true,
   "noInstanceLimit": true,
   "conquestProbability": 100,

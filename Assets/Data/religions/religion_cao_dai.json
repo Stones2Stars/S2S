@@ -1,7 +1,5 @@
 {
  "type": "RELIGION_CAO_DAI",
- "description": "TXT_KEY_TECH_CAO_DAI",
- "civilopedia": "TXT_KEY_TECH_CAO_DAI_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_CAO_DAI_CATHEDRAL",
@@ -74,6 +72,8 @@
   "sound": "AS2D_BUILD_BUDDHIST"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_CAO_DAI",
+  "civilopedia": "TXT_KEY_TECH_CAO_DAI_PEDIA",
   "spreadFactor": 50
  }
 }

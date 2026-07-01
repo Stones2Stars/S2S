@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_CULTURE_DENE",
- "description": "TXT_KEY_BUILDING_CULTURE_DENE",
- "civilopedia": "TXT_KEY_BUILDING_CULTURE_DENE_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -76,6 +74,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_CULTURE_DENE",
+  "civilopedia": "TXT_KEY_BUILDING_CULTURE_DENE_PEDIA",
   "nukeImmune": true,
   "noInstanceLimit": true,
   "conquestProbability": 100,

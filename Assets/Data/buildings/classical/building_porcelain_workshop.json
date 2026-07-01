@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_PORCELAIN_WORKSHOP",
- "description": "TXT_KEY_BUILDING_PORCELAIN_WORKSHOP",
- "civilopedia": "TXT_KEY_BUILDING_PORCELAIN_WORKSHOP_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_MING_VASE_WORKSHOP"
@@ -117,6 +115,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_PORCELAIN_WORKSHOP",
+  "civilopedia": "TXT_KEY_BUILDING_PORCELAIN_WORKSHOP_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

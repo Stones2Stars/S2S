@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_FARM_CROP_WHITE_MUSHROOM",
- "description": "TXT_KEY_BUILDING_FARM_CROP_WHITE_MUSHROOM",
- "civilopedia": "TXT_KEY_BUILDING_FARM_CROP_WHITE_MUSHROOM_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_FARMSCRAPER_I"
@@ -61,6 +59,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_FARM_CROP_WHITE_MUSHROOM",
+  "civilopedia": "TXT_KEY_BUILDING_FARM_CROP_WHITE_MUSHROOM_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

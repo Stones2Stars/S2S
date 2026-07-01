@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_VENUS_HYDROGEN_BOMBARDMENT",
- "description": "TXT_KEY_BUILDING_VENUS_HYDROGEN_BOMBARDMENT",
- "civilopedia": "TXT_KEY_BUILDING_VENUS_HYDROGEN_BOMBARDMENT_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -38,6 +36,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_VENUS_HYDROGEN_BOMBARDMENT",
+  "civilopedia": "TXT_KEY_BUILDING_VENUS_HYDROGEN_BOMBARDMENT_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

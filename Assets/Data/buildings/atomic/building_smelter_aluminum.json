@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_SMELTER_ALUMINUM",
- "description": "TXT_KEY_BUILDING_SMELTER_ALUMINUM",
- "civilopedia": "TXT_KEY_BUILDING_SMELTER_ALUMINUM_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_RESOURCES_ALUMINUM_INGOTS"
@@ -84,6 +82,8 @@
   "construct": "AS2D_BUILD_ALUMINUM_FACTORY"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_SMELTER_ALUMINUM",
+  "civilopedia": "TXT_KEY_BUILDING_SMELTER_ALUMINUM_PEDIA",
   "worth": 6,
   "militaryWorth": 30,
   "conquestProbability": 75,

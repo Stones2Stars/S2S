@@ -1,7 +1,5 @@
 {
  "type": "TRAIT_AGRICULTURAL",
- "description": "TXT_KEY_TRAIT_AGRICULTURAL",
- "civilopedia": "TXT_KEY_TRAIT_AGRICULTURAL_PEDIA",
  "food": {
   "empire": {
    "percent": [
@@ -177,6 +175,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_TRAIT_AGRICULTURAL",
+  "civilopedia": "TXT_KEY_TRAIT_AGRICULTURAL_PEDIA",
   "shortDescription": "TXT_KEY_TRAIT_AGRICULTURAL_SHORT"
  }
 }

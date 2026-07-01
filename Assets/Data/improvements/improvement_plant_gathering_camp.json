@@ -1,7 +1,5 @@
 {
  "type": "IMPROVEMENT_PLANT_GATHERING_CAMP",
- "description": "TXT_KEY_IMPROVEMENT_PLANT_GATHERING_CAMP",
- "civilopedia": "TXT_KEY_IMPROVEMENT_PLANT_GATHERING_CAMP_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -187,6 +185,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_IMPROVEMENT_PLANT_GATHERING_CAMP",
+  "civilopedia": "TXT_KEY_IMPROVEMENT_PLANT_GATHERING_CAMP_PEDIA",
   "upgradeTime": 5,
   "pillageGold": 7,
   "upgradesTo": "IMPROVEMENT_PLANT_PICKING_CAMP",

@@ -1,8 +1,5 @@
 {
  "type": "TECH_COMPASS",
- "description": "TXT_KEY_TECH_COMPASS",
- "civilopedia": "TXT_KEY_TECH_COMPASS_PEDIA",
- "quote": "TXT_KEY_TECH_COMPASS_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_COMMERCIAL_PORT",
@@ -85,6 +82,9 @@
   "soundMP": "AS2D_TECH_MP_COMPASS"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_COMPASS",
+  "civilopedia": "TXT_KEY_TECH_COMPASS_PEDIA",
+  "quote": "TXT_KEY_TECH_COMPASS_QUOTE",
   "era": "C2C_ERA_MEDIEVAL",
   "worth": 16,
   "militaryWorth": 4,

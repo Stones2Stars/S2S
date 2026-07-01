@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_LIFE_CHIRAL_FLEXIBLE",
- "description": "TXT_KEY_BUILDING_LIFE_CHIRAL_FLEXIBLE",
- "civilopedia": "TXT_KEY_BUILDING_LIFE_CHIRAL_FLEXIBLE_PEDIA",
  "enables": {
   "units": [
    "UNIT_LIFE_SWARM"
@@ -51,6 +49,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_LIFE_CHIRAL_FLEXIBLE",
+  "civilopedia": "TXT_KEY_BUILDING_LIFE_CHIRAL_FLEXIBLE_PEDIA",
   "neverCapture": true,
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,

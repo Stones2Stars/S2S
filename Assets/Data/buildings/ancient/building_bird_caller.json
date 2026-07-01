@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_BIRD_CALLER",
- "description": "TXT_KEY_BUILDING_BIRD_CALLER",
- "civilopedia": "TXT_KEY_BUILDING_BIRD_CALLER_PEDIA",
  "obsoletedBy": {
   "techs": [
    "TECH_CITY_PLANNING"
@@ -80,6 +78,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_BIRD_CALLER",
+  "civilopedia": "TXT_KEY_BUILDING_BIRD_CALLER_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

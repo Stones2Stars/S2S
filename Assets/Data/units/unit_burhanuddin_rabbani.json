@@ -1,7 +1,5 @@
 {
  "type": "UNIT_BURHANUDDIN_RABBANI",
- "description": "TXT_KEY_UNIT_BURHANUDDIN_RABBANI",
- "civilopedia": "TXT_KEY_UNIT_BURHANUDDIN_RABBANI_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -68,6 +66,8 @@
   "upkeep": 1
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_BURHANUDDIN_RABBANI",
+  "civilopedia": "TXT_KEY_UNIT_BURHANUDDIN_RABBANI_PEDIA",
   "worth": 6,
   "militaryWorth": 8,
   "xpValueAttack": 4,

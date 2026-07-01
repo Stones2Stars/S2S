@@ -1,6 +1,5 @@
 {
  "type": "PROMOTION_ASTONISHING_ACCUMEN",
- "description": "TXT_KEY_PROMOTION_ASTONISHING_ACCUMEN",
  "strength": {
   "unit": {
    "quality": {
@@ -30,6 +29,7 @@
   "sound": "AS2D_IF_LEVELUP"
  },
  "identity": {
+  "description": "TXT_KEY_PROMOTION_ASTONISHING_ACCUMEN",
   "replacesUnitCombat": "UNITCOMBAT_QUALITY_SUPERIOR",
   "levelPrereq": 8,
   "notOnUnitCombats": [

@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_HOPSCOTCH",
- "description": "TXT_KEY_BUILDING_HOPSCOTCH",
- "civilopedia": "TXT_KEY_BUILDING_HOPSCOTCH_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_HIGH_TECH_CULTURAL_ENRICHMENT"
@@ -79,6 +77,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_HOPSCOTCH",
+  "civilopedia": "TXT_KEY_BUILDING_HOPSCOTCH_PEDIA",
   "nukeImmune": true,
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [

@@ -1,8 +1,5 @@
 {
  "type": "TECH_NONSTANDARD_MATHEMATICS",
- "description": "TXT_KEY_TECH_NONSTANDARD_MATHEMATICS",
- "civilopedia": "TXT_KEY_TECH_NONSTANDARD_MATHEMATICS_PEDIA",
- "quote": "TXT_KEY_TECH_NONSTANDARD_MATHEMATICS_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_DISTANT_RECURSIVE_WORLD",
@@ -53,6 +50,9 @@
   "soundMP": "AS2D_TECH_GENERIC"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_NONSTANDARD_MATHEMATICS",
+  "civilopedia": "TXT_KEY_TECH_NONSTANDARD_MATHEMATICS_PEDIA",
+  "quote": "TXT_KEY_TECH_NONSTANDARD_MATHEMATICS_QUOTE",
   "era": "C2C_ERA_TRANSCENDENT",
   "worth": 48,
   "tradeable": true,

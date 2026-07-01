@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_HYPOCAUSTS",
- "description": "TXT_KEY_BUILDING_HYPOCAUSTS",
- "civilopedia": "TXT_KEY_BUILDING_HYPOCAUSTS_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_BATH_HOUSE"
@@ -84,6 +82,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_HYPOCAUSTS",
+  "civilopedia": "TXT_KEY_BUILDING_HYPOCAUSTS_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_CATACOMBS_OF_KOM_EL_SHOQAFA",
- "description": "TXT_KEY_BUILDING_CATACOMBS_OF_KOM_EL_SHOQAFA",
- "civilopedia": "TXT_KEY_BUILDING_CATACOMBS_OF_KOM_EL_SHOQAFA_PEDIA",
  "obsoletedBy": {
   "techs": [
    "TECH_ARTILLERY"
@@ -84,6 +82,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_CATACOMBS_OF_KOM_EL_SHOQAFA",
+  "civilopedia": "TXT_KEY_BUILDING_CATACOMBS_OF_KOM_EL_SHOQAFA_PEDIA",
   "commerceDoubleTime": {
    "culture": 1000
   },

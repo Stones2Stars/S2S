@@ -1,8 +1,5 @@
 {
  "type": "TECH_ASTROIMPERIALISM",
- "description": "TXT_KEY_TECH_ASTROIMPERIALISM",
- "civilopedia": "TXT_KEY_TECH_ASTROIMPERIALISM_PEDIA",
- "quote": "TXT_KEY_TECH_ASTROIMPERIALISM_QUOTE",
  "enables": {
   "bonuses": [
    "BONUS_ABANDONED_CIVILIZATION"
@@ -72,6 +69,9 @@
   "soundMP": "AS2D_TECH_GENERIC"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_ASTROIMPERIALISM",
+  "civilopedia": "TXT_KEY_TECH_ASTROIMPERIALISM_PEDIA",
+  "quote": "TXT_KEY_TECH_ASTROIMPERIALISM_QUOTE",
   "era": "C2C_ERA_GALACTIC",
   "worth": 48,
   "tradeable": true,

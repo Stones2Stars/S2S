@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_HUNGER_GAMES",
- "description": "TXT_KEY_BUILDING_HUNGER_GAMES",
- "civilopedia": "TXT_KEY_BUILDING_HUNGER_GAMES_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -50,6 +48,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_HUNGER_GAMES",
+  "civilopedia": "TXT_KEY_BUILDING_HUNGER_GAMES_PEDIA",
   "conquestProbability": 100,
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,

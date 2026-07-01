@@ -1,12 +1,12 @@
 {
  "type": "UNITCOMBAT_CULTURE_HELVETII",
- "description": "TXT_KEY_UNITCOMBAT_CULTURE_HELVETII",
  "ui": {
   "art": {
    "icon": "Art/categories/culture_newcultures.dds"
   }
  },
  "identity": {
+  "description": "TXT_KEY_UNITCOMBAT_CULTURE_HELVETII",
   "culture": "BONUS_HELVETIAN"
  }
 }

@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_THE_NECROMANTEION",
- "description": "TXT_KEY_BUILDING_THE_NECROMANTEION",
- "civilopedia": "TXT_KEY_BUILDING_THE_NECROMANTEION_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -117,6 +115,8 @@
   "construct": "AS2D_BUILD_CHRISTIAN"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_THE_NECROMANTEION",
+  "civilopedia": "TXT_KEY_BUILDING_THE_NECROMANTEION_PEDIA",
   "commerceDoubleTime": {
    "culture": 1000
   },

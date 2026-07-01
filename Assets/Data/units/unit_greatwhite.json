@@ -1,7 +1,5 @@
 {
  "type": "UNIT_GREATWHITE",
- "description": "TXT_KEY_UNIT_GREATWHITE",
- "civilopedia": "TXT_KEY_UNIT_GREATWHITE_SHARK_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -103,6 +101,8 @@
   ]
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_GREATWHITE",
+  "civilopedia": "TXT_KEY_UNIT_GREATWHITE_SHARK_PEDIA",
   "spawnOnly": true,
   "xpValueAttack": 12,
   "xpValueDefense": 7,

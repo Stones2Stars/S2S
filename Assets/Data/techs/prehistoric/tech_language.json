@@ -1,8 +1,5 @@
 {
  "type": "TECH_LANGUAGE",
- "description": "TXT_KEY_TECH_LANGUAGE",
- "civilopedia": "TXT_KEY_TECH_LANGUAGE_PEDIA",
- "quote": "TXT_KEY_TECH_LANGUAGE_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_COMMUNITY_DISCUSSIONS",
@@ -77,6 +74,9 @@
   "soundMP": "AS2D_TECH_LANGUAGE"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_LANGUAGE",
+  "civilopedia": "TXT_KEY_TECH_LANGUAGE_PEDIA",
+  "quote": "TXT_KEY_TECH_LANGUAGE_QUOTE",
   "era": "C2C_ERA_PREHISTORIC",
   "worth": 2,
   "tradeable": true,

@@ -1,7 +1,5 @@
 {
  "type": "UNIT_GLYPTO",
- "description": "TXT_KEY_UNIT_GLYPTO",
- "civilopedia": "TXT_KEY_CONCEPT_SUBDUED_ANIMALS_PEDIA",
  "skills": {
   "blendIntoCity": true,
   "onlyDefensive": true,
@@ -46,6 +44,8 @@
   ]
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_GLYPTO",
+  "civilopedia": "TXT_KEY_CONCEPT_SUBDUED_ANIMALS_PEDIA",
   "spawnOnly": true,
   "xpValueAttack": 10,
   "xpValueDefense": 7,

@@ -1,7 +1,5 @@
 {
  "type": "UNIT_GALLEY",
- "description": "TXT_KEY_UNIT_GALLEY",
- "civilopedia": "TXT_KEY_UNIT_GALLEY_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -71,6 +69,8 @@
   "upkeep": 1
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_GALLEY",
+  "civilopedia": "TXT_KEY_UNIT_GALLEY_PEDIA",
   "worth": 1,
   "militaryWorth": 4,
   "xpValueAttack": 3,

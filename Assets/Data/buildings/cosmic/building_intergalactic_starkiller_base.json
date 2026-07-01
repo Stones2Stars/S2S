@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_INTERGALACTIC_STARKILLER_BASE",
- "description": "TXT_KEY_BUILDING_INTERGALACTIC_STARKILLER_BASE",
- "civilopedia": "TXT_KEY_BUILDING_INTERGALACTIC_STARKILLER_BASE_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -36,6 +34,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_INTERGALACTIC_STARKILLER_BASE",
+  "civilopedia": "TXT_KEY_BUILDING_INTERGALACTIC_STARKILLER_BASE_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

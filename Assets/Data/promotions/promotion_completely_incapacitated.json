@@ -1,6 +1,5 @@
 {
  "type": "PROMOTION_COMPLETELY_INCAPACITATED",
- "description": "TXT_KEY_PROMOTION_COMPLETELY_INCAPACITATED",
  "strength": {
   "unit": {
    "quality": {
@@ -30,6 +29,7 @@
   "sound": "AS2D_IF_LEVELUP"
  },
  "identity": {
+  "description": "TXT_KEY_PROMOTION_COMPLETELY_INCAPACITATED",
   "replacesUnitCombat": "UNITCOMBAT_QUALITY_PATHETIC",
   "notOnUnitCombats": [
    "UNITCOMBAT_PACIFIST",

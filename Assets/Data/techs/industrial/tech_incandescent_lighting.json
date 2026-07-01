@@ -1,8 +1,5 @@
 {
  "type": "TECH_INCANDESCENT_LIGHTING",
- "description": "TXT_KEY_TECH_INCANDESCENT_LIGHTING",
- "civilopedia": "TXT_KEY_TECH_INCANDESCENT_LIGHTING_PEDIA",
- "quote": "TXT_KEY_TECH_INCANDESCENT_LIGHTING_QUOTE",
  "enables": {
   "bonuses": [
    "BONUS_HIT_MUSICALS"
@@ -56,6 +53,9 @@
   "soundMP": "AS2D_TECH_GENERIC"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_INCANDESCENT_LIGHTING",
+  "civilopedia": "TXT_KEY_TECH_INCANDESCENT_LIGHTING_PEDIA",
+  "quote": "TXT_KEY_TECH_INCANDESCENT_LIGHTING_QUOTE",
   "era": "C2C_ERA_INDUSTRIAL",
   "worth": 40,
   "tradeable": true,

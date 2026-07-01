@@ -1,6 +1,5 @@
 {
  "type": "UNITCOMBAT_SIZE_COLOSSAL",
- "description": "TXT_KEY_UNITCOMBAT_SIZE_COLOSSAL",
  "strength": {
   "unit": {
    "damageModifier": {
@@ -31,6 +30,7 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_UNITCOMBAT_SIZE_COLOSSAL",
   "base": {
    "size": 9
   }

@@ -1,8 +1,5 @@
 {
  "type": "TECH_COMMUNISM",
- "description": "TXT_KEY_TECH_COMMUNISM",
- "civilopedia": "TXT_KEY_TECH_COMMUNISM_PEDIA",
- "quote": "TXT_KEY_TECH_COMMUNISM_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_COLLECTIVE_FARM",
@@ -87,6 +84,9 @@
   "soundMP": "AS2D_TECH_MP_UTOPIA"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_COMMUNISM",
+  "civilopedia": "TXT_KEY_TECH_COMMUNISM_PEDIA",
+  "quote": "TXT_KEY_TECH_COMMUNISM_QUOTE",
   "era": "C2C_ERA_ATOMIC",
   "worth": 40,
   "tradeable": true,

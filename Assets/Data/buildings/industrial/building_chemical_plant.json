@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_CHEMICAL_PLANT",
- "description": "TXT_KEY_BUILDING_CHEMICAL_PLANT",
- "civilopedia": "TXT_KEY_BUILDING_CHEMICAL_PLANT_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_FACTORY_DYE",
@@ -107,6 +105,8 @@
   "construct": "AS2D_BUILD_OIL_REFINERY"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_CHEMICAL_PLANT",
+  "civilopedia": "TXT_KEY_BUILDING_CHEMICAL_PLANT_PEDIA",
   "worth": 6,
   "militaryWorth": 30,
   "dcmAirbombMission": 3,

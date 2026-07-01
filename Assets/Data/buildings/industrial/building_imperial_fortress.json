@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_IMPERIAL_FORTRESS",
- "description": "TXT_KEY_BUILDING_IMPERIAL_FORTRESS",
- "civilopedia": "TXT_KEY_BUILDING_IMPERIAL_FORTRESS_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_CASTLE_GARDEN",
@@ -244,6 +242,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_IMPERIAL_FORTRESS",
+  "civilopedia": "TXT_KEY_BUILDING_IMPERIAL_FORTRESS_PEDIA",
   "protectedCulture": true,
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [

@@ -1,7 +1,5 @@
 {
  "type": "UNIT_KALANG_MATAI",
- "description": "TXT_KEY_UNIT_KALANG_MATAI",
- "civilopedia": "TXT_KEY_UNIT_KALANG_MATAI_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -120,6 +118,8 @@
   "upkeep": 1
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_KALANG_MATAI",
+  "civilopedia": "TXT_KEY_UNIT_KALANG_MATAI_PEDIA",
   "worth": 1,
   "militaryWorth": 5,
   "xpValueAttack": 4,

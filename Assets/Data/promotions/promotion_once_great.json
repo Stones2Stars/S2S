@@ -1,6 +1,5 @@
 {
  "type": "PROMOTION_ONCE_GREAT",
- "description": "TXT_KEY_PROMOTION_ONCE_GREAT",
  "strength": {
   "unit": {
    "quality": {
@@ -30,6 +29,7 @@
   "sound": "AS2D_IF_LEVELUP"
  },
  "identity": {
+  "description": "TXT_KEY_PROMOTION_ONCE_GREAT",
   "replacesUnitCombat": "UNITCOMBAT_QUALITY_EXCEPTIONAL",
   "notOnUnitCombats": [
    "UNITCOMBAT_PACIFIST",

@@ -1,8 +1,5 @@
 {
  "type": "TECH_MORMON",
- "description": "TXT_KEY_TECH_MORMON",
- "civilopedia": "TXT_KEY_TECH_MORMON_PEDIA",
- "quote": "TXT_KEY_TECH_MORMON_QUOTE",
  "enables": {
   "religions": [
    "RELIGION_MORMON"
@@ -51,6 +48,9 @@
   "soundMP": "AS2D_TECH_GENERIC"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_MORMON",
+  "civilopedia": "TXT_KEY_TECH_MORMON_PEDIA",
+  "quote": "TXT_KEY_TECH_MORMON_QUOTE",
   "era": "C2C_ERA_INDUSTRIAL",
   "worth": 8,
   "gridX": 67,

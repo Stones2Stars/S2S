@@ -1,8 +1,5 @@
 {
  "type": "RELIGION_TAOISM",
- "description": "TXT_KEY_TECH_TAOISM",
- "civilopedia": "TXT_KEY_TECH_TAOISM_PEDIA",
- "adjective": "TXT_KEY_TECH_TAOISM_ADJECTIVE",
  "enables": {
   "buildings": [
    "BUILDING_QUANZHEN_SCHOOL",
@@ -91,6 +88,9 @@
   "sound": "AS2D_BUILD_TAOIST"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_TAOISM",
+  "adjective": "TXT_KEY_TECH_TAOISM_ADJECTIVE",
+  "civilopedia": "TXT_KEY_TECH_TAOISM_PEDIA",
   "spreadFactor": 50
  }
 }

@@ -1,8 +1,5 @@
 {
  "type": "TECH_FUSION",
- "description": "TXT_KEY_TECH_FUSION",
- "civilopedia": "TXT_KEY_TECH_FUSION_PEDIA",
- "quote": "TXT_KEY_TECH_FUSION_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_D_T_FUSION_POWER_PLANT"
@@ -77,6 +74,9 @@
   "soundMP": "AS2D_TECH_MP_FUSION"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_FUSION",
+  "civilopedia": "TXT_KEY_TECH_FUSION_PEDIA",
+  "quote": "TXT_KEY_TECH_FUSION_QUOTE",
   "era": "C2C_ERA_NANOTECH",
   "worth": 48,
   "tradeable": true,

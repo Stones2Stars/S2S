@@ -1,8 +1,5 @@
 {
  "type": "UNIT_SUBDUED_DUGONG",
- "description": "TXT_KEY_UNIT_SUBDUED_DUGONG",
- "civilopedia": "TXT_KEY_CONCEPT_SUBDUED_SEA_ANIMALS_PEDIA",
- "help": "TXT_KEY_UNIT_SUBDUED_ANIMALS_HELP",
  "requires": {
   "build": {
    "all": [
@@ -57,6 +54,9 @@
   ]
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_SUBDUED_DUGONG",
+  "civilopedia": "TXT_KEY_CONCEPT_SUBDUED_SEA_ANIMALS_PEDIA",
+  "help": "TXT_KEY_UNIT_SUBDUED_ANIMALS_HELP",
   "spawnOnly": true,
   "worth": 1,
   "domain": "DOMAIN_SEA",

@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_JEWELER",
- "description": "TXT_KEY_BUILDING_JEWELER",
- "civilopedia": "TXT_KEY_BUILDING_JEWELER_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_GUILD_GOLDSMITHS"
@@ -242,6 +240,8 @@
   "construct": "AS2D_BUILD_JEWELLERY"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_JEWELER",
+  "civilopedia": "TXT_KEY_BUILDING_JEWELER_PEDIA",
   "worth": 4,
   "militaryWorth": 2,
   "conquestProbability": 75,

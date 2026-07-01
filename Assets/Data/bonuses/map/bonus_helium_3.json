@@ -1,7 +1,5 @@
 {
  "type": "BONUS_HELIUM_3",
- "description": "TXT_KEY_BONUS_HELIUM_3",
- "civilopedia": "TXT_KEY_BONUS_HELIUM_3_PEDIA",
  "production": {
   "plot": {
    "flat": 1
@@ -33,6 +31,8 @@
   "placementOrder": 9
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_HELIUM_3",
+  "civilopedia": "TXT_KEY_BONUS_HELIUM_3_PEDIA",
   "bonusClassType": "BONUSCLASS_MISC"
  }
 }

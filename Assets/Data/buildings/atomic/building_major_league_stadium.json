@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_MAJOR_LEAGUE_STADIUM",
- "description": "TXT_KEY_BUILDING_MAJOR_LEAGUE_STADIUM",
- "civilopedia": "TXT_KEY_BUILDING_MAJOR_LEAGUE_STADIUM_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_FLAVIAN_AMPHITHEATRE",
@@ -89,6 +87,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_MAJOR_LEAGUE_STADIUM",
+  "civilopedia": "TXT_KEY_BUILDING_MAJOR_LEAGUE_STADIUM_PEDIA",
   "worth": 5,
   "militaryWorth": 4,
   "advisor": "ADVISOR_ECONOMY",

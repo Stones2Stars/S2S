@@ -1,6 +1,5 @@
 {
  "type": "VOTE_CONGVIENNA_FORCE_WAR",
- "description": "TXT_KEY_VOTE_CONGVIENNA_FORCE_WAR",
  "voteSource": [
   "DIPLOVOTE_CVIENNA"
  ],
@@ -11,5 +10,8 @@
  },
  "effect": {
   "forceWar": true
+ },
+ "identity": {
+  "description": "TXT_KEY_VOTE_CONGVIENNA_FORCE_WAR"
  }
 }

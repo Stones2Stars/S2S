@@ -1,8 +1,5 @@
 {
  "type": "BUILDING_NAZCA_LINES",
- "description": "TXT_KEY_BUILDING_NAZCA_LINES",
- "civilopedia": "TXT_KEY_BUILDING_NAZCA_LINES_PEDIA",
- "help": "TXT_KEY_BUILDING_NAZCA_LINES_HELP",
  "requires": {
   "build": {
    "all": [
@@ -72,6 +69,9 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_NAZCA_LINES",
+  "civilopedia": "TXT_KEY_BUILDING_NAZCA_LINES_PEDIA",
+  "help": "TXT_KEY_BUILDING_NAZCA_LINES_HELP",
   "commerceDoubleTime": {
    "culture": 1000
   },

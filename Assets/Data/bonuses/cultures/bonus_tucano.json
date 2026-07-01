@@ -1,7 +1,5 @@
 {
  "type": "BONUS_TUCANO",
- "description": "TXT_KEY_BONUS_TUCANO",
- "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
  "enables": {
   "units": [
    "UNIT_TUCANO_MERCHANT",
@@ -14,6 +12,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_TUCANO",
+  "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
   "bonusClassType": "BONUSCLASS_CULTURE"
  }
 }

@@ -1,8 +1,5 @@
 {
  "type": "TECH_PREHISTORIC_MUSIC",
- "description": "TXT_KEY_TECH_PREHISTORIC_MUSIC",
- "civilopedia": "TXT_KEY_TECH_PREHISTORIC_MUSIC_PEDIA",
- "quote": "TXT_KEY_TECH_PREHISTORIC_MUSIC_QUOTE",
  "enables": {
   "bonuses": [
    "BONUS_PERCUSSION_INSTRUMENTS"
@@ -53,6 +50,9 @@
   "soundMP": "AS2D_TECH_PREHISTORIC_MUSIC"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_PREHISTORIC_MUSIC",
+  "civilopedia": "TXT_KEY_TECH_PREHISTORIC_MUSIC_PEDIA",
+  "quote": "TXT_KEY_TECH_PREHISTORIC_MUSIC_QUOTE",
   "era": "C2C_ERA_PREHISTORIC",
   "worth": 5,
   "militaryWorth": 1,

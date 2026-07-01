@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_PLANTATION_CINNAMON",
- "description": "TXT_KEY_BUILDING_PLANTATION_CINNAMON",
- "civilopedia": "TXT_KEY_BUILDING_PLANTATION_CINNAMON_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_RESOURCES_SEASONING"
@@ -76,6 +74,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_PLANTATION_CINNAMON",
+  "civilopedia": "TXT_KEY_BUILDING_PLANTATION_CINNAMON_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

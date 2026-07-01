@@ -1,8 +1,5 @@
 {
  "type": "UNIT_SAMBUK",
- "description": "TXT_KEY_UNIT_SAMBUK",
- "civilopedia": "TXT_KEY_UNIT_SAMBUK_PEDIA",
- "help": "TXT_KEY_UNIT_PIRATE_HELP",
  "requires": {
   "build": {
    "all": [
@@ -108,6 +105,9 @@
   "upkeep": 1
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_SAMBUK",
+  "civilopedia": "TXT_KEY_UNIT_SAMBUK_PEDIA",
+  "help": "TXT_KEY_UNIT_PIRATE_HELP",
   "worth": 4,
   "militaryWorth": 3,
   "xpValueAttack": 4,

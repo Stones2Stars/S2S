@@ -1,7 +1,5 @@
 {
  "type": "UNIT_MOTAR",
- "description": "TXT_KEY_UNIT_MOTAR",
- "civilopedia": "TXT_KEY_UNIT_MOTAR_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -82,6 +80,8 @@
   "upkeep": 1
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_MOTAR",
+  "civilopedia": "TXT_KEY_UNIT_MOTAR_PEDIA",
   "worth": 3,
   "militaryWorth": 37,
   "xpValueAttack": 6,

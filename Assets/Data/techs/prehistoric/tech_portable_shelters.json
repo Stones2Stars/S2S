@@ -1,8 +1,5 @@
 {
  "type": "TECH_PORTABLE_SHELTERS",
- "description": "TXT_KEY_TECH_PORTABLE_SHELTERS",
- "civilopedia": "TXT_KEY_TECH_PORTABLE_SHELTERS_PEDIA",
- "quote": "TXT_KEY_TECH_PORTABLE_SHELTERS_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_HOUSING_TIPIS",
@@ -65,6 +62,9 @@
   "soundMP": "AS2D_TECH_PORTABLE_SHELTERS"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_PORTABLE_SHELTERS",
+  "civilopedia": "TXT_KEY_TECH_PORTABLE_SHELTERS_PEDIA",
+  "quote": "TXT_KEY_TECH_PORTABLE_SHELTERS_QUOTE",
   "era": "C2C_ERA_PREHISTORIC",
   "worth": 4,
   "tradeable": true,

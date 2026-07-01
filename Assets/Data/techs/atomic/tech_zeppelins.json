@@ -1,8 +1,5 @@
 {
  "type": "TECH_ZEPPELINS",
- "description": "TXT_KEY_TECH_ZEPPELINS",
- "civilopedia": "TXT_KEY_TECH_ZEPPELINS_PEDIA",
- "quote": "TXT_KEY_TECH_ZEPPELINS_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_DIRIGIBLE_TERMINAL"
@@ -63,6 +60,9 @@
   "soundMP": "AS2D_TECH_ZEPPELINS"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_ZEPPELINS",
+  "civilopedia": "TXT_KEY_TECH_ZEPPELINS_PEDIA",
+  "quote": "TXT_KEY_TECH_ZEPPELINS_QUOTE",
   "era": "C2C_ERA_ATOMIC",
   "worth": 48,
   "militaryWorth": 8,

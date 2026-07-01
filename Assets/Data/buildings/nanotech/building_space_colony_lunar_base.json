@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_SPACE_COLONY_LUNAR_BASE",
- "description": "TXT_KEY_BUILDING_SPACE_COLONY_LUNAR_BASE",
- "civilopedia": "TXT_KEY_BUILDING_SPACE_COLONY_LUNAR_BASE_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_LUNAR_CHEMICAL_STORAGE",
@@ -55,6 +53,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_SPACE_COLONY_LUNAR_BASE",
+  "civilopedia": "TXT_KEY_BUILDING_SPACE_COLONY_LUNAR_BASE_PEDIA",
   "notConstructible": true,
   "autoBuild": true,
   "conquestProbability": 100,

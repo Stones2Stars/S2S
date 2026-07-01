@@ -1,8 +1,5 @@
 {
  "type": "TECH_VOODOO",
- "description": "TXT_KEY_TECH_VOODOO",
- "civilopedia": "TXT_KEY_TECH_VOODOO_PEDIA",
- "quote": "TXT_KEY_TECH_VOODOO_QUOTE",
  "enables": {
   "religions": [
    "RELIGION_VOODOO"
@@ -51,6 +48,9 @@
   "soundMP": "AS2D_TECH_GENERIC"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_VOODOO",
+  "civilopedia": "TXT_KEY_TECH_VOODOO_PEDIA",
+  "quote": "TXT_KEY_TECH_VOODOO_QUOTE",
   "era": "C2C_ERA_MEDIEVAL",
   "worth": 8,
   "gridX": 44,

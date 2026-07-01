@@ -1,7 +1,5 @@
 {
  "type": "IMPROVEMENT_CISLUNAR_BASE",
- "description": "TXT_KEY_IMPROVEMENT_CISLUNAR_BASE",
- "civilopedia": "TXT_KEY_IMPROVEMENT_CISLUNAR_BASE_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -48,6 +46,8 @@
   "uniqueRange": 2
  },
  "identity": {
+  "description": "TXT_KEY_IMPROVEMENT_CISLUNAR_BASE",
+  "civilopedia": "TXT_KEY_IMPROVEMENT_CISLUNAR_BASE_PEDIA",
   "extraterrestrial": true,
   "actsAsCity": true,
   "advancedStart": {

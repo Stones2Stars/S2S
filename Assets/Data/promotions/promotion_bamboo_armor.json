@@ -1,6 +1,5 @@
 {
  "type": "PROMOTION_BAMBOO_ARMOR",
- "description": "TXT_KEY_PROMOTION_BAMBOO_ARMOR",
  "strength": {
   "unit": {
    "unitCombat": {
@@ -19,6 +18,7 @@
   "sound": "AS2D_IF_LEVELUP"
  },
  "identity": {
+  "description": "TXT_KEY_PROMOTION_BAMBOO_ARMOR",
   "unitCombats": [
    "UNITCOMBAT_HUNTER",
    "UNITCOMBAT_RECON",

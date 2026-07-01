@@ -1,7 +1,5 @@
 {
  "type": "RELIGION_KEMETISM",
- "description": "TXT_KEY_TECH_KEMETISM",
- "civilopedia": "TXT_KEY_TECH_KEMETISM_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_CAT_SHRINE",
@@ -98,6 +96,8 @@
   "sound": "AS2D_BUILD_RA"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_KEMETISM",
+  "civilopedia": "TXT_KEY_TECH_KEMETISM_PEDIA",
   "spreadFactor": 20
  }
 }

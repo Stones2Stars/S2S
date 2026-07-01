@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_FACTORY_OMEGA_ACIDS",
- "description": "TXT_KEY_BUILDING_FACTORY_OMEGA_ACIDS",
- "civilopedia": "TXT_KEY_BUILDING_FACTORY_OMEGA_ACIDS_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_CHEMICALS_DISTRICT"
@@ -78,6 +76,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_FACTORY_OMEGA_ACIDS",
+  "civilopedia": "TXT_KEY_BUILDING_FACTORY_OMEGA_ACIDS_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

@@ -1,8 +1,5 @@
 {
  "type": "CIVIC_RECYCLED",
- "description": "TXT_KEY_CIVIC_RECYCLED",
- "civilopedia": "TXT_KEY_CIVIC_RECYCLED_PEDIA",
- "strategy": "TXT_KEY_CIVIC_RECYCLED_STRATEGY",
  "food": {
   "empire": {
    "percent": 2
@@ -78,6 +75,9 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_CIVIC_RECYCLED",
+  "civilopedia": "TXT_KEY_CIVIC_RECYCLED_PEDIA",
+  "strategy": "TXT_KEY_CIVIC_RECYCLED_STRATEGY",
   "civicOption": "CIVICOPTION_GARBAGE",
   "upkeepLevel": "UPKEEP_HIGH"
  }

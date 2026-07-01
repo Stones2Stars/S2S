@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_HQ_CIVILIZED_JEWELERS_INC",
- "description": "TXT_KEY_BUILDING_HQ_CIVILIZED_JEWELERS_INC",
- "civilopedia": "TXT_KEY_BUILDING_CORPORATION_7_PEDIA",
  "enables": {
   "corporations": [
    "CORPORATION_7"
@@ -56,6 +54,8 @@
   "construct": "AS2D_BUILD_BANK"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_HQ_CIVILIZED_JEWELERS_INC",
+  "civilopedia": "TXT_KEY_BUILDING_CORPORATION_7_PEDIA",
   "commerceDoubleTime": {
    "culture": 1000
   },

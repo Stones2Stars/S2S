@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_EFFECT_NEUROIMPLANT_EXPORTER",
- "description": "TXT_KEY_BUILDING_EFFECT_NEUROIMPLANT_EXPORTER",
- "civilopedia": "TXT_KEY_BUILDING_EFFECT_NEUROIMPLANT_EXPORTER_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_DEEP_SPACE_SIMULATED_WORLD"
@@ -24,6 +22,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_EFFECT_NEUROIMPLANT_EXPORTER",
+  "civilopedia": "TXT_KEY_BUILDING_EFFECT_NEUROIMPLANT_EXPORTER_PEDIA",
   "notConstructible": true,
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,

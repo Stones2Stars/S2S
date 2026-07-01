@@ -1,8 +1,5 @@
 {
  "type": "TECH_PLANET_ENGINEERING",
- "description": "TXT_KEY_TECH_PLANET_ENGINEERING",
- "civilopedia": "TXT_KEY_TECH_PLANET_ENGINEERING_PEDIA",
- "quote": "TXT_KEY_TECH_PLANET_ENGINEERING_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_DEEP_SPACE_MCKENDREE_CYLINDER",
@@ -86,6 +83,9 @@
   "soundMP": "AS2D_TECH_PLANET_ENGINEERING"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_PLANET_ENGINEERING",
+  "civilopedia": "TXT_KEY_TECH_PLANET_ENGINEERING_PEDIA",
+  "quote": "TXT_KEY_TECH_PLANET_ENGINEERING_QUOTE",
   "era": "C2C_ERA_GALACTIC",
   "worth": 48,
   "militaryWorth": 4,

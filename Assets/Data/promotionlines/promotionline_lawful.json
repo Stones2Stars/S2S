@@ -1,9 +1,11 @@
 {
  "type": "PROMOTIONLINE_LAWFUL",
- "description": "TXT_KEY_PROMOTIONLINE_LAWFUL",
  "ui": {
   "art": {
    "icon": "art/Buttons/Traits/TraitLawful.dds"
   }
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTIONLINE_LAWFUL"
  }
 }

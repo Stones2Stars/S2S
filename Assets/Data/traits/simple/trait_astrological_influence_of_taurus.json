@@ -1,7 +1,5 @@
 {
  "type": "TRAIT_ASTROLOGICAL_INFLUENCE_OF_TAURUS",
- "description": "TXT_KEY_TRAIT_ASTROLOGICAL_INFLUENCE_OF_TAURUS",
- "civilopedia": "TXT_KEY_TRAIT_ASTROLOGICAL_INFLUENCE_OF_TAURUS_PEDIA",
  "culture": {
   "empire": {
    "flat": 5
@@ -30,6 +28,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_TRAIT_ASTROLOGICAL_INFLUENCE_OF_TAURUS",
+  "civilopedia": "TXT_KEY_TRAIT_ASTROLOGICAL_INFLUENCE_OF_TAURUS_PEDIA",
   "shortDescription": "TXT_KEY_TRAIT_ASTROLOGICAL_INFLUENCE_OF_TAURUS_SHORT",
   "civilizationTrait": true
  }

@@ -1,7 +1,5 @@
 {
  "type": "UNIT_SHARPSHOOTER",
- "description": "TXT_KEY_UNIT_SHARPSHOOTER",
- "civilopedia": "TXT_KEY_UNIT_SHARPSHOOTER_PEDIA",
  "obsoletedBy": {
   "techs": [
    "TECH_MILITARY_SCIENCE"
@@ -186,6 +184,8 @@
   ]
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_SHARPSHOOTER",
+  "civilopedia": "TXT_KEY_UNIT_SHARPSHOOTER_PEDIA",
   "worth": 7,
   "militaryWorth": 15,
   "xpValueAttack": 8,

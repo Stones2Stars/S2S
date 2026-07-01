@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_MARTIAN_NOMAD",
- "description": "TXT_KEY_BUILDING_MARTIAN_NOMAD",
- "civilopedia": "TXT_KEY_BUILDING_MARTIAN_NOMAD_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -49,6 +47,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_MARTIAN_NOMAD",
+  "civilopedia": "TXT_KEY_BUILDING_MARTIAN_NOMAD_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

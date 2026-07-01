@@ -1,7 +1,5 @@
 {
  "type": "UNIT_RED_FOX_ARCHER",
- "description": "TXT_KEY_UNIT_RED_FOX_ARCHER",
- "civilopedia": "TXT_KEY_UNIT_RED_FOX_ARCHER_PEDIA",
  "obsoletedBy": {
   "techs": [
    "TECH_FLINTLOCK"
@@ -81,6 +79,8 @@
   "upkeep": 1
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_RED_FOX_ARCHER",
+  "civilopedia": "TXT_KEY_UNIT_RED_FOX_ARCHER_PEDIA",
   "worth": 1,
   "militaryWorth": 5,
   "xpValueAttack": 6,

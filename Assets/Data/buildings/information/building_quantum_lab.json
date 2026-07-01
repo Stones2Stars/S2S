@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_QUANTUM_LAB",
- "description": "TXT_KEY_BUILDING_QUANTUM_LAB",
- "civilopedia": "TXT_KEY_BUILDING_QUANTUM_LAB_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_EXPERIMENTAL_QUANTUM_COMPUTER"
@@ -85,6 +83,8 @@
   "construct": "AS2D_BUILD_LABORATORY"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_QUANTUM_LAB",
+  "civilopedia": "TXT_KEY_BUILDING_QUANTUM_LAB_PEDIA",
   "worth": 6,
   "conquestProbability": 75,
   "greatPeopleUnitType": "UNIT_SCIENTIST",

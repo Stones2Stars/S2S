@@ -1,7 +1,5 @@
 {
  "type": "UNIT_SPECTACLEDBEAR",
- "description": "TXT_KEY_UNIT_SPECTACLEDBEAR",
- "civilopedia": "TXT_KEY_UNIT_SPECTACLEDBEAR_PEDIA",
  "skills": {
   "assassin": true,
   "blendIntoCity": true,
@@ -58,6 +56,8 @@
   ]
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_SPECTACLEDBEAR",
+  "civilopedia": "TXT_KEY_UNIT_SPECTACLEDBEAR_PEDIA",
   "spawnOnly": true,
   "xpValueAttack": 6,
   "xpValueDefense": 4,

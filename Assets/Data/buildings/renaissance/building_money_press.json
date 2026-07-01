@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_MONEY_PRESS",
- "description": "TXT_KEY_BUILDING_MONEY_PRESS",
- "civilopedia": "TXT_KEY_BUILDING_MONEY_PRESS_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -50,6 +48,8 @@
   "construct": "AS2D_BUILD_MUSEUM"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_MONEY_PRESS",
+  "civilopedia": "TXT_KEY_BUILDING_MONEY_PRESS_PEDIA",
   "worth": 4,
   "advisor": "ADVISOR_GROWTH",
   "visibilityPriority": 1,

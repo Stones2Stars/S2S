@@ -1,7 +1,5 @@
 {
  "type": "BONUS_WINE_VINTAGE_RED",
- "description": "TXT_KEY_BONUS_WINE_VINTAGE_RED",
- "civilopedia": "TXT_KEY_BONUS_VINTAGE_WINE_PEDIA",
  "happiness": {
   "empire": {
    "flat": 1
@@ -18,6 +16,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_WINE_VINTAGE_RED",
+  "civilopedia": "TXT_KEY_BONUS_VINTAGE_WINE_PEDIA",
   "bonusClassType": "BONUSCLASS_WONDER"
  }
 }

@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_INTERSTELLAR_STAR_CLUSTER_COLONY",
- "description": "TXT_KEY_BUILDING_INTERSTELLAR_STAR_CLUSTER_COLONY",
- "civilopedia": "TXT_KEY_BUILDING_INTERSTELLAR_STAR_CLUSTER_COLONY_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_INTERSTELLAR_STELLAR_SAIL_NETWORK"
@@ -60,6 +58,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_INTERSTELLAR_STAR_CLUSTER_COLONY",
+  "civilopedia": "TXT_KEY_BUILDING_INTERSTELLAR_STAR_CLUSTER_COLONY_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

@@ -1,8 +1,5 @@
 {
  "type": "TECH_GAMES",
- "description": "TXT_KEY_TECH_GAMES",
- "civilopedia": "TXT_KEY_TECH_GAMES_PEDIA",
- "quote": "TXT_KEY_TECH_GAMES_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_CAPTURE_THE_FLAG",
@@ -67,6 +64,9 @@
   "soundMP": "AS2D_TECH_GAMES"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_GAMES",
+  "civilopedia": "TXT_KEY_TECH_GAMES_PEDIA",
+  "quote": "TXT_KEY_TECH_GAMES_QUOTE",
   "era": "C2C_ERA_PREHISTORIC",
   "worth": 14,
   "tradeable": true,

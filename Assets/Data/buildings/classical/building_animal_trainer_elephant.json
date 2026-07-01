@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_ANIMAL_TRAINER_ELEPHANT",
- "description": "TXT_KEY_BUILDING_ANIMAL_TRAINER_ELEPHANT",
- "civilopedia": "TXT_KEY_BUILDING_ANIMAL_TRAINER_ELEPHANT_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_ANIMAL_ACTOR_STUDIO",
@@ -89,6 +87,8 @@
   "construct": "AS2D_BUILD_GRANARY"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_ANIMAL_TRAINER_ELEPHANT",
+  "civilopedia": "TXT_KEY_BUILDING_ANIMAL_TRAINER_ELEPHANT_PEDIA",
   "enabledCivilizations": [
    "CIVILIZATION_NPC_NEANDERTHAL"
   ],

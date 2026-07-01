@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_IQ_TESTING_CENTER",
- "description": "TXT_KEY_BUILDING_IQ_TESTING_CENTER",
- "civilopedia": "TXT_KEY_BUILDING_IQ_TESTING_CENTER_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_HEALTHCARE_MEGACOMPLEX"
@@ -60,6 +58,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_IQ_TESTING_CENTER",
+  "civilopedia": "TXT_KEY_BUILDING_IQ_TESTING_CENTER_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

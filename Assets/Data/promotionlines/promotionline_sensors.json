@@ -1,12 +1,12 @@
 {
  "type": "PROMOTIONLINE_SENSORS",
- "description": "TXT_KEY_PROMOTIONLINE_SENSORS",
  "ui": {
   "art": {
    "icon": ",Art/Interface/Buttons/Promotions/Sentry.dds,Art/Interface/Buttons/FinalFrontier1_Atlas.dds,4,10"
   }
  },
  "identity": {
+  "description": "TXT_KEY_PROMOTIONLINE_SENSORS",
   "unitCombats": [
    "UNITCOMBAT_RECON",
    "UNITCOMBAT_HELICOPTER",

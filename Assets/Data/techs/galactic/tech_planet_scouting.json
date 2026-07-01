@@ -1,8 +1,5 @@
 {
  "type": "TECH_PLANET_SCOUTING",
- "description": "TXT_KEY_TECH_PLANET_SCOUTING",
- "civilopedia": "TXT_KEY_TECH_PLANET_SCOUTING_PEDIA",
- "quote": "TXT_KEY_TECH_PLANET_SCOUTING_QUOTE",
  "enables": {
   "bonuses": [
    "BONUS_XENOFAUNA",
@@ -73,6 +70,9 @@
   "soundMP": "AS2D_TECH_GENERIC"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_PLANET_SCOUTING",
+  "civilopedia": "TXT_KEY_TECH_PLANET_SCOUTING_PEDIA",
+  "quote": "TXT_KEY_TECH_PLANET_SCOUTING_QUOTE",
   "era": "C2C_ERA_GALACTIC",
   "worth": 48,
   "tradeable": true,

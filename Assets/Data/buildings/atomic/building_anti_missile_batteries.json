@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_ANTI_MISSILE_BATTERIES",
- "description": "TXT_KEY_BUILDING_ANTI_MISSILE_BATTERIES",
- "civilopedia": "TXT_KEY_BUILDING_ANTI_MISSILE_BATTERIES_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_ARCOLOGY_SHIELDING"
@@ -75,6 +73,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_ANTI_MISSILE_BATTERIES",
+  "civilopedia": "TXT_KEY_BUILDING_ANTI_MISSILE_BATTERIES_PEDIA",
   "neverCapture": true,
   "worth": 1,
   "dcmAirbombMission": 2,

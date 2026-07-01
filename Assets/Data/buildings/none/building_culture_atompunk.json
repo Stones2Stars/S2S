@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_CULTURE_ATOMPUNK",
- "description": "TXT_KEY_BUILDING_CULTURE_ATOMPUNK",
- "civilopedia": "TXT_KEY_BUILDING_CULTURE_ATOMPUNK_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -50,6 +48,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_CULTURE_ATOMPUNK",
+  "civilopedia": "TXT_KEY_BUILDING_CULTURE_ATOMPUNK_PEDIA",
   "nukeImmune": true,
   "noInstanceLimit": true,
   "conquestProbability": 100,

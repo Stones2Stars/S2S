@@ -1,8 +1,5 @@
 {
  "type": "TECH_FUEL_CELLS",
- "description": "TXT_KEY_TECH_FUEL_CELLS",
- "civilopedia": "TXT_KEY_TECH_FUEL_CELLS_PEDIA",
- "quote": "TXT_KEY_TECH_FUEL_CELLS_QUOTE",
  "enables": {
   "bonuses": [
    "BONUS_ELECTROLYTIC_CELLS"
@@ -61,6 +58,9 @@
   "soundMP": "AS2D_TECH_FUEL_CELLS"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_FUEL_CELLS",
+  "civilopedia": "TXT_KEY_TECH_FUEL_CELLS_PEDIA",
+  "quote": "TXT_KEY_TECH_FUEL_CELLS_QUOTE",
   "era": "C2C_ERA_INFORMATION",
   "worth": 48,
   "tradeable": true,

@@ -1,7 +1,5 @@
 {
  "type": "BONUS_EXOSKELETONS",
- "description": "TXT_KEY_BONUS_EXOSKELETONS",
- "civilopedia": "TXT_KEY_BONUS_EXOSKELETONS_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_ANTHROPOMORPHICS_LAB",
@@ -19,6 +17,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_EXOSKELETONS",
+  "civilopedia": "TXT_KEY_BONUS_EXOSKELETONS_PEDIA",
   "bonusClassType": "BONUSCLASS_MANUFACTURED"
  }
 }

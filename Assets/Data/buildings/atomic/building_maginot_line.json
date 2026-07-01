@@ -1,8 +1,5 @@
 {
  "type": "BUILDING_MAGINOT_LINE",
- "description": "TXT_KEY_BUILDING_MAGINOT_LINE",
- "civilopedia": "TXT_KEY_BUILDING_MAGINOT_LINE_PEDIA",
- "help": "TXT_KEY_BUILDING_MAGINOT_LINE_HELP",
  "obsoletedBy": {
   "techs": [
    "TECH_METAMATERIALS"
@@ -52,6 +49,9 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_MAGINOT_LINE",
+  "civilopedia": "TXT_KEY_BUILDING_MAGINOT_LINE_PEDIA",
+  "help": "TXT_KEY_BUILDING_MAGINOT_LINE_HELP",
   "nukeImmune": true,
   "worth": 10,
   "conquestProbability": 100,

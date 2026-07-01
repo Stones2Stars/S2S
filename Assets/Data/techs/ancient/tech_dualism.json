@@ -1,8 +1,5 @@
 {
  "type": "TECH_DUALISM",
- "description": "TXT_KEY_TECH_DUALISM",
- "civilopedia": "TXT_KEY_TECH_DUALISM_PEDIA",
- "quote": "TXT_KEY_TECH_DUALISM_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_APADANA_PALACE",
@@ -77,6 +74,9 @@
   "soundMP": "AS2D_TECH_DUALISM"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_DUALISM",
+  "civilopedia": "TXT_KEY_TECH_DUALISM_PEDIA",
+  "quote": "TXT_KEY_TECH_DUALISM_QUOTE",
   "era": "C2C_ERA_ANCIENT",
   "worth": 8,
   "tradeable": true,

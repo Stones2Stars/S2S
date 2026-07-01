@@ -1,12 +1,12 @@
 {
  "type": "UNITCOMBAT_CULTURE_TASMANIAN",
- "description": "TXT_KEY_UNITCOMBAT_CULTURE_TASMANIAN",
  "ui": {
   "art": {
    "icon": "Art/categories/culture_newcultures.dds"
   }
  },
  "identity": {
+  "description": "TXT_KEY_UNITCOMBAT_CULTURE_TASMANIAN",
   "culture": "BONUS_TASMANIAN"
  }
 }

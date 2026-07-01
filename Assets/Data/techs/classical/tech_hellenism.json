@@ -1,8 +1,5 @@
 {
  "type": "TECH_HELLENISM",
- "description": "TXT_KEY_TECH_HELLENISM",
- "civilopedia": "TXT_KEY_TECH_HELLENISM_PEDIA",
- "quote": "TXT_KEY_TECH_HELLENISM_QUOTE",
  "enables": {
   "religions": [
    "RELIGION_HELLENISM"
@@ -55,6 +52,9 @@
   "soundMP": "AS2D_TECH_HELLENISM"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_HELLENISM",
+  "civilopedia": "TXT_KEY_TECH_HELLENISM_PEDIA",
+  "quote": "TXT_KEY_TECH_HELLENISM_QUOTE",
   "era": "C2C_ERA_CLASSICAL",
   "worth": 8,
   "gridX": 35,

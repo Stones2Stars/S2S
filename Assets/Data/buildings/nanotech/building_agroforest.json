@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_AGROFOREST",
- "description": "TXT_KEY_BUILDING_AGROFOREST",
- "civilopedia": "TXT_KEY_BUILDING_AGROFOREST_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_BONFIRE",
@@ -121,6 +119,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_AGROFOREST",
+  "civilopedia": "TXT_KEY_BUILDING_AGROFOREST_PEDIA",
   "worth": 3,
   "militaryWorth": 1,
   "advisor": "ADVISOR_GROWTH",

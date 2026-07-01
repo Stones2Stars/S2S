@@ -1,8 +1,5 @@
 {
  "type": "UNIT_TAMED_SUNBEAR",
- "description": "TXT_KEY_UNIT_TAMED_SUNBEAR",
- "civilopedia": "TXT_KEY_UNIT_SUNBEAR_PEDIA",
- "help": "TXT_KEY_UNIT_TAMED_ANIMALS_HELP",
  "requires": {
   "build": {
    "all": [
@@ -51,6 +48,9 @@
   "production": 133
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_TAMED_SUNBEAR",
+  "civilopedia": "TXT_KEY_UNIT_SUNBEAR_PEDIA",
+  "help": "TXT_KEY_UNIT_TAMED_ANIMALS_HELP",
   "worth": 1,
   "militaryWorth": 6,
   "xpValueAttack": 6,

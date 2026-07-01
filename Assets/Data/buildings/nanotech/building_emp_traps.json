@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_EMP_TRAPS",
- "description": "TXT_KEY_BUILDING_EMP_TRAPS",
- "civilopedia": "TXT_KEY_BUILDING_EMP_TRAPS_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_NANOBOT_TRAPS"
@@ -91,6 +89,8 @@
   "construct": "AS2D_BUILD_NANOFACTORY"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_EMP_TRAPS",
+  "civilopedia": "TXT_KEY_BUILDING_EMP_TRAPS_PEDIA",
   "damageAllAttackers": true,
   "militaryWorth": 7,
   "advisor": "ADVISOR_MILITARY",

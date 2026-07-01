@@ -1,8 +1,5 @@
 {
  "type": "TECH_SPEARFISHING",
- "description": "TXT_KEY_TECH_SPEARFISHING",
- "civilopedia": "TXT_KEY_TECH_SPEARFISHING_PEDIA",
- "quote": "TXT_KEY_TECH_SPEARFISHING_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_SPEARFISHER"
@@ -58,6 +55,9 @@
   "soundMP": "AS2D_TECH_SPEARFISHING"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_SPEARFISHING",
+  "civilopedia": "TXT_KEY_TECH_SPEARFISHING_PEDIA",
+  "quote": "TXT_KEY_TECH_SPEARFISHING_QUOTE",
   "era": "C2C_ERA_PREHISTORIC",
   "worth": 8,
   "militaryWorth": 1,

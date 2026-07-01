@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_ORCHARD_JUJUBE",
- "description": "TXT_KEY_BUILDING_ORCHARD_JUJUBE",
- "civilopedia": "TXT_KEY_BUILDING_ORCHARD_JUJUBE_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_RESOURCES_FRUIT"
@@ -72,6 +70,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_ORCHARD_JUJUBE",
+  "civilopedia": "TXT_KEY_BUILDING_ORCHARD_JUJUBE_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

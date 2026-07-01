@@ -1,7 +1,5 @@
 {
  "type": "UNIT_EGYPT_WARCHARIOT",
- "description": "TXT_KEY_UNIT_EGYPT_WARCHARIOT",
- "civilopedia": "TXT_KEY_UNIT_EGYPT_WARCHARIOT_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -87,6 +85,8 @@
   "upkeep": 1
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_EGYPT_WARCHARIOT",
+  "civilopedia": "TXT_KEY_UNIT_EGYPT_WARCHARIOT_PEDIA",
   "worth": 1,
   "militaryWorth": 8,
   "xpValueAttack": 6,

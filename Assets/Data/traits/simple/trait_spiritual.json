@@ -1,7 +1,5 @@
 {
  "type": "TRAIT_SPIRITUAL",
- "description": "TXT_KEY_TRAIT_SPIRITUAL",
- "civilopedia": "TXT_KEY_TRAIT_SPIRITUAL_PEDIA",
  "production": {
   "empire": {
    "specialists": {
@@ -245,6 +243,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_TRAIT_SPIRITUAL",
+  "civilopedia": "TXT_KEY_TRAIT_SPIRITUAL_PEDIA",
   "shortDescription": "TXT_KEY_TRAIT_SPIRITUAL_SHORT",
   "maxAnarchy": 0
  }

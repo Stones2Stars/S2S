@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_WASTE_COMPACTOR",
- "description": "TXT_KEY_BUILDING_WASTE_COMPACTOR",
- "civilopedia": "TXT_KEY_BUILDING_WASTE_COMPACTOR_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -63,6 +61,8 @@
   "construct": "AS2D_BUILD_GARBAGE_DUMP"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_WASTE_COMPACTOR",
+  "civilopedia": "TXT_KEY_BUILDING_WASTE_COMPACTOR_PEDIA",
   "worth": 2,
   "militaryWorth": 2,
   "conquestProbability": 100,

@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_ENCLOSURE_BIG_CAT",
- "description": "TXT_KEY_BUILDING_ENCLOSURE_BIG_CAT",
- "civilopedia": "TXT_KEY_BUILDING_WILD_ANIMAL_CAGE_PEDIA",
  "enables": {
   "units": [
    "UNIT_TAMED_LION",
@@ -74,6 +72,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_ENCLOSURE_BIG_CAT",
+  "civilopedia": "TXT_KEY_BUILDING_WILD_ANIMAL_CAGE_PEDIA",
   "worth": 1,
   "conquestProbability": 25,
   "advisor": "ADVISOR_CULTURE",

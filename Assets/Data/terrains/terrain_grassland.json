@@ -1,7 +1,5 @@
 {
  "type": "TERRAIN_GRASSLAND",
- "description": "TXT_KEY_TERRAIN_GRASSLAND",
- "civilopedia": "TXT_KEY_TERRAIN_GRASSLAND_PEDIA",
  "food": {
   "plot": {
    "flat": 2
@@ -126,6 +124,8 @@
   "soundscape": "ASSS_GRASSLAND_SELECT_AMB"
  },
  "identity": {
+  "description": "TXT_KEY_TERRAIN_GRASSLAND",
+  "civilopedia": "TXT_KEY_TERRAIN_GRASSLAND_PEDIA",
   "found": true,
   "movementCost": 1,
   "mapCategories": [

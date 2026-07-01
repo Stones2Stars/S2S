@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_CONFUCIAN_SCHOOL",
- "description": "TXT_KEY_BUILDING_CONFUCIAN_SCHOOL",
- "civilopedia": "TXT_KEY_BUILDING_CONFUCIAN_SCHOOL_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -151,6 +149,8 @@
   "construct": "AS2D_BUILD_CONFUCIAN"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_CONFUCIAN_SCHOOL",
+  "civilopedia": "TXT_KEY_BUILDING_CONFUCIAN_SCHOOL_PEDIA",
   "commerceDoubleTime": {
    "culture": 1000
   },

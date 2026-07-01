@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_SOLAR_PHOTOVOLTAIC_ROOFS",
- "description": "TXT_KEY_BUILDING_SOLAR_PHOTOVOLTAIC_ROOFS",
- "civilopedia": "TXT_KEY_BUILDING_SOLAR_PHOTOVOLTAIC_ROOFS_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_MEGATOWER_SOLAR_POWER_CROWN_SECTION"
@@ -88,6 +86,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_SOLAR_PHOTOVOLTAIC_ROOFS",
+  "civilopedia": "TXT_KEY_BUILDING_SOLAR_PHOTOVOLTAIC_ROOFS_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

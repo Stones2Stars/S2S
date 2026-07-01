@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_SAFETY_GREAT_FIREWALL",
- "description": "TXT_KEY_BUILDING_SAFETY_GREAT_FIREWALL",
- "civilopedia": "TXT_KEY_BUILDING_SAFETY_GREAT_FIREWALL_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -70,6 +68,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_SAFETY_GREAT_FIREWALL",
+  "civilopedia": "TXT_KEY_BUILDING_SAFETY_GREAT_FIREWALL_PEDIA",
   "notConstructible": true,
   "nukeImmune": true,
   "neverCapture": true,

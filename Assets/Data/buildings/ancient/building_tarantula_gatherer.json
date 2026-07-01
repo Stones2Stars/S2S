@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_TARANTULA_GATHERER",
- "description": "TXT_KEY_BUILDING_TARANTULA_GATHERER",
- "civilopedia": "TXT_KEY_BUILDING_TARANTULA_GATHERER_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_RESOURCES_BUGS"
@@ -89,6 +87,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_TARANTULA_GATHERER",
+  "civilopedia": "TXT_KEY_BUILDING_TARANTULA_GATHERER_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

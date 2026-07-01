@@ -1,8 +1,5 @@
 {
  "type": "CIVIC_CLOSED_BORDERS",
- "description": "TXT_KEY_CIVIC_CLOSED_BORDERS",
- "civilopedia": "TXT_KEY_CIVIC_CLOSED_BORDERS_PEDIA",
- "strategy": "TXT_KEY_CIVIC_CLOSED_BORDERS_STRATEGY",
  "enables": {
   "buildings": [
    "BUILDING_BERLIN_WALL",
@@ -61,6 +58,9 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_CIVIC_CLOSED_BORDERS",
+  "civilopedia": "TXT_KEY_CIVIC_CLOSED_BORDERS_PEDIA",
+  "strategy": "TXT_KEY_CIVIC_CLOSED_BORDERS_STRATEGY",
   "civicOption": "CIVICOPTION_IMMIGRATION",
   "upkeepLevel": "UPKEEP_MEDIUM"
  }

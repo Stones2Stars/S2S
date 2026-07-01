@@ -1,7 +1,5 @@
 {
  "type": "BONUS_GRAPHITE",
- "description": "TXT_KEY_BONUS_GRAPHITE",
- "civilopedia": "TXT_KEY_BONUS_GRAPHITE_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_FACTORY_PENCILS"
@@ -13,6 +11,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_GRAPHITE",
+  "civilopedia": "TXT_KEY_BONUS_GRAPHITE_PEDIA",
   "bonusClassType": "BONUSCLASS_MANUFACTURED"
  }
 }

@@ -1,7 +1,5 @@
 {
  "type": "UNIT_NELSON_MANDELA",
- "description": "TXT_KEY_UNIT_NELSON_MANDELA",
- "civilopedia": "TXT_KEY_UNIT_NELSON_MANDELA_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -61,6 +59,8 @@
   "upkeep": 1
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_NELSON_MANDELA",
+  "civilopedia": "TXT_KEY_UNIT_NELSON_MANDELA_PEDIA",
   "worth": 6,
   "militaryWorth": 8,
   "xpValueAttack": 4,

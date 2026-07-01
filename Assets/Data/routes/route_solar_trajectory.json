@@ -1,6 +1,5 @@
 {
  "type": "ROUTE_SOLAR_TRAJECTORY",
- "description": "TXT_KEY_ROUTE_SOLAR_TRAJECTORY",
  "food": {
   "plot": {
    "flat": 1
@@ -22,6 +21,7 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_ROUTE_SOLAR_TRAJECTORY",
   "value": 2,
   "advancedStart": {
    "cost": 30

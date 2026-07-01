@@ -1,8 +1,5 @@
 {
  "type": "TECH_LUNAR_TRADE",
- "description": "TXT_KEY_TECH_LUNAR_TRADE",
- "civilopedia": "TXT_KEY_TECH_LUNAR_TRADE_PEDIA",
- "quote": "TXT_KEY_TECH_LUNAR_TRADE_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_ASTEROID_MINING_COMPLEX",
@@ -80,6 +77,9 @@
   "soundMP": "AS2D_TECH_LUNAR_TRADE"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_LUNAR_TRADE",
+  "civilopedia": "TXT_KEY_TECH_LUNAR_TRADE_PEDIA",
+  "quote": "TXT_KEY_TECH_LUNAR_TRADE_QUOTE",
   "era": "C2C_ERA_NANOTECH",
   "worth": 48,
   "militaryWorth": 4,

@@ -1,8 +1,5 @@
 {
  "type": "TECH_BIONICS",
- "description": "TXT_KEY_TECH_BIONICS",
- "civilopedia": "TXT_KEY_TECH_BIONICS_PEDIA",
- "quote": "TXT_KEY_TECH_BIONICS_QUOTE",
  "enables": {
   "bonuses": [
    "BONUS_BIONIC_SUITS"
@@ -68,6 +65,9 @@
   "soundMP": "AS2D_TECH_BIONICS"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_BIONICS",
+  "civilopedia": "TXT_KEY_TECH_BIONICS_PEDIA",
+  "quote": "TXT_KEY_TECH_BIONICS_QUOTE",
   "era": "C2C_ERA_NANOTECH",
   "worth": 40,
   "tradeable": true,

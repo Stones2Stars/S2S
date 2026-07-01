@@ -1,8 +1,5 @@
 {
  "type": "TECH_ELECTRICITY",
- "description": "TXT_KEY_TECH_ELECTRICITY",
- "civilopedia": "TXT_KEY_TECH_ELECTRICITY_PEDIA",
- "quote": "TXT_KEY_TECH_ELECTRICITY_QUOTE",
  "enables": {
   "bonuses": [
    "BONUS_COPPER_WIRES"
@@ -95,6 +92,9 @@
   "soundMP": "AS2D_TECH_MP_ELECTRICITY"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_ELECTRICITY",
+  "civilopedia": "TXT_KEY_TECH_ELECTRICITY_PEDIA",
+  "quote": "TXT_KEY_TECH_ELECTRICITY_QUOTE",
   "era": "C2C_ERA_INDUSTRIAL",
   "worth": 40,
   "tradeable": true,

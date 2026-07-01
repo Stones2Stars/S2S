@@ -1,7 +1,5 @@
 {
  "type": "UNIT_WORKER_MODERN",
- "description": "TXT_KEY_UNIT_WORKER_MODERN",
- "civilopedia": "TXT_KEY_UNIT_WORKER_PEDIA",
  "obsoletedBy": {
   "techs": [
    "TECH_PERSONAL_ROBOTS"
@@ -110,6 +108,8 @@
   "upkeep": 5
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_WORKER_MODERN",
+  "civilopedia": "TXT_KEY_UNIT_WORKER_PEDIA",
   "worth": 1,
   "domain": "DOMAIN_LAND",
   "defaultUnitAI": "UNITAI_WORKER",

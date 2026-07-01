@@ -1,8 +1,5 @@
 {
  "type": "TECH_COMMERCIAL_WHALING",
- "description": "TXT_KEY_TECH_COMMERCIAL_WHALING",
- "civilopedia": "TXT_KEY_TECH_COMMERCIAL_WHALING_PEDIA",
- "quote": "TXT_KEY_TECH_COMMERCIAL_WHALING_QUOTE",
  "enables": {
   "bonuses": [
    "BONUS_WHALE_OIL"
@@ -81,6 +78,9 @@
   "soundMP": "AS2D_TECH_COMMERCIAL_WHALING"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_COMMERCIAL_WHALING",
+  "civilopedia": "TXT_KEY_TECH_COMMERCIAL_WHALING_PEDIA",
+  "quote": "TXT_KEY_TECH_COMMERCIAL_WHALING_QUOTE",
   "era": "C2C_ERA_MEDIEVAL",
   "worth": 24,
   "tradeable": true,

@@ -1,7 +1,5 @@
 {
  "type": "UNIT_PHILIP_THE_BOLD",
- "description": "TXT_KEY_UNIT_PHILIP_THE_BOLD",
- "civilopedia": "TXT_KEY_UNIT_PHILIP_THE_BOLD_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -46,6 +44,8 @@
   "upkeep": 1
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_PHILIP_THE_BOLD",
+  "civilopedia": "TXT_KEY_UNIT_PHILIP_THE_BOLD_PEDIA",
   "worth": 6,
   "militaryWorth": 8,
   "xpValueAttack": 4,

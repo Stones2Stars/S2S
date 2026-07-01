@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_STARGATE",
- "description": "TXT_KEY_BUILDING_STARGATE",
- "civilopedia": "TXT_KEY_BUILDING_STARGATE_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -56,6 +54,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_STARGATE",
+  "civilopedia": "TXT_KEY_BUILDING_STARGATE_PEDIA",
   "specialBuildingType": "SPECIALBUILDING_PUNK_STAR",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,

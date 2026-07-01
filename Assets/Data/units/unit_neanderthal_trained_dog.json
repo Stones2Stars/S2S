@@ -1,7 +1,5 @@
 {
  "type": "UNIT_NEANDERTHAL_TRAINED_DOG",
- "description": "TXT_KEY_UNIT_NEANDERTHAL_TRAINED_DOG",
- "civilopedia": "TXT_KEY_UNIT_WARDOG_PEDIA",
  "obsoletedBy": {
   "techs": [
    "TECH_SEDENTARY_LIFESTYLE"
@@ -78,6 +76,8 @@
   "upkeep": 1
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_NEANDERTHAL_TRAINED_DOG",
+  "civilopedia": "TXT_KEY_UNIT_WARDOG_PEDIA",
   "worth": 3,
   "militaryWorth": 3,
   "xpValueAttack": 3,

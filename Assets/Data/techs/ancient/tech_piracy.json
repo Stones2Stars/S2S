@@ -1,8 +1,5 @@
 {
  "type": "TECH_PIRACY",
- "description": "TXT_KEY_TECH_PIRACY",
- "civilopedia": "TXT_KEY_TECH_PIRACY_PEDIA",
- "quote": "TXT_KEY_TECH_PIRACY_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_CULTURE_OMANI",
@@ -72,6 +69,9 @@
   "soundMP": "AS2D_TECH_PIRACY"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_PIRACY",
+  "civilopedia": "TXT_KEY_TECH_PIRACY_PEDIA",
+  "quote": "TXT_KEY_TECH_PIRACY_QUOTE",
   "era": "C2C_ERA_ANCIENT",
   "worth": 8,
   "militaryWorth": 2,

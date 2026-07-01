@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_STORYTELLER",
- "description": "TXT_KEY_BUILDING_STORYTELLER",
- "civilopedia": "TXT_KEY_BUILDING_STORYTELLER_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_CREATION_MYTH",
@@ -79,6 +77,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_STORYTELLER",
+  "civilopedia": "TXT_KEY_BUILDING_STORYTELLER_PEDIA",
   "advisor": "ADVISOR_CULTURE",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

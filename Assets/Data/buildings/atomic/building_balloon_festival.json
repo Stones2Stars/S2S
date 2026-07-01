@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_BALLOON_FESTIVAL",
- "description": "TXT_KEY_BUILDING_BALLOON_FESTIVAL",
- "civilopedia": "TXT_KEY_BUILDING_BALLOON_FESTIVAL_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_HIGH_TECH_CULTURAL_ENRICHMENT"
@@ -58,6 +56,8 @@
   "construct": "AS2D_BUILD_MARKETPLACE"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_BALLOON_FESTIVAL",
+  "civilopedia": "TXT_KEY_BUILDING_BALLOON_FESTIVAL_PEDIA",
   "worth": 2,
   "conquestProbability": 25,
   "advisor": "ADVISOR_MILITARY",

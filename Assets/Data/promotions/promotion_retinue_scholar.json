@@ -1,6 +1,5 @@
 {
  "type": "PROMOTION_RETINUE_SCHOLAR",
- "description": "TXT_KEY_PROMOTION_RETINUE_SCHOLAR",
  "capture": {
   "unit": {
    "probability": {
@@ -22,6 +21,7 @@
   "sound": "AS2D_IF_GET_RETINUE"
  },
  "identity": {
+  "description": "TXT_KEY_PROMOTION_RETINUE_SCHOLAR",
   "unitCombats": [
    "UNITCOMBAT_HERO"
   ]

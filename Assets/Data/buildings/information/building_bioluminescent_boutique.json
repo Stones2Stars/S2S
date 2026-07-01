@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_BIOLUMINESCENT_BOUTIQUE",
- "description": "TXT_KEY_BUILDING_BIOLUMINESCENT_BOUTIQUE",
- "civilopedia": "TXT_KEY_BUILDING_BIOLUMINESCENT_BOUTIQUE_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_PHOTOSYNTHESIS_BOUTIQUE"
@@ -95,6 +93,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_BIOLUMINESCENT_BOUTIQUE",
+  "civilopedia": "TXT_KEY_BUILDING_BIOLUMINESCENT_BOUTIQUE_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

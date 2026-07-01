@@ -1,6 +1,5 @@
 {
  "type": "PROMOTIONLINE_KEEN_EARS",
- "description": "TXT_KEY_PROMOTIONLINE_KEEN_EARS",
  "loadPrune": {
   "onGameOptions": [
    "GAMEOPTION_COMBAT_HIDE_SEEK"
@@ -12,6 +11,7 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_PROMOTIONLINE_KEEN_EARS",
   "unitCombats": [
    "UNITCOMBAT_CANINE",
    "UNITCOMBAT_ANIMAL_COMBAT_KEEN_SENSES"

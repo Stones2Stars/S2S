@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_INTERSTELLAR_PROGRAMMED_WORK_ETHIC",
- "description": "TXT_KEY_BUILDING_INTERSTELLAR_PROGRAMMED_WORK_ETHIC",
- "civilopedia": "TXT_KEY_BUILDING_INTERSTELLAR_PROGRAMMED_WORK_ETHIC_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -39,6 +37,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_INTERSTELLAR_PROGRAMMED_WORK_ETHIC",
+  "civilopedia": "TXT_KEY_BUILDING_INTERSTELLAR_PROGRAMMED_WORK_ETHIC_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

@@ -1,7 +1,5 @@
 {
  "type": "UNIT_YURUPARI",
- "description": "TXT_KEY_UNIT_YURUPARI",
- "civilopedia": "TXT_KEY_UNIT_YURUPARI_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -106,6 +104,8 @@
   "upkeep": 1
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_YURUPARI",
+  "civilopedia": "TXT_KEY_UNIT_YURUPARI_PEDIA",
   "worth": 3,
   "militaryWorth": 4,
   "xpValueAttack": 4,

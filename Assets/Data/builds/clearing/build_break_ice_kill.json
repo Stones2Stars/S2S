@@ -1,6 +1,5 @@
 {
  "type": "BUILD_BREAK_ICE_KILL",
- "description": "TXT_KEY_BUILD_BREAK_ICE_KILL",
  "requires": {
   "build": {
    "all": [
@@ -37,6 +36,7 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILD_BREAK_ICE_KILL",
   "consumesUnit": true
  }
 }

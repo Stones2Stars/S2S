@@ -1,6 +1,5 @@
 {
  "type": "PROMOTION_FIRE_SHIP",
- "description": "TXT_KEY_PROMOTION_FIRE_SHIP",
  "strength": {
   "unit": {
    "kamikaze": {
@@ -24,6 +23,7 @@
   "sound": "AS2D_IF_LEVELUP"
  },
  "identity": {
+  "description": "TXT_KEY_PROMOTION_FIRE_SHIP",
   "unitCombats": [
    "UNITCOMBAT_WOODEN_SHIPS"
   ]

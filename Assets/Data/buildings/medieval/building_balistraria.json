@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_BALISTRARIA",
- "description": "TXT_KEY_BUILDING_BALISTRARIA",
- "civilopedia": "TXT_KEY_BUILDING_BALISTRARIA_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_IMPERIAL_FORTRESS"
@@ -71,6 +69,8 @@
   "construct": "AS2D_BUILD_ARROW"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_BALISTRARIA",
+  "civilopedia": "TXT_KEY_BUILDING_BALISTRARIA_PEDIA",
   "worth": 8,
   "militaryWorth": 8,
   "conquestProbability": 40,

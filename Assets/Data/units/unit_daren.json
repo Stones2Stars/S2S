@@ -1,7 +1,5 @@
 {
  "type": "UNIT_DAREN",
- "description": "TXT_KEY_UNIT_DAREN",
- "civilopedia": "TXT_KEY_UNIT_DAREN_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -161,6 +159,8 @@
   "upkeep": 1
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_DAREN",
+  "civilopedia": "TXT_KEY_UNIT_DAREN_PEDIA",
   "worth": 2,
   "militaryWorth": 8,
   "xpValueAttack": 6,

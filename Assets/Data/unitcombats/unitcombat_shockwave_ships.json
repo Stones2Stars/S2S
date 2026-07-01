@@ -1,6 +1,5 @@
 {
  "type": "UNITCOMBAT_SHOCKWAVE_SHIPS",
- "description": "TXT_KEY_UNITCOMBAT_SHOCKWAVE_SHIPS",
  "vision": {
   "visibilityIntensity": {
    "INVISIBLE_NAVAL_DISGUISE": 1
@@ -12,6 +11,7 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_UNITCOMBAT_SHOCKWAVE_SHIPS",
   "forNavalMilitary": true
  }
 }

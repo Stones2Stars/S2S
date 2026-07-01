@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_MATHEMATICAL_ORACLE",
- "description": "TXT_KEY_BUILDING_MATHEMATICAL_ORACLE",
- "civilopedia": "TXT_KEY_BUILDING_MATHEMATICAL_ORACLE_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_FORMAL_REASONING_CENTER"
@@ -58,6 +56,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_MATHEMATICAL_ORACLE",
+  "civilopedia": "TXT_KEY_BUILDING_MATHEMATICAL_ORACLE_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

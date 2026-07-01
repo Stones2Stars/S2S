@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_GREAT_MOSQUE_OF_DESERT",
- "description": "TXT_KEY_BUILDING_GREAT_MOSQUE_OF_DESERT",
- "civilopedia": "TXT_KEY_BUILDING_GREAT_MOSQUE_OF_DESERT_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -115,6 +113,8 @@
   "construct": "AS2D_BUILD_ISLAMIC"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_GREAT_MOSQUE_OF_DESERT",
+  "civilopedia": "TXT_KEY_BUILDING_GREAT_MOSQUE_OF_DESERT_PEDIA",
   "commerceDoubleTime": {
    "culture": 1000
   },

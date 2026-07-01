@@ -1,8 +1,5 @@
 {
  "type": "TECH_INVISIBILITY",
- "description": "TXT_KEY_TECH_INVISIBILITY",
- "civilopedia": "TXT_KEY_TECH_INVISIBILITY_PEDIA",
- "quote": "TXT_KEY_TECH_INVISIBILITY_QUOTE",
  "enables": {
   "promotions": [
    "PROMOTION_COVERT_OPERATIONS2",
@@ -63,6 +60,9 @@
   "soundMP": "AS2D_TECH_INVISIBILITY"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_INVISIBILITY",
+  "civilopedia": "TXT_KEY_TECH_INVISIBILITY_PEDIA",
+  "quote": "TXT_KEY_TECH_INVISIBILITY_QUOTE",
   "era": "C2C_ERA_NANOTECH",
   "worth": 48,
   "militaryWorth": 5,

@@ -1,8 +1,5 @@
 {
  "type": "TECH_SATELLITES",
- "description": "TXT_KEY_TECH_SATELLITES",
- "civilopedia": "TXT_KEY_TECH_SATELLITES_PEDIA",
- "quote": "TXT_KEY_TECH_SATELLITES_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_DARPA",
@@ -70,6 +67,9 @@
   "soundMP": "AS2D_TECH_MP_SATELLITES"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_SATELLITES",
+  "civilopedia": "TXT_KEY_TECH_SATELLITES_PEDIA",
+  "quote": "TXT_KEY_TECH_SATELLITES_QUOTE",
   "era": "C2C_ERA_ATOMIC",
   "worth": 48,
   "militaryWorth": 4,

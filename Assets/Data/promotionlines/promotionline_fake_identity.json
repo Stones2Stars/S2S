@@ -1,6 +1,5 @@
 {
  "type": "PROMOTIONLINE_FAKE_IDENTITY",
- "description": "TXT_KEY_PROMOTIONLINE_FAKE_IDENTITY",
  "loadPrune": {
   "onGameOptions": [
    "GAMEOPTION_COMBAT_HIDE_SEEK"
@@ -12,6 +11,7 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_PROMOTIONLINE_FAKE_IDENTITY",
   "unitCombats": [
    "UNITCOMBAT_ENTERTAINER",
    "UNITCOMBAT_CRIMINAL"

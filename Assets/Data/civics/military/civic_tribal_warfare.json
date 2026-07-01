@@ -1,8 +1,5 @@
 {
  "type": "CIVIC_TRIBAL_WARFARE",
- "description": "TXT_KEY_CIVIC_TRIBAL_WARFARE",
- "civilopedia": "TXT_KEY_CIVIC_TRIBAL_WARFARE_PEDIA",
- "strategy": "TXT_KEY_CIVIC_TRIBAL_WARFARE_STRATEGY",
  "enables": {
   "buildings": [
    "BUILDING_WARRIORS_HUT"
@@ -130,6 +127,9 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_CIVIC_TRIBAL_WARFARE",
+  "civilopedia": "TXT_KEY_CIVIC_TRIBAL_WARFARE_PEDIA",
+  "strategy": "TXT_KEY_CIVIC_TRIBAL_WARFARE_STRATEGY",
   "civicOption": "CIVICOPTION_MILITARY",
   "upkeepLevel": "UPKEEP_LOW"
  }

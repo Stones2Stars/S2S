@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_FACTORY_ORGANIC_COMPUTERS",
- "description": "TXT_KEY_BUILDING_FACTORY_ORGANIC_COMPUTERS",
- "civilopedia": "TXT_KEY_BUILDING_FACTORY_ORGANIC_COMPUTERS_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_NANOTECH_COMPLEX"
@@ -77,6 +75,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_FACTORY_ORGANIC_COMPUTERS",
+  "civilopedia": "TXT_KEY_BUILDING_FACTORY_ORGANIC_COMPUTERS_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

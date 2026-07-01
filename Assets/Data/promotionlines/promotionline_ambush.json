@@ -1,12 +1,12 @@
 {
  "type": "PROMOTIONLINE_AMBUSH",
- "description": "TXT_KEY_PROMOTIONLINE_AMBUSH",
  "ui": {
   "art": {
    "icon": ",Art/Interface/Buttons/Promotions/Ambush.dds,Art/Interface/Buttons/Promotions_Atlas.dds,2,1"
   }
  },
  "identity": {
+  "description": "TXT_KEY_PROMOTIONLINE_AMBUSH",
   "unitCombats": [
    "UNITCOMBAT_GUN",
    "UNITCOMBAT_HITECH",

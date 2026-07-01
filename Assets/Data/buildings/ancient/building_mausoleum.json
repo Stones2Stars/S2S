@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_MAUSOLEUM",
- "description": "TXT_KEY_BUILDING_MAUSOLEUM",
- "civilopedia": "TXT_KEY_BUILDING_MAUSOLEUM_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_CAPUCHIN_CRYPT"
@@ -147,6 +145,8 @@
   "construct": "AS2D_BUILD_WALLS"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_MAUSOLEUM",
+  "civilopedia": "TXT_KEY_BUILDING_MAUSOLEUM_PEDIA",
   "conquestProbability": 95,
   "advisor": "ADVISOR_MILITARY",
   "visibilityPriority": 1,

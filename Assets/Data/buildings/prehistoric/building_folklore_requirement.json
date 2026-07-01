@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_FOLKLORE_REQUIREMENT",
- "description": "TXT_KEY_BUILDING_FOLKLORE_REQUIREMENT",
- "civilopedia": "TXT_KEY_BUILDING_FOLKLORE_REQUIREMENT_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_FOLKLORE_ARCTIC_TERN",
@@ -183,6 +181,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_FOLKLORE_REQUIREMENT",
+  "civilopedia": "TXT_KEY_BUILDING_FOLKLORE_REQUIREMENT_PEDIA",
   "notConstructible": true,
   "nukeImmune": true,
   "autoBuild": true,

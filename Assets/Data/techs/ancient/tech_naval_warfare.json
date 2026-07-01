@@ -1,8 +1,5 @@
 {
  "type": "TECH_NAVAL_WARFARE",
- "description": "TXT_KEY_TECH_NAVAL_WARFARE",
- "civilopedia": "TXT_KEY_TECH_NAVAL_WARFARE_PEDIA",
- "quote": "TXT_KEY_TECH_NAVAL_WARFARE_QUOTE",
  "enables": {
   "promotions": [
    "PROMOTION_COASTAL_ASSAULT1",
@@ -76,6 +73,9 @@
   "soundMP": "AS2D_TECH_NAVAL_WARFARE"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_NAVAL_WARFARE",
+  "civilopedia": "TXT_KEY_TECH_NAVAL_WARFARE_PEDIA",
+  "quote": "TXT_KEY_TECH_NAVAL_WARFARE_QUOTE",
   "era": "C2C_ERA_ANCIENT",
   "worth": 8,
   "militaryWorth": 2,

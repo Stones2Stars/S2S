@@ -1,7 +1,5 @@
 {
  "type": "UNIT_OKAPI",
- "description": "TXT_KEY_UNIT_OKAPI",
- "civilopedia": "TXT_KEY_CONCEPT_SUBDUED_ANIMALS_PEDIA",
  "withdrawal": {
   "unit": {
    "percent": 50
@@ -51,6 +49,8 @@
   ]
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_OKAPI",
+  "civilopedia": "TXT_KEY_CONCEPT_SUBDUED_ANIMALS_PEDIA",
   "spawnOnly": true,
   "xpValueAttack": 4,
   "xpValueDefense": 3,

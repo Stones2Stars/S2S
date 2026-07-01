@@ -1,7 +1,5 @@
 {
  "type": "UNIT_SHANG_CHARIOT",
- "description": "TXT_KEY_UNIT_SHANG_CHARIOT",
- "civilopedia": "TXT_KEY_UNIT_SHANG_CHARIOT_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -91,6 +89,8 @@
   "upkeep": 1
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_SHANG_CHARIOT",
+  "civilopedia": "TXT_KEY_UNIT_SHANG_CHARIOT_PEDIA",
   "worth": 1,
   "militaryWorth": 6,
   "xpValueAttack": 6,

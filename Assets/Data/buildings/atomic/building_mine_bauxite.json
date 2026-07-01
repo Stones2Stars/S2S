@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_MINE_BAUXITE",
- "description": "TXT_KEY_BUILDING_MINE_BAUXITE",
- "civilopedia": "TXT_KEY_BUILDING_MINE_BAUXITE_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_SMELTER_ALUMINUM"
@@ -75,6 +73,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_MINE_BAUXITE",
+  "civilopedia": "TXT_KEY_BUILDING_MINE_BAUXITE_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

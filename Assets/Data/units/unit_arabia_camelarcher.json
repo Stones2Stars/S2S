@@ -1,7 +1,5 @@
 {
  "type": "UNIT_ARABIA_CAMELARCHER",
- "description": "TXT_KEY_UNIT_ARABIA_CAMELARCHER",
- "civilopedia": "TXT_KEY_UNIT_ARABIA_CAMELARCHER_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -104,6 +102,8 @@
   "upkeep": 1
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_ARABIA_CAMELARCHER",
+  "civilopedia": "TXT_KEY_UNIT_ARABIA_CAMELARCHER_PEDIA",
   "worth": 3,
   "militaryWorth": 24,
   "xpValueAttack": 6,

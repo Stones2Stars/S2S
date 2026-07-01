@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_HYPERLOOP",
- "description": "TXT_KEY_BUILDING_HYPERLOOP",
- "civilopedia": "TXT_KEY_BUILDING_HYPERLOOP_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -43,6 +41,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_HYPERLOOP",
+  "civilopedia": "TXT_KEY_BUILDING_HYPERLOOP_PEDIA",
   "conquestProbability": 100,
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,

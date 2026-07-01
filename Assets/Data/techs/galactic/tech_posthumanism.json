@@ -1,8 +1,5 @@
 {
  "type": "TECH_POSTHUMANISM",
- "description": "TXT_KEY_TECH_POSTHUMANISM",
- "civilopedia": "TXT_KEY_TECH_POSTHUMANISM_PEDIA",
- "quote": "TXT_KEY_TECH_POSTHUMANISM_QUOTE",
  "enables": {
   "bonuses": [
    "BONUS_HUMAN_MOD_INFORMATION_BASED"
@@ -53,6 +50,9 @@
   "soundMP": "AS2D_TECH_GENERIC"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_POSTHUMANISM",
+  "civilopedia": "TXT_KEY_TECH_POSTHUMANISM_PEDIA",
+  "quote": "TXT_KEY_TECH_POSTHUMANISM_QUOTE",
   "era": "C2C_ERA_GALACTIC",
   "worth": 48,
   "tradeable": true,

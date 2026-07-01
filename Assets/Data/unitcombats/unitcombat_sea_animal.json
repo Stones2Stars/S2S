@@ -1,6 +1,5 @@
 {
  "type": "UNITCOMBAT_SEA_ANIMAL",
- "description": "TXT_KEY_UNITCOMBAT_SEA_ANIMAL",
  "capture": {
   "unit": {
    "resistance": {
@@ -20,5 +19,8 @@
   "art": {
    "icon": "Art/Interface/Buttons/units/sparth/categories/whales.dds"
   }
+ },
+ "identity": {
+  "description": "TXT_KEY_UNITCOMBAT_SEA_ANIMAL"
  }
 }

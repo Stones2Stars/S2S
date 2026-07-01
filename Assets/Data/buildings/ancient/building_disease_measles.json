@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_DISEASE_MEASLES",
- "description": "TXT_KEY_BUILDING_DISEASE_MEASLES",
- "civilopedia": "TXT_KEY_BUILDING_DISEASE_PEDIA",
  "obsoletedBy": {
   "techs": [
    "TECH_SMART_DRUGS"
@@ -67,6 +65,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_DISEASE_MEASLES",
+  "civilopedia": "TXT_KEY_BUILDING_DISEASE_PEDIA",
   "notConstructible": true,
   "nukeImmune": true,
   "conquestProbability": 100,

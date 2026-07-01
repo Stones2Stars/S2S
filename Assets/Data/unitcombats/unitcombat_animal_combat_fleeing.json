@@ -1,6 +1,5 @@
 {
  "type": "UNITCOMBAT_ANIMAL_COMBAT_FLEEING",
- "description": "TXT_KEY_UNITCOMBAT_ANIMAL_COMBAT_FLEEING",
  "withdrawal": {
   "unit": {
    "percent": 10
@@ -13,5 +12,8 @@
   "art": {
    "icon": "Art/Interface/Buttons/units/sparth/categories/nature_fleeing.dds"
   }
+ },
+ "identity": {
+  "description": "TXT_KEY_UNITCOMBAT_ANIMAL_COMBAT_FLEEING"
  }
 }

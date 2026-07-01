@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_INTERSTELLAR_STELLAR_FUSION_PLANT",
- "description": "TXT_KEY_BUILDING_INTERSTELLAR_STELLAR_FUSION_PLANT",
- "civilopedia": "TXT_KEY_BUILDING_INTERSTELLAR_STELLAR_FUSION_PLANT_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_INTERSTELLAR_AB_FOUNDRY"
@@ -48,6 +46,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_INTERSTELLAR_STELLAR_FUSION_PLANT",
+  "civilopedia": "TXT_KEY_BUILDING_INTERSTELLAR_STELLAR_FUSION_PLANT_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

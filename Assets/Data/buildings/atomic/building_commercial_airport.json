@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_COMMERCIAL_AIRPORT",
- "description": "TXT_KEY_BUILDING_COMMERCIAL_AIRPORT",
- "civilopedia": "TXT_KEY_BUILDING_COMMERCIAL_AIRPORT_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_AERODROME",
@@ -101,6 +99,8 @@
   "construct": "AS2D_BUILD_AIRPORT"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_COMMERCIAL_AIRPORT",
+  "civilopedia": "TXT_KEY_BUILDING_COMMERCIAL_AIRPORT_PEDIA",
   "worth": 5,
   "airlift": 2,
   "airUnitCapacity": 6,

@@ -1,6 +1,5 @@
 {
  "type": "PROMOTION_CRUSADER",
- "description": "TXT_KEY_PROMOTION_CRUSADER",
  "strength": {
   "unit": {
    "cityAttack": {
@@ -32,6 +31,7 @@
   "sound": "AS2D_IF_LEVELUP"
  },
  "identity": {
+  "description": "TXT_KEY_PROMOTION_CRUSADER",
   "stateReligionPrereq": "RELIGION_CHRISTIANITY",
   "unitCombats": [
    "UNITCOMBAT_RECON",

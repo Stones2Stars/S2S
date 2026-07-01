@@ -1,8 +1,5 @@
 {
  "type": "TECH_CYBERIMMUNOLOGY",
- "description": "TXT_KEY_TECH_CYBERIMMUNOLOGY",
- "civilopedia": "TXT_KEY_TECH_CYBERIMMUNOLOGY_PEDIA",
- "quote": "TXT_KEY_TECH_CYBERIMMUNOLOGY_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_CYBERIMMUNIOLOGY_THERAPY_CLINIC",
@@ -67,6 +64,9 @@
   "soundMP": "AS2D_TECH_CYBERIMMUNOLOGY"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_CYBERIMMUNOLOGY",
+  "civilopedia": "TXT_KEY_TECH_CYBERIMMUNOLOGY_PEDIA",
+  "quote": "TXT_KEY_TECH_CYBERIMMUNOLOGY_QUOTE",
   "era": "C2C_ERA_NANOTECH",
   "worth": 14,
   "tradeable": true,

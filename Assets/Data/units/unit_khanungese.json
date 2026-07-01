@@ -1,7 +1,5 @@
 {
  "type": "UNIT_KHANUNGESE",
- "description": "TXT_KEY_UNIT_KHANUNGESE",
- "civilopedia": "TXT_KEY_UNIT_KHANUNGESE_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -154,6 +152,8 @@
   "upkeep": 1
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_KHANUNGESE",
+  "civilopedia": "TXT_KEY_UNIT_KHANUNGESE_PEDIA",
   "worth": 3,
   "militaryWorth": 5,
   "xpValueAttack": 6,

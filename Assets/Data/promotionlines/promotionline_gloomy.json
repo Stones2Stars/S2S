@@ -1,9 +1,11 @@
 {
  "type": "PROMOTIONLINE_GLOOMY",
- "description": "TXT_KEY_PROMOTIONLINE_GLOOMY",
  "ui": {
   "art": {
    "icon": "art/Buttons/Traits/TraitGloomy.dds"
   }
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTIONLINE_GLOOMY"
  }
 }

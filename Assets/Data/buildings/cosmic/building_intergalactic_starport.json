@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_INTERGALACTIC_STARPORT",
- "description": "TXT_KEY_BUILDING_INTERGALACTIC_STARPORT",
- "civilopedia": "TXT_KEY_BUILDING_INTERGALACTIC_STARPORT_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_INTERGALACTIC_DARK_MATTER_HIGHWAY",
@@ -76,6 +74,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_INTERGALACTIC_STARPORT",
+  "civilopedia": "TXT_KEY_BUILDING_INTERGALACTIC_STARPORT_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

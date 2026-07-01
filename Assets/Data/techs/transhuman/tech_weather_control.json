@@ -1,8 +1,5 @@
 {
  "type": "TECH_WEATHER_CONTROL",
- "description": "TXT_KEY_TECH_WEATHER_CONTROL",
- "civilopedia": "TXT_KEY_TECH_WEATHER_CONTROL_PEDIA",
- "quote": "TXT_KEY_TECH_WEATHER_CONTROL_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_INDUCED_RAIN",
@@ -102,6 +99,9 @@
   "soundMP": "AS2D_TECH_WEATHER_CONTROL"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_WEATHER_CONTROL",
+  "civilopedia": "TXT_KEY_TECH_WEATHER_CONTROL_PEDIA",
+  "quote": "TXT_KEY_TECH_WEATHER_CONTROL_QUOTE",
   "era": "C2C_ERA_TRANSHUMAN",
   "worth": 40,
   "militaryWorth": 10,

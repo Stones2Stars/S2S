@@ -1,6 +1,5 @@
 {
  "type": "UNITCOMBAT_WEAPON_DIST_COILGUN",
- "description": "TXT_KEY_UNITCOMBAT_WEAPON_DIST_COILGUN",
  "skills": {
   "rBombardDirect": true
  },
@@ -10,6 +9,7 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_UNITCOMBAT_WEAPON_DIST_COILGUN",
   "base": {
    "rangedBombardDamage": 85,
    "rangedBombardLimit": 65,

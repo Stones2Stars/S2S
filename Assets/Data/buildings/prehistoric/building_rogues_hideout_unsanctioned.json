@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_ROGUES_HIDEOUT_UNSANCTIONED",
- "description": "TXT_KEY_BUILDING_ROGUES_HIDEOUT_UNSANCTIONED",
- "civilopedia": "TXT_KEY_BUILDING_THIEVES_HIDEOUT_PEDIA",
  "obsoletedBy": {
   "techs": [
    "TECH_RIFLING"
@@ -69,6 +67,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_ROGUES_HIDEOUT_UNSANCTIONED",
+  "civilopedia": "TXT_KEY_BUILDING_THIEVES_HIDEOUT_PEDIA",
   "notConstructible": true,
   "nukeImmune": true,
   "conquestProbability": 100,

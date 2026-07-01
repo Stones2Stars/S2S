@@ -1,8 +1,5 @@
 {
  "type": "TECH_REALITY_REPROGRAMMING",
- "description": "TXT_KEY_TECH_REALITY_REPROGRAMMING",
- "civilopedia": "TXT_KEY_TECH_REALITY_REPROGRAMMING_PEDIA",
- "quote": "TXT_KEY_TECH_REALITY_REPROGRAMMING_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_BIZARRO_WORLD",
@@ -62,6 +59,9 @@
   "soundMP": "AS2D_TECH_GENERIC"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_REALITY_REPROGRAMMING",
+  "civilopedia": "TXT_KEY_TECH_REALITY_REPROGRAMMING_PEDIA",
+  "quote": "TXT_KEY_TECH_REALITY_REPROGRAMMING_QUOTE",
   "era": "C2C_ERA_TRANSCENDENT",
   "worth": 48,
   "tradeable": true,

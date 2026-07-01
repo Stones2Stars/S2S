@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_BEACH_SAND_GATHERER",
- "description": "TXT_KEY_BUILDING_BEACH_SAND_GATHERER",
- "civilopedia": "TXT_KEY_BUILDING_BEACH_SAND_GATHERER_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_RESOURCES_SAND"
@@ -52,6 +50,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_BEACH_SAND_GATHERER",
+  "civilopedia": "TXT_KEY_BUILDING_BEACH_SAND_GATHERER_PEDIA",
   "nukeImmune": true,
   "advisor": "ADVISOR_ECONOMY",
   "freeStartEra": "C2C_ERA_ANCIENT",

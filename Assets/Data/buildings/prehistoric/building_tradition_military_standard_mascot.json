@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_TRADITION_MILITARY_STANDARD_MASCOT",
- "description": "TXT_KEY_BUILDING_TRADITION_MILITARY_STANDARD_MASCOT",
- "civilopedia": "TXT_KEY_BUILDING_MILITARY_STANDARD_ANIMAL_MASCOT_PEDIA",
  "obsoletedBy": {
   "techs": [
    "TECH_AVIATION"
@@ -35,6 +33,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_TRADITION_MILITARY_STANDARD_MASCOT",
+  "civilopedia": "TXT_KEY_BUILDING_MILITARY_STANDARD_ANIMAL_MASCOT_PEDIA",
   "notConstructible": true,
   "nukeImmune": true,
   "neverCapture": true,

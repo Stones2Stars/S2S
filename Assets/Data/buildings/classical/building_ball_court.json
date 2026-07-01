@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_BALL_COURT",
- "description": "TXT_KEY_BUILDING_BALL_COURT",
- "civilopedia": "TXT_KEY_BUILDING_BALL_COURT_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_MINOR_LEAGUE_STADIUM"
@@ -113,6 +111,8 @@
   "construct": "AS2D_BUILD_COLOSSEUM"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_BALL_COURT",
+  "civilopedia": "TXT_KEY_BUILDING_BALL_COURT_PEDIA",
   "worth": 5,
   "conquestProbability": 75,
   "dcmAirbombMission": 2,

@@ -1,8 +1,5 @@
 {
  "type": "TECH_MICROLITH",
- "description": "TXT_KEY_TECH_MICROLITH",
- "civilopedia": "TXT_KEY_TECH_MICROLITH_PEDIA",
- "quote": "TXT_KEY_TECH_MICROLITH_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_MICROLITH_WORKSHOP"
@@ -54,6 +51,9 @@
   "soundMP": "AS2D_TECH_MICROLITH"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_MICROLITH",
+  "civilopedia": "TXT_KEY_TECH_MICROLITH_PEDIA",
+  "quote": "TXT_KEY_TECH_MICROLITH_QUOTE",
   "era": "C2C_ERA_PREHISTORIC",
   "worth": 6,
   "tradeable": true,

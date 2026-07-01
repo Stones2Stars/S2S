@@ -1,7 +1,5 @@
 {
  "type": "BONUS_SAPPHIRES",
- "description": "TXT_KEY_BONUS_SAPPHIRES",
- "civilopedia": "TXT_KEY_BONUS_SAPPHIRES_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_CULTURE_BAHRAINI",
@@ -61,6 +59,8 @@
   ]
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_SAPPHIRES",
+  "civilopedia": "TXT_KEY_BONUS_SAPPHIRES_PEDIA",
   "bonusClassType": "BONUSCLASS_LUXURY"
  }
 }

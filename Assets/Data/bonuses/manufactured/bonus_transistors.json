@@ -1,7 +1,5 @@
 {
  "type": "BONUS_TRANSISTORS",
- "description": "TXT_KEY_BONUS_TRANSISTORS",
- "civilopedia": "TXT_KEY_BONUS_TRANSISTORS_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_COPPER_RECLAMATION_PLANT",
@@ -15,6 +13,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_TRANSISTORS",
+  "civilopedia": "TXT_KEY_BONUS_TRANSISTORS_PEDIA",
   "bonusClassType": "BONUSCLASS_MANUFACTURED"
  }
 }

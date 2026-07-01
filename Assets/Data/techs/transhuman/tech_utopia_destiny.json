@@ -1,8 +1,5 @@
 {
  "type": "TECH_UTOPIA_DESTINY",
- "description": "TXT_KEY_TECH_UTOPIA_DESTINY",
- "civilopedia": "TXT_KEY_TECH_UTOPIA_DESTINY_PEDIA",
- "quote": "TXT_KEY_TECH_UTOPIA_DESTINY_QUOTE",
  "enables": {
   "bonuses": [
    "BONUS_HUMAN_MOD_ENLIGHTENED"
@@ -82,6 +79,9 @@
   "soundMP": "AS2D_TECH_UTOPIA_DESTINY"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_UTOPIA_DESTINY",
+  "civilopedia": "TXT_KEY_TECH_UTOPIA_DESTINY_PEDIA",
+  "quote": "TXT_KEY_TECH_UTOPIA_DESTINY_QUOTE",
   "era": "C2C_ERA_TRANSHUMAN",
   "worth": 48,
   "militaryWorth": 4,

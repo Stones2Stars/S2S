@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_BICYCLE_BOULEVARD",
- "description": "TXT_KEY_BUILDING_BICYCLE_BOULEVARD",
- "civilopedia": "TXT_KEY_BUILDING_BICYCLE_BOULEVARD_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_ELEVATED_BICYCLE_TRACK"
@@ -76,6 +74,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_BICYCLE_BOULEVARD",
+  "civilopedia": "TXT_KEY_BUILDING_BICYCLE_BOULEVARD_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

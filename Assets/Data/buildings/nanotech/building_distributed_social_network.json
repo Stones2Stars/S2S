@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_DISTRIBUTED_SOCIAL_NETWORK",
- "description": "TXT_KEY_BUILDING_DISTRIBUTED_SOCIAL_NETWORK",
- "civilopedia": "TXT_KEY_BUILDING_DISTRIBUTED_SOCIAL_NETWORK_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -71,6 +69,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_DISTRIBUTED_SOCIAL_NETWORK",
+  "civilopedia": "TXT_KEY_BUILDING_DISTRIBUTED_SOCIAL_NETWORK_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

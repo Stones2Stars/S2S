@@ -1,8 +1,5 @@
 {
  "type": "TECH_EMANCIPATION",
- "description": "TXT_KEY_TECH_EMANCIPATION",
- "civilopedia": "TXT_KEY_TECH_EMANCIPATION_PEDIA",
- "quote": "TXT_KEY_TECH_EMANCIPATION_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_CRIME_HUMAN_TRAFFICKING",
@@ -59,6 +56,9 @@
   "soundMP": "AS2D_TECH_EMANCIPATION"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_EMANCIPATION",
+  "civilopedia": "TXT_KEY_TECH_EMANCIPATION_PEDIA",
+  "quote": "TXT_KEY_TECH_EMANCIPATION_QUOTE",
   "era": "C2C_ERA_INDUSTRIAL",
   "worth": 32,
   "tradeable": true,

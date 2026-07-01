@@ -1,7 +1,5 @@
 {
  "type": "UNIT_BOAR",
- "description": "TXT_KEY_UNIT_BOAR",
- "civilopedia": "TXT_KEY_UNIT_BOAR_PEDIA",
  "withdrawal": {
   "unit": {
    "percent": 15
@@ -90,6 +88,8 @@
   ]
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_BOAR",
+  "civilopedia": "TXT_KEY_UNIT_BOAR_PEDIA",
   "spawnOnly": true,
   "xpValueAttack": 5,
   "xpValueDefense": 4,

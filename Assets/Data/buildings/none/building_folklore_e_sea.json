@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_FOLKLORE_E_SEA",
- "description": "TXT_KEY_BUILDING_FOLKLORE_E_SEA",
- "civilopedia": "TXT_KEY_BUILDING_FOLKLORE_ELEMENTAL_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_BURIAL_TRADITION_SEA",
@@ -105,6 +103,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_FOLKLORE_E_SEA",
+  "civilopedia": "TXT_KEY_BUILDING_FOLKLORE_ELEMENTAL_PEDIA",
   "nukeImmune": true,
   "neverCapture": true,
   "forceNoPrereqScaling": true,

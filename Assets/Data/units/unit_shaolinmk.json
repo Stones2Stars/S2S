@@ -1,7 +1,5 @@
 {
  "type": "UNIT_SHAOLINMK",
- "description": "TXT_KEY_UNIT_SHAOLINMK",
- "civilopedia": "TXT_KEY_UNIT_SHAOLINMK_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -109,6 +107,8 @@
   "hurryCostModifier": 25
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_SHAOLINMK",
+  "civilopedia": "TXT_KEY_UNIT_SHAOLINMK_PEDIA",
   "worth": 6,
   "militaryWorth": 15,
   "xpValueAttack": 4,

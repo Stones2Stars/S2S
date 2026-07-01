@@ -1,7 +1,5 @@
 {
  "type": "UNIT_GONE_DAU",
- "description": "TXT_KEY_UNIT_GONE_DAU",
- "civilopedia": "TXT_KEY_UNIT_GONE_DAU_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -70,6 +68,8 @@
   "upkeep": 1
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_GONE_DAU",
+  "civilopedia": "TXT_KEY_UNIT_GONE_DAU_PEDIA",
   "worth": 1,
   "xpValueDefense": 3,
   "domain": "DOMAIN_SEA",

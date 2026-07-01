@@ -1,12 +1,12 @@
 {
  "type": "UNITCOMBAT_CULTURE_HERERO",
- "description": "TXT_KEY_UNITCOMBAT_CULTURE_HERERO",
  "ui": {
   "art": {
    "icon": "Art/Interface/Buttons/units/sparth/categories/culture_herero.dds"
   }
  },
  "identity": {
+  "description": "TXT_KEY_UNITCOMBAT_CULTURE_HERERO",
   "culture": "BONUS_HERERO"
  }
 }

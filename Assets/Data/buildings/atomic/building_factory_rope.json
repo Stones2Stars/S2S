@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_FACTORY_ROPE",
- "description": "TXT_KEY_BUILDING_FACTORY_ROPE",
- "civilopedia": "TXT_KEY_BUILDING_FACTORY_ROPE_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_MANUFACTURING_DISTRICT"
@@ -100,6 +98,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_FACTORY_ROPE",
+  "civilopedia": "TXT_KEY_BUILDING_FACTORY_ROPE_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

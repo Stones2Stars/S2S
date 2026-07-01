@@ -1,7 +1,5 @@
 {
  "type": "UNIT_GALAPAGOS_PENGUIN",
- "description": "TXT_KEY_UNIT_GALAPAGOS_PENGUIN",
- "civilopedia": "TXT_KEY_UNIT_GALAPAGOS_PENGUIN_PEDIA",
  "withdrawal": {
   "unit": {
    "percent": 40
@@ -36,6 +34,8 @@
   ]
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_GALAPAGOS_PENGUIN",
+  "civilopedia": "TXT_KEY_UNIT_GALAPAGOS_PENGUIN_PEDIA",
   "spawnOnly": true,
   "xpValueAttack": 1,
   "xpValueDefense": 1,

@@ -1,7 +1,5 @@
 {
  "type": "UNIT_GASTRAPHETES",
- "description": "TXT_KEY_UNIT_GASTRAPHETES",
- "civilopedia": "TXT_KEY_UNIT_GASTRAPHETES_PEDIA",
  "obsoletedBy": {
   "techs": [
    "TECH_FLINTLOCK"
@@ -82,6 +80,8 @@
   "upkeep": 1
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_GASTRAPHETES",
+  "civilopedia": "TXT_KEY_UNIT_GASTRAPHETES_PEDIA",
   "worth": 2,
   "militaryWorth": 5,
   "xpValueAttack": 6,

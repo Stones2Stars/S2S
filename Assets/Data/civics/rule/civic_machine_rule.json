@@ -1,8 +1,5 @@
 {
  "type": "CIVIC_MACHINE_RULE",
- "description": "TXT_KEY_CIVIC_MACHINE_RULE",
- "civilopedia": "TXT_KEY_CIVIC_MACHINE_RULE_PEDIA",
- "strategy": "TXT_KEY_CIVIC_MACHINE_RULE_STRATEGY",
  "enables": {
   "buildings": [
    "BUILDING_AI_SINGLETON"
@@ -117,6 +114,9 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_CIVIC_MACHINE_RULE",
+  "civilopedia": "TXT_KEY_CIVIC_MACHINE_RULE_PEDIA",
+  "strategy": "TXT_KEY_CIVIC_MACHINE_RULE_STRATEGY",
   "civicOption": "CIVICOPTION_RULE",
   "anarchyLength": 3,
   "upkeepLevel": "UPKEEP_HIGH"

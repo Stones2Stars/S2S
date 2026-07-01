@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_STARPORT",
- "description": "TXT_KEY_BUILDING_STARPORT",
- "civilopedia": "TXT_KEY_BUILDING_STARPORT_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_ADVANCED_NEUROIMPLANT_EXPORTER",
@@ -144,6 +142,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_STARPORT",
+  "civilopedia": "TXT_KEY_BUILDING_STARPORT_PEDIA",
   "orbitalInfrastructure": true,
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,

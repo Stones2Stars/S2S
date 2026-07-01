@@ -1,8 +1,5 @@
 {
  "type": "TECH_FLASH_MEMORY",
- "description": "TXT_KEY_TECH_FLASH_MEMORY",
- "civilopedia": "TXT_KEY_TECH_FLASH_MEMORY_PEDIA",
- "quote": "TXT_KEY_TECH_FLASH_MEMORY_QUOTE",
  "enables": {
   "bonuses": [
    "BONUS_FLASH_MEMORY_DEVICES"
@@ -58,6 +55,9 @@
   "soundMP": "AS2D_TECH_FLASH_MEMORY"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_FLASH_MEMORY",
+  "civilopedia": "TXT_KEY_TECH_FLASH_MEMORY_PEDIA",
+  "quote": "TXT_KEY_TECH_FLASH_MEMORY_QUOTE",
   "era": "C2C_ERA_INFORMATION",
   "worth": 14,
   "tradeable": true,

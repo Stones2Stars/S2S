@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_FACTORY_GRAVITY_GENERATORS",
- "description": "TXT_KEY_BUILDING_FACTORY_GRAVITY_GENERATORS",
- "civilopedia": "TXT_KEY_BUILDING_FACTORY_GRAVITY_GENERATORS_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_MATERIALIZATION_COMPLEX"
@@ -76,6 +74,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_FACTORY_GRAVITY_GENERATORS",
+  "civilopedia": "TXT_KEY_BUILDING_FACTORY_GRAVITY_GENERATORS_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

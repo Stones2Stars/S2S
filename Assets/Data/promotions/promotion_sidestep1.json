@@ -1,6 +1,5 @@
 {
  "type": "PROMOTION_SIDESTEP1",
- "description": "TXT_KEY_PROMOTION_SIDESTEP1",
  "strength": {
   "unit": {
    "unitCombat": {
@@ -22,6 +21,7 @@
   "sound": "AS2D_IF_LEVELUP"
  },
  "identity": {
+  "description": "TXT_KEY_PROMOTION_SIDESTEP1",
   "unitCombats": [
    "UNITCOMBAT_ANIMAL",
    "UNITCOMBAT_GUN"

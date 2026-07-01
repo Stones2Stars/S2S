@@ -1,7 +1,5 @@
 {
  "type": "UNIT_LIGHT_HOPLITE",
- "description": "TXT_KEY_UNIT_LIGHT_HOPLITE",
- "civilopedia": "TXT_KEY_UNIT_LIGHT_HOPLITE_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -110,6 +108,8 @@
   "upkeep": 1
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_LIGHT_HOPLITE",
+  "civilopedia": "TXT_KEY_UNIT_LIGHT_HOPLITE_PEDIA",
   "worth": 2,
   "militaryWorth": 5,
   "xpValueAttack": 6,

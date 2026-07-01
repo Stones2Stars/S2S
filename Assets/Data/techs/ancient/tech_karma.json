@@ -1,8 +1,5 @@
 {
  "type": "TECH_KARMA",
- "description": "TXT_KEY_TECH_KARMA",
- "civilopedia": "TXT_KEY_TECH_KARMA_PEDIA",
- "quote": "TXT_KEY_TECH_KARMA_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_BELIEF_KARMA",
@@ -66,6 +63,9 @@
   "soundMP": "AS2D_TECH_KARMA"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_KARMA",
+  "civilopedia": "TXT_KEY_TECH_KARMA_PEDIA",
+  "quote": "TXT_KEY_TECH_KARMA_QUOTE",
   "era": "C2C_ERA_ANCIENT",
   "worth": 16,
   "tradeable": true,

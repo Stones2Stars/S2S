@@ -1,12 +1,12 @@
 {
  "type": "UNITCOMBAT_CULTURE_CZECH",
- "description": "TXT_KEY_UNITCOMBAT_CULTURE_CZECH",
  "ui": {
   "art": {
    "icon": "Art/categories/culture_newcultures.dds"
   }
  },
  "identity": {
+  "description": "TXT_KEY_UNITCOMBAT_CULTURE_CZECH",
   "culture": "BONUS_CZECH"
  }
 }

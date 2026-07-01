@@ -1,8 +1,5 @@
 {
  "type": "TECH_ARTIFICIAL_LIFE",
- "description": "TXT_KEY_TECH_ARTIFICIAL_LIFE",
- "civilopedia": "TXT_KEY_TECH_ARTIFICIAL_LIFE_PEDIA",
- "quote": "TXT_KEY_TECH_ARTIFICIAL_LIFE_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_ANIMA_CHAMBER",
@@ -82,6 +79,9 @@
   "soundMP": "AS2D_TECH_ARTIFICIAL_LIFE"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_ARTIFICIAL_LIFE",
+  "civilopedia": "TXT_KEY_TECH_ARTIFICIAL_LIFE_PEDIA",
+  "quote": "TXT_KEY_TECH_ARTIFICIAL_LIFE_QUOTE",
   "era": "C2C_ERA_TRANSHUMAN",
   "worth": 50,
   "militaryWorth": 10,

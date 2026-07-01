@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_HERD_ELEPHANT",
- "description": "TXT_KEY_BUILDING_HERD_ELEPHANT",
- "civilopedia": "TXT_KEY_BUILDING_HERD_ELEPHANT_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_ANIMAL_TRAINER_ELEPHANT",
@@ -57,6 +55,8 @@
   "construct": "SND_AMB_HORSE_COBBLESTONES"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_HERD_ELEPHANT",
+  "civilopedia": "TXT_KEY_BUILDING_HERD_ELEPHANT_PEDIA",
   "notConstructible": true,
   "worth": 3,
   "conquestProbability": 75,

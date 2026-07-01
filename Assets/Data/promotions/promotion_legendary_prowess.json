@@ -1,6 +1,5 @@
 {
  "type": "PROMOTION_LEGENDARY_PROWESS",
- "description": "TXT_KEY_PROMOTION_LEGENDARY_PROWESS",
  "strength": {
   "unit": {
    "quality": {
@@ -30,6 +29,7 @@
   "sound": "AS2D_IF_LEVELUP"
  },
  "identity": {
+  "description": "TXT_KEY_PROMOTION_LEGENDARY_PROWESS",
   "replacesUnitCombat": "UNITCOMBAT_QUALITY_ELITE",
   "levelPrereq": 15,
   "notOnUnitCombats": [

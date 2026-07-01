@@ -1,7 +1,5 @@
 {
  "type": "TERRAIN_GANYMEDE",
- "description": "TXT_KEY_TERRAIN_GANYMEDE",
- "civilopedia": "TXT_KEY_TERRAIN_GANYMEDE_PEDIA",
  "commerce": {
   "plot": {
    "flat": 2
@@ -23,6 +21,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_TERRAIN_GANYMEDE",
+  "civilopedia": "TXT_KEY_TERRAIN_GANYMEDE_PEDIA",
   "found": true,
   "movementCost": 1,
   "mapCategories": [

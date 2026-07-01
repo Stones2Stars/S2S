@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_STICK_GATHERER",
- "description": "TXT_KEY_BUILDING_STICK_GATHERER",
- "civilopedia": "TXT_KEY_BUILDING_STICK_GATHERER_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_CAPTURED_FIRE",
@@ -69,6 +67,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_STICK_GATHERER",
+  "civilopedia": "TXT_KEY_BUILDING_STICK_GATHERER_PEDIA",
   "enabledCivilizations": [
    "CIVILIZATION_NPC_NEANDERTHAL"
   ],

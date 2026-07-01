@@ -1,7 +1,5 @@
 {
  "type": "BONUS_CORN",
- "description": "TXT_KEY_BONUS_CORN",
- "civilopedia": "TXT_KEY_BONUS_CORN_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_BREEDING_PROGRAM_RACCOON",
@@ -78,6 +76,8 @@
   ]
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_CORN",
+  "civilopedia": "TXT_KEY_BONUS_CORN_PEDIA",
   "bonusClassType": "BONUSCLASS_CROP"
  }
 }

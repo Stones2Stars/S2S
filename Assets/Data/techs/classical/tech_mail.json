@@ -1,8 +1,5 @@
 {
  "type": "TECH_MAIL",
- "description": "TXT_KEY_TECH_MAIL",
- "civilopedia": "TXT_KEY_TECH_MAIL_PEDIA",
- "quote": "TXT_KEY_TECH_MAIL_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_NATIONAL_COURIER_SYSTEM",
@@ -46,6 +43,9 @@
   "soundMP": "AS2D_TECH_MAIL"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_MAIL",
+  "civilopedia": "TXT_KEY_TECH_MAIL_PEDIA",
+  "quote": "TXT_KEY_TECH_MAIL_QUOTE",
   "era": "C2C_ERA_CLASSICAL",
   "worth": 2,
   "tradeable": true,

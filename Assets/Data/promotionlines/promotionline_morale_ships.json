@@ -1,12 +1,12 @@
 {
  "type": "PROMOTIONLINE_MORALE_SHIPS",
- "description": "TXT_KEY_PROMOTIONLINE_MORALE_SHIPS",
  "ui": {
   "art": {
    "icon": "Art/Interface/Buttons/promotions/shipMorale1.dds"
   }
  },
  "identity": {
+  "description": "TXT_KEY_PROMOTIONLINE_MORALE_SHIPS",
   "unitCombats": [
    "UNITCOMBAT_COMMODORE"
   ]

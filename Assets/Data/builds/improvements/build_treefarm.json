@@ -1,6 +1,5 @@
 {
  "type": "BUILD_TREEFARM",
- "description": "TXT_KEY_BUILD_TREEFARM",
  "requires": {
   "build": {
    "all": [
@@ -30,5 +29,8 @@
   "art": {
    "entityEvent": "ENTITY_EVENT_IRRIGATE"
   }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILD_TREEFARM"
  }
 }

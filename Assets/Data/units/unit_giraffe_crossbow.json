@@ -1,7 +1,5 @@
 {
  "type": "UNIT_GIRAFFE_CROSSBOW",
- "description": "TXT_KEY_UNIT_GIRAFFE_CROSSBOW",
- "civilopedia": "TXT_KEY_UNIT_GIRAFFE_ARCHER_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -142,6 +140,8 @@
   "production": 245
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_GIRAFFE_CROSSBOW",
+  "civilopedia": "TXT_KEY_UNIT_GIRAFFE_ARCHER_PEDIA",
   "worth": 2,
   "militaryWorth": 8,
   "xpValueAttack": 6,

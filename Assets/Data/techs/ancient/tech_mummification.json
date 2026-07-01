@@ -1,8 +1,5 @@
 {
  "type": "TECH_MUMMIFICATION",
- "description": "TXT_KEY_TECH_MUMMIFICATION",
- "civilopedia": "TXT_KEY_TECH_MUMMIFICATION_PEDIA",
- "quote": "TXT_KEY_TECH_MUMMIFICATION_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_ANCIENT_EMBALMER",
@@ -55,6 +52,9 @@
   "soundMP": "AS2D_TECH_MUMMIFICATION"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_MUMMIFICATION",
+  "civilopedia": "TXT_KEY_TECH_MUMMIFICATION_PEDIA",
+  "quote": "TXT_KEY_TECH_MUMMIFICATION_QUOTE",
   "era": "C2C_ERA_ANCIENT",
   "worth": 8,
   "tradeable": true,

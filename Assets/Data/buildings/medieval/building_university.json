@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_UNIVERSITY",
- "description": "TXT_KEY_BUILDING_UNIVERSITY",
- "civilopedia": "TXT_KEY_BUILDING_UNIVERSITY_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_ACCELERATOR",
@@ -253,6 +251,8 @@
   "construct": "AS2D_BUILD_UNIVERSITY"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_UNIVERSITY",
+  "civilopedia": "TXT_KEY_BUILDING_UNIVERSITY_PEDIA",
   "neverCapture": true,
   "worth": 4,
   "dcmAirbombMission": 2,

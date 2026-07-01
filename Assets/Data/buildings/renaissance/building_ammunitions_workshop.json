@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_AMMUNITIONS_WORKSHOP",
- "description": "TXT_KEY_BUILDING_AMMUNITIONS_WORKSHOP",
- "civilopedia": "TXT_KEY_BUILDING_AMMUNITIONS_WORKSHOP_PEDIA",
  "enables": {
   "units": [
    "UNIT_ACVSAM",
@@ -135,6 +133,8 @@
   "construct": "AS2D_BUILD_IRONWORKS"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_AMMUNITIONS_WORKSHOP",
+  "civilopedia": "TXT_KEY_BUILDING_AMMUNITIONS_WORKSHOP_PEDIA",
   "worth": 6,
   "militaryWorth": 30,
   "conquestProbability": 75,

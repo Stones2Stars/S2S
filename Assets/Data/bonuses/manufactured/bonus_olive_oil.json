@@ -1,7 +1,5 @@
 {
  "type": "BONUS_OLIVE_OIL",
- "description": "TXT_KEY_BONUS_OLIVE_OIL",
- "civilopedia": "TXT_KEY_BONUS_OLIVE_OIL_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_ANCIENT_EMBALMER",
@@ -26,6 +24,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_OLIVE_OIL",
+  "civilopedia": "TXT_KEY_BONUS_OLIVE_OIL_PEDIA",
   "bonusClassType": "BONUSCLASS_MANUFACTURED"
  }
 }

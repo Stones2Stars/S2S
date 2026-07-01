@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_JAIN_TEMPLE",
- "description": "TXT_KEY_BUILDING_JAIN_TEMPLE",
- "civilopedia": "TXT_KEY_BUILDING_JAIN_TEMPLE_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_JAIN_CATHEDRAL",
@@ -106,6 +104,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_JAIN_TEMPLE",
+  "civilopedia": "TXT_KEY_BUILDING_JAIN_TEMPLE_PEDIA",
   "neverCapture": true,
   "worth": 4,
   "specialBuildingType": "SPECIALBUILDING_TEMPLE",

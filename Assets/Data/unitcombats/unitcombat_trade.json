@@ -1,6 +1,5 @@
 {
  "type": "UNITCOMBAT_TRADE",
- "description": "TXT_KEY_UNITCOMBAT_TRADE",
  "capture": {
   "unit": {
    "resistance": {
@@ -51,5 +50,8 @@
   "art": {
    "icon": "Art/Interface/Buttons/units/sparth/categories/traders.dds"
   }
+ },
+ "identity": {
+  "description": "TXT_KEY_UNITCOMBAT_TRADE"
  }
 }

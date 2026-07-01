@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_ORDINANCE_EFFECT_COMMUTER_SHUTTLE_SERVICE",
- "description": "TXT_KEY_BUILDING_ORDINANCE_EFFECT_COMMUTER_SHUTTLE_SERVICE",
- "civilopedia": "TXT_KEY_BUILDING_ORDINANCE_EFFECT_COMMUTER_SHUTTLE_SERVICE_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_TELEPORT_BOOTH"
@@ -47,6 +45,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_ORDINANCE_EFFECT_COMMUTER_SHUTTLE_SERVICE",
+  "civilopedia": "TXT_KEY_BUILDING_ORDINANCE_EFFECT_COMMUTER_SHUTTLE_SERVICE_PEDIA",
   "notConstructible": true,
   "nukeImmune": true,
   "neverCapture": true,

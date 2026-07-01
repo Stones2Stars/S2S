@@ -1,8 +1,5 @@
 {
  "type": "TECH_CASTE_SYSTEM",
- "description": "TXT_KEY_TECH_CASTE_SYSTEM",
- "civilopedia": "TXT_KEY_TECH_CASTE_SYSTEM_PEDIA",
- "quote": "TXT_KEY_TECH_CASTE_SYSTEM_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_BRAHMIN_LIBRARY",
@@ -62,6 +59,9 @@
   "soundMP": "AS2D_TECH_CASTE_SYSTEM"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_CASTE_SYSTEM",
+  "civilopedia": "TXT_KEY_TECH_CASTE_SYSTEM_PEDIA",
+  "quote": "TXT_KEY_TECH_CASTE_SYSTEM_QUOTE",
   "era": "C2C_ERA_ANCIENT",
   "worth": 16,
   "tradeable": true,

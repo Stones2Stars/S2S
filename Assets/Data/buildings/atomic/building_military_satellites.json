@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_MILITARY_SATELLITES",
- "description": "TXT_KEY_BUILDING_MILITARY_SATELLITES",
- "civilopedia": "TXT_KEY_BUILDING_MILITARY_SATELLITES_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_GLOBAL_POSITIONING_SYSTEM",
@@ -72,6 +70,8 @@
   "construct": "AS2D_BUILD_SPACEWAY"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_MILITARY_SATELLITES",
+  "civilopedia": "TXT_KEY_BUILDING_MILITARY_SATELLITES_PEDIA",
   "orbital": true,
   "worth": 6,
   "militaryWorth": 1,

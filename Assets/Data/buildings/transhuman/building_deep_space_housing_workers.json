@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_DEEP_SPACE_HOUSING_WORKERS",
- "description": "TXT_KEY_BUILDING_DEEP_SPACE_HOUSING_WORKERS",
- "civilopedia": "TXT_KEY_BUILDING_DEEP_SPACE_HOUSING_WORKERS_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_DEEP_SPACE_ADVANCED_RECYCLING",
@@ -57,6 +55,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_DEEP_SPACE_HOUSING_WORKERS",
+  "civilopedia": "TXT_KEY_BUILDING_DEEP_SPACE_HOUSING_WORKERS_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

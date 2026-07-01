@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_MOAT",
- "description": "TXT_KEY_BUILDING_MOAT",
- "civilopedia": "TXT_KEY_BUILDING_MOAT_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_IMPERIAL_FORTRESS"
@@ -70,6 +68,8 @@
   "construct": "AS2D_BUILD_AQUEDUCT"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_MOAT",
+  "civilopedia": "TXT_KEY_BUILDING_MOAT_PEDIA",
   "zoneOfControl": true,
   "worth": 4,
   "militaryWorth": 8,

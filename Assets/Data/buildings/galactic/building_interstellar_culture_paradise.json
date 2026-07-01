@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_INTERSTELLAR_CULTURE_PARADISE",
- "description": "TXT_KEY_BUILDING_INTERSTELLAR_CULTURE_PARADISE",
- "civilopedia": "TXT_KEY_BUILDING_INTERSTELLAR_CULTURE_PARADISE_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_INTERSTELLAR_UTOPIAN_COLONY"
@@ -70,6 +68,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_INTERSTELLAR_CULTURE_PARADISE",
+  "civilopedia": "TXT_KEY_BUILDING_INTERSTELLAR_CULTURE_PARADISE_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_RIVER_ROUGE_COMPLEX",
- "description": "TXT_KEY_BUILDING_RIVER_ROUGE_COMPLEX",
- "civilopedia": "TXT_KEY_BUILDING_RIVER_ROUGE_COMPLEX_PEDIA",
  "obsoletedBy": {
   "techs": [
    "TECH_SKYROADS"
@@ -127,6 +125,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_RIVER_ROUGE_COMPLEX",
+  "civilopedia": "TXT_KEY_BUILDING_RIVER_ROUGE_COMPLEX_PEDIA",
   "nukeImmune": true,
   "worth": 10,
   "conquestProbability": 100,

@@ -1,6 +1,5 @@
 {
  "type": "UNITCOMBAT_CANINE",
- "description": "TXT_KEY_UNITCOMBAT_CANINE",
  "strength": {
   "unit": {
    "attack": {
@@ -182,6 +181,7 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_UNITCOMBAT_CANINE",
   "forMilitary": true
  }
 }

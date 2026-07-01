@@ -1,8 +1,5 @@
 {
  "type": "TECH_BASKETRY",
- "description": "TXT_KEY_TECH_BASKETRY",
- "civilopedia": "TXT_KEY_TECH_BASKETRY_PEDIA",
- "quote": "TXT_KEY_TECH_BASKETRY_QUOTE",
  "enables": {
   "bonuses": [
    "BONUS_BASKETS"
@@ -62,6 +59,9 @@
   "soundMP": "AS2D_TECH_BASKETRY"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_BASKETRY",
+  "civilopedia": "TXT_KEY_TECH_BASKETRY_PEDIA",
+  "quote": "TXT_KEY_TECH_BASKETRY_QUOTE",
   "era": "C2C_ERA_PREHISTORIC",
   "worth": 6,
   "militaryWorth": 4,

@@ -1,8 +1,5 @@
 {
  "type": "TECH_MULTIVERSE_TRAVERSAL",
- "description": "TXT_KEY_TECH_MULTIVERSE_TRAVERSAL",
- "civilopedia": "TXT_KEY_TECH_MULTIVERSE_TRAVERSAL_PEDIA",
- "quote": "TXT_KEY_TECH_MULTIVERSE_TRAVERSAL_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_DISTANT_MULTIVERSE_MINE",
@@ -61,6 +58,9 @@
   "soundMP": "AS2D_TECH_GENERIC"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_MULTIVERSE_TRAVERSAL",
+  "civilopedia": "TXT_KEY_TECH_MULTIVERSE_TRAVERSAL_PEDIA",
+  "quote": "TXT_KEY_TECH_MULTIVERSE_TRAVERSAL_QUOTE",
   "era": "C2C_ERA_TRANSCENDENT",
   "worth": 48,
   "tradeable": true,

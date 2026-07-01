@@ -1,6 +1,5 @@
 {
  "type": "PROMOTION_WARRIORS_INTUITION3",
- "description": "TXT_KEY_PROMOTION_WARRIORS_INTUITION3",
  "vision": {
   "visibilityIntensityRange": {
    "INVISIBLE_CAMOUFLAGE": 1
@@ -21,5 +20,8 @@
  },
  "sound": {
   "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_WARRIORS_INTUITION3"
  }
 }

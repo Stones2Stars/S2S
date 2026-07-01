@@ -1,7 +1,5 @@
 {
  "type": "UNIT_GIRAFFE",
- "description": "TXT_KEY_UNIT_GIRAFFE",
- "civilopedia": "TXT_KEY_UNIT_GIRAFFE_PEDIA",
  "skills": {
   "blendIntoCity": true,
   "onlyDefensive": true,
@@ -46,6 +44,8 @@
   ]
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_GIRAFFE",
+  "civilopedia": "TXT_KEY_UNIT_GIRAFFE_PEDIA",
   "spawnOnly": true,
   "xpValueAttack": 6,
   "xpValueDefense": 4,

@@ -1,12 +1,12 @@
 {
  "type": "UNITCOMBAT_CULTURE_SCYTHIAN",
- "description": "TXT_KEY_UNITCOMBAT_CULTURE_SCYTHIAN",
  "ui": {
   "art": {
    "icon": "Art/Interface/Buttons/units/sparth/categories/culture_scythian.dds"
   }
  },
  "identity": {
+  "description": "TXT_KEY_UNITCOMBAT_CULTURE_SCYTHIAN",
   "culture": "BONUS_SCYTHIAN"
  }
 }

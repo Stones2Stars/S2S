@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_LIQUID_METALS_FOUNDRY",
- "description": "TXT_KEY_BUILDING_LIQUID_METALS_FOUNDRY",
- "civilopedia": "TXT_KEY_BUILDING_LIQUID_METALS_FOUNDRY_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_PLYMOUTH_ARCOLOGY"
@@ -122,6 +120,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_LIQUID_METALS_FOUNDRY",
+  "civilopedia": "TXT_KEY_BUILDING_LIQUID_METALS_FOUNDRY_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

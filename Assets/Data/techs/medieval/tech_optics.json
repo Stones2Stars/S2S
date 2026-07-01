@@ -1,8 +1,5 @@
 {
  "type": "TECH_OPTICS",
- "description": "TXT_KEY_TECH_OPTICS",
- "civilopedia": "TXT_KEY_TECH_OPTICS_PEDIA",
- "quote": "TXT_KEY_TECH_OPTICS_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_OPTOMETRIST"
@@ -78,6 +75,9 @@
   "soundMP": "AS2D_TECH_MP_OPTICS"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_OPTICS",
+  "civilopedia": "TXT_KEY_TECH_OPTICS_PEDIA",
+  "quote": "TXT_KEY_TECH_OPTICS_QUOTE",
   "era": "C2C_ERA_MEDIEVAL",
   "worth": 24,
   "tradeable": true,

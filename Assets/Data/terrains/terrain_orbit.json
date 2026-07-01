@@ -1,7 +1,5 @@
 {
  "type": "TERRAIN_ORBIT",
- "description": "TXT_KEY_TERRAIN_ORBIT",
- "civilopedia": "TXT_KEY_TERRAIN_ORBIT_PEDIA",
  "commerce": {
   "plot": {
    "flat": 1
@@ -23,6 +21,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_TERRAIN_ORBIT",
+  "civilopedia": "TXT_KEY_TERRAIN_ORBIT_PEDIA",
   "found": true,
   "impassable": true,
   "movementCost": 1,

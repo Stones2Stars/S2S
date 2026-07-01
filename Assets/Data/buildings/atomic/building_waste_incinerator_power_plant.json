@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_WASTE_INCINERATOR_POWER_PLANT",
- "description": "TXT_KEY_BUILDING_WASTE_INCINERATOR_POWER_PLANT",
- "civilopedia": "TXT_KEY_BUILDING_WASTE_INCINERATOR_POWER_PLANT_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -65,6 +63,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_WASTE_INCINERATOR_POWER_PLANT",
+  "civilopedia": "TXT_KEY_BUILDING_WASTE_INCINERATOR_POWER_PLANT_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

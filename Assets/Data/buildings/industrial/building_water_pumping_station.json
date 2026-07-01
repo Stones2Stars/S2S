@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_WATER_PUMPING_STATION",
- "description": "TXT_KEY_BUILDING_WATER_PUMPING_STATION",
- "civilopedia": "TXT_KEY_BUILDING_WATER_PUMPING_STATION_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_DOWNDRAFT_TOWER",
@@ -92,6 +90,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_WATER_PUMPING_STATION",
+  "civilopedia": "TXT_KEY_BUILDING_WATER_PUMPING_STATION_PEDIA",
   "advisor": "ADVISOR_GROWTH",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

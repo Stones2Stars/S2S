@@ -1,7 +1,5 @@
 {
  "type": "UNIT_MOOSE",
- "description": "TXT_KEY_UNIT_MOOSE",
- "civilopedia": "TXT_KEY_CONCEPT_SUBDUED_ANIMALS_PEDIA",
  "withdrawal": {
   "unit": {
    "percent": 20
@@ -51,6 +49,8 @@
   ]
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_MOOSE",
+  "civilopedia": "TXT_KEY_CONCEPT_SUBDUED_ANIMALS_PEDIA",
   "spawnOnly": true,
   "xpValueAttack": 6,
   "xpValueDefense": 4,

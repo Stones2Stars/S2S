@@ -1,7 +1,5 @@
 {
  "type": "UNIT_GREAT_STATESMAN",
- "description": "TXT_KEY_UNIT_GREAT_STATESMAN",
- "civilopedia": "TXT_KEY_CONCEPT_GREAT_STATESMAN_PEDIA",
  "skills": {
   "goldenAge": true,
   "ignoreBuildingDefense": true,
@@ -73,6 +71,8 @@
   ]
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_GREAT_STATESMAN",
+  "civilopedia": "TXT_KEY_CONCEPT_GREAT_STATESMAN_PEDIA",
   "spawnOnly": true,
   "worth": 1,
   "domain": "DOMAIN_LAND",

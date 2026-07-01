@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_SAFETY_POLICE_ACADEMY",
- "description": "TXT_KEY_BUILDING_SAFETY_POLICE_ACADEMY",
- "civilopedia": "TXT_KEY_BUILDING_SAFETY_POLICE_ACADEMY_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -24,6 +22,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_SAFETY_POLICE_ACADEMY",
+  "civilopedia": "TXT_KEY_BUILDING_SAFETY_POLICE_ACADEMY_PEDIA",
   "notConstructible": true,
   "nukeImmune": true,
   "neverCapture": true,

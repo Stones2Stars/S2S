@@ -1,8 +1,5 @@
 {
  "type": "TECH_NUTRACEUTICAL_ANIMALS",
- "description": "TXT_KEY_TECH_NUTRACEUTICAL_ANIMALS",
- "civilopedia": "TXT_KEY_TECH_NUTRACEUTICAL_ANIMALS_PEDIA",
- "quote": "TXT_KEY_TECH_NUTRACEUTICAL_ANIMALS_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_BIOLOGICAL_VEHICLES",
@@ -61,6 +58,9 @@
   "soundMP": "AS2D_TECH_NUTRACEUTICAL_ANIMALS"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_NUTRACEUTICAL_ANIMALS",
+  "civilopedia": "TXT_KEY_TECH_NUTRACEUTICAL_ANIMALS_PEDIA",
+  "quote": "TXT_KEY_TECH_NUTRACEUTICAL_ANIMALS_QUOTE",
   "era": "C2C_ERA_TRANSHUMAN",
   "worth": 48,
   "militaryWorth": 4,

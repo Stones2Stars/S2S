@@ -1,13 +1,13 @@
 {
  "type": "IMPROVEMENT_BONUS_PRIME_TIMBER",
- "description": "TXT_KEY_IMPROVEMENT_BONUS_PRIME_TIMBER",
- "civilopedia": "TXT_KEY_IMPROVEMENT_LAND_WORKED_PEDIA",
  "world": {
   "art": {
    "icon": "ART_DEF_IMPROVEMENT_LAND_WORKED"
   }
  },
  "identity": {
+  "description": "TXT_KEY_IMPROVEMENT_BONUS_PRIME_TIMBER",
+  "civilopedia": "TXT_KEY_IMPROVEMENT_LAND_WORKED_PEDIA",
   "placesBonus": true,
   "advancedStart": {
    "cost": -1

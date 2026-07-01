@@ -1,12 +1,12 @@
 {
  "type": "UNITCOMBAT_CULTURE_SARMATIANS",
- "description": "TXT_KEY_UNITCOMBAT_CULTURE_SARMATIANS",
  "ui": {
   "art": {
    "icon": "Art/categories/culture_newcultures.dds"
   }
  },
  "identity": {
+  "description": "TXT_KEY_UNITCOMBAT_CULTURE_SARMATIANS",
   "culture": "BONUS_SARMATIAN"
  }
 }

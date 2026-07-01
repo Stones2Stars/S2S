@@ -1,8 +1,5 @@
 {
  "type": "BUILDING_TSUKIJI_FISH_MARKET",
- "description": "TXT_KEY_BUILDING_TSUKIJI_FISH_MARKET",
- "civilopedia": "TXT_KEY_BUILDING_TSUKIJI_FISH_MARKET_PEDIA",
- "help": "TXT_KEY_BUILDING_TSUKIJI_FISH_MARKET_HELP",
  "requires": {
   "build": {
    "all": [
@@ -79,6 +76,9 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_TSUKIJI_FISH_MARKET",
+  "civilopedia": "TXT_KEY_BUILDING_TSUKIJI_FISH_MARKET_PEDIA",
+  "help": "TXT_KEY_BUILDING_TSUKIJI_FISH_MARKET_HELP",
   "commerceDoubleTime": {
    "culture": 1000
   },

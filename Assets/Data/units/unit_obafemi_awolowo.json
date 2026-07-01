@@ -1,7 +1,5 @@
 {
  "type": "UNIT_OBAFEMI_AWOLOWO",
- "description": "TXT_KEY_UNIT_OBAFEMI_AWOLOWO",
- "civilopedia": "TXT_KEY_UNIT_OBAFEMI_AWOLOWO_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -62,6 +60,8 @@
   "upkeep": 1
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_OBAFEMI_AWOLOWO",
+  "civilopedia": "TXT_KEY_UNIT_OBAFEMI_AWOLOWO_PEDIA",
   "worth": 6,
   "militaryWorth": 8,
   "xpValueAttack": 4,

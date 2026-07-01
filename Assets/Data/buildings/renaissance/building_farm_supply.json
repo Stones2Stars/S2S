@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_FARM_SUPPLY",
- "description": "TXT_KEY_BUILDING_FARM_SUPPLY",
- "civilopedia": "TXT_KEY_BUILDING_FARM_SUPPLY_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_FARMSCRAPER_I"
@@ -128,6 +126,8 @@
   "construct": "AS2D_BUILD_FARM_SUPPLY"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_FARM_SUPPLY",
+  "civilopedia": "TXT_KEY_BUILDING_FARM_SUPPLY_PEDIA",
   "worth": 6,
   "militaryWorth": 3,
   "advisor": "ADVISOR_GROWTH",

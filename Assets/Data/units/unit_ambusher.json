@@ -1,7 +1,5 @@
 {
  "type": "UNIT_AMBUSHER",
- "description": "TXT_KEY_UNIT_AMBUSHER",
- "civilopedia": "TXT_KEY_UNIT_AMBUSHER_PEDIA",
  "obsoletedBy": {
   "techs": [
    "TECH_CODE_OF_LAWS"
@@ -149,6 +147,8 @@
   "upkeep": 2
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_AMBUSHER",
+  "civilopedia": "TXT_KEY_UNIT_AMBUSHER_PEDIA",
   "worth": 3,
   "militaryWorth": 3,
   "xpValueAttack": 8,

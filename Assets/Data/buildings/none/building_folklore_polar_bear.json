@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_FOLKLORE_POLAR_BEAR",
- "description": "TXT_KEY_BUILDING_FOLKLORE_POLAR_BEAR",
- "civilopedia": "TXT_KEY_BUILDING_FOLKLORE_ANIMAL_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_ANIMAL_TRAINER_BEAR",
@@ -81,6 +79,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_FOLKLORE_POLAR_BEAR",
+  "civilopedia": "TXT_KEY_BUILDING_FOLKLORE_ANIMAL_PEDIA",
   "notConstructible": true,
   "nukeImmune": true,
   "neverCapture": true,

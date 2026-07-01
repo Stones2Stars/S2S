@@ -1,8 +1,5 @@
 {
  "type": "TECH_CRYPTOGRAPHY",
- "description": "TXT_KEY_TECH_CRYPTOGRAPHY",
- "civilopedia": "TXT_KEY_TECH_CRYPTOGRAPHY_PEDIA",
- "quote": "TXT_KEY_TECH_CRYPTOGRAPHY_QUOTE",
  "enables": {
   "promotions": [
    "PROMOTION_BUILD_UP_SECURITY2"
@@ -60,6 +57,9 @@
   "soundMP": "AS2D_TECH_CRYPTOGRAPHY"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_CRYPTOGRAPHY",
+  "civilopedia": "TXT_KEY_TECH_CRYPTOGRAPHY_PEDIA",
+  "quote": "TXT_KEY_TECH_CRYPTOGRAPHY_QUOTE",
   "era": "C2C_ERA_CLASSICAL",
   "worth": 20,
   "militaryWorth": 2,

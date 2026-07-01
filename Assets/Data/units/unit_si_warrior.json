@@ -1,7 +1,5 @@
 {
  "type": "UNIT_SI_WARRIOR",
- "description": "TXT_KEY_UNIT_SI_WARRIOR",
- "civilopedia": "TXT_KEY_UNIT_SI_WARRIOR_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -119,6 +117,8 @@
   "upkeep": 1
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_SI_WARRIOR",
+  "civilopedia": "TXT_KEY_UNIT_SI_WARRIOR_PEDIA",
   "worth": 2,
   "militaryWorth": 10,
   "xpValueAttack": 4,

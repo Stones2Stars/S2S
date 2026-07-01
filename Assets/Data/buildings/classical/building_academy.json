@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_ACADEMY",
- "description": "TXT_KEY_BUILDING_ACADEMY",
- "civilopedia": "TXT_KEY_BUILDING_ACADEMY_PEDIA",
  "obsoletedBy": {
   "techs": [
    "TECH_PERSONAL_COMPUTERS"
@@ -54,6 +52,8 @@
   "construct": "AS2D_BUILD_LIBRARY"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_ACADEMY",
+  "civilopedia": "TXT_KEY_BUILDING_ACADEMY_PEDIA",
   "notConstructible": true,
   "nukeImmune": true,
   "neverCapture": true,

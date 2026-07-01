@@ -1,7 +1,5 @@
 {
  "type": "UNIT_AFRICAN_PENGUIN",
- "description": "TXT_KEY_UNIT_AFRICAN_PENGUIN",
- "civilopedia": "TXT_KEY_UNIT_AFRICAN_PENGUIN_PEDIA",
  "withdrawal": {
   "unit": {
    "percent": 45
@@ -36,6 +34,8 @@
   ]
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_AFRICAN_PENGUIN",
+  "civilopedia": "TXT_KEY_UNIT_AFRICAN_PENGUIN_PEDIA",
   "spawnOnly": true,
   "xpValueAttack": 1,
   "xpValueDefense": 1,

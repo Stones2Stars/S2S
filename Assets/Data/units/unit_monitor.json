@@ -1,7 +1,5 @@
 {
  "type": "UNIT_MONITOR",
- "description": "TXT_KEY_UNIT_MONITOR",
- "civilopedia": "TXT_KEY_UNIT_NILE_MONITOR_PEDIA",
  "skills": {
   "assassin": true,
   "blendIntoCity": true,
@@ -52,6 +50,8 @@
   ]
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_MONITOR",
+  "civilopedia": "TXT_KEY_UNIT_NILE_MONITOR_PEDIA",
   "spawnOnly": true,
   "xpValueAttack": 4,
   "xpValueDefense": 2,

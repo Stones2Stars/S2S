@@ -1,6 +1,5 @@
 {
  "type": "UNITCOMBAT_WEAPON_DIST_LIGHT_CROSSBOW",
- "description": "TXT_KEY_UNITCOMBAT_WEAPON_DIST_LIGHT_CROSSBOW",
  "skills": {
   "rBombardDirect": true
  },
@@ -10,6 +9,7 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_UNITCOMBAT_WEAPON_DIST_LIGHT_CROSSBOW",
   "base": {
    "rangedBombardDamage": 25,
    "rangedBombardLimit": 20,

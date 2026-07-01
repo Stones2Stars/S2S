@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_RELIC_CHEOMSEONGDAE",
- "description": "TXT_KEY_BUILDING_RELIC_CHEOMSEONGDAE",
- "civilopedia": "TXT_KEY_BUILDING_CHEOMSEONGDAE_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -41,6 +39,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_RELIC_CHEOMSEONGDAE",
+  "civilopedia": "TXT_KEY_BUILDING_CHEOMSEONGDAE_PEDIA",
   "notConstructible": true,
   "nukeImmune": true,
   "noInstanceLimit": true,

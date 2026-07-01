@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_GRASS_GATHERER",
- "description": "TXT_KEY_BUILDING_GRASS_GATHERER",
- "civilopedia": "TXT_KEY_BUILDING_GRASS_GATHERER_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_RESOURCES_GRASS"
@@ -55,6 +53,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_GRASS_GATHERER",
+  "civilopedia": "TXT_KEY_BUILDING_GRASS_GATHERER_PEDIA",
   "enabledCivilizations": [
    "CIVILIZATION_NPC_NEANDERTHAL"
   ],

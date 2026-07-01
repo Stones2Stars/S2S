@@ -1,7 +1,5 @@
 {
  "type": "UNIT_LORD",
- "description": "TXT_KEY_UNIT_LORD",
- "civilopedia": "TXT_KEY_UNIT_LORD_PEDIA",
  "obsoletedBy": {
   "techs": [
    "TECH_LEADERSHIP"
@@ -35,6 +33,8 @@
   "upkeep": 1
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_LORD",
+  "civilopedia": "TXT_KEY_UNIT_LORD_PEDIA",
   "worth": 1,
   "leaderExperience": 15,
   "domain": "DOMAIN_LAND",

@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_TOLL_HOUSE",
- "description": "TXT_KEY_BUILDING_TOLL_HOUSE",
- "civilopedia": "TXT_KEY_BUILDING_TOLL_HOUSE_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_CUSTOMS_OFFICE"
@@ -68,6 +66,8 @@
   "construct": "AS2D_BUILD_TOLLHOUSE"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_TOLL_HOUSE",
+  "civilopedia": "TXT_KEY_BUILDING_TOLL_HOUSE_PEDIA",
   "worth": 4,
   "conquestProbability": 75,
   "dcmAirbombMission": 2,

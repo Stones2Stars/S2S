@@ -1,7 +1,5 @@
 {
  "type": "BONUS_MARBLE",
- "description": "TXT_KEY_BONUS_MARBLE",
- "civilopedia": "TXT_KEY_BONUS_MARBLE_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_AGORA",
@@ -121,6 +119,8 @@
   ]
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_MARBLE",
+  "civilopedia": "TXT_KEY_BONUS_MARBLE_PEDIA",
   "bonusClassType": "BONUSCLASS_STRATEGIC"
  }
 }

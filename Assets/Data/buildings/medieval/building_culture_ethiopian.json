@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_CULTURE_ETHIOPIAN",
- "description": "TXT_KEY_BUILDING_CULTURE_ETHIOPIAN",
- "civilopedia": "TXT_KEY_BUILDING_CULTURE_ETHIOPIAN_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -60,6 +58,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_CULTURE_ETHIOPIAN",
+  "civilopedia": "TXT_KEY_BUILDING_CULTURE_ETHIOPIAN_PEDIA",
   "nukeImmune": true,
   "noInstanceLimit": true,
   "conquestProbability": 100,

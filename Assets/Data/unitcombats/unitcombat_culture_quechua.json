@@ -1,12 +1,12 @@
 {
  "type": "UNITCOMBAT_CULTURE_QUECHUA",
- "description": "TXT_KEY_UNITCOMBAT_CULTURE_QUECHUA",
  "ui": {
   "art": {
    "icon": "Art/Interface/Buttons/units/sparth/categories/culture_quechua.dds"
   }
  },
  "identity": {
+  "description": "TXT_KEY_UNITCOMBAT_CULTURE_QUECHUA",
   "culture": "BONUS_QUECHUA"
  }
 }

@@ -1,13 +1,13 @@
 {
  "type": "BONUS_QUETZALCOATL",
- "description": "TXT_KEY_BONUS_QUETZALCOATL",
- "civilopedia": "TXT_KEY_BONUS_QUETZALCOATL_PEDIA",
  "world": {
   "art": {
    "icon": "ART_DEF_BONUS_QUETZALCOATL"
   }
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_QUETZALCOATL",
+  "civilopedia": "TXT_KEY_BONUS_QUETZALCOATL_PEDIA",
   "bonusClassType": "BONUSCLASS_WONDER"
  }
 }

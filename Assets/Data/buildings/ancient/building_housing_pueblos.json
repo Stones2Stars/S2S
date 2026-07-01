@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_HOUSING_PUEBLOS",
- "description": "TXT_KEY_BUILDING_HOUSING_PUEBLOS",
- "civilopedia": "TXT_KEY_BUILDING_HOUSING_PUEBLOS_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_KIVA"
@@ -78,6 +76,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_HOUSING_PUEBLOS",
+  "civilopedia": "TXT_KEY_BUILDING_HOUSING_PUEBLOS_PEDIA",
   "notConstructible": true,
   "nukeImmune": true,
   "neverCapture": true,

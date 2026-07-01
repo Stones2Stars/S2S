@@ -1,6 +1,5 @@
 {
  "type": "BUILD_WHALING_BOATS",
- "description": "TXT_KEY_BUILD_WHALING_BOATS",
  "requires": {
   "build": {
    "all": [
@@ -32,6 +31,7 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILD_WHALING_BOATS",
   "consumesUnit": true
  }
 }

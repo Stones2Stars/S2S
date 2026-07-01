@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_AMNESTY_INTERNATIONAL",
- "description": "TXT_KEY_BUILDING_AMNESTY_INTERNATIONAL",
- "civilopedia": "TXT_KEY_BUILDING_AMNESTY_INTERNATIONAL_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -45,6 +43,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_AMNESTY_INTERNATIONAL",
+  "civilopedia": "TXT_KEY_BUILDING_AMNESTY_INTERNATIONAL_PEDIA",
   "conquestProbability": 100,
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,

@@ -1,6 +1,5 @@
 {
  "type": "BUILD_RECLAIM_LAND",
- "description": "TXT_KEY_BUILD_RECLAIM_LAND",
  "requires": {
   "build": {
    "all": [
@@ -255,5 +254,8 @@
   },
   "hotkey": "KB_C",
   "altDown": true
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILD_RECLAIM_LAND"
  }
 }

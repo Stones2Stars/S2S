@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_CISLUNAR_RESUPPLY",
- "description": "TXT_KEY_BUILDING_CISLUNAR_RESUPPLY",
- "civilopedia": "TXT_KEY_BUILDING_CISLUNAR_RESUPPLY_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_CISLUNAR_AEROGEL_SHIELDING"
@@ -67,6 +65,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_CISLUNAR_RESUPPLY",
+  "civilopedia": "TXT_KEY_BUILDING_CISLUNAR_RESUPPLY_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

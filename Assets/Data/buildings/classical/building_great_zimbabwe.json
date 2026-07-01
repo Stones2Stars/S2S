@@ -1,8 +1,5 @@
 {
  "type": "BUILDING_GREAT_ZIMBABWE",
- "description": "TXT_KEY_BUILDING_GREAT_ZIMBABWE",
- "civilopedia": "TXT_KEY_BUILDING_GREAT_ZIMBABWE_PEDIA",
- "help": "TXT_KEY_BUILDING_GREAT_ZIMBABWE_HELP",
  "obsoletedBy": {
   "techs": [
    "TECH_IMPERIALISM"
@@ -87,6 +84,9 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_GREAT_ZIMBABWE",
+  "civilopedia": "TXT_KEY_BUILDING_GREAT_ZIMBABWE_PEDIA",
+  "help": "TXT_KEY_BUILDING_GREAT_ZIMBABWE_HELP",
   "commerceDoubleTime": {
    "culture": 1000
   },

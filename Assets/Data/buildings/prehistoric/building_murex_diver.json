@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_MUREX_DIVER",
- "description": "TXT_KEY_BUILDING_MUREX_DIVER",
- "civilopedia": "TXT_KEY_BUILDING_MUREX_DIVER_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_DYE_MAKER",
@@ -61,6 +59,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_MUREX_DIVER",
+  "civilopedia": "TXT_KEY_BUILDING_MUREX_DIVER_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

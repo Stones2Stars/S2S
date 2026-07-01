@@ -1,7 +1,5 @@
 {
  "type": "TRAIT_IDEALISTIC1",
- "description": "TXT_KEY_TRAIT_IDEALISTIC0",
- "civilopedia": "TXT_KEY_TRAIT_IDEALISTIC_PEDIA",
  "enables": {
   "traits": [
    "TRAIT_IDEALISTIC2"
@@ -54,6 +52,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_TRAIT_IDEALISTIC0",
+  "civilopedia": "TXT_KEY_TRAIT_IDEALISTIC_PEDIA",
   "shortDescription": "TXT_KEY_TRAIT_IDEALISTIC_SHORT",
   "negativeTrait": true
  }

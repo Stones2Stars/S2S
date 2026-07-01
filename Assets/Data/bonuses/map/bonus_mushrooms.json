@@ -1,7 +1,5 @@
 {
  "type": "BONUS_MUSHROOMS",
- "description": "TXT_KEY_BONUS_MUSHROOMS",
- "civilopedia": "TXT_KEY_BONUS_MUSHROOMS_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_BLACK_TRUFFLE_GATHERER",
@@ -89,6 +87,8 @@
   ]
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_MUSHROOMS",
+  "civilopedia": "TXT_KEY_BONUS_MUSHROOMS_PEDIA",
   "bonusClassType": "BONUSCLASS_CROP"
  }
 }

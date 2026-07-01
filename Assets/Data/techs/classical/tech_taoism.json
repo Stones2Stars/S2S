@@ -1,8 +1,5 @@
 {
  "type": "TECH_TAOISM",
- "description": "TXT_KEY_TECH_TAOISM",
- "civilopedia": "TXT_KEY_TECH_TAOISM_PEDIA",
- "quote": "TXT_KEY_TECH_TAOISM_QUOTE",
  "enables": {
   "religions": [
    "RELIGION_TAOISM"
@@ -51,6 +48,9 @@
   "soundMP": "AS2D_TECH_TAOISM"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_TAOISM",
+  "civilopedia": "TXT_KEY_TECH_TAOISM_PEDIA",
+  "quote": "TXT_KEY_TECH_TAOISM_QUOTE",
   "era": "C2C_ERA_CLASSICAL",
   "worth": 8,
   "gridX": 38,

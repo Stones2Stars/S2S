@@ -1,8 +1,5 @@
 {
  "type": "TRAIT_POPULIST",
- "description": "TXT_KEY_TRAIT_COMPLEX_POPULIST",
- "civilopedia": "TXT_KEY_TRAIT_COMPLEX_POPULIST_PEDIA",
- "strategy": "TXT_KEY_TRAIT_COMPLEX_POPULIST_STRATEGY",
  "excludes": [
   "TRAIT_PHILOSOPHICAL"
  ],
@@ -222,6 +219,9 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_TRAIT_COMPLEX_POPULIST",
+  "civilopedia": "TXT_KEY_TRAIT_COMPLEX_POPULIST_PEDIA",
+  "strategy": "TXT_KEY_TRAIT_COMPLEX_POPULIST_STRATEGY",
   "negativeTrait": true,
   "impurePropertyManipulators": true
  }

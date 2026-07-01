@@ -1,6 +1,5 @@
 {
  "type": "UNITCOMBAT_MAMMAL_RACCOON",
- "description": "TXT_KEY_UNITCOMBAT_MAMMAL_RACCOON",
  "withdrawal": {
   "unit": {
    "percent": 5
@@ -10,5 +9,8 @@
   "art": {
    "icon": "Art/Interface/Buttons/units/sparth/categories/mammal.dds"
   }
+ },
+ "identity": {
+  "description": "TXT_KEY_UNITCOMBAT_MAMMAL_RACCOON"
  }
 }

@@ -1,8 +1,5 @@
 {
  "type": "UNIT_SUBDUED_FLAMINGO",
- "description": "TXT_KEY_UNIT_SUBDUED_FLAMINGO",
- "civilopedia": "TXT_KEY_UNIT_FLAMINGO_PEDIA",
- "help": "TXT_KEY_UNIT_SUBDUED_ANIMALS_HELP",
  "skills": {
   "onlyDefensive": true,
   "militaryTrade": true
@@ -145,6 +142,9 @@
   ]
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_SUBDUED_FLAMINGO",
+  "civilopedia": "TXT_KEY_UNIT_FLAMINGO_PEDIA",
+  "help": "TXT_KEY_UNIT_SUBDUED_ANIMALS_HELP",
   "spawnOnly": true,
   "worth": 1,
   "domain": "DOMAIN_LAND",

@@ -1,8 +1,5 @@
 {
  "type": "TECH_MOUNTAINEERING",
- "description": "TXT_KEY_TECH_MOUNTAINEERING",
- "civilopedia": "TXT_KEY_TECH_MOUNTAINEERING_PEDIA",
- "quote": "TXT_KEY_TECH_MOUNTAINEERING_QUOTE",
  "enables": {
   "bonuses": [
    "BONUS_MACHU_PICCHU_PLANS"
@@ -77,6 +74,9 @@
   "soundMP": "AS2D_TECH_MOUNTAINEERING"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_MOUNTAINEERING",
+  "civilopedia": "TXT_KEY_TECH_MOUNTAINEERING_PEDIA",
+  "quote": "TXT_KEY_TECH_MOUNTAINEERING_QUOTE",
   "era": "C2C_ERA_MEDIEVAL",
   "worth": 16,
   "militaryWorth": 20,

@@ -1,7 +1,5 @@
 {
  "type": "UNIT_ALFRED_A_THORNE",
- "description": "TXT_KEY_UNIT_ALFRED_A_THORNE",
- "civilopedia": "TXT_KEY_UNIT_ALFRED_A_THORNE_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -62,6 +60,8 @@
   "upkeep": 1
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_ALFRED_A_THORNE",
+  "civilopedia": "TXT_KEY_UNIT_ALFRED_A_THORNE_PEDIA",
   "worth": 6,
   "militaryWorth": 8,
   "xpValueAttack": 4,

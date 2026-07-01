@@ -1,12 +1,12 @@
 {
  "type": "PROMOTIONLINE_SURPRISE",
- "description": "TXT_KEY_PROMOTIONLINE_SURPRISE",
  "ui": {
   "art": {
    "icon": "Art/Buttons/Promotions/SurpriseStatus.dds"
   }
  },
  "identity": {
+  "description": "TXT_KEY_PROMOTIONLINE_SURPRISE",
   "unitCombats": [
    "UNITCOMBAT_CRIMINAL",
    "UNITCOMBAT_STRIKE_TEAM",

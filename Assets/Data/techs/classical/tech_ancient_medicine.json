@@ -1,8 +1,5 @@
 {
  "type": "TECH_ANCIENT_MEDICINE",
- "description": "TXT_KEY_TECH_ANCIENT_MEDICINE",
- "civilopedia": "TXT_KEY_TECH_ANCIENT_MEDICINE_PEDIA",
- "quote": "TXT_KEY_TECH_ANCIENT_MEDICINE_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_ACHIEVEMENT_MEDICAL",
@@ -77,6 +74,9 @@
   "soundMP": "AS2D_TECH_ANCIENT_MEDICINE"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_ANCIENT_MEDICINE",
+  "civilopedia": "TXT_KEY_TECH_ANCIENT_MEDICINE_PEDIA",
+  "quote": "TXT_KEY_TECH_ANCIENT_MEDICINE_QUOTE",
   "era": "C2C_ERA_CLASSICAL",
   "worth": 16,
   "tradeable": true,

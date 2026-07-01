@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_ACUPUNCTURISTS_SHOP",
- "description": "TXT_KEY_BUILDING_ACUPUNCTURISTS_SHOP",
- "civilopedia": "TXT_KEY_BUILDING_ACUPUNCTURISTS_SHOP_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_ALTERNATIVE_MEDICINE"
@@ -66,6 +64,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_ACUPUNCTURISTS_SHOP",
+  "civilopedia": "TXT_KEY_BUILDING_ACUPUNCTURISTS_SHOP_PEDIA",
   "advisor": "ADVISOR_GROWTH",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

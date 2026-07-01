@@ -1,6 +1,5 @@
 {
  "type": "UNITCOMBAT_BALLISTIC",
- "description": "TXT_KEY_UNITCOMBAT_BALLISTIC",
  "skills": {
   "cannotMergeSplit": true
  },
@@ -10,6 +9,7 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_UNITCOMBAT_BALLISTIC",
   "forMilitary": true
  }
 }

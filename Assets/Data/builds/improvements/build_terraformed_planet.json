@@ -1,6 +1,5 @@
 {
  "type": "BUILD_TERRAFORMED_PLANET",
- "description": "TXT_KEY_BUILD_TERRAFORMED_PLANET",
  "requires": {
   "build": {
    "all": [
@@ -38,5 +37,8 @@
   "art": {
    "entityEvent": "ENTITY_EVENT_BUILD"
   }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILD_TERRAFORMED_PLANET"
  }
 }

@@ -1,7 +1,5 @@
 {
  "type": "IMPROVEMENT_WINDMILL",
- "description": "TXT_KEY_IMPROVEMENT_WINDMILL",
- "civilopedia": "TXT_KEY_IMPROVEMENT_WINDMILL_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -68,6 +66,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_IMPROVEMENT_WINDMILL",
+  "civilopedia": "TXT_KEY_IMPROVEMENT_WINDMILL_PEDIA",
   "advancedStart": {
    "cost": 30
   },

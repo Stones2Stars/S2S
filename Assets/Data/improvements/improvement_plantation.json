@@ -1,7 +1,5 @@
 {
  "type": "IMPROVEMENT_PLANTATION",
- "description": "TXT_KEY_IMPROVEMENT_PLANTATION",
- "civilopedia": "TXT_KEY_IMPROVEMENT_PLANTATION_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -277,6 +275,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_IMPROVEMENT_PLANTATION",
+  "civilopedia": "TXT_KEY_IMPROVEMENT_PLANTATION_PEDIA",
   "carriesIrrigation": true,
   "advancedStart": {
    "cost": 30

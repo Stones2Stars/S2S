@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_CIVIC_BURN_TRASH",
- "description": "TXT_KEY_BUILDING_CIVIC_BURN_TRASH",
- "civilopedia": "TXT_KEY_BUILDING_CIVIC_BURN_TRASH_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -28,6 +26,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_CIVIC_BURN_TRASH",
+  "civilopedia": "TXT_KEY_BUILDING_CIVIC_BURN_TRASH_PEDIA",
   "notConstructible": true,
   "nukeImmune": true,
   "neverCapture": true,

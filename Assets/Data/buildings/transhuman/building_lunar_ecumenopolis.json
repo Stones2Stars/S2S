@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_LUNAR_ECUMENOPOLIS",
- "description": "TXT_KEY_BUILDING_LUNAR_ECUMENOPOLIS",
- "civilopedia": "TXT_KEY_BUILDING_LUNAR_ECUMENOPOLIS_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -50,6 +48,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_LUNAR_ECUMENOPOLIS",
+  "civilopedia": "TXT_KEY_BUILDING_LUNAR_ECUMENOPOLIS_PEDIA",
   "conquestProbability": 100,
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,

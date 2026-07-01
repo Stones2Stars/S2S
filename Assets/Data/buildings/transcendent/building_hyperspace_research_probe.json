@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_HYPERSPACE_RESEARCH_PROBE",
- "description": "TXT_KEY_BUILDING_HYPERSPACE_RESEARCH_PROBE",
- "civilopedia": "TXT_KEY_BUILDING_HYPERSPACE_RESEARCH_PROBE_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -37,6 +35,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_HYPERSPACE_RESEARCH_PROBE",
+  "civilopedia": "TXT_KEY_BUILDING_HYPERSPACE_RESEARCH_PROBE_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

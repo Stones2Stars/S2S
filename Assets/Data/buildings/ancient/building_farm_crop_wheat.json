@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_FARM_CROP_WHEAT",
- "description": "TXT_KEY_BUILDING_FARM_CROP_WHEAT",
- "civilopedia": "TXT_KEY_BUILDING_FARM_CROP_WHEAT_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_RESOURCES_GRAINS"
@@ -70,6 +68,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_FARM_CROP_WHEAT",
+  "civilopedia": "TXT_KEY_BUILDING_FARM_CROP_WHEAT_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

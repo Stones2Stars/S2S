@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_HUMAN_MOD_COGNITIVE_ENHANCEMENT",
- "description": "TXT_KEY_BUILDING_HUMAN_MOD_COGNITIVE_ENHANCEMENT",
- "civilopedia": "TXT_KEY_BUILDING_HUMAN_MOD_COGNITIVE_ENHANCEMENT_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -39,6 +37,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_HUMAN_MOD_COGNITIVE_ENHANCEMENT",
+  "civilopedia": "TXT_KEY_BUILDING_HUMAN_MOD_COGNITIVE_ENHANCEMENT_PEDIA",
   "neverCapture": true,
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,

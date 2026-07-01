@@ -1,7 +1,5 @@
 {
  "type": "PROMOTIONLINE_BUILD_UP_TRAP_HUNTING",
- "description": "TXT_KEY_PROMOTIONLINE_BUILD_UP_TRAP_HUNTING",
- "help": "TXT_KEY_PROMOTIONLINE_BUILD_UP_TRAP_HUNTING_HELP",
  "buildUp": {
   "active": true
  },
@@ -11,6 +9,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_PROMOTIONLINE_BUILD_UP_TRAP_HUNTING",
+  "help": "TXT_KEY_PROMOTIONLINE_BUILD_UP_TRAP_HUNTING_HELP",
   "unitCombats": [
    "UNITCOMBAT_EXPLORER"
   ],

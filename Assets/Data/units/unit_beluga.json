@@ -1,7 +1,5 @@
 {
  "type": "UNIT_BELUGA",
- "description": "TXT_KEY_UNIT_BELUGA",
- "civilopedia": "TXT_KEY_CONCEPT_SUBDUED_ANIMALS_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -91,6 +89,8 @@
   ]
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_BELUGA",
+  "civilopedia": "TXT_KEY_CONCEPT_SUBDUED_ANIMALS_PEDIA",
   "spawnOnly": true,
   "xpValueAttack": 10,
   "xpValueDefense": 4,

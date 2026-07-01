@@ -1,7 +1,5 @@
 {
  "type": "TRAIT_HUMANITARIAN1",
- "description": "TXT_KEY_TRAIT_HUMANITARIAN0",
- "civilopedia": "TXT_KEY_TRAIT_HUMANITARIAN_PEDIA",
  "enables": {
   "traits": [
    "TRAIT_HUMANITARIAN2"
@@ -162,6 +160,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_TRAIT_HUMANITARIAN0",
+  "civilopedia": "TXT_KEY_TRAIT_HUMANITARIAN_PEDIA",
   "shortDescription": "TXT_KEY_TRAIT_HUMANITARIAN_SHORT"
  }
 }

@@ -1,8 +1,5 @@
 {
  "type": "TECH_TEXTILE_LOOM",
- "description": "TXT_KEY_TECH_TEXTILE_LOOM",
- "civilopedia": "TXT_KEY_TECH_TEXTILE_LOOM_PEDIA",
- "quote": "TXT_KEY_TECH_TEXTILE_LOOM_QUOTE",
  "enables": {
   "bonuses": [
    "BONUS_TAPESTRIES"
@@ -50,6 +47,9 @@
   "soundMP": "AS2D_TECH_TEXTILE_LOOM"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_TEXTILE_LOOM",
+  "civilopedia": "TXT_KEY_TECH_TEXTILE_LOOM_PEDIA",
+  "quote": "TXT_KEY_TECH_TEXTILE_LOOM_QUOTE",
   "era": "C2C_ERA_ANCIENT",
   "worth": 2,
   "tradeable": true,

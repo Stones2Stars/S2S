@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_NAVAL_ACADEMY",
- "description": "TXT_KEY_BUILDING_NAVAL_ACADEMY",
- "civilopedia": "TXT_KEY_BUILDING_NAVAL_ACADEMY_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_COAST_GUARD_STATION",
@@ -67,6 +65,8 @@
   "construct": "AS2D_BUILD_NAVAL_ACADEMY"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_NAVAL_ACADEMY",
+  "civilopedia": "TXT_KEY_BUILDING_NAVAL_ACADEMY_PEDIA",
   "worth": 6,
   "militaryWorth": 6,
   "conquestProbability": 33,

@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_ATOMIUM",
- "description": "TXT_KEY_BUILDING_ATOMIUM",
- "civilopedia": "TXT_KEY_BUILDING_ATOMIUM_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -69,6 +67,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_ATOMIUM",
+  "civilopedia": "TXT_KEY_BUILDING_ATOMIUM_PEDIA",
   "conquestProbability": 100,
   "greatPeopleUnitType": "UNIT_GREAT_ENGINEER",
   "advisor": "ADVISOR_SCIENCE",

@@ -1,7 +1,5 @@
 {
  "type": "UNIT_SIBERIAN_TRACKER",
- "description": "TXT_KEY_UNIT_SIBERIAN_TRACKER",
- "civilopedia": "TXT_KEY_UNIT_SIBERIAN_TRACKER_PEDIA",
  "obsoletedBy": {
   "techs": [
    "TECH_RIFLING"
@@ -76,6 +74,8 @@
   "upkeep": 1
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_SIBERIAN_TRACKER",
+  "civilopedia": "TXT_KEY_UNIT_SIBERIAN_TRACKER_PEDIA",
   "worth": 2,
   "militaryWorth": 10,
   "xpValueAttack": 5,

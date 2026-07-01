@@ -1,7 +1,5 @@
 {
  "type": "UNIT_MACAW",
- "description": "TXT_KEY_UNIT_MACAW",
- "civilopedia": "TXT_KEY_UNIT_MACAW_PEDIA",
  "withdrawal": {
   "unit": {
    "percent": 55
@@ -36,6 +34,8 @@
   ]
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_MACAW",
+  "civilopedia": "TXT_KEY_UNIT_MACAW_PEDIA",
   "spawnOnly": true,
   "xpValueAttack": 1,
   "xpValueDefense": 1,

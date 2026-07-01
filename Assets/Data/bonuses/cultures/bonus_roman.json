@@ -1,7 +1,5 @@
 {
  "type": "BONUS_ROMAN",
- "description": "TXT_KEY_BONUS_ROMAN",
- "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
  "enables": {
   "units": [
    "UNIT_ROME_PRAETORIAN",
@@ -15,6 +13,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_ROMAN",
+  "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
   "bonusClassType": "BONUSCLASS_CULTURE"
  }
 }

@@ -1,7 +1,5 @@
 {
  "type": "BONUS_HEMP",
- "description": "TXT_KEY_BONUS_HEMP",
- "civilopedia": "TXT_KEY_BONUS_HEMP_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_BIOFUEL_REFINERY",
@@ -74,6 +72,8 @@
   ]
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_HEMP",
+  "civilopedia": "TXT_KEY_BONUS_HEMP_PEDIA",
   "bonusClassType": "BONUSCLASS_PRODUCTION"
  }
 }

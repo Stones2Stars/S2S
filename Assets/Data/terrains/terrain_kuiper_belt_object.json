@@ -1,7 +1,5 @@
 {
  "type": "TERRAIN_KUIPER_BELT_OBJECT",
- "description": "TXT_KEY_TERRAIN_KUIPER_BELT_OBJECT",
- "civilopedia": "TXT_KEY_TERRAIN_KUIPER_BELT_OBJECT_PEDIA",
  "commerce": {
   "plot": {
    "flat": 2
@@ -31,6 +29,8 @@
   "soundscape": "ASSS_TUNDRA_SELECT_AMB"
  },
  "identity": {
+  "description": "TXT_KEY_TERRAIN_KUIPER_BELT_OBJECT",
+  "civilopedia": "TXT_KEY_TERRAIN_KUIPER_BELT_OBJECT_PEDIA",
   "found": true,
   "movementCost": 3,
   "mapCategories": [

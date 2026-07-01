@@ -1,7 +1,5 @@
 {
  "type": "UNIT_ZEPHYR",
- "description": "TXT_KEY_UNIT_ZEPHYR",
- "civilopedia": "TXT_KEY_UNIT_ZEPHYR_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -95,6 +93,8 @@
   "production": 580
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_ZEPHYR",
+  "civilopedia": "TXT_KEY_UNIT_ZEPHYR_PEDIA",
   "worth": 3,
   "militaryWorth": 49,
   "xpValueAttack": 6,

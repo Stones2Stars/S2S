@@ -1,6 +1,5 @@
 {
  "type": "PROMOTION_HARAKIRI",
- "description": "TXT_KEY_PROMOTION_HARAKIRI",
  "capture": {
   "unit": {
    "resistance": {
@@ -17,6 +16,7 @@
   "sound": "AS2D_IF_LEVELUP"
  },
  "identity": {
+  "description": "TXT_KEY_PROMOTION_HARAKIRI",
   "unitCombats": [
    "UNITCOMBAT_COMBATANT"
   ]

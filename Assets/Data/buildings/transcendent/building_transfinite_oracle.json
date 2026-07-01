@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_TRANSFINITE_ORACLE",
- "description": "TXT_KEY_BUILDING_TRANSFINITE_ORACLE",
- "civilopedia": "TXT_KEY_BUILDING_TRANSFINITE_ORACLE_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_GLITCH_IN_THE_MATRIX"
@@ -52,6 +50,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_TRANSFINITE_ORACLE",
+  "civilopedia": "TXT_KEY_BUILDING_TRANSFINITE_ORACLE_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

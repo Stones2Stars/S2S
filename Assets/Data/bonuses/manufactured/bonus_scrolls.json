@@ -1,7 +1,5 @@
 {
  "type": "BONUS_SCROLLS",
- "description": "TXT_KEY_BONUS_SCROLLS",
- "civilopedia": "TXT_KEY_BONUS_SCROLLS_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_AMBASSADORS_HOUSE",
@@ -49,6 +47,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_SCROLLS",
+  "civilopedia": "TXT_KEY_BONUS_SCROLLS_PEDIA",
   "bonusClassType": "BONUSCLASS_MANUFACTURED"
  }
 }

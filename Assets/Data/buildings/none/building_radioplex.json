@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_RADIOPLEX",
- "description": "TXT_KEY_BUILDING_RADIOPLEX",
- "civilopedia": "TXT_KEY_BUILDING_RADIOPLEX_PEDIA",
  "obsoletedBy": {
   "techs": [
    "TECH_BINARY_SUBCONSCIOUSNESS"
@@ -89,6 +87,8 @@
   "construct": "AS2D_BUILD_BROADCASTTOWER"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_RADIOPLEX",
+  "civilopedia": "TXT_KEY_BUILDING_RADIOPLEX_PEDIA",
   "worth": 5,
   "dcmAirbombMission": 2,
   "specialBuildingType": "SPECIALBUILDING_PUNK_DIESEL",

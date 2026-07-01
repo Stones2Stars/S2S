@@ -1,6 +1,5 @@
 {
  "type": "PROMOTION_FUEL_TANK",
- "description": "TXT_KEY_PROMOTION_FUEL_TANK",
  "strength": {
   "unit": {
    "percent": -15
@@ -22,6 +21,7 @@
   "sound": "AS2D_IF_LEVELUP"
  },
  "identity": {
+  "description": "TXT_KEY_PROMOTION_FUEL_TANK",
   "unitCombats": [
    "UNITCOMBAT_JET_FIGHTERS",
    "UNITCOMBAT_BOMBERS",

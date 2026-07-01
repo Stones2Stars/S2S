@@ -1,6 +1,5 @@
 {
  "type": "PROMOTION_CITY_GARRISON2",
- "description": "TXT_KEY_PROMOTION_GARRISON2",
  "upkeep": {
   "unit": {
    "modifier": {
@@ -37,6 +36,7 @@
   "sound": "AS2D_IF_LEVELUP"
  },
  "identity": {
+  "description": "TXT_KEY_PROMOTION_GARRISON2",
   "notOnUnitCombats": [
    "UNITCOMBAT_CIVILIAN"
   ]

@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_INTERSTELLAR_GALACTIC_PORT",
- "description": "TXT_KEY_BUILDING_INTERSTELLAR_GALACTIC_PORT",
- "civilopedia": "TXT_KEY_BUILDING_INTERSTELLAR_GALACTIC_PORT_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_CENTERPOINT_STATION",
@@ -60,6 +58,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_INTERSTELLAR_GALACTIC_PORT",
+  "civilopedia": "TXT_KEY_BUILDING_INTERSTELLAR_GALACTIC_PORT_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

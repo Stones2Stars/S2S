@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_ROPE_BRIDGE",
- "description": "TXT_KEY_BUILDING_ROPE_BRIDGE",
- "civilopedia": "TXT_KEY_BUILDING_ROPE_BRIDGE_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_LOG_BRIDGE"
@@ -103,6 +101,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_ROPE_BRIDGE",
+  "civilopedia": "TXT_KEY_BUILDING_ROPE_BRIDGE_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

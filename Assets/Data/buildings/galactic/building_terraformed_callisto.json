@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_TERRAFORMED_CALLISTO",
- "description": "TXT_KEY_BUILDING_TERRAFORMED_CALLISTO",
- "civilopedia": "TXT_KEY_BUILDING_TERRAFORMED_CALLISTO_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -57,6 +55,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_TERRAFORMED_CALLISTO",
+  "civilopedia": "TXT_KEY_BUILDING_TERRAFORMED_CALLISTO_PEDIA",
   "conquestProbability": 100,
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,

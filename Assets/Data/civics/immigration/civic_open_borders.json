@@ -1,8 +1,5 @@
 {
  "type": "CIVIC_OPEN_BORDERS",
- "description": "TXT_KEY_CIVIC_OPEN_BORDERS",
- "civilopedia": "TXT_KEY_CIVIC_OPEN_BORDERS_PEDIA",
- "strategy": "TXT_KEY_CIVIC_OPEN_BORDERS_STRATEGY",
  "enables": {
   "buildings": [
    "BUILDING_ELLIS_ISLAND",
@@ -69,6 +66,9 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_CIVIC_OPEN_BORDERS",
+  "civilopedia": "TXT_KEY_CIVIC_OPEN_BORDERS_PEDIA",
+  "strategy": "TXT_KEY_CIVIC_OPEN_BORDERS_STRATEGY",
   "civicOption": "CIVICOPTION_IMMIGRATION",
   "upkeepLevel": "UPKEEP_LOW"
  }

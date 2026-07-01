@@ -1,8 +1,5 @@
 {
  "type": "TECH_TESSERACT_CONSTRUCTION",
- "description": "TXT_KEY_TECH_TESSERACT_CONSTRUCTION",
- "civilopedia": "TXT_KEY_TECH_TESSERACT_CONSTRUCTION_PEDIA",
- "quote": "TXT_KEY_TECH_TESSERACT_CONSTRUCTION_QUOTE",
  "enables": {
   "bonuses": [
    "BONUS_TESSERACT"
@@ -58,6 +55,9 @@
   "soundMP": "AS2D_TECH_GENERIC"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_TESSERACT_CONSTRUCTION",
+  "civilopedia": "TXT_KEY_TECH_TESSERACT_CONSTRUCTION_PEDIA",
+  "quote": "TXT_KEY_TECH_TESSERACT_CONSTRUCTION_QUOTE",
   "era": "C2C_ERA_TRANSCENDENT",
   "worth": 48,
   "tradeable": true,

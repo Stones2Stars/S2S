@@ -1,12 +1,12 @@
 {
  "type": "UNITCOMBAT_CULTURE_MAYAN",
- "description": "TXT_KEY_UNITCOMBAT_CULTURE_MAYAN",
  "ui": {
   "art": {
    "icon": "Art/Interface/Buttons/units/sparth/categories/culture_maya.dds"
   }
  },
  "identity": {
+  "description": "TXT_KEY_UNITCOMBAT_CULTURE_MAYAN",
   "culture": "BONUS_MAYAN"
  }
 }

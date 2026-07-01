@@ -1,6 +1,5 @@
 {
  "type": "UNITCOMBAT_AIR_RECON",
- "description": "TXT_KEY_UNITCOMBAT_AIR_RECON",
  "vision": {
   "visibilityIntensity": {
    "INVISIBLE_SUBMARINE": 2,
@@ -14,6 +13,7 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_UNITCOMBAT_AIR_RECON",
   "forMilitary": true
  }
 }

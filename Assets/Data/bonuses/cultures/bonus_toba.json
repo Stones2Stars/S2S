@@ -1,7 +1,5 @@
 {
  "type": "BONUS_TOBA",
- "description": "TXT_KEY_BONUS_TOBA",
- "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
  "enables": {
   "units": [
    "UNIT_ARACAGUA",
@@ -14,6 +12,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_TOBA",
+  "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
   "bonusClassType": "BONUSCLASS_CULTURE"
  }
 }

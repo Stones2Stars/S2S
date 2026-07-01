@@ -1,8 +1,5 @@
 {
  "type": "RELIGION_BUDDHISM",
- "description": "TXT_KEY_TECH_BUDDHISM",
- "civilopedia": "TXT_KEY_TECH_BUDDHISM_PEDIA",
- "adjective": "TXT_KEY_TECH_BUDDHISM_ADJECTIVE",
  "enables": {
   "buildings": [
    "BUILDING_BEZEKLIK_CAVES",
@@ -101,6 +98,9 @@
   "sound": "AS2D_BUILD_BUDDHIST"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_BUDDHISM",
+  "adjective": "TXT_KEY_TECH_BUDDHISM_ADJECTIVE",
+  "civilopedia": "TXT_KEY_TECH_BUDDHISM_PEDIA",
   "spreadFactor": 35
  }
 }

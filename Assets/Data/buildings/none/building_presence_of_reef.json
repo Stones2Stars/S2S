@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_PRESENCE_OF_REEF",
- "description": "TXT_KEY_BUILDING_PRESENCE_OF_REEF",
- "civilopedia": "TXT_KEY_BUILDING_FOLKLORE_PRESENCE_OF_ORIGIN_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -35,6 +33,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_PRESENCE_OF_REEF",
+  "civilopedia": "TXT_KEY_BUILDING_FOLKLORE_PRESENCE_OF_ORIGIN_PEDIA",
   "notConstructible": true,
   "nukeImmune": true,
   "autoBuild": true,

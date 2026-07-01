@@ -1,8 +1,5 @@
 {
  "type": "CIVIC_BANDITRY",
- "description": "TXT_KEY_CIVIC_BANDITRY",
- "civilopedia": "TXT_KEY_CIVIC_BANDITRY_PEDIA",
- "strategy": "TXT_KEY_CIVIC_BANDITRY_STRATEGY",
  "enables": {
   "buildings": [
    "BUILDING_CIVIC_BANDITRY",
@@ -163,6 +160,9 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_CIVIC_BANDITRY",
+  "civilopedia": "TXT_KEY_CIVIC_BANDITRY_PEDIA",
+  "strategy": "TXT_KEY_CIVIC_BANDITRY_STRATEGY",
   "civicOption": "CIVICOPTION_MILITARY",
   "upkeepLevel": "UPKEEP_LOW"
  }

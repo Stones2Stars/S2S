@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_GARDEROBE",
- "description": "TXT_KEY_BUILDING_GARDEROBE",
- "civilopedia": "TXT_KEY_BUILDING_GARDEROBE_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_PUBLIC_RESTROOMS"
@@ -79,6 +77,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_GARDEROBE",
+  "civilopedia": "TXT_KEY_BUILDING_GARDEROBE_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

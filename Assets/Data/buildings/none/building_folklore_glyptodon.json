@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_FOLKLORE_GLYPTODON",
- "description": "TXT_KEY_BUILDING_FOLKLORE_GLYPTODON",
- "civilopedia": "TXT_KEY_BUILDING_FOLKLORE_ANIMAL_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_MILITARY_STANDARD_WORKERS"
@@ -77,6 +75,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_FOLKLORE_GLYPTODON",
+  "civilopedia": "TXT_KEY_BUILDING_FOLKLORE_ANIMAL_PEDIA",
   "notConstructible": true,
   "nukeImmune": true,
   "neverCapture": true,

@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_INTERSTELLAR_SUPERCOMPUTER",
- "description": "TXT_KEY_BUILDING_INTERSTELLAR_SUPERCOMPUTER",
- "civilopedia": "TXT_KEY_BUILDING_INTERSTELLAR_SUPERCOMPUTER_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_INTERSTELLAR_GALACTIC_AC"
@@ -46,6 +44,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_INTERSTELLAR_SUPERCOMPUTER",
+  "civilopedia": "TXT_KEY_BUILDING_INTERSTELLAR_SUPERCOMPUTER_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

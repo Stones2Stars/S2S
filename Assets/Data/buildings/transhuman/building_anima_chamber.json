@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_ANIMA_CHAMBER",
- "description": "TXT_KEY_BUILDING_ANIMA_CHAMBER",
- "civilopedia": "TXT_KEY_BUILDING_ANIMA_CHAMBER_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_ANIMA_STUDIO",
@@ -99,6 +97,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_ANIMA_CHAMBER",
+  "civilopedia": "TXT_KEY_BUILDING_ANIMA_CHAMBER_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

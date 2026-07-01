@@ -1,7 +1,5 @@
 {
  "type": "BONUS_NUTS",
- "description": "TXT_KEY_BONUS_NUTS",
- "civilopedia": "TXT_KEY_BONUS_NUTS_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_CONFECTIONERS_WORKSHOP",
@@ -17,6 +15,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_NUTS",
+  "civilopedia": "TXT_KEY_BONUS_NUTS_PEDIA",
   "bonusClassType": "BONUSCLASS_MANUFACTURED"
  }
 }

@@ -1,6 +1,5 @@
 {
  "type": "PROMOTION_FAKE_IDENTITY3",
- "description": "TXT_KEY_PROMOTION_FAKE_IDENTITY3",
  "espionage": {
   "unit": {
    "insidiousness": {
@@ -31,5 +30,8 @@
  },
  "sound": {
   "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_FAKE_IDENTITY3"
  }
 }

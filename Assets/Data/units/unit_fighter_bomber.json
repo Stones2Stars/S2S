@@ -1,7 +1,5 @@
 {
  "type": "UNIT_FIGHTER_BOMBER",
- "description": "TXT_KEY_UNIT_FIGHTER_BOMBER",
- "civilopedia": "TXT_KEY_UNIT_FIGHTER_BOMBER_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -101,6 +99,8 @@
   "upkeep": 1
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_FIGHTER_BOMBER",
+  "civilopedia": "TXT_KEY_UNIT_FIGHTER_BOMBER_PEDIA",
   "worth": 3,
   "militaryWorth": 120,
   "xpValueAttack": 6,

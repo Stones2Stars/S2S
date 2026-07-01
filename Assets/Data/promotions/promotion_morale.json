@@ -1,6 +1,5 @@
 {
  "type": "PROMOTION_MORALE",
- "description": "TXT_KEY_PROMOTION_MORALE",
  "movement": {
   "unit": {
    "moves": {
@@ -24,6 +23,7 @@
   "sound": "AS2D_IF_LEVELUP"
  },
  "identity": {
+  "description": "TXT_KEY_PROMOTION_MORALE",
   "unitCombats": [
    "UNITCOMBAT_RECON",
    "UNITCOMBAT_HUNTER",

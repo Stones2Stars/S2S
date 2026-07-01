@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_CRAFTS_HUT",
- "description": "TXT_KEY_BUILDING_CRAFTS_HUT",
- "civilopedia": "TXT_KEY_BUILDING_CRAFTS_HUT_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_GUILD_ARTISANS"
@@ -168,6 +166,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_CRAFTS_HUT",
+  "civilopedia": "TXT_KEY_BUILDING_CRAFTS_HUT_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

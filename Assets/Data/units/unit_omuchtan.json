@@ -1,7 +1,5 @@
 {
  "type": "UNIT_OMUCHTAN",
- "description": "TXT_KEY_UNIT_OMUCHTAN",
- "civilopedia": "TXT_KEY_UNIT_OMUCHTAN_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -74,6 +72,8 @@
   "upkeep": 1
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_OMUCHTAN",
+  "civilopedia": "TXT_KEY_UNIT_OMUCHTAN_PEDIA",
   "worth": 1,
   "xpValueAttack": 6,
   "xpValueDefense": 3,

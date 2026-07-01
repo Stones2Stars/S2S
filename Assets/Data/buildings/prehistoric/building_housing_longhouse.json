@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_HOUSING_LONGHOUSE",
- "description": "TXT_KEY_BUILDING_HOUSING_LONGHOUSE",
- "civilopedia": "TXT_KEY_BUILDING_HOUSING_LONGHOUSE_PEDIA",
  "obsoletedBy": {
   "techs": [
    "TECH_SANITATION"
@@ -77,6 +75,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_HOUSING_LONGHOUSE",
+  "civilopedia": "TXT_KEY_BUILDING_HOUSING_LONGHOUSE_PEDIA",
   "notConstructible": true,
   "nukeImmune": true,
   "neverCapture": true,

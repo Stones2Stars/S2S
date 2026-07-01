@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_TITAN_ARCOLOGY",
- "description": "TXT_KEY_BUILDING_TITAN_ARCOLOGY",
- "civilopedia": "TXT_KEY_BUILDING_TITAN_ARCOLOGY_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_COMPUTRONIUM_TITAN"
@@ -54,6 +52,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_TITAN_ARCOLOGY",
+  "civilopedia": "TXT_KEY_BUILDING_TITAN_ARCOLOGY_PEDIA",
   "workableRadius": 3,
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,

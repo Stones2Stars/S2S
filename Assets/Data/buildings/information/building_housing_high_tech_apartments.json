@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_HOUSING_HIGH_TECH_APARTMENTS",
- "description": "TXT_KEY_BUILDING_HOUSING_HIGH_TECH_APARTMENTS",
- "civilopedia": "TXT_KEY_BUILDING_HOUSING_HIGH_TECH_APARTMENTS_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_HOUSING_COLONY_ARCOLOGY"
@@ -64,6 +62,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_HOUSING_HIGH_TECH_APARTMENTS",
+  "civilopedia": "TXT_KEY_BUILDING_HOUSING_HIGH_TECH_APARTMENTS_PEDIA",
   "notConstructible": true,
   "nukeImmune": true,
   "neverCapture": true,

@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_ARTIFICIAL_REEF",
- "description": "TXT_KEY_BUILDING_ARTIFICIAL_REEF",
- "civilopedia": "TXT_KEY_BUILDING_ARTIFICIAL_REEF_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_FUTURE_VENICE"
@@ -65,6 +63,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_ARTIFICIAL_REEF",
+  "civilopedia": "TXT_KEY_BUILDING_ARTIFICIAL_REEF_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

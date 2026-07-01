@@ -1,6 +1,5 @@
 {
  "type": "PROMOTION_SHIP_INITIATIVE1",
- "description": "TXT_KEY_PROMOTION_SHIP_INITIATIVE1",
  "upkeep": {
   "unit": {
    "modifier": {
@@ -32,5 +31,8 @@
  },
  "sound": {
   "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_SHIP_INITIATIVE1"
  }
 }

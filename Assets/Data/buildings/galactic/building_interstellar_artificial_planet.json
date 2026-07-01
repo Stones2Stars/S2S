@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_INTERSTELLAR_ARTIFICIAL_PLANET",
- "description": "TXT_KEY_BUILDING_INTERSTELLAR_ARTIFICIAL_PLANET",
- "civilopedia": "TXT_KEY_BUILDING_INTERSTELLAR_ARTIFICIAL_PLANET_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_INTERSTELLAR_COMPUTRONIUM_PLANET",
@@ -61,6 +59,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_INTERSTELLAR_ARTIFICIAL_PLANET",
+  "civilopedia": "TXT_KEY_BUILDING_INTERSTELLAR_ARTIFICIAL_PLANET_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

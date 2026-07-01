@@ -1,7 +1,5 @@
 {
  "type": "BONUS_MALAYSIAN",
- "description": "TXT_KEY_BONUS_MALAYSIAN",
- "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
  "enables": {
   "units": [
    "UNIT_ABDUL_RAZAK_HUSSEIN",
@@ -14,6 +12,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_MALAYSIAN",
+  "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
   "bonusClassType": "BONUSCLASS_CULTURE"
  }
 }

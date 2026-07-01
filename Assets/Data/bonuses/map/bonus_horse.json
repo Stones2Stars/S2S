@@ -1,7 +1,5 @@
 {
  "type": "BONUS_HORSE",
- "description": "TXT_KEY_BONUS_HORSE",
- "civilopedia": "TXT_KEY_BONUS_HORSE_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_ANIMAL_TRAINER_HORSE",
@@ -126,6 +124,8 @@
   ]
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_HORSE",
+  "civilopedia": "TXT_KEY_BONUS_HORSE_PEDIA",
   "bonusClassType": "BONUSCLASS_STRATEGIC"
  }
 }

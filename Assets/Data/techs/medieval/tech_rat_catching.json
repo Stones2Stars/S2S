@@ -1,8 +1,5 @@
 {
  "type": "TECH_RAT_CATCHING",
- "description": "TXT_KEY_TECH_RAT_CATCHING",
- "civilopedia": "TXT_KEY_TECH_RAT_CATCHING_PEDIA",
- "quote": "TXT_KEY_TECH_RAT_CATCHING_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_RAT_CATCHER"
@@ -49,6 +46,9 @@
   "soundMP": "AS2D_TECH_RAT_CATCHING"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_RAT_CATCHING",
+  "civilopedia": "TXT_KEY_TECH_RAT_CATCHING_PEDIA",
+  "quote": "TXT_KEY_TECH_RAT_CATCHING_QUOTE",
   "era": "C2C_ERA_MEDIEVAL",
   "worth": 24,
   "militaryWorth": 6,

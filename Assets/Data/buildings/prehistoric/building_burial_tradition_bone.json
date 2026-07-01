@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_BURIAL_TRADITION_BONE",
- "description": "TXT_KEY_BUILDING_BURIAL_TRADITION_BONE",
- "civilopedia": "TXT_KEY_BUILDING_BURIAL_TRADITION_BONE_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_FUNERARY_SERVICES"
@@ -60,6 +58,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_BURIAL_TRADITION_BONE",
+  "civilopedia": "TXT_KEY_BUILDING_BURIAL_TRADITION_BONE_PEDIA",
   "conquestProbability": 70,
   "advisor": "ADVISOR_SCIENCE",
   "mapCategories": [

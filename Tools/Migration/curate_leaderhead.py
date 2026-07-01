@@ -265,6 +265,7 @@ def curate(typ, rec):
         out["sound"] = sound
     if identity:
         out["identity"] = identity
+    cc.fold_text_to_identity(out)   # TEXT -> identity (json.md §7)
     return out, leftover
 
 

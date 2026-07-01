@@ -1,8 +1,5 @@
 {
  "type": "TECH_BOARD_GAMES",
- "description": "TXT_KEY_TECH_BOARD_GAMES",
- "civilopedia": "TXT_KEY_TECH_BOARD_GAMES_PEDIA",
- "quote": "TXT_KEY_TECH_BOARD_GAMES_QUOTE",
  "enables": {
   "bonuses": [
    "BONUS_TOYS"
@@ -58,6 +55,9 @@
   "soundMP": "AS2D_TECH_BOARD_GAMES"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_BOARD_GAMES",
+  "civilopedia": "TXT_KEY_TECH_BOARD_GAMES_PEDIA",
+  "quote": "TXT_KEY_TECH_BOARD_GAMES_QUOTE",
   "era": "C2C_ERA_ANCIENT",
   "worth": 14,
   "tradeable": true,

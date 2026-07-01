@@ -1,7 +1,5 @@
 {
  "type": "BONUS_SPANISH",
- "description": "TXT_KEY_BONUS_SPANISH",
- "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
  "enables": {
   "units": [
    "UNIT_EL_CID",
@@ -15,6 +13,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_SPANISH",
+  "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
   "bonusClassType": "BONUSCLASS_CULTURE"
  }
 }

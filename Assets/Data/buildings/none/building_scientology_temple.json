@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_SCIENTOLOGY_TEMPLE",
- "description": "TXT_KEY_BUILDING_SCIENTOLOGY_TEMPLE",
- "civilopedia": "TXT_KEY_BUILDING_SCIENTOLOGY_TEMPLE_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_SCIENTOLOGY_CATHEDRAL"
@@ -86,6 +84,8 @@
   "construct": "AS2D_BUILD_BUDDHIST"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_SCIENTOLOGY_TEMPLE",
+  "civilopedia": "TXT_KEY_BUILDING_SCIENTOLOGY_TEMPLE_PEDIA",
   "neverCapture": true,
   "worth": 4,
   "specialBuildingType": "SPECIALBUILDING_TEMPLE",

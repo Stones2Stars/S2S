@@ -1,7 +1,5 @@
 {
  "type": "TRAIT_MEGALOMANIAC",
- "description": "TXT_KEY_TRAIT_MEGALOMANIAC",
- "civilopedia": "TXT_KEY_TRAIT_MEGALOMANIAC_PEDIA",
  "production": {
   "empire": {
    "percent": [
@@ -95,6 +93,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_TRAIT_MEGALOMANIAC",
+  "civilopedia": "TXT_KEY_TRAIT_MEGALOMANIAC_PEDIA",
   "shortDescription": "TXT_KEY_TRAIT_MEGALOMANIAC_SHORT",
   "negativeTrait": true
  }

@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_PATTAKY_OF_OLODUMARE",
- "description": "TXT_KEY_BUILDING_PATTAKY_OF_OLODUMARE",
- "civilopedia": "TXT_KEY_BUILDING_PATTAKY_OF_OLODUMARE_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -53,6 +51,8 @@
   "construct": "AS2D_BUILD_CHRISTIAN"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_PATTAKY_OF_OLODUMARE",
+  "civilopedia": "TXT_KEY_BUILDING_PATTAKY_OF_OLODUMARE_PEDIA",
   "commerceDoubleTime": {
    "culture": 1000
   },

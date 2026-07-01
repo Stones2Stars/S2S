@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_SMITH_LEAD",
- "description": "TXT_KEY_BUILDING_SMITH_LEAD",
- "civilopedia": "TXT_KEY_BUILDING_SMITH_LEAD_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_METALS_MEGACOMPLEX"
@@ -81,6 +79,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_SMITH_LEAD",
+  "civilopedia": "TXT_KEY_BUILDING_SMITH_LEAD_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

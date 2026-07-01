@@ -1,8 +1,5 @@
 {
  "type": "TECH_ARCHEOLOGY",
- "description": "TXT_KEY_TECH_ARCHEOLOGY",
- "civilopedia": "TXT_KEY_TECH_ARCHEOLOGY_PEDIA",
- "quote": "TXT_KEY_TECH_ARCHEOLOGY_QUOTE",
  "enables": {
   "bonuses": [
    "BONUS_ANCIENT_RELICS"
@@ -62,6 +59,9 @@
   "soundMP": "AS2D_TECH_ARCHEOLOGY"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_ARCHEOLOGY",
+  "civilopedia": "TXT_KEY_TECH_ARCHEOLOGY_PEDIA",
+  "quote": "TXT_KEY_TECH_ARCHEOLOGY_QUOTE",
   "era": "C2C_ERA_RENAISSANCE",
   "worth": 40,
   "tradeable": true,

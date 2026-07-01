@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_FORBIDDEN_PALACE",
- "description": "TXT_KEY_BUILDING_FORBIDDEN_PALACE",
- "civilopedia": "TXT_KEY_BUILDING_FORBIDDEN_PALACE_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_BALLROOM",
@@ -93,6 +91,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_FORBIDDEN_PALACE",
+  "civilopedia": "TXT_KEY_BUILDING_FORBIDDEN_PALACE_PEDIA",
   "commerceDoubleTime": {
    "culture": 1000
   },

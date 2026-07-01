@@ -1,7 +1,5 @@
 {
  "type": "BONUS_URANIUM",
- "description": "TXT_KEY_BONUS_URANIUM",
- "civilopedia": "TXT_KEY_BONUS_URANIUM_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_CLEAN_NUCLEAR_REACTOR",
@@ -100,6 +98,8 @@
   ]
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_URANIUM",
+  "civilopedia": "TXT_KEY_BONUS_URANIUM_PEDIA",
   "bonusClassType": "BONUSCLASS_STRATEGIC"
  }
 }

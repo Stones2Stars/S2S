@@ -1,8 +1,5 @@
 {
  "type": "TECH_PLANETARY_ECONOMICS",
- "description": "TXT_KEY_TECH_PLANETARY_ECONOMICS",
- "civilopedia": "TXT_KEY_TECH_PLANETARY_ECONOMICS_PEDIA",
- "quote": "TXT_KEY_TECH_PLANETARY_ECONOMICS_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_ANIMAL_PRESERVE",
@@ -67,6 +64,9 @@
   "soundMP": "AS2D_TECH_PLANETARY_ECONOMICS"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_PLANETARY_ECONOMICS",
+  "civilopedia": "TXT_KEY_TECH_PLANETARY_ECONOMICS_PEDIA",
+  "quote": "TXT_KEY_TECH_PLANETARY_ECONOMICS_QUOTE",
   "era": "C2C_ERA_NANOTECH",
   "worth": 48,
   "tradeable": true,

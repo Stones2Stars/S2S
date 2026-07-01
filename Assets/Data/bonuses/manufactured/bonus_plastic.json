@@ -1,7 +1,5 @@
 {
  "type": "BONUS_PLASTIC",
- "description": "TXT_KEY_BONUS_PLASTIC",
- "civilopedia": "TXT_KEY_BONUS_PLASTIC_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_FACTORY_BASKETS",
@@ -44,6 +42,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_PLASTIC",
+  "civilopedia": "TXT_KEY_BONUS_PLASTIC_PEDIA",
   "bonusClassType": "BONUSCLASS_MANUFACTURED"
  }
 }

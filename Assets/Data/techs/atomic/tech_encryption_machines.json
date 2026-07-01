@@ -1,8 +1,5 @@
 {
  "type": "TECH_ENCRYPTION_MACHINES",
- "description": "TXT_KEY_TECH_ENCRYPTION_MACHINES",
- "civilopedia": "TXT_KEY_TECH_ENCRYPTION_MACHINES_PEDIA",
- "quote": "TXT_KEY_TECH_ENCRYPTION_MACHINES_QUOTE",
  "enables": {
   "bonuses": [
    "BONUS_PUNCH_CARDS"
@@ -55,6 +52,9 @@
   "soundMP": "AS2D_TECH_ENCRYPTION_MACHINES"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_ENCRYPTION_MACHINES",
+  "civilopedia": "TXT_KEY_TECH_ENCRYPTION_MACHINES_PEDIA",
+  "quote": "TXT_KEY_TECH_ENCRYPTION_MACHINES_QUOTE",
   "era": "C2C_ERA_ATOMIC",
   "worth": 48,
   "tradeable": true,

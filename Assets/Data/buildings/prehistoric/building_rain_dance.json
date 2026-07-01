@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_RAIN_DANCE",
- "description": "TXT_KEY_BUILDING_RAIN_DANCE",
- "civilopedia": "TXT_KEY_BUILDING_RAIN_DANCE_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_GRAND_MARINE_FESTIVAL"
@@ -51,6 +49,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_RAIN_DANCE",
+  "civilopedia": "TXT_KEY_BUILDING_RAIN_DANCE_PEDIA",
   "notConstructible": true,
   "nukeImmune": true,
   "worth": 1,

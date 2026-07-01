@@ -1,7 +1,5 @@
 {
  "type": "UNIT_MASTER_SAILOR_PRE_DREADNOUGHT",
- "description": "TXT_KEY_UNIT_MASTER_SAILOR_PRE_DREADNOUGHT",
- "civilopedia": "TXT_KEY_UNIT_PRE_DREADNOUGHT_PEDIA",
  "obsoletedBy": {
   "techs": [
    "TECH_INDUSTRIALISM"
@@ -82,6 +80,8 @@
   "upkeep": 2
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_MASTER_SAILOR_PRE_DREADNOUGHT",
+  "civilopedia": "TXT_KEY_UNIT_PRE_DREADNOUGHT_PEDIA",
   "spawnOnly": true,
   "worth": 4,
   "militaryWorth": 117,

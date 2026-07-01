@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_NOK_SCULPTURE_WORKSHOP",
- "description": "TXT_KEY_BUILDING_NOK_SCULPTURE_WORKSHOP",
- "civilopedia": "TXT_KEY_BUILDING_NOK_SCULPTURE_WORKSHOP_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -102,6 +100,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_NOK_SCULPTURE_WORKSHOP",
+  "civilopedia": "TXT_KEY_BUILDING_NOK_SCULPTURE_WORKSHOP_PEDIA",
   "centerInCity": true,
   "worth": 10,
   "conquestProbability": 100,

@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_DIGITAL_GLOBE",
- "description": "TXT_KEY_BUILDING_DIGITAL_GLOBE",
- "civilopedia": "TXT_KEY_BUILDING_DIGITAL_GLOBE_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_HOLOGRAPHIC_SOLAR_SYSTEM"
@@ -89,6 +87,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_DIGITAL_GLOBE",
+  "civilopedia": "TXT_KEY_BUILDING_DIGITAL_GLOBE_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

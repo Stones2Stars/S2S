@@ -1,8 +1,5 @@
 {
  "type": "TECH_EARLY_COMPUTING",
- "description": "TXT_KEY_TECH_EARLY_COMPUTING",
- "civilopedia": "TXT_KEY_TECH_EARLY_COMPUTING_PEDIA",
- "quote": "TXT_KEY_TECH_EARLY_COMPUTING_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_HQ_MAPSTER",
@@ -58,6 +55,9 @@
   "soundMP": "AS2D_TECH_EARLY_COMPUTING"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_EARLY_COMPUTING",
+  "civilopedia": "TXT_KEY_TECH_EARLY_COMPUTING_PEDIA",
+  "quote": "TXT_KEY_TECH_EARLY_COMPUTING_QUOTE",
   "era": "C2C_ERA_ATOMIC",
   "worth": 48,
   "tradeable": true,

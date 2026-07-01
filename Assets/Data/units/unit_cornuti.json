@@ -1,7 +1,5 @@
 {
  "type": "UNIT_CORNUTI",
- "description": "TXT_KEY_UNIT_CORNUTI",
- "civilopedia": "TXT_KEY_UNIT_CORNUTI_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -71,6 +69,8 @@
   "upkeep": 1
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_CORNUTI",
+  "civilopedia": "TXT_KEY_UNIT_CORNUTI_PEDIA",
   "worth": 2,
   "militaryWorth": 20,
   "xpValueAttack": 6,

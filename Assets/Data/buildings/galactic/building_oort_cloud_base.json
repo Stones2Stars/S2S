@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_OORT_CLOUD_BASE",
- "description": "TXT_KEY_BUILDING_OORT_CLOUD_BASE",
- "civilopedia": "TXT_KEY_BUILDING_OORT_CLOUD_BASE_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_OORT_CLOUD_DEUTERIUM_MINE",
@@ -66,6 +64,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_OORT_CLOUD_BASE",
+  "civilopedia": "TXT_KEY_BUILDING_OORT_CLOUD_BASE_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

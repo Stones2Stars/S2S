@@ -1,7 +1,5 @@
 {
  "type": "UNIT_HIGHLANDER",
- "description": "TXT_KEY_UNIT_HIGHLANDER",
- "civilopedia": "TXT_KEY_UNIT_HIGHLANDER_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -83,6 +81,8 @@
   "upkeep": 1
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_HIGHLANDER",
+  "civilopedia": "TXT_KEY_UNIT_HIGHLANDER_PEDIA",
   "worth": 3,
   "militaryWorth": 49,
   "xpValueAttack": 6,

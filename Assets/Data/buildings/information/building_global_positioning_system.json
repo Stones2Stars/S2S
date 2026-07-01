@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_GLOBAL_POSITIONING_SYSTEM",
- "description": "TXT_KEY_BUILDING_GLOBAL_POSITIONING_SYSTEM",
- "civilopedia": "TXT_KEY_BUILDING_GLOBAL_POSITIONING_SYSTEM_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -57,6 +55,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_GLOBAL_POSITIONING_SYSTEM",
+  "civilopedia": "TXT_KEY_BUILDING_GLOBAL_POSITIONING_SYSTEM_PEDIA",
   "neverCapture": true,
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,

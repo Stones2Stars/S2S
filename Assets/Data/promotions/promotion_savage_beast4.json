@@ -1,6 +1,5 @@
 {
  "type": "PROMOTION_SAVAGE_BEAST4",
- "description": "TXT_KEY_PROMOTION_SAVAGE_BEAST4",
  "strength": {
   "unit": {
    "attack": {
@@ -26,5 +25,8 @@
  },
  "sound": {
   "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_SAVAGE_BEAST4"
  }
 }

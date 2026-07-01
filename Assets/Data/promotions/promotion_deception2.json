@@ -1,6 +1,5 @@
 {
  "type": "PROMOTION_DECEPTION2",
- "description": "TXT_KEY_PROMOTION_DECEPTION2",
  "air": {
   "unit": {
    "evasion": {
@@ -18,5 +17,8 @@
  },
  "sound": {
   "sound": "AS2D_PING"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_DECEPTION2"
  }
 }

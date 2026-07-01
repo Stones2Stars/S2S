@@ -1,8 +1,5 @@
 {
  "type": "TECH_NITROGLYCERIN",
- "description": "TXT_KEY_TECH_NITROGLYCERIN",
- "civilopedia": "TXT_KEY_TECH_NITROGLYCERIN_PEDIA",
- "quote": "TXT_KEY_TECH_NITROGLYCERIN_QUOTE",
  "enables": {
   "builds": [
    "BUILD_RAILROAD"
@@ -66,6 +63,9 @@
   "soundMP": "AS2D_TECH_NITROGLYCERIN"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_NITROGLYCERIN",
+  "civilopedia": "TXT_KEY_TECH_NITROGLYCERIN_PEDIA",
+  "quote": "TXT_KEY_TECH_NITROGLYCERIN_QUOTE",
   "era": "C2C_ERA_INDUSTRIAL",
   "worth": 32,
   "militaryWorth": 8,

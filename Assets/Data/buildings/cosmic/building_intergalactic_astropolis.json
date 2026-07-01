@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_INTERGALACTIC_ASTROPOLIS",
- "description": "TXT_KEY_BUILDING_INTERGALACTIC_ASTROPOLIS",
- "civilopedia": "TXT_KEY_BUILDING_INTERGALACTIC_ASTROPOLIS_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_INTERGALACTIC_FANTASY_CITY",
@@ -53,6 +51,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_INTERGALACTIC_ASTROPOLIS",
+  "civilopedia": "TXT_KEY_BUILDING_INTERGALACTIC_ASTROPOLIS_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

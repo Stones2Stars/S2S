@@ -1,6 +1,5 @@
 {
  "type": "PROMOTION_JADED_DECADENCE",
- "description": "TXT_KEY_PROMOTION_JADED_DECADENCE",
  "strength": {
   "unit": {
    "quality": {
@@ -30,6 +29,7 @@
   "sound": "AS2D_IF_LEVELUP"
  },
  "identity": {
+  "description": "TXT_KEY_PROMOTION_JADED_DECADENCE",
   "replacesUnitCombat": "UNITCOMBAT_QUALITY_MEDIOCRE",
   "notOnUnitCombats": [
    "UNITCOMBAT_PACIFIST",

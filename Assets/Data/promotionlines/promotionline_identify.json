@@ -1,6 +1,5 @@
 {
  "type": "PROMOTIONLINE_IDENTIFY",
- "description": "TXT_KEY_PROMOTIONLINE_IDENTIFY",
  "loadPrune": {
   "onGameOptions": [
    "GAMEOPTION_COMBAT_HIDE_SEEK"
@@ -12,6 +11,7 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_PROMOTIONLINE_IDENTIFY",
   "unitCombats": [
    "UNITCOMBAT_LAW_ENFORCEMENT",
    "UNITCOMBAT_SPY"

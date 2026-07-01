@@ -1,12 +1,12 @@
 {
  "type": "UNITCOMBAT_CULTURE_ARMENIAN",
- "description": "TXT_KEY_UNITCOMBAT_CULTURE_ARMENIAN",
  "ui": {
   "art": {
    "icon": "Art/Interface/Buttons/units/sparth/categories/culture_armenia.dds"
   }
  },
  "identity": {
+  "description": "TXT_KEY_UNITCOMBAT_CULTURE_ARMENIAN",
   "culture": "BONUS_ARMENIAN"
  }
 }

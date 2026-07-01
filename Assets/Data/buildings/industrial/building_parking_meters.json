@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_PARKING_METERS",
- "description": "TXT_KEY_BUILDING_PARKING_METERS",
- "civilopedia": "TXT_KEY_BUILDING_PARKING_METERS_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_TELEPORT_BOOTH"
@@ -72,6 +70,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_PARKING_METERS",
+  "civilopedia": "TXT_KEY_BUILDING_PARKING_METERS_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

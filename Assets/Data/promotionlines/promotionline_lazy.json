@@ -1,9 +1,11 @@
 {
  "type": "PROMOTIONLINE_LAZY",
- "description": "TXT_KEY_PROMOTIONLINE_LAZY",
  "ui": {
   "art": {
    "icon": "art/Buttons/Traits/TraitLazy.dds"
   }
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTIONLINE_LAZY"
  }
 }

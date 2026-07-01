@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_ANIMAL_PRESERVE",
- "description": "TXT_KEY_BUILDING_ANIMAL_PRESERVE",
- "civilopedia": "TXT_KEY_BUILDING_ANIMAL_PRESERVE_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_ANIMAL_TRAINER_BISON",
@@ -89,6 +87,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_ANIMAL_PRESERVE",
+  "civilopedia": "TXT_KEY_BUILDING_ANIMAL_PRESERVE_PEDIA",
   "advisor": "ADVISOR_CULTURE",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

@@ -1,7 +1,5 @@
 {
  "type": "UNIT_KARAI_PYHARE",
- "description": "TXT_KEY_UNIT_KARAI_PYHARE",
- "civilopedia": "TXT_KEY_UNIT_KARAI_PYHARE_PEDIA",
  "obsoletedBy": {
   "techs": [
    "TECH_RIFLING"
@@ -188,6 +186,8 @@
   ]
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_KARAI_PYHARE",
+  "civilopedia": "TXT_KEY_UNIT_KARAI_PYHARE_PEDIA",
   "worth": 6,
   "militaryWorth": 11,
   "xpValueAttack": 8,

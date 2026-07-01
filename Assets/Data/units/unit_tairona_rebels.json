@@ -1,7 +1,5 @@
 {
  "type": "UNIT_TAIRONA_REBELS",
- "description": "TXT_KEY_UNIT_TAIRONA_REBELS",
- "civilopedia": "TXT_KEY_UNIT_TAIRONA_REBELS_PEDIA",
  "obsoletedBy": {
   "techs": [
    "TECH_FLINTLOCK"
@@ -80,6 +78,8 @@
   "upkeep": 1
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_TAIRONA_REBELS",
+  "civilopedia": "TXT_KEY_UNIT_TAIRONA_REBELS_PEDIA",
   "worth": 2,
   "militaryWorth": 17,
   "xpValueAttack": 6,

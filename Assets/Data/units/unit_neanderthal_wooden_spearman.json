@@ -1,7 +1,5 @@
 {
  "type": "UNIT_NEANDERTHAL_WOODEN_SPEARMAN",
- "description": "TXT_KEY_UNIT_NEANDERTHAL_WOODEN_SPEARMAN",
- "civilopedia": "TXT_KEY_UNIT_WOODEN_SPEARMAN_PEDIA",
  "obsoletedBy": {
   "techs": [
    "TECH_SEDENTARY_LIFESTYLE"
@@ -63,6 +61,8 @@
   "upkeep": 1
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_NEANDERTHAL_WOODEN_SPEARMAN",
+  "civilopedia": "TXT_KEY_UNIT_WOODEN_SPEARMAN_PEDIA",
   "worth": 2,
   "militaryWorth": 4,
   "xpValueAttack": 2,

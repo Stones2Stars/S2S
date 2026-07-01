@@ -1,8 +1,5 @@
 {
  "type": "BUILDING_BLARNEY_CASTLE",
- "description": "TXT_KEY_BUILDING_BLARNEY_CASTLE",
- "civilopedia": "TXT_KEY_BUILDING_BLARNEY_CASTLE_PEDIA",
- "help": "TXT_KEY_BUILDING_BLARNEY_CASTLE_HELP",
  "obsoletedBy": {
   "techs": [
    "TECH_TELEGRAPH"
@@ -105,6 +102,9 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_BLARNEY_CASTLE",
+  "civilopedia": "TXT_KEY_BUILDING_BLARNEY_CASTLE_PEDIA",
+  "help": "TXT_KEY_BUILDING_BLARNEY_CASTLE_HELP",
   "commerceDoubleTime": {
    "culture": 1000
   },

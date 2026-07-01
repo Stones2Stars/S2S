@@ -1,8 +1,5 @@
 {
  "type": "UNIT_CISLUNARSETTLER",
- "description": "TXT_KEY_UNIT_CISLUNARSETTLER",
- "civilopedia": "TXT_KEY_UNIT_SETTLER_PEDIA",
- "help": "TXT_KEY_UNIT_CISLUNARSETTLER_HELP",
  "requires": {
   "build": {
    "all": [
@@ -51,6 +48,9 @@
   "hurryCostModifier": 10000
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_CISLUNARSETTLER",
+  "civilopedia": "TXT_KEY_UNIT_SETTLER_PEDIA",
+  "help": "TXT_KEY_UNIT_CISLUNARSETTLER_HELP",
   "worth": 1,
   "domain": "DOMAIN_LAND",
   "defaultUnitAI": "UNITAI_SETTLE",

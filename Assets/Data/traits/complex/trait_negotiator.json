@@ -1,8 +1,5 @@
 {
  "type": "TRAIT_NEGOTIATOR",
- "description": "TXT_KEY_TRAIT_NEGOTIATOR",
- "civilopedia": "TXT_KEY_TRAIT_NEGOTIATOR_PEDIA",
- "strategy": "TXT_KEY_TRAIT_NEGOTIATOR_STRATEGY",
  "excludes": [
   "TRAIT_ISOLATIONIST"
  ],
@@ -185,5 +182,10 @@
   "art": {
    "icon": "art/Buttons/Traits/TraitNegotiator.dds"
   }
+ },
+ "identity": {
+  "description": "TXT_KEY_TRAIT_NEGOTIATOR",
+  "civilopedia": "TXT_KEY_TRAIT_NEGOTIATOR_PEDIA",
+  "strategy": "TXT_KEY_TRAIT_NEGOTIATOR_STRATEGY"
  }
 }

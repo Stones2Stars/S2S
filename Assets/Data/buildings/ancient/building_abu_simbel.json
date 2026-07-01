@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_ABU_SIMBEL",
- "description": "TXT_KEY_BUILDING_ABU_SIMBEL",
- "civilopedia": "TXT_KEY_BUILDING_ABU_SIMBEL_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -85,6 +83,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_ABU_SIMBEL",
+  "civilopedia": "TXT_KEY_BUILDING_ABU_SIMBEL_PEDIA",
   "commerceDoubleTime": {
    "culture": 1000
   },

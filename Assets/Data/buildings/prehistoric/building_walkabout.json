@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_WALKABOUT",
- "description": "TXT_KEY_BUILDING_WALKABOUT",
- "civilopedia": "TXT_KEY_BUILDING_WALKABOUT_PEDIA",
  "obsoletedBy": {
   "techs": [
    "TECH_CITY_PLANNING"
@@ -50,6 +48,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_WALKABOUT",
+  "civilopedia": "TXT_KEY_BUILDING_WALKABOUT_PEDIA",
   "nukeImmune": true,
   "conquestProbability": 70,
   "advisor": "ADVISOR_CULTURE",

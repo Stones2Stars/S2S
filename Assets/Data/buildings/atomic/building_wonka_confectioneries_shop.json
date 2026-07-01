@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_WONKA_CONFECTIONERIES_SHOP",
- "description": "TXT_KEY_BUILDING_WONKA_CONFECTIONERIES_SHOP",
- "civilopedia": "TXT_KEY_BUILDING_WONKA_CONFECTIONERIES_SHOP_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -117,6 +115,8 @@
   "construct": "AS2D_BUILD_BANK"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_WONKA_CONFECTIONERIES_SHOP",
+  "civilopedia": "TXT_KEY_BUILDING_WONKA_CONFECTIONERIES_SHOP_PEDIA",
   "nukeImmune": true,
   "worth": 8,
   "conquestProbability": 100,

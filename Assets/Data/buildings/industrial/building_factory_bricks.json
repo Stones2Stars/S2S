@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_FACTORY_BRICKS",
- "description": "TXT_KEY_BUILDING_FACTORY_BRICKS",
- "civilopedia": "TXT_KEY_BUILDING_FACTORY_BRICKS_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_GUILD_MASONS"
@@ -91,6 +89,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_FACTORY_BRICKS",
+  "civilopedia": "TXT_KEY_BUILDING_FACTORY_BRICKS_PEDIA",
   "conquestProbability": 70,
   "advisor": "ADVISOR_ECONOMY",
   "visibilityPriority": 1,

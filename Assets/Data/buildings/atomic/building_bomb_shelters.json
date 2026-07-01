@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_BOMB_SHELTERS",
- "description": "TXT_KEY_BUILDING_BOMB_SHELTERS",
- "civilopedia": "TXT_KEY_BUILDING_BOMB_SHELTERS_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -76,6 +74,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_BOMB_SHELTERS",
+  "civilopedia": "TXT_KEY_BUILDING_BOMB_SHELTERS_PEDIA",
   "nukeImmune": true,
   "worth": 1,
   "conquestProbability": 75,

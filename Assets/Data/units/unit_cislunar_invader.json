@@ -1,7 +1,5 @@
 {
  "type": "UNIT_CISLUNAR_INVADER",
- "description": "TXT_KEY_UNIT_CISLUNAR_INVADER",
- "civilopedia": "TXT_KEY_UNIT_CISLUNAR_INVADER_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -52,6 +50,8 @@
   "hurryCostModifier": 10000
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_CISLUNAR_INVADER",
+  "civilopedia": "TXT_KEY_UNIT_CISLUNAR_INVADER_PEDIA",
   "worth": 1,
   "xpValueAttack": 6,
   "xpValueDefense": 3,

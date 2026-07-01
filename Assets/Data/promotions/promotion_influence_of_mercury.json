@@ -1,6 +1,5 @@
 {
  "type": "PROMOTION_INFLUENCE_OF_MERCURY",
- "description": "TXT_KEY_PROMOTION_INFLUENCE_OF_MERCURY",
  "strength": {
   "unit": {
    "percent": 10
@@ -22,6 +21,7 @@
   "sound": "AS2D_IF_LEVELUP"
  },
  "identity": {
+  "description": "TXT_KEY_PROMOTION_INFLUENCE_OF_MERCURY",
   "unitCombats": [
    "UNITCOMBAT_SIEGE"
   ]

@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_TRANSDISCIPLINARY_UNIVERSITY",
- "description": "TXT_KEY_BUILDING_TRANSDISCIPLINARY_UNIVERSITY",
- "civilopedia": "TXT_KEY_BUILDING_TRANSDISCIPLINARY_UNIVERSITY_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -47,6 +45,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_TRANSDISCIPLINARY_UNIVERSITY",
+  "civilopedia": "TXT_KEY_BUILDING_TRANSDISCIPLINARY_UNIVERSITY_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

@@ -1,6 +1,5 @@
 {
  "type": "PROMOTION_STAY_THE_HAND_STATUS",
- "description": "TXT_KEY_PROMOTION_STAY_THE_HAND",
  "skills": {
   "defenseOnly": true
  },
@@ -16,6 +15,7 @@
   "sound": "AS2D_IF_LEVELUP"
  },
  "identity": {
+  "description": "TXT_KEY_PROMOTION_STAY_THE_HAND",
   "status": true,
   "quick": true,
   "prereqNormInvisible": true

@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_SULTAN_QABOOS_GRAND_MOSQUE",
- "description": "TXT_KEY_BUILDING_SULTAN_QABOOS_GRAND_MOSQUE",
- "civilopedia": "TXT_KEY_BUILDING_SULTAN_QABOOS_GRAND_MOSQUE_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -118,6 +116,8 @@
   "construct": "AS2D_BUILD_ISLAMIC"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_SULTAN_QABOOS_GRAND_MOSQUE",
+  "civilopedia": "TXT_KEY_BUILDING_SULTAN_QABOOS_GRAND_MOSQUE_PEDIA",
   "worth": 2,
   "conquestProbability": 100,
   "greatPeopleUnitType": "UNIT_PROPHET",

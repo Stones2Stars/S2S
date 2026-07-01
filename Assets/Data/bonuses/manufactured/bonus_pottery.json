@@ -1,7 +1,5 @@
 {
  "type": "BONUS_POTTERY",
- "description": "TXT_KEY_BONUS_POTTERY",
- "civilopedia": "TXT_KEY_BONUS_POTTERY_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_BEE_BOMBS",
@@ -36,6 +34,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_POTTERY",
+  "civilopedia": "TXT_KEY_BONUS_POTTERY_PEDIA",
   "bonusClassType": "BONUSCLASS_MANUFACTURED"
  }
 }

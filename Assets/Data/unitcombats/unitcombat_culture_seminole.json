@@ -1,12 +1,12 @@
 {
  "type": "UNITCOMBAT_CULTURE_SEMINOLE",
- "description": "TXT_KEY_UNITCOMBAT_CULTURE_SEMINOLE",
  "ui": {
   "art": {
    "icon": "Art/Interface/Buttons/units/sparth/categories/culture_seminole.dds"
   }
  },
  "identity": {
+  "description": "TXT_KEY_UNITCOMBAT_CULTURE_SEMINOLE",
   "culture": "BONUS_SEMINOLE"
  }
 }

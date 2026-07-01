@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_HQ_MILEHIGH_TRAVELS_INTERNATIONAL",
- "description": "TXT_KEY_BUILDING_HQ_MILEHIGH_TRAVELS_INTERNATIONAL",
- "civilopedia": "TXT_KEY_BUILDING_CORPORATION_MILEHIGH_PEDIA",
  "enables": {
   "corporations": [
    "CORPORATION_MILEHIGH"
@@ -61,6 +59,8 @@
   "construct": "AS2D_BUILD_BANK"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_HQ_MILEHIGH_TRAVELS_INTERNATIONAL",
+  "civilopedia": "TXT_KEY_BUILDING_CORPORATION_MILEHIGH_PEDIA",
   "commerceDoubleTime": {
    "culture": 1000
   },

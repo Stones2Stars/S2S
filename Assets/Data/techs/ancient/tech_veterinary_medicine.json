@@ -1,8 +1,5 @@
 {
  "type": "TECH_VETERINARY_MEDICINE",
- "description": "TXT_KEY_TECH_VETERINARY_MEDICINE",
- "civilopedia": "TXT_KEY_TECH_VETERINARY_MEDICINE_PEDIA",
- "quote": "TXT_KEY_TECH_VETERINARY_MEDICINE_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_ANCIENT_VETERINARIAN"
@@ -59,6 +56,9 @@
   "soundMP": "AS2D_TECH_VETERINARY_MEDICINE"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_VETERINARY_MEDICINE",
+  "civilopedia": "TXT_KEY_TECH_VETERINARY_MEDICINE_PEDIA",
+  "quote": "TXT_KEY_TECH_VETERINARY_MEDICINE_QUOTE",
   "era": "C2C_ERA_ANCIENT",
   "worth": 2,
   "tradeable": true,

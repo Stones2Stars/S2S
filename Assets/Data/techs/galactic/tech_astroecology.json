@@ -1,8 +1,5 @@
 {
  "type": "TECH_ASTROECOLOGY",
- "description": "TXT_KEY_TECH_ASTROECOLOGY",
- "civilopedia": "TXT_KEY_TECH_ASTROECOLOGY_PEDIA",
- "quote": "TXT_KEY_TECH_ASTROECOLOGY_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_LUNAR_SEA",
@@ -62,6 +59,9 @@
   "soundMP": "AS2D_TECH_ASTROECOLOGY"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_ASTROECOLOGY",
+  "civilopedia": "TXT_KEY_TECH_ASTROECOLOGY_PEDIA",
+  "quote": "TXT_KEY_TECH_ASTROECOLOGY_QUOTE",
   "era": "C2C_ERA_GALACTIC",
   "worth": 48,
   "militaryWorth": 4,

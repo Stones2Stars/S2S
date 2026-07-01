@@ -1,6 +1,5 @@
 {
  "type": "BUILD_BONUS_COW",
- "description": "TXT_KEY_BUILD_BONUS_COW",
  "produces": {
   "improvement": "IMPROVEMENT_BONUS_COW"
  },
@@ -19,6 +18,7 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILD_BONUS_COW",
   "consumesUnit": true
  }
 }

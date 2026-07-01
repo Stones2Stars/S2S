@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_INTERSTELLAR_ADAPTED_HUMANS",
- "description": "TXT_KEY_BUILDING_INTERSTELLAR_ADAPTED_HUMANS",
- "civilopedia": "TXT_KEY_BUILDING_INTERSTELLAR_ADAPTED_HUMANS_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_INTERSTELLAR_DEGENERATE_ERA_SURVIVAL_PLAN"
@@ -60,6 +58,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_INTERSTELLAR_ADAPTED_HUMANS",
+  "civilopedia": "TXT_KEY_BUILDING_INTERSTELLAR_ADAPTED_HUMANS_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

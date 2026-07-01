@@ -1,8 +1,5 @@
 {
  "type": "TECH_CAVALRY_TACTICS",
- "description": "TXT_KEY_TECH_CAVALRY_TACTICS",
- "civilopedia": "TXT_KEY_TECH_CAVALRY_TACTICS_PEDIA",
- "quote": "TXT_KEY_TECH_CAVALRY_TACTICS_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_ANIMAL_RACE_TRACK",
@@ -76,6 +73,9 @@
   "soundMP": "AS2D_TECH_CAVALRYTACTICS"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_CAVALRY_TACTICS",
+  "civilopedia": "TXT_KEY_TECH_CAVALRY_TACTICS_PEDIA",
+  "quote": "TXT_KEY_TECH_CAVALRY_TACTICS_QUOTE",
   "era": "C2C_ERA_RENAISSANCE",
   "worth": 32,
   "militaryWorth": 8,

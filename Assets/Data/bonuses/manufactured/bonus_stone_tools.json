@@ -1,13 +1,13 @@
 {
  "type": "BONUS_STONE_TOOLS",
- "description": "TXT_KEY_BONUS_STONE_TOOLS",
- "civilopedia": "TXT_KEY_BONUS_STONE_TOOLS_PEDIA",
  "world": {
   "art": {
    "icon": "ART_DEF_BONUS_STONE_TOOLS"
   }
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_STONE_TOOLS",
+  "civilopedia": "TXT_KEY_BONUS_STONE_TOOLS_PEDIA",
   "bonusClassType": "BONUSCLASS_MANUFACTURED"
  }
 }

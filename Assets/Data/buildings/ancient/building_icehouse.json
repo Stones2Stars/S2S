@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_ICEHOUSE",
- "description": "TXT_KEY_BUILDING_ICEHOUSE",
- "civilopedia": "TXT_KEY_BUILDING_ICEHOUSE_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_MODERN_WAREHOUSE"
@@ -59,6 +57,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_ICEHOUSE",
+  "civilopedia": "TXT_KEY_BUILDING_ICEHOUSE_PEDIA",
   "advisor": "ADVISOR_GROWTH",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

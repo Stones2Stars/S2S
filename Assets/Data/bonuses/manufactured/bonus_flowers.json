@@ -1,7 +1,5 @@
 {
  "type": "BONUS_FLOWERS",
- "description": "TXT_KEY_BONUS_FLOWERS",
- "civilopedia": "TXT_KEY_BONUS_FLOWERS_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_FACTORY_PERFUME",
@@ -17,6 +15,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_FLOWERS",
+  "civilopedia": "TXT_KEY_BONUS_FLOWERS_PEDIA",
   "bonusClassType": "BONUSCLASS_MANUFACTURED"
  }
 }

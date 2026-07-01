@@ -1,7 +1,5 @@
 {
  "type": "BONUS_PAPAYA",
- "description": "TXT_KEY_BONUS_PAPAYA",
- "civilopedia": "TXT_KEY_BONUS_PAPAYA_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_CULTURE_GUARANI",
@@ -72,6 +70,8 @@
   ]
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_PAPAYA",
+  "civilopedia": "TXT_KEY_BONUS_PAPAYA_PEDIA",
   "bonusClassType": "BONUSCLASS_CROP"
  }
 }

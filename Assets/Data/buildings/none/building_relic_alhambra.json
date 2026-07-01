@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_RELIC_ALHAMBRA",
- "description": "TXT_KEY_BUILDING_RELIC_ALHAMBRA",
- "civilopedia": "TXT_KEY_BUILDING_ALHAMBRA_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -36,6 +34,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_RELIC_ALHAMBRA",
+  "civilopedia": "TXT_KEY_BUILDING_ALHAMBRA_PEDIA",
   "notConstructible": true,
   "nukeImmune": true,
   "noInstanceLimit": true,

@@ -1,6 +1,5 @@
 {
  "type": "UNITCOMBAT_TAMED",
- "description": "TXT_KEY_UNITCOMBAT_TAMED",
  "capture": {
   "unit": {
    "probability": {
@@ -18,5 +17,8 @@
   "art": {
    "icon": "Art/Interface/Buttons/units/sparth/categories/tamed.dds"
   }
+ },
+ "identity": {
+  "description": "TXT_KEY_UNITCOMBAT_TAMED"
  }
 }

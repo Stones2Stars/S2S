@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_CAMP_OSTRICH",
- "description": "TXT_KEY_BUILDING_CAMP_OSTRICH",
- "civilopedia": "TXT_KEY_BUILDING_CAMP_OSTRICH_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_FARM_ANIMAL_OSTRICH",
@@ -91,6 +89,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_CAMP_OSTRICH",
+  "civilopedia": "TXT_KEY_BUILDING_CAMP_OSTRICH_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

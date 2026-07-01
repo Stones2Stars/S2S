@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_PLANTATION_MADDER",
- "description": "TXT_KEY_BUILDING_PLANTATION_MADDER",
- "civilopedia": "TXT_KEY_BUILDING_PLANTATION_MADDER_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_DYE_MAKER",
@@ -74,6 +72,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_PLANTATION_MADDER",
+  "civilopedia": "TXT_KEY_BUILDING_PLANTATION_MADDER_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

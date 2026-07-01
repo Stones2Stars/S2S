@@ -1,7 +1,5 @@
 {
  "type": "BONUS_COTTON",
- "description": "TXT_KEY_BONUS_COTTON",
- "civilopedia": "TXT_KEY_BONUS_COTTON_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_CULTURE_CONFEDERATES",
@@ -67,6 +65,8 @@
   ]
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_COTTON",
+  "civilopedia": "TXT_KEY_BONUS_COTTON_PEDIA",
   "bonusClassType": "BONUSCLASS_PRODUCTION"
  }
 }

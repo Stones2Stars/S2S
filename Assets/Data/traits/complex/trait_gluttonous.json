@@ -1,8 +1,5 @@
 {
  "type": "TRAIT_GLUTTONOUS",
- "description": "TXT_KEY_TRAIT_GLUTTONOUS",
- "civilopedia": "TXT_KEY_TRAIT_GLUTTONOUS_PEDIA",
- "strategy": "TXT_KEY_TRAIT_GLUTTONOUS_STRATEGY",
  "excludes": [
   "TRAIT_AGRICULTURAL"
  ],
@@ -414,6 +411,9 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_TRAIT_GLUTTONOUS",
+  "civilopedia": "TXT_KEY_TRAIT_GLUTTONOUS_PEDIA",
+  "strategy": "TXT_KEY_TRAIT_GLUTTONOUS_STRATEGY",
   "negativeTrait": true
  }
 }

@@ -1,9 +1,5 @@
 {
  "type": "CIVILIZATION_KOREA",
- "description": "TXT_KEY_CIVILIZATION_KOREA",
- "shortDescription": "TXT_KEY_CIVILIZATION_KOREA_SHORT",
- "adjective": "TXT_KEY_CIVILIZATION_KOREA_ADJECTIVE",
- "civilopedia": "TXT_KEY_CIVILIZATION_KOREA_PEDIA",
  "grants": {
   "buildings": [
    "BUILDING_PALACE",
@@ -32,10 +28,6 @@
    "TECH_GAME_START"
   ]
  },
- "policies": {
-  "playable": true,
-  "aiPlayable": true
- },
  "world": {
   "art": {
    "playerColor": "PLAYERCOLOR_DARK_CYAN",
@@ -49,6 +41,12 @@
   "action": "AS3D_KOREA_ORDER"
  },
  "identity": {
+  "description": "TXT_KEY_CIVILIZATION_KOREA",
+  "shortDescription": "TXT_KEY_CIVILIZATION_KOREA_SHORT",
+  "adjective": "TXT_KEY_CIVILIZATION_KOREA_ADJECTIVE",
+  "civilopedia": "TXT_KEY_CIVILIZATION_KOREA_PEDIA",
+  "playable": true,
+  "aiPlayable": true,
   "leaders": [
    "LEADER_WANGKON",
    "LEADER_KIM",

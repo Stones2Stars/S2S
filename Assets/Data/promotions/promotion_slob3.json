@@ -1,6 +1,5 @@
 {
  "type": "PROMOTION_SLOB3",
- "description": "TXT_KEY_PROMOTION_SLOB3",
  "PROPERTY_WATER_POLLUTION": {
   "city": {
    "flat": 1
@@ -29,6 +28,7 @@
   "sound": "AS2D_IF_LEVELUP"
  },
  "identity": {
+  "description": "TXT_KEY_PROMOTION_SLOB3",
   "unitCombats": [
    "UNITCOMBAT_SPECIES_HUMAN",
    "UNITCOMBAT_SPECIES_NEANDERTHAL"

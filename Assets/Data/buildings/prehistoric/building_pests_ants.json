@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_PESTS_ANTS",
- "description": "TXT_KEY_BUILDING_PESTS_ANTS",
- "civilopedia": "TXT_KEY_BUILDING_PESTS_PEDIA",
  "obsoletedBy": {
   "techs": [
    "TECH_ENVIRONMENTAL_ECONOMICS"
@@ -39,6 +37,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_PESTS_ANTS",
+  "civilopedia": "TXT_KEY_BUILDING_PESTS_PEDIA",
   "notConstructible": true,
   "nukeImmune": true,
   "autoBuild": true,

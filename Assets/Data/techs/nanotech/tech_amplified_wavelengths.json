@@ -1,8 +1,5 @@
 {
  "type": "TECH_AMPLIFIED_WAVELENGTHS",
- "description": "TXT_KEY_TECH_AMPLIFIED_WAVELENGTHS",
- "civilopedia": "TXT_KEY_TECH_AMPLIFIED_WAVELENGTHS_PEDIA",
- "quote": "TXT_KEY_TECH_AMPLIFIED_WAVELENGTHS_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_CISLUNAR_BIG_BANG_OBSERVATORY",
@@ -70,6 +67,9 @@
   "soundMP": "AS2D_TECH_AMPLIFIED_WAVELENGTHS"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_AMPLIFIED_WAVELENGTHS",
+  "civilopedia": "TXT_KEY_TECH_AMPLIFIED_WAVELENGTHS_PEDIA",
+  "quote": "TXT_KEY_TECH_AMPLIFIED_WAVELENGTHS_QUOTE",
   "era": "C2C_ERA_NANOTECH",
   "worth": 48,
   "militaryWorth": 4,

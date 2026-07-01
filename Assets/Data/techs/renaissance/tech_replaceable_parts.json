@@ -1,8 +1,5 @@
 {
  "type": "TECH_REPLACEABLE_PARTS",
- "description": "TXT_KEY_TECH_REPLACEABLE_PARTS",
- "civilopedia": "TXT_KEY_TECH_REPLACEABLE_PARTS_PEDIA",
- "quote": "TXT_KEY_TECH_REPLACEABLE_PARTS_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_COTTAGE_INDUSTRY",
@@ -60,6 +57,9 @@
   "soundMP": "AS2D_TECH_MP_REPLACE_PARTS"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_REPLACEABLE_PARTS",
+  "civilopedia": "TXT_KEY_TECH_REPLACEABLE_PARTS_PEDIA",
+  "quote": "TXT_KEY_TECH_REPLACEABLE_PARTS_QUOTE",
   "era": "C2C_ERA_RENAISSANCE",
   "worth": 32,
   "tradeable": true,

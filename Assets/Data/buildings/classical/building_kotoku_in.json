@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_KOTOKU_IN",
- "description": "TXT_KEY_BUILDING_KOTOKU_IN",
- "civilopedia": "TXT_KEY_BUILDING_KOTOKU_IN_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -109,6 +107,8 @@
   "construct": "AS2D_BUILD_BUDDHIST"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_KOTOKU_IN",
+  "civilopedia": "TXT_KEY_BUILDING_KOTOKU_IN_PEDIA",
   "commerceDoubleTime": {
    "culture": 1000
   },

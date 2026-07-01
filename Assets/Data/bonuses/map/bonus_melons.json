@@ -1,7 +1,5 @@
 {
  "type": "BONUS_MELONS",
- "description": "TXT_KEY_BONUS_MELONS",
- "civilopedia": "TXT_KEY_BONUS_MELONS_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_CULTURE_KAZAKH",
@@ -72,6 +70,8 @@
   ]
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_MELONS",
+  "civilopedia": "TXT_KEY_BONUS_MELONS_PEDIA",
   "bonusClassType": "BONUSCLASS_CROP"
  }
 }

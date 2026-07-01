@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_TELEGRAPH_STATION",
- "description": "TXT_KEY_BUILDING_TELEGRAPH_STATION",
- "civilopedia": "TXT_KEY_BUILDING_TELEGRAPH_STATION_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_MAIL_ORDER_CATALOGUE",
@@ -83,6 +81,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_TELEGRAPH_STATION",
+  "civilopedia": "TXT_KEY_BUILDING_TELEGRAPH_STATION_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

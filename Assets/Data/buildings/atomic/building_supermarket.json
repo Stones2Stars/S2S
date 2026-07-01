@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_SUPERMARKET",
- "description": "TXT_KEY_BUILDING_SUPERMARKET",
- "civilopedia": "TXT_KEY_BUILDING_SUPERMARKET_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_GUILD_GROCERS",
@@ -340,6 +338,8 @@
   "construct": "AS2D_BUILD_SUPERMARKET"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_SUPERMARKET",
+  "civilopedia": "TXT_KEY_BUILDING_SUPERMARKET_PEDIA",
   "worth": 6,
   "conquestProbability": 75,
   "dcmAirbombMission": 2,

@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_RECRUITMENT_CENTER",
- "description": "TXT_KEY_BUILDING_RECRUITMENT_CENTER",
- "civilopedia": "TXT_KEY_BUILDING_RECRUITMENT_CENTER_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -54,6 +52,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_RECRUITMENT_CENTER",
+  "civilopedia": "TXT_KEY_BUILDING_RECRUITMENT_CENTER_PEDIA",
   "worth": 6,
   "militaryWorth": 4,
   "advisor": "ADVISOR_MILITARY",

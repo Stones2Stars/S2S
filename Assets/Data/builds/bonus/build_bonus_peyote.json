@@ -1,6 +1,5 @@
 {
  "type": "BUILD_BONUS_PEYOTE",
- "description": "TXT_KEY_BUILD_BONUS_PEYOTE",
  "produces": {
   "improvement": "IMPROVEMENT_BONUS_PEYOTE"
  },
@@ -19,6 +18,7 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILD_BONUS_PEYOTE",
   "consumesUnit": true
  }
 }

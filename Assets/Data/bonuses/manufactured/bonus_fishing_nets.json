@@ -1,7 +1,5 @@
 {
  "type": "BONUS_FISHING_NETS",
- "description": "TXT_KEY_BONUS_FISHING_NETS",
- "civilopedia": "TXT_KEY_BONUS_FISHING_NETS_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_MACKEREL_NETS",
@@ -25,6 +23,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_FISHING_NETS",
+  "civilopedia": "TXT_KEY_BONUS_FISHING_NETS_PEDIA",
   "bonusClassType": "BONUSCLASS_MANUFACTURED"
  }
 }

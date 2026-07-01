@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_FLINT_GATHERER",
- "description": "TXT_KEY_BUILDING_FLINT_GATHERER",
- "civilopedia": "TXT_KEY_BUILDING_FLINT_GATHERER_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_RESOURCES_FLINT"
@@ -133,6 +131,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_FLINT_GATHERER",
+  "civilopedia": "TXT_KEY_BUILDING_FLINT_GATHERER_PEDIA",
   "enabledCivilizations": [
    "CIVILIZATION_NPC_NEANDERTHAL"
   ],

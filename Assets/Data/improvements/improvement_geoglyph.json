@@ -1,7 +1,5 @@
 {
  "type": "IMPROVEMENT_GEOGLYPH",
- "description": "TXT_KEY_IMPROVEMENT_GEOGLYPH",
- "civilopedia": "TXT_KEY_IMPROVEMENT_SACRED_SITE_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -87,6 +85,8 @@
   "uniqueRange": 2
  },
  "identity": {
+  "description": "TXT_KEY_IMPROVEMENT_GEOGLYPH",
+  "civilopedia": "TXT_KEY_IMPROVEMENT_SACRED_SITE_PEDIA",
   "advancedStart": {
    "cost": 30
   },

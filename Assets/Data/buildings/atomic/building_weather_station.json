@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_WEATHER_STATION",
- "description": "TXT_KEY_BUILDING_WEATHER_STATION",
- "civilopedia": "TXT_KEY_BUILDING_WEATHER_STATION_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -45,6 +43,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_WEATHER_STATION",
+  "civilopedia": "TXT_KEY_BUILDING_WEATHER_STATION_PEDIA",
   "applyFreePromotionOnMove": true,
   "worth": 5,
   "advisor": "ADVISOR_SCIENCE",

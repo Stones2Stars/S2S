@@ -1,8 +1,5 @@
 {
  "type": "TECH_NAVAL_TACTICS",
- "description": "TXT_KEY_TECH_NAVAL_TACTICS",
- "civilopedia": "TXT_KEY_TECH_NAVAL_TACTICS_PEDIA",
- "quote": "TXT_KEY_TECH_NAVAL_TACTICS_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_NAVAL_ACADEMY"
@@ -60,6 +57,9 @@
   "soundMP": "AS2D_TECH_NAVAL_TACTICS"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_NAVAL_TACTICS",
+  "civilopedia": "TXT_KEY_TECH_NAVAL_TACTICS_PEDIA",
+  "quote": "TXT_KEY_TECH_NAVAL_TACTICS_QUOTE",
   "era": "C2C_ERA_RENAISSANCE",
   "worth": 32,
   "tradeable": true,

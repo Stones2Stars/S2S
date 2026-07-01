@@ -1,8 +1,5 @@
 {
  "type": "TECH_ASTROGEOLOGY",
- "description": "TXT_KEY_TECH_ASTROGEOLOGY",
- "civilopedia": "TXT_KEY_TECH_ASTROGEOLOGY_PEDIA",
- "quote": "TXT_KEY_TECH_ASTROGEOLOGY_QUOTE",
  "enables": {
   "bonuses": [
    "BONUS_CARBON_DIOXIDE_ICE",
@@ -66,6 +63,9 @@
   "soundMP": "AS2D_TECH_ASTROGEOLOGY"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_ASTROGEOLOGY",
+  "civilopedia": "TXT_KEY_TECH_ASTROGEOLOGY_PEDIA",
+  "quote": "TXT_KEY_TECH_ASTROGEOLOGY_QUOTE",
   "era": "C2C_ERA_ATOMIC",
   "worth": 48,
   "militaryWorth": 4,

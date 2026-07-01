@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_PULLEY_WHEEL",
- "description": "TXT_KEY_BUILDING_PULLEY_WHEEL",
- "civilopedia": "TXT_KEY_BUILDING_PULLEY_WHEEL_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_TREADMILL_CRANE"
@@ -99,6 +97,8 @@
   "construct": "AS2D_BUILD_WALLS"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_PULLEY_WHEEL",
+  "civilopedia": "TXT_KEY_BUILDING_PULLEY_WHEEL_PEDIA",
   "nukeImmune": true,
   "conquestProbability": 70,
   "advisor": "ADVISOR_ECONOMY",

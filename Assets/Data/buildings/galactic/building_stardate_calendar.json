@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_STARDATE_CALENDAR",
- "description": "TXT_KEY_BUILDING_STARDATE_CALENDAR",
- "civilopedia": "TXT_KEY_BUILDING_STARDATE_CALENDAR_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -52,6 +50,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_STARDATE_CALENDAR",
+  "civilopedia": "TXT_KEY_BUILDING_STARDATE_CALENDAR_PEDIA",
   "conquestProbability": 100,
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,

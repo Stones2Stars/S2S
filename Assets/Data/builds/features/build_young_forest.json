@@ -1,6 +1,5 @@
 {
  "type": "BUILD_YOUNG_FOREST",
- "description": "TXT_KEY_BUILD_YOUNG_FOREST",
  "requires": {
   "build": {
    "all": [
@@ -240,5 +239,8 @@
   "art": {
    "entityEvent": "ENTITY_EVENT_BUILD"
   }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILD_YOUNG_FOREST"
  }
 }

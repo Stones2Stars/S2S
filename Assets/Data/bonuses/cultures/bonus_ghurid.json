@@ -1,7 +1,5 @@
 {
  "type": "BONUS_GHURID",
- "description": "TXT_KEY_BONUS_GHURID",
- "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
  "enables": {
   "units": [
    "UNIT_ALA_AL_DIN_HUSAYN",
@@ -14,6 +12,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_GHURID",
+  "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
   "bonusClassType": "BONUSCLASS_CULTURE"
  }
 }

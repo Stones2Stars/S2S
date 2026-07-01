@@ -1,8 +1,5 @@
 {
  "type": "TECH_TOURISM",
- "description": "TXT_KEY_TECH_TOURISM",
- "civilopedia": "TXT_KEY_TECH_TOURISM_PEDIA",
- "quote": "TXT_KEY_TECH_TOURISM_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_ACHIEVEMENT_TOURISTIC",
@@ -94,6 +91,9 @@
   "soundMP": "AS2D_TECH_TOURISM"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_TOURISM",
+  "civilopedia": "TXT_KEY_TECH_TOURISM_PEDIA",
+  "quote": "TXT_KEY_TECH_TOURISM_QUOTE",
   "era": "C2C_ERA_ATOMIC",
   "worth": 48,
   "militaryWorth": 10,

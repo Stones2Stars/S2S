@@ -1,7 +1,5 @@
 {
  "type": "UNIT_PLO_FIGHTER",
- "description": "TXT_KEY_UNIT_PLO_FIGHTER",
- "civilopedia": "TXT_KEY_UNIT_PLO_FIGHTER_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -97,6 +95,8 @@
   "upkeep": 1
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_PLO_FIGHTER",
+  "civilopedia": "TXT_KEY_UNIT_PLO_FIGHTER_PEDIA",
   "worth": 5,
   "militaryWorth": 140,
   "xpValueAttack": 6,

@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_AUTOMOBILE_DEALERSHIP",
- "description": "TXT_KEY_BUILDING_AUTOMOBILE_DEALERSHIP",
- "civilopedia": "TXT_KEY_BUILDING_AUTOMOBILE_DEALERSHIP_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_AUTOMATED_VEHICLE_DEALERSHIP"
@@ -78,6 +76,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_AUTOMOBILE_DEALERSHIP",
+  "civilopedia": "TXT_KEY_BUILDING_AUTOMOBILE_DEALERSHIP_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

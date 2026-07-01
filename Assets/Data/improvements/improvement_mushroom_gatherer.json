@@ -1,7 +1,5 @@
 {
  "type": "IMPROVEMENT_MUSHROOM_GATHERER",
- "description": "TXT_KEY_IMPROVEMENT_MUSHROOM_GATHERER",
- "civilopedia": "TXT_KEY_IMPROVEMENT_MUSHROOM_GATHERER_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -75,6 +73,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_IMPROVEMENT_MUSHROOM_GATHERER",
+  "civilopedia": "TXT_KEY_IMPROVEMENT_MUSHROOM_GATHERER_PEDIA",
   "upgradeTime": 20,
   "pillageGold": 7,
   "upgradesTo": "IMPROVEMENT_VERTICAL_FARM",

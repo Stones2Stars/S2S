@@ -1,6 +1,5 @@
 {
  "type": "PROMOTION_CHAFF",
- "description": "TXT_KEY_PROMOTION_CHAFF",
  "air": {
   "unit": {
    "evasion": {
@@ -17,6 +16,7 @@
   "sound": "AS2D_IF_LEVELUP"
  },
  "identity": {
+  "description": "TXT_KEY_PROMOTION_CHAFF",
   "unitCombats": [
    "UNITCOMBAT_HELICOPTER",
    "UNITCOMBAT_JET_FIGHTERS",

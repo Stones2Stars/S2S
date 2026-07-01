@@ -1,7 +1,5 @@
 {
  "type": "UNIT_MECHANIC",
- "description": "TXT_KEY_UNIT_MECHANIC",
- "civilopedia": "TXT_KEY_UNIT_MECHANIC_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -71,6 +69,8 @@
   "hurryCostModifier": 25
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_MECHANIC",
+  "civilopedia": "TXT_KEY_UNIT_MECHANIC_PEDIA",
   "worth": 6,
   "militaryWorth": 15,
   "xpValueDefense": 2,

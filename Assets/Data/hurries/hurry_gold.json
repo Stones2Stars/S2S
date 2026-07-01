@@ -1,6 +1,5 @@
 {
  "type": "HURRY_GOLD",
- "description": "TXT_KEY_HURRY_GOLD",
  "conversion": {
   "goldPerProduction": 3
  },
@@ -8,5 +7,8 @@
   "art": {
    "icon": "Art/Interface/MainScreen/CityScreen/hurry_commerce.dds"
   }
+ },
+ "identity": {
+  "description": "TXT_KEY_HURRY_GOLD"
  }
 }

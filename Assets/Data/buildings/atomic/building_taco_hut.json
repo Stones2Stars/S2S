@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_TACO_HUT",
- "description": "TXT_KEY_BUILDING_TACO_HUT",
- "civilopedia": "TXT_KEY_BUILDING_TACO_HUT_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_UNIVERSAL_RESTAURANT"
@@ -114,6 +112,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_TACO_HUT",
+  "civilopedia": "TXT_KEY_BUILDING_TACO_HUT_PEDIA",
   "conquestProbability": 70,
   "advisor": "ADVISOR_ECONOMY",
   "visibilityPriority": 1,

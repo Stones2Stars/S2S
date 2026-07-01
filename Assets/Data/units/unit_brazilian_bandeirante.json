@@ -1,7 +1,5 @@
 {
  "type": "UNIT_BRAZILIAN_BANDEIRANTE",
- "description": "TXT_KEY_UNIT_BRAZILIAN_BANDEIRANTE",
- "civilopedia": "TXT_KEY_UNIT_BANDEIRANTE_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -91,6 +89,8 @@
   "upkeep": 1
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_BRAZILIAN_BANDEIRANTE",
+  "civilopedia": "TXT_KEY_UNIT_BANDEIRANTE_PEDIA",
   "worth": 3,
   "militaryWorth": 49,
   "xpValueAttack": 6,

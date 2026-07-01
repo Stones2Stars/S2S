@@ -1,8 +1,5 @@
 {
  "type": "TECH_WEATHER_FORECASTING",
- "description": "TXT_KEY_TECH_WEATHER_FORECASTING",
- "civilopedia": "TXT_KEY_TECH_WEATHER_FORECASTING_PEDIA",
- "quote": "TXT_KEY_TECH_WEATHER_FORECASTING_QUOTE",
  "enables": {
   "builds": [
    "BUILD_PAVED_ROAD"
@@ -53,6 +50,9 @@
   "soundMP": "AS2D_TECH_WEATHER_FORECASTING"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_WEATHER_FORECASTING",
+  "civilopedia": "TXT_KEY_TECH_WEATHER_FORECASTING_PEDIA",
+  "quote": "TXT_KEY_TECH_WEATHER_FORECASTING_QUOTE",
   "era": "C2C_ERA_RENAISSANCE",
   "worth": 40,
   "militaryWorth": 2,

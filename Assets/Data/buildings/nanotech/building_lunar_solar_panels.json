@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_LUNAR_SOLAR_PANELS",
- "description": "TXT_KEY_BUILDING_LUNAR_SOLAR_PANELS",
- "civilopedia": "TXT_KEY_BUILDING_LUNAR_SOLAR_PANELS_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -40,6 +38,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_LUNAR_SOLAR_PANELS",
+  "civilopedia": "TXT_KEY_BUILDING_LUNAR_SOLAR_PANELS_PEDIA",
   "forceNoPrereqScaling": true,
   "conquestProbability": 70,
   "advisor": "ADVISOR_ECONOMY",

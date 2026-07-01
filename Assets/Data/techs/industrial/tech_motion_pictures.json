@@ -1,8 +1,5 @@
 {
  "type": "TECH_MOTION_PICTURES",
- "description": "TXT_KEY_TECH_MOTION_PICTURES",
- "civilopedia": "TXT_KEY_TECH_MOTION_PICTURES_PEDIA",
- "quote": "TXT_KEY_TECH_MOTION_PICTURES_QUOTE",
  "enables": {
   "bonuses": [
    "BONUS_HIT_MOVIES"
@@ -65,6 +62,9 @@
   "soundMP": "AS2D_TECH_MOTION_PICTURES"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_MOTION_PICTURES",
+  "civilopedia": "TXT_KEY_TECH_MOTION_PICTURES_PEDIA",
+  "quote": "TXT_KEY_TECH_MOTION_PICTURES_QUOTE",
   "era": "C2C_ERA_INDUSTRIAL",
   "worth": 48,
   "militaryWorth": 4,

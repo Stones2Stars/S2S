@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_GREAT_BONFIRE",
- "description": "TXT_KEY_BUILDING_GREAT_BONFIRE",
- "civilopedia": "TXT_KEY_BUILDING_GREAT_BONFIRE_PEDIA",
  "obsoletedBy": {
   "techs": [
    "TECH_FIREFIGHTING"
@@ -64,6 +62,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_GREAT_BONFIRE",
+  "civilopedia": "TXT_KEY_BUILDING_GREAT_BONFIRE_PEDIA",
   "neverCapture": true,
   "centerInCity": true,
   "worth": 10,

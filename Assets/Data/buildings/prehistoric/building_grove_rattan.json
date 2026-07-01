@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_GROVE_RATTAN",
- "description": "TXT_KEY_BUILDING_GROVE_RATTAN",
- "civilopedia": "TXT_KEY_BUILDING_GROVE_RATTAN_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_AGROFOREST"
@@ -61,6 +59,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_GROVE_RATTAN",
+  "civilopedia": "TXT_KEY_BUILDING_GROVE_RATTAN_PEDIA",
   "enabledCivilizations": [
    "CIVILIZATION_NPC_NEANDERTHAL"
   ],

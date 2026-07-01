@@ -1,8 +1,5 @@
 {
  "type": "UNIT_LIBERTY_MERCHANT",
- "description": "TXT_KEY_UNIT_LIBERTY_MERCHANT",
- "civilopedia": "TXT_KEY_UNIT_LIBERTY_MERCHANT_PEDIA",
- "help": "TXT_KEY_UNIT_MERCHANT_SHIP_HELP",
  "obsoletedBy": {
   "techs": [
    "TECH_CONGLOMERATES"
@@ -75,6 +72,9 @@
   ]
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_LIBERTY_MERCHANT",
+  "civilopedia": "TXT_KEY_UNIT_LIBERTY_MERCHANT_PEDIA",
+  "help": "TXT_KEY_UNIT_MERCHANT_SHIP_HELP",
   "worth": 2,
   "minAreaSize": 10,
   "domain": "DOMAIN_SEA",

@@ -1,8 +1,5 @@
 {
  "type": "CIVIC_PUBLIC_WORKS",
- "description": "TXT_KEY_CIVIC_PUBLIC_WORKS",
- "civilopedia": "TXT_KEY_CIVIC_PUBLIC_WORKS_PEDIA",
- "strategy": "TXT_KEY_CIVIC_PUBLIC_WORKS_STRATEGY",
  "enables": {
   "buildings": [
    "BUILDING_GARDEN_CITY",
@@ -167,6 +164,9 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_CIVIC_PUBLIC_WORKS",
+  "civilopedia": "TXT_KEY_CIVIC_PUBLIC_WORKS_PEDIA",
+  "strategy": "TXT_KEY_CIVIC_PUBLIC_WORKS_STRATEGY",
   "civicOption": "CIVICOPTION_WELFARE",
   "upkeepLevel": "UPKEEP_MEDIUM"
  }

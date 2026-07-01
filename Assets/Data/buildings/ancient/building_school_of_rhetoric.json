@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_SCHOOL_OF_RHETORIC",
- "description": "TXT_KEY_BUILDING_SCHOOL_OF_RHETORIC",
- "civilopedia": "TXT_KEY_BUILDING_SCHOOL_OF_RHETORIC_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_LYCEUM"
@@ -83,6 +81,8 @@
   "construct": "AS2D_BUILD_LIBRARY"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_SCHOOL_OF_RHETORIC",
+  "civilopedia": "TXT_KEY_BUILDING_SCHOOL_OF_RHETORIC_PEDIA",
   "worth": 2,
   "advisor": "ADVISOR_CULTURE",
   "mapCategories": [

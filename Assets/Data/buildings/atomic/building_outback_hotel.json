@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_OUTBACK_HOTEL",
- "description": "TXT_KEY_BUILDING_OUTBACK_HOTEL",
- "civilopedia": "TXT_KEY_BUILDING_OUTBACK_HOTEL_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_TOURISM_MEGACOMPLEX"
@@ -79,6 +77,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_OUTBACK_HOTEL",
+  "civilopedia": "TXT_KEY_BUILDING_OUTBACK_HOTEL_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

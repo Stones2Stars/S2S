@@ -1,7 +1,5 @@
 {
  "type": "PROMOTIONLINE_BUILD_UP_PATRIOTISM",
- "description": "TXT_KEY_PROMOTIONLINE_BUILD_UP_PATRIOTISM",
- "help": "TXT_KEY_PROMOTIONLINE_BUILD_UP_PATRIOTISM_HELP",
  "buildUp": {
   "active": true
  },
@@ -11,6 +9,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_PROMOTIONLINE_BUILD_UP_PATRIOTISM",
+  "help": "TXT_KEY_PROMOTIONLINE_BUILD_UP_PATRIOTISM_HELP",
   "unitCombats": [
    "UNITCOMBAT_ENTERTAINER"
   ],

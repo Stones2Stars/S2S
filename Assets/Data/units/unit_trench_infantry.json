@@ -1,7 +1,5 @@
 {
  "type": "UNIT_TRENCH_INFANTRY",
- "description": "TXT_KEY_UNIT_TRENCH_INFANTRY",
- "civilopedia": "TXT_KEY_UNIT_TRENCH_INFANTRY_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -49,6 +47,8 @@
   "upkeep": 1
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_TRENCH_INFANTRY",
+  "civilopedia": "TXT_KEY_UNIT_TRENCH_INFANTRY_PEDIA",
   "worth": 3,
   "militaryWorth": 18,
   "xpValueAttack": 1,

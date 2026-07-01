@@ -1,7 +1,5 @@
 {
  "type": "BONUS_WOOL",
- "description": "TXT_KEY_BONUS_WOOL",
- "civilopedia": "TXT_KEY_BONUS_WOOL_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_FACTORY_CLOTH",
@@ -15,6 +13,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_WOOL",
+  "civilopedia": "TXT_KEY_BONUS_WOOL_PEDIA",
   "bonusClassType": "BONUSCLASS_MANUFACTURED"
  }
 }

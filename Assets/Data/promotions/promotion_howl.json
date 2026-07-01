@@ -1,6 +1,5 @@
 {
  "type": "PROMOTION_HOWL",
- "description": "TXT_KEY_PROMOTION_HOWL",
  "strength": {
   "unit": {
    "unnerve": {
@@ -32,6 +31,7 @@
   "sound": "AS2D_IF_LEVELUP"
  },
  "identity": {
+  "description": "TXT_KEY_PROMOTION_HOWL",
   "unitCombats": [
    "UNITCOMBAT_CANINE"
   ]

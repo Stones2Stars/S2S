@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_ARCHERY_RANGE",
- "description": "TXT_KEY_BUILDING_ARCHERY_RANGE",
- "civilopedia": "TXT_KEY_BUILDING_ARCHERY_RANGE_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_SHOOTING_CLUB"
@@ -78,6 +76,8 @@
   "construct": "AS2D_BUILD_ARCHERY_RANGE"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_ARCHERY_RANGE",
+  "civilopedia": "TXT_KEY_BUILDING_ARCHERY_RANGE_PEDIA",
   "worth": 2,
   "militaryWorth": 3,
   "dcmAirbombMission": 2,

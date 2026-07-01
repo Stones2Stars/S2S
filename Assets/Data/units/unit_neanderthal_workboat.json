@@ -1,7 +1,5 @@
 {
  "type": "UNIT_NEANDERTHAL_WORKBOAT",
- "description": "TXT_KEY_UNIT_NEANDERTHAL_WORKBOAT",
- "civilopedia": "TXT_KEY_UNIT_WORKBOAT_PEDIA",
  "obsoletedBy": {
   "techs": [
    "TECH_SEDENTARY_LIFESTYLE"
@@ -53,6 +51,8 @@
   "upkeep": 1
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_NEANDERTHAL_WORKBOAT",
+  "civilopedia": "TXT_KEY_UNIT_WORKBOAT_PEDIA",
   "worth": 1,
   "xpValueDefense": 3,
   "domain": "DOMAIN_SEA",

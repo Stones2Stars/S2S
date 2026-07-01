@@ -1,12 +1,12 @@
 {
  "type": "PROMOTIONLINE_BACK_DOWN",
- "description": "TXT_KEY_PROMOTIONLINE_BACK_DOWN",
  "ui": {
   "art": {
    "icon": "art/Buttons/Promotions/BackDown1Promotion.dds"
   }
  },
  "identity": {
+  "description": "TXT_KEY_PROMOTIONLINE_BACK_DOWN",
   "unitCombats": [
    "UNITCOMBAT_THROWING",
    "UNITCOMBAT_BALLOON",

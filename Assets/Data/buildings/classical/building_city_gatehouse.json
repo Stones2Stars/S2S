@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_CITY_GATEHOUSE",
- "description": "TXT_KEY_BUILDING_CITY_GATEHOUSE",
- "civilopedia": "TXT_KEY_BUILDING_CITY_GATEHOUSE_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_CITY_GATE"
@@ -100,6 +98,8 @@
   "construct": "AS2D_BUILD_BARRACKS"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_CITY_GATEHOUSE",
+  "civilopedia": "TXT_KEY_BUILDING_CITY_GATEHOUSE_PEDIA",
   "militaryWorth": 2,
   "advisor": "ADVISOR_MILITARY",
   "visibilityPriority": 1,

@@ -1,12 +1,12 @@
 {
  "type": "UNITCOMBAT_RELIGION_SHAMANISM",
- "description": "TXT_KEY_UNITCOMBAT_RELIGION_SHAMANISM",
  "ui": {
   "art": {
    "icon": "Art/Interface/Buttons/units/sparth/categories/religion_shamanism.dds"
   }
  },
  "identity": {
+  "description": "TXT_KEY_UNITCOMBAT_RELIGION_SHAMANISM",
   "religion": "RELIGION_SHAMANISM"
  }
 }

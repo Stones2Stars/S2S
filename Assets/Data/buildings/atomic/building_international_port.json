@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_INTERNATIONAL_PORT",
- "description": "TXT_KEY_BUILDING_INTERNATIONAL_PORT",
- "civilopedia": "TXT_KEY_BUILDING_INTERNATIONAL_PORT_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_AUTOMATED_PORT",
@@ -231,6 +229,8 @@
   "construct": "AS2D_BUILD_INTERNATIONAL_PORT"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_INTERNATIONAL_PORT",
+  "civilopedia": "TXT_KEY_BUILDING_INTERNATIONAL_PORT_PEDIA",
   "worth": 4,
   "conquestProbability": 100,
   "dcmAirbombMission": 2,

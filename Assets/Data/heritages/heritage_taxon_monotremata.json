@@ -1,7 +1,5 @@
 {
  "type": "HERITAGE_TAXON_MONOTREMATA",
- "description": "TXT_KEY_HERITAGE_TAXON_MONOTREMATA",
- "civilopedia": "TXT_KEY_HERITAGE_TAXON_MONOTREMATA_PEDIA",
  "research": {
   "empire": {
    "flat": [
@@ -102,5 +100,9 @@
   "art": {
    "icon": "Art/Interface/Buttons/Units/Platypus.dds"
   }
+ },
+ "identity": {
+  "description": "TXT_KEY_HERITAGE_TAXON_MONOTREMATA",
+  "civilopedia": "TXT_KEY_HERITAGE_TAXON_MONOTREMATA_PEDIA"
  }
 }

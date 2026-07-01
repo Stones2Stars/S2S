@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_INTERSTELLAR_PORTAL_CITY",
- "description": "TXT_KEY_BUILDING_INTERSTELLAR_PORTAL_CITY",
- "civilopedia": "TXT_KEY_BUILDING_INTERSTELLAR_PORTAL_CITY_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -66,6 +64,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_INTERSTELLAR_PORTAL_CITY",
+  "civilopedia": "TXT_KEY_BUILDING_INTERSTELLAR_PORTAL_CITY_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

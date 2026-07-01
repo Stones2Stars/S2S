@@ -1,7 +1,5 @@
 {
  "type": "GAMESPEED_EPIC",
- "description": "TXT_KEY_GAMESPEED_EPIC",
- "help": "TXT_KEY_GAMESPEED_EPIC_HELP",
  "speed": {
   "world": {
    "percent": 300
@@ -11,5 +9,9 @@
   "world": {
    "percent": 850
   }
+ },
+ "identity": {
+  "description": "TXT_KEY_GAMESPEED_EPIC",
+  "help": "TXT_KEY_GAMESPEED_EPIC_HELP"
  }
 }

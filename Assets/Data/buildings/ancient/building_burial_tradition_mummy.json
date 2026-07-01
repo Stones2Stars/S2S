@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_BURIAL_TRADITION_MUMMY",
- "description": "TXT_KEY_BUILDING_BURIAL_TRADITION_MUMMY",
- "civilopedia": "TXT_KEY_BUILDING_BURIAL_TRADITION_MUMMY_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_FUNERARY_SERVICES"
@@ -91,6 +89,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_BURIAL_TRADITION_MUMMY",
+  "civilopedia": "TXT_KEY_BUILDING_BURIAL_TRADITION_MUMMY_PEDIA",
   "conquestProbability": 70,
   "advisor": "ADVISOR_SCIENCE",
   "mapCategories": [

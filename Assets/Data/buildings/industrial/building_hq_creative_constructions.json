@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_HQ_CREATIVE_CONSTRUCTIONS",
- "description": "TXT_KEY_BUILDING_HQ_CREATIVE_CONSTRUCTIONS",
- "civilopedia": "TXT_KEY_BUILDING_CORPORATION_4_PEDIA",
  "enables": {
   "corporations": [
    "CORPORATION_4"
@@ -56,6 +54,8 @@
   "construct": "AS2D_BUILD_BANK"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_HQ_CREATIVE_CONSTRUCTIONS",
+  "civilopedia": "TXT_KEY_BUILDING_CORPORATION_4_PEDIA",
   "commerceDoubleTime": {
    "culture": 1000
   },

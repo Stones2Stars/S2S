@@ -1,8 +1,5 @@
 {
  "type": "TRAIT_BIGOT",
- "description": "TXT_KEY_TRAIT_BIGOT",
- "civilopedia": "TXT_KEY_TRAIT_BIGOT_PEDIA",
- "strategy": "TXT_KEY_TRAIT_BIGOT_STRATEGY",
  "excludes": [
   "TRAIT_PROGRESSIVE"
  ],
@@ -176,6 +173,9 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_TRAIT_BIGOT",
+  "civilopedia": "TXT_KEY_TRAIT_BIGOT_PEDIA",
+  "strategy": "TXT_KEY_TRAIT_BIGOT_STRATEGY",
   "negativeTrait": true
  }
 }

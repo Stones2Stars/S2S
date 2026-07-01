@@ -1,6 +1,5 @@
 {
  "type": "ROUTE_COMPACT_WORMHOLE",
- "description": "TXT_KEY_ROUTE_COMPACT_WORMHOLE",
  "food": {
   "plot": {
    "flat": 1
@@ -22,6 +21,7 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_ROUTE_COMPACT_WORMHOLE",
   "value": 4,
   "advancedStart": {
    "cost": 30

@@ -1,6 +1,5 @@
 {
  "type": "PROMOTION_AMPHIBIOUS",
- "description": "TXT_KEY_PROMOTION_AMPHIBIOUS",
  "strength": {
   "unit": {
    "percent": 10
@@ -19,6 +18,7 @@
   "sound": "AS2D_IF_LEVELUP"
  },
  "identity": {
+  "description": "TXT_KEY_PROMOTION_AMPHIBIOUS",
   "unitCombats": [
    "UNITCOMBAT_EXPLORER",
    "UNITCOMBAT_THROWING",

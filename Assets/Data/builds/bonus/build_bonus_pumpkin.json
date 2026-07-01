@@ -1,6 +1,5 @@
 {
  "type": "BUILD_BONUS_PUMPKIN",
- "description": "TXT_KEY_BUILD_BONUS_PUMPKIN",
  "produces": {
   "improvement": "IMPROVEMENT_BONUS_PUMPKIN"
  },
@@ -19,6 +18,7 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILD_BONUS_PUMPKIN",
   "consumesUnit": true
  }
 }

@@ -1,6 +1,5 @@
 {
  "type": "PROMOTION_ARROW_BARRAGE3",
- "description": "TXT_KEY_PROMOTION_ARROW_BARRAGE3",
  "bombard": {
   "unit": {
    "rangedDamage": {
@@ -29,6 +28,7 @@
   "sound": "AS2D_IF_LEVELUP"
  },
  "identity": {
+  "description": "TXT_KEY_PROMOTION_ARROW_BARRAGE3",
   "rBombardPrereq": true
  }
 }

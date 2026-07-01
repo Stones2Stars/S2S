@@ -1,8 +1,5 @@
 {
  "type": "TECH_BINARY_LEGISLATION",
- "description": "TXT_KEY_TECH_BINARY_LEGISLATION",
- "civilopedia": "TXT_KEY_TECH_BINARY_LEGISLATION_PEDIA",
- "quote": "TXT_KEY_TECH_BINARY_LEGISLATION_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_AI_LEGAL_SYSTEM",
@@ -71,6 +68,9 @@
   "soundMP": "AS2D_TECH_BINARY_LEGISLATION"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_BINARY_LEGISLATION",
+  "civilopedia": "TXT_KEY_TECH_BINARY_LEGISLATION_PEDIA",
+  "quote": "TXT_KEY_TECH_BINARY_LEGISLATION_QUOTE",
   "era": "C2C_ERA_TRANSHUMAN",
   "worth": 48,
   "militaryWorth": 4,

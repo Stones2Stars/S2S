@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_VIDEOPHONE_NETWORK",
- "description": "TXT_KEY_BUILDING_VIDEOPHONE_NETWORK",
- "civilopedia": "TXT_KEY_BUILDING_VIDEOPHONE_NETWORK_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_HOUSING_MID_CLASS_SKYPAD_APARTMENTS"
@@ -99,6 +97,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_VIDEOPHONE_NETWORK",
+  "civilopedia": "TXT_KEY_BUILDING_VIDEOPHONE_NETWORK_PEDIA",
   "specialBuildingType": "SPECIALBUILDING_PUNK_ATOM",
   "advisor": "ADVISOR_ECONOMY",
   "visibilityPriority": "1.0",

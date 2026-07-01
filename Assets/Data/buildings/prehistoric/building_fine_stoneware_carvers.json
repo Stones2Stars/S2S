@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_FINE_STONEWARE_CARVERS",
- "description": "TXT_KEY_BUILDING_FINE_STONEWARE_CARVERS",
- "civilopedia": "TXT_KEY_BUILDING_FINE_STONEWARE_CARVERS_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -77,6 +75,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_FINE_STONEWARE_CARVERS",
+  "civilopedia": "TXT_KEY_BUILDING_FINE_STONEWARE_CARVERS_PEDIA",
   "centerInCity": true,
   "worth": 10,
   "conquestProbability": 100,

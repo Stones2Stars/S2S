@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_LAW_FIRM",
- "description": "TXT_KEY_BUILDING_LAW_FIRM",
- "civilopedia": "TXT_KEY_BUILDING_LAW_FIRM_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_AI_LEGAL_SYSTEM"
@@ -74,6 +72,8 @@
   "construct": "AS2D_BUILD_COURTHOUSE"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_LAW_FIRM",
+  "civilopedia": "TXT_KEY_BUILDING_LAW_FIRM_PEDIA",
   "worth": 4,
   "conquestProbability": 75,
   "dcmAirbombMission": 2,

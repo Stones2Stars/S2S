@@ -1,7 +1,5 @@
 {
  "type": "IMPROVEMENT_TAR_GATHERER",
- "description": "TXT_KEY_IMPROVEMENT_TAR_GATHERER",
- "civilopedia": "TXT_KEY_IMPROVEMENT_TAR_GATHERER_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -67,6 +65,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_IMPROVEMENT_TAR_GATHERER",
+  "civilopedia": "TXT_KEY_IMPROVEMENT_TAR_GATHERER_PEDIA",
   "upgradeTime": 30,
   "pillageGold": 15,
   "upgradesTo": "IMPROVEMENT_HYDROCARBON_WELL",

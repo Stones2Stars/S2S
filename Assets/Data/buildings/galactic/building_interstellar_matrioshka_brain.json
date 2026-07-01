@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_INTERSTELLAR_MATRIOSHKA_BRAIN",
- "description": "TXT_KEY_BUILDING_INTERSTELLAR_MATRIOSHKA_BRAIN",
- "civilopedia": "TXT_KEY_BUILDING_INTERSTELLAR_MATRIOSHKA_BRAIN_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_EARTH_2_0",
@@ -124,6 +122,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_INTERSTELLAR_MATRIOSHKA_BRAIN",
+  "civilopedia": "TXT_KEY_BUILDING_INTERSTELLAR_MATRIOSHKA_BRAIN_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

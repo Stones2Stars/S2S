@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_SHINTO_MONASTERY",
- "description": "TXT_KEY_BUILDING_SHINTO_MONASTERY",
- "civilopedia": "TXT_KEY_BUILDING_SHINTO_MONASTERY_PEDIA",
  "enables": {
   "units": [
    "UNIT_SHINTO_MISSIONARY"
@@ -109,6 +107,8 @@
   "construct": "SND_BUILD_SHINTO"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_SHINTO_MONASTERY",
+  "civilopedia": "TXT_KEY_BUILDING_SHINTO_MONASTERY_PEDIA",
   "neverCapture": true,
   "worth": 3,
   "specialBuildingType": "SPECIALBUILDING_MONASTERY",

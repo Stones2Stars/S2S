@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_CULTURE_BERBER",
- "description": "TXT_KEY_BUILDING_CULTURE_BERBER",
- "civilopedia": "TXT_KEY_BUILDING_CULTURE_BERBER_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -56,6 +54,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_CULTURE_BERBER",
+  "civilopedia": "TXT_KEY_BUILDING_CULTURE_BERBER_PEDIA",
   "nukeImmune": true,
   "noInstanceLimit": true,
   "conquestProbability": 100,

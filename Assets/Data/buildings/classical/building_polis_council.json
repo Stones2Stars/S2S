@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_POLIS_COUNCIL",
- "description": "TXT_KEY_BUILDING_POLIS_COUNCIL",
- "civilopedia": "TXT_KEY_BUILDING_POLIS_COUNCIL_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -68,6 +66,8 @@
   "construct": "AS2D_BUILD_AGORA"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_POLIS_COUNCIL",
+  "civilopedia": "TXT_KEY_BUILDING_POLIS_COUNCIL_PEDIA",
   "worth": 2,
   "advisor": "ADVISOR_ECONOMY",
   "visibilityPriority": 1,

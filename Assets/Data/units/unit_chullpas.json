@@ -1,7 +1,5 @@
 {
  "type": "UNIT_CHULLPAS",
- "description": "TXT_KEY_UNIT_CHULLPAS",
- "civilopedia": "TXT_KEY_UNIT_CHULLPAS_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -90,6 +88,8 @@
   "upkeep": 1
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_CHULLPAS",
+  "civilopedia": "TXT_KEY_UNIT_CHULLPAS_PEDIA",
   "worth": 3,
   "militaryWorth": 34,
   "xpValueAttack": 6,

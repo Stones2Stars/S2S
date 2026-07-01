@@ -1,7 +1,5 @@
 {
  "type": "FEATURE_FOREST",
- "description": "TXT_KEY_FEATURE_FOREST",
- "civilopedia": "TXT_KEY_FEATURE_FOREST_PEDIA",
  "production": {
   "plot": {
    "flat": 1
@@ -96,6 +94,8 @@
   "growth": "AS2D_FEATUREGROWTH"
  },
  "identity": {
+  "description": "TXT_KEY_FEATURE_FOREST",
+  "civilopedia": "TXT_KEY_FEATURE_FOREST_PEDIA",
   "movementCost": 1,
   "popDestroys": 3,
   "validTerrains": [

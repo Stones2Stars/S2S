@@ -1,9 +1,5 @@
 {
  "type": "CIVILIZATION_SIOUX",
- "description": "TXT_KEY_CIVILIZATION_SIOUX",
- "shortDescription": "TXT_KEY_CIVILIZATION_SIOUX_SHORT",
- "adjective": "TXT_KEY_CIVILIZATION_SIOUX_ADJECTIVE",
- "civilopedia": "TXT_KEY_CIVILIZATION_SIOUX_PEDIA",
  "grants": {
   "buildings": [
    "BUILDING_PALACE",
@@ -32,10 +28,6 @@
    "TECH_GAME_START"
   ]
  },
- "policies": {
-  "playable": true,
-  "aiPlayable": true
- },
  "world": {
   "art": {
    "playerColor": "PLAYERCOLOR_LIGHT_BROWN",
@@ -49,6 +41,12 @@
   "action": "AS3D_NATIVE_AMERICA_ORDER"
  },
  "identity": {
+  "description": "TXT_KEY_CIVILIZATION_SIOUX",
+  "shortDescription": "TXT_KEY_CIVILIZATION_SIOUX_SHORT",
+  "adjective": "TXT_KEY_CIVILIZATION_SIOUX_ADJECTIVE",
+  "civilopedia": "TXT_KEY_CIVILIZATION_SIOUX_PEDIA",
+  "playable": true,
+  "aiPlayable": true,
   "leaders": [
    "LEADER_SITTING_BULL",
    "LEADER_RED_CLOUD"

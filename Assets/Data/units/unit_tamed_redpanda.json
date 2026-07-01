@@ -1,8 +1,5 @@
 {
  "type": "UNIT_TAMED_REDPANDA",
- "description": "TXT_KEY_UNIT_TAMED_REDPANDA",
- "civilopedia": "TXT_KEY_UNIT_REDPANDA_PEDIA",
- "help": "TXT_KEY_UNIT_TAMED_ANIMALS_HELP",
  "requires": {
   "build": {
    "all": [
@@ -55,6 +52,9 @@
   "production": 133
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_TAMED_REDPANDA",
+  "civilopedia": "TXT_KEY_UNIT_REDPANDA_PEDIA",
+  "help": "TXT_KEY_UNIT_TAMED_ANIMALS_HELP",
   "xpValueAttack": 2,
   "xpValueDefense": 1,
   "domain": "DOMAIN_LAND",

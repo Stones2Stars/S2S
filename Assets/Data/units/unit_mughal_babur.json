@@ -1,7 +1,5 @@
 {
  "type": "UNIT_MUGHAL_BABUR",
- "description": "TXT_KEY_UNIT_MUGHAL_BABUR",
- "civilopedia": "TXT_KEY_UNIT_MUGHAL_BABUR_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -51,6 +49,8 @@
   "upkeep": 1
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_MUGHAL_BABUR",
+  "civilopedia": "TXT_KEY_UNIT_MUGHAL_BABUR_PEDIA",
   "worth": 6,
   "militaryWorth": 8,
   "xpValueAttack": 4,

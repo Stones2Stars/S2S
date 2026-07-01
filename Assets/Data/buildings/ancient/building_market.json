@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_MARKET",
- "description": "TXT_KEY_BUILDING_MARKET",
- "civilopedia": "TXT_KEY_BUILDING_MARKET_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_SCARBOROUGH_FAIR",
@@ -205,6 +203,8 @@
   "construct": "AS2D_BUILD_MARKETPLACE"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_MARKET",
+  "civilopedia": "TXT_KEY_BUILDING_MARKET_PEDIA",
   "worth": 3,
   "conquestProbability": 75,
   "dcmAirbombMission": 2,

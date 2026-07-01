@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_CAMP_NARWHAL",
- "description": "TXT_KEY_BUILDING_CAMP_NARWHAL",
- "civilopedia": "TXT_KEY_BUILDING_CAMP_NARWHAL_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_RESOURCES_CARCASS",
@@ -101,6 +99,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_CAMP_NARWHAL",
+  "civilopedia": "TXT_KEY_BUILDING_CAMP_NARWHAL_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

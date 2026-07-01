@@ -1,7 +1,5 @@
 {
  "type": "SPECIALIST_ANDROID_WORKER",
- "description": "TXT_KEY_SPECIALIST_ANDROID_WORKER",
- "civilopedia": "TXT_KEY_CONCEPT_SPECIALISTS_PEDIA",
  "production": {
   "city": {
    "flat": 10
@@ -19,6 +17,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_SPECIALIST_ANDROID_WORKER",
+  "civilopedia": "TXT_KEY_CONCEPT_SPECIALISTS_PEDIA",
   "categories": [
    "CATEGORY_SPECIALIST_GROUP_CIVILIAN"
   ]

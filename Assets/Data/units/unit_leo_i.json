@@ -1,7 +1,5 @@
 {
  "type": "UNIT_LEO_I",
- "description": "TXT_KEY_UNIT_LEO_I",
- "civilopedia": "TXT_KEY_UNIT_LEO_I_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -54,6 +52,8 @@
   "upkeep": 1
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_LEO_I",
+  "civilopedia": "TXT_KEY_UNIT_LEO_I_PEDIA",
   "worth": 6,
   "militaryWorth": 8,
   "xpValueAttack": 4,

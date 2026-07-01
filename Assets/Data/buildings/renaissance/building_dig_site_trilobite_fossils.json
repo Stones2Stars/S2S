@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_DIG_SITE_TRILOBITE_FOSSILS",
- "description": "TXT_KEY_BUILDING_DIG_SITE_TRILOBITE_FOSSILS",
- "civilopedia": "TXT_KEY_BUILDING_DIG_SITE_TRILOBITE_FOSSILS_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_RESOURCES_FOSSILS"
@@ -71,6 +69,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_DIG_SITE_TRILOBITE_FOSSILS",
+  "civilopedia": "TXT_KEY_BUILDING_DIG_SITE_TRILOBITE_FOSSILS_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

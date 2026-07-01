@@ -1,7 +1,5 @@
 {
  "type": "TERRAIN_DUNES",
- "description": "TXT_KEY_TERRAIN_DUNES",
- "civilopedia": "TXT_KEY_TERRAIN_DUNES_PEDIA",
  "commerce": {
   "plot": {
    "flat": [
@@ -138,6 +136,8 @@
   "soundscape": "ASSS_DESERT_SELECT_AMB"
  },
  "identity": {
+  "description": "TXT_KEY_TERRAIN_DUNES",
+  "civilopedia": "TXT_KEY_TERRAIN_DUNES_PEDIA",
   "foundCoast": true,
   "foundFreshWater": true,
   "movementCost": 4,

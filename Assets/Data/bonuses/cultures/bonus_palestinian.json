@@ -1,7 +1,5 @@
 {
  "type": "BONUS_PALESTINIAN",
- "description": "TXT_KEY_BONUS_PALESTINIAN",
- "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
  "enables": {
   "units": [
    "UNIT_JASIR_ARAFAT",
@@ -14,6 +12,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_PALESTINIAN",
+  "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
   "bonusClassType": "BONUSCLASS_CULTURE"
  }
 }

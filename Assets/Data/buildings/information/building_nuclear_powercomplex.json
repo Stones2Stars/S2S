@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_NUCLEAR_POWERCOMPLEX",
- "description": "TXT_KEY_BUILDING_NUCLEAR_POWERCOMPLEX",
- "civilopedia": "TXT_KEY_BUILDING_NUCLEAR_POWERCOMPLEX_PEDIA",
  "obsoletedBy": {
   "techs": [
    "TECH_ARTIFICIAL_NUCLEOSYNTHESIS"
@@ -92,6 +90,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_NUCLEAR_POWERCOMPLEX",
+  "civilopedia": "TXT_KEY_BUILDING_NUCLEAR_POWERCOMPLEX_PEDIA",
   "neverCapture": true,
   "specialBuildingType": "SPECIALBUILDING_PUNK_ATOM",
   "advisor": "ADVISOR_ECONOMY",

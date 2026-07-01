@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_ARTIFICIAL_INTELLIGENCE_CORE",
- "description": "TXT_KEY_BUILDING_ARTIFICIAL_INTELLIGENCE_CORE",
- "civilopedia": "TXT_KEY_BUILDING_ARTIFICIAL_INTELLIGENCE_CORE_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_AI_ARTIST",
@@ -108,6 +106,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_ARTIFICIAL_INTELLIGENCE_CORE",
+  "civilopedia": "TXT_KEY_BUILDING_ARTIFICIAL_INTELLIGENCE_CORE_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

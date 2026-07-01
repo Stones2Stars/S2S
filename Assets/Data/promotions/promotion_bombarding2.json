@@ -1,6 +1,5 @@
 {
  "type": "PROMOTION_BOMBARDING2",
- "description": "TXT_KEY_PROMOTION_BOMBARDING2",
  "bombard": {
   "unit": {
    "rate": {
@@ -18,5 +17,8 @@
  },
  "sound": {
   "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_BOMBARDING2"
  }
 }

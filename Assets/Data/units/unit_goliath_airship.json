@@ -1,7 +1,5 @@
 {
  "type": "UNIT_GOLIATH_AIRSHIP",
- "description": "TXT_KEY_UNIT_GOLIATH_AIRSHIP",
- "civilopedia": "TXT_KEY_UNIT_GOLIATH_AIRSHIP_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -86,6 +84,8 @@
   "upkeep": 1
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_GOLIATH_AIRSHIP",
+  "civilopedia": "TXT_KEY_UNIT_GOLIATH_AIRSHIP_PEDIA",
   "worth": 3,
   "militaryWorth": 139,
   "xpValueAttack": 3,

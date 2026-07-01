@@ -1,7 +1,5 @@
 {
  "type": "UNIT_GHARIAL",
- "description": "TXT_KEY_UNIT_GHARIAL",
- "civilopedia": "TXT_KEY_CONCEPT_SUBDUED_ANIMALS_PEDIA",
  "skills": {
   "assassin": true,
   "blendIntoCity": true,
@@ -52,6 +50,8 @@
   ]
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_GHARIAL",
+  "civilopedia": "TXT_KEY_CONCEPT_SUBDUED_ANIMALS_PEDIA",
   "spawnOnly": true,
   "xpValueAttack": 8,
   "xpValueDefense": 4,

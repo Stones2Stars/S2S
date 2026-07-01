@@ -1,7 +1,5 @@
 {
  "type": "UNIT_HAYK",
- "description": "TXT_KEY_UNIT_HAYK",
- "civilopedia": "TXT_KEY_UNIT_HAYK_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -69,6 +67,8 @@
   "upkeep": 1
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_HAYK",
+  "civilopedia": "TXT_KEY_UNIT_HAYK_PEDIA",
   "worth": 6,
   "militaryWorth": 8,
   "xpValueAttack": 4,

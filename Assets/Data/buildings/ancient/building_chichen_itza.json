@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_CHICHEN_ITZA",
- "description": "TXT_KEY_BUILDING_CHICHEN_ITZA",
- "civilopedia": "TXT_KEY_BUILDING_CHICHEN_ITZA_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_RELIC_CHICHEN_ITZA"
@@ -105,6 +103,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_CHICHEN_ITZA",
+  "civilopedia": "TXT_KEY_BUILDING_CHICHEN_ITZA_PEDIA",
   "commerceDoubleTime": {
    "culture": 1000
   },

@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_HYPERSPACE_PICARD_HORN",
- "description": "TXT_KEY_BUILDING_HYPERSPACE_PICARD_HORN",
- "civilopedia": "TXT_KEY_BUILDING_HYPERSPACE_PICARD_HORN_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_HYPERSPACE_REAL_PROJECTIVE_SPACE_COLONY"
@@ -39,6 +37,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_HYPERSPACE_PICARD_HORN",
+  "civilopedia": "TXT_KEY_BUILDING_HYPERSPACE_PICARD_HORN_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

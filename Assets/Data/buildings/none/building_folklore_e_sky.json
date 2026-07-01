@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_FOLKLORE_E_SKY",
- "description": "TXT_KEY_BUILDING_FOLKLORE_E_SKY",
- "civilopedia": "TXT_KEY_BUILDING_FOLKLORE_ELEMENTAL_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_BURIAL_TRADITION_SKY",
@@ -95,6 +93,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_FOLKLORE_E_SKY",
+  "civilopedia": "TXT_KEY_BUILDING_FOLKLORE_ELEMENTAL_PEDIA",
   "nukeImmune": true,
   "neverCapture": true,
   "specialBuildingType": "SPECIALBUILDING_FOLKLORE_EXPLORATION",

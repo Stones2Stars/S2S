@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_INTERGALACTIC_BIRCH_PLANET",
- "description": "TXT_KEY_BUILDING_INTERGALACTIC_BIRCH_PLANET",
- "civilopedia": "TXT_KEY_BUILDING_INTERGALACTIC_BIRCH_PLANET_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_FEYMARCH",
@@ -44,6 +42,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_INTERGALACTIC_BIRCH_PLANET",
+  "civilopedia": "TXT_KEY_BUILDING_INTERGALACTIC_BIRCH_PLANET_PEDIA",
   "workableRadius": 3,
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,

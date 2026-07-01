@@ -1,8 +1,5 @@
 {
  "type": "TECH_HEAT_TREATMENT",
- "description": "TXT_KEY_TECH_HEAT_TREATMENT",
- "civilopedia": "TXT_KEY_TECH_HEAT_TREATMENT_PEDIA",
- "quote": "TXT_KEY_TECH_HEAT_TREATMENT_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_BRANDING_HUT",
@@ -63,6 +60,9 @@
   "soundMP": "AS2D_TECH_HEAT_TREATMENT"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_HEAT_TREATMENT",
+  "civilopedia": "TXT_KEY_TECH_HEAT_TREATMENT_PEDIA",
+  "quote": "TXT_KEY_TECH_HEAT_TREATMENT_QUOTE",
   "era": "C2C_ERA_PREHISTORIC",
   "worth": 8,
   "militaryWorth": 2,

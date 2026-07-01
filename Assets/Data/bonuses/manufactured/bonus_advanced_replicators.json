@@ -1,7 +1,5 @@
 {
  "type": "BONUS_ADVANCED_REPLICATORS",
- "description": "TXT_KEY_BONUS_ADVANCED_REPLICATORS",
- "civilopedia": "TXT_KEY_BONUS_ADVANCED_REPLICATORS_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_DEEP_SPACE_MCKENDREE_CYLINDER"
@@ -13,6 +11,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_ADVANCED_REPLICATORS",
+  "civilopedia": "TXT_KEY_BONUS_ADVANCED_REPLICATORS_PEDIA",
   "bonusClassType": "BONUSCLASS_MANUFACTURED"
  }
 }

@@ -1,7 +1,5 @@
 {
  "type": "UNIT_SPIRIT_WALKER",
- "description": "TXT_KEY_UNIT_SPIRIT_WALKER",
- "civilopedia": "TXT_KEY_UNIT_SPIRIT_WALKER_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -124,6 +122,8 @@
   "upkeep": 1
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_SPIRIT_WALKER",
+  "civilopedia": "TXT_KEY_UNIT_SPIRIT_WALKER_PEDIA",
   "worth": 2,
   "militaryWorth": 6,
   "xpValueAttack": 6,

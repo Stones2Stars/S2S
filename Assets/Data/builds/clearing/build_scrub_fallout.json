@@ -1,6 +1,5 @@
 {
  "type": "BUILD_SCRUB_FALLOUT",
- "description": "TXT_KEY_BUILD_SCRUB_FALLOUT",
  "requires": {
   "build": {
    "all": [
@@ -34,5 +33,8 @@
   "art": {
    "entityEvent": "ENTITY_EVENT_IRRIGATE"
   }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILD_SCRUB_FALLOUT"
  }
 }

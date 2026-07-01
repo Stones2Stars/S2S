@@ -1,6 +1,5 @@
 {
  "type": "PROMOTION_SHADOWSTALKER1",
- "description": "TXT_KEY_PROMOTION_SHADOWSTALKER1",
  "strength": {
   "unit": {
    "stealthStrikes": {
@@ -60,5 +59,8 @@
  },
  "sound": {
   "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_SHADOWSTALKER1"
  }
 }

@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_ROCK_GATHERER",
- "description": "TXT_KEY_BUILDING_ROCK_GATHERER",
- "civilopedia": "TXT_KEY_BUILDING_ROCK_GATHERER_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_PUBLIC_STONING",
@@ -45,6 +43,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_ROCK_GATHERER",
+  "civilopedia": "TXT_KEY_BUILDING_ROCK_GATHERER_PEDIA",
   "enabledCivilizations": [
    "CIVILIZATION_NPC_NEANDERTHAL"
   ],

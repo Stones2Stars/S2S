@@ -1,6 +1,5 @@
 {
  "type": "UNITCOMBAT_HELICOPTER",
- "description": "TXT_KEY_UNITCOMBAT_HELICOPTER",
  "skills": {
   "fliesToMove": true
  },
@@ -8,5 +7,8 @@
   "art": {
    "icon": "Art/Interface/Buttons/units/sparth/categories/helicopters.dds"
   }
+ },
+ "identity": {
+  "description": "TXT_KEY_UNITCOMBAT_HELICOPTER"
  }
 }

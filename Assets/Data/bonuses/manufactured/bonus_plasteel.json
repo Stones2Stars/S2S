@@ -1,7 +1,5 @@
 {
  "type": "BONUS_PLASTEEL",
- "description": "TXT_KEY_BONUS_PLASTEEL",
- "civilopedia": "TXT_KEY_BONUS_PLASTEEL_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_VENUS_SURFACE_CITY"
@@ -18,6 +16,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_PLASTEEL",
+  "civilopedia": "TXT_KEY_BONUS_PLASTEEL_PEDIA",
   "bonusClassType": "BONUSCLASS_MANUFACTURED"
  }
 }

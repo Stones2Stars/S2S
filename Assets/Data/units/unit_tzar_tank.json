@@ -1,7 +1,5 @@
 {
  "type": "UNIT_TZAR_TANK",
- "description": "TXT_KEY_UNIT_TZAR_TANK",
- "civilopedia": "TXT_KEY_UNIT_TZAR_TANK_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -108,6 +106,8 @@
   "upkeep": 1
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_TZAR_TANK",
+  "civilopedia": "TXT_KEY_UNIT_TZAR_TANK_PEDIA",
   "worth": 5,
   "militaryWorth": 161,
   "xpValueAttack": 6,

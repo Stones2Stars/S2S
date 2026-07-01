@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_DISTANT_EXPLORERS_BASE",
- "description": "TXT_KEY_BUILDING_DISTANT_EXPLORERS_BASE",
- "civilopedia": "TXT_KEY_BUILDING_DISTANT_EXPLORERS_BASE_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_DISTANT_TIMELINE_STABILIZERS"
@@ -48,6 +46,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_DISTANT_EXPLORERS_BASE",
+  "civilopedia": "TXT_KEY_BUILDING_DISTANT_EXPLORERS_BASE_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

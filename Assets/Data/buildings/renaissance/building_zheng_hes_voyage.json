@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_ZHENG_HES_VOYAGE",
- "description": "TXT_KEY_BUILDING_ZHENG_HES_VOYAGE",
- "civilopedia": "TXT_KEY_BUILDING_ZHENG_HES_VOYAGE_PEDIA",
  "obsoletedBy": {
   "techs": [
    "TECH_SCREW_PROPELLER"
@@ -76,6 +74,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_ZHENG_HES_VOYAGE",
+  "civilopedia": "TXT_KEY_BUILDING_ZHENG_HES_VOYAGE_PEDIA",
   "worth": 10,
   "conquestProbability": 100,
   "greatPeopleUnitType": "UNIT_MERCHANT",

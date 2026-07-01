@@ -1,12 +1,12 @@
 {
  "type": "PROMOTIONLINE_STANDOUT",
- "description": "TXT_KEY_PROMOTIONLINE_STANDOUT",
  "ui": {
   "art": {
    "icon": "Art/Buttons/Promotions/StandOutStatus.dds"
   }
  },
  "identity": {
+  "description": "TXT_KEY_PROMOTIONLINE_STANDOUT",
   "unitCombats": [
    "UNITCOMBAT_SPECIES_HUMAN",
    "UNITCOMBAT_SPECIES_NEANDERTHAL",

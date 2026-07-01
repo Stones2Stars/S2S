@@ -1,6 +1,5 @@
 {
  "type": "PROMOTION_DECEIVER3",
- "description": "TXT_KEY_PROMOTION_DECEIVER3",
  "withdrawal": {
   "unit": {
    "percent": 10
@@ -28,6 +27,7 @@
   "sound": "AS2D_PING"
  },
  "identity": {
+  "description": "TXT_KEY_PROMOTION_DECEIVER3",
   "unitCombats": [
    "UNITCOMBAT_SPY"
   ]

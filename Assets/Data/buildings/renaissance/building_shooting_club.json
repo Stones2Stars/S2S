@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_SHOOTING_CLUB",
- "description": "TXT_KEY_BUILDING_SHOOTING_CLUB",
- "civilopedia": "TXT_KEY_BUILDING_SHOOTING_CLUB_PEDIA",
  "enables": {
   "units": [
    "UNIT_NIAM_NIAM",
@@ -102,6 +100,8 @@
   "construct": "AS2D_BUILD_BARRACKS"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_SHOOTING_CLUB",
+  "civilopedia": "TXT_KEY_BUILDING_SHOOTING_CLUB_PEDIA",
   "worth": 3,
   "militaryWorth": 5,
   "dcmAirbombMission": 2,

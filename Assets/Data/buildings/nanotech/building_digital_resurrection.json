@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_DIGITAL_RESURRECTION",
- "description": "TXT_KEY_BUILDING_DIGITAL_RESURRECTION",
- "civilopedia": "TXT_KEY_BUILDING_DIGITAL_RESURRECTION_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -61,6 +59,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_DIGITAL_RESURRECTION",
+  "civilopedia": "TXT_KEY_BUILDING_DIGITAL_RESURRECTION_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

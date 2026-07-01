@@ -1,7 +1,5 @@
 {
  "type": "TRAIT_ASTROLOGICAL_INFLUENCE_OF_ARIES",
- "description": "TXT_KEY_TRAIT_ASTROLOGICAL_INFLUENCE_OF_ARIES",
- "civilopedia": "TXT_KEY_TRAIT_ASTROLOGICAL_INFLUENCE_OF_ARIES_PEDIA",
  "culture": {
   "empire": {
    "flat": 5
@@ -29,6 +27,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_TRAIT_ASTROLOGICAL_INFLUENCE_OF_ARIES",
+  "civilopedia": "TXT_KEY_TRAIT_ASTROLOGICAL_INFLUENCE_OF_ARIES_PEDIA",
   "shortDescription": "TXT_KEY_TRAIT_ASTROLOGICAL_INFLUENCE_OF_ARIES_SHORT",
   "civilizationTrait": true
  }

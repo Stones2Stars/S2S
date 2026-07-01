@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_WORLD_TRADE_CENTER",
- "description": "TXT_KEY_BUILDING_WORLD_TRADE_CENTER",
- "civilopedia": "TXT_KEY_BUILDING_WORLD_TRADE_CENTER_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -83,6 +81,8 @@
   "construct": "AS2D_BUILD_WTC"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_WORLD_TRADE_CENTER",
+  "civilopedia": "TXT_KEY_BUILDING_WORLD_TRADE_CENTER_PEDIA",
   "nukeImmune": true,
   "teamShare": true,
   "worth": 20,

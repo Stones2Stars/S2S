@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_PC_BLUEFISH_CAVES",
- "description": "TXT_KEY_BUILDING_PC_BLUEFISH_CAVES",
- "civilopedia": "TXT_KEY_BUILDING_PC_BLUEFISH_CAVES_PEDIA",
  "obsoletedBy": {
   "techs": [
    "TECH_SEDENTARY_LIFESTYLE"
@@ -89,6 +87,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_PC_BLUEFISH_CAVES",
+  "civilopedia": "TXT_KEY_BUILDING_PC_BLUEFISH_CAVES_PEDIA",
   "centerInCity": true,
   "worth": 10,
   "conquestProbability": 100,

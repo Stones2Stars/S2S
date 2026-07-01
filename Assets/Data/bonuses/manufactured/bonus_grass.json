@@ -1,7 +1,5 @@
 {
  "type": "BONUS_GRASS",
- "description": "TXT_KEY_BONUS_GRASS",
- "civilopedia": "TXT_KEY_BONUS_GRASS_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_BASKETMAKER",
@@ -21,6 +19,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_GRASS",
+  "civilopedia": "TXT_KEY_BONUS_GRASS_PEDIA",
   "bonusClassType": "BONUSCLASS_MANUFACTURED"
  }
 }

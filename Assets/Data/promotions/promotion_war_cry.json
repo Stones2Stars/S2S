@@ -1,6 +1,5 @@
 {
  "type": "PROMOTION_WAR_CRY",
- "description": "TXT_KEY_PROMOTION_WAR_CRY",
  "strength": {
   "unit": {
    "percent": 5
@@ -15,6 +14,7 @@
   "sound": "AS2D_IF_LEVELUP"
  },
  "identity": {
+  "description": "TXT_KEY_PROMOTION_WAR_CRY",
   "unitCombats": [
    "UNITCOMBAT_COMMANDER"
   ]

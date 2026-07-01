@@ -1,7 +1,5 @@
 {
  "type": "UNIT_MISSILE_CRUISER",
- "description": "TXT_KEY_UNIT_MISSILE_CRUISER",
- "civilopedia": "TXT_KEY_UNIT_MISSILE_CRUISER_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -104,6 +102,8 @@
   "upkeep": 3
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_MISSILE_CRUISER",
+  "civilopedia": "TXT_KEY_UNIT_MISSILE_CRUISER_PEDIA",
   "worth": 4,
   "militaryWorth": 367,
   "xpValueAttack": 3,

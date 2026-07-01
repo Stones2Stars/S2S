@@ -1,12 +1,12 @@
 {
  "type": "UNITCOMBAT_CULTURE_BURGUNDI",
- "description": "TXT_KEY_UNITCOMBAT_CULTURE_BURGUNDI",
  "ui": {
   "art": {
    "icon": "Art/categories/culture_newcultures.dds"
   }
  },
  "identity": {
+  "description": "TXT_KEY_UNITCOMBAT_CULTURE_BURGUNDI",
   "culture": "BONUS_BURGUNDIAN"
  }
 }

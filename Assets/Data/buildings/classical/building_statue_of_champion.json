@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_STATUE_OF_CHAMPION",
- "description": "TXT_KEY_BUILDING_STATUE_OF_CHAMPION",
- "civilopedia": "TXT_KEY_BUILDING_STATUE_OF_CHAMPION_PEDIA",
  "obsoletedBy": {
   "techs": [
    "TECH_BINARY_PSYCHOKINESIS"
@@ -126,6 +124,8 @@
   "construct": "AS2D_BUILD_OBELISK"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_STATUE_OF_CHAMPION",
+  "civilopedia": "TXT_KEY_BUILDING_STATUE_OF_CHAMPION_PEDIA",
   "commerceDoubleTime": {
    "culture": 1000
   },

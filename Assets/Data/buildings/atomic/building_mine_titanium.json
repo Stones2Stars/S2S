@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_MINE_TITANIUM",
- "description": "TXT_KEY_BUILDING_MINE_TITANIUM",
- "civilopedia": "TXT_KEY_BUILDING_MINE_TITANIUM_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_SMELTER_TITANIUM"
@@ -75,6 +73,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_MINE_TITANIUM",
+  "civilopedia": "TXT_KEY_BUILDING_MINE_TITANIUM_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

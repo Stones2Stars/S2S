@@ -1,7 +1,5 @@
 {
  "type": "BONUS_LLAMA",
- "description": "TXT_KEY_BONUS_LLAMA",
- "civilopedia": "TXT_KEY_BONUS_LLAMA_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_ANIMAL_TRAINER_LLAMA",
@@ -66,6 +64,8 @@
   ]
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_LLAMA",
+  "civilopedia": "TXT_KEY_BONUS_LLAMA_PEDIA",
   "bonusClassType": "BONUSCLASS_STRATEGIC"
  }
 }

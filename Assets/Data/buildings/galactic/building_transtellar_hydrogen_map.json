@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_TRANSTELLAR_HYDROGEN_MAP",
- "description": "TXT_KEY_BUILDING_TRANSTELLAR_HYDROGEN_MAP",
- "civilopedia": "TXT_KEY_BUILDING_TRANSTELLAR_HYDROGEN_MAP_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_LIFE_DUST_AND_PLASMA",
@@ -39,6 +37,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_TRANSTELLAR_HYDROGEN_MAP",
+  "civilopedia": "TXT_KEY_BUILDING_TRANSTELLAR_HYDROGEN_MAP_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

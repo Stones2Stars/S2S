@@ -1,7 +1,5 @@
 {
  "type": "UNIT_SCOUT",
- "description": "TXT_KEY_UNIT_SCOUT",
- "civilopedia": "TXT_KEY_UNIT_SCOUT_PEDIA",
  "obsoletedBy": {
   "techs": [
    "TECH_WRITING"
@@ -46,6 +44,8 @@
   "upkeep": 1
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_SCOUT",
+  "civilopedia": "TXT_KEY_UNIT_SCOUT_PEDIA",
   "worth": 1,
   "xpValueAttack": 4,
   "xpValueDefense": 4,

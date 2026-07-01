@@ -1,6 +1,5 @@
 {
  "type": "PROMOTION_FORESTRY",
- "description": "TXT_KEY_PROMOTION_FORESTRY",
  "skills": {
   "featureDoubleMove": {
    "FEATURE_JUNGLE": true,
@@ -20,6 +19,7 @@
   "sound": "AS2D_IF_LEVELUP"
  },
  "identity": {
+  "description": "TXT_KEY_PROMOTION_FORESTRY",
   "unitCombats": [
    "UNITCOMBAT_HUNTER",
    "UNITCOMBAT_RECON",

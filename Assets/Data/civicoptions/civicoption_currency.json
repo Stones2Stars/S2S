@@ -1,4 +1,6 @@
 {
  "type": "CIVICOPTION_CURRENCY",
- "description": "TXT_KEY_CIVICOPTION_CURRENCY"
+ "identity": {
+  "description": "TXT_KEY_CIVICOPTION_CURRENCY"
+ }
 }

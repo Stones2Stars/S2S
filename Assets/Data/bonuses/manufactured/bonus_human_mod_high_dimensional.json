@@ -1,7 +1,5 @@
 {
  "type": "BONUS_HUMAN_MOD_HIGH_DIMENSIONAL",
- "description": "TXT_KEY_BONUS_HUMAN_MOD_HIGH_DIMENSIONAL",
- "civilopedia": "TXT_KEY_BONUS_HUMAN_MOD_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_HUMAN_MOD_ARCHAILECT",
@@ -15,6 +13,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_HUMAN_MOD_HIGH_DIMENSIONAL",
+  "civilopedia": "TXT_KEY_BONUS_HUMAN_MOD_PEDIA",
   "bonusClassType": "BONUSCLASS_GENMODS"
  }
 }

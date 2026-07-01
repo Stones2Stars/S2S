@@ -1,7 +1,5 @@
 {
  "type": "UNIT_CATAPULT",
- "description": "TXT_KEY_UNIT_MANGONEL",
- "civilopedia": "TXT_KEY_UNIT_MANGONEL_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -78,6 +76,8 @@
   "upkeep": 1
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_MANGONEL",
+  "civilopedia": "TXT_KEY_UNIT_MANGONEL_PEDIA",
   "worth": 2,
   "militaryWorth": 10,
   "xpValueAttack": 6,

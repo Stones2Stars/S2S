@@ -1,8 +1,5 @@
 {
  "type": "TECH_WEAVING",
- "description": "TXT_KEY_TECH_WEAVING",
- "civilopedia": "TXT_KEY_TECH_WEAVING_PEDIA",
- "quote": "TXT_KEY_TECH_WEAVING_QUOTE",
  "enables": {
   "bonuses": [
    "BONUS_BAMBOO",
@@ -68,6 +65,9 @@
   "soundMP": "AS2D_TECH_WEAVING"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_WEAVING",
+  "civilopedia": "TXT_KEY_TECH_WEAVING_PEDIA",
+  "quote": "TXT_KEY_TECH_WEAVING_QUOTE",
   "era": "C2C_ERA_PREHISTORIC",
   "worth": 3,
   "tradeable": true,

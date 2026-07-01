@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_IDOL",
- "description": "TXT_KEY_BUILDING_IDOL",
- "civilopedia": "TXT_KEY_BUILDING_IDOL_PEDIA",
  "enables": {
   "units": [
    "UNIT_RODNOVERY_MISSIONARY"
@@ -102,6 +100,8 @@
   "construct": "AS2D_BUILD_RODNOVERY"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_IDOL",
+  "civilopedia": "TXT_KEY_BUILDING_IDOL_PEDIA",
   "neverCapture": true,
   "worth": 3,
   "specialBuildingType": "SPECIALBUILDING_MONASTERY",

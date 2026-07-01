@@ -1,7 +1,5 @@
 {
  "type": "BONUS_BRONZE_WARES",
- "description": "TXT_KEY_BONUS_BRONZE_WARES",
- "civilopedia": "TXT_KEY_BONUS_WARES_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_AMMUNITIONS_WORKSHOP",
@@ -101,6 +99,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_BRONZE_WARES",
+  "civilopedia": "TXT_KEY_BONUS_WARES_PEDIA",
   "bonusClassType": "BONUSCLASS_MANUFACTURED"
  }
 }

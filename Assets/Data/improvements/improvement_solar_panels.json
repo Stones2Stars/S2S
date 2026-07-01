@@ -1,7 +1,5 @@
 {
  "type": "IMPROVEMENT_SOLAR_PANELS",
- "description": "TXT_KEY_IMPROVEMENT_SOLAR_PANELS",
- "civilopedia": "TXT_KEY_IMPROVEMENT_SOLAR_PANEL_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -91,6 +89,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_IMPROVEMENT_SOLAR_PANELS",
+  "civilopedia": "TXT_KEY_IMPROVEMENT_SOLAR_PANEL_PEDIA",
   "advancedStart": {
    "cost": 35
   },

@@ -1,8 +1,5 @@
 {
  "type": "CIVIC_MARTIAL",
- "description": "TXT_KEY_CIVIC_MARTIAL",
- "civilopedia": "TXT_KEY_CIVIC_MARTIAL_PEDIA",
- "strategy": "TXT_KEY_CIVIC_MARTIAL_STRATEGY",
  "enables": {
   "buildings": [
    "BUILDING_MILITARY_SCHOOL",
@@ -113,6 +110,9 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_CIVIC_MARTIAL",
+  "civilopedia": "TXT_KEY_CIVIC_MARTIAL_PEDIA",
+  "strategy": "TXT_KEY_CIVIC_MARTIAL_STRATEGY",
   "civicOption": "CIVICOPTION_EDUCATION",
   "upkeepLevel": "UPKEEP_MEDIUM"
  }

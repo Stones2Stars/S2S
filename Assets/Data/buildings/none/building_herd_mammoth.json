@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_HERD_MAMMOTH",
- "description": "TXT_KEY_BUILDING_HERD_MAMMOTH",
- "civilopedia": "TXT_KEY_BUILDING_HERD_MAMMOTH_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_ANIMAL_TRAINER_MAMMOTH"
@@ -61,6 +59,8 @@
   "construct": "SND_AMB_HORSE_COBBLESTONES"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_HERD_MAMMOTH",
+  "civilopedia": "TXT_KEY_BUILDING_HERD_MAMMOTH_PEDIA",
   "enabledCivilizations": [
    "CIVILIZATION_NPC_NEANDERTHAL"
   ],

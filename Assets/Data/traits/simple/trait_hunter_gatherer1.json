@@ -1,7 +1,5 @@
 {
  "type": "TRAIT_HUNTER_GATHERER1",
- "description": "TXT_KEY_TRAIT_HUNTER_GATHERER0",
- "civilopedia": "TXT_KEY_TRAIT_HUNTER_GATHERER_PEDIA",
  "enables": {
   "traits": [
    "TRAIT_HUNTER_GATHERER2"
@@ -91,6 +89,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_TRAIT_HUNTER_GATHERER0",
+  "civilopedia": "TXT_KEY_TRAIT_HUNTER_GATHERER_PEDIA",
   "shortDescription": "TXT_KEY_TRAIT_HUNTER_GATHERER_SHORT",
   "negativeTrait": true
  }

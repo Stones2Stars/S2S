@@ -1,6 +1,5 @@
 {
  "type": "BUILD_SUBURBS",
- "description": "TXT_KEY_BUILD_SUBURBS",
  "requires": {
   "build": {
    "all": [
@@ -258,5 +257,8 @@
   "art": {
    "entityEvent": "ENTITY_EVENT_BUILD"
   }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILD_SUBURBS"
  }
 }

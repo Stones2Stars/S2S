@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_EDUCATION_KNOWLEDGE_BASE_RENAISSANCE",
- "description": "TXT_KEY_BUILDING_EDUCATION_KNOWLEDGE_BASE_RENAISSANCE",
- "civilopedia": "TXT_KEY_BUILDING_EDUCATION_KNOWLEDGE_BASE_RENAISSANCE_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -36,6 +34,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_EDUCATION_KNOWLEDGE_BASE_RENAISSANCE",
+  "civilopedia": "TXT_KEY_BUILDING_EDUCATION_KNOWLEDGE_BASE_RENAISSANCE_PEDIA",
   "notConstructible": true,
   "nukeImmune": true,
   "neverCapture": true,

@@ -1,7 +1,5 @@
 {
  "type": "BONUS_CLOTHING",
- "description": "TXT_KEY_BONUS_CLOTHING",
- "civilopedia": "TXT_KEY_BONUS_CLOTHING_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_BRIDAL_SHOP",
@@ -23,6 +21,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_CLOTHING",
+  "civilopedia": "TXT_KEY_BONUS_CLOTHING_PEDIA",
   "bonusClassType": "BONUSCLASS_MANUFACTURED"
  }
 }

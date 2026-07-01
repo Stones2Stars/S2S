@@ -1,7 +1,5 @@
 {
  "type": "BONUS_RUBBER",
- "description": "TXT_KEY_BONUS_RUBBER",
- "civilopedia": "TXT_KEY_BONUS_RUBBER_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_BICYCLE_SHOP",
@@ -55,6 +53,8 @@
   ]
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_RUBBER",
+  "civilopedia": "TXT_KEY_BONUS_RUBBER_PEDIA",
   "bonusClassType": "BONUSCLASS_STRATEGIC"
  }
 }

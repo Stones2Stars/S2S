@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_NIGHT_CLUB",
- "description": "TXT_KEY_BUILDING_NIGHT_CLUB",
- "civilopedia": "TXT_KEY_BUILDING_NIGHT_CLUB_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_ANDROID_BROTHEL",
@@ -126,6 +124,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_NIGHT_CLUB",
+  "civilopedia": "TXT_KEY_BUILDING_NIGHT_CLUB_PEDIA",
   "advisor": "ADVISOR_CULTURE",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

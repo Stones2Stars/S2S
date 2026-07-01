@@ -1,8 +1,5 @@
 {
  "type": "TECH_GERONTOCRACY",
- "description": "TXT_KEY_TECH_GERONTOCRACY",
- "civilopedia": "TXT_KEY_TECH_GERONTOCRACY_PEDIA",
- "quote": "TXT_KEY_TECH_GERONTOCRACY_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_INTERSTELLAR_CAPITOL",
@@ -56,6 +53,9 @@
   "soundMP": "AS2D_TECH_GENERIC"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_GERONTOCRACY",
+  "civilopedia": "TXT_KEY_TECH_GERONTOCRACY_PEDIA",
+  "quote": "TXT_KEY_TECH_GERONTOCRACY_QUOTE",
   "era": "C2C_ERA_GALACTIC",
   "worth": 48,
   "tradeable": true,

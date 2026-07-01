@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_LEARNING_CENTER",
- "description": "TXT_KEY_BUILDING_LEARNING_CENTER",
- "civilopedia": "TXT_KEY_BUILDING_LEARNING_CENTER_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -78,6 +76,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_LEARNING_CENTER",
+  "civilopedia": "TXT_KEY_BUILDING_LEARNING_CENTER_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

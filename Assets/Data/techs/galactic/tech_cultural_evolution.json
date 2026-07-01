@@ -1,8 +1,5 @@
 {
  "type": "TECH_CULTURAL_EVOLUTION",
- "description": "TXT_KEY_TECH_CULTURAL_EVOLUTION",
- "civilopedia": "TXT_KEY_TECH_CULTURAL_EVOLUTION_PEDIA",
- "quote": "TXT_KEY_TECH_CULTURAL_EVOLUTION_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_INTERSTELLAR_COLONY_EUGENICS",
@@ -57,6 +54,9 @@
   "soundMP": "AS2D_TECH_GENERIC"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_CULTURAL_EVOLUTION",
+  "civilopedia": "TXT_KEY_TECH_CULTURAL_EVOLUTION_PEDIA",
+  "quote": "TXT_KEY_TECH_CULTURAL_EVOLUTION_QUOTE",
   "era": "C2C_ERA_GALACTIC",
   "worth": 48,
   "tradeable": true,

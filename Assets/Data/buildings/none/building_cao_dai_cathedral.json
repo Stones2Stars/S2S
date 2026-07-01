@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_CAO_DAI_CATHEDRAL",
- "description": "TXT_KEY_BUILDING_CAO_DAI_CATHEDRAL",
- "civilopedia": "TXT_KEY_BUILDING_CAO_DAI_CATHEDRAL_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -99,6 +97,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_CAO_DAI_CATHEDRAL",
+  "civilopedia": "TXT_KEY_BUILDING_CAO_DAI_CATHEDRAL_PEDIA",
   "neverCapture": true,
   "worth": 6,
   "specialBuildingType": "SPECIALBUILDING_CATHEDRAL",

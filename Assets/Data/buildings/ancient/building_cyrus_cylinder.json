@@ -1,8 +1,5 @@
 {
  "type": "BUILDING_CYRUS_CYLINDER",
- "description": "TXT_KEY_BUILDING_CYRUS_CYLINDER",
- "civilopedia": "TXT_KEY_BUILDING_CYRUS_CYLINDER_PEDIA",
- "help": "TXT_KEY_BUILDING_CYRUS_CYLINDER_HELP",
  "requires": {
   "build": {
    "all": [
@@ -53,6 +50,9 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_CYRUS_CYLINDER",
+  "civilopedia": "TXT_KEY_BUILDING_CYRUS_CYLINDER_PEDIA",
+  "help": "TXT_KEY_BUILDING_CYRUS_CYLINDER_HELP",
   "nukeImmune": true,
   "worth": 6,
   "militaryWorth": 3,

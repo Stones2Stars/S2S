@@ -1,7 +1,5 @@
 {
  "type": "UNIT_NOK_MERCHANTS",
- "description": "TXT_KEY_UNIT_NOK_MERCHANTS",
- "civilopedia": "TXT_KEY_UNIT_NOK_MERCHANTS_PEDIA",
  "obsoletedBy": {
   "techs": [
    "TECH_ENGINEERING"
@@ -134,6 +132,8 @@
   ]
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_NOK_MERCHANTS",
+  "civilopedia": "TXT_KEY_UNIT_NOK_MERCHANTS_PEDIA",
   "worth": 1,
   "animalCombat": 100,
   "domain": "DOMAIN_LAND",

@@ -1,7 +1,5 @@
 {
  "type": "BONUS_CLOCKPUNK",
- "description": "TXT_KEY_BONUS_CLOCKPUNK",
- "civilopedia": "TXT_KEY_BONUS_CLOCKPUNK_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_AUTOMATION_CLOCK",
@@ -24,6 +22,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_CLOCKPUNK",
+  "civilopedia": "TXT_KEY_BONUS_CLOCKPUNK_PEDIA",
   "bonusClassType": "BONUSCLASS_GENMODS"
  }
 }

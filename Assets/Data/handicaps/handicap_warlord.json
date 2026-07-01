@@ -1,7 +1,5 @@
 {
  "type": "HANDICAP_WARLORD",
- "description": "TXT_KEY_HANDICAP_WARLORD",
- "help": "TXT_KEY_HANDICAP_WARLORD_HELP",
  "maintenance": {
   "empire": {
    "colony": {
@@ -213,6 +211,8 @@
   "startingExploreUnits": 1
  },
  "identity": {
+  "description": "TXT_KEY_HANDICAP_WARLORD",
+  "help": "TXT_KEY_HANDICAP_WARLORD_HELP",
   "advancedStart": {
    "pointsMod": 120,
    "aiPercent": 100

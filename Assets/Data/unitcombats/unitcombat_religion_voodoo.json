@@ -1,12 +1,12 @@
 {
  "type": "UNITCOMBAT_RELIGION_VOODOO",
- "description": "TXT_KEY_UNITCOMBAT_RELIGION_VOODOO",
  "ui": {
   "art": {
    "icon": "Art/Interface/Buttons/units/sparth/categories/religion_voodoo.dds"
   }
  },
  "identity": {
+  "description": "TXT_KEY_UNITCOMBAT_RELIGION_VOODOO",
   "religion": "RELIGION_VOODOO"
  }
 }

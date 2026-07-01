@@ -1,6 +1,5 @@
 {
  "type": "UNITCOMBAT_COMMODORE",
- "description": "TXT_KEY_UNITCOMBAT_COMMODORE",
  "skills": {
   "cannotMergeSplit": true
  },
@@ -8,5 +7,8 @@
   "art": {
    "icon": "Art/Interface/Buttons/units/sparth/categories/commanders.dds"
   }
+ },
+ "identity": {
+  "description": "TXT_KEY_UNITCOMBAT_COMMODORE"
  }
 }

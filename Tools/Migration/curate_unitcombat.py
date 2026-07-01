@@ -34,7 +34,7 @@ from collections import OrderedDict
 
 import engine
 from store import Store, REPO
-from curate_common import FAMILY_ORDER, put_art, emit_art, descale100
+from curate_common import FAMILY_ORDER, put_art, emit_art, descale100, fold_text_to_identity
 # REUSE the Promotion unit-stat vocabulary (the shared §5 definition) + helpers.
 from curate_promotion import (STRENGTH, FAMILIES, CAP_BOOL, CAP_PAIR, CAP_COUNT, VISION_PAIRS,
                               VISION_STRUCTS, _txt, _int, _simple_list, _pairs)
@@ -237,6 +237,7 @@ def curate(typ, rec, store):
     emit_art(out, art_blocks)
     if identity:
         out["identity"] = identity
+    fold_text_to_identity(out)   # TEXT -> identity (json.md §7)
     return out
 
 

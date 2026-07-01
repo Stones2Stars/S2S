@@ -1,7 +1,5 @@
 {
  "type": "PROJECT_SS_CASING",
- "description": "TXT_KEY_PROJECT_SS_CASING",
- "civilopedia": "TXT_KEY_PROJECT_SS_CASING_PEDIA",
  "buildRate": {
   "self": {
    "percent": [
@@ -34,6 +32,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_PROJECT_SS_CASING",
+  "civilopedia": "TXT_KEY_PROJECT_SS_CASING_PEDIA",
   "mapCategories": [
    "MAPCATEGORY_EARTH"
   ],

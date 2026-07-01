@@ -1,8 +1,5 @@
 {
  "type": "TECH_COMPULSORY_EDUCATION",
- "description": "TXT_KEY_TECH_COMPULSORY_EDUCATION",
- "civilopedia": "TXT_KEY_TECH_COMPULSORY_EDUCATION_PEDIA",
- "quote": "TXT_KEY_TECH_COMPULSORY_EDUCATION_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_CHURCH_OF_THE_STATE",
@@ -80,6 +77,9 @@
   "soundMP": "AS2D_TECH_COMPULSORY_EDUCATION"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_COMPULSORY_EDUCATION",
+  "civilopedia": "TXT_KEY_TECH_COMPULSORY_EDUCATION_PEDIA",
+  "quote": "TXT_KEY_TECH_COMPULSORY_EDUCATION_QUOTE",
   "era": "C2C_ERA_INDUSTRIAL",
   "worth": 40,
   "tradeable": true,

@@ -1,7 +1,5 @@
 {
  "type": "BONUS_DARK_MATTER",
- "description": "TXT_KEY_BONUS_DARK_MATTER",
- "civilopedia": "TXT_KEY_BONUS_DARK_MATTER_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_INTERGALACTIC_DARK_MATTER_FUEL_SUPPLY",
@@ -14,6 +12,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_DARK_MATTER",
+  "civilopedia": "TXT_KEY_BONUS_DARK_MATTER_PEDIA",
   "bonusClassType": "BONUSCLASS_MANUFACTURED"
  }
 }

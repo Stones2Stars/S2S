@@ -1,7 +1,5 @@
 {
  "type": "UNIT_POSSUM",
- "description": "TXT_KEY_UNIT_POSSUM",
- "civilopedia": "TXT_KEY_UNIT_POSSUM_PEDIA",
  "withdrawal": {
   "unit": {
    "percent": 10
@@ -41,6 +39,8 @@
   ]
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_POSSUM",
+  "civilopedia": "TXT_KEY_UNIT_POSSUM_PEDIA",
   "spawnOnly": true,
   "xpValueAttack": 1,
   "xpValueDefense": 1,

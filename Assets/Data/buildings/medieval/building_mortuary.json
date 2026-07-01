@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_MORTUARY",
- "description": "TXT_KEY_BUILDING_MORTUARY",
- "civilopedia": "TXT_KEY_BUILDING_MORTUARY_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_MODERN_EMBALMER"
@@ -69,6 +67,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_MORTUARY",
+  "civilopedia": "TXT_KEY_BUILDING_MORTUARY_PEDIA",
   "conquestProbability": 95,
   "advisor": "ADVISOR_GROWTH",
   "visibilityPriority": 1,

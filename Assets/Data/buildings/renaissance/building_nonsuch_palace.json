@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_NONSUCH_PALACE",
- "description": "TXT_KEY_BUILDING_NONSUCH_PALACE",
- "civilopedia": "TXT_KEY_BUILDING_NONSUCH_PALACE_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -89,6 +87,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_NONSUCH_PALACE",
+  "civilopedia": "TXT_KEY_BUILDING_NONSUCH_PALACE_PEDIA",
   "centerInCity": true,
   "worth": 10,
   "conquestProbability": 100,

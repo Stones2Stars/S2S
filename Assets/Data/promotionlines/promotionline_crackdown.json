@@ -1,12 +1,12 @@
 {
  "type": "PROMOTIONLINE_CRACKDOWN",
- "description": "TXT_KEY_PROMOTIONLINE_CRACKDOWN",
  "ui": {
   "art": {
    "icon": "Art/Buttons/Promotions/Crackdown1Buildup.dds"
   }
  },
  "identity": {
+  "description": "TXT_KEY_PROMOTIONLINE_CRACKDOWN",
   "unitCombats": [
    "UNITCOMBAT_LAW_ENFORCEMENT"
   ],

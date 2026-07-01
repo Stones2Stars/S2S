@@ -1,7 +1,5 @@
 {
  "type": "PROMOTION_WANTED1_HS",
- "description": "TXT_KEY_PROMOTION_WANTED1",
- "help": "TXT_KEY_PROMOTION_WANTED_HELP",
  "skills": {
   "upgradeAnywhere": true,
   "assassin": true
@@ -31,6 +29,8 @@
   "sound": "AS2D_IF_LEVELUP"
  },
  "identity": {
+  "description": "TXT_KEY_PROMOTION_WANTED1",
+  "help": "TXT_KEY_PROMOTION_WANTED_HELP",
   "setOnInvestigated": true
  }
 }

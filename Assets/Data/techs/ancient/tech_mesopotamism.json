@@ -1,8 +1,5 @@
 {
  "type": "TECH_MESOPOTAMISM",
- "description": "TXT_KEY_TECH_MESOPOTAMISM",
- "civilopedia": "TXT_KEY_TECH_MESOPOTAMISM_PEDIA",
- "quote": "TXT_KEY_TECH_MESOPOTAMISM_QUOTE",
  "enables": {
   "religions": [
    "RELIGION_MESOPOTAMISM"
@@ -51,6 +48,9 @@
   "soundMP": "AS2D_TECH_GENERIC"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_MESOPOTAMISM",
+  "civilopedia": "TXT_KEY_TECH_MESOPOTAMISM_PEDIA",
+  "quote": "TXT_KEY_TECH_MESOPOTAMISM_QUOTE",
   "era": "C2C_ERA_ANCIENT",
   "worth": 8,
   "gridX": 23,

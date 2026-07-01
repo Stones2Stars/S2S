@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_NORIA",
- "description": "TXT_KEY_BUILDING_NORIA",
- "civilopedia": "TXT_KEY_BUILDING_NORIA_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_RIVER_ADMINISTRATION"
@@ -95,6 +93,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_NORIA",
+  "civilopedia": "TXT_KEY_BUILDING_NORIA_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

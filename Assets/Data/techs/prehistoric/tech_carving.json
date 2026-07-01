@@ -1,8 +1,5 @@
 {
  "type": "TECH_CARVING",
- "description": "TXT_KEY_TECH_CARVING",
- "civilopedia": "TXT_KEY_TECH_CARVING_PEDIA",
- "quote": "TXT_KEY_TECH_CARVING_QUOTE",
  "enables": {
   "bonuses": [
    "BONUS_JADE"
@@ -62,6 +59,9 @@
   "soundMP": "AS2D_TECH_CARVING"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_CARVING",
+  "civilopedia": "TXT_KEY_TECH_CARVING_PEDIA",
+  "quote": "TXT_KEY_TECH_CARVING_QUOTE",
   "era": "C2C_ERA_PREHISTORIC",
   "worth": 2,
   "militaryWorth": 1,

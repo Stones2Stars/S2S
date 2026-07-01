@@ -1,8 +1,5 @@
 {
  "type": "TECH_HYDROPONICS",
- "description": "TXT_KEY_TECH_HYDROPONICS",
- "civilopedia": "TXT_KEY_TECH_HYDROPONICS_PEDIA",
- "quote": "TXT_KEY_TECH_HYDROPONICS_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_CANNABIS_GROW_OPERATION",
@@ -54,6 +51,9 @@
   "soundMP": "AS2D_TECH_HYDROPONICS"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_HYDROPONICS",
+  "civilopedia": "TXT_KEY_TECH_HYDROPONICS_PEDIA",
+  "quote": "TXT_KEY_TECH_HYDROPONICS_QUOTE",
   "era": "C2C_ERA_ATOMIC",
   "worth": 48,
   "tradeable": true,

@@ -1,7 +1,5 @@
 {
  "type": "PROJECT_HUMAN_GENOME_PROJECT",
- "description": "TXT_KEY_BUILDING_HUMAN_GENOME_PROJECT",
- "civilopedia": "TXT_KEY_BUILDING_HUMAN_GENOME_PROJECT_PEDIA",
  "health": {
   "empire": {
    "flat": 1
@@ -24,6 +22,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_HUMAN_GENOME_PROJECT",
+  "civilopedia": "TXT_KEY_BUILDING_HUMAN_GENOME_PROJECT_PEDIA",
   "mapCategories": [
    "MAPCATEGORY_EARTH"
   ],

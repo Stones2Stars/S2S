@@ -1,6 +1,5 @@
 {
  "type": "UNITCOMBAT_SEA_WORKER",
- "description": "TXT_KEY_UNITCOMBAT_SEA_WORKER",
  "skills": {
   "cannotMergeSplit": true
  },
@@ -8,5 +7,8 @@
   "art": {
    "icon": "Art/Interface/Buttons/units/sparth/categories/sea_worker.dds"
   }
+ },
+ "identity": {
+  "description": "TXT_KEY_UNITCOMBAT_SEA_WORKER"
  }
 }

@@ -1,7 +1,5 @@
 {
  "type": "BONUS_AUTOMOBILES",
- "description": "TXT_KEY_BONUS_AUTOMOBILES",
- "civilopedia": "TXT_KEY_BONUS_AUTOMOBILES_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_ALUMINUM_RECLAMATION_PLANT",
@@ -69,6 +67,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_AUTOMOBILES",
+  "civilopedia": "TXT_KEY_BONUS_AUTOMOBILES_PEDIA",
   "bonusClassType": "BONUSCLASS_MANUFACTURED"
  }
 }

@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_TUBER_GATHERER",
- "description": "TXT_KEY_BUILDING_TUBER_GATHERER",
- "civilopedia": "TXT_KEY_BUILDING_TUBER_GATHERER_PEDIA",
  "obsoletedBy": {
   "techs": [
    "TECH_CITY_PLANNING"
@@ -38,6 +36,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_TUBER_GATHERER",
+  "civilopedia": "TXT_KEY_BUILDING_TUBER_GATHERER_PEDIA",
   "enabledCivilizations": [
    "CIVILIZATION_NPC_NEANDERTHAL"
   ],

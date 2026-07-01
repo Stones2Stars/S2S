@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_TOWER_OF_SILENCE",
- "description": "TXT_KEY_BUILDING_TOWER_OF_SILENCE",
- "civilopedia": "TXT_KEY_BUILDING_TOWER_OF_SILENCE_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_FUNERARY_SERVICES"
@@ -85,6 +83,8 @@
   "construct": "AS2D_BUILD_BUDDHIST"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_TOWER_OF_SILENCE",
+  "civilopedia": "TXT_KEY_BUILDING_TOWER_OF_SILENCE_PEDIA",
   "worth": 2,
   "conquestProbability": 100,
   "greatPeopleUnitType": "UNIT_PROPHET",

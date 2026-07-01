@@ -1,7 +1,5 @@
 {
  "type": "UNIT_NEANDERTHAL_KAYAK",
- "description": "TXT_KEY_UNIT_NEANDERTHAL_KAYAK",
- "civilopedia": "TXT_KEY_UNIT_KAYAK_PEDIA",
  "obsoletedBy": {
   "techs": [
    "TECH_SEDENTARY_LIFESTYLE"
@@ -88,6 +86,8 @@
   "upkeep": 1
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_NEANDERTHAL_KAYAK",
+  "civilopedia": "TXT_KEY_UNIT_KAYAK_PEDIA",
   "worth": 3,
   "militaryWorth": 1,
   "xpValueAttack": 2,

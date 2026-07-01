@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_SPACE_ELEVATOR",
- "description": "TXT_KEY_BUILDING_SPACE_ELEVATOR",
- "civilopedia": "TXT_KEY_BUILDING_SPACE_ELEVATOR_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -112,6 +110,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_SPACE_ELEVATOR",
+  "civilopedia": "TXT_KEY_BUILDING_SPACE_ELEVATOR_PEDIA",
   "nukeImmune": true,
   "teamShare": true,
   "worth": 20,

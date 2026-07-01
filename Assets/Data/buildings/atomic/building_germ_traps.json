@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_GERM_TRAPS",
- "description": "TXT_KEY_BUILDING_GERM_TRAPS",
- "civilopedia": "TXT_KEY_BUILDING_GERM_TRAPS_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_ROBOTIC_TRAPS"
@@ -89,6 +87,8 @@
   "construct": "AS2D_BUILD_NANOFACTORY"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_GERM_TRAPS",
+  "civilopedia": "TXT_KEY_BUILDING_GERM_TRAPS_PEDIA",
   "damageAttackingUnitCombats": [
    "UNITCOMBAT_ARCHER",
    "UNITCOMBAT_ASSAULT_MECH",

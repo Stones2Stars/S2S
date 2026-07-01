@@ -1,7 +1,5 @@
 {
  "type": "BONUS_SEA_LION_AND_SEAL",
- "description": "TXT_KEY_BONUS_SEA_LION_AND_SEAL",
- "civilopedia": "TXT_KEY_BONUS_SEA_LION_AND_SEAL_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_BREEDING_PROGRAM_BELUGA",
@@ -76,6 +74,8 @@
   ]
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_SEA_LION_AND_SEAL",
+  "civilopedia": "TXT_KEY_BONUS_SEA_LION_AND_SEAL_PEDIA",
   "bonusClassType": "BONUSCLASS_LIVESTOCK"
  }
 }

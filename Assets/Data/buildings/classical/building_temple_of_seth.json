@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_TEMPLE_OF_SETH",
- "description": "TXT_KEY_BUILDING_TEMPLE_OF_SETH",
- "civilopedia": "TXT_KEY_BUILDING_TEMPLE_OF_SETH_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -126,6 +124,8 @@
   "construct": "AS2D_UNIT_BUILD_RA_MISSIONARY"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_TEMPLE_OF_SETH",
+  "civilopedia": "TXT_KEY_BUILDING_TEMPLE_OF_SETH_PEDIA",
   "commerceDoubleTime": {
    "culture": 1000
   },

@@ -1,7 +1,5 @@
 {
  "type": "UNIT_UNMANNED_MACHINE_GUN",
- "description": "TXT_KEY_UNIT_UNMANNED_MACHINE_GUN",
- "civilopedia": "TXT_KEY_UNIT_UNMANNED_MACHINE_GUN_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -82,6 +80,8 @@
   "upkeep": 1
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_UNMANNED_MACHINE_GUN",
+  "civilopedia": "TXT_KEY_UNIT_UNMANNED_MACHINE_GUN_PEDIA",
   "worth": 4,
   "militaryWorth": 110,
   "xpValueAttack": 6,

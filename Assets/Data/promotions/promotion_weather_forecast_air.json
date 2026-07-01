@@ -1,6 +1,5 @@
 {
  "type": "PROMOTION_WEATHER_FORECAST_AIR",
- "description": "TXT_KEY_PROMOTION_WEATHER_FORECAST_AIR",
  "air": {
   "unit": {
    "range": {
@@ -17,6 +16,7 @@
   "sound": "AS2D_IF_LEVELUP"
  },
  "identity": {
+  "description": "TXT_KEY_PROMOTION_WEATHER_FORECAST_AIR",
   "unitCombats": [
    "UNITCOMBAT_EARLY_FIGHTERS",
    "UNITCOMBAT_EARLY_BOMBERS",

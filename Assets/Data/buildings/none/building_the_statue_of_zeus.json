@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_THE_STATUE_OF_ZEUS",
- "description": "TXT_KEY_BUILDING_THE_STATUE_OF_ZEUS",
- "civilopedia": "TXT_KEY_BUILDING_THE_STATUE_OF_ZEUS_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -57,6 +55,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_THE_STATUE_OF_ZEUS",
+  "civilopedia": "TXT_KEY_BUILDING_THE_STATUE_OF_ZEUS_PEDIA",
   "commerceDoubleTime": {
    "culture": 1000
   },

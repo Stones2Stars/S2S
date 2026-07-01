@@ -1,6 +1,5 @@
 {
  "type": "UNITCOMBAT_SIZE_GARGANTUAN",
- "description": "TXT_KEY_UNITCOMBAT_SIZE_GARGANTUAN",
  "strength": {
   "unit": {
    "damageModifier": {
@@ -31,6 +30,7 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_UNITCOMBAT_SIZE_GARGANTUAN",
   "base": {
    "size": 8
   }

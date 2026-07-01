@@ -1,8 +1,5 @@
 {
  "type": "TECH_DERIVATIVES",
- "description": "TXT_KEY_TECH_DERIVATIVES",
- "civilopedia": "TXT_KEY_TECH_DERIVATIVES_PEDIA",
- "quote": "TXT_KEY_TECH_DERIVATIVES_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_HEDGE_FUND",
@@ -49,6 +46,9 @@
   "soundMP": "AS2D_TECH_DERIVATIVES"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_DERIVATIVES",
+  "civilopedia": "TXT_KEY_TECH_DERIVATIVES_PEDIA",
+  "quote": "TXT_KEY_TECH_DERIVATIVES_QUOTE",
   "era": "C2C_ERA_INFORMATION",
   "worth": 120,
   "militaryWorth": 24,

@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_GUINEA_PIG_BREEDER",
- "description": "TXT_KEY_BUILDING_GUINEA_PIG_BREEDER",
- "civilopedia": "TXT_KEY_BUILDING_GUINEA_PIG_BREEDER_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_INDUSTRIAL_FARMS"
@@ -94,6 +92,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_GUINEA_PIG_BREEDER",
+  "civilopedia": "TXT_KEY_BUILDING_GUINEA_PIG_BREEDER_PEDIA",
   "worth": 4,
   "militaryWorth": 2,
   "advisor": "ADVISOR_GROWTH",

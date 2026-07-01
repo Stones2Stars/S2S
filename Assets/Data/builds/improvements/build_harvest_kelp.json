@@ -1,6 +1,5 @@
 {
  "type": "BUILD_HARVEST_KELP",
- "description": "TXT_KEY_BUILD_HARVEST_KELP",
  "requires": {
   "build": {
    "all": [
@@ -37,5 +36,8 @@
   "art": {
    "entityEvent": "ENTITY_EVENT_BUILD"
   }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILD_HARVEST_KELP"
  }
 }

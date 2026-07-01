@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_TALLY_STONE",
- "description": "TXT_KEY_BUILDING_TALLY_STONE",
- "civilopedia": "TXT_KEY_BUILDING_TALLY_STONE_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_LYCEUM"
@@ -79,6 +77,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_TALLY_STONE",
+  "civilopedia": "TXT_KEY_BUILDING_TALLY_STONE_PEDIA",
   "enabledCivilizations": [
    "CIVILIZATION_NPC_NEANDERTHAL"
   ],

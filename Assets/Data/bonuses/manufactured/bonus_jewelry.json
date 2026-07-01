@@ -1,7 +1,5 @@
 {
  "type": "BONUS_JEWELRY",
- "description": "TXT_KEY_BONUS_JEWELRY",
- "civilopedia": "TXT_KEY_BONUS_JEWELRY_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_COPPER_RECLAMATION_PLANT",
@@ -20,6 +18,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_JEWELRY",
+  "civilopedia": "TXT_KEY_BONUS_JEWELRY_PEDIA",
   "bonusClassType": "BONUSCLASS_MANUFACTURED"
  }
 }

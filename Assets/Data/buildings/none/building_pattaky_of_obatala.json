@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_PATTAKY_OF_OBATALA",
- "description": "TXT_KEY_BUILDING_PATTAKY_OF_OBATALA",
- "civilopedia": "TXT_KEY_BUILDING_PATTAKY_OF_OBATALAL_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -95,6 +93,8 @@
   "construct": "AS2D_BUILD_CHRISTIAN"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_PATTAKY_OF_OBATALA",
+  "civilopedia": "TXT_KEY_BUILDING_PATTAKY_OF_OBATALAL_PEDIA",
   "nukeImmune": true,
   "worth": 8,
   "conquestProbability": 100,

@@ -1,6 +1,5 @@
 {
  "type": "BUILD_WORMHOLE",
- "description": "TXT_KEY_BUILD_WORMHOLE",
  "requires": {
   "build": {
    "all": [
@@ -28,5 +27,8 @@
   "art": {
    "entityEvent": "ENTITY_EVENT_SHOVEL"
   }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILD_WORMHOLE"
  }
 }

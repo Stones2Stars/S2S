@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_EFFECT_UNIVERSAL_ECONOMY",
- "description": "TXT_KEY_BUILDING_EFFECT_UNIVERSAL_ECONOMY",
- "civilopedia": "TXT_KEY_BUILDING_UNIVERSAL_ECONOMY_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_EFFECT_COSMIC_EXPANSION_POWER_PLANT",
@@ -27,6 +25,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_EFFECT_UNIVERSAL_ECONOMY",
+  "civilopedia": "TXT_KEY_BUILDING_UNIVERSAL_ECONOMY_PEDIA",
   "notConstructible": true,
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,

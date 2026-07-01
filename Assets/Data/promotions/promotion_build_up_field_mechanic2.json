@@ -1,6 +1,5 @@
 {
  "type": "PROMOTION_BUILD_UP_FIELD_MECHANIC2",
- "description": "TXT_KEY_PROMOTION_BUILD_UP_FIELD_MECHANIC2",
  "heal": {
   "unit": {
    "support": {
@@ -24,5 +23,8 @@
  },
  "sound": {
   "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_BUILD_UP_FIELD_MECHANIC2"
  }
 }

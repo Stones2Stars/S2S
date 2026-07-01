@@ -1,7 +1,5 @@
 {
  "type": "LEADER_ISABELLA",
- "description": "TXT_KEY_LEADER_ISABELLA",
- "civilopedia": "TXT_KEY_LEADER_ISABELLA_PEDIA",
  "grants": {
   "traits": [
    "TRAIT_SPIRITUAL",
@@ -312,5 +310,9 @@
    "C2C_ERA_TRANSCENDENT": "AS2D_DIPLO_WARDRUMS_LATE",
    "C2C_ERA_FUTURE": "AS2D_DIPLO_WARDRUMS_LATE"
   }
+ },
+ "identity": {
+  "description": "TXT_KEY_LEADER_ISABELLA",
+  "civilopedia": "TXT_KEY_LEADER_ISABELLA_PEDIA"
  }
 }

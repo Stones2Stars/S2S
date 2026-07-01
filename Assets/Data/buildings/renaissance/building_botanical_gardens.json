@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_BOTANICAL_GARDENS",
- "description": "TXT_KEY_BUILDING_BOTANICAL_GARDENS",
- "civilopedia": "TXT_KEY_BUILDING_BOTANICAL_GARDENS_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -101,6 +99,8 @@
   "construct": "AS2D_BUILD_PARK"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_BOTANICAL_GARDENS",
+  "civilopedia": "TXT_KEY_BUILDING_BOTANICAL_GARDENS_PEDIA",
   "neverCapture": true,
   "worth": 6,
   "militaryWorth": 3,

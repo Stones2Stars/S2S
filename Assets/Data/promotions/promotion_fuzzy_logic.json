@@ -1,6 +1,5 @@
 {
  "type": "PROMOTION_FUZZY_LOGIC",
- "description": "TXT_KEY_PROMOTION_FUZZY_LOGIC",
  "firstStrike": {
   "unit": {
    "strikes": {
@@ -27,6 +26,7 @@
   "sound": "AS2D_IF_LEVELUP"
  },
  "identity": {
+  "description": "TXT_KEY_PROMOTION_FUZZY_LOGIC",
   "unitCombats": [
    "UNITCOMBAT_ASSAULT_MECH",
    "UNITCOMBAT_ROBOT"

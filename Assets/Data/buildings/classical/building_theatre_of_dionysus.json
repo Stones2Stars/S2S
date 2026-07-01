@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_THEATRE_OF_DIONYSUS",
- "description": "TXT_KEY_BUILDING_THEATRE_OF_DIONYSUS",
- "civilopedia": "TXT_KEY_BUILDING_THEATRE_OF_DIONYSUS_PEDIA",
  "obsoletedBy": {
   "techs": [
    "TECH_FREE_ARTISTRY"
@@ -96,6 +94,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_THEATRE_OF_DIONYSUS",
+  "civilopedia": "TXT_KEY_BUILDING_THEATRE_OF_DIONYSUS_PEDIA",
   "commerceDoubleTime": {
    "culture": 1000
   },

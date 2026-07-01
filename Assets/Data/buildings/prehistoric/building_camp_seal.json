@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_CAMP_SEAL",
- "description": "TXT_KEY_BUILDING_CAMP_SEAL",
- "civilopedia": "TXT_KEY_BUILDING_CAMP_SEAL_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_RESOURCES_PELTS"
@@ -89,6 +87,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_CAMP_SEAL",
+  "civilopedia": "TXT_KEY_BUILDING_CAMP_SEAL_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

@@ -1,6 +1,5 @@
 {
  "type": "PROMOTION_PATROL3",
- "description": "TXT_KEY_PROMOTION_PATROL3",
  "strength": {
   "unit": {
    "cityDefense": {
@@ -30,5 +29,8 @@
  },
  "sound": {
   "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_PATROL3"
  }
 }

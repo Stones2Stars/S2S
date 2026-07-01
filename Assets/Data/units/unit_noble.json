@@ -1,7 +1,5 @@
 {
  "type": "UNIT_NOBLE",
- "description": "TXT_KEY_UNIT_NOBLE",
- "civilopedia": "TXT_KEY_UNIT_NOBLE_PEDIA",
  "obsoletedBy": {
   "techs": [
    "TECH_VASSALAGE"
@@ -35,6 +33,8 @@
   "upkeep": 1
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_NOBLE",
+  "civilopedia": "TXT_KEY_UNIT_NOBLE_PEDIA",
   "worth": 1,
   "leaderExperience": 6,
   "domain": "DOMAIN_LAND",

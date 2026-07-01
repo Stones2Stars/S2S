@@ -1,7 +1,5 @@
 {
  "type": "BONUS_POMEGRANATE",
- "description": "TXT_KEY_BONUS_POMEGRANATE",
- "civilopedia": "TXT_KEY_BONUS_POMEGRANATE_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_CULTURE_SAFAVID",
@@ -61,6 +59,8 @@
   ]
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_POMEGRANATE",
+  "civilopedia": "TXT_KEY_BONUS_POMEGRANATE_PEDIA",
   "bonusClassType": "BONUSCLASS_CROP"
  }
 }

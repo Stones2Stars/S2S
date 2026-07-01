@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_UTERINE_REPLICATOR",
- "description": "TXT_KEY_BUILDING_UTERINE_REPLICATOR",
- "civilopedia": "TXT_KEY_BUILDING_UTERINE_REPLICATOR_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_GAMMA_ASSEMBLER",
@@ -85,6 +83,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_UTERINE_REPLICATOR",
+  "civilopedia": "TXT_KEY_BUILDING_UTERINE_REPLICATOR_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

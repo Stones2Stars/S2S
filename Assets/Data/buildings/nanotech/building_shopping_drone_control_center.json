@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_SHOPPING_DRONE_CONTROL_CENTER",
- "description": "TXT_KEY_BUILDING_SHOPPING_DRONE_CONTROL_CENTER",
- "civilopedia": "TXT_KEY_BUILDING_SHOPPING_DRONE_CONTROL_CENTER_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_TELEPORT_BOOTH"
@@ -74,6 +72,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_SHOPPING_DRONE_CONTROL_CENTER",
+  "civilopedia": "TXT_KEY_BUILDING_SHOPPING_DRONE_CONTROL_CENTER_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

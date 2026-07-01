@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_PEAT_GATHERER",
- "description": "TXT_KEY_BUILDING_PEAT_GATHERER",
- "civilopedia": "TXT_KEY_BUILDING_PEAT_GATHERER_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_MODERN_EARTHWORKS"
@@ -63,6 +61,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_PEAT_GATHERER",
+  "civilopedia": "TXT_KEY_BUILDING_PEAT_GATHERER_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

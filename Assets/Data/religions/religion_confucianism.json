@@ -1,8 +1,5 @@
 {
  "type": "RELIGION_CONFUCIANISM",
- "description": "TXT_KEY_TECH_CONFUCIANISM",
- "civilopedia": "TXT_KEY_TECH_CONFUCIANISM_PEDIA",
- "adjective": "TXT_KEY_TECH_CONFUCIANISM_ADJECTIVE",
  "enables": {
   "buildings": [
    "BUILDING_CONFUCIAN_ACADEMY",
@@ -115,6 +112,9 @@
   "sound": "AS2D_BUILD_CONFUCIAN"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_CONFUCIANISM",
+  "adjective": "TXT_KEY_TECH_CONFUCIANISM_ADJECTIVE",
+  "civilopedia": "TXT_KEY_TECH_CONFUCIANISM_PEDIA",
   "spreadFactor": 50
  }
 }

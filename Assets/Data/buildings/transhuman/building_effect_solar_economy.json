@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_EFFECT_SOLAR_ECONOMY",
- "description": "TXT_KEY_BUILDING_EFFECT_SOLAR_ECONOMY",
- "civilopedia": "TXT_KEY_BUILDING_SOLAR_ECONOMY_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_EFFECT_SOLAR_DYSON_SPHERE",
@@ -29,6 +27,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_EFFECT_SOLAR_ECONOMY",
+  "civilopedia": "TXT_KEY_BUILDING_SOLAR_ECONOMY_PEDIA",
   "notConstructible": true,
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,

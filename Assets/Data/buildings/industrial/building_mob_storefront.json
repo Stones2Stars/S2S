@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_MOB_STOREFRONT",
- "description": "TXT_KEY_BUILDING_MOB_STOREFRONT",
- "civilopedia": "TXT_KEY_BUILDING_MOB_STOREFRONT_PEDIA",
  "enables": {
   "units": [
    "UNIT_MOBSTER_CAR"
@@ -149,6 +147,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_MOB_STOREFRONT",
+  "civilopedia": "TXT_KEY_BUILDING_MOB_STOREFRONT_PEDIA",
   "nukeImmune": true,
   "militaryWorth": 1,
   "advisor": "ADVISOR_ECONOMY",

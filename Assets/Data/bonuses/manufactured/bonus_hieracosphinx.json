@@ -1,13 +1,13 @@
 {
  "type": "BONUS_HIERACOSPHINX",
- "description": "TXT_KEY_BONUS_HIERACOSPHINX",
- "civilopedia": "TXT_KEY_BONUS_HIERACOSPHINX_PEDIA",
  "world": {
   "art": {
    "icon": "ART_DEF_BONUS_HIERACOSPHINX"
   }
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_HIERACOSPHINX",
+  "civilopedia": "TXT_KEY_BONUS_HIERACOSPHINX_PEDIA",
   "bonusClassType": "BONUSCLASS_WONDER"
  }
 }

@@ -1,6 +1,5 @@
 {
  "type": "PROMOTION_ARMED_GUARD5",
- "description": "TXT_KEY_PROMOTION_ARMED_GUARD5",
  "strength": {
   "unit": {
    "defense": {
@@ -36,5 +35,8 @@
  },
  "sound": {
   "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_ARMED_GUARD5"
  }
 }

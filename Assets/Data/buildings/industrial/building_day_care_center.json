@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_DAY_CARE_CENTER",
- "description": "TXT_KEY_BUILDING_DAY_CARE_CENTER",
- "civilopedia": "TXT_KEY_BUILDING_DAY_CARE_CENTER_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_CHILD_LABOR_CREW"
@@ -79,6 +77,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_DAY_CARE_CENTER",
+  "civilopedia": "TXT_KEY_BUILDING_DAY_CARE_CENTER_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

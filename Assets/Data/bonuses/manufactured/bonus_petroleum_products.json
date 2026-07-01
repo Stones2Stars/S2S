@@ -1,7 +1,5 @@
 {
  "type": "BONUS_PETROLEUM_PRODUCTS",
- "description": "TXT_KEY_BONUS_PETROLEUM_PRODUCTS",
- "civilopedia": "TXT_KEY_BONUS_PETROLEUM_PRODUCTS_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_AUTOMOBILE_DEALERSHIP",
@@ -145,6 +143,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_PETROLEUM_PRODUCTS",
+  "civilopedia": "TXT_KEY_BONUS_PETROLEUM_PRODUCTS_PEDIA",
   "bonusClassType": "BONUSCLASS_MANUFACTURED"
  }
 }

@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_FOLKLORE_EAGLE_RAY",
- "description": "TXT_KEY_BUILDING_FOLKLORE_EAGLE_RAY",
- "civilopedia": "TXT_KEY_BUILDING_FOLKLORE_ANIMAL_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_FOLKLORE_T_FISH",
@@ -79,6 +77,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_FOLKLORE_EAGLE_RAY",
+  "civilopedia": "TXT_KEY_BUILDING_FOLKLORE_ANIMAL_PEDIA",
   "notConstructible": true,
   "nukeImmune": true,
   "neverCapture": true,

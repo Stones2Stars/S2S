@@ -1,7 +1,5 @@
 {
  "type": "BONUS_TITANIUM_ORE",
- "description": "TXT_KEY_BONUS_TITANIUM_ORE",
- "civilopedia": "TXT_KEY_BONUS_TITANIUM_ORE_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_LUNAR_TITANIUM_PROCESSING_FACILITY",
@@ -64,6 +62,8 @@
   ]
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_TITANIUM_ORE",
+  "civilopedia": "TXT_KEY_BONUS_TITANIUM_ORE_PEDIA",
   "bonusClassType": "BONUSCLASS_STRATEGIC"
  }
 }

@@ -1,7 +1,5 @@
 {
  "type": "IMPROVEMENT_CISLUNAR_EXPANSION_MODULE",
- "description": "TXT_KEY_IMPROVEMENT_CISLUNAR_EXPANSION_MODULE",
- "civilopedia": "TXT_KEY_IMPROVEMENT_CISLUNAR_EXPANSION_MODULE_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -56,6 +54,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_IMPROVEMENT_CISLUNAR_EXPANSION_MODULE",
+  "civilopedia": "TXT_KEY_IMPROVEMENT_CISLUNAR_EXPANSION_MODULE_PEDIA",
   "extraterrestrial": true,
   "pillageGold": 200
  }

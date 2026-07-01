@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_DUTCH_DIKE",
- "description": "TXT_KEY_BUILDING_DUTCH_DIKE",
- "civilopedia": "TXT_KEY_BUILDING_DUTCH_DIKE_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -110,6 +108,8 @@
   "construct": "AS2D_BUILD_AQUEDUCT"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_DUTCH_DIKE",
+  "civilopedia": "TXT_KEY_BUILDING_DUTCH_DIKE_PEDIA",
   "neverCapture": true,
   "worth": 4,
   "militaryWorth": 2,

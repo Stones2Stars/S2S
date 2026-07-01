@@ -1,6 +1,5 @@
 {
  "type": "PROMOTION_BLITZ",
- "description": "TXT_KEY_PROMOTION_BLITZ",
  "experience": {
   "unit": {
    "percent": -25
@@ -18,6 +17,7 @@
   "sound": "AS2D_IF_LEVELUP"
  },
  "identity": {
+  "description": "TXT_KEY_PROMOTION_BLITZ",
   "unitCombats": [
    "UNITCOMBAT_MOUNTED",
    "UNITCOMBAT_WHEELED",

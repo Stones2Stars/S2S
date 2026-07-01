@@ -1,7 +1,5 @@
 {
  "type": "C2C_ERA_INDUSTRIAL",
- "description": "TXT_KEY_ERA_INDUSTRIAL",
- "strategy": "TXT_KEY_ERA_INDUSTRIAL_STRATEGY",
  "costs": {
   "world": {
    "train": {
@@ -98,6 +96,8 @@
   "unitDefeat": "AS2D_LOSS_MIDDLE"
  },
  "identity": {
+  "description": "TXT_KEY_ERA_INDUSTRIAL",
+  "strategy": "TXT_KEY_ERA_INDUSTRIAL_STRATEGY",
   "order": 6,
   "advancedStart": 16000,
   "historicalStartYear": 1750,

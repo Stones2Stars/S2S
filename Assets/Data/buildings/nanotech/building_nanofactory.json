@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_NANOFACTORY",
- "description": "TXT_KEY_BUILDING_NANOFACTORY",
- "civilopedia": "TXT_KEY_BUILDING_NANOFACTORY_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_FACTORY_NANOACTUATORS",
@@ -100,6 +98,8 @@
   "construct": "AS2D_BUILD_NANOFACTORY"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_NANOFACTORY",
+  "civilopedia": "TXT_KEY_BUILDING_NANOFACTORY_PEDIA",
   "worth": 20,
   "militaryWorth": 25,
   "conquestProbability": 75,

@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_CAMP_RHEA",
- "description": "TXT_KEY_BUILDING_CAMP_RHEA",
- "civilopedia": "TXT_KEY_BUILDING_CAMP_RHEA_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_RESOURCES_CARCASS"
@@ -90,6 +88,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_CAMP_RHEA",
+  "civilopedia": "TXT_KEY_BUILDING_CAMP_RHEA_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

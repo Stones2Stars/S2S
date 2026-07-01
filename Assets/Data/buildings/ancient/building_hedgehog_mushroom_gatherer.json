@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_HEDGEHOG_MUSHROOM_GATHERER",
- "description": "TXT_KEY_BUILDING_HEDGEHOG_MUSHROOM_GATHERER",
- "civilopedia": "TXT_KEY_BUILDING_HEDGEHOG_MUSHROOM_GATHERER_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_FARMSCRAPER_I"
@@ -65,6 +63,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_HEDGEHOG_MUSHROOM_GATHERER",
+  "civilopedia": "TXT_KEY_BUILDING_HEDGEHOG_MUSHROOM_GATHERER_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

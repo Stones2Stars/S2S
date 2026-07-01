@@ -1,8 +1,5 @@
 {
  "type": "TECH_FRANCHISES",
- "description": "TXT_KEY_TECH_FRANCHISES",
- "civilopedia": "TXT_KEY_TECH_FRANCHISES_PEDIA",
- "quote": "TXT_KEY_TECH_FRANCHISES_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_BURGER_JOINT",
@@ -61,6 +58,9 @@
   "soundMP": "AS2D_TECH_FRANCHISES"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_FRANCHISES",
+  "civilopedia": "TXT_KEY_TECH_FRANCHISES_PEDIA",
+  "quote": "TXT_KEY_TECH_FRANCHISES_QUOTE",
   "era": "C2C_ERA_ATOMIC",
   "worth": 48,
   "militaryWorth": 4,

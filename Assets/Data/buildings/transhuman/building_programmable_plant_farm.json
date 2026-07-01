@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_PROGRAMMABLE_PLANT_FARM",
- "description": "TXT_KEY_BUILDING_PROGRAMMABLE_PLANT_FARM",
- "civilopedia": "TXT_KEY_BUILDING_PROGRAMMABLE_PLANT_FARM_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_CYBER_CHLOROPLASTIDA_BLOOM"
@@ -63,6 +61,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_PROGRAMMABLE_PLANT_FARM",
+  "civilopedia": "TXT_KEY_BUILDING_PROGRAMMABLE_PLANT_FARM_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

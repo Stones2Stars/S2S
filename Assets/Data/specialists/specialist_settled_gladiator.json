@@ -1,7 +1,5 @@
 {
  "type": "SPECIALIST_SETTLED_GLADIATOR",
- "description": "TXT_KEY_SPECIALIST_SETTLED_GLADIATOR",
- "civilopedia": "TXT_KEY_SPECIALIST_SETTLED_GLADIATOR_PEDIA",
  "gold": {
   "city": {
    "flat": 1
@@ -23,6 +21,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_SPECIALIST_SETTLED_GLADIATOR",
+  "civilopedia": "TXT_KEY_SPECIALIST_SETTLED_GLADIATOR_PEDIA",
   "categories": [
    "CATEGORY_SPECIALIST_GROUP_MILITARY"
   ]

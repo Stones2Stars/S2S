@@ -1,7 +1,5 @@
 {
  "type": "BONUS_BAMBOO",
- "description": "TXT_KEY_BONUS_BAMBOO",
- "civilopedia": "TXT_KEY_BONUS_BAMBOO_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_ABATIS",
@@ -50,6 +48,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_BAMBOO",
+  "civilopedia": "TXT_KEY_BONUS_BAMBOO_PEDIA",
   "bonusClassType": "BONUSCLASS_MANUFACTURED"
  }
 }

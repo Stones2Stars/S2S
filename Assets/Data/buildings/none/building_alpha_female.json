@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_ALPHA_FEMALE",
- "description": "TXT_KEY_BUILDING_ALPHA_FEMALE",
- "civilopedia": "TXT_KEY_BUILDING_ALPHAGENDER_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -53,6 +51,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_ALPHA_FEMALE",
+  "civilopedia": "TXT_KEY_BUILDING_ALPHAGENDER_PEDIA",
   "enabledCivilizations": [
    "CIVILIZATION_NPC_NEANDERTHAL"
   ],

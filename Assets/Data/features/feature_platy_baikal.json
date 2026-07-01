@@ -1,7 +1,5 @@
 {
  "type": "FEATURE_PLATY_BAIKAL",
- "description": "TXT_KEY_FEATURE_BAIKAL",
- "civilopedia": "TXT_KEY_FEATURE_BAIKAL_PEDIA",
  "vision": {
   "plot": {
    "seeThrough": {
@@ -18,6 +16,8 @@
   "soundscape": "ASSS_OASIS_SELECT_AMB"
  },
  "identity": {
+  "description": "TXT_KEY_FEATURE_BAIKAL",
+  "civilopedia": "TXT_KEY_FEATURE_BAIKAL_PEDIA",
   "movementCost": 1,
   "noCoast": true,
   "noRiver": true,

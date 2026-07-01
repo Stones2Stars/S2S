@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_FARMSCRAPER_I",
- "description": "TXT_KEY_BUILDING_FARMSCRAPER_I",
- "civilopedia": "TXT_KEY_BUILDING_FARMSCRAPER_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_CIGAR_ROLLERS_SHOP",
@@ -110,6 +108,8 @@
   "construct": "AS2D_BUILD_VERTICAL_FARM"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_FARMSCRAPER_I",
+  "civilopedia": "TXT_KEY_BUILDING_FARMSCRAPER_PEDIA",
   "worth": 6,
   "conquestProbability": 75,
   "dcmAirbombMission": 2,

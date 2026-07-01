@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_FOLKLORE_WILD_TURKEY",
- "description": "TXT_KEY_BUILDING_FOLKLORE_WILD_TURKEY",
- "civilopedia": "TXT_KEY_BUILDING_FOLKLORE_ANIMAL_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_FLOCKS_OF_TURKEY",
@@ -82,6 +80,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_FOLKLORE_WILD_TURKEY",
+  "civilopedia": "TXT_KEY_BUILDING_FOLKLORE_ANIMAL_PEDIA",
   "notConstructible": true,
   "nukeImmune": true,
   "neverCapture": true,

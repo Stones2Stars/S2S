@@ -1,8 +1,5 @@
 {
  "type": "TECH_COMPACT_WORMHOLES",
- "description": "TXT_KEY_TECH_COMPACT_WORMHOLES",
- "civilopedia": "TXT_KEY_TECH_COMPACT_WORMHOLES_PEDIA",
- "quote": "TXT_KEY_TECH_COMPACT_WORMHOLES_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_CISLUNAR_WORMHOLE_TO_EARTH",
@@ -56,6 +53,9 @@
   "soundMP": "AS2D_TECH_GENERIC"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_COMPACT_WORMHOLES",
+  "civilopedia": "TXT_KEY_TECH_COMPACT_WORMHOLES_PEDIA",
+  "quote": "TXT_KEY_TECH_COMPACT_WORMHOLES_QUOTE",
   "era": "C2C_ERA_COSMIC",
   "worth": 48,
   "tradeable": true,

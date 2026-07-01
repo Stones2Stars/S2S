@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_MILKY_WAY_CLUSTER_BRAIN",
- "description": "TXT_KEY_BUILDING_MILKY_WAY_CLUSTER_BRAIN",
- "civilopedia": "TXT_KEY_BUILDING_MILKY_WAY_CLUSTER_BRAIN_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -61,6 +59,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_MILKY_WAY_CLUSTER_BRAIN",
+  "civilopedia": "TXT_KEY_BUILDING_MILKY_WAY_CLUSTER_BRAIN_PEDIA",
   "conquestProbability": 100,
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,

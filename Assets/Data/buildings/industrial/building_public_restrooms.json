@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_PUBLIC_RESTROOMS",
- "description": "TXT_KEY_BUILDING_PUBLIC_RESTROOMS",
- "civilopedia": "TXT_KEY_BUILDING_PUBLIC_RESTROOMS_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_SANITATION_CHAMBER"
@@ -98,6 +96,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_PUBLIC_RESTROOMS",
+  "civilopedia": "TXT_KEY_BUILDING_PUBLIC_RESTROOMS_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

@@ -1,12 +1,12 @@
 {
  "type": "PROMOTIONLINE_TRANSPORT_TROOPS",
- "description": "TXT_KEY_PROMOTIONLINE_TRANSPORT_TROOPS",
  "ui": {
   "art": {
    "icon": "art/Buttons/Promotions/TransportTroops.dds"
   }
  },
  "identity": {
+  "description": "TXT_KEY_PROMOTIONLINE_TRANSPORT_TROOPS",
   "unitCombats": [
    "UNITCOMBAT_PROMOTED_TRANSPORT_TROOPS"
   ],

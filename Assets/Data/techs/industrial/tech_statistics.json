@@ -1,8 +1,5 @@
 {
  "type": "TECH_STATISTICS",
- "description": "TXT_KEY_TECH_STATISTICS",
- "civilopedia": "TXT_KEY_TECH_STATISTICS_PEDIA",
- "quote": "TXT_KEY_TECH_STATISTICS_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_MATHEMATICS_DEPARTMENT",
@@ -52,6 +49,9 @@
   "soundMP": "AS2D_TECH_GENERIC"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_STATISTICS",
+  "civilopedia": "TXT_KEY_TECH_STATISTICS_PEDIA",
+  "quote": "TXT_KEY_TECH_STATISTICS_QUOTE",
   "era": "C2C_ERA_INDUSTRIAL",
   "worth": 40,
   "tradeable": true,

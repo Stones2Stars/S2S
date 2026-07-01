@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_CYBERNETICA_SALON",
- "description": "TXT_KEY_BUILDING_CYBERNETICA_SALON",
- "civilopedia": "TXT_KEY_BUILDING_CYBERNETICA_SALON_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_HIGH_TECH_CULTURAL_ENRICHMENT"
@@ -64,6 +62,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_CYBERNETICA_SALON",
+  "civilopedia": "TXT_KEY_BUILDING_CYBERNETICA_SALON_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

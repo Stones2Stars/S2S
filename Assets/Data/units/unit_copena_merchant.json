@@ -1,7 +1,5 @@
 {
  "type": "UNIT_COPENA_MERCHANT",
- "description": "TXT_KEY_UNIT_COPENA_MERCHANT",
- "civilopedia": "TXT_KEY_UNIT_COPENA_MERCHANT_PEDIA",
  "obsoletedBy": {
   "techs": [
    "TECH_ENGINEERING"
@@ -99,6 +97,8 @@
   ]
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_COPENA_MERCHANT",
+  "civilopedia": "TXT_KEY_UNIT_COPENA_MERCHANT_PEDIA",
   "worth": 1,
   "animalCombat": 100,
   "domain": "DOMAIN_LAND",

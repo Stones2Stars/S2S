@@ -1,7 +1,5 @@
 {
  "type": "IMPROVEMENT_WILDLIFE_SANCTUARY",
- "description": "TXT_KEY_IMPROVEMENT_WILDLIFE_SANCTUARY",
- "civilopedia": "TXT_KEY_IMPROVEMENT_WILDLIFE_SANCTUARY_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -146,6 +144,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_IMPROVEMENT_WILDLIFE_SANCTUARY",
+  "civilopedia": "TXT_KEY_IMPROVEMENT_WILDLIFE_SANCTUARY_PEDIA",
   "advancedStart": {
    "cost": 24
   },

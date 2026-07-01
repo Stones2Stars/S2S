@@ -1,7 +1,5 @@
 {
  "type": "UNIT_POLICE_CAR",
- "description": "TXT_KEY_UNIT_POLICE_CAR",
- "civilopedia": "TXT_KEY_UNIT_POLICE_CAR_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -146,6 +144,8 @@
   "upkeep": 10
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_POLICE_CAR",
+  "civilopedia": "TXT_KEY_UNIT_POLICE_CAR_PEDIA",
   "worth": 10,
   "militaryWorth": 30,
   "xpValueAttack": 3,

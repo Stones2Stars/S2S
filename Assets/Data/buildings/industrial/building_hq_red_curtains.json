@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_HQ_RED_CURTAINS",
- "description": "TXT_KEY_BUILDING_HQ_RED_CURTAINS",
- "civilopedia": "TXT_KEY_BUILDING_CORPORATION_RED_PEDIA",
  "enables": {
   "corporations": [
    "CORPORATION_RED"
@@ -66,6 +64,8 @@
   "construct": "AS2D_BUILD_BANK"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_HQ_RED_CURTAINS",
+  "civilopedia": "TXT_KEY_BUILDING_CORPORATION_RED_PEDIA",
   "commerceDoubleTime": {
    "culture": 1000
   },

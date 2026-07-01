@@ -1,7 +1,5 @@
 {
  "type": "TRAIT_ANCIENT_WAY_OF_THE_CENTAUR",
- "description": "TXT_KEY_TRAIT_ANCIENT_WAY_OF_THE_CENTAUR",
- "civilopedia": "TXT_KEY_TRAIT_ANCIENT_WAY_OF_THE_CENTAUR_PEDIA",
  "culture": {
   "empire": {
    "flat": 3
@@ -29,6 +27,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_TRAIT_ANCIENT_WAY_OF_THE_CENTAUR",
+  "civilopedia": "TXT_KEY_TRAIT_ANCIENT_WAY_OF_THE_CENTAUR_PEDIA",
   "shortDescription": "TXT_KEY_TRAIT_ANCIENT_WAY_OF_THE_CENTAUR_SHORT",
   "civilizationTrait": true
  }

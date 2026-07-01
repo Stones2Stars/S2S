@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_WHEELWRIGHT",
- "description": "TXT_KEY_BUILDING_WHEELWRIGHT",
- "civilopedia": "TXT_KEY_BUILDING_WHEELWRIGHT_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_AERIAL_BASKET_ROPEWAYS",
@@ -127,6 +125,8 @@
   "construct": "AS2D_BUILD_SIEGE_WORKSHOP"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_WHEELWRIGHT",
+  "civilopedia": "TXT_KEY_BUILDING_WHEELWRIGHT_PEDIA",
   "nukeImmune": true,
   "conquestProbability": 33,
   "advisor": "ADVISOR_ECONOMY",

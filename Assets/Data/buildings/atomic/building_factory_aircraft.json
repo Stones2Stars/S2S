@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_FACTORY_AIRCRAFT",
- "description": "TXT_KEY_BUILDING_FACTORY_AIRCRAFT",
- "civilopedia": "TXT_KEY_BUILDING_FACTORY_AIRCRAFT_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_SPACE_NEEDLE"
@@ -148,6 +146,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_FACTORY_AIRCRAFT",
+  "civilopedia": "TXT_KEY_BUILDING_FACTORY_AIRCRAFT_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

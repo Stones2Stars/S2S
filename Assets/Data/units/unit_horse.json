@@ -1,7 +1,5 @@
 {
  "type": "UNIT_HORSE",
- "description": "TXT_KEY_UNIT_HORSE",
- "civilopedia": "TXT_KEY_UNIT_HORSE_PEDIA",
  "withdrawal": {
   "unit": {
    "percent": 45
@@ -76,6 +74,8 @@
   ]
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_HORSE",
+  "civilopedia": "TXT_KEY_UNIT_HORSE_PEDIA",
   "spawnOnly": true,
   "xpValueAttack": 5,
   "xpValueDefense": 3,

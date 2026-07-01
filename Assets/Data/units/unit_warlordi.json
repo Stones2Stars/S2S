@@ -1,7 +1,5 @@
 {
  "type": "UNIT_WARLORDI",
- "description": "TXT_KEY_UNIT_WARLORDI",
- "civilopedia": "TXT_KEY_CONCEPT_GREAT_GENERALS_PEDIA",
  "obsoletedBy": {
   "techs": [
    "TECH_HERALDRY"
@@ -132,6 +130,8 @@
   "upkeep": 2
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_WARLORDI",
+  "civilopedia": "TXT_KEY_CONCEPT_GREAT_GENERALS_PEDIA",
   "worth": 3,
   "militaryWorth": 10,
   "xpValueAttack": 1,

@@ -1,8 +1,5 @@
 {
  "type": "TECH_NANOTROIDS",
- "description": "TXT_KEY_TECH_NANOTROIDS",
- "civilopedia": "TXT_KEY_TECH_NANOTROIDS_PEDIA",
- "quote": "TXT_KEY_TECH_NANOTROIDS_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_CLAYTRONIC_CITY",
@@ -64,6 +61,9 @@
   "soundMP": "AS2D_TECH_NANOTROIDS"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_NANOTROIDS",
+  "civilopedia": "TXT_KEY_TECH_NANOTROIDS_PEDIA",
+  "quote": "TXT_KEY_TECH_NANOTROIDS_QUOTE",
   "era": "C2C_ERA_TRANSHUMAN",
   "worth": 50,
   "militaryWorth": 10,

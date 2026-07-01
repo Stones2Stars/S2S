@@ -1,7 +1,5 @@
 {
  "type": "BONUS_ORGANIC_COMPUTERS",
- "description": "TXT_KEY_BONUS_ORGANIC_COMPUTERS",
- "civilopedia": "TXT_KEY_BONUS_ORGANIC_COMPUTERS_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_HIERACOSPHINX_BREEDER",
@@ -23,6 +21,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_ORGANIC_COMPUTERS",
+  "civilopedia": "TXT_KEY_BONUS_ORGANIC_COMPUTERS_PEDIA",
   "bonusClassType": "BONUSCLASS_MANUFACTURED"
  }
 }

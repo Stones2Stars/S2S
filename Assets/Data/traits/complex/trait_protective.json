@@ -1,8 +1,5 @@
 {
  "type": "TRAIT_PROTECTIVE",
- "description": "TXT_KEY_TRAIT_COMPLEX_PROTECTIVE",
- "civilopedia": "TXT_KEY_TRAIT_COMPLEX_PROTECTIVE_PEDIA",
- "strategy": "TXT_KEY_TRAIT_COMPLEX_PROTECTIVE_STRATEGY",
  "excludes": [
   "TRAIT_NEGLIGENT"
  ],
@@ -615,5 +612,10 @@
   "art": {
    "icon": "art/Buttons/Traits/TraitProtective.dds"
   }
+ },
+ "identity": {
+  "description": "TXT_KEY_TRAIT_COMPLEX_PROTECTIVE",
+  "civilopedia": "TXT_KEY_TRAIT_COMPLEX_PROTECTIVE_PEDIA",
+  "strategy": "TXT_KEY_TRAIT_COMPLEX_PROTECTIVE_STRATEGY"
  }
 }

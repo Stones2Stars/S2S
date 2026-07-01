@@ -1,7 +1,5 @@
 {
  "type": "TRAIT_POPULIST",
- "description": "TXT_KEY_TRAIT_POPULIST",
- "civilopedia": "TXT_KEY_TRAIT_POPULIST_PEDIA",
  "food": {
   "empire": {
    "tradeRoute": {
@@ -87,6 +85,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_TRAIT_POPULIST",
+  "civilopedia": "TXT_KEY_TRAIT_POPULIST_PEDIA",
   "shortDescription": "TXT_KEY_TRAIT_POPULIST_SHORT",
   "negativeTrait": true
  }

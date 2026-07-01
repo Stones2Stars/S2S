@@ -1,8 +1,5 @@
 {
  "type": "TECH_BAHAI",
- "description": "TXT_KEY_TECH_BAHAI",
- "civilopedia": "TXT_KEY_TECH_BAHAI_PEDIA",
- "quote": "TXT_KEY_TECH_BAHAI_QUOTE",
  "enables": {
   "religions": [
    "RELIGION_BAHAI"
@@ -51,6 +48,9 @@
   "soundMP": "AS2D_TECH_GENERIC"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_BAHAI",
+  "civilopedia": "TXT_KEY_TECH_BAHAI_PEDIA",
+  "quote": "TXT_KEY_TECH_BAHAI_QUOTE",
   "era": "C2C_ERA_INDUSTRIAL",
   "worth": 8,
   "gridX": 62,

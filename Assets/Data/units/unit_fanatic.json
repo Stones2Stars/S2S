@@ -1,8 +1,5 @@
 {
  "type": "UNIT_FANATIC",
- "description": "TXT_KEY_UNIT_FANATIC",
- "civilopedia": "TXT_KEY_UNIT_FANATIC_PEDIA",
- "help": "TXT_KEY_UNIT_FANATIC_HELP",
  "requires": {
   "build": {
    "all": [
@@ -36,6 +33,9 @@
   "upkeep": 1
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_FANATIC",
+  "civilopedia": "TXT_KEY_UNIT_FANATIC_PEDIA",
+  "help": "TXT_KEY_UNIT_FANATIC_HELP",
   "worth": 2,
   "militaryWorth": 8,
   "xpValueAttack": 3,

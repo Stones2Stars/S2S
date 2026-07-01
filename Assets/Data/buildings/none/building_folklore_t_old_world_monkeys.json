@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_FOLKLORE_T_OLD_WORLD_MONKEYS",
- "description": "TXT_KEY_BUILDING_FOLKLORE_T_OLD_WORLD_MONKEYS",
- "civilopedia": "TXT_KEY_BUILDING_FOLKLORE_ANIMAL_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -92,6 +90,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_FOLKLORE_T_OLD_WORLD_MONKEYS",
+  "civilopedia": "TXT_KEY_BUILDING_FOLKLORE_ANIMAL_PEDIA",
   "nukeImmune": true,
   "neverCapture": true,
   "specialBuildingType": "SPECIALBUILDING_FOLKLORE_TAXONOMY",

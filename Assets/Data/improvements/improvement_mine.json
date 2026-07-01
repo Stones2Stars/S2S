@@ -1,7 +1,5 @@
 {
  "type": "IMPROVEMENT_MINE",
- "description": "TXT_KEY_IMPROVEMENT_MINE",
- "civilopedia": "TXT_KEY_IMPROVEMENT_MINE_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -269,6 +267,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_IMPROVEMENT_MINE",
+  "civilopedia": "TXT_KEY_IMPROVEMENT_MINE_PEDIA",
   "advancedStart": {
    "cost": 24
   },

@@ -1,7 +1,5 @@
 {
  "type": "UNIT_SIPAHI",
- "description": "TXT_KEY_UNIT_SIPAHI",
- "civilopedia": "TXT_KEY_UNIT_SIPAHI_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -125,6 +123,8 @@
   "upkeep": 1
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_SIPAHI",
+  "civilopedia": "TXT_KEY_UNIT_SIPAHI_PEDIA",
   "worth": 3,
   "militaryWorth": 13,
   "xpValueAttack": 6,

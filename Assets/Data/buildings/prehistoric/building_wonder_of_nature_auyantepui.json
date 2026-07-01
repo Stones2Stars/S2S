@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_WONDER_OF_NATURE_AUYANTEPUI",
- "description": "TXT_KEY_BUILDING_WONDER_OF_NATURE_AUYANTEPUI",
- "civilopedia": "TXT_KEY_BUILDING_WONDER_OF_NATURE_AUYANTEPUI_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -142,6 +140,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_WONDER_OF_NATURE_AUYANTEPUI",
+  "civilopedia": "TXT_KEY_BUILDING_WONDER_OF_NATURE_AUYANTEPUI_PEDIA",
   "enabledCivilizations": [
    "CIVILIZATION_NPC_NEANDERTHAL"
   ],

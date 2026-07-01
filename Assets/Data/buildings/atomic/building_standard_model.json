@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_STANDARD_MODEL",
- "description": "TXT_KEY_BUILDING_STANDARD_MODEL",
- "civilopedia": "TXT_KEY_BUILDING_STANDARD_MODEL_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -62,6 +60,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_STANDARD_MODEL",
+  "civilopedia": "TXT_KEY_BUILDING_STANDARD_MODEL_PEDIA",
   "conquestProbability": 100,
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,

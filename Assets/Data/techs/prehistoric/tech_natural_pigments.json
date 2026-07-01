@@ -1,8 +1,5 @@
 {
  "type": "TECH_NATURAL_PIGMENTS",
- "description": "TXT_KEY_TECH_NATURAL_PIGMENTS",
- "civilopedia": "TXT_KEY_TECH_NATURAL_PIGMENTS_PEDIA",
- "quote": "TXT_KEY_TECH_NATURAL_PIGMENTS_QUOTE",
  "enables": {
   "bonuses": [
    "BONUS_CHALK",
@@ -66,6 +63,9 @@
   "soundMP": "AS2D_TECH_NATURAL_PIGMENTS"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_NATURAL_PIGMENTS",
+  "civilopedia": "TXT_KEY_TECH_NATURAL_PIGMENTS_PEDIA",
+  "quote": "TXT_KEY_TECH_NATURAL_PIGMENTS_QUOTE",
   "era": "C2C_ERA_PREHISTORIC",
   "worth": 4,
   "tradeable": true,

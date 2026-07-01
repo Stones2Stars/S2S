@@ -1,6 +1,5 @@
 {
  "type": "PROMOTION_TRANSPORT3",
- "description": "TXT_KEY_PROMOTION_TRANSPORT3",
  "movement": {
   "unit": {
    "moves": {
@@ -35,5 +34,8 @@
  },
  "sound": {
   "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_TRANSPORT3"
  }
 }

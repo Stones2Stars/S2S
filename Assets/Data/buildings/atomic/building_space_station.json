@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_SPACE_STATION",
- "description": "TXT_KEY_BUILDING_SPACE_STATION",
- "civilopedia": "TXT_KEY_BUILDING_SPACE_STATION_PEDIA",
  "enables": {
   "units": [
    "UNIT_CISLUNARSETTLER",
@@ -54,6 +52,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_SPACE_STATION",
+  "civilopedia": "TXT_KEY_BUILDING_SPACE_STATION_PEDIA",
   "orbital": true,
   "orbitalInfrastructure": true,
   "advisor": "ADVISOR_SCIENCE",

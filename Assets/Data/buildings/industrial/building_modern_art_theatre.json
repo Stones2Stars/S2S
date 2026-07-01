@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_MODERN_ART_THEATRE",
- "description": "TXT_KEY_BUILDING_MODERN_ART_THEATRE",
- "civilopedia": "TXT_KEY_BUILDING_MODERN_ART_THEATRE_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -87,6 +85,8 @@
   "construct": "AS2D_BUILD_THEATRE"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_MODERN_ART_THEATRE",
+  "civilopedia": "TXT_KEY_BUILDING_MODERN_ART_THEATRE_PEDIA",
   "commerceDoubleTime": {
    "culture": 100
   },

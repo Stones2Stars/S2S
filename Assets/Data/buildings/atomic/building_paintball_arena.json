@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_PAINTBALL_ARENA",
- "description": "TXT_KEY_BUILDING_PAINTBALL_ARENA",
- "civilopedia": "TXT_KEY_BUILDING_PAINTBALL_ARENA_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_ATHLETIC_MEGACOMPLEX"
@@ -80,6 +78,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_PAINTBALL_ARENA",
+  "civilopedia": "TXT_KEY_BUILDING_PAINTBALL_ARENA_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

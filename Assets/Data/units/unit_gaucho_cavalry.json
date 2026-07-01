@@ -1,7 +1,5 @@
 {
  "type": "UNIT_GAUCHO_CAVALRY",
- "description": "TXT_KEY_UNIT_GAUCHO_CAVALRY",
- "civilopedia": "TXT_KEY_UNIT_GAUCHO_CAVALRY_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -166,6 +164,8 @@
   "upkeep": 1
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_GAUCHO_CAVALRY",
+  "civilopedia": "TXT_KEY_UNIT_GAUCHO_CAVALRY_PEDIA",
   "worth": 4,
   "militaryWorth": 27,
   "xpValueAttack": 6,

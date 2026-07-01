@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_HUNTING_INSTRUCTIONS",
- "description": "TXT_KEY_BUILDING_HUNTING_INSTRUCTIONS",
- "civilopedia": "TXT_KEY_BUILDING_HUNTING_INSTRUCTIONS_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_GREAT_HOLMEGAARD_HUNT"
@@ -57,6 +55,8 @@
   "construct": "AS2D_BUILD_BARRACKS"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_HUNTING_INSTRUCTIONS",
+  "civilopedia": "TXT_KEY_BUILDING_HUNTING_INSTRUCTIONS_PEDIA",
   "enabledCivilizations": [
    "CIVILIZATION_NPC_NEANDERTHAL"
   ],

@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_SAFARI_HUNTERS_GUIDE",
- "description": "TXT_KEY_BUILDING_SAFARI_HUNTERS_GUIDE",
- "civilopedia": "TXT_KEY_BUILDING_SAFARI_HUNTERS_GUIDE_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -94,6 +92,8 @@
   "construct": "AS2D_BUILD_BANK"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_SAFARI_HUNTERS_GUIDE",
+  "civilopedia": "TXT_KEY_BUILDING_SAFARI_HUNTERS_GUIDE_PEDIA",
   "nukeImmune": true,
   "worth": 8,
   "conquestProbability": 100,

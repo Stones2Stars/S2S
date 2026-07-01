@@ -1,6 +1,5 @@
 {
  "type": "BUILD_SUN_SCOOP",
- "description": "TXT_KEY_BUILD_SUN_SCOOP",
  "requires": {
   "build": {
    "all": [
@@ -28,5 +27,8 @@
   "art": {
    "entityEvent": "ENTITY_EVENT_BUILD"
   }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILD_SUN_SCOOP"
  }
 }

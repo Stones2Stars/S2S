@@ -1,7 +1,5 @@
 {
  "type": "BONUS_RABBIT",
- "description": "TXT_KEY_BONUS_RABBIT",
- "civilopedia": "TXT_KEY_BONUS_RABBIT_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_ANGORA_RABBIT_BREEDER",
@@ -71,6 +69,8 @@
   ]
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_RABBIT",
+  "civilopedia": "TXT_KEY_BONUS_RABBIT_PEDIA",
   "bonusClassType": "BONUSCLASS_LIVESTOCK"
  }
 }

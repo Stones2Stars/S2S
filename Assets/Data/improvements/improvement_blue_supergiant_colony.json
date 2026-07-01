@@ -1,7 +1,5 @@
 {
  "type": "IMPROVEMENT_BLUE_SUPERGIANT_COLONY",
- "description": "TXT_KEY_IMPROVEMENT_BLUE_SUPERGIANT_COLONY",
- "civilopedia": "TXT_KEY_IMPROVEMENT_BLUE_SUPERGIANT_COLONY_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -33,6 +31,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_IMPROVEMENT_BLUE_SUPERGIANT_COLONY",
+  "civilopedia": "TXT_KEY_IMPROVEMENT_BLUE_SUPERGIANT_COLONY_PEDIA",
   "extraterrestrial": true,
   "outsideBorders": true,
   "pillageGold": 200

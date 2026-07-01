@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_HORSE_BREEDER",
- "description": "TXT_KEY_BUILDING_HORSE_BREEDER",
- "civilopedia": "TXT_KEY_BUILDING_ANIMAL_BREEDER_PEDIA",
  "enables": {
   "units": [
    "UNIT_TAMED_HORSE_PAIR"
@@ -69,6 +67,8 @@
   "construct": "AS2D_BUILD_STABLE"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_HORSE_BREEDER",
+  "civilopedia": "TXT_KEY_BUILDING_ANIMAL_BREEDER_PEDIA",
   "worth": 4,
   "militaryWorth": 2,
   "advisor": "ADVISOR_MILITARY",

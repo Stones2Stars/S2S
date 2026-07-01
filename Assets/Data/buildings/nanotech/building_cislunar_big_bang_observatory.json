@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_CISLUNAR_BIG_BANG_OBSERVATORY",
- "description": "TXT_KEY_BUILDING_CISLUNAR_BIG_BANG_OBSERVATORY",
- "civilopedia": "TXT_KEY_BUILDING_CISLUNAR_BIG_BANG_OBSERVATORY_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -40,6 +38,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_CISLUNAR_BIG_BANG_OBSERVATORY",
+  "civilopedia": "TXT_KEY_BUILDING_CISLUNAR_BIG_BANG_OBSERVATORY_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

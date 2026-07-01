@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_FOLKLORE_E_METAL",
- "description": "TXT_KEY_BUILDING_FOLKLORE_E_METAL",
- "civilopedia": "TXT_KEY_BUILDING_FOLKLORE_ELEMENTAL_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -94,6 +92,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_FOLKLORE_E_METAL",
+  "civilopedia": "TXT_KEY_BUILDING_FOLKLORE_ELEMENTAL_PEDIA",
   "nukeImmune": true,
   "neverCapture": true,
   "forceNoPrereqScaling": true,

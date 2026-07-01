@@ -1,8 +1,5 @@
 {
  "type": "TECH_HORIZON_BREAKING",
- "description": "TXT_KEY_TECH_HORIZON_BREAKING",
- "civilopedia": "TXT_KEY_TECH_HORIZON_BREAKING_PEDIA",
- "quote": "TXT_KEY_TECH_HORIZON_BREAKING_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_DISTANT_BLAZAR_FACTORY",
@@ -73,6 +70,9 @@
   "soundMP": "AS2D_TECH_GENERIC"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_HORIZON_BREAKING",
+  "civilopedia": "TXT_KEY_TECH_HORIZON_BREAKING_PEDIA",
+  "quote": "TXT_KEY_TECH_HORIZON_BREAKING_QUOTE",
   "era": "C2C_ERA_TRANSCENDENT",
   "worth": 48,
   "tradeable": true,

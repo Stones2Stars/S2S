@@ -1,7 +1,5 @@
 {
  "type": "UNIT_KATIPUNAN_CAVALRY",
- "description": "TXT_KEY_UNIT_KATIPUNAN_CAVALRY",
- "civilopedia": "TXT_KEY_UNIT_KATIPUNAN_CAVALRY_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -173,6 +171,8 @@
   "upkeep": 1
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_KATIPUNAN_CAVALRY",
+  "civilopedia": "TXT_KEY_UNIT_KATIPUNAN_CAVALRY_PEDIA",
   "worth": 4,
   "militaryWorth": 33,
   "xpValueAttack": 6,

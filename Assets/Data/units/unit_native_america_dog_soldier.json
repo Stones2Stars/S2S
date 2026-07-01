@@ -1,7 +1,5 @@
 {
  "type": "UNIT_NATIVE_AMERICA_DOG_SOLDIER",
- "description": "TXT_KEY_UNIT_NATIVE_AMERICA_DOG_SOLDIER",
- "civilopedia": "TXT_KEY_UNIT_NATIVE_AMERICA_DOG_SOLDIER_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -92,6 +90,8 @@
   "upkeep": 1
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_NATIVE_AMERICA_DOG_SOLDIER",
+  "civilopedia": "TXT_KEY_UNIT_NATIVE_AMERICA_DOG_SOLDIER_PEDIA",
   "worth": 2,
   "militaryWorth": 9,
   "xpValueAttack": 6,

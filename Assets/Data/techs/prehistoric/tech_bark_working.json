@@ -1,8 +1,5 @@
 {
  "type": "TECH_BARK_WORKING",
- "description": "TXT_KEY_TECH_BARK_WORKING",
- "civilopedia": "TXT_KEY_TECH_BARK_WORKING_PEDIA",
- "quote": "TXT_KEY_TECH_BARK_WORKING_QUOTE",
  "enables": {
   "bonuses": [
    "BONUS_BARK"
@@ -59,6 +56,9 @@
   "soundMP": "AS2D_TECH_BARK_WORKING"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_BARK_WORKING",
+  "civilopedia": "TXT_KEY_TECH_BARK_WORKING_PEDIA",
+  "quote": "TXT_KEY_TECH_BARK_WORKING_QUOTE",
   "era": "C2C_ERA_PREHISTORIC",
   "worth": 8,
   "militaryWorth": 2,

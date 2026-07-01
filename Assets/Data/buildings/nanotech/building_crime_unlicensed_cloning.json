@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_CRIME_UNLICENSED_CLONING",
- "description": "TXT_KEY_BUILDING_CRIME_UNLICENSED_CLONING",
- "civilopedia": "TXT_KEY_BUILDING_CRIME_UNLICENSED_CLONING_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -57,6 +55,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_CRIME_UNLICENSED_CLONING",
+  "civilopedia": "TXT_KEY_BUILDING_CRIME_UNLICENSED_CLONING_PEDIA",
   "notConstructible": true,
   "nukeImmune": true,
   "conquestProbability": 100,

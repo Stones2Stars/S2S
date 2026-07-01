@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_RADAR_STATION",
- "description": "TXT_KEY_BUILDING_RADAR_STATION",
- "civilopedia": "TXT_KEY_BUILDING_RADAR_STATION_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -71,6 +69,8 @@
   "construct": "AS2D_BUILD_RADAR_TOWER_STATION"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_RADAR_STATION",
+  "civilopedia": "TXT_KEY_BUILDING_RADAR_STATION_PEDIA",
   "worth": 1,
   "conquestProbability": 33,
   "dcmAirbombMission": 2,

@@ -1,7 +1,5 @@
 {
  "type": "C2C_ERA_COSMIC",
- "description": "TXT_KEY_ERA_COSMIC",
- "strategy": "TXT_KEY_ERA_COSMIC_STRATEGY",
  "costs": {
   "world": {
    "train": {
@@ -85,6 +83,8 @@
   "unitDefeat": "AS2D_LOSS_LATE"
  },
  "identity": {
+  "description": "TXT_KEY_ERA_COSMIC",
+  "strategy": "TXT_KEY_ERA_COSMIC_STRATEGY",
   "order": 12,
   "advancedStart": 1024000,
   "historicalStartYear": 3000,

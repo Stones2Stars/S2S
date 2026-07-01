@@ -1,6 +1,5 @@
 {
  "type": "PROMOTION_COASTAL_GUARD3",
- "description": "TXT_KEY_PROMOTION_COASTAL_GUARD3",
  "strength": {
   "unit": {
    "terrain": {
@@ -32,5 +31,8 @@
  },
  "sound": {
   "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_COASTAL_GUARD3"
  }
 }

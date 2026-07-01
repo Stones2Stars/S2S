@@ -1,7 +1,5 @@
 {
  "type": "PROMOTIONLINE_BUILD_UP_ANTI_AIR",
- "description": "TXT_KEY_PROMOTIONLINE_BUILD_UP_ANTI_AIR",
- "help": "TXT_KEY_PROMOTIONLINE_BUILD_UP_ANTI_AIR_HELP",
  "buildUp": {
   "active": true
  },
@@ -11,6 +9,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_PROMOTIONLINE_BUILD_UP_ANTI_AIR",
+  "help": "TXT_KEY_PROMOTIONLINE_BUILD_UP_ANTI_AIR_HELP",
   "unitCombats": [
    "UNITCOMBAT_ROCKET_LAUNCHER",
    "UNITCOMBAT_DESTROYER"

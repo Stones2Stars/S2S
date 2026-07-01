@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_BREEDING_PROGRAM_ZEBRA",
- "description": "TXT_KEY_BUILDING_BREEDING_PROGRAM_ZEBRA",
- "civilopedia": "TXT_KEY_BUILDING_BREEDING_PROGRAM_ZEBRA_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_ANIMAL_TRAINER_ZEBRA",
@@ -92,6 +90,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_BREEDING_PROGRAM_ZEBRA",
+  "civilopedia": "TXT_KEY_BUILDING_BREEDING_PROGRAM_ZEBRA_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

@@ -1,7 +1,5 @@
 {
  "type": "UNIT_GULL",
- "description": "TXT_KEY_UNIT_GULL",
- "civilopedia": "TXT_KEY_UNIT_GULL_PEDIA",
  "withdrawal": {
   "unit": {
    "percent": 60
@@ -41,6 +39,8 @@
   ]
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_GULL",
+  "civilopedia": "TXT_KEY_UNIT_GULL_PEDIA",
   "spawnOnly": true,
   "xpValueAttack": 1,
   "xpValueDefense": 1,

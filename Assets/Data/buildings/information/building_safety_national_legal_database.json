@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_SAFETY_NATIONAL_LEGAL_DATABASE",
- "description": "TXT_KEY_BUILDING_SAFETY_NATIONAL_LEGAL_DATABASE",
- "civilopedia": "TXT_KEY_BUILDING_SAFETY_NATIONAL_LEGAL_DATABASE_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -29,6 +27,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_SAFETY_NATIONAL_LEGAL_DATABASE",
+  "civilopedia": "TXT_KEY_BUILDING_SAFETY_NATIONAL_LEGAL_DATABASE_PEDIA",
   "notConstructible": true,
   "nukeImmune": true,
   "neverCapture": true,

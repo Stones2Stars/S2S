@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_CLOSED_TIMELIKE_CURVE_COMPUTER",
- "description": "TXT_KEY_BUILDING_CLOSED_TIMELIKE_CURVE_COMPUTER",
- "civilopedia": "TXT_KEY_BUILDING_CLOSED_TIMELIKE_CURVE_COMPUTER_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_FIRE_REVERSAL",
@@ -73,6 +71,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_CLOSED_TIMELIKE_CURVE_COMPUTER",
+  "civilopedia": "TXT_KEY_BUILDING_CLOSED_TIMELIKE_CURVE_COMPUTER_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

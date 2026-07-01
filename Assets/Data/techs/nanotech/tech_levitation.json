@@ -1,8 +1,5 @@
 {
  "type": "TECH_LEVITATION",
- "description": "TXT_KEY_TECH_LEVITATION",
- "civilopedia": "TXT_KEY_TECH_LEVITATION_PEDIA",
- "quote": "TXT_KEY_TECH_LEVITATION_QUOTE",
  "enables": {
   "bonuses": [
    "BONUS_LEVITATION_GENERATORS"
@@ -70,6 +67,9 @@
   "soundMP": "AS2D_TECH_LEVITATION"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_LEVITATION",
+  "civilopedia": "TXT_KEY_TECH_LEVITATION_PEDIA",
+  "quote": "TXT_KEY_TECH_LEVITATION_QUOTE",
   "era": "C2C_ERA_NANOTECH",
   "worth": 14,
   "tradeable": true,

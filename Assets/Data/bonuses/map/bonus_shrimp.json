@@ -1,7 +1,5 @@
 {
  "type": "BONUS_SHRIMP",
- "description": "TXT_KEY_BONUS_SHRIMP",
- "civilopedia": "TXT_KEY_BONUS_SHRIMP_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_CULTURE_ESTONIAN",
@@ -62,6 +60,8 @@
   ]
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_SHRIMP",
+  "civilopedia": "TXT_KEY_BONUS_SHRIMP_PEDIA",
   "bonusClassType": "BONUSCLASS_SEAFOOD"
  }
 }

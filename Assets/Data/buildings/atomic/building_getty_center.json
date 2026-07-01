@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_GETTY_CENTER",
- "description": "TXT_KEY_BUILDING_GETTY_CENTER",
- "civilopedia": "TXT_KEY_BUILDING_GETTY_CENTER_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -77,6 +75,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_GETTY_CENTER",
+  "civilopedia": "TXT_KEY_BUILDING_GETTY_CENTER_PEDIA",
   "centerInCity": true,
   "worth": 10,
   "conquestProbability": 100,

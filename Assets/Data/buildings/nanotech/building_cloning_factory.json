@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_CLONING_FACTORY",
- "description": "TXT_KEY_BUILDING_CLONING_FACTORY",
- "civilopedia": "TXT_KEY_BUILDING_CLONING_FACTORY_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_BODY_EXCHANGE_CLINIC",
@@ -69,6 +67,8 @@
   "construct": "AS2D_BUILD_CLONING_FACTORY"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_CLONING_FACTORY",
+  "civilopedia": "TXT_KEY_BUILDING_CLONING_FACTORY_PEDIA",
   "worth": 6,
   "conquestProbability": 75,
   "dcmAirbombMission": 3,

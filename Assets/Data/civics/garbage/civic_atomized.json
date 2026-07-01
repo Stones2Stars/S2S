@@ -1,8 +1,5 @@
 {
  "type": "CIVIC_ATOMIZED",
- "description": "TXT_KEY_CIVIC_ATOMIZED",
- "civilopedia": "TXT_KEY_CIVIC_ATOMIZED_PEDIA",
- "strategy": "TXT_KEY_CIVIC_ATOMIZED_STRATEGY",
  "food": {
   "empire": {
    "percent": 5
@@ -36,6 +33,9 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_CIVIC_ATOMIZED",
+  "civilopedia": "TXT_KEY_CIVIC_ATOMIZED_PEDIA",
+  "strategy": "TXT_KEY_CIVIC_ATOMIZED_STRATEGY",
   "civicOption": "CIVICOPTION_GARBAGE",
   "upkeepLevel": "UPKEEP_LOW"
  }

@@ -1,8 +1,5 @@
 {
  "type": "TECH_COLONY_ARCOLOGY",
- "description": "TXT_KEY_TECH_COLONY_ARCOLOGY",
- "civilopedia": "TXT_KEY_TECH_COLONY_ARCOLOGY_PEDIA",
- "quote": "TXT_KEY_TECH_COLONY_ARCOLOGY_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_DEEP_SPACE_BISHOP_RING",
@@ -67,6 +64,9 @@
   "soundMP": "AS2D_TECH_COLONY_ARCOLOGY"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_COLONY_ARCOLOGY",
+  "civilopedia": "TXT_KEY_TECH_COLONY_ARCOLOGY_PEDIA",
+  "quote": "TXT_KEY_TECH_COLONY_ARCOLOGY_QUOTE",
   "era": "C2C_ERA_GALACTIC",
   "worth": 48,
   "militaryWorth": 4,

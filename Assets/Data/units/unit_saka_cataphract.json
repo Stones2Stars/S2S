@@ -1,7 +1,5 @@
 {
  "type": "UNIT_SAKA_CATAPHRACT",
- "description": "TXT_KEY_UNIT_SAKA_CATAPHRACT",
- "civilopedia": "TXT_KEY_UNIT_SAKA_CATAPHRACT_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -115,6 +113,8 @@
   "upkeep": 1
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_SAKA_CATAPHRACT",
+  "civilopedia": "TXT_KEY_UNIT_SAKA_CATAPHRACT_PEDIA",
   "worth": 3,
   "militaryWorth": 22,
   "xpValueAttack": 6,

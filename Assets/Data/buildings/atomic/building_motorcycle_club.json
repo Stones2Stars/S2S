@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_MOTORCYCLE_CLUB",
- "description": "TXT_KEY_BUILDING_MOTORCYCLE_CLUB",
- "civilopedia": "TXT_KEY_BUILDING_MOTORCYCLE_CLUB_PEDIA",
  "enables": {
   "units": [
    "UNIT_BIKER_GANG"
@@ -239,6 +237,8 @@
   "construct": "AS2D_BUILD_MARKETPLACE"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_MOTORCYCLE_CLUB",
+  "civilopedia": "TXT_KEY_BUILDING_MOTORCYCLE_CLUB_PEDIA",
   "worth": 2,
   "conquestProbability": 75,
   "dcmAirbombMission": 2,

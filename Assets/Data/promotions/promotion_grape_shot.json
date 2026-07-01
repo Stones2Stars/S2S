@@ -1,6 +1,5 @@
 {
  "type": "PROMOTION_GRAPE_SHOT",
- "description": "TXT_KEY_PROMOTION_GRAPE_SHOT",
  "capture": {
   "unit": {
    "probability": {
@@ -33,5 +32,8 @@
  },
  "sound": {
   "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_GRAPE_SHOT"
  }
 }

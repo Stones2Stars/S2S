@@ -1,7 +1,5 @@
 {
  "type": "UNIT_SYSTEMS_ANALYST",
- "description": "TXT_KEY_UNIT_SYSTEMS_ANALYST",
- "civilopedia": "TXT_KEY_UNIT_SYSTEMS_ANALYST_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -53,6 +51,8 @@
   "hurryCostModifier": 25
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_SYSTEMS_ANALYST",
+  "civilopedia": "TXT_KEY_UNIT_SYSTEMS_ANALYST_PEDIA",
   "worth": 19,
   "militaryWorth": 50,
   "xpValueDefense": 2,

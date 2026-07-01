@@ -1,7 +1,5 @@
 {
  "type": "UNIT_FLORENCE_NIGHTINGALE",
- "description": "TXT_KEY_UNIT_FLORENCE_NIGHTINGALE",
- "civilopedia": "TXT_KEY_UNIT_FLORENCE_NIGHTINGALE_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -58,6 +56,8 @@
   "upkeep": 1
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_FLORENCE_NIGHTINGALE",
+  "civilopedia": "TXT_KEY_UNIT_FLORENCE_NIGHTINGALE_PEDIA",
   "worth": 8,
   "militaryWorth": 20,
   "domain": "DOMAIN_LAND",

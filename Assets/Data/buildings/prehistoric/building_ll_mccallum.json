@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_LL_MCCALLUM",
- "description": "TXT_KEY_BUILDING_LL_MCCALLUM",
- "civilopedia": "TXT_KEY_BUILDING_LL_MCCALLUM_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_RESOURCES_HIDE"
@@ -71,6 +69,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_LL_MCCALLUM",
+  "civilopedia": "TXT_KEY_BUILDING_LL_MCCALLUM_PEDIA",
   "centerInCity": true,
   "worth": 10,
   "conquestProbability": 100,

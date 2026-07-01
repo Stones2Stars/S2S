@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_EFFECT_MULTIVERSAL_ECONOMY",
- "description": "TXT_KEY_BUILDING_EFFECT_MULTIVERSAL_ECONOMY",
- "civilopedia": "TXT_KEY_BUILDING_MULTIVERSAL_ECONOMY_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_DEEP_SPACE_ASCENDED_PLANET",
@@ -28,6 +26,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_EFFECT_MULTIVERSAL_ECONOMY",
+  "civilopedia": "TXT_KEY_BUILDING_MULTIVERSAL_ECONOMY_PEDIA",
   "notConstructible": true,
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,

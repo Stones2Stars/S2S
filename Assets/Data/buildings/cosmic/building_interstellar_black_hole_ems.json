@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_INTERSTELLAR_BLACK_HOLE_EMS",
- "description": "TXT_KEY_BUILDING_INTERSTELLAR_BLACK_HOLE_EMS",
- "civilopedia": "TXT_KEY_BUILDING_INTERSTELLAR_BLACK_HOLE_EMS_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_INTERSTELLAR_HOLOGRAPHIC_MULTIVERSE"
@@ -65,6 +63,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_INTERSTELLAR_BLACK_HOLE_EMS",
+  "civilopedia": "TXT_KEY_BUILDING_INTERSTELLAR_BLACK_HOLE_EMS_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

@@ -1,8 +1,5 @@
 {
  "type": "TRAIT_PRAGMATIC",
- "description": "TXT_KEY_TRAIT_PRAGMATIC",
- "civilopedia": "TXT_KEY_TRAIT_PRAGMATIC_PEDIA",
- "strategy": "TXT_KEY_TRAIT_PRAGMATIC_STRATEGY",
  "excludes": [
   "TRAIT_IDEALISTIC"
  ],
@@ -166,5 +163,10 @@
   "art": {
    "icon": "art/Buttons/Traits/TraitPragmatic.dds"
   }
+ },
+ "identity": {
+  "description": "TXT_KEY_TRAIT_PRAGMATIC",
+  "civilopedia": "TXT_KEY_TRAIT_PRAGMATIC_PEDIA",
+  "strategy": "TXT_KEY_TRAIT_PRAGMATIC_STRATEGY"
  }
 }

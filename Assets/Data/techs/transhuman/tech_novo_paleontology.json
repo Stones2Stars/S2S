@@ -1,8 +1,5 @@
 {
  "type": "TECH_NOVO_PALEONTOLOGY",
- "description": "TXT_KEY_TECH_NOVO_PALEONTOLOGY",
- "civilopedia": "TXT_KEY_TECH_NOVO_PALEONTOLOGY_PEDIA",
- "quote": "TXT_KEY_TECH_NOVO_PALEONTOLOGY_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_PALEO_PARK",
@@ -66,6 +63,9 @@
   "soundMP": "AS2D_TECH_NOVO_PALEONTOLOGY"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_NOVO_PALEONTOLOGY",
+  "civilopedia": "TXT_KEY_TECH_NOVO_PALEONTOLOGY_PEDIA",
+  "quote": "TXT_KEY_TECH_NOVO_PALEONTOLOGY_QUOTE",
   "era": "C2C_ERA_TRANSHUMAN",
   "worth": 48,
   "militaryWorth": 4,

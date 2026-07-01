@@ -1,12 +1,12 @@
 {
  "type": "UNITCOMBAT_CULTURE_BASQUE",
- "description": "TXT_KEY_UNITCOMBAT_CULTURE_BASQUE",
  "ui": {
   "art": {
    "icon": "Art/Interface/Buttons/units/sparth/categories/culture_basque.dds"
   }
  },
  "identity": {
+  "description": "TXT_KEY_UNITCOMBAT_CULTURE_BASQUE",
   "culture": "BONUS_BASQUE"
  }
 }

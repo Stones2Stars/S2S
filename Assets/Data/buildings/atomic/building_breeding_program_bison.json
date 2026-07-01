@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_BREEDING_PROGRAM_BISON",
- "description": "TXT_KEY_BUILDING_BREEDING_PROGRAM_BISON",
- "civilopedia": "TXT_KEY_BUILDING_BREEDING_PROGRAM_BISON_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_ANIMAL_TRAINER_BISON",
@@ -94,6 +92,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_BREEDING_PROGRAM_BISON",
+  "civilopedia": "TXT_KEY_BUILDING_BREEDING_PROGRAM_BISON_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

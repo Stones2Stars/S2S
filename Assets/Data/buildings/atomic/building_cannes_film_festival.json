@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_CANNES_FILM_FESTIVAL",
- "description": "TXT_KEY_BUILDING_CANNES_FILM_FESTIVAL",
- "civilopedia": "TXT_KEY_BUILDING_CANNES_FILM_FESTIVAL_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -86,6 +84,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_CANNES_FILM_FESTIVAL",
+  "civilopedia": "TXT_KEY_BUILDING_CANNES_FILM_FESTIVAL_PEDIA",
   "nukeImmune": true,
   "worth": 10,
   "conquestProbability": 100,

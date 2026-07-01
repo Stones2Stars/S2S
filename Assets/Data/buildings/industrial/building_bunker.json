@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_BUNKER",
- "description": "TXT_KEY_BUILDING_BUNKER",
- "civilopedia": "TXT_KEY_BUILDING_BUNKER_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_BOMB_SHELTERS"
@@ -87,6 +85,8 @@
   "construct": "AS2D_BUILD_COMMAND_BUNKER"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_BUNKER",
+  "civilopedia": "TXT_KEY_BUILDING_BUNKER_PEDIA",
   "nukeImmune": true,
   "worth": 1,
   "conquestProbability": 75,

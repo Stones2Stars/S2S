@@ -1,8 +1,5 @@
 {
  "type": "UNIT_SPACE_SHUTTLE",
- "description": "TXT_KEY_UNIT_SPACE_SHUTTLE",
- "civilopedia": "TXT_KEY_UNIT_SPACE_SHUTTLE_PEDIA",
- "help": "TXT_KEY_UNIT_SPACEUNIT_HELP",
  "requires": {
   "build": {
    "all": [
@@ -102,6 +99,9 @@
   "upkeep": 1
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_SPACE_SHUTTLE",
+  "civilopedia": "TXT_KEY_UNIT_SPACE_SHUTTLE_PEDIA",
+  "help": "TXT_KEY_UNIT_SPACEUNIT_HELP",
   "worth": 1,
   "domain": "DOMAIN_LAND",
   "defaultUnitAI": "UNITAI_WORKER",

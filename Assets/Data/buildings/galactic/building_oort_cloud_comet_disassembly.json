@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_OORT_CLOUD_COMET_DISASSEMBLY",
- "description": "TXT_KEY_BUILDING_OORT_CLOUD_COMET_DISASSEMBLY",
- "civilopedia": "TXT_KEY_BUILDING_OORT_CLOUD_COMET_DISASSEMBLY_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -59,6 +57,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_OORT_CLOUD_COMET_DISASSEMBLY",
+  "civilopedia": "TXT_KEY_BUILDING_OORT_CLOUD_COMET_DISASSEMBLY_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

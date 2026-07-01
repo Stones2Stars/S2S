@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_COVERED_BRIDGE",
- "description": "TXT_KEY_BUILDING_COVERED_BRIDGE",
- "civilopedia": "TXT_KEY_BUILDING_COVERED_BRIDGE_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_VIADUCT"
@@ -106,6 +104,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_COVERED_BRIDGE",
+  "civilopedia": "TXT_KEY_BUILDING_COVERED_BRIDGE_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

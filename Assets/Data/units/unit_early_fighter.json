@@ -1,7 +1,5 @@
 {
  "type": "UNIT_EARLY_FIGHTER",
- "description": "TXT_KEY_UNIT_EARLY_FIGHTER",
- "civilopedia": "TXT_KEY_UNIT_EARLY_FIGHTER_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -72,6 +70,8 @@
   "upkeep": 1
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_EARLY_FIGHTER",
+  "civilopedia": "TXT_KEY_UNIT_EARLY_FIGHTER_PEDIA",
   "worth": 3,
   "militaryWorth": 49,
   "xpValueAttack": 6,

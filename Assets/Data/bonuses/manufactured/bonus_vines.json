@@ -1,7 +1,5 @@
 {
  "type": "BONUS_VINES",
- "description": "TXT_KEY_BONUS_VINES",
- "civilopedia": "TXT_KEY_BONUS_VINES_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_AERIAL_BASKET_ROPEWAYS",
@@ -16,6 +14,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_VINES",
+  "civilopedia": "TXT_KEY_BONUS_VINES_PEDIA",
   "bonusClassType": "BONUSCLASS_MANUFACTURED"
  }
 }

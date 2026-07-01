@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_ORCHARD_POMEGRANATE",
- "description": "TXT_KEY_BUILDING_ORCHARD_POMEGRANATE",
- "civilopedia": "TXT_KEY_BUILDING_ORCHARD_POMEGRANATE_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_RESOURCES_FRUIT"
@@ -71,6 +69,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_ORCHARD_POMEGRANATE",
+  "civilopedia": "TXT_KEY_BUILDING_ORCHARD_POMEGRANATE_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

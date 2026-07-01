@@ -1,8 +1,5 @@
 {
  "type": "TECH_ATLATL_MAKING",
- "description": "TXT_KEY_TECH_ATLATL_MAKING",
- "civilopedia": "TXT_KEY_TECH_ATLATL_MAKING_PEDIA",
- "quote": "TXT_KEY_TECH_ATLATL_MAKING_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_ANCIENT_WAY_OF_THE_WIND"
@@ -62,6 +59,9 @@
   "soundMP": "AS2D_TECH_ATLATL_MAKING"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_ATLATL_MAKING",
+  "civilopedia": "TXT_KEY_TECH_ATLATL_MAKING_PEDIA",
+  "quote": "TXT_KEY_TECH_ATLATL_MAKING_QUOTE",
   "era": "C2C_ERA_PREHISTORIC",
   "worth": 8,
   "militaryWorth": 3,

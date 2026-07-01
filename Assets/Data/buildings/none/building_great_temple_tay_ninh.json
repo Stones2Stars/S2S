@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_GREAT_TEMPLE_TAY_NINH",
- "description": "TXT_KEY_BUILDING_GREAT_TEMPLE_TAY_NINH",
- "civilopedia": "TXT_KEY_BUILDING_GREAT_TEMPLE_TAY_NINH_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -50,6 +48,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_GREAT_TEMPLE_TAY_NINH",
+  "civilopedia": "TXT_KEY_BUILDING_GREAT_TEMPLE_TAY_NINH_PEDIA",
   "shrine": "RELIGION_CAO_DAI",
   "notConstructible": true,
   "nukeImmune": true,

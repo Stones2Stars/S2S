@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_DEPARTMENT_OF_FOREIGN_POLICY",
- "description": "TXT_KEY_BUILDING_DEPARTMENT_OF_FOREIGN_POLICY",
- "civilopedia": "TXT_KEY_BUILDING_DEPARTMENT_OF_FOREIGN_POLICY_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -92,6 +90,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_DEPARTMENT_OF_FOREIGN_POLICY",
+  "civilopedia": "TXT_KEY_BUILDING_DEPARTMENT_OF_FOREIGN_POLICY_PEDIA",
   "neverCapture": true,
   "advisor": "ADVISOR_SCIENCE",
   "mapCategories": [

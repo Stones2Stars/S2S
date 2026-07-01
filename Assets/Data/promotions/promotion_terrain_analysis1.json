@@ -1,6 +1,5 @@
 {
  "type": "PROMOTION_TERRAIN_ANALYSIS1",
- "description": "TXT_KEY_PROMOTION_TERRAIN_ANALYSIS1",
  "strength": {
   "unit": {
    "hillsAttack": {
@@ -62,5 +61,8 @@
  },
  "sound": {
   "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_TERRAIN_ANALYSIS1"
  }
 }

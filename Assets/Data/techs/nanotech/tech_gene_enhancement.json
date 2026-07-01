@@ -1,8 +1,5 @@
 {
  "type": "TECH_GENE_ENHANCEMENT",
- "description": "TXT_KEY_TECH_GENE_ENHANCEMENT",
- "civilopedia": "TXT_KEY_TECH_GENE_ENHANCEMENT_PEDIA",
- "quote": "TXT_KEY_TECH_GENE_ENHANCEMENT_QUOTE",
  "enables": {
   "bonuses": [
    "BONUS_HUMAN_MOD_GENE_EDITING"
@@ -70,6 +67,9 @@
   "soundMP": "AS2D_TECH_GENE_ENHANCEMENT"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_GENE_ENHANCEMENT",
+  "civilopedia": "TXT_KEY_TECH_GENE_ENHANCEMENT_PEDIA",
+  "quote": "TXT_KEY_TECH_GENE_ENHANCEMENT_QUOTE",
   "era": "C2C_ERA_NANOTECH",
   "worth": 14,
   "tradeable": true,

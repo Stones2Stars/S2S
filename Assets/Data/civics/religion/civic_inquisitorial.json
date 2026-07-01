@@ -1,8 +1,5 @@
 {
  "type": "CIVIC_INQUISITORIAL",
- "description": "TXT_KEY_CIVIC_INQUISITORIAL",
- "civilopedia": "TXT_KEY_CIVIC_INQUISITORIAL_PEDIA",
- "strategy": "TXT_KEY_CIVIC_INQUISITORIAL_STRATEGY",
  "enables": {
   "buildings": [
    "BUILDING_ALAMUT",
@@ -182,6 +179,9 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_CIVIC_INQUISITORIAL",
+  "civilopedia": "TXT_KEY_CIVIC_INQUISITORIAL_PEDIA",
+  "strategy": "TXT_KEY_CIVIC_INQUISITORIAL_STRATEGY",
   "civicOption": "CIVICOPTION_RELIGION",
   "anarchyLength": 1,
   "upkeepLevel": "UPKEEP_MEDIUM"

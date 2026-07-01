@@ -1,8 +1,5 @@
 {
  "type": "TECH_MONARCHY",
- "description": "TXT_KEY_TECH_MONARCHY",
- "civilopedia": "TXT_KEY_TECH_MONARCHY_PEDIA",
- "quote": "TXT_KEY_TECH_MONARCHY_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_ABU_SIMBEL",
@@ -91,6 +88,9 @@
   "soundMP": "AS2D_TECH_MP_MONARCHY"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_MONARCHY",
+  "civilopedia": "TXT_KEY_TECH_MONARCHY_PEDIA",
+  "quote": "TXT_KEY_TECH_MONARCHY_QUOTE",
   "era": "C2C_ERA_ANCIENT",
   "worth": 16,
   "tradeable": true,

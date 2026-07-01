@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_TRANSTELLAR_ALDERSON_DISK",
- "description": "TXT_KEY_BUILDING_TRANSTELLAR_ALDERSON_DISK",
- "civilopedia": "TXT_KEY_BUILDING_TRANSTELLAR_ALDERSON_DISK_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_GODWHEEL",
@@ -64,6 +62,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_TRANSTELLAR_ALDERSON_DISK",
+  "civilopedia": "TXT_KEY_BUILDING_TRANSTELLAR_ALDERSON_DISK_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

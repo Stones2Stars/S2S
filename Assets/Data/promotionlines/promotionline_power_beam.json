@@ -1,12 +1,12 @@
 {
  "type": "PROMOTIONLINE_POWER_BEAM",
- "description": "TXT_KEY_PROMOTIONLINE_POWER_BEAM",
  "ui": {
   "art": {
    "icon": "art/Buttons/Promotions/PowerBeam1Promotion.dds"
   }
  },
  "identity": {
+  "description": "TXT_KEY_PROMOTIONLINE_POWER_BEAM",
   "unitCombats": [
    "UNITCOMBAT_WEAPON_DIST_LASER",
    "UNITCOMBAT_WEAPON_DIST_IMPROVED_LASER",

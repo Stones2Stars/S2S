@@ -1,8 +1,5 @@
 {
  "type": "TECH_GEOLOGY",
- "description": "TXT_KEY_TECH_GEOLOGY",
- "civilopedia": "TXT_KEY_TECH_GEOLOGY_PEDIA",
- "quote": "TXT_KEY_TECH_GEOLOGY_QUOTE",
  "enables": {
   "bonuses": [
    "BONUS_FOSSIL_BEDS",
@@ -67,6 +64,9 @@
   "soundMP": "AS2D_TECH_GEOLOGY"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_GEOLOGY",
+  "civilopedia": "TXT_KEY_TECH_GEOLOGY_PEDIA",
+  "quote": "TXT_KEY_TECH_GEOLOGY_QUOTE",
   "era": "C2C_ERA_RENAISSANCE",
   "worth": 20,
   "tradeable": true,

@@ -1,8 +1,5 @@
 {
  "type": "TECH_STEAM_POWER",
- "description": "TXT_KEY_TECH_STEAM_POWER",
- "civilopedia": "TXT_KEY_TECH_STEAM_POWER_PEDIA",
- "quote": "TXT_KEY_TECH_STEAM_POWER_QUOTE",
  "enables": {
   "bonuses": [
    "BONUS_GRAPHITE",
@@ -99,6 +96,9 @@
   "soundMP": "AS2D_TECH_MP_STEAMPOWER"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_STEAM_POWER",
+  "civilopedia": "TXT_KEY_TECH_STEAM_POWER_PEDIA",
+  "quote": "TXT_KEY_TECH_STEAM_POWER_QUOTE",
   "era": "C2C_ERA_INDUSTRIAL",
   "worth": 40,
   "tradeable": true,

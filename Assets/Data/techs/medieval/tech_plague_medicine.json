@@ -1,8 +1,5 @@
 {
  "type": "TECH_PLAGUE_MEDICINE",
- "description": "TXT_KEY_TECH_PLAGUE_MEDICINE",
- "civilopedia": "TXT_KEY_TECH_PLAGUE_MEDICINE_PEDIA",
- "quote": "TXT_KEY_TECH_PLAGUE_MEDICINE_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_DOCTORS_OFFICE"
@@ -63,6 +60,9 @@
   "soundMP": "AS2D_TECH_PLAGUE_MEDICINE"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_PLAGUE_MEDICINE",
+  "civilopedia": "TXT_KEY_TECH_PLAGUE_MEDICINE_PEDIA",
+  "quote": "TXT_KEY_TECH_PLAGUE_MEDICINE_QUOTE",
   "era": "C2C_ERA_MEDIEVAL",
   "worth": 32,
   "tradeable": true,

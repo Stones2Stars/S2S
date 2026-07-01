@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_MUD_BATH",
- "description": "TXT_KEY_BUILDING_MUD_BATH",
- "civilopedia": "TXT_KEY_BUILDING_MUD_BATH_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_HEALTH_SPA"
@@ -72,6 +70,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_MUD_BATH",
+  "civilopedia": "TXT_KEY_BUILDING_MUD_BATH_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

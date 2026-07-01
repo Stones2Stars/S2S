@@ -1,8 +1,5 @@
 {
  "type": "UNIT_TAMED_GRIZZLY",
- "description": "TXT_KEY_UNIT_TAMED_GRIZZLY",
- "civilopedia": "TXT_KEY_UNIT_GRIZZLY_PEDIA",
- "help": "TXT_KEY_UNIT_TAMED_ANIMALS_HELP",
  "requires": {
   "build": {
    "all": [
@@ -52,6 +49,9 @@
   "production": 133
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_TAMED_GRIZZLY",
+  "civilopedia": "TXT_KEY_UNIT_GRIZZLY_PEDIA",
+  "help": "TXT_KEY_UNIT_TAMED_ANIMALS_HELP",
   "xpValueAttack": 8,
   "xpValueDefense": 4,
   "domain": "DOMAIN_LAND",

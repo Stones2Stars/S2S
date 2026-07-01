@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_MULTIVERSE_CITY",
- "description": "TXT_KEY_BUILDING_MULTIVERSE_CITY",
- "civilopedia": "TXT_KEY_BUILDING_MULTIVERSE_CITY_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_BIZARRO_WORLD"
@@ -64,6 +62,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_MULTIVERSE_CITY",
+  "civilopedia": "TXT_KEY_BUILDING_MULTIVERSE_CITY_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

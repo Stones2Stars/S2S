@@ -1,7 +1,5 @@
 {
  "type": "TRAIT_MEGALOMANIAC1",
- "description": "TXT_KEY_TRAIT_MEGALOMANIAC0",
- "civilopedia": "TXT_KEY_TRAIT_MEGALOMANIAC_PEDIA",
  "enables": {
   "traits": [
    "TRAIT_MEGALOMANIAC2"
@@ -101,6 +99,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_TRAIT_MEGALOMANIAC0",
+  "civilopedia": "TXT_KEY_TRAIT_MEGALOMANIAC_PEDIA",
   "shortDescription": "TXT_KEY_TRAIT_MEGALOMANIAC_SHORT",
   "negativeTrait": true
  }

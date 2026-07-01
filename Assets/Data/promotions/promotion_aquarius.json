@@ -1,7 +1,5 @@
 {
  "type": "PROMOTION_AQUARIUS",
- "description": "TXT_KEY_PROMOTION_AQUARIUS",
- "help": "TXT_KEY_PROMOTION_ASTRO_HELP",
  "experience": {
   "unit": {
    "percent": 20
@@ -16,6 +14,8 @@
   "sound": "AS2D_IF_LEVELUP"
  },
  "identity": {
+  "description": "TXT_KEY_PROMOTION_AQUARIUS",
+  "help": "TXT_KEY_PROMOTION_ASTRO_HELP",
   "notOnUnitCombats": [
    "UNITCOMBAT_PACIFIST"
   ],

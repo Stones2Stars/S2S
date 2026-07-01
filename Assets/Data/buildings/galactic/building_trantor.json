@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_TRANTOR",
- "description": "TXT_KEY_BUILDING_TRANTOR",
- "civilopedia": "TXT_KEY_BUILDING_TRANTOR_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -80,6 +78,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_TRANTOR",
+  "civilopedia": "TXT_KEY_BUILDING_TRANTOR_PEDIA",
   "conquestProbability": 100,
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,

@@ -1,7 +1,5 @@
 {
  "type": "UNIT_BLIMP",
- "description": "TXT_KEY_UNIT_BLIMP",
- "civilopedia": "TXT_KEY_UNIT_BLIMP_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -63,6 +61,8 @@
   "upkeep": 1
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_BLIMP",
+  "civilopedia": "TXT_KEY_UNIT_BLIMP_PEDIA",
   "worth": 3,
   "militaryWorth": 139,
   "xpValueAttack": 3,

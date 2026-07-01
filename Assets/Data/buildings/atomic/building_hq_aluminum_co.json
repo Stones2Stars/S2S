@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_HQ_ALUMINUM_CO",
- "description": "TXT_KEY_BUILDING_HQ_ALUMINUM_CO",
- "civilopedia": "TXT_KEY_BUILDING_CORPORATION_6_PEDIA",
  "enables": {
   "corporations": [
    "CORPORATION_6"
@@ -56,6 +54,8 @@
   "construct": "AS2D_BUILD_BANK"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_HQ_ALUMINUM_CO",
+  "civilopedia": "TXT_KEY_BUILDING_CORPORATION_6_PEDIA",
   "commerceDoubleTime": {
    "culture": 1000
   },

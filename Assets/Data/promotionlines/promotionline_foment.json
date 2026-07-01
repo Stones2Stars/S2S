@@ -1,12 +1,12 @@
 {
  "type": "PROMOTIONLINE_FOMENT",
- "description": "TXT_KEY_PROMOTIONLINE_FOMENT",
  "ui": {
   "art": {
    "icon": "Art/Buttons/Promotions/Foment1Promotion.dds"
   }
  },
  "identity": {
+  "description": "TXT_KEY_PROMOTIONLINE_FOMENT",
   "unitCombats": [
    "UNITCOMBAT_CRIMINAL"
   ],

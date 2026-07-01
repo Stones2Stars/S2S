@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_DARPA",
- "description": "TXT_KEY_BUILDING_DARPA",
- "civilopedia": "TXT_KEY_BUILDING_DARPA_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -74,6 +72,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_DARPA",
+  "civilopedia": "TXT_KEY_BUILDING_DARPA_PEDIA",
   "conquestProbability": 100,
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,

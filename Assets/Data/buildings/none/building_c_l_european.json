@@ -1,8 +1,5 @@
 {
  "type": "BUILDING_C_L_EUROPEAN",
- "description": "TXT_KEY_BUILDING_C_L_EUROPEAN",
- "civilopedia": "TXT_KEY_BUILDING_C_L_PEDIA",
- "help": "TXT_KEY_BUILDING_C_L_HELP",
  "enables": {
   "buildings": [
    "BUILDING_CULTURE_ALBANIAN",
@@ -184,6 +181,9 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_C_L_EUROPEAN",
+  "civilopedia": "TXT_KEY_BUILDING_C_L_PEDIA",
+  "help": "TXT_KEY_BUILDING_C_L_HELP",
   "nukeImmune": true,
   "conquestProbability": 85,
   "mapCategories": [

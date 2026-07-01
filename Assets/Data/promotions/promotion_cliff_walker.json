@@ -1,6 +1,5 @@
 {
  "type": "PROMOTION_CLIFF_WALKER",
- "description": "TXT_KEY_PROMOTION_CLIFF_WALKER",
  "strength": {
   "unit": {
    "hillsAttack": {
@@ -28,5 +27,8 @@
  },
  "sound": {
   "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_CLIFF_WALKER"
  }
 }

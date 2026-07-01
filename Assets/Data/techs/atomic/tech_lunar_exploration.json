@@ -1,8 +1,5 @@
 {
  "type": "TECH_LUNAR_EXPLORATION",
- "description": "TXT_KEY_TECH_LUNAR_EXPLORATION",
- "civilopedia": "TXT_KEY_TECH_LUNAR_EXPLORATION_PEDIA",
- "quote": "TXT_KEY_TECH_LUNAR_EXPLORATION_QUOTE",
  "enables": {
   "bonuses": [
    "BONUS_MOON_ROCKS"
@@ -62,6 +59,9 @@
   "soundMP": "AS2D_TECH_LUNAR_EXPLORATION"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_LUNAR_EXPLORATION",
+  "civilopedia": "TXT_KEY_TECH_LUNAR_EXPLORATION_PEDIA",
+  "quote": "TXT_KEY_TECH_LUNAR_EXPLORATION_QUOTE",
   "era": "C2C_ERA_ATOMIC",
   "worth": 48,
   "militaryWorth": 4,

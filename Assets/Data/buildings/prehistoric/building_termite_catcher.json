@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_TERMITE_CATCHER",
- "description": "TXT_KEY_BUILDING_TERMITE_CATCHER",
- "civilopedia": "TXT_KEY_BUILDING_TERMITE_CATCHER_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_RESOURCES_BUGS"
@@ -90,6 +88,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_TERMITE_CATCHER",
+  "civilopedia": "TXT_KEY_BUILDING_TERMITE_CATCHER_PEDIA",
   "nukeImmune": true,
   "advisor": "ADVISOR_GROWTH",
   "mapCategories": [

@@ -1,6 +1,5 @@
 {
  "type": "BUILD_TRAIL",
- "description": "TXT_KEY_BUILD_TRAIL",
  "requires": {
   "build": {
    "all": [
@@ -27,5 +26,8 @@
   "art": {
    "entityEvent": "ENTITY_EVENT_SHOVEL"
   }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILD_TRAIL"
  }
 }

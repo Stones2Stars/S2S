@@ -1,13 +1,13 @@
 {
  "type": "BONUS_LITHIUM",
- "description": "TXT_KEY_BONUS_LITHIUM",
- "civilopedia": "TXT_KEY_BONUS_LITHIUM_PEDIA",
  "world": {
   "art": {
    "icon": "ART_DEF_BONUS_LITHIUM"
   }
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_LITHIUM",
+  "civilopedia": "TXT_KEY_BONUS_LITHIUM_PEDIA",
   "bonusClassType": "BONUSCLASS_MANUFACTURED"
  }
 }

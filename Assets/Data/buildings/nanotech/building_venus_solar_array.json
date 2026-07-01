@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_VENUS_SOLAR_ARRAY",
- "description": "TXT_KEY_BUILDING_VENUS_SOLAR_ARRAY",
- "civilopedia": "TXT_KEY_BUILDING_VENUS_SOLAR_ARRAY_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -34,6 +32,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_VENUS_SOLAR_ARRAY",
+  "civilopedia": "TXT_KEY_BUILDING_VENUS_SOLAR_ARRAY_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

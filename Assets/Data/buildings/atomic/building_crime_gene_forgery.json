@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_CRIME_GENE_FORGERY",
- "description": "TXT_KEY_BUILDING_CRIME_GENE_FORGERY",
- "civilopedia": "TXT_KEY_BUILDING_CRIME_GENE_FORGERY_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -60,6 +58,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_CRIME_GENE_FORGERY",
+  "civilopedia": "TXT_KEY_BUILDING_CRIME_GENE_FORGERY_PEDIA",
   "notConstructible": true,
   "nukeImmune": true,
   "conquestProbability": 100,

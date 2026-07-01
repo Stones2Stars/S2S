@@ -1,7 +1,5 @@
 {
  "type": "BONUS_WHEAT",
- "description": "TXT_KEY_BONUS_WHEAT",
- "civilopedia": "TXT_KEY_BONUS_WHEAT_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_CATCHER_CANARY",
@@ -75,6 +73,8 @@
   ]
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_WHEAT",
+  "civilopedia": "TXT_KEY_BONUS_WHEAT_PEDIA",
   "bonusClassType": "BONUSCLASS_CROP"
  }
 }

@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_SOCIAL_NETWORKS",
- "description": "TXT_KEY_BUILDING_SOCIAL_NETWORKS",
- "civilopedia": "TXT_KEY_BUILDING_SOCIAL_NETWORKS_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_BLOGS",
@@ -80,6 +78,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_SOCIAL_NETWORKS",
+  "civilopedia": "TXT_KEY_BUILDING_SOCIAL_NETWORKS_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

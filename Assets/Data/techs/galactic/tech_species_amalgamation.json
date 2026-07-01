@@ -1,8 +1,5 @@
 {
  "type": "TECH_SPECIES_AMALGAMATION",
- "description": "TXT_KEY_TECH_SPECIES_AMALGAMATION",
- "civilopedia": "TXT_KEY_TECH_SPECIES_AMALGAMATION_PEDIA",
- "quote": "TXT_KEY_TECH_SPECIES_AMALGAMATION_QUOTE",
  "enables": {
   "bonuses": [
    "BONUS_HUMAN_MOD_ALIEN_HYBRID"
@@ -61,6 +58,9 @@
   "soundMP": "AS2D_TECH_GENERIC"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_SPECIES_AMALGAMATION",
+  "civilopedia": "TXT_KEY_TECH_SPECIES_AMALGAMATION_PEDIA",
+  "quote": "TXT_KEY_TECH_SPECIES_AMALGAMATION_QUOTE",
   "era": "C2C_ERA_GALACTIC",
   "worth": 48,
   "tradeable": true,

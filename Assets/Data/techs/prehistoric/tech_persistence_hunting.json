@@ -1,8 +1,5 @@
 {
  "type": "TECH_PERSISTENCE_HUNTING",
- "description": "TXT_KEY_TECH_PERSISTENCE_HUNTING",
- "civilopedia": "TXT_KEY_TECH_PERSISTENCE_HUNTING_PEDIA",
- "quote": "TXT_KEY_TECH_PERSISTENCE_HUNTING_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_HUNTING_INSTRUCTIONS"
@@ -74,6 +71,9 @@
   "soundMP": "AS2D_TECH_PERSISTENCE_HUNTING"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_PERSISTENCE_HUNTING",
+  "civilopedia": "TXT_KEY_TECH_PERSISTENCE_HUNTING_PEDIA",
+  "quote": "TXT_KEY_TECH_PERSISTENCE_HUNTING_QUOTE",
   "era": "C2C_ERA_PREHISTORIC",
   "worth": 8,
   "militaryWorth": 2,

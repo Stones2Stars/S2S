@@ -1,9 +1,5 @@
 {
  "type": "CIVILIZATION_IROQUOIS",
- "description": "TXT_KEY_CIVILIZATION_IROQUOIS",
- "shortDescription": "TXT_KEY_CIVILIZATION_IROQUOIS_SHORT",
- "adjective": "TXT_KEY_CIVILIZATION_IROQUOIS_ADJECTIVE",
- "civilopedia": "TXT_KEY_CIVILIZATION_IROQUOIS_PEDIA",
  "grants": {
   "buildings": [
    "BUILDING_PALACE",
@@ -32,10 +28,6 @@
    "TECH_GAME_START"
   ]
  },
- "policies": {
-  "playable": true,
-  "aiPlayable": true
- },
  "world": {
   "art": {
    "playerColor": "PLAYERCOLOR_IROQUOIS",
@@ -49,6 +41,12 @@
   "action": "AS3D_NATIVE_AMERICA_ORDER"
  },
  "identity": {
+  "description": "TXT_KEY_CIVILIZATION_IROQUOIS",
+  "shortDescription": "TXT_KEY_CIVILIZATION_IROQUOIS_SHORT",
+  "adjective": "TXT_KEY_CIVILIZATION_IROQUOIS_ADJECTIVE",
+  "civilopedia": "TXT_KEY_CIVILIZATION_IROQUOIS_PEDIA",
+  "playable": true,
+  "aiPlayable": true,
   "leaders": [
    "LEADER_DEGANAWIDA",
    "LEADER_HIAWATHA",

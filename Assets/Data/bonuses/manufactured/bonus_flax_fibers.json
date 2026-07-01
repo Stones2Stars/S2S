@@ -1,7 +1,5 @@
 {
  "type": "BONUS_FLAX_FIBERS",
- "description": "TXT_KEY_BONUS_FLAX_FIBERS",
- "civilopedia": "TXT_KEY_BONUS_FLAX_FIBERS_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_FACTORY_CLOTH",
@@ -15,6 +13,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_FLAX_FIBERS",
+  "civilopedia": "TXT_KEY_BONUS_FLAX_FIBERS_PEDIA",
   "bonusClassType": "BONUSCLASS_MANUFACTURED"
  }
 }

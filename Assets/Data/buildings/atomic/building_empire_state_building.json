@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_EMPIRE_STATE_BUILDING",
- "description": "TXT_KEY_BUILDING_EMPIRE_STATE_BUILDING",
- "civilopedia": "TXT_KEY_BUILDING_EMPIRE_STATE_BUILDING_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_DIRIGIBLE_TERMINAL"
@@ -74,6 +72,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_EMPIRE_STATE_BUILDING",
+  "civilopedia": "TXT_KEY_BUILDING_EMPIRE_STATE_BUILDING_PEDIA",
   "nukeImmune": true,
   "worth": 15,
   "conquestProbability": 100,

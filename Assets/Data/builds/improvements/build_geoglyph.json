@@ -1,6 +1,5 @@
 {
  "type": "BUILD_GEOGLYPH",
- "description": "TXT_KEY_BUILD_GEOGLYPH",
  "requires": {
   "build": {
    "all": [
@@ -120,5 +119,8 @@
   "art": {
    "entityEvent": "ENTITY_EVENT_BUILD"
   }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILD_GEOGLYPH"
  }
 }

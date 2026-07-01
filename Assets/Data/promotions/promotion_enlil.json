@@ -1,6 +1,5 @@
 {
  "type": "PROMOTION_ENLIL",
- "description": "TXT_KEY_PROMOTION_ENLIL",
  "firstStrike": {
   "unit": {
    "strikes": {
@@ -33,6 +32,7 @@
   "sound": "AS2D_IF_LEVELUP"
  },
  "identity": {
+  "description": "TXT_KEY_PROMOTION_ENLIL",
   "stateReligionPrereq": "RELIGION_MESOPOTAMISM",
   "unitCombats": [
    "UNITCOMBAT_ARCHER",

@@ -1,8 +1,5 @@
 {
  "type": "TECH_SMART_DUST",
- "description": "TXT_KEY_TECH_SMART_DUST",
- "civilopedia": "TXT_KEY_TECH_SMART_DUST_PEDIA",
- "quote": "TXT_KEY_TECH_SMART_DUST_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_NANITE_DEFUSER",
@@ -59,6 +56,9 @@
   "soundMP": "AS2D_TECH_SMART_DUST"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_SMART_DUST",
+  "civilopedia": "TXT_KEY_TECH_SMART_DUST_PEDIA",
+  "quote": "TXT_KEY_TECH_SMART_DUST_QUOTE",
   "era": "C2C_ERA_TRANSHUMAN",
   "worth": 40,
   "militaryWorth": 10,

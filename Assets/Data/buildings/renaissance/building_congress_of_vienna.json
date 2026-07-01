@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_CONGRESS_OF_VIENNA",
- "description": "TXT_KEY_BUILDING_CONGRESS_OF_VIENNA",
- "civilopedia": "TXT_KEY_BUILDING_CONGRESS_OF_VIENNA_PEDIA",
  "enables": {
   "votes": [
    "FORCE_TEAM_ELIGIBLE"
@@ -75,6 +73,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_CONGRESS_OF_VIENNA",
+  "civilopedia": "TXT_KEY_BUILDING_CONGRESS_OF_VIENNA_PEDIA",
   "commerceDoubleTime": {
    "culture": 1000
   },

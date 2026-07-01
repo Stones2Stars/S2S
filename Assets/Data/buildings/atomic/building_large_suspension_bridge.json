@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_LARGE_SUSPENSION_BRIDGE",
- "description": "TXT_KEY_BUILDING_LARGE_SUSPENSION_BRIDGE",
- "civilopedia": "TXT_KEY_BUILDING_LARGE_SUSPENSION_BRIDGE_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_BUNGEE_JUMPING_SITE",
@@ -92,6 +90,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_LARGE_SUSPENSION_BRIDGE",
+  "civilopedia": "TXT_KEY_BUILDING_LARGE_SUSPENSION_BRIDGE_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

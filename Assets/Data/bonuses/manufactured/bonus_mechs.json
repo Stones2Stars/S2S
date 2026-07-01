@@ -1,7 +1,5 @@
 {
  "type": "BONUS_MECHS",
- "description": "TXT_KEY_BONUS_MECHS",
- "civilopedia": "TXT_KEY_BONUS_MECHS_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_FARM_MECH_CONTROL_CENTER",
@@ -22,6 +20,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_MECHS",
+  "civilopedia": "TXT_KEY_BONUS_MECHS_PEDIA",
   "bonusClassType": "BONUSCLASS_MANUFACTURED"
  }
 }

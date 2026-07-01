@@ -1,7 +1,5 @@
 {
  "type": "UNIT_CHASER",
- "description": "TXT_KEY_UNIT_CHASER",
- "civilopedia": "TXT_KEY_UNIT_CHASER_PEDIA",
  "obsoletedBy": {
   "techs": [
    "TECH_TRACKING"
@@ -73,6 +71,8 @@
   "upkeep": 1
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_CHASER",
+  "civilopedia": "TXT_KEY_UNIT_CHASER_PEDIA",
   "worth": 1,
   "militaryWorth": 1,
   "xpValueAttack": 2,

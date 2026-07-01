@@ -1,7 +1,5 @@
 {
  "type": "SPECIALIST_LAWYER",
- "description": "TXT_KEY_LAWYER_SPECIALIST",
- "civilopedia": "TXT_KEY_CONCEPT_GREAT_STATESMAN_PEDIA",
  "commerce": {
   "city": {
    "flat": 2
@@ -41,6 +39,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_LAWYER_SPECIALIST",
+  "civilopedia": "TXT_KEY_CONCEPT_GREAT_STATESMAN_PEDIA",
   "visible": true,
   "categories": [
    "CATEGORY_ASSIGNABLE_SPECIALISTS",

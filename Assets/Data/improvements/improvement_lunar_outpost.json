@@ -1,7 +1,5 @@
 {
  "type": "IMPROVEMENT_LUNAR_OUTPOST",
- "description": "TXT_KEY_IMPROVEMENT_LUNAR_OUTPOST",
- "civilopedia": "TXT_KEY_IMPROVEMENT_LUNAR_OUTPOST_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -33,6 +31,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_IMPROVEMENT_LUNAR_OUTPOST",
+  "civilopedia": "TXT_KEY_IMPROVEMENT_LUNAR_OUTPOST_PEDIA",
   "extraterrestrial": true,
   "upgradeTime": 50,
   "pillageGold": 500,

@@ -1,6 +1,5 @@
 {
  "type": "VOTE_UN_ASSIGN_CITY",
- "description": "TXT_KEY_VOTE_UN_ASSIGN_CITY",
  "voteSource": [
   "DIPLOVOTE_UN"
  ],
@@ -10,5 +9,8 @@
  },
  "effect": {
   "assignCity": true
+ },
+ "identity": {
+  "description": "TXT_KEY_VOTE_UN_ASSIGN_CITY"
  }
 }

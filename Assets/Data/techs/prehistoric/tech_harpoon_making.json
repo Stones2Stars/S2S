@@ -1,8 +1,5 @@
 {
  "type": "TECH_HARPOON_MAKING",
- "description": "TXT_KEY_TECH_HARPOON_MAKING",
- "civilopedia": "TXT_KEY_TECH_HARPOON_MAKING_PEDIA",
- "quote": "TXT_KEY_TECH_HARPOON_MAKING_QUOTE",
  "enables": {
   "bonuses": [
    "BONUS_WHALE"
@@ -75,6 +72,9 @@
   "soundMP": "AS2D_TECH_HARPOON_MAKING"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_HARPOON_MAKING",
+  "civilopedia": "TXT_KEY_TECH_HARPOON_MAKING_PEDIA",
+  "quote": "TXT_KEY_TECH_HARPOON_MAKING_QUOTE",
   "era": "C2C_ERA_PREHISTORIC",
   "worth": 8,
   "militaryWorth": 1,

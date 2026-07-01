@@ -1,8 +1,5 @@
 {
  "type": "TRAIT_PREEMINENT",
- "description": "TXT_KEY_TRAIT_PREEMINENT",
- "civilopedia": "TXT_KEY_TRAIT_PREEMINENT_PEDIA",
- "strategy": "TXT_KEY_TRAIT_PREEMINENT_STRATEGY",
  "excludes": [
   "TRAIT_ALOOF"
  ],
@@ -389,5 +386,10 @@
   "art": {
    "icon": "art/Buttons/Traits/TraitPreeminent.dds"
   }
+ },
+ "identity": {
+  "description": "TXT_KEY_TRAIT_PREEMINENT",
+  "civilopedia": "TXT_KEY_TRAIT_PREEMINENT_PEDIA",
+  "strategy": "TXT_KEY_TRAIT_PREEMINENT_STRATEGY"
  }
 }

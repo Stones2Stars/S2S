@@ -1,8 +1,5 @@
 {
  "type": "TECH_MICROWAVES",
- "description": "TXT_KEY_TECH_MICROWAVES",
- "civilopedia": "TXT_KEY_TECH_MICROWAVES_PEDIA",
- "quote": "TXT_KEY_TECH_MICROWAVES_QUOTE",
  "enables": {
   "bonuses": [
    "BONUS_MICROWAVE_OVENS"
@@ -63,6 +60,9 @@
   "soundMP": "AS2D_TECH_MICROWAVES"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_MICROWAVES",
+  "civilopedia": "TXT_KEY_TECH_MICROWAVES_PEDIA",
+  "quote": "TXT_KEY_TECH_MICROWAVES_QUOTE",
   "era": "C2C_ERA_ATOMIC",
   "worth": 48,
   "militaryWorth": 4,

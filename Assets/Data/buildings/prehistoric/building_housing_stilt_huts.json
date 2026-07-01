@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_HOUSING_STILT_HUTS",
- "description": "TXT_KEY_BUILDING_HOUSING_STILT_HUTS",
- "civilopedia": "TXT_KEY_BUILDING_HOUSING_STILT_HUTS_PEDIA",
  "obsoletedBy": {
   "techs": [
    "TECH_SANITATION"
@@ -75,6 +73,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_HOUSING_STILT_HUTS",
+  "civilopedia": "TXT_KEY_BUILDING_HOUSING_STILT_HUTS_PEDIA",
   "notConstructible": true,
   "nukeImmune": true,
   "neverCapture": true,

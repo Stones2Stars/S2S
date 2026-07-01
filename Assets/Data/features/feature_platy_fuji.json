@@ -1,7 +1,5 @@
 {
  "type": "FEATURE_PLATY_FUJI",
- "description": "TXT_KEY_FEATURE_FUJI",
- "civilopedia": "TXT_KEY_FEATURE_FUJI_PEDIA",
  "vision": {
   "plot": {
    "seeThrough": {
@@ -28,6 +26,8 @@
   "soundscape": "ASSS_OASIS_SELECT_AMB"
  },
  "identity": {
+  "description": "TXT_KEY_FEATURE_FUJI",
+  "civilopedia": "TXT_KEY_FEATURE_FUJI_PEDIA",
   "movementCost": 1,
   "noCity": true,
   "noImprovement": true,

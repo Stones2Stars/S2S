@@ -1,8 +1,5 @@
 {
  "type": "TECH_TACHYON_COMMUNICATIONS",
- "description": "TXT_KEY_TECH_TACHYON_COMMUNICATIONS",
- "civilopedia": "TXT_KEY_TECH_TACHYON_COMMUNICATIONS_PEDIA",
- "quote": "TXT_KEY_TECH_TACHYON_COMMUNICATIONS_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_INTERGALACTIC_TACHYON_COMMUNICATION_CENTER",
@@ -58,6 +55,9 @@
   "soundMP": "AS2D_TECH_GENERIC"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_TACHYON_COMMUNICATIONS",
+  "civilopedia": "TXT_KEY_TECH_TACHYON_COMMUNICATIONS_PEDIA",
+  "quote": "TXT_KEY_TECH_TACHYON_COMMUNICATIONS_QUOTE",
   "era": "C2C_ERA_COSMIC",
   "worth": 48,
   "tradeable": true,

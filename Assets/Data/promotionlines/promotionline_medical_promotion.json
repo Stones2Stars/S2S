@@ -1,12 +1,12 @@
 {
  "type": "PROMOTIONLINE_MEDICAL_PROMOTION",
- "description": "TXT_KEY_PROMOTIONLINE_MEDICAL_PROMOTION",
  "ui": {
   "art": {
    "icon": "art/Buttons/Promotions/PromotionMedical.dds"
   }
  },
  "identity": {
+  "description": "TXT_KEY_PROMOTIONLINE_MEDICAL_PROMOTION",
   "unitCombats": [
    "UNITCOMBAT_HEALTH_CARE"
   ]

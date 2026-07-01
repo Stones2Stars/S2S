@@ -1,8 +1,5 @@
 {
  "type": "TECH_PLOUGH",
- "description": "TXT_KEY_TECH_PLOUGH",
- "civilopedia": "TXT_KEY_TECH_PLOUGH_PEDIA",
- "quote": "TXT_KEY_TECH_PLOUGH_QUOTE",
  "enables": {
   "bonuses": [
    "BONUS_VEGETABLES"
@@ -88,6 +85,9 @@
   "soundMP": "AS2D_TECH_PLOUGH"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_PLOUGH",
+  "civilopedia": "TXT_KEY_TECH_PLOUGH_PEDIA",
+  "quote": "TXT_KEY_TECH_PLOUGH_QUOTE",
   "era": "C2C_ERA_ANCIENT",
   "worth": 8,
   "tradeable": true,

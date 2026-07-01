@@ -1,7 +1,5 @@
 {
  "type": "UNIT_NEANDERTHAL_WISE_WOMAN",
- "description": "TXT_KEY_UNIT_NEANDERTHAL_WISE_WOMAN",
- "civilopedia": "TXT_KEY_UNIT_WISE_WOMAN_PEDIA",
  "obsoletedBy": {
   "techs": [
    "TECH_SEDENTARY_LIFESTYLE"
@@ -73,6 +71,8 @@
   "hurryCostModifier": 25
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_NEANDERTHAL_WISE_WOMAN",
+  "civilopedia": "TXT_KEY_UNIT_WISE_WOMAN_PEDIA",
   "worth": 2,
   "militaryWorth": 2,
   "xpValueDefense": 2,

@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_MAGLEV_RAILS",
- "description": "TXT_KEY_BUILDING_MAGLEV_RAILS",
- "civilopedia": "TXT_KEY_BUILDING_MAGLEV_RAILS_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_CHUO_SHINKANSEN",
@@ -63,6 +61,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_MAGLEV_RAILS",
+  "civilopedia": "TXT_KEY_BUILDING_MAGLEV_RAILS_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

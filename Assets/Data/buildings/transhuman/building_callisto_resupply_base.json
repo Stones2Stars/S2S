@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_CALLISTO_RESUPPLY_BASE",
- "description": "TXT_KEY_BUILDING_CALLISTO_RESUPPLY_BASE",
- "civilopedia": "TXT_KEY_BUILDING_CALLISTO_RESUPPLY_BASE_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_CALLISTO_NITROGEN_GENERATOR"
@@ -52,6 +50,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_CALLISTO_RESUPPLY_BASE",
+  "civilopedia": "TXT_KEY_BUILDING_CALLISTO_RESUPPLY_BASE_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

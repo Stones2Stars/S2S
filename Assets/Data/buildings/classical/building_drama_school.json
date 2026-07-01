@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_DRAMA_SCHOOL",
- "description": "TXT_KEY_BUILDING_DRAMA_SCHOOL",
- "civilopedia": "TXT_KEY_BUILDING_DRAMA_SCHOOL_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_SLAVE_COMPOUND_ENTERTAINMENT"
@@ -77,6 +75,8 @@
   "construct": "AS2D_BUILD_THEATRE"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_DRAMA_SCHOOL",
+  "civilopedia": "TXT_KEY_BUILDING_DRAMA_SCHOOL_PEDIA",
   "centerInCity": true,
   "worth": 2,
   "militaryWorth": 1,

@@ -1,7 +1,5 @@
 {
  "type": "TRAIT_IDEALISTIC",
- "description": "TXT_KEY_TRAIT_IDEALISTIC",
- "civilopedia": "TXT_KEY_TRAIT_IDEALISTIC_PEDIA",
  "culture": {
   "empire": {
    "percent": 5
@@ -48,6 +46,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_TRAIT_IDEALISTIC",
+  "civilopedia": "TXT_KEY_TRAIT_IDEALISTIC_PEDIA",
   "shortDescription": "TXT_KEY_TRAIT_IDEALISTIC_SHORT",
   "negativeTrait": true
  }

@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_WINTER_CHALET",
- "description": "TXT_KEY_BUILDING_WINTER_CHALET",
- "civilopedia": "TXT_KEY_BUILDING_WINTER_CHALET_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_SKI_RESORT"
@@ -105,6 +103,8 @@
   "construct": "AS2D_BUILD_SKI_RESORT"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_WINTER_CHALET",
+  "civilopedia": "TXT_KEY_BUILDING_WINTER_CHALET_PEDIA",
   "worth": 8,
   "militaryWorth": 4,
   "advisor": "ADVISOR_ECONOMY",

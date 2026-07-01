@@ -1,12 +1,12 @@
 {
  "type": "UNITCOMBAT_RELIGION_CONFUCIANISM",
- "description": "TXT_KEY_UNITCOMBAT_RELIGION_CONFUCIANISM",
  "ui": {
   "art": {
    "icon": "Art/Interface/Buttons/units/sparth/categories/religion_confucianism.dds"
   }
  },
  "identity": {
+  "description": "TXT_KEY_UNITCOMBAT_RELIGION_CONFUCIANISM",
   "religion": "RELIGION_CONFUCIANISM"
  }
 }

@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_CIDER_HOUSE",
- "description": "TXT_KEY_BUILDING_CIDER_HOUSE",
- "civilopedia": "TXT_KEY_BUILDING_CIDER_HOUSE_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_RESOURCES_ALCOHOL"
@@ -124,6 +122,8 @@
   "construct": "AS2D_BUILD_BREWERY"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_CIDER_HOUSE",
+  "civilopedia": "TXT_KEY_BUILDING_CIDER_HOUSE_PEDIA",
   "worth": 3,
   "dcmAirbombMission": 2,
   "advisor": "ADVISOR_ECONOMY",

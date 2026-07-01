@@ -1,6 +1,5 @@
 {
  "type": "PROMOTION_GPS",
- "description": "TXT_KEY_PROMOTION_GPS",
  "bombard": {
   "unit": {
    "rate": {
@@ -42,6 +41,7 @@
   "sound": "AS2D_IF_LEVELUP"
  },
  "identity": {
+  "description": "TXT_KEY_PROMOTION_GPS",
   "unitCombats": [
    "UNITCOMBAT_MISSILE"
   ]

@@ -1,7 +1,5 @@
 {
  "type": "FEATURE_ICE",
- "description": "TXT_KEY_FEATURE_ICE",
- "civilopedia": "TXT_KEY_FEATURE_ICE_PEDIA",
  "cultureDistance": {
   "plot": {
    "flat": 3
@@ -47,6 +45,8 @@
   ]
  },
  "identity": {
+  "description": "TXT_KEY_FEATURE_ICE",
+  "civilopedia": "TXT_KEY_FEATURE_ICE_PEDIA",
   "movementCost": 2,
   "addsFreshWater": true,
   "impassable": true,

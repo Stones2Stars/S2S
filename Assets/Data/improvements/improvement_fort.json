@@ -1,7 +1,5 @@
 {
  "type": "IMPROVEMENT_FORT",
- "description": "TXT_KEY_IMPROVEMENT_FORT",
- "civilopedia": "TXT_KEY_IMPROVEMENT_FORT_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -61,6 +59,8 @@
   "uniqueRange": 2
  },
  "identity": {
+  "description": "TXT_KEY_IMPROVEMENT_FORT",
+  "civilopedia": "TXT_KEY_IMPROVEMENT_FORT_PEDIA",
   "actsAsCity": true,
   "advancedStart": {
    "cost": 60

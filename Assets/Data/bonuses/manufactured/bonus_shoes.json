@@ -1,7 +1,5 @@
 {
  "type": "BONUS_SHOES",
- "description": "TXT_KEY_BONUS_SHOES",
- "civilopedia": "TXT_KEY_BONUS_SHOES_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_BOWLING_ALLEY",
@@ -15,6 +13,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_SHOES",
+  "civilopedia": "TXT_KEY_BONUS_SHOES_PEDIA",
   "bonusClassType": "BONUSCLASS_MANUFACTURED"
  }
 }

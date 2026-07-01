@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_HUDSON_YARDS",
- "description": "TXT_KEY_BUILDING_HUDSON_YARDS",
- "civilopedia": "TXT_KEY_BUILDING_HUDSON_YARDS_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -52,6 +50,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_HUDSON_YARDS",
+  "civilopedia": "TXT_KEY_BUILDING_HUDSON_YARDS_PEDIA",
   "conquestProbability": 100,
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,

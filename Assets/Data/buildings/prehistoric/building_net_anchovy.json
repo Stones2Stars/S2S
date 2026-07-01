@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_NET_ANCHOVY",
- "description": "TXT_KEY_BUILDING_NET_ANCHOVY",
- "civilopedia": "TXT_KEY_BUILDING_NET_ANCHOVY_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_RESOURCES_FISH"
@@ -77,6 +75,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_NET_ANCHOVY",
+  "civilopedia": "TXT_KEY_BUILDING_NET_ANCHOVY_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

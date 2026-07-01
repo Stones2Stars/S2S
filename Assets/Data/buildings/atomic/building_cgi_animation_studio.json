@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_CGI_ANIMATION_STUDIO",
- "description": "TXT_KEY_BUILDING_CGI_ANIMATION_STUDIO",
- "civilopedia": "TXT_KEY_BUILDING_CGI_ANIMATION_STUDIO_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_CAD_STUDIO"
@@ -111,6 +109,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_CGI_ANIMATION_STUDIO",
+  "civilopedia": "TXT_KEY_BUILDING_CGI_ANIMATION_STUDIO_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

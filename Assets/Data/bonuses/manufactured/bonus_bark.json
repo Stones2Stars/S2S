@@ -1,7 +1,5 @@
 {
  "type": "BONUS_BARK",
- "description": "TXT_KEY_BONUS_BARK",
- "civilopedia": "TXT_KEY_BONUS_BARK_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_BASKETMAKER",
@@ -18,6 +16,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_BARK",
+  "civilopedia": "TXT_KEY_BONUS_BARK_PEDIA",
   "bonusClassType": "BONUSCLASS_MANUFACTURED"
  }
 }

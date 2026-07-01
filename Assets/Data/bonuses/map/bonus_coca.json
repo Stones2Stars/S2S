@@ -1,7 +1,5 @@
 {
  "type": "BONUS_COCA",
- "description": "TXT_KEY_BONUS_COCA",
- "civilopedia": "TXT_KEY_BONUS_COCA_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_CULTURE_CHIPPEWA",
@@ -66,6 +64,8 @@
   ]
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_COCA",
+  "civilopedia": "TXT_KEY_BONUS_COCA_PEDIA",
   "bonusClassType": "BONUSCLASS_LUXURY"
  }
 }

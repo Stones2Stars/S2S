@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_EXOTIC_MATTER_LAB",
- "description": "TXT_KEY_BUILDING_EXOTIC_MATTER_LAB",
- "civilopedia": "TXT_KEY_BUILDING_EXOTIC_MATTER_LAB_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_EXOTIC_PARTICLE_LAB"
@@ -63,6 +61,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_EXOTIC_MATTER_LAB",
+  "civilopedia": "TXT_KEY_BUILDING_EXOTIC_MATTER_LAB_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

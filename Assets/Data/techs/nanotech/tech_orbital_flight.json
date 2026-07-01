@@ -1,8 +1,5 @@
 {
  "type": "TECH_ORBITAL_FLIGHT",
- "description": "TXT_KEY_TECH_ORBITAL_FLIGHT",
- "civilopedia": "TXT_KEY_TECH_ORBITAL_FLIGHT_PEDIA",
- "quote": "TXT_KEY_TECH_ORBITAL_FLIGHT_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_AEROSPACE_COMPLEX",
@@ -78,6 +75,9 @@
   "soundMP": "AS2D_TECH_ORBITAL_FLIGHT"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_ORBITAL_FLIGHT",
+  "civilopedia": "TXT_KEY_TECH_ORBITAL_FLIGHT_PEDIA",
+  "quote": "TXT_KEY_TECH_ORBITAL_FLIGHT_QUOTE",
   "era": "C2C_ERA_NANOTECH",
   "worth": 48,
   "militaryWorth": 5,

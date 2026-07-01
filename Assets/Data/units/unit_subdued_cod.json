@@ -1,8 +1,5 @@
 {
  "type": "UNIT_SUBDUED_COD",
- "description": "TXT_KEY_UNIT_SUBDUED_COD",
- "civilopedia": "TXT_KEY_UNIT_COD_PEDIA",
- "help": "TXT_KEY_UNIT_SUBDUED_ANIMALS_HELP",
  "requires": {
   "build": {
    "all": [
@@ -45,6 +42,9 @@
   ]
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_SUBDUED_COD",
+  "civilopedia": "TXT_KEY_UNIT_COD_PEDIA",
+  "help": "TXT_KEY_UNIT_SUBDUED_ANIMALS_HELP",
   "spawnOnly": true,
   "worth": 1,
   "domain": "DOMAIN_SEA",

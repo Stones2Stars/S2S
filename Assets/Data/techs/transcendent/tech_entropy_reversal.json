@@ -1,8 +1,5 @@
 {
  "type": "TECH_ENTROPY_REVERSAL",
- "description": "TXT_KEY_TECH_ENTROPY_REVERSAL",
- "civilopedia": "TXT_KEY_TECH_ENTROPY_REVERSAL_PEDIA",
- "quote": "TXT_KEY_TECH_ENTROPY_REVERSAL_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_DEEP_SPACE_TEMPERATURE_REGULATOR",
@@ -54,6 +51,9 @@
   "soundMP": "AS2D_TECH_GENERIC"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_ENTROPY_REVERSAL",
+  "civilopedia": "TXT_KEY_TECH_ENTROPY_REVERSAL_PEDIA",
+  "quote": "TXT_KEY_TECH_ENTROPY_REVERSAL_QUOTE",
   "era": "C2C_ERA_TRANSCENDENT",
   "worth": 48,
   "tradeable": true,

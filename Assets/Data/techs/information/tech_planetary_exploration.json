@@ -1,8 +1,5 @@
 {
  "type": "TECH_PLANETARY_EXPLORATION",
- "description": "TXT_KEY_TECH_PLANETARY_EXPLORATION",
- "civilopedia": "TXT_KEY_TECH_PLANETARY_EXPLORATION_PEDIA",
- "quote": "TXT_KEY_TECH_PLANETARY_EXPLORATION_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_CASSINI_HUYGENS",
@@ -77,6 +74,9 @@
   "soundMP": "AS2D_TECH_GENERIC"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_PLANETARY_EXPLORATION",
+  "civilopedia": "TXT_KEY_TECH_PLANETARY_EXPLORATION_PEDIA",
+  "quote": "TXT_KEY_TECH_PLANETARY_EXPLORATION_QUOTE",
   "era": "C2C_ERA_INFORMATION",
   "worth": 48,
   "militaryWorth": 4,

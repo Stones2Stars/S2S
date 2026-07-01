@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_VENUS_FUSION_PLANT",
- "description": "TXT_KEY_BUILDING_VENUS_FUSION_PLANT",
- "civilopedia": "TXT_KEY_BUILDING_VENUS_FUSION_PLANT_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_VENUS_CLAYTRONIC_CITY",
@@ -41,6 +39,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_VENUS_FUSION_PLANT",
+  "civilopedia": "TXT_KEY_BUILDING_VENUS_FUSION_PLANT_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

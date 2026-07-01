@@ -1,7 +1,5 @@
 {
  "type": "BONUS_GOLD_WARES",
- "description": "TXT_KEY_BONUS_GOLD_WARES",
- "civilopedia": "TXT_KEY_BONUS_WARES_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_ARK_OF_THE_COVENANT",
@@ -18,6 +16,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_GOLD_WARES",
+  "civilopedia": "TXT_KEY_BONUS_WARES_PEDIA",
   "bonusClassType": "BONUSCLASS_MANUFACTURED"
  }
 }

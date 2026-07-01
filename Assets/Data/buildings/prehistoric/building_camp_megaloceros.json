@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_CAMP_MEGALOCEROS",
- "description": "TXT_KEY_BUILDING_CAMP_MEGALOCEROS",
- "civilopedia": "TXT_KEY_BUILDING_CAMP_MEGALOCEROS_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_ANIMAL_TRAINER_DEER",
@@ -69,6 +67,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_CAMP_MEGALOCEROS",
+  "civilopedia": "TXT_KEY_BUILDING_CAMP_MEGALOCEROS_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

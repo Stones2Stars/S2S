@@ -1,7 +1,5 @@
 {
  "type": "UNIT_DEER_ARCHER",
- "description": "TXT_KEY_UNIT_DEER_ARCHER",
- "civilopedia": "TXT_KEY_UNIT_DEER_ARCHER_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -124,6 +122,8 @@
   "production": 235
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_DEER_ARCHER",
+  "civilopedia": "TXT_KEY_UNIT_DEER_ARCHER_PEDIA",
   "worth": 2,
   "militaryWorth": 15,
   "xpValueAttack": 6,

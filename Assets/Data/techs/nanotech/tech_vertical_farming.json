@@ -1,8 +1,5 @@
 {
  "type": "TECH_VERTICAL_FARMING",
- "description": "TXT_KEY_TECH_VERTICAL_FARMING",
- "civilopedia": "TXT_KEY_TECH_VERTICAL_FARMING_PEDIA",
- "quote": "TXT_KEY_TECH_VERTICAL_FARMING_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_FARMSCRAPER_I",
@@ -73,6 +70,9 @@
   "soundMP": "AS2D_TECH_VERTICAL_FARMING"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_VERTICAL_FARMING",
+  "civilopedia": "TXT_KEY_TECH_VERTICAL_FARMING_PEDIA",
+  "quote": "TXT_KEY_TECH_VERTICAL_FARMING_QUOTE",
   "era": "C2C_ERA_NANOTECH",
   "worth": 48,
   "tradeable": true,

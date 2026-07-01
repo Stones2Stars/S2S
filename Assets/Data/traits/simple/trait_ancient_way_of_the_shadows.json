@@ -1,7 +1,5 @@
 {
  "type": "TRAIT_ANCIENT_WAY_OF_THE_SHADOWS",
- "description": "TXT_KEY_TRAIT_ANCIENT_WAY_OF_THE_SHADOWS",
- "civilopedia": "TXT_KEY_TRAIT_ANCIENT_WAY_OF_THE_SHADOWS_PEDIA",
  "culture": {
   "empire": {
    "flat": 3
@@ -31,6 +29,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_TRAIT_ANCIENT_WAY_OF_THE_SHADOWS",
+  "civilopedia": "TXT_KEY_TRAIT_ANCIENT_WAY_OF_THE_SHADOWS_PEDIA",
   "shortDescription": "TXT_KEY_TRAIT_ANCIENT_WAY_OF_THE_SHADOWS_SHORT",
   "civilizationTrait": true
  }

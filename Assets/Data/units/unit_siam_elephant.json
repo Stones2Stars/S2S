@@ -1,7 +1,5 @@
 {
  "type": "UNIT_SIAM_ELEPHANT",
- "description": "TXT_KEY_UNIT_SIAM_ELEPHANT",
- "civilopedia": "TXT_KEY_UNIT_SIAM_ELEPHANT_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -96,6 +94,8 @@
   "upkeep": 1
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_SIAM_ELEPHANT",
+  "civilopedia": "TXT_KEY_UNIT_SIAM_ELEPHANT_PEDIA",
   "worth": 2,
   "militaryWorth": 17,
   "xpValueAttack": 6,

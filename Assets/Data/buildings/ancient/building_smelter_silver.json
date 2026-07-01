@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_SMELTER_SILVER",
- "description": "TXT_KEY_BUILDING_SMELTER_SILVER",
- "civilopedia": "TXT_KEY_BUILDING_SMELTER_SILVER_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_RESOURCES_SILVER_INGOTS"
@@ -87,6 +85,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_SMELTER_SILVER",
+  "civilopedia": "TXT_KEY_BUILDING_SMELTER_SILVER_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

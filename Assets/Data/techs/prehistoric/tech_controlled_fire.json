@@ -1,8 +1,5 @@
 {
  "type": "TECH_CONTROLLED_FIRE",
- "description": "TXT_KEY_TECH_CONTROLLED_FIRE",
- "civilopedia": "TXT_KEY_TECH_CONTROLLED_FIRE_PEDIA",
- "quote": "TXT_KEY_TECH_CONTROLLED_FIRE_QUOTE",
  "enables": {
   "bonuses": [
    "BONUS_CHARCOAL"
@@ -48,6 +45,9 @@
   "soundMP": "AS2D_TECH_CONTROLLED_FIRE"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_CONTROLLED_FIRE",
+  "civilopedia": "TXT_KEY_TECH_CONTROLLED_FIRE_PEDIA",
+  "quote": "TXT_KEY_TECH_CONTROLLED_FIRE_QUOTE",
   "era": "C2C_ERA_PREHISTORIC",
   "worth": 3,
   "tradeable": true,

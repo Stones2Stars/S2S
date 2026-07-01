@@ -1,7 +1,5 @@
 {
  "type": "UNIT_RAZZIA_PIRATES",
- "description": "TXT_KEY_UNIT_RAZZIA_PIRATES",
- "civilopedia": "TXT_KEY_UNIT_RAZZIA_PIRATES_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -123,6 +121,8 @@
   "upkeep": 1
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_RAZZIA_PIRATES",
+  "civilopedia": "TXT_KEY_UNIT_RAZZIA_PIRATES_PEDIA",
   "worth": 2,
   "militaryWorth": 40,
   "xpValueAttack": 6,

@@ -1,6 +1,5 @@
 {
  "type": "PROMOTION_BUSHIDO",
- "description": "TXT_KEY_PROMOTION_BUSHIDO",
  "upkeep": {
   "unit": {
    "upgradeDiscount": {
@@ -32,6 +31,7 @@
   "sound": "AS2D_IF_LEVELUP"
  },
  "identity": {
+  "description": "TXT_KEY_PROMOTION_BUSHIDO",
   "stateReligionPrereq": "RELIGION_SHINTO",
   "unitCombats": [
    "UNITCOMBAT_ARCHER",

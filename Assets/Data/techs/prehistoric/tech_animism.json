@@ -1,8 +1,5 @@
 {
  "type": "TECH_ANIMISM",
- "description": "TXT_KEY_TECH_ANIMISM",
- "civilopedia": "TXT_KEY_TECH_ANIMISM_PEDIA",
- "quote": "TXT_KEY_TECH_ANIMISM_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_LL_RICHARDSON_ISLAND",
@@ -58,6 +55,9 @@
   "soundMP": "AS2D_TECH_ANIMISM"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_ANIMISM",
+  "civilopedia": "TXT_KEY_TECH_ANIMISM_PEDIA",
+  "quote": "TXT_KEY_TECH_ANIMISM_QUOTE",
   "era": "C2C_ERA_PREHISTORIC",
   "worth": 8,
   "tradeable": true,

@@ -1,7 +1,5 @@
 {
  "type": "UNIT_DE_SUCRE_DRAGOONS",
- "description": "TXT_KEY_UNIT_DE_SUCRE_DRAGOONS",
- "civilopedia": "TXT_KEY_UNIT_DE_SUCRE_DRAGOONS_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -123,6 +121,8 @@
   "upkeep": 1
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_DE_SUCRE_DRAGOONS",
+  "civilopedia": "TXT_KEY_UNIT_DE_SUCRE_DRAGOONS_PEDIA",
   "worth": 2,
   "militaryWorth": 16,
   "xpValueAttack": 6,

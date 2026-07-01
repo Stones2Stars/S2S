@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_EFFECT_HERITAGE_BEARS",
- "description": "TXT_KEY_BUILDING_EFFECT_HERITAGE_BEARS",
- "civilopedia": "TXT_KEY_BUILDING_ANIMAL_TRAINER_BEAR_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_MILITARY_STANDARD_BEARS"
@@ -32,6 +30,8 @@
   "construct": "AS2D_BUILD_BARRACKS"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_EFFECT_HERITAGE_BEARS",
+  "civilopedia": "TXT_KEY_BUILDING_ANIMAL_TRAINER_BEAR_PEDIA",
   "notConstructible": true,
   "neverCapture": true,
   "worth": 2,

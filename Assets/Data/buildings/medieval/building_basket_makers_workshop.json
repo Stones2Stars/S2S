@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_BASKET_MAKERS_WORKSHOP",
- "description": "TXT_KEY_BUILDING_BASKET_MAKERS_WORKSHOP",
- "civilopedia": "TXT_KEY_BUILDING_BASKET_MAKERS_WORKSHOP_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_FACTORY_BASKETS"
@@ -102,6 +100,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_BASKET_MAKERS_WORKSHOP",
+  "civilopedia": "TXT_KEY_BUILDING_BASKET_MAKERS_WORKSHOP_PEDIA",
   "nukeImmune": true,
   "conquestProbability": 80,
   "advisor": "ADVISOR_ECONOMY",

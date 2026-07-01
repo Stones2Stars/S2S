@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_WONDER_OF_NATURE_DEAD_SEA",
- "description": "TXT_KEY_BUILDING_WONDER_OF_NATURE_DEAD_SEA",
- "civilopedia": "TXT_KEY_BUILDING_WONDER_OF_NATURE_DEAD_SEA_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_RESOURCES_SALT"
@@ -135,6 +133,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_WONDER_OF_NATURE_DEAD_SEA",
+  "civilopedia": "TXT_KEY_BUILDING_WONDER_OF_NATURE_DEAD_SEA_PEDIA",
   "enabledCivilizations": [
    "CIVILIZATION_NPC_NEANDERTHAL"
   ],

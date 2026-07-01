@@ -1,8 +1,5 @@
 {
  "type": "TECH_ASTEROID_MINING",
- "description": "TXT_KEY_TECH_ASTEROID_MINING",
- "civilopedia": "TXT_KEY_TECH_ASTEROID_MINING_PEDIA",
- "quote": "TXT_KEY_TECH_ASTEROID_MINING_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_ASTEROID_MINE",
@@ -68,6 +65,9 @@
   "soundMP": "AS2D_TECH_ASTEROID_MINING"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_ASTEROID_MINING",
+  "civilopedia": "TXT_KEY_TECH_ASTEROID_MINING_PEDIA",
+  "quote": "TXT_KEY_TECH_ASTEROID_MINING_QUOTE",
   "era": "C2C_ERA_INFORMATION",
   "worth": 40,
   "militaryWorth": 4,

@@ -1,7 +1,5 @@
 {
  "type": "UNIT_FUSION_NOVA",
- "description": "TXT_KEY_UNIT_FUSION_NOVA",
- "civilopedia": "TXT_KEY_UNIT_FUSION_NOVA_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -61,6 +59,8 @@
   "upkeep": 33
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_FUSION_NOVA",
+  "civilopedia": "TXT_KEY_UNIT_FUSION_NOVA_PEDIA",
   "worth": 5,
   "militaryWorth": 60,
   "domain": "DOMAIN_AIR",

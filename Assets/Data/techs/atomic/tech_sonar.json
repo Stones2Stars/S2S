@@ -1,8 +1,5 @@
 {
  "type": "TECH_SONAR",
- "description": "TXT_KEY_TECH_SONAR",
- "civilopedia": "TXT_KEY_TECH_SONAR_PEDIA",
- "quote": "TXT_KEY_TECH_SONAR_QUOTE",
  "enables": {
   "promotions": [
    "PROMOTION_SONAR"
@@ -66,6 +63,9 @@
   "soundMP": "AS2D_TECH_SONAR"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_SONAR",
+  "civilopedia": "TXT_KEY_TECH_SONAR_PEDIA",
+  "quote": "TXT_KEY_TECH_SONAR_QUOTE",
   "era": "C2C_ERA_ATOMIC",
   "worth": 48,
   "militaryWorth": 4,

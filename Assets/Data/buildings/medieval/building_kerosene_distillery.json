@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_KEROSENE_DISTILLERY",
- "description": "TXT_KEY_BUILDING_KEROSENE_DISTILLERY",
- "civilopedia": "TXT_KEY_BUILDING_KEROSENE_DISTILLERY_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_CHEMICALS_DISTRICT"
@@ -88,6 +86,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_KEROSENE_DISTILLERY",
+  "civilopedia": "TXT_KEY_BUILDING_KEROSENE_DISTILLERY_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

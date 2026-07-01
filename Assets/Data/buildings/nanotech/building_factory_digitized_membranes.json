@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_FACTORY_DIGITIZED_MEMBRANES",
- "description": "TXT_KEY_BUILDING_FACTORY_DIGITIZED_MEMBRANES",
- "civilopedia": "TXT_KEY_BUILDING_FACTORY_DIGITIZED_MEMBRANES_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_NANOTECH_COMPLEX"
@@ -85,6 +83,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_FACTORY_DIGITIZED_MEMBRANES",
+  "civilopedia": "TXT_KEY_BUILDING_FACTORY_DIGITIZED_MEMBRANES_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

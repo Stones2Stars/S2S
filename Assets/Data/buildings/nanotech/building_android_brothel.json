@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_ANDROID_BROTHEL",
- "description": "TXT_KEY_BUILDING_ANDROID_BROTHEL",
- "civilopedia": "TXT_KEY_BUILDING_ANDROID_BROTHEL_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -149,6 +147,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_ANDROID_BROTHEL",
+  "civilopedia": "TXT_KEY_BUILDING_ANDROID_BROTHEL_PEDIA",
   "advisor": "ADVISOR_CULTURE",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

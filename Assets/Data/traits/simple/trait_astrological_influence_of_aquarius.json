@@ -1,7 +1,5 @@
 {
  "type": "TRAIT_ASTROLOGICAL_INFLUENCE_OF_AQUARIUS",
- "description": "TXT_KEY_TRAIT_ASTROLOGICAL_INFLUENCE_OF_AQUARIUS",
- "civilopedia": "TXT_KEY_TRAIT_ASTROLOGICAL_INFLUENCE_OF_AQUARIUS_PEDIA",
  "culture": {
   "empire": {
    "flat": 5
@@ -29,6 +27,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_TRAIT_ASTROLOGICAL_INFLUENCE_OF_AQUARIUS",
+  "civilopedia": "TXT_KEY_TRAIT_ASTROLOGICAL_INFLUENCE_OF_AQUARIUS_PEDIA",
   "shortDescription": "TXT_KEY_TRAIT_ASTROLOGICAL_INFLUENCE_OF_AQUARIUS_SHORT",
   "civilizationTrait": true
  }

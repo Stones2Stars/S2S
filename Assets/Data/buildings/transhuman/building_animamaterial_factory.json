@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_ANIMAMATERIAL_FACTORY",
- "description": "TXT_KEY_BUILDING_ANIMAMATERIAL_FACTORY",
- "civilopedia": "TXT_KEY_BUILDING_ANIMAMATERIAL_FACTORY_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_PICOTECH_COMPLEX"
@@ -75,6 +73,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_ANIMAMATERIAL_FACTORY",
+  "civilopedia": "TXT_KEY_BUILDING_ANIMAMATERIAL_FACTORY_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

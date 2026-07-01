@@ -1,12 +1,12 @@
 {
  "type": "PROMOTIONLINE_ARROW_BARRAGE",
- "description": "TXT_KEY_PROMOTIONLINE_ARROW_BARRAGE",
  "ui": {
   "art": {
    "icon": "art/Buttons/Promotions/ArrowBarrage1Promotion.dds"
   }
  },
  "identity": {
+  "description": "TXT_KEY_PROMOTIONLINE_ARROW_BARRAGE",
   "unitCombats": [
    "UNITCOMBAT_WEAPON_DIST_SHORTBOW",
    "UNITCOMBAT_WEAPON_DIST_LONGBOW",

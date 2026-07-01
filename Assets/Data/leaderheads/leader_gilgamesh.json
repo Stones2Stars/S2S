@@ -1,7 +1,5 @@
 {
  "type": "LEADER_GILGAMESH",
- "description": "TXT_KEY_LEADER_GILGAMESH",
- "civilopedia": "TXT_KEY_LEADER_GILGAMESH_PEDIA",
  "grants": {
   "traits": [
    "TRAIT_PROTECTIVE",
@@ -305,5 +303,9 @@
    "C2C_ERA_TRANSCENDENT": "AS2D_DIPLO_WARDRUMS_LATE",
    "C2C_ERA_FUTURE": "AS2D_DIPLO_WARDRUMS_LATE"
   }
+ },
+ "identity": {
+  "description": "TXT_KEY_LEADER_GILGAMESH",
+  "civilopedia": "TXT_KEY_LEADER_GILGAMESH_PEDIA"
  }
 }

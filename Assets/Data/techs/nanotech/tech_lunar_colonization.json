@@ -1,8 +1,5 @@
 {
  "type": "TECH_LUNAR_COLONIZATION",
- "description": "TXT_KEY_TECH_LUNAR_COLONIZATION",
- "civilopedia": "TXT_KEY_TECH_LUNAR_COLONIZATION_PEDIA",
- "quote": "TXT_KEY_TECH_LUNAR_COLONIZATION_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_LUNAR_ALGAE_FARM",
@@ -92,6 +89,9 @@
   "soundMP": "AS2D_TECH_ADVANCED_ENVIRONMENTAL_SYSTEMS"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_LUNAR_COLONIZATION",
+  "civilopedia": "TXT_KEY_TECH_LUNAR_COLONIZATION_PEDIA",
+  "quote": "TXT_KEY_TECH_LUNAR_COLONIZATION_QUOTE",
   "era": "C2C_ERA_NANOTECH",
   "worth": 48,
   "militaryWorth": 4,

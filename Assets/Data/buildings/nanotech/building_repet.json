@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_REPET",
- "description": "TXT_KEY_BUILDING_REPET",
- "civilopedia": "TXT_KEY_BUILDING_REPET_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_ANCIENT_VETERINARIAN",
@@ -169,6 +167,8 @@
   "construct": "AS2D_BUILD_CLONING_FACTORY"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_REPET",
+  "civilopedia": "TXT_KEY_BUILDING_REPET_PEDIA",
   "centerInCity": true,
   "worth": 6,
   "militaryWorth": 3,

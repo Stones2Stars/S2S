@@ -1,8 +1,5 @@
 {
  "type": "TECH_MODERN_SPORTS",
- "description": "TXT_KEY_TECH_MODERN_SPORTS",
- "civilopedia": "TXT_KEY_TECH_MODERN_SPORTS_PEDIA",
- "quote": "TXT_KEY_TECH_MODERN_SPORTS_QUOTE",
  "enables": {
   "bonuses": [
    "BONUS_SKIS"
@@ -70,6 +67,9 @@
   "soundMP": "AS2D_TECH_MODERN_SPORTS"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_MODERN_SPORTS",
+  "civilopedia": "TXT_KEY_TECH_MODERN_SPORTS_PEDIA",
+  "quote": "TXT_KEY_TECH_MODERN_SPORTS_QUOTE",
   "era": "C2C_ERA_ATOMIC",
   "worth": 48,
   "tradeable": true,

@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_INTERSTELLAR_DYSON_SPHERE",
- "description": "TXT_KEY_BUILDING_INTERSTELLAR_DYSON_SPHERE",
- "civilopedia": "TXT_KEY_BUILDING_INTERSTELLAR_DYSON_SPHERE_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_INTERSTELLAR_ANIMATED_PREON_STAR",
@@ -65,6 +63,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_INTERSTELLAR_DYSON_SPHERE",
+  "civilopedia": "TXT_KEY_BUILDING_INTERSTELLAR_DYSON_SPHERE_PEDIA",
   "workableRadius": 3,
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,

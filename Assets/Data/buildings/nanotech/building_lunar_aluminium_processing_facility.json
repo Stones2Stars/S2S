@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_LUNAR_ALUMINIUM_PROCESSING_FACILITY",
- "description": "TXT_KEY_BUILDING_LUNAR_ALUMINIUM_PROCESSING_FACILITY",
- "civilopedia": "TXT_KEY_BUILDING_LUNAR_ALUMINIUM_PROCESSING_FACILITY_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -79,6 +77,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_LUNAR_ALUMINIUM_PROCESSING_FACILITY",
+  "civilopedia": "TXT_KEY_BUILDING_LUNAR_ALUMINIUM_PROCESSING_FACILITY_PEDIA",
   "conquestProbability": 70,
   "advisor": "ADVISOR_ECONOMY",
   "visibilityPriority": "1.0",

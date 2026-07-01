@@ -1,7 +1,5 @@
 {
  "type": "UNIT_ASSYRIAN_REDU",
- "description": "TXT_KEY_UNIT_ASSYRIAN_REDU",
- "civilopedia": "TXT_KEY_UNIT_ASSYRIAN_REDU_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -129,6 +127,8 @@
   "upkeep": 1
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_ASSYRIAN_REDU",
+  "civilopedia": "TXT_KEY_UNIT_ASSYRIAN_REDU_PEDIA",
   "worth": 2,
   "militaryWorth": 6,
   "xpValueAttack": 6,

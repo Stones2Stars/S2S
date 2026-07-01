@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_ANIMAL_TRAINER_HORSE",
- "description": "TXT_KEY_BUILDING_ANIMAL_TRAINER_HORSE",
- "civilopedia": "TXT_KEY_BUILDING_ANIMAL_TRAINER_HORSE_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_ANIMAL_ACTOR_STUDIO",
@@ -172,6 +170,8 @@
   "construct": "AS2D_BUILD_GRANARY"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_ANIMAL_TRAINER_HORSE",
+  "civilopedia": "TXT_KEY_BUILDING_ANIMAL_TRAINER_HORSE_PEDIA",
   "worth": 4,
   "militaryWorth": 6,
   "advisor": "ADVISOR_ECONOMY",

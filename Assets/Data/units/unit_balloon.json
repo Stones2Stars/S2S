@@ -1,7 +1,5 @@
 {
  "type": "UNIT_BALLOON",
- "description": "TXT_KEY_UNIT_BALLOON",
- "civilopedia": "TXT_KEY_UNIT_BALLOON_PEDIA",
  "obsoletedBy": {
   "techs": [
    "TECH_ASTRONAUTICS"
@@ -63,6 +61,8 @@
   "upkeep": 1
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_BALLOON",
+  "civilopedia": "TXT_KEY_UNIT_BALLOON_PEDIA",
   "worth": 3,
   "militaryWorth": 79,
   "xpValueAttack": 3,

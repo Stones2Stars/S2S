@@ -1,7 +1,5 @@
 {
  "type": "BONUS_HIT_MOVIES",
- "description": "TXT_KEY_BONUS_HIT_MOVIES",
- "civilopedia": "TXT_KEY_BONUS_HIT_MOVIES_PEDIA",
  "enables": {
   "units": [
    "UNIT_LARA_CROFT"
@@ -18,6 +16,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_HIT_MOVIES",
+  "civilopedia": "TXT_KEY_BONUS_HIT_MOVIES_PEDIA",
   "bonusClassType": "BONUSCLASS_WONDER"
  }
 }

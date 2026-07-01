@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_AEROSPACE_COMPLEX",
- "description": "TXT_KEY_BUILDING_AEROSPACE_COMPLEX",
- "civilopedia": "TXT_KEY_BUILDING_AEROSPACE_COMPLEX_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_BALLOON_RIDES",
@@ -157,6 +155,8 @@
   "construct": "AS2D_BUILD_MILITARY_AIRBASE"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_AEROSPACE_COMPLEX",
+  "civilopedia": "TXT_KEY_BUILDING_AEROSPACE_COMPLEX_PEDIA",
   "worth": 5,
   "militaryWorth": 4,
   "airlift": 2,

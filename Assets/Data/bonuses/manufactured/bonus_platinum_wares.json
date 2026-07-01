@@ -1,7 +1,5 @@
 {
  "type": "BONUS_PLATINUM_WARES",
- "description": "TXT_KEY_BONUS_PLATINUM_WARES",
- "civilopedia": "TXT_KEY_BONUS_WARES_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_FACTORY_ANTI_GRAVITY_FIELD_GENERATORS",
@@ -15,6 +13,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_PLATINUM_WARES",
+  "civilopedia": "TXT_KEY_BONUS_WARES_PEDIA",
   "bonusClassType": "BONUSCLASS_MANUFACTURED"
  }
 }

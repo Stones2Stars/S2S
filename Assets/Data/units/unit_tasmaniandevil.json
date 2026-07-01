@@ -1,7 +1,5 @@
 {
  "type": "UNIT_TASMANIANDEVIL",
- "description": "TXT_KEY_UNIT_TASMANIANDEVIL",
- "civilopedia": "TXT_KEY_UNIT_TASMANIANDEVIL_PEDIA",
  "withdrawal": {
   "unit": {
    "percent": 30
@@ -55,6 +53,8 @@
   ]
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_TASMANIANDEVIL",
+  "civilopedia": "TXT_KEY_UNIT_TASMANIANDEVIL_PEDIA",
   "spawnOnly": true,
   "xpValueAttack": 3,
   "xpValueDefense": 2,

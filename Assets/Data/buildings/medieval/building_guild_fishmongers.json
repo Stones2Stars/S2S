@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_GUILD_FISHMONGERS",
- "description": "TXT_KEY_BUILDING_GUILD_FISHMONGERS",
- "civilopedia": "TXT_KEY_BUILDING_GUILDS_PEDIA",
  "obsoletedBy": {
   "techs": [
    "TECH_GLOBALIZATION"
@@ -90,6 +88,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_GUILD_FISHMONGERS",
+  "civilopedia": "TXT_KEY_BUILDING_GUILDS_PEDIA",
   "neverCapture": true,
   "greatPeopleUnitType": "UNIT_MERCHANT",
   "specialBuildingType": "SPECIALBUILDING_GUILD",

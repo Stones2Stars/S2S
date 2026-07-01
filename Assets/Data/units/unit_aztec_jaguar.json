@@ -1,7 +1,5 @@
 {
  "type": "UNIT_AZTEC_JAGUAR",
- "description": "TXT_KEY_UNIT_AZTEC_JAGUAR",
- "civilopedia": "TXT_KEY_UNIT_AZTEC_JAGUAR_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -133,6 +131,8 @@
   "upkeep": 1
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_AZTEC_JAGUAR",
+  "civilopedia": "TXT_KEY_UNIT_AZTEC_JAGUAR_PEDIA",
   "worth": 2,
   "militaryWorth": 12,
   "xpValueAttack": 6,

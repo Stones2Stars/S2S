@@ -1,8 +1,5 @@
 {
  "type": "TRAIT_ZEALOUS2",
- "description": "TXT_KEY_TRAIT_ZEALOUS2",
- "civilopedia": "TXT_KEY_TRAIT_ZEALOUS2_PEDIA",
- "strategy": "TXT_KEY_TRAIT_ZEALOUS_STRATEGY",
  "enables": {
   "traits": [
    "TRAIT_ZEALOUS3"
@@ -287,6 +284,9 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_TRAIT_ZEALOUS2",
+  "civilopedia": "TXT_KEY_TRAIT_ZEALOUS2_PEDIA",
+  "strategy": "TXT_KEY_TRAIT_ZEALOUS_STRATEGY",
   "negativeTrait": true,
   "impurePromotions": true
  }

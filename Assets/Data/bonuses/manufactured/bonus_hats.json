@@ -1,7 +1,5 @@
 {
  "type": "BONUS_HATS",
- "description": "TXT_KEY_BONUS_HATS",
- "civilopedia": "TXT_KEY_BONUS_HATS_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_TAILOR_SHOP"
@@ -13,6 +11,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_HATS",
+  "civilopedia": "TXT_KEY_BONUS_HATS_PEDIA",
   "bonusClassType": "BONUSCLASS_MANUFACTURED"
  }
 }

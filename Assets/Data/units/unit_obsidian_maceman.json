@@ -1,7 +1,5 @@
 {
  "type": "UNIT_OBSIDIAN_MACEMAN",
- "description": "TXT_KEY_UNIT_OBSIDIAN_MACEMAN",
- "civilopedia": "TXT_KEY_UNIT_OBSIDIAN_MACEMAN_PEDIA",
  "replacedBy": {
   "units": [
    "UNIT_NEANDERTHAL_OBSIDIAN_MACEMAN"
@@ -79,6 +77,8 @@
   "upkeep": 1
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_OBSIDIAN_MACEMAN",
+  "civilopedia": "TXT_KEY_UNIT_OBSIDIAN_MACEMAN_PEDIA",
   "worth": 1,
   "militaryWorth": 4,
   "xpValueAttack": 3,

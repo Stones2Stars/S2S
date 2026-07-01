@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_RELIC_CHICHEN_ITZA",
- "description": "TXT_KEY_BUILDING_RELIC_CHICHEN_ITZA",
- "civilopedia": "TXT_KEY_BUILDING_CHICHEN_ITZA_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -36,6 +34,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_RELIC_CHICHEN_ITZA",
+  "civilopedia": "TXT_KEY_BUILDING_CHICHEN_ITZA_PEDIA",
   "notConstructible": true,
   "nukeImmune": true,
   "noInstanceLimit": true,

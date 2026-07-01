@@ -1,6 +1,5 @@
 {
  "type": "PROMOTION_RETINUE_ADVENTURER",
- "description": "TXT_KEY_PROMOTION_RETINUE_ADVENTURER",
  "withdrawal": {
   "unit": {
    "percent": 10
@@ -32,6 +31,7 @@
   "sound": "AS2D_IF_GET_RETINUE"
  },
  "identity": {
+  "description": "TXT_KEY_PROMOTION_RETINUE_ADVENTURER",
   "unitCombats": [
    "UNITCOMBAT_HERO"
   ],

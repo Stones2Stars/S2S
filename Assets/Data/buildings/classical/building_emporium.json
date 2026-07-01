@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_EMPORIUM",
- "description": "TXT_KEY_BUILDING_EMPORIUM",
- "civilopedia": "TXT_KEY_BUILDING_EMPORIUM_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_HYPERMARKET"
@@ -88,6 +86,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_EMPORIUM",
+  "civilopedia": "TXT_KEY_BUILDING_EMPORIUM_PEDIA",
   "conquestProbability": 70,
   "advisor": "ADVISOR_SCIENCE",
   "mapCategories": [

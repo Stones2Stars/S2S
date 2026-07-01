@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_HEDGE_FUND",
- "description": "TXT_KEY_BUILDING_HEDGE_FUND",
- "civilopedia": "TXT_KEY_BUILDING_HEDGE_FUND_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_INTERTEMPORAL_STOCK_MARKET"
@@ -78,6 +76,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_HEDGE_FUND",
+  "civilopedia": "TXT_KEY_BUILDING_HEDGE_FUND_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

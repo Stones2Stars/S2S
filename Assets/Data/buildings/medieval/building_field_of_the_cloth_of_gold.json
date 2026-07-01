@@ -1,8 +1,5 @@
 {
  "type": "BUILDING_FIELD_OF_THE_CLOTH_OF_GOLD",
- "description": "TXT_KEY_BUILDING_FIELD_OF_THE_CLOTH_OF_GOLD",
- "civilopedia": "TXT_KEY_BUILDING_FIELD_OF_THE_CLOTH_OF_GOLD_PEDIA",
- "help": "TXT_KEY_BUILDING_FIELD_OF_THE_CLOTH_OF_GOLD_HELP",
  "requires": {
   "build": {
    "all": [
@@ -79,6 +76,9 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_FIELD_OF_THE_CLOTH_OF_GOLD",
+  "civilopedia": "TXT_KEY_BUILDING_FIELD_OF_THE_CLOTH_OF_GOLD_PEDIA",
+  "help": "TXT_KEY_BUILDING_FIELD_OF_THE_CLOTH_OF_GOLD_HELP",
   "commerceDoubleTime": {
    "culture": 1000
   },

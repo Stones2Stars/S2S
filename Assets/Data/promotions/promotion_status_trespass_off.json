@@ -1,6 +1,5 @@
 {
  "type": "PROMOTION_STATUS_TRESPASS_OFF",
- "description": "TXT_KEY_STATUS_TRESPASS_OFF",
  "promotionLine": {
   "PROMOTIONLINE_TRESPASS": 1
  },
@@ -13,6 +12,7 @@
   "sound": "AS2D_IF_LEVELUP"
  },
  "identity": {
+  "description": "TXT_KEY_STATUS_TRESPASS_OFF",
   "unitCombats": [
    "UNITCOMBAT_CRIMINAL"
   ],

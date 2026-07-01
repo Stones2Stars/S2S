@@ -1,8 +1,5 @@
 {
  "type": "TRAIT_LAWFUL",
- "description": "TXT_KEY_TRAIT_LAWFUL",
- "civilopedia": "TXT_KEY_TRAIT_LAWFUL_PEDIA",
- "strategy": "TXT_KEY_TRAIT_LAWFUL_STRATEGY",
  "excludes": [
   "TRAIT_CROOKED"
  ],
@@ -785,5 +782,10 @@
   "art": {
    "icon": "art/Buttons/Traits/TraitLawful.dds"
   }
+ },
+ "identity": {
+  "description": "TXT_KEY_TRAIT_LAWFUL",
+  "civilopedia": "TXT_KEY_TRAIT_LAWFUL_PEDIA",
+  "strategy": "TXT_KEY_TRAIT_LAWFUL_STRATEGY"
  }
 }

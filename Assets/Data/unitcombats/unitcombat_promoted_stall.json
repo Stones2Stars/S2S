@@ -1,9 +1,11 @@
 {
  "type": "UNITCOMBAT_PROMOTED_STALL",
- "description": "TXT_KEY_UNITCOMBAT_PROMOTED_STALL",
  "ui": {
   "art": {
    "icon": "Art/Interface/Buttons/units/sparth/categories/promoted_stall.dds"
   }
+ },
+ "identity": {
+  "description": "TXT_KEY_UNITCOMBAT_PROMOTED_STALL"
  }
 }

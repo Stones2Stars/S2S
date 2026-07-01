@@ -1,7 +1,5 @@
 {
  "type": "BONUS_MANGO",
- "description": "TXT_KEY_BONUS_MANGO",
- "civilopedia": "TXT_KEY_BONUS_MANGO_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_CATCHER_TOUCAN",
@@ -74,6 +72,8 @@
   ]
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_MANGO",
+  "civilopedia": "TXT_KEY_BONUS_MANGO_PEDIA",
   "bonusClassType": "BONUSCLASS_CROP"
  }
 }

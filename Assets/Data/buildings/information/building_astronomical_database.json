@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_ASTRONOMICAL_DATABASE",
- "description": "TXT_KEY_BUILDING_ASTRONOMICAL_DATABASE",
- "civilopedia": "TXT_KEY_BUILDING_ASTRONOMICAL_DATABASE_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_ATLAST_SPACE_TELESCOPE"
@@ -62,6 +60,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_ASTRONOMICAL_DATABASE",
+  "civilopedia": "TXT_KEY_BUILDING_ASTRONOMICAL_DATABASE_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

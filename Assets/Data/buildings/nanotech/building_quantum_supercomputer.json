@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_QUANTUM_SUPERCOMPUTER",
- "description": "TXT_KEY_BUILDING_QUANTUM_SUPERCOMPUTER",
- "civilopedia": "TXT_KEY_BUILDING_QUANTUM_SUPERCOMPUTER_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_QUANTUM_GRAVITY_SUPERCOMPUTER"
@@ -78,6 +76,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_QUANTUM_SUPERCOMPUTER",
+  "civilopedia": "TXT_KEY_BUILDING_QUANTUM_SUPERCOMPUTER_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

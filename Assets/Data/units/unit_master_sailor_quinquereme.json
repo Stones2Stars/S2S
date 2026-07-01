@@ -1,7 +1,5 @@
 {
  "type": "UNIT_MASTER_SAILOR_QUINQUEREME",
- "description": "TXT_KEY_UNIT_MASTER_SAILOR_QUINQUEREME",
- "civilopedia": "TXT_KEY_UNIT_QUINQUEREME_PEDIA",
  "obsoletedBy": {
   "techs": [
    "TECH_ANCIENT_MACHINERY"
@@ -57,6 +55,8 @@
   "upkeep": 1
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_MASTER_SAILOR_QUINQUEREME",
+  "civilopedia": "TXT_KEY_UNIT_QUINQUEREME_PEDIA",
   "spawnOnly": true,
   "worth": 1,
   "militaryWorth": 10,

@@ -1,8 +1,5 @@
 {
  "type": "TECH_DATA_ARCHIVAL",
- "description": "TXT_KEY_TECH_DATA_ARCHIVAL",
- "civilopedia": "TXT_KEY_TECH_DATA_ARCHIVAL_PEDIA",
- "quote": "TXT_KEY_TECH_DATA_ARCHIVAL_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_EARTH_HISTORY_BACKUP",
@@ -54,6 +51,9 @@
   "soundMP": "AS2D_TECH_GENERIC"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_DATA_ARCHIVAL",
+  "civilopedia": "TXT_KEY_TECH_DATA_ARCHIVAL_PEDIA",
+  "quote": "TXT_KEY_TECH_DATA_ARCHIVAL_QUOTE",
   "era": "C2C_ERA_GALACTIC",
   "worth": 48,
   "tradeable": true,

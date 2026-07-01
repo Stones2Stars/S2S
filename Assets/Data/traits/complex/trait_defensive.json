@@ -1,8 +1,5 @@
 {
  "type": "TRAIT_DEFENSIVE",
- "description": "TXT_KEY_TRAIT_DEFENSIVE",
- "civilopedia": "TXT_KEY_TRAIT_DEFENSIVE_PEDIA",
- "strategy": "TXT_KEY_TRAIT_DEFENSIVE_STRATEGY",
  "excludes": [
   "TRAIT_COWARDLY"
  ],
@@ -240,5 +237,10 @@
   "art": {
    "icon": "art/Buttons/Traits/TraitDefensive.dds"
   }
+ },
+ "identity": {
+  "description": "TXT_KEY_TRAIT_DEFENSIVE",
+  "civilopedia": "TXT_KEY_TRAIT_DEFENSIVE_PEDIA",
+  "strategy": "TXT_KEY_TRAIT_DEFENSIVE_STRATEGY"
  }
 }

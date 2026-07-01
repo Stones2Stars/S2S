@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_HQ_MAPSTER",
- "description": "TXT_KEY_BUILDING_HQ_MAPSTER",
- "civilopedia": "TXT_KEY_BUILDING_HQ_MAPSTER_PEDIA",
  "enables": {
   "corporations": [
    "CORPORATION_MAPSTER"
@@ -56,6 +54,8 @@
   "construct": "AS2D_BUILD_BANK"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_HQ_MAPSTER",
+  "civilopedia": "TXT_KEY_BUILDING_HQ_MAPSTER_PEDIA",
   "corporationHQ": "CORPORATION_MAPSTER",
   "notConstructible": true,
   "nukeImmune": true,

@@ -1,7 +1,5 @@
 {
  "type": "UNIT_WALLAROO",
- "description": "TXT_KEY_UNIT_WALLAROO",
- "civilopedia": "TXT_KEY_UNIT_WALLAROO_PEDIA",
  "withdrawal": {
   "unit": {
    "percent": 40
@@ -51,6 +49,8 @@
   ]
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_WALLAROO",
+  "civilopedia": "TXT_KEY_UNIT_WALLAROO_PEDIA",
   "spawnOnly": true,
   "xpValueAttack": 4,
   "xpValueDefense": 3,

@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_JUGGLING",
- "description": "TXT_KEY_BUILDING_JUGGLING",
- "civilopedia": "TXT_KEY_BUILDING_JUGGLING_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_HIGH_TECH_CULTURAL_ENRICHMENT"
@@ -54,6 +52,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_JUGGLING",
+  "civilopedia": "TXT_KEY_BUILDING_JUGGLING_PEDIA",
   "nukeImmune": true,
   "advisor": "ADVISOR_CULTURE",
   "mapCategories": [

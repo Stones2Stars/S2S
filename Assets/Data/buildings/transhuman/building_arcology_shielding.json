@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_ARCOLOGY_SHIELDING",
- "description": "TXT_KEY_BUILDING_ARCOLOGY_SHIELDING",
- "civilopedia": "TXT_KEY_BUILDING_ARCOLOGY_SHIELDING_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_ADVANCED_SHIELDING"
@@ -90,6 +88,8 @@
   "construct": "AS2D_BUILD_ARCOLOGY_SHIELDING"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_ARCOLOGY_SHIELDING",
+  "civilopedia": "TXT_KEY_BUILDING_ARCOLOGY_SHIELDING_PEDIA",
   "nukeImmune": true,
   "worth": 2,
   "militaryWorth": 4,

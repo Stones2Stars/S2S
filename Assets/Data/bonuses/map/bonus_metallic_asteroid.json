@@ -1,7 +1,5 @@
 {
  "type": "BONUS_METALLIC_ASTEROID",
- "description": "TXT_KEY_BONUS_METALLIC_ASTEROID",
- "civilopedia": "TXT_KEY_BONUS_METALLIC_ASTEROID_PEDIA",
  "production": {
   "plot": {
    "flat": 3
@@ -42,6 +40,8 @@
   "placementOrder": 9
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_METALLIC_ASTEROID",
+  "civilopedia": "TXT_KEY_BONUS_METALLIC_ASTEROID_PEDIA",
   "bonusClassType": "BONUSCLASS_PRODUCTION",
   "randApp4": 25
  }

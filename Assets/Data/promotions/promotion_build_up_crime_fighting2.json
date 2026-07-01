@@ -1,6 +1,5 @@
 {
  "type": "PROMOTION_BUILD_UP_CRIME_FIGHTING2",
- "description": "TXT_KEY_PROMOTION_BUILD_UP_CRIME_FIGHTING2",
  "PROPERTY_CRIME": {
   "city": {
    "flat": -2
@@ -21,6 +20,7 @@
   "sound": "AS2D_IF_LEVELUP"
  },
  "identity": {
+  "description": "TXT_KEY_PROMOTION_BUILD_UP_CRIME_FIGHTING2",
   "minEra": "C2C_ERA_ANCIENT"
  }
 }

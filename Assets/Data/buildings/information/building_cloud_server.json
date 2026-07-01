@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_CLOUD_SERVER",
- "description": "TXT_KEY_BUILDING_CLOUD_SERVER",
- "civilopedia": "TXT_KEY_BUILDING_CLOUD_SERVER_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_ARCTIC_DATA_CENTER",
@@ -67,6 +65,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_CLOUD_SERVER",
+  "civilopedia": "TXT_KEY_BUILDING_CLOUD_SERVER_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

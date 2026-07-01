@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_TEA_CEREMONY",
- "description": "TXT_KEY_BUILDING_TEA_CEREMONY",
- "civilopedia": "TXT_KEY_BUILDING_TEA_CEREMONY_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_HIGH_TECH_CULTURAL_ENRICHMENT"
@@ -60,6 +58,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_TEA_CEREMONY",
+  "civilopedia": "TXT_KEY_BUILDING_TEA_CEREMONY_PEDIA",
   "advisor": "ADVISOR_CULTURE",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

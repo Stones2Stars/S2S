@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_EFFECT_FERTILITY_FESTIVAL",
- "description": "TXT_KEY_BUILDING_EFFECT_FERTILITY_FESTIVAL",
- "civilopedia": "TXT_KEY_BUILDING_FERTILITY_FESTIVAL_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_FERTILITY_FESTIVAL"
@@ -49,6 +47,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_EFFECT_FERTILITY_FESTIVAL",
+  "civilopedia": "TXT_KEY_BUILDING_FERTILITY_FESTIVAL_PEDIA",
   "notConstructible": true,
   "nukeImmune": true,
   "neverCapture": true,

@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_INTERSTELLAR_SPEEDWAY",
- "description": "TXT_KEY_BUILDING_INTERSTELLAR_SPEEDWAY",
- "civilopedia": "TXT_KEY_BUILDING_INTERSTELLAR_SPEEDWAY_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -75,6 +73,8 @@
   "construct": "AS2D_BUILD_SPACEWAY"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_INTERSTELLAR_SPEEDWAY",
+  "civilopedia": "TXT_KEY_BUILDING_INTERSTELLAR_SPEEDWAY_PEDIA",
   "orbital": true,
   "worth": 8,
   "militaryWorth": 4,

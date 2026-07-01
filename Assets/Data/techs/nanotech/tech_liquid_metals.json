@@ -1,8 +1,5 @@
 {
  "type": "TECH_LIQUID_METALS",
- "description": "TXT_KEY_TECH_LIQUID_METALS",
- "civilopedia": "TXT_KEY_TECH_LIQUID_METALS_PEDIA",
- "quote": "TXT_KEY_TECH_LIQUID_METALS_QUOTE",
  "enables": {
   "bonuses": [
    "BONUS_LIQUID_METAL",
@@ -71,6 +68,9 @@
   "soundMP": "AS2D_TECH_LIQUID_METALS"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_LIQUID_METALS",
+  "civilopedia": "TXT_KEY_TECH_LIQUID_METALS_PEDIA",
+  "quote": "TXT_KEY_TECH_LIQUID_METALS_QUOTE",
   "era": "C2C_ERA_NANOTECH",
   "worth": 14,
   "tradeable": true,

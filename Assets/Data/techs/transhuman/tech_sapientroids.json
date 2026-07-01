@@ -1,8 +1,5 @@
 {
  "type": "TECH_SAPIENTROIDS",
- "description": "TXT_KEY_TECH_SAPIENTROIDS",
- "civilopedia": "TXT_KEY_TECH_SAPIENTROIDS_PEDIA",
- "quote": "TXT_KEY_TECH_SAPIENTROIDS_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_HUMANOID_DESIGNER"
@@ -71,6 +68,9 @@
   "soundMP": "AS2D_TECH_SAPIENTROIDS"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_SAPIENTROIDS",
+  "civilopedia": "TXT_KEY_TECH_SAPIENTROIDS_PEDIA",
+  "quote": "TXT_KEY_TECH_SAPIENTROIDS_QUOTE",
   "era": "C2C_ERA_TRANSHUMAN",
   "worth": 48,
   "militaryWorth": 4,

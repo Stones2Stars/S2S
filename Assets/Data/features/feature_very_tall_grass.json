@@ -1,7 +1,5 @@
 {
  "type": "FEATURE_VERY_TALL_GRASS",
- "description": "TXT_KEY_FEATURE_VERY_TALL_GRASS",
- "civilopedia": "TXT_KEY_FEATURE_VERY_TALL_GRASS_PEDIA",
  "food": {
   "plot": {
    "flat": 1
@@ -66,6 +64,8 @@
   ]
  },
  "identity": {
+  "description": "TXT_KEY_FEATURE_VERY_TALL_GRASS",
+  "civilopedia": "TXT_KEY_FEATURE_VERY_TALL_GRASS_PEDIA",
   "appearance": 500,
   "growth": 20,
   "popDestroys": 3,

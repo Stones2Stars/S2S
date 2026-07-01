@@ -1,6 +1,5 @@
 {
  "type": "PROMOTION_CARAVAN_MARINES_I",
- "description": "TXT_KEY_CARAVAN_MARINES_I",
  "strength": {
   "unit": {
    "percent": 5,
@@ -26,5 +25,8 @@
  },
  "sound": {
   "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_CARAVAN_MARINES_I"
  }
 }

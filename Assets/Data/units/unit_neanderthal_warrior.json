@@ -1,7 +1,5 @@
 {
  "type": "UNIT_NEANDERTHAL_WARRIOR",
- "description": "TXT_KEY_UNIT_NEANDERTHAL_WARRIOR",
- "civilopedia": "TXT_KEY_UNIT_NEANDERTHAL_WARRIOR_PEDIA",
  "obsoletedBy": {
   "techs": [
    "TECH_SEDENTARY_LIFESTYLE"
@@ -55,6 +53,8 @@
   "upkeep": 1
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_NEANDERTHAL_WARRIOR",
+  "civilopedia": "TXT_KEY_UNIT_NEANDERTHAL_WARRIOR_PEDIA",
   "worth": 1,
   "militaryWorth": 3,
   "xpValueAttack": 3,

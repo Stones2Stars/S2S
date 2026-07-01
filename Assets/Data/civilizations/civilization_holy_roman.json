@@ -1,9 +1,5 @@
 {
  "type": "CIVILIZATION_HOLY_ROMAN",
- "description": "TXT_KEY_CIVILIZATION_HOLY_ROMAN",
- "shortDescription": "TXT_KEY_CIVILIZATION_HOLY_ROMAN_SHORT",
- "adjective": "TXT_KEY_CIVILIZATION_HOLY_ROMAN_ADJECTIVE",
- "civilopedia": "TXT_KEY_CIVILIZATION_HOLY_ROMAN_PEDIA",
  "grants": {
   "buildings": [
    "BUILDING_PALACE",
@@ -32,10 +28,6 @@
    "TECH_GAME_START"
   ]
  },
- "policies": {
-  "playable": true,
-  "aiPlayable": true
- },
  "world": {
   "art": {
    "playerColor": "PLAYERCOLOR_DARK_LEMON",
@@ -49,6 +41,12 @@
   "action": "AS3D_HOLY_ROMAN_ORDER"
  },
  "identity": {
+  "description": "TXT_KEY_CIVILIZATION_HOLY_ROMAN",
+  "shortDescription": "TXT_KEY_CIVILIZATION_HOLY_ROMAN_SHORT",
+  "adjective": "TXT_KEY_CIVILIZATION_HOLY_ROMAN_ADJECTIVE",
+  "civilopedia": "TXT_KEY_CIVILIZATION_HOLY_ROMAN_PEDIA",
+  "playable": true,
+  "aiPlayable": true,
   "leaders": [
    "LEADER_CHARLEMAGNE",
    "LEADER_CHARLES_V"

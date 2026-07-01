@@ -1,7 +1,5 @@
 {
  "type": "FEATURE_DWARF_GALAXY",
- "description": "TXT_KEY_FEATURE_DWARF_GALAXY",
- "civilopedia": "TXT_KEY_FEATURE_DWARF_GALAXY_PEDIA",
  "defense": {
   "plot": {
    "amount": {
@@ -25,6 +23,8 @@
   "soundscape": "ASSS_ASTEROIDS_SELECT_AMB"
  },
  "identity": {
+  "description": "TXT_KEY_FEATURE_DWARF_GALAXY",
+  "civilopedia": "TXT_KEY_FEATURE_DWARF_GALAXY_PEDIA",
   "popDestroys": -1,
   "movementCost": 2,
   "validTerrains": [

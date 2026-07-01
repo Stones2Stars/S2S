@@ -1,8 +1,5 @@
 {
  "type": "UNIT_DRAGON_SHIP_PIRATE",
- "description": "TXT_KEY_UNIT_DRAGON_SHIP_PIRATE",
- "civilopedia": "TXT_KEY_UNIT_DRAGON_SHIP_PIRATE_PEDIA",
- "help": "TXT_KEY_UNIT_PIRATE_HELP",
  "requires": {
   "build": {
    "all": [
@@ -100,6 +97,9 @@
   "upkeep": 1
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_DRAGON_SHIP_PIRATE",
+  "civilopedia": "TXT_KEY_UNIT_DRAGON_SHIP_PIRATE_PEDIA",
+  "help": "TXT_KEY_UNIT_PIRATE_HELP",
   "worth": 3,
   "militaryWorth": 4,
   "xpValueAttack": 4,

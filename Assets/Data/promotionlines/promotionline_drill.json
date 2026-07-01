@@ -1,12 +1,12 @@
 {
  "type": "PROMOTIONLINE_DRILL",
- "description": "TXT_KEY_PROMOTIONLINE_DRILL",
  "ui": {
   "art": {
    "icon": ",Art/Interface/Buttons/Promotions/Drill1.dds,Art/Interface/Buttons/Promotions_Atlas.dds,2,3"
   }
  },
  "identity": {
+  "description": "TXT_KEY_PROMOTIONLINE_DRILL",
   "unitCombats": [
    "UNITCOMBAT_ARCHER",
    "UNITCOMBAT_THROWING",

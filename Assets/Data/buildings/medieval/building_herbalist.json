@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_HERBALIST",
- "description": "TXT_KEY_BUILDING_HERBALIST",
- "civilopedia": "TXT_KEY_BUILDING_HERBALIST_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_ALTERNATIVE_MEDICINE"
@@ -97,6 +95,8 @@
   "construct": "AS2D_BUILD_HEALERSHUT"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_HERBALIST",
+  "civilopedia": "TXT_KEY_BUILDING_HERBALIST_PEDIA",
   "worth": 5,
   "militaryWorth": 3,
   "advisor": "ADVISOR_MILITARY",

@@ -1,7 +1,5 @@
 {
  "type": "IMPROVEMENT_MARTIAN_FARM",
- "description": "TXT_KEY_IMPROVEMENT_MARTIAN_FARM",
- "civilopedia": "TXT_KEY_IMPROVEMENT_MARTIAN_FARM_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -42,6 +40,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_IMPROVEMENT_MARTIAN_FARM",
+  "civilopedia": "TXT_KEY_IMPROVEMENT_MARTIAN_FARM_PEDIA",
   "extraterrestrial": true,
   "pillageGold": 200
  }

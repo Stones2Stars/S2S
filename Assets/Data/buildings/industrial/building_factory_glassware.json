@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_FACTORY_GLASSWARE",
- "description": "TXT_KEY_BUILDING_FACTORY_GLASSWARE",
- "civilopedia": "TXT_KEY_BUILDING_FACTORY_GLASSWARE_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_GUILD_GLASSBLOWERS",
@@ -134,6 +132,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_FACTORY_GLASSWARE",
+  "civilopedia": "TXT_KEY_BUILDING_FACTORY_GLASSWARE_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_LOAN_SHARK_UNSANCTIONED",
- "description": "TXT_KEY_BUILDING_LOAN_SHARK_UNSANCTIONED",
- "civilopedia": "TXT_KEY_BUILDING_LOAN_SHARK_PEDIA",
  "obsoletedBy": {
   "techs": [
    "TECH_CYBERSOCIAL_INTEGRATION"
@@ -69,6 +67,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_LOAN_SHARK_UNSANCTIONED",
+  "civilopedia": "TXT_KEY_BUILDING_LOAN_SHARK_PEDIA",
   "notConstructible": true,
   "nukeImmune": true,
   "worth": 1,

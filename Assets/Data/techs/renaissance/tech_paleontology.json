@@ -1,8 +1,5 @@
 {
  "type": "TECH_PALEONTOLOGY",
- "description": "TXT_KEY_TECH_PALEONTOLOGY",
- "civilopedia": "TXT_KEY_TECH_PALEONTOLOGY_PEDIA",
- "quote": "TXT_KEY_TECH_PALEONTOLOGY_QUOTE",
  "enables": {
   "bonuses": [
    "BONUS_FOSSILS",
@@ -84,6 +81,9 @@
   "soundMP": "AS2D_TECH_PALEONTOLOGY"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_PALEONTOLOGY",
+  "civilopedia": "TXT_KEY_TECH_PALEONTOLOGY_PEDIA",
+  "quote": "TXT_KEY_TECH_PALEONTOLOGY_QUOTE",
   "era": "C2C_ERA_RENAISSANCE",
   "worth": 40,
   "tradeable": true,

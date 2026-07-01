@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_PEARL_DIVER",
- "description": "TXT_KEY_BUILDING_PEARL_DIVER",
- "civilopedia": "TXT_KEY_BUILDING_PEARL_DIVER_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_RESOURCES_SHELLFISH"
@@ -64,6 +62,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_PEARL_DIVER",
+  "civilopedia": "TXT_KEY_BUILDING_PEARL_DIVER_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

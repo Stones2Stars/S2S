@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_UNMANNED_MARKET",
- "description": "TXT_KEY_BUILDING_UNMANNED_MARKET",
- "civilopedia": "TXT_KEY_BUILDING_UNMANNED_MARKET_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_MOBILE_BODEGA"
@@ -53,6 +51,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_UNMANNED_MARKET",
+  "civilopedia": "TXT_KEY_BUILDING_UNMANNED_MARKET_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_WOODCARVER",
- "description": "TXT_KEY_BUILDING_WOODCARVER",
- "civilopedia": "TXT_KEY_BUILDING_WOODCARVER_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_TOTEM_POLE"
@@ -79,6 +77,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_WOODCARVER",
+  "civilopedia": "TXT_KEY_BUILDING_WOODCARVER_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

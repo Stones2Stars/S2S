@@ -1,8 +1,5 @@
 {
  "type": "TRAIT_TEMPERAMENTAL",
- "description": "TXT_KEY_TRAIT_COMPLEX_TEMPERAMENTAL",
- "civilopedia": "TXT_KEY_TRAIT_COMPLEX_TEMPERAMENTAL_PEDIA",
- "strategy": "TXT_KEY_TRAIT_COMPLEX_TEMPERAMENTAL_STRATEGY",
  "excludes": [
   "TRAIT_CHARISMATIC"
  ],
@@ -123,6 +120,9 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_TRAIT_COMPLEX_TEMPERAMENTAL",
+  "civilopedia": "TXT_KEY_TRAIT_COMPLEX_TEMPERAMENTAL_PEDIA",
+  "strategy": "TXT_KEY_TRAIT_COMPLEX_TEMPERAMENTAL_STRATEGY",
   "negativeTrait": true,
   "impurePropertyManipulators": true
  }

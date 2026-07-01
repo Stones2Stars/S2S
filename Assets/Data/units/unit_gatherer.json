@@ -1,7 +1,5 @@
 {
  "type": "UNIT_GATHERER",
- "description": "TXT_KEY_UNIT_GATHERER",
- "civilopedia": "TXT_KEY_UNIT_GATHERER_PEDIA",
  "obsoletedBy": {
   "techs": [
    "TECH_SEDENTARY_LIFESTYLE"
@@ -69,6 +67,8 @@
   "upkeep": 1
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_GATHERER",
+  "civilopedia": "TXT_KEY_UNIT_GATHERER_PEDIA",
   "worth": 1,
   "domain": "DOMAIN_LAND",
   "defaultUnitAI": "UNITAI_WORKER",

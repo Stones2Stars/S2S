@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_CAR_RENTAL_STORE",
- "description": "TXT_KEY_BUILDING_CAR_RENTAL_STORE",
- "civilopedia": "TXT_KEY_BUILDING_CAR_RENTAL_STORE_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_HYPERMARKET"
@@ -68,6 +66,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_CAR_RENTAL_STORE",
+  "civilopedia": "TXT_KEY_BUILDING_CAR_RENTAL_STORE_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

@@ -1,6 +1,5 @@
 {
  "type": "BUILD_SANITIZE",
- "description": "TXT_KEY_BUILD_SANITIZE",
  "requires": {
   "build": {
    "all": [
@@ -40,5 +39,8 @@
   "art": {
    "entityEvent": "ENTITY_EVENT_IRRIGATE"
   }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILD_SANITIZE"
  }
 }

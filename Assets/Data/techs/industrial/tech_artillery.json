@@ -1,8 +1,5 @@
 {
  "type": "TECH_ARTILLERY",
- "description": "TXT_KEY_TECH_ARTILLERY",
- "civilopedia": "TXT_KEY_TECH_ARTILLERY_PEDIA",
- "quote": "TXT_KEY_TECH_ARTILLERY_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_ARTILLERY_BATTERY",
@@ -66,6 +63,9 @@
   "soundMP": "AS2D_TECH_MP_ARTILLERY"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_ARTILLERY",
+  "civilopedia": "TXT_KEY_TECH_ARTILLERY_PEDIA",
+  "quote": "TXT_KEY_TECH_ARTILLERY_QUOTE",
   "era": "C2C_ERA_INDUSTRIAL",
   "worth": 40,
   "militaryWorth": 10,

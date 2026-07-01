@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_WEATHER_VANES",
- "description": "TXT_KEY_BUILDING_WEATHER_VANES",
- "civilopedia": "TXT_KEY_BUILDING_WEATHER_VANES_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_METEOROLOGY_LAB"
@@ -98,6 +96,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_WEATHER_VANES",
+  "civilopedia": "TXT_KEY_BUILDING_WEATHER_VANES_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

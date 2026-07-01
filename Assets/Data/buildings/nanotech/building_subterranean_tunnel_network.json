@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_SUBTERRANEAN_TUNNEL_NETWORK",
- "description": "TXT_KEY_BUILDING_SUBTERRANEAN_TUNNEL_NETWORK",
- "civilopedia": "TXT_KEY_BUILDING_SUBTERRANEAN_TUNNEL_NETWORK_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_TELEPORT_BOOTH"
@@ -60,6 +58,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_SUBTERRANEAN_TUNNEL_NETWORK",
+  "civilopedia": "TXT_KEY_BUILDING_SUBTERRANEAN_TUNNEL_NETWORK_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

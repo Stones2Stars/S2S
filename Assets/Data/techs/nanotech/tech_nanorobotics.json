@@ -1,8 +1,5 @@
 {
  "type": "TECH_NANOROBOTICS",
- "description": "TXT_KEY_TECH_NANOROBOTICS",
- "civilopedia": "TXT_KEY_TECH_NANOROBOTICS_PEDIA",
- "quote": "TXT_KEY_TECH_NANOROBOTICS_QUOTE",
  "enables": {
   "bonuses": [
    "BONUS_REPLICATORS"
@@ -67,6 +64,9 @@
   "soundMP": "AS2D_TECH_NANOROBOTICS"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_NANOROBOTICS",
+  "civilopedia": "TXT_KEY_TECH_NANOROBOTICS_PEDIA",
+  "quote": "TXT_KEY_TECH_NANOROBOTICS_QUOTE",
   "era": "C2C_ERA_NANOTECH",
   "worth": 48,
   "tradeable": true,

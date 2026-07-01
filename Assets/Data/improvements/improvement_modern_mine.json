@@ -1,7 +1,5 @@
 {
  "type": "IMPROVEMENT_MODERN_MINE",
- "description": "TXT_KEY_IMPROVEMENT_MODERN_MINE",
- "civilopedia": "TXT_KEY_IMPROVEMENT_MODERN_MINE_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -281,6 +279,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_IMPROVEMENT_MODERN_MINE",
+  "civilopedia": "TXT_KEY_IMPROVEMENT_MODERN_MINE_PEDIA",
   "advancedStart": {
    "cost": 64
   },

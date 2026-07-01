@@ -1,7 +1,5 @@
 {
  "type": "CORPORATION_MAPSTER",
- "description": "TXT_KEY_BUILDING_CORPORATION_MAPSTER",
- "civilopedia": "TXT_KEY_BUILDING_CORPORATION_MAPSTER_PEDIA",
  "gold": {
   "empire": {
    "headquarters": {
@@ -74,6 +72,8 @@
   "sound": "AS2D_BUILD_BANK"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_CORPORATION_MAPSTER",
+  "civilopedia": "TXT_KEY_BUILDING_CORPORATION_MAPSTER_PEDIA",
   "spreadFactor": 200
  }
 }

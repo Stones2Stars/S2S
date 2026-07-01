@@ -1,6 +1,5 @@
 {
  "type": "PROMOTION_AGGRESSIVE",
- "description": "TXT_KEY_PROMOTION_AGGRESSIVE",
  "strength": {
   "unit": {
    "percent": 10
@@ -25,6 +24,7 @@
   "sound": "AS2D_IF_LEVELUP"
  },
  "identity": {
+  "description": "TXT_KEY_PROMOTION_AGGRESSIVE",
   "unitCombats": [
    "UNITCOMBAT_COMBATANT",
    "UNITCOMBAT_NAVAL_COMBATANT"

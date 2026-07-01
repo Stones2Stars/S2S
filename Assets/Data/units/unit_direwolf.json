@@ -1,7 +1,5 @@
 {
  "type": "UNIT_DIREWOLF",
- "description": "TXT_KEY_UNIT_DIREWOLF",
- "civilopedia": "TXT_KEY_UNIT_DIREWOLF_PEDIA",
  "withdrawal": {
   "unit": {
    "percent": 25
@@ -49,6 +47,8 @@
   ]
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_DIREWOLF",
+  "civilopedia": "TXT_KEY_UNIT_DIREWOLF_PEDIA",
   "spawnOnly": true,
   "xpValueAttack": 10,
   "xpValueDefense": 7,

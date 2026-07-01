@@ -1,7 +1,5 @@
 {
  "type": "SPECIALIST_INVESTIGATOR",
- "description": "TXT_KEY_SPECIALIST_INVESTIGATOR",
- "civilopedia": "TXT_KEY_CONCEPT_SPECIALISTS_PEDIA",
  "espionage": {
   "city": {
    "flat": 1
@@ -38,6 +36,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_SPECIALIST_INVESTIGATOR",
+  "civilopedia": "TXT_KEY_CONCEPT_SPECIALISTS_PEDIA",
   "visible": true,
   "categories": [
    "CATEGORY_ASSIGNABLE_SPECIALISTS",

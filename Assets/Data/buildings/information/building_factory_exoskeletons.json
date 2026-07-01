@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_FACTORY_EXOSKELETONS",
- "description": "TXT_KEY_BUILDING_FACTORY_EXOSKELETONS",
- "civilopedia": "TXT_KEY_BUILDING_FACTORY_EXOSKELETONS_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_DELTA_ASSEMBLER",
@@ -89,6 +87,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_FACTORY_EXOSKELETONS",
+  "civilopedia": "TXT_KEY_BUILDING_FACTORY_EXOSKELETONS_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

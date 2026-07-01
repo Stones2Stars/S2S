@@ -1,7 +1,5 @@
 {
  "type": "UNIT_ROGUE",
- "description": "TXT_KEY_UNIT_ROGUE",
- "civilopedia": "TXT_KEY_CONCEPT_ESPIONAGE_PEDIA",
  "obsoletedBy": {
   "techs": [
    "TECH_MATCHLOCK"
@@ -175,6 +173,8 @@
   ]
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_ROGUE",
+  "civilopedia": "TXT_KEY_CONCEPT_ESPIONAGE_PEDIA",
   "worth": 3,
   "militaryWorth": 5,
   "xpValueAttack": 8,

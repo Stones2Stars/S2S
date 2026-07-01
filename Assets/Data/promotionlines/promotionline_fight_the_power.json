@@ -1,12 +1,12 @@
 {
  "type": "PROMOTIONLINE_FIGHT_THE_POWER",
- "description": "TXT_KEY_PROMOTIONLINE_FIGHT_THE_POWER",
  "ui": {
   "art": {
    "icon": "Art/Interface/Buttons/Promotions/FightThePower1Promotion.dds"
   }
  },
  "identity": {
+  "description": "TXT_KEY_PROMOTIONLINE_FIGHT_THE_POWER",
   "unitCombats": [
    "UNITCOMBAT_CRIMINAL",
    "UNITCOMBAT_RUFFIAN",

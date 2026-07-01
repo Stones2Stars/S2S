@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_CAT_BREEDER",
- "description": "TXT_KEY_BUILDING_CAT_BREEDER",
- "civilopedia": "TXT_KEY_BUILDING_CAT_BREEDER_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_ANCIENT_VETERINARIAN",
@@ -105,6 +103,8 @@
   "construct": "AS2D_BUILD_GRANARY"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_CAT_BREEDER",
+  "civilopedia": "TXT_KEY_BUILDING_CAT_BREEDER_PEDIA",
   "worth": 4,
   "militaryWorth": 2,
   "advisor": "ADVISOR_GROWTH",

@@ -1,7 +1,5 @@
 {
  "type": "BONUS_STEEL_INGOTS",
- "description": "TXT_KEY_BONUS_STEEL_INGOTS",
- "civilopedia": "TXT_KEY_BONUS_INGOTS_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_AUGMENTED_SPORTS_ARENA",
@@ -21,6 +19,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_STEEL_INGOTS",
+  "civilopedia": "TXT_KEY_BONUS_INGOTS_PEDIA",
   "bonusClassType": "BONUSCLASS_MANUFACTURED"
  }
 }

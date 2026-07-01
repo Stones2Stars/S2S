@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_HUMAN_MOD_DIGITAL_LIFESTYLE",
- "description": "TXT_KEY_BUILDING_HUMAN_MOD_DIGITAL_LIFESTYLE",
- "civilopedia": "TXT_KEY_BUILDING_HUMAN_MOD_DIGITAL_LIFESTYLE_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -48,6 +46,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_HUMAN_MOD_DIGITAL_LIFESTYLE",
+  "civilopedia": "TXT_KEY_BUILDING_HUMAN_MOD_DIGITAL_LIFESTYLE_PEDIA",
   "neverCapture": true,
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,

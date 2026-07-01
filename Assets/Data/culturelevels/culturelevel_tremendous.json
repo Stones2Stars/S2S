@@ -1,6 +1,5 @@
 {
  "type": "CULTURELEVEL_TREMENDOUS",
- "description": "TXT_KEY_CULTURELEVEL_TREMENDOUS",
  "allowed": {
   "worldWonders": 9,
   "teamWonders": 9,
@@ -19,6 +18,7 @@
   ]
  },
  "identity": {
+  "description": "TXT_KEY_CULTURELEVEL_TREMENDOUS",
   "cityRadius": 3,
   "cultureThreshold": 66560
  }

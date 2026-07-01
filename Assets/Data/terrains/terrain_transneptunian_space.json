@@ -1,7 +1,5 @@
 {
  "type": "TERRAIN_TRANSNEPTUNIAN_SPACE",
- "description": "TXT_KEY_TERRAIN_TRANSNEPTUNIAN_SPACE",
- "civilopedia": "TXT_KEY_TERRAIN_TRANSNEPTUNIAN_SPACE_PEDIA",
  "commerce": {
   "plot": {
    "flat": 1
@@ -23,6 +21,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_TERRAIN_TRANSNEPTUNIAN_SPACE",
+  "civilopedia": "TXT_KEY_TERRAIN_TRANSNEPTUNIAN_SPACE_PEDIA",
   "found": true,
   "movementCost": 1,
   "mapCategories": [

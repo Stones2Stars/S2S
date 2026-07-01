@@ -1,7 +1,5 @@
 {
  "type": "UNIT_PENGUIN",
- "description": "TXT_KEY_UNIT_PENGUIN",
- "civilopedia": "TXT_KEY_UNIT_EMPEROR_PENGUIN_PEDIA",
  "withdrawal": {
   "unit": {
    "percent": 50
@@ -51,6 +49,8 @@
   ]
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_PENGUIN",
+  "civilopedia": "TXT_KEY_UNIT_EMPEROR_PENGUIN_PEDIA",
   "spawnOnly": true,
   "xpValueAttack": 1,
   "xpValueDefense": 1,

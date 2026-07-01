@@ -1,8 +1,5 @@
 {
  "type": "TECH_PHILOSOPHY",
- "description": "TXT_KEY_TECH_PHILOSOPHY",
- "civilopedia": "TXT_KEY_TECH_PHILOSOPHY_PEDIA",
- "quote": "TXT_KEY_TECH_PHILOSOPHY_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_ANGKOR_WAT",
@@ -67,6 +64,9 @@
   "soundMP": "AS2D_TECH_MP_PHILOSOPHY"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_PHILOSOPHY",
+  "civilopedia": "TXT_KEY_TECH_PHILOSOPHY_PEDIA",
+  "quote": "TXT_KEY_TECH_PHILOSOPHY_QUOTE",
   "era": "C2C_ERA_CLASSICAL",
   "worth": 24,
   "tradeable": true,

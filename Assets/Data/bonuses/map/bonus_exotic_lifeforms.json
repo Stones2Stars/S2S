@@ -1,7 +1,5 @@
 {
  "type": "BONUS_EXOTIC_LIFEFORMS",
- "description": "TXT_KEY_BONUS_EXOTIC_LIFEFORMS",
- "civilopedia": "TXT_KEY_BONUS_EXOTIC_LIFEFORMS_PEDIA",
  "commerce": {
   "plot": {
    "flat": 3
@@ -33,6 +31,8 @@
   "placementOrder": 9
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_EXOTIC_LIFEFORMS",
+  "civilopedia": "TXT_KEY_BONUS_EXOTIC_LIFEFORMS_PEDIA",
   "bonusClassType": "BONUSCLASS_MISC"
  }
 }

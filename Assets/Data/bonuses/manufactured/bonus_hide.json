@@ -1,7 +1,5 @@
 {
  "type": "BONUS_HIDE",
- "description": "TXT_KEY_BONUS_HIDE",
- "civilopedia": "TXT_KEY_BONUS_HIDE_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_FACTORY_CLOTHING",
@@ -19,6 +17,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_HIDE",
+  "civilopedia": "TXT_KEY_BONUS_HIDE_PEDIA",
   "bonusClassType": "BONUSCLASS_MANUFACTURED"
  }
 }

@@ -1,8 +1,5 @@
 {
  "type": "TECH_HOLOGRAPHICS",
- "description": "TXT_KEY_TECH_HOLOGRAPHICS",
- "civilopedia": "TXT_KEY_TECH_HOLOGRAPHICS_PEDIA",
- "quote": "TXT_KEY_TECH_HOLOGRAPHICS_QUOTE",
  "enables": {
   "bonuses": [
    "BONUS_HOLOGRAPHIC_PROJECTORS"
@@ -78,6 +75,9 @@
   "soundMP": "AS2D_TECH_HOLOGRAPHICS"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_HOLOGRAPHICS",
+  "civilopedia": "TXT_KEY_TECH_HOLOGRAPHICS_PEDIA",
+  "quote": "TXT_KEY_TECH_HOLOGRAPHICS_QUOTE",
   "era": "C2C_ERA_NANOTECH",
   "worth": 14,
   "tradeable": true,

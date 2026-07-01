@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_FACTORY_ENERGY_DRINK",
- "description": "TXT_KEY_BUILDING_FACTORY_ENERGY_DRINK",
- "civilopedia": "TXT_KEY_BUILDING_FACTORY_ENERGY_DRINK_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_FOOD_MANUFACTURING_DISTRICT"
@@ -179,6 +177,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_FACTORY_ENERGY_DRINK",
+  "civilopedia": "TXT_KEY_BUILDING_FACTORY_ENERGY_DRINK_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

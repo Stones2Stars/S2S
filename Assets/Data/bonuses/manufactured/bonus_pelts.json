@@ -1,7 +1,5 @@
 {
  "type": "BONUS_PELTS",
- "description": "TXT_KEY_BONUS_PELTS",
- "civilopedia": "TXT_KEY_BONUS_PELTS_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_FURRIER",
@@ -15,6 +13,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_PELTS",
+  "civilopedia": "TXT_KEY_BONUS_PELTS_PEDIA",
   "bonusClassType": "BONUSCLASS_MANUFACTURED"
  }
 }

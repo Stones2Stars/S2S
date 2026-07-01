@@ -1,7 +1,5 @@
 {
  "type": "UNIT_SKI_PATROL",
- "description": "TXT_KEY_UNIT_SKI_PATROL",
- "civilopedia": "TXT_KEY_UNIT_SKI_PATROL_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -92,6 +90,8 @@
   "upkeep": 1
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_SKI_PATROL",
+  "civilopedia": "TXT_KEY_UNIT_SKI_PATROL_PEDIA",
   "worth": 5,
   "militaryWorth": 117,
   "xpValueAttack": 6,

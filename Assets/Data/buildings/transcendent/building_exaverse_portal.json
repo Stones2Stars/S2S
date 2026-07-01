@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_EXAVERSE_PORTAL",
- "description": "TXT_KEY_BUILDING_EXAVERSE_PORTAL",
- "civilopedia": "TXT_KEY_BUILDING_EXAVERSE_PORTAL_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -62,6 +60,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_EXAVERSE_PORTAL",
+  "civilopedia": "TXT_KEY_BUILDING_EXAVERSE_PORTAL_PEDIA",
   "forceNoPrereqScaling": true,
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,

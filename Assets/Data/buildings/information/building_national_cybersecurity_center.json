@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_NATIONAL_CYBERSECURITY_CENTER",
- "description": "TXT_KEY_BUILDING_NATIONAL_CYBERSECURITY_CENTER",
- "civilopedia": "TXT_KEY_BUILDING_NATIONAL_CYBERSECURITY_CENTER_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_BLACKNET"
@@ -71,6 +69,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_NATIONAL_CYBERSECURITY_CENTER",
+  "civilopedia": "TXT_KEY_BUILDING_NATIONAL_CYBERSECURITY_CENTER_PEDIA",
   "neverCapture": true,
   "greatPeopleUnitType": "UNIT_GREAT_SPY",
   "advisor": "ADVISOR_MILITARY",

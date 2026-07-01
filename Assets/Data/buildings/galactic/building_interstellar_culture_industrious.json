@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_INTERSTELLAR_CULTURE_INDUSTRIOUS",
- "description": "TXT_KEY_BUILDING_INTERSTELLAR_CULTURE_INDUSTRIOUS",
- "civilopedia": "TXT_KEY_BUILDING_INTERSTELLAR_CULTURE_INDUSTRIOUS_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_INTERSTELLAR_COLONY_EUGENICS",
@@ -46,6 +44,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_INTERSTELLAR_CULTURE_INDUSTRIOUS",
+  "civilopedia": "TXT_KEY_BUILDING_INTERSTELLAR_CULTURE_INDUSTRIOUS_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

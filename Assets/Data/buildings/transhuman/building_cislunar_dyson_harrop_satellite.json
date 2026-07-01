@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_CISLUNAR_DYSON_HARROP_SATELLITE",
- "description": "TXT_KEY_BUILDING_CISLUNAR_DYSON_HARROP_SATELLITE",
- "civilopedia": "TXT_KEY_BUILDING_CISLUNAR_DYSON_HARROP_SATELLITE_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_ENERGY_BEAM_NETWORK"
@@ -40,6 +38,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_CISLUNAR_DYSON_HARROP_SATELLITE",
+  "civilopedia": "TXT_KEY_BUILDING_CISLUNAR_DYSON_HARROP_SATELLITE_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

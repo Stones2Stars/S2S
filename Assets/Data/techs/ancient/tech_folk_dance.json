@@ -1,8 +1,5 @@
 {
  "type": "TECH_FOLK_DANCE",
- "description": "TXT_KEY_TECH_FOLK_DANCE",
- "civilopedia": "TXT_KEY_TECH_FOLK_DANCE_PEDIA",
- "quote": "TXT_KEY_TECH_FOLK_DANCE_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_CULTURE_MASAI",
@@ -56,6 +53,9 @@
   "soundMP": "AS2D_TECH_FOLK_DANCE"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_FOLK_DANCE",
+  "civilopedia": "TXT_KEY_TECH_FOLK_DANCE_PEDIA",
+  "quote": "TXT_KEY_TECH_FOLK_DANCE_QUOTE",
   "era": "C2C_ERA_ANCIENT",
   "worth": 8,
   "tradeable": true,

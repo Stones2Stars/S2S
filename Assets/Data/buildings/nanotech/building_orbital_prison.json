@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_ORBITAL_PRISON",
- "description": "TXT_KEY_BUILDING_ORBITAL_PRISON",
- "civilopedia": "TXT_KEY_BUILDING_ORBITAL_PRISON_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -63,6 +61,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_ORBITAL_PRISON",
+  "civilopedia": "TXT_KEY_BUILDING_ORBITAL_PRISON_PEDIA",
   "neverCapture": true,
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [

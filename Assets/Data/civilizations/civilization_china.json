@@ -1,9 +1,5 @@
 {
  "type": "CIVILIZATION_CHINA",
- "description": "TXT_KEY_CIVILIZATION_CHINA",
- "shortDescription": "TXT_KEY_CIVILIZATION_CHINA_SHORT",
- "adjective": "TXT_KEY_CIVILIZATION_CHINA_ADJECTIVE",
- "civilopedia": "TXT_KEY_CIVILIZATION_CHINA_PEDIA",
  "grants": {
   "buildings": [
    "BUILDING_PALACE",
@@ -32,10 +28,6 @@
    "TECH_GAME_START"
   ]
  },
- "policies": {
-  "playable": true,
-  "aiPlayable": true
- },
  "world": {
   "art": {
    "playerColor": "PLAYERCOLOR_DARK_PINK",
@@ -49,6 +41,12 @@
   "action": "AS3D_CHINA_ORDER"
  },
  "identity": {
+  "description": "TXT_KEY_CIVILIZATION_CHINA",
+  "shortDescription": "TXT_KEY_CIVILIZATION_CHINA_SHORT",
+  "adjective": "TXT_KEY_CIVILIZATION_CHINA_ADJECTIVE",
+  "civilopedia": "TXT_KEY_CIVILIZATION_CHINA_PEDIA",
+  "playable": true,
+  "aiPlayable": true,
   "leaders": [
    "LEADER_QIN_SHI_HUANG",
    "LEADER_CHINESE_LEADER",

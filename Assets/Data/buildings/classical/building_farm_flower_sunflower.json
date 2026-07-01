@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_FARM_FLOWER_SUNFLOWER",
- "description": "TXT_KEY_BUILDING_FARM_FLOWER_SUNFLOWER",
- "civilopedia": "TXT_KEY_BUILDING_FARM_FLOWER_SUNFLOWER_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_RESOURCES_FLOWERS"
@@ -87,6 +85,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_FARM_FLOWER_SUNFLOWER",
+  "civilopedia": "TXT_KEY_BUILDING_FARM_FLOWER_SUNFLOWER_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

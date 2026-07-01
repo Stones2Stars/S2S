@@ -1,7 +1,5 @@
 {
  "type": "BONUS_ELECTROLYTIC_CELLS",
- "description": "TXT_KEY_BONUS_ELECTROLYTIC_CELLS",
- "civilopedia": "TXT_KEY_BONUS_ELECTROLYTIC_CELLS_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_EMP_GRID",
@@ -16,6 +14,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_ELECTROLYTIC_CELLS",
+  "civilopedia": "TXT_KEY_BONUS_ELECTROLYTIC_CELLS_PEDIA",
   "bonusClassType": "BONUSCLASS_MANUFACTURED"
  }
 }

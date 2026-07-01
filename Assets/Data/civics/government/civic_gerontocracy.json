@@ -1,8 +1,5 @@
 {
  "type": "CIVIC_GERONTOCRACY",
- "description": "TXT_KEY_CIVIC_GERONTOCRACY",
- "civilopedia": "TXT_KEY_CIVIC_GERONTOCRACY_PEDIA",
- "strategy": "TXT_KEY_CIVIC_GERONTOCRACY_STRATEGY",
  "enables": {
   "buildings": [
    "BUILDING_INTERSTELLAR_TIME_ABYSS"
@@ -130,6 +127,9 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_CIVIC_GERONTOCRACY",
+  "civilopedia": "TXT_KEY_CIVIC_GERONTOCRACY_PEDIA",
+  "strategy": "TXT_KEY_CIVIC_GERONTOCRACY_STRATEGY",
   "civicOption": "CIVICOPTION_GOVERNMENT",
   "anarchyLength": 1,
   "upkeepLevel": "UPKEEP_HIGH",

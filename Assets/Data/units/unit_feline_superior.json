@@ -1,7 +1,5 @@
 {
  "type": "UNIT_FELINE_SUPERIOR",
- "description": "TXT_KEY_UNIT_FELINE_SUPERIOR",
- "civilopedia": "TXT_KEY_UNIT_WARCAT_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -137,6 +135,8 @@
   "upkeep": 8
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_FELINE_SUPERIOR",
+  "civilopedia": "TXT_KEY_UNIT_WARCAT_PEDIA",
   "worth": 22,
   "militaryWorth": 85,
   "xpValueAttack": 8,

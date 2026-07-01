@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_MIXED_USE_DEVELOPMENT",
- "description": "TXT_KEY_BUILDING_MIXED_USE_DEVELOPMENT",
- "civilopedia": "TXT_KEY_BUILDING_MIXED_USE_DEVELOPMENT_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_BICYCLE_BOULEVARD",
@@ -64,6 +62,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_MIXED_USE_DEVELOPMENT",
+  "civilopedia": "TXT_KEY_BUILDING_MIXED_USE_DEVELOPMENT_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

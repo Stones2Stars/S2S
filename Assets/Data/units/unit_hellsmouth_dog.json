@@ -1,7 +1,5 @@
 {
  "type": "UNIT_HELLSMOUTH_DOG",
- "description": "TXT_KEY_UNIT_HELLSMOUTH_DOG",
- "civilopedia": "TXT_KEY_UNIT_HELLSMOUTH_DOG_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -98,6 +96,8 @@
   "upkeep": 4
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_HELLSMOUTH_DOG",
+  "civilopedia": "TXT_KEY_UNIT_HELLSMOUTH_DOG_PEDIA",
   "worth": 7,
   "militaryWorth": 15,
   "xpValueAttack": 8,

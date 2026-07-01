@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_DELHI_MUMBAI_INDUSTRIAL_CORRIDOR",
- "description": "TXT_KEY_BUILDING_DELHI_MUMBAI_INDUSTRIAL_CORRIDOR",
- "civilopedia": "TXT_KEY_BUILDING_DELHI_MUMBAI_INDUSTRIAL_CORRIDOR_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -56,6 +54,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_DELHI_MUMBAI_INDUSTRIAL_CORRIDOR",
+  "civilopedia": "TXT_KEY_BUILDING_DELHI_MUMBAI_INDUSTRIAL_CORRIDOR_PEDIA",
   "conquestProbability": 100,
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,

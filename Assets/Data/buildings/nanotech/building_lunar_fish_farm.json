@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_LUNAR_FISH_FARM",
- "description": "TXT_KEY_BUILDING_LUNAR_FISH_FARM",
- "civilopedia": "TXT_KEY_BUILDING_LUNAR_FISH_FARM_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -80,6 +78,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_LUNAR_FISH_FARM",
+  "civilopedia": "TXT_KEY_BUILDING_LUNAR_FISH_FARM_PEDIA",
   "conquestProbability": 70,
   "advisor": "ADVISOR_GROWTH",
   "visibilityPriority": "1.0",

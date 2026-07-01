@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_PLANTATION_PAPAYAS",
- "description": "TXT_KEY_BUILDING_PLANTATION_PAPAYAS",
- "civilopedia": "TXT_KEY_BUILDING_PLANTATION_PAPAYAS_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_RESOURCES_FRUIT"
@@ -71,6 +69,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_PLANTATION_PAPAYAS",
+  "civilopedia": "TXT_KEY_BUILDING_PLANTATION_PAPAYAS_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

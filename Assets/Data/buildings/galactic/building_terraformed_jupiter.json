@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_TERRAFORMED_JUPITER",
- "description": "TXT_KEY_BUILDING_TERRAFORMED_JUPITER",
- "civilopedia": "TXT_KEY_BUILDING_TERRAFORMED_JUPITER_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -60,6 +58,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_TERRAFORMED_JUPITER",
+  "civilopedia": "TXT_KEY_BUILDING_TERRAFORMED_JUPITER_PEDIA",
   "conquestProbability": 100,
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,

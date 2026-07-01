@@ -1,6 +1,5 @@
 {
  "type": "PROMOTION_DARING_ESCAPE2",
- "description": "TXT_KEY_PROMOTION_DARING_ESCAPE2",
  "withdrawal": {
   "unit": {
    "percent": 10
@@ -23,5 +22,8 @@
  },
  "sound": {
   "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_DARING_ESCAPE2"
  }
 }

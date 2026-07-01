@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_FACTORY_PLASMA_GENERATORS",
- "description": "TXT_KEY_BUILDING_FACTORY_PLASMA_GENERATORS",
- "civilopedia": "TXT_KEY_BUILDING_FACTORY_PLASMA_GENERATORS_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_NANOTECH_COMPLEX"
@@ -83,6 +81,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_FACTORY_PLASMA_GENERATORS",
+  "civilopedia": "TXT_KEY_BUILDING_FACTORY_PLASMA_GENERATORS_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

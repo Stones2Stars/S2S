@@ -1,7 +1,5 @@
 {
  "type": "BONUS_QUANTONIUM_CRYSTALS",
- "description": "TXT_KEY_BONUS_QUANTONIUM_CRYSTALS",
- "civilopedia": "TXT_KEY_BONUS_QUANTONIUM_CRYSTALS_PEDIA",
  "commerce": {
   "plot": {
    "flat": 5
@@ -32,6 +30,8 @@
   "placementOrder": 9
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_QUANTONIUM_CRYSTALS",
+  "civilopedia": "TXT_KEY_BONUS_QUANTONIUM_CRYSTALS_PEDIA",
   "bonusClassType": "BONUSCLASS_MISC"
  }
 }

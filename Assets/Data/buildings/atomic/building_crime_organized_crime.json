@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_CRIME_ORGANIZED_CRIME",
- "description": "TXT_KEY_BUILDING_CRIME_ORGANIZED_CRIME",
- "civilopedia": "TXT_KEY_BUILDING_CRIME_ORGANIZED_CRIME_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -88,6 +86,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_CRIME_ORGANIZED_CRIME",
+  "civilopedia": "TXT_KEY_BUILDING_CRIME_ORGANIZED_CRIME_PEDIA",
   "notConstructible": true,
   "nukeImmune": true,
   "conquestProbability": 100,

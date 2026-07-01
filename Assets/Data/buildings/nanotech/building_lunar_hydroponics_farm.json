@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_LUNAR_HYDROPONICS_FARM",
- "description": "TXT_KEY_BUILDING_LUNAR_HYDROPONICS_FARM",
- "civilopedia": "TXT_KEY_BUILDING_LUNAR_HYDROPONICS_FARM_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_LUNAR_ALGAE_FARM",
@@ -63,6 +61,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_LUNAR_HYDROPONICS_FARM",
+  "civilopedia": "TXT_KEY_BUILDING_LUNAR_HYDROPONICS_FARM_PEDIA",
   "conquestProbability": 70,
   "advisor": "ADVISOR_GROWTH",
   "visibilityPriority": "1.0",

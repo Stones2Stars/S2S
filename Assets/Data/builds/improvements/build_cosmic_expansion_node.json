@@ -1,6 +1,5 @@
 {
  "type": "BUILD_COSMIC_EXPANSION_NODE",
- "description": "TXT_KEY_BUILD_COSMIC_EXPANSION_NODE",
  "requires": {
   "build": {
    "all": [
@@ -28,5 +27,8 @@
   "art": {
    "entityEvent": "ENTITY_EVENT_BUILD"
   }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILD_COSMIC_EXPANSION_NODE"
  }
 }

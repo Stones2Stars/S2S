@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_BLIMP_ADVERTISING",
- "description": "TXT_KEY_BUILDING_BLIMP_ADVERTISING",
- "civilopedia": "TXT_KEY_BUILDING_BLIMP_ADVERTISING_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -55,6 +53,8 @@
   "construct": "AS2D_BUILD_MARKETPLACE"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_BLIMP_ADVERTISING",
+  "civilopedia": "TXT_KEY_BUILDING_BLIMP_ADVERTISING_PEDIA",
   "worth": 2,
   "conquestProbability": 25,
   "advisor": "ADVISOR_MILITARY",

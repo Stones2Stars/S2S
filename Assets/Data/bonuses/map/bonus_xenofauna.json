@@ -1,7 +1,5 @@
 {
  "type": "BONUS_XENOFAUNA",
- "description": "TXT_KEY_BONUS_XENOFAUNA",
- "civilopedia": "TXT_KEY_BONUS_XENOFAUNA_PEDIA",
  "food": {
   "plot": {
    "flat": 3
@@ -42,6 +40,8 @@
   "placementOrder": 9
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_XENOFAUNA",
+  "civilopedia": "TXT_KEY_BONUS_XENOFAUNA_PEDIA",
   "bonusClassType": "BONUSCLASS_LIVESTOCK"
  }
 }

@@ -1,7 +1,5 @@
 {
  "type": "SPECIALIST_GREAT_SLEUTH",
- "description": "TXT_KEY_SPECIALIST_GREAT_SLEUTH",
- "civilopedia": "TXT_KEY_CONCEPT_GREAT_DETECTIVE_PEDIA",
  "espionage": {
   "city": {
    "flat": 1
@@ -33,6 +31,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_SPECIALIST_GREAT_SLEUTH",
+  "civilopedia": "TXT_KEY_CONCEPT_GREAT_DETECTIVE_PEDIA",
   "categories": [
    "CATEGORY_SPECIALIST_GROUP_LEGAL"
   ]

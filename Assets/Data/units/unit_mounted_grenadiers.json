@@ -1,7 +1,5 @@
 {
  "type": "UNIT_MOUNTED_GRENADIERS",
- "description": "TXT_KEY_UNIT_MOUNTED_GRENADIERS",
- "civilopedia": "TXT_KEY_UNIT_MOUNTED_GRENADIERS_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -162,6 +160,8 @@
   "upkeep": 1
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_MOUNTED_GRENADIERS",
+  "civilopedia": "TXT_KEY_UNIT_MOUNTED_GRENADIERS_PEDIA",
   "worth": 4,
   "militaryWorth": 21,
   "xpValueAttack": 6,

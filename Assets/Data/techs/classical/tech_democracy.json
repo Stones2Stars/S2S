@@ -1,8 +1,5 @@
 {
  "type": "TECH_DEMOCRACY",
- "description": "TXT_KEY_TECH_DEMOCRACY",
- "civilopedia": "TXT_KEY_TECH_DEMOCRACY_PEDIA",
- "quote": "TXT_KEY_TECH_DEMOCRACY_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_AGORA",
@@ -74,6 +71,9 @@
   "soundMP": "AS2D_TECH_MP_DEMOCRACY"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_DEMOCRACY",
+  "civilopedia": "TXT_KEY_TECH_DEMOCRACY_PEDIA",
+  "quote": "TXT_KEY_TECH_DEMOCRACY_QUOTE",
   "era": "C2C_ERA_CLASSICAL",
   "worth": 32,
   "tradeable": true,

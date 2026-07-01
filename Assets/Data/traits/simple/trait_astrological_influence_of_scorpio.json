@@ -1,7 +1,5 @@
 {
  "type": "TRAIT_ASTROLOGICAL_INFLUENCE_OF_SCORPIO",
- "description": "TXT_KEY_TRAIT_ASTROLOGICAL_INFLUENCE_OF_SCORPIO",
- "civilopedia": "TXT_KEY_TRAIT_ASTROLOGICAL_INFLUENCE_OF_SCORPIO_PEDIA",
  "culture": {
   "empire": {
    "flat": 5
@@ -29,6 +27,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_TRAIT_ASTROLOGICAL_INFLUENCE_OF_SCORPIO",
+  "civilopedia": "TXT_KEY_TRAIT_ASTROLOGICAL_INFLUENCE_OF_SCORPIO_PEDIA",
   "shortDescription": "TXT_KEY_TRAIT_ASTROLOGICAL_INFLUENCE_OF_SCORPIO_SHORT",
   "civilizationTrait": true
  }

@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_FREE_PORT",
- "description": "TXT_KEY_BUILDING_FREE_PORT",
- "civilopedia": "TXT_KEY_BUILDING_FREE_PORT_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -74,6 +72,8 @@
   "construct": "AS2D_BUILD_INTERNATIONAL_PORT"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_FREE_PORT",
+  "civilopedia": "TXT_KEY_BUILDING_FREE_PORT_PEDIA",
   "worth": 3,
   "dcmAirbombMission": 2,
   "advisor": "ADVISOR_ECONOMY",

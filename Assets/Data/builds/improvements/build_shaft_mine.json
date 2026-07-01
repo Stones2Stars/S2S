@@ -1,6 +1,5 @@
 {
  "type": "BUILD_SHAFT_MINE",
- "description": "TXT_KEY_BUILD_SHAFT_MINE",
  "requires": {
   "build": {
    "all": [
@@ -43,5 +42,8 @@
   "art": {
    "entityEvent": "ENTITY_EVENT_MINE"
   }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILD_SHAFT_MINE"
  }
 }

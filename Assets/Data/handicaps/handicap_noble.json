@@ -1,7 +1,5 @@
 {
  "type": "HANDICAP_NOBLE",
- "description": "TXT_KEY_HANDICAP_NOBLE",
- "help": "TXT_KEY_HANDICAP_NOBLE_HELP",
  "maintenance": {
   "empire": {
    "colony": {
@@ -185,6 +183,8 @@
   "startingGold": 20
  },
  "identity": {
+  "description": "TXT_KEY_HANDICAP_NOBLE",
+  "help": "TXT_KEY_HANDICAP_NOBLE_HELP",
   "advancedStart": {
    "pointsMod": 100,
    "aiPercent": 100

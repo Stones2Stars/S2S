@@ -1,6 +1,5 @@
 {
  "type": "UNITCOMBAT_WEAPON_H2H_STAFF",
- "description": "TXT_KEY_UNITCOMBAT_WEAPON_H2H_STAFF",
  "strength": {
   "unit": {
    "perVolumeMore": {
@@ -30,5 +29,8 @@
   "art": {
    "icon": "Art/Interface/Buttons/units/sparth/categories/wields_h2h.dds"
   }
+ },
+ "identity": {
+  "description": "TXT_KEY_UNITCOMBAT_WEAPON_H2H_STAFF"
  }
 }

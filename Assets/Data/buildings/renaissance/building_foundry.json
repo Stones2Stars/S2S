@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_FOUNDRY",
- "description": "TXT_KEY_BUILDING_FOUNDRY",
- "civilopedia": "TXT_KEY_BUILDING_FOUNDRY_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_ARMOURER",
@@ -203,6 +201,8 @@
   "construct": "AS2D_BUILD_FORGE"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_FOUNDRY",
+  "civilopedia": "TXT_KEY_BUILDING_FOUNDRY_PEDIA",
   "worth": 4,
   "militaryWorth": 10,
   "conquestProbability": 75,

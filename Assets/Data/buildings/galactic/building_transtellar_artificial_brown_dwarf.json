@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_TRANSTELLAR_ARTIFICIAL_BROWN_DWARF",
- "description": "TXT_KEY_BUILDING_TRANSTELLAR_ARTIFICIAL_BROWN_DWARF",
- "civilopedia": "TXT_KEY_BUILDING_TRANSTELLAR_ARTIFICIAL_BROWN_DWARF_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_TRANSTELLAR_ARTIFICIAL_RED_DWARF"
@@ -43,6 +41,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_TRANSTELLAR_ARTIFICIAL_BROWN_DWARF",
+  "civilopedia": "TXT_KEY_BUILDING_TRANSTELLAR_ARTIFICIAL_BROWN_DWARF_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

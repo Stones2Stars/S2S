@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_TEMPLE_OF_PTAH",
- "description": "TXT_KEY_BUILDING_TEMPLE_OF_PTAH",
- "civilopedia": "TXT_KEY_BUILDING_TEMPLE_OF_PTAH_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -111,6 +109,8 @@
   "construct": "AS2D_UNIT_BUILD_RA_MISSIONARY"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_TEMPLE_OF_PTAH",
+  "civilopedia": "TXT_KEY_BUILDING_TEMPLE_OF_PTAH_PEDIA",
   "commerceDoubleTime": {
    "culture": 1000
   },

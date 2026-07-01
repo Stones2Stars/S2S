@@ -1,8 +1,5 @@
 {
  "type": "TECH_MASS_MEDIA",
- "description": "TXT_KEY_TECH_MASS_MEDIA",
- "civilopedia": "TXT_KEY_TECH_MASS_MEDIA_PEDIA",
- "quote": "TXT_KEY_TECH_MASS_MEDIA_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_BLIMP_ADVERTISING",
@@ -92,6 +89,9 @@
   "soundMP": "AS2D_TECH_MP_MASS_MEDIA"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_MASS_MEDIA",
+  "civilopedia": "TXT_KEY_TECH_MASS_MEDIA_PEDIA",
+  "quote": "TXT_KEY_TECH_MASS_MEDIA_QUOTE",
   "era": "C2C_ERA_ATOMIC",
   "worth": 48,
   "tradeable": true,

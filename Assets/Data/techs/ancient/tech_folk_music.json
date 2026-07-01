@@ -1,8 +1,5 @@
 {
  "type": "TECH_FOLK_MUSIC",
- "description": "TXT_KEY_TECH_FOLK_MUSIC",
- "civilopedia": "TXT_KEY_TECH_FOLK_MUSIC_PEDIA",
- "quote": "TXT_KEY_TECH_FOLK_MUSIC_QUOTE",
  "enables": {
   "bonuses": [
    "BONUS_BRASS_INSTRUMENTS",
@@ -63,6 +60,9 @@
   "soundMP": "AS2D_TECH_FOLK_MUSIC"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_FOLK_MUSIC",
+  "civilopedia": "TXT_KEY_TECH_FOLK_MUSIC_PEDIA",
+  "quote": "TXT_KEY_TECH_FOLK_MUSIC_QUOTE",
   "era": "C2C_ERA_ANCIENT",
   "worth": 8,
   "tradeable": true,

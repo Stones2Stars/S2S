@@ -1,8 +1,5 @@
 {
  "type": "TECH_URBAN_CULTURE",
- "description": "TXT_KEY_TECH_URBAN_CULTURE",
- "civilopedia": "TXT_KEY_TECH_URBAN_CULTURE_PEDIA",
- "quote": "TXT_KEY_TECH_URBAN_CULTURE_QUOTE",
  "enables": {
   "bonuses": [
    "BONUS_ECSTASY",
@@ -79,6 +76,9 @@
   "soundMP": "AS2D_TECH_URBAN_CULTURE"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_URBAN_CULTURE",
+  "civilopedia": "TXT_KEY_TECH_URBAN_CULTURE_PEDIA",
+  "quote": "TXT_KEY_TECH_URBAN_CULTURE_QUOTE",
   "era": "C2C_ERA_ATOMIC",
   "worth": 48,
   "militaryWorth": 5,

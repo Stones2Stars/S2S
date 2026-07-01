@@ -1,6 +1,5 @@
 {
  "type": "BUILD_COTTAGE_KILL",
- "description": "TXT_KEY_BUILD_COTTAGE_KILL",
  "requires": {
   "build": {
    "all": [
@@ -62,6 +61,7 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILD_COTTAGE_KILL",
   "consumesUnit": true
  }
 }

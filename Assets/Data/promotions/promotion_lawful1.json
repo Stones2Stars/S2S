@@ -1,6 +1,5 @@
 {
  "type": "PROMOTION_LAWFUL1",
- "description": "TXT_KEY_PROMOTION_LAWFUL1",
  "espionage": {
   "unit": {
    "investigation": {
@@ -33,6 +32,7 @@
   "sound": "AS2D_IF_LEVELUP"
  },
  "identity": {
+  "description": "TXT_KEY_PROMOTION_LAWFUL1",
   "unitCombats": [
    "UNITCOMBAT_LAW_ENFORCEMENT"
   ]

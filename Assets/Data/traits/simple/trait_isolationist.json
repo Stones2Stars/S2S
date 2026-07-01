@@ -1,7 +1,5 @@
 {
  "type": "TRAIT_ISOLATIONIST",
- "description": "TXT_KEY_TRAIT_ISOLATIONIST",
- "civilopedia": "TXT_KEY_TRAIT_ISOLATIONIST_PEDIA",
  "food": {
   "empire": {
    "tradeRoute": {
@@ -80,6 +78,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_TRAIT_ISOLATIONIST",
+  "civilopedia": "TXT_KEY_TRAIT_ISOLATIONIST_PEDIA",
   "shortDescription": "TXT_KEY_TRAIT_ISOLATIONIST_SHORT",
   "negativeTrait": true
  }

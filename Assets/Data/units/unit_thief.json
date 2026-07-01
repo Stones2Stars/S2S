@@ -1,7 +1,5 @@
 {
  "type": "UNIT_THIEF",
- "description": "TXT_KEY_UNIT_THIEF",
- "civilopedia": "TXT_KEY_CONCEPT_ESPIONAGE_PEDIA",
  "obsoletedBy": {
   "techs": [
    "TECH_MATCHLOCK"
@@ -172,6 +170,8 @@
   ]
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_THIEF",
+  "civilopedia": "TXT_KEY_CONCEPT_ESPIONAGE_PEDIA",
   "worth": 2,
   "militaryWorth": 4,
   "xpValueAttack": 8,

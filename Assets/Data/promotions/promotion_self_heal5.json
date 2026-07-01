@@ -1,6 +1,5 @@
 {
  "type": "PROMOTION_SELF_HEAL5",
- "description": "TXT_KEY_PROMOTION_SELF_HEAL5",
  "strength": {
   "unit": {
    "maxHP": {
@@ -31,5 +30,8 @@
  },
  "sound": {
   "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_SELF_HEAL5"
  }
 }

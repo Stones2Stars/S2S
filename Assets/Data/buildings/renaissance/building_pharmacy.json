@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_PHARMACY",
- "description": "TXT_KEY_BUILDING_PHARMACY",
- "civilopedia": "TXT_KEY_BUILDING_PHARMACY_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_GUILD_APOTHECARIES",
@@ -205,6 +203,8 @@
   "construct": "AS2D_BUILD_HOSPITAL"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_PHARMACY",
+  "civilopedia": "TXT_KEY_BUILDING_PHARMACY_PEDIA",
   "worth": 4,
   "conquestProbability": 75,
   "dcmAirbombMission": 2,

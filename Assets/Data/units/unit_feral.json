@@ -1,7 +1,5 @@
 {
  "type": "UNIT_FERAL",
- "description": "TXT_KEY_UNIT_FERAL",
- "civilopedia": "TXT_KEY_UNIT_FERAL_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -36,6 +34,8 @@
   "upkeep": 11
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_FERAL",
+  "civilopedia": "TXT_KEY_UNIT_FERAL_PEDIA",
   "worth": 5,
   "militaryWorth": 920,
   "xpValueAttack": 3,

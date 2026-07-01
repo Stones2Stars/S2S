@@ -1,8 +1,5 @@
 {
  "type": "TECH_GUNPOWDER",
- "description": "TXT_KEY_TECH_GUNPOWDER",
- "civilopedia": "TXT_KEY_TECH_GUNPOWDER_PEDIA",
- "quote": "TXT_KEY_TECH_GUNPOWDER_QUOTE",
  "enables": {
   "bonuses": [
    "BONUS_COBALT_ORE",
@@ -97,6 +94,9 @@
   "soundMP": "AS2D_TECH_MP_GUNPOWDER"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_GUNPOWDER",
+  "civilopedia": "TXT_KEY_TECH_GUNPOWDER_PEDIA",
+  "quote": "TXT_KEY_TECH_GUNPOWDER_QUOTE",
   "era": "C2C_ERA_RENAISSANCE",
   "worth": 32,
   "militaryWorth": 12,

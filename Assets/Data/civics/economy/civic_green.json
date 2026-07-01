@@ -1,8 +1,5 @@
 {
  "type": "CIVIC_GREEN",
- "description": "TXT_KEY_CIVIC_GREEN",
- "civilopedia": "TXT_KEY_CIVIC_GREEN_PEDIA",
- "strategy": "TXT_KEY_CIVIC_GREEN_STRATEGY",
  "enables": {
   "buildings": [
    "BUILDING_CENTRAL_BANK",
@@ -180,6 +177,9 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_CIVIC_GREEN",
+  "civilopedia": "TXT_KEY_CIVIC_GREEN_PEDIA",
+  "strategy": "TXT_KEY_CIVIC_GREEN_STRATEGY",
   "civicOption": "CIVICOPTION_ECONOMY",
   "anarchyLength": 2,
   "upkeepLevel": "UPKEEP_HIGH"

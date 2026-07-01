@@ -1,8 +1,5 @@
 {
  "type": "TECH_MAGNETIC_LEVITATION",
- "description": "TXT_KEY_TECH_MAGNETIC_LEVITATION",
- "civilopedia": "TXT_KEY_TECH_MAGNETIC_LEVITATION_PEDIA",
- "quote": "TXT_KEY_TECH_MAGNETIC_LEVITATION_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_MAGLEV_RAILS",
@@ -71,6 +68,9 @@
   "soundMP": "AS2D_TECH_MAGNETIC_LEVITATION"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_MAGNETIC_LEVITATION",
+  "civilopedia": "TXT_KEY_TECH_MAGNETIC_LEVITATION_PEDIA",
+  "quote": "TXT_KEY_TECH_MAGNETIC_LEVITATION_QUOTE",
   "era": "C2C_ERA_INFORMATION",
   "worth": 48,
   "tradeable": true,

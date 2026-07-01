@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_DISNEYLAND",
- "description": "TXT_KEY_BUILDING_DISNEYLAND",
- "civilopedia": "TXT_KEY_BUILDING_DISNEYLAND_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -86,6 +84,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_DISNEYLAND",
+  "civilopedia": "TXT_KEY_BUILDING_DISNEYLAND_PEDIA",
   "commerceDoubleTime": {
    "culture": 100
   },

@@ -1,6 +1,5 @@
 {
  "type": "ROUTE_ORBITAL_TRAJECTORY",
- "description": "TXT_KEY_ROUTE_ORBITAL_TRAJECTORY",
  "food": {
   "plot": {
    "flat": 1
@@ -22,6 +21,7 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_ROUTE_ORBITAL_TRAJECTORY",
   "value": 1,
   "advancedStart": {
    "cost": 30

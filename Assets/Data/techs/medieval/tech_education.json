@@ -1,8 +1,5 @@
 {
  "type": "TECH_EDUCATION",
- "description": "TXT_KEY_TECH_EDUCATION",
- "civilopedia": "TXT_KEY_TECH_EDUCATION_PEDIA",
- "quote": "TXT_KEY_TECH_EDUCATION_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_BLUE_MOSQUE",
@@ -85,6 +82,9 @@
   "soundMP": "AS2D_TECH_MP_EDUCATION"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_EDUCATION",
+  "civilopedia": "TXT_KEY_TECH_EDUCATION_PEDIA",
+  "quote": "TXT_KEY_TECH_EDUCATION_QUOTE",
   "era": "C2C_ERA_MEDIEVAL",
   "worth": 32,
   "tradeable": true,

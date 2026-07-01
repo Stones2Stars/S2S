@@ -1,7 +1,5 @@
 {
  "type": "UNIT_WAR_ELEPHANT",
- "description": "TXT_KEY_UNIT_WAR_ELEPHANT",
- "civilopedia": "TXT_KEY_UNIT_WAR_ELEPHANT_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -77,6 +75,8 @@
   "upkeep": 1
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_WAR_ELEPHANT",
+  "civilopedia": "TXT_KEY_UNIT_WAR_ELEPHANT_PEDIA",
   "worth": 2,
   "militaryWorth": 15,
   "xpValueAttack": 3,

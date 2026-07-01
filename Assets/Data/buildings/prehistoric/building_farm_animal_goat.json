@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_FARM_ANIMAL_GOAT",
- "description": "TXT_KEY_BUILDING_FARM_ANIMAL_GOAT",
- "civilopedia": "TXT_KEY_BUILDING_FARM_ANIMAL_GOAT_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_ANGORA_GOAT_BREEDER",
@@ -114,6 +112,8 @@
   "construct": "AS2D_BUILD_GRANARY"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_FARM_ANIMAL_GOAT",
+  "civilopedia": "TXT_KEY_BUILDING_FARM_ANIMAL_GOAT_PEDIA",
   "worth": 4,
   "militaryWorth": 2,
   "advisor": "ADVISOR_GROWTH",

@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_EXPRESSWAY",
- "description": "TXT_KEY_BUILDING_EXPRESSWAY",
- "civilopedia": "TXT_KEY_BUILDING_EXPRESSWAY_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_SKYROAD_CONTROL_TOWER"
@@ -90,6 +88,8 @@
   "construct": "AS2D_BUILD_SKYSCRAPER"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_EXPRESSWAY",
+  "civilopedia": "TXT_KEY_BUILDING_EXPRESSWAY_PEDIA",
   "worth": 7,
   "dcmAirbombMission": 2,
   "advisor": "ADVISOR_ECONOMY",

@@ -1,9 +1,11 @@
 {
  "type": "SPECIALBUILDING_CATHEDRAL",
- "description": "TXT_KEY_SPECIALBUILDING_CATHEDRAL",
  "ui": {
   "art": {
    "icon": "Art/Interface/Buttons/Buildings/Cathedral.dds"
   }
+ },
+ "identity": {
+  "description": "TXT_KEY_SPECIALBUILDING_CATHEDRAL"
  }
 }

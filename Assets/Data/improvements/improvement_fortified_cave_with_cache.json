@@ -1,7 +1,5 @@
 {
  "type": "IMPROVEMENT_FORTIFIED_CAVE_WITH_CACHE",
- "description": "TXT_KEY_IMPROVEMENT_FORTIFIED_CAVE_WITH_CACHE",
- "civilopedia": "TXT_KEY_IMPROVEMENT_FORTIFIED_CAVE_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -38,6 +36,8 @@
   "uniqueRange": 0
  },
  "identity": {
+  "description": "TXT_KEY_IMPROVEMENT_FORTIFIED_CAVE_WITH_CACHE",
+  "civilopedia": "TXT_KEY_IMPROVEMENT_FORTIFIED_CAVE_PEDIA",
   "actsAsCity": true,
   "advancedStart": {
    "cost": 10

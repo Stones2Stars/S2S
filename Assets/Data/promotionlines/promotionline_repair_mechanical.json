@@ -1,12 +1,12 @@
 {
  "type": "PROMOTIONLINE_REPAIR_MECHANICAL",
- "description": "TXT_KEY_PROMOTIONLINE_REPAIR_MECHANICAL",
  "ui": {
   "art": {
    "icon": "Art/Buttons/Promotions/RepairMechanicalPromotion.dds"
   }
  },
  "identity": {
+  "description": "TXT_KEY_PROMOTIONLINE_REPAIR_MECHANICAL",
   "unitCombats": [
    "UNITCOMBAT_HEALS_MECHANICAL"
   ],

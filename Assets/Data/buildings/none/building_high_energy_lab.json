@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_HIGH_ENERGY_LAB",
- "description": "TXT_KEY_BUILDING_HIGH_ENERGY_LAB",
- "civilopedia": "TXT_KEY_BUILDING_HIGH_ENERGY_LAB_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -104,6 +102,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_HIGH_ENERGY_LAB",
+  "civilopedia": "TXT_KEY_BUILDING_HIGH_ENERGY_LAB_PEDIA",
   "specialBuildingType": "SPECIALBUILDING_PUNK_ATOM",
   "advisor": "ADVISOR_SCIENCE",
   "mapCategories": [

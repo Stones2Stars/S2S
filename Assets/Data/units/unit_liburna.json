@@ -1,8 +1,5 @@
 {
  "type": "UNIT_LIBURNA",
- "description": "TXT_KEY_UNIT_LIBURNA",
- "civilopedia": "TXT_KEY_UNIT_LIBURNA_PEDIA",
- "help": "TXT_KEY_UNIT_PIRATE_HELP",
  "requires": {
   "build": {
    "all": [
@@ -114,6 +111,9 @@
   "upkeep": 1
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_LIBURNA",
+  "civilopedia": "TXT_KEY_UNIT_LIBURNA_PEDIA",
+  "help": "TXT_KEY_UNIT_PIRATE_HELP",
   "worth": 3,
   "militaryWorth": 4,
   "xpValueAttack": 4,

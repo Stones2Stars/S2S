@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_SEAMSTRESS",
- "description": "TXT_KEY_BUILDING_SEAMSTRESS",
- "civilopedia": "TXT_KEY_BUILDING_SEAMSTRESS_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_GUILD_DRAPERS",
@@ -118,6 +116,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_SEAMSTRESS",
+  "civilopedia": "TXT_KEY_BUILDING_SEAMSTRESS_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

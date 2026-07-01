@@ -1,7 +1,5 @@
 {
  "type": "BONUS_PRIME_TIMBER",
- "description": "TXT_KEY_BONUS_PRIME_TIMBER",
- "civilopedia": "TXT_KEY_BONUS_PRIME_TIMBER_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_ABATIS",
@@ -183,6 +181,8 @@
   ]
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_PRIME_TIMBER",
+  "civilopedia": "TXT_KEY_BONUS_PRIME_TIMBER_PEDIA",
   "bonusClassType": "BONUSCLASS_STRATEGIC"
  }
 }

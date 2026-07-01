@@ -1,12 +1,12 @@
 {
  "type": "UNITCOMBAT_CULTURE_MICRONESIAN",
- "description": "TXT_KEY_UNITCOMBAT_CULTURE_MICRONESIAN",
  "ui": {
   "art": {
    "icon": "Art/categories/culture_newcultures.dds"
   }
  },
  "identity": {
+  "description": "TXT_KEY_UNITCOMBAT_CULTURE_MICRONESIAN",
   "culture": "BONUS_MICRONESIAN"
  }
 }

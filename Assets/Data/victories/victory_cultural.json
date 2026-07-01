@@ -1,6 +1,5 @@
 {
  "type": "VICTORY_CULTURAL",
- "description": "TXT_KEY_VICTORY_CULTURAL",
  "condition": {
   "cityCulture": "CULTURELEVEL_MONUMENTAL",
   "numCultureCities": 10
@@ -11,5 +10,8 @@
     "file": "ART_DEF_MOVIE_VICTORY_CULTURAL"
    }
   }
+ },
+ "identity": {
+  "description": "TXT_KEY_VICTORY_CULTURAL"
  }
 }

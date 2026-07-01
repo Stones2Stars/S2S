@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_DARCO",
- "description": "TXT_KEY_BUILDING_DARCO",
- "civilopedia": "TXT_KEY_BUILDING_DARCO_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -62,6 +60,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_DARCO",
+  "civilopedia": "TXT_KEY_BUILDING_DARCO_PEDIA",
   "conquestProbability": 100,
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,

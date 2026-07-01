@@ -1,7 +1,5 @@
 {
  "type": "HERITAGE_TAXON_SPHENISCIDAE",
- "description": "TXT_KEY_HERITAGE_TAXON_SPHENISCIDAE",
- "civilopedia": "TXT_KEY_HERITAGE_TAXON_SPHENISCIDAE_PEDIA",
  "research": {
   "empire": {
    "flat": [
@@ -102,5 +100,9 @@
   "art": {
    "icon": "Art/Interface/Buttons/Units/Penguin_b.dds"
   }
+ },
+ "identity": {
+  "description": "TXT_KEY_HERITAGE_TAXON_SPHENISCIDAE",
+  "civilopedia": "TXT_KEY_HERITAGE_TAXON_SPHENISCIDAE_PEDIA"
  }
 }

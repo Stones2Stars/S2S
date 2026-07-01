@@ -1,12 +1,12 @@
 {
  "type": "PROMOTIONLINE_RANGE",
- "description": "TXT_KEY_PROMOTIONLINE_RANGE",
  "ui": {
   "art": {
    "icon": ",Art/Interface/Buttons/TechTree/Corporation.dds,Art/Interface/Buttons/Beyond_the_Sword_Atlas.dds,1,15"
   }
  },
  "identity": {
+  "description": "TXT_KEY_PROMOTIONLINE_RANGE",
   "unitCombats": [
    "UNITCOMBAT_EARLY_FIGHTERS",
    "UNITCOMBAT_EARLY_BOMBERS",

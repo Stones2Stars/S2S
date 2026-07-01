@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_PLEISTOCENE_PARK",
- "description": "TXT_KEY_BUILDING_PLEISTOCENE_PARK",
- "civilopedia": "TXT_KEY_BUILDING_PLEISTOCENE_PARK_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -93,6 +91,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_PLEISTOCENE_PARK",
+  "civilopedia": "TXT_KEY_BUILDING_PLEISTOCENE_PARK_PEDIA",
   "commerceDoubleTime": {
    "culture": 1000
   },

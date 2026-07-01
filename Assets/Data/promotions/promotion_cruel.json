@@ -1,6 +1,5 @@
 {
  "type": "PROMOTION_CRUEL",
- "description": "TXT_KEY_PROMOTION_CRUEL",
  "strength": {
   "unit": {
    "percent": 10
@@ -28,6 +27,7 @@
   "sound": "AS2D_IF_LEVELUP"
  },
  "identity": {
+  "description": "TXT_KEY_PROMOTION_CRUEL",
   "unitCombats": [
    "UNITCOMBAT_MELEE",
    "UNITCOMBAT_THROWING",

@@ -1,8 +1,5 @@
 {
  "type": "TRAIT_TRADITIONAL",
- "description": "TXT_KEY_TRAIT_TRADITIONAL",
- "civilopedia": "TXT_KEY_TRAIT_TRADITIONAL_PEDIA",
- "strategy": "TXT_KEY_TRAIT_TRADITIONAL_STRATEGY",
  "excludes": [
   "TRAIT_SCIENTIFIC"
  ],
@@ -657,6 +654,9 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_TRAIT_TRADITIONAL",
+  "civilopedia": "TXT_KEY_TRAIT_TRADITIONAL_PEDIA",
+  "strategy": "TXT_KEY_TRAIT_TRADITIONAL_STRATEGY",
   "negativeTrait": true,
   "impurePropertyManipulators": true
  }

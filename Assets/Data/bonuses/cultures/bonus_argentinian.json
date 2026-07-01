@@ -1,7 +1,5 @@
 {
  "type": "BONUS_ARGENTINIAN",
- "description": "TXT_KEY_BONUS_ARGENTINIAN",
- "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
  "enables": {
   "units": [
    "UNIT_JUAN_PERON",
@@ -15,6 +13,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_ARGENTINIAN",
+  "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
   "bonusClassType": "BONUSCLASS_CULTURE"
  }
 }

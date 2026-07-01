@@ -1,7 +1,5 @@
 {
  "type": "CORPORATION_7",
- "description": "TXT_KEY_BUILDING_CORPORATION_7",
- "civilopedia": "TXT_KEY_BUILDING_CORPORATION_7_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_CIVILIZED_JEWELERS_STORE"
@@ -90,6 +88,8 @@
   "sound": "AS2D_BUILD_BANK"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_CORPORATION_7",
+  "civilopedia": "TXT_KEY_BUILDING_CORPORATION_7_PEDIA",
   "spreadFactor": 200,
   "spread": 60
  }

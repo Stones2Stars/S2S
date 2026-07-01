@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_MINE_TIN",
- "description": "TXT_KEY_BUILDING_MINE_TIN",
- "civilopedia": "TXT_KEY_BUILDING_MINE_TIN_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_SMELTER_TIN"
@@ -75,6 +73,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_MINE_TIN",
+  "civilopedia": "TXT_KEY_BUILDING_MINE_TIN_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

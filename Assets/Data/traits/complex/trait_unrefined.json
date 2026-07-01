@@ -1,8 +1,5 @@
 {
  "type": "TRAIT_UNREFINED",
- "description": "TXT_KEY_TRAIT_UNREFINED",
- "civilopedia": "TXT_KEY_TRAIT_UNREFINED_PEDIA",
- "strategy": "TXT_KEY_TRAIT_UNREFINED_STRATEGY",
  "excludes": [
   "TRAIT_CREATIVE"
  ],
@@ -746,6 +743,9 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_TRAIT_UNREFINED",
+  "civilopedia": "TXT_KEY_TRAIT_UNREFINED_PEDIA",
+  "strategy": "TXT_KEY_TRAIT_UNREFINED_STRATEGY",
   "negativeTrait": true
  }
 }

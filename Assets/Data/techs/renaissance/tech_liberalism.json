@@ -1,8 +1,5 @@
 {
  "type": "TECH_LIBERALISM",
- "description": "TXT_KEY_TECH_LIBERALISM",
- "civilopedia": "TXT_KEY_TECH_LIBERALISM_PEDIA",
- "quote": "TXT_KEY_TECH_LIBERALISM_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_NATIONAL_LIBRARY_SERVICE",
@@ -74,6 +71,9 @@
   "soundMP": "AS2D_TECH_MP_LIBERALISM"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_LIBERALISM",
+  "civilopedia": "TXT_KEY_TECH_LIBERALISM_PEDIA",
+  "quote": "TXT_KEY_TECH_LIBERALISM_QUOTE",
   "era": "C2C_ERA_RENAISSANCE",
   "worth": 32,
   "tradeable": true,

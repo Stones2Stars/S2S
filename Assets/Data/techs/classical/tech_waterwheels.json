@@ -1,8 +1,5 @@
 {
  "type": "TECH_WATERWHEELS",
- "description": "TXT_KEY_TECH_WATERWHEELS",
- "civilopedia": "TXT_KEY_TECH_WATERWHEELS_PEDIA",
- "quote": "TXT_KEY_TECH_WATERWHEELS_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_HIERAPOLIS_SAWMILL",
@@ -70,6 +67,9 @@
   "soundMP": "AS2D_TECH_WATERWHEELS"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_WATERWHEELS",
+  "civilopedia": "TXT_KEY_TECH_WATERWHEELS_PEDIA",
+  "quote": "TXT_KEY_TECH_WATERWHEELS_QUOTE",
   "era": "C2C_ERA_CLASSICAL",
   "worth": 24,
   "militaryWorth": 8,

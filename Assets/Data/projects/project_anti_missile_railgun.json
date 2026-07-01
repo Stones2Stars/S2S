@@ -1,7 +1,5 @@
 {
  "type": "PROJECT_ANTI_MISSILE_RAILGUN",
- "description": "TXT_KEY_PROJECT_ANTI_MISSILE_RAILGUN",
- "civilopedia": "TXT_KEY_PROJECT_MISSILE_DEFENCE_PEDIA",
  "buildRate": {
   "self": {
    "percent": [
@@ -55,6 +53,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_PROJECT_ANTI_MISSILE_RAILGUN",
+  "civilopedia": "TXT_KEY_PROJECT_MISSILE_DEFENCE_PEDIA",
   "mapCategories": [
    "MAPCATEGORY_EARTH"
   ],

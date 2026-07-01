@@ -1,7 +1,5 @@
 {
  "type": "UNIT_UNMANNED_DESTROYER",
- "description": "TXT_KEY_UNIT_UNMANNED_DESTROYER",
- "civilopedia": "TXT_KEY_UNIT_UNMANNED_DESTROYER_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -104,6 +102,8 @@
   "upkeep": 6
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_UNMANNED_DESTROYER",
+  "civilopedia": "TXT_KEY_UNIT_UNMANNED_DESTROYER_PEDIA",
   "worth": 4,
   "militaryWorth": 560,
   "xpValueAttack": 3,

@@ -1,7 +1,5 @@
 {
  "type": "BONUS_METHANE_ICE",
- "description": "TXT_KEY_BONUS_METHANE_ICE",
- "civilopedia": "TXT_KEY_BONUS_METHANE_ICE_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_METHANE_POWER_PLANT"
@@ -61,6 +59,8 @@
   ]
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_METHANE_ICE",
+  "civilopedia": "TXT_KEY_BONUS_METHANE_ICE_PEDIA",
   "bonusClassType": "BONUSCLASS_STRATEGIC"
  }
 }

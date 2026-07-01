@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_HOUSING_SUBURBS",
- "description": "TXT_KEY_BUILDING_HOUSING_SUBURBS",
- "civilopedia": "TXT_KEY_BUILDING_HOUSING_SUBURBS_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_BED_N_BREAKFAST"
@@ -61,6 +59,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_HOUSING_SUBURBS",
+  "civilopedia": "TXT_KEY_BUILDING_HOUSING_SUBURBS_PEDIA",
   "notConstructible": true,
   "nukeImmune": true,
   "neverCapture": true,

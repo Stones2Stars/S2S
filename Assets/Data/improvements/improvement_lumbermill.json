@@ -1,7 +1,5 @@
 {
  "type": "IMPROVEMENT_LUMBERMILL",
- "description": "TXT_KEY_IMPROVEMENT_LUMBERMILL",
- "civilopedia": "TXT_KEY_IMPROVEMENT_LUMBERMILL_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -149,6 +147,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_IMPROVEMENT_LUMBERMILL",
+  "civilopedia": "TXT_KEY_IMPROVEMENT_LUMBERMILL_PEDIA",
   "advancedStart": {
    "cost": 48
   },

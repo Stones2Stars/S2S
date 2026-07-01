@@ -1,7 +1,5 @@
 {
  "type": "UNIT_AHMAD_SHAH_DURRANI",
- "description": "TXT_KEY_UNIT_AHMAD_SHAH_DURRANI",
- "civilopedia": "TXT_KEY_UNIT_AHMAD_SHAH_DURRANI_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -65,6 +63,8 @@
   "upkeep": 1
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_AHMAD_SHAH_DURRANI",
+  "civilopedia": "TXT_KEY_UNIT_AHMAD_SHAH_DURRANI_PEDIA",
   "worth": 6,
   "militaryWorth": 8,
   "xpValueAttack": 4,

@@ -1,7 +1,5 @@
 {
  "type": "UNIT_HAMILCAR",
- "description": "TXT_KEY_UNIT_HAMILCAR",
- "civilopedia": "TXT_KEY_UNIT_HAMILCAR_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -49,6 +47,8 @@
   "upkeep": 1
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_HAMILCAR",
+  "civilopedia": "TXT_KEY_UNIT_HAMILCAR_PEDIA",
   "worth": 6,
   "militaryWorth": 8,
   "xpValueAttack": 4,

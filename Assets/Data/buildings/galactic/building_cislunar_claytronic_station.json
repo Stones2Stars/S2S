@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_CISLUNAR_CLAYTRONIC_STATION",
- "description": "TXT_KEY_BUILDING_CISLUNAR_CLAYTRONIC_STATION",
- "civilopedia": "TXT_KEY_BUILDING_CISLUNAR_CLAYTRONIC_STATION_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_CISLUNAR_METAMORPHIC_STATION",
@@ -45,6 +43,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_CISLUNAR_CLAYTRONIC_STATION",
+  "civilopedia": "TXT_KEY_BUILDING_CISLUNAR_CLAYTRONIC_STATION_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

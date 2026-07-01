@@ -1,8 +1,5 @@
 {
  "type": "TRAIT_NEGLIGENT1",
- "description": "TXT_KEY_TRAIT_NEGLIGENT1",
- "civilopedia": "TXT_KEY_TRAIT_NEGLIGENT1_PEDIA",
- "strategy": "TXT_KEY_TRAIT_NEGLIGENT_STRATEGY",
  "enables": {
   "traits": [
    "TRAIT_NEGLIGENT2"
@@ -347,6 +344,9 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_TRAIT_NEGLIGENT1",
+  "civilopedia": "TXT_KEY_TRAIT_NEGLIGENT1_PEDIA",
+  "strategy": "TXT_KEY_TRAIT_NEGLIGENT_STRATEGY",
   "negativeTrait": true
  }
 }

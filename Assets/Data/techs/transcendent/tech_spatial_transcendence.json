@@ -1,8 +1,5 @@
 {
  "type": "TECH_SPATIAL_TRANSCENDENCE",
- "description": "TXT_KEY_TECH_SPATIAL_TRANSCENDENCE",
- "civilopedia": "TXT_KEY_TECH_SPATIAL_TRANSCENDENCE_PEDIA",
- "quote": "TXT_KEY_TECH_SPATIAL_TRANSCENDENCE_QUOTE",
  "enables": {
   "bonuses": [
    "BONUS_HUMAN_MOD_NON_SPATIAL"
@@ -62,6 +59,9 @@
   "soundMP": "AS2D_TECH_GENERIC"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_SPATIAL_TRANSCENDENCE",
+  "civilopedia": "TXT_KEY_TECH_SPATIAL_TRANSCENDENCE_PEDIA",
+  "quote": "TXT_KEY_TECH_SPATIAL_TRANSCENDENCE_QUOTE",
   "era": "C2C_ERA_TRANSCENDENT",
   "worth": 48,
   "tradeable": true,

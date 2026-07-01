@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_TEMPLE_OF_CHONS",
- "description": "TXT_KEY_BUILDING_TEMPLE_OF_CHONS",
- "civilopedia": "TXT_KEY_BUILDING_TEMPLE_OF_CHONS_PEDIA",
  "enables": {
   "units": [
    "UNIT_EGYPT_MYTH_MISSIONARY",
@@ -104,6 +102,8 @@
   "construct": "AS2D_BUILD_BUDDHIST"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_TEMPLE_OF_CHONS",
+  "civilopedia": "TXT_KEY_BUILDING_TEMPLE_OF_CHONS_PEDIA",
   "neverCapture": true,
   "worth": 3,
   "specialBuildingType": "SPECIALBUILDING_MONASTERY",

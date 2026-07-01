@@ -1,7 +1,5 @@
 {
  "type": "UNIT_TLATOANI_BOWMANS",
- "description": "TXT_KEY_UNIT_TLATOANI_BOWMANS",
- "civilopedia": "TXT_KEY_UNIT_TLATOANI_BOWMANS_PEDIA",
  "obsoletedBy": {
   "techs": [
    "TECH_FLINTLOCK"
@@ -80,6 +78,8 @@
   "upkeep": 1
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_TLATOANI_BOWMANS",
+  "civilopedia": "TXT_KEY_UNIT_TLATOANI_BOWMANS_PEDIA",
   "worth": 1,
   "militaryWorth": 5,
   "xpValueAttack": 6,

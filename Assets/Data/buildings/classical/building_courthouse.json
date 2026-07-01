@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_COURTHOUSE",
- "description": "TXT_KEY_BUILDING_COURTHOUSE",
- "civilopedia": "TXT_KEY_BUILDING_COURTHOUSE_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_BAILIWICK",
@@ -144,6 +142,8 @@
   "construct": "AS2D_BUILD_COURTHOUSE"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_COURTHOUSE",
+  "civilopedia": "TXT_KEY_BUILDING_COURTHOUSE_PEDIA",
   "worth": 4,
   "conquestProbability": 75,
   "dcmAirbombMission": 2,

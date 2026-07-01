@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_INTERGALACTIC_DYSON_SPHERES",
- "description": "TXT_KEY_BUILDING_INTERGALACTIC_DYSON_SPHERES",
- "civilopedia": "TXT_KEY_BUILDING_INTERGALACTIC_DYSON_SPHERES_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_INTERGALACTIC_CLUSTER_BRAIN",
@@ -50,6 +48,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_INTERGALACTIC_DYSON_SPHERES",
+  "civilopedia": "TXT_KEY_BUILDING_INTERGALACTIC_DYSON_SPHERES_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

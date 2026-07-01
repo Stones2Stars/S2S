@@ -148,6 +148,24 @@ def emit_art(out, art_blocks):
             out[blk] = art_blocks[blk]
 
 
+# TEXT belongs INSIDE `identity` (json.md §7: "identity — all TEXT"); only `type` (the ID) stays at root, front-and-
+# centre. This fold moves any root TEXT keys into out["identity"] (created if absent, TEXT FIRST, existing identity
+# fields after) — applied UNIFORMLY by every curator so the whole model is consistent (owner 2026-07-01, no deferral:
+# "if deferred it will be forgotten, and we get inconsistency"). Call it right before writing/returning the finished out.
+TEXT_KEYS = ("description", "shortDescription", "adjective", "civilopedia", "help", "quote", "strategy", "message")
+
+
+def fold_text_to_identity(out):
+    text = [(k, out.pop(k)) for k in TEXT_KEYS if k in out]
+    if not text:
+        return out
+    ident = OrderedDict(text)
+    for k, v in out.get("identity", {}).items():
+        ident[k] = v
+    out["identity"] = ident
+    return out
+
+
 def _merge_val(a, b):
     """Additive merge on collision (cascade rule): dicts merge keys (summing shared), numbers sum."""
     if isinstance(a, dict) and isinstance(b, dict):
@@ -452,6 +470,7 @@ def curate(typ, rec, cfg, store, boosts):
         out["mapGeneration"] = map_gen
     if identity:
         out["identity"] = identity
+    fold_text_to_identity(out)   # TEXT (emitted at root above) -> identity (json.md §7; owner 2026-07-01)
     return out
 
 

@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_CAMP_GROUNDS",
- "description": "TXT_KEY_BUILDING_CAMP_GROUNDS",
- "civilopedia": "TXT_KEY_BUILDING_CAMP_GROUNDS_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -80,6 +78,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_CAMP_GROUNDS",
+  "civilopedia": "TXT_KEY_BUILDING_CAMP_GROUNDS_PEDIA",
   "militaryWorth": 1,
   "conquestProbability": 30,
   "advisor": "ADVISOR_GROWTH",

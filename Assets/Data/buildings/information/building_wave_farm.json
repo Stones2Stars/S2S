@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_WAVE_FARM",
- "description": "TXT_KEY_BUILDING_WAVE_FARM",
- "civilopedia": "TXT_KEY_BUILDING_WAVE_FARM_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_OCEAN_CITY",
@@ -76,6 +74,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_WAVE_FARM",
+  "civilopedia": "TXT_KEY_BUILDING_WAVE_FARM_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

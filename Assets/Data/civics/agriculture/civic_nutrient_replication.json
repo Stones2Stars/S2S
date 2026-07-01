@@ -1,8 +1,5 @@
 {
  "type": "CIVIC_NUTRIENT_REPLICATION",
- "description": "TXT_KEY_CIVIC_NUTRIENT_REPLICATION",
- "civilopedia": "TXT_KEY_CIVIC_NUTRIENT_REPLICATION_PEDIA",
- "strategy": "TXT_KEY_CIVIC_NUTRIENT_REPLICATION_STRATEGY",
  "food": {
   "empire": {
    "percent": 10,
@@ -39,6 +36,9 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_CIVIC_NUTRIENT_REPLICATION",
+  "civilopedia": "TXT_KEY_CIVIC_NUTRIENT_REPLICATION_PEDIA",
+  "strategy": "TXT_KEY_CIVIC_NUTRIENT_REPLICATION_STRATEGY",
   "civicOption": "CIVICOPTION_AGRICULTURE",
   "anarchyLength": 1,
   "upkeepLevel": "UPKEEP_EXTREME"

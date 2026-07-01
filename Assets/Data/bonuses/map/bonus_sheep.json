@@ -1,7 +1,5 @@
 {
  "type": "BONUS_SHEEP",
- "description": "TXT_KEY_BONUS_SHEEP",
- "civilopedia": "TXT_KEY_BONUS_SHEEP_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_ANGORA_GOAT_BREEDER",
@@ -84,6 +82,8 @@
   ]
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_SHEEP",
+  "civilopedia": "TXT_KEY_BONUS_SHEEP_PEDIA",
   "bonusClassType": "BONUSCLASS_LIVESTOCK"
  }
 }

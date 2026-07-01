@@ -1,4 +1,6 @@
 {
  "type": "CIVICOPTION_MILITARY",
- "description": "TXT_KEY_CIVICOPTION_MILITARY"
+ "identity": {
+  "description": "TXT_KEY_CIVICOPTION_MILITARY"
+ }
 }

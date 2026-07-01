@@ -1,7 +1,5 @@
 {
  "type": "BONUS_EXTRATERRESTRIAL_MICROBES",
- "description": "TXT_KEY_BONUS_EXTRATERRESTRIAL_MICROBES",
- "civilopedia": "TXT_KEY_BONUS_EXTRATERRESTRIAL_MICROBES_PEDIA",
  "food": {
   "plot": {
    "flat": 1
@@ -50,6 +48,8 @@
   "placementOrder": 9
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_EXTRATERRESTRIAL_MICROBES",
+  "civilopedia": "TXT_KEY_BONUS_EXTRATERRESTRIAL_MICROBES_PEDIA",
   "bonusClassType": "BONUSCLASS_PRODUCTION"
  }
 }

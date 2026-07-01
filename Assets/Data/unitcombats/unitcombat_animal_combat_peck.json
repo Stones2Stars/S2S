@@ -1,9 +1,11 @@
 {
  "type": "UNITCOMBAT_ANIMAL_COMBAT_PECK",
- "description": "TXT_KEY_UNITCOMBAT_ANIMAL_COMBAT_PECK",
  "ui": {
   "art": {
    "icon": "Art/Interface/Buttons/units/sparth/categories/nature_peck.dds"
   }
+ },
+ "identity": {
+  "description": "TXT_KEY_UNITCOMBAT_ANIMAL_COMBAT_PECK"
  }
 }

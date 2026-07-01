@@ -1,13 +1,13 @@
 {
  "type": "BONUS_METAL_FOAM",
- "description": "TXT_KEY_BONUS_METAL_FOAM",
- "civilopedia": "TXT_KEY_BONUS_METAL_FOAM_PEDIA",
  "world": {
   "art": {
    "icon": "ART_DEF_BONUS_METAL_FOAM"
   }
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_METAL_FOAM",
+  "civilopedia": "TXT_KEY_BONUS_METAL_FOAM_PEDIA",
   "bonusClassType": "BONUSCLASS_MANUFACTURED"
  }
 }

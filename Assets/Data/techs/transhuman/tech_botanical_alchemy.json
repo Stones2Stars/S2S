@@ -1,8 +1,5 @@
 {
  "type": "TECH_BOTANICAL_ALCHEMY",
- "description": "TXT_KEY_TECH_BOTANICAL_ALCHEMY",
- "civilopedia": "TXT_KEY_TECH_BOTANICAL_ALCHEMY_PEDIA",
- "quote": "TXT_KEY_TECH_BOTANICAL_ALCHEMY_QUOTE",
  "enables": {
   "bonuses": [
    "BONUS_MARTIAN_FRUIT"
@@ -73,6 +70,9 @@
   "soundMP": "AS2D_TECH_BOTANICAL_ALCHEMY"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_BOTANICAL_ALCHEMY",
+  "civilopedia": "TXT_KEY_TECH_BOTANICAL_ALCHEMY_PEDIA",
+  "quote": "TXT_KEY_TECH_BOTANICAL_ALCHEMY_QUOTE",
   "era": "C2C_ERA_TRANSHUMAN",
   "worth": 48,
   "militaryWorth": 4,

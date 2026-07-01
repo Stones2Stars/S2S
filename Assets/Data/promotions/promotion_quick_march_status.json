@@ -1,6 +1,5 @@
 {
  "type": "PROMOTION_QUICK_MARCH_STATUS",
- "description": "TXT_KEY_PROMOTION_QUICK_MARCH_STATUS",
  "movement": {
   "unit": {
    "moves": {
@@ -51,6 +50,7 @@
   "sound": "AS2D_IF_LEVELUP"
  },
  "identity": {
+  "description": "TXT_KEY_PROMOTION_QUICK_MARCH_STATUS",
   "negatesInvisibility": [
    "INVISIBLE_CAMOUFLAGE"
   ],

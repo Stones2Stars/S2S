@@ -1,8 +1,5 @@
 {
  "type": "UNIT_F18_HORNET",
- "description": "TXT_KEY_UNIT_F18_HORNET",
- "civilopedia": "TXT_KEY_UNIT_F18_HORNET_PEDIA",
- "help": "TXT_KEY_UNIT_CARRIER_OPS_HELP",
  "requires": {
   "build": {
    "all": [
@@ -111,6 +108,9 @@
   "upkeep": 4
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_F18_HORNET",
+  "civilopedia": "TXT_KEY_UNIT_F18_HORNET_PEDIA",
+  "help": "TXT_KEY_UNIT_CARRIER_OPS_HELP",
   "worth": 4,
   "militaryWorth": 28,
   "xpValueAttack": 4,

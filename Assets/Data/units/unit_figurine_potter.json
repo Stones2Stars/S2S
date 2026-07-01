@@ -1,7 +1,5 @@
 {
  "type": "UNIT_FIGURINE_POTTER",
- "description": "TXT_KEY_UNIT_FIGURINE_POTTER",
- "civilopedia": "TXT_KEY_UNIT_FIGURINE_POTTER_PEDIA",
  "obsoletedBy": {
   "techs": [
    "TECH_ENGINEERING"
@@ -248,6 +246,8 @@
   ]
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_FIGURINE_POTTER",
+  "civilopedia": "TXT_KEY_UNIT_FIGURINE_POTTER_PEDIA",
   "worth": 1,
   "domain": "DOMAIN_LAND",
   "defaultUnitAI": "UNITAI_MERCHANT",

@@ -1,8 +1,5 @@
 {
  "type": "CIVIC_DIGITAL",
- "description": "TXT_KEY_CIVIC_DIGITAL",
- "civilopedia": "TXT_KEY_CIVIC_DIGITAL_PEDIA",
- "strategy": "TXT_KEY_CIVIC_DIGITAL_STRATEGY",
  "enables": {
   "hurries": [
    "HURRY_GOLD"
@@ -61,6 +58,9 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_CIVIC_DIGITAL",
+  "civilopedia": "TXT_KEY_CIVIC_DIGITAL_PEDIA",
+  "strategy": "TXT_KEY_CIVIC_DIGITAL_STRATEGY",
   "civicOption": "CIVICOPTION_CURRENCY",
   "anarchyLength": 2,
   "upkeepLevel": "UPKEEP_HIGH"

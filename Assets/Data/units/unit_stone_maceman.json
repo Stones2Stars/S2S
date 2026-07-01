@@ -1,7 +1,5 @@
 {
  "type": "UNIT_STONE_MACEMAN",
- "description": "TXT_KEY_UNIT_STONE_MACEMAN",
- "civilopedia": "TXT_KEY_UNIT_STONE_MACEMAN_PEDIA",
  "obsoletedBy": {
   "techs": [
    "TECH_FLINTLOCK"
@@ -89,6 +87,8 @@
   "upkeep": 1
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_STONE_MACEMAN",
+  "civilopedia": "TXT_KEY_UNIT_STONE_MACEMAN_PEDIA",
   "worth": 1,
   "militaryWorth": 3,
   "xpValueAttack": 3,

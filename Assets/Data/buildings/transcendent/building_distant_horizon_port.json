@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_DISTANT_HORIZON_PORT",
- "description": "TXT_KEY_BUILDING_DISTANT_HORIZON_PORT",
- "civilopedia": "TXT_KEY_BUILDING_DISTANT_HORIZON_PORT_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_DISTANT_BIG_BANG_PROBE",
@@ -52,6 +50,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_DISTANT_HORIZON_PORT",
+  "civilopedia": "TXT_KEY_BUILDING_DISTANT_HORIZON_PORT_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

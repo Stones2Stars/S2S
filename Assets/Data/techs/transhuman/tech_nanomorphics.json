@@ -1,8 +1,5 @@
 {
  "type": "TECH_NANOMORPHICS",
- "description": "TXT_KEY_TECH_NANOMORPHICS",
- "civilopedia": "TXT_KEY_TECH_NANOMORPHICS_PEDIA",
- "quote": "TXT_KEY_TECH_NANOMORPHICS_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_DEEP_SPACE_CLOAKING",
@@ -61,6 +58,9 @@
   "soundMP": "AS2D_TECH_GENERIC"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_NANOMORPHICS",
+  "civilopedia": "TXT_KEY_TECH_NANOMORPHICS_PEDIA",
+  "quote": "TXT_KEY_TECH_NANOMORPHICS_QUOTE",
   "era": "C2C_ERA_TRANSHUMAN",
   "worth": 50,
   "militaryWorth": 10,

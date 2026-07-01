@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_INTELLIGENT_PERSONAL_ASSISTANT",
- "description": "TXT_KEY_BUILDING_INTELLIGENT_PERSONAL_ASSISTANT",
- "civilopedia": "TXT_KEY_BUILDING_INTELLIGENT_PERSONAL_ASSISTANT_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_KNOWLEDGE_NAVIGATOR"
@@ -53,6 +51,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_INTELLIGENT_PERSONAL_ASSISTANT",
+  "civilopedia": "TXT_KEY_BUILDING_INTELLIGENT_PERSONAL_ASSISTANT_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

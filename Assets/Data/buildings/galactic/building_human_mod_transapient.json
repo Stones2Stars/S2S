@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_HUMAN_MOD_TRANSAPIENT",
- "description": "TXT_KEY_BUILDING_HUMAN_MOD_TRANSAPIENT",
- "civilopedia": "TXT_KEY_BUILDING_HUMAN_MOD_TRANSAPIENT_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -50,6 +48,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_HUMAN_MOD_TRANSAPIENT",
+  "civilopedia": "TXT_KEY_BUILDING_HUMAN_MOD_TRANSAPIENT_PEDIA",
   "neverCapture": true,
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,

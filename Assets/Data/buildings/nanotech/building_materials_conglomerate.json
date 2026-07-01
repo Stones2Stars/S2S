@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_MATERIALS_CONGLOMERATE",
- "description": "TXT_KEY_BUILDING_MATERIALS_CONGLOMERATE",
- "civilopedia": "TXT_KEY_BUILDING_MATERIALS_CONGLOMERATE_PEDIA",
  "enables": {
   "units": [
    "UNIT_HEZBOLLAH",
@@ -100,6 +98,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_MATERIALS_CONGLOMERATE",
+  "civilopedia": "TXT_KEY_BUILDING_MATERIALS_CONGLOMERATE_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

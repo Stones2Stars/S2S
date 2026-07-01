@@ -1,7 +1,5 @@
 {
  "type": "FEATURE_PLAGUED_SMOG",
- "description": "TXT_KEY_FEATURE_PLAGUED_SMOG",
- "civilopedia": "TXT_KEY_FEATURE_PLAGUED_SMOG_PEDIA",
  "food": {
   "plot": {
    "flat": -25
@@ -33,6 +31,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_FEATURE_PLAGUED_SMOG",
+  "civilopedia": "TXT_KEY_FEATURE_PLAGUED_SMOG_PEDIA",
   "movementCost": 4,
   "disappearance": 150,
   "spread": 1000,

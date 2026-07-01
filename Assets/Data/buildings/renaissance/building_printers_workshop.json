@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_PRINTERS_WORKSHOP",
- "description": "TXT_KEY_BUILDING_PRINTERS_WORKSHOP",
- "civilopedia": "TXT_KEY_BUILDING_PRINTERS_WORKSHOP_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_FACTORY_BOOKS"
@@ -107,6 +105,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_PRINTERS_WORKSHOP",
+  "civilopedia": "TXT_KEY_BUILDING_PRINTERS_WORKSHOP_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

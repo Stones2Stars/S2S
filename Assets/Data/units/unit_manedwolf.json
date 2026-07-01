@@ -1,7 +1,5 @@
 {
  "type": "UNIT_MANEDWOLF",
- "description": "TXT_KEY_UNIT_MANEDWOLF",
- "civilopedia": "TXT_KEY_UNIT_MANEDWOLF_PEDIA",
  "withdrawal": {
   "unit": {
    "percent": 30
@@ -56,6 +54,8 @@
   ]
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_MANEDWOLF",
+  "civilopedia": "TXT_KEY_UNIT_MANEDWOLF_PEDIA",
   "spawnOnly": true,
   "xpValueAttack": 5,
   "xpValueDefense": 3,

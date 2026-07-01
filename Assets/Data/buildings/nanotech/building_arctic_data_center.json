@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_ARCTIC_DATA_CENTER",
- "description": "TXT_KEY_BUILDING_ARCTIC_DATA_CENTER",
- "civilopedia": "TXT_KEY_BUILDING_ARCTIC_DATA_CENTER_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -52,6 +50,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_ARCTIC_DATA_CENTER",
+  "civilopedia": "TXT_KEY_BUILDING_ARCTIC_DATA_CENTER_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

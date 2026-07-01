@@ -1,8 +1,5 @@
 {
  "type": "TECH_RAPID_PROTOTYPING",
- "description": "TXT_KEY_TECH_RAPID_PROTOTYPING",
- "civilopedia": "TXT_KEY_TECH_RAPID_PROTOTYPING_PEDIA",
- "quote": "TXT_KEY_TECH_RAPID_PROTOTYPING_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_ELECTRONICS_MANUFACTURING_DISTRICT",
@@ -79,6 +76,9 @@
   "soundMP": "AS2D_TECH_RAPID_PROTOTYPING"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_RAPID_PROTOTYPING",
+  "civilopedia": "TXT_KEY_TECH_RAPID_PROTOTYPING_PEDIA",
+  "quote": "TXT_KEY_TECH_RAPID_PROTOTYPING_QUOTE",
   "era": "C2C_ERA_INFORMATION",
   "worth": 48,
   "tradeable": true,

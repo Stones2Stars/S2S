@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_FOLKLORE_GIANT_SQUID",
- "description": "TXT_KEY_BUILDING_FOLKLORE_GIANT_SQUID",
- "civilopedia": "TXT_KEY_BUILDING_FOLKLORE_ANIMAL_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_FOLKLORE_T_FISH",
@@ -79,6 +77,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_FOLKLORE_GIANT_SQUID",
+  "civilopedia": "TXT_KEY_BUILDING_FOLKLORE_ANIMAL_PEDIA",
   "notConstructible": true,
   "nukeImmune": true,
   "neverCapture": true,

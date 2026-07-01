@@ -1,7 +1,5 @@
 {
  "type": "UNIT_MANCHU_HORSEARCHER",
- "description": "TXT_KEY_UNIT_MANCHU_HORSEARCHER",
- "civilopedia": "TXT_KEY_UNIT_MANCHU_HORSEARCHER_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -135,6 +133,8 @@
   "upkeep": 1
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_MANCHU_HORSEARCHER",
+  "civilopedia": "TXT_KEY_UNIT_MANCHU_HORSEARCHER_PEDIA",
   "worth": 2,
   "militaryWorth": 15,
   "xpValueAttack": 6,

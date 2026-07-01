@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_HOUSING_TREE_HOLLOW",
- "description": "TXT_KEY_BUILDING_HOUSING_TREE_HOLLOW",
- "civilopedia": "TXT_KEY_BUILDING_HOUSING_TREE_HOLLOW_PEDIA",
  "obsoletedBy": {
   "techs": [
    "TECH_CARPENTRY"
@@ -66,6 +64,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_HOUSING_TREE_HOLLOW",
+  "civilopedia": "TXT_KEY_BUILDING_HOUSING_TREE_HOLLOW_PEDIA",
   "notConstructible": true,
   "nukeImmune": true,
   "neverCapture": true,

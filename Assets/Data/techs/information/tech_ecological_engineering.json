@@ -1,8 +1,5 @@
 {
  "type": "TECH_ECOLOGICAL_ENGINEERING",
- "description": "TXT_KEY_TECH_ECOLOGICAL_ENGINEERING",
- "civilopedia": "TXT_KEY_TECH_ECOLOGICAL_ENGINEERING_PEDIA",
- "quote": "TXT_KEY_TECH_ECOLOGICAL_ENGINEERING_QUOTE",
  "enables": {
   "bonuses": [
    "BONUS_GEOTHERMAL_ENERGY"
@@ -73,6 +70,9 @@
   "soundMP": "AS2D_TECH_ECOLOGICAL_ENGINEERING"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_ECOLOGICAL_ENGINEERING",
+  "civilopedia": "TXT_KEY_TECH_ECOLOGICAL_ENGINEERING_PEDIA",
+  "quote": "TXT_KEY_TECH_ECOLOGICAL_ENGINEERING_QUOTE",
   "era": "C2C_ERA_INFORMATION",
   "worth": 48,
   "tradeable": true,

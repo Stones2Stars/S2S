@@ -1,7 +1,5 @@
 {
  "type": "TERRAIN_VIRGO_SUPERCLUSTER",
- "description": "TXT_KEY_TERRAIN_VIRGO_SUPERCLUSTER",
- "civilopedia": "TXT_KEY_TERRAIN_VIRGO_SUPERCLUSTER_PEDIA",
  "commerce": {
   "plot": {
    "flat": 1
@@ -23,6 +21,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_TERRAIN_VIRGO_SUPERCLUSTER",
+  "civilopedia": "TXT_KEY_TERRAIN_VIRGO_SUPERCLUSTER_PEDIA",
   "found": true,
   "movementCost": 1,
   "mapCategories": [

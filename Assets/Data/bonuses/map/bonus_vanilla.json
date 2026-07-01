@@ -1,7 +1,5 @@
 {
  "type": "BONUS_VANILLA",
- "description": "TXT_KEY_BONUS_VANILLA",
- "civilopedia": "TXT_KEY_BONUS_VANILLA_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_CULTURE_CHACHAPOYA",
@@ -60,6 +58,8 @@
   ]
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_VANILLA",
+  "civilopedia": "TXT_KEY_BONUS_VANILLA_PEDIA",
   "bonusClassType": "BONUSCLASS_LUXURY"
  }
 }

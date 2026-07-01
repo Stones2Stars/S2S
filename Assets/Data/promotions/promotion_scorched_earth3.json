@@ -1,6 +1,5 @@
 {
  "type": "PROMOTION_SCORCHED_EARTH3",
- "description": "TXT_KEY_PROMOTION_SCORCHED_EARTH3",
  "bombard": {
   "unit": {
    "rate": {
@@ -35,6 +34,7 @@
   "sound": "AS2D_IF_LEVELUP"
  },
  "identity": {
+  "description": "TXT_KEY_PROMOTION_SCORCHED_EARTH3",
   "rBombardPrereq": true
  }
 }

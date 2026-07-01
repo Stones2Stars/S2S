@@ -1,6 +1,5 @@
 {
  "type": "PROMOTION_GOAD2",
- "description": "TXT_KEY_PROMOTION_GOAD2",
  "strength": {
   "unit": {
    "taunt": {
@@ -23,5 +22,8 @@
  },
  "sound": {
   "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_GOAD2"
  }
 }

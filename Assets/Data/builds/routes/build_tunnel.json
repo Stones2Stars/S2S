@@ -1,6 +1,5 @@
 {
  "type": "BUILD_TUNNEL",
- "description": "TXT_KEY_BUILD_TUNNEL",
  "requires": {
   "build": {
    "all": [
@@ -103,5 +102,8 @@
   "art": {
    "entityEvent": "ENTITY_EVENT_RAILROAD"
   }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILD_TUNNEL"
  }
 }

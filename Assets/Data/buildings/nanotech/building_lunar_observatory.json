@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_LUNAR_OBSERVATORY",
- "description": "TXT_KEY_BUILDING_LUNAR_OBSERVATORY",
- "civilopedia": "TXT_KEY_BUILDING_LUNAR_OBSERVATORY_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_LUNAR_RESEARCH_BASE"
@@ -86,6 +84,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_LUNAR_OBSERVATORY",
+  "civilopedia": "TXT_KEY_BUILDING_LUNAR_OBSERVATORY_PEDIA",
   "conquestProbability": 70,
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": "1.0",

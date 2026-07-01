@@ -1,9 +1,5 @@
 {
  "type": "CIVILIZATION_NPC_PREDATOR",
- "description": "TXT_KEY_CIVILIZATION_NPC_PREDATOR",
- "shortDescription": "TXT_KEY_CIVILIZATION_NPC_PREDATOR_SHORT",
- "adjective": "TXT_KEY_CIVILIZATION_NPC_PREDATOR_ADJECTIVE",
- "civilopedia": "TXT_KEY_CIVILIZATION_NPC_PREDATOR_PEDIA",
  "grants": {
   "civics": [
    "CIVIC_ANARCHISM",
@@ -42,6 +38,11 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_CIVILIZATION_NPC_PREDATOR",
+  "shortDescription": "TXT_KEY_CIVILIZATION_NPC_PREDATOR_SHORT",
+  "adjective": "TXT_KEY_CIVILIZATION_NPC_PREDATOR_ADJECTIVE",
+  "civilopedia": "TXT_KEY_CIVILIZATION_NPC_PREDATOR_PEDIA",
+  "isNpc": true,
   "leaders": [
    "LEADER_GREEN_MAN"
   ]

@@ -1,7 +1,5 @@
 {
  "type": "UNIT_WINGED_CAVALRY",
- "description": "TXT_KEY_UNIT_WINGED_CAVALRY",
- "civilopedia": "TXT_KEY_UNIT_WINGED_CAVALRY_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -123,6 +121,8 @@
   "upkeep": 1
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_WINGED_CAVALRY",
+  "civilopedia": "TXT_KEY_UNIT_WINGED_CAVALRY_PEDIA",
   "worth": 3,
   "militaryWorth": 22,
   "xpValueAttack": 6,

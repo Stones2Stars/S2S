@@ -1,8 +1,5 @@
 {
  "type": "TECH_ADHESIVES",
- "description": "TXT_KEY_TECH_ADHESIVES",
- "civilopedia": "TXT_KEY_TECH_ADHESIVES_PEDIA",
- "quote": "TXT_KEY_TECH_ADHESIVES_QUOTE",
  "enables": {
   "bonuses": [
    "BONUS_RESIN",
@@ -68,6 +65,9 @@
   "soundMP": "AS2D_TECH_ADHESIVES"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_ADHESIVES",
+  "civilopedia": "TXT_KEY_TECH_ADHESIVES_PEDIA",
+  "quote": "TXT_KEY_TECH_ADHESIVES_QUOTE",
   "era": "C2C_ERA_PREHISTORIC",
   "worth": 8,
   "tradeable": true,

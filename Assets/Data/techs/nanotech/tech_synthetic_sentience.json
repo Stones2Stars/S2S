@@ -1,8 +1,5 @@
 {
  "type": "TECH_SYNTHETIC_SENTIENCE",
- "description": "TXT_KEY_TECH_SYNTHETIC_SENTIENCE",
- "civilopedia": "TXT_KEY_TECH_SYNTHETIC_SENTIENCE_PEDIA",
- "quote": "TXT_KEY_TECH_SYNTHETIC_SENTIENCE_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_AI_INVESTMENT",
@@ -69,6 +66,9 @@
   "soundMP": "AS2D_TECH_SYNTHETIC_SENTIENCE"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_SYNTHETIC_SENTIENCE",
+  "civilopedia": "TXT_KEY_TECH_SYNTHETIC_SENTIENCE_PEDIA",
+  "quote": "TXT_KEY_TECH_SYNTHETIC_SENTIENCE_QUOTE",
   "era": "C2C_ERA_NANOTECH",
   "worth": 48,
   "militaryWorth": 4,

@@ -1,8 +1,5 @@
 {
  "type": "TECH_MANUFACTURING",
- "description": "TXT_KEY_TECH_MANUFACTURING",
- "civilopedia": "TXT_KEY_TECH_MANUFACTURING_PEDIA",
- "quote": "TXT_KEY_TECH_MANUFACTURING_QUOTE",
  "enables": {
   "bonuses": [
    "BONUS_KEVLAR"
@@ -87,6 +84,9 @@
   "soundMP": "AS2D_TECH_MANUFACTURING"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_MANUFACTURING",
+  "civilopedia": "TXT_KEY_TECH_MANUFACTURING_PEDIA",
+  "quote": "TXT_KEY_TECH_MANUFACTURING_QUOTE",
   "era": "C2C_ERA_ATOMIC",
   "worth": 40,
   "militaryWorth": 10,

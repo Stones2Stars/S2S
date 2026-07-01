@@ -1,7 +1,5 @@
 {
  "type": "HANDICAP_CHIEFTAIN",
- "description": "TXT_KEY_HANDICAP_CHIEFTAIN",
- "help": "TXT_KEY_HANDICAP_CHIEFTAIN_HELP",
  "maintenance": {
   "empire": {
    "colony": {
@@ -214,6 +212,8 @@
   "startingWorkerUnits": 1
  },
  "identity": {
+  "description": "TXT_KEY_HANDICAP_CHIEFTAIN",
+  "help": "TXT_KEY_HANDICAP_CHIEFTAIN_HELP",
   "advancedStart": {
    "pointsMod": 140,
    "aiPercent": 100

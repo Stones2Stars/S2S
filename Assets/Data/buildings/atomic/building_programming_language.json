@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_PROGRAMMING_LANGUAGE",
- "description": "TXT_KEY_BUILDING_PROGRAMMING_LANGUAGE",
- "civilopedia": "TXT_KEY_BUILDING_PROGRAMMING_LANGUAGE_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -39,6 +37,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_PROGRAMMING_LANGUAGE",
+  "civilopedia": "TXT_KEY_BUILDING_PROGRAMMING_LANGUAGE_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

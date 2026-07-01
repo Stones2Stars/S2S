@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_EFFECT_MEDICAL_DATABASE",
- "description": "TXT_KEY_BUILDING_EFFECT_MEDICAL_DATABASE",
- "civilopedia": "TXT_KEY_BUILDING_EFFECT_MEDICAL_DATABASE_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_3D_BODY_ATLAS"
@@ -39,6 +37,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_EFFECT_MEDICAL_DATABASE",
+  "civilopedia": "TXT_KEY_BUILDING_EFFECT_MEDICAL_DATABASE_PEDIA",
   "notConstructible": true,
   "nukeImmune": true,
   "neverCapture": true,

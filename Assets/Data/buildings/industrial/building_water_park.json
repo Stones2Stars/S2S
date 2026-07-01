@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_WATER_PARK",
- "description": "TXT_KEY_BUILDING_WATER_PARK",
- "civilopedia": "TXT_KEY_BUILDING_WATER_PARK_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_HIGH_TECH_CULTURAL_ENRICHMENT"
@@ -80,6 +78,8 @@
   "construct": "AS2D_BUILD_AMUSEMENT_PARK"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_WATER_PARK",
+  "civilopedia": "TXT_KEY_BUILDING_WATER_PARK_PEDIA",
   "worth": 8,
   "conquestProbability": 75,
   "advisor": "ADVISOR_CULTURE",

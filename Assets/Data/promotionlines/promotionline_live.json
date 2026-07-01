@@ -1,12 +1,12 @@
 {
  "type": "PROMOTIONLINE_LIVE",
- "description": "TXT_KEY_PROMOTIONLINE_LIVE",
  "ui": {
   "art": {
    "icon": "Art/Interface/Buttons/Promotions/Phoenix1.dds"
   }
  },
  "identity": {
+  "description": "TXT_KEY_PROMOTIONLINE_LIVE",
   "unitCombats": [
    "UNITCOMBAT_HERO"
   ]

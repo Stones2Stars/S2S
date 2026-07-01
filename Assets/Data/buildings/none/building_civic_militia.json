@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_CIVIC_MILITIA",
- "description": "TXT_KEY_BUILDING_CIVIC_MILITIA",
- "civilopedia": "TXT_KEY_BUILDING_CIVIC_MILITIA_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -23,6 +21,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_CIVIC_MILITIA",
+  "civilopedia": "TXT_KEY_BUILDING_CIVIC_MILITIA_PEDIA",
   "notConstructible": true,
   "nukeImmune": true,
   "neverCapture": true,

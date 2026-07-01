@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_METEORITE_LAB",
- "description": "TXT_KEY_BUILDING_METEORITE_LAB",
- "civilopedia": "TXT_KEY_BUILDING_METEORITE_LAB_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -68,6 +66,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_METEORITE_LAB",
+  "civilopedia": "TXT_KEY_BUILDING_METEORITE_LAB_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

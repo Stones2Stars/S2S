@@ -1,7 +1,5 @@
 {
  "type": "BONUS_ELECTRUM_WARES",
- "description": "TXT_KEY_BONUS_ELECTRUM_WARES",
- "civilopedia": "TXT_KEY_BONUS_WARES_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_JEWELER"
@@ -13,6 +11,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_ELECTRUM_WARES",
+  "civilopedia": "TXT_KEY_BONUS_WARES_PEDIA",
   "bonusClassType": "BONUSCLASS_MANUFACTURED"
  }
 }

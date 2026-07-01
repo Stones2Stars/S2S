@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_BELLADONNA",
- "description": "TXT_KEY_BUILDING_BELLADONNA",
- "civilopedia": "TXT_KEY_BUILDING_BELLADONNA_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_RESOURCES_POISON"
@@ -90,6 +88,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_BELLADONNA",
+  "civilopedia": "TXT_KEY_BUILDING_BELLADONNA_PEDIA",
   "enabledCivilizations": [
    "CIVILIZATION_NPC_NEANDERTHAL"
   ],

@@ -1,8 +1,5 @@
 {
  "type": "TECH_DIRECTED_PANSPERMIA",
- "description": "TXT_KEY_TECH_DIRECTED_PANSPERMIA",
- "civilopedia": "TXT_KEY_TECH_DIRECTED_PANSPERMIA_PEDIA",
- "quote": "TXT_KEY_TECH_DIRECTED_PANSPERMIA_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_INTERGALACTIC_GUIDED_PLANETARY_EVOLUTION",
@@ -58,6 +55,9 @@
   "soundMP": "AS2D_TECH_GENERIC"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_DIRECTED_PANSPERMIA",
+  "civilopedia": "TXT_KEY_TECH_DIRECTED_PANSPERMIA_PEDIA",
+  "quote": "TXT_KEY_TECH_DIRECTED_PANSPERMIA_QUOTE",
   "era": "C2C_ERA_COSMIC",
   "worth": 48,
   "tradeable": true,

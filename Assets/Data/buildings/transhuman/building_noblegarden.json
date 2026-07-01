@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_NOBLEGARDEN",
- "description": "TXT_KEY_BUILDING_NOBLEGARDEN",
- "civilopedia": "TXT_KEY_BUILDING_NOBLEGARDEN_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -128,6 +126,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_NOBLEGARDEN",
+  "civilopedia": "TXT_KEY_BUILDING_NOBLEGARDEN_PEDIA",
   "neverCapture": true,
   "greatPeopleUnitType": "UNIT_ARTIST",
   "advisor": "ADVISOR_SCIENCE",

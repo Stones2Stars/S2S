@@ -1,8 +1,5 @@
 {
  "type": "TECH_CANAL_SYSTEMS",
- "description": "TXT_KEY_TECH_CANAL_SYSTEMS",
- "civilopedia": "TXT_KEY_TECH_CANAL_SYSTEMS_PEDIA",
- "quote": "TXT_KEY_TECH_CANAL_SYSTEMS_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_AQUEDUCT",
@@ -112,6 +109,9 @@
   "soundMP": "AS2D_TECH_CANAL_SYSTEMS"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_CANAL_SYSTEMS",
+  "civilopedia": "TXT_KEY_TECH_CANAL_SYSTEMS_PEDIA",
+  "quote": "TXT_KEY_TECH_CANAL_SYSTEMS_QUOTE",
   "era": "C2C_ERA_CLASSICAL",
   "worth": 24,
   "tradeable": true,

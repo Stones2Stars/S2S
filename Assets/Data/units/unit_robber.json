@@ -1,7 +1,5 @@
 {
  "type": "UNIT_ROBBER",
- "description": "TXT_KEY_UNIT_ROBBER",
- "civilopedia": "TXT_KEY_UNIT_ROBBER_PEDIA",
  "obsoletedBy": {
   "techs": [
    "TECH_COMPREHENSIVE_CYBERNETICS"
@@ -174,6 +172,8 @@
   "upkeep": 11
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_ROBBER",
+  "civilopedia": "TXT_KEY_UNIT_ROBBER_PEDIA",
   "worth": 11,
   "militaryWorth": 37,
   "xpValueAttack": 8,

@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_NEGOTIATORS_HUT",
- "description": "TXT_KEY_BUILDING_NEGOTIATORS_HUT",
- "civilopedia": "TXT_KEY_BUILDING_NEGOTIATORS_HUT_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_AMBASSADORS_HOUSE"
@@ -85,6 +83,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_NEGOTIATORS_HUT",
+  "civilopedia": "TXT_KEY_BUILDING_NEGOTIATORS_HUT_PEDIA",
   "conquestProbability": 70,
   "advisor": "ADVISOR_SCIENCE",
   "mapCategories": [

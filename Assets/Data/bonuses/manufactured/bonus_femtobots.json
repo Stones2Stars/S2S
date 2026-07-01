@@ -1,7 +1,5 @@
 {
  "type": "BONUS_FEMTOBOTS",
- "description": "TXT_KEY_BONUS_FEMTOBOTS",
- "civilopedia": "TXT_KEY_BONUS_FEMTOBOTS_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_FEMTOBOTIC_ASSEMBLER",
@@ -14,6 +12,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_FEMTOBOTS",
+  "civilopedia": "TXT_KEY_BONUS_FEMTOBOTS_PEDIA",
   "bonusClassType": "BONUSCLASS_MANUFACTURED"
  }
 }

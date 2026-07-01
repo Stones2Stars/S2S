@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_GAMMA_ASSEMBLER",
- "description": "TXT_KEY_BUILDING_GAMMA_ASSEMBLER",
- "civilopedia": "TXT_KEY_BUILDING_GAMMA_ASSEMBLER_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_ANIMAMATERIAL_FACTORY",
@@ -103,6 +101,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_GAMMA_ASSEMBLER",
+  "civilopedia": "TXT_KEY_BUILDING_GAMMA_ASSEMBLER_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

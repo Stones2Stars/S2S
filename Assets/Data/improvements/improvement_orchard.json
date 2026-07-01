@@ -1,7 +1,5 @@
 {
  "type": "IMPROVEMENT_ORCHARD",
- "description": "TXT_KEY_IMPROVEMENT_ORCHARD",
- "civilopedia": "TXT_KEY_IMPROVEMENT_ORCHARD_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -289,6 +287,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_IMPROVEMENT_ORCHARD",
+  "civilopedia": "TXT_KEY_IMPROVEMENT_ORCHARD_PEDIA",
   "advancedStart": {
    "cost": 30
   },

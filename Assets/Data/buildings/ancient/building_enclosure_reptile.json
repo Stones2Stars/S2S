@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_ENCLOSURE_REPTILE",
- "description": "TXT_KEY_BUILDING_ENCLOSURE_REPTILE",
- "civilopedia": "TXT_KEY_BUILDING_ENCLOSURE_EXOTIC_HERBIVORE_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_RESOURCES_LIZARDS"
@@ -61,6 +59,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_ENCLOSURE_REPTILE",
+  "civilopedia": "TXT_KEY_BUILDING_ENCLOSURE_EXOTIC_HERBIVORE_PEDIA",
   "worth": 2,
   "conquestProbability": 25,
   "advisor": "ADVISOR_CULTURE",

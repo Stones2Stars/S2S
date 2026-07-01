@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_COASTAL_FISH_FARM",
- "description": "TXT_KEY_BUILDING_COASTAL_FISH_FARM",
- "civilopedia": "TXT_KEY_BUILDING_COASTAL_FISH_FARM_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -55,6 +53,8 @@
   "construct": "AS2D_BUILD_GRANARY"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_COASTAL_FISH_FARM",
+  "civilopedia": "TXT_KEY_BUILDING_COASTAL_FISH_FARM_PEDIA",
   "worth": 3,
   "conquestProbability": 25,
   "advisor": "ADVISOR_GROWTH",

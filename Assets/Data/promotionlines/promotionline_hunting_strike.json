@@ -1,6 +1,5 @@
 {
  "type": "PROMOTIONLINE_HUNTING_STRIKE",
- "description": "TXT_KEY_PROMOTIONLINE_HUNTING_STRIKE",
  "loadPrune": {
   "onGameOptions": [
    "GAMEOPTION_COMBAT_HIDE_SEEK"
@@ -12,6 +11,7 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_PROMOTIONLINE_HUNTING_STRIKE",
   "unitCombats": [
    "UNITCOMBAT_HUNTER"
   ],

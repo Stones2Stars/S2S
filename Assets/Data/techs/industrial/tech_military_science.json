@@ -1,8 +1,5 @@
 {
  "type": "TECH_MILITARY_SCIENCE",
- "description": "TXT_KEY_TECH_MILITARY_SCIENCE",
- "civilopedia": "TXT_KEY_TECH_MILITARY_SCIENCE_PEDIA",
- "quote": "TXT_KEY_TECH_MILITARY_SCIENCE_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_ARC_DE_TRIOMPHE",
@@ -82,6 +79,9 @@
   "soundMP": "AS2D_TECH_MP_MILITARY_SCIENCE"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_MILITARY_SCIENCE",
+  "civilopedia": "TXT_KEY_TECH_MILITARY_SCIENCE_PEDIA",
+  "quote": "TXT_KEY_TECH_MILITARY_SCIENCE_QUOTE",
   "era": "C2C_ERA_INDUSTRIAL",
   "worth": 32,
   "militaryWorth": 12,

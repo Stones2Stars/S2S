@@ -1,8 +1,5 @@
 {
  "type": "TECH_ARMORED_VEHICLES",
- "description": "TXT_KEY_TECH_ARMORED_VEHICLES",
- "civilopedia": "TXT_KEY_TECH_ARMORED_VEHICLES_PEDIA",
- "quote": "TXT_KEY_TECH_ARMORED_VEHICLES_QUOTE",
  "enables": {
   "bonuses": [
    "BONUS_TANKS"
@@ -74,6 +71,9 @@
   "soundMP": "AS2D_TECH_ARMORED_VEHICLES"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_ARMORED_VEHICLES",
+  "civilopedia": "TXT_KEY_TECH_ARMORED_VEHICLES_PEDIA",
+  "quote": "TXT_KEY_TECH_ARMORED_VEHICLES_QUOTE",
   "era": "C2C_ERA_ATOMIC",
   "worth": 40,
   "militaryWorth": 10,

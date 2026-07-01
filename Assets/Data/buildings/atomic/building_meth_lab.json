@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_METH_LAB",
- "description": "TXT_KEY_BUILDING_METH_LAB",
- "civilopedia": "TXT_KEY_BUILDING_METH_LAB_PEDIA",
  "enables": {
   "units": [
    "UNIT_HEZBOLLAH",
@@ -112,6 +110,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_METH_LAB",
+  "civilopedia": "TXT_KEY_BUILDING_METH_LAB_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

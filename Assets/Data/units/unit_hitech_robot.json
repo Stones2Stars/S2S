@@ -1,7 +1,5 @@
 {
  "type": "UNIT_HITECH_ROBOT",
- "description": "TXT_KEY_UNIT_HITECH_ROBOT",
- "civilopedia": "TXT_KEY_UNIT_HITECH_ROBOT_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -46,6 +44,8 @@
   "upkeep": 21
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_HITECH_ROBOT",
+  "civilopedia": "TXT_KEY_UNIT_HITECH_ROBOT_PEDIA",
   "worth": 5,
   "militaryWorth": 1600,
   "xpValueAttack": 6,

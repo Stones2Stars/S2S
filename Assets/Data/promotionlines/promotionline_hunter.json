@@ -1,12 +1,12 @@
 {
  "type": "PROMOTIONLINE_HUNTER",
- "description": "TXT_KEY_PROMOTIONLINE_HUNTER",
  "ui": {
   "art": {
    "icon": "Art/Interface/Buttons/Promotions/hunter1.dds"
   }
  },
  "identity": {
+  "description": "TXT_KEY_PROMOTIONLINE_HUNTER",
   "unitCombats": [
    "UNITCOMBAT_HUNTER"
   ]

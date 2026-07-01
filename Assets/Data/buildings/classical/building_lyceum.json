@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_LYCEUM",
- "description": "TXT_KEY_BUILDING_LYCEUM",
- "civilopedia": "TXT_KEY_BUILDING_LYCEUM_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_ELEMENTARY_SCHOOL"
@@ -110,6 +108,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_LYCEUM",
+  "civilopedia": "TXT_KEY_BUILDING_LYCEUM_PEDIA",
   "conquestProbability": 70,
   "advisor": "ADVISOR_SCIENCE",
   "mapCategories": [

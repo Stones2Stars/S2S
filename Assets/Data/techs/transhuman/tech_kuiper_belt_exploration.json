@@ -1,8 +1,5 @@
 {
  "type": "TECH_KUIPER_BELT_EXPLORATION",
- "description": "TXT_KEY_TECH_KUIPER_BELT_EXPLORATION",
- "civilopedia": "TXT_KEY_TECH_KUIPER_BELT_EXPLORATION_PEDIA",
- "quote": "TXT_KEY_TECH_KUIPER_BELT_EXPLORATION_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_CALLISTO_RESUPPLY_BASE",
@@ -79,6 +76,9 @@
   "soundMP": "AS2D_TECH_KUIPER_BELT_EXPLORATION"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_KUIPER_BELT_EXPLORATION",
+  "civilopedia": "TXT_KEY_TECH_KUIPER_BELT_EXPLORATION_PEDIA",
+  "quote": "TXT_KEY_TECH_KUIPER_BELT_EXPLORATION_QUOTE",
   "era": "C2C_ERA_TRANSHUMAN",
   "worth": 48,
   "militaryWorth": 4,

@@ -1,12 +1,12 @@
 {
  "type": "UNITCOMBAT_CULTURE_TUCANO",
- "description": "TXT_KEY_UNITCOMBAT_CULTURE_TUCANO",
  "ui": {
   "art": {
    "icon": "Art/categories/culture_newcultures.dds"
   }
  },
  "identity": {
+  "description": "TXT_KEY_UNITCOMBAT_CULTURE_TUCANO",
   "culture": "BONUS_TUCANO"
  }
 }

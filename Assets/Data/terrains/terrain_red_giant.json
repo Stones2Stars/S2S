@@ -1,7 +1,5 @@
 {
  "type": "TERRAIN_RED_GIANT",
- "description": "TXT_KEY_TERRAIN_RED_GIANT",
- "civilopedia": "TXT_KEY_TERRAIN_RED_GIANT_PEDIA",
  "commerce": {
   "plot": {
    "flat": 2
@@ -23,6 +21,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_TERRAIN_RED_GIANT",
+  "civilopedia": "TXT_KEY_TERRAIN_RED_GIANT_PEDIA",
   "found": true,
   "movementCost": 1,
   "mapCategories": [

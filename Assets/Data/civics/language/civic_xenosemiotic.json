@@ -1,8 +1,5 @@
 {
  "type": "CIVIC_XENOSEMIOTIC",
- "description": "TXT_KEY_CIVIC_XENOSEMIOTIC",
- "civilopedia": "TXT_KEY_CIVIC_XENOSEMIOTIC_PEDIA",
- "strategy": "TXT_KEY_CIVIC_XENOSEMIOTIC_STRATEGY",
  "commerce": {
   "empire": {
    "percent": [
@@ -95,6 +92,9 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_CIVIC_XENOSEMIOTIC",
+  "civilopedia": "TXT_KEY_CIVIC_XENOSEMIOTIC_PEDIA",
+  "strategy": "TXT_KEY_CIVIC_XENOSEMIOTIC_STRATEGY",
   "civicOption": "CIVICOPTION_LANGUAGE",
   "upkeepLevel": "UPKEEP_EXTREME"
  }

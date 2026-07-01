@@ -1,8 +1,5 @@
 {
  "type": "TECH_SCULPTURE",
- "description": "TXT_KEY_TECH_SCULPTURE",
- "civilopedia": "TXT_KEY_TECH_SCULPTURE_PEDIA",
- "quote": "TXT_KEY_TECH_SCULPTURE_QUOTE",
  "enables": {
   "bonuses": [
    "BONUS_SCULPTURES"
@@ -62,6 +59,9 @@
   "soundMP": "AS2D_TECH_SCULPTURE"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_SCULPTURE",
+  "civilopedia": "TXT_KEY_TECH_SCULPTURE_PEDIA",
+  "quote": "TXT_KEY_TECH_SCULPTURE_QUOTE",
   "era": "C2C_ERA_ANCIENT",
   "worth": 8,
   "tradeable": true,

@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_MISSION_TO_MARS",
- "description": "TXT_KEY_BUILDING_MISSION_TO_MARS",
- "civilopedia": "TXT_KEY_BUILDING_MISSION_TO_MARS_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -68,6 +66,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_MISSION_TO_MARS",
+  "civilopedia": "TXT_KEY_BUILDING_MISSION_TO_MARS_PEDIA",
   "conquestProbability": 100,
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,

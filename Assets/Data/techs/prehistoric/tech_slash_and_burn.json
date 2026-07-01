@@ -1,8 +1,5 @@
 {
  "type": "TECH_SLASH_AND_BURN",
- "description": "TXT_KEY_TECH_SLASH_AND_BURN",
- "civilopedia": "TXT_KEY_TECH_SLASH_AND_BURN_PEDIA",
- "quote": "TXT_KEY_TECH_SLASH_AND_BURN_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_FIRE_ABATIS"
@@ -87,6 +84,9 @@
   "soundMP": "AS2D_TECH_SLASH_AND_BURN"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_SLASH_AND_BURN",
+  "civilopedia": "TXT_KEY_TECH_SLASH_AND_BURN_PEDIA",
+  "quote": "TXT_KEY_TECH_SLASH_AND_BURN_QUOTE",
   "era": "C2C_ERA_PREHISTORIC",
   "worth": 8,
   "militaryWorth": 1,

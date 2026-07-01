@@ -1,8 +1,5 @@
 {
  "type": "UNIT_F14_TOMCAT",
- "description": "TXT_KEY_UNIT_F14_TOMCAT",
- "civilopedia": "TXT_KEY_UNIT_F14_TOMCAT_PEDIA",
- "help": "TXT_KEY_UNIT_CARRIER_OPS_HELP",
  "requires": {
   "build": {
    "all": [
@@ -105,6 +102,9 @@
   "upkeep": 3
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_F14_TOMCAT",
+  "civilopedia": "TXT_KEY_UNIT_F14_TOMCAT_PEDIA",
+  "help": "TXT_KEY_UNIT_CARRIER_OPS_HELP",
   "worth": 4,
   "militaryWorth": 24,
   "xpValueAttack": 4,

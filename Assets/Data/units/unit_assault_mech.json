@@ -1,7 +1,5 @@
 {
  "type": "UNIT_ASSAULT_MECH",
- "description": "TXT_KEY_UNIT_ASSAULT_MECH",
- "civilopedia": "TXT_KEY_UNIT_ASSAULT_MECH_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -80,6 +78,8 @@
   "upkeep": 16
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_ASSAULT_MECH",
+  "civilopedia": "TXT_KEY_UNIT_ASSAULT_MECH_PEDIA",
   "worth": 7,
   "militaryWorth": 1100,
   "xpValueAttack": 3,

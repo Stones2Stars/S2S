@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_DIGITAL_VOTING",
- "description": "TXT_KEY_BUILDING_DIGITAL_VOTING",
- "civilopedia": "TXT_KEY_BUILDING_DIGITAL_VOTING_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -45,6 +43,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_DIGITAL_VOTING",
+  "civilopedia": "TXT_KEY_BUILDING_DIGITAL_VOTING_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

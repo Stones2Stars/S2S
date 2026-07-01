@@ -1,7 +1,5 @@
 {
  "type": "TERRAIN_HILL",
- "description": "TXT_KEY_TERRAIN_HILL",
- "civilopedia": "TXT_KEY_TERRAIN_HILL_PEDIA",
  "food": {
   "plot": {
    "flat": -1
@@ -38,6 +36,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_TERRAIN_HILL",
+  "civilopedia": "TXT_KEY_TERRAIN_HILL_PEDIA",
   "movementCost": 1
  }
 }

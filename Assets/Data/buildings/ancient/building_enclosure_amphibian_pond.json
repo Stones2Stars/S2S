@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_ENCLOSURE_AMPHIBIAN_POND",
- "description": "TXT_KEY_BUILDING_ENCLOSURE_AMPHIBIAN_POND",
- "civilopedia": "TXT_KEY_BUILDING_WILD_ANIMAL_CAGE_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_RESOURCES_POISON"
@@ -56,6 +54,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_ENCLOSURE_AMPHIBIAN_POND",
+  "civilopedia": "TXT_KEY_BUILDING_WILD_ANIMAL_CAGE_PEDIA",
   "worth": 2,
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [

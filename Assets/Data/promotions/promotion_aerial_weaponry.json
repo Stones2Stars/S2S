@@ -1,6 +1,5 @@
 {
  "type": "PROMOTION_AERIAL_WEAPONRY",
- "description": "TXT_KEY_PROMOTION_AERIAL_WEAPONRY",
  "firstStrike": {
   "unit": {
    "strikes": {
@@ -31,6 +30,7 @@
   "sound": "AS2D_IF_LEVELUP"
  },
  "identity": {
+  "description": "TXT_KEY_PROMOTION_AERIAL_WEAPONRY",
   "unitCombats": [
    "UNITCOMBAT_ARCHER",
    "UNITCOMBAT_GUN",

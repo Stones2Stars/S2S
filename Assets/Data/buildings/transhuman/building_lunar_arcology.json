@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_LUNAR_ARCOLOGY",
- "description": "TXT_KEY_BUILDING_LUNAR_ARCOLOGY",
- "civilopedia": "TXT_KEY_BUILDING_LUNAR_ARCOLOGY_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_GIGAVERSE_PORTAL",
@@ -59,6 +57,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_LUNAR_ARCOLOGY",
+  "civilopedia": "TXT_KEY_BUILDING_LUNAR_ARCOLOGY_PEDIA",
   "workableRadius": 3,
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,

@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_CARNIVAL_BOXING_KANGAROO",
- "description": "TXT_KEY_BUILDING_CARNIVAL_BOXING_KANGAROO",
- "civilopedia": "TXT_KEY_BUILDING_CARNIVAL_BOXING_KANGAROO_PEDIA",
  "obsoletedBy": {
   "techs": [
    "TECH_ADVANCED_AVIATION"
@@ -42,6 +40,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_CARNIVAL_BOXING_KANGAROO",
+  "civilopedia": "TXT_KEY_BUILDING_CARNIVAL_BOXING_KANGAROO_PEDIA",
   "worth": 1,
   "conquestProbability": 25,
   "advisor": "ADVISOR_CULTURE",

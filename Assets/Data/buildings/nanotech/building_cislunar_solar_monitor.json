@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_CISLUNAR_SOLAR_MONITOR",
- "description": "TXT_KEY_BUILDING_CISLUNAR_SOLAR_MONITOR",
- "civilopedia": "TXT_KEY_BUILDING_CISLUNAR_SOLAR_MONITOR_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_CISLUNAR_SANITATION_SYSTEM"
@@ -47,6 +45,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_CISLUNAR_SOLAR_MONITOR",
+  "civilopedia": "TXT_KEY_BUILDING_CISLUNAR_SOLAR_MONITOR_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

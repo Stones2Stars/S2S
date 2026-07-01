@@ -1,7 +1,5 @@
 {
  "type": "UNIT_KOMODO_DRAGON",
- "description": "TXT_KEY_UNIT_KOMODO_DRAGON",
- "civilopedia": "TXT_KEY_UNIT_KOMODO_DRAGON_PEDIA",
  "skills": {
   "assassin": true,
   "blendIntoCity": true,
@@ -57,6 +55,8 @@
   ]
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_KOMODO_DRAGON",
+  "civilopedia": "TXT_KEY_UNIT_KOMODO_DRAGON_PEDIA",
   "spawnOnly": true,
   "xpValueAttack": 7,
   "xpValueDefense": 5,

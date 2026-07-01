@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_ANIMAL_SHELTER",
- "description": "TXT_KEY_BUILDING_ANIMAL_SHELTER",
- "civilopedia": "TXT_KEY_BUILDING_ANIMAL_SHELTER_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_HIGH_TECH_CULTURAL_ENRICHMENT"
@@ -82,6 +80,8 @@
   "construct": "AS2D_BUILD_GRANARY"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_ANIMAL_SHELTER",
+  "civilopedia": "TXT_KEY_BUILDING_ANIMAL_SHELTER_PEDIA",
   "worth": 4,
   "militaryWorth": 2,
   "advisor": "ADVISOR_GROWTH",

@@ -1,6 +1,5 @@
 {
  "type": "PROMOTION_SPEED",
- "description": "TXT_KEY_PROMOTION_SPEED",
  "movement": {
   "unit": {
    "moves": {
@@ -17,6 +16,7 @@
   "sound": "AS2D_IF_LEVELUP"
  },
  "identity": {
+  "description": "TXT_KEY_PROMOTION_SPEED",
   "unitCombats": [
    "UNITCOMBAT_EXPLORER",
    "UNITCOMBAT_THROWING",

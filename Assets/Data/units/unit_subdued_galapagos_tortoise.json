@@ -1,8 +1,5 @@
 {
  "type": "UNIT_SUBDUED_GALAPAGOS_TORTOISE",
- "description": "TXT_KEY_UNIT_SUBDUED_GALAPAGOS_TORTOISE",
- "civilopedia": "TXT_KEY_UNIT_GALAPAGOS_TORTOISE_PEDIA",
- "help": "TXT_KEY_UNIT_SUBDUED_ANIMALS_HELP",
  "skills": {
   "onlyDefensive": true,
   "militaryTrade": true
@@ -51,6 +48,9 @@
   ]
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_SUBDUED_GALAPAGOS_TORTOISE",
+  "civilopedia": "TXT_KEY_UNIT_GALAPAGOS_TORTOISE_PEDIA",
+  "help": "TXT_KEY_UNIT_SUBDUED_ANIMALS_HELP",
   "spawnOnly": true,
   "worth": 1,
   "domain": "DOMAIN_LAND",

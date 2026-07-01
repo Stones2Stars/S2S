@@ -1,7 +1,5 @@
 {
  "type": "UNIT_MERCHANTFLEET",
- "description": "TXT_KEY_UNIT_MERCHANT_FLEET",
- "civilopedia": "TXT_KEY_CONCEPT_GREAT_PEOPLE_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -31,6 +29,8 @@
   "upkeep": 1
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_MERCHANT_FLEET",
+  "civilopedia": "TXT_KEY_CONCEPT_GREAT_PEOPLE_PEDIA",
   "spawnOnly": true,
   "worth": 5,
   "domain": "DOMAIN_SEA",

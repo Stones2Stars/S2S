@@ -1,7 +1,5 @@
 {
  "type": "TRAIT_CREATIVE1",
- "description": "TXT_KEY_TRAIT_CREATIVE0",
- "civilopedia": "TXT_KEY_TRAIT_CREATIVE_PEDIA",
  "enables": {
   "traits": [
    "TRAIT_CREATIVE2"
@@ -222,6 +220,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_TRAIT_CREATIVE0",
+  "civilopedia": "TXT_KEY_TRAIT_CREATIVE_PEDIA",
   "shortDescription": "TXT_KEY_TRAIT_CREATIVE_SHORT"
  }
 }

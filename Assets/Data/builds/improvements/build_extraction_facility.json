@@ -1,6 +1,5 @@
 {
  "type": "BUILD_EXTRACTION_FACILITY",
- "description": "TXT_KEY_BUILD_EXTRACTION_FACILITY",
  "requires": {
   "build": {
    "all": [
@@ -39,6 +38,7 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILD_EXTRACTION_FACILITY",
   "consumesUnit": true
  }
 }

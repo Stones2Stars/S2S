@@ -1,7 +1,5 @@
 {
  "type": "UNIT_DOLPHIN_MECH",
- "description": "TXT_KEY_UNIT_DOLPHIN_MECH",
- "civilopedia": "TXT_KEY_UNIT_DOLPHIN_MECH_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -96,6 +94,8 @@
   "hurryCostModifier": 50
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_DOLPHIN_MECH",
+  "civilopedia": "TXT_KEY_UNIT_DOLPHIN_MECH_PEDIA",
   "worth": 6,
   "militaryWorth": 400,
   "xpValueAttack": 6,

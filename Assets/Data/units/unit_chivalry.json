@@ -1,7 +1,5 @@
 {
  "type": "UNIT_CHIVALRY",
- "description": "TXT_KEY_UNIT_CHIVALRY",
- "civilopedia": "TXT_KEY_UNIT_CHIVALRY_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -102,6 +100,8 @@
   "upkeep": 1
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_CHIVALRY",
+  "civilopedia": "TXT_KEY_UNIT_CHIVALRY_PEDIA",
   "worth": 3,
   "militaryWorth": 14,
   "xpValueAttack": 3,

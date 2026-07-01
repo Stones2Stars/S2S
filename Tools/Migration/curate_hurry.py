@@ -56,6 +56,7 @@ def curate(typ, rec):
     art_blocks = {}
     cc.put_art(art_blocks, "Button", engine.text(rec.find("Button")))   # -> ui.art.icon via ART_BLOCK
     cc.emit_art(out, art_blocks)
+    cc.fold_text_to_identity(out)   # TEXT -> identity (json.md §7)
     return out
 
 

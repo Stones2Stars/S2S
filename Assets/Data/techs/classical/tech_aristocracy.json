@@ -1,8 +1,5 @@
 {
  "type": "TECH_ARISTOCRACY",
- "description": "TXT_KEY_TECH_ARISTOCRACY",
- "civilopedia": "TXT_KEY_TECH_ARISTOCRACY_PEDIA",
- "quote": "TXT_KEY_TECH_ARISTOCRACY_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_CULTURE_FRENCH"
@@ -67,6 +64,9 @@
   "soundMP": "AS2D_TECH_ARISTOCRACY"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_ARISTOCRACY",
+  "civilopedia": "TXT_KEY_TECH_ARISTOCRACY_PEDIA",
+  "quote": "TXT_KEY_TECH_ARISTOCRACY_QUOTE",
   "era": "C2C_ERA_CLASSICAL",
   "worth": 16,
   "tradeable": true,

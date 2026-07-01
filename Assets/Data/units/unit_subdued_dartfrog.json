@@ -1,8 +1,5 @@
 {
  "type": "UNIT_SUBDUED_DARTFROG",
- "description": "TXT_KEY_UNIT_SUBDUED_DARTFROG",
- "civilopedia": "TXT_KEY_UNIT_DARTFROG_PEDIA",
- "help": "TXT_KEY_UNIT_SUBDUED_ANIMALS_HELP",
  "skills": {
   "onlyDefensive": true,
   "militaryTrade": true
@@ -37,6 +34,9 @@
   ]
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_SUBDUED_DARTFROG",
+  "civilopedia": "TXT_KEY_UNIT_DARTFROG_PEDIA",
+  "help": "TXT_KEY_UNIT_SUBDUED_ANIMALS_HELP",
   "spawnOnly": true,
   "worth": 1,
   "domain": "DOMAIN_LAND",

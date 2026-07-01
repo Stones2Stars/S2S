@@ -1,6 +1,5 @@
 {
  "type": "ROUTE_GRAVITY_TRAIN",
- "description": "TXT_KEY_ROUTE_GRAVITY_TRAIN",
  "food": {
   "plot": {
    "improvements": {
@@ -108,6 +107,7 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_ROUTE_GRAVITY_TRAIN",
   "value": 10,
   "advancedStart": {
    "cost": 24

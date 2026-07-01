@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_FACTORY_HELICOPTERS",
- "description": "TXT_KEY_BUILDING_FACTORY_HELICOPTERS",
- "civilopedia": "TXT_KEY_BUILDING_FACTORY_HELICOPTERS_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_MILITARY_INDUSTRIAL_COMPLEX"
@@ -124,6 +122,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_FACTORY_HELICOPTERS",
+  "civilopedia": "TXT_KEY_BUILDING_FACTORY_HELICOPTERS_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

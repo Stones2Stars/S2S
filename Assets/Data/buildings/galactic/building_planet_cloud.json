@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_PLANET_CLOUD",
- "description": "TXT_KEY_BUILDING_PLANET_CLOUD",
- "civilopedia": "TXT_KEY_BUILDING_PLANET_CLOUD_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -70,6 +68,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_PLANET_CLOUD",
+  "civilopedia": "TXT_KEY_BUILDING_PLANET_CLOUD_PEDIA",
   "conquestProbability": 100,
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,

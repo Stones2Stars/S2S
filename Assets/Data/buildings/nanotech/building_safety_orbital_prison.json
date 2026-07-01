@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_SAFETY_ORBITAL_PRISON",
- "description": "TXT_KEY_BUILDING_SAFETY_ORBITAL_PRISON",
- "civilopedia": "TXT_KEY_BUILDING_SAFETY_ORBITAL_PRISON_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_CRIME_PRISON_BREAKOUTS"
@@ -54,6 +52,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_SAFETY_ORBITAL_PRISON",
+  "civilopedia": "TXT_KEY_BUILDING_SAFETY_ORBITAL_PRISON_PEDIA",
   "notConstructible": true,
   "nukeImmune": true,
   "neverCapture": true,

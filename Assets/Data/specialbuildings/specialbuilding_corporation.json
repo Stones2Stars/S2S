@@ -1,9 +1,11 @@
 {
  "type": "SPECIALBUILDING_CORPORATION",
- "description": "TXT_KEY_SPECIALBUILDING_CORPORATION",
  "ui": {
   "art": {
    "icon": ",Art/Interface/Buttons/TechTree/Corporation.dds,Art/Interface/Buttons/TechTree_Atlas.dds,6,9"
   }
+ },
+ "identity": {
+  "description": "TXT_KEY_SPECIALBUILDING_CORPORATION"
  }
 }

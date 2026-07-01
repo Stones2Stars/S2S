@@ -1,7 +1,5 @@
 {
  "type": "TERRAIN_PLAINS",
- "description": "TXT_KEY_TERRAIN_PLAINS",
- "civilopedia": "TXT_KEY_TERRAIN_PLAINS_PEDIA",
  "food": {
   "plot": {
    "flat": 1
@@ -131,6 +129,8 @@
   "soundscape": "ASSS_PLAINS_SELECT_AMB"
  },
  "identity": {
+  "description": "TXT_KEY_TERRAIN_PLAINS",
+  "civilopedia": "TXT_KEY_TERRAIN_PLAINS_PEDIA",
   "found": true,
   "movementCost": 1,
   "mapCategories": [

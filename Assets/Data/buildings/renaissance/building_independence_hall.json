@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_INDEPENDENCE_HALL",
- "description": "TXT_KEY_BUILDING_INDEPENDENCE_HALL",
- "civilopedia": "TXT_KEY_BUILDING_INDEPENDENCE_HALL_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -75,6 +73,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_INDEPENDENCE_HALL",
+  "civilopedia": "TXT_KEY_BUILDING_INDEPENDENCE_HALL_PEDIA",
   "centerInCity": true,
   "worth": 10,
   "conquestProbability": 100,

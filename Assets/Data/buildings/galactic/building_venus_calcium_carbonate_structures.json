@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_VENUS_CALCIUM_CARBONATE_STRUCTURES",
- "description": "TXT_KEY_BUILDING_VENUS_CALCIUM_CARBONATE_STRUCTURES",
- "civilopedia": "TXT_KEY_BUILDING_VENUS_CALCIUM_CARBONATE_STRUCTURES_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_TERRAFORMED_VENUS"
@@ -53,6 +51,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_VENUS_CALCIUM_CARBONATE_STRUCTURES",
+  "civilopedia": "TXT_KEY_BUILDING_VENUS_CALCIUM_CARBONATE_STRUCTURES_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

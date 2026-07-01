@@ -1,7 +1,5 @@
 {
  "type": "UNIT_PRIVATEER",
- "description": "TXT_KEY_UNIT_PRIVATEER",
- "civilopedia": "TXT_KEY_UNIT_PRIVATEER_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -112,6 +110,8 @@
   "upkeep": 1
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_PRIVATEER",
+  "civilopedia": "TXT_KEY_UNIT_PRIVATEER_PEDIA",
   "worth": 2,
   "militaryWorth": 40,
   "xpValueAttack": 3,

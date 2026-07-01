@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_DEEP_SPACE_SUN_SCOOP",
- "description": "TXT_KEY_BUILDING_DEEP_SPACE_SUN_SCOOP",
- "civilopedia": "TXT_KEY_BUILDING_DEEP_SPACE_SUN_SCOOP_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_DEEP_SPACE_SUN_SCOOP_POWER_PLANT",
@@ -50,6 +48,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_DEEP_SPACE_SUN_SCOOP",
+  "civilopedia": "TXT_KEY_BUILDING_DEEP_SPACE_SUN_SCOOP_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

@@ -1,6 +1,5 @@
 {
  "type": "PROMOTION_WIND_HORSE2",
- "description": "TXT_KEY_PROMOTION_WIND_HORSE2",
  "experience": {
   "unit": {
    "percent": 15
@@ -40,6 +39,7 @@
   "sound": "AS2D_IF_LEVELUP"
  },
  "identity": {
+  "description": "TXT_KEY_PROMOTION_WIND_HORSE2",
   "stateReligionPrereq": "RELIGION_TENGRIISM"
  }
 }

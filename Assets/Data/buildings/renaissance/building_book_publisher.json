@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_BOOK_PUBLISHER",
- "description": "TXT_KEY_BUILDING_BOOK_PUBLISHER",
- "civilopedia": "TXT_KEY_BUILDING_BOOK_PUBLISHER_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_HIGH_TECH_CULTURAL_ENRICHMENT"
@@ -82,6 +80,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_BOOK_PUBLISHER",
+  "civilopedia": "TXT_KEY_BUILDING_BOOK_PUBLISHER_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

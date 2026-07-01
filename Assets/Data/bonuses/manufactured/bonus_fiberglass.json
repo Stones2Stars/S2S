@@ -1,7 +1,5 @@
 {
  "type": "BONUS_FIBERGLASS",
- "description": "TXT_KEY_BONUS_FIBERGLASS",
- "civilopedia": "TXT_KEY_BONUS_FIBERGLASS_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_ELECTRIC_LAMPS",
@@ -18,6 +16,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_FIBERGLASS",
+  "civilopedia": "TXT_KEY_BONUS_FIBERGLASS_PEDIA",
   "bonusClassType": "BONUSCLASS_MANUFACTURED"
  }
 }

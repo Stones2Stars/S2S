@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_MISSION_TO_THE_GALACTIC_CORE",
- "description": "TXT_KEY_BUILDING_MISSION_TO_THE_GALACTIC_CORE",
- "civilopedia": "TXT_KEY_BUILDING_GALACTIC_CORE_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -56,6 +54,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_MISSION_TO_THE_GALACTIC_CORE",
+  "civilopedia": "TXT_KEY_BUILDING_GALACTIC_CORE_PEDIA",
   "conquestProbability": 100,
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,

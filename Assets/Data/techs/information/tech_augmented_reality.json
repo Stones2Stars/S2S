@@ -1,8 +1,5 @@
 {
  "type": "TECH_AUGMENTED_REALITY",
- "description": "TXT_KEY_TECH_AUGMENTED_REALITY",
- "civilopedia": "TXT_KEY_TECH_AUGMENTED_REALITY_PEDIA",
- "quote": "TXT_KEY_TECH_AUGUMENTEDREALITY_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_AUGMENTED_EQUIPMENT_CENTER",
@@ -69,6 +66,9 @@
   "soundMP": "AS2D_TECH_AUGUMENTEDREALITY"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_AUGMENTED_REALITY",
+  "civilopedia": "TXT_KEY_TECH_AUGMENTED_REALITY_PEDIA",
+  "quote": "TXT_KEY_TECH_AUGUMENTEDREALITY_QUOTE",
   "era": "C2C_ERA_INFORMATION",
   "worth": 14,
   "tradeable": true,

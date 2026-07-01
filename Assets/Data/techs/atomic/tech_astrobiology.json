@@ -1,8 +1,5 @@
 {
  "type": "TECH_ASTROBIOLOGY",
- "description": "TXT_KEY_TECH_ASTROBIOLOGY",
- "civilopedia": "TXT_KEY_TECH_ASTROBIOLOGY_PEDIA",
- "quote": "TXT_KEY_TECH_ASTROBIOLOGY_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_ASTROBIOLOGY_LAB"
@@ -62,6 +59,9 @@
   "soundMP": "AS2D_TECH_ASTROBIOLOGY"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_ASTROBIOLOGY",
+  "civilopedia": "TXT_KEY_TECH_ASTROBIOLOGY_PEDIA",
+  "quote": "TXT_KEY_TECH_ASTROBIOLOGY_QUOTE",
   "era": "C2C_ERA_ATOMIC",
   "worth": 48,
   "militaryWorth": 4,

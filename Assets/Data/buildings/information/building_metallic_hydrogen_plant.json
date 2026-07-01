@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_METALLIC_HYDROGEN_PLANT",
- "description": "TXT_KEY_BUILDING_METALLIC_HYDROGEN_PLANT",
- "civilopedia": "TXT_KEY_BUILDING_METALLIC_HYDROGEN_PLANT_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_PICOTECH_COMPLEX"
@@ -64,6 +62,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_METALLIC_HYDROGEN_PLANT",
+  "civilopedia": "TXT_KEY_BUILDING_METALLIC_HYDROGEN_PLANT_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

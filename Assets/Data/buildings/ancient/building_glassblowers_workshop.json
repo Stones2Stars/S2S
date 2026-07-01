@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_GLASSBLOWERS_WORKSHOP",
- "description": "TXT_KEY_BUILDING_GLASSBLOWERS_WORKSHOP",
- "civilopedia": "TXT_KEY_BUILDING_GLASSBLOWERS_WORKSHOP_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_GUILD_GLASSBLOWERS",
@@ -139,6 +137,8 @@
   "construct": "AS2D_BUILD_GLASSMITH"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_GLASSBLOWERS_WORKSHOP",
+  "civilopedia": "TXT_KEY_BUILDING_GLASSBLOWERS_WORKSHOP_PEDIA",
   "worth": 4,
   "militaryWorth": 2,
   "conquestProbability": 75,

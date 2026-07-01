@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_MARTIAN_ELECTRONICS_FACTORY",
- "description": "TXT_KEY_BUILDING_MARTIAN_ELECTRONICS_FACTORY",
- "civilopedia": "TXT_KEY_BUILDING_MARTIAN_ELECTRONICS_FACTORY_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_MARTIAN_MAGNETIC_FIELD_GENERATOR"
@@ -65,6 +63,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_MARTIAN_ELECTRONICS_FACTORY",
+  "civilopedia": "TXT_KEY_BUILDING_MARTIAN_ELECTRONICS_FACTORY_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

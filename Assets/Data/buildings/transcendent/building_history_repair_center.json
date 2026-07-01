@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_HISTORY_REPAIR_CENTER",
- "description": "TXT_KEY_BUILDING_HISTORY_REPAIR_CENTER",
- "civilopedia": "TXT_KEY_BUILDING_HISTORY_REPAIR_CENTER_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_HISTORICAL_RECREATION"
@@ -53,6 +51,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_HISTORY_REPAIR_CENTER",
+  "civilopedia": "TXT_KEY_BUILDING_HISTORY_REPAIR_CENTER_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

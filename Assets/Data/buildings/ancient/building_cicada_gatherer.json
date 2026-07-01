@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_CICADA_GATHERER",
- "description": "TXT_KEY_BUILDING_CICADA_GATHERER",
- "civilopedia": "TXT_KEY_BUILDING_CICADA_GATHERER_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_CICADA_SANCTUARY",
@@ -90,6 +88,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_CICADA_GATHERER",
+  "civilopedia": "TXT_KEY_BUILDING_CICADA_GATHERER_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

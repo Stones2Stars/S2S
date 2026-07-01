@@ -1,8 +1,5 @@
 {
  "type": "TECH_APPLIED_ECONOMICS",
- "description": "TXT_KEY_TECH_APPLIED_ECONOMICS",
- "civilopedia": "TXT_KEY_TECH_APPLIED_ECONOMICS_PEDIA",
- "quote": "TXT_KEY_TECH_APPLIED_ECONOMICS_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_CREDIT_UNION"
@@ -64,6 +61,9 @@
   "soundMP": "AS2D_TECH_MERCHANTADVENTURES"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_APPLIED_ECONOMICS",
+  "civilopedia": "TXT_KEY_TECH_APPLIED_ECONOMICS_PEDIA",
+  "quote": "TXT_KEY_TECH_APPLIED_ECONOMICS_QUOTE",
   "era": "C2C_ERA_ATOMIC",
   "worth": 50,
   "tradeable": true,

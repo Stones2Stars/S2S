@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_MOBILE_BODEGA",
- "description": "TXT_KEY_BUILDING_MOBILE_BODEGA",
- "civilopedia": "TXT_KEY_BUILDING_MOBILE_BODEGA_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_TELEPORT_BOOTH"
@@ -57,6 +55,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_MOBILE_BODEGA",
+  "civilopedia": "TXT_KEY_BUILDING_MOBILE_BODEGA_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

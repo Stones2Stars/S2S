@@ -1,6 +1,5 @@
 {
  "type": "BUILD_GRAVITY_TRAIN",
- "description": "TXT_KEY_BUILD_GRAVITY_TRAIN",
  "requires": {
   "build": {
    "all": [
@@ -28,5 +27,8 @@
   "art": {
    "entityEvent": "ENTITY_EVENT_SHOVEL"
   }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILD_GRAVITY_TRAIN"
  }
 }

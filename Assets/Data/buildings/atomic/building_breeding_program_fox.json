@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_BREEDING_PROGRAM_FOX",
- "description": "TXT_KEY_BUILDING_BREEDING_PROGRAM_FOX",
- "civilopedia": "TXT_KEY_BUILDING_BREEDING_PROGRAM_FOX_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_RESOURCES_PELTS"
@@ -85,6 +83,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_BREEDING_PROGRAM_FOX",
+  "civilopedia": "TXT_KEY_BUILDING_BREEDING_PROGRAM_FOX_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

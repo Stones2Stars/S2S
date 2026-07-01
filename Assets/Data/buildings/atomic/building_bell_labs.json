@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_BELL_LABS",
- "description": "TXT_KEY_BUILDING_BELL_LABS",
- "civilopedia": "TXT_KEY_BUILDING_BELL_LABS_PEDIA",
  "obsoletedBy": {
   "techs": [
    "TECH_EXOCORTEX_NETWORKS"
@@ -122,6 +120,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_BELL_LABS",
+  "civilopedia": "TXT_KEY_BUILDING_BELL_LABS_PEDIA",
   "conquestProbability": 100,
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,

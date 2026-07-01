@@ -1,7 +1,5 @@
 {
  "type": "UNIT_REDFOX",
- "description": "TXT_KEY_UNIT_REDFOX",
- "civilopedia": "TXT_KEY_UNIT_REDFOX_PEDIA",
  "withdrawal": {
   "unit": {
    "percent": 40
@@ -52,6 +50,8 @@
   ]
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_REDFOX",
+  "civilopedia": "TXT_KEY_UNIT_REDFOX_PEDIA",
   "spawnOnly": true,
   "xpValueAttack": 3,
   "xpValueDefense": 1,

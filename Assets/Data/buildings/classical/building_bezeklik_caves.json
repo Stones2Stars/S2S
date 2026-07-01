@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_BEZEKLIK_CAVES",
- "description": "TXT_KEY_BUILDING_BEZEKLIK_CAVES",
- "civilopedia": "TXT_KEY_BUILDING_BEZEKLIK_CAVES_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -113,6 +111,8 @@
   "construct": "AS2D_BUILD_BUDDHIST"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_BEZEKLIK_CAVES",
+  "civilopedia": "TXT_KEY_BUILDING_BEZEKLIK_CAVES_PEDIA",
   "commerceDoubleTime": {
    "culture": 1000
   },

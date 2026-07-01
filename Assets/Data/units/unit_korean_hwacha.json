@@ -1,7 +1,5 @@
 {
  "type": "UNIT_KOREAN_HWACHA",
- "description": "TXT_KEY_UNIT_KOREAN_HWACHA",
- "civilopedia": "TXT_KEY_UNIT_KOREAN_HWACHA_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -104,6 +102,8 @@
   "upkeep": 1
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_KOREAN_HWACHA",
+  "civilopedia": "TXT_KEY_UNIT_KOREAN_HWACHA_PEDIA",
   "worth": 2,
   "militaryWorth": 12,
   "xpValueAttack": 6,

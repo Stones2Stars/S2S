@@ -1,7 +1,5 @@
 {
  "type": "FEATURE_CORAL_REEF_LIGHTHOUSE",
- "description": "TXT_KEY_FEATURE_CORAL_REEF_LIGHTHOUSE",
- "civilopedia": "TXT_KEY_FEATURE_CORAL_REEF_PEDIA",
  "food": {
   "plot": {
    "flat": 1
@@ -33,6 +31,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_FEATURE_CORAL_REEF_LIGHTHOUSE",
+  "civilopedia": "TXT_KEY_FEATURE_CORAL_REEF_PEDIA",
   "movementCost": 1,
   "appearance": -1,
   "validTerrains": [

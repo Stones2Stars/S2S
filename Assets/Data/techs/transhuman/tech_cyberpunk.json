@@ -1,8 +1,5 @@
 {
  "type": "TECH_CYBERPUNK",
- "description": "TXT_KEY_TECH_CYBERPUNK",
- "civilopedia": "TXT_KEY_TECH_CYBERPUNK_PEDIA",
- "quote": "TXT_KEY_TECH_CYBERPUNK_QUOTE",
  "enables": {
   "bonuses": [
    "BONUS_CYBERPUNK"
@@ -48,6 +45,9 @@
   "soundMP": "AS2D_TECH_GENERIC"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_CYBERPUNK",
+  "civilopedia": "TXT_KEY_TECH_CYBERPUNK_PEDIA",
+  "quote": "TXT_KEY_TECH_CYBERPUNK_QUOTE",
   "era": "C2C_ERA_TRANSHUMAN",
   "worth": 50,
   "militaryWorth": 10,

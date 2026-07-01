@@ -1,7 +1,5 @@
 {
  "type": "BONUS_TIRES",
- "description": "TXT_KEY_BONUS_TIRES",
- "civilopedia": "TXT_KEY_BONUS_TIRES_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_FACTORY_AIRCRAFT",
@@ -21,6 +19,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_TIRES",
+  "civilopedia": "TXT_KEY_BONUS_TIRES_PEDIA",
   "bonusClassType": "BONUSCLASS_MANUFACTURED"
  }
 }

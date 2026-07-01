@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_EU_UNIVERSITY_OF_SALAMANCA",
- "description": "TXT_KEY_BUILDING_EU_UNIVERSITY_OF_SALAMANCA",
- "civilopedia": "TXT_KEY_BUILDING_EU_UNIVERSITY_OF_SALAMANCA_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -135,6 +133,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_EU_UNIVERSITY_OF_SALAMANCA",
+  "civilopedia": "TXT_KEY_BUILDING_EU_UNIVERSITY_OF_SALAMANCA_PEDIA",
   "commerceDoubleTime": {
    "culture": 1000
   },

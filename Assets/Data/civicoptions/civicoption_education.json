@@ -1,4 +1,6 @@
 {
  "type": "CIVICOPTION_EDUCATION",
- "description": "TXT_KEY_CIVICOPTION_EDUCATION"
+ "identity": {
+  "description": "TXT_KEY_CIVICOPTION_EDUCATION"
+ }
 }

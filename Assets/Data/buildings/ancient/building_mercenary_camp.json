@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_MERCENARY_CAMP",
- "description": "TXT_KEY_BUILDING_MERCENARY_CAMP",
- "civilopedia": "TXT_KEY_BUILDING_MERCENARY_CAMP_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_MERCENARY_STABLES"
@@ -80,6 +78,8 @@
   "construct": "AS2D_BUILD_KNIGHT_STABLE"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_MERCENARY_CAMP",
+  "civilopedia": "TXT_KEY_BUILDING_MERCENARY_CAMP_PEDIA",
   "worth": 1,
   "militaryWorth": 3,
   "advisor": "ADVISOR_ECONOMY",

@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_DESIGN_STUDIO",
- "description": "TXT_KEY_BUILDING_DESIGN_STUDIO",
- "civilopedia": "TXT_KEY_BUILDING_DESIGN_STUDIO_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_CGI_ANIMATION_STUDIO",
@@ -100,6 +98,8 @@
   "construct": "AS2D_BUILD_LABORATORY"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_DESIGN_STUDIO",
+  "civilopedia": "TXT_KEY_BUILDING_DESIGN_STUDIO_PEDIA",
   "worth": 6,
   "conquestProbability": 75,
   "dcmAirbombMission": 2,

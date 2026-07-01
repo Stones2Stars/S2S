@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_GREAT_FIREWALL",
- "description": "TXT_KEY_BUILDING_GREAT_FIREWALL",
- "civilopedia": "TXT_KEY_BUILDING_GREAT_FIREWALL_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -62,6 +60,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_GREAT_FIREWALL",
+  "civilopedia": "TXT_KEY_BUILDING_GREAT_FIREWALL_PEDIA",
   "nukeImmune": true,
   "militaryWorth": 5,
   "conquestProbability": 100,

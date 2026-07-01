@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_ART_PATRONAGE",
- "description": "TXT_KEY_BUILDING_ART_PATRONAGE",
- "civilopedia": "TXT_KEY_BUILDING_ART_PATRONAGE_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -162,6 +160,8 @@
   "construct": "AS2D_BUILD_JEWELLERY"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_ART_PATRONAGE",
+  "civilopedia": "TXT_KEY_BUILDING_ART_PATRONAGE_PEDIA",
   "worth": 3,
   "greatPeopleUnitType": "UNIT_ARTIST",
   "advisor": "ADVISOR_CULTURE",

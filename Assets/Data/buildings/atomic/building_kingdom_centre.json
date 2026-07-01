@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_KINGDOM_CENTRE",
- "description": "TXT_KEY_BUILDING_KINGDOM_CENTRE",
- "civilopedia": "TXT_KEY_BUILDING_KINGDOM_CENTRE_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -105,6 +103,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_KINGDOM_CENTRE",
+  "civilopedia": "TXT_KEY_BUILDING_KINGDOM_CENTRE_PEDIA",
   "commerceDoubleTime": {
    "culture": 1000
   },

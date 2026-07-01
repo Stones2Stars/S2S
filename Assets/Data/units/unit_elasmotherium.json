@@ -1,7 +1,5 @@
 {
  "type": "UNIT_ELASMOTHERIUM",
- "description": "TXT_KEY_UNIT_ELASMOTHERIUM",
- "civilopedia": "TXT_KEY_UNIT_ELASMOTHERIUM_PEDIA",
  "collateral": {
   "unit": {
    "damage": {
@@ -58,6 +56,8 @@
   ]
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_ELASMOTHERIUM",
+  "civilopedia": "TXT_KEY_UNIT_ELASMOTHERIUM_PEDIA",
   "spawnOnly": true,
   "xpValueAttack": 11,
   "xpValueDefense": 9,

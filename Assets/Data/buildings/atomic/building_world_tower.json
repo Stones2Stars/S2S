@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_WORLD_TOWER",
- "description": "TXT_KEY_BUILDING_WORLD_TOWER",
- "civilopedia": "TXT_KEY_BUILDING_WORLD_TOWER_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -95,6 +93,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_WORLD_TOWER",
+  "civilopedia": "TXT_KEY_BUILDING_WORLD_TOWER_PEDIA",
   "commerceDoubleTime": {
    "gold": 1000
   },

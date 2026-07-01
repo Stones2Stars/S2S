@@ -1,7 +1,5 @@
 {
  "type": "UNIT_FRENCH_MUSKETEER",
- "description": "TXT_KEY_UNIT_FRENCH_MUSKETEER",
- "civilopedia": "TXT_KEY_UNIT_FRENCH_MUSKETEER_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -89,6 +87,8 @@
   "upkeep": 1
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_FRENCH_MUSKETEER",
+  "civilopedia": "TXT_KEY_UNIT_FRENCH_MUSKETEER_PEDIA",
   "worth": 3,
   "militaryWorth": 52,
   "xpValueAttack": 6,

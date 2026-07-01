@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_GRAND_MARINE_FESTIVAL",
- "description": "TXT_KEY_BUILDING_GRAND_MARINE_FESTIVAL",
- "civilopedia": "TXT_KEY_BUILDING_GRAND_MARINE_FESTIVAL_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -310,6 +308,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_GRAND_MARINE_FESTIVAL",
+  "civilopedia": "TXT_KEY_BUILDING_GRAND_MARINE_FESTIVAL_PEDIA",
   "conquestProbability": 100,
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [

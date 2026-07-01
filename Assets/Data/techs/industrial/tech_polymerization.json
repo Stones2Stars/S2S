@@ -1,8 +1,5 @@
 {
  "type": "TECH_POLYMERIZATION",
- "description": "TXT_KEY_TECH_POLYMERIZATION",
- "civilopedia": "TXT_KEY_TECH_POLYMERIZATION_PEDIA",
- "quote": "TXT_KEY_TECH_POLYMERIZATION_QUOTE",
  "enables": {
   "bonuses": [
    "BONUS_NYLON",
@@ -58,6 +55,9 @@
   "soundMP": "AS2D_TECH_POLYMERIZATION"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_POLYMERIZATION",
+  "civilopedia": "TXT_KEY_TECH_POLYMERIZATION_PEDIA",
+  "quote": "TXT_KEY_TECH_POLYMERIZATION_QUOTE",
   "era": "C2C_ERA_INDUSTRIAL",
   "worth": 40,
   "tradeable": true,

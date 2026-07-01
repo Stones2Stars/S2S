@@ -1,6 +1,5 @@
 {
  "type": "VOTE_UN_FORCE_NO_TRADE",
- "description": "TXT_KEY_UN_VOTE_FORCE_NO_TRADE",
  "voteSource": [
   "DIPLOVOTE_UN"
  ],
@@ -10,5 +9,8 @@
  },
  "effect": {
   "forceNoTrade": true
+ },
+ "identity": {
+  "description": "TXT_KEY_UN_VOTE_FORCE_NO_TRADE"
  }
 }

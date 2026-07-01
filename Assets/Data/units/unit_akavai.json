@@ -1,7 +1,5 @@
 {
  "type": "UNIT_AKAVAI",
- "description": "TXT_KEY_UNIT_AKAVAI",
- "civilopedia": "TXT_KEY_UNIT_AKAVAI_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -138,6 +136,8 @@
   "upkeep": 1
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_AKAVAI",
+  "civilopedia": "TXT_KEY_UNIT_AKAVAI_PEDIA",
   "worth": 3,
   "militaryWorth": 20,
   "xpValueAttack": 6,

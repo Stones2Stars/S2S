@@ -1,8 +1,5 @@
 {
  "type": "TECH_CODE_OF_LAWS",
- "description": "TXT_KEY_TECH_CODE_OF_LAWS",
- "civilopedia": "TXT_KEY_TECH_CODE_OF_LAWS_PEDIA",
- "quote": "TXT_KEY_TECH_CODE_OF_LAWS_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_ACHIEVEMENT_SAFETY",
@@ -98,6 +95,9 @@
   "soundMP": "AS2D_TECH_MP_CODE_OF_LAWS"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_CODE_OF_LAWS",
+  "civilopedia": "TXT_KEY_TECH_CODE_OF_LAWS_PEDIA",
+  "quote": "TXT_KEY_TECH_CODE_OF_LAWS_QUOTE",
   "era": "C2C_ERA_CLASSICAL",
   "worth": 16,
   "tradeable": true,

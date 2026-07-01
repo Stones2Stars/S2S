@@ -1,6 +1,5 @@
 {
  "type": "PROMOTION_TRANSPORT2",
- "description": "TXT_KEY_PROMOTION_TRANSPORT2",
  "strength": {
   "unit": {
    "percent": -20
@@ -30,6 +29,7 @@
   "sound": "AS2D_IF_LEVELUP"
  },
  "identity": {
+  "description": "TXT_KEY_PROMOTION_TRANSPORT2",
   "unitCombats": [
    "UNITCOMBAT_WOODEN_SHIPS"
   ],

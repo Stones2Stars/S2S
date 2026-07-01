@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_TRAINING_DOJO",
- "description": "TXT_KEY_BUILDING_TRAINING_DOJO",
- "civilopedia": "TXT_KEY_BUILDING_TRAINING_DOJO_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_MASTERS_DOJO"
@@ -82,6 +80,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_TRAINING_DOJO",
+  "civilopedia": "TXT_KEY_BUILDING_TRAINING_DOJO_PEDIA",
   "worth": 5,
   "militaryWorth": 6,
   "advisor": "ADVISOR_MILITARY",

@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_PORT",
- "description": "TXT_KEY_BUILDING_PORT",
- "civilopedia": "TXT_KEY_BUILDING_PORT_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_ELLIS_ISLAND",
@@ -183,6 +181,8 @@
   "construct": "AS2D_BUILD_PORT"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_PORT",
+  "civilopedia": "TXT_KEY_BUILDING_PORT_PEDIA",
   "worth": 4,
   "conquestProbability": 100,
   "dcmAirbombMission": 2,

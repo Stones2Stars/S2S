@@ -1,7 +1,5 @@
 {
  "type": "TERRAIN_LAKE_SHORE",
- "description": "TXT_KEY_TERRAIN_FRESHWATER_COAST",
- "civilopedia": "TXT_KEY_TERRAIN_COAST_PEDIA",
  "food": {
   "plot": {
    "flat": 3
@@ -133,6 +131,8 @@
   "soundscape": "ASSS_COAST_SELECT_AMB"
  },
  "identity": {
+  "description": "TXT_KEY_TERRAIN_FRESHWATER_COAST",
+  "civilopedia": "TXT_KEY_TERRAIN_COAST_PEDIA",
   "distanceToLand": 1,
   "freshWaterTerrain": true,
   "movementCost": 2,

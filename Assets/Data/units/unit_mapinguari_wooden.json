@@ -1,7 +1,5 @@
 {
  "type": "UNIT_MAPINGUARI_WOODEN",
- "description": "TXT_KEY_UNIT_MAPINGUARI_WOODEN",
- "civilopedia": "TXT_KEY_UNIT_MAPINGUARI_PEDIA",
  "obsoletedBy": {
   "techs": [
    "TECH_SPEAR_MAKING"
@@ -71,6 +69,8 @@
   "upkeep": 5
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_MAPINGUARI_WOODEN",
+  "civilopedia": "TXT_KEY_UNIT_MAPINGUARI_PEDIA",
   "worth": 1,
   "militaryWorth": 4,
   "xpValueAttack": 2,

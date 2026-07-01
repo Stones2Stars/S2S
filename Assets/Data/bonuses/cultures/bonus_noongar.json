@@ -1,7 +1,5 @@
 {
  "type": "BONUS_NOONGAR",
- "description": "TXT_KEY_BONUS_NOONGAR",
- "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
  "enables": {
   "units": [
    "UNIT_BUSH_TRACKERS",
@@ -14,6 +12,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_NOONGAR",
+  "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
   "bonusClassType": "BONUSCLASS_CULTURE"
  }
 }

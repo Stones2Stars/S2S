@@ -1,6 +1,5 @@
 {
  "type": "PROMOTION_SURPRISE_STATUS",
- "description": "TXT_KEY_PROMOTION_SURPRISE",
  "skills": {
   "stealthDefense": true
  },
@@ -21,6 +20,7 @@
   "sound": "AS2D_IF_LEVELUP"
  },
  "identity": {
+  "description": "TXT_KEY_PROMOTION_SURPRISE",
   "status": true,
   "quick": true,
   "prereqNormInvisible": true

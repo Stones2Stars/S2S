@@ -1,6 +1,5 @@
 {
  "type": "PROMOTIONLINE_MIGHT",
- "description": "TXT_KEY_PROMOTIONLINE_MIGHT",
  "loadPrune": {
   "onGameOptions": [
    "GAMEOPTION_COMBAT_SIZE_MATTERS"
@@ -12,6 +11,7 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_PROMOTIONLINE_MIGHT",
   "notOnUnitCombats": [
    "UNITCOMBAT_PACIFIST",
    "UNITCOMBAT_CIVILIAN",

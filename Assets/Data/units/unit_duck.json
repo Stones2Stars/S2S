@@ -1,7 +1,5 @@
 {
  "type": "UNIT_DUCK",
- "description": "TXT_KEY_UNIT_DUCK",
- "civilopedia": "TXT_KEY_CONCEPT_SUBDUED_ANIMALS_PEDIA",
  "withdrawal": {
   "unit": {
    "percent": 70
@@ -56,6 +54,8 @@
   ]
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_DUCK",
+  "civilopedia": "TXT_KEY_CONCEPT_SUBDUED_ANIMALS_PEDIA",
   "spawnOnly": true,
   "xpValueAttack": 1,
   "xpValueDefense": 1,

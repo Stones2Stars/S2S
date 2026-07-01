@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_METAMATERIAL_FOUNDRY",
- "description": "TXT_KEY_BUILDING_METAMATERIAL_FOUNDRY",
- "civilopedia": "TXT_KEY_BUILDING_METAMATERIAL_FOUNDRY_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_PICOTECH_COMPLEX"
@@ -178,6 +176,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_METAMATERIAL_FOUNDRY",
+  "civilopedia": "TXT_KEY_BUILDING_METAMATERIAL_FOUNDRY_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

@@ -1,8 +1,5 @@
 {
  "type": "TECH_GLOBALIZATION",
- "description": "TXT_KEY_TECH_GLOBALIZATION",
- "civilopedia": "TXT_KEY_TECH_GLOBALIZATION_PEDIA",
- "quote": "TXT_KEY_TECH_GLOBALIZATION_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_AON_CENTER",
@@ -88,6 +85,9 @@
   "soundMP": "AS2D_TECH_GLOBALIZATION"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_GLOBALIZATION",
+  "civilopedia": "TXT_KEY_TECH_GLOBALIZATION_PEDIA",
+  "quote": "TXT_KEY_TECH_GLOBALIZATION_QUOTE",
   "era": "C2C_ERA_ATOMIC",
   "worth": 40,
   "militaryWorth": 10,

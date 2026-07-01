@@ -1,8 +1,5 @@
 {
  "type": "TRAIT_NOMAD",
- "description": "TXT_KEY_TRAIT_COMPLEX_NOMADIC",
- "civilopedia": "TXT_KEY_TRAIT_COMPLEX_NOMADIC_PEDIA",
- "strategy": "TXT_KEY_TRAIT_COMPLEX_NOMADIC_STRATEGY",
  "food": {
   "empire": {
    "improvements": {
@@ -1328,5 +1325,10 @@
   "art": {
    "icon": "art/Buttons/Traits/TraitNomadic.dds"
   }
+ },
+ "identity": {
+  "description": "TXT_KEY_TRAIT_COMPLEX_NOMADIC",
+  "civilopedia": "TXT_KEY_TRAIT_COMPLEX_NOMADIC_PEDIA",
+  "strategy": "TXT_KEY_TRAIT_COMPLEX_NOMADIC_STRATEGY"
  }
 }

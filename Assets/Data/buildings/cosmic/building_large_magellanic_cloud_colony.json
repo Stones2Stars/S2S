@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_LARGE_MAGELLANIC_CLOUD_COLONY",
- "description": "TXT_KEY_BUILDING_LARGE_MAGELLANIC_CLOUD_COLONY",
- "civilopedia": "TXT_KEY_BUILDING_LARGE_MAGELLANIC_CLOUD_COLONY_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -81,6 +79,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_LARGE_MAGELLANIC_CLOUD_COLONY",
+  "civilopedia": "TXT_KEY_BUILDING_LARGE_MAGELLANIC_CLOUD_COLONY_PEDIA",
   "conquestProbability": 100,
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,

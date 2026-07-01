@@ -1,7 +1,5 @@
 {
  "type": "BONUS_OLMEC",
- "description": "TXT_KEY_BONUS_OLMEC",
- "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_BALL_COURT",
@@ -18,6 +16,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_OLMEC",
+  "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
   "bonusClassType": "BONUSCLASS_CULTURE"
  }
 }

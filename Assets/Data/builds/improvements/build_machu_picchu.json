@@ -1,6 +1,5 @@
 {
  "type": "BUILD_MACHU_PICCHU",
- "description": "TXT_KEY_BUILD_MACHU_PICCHU",
  "requires": {
   "build": {
    "all": [
@@ -32,5 +31,8 @@
   "art": {
    "entityEvent": "ENTITY_EVENT_BUILD"
   }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILD_MACHU_PICCHU"
  }
 }

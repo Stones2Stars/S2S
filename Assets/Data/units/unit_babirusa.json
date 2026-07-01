@@ -1,7 +1,5 @@
 {
  "type": "UNIT_BABIRUSA",
- "description": "TXT_KEY_UNIT_BABIRUSA",
- "civilopedia": "TXT_KEY_UNIT_BABIRUSA_PEDIA",
  "withdrawal": {
   "unit": {
    "percent": 15
@@ -107,6 +105,8 @@
   ]
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_BABIRUSA",
+  "civilopedia": "TXT_KEY_UNIT_BABIRUSA_PEDIA",
   "spawnOnly": true,
   "xpValueAttack": 5,
   "xpValueDefense": 2,

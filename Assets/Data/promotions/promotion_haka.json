@@ -1,6 +1,5 @@
 {
  "type": "PROMOTION_HAKA",
- "description": "TXT_KEY_PROMOTION_HAKA",
  "strength": {
   "unit": {
    "percent": 5
@@ -15,6 +14,7 @@
   "sound": "AS2D_IF_LEVELUP"
  },
  "identity": {
+  "description": "TXT_KEY_PROMOTION_HAKA",
   "unitCombats": [
    "UNITCOMBAT_COMMANDER"
   ]

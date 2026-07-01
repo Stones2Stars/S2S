@@ -1,12 +1,12 @@
 {
  "type": "UNITCOMBAT_CULTURE_HIMYARITE",
- "description": "TXT_KEY_UNITCOMBAT_CULTURE_HIMYARITE",
  "ui": {
   "art": {
    "icon": "Art/categories/culture_newcultures.dds"
   }
  },
  "identity": {
+  "description": "TXT_KEY_UNITCOMBAT_CULTURE_HIMYARITE",
   "culture": "BONUS_HIMYARITE"
  }
 }

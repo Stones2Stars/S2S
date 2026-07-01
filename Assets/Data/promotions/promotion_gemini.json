@@ -1,7 +1,5 @@
 {
  "type": "PROMOTION_GEMINI",
- "description": "TXT_KEY_PROMOTION_GEMINI",
- "help": "TXT_KEY_PROMOTION_ASTRO_HELP",
  "heal": {
   "unit": {
    "victory": {
@@ -18,6 +16,8 @@
   "sound": "AS2D_IF_LEVELUP"
  },
  "identity": {
+  "description": "TXT_KEY_PROMOTION_GEMINI",
+  "help": "TXT_KEY_PROMOTION_ASTRO_HELP",
   "notOnUnitCombats": [
    "UNITCOMBAT_PACIFIST"
   ],

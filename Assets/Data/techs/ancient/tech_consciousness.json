@@ -1,8 +1,5 @@
 {
  "type": "TECH_CONSCIOUSNESS",
- "description": "TXT_KEY_TECH_CONSCIOUSNESS",
- "civilopedia": "TXT_KEY_TECH_CONSCIOUSNESS_PEDIA",
- "quote": "TXT_KEY_TECH_CONSCIOUSNESS_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_ANCIENT_WAY_OF_THE_SHADOWS",
@@ -53,6 +50,9 @@
   "soundMP": "AS2D_TECH_CONSCIOUSNESS"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_CONSCIOUSNESS",
+  "civilopedia": "TXT_KEY_TECH_CONSCIOUSNESS_PEDIA",
+  "quote": "TXT_KEY_TECH_CONSCIOUSNESS_QUOTE",
   "era": "C2C_ERA_ANCIENT",
   "worth": 2,
   "tradeable": true,

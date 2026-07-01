@@ -1,8 +1,5 @@
 {
  "type": "CIVIC_INTERDIMENSIONAL",
- "description": "TXT_KEY_CIVIC_INTERDIMENSIONAL",
- "civilopedia": "TXT_KEY_CIVIC_INTERDIMENSIONAL_PEDIA",
- "strategy": "TXT_KEY_CIVIC_INTERDIMENSIONAL_STRATEGY",
  "production": {
   "empire": {
    "percent": 10
@@ -88,6 +85,9 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_CIVIC_INTERDIMENSIONAL",
+  "civilopedia": "TXT_KEY_CIVIC_INTERDIMENSIONAL_PEDIA",
+  "strategy": "TXT_KEY_CIVIC_INTERDIMENSIONAL_STRATEGY",
   "civicOption": "CIVICOPTION_MILITARY",
   "anarchyLength": 5,
   "upkeepLevel": "UPKEEP_EXTREME"

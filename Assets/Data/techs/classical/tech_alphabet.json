@@ -1,8 +1,5 @@
 {
  "type": "TECH_ALPHABET",
- "description": "TXT_KEY_TECH_ALPHABET",
- "civilopedia": "TXT_KEY_TECH_ALPHABET_PEDIA",
- "quote": "TXT_KEY_TECH_ALPHABET_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_CRIME_ILLEGAL_IMMIGRATION",
@@ -72,6 +69,9 @@
   "soundMP": "AS2D_TECH_MP_ALPHABET"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_ALPHABET",
+  "civilopedia": "TXT_KEY_TECH_ALPHABET_PEDIA",
+  "quote": "TXT_KEY_TECH_ALPHABET_QUOTE",
   "era": "C2C_ERA_CLASSICAL",
   "worth": 16,
   "militaryWorth": 4,

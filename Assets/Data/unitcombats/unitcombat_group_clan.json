@@ -1,6 +1,5 @@
 {
  "type": "UNITCOMBAT_GROUP_CLAN",
- "description": "TXT_KEY_UNITCOMBAT_GROUP_CLAN",
  "experience": {
   "unit": {
    "percent": -40
@@ -39,6 +38,7 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_UNITCOMBAT_GROUP_CLAN",
   "base": {
    "group": 7
   }

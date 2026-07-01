@@ -1,8 +1,5 @@
 {
  "type": "TRAIT_FOREIGN3",
- "description": "TXT_KEY_TRAIT_COMPLEX_FOREIGN3",
- "civilopedia": "TXT_KEY_TRAIT_COMPLEX_FOREIGN3_PEDIA",
- "strategy": "TXT_KEY_TRAIT_COMPLEX_FOREIGN_STRATEGY",
  "excludes": [
   "TRAIT_POLITICIAN1"
  ],
@@ -172,6 +169,9 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_TRAIT_COMPLEX_FOREIGN3",
+  "civilopedia": "TXT_KEY_TRAIT_COMPLEX_FOREIGN3_PEDIA",
+  "strategy": "TXT_KEY_TRAIT_COMPLEX_FOREIGN_STRATEGY",
   "negativeTrait": true
  }
 }

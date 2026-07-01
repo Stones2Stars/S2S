@@ -1,8 +1,5 @@
 {
  "type": "TECH_HYPERLANES",
- "description": "TXT_KEY_TECH_HYPERLANES",
- "civilopedia": "TXT_KEY_TECH_HYPERLANES_PEDIA",
- "quote": "TXT_KEY_TECH_HYPERLANES_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_DISTANT_HYPERPORT",
@@ -58,6 +55,9 @@
   "soundMP": "AS2D_TECH_GENERIC"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_HYPERLANES",
+  "civilopedia": "TXT_KEY_TECH_HYPERLANES_PEDIA",
+  "quote": "TXT_KEY_TECH_HYPERLANES_QUOTE",
   "era": "C2C_ERA_TRANSCENDENT",
   "worth": 48,
   "tradeable": true,

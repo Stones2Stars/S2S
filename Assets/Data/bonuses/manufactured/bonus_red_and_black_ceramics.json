@@ -1,7 +1,5 @@
 {
  "type": "BONUS_RED_AND_BLACK_CERAMICS",
- "description": "TXT_KEY_BONUS_RED_AND_BLACK_CERAMICS",
- "civilopedia": "TXT_KEY_BONUS_RED_AND_BLACK_CERAMICS_PEDIA",
  "health": {
   "empire": {
    "flat": 1
@@ -13,6 +11,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_RED_AND_BLACK_CERAMICS",
+  "civilopedia": "TXT_KEY_BONUS_RED_AND_BLACK_CERAMICS_PEDIA",
   "bonusClassType": "BONUSCLASS_WONDER"
  }
 }

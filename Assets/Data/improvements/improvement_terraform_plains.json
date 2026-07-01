@@ -1,7 +1,5 @@
 {
  "type": "IMPROVEMENT_TERRAFORM_PLAINS",
- "description": "TXT_KEY_BUILD_TERRAFORM_PLAINS",
- "civilopedia": "TXT_KEY_IMPROVEMENT_LAND_WORKED_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -27,6 +25,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILD_TERRAFORM_PLAINS",
+  "civilopedia": "TXT_KEY_IMPROVEMENT_LAND_WORKED_PEDIA",
   "advancedStart": {
    "cost": -1
   },

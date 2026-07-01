@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_SONGDO_INTERNATIONAL_BUSINESS_DISTRICT",
- "description": "TXT_KEY_BUILDING_SONGDO_INTERNATIONAL_BUSINESS_DISTRICT",
- "civilopedia": "TXT_KEY_BUILDING_SONGDO_INTERNATIONAL_BUSINESS_DISTRICT_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -50,6 +48,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_SONGDO_INTERNATIONAL_BUSINESS_DISTRICT",
+  "civilopedia": "TXT_KEY_BUILDING_SONGDO_INTERNATIONAL_BUSINESS_DISTRICT_PEDIA",
   "conquestProbability": 100,
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,

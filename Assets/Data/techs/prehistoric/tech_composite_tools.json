@@ -1,8 +1,5 @@
 {
  "type": "TECH_COMPOSITE_TOOLS",
- "description": "TXT_KEY_TECH_COMPOSITE_TOOLS",
- "civilopedia": "TXT_KEY_TECH_COMPOSITE_TOOLS_PEDIA",
- "quote": "TXT_KEY_TECH_COMPOSITE_TOOLS_QUOTE",
  "enables": {
   "techs": [
    "TECH_AXE_MAKING",
@@ -60,6 +57,9 @@
   "soundMP": "AS2D_TECH_COMPOSITE_TOOLS"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_COMPOSITE_TOOLS",
+  "civilopedia": "TXT_KEY_TECH_COMPOSITE_TOOLS_PEDIA",
+  "quote": "TXT_KEY_TECH_COMPOSITE_TOOLS_QUOTE",
   "era": "C2C_ERA_PREHISTORIC",
   "worth": 4,
   "militaryWorth": 3,

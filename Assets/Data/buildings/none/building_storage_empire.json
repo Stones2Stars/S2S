@@ -1,8 +1,5 @@
 {
  "type": "BUILDING_STORAGE_EMPIRE",
- "description": "TXT_KEY_BUILDING_ECONOMY_STORAGE_BASE",
- "civilopedia": "TXT_KEY_BUILDING_ECONOMY_PEDIA",
- "help": "TXT_KEY_BUILDING_ECONOMY_HELP",
  "requires": {
   "build": {
    "all": [
@@ -19,6 +16,9 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_ECONOMY_STORAGE_BASE",
+  "civilopedia": "TXT_KEY_BUILDING_ECONOMY_PEDIA",
+  "help": "TXT_KEY_BUILDING_ECONOMY_HELP",
   "notConstructible": true,
   "nukeImmune": true,
   "neverCapture": true,

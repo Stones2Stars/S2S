@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_FACTORY_BIONIC_SUITS",
- "description": "TXT_KEY_BUILDING_FACTORY_BIONIC_SUITS",
- "civilopedia": "TXT_KEY_BUILDING_FACTORY_BIONIC_SUITS_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_NANOTECH_COMPLEX"
@@ -84,6 +82,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_FACTORY_BIONIC_SUITS",
+  "civilopedia": "TXT_KEY_BUILDING_FACTORY_BIONIC_SUITS_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

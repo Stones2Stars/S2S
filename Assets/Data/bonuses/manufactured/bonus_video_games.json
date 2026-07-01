@@ -1,7 +1,5 @@
 {
  "type": "BONUS_VIDEO_GAMES",
- "description": "TXT_KEY_BONUS_VIDEO_GAMES",
- "civilopedia": "TXT_KEY_BONUS_VIDEO_GAMES_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_ANIMA_GAMING_LEAGUE",
@@ -16,6 +14,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_VIDEO_GAMES",
+  "civilopedia": "TXT_KEY_BONUS_VIDEO_GAMES_PEDIA",
   "bonusClassType": "BONUSCLASS_MANUFACTURED"
  }
 }

@@ -35,7 +35,7 @@ import os
 from collections import OrderedDict
 
 import engine
-from curate_common import put_art, emit_art   # by-name: a local `cc` var below shadows the usual `cc` alias
+from curate_common import put_art, emit_art, fold_text_to_identity   # by-name: a local `cc` var below shadows the usual `cc` alias
 from store import Store, REPO
 
 # boolean kind/property flags -> clean condition keys (only `true` emitted)
@@ -73,6 +73,7 @@ def curate(typ, rec):
     art_blocks = {}
     put_art(art_blocks, "VictoryMovie", engine.text(rec.find("VictoryMovie")))   # -> ui.art.movie.file via ART_BLOCK
     emit_art(out, art_blocks)
+    fold_text_to_identity(out)   # TEXT -> identity (json.md §7)
     return out
 
 

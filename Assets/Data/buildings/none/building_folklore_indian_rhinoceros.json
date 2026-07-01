@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_FOLKLORE_INDIAN_RHINOCEROS",
- "description": "TXT_KEY_BUILDING_FOLKLORE_INDIAN_RHINOCEROS",
- "civilopedia": "TXT_KEY_BUILDING_FOLKLORE_ANIMAL_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_ANIMAL_TRAINER_RHINOCEROS",
@@ -81,6 +79,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_FOLKLORE_INDIAN_RHINOCEROS",
+  "civilopedia": "TXT_KEY_BUILDING_FOLKLORE_ANIMAL_PEDIA",
   "notConstructible": true,
   "nukeImmune": true,
   "neverCapture": true,

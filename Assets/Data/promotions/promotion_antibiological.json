@@ -1,6 +1,5 @@
 {
  "type": "PROMOTION_ANTIBIOLOGICAL",
- "description": "TXT_KEY_PROMOTION_ANTIBIOLOGICAL",
  "strength": {
   "unit": {
    "percent": -15,
@@ -20,6 +19,7 @@
   "sound": "AS2D_IF_LEVELUP"
  },
  "identity": {
+  "description": "TXT_KEY_PROMOTION_ANTIBIOLOGICAL",
   "unitCombats": [
    "UNITCOMBAT_SIEGE",
    "UNITCOMBAT_GUN",

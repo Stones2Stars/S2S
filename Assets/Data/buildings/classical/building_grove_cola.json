@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_GROVE_COLA",
- "description": "TXT_KEY_BUILDING_GROVE_COLA",
- "civilopedia": "TXT_KEY_BUILDING_GROVE_COLA_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_RESOURCES_DRUGS"
@@ -87,6 +85,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_GROVE_COLA",
+  "civilopedia": "TXT_KEY_BUILDING_GROVE_COLA_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

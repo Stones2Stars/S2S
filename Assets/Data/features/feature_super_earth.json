@@ -1,7 +1,5 @@
 {
  "type": "FEATURE_SUPER_EARTH",
- "description": "TXT_KEY_FEATURE_SUPER_EARTH",
- "civilopedia": "TXT_KEY_FEATURE_SUPER_EARTH_PEDIA",
  "defense": {
   "plot": {
    "amount": {
@@ -25,6 +23,8 @@
   "soundscape": "ASSS_ASTEROIDS_SELECT_AMB"
  },
  "identity": {
+  "description": "TXT_KEY_FEATURE_SUPER_EARTH",
+  "civilopedia": "TXT_KEY_FEATURE_SUPER_EARTH_PEDIA",
   "popDestroys": -1,
   "movementCost": 2,
   "validTerrains": [

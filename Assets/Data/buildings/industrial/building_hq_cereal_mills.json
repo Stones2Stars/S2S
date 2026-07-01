@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_HQ_CEREAL_MILLS",
- "description": "TXT_KEY_BUILDING_HQ_CEREAL_MILLS",
- "civilopedia": "TXT_KEY_BUILDING_CORPORATION_1_PEDIA",
  "enables": {
   "corporations": [
    "CORPORATION_1"
@@ -56,6 +54,8 @@
   "construct": "AS2D_BUILD_BANK"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_HQ_CEREAL_MILLS",
+  "civilopedia": "TXT_KEY_BUILDING_CORPORATION_1_PEDIA",
   "commerceDoubleTime": {
    "culture": 1000
   },

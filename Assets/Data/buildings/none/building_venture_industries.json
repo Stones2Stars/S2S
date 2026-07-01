@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_VENTURE_INDUSTRIES",
- "description": "TXT_KEY_BUILDING_VENTURE_INDUSTRIES",
- "civilopedia": "TXT_KEY_BUILDING_VENTURE_INDUSTRIES_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -110,6 +108,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_VENTURE_INDUSTRIES",
+  "civilopedia": "TXT_KEY_BUILDING_VENTURE_INDUSTRIES_PEDIA",
   "neverCapture": true,
   "specialBuildingType": "SPECIALBUILDING_PUNK_ATOM",
   "advisor": "ADVISOR_SCIENCE",

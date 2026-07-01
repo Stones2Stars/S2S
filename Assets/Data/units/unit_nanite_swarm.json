@@ -1,7 +1,5 @@
 {
  "type": "UNIT_NANITE_SWARM",
- "description": "TXT_KEY_UNIT_NANITE_SWARM",
- "civilopedia": "TXT_KEY_UNIT_NANITE_CLOUD_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -72,6 +70,8 @@
   "upkeep": 1
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_NANITE_SWARM",
+  "civilopedia": "TXT_KEY_UNIT_NANITE_CLOUD_PEDIA",
   "worth": 5,
   "militaryWorth": 735,
   "xpValueAttack": 3,

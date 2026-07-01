@@ -1,6 +1,5 @@
 {
  "type": "UNITCOMBAT_MOUNT_ELEPHANT",
- "description": "TXT_KEY_UNITCOMBAT_MOUNT_ELEPHANT",
  "capture": {
   "unit": {
    "resistance": {
@@ -12,5 +11,8 @@
   "art": {
    "icon": "Art/Interface/Buttons/units/sparth/categories/mount_elephant.dds"
   }
+ },
+ "identity": {
+  "description": "TXT_KEY_UNITCOMBAT_MOUNT_ELEPHANT"
  }
 }

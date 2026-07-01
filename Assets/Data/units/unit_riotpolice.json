@@ -1,7 +1,5 @@
 {
  "type": "UNIT_RIOTPOLICE",
- "description": "TXT_KEY_UNIT_RIOTPOLICE",
- "civilopedia": "TXT_KEY_UNIT_RIOTPOLICE_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -116,6 +114,8 @@
   "upkeep": 8
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_RIOTPOLICE",
+  "civilopedia": "TXT_KEY_UNIT_RIOTPOLICE_PEDIA",
   "worth": 9,
   "militaryWorth": 25,
   "xpValueAttack": 3,

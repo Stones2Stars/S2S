@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_MILITARY_BASE",
- "description": "TXT_KEY_BUILDING_MILITARY_BASE",
- "civilopedia": "TXT_KEY_BUILDING_MILITARY_BASE_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_BRANDENBURG_GATE",
@@ -135,6 +133,8 @@
   "construct": "AS2D_BUILD_BARRACKS"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_MILITARY_BASE",
+  "civilopedia": "TXT_KEY_BUILDING_MILITARY_BASE_PEDIA",
   "worth": 5,
   "militaryWorth": 6,
   "dcmAirbombMission": 2,

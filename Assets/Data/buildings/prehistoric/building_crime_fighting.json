@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_CRIME_FIGHTING",
- "description": "TXT_KEY_BUILDING_CRIME_FIGHTING",
- "civilopedia": "TXT_KEY_BUILDING_CRIME_FIGHTING_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -71,6 +69,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_CRIME_FIGHTING",
+  "civilopedia": "TXT_KEY_BUILDING_CRIME_FIGHTING_PEDIA",
   "notConstructible": true,
   "nukeImmune": true,
   "conquestProbability": 100,

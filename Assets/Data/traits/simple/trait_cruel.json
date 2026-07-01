@@ -1,7 +1,5 @@
 {
  "type": "TRAIT_CRUEL",
- "description": "TXT_KEY_TRAIT_CRUEL",
- "civilopedia": "TXT_KEY_TRAIT_CRUEL_PEDIA",
  "culture": {
   "empire": {
    "percent": -5
@@ -68,6 +66,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_TRAIT_CRUEL",
+  "civilopedia": "TXT_KEY_TRAIT_CRUEL_PEDIA",
   "shortDescription": "TXT_KEY_TRAIT_CRUEL_SHORT",
   "negativeTrait": true
  }

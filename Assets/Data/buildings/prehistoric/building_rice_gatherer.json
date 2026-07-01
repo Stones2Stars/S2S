@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_RICE_GATHERER",
- "description": "TXT_KEY_BUILDING_RICE_GATHERER",
- "civilopedia": "TXT_KEY_BUILDING_RICE_GATHERER_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_RESOURCES_GRAINS"
@@ -60,6 +58,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_RICE_GATHERER",
+  "civilopedia": "TXT_KEY_BUILDING_RICE_GATHERER_PEDIA",
   "nukeImmune": true,
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [

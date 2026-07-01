@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_MINI_GOLF_COURSE",
- "description": "TXT_KEY_BUILDING_MINI_GOLF_COURSE",
- "civilopedia": "TXT_KEY_BUILDING_MINI_GOLF_COURSE_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_ATHLETIC_MEGACOMPLEX"
@@ -58,6 +56,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_MINI_GOLF_COURSE",
+  "civilopedia": "TXT_KEY_BUILDING_MINI_GOLF_COURSE_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

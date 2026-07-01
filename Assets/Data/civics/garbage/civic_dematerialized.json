@@ -1,8 +1,5 @@
 {
  "type": "CIVIC_DEMATERIALIZED",
- "description": "TXT_KEY_CIVIC_DEMATERIALIZED",
- "civilopedia": "TXT_KEY_CIVIC_DEMATERIALIZED_PEDIA",
- "strategy": "TXT_KEY_CIVIC_DEMATERIALIZED_STRATEGY",
  "food": {
   "empire": {
    "percent": 5
@@ -39,6 +36,9 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_CIVIC_DEMATERIALIZED",
+  "civilopedia": "TXT_KEY_CIVIC_DEMATERIALIZED_PEDIA",
+  "strategy": "TXT_KEY_CIVIC_DEMATERIALIZED_STRATEGY",
   "civicOption": "CIVICOPTION_GARBAGE",
   "upkeepLevel": "UPKEEP_EXTREME"
  }

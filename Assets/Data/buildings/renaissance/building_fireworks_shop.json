@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_FIREWORKS_SHOP",
- "description": "TXT_KEY_BUILDING_FIREWORKS_SHOP",
- "civilopedia": "TXT_KEY_BUILDING_FIREWORKS_SHOP_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_MANUFACTURING_DISTRICT"
@@ -82,6 +80,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_FIREWORKS_SHOP",
+  "civilopedia": "TXT_KEY_BUILDING_FIREWORKS_SHOP_PEDIA",
   "conquestProbability": 70,
   "advisor": "ADVISOR_ECONOMY",
   "visibilityPriority": 1,

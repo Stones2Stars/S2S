@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_ONLINE_SHIPPING_WAREHOUSE",
- "description": "TXT_KEY_BUILDING_ONLINE_SHIPPING_WAREHOUSE",
- "civilopedia": "TXT_KEY_BUILDING_ONLINE_SHIPPING_WAREHOUSE_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_DIGITAL_LOGISTICS_CENTER"
@@ -80,6 +78,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_ONLINE_SHIPPING_WAREHOUSE",
+  "civilopedia": "TXT_KEY_BUILDING_ONLINE_SHIPPING_WAREHOUSE_PEDIA",
   "conquestProbability": 100,
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [

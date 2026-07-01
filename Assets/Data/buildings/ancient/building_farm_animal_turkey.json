@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_FARM_ANIMAL_TURKEY",
- "description": "TXT_KEY_BUILDING_FARM_ANIMAL_TURKEY",
- "civilopedia": "TXT_KEY_BUILDING_FARM_ANIMAL_TURKEY_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_RESOURCES_EGGS",
@@ -97,6 +95,8 @@
   "construct": "AS2D_BUILD_GRANARY"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_FARM_ANIMAL_TURKEY",
+  "civilopedia": "TXT_KEY_BUILDING_FARM_ANIMAL_TURKEY_PEDIA",
   "worth": 4,
   "militaryWorth": 2,
   "advisor": "ADVISOR_GROWTH",

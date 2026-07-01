@@ -1,4 +1,6 @@
 {
  "type": "CIVICOPTION_WORKFORCE",
- "description": "TXT_KEY_CIVICOPTION_WORKFORCE"
+ "identity": {
+  "description": "TXT_KEY_CIVICOPTION_WORKFORCE"
+ }
 }

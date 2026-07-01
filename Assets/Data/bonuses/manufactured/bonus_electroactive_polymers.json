@@ -1,7 +1,5 @@
 {
  "type": "BONUS_ELECTROACTIVE_POLYMERS",
- "description": "TXT_KEY_BONUS_ELECTROACTIVE_POLYMERS",
- "civilopedia": "TXT_KEY_BONUS_ELECTROACTIVE_POLYMERS_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_ELECTRONIC_PAPER_MAKER"
@@ -13,6 +11,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_ELECTROACTIVE_POLYMERS",
+  "civilopedia": "TXT_KEY_BONUS_ELECTROACTIVE_POLYMERS_PEDIA",
   "bonusClassType": "BONUSCLASS_MANUFACTURED"
  }
 }

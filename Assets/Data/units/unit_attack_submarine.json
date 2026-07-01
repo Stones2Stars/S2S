@@ -1,7 +1,5 @@
 {
  "type": "UNIT_ATTACK_SUBMARINE",
- "description": "TXT_KEY_UNIT_ATTACK_SUBMARINE",
- "civilopedia": "TXT_KEY_UNIT_ATTACK_SUBMARINE_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -107,6 +105,8 @@
   "upkeep": 2
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_ATTACK_SUBMARINE",
+  "civilopedia": "TXT_KEY_UNIT_ATTACK_SUBMARINE_PEDIA",
   "worth": 4,
   "militaryWorth": 177,
   "xpValueAttack": 3,

@@ -1,8 +1,5 @@
 {
  "type": "TECH_CRYONICS",
- "description": "TXT_KEY_TECH_CRYONICS",
- "civilopedia": "TXT_KEY_TECH_CRYONICS_PEDIA",
- "quote": "TXT_KEY_TECH_CRYONICS_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_CISLUNAR_CRYONIC_BODY_STORAGE",
@@ -60,6 +57,9 @@
   "soundMP": "AS2D_TECH_CRYONICS"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_CRYONICS",
+  "civilopedia": "TXT_KEY_TECH_CRYONICS_PEDIA",
+  "quote": "TXT_KEY_TECH_CRYONICS_QUOTE",
   "era": "C2C_ERA_TRANSHUMAN",
   "worth": 48,
   "militaryWorth": 6,

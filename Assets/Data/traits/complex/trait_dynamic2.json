@@ -1,8 +1,5 @@
 {
  "type": "TRAIT_DYNAMIC2",
- "description": "TXT_KEY_TRAIT_DYNAMIC2",
- "civilopedia": "TXT_KEY_TRAIT_DYNAMIC2_PEDIA",
- "strategy": "TXT_KEY_TRAIT_DYNAMIC_STRATEGY",
  "enables": {
   "traits": [
    "TRAIT_DYNAMIC3"
@@ -281,5 +278,10 @@
   "art": {
    "icon": "art/Buttons/Traits/TraitDynamic2.dds"
   }
+ },
+ "identity": {
+  "description": "TXT_KEY_TRAIT_DYNAMIC2",
+  "civilopedia": "TXT_KEY_TRAIT_DYNAMIC2_PEDIA",
+  "strategy": "TXT_KEY_TRAIT_DYNAMIC_STRATEGY"
  }
 }

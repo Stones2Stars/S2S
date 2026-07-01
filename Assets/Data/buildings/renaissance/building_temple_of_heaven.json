@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_TEMPLE_OF_HEAVEN",
- "description": "TXT_KEY_BUILDING_TEMPLE_OF_HEAVEN",
- "civilopedia": "TXT_KEY_BUILDING_TEMPLE_OF_HEAVEN_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -147,6 +145,8 @@
   "construct": "AS2D_BUILD_TAOIST"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_TEMPLE_OF_HEAVEN",
+  "civilopedia": "TXT_KEY_BUILDING_TEMPLE_OF_HEAVEN_PEDIA",
   "commerceDoubleTime": {
    "culture": 1000
   },

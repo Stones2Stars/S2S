@@ -1,7 +1,5 @@
 {
  "type": "UNIT_MASTER_SAILOR_BATTLESHIP",
- "description": "TXT_KEY_UNIT_MASTER_SAILOR_BATTLESHIP",
- "civilopedia": "TXT_KEY_UNIT_BATTLESHIP_PEDIA",
  "obsoletedBy": {
   "techs": [
    "TECH_ADVANCED_WARMACHINES"
@@ -104,6 +102,8 @@
   "upkeep": 3
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_MASTER_SAILOR_BATTLESHIP",
+  "civilopedia": "TXT_KEY_UNIT_BATTLESHIP_PEDIA",
   "spawnOnly": true,
   "worth": 4,
   "militaryWorth": 288,

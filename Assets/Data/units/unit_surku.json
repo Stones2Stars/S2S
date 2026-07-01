@@ -1,7 +1,5 @@
 {
  "type": "UNIT_SURKU",
- "description": "TXT_KEY_UNIT_SURKU",
- "civilopedia": "TXT_KEY_UNIT_SURKU_PEDIA",
  "obsoletedBy": {
   "techs": [
    "TECH_FLINTLOCK"
@@ -113,6 +111,8 @@
   "upkeep": 1
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_SURKU",
+  "civilopedia": "TXT_KEY_UNIT_SURKU_PEDIA",
   "worth": 1,
   "militaryWorth": 4,
   "xpValueAttack": 6,

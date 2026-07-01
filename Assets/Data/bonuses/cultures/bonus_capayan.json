@@ -1,7 +1,5 @@
 {
  "type": "BONUS_CAPAYAN",
- "description": "TXT_KEY_BONUS_CAPAYAN",
- "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
  "enables": {
   "units": [
    "UNIT_CAPAYAN_AXEMANS",
@@ -14,6 +12,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_CAPAYAN",
+  "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
   "bonusClassType": "BONUSCLASS_CULTURE"
  }
 }

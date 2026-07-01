@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_HYBRID_AIRSHIP_PORT",
- "description": "TXT_KEY_BUILDING_HYBRID_AIRSHIP_PORT",
- "civilopedia": "TXT_KEY_BUILDING_HYBRID_AIRSHIP_PORT_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_AERIAL_CITY",
@@ -64,6 +62,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_HYBRID_AIRSHIP_PORT",
+  "civilopedia": "TXT_KEY_BUILDING_HYBRID_AIRSHIP_PORT_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

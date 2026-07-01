@@ -1,7 +1,5 @@
 {
  "type": "IMPROVEMENT_HAMLET",
- "description": "TXT_KEY_IMPROVEMENT_HAMLET",
- "civilopedia": "TXT_KEY_IMPROVEMENT_HAMLET_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -61,6 +59,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_IMPROVEMENT_HAMLET",
+  "civilopedia": "TXT_KEY_IMPROVEMENT_HAMLET_PEDIA",
   "advancedStart": {
    "cost": -1
   },

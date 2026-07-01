@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_DEPARTMENT_OF_MOTOR_VEHICLES",
- "description": "TXT_KEY_BUILDING_DEPARTMENT_OF_MOTOR_VEHICLES",
- "civilopedia": "TXT_KEY_BUILDING_DEPARTMENT_OF_MOTOR_VEHICLES_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_ORDINANCE_AUTOMOBILE_EMISSION_REDUCTION_ACT",
@@ -105,6 +103,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_DEPARTMENT_OF_MOTOR_VEHICLES",
+  "civilopedia": "TXT_KEY_BUILDING_DEPARTMENT_OF_MOTOR_VEHICLES_PEDIA",
   "neverCapture": true,
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [

@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_TRADITION_HUNTER",
- "description": "TXT_KEY_BUILDING_TRADITION_HUNTER",
- "civilopedia": "TXT_KEY_BUILDING_MASTER_HUNTER_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -35,6 +33,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_TRADITION_HUNTER",
+  "civilopedia": "TXT_KEY_BUILDING_MASTER_HUNTER_PEDIA",
   "enabledCivilizations": [
    "CIVILIZATION_NPC_NEANDERTHAL"
   ],

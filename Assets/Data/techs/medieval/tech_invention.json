@@ -1,8 +1,5 @@
 {
  "type": "TECH_INVENTION",
- "description": "TXT_KEY_TECH_INVENTION",
- "civilopedia": "TXT_KEY_TECH_INVENTION_PEDIA",
- "quote": "TXT_KEY_TECH_INVENTION_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_ARTESIAN_WELL",
@@ -72,6 +69,9 @@
   "soundMP": "AS2D_TECH_INVENTION"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_INVENTION",
+  "civilopedia": "TXT_KEY_TECH_INVENTION_PEDIA",
+  "quote": "TXT_KEY_TECH_INVENTION_QUOTE",
   "era": "C2C_ERA_MEDIEVAL",
   "worth": 24,
   "militaryWorth": 6,

@@ -1,7 +1,5 @@
 {
  "type": "UNIT_SAVARAN",
- "description": "TXT_KEY_UNIT_SAVARAN",
- "civilopedia": "TXT_KEY_UNIT_SAVARAN_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -115,6 +113,8 @@
   "upkeep": 1
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_SAVARAN",
+  "civilopedia": "TXT_KEY_UNIT_SAVARAN_PEDIA",
   "worth": 3,
   "militaryWorth": 22,
   "xpValueAttack": 6,

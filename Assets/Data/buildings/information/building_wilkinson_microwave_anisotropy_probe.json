@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_WILKINSON_MICROWAVE_ANISOTROPY_PROBE",
- "description": "TXT_KEY_BUILDING_WILKINSON_MICROWAVE_ANISOTROPY_PROBE",
- "civilopedia": "TXT_KEY_BUILDING_WILKINSON_MICROWAVE_ANISOTROPY_PROBE_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -55,6 +53,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_WILKINSON_MICROWAVE_ANISOTROPY_PROBE",
+  "civilopedia": "TXT_KEY_BUILDING_WILKINSON_MICROWAVE_ANISOTROPY_PROBE_PEDIA",
   "conquestProbability": 100,
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,

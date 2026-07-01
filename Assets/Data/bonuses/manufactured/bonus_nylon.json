@@ -1,7 +1,5 @@
 {
  "type": "BONUS_NYLON",
- "description": "TXT_KEY_BONUS_NYLON",
- "civilopedia": "TXT_KEY_BONUS_NYLON_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_FACTORY_ROPE"
@@ -13,6 +11,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_NYLON",
+  "civilopedia": "TXT_KEY_BONUS_NYLON_PEDIA",
   "bonusClassType": "BONUSCLASS_MANUFACTURED"
  }
 }

@@ -1,7 +1,5 @@
 {
  "type": "BONUS_BIONIC_SUITS",
- "description": "TXT_KEY_BONUS_BIONIC_SUITS",
- "civilopedia": "TXT_KEY_BONUS_BIONIC_SUITS_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_CIRCADIAN_CHAMBER"
@@ -18,6 +16,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_BIONIC_SUITS",
+  "civilopedia": "TXT_KEY_BONUS_BIONIC_SUITS_PEDIA",
   "bonusClassType": "BONUSCLASS_MANUFACTURED"
  }
 }

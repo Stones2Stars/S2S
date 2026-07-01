@@ -1,6 +1,5 @@
 {
  "type": "PROMOTIONLINE_LOW_PROFILE",
- "description": "TXT_KEY_PROMOTIONLINE_LOW_PROFILE",
  "loadPrune": {
   "onGameOptions": [
    "GAMEOPTION_COMBAT_HIDE_SEEK",
@@ -13,6 +12,7 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_PROMOTIONLINE_LOW_PROFILE",
   "notOnUnitCombats": [
    "UNITCOMBAT_SPY",
    "UNITCOMBAT_COMMANDER",

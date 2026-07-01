@@ -1,8 +1,5 @@
 {
  "type": "TECH_OMEGA_POINT",
- "description": "TXT_KEY_TECH_OMEGA_POINT",
- "civilopedia": "TXT_KEY_TECH_OMEGA_POINT_PEDIA",
- "quote": "TXT_KEY_TECH_OMEGA_POINT_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_ASCENDED_CITY",
@@ -57,6 +54,9 @@
   "soundMP": "AS2D_TECH_GENERIC"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_OMEGA_POINT",
+  "civilopedia": "TXT_KEY_TECH_OMEGA_POINT_PEDIA",
+  "quote": "TXT_KEY_TECH_OMEGA_POINT_QUOTE",
   "era": "C2C_ERA_TRANSCENDENT",
   "worth": 48,
   "tradeable": true,

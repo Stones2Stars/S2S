@@ -1,8 +1,5 @@
 {
  "type": "TECH_IMAGINARY_PHYSICS",
- "description": "TXT_KEY_TECH_IMAGINARY_PHYSICS",
- "civilopedia": "TXT_KEY_TECH_IMAGINARY_PHYSICS_PEDIA",
- "quote": "TXT_KEY_TECH_IMAGINARY_PHYSICS_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_DARK_MATTER_DETECTOR",
@@ -62,6 +59,9 @@
   "soundMP": "AS2D_TECH_IMAGINARY_PHYSICS"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_IMAGINARY_PHYSICS",
+  "civilopedia": "TXT_KEY_TECH_IMAGINARY_PHYSICS_PEDIA",
+  "quote": "TXT_KEY_TECH_IMAGINARY_PHYSICS_QUOTE",
   "era": "C2C_ERA_INFORMATION",
   "worth": 14,
   "tradeable": true,

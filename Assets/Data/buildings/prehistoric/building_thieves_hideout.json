@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_THIEVES_HIDEOUT",
- "description": "TXT_KEY_BUILDING_THIEVES_HIDEOUT",
- "civilopedia": "TXT_KEY_BUILDING_THIEVES_HIDEOUT_PEDIA",
  "enables": {
   "units": [
    "UNIT_BEGGAR",
@@ -106,6 +104,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_THIEVES_HIDEOUT",
+  "civilopedia": "TXT_KEY_BUILDING_THIEVES_HIDEOUT_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

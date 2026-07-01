@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_TENNIS_COURT",
- "description": "TXT_KEY_BUILDING_TENNIS_COURT",
- "civilopedia": "TXT_KEY_BUILDING_TENNIS_COURT_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_COUNTRY_CLUB"
@@ -71,6 +69,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_TENNIS_COURT",
+  "civilopedia": "TXT_KEY_BUILDING_TENNIS_COURT_PEDIA",
   "worth": 2,
   "advisor": "ADVISOR_CULTURE",
   "mapCategories": [

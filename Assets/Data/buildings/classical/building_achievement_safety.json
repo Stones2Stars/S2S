@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_ACHIEVEMENT_SAFETY",
- "description": "TXT_KEY_BUILDING_ACHIEVEMENT_SAFETY",
- "civilopedia": "TXT_KEY_BUILDING_ACHIEVEMENT_SAFETY_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -35,6 +33,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_ACHIEVEMENT_SAFETY",
+  "civilopedia": "TXT_KEY_BUILDING_ACHIEVEMENT_SAFETY_PEDIA",
   "notConstructible": true,
   "nukeImmune": true,
   "neverCapture": true,

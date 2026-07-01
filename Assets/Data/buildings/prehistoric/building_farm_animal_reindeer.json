@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_FARM_ANIMAL_REINDEER",
- "description": "TXT_KEY_BUILDING_FARM_ANIMAL_REINDEER",
- "civilopedia": "TXT_KEY_BUILDING_FARM_ANIMAL_REINDEER_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_ANIMAL_TRAINER_DEER",
@@ -140,6 +138,8 @@
   "construct": "AS2D_BUILD_GRANARY"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_FARM_ANIMAL_REINDEER",
+  "civilopedia": "TXT_KEY_BUILDING_FARM_ANIMAL_REINDEER_PEDIA",
   "enabledCivilizations": [
    "CIVILIZATION_NPC_NEANDERTHAL"
   ],

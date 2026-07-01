@@ -1,7 +1,5 @@
 {
  "type": "UNIT_DHOLE",
- "description": "TXT_KEY_UNIT_DHOLE",
- "civilopedia": "TXT_KEY_UNIT_DHOLE_PEDIA",
  "skills": {
   "assassin": true,
   "blendIntoCity": true,
@@ -49,6 +47,8 @@
   ]
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_DHOLE",
+  "civilopedia": "TXT_KEY_UNIT_DHOLE_PEDIA",
   "spawnOnly": true,
   "xpValueAttack": 6,
   "xpValueDefense": 4,

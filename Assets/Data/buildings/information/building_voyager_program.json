@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_VOYAGER_PROGRAM",
- "description": "TXT_KEY_BUILDING_VOYAGER_PROGRAM",
- "civilopedia": "TXT_KEY_BUILDING_VOYAGER_PROGRAM_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -62,6 +60,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_VOYAGER_PROGRAM",
+  "civilopedia": "TXT_KEY_BUILDING_VOYAGER_PROGRAM_PEDIA",
   "conquestProbability": 100,
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,

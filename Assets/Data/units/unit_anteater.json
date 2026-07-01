@@ -1,7 +1,5 @@
 {
  "type": "UNIT_ANTEATER",
- "description": "TXT_KEY_UNIT_ANTEATER",
- "civilopedia": "TXT_KEY_UNIT_ANTEATER_PEDIA",
  "skills": {
   "blendIntoCity": true,
   "onlyDefensive": true,
@@ -65,6 +63,8 @@
   ]
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_ANTEATER",
+  "civilopedia": "TXT_KEY_UNIT_ANTEATER_PEDIA",
   "spawnOnly": true,
   "xpValueAttack": 3,
   "xpValueDefense": 2,

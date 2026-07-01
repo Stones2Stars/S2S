@@ -1,8 +1,5 @@
 {
  "type": "BUILDING_GOLDEN_SPIKE",
- "description": "TXT_KEY_BUILDING_GOLDEN_SPIKE",
- "civilopedia": "TXT_KEY_BUILDING_GOLDEN_SPIKE_PEDIA",
- "help": "TXT_KEY_BUILDING_GOLDEN_SPIKE_HELP",
  "obsoletedBy": {
   "techs": [
    "TECH_MAGNETIC_LEVITATION"
@@ -134,6 +131,9 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_GOLDEN_SPIKE",
+  "civilopedia": "TXT_KEY_BUILDING_GOLDEN_SPIKE_PEDIA",
+  "help": "TXT_KEY_BUILDING_GOLDEN_SPIKE_HELP",
   "commerceDoubleTime": {
    "culture": 1000
   },

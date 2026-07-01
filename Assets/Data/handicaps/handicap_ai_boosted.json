@@ -1,7 +1,5 @@
 {
  "type": "HANDICAP_AI_BOOSTED",
- "description": "TXT_KEY_HANDICAP_AI_BOOSTED",
- "help": "TXT_KEY_HANDICAP_AI_BOOSTED_HELP",
  "maintenance": {
   "empire": {
    "colony": {
@@ -214,6 +212,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_HANDICAP_AI_BOOSTED",
+  "help": "TXT_KEY_HANDICAP_AI_BOOSTED_HELP",
   "advancedStart": {
    "pointsMod": 100,
    "aiPercent": 240

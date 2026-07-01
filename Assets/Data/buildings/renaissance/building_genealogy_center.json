@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_GENEALOGY_CENTER",
- "description": "TXT_KEY_BUILDING_GENEALOGY_CENTER",
- "civilopedia": "TXT_KEY_BUILDING_GENEALOGY_CENTER_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_ONLINE_GENEALOGY_CENTER"
@@ -90,6 +88,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_GENEALOGY_CENTER",
+  "civilopedia": "TXT_KEY_BUILDING_GENEALOGY_CENTER_PEDIA",
   "advisor": "ADVISOR_CULTURE",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

@@ -1,7 +1,5 @@
 {
  "type": "BONUS_BUGS",
- "description": "TXT_KEY_BONUS_BUGS",
- "civilopedia": "TXT_KEY_BONUS_BUGS_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_ENTOMOLOGY_LAB"
@@ -13,6 +11,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_BUGS",
+  "civilopedia": "TXT_KEY_BONUS_BUGS_PEDIA",
   "bonusClassType": "BONUSCLASS_MANUFACTURED"
  }
 }

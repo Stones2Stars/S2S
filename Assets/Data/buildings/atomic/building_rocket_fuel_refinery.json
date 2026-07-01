@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_ROCKET_FUEL_REFINERY",
- "description": "TXT_KEY_BUILDING_ROCKET_FUEL_REFINERY",
- "civilopedia": "TXT_KEY_BUILDING_ROCKET_FUEL_REFINERY_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_CHEMICALS_DISTRICT"
@@ -104,6 +102,8 @@
   "construct": "AS2D_BUILD_OIL_REFINERY"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_ROCKET_FUEL_REFINERY",
+  "civilopedia": "TXT_KEY_BUILDING_ROCKET_FUEL_REFINERY_PEDIA",
   "worth": 6,
   "militaryWorth": 30,
   "dcmAirbombMission": 3,

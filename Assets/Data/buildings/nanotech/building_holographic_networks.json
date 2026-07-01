@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_HOLOGRAPHIC_NETWORKS",
- "description": "TXT_KEY_BUILDING_HOLOGRAPHIC_NETWORKS",
- "civilopedia": "TXT_KEY_BUILDING_HOLOGRAPHIC_NETWORKS_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_BLOGS",
@@ -87,6 +85,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_HOLOGRAPHIC_NETWORKS",
+  "civilopedia": "TXT_KEY_BUILDING_HOLOGRAPHIC_NETWORKS_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

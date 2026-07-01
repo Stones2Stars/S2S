@@ -1,7 +1,5 @@
 {
  "type": "UNIT_INTERDIMENSIONAL_PROBE",
- "description": "TXT_KEY_UNIT_INTERDIMENSIONAL_PROBE",
- "civilopedia": "TXT_KEY_UNIT_INTERDIMENSIONAL_PROBE_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -63,6 +61,8 @@
   "upkeep": 1
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_INTERDIMENSIONAL_PROBE",
+  "civilopedia": "TXT_KEY_UNIT_INTERDIMENSIONAL_PROBE_PEDIA",
   "worth": 1,
   "domain": "DOMAIN_LAND",
   "defaultUnitAI": "UNITAI_WORKER",

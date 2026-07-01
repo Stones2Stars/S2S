@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_CIVIC_POST_SCARCITY",
- "description": "TXT_KEY_BUILDING_CIVIC_POST_SCARCITY",
- "civilopedia": "TXT_KEY_BUILDING_CIVIC_POST_SCARCITY_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -24,6 +22,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_CIVIC_POST_SCARCITY",
+  "civilopedia": "TXT_KEY_BUILDING_CIVIC_POST_SCARCITY_PEDIA",
   "notConstructible": true,
   "nukeImmune": true,
   "neverCapture": true,

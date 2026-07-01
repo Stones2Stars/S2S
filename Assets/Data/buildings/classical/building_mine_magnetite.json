@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_MINE_MAGNETITE",
- "description": "TXT_KEY_BUILDING_MINE_MAGNETITE",
- "civilopedia": "TXT_KEY_BUILDING_MINE_MAGNETITE_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_CORE_MINE"
@@ -76,6 +74,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_MINE_MAGNETITE",
+  "civilopedia": "TXT_KEY_BUILDING_MINE_MAGNETITE_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

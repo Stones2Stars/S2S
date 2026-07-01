@@ -1,7 +1,5 @@
 {
  "type": "BONUS_GRAPES",
- "description": "TXT_KEY_BONUS_GRAPES",
- "civilopedia": "TXT_KEY_BONUS_GRAPES_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_BELLADONNA",
@@ -82,6 +80,8 @@
   ]
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_GRAPES",
+  "civilopedia": "TXT_KEY_BONUS_GRAPES_PEDIA",
   "bonusClassType": "BONUSCLASS_CROP"
  }
 }

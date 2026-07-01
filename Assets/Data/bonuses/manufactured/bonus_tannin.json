@@ -1,7 +1,5 @@
 {
  "type": "BONUS_TANNIN",
- "description": "TXT_KEY_BONUS_TANNIN",
- "civilopedia": "TXT_KEY_BONUS_TANNIN_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_ANCIENT_EMBALMER",
@@ -15,6 +13,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_TANNIN",
+  "civilopedia": "TXT_KEY_BONUS_TANNIN_PEDIA",
   "bonusClassType": "BONUSCLASS_MANUFACTURED"
  }
 }

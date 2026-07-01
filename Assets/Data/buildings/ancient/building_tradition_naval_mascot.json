@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_TRADITION_NAVAL_MASCOT",
- "description": "TXT_KEY_BUILDING_TRADITION_NAVAL_MASCOT",
- "civilopedia": "TXT_KEY_BUILDING_NAVAL_STANDARD_ANIMAL_MASCOT_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -30,6 +28,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_TRADITION_NAVAL_MASCOT",
+  "civilopedia": "TXT_KEY_BUILDING_NAVAL_STANDARD_ANIMAL_MASCOT_PEDIA",
   "notConstructible": true,
   "nukeImmune": true,
   "neverCapture": true,

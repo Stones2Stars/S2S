@@ -1,7 +1,5 @@
 {
  "type": "TRAIT_BARBARIC1",
- "description": "TXT_KEY_TRAIT_BARBARIC0",
- "civilopedia": "TXT_KEY_TRAIT_BARBARIC_PEDIA",
  "enables": {
   "traits": [
    "TRAIT_BARBARIC2"
@@ -89,6 +87,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_TRAIT_BARBARIC0",
+  "civilopedia": "TXT_KEY_TRAIT_BARBARIC_PEDIA",
   "shortDescription": "TXT_KEY_TRAIT_BARBARIC_SHORT",
   "negativeTrait": true,
   "impurePromotions": true

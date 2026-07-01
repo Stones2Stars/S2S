@@ -1,8 +1,5 @@
 {
  "type": "TECH_GRAVITY_CONTROL",
- "description": "TXT_KEY_TECH_GRAVITY_CONTROL",
- "civilopedia": "TXT_KEY_TECH_GRAVITY_CONTROL_PEDIA",
- "quote": "TXT_KEY_TECH_GRAVITY_CONTROL_QUOTE",
  "enables": {
   "bonuses": [
    "BONUS_GRAVITY_GENERATORS"
@@ -61,6 +58,9 @@
   "soundMP": "AS2D_TECH_GRAVITY_CONTROL"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_GRAVITY_CONTROL",
+  "civilopedia": "TXT_KEY_TECH_GRAVITY_CONTROL_PEDIA",
+  "quote": "TXT_KEY_TECH_GRAVITY_CONTROL_QUOTE",
   "era": "C2C_ERA_GALACTIC",
   "worth": 50,
   "militaryWorth": 10,

@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_HELICOPTER_TRAINING_CENTER",
- "description": "TXT_KEY_BUILDING_HELICOPTER_TRAINING_CENTER",
- "civilopedia": "TXT_KEY_BUILDING_HELICOPTER_TRAINING_CENTER_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_HOLOGRAPHIC_SCHOOL"
@@ -74,6 +72,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_HELICOPTER_TRAINING_CENTER",
+  "civilopedia": "TXT_KEY_BUILDING_HELICOPTER_TRAINING_CENTER_PEDIA",
   "advisor": "ADVISOR_MILITARY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

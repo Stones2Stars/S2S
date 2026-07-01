@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_DRYING_FRAME",
- "description": "TXT_KEY_BUILDING_DRYING_FRAME",
- "civilopedia": "TXT_KEY_BUILDING_DRYING_FRAME_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_DRIED_FISH_MAKER",
@@ -63,6 +61,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_DRYING_FRAME",
+  "civilopedia": "TXT_KEY_BUILDING_DRYING_FRAME_PEDIA",
   "enabledCivilizations": [
    "CIVILIZATION_NPC_NEANDERTHAL"
   ],

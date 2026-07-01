@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_WATER_PIPES",
- "description": "TXT_KEY_BUILDING_WATER_PIPES",
- "civilopedia": "TXT_KEY_BUILDING_WATER_PIPES_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_DESALINATION_PLANT",
@@ -164,6 +162,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_WATER_PIPES",
+  "civilopedia": "TXT_KEY_BUILDING_WATER_PIPES_PEDIA",
   "nukeImmune": true,
   "advisor": "ADVISOR_GROWTH",
   "mapCategories": [

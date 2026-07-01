@@ -1,8 +1,5 @@
 {
  "type": "TECH_MACHINERY",
- "description": "TXT_KEY_TECH_MACHINERY",
- "civilopedia": "TXT_KEY_TECH_MACHINERY_PEDIA",
- "quote": "TXT_KEY_TECH_MACHINERY_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_CARRIAGE_BUILDER",
@@ -79,6 +76,9 @@
   "soundMP": "AS2D_TECH_MP_MACHINERY"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_MACHINERY",
+  "civilopedia": "TXT_KEY_TECH_MACHINERY_PEDIA",
+  "quote": "TXT_KEY_TECH_MACHINERY_QUOTE",
   "era": "C2C_ERA_CLASSICAL",
   "worth": 24,
   "militaryWorth": 8,

@@ -1,7 +1,5 @@
 {
  "type": "UNIT_STEPHEN_UROS_IV_DUSAN",
- "description": "TXT_KEY_UNIT_STEPHEN_UROS_IV_DUSAN",
- "civilopedia": "TXT_KEY_UNIT_STEPHEN_UROS_IV_DUSAN_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -61,6 +59,8 @@
   "upkeep": 1
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_STEPHEN_UROS_IV_DUSAN",
+  "civilopedia": "TXT_KEY_UNIT_STEPHEN_UROS_IV_DUSAN_PEDIA",
   "worth": 6,
   "militaryWorth": 8,
   "xpValueAttack": 4,

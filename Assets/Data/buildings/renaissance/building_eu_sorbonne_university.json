@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_EU_SORBONNE_UNIVERSITY",
- "description": "TXT_KEY_BUILDING_EU_SORBONNE_UNIVERSITY",
- "civilopedia": "TXT_KEY_BUILDING_EU_SORBONNE_UNIVERSITY_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -127,6 +125,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_EU_SORBONNE_UNIVERSITY",
+  "civilopedia": "TXT_KEY_BUILDING_EU_SORBONNE_UNIVERSITY_PEDIA",
   "commerceDoubleTime": {
    "culture": 1000
   },

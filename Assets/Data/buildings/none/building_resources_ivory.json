@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_RESOURCES_IVORY",
- "description": "TXT_KEY_BUILDING_RESOURCES_IVORY",
- "civilopedia": "TXT_KEY_BUILDING_RESOURCE_PROVIDER_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_INDUSTRIAL_FARMS"
@@ -58,6 +56,8 @@
   "construct": "AS2D_BUILD_GRANARY"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_RESOURCES_IVORY",
+  "civilopedia": "TXT_KEY_BUILDING_RESOURCE_PROVIDER_PEDIA",
   "notConstructible": true,
   "autoBuild": true,
   "advisor": "ADVISOR_ECONOMY",

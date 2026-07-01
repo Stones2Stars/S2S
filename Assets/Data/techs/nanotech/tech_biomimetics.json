@@ -1,8 +1,5 @@
 {
  "type": "TECH_BIOMIMETICS",
- "description": "TXT_KEY_TECH_BIOMIMETICS",
- "civilopedia": "TXT_KEY_TECH_BIOMIMETICS_PEDIA",
- "quote": "TXT_KEY_TECH_BIOMIMETICS_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_BUILDING_MEMBRANES"
@@ -58,6 +55,9 @@
   "soundMP": "AS2D_TECH_BIOMIMETICS"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_BIOMIMETICS",
+  "civilopedia": "TXT_KEY_TECH_BIOMIMETICS_PEDIA",
+  "quote": "TXT_KEY_TECH_BIOMIMETICS_QUOTE",
   "era": "C2C_ERA_NANOTECH",
   "worth": 48,
   "militaryWorth": 5,

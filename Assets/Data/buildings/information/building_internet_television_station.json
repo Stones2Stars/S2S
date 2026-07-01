@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_INTERNET_TELEVISION_STATION",
- "description": "TXT_KEY_BUILDING_INTERNET_TELEVISION_STATION",
- "civilopedia": "TXT_KEY_BUILDING_INTERNET_TELEVISION_STATION_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_PERSONAL_WEB_CHANNEL"
@@ -60,6 +58,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_INTERNET_TELEVISION_STATION",
+  "civilopedia": "TXT_KEY_BUILDING_INTERNET_TELEVISION_STATION_PEDIA",
   "advisor": "ADVISOR_CULTURE",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

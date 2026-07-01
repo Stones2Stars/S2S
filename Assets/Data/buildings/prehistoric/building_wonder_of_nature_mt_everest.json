@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_WONDER_OF_NATURE_MT_EVEREST",
- "description": "TXT_KEY_BUILDING_WONDER_OF_NATURE_MT_EVEREST",
- "civilopedia": "TXT_KEY_BUILDING_WONDER_OF_NATURE_MT_EVEREST_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -127,6 +125,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_WONDER_OF_NATURE_MT_EVEREST",
+  "civilopedia": "TXT_KEY_BUILDING_WONDER_OF_NATURE_MT_EVEREST_PEDIA",
   "enabledCivilizations": [
    "CIVILIZATION_NPC_NEANDERTHAL"
   ],

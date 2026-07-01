@@ -1,8 +1,5 @@
 {
  "type": "TECH_MOLECULAR_SCANNING",
- "description": "TXT_KEY_TECH_MOLECULAR_SCANNING",
- "civilopedia": "TXT_KEY_TECH_MOLECULAR_SCANNING_PEDIA",
- "quote": "TXT_KEY_TECH_MOLECULAR_SCANNING_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_CISLUNAR_OMNISURVEILLANCE",
@@ -66,6 +63,9 @@
   "soundMP": "AS2D_TECH_MOLECULAR_SCANNING"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_MOLECULAR_SCANNING",
+  "civilopedia": "TXT_KEY_TECH_MOLECULAR_SCANNING_PEDIA",
+  "quote": "TXT_KEY_TECH_MOLECULAR_SCANNING_QUOTE",
   "era": "C2C_ERA_TRANSHUMAN",
   "worth": 50,
   "militaryWorth": 10,

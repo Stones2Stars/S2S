@@ -1,12 +1,12 @@
 {
  "type": "UNIT_LOCUST_LARGE_SWARM",
- "description": "TXT_KEY_UNIT_LOCUST_LARGE_SWARM",
- "civilopedia": "TXT_KEY_UNIT_LOCUST_PEDIA",
  "skills": {
   "pillage": true,
   "onlyDefensive": true
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_LOCUST_LARGE_SWARM",
+  "civilopedia": "TXT_KEY_UNIT_LOCUST_PEDIA",
   "spawnOnly": true,
   "xpValueAttack": 12,
   "xpValueDefense": 12,

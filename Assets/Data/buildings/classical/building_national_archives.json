@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_NATIONAL_ARCHIVES",
- "description": "TXT_KEY_BUILDING_NATIONAL_ARCHIVES",
- "civilopedia": "TXT_KEY_BUILDING_NATIONAL_ARCHIVES_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -89,6 +87,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_NATIONAL_ARCHIVES",
+  "civilopedia": "TXT_KEY_BUILDING_NATIONAL_ARCHIVES_PEDIA",
   "nukeImmune": true,
   "neverCapture": true,
   "worth": 10,

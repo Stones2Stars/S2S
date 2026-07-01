@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_AIRPORT",
- "description": "TXT_KEY_BUILDING_AIRPORT",
- "civilopedia": "TXT_KEY_BUILDING_AIRPORT_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_AERODROME",
@@ -93,6 +91,8 @@
   "construct": "AS2D_BUILD_EARLY_AIRPORT"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_AIRPORT",
+  "civilopedia": "TXT_KEY_BUILDING_AIRPORT_PEDIA",
   "worth": 5,
   "airlift": 1,
   "airUnitCapacity": 4,

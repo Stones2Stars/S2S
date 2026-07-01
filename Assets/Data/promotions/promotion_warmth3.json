@@ -1,6 +1,5 @@
 {
  "type": "PROMOTION_WARMTH3",
- "description": "TXT_KEY_PROMOTION_WARMTH3",
  "strength": {
   "unit": {
    "terrain": {
@@ -50,6 +49,7 @@
   "sound": "AS2D_IF_LEVELUP"
  },
  "identity": {
+  "description": "TXT_KEY_PROMOTION_WARMTH3",
   "notOnDomains": [
    "DOMAIN_AIR",
    "DOMAIN_SEA"

@@ -1,7 +1,5 @@
 {
  "type": "UNIT_BIG_GAME_HUNTER",
- "description": "TXT_KEY_UNIT_BIG_GAME_HUNTER",
- "civilopedia": "TXT_KEY_UNIT_HUNTER_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -39,6 +37,8 @@
   "upkeep": 1
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_BIG_GAME_HUNTER",
+  "civilopedia": "TXT_KEY_UNIT_HUNTER_PEDIA",
   "worth": 2,
   "militaryWorth": 2,
   "xpValueAttack": 2,

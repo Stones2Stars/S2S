@@ -1,8 +1,5 @@
 {
  "type": "TRAIT_INDUSTRIOUS",
- "description": "TXT_KEY_TRAIT_COMPLEX_INDUSTRIOUS",
- "civilopedia": "TXT_KEY_TRAIT_COMPLEX_INDUSTRIOUS_PEDIA",
- "strategy": "TXT_KEY_TRAIT_COMPLEX_INDUSTRIOUS_STRATEGY",
  "excludes": [
   "TRAIT_LAZY"
  ],
@@ -650,6 +647,9 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_TRAIT_COMPLEX_INDUSTRIOUS",
+  "civilopedia": "TXT_KEY_TRAIT_COMPLEX_INDUSTRIOUS_PEDIA",
+  "strategy": "TXT_KEY_TRAIT_COMPLEX_INDUSTRIOUS_STRATEGY",
   "impurePropertyManipulators": true
  }
 }

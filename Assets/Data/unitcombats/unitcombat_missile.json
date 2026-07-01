@@ -1,6 +1,5 @@
 {
  "type": "UNITCOMBAT_MISSILE",
- "description": "TXT_KEY_UNITCOMBAT_MISSILE",
  "skills": {
   "cannotMergeSplit": true
  },
@@ -10,6 +9,7 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_UNITCOMBAT_MISSILE",
   "forMilitary": true
  }
 }

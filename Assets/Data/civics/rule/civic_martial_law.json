@@ -1,8 +1,5 @@
 {
  "type": "CIVIC_MARTIAL_LAW",
- "description": "TXT_KEY_CIVIC_MARTIAL_LAW",
- "civilopedia": "TXT_KEY_CIVIC_MARTIAL_LAW_PEDIA",
- "strategy": "TXT_KEY_CIVIC_MARTIAL_LAW_STRATEGY",
  "enables": {
   "buildings": [
    "BUILDING_CIVIC_MARTIAL_LAW",
@@ -145,6 +142,9 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_CIVIC_MARTIAL_LAW",
+  "civilopedia": "TXT_KEY_CIVIC_MARTIAL_LAW_PEDIA",
+  "strategy": "TXT_KEY_CIVIC_MARTIAL_LAW_STRATEGY",
   "civicOption": "CIVICOPTION_RULE",
   "anarchyLength": 2,
   "upkeepLevel": "UPKEEP_HIGH"

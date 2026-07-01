@@ -1,8 +1,5 @@
 {
  "type": "TECH_ISLAM",
- "description": "TXT_KEY_TECH_ISLAM",
- "civilopedia": "TXT_KEY_TECH_ISLAM_PEDIA",
- "quote": "TXT_KEY_TECH_ISLAM_QUOTE",
  "enables": {
   "religions": [
    "RELIGION_ISLAM"
@@ -51,6 +48,9 @@
   "soundMP": "AS2D_TECH_ISLAM"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_ISLAM",
+  "civilopedia": "TXT_KEY_TECH_ISLAM_PEDIA",
+  "quote": "TXT_KEY_TECH_ISLAM_QUOTE",
   "era": "C2C_ERA_MEDIEVAL",
   "worth": 8,
   "gridX": 44,

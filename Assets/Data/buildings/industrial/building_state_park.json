@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_STATE_PARK",
- "description": "TXT_KEY_BUILDING_STATE_PARK",
- "civilopedia": "TXT_KEY_BUILDING_STATE_PARK_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_GREAT_GREEN_WALL",
@@ -111,6 +109,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_STATE_PARK",
+  "civilopedia": "TXT_KEY_BUILDING_STATE_PARK_PEDIA",
   "conquestProbability": 30,
   "advisor": "ADVISOR_GROWTH",
   "visibilityPriority": 1,

@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_BOXING_RING",
- "description": "TXT_KEY_BUILDING_BOXING_RING",
- "civilopedia": "TXT_KEY_BUILDING_BOXING_RING_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_ATHLETIC_MEGACOMPLEX"
@@ -73,6 +71,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_BOXING_RING",
+  "civilopedia": "TXT_KEY_BUILDING_BOXING_RING_PEDIA",
   "worth": 2,
   "advisor": "ADVISOR_CULTURE",
   "mapCategories": [

@@ -1,8 +1,5 @@
 {
  "type": "TECH_CIVIL_ENGINEERING",
- "description": "TXT_KEY_TECH_CIVIL_ENGINEERING",
- "civilopedia": "TXT_KEY_TECH_CIVIL_ENGINEERING_PEDIA",
- "quote": "TXT_KEY_TECH_CIVIL_ENGINEERING_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_BULLSEYE_STORE",
@@ -83,6 +80,9 @@
   "soundMP": "AS2D_TECH_CIVILENGINEERING"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_CIVIL_ENGINEERING",
+  "civilopedia": "TXT_KEY_TECH_CIVIL_ENGINEERING_PEDIA",
+  "quote": "TXT_KEY_TECH_CIVIL_ENGINEERING_QUOTE",
   "era": "C2C_ERA_INDUSTRIAL",
   "worth": 40,
   "tradeable": true,

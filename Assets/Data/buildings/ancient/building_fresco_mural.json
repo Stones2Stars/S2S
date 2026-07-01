@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_FRESCO_MURAL",
- "description": "TXT_KEY_BUILDING_FRESCO_MURAL",
- "civilopedia": "TXT_KEY_BUILDING_FRESCO_MURAL_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_LASCAUX_PAINTS"
@@ -84,6 +82,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_FRESCO_MURAL",
+  "civilopedia": "TXT_KEY_BUILDING_FRESCO_MURAL_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

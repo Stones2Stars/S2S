@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_DEEP_SPACE_MCKENDREE_CYLINDER",
- "description": "TXT_KEY_BUILDING_DEEP_SPACE_MCKENDREE_CYLINDER",
- "civilopedia": "TXT_KEY_BUILDING_DEEP_SPACE_MCKENDREE_CYLINDER_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_DEEP_SPACE_COLD_FUSION",
@@ -68,6 +66,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_DEEP_SPACE_MCKENDREE_CYLINDER",
+  "civilopedia": "TXT_KEY_BUILDING_DEEP_SPACE_MCKENDREE_CYLINDER_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

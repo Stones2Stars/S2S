@@ -1,7 +1,5 @@
 {
  "type": "SPECIALIST_MERCHANT",
- "description": "TXT_KEY_SPECIALIST_MERCHANT",
- "civilopedia": "TXT_KEY_CONCEPT_SPECIALISTS_PEDIA",
  "commerce": {
   "city": {
    "flat": 3
@@ -86,6 +84,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_SPECIALIST_MERCHANT",
+  "civilopedia": "TXT_KEY_CONCEPT_SPECIALISTS_PEDIA",
   "visible": true,
   "categories": [
    "CATEGORY_ASSIGNABLE_SPECIALISTS",

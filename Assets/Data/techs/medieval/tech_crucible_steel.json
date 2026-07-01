@@ -1,8 +1,5 @@
 {
  "type": "TECH_CRUCIBLE_STEEL",
- "description": "TXT_KEY_TECH_CRUCIBLE_STEEL",
- "civilopedia": "TXT_KEY_TECH_CRUCIBLE_STEEL_PEDIA",
- "quote": "TXT_KEY_TECH_CRUCIBLE_STEEL_QUOTE",
  "enables": {
   "bonuses": [
    "BONUS_STEEL_INGOTS",
@@ -76,6 +73,9 @@
   "soundMP": "AS2D_TECH_CRUCIBLESTEEL"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_CRUCIBLE_STEEL",
+  "civilopedia": "TXT_KEY_TECH_CRUCIBLE_STEEL_PEDIA",
+  "quote": "TXT_KEY_TECH_CRUCIBLE_STEEL_QUOTE",
   "era": "C2C_ERA_MEDIEVAL",
   "worth": 24,
   "militaryWorth": 10,

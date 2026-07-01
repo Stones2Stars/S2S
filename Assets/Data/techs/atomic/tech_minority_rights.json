@@ -1,8 +1,5 @@
 {
  "type": "TECH_MINORITY_RIGHTS",
- "description": "TXT_KEY_TECH_MINORITY_RIGHTS",
- "civilopedia": "TXT_KEY_TECH_MINORITY_RIGHTS_PEDIA",
- "quote": "TXT_KEY_TECH_MINORITY_RIGHTS_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_AMNESTY_INTERNATIONAL",
@@ -60,6 +57,9 @@
   "soundMP": "AS2D_TECH_MINORITY_RIGHTS"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_MINORITY_RIGHTS",
+  "civilopedia": "TXT_KEY_TECH_MINORITY_RIGHTS_PEDIA",
+  "quote": "TXT_KEY_TECH_MINORITY_RIGHTS_QUOTE",
   "era": "C2C_ERA_ATOMIC",
   "worth": 48,
   "tradeable": true,

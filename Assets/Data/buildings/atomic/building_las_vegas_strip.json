@@ -1,8 +1,5 @@
 {
  "type": "BUILDING_LAS_VEGAS_STRIP",
- "description": "TXT_KEY_BUILDING_LAS_VEGAS_STRIP",
- "civilopedia": "TXT_KEY_BUILDING_LAS_VEGAS_STRIP_PEDIA",
- "help": "TXT_KEY_BUILDING_LASVEGASSTRIP_HELP",
  "requires": {
   "build": {
    "all": [
@@ -101,6 +98,9 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_LAS_VEGAS_STRIP",
+  "civilopedia": "TXT_KEY_BUILDING_LAS_VEGAS_STRIP_PEDIA",
+  "help": "TXT_KEY_BUILDING_LASVEGASSTRIP_HELP",
   "commerceDoubleTime": {
    "culture": 1000
   },

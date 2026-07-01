@@ -1,8 +1,5 @@
 {
  "type": "TECH_PAPACY",
- "description": "TXT_KEY_TECH_PAPACY",
- "civilopedia": "TXT_KEY_TECH_PAPACY_PEDIA",
- "quote": "TXT_KEY_TECH_PAPACY_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_AACHEN_CATHEDRAL",
@@ -56,6 +53,9 @@
   "soundMP": "AS2D_TECH_PAPACY"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_PAPACY",
+  "civilopedia": "TXT_KEY_TECH_PAPACY_PEDIA",
+  "quote": "TXT_KEY_TECH_PAPACY_QUOTE",
   "era": "C2C_ERA_MEDIEVAL",
   "worth": 24,
   "tradeable": true,

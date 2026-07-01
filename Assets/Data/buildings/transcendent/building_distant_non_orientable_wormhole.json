@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_DISTANT_NON_ORIENTABLE_WORMHOLE",
- "description": "TXT_KEY_BUILDING_DISTANT_NON_ORIENTABLE_WORMHOLE",
- "civilopedia": "TXT_KEY_BUILDING_DISTANT_NON_ORIENTABLE_WORMHOLE_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_DISTANT_KLEIN_BOTTLE_UNIVERSE"
@@ -43,6 +41,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_DISTANT_NON_ORIENTABLE_WORMHOLE",
+  "civilopedia": "TXT_KEY_BUILDING_DISTANT_NON_ORIENTABLE_WORMHOLE_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

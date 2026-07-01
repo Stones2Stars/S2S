@@ -1,7 +1,5 @@
 {
  "type": "SPECIALIST_SETTLED_CITIZEN",
- "description": "TXT_KEY_SPECIALIST_SETTLED_CITIZEN",
- "civilopedia": "TXT_KEY_SPECIALIST_SETTLED_CITIZEN_PEDIA",
  "food": {
   "city": {
    "flat": -2
@@ -48,6 +46,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_SPECIALIST_SETTLED_CITIZEN",
+  "civilopedia": "TXT_KEY_SPECIALIST_SETTLED_CITIZEN_PEDIA",
   "categories": [
    "CATEGORY_SPECIALIST_GROUP_CIVILIAN"
   ]

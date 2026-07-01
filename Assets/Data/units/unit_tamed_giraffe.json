@@ -1,8 +1,5 @@
 {
  "type": "UNIT_TAMED_GIRAFFE",
- "description": "TXT_KEY_UNIT_TAMED_GIRAFFE",
- "civilopedia": "TXT_KEY_UNIT_TAMED_ANIMAL_PEDIA",
- "help": "TXT_KEY_UNIT_TAMED_ANIMALS_HELP",
  "requires": {
   "build": {
    "all": [
@@ -56,6 +53,9 @@
   "production": 140
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_TAMED_GIRAFFE",
+  "civilopedia": "TXT_KEY_UNIT_TAMED_ANIMAL_PEDIA",
+  "help": "TXT_KEY_UNIT_TAMED_ANIMALS_HELP",
   "xpValueAttack": 4,
   "xpValueDefense": 2,
   "domain": "DOMAIN_LAND",

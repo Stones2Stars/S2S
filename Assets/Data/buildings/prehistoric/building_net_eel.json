@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_NET_EEL",
- "description": "TXT_KEY_BUILDING_NET_EEL",
- "civilopedia": "TXT_KEY_BUILDING_NET_EEL_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_RESOURCES_FISH"
@@ -71,6 +69,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_NET_EEL",
+  "civilopedia": "TXT_KEY_BUILDING_NET_EEL_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

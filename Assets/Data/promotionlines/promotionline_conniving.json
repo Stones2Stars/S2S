@@ -1,12 +1,12 @@
 {
  "type": "PROMOTIONLINE_CONNIVING",
- "description": "TXT_KEY_PROMOTIONLINE_CONNIVING",
  "ui": {
   "art": {
    "icon": "Art/Buttons/Promotions/Conniving1Promotion.dds"
   }
  },
  "identity": {
+  "description": "TXT_KEY_PROMOTIONLINE_CONNIVING",
   "unitCombats": [
    "UNITCOMBAT_CRIMINAL",
    "UNITCOMBAT_PIRATE"

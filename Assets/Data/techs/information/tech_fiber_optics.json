@@ -1,8 +1,5 @@
 {
  "type": "TECH_FIBER_OPTICS",
- "description": "TXT_KEY_TECH_FIBER_OPTICS",
- "civilopedia": "TXT_KEY_TECH_FIBER_OPTICS_PEDIA",
- "quote": "TXT_KEY_TECH_FIBER_OPTICS_QUOTE",
  "enables": {
   "bonuses": [
    "BONUS_FIBER_OPTIC_CABLES"
@@ -72,6 +69,9 @@
   "soundMP": "AS2D_TECH_MP_FIBER_OPTICS"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_FIBER_OPTICS",
+  "civilopedia": "TXT_KEY_TECH_FIBER_OPTICS_PEDIA",
+  "quote": "TXT_KEY_TECH_FIBER_OPTICS_QUOTE",
   "era": "C2C_ERA_INFORMATION",
   "worth": 48,
   "tradeable": true,

@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_NATIONAL_NIGHT_OF_HOCKEY",
- "description": "TXT_KEY_BUILDING_NATIONAL_NIGHT_OF_HOCKEY",
- "civilopedia": "TXT_KEY_BUILDING_NATIONAL_NIGHT_OF_HOCKEY_PEDIA",
  "obsoletedBy": {
   "techs": [
    "TECH_BINARY_PSYCHOKINESIS"
@@ -109,6 +107,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_NATIONAL_NIGHT_OF_HOCKEY",
+  "civilopedia": "TXT_KEY_BUILDING_NATIONAL_NIGHT_OF_HOCKEY_PEDIA",
   "nukeImmune": true,
   "worth": 10,
   "conquestProbability": 100,

@@ -1,7 +1,5 @@
 {
  "type": "UNIT_BROKEN_ARROW",
- "description": "TXT_KEY_UNIT_BROKEN_ARROW",
- "civilopedia": "TXT_KEY_UNIT_BROKEN_ARROW_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -48,6 +46,8 @@
   "upkeep": 1
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_BROKEN_ARROW",
+  "civilopedia": "TXT_KEY_UNIT_BROKEN_ARROW_PEDIA",
   "worth": 6,
   "militaryWorth": 8,
   "xpValueAttack": 4,

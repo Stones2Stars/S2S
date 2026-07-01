@@ -1,7 +1,5 @@
 {
  "type": "UNIT_CELEBRITY",
- "description": "TXT_KEY_UNIT_CELEBRITY",
- "civilopedia": "TXT_KEY_UNIT_CELEBRITY_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -73,6 +71,8 @@
   "upkeep": 6
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_CELEBRITY",
+  "civilopedia": "TXT_KEY_UNIT_CELEBRITY_PEDIA",
   "worth": 8,
   "domain": "DOMAIN_LAND",
   "defaultUnitAI": "UNITAI_PROPERTY_CONTROL",

@@ -1,7 +1,5 @@
 {
  "type": "UNIT_ANCIENT_FLAMETHROWER",
- "description": "TXT_KEY_UNIT_ANCIENT_FLAMETHROWER",
- "civilopedia": "TXT_KEY_UNIT_ANCIENT_FLAMETHROWER_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -75,6 +73,8 @@
   "upkeep": 3
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_ANCIENT_FLAMETHROWER",
+  "civilopedia": "TXT_KEY_UNIT_ANCIENT_FLAMETHROWER_PEDIA",
   "worth": 4,
   "militaryWorth": 105,
   "xpValueAttack": 3,

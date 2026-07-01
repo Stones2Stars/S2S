@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_CRYOGENIC_PRISON",
- "description": "TXT_KEY_BUILDING_CRYOGENIC_PRISON",
- "civilopedia": "TXT_KEY_BUILDING_CRYOGENIC_PRISON_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -103,6 +101,8 @@
   "construct": "AS2D_BUILD_CYRO_PRISON"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_CRYOGENIC_PRISON",
+  "civilopedia": "TXT_KEY_BUILDING_CRYOGENIC_PRISON_PEDIA",
   "worth": 6,
   "militaryWorth": 2,
   "advisor": "ADVISOR_MILITARY",

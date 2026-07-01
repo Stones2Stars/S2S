@@ -1,8 +1,5 @@
 {
  "type": "UNIT_SPARTACUS",
- "description": "TXT_KEY_UNIT_SPARTACUS",
- "civilopedia": "TXT_KEY_UNIT_SPARTACUS_PEDIA",
- "help": "TXT_KEY_UNIT_SPARTACUS_HELP",
  "requires": {
   "build": {
    "noneOf": [
@@ -41,6 +38,9 @@
   ]
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_SPARTACUS",
+  "civilopedia": "TXT_KEY_UNIT_SPARTACUS_PEDIA",
+  "help": "TXT_KEY_UNIT_SPARTACUS_HELP",
   "spawnOnly": true,
   "worth": 5,
   "militaryWorth": 5,

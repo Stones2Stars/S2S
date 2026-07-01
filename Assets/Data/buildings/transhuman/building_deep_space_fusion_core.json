@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_DEEP_SPACE_FUSION_CORE",
- "description": "TXT_KEY_BUILDING_DEEP_SPACE_FUSION_CORE",
- "civilopedia": "TXT_KEY_BUILDING_DEEP_SPACE_FUSION_CORE_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_DEEP_SPACE_ANTIMATTER_RESEARCH_CENTER",
@@ -60,6 +58,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_DEEP_SPACE_FUSION_CORE",
+  "civilopedia": "TXT_KEY_BUILDING_DEEP_SPACE_FUSION_CORE_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

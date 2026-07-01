@@ -1,7 +1,5 @@
 {
  "type": "BONUS_FLOUR",
- "description": "TXT_KEY_BONUS_FLOUR",
- "civilopedia": "TXT_KEY_BONUS_FLOUR_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_BAKERY",
@@ -18,6 +16,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_FLOUR",
+  "civilopedia": "TXT_KEY_BONUS_FLOUR_PEDIA",
   "bonusClassType": "BONUSCLASS_MANUFACTURED"
  }
 }

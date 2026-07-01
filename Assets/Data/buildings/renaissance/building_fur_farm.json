@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_FUR_FARM",
- "description": "TXT_KEY_BUILDING_FUR_FARM",
- "civilopedia": "TXT_KEY_BUILDING_FUR_FARM_PEDIA",
  "obsoletedBy": {
   "techs": [
    "TECH_VERTICAL_FLIGHT"
@@ -70,6 +68,8 @@
   "construct": "AS2D_BUILD_GRANARY"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_FUR_FARM",
+  "civilopedia": "TXT_KEY_BUILDING_FUR_FARM_PEDIA",
   "worth": 2,
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [

@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_ASATRU_MONASTERY",
- "description": "TXT_KEY_BUILDING_ASATRU_MONASTERY",
- "civilopedia": "TXT_KEY_BUILDING_ASATRU_MONASTERY_PEDIA",
  "enables": {
   "units": [
    "UNIT_ASATRU_MISSIONARY"
@@ -132,6 +130,8 @@
   "construct": "AS2D_BUILD_NORDIC"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_ASATRU_MONASTERY",
+  "civilopedia": "TXT_KEY_BUILDING_ASATRU_MONASTERY_PEDIA",
   "neverCapture": true,
   "worth": 3,
   "specialBuildingType": "SPECIALBUILDING_MONASTERY",

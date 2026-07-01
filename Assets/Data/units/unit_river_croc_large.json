@@ -1,7 +1,5 @@
 {
  "type": "UNIT_RIVER_CROC_LARGE",
- "description": "TXT_KEY_UNIT_RIVER_CROC_LARGE",
- "civilopedia": "TXT_KEY_UNIT_CROCODILE_PEDIA",
  "skills": {
   "assassin": true,
   "blendIntoCity": true,
@@ -52,6 +50,8 @@
   ]
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_RIVER_CROC_LARGE",
+  "civilopedia": "TXT_KEY_UNIT_CROCODILE_PEDIA",
   "spawnOnly": true,
   "xpValueAttack": 8,
   "xpValueDefense": 6,

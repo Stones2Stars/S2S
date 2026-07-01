@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_SNAKE_CHARMER",
- "description": "TXT_KEY_BUILDING_SNAKE_CHARMER",
- "civilopedia": "TXT_KEY_BUILDING_SNAKE_CHARMER_PEDIA",
  "enables": {
   "units": [
    "UNIT_TAMED_SNAKE"
@@ -54,6 +52,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_SNAKE_CHARMER",
+  "civilopedia": "TXT_KEY_BUILDING_SNAKE_CHARMER_PEDIA",
   "enabledCivilizations": [
    "CIVILIZATION_NPC_NEANDERTHAL"
   ],

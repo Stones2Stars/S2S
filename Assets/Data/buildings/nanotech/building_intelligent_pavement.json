@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_INTELLIGENT_PAVEMENT",
- "description": "TXT_KEY_BUILDING_INTELLIGENT_PAVEMENT",
- "civilopedia": "TXT_KEY_BUILDING_INTELLIGENT_PAVEMENT_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_ANTIGRAV_VEHICLE_DEALERSHIP"
@@ -102,6 +100,8 @@
   "construct": "AS2D_BUILD_WALLS"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_INTELLIGENT_PAVEMENT",
+  "civilopedia": "TXT_KEY_BUILDING_INTELLIGENT_PAVEMENT_PEDIA",
   "worth": 4,
   "conquestProbability": 100,
   "advisor": "ADVISOR_ECONOMY",

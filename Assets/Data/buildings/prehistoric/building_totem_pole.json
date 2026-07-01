@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_TOTEM_POLE",
- "description": "TXT_KEY_BUILDING_TOTEM_POLE",
- "civilopedia": "TXT_KEY_BUILDING_TOTEM_POLE_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -86,6 +84,8 @@
   "construct": "AS2D_BUILD_TOTEM"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_TOTEM_POLE",
+  "civilopedia": "TXT_KEY_BUILDING_TOTEM_POLE_PEDIA",
   "neverCapture": true,
   "centerInCity": true,
   "worth": 2,

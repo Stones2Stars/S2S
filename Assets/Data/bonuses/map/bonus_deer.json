@@ -1,7 +1,5 @@
 {
  "type": "BONUS_DEER",
- "description": "TXT_KEY_BONUS_DEER",
- "civilopedia": "TXT_KEY_BONUS_DEER_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_ANIMAL_TRAINER_DEER",
@@ -90,6 +88,8 @@
   ]
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_DEER",
+  "civilopedia": "TXT_KEY_BONUS_DEER_PEDIA",
   "bonusClassType": "BONUSCLASS_LIVESTOCK"
  }
 }

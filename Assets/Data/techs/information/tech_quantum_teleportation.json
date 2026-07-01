@@ -1,8 +1,5 @@
 {
  "type": "TECH_QUANTUM_TELEPORTATION",
- "description": "TXT_KEY_TECH_QUANTUM_TELEPORTATION",
- "civilopedia": "TXT_KEY_TECH_QUANTUM_TELEPORTATION_PEDIA",
- "quote": "TXT_KEY_TECH_QUANTUM_TELEPORTATION_QUOTE",
  "enables": {
   "bonuses": [
    "BONUS_QUANTUM_DOTS"
@@ -56,6 +53,9 @@
   "soundMP": "AS2D_TECH_QUANTUM_TELEPORTATION"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_QUANTUM_TELEPORTATION",
+  "civilopedia": "TXT_KEY_TECH_QUANTUM_TELEPORTATION_PEDIA",
+  "quote": "TXT_KEY_TECH_QUANTUM_TELEPORTATION_QUOTE",
   "era": "C2C_ERA_INFORMATION",
   "worth": 48,
   "tradeable": true,

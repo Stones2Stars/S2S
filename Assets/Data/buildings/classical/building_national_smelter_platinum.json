@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_NATIONAL_SMELTER_PLATINUM",
- "description": "TXT_KEY_BUILDING_NATIONAL_SMELTER_PLATINUM",
- "civilopedia": "TXT_KEY_BUILDING_NATIONAL_SMELTER_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_RESOURCES_PLATINUM_INGOTS"
@@ -85,6 +83,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_NATIONAL_SMELTER_PLATINUM",
+  "civilopedia": "TXT_KEY_BUILDING_NATIONAL_SMELTER_PEDIA",
   "neverCapture": true,
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [

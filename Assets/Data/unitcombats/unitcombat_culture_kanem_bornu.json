@@ -1,12 +1,12 @@
 {
  "type": "UNITCOMBAT_CULTURE_KANEM_BORNU",
- "description": "TXT_KEY_UNITCOMBAT_CULTURE_KANEM_BORNU",
  "ui": {
   "art": {
    "icon": "Art/Interface/Buttons/units/sparth/categories/culture_kanembornu.dds"
   }
  },
  "identity": {
+  "description": "TXT_KEY_UNITCOMBAT_CULTURE_KANEM_BORNU",
   "culture": "BONUS_KANEM_BORNU"
  }
 }

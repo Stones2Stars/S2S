@@ -1,7 +1,5 @@
 {
  "type": "UNIT_MASTER_SAILOR_KAYAK",
- "description": "TXT_KEY_UNIT_MASTER_SAILOR_KAYAK",
- "civilopedia": "TXT_KEY_UNIT_KAYAK_PEDIA",
  "obsoletedBy": {
   "techs": [
    "TECH_OPTICS"
@@ -76,6 +74,8 @@
   "upkeep": 1
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_MASTER_SAILOR_KAYAK",
+  "civilopedia": "TXT_KEY_UNIT_KAYAK_PEDIA",
   "spawnOnly": true,
   "worth": 3,
   "militaryWorth": 1,

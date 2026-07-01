@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_CISLUNAR_DILATON_GENERATOR",
- "description": "TXT_KEY_BUILDING_CISLUNAR_DILATON_GENERATOR",
- "civilopedia": "TXT_KEY_BUILDING_CISLUNAR_DILATON_GENERATOR_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_CISLUNAR_BLACK_HOLE"
@@ -49,6 +47,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_CISLUNAR_DILATON_GENERATOR",
+  "civilopedia": "TXT_KEY_BUILDING_CISLUNAR_DILATON_GENERATOR_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

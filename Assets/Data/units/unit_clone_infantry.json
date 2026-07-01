@@ -1,7 +1,5 @@
 {
  "type": "UNIT_CLONE_INFANTRY",
- "description": "TXT_KEY_UNIT_CLONE_INFANTRY",
- "civilopedia": "TXT_KEY_UNIT_CLONE_INFANTRY_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -44,6 +42,8 @@
   "upkeep": 3
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_CLONE_INFANTRY",
+  "civilopedia": "TXT_KEY_UNIT_CLONE_INFANTRY_PEDIA",
   "worth": 5,
   "militaryWorth": 250,
   "xpValueAttack": 1,

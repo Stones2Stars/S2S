@@ -1,7 +1,5 @@
 {
  "type": "IMPROVEMENT_MACHU_PICCHU",
- "description": "TXT_KEY_BUILDING_MACHU_PICCHU",
- "civilopedia": "TXT_KEY_BUILDING_MACHU_PICCHU_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -39,6 +37,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_MACHU_PICCHU",
+  "civilopedia": "TXT_KEY_BUILDING_MACHU_PICCHU_PEDIA",
   "advancedStart": {
    "cost": -1
   },

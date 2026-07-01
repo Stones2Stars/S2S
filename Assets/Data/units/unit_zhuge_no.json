@@ -1,7 +1,5 @@
 {
  "type": "UNIT_ZHUGE_NO",
- "description": "TXT_KEY_UNIT_ZHUGE_NO",
- "civilopedia": "TXT_KEY_UNIT_ZHUGE_NO_PEDIA",
  "obsoletedBy": {
   "techs": [
    "TECH_FLINTLOCK"
@@ -80,6 +78,8 @@
   "upkeep": 1
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_ZHUGE_NO",
+  "civilopedia": "TXT_KEY_UNIT_ZHUGE_NO_PEDIA",
   "worth": 2,
   "militaryWorth": 6,
   "xpValueAttack": 6,

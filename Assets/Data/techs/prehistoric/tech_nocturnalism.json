@@ -1,8 +1,5 @@
 {
  "type": "TECH_NOCTURNALISM",
- "description": "TXT_KEY_TECH_NOCTURNALISM",
- "civilopedia": "TXT_KEY_TECH_NOCTURNALISM_PEDIA",
- "quote": "TXT_KEY_TECH_NOCTURNALISM_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_ROGUES_HIDEOUT_UNSANCTIONED"
@@ -46,6 +43,9 @@
   "soundMP": "AS2D_TECH_NOCTURNALISM"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_NOCTURNALISM",
+  "civilopedia": "TXT_KEY_TECH_NOCTURNALISM_PEDIA",
+  "quote": "TXT_KEY_TECH_NOCTURNALISM_QUOTE",
   "era": "C2C_ERA_PREHISTORIC",
   "worth": 4,
   "militaryWorth": 1,

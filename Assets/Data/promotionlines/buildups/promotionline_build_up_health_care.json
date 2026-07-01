@@ -1,7 +1,5 @@
 {
  "type": "PROMOTIONLINE_BUILD_UP_HEALTH_CARE",
- "description": "TXT_KEY_PROMOTIONLINE_BUILD_UP_HEALTH_CARE",
- "help": "TXT_KEY_PROMOTIONLINE_BUILD_UP_HEALTH_CARE_HELP",
  "buildUp": {
   "active": true
  },
@@ -11,6 +9,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_PROMOTIONLINE_BUILD_UP_HEALTH_CARE",
+  "help": "TXT_KEY_PROMOTIONLINE_BUILD_UP_HEALTH_CARE_HELP",
   "unitCombats": [
    "UNITCOMBAT_HEALS_ALL"
   ],

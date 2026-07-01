@@ -1,8 +1,5 @@
 {
  "type": "TECH_TELEPHONE",
- "description": "TXT_KEY_TECH_TELEPHONE",
- "civilopedia": "TXT_KEY_TECH_TELEPHONE_PEDIA",
- "quote": "TXT_KEY_TECH_TELEPHONE_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_CALL_CENTER",
@@ -65,6 +62,9 @@
   "soundMP": "AS2D_TECH_GENERIC"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_TELEPHONE",
+  "civilopedia": "TXT_KEY_TECH_TELEPHONE_PEDIA",
+  "quote": "TXT_KEY_TECH_TELEPHONE_QUOTE",
   "era": "C2C_ERA_INDUSTRIAL",
   "worth": 40,
   "tradeable": true,

@@ -1,8 +1,5 @@
 {
  "type": "TECH_AVIATION",
- "description": "TXT_KEY_TECH_AVIATION",
- "civilopedia": "TXT_KEY_TECH_AVIATION_PEDIA",
- "quote": "TXT_KEY_TECH_AVIATION_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_AIRFIELD",
@@ -76,6 +73,9 @@
   "soundMP": "AS2D_TECH_AVIATION"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_AVIATION",
+  "civilopedia": "TXT_KEY_TECH_AVIATION_PEDIA",
+  "quote": "TXT_KEY_TECH_AVIATION_QUOTE",
   "era": "C2C_ERA_ATOMIC",
   "worth": 48,
   "militaryWorth": 8,

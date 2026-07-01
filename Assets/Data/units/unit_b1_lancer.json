@@ -1,7 +1,5 @@
 {
  "type": "UNIT_B1_LANCER",
- "description": "TXT_KEY_UNIT_B1_LANCER",
- "civilopedia": "TXT_KEY_UNIT_B1_LANCER_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -102,6 +100,8 @@
   "upkeep": 7
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_B1_LANCER",
+  "civilopedia": "TXT_KEY_UNIT_B1_LANCER_PEDIA",
   "worth": 3,
   "militaryWorth": 10,
   "xpValueAttack": 6,

@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_LIFE_HYPERSPACE",
- "description": "TXT_KEY_BUILDING_LIFE_HYPERSPACE",
- "civilopedia": "TXT_KEY_BUILDING_LIFE_HYPERSPACE_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -45,6 +43,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_LIFE_HYPERSPACE",
+  "civilopedia": "TXT_KEY_BUILDING_LIFE_HYPERSPACE_PEDIA",
   "neverCapture": true,
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,

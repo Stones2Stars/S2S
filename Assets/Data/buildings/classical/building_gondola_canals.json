@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_GONDOLA_CANALS",
- "description": "TXT_KEY_BUILDING_GONDOLA_CANALS",
- "civilopedia": "TXT_KEY_BUILDING_GONDOLA_CANALS_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_TOURISM_MEGACOMPLEX"
@@ -60,6 +58,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_GONDOLA_CANALS",
+  "civilopedia": "TXT_KEY_BUILDING_GONDOLA_CANALS_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

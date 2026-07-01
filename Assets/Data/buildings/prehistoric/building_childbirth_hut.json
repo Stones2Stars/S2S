@@ -1,8 +1,5 @@
 {
  "type": "BUILDING_CHILDBIRTH_HUT",
- "description": "TXT_KEY_BUILDING_CHILDBIRTH_HUT",
- "civilopedia": "TXT_KEY_BUILDING_CHILDBIRTH_HUT_PEDIA",
- "help": "TXT_KEY_BUILDING_CHILDBIRTH_HUT_HELP",
  "enables": {
   "buildings": [
    "BUILDING_WET_NURSE"
@@ -65,6 +62,9 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_CHILDBIRTH_HUT",
+  "civilopedia": "TXT_KEY_BUILDING_CHILDBIRTH_HUT_PEDIA",
+  "help": "TXT_KEY_BUILDING_CHILDBIRTH_HUT_HELP",
   "conquestProbability": 70,
   "advisor": "ADVISOR_GROWTH",
   "visibilityPriority": 1,

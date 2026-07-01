@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_BEADWORKER",
- "description": "TXT_KEY_BUILDING_BEADWORKER",
- "civilopedia": "TXT_KEY_BUILDING_BEADWORKER_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_HARAPPAN_FAKE_GEMS"
@@ -177,6 +175,8 @@
   "construct": "AS2D_BUILD_JEWELLERY"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_BEADWORKER",
+  "civilopedia": "TXT_KEY_BUILDING_BEADWORKER_PEDIA",
   "nukeImmune": true,
   "conquestProbability": 80,
   "advisor": "ADVISOR_ECONOMY",

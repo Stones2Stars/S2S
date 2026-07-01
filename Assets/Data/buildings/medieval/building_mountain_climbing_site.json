@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_MOUNTAIN_CLIMBING_SITE",
- "description": "TXT_KEY_BUILDING_MOUNTAIN_CLIMBING_SITE",
- "civilopedia": "TXT_KEY_BUILDING_MOUNTAIN_CLIMBING_SITE_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_ATHLETIC_MEGACOMPLEX"
@@ -61,6 +59,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_MOUNTAIN_CLIMBING_SITE",
+  "civilopedia": "TXT_KEY_BUILDING_MOUNTAIN_CLIMBING_SITE_PEDIA",
   "militaryWorth": 1,
   "conquestProbability": 30,
   "advisor": "ADVISOR_GROWTH",

@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_GRAND_AERODROME",
- "description": "TXT_KEY_BUILDING_GRAND_AERODROME",
- "civilopedia": "TXT_KEY_BUILDING_GRAND_AERODROME_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -78,6 +76,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_GRAND_AERODROME",
+  "civilopedia": "TXT_KEY_BUILDING_GRAND_AERODROME_PEDIA",
   "airlift": 4,
   "airUnitCapacity": 9,
   "specialBuildingType": "SPECIALBUILDING_PUNK_DIESEL",

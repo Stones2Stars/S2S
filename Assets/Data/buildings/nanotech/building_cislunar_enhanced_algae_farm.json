@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_CISLUNAR_ENHANCED_ALGAE_FARM",
- "description": "TXT_KEY_BUILDING_CISLUNAR_ENHANCED_ALGAE_FARM",
- "civilopedia": "TXT_KEY_BUILDING_CISLUNAR_ENHANCED_ALGAE_FARM_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_CISLUNAR_ORGANIC_COLONY"
@@ -59,6 +57,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_CISLUNAR_ENHANCED_ALGAE_FARM",
+  "civilopedia": "TXT_KEY_BUILDING_CISLUNAR_ENHANCED_ALGAE_FARM_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

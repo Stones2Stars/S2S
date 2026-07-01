@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_EDUCATION_RIDICULOUS",
- "description": "TXT_KEY_BUILDING_EDUCATION_RIDICULOUS",
- "civilopedia": "TXT_KEY_BUILDING_EQ_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -99,6 +97,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_EDUCATION_RIDICULOUS",
+  "civilopedia": "TXT_KEY_BUILDING_EQ_PEDIA",
   "notConstructible": true,
   "nukeImmune": true,
   "conquestProbability": 100,

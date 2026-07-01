@@ -1,7 +1,5 @@
 {
  "type": "IMPROVEMENT_CITY_RUINS_ARCOLOGY",
- "description": "TXT_KEY_IMPROVEMENT_CITY_RUINS",
- "civilopedia": "TXT_KEY_IMPROVEMENT_CITY_RUINS_PEDIA",
  "defense": {
   "plot": {
    "amount": {
@@ -15,6 +13,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_IMPROVEMENT_CITY_RUINS",
+  "civilopedia": "TXT_KEY_IMPROVEMENT_CITY_RUINS_PEDIA",
   "advancedStart": {
    "cost": -1
   },

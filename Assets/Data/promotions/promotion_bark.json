@@ -1,6 +1,5 @@
 {
  "type": "PROMOTION_BARK",
- "description": "TXT_KEY_PROMOTION_BARK",
  "strength": {
   "unit": {
    "taunt": {
@@ -38,6 +37,7 @@
   "sound": "AS2D_IF_LEVELUP"
  },
  "identity": {
+  "description": "TXT_KEY_PROMOTION_BARK",
   "unitCombats": [
    "UNITCOMBAT_CANINE"
   ]

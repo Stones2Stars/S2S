@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_FACTORY_SCULPTURES",
- "description": "TXT_KEY_BUILDING_FACTORY_SCULPTURES",
- "civilopedia": "TXT_KEY_BUILDING_FACTORY_SCULPTURES_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_PHIDIAS_STATUE_WORKSHOP"
@@ -121,6 +119,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_FACTORY_SCULPTURES",
+  "civilopedia": "TXT_KEY_BUILDING_FACTORY_SCULPTURES_PEDIA",
   "nukeImmune": true,
   "conquestProbability": 80,
   "advisor": "ADVISOR_CULTURE",

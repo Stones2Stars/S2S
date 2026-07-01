@@ -1,7 +1,5 @@
 {
  "type": "BUILD_AQUATIC_ANTI_AIR_DEFENSE",
- "description": "TXT_KEY_BUILD_AQUATIC_ANTI_AIR_DEFENSE",
- "help": "TXT_KEY_BUILD_AQUATIC_ANTI_AIR_DEFENSE_HELP",
  "requires": {
   "build": {
    "all": [
@@ -31,5 +29,9 @@
   "art": {
    "entityEvent": "ENTITY_EVENT_BUILD"
   }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILD_AQUATIC_ANTI_AIR_DEFENSE",
+  "help": "TXT_KEY_BUILD_AQUATIC_ANTI_AIR_DEFENSE_HELP"
  }
 }

@@ -1,8 +1,5 @@
 {
  "type": "TECH_APPLIED_RELATIVITY",
- "description": "TXT_KEY_TECH_APPLIED_RELATIVITY",
- "civilopedia": "TXT_KEY_TECH_APPLIED_RELATIVITY_PEDIA",
- "quote": "TXT_KEY_TECH_APPLIED_RELATIVITY_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_GALACTIC_CORE_BASE",
@@ -63,6 +60,9 @@
   "soundMP": "AS2D_TECH_GENERIC"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_APPLIED_RELATIVITY",
+  "civilopedia": "TXT_KEY_TECH_APPLIED_RELATIVITY_PEDIA",
+  "quote": "TXT_KEY_TECH_APPLIED_RELATIVITY_QUOTE",
   "era": "C2C_ERA_COSMIC",
   "worth": 48,
   "tradeable": true,

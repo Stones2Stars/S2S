@@ -1,12 +1,12 @@
 {
  "type": "UNITCOMBAT_CULTURE_NEW_ZEALAND",
- "description": "TXT_KEY_UNITCOMBAT_CULTURE_NEW_ZEALAND",
  "ui": {
   "art": {
    "icon": "Art/Interface/Buttons/units/sparth/categories/culture_new_zeland.dds"
   }
  },
  "identity": {
+  "description": "TXT_KEY_UNITCOMBAT_CULTURE_NEW_ZEALAND",
   "culture": "BONUS_NEW_ZEALANDER"
  }
 }

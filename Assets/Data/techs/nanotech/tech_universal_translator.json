@@ -1,8 +1,5 @@
 {
  "type": "TECH_UNIVERSAL_TRANSLATOR",
- "description": "TXT_KEY_TECH_UNIVERSAL_TRANSLATOR",
- "civilopedia": "TXT_KEY_TECH_UNIVERSAL_TRANSLATOR_PEDIA",
- "quote": "TXT_KEY_TECH_UNIVERSAL_TRANSLATOR_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_ADVANCED_METI"
@@ -59,6 +56,9 @@
   "soundMP": "AS2D_TECH_UNIVERSAL_TRANSLATOR"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_UNIVERSAL_TRANSLATOR",
+  "civilopedia": "TXT_KEY_TECH_UNIVERSAL_TRANSLATOR_PEDIA",
+  "quote": "TXT_KEY_TECH_UNIVERSAL_TRANSLATOR_QUOTE",
   "era": "C2C_ERA_NANOTECH",
   "worth": 48,
   "tradeable": true,

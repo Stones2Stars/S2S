@@ -1,7 +1,5 @@
 {
  "type": "TERRAIN_SEA_TROPICAL",
- "description": "TXT_KEY_TERRAIN_SEA_TROPICAL",
- "civilopedia": "TXT_KEY_TERRAIN_SEA_PEDIA",
  "food": {
   "plot": {
    "flat": 1
@@ -126,6 +124,8 @@
   "soundscape": "ASSS_OCEAN_SELECT_AMB"
  },
  "identity": {
+  "description": "TXT_KEY_TERRAIN_SEA_TROPICAL",
+  "civilopedia": "TXT_KEY_TERRAIN_SEA_PEDIA",
   "distanceToLand": 2,
   "climateZoneType": "CLIMATE_ZONE_TROPICAL",
   "movementCost": 2,

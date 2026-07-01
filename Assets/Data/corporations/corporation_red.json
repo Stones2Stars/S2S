@@ -1,7 +1,5 @@
 {
  "type": "CORPORATION_RED",
- "description": "TXT_KEY_BUILDING_CORPORATION_RED",
- "civilopedia": "TXT_KEY_BUILDING_CORPORATION_RED_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_RED_CURTAINS_THEATRE"
@@ -81,6 +79,8 @@
   "sound": "AS2D_BUILD_BANK"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_CORPORATION_RED",
+  "civilopedia": "TXT_KEY_BUILDING_CORPORATION_RED_PEDIA",
   "spreadFactor": 200,
   "spread": 50
  }

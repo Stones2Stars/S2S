@@ -1,6 +1,5 @@
 {
  "type": "UNITCOMBAT_FELINE",
- "description": "TXT_KEY_UNITCOMBAT_FELINE",
  "strength": {
   "unit": {
    "attack": {
@@ -72,6 +71,7 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_UNITCOMBAT_FELINE",
   "forMilitary": true,
   "defaultStatuses": [
    "PROMOTION_REMOVE_STANDOUT_STATUS"

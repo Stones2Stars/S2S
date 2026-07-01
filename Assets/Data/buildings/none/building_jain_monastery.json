@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_JAIN_MONASTERY",
- "description": "TXT_KEY_BUILDING_JAIN_MONASTERY",
- "civilopedia": "TXT_KEY_BUILDING_JAIN_MONASTERY_PEDIA",
  "enables": {
   "units": [
    "UNIT_JAINISM_MISSIONARY"
@@ -106,6 +104,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_JAIN_MONASTERY",
+  "civilopedia": "TXT_KEY_BUILDING_JAIN_MONASTERY_PEDIA",
   "neverCapture": true,
   "worth": 3,
   "specialBuildingType": "SPECIALBUILDING_MONASTERY",

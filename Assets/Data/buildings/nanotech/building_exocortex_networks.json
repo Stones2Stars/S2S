@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_EXOCORTEX_NETWORKS",
- "description": "TXT_KEY_BUILDING_EXOCORTEX_NETWORKS",
- "civilopedia": "TXT_KEY_BUILDING_EXOCORTEX_NETWORKS_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_ANTIGRAV_VEHICLE_DEALERSHIP",
@@ -79,6 +77,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_EXOCORTEX_NETWORKS",
+  "civilopedia": "TXT_KEY_BUILDING_EXOCORTEX_NETWORKS_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

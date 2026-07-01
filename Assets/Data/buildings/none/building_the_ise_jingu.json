@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_THE_ISE_JINGU",
- "description": "TXT_KEY_BUILDING_THE_ISE_JINGU",
- "civilopedia": "TXT_KEY_BUILDING_THE_ISE_JINGU_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -53,6 +51,8 @@
   "construct": "SND_BUILD_SHINTO"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_THE_ISE_JINGU",
+  "civilopedia": "TXT_KEY_BUILDING_THE_ISE_JINGU_PEDIA",
   "commerceDoubleTime": {
    "culture": 1000
   },

@@ -1,8 +1,5 @@
 {
  "type": "RELIGION_SHAMANISM",
- "description": "TXT_KEY_TECH_SHAMANISM",
- "civilopedia": "TXT_KEY_TECH_SHAMANISM_PEDIA",
- "adjective": "TXT_KEY_TECH_SHAMANISM_ADJECTIVE",
  "enables": {
   "buildings": [
    "BUILDING_INVOCATION_HUT",
@@ -96,6 +93,9 @@
   "sound": "AS2D_BUILD_SHAMAN"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_SHAMANISM",
+  "adjective": "TXT_KEY_TECH_SHAMANISM_ADJECTIVE",
+  "civilopedia": "TXT_KEY_TECH_SHAMANISM_PEDIA",
   "spreadFactor": 10
  }
 }

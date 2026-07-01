@@ -1,8 +1,5 @@
 {
  "type": "RELIGION_CHRISTIANITY",
- "description": "TXT_KEY_TECH_CHRISTIANITY",
- "civilopedia": "TXT_KEY_TECH_CHRISTIANITY_PEDIA",
- "adjective": "TXT_KEY_TECH_CHRISTIANITY_ADJECTIVE",
  "enables": {
   "buildings": [
    "BUILDING_CHRISTIAN_CATHEDRAL",
@@ -100,6 +97,9 @@
   "sound": "AS2D_BUILD_CHRISTIAN"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_CHRISTIANITY",
+  "adjective": "TXT_KEY_TECH_CHRISTIANITY_ADJECTIVE",
+  "civilopedia": "TXT_KEY_TECH_CHRISTIANITY_PEDIA",
   "spreadFactor": 50
  }
 }

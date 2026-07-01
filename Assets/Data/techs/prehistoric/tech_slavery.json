@@ -1,8 +1,5 @@
 {
  "type": "TECH_SLAVERY",
- "description": "TXT_KEY_TECH_SLAVERY",
- "civilopedia": "TXT_KEY_TECH_SLAVERY_PEDIA",
- "quote": "TXT_KEY_TECH_SLAVERY_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_SLAVE_COMPOUND",
@@ -63,6 +60,9 @@
   "soundMP": "AS2D_TECH_SLAVERY"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_SLAVERY",
+  "civilopedia": "TXT_KEY_TECH_SLAVERY_PEDIA",
+  "quote": "TXT_KEY_TECH_SLAVERY_QUOTE",
   "era": "C2C_ERA_PREHISTORIC",
   "worth": 8,
   "militaryWorth": 6,

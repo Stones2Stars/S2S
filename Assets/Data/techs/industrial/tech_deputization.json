@@ -1,8 +1,5 @@
 {
  "type": "TECH_DEPUTIZATION",
- "description": "TXT_KEY_TECH_DEPUTIZATION",
- "civilopedia": "TXT_KEY_TECH_DEPUTIZATION_PEDIA",
- "quote": "TXT_KEY_TECH_DEPUTIZATION_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_SALOON",
@@ -69,6 +66,9 @@
   "soundMP": "AS2D_TECH_DEPUTIZATION"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_DEPUTIZATION",
+  "civilopedia": "TXT_KEY_TECH_DEPUTIZATION_PEDIA",
+  "quote": "TXT_KEY_TECH_DEPUTIZATION_QUOTE",
   "era": "C2C_ERA_INDUSTRIAL",
   "worth": 40,
   "tradeable": true,

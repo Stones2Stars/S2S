@@ -1,8 +1,10 @@
 {
  "type": "VICTORY_RELIGIOUS",
- "description": "TXT_KEY_VICTORY_RELIGIOUS",
- "civilopedia": "TXT_KEY_VICTORY_RELIGIOUS_PEDIA",
  "condition": {
   "religionPercent": 67
+ },
+ "identity": {
+  "description": "TXT_KEY_VICTORY_RELIGIOUS",
+  "civilopedia": "TXT_KEY_VICTORY_RELIGIOUS_PEDIA"
  }
 }

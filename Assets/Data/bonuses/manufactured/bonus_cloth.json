@@ -1,7 +1,5 @@
 {
  "type": "BONUS_CLOTH",
- "description": "TXT_KEY_BONUS_CLOTH",
- "civilopedia": "TXT_KEY_BONUS_CLOTH_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_ANCIENT_EMBALMER",
@@ -30,6 +28,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_CLOTH",
+  "civilopedia": "TXT_KEY_BONUS_CLOTH_PEDIA",
   "bonusClassType": "BONUSCLASS_MANUFACTURED"
  }
 }

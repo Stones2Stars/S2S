@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_CRIME_TRESPASSING",
- "description": "TXT_KEY_BUILDING_CRIME_TRESPASSING",
- "civilopedia": "TXT_KEY_BUILDING_CRIME_TRESPASSING_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -46,6 +44,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_CRIME_TRESPASSING",
+  "civilopedia": "TXT_KEY_BUILDING_CRIME_TRESPASSING_PEDIA",
   "notConstructible": true,
   "nukeImmune": true,
   "conquestProbability": 100,

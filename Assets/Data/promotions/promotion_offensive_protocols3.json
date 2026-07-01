@@ -1,6 +1,5 @@
 {
  "type": "PROMOTION_OFFENSIVE_PROTOCOLS3",
- "description": "TXT_KEY_PROMOTION_OFFENSIVE_PROTOCOLS3",
  "capture": {
   "unit": {
    "probability": {
@@ -36,5 +35,8 @@
  },
  "sound": {
   "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_OFFENSIVE_PROTOCOLS3"
  }
 }

@@ -1,8 +1,5 @@
 {
  "type": "TRAIT_HONEST",
- "description": "TXT_KEY_TRAIT_HONEST",
- "civilopedia": "TXT_KEY_TRAIT_HONEST_PEDIA",
- "strategy": "TXT_KEY_TRAIT_HONEST_STRATEGY",
  "excludes": [
   "TRAIT_LIAR"
  ],
@@ -171,5 +168,10 @@
   "art": {
    "icon": "art/Buttons/Traits/TraitHonest.dds"
   }
+ },
+ "identity": {
+  "description": "TXT_KEY_TRAIT_HONEST",
+  "civilopedia": "TXT_KEY_TRAIT_HONEST_PEDIA",
+  "strategy": "TXT_KEY_TRAIT_HONEST_STRATEGY"
  }
 }

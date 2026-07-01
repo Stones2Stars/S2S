@@ -1,6 +1,5 @@
 {
  "type": "PROMOTION_ALCHEMIST1",
- "description": "TXT_KEY_PROMOTION_ALCHEMIST1",
  "heal": {
   "unit": {
    "friendly": {
@@ -18,5 +17,8 @@
  },
  "sound": {
   "sound": "AS2D_PING"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_ALCHEMIST1"
  }
 }

@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_LACQUERWARE_WORKSHOP",
- "description": "TXT_KEY_BUILDING_LACQUERWARE_WORKSHOP",
- "civilopedia": "TXT_KEY_BUILDING_LACQUERWARE_WORKSHOP_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_FACTORY_LACQUERWARE"
@@ -99,6 +97,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_LACQUERWARE_WORKSHOP",
+  "civilopedia": "TXT_KEY_BUILDING_LACQUERWARE_WORKSHOP_PEDIA",
   "nukeImmune": true,
   "conquestProbability": 80,
   "advisor": "ADVISOR_ECONOMY",

@@ -1,8 +1,5 @@
 {
  "type": "TECH_HERBALISM",
- "description": "TXT_KEY_TECH_HERBALISM",
- "civilopedia": "TXT_KEY_TECH_HERBALISM_PEDIA",
- "quote": "TXT_KEY_TECH_HERBALISM_QUOTE",
  "enables": {
   "bonuses": [
    "BONUS_MUSHROOMS"
@@ -61,6 +58,9 @@
   "soundMP": "AS2D_TECH_HERBALISM"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_HERBALISM",
+  "civilopedia": "TXT_KEY_TECH_HERBALISM_PEDIA",
+  "quote": "TXT_KEY_TECH_HERBALISM_QUOTE",
   "era": "C2C_ERA_PREHISTORIC",
   "worth": 4,
   "tradeable": true,

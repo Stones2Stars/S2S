@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_EARTH_WALL",
- "description": "TXT_KEY_BUILDING_EARTH_WALL",
- "civilopedia": "TXT_KEY_BUILDING_EARTH_WALL_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_WALLS"
@@ -107,6 +105,8 @@
   "construct": "AS2D_BUILD_WALLS"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_EARTH_WALL",
+  "civilopedia": "TXT_KEY_BUILDING_EARTH_WALL_PEDIA",
   "enabledCivilizations": [
    "CIVILIZATION_NPC_NEANDERTHAL"
   ],

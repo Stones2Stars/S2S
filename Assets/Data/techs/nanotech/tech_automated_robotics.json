@@ -1,8 +1,5 @@
 {
  "type": "TECH_AUTOMATED_ROBOTICS",
- "description": "TXT_KEY_TECH_AUTOMATED_ROBOTICS",
- "civilopedia": "TXT_KEY_TECH_AUTOMATED_ROBOTICS_PEDIA",
- "quote": "TXT_KEY_TECH_AUTOMATED_ROBOTICS_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_AUTODOCTOR",
@@ -73,6 +70,9 @@
   "soundMP": "AS2D_TECH_AUTOMATED_ROBOTICS"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_AUTOMATED_ROBOTICS",
+  "civilopedia": "TXT_KEY_TECH_AUTOMATED_ROBOTICS_PEDIA",
+  "quote": "TXT_KEY_TECH_AUTOMATED_ROBOTICS_QUOTE",
   "era": "C2C_ERA_NANOTECH",
   "worth": 14,
   "tradeable": true,

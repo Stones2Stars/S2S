@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_UNIVERSAL_LIBRARY",
- "description": "TXT_KEY_BUILDING_UNIVERSAL_LIBRARY",
- "civilopedia": "TXT_KEY_BUILDING_UNIVERSAL_LIBRARY_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_ENCYCLOPEDIA_GALACTICA",
@@ -100,6 +98,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_UNIVERSAL_LIBRARY",
+  "civilopedia": "TXT_KEY_BUILDING_UNIVERSAL_LIBRARY_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

@@ -1,6 +1,5 @@
 {
  "type": "BUILD_PLANTATION",
- "description": "TXT_KEY_BUILD_PLANTATION",
  "requires": {
   "build": {
    "all": [
@@ -126,5 +125,8 @@
   "art": {
    "entityEvent": "ENTITY_EVENT_BUILD"
   }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILD_PLANTATION"
  }
 }

@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_HERD_KANGAROO",
- "description": "TXT_KEY_BUILDING_HERD_KANGAROO",
- "civilopedia": "TXT_KEY_BUILDING_HERD_KANGAROO_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_RESOURCES_CARCASS"
@@ -55,6 +53,8 @@
   "construct": "SND_AMB_HORSE_COBBLESTONES"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_HERD_KANGAROO",
+  "civilopedia": "TXT_KEY_BUILDING_HERD_KANGAROO_PEDIA",
   "notConstructible": true,
   "worth": 3,
   "conquestProbability": 75,

@@ -1,12 +1,12 @@
 {
  "type": "PROMOTIONLINE_STINGING_INSULTS",
- "description": "TXT_KEY_PROMOTIONLINE_STINGING_INSULTS",
  "ui": {
   "art": {
    "icon": "art/Buttons/Promotions/Insult1Promotion.fw.dds"
   }
  },
  "identity": {
+  "description": "TXT_KEY_PROMOTIONLINE_STINGING_INSULTS",
   "unitCombats": [
    "UNITCOMBAT_RECON"
   ],

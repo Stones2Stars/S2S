@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_AUTODOCTOR",
- "description": "TXT_KEY_BUILDING_AUTODOCTOR",
- "civilopedia": "TXT_KEY_BUILDING_AUTODOCTOR_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_MEDICAL_DIAGNOSTAT",
@@ -122,6 +120,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_AUTODOCTOR",
+  "civilopedia": "TXT_KEY_BUILDING_AUTODOCTOR_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

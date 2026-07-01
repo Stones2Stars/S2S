@@ -1,6 +1,5 @@
 {
  "type": "UNITCOMBAT_DROID_SHIPS",
- "description": "TXT_KEY_UNITCOMBAT_DROID_SHIPS",
  "vision": {
   "visibilityIntensity": {
    "INVISIBLE_NAVAL_DISGUISE": 2
@@ -12,6 +11,7 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_UNITCOMBAT_DROID_SHIPS",
   "forNavalMilitary": true
  }
 }

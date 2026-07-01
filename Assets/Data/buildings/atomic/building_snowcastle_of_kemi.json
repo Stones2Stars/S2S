@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_SNOWCASTLE_OF_KEMI",
- "description": "TXT_KEY_BUILDING_SNOWCASTLE_OF_KEMI",
- "civilopedia": "TXT_KEY_BUILDING_SNOWCASTLE_OF_KEMI_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -90,6 +88,8 @@
   "construct": "AS2D_BUILD_HOTEL"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_SNOWCASTLE_OF_KEMI",
+  "civilopedia": "TXT_KEY_BUILDING_SNOWCASTLE_OF_KEMI_PEDIA",
   "worth": 10,
   "militaryWorth": 3,
   "conquestProbability": 100,

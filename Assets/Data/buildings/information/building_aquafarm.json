@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_AQUAFARM",
- "description": "TXT_KEY_BUILDING_AQUAFARM",
- "civilopedia": "TXT_KEY_BUILDING_AQUAFARM_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_DYE_MAKER",
@@ -234,6 +232,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_AQUAFARM",
+  "civilopedia": "TXT_KEY_BUILDING_AQUAFARM_PEDIA",
   "worth": 3,
   "militaryWorth": 1,
   "advisor": "ADVISOR_GROWTH",

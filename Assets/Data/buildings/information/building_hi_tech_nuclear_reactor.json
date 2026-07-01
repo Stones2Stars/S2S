@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_HI_TECH_NUCLEAR_REACTOR",
- "description": "TXT_KEY_BUILDING_HI_TECH_NUCLEAR_REACTOR",
- "civilopedia": "TXT_KEY_BUILDING_HI_TECH_NUCLEAR_REACTOR_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_HIGH_ENERGY_LAB",
@@ -81,6 +79,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_HI_TECH_NUCLEAR_REACTOR",
+  "civilopedia": "TXT_KEY_BUILDING_HI_TECH_NUCLEAR_REACTOR_PEDIA",
   "specialBuildingType": "SPECIALBUILDING_PUNK_ATOM",
   "advisor": "ADVISOR_ECONOMY",
   "visibilityPriority": "1.0",

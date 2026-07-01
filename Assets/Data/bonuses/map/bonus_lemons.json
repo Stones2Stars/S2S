@@ -1,7 +1,5 @@
 {
  "type": "BONUS_LEMONS",
- "description": "TXT_KEY_BONUS_LEMONS",
- "civilopedia": "TXT_KEY_BONUS_LEMONS_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_CHANTERELLE_GATHERER",
@@ -77,6 +75,8 @@
   ]
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_LEMONS",
+  "civilopedia": "TXT_KEY_BONUS_LEMONS_PEDIA",
   "bonusClassType": "BONUSCLASS_CROP"
  }
 }

@@ -1,7 +1,5 @@
 {
  "type": "PROMOTIONLINE_BUILD_UP_OBSERVATION",
- "description": "TXT_KEY_PROMOTIONLINE_BUILD_UP_OBSERVATION",
- "help": "TXT_KEY_PROMOTIONLINE_BUILD_UP_OBSERVATION_HELP",
  "loadPrune": {
   "onGameOptions": [
    "GAMEOPTION_COMBAT_HIDE_SEEK"
@@ -16,6 +14,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_PROMOTIONLINE_BUILD_UP_OBSERVATION",
+  "help": "TXT_KEY_PROMOTIONLINE_BUILD_UP_OBSERVATION_HELP",
   "unitCombats": [
    "UNITCOMBAT_EXPLORER"
   ],

@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_TAX_OFFICE",
- "description": "TXT_KEY_BUILDING_TAX_OFFICE",
- "civilopedia": "TXT_KEY_BUILDING_TAX_OFFICE_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -58,6 +56,8 @@
   "construct": "AS2D_BUILD_TOLLHOUSE"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_TAX_OFFICE",
+  "civilopedia": "TXT_KEY_BUILDING_TAX_OFFICE_PEDIA",
   "nukeImmune": true,
   "advisor": "ADVISOR_ECONOMY",
   "visibilityPriority": 1,

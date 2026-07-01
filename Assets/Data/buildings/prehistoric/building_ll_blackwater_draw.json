@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_LL_BLACKWATER_DRAW",
- "description": "TXT_KEY_BUILDING_LL_BLACKWATER_DRAW",
- "civilopedia": "TXT_KEY_BUILDING_LL_BLACKWATER_DRAW_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_RESOURCES_BONE"
@@ -70,6 +68,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_LL_BLACKWATER_DRAW",
+  "civilopedia": "TXT_KEY_BUILDING_LL_BLACKWATER_DRAW_PEDIA",
   "centerInCity": true,
   "worth": 10,
   "conquestProbability": 100,

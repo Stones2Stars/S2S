@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_OXEN_MILL",
- "description": "TXT_KEY_BUILDING_OXEN_MILL",
- "civilopedia": "TXT_KEY_BUILDING_OXEN_MILL_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_RESOURCES_FLOUR"
@@ -141,6 +139,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_OXEN_MILL",
+  "civilopedia": "TXT_KEY_BUILDING_OXEN_MILL_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

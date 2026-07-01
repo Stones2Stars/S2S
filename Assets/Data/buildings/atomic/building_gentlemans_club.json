@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_GENTLEMANS_CLUB",
- "description": "TXT_KEY_BUILDING_GENTLEMANS_CLUB",
- "civilopedia": "TXT_KEY_BUILDING_GENTLEMANS_CLUB_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_ANDROID_BROTHEL"
@@ -158,6 +156,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_GENTLEMANS_CLUB",
+  "civilopedia": "TXT_KEY_BUILDING_GENTLEMANS_CLUB_PEDIA",
   "advisor": "ADVISOR_CULTURE",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

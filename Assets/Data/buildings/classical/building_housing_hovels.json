@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_HOUSING_HOVELS",
- "description": "TXT_KEY_BUILDING_HOUSING_HOVELS",
- "civilopedia": "TXT_KEY_BUILDING_HOUSING_HOVELS_PEDIA",
  "obsoletedBy": {
   "techs": [
    "TECH_TELEPHONE"
@@ -61,6 +59,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_HOUSING_HOVELS",
+  "civilopedia": "TXT_KEY_BUILDING_HOUSING_HOVELS_PEDIA",
   "notConstructible": true,
   "nukeImmune": true,
   "neverCapture": true,

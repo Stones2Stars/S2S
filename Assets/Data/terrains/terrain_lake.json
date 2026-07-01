@@ -1,7 +1,5 @@
 {
  "type": "TERRAIN_LAKE",
- "description": "TXT_KEY_TERRAIN_FRESHWATER_SEA",
- "civilopedia": "TXT_KEY_TERRAIN_OCEAN_PEDIA",
  "food": {
   "plot": {
    "flat": 2
@@ -126,6 +124,8 @@
   "soundscape": "ASSS_OCEAN_SELECT_AMB"
  },
  "identity": {
+  "description": "TXT_KEY_TERRAIN_FRESHWATER_SEA",
+  "civilopedia": "TXT_KEY_TERRAIN_OCEAN_PEDIA",
   "distanceToLand": 2,
   "freshWaterTerrain": true,
   "movementCost": 2,

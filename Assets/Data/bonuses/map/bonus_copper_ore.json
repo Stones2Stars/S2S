@@ -1,7 +1,5 @@
 {
  "type": "BONUS_COPPER_ORE",
- "description": "TXT_KEY_BONUS_COPPER_ORE",
- "civilopedia": "TXT_KEY_BONUS_COPPER_ORE_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_ADVANCED_COPPERWORKS",
@@ -73,6 +71,8 @@
   ]
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_COPPER_ORE",
+  "civilopedia": "TXT_KEY_BONUS_COPPER_ORE_PEDIA",
   "bonusClassType": "BONUSCLASS_STRATEGIC"
  }
 }

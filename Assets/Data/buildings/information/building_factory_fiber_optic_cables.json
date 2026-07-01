@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_FACTORY_FIBER_OPTIC_CABLES",
- "description": "TXT_KEY_BUILDING_FACTORY_FIBER_OPTIC_CABLES",
- "civilopedia": "TXT_KEY_BUILDING_FACTORY_FIBER_OPTIC_CABLES_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_ELECTRONICS_MANUFACTURING_DISTRICT"
@@ -81,6 +79,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_FACTORY_FIBER_OPTIC_CABLES",
+  "civilopedia": "TXT_KEY_BUILDING_FACTORY_FIBER_OPTIC_CABLES_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

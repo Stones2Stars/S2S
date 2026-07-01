@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_EUROPA_VERTICAL_REEF",
- "description": "TXT_KEY_BUILDING_EUROPA_VERTICAL_REEF",
- "civilopedia": "TXT_KEY_BUILDING_EUROPA_VERTICAL_REEF_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -52,6 +50,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_EUROPA_VERTICAL_REEF",
+  "civilopedia": "TXT_KEY_BUILDING_EUROPA_VERTICAL_REEF_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

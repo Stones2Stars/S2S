@@ -1,7 +1,5 @@
 {
  "type": "UNIT_MOTU_ARCHERS",
- "description": "TXT_KEY_UNIT_MOTU_ARCHERS",
- "civilopedia": "TXT_KEY_UNIT_MOTU_ARCHERS_PEDIA",
  "obsoletedBy": {
   "techs": [
    "TECH_FLINTLOCK"
@@ -81,6 +79,8 @@
   "upkeep": 1
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_MOTU_ARCHERS",
+  "civilopedia": "TXT_KEY_UNIT_MOTU_ARCHERS_PEDIA",
   "worth": 1,
   "militaryWorth": 5,
   "xpValueAttack": 6,

@@ -1,6 +1,5 @@
 {
  "type": "UNITCOMBAT_GROUP_HORDE",
- "description": "TXT_KEY_UNITCOMBAT_GROUP_HORDE",
  "experience": {
   "unit": {
    "percent": -60
@@ -39,6 +38,7 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_UNITCOMBAT_GROUP_HORDE",
   "base": {
    "group": 8
   }

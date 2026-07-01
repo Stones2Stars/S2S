@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_FARM_ANIMAL_COW",
- "description": "TXT_KEY_BUILDING_FARM_ANIMAL_COW",
- "civilopedia": "TXT_KEY_BUILDING_FARM_ANIMAL_COW_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_BULL_LEAPING",
@@ -113,6 +111,8 @@
   "construct": "AS2D_BUILD_GRANARY"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_FARM_ANIMAL_COW",
+  "civilopedia": "TXT_KEY_BUILDING_FARM_ANIMAL_COW_PEDIA",
   "worth": 4,
   "militaryWorth": 6,
   "advisor": "ADVISOR_GROWTH",

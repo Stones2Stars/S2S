@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_FOUNTAIN",
- "description": "TXT_KEY_BUILDING_FOUNTAIN",
- "civilopedia": "TXT_KEY_BUILDING_FOUNTAIN_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_TUMEN_AMUGULANG_PALACE"
@@ -74,6 +72,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_FOUNTAIN",
+  "civilopedia": "TXT_KEY_BUILDING_FOUNTAIN_PEDIA",
   "advisor": "ADVISOR_CULTURE",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

@@ -1,6 +1,5 @@
 {
  "type": "UNITCOMBAT_SIZE_MEDIUM",
- "description": "TXT_KEY_UNITCOMBAT_SIZE_MEDIUM",
  "loadPrune": {
   "onGameOptions": [
    "GAMEOPTION_COMBAT_SIZE_MATTERS"
@@ -12,6 +11,7 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_UNITCOMBAT_SIZE_MEDIUM",
   "base": {
    "size": 5
   }

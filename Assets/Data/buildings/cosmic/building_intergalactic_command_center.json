@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_INTERGALACTIC_COMMAND_CENTER",
- "description": "TXT_KEY_BUILDING_INTERGALACTIC_COMMAND_CENTER",
- "civilopedia": "TXT_KEY_BUILDING_INTERGALACTIC_COMMAND_CENTER_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_INTERGALACTIC_BERSERKER",
@@ -49,6 +47,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_INTERGALACTIC_COMMAND_CENTER",
+  "civilopedia": "TXT_KEY_BUILDING_INTERGALACTIC_COMMAND_CENTER_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

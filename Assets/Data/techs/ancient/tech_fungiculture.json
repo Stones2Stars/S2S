@@ -1,8 +1,5 @@
 {
  "type": "TECH_FUNGICULTURE",
- "description": "TXT_KEY_TECH_FUNGICULTURE",
- "civilopedia": "TXT_KEY_TECH_FUNGICULTURE_PEDIA",
- "quote": "TXT_KEY_TECH_FUNGICULTURE_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_BLACK_TRUFFLE_GATHERER",
@@ -75,6 +72,9 @@
   "soundMP": "AS2D_TECH_FUNGICULTURE"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_FUNGICULTURE",
+  "civilopedia": "TXT_KEY_TECH_FUNGICULTURE_PEDIA",
+  "quote": "TXT_KEY_TECH_FUNGICULTURE_QUOTE",
   "era": "C2C_ERA_ANCIENT",
   "worth": 8,
   "tradeable": true,

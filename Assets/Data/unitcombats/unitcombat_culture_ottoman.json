@@ -1,12 +1,12 @@
 {
  "type": "UNITCOMBAT_CULTURE_OTTOMAN",
- "description": "TXT_KEY_UNITCOMBAT_CULTURE_OTTOMAN",
  "ui": {
   "art": {
    "icon": "Art/Interface/Buttons/units/sparth/categories/culture_ottoman.dds"
   }
  },
  "identity": {
+  "description": "TXT_KEY_UNITCOMBAT_CULTURE_OTTOMAN",
   "culture": "BONUS_OTTOMAN"
  }
 }

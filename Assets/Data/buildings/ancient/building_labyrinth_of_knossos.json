@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_LABYRINTH_OF_KNOSSOS",
- "description": "TXT_KEY_BUILDING_LABYRINTH_OF_KNOSSOS",
- "civilopedia": "TXT_KEY_BUILDING_LABYRINTH_OF_KNOSSOS_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -115,6 +113,8 @@
   "construct": "AS2D_BUILD_WALLS"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_LABYRINTH_OF_KNOSSOS",
+  "civilopedia": "TXT_KEY_BUILDING_LABYRINTH_OF_KNOSSOS_PEDIA",
   "neverCapture": true,
   "centerInCity": true,
   "worth": 1,

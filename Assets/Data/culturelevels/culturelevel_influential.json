@@ -1,6 +1,5 @@
 {
  "type": "CULTURELEVEL_INFLUENTIAL",
- "description": "TXT_KEY_CULTURELEVEL_INFLUENTIAL",
  "enables": {
   "buildings": [
    "BUILDING_METROPOLITAN_ADMINISTRATION"
@@ -19,6 +18,7 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_CULTURELEVEL_INFLUENTIAL",
   "cityRadius": 3,
   "cultureThreshold": 8320
  }

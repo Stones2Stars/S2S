@@ -1,7 +1,5 @@
 {
  "type": "UNIT_GREAT_BOMBARD",
- "description": "TXT_KEY_UNIT_GREAT_BOMBARD",
- "civilopedia": "TXT_KEY_UNIT_GREAT_BOMBARD_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -82,6 +80,8 @@
   "upkeep": 1
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_GREAT_BOMBARD",
+  "civilopedia": "TXT_KEY_UNIT_GREAT_BOMBARD_PEDIA",
   "worth": 3,
   "militaryWorth": 37,
   "xpValueAttack": 6,

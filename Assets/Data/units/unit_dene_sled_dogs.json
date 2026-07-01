@@ -1,7 +1,5 @@
 {
  "type": "UNIT_DENE_SLED_DOGS",
- "description": "TXT_KEY_UNIT_DENE_SLED_DOGS",
- "civilopedia": "TXT_KEY_UNIT_DENE_SLED_DOGS_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -97,6 +95,8 @@
   "upkeep": 1
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_DENE_SLED_DOGS",
+  "civilopedia": "TXT_KEY_UNIT_DENE_SLED_DOGS_PEDIA",
   "worth": 1,
   "militaryWorth": 4,
   "xpValueAttack": 6,

@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_RACIAL_PROFILING",
- "description": "TXT_KEY_BUILDING_RACIAL_PROFILING",
- "civilopedia": "TXT_KEY_BUILDING_RACIAL_PROFILING_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_GENETIC_PROFILING"
@@ -63,6 +61,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_RACIAL_PROFILING",
+  "civilopedia": "TXT_KEY_BUILDING_RACIAL_PROFILING_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

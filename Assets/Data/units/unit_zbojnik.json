@@ -1,7 +1,5 @@
 {
  "type": "UNIT_ZBOJNIK",
- "description": "TXT_KEY_UNIT_ZBOJNIK",
- "civilopedia": "TXT_KEY_UNIT_ZBOJNIK_PEDIA",
  "obsoletedBy": {
   "techs": [
    "TECH_MOTORIZED_TRANSPORTATION"
@@ -193,6 +191,8 @@
   ]
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_ZBOJNIK",
+  "civilopedia": "TXT_KEY_UNIT_ZBOJNIK_PEDIA",
   "worth": 6,
   "militaryWorth": 17,
   "xpValueAttack": 6,

@@ -1,7 +1,5 @@
 {
  "type": "UNIT_JAIPONGAN_DANCER",
- "description": "TXT_KEY_UNIT_JAIPONGAN_DANCER",
- "civilopedia": "TXT_KEY_UNIT_JAIPONGAN_DANCER_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -103,6 +101,8 @@
   "upkeep": 4
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_JAIPONGAN_DANCER",
+  "civilopedia": "TXT_KEY_UNIT_JAIPONGAN_DANCER_PEDIA",
   "worth": 5,
   "domain": "DOMAIN_LAND",
   "defaultUnitAI": "UNITAI_PROPERTY_CONTROL",

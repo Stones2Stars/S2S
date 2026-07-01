@@ -1,6 +1,5 @@
 {
  "type": "PROMOTION_CARAVAN_CIRCLE_THE_WAGONS",
- "description": "TXT_KEY_CARAVAN_CIRCLE_THE_WAGONS",
  "strength": {
   "unit": {
    "percent": 10,
@@ -109,6 +108,7 @@
   "sound": "AS2D_IF_LEVELUP"
  },
  "identity": {
+  "description": "TXT_KEY_CARAVAN_CIRCLE_THE_WAGONS",
   "unitCombats": [
    "UNITCOMBAT_TRADE"
   ]

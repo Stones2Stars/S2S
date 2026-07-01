@@ -1,7 +1,5 @@
 {
  "type": "UNIT_LIZARD",
- "description": "TXT_KEY_UNIT_LIZARD",
- "civilopedia": "TXT_KEY_UNIT_LIZARD_PEDIA",
  "skills": {
   "blendIntoCity": true,
   "onlyDefensive": true,
@@ -46,6 +44,8 @@
   ]
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_LIZARD",
+  "civilopedia": "TXT_KEY_UNIT_LIZARD_PEDIA",
   "spawnOnly": true,
   "xpValueAttack": 1,
   "xpValueDefense": 1,

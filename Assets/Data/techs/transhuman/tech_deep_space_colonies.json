@@ -1,8 +1,5 @@
 {
  "type": "TECH_DEEP_SPACE_COLONIES",
- "description": "TXT_KEY_TECH_DEEP_SPACE_COLONIES",
- "civilopedia": "TXT_KEY_TECH_DEEP_SPACE_COLONIES_PEDIA",
- "quote": "TXT_KEY_TECH_DEEP_SPACE_COLONIES_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_DEEP_SPACE_ASSEMBLER",
@@ -72,6 +69,9 @@
   "soundMP": "AS2D_TECH_GENERIC"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_DEEP_SPACE_COLONIES",
+  "civilopedia": "TXT_KEY_TECH_DEEP_SPACE_COLONIES_PEDIA",
+  "quote": "TXT_KEY_TECH_DEEP_SPACE_COLONIES_QUOTE",
   "era": "C2C_ERA_TRANSHUMAN",
   "worth": 48,
   "tradeable": true,

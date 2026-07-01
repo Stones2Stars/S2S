@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_TRAFFIC_ENGINEERING_AGENCY",
- "description": "TXT_KEY_BUILDING_TRAFFIC_ENGINEERING_AGENCY",
- "civilopedia": "TXT_KEY_BUILDING_TRAFFIC_ENGINEERING_AGENCY_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_TELEPORT_BOOTH"
@@ -78,6 +76,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_TRAFFIC_ENGINEERING_AGENCY",
+  "civilopedia": "TXT_KEY_BUILDING_TRAFFIC_ENGINEERING_AGENCY_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

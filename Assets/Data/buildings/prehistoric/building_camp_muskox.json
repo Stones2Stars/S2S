@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_CAMP_MUSKOX",
- "description": "TXT_KEY_BUILDING_CAMP_MUSKOX",
- "civilopedia": "TXT_KEY_BUILDING_CAMP_MUSKOX_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_ANIMAL_TRAINER_BISON",
@@ -108,6 +106,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_CAMP_MUSKOX",
+  "civilopedia": "TXT_KEY_BUILDING_CAMP_MUSKOX_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

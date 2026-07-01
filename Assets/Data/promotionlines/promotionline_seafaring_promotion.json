@@ -1,12 +1,12 @@
 {
  "type": "PROMOTIONLINE_SEAFARING_PROMOTION",
- "description": "TXT_KEY_PROMOTIONLINE_SEAFARING_PROMOTION",
  "ui": {
   "art": {
    "icon": "art/Buttons/Promotions/PromotionSeafaring.dds"
   }
  },
  "identity": {
+  "description": "TXT_KEY_PROMOTIONLINE_SEAFARING_PROMOTION",
   "unitCombats": [
    "UNITCOMBAT_WOODEN_SHIPS",
    "UNITCOMBAT_STEAM_SHIPS",

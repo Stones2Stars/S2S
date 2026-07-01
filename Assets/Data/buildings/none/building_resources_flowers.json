@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_RESOURCES_FLOWERS",
- "description": "TXT_KEY_BUILDING_RESOURCES_FLOWERS",
- "civilopedia": "TXT_KEY_BUILDING_RESOURCE_PROVIDER_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_GREENHOUSE"
@@ -60,6 +58,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_RESOURCES_FLOWERS",
+  "civilopedia": "TXT_KEY_BUILDING_RESOURCE_PROVIDER_PEDIA",
   "notConstructible": true,
   "autoBuild": true,
   "advisor": "ADVISOR_ECONOMY",

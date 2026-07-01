@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_HOUSING_BOONDOCKS",
- "description": "TXT_KEY_BUILDING_HOUSING_BOONDOCKS",
- "civilopedia": "TXT_KEY_BUILDING_HOUSING_BOONDOCKS_PEDIA",
  "obsoletedBy": {
   "techs": [
    "TECH_COLONY_ARCOLOGY"
@@ -50,6 +48,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_HOUSING_BOONDOCKS",
+  "civilopedia": "TXT_KEY_BUILDING_HOUSING_BOONDOCKS_PEDIA",
   "notConstructible": true,
   "nukeImmune": true,
   "neverCapture": true,

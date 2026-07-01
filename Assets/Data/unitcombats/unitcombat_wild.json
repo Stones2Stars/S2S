@@ -1,6 +1,5 @@
 {
  "type": "UNITCOMBAT_WILD",
- "description": "TXT_KEY_UNITCOMBAT_WILD",
  "capture": {
   "unit": {
    "probability": {
@@ -22,5 +21,8 @@
   "art": {
    "icon": "Art/Interface/Buttons/units/sparth/categories/wild.dds"
   }
+ },
+ "identity": {
+  "description": "TXT_KEY_UNITCOMBAT_WILD"
  }
 }

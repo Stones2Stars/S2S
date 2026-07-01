@@ -1,8 +1,5 @@
 {
  "type": "TECH_NAVIGATION",
- "description": "TXT_KEY_TECH_NAVIGATION",
- "civilopedia": "TXT_KEY_TECH_NAVIGATION_PEDIA",
- "quote": "TXT_KEY_TECH_NAVIGATION_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_CULTURE_AUSTRALIAN",
@@ -77,6 +74,9 @@
   "soundMP": "AS2D_TECH_NAVIGATION"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_NAVIGATION",
+  "civilopedia": "TXT_KEY_TECH_NAVIGATION_PEDIA",
+  "quote": "TXT_KEY_TECH_NAVIGATION_QUOTE",
   "era": "C2C_ERA_RENAISSANCE",
   "worth": 32,
   "militaryWorth": 4,

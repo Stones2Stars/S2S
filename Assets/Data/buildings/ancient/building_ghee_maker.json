@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_GHEE_MAKER",
- "description": "TXT_KEY_BUILDING_GHEE_MAKER",
- "civilopedia": "TXT_KEY_BUILDING_GHEE_MAKER_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_FACTORY_GHEE_OIL"
@@ -98,6 +96,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_GHEE_MAKER",
+  "civilopedia": "TXT_KEY_BUILDING_GHEE_MAKER_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

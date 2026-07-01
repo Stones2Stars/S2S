@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_INTERSTELLAR_BASE_CARBON_PLANET",
- "description": "TXT_KEY_BUILDING_INTERSTELLAR_BASE_CARBON_PLANET",
- "civilopedia": "TXT_KEY_BUILDING_INTERSTELLAR_BASE_CARBON_PLANET_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -47,6 +45,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_INTERSTELLAR_BASE_CARBON_PLANET",
+  "civilopedia": "TXT_KEY_BUILDING_INTERSTELLAR_BASE_CARBON_PLANET_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

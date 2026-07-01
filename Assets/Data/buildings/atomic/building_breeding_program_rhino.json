@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_BREEDING_PROGRAM_RHINO",
- "description": "TXT_KEY_BUILDING_BREEDING_PROGRAM_RHINO",
- "civilopedia": "TXT_KEY_BUILDING_BREEDING_PROGRAM_RHINO_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_ANIMAL_TRAINER_RHINOCEROS",
@@ -93,6 +91,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_BREEDING_PROGRAM_RHINO",
+  "civilopedia": "TXT_KEY_BUILDING_BREEDING_PROGRAM_RHINO_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

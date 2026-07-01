@@ -1,6 +1,5 @@
 {
  "type": "PROMOTION_SPOT1",
- "description": "TXT_KEY_PROMOTION_SPOT1",
  "vision": {
   "visibilityIntensity": {
    "INVISIBLE_SIZE": 1
@@ -24,6 +23,7 @@
   "sound": "AS2D_IF_LEVELUP"
  },
  "identity": {
+  "description": "TXT_KEY_PROMOTION_SPOT1",
   "unitCombats": [
    "UNITCOMBAT_QUALITY_STANDARD",
    "UNITCOMBAT_QUALITY_SUPERIOR",

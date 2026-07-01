@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_SLOAN_DIGITAL_SKY_SURVEY",
- "description": "TXT_KEY_BUILDING_SLOAN_DIGITAL_SKY_SURVEY",
- "civilopedia": "TXT_KEY_BUILDING_SLOAN_DIGITAL_SKY_SURVEY_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -60,6 +58,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_SLOAN_DIGITAL_SKY_SURVEY",
+  "civilopedia": "TXT_KEY_BUILDING_SLOAN_DIGITAL_SKY_SURVEY_PEDIA",
   "conquestProbability": 100,
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,

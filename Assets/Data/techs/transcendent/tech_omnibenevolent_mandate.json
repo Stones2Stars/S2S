@@ -1,8 +1,5 @@
 {
  "type": "TECH_OMNIBENEVOLENT_MANDATE",
- "description": "TXT_KEY_TECH_OMNIBENEVOLENT_MANDATE",
- "civilopedia": "TXT_KEY_TECH_OMNIBENEVOLENT_MANDATE_PEDIA",
- "quote": "TXT_KEY_TECH_OMNIBENEVOLENT_MANDATE_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_ANIMAL_SUFFERING_PREVENTION",
@@ -57,6 +54,9 @@
   "soundMP": "AS2D_TECH_GENERIC"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_OMNIBENEVOLENT_MANDATE",
+  "civilopedia": "TXT_KEY_TECH_OMNIBENEVOLENT_MANDATE_PEDIA",
+  "quote": "TXT_KEY_TECH_OMNIBENEVOLENT_MANDATE_QUOTE",
   "era": "C2C_ERA_TRANSCENDENT",
   "worth": 48,
   "tradeable": true,

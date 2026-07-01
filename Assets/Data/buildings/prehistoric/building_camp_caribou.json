@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_CAMP_CARIBOU",
- "description": "TXT_KEY_BUILDING_CAMP_CARIBOU",
- "civilopedia": "TXT_KEY_BUILDING_CAMP_CARIBOU_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_RESOURCES_CARCASS"
@@ -107,6 +105,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_CAMP_CARIBOU",
+  "civilopedia": "TXT_KEY_BUILDING_CAMP_CARIBOU_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

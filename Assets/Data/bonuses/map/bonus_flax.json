@@ -1,7 +1,5 @@
 {
  "type": "BONUS_FLAX",
- "description": "TXT_KEY_BONUS_FLAX",
- "civilopedia": "TXT_KEY_BONUS_FLAX_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_BUTTERFLY_GATHERER",
@@ -82,6 +80,8 @@
   ]
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_FLAX",
+  "civilopedia": "TXT_KEY_BONUS_FLAX_PEDIA",
   "bonusClassType": "BONUSCLASS_PRODUCTION"
  }
 }

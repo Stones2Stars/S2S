@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_PERSONAL_SPACECRAFT_FACTORY",
- "description": "TXT_KEY_BUILDING_PERSONAL_SPACECRAFT_FACTORY",
- "civilopedia": "TXT_KEY_BUILDING_PERSONAL_SPACECRAFT_FACTORY_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_MATERIALIZATION_COMPLEX"
@@ -78,6 +76,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_PERSONAL_SPACECRAFT_FACTORY",
+  "civilopedia": "TXT_KEY_BUILDING_PERSONAL_SPACECRAFT_FACTORY_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

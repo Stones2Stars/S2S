@@ -1,7 +1,5 @@
 {
  "type": "TRAIT_SPIRITUAL1",
- "description": "TXT_KEY_TRAIT_SPIRITUAL0",
- "civilopedia": "TXT_KEY_TRAIT_SPIRITUAL_PEDIA",
  "enables": {
   "traits": [
    "TRAIT_SPIRITUAL2"
@@ -242,6 +240,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_TRAIT_SPIRITUAL0",
+  "civilopedia": "TXT_KEY_TRAIT_SPIRITUAL_PEDIA",
   "shortDescription": "TXT_KEY_TRAIT_SPIRITUAL_SHORT"
  }
 }

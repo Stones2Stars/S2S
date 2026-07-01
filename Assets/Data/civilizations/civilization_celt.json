@@ -1,9 +1,5 @@
 {
  "type": "CIVILIZATION_CELT",
- "description": "TXT_KEY_CIVILIZATION_CELT",
- "shortDescription": "TXT_KEY_CIVILIZATION_CELT_SHORT",
- "adjective": "TXT_KEY_CIVILIZATION_CELT_ADJECTIVE",
- "civilopedia": "TXT_KEY_CIVILIZATION_CELT_PEDIA",
  "grants": {
   "buildings": [
    "BUILDING_PALACE",
@@ -32,10 +28,6 @@
    "TECH_GAME_START"
   ]
  },
- "policies": {
-  "playable": true,
-  "aiPlayable": true
- },
  "world": {
   "art": {
    "playerColor": "PLAYERCOLOR_LIGHT_ORANGE",
@@ -49,6 +41,12 @@
   "action": "AS3D_CELTS_ORDER"
  },
  "identity": {
+  "description": "TXT_KEY_CIVILIZATION_CELT",
+  "shortDescription": "TXT_KEY_CIVILIZATION_CELT_SHORT",
+  "adjective": "TXT_KEY_CIVILIZATION_CELT_ADJECTIVE",
+  "civilopedia": "TXT_KEY_CIVILIZATION_CELT_PEDIA",
+  "playable": true,
+  "aiPlayable": true,
   "leaders": [
    "LEADER_BRENNUS",
    "LEADER_BOUDICA"

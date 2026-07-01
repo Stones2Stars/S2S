@@ -1,9 +1,11 @@
 {
  "type": "SPECIALBUILDING_PUNK_NANO",
- "description": "TXT_KEY_SPECIALBUILDING_PUNK_NANO",
  "ui": {
   "art": {
    "icon": "Art/Interface/Buttons/TechTree/nanopunk.dds"
   }
+ },
+ "identity": {
+  "description": "TXT_KEY_SPECIALBUILDING_PUNK_NANO"
  }
 }

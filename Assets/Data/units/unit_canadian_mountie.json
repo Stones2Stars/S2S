@@ -1,7 +1,5 @@
 {
  "type": "UNIT_CANADIAN_MOUNTIE",
- "description": "TXT_KEY_UNIT_CANADIAN_MOUNTIE",
- "civilopedia": "TXT_KEY_UNIT_MOUNTIE_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -165,6 +163,8 @@
   "upkeep": 1
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_CANADIAN_MOUNTIE",
+  "civilopedia": "TXT_KEY_UNIT_MOUNTIE_PEDIA",
   "worth": 4,
   "militaryWorth": 72,
   "xpValueAttack": 6,

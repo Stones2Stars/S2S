@@ -1,7 +1,5 @@
 {
  "type": "UNIT_PATTON",
- "description": "TXT_KEY_UNIT_PATTON",
- "civilopedia": "TXT_KEY_UNIT_PATTON_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -44,6 +42,8 @@
   "upkeep": 1
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_PATTON",
+  "civilopedia": "TXT_KEY_UNIT_PATTON_PEDIA",
   "worth": 6,
   "militaryWorth": 8,
   "xpValueAttack": 4,

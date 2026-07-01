@@ -1,8 +1,5 @@
 {
  "type": "TECH_UNMANNED_NAVAL_VEHICLES",
- "description": "TXT_KEY_TECH_UNMANNED_NAVAL_VEHICLES",
- "civilopedia": "TXT_KEY_TECH_UNMANNED_NAVAL_VEHICLES_PEDIA",
- "quote": "TXT_KEY_TECH_UNMANNED_NAVAL_VEHICLES_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_DEEP_SEA_MINE",
@@ -57,6 +54,9 @@
   "soundMP": "AS2D_TECH_UNMANNED_NAVAL_VEHICLES"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_UNMANNED_NAVAL_VEHICLES",
+  "civilopedia": "TXT_KEY_TECH_UNMANNED_NAVAL_VEHICLES_PEDIA",
+  "quote": "TXT_KEY_TECH_UNMANNED_NAVAL_VEHICLES_QUOTE",
   "era": "C2C_ERA_INFORMATION",
   "worth": 14,
   "tradeable": true,

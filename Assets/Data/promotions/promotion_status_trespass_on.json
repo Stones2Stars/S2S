@@ -1,7 +1,5 @@
 {
  "type": "PROMOTION_STATUS_TRESPASS_ON",
- "description": "TXT_KEY_STATUS_TRESPASS_ON",
- "help": "TXT_KEY_PROMOTION_DEPLETE_MP_HELP",
  "firstStrike": {
   "unit": {
    "chance": {
@@ -29,6 +27,8 @@
   "sound": "AS2D_IF_LEVELUP"
  },
  "identity": {
+  "description": "TXT_KEY_STATUS_TRESPASS_ON",
+  "help": "TXT_KEY_PROMOTION_DEPLETE_MP_HELP",
   "status": true
  }
 }

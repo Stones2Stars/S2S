@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_ORGANIC_FARM",
- "description": "TXT_KEY_BUILDING_ORGANIC_FARM",
- "civilopedia": "TXT_KEY_BUILDING_ORGANIC_FARM_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_AGRICULTURAL_EXTENSION"
@@ -79,6 +77,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_ORGANIC_FARM",
+  "civilopedia": "TXT_KEY_BUILDING_ORGANIC_FARM_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

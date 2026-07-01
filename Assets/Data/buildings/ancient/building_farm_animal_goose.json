@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_FARM_ANIMAL_GOOSE",
- "description": "TXT_KEY_BUILDING_FARM_ANIMAL_GOOSE",
- "civilopedia": "TXT_KEY_BUILDING_FARM_ANIMAL_GOOSE_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_RESOURCES_EGGS"
@@ -97,6 +95,8 @@
   "construct": "AS2D_BUILD_GRANARY"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_FARM_ANIMAL_GOOSE",
+  "civilopedia": "TXT_KEY_BUILDING_FARM_ANIMAL_GOOSE_PEDIA",
   "worth": 4,
   "militaryWorth": 2,
   "advisor": "ADVISOR_GROWTH",

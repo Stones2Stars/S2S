@@ -1,8 +1,5 @@
 {
  "type": "TECH_SEMI_AUTOMATIC_WEAPONS",
- "description": "TXT_KEY_TECH_SEMI_AUTOMATIC_WEAPONS",
- "civilopedia": "TXT_KEY_TECH_SEMI_AUTOMATIC_WEAPONS_PEDIA",
- "quote": "TXT_KEY_TECH_SEMI_AUTOMATIC_WEAPONS_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_CRIME_GUN_RAMPAGE",
@@ -70,6 +67,9 @@
   "soundMP": "AS2D_TECH_SEMI_AUTOMATIC_WEAPONS"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_SEMI_AUTOMATIC_WEAPONS",
+  "civilopedia": "TXT_KEY_TECH_SEMI_AUTOMATIC_WEAPONS_PEDIA",
+  "quote": "TXT_KEY_TECH_SEMI_AUTOMATIC_WEAPONS_QUOTE",
   "era": "C2C_ERA_INDUSTRIAL",
   "worth": 32,
   "tradeable": true,

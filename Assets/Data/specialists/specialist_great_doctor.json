@@ -1,7 +1,5 @@
 {
  "type": "SPECIALIST_GREAT_DOCTOR",
- "description": "TXT_KEY_SPECIALIST_GREAT_DOCTOR",
- "civilopedia": "TXT_KEY_CONCEPT_GREAT_DOCTOR_PEDIA",
  "research": {
   "city": {
    "flat": 1
@@ -33,6 +31,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_SPECIALIST_GREAT_DOCTOR",
+  "civilopedia": "TXT_KEY_CONCEPT_GREAT_DOCTOR_PEDIA",
   "categories": [
    "CATEGORY_SPECIALIST_GROUP_MEDICAL"
   ]

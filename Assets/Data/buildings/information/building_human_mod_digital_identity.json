@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_HUMAN_MOD_DIGITAL_IDENTITY",
- "description": "TXT_KEY_BUILDING_HUMAN_MOD_DIGITAL_IDENTITY",
- "civilopedia": "TXT_KEY_BUILDING_HUMAN_MOD_DIGITAL_IDENTITY_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -41,6 +39,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_HUMAN_MOD_DIGITAL_IDENTITY",
+  "civilopedia": "TXT_KEY_BUILDING_HUMAN_MOD_DIGITAL_IDENTITY_PEDIA",
   "neverCapture": true,
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,

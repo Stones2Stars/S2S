@@ -1,12 +1,12 @@
 {
  "type": "PROMOTIONLINE_MANUEVERING",
- "description": "TXT_KEY_PROMOTIONLINE_MANUEVERING",
  "ui": {
   "art": {
    "icon": ",Art/Interface/Buttons/Promotions/Manuevering1.dds"
   }
  },
  "identity": {
+  "description": "TXT_KEY_PROMOTIONLINE_MANUEVERING",
   "unitCombats": [
    "UNITCOMBAT_WOODEN_SHIPS"
   ],

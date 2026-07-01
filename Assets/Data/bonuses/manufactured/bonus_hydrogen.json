@@ -1,7 +1,5 @@
 {
  "type": "BONUS_HYDROGEN",
- "description": "TXT_KEY_BONUS_HYDROGEN",
- "civilopedia": "TXT_KEY_BONUS_HYDROGEN_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_BLIMP_ADVERTISING",
@@ -23,6 +21,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_HYDROGEN",
+  "civilopedia": "TXT_KEY_BONUS_HYDROGEN_PEDIA",
   "bonusClassType": "BONUSCLASS_MANUFACTURED"
  }
 }

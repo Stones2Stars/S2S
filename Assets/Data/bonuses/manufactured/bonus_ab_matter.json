@@ -1,7 +1,5 @@
 {
  "type": "BONUS_AB_MATTER",
- "description": "TXT_KEY_BONUS_AB_MATTER",
- "civilopedia": "TXT_KEY_BONUS_AB_MATTER_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_INTERSTELLAR_STAR_ROAD",
@@ -14,6 +12,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_AB_MATTER",
+  "civilopedia": "TXT_KEY_BONUS_AB_MATTER_PEDIA",
   "bonusClassType": "BONUSCLASS_MANUFACTURED"
  }
 }

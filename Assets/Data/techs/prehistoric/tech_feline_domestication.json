@@ -1,8 +1,5 @@
 {
  "type": "TECH_FELINE_DOMESTICATION",
- "description": "TXT_KEY_TECH_FELINE_DOMESTICATION",
- "civilopedia": "TXT_KEY_TECH_FELINE_DOMESTICATION_PEDIA",
- "quote": "TXT_KEY_TECH_FELINE_DOMESTICATION_QUOTE",
  "enables": {
   "bonuses": [
    "BONUS_CAT"
@@ -51,6 +48,9 @@
   "soundMP": "AS2D_TECH_FELINE_DOMESTICATION"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_FELINE_DOMESTICATION",
+  "civilopedia": "TXT_KEY_TECH_FELINE_DOMESTICATION_PEDIA",
+  "quote": "TXT_KEY_TECH_FELINE_DOMESTICATION_QUOTE",
   "era": "C2C_ERA_PREHISTORIC",
   "worth": 4,
   "militaryWorth": 1,

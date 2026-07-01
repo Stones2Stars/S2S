@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_DANCE_HALL",
- "description": "TXT_KEY_BUILDING_DANCE_HALL",
- "civilopedia": "TXT_KEY_BUILDING_DANCE_HALL_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_BLOOD_DANCE",
@@ -107,6 +105,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_DANCE_HALL",
+  "civilopedia": "TXT_KEY_BUILDING_DANCE_HALL_PEDIA",
   "advisor": "ADVISOR_CULTURE",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

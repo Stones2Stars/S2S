@@ -1,8 +1,5 @@
 {
  "type": "TECH_IMPRESSIONISM",
- "description": "TXT_KEY_TECH_IMPRESSIONISM",
- "civilopedia": "TXT_KEY_TECH_IMPRESSIONISM_PEDIA",
- "quote": "TXT_KEY_TECH_IMPRESSIONISM_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_ART_SUPPLY_STORE",
@@ -53,6 +50,9 @@
   "soundMP": "AS2D_TECH_IMPRESSIONISM"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_IMPRESSIONISM",
+  "civilopedia": "TXT_KEY_TECH_IMPRESSIONISM_PEDIA",
+  "quote": "TXT_KEY_TECH_IMPRESSIONISM_QUOTE",
   "era": "C2C_ERA_INDUSTRIAL",
   "worth": 32,
   "militaryWorth": 6,

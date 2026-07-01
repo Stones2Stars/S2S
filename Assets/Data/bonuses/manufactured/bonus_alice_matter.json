@@ -1,7 +1,5 @@
 {
  "type": "BONUS_ALICE_MATTER",
- "description": "TXT_KEY_BONUS_ALICE_MATTER",
- "civilopedia": "TXT_KEY_BONUS_ALICE_MATTER_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_FEYMARCH"
@@ -16,6 +14,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_ALICE_MATTER",
+  "civilopedia": "TXT_KEY_BONUS_ALICE_MATTER_PEDIA",
   "bonusClassType": "BONUSCLASS_MANUFACTURED"
  }
 }

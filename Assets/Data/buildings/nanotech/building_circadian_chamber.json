@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_CIRCADIAN_CHAMBER",
- "description": "TXT_KEY_BUILDING_CIRCADIAN_CHAMBER",
- "civilopedia": "TXT_KEY_BUILDING_CIRCADIAN_CHAMBER_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_MORPHOGEN_NANOBOTS"
@@ -69,6 +67,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_CIRCADIAN_CHAMBER",
+  "civilopedia": "TXT_KEY_BUILDING_CIRCADIAN_CHAMBER_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

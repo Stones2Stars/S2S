@@ -1,7 +1,5 @@
 {
  "type": "BONUS_DOG",
- "description": "TXT_KEY_BONUS_DOG",
- "civilopedia": "TXT_KEY_BONUS_DOG_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_ANCIENT_WAY_OF_THE_WOLF",
@@ -38,6 +36,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_DOG",
+  "civilopedia": "TXT_KEY_BONUS_DOG_PEDIA",
   "bonusClassType": "BONUSCLASS_MANUFACTURED"
  }
 }

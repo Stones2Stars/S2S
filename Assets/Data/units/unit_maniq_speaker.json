@@ -1,7 +1,5 @@
 {
  "type": "UNIT_MANIQ_SPEAKER",
- "description": "TXT_KEY_UNIT_MANIQ_SPEAKER",
- "civilopedia": "TXT_KEY_UNIT_MANIQ_SPEAKER_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -100,6 +98,8 @@
   "hurryCostModifier": 25
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_MANIQ_SPEAKER",
+  "civilopedia": "TXT_KEY_UNIT_MANIQ_SPEAKER_PEDIA",
   "worth": 4,
   "militaryWorth": 5,
   "xpValueDefense": 2,

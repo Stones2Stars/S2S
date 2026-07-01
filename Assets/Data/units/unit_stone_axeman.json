@@ -1,7 +1,5 @@
 {
  "type": "UNIT_STONE_AXEMAN",
- "description": "TXT_KEY_UNIT_STONE_AXEMAN",
- "civilopedia": "TXT_KEY_UNIT_STONE_AXEMAN_PEDIA",
  "obsoletedBy": {
   "techs": [
    "TECH_FLINTLOCK"
@@ -84,6 +82,8 @@
   "upkeep": 1
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_STONE_AXEMAN",
+  "civilopedia": "TXT_KEY_UNIT_STONE_AXEMAN_PEDIA",
   "worth": 1,
   "militaryWorth": 3,
   "xpValueAttack": 3,

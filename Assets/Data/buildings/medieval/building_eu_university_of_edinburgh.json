@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_EU_UNIVERSITY_OF_EDINBURGH",
- "description": "TXT_KEY_BUILDING_EU_UNIVERSITY_OF_EDINBURGH",
- "civilopedia": "TXT_KEY_BUILDING_EU_UNIVERSITY_OF_EDINBURGH_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -131,6 +129,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_EU_UNIVERSITY_OF_EDINBURGH",
+  "civilopedia": "TXT_KEY_BUILDING_EU_UNIVERSITY_OF_EDINBURGH_PEDIA",
   "commerceDoubleTime": {
    "culture": 1000
   },

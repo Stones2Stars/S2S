@@ -1,8 +1,5 @@
 {
  "type": "TECH_EARTH_OVEN",
- "description": "TXT_KEY_TECH_EARTH_OVEN",
- "civilopedia": "TXT_KEY_TECH_EARTH_OVEN_PEDIA",
- "quote": "TXT_KEY_TECH_EARTH_OVEN_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_IMU"
@@ -45,6 +42,9 @@
   "soundMP": "AS2D_TECH_EARTH_OVEN"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_EARTH_OVEN",
+  "civilopedia": "TXT_KEY_TECH_EARTH_OVEN_PEDIA",
+  "quote": "TXT_KEY_TECH_EARTH_OVEN_QUOTE",
   "era": "C2C_ERA_PREHISTORIC",
   "worth": 2,
   "tradeable": true,

@@ -1,12 +1,12 @@
 {
  "type": "UNITCOMBAT_CULTURE_MUISCA",
- "description": "TXT_KEY_UNITCOMBAT_CULTURE_MUISCA",
  "ui": {
   "art": {
    "icon": "Art/categories/culture_newcultures.dds"
   }
  },
  "identity": {
+  "description": "TXT_KEY_UNITCOMBAT_CULTURE_MUISCA",
   "culture": "BONUS_MUISCA"
  }
 }

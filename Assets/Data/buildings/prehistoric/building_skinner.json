@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_SKINNER",
- "description": "TXT_KEY_BUILDING_SKINNER",
- "civilopedia": "TXT_KEY_BUILDING_SKINNER_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_RESOURCES_HIDE"
@@ -106,6 +104,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_SKINNER",
+  "civilopedia": "TXT_KEY_BUILDING_SKINNER_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

@@ -1,8 +1,5 @@
 {
  "type": "RELIGION_HINDUISM",
- "description": "TXT_KEY_TECH_HINDUISM",
- "civilopedia": "TXT_KEY_TECH_HINDUISM_PEDIA",
- "adjective": "TXT_KEY_TECH_HINDUISM_ADJECTIVE",
  "enables": {
   "buildings": [
    "BUILDING_AKSHARDHAM",
@@ -96,6 +93,9 @@
   "sound": "AS2D_BUILD_HINDU"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_HINDUISM",
+  "adjective": "TXT_KEY_TECH_HINDUISM_ADJECTIVE",
+  "civilopedia": "TXT_KEY_TECH_HINDUISM_PEDIA",
   "spreadFactor": 20
  }
 }

@@ -1,7 +1,5 @@
 {
  "type": "IMPROVEMENT_EXTRACTION_FACILITY",
- "description": "TXT_KEY_IMPROVEMENT_EXTRACTION_FACILITY",
- "civilopedia": "TXT_KEY_IMPROVEMENT_EXTRACTION_FACILITY_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -150,6 +148,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_IMPROVEMENT_EXTRACTION_FACILITY",
+  "civilopedia": "TXT_KEY_IMPROVEMENT_EXTRACTION_FACILITY_PEDIA",
   "pillageTo": "IMPROVEMENT_OFFSHORE_PLATFORM",
   "advancedStart": {
    "cost": 60

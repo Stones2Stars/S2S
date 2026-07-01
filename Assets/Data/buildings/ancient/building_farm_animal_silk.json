@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_FARM_ANIMAL_SILK",
- "description": "TXT_KEY_BUILDING_FARM_ANIMAL_SILK",
- "civilopedia": "TXT_KEY_BUILDING_FARM_ANIMAL_SILK_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_TEXTILE_MANUFACTURING_DISTRICT"
@@ -59,6 +57,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_FARM_ANIMAL_SILK",
+  "civilopedia": "TXT_KEY_BUILDING_FARM_ANIMAL_SILK_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

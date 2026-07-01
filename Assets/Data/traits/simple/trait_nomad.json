@@ -1,7 +1,5 @@
 {
  "type": "TRAIT_NOMAD",
- "description": "TXT_KEY_TRAIT_NOMAD",
- "civilopedia": "TXT_KEY_TRAIT_NOMAD_PEDIA",
  "food": {
   "empire": {
    "improvements": {
@@ -247,6 +245,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_TRAIT_NOMAD",
+  "civilopedia": "TXT_KEY_TRAIT_NOMAD_PEDIA",
   "shortDescription": "TXT_KEY_TRAIT_NOMAD_SHORT",
   "impurePropertyManipulators": true
  }

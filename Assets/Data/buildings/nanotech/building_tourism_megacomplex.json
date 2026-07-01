@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_TOURISM_MEGACOMPLEX",
- "description": "TXT_KEY_BUILDING_TOURISM_MEGACOMPLEX",
- "civilopedia": "TXT_KEY_BUILDING_TOURISM_MEGACOMPLEX_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -171,6 +169,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_TOURISM_MEGACOMPLEX",
+  "civilopedia": "TXT_KEY_BUILDING_TOURISM_MEGACOMPLEX_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

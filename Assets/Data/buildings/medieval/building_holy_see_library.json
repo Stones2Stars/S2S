@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_HOLY_SEE_LIBRARY",
- "description": "TXT_KEY_BUILDING_HOLY_SEE_LIBRARY",
- "civilopedia": "TXT_KEY_BUILDING_HOLY_SEE_LIBRARY_PEDIA",
  "obsoletedBy": {
   "techs": [
    "TECH_MASS_MEDIA"
@@ -129,6 +127,8 @@
   "construct": "AS2D_BUILD_CHRISTIAN"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_HOLY_SEE_LIBRARY",
+  "civilopedia": "TXT_KEY_BUILDING_HOLY_SEE_LIBRARY_PEDIA",
   "commerceDoubleTime": {
    "culture": 1000
   },

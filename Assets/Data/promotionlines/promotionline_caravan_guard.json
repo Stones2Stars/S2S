@@ -1,12 +1,12 @@
 {
  "type": "PROMOTIONLINE_CARAVAN_GUARD",
- "description": "TXT_KEY_PROMOTIONLINE_CARAVAN_GUARD",
  "ui": {
   "art": {
    "icon": "Art/Interface/Buttons/Promotions/CaravanGuard_PromotionLine.dds"
   }
  },
  "identity": {
+  "description": "TXT_KEY_PROMOTIONLINE_CARAVAN_GUARD",
   "unitCombats": [
    "UNITCOMBAT_TRADE"
   ],

@@ -1,7 +1,5 @@
 {
  "type": "BONUS_POULTRY",
- "description": "TXT_KEY_BONUS_POULTRY",
- "civilopedia": "TXT_KEY_BONUS_POULTRY_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_BIRD_CALLER",
@@ -99,6 +97,8 @@
   ]
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_POULTRY",
+  "civilopedia": "TXT_KEY_BONUS_POULTRY_PEDIA",
   "bonusClassType": "BONUSCLASS_LIVESTOCK"
  }
 }

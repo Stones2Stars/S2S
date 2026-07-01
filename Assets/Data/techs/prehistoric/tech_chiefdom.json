@@ -1,8 +1,5 @@
 {
  "type": "TECH_CHIEFDOM",
- "description": "TXT_KEY_TECH_CHIEFDOM",
- "civilopedia": "TXT_KEY_TECH_CHIEFDOM_PEDIA",
- "quote": "TXT_KEY_TECH_CHIEFDOM_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_CHIEFS_FUNERAL_PYRE",
@@ -58,6 +55,9 @@
   "soundMP": "AS2D_TECH_CHIEFDOM"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_CHIEFDOM",
+  "civilopedia": "TXT_KEY_TECH_CHIEFDOM_PEDIA",
+  "quote": "TXT_KEY_TECH_CHIEFDOM_QUOTE",
   "era": "C2C_ERA_PREHISTORIC",
   "worth": 4,
   "tradeable": true,

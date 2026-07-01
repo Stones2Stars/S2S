@@ -1,7 +1,5 @@
 {
  "type": "UNIT_GREAT_SPY",
- "description": "TXT_KEY_UNIT_GREAT_SPY",
- "civilopedia": "TXT_KEY_CONCEPT_GREAT_SPY_PEDIA",
  "skills": {
   "goldenAge": true,
   "alwaysInvisible": true,
@@ -70,6 +68,8 @@
   ]
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_GREAT_SPY",
+  "civilopedia": "TXT_KEY_CONCEPT_GREAT_SPY_PEDIA",
   "spawnOnly": true,
   "worth": 1,
   "domain": "DOMAIN_LAND",

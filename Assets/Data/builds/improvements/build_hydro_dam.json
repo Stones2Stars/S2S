@@ -1,6 +1,5 @@
 {
  "type": "BUILD_HYDRO_DAM",
- "description": "TXT_KEY_BUILD_IMPROVEMENT_HYDRO_DAM",
  "requires": {
   "build": {
    "all": [
@@ -29,5 +28,8 @@
   "art": {
    "entityEvent": "ENTITY_EVENT_BUILD"
   }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILD_IMPROVEMENT_HYDRO_DAM"
  }
 }

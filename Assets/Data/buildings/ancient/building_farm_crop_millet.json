@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_FARM_CROP_MILLET",
- "description": "TXT_KEY_BUILDING_FARM_CROP_MILLET",
- "civilopedia": "TXT_KEY_BUILDING_FARM_CROP_MILLET_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_RESOURCES_GRAINS"
@@ -76,6 +74,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_FARM_CROP_MILLET",
+  "civilopedia": "TXT_KEY_BUILDING_FARM_CROP_MILLET_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

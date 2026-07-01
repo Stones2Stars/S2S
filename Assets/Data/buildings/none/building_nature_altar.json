@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_NATURE_ALTAR",
- "description": "TXT_KEY_BUILDING_NATURE_ALTAR",
- "civilopedia": "TXT_KEY_BUILDING_NATURE_ALTAR_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_NATIONAL_BELIEF_RESURRECTION",
@@ -106,6 +104,8 @@
   "construct": "AS2D_BUILD_DRUID"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_NATURE_ALTAR",
+  "civilopedia": "TXT_KEY_BUILDING_NATURE_ALTAR_PEDIA",
   "worth": 4,
   "religion": "RELIGION_DRUIDIC_TRADITIONS",
   "advisor": "ADVISOR_RELIGION",

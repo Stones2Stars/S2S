@@ -1,7 +1,5 @@
 {
  "type": "TRAIT_INDUSTRIOUS",
- "description": "TXT_KEY_TRAIT_INDUSTRIOUS",
- "civilopedia": "TXT_KEY_TRAIT_INDUSTRIOUS_PEDIA",
  "production": {
   "empire": {
    "tradeRoute": {
@@ -201,6 +199,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_TRAIT_INDUSTRIOUS",
+  "civilopedia": "TXT_KEY_TRAIT_INDUSTRIOUS_PEDIA",
   "shortDescription": "TXT_KEY_TRAIT_INDUSTRIOUS_SHORT",
   "impurePropertyManipulators": true
  }

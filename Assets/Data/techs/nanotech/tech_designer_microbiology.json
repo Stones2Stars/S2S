@@ -1,8 +1,5 @@
 {
  "type": "TECH_DESIGNER_MICROBIOLOGY",
- "description": "TXT_KEY_TECH_DESIGNER_MICROBIOLOGY",
- "civilopedia": "TXT_KEY_TECH_DESIGNER_MICROBIOLOGY_PEDIA",
- "quote": "TXT_KEY_TECH_DESIGNER_MICROBIOLOGY_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_CISLUNAR_ENHANCED_ALGAE_FARM",
@@ -68,6 +65,9 @@
   "soundMP": "AS2D_TECH_DESIGNER_MICROBIOLOGY"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_DESIGNER_MICROBIOLOGY",
+  "civilopedia": "TXT_KEY_TECH_DESIGNER_MICROBIOLOGY_PEDIA",
+  "quote": "TXT_KEY_TECH_DESIGNER_MICROBIOLOGY_QUOTE",
   "era": "C2C_ERA_NANOTECH",
   "worth": 48,
   "militaryWorth": 4,

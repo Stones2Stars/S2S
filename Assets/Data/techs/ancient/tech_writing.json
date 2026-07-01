@@ -1,8 +1,5 @@
 {
  "type": "TECH_WRITING",
- "description": "TXT_KEY_TECH_WRITING",
- "civilopedia": "TXT_KEY_TECH_WRITING_PEDIA",
- "quote": "TXT_KEY_TECH_WRITING_QUOTE",
  "enables": {
   "bonuses": [
    "BONUS_SCROLLS"
@@ -131,6 +128,9 @@
   "soundMP": "AS2D_TECH_MP_WRITING"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_WRITING",
+  "civilopedia": "TXT_KEY_TECH_WRITING_PEDIA",
+  "quote": "TXT_KEY_TECH_WRITING_QUOTE",
   "era": "C2C_ERA_ANCIENT",
   "worth": 8,
   "tradeable": true,

@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_OFFICIUM",
- "description": "TXT_KEY_BUILDING_OFFICIUM",
- "civilopedia": "TXT_KEY_BUILDING_OFFICIUM_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_ADVENTURE_TOURS_FRANCHISE",
@@ -109,6 +107,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_OFFICIUM",
+  "civilopedia": "TXT_KEY_BUILDING_OFFICIUM_PEDIA",
   "conquestProbability": 70,
   "advisor": "ADVISOR_ECONOMY",
   "visibilityPriority": 1,

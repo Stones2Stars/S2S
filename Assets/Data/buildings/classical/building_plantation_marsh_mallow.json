@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_PLANTATION_MARSH_MALLOW",
- "description": "TXT_KEY_BUILDING_PLANTATION_MARSH_MALLOW",
- "civilopedia": "TXT_KEY_BUILDING_PLANTATION_MARSH_MALLOW_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_RESOURCES_DRUGS"
@@ -77,6 +75,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_PLANTATION_MARSH_MALLOW",
+  "civilopedia": "TXT_KEY_BUILDING_PLANTATION_MARSH_MALLOW_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_E_STOCK_MARKET",
- "description": "TXT_KEY_BUILDING_E_STOCK_MARKET",
- "civilopedia": "TXT_KEY_BUILDING_E_STOCK_MARKET_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_AI_INVESTMENT",
@@ -73,6 +71,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_E_STOCK_MARKET",
+  "civilopedia": "TXT_KEY_BUILDING_E_STOCK_MARKET_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

@@ -1,8 +1,5 @@
 {
  "type": "TECH_TIMELINE_RECTIFICATION",
- "description": "TXT_KEY_TECH_TIMELINE_RECTIFICATION",
- "civilopedia": "TXT_KEY_TECH_TIMELINE_RECTIFICATION_PEDIA",
- "quote": "TXT_KEY_TECH_TIMELINE_RECTIFICATION_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_DISTANT_TIMELINE_STABILIZERS",
@@ -54,6 +51,9 @@
   "soundMP": "AS2D_TECH_GENERIC"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_TIMELINE_RECTIFICATION",
+  "civilopedia": "TXT_KEY_TECH_TIMELINE_RECTIFICATION_PEDIA",
+  "quote": "TXT_KEY_TECH_TIMELINE_RECTIFICATION_QUOTE",
   "era": "C2C_ERA_TRANSCENDENT",
   "worth": 48,
   "tradeable": true,

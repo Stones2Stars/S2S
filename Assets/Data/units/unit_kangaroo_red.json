@@ -1,7 +1,5 @@
 {
  "type": "UNIT_KANGAROO_RED",
- "description": "TXT_KEY_UNIT_KANGAROO_RED",
- "civilopedia": "TXT_KEY_UNIT_KANGAROO_RED_PEDIA",
  "withdrawal": {
   "unit": {
    "percent": 50
@@ -76,6 +74,8 @@
   ]
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_KANGAROO_RED",
+  "civilopedia": "TXT_KEY_UNIT_KANGAROO_RED_PEDIA",
   "spawnOnly": true,
   "xpValueAttack": 5,
   "xpValueDefense": 3,

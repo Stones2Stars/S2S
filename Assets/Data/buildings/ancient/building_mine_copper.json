@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_MINE_COPPER",
- "description": "TXT_KEY_BUILDING_MINE_COPPER",
- "civilopedia": "TXT_KEY_BUILDING_MINE_COPPER_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_SMELTER_COPPER"
@@ -75,6 +73,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_MINE_COPPER",
+  "civilopedia": "TXT_KEY_BUILDING_MINE_COPPER_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

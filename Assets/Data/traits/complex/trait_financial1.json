@@ -1,8 +1,5 @@
 {
  "type": "TRAIT_FINANCIAL1",
- "description": "TXT_KEY_TRAIT_COMPLEX_FINANCIAL1",
- "civilopedia": "TXT_KEY_TRAIT_COMPLEX_FINANCIAL1_PEDIA",
- "strategy": "TXT_KEY_TRAIT_COMPLEX_FINANCIAL_STRATEGY",
  "excludes": [
   "TRAIT_GREEDY1"
  ],
@@ -431,6 +428,9 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_TRAIT_COMPLEX_FINANCIAL1",
+  "civilopedia": "TXT_KEY_TRAIT_COMPLEX_FINANCIAL1_PEDIA",
+  "strategy": "TXT_KEY_TRAIT_COMPLEX_FINANCIAL_STRATEGY",
   "impurePropertyManipulators": true
  }
 }

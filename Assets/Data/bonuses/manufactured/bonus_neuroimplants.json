@@ -1,7 +1,5 @@
 {
  "type": "BONUS_NEUROIMPLANTS",
- "description": "TXT_KEY_BONUS_NEUROIMPLANTS",
- "civilopedia": "TXT_KEY_BONUS_NEUROIMPLANTS_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_ADVANCED_NEUROIMPLANT_EXPORTER",
@@ -26,6 +24,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_NEUROIMPLANTS",
+  "civilopedia": "TXT_KEY_BONUS_NEUROIMPLANTS_PEDIA",
   "bonusClassType": "BONUSCLASS_MANUFACTURED"
  }
 }

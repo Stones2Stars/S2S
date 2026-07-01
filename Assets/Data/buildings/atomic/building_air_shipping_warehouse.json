@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_AIR_SHIPPING_WAREHOUSE",
- "description": "TXT_KEY_BUILDING_AIR_SHIPPING_WAREHOUSE",
- "civilopedia": "TXT_KEY_BUILDING_AIR_SHIPPING_WAREHOUSE_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_ONLINE_SHIPPING_WAREHOUSE"
@@ -77,6 +75,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_AIR_SHIPPING_WAREHOUSE",
+  "civilopedia": "TXT_KEY_BUILDING_AIR_SHIPPING_WAREHOUSE_PEDIA",
   "conquestProbability": 100,
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [

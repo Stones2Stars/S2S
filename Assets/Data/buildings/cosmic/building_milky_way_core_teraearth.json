@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_MILKY_WAY_CORE_TERAEARTH",
- "description": "TXT_KEY_BUILDING_MILKY_WAY_CORE_TERAEARTH",
- "civilopedia": "TXT_KEY_BUILDING_MILKY_WAY_CORE_TERAEARTH_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -66,6 +64,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_MILKY_WAY_CORE_TERAEARTH",
+  "civilopedia": "TXT_KEY_BUILDING_MILKY_WAY_CORE_TERAEARTH_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

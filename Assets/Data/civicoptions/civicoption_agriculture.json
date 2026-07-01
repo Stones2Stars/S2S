@@ -1,4 +1,6 @@
 {
  "type": "CIVICOPTION_AGRICULTURE",
- "description": "TXT_KEY_CIVICOPTION_AGRICULTURE"
+ "identity": {
+  "description": "TXT_KEY_CIVICOPTION_AGRICULTURE"
+ }
 }

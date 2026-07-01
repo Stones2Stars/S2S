@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_THE_TOMB_OF_ANSYEN_BON",
- "description": "TXT_KEY_BUILDING_THE_TOMB_OF_ANSYEN_BON",
- "civilopedia": "TXT_KEY_BUILDING_THE_TOMB_OF_ANSYEN_BON_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -46,6 +44,8 @@
   "construct": "AS2D_BUILD_VOODOO"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_THE_TOMB_OF_ANSYEN_BON",
+  "civilopedia": "TXT_KEY_BUILDING_THE_TOMB_OF_ANSYEN_BON_PEDIA",
   "commerceDoubleTime": {
    "culture": 1000
   },

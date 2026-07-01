@@ -1,7 +1,5 @@
 {
  "type": "IMPROVEMENT_ARCOLOGY_MOON",
- "description": "TXT_KEY_IMPROVEMENT_ARCOLOGY_MOON",
- "civilopedia": "TXT_KEY_IMPROVEMENT_ARCOLOGY_MOON_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -40,6 +38,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_IMPROVEMENT_ARCOLOGY_MOON",
+  "civilopedia": "TXT_KEY_IMPROVEMENT_ARCOLOGY_MOON_PEDIA",
   "extraterrestrial": true,
   "pillageGold": 200,
   "pillageTo": "IMPROVEMENT_SATELLITE_STATION"

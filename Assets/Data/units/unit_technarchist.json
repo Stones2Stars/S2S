@@ -1,7 +1,5 @@
 {
  "type": "UNIT_TECHNARCHIST",
- "description": "TXT_KEY_UNIT_TECHNARCHIST",
- "civilopedia": "TXT_KEY_UNIT_TECHNARCHIST_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -147,6 +145,8 @@
   "upkeep": 16
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_TECHNARCHIST",
+  "civilopedia": "TXT_KEY_UNIT_TECHNARCHIST_PEDIA",
   "worth": 17,
   "militaryWorth": 70,
   "xpValueAttack": 8,

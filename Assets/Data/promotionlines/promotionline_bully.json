@@ -1,12 +1,12 @@
 {
  "type": "PROMOTIONLINE_BULLY",
- "description": "TXT_KEY_PROMOTIONLINE_BULLY",
  "ui": {
   "art": {
    "icon": "art/Buttons/Promotions/Bully1Promotion.dds"
   }
  },
  "identity": {
+  "description": "TXT_KEY_PROMOTIONLINE_BULLY",
   "unitCombats": [
    "UNITCOMBAT_SIZE_TINY",
    "UNITCOMBAT_SIZE_SMALL",

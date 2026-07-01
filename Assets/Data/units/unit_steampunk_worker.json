@@ -1,7 +1,5 @@
 {
  "type": "UNIT_STEAMPUNK_WORKER",
- "description": "TXT_KEY_UNIT_STEAMPUNK_WORKER",
- "civilopedia": "TXT_KEY_UNIT_STEAMPUNK_WORKER_PEDIA",
  "obsoletedBy": {
   "techs": [
    "TECH_PERSONAL_ROBOTS"
@@ -190,6 +188,8 @@
   "upkeep": 1
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_STEAMPUNK_WORKER",
+  "civilopedia": "TXT_KEY_UNIT_STEAMPUNK_WORKER_PEDIA",
   "worth": 3,
   "domain": "DOMAIN_LAND",
   "defaultUnitAI": "UNITAI_WORKER",

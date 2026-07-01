@@ -1,8 +1,5 @@
 {
  "type": "TECH_HARD_HAMMER_PERCUSSION",
- "description": "TXT_KEY_TECH_HARD_HAMMER_PERCUSSION",
- "civilopedia": "TXT_KEY_TECH_HARD_HAMMER_PERCUSSION_PEDIA",
- "quote": "TXT_KEY_TECH_HARD_HAMMER_PERCUSSION_QUOTE",
  "enables": {
   "bonuses": [
    "BONUS_MARBLE",
@@ -73,6 +70,9 @@
   "soundMP": "AS2D_TECH_HARD_HAMMER_PERCUSSION"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_HARD_HAMMER_PERCUSSION",
+  "civilopedia": "TXT_KEY_TECH_HARD_HAMMER_PERCUSSION_PEDIA",
+  "quote": "TXT_KEY_TECH_HARD_HAMMER_PERCUSSION_QUOTE",
   "era": "C2C_ERA_PREHISTORIC",
   "worth": 8,
   "militaryWorth": 1,

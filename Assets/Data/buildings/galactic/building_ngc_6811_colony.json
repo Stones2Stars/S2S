@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_NGC_6811_COLONY",
- "description": "TXT_KEY_BUILDING_NGC_6811_COLONY",
- "civilopedia": "TXT_KEY_BUILDING_NGC_6811_COLONY_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -71,6 +69,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_NGC_6811_COLONY",
+  "civilopedia": "TXT_KEY_BUILDING_NGC_6811_COLONY_PEDIA",
   "conquestProbability": 100,
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,

@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_THE_ERECHTHEUM",
- "description": "TXT_KEY_BUILDING_THE_ERECHTHEUM",
- "civilopedia": "TXT_KEY_BUILDING_THE_ERECHTHEUM_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -133,6 +131,8 @@
   "construct": "AS2D_BUILD_CHRISTIAN"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_THE_ERECHTHEUM",
+  "civilopedia": "TXT_KEY_BUILDING_THE_ERECHTHEUM_PEDIA",
   "commerceDoubleTime": {
    "culture": 1000
   },

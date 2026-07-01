@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_GROVE_BRAZILWOOD",
- "description": "TXT_KEY_BUILDING_GROVE_BRAZILWOOD",
- "civilopedia": "TXT_KEY_BUILDING_GROVE_BRAZILWOOD_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_DYE_MAKER",
@@ -79,6 +77,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_GROVE_BRAZILWOOD",
+  "civilopedia": "TXT_KEY_BUILDING_GROVE_BRAZILWOOD_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

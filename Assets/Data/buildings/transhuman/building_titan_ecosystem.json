@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_TITAN_ECOSYSTEM",
- "description": "TXT_KEY_BUILDING_TITAN_ECOSYSTEM",
- "civilopedia": "TXT_KEY_BUILDING_TITAN_ECOSYSTEM_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_TERRAFORMED_TITAN"
@@ -38,6 +36,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_TITAN_ECOSYSTEM",
+  "civilopedia": "TXT_KEY_BUILDING_TITAN_ECOSYSTEM_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

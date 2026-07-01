@@ -1,7 +1,5 @@
 {
  "type": "PROJECT_SS_STASIS_CHAMBER",
- "description": "TXT_KEY_PROJECT_SS_STASIS_CHAMBER",
- "civilopedia": "TXT_KEY_PROJECT_SS_STASIS_CHAMBER_PEDIA",
  "victory": {
   "thresholds": {
    "VICTORY_SPACE_RACE": 1
@@ -16,6 +14,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_PROJECT_SS_STASIS_CHAMBER",
+  "civilopedia": "TXT_KEY_PROJECT_SS_STASIS_CHAMBER_PEDIA",
   "mapCategories": [
    "MAPCATEGORY_EARTH"
   ],

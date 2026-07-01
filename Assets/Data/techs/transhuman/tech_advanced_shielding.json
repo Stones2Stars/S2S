@@ -1,8 +1,5 @@
 {
  "type": "TECH_ADVANCED_SHIELDING",
- "description": "TXT_KEY_TECH_ADVANCED_SHIELDING",
- "civilopedia": "TXT_KEY_TECH_ADVANCED_SHIELDING_PEDIA",
- "quote": "TXT_KEY_TECH_ADVANCED_SHIELDING_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_ADVANCED_SHIELDING",
@@ -75,6 +72,9 @@
   "soundMP": "AS2D_TECH_ADVANCED_SHIELDING"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_ADVANCED_SHIELDING",
+  "civilopedia": "TXT_KEY_TECH_ADVANCED_SHIELDING_PEDIA",
+  "quote": "TXT_KEY_TECH_ADVANCED_SHIELDING_QUOTE",
   "era": "C2C_ERA_TRANSHUMAN",
   "worth": 50,
   "militaryWorth": 10,

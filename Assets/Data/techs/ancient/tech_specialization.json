@@ -1,8 +1,5 @@
 {
  "type": "TECH_SPECIALIZATION",
- "description": "TXT_KEY_TECH_SPECIALIZATION",
- "civilopedia": "TXT_KEY_TECH_SPECIALIZATION_PEDIA",
- "quote": "TXT_KEY_TECH_SPECIALIZATION_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_ANIMAL_TAMER_COMPLEX",
@@ -116,6 +113,9 @@
   "soundMP": "AS2D_TECH_SPECIALIZATION"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_SPECIALIZATION",
+  "civilopedia": "TXT_KEY_TECH_SPECIALIZATION_PEDIA",
+  "quote": "TXT_KEY_TECH_SPECIALIZATION_QUOTE",
   "era": "C2C_ERA_ANCIENT",
   "worth": 2,
   "tradeable": true,

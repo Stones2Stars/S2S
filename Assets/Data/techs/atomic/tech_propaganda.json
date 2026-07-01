@@ -1,8 +1,5 @@
 {
  "type": "TECH_PROPAGANDA",
- "description": "TXT_KEY_TECH_PROPAGANDA",
- "civilopedia": "TXT_KEY_TECH_PROPAGANDA_PEDIA",
- "quote": "TXT_KEY_TECH_PROPAGANDA_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_ADVERTISING_AGENCY",
@@ -60,6 +57,9 @@
   "soundMP": "AS2D_TECH_PROPAGANDA"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_PROPAGANDA",
+  "civilopedia": "TXT_KEY_TECH_PROPAGANDA_PEDIA",
+  "quote": "TXT_KEY_TECH_PROPAGANDA_QUOTE",
   "era": "C2C_ERA_ATOMIC",
   "worth": 14,
   "tradeable": true,

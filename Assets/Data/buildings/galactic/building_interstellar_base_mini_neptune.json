@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_INTERSTELLAR_BASE_MINI_NEPTUNE",
- "description": "TXT_KEY_BUILDING_INTERSTELLAR_BASE_MINI_NEPTUNE",
- "civilopedia": "TXT_KEY_BUILDING_INTERSTELLAR_BASE_MINI_NEPTUNE_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -52,6 +50,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_INTERSTELLAR_BASE_MINI_NEPTUNE",
+  "civilopedia": "TXT_KEY_BUILDING_INTERSTELLAR_BASE_MINI_NEPTUNE_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

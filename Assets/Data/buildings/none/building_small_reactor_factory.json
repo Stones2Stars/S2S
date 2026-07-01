@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_SMALL_REACTOR_FACTORY",
- "description": "TXT_KEY_BUILDING_SMALL_REACTOR_FACTORY",
- "civilopedia": "TXT_KEY_BUILDING_SMALL_REACTOR_FACTORY_PEDIA",
  "obsoletedBy": {
   "techs": [
    "TECH_FUSION"
@@ -88,6 +86,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_SMALL_REACTOR_FACTORY",
+  "civilopedia": "TXT_KEY_BUILDING_SMALL_REACTOR_FACTORY_PEDIA",
   "specialBuildingType": "SPECIALBUILDING_PUNK_ATOM",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [

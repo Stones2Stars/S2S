@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_CAPTURED_IO",
- "description": "TXT_KEY_BUILDING_CAPTURED_IO",
- "civilopedia": "TXT_KEY_BUILDING_CAPTURED_IO_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -68,6 +66,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_CAPTURED_IO",
+  "civilopedia": "TXT_KEY_BUILDING_CAPTURED_IO_PEDIA",
   "conquestProbability": 100,
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,

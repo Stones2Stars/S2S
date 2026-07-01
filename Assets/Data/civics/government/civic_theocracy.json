@@ -1,8 +1,5 @@
 {
  "type": "CIVIC_THEOCRACY",
- "description": "TXT_KEY_CIVIC_THEOCRACY",
- "civilopedia": "TXT_KEY_CIVIC_THEOCRACY_PEDIA",
- "strategy": "TXT_KEY_CIVIC_THEOCRACY_STRATEGY",
  "enables": {
   "buildings": [
    "BUILDING_HILL_OF_TARA"
@@ -336,6 +333,9 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_CIVIC_THEOCRACY",
+  "civilopedia": "TXT_KEY_CIVIC_THEOCRACY_PEDIA",
+  "strategy": "TXT_KEY_CIVIC_THEOCRACY_STRATEGY",
   "civicOption": "CIVICOPTION_GOVERNMENT",
   "anarchyLength": 1,
   "upkeepLevel": "UPKEEP_MEDIUM",

@@ -1,8 +1,5 @@
 {
  "type": "TECH_FIRE_BRIGADES",
- "description": "TXT_KEY_TECH_FIRE_BRIGADES",
- "civilopedia": "TXT_KEY_TECH_FIRE_BRIGADES_PEDIA",
- "quote": "TXT_KEY_TECH_FIRE_BRIGADES_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_FIRE_BRIGADE"
@@ -52,6 +49,9 @@
   "soundMP": "AS2D_TECH_FIRE_BRIGADES"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_FIRE_BRIGADES",
+  "civilopedia": "TXT_KEY_TECH_FIRE_BRIGADES_PEDIA",
+  "quote": "TXT_KEY_TECH_FIRE_BRIGADES_QUOTE",
   "era": "C2C_ERA_MEDIEVAL",
   "worth": 24,
   "militaryWorth": 1,

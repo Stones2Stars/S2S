@@ -1,7 +1,5 @@
 {
  "type": "BONUS_MOCHE",
- "description": "TXT_KEY_BONUS_MOCHE",
- "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
  "enables": {
   "units": [
    "UNIT_HUACA_GUARDIANS",
@@ -15,6 +13,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_MOCHE",
+  "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
   "bonusClassType": "BONUSCLASS_CULTURE"
  }
 }

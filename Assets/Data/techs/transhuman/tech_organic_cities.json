@@ -1,8 +1,5 @@
 {
  "type": "TECH_ORGANIC_CITIES",
- "description": "TXT_KEY_TECH_ORGANIC_CITIES",
- "civilopedia": "TXT_KEY_TECH_ORGANIC_CITIES_PEDIA",
- "quote": "TXT_KEY_TECH_ORGANIC_CITIES_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_CYBER_CHLOROPLASTIDA_BLOOM",
@@ -79,6 +76,9 @@
   "soundMP": "AS2D_TECH_ORGANIC_CITIES"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_ORGANIC_CITIES",
+  "civilopedia": "TXT_KEY_TECH_ORGANIC_CITIES_PEDIA",
+  "quote": "TXT_KEY_TECH_ORGANIC_CITIES_QUOTE",
   "era": "C2C_ERA_TRANSHUMAN",
   "worth": 48,
   "tradeable": true,

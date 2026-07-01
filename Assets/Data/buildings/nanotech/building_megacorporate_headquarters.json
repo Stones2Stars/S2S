@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_MEGACORPORATE_HEADQUARTERS",
- "description": "TXT_KEY_BUILDING_MEGACORPORATE_HEADQUARTERS",
- "civilopedia": "TXT_KEY_BUILDING_MEGACORPORATE_HEADQUARTERS_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -53,6 +51,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_MEGACORPORATE_HEADQUARTERS",
+  "civilopedia": "TXT_KEY_BUILDING_MEGACORPORATE_HEADQUARTERS_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

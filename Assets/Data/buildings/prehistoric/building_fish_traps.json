@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_FISH_TRAPS",
- "description": "TXT_KEY_BUILDING_FISH_TRAPS",
- "civilopedia": "TXT_KEY_BUILDING_FISH_TRAPS_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_NET_CRAB",
@@ -135,6 +133,8 @@
   "construct": "AS2D_BUILD_ARTESIAN_WELL"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_FISH_TRAPS",
+  "civilopedia": "TXT_KEY_BUILDING_FISH_TRAPS_PEDIA",
   "nukeImmune": true,
   "conquestProbability": 95,
   "advisor": "ADVISOR_ECONOMY",

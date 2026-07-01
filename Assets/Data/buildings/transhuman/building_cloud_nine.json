@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_CLOUD_NINE",
- "description": "TXT_KEY_BUILDING_CLOUD_NINE",
- "civilopedia": "TXT_KEY_BUILDING_CLOUD_NINE_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -49,6 +47,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_CLOUD_NINE",
+  "civilopedia": "TXT_KEY_BUILDING_CLOUD_NINE_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

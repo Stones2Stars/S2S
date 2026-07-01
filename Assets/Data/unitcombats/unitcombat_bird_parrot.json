@@ -1,6 +1,5 @@
 {
  "type": "UNITCOMBAT_BIRD_PARROT",
- "description": "TXT_KEY_UNITCOMBAT_BIRD_PARROT",
  "strength": {
   "unit": {
    "damageModifier": {
@@ -17,5 +16,8 @@
   "art": {
    "icon": "Art/Interface/Buttons/units/sparth/categories/birds.dds"
   }
+ },
+ "identity": {
+  "description": "TXT_KEY_UNITCOMBAT_BIRD_PARROT"
  }
 }

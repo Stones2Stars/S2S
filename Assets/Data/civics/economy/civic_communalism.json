@@ -1,8 +1,5 @@
 {
  "type": "CIVIC_COMMUNALISM",
- "description": "TXT_KEY_CIVIC_COMMUNALISM",
- "civilopedia": "TXT_KEY_CIVIC_COMMUNALISM_PEDIA",
- "strategy": "TXT_KEY_CIVIC_COMMUNALISM_STRATEGY",
  "enables": {
   "buildings": [
    "BUILDING_WET_NURSE"
@@ -130,6 +127,9 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_CIVIC_COMMUNALISM",
+  "civilopedia": "TXT_KEY_CIVIC_COMMUNALISM_PEDIA",
+  "strategy": "TXT_KEY_CIVIC_COMMUNALISM_STRATEGY",
   "civicOption": "CIVICOPTION_ECONOMY"
  }
 }

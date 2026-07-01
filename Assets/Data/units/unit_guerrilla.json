@@ -1,7 +1,5 @@
 {
  "type": "UNIT_GUERRILLA",
- "description": "TXT_KEY_UNIT_GUERRILLA",
- "civilopedia": "TXT_KEY_UNIT_GUERRILLA_PEDIA",
  "obsoletedBy": {
   "techs": [
    "TECH_SUPERSTRONG_ALLOYS"
@@ -135,6 +133,8 @@
   "upkeep": 9
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_GUERRILLA",
+  "civilopedia": "TXT_KEY_UNIT_GUERRILLA_PEDIA",
   "worth": 10,
   "militaryWorth": 40,
   "xpValueAttack": 8,

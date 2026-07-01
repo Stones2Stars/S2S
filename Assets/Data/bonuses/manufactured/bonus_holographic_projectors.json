@@ -1,7 +1,5 @@
 {
  "type": "BONUS_HOLOGRAPHIC_PROJECTORS",
- "description": "TXT_KEY_BONUS_HOLOGRAPHIC_PROJECTORS",
- "civilopedia": "TXT_KEY_BONUS_HOLOGRAPHIC_PROJECTORS_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_DREAM_VISUALIZER",
@@ -22,6 +20,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_HOLOGRAPHIC_PROJECTORS",
+  "civilopedia": "TXT_KEY_BONUS_HOLOGRAPHIC_PROJECTORS_PEDIA",
   "bonusClassType": "BONUSCLASS_MANUFACTURED"
  }
 }

@@ -1,6 +1,5 @@
 {
  "type": "UNITCOMBAT_GROUP_MULTITUDES",
- "description": "TXT_KEY_UNITCOMBAT_GROUP_MULTITUDES",
  "experience": {
   "unit": {
    "percent": -80
@@ -39,6 +38,7 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_UNITCOMBAT_GROUP_MULTITUDES",
   "base": {
    "group": 9
   }

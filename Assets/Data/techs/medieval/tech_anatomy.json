@@ -1,8 +1,5 @@
 {
  "type": "TECH_ANATOMY",
- "description": "TXT_KEY_TECH_ANATOMY",
- "civilopedia": "TXT_KEY_TECH_ANATOMY_PEDIA",
- "quote": "TXT_KEY_TECH_ANATOMY_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_ANATOMY_LAB",
@@ -56,6 +53,9 @@
   "soundMP": "AS2D_TECH_ANATOMY"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_ANATOMY",
+  "civilopedia": "TXT_KEY_TECH_ANATOMY_PEDIA",
+  "quote": "TXT_KEY_TECH_ANATOMY_QUOTE",
   "era": "C2C_ERA_MEDIEVAL",
   "worth": 32,
   "tradeable": true,

@@ -1,8 +1,5 @@
 {
  "type": "UNIT_SUBDUED_SALTWATER_CROCS",
- "description": "TXT_KEY_UNIT_SUBDUED_SALTWATER_CROCS",
- "civilopedia": "TXT_KEY_CONCEPT_SUBDUED_ANIMALS_PEDIA",
- "help": "TXT_KEY_UNIT_SUBDUED_ANIMALS_HELP",
  "requires": {
   "build": {
    "all": [
@@ -159,6 +156,9 @@
   ]
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_SUBDUED_SALTWATER_CROCS",
+  "civilopedia": "TXT_KEY_CONCEPT_SUBDUED_ANIMALS_PEDIA",
+  "help": "TXT_KEY_UNIT_SUBDUED_ANIMALS_HELP",
   "spawnOnly": true,
   "worth": 1,
   "domain": "DOMAIN_SEA",

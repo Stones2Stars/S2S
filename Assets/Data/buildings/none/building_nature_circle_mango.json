@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_NATURE_CIRCLE_MANGO",
- "description": "TXT_KEY_BUILDING_NATURE_CIRCLE_MANGO",
- "civilopedia": "TXT_KEY_BUILDING_NATURE_CIRCLE_OF_POWER_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -60,6 +58,8 @@
   "construct": "AS2D_BUILD_DRUID"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_NATURE_CIRCLE_MANGO",
+  "civilopedia": "TXT_KEY_BUILDING_NATURE_CIRCLE_OF_POWER_PEDIA",
   "neverCapture": true,
   "worth": 3,
   "religion": "RELIGION_DRUIDIC_TRADITIONS",

@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_URANIAN_LUNAR_HEATING",
- "description": "TXT_KEY_BUILDING_URANIAN_LUNAR_HEATING",
- "civilopedia": "TXT_KEY_BUILDING_URANIAN_LUNAR_HEATING_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_URANIAN_LUNAR_MAGNETIC_FIELD",
@@ -48,6 +46,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_URANIAN_LUNAR_HEATING",
+  "civilopedia": "TXT_KEY_BUILDING_URANIAN_LUNAR_HEATING_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

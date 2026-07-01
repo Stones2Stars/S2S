@@ -1,12 +1,12 @@
 {
  "type": "PROMOTIONLINE_HUMANITARIAN_PROMOTION",
- "description": "TXT_KEY_PROMOTIONLINE_HUMANITARIAN_PROMOTION",
  "ui": {
   "art": {
    "icon": "art/Buttons/Promotions/PromotionHumanitarian.dds"
   }
  },
  "identity": {
+  "description": "TXT_KEY_PROMOTIONLINE_HUMANITARIAN_PROMOTION",
   "unitCombats": [
    "UNITCOMBAT_HEALTH_CARE",
    "UNITCOMBAT_RECON"

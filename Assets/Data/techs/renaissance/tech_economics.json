@@ -1,8 +1,5 @@
 {
  "type": "TECH_ECONOMICS",
- "description": "TXT_KEY_TECH_ECONOMICS",
- "civilopedia": "TXT_KEY_TECH_ECONOMICS_PEDIA",
- "quote": "TXT_KEY_TECH_ECONOMICS_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_ADAM_SMITHS_TRADING_COMPANY",
@@ -85,6 +82,9 @@
   "soundMP": "AS2D_TECH_MP_ECONOMICS"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_ECONOMICS",
+  "civilopedia": "TXT_KEY_TECH_ECONOMICS_PEDIA",
+  "quote": "TXT_KEY_TECH_ECONOMICS_QUOTE",
   "era": "C2C_ERA_RENAISSANCE",
   "worth": 32,
   "tradeable": true,

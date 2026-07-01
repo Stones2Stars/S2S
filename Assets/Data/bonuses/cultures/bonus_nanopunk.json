@@ -1,7 +1,5 @@
 {
  "type": "BONUS_NANOPUNK",
- "description": "TXT_KEY_BONUS_NANOPUNK",
- "civilopedia": "TXT_KEY_BONUS_NANOPUNK_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_COSMOPOLITAN_AWAKENING",
@@ -18,6 +16,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_NANOPUNK",
+  "civilopedia": "TXT_KEY_BONUS_NANOPUNK_PEDIA",
   "bonusClassType": "BONUSCLASS_GENMODS"
  }
 }

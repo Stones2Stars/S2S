@@ -1,7 +1,5 @@
 {
  "type": "BONUS_HUMAN_MOD_DIGITAL_IDENTITY",
- "description": "TXT_KEY_BONUS_HUMAN_MOD_DIGITAL_IDENTITY",
- "civilopedia": "TXT_KEY_BONUS_HUMAN_MOD_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_DIGITAL_RESURRECTION",
@@ -17,6 +15,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_HUMAN_MOD_DIGITAL_IDENTITY",
+  "civilopedia": "TXT_KEY_BONUS_HUMAN_MOD_PEDIA",
   "bonusClassType": "BONUSCLASS_GENMODS"
  }
 }

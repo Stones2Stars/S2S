@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_CISLUNAR_SPACEPORT",
- "description": "TXT_KEY_BUILDING_CISLUNAR_SPACEPORT",
- "civilopedia": "TXT_KEY_BUILDING_CISLUNAR_SPACEPORT_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_CISLUNAR_COOLING_SYSTEM",
@@ -55,6 +53,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_CISLUNAR_SPACEPORT",
+  "civilopedia": "TXT_KEY_BUILDING_CISLUNAR_SPACEPORT_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

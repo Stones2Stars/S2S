@@ -1,8 +1,5 @@
 {
  "type": "BUILDING_MONTE_CARLO",
- "description": "TXT_KEY_BUILDING_MONTE_CARLO",
- "civilopedia": "TXT_KEY_BUILDING_MONTE_CARLO_PEDIA",
- "help": "TXT_KEY_BUILDING_LASVEGASSTRIP_HELP",
  "requires": {
   "build": {
    "all": [
@@ -126,6 +123,9 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_MONTE_CARLO",
+  "civilopedia": "TXT_KEY_BUILDING_MONTE_CARLO_PEDIA",
+  "help": "TXT_KEY_BUILDING_LASVEGASSTRIP_HELP",
   "commerceDoubleTime": {
    "culture": 1000
   },

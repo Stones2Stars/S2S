@@ -1,7 +1,5 @@
 {
  "type": "UNIT_APOTHECARY",
- "description": "TXT_KEY_UNIT_APOTHECARY",
- "civilopedia": "TXT_KEY_UNIT_APOTHECARY_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -68,6 +66,8 @@
   "hurryCostModifier": 25
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_APOTHECARY",
+  "civilopedia": "TXT_KEY_UNIT_APOTHECARY_PEDIA",
   "worth": 5,
   "militaryWorth": 7,
   "xpValueDefense": 2,

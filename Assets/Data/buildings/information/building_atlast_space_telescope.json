@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_ATLAST_SPACE_TELESCOPE",
- "description": "TXT_KEY_BUILDING_ATLAST_SPACE_TELESCOPE",
- "civilopedia": "TXT_KEY_BUILDING_ATLAST_SPACE_TELESCOPE_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -43,6 +41,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_ATLAST_SPACE_TELESCOPE",
+  "civilopedia": "TXT_KEY_BUILDING_ATLAST_SPACE_TELESCOPE_PEDIA",
   "conquestProbability": 100,
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,

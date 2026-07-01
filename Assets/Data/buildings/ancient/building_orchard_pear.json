@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_ORCHARD_PEAR",
- "description": "TXT_KEY_BUILDING_ORCHARD_PEAR",
- "civilopedia": "TXT_KEY_BUILDING_ORCHARD_PEAR_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_RESOURCES_FRUIT"
@@ -77,6 +75,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_ORCHARD_PEAR",
+  "civilopedia": "TXT_KEY_BUILDING_ORCHARD_PEAR_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

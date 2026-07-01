@@ -1,6 +1,5 @@
 {
  "type": "PROMOTION_UNBELIEVABLE_EXPERTISE",
- "description": "TXT_KEY_PROMOTION_UNBELIEVABLE_EXPERTISE",
  "strength": {
   "unit": {
    "quality": {
@@ -30,6 +29,7 @@
   "sound": "AS2D_IF_LEVELUP"
  },
  "identity": {
+  "description": "TXT_KEY_PROMOTION_UNBELIEVABLE_EXPERTISE",
   "replacesUnitCombat": "UNITCOMBAT_QUALITY_EXCEPTIONAL",
   "levelPrereq": 11,
   "notOnUnitCombats": [

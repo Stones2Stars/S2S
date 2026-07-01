@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_FACTORY_CELLULASE_CAPSULES",
- "description": "TXT_KEY_BUILDING_FACTORY_CELLULASE_CAPSULES",
- "civilopedia": "TXT_KEY_BUILDING_FACTORY_CELLULASE_CAPSULES_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_MEDICAL_MEGACOMPLEX"
@@ -101,6 +99,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_FACTORY_CELLULASE_CAPSULES",
+  "civilopedia": "TXT_KEY_BUILDING_FACTORY_CELLULASE_CAPSULES_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

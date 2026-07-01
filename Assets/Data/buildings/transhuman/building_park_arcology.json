@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_PARK_ARCOLOGY",
- "description": "TXT_KEY_BUILDING_PARK_ARCOLOGY",
- "civilopedia": "TXT_KEY_BUILDING_PARK_ARCOLOGY_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_CYBER_CHLOROPLASTIDA_BLOOM"
@@ -93,6 +91,8 @@
   "construct": "AS2D_BUILD_ARCOLOGY"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_PARK_ARCOLOGY",
+  "civilopedia": "TXT_KEY_BUILDING_PARK_ARCOLOGY_PEDIA",
   "worth": 5,
   "advisor": "ADVISOR_GROWTH",
   "visibilityPriority": 1,

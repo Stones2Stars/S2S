@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_LL_RICHARDSON_ISLAND",
- "description": "TXT_KEY_BUILDING_LL_RICHARDSON_ISLAND",
- "civilopedia": "TXT_KEY_BUILDING_LL_RICHARDSON_ISLAND_PEDIA",
  "obsoletedBy": {
   "techs": [
    "TECH_COPPER_WORKING"
@@ -70,6 +68,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_LL_RICHARDSON_ISLAND",
+  "civilopedia": "TXT_KEY_BUILDING_LL_RICHARDSON_ISLAND_PEDIA",
   "centerInCity": true,
   "worth": 10,
   "conquestProbability": 100,

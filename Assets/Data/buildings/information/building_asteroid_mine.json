@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_ASTEROID_MINE",
- "description": "TXT_KEY_BUILDING_ASTEROID_MINE",
- "civilopedia": "TXT_KEY_BUILDING_ASTEROID_MINE_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_ASTEROID_MINE_RARE_MINERALS"
@@ -41,6 +39,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_ASTEROID_MINE",
+  "civilopedia": "TXT_KEY_BUILDING_ASTEROID_MINE_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

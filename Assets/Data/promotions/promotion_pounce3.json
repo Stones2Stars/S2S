@@ -1,6 +1,5 @@
 {
  "type": "PROMOTION_POUNCE3",
- "description": "TXT_KEY_PROMOTION_POUNCE3",
  "strength": {
   "unit": {
    "stealth": {
@@ -29,5 +28,8 @@
  },
  "sound": {
   "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_POUNCE3"
  }
 }

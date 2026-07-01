@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_HEALTH_SPA",
- "description": "TXT_KEY_BUILDING_HEALTH_SPA",
- "civilopedia": "TXT_KEY_BUILDING_HEALTH_SPA_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_HEALTHCARE_MEGACOMPLEX"
@@ -50,6 +48,8 @@
   "construct": "AS2D_BUILD_HOSPITAL"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_HEALTH_SPA",
+  "civilopedia": "TXT_KEY_BUILDING_HEALTH_SPA_PEDIA",
   "notConstructible": true,
   "worth": 5,
   "dcmAirbombMission": 2,

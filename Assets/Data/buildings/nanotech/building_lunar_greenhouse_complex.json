@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_LUNAR_GREENHOUSE_COMPLEX",
- "description": "TXT_KEY_BUILDING_LUNAR_GREENHOUSE_COMPLEX",
- "civilopedia": "TXT_KEY_BUILDING_LUNAR_GREENHOUSE_COMPLEX_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -79,6 +77,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_LUNAR_GREENHOUSE_COMPLEX",
+  "civilopedia": "TXT_KEY_BUILDING_LUNAR_GREENHOUSE_COMPLEX_PEDIA",
   "conquestProbability": 70,
   "advisor": "ADVISOR_GROWTH",
   "visibilityPriority": "1.0",

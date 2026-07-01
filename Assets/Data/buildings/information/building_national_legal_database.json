@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_NATIONAL_LEGAL_DATABASE",
- "description": "TXT_KEY_BUILDING_NATIONAL_LEGAL_DATABASE",
- "civilopedia": "TXT_KEY_BUILDING_NATIONAL_LEGAL_DATABASE_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -57,6 +55,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_NATIONAL_LEGAL_DATABASE",
+  "civilopedia": "TXT_KEY_BUILDING_NATIONAL_LEGAL_DATABASE_PEDIA",
   "neverCapture": true,
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [

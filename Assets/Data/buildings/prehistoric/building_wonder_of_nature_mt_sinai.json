@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_WONDER_OF_NATURE_MT_SINAI",
- "description": "TXT_KEY_BUILDING_WONDER_OF_NATURE_MT_SINAI",
- "civilopedia": "TXT_KEY_BUILDING_WONDER_OF_NATURE_MT_SINAI_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -99,6 +97,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_WONDER_OF_NATURE_MT_SINAI",
+  "civilopedia": "TXT_KEY_BUILDING_WONDER_OF_NATURE_MT_SINAI_PEDIA",
   "enabledCivilizations": [
    "CIVILIZATION_NPC_NEANDERTHAL"
   ],

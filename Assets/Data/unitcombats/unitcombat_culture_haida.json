@@ -1,12 +1,12 @@
 {
  "type": "UNITCOMBAT_CULTURE_HAIDA",
- "description": "TXT_KEY_UNITCOMBAT_CULTURE_HAIDA",
  "ui": {
   "art": {
    "icon": "Art/Interface/Buttons/units/sparth/categories/culture_haida.dds"
   }
  },
  "identity": {
+  "description": "TXT_KEY_UNITCOMBAT_CULTURE_HAIDA",
   "culture": "BONUS_HAIDA"
  }
 }

@@ -1,7 +1,5 @@
 {
  "type": "BONUS_OIL",
- "description": "TXT_KEY_BONUS_OIL",
- "civilopedia": "TXT_KEY_BONUS_OIL_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_ASPHALT_ROADS",
@@ -88,6 +86,8 @@
   ]
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_OIL",
+  "civilopedia": "TXT_KEY_BONUS_OIL_PEDIA",
   "bonusClassType": "BONUSCLASS_STRATEGIC"
  }
 }

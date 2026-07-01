@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_BACTERIUM_LANDFILL",
- "description": "TXT_KEY_BUILDING_BACTERIUM_LANDFILL",
- "civilopedia": "TXT_KEY_BUILDING_BACTERIUM_LANDFILL_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -71,6 +69,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_BACTERIUM_LANDFILL",
+  "civilopedia": "TXT_KEY_BUILDING_BACTERIUM_LANDFILL_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

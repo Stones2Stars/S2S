@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_CRIME_GANG_WARFARE",
- "description": "TXT_KEY_BUILDING_CRIME_GANG_WARFARE",
- "civilopedia": "TXT_KEY_BUILDING_CRIME_GANG_WARFARE_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -92,6 +90,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_CRIME_GANG_WARFARE",
+  "civilopedia": "TXT_KEY_BUILDING_CRIME_GANG_WARFARE_PEDIA",
   "notConstructible": true,
   "nukeImmune": true,
   "conquestProbability": 100,

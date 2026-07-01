@@ -1,8 +1,5 @@
 {
  "type": "TRAIT_PRAGMATIC2",
- "description": "TXT_KEY_TRAIT_PRAGMATIC2",
- "civilopedia": "TXT_KEY_TRAIT_PRAGMATIC2_PEDIA",
- "strategy": "TXT_KEY_TRAIT_PRAGMATIC_STRATEGY",
  "enables": {
   "traits": [
    "TRAIT_PRAGMATIC3"
@@ -172,5 +169,10 @@
   "art": {
    "icon": "art/Buttons/Traits/TraitPragmatic2.dds"
   }
+ },
+ "identity": {
+  "description": "TXT_KEY_TRAIT_PRAGMATIC2",
+  "civilopedia": "TXT_KEY_TRAIT_PRAGMATIC2_PEDIA",
+  "strategy": "TXT_KEY_TRAIT_PRAGMATIC_STRATEGY"
  }
 }

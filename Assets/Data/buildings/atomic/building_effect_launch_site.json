@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_EFFECT_LAUNCH_SITE",
- "description": "TXT_KEY_BUILDING_EFFECT_LAUNCH_SITE",
- "civilopedia": "TXT_KEY_BUILDING_EFFECT_LAUNCH_SITE_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_BAIKONUR_COSMODROME",
@@ -47,6 +45,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_EFFECT_LAUNCH_SITE",
+  "civilopedia": "TXT_KEY_BUILDING_EFFECT_LAUNCH_SITE_PEDIA",
   "notConstructible": true,
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,

@@ -1,7 +1,5 @@
 {
  "type": "UNIT_ORANG_BOWMAN",
- "description": "TXT_KEY_UNIT_ORANG_BOWMAN",
- "civilopedia": "TXT_KEY_UNIT_ORANG_BOWMAN_PEDIA",
  "obsoletedBy": {
   "techs": [
    "TECH_FLINTLOCK"
@@ -81,6 +79,8 @@
   "upkeep": 1
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_ORANG_BOWMAN",
+  "civilopedia": "TXT_KEY_UNIT_ORANG_BOWMAN_PEDIA",
   "worth": 2,
   "militaryWorth": 15,
   "xpValueAttack": 6,

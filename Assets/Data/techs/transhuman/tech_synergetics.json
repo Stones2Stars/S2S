@@ -1,8 +1,5 @@
 {
  "type": "TECH_SYNERGETICS",
- "description": "TXT_KEY_TECH_SYNERGETICS",
- "civilopedia": "TXT_KEY_TECH_SYNERGETICS_PEDIA",
- "quote": "TXT_KEY_TECH_SYNERGETICS_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_CLOUD_NINE",
@@ -67,6 +64,9 @@
   "soundMP": "AS2D_TECH_SYNERGETICS"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_SYNERGETICS",
+  "civilopedia": "TXT_KEY_TECH_SYNERGETICS_PEDIA",
+  "quote": "TXT_KEY_TECH_SYNERGETICS_QUOTE",
   "era": "C2C_ERA_TRANSHUMAN",
   "worth": 48,
   "militaryWorth": 4,

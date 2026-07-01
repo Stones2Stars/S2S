@@ -1,8 +1,5 @@
 {
  "type": "TRAIT_LAZY1",
- "description": "TXT_KEY_TRAIT_LAZY1",
- "civilopedia": "TXT_KEY_TRAIT_LAZY1_PEDIA",
- "strategy": "TXT_KEY_TRAIT_LAZY_STRATEGY",
  "enables": {
   "traits": [
    "TRAIT_LAZY2"
@@ -422,6 +419,9 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_TRAIT_LAZY1",
+  "civilopedia": "TXT_KEY_TRAIT_LAZY1_PEDIA",
+  "strategy": "TXT_KEY_TRAIT_LAZY_STRATEGY",
   "negativeTrait": true,
   "impurePropertyManipulators": true
  }

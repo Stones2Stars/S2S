@@ -1,7 +1,5 @@
 {
  "type": "UNIT_ARMORED_CAR",
- "description": "TXT_KEY_UNIT_ARMORED_CAR",
- "civilopedia": "TXT_KEY_UNIT_ARMORED_CAR_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -105,6 +103,8 @@
   "upkeep": 2
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_ARMORED_CAR",
+  "civilopedia": "TXT_KEY_UNIT_ARMORED_CAR_PEDIA",
   "worth": 5,
   "militaryWorth": 183,
   "xpValueAttack": 2,

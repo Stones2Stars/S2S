@@ -1,6 +1,5 @@
 {
  "type": "PROMOTION_SEGMENTED_ARMOR",
- "description": "TXT_KEY_PROMOTION_SEGMENTED_ARMOR",
  "strength": {
   "unit": {
    "unitCombat": {
@@ -20,5 +19,8 @@
  },
  "sound": {
   "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_SEGMENTED_ARMOR"
  }
 }

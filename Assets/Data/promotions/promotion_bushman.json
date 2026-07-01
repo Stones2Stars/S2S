@@ -1,6 +1,5 @@
 {
  "type": "PROMOTION_BUSHMAN",
- "description": "TXT_KEY_PROMOTION_BUSHMAN",
  "strength": {
   "unit": {
    "terrain": {
@@ -70,5 +69,8 @@
  },
  "sound": {
   "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_BUSHMAN"
  }
 }

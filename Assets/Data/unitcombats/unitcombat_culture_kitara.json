@@ -1,12 +1,12 @@
 {
  "type": "UNITCOMBAT_CULTURE_KITARA",
- "description": "TXT_KEY_UNITCOMBAT_CULTURE_KITARA",
  "ui": {
   "art": {
    "icon": "Art/categories/culture_newcultures.dds"
   }
  },
  "identity": {
+  "description": "TXT_KEY_UNITCOMBAT_CULTURE_KITARA",
   "culture": "BONUS_KITARAN"
  }
 }

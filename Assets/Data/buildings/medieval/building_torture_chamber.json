@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_TORTURE_CHAMBER",
- "description": "TXT_KEY_BUILDING_TORTURE_CHAMBER",
- "civilopedia": "TXT_KEY_BUILDING_TORTURE_CHAMBER_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_INTERROGATION_CHAIR",
@@ -93,6 +91,8 @@
   "construct": "AS2D_BUILD_JAIL"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_TORTURE_CHAMBER",
+  "civilopedia": "TXT_KEY_BUILDING_TORTURE_CHAMBER_PEDIA",
   "worth": 4,
   "militaryWorth": 4,
   "advisor": "ADVISOR_MILITARY",

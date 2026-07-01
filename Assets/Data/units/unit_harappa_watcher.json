@@ -1,7 +1,5 @@
 {
  "type": "UNIT_HARAPPA_WATCHER",
- "description": "TXT_KEY_UNIT_HARAPPA_WATCHER",
- "civilopedia": "TXT_KEY_UNIT_HARAPPA_WATCHER_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -160,6 +158,8 @@
   "upkeep": 4
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_HARAPPA_WATCHER",
+  "civilopedia": "TXT_KEY_UNIT_HARAPPA_WATCHER_PEDIA",
   "worth": 4,
   "militaryWorth": 6,
   "xpValueAttack": 6,

@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_GEODESIC_DOME",
- "description": "TXT_KEY_BUILDING_GEODESIC_DOME",
- "civilopedia": "TXT_KEY_BUILDING_GEODESIC_DOME_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_NUDGING_SPACE_ARCOLOGY"
@@ -78,6 +76,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_GEODESIC_DOME",
+  "civilopedia": "TXT_KEY_BUILDING_GEODESIC_DOME_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

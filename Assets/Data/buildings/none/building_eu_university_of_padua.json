@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_EU_UNIVERSITY_OF_PADUA",
- "description": "TXT_KEY_BUILDING_EU_UNIVERSITY_OF_PADUA",
- "civilopedia": "TXT_KEY_BUILDING_EU_UNIVERSITY_OF_PADUA_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -108,6 +106,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_EU_UNIVERSITY_OF_PADUA",
+  "civilopedia": "TXT_KEY_BUILDING_EU_UNIVERSITY_OF_PADUA_PEDIA",
   "commerceDoubleTime": {
    "culture": 1000
   },

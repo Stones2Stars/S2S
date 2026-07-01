@@ -1,6 +1,5 @@
 {
  "type": "PROMOTION_PHARAOH",
- "description": "TXT_KEY_PROMOTION_PHARAOH",
  "firstStrike": {
   "unit": {
    "chance": {
@@ -22,6 +21,7 @@
   "sound": "AS2D_IF_LEVELUP"
  },
  "identity": {
+  "description": "TXT_KEY_PROMOTION_PHARAOH",
   "stateReligionPrereq": "RELIGION_KEMETISM",
   "unitCombats": [
    "UNITCOMBAT_RECON",

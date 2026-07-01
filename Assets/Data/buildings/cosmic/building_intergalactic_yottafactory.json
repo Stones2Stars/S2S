@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_INTERGALACTIC_YOTTAFACTORY",
- "description": "TXT_KEY_BUILDING_INTERGALACTIC_YOTTAFACTORY",
- "civilopedia": "TXT_KEY_BUILDING_INTERGALACTIC_YOTTAFACTORY_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_INTERGALACTIC_BIRCH_PLANET",
@@ -44,6 +42,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_INTERGALACTIC_YOTTAFACTORY",
+  "civilopedia": "TXT_KEY_BUILDING_INTERGALACTIC_YOTTAFACTORY_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

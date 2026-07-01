@@ -1,8 +1,5 @@
 {
  "type": "TECH_FLINTLOCK",
- "description": "TXT_KEY_TECH_FLINTLOCK",
- "civilopedia": "TXT_KEY_TECH_FLINTLOCK_PEDIA",
- "quote": "TXT_KEY_TECH_FLINTLOCK_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_BARRICADES",
@@ -173,6 +170,9 @@
   "soundMP": "AS2D_TECH_FLINTLOCK"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_FLINTLOCK",
+  "civilopedia": "TXT_KEY_TECH_FLINTLOCK_PEDIA",
+  "quote": "TXT_KEY_TECH_FLINTLOCK_QUOTE",
   "era": "C2C_ERA_RENAISSANCE",
   "worth": 32,
   "militaryWorth": 10,

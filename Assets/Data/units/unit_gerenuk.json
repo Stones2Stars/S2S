@@ -1,7 +1,5 @@
 {
  "type": "UNIT_GERENUK",
- "description": "TXT_KEY_UNIT_GERENUK",
- "civilopedia": "TXT_KEY_UNIT_GERENUK_PEDIA",
  "withdrawal": {
   "unit": {
    "percent": 45
@@ -51,6 +49,8 @@
   ]
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_GERENUK",
+  "civilopedia": "TXT_KEY_UNIT_GERENUK_PEDIA",
   "spawnOnly": true,
   "xpValueAttack": 4,
   "xpValueDefense": 2,

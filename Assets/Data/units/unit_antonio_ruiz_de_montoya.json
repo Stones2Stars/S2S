@@ -1,7 +1,5 @@
 {
  "type": "UNIT_ANTONIO_RUIZ_DE_MONTOYA",
- "description": "TXT_KEY_UNIT_ANTONIO_RUIZ_DE_MONTOYA",
- "civilopedia": "TXT_KEY_UNIT_ANTONIO_RUIZ_DE_MONTOYA_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -50,6 +48,8 @@
   "upkeep": 1
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_ANTONIO_RUIZ_DE_MONTOYA",
+  "civilopedia": "TXT_KEY_UNIT_ANTONIO_RUIZ_DE_MONTOYA_PEDIA",
   "worth": 6,
   "militaryWorth": 8,
   "xpValueAttack": 4,

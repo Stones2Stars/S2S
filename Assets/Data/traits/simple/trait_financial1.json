@@ -1,7 +1,5 @@
 {
  "type": "TRAIT_FINANCIAL1",
- "description": "TXT_KEY_TRAIT_FINANCIAL0",
- "civilopedia": "TXT_KEY_TRAIT_FINANCIAL_PEDIA",
  "enables": {
   "traits": [
    "TRAIT_FINANCIAL2"
@@ -120,6 +118,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_TRAIT_FINANCIAL0",
+  "civilopedia": "TXT_KEY_TRAIT_FINANCIAL_PEDIA",
   "shortDescription": "TXT_KEY_TRAIT_FINANCIAL_SHORT"
  }
 }

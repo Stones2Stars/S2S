@@ -1,8 +1,5 @@
 {
  "type": "TRAIT_NAIVE",
- "description": "TXT_KEY_TRAIT_NAIVE",
- "civilopedia": "TXT_KEY_TRAIT_NAIVE_PEDIA",
- "strategy": "TXT_KEY_TRAIT_NAIVE_STRATEGY",
  "excludes": [
   "TRAIT_DECEIVER"
  ],
@@ -520,6 +517,9 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_TRAIT_NAIVE",
+  "civilopedia": "TXT_KEY_TRAIT_NAIVE_PEDIA",
+  "strategy": "TXT_KEY_TRAIT_NAIVE_STRATEGY",
   "negativeTrait": true,
   "impurePropertyManipulators": true
  }

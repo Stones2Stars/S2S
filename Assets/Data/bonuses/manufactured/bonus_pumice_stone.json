@@ -1,13 +1,13 @@
 {
  "type": "BONUS_PUMICE_STONE",
- "description": "TXT_KEY_BONUS_PUMICE_STONE",
- "civilopedia": "TXT_KEY_BONUS_PUMICE_STONE_PEDIA",
  "world": {
   "art": {
    "icon": "ART_DEF_BONUS_PUMICE_STONE"
   }
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_PUMICE_STONE",
+  "civilopedia": "TXT_KEY_BONUS_PUMICE_STONE_PEDIA",
   "bonusClassType": "BONUSCLASS_MANUFACTURED"
  }
 }

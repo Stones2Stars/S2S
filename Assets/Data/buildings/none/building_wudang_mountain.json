@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_WUDANG_MOUNTAIN",
- "description": "TXT_KEY_BUILDING_WUDANG_MOUNTAIN",
- "civilopedia": "TXT_KEY_BUILDING_WUDANG_MOUNTAIN_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -121,6 +119,8 @@
   "construct": "AS2D_BUILD_TAOIST"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_WUDANG_MOUNTAIN",
+  "civilopedia": "TXT_KEY_BUILDING_WUDANG_MOUNTAIN_PEDIA",
   "commerceDoubleTime": {
    "culture": 1000
   },

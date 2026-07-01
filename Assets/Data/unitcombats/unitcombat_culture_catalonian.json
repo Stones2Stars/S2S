@@ -1,12 +1,12 @@
 {
  "type": "UNITCOMBAT_CULTURE_CATALONIAN",
- "description": "TXT_KEY_UNITCOMBAT_CULTURE_CATALONIAN",
  "ui": {
   "art": {
    "icon": "Art/categories/culture_newcultures.dds"
   }
  },
  "identity": {
+  "description": "TXT_KEY_UNITCOMBAT_CULTURE_CATALONIAN",
   "culture": "BONUS_CATALONIAN"
  }
 }

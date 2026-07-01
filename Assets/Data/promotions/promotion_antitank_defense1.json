@@ -1,6 +1,5 @@
 {
  "type": "PROMOTION_ANTITANK_DEFENSE1",
- "description": "TXT_KEY_PROMOTION_ANTITANK_DEFENSE1",
  "strength": {
   "unit": {
    "unitCombat": {
@@ -28,6 +27,7 @@
   "sound": "AS2D_IF_LEVELUP"
  },
  "identity": {
+  "description": "TXT_KEY_PROMOTION_ANTITANK_DEFENSE1",
   "unitCombats": [
    "UNITCOMBAT_THROWING"
   ]

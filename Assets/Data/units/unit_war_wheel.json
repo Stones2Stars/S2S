@@ -1,7 +1,5 @@
 {
  "type": "UNIT_WAR_WHEEL",
- "description": "TXT_KEY_UNIT_WAR_WHEEL",
- "civilopedia": "TXT_KEY_UNIT_WAR_WHEEL_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -80,6 +78,8 @@
   "upkeep": 1
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_WAR_WHEEL",
+  "civilopedia": "TXT_KEY_UNIT_WAR_WHEEL_PEDIA",
   "worth": 5,
   "militaryWorth": 70,
   "xpValueAttack": 6,

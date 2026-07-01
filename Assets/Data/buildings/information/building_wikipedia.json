@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_WIKIPEDIA",
- "description": "TXT_KEY_BUILDING_WIKIPEDIA",
- "civilopedia": "TXT_KEY_BUILDING_WIKIPEDIA_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -73,6 +71,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_WIKIPEDIA",
+  "civilopedia": "TXT_KEY_BUILDING_WIKIPEDIA_PEDIA",
   "worth": 10,
   "conquestProbability": 100,
   "greatPeopleUnitType": "UNIT_SCIENTIST",

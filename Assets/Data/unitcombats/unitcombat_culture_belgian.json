@@ -1,12 +1,12 @@
 {
  "type": "UNITCOMBAT_CULTURE_BELGIAN",
- "description": "TXT_KEY_UNITCOMBAT_CULTURE_BELGIAN",
  "ui": {
   "art": {
    "icon": "Art/Interface/Buttons/units/sparth/categories/culture_belgia.dds"
   }
  },
  "identity": {
+  "description": "TXT_KEY_UNITCOMBAT_CULTURE_BELGIAN",
   "culture": "BONUS_BELGIAN"
  }
 }

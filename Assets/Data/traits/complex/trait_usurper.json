@@ -1,8 +1,5 @@
 {
  "type": "TRAIT_USURPER",
- "description": "TXT_KEY_TRAIT_USURPER",
- "civilopedia": "TXT_KEY_TRAIT_USURPER_PEDIA",
- "strategy": "TXT_KEY_TRAIT_USURPER_STRATEGY",
  "excludes": [
   "TRAIT_REVOLUTIONARY"
  ],
@@ -232,6 +229,9 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_TRAIT_USURPER",
+  "civilopedia": "TXT_KEY_TRAIT_USURPER_PEDIA",
+  "strategy": "TXT_KEY_TRAIT_USURPER_STRATEGY",
   "negativeTrait": true
  }
 }

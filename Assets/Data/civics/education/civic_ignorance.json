@@ -1,8 +1,5 @@
 {
  "type": "CIVIC_IGNORANCE",
- "description": "TXT_KEY_CIVIC_IGNORANCE",
- "civilopedia": "TXT_KEY_CIVIC_IGNORANCE_PEDIA",
- "strategy": "TXT_KEY_CIVIC_IGNORANCE_STRATEGY",
  "gold": {
   "empire": {
    "percent": [
@@ -85,6 +82,9 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_CIVIC_IGNORANCE",
+  "civilopedia": "TXT_KEY_CIVIC_IGNORANCE_PEDIA",
+  "strategy": "TXT_KEY_CIVIC_IGNORANCE_STRATEGY",
   "civicOption": "CIVICOPTION_EDUCATION"
  }
 }

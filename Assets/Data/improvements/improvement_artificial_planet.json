@@ -1,7 +1,5 @@
 {
  "type": "IMPROVEMENT_ARTIFICIAL_PLANET",
- "description": "TXT_KEY_IMPROVEMENT_ARTIFICIAL_PLANET",
- "civilopedia": "TXT_KEY_IMPROVEMENT_ARTIFICIAL_PLANET_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -41,6 +39,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_IMPROVEMENT_ARTIFICIAL_PLANET",
+  "civilopedia": "TXT_KEY_IMPROVEMENT_ARTIFICIAL_PLANET_PEDIA",
   "extraterrestrial": true,
   "pillageGold": 200
  }

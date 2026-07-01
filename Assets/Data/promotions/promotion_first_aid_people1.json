@@ -1,6 +1,5 @@
 {
  "type": "PROMOTION_FIRST_AID_PEOPLE1",
- "description": "TXT_KEY_PROMOTION_FIRST_AID_PEOPLE1",
  "heal": {
   "unit": {
    "support": {
@@ -26,5 +25,8 @@
  },
  "sound": {
   "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_FIRST_AID_PEOPLE1"
  }
 }

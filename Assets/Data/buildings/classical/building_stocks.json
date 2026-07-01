@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_STOCKS",
- "description": "TXT_KEY_BUILDING_STOCKS",
- "civilopedia": "TXT_KEY_BUILDING_STOCKS_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_DEBTORS_PRISON"
@@ -88,6 +86,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_STOCKS",
+  "civilopedia": "TXT_KEY_BUILDING_STOCKS_PEDIA",
   "advisor": "ADVISOR_MILITARY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

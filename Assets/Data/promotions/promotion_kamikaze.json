@@ -1,6 +1,5 @@
 {
  "type": "PROMOTION_KAMIKAZE",
- "description": "TXT_KEY_PROMOTION_KAMIKAZE",
  "strength": {
   "unit": {
    "cityAttack": {
@@ -37,6 +36,7 @@
   "sound": "AS2D_IF_LEVELUP"
  },
  "identity": {
+  "description": "TXT_KEY_PROMOTION_KAMIKAZE",
   "unitCombats": [
    "UNITCOMBAT_ANIMAL",
    "UNITCOMBAT_EARLY_FIGHTERS",

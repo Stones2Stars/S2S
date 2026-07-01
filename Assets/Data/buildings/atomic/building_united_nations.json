@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_UNITED_NATIONS",
- "description": "TXT_KEY_BUILDING_UNITED_NATIONS",
- "civilopedia": "TXT_KEY_BUILDING_UNITED_NATIONS_PEDIA",
  "enables": {
   "votes": [
    "FORCE_TEAM_ELIGIBLE"
@@ -66,6 +64,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_UNITED_NATIONS",
+  "civilopedia": "TXT_KEY_BUILDING_UNITED_NATIONS_PEDIA",
   "nukeImmune": true,
   "teamShare": true,
   "worth": 20,

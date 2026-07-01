@@ -1,7 +1,5 @@
 {
  "type": "BONUS_COCONUT",
- "description": "TXT_KEY_BONUS_COCONUT",
- "civilopedia": "TXT_KEY_BONUS_COCONUT_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_CATCHER_BIRDS_OF_PARADISE",
@@ -73,6 +71,8 @@
   ]
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_COCONUT",
+  "civilopedia": "TXT_KEY_BONUS_COCONUT_PEDIA",
   "bonusClassType": "BONUSCLASS_CROP"
  }
 }

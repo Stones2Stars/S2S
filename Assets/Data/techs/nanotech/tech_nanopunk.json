@@ -1,8 +1,5 @@
 {
  "type": "TECH_NANOPUNK",
- "description": "TXT_KEY_TECH_NANOPUNK",
- "civilopedia": "TXT_KEY_TECH_NANOPUNK_PEDIA",
- "quote": "TXT_KEY_TECH_NANOPUNK_QUOTE",
  "enables": {
   "bonuses": [
    "BONUS_NANOPUNK"
@@ -62,6 +59,9 @@
   "soundMP": "AS2D_TECH_GENERIC"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_NANOPUNK",
+  "civilopedia": "TXT_KEY_TECH_NANOPUNK_PEDIA",
+  "quote": "TXT_KEY_TECH_NANOPUNK_QUOTE",
   "era": "C2C_ERA_NANOTECH",
   "worth": 48,
   "militaryWorth": 4,

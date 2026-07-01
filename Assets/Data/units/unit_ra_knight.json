@@ -1,7 +1,5 @@
 {
  "type": "UNIT_RA_KNIGHT",
- "description": "TXT_KEY_UNIT_RA_KNIGHT",
- "civilopedia": "TXT_KEY_UNIT_RA_FIST_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -68,6 +66,8 @@
   "production": 370
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_RA_KNIGHT",
+  "civilopedia": "TXT_KEY_UNIT_RA_FIST_PEDIA",
   "worth": 5,
   "militaryWorth": 11,
   "xpValueAttack": 4,

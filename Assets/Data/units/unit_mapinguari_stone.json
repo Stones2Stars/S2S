@@ -1,7 +1,5 @@
 {
  "type": "UNIT_MAPINGUARI_STONE",
- "description": "TXT_KEY_UNIT_MAPINGUARI_STONE",
- "civilopedia": "TXT_KEY_UNIT_MAPINGUARI_PEDIA",
  "obsoletedBy": {
   "techs": [
    "TECH_IRON_WORKING"
@@ -71,6 +69,8 @@
   "upkeep": 8
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_MAPINGUARI_STONE",
+  "civilopedia": "TXT_KEY_UNIT_MAPINGUARI_PEDIA",
   "worth": 2,
   "militaryWorth": 5,
   "xpValueAttack": 6,

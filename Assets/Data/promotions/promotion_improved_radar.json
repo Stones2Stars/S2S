@@ -1,6 +1,5 @@
 {
  "type": "PROMOTION_IMPROVED_RADAR",
- "description": "TXT_KEY_PROMOTION_IMPROVED_RADAR",
  "air": {
   "unit": {
    "intercept": {
@@ -39,6 +38,7 @@
   "sound": "AS2D_IF_LEVELUP"
  },
  "identity": {
+  "description": "TXT_KEY_PROMOTION_IMPROVED_RADAR",
   "unitCombats": [
    "UNITCOMBAT_GUN",
    "UNITCOMBAT_HITECH",

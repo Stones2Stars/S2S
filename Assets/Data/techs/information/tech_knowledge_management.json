@@ -1,8 +1,5 @@
 {
  "type": "TECH_KNOWLEDGE_MANAGEMENT",
- "description": "TXT_KEY_TECH_KNOWLEDGE_MANAGEMENT",
- "civilopedia": "TXT_KEY_TECH_KNOWLEDGE_MANAGEMENT_PEDIA",
- "quote": "TXT_KEY_TECH_KNOWLEDGE_MANAGEMENT_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_EFFECT_MEDICAL_DATABASE",
@@ -63,6 +60,9 @@
   "soundMP": "AS2D_TECH_KNOWLEDGE_MANAGEMENT"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_KNOWLEDGE_MANAGEMENT",
+  "civilopedia": "TXT_KEY_TECH_KNOWLEDGE_MANAGEMENT_PEDIA",
+  "quote": "TXT_KEY_TECH_KNOWLEDGE_MANAGEMENT_QUOTE",
   "era": "C2C_ERA_INFORMATION",
   "worth": 40,
   "militaryWorth": 10,

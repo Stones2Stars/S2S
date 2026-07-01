@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_CISLUNAR_LABS",
- "description": "TXT_KEY_BUILDING_CISLUNAR_LABS",
- "civilopedia": "TXT_KEY_BUILDING_CISLUNAR_LABS_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -52,6 +50,8 @@
   "construct": "AS2D_BUILD_SPACEWAY"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_CISLUNAR_LABS",
+  "civilopedia": "TXT_KEY_BUILDING_CISLUNAR_LABS_PEDIA",
   "orbital": true,
   "worth": 6,
   "advisor": "ADVISOR_GROWTH",

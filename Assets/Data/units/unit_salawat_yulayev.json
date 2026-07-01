@@ -1,7 +1,5 @@
 {
  "type": "UNIT_SALAWAT_YULAYEV",
- "description": "TXT_KEY_UNIT_SALAWAT_YULAYEV",
- "civilopedia": "TXT_KEY_UNIT_SALAWAT_YULAYEV_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -55,6 +53,8 @@
   "upkeep": 1
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_SALAWAT_YULAYEV",
+  "civilopedia": "TXT_KEY_UNIT_SALAWAT_YULAYEV_PEDIA",
   "worth": 2,
   "militaryWorth": 3,
   "xpValueAttack": 4,

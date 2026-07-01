@@ -1,8 +1,5 @@
 {
  "type": "TECH_CALCULUS",
- "description": "TXT_KEY_TECH_CALCULUS",
- "civilopedia": "TXT_KEY_TECH_CALCULUS_PEDIA",
- "quote": "TXT_KEY_TECH_CALCULUS_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_KERALA_SCHOOL_OF_MATHEMATICS"
@@ -45,6 +42,9 @@
   "soundMP": "AS2D_TECH_CALCULUS"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_CALCULUS",
+  "civilopedia": "TXT_KEY_TECH_CALCULUS_PEDIA",
+  "quote": "TXT_KEY_TECH_CALCULUS_QUOTE",
   "era": "C2C_ERA_RENAISSANCE",
   "worth": 32,
   "tradeable": true,

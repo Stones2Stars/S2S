@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_TITAN_SUPERCOMPUTER",
- "description": "TXT_KEY_BUILDING_TITAN_SUPERCOMPUTER",
- "civilopedia": "TXT_KEY_BUILDING_TITAN_SUPERCOMPUTER_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_COMPUTRONIUM_TITAN"
@@ -43,6 +41,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_TITAN_SUPERCOMPUTER",
+  "civilopedia": "TXT_KEY_BUILDING_TITAN_SUPERCOMPUTER_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

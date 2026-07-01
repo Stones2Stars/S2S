@@ -1,8 +1,5 @@
 {
  "type": "CIVIC_CHURCH",
- "description": "TXT_KEY_CIVIC_CHURCH",
- "civilopedia": "TXT_KEY_CIVIC_CHURCH_PEDIA",
- "strategy": "TXT_KEY_CIVIC_CHURCH_STRATEGY",
  "enables": {
   "buildings": [
    "BUILDING_FOUNDLING_HOSPITAL"
@@ -143,6 +140,9 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_CIVIC_CHURCH",
+  "civilopedia": "TXT_KEY_CIVIC_CHURCH_PEDIA",
+  "strategy": "TXT_KEY_CIVIC_CHURCH_STRATEGY",
   "civicOption": "CIVICOPTION_WELFARE",
   "upkeepLevel": "UPKEEP_LOW"
  }

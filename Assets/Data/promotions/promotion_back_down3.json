@@ -1,6 +1,5 @@
 {
  "type": "PROMOTION_BACK_DOWN3",
- "description": "TXT_KEY_PROMOTION_BACK_DOWN3",
  "withdrawal": {
   "unit": {
    "percent": 15
@@ -16,5 +15,8 @@
  },
  "sound": {
   "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_BACK_DOWN3"
  }
 }

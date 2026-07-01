@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_MARINE_INSTITUTE",
- "description": "TXT_KEY_BUILDING_MARINE_INSTITUTE",
- "civilopedia": "TXT_KEY_BUILDING_MARINE_INSTITUTE_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_CENTER_FOR_CEPHALOPOD_STUDIES",
@@ -54,6 +52,8 @@
   "construct": "AS2D_BUILD_GRANARY"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_MARINE_INSTITUTE",
+  "civilopedia": "TXT_KEY_BUILDING_MARINE_INSTITUTE_PEDIA",
   "worth": 2,
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [

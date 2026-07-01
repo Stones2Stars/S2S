@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_CITY_PARK",
- "description": "TXT_KEY_BUILDING_CITY_PARK",
- "civilopedia": "TXT_KEY_BUILDING_CITY_PARK_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_BALLOON_RIDES",
@@ -82,6 +80,8 @@
   "construct": "AS2D_BUILD_PARK"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_CITY_PARK",
+  "civilopedia": "TXT_KEY_BUILDING_CITY_PARK_PEDIA",
   "worth": 2,
   "militaryWorth": 2,
   "greatPeopleUnitType": "UNIT_ARTIST",

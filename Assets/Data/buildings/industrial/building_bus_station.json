@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_BUS_STATION",
- "description": "TXT_KEY_BUILDING_BUS_STATION",
- "civilopedia": "TXT_KEY_BUILDING_BUS_STATION_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_PUBLIC_TRANSPORTATION"
@@ -95,6 +93,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_BUS_STATION",
+  "civilopedia": "TXT_KEY_BUILDING_BUS_STATION_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

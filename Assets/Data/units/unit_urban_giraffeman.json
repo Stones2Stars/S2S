@@ -1,7 +1,5 @@
 {
  "type": "UNIT_URBAN_GIRAFFEMAN",
- "description": "TXT_KEY_UNIT_URBAN_GIRAFFEMAN",
- "civilopedia": "TXT_KEY_UNIT_GIRAFFE_ARCHER_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -118,6 +116,8 @@
   "production": 1030
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_URBAN_GIRAFFEMAN",
+  "civilopedia": "TXT_KEY_UNIT_GIRAFFE_ARCHER_PEDIA",
   "worth": 3,
   "militaryWorth": 18,
   "xpValueAttack": 6,

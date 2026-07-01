@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_TREE_CARVINGS",
- "description": "TXT_KEY_BUILDING_TREE_CARVINGS",
- "civilopedia": "TXT_KEY_BUILDING_TREE_CARVINGS_PEDIA",
  "obsoletedBy": {
   "techs": [
    "TECH_CITY_PLANNING"
@@ -72,6 +70,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_TREE_CARVINGS",
+  "civilopedia": "TXT_KEY_BUILDING_TREE_CARVINGS_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

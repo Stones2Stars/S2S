@@ -1,6 +1,5 @@
 {
  "type": "PROMOTION_OFFICER_COMMISSION",
- "description": "TXT_KEY_PROMOTION_OFFICER_COMMISSION",
  "experience": {
   "unit": {
    "percent": 25
@@ -34,6 +33,7 @@
   "sound": "AS2D_IF_LEVELUP"
  },
  "identity": {
+  "description": "TXT_KEY_PROMOTION_OFFICER_COMMISSION",
   "unitCombats": [
    "UNITCOMBAT_RECON",
    "UNITCOMBAT_ARCHER",

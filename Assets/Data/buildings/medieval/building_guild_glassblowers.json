@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_GUILD_GLASSBLOWERS",
- "description": "TXT_KEY_BUILDING_GUILD_GLASSBLOWERS",
- "civilopedia": "TXT_KEY_BUILDING_GUILDS_PEDIA",
  "obsoletedBy": {
   "techs": [
    "TECH_ASSEMBLY_LINE"
@@ -93,6 +91,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_GUILD_GLASSBLOWERS",
+  "civilopedia": "TXT_KEY_BUILDING_GUILDS_PEDIA",
   "neverCapture": true,
   "greatPeopleUnitType": "UNIT_MERCHANT",
   "specialBuildingType": "SPECIALBUILDING_GUILD",

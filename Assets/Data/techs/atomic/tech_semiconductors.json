@@ -1,8 +1,5 @@
 {
  "type": "TECH_SEMICONDUCTORS",
- "description": "TXT_KEY_TECH_SEMICONDUCTORS",
- "civilopedia": "TXT_KEY_TECH_SEMICONDUCTORS_PEDIA",
- "quote": "TXT_KEY_TECH_SEMICONDUCTORS_QUOTE",
  "enables": {
   "bonuses": [
    "BONUS_MICROCHIPS"
@@ -85,6 +82,9 @@
   "soundMP": "AS2D_TECH_TRANSISTORS"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_SEMICONDUCTORS",
+  "civilopedia": "TXT_KEY_TECH_SEMICONDUCTORS_PEDIA",
+  "quote": "TXT_KEY_TECH_SEMICONDUCTORS_QUOTE",
   "era": "C2C_ERA_ATOMIC",
   "worth": 48,
   "tradeable": true,

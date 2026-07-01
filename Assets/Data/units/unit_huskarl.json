@@ -1,7 +1,5 @@
 {
  "type": "UNIT_HUSKARL",
- "description": "TXT_KEY_UNIT_HUSKARL",
- "civilopedia": "TXT_KEY_UNIT_HUSKARL_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -83,6 +81,8 @@
   "upkeep": 1
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_HUSKARL",
+  "civilopedia": "TXT_KEY_UNIT_HUSKARL_PEDIA",
   "worth": 2,
   "militaryWorth": 12,
   "xpValueAttack": 6,

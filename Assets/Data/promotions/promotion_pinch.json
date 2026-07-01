@@ -1,6 +1,5 @@
 {
  "type": "PROMOTION_PINCH",
- "description": "TXT_KEY_PROMOTION_PINCH",
  "strength": {
   "unit": {
    "unitCombat": {
@@ -22,6 +21,7 @@
   "sound": "AS2D_IF_LEVELUP"
  },
  "identity": {
+  "description": "TXT_KEY_PROMOTION_PINCH",
   "unitCombats": [
    "UNITCOMBAT_MOUNTED",
    "UNITCOMBAT_WHEELED",

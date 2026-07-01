@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_CRIME_GRAFFITI",
- "description": "TXT_KEY_BUILDING_CRIME_GRAFFITI",
- "civilopedia": "TXT_KEY_BUILDING_CRIME_GRAFFITI_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -84,6 +82,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_CRIME_GRAFFITI",
+  "civilopedia": "TXT_KEY_BUILDING_CRIME_GRAFFITI_PEDIA",
   "notConstructible": true,
   "nukeImmune": true,
   "conquestProbability": 100,

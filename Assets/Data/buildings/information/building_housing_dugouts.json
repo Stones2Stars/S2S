@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_HOUSING_DUGOUTS",
- "description": "TXT_KEY_BUILDING_HOUSING_DUGOUTS",
- "civilopedia": "TXT_KEY_BUILDING_HOUSING_DUGOUTS_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_HOUSING_COLONY_ARCOLOGY"
@@ -53,6 +51,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_HOUSING_DUGOUTS",
+  "civilopedia": "TXT_KEY_BUILDING_HOUSING_DUGOUTS_PEDIA",
   "notConstructible": true,
   "nukeImmune": true,
   "neverCapture": true,

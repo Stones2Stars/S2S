@@ -1,6 +1,5 @@
 {
  "type": "PROMOTION_CHEMICAL3",
- "description": "TXT_KEY_PROMOTION_CHEMICAL3",
  "collateral": {
   "unit": {
    "damage": {
@@ -52,5 +51,8 @@
  },
  "sound": {
   "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_CHEMICAL3"
  }
 }

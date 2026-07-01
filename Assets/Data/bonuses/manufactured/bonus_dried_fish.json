@@ -1,13 +1,13 @@
 {
  "type": "BONUS_DRIED_FISH",
- "description": "TXT_KEY_BONUS_DRIED_FISH",
- "civilopedia": "TXT_KEY_BONUS_DRIED_FISH_PEDIA",
  "world": {
   "art": {
    "icon": "ART_DEF_BONUS_DRIED_FISH"
   }
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_DRIED_FISH",
+  "civilopedia": "TXT_KEY_BONUS_DRIED_FISH_PEDIA",
   "bonusClassType": "BONUSCLASS_MANUFACTURED"
  }
 }

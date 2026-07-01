@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_RAT_CATCHER",
- "description": "TXT_KEY_BUILDING_RAT_CATCHER",
- "civilopedia": "TXT_KEY_BUILDING_RAT_CATCHER_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_AGROFOREST"
@@ -74,6 +72,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_RAT_CATCHER",
+  "civilopedia": "TXT_KEY_BUILDING_RAT_CATCHER_PEDIA",
   "conquestProbability": 70,
   "advisor": "ADVISOR_CULTURE",
   "visibilityPriority": 1,

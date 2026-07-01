@@ -1,7 +1,5 @@
 {
  "type": "UNIT_UNMANNED_PIRATE_SKIFF",
- "description": "TXT_KEY_UNIT_UNMANNED_PIRATE_SKIFF",
- "civilopedia": "TXT_KEY_UNIT_UNMANNED_PIRATE_SKIFF_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -88,6 +86,8 @@
   "upkeep": 4
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_UNMANNED_PIRATE_SKIFF",
+  "civilopedia": "TXT_KEY_UNIT_UNMANNED_PIRATE_SKIFF_PEDIA",
   "worth": 2,
   "militaryWorth": 40,
   "xpValueAttack": 3,

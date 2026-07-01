@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_HYPERFACTORY",
- "description": "TXT_KEY_BUILDING_HYPERFACTORY",
- "civilopedia": "TXT_KEY_BUILDING_HYPERFACTORY_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_HYPERPLANET",
@@ -57,6 +55,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_HYPERFACTORY",
+  "civilopedia": "TXT_KEY_BUILDING_HYPERFACTORY_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

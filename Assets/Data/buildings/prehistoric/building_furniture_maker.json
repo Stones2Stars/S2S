@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_FURNITURE_MAKER",
- "description": "TXT_KEY_BUILDING_FURNITURE_MAKER",
- "civilopedia": "TXT_KEY_BUILDING_FURNITURE_MAKER_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_FACTORY_FURNITURE"
@@ -128,6 +126,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_FURNITURE_MAKER",
+  "civilopedia": "TXT_KEY_BUILDING_FURNITURE_MAKER_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

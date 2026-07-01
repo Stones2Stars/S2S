@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_INTERSTELLAR_PLANETARY_AWARENESS",
- "description": "TXT_KEY_BUILDING_INTERSTELLAR_PLANETARY_AWARENESS",
- "civilopedia": "TXT_KEY_BUILDING_INTERSTELLAR_PLANETARY_AWARENESS_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_INTERSTELLAR_NEUTRINO_SCANNER"
@@ -66,6 +64,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_INTERSTELLAR_PLANETARY_AWARENESS",
+  "civilopedia": "TXT_KEY_BUILDING_INTERSTELLAR_PLANETARY_AWARENESS_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

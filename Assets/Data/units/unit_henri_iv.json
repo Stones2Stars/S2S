@@ -1,7 +1,5 @@
 {
  "type": "UNIT_HENRI_IV",
- "description": "TXT_KEY_UNIT_HENRI_IV",
- "civilopedia": "TXT_KEY_UNIT_HENRI_IV_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -64,6 +62,8 @@
   "upkeep": 1
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_HENRI_IV",
+  "civilopedia": "TXT_KEY_UNIT_HENRI_IV_PEDIA",
   "worth": 6,
   "militaryWorth": 8,
   "xpValueAttack": 4,

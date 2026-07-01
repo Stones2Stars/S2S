@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_HYDROPONIC_VEGETABLE_GARDEN",
- "description": "TXT_KEY_BUILDING_HYDROPONIC_VEGETABLE_GARDEN",
- "civilopedia": "TXT_KEY_BUILDING_HYDROPONIC_VEGETABLE_GARDEN_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_RESOURCES_VEGETABLES"
@@ -62,6 +60,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_HYDROPONIC_VEGETABLE_GARDEN",
+  "civilopedia": "TXT_KEY_BUILDING_HYDROPONIC_VEGETABLE_GARDEN_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

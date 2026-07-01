@@ -1,7 +1,5 @@
 {
  "type": "UNIT_MOBSTER_CAR",
- "description": "TXT_KEY_UNIT_MOBSTER_CAR",
- "civilopedia": "TXT_KEY_UNIT_MOBSTER_CAR_PEDIA",
  "obsoletedBy": {
   "techs": [
    "TECH_CONSUMERISM"
@@ -164,6 +162,8 @@
   "upkeep": 10
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_MOBSTER_CAR",
+  "civilopedia": "TXT_KEY_UNIT_MOBSTER_CAR_PEDIA",
   "worth": 10,
   "militaryWorth": 29,
   "xpValueAttack": 8,

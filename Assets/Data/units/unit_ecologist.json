@@ -1,7 +1,5 @@
 {
  "type": "UNIT_ECOLOGIST",
- "description": "TXT_KEY_UNIT_ECOLOGIST",
- "civilopedia": "TXT_KEY_UNIT_ECOLOGIST_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -72,6 +70,8 @@
   "hurryCostModifier": 25
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_ECOLOGIST",
+  "civilopedia": "TXT_KEY_UNIT_ECOLOGIST_PEDIA",
   "worth": 12,
   "militaryWorth": 12,
   "domain": "DOMAIN_LAND",

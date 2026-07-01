@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_RELIC_OLD_CITY_WALLS",
- "description": "TXT_KEY_BUILDING_RELIC_OLD_CITY_WALLS",
- "civilopedia": "TXT_KEY_BUILDING_WALLS_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -28,6 +26,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_RELIC_OLD_CITY_WALLS",
+  "civilopedia": "TXT_KEY_BUILDING_WALLS_PEDIA",
   "notConstructible": true,
   "worth": 1,
   "conquestProbability": 80,

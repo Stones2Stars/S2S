@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_FOLKLORE_THOMSONS_GAZELLE",
- "description": "TXT_KEY_BUILDING_FOLKLORE_THOMSONS_GAZELLE",
- "civilopedia": "TXT_KEY_BUILDING_FOLKLORE_ANIMAL_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_FOLKLORE_T_ANTELOPE"
@@ -77,6 +75,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_FOLKLORE_THOMSONS_GAZELLE",
+  "civilopedia": "TXT_KEY_BUILDING_FOLKLORE_ANIMAL_PEDIA",
   "notConstructible": true,
   "nukeImmune": true,
   "neverCapture": true,

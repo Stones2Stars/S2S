@@ -1,6 +1,5 @@
 {
  "type": "PROMOTION_LOCALLORD",
- "description": "TXT_KEY_PROMOTION_LOCALLORD",
  "upkeep": {
   "unit": {
    "upgradeDiscount": {
@@ -43,6 +42,7 @@
   "sound": "AS2D_IF_LEVELUP"
  },
  "identity": {
+  "description": "TXT_KEY_PROMOTION_LOCALLORD",
   "unitCombats": [
    "UNITCOMBAT_RECON",
    "UNITCOMBAT_ARCHER",

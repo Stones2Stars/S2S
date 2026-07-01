@@ -1,12 +1,12 @@
 {
  "type": "PROMOTIONLINE_ARMED_GUARD",
- "description": "TXT_KEY_PROMOTIONLINE_ARMED_GUARD",
  "ui": {
   "art": {
    "icon": "Art/Interface/Buttons/Promotions/ArmedGuard1Promotion.dds"
   }
  },
  "identity": {
+  "description": "TXT_KEY_PROMOTIONLINE_ARMED_GUARD",
   "unitCombats": [
    "UNITCOMBAT_COMBATANT",
    "UNITCOMBAT_LAW_ENFORCEMENT"

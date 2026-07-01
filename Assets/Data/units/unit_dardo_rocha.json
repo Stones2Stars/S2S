@@ -1,7 +1,5 @@
 {
  "type": "UNIT_DARDO_ROCHA",
- "description": "TXT_KEY_UNIT_DARDO_ROCHA",
- "civilopedia": "TXT_KEY_UNIT_DARDO_ROCHA_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -45,6 +43,8 @@
   "upkeep": 1
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_DARDO_ROCHA",
+  "civilopedia": "TXT_KEY_UNIT_DARDO_ROCHA_PEDIA",
   "worth": 6,
   "militaryWorth": 8,
   "xpValueAttack": 4,

@@ -1,12 +1,12 @@
 {
  "type": "PROMOTIONLINE_RACING_DOG",
- "description": "TXT_KEY_PROMOTIONLINE_RACING_DOG",
  "ui": {
   "art": {
    "icon": "Art/Interface/Buttons/Promotions/racingdog1.dds"
   }
  },
  "identity": {
+  "description": "TXT_KEY_PROMOTIONLINE_RACING_DOG",
   "unitCombats": [
    "UNITCOMBAT_CANINE"
   ]

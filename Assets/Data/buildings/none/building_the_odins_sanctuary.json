@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_THE_ODINS_SANCTUARY",
- "description": "TXT_KEY_BUILDING_THE_ODINS_SANCTUARY",
- "civilopedia": "TXT_KEY_BUILDING_THE_ODINS_SANCTUARY_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -62,6 +60,8 @@
   "construct": "AS2D_BUILD_NORDIC"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_THE_ODINS_SANCTUARY",
+  "civilopedia": "TXT_KEY_BUILDING_THE_ODINS_SANCTUARY_PEDIA",
   "commerceDoubleTime": {
    "culture": 1000
   },

@@ -1,7 +1,5 @@
 {
  "type": "TRAIT_REVOLUTIONARY",
- "description": "TXT_KEY_TRAIT_REVOLUTIONARY",
- "civilopedia": "TXT_KEY_TRAIT_REVOLUTIONARY_PEDIA",
  "gold": {
   "empire": {
    "percent": -10
@@ -79,6 +77,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_TRAIT_REVOLUTIONARY",
+  "civilopedia": "TXT_KEY_TRAIT_REVOLUTIONARY_PEDIA",
   "shortDescription": "TXT_KEY_TRAIT_REVOLUTIONARY_SHORT",
   "negativeTrait": true,
   "impurePromotions": true

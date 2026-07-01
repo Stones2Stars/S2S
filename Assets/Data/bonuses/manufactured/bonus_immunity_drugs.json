@@ -1,7 +1,5 @@
 {
  "type": "BONUS_IMMUNITY_DRUGS",
- "description": "TXT_KEY_BONUS_IMMUNITY_DRUGS",
- "civilopedia": "TXT_KEY_BONUS_IMMUNITY_DRUGS_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_FACTORY_HYPOSPRAYS"
@@ -18,6 +16,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_IMMUNITY_DRUGS",
+  "civilopedia": "TXT_KEY_BONUS_IMMUNITY_DRUGS_PEDIA",
   "bonusClassType": "BONUSCLASS_MANUFACTURED"
  }
 }

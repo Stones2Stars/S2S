@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_GUARD_TOWER",
- "description": "TXT_KEY_BUILDING_GUARD_TOWER",
- "civilopedia": "TXT_KEY_BUILDING_GUARD_TOWER_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_SLAVE_COMPOUND_CRIME_PREVENTION"
@@ -113,6 +111,8 @@
   "construct": "AS2D_BUILD_CASTLE"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_GUARD_TOWER",
+  "civilopedia": "TXT_KEY_BUILDING_GUARD_TOWER_PEDIA",
   "worth": 4,
   "militaryWorth": 4,
   "sightRange": 2,

@@ -1,8 +1,5 @@
 {
  "type": "TECH_METAL_CASTING",
- "description": "TXT_KEY_TECH_METAL_CASTING",
- "civilopedia": "TXT_KEY_TECH_METAL_CASTING_PEDIA",
- "quote": "TXT_KEY_TECH_METAL_CASTING_QUOTE",
  "enables": {
   "bonuses": [
    "BONUS_GOLD_INGOTS",
@@ -75,6 +72,9 @@
   "soundMP": "AS2D_TECH_MP_METALCAST"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_METAL_CASTING",
+  "civilopedia": "TXT_KEY_TECH_METAL_CASTING_PEDIA",
+  "quote": "TXT_KEY_TECH_METAL_CASTING_QUOTE",
   "era": "C2C_ERA_ANCIENT",
   "worth": 16,
   "militaryWorth": 4,

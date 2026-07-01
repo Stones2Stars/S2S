@@ -1,6 +1,5 @@
 {
  "type": "PROMOTION_DISEASE_CONTROL2",
- "description": "TXT_KEY_PROMOTION_DISEASE_CONTROL2",
  "PROPERTY_DISEASE": {
   "city": {
    "flat": -4
@@ -26,6 +25,7 @@
   "sound": "AS2D_IF_LEVELUP"
  },
  "identity": {
+  "description": "TXT_KEY_PROMOTION_DISEASE_CONTROL2",
   "minEra": "C2C_ERA_ANCIENT"
  }
 }

@@ -1,8 +1,5 @@
 {
  "type": "TECH_TATTOOS",
- "description": "TXT_KEY_TECH_TATTOOS",
- "civilopedia": "TXT_KEY_TECH_TATTOOS_PEDIA",
- "quote": "TXT_KEY_TECH_TATTOOS_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_BLOODHUNTRESSS_HUT",
@@ -58,6 +55,9 @@
   "soundMP": "AS2D_TECH_TATTOOS"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_TATTOOS",
+  "civilopedia": "TXT_KEY_TECH_TATTOOS_PEDIA",
+  "quote": "TXT_KEY_TECH_TATTOOS_QUOTE",
   "era": "C2C_ERA_PREHISTORIC",
   "worth": 4,
   "tradeable": true,

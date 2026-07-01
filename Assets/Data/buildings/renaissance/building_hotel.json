@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_HOTEL",
- "description": "TXT_KEY_BUILDING_HOTEL",
- "civilopedia": "TXT_KEY_BUILDING_HOTEL_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_JUNGLE_TREEHOUSE_HOTEL",
@@ -105,6 +103,8 @@
   "construct": "AS2D_BUILD_HOTEL"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_HOTEL",
+  "civilopedia": "TXT_KEY_BUILDING_HOTEL_PEDIA",
   "worth": 5,
   "conquestProbability": 75,
   "dcmAirbombMission": 2,

@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_PESTS_LOCUST",
- "description": "TXT_KEY_BUILDING_PESTS_LOCUST",
- "civilopedia": "TXT_KEY_BUILDING_PESTS_PEDIA",
  "obsoletedBy": {
   "techs": [
    "TECH_ENVIRONMENTAL_ECONOMICS"
@@ -64,6 +62,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_PESTS_LOCUST",
+  "civilopedia": "TXT_KEY_BUILDING_PESTS_PEDIA",
   "notConstructible": true,
   "nukeImmune": true,
   "autoBuild": true,

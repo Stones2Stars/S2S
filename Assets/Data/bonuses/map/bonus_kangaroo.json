@@ -1,7 +1,5 @@
 {
  "type": "BONUS_KANGAROO",
- "description": "TXT_KEY_BONUS_KANGAROO",
- "civilopedia": "TXT_KEY_BONUS_KANGAROO_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_BOGONG_MOTH_GATHERER",
@@ -68,6 +66,8 @@
   ]
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_KANGAROO",
+  "civilopedia": "TXT_KEY_BONUS_KANGAROO_PEDIA",
   "bonusClassType": "BONUSCLASS_LIVESTOCK"
  }
 }

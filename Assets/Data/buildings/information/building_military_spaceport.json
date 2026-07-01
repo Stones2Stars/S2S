@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_MILITARY_SPACEPORT",
- "description": "TXT_KEY_BUILDING_MILITARY_SPACEPORT",
- "civilopedia": "TXT_KEY_BUILDING_MILITARY_SPACEPORT_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_ASTEROID_DEFLECTION_SYSTEM",
@@ -110,6 +108,8 @@
   "construct": "AS2D_BUILD_SPACEWAY"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_MILITARY_SPACEPORT",
+  "civilopedia": "TXT_KEY_BUILDING_MILITARY_SPACEPORT_PEDIA",
   "orbitalInfrastructure": true,
   "worth": 6,
   "advisor": "ADVISOR_GROWTH",

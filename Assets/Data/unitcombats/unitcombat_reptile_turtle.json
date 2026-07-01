@@ -1,9 +1,11 @@
 {
  "type": "UNITCOMBAT_REPTILE_TURTLE",
- "description": "TXT_KEY_UNITCOMBAT_REPTILE_TURTLE",
  "ui": {
   "art": {
    "icon": "Art/Interface/Buttons/units/sparth/categories/reptile.dds"
   }
+ },
+ "identity": {
+  "description": "TXT_KEY_UNITCOMBAT_REPTILE_TURTLE"
  }
 }

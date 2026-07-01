@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_DALI_THEATRE_AND_MUSEUM",
- "description": "TXT_KEY_BUILDING_DALI_THEATRE_AND_MUSEUM",
- "civilopedia": "TXT_KEY_BUILDING_DALI_THEATRE_AND_MUSEUM_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -61,6 +59,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_DALI_THEATRE_AND_MUSEUM",
+  "civilopedia": "TXT_KEY_BUILDING_DALI_THEATRE_AND_MUSEUM_PEDIA",
   "conquestProbability": 100,
   "greatPeopleUnitType": "UNIT_ARTIST",
   "advisor": "ADVISOR_SCIENCE",

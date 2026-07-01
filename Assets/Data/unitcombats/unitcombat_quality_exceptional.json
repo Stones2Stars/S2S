@@ -1,6 +1,5 @@
 {
  "type": "UNITCOMBAT_QUALITY_EXCEPTIONAL",
- "description": "TXT_KEY_UNITCOMBAT_QUALITY_EXCEPTIONAL",
  "experience": {
   "unit": {
    "percent": -30
@@ -32,6 +31,7 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_UNITCOMBAT_QUALITY_EXCEPTIONAL",
   "base": {
    "quality": 7
   }

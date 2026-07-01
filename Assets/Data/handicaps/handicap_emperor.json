@@ -1,7 +1,5 @@
 {
  "type": "HANDICAP_EMPEROR",
- "description": "TXT_KEY_HANDICAP_EMPEROR",
- "help": "TXT_KEY_HANDICAP_EMPEROR_HELP",
  "maintenance": {
   "empire": {
    "colony": {
@@ -232,6 +230,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_HANDICAP_EMPEROR",
+  "help": "TXT_KEY_HANDICAP_EMPEROR_HELP",
   "advancedStart": {
    "pointsMod": 100,
    "aiPercent": 160

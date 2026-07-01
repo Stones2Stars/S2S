@@ -1,7 +1,5 @@
 {
  "type": "BONUS_BICYCLES",
- "description": "TXT_KEY_BONUS_BICYCLES",
- "civilopedia": "TXT_KEY_BONUS_BICYCLES_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_ALUMINUM_RECLAMATION_PLANT",
@@ -19,6 +17,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_BICYCLES",
+  "civilopedia": "TXT_KEY_BONUS_BICYCLES_PEDIA",
   "bonusClassType": "BONUSCLASS_MANUFACTURED"
  }
 }

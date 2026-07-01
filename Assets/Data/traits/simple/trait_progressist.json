@@ -1,7 +1,5 @@
 {
  "type": "TRAIT_PROGRESSIST",
- "description": "TXT_KEY_TRAIT_PROGRESSIST",
- "civilopedia": "TXT_KEY_TRAIT_PROGRESSIST_PEDIA",
  "buildRate": {
   "empire": {
    "units": {
@@ -139,6 +137,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_TRAIT_PROGRESSIST",
+  "civilopedia": "TXT_KEY_TRAIT_PROGRESSIST_PEDIA",
   "shortDescription": "TXT_KEY_TRAIT_PROGRESSIST_SHORT"
  }
 }

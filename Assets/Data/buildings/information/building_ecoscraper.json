@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_ECOSCRAPER",
- "description": "TXT_KEY_BUILDING_ECOSCRAPER",
- "civilopedia": "TXT_KEY_BUILDING_ECOSCRAPER_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_ECOMEGATOWER",
@@ -51,6 +49,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_ECOSCRAPER",
+  "civilopedia": "TXT_KEY_BUILDING_ECOSCRAPER_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

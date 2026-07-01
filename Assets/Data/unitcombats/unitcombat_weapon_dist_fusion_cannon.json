@@ -1,6 +1,5 @@
 {
  "type": "UNITCOMBAT_WEAPON_DIST_FUSION_CANNON",
- "description": "TXT_KEY_UNITCOMBAT_WEAPON_DIST_FUSION_CANNON",
  "skills": {
   "rBombardDirect": true
  },
@@ -10,6 +9,7 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_UNITCOMBAT_WEAPON_DIST_FUSION_CANNON",
   "base": {
    "rangedBombardDamage": 200,
    "rangedBombardLimit": 150,

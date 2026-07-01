@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_MINE_GOLD",
- "description": "TXT_KEY_BUILDING_MINE_GOLD",
- "civilopedia": "TXT_KEY_BUILDING_MINE_GOLD_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_SMELTER_GOLD"
@@ -75,6 +73,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_MINE_GOLD",
+  "civilopedia": "TXT_KEY_BUILDING_MINE_GOLD_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

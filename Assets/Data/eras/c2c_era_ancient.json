@@ -1,7 +1,5 @@
 {
  "type": "C2C_ERA_ANCIENT",
- "description": "TXT_KEY_ERA_ANCIENT",
- "strategy": "TXT_KEY_ERA_ANCIENT_STRATEGY",
  "costs": {
   "world": {
    "train": {
@@ -104,6 +102,8 @@
   "unitDefeat": "AS2D_LOSS_EARLY"
  },
  "identity": {
+  "description": "TXT_KEY_ERA_ANCIENT",
+  "strategy": "TXT_KEY_ERA_ANCIENT_STRATEGY",
   "order": 2,
   "advancedStart": 1000,
   "historicalStartYear": -12000,

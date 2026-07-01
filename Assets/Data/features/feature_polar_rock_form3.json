@@ -1,7 +1,5 @@
 {
  "type": "FEATURE_POLAR_ROCK_FORM3",
- "description": "TXT_KEY_FEATURE_OUTCROP_POLAR",
- "civilopedia": "TXT_KEY_FEATURE_OUTCROP_PEDIA",
  "vision": {
   "plot": {
    "seeThrough": {
@@ -31,6 +29,8 @@
   ]
  },
  "identity": {
+  "description": "TXT_KEY_FEATURE_OUTCROP_POLAR",
+  "civilopedia": "TXT_KEY_FEATURE_OUTCROP_PEDIA",
   "movementCost": 1,
   "appearance": 50,
   "popDestroys": 4,

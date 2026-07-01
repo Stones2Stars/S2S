@@ -1,7 +1,5 @@
 {
  "type": "BONUS_FAKE_GEMS",
- "description": "TXT_KEY_BONUS_FAKE_GEMS",
- "civilopedia": "TXT_KEY_BONUS_FAKE_GEMS_PEDIA",
  "happiness": {
   "empire": {
    "flat": 1
@@ -13,6 +11,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_FAKE_GEMS",
+  "civilopedia": "TXT_KEY_BONUS_FAKE_GEMS_PEDIA",
   "bonusClassType": "BONUSCLASS_WONDER"
  }
 }

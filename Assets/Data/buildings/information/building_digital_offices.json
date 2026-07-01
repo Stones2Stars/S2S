@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_DIGITAL_OFFICES",
- "description": "TXT_KEY_BUILDING_DIGITAL_OFFICES",
- "civilopedia": "TXT_KEY_BUILDING_DIGITAL_OFFICES_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_DIGITAL_ADVERTISING_FIRM",
@@ -75,6 +73,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_DIGITAL_OFFICES",
+  "civilopedia": "TXT_KEY_BUILDING_DIGITAL_OFFICES_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

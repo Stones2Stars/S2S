@@ -1,8 +1,5 @@
 {
  "type": "TECH_METALLURGY",
- "description": "TXT_KEY_TECH_METALLURGY",
- "civilopedia": "TXT_KEY_TECH_METALLURGY_PEDIA",
- "quote": "TXT_KEY_TECH_METALLURGY_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_CAUSEWAY",
@@ -82,6 +79,9 @@
   "soundMP": "AS2D_TECH_METALLURGY"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_METALLURGY",
+  "civilopedia": "TXT_KEY_TECH_METALLURGY_PEDIA",
+  "quote": "TXT_KEY_TECH_METALLURGY_QUOTE",
   "era": "C2C_ERA_RENAISSANCE",
   "worth": 32,
   "militaryWorth": 12,

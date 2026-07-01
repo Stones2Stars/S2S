@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_ANCIENT_WAY_OF_THE_WAVES",
- "description": "TXT_KEY_BUILDING_ANCIENT_WAY_OF_THE_WAVES",
- "civilopedia": "TXT_KEY_BUILDING_ANCIENT_WAY_OF_THE_WAVES_PEDIA",
  "obsoletedBy": {
   "techs": [
    "TECH_CLASSICAL_LIFESTYLE"
@@ -61,6 +59,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_ANCIENT_WAY_OF_THE_WAVES",
+  "civilopedia": "TXT_KEY_BUILDING_ANCIENT_WAY_OF_THE_WAVES_PEDIA",
   "worth": 3,
   "militaryWorth": 5,
   "conquestProbability": 100,

@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_FACTORY_SOYLENT_GREEN",
- "description": "TXT_KEY_BUILDING_FACTORY_SOYLENT_GREEN",
- "civilopedia": "TXT_KEY_BUILDING_FACTORY_SOYLENT_GREEN_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_MATERIALIZATION_COMPLEX"
@@ -71,6 +69,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_FACTORY_SOYLENT_GREEN",
+  "civilopedia": "TXT_KEY_BUILDING_FACTORY_SOYLENT_GREEN_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

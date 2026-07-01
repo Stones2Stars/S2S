@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_APOSTOLIC_PALACE",
- "description": "TXT_KEY_BUILDING_APOSTOLIC_PALACE",
- "civilopedia": "TXT_KEY_BUILDING_APOSTOLIC_PALACE_PEDIA",
  "enables": {
   "votes": [
    "FORCE_TEAM_ELIGIBLE"
@@ -80,6 +78,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_APOSTOLIC_PALACE",
+  "civilopedia": "TXT_KEY_BUILDING_APOSTOLIC_PALACE_PEDIA",
   "commerceDoubleTime": {
    "culture": 1000
   },

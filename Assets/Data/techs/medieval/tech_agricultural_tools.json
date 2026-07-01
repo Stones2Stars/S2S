@@ -1,8 +1,5 @@
 {
  "type": "TECH_AGRICULTURAL_TOOLS",
- "description": "TXT_KEY_TECH_AGRICULTURAL_TOOLS",
- "civilopedia": "TXT_KEY_TECH_AGRICULTURAL_TOOLS_PEDIA",
- "quote": "TXT_KEY_TECH_AGRICULTURAL_TOOLS_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_GREAT_CHINAMPA",
@@ -65,6 +62,9 @@
   "soundMP": "AS2D_TECH_AGRICULTURAL_TOOLS"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_AGRICULTURAL_TOOLS",
+  "civilopedia": "TXT_KEY_TECH_AGRICULTURAL_TOOLS_PEDIA",
+  "quote": "TXT_KEY_TECH_AGRICULTURAL_TOOLS_QUOTE",
   "era": "C2C_ERA_MEDIEVAL",
   "worth": 24,
   "militaryWorth": 8,

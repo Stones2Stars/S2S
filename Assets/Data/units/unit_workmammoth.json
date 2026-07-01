@@ -1,7 +1,5 @@
 {
  "type": "UNIT_WORKMAMMOTH",
- "description": "TXT_KEY_UNIT_WORKMAMMOTH",
- "civilopedia": "TXT_KEY_UNIT_WORKER_PEDIA",
  "obsoletedBy": {
   "techs": [
    "TECH_MAINSTREAM_CLONING"
@@ -116,6 +114,8 @@
   "upkeep": 3
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_WORKMAMMOTH",
+  "civilopedia": "TXT_KEY_UNIT_WORKER_PEDIA",
   "worth": 3,
   "domain": "DOMAIN_LAND",
   "defaultUnitAI": "UNITAI_WORKER",

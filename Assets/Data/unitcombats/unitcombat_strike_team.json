@@ -1,6 +1,5 @@
 {
  "type": "UNITCOMBAT_STRIKE_TEAM",
- "description": "TXT_KEY_UNITCOMBAT_STRIKE_TEAM",
  "strength": {
   "unit": {
    "attack": {
@@ -133,6 +132,7 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_UNITCOMBAT_STRIKE_TEAM",
   "forMilitary": true,
   "defaultStatuses": [
    "PROMOTION_REMOVE_STANDOUT_STATUS",

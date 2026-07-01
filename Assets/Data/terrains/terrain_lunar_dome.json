@@ -1,7 +1,5 @@
 {
  "type": "TERRAIN_LUNAR_DOME",
- "description": "TXT_KEY_TERRAIN_LUNAR_DOME",
- "civilopedia": "TXT_KEY_TERRAIN_LUNAR_DOME_PEDIA",
  "commerce": {
   "plot": {
    "flat": 2
@@ -26,6 +24,8 @@
   "soundscape": "ASSS_GRASSLAND_SELECT_AMB"
  },
  "identity": {
+  "description": "TXT_KEY_TERRAIN_LUNAR_DOME",
+  "civilopedia": "TXT_KEY_TERRAIN_LUNAR_DOME_PEDIA",
   "found": true,
   "movementCost": 2,
   "mapCategories": [

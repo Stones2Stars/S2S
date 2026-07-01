@@ -1,8 +1,5 @@
 {
  "type": "TRAIT_PROGRESSIVE",
- "description": "TXT_KEY_TRAIT_PROGRESSIVE",
- "civilopedia": "TXT_KEY_TRAIT_PROGRESSIVE_PEDIA",
- "strategy": "TXT_KEY_TRAIT_PROGRESSIVE_STRATEGY",
  "excludes": [
   "TRAIT_BIGOT"
  ],
@@ -16,6 +13,33 @@
  "growth": {
   "empire": {
    "percent": -10
+  }
+ },
+ "freeSpecialists": {
+  "empire": {
+   "any": [
+    {
+     "value": 1,
+     "per": {
+      "type": "WORLD_WONDER",
+      "scope": "city"
+     }
+    },
+    {
+     "value": 1,
+     "per": {
+      "type": "NATIONAL_WONDER",
+      "scope": "city"
+     }
+    },
+    {
+     "value": 1,
+     "per": {
+      "type": "TEAM_WONDER",
+      "scope": "city"
+     }
+    }
+   ]
   }
  },
  "conscript": {
@@ -94,9 +118,6 @@
  },
  "policies": {
   "allReligionsActive": true,
-  "freeSpecialistPerNationalWonder": true,
-  "freeSpecialistPerTeamProject": true,
-  "freeSpecialistPerWorldWonder": true,
   "nonStateReligionCommerce": true
  },
  "succession": {
@@ -139,5 +160,10 @@
   "art": {
    "icon": "art/Buttons/Traits/TraitProgressive.dds"
   }
+ },
+ "identity": {
+  "description": "TXT_KEY_TRAIT_PROGRESSIVE",
+  "civilopedia": "TXT_KEY_TRAIT_PROGRESSIVE_PEDIA",
+  "strategy": "TXT_KEY_TRAIT_PROGRESSIVE_STRATEGY"
  }
 }

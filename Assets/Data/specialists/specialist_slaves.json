@@ -1,7 +1,5 @@
 {
  "type": "SPECIALIST_SLAVES",
- "description": "TXT_KEY_SPECIALIST_SLAVES",
- "civilopedia": "TXT_KEY_CONCEPT_SPECIALISTS_PEDIA",
  "food": {
   "city": {
    "flat": 1
@@ -155,6 +153,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_SPECIALIST_SLAVES",
+  "civilopedia": "TXT_KEY_CONCEPT_SPECIALISTS_PEDIA",
   "slave": true,
   "visible": true,
   "categories": [

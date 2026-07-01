@@ -1,7 +1,5 @@
 {
  "type": "UNIT_GUNSHIP",
- "description": "TXT_KEY_UNIT_GUNSHIP",
- "civilopedia": "TXT_KEY_UNIT_GUNSHIP_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -80,6 +78,8 @@
   "upkeep": 2
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_GUNSHIP",
+  "civilopedia": "TXT_KEY_UNIT_GUNSHIP_PEDIA",
   "worth": 5,
   "militaryWorth": 196,
   "xpValueAttack": 3,

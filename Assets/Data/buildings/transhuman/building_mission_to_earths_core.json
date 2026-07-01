@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_MISSION_TO_EARTHS_CORE",
- "description": "TXT_KEY_BUILDING_MISSION_TO_EARTHS_CORE",
- "civilopedia": "TXT_KEY_BUILDING_MISSION_TO_EARTHS_CORE_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -82,6 +80,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_MISSION_TO_EARTHS_CORE",
+  "civilopedia": "TXT_KEY_BUILDING_MISSION_TO_EARTHS_CORE_PEDIA",
   "conquestProbability": 100,
   "greatPeopleUnitType": "UNIT_SCIENTIST",
   "advisor": "ADVISOR_SCIENCE",

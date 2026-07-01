@@ -1,6 +1,5 @@
 {
  "type": "PROMOTION_TRANSPORT_FIGHTERS",
- "description": "TXT_KEY_PROMOTION_TRANSPORT_FIGHTERS",
  "strength": {
   "unit": {
    "percent": -15
@@ -30,6 +29,7 @@
   "sound": "AS2D_IF_LEVELUP"
  },
  "identity": {
+  "description": "TXT_KEY_PROMOTION_TRANSPORT_FIGHTERS",
   "domainCargoChange": "DOMAIN_AIR",
   "specialCargoChange": "SPECIALUNIT_FIGHTER",
   "smNotSpecialCargoChange": "SPECIALUNIT_MISSILE",

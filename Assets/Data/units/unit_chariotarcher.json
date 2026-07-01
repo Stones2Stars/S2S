@@ -1,7 +1,5 @@
 {
  "type": "UNIT_CHARIOTARCHER",
- "description": "TXT_KEY_UNIT_CHARIOTARCHER",
- "civilopedia": "TXT_KEY_UNIT_CHARIOTARCHER_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -113,6 +111,8 @@
   "upkeep": 1
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_CHARIOTARCHER",
+  "civilopedia": "TXT_KEY_UNIT_CHARIOTARCHER_PEDIA",
   "worth": 1,
   "militaryWorth": 6,
   "xpValueAttack": 3,

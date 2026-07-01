@@ -1,6 +1,5 @@
 {
  "type": "BUILD_JUNGLE_CAMP",
- "description": "TXT_KEY_BUILD_JUNGLE_CAMP",
  "requires": {
   "build": {
    "all": [
@@ -27,5 +26,8 @@
   "art": {
    "entityEvent": "ENTITY_EVENT_BUILD"
   }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILD_JUNGLE_CAMP"
  }
 }

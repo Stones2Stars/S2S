@@ -1,7 +1,5 @@
 {
  "type": "BONUS_COFFEE",
- "description": "TXT_KEY_BONUS_COFFEE",
- "civilopedia": "TXT_KEY_BONUS_COFFEE_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_CATCHER_MACAW",
@@ -74,6 +72,8 @@
   ]
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_COFFEE",
+  "civilopedia": "TXT_KEY_BONUS_COFFEE_PEDIA",
   "bonusClassType": "BONUSCLASS_LUXURY"
  }
 }

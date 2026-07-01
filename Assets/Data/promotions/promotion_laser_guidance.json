@@ -1,6 +1,5 @@
 {
  "type": "PROMOTION_LASER_GUIDANCE",
- "description": "TXT_KEY_PROMOTION_LASER_GUIDANCE",
  "strength": {
   "unit": {
    "cityAttack": {
@@ -28,6 +27,7 @@
   "sound": "AS2D_IF_LEVELUP"
  },
  "identity": {
+  "description": "TXT_KEY_PROMOTION_LASER_GUIDANCE",
   "unitCombats": [
    "UNITCOMBAT_MISSILE"
   ]

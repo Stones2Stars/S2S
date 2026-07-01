@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_CATCHER_HUMMINGBIRD",
- "description": "TXT_KEY_BUILDING_CATCHER_HUMMINGBIRD",
- "civilopedia": "TXT_KEY_BUILDING_CATCHER_HUMMINGBIRD_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_RESOURCES_FEATHERS"
@@ -85,6 +83,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_CATCHER_HUMMINGBIRD",
+  "civilopedia": "TXT_KEY_BUILDING_CATCHER_HUMMINGBIRD_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

@@ -1,7 +1,5 @@
 {
  "type": "BONUS_HYDROTHERMAL_VENT",
- "description": "TXT_KEY_BONUS_HYDROTHERMAL_VENT",
- "civilopedia": "TXT_KEY_BONUS_HYDROTHERMAL_VENT_PEDIA",
  "production": {
   "plot": {
    "flat": 3
@@ -49,6 +47,8 @@
   ]
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_HYDROTHERMAL_VENT",
+  "civilopedia": "TXT_KEY_BONUS_HYDROTHERMAL_VENT_PEDIA",
   "bonusClassType": "BONUSCLASS_PRODUCTION"
  }
 }

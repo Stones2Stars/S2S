@@ -1,7 +1,5 @@
 {
  "type": "UNIT_TESLA_INFANTRY",
- "description": "TXT_KEY_UNIT_TESLA_INFANTRY",
- "civilopedia": "TXT_KEY_UNIT_TESLA_INFANTRY_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -65,6 +63,8 @@
   "hurryCostModifier": 50
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_TESLA_INFANTRY",
+  "civilopedia": "TXT_KEY_UNIT_TESLA_INFANTRY_PEDIA",
   "worth": 6,
   "militaryWorth": 400,
   "xpValueAttack": 6,

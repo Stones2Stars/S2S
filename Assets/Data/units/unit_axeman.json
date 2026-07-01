@@ -1,7 +1,5 @@
 {
  "type": "UNIT_AXEMAN",
- "description": "TXT_KEY_UNIT_AXEMAN",
- "civilopedia": "TXT_KEY_UNIT_AXEMAN_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -92,6 +90,8 @@
   "upkeep": 1
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_AXEMAN",
+  "civilopedia": "TXT_KEY_UNIT_AXEMAN_PEDIA",
   "worth": 1,
   "militaryWorth": 5,
   "xpValueAttack": 3,

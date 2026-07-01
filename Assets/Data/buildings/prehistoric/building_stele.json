@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_STELE",
- "description": "TXT_KEY_BUILDING_STELE",
- "civilopedia": "TXT_KEY_BUILDING_STELE_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_FUNERARY_SERVICES"
@@ -110,6 +108,8 @@
   "construct": "AS2D_BUILD_OBELISK"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_STELE",
+  "civilopedia": "TXT_KEY_BUILDING_STELE_PEDIA",
   "neverCapture": true,
   "centerInCity": true,
   "worth": 2,

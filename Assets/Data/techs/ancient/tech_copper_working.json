@@ -1,8 +1,5 @@
 {
  "type": "TECH_COPPER_WORKING",
- "description": "TXT_KEY_TECH_COPPER_WORKING",
- "civilopedia": "TXT_KEY_TECH_COPPER_WORKING_PEDIA",
- "quote": "TXT_KEY_TECH_COPPER_WORKING_QUOTE",
  "enables": {
   "bonuses": [
    "BONUS_COPPER_INGOTS",
@@ -122,6 +119,9 @@
   "soundMP": "AS2D_TECH_COPPER_WORKING"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_COPPER_WORKING",
+  "civilopedia": "TXT_KEY_TECH_COPPER_WORKING_PEDIA",
+  "quote": "TXT_KEY_TECH_COPPER_WORKING_QUOTE",
   "era": "C2C_ERA_ANCIENT",
   "worth": 8,
   "militaryWorth": 2,

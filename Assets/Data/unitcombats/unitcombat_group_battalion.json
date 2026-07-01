@@ -1,6 +1,5 @@
 {
  "type": "UNITCOMBAT_GROUP_BATTALION",
- "description": "TXT_KEY_UNITCOMBAT_GROUP_BATTALION",
  "vision": {
   "visibilityIntensity": {
    "INVISIBLE_SIZE": 1
@@ -20,6 +19,7 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_UNITCOMBAT_GROUP_BATTALION",
   "base": {
    "group": 5
   }

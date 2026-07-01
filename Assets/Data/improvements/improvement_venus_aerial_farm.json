@@ -1,7 +1,5 @@
 {
  "type": "IMPROVEMENT_VENUS_AERIAL_FARM",
- "description": "TXT_KEY_IMPROVEMENT_VENUS_AERIAL_FARM",
- "civilopedia": "TXT_KEY_IMPROVEMENT_VENUS_AERIAL_FARM_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -30,6 +28,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_IMPROVEMENT_VENUS_AERIAL_FARM",
+  "civilopedia": "TXT_KEY_IMPROVEMENT_VENUS_AERIAL_FARM_PEDIA",
   "extraterrestrial": true,
   "pillageGold": 200
  }

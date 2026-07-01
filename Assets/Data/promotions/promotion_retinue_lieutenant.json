@@ -1,6 +1,5 @@
 {
  "type": "PROMOTION_RETINUE_LIEUTENANT",
- "description": "TXT_KEY_PROMOTION_RETINUE_LIEUTENANT",
  "withdrawal": {
   "unit": {
    "percent": 10
@@ -40,6 +39,7 @@
   "sound": "AS2D_IF_GET_RETINUE"
  },
  "identity": {
+  "description": "TXT_KEY_PROMOTION_RETINUE_LIEUTENANT",
   "unitCombats": [
    "UNITCOMBAT_HERO"
   ]

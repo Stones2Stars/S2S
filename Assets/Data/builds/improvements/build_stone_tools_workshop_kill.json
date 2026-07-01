@@ -1,6 +1,5 @@
 {
  "type": "BUILD_STONE_TOOLS_WORKSHOP_KILL",
- "description": "TXT_KEY_BUILD_STONE_TOOLS_WORKSHOP_KILL",
  "requires": {
   "build": {
    "all": [
@@ -43,6 +42,7 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILD_STONE_TOOLS_WORKSHOP_KILL",
   "consumesUnit": true
  }
 }

@@ -1,7 +1,5 @@
 {
  "type": "BONUS_CHRONOTON",
- "description": "TXT_KEY_BONUS_CHRONOTON",
- "civilopedia": "TXT_KEY_BONUS_CHRONOTON_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_DISTANT_INFINITE_SPEED_TACHYON_GENERATOR",
@@ -17,6 +15,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_CHRONOTON",
+  "civilopedia": "TXT_KEY_BONUS_CHRONOTON_PEDIA",
   "bonusClassType": "BONUSCLASS_MANUFACTURED"
  }
 }

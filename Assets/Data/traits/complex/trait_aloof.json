@@ -1,8 +1,5 @@
 {
  "type": "TRAIT_ALOOF",
- "description": "TXT_KEY_TRAIT_ALOOF",
- "civilopedia": "TXT_KEY_TRAIT_ALOOF_PEDIA",
- "strategy": "TXT_KEY_TRAIT_ALOOF_STRATEGY",
  "excludes": [
   "TRAIT_PREEMINENT"
  ],
@@ -391,6 +388,9 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_TRAIT_ALOOF",
+  "civilopedia": "TXT_KEY_TRAIT_ALOOF_PEDIA",
+  "strategy": "TXT_KEY_TRAIT_ALOOF_STRATEGY",
   "negativeTrait": true
  }
 }

@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_PERSONAL_RAPID_TRAIN",
- "description": "TXT_KEY_BUILDING_PERSONAL_RAPID_TRAIN",
- "civilopedia": "TXT_KEY_BUILDING_PERSONAL_RAPID_TRAIN_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_TELEPORT_BOOTH"
@@ -85,6 +83,8 @@
   "construct": "AS2D_BUILD_PERSONAL_RAPID_TRAIN"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_PERSONAL_RAPID_TRAIN",
+  "civilopedia": "TXT_KEY_BUILDING_PERSONAL_RAPID_TRAIN_PEDIA",
   "worth": 5,
   "dcmAirbombMission": 2,
   "advisor": "ADVISOR_GROWTH",

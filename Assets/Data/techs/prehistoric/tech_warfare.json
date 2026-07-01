@@ -1,8 +1,5 @@
 {
  "type": "TECH_WARFARE",
- "description": "TXT_KEY_TECH_WARFARE",
- "civilopedia": "TXT_KEY_TECH_WARFARE_PEDIA",
- "quote": "TXT_KEY_TECH_WARFARE_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_CULTURE_PAPUAN",
@@ -72,6 +69,9 @@
   "soundMP": "AS2D_TECH_WARFARE"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_WARFARE",
+  "civilopedia": "TXT_KEY_TECH_WARFARE_PEDIA",
+  "quote": "TXT_KEY_TECH_WARFARE_QUOTE",
   "era": "C2C_ERA_PREHISTORIC",
   "worth": 4,
   "tradeable": true,

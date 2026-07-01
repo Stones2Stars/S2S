@@ -1,7 +1,5 @@
 {
  "type": "UNIT_NEANDERTHAL_BRUTE",
- "description": "TXT_KEY_UNIT_NEANDERTHAL_BRUTE",
- "civilopedia": "TXT_KEY_UNIT_BRUTE_PEDIA",
  "obsoletedBy": {
   "techs": [
    "TECH_SEDENTARY_LIFESTYLE"
@@ -54,6 +52,8 @@
   "upkeep": 1
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_NEANDERTHAL_BRUTE",
+  "civilopedia": "TXT_KEY_UNIT_BRUTE_PEDIA",
   "worth": 1,
   "militaryWorth": 1,
   "xpValueAttack": 3,

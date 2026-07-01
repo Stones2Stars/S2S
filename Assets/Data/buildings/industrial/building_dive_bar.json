@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_DIVE_BAR",
- "description": "TXT_KEY_BUILDING_DIVE_BAR",
- "civilopedia": "TXT_KEY_BUILDING_DIVE_BAR_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_COMEDY_CLUB",
@@ -99,6 +97,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_DIVE_BAR",
+  "civilopedia": "TXT_KEY_BUILDING_DIVE_BAR_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

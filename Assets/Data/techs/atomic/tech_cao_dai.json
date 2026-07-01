@@ -1,8 +1,5 @@
 {
  "type": "TECH_CAO_DAI",
- "description": "TXT_KEY_TECH_CAO_DAI",
- "civilopedia": "TXT_KEY_TECH_CAO_DAI_PEDIA",
- "quote": "TXT_KEY_TECH_CAO_DAI_QUOTE",
  "enables": {
   "religions": [
    "RELIGION_CAO_DAI"
@@ -51,6 +48,9 @@
   "soundMP": "AS2D_TECH_GENERIC"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_CAO_DAI",
+  "civilopedia": "TXT_KEY_TECH_CAO_DAI_PEDIA",
+  "quote": "TXT_KEY_TECH_CAO_DAI_QUOTE",
   "era": "C2C_ERA_ATOMIC",
   "worth": 8,
   "gridX": 72,

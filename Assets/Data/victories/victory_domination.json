@@ -1,6 +1,5 @@
 {
  "type": "VICTORY_DOMINATION",
- "description": "TXT_KEY_VICTORY_DOMINATION",
  "condition": {
   "landPercent": 78,
   "minLandPercent": 51,
@@ -12,5 +11,8 @@
     "file": "ART_DEF_MOVIE_VICTORY_DOMINATION"
    }
   }
+ },
+ "identity": {
+  "description": "TXT_KEY_VICTORY_DOMINATION"
  }
 }

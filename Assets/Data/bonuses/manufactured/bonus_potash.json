@@ -1,13 +1,13 @@
 {
  "type": "BONUS_POTASH",
- "description": "TXT_KEY_BONUS_POTASH",
- "civilopedia": "TXT_KEY_BONUS_POTASH_PEDIA",
  "world": {
   "art": {
    "icon": "ART_DEF_BONUS_POTASH"
   }
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_POTASH",
+  "civilopedia": "TXT_KEY_BONUS_POTASH_PEDIA",
   "bonusClassType": "BONUSCLASS_MANUFACTURED"
  }
 }

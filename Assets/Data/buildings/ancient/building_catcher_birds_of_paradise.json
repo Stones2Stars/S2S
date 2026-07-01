@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_CATCHER_BIRDS_OF_PARADISE",
- "description": "TXT_KEY_BUILDING_CATCHER_BIRDS_OF_PARADISE",
- "civilopedia": "TXT_KEY_BUILDING_CATCHER_BIRDS_OF_PARADISE_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_RESOURCES_FEATHERS"
@@ -85,6 +83,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_CATCHER_BIRDS_OF_PARADISE",
+  "civilopedia": "TXT_KEY_BUILDING_CATCHER_BIRDS_OF_PARADISE_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

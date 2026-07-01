@@ -1,8 +1,5 @@
 {
  "type": "BUILDING_C_AD_NORTH_AMERICAN",
- "description": "TXT_KEY_BUILDING_C_AD_NORTH_AMERICAN",
- "civilopedia": "TXT_KEY_BUILDING_C_AD_PEDIA",
- "help": "TXT_KEY_BUILDING_C_AD_HELP",
  "requires": {
   "build": {
    "all": [
@@ -29,6 +26,9 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_C_AD_NORTH_AMERICAN",
+  "civilopedia": "TXT_KEY_BUILDING_C_AD_PEDIA",
+  "help": "TXT_KEY_BUILDING_C_AD_HELP",
   "notConstructible": true,
   "nukeImmune": true,
   "neverCapture": true,

@@ -1,6 +1,5 @@
 {
  "type": "BUILD_BONUS_HENNA",
- "description": "TXT_KEY_BUILD_BONUS_HENNA",
  "produces": {
   "improvement": "IMPROVEMENT_BONUS_HENNA"
  },
@@ -19,6 +18,7 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILD_BONUS_HENNA",
   "consumesUnit": true
  }
 }

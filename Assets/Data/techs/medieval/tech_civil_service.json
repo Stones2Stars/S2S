@@ -1,8 +1,5 @@
 {
  "type": "TECH_CIVIL_SERVICE",
- "description": "TXT_KEY_TECH_CIVIL_SERVICE",
- "civilopedia": "TXT_KEY_TECH_CIVIL_SERVICE_PEDIA",
- "quote": "TXT_KEY_TECH_CIVIL_SERVICE_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_ALMSHOUSE",
@@ -102,6 +99,9 @@
   "soundMP": "AS2D_TECH_MP_CIVIL_SERVICE"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_CIVIL_SERVICE",
+  "civilopedia": "TXT_KEY_TECH_CIVIL_SERVICE_PEDIA",
+  "quote": "TXT_KEY_TECH_CIVIL_SERVICE_QUOTE",
   "era": "C2C_ERA_MEDIEVAL",
   "worth": 24,
   "tradeable": true,

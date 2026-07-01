@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_ROBOTIC_SURGEON",
- "description": "TXT_KEY_BUILDING_ROBOTIC_SURGEON",
- "civilopedia": "TXT_KEY_BUILDING_ROBOTIC_SURGEON_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_HEALTHCARE_MEGACOMPLEX"
@@ -56,6 +54,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_ROBOTIC_SURGEON",
+  "civilopedia": "TXT_KEY_BUILDING_ROBOTIC_SURGEON_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

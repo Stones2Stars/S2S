@@ -1,8 +1,5 @@
 {
  "type": "TRAIT_ANTI_CLERICAL1",
- "description": "TXT_KEY_TRAIT_COMPLEX_ANTI_CLERICAL1",
- "civilopedia": "TXT_KEY_TRAIT_COMPLEX_ANTI_CLERICAL1_PEDIA",
- "strategy": "TXT_KEY_TRAIT_COMPLEX_ANTI_CLERICAL_STRATEGY",
  "excludes": [
   "TRAIT_FANATICAL",
   "TRAIT_PIOUS1",
@@ -216,6 +213,9 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_TRAIT_COMPLEX_ANTI_CLERICAL1",
+  "civilopedia": "TXT_KEY_TRAIT_COMPLEX_ANTI_CLERICAL1_PEDIA",
+  "strategy": "TXT_KEY_TRAIT_COMPLEX_ANTI_CLERICAL_STRATEGY",
   "negativeTrait": true
  }
 }

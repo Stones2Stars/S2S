@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_MIND_CONTROL_CENTER",
- "description": "TXT_KEY_BUILDING_MIND_CONTROL_CENTER",
- "civilopedia": "TXT_KEY_BUILDING_MIND_CONTROL_CENTER_PEDIA",
  "enables": {
   "units": [
    "UNIT_TURN"
@@ -99,6 +97,8 @@
   "construct": "AS2D_BUILD_MIND_CONTROL"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_MIND_CONTROL_CENTER",
+  "civilopedia": "TXT_KEY_BUILDING_MIND_CONTROL_CENTER_PEDIA",
   "neverCapture": true,
   "worth": 3,
   "dcmAirbombMission": 3,

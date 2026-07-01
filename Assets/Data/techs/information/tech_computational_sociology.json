@@ -1,8 +1,5 @@
 {
  "type": "TECH_COMPUTATIONAL_SOCIOLOGY",
- "description": "TXT_KEY_TECH_COMPUTATIONAL_SOCIOLOGY",
- "civilopedia": "TXT_KEY_TECH_COMPUTATIONAL_SOCIOLOGY_PEDIA",
- "quote": "TXT_KEY_TECH_COMPUTATIONAL_SOCIOLOGY_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_APPLIED_SOCIOLOGY_LAB",
@@ -60,6 +57,9 @@
   "soundMP": "AS2D_TECH_GENERIC"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_COMPUTATIONAL_SOCIOLOGY",
+  "civilopedia": "TXT_KEY_TECH_COMPUTATIONAL_SOCIOLOGY_PEDIA",
+  "quote": "TXT_KEY_TECH_COMPUTATIONAL_SOCIOLOGY_QUOTE",
   "era": "C2C_ERA_INFORMATION",
   "worth": 40,
   "tradeable": true,

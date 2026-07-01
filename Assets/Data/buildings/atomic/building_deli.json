@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_DELI",
- "description": "TXT_KEY_BUILDING_DELI",
- "civilopedia": "TXT_KEY_BUILDING_DELI_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_UNIVERSAL_RESTAURANT"
@@ -119,6 +117,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_DELI",
+  "civilopedia": "TXT_KEY_BUILDING_DELI_PEDIA",
   "conquestProbability": 70,
   "advisor": "ADVISOR_ECONOMY",
   "visibilityPriority": 1,

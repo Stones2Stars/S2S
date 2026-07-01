@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_INSURANCE_OFFICE",
- "description": "TXT_KEY_BUILDING_INSURANCE_OFFICE",
- "civilopedia": "TXT_KEY_BUILDING_INSURANCE_OFFICE_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_TRANSAMERICA_TOWER"
@@ -76,6 +74,8 @@
   "construct": "AS2D_BUILD_BANK"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_INSURANCE_OFFICE",
+  "civilopedia": "TXT_KEY_BUILDING_INSURANCE_OFFICE_PEDIA",
   "worth": 5,
   "conquestProbability": 75,
   "dcmAirbombMission": 2,

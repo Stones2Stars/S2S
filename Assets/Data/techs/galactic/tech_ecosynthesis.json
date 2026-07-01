@@ -1,8 +1,5 @@
 {
  "type": "TECH_ECOSYNTHESIS",
- "description": "TXT_KEY_TECH_ECOSYNTHESIS",
- "civilopedia": "TXT_KEY_TECH_ECOSYNTHESIS_PEDIA",
- "quote": "TXT_KEY_TECH_ECOSYNTHESIS_QUOTE",
  "enables": {
   "bonuses": [
    "BONUS_YGGDRASIL_SEEDS"
@@ -70,6 +67,9 @@
   "soundMP": "AS2D_TECH_GENERIC"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_ECOSYNTHESIS",
+  "civilopedia": "TXT_KEY_TECH_ECOSYNTHESIS_PEDIA",
+  "quote": "TXT_KEY_TECH_ECOSYNTHESIS_QUOTE",
   "era": "C2C_ERA_GALACTIC",
   "worth": 48,
   "tradeable": true,

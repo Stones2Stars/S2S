@@ -1,7 +1,5 @@
 {
  "type": "SPECIALIST_SETTLED_SLAVE_TUTOR",
- "description": "TXT_KEY_SPECIALIST_SETTLED_SLAVE_TUTOR",
- "civilopedia": "TXT_KEY_SPECIALIST_SETTLED_SLAVE_PEDIA",
  "food": {
   "city": {
    "flat": -1
@@ -49,6 +47,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_SPECIALIST_SETTLED_SLAVE_TUTOR",
+  "civilopedia": "TXT_KEY_SPECIALIST_SETTLED_SLAVE_PEDIA",
   "categories": [
    "CATEGORY_SPECIALIST_GROUP_CAPTIVE",
    "CATEGORY_SPECIALIST_GROUP_RESEARCH"

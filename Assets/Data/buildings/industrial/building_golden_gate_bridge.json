@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_GOLDEN_GATE_BRIDGE",
- "description": "TXT_KEY_BUILDING_GOLDEN_GATE_BRIDGE",
- "civilopedia": "TXT_KEY_BUILDING_GOLDEN_GATE_BRIDGE_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_BUNGEE_JUMPING_SITE"
@@ -117,6 +115,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_GOLDEN_GATE_BRIDGE",
+  "civilopedia": "TXT_KEY_BUILDING_GOLDEN_GATE_BRIDGE_PEDIA",
   "conquestProbability": 100,
   "greatPeopleUnitType": "UNIT_GREAT_ENGINEER",
   "advisor": "ADVISOR_ECONOMY",

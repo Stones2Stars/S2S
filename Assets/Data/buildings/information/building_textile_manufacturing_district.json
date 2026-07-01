@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_TEXTILE_MANUFACTURING_DISTRICT",
- "description": "TXT_KEY_BUILDING_TEXTILE_MANUFACTURING_DISTRICT",
- "civilopedia": "TXT_KEY_BUILDING_TEXTILE_MANUFACTURING_DISTRICT_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_GUILD_DRAPERS",
@@ -201,6 +199,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_TEXTILE_MANUFACTURING_DISTRICT",
+  "civilopedia": "TXT_KEY_BUILDING_TEXTILE_MANUFACTURING_DISTRICT_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

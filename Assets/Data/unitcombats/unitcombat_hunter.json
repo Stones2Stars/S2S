@@ -1,6 +1,5 @@
 {
  "type": "UNITCOMBAT_HUNTER",
- "description": "TXT_KEY_UNITCOMBAT_HUNTER",
  "strength": {
   "unit": {
    "stealth": {
@@ -33,5 +32,8 @@
   "art": {
    "icon": "Art/Interface/Buttons/units/sparth/categories/hunters.dds"
   }
+ },
+ "identity": {
+  "description": "TXT_KEY_UNITCOMBAT_HUNTER"
  }
 }

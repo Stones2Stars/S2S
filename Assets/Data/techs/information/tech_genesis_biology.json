@@ -1,8 +1,5 @@
 {
  "type": "TECH_GENESIS_BIOLOGY",
- "description": "TXT_KEY_TECH_GENESIS_BIOLOGY",
- "civilopedia": "TXT_KEY_TECH_GENESIS_BIOLOGY_PEDIA",
- "quote": "TXT_KEY_TECH_GENESIS_BIOLOGY_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_BIOMORPHICS_LAB",
@@ -63,6 +60,9 @@
   "soundMP": "AS2D_TECH_GENESIS_BIOLOGY"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_GENESIS_BIOLOGY",
+  "civilopedia": "TXT_KEY_TECH_GENESIS_BIOLOGY_PEDIA",
+  "quote": "TXT_KEY_TECH_GENESIS_BIOLOGY_QUOTE",
   "era": "C2C_ERA_INFORMATION",
   "worth": 14,
   "tradeable": true,

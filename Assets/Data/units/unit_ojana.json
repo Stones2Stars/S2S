@@ -1,7 +1,5 @@
 {
  "type": "UNIT_OJANA",
- "description": "TXT_KEY_UNIT_OJANA",
- "civilopedia": "TXT_KEY_UNIT_OJANA_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -62,6 +60,8 @@
   "upkeep": 1
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_OJANA",
+  "civilopedia": "TXT_KEY_UNIT_OJANA_PEDIA",
   "worth": 6,
   "militaryWorth": 8,
   "xpValueAttack": 4,

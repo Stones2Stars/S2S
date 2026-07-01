@@ -1,8 +1,5 @@
 {
  "type": "TECH_MOUNTED_ARCHERY",
- "description": "TXT_KEY_TECH_MOUNTED_ARCHERY",
- "civilopedia": "TXT_KEY_TECH_MOUNTED_ARCHERY_PEDIA",
- "quote": "TXT_KEY_TECH_MOUNTED_ARCHERY_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_CULTURE_BERBER",
@@ -79,6 +76,9 @@
   "soundMP": "AS2D_TECH_MOUNTED_ARCHERY"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_MOUNTED_ARCHERY",
+  "civilopedia": "TXT_KEY_TECH_MOUNTED_ARCHERY_PEDIA",
+  "quote": "TXT_KEY_TECH_MOUNTED_ARCHERY_QUOTE",
   "era": "C2C_ERA_CLASSICAL",
   "worth": 8,
   "militaryWorth": 10,

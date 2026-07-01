@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_GRAVEYARD",
- "description": "TXT_KEY_BUILDING_GRAVEYARD",
- "civilopedia": "TXT_KEY_BUILDING_GRAVEYARD_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_MAUSOLEUM"
@@ -123,6 +121,8 @@
   "construct": "AS2D_BUILD_WALLS"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_GRAVEYARD",
+  "civilopedia": "TXT_KEY_BUILDING_GRAVEYARD_PEDIA",
   "conquestProbability": 95,
   "advisor": "ADVISOR_GROWTH",
   "visibilityPriority": 1,

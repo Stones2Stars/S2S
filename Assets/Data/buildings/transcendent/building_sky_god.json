@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_SKY_GOD",
- "description": "TXT_KEY_BUILDING_SKY_GOD",
- "civilopedia": "TXT_KEY_BUILDING_SKY_GOD_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_REALM_OF_ENLIGHTENMENT"
@@ -53,6 +51,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_SKY_GOD",
+  "civilopedia": "TXT_KEY_BUILDING_SKY_GOD_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

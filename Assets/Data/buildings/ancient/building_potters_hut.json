@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_POTTERS_HUT",
- "description": "TXT_KEY_BUILDING_POTTERS_HUT",
- "civilopedia": "TXT_KEY_BUILDING_POTTERS_HUT_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_PORCELAIN_WORKSHOP",
@@ -155,6 +153,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_POTTERS_HUT",
+  "civilopedia": "TXT_KEY_BUILDING_POTTERS_HUT_PEDIA",
   "advisor": "ADVISOR_GROWTH",
   "visibilityPriority": 1,
   "mapCategories": [

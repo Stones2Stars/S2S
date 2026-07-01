@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_STORAGE_PIT",
- "description": "TXT_KEY_BUILDING_STORAGE_PIT",
- "civilopedia": "TXT_KEY_BUILDING_STORAGE_PIT_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_APOTHECARY_SHOP",
@@ -105,6 +103,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_STORAGE_PIT",
+  "civilopedia": "TXT_KEY_BUILDING_STORAGE_PIT_PEDIA",
   "enabledCivilizations": [
    "CIVILIZATION_NPC_NEANDERTHAL"
   ],

@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_ARK_OF_THE_COVENANT",
- "description": "TXT_KEY_BUILDING_ARK_OF_THE_COVENANT",
- "civilopedia": "TXT_KEY_BUILDING_ARK_OF_THE_COVENANT_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -84,6 +82,8 @@
   "construct": "AS2D_BUILD_OBELISK"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_ARK_OF_THE_COVENANT",
+  "civilopedia": "TXT_KEY_BUILDING_ARK_OF_THE_COVENANT_PEDIA",
   "stateReligionCommerce": {
    "gold": 1
   },

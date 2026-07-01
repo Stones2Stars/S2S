@@ -1,6 +1,5 @@
 {
  "type": "UNITCOMBAT_WEAPON_DIST_CANNONBALL",
- "description": "TXT_KEY_UNITCOMBAT_WEAPON_DIST_CANNONBALL",
  "skills": {
   "rBombardDirect": true
  },
@@ -10,6 +9,7 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_UNITCOMBAT_WEAPON_DIST_CANNONBALL",
   "base": {
    "rangedBombardDamage": 70,
    "rangedBombardLimit": 40,

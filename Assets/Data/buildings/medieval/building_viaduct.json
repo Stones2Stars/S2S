@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_VIADUCT",
- "description": "TXT_KEY_BUILDING_VIADUCT",
- "civilopedia": "TXT_KEY_BUILDING_VIADUCT_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_CAUSEWAY"
@@ -115,6 +113,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_VIADUCT",
+  "civilopedia": "TXT_KEY_BUILDING_VIADUCT_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

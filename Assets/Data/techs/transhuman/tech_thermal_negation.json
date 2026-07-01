@@ -1,8 +1,5 @@
 {
  "type": "TECH_THERMAL_NEGATION",
- "description": "TXT_KEY_TECH_THERMAL_NEGATION",
- "civilopedia": "TXT_KEY_TECH_THERMAL_NEGATION_PEDIA",
- "quote": "TXT_KEY_TECH_THERMAL_NEGATION_QUOTE",
  "enables": {
   "bonuses": [
    "BONUS_HUMAN_MOD_COLD_TOLERANCE",
@@ -65,6 +62,9 @@
   "soundMP": "AS2D_TECH_THERMAL_NEGATION"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_THERMAL_NEGATION",
+  "civilopedia": "TXT_KEY_TECH_THERMAL_NEGATION_PEDIA",
+  "quote": "TXT_KEY_TECH_THERMAL_NEGATION_QUOTE",
   "era": "C2C_ERA_TRANSHUMAN",
   "worth": 50,
   "militaryWorth": 10,

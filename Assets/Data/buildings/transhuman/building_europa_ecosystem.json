@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_EUROPA_ECOSYSTEM",
- "description": "TXT_KEY_BUILDING_EUROPA_ECOSYSTEM",
- "civilopedia": "TXT_KEY_BUILDING_EUROPA_ECOSYSTEM_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_EUROPA_VERTICAL_REEF"
@@ -50,6 +48,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_EUROPA_ECOSYSTEM",
+  "civilopedia": "TXT_KEY_BUILDING_EUROPA_ECOSYSTEM_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

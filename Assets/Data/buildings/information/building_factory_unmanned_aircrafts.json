@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_FACTORY_UNMANNED_AIRCRAFTS",
- "description": "TXT_KEY_BUILDING_FACTORY_UNMANNED_AIRCRAFTS",
- "civilopedia": "TXT_KEY_BUILDING_FACTORY_UNMANNED_AIRCRAFTS_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_MILITARY_INDUSTRIAL_COMPLEX"
@@ -133,6 +131,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_FACTORY_UNMANNED_AIRCRAFTS",
+  "civilopedia": "TXT_KEY_BUILDING_FACTORY_UNMANNED_AIRCRAFTS_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

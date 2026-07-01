@@ -1,7 +1,5 @@
 {
  "type": "TRAIT_INDUSTRIOUS1",
- "description": "TXT_KEY_TRAIT_INDUSTRIOUS0",
- "civilopedia": "TXT_KEY_TRAIT_INDUSTRIOUS_PEDIA",
  "enables": {
   "traits": [
    "TRAIT_INDUSTRIOUS2"
@@ -198,6 +196,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_TRAIT_INDUSTRIOUS0",
+  "civilopedia": "TXT_KEY_TRAIT_INDUSTRIOUS_PEDIA",
   "shortDescription": "TXT_KEY_TRAIT_INDUSTRIOUS_SHORT",
   "impurePropertyManipulators": true
  }

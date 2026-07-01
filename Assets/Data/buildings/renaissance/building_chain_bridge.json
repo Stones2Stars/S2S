@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_CHAIN_BRIDGE",
- "description": "TXT_KEY_BUILDING_CHAIN_BRIDGE",
- "civilopedia": "TXT_KEY_BUILDING_CHAIN_BRIDGE_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_TRUSS_BRIDGE"
@@ -108,6 +106,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_CHAIN_BRIDGE",
+  "civilopedia": "TXT_KEY_BUILDING_CHAIN_BRIDGE_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

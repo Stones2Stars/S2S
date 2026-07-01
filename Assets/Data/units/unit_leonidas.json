@@ -1,7 +1,5 @@
 {
  "type": "UNIT_LEONIDAS",
- "description": "TXT_KEY_UNIT_LEONIDAS",
- "civilopedia": "TXT_KEY_UNIT_LEONIDAS_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -71,6 +69,8 @@
   "hurryCostModifier": 200
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_LEONIDAS",
+  "civilopedia": "TXT_KEY_UNIT_LEONIDAS_PEDIA",
   "worth": 4,
   "militaryWorth": 8,
   "xpValueAttack": 6,

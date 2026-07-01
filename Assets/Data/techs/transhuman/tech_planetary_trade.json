@@ -1,8 +1,5 @@
 {
  "type": "TECH_PLANETARY_TRADE",
- "description": "TXT_KEY_TECH_PLANETARY_TRADE",
- "civilopedia": "TXT_KEY_TECH_PLANETARY_TRADE_PEDIA",
- "quote": "TXT_KEY_TECH_PLANETARY_TRADE_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_ASTEROID_CERES_TRADING_POST",
@@ -75,6 +72,9 @@
   "soundMP": "AS2D_TECH_PLANETARY_TRADE"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_PLANETARY_TRADE",
+  "civilopedia": "TXT_KEY_TECH_PLANETARY_TRADE_PEDIA",
+  "quote": "TXT_KEY_TECH_PLANETARY_TRADE_QUOTE",
   "era": "C2C_ERA_TRANSHUMAN",
   "worth": 48,
   "militaryWorth": 4,

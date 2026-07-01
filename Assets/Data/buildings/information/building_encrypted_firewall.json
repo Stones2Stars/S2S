@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_ENCRYPTED_FIREWALL",
- "description": "TXT_KEY_BUILDING_ENCRYPTED_FIREWALL",
- "civilopedia": "TXT_KEY_BUILDING_ENCRYPTED_FIREWALL_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_BLACKNET",
@@ -62,6 +60,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_ENCRYPTED_FIREWALL",
+  "civilopedia": "TXT_KEY_BUILDING_ENCRYPTED_FIREWALL_PEDIA",
   "nukeImmune": true,
   "advisor": "ADVISOR_MILITARY",
   "visibilityPriority": 1,

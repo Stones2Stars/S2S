@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_FIRE_STATION",
- "description": "TXT_KEY_BUILDING_FIRE_STATION",
- "civilopedia": "TXT_KEY_BUILDING_FIRE_BRIGADE_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_FIRE_DOCK",
@@ -83,6 +81,8 @@
   "construct": "AS2D_BUILD_FIRE_STATION"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_FIRE_STATION",
+  "civilopedia": "TXT_KEY_BUILDING_FIRE_BRIGADE_PEDIA",
   "worth": 14,
   "militaryWorth": 4,
   "conquestProbability": 35,

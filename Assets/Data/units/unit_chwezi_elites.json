@@ -1,7 +1,5 @@
 {
  "type": "UNIT_CHWEZI_ELITES",
- "description": "TXT_KEY_UNIT_CHWEZI_ELITES",
- "civilopedia": "TXT_KEY_UNIT_CHWEZI_ELITES_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -72,6 +70,8 @@
   "upkeep": 1
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_CHWEZI_ELITES",
+  "civilopedia": "TXT_KEY_UNIT_CHWEZI_ELITES_PEDIA",
   "worth": 1,
   "militaryWorth": 3,
   "xpValueAttack": 4,

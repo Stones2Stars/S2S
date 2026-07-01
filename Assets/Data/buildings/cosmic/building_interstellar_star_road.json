@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_INTERSTELLAR_STAR_ROAD",
- "description": "TXT_KEY_BUILDING_INTERSTELLAR_STAR_ROAD",
- "civilopedia": "TXT_KEY_BUILDING_INTERSTELLAR_STAR_ROAD_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_INTERSTELLAR_HYPERMAGLEV"
@@ -60,6 +58,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_INTERSTELLAR_STAR_ROAD",
+  "civilopedia": "TXT_KEY_BUILDING_INTERSTELLAR_STAR_ROAD_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

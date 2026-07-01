@@ -1,7 +1,5 @@
 {
  "type": "BONUS_SYNTHETIC_RUBBER",
- "description": "TXT_KEY_BONUS_SYNTHETIC_RUBBER",
- "civilopedia": "TXT_KEY_BONUS_SYNTHETIC_RUBBER_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_FACTORY_TIRES",
@@ -20,6 +18,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_SYNTHETIC_RUBBER",
+  "civilopedia": "TXT_KEY_BONUS_SYNTHETIC_RUBBER_PEDIA",
   "bonusClassType": "BONUSCLASS_MANUFACTURED"
  }
 }

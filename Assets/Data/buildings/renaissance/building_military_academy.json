@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_MILITARY_ACADEMY",
- "description": "TXT_KEY_BUILDING_MILITARY_ACADEMY",
- "civilopedia": "TXT_KEY_BUILDING_MILITARY_ACADEMY_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_MA_ACCADEMIA_AERONAUTICA",
@@ -47,6 +45,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_MILITARY_ACADEMY",
+  "civilopedia": "TXT_KEY_BUILDING_MILITARY_ACADEMY_PEDIA",
   "notConstructible": true,
   "nukeImmune": true,
   "worth": 6,

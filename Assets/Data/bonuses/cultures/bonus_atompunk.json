@@ -1,7 +1,5 @@
 {
  "type": "BONUS_ATOMPUNK",
- "description": "TXT_KEY_BONUS_ATOMPUNK",
- "civilopedia": "TXT_KEY_BONUS_ATOMPUNK_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_CLEAN_NUCLEAR_REACTOR",
@@ -22,6 +20,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_ATOMPUNK",
+  "civilopedia": "TXT_KEY_BONUS_ATOMPUNK_PEDIA",
   "bonusClassType": "BONUSCLASS_GENMODS"
  }
 }

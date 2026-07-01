@@ -1,6 +1,5 @@
 {
  "type": "PROMOTION_FA_MEN_SI_INSPIRED",
- "description": "TXT_KEY_PROMOTION_FA_MEN_SI_INSPIRED",
  "movement": {
   "unit": {
    "moves": {
@@ -17,6 +16,7 @@
   "sound": "AS2D_IF_LEVELUP"
  },
  "identity": {
+  "description": "TXT_KEY_PROMOTION_FA_MEN_SI_INSPIRED",
   "unitCombats": [
    "UNITCOMBAT_MISSIONARY"
   ]

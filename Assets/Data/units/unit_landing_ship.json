@@ -1,7 +1,5 @@
 {
  "type": "UNIT_LANDING_SHIP",
- "description": "TXT_KEY_UNIT_LANDING_SHIP",
- "civilopedia": "TXT_KEY_UNIT_LANDING_SHIP_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -65,6 +63,8 @@
   "upkeep": 2
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_LANDING_SHIP",
+  "civilopedia": "TXT_KEY_UNIT_LANDING_SHIP_PEDIA",
   "worth": 4,
   "militaryWorth": 120,
   "xpValueAttack": 3,

@@ -1,8 +1,5 @@
 {
  "type": "BUILDING_C_L_SOUTH_AMERICAN",
- "description": "TXT_KEY_BUILDING_C_L_SOUTH_AMERICAN",
- "civilopedia": "TXT_KEY_BUILDING_C_L_PEDIA",
- "help": "TXT_KEY_BUILDING_C_L_HELP",
  "enables": {
   "buildings": [
    "BUILDING_CULTURE_ALACALUFE",
@@ -159,6 +156,9 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_C_L_SOUTH_AMERICAN",
+  "civilopedia": "TXT_KEY_BUILDING_C_L_PEDIA",
+  "help": "TXT_KEY_BUILDING_C_L_HELP",
   "nukeImmune": true,
   "conquestProbability": 85,
   "mapCategories": [

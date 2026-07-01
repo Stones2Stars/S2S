@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_ADVANCED_QUALITY_CONTROL",
- "description": "TXT_KEY_BUILDING_ADVANCED_QUALITY_CONTROL",
- "civilopedia": "TXT_KEY_BUILDING_ADVANCED_QUALITY_CONTROL_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_FACTORY_NANOGENERATORS",
@@ -69,6 +67,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_ADVANCED_QUALITY_CONTROL",
+  "civilopedia": "TXT_KEY_BUILDING_ADVANCED_QUALITY_CONTROL_PEDIA",
   "worth": 8,
   "greatPeopleUnitType": "UNIT_GREAT_ENGINEER",
   "advisor": "ADVISOR_GROWTH",

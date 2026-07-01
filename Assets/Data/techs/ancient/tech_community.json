@@ -1,8 +1,5 @@
 {
  "type": "TECH_COMMUNITY",
- "description": "TXT_KEY_TECH_COMMUNITY",
- "civilopedia": "TXT_KEY_TECH_COMMUNITY_PEDIA",
- "quote": "TXT_KEY_TECH_COMMUNITY_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_ANCIENT_WAY_OF_THE_FIST",
@@ -58,6 +55,9 @@
   "soundMP": "AS2D_TECH_COMMUNITY"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_COMMUNITY",
+  "civilopedia": "TXT_KEY_TECH_COMMUNITY_PEDIA",
+  "quote": "TXT_KEY_TECH_COMMUNITY_QUOTE",
   "era": "C2C_ERA_ANCIENT",
   "worth": 2,
   "tradeable": true,

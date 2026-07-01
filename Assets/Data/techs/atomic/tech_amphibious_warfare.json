@@ -1,8 +1,5 @@
 {
  "type": "TECH_AMPHIBIOUS_WARFARE",
- "description": "TXT_KEY_TECH_AMPHIBIOUS_WARFARE",
- "civilopedia": "TXT_KEY_TECH_AMPHIBIOUS_WARFARE_PEDIA",
- "quote": "TXT_KEY_TECH_AMPHIBIOUS_WARFARE_QUOTE",
  "enables": {
   "bonuses": [
    "BONUS_HOVERCRAFTS"
@@ -67,6 +64,9 @@
   "soundMP": "AS2D_TECH_AMPHIBIOUS_WARFARE"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_AMPHIBIOUS_WARFARE",
+  "civilopedia": "TXT_KEY_TECH_AMPHIBIOUS_WARFARE_PEDIA",
+  "quote": "TXT_KEY_TECH_AMPHIBIOUS_WARFARE_QUOTE",
   "era": "C2C_ERA_ATOMIC",
   "worth": 32,
   "tradeable": true,

@@ -1,8 +1,5 @@
 {
  "type": "UNIT_CLIPPER_MERCHANT",
- "description": "TXT_KEY_UNIT_CLIPPER_MERCHANT",
- "civilopedia": "TXT_KEY_UNIT_CLIPPER_MERCHANT_PEDIA",
- "help": "TXT_KEY_UNIT_MERCHANT_SHIP_HELP",
  "obsoletedBy": {
   "techs": [
    "TECH_SUBMARINE_WARFARE"
@@ -66,6 +63,9 @@
   ]
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_CLIPPER_MERCHANT",
+  "civilopedia": "TXT_KEY_UNIT_CLIPPER_MERCHANT_PEDIA",
+  "help": "TXT_KEY_UNIT_MERCHANT_SHIP_HELP",
   "worth": 2,
   "minAreaSize": 10,
   "domain": "DOMAIN_SEA",

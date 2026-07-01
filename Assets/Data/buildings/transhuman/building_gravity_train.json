@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_GRAVITY_TRAIN",
- "description": "TXT_KEY_BUILDING_GRAVITY_TRAIN",
- "civilopedia": "TXT_KEY_BUILDING_GRAVITY_TRAIN_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_CHUO_SHINKANSEN",
@@ -63,6 +61,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_GRAVITY_TRAIN",
+  "civilopedia": "TXT_KEY_BUILDING_GRAVITY_TRAIN_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

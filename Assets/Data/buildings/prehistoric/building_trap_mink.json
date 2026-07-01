@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_TRAP_MINK",
- "description": "TXT_KEY_BUILDING_TRAP_MINK",
- "civilopedia": "TXT_KEY_BUILDING_TRAP_MINK_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_RESOURCES_PELTS"
@@ -88,6 +86,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_TRAP_MINK",
+  "civilopedia": "TXT_KEY_BUILDING_TRAP_MINK_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_FACTORY_BASKETS",
- "description": "TXT_KEY_BUILDING_FACTORY_BASKETS",
- "civilopedia": "TXT_KEY_BUILDING_FACTORY_BASKETS_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_MANUFACTURING_DISTRICT"
@@ -108,6 +106,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_FACTORY_BASKETS",
+  "civilopedia": "TXT_KEY_BUILDING_FACTORY_BASKETS_PEDIA",
   "conquestProbability": 70,
   "advisor": "ADVISOR_ECONOMY",
   "visibilityPriority": 1,

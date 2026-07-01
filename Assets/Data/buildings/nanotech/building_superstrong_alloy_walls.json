@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_SUPERSTRONG_ALLOY_WALLS",
- "description": "TXT_KEY_BUILDING_SUPERSTRONG_ALLOY_WALLS",
- "civilopedia": "TXT_KEY_BUILDING_SUPERSTRONG_ALLOY_WALLS_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_BLARNEY_CASTLE",
@@ -109,6 +107,8 @@
   "construct": "AS2D_BUILD_WALLS"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_SUPERSTRONG_ALLOY_WALLS",
+  "civilopedia": "TXT_KEY_BUILDING_SUPERSTRONG_ALLOY_WALLS_PEDIA",
   "centerInCity": true,
   "worth": 1,
   "militaryWorth": 2,

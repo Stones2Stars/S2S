@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_REVIVALIST_CHURCH",
- "description": "TXT_KEY_BUILDING_REVIVALIST_CHURCH",
- "civilopedia": "TXT_KEY_BUILDING_REVIVALIST_CHURCH_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -91,6 +89,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_REVIVALIST_CHURCH",
+  "civilopedia": "TXT_KEY_BUILDING_REVIVALIST_CHURCH_PEDIA",
   "worth": 5,
   "greatPeopleUnitType": "UNIT_PROPHET",
   "advisor": "ADVISOR_MILITARY",

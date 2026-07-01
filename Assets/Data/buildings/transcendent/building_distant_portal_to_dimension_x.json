@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_DISTANT_PORTAL_TO_DIMENSION_X",
- "description": "TXT_KEY_BUILDING_DISTANT_PORTAL_TO_DIMENSION_X",
- "civilopedia": "TXT_KEY_BUILDING_DISTANT_PORTAL_TO_DIMENSION_X_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_DISTANT_PARALLEL_UNIVERSE_PORTAL",
@@ -64,6 +62,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_DISTANT_PORTAL_TO_DIMENSION_X",
+  "civilopedia": "TXT_KEY_BUILDING_DISTANT_PORTAL_TO_DIMENSION_X_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

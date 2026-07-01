@@ -1,7 +1,5 @@
 {
  "type": "UNIT_KHMER_PHAKAK",
- "description": "TXT_KEY_UNIT_KHMER_PHAKAK",
- "civilopedia": "TXT_KEY_UNIT_KHMER_PHAKAK_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -157,6 +155,8 @@
   "upkeep": 1
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_KHMER_PHAKAK",
+  "civilopedia": "TXT_KEY_UNIT_KHMER_PHAKAK_PEDIA",
   "worth": 2,
   "militaryWorth": 6,
   "xpValueAttack": 6,

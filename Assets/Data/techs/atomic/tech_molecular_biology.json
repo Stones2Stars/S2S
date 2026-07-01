@@ -1,8 +1,5 @@
 {
  "type": "TECH_MOLECULAR_BIOLOGY",
- "description": "TXT_KEY_TECH_MOLECULAR_BIOLOGY",
- "civilopedia": "TXT_KEY_TECH_MOLECULAR_BIOLOGY_PEDIA",
- "quote": "TXT_KEY_TECH_MOLECULAR_BIOLOGY_QUOTE",
  "enables": {
   "bonuses": [
    "BONUS_ENZYMES",
@@ -66,6 +63,9 @@
   "soundMP": "AS2D_TECH_MOLECULARBIOLOGY"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_MOLECULAR_BIOLOGY",
+  "civilopedia": "TXT_KEY_TECH_MOLECULAR_BIOLOGY_PEDIA",
+  "quote": "TXT_KEY_TECH_MOLECULAR_BIOLOGY_QUOTE",
   "era": "C2C_ERA_ATOMIC",
   "worth": 40,
   "tradeable": true,

@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_MINE_COBALT",
- "description": "TXT_KEY_BUILDING_MINE_COBALT",
- "civilopedia": "TXT_KEY_BUILDING_MINE_COBALT_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_CORE_MINE"
@@ -81,6 +79,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_MINE_COBALT",
+  "civilopedia": "TXT_KEY_BUILDING_MINE_COBALT_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

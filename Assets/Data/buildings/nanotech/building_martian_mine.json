@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_MARTIAN_MINE",
- "description": "TXT_KEY_BUILDING_MARTIAN_MINE",
- "civilopedia": "TXT_KEY_BUILDING_MARTIAN_MINE_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_MARTIAN_GEOTHERMAL_PLANT"
@@ -48,6 +46,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_MARTIAN_MINE",
+  "civilopedia": "TXT_KEY_BUILDING_MARTIAN_MINE_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

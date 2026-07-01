@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_MOB_STOREFRONT_UNSANCTIONED",
- "description": "TXT_KEY_BUILDING_MOB_STOREFRONT_UNSANCTIONED",
- "civilopedia": "TXT_KEY_BUILDING_MOB_STOREFRONT_PEDIA",
  "obsoletedBy": {
   "techs": [
    "TECH_THOUGHT_SCANNING"
@@ -116,6 +114,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_MOB_STOREFRONT_UNSANCTIONED",
+  "civilopedia": "TXT_KEY_BUILDING_MOB_STOREFRONT_PEDIA",
   "notConstructible": true,
   "nukeImmune": true,
   "conquestProbability": 100,

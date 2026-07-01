@@ -1,8 +1,5 @@
 {
  "type": "CIVIC_CODIFIED",
- "description": "TXT_KEY_CIVIC_CODIFIED",
- "civilopedia": "TXT_KEY_CIVIC_CODIFIED_PEDIA",
- "strategy": "TXT_KEY_CIVIC_CODIFIED_STRATEGY",
  "gold": {
   "empire": {
    "percent": 5
@@ -54,6 +51,9 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_CIVIC_CODIFIED",
+  "civilopedia": "TXT_KEY_CIVIC_CODIFIED_PEDIA",
+  "strategy": "TXT_KEY_CIVIC_CODIFIED_STRATEGY",
   "civicOption": "CIVICOPTION_LANGUAGE",
   "upkeepLevel": "UPKEEP_HIGH"
  }

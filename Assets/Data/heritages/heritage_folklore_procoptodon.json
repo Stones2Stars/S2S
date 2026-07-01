@@ -1,7 +1,5 @@
 {
  "type": "HERITAGE_FOLKLORE_PROCOPTODON",
- "description": "TXT_KEY_HERITAGE_FOLKLORE_PROCOPTODON",
- "civilopedia": "TXT_KEY_BUILDING_FOLKLORE_ANIMAL_PEDIA",
  "enables": {
   "heritages": [
    "HERITAGE_FOLKLORE_PALEOLITHIC_MARSUPIAL",
@@ -96,6 +94,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_HERITAGE_FOLKLORE_PROCOPTODON",
+  "civilopedia": "TXT_KEY_BUILDING_FOLKLORE_ANIMAL_PEDIA",
   "needsLanguage": true
  }
 }

@@ -1,6 +1,5 @@
 {
  "type": "ROUTE_ROAD",
- "description": "TXT_KEY_ROUTE_ROAD",
  "production": {
   "plot": {
    "improvements": {
@@ -46,6 +45,7 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_ROUTE_ROAD",
   "value": 3,
   "advancedStart": {
    "cost": 12

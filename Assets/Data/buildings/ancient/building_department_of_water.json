@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_DEPARTMENT_OF_WATER",
- "description": "TXT_KEY_BUILDING_DEPARTMENT_OF_WATER",
- "civilopedia": "TXT_KEY_BUILDING_DEPARTMENT_OF_WATER_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_ORDINANCE_CLEAN_WATER_ACT"
@@ -86,6 +84,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_DEPARTMENT_OF_WATER",
+  "civilopedia": "TXT_KEY_BUILDING_DEPARTMENT_OF_WATER_PEDIA",
   "neverCapture": true,
   "advisor": "ADVISOR_GROWTH",
   "mapCategories": [

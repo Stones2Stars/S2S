@@ -1,7 +1,5 @@
 {
  "type": "UNIT_HIGHWAYMAN",
- "description": "TXT_KEY_UNIT_HIGHWAYMAN",
- "civilopedia": "TXT_KEY_UNIT_HIGHWAYMAN_PEDIA",
  "obsoletedBy": {
   "techs": [
    "TECH_DEPUTIZATION"
@@ -178,6 +176,8 @@
   ]
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_HIGHWAYMAN",
+  "civilopedia": "TXT_KEY_UNIT_HIGHWAYMAN_PEDIA",
   "worth": 6,
   "militaryWorth": 17,
   "xpValueAttack": 3,

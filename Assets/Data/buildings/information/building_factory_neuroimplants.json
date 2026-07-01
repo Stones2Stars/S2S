@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_FACTORY_NEUROIMPLANTS",
- "description": "TXT_KEY_BUILDING_FACTORY_NEUROIMPLANTS",
- "civilopedia": "TXT_KEY_BUILDING_FACTORY_NEUROIMPLANTS_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_MEDICAL_MEGACOMPLEX"
@@ -77,6 +75,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_FACTORY_NEUROIMPLANTS",
+  "civilopedia": "TXT_KEY_BUILDING_FACTORY_NEUROIMPLANTS_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

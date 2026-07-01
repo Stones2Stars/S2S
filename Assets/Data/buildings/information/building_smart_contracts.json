@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_SMART_CONTRACTS",
- "description": "TXT_KEY_BUILDING_SMART_CONTRACTS",
- "civilopedia": "TXT_KEY_BUILDING_SMART_CONTRACTS_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -40,6 +38,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_SMART_CONTRACTS",
+  "civilopedia": "TXT_KEY_BUILDING_SMART_CONTRACTS_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

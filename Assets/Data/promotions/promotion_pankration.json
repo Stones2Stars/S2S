@@ -1,6 +1,5 @@
 {
  "type": "PROMOTION_PANKRATION",
- "description": "TXT_KEY_PROMOTION_PANKRATION",
  "upkeep": {
   "unit": {
    "upgradeDiscount": {
@@ -39,6 +38,7 @@
   "sound": "AS2D_IF_LEVELUP"
  },
  "identity": {
+  "description": "TXT_KEY_PROMOTION_PANKRATION",
   "stateReligionPrereq": "RELIGION_HELLENISM",
   "unitCombats": [
    "UNITCOMBAT_RECON",

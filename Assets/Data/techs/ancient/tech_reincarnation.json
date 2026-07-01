@@ -1,8 +1,5 @@
 {
  "type": "TECH_REINCARNATION",
- "description": "TXT_KEY_TECH_REINCARNATION",
- "civilopedia": "TXT_KEY_TECH_REINCARNATION_PEDIA",
- "quote": "TXT_KEY_TECH_REINCARNATION_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_BELIEF_REINCARNATION",
@@ -55,6 +52,9 @@
   "soundMP": "AS2D_TECH_REINCARNATION2"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_REINCARNATION",
+  "civilopedia": "TXT_KEY_TECH_REINCARNATION_PEDIA",
+  "quote": "TXT_KEY_TECH_REINCARNATION_QUOTE",
   "era": "C2C_ERA_ANCIENT",
   "worth": 16,
   "tradeable": true,

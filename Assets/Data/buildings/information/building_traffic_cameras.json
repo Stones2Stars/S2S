@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_TRAFFIC_CAMERAS",
- "description": "TXT_KEY_BUILDING_TRAFFIC_CAMERAS",
- "civilopedia": "TXT_KEY_BUILDING_TRAFFIC_CAMERAS_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_TELEPORT_BOOTH"
@@ -73,6 +71,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_TRAFFIC_CAMERAS",
+  "civilopedia": "TXT_KEY_BUILDING_TRAFFIC_CAMERAS_PEDIA",
   "advisor": "ADVISOR_MILITARY",
   "visibilityPriority": 1,
   "mapCategories": [

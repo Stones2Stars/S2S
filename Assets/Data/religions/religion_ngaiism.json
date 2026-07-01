@@ -1,8 +1,5 @@
 {
  "type": "RELIGION_NGAIISM",
- "description": "TXT_KEY_TECH_NGAIISM",
- "civilopedia": "TXT_KEY_TECH_NGAIISM_PEDIA",
- "adjective": "TXT_KEY_TECH_NGAIISM_ADJECTIVE",
  "enables": {
   "buildings": [
    "BUILDING_NAITERU_KOB_BLESS",
@@ -82,6 +79,9 @@
   "sound": "AS2D_BUILD_NGAI"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_NGAIISM",
+  "adjective": "TXT_KEY_TECH_NGAIISM_ADJECTIVE",
+  "civilopedia": "TXT_KEY_TECH_NGAIISM_PEDIA",
   "spreadFactor": 5
  }
 }

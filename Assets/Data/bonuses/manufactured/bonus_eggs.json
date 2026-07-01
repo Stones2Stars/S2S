@@ -1,7 +1,5 @@
 {
  "type": "BONUS_EGGS",
- "description": "TXT_KEY_BONUS_EGGS",
- "civilopedia": "TXT_KEY_BONUS_EGGS_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_CHILD_LABOR_CREW",
@@ -15,6 +13,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_EGGS",
+  "civilopedia": "TXT_KEY_BONUS_EGGS_PEDIA",
   "bonusClassType": "BONUSCLASS_MANUFACTURED"
  }
 }

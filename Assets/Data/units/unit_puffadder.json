@@ -1,7 +1,5 @@
 {
  "type": "UNIT_PUFFADDER",
- "description": "TXT_KEY_UNIT_PUFFADDER",
- "civilopedia": "TXT_KEY_UNIT_PUFFADDER_PEDIA",
  "withdrawal": {
   "unit": {
    "percent": 60
@@ -42,6 +40,8 @@
   ]
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_PUFFADDER",
+  "civilopedia": "TXT_KEY_UNIT_PUFFADDER_PEDIA",
   "spawnOnly": true,
   "xpValueAttack": 5,
   "xpValueDefense": 3,

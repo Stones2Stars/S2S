@@ -1,7 +1,5 @@
 {
  "type": "LEADER_ELIZABETH",
- "description": "TXT_KEY_LEADER_ELIZABETH",
- "civilopedia": "TXT_KEY_LEADER_ELIZABETH_PEDIA",
  "grants": {
   "traits": [
    "TRAIT_SEAFARING",
@@ -309,5 +307,9 @@
    "C2C_ERA_TRANSCENDENT": "AS2D_DIPLO_WARDRUMS_LATE",
    "C2C_ERA_FUTURE": "AS2D_DIPLO_WARDRUMS_LATE"
   }
+ },
+ "identity": {
+  "description": "TXT_KEY_LEADER_ELIZABETH",
+  "civilopedia": "TXT_KEY_LEADER_ELIZABETH_PEDIA"
  }
 }

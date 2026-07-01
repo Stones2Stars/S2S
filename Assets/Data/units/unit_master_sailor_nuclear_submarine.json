@@ -1,7 +1,5 @@
 {
  "type": "UNIT_MASTER_SAILOR_NUCLEAR_SUBMARINE",
- "description": "TXT_KEY_UNIT_NUCLEAR_MASTER_SAILOR_SUBMARINE",
- "civilopedia": "TXT_KEY_UNIT_NUCLEAR_SUBMARINE_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -108,6 +106,8 @@
   "upkeep": 3
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_NUCLEAR_MASTER_SAILOR_SUBMARINE",
+  "civilopedia": "TXT_KEY_UNIT_NUCLEAR_SUBMARINE_PEDIA",
   "spawnOnly": true,
   "worth": 4,
   "militaryWorth": 298,

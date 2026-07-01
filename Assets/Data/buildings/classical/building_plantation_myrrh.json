@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_PLANTATION_MYRRH",
- "description": "TXT_KEY_BUILDING_PLANTATION_MYRRH",
- "civilopedia": "TXT_KEY_BUILDING_PLANTATION_MYRRH_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_RESOURCES_DRUGS"
@@ -72,6 +70,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_PLANTATION_MYRRH",
+  "civilopedia": "TXT_KEY_BUILDING_PLANTATION_MYRRH_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

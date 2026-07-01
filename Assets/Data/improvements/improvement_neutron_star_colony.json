@@ -1,7 +1,5 @@
 {
  "type": "IMPROVEMENT_NEUTRON_STAR_COLONY",
- "description": "TXT_KEY_IMPROVEMENT_NEUTRON_STAR_COLONY",
- "civilopedia": "TXT_KEY_IMPROVEMENT_NEUTRON_STAR_COLONY_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -33,6 +31,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_IMPROVEMENT_NEUTRON_STAR_COLONY",
+  "civilopedia": "TXT_KEY_IMPROVEMENT_NEUTRON_STAR_COLONY_PEDIA",
   "extraterrestrial": true,
   "outsideBorders": true,
   "pillageGold": 200

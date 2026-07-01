@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_HQ_SIDS_SUSHI_CO",
- "description": "TXT_KEY_BUILDING_HQ_SIDS_SUSHI_CO",
- "civilopedia": "TXT_KEY_BUILDING_CORPORATION_2_PEDIA",
  "enables": {
   "corporations": [
    "CORPORATION_2"
@@ -57,6 +55,8 @@
   "construct": "AS2D_BUILD_BANK"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_HQ_SIDS_SUSHI_CO",
+  "civilopedia": "TXT_KEY_BUILDING_CORPORATION_2_PEDIA",
   "commerceDoubleTime": {
    "culture": 1000
   },

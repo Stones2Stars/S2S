@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_WIRELESS_NETWORKS",
- "description": "TXT_KEY_BUILDING_WIRELESS_NETWORKS",
- "civilopedia": "TXT_KEY_BUILDING_WIRELESS_NETWORKS_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_BLACK_HAT_HIDEOUT",
@@ -126,6 +124,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_WIRELESS_NETWORKS",
+  "civilopedia": "TXT_KEY_BUILDING_WIRELESS_NETWORKS_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

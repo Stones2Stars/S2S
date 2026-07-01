@@ -1,7 +1,5 @@
 {
  "type": "UNIT_SKUNK",
- "description": "TXT_KEY_UNIT_SKUNK",
- "civilopedia": "TXT_KEY_UNIT_SKUNK_PEDIA",
  "withdrawal": {
   "unit": {
    "percent": 10
@@ -46,6 +44,8 @@
   ]
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_SKUNK",
+  "civilopedia": "TXT_KEY_UNIT_SKUNK_PEDIA",
   "spawnOnly": true,
   "xpValueAttack": 2,
   "xpValueDefense": 1,

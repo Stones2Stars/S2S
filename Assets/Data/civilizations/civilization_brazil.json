@@ -1,9 +1,5 @@
 {
  "type": "CIVILIZATION_BRAZIL",
- "description": "TXT_KEY_CIVILIZATION_BRAZIL",
- "shortDescription": "TXT_KEY_CIVILIZATION_BRAZIL_SHORT",
- "adjective": "TXT_KEY_CIVILIZATION_BRAZIL_ADJECTIVE",
- "civilopedia": "TXT_KEY_CIVILIZATION_BRAZIL_PEDIA",
  "grants": {
   "buildings": [
    "BUILDING_PALACE",
@@ -32,10 +28,6 @@
    "TECH_GAME_START"
   ]
  },
- "policies": {
-  "playable": true,
-  "aiPlayable": true
- },
  "world": {
   "art": {
    "playerColor": "PLAYERCOLOR_BRAZIL",
@@ -49,6 +41,12 @@
   "action": "AS3D_PORTUGAL_ORDER"
  },
  "identity": {
+  "description": "TXT_KEY_CIVILIZATION_BRAZIL",
+  "shortDescription": "TXT_KEY_CIVILIZATION_BRAZIL_SHORT",
+  "adjective": "TXT_KEY_CIVILIZATION_BRAZIL_ADJECTIVE",
+  "civilopedia": "TXT_KEY_CIVILIZATION_BRAZIL_PEDIA",
+  "playable": true,
+  "aiPlayable": true,
   "leaders": [
    "LEADER_PEDRO_II"
   ],

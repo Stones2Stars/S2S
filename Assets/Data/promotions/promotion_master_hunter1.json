@@ -1,6 +1,5 @@
 {
  "type": "PROMOTION_MASTER_HUNTER1",
- "description": "TXT_KEY_PROMOTION_MASTER_HUNTER1",
  "skills": {
   "blitz": true
  },
@@ -19,5 +18,8 @@
  },
  "sound": {
   "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_MASTER_HUNTER1"
  }
 }

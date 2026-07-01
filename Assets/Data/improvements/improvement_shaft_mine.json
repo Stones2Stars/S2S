@@ -1,7 +1,5 @@
 {
  "type": "IMPROVEMENT_SHAFT_MINE",
- "description": "TXT_KEY_IMPROVEMENT_SHAFT_MINE",
- "civilopedia": "TXT_KEY_IMPROVEMENT_SHAFT_MINE_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -295,6 +293,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_IMPROVEMENT_SHAFT_MINE",
+  "civilopedia": "TXT_KEY_IMPROVEMENT_SHAFT_MINE_PEDIA",
   "advancedStart": {
    "cost": 48
   },

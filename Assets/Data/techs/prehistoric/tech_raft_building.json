@@ -1,8 +1,5 @@
 {
  "type": "TECH_RAFT_BUILDING",
- "description": "TXT_KEY_TECH_RAFT_BUILDING",
- "civilopedia": "TXT_KEY_TECH_RAFT_BUILDING_PEDIA",
- "quote": "TXT_KEY_TECH_RAFT_BUILDING_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_WATER_BURIALS"
@@ -72,6 +69,9 @@
   "soundMP": "AS2D_TECH_RAFT_BUILDING"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_RAFT_BUILDING",
+  "civilopedia": "TXT_KEY_TECH_RAFT_BUILDING_PEDIA",
+  "quote": "TXT_KEY_TECH_RAFT_BUILDING_QUOTE",
   "era": "C2C_ERA_PREHISTORIC",
   "worth": 4,
   "militaryWorth": 1,

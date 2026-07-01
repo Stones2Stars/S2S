@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_HAMMURABI_STELE_OF_LAWS",
- "description": "TXT_KEY_BUILDING_HAMMURABI_STELE_OF_LAWS",
- "civilopedia": "TXT_KEY_BUILDING_HAMMURABI_STELE_OF_LAWS_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -103,6 +101,8 @@
   "construct": "AS2D_BUILD_BUDDHIST"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_HAMMURABI_STELE_OF_LAWS",
+  "civilopedia": "TXT_KEY_BUILDING_HAMMURABI_STELE_OF_LAWS_PEDIA",
   "commerceDoubleTime": {
    "culture": 1000
   },

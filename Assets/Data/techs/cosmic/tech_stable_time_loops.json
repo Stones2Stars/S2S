@@ -1,8 +1,5 @@
 {
  "type": "TECH_STABLE_TIME_LOOPS",
- "description": "TXT_KEY_TECH_STABLE_TIME_LOOPS",
- "civilopedia": "TXT_KEY_TECH_STABLE_TIME_LOOPS_PEDIA",
- "quote": "TXT_KEY_TECH_STABLE_TIME_LOOPS_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_CLOSED_TIMELIKE_CURVE_COMPUTER",
@@ -58,6 +55,9 @@
   "soundMP": "AS2D_TECH_GENERIC"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_STABLE_TIME_LOOPS",
+  "civilopedia": "TXT_KEY_TECH_STABLE_TIME_LOOPS_PEDIA",
+  "quote": "TXT_KEY_TECH_STABLE_TIME_LOOPS_QUOTE",
   "era": "C2C_ERA_COSMIC",
   "worth": 48,
   "tradeable": true,

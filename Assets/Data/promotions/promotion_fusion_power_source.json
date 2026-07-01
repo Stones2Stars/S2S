@@ -1,6 +1,5 @@
 {
  "type": "PROMOTION_FUSION_POWER_SOURCE",
- "description": "TXT_KEY_PROMOTION_FUSION_POWER_SOURCE",
  "strength": {
   "unit": {
    "unitCombat": {
@@ -22,6 +21,7 @@
   "sound": "AS2D_IF_LEVELUP"
  },
  "identity": {
+  "description": "TXT_KEY_PROMOTION_FUSION_POWER_SOURCE",
   "unitCombats": [
    "UNITCOMBAT_ROBOT",
    "UNITCOMBAT_ASSAULT_MECH"

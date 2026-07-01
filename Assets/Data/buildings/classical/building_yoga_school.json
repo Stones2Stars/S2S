@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_YOGA_SCHOOL",
- "description": "TXT_KEY_BUILDING_YOGA_SCHOOL",
- "civilopedia": "TXT_KEY_BUILDING_YOGA_SCHOOL_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_ATHLETIC_MEGACOMPLEX"
@@ -73,6 +71,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_YOGA_SCHOOL",
+  "civilopedia": "TXT_KEY_BUILDING_YOGA_SCHOOL_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

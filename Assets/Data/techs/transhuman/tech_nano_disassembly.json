@@ -1,8 +1,5 @@
 {
  "type": "TECH_NANO_DISASSEMBLY",
- "description": "TXT_KEY_TECH_NANO_DISASSEMBLY",
- "civilopedia": "TXT_KEY_TECH_NANO_DISASSEMBLY_PEDIA",
- "quote": "TXT_KEY_TECH_NANO_DISASSEMBLY_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_CLAYTRONIC_TOWER"
@@ -55,6 +52,9 @@
   "soundMP": "AS2D_TECH_NANO_DISASSEMBLY"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_NANO_DISASSEMBLY",
+  "civilopedia": "TXT_KEY_TECH_NANO_DISASSEMBLY_PEDIA",
+  "quote": "TXT_KEY_TECH_NANO_DISASSEMBLY_QUOTE",
   "era": "C2C_ERA_TRANSHUMAN",
   "worth": 50,
   "militaryWorth": 10,

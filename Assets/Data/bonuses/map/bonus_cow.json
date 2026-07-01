@@ -1,7 +1,5 @@
 {
  "type": "BONUS_COW",
- "description": "TXT_KEY_BONUS_COW",
- "civilopedia": "TXT_KEY_BONUS_COW_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_CAMP_AUROCHS",
@@ -85,6 +83,8 @@
   ]
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_COW",
+  "civilopedia": "TXT_KEY_BONUS_COW_PEDIA",
   "bonusClassType": "BONUSCLASS_LIVESTOCK"
  }
 }

@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_TOWNCLOCK",
- "description": "TXT_KEY_BUILDING_TOWNCLOCK",
- "civilopedia": "TXT_KEY_BUILDING_TOWNCLOCK_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_AUTOMATION_CLOCK",
@@ -74,6 +72,8 @@
   "construct": "AS2D_BUILD_TOWNCLOCK"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_TOWNCLOCK",
+  "civilopedia": "TXT_KEY_BUILDING_TOWNCLOCK_PEDIA",
   "centerInCity": true,
   "worth": 4,
   "militaryWorth": 5,

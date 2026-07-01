@@ -1,8 +1,5 @@
 {
  "type": "CIVIC_APPRENTICESHIP",
- "description": "TXT_KEY_CIVIC_APPRENTICESHIP",
- "civilopedia": "TXT_KEY_CIVIC_APPRENTICESHIP_PEDIA",
- "strategy": "TXT_KEY_CIVIC_APPRENTICESHIP_STRATEGY",
  "enables": {
   "buildings": [
    "BUILDING_APPRENTICE_WORKSHOP"
@@ -77,6 +74,9 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_CIVIC_APPRENTICESHIP",
+  "civilopedia": "TXT_KEY_CIVIC_APPRENTICESHIP_PEDIA",
+  "strategy": "TXT_KEY_CIVIC_APPRENTICESHIP_STRATEGY",
   "civicOption": "CIVICOPTION_EDUCATION",
   "upkeepLevel": "UPKEEP_LOW"
  }

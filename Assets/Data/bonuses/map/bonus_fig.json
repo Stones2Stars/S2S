@@ -1,7 +1,5 @@
 {
  "type": "BONUS_FIG",
- "description": "TXT_KEY_BONUS_FIG",
- "civilopedia": "TXT_KEY_BONUS_FIG_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_CULTURE_ABBASID",
@@ -76,6 +74,8 @@
   ]
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_FIG",
+  "civilopedia": "TXT_KEY_BONUS_FIG_PEDIA",
   "bonusClassType": "BONUSCLASS_CROP"
  }
 }

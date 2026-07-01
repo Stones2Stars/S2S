@@ -1,7 +1,5 @@
 {
  "type": "UNIT_STEALTH_FIGHTER",
- "description": "TXT_KEY_UNIT_EARLYSTEALTH",
- "civilopedia": "TXT_KEY_UNIT_STEALTH_FIGHTER_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -105,6 +103,8 @@
   "upkeep": 9
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_EARLYSTEALTH",
+  "civilopedia": "TXT_KEY_UNIT_STEALTH_FIGHTER_PEDIA",
   "worth": 4,
   "militaryWorth": 347,
   "xpValueAttack": 6,

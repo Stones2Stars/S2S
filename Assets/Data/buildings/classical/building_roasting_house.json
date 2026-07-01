@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_ROASTING_HOUSE",
- "description": "TXT_KEY_BUILDING_ROASTING_HOUSE",
- "civilopedia": "TXT_KEY_BUILDING_ROASTING_HOUSE_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_FACTORY_ROASTED_COFFEE"
@@ -78,6 +76,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_ROASTING_HOUSE",
+  "civilopedia": "TXT_KEY_BUILDING_ROASTING_HOUSE_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

@@ -1,7 +1,5 @@
 {
  "type": "BONUS_WALRUS",
- "description": "TXT_KEY_BONUS_WALRUS",
- "civilopedia": "TXT_KEY_BONUS_WALRUS_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_BREEDING_PROGRAM_ELEPHANT_SEAL",
@@ -63,6 +61,8 @@
   ]
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_WALRUS",
+  "civilopedia": "TXT_KEY_BONUS_WALRUS_PEDIA",
   "bonusClassType": "BONUSCLASS_LIVESTOCK"
  }
 }

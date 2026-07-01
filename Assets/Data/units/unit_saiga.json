@@ -1,7 +1,5 @@
 {
  "type": "UNIT_SAIGA",
- "description": "TXT_KEY_UNIT_SAIGA",
- "civilopedia": "TXT_KEY_UNIT_SAIGA_PEDIA",
  "withdrawal": {
   "unit": {
    "percent": 35
@@ -51,6 +49,8 @@
   ]
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_SAIGA",
+  "civilopedia": "TXT_KEY_UNIT_SAIGA_PEDIA",
   "spawnOnly": true,
   "xpValueAttack": 3,
   "xpValueDefense": 2,

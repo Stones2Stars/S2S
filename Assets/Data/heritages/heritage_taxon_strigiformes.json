@@ -1,7 +1,5 @@
 {
  "type": "HERITAGE_TAXON_STRIGIFORMES",
- "description": "TXT_KEY_HERITAGE_TAXON_STRIGIFORMES",
- "civilopedia": "TXT_KEY_HERITAGE_TAXON_STRIGIFORMES_PEDIA",
  "research": {
   "empire": {
    "flat": [
@@ -102,5 +100,9 @@
   "art": {
    "icon": "Art/Interface/Buttons/buildings/totem_cassowary.dds"
   }
+ },
+ "identity": {
+  "description": "TXT_KEY_HERITAGE_TAXON_STRIGIFORMES",
+  "civilopedia": "TXT_KEY_HERITAGE_TAXON_STRIGIFORMES_PEDIA"
  }
 }

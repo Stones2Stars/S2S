@@ -1,7 +1,5 @@
 {
  "type": "BONUS_REPLICATORS",
- "description": "TXT_KEY_BONUS_REPLICATORS",
- "civilopedia": "TXT_KEY_BONUS_REPLICATORS_PEDIA",
  "enables": {
   "units": [
    "UNIT_SERVICE_DROID"
@@ -29,6 +27,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_REPLICATORS",
+  "civilopedia": "TXT_KEY_BONUS_REPLICATORS_PEDIA",
   "bonusClassType": "BONUSCLASS_MANUFACTURED"
  }
 }

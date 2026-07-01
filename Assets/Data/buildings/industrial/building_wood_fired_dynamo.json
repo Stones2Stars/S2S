@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_WOOD_FIRED_DYNAMO",
- "description": "TXT_KEY_BUILDING_WOOD_FIRED_DYNAMO",
- "civilopedia": "TXT_KEY_BUILDING_WOOD_FIRED_DYNAMO_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_BIOFUEL_POWER_PLANT"
@@ -86,6 +84,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_WOOD_FIRED_DYNAMO",
+  "civilopedia": "TXT_KEY_BUILDING_WOOD_FIRED_DYNAMO_PEDIA",
   "worth": 5,
   "specialBuildingType": "SPECIALBUILDING_PUNK_STEAM",
   "advisor": "ADVISOR_ECONOMY",

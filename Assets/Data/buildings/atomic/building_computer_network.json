@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_COMPUTER_NETWORK",
- "description": "TXT_KEY_BUILDING_COMPUTER_NETWORK",
- "civilopedia": "TXT_KEY_BUILDING_COMPUTER_NETWORK_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_ADVANCED_QUALITY_CONTROL",
@@ -178,6 +176,8 @@
   "construct": "AS2D_BUILD_COMPUTER_NETWORK"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_COMPUTER_NETWORK",
+  "civilopedia": "TXT_KEY_BUILDING_COMPUTER_NETWORK_PEDIA",
   "worth": 6,
   "conquestProbability": 75,
   "dcmAirbombMission": 2,

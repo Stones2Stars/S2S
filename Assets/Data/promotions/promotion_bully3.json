@@ -1,6 +1,5 @@
 {
  "type": "PROMOTION_BULLY3",
- "description": "TXT_KEY_PROMOTION_BULLY3",
  "strength": {
   "unit": {
    "perSizeLess": {
@@ -23,5 +22,8 @@
  },
  "sound": {
   "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_BULLY3"
  }
 }

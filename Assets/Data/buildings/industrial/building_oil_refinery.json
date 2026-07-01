@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_OIL_REFINERY",
- "description": "TXT_KEY_BUILDING_OIL_REFINERY",
- "civilopedia": "TXT_KEY_BUILDING_OIL_REFINERY_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_RESOURCES_PETROLEUM_PRODUCTS"
@@ -116,6 +114,8 @@
   "construct": "AS2D_BUILD_OIL_REFINERY"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_OIL_REFINERY",
+  "civilopedia": "TXT_KEY_BUILDING_OIL_REFINERY_PEDIA",
   "worth": 6,
   "militaryWorth": 30,
   "conquestProbability": 75,

@@ -1,9 +1,11 @@
 {
  "type": "PROMOTIONLINE_GREEDY",
- "description": "TXT_KEY_PROMOTIONLINE_GREEDY",
  "ui": {
   "art": {
    "icon": "art/Buttons/Traits/TraitGreedy.dds"
   }
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTIONLINE_GREEDY"
  }
 }

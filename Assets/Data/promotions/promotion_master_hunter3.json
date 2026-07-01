@@ -1,6 +1,5 @@
 {
  "type": "PROMOTION_MASTER_HUNTER3",
- "description": "TXT_KEY_PROMOTION_MASTER_HUNTER3",
  "skills": {
   "enemyRoute": true
  },
@@ -21,6 +20,7 @@
   "sound": "AS2D_IF_LEVELUP"
  },
  "identity": {
+  "description": "TXT_KEY_PROMOTION_MASTER_HUNTER3",
   "levelPrereq": 10,
   "unitCombats": [
    "UNITCOMBAT_HUNTER"

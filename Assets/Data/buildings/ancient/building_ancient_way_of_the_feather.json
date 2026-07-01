@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_ANCIENT_WAY_OF_THE_FEATHER",
- "description": "TXT_KEY_BUILDING_ANCIENT_WAY_OF_THE_FEATHER",
- "civilopedia": "TXT_KEY_BUILDING_ANCIENT_WAY_OF_THE_FEATHER_PEDIA",
  "obsoletedBy": {
   "techs": [
    "TECH_CLASSICAL_LIFESTYLE"
@@ -56,6 +54,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_ANCIENT_WAY_OF_THE_FEATHER",
+  "civilopedia": "TXT_KEY_BUILDING_ANCIENT_WAY_OF_THE_FEATHER_PEDIA",
   "worth": 3,
   "militaryWorth": 5,
   "conquestProbability": 100,

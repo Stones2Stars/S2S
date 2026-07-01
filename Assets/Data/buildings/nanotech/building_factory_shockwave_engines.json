@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_FACTORY_SHOCKWAVE_ENGINES",
- "description": "TXT_KEY_BUILDING_FACTORY_SHOCKWAVE_ENGINES",
- "civilopedia": "TXT_KEY_BUILDING_FACTORY_SHOCKWAVE_ENGINES_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_NANOTECH_COMPLEX"
@@ -99,6 +97,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_FACTORY_SHOCKWAVE_ENGINES",
+  "civilopedia": "TXT_KEY_BUILDING_FACTORY_SHOCKWAVE_ENGINES_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

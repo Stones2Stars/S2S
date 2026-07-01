@@ -1,7 +1,5 @@
 {
  "type": "TERRAIN_SALT_FLATS",
- "description": "TXT_KEY_TERRAIN_SALT_FLATS",
- "civilopedia": "TXT_KEY_TERRAIN_SALT_FLATS_PEDIA",
  "commerce": {
   "plot": {
    "flat": [
@@ -132,6 +130,8 @@
   "soundscape": "ASSS_DESERT_SELECT_AMB"
  },
  "identity": {
+  "description": "TXT_KEY_TERRAIN_SALT_FLATS",
+  "civilopedia": "TXT_KEY_TERRAIN_SALT_FLATS_PEDIA",
   "foundCoast": true,
   "foundFreshWater": true,
   "movementCost": 1,

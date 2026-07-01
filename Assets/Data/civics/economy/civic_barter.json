@@ -1,8 +1,5 @@
 {
  "type": "CIVIC_BARTER",
- "description": "TXT_KEY_CIVIC_BARTER",
- "civilopedia": "TXT_KEY_CIVIC_BARTER_PEDIA",
- "strategy": "TXT_KEY_CIVIC_BARTER_STRATEGY",
  "enables": {
   "buildings": [
    "BUILDING_WET_NURSE"
@@ -84,6 +81,9 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_CIVIC_BARTER",
+  "civilopedia": "TXT_KEY_CIVIC_BARTER_PEDIA",
+  "strategy": "TXT_KEY_CIVIC_BARTER_STRATEGY",
   "civicOption": "CIVICOPTION_ECONOMY"
  }
 }

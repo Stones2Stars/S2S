@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_SPIKED_PIT_TRAPS",
- "description": "TXT_KEY_BUILDING_SPIKED_PIT_TRAPS",
- "civilopedia": "TXT_KEY_BUILDING_SPIKED_PIT_TRAPS_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_MECHANICAL_TRAPS"
@@ -105,6 +103,8 @@
   "construct": "AS2D_BUILD_FORGE"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_SPIKED_PIT_TRAPS",
+  "civilopedia": "TXT_KEY_BUILDING_SPIKED_PIT_TRAPS_PEDIA",
   "enabledCivilizations": [
    "CIVILIZATION_NPC_NEANDERTHAL"
   ],

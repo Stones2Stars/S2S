@@ -1,7 +1,5 @@
 {
  "type": "TERRAIN_MARTIAN_PERMAFROST",
- "description": "TXT_KEY_TERRAIN_MARTIAN_PERMAFROST",
- "civilopedia": "TXT_KEY_TERRAIN_MARTIAN_PERMAFROST_PEDIA",
  "commerce": {
   "plot": {
    "flat": 2
@@ -31,6 +29,8 @@
   "soundscape": "ASSS_TUNDRA_SELECT_AMB"
  },
  "identity": {
+  "description": "TXT_KEY_TERRAIN_MARTIAN_PERMAFROST",
+  "civilopedia": "TXT_KEY_TERRAIN_MARTIAN_PERMAFROST_PEDIA",
   "found": true,
   "movementCost": 3,
   "mapCategories": [

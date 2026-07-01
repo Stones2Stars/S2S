@@ -1,7 +1,5 @@
 {
  "type": "TERRAIN_DESERT",
- "description": "TXT_KEY_TERRAIN_DESERT",
- "civilopedia": "TXT_KEY_TERRAIN_DESERT_PEDIA",
  "commerce": {
   "plot": {
    "flat": [
@@ -131,6 +129,8 @@
   "soundscape": "ASSS_DESERT_SELECT_AMB"
  },
  "identity": {
+  "description": "TXT_KEY_TERRAIN_DESERT",
+  "civilopedia": "TXT_KEY_TERRAIN_DESERT_PEDIA",
   "foundCoast": true,
   "foundFreshWater": true,
   "movementCost": 2,

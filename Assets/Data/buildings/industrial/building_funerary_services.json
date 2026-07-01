@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_FUNERARY_SERVICES",
- "description": "TXT_KEY_BUILDING_FUNERARY_SERVICES",
- "civilopedia": "TXT_KEY_BUILDING_FUNERARY_SERVICES_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_CAPUCHIN_CRYPT",
@@ -156,6 +154,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_FUNERARY_SERVICES",
+  "civilopedia": "TXT_KEY_BUILDING_FUNERARY_SERVICES_PEDIA",
   "conquestProbability": 70,
   "greatPeopleUnitType": "UNIT_PROPHET",
   "advisor": "ADVISOR_SCIENCE",

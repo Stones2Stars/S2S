@@ -1,13 +1,13 @@
 {
  "type": "BONUS_ZINC_ORE",
- "description": "TXT_KEY_BONUS_ZINC_ORE",
- "civilopedia": "TXT_KEY_BONUS_ZINC_ORE_PEDIA",
  "world": {
   "art": {
    "icon": "ART_DEF_BONUS_ZINC_ORE"
   }
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_ZINC_ORE",
+  "civilopedia": "TXT_KEY_BONUS_ZINC_ORE_PEDIA",
   "bonusClassType": "BONUSCLASS_MANUFACTURED"
  }
 }

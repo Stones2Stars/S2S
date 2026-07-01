@@ -1,7 +1,5 @@
 {
  "type": "UNIT_PROGRAMMER",
- "description": "TXT_KEY_UNIT_PROGRAMMER",
- "civilopedia": "TXT_KEY_UNIT_PROGRAMMER_PEDIA",
  "obsoletedBy": {
   "techs": [
    "TECH_COMPREHENSIVE_CYBERNETICS"
@@ -72,6 +70,8 @@
   "hurryCostModifier": 25
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_PROGRAMMER",
+  "civilopedia": "TXT_KEY_UNIT_PROGRAMMER_PEDIA",
   "worth": 10,
   "militaryWorth": 10,
   "xpValueDefense": 2,

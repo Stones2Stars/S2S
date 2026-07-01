@@ -1,8 +1,5 @@
 {
  "type": "UNIT_TAMED_MAMMOTH",
- "description": "TXT_KEY_UNIT_TAMED_MAMMOTH",
- "civilopedia": "TXT_KEY_UNIT_TAMED_ANIMAL_PEDIA",
- "help": "TXT_KEY_UNIT_TAMED_ANIMALS_HELP",
  "requires": {
   "build": {
    "all": [
@@ -80,6 +77,9 @@
   "production": 140
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_TAMED_MAMMOTH",
+  "civilopedia": "TXT_KEY_UNIT_TAMED_ANIMAL_PEDIA",
+  "help": "TXT_KEY_UNIT_TAMED_ANIMALS_HELP",
   "worth": 1,
   "militaryWorth": 6,
   "xpValueAttack": 10,

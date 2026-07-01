@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_MITHRIL_IMPORTER",
- "description": "TXT_KEY_BUILDING_MITHRIL_IMPORTER",
- "civilopedia": "TXT_KEY_BUILDING_MITHRIL_IMPORTER_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -55,6 +53,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_MITHRIL_IMPORTER",
+  "civilopedia": "TXT_KEY_BUILDING_MITHRIL_IMPORTER_PEDIA",
   "conquestProbability": 100,
   "greatPeopleUnitType": "UNIT_ARTIST",
   "advisor": "ADVISOR_SCIENCE",

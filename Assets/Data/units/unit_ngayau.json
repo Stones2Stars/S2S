@@ -1,7 +1,5 @@
 {
  "type": "UNIT_NGAYAU",
- "description": "TXT_KEY_UNIT_NGAYAU",
- "civilopedia": "TXT_KEY_UNIT_NGAYAU_PEDIA",
  "obsoletedBy": {
   "techs": [
    "TECH_FEUDALISM"
@@ -76,6 +74,8 @@
   "upkeep": 1
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_NGAYAU",
+  "civilopedia": "TXT_KEY_UNIT_NGAYAU_PEDIA",
   "worth": 2,
   "militaryWorth": 2,
   "xpValueAttack": 8,

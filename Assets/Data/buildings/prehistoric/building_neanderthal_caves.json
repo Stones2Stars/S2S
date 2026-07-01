@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_NEANDERTHAL_CAVES",
- "description": "TXT_KEY_BUILDING_NEANDERTHAL_CAVES",
- "civilopedia": "TXT_KEY_BUILDING_NEANDERTHAL_CAVES_PEDIA",
  "obsoletedBy": {
   "techs": [
    "TECH_SEDENTARY_LIFESTYLE"
@@ -66,6 +64,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_NEANDERTHAL_CAVES",
+  "civilopedia": "TXT_KEY_BUILDING_NEANDERTHAL_CAVES_PEDIA",
   "enabledCivilizations": [
    "CIVILIZATION_NPC_NEANDERTHAL"
   ],

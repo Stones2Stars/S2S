@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_ARTESIAN_WELL",
- "description": "TXT_KEY_BUILDING_ARTESIAN_WELL",
- "civilopedia": "TXT_KEY_BUILDING_ARTESIAN_WELL_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_MODERN_WATERWORKS"
@@ -113,6 +111,8 @@
   "construct": "AS2D_BUILD_ARTESIAN_WELL"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_ARTESIAN_WELL",
+  "civilopedia": "TXT_KEY_BUILDING_ARTESIAN_WELL_PEDIA",
   "providesFreshWater": true,
   "worth": 3,
   "conquestProbability": 75,

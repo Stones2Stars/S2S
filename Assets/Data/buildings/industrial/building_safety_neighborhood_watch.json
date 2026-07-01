@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_SAFETY_NEIGHBORHOOD_WATCH",
- "description": "TXT_KEY_BUILDING_SAFETY_NEIGHBORHOOD_WATCH",
- "civilopedia": "TXT_KEY_BUILDING_SAFETY_NEIGHBORHOOD_WATCH_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -34,6 +32,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_SAFETY_NEIGHBORHOOD_WATCH",
+  "civilopedia": "TXT_KEY_BUILDING_SAFETY_NEIGHBORHOOD_WATCH_PEDIA",
   "notConstructible": true,
   "nukeImmune": true,
   "neverCapture": true,

@@ -1,7 +1,5 @@
 {
  "type": "UNIT_ROBOT_IMP_GUARD",
- "description": "TXT_KEY_UNIT_ROBOT_IMP_GUARD",
- "civilopedia": "TXT_KEY_UNIT_ROBOT_IMP_GUARD_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -39,6 +37,8 @@
   "upkeep": 1
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_ROBOT_IMP_GUARD",
+  "civilopedia": "TXT_KEY_UNIT_ROBOT_IMP_GUARD_PEDIA",
   "worth": 3,
   "militaryWorth": 20,
   "xpValueAttack": 3,

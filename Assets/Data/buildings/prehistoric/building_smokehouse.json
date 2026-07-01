@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_SMOKEHOUSE",
- "description": "TXT_KEY_BUILDING_SMOKEHOUSE",
- "civilopedia": "TXT_KEY_BUILDING_SMOKEHOUSE_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_DRIED_FISH_MAKER",
@@ -103,6 +101,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_SMOKEHOUSE",
+  "civilopedia": "TXT_KEY_BUILDING_SMOKEHOUSE_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

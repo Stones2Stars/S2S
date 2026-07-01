@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_WONDER_OF_NATURE_BASALT_ORGAN",
- "description": "TXT_KEY_BUILDING_WONDER_OF_NATURE_BASALT_ORGAN",
- "civilopedia": "TXT_KEY_BUILDING_WONDER_OF_NATURE_BASALT_ORGAN_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_RESOURCES_GRASS"
@@ -107,6 +105,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_WONDER_OF_NATURE_BASALT_ORGAN",
+  "civilopedia": "TXT_KEY_BUILDING_WONDER_OF_NATURE_BASALT_ORGAN_PEDIA",
   "enabledCivilizations": [
    "CIVILIZATION_NPC_NEANDERTHAL"
   ],

@@ -1,8 +1,5 @@
 {
  "type": "TECH_MODERN_PHYSICS",
- "description": "TXT_KEY_TECH_MODERN_PHYSICS",
- "civilopedia": "TXT_KEY_TECH_MODERN_PHYSICS_PEDIA",
- "quote": "TXT_KEY_TECH_MODERN_PHYSICS_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_ANIMAL_TESTING_LAB",
@@ -88,6 +85,9 @@
   "soundMP": "AS2D_TECH_MODERN_PHYSICS"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_MODERN_PHYSICS",
+  "civilopedia": "TXT_KEY_TECH_MODERN_PHYSICS_PEDIA",
+  "quote": "TXT_KEY_TECH_MODERN_PHYSICS_QUOTE",
   "era": "C2C_ERA_ATOMIC",
   "worth": 40,
   "tradeable": true,

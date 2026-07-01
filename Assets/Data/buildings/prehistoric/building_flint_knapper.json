@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_FLINT_KNAPPER",
- "description": "TXT_KEY_BUILDING_FLINT_KNAPPER",
- "civilopedia": "TXT_KEY_BUILDING_FLINT_KNAPPER_PEDIA",
  "obsoletedBy": {
   "techs": [
    "TECH_CITY_PLANNING"
@@ -81,6 +79,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_FLINT_KNAPPER",
+  "civilopedia": "TXT_KEY_BUILDING_FLINT_KNAPPER_PEDIA",
   "enabledCivilizations": [
    "CIVILIZATION_NPC_NEANDERTHAL"
   ],

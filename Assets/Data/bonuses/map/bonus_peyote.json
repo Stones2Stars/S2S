@@ -1,7 +1,5 @@
 {
  "type": "BONUS_PEYOTE",
- "description": "TXT_KEY_BONUS_PEYOTE",
- "civilopedia": "TXT_KEY_BONUS_PEYOTE_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_CULTURE_APACHE",
@@ -60,6 +58,8 @@
   ]
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_PEYOTE",
+  "civilopedia": "TXT_KEY_BONUS_PEYOTE_PEDIA",
   "bonusClassType": "BONUSCLASS_LUXURY"
  }
 }

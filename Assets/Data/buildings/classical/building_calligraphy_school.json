@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_CALLIGRAPHY_SCHOOL",
- "description": "TXT_KEY_BUILDING_CALLIGRAPHY_SCHOOL",
- "civilopedia": "TXT_KEY_BUILDING_CALLIGRAPHY_SCHOOL_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_ELEMENTARY_SCHOOL"
@@ -148,6 +146,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_CALLIGRAPHY_SCHOOL",
+  "civilopedia": "TXT_KEY_BUILDING_CALLIGRAPHY_SCHOOL_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

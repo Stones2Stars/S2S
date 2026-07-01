@@ -1,7 +1,5 @@
 {
  "type": "BONUS_RUBIES",
- "description": "TXT_KEY_BONUS_RUBIES",
- "civilopedia": "TXT_KEY_BONUS_RUBIES_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_CULTURE_GHURID",
@@ -59,6 +57,8 @@
   ]
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_RUBIES",
+  "civilopedia": "TXT_KEY_BONUS_RUBIES_PEDIA",
   "bonusClassType": "BONUSCLASS_LUXURY"
  }
 }

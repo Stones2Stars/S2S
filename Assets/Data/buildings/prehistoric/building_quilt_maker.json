@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_QUILT_MAKER",
- "description": "TXT_KEY_BUILDING_QUILT_MAKER",
- "civilopedia": "TXT_KEY_BUILDING_QUILT_MAKER_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_HYPERMARKET"
@@ -86,6 +84,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_QUILT_MAKER",
+  "civilopedia": "TXT_KEY_BUILDING_QUILT_MAKER_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

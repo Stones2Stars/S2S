@@ -1,8 +1,5 @@
 {
  "type": "TECH_ZOOLOGY",
- "description": "TXT_KEY_TECH_ZOOLOGY",
- "civilopedia": "TXT_KEY_TECH_ZOOLOGY_PEDIA",
- "quote": "TXT_KEY_TECH_ZOOLOGY_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_ANIMAL_SHELTER",
@@ -70,6 +67,9 @@
   "soundMP": "AS2D_TECH_ZOOLOGY"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_ZOOLOGY",
+  "civilopedia": "TXT_KEY_TECH_ZOOLOGY_PEDIA",
+  "quote": "TXT_KEY_TECH_ZOOLOGY_QUOTE",
   "era": "C2C_ERA_RENAISSANCE",
   "worth": 14,
   "tradeable": true,

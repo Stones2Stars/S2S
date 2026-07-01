@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_ATOMIC_CLOCK",
- "description": "TXT_KEY_BUILDING_ATOMIC_CLOCK",
- "civilopedia": "TXT_KEY_BUILDING_ATOMIC_CLOCK_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_GLOBAL_POSITIONING_SYSTEM"
@@ -66,6 +64,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_ATOMIC_CLOCK",
+  "civilopedia": "TXT_KEY_BUILDING_ATOMIC_CLOCK_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

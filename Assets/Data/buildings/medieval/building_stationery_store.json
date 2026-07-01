@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_STATIONERY_STORE",
- "description": "TXT_KEY_BUILDING_STATIONERY_STORE",
- "civilopedia": "TXT_KEY_BUILDING_STATIONERY_STORE_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_HYPERMARKET"
@@ -67,6 +65,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_STATIONERY_STORE",
+  "civilopedia": "TXT_KEY_BUILDING_STATIONERY_STORE_PEDIA",
   "conquestProbability": 70,
   "advisor": "ADVISOR_ECONOMY",
   "visibilityPriority": 1,

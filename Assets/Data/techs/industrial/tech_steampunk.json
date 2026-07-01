@@ -1,8 +1,5 @@
 {
  "type": "TECH_STEAMPUNK",
- "description": "TXT_KEY_TECH_STEAMPUNK",
- "civilopedia": "TXT_KEY_TECH_STEAMPUNK_PEDIA",
- "quote": "TXT_KEY_TECH_STEAMPUNK_QUOTE",
  "enables": {
   "bonuses": [
    "BONUS_STEAMPUNK"
@@ -65,6 +62,9 @@
   "soundMP": "AS2D_TECH_GENERIC"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_STEAMPUNK",
+  "civilopedia": "TXT_KEY_TECH_STEAMPUNK_PEDIA",
+  "quote": "TXT_KEY_TECH_STEAMPUNK_QUOTE",
   "era": "C2C_ERA_INDUSTRIAL",
   "gridX": 63,
   "gridY": 13,

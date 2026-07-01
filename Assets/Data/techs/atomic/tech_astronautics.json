@@ -1,8 +1,5 @@
 {
  "type": "TECH_ASTRONAUTICS",
- "description": "TXT_KEY_TECH_ASTRONAUTICS",
- "civilopedia": "TXT_KEY_TECH_ASTRONAUTICS_PEDIA",
- "quote": "TXT_KEY_TECH_ASTRONAUTICS_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_BAIKONUR_COSMODROME",
@@ -74,6 +71,9 @@
   "soundMP": "AS2D_TECH_SPACEFLIGHT"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_ASTRONAUTICS",
+  "civilopedia": "TXT_KEY_TECH_ASTRONAUTICS_PEDIA",
+  "quote": "TXT_KEY_TECH_ASTRONAUTICS_QUOTE",
   "era": "C2C_ERA_ATOMIC",
   "worth": 48,
   "militaryWorth": 4,

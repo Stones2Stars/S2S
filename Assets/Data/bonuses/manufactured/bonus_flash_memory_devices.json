@@ -1,7 +1,5 @@
 {
  "type": "BONUS_FLASH_MEMORY_DEVICES",
- "description": "TXT_KEY_BONUS_FLASH_MEMORY_DEVICES",
- "civilopedia": "TXT_KEY_BONUS_FLASH_MEMORY_DEVICES_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_AUGMENTED_EQUIPMENT_CENTER",
@@ -23,6 +21,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_FLASH_MEMORY_DEVICES",
+  "civilopedia": "TXT_KEY_BONUS_FLASH_MEMORY_DEVICES_PEDIA",
   "bonusClassType": "BONUSCLASS_MANUFACTURED"
  }
 }

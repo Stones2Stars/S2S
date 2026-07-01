@@ -1,7 +1,5 @@
 {
  "type": "TECH_DUMMY",
- "description": "TXT_KEY_TECH_DUMMY",
- "civilopedia": "TXT_KEY_TECH_DUMMY_PEDIA",
  "enables": {
   "builds": [
    "BUILD_ELECTRIC_RAILROAD",
@@ -187,6 +185,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_TECH_DUMMY",
+  "civilopedia": "TXT_KEY_TECH_DUMMY_PEDIA",
   "era": "C2C_ERA_PREHISTORIC",
   "disable": true
  }

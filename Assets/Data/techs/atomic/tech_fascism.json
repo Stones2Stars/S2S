@@ -1,8 +1,5 @@
 {
  "type": "TECH_FASCISM",
- "description": "TXT_KEY_TECH_FASCISM",
- "civilopedia": "TXT_KEY_TECH_FASCISM_PEDIA",
- "quote": "TXT_KEY_TECH_FASCISM_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_BERLIN_WALL",
@@ -86,6 +83,9 @@
   "soundMP": "AS2D_TECH_MP_FASCISM"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_FASCISM",
+  "civilopedia": "TXT_KEY_TECH_FASCISM_PEDIA",
+  "quote": "TXT_KEY_TECH_FASCISM_QUOTE",
   "era": "C2C_ERA_ATOMIC",
   "worth": 40,
   "tradeable": true,

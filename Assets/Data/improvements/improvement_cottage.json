@@ -1,7 +1,5 @@
 {
  "type": "IMPROVEMENT_COTTAGE",
- "description": "TXT_KEY_IMPROVEMENT_COTTAGE",
- "civilopedia": "TXT_KEY_IMPROVEMENT_COTTAGE_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -47,6 +45,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_IMPROVEMENT_COTTAGE",
+  "civilopedia": "TXT_KEY_IMPROVEMENT_COTTAGE_PEDIA",
   "advancedStart": {
    "cost": 24
   },

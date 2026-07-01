@@ -1,7 +1,5 @@
 {
  "type": "LEADER_GREEN_MAN",
- "description": "TXT_KEY_LEADER_GREEN_MAN",
- "civilopedia": "TXT_KEY_LEADER_GREEN_MAN_PEDIA",
  "ai": {
   "npc": true,
   "war": {
@@ -80,5 +78,9 @@
    "C2C_ERA_TRANSCENDENT": "AS2D_DIPLO_WARDRUMS_LATE",
    "C2C_ERA_FUTURE": "AS2D_DIPLO_WARDRUMS_LATE"
   }
+ },
+ "identity": {
+  "description": "TXT_KEY_LEADER_GREEN_MAN",
+  "civilopedia": "TXT_KEY_LEADER_GREEN_MAN_PEDIA"
  }
 }

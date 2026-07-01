@@ -1,6 +1,5 @@
 {
  "type": "ROUTE_HIGHWAY",
- "description": "TXT_KEY_ROUTE_HIGHWAY",
  "food": {
   "plot": {
    "improvements": {
@@ -76,6 +75,7 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_ROUTE_HIGHWAY",
   "value": 6,
   "advancedStart": {
    "cost": 12

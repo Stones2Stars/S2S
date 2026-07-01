@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_DISTRICT_OFFICE",
- "description": "TXT_KEY_BUILDING_DISTRICT_OFFICE",
- "civilopedia": "TXT_KEY_BUILDING_DISTRICT_OFFICE_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -60,6 +58,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_DISTRICT_OFFICE",
+  "civilopedia": "TXT_KEY_BUILDING_DISTRICT_OFFICE_PEDIA",
   "worth": 3,
   "advisor": "ADVISOR_GROWTH",
   "visibilityPriority": 1,

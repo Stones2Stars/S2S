@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_POISON_CRAFTER",
- "description": "TXT_KEY_BUILDING_POISON_CRAFTER",
- "civilopedia": "TXT_KEY_BUILDING_POISON_CRAFTER_PEDIA",
  "enables": {
   "units": [
    "UNIT_AMBUSHER",
@@ -71,6 +69,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_POISON_CRAFTER",
+  "civilopedia": "TXT_KEY_BUILDING_POISON_CRAFTER_PEDIA",
   "enabledCivilizations": [
    "CIVILIZATION_NPC_NEANDERTHAL"
   ],

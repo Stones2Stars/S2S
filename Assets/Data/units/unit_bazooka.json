@@ -1,7 +1,5 @@
 {
  "type": "UNIT_BAZOOKA",
- "description": "TXT_KEY_UNIT_BAZOOKA",
- "civilopedia": "TXT_KEY_UNIT_BAZOOKA_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -71,6 +69,8 @@
   "upkeep": 1
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_BAZOOKA",
+  "civilopedia": "TXT_KEY_UNIT_BAZOOKA_PEDIA",
   "worth": 5,
   "militaryWorth": 140,
   "xpValueAttack": 2,

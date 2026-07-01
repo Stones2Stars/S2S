@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_BURJ_AL_ARAB",
- "description": "TXT_KEY_BUILDING_BURJ_AL_ARAB",
- "civilopedia": "TXT_KEY_BUILDING_BURJ_AL_ARAB_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -104,6 +102,8 @@
   "construct": "AS2D_BUILD_STONEHENGE"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_BURJ_AL_ARAB",
+  "civilopedia": "TXT_KEY_BUILDING_BURJ_AL_ARAB_PEDIA",
   "commerceDoubleTime": {
    "culture": 1000
   },

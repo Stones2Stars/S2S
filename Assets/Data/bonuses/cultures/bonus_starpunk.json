@@ -1,7 +1,5 @@
 {
  "type": "BONUS_STARPUNK",
- "description": "TXT_KEY_BONUS_STARPUNK",
- "civilopedia": "TXT_KEY_BONUS_STARPUNK_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_NEO_PYRAMID",
@@ -14,6 +12,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_STARPUNK",
+  "civilopedia": "TXT_KEY_BONUS_STARPUNK_PEDIA",
   "bonusClassType": "BONUSCLASS_GENMODS"
  }
 }

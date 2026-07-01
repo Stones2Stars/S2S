@@ -1,7 +1,5 @@
 {
  "type": "UNIT_MANDEKALU",
- "description": "TXT_KEY_UNIT_MANDEKALU",
- "civilopedia": "TXT_KEY_UNIT_MANDEKALU_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -158,6 +156,8 @@
   "upkeep": 1
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_MANDEKALU",
+  "civilopedia": "TXT_KEY_UNIT_MANDEKALU_PEDIA",
   "worth": 3,
   "militaryWorth": 15,
   "xpValueAttack": 6,

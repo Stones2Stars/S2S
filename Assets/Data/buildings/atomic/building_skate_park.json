@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_SKATE_PARK",
- "description": "TXT_KEY_BUILDING_SKATE_PARK",
- "civilopedia": "TXT_KEY_BUILDING_SKATE_PARK_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_ATHLETIC_MEGACOMPLEX"
@@ -72,6 +70,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_SKATE_PARK",
+  "civilopedia": "TXT_KEY_BUILDING_SKATE_PARK_PEDIA",
   "worth": 2,
   "advisor": "ADVISOR_CULTURE",
   "mapCategories": [

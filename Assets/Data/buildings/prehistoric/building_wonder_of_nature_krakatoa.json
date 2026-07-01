@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_WONDER_OF_NATURE_KRAKATOA",
- "description": "TXT_KEY_BUILDING_WONDER_OF_NATURE_KRAKATOA",
- "civilopedia": "TXT_KEY_BUILDING_WONDER_OF_NATURE_KRAKATOA_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_RESOURCES_CHARCOAL"
@@ -106,6 +104,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_WONDER_OF_NATURE_KRAKATOA",
+  "civilopedia": "TXT_KEY_BUILDING_WONDER_OF_NATURE_KRAKATOA_PEDIA",
   "enabledCivilizations": [
    "CIVILIZATION_NPC_NEANDERTHAL"
   ],

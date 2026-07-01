@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_HERD_BUFFALO",
- "description": "TXT_KEY_BUILDING_HERD_BUFFALO",
- "civilopedia": "TXT_KEY_BUILDING_HERD_BUFFALO_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_ANIMAL_TRAINER_BUFFALO",
@@ -53,6 +51,8 @@
   "construct": "SND_AMB_HORSE_COBBLESTONES"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_HERD_BUFFALO",
+  "civilopedia": "TXT_KEY_BUILDING_HERD_BUFFALO_PEDIA",
   "notConstructible": true,
   "worth": 3,
   "conquestProbability": 75,

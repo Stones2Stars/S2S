@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_BREEDING_PROGRAM_OSTRICH",
- "description": "TXT_KEY_BUILDING_BREEDING_PROGRAM_OSTRICH",
- "civilopedia": "TXT_KEY_BUILDING_BREEDING_PROGRAM_OSTRICH_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_FARM_ANIMAL_OSTRICH",
@@ -92,6 +90,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_BREEDING_PROGRAM_OSTRICH",
+  "civilopedia": "TXT_KEY_BUILDING_BREEDING_PROGRAM_OSTRICH_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

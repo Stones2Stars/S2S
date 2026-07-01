@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_RICE_TERRACE",
- "description": "TXT_KEY_BUILDING_RICE_TERRACE",
- "civilopedia": "TXT_KEY_BUILDING_RICE_TERRACE_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_RESOURCES_GRAINS"
@@ -83,6 +81,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_RICE_TERRACE",
+  "civilopedia": "TXT_KEY_BUILDING_RICE_TERRACE_PEDIA",
   "advisor": "ADVISOR_GROWTH",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

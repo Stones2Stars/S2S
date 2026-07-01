@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_MEETING_HALL",
- "description": "TXT_KEY_BUILDING_MEETING_HALL",
- "civilopedia": "TXT_KEY_BUILDING_MEETING_HALL_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_SPY_HIDEOUT"
@@ -131,6 +129,8 @@
   "construct": "AS2D_BUILD_BARRACKS"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_MEETING_HALL",
+  "civilopedia": "TXT_KEY_BUILDING_MEETING_HALL_PEDIA",
   "worth": 2,
   "militaryWorth": 3,
   "dcmAirbombMission": 2,

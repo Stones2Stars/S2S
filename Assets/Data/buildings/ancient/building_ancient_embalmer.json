@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_ANCIENT_EMBALMER",
- "description": "TXT_KEY_BUILDING_ANCIENT_EMBALMER",
- "civilopedia": "TXT_KEY_BUILDING_ANCIENT_EMBALMER_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_MODERN_EMBALMER"
@@ -117,6 +115,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_ANCIENT_EMBALMER",
+  "civilopedia": "TXT_KEY_BUILDING_ANCIENT_EMBALMER_PEDIA",
   "advisor": "ADVISOR_CULTURE",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

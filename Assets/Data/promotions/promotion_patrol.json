@@ -1,6 +1,5 @@
 {
  "type": "PROMOTION_PATROL",
- "description": "TXT_KEY_PROMOTION_PATROL",
  "capture": {
   "unit": {
    "probability": {
@@ -30,6 +29,7 @@
   "sound": "AS2D_IF_LEVELUP"
  },
  "identity": {
+  "description": "TXT_KEY_PROMOTION_PATROL",
   "unitCombats": [
    "UNITCOMBAT_ANIMAL"
   ]

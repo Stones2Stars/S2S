@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_DEEP_SPACE_ECOSYSTEM",
- "description": "TXT_KEY_BUILDING_DEEP_SPACE_ECOSYSTEM",
- "civilopedia": "TXT_KEY_BUILDING_DEEP_SPACE_ECOSYSTEM_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_DEEP_SPACE_ADVANCED_RECYCLING",
@@ -81,6 +79,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_DEEP_SPACE_ECOSYSTEM",
+  "civilopedia": "TXT_KEY_BUILDING_DEEP_SPACE_ECOSYSTEM_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

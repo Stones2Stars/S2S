@@ -1,8 +1,5 @@
 {
  "type": "TECH_HORSE_BREEDING",
- "description": "TXT_KEY_TECH_HORSE_BREEDING",
- "civilopedia": "TXT_KEY_TECH_HORSE_BREEDING_PEDIA",
- "quote": "TXT_KEY_TECH_HORSE_BREEDING_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_ASTROLOGICAL_INFLUENCE_OF_PISCES",
@@ -85,6 +82,9 @@
   "soundMP": "AS2D_TECH_HORSE_BREEDING2"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_HORSE_BREEDING",
+  "civilopedia": "TXT_KEY_TECH_HORSE_BREEDING_PEDIA",
+  "quote": "TXT_KEY_TECH_HORSE_BREEDING_QUOTE",
   "era": "C2C_ERA_CLASSICAL",
   "worth": 8,
   "militaryWorth": 10,

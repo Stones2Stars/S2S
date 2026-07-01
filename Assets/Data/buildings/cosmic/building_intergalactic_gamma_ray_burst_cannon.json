@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_INTERGALACTIC_GAMMA_RAY_BURST_CANNON",
- "description": "TXT_KEY_BUILDING_INTERGALACTIC_GAMMA_RAY_BURST_CANNON",
- "civilopedia": "TXT_KEY_BUILDING_INTERGALACTIC_GAMMA_RAY_BURST_CANNON_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_INTERGALACTIC_STAR_CANNON"
@@ -57,6 +55,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_INTERGALACTIC_GAMMA_RAY_BURST_CANNON",
+  "civilopedia": "TXT_KEY_BUILDING_INTERGALACTIC_GAMMA_RAY_BURST_CANNON_PEDIA",
   "sightRange": 1,
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,

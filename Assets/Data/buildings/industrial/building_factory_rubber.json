@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_FACTORY_RUBBER",
- "description": "TXT_KEY_BUILDING_FACTORY_RUBBER",
- "civilopedia": "TXT_KEY_BUILDING_FACTORY_RUBBER_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_MATERIALS_CONGLOMERATE"
@@ -116,6 +114,8 @@
   "construct": "AS2D_BUILD_RUBBER_FACTORY"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_FACTORY_RUBBER",
+  "civilopedia": "TXT_KEY_BUILDING_FACTORY_RUBBER_PEDIA",
   "worth": 6,
   "militaryWorth": 30,
   "conquestProbability": 75,

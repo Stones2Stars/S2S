@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_OCEAN_ADMINISTRATION",
- "description": "TXT_KEY_BUILDING_OCEAN_ADMINISTRATION",
- "civilopedia": "TXT_KEY_BUILDING_OCEAN_ADMINISTRATION_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_AUTOMATED_PORT",
@@ -240,6 +238,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_OCEAN_ADMINISTRATION",
+  "civilopedia": "TXT_KEY_BUILDING_OCEAN_ADMINISTRATION_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

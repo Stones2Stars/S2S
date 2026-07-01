@@ -1,7 +1,5 @@
 {
  "type": "SPECIALIST_GREAT_ENGINEER",
- "description": "TXT_KEY_SPECIALIST_GREAT_ENGINEER",
- "civilopedia": "TXT_KEY_CONCEPT_GREAT_PEOPLE_PEDIA",
  "production": {
   "city": {
    "flat": 3
@@ -44,6 +42,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_SPECIALIST_GREAT_ENGINEER",
+  "civilopedia": "TXT_KEY_CONCEPT_GREAT_PEOPLE_PEDIA",
   "categories": [
    "CATEGORY_SPECIALIST_GROUP_ARCHITECTURAL"
   ]

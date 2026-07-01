@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_VENUS_SURFACE_CITY",
- "description": "TXT_KEY_BUILDING_VENUS_SURFACE_CITY",
- "civilopedia": "TXT_KEY_BUILDING_VENUS_SURFACE_CITY_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_VENUS_AGRODOME",
@@ -94,6 +92,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_VENUS_SURFACE_CITY",
+  "civilopedia": "TXT_KEY_BUILDING_VENUS_SURFACE_CITY_PEDIA",
   "workableRadius": 3,
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,

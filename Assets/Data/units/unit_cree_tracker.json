@@ -1,7 +1,5 @@
 {
  "type": "UNIT_CREE_TRACKER",
- "description": "TXT_KEY_UNIT_CREE_TRACKER",
- "civilopedia": "TXT_KEY_UNIT_CREE_TRACKER_PEDIA",
  "obsoletedBy": {
   "techs": [
    "TECH_FEUDALISM"
@@ -116,6 +114,8 @@
   "upkeep": 1
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_CREE_TRACKER",
+  "civilopedia": "TXT_KEY_UNIT_CREE_TRACKER_PEDIA",
   "worth": 1,
   "militaryWorth": 4,
   "xpValueAttack": 6,

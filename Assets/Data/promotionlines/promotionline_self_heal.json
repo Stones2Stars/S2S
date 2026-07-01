@@ -1,12 +1,12 @@
 {
  "type": "PROMOTIONLINE_SELF_HEAL",
- "description": "TXT_KEY_PROMOTIONLINE_SELF_HEAL",
  "ui": {
   "art": {
    "icon": "Art/Buttons/Promotions/SelfHeal1Promotion.dds"
   }
  },
  "identity": {
+  "description": "TXT_KEY_PROMOTIONLINE_SELF_HEAL",
   "unitCombats": [
    "UNITCOMBAT_HEALS_AS_PEOPLE",
    "UNITCOMBAT_HEALS_AS_ANIMALS",

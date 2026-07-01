@@ -48,7 +48,7 @@ import os
 from collections import OrderedDict
 
 import engine
-from curate_common import put_art, emit_art
+from curate_common import put_art, emit_art, fold_text_to_identity
 from store import Store, REPO
 
 
@@ -113,6 +113,7 @@ def curate(typ, rec):
             ident[key] = vals
     if ident:
         out["identity"] = ident
+    fold_text_to_identity(out)   # TEXT -> identity (json.md §7)
     return out
 
 

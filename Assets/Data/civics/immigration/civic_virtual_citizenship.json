@@ -1,8 +1,5 @@
 {
  "type": "CIVIC_VIRTUAL_CITIZENSHIP",
- "description": "TXT_KEY_CIVIC_VIRTUAL_CITIZENSHIP",
- "civilopedia": "TXT_KEY_CIVIC_VIRTUAL_CITIZENSHIP_PEDIA",
- "strategy": "TXT_KEY_CIVIC_VIRTUAL_CITIZENSHIP_STRATEGY",
  "production": {
   "empire": {
    "percent": 5,
@@ -52,6 +49,9 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_CIVIC_VIRTUAL_CITIZENSHIP",
+  "civilopedia": "TXT_KEY_CIVIC_VIRTUAL_CITIZENSHIP_PEDIA",
+  "strategy": "TXT_KEY_CIVIC_VIRTUAL_CITIZENSHIP_STRATEGY",
   "civicOption": "CIVICOPTION_IMMIGRATION",
   "upkeepLevel": "UPKEEP_HIGH"
  }

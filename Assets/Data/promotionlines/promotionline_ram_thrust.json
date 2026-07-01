@@ -1,12 +1,12 @@
 {
  "type": "PROMOTIONLINE_RAM_THRUST",
- "description": "TXT_KEY_PROMOTIONLINE_RAM_THRUST",
  "ui": {
   "art": {
    "icon": "art/Buttons/Promotions/RamThrust1.dds"
   }
  },
  "identity": {
+  "description": "TXT_KEY_PROMOTIONLINE_RAM_THRUST",
   "unitCombats": [
    "UNITCOMBAT_SIEGE_GATECRASHER"
   ],

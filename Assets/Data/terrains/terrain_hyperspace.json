@@ -1,7 +1,5 @@
 {
  "type": "TERRAIN_HYPERSPACE",
- "description": "TXT_KEY_TERRAIN_HYPERSPACE",
- "civilopedia": "TXT_KEY_TERRAIN_HYPERSPACE_PEDIA",
  "commerce": {
   "plot": {
    "flat": 1
@@ -23,6 +21,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_TERRAIN_HYPERSPACE",
+  "civilopedia": "TXT_KEY_TERRAIN_HYPERSPACE_PEDIA",
   "found": true,
   "movementCost": 1,
   "mapCategories": [

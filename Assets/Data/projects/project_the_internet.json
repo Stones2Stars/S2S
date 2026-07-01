@@ -1,7 +1,5 @@
 {
  "type": "PROJECT_THE_INTERNET",
- "description": "TXT_KEY_PROJECT_THE_INTERNET",
- "civilopedia": "TXT_KEY_PROJECT_THE_INTERNET_PEDIA",
  "buildRate": {
   "self": {
    "percent": [
@@ -51,6 +49,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_PROJECT_THE_INTERNET",
+  "civilopedia": "TXT_KEY_PROJECT_THE_INTERNET_PEDIA",
   "mapCategories": [
    "MAPCATEGORY_EARTH"
   ],

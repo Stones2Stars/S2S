@@ -1,7 +1,5 @@
 {
  "type": "UNIT_ASTRONAUTIC_TECHNICIAN",
- "description": "TXT_KEY_UNIT_ASTRONAUTIC_TECHNICIAN",
- "civilopedia": "TXT_KEY_UNIT_ASTRONAUTIC_TECHNICIAN_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -87,6 +85,8 @@
   "hurryCostModifier": 25
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_ASTRONAUTIC_TECHNICIAN",
+  "civilopedia": "TXT_KEY_UNIT_ASTRONAUTIC_TECHNICIAN_PEDIA",
   "worth": 12,
   "militaryWorth": 25,
   "xpValueDefense": 2,

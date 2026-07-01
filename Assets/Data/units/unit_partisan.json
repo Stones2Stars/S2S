@@ -1,7 +1,5 @@
 {
  "type": "UNIT_PARTISAN",
- "description": "TXT_KEY_UNIT_PARTISAN",
- "civilopedia": "TXT_KEY_UNIT_PARTISAN_PEDIA",
  "obsoletedBy": {
   "techs": [
    "TECH_GUERRILLA_WARFARE"
@@ -149,6 +147,8 @@
   "upkeep": 7
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_PARTISAN",
+  "civilopedia": "TXT_KEY_UNIT_PARTISAN_PEDIA",
   "worth": 7,
   "militaryWorth": 20,
   "xpValueAttack": 3,

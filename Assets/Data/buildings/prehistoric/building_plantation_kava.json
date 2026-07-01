@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_PLANTATION_KAVA",
- "description": "TXT_KEY_BUILDING_PLANTATION_KAVA",
- "civilopedia": "TXT_KEY_BUILDING_PLANTATION_KAVA_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_RESOURCES_DRUGS"
@@ -76,6 +74,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_PLANTATION_KAVA",
+  "civilopedia": "TXT_KEY_BUILDING_PLANTATION_KAVA_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

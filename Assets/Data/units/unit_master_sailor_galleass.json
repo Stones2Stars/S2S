@@ -1,7 +1,5 @@
 {
  "type": "UNIT_MASTER_SAILOR_GALLEASS",
- "description": "TXT_KEY_UNIT_MASTER_SAILOR_GALLEASS",
- "civilopedia": "TXT_KEY_UNIT_GALLEASS_PEDIA",
  "obsoletedBy": {
   "techs": [
    "TECH_COMPASS"
@@ -85,6 +83,8 @@
   "upkeep": 1
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_MASTER_SAILOR_GALLEASS",
+  "civilopedia": "TXT_KEY_UNIT_GALLEASS_PEDIA",
   "spawnOnly": true,
   "worth": 1,
   "militaryWorth": 10,

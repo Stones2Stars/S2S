@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_GROVE_TIMBER",
- "description": "TXT_KEY_BUILDING_GROVE_TIMBER",
- "civilopedia": "TXT_KEY_BUILDING_GROVE_TIMBER_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_RESOURCES_WOOD"
@@ -71,6 +69,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_GROVE_TIMBER",
+  "civilopedia": "TXT_KEY_BUILDING_GROVE_TIMBER_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

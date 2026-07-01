@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_ORDINANCE_EFFECT_CLEAN_AIR_ACT",
- "description": "TXT_KEY_BUILDING_ORDINANCE_EFFECT_CLEAN_AIR_ACT",
- "civilopedia": "TXT_KEY_BUILDING_ORDINANCE_EFFECT_CLEAN_AIR_ACT_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -34,6 +32,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_ORDINANCE_EFFECT_CLEAN_AIR_ACT",
+  "civilopedia": "TXT_KEY_BUILDING_ORDINANCE_EFFECT_CLEAN_AIR_ACT_PEDIA",
   "notConstructible": true,
   "nukeImmune": true,
   "neverCapture": true,

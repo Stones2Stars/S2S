@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_SPEAKEASY",
- "description": "TXT_KEY_BUILDING_SPEAKEASY",
- "civilopedia": "TXT_KEY_BUILDING_SPEAKEASY_PEDIA",
  "obsoletedBy": {
   "techs": [
    "TECH_SYNTHETIC_SYNESTHESIA"
@@ -72,6 +70,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_SPEAKEASY",
+  "civilopedia": "TXT_KEY_BUILDING_SPEAKEASY_PEDIA",
   "conquestProbability": 70,
   "advisor": "ADVISOR_ECONOMY",
   "visibilityPriority": 1,

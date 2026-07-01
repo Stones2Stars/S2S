@@ -1,8 +1,5 @@
 {
  "type": "TECH_CITY_PLANNING",
- "description": "TXT_KEY_TECH_CITY_PLANNING",
- "civilopedia": "TXT_KEY_TECH_CITY_PLANNING_PEDIA",
- "quote": "TXT_KEY_TECH_CITY_PLANNING_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_CITY_COUNCIL",
@@ -90,6 +87,9 @@
   "soundMP": "AS2D_TECH_CITY_PLANNING"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_CITY_PLANNING",
+  "civilopedia": "TXT_KEY_TECH_CITY_PLANNING_PEDIA",
+  "quote": "TXT_KEY_TECH_CITY_PLANNING_QUOTE",
   "era": "C2C_ERA_CLASSICAL",
   "worth": 16,
   "militaryWorth": 4,

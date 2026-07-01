@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_BREEDING_PROGRAM_GIRAFFE",
- "description": "TXT_KEY_BUILDING_BREEDING_PROGRAM_GIRAFFE",
- "civilopedia": "TXT_KEY_BUILDING_BREEDING_PROGRAM_GIRAFFE_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_ANIMAL_TRAINER_GIRAFFE",
@@ -92,6 +90,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_BREEDING_PROGRAM_GIRAFFE",
+  "civilopedia": "TXT_KEY_BUILDING_BREEDING_PROGRAM_GIRAFFE_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

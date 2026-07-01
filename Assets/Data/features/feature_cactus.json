@@ -1,7 +1,5 @@
 {
  "type": "FEATURE_CACTUS",
- "description": "TXT_KEY_FEATURE_CACTUS",
- "civilopedia": "TXT_KEY_FEATURE_CACTUS_PEDIA",
  "food": {
   "plot": {
    "flat": 1
@@ -71,6 +69,8 @@
   "soundscape": "ASSS_DESERT_SELECT_AMB"
  },
  "identity": {
+  "description": "TXT_KEY_FEATURE_CACTUS",
+  "civilopedia": "TXT_KEY_FEATURE_CACTUS_PEDIA",
   "appearance": 800,
   "growth": 10,
   "popDestroys": 10,

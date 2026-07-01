@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_WAREHOUSE",
- "description": "TXT_KEY_BUILDING_WAREHOUSE",
- "civilopedia": "TXT_KEY_BUILDING_WAREHOUSE_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_IKHANDA",
@@ -81,6 +79,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_WAREHOUSE",
+  "civilopedia": "TXT_KEY_BUILDING_WAREHOUSE_PEDIA",
   "worth": 8,
   "militaryWorth": 4,
   "advisor": "ADVISOR_ECONOMY",

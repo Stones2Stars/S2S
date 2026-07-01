@@ -1,7 +1,5 @@
 {
  "type": "UNIT_LUNAR_WORKER",
- "description": "TXT_KEY_UNIT_LUNAR_WORKER",
- "civilopedia": "TXT_KEY_UNIT_WORKER_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -39,6 +37,8 @@
   "upkeep": 1
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_LUNAR_WORKER",
+  "civilopedia": "TXT_KEY_UNIT_WORKER_PEDIA",
   "worth": 1,
   "domain": "DOMAIN_LAND",
   "defaultUnitAI": "UNITAI_WORKER",

@@ -1,8 +1,5 @@
 {
  "type": "TRAIT_IMPULSIVE",
- "description": "TXT_KEY_TRAIT_IMPULSIVE",
- "civilopedia": "TXT_KEY_TRAIT_IMPULSIVE_PEDIA",
- "strategy": "TXT_KEY_TRAIT_IMPULSIVE_STRATEGY",
  "excludes": [
   "TRAIT_ORGANIZED"
  ],
@@ -144,6 +141,9 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_TRAIT_IMPULSIVE",
+  "civilopedia": "TXT_KEY_TRAIT_IMPULSIVE_PEDIA",
+  "strategy": "TXT_KEY_TRAIT_IMPULSIVE_STRATEGY",
   "negativeTrait": true
  }
 }

@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_WATER_TROUGH",
- "description": "TXT_KEY_BUILDING_WATER_TROUGH",
- "civilopedia": "TXT_KEY_BUILDING_WATER_TROUGH_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_ARTESIAN_WELL"
@@ -69,6 +67,8 @@
   "construct": "AS2D_BUILD_RIVER_PORT"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_WATER_TROUGH",
+  "civilopedia": "TXT_KEY_BUILDING_WATER_TROUGH_PEDIA",
   "worth": 4,
   "conquestProbability": 50,
   "advisor": "ADVISOR_ECONOMY",

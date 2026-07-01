@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_DINING_HALL",
- "description": "TXT_KEY_BUILDING_DINING_HALL",
- "civilopedia": "TXT_KEY_BUILDING_DINING_HALL_PEDIA",
  "obsoletedBy": {
   "techs": [
    "TECH_CITY_PLANNING"
@@ -76,6 +74,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_DINING_HALL",
+  "civilopedia": "TXT_KEY_BUILDING_DINING_HALL_PEDIA",
   "advisor": "ADVISOR_GROWTH",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

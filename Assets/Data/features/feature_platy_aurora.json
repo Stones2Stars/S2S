@@ -1,7 +1,5 @@
 {
  "type": "FEATURE_PLATY_AURORA",
- "description": "TXT_KEY_FEATURE_AURORA",
- "civilopedia": "TXT_KEY_FEATURE_AURORA_PEDIA",
  "world": {
   "art": {
    "icon": "ART_DEF_FEATURE_AURORA"
@@ -11,6 +9,8 @@
   "soundscape": "ASSS_OASIS_SELECT_AMB"
  },
  "identity": {
+  "description": "TXT_KEY_FEATURE_AURORA",
+  "civilopedia": "TXT_KEY_FEATURE_AURORA_PEDIA",
   "noCity": true,
   "noImprovement": true,
   "noBonus": true,

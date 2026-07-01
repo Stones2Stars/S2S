@@ -1,7 +1,5 @@
 {
  "type": "BONUS_RAPA_NUI",
- "description": "TXT_KEY_BONUS_RAPA_NUI",
- "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
  "enables": {
   "builds": [
    "BUILD_MOAI_STATUES"
@@ -16,6 +14,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_RAPA_NUI",
+  "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
   "bonusClassType": "BONUSCLASS_CULTURE"
  }
 }

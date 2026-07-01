@@ -1,8 +1,5 @@
 {
  "type": "TECH_PAVED_ROADS",
- "description": "TXT_KEY_TECH_PAVED_ROADS",
- "civilopedia": "TXT_KEY_TECH_PAVED_ROADS_PEDIA",
- "quote": "TXT_KEY_TECH_PAVED_ROADS_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_PAVED_ROADS",
@@ -72,6 +69,9 @@
   "soundMP": "AS2D_TECH_PAVED_ROADS"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_PAVED_ROADS",
+  "civilopedia": "TXT_KEY_TECH_PAVED_ROADS_PEDIA",
+  "quote": "TXT_KEY_TECH_PAVED_ROADS_QUOTE",
   "era": "C2C_ERA_CLASSICAL",
   "worth": 24,
   "militaryWorth": 8,

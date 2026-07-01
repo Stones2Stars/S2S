@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_MINE_IRON",
- "description": "TXT_KEY_BUILDING_MINE_IRON",
- "civilopedia": "TXT_KEY_BUILDING_MINE_IRON_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_GRAND_EARTH_FESTIVAL",
@@ -76,6 +74,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_MINE_IRON",
+  "civilopedia": "TXT_KEY_BUILDING_MINE_IRON_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

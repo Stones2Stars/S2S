@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_NANOBOT_WALLS",
- "description": "TXT_KEY_BUILDING_NANOBOT_WALLS",
- "civilopedia": "TXT_KEY_BUILDING_NANOBOT_WALLS_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_SMART_DUST_WALLS"
@@ -73,6 +71,8 @@
   "construct": "AS2D_BUILD_WALLS"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_NANOBOT_WALLS",
+  "civilopedia": "TXT_KEY_BUILDING_NANOBOT_WALLS_PEDIA",
   "worth": 1,
   "militaryWorth": 2,
   "conquestProbability": 30,

@@ -1,8 +1,5 @@
 {
  "type": "BUILDING_SLAVE_MARKET",
- "description": "TXT_KEY_BUILDING_SLAVE_MARKET",
- "civilopedia": "TXT_KEY_BUILDING_SLAVE_MARKET_PEDIA",
- "help": "TXT_KEY_BUILDING_SLAVE_MARKET_HELP",
  "requires": {
   "build": {
    "all": [
@@ -73,6 +70,9 @@
   "construct": "AS2D_BUILD_SLAVE_MARKET"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_SLAVE_MARKET",
+  "civilopedia": "TXT_KEY_BUILDING_SLAVE_MARKET_PEDIA",
+  "help": "TXT_KEY_BUILDING_SLAVE_MARKET_HELP",
   "neverCapture": true,
   "worth": 3,
   "advisor": "ADVISOR_ECONOMY",

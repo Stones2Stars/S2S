@@ -1,7 +1,5 @@
 {
  "type": "UNIT_A10_BOMBER",
- "description": "TXT_KEY_UNIT_A10_BOMBER",
- "civilopedia": "TXT_KEY_UNIT_A10_BOMBER_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -105,6 +103,8 @@
   "upkeep": 5
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_A10_BOMBER",
+  "civilopedia": "TXT_KEY_UNIT_A10_BOMBER_PEDIA",
   "worth": 3,
   "militaryWorth": 250,
   "xpValueAttack": 6,

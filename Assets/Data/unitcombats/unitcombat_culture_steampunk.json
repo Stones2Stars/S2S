@@ -1,12 +1,12 @@
 {
  "type": "UNITCOMBAT_CULTURE_STEAMPUNK",
- "description": "TXT_KEY_UNITCOMBAT_CULTURE_STEAMPUNK",
  "ui": {
   "art": {
    "icon": "Art/Interface/Buttons/units/sparth/categories/culture_steampunk.dds"
   }
  },
  "identity": {
+  "description": "TXT_KEY_UNITCOMBAT_CULTURE_STEAMPUNK",
   "culture": "BONUS_STEAMPUNK"
  }
 }

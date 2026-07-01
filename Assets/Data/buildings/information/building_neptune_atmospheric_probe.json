@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_NEPTUNE_ATMOSPHERIC_PROBE",
- "description": "TXT_KEY_BUILDING_NEPTUNE_ATMOSPHERIC_PROBE",
- "civilopedia": "TXT_KEY_BUILDING_NEPTUNE_ATMOSPHERIC_PROBE_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -51,6 +49,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_NEPTUNE_ATMOSPHERIC_PROBE",
+  "civilopedia": "TXT_KEY_BUILDING_NEPTUNE_ATMOSPHERIC_PROBE_PEDIA",
   "conquestProbability": 100,
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,

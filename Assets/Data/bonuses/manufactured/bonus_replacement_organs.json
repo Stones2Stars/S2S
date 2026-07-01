@@ -1,7 +1,5 @@
 {
  "type": "BONUS_REPLACEMENT_ORGANS",
- "description": "TXT_KEY_BONUS_REPLACEMENT_ORGANS",
- "civilopedia": "TXT_KEY_BONUS_REPLACEMENT_ORGANS_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_AUGMENTED_ORGAN_LAB"
@@ -18,6 +16,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_REPLACEMENT_ORGANS",
+  "civilopedia": "TXT_KEY_BONUS_REPLACEMENT_ORGANS_PEDIA",
   "bonusClassType": "BONUSCLASS_MANUFACTURED"
  }
 }

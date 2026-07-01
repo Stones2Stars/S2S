@@ -1,8 +1,5 @@
 {
  "type": "TECH_NEURON_ENGINEERING",
- "description": "TXT_KEY_TECH_NEURON_ENGINEERING",
- "civilopedia": "TXT_KEY_TECH_NEURON_ENGINEERING_PEDIA",
- "quote": "TXT_KEY_TECH_NEURON_ENGINEERING_QUOTE",
  "enables": {
   "bonuses": [
    "BONUS_HUMAN_MOD_COGNITIVE_ENHANCEMENT"
@@ -81,6 +78,9 @@
   "soundMP": "AS2D_TECH_NEURON_ENGINEERING"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_NEURON_ENGINEERING",
+  "civilopedia": "TXT_KEY_TECH_NEURON_ENGINEERING_PEDIA",
+  "quote": "TXT_KEY_TECH_NEURON_ENGINEERING_QUOTE",
   "era": "C2C_ERA_TRANSHUMAN",
   "worth": 48,
   "militaryWorth": 4,

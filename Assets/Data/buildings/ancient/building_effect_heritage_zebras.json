@@ -1,8 +1,5 @@
 {
  "type": "BUILDING_EFFECT_HERITAGE_ZEBRAS",
- "description": "TXT_KEY_BUILDING_EFFECT_HERITAGE_ZEBRAS",
- "civilopedia": "TXT_KEY_BUILDING_ANIMAL_TRAINER_ZEBRA_PEDIA",
- "help": "TXT_KEY_BUILDING_ANIMAL_TRAINER_ZEBRA_HELP",
  "enables": {
   "buildings": [
    "BUILDING_MILITARY_STANDARD_ZEBRA"
@@ -36,6 +33,9 @@
   "construct": "AS2D_BUILD_BARRACKS"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_EFFECT_HERITAGE_ZEBRAS",
+  "civilopedia": "TXT_KEY_BUILDING_ANIMAL_TRAINER_ZEBRA_PEDIA",
+  "help": "TXT_KEY_BUILDING_ANIMAL_TRAINER_ZEBRA_HELP",
   "notConstructible": true,
   "worth": 2,
   "conquestProbability": 100,

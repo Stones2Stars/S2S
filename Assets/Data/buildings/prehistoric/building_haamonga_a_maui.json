@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_HAAMONGA_A_MAUI",
- "description": "TXT_KEY_BUILDING_HAAMONGA_A_MAUI",
- "civilopedia": "TXT_KEY_BUILDING_HAAMONGA_A_MAUI_PEDIA",
  "obsoletedBy": {
   "techs": [
    "TECH_ASTRONOMY"
@@ -106,6 +104,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_HAAMONGA_A_MAUI",
+  "civilopedia": "TXT_KEY_BUILDING_HAAMONGA_A_MAUI_PEDIA",
   "centerInCity": true,
   "worth": 10,
   "conquestProbability": 100,

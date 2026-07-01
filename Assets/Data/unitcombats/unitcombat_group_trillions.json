@@ -1,6 +1,5 @@
 {
  "type": "UNITCOMBAT_GROUP_TRILLIONS",
- "description": "TXT_KEY_UNITCOMBAT_GROUP_TRILLIONS",
  "experience": {
   "unit": {
    "percent": -140
@@ -39,6 +38,7 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_UNITCOMBAT_GROUP_TRILLIONS",
   "base": {
    "group": 12
   }

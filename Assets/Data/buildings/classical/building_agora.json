@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_AGORA",
- "description": "TXT_KEY_BUILDING_AGORA",
- "civilopedia": "TXT_KEY_BUILDING_AGORA_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_FORUM"
@@ -105,6 +103,8 @@
   "construct": "AS2D_BUILD_AGORA"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_AGORA",
+  "civilopedia": "TXT_KEY_BUILDING_AGORA_PEDIA",
   "worth": 4,
   "advisor": "ADVISOR_ECONOMY",
   "visibilityPriority": 1,

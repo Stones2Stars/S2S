@@ -1,8 +1,5 @@
 {
  "type": "TECH_WEAPONIZED_LASERS",
- "description": "TXT_KEY_TECH_WEAPONIZED_LASERS",
- "civilopedia": "TXT_KEY_TECH_WEAPONIZED_LASERS_PEDIA",
- "quote": "TXT_KEY_TECH_WEAPONIZED_LASERS_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_BREAKTHROUGH_STARSHOT",
@@ -55,6 +52,9 @@
   "soundMP": "AS2D_TECH_WEAPONIZED_LASERS"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_WEAPONIZED_LASERS",
+  "civilopedia": "TXT_KEY_TECH_WEAPONIZED_LASERS_PEDIA",
+  "quote": "TXT_KEY_TECH_WEAPONIZED_LASERS_QUOTE",
   "era": "C2C_ERA_INFORMATION",
   "worth": 48,
   "militaryWorth": 5,

@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_SOLAR_NOVA_SURVIVAL_PLAN",
- "description": "TXT_KEY_BUILDING_SOLAR_NOVA_SURVIVAL_PLAN",
- "civilopedia": "TXT_KEY_BUILDING_SOLAR_NOVA_SURVIVAL_PLAN_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -63,6 +61,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_SOLAR_NOVA_SURVIVAL_PLAN",
+  "civilopedia": "TXT_KEY_BUILDING_SOLAR_NOVA_SURVIVAL_PLAN_PEDIA",
   "neverCapture": true,
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,

@@ -1,8 +1,5 @@
 {
  "type": "TECH_MATHEMATICS",
- "description": "TXT_KEY_TECH_MATHEMATICS",
- "civilopedia": "TXT_KEY_TECH_MATHEMATICS_PEDIA",
- "quote": "TXT_KEY_TECH_MATHEMATICS_QUOTE",
  "enables": {
   "bonuses": [
    "BONUS_GEOGLYPH_PLANS"
@@ -93,6 +90,9 @@
   "soundMP": "AS2D_TECH_MP_MATHEMATICS"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_MATHEMATICS",
+  "civilopedia": "TXT_KEY_TECH_MATHEMATICS_PEDIA",
+  "quote": "TXT_KEY_TECH_MATHEMATICS_QUOTE",
   "era": "C2C_ERA_CLASSICAL",
   "worth": 16,
   "militaryWorth": 6,

@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_CANDLEMAKERS_SHOP",
- "description": "TXT_KEY_BUILDING_CANDLEMAKERS_SHOP",
- "civilopedia": "TXT_KEY_BUILDING_CANDLEMAKERS_SHOP_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_FACTORY_CANDLES"
@@ -102,6 +100,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_CANDLEMAKERS_SHOP",
+  "civilopedia": "TXT_KEY_BUILDING_CANDLEMAKERS_SHOP_PEDIA",
   "nukeImmune": true,
   "conquestProbability": 80,
   "advisor": "ADVISOR_ECONOMY",

@@ -1,7 +1,5 @@
 {
  "type": "BONUS_IRON_INGOTS",
- "description": "TXT_KEY_BONUS_IRON_INGOTS",
- "civilopedia": "TXT_KEY_BONUS_INGOTS_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_SMELTER_STEEL",
@@ -14,6 +12,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_IRON_INGOTS",
+  "civilopedia": "TXT_KEY_BONUS_INGOTS_PEDIA",
   "bonusClassType": "BONUSCLASS_MANUFACTURED"
  }
 }

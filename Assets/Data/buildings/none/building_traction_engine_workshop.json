@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_TRACTION_ENGINE_WORKSHOP",
- "description": "TXT_KEY_BUILDING_TRACTION_ENGINE_WORKSHOP",
- "civilopedia": "TXT_KEY_BUILDING_TRACTION_ENGINE_WORKSHOP_PEDIA",
  "enables": {
   "units": [
    "UNIT_STEAM_TANK",
@@ -101,6 +99,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_TRACTION_ENGINE_WORKSHOP",
+  "civilopedia": "TXT_KEY_BUILDING_TRACTION_ENGINE_WORKSHOP_PEDIA",
   "worth": 5,
   "specialBuildingType": "SPECIALBUILDING_PUNK_STEAM",
   "advisor": "ADVISOR_MILITARY",

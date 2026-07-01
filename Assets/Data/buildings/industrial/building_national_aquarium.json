@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_NATIONAL_AQUARIUM",
- "description": "TXT_KEY_BUILDING_NATIONAL_AQUARIUM",
- "civilopedia": "TXT_KEY_BUILDING_NATIONAL_AQUARIUM_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_WORLD_WIDE_FUND_FOR_NATURE"
@@ -81,6 +79,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_NATIONAL_AQUARIUM",
+  "civilopedia": "TXT_KEY_BUILDING_NATIONAL_AQUARIUM_PEDIA",
   "neverCapture": true,
   "centerInCity": true,
   "worth": 10,

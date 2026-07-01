@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_STRATOSPHERIC_TOWER",
- "description": "TXT_KEY_BUILDING_STRATOSPHERIC_TOWER",
- "civilopedia": "TXT_KEY_BUILDING_STRATOSPHERIC_TOWER_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_ANTARCTIC_SKYSCRAPER",
@@ -77,6 +75,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_STRATOSPHERIC_TOWER",
+  "civilopedia": "TXT_KEY_BUILDING_STRATOSPHERIC_TOWER_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

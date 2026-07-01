@@ -1,6 +1,5 @@
 {
  "type": "PROMOTION_BUILD_UP_TERRITORIAL_VIGILANCE2",
- "description": "TXT_KEY_PROMOTION_BUILD_UP_TERRITORIAL_VIGILANCE2",
  "vision": {
   "visibilityIntensity": {
    "INVISIBLE_CAMOUFLAGE": 1
@@ -21,5 +20,8 @@
  },
  "sound": {
   "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_BUILD_UP_TERRITORIAL_VIGILANCE2"
  }
 }

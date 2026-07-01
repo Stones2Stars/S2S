@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_PLANTATION_CARDON_CACTUS",
- "description": "TXT_KEY_BUILDING_PLANTATION_CARDON_CACTUS",
- "civilopedia": "TXT_KEY_BUILDING_PLANTATION_CARDON_CACTUS_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_RESOURCES_FRUIT"
@@ -77,6 +75,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_PLANTATION_CARDON_CACTUS",
+  "civilopedia": "TXT_KEY_BUILDING_PLANTATION_CARDON_CACTUS_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

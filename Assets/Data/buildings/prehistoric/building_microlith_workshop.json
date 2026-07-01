@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_MICROLITH_WORKSHOP",
- "description": "TXT_KEY_BUILDING_MICROLITH_WORKSHOP",
- "civilopedia": "TXT_KEY_BUILDING_MICROLITH_WORKSHOP_PEDIA",
  "obsoletedBy": {
   "techs": [
    "TECH_IRON_WORKING"
@@ -73,6 +71,8 @@
   "construct": "AS2D_BUILD_BARRACKS"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_MICROLITH_WORKSHOP",
+  "civilopedia": "TXT_KEY_BUILDING_MICROLITH_WORKSHOP_PEDIA",
   "neverCapture": true,
   "worth": 2,
   "militaryWorth": 6,

@@ -1,6 +1,5 @@
 {
  "type": "PROMOTION_BUILD_UP_REVOLUTIONARY_SENTIMENT4",
- "description": "TXT_KEY_PROMOTION_BUILD_UP_REVOLUTIONARY_SENTIMENT4",
  "revoltProtection": {
   "unit": {
    "percent": -2
@@ -16,5 +15,8 @@
  },
  "sound": {
   "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_BUILD_UP_REVOLUTIONARY_SENTIMENT4"
  }
 }

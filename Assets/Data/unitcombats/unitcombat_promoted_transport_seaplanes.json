@@ -1,9 +1,11 @@
 {
  "type": "UNITCOMBAT_PROMOTED_TRANSPORT_SEAPLANES",
- "description": "TXT_KEY_UNITCOMBAT_PROMOTED_TRANSPORT_SEAPLANES",
  "ui": {
   "art": {
    "icon": "Art/Interface/Buttons/units/sparth/categories/transport_seaplanes.dds"
   }
+ },
+ "identity": {
+  "description": "TXT_KEY_UNITCOMBAT_PROMOTED_TRANSPORT_SEAPLANES"
  }
 }

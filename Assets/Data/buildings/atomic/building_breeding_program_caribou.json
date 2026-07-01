@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_BREEDING_PROGRAM_CARIBOU",
- "description": "TXT_KEY_BUILDING_BREEDING_PROGRAM_CARIBOU",
- "civilopedia": "TXT_KEY_BUILDING_BREEDING_PROGRAM_CARIBOU_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_RESOURCES_CARCASS"
@@ -106,6 +104,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_BREEDING_PROGRAM_CARIBOU",
+  "civilopedia": "TXT_KEY_BUILDING_BREEDING_PROGRAM_CARIBOU_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

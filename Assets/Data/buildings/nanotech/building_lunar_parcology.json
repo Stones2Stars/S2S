@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_LUNAR_PARCOLOGY",
- "description": "TXT_KEY_BUILDING_LUNAR_PARCOLOGY",
- "civilopedia": "TXT_KEY_BUILDING_LUNAR_PARCOLOGY_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_LUNAR_ARCOLOGY"
@@ -81,6 +79,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_LUNAR_PARCOLOGY",
+  "civilopedia": "TXT_KEY_BUILDING_LUNAR_PARCOLOGY_PEDIA",
   "conquestProbability": 70,
   "advisor": "ADVISOR_ECONOMY",
   "visibilityPriority": "1.0",

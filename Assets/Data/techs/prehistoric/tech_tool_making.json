@@ -1,8 +1,5 @@
 {
  "type": "TECH_TOOL_MAKING",
- "description": "TXT_KEY_TECH_TOOL_MAKING",
- "civilopedia": "TXT_KEY_TECH_TOOL_MAKING_PEDIA",
- "quote": "TXT_KEY_TECH_TOOL_MAKING_QUOTE",
  "enables": {
   "bonuses": [
    "BONUS_STONE",
@@ -86,6 +83,9 @@
   "soundMP": "AS2D_TECH_TOOL_MAKING"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_TOOL_MAKING",
+  "civilopedia": "TXT_KEY_TECH_TOOL_MAKING_PEDIA",
+  "quote": "TXT_KEY_TECH_TOOL_MAKING_QUOTE",
   "era": "C2C_ERA_PREHISTORIC",
   "worth": 8,
   "militaryWorth": 2,

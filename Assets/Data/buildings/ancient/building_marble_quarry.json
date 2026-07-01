@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_MARBLE_QUARRY",
- "description": "TXT_KEY_BUILDING_MARBLE_QUARRY",
- "civilopedia": "TXT_KEY_BUILDING_MARBLE_QUARRY_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_MODERN_EARTHWORKS"
@@ -68,6 +66,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_MARBLE_QUARRY",
+  "civilopedia": "TXT_KEY_BUILDING_MARBLE_QUARRY_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

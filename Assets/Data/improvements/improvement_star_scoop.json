@@ -1,7 +1,5 @@
 {
  "type": "IMPROVEMENT_STAR_SCOOP",
- "description": "TXT_KEY_IMPROVEMENT_STAR_SCOOP",
- "civilopedia": "TXT_KEY_IMPROVEMENT_STAR_SCOOP_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -33,6 +31,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_IMPROVEMENT_STAR_SCOOP",
+  "civilopedia": "TXT_KEY_IMPROVEMENT_STAR_SCOOP_PEDIA",
   "extraterrestrial": true,
   "pillageGold": 200
  }

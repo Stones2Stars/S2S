@@ -1,7 +1,5 @@
 {
  "type": "BONUS_BRICKS",
- "description": "TXT_KEY_BONUS_BRICKS",
- "civilopedia": "TXT_KEY_BONUS_BRICKS_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_AGORA",
@@ -171,6 +169,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_BRICKS",
+  "civilopedia": "TXT_KEY_BONUS_BRICKS_PEDIA",
   "bonusClassType": "BONUSCLASS_MANUFACTURED"
  }
 }

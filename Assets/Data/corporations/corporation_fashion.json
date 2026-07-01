@@ -1,7 +1,5 @@
 {
  "type": "CORPORATION_FASHION",
- "description": "TXT_KEY_BUILDING_CORPORATION_FASHION",
- "civilopedia": "TXT_KEY_BUILDING_CORPORATION_FASHION_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_FASHION_HOUSE_STORE"
@@ -73,6 +71,8 @@
   "sound": "AS2D_BUILD_BANK"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_CORPORATION_FASHION",
+  "civilopedia": "TXT_KEY_BUILDING_CORPORATION_FASHION_PEDIA",
   "spreadFactor": 200,
   "spread": 50
  }

@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_FOUR_COLOR_THEOREM",
- "description": "TXT_KEY_BUILDING_FOUR_COLOR_THEOREM",
- "civilopedia": "TXT_KEY_BUILDING_FOUR_COLOR_THEOREM_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -49,6 +47,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_FOUR_COLOR_THEOREM",
+  "civilopedia": "TXT_KEY_BUILDING_FOUR_COLOR_THEOREM_PEDIA",
   "conquestProbability": 100,
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,

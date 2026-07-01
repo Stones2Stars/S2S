@@ -1,8 +1,5 @@
 {
  "type": "TECH_COMBUSTION",
- "description": "TXT_KEY_TECH_COMBUSTION",
- "civilopedia": "TXT_KEY_TECH_COMBUSTION_PEDIA",
- "quote": "TXT_KEY_TECH_COMBUSTION_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_CREATIVE_CONSTRUCTIONS_CONTRACTORS",
@@ -88,6 +85,9 @@
   "soundMP": "AS2D_TECH_MP_COMBUSTION"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_COMBUSTION",
+  "civilopedia": "TXT_KEY_TECH_COMBUSTION_PEDIA",
+  "quote": "TXT_KEY_TECH_COMBUSTION_QUOTE",
   "era": "C2C_ERA_INDUSTRIAL",
   "worth": 40,
   "militaryWorth": 6,

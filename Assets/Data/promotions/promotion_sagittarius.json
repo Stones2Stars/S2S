@@ -1,7 +1,5 @@
 {
  "type": "PROMOTION_SAGITTARIUS",
- "description": "TXT_KEY_PROMOTION_SAGITTARIUS",
- "help": "TXT_KEY_PROMOTION_ASTRO_HELP",
  "firstStrike": {
   "unit": {
    "strikes": {
@@ -18,6 +16,8 @@
   "sound": "AS2D_IF_LEVELUP"
  },
  "identity": {
+  "description": "TXT_KEY_PROMOTION_SAGITTARIUS",
+  "help": "TXT_KEY_PROMOTION_ASTRO_HELP",
   "notOnUnitCombats": [
    "UNITCOMBAT_PACIFIST"
   ],

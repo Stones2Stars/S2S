@@ -1,6 +1,5 @@
 {
  "type": "PROMOTION_LEADER",
- "description": "TXT_KEY_PROMOTION_GREAT_GENERAL",
  "upkeep": {
   "unit": {
    "upgradeDiscount": {
@@ -24,6 +23,7 @@
   "sound": "AS2D_IF_LEVELUP"
  },
  "identity": {
+  "description": "TXT_KEY_PROMOTION_GREAT_GENERAL",
   "unitCombats": [
    "UNITCOMBAT_EXPLORER",
    "UNITCOMBAT_COMBATANT",

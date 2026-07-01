@@ -1,6 +1,5 @@
 {
  "type": "PROMOTION_TOPGUN",
- "description": "TXT_KEY_PROMOTION_TOPGUN",
  "experience": {
   "unit": {
    "percent": 20
@@ -30,6 +29,7 @@
   "sound": "AS2D_IF_LEVELUP"
  },
  "identity": {
+  "description": "TXT_KEY_PROMOTION_TOPGUN",
   "unitCombats": [
    "UNITCOMBAT_EARLY_FIGHTERS",
    "UNITCOMBAT_EARLY_BOMBERS",

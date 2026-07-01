@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_RED_CROSS",
- "description": "TXT_KEY_BUILDING_RED_CROSS",
- "civilopedia": "TXT_KEY_BUILDING_RED_CROSS_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -81,6 +79,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_RED_CROSS",
+  "civilopedia": "TXT_KEY_BUILDING_RED_CROSS_PEDIA",
   "commerceDoubleTime": {
    "culture": 1000
   },

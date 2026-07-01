@@ -1,8 +1,5 @@
 {
  "type": "CIVIC_WRITTEN_TRADITION",
- "description": "TXT_KEY_CIVIC_WRITTEN_TRADITION",
- "civilopedia": "TXT_KEY_CIVIC_WRITTEN_TRADITION_PEDIA",
- "strategy": "TXT_KEY_CIVIC_WRITTEN_TRADITION_STRATEGY",
  "food": {
   "empire": {
    "percent": 2
@@ -76,6 +73,9 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_CIVIC_WRITTEN_TRADITION",
+  "civilopedia": "TXT_KEY_CIVIC_WRITTEN_TRADITION_PEDIA",
+  "strategy": "TXT_KEY_CIVIC_WRITTEN_TRADITION_STRATEGY",
   "civicOption": "CIVICOPTION_EDUCATION",
   "upkeepLevel": "UPKEEP_LOW"
  }

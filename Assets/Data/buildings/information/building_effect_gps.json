@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_EFFECT_GPS",
- "description": "TXT_KEY_BUILDING_EFFECT_GPS",
- "civilopedia": "TXT_KEY_BUILDING_EFFECT_GPS_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_AUTOMATED_TAXI_SERVICE",
@@ -62,6 +60,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_EFFECT_GPS",
+  "civilopedia": "TXT_KEY_BUILDING_EFFECT_GPS_PEDIA",
   "notConstructible": true,
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,

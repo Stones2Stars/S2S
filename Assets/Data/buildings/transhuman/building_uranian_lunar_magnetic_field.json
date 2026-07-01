@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_URANIAN_LUNAR_MAGNETIC_FIELD",
- "description": "TXT_KEY_BUILDING_URANIAN_LUNAR_MAGNETIC_FIELD",
- "civilopedia": "TXT_KEY_BUILDING_URANIAN_LUNAR_MAGNETIC_FIELD_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_TERRAFORMED_OBERON",
@@ -48,6 +46,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_URANIAN_LUNAR_MAGNETIC_FIELD",
+  "civilopedia": "TXT_KEY_BUILDING_URANIAN_LUNAR_MAGNETIC_FIELD_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

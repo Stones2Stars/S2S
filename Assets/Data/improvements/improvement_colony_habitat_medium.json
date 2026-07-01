@@ -1,7 +1,5 @@
 {
  "type": "IMPROVEMENT_COLONY_HABITAT_MEDIUM",
- "description": "TXT_KEY_IMPROVEMENT_COLONY_HABITAT_MEDIUM",
- "civilopedia": "TXT_KEY_IMPROVEMENT_COTTAGE_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -50,6 +48,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_IMPROVEMENT_COLONY_HABITAT_MEDIUM",
+  "civilopedia": "TXT_KEY_IMPROVEMENT_COTTAGE_PEDIA",
   "extraterrestrial": true,
   "advancedStart": {
    "cost": -1

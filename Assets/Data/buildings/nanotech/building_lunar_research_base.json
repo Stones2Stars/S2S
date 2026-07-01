@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_LUNAR_RESEARCH_BASE",
- "description": "TXT_KEY_BUILDING_LUNAR_RESEARCH_BASE",
- "civilopedia": "TXT_KEY_BUILDING_LUNAR_RESEARCH_BASE_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -149,6 +147,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_LUNAR_RESEARCH_BASE",
+  "civilopedia": "TXT_KEY_BUILDING_LUNAR_RESEARCH_BASE_PEDIA",
   "conquestProbability": 70,
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": "1.0",

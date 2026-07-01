@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_INTERSTELLAR_DATA_COLLECTION",
- "description": "TXT_KEY_BUILDING_INTERSTELLAR_DATA_COLLECTION",
- "civilopedia": "TXT_KEY_BUILDING_INTERSTELLAR_DATA_COLLECTION_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_INTERSTELLAR_BIOMARKER_CATALOGUE",
@@ -61,6 +59,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_INTERSTELLAR_DATA_COLLECTION",
+  "civilopedia": "TXT_KEY_BUILDING_INTERSTELLAR_DATA_COLLECTION_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

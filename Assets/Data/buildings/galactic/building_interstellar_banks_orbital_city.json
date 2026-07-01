@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_INTERSTELLAR_BANKS_ORBITAL_CITY",
- "description": "TXT_KEY_BUILDING_INTERSTELLAR_BANKS_ORBITAL_CITY",
- "civilopedia": "TXT_KEY_BUILDING_INTERSTELLAR_BANKS_ORBITAL_CITY_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -47,6 +45,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_INTERSTELLAR_BANKS_ORBITAL_CITY",
+  "civilopedia": "TXT_KEY_BUILDING_INTERSTELLAR_BANKS_ORBITAL_CITY_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

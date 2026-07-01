@@ -1,8 +1,5 @@
 {
  "type": "TRAIT_AGGRESSIVE",
- "description": "TXT_KEY_TRAIT_COMPLEX_AGGRESSIVE",
- "civilopedia": "TXT_KEY_TRAIT_COMPLEX_AGGRESSIVE_PEDIA",
- "strategy": "TXT_KEY_TRAIT_COMPLEX_AGGRESSIVE_STRATEGY",
  "excludes": [
   "TRAIT_TIMID"
  ],
@@ -152,5 +149,10 @@
   "art": {
    "icon": "art/Buttons/Traits/TraitAggressive.dds"
   }
+ },
+ "identity": {
+  "description": "TXT_KEY_TRAIT_COMPLEX_AGGRESSIVE",
+  "civilopedia": "TXT_KEY_TRAIT_COMPLEX_AGGRESSIVE_PEDIA",
+  "strategy": "TXT_KEY_TRAIT_COMPLEX_AGGRESSIVE_STRATEGY"
  }
 }

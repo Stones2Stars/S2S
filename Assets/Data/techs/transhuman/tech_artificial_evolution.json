@@ -1,8 +1,5 @@
 {
  "type": "TECH_ARTIFICIAL_EVOLUTION",
- "description": "TXT_KEY_TECH_ARTIFICIAL_EVOLUTION",
- "civilopedia": "TXT_KEY_TECH_ARTIFICIAL_EVOLUTION_PEDIA",
- "quote": "TXT_KEY_TECH_ARTIFICIAL_EVOLUTION_QUOTE",
  "enables": {
   "bonuses": [
    "BONUS_HUMAN_MOD_LUNARIS",
@@ -72,6 +69,9 @@
   "soundMP": "AS2D_TECH_ARTIFICIAL_EVOLUTION"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_ARTIFICIAL_EVOLUTION",
+  "civilopedia": "TXT_KEY_TECH_ARTIFICIAL_EVOLUTION_PEDIA",
+  "quote": "TXT_KEY_TECH_ARTIFICIAL_EVOLUTION_QUOTE",
   "era": "C2C_ERA_TRANSHUMAN",
   "worth": 50,
   "militaryWorth": 10,

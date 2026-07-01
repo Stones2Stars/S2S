@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_INTERSTELLAR_TIMEHOLE",
- "description": "TXT_KEY_BUILDING_INTERSTELLAR_TIMEHOLE",
- "civilopedia": "TXT_KEY_BUILDING_INTERSTELLAR_TIMEHOLE_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_EXAVERSE_PORTAL"
@@ -48,6 +46,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_INTERSTELLAR_TIMEHOLE",
+  "civilopedia": "TXT_KEY_BUILDING_INTERSTELLAR_TIMEHOLE_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_PUBLIC_STONING",
- "description": "TXT_KEY_BUILDING_PUBLIC_STONING",
- "civilopedia": "TXT_KEY_BUILDING_PUBLIC_STONING_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_CRUCIFIXION_CROSSES"
@@ -77,6 +75,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_PUBLIC_STONING",
+  "civilopedia": "TXT_KEY_BUILDING_PUBLIC_STONING_PEDIA",
   "advisor": "ADVISOR_MILITARY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

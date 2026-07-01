@@ -1,6 +1,5 @@
 {
  "type": "UNITCOMBAT_RECKLESS_ANIMAL",
- "description": "TXT_KEY_UNITCOMBAT_RECKLESS_ANIMAL",
  "skills": {
   "animalIgnoresBorders": true,
   "defenseOnly": true
@@ -14,5 +13,8 @@
   "art": {
    "icon": "Art/Interface/Buttons/units/sparth/categories/nature_pounce.dds"
   }
+ },
+ "identity": {
+  "description": "TXT_KEY_UNITCOMBAT_RECKLESS_ANIMAL"
  }
 }

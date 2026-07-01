@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_GATEWAY_ARCH",
- "description": "TXT_KEY_BUILDING_GATEWAY_ARCH",
- "civilopedia": "TXT_KEY_BUILDING_GATEWAY_ARCH_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -86,6 +84,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_GATEWAY_ARCH",
+  "civilopedia": "TXT_KEY_BUILDING_GATEWAY_ARCH_PEDIA",
   "commerceDoubleTime": {
    "culture": 1000
   },

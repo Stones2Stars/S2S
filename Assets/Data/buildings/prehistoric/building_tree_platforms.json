@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_TREE_PLATFORMS",
- "description": "TXT_KEY_BUILDING_TREE_PLATFORMS",
- "civilopedia": "TXT_KEY_BUILDING_TREE_PLATFORMS_PEDIA",
  "obsoletedBy": {
   "techs": [
    "TECH_CITY_PLANNING"
@@ -105,6 +103,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_TREE_PLATFORMS",
+  "civilopedia": "TXT_KEY_BUILDING_TREE_PLATFORMS_PEDIA",
   "sightRange": 1,
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [

@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_INTERSTELLAR_OSMIUM_CORE_PLANET",
- "description": "TXT_KEY_BUILDING_INTERSTELLAR_OSMIUM_CORE_PLANET",
- "civilopedia": "TXT_KEY_BUILDING_INTERSTELLAR_OSMIUM_CORE_PLANET_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_LIFE_INTERSTELLAR_PARTICLE"
@@ -52,6 +50,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_INTERSTELLAR_OSMIUM_CORE_PLANET",
+  "civilopedia": "TXT_KEY_BUILDING_INTERSTELLAR_OSMIUM_CORE_PLANET_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

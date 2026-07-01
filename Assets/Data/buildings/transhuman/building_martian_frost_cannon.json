@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_MARTIAN_FROST_CANNON",
- "description": "TXT_KEY_BUILDING_MARTIAN_FROST_CANNON",
- "civilopedia": "TXT_KEY_BUILDING_MARTIAN_FROST_CANNON_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -46,6 +44,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_MARTIAN_FROST_CANNON",
+  "civilopedia": "TXT_KEY_BUILDING_MARTIAN_FROST_CANNON_PEDIA",
   "sightRange": 1,
   "dcmAirbombMission": 1,
   "advisor": "ADVISOR_SCIENCE",

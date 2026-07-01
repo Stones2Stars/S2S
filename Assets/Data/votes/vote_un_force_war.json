@@ -1,6 +1,5 @@
 {
  "type": "VOTE_UN_FORCE_WAR",
- "description": "TXT_KEY_UN_VOTE_FORCE_WAR",
  "voteSource": [
   "DIPLOVOTE_UN"
  ],
@@ -10,5 +9,8 @@
  },
  "effect": {
   "forceWar": true
+ },
+ "identity": {
+  "description": "TXT_KEY_UN_VOTE_FORCE_WAR"
  }
 }

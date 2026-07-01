@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_MUSSEL_RAFTS",
- "description": "TXT_KEY_BUILDING_MUSSEL_RAFTS",
- "civilopedia": "TXT_KEY_BUILDING_MUSSEL_RAFTS_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -61,6 +59,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_MUSSEL_RAFTS",
+  "civilopedia": "TXT_KEY_BUILDING_MUSSEL_RAFTS_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

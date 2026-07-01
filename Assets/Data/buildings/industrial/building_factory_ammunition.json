@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_FACTORY_AMMUNITION",
- "description": "TXT_KEY_BUILDING_FACTORY_AMMUNITION",
- "civilopedia": "TXT_KEY_BUILDING_FACTORY_AMMUNITION_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_SHOOTING_CLUB"
@@ -110,6 +108,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_FACTORY_AMMUNITION",
+  "civilopedia": "TXT_KEY_BUILDING_FACTORY_AMMUNITION_PEDIA",
   "worth": 10,
   "advisor": "ADVISOR_MILITARY",
   "visibilityPriority": 1,

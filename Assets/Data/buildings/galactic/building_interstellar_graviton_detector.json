@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_INTERSTELLAR_GRAVITON_DETECTOR",
- "description": "TXT_KEY_BUILDING_INTERSTELLAR_GRAVITON_DETECTOR",
- "civilopedia": "TXT_KEY_BUILDING_INTERSTELLAR_GRAVITON_DETECTOR_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -48,6 +46,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_INTERSTELLAR_GRAVITON_DETECTOR",
+  "civilopedia": "TXT_KEY_BUILDING_INTERSTELLAR_GRAVITON_DETECTOR_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

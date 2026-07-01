@@ -1,7 +1,5 @@
 {
  "type": "UNIT_NAKHARAR",
- "description": "TXT_KEY_UNIT_NAKHARAR",
- "civilopedia": "TXT_KEY_UNIT_NAKHARAR_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -126,6 +124,8 @@
   "upkeep": 1
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_NAKHARAR",
+  "civilopedia": "TXT_KEY_UNIT_NAKHARAR_PEDIA",
   "worth": 3,
   "militaryWorth": 25,
   "xpValueAttack": 6,

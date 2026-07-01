@@ -1,7 +1,5 @@
 {
  "type": "UNIT_REEF_SHARK",
- "description": "TXT_KEY_UNIT_REEF_SHARK",
- "civilopedia": "TXT_KEY_UNIT_REEF_SHARK_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -91,6 +89,8 @@
   ]
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_REEF_SHARK",
+  "civilopedia": "TXT_KEY_UNIT_REEF_SHARK_PEDIA",
   "spawnOnly": true,
   "xpValueAttack": 5,
   "xpValueDefense": 3,

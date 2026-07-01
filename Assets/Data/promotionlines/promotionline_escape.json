@@ -1,12 +1,12 @@
 {
  "type": "PROMOTIONLINE_ESCAPE",
- "description": "TXT_KEY_PROMOTIONLINE_ESCAPE",
  "ui": {
   "art": {
    "icon": "Art/Interface/Buttons/Promotions/Escape1.dds"
   }
  },
  "identity": {
+  "description": "TXT_KEY_PROMOTIONLINE_ESCAPE",
   "unitCombats": [
    "UNITCOMBAT_SPY"
   ]

@@ -1,6 +1,5 @@
 {
  "type": "PROMOTION_COMBAT_AI1",
- "description": "TXT_KEY_PROMOTION_COMBAT_AI1",
  "experience": {
   "unit": {
    "percent": 5
@@ -21,5 +20,8 @@
  },
  "sound": {
   "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_COMBAT_AI1"
  }
 }

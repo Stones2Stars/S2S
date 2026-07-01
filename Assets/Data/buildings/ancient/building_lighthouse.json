@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_LIGHTHOUSE",
- "description": "TXT_KEY_BUILDING_LIGHTHOUSE",
- "civilopedia": "TXT_KEY_BUILDING_LIGHTHOUSE_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_BELL_ROCK_LIGHTHOUSE",
@@ -122,6 +120,8 @@
   "construct": "AS2D_BUILD_LIGHTHOUSE"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_LIGHTHOUSE",
+  "civilopedia": "TXT_KEY_BUILDING_LIGHTHOUSE_PEDIA",
   "worth": 3,
   "conquestProbability": 75,
   "dcmAirbombMission": 2,

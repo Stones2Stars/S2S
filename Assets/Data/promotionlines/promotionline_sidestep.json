@@ -1,12 +1,12 @@
 {
  "type": "PROMOTIONLINE_SIDESTEP",
- "description": "TXT_KEY_PROMOTIONLINE_SIDESTEP",
  "ui": {
   "art": {
    "icon": "art/Buttons/Promotions/SidestepPromotion1.dds"
   }
  },
  "identity": {
+  "description": "TXT_KEY_PROMOTIONLINE_SIDESTEP",
   "unitCombats": [
    "UNITCOMBAT_MELEE",
    "UNITCOMBAT_MOUNTED",

@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_GENOMIC_ENCYCLOPEDIA",
- "description": "TXT_KEY_BUILDING_GENOMIC_ENCYCLOPEDIA",
- "civilopedia": "TXT_KEY_BUILDING_GENOMIC_ENCYCLOPEDIA_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -104,6 +102,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_GENOMIC_ENCYCLOPEDIA",
+  "civilopedia": "TXT_KEY_BUILDING_GENOMIC_ENCYCLOPEDIA_PEDIA",
   "worth": 10,
   "conquestProbability": 100,
   "greatPeopleUnitType": "UNIT_SCIENTIST",

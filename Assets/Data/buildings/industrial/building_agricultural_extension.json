@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_AGRICULTURAL_EXTENSION",
- "description": "TXT_KEY_BUILDING_AGRICULTURAL_EXTENSION",
- "civilopedia": "TXT_KEY_BUILDING_AGRICULTURAL_EXTENSION_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_FARMSCRAPER_I"
@@ -65,6 +63,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_AGRICULTURAL_EXTENSION",
+  "civilopedia": "TXT_KEY_BUILDING_AGRICULTURAL_EXTENSION_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

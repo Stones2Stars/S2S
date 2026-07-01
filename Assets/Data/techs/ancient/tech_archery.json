@@ -1,8 +1,5 @@
 {
  "type": "TECH_ARCHERY",
- "description": "TXT_KEY_TECH_ARCHERY",
- "civilopedia": "TXT_KEY_TECH_ARCHERY_PEDIA",
- "quote": "TXT_KEY_TECH_ARCHERY_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_ANCIENT_WAY_OF_THE_FEATHER",
@@ -89,6 +86,9 @@
   "soundMP": "AS2D_TECH_MP_ARCHERY"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_ARCHERY",
+  "civilopedia": "TXT_KEY_TECH_ARCHERY_PEDIA",
+  "quote": "TXT_KEY_TECH_ARCHERY_QUOTE",
   "era": "C2C_ERA_ANCIENT",
   "worth": 8,
   "militaryWorth": 6,

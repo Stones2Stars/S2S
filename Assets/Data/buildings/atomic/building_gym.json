@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_GYM",
- "description": "TXT_KEY_BUILDING_GYM",
- "civilopedia": "TXT_KEY_BUILDING_GYM_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_YOGA_SCHOOL"
@@ -60,6 +58,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_GYM",
+  "civilopedia": "TXT_KEY_BUILDING_GYM_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

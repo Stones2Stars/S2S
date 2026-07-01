@@ -1,8 +1,5 @@
 {
  "type": "TECH_ARITHMETIC",
- "description": "TXT_KEY_TECH_ARITHMETIC",
- "civilopedia": "TXT_KEY_TECH_ARITHMETIC_PEDIA",
- "quote": "TXT_KEY_TECH_ARITHMETIC_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_AERIAL_BASKET_ROPEWAYS",
@@ -50,6 +47,9 @@
   "soundMP": "AS2D_TECH_ARITHMETIC"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_ARITHMETIC",
+  "civilopedia": "TXT_KEY_TECH_ARITHMETIC_PEDIA",
+  "quote": "TXT_KEY_TECH_ARITHMETIC_QUOTE",
   "era": "C2C_ERA_PREHISTORIC",
   "worth": 8,
   "militaryWorth": 2,

@@ -1,6 +1,5 @@
 {
  "type": "PROMOTION_HUMANITARIAN",
- "description": "TXT_KEY_PROMOTION_HUMANITARIAN",
  "heal": {
   "unit": {
    "sameTile": {
@@ -28,6 +27,7 @@
   "sound": "AS2D_IF_LEVELUP"
  },
  "identity": {
+  "description": "TXT_KEY_PROMOTION_HUMANITARIAN",
   "unitCombats": [
    "UNITCOMBAT_HEALTH_CARE",
    "UNITCOMBAT_RECON"

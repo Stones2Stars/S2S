@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_PHIDIAS_STATUE_WORKSHOP",
- "description": "TXT_KEY_BUILDING_PHIDIAS_STATUE_WORKSHOP",
- "civilopedia": "TXT_KEY_BUILDING_PHIDIAS_STATUE_WORKSHOP_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -124,6 +122,8 @@
   "construct": "AS2D_BUILD_CHRISTIAN"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_PHIDIAS_STATUE_WORKSHOP",
+  "civilopedia": "TXT_KEY_BUILDING_PHIDIAS_STATUE_WORKSHOP_PEDIA",
   "commerceDoubleTime": {
    "culture": 1000
   },

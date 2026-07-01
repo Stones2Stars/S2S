@@ -1,8 +1,5 @@
 {
  "type": "TECH_USURY",
- "description": "TXT_KEY_TECH_USURY",
- "civilopedia": "TXT_KEY_TECH_USURY_PEDIA",
- "quote": "TXT_KEY_TECH_USURY_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_BAILIWICK",
@@ -76,6 +73,9 @@
   "soundMP": "AS2D_TECH_USURY"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_USURY",
+  "civilopedia": "TXT_KEY_TECH_USURY_PEDIA",
+  "quote": "TXT_KEY_TECH_USURY_QUOTE",
   "era": "C2C_ERA_MEDIEVAL",
   "worth": 16,
   "tradeable": true,

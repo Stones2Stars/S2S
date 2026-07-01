@@ -1,7 +1,5 @@
 {
  "type": "BONUS_SHELLFISH",
- "description": "TXT_KEY_BONUS_SHELLFISH",
- "civilopedia": "TXT_KEY_BONUS_SHELLFISH_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_BEADMAKERS_WORKSHOP",
@@ -19,6 +17,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_SHELLFISH",
+  "civilopedia": "TXT_KEY_BONUS_SHELLFISH_PEDIA",
   "bonusClassType": "BONUSCLASS_MANUFACTURED"
  }
 }

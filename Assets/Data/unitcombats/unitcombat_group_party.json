@@ -1,6 +1,5 @@
 {
  "type": "UNITCOMBAT_GROUP_PARTY",
- "description": "TXT_KEY_UNITCOMBAT_GROUP_PARTY",
  "experience": {
   "unit": {
    "percent": 60
@@ -32,6 +31,7 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_UNITCOMBAT_GROUP_PARTY",
   "base": {
    "group": 2
   }

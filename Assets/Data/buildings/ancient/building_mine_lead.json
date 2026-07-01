@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_MINE_LEAD",
- "description": "TXT_KEY_BUILDING_MINE_LEAD",
- "civilopedia": "TXT_KEY_BUILDING_MINE_LEAD_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_SMELTER_LEAD"
@@ -80,6 +78,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_MINE_LEAD",
+  "civilopedia": "TXT_KEY_BUILDING_MINE_LEAD_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

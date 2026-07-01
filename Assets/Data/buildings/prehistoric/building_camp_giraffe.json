@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_CAMP_GIRAFFE",
- "description": "TXT_KEY_BUILDING_CAMP_GIRAFFE",
- "civilopedia": "TXT_KEY_BUILDING_CAMP_GIRAFFE_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_ANIMAL_TRAINER_GIRAFFE",
@@ -91,6 +89,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_CAMP_GIRAFFE",
+  "civilopedia": "TXT_KEY_BUILDING_CAMP_GIRAFFE_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

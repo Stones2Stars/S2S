@@ -1,7 +1,5 @@
 {
  "type": "BONUS_FUR",
- "description": "TXT_KEY_BONUS_FUR",
- "civilopedia": "TXT_KEY_BONUS_FUR_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_FACTORY_CLOTHING",
@@ -18,6 +16,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_FUR",
+  "civilopedia": "TXT_KEY_BONUS_FUR_PEDIA",
   "bonusClassType": "BONUSCLASS_MANUFACTURED"
  }
 }

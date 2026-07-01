@@ -1,7 +1,5 @@
 {
  "type": "IMPROVEMENT_ARCHEOLOGICAL_SITE",
- "description": "TXT_KEY_IMPROVEMENT_ARCHEOLOGICAL_SITE",
- "civilopedia": "TXT_KEY_IMPROVEMENT_ARCHEOLOGICAL_SITE_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -47,6 +45,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_IMPROVEMENT_ARCHEOLOGICAL_SITE",
+  "civilopedia": "TXT_KEY_IMPROVEMENT_ARCHEOLOGICAL_SITE_PEDIA",
   "advancedStart": {
    "cost": 30
   },

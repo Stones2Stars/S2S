@@ -1,7 +1,5 @@
 {
  "type": "UNIT_CAPTURED_COMET",
- "description": "TXT_KEY_UNIT_CAPTURED_COMET",
- "civilopedia": "TXT_KEY_UNIT_CAPTURED_COMET_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -42,6 +40,8 @@
   "hurryCostModifier": 10000
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_CAPTURED_COMET",
+  "civilopedia": "TXT_KEY_UNIT_CAPTURED_COMET_PEDIA",
   "worth": 1,
   "domain": "DOMAIN_LAND",
   "defaultUnitAI": "UNITAI_WORKER",

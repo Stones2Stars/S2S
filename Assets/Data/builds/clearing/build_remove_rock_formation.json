@@ -1,6 +1,5 @@
 {
  "type": "BUILD_REMOVE_ROCK_FORMATION",
- "description": "TXT_KEY_BUILD_REMOVE_ROCK_FORMATION",
  "requires": {
   "build": {
    "all": [
@@ -151,5 +150,8 @@
   },
   "hotkey": "KB_C",
   "altDown": true
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILD_REMOVE_ROCK_FORMATION"
  }
 }

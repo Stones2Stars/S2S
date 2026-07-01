@@ -1,7 +1,5 @@
 {
  "type": "UNIT_CROSSBOWMAN",
- "description": "TXT_KEY_UNIT_CROSSBOWMAN",
- "civilopedia": "TXT_KEY_UNIT_CROSSBOWMAN_PEDIA",
  "obsoletedBy": {
   "techs": [
    "TECH_FLINTLOCK"
@@ -54,6 +52,8 @@
   "upkeep": 1
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_CROSSBOWMAN",
+  "civilopedia": "TXT_KEY_UNIT_CROSSBOWMAN_PEDIA",
   "worth": 2,
   "militaryWorth": 17,
   "xpValueAttack": 1,

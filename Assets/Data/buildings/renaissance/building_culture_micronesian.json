@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_CULTURE_MICRONESIAN",
- "description": "TXT_KEY_BUILDING_CULTURE_MICRONESIAN",
- "civilopedia": "TXT_KEY_BUILDING_CULTURE_MICRONESIAN_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -53,6 +51,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_CULTURE_MICRONESIAN",
+  "civilopedia": "TXT_KEY_BUILDING_CULTURE_MICRONESIAN_PEDIA",
   "nukeImmune": true,
   "noInstanceLimit": true,
   "conquestProbability": 100,

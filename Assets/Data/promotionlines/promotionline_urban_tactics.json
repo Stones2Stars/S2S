@@ -1,12 +1,12 @@
 {
  "type": "PROMOTIONLINE_URBAN_TACTICS",
- "description": "TXT_KEY_PROMOTIONLINE_URBAN_TACTICS",
  "ui": {
   "art": {
    "icon": "Art/Interface/Buttons/Promotions/roadwar1.dds"
   }
  },
  "identity": {
+  "description": "TXT_KEY_PROMOTIONLINE_URBAN_TACTICS",
   "unitCombats": [
    "UNITCOMBAT_SIEGE",
    "UNITCOMBAT_GUN",

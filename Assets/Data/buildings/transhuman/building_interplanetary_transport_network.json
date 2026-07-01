@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_INTERPLANETARY_TRANSPORT_NETWORK",
- "description": "TXT_KEY_BUILDING_INTERPLANETARY_TRANSPORT_NETWORK",
- "civilopedia": "TXT_KEY_BUILDING_INTERPLANETARY_TRANSPORT_NETWORK_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -52,6 +50,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_INTERPLANETARY_TRANSPORT_NETWORK",
+  "civilopedia": "TXT_KEY_BUILDING_INTERPLANETARY_TRANSPORT_NETWORK_PEDIA",
   "conquestProbability": 100,
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,

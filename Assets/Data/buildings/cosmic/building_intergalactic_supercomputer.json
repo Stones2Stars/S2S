@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_INTERGALACTIC_SUPERCOMPUTER",
- "description": "TXT_KEY_BUILDING_INTERGALACTIC_SUPERCOMPUTER",
- "civilopedia": "TXT_KEY_BUILDING_INTERGALACTIC_SUPERCOMPUTER_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_INTERGALACTIC_ACCELERATOR",
@@ -52,6 +50,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_INTERGALACTIC_SUPERCOMPUTER",
+  "civilopedia": "TXT_KEY_BUILDING_INTERGALACTIC_SUPERCOMPUTER_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

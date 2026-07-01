@@ -1,7 +1,5 @@
 {
  "type": "BONUS_MAMMOTH",
- "description": "TXT_KEY_BONUS_MAMMOTH",
- "civilopedia": "TXT_KEY_BONUS_MAMMOTH_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_ANIMAL_TRAINER_MAMMOTH",
@@ -72,6 +70,8 @@
   ]
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_MAMMOTH",
+  "civilopedia": "TXT_KEY_BONUS_MAMMOTH_PEDIA",
   "bonusClassType": "BONUSCLASS_STRATEGIC"
  }
 }

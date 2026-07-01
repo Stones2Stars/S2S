@@ -1,6 +1,5 @@
 {
  "type": "PROMOTION_RETINUE_PRIEST",
- "description": "TXT_KEY_PROMOTION_RETINUE_PRIEST",
  "heal": {
   "unit": {
    "enemy": {
@@ -42,6 +41,7 @@
   "sound": "AS2D_IF_GET_RETINUE"
  },
  "identity": {
+  "description": "TXT_KEY_PROMOTION_RETINUE_PRIEST",
   "unitCombats": [
    "UNITCOMBAT_HERO"
   ]

@@ -1,7 +1,5 @@
 {
  "type": "BONUS_ALUMINUM_WARES",
- "description": "TXT_KEY_BONUS_ALUMINUM_WARES",
- "civilopedia": "TXT_KEY_BONUS_WARES_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_3D_PRINTING_MILL",
@@ -73,6 +71,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_ALUMINUM_WARES",
+  "civilopedia": "TXT_KEY_BONUS_WARES_PEDIA",
   "bonusClassType": "BONUSCLASS_MANUFACTURED"
  }
 }

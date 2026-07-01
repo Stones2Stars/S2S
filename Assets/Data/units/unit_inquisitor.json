@@ -1,8 +1,5 @@
 {
  "type": "UNIT_INQUISITOR",
- "description": "TXT_KEY_UNIT_INQUISITOR",
- "civilopedia": "TXT_KEY_UNIT_INQUISITOR_PEDIA",
- "help": "TXT_KEY_UNIT_INQUISITOR_HELP",
  "requires": {
   "build": {
    "all": [
@@ -37,6 +34,9 @@
   "upkeep": 1
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_INQUISITOR",
+  "civilopedia": "TXT_KEY_UNIT_INQUISITOR_PEDIA",
+  "help": "TXT_KEY_UNIT_INQUISITOR_HELP",
   "worth": 1,
   "domain": "DOMAIN_LAND",
   "defaultUnitAI": "UNITAI_MERCHANT",

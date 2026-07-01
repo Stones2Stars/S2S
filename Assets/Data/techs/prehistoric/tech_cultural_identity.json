@@ -1,8 +1,5 @@
 {
  "type": "TECH_CULTURAL_IDENTITY",
- "description": "TXT_KEY_TECH_CULTURAL_IDENTITY",
- "civilopedia": "TXT_KEY_TECH_CULTURAL_IDENTITY_PEDIA",
- "quote": "TXT_KEY_TECH_CULTURAL_IDENTITY_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_ELDER_COUNCIL",
@@ -63,6 +60,9 @@
   "soundMP": "AS2D_TECH_CULTURAL_IDENTITY"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_CULTURAL_IDENTITY",
+  "civilopedia": "TXT_KEY_TECH_CULTURAL_IDENTITY_PEDIA",
+  "quote": "TXT_KEY_TECH_CULTURAL_IDENTITY_QUOTE",
   "era": "C2C_ERA_PREHISTORIC",
   "worth": 2,
   "militaryWorth": 1,

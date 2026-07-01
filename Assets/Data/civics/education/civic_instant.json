@@ -1,8 +1,5 @@
 {
  "type": "CIVIC_INSTANT",
- "description": "TXT_KEY_CIVIC_INSTANT",
- "civilopedia": "TXT_KEY_CIVIC_INSTANT_PEDIA",
- "strategy": "TXT_KEY_CIVIC_INSTANT_STRATEGY",
  "enables": {
   "buildings": [
    "BUILDING_INSTANT_EDUCATION_CENTER"
@@ -54,6 +51,9 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_CIVIC_INSTANT",
+  "civilopedia": "TXT_KEY_CIVIC_INSTANT_PEDIA",
+  "strategy": "TXT_KEY_CIVIC_INSTANT_STRATEGY",
   "civicOption": "CIVICOPTION_EDUCATION",
   "upkeepLevel": "UPKEEP_HIGH"
  }

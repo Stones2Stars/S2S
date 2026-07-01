@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_CRIME_GUN_RAMPAGE",
- "description": "TXT_KEY_BUILDING_CRIME_GUN_RAMPAGE",
- "civilopedia": "TXT_KEY_BUILDING_CRIME_GUN_RAMPAGE_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -87,6 +85,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_CRIME_GUN_RAMPAGE",
+  "civilopedia": "TXT_KEY_BUILDING_CRIME_GUN_RAMPAGE_PEDIA",
   "notConstructible": true,
   "nukeImmune": true,
   "conquestProbability": 100,

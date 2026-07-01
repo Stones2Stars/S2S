@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_LUNAR_ORBITAL_PLATFORM_GATEWAY",
- "description": "TXT_KEY_BUILDING_LUNAR_ORBITAL_PLATFORM_GATEWAY",
- "civilopedia": "TXT_KEY_BUILDING_LUNAR_ORBITAL_PLATFORM_GATEWAY_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -42,6 +40,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_LUNAR_ORBITAL_PLATFORM_GATEWAY",
+  "civilopedia": "TXT_KEY_BUILDING_LUNAR_ORBITAL_PLATFORM_GATEWAY_PEDIA",
   "conquestProbability": 100,
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,

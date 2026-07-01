@@ -1,6 +1,5 @@
 {
  "type": "PROMOTION_HEROIC2",
- "description": "TXT_KEY_PROMOTION_HEROIC2",
  "upkeep": {
   "unit": {
    "upgradeDiscount": {
@@ -39,6 +38,7 @@
   "sound": "AS2D_IF_LEVELUP"
  },
  "identity": {
+  "description": "TXT_KEY_PROMOTION_HEROIC2",
   "unitCombats": [
    "UNITCOMBAT_RECON",
    "UNITCOMBAT_ARCHER",

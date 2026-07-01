@@ -1,6 +1,5 @@
 {
  "type": "PROMOTION_DEFENSIVE",
- "description": "TXT_KEY_PROMOTION_DEFENSIVE",
  "strength": {
   "unit": {
    "attack": {
@@ -20,6 +19,7 @@
   "sound": "AS2D_IF_LEVELUP"
  },
  "identity": {
+  "description": "TXT_KEY_PROMOTION_DEFENSIVE",
   "unitCombats": [
    "UNITCOMBAT_COMBATANT",
    "UNITCOMBAT_NAVAL_COMBATANT"

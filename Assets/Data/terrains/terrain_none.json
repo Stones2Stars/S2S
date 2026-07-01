@@ -1,7 +1,5 @@
 {
  "type": "TERRAIN_NONE",
- "description": "TXT_KEY_TERRAIN_NONE",
- "civilopedia": "TXT_KEY_TERRAIN_NONE_PEDIA",
  "cultureDistance": {
   "plot": {
    "flat": 20
@@ -18,6 +16,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_TERRAIN_NONE",
+  "civilopedia": "TXT_KEY_TERRAIN_NONE_PEDIA",
   "found": true,
   "movementCost": 1
  }

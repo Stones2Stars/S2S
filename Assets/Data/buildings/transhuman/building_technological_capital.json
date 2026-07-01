@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_TECHNOLOGICAL_CAPITAL",
- "description": "TXT_KEY_BUILDING_TECHNOLOGICAL_CAPITAL",
- "civilopedia": "TXT_KEY_BUILDING_TECHNOLOGICAL_CAPITAL_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -91,6 +89,8 @@
   "construct": "AS2D_BUILD_TECH_CAPITOL"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_TECHNOLOGICAL_CAPITAL",
+  "civilopedia": "TXT_KEY_BUILDING_TECHNOLOGICAL_CAPITAL_PEDIA",
   "nukeImmune": true,
   "worth": 6,
   "conquestProbability": 100,

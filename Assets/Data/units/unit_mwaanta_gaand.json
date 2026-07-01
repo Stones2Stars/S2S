@@ -1,7 +1,5 @@
 {
  "type": "UNIT_MWAANTA_GAAND",
- "description": "TXT_KEY_UNIT_MWAANTA_GAAND",
- "civilopedia": "TXT_KEY_UNIT_MWAANTA_GAAND_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -119,6 +117,8 @@
   "upkeep": 1
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_MWAANTA_GAAND",
+  "civilopedia": "TXT_KEY_UNIT_MWAANTA_GAAND_PEDIA",
   "worth": 3,
   "militaryWorth": 6,
   "xpValueAttack": 6,

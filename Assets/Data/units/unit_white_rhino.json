@@ -1,7 +1,5 @@
 {
  "type": "UNIT_WHITE_RHINO",
- "description": "TXT_KEY_UNIT_WHITE_RHINO",
- "civilopedia": "TXT_KEY_UNIT_WHITE_RHINO_PEDIA",
  "skills": {
   "blendIntoCity": true,
   "onlyDefensive": true,
@@ -46,6 +44,8 @@
   ]
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_WHITE_RHINO",
+  "civilopedia": "TXT_KEY_UNIT_WHITE_RHINO_PEDIA",
   "spawnOnly": true,
   "xpValueAttack": 10,
   "xpValueDefense": 8,

@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_LOCAL_COURTHOUSE",
- "description": "TXT_KEY_BUILDING_LOCAL_COURTHOUSE",
- "civilopedia": "TXT_KEY_BUILDING_LOCAL_COURTHOUSE_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_AI_LEGAL_SYSTEM"
@@ -103,6 +101,8 @@
   "construct": "AS2D_BUILD_COURTHOUSE"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_LOCAL_COURTHOUSE",
+  "civilopedia": "TXT_KEY_BUILDING_LOCAL_COURTHOUSE_PEDIA",
   "worth": 4,
   "conquestProbability": 75,
   "dcmAirbombMission": 2,

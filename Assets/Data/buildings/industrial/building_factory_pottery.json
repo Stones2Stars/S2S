@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_FACTORY_POTTERY",
- "description": "TXT_KEY_BUILDING_FACTORY_POTTERY",
- "civilopedia": "TXT_KEY_BUILDING_FACTORY_POTTERY_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_GUILD_POTTERS",
@@ -131,6 +129,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_FACTORY_POTTERY",
+  "civilopedia": "TXT_KEY_BUILDING_FACTORY_POTTERY_PEDIA",
   "conquestProbability": 70,
   "advisor": "ADVISOR_ECONOMY",
   "visibilityPriority": 1,

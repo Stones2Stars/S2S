@@ -1,8 +1,5 @@
 {
  "type": "TECH_SURREALISM",
- "description": "TXT_KEY_TECH_SURREALISM",
- "civilopedia": "TXT_KEY_TECH_SURREALISM_PEDIA",
- "quote": "TXT_KEY_TECH_SURREALISM_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_DALI_THEATRE_AND_MUSEUM"
@@ -55,6 +52,9 @@
   "soundMP": "AS2D_TECH_SURREALISM"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_SURREALISM",
+  "civilopedia": "TXT_KEY_TECH_SURREALISM_PEDIA",
+  "quote": "TXT_KEY_TECH_SURREALISM_QUOTE",
   "era": "C2C_ERA_ATOMIC",
   "worth": 48,
   "militaryWorth": 4,

@@ -1,8 +1,5 @@
 {
  "type": "TECH_LUNAR_MANUFACTURING",
- "description": "TXT_KEY_TECH_LUNAR_MANUFACTURING",
- "civilopedia": "TXT_KEY_TECH_LUNAR_MANUFACTURING_PEDIA",
- "quote": "TXT_KEY_TECH_LUNAR_MANUFACTURING_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_CISLUNAR_REFUELING_STATION",
@@ -98,6 +95,9 @@
   "soundMP": "AS2D_TECH_LUNAR_MANUFACTURING"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_LUNAR_MANUFACTURING",
+  "civilopedia": "TXT_KEY_TECH_LUNAR_MANUFACTURING_PEDIA",
+  "quote": "TXT_KEY_TECH_LUNAR_MANUFACTURING_QUOTE",
   "era": "C2C_ERA_NANOTECH",
   "worth": 48,
   "militaryWorth": 4,

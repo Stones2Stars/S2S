@@ -1,6 +1,5 @@
 {
  "type": "BUILD_BONUS_COCA",
- "description": "TXT_KEY_BUILD_BONUS_COCA",
  "produces": {
   "improvement": "IMPROVEMENT_BONUS_COCA"
  },
@@ -19,6 +18,7 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILD_BONUS_COCA",
   "consumesUnit": true
  }
 }

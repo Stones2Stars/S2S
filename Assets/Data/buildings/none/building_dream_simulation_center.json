@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_DREAM_SIMULATION_CENTER",
- "description": "TXT_KEY_BUILDING_DREAM_SIMULATION_CENTER",
- "civilopedia": "TXT_KEY_BUILDING_DREAM_SIMULATION_CENTER_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_DREAM_ARTIST",
@@ -93,6 +91,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_DREAM_SIMULATION_CENTER",
+  "civilopedia": "TXT_KEY_BUILDING_DREAM_SIMULATION_CENTER_PEDIA",
   "specialBuildingType": "SPECIALBUILDING_PUNK_CYBER",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": "1.0",

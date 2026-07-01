@@ -1,12 +1,12 @@
 {
  "type": "PROMOTIONLINE_WIND_HORSE",
- "description": "TXT_KEY_PROMOTIONLINE_WIND_HORSE",
  "ui": {
   "art": {
    "icon": "Art/Interface/Buttons/Promotions/Windhorse1.dds"
   }
  },
  "identity": {
+  "description": "TXT_KEY_PROMOTIONLINE_WIND_HORSE",
   "unitCombats": [
    "UNITCOMBAT_MOUNTED"
   ]

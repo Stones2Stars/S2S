@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_MILITARY_INDUSTRIAL_COMPLEX",
- "description": "TXT_KEY_BUILDING_MILITARY_INDUSTRIAL_COMPLEX",
- "civilopedia": "TXT_KEY_BUILDING_MILITARY_INDUSTRIAL_COMPLEX_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_SHOOTING_CLUB",
@@ -239,6 +237,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_MILITARY_INDUSTRIAL_COMPLEX",
+  "civilopedia": "TXT_KEY_BUILDING_MILITARY_INDUSTRIAL_COMPLEX_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

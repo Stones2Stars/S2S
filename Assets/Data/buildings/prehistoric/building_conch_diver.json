@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_CONCH_DIVER",
- "description": "TXT_KEY_BUILDING_CONCH_DIVER",
- "civilopedia": "TXT_KEY_BUILDING_CONCH_DIVER_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_RESOURCES_SHELLFISH"
@@ -70,6 +68,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_CONCH_DIVER",
+  "civilopedia": "TXT_KEY_BUILDING_CONCH_DIVER_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

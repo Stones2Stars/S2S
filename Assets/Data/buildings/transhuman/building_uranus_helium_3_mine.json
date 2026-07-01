@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_URANUS_HELIUM_3_MINE",
- "description": "TXT_KEY_BUILDING_URANUS_HELIUM_3_MINE",
- "civilopedia": "TXT_KEY_BUILDING_URANUS_HELIUM_3_MINE_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -52,6 +50,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_URANUS_HELIUM_3_MINE",
+  "civilopedia": "TXT_KEY_BUILDING_URANUS_HELIUM_3_MINE_PEDIA",
   "neverCapture": true,
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,

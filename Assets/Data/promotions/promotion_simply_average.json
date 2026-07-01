@@ -1,6 +1,5 @@
 {
  "type": "PROMOTION_SIMPLY_AVERAGE",
- "description": "TXT_KEY_PROMOTION_SIMPLY_AVERAGE",
  "strength": {
   "unit": {
    "quality": {
@@ -30,6 +29,7 @@
   "sound": "AS2D_IF_LEVELUP"
  },
  "identity": {
+  "description": "TXT_KEY_PROMOTION_SIMPLY_AVERAGE",
   "replacesUnitCombat": "UNITCOMBAT_QUALITY_SUPERIOR",
   "notOnUnitCombats": [
    "UNITCOMBAT_PACIFIST",

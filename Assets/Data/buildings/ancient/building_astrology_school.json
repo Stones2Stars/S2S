@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_ASTROLOGY_SCHOOL",
- "description": "TXT_KEY_BUILDING_ASTROLOGY_SCHOOL",
- "civilopedia": "TXT_KEY_BUILDING_ASTROLOGY_SCHOOL_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_ALMAGEST",
@@ -115,6 +113,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_ASTROLOGY_SCHOOL",
+  "civilopedia": "TXT_KEY_BUILDING_ASTROLOGY_SCHOOL_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

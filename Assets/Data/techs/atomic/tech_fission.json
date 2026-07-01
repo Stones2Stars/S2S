@@ -1,8 +1,5 @@
 {
  "type": "TECH_FISSION",
- "description": "TXT_KEY_TECH_FISSION",
- "civilopedia": "TXT_KEY_TECH_FISSION_PEDIA",
- "quote": "TXT_KEY_TECH_FISSION_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_ATOMIUM",
@@ -63,6 +60,9 @@
   "soundMP": "AS2D_TECH_MP_FISSION"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_FISSION",
+  "civilopedia": "TXT_KEY_TECH_FISSION_PEDIA",
+  "quote": "TXT_KEY_TECH_FISSION_QUOTE",
   "era": "C2C_ERA_ATOMIC",
   "worth": 40,
   "militaryWorth": 8,

@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_PETRA",
- "description": "TXT_KEY_BUILDING_PETRA",
- "civilopedia": "TXT_KEY_BUILDING_PETRA_PEDIA",
  "obsoletedBy": {
   "techs": [
    "TECH_ECONOMICS"
@@ -121,6 +119,8 @@
   "construct": "AS2D_BUILD_PYRAMID"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_PETRA",
+  "civilopedia": "TXT_KEY_BUILDING_PETRA_PEDIA",
   "commerceDoubleTime": {
    "culture": 1000
   },

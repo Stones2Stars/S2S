@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_MINE_JADE",
- "description": "TXT_KEY_BUILDING_MINE_JADE",
- "civilopedia": "TXT_KEY_BUILDING_MINE_JADE_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_RESOURCES_GEMSTONE"
@@ -70,6 +68,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_MINE_JADE",
+  "civilopedia": "TXT_KEY_BUILDING_MINE_JADE_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

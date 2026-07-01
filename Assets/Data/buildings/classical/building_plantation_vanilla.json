@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_PLANTATION_VANILLA",
- "description": "TXT_KEY_BUILDING_PLANTATION_VANILLA",
- "civilopedia": "TXT_KEY_BUILDING_PLANTATION_VANILLA_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_RESOURCES_SEASONING"
@@ -71,6 +69,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_PLANTATION_VANILLA",
+  "civilopedia": "TXT_KEY_BUILDING_PLANTATION_VANILLA_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

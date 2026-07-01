@@ -1,6 +1,5 @@
 {
  "type": "BUILD_OFFSHORE_PLATFORM",
- "description": "TXT_KEY_BUILD_OFFSHORE_PLATFORM",
  "requires": {
   "build": {
    "all": [
@@ -38,6 +37,7 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILD_OFFSHORE_PLATFORM",
   "consumesUnit": true
  }
 }

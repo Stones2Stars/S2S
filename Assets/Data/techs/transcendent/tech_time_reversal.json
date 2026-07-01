@@ -1,8 +1,5 @@
 {
  "type": "TECH_TIME_REVERSAL",
- "description": "TXT_KEY_TECH_TIME_REVERSAL",
- "civilopedia": "TXT_KEY_TECH_TIME_REVERSAL_PEDIA",
- "quote": "TXT_KEY_TECH_TIME_REVERSAL_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_ATLANTIS",
@@ -68,6 +65,9 @@
   "soundMP": "AS2D_TECH_GENERIC"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_TIME_REVERSAL",
+  "civilopedia": "TXT_KEY_TECH_TIME_REVERSAL_PEDIA",
+  "quote": "TXT_KEY_TECH_TIME_REVERSAL_QUOTE",
   "era": "C2C_ERA_TRANSCENDENT",
   "worth": 48,
   "tradeable": true,

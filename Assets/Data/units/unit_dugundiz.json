@@ -1,7 +1,5 @@
 {
  "type": "UNIT_DUGUNDIZ",
- "description": "TXT_KEY_UNIT_DUGUNDIZ",
- "civilopedia": "TXT_KEY_UNIT_DUGUNDIZ_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -117,6 +115,8 @@
   "upkeep": 1
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_DUGUNDIZ",
+  "civilopedia": "TXT_KEY_UNIT_DUGUNDIZ_PEDIA",
   "worth": 2,
   "militaryWorth": 5,
   "xpValueAttack": 6,

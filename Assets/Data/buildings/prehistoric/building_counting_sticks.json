@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_COUNTING_STICKS",
- "description": "TXT_KEY_BUILDING_COUNTING_STICKS",
- "civilopedia": "TXT_KEY_BUILDING_COUNTING_STICKS_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_LYCEUM"
@@ -84,6 +82,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_COUNTING_STICKS",
+  "civilopedia": "TXT_KEY_BUILDING_COUNTING_STICKS_PEDIA",
   "enabledCivilizations": [
    "CIVILIZATION_NPC_NEANDERTHAL"
   ],

@@ -1,7 +1,5 @@
 {
  "type": "UNIT_IRONCLAD",
- "description": "TXT_KEY_UNIT_IRONCLAD",
- "civilopedia": "TXT_KEY_UNIT_IRONCLAD_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -78,6 +76,8 @@
   "upkeep": 2
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_IRONCLAD",
+  "civilopedia": "TXT_KEY_UNIT_IRONCLAD_PEDIA",
   "worth": 3,
   "militaryWorth": 62,
   "xpValueAttack": 3,

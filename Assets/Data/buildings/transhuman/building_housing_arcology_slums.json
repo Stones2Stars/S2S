@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_HOUSING_ARCOLOGY_SLUMS",
- "description": "TXT_KEY_BUILDING_HOUSING_ARCOLOGY_SLUMS",
- "civilopedia": "TXT_KEY_BUILDING_HOUSING_ARCOLOGY_SLUMS_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_HOUSING_COLONY_ARCOLOGY"
@@ -64,6 +62,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_HOUSING_ARCOLOGY_SLUMS",
+  "civilopedia": "TXT_KEY_BUILDING_HOUSING_ARCOLOGY_SLUMS_PEDIA",
   "notConstructible": true,
   "nukeImmune": true,
   "neverCapture": true,

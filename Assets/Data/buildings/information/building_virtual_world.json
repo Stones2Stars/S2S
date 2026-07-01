@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_VIRTUAL_WORLD",
- "description": "TXT_KEY_BUILDING_VIRTUAL_WORLD",
- "civilopedia": "TXT_KEY_BUILDING_VIRTUAL_WORLD_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_HUMAN_MOD_DIGITAL_IDENTITY",
@@ -67,6 +65,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_VIRTUAL_WORLD",
+  "civilopedia": "TXT_KEY_BUILDING_VIRTUAL_WORLD_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

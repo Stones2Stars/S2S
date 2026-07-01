@@ -1,8 +1,5 @@
 {
  "type": "TECH_SPACE_TOURISM",
- "description": "TXT_KEY_TECH_SPACE_TOURISM",
- "civilopedia": "TXT_KEY_TECH_SPACE_TOURISM_PEDIA",
- "quote": "TXT_KEY_TECH_SPACE_TOURISM_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_ORBITAL_HOTEL",
@@ -69,6 +66,9 @@
   "soundMP": "AS2D_TECH_SPACE_TOURISM"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_SPACE_TOURISM",
+  "civilopedia": "TXT_KEY_TECH_SPACE_TOURISM_PEDIA",
+  "quote": "TXT_KEY_TECH_SPACE_TOURISM_QUOTE",
   "era": "C2C_ERA_INFORMATION",
   "worth": 50,
   "tradeable": true,

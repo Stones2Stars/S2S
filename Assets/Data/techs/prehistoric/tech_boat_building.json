@@ -1,8 +1,5 @@
 {
  "type": "TECH_BOAT_BUILDING",
- "description": "TXT_KEY_TECH_BOAT_BUILDING",
- "civilopedia": "TXT_KEY_TECH_BOAT_BUILDING_PEDIA",
- "quote": "TXT_KEY_TECH_BOAT_BUILDING_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_ANCIENT_WAY_OF_THE_WAVES",
@@ -62,6 +59,9 @@
   "soundMP": "AS2D_TECH_BOAT_BUILDING"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_BOAT_BUILDING",
+  "civilopedia": "TXT_KEY_TECH_BOAT_BUILDING_PEDIA",
+  "quote": "TXT_KEY_TECH_BOAT_BUILDING_QUOTE",
   "era": "C2C_ERA_PREHISTORIC",
   "worth": 4,
   "tradeable": true,

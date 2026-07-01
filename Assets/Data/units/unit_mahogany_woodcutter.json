@@ -1,7 +1,5 @@
 {
  "type": "UNIT_MAHOGANY_WOODCUTTER",
- "description": "TXT_KEY_UNIT_MAHOGANY_WOODCUTTER",
- "civilopedia": "TXT_KEY_UNIT_MAHOGANY_WOODCUTTER_PEDIA",
  "obsoletedBy": {
   "techs": [
    "TECH_MOTORIZED_TRANSPORTATION"
@@ -131,6 +129,8 @@
   "upkeep": 1
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_MAHOGANY_WOODCUTTER",
+  "civilopedia": "TXT_KEY_UNIT_MAHOGANY_WOODCUTTER_PEDIA",
   "worth": 1,
   "domain": "DOMAIN_LAND",
   "defaultUnitAI": "UNITAI_WORKER",

@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_SELF_ASSEMBLY_FACTORY",
- "description": "TXT_KEY_BUILDING_SELF_ASSEMBLY_FACTORY",
- "civilopedia": "TXT_KEY_BUILDING_SELF_ASSEMBLY_FACTORY_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_AERIAL_BASKET_ROPEWAYS",
@@ -112,6 +110,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_SELF_ASSEMBLY_FACTORY",
+  "civilopedia": "TXT_KEY_BUILDING_SELF_ASSEMBLY_FACTORY_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

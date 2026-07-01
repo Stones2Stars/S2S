@@ -1,8 +1,5 @@
 {
  "type": "UNIT_TAMED_WOLF_PAIR",
- "description": "TXT_KEY_UNIT_TAMED_WOLF_PAIR",
- "civilopedia": "TXT_KEY_UNIT_TAMED_ANIMAL_PEDIA",
- "help": "TXT_KEY_UNIT_TAMED_ANIMALS_HELP",
  "obsoletedBy": {
   "techs": [
    "TECH_SPECIALIZATION"
@@ -78,6 +75,9 @@
   "production": 100
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_TAMED_WOLF_PAIR",
+  "civilopedia": "TXT_KEY_UNIT_TAMED_ANIMAL_PEDIA",
+  "help": "TXT_KEY_UNIT_TAMED_ANIMALS_HELP",
   "worth": 1,
   "militaryWorth": 1,
   "xpValueAttack": 6,

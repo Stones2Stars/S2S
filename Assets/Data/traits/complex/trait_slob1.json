@@ -1,8 +1,5 @@
 {
  "type": "TRAIT_SLOB1",
- "description": "TXT_KEY_TRAIT_SLOB1",
- "civilopedia": "TXT_KEY_TRAIT_SLOB1_PEDIA",
- "strategy": "TXT_KEY_TRAIT_SLOB_STRATEGY",
  "enables": {
   "traits": [
    "TRAIT_SLOB2"
@@ -162,6 +159,9 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_TRAIT_SLOB1",
+  "civilopedia": "TXT_KEY_TRAIT_SLOB1_PEDIA",
+  "strategy": "TXT_KEY_TRAIT_SLOB_STRATEGY",
   "negativeTrait": true
  }
 }

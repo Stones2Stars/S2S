@@ -1,7 +1,5 @@
 {
  "type": "IMPROVEMENT_SEA_MILL",
- "description": "TXT_KEY_IMPROVEMENT_SEA_MILL",
- "civilopedia": "TXT_KEY_IMPROVEMENT_WINDMILL_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -58,6 +56,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_IMPROVEMENT_SEA_MILL",
+  "civilopedia": "TXT_KEY_IMPROVEMENT_WINDMILL_PEDIA",
   "advancedStart": {
    "cost": 30
   },

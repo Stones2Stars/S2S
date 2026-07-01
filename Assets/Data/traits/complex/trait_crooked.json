@@ -1,8 +1,5 @@
 {
  "type": "TRAIT_CROOKED",
- "description": "TXT_KEY_TRAIT_CROOKED",
- "civilopedia": "TXT_KEY_TRAIT_CROOKED_PEDIA",
- "strategy": "TXT_KEY_TRAIT_CROOKED_STRATEGY",
  "excludes": [
   "TRAIT_LAWFUL"
  ],
@@ -584,6 +581,9 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_TRAIT_CROOKED",
+  "civilopedia": "TXT_KEY_TRAIT_CROOKED_PEDIA",
+  "strategy": "TXT_KEY_TRAIT_CROOKED_STRATEGY",
   "negativeTrait": true
  }
 }

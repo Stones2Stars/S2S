@@ -1,6 +1,5 @@
 {
  "type": "PROMOTION_BARELY_CAPABLE",
- "description": "TXT_KEY_PROMOTION_BARELY_CAPABLE",
  "strength": {
   "unit": {
    "quality": {
@@ -30,6 +29,7 @@
   "sound": "AS2D_IF_LEVELUP"
  },
  "identity": {
+  "description": "TXT_KEY_PROMOTION_BARELY_CAPABLE",
   "replacesUnitCombat": "UNITCOMBAT_QUALITY_INCAPABLE",
   "notOnUnitCombats": [
    "UNITCOMBAT_PACIFIST",

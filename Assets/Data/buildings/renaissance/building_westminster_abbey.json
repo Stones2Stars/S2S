@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_WESTMINSTER_ABBEY",
- "description": "TXT_KEY_BUILDING_WESTMINSTER_ABBEY",
- "civilopedia": "TXT_KEY_BUILDING_WESTMINSTER_ABBEY_PEDIA",
  "obsoletedBy": {
   "techs": [
    "TECH_VIRTUAL_REALITY"
@@ -84,6 +82,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_WESTMINSTER_ABBEY",
+  "civilopedia": "TXT_KEY_BUILDING_WESTMINSTER_ABBEY_PEDIA",
   "commerceDoubleTime": {
    "culture": 1000
   },

@@ -1,6 +1,5 @@
 {
  "type": "PROMOTION_SPLIT_INTO_SQUADS",
- "description": "TXT_KEY_PROMOTION_SPLIT_INTO_SQUADS",
  "strength": {
   "unit": {
    "group": {
@@ -30,6 +29,7 @@
   "sound": "AS2D_IF_LEVELUP"
  },
  "identity": {
+  "description": "TXT_KEY_PROMOTION_SPLIT_INTO_SQUADS",
   "replacesUnitCombat": "UNITCOMBAT_GROUP_COMPANY",
   "forOffset": true
  }

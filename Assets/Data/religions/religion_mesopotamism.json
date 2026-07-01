@@ -1,8 +1,5 @@
 {
  "type": "RELIGION_MESOPOTAMISM",
- "description": "TXT_KEY_TECH_MESOPOTAMISM",
- "civilopedia": "TXT_KEY_TECH_MESOPOTAMISM_PEDIA",
- "adjective": "TXT_KEY_TECH_MESOPOTAMISM_ADJECTIVE",
  "enables": {
   "buildings": [
    "BUILDING_HAMMURABI_STELE_OF_LAWS",
@@ -89,6 +86,9 @@
   "sound": "AS2D_BUILD_MESOPOTAMIAN"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_MESOPOTAMISM",
+  "adjective": "TXT_KEY_TECH_MESOPOTAMISM_ADJECTIVE",
+  "civilopedia": "TXT_KEY_TECH_MESOPOTAMISM_PEDIA",
   "spreadFactor": 20
  }
 }

@@ -1,8 +1,5 @@
 {
  "type": "TECH_GAIA_ECOLOGY",
- "description": "TXT_KEY_TECH_GAIA_ECOLOGY",
- "civilopedia": "TXT_KEY_TECH_GAIA_ECOLOGY_PEDIA",
- "quote": "TXT_KEY_TECH_GAIA_ECOLOGY_QUOTE",
  "enables": {
   "bonuses": [
    "BONUS_DEEP_SPACE_LIFEFORMS"
@@ -74,6 +71,9 @@
   "soundMP": "AS2D_TECH_GAIA_ECOLOGY"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_GAIA_ECOLOGY",
+  "civilopedia": "TXT_KEY_TECH_GAIA_ECOLOGY_PEDIA",
+  "quote": "TXT_KEY_TECH_GAIA_ECOLOGY_QUOTE",
   "era": "C2C_ERA_TRANSHUMAN",
   "worth": 48,
   "militaryWorth": 4,

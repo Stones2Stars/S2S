@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_ARMOURER",
- "description": "TXT_KEY_BUILDING_ARMOURER",
- "civilopedia": "TXT_KEY_BUILDING_ARMOURER_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -110,6 +108,8 @@
   "construct": "AS2D_BUILD_FORGE"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_ARMOURER",
+  "civilopedia": "TXT_KEY_BUILDING_ARMOURER_PEDIA",
   "applyFreePromotionOnMove": true,
   "worth": 4,
   "militaryWorth": 5,

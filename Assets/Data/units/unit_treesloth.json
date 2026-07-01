@@ -1,7 +1,5 @@
 {
  "type": "UNIT_TREESLOTH",
- "description": "TXT_KEY_UNIT_TREESLOTH",
- "civilopedia": "TXT_KEY_UNIT_TREESLOTH_PEDIA",
  "skills": {
   "blendIntoCity": true,
   "onlyDefensive": true,
@@ -31,6 +29,8 @@
   ]
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_TREESLOTH",
+  "civilopedia": "TXT_KEY_UNIT_TREESLOTH_PEDIA",
   "spawnOnly": true,
   "xpValueAttack": 2,
   "xpValueDefense": 2,

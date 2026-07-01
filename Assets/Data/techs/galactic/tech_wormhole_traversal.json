@@ -1,8 +1,5 @@
 {
  "type": "TECH_WORMHOLE_TRAVERSAL",
- "description": "TXT_KEY_TECH_WORMHOLE_TRAVERSAL",
- "civilopedia": "TXT_KEY_TECH_WORMHOLE_TRAVERSAL_PEDIA",
- "quote": "TXT_KEY_TECH_WORMHOLE_TRAVERSAL_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_INTERSTELLAR_OLYMPICS",
@@ -68,6 +65,9 @@
   "soundMP": "AS2D_TECH_WORMHOLE_TRAVERSAL"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_WORMHOLE_TRAVERSAL",
+  "civilopedia": "TXT_KEY_TECH_WORMHOLE_TRAVERSAL_PEDIA",
+  "quote": "TXT_KEY_TECH_WORMHOLE_TRAVERSAL_QUOTE",
   "era": "C2C_ERA_GALACTIC",
   "worth": 48,
   "militaryWorth": 4,

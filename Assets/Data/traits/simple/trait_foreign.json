@@ -1,7 +1,5 @@
 {
  "type": "TRAIT_FOREIGN",
- "description": "TXT_KEY_TRAIT_FOREIGN",
- "civilopedia": "TXT_KEY_TRAIT_FOREIGN_PEDIA",
  "buildRate": {
   "empire": {
    "buildings": {
@@ -83,6 +81,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_TRAIT_FOREIGN",
+  "civilopedia": "TXT_KEY_TRAIT_FOREIGN_PEDIA",
   "shortDescription": "TXT_KEY_TRAIT_FOREIGN_SHORT",
   "negativeTrait": true,
   "impurePromotions": true

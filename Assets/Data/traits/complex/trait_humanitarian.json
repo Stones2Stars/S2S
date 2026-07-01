@@ -1,8 +1,5 @@
 {
  "type": "TRAIT_HUMANITARIAN",
- "description": "TXT_KEY_TRAIT_COMPLEX_HUMANITARIAN",
- "civilopedia": "TXT_KEY_TRAIT_COMPLEX_HUMANITARIAN_PEDIA",
- "strategy": "TXT_KEY_TRAIT_COMPLEX_HUMANITARIAN_STRATEGY",
  "excludes": [
   "TRAIT_CRUEL"
  ],
@@ -274,5 +271,10 @@
   "art": {
    "icon": "art/Buttons/Traits/TraitHumanitarian.dds"
   }
+ },
+ "identity": {
+  "description": "TXT_KEY_TRAIT_COMPLEX_HUMANITARIAN",
+  "civilopedia": "TXT_KEY_TRAIT_COMPLEX_HUMANITARIAN_PEDIA",
+  "strategy": "TXT_KEY_TRAIT_COMPLEX_HUMANITARIAN_STRATEGY"
  }
 }

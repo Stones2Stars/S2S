@@ -1,7 +1,5 @@
 {
  "type": "IMPROVEMENT_SCAVENGING_CAMP",
- "description": "TXT_KEY_IMPROVEMENT_SCAVENGING_CAMP",
- "civilopedia": "TXT_KEY_IMPROVEMENT_SCAVENGING_CAMP_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -191,6 +189,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_IMPROVEMENT_SCAVENGING_CAMP",
+  "civilopedia": "TXT_KEY_IMPROVEMENT_SCAVENGING_CAMP_PEDIA",
   "advancedStart": {
    "cost": 12
   },

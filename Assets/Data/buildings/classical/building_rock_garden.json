@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_ROCK_GARDEN",
- "description": "TXT_KEY_BUILDING_ROCK_GARDEN",
- "civilopedia": "TXT_KEY_BUILDING_ROCK_GARDEN_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_CITY_PARK"
@@ -66,6 +64,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_ROCK_GARDEN",
+  "civilopedia": "TXT_KEY_BUILDING_ROCK_GARDEN_PEDIA",
   "advisor": "ADVISOR_CULTURE",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

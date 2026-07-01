@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_CAMP_RHINO",
- "description": "TXT_KEY_BUILDING_CAMP_RHINO",
- "civilopedia": "TXT_KEY_BUILDING_CAMP_RHINO_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_ANIMAL_TRAINER_RHINOCEROS",
@@ -97,6 +95,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_CAMP_RHINO",
+  "civilopedia": "TXT_KEY_BUILDING_CAMP_RHINO_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

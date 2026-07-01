@@ -1,7 +1,5 @@
 {
  "type": "BONUS_TOBACCO",
- "description": "TXT_KEY_BONUS_TOBACCO",
- "civilopedia": "TXT_KEY_BONUS_TOBACCO_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_CULTURE_CHILEAN",
@@ -77,6 +75,8 @@
   ]
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_TOBACCO",
+  "civilopedia": "TXT_KEY_BONUS_TOBACCO_PEDIA",
   "bonusClassType": "BONUSCLASS_LUXURY"
  }
 }

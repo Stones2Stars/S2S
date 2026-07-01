@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_COAL_PLANT",
- "description": "TXT_KEY_BUILDING_COAL_PLANT",
- "civilopedia": "TXT_KEY_BUILDING_COAL_PLANT_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_HIGH_TECH_COAL_POWER_PLANT"
@@ -90,6 +88,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_COAL_PLANT",
+  "civilopedia": "TXT_KEY_BUILDING_COAL_PLANT_PEDIA",
   "conquestProbability": 75,
   "dcmAirbombMission": 3,
   "advisor": "ADVISOR_ECONOMY",

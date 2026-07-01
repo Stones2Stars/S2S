@@ -1,7 +1,5 @@
 {
  "type": "SPECIALIST_NOBLE",
- "description": "TXT_KEY_SPECIALIST_NOBLE",
- "civilopedia": "TXT_KEY_CONCEPT_SPECIALISTS_PEDIA",
  "production": {
   "empire": {
    "flat": [
@@ -53,6 +51,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_SPECIALIST_NOBLE",
+  "civilopedia": "TXT_KEY_CONCEPT_SPECIALISTS_PEDIA",
   "visible": true,
   "categories": [
    "CATEGORY_ASSIGNABLE_SPECIALISTS",

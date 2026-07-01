@@ -1,8 +1,5 @@
 {
  "type": "TECH_INDUSTRIAL_LIFESTYLE",
- "description": "TXT_KEY_TECH_INDUSTRIAL_LIFESTYLE",
- "civilopedia": "TXT_KEY_TECH_INDUSTRIAL_LIFESTYLE_PEDIA",
- "quote": "TXT_KEY_TECH_INDUSTRIAL_LIFESTYLE_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_EDUCATION_FARCICAL",
@@ -85,6 +82,9 @@
   "soundMP": "AS2D_TECH_INDUSTRIAL_LIFESTYLE"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_INDUSTRIAL_LIFESTYLE",
+  "civilopedia": "TXT_KEY_TECH_INDUSTRIAL_LIFESTYLE_PEDIA",
+  "quote": "TXT_KEY_TECH_INDUSTRIAL_LIFESTYLE_QUOTE",
   "era": "C2C_ERA_INDUSTRIAL",
   "worth": 40,
   "tradeable": true,

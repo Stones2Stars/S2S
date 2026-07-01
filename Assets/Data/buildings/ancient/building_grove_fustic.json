@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_GROVE_FUSTIC",
- "description": "TXT_KEY_BUILDING_GROVE_FUSTIC",
- "civilopedia": "TXT_KEY_BUILDING_GROVE_FUSTIC_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_DYE_MAKER",
@@ -73,6 +71,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_GROVE_FUSTIC",
+  "civilopedia": "TXT_KEY_BUILDING_GROVE_FUSTIC_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

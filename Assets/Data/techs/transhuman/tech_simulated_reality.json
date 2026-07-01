@@ -1,8 +1,5 @@
 {
  "type": "TECH_SIMULATED_REALITY",
- "description": "TXT_KEY_TECH_SIMULATED_REALITY",
- "civilopedia": "TXT_KEY_TECH_SIMULATED_REALITY_PEDIA",
- "quote": "TXT_KEY_TECH_SIMULATED_REALITY_QUOTE",
  "enables": {
   "bonuses": [
    "BONUS_SOYLENT_GREEN"
@@ -85,6 +82,9 @@
   "soundMP": "AS2D_TECH_SIMULATED_REALITY"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_SIMULATED_REALITY",
+  "civilopedia": "TXT_KEY_TECH_SIMULATED_REALITY_PEDIA",
+  "quote": "TXT_KEY_TECH_SIMULATED_REALITY_QUOTE",
   "era": "C2C_ERA_TRANSHUMAN",
   "worth": 48,
   "militaryWorth": 4,

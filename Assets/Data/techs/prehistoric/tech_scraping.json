@@ -1,8 +1,5 @@
 {
  "type": "TECH_SCRAPING",
- "description": "TXT_KEY_TECH_SCRAPING",
- "civilopedia": "TXT_KEY_TECH_SCRAPING_PEDIA",
- "quote": "TXT_KEY_TECH_SCRAPING_QUOTE",
  "enables": {
   "techs": [
    "TECH_BARK_WORKING",
@@ -46,6 +43,9 @@
   "soundMP": "AS2D_TECH_SCRAPING"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_SCRAPING",
+  "civilopedia": "TXT_KEY_TECH_SCRAPING_PEDIA",
+  "quote": "TXT_KEY_TECH_SCRAPING_QUOTE",
   "era": "C2C_ERA_PREHISTORIC",
   "worth": 8,
   "tradeable": true,

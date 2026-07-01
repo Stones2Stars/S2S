@@ -1,8 +1,5 @@
 {
  "type": "TECH_CHRISTIANITY",
- "description": "TXT_KEY_TECH_CHRISTIANITY",
- "civilopedia": "TXT_KEY_TECH_CHRISTIANITY_PEDIA",
- "quote": "TXT_KEY_TECH_CHRISTIANITY_QUOTE",
  "enables": {
   "religions": [
    "RELIGION_CHRISTIANITY"
@@ -51,6 +48,9 @@
   "soundMP": "AS2D_TECH_CHRISTIANITY"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_CHRISTIANITY",
+  "civilopedia": "TXT_KEY_TECH_CHRISTIANITY_PEDIA",
+  "quote": "TXT_KEY_TECH_CHRISTIANITY_QUOTE",
   "era": "C2C_ERA_CLASSICAL",
   "worth": 8,
   "gridX": 38,

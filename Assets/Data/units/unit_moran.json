@@ -1,7 +1,5 @@
 {
  "type": "UNIT_MORAN",
- "description": "TXT_KEY_UNIT_MASAI_MORAN",
- "civilopedia": "TXT_KEY_UNIT_MASAI_MORAN_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -135,6 +133,8 @@
   "upkeep": 1
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_MASAI_MORAN",
+  "civilopedia": "TXT_KEY_UNIT_MASAI_MORAN_PEDIA",
   "worth": 2,
   "militaryWorth": 4,
   "xpValueAttack": 6,

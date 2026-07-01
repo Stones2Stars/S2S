@@ -1,7 +1,5 @@
 {
  "type": "UNIT_MOUFLON",
- "description": "TXT_KEY_UNIT_MOUFLON",
- "civilopedia": "TXT_KEY_UNIT_MOUFLON_PEDIA",
  "withdrawal": {
   "unit": {
    "percent": 30
@@ -76,6 +74,8 @@
   ]
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_MOUFLON",
+  "civilopedia": "TXT_KEY_UNIT_MOUFLON_PEDIA",
   "spawnOnly": true,
   "xpValueAttack": 4,
   "xpValueDefense": 2,

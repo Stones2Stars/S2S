@@ -1,7 +1,9 @@
 {
  "type": "VICTORY_TIME",
- "description": "TXT_KEY_VICTORY_TIME",
  "condition": {
   "endScore": true
+ },
+ "identity": {
+  "description": "TXT_KEY_VICTORY_TIME"
  }
 }

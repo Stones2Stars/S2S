@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_SPACESCRAPER",
- "description": "TXT_KEY_BUILDING_SPACESCRAPER",
- "civilopedia": "TXT_KEY_BUILDING_SPACESCRAPER_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_COMPUTRONIUM_TOWER",
@@ -75,6 +73,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_SPACESCRAPER",
+  "civilopedia": "TXT_KEY_BUILDING_SPACESCRAPER_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

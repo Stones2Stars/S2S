@@ -1,13 +1,13 @@
 {
  "type": "BONUS_PEGASUS",
- "description": "TXT_KEY_BONUS_PEGASUS",
- "civilopedia": "TXT_KEY_BONUS_PEGASUS_PEDIA",
  "world": {
   "art": {
    "icon": "ART_DEF_BONUS_PEGASUS"
   }
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_PEGASUS",
+  "civilopedia": "TXT_KEY_BONUS_PEGASUS_PEDIA",
   "bonusClassType": "BONUSCLASS_WONDER"
  }
 }

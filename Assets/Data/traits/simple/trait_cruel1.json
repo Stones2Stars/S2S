@@ -1,7 +1,5 @@
 {
  "type": "TRAIT_CRUEL1",
- "description": "TXT_KEY_TRAIT_CRUEL0",
- "civilopedia": "TXT_KEY_TRAIT_CRUEL_PEDIA",
  "enables": {
   "traits": [
    "TRAIT_CRUEL2"
@@ -74,6 +72,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_TRAIT_CRUEL0",
+  "civilopedia": "TXT_KEY_TRAIT_CRUEL_PEDIA",
   "shortDescription": "TXT_KEY_TRAIT_CRUEL_SHORT",
   "negativeTrait": true
  }

@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_HQ_EMPERORS_CLOTHING",
- "description": "TXT_KEY_BUILDING_HQ_EMPERORS_CLOTHING",
- "civilopedia": "TXT_KEY_BUILDING_HQ_EMPERORS_CLOTHING_PEDIA",
  "enables": {
   "corporations": [
    "CORPORATION_EMPCLOTH"
@@ -56,6 +54,8 @@
   "construct": "AS2D_BUILD_BANK"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_HQ_EMPERORS_CLOTHING",
+  "civilopedia": "TXT_KEY_BUILDING_HQ_EMPERORS_CLOTHING_PEDIA",
   "commerceDoubleTime": {
    "culture": 1000
   },

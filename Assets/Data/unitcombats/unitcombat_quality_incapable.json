@@ -1,6 +1,5 @@
 {
  "type": "UNITCOMBAT_QUALITY_INCAPABLE",
- "description": "TXT_KEY_UNITCOMBAT_QUALITY_INCAPABLE",
  "experience": {
   "unit": {
    "percent": 75
@@ -29,6 +28,7 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_UNITCOMBAT_QUALITY_INCAPABLE",
   "base": {
    "quality": 0
   }

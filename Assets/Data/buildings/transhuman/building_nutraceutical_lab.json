@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_NUTRACEUTICAL_LAB",
- "description": "TXT_KEY_BUILDING_NUTRACEUTICAL_LAB",
- "civilopedia": "TXT_KEY_BUILDING_NUTRACEUTICAL_LAB_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_RESOURCES_SMART_MEDICINE"
@@ -66,6 +64,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_NUTRACEUTICAL_LAB",
+  "civilopedia": "TXT_KEY_BUILDING_NUTRACEUTICAL_LAB_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

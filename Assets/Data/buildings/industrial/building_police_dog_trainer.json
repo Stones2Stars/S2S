@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_POLICE_DOG_TRAINER",
- "description": "TXT_KEY_BUILDING_POLICE_DOG_TRAINER",
- "civilopedia": "TXT_KEY_BUILDING_POLICE_DOG_TRAINER_PEDIA",
  "enables": {
   "units": [
    "UNIT_POLICE_DOG"
@@ -59,6 +57,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_POLICE_DOG_TRAINER",
+  "civilopedia": "TXT_KEY_BUILDING_POLICE_DOG_TRAINER_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

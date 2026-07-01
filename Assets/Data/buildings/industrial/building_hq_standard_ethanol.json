@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_HQ_STANDARD_ETHANOL",
- "description": "TXT_KEY_BUILDING_HQ_STANDARD_ETHANOL",
- "civilopedia": "TXT_KEY_BUILDING_CORPORATION_3_PEDIA",
  "enables": {
   "corporations": [
    "CORPORATION_3"
@@ -56,6 +54,8 @@
   "construct": "AS2D_BUILD_BANK"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_HQ_STANDARD_ETHANOL",
+  "civilopedia": "TXT_KEY_BUILDING_CORPORATION_3_PEDIA",
   "commerceDoubleTime": {
    "culture": 1000
   },

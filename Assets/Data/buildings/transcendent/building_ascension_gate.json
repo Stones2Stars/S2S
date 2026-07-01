@@ -1,8 +1,5 @@
 {
  "type": "BUILDING_ASCENSION_GATE",
- "description": "TXT_KEY_BUILDING_ASCENSION_GATE",
- "civilopedia": "TXT_KEY_BUILDING_ASCENSION_GATE_PEDIA",
- "help": "TXT_KEY_BUILDING_ASCENSION_GATE_HELP",
  "requires": {
   "build": {
    "all": [
@@ -87,6 +84,9 @@
   "construct": "AS2D_BUILD_ACCELERATOR"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_ASCENSION_GATE",
+  "civilopedia": "TXT_KEY_BUILDING_ASCENSION_GATE_PEDIA",
+  "help": "TXT_KEY_BUILDING_ASCENSION_GATE_HELP",
   "nukeImmune": true,
   "centerInCity": true,
   "forceNoPrereqScaling": true,

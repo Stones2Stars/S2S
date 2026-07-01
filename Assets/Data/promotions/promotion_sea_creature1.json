@@ -1,6 +1,5 @@
 {
  "type": "PROMOTION_SEA_CREATURE1",
- "description": "TXT_KEY_PROMOTION_SEA_CREATURE1",
  "firstStrike": {
   "unit": {
    "chance": {
@@ -72,5 +71,8 @@
  },
  "sound": {
   "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_SEA_CREATURE1"
  }
 }

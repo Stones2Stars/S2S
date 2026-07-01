@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_CERN_ACCELERATOR",
- "description": "TXT_KEY_BUILDING_CERN_ACCELERATOR",
- "civilopedia": "TXT_KEY_BUILDING_CERN_ACCELERATOR_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -73,6 +71,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_CERN_ACCELERATOR",
+  "civilopedia": "TXT_KEY_BUILDING_CERN_ACCELERATOR_PEDIA",
   "centerInCity": true,
   "worth": 10,
   "conquestProbability": 100,

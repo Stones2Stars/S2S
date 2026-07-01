@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_WATER_RACEWAY",
- "description": "TXT_KEY_BUILDING_WATER_RACEWAY",
- "civilopedia": "TXT_KEY_BUILDING_WATER_RACEWAY_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_ATHLETIC_MEGACOMPLEX"
@@ -85,6 +83,8 @@
   "construct": "AS2D_BUILD_WAVERACING"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_WATER_RACEWAY",
+  "civilopedia": "TXT_KEY_BUILDING_WATER_RACEWAY_PEDIA",
   "worth": 8,
   "militaryWorth": 4,
   "advisor": "ADVISOR_MILITARY",

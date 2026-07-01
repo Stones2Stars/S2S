@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_SMELTER_LEAD",
- "description": "TXT_KEY_BUILDING_SMELTER_LEAD",
- "civilopedia": "TXT_KEY_BUILDING_SMELTER_LEAD_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_RESOURCES_LEAD_INGOTS"
@@ -87,6 +85,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_SMELTER_LEAD",
+  "civilopedia": "TXT_KEY_BUILDING_SMELTER_LEAD_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

@@ -1,8 +1,5 @@
 {
  "type": "TECH_COMMUNICATION_NETWORKS",
- "description": "TXT_KEY_TECH_COMMUNICATION_NETWORKS",
- "civilopedia": "TXT_KEY_TECH_COMMUNICATION_NETWORKS_PEDIA",
- "quote": "TXT_KEY_TECH_COMMUNICATION_NETWORKS_QUOTE",
  "enables": {
   "bonuses": [
    "BONUS_CELLPHONES"
@@ -83,6 +80,9 @@
   "soundMP": "AS2D_TECH_COMMUNICATION_NETWORKS"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_COMMUNICATION_NETWORKS",
+  "civilopedia": "TXT_KEY_TECH_COMMUNICATION_NETWORKS_PEDIA",
+  "quote": "TXT_KEY_TECH_COMMUNICATION_NETWORKS_QUOTE",
   "era": "C2C_ERA_INFORMATION",
   "worth": 40,
   "militaryWorth": 10,

@@ -1,7 +1,5 @@
 {
  "type": "TRAIT_REVOLUTIONARY1",
- "description": "TXT_KEY_TRAIT_REVOLUTIONARY0",
- "civilopedia": "TXT_KEY_TRAIT_REVOLUTIONARY_PEDIA",
  "enables": {
   "traits": [
    "TRAIT_REVOLUTIONARY2"
@@ -86,6 +84,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_TRAIT_REVOLUTIONARY0",
+  "civilopedia": "TXT_KEY_TRAIT_REVOLUTIONARY_PEDIA",
   "shortDescription": "TXT_KEY_TRAIT_REVOLUTIONARY_SHORT",
   "negativeTrait": true,
   "impurePromotions": true

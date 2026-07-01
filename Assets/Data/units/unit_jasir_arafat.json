@@ -1,7 +1,5 @@
 {
  "type": "UNIT_JASIR_ARAFAT",
- "description": "TXT_KEY_UNIT_JASIR_ARAFAT",
- "civilopedia": "TXT_KEY_UNIT_JASIR_ARAFAT_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -53,6 +51,8 @@
   "upkeep": 1
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_JASIR_ARAFAT",
+  "civilopedia": "TXT_KEY_UNIT_JASIR_ARAFAT_PEDIA",
   "worth": 6,
   "militaryWorth": 8,
   "xpValueAttack": 4,

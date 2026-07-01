@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_CISLUNAR_CRYONIC_BODY_STORAGE",
- "description": "TXT_KEY_BUILDING_CISLUNAR_CRYONIC_BODY_STORAGE",
- "civilopedia": "TXT_KEY_BUILDING_CISLUNAR_CRYONIC_BODY_STORAGE_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -44,6 +42,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_CISLUNAR_CRYONIC_BODY_STORAGE",
+  "civilopedia": "TXT_KEY_BUILDING_CISLUNAR_CRYONIC_BODY_STORAGE_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

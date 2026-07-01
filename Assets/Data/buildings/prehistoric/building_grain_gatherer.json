@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_GRAIN_GATHERER",
- "description": "TXT_KEY_BUILDING_GRAIN_GATHERER",
- "civilopedia": "TXT_KEY_BUILDING_GRAIN_GATHERER_PEDIA",
  "obsoletedBy": {
   "techs": [
    "TECH_CITY_PLANNING"
@@ -53,6 +51,8 @@
   "construct": "AS2D_BUILD_COMMUNITY_GARDEN"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_GRAIN_GATHERER",
+  "civilopedia": "TXT_KEY_BUILDING_GRAIN_GATHERER_PEDIA",
   "enabledCivilizations": [
    "CIVILIZATION_NPC_NEANDERTHAL"
   ],

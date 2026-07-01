@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_MASTERS_DOJO",
- "description": "TXT_KEY_BUILDING_MASTERS_DOJO",
- "civilopedia": "TXT_KEY_BUILDING_TRAINING_DOJO_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_ATHLETIC_MEGACOMPLEX"
@@ -57,6 +55,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_MASTERS_DOJO",
+  "civilopedia": "TXT_KEY_BUILDING_TRAINING_DOJO_PEDIA",
   "worth": 5,
   "militaryWorth": 6,
   "advisor": "ADVISOR_MILITARY",

@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_ORGAN_HALL",
- "description": "TXT_KEY_BUILDING_ORGAN_HALL",
- "civilopedia": "TXT_KEY_BUILDING_ORGAN_HALL_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_HIGH_TECH_CULTURAL_ENRICHMENT"
@@ -91,6 +89,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_ORGAN_HALL",
+  "civilopedia": "TXT_KEY_BUILDING_ORGAN_HALL_PEDIA",
   "conquestProbability": 70,
   "advisor": "ADVISOR_SCIENCE",
   "mapCategories": [

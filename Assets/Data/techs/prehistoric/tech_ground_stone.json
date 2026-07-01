@@ -1,8 +1,5 @@
 {
  "type": "TECH_GROUND_STONE",
- "description": "TXT_KEY_TECH_GROUND_STONE",
- "civilopedia": "TXT_KEY_TECH_GROUND_STONE_PEDIA",
- "quote": "TXT_KEY_TECH_GROUND_STONE_QUOTE",
  "enables": {
   "bonuses": [
    "BONUS_FLOUR",
@@ -57,6 +54,9 @@
   "soundMP": "AS2D_TECH_GROUND_STONE"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_GROUND_STONE",
+  "civilopedia": "TXT_KEY_TECH_GROUND_STONE_PEDIA",
+  "quote": "TXT_KEY_TECH_GROUND_STONE_QUOTE",
   "era": "C2C_ERA_PREHISTORIC",
   "worth": 4,
   "tradeable": true,

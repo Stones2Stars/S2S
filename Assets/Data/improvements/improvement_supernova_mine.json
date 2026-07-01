@@ -1,7 +1,5 @@
 {
  "type": "IMPROVEMENT_SUPERNOVA_MINE",
- "description": "TXT_KEY_IMPROVEMENT_SUPERNOVA_MINE",
- "civilopedia": "TXT_KEY_IMPROVEMENT_SUPERNOVA_MINE_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -49,6 +47,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_IMPROVEMENT_SUPERNOVA_MINE",
+  "civilopedia": "TXT_KEY_IMPROVEMENT_SUPERNOVA_MINE_PEDIA",
   "extraterrestrial": true,
   "pillageGold": 200
  }

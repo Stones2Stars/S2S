@@ -1,8 +1,5 @@
 {
  "type": "TECH_JURISPRUDENCE",
- "description": "TXT_KEY_TECH_JURISPRUDENCE",
- "civilopedia": "TXT_KEY_TECH_JURISPRUDENCE_PEDIA",
- "quote": "TXT_KEY_TECH_JURISPRUDENCE_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_CRIME_RIOTING",
@@ -63,6 +60,9 @@
   "soundMP": "AS2D_TECH_JURISPRUDENCE"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_JURISPRUDENCE",
+  "civilopedia": "TXT_KEY_TECH_JURISPRUDENCE_PEDIA",
+  "quote": "TXT_KEY_TECH_JURISPRUDENCE_QUOTE",
   "era": "C2C_ERA_RENAISSANCE",
   "worth": 24,
   "tradeable": true,

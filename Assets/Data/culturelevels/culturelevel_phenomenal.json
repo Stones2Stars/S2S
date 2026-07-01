@@ -1,6 +1,5 @@
 {
  "type": "CULTURELEVEL_PHENOMENAL",
- "description": "TXT_KEY_CULTURELEVEL_PHENOMENAL",
  "allowed": {
   "worldWonders": 12,
   "teamWonders": 14,
@@ -14,6 +13,7 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_CULTURELEVEL_PHENOMENAL",
   "cityRadius": 3,
   "cultureThreshold": 532480
  }

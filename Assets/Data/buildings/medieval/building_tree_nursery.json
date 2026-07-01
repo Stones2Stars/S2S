@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_TREE_NURSERY",
- "description": "TXT_KEY_BUILDING_TREE_NURSERY",
- "civilopedia": "TXT_KEY_BUILDING_TREE_NURSERY_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_AGROFOREST"
@@ -110,6 +108,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_TREE_NURSERY",
+  "civilopedia": "TXT_KEY_BUILDING_TREE_NURSERY_PEDIA",
   "worth": 3,
   "militaryWorth": 1,
   "advisor": "ADVISOR_GROWTH",

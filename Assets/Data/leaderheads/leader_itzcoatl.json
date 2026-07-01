@@ -1,7 +1,5 @@
 {
  "type": "LEADER_ITZCOATL",
- "description": "TXT_KEY_LEADER_ITZCOATL",
- "civilopedia": "TXT_KEY_LEADER_ITZCOATL_PEDIA",
  "grants": {
   "traits": [
    "TRAIT_INDUSTRIOUS",
@@ -299,5 +297,9 @@
    "C2C_ERA_TRANSCENDENT": "AS2D_DIPLO_WARDRUMS_LATE",
    "C2C_ERA_FUTURE": "AS2D_DIPLO_WARDRUMS_LATE"
   }
+ },
+ "identity": {
+  "description": "TXT_KEY_LEADER_ITZCOATL",
+  "civilopedia": "TXT_KEY_LEADER_ITZCOATL_PEDIA"
  }
 }

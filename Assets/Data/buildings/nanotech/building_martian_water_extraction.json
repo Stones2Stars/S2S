@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_MARTIAN_WATER_EXTRACTION",
- "description": "TXT_KEY_BUILDING_MARTIAN_WATER_EXTRACTION",
- "civilopedia": "TXT_KEY_BUILDING_MARTIAN_WATER_EXTRACTION_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_MARTIAN_GARDEN"
@@ -48,6 +46,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_MARTIAN_WATER_EXTRACTION",
+  "civilopedia": "TXT_KEY_BUILDING_MARTIAN_WATER_EXTRACTION_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

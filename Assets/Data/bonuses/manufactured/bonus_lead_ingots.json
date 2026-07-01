@@ -1,7 +1,5 @@
 {
  "type": "BONUS_LEAD_INGOTS",
- "description": "TXT_KEY_BONUS_LEAD_INGOTS",
- "civilopedia": "TXT_KEY_BONUS_INGOTS_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_FACTORY_RUBBER",
@@ -14,6 +12,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_LEAD_INGOTS",
+  "civilopedia": "TXT_KEY_BONUS_INGOTS_PEDIA",
   "bonusClassType": "BONUSCLASS_MANUFACTURED"
  }
 }

@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_INTERSTELLAR_CULTURE_COMMERCIAL",
- "description": "TXT_KEY_BUILDING_INTERSTELLAR_CULTURE_COMMERCIAL",
- "civilopedia": "TXT_KEY_BUILDING_INTERSTELLAR_CULTURE_COMMERCIAL_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_INTERSTELLAR_PROGRAMMED_WORK_ETHIC"
@@ -50,6 +48,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_INTERSTELLAR_CULTURE_COMMERCIAL",
+  "civilopedia": "TXT_KEY_BUILDING_INTERSTELLAR_CULTURE_COMMERCIAL_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

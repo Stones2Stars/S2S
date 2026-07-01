@@ -1,7 +1,5 @@
 {
  "type": "BONUS_INDIGO",
- "description": "TXT_KEY_BONUS_INDIGO",
- "civilopedia": "TXT_KEY_BONUS_INDIGO_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_CULTURE_AKSUMITE",
@@ -79,6 +77,8 @@
   ]
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_INDIGO",
+  "civilopedia": "TXT_KEY_BONUS_INDIGO_PEDIA",
   "bonusClassType": "BONUSCLASS_LUXURY"
  }
 }

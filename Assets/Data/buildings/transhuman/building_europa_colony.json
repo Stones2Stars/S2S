@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_EUROPA_COLONY",
- "description": "TXT_KEY_BUILDING_EUROPA_COLONY",
- "civilopedia": "TXT_KEY_BUILDING_EUROPA_COLONY_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_EUROPA_CITY",
@@ -68,6 +66,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_EUROPA_COLONY",
+  "civilopedia": "TXT_KEY_BUILDING_EUROPA_COLONY_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

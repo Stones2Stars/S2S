@@ -1,8 +1,5 @@
 {
  "type": "TECH_EXOCORTEX_NETWORKS",
- "description": "TXT_KEY_TECH_EXOCORTEX_NETWORKS",
- "civilopedia": "TXT_KEY_TECH_EXOCORTEX_NETWORKS_PEDIA",
- "quote": "TXT_KEY_TECH_EXOCORTEX_NETWORKS_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_BINARY_CONSCIOUSNESS_ALGORITHMS",
@@ -76,6 +73,9 @@
   "soundMP": "AS2D_TECH_EXOCORTEX_NETWORKS"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_EXOCORTEX_NETWORKS",
+  "civilopedia": "TXT_KEY_TECH_EXOCORTEX_NETWORKS_PEDIA",
+  "quote": "TXT_KEY_TECH_EXOCORTEX_NETWORKS_QUOTE",
   "era": "C2C_ERA_NANOTECH",
   "worth": 14,
   "tradeable": true,

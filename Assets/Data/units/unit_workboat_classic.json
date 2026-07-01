@@ -1,7 +1,5 @@
 {
  "type": "UNIT_WORKBOAT_CLASSIC",
- "description": "TXT_KEY_UNIT_WORKBOAT_CLASSIC",
- "civilopedia": "TXT_KEY_UNIT_WORKBOAT_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -49,6 +47,8 @@
   "upkeep": 2
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_WORKBOAT_CLASSIC",
+  "civilopedia": "TXT_KEY_UNIT_WORKBOAT_PEDIA",
   "worth": 1,
   "domain": "DOMAIN_SEA",
   "defaultUnitAI": "UNITAI_WORKER_SEA",

@@ -1,8 +1,5 @@
 {
  "type": "TECH_SOCIAL_CONTRACT",
- "description": "TXT_KEY_TECH_SOCIAL_CONTRACT",
- "civilopedia": "TXT_KEY_TECH_SOCIAL_CONTRACT_PEDIA",
- "quote": "TXT_KEY_TECH_SOCIAL_CONTRACT_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_CAPITAL_ADMINISTRATION",
@@ -67,6 +64,9 @@
   "soundMP": "AS2D_TECH_SOCIAL_CONTRACT"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_SOCIAL_CONTRACT",
+  "civilopedia": "TXT_KEY_TECH_SOCIAL_CONTRACT_PEDIA",
+  "quote": "TXT_KEY_TECH_SOCIAL_CONTRACT_QUOTE",
   "era": "C2C_ERA_RENAISSANCE",
   "worth": 24,
   "tradeable": true,

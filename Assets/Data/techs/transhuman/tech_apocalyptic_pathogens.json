@@ -1,8 +1,5 @@
 {
  "type": "TECH_APOCALYPTIC_PATHOGENS",
- "description": "TXT_KEY_TECH_APOCALYPTIC_PATHOGENS",
- "civilopedia": "TXT_KEY_TECH_APOCALYPTIC_PATHOGENS_PEDIA",
- "quote": "TXT_KEY_TECH_APOCALYPTIC_PATHOGENS_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_CALLISTO_NITROGEN_GENERATOR",
@@ -69,6 +66,9 @@
   "soundMP": "AS2D_TECH_APOCALYPTIC_PATHOGENS"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_APOCALYPTIC_PATHOGENS",
+  "civilopedia": "TXT_KEY_TECH_APOCALYPTIC_PATHOGENS_PEDIA",
+  "quote": "TXT_KEY_TECH_APOCALYPTIC_PATHOGENS_QUOTE",
   "era": "C2C_ERA_TRANSHUMAN",
   "worth": 48,
   "militaryWorth": 4,

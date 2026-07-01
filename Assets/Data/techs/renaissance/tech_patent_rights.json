@@ -1,8 +1,5 @@
 {
  "type": "TECH_PATENT_RIGHTS",
- "description": "TXT_KEY_TECH_PATENT_RIGHTS",
- "civilopedia": "TXT_KEY_TECH_PATENT_RIGHTS_PEDIA",
- "quote": "TXT_KEY_TECH_PATENT_RIGHTS_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_PATENT_OFFICE"
@@ -51,6 +48,9 @@
   "soundMP": "AS2D_TECH_PATENTRIGHT"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_PATENT_RIGHTS",
+  "civilopedia": "TXT_KEY_TECH_PATENT_RIGHTS_PEDIA",
+  "quote": "TXT_KEY_TECH_PATENT_RIGHTS_QUOTE",
   "era": "C2C_ERA_RENAISSANCE",
   "worth": 32,
   "tradeable": true,

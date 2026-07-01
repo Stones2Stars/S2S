@@ -1,7 +1,5 @@
 {
  "type": "UNIT_BARRAGE_BALLOON",
- "description": "TXT_KEY_UNIT_BARRAGE_BALLOON",
- "civilopedia": "TXT_KEY_UNIT_BALLOON_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -52,6 +50,8 @@
   "upkeep": 1
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_BARRAGE_BALLOON",
+  "civilopedia": "TXT_KEY_UNIT_BALLOON_PEDIA",
   "worth": 3,
   "militaryWorth": 29,
   "xpValueAttack": 3,

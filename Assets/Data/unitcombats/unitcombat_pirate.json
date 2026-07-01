@@ -1,6 +1,5 @@
 {
  "type": "UNITCOMBAT_PIRATE",
- "description": "TXT_KEY_UNITCOMBAT_PIRATE",
  "strength": {
   "unit": {
    "stealth": {
@@ -32,6 +31,7 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_UNITCOMBAT_PIRATE",
   "forNavalMilitary": true,
   "defaultStatuses": [
    "PROMOTION_REMOVE_STANDOUT_STATUS"

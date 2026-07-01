@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_CANNERY",
- "description": "TXT_KEY_BUILDING_CANNERY",
- "civilopedia": "TXT_KEY_BUILDING_CANNERY_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_PUSHBUTTON_AUTOMAT"
@@ -281,6 +279,8 @@
   "construct": "AS2D_BUILD_FOOD_PROCESSING_PLANT"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_CANNERY",
+  "civilopedia": "TXT_KEY_BUILDING_CANNERY_PEDIA",
   "worth": 6,
   "militaryWorth": 2,
   "conquestProbability": 75,

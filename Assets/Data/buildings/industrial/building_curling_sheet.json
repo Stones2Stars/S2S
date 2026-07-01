@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_CURLING_SHEET",
- "description": "TXT_KEY_BUILDING_CURLING_SHEET",
- "civilopedia": "TXT_KEY_BUILDING_CURLING_SHEET_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_ATHLETIC_MEGACOMPLEX"
@@ -68,6 +66,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_CURLING_SHEET",
+  "civilopedia": "TXT_KEY_BUILDING_CURLING_SHEET_PEDIA",
   "worth": 2,
   "advisor": "ADVISOR_CULTURE",
   "mapCategories": [

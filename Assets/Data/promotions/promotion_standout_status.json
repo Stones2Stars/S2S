@@ -1,6 +1,5 @@
 {
  "type": "PROMOTION_STANDOUT_STATUS",
- "description": "TXT_KEY_PROMOTION_STANDOUT_STATUS",
  "skills": {
   "noInvisibility": true
  },
@@ -21,6 +20,7 @@
   "sound": "AS2D_IF_LEVELUP"
  },
  "identity": {
+  "description": "TXT_KEY_PROMOTION_STANDOUT_STATUS",
   "status": true,
   "quick": true,
   "prereqNormInvisible": true

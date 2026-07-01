@@ -1,7 +1,5 @@
 {
  "type": "UNIT_SEAL_HUNTER",
- "description": "TXT_KEY_UNIT_SEAL_HUNTER",
- "civilopedia": "TXT_KEY_UNIT_SEAL_HUNTER_PEDIA",
  "obsoletedBy": {
   "techs": [
    "TECH_BRONZE_WORKING"
@@ -106,6 +104,8 @@
   "upkeep": 1
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_SEAL_HUNTER",
+  "civilopedia": "TXT_KEY_UNIT_SEAL_HUNTER_PEDIA",
   "worth": 2,
   "militaryWorth": 2,
   "xpValueAttack": 8,

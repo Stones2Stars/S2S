@@ -1,8 +1,5 @@
 {
  "type": "TECH_SUBDIMENSIONAL_UNIVERSE",
- "description": "TXT_KEY_TECH_SUBDIMENSIONAL_UNIVERSE",
- "civilopedia": "TXT_KEY_TECH_SUBDIMENSIONAL_UNIVERSE_PEDIA",
- "quote": "TXT_KEY_TECH_SUBDIMENSIONAL_UNIVERSE_QUOTE",
  "enables": {
   "bonuses": [
    "BONUS_POCKET_UNIVERSE"
@@ -57,6 +54,9 @@
   "soundMP": "AS2D_TECH_GENERIC"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_SUBDIMENSIONAL_UNIVERSE",
+  "civilopedia": "TXT_KEY_TECH_SUBDIMENSIONAL_UNIVERSE_PEDIA",
+  "quote": "TXT_KEY_TECH_SUBDIMENSIONAL_UNIVERSE_QUOTE",
   "era": "C2C_ERA_TRANSCENDENT",
   "worth": 48,
   "tradeable": true,

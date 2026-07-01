@@ -1,6 +1,5 @@
 {
  "type": "PROMOTION_SELF_DESTRUCT",
- "description": "TXT_KEY_PROMOTION_SELF_DESTRUCT",
  "strength": {
   "unit": {
    "kamikaze": {
@@ -24,6 +23,7 @@
   "sound": "AS2D_IF_LEVELUP"
  },
  "identity": {
+  "description": "TXT_KEY_PROMOTION_SELF_DESTRUCT",
   "unitCombats": [
    "UNITCOMBAT_ROBOT",
    "UNITCOMBAT_ASSAULT_MECH",

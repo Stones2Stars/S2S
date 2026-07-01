@@ -1,8 +1,5 @@
 {
  "type": "CIVIC_VOLUNTARY",
- "description": "TXT_KEY_CIVIC_VOLUNTARY",
- "civilopedia": "TXT_KEY_CIVIC_VOLUNTARY_PEDIA",
- "strategy": "TXT_KEY_CIVIC_VOLUNTARY_STRATEGY",
  "enables": {
   "buildings": [
    "BUILDING_RECRUITMENT_CENTER"
@@ -92,6 +89,9 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_CIVIC_VOLUNTARY",
+  "civilopedia": "TXT_KEY_CIVIC_VOLUNTARY_PEDIA",
+  "strategy": "TXT_KEY_CIVIC_VOLUNTARY_STRATEGY",
   "civicOption": "CIVICOPTION_MILITARY",
   "anarchyLength": 1,
   "upkeepLevel": "UPKEEP_MEDIUM"

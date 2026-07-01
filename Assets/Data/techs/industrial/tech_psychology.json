@@ -1,8 +1,5 @@
 {
  "type": "TECH_PSYCHOLOGY",
- "description": "TXT_KEY_TECH_PSYCHOLOGY",
- "civilopedia": "TXT_KEY_TECH_PSYCHOLOGY_PEDIA",
- "quote": "TXT_KEY_TECH_PSYCHOLOGY_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_AMUSEMENT_PARK",
@@ -63,6 +60,9 @@
   "soundMP": "AS2D_TECH_PSYCHOLOGY"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_PSYCHOLOGY",
+  "civilopedia": "TXT_KEY_TECH_PSYCHOLOGY_PEDIA",
+  "quote": "TXT_KEY_TECH_PSYCHOLOGY_QUOTE",
   "era": "C2C_ERA_INDUSTRIAL",
   "worth": 21,
   "militaryWorth": 7,

@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_CARRION_GATHERER",
- "description": "TXT_KEY_BUILDING_CARRION_GATHERER",
- "civilopedia": "TXT_KEY_BUILDING_CARRION_GATHERER_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_RESOURCES_CARCASS"
@@ -183,6 +181,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_CARRION_GATHERER",
+  "civilopedia": "TXT_KEY_BUILDING_CARRION_GATHERER_PEDIA",
   "nukeImmune": true,
   "advisor": "ADVISOR_GROWTH",
   "mapCategories": [

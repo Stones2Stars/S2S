@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_FOLKLORE_T_LEVIATHAN",
- "description": "TXT_KEY_BUILDING_FOLKLORE_T_LEVIATHAN",
- "civilopedia": "TXT_KEY_BUILDING_FOLKLORE_ANIMAL_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_NAVAL_STANDARD_ANIMAL_MASCOT"
@@ -102,6 +100,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_FOLKLORE_T_LEVIATHAN",
+  "civilopedia": "TXT_KEY_BUILDING_FOLKLORE_ANIMAL_PEDIA",
   "nukeImmune": true,
   "neverCapture": true,
   "specialBuildingType": "SPECIALBUILDING_FOLKLORE_TAXONOMY",

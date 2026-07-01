@@ -1,7 +1,5 @@
 {
  "type": "BONUS_SAILS",
- "description": "TXT_KEY_BONUS_SAILS",
- "civilopedia": "TXT_KEY_BONUS_SAILS_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_SHIPWRIGHT"
@@ -13,6 +11,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_SAILS",
+  "civilopedia": "TXT_KEY_BONUS_SAILS_PEDIA",
   "bonusClassType": "BONUSCLASS_MANUFACTURED"
  }
 }

@@ -1,7 +1,5 @@
 {
  "type": "TRAIT_ASTROLOGICAL_INFLUENCE_OF_LIBRA",
- "description": "TXT_KEY_TRAIT_ASTROLOGICAL_INFLUENCE_OF_LIBRA",
- "civilopedia": "TXT_KEY_TRAIT_ASTROLOGICAL_INFLUENCE_OF_LIBRA_PEDIA",
  "culture": {
   "empire": {
    "flat": 5
@@ -30,6 +28,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_TRAIT_ASTROLOGICAL_INFLUENCE_OF_LIBRA",
+  "civilopedia": "TXT_KEY_TRAIT_ASTROLOGICAL_INFLUENCE_OF_LIBRA_PEDIA",
   "shortDescription": "TXT_KEY_TRAIT_ASTROLOGICAL_INFLUENCE_OF_LIBRA_SHORT",
   "civilizationTrait": true
  }

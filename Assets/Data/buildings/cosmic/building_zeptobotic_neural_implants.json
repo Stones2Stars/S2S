@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_ZEPTOBOTIC_NEURAL_IMPLANTS",
- "description": "TXT_KEY_BUILDING_ZEPTOBOTIC_NEURAL_IMPLANTS",
- "civilopedia": "TXT_KEY_BUILDING_ZEPTOBOTIC_NEURAL_IMPLANTS_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -38,6 +36,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_ZEPTOBOTIC_NEURAL_IMPLANTS",
+  "civilopedia": "TXT_KEY_BUILDING_ZEPTOBOTIC_NEURAL_IMPLANTS_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

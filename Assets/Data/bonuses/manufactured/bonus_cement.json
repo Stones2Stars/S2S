@@ -1,7 +1,5 @@
 {
  "type": "BONUS_CEMENT",
- "description": "TXT_KEY_BONUS_CEMENT",
- "civilopedia": "TXT_KEY_BONUS_CEMENT_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_AON_CENTER",
@@ -124,6 +122,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_CEMENT",
+  "civilopedia": "TXT_KEY_BONUS_CEMENT_PEDIA",
   "bonusClassType": "BONUSCLASS_MANUFACTURED"
  }
 }

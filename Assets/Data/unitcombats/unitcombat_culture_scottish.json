@@ -1,12 +1,12 @@
 {
  "type": "UNITCOMBAT_CULTURE_SCOTTISH",
- "description": "TXT_KEY_UNITCOMBAT_CULTURE_SCOTTISH",
  "ui": {
   "art": {
    "icon": "Art/Interface/Buttons/units/sparth/categories/culture_scotish.dds"
   }
  },
  "identity": {
+  "description": "TXT_KEY_UNITCOMBAT_CULTURE_SCOTTISH",
   "culture": "BONUS_SCOTTISH"
  }
 }

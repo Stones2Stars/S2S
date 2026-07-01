@@ -1,8 +1,5 @@
 {
  "type": "TECH_TRENCH_WARFARE",
- "description": "TXT_KEY_TECH_TRENCH_WARFARE",
- "civilopedia": "TXT_KEY_TECH_TRENCH_WARFARE_PEDIA",
- "quote": "TXT_KEY_TECH_TRENCH_WARFARE_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_MAGINOT_LINE"
@@ -74,6 +71,9 @@
   "soundMP": "AS2D_TECH_TRENCH_WARFARE"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_TRENCH_WARFARE",
+  "civilopedia": "TXT_KEY_TECH_TRENCH_WARFARE_PEDIA",
+  "quote": "TXT_KEY_TECH_TRENCH_WARFARE_QUOTE",
   "era": "C2C_ERA_ATOMIC",
   "worth": 40,
   "militaryWorth": 8,

@@ -1,8 +1,5 @@
 {
  "type": "TECH_ARMOR_CRAFTING",
- "description": "TXT_KEY_TECH_ARMOR_CRAFTING",
- "civilopedia": "TXT_KEY_TECH_ARMOR_CRAFTING_PEDIA",
- "quote": "TXT_KEY_TECH_ARMOR_CRAFTING_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_CULTURE_DANISH",
@@ -93,6 +90,9 @@
   "soundMP": "AS2D_TECH_ARMORCRAFTING"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_ARMOR_CRAFTING",
+  "civilopedia": "TXT_KEY_TECH_ARMOR_CRAFTING_PEDIA",
+  "quote": "TXT_KEY_TECH_ARMOR_CRAFTING_QUOTE",
   "era": "C2C_ERA_MEDIEVAL",
   "worth": 24,
   "militaryWorth": 10,

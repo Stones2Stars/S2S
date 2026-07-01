@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_COUNTRY_CLUB",
- "description": "TXT_KEY_BUILDING_COUNTRY_CLUB",
- "civilopedia": "TXT_KEY_BUILDING_COUNTRY_CLUB_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_ATHLETIC_MEGACOMPLEX"
@@ -101,6 +99,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_COUNTRY_CLUB",
+  "civilopedia": "TXT_KEY_BUILDING_COUNTRY_CLUB_PEDIA",
   "advisor": "ADVISOR_CULTURE",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

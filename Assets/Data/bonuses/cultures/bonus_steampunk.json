@@ -1,7 +1,5 @@
 {
  "type": "BONUS_STEAMPUNK",
- "description": "TXT_KEY_BONUS_STEAMPUNK",
- "civilopedia": "TXT_KEY_BONUS_STEAMPUNK_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_COAL_FIRED_DYNAMO",
@@ -24,6 +22,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_STEAMPUNK",
+  "civilopedia": "TXT_KEY_BONUS_STEAMPUNK_PEDIA",
   "bonusClassType": "BONUSCLASS_GENMODS"
  }
 }

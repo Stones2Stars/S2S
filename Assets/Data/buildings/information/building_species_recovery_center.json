@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_SPECIES_RECOVERY_CENTER",
- "description": "TXT_KEY_BUILDING_SPECIES_RECOVERY_CENTER",
- "civilopedia": "TXT_KEY_BUILDING_SPECIES_RECOVERY_CENTER_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -76,6 +74,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_SPECIES_RECOVERY_CENTER",
+  "civilopedia": "TXT_KEY_BUILDING_SPECIES_RECOVERY_CENTER_PEDIA",
   "centerInCity": true,
   "worth": 10,
   "conquestProbability": 100,

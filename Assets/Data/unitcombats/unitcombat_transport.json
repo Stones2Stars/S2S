@@ -1,9 +1,11 @@
 {
  "type": "UNITCOMBAT_TRANSPORT",
- "description": "TXT_KEY_UNITCOMBAT_TRANSPORT",
  "ui": {
   "art": {
    "icon": "Art/Interface/Buttons/units/sparth/categories/transport.dds"
   }
+ },
+ "identity": {
+  "description": "TXT_KEY_UNITCOMBAT_TRANSPORT"
  }
 }

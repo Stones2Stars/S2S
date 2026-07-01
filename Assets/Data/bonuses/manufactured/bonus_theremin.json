@@ -1,7 +1,5 @@
 {
  "type": "BONUS_THEREMIN",
- "description": "TXT_KEY_BONUS_THEREMIN",
- "civilopedia": "TXT_KEY_BONUS_THEREMIN_PEDIA",
  "happiness": {
   "empire": {
    "flat": 1
@@ -13,6 +11,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_THEREMIN",
+  "civilopedia": "TXT_KEY_BONUS_THEREMIN_PEDIA",
   "bonusClassType": "BONUSCLASS_MANUFACTURED"
  }
 }

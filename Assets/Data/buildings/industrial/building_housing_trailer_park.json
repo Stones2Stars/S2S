@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_HOUSING_TRAILER_PARK",
- "description": "TXT_KEY_BUILDING_HOUSING_TRAILER_PARK",
- "civilopedia": "TXT_KEY_BUILDING_HOUSING_TRAILER_PARK_PEDIA",
  "obsoletedBy": {
   "techs": [
    "TECH_COLONY_ARCOLOGY"
@@ -58,6 +56,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_HOUSING_TRAILER_PARK",
+  "civilopedia": "TXT_KEY_BUILDING_HOUSING_TRAILER_PARK_PEDIA",
   "notConstructible": true,
   "nukeImmune": true,
   "neverCapture": true,

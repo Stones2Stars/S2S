@@ -1,7 +1,5 @@
 {
  "type": "UNIT_SLEEPER",
- "description": "TXT_KEY_UNIT_SLEEPER",
- "civilopedia": "TXT_KEY_UNIT_SLEEPER_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -52,6 +50,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_SLEEPER",
+  "civilopedia": "TXT_KEY_UNIT_SLEEPER_PEDIA",
   "worth": 1,
   "domain": "DOMAIN_LAND",
   "defaultUnitAI": "UNITAI_SPY",

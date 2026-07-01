@@ -1,8 +1,5 @@
 {
  "type": "TECH_PRIESTHOOD",
- "description": "TXT_KEY_TECH_PRIESTHOOD",
- "civilopedia": "TXT_KEY_TECH_PRIESTHOOD_PEDIA",
- "quote": "TXT_KEY_TECH_PRIESTHOOD_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_ARK_OF_THE_COVENANT",
@@ -71,6 +68,9 @@
   "soundMP": "AS2D_TECH_MP_PRIESTHOOD"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_PRIESTHOOD",
+  "civilopedia": "TXT_KEY_TECH_PRIESTHOOD_PEDIA",
+  "quote": "TXT_KEY_TECH_PRIESTHOOD_QUOTE",
   "era": "C2C_ERA_ANCIENT",
   "worth": 8,
   "tradeable": true,

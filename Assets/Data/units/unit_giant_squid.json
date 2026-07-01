@@ -1,7 +1,5 @@
 {
  "type": "UNIT_GIANT_SQUID",
- "description": "TXT_KEY_UNIT_GIANT_SQUID",
- "civilopedia": "TXT_KEY_UNIT_GIANT_SQUID_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -85,6 +83,8 @@
   ]
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_GIANT_SQUID",
+  "civilopedia": "TXT_KEY_UNIT_GIANT_SQUID_PEDIA",
   "spawnOnly": true,
   "xpValueAttack": 12,
   "xpValueDefense": 7,

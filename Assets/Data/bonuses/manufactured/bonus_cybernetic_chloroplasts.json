@@ -1,7 +1,5 @@
 {
  "type": "BONUS_CYBERNETIC_CHLOROPLASTS",
- "description": "TXT_KEY_BONUS_CYBERNETIC_CHLOROPLASTS",
- "civilopedia": "TXT_KEY_BONUS_CYBERNETIC_CHLOROPLASTS_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_CYBER_CHLOROPLASTIDA_BLOOM",
@@ -16,6 +14,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_CYBERNETIC_CHLOROPLASTS",
+  "civilopedia": "TXT_KEY_BONUS_CYBERNETIC_CHLOROPLASTS_PEDIA",
   "bonusClassType": "BONUSCLASS_MANUFACTURED"
  }
 }

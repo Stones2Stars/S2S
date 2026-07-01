@@ -1,7 +1,5 @@
 {
  "type": "UNIT_GIRAFFE_CAVALRY",
- "description": "TXT_KEY_UNIT_GIRAFFE_CAVALRY",
- "civilopedia": "TXT_KEY_UNIT_GIRAFFE_ARCHER_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -163,6 +161,8 @@
   "production": 580
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_GIRAFFE_CAVALRY",
+  "civilopedia": "TXT_KEY_UNIT_GIRAFFE_ARCHER_PEDIA",
   "worth": 4,
   "militaryWorth": 27,
   "xpValueAttack": 6,

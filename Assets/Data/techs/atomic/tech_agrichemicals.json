@@ -1,8 +1,5 @@
 {
  "type": "TECH_AGRICHEMICALS",
- "description": "TXT_KEY_TECH_AGRICHEMICALS",
- "civilopedia": "TXT_KEY_TECH_AGRICHEMICALS_PEDIA",
- "quote": "TXT_KEY_TECH_AGRICHEMICALS_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_ORGANIC_FARM",
@@ -56,6 +53,9 @@
   "soundMP": "AS2D_TECH_AGRICHEMICALS"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_AGRICHEMICALS",
+  "civilopedia": "TXT_KEY_TECH_AGRICHEMICALS_PEDIA",
+  "quote": "TXT_KEY_TECH_AGRICHEMICALS_QUOTE",
   "era": "C2C_ERA_ATOMIC",
   "worth": 48,
   "tradeable": true,

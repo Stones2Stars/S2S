@@ -1,7 +1,5 @@
 {
  "type": "BONUS_OMEGA_FATTY_ACID",
- "description": "TXT_KEY_BONUS_OMEGA_FATTY_ACID",
- "civilopedia": "TXT_KEY_BONUS_OMEGA_FATTY_ACID_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_FACTORY_ELECTROLYTE_CELLS"
@@ -18,6 +16,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_OMEGA_FATTY_ACID",
+  "civilopedia": "TXT_KEY_BONUS_OMEGA_FATTY_ACID_PEDIA",
   "bonusClassType": "BONUSCLASS_MANUFACTURED"
  }
 }

@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_OCEAN_SPIRAL",
- "description": "TXT_KEY_BUILDING_OCEAN_SPIRAL",
- "civilopedia": "TXT_KEY_BUILDING_OCEAN_SPIRAL_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -73,6 +71,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_OCEAN_SPIRAL",
+  "civilopedia": "TXT_KEY_BUILDING_OCEAN_SPIRAL_PEDIA",
   "conquestProbability": 100,
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,

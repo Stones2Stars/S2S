@@ -1,7 +1,5 @@
 {
  "type": "UNIT_EARLY_FOOD_MERCHANT_C2C",
- "description": "TXT_KEY_UNIT_EARLY_FOOD_MERCHANT",
- "civilopedia": "TXT_KEY_CONCEPT_FOOD_CARAVAN_PEDIA",
  "obsoletedBy": {
   "techs": [
    "TECH_MOTORIZED_TRANSPORTATION"
@@ -492,6 +490,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_EARLY_FOOD_MERCHANT",
+  "civilopedia": "TXT_KEY_CONCEPT_FOOD_CARAVAN_PEDIA",
   "worth": 1,
   "animalCombat": 100,
   "domain": "DOMAIN_LAND",

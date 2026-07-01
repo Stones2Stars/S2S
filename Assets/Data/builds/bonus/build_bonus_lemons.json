@@ -1,6 +1,5 @@
 {
  "type": "BUILD_BONUS_LEMONS",
- "description": "TXT_KEY_BUILD_BONUS_LEMONS",
  "produces": {
   "improvement": "IMPROVEMENT_BONUS_LEMONS"
  },
@@ -19,6 +18,7 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILD_BONUS_LEMONS",
   "consumesUnit": true
  }
 }

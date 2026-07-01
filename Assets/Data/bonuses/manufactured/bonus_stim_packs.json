@@ -1,7 +1,5 @@
 {
  "type": "BONUS_STIM_PACKS",
- "description": "TXT_KEY_BONUS_STIM_PACKS",
- "civilopedia": "TXT_KEY_BONUS_STIM_PACKS_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_DESIGNER_PROBIOTICS_CLINIC",
@@ -14,6 +12,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_STIM_PACKS",
+  "civilopedia": "TXT_KEY_BONUS_STIM_PACKS_PEDIA",
   "bonusClassType": "BONUSCLASS_MANUFACTURED"
  }
 }

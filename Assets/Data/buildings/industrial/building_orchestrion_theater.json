@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_ORCHESTRION_THEATER",
- "description": "TXT_KEY_BUILDING_ORCHESTRION_THEATER",
- "civilopedia": "TXT_KEY_BUILDING_ORCHESTRION_THEATER_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_HIGH_TECH_CULTURAL_ENRICHMENT"
@@ -75,6 +73,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_ORCHESTRION_THEATER",
+  "civilopedia": "TXT_KEY_BUILDING_ORCHESTRION_THEATER_PEDIA",
   "worth": 2,
   "specialBuildingType": "SPECIALBUILDING_PUNK_CLOCK",
   "advisor": "ADVISOR_CULTURE",

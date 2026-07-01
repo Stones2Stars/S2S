@@ -1,8 +1,5 @@
 {
  "type": "TECH_AUTONOMOUS_VEHICLES",
- "description": "TXT_KEY_TECH_AUTONOMOUS_VEHICLES",
- "civilopedia": "TXT_KEY_TECH_AUTONOMOUS_VEHICLES_PEDIA",
- "quote": "TXT_KEY_TECH_AUTONOMOUS_VEHICLES_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_AUTOMATED_PARKING_GARAGE",
@@ -67,6 +64,9 @@
   "soundMP": "AS2D_TECH_GENERIC"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_AUTONOMOUS_VEHICLES",
+  "civilopedia": "TXT_KEY_TECH_AUTONOMOUS_VEHICLES_PEDIA",
+  "quote": "TXT_KEY_TECH_AUTONOMOUS_VEHICLES_QUOTE",
   "era": "C2C_ERA_INFORMATION",
   "worth": 40,
   "tradeable": true,

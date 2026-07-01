@@ -1,8 +1,5 @@
 {
  "type": "TECH_HERALDRY",
- "description": "TXT_KEY_TECH_HERALDRY",
- "civilopedia": "TXT_KEY_TECH_HERALDRY_PEDIA",
- "quote": "TXT_KEY_TECH_HERALDRY_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_CULTURE_ALBANIAN",
@@ -89,6 +86,9 @@
   "soundMP": "AS2D_TECH_HERALDRY"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_HERALDRY",
+  "civilopedia": "TXT_KEY_TECH_HERALDRY_PEDIA",
+  "quote": "TXT_KEY_TECH_HERALDRY_QUOTE",
   "era": "C2C_ERA_MEDIEVAL",
   "worth": 24,
   "militaryWorth": 6,

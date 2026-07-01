@@ -1,7 +1,5 @@
 {
  "type": "BONUS_HEAVY_WATER",
- "description": "TXT_KEY_BONUS_HEAVY_WATER",
- "civilopedia": "TXT_KEY_BONUS_HEAVY_WATER_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_FAST_BREEDER_REACTOR",
@@ -26,6 +24,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_HEAVY_WATER",
+  "civilopedia": "TXT_KEY_BONUS_HEAVY_WATER_PEDIA",
   "bonusClassType": "BONUSCLASS_WONDER"
  }
 }

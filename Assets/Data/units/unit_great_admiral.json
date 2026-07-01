@@ -1,7 +1,5 @@
 {
  "type": "UNIT_GREAT_ADMIRAL",
- "description": "TXT_KEY_UNIT_GREAT_ADMIRAL",
- "civilopedia": "TXT_KEY_CONCEPT_GREAT_ADMIRALS_PEDIA",
  "requires": {
   "build": {
    "dormant": {
@@ -90,6 +88,8 @@
   ]
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_GREAT_ADMIRAL",
+  "civilopedia": "TXT_KEY_CONCEPT_GREAT_ADMIRALS_PEDIA",
   "spawnOnly": true,
   "worth": 25,
   "militaryWorth": 75,

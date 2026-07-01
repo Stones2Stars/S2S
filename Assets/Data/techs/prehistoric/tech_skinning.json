@@ -1,8 +1,5 @@
 {
  "type": "TECH_SKINNING",
- "description": "TXT_KEY_TECH_SKINNING",
- "civilopedia": "TXT_KEY_TECH_SKINNING_PEDIA",
- "quote": "TXT_KEY_TECH_SKINNING_QUOTE",
  "enables": {
   "bonuses": [
    "BONUS_FUR",
@@ -68,6 +65,9 @@
   "soundMP": "AS2D_TECH_SKINNING"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_SKINNING",
+  "civilopedia": "TXT_KEY_TECH_SKINNING_PEDIA",
+  "quote": "TXT_KEY_TECH_SKINNING_QUOTE",
   "era": "C2C_ERA_PREHISTORIC",
   "worth": 8,
   "militaryWorth": 2,

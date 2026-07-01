@@ -1,7 +1,5 @@
 {
  "type": "BONUS_CLAM",
- "description": "TXT_KEY_BONUS_CLAM",
- "civilopedia": "TXT_KEY_BONUS_CLAM_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_CLAM_DIGGERS",
@@ -63,6 +61,8 @@
   ]
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_CLAM",
+  "civilopedia": "TXT_KEY_BONUS_CLAM_PEDIA",
   "bonusClassType": "BONUSCLASS_SEAFOOD"
  }
 }

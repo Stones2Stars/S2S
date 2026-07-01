@@ -1,8 +1,5 @@
 {
  "type": "BUILDING_MONTREAL_BIODOME",
- "description": "TXT_KEY_BUILDING_MONTREAL_BIODOME",
- "civilopedia": "TXT_KEY_BUILDING_MONTREAL_BIODOME_PEDIA",
- "help": "TXT_KEY_BUILDING_MONTREAL_BIODOME_HELP",
  "requires": {
   "build": {
    "all": [
@@ -125,6 +122,9 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_MONTREAL_BIODOME",
+  "civilopedia": "TXT_KEY_BUILDING_MONTREAL_BIODOME_PEDIA",
+  "help": "TXT_KEY_BUILDING_MONTREAL_BIODOME_HELP",
   "commerceDoubleTime": {
    "culture": 1000
   },

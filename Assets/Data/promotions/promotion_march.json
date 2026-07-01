@@ -1,6 +1,5 @@
 {
  "type": "PROMOTION_MARCH",
- "description": "TXT_KEY_PROMOTION_MARCH",
  "capture": {
   "unit": {
    "resistance": {
@@ -20,6 +19,7 @@
   "sound": "AS2D_IF_LEVELUP"
  },
  "identity": {
+  "description": "TXT_KEY_PROMOTION_MARCH",
   "unitCombats": [
    "UNITCOMBAT_HEALTH_CARE",
    "UNITCOMBAT_RECON",

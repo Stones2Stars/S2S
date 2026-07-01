@@ -1,7 +1,5 @@
 {
  "type": "UNIT_WARLORDVIIIS",
- "description": "TXT_KEY_UNIT_WARLORDVIIIS",
- "civilopedia": "TXT_KEY_CONCEPT_GREAT_GENERALS_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -18,6 +16,8 @@
   "upkeep": 1
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_WARLORDVIIIS",
+  "civilopedia": "TXT_KEY_CONCEPT_GREAT_GENERALS_PEDIA",
   "spawnOnly": true,
   "worth": 1,
   "leaderExperience": 25,

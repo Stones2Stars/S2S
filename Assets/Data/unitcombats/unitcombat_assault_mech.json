@@ -1,6 +1,5 @@
 {
  "type": "UNITCOMBAT_ASSAULT_MECH",
- "description": "TXT_KEY_UNITCOMBAT_ASSAULT_MECH",
  "capture": {
   "unit": {
    "probability": {
@@ -17,6 +16,7 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_UNITCOMBAT_ASSAULT_MECH",
   "forMilitary": true
  }
 }

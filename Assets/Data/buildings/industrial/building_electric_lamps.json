@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_ELECTRIC_LAMPS",
- "description": "TXT_KEY_BUILDING_ELECTRIC_LAMPS",
- "civilopedia": "TXT_KEY_BUILDING_ELECTRIC_LAMPS_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_OLED_LAMPS"
@@ -90,6 +88,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_ELECTRIC_LAMPS",
+  "civilopedia": "TXT_KEY_BUILDING_ELECTRIC_LAMPS_PEDIA",
   "worth": 4,
   "conquestProbability": 100,
   "advisor": "ADVISOR_ECONOMY",

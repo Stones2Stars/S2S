@@ -1,8 +1,5 @@
 {
  "type": "TECH_FOOD_PRESERVATION",
- "description": "TXT_KEY_TECH_FOOD_PRESERVATION",
- "civilopedia": "TXT_KEY_TECH_FOOD_PRESERVATION_PEDIA",
- "quote": "TXT_KEY_TECH_FOOD_PRESERVATION_QUOTE",
  "enables": {
   "bonuses": [
    "BONUS_CANNED_FOOD"
@@ -67,6 +64,9 @@
   "soundMP": "AS2D_TECH_FOOD_PRESERVATION"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_FOOD_PRESERVATION",
+  "civilopedia": "TXT_KEY_TECH_FOOD_PRESERVATION_PEDIA",
+  "quote": "TXT_KEY_TECH_FOOD_PRESERVATION_QUOTE",
   "era": "C2C_ERA_INDUSTRIAL",
   "worth": 14,
   "tradeable": true,

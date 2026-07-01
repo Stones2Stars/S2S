@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_CYGNUS_X_1_COLONY",
- "description": "TXT_KEY_BUILDING_CYGNUS_X_1_COLONY",
- "civilopedia": "TXT_KEY_BUILDING_CYGNUS_X_1_COLONY_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -80,6 +78,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_CYGNUS_X_1_COLONY",
+  "civilopedia": "TXT_KEY_BUILDING_CYGNUS_X_1_COLONY_PEDIA",
   "conquestProbability": 100,
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,

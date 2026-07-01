@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_ROBOTIC_TRAPS",
- "description": "TXT_KEY_BUILDING_ROBOTIC_TRAPS",
- "civilopedia": "TXT_KEY_BUILDING_ROBOTIC_TRAPS_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_EMP_TRAPS"
@@ -97,6 +95,8 @@
   "construct": "AS2D_BUILD_NANOFACTORY"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_ROBOTIC_TRAPS",
+  "civilopedia": "TXT_KEY_BUILDING_ROBOTIC_TRAPS_PEDIA",
   "damageAllAttackers": true,
   "militaryWorth": 6,
   "advisor": "ADVISOR_MILITARY",

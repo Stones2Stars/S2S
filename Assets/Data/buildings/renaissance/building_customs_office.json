@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_CUSTOMS_OFFICE",
- "description": "TXT_KEY_BUILDING_CUSTOMS_OFFICE",
- "civilopedia": "TXT_KEY_BUILDING_CUSTOMS_OFFICE_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_FEITORIA"
@@ -60,6 +58,8 @@
   "construct": "AS2D_BUILD_BANK"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_CUSTOMS_OFFICE",
+  "civilopedia": "TXT_KEY_BUILDING_CUSTOMS_OFFICE_PEDIA",
   "worth": 4,
   "conquestProbability": 75,
   "dcmAirbombMission": 2,

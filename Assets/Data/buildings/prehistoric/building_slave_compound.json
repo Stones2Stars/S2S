@@ -1,8 +1,5 @@
 {
  "type": "BUILDING_SLAVE_COMPOUND",
- "description": "TXT_KEY_BUILDING_SLAVE_COMPOUND",
- "civilopedia": "TXT_KEY_BUILDING_SLAVE_COMPOUND_PEDIA",
- "help": "TXT_KEY_BUILDING_SLAVE_COMPOUND_HELP",
  "enables": {
   "buildings": [
    "BUILDING_SLAVE_COMPOUND_COMMERCE",
@@ -77,6 +74,9 @@
   "construct": "AS2D_BUILD_SLAVE_MARKET"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_SLAVE_COMPOUND",
+  "civilopedia": "TXT_KEY_BUILDING_SLAVE_COMPOUND_PEDIA",
+  "help": "TXT_KEY_BUILDING_SLAVE_COMPOUND_HELP",
   "enabledCivilizations": [
    "CIVILIZATION_NPC_NEANDERTHAL"
   ],

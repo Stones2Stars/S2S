@@ -1,6 +1,5 @@
 {
  "type": "BUILD_JUMPLANE",
- "description": "TXT_KEY_BUILD_JUMPLANE",
  "requires": {
   "build": {
    "all": [
@@ -28,5 +27,8 @@
   "art": {
    "entityEvent": "ENTITY_EVENT_RAILROAD"
   }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILD_JUMPLANE"
  }
 }

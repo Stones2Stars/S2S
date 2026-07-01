@@ -1,6 +1,5 @@
 {
  "type": "PROMOTION_VETERAN",
- "description": "TXT_KEY_PROMOTION_VETERAN",
  "experience": {
   "unit": {
    "percent": 10
@@ -27,6 +26,7 @@
   "sound": "AS2D_IF_LEVELUP"
  },
  "identity": {
+  "description": "TXT_KEY_PROMOTION_VETERAN",
   "unitCombats": [
    "UNITCOMBAT_EARLY_FIGHTERS",
    "UNITCOMBAT_EARLY_BOMBERS",

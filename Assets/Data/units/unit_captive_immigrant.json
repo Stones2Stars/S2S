@@ -1,8 +1,5 @@
 {
  "type": "UNIT_CAPTIVE_IMMIGRANT",
- "description": "TXT_KEY_UNIT_CAPTIVE_IMMIGRANT",
- "civilopedia": "TXT_KEY_UNIT_IMMIGRANT_PEDIA",
- "help": "TXT_KEY_UNIT_IMMIGRANT_HELP",
  "outcomes": {
   "actions": [
    {
@@ -33,6 +30,9 @@
   "upkeep": 1
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_CAPTIVE_IMMIGRANT",
+  "civilopedia": "TXT_KEY_UNIT_IMMIGRANT_PEDIA",
+  "help": "TXT_KEY_UNIT_IMMIGRANT_HELP",
   "spawnOnly": true,
   "domain": "DOMAIN_LAND",
   "defaultUnitAI": "UNITAI_CITY_SPECIAL",

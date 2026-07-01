@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_PET_SHOP",
- "description": "TXT_KEY_BUILDING_PET_SHOP",
- "civilopedia": "TXT_KEY_BUILDING_PET_SHOP_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_ANIMAL_TESTING_LAB"
@@ -152,6 +150,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_PET_SHOP",
+  "civilopedia": "TXT_KEY_BUILDING_PET_SHOP_PEDIA",
   "centerInCity": true,
   "worth": 6,
   "militaryWorth": 3,

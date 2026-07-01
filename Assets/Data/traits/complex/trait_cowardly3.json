@@ -1,8 +1,5 @@
 {
  "type": "TRAIT_COWARDLY3",
- "description": "TXT_KEY_TRAIT_COWARDLY3",
- "civilopedia": "TXT_KEY_TRAIT_COWARDLY3_PEDIA",
- "strategy": "TXT_KEY_TRAIT_COWARDLY_STRATEGY",
  "excludes": [
   "TRAIT_DEFENSIVE1"
  ],
@@ -223,6 +220,9 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_TRAIT_COWARDLY3",
+  "civilopedia": "TXT_KEY_TRAIT_COWARDLY3_PEDIA",
+  "strategy": "TXT_KEY_TRAIT_COWARDLY_STRATEGY",
   "negativeTrait": true
  }
 }

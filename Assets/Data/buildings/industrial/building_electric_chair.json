@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_ELECTRIC_CHAIR",
- "description": "TXT_KEY_BUILDING_ELECTRIC_CHAIR",
- "civilopedia": "TXT_KEY_BUILDING_ELECTRIC_CHAIR_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_DEBTORS_PRISON"
@@ -76,6 +74,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_ELECTRIC_CHAIR",
+  "civilopedia": "TXT_KEY_BUILDING_ELECTRIC_CHAIR_PEDIA",
   "advisor": "ADVISOR_MILITARY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

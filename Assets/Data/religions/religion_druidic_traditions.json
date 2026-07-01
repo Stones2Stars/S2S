@@ -1,8 +1,5 @@
 {
  "type": "RELIGION_DRUIDIC_TRADITIONS",
- "description": "TXT_KEY_TECH_DRUIDIC_TRADITIONS",
- "civilopedia": "TXT_KEY_TECH_DRUIDIC_TRADITIONS_PEDIA",
- "adjective": "TXT_KEY_TECH_DRUIDIC_TRADITIONS_ADJECTIVE",
  "enables": {
   "buildings": [
    "BUILDING_NATURE_ALLIANCE",
@@ -129,6 +126,9 @@
   "sound": "AS2D_BUILD_DRUID"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_DRUIDIC_TRADITIONS",
+  "adjective": "TXT_KEY_TECH_DRUIDIC_TRADITIONS_ADJECTIVE",
+  "civilopedia": "TXT_KEY_TECH_DRUIDIC_TRADITIONS_PEDIA",
   "spreadFactor": 20
  }
 }

@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_INTERSTELLAR_MOLECULAR_DISRUPTION_DEVICE",
- "description": "TXT_KEY_BUILDING_INTERSTELLAR_MOLECULAR_DISRUPTION_DEVICE",
- "civilopedia": "TXT_KEY_BUILDING_INTERSTELLAR_MOLECULAR_DISRUPTION_DEVICE_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -46,6 +44,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_INTERSTELLAR_MOLECULAR_DISRUPTION_DEVICE",
+  "civilopedia": "TXT_KEY_BUILDING_INTERSTELLAR_MOLECULAR_DISRUPTION_DEVICE_PEDIA",
   "damageAllAttackers": true,
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,

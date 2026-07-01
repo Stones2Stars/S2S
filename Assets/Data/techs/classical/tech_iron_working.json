@@ -1,8 +1,5 @@
 {
  "type": "TECH_IRON_WORKING",
- "description": "TXT_KEY_TECH_IRON_WORKING",
- "civilopedia": "TXT_KEY_TECH_IRON_WORKING_PEDIA",
- "quote": "TXT_KEY_TECH_IRON_WORKING_QUOTE",
  "enables": {
   "bonuses": [
    "BONUS_IRON_INGOTS",
@@ -119,6 +116,9 @@
   "soundMP": "AS2D_TECH_MP_IRONWORK"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_IRON_WORKING",
+  "civilopedia": "TXT_KEY_TECH_IRON_WORKING_PEDIA",
+  "quote": "TXT_KEY_TECH_IRON_WORKING_QUOTE",
   "era": "C2C_ERA_CLASSICAL",
   "worth": 16,
   "militaryWorth": 10,

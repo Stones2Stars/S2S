@@ -1,6 +1,5 @@
 {
  "type": "BUILD_SEA_MILL",
- "description": "TXT_KEY_BUILD_SEA_MILL",
  "requires": {
   "build": {
    "all": [
@@ -82,5 +81,8 @@
   "art": {
    "entityEvent": "ENTITY_EVENT_BUILD"
   }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILD_SEA_MILL"
  }
 }

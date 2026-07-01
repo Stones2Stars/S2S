@@ -1,6 +1,5 @@
 {
  "type": "BUILD_JUNGLE_CAMP_KILL",
- "description": "TXT_KEY_BUILD_JUNGLE_CAMP_KILL",
  "requires": {
   "build": {
    "all": [
@@ -29,6 +28,7 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILD_JUNGLE_CAMP_KILL",
   "consumesUnit": true
  }
 }

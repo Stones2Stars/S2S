@@ -1,6 +1,5 @@
 {
  "type": "UNITCOMBAT_SIEGE_GATECRASHER",
- "description": "TXT_KEY_UNITCOMBAT_SIEGE_GATECRASHER",
  "strength": {
   "unit": {
    "damageModifier": {
@@ -27,6 +26,7 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_UNITCOMBAT_SIEGE_GATECRASHER",
   "forMilitary": true
  }
 }

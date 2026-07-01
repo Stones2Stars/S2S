@@ -1,7 +1,5 @@
 {
  "type": "UNIT_WARLORD_VASSAL",
- "description": "TXT_KEY_UNIT_WARLORD_VASSAL",
- "civilopedia": "TXT_KEY_UNIT_WARLORD_VASSAL_PEDIA",
  "obsoletedBy": {
   "techs": [
    "TECH_CHIVALRY"
@@ -35,6 +33,8 @@
   "upkeep": 1
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_WARLORD_VASSAL",
+  "civilopedia": "TXT_KEY_UNIT_WARLORD_VASSAL_PEDIA",
   "worth": 1,
   "leaderExperience": 10,
   "domain": "DOMAIN_LAND",

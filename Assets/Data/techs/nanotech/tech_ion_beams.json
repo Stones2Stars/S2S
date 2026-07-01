@@ -1,8 +1,5 @@
 {
  "type": "TECH_ION_BEAMS",
- "description": "TXT_KEY_TECH_ION_BEAMS",
- "civilopedia": "TXT_KEY_TECH_ION_BEAMS_PEDIA",
- "quote": "TXT_KEY_TECH_ION_BEAMS_QUOTE",
  "enables": {
   "bonuses": [
    "BONUS_MARTIAN_ELECTRONICS"
@@ -76,6 +73,9 @@
   "soundMP": "AS2D_TECH_ION_BEAMS"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_ION_BEAMS",
+  "civilopedia": "TXT_KEY_TECH_ION_BEAMS_PEDIA",
+  "quote": "TXT_KEY_TECH_ION_BEAMS_QUOTE",
   "era": "C2C_ERA_NANOTECH",
   "worth": 50,
   "militaryWorth": 10,

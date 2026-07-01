@@ -1,7 +1,5 @@
 {
  "type": "UNIT_MASTER_SAILOR_CARAVEL",
- "description": "TXT_KEY_UNIT_MASTER_SAILOR_CARAVEL",
- "civilopedia": "TXT_KEY_UNIT_CARAVEL_PEDIA",
  "obsoletedBy": {
   "techs": [
    "TECH_ASTROLABE"
@@ -59,6 +57,8 @@
   "upkeep": 1
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_MASTER_SAILOR_CARAVEL",
+  "civilopedia": "TXT_KEY_UNIT_CARAVEL_PEDIA",
   "spawnOnly": true,
   "worth": 1,
   "militaryWorth": 17,

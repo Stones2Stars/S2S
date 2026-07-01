@@ -1,7 +1,5 @@
 {
  "type": "UNIT_NIAM_NIAM",
- "description": "TXT_KEY_UNIT_NIAM_NIAM",
- "civilopedia": "TXT_KEY_UNIT_NIAM_NIAM_PEDIA",
  "obsoletedBy": {
   "techs": [
    "TECH_LASER"
@@ -206,6 +204,8 @@
   ]
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_NIAM_NIAM",
+  "civilopedia": "TXT_KEY_UNIT_NIAM_NIAM_PEDIA",
   "worth": 7,
   "militaryWorth": 15,
   "xpValueAttack": 8,

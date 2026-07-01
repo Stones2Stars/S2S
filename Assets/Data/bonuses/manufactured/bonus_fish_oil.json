@@ -1,7 +1,5 @@
 {
  "type": "BONUS_FISH_OIL",
- "description": "TXT_KEY_BONUS_FISH_OIL",
- "civilopedia": "TXT_KEY_BONUS_FISH_OIL_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_OIL_LAMPS"
@@ -18,6 +16,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_FISH_OIL",
+  "civilopedia": "TXT_KEY_BONUS_FISH_OIL_PEDIA",
   "bonusClassType": "BONUSCLASS_MANUFACTURED"
  }
 }

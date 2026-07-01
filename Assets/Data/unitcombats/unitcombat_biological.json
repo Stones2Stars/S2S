@@ -1,6 +1,5 @@
 {
  "type": "UNITCOMBAT_BIOLOGICAL",
- "description": "TXT_KEY_UNITCOMBAT_BIOLOGICAL",
  "skills": {
   "cannotMergeSplit": true
  },
@@ -10,6 +9,7 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_UNITCOMBAT_BIOLOGICAL",
   "forMilitary": true
  }
 }

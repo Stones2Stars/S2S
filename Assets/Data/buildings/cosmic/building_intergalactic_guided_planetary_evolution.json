@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_INTERGALACTIC_GUIDED_PLANETARY_EVOLUTION",
- "description": "TXT_KEY_BUILDING_INTERGALACTIC_GUIDED_PLANETARY_EVOLUTION",
- "civilopedia": "TXT_KEY_BUILDING_INTERGALACTIC_GUIDED_PLANETARY_EVOLUTION_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -39,6 +37,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_INTERGALACTIC_GUIDED_PLANETARY_EVOLUTION",
+  "civilopedia": "TXT_KEY_BUILDING_INTERGALACTIC_GUIDED_PLANETARY_EVOLUTION_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

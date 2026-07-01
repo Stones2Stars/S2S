@@ -1,7 +1,5 @@
 {
  "type": "BONUS_FISH",
- "description": "TXT_KEY_BONUS_FISH",
- "civilopedia": "TXT_KEY_BONUS_FISH_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_CORMORANT_TRAINER",
@@ -75,6 +73,8 @@
   ]
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_FISH",
+  "civilopedia": "TXT_KEY_BONUS_FISH_PEDIA",
   "bonusClassType": "BONUSCLASS_SEAFOOD"
  }
 }

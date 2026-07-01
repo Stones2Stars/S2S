@@ -1,8 +1,5 @@
 {
  "type": "TECH_BRONZE_WORKING",
- "description": "TXT_KEY_TECH_BRONZE_WORKING",
- "civilopedia": "TXT_KEY_TECH_BRONZE_WORKING_PEDIA",
- "quote": "TXT_KEY_TECH_BRONZE_WORKING_QUOTE",
  "enables": {
   "bonuses": [
    "BONUS_BRONZE_WARES",
@@ -197,6 +194,9 @@
   "soundMP": "AS2D_TECH_MP_BRONZEWORK"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_BRONZE_WORKING",
+  "civilopedia": "TXT_KEY_TECH_BRONZE_WORKING_PEDIA",
+  "quote": "TXT_KEY_TECH_BRONZE_WORKING_QUOTE",
   "era": "C2C_ERA_ANCIENT",
   "worth": 8,
   "militaryWorth": 8,

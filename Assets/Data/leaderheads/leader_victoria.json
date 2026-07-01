@@ -1,7 +1,5 @@
 {
  "type": "LEADER_VICTORIA",
- "description": "TXT_KEY_LEADER_VICTORIA",
- "civilopedia": "TXT_KEY_LEADER_VICTORIA_PEDIA",
  "grants": {
   "traits": [
    "TRAIT_IMPERIALIST",
@@ -305,5 +303,9 @@
    "C2C_ERA_TRANSCENDENT": "AS2D_DIPLO_WARDRUMS_LATE",
    "C2C_ERA_FUTURE": "AS2D_DIPLO_WARDRUMS_LATE"
   }
+ },
+ "identity": {
+  "description": "TXT_KEY_LEADER_VICTORIA",
+  "civilopedia": "TXT_KEY_LEADER_VICTORIA_PEDIA"
  }
 }

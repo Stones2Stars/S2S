@@ -1,12 +1,12 @@
 {
  "type": "UNITCOMBAT_CULTURE_EGYPTIAN",
- "description": "TXT_KEY_UNITCOMBAT_CULTURE_EGYPTIAN",
  "ui": {
   "art": {
    "icon": "Art/Interface/Buttons/units/sparth/categories/culture_egypt.dds"
   }
  },
  "identity": {
+  "description": "TXT_KEY_UNITCOMBAT_CULTURE_EGYPTIAN",
   "culture": "BONUS_EGYPTIAN"
  }
 }

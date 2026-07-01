@@ -1,7 +1,5 @@
 {
  "type": "UNIT_FORTY_NINER",
- "description": "TXT_KEY_UNIT_FORTY_NINER",
- "civilopedia": "TXT_KEY_UNIT_FORTY_NINER_PEDIA",
  "obsoletedBy": {
   "techs": [
    "TECH_PERSONAL_ROBOTS"
@@ -129,6 +127,8 @@
   "upkeep": 1
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_FORTY_NINER",
+  "civilopedia": "TXT_KEY_UNIT_FORTY_NINER_PEDIA",
   "worth": 1,
   "domain": "DOMAIN_LAND",
   "defaultUnitAI": "UNITAI_WORKER",

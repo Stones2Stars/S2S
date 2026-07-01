@@ -1,8 +1,5 @@
 {
  "type": "TECH_SIKHISM",
- "description": "TXT_KEY_TECH_SIKHISM",
- "civilopedia": "TXT_KEY_TECH_SIKHISM_PEDIA",
- "quote": "TXT_KEY_TECH_SIKHISM_QUOTE",
  "enables": {
   "religions": [
    "RELIGION_SIKHISM"
@@ -51,6 +48,9 @@
   "soundMP": "AS2D_TECH_GENERIC"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_SIKHISM",
+  "civilopedia": "TXT_KEY_TECH_SIKHISM_PEDIA",
+  "quote": "TXT_KEY_TECH_SIKHISM_QUOTE",
   "era": "C2C_ERA_RENAISSANCE",
   "gridX": 52,
   "gridY": 11,

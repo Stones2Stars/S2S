@@ -1,13 +1,13 @@
 {
  "type": "BONUS_ORICHALCUM",
- "description": "TXT_KEY_BONUS_ORICHALCUM",
- "civilopedia": "TXT_KEY_BONUS_ORICHALCUM_PEDIA",
  "world": {
   "art": {
    "icon": "ART_DEF_BONUS_ORICHALCUM"
   }
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_ORICHALCUM",
+  "civilopedia": "TXT_KEY_BONUS_ORICHALCUM_PEDIA",
   "bonusClassType": "BONUSCLASS_WONDER"
  }
 }

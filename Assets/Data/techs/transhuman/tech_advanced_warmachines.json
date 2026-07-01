@@ -1,8 +1,5 @@
 {
  "type": "TECH_ADVANCED_WARMACHINES",
- "description": "TXT_KEY_TECH_ADVANCED_WARMACHINES",
- "civilopedia": "TXT_KEY_TECH_ADVANCED_WARMACHINES_PEDIA",
- "quote": "TXT_KEY_TECH_ADVANCED_WARMACHINES_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_BETA_ASSEMBLER",
@@ -70,6 +67,9 @@
   "soundMP": "AS2D_TECH_ADVANCED_WARMACHINES"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_ADVANCED_WARMACHINES",
+  "civilopedia": "TXT_KEY_TECH_ADVANCED_WARMACHINES_PEDIA",
+  "quote": "TXT_KEY_TECH_ADVANCED_WARMACHINES_QUOTE",
   "era": "C2C_ERA_TRANSHUMAN",
   "worth": 48,
   "tradeable": true,

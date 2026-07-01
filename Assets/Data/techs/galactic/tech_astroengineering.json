@@ -1,8 +1,5 @@
 {
  "type": "TECH_ASTROENGINEERING",
- "description": "TXT_KEY_TECH_ASTROENGINEERING",
- "civilopedia": "TXT_KEY_TECH_ASTROENGINEERING_PEDIA",
- "quote": "TXT_KEY_TECH_ASTROENGINEERING_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_EFFECT_SOLAR_DYSON_SPHERE",
@@ -65,6 +62,9 @@
   "soundMP": "AS2D_TECH_GENERIC"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_ASTROENGINEERING",
+  "civilopedia": "TXT_KEY_TECH_ASTROENGINEERING_PEDIA",
+  "quote": "TXT_KEY_TECH_ASTROENGINEERING_QUOTE",
   "era": "C2C_ERA_GALACTIC",
   "worth": 48,
   "tradeable": true,

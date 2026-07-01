@@ -1,6 +1,5 @@
 {
  "type": "CULTURELEVEL_MINISCULE",
- "description": "TXT_KEY_CULTURELEVEL_MINISCULE",
  "allowed": {
   "worldWonders": 1,
   "teamWonders": 1,
@@ -19,6 +18,7 @@
   ]
  },
  "identity": {
+  "description": "TXT_KEY_CULTURELEVEL_MINISCULE",
   "cityRadius": 2,
   "cultureThreshold": 65
  }

@@ -1,8 +1,5 @@
 {
  "type": "TRAIT_HUNTER_GATHERER",
- "description": "TXT_KEY_TRAIT_COMPLEX_HUNTER_GATHERER",
- "civilopedia": "TXT_KEY_TRAIT_COMPLEX_HUNTER_GATHERER_PEDIA",
- "strategy": "TXT_KEY_TRAIT_COMPLEX_HUNTER_GATHERER_STRATEGY",
  "food": {
   "empire": {
    "flat": 1,
@@ -157,6 +154,9 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_TRAIT_COMPLEX_HUNTER_GATHERER",
+  "civilopedia": "TXT_KEY_TRAIT_COMPLEX_HUNTER_GATHERER_PEDIA",
+  "strategy": "TXT_KEY_TRAIT_COMPLEX_HUNTER_GATHERER_STRATEGY",
   "negativeTrait": true,
   "impurePropertyManipulators": true
  }

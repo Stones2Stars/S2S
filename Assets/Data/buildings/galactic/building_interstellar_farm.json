@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_INTERSTELLAR_FARM",
- "description": "TXT_KEY_BUILDING_INTERSTELLAR_FARM",
- "civilopedia": "TXT_KEY_BUILDING_INTERSTELLAR_FARM_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_INTERSTELLAR_AEROPONICS_ARCOLOGY"
@@ -48,6 +46,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_INTERSTELLAR_FARM",
+  "civilopedia": "TXT_KEY_BUILDING_INTERSTELLAR_FARM_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

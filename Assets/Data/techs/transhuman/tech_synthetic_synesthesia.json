@@ -1,8 +1,5 @@
 {
  "type": "TECH_SYNTHETIC_SYNESTHESIA",
- "description": "TXT_KEY_TECH_SYNTHETIC_SYNESTHESIA",
- "civilopedia": "TXT_KEY_TECH_SYNTHETIC_SYNESTHESIA_PEDIA",
- "quote": "TXT_KEY_TECH_SYNTHETIC_SYNESTHESIA_QUOTE",
  "enables": {
   "bonuses": [
    "BONUS_HUMAN_MOD_NOVEL_SENSES"
@@ -68,6 +65,9 @@
   "soundMP": "AS2D_TECH_SYNTHETIC_SYNESTHESIA"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_SYNTHETIC_SYNESTHESIA",
+  "civilopedia": "TXT_KEY_TECH_SYNTHETIC_SYNESTHESIA_PEDIA",
+  "quote": "TXT_KEY_TECH_SYNTHETIC_SYNESTHESIA_QUOTE",
   "era": "C2C_ERA_TRANSHUMAN",
   "worth": 48,
   "militaryWorth": 4,

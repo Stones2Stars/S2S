@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_LUNAR_SHIPYARD",
- "description": "TXT_KEY_BUILDING_LUNAR_SHIPYARD",
- "civilopedia": "TXT_KEY_BUILDING_LUNAR_SHIPYARD_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -79,6 +77,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_LUNAR_SHIPYARD",
+  "civilopedia": "TXT_KEY_BUILDING_LUNAR_SHIPYARD_PEDIA",
   "conquestProbability": 70,
   "advisor": "ADVISOR_MILITARY",
   "visibilityPriority": "1.0",

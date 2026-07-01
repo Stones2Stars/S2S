@@ -1,7 +1,5 @@
 {
  "type": "BONUS_LARD",
- "description": "TXT_KEY_BONUS_LARD",
- "civilopedia": "TXT_KEY_BONUS_LARD_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_CANDLEMAKERS_SHOP",
@@ -18,6 +16,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_LARD",
+  "civilopedia": "TXT_KEY_BONUS_LARD_PEDIA",
   "bonusClassType": "BONUSCLASS_MANUFACTURED"
  }
 }

@@ -1,6 +1,5 @@
 {
  "type": "PROMOTIONLINE_RED_TAPE",
- "description": "TXT_KEY_PROMOTIONLINE_RED_TAPE",
  "loadPrune": {
   "onGameOptions": [
    "GAMEOPTION_COMBAT_HIDE_SEEK"
@@ -12,6 +11,7 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_PROMOTIONLINE_RED_TAPE",
   "unitCombats": [
    "UNITCOMBAT_CRIMINAL",
    "UNITCOMBAT_DIPLOMAT"

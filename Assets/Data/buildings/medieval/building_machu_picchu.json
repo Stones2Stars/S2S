@@ -1,8 +1,5 @@
 {
  "type": "BUILDING_MACHU_PICCHU",
- "description": "TXT_KEY_BUILDING_MACHU_PICCHU",
- "civilopedia": "TXT_KEY_BUILDING_MACHU_PICCHU_PEDIA",
- "help": "TXT_KEY_BUILDING_MACHU_PICCHU_HELP",
  "requires": {
   "build": {
    "all": [
@@ -162,6 +159,9 @@
   "construct": "AS2D_BUILD_ANDEAN"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_MACHU_PICCHU",
+  "civilopedia": "TXT_KEY_BUILDING_MACHU_PICCHU_PEDIA",
+  "help": "TXT_KEY_BUILDING_MACHU_PICCHU_HELP",
   "commerceDoubleTime": {
    "culture": 1000
   },

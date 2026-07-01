@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_LUNAR_KREEP_MINE",
- "description": "TXT_KEY_BUILDING_LUNAR_KREEP_MINE",
- "civilopedia": "TXT_KEY_BUILDING_LUNAR_KREEP_MINE_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -65,6 +63,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_LUNAR_KREEP_MINE",
+  "civilopedia": "TXT_KEY_BUILDING_LUNAR_KREEP_MINE_PEDIA",
   "conquestProbability": 70,
   "advisor": "ADVISOR_ECONOMY",
   "visibilityPriority": "1.0",

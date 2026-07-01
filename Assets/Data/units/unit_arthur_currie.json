@@ -1,7 +1,5 @@
 {
  "type": "UNIT_ARTHUR_CURRIE",
- "description": "TXT_KEY_UNIT_ARTHUR_CURRIE",
- "civilopedia": "TXT_KEY_UNIT_ARTHUR_CURRIE_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -69,6 +67,8 @@
   "upkeep": 1
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_ARTHUR_CURRIE",
+  "civilopedia": "TXT_KEY_UNIT_ARTHUR_CURRIE_PEDIA",
   "worth": 6,
   "militaryWorth": 8,
   "xpValueAttack": 4,

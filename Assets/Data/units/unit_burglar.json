@@ -1,7 +1,5 @@
 {
  "type": "UNIT_BURGLAR",
- "description": "TXT_KEY_UNIT_BURGLAR",
- "civilopedia": "TXT_KEY_CONCEPT_ESPIONAGE_PEDIA",
  "obsoletedBy": {
   "techs": [
    "TECH_MATCHLOCK"
@@ -155,6 +153,8 @@
   ]
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_BURGLAR",
+  "civilopedia": "TXT_KEY_CONCEPT_ESPIONAGE_PEDIA",
   "worth": 4,
   "militaryWorth": 6,
   "xpValueAttack": 8,

@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_MESA_VERDE",
- "description": "TXT_KEY_BUILDING_MESA_VERDE",
- "civilopedia": "TXT_KEY_BUILDING_MESA_VERDE_PEDIA",
  "obsoletedBy": {
   "techs": [
    "TECH_CIVIL_ENGINEERING"
@@ -107,6 +105,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_MESA_VERDE",
+  "civilopedia": "TXT_KEY_BUILDING_MESA_VERDE_PEDIA",
   "centerInCity": true,
   "worth": 10,
   "conquestProbability": 100,

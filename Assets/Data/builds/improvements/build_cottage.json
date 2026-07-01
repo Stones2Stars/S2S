@@ -1,6 +1,5 @@
 {
  "type": "BUILD_COTTAGE",
- "description": "TXT_KEY_BUILD_COTTAGE",
  "requires": {
   "build": {
    "all": [
@@ -60,5 +59,8 @@
   "art": {
    "entityEvent": "ENTITY_EVENT_BUILD"
   }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILD_COTTAGE"
  }
 }

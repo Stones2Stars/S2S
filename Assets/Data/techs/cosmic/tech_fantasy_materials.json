@@ -1,8 +1,5 @@
 {
  "type": "TECH_FANTASY_MATERIALS",
- "description": "TXT_KEY_TECH_FANTASY_MATERIALS",
- "civilopedia": "TXT_KEY_TECH_FANTASY_MATERIALS_PEDIA",
- "quote": "TXT_KEY_TECH_FANTASY_MATERIALS_QUOTE",
  "enables": {
   "bonuses": [
    "BONUS_CONSCIOUS_MATERIALS",
@@ -63,6 +60,9 @@
   "soundMP": "AS2D_TECH_GENERIC"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_FANTASY_MATERIALS",
+  "civilopedia": "TXT_KEY_TECH_FANTASY_MATERIALS_PEDIA",
+  "quote": "TXT_KEY_TECH_FANTASY_MATERIALS_QUOTE",
   "era": "C2C_ERA_COSMIC",
   "worth": 48,
   "tradeable": true,

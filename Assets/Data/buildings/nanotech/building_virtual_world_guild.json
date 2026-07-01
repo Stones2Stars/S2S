@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_VIRTUAL_WORLD_GUILD",
- "description": "TXT_KEY_BUILDING_VIRTUAL_WORLD_GUILD",
- "civilopedia": "TXT_KEY_BUILDING_VIRTUAL_WORLD_GUILD_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_VIRTUAL_ECONOMY"
@@ -48,6 +46,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_VIRTUAL_WORLD_GUILD",
+  "civilopedia": "TXT_KEY_BUILDING_VIRTUAL_WORLD_GUILD_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_TEMPLE_OF_AH_CACAO",
- "description": "TXT_KEY_BUILDING_TEMPLE_OF_AH_CACAO",
- "civilopedia": "TXT_KEY_BUILDING_TEMPLE_OF_AH_CACAO_PEDIA",
  "obsoletedBy": {
   "techs": [
    "TECH_GUNPOWDER"
@@ -81,6 +79,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_TEMPLE_OF_AH_CACAO",
+  "civilopedia": "TXT_KEY_BUILDING_TEMPLE_OF_AH_CACAO_PEDIA",
   "commerceDoubleTime": {
    "culture": 1000
   },

@@ -1,8 +1,5 @@
 {
  "type": "TECH_NANOMINING",
- "description": "TXT_KEY_TECH_NANOMINING",
- "civilopedia": "TXT_KEY_TECH_NANOMINING_PEDIA",
- "quote": "TXT_KEY_TECH_NANOMINING_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_CORE_MINE",
@@ -73,6 +70,9 @@
   "soundMP": "AS2D_TECH_NANOMINING"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_NANOMINING",
+  "civilopedia": "TXT_KEY_TECH_NANOMINING_PEDIA",
+  "quote": "TXT_KEY_TECH_NANOMINING_QUOTE",
   "era": "C2C_ERA_TRANSHUMAN",
   "worth": 48,
   "tradeable": true,

@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_ZURICH_ORBITAL",
- "description": "TXT_KEY_BUILDING_ZURICH_ORBITAL",
- "civilopedia": "TXT_KEY_BUILDING_ZURICH_ORBITAL_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -83,6 +81,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_ZURICH_ORBITAL",
+  "civilopedia": "TXT_KEY_BUILDING_ZURICH_ORBITAL_PEDIA",
   "nukeImmune": true,
   "orbital": true,
   "worth": 20,

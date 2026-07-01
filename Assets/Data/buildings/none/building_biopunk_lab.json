@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_BIOPUNK_LAB",
- "description": "TXT_KEY_BUILDING_BIOPUNK_LAB",
- "civilopedia": "TXT_KEY_BUILDING_BIOPUNK_LAB_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_CHIMERA_SURGERY_CLINIC",
@@ -74,6 +72,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_BIOPUNK_LAB",
+  "civilopedia": "TXT_KEY_BUILDING_BIOPUNK_LAB_PEDIA",
   "specialBuildingType": "SPECIALBUILDING_PUNK_BIO",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": "1.0",

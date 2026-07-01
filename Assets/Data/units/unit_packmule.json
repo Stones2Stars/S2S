@@ -1,7 +1,5 @@
 {
  "type": "UNIT_PACKMULE",
- "description": "TXT_KEY_UNIT_PACKMULE",
- "civilopedia": "TXT_KEY_UNIT_PACK_LLAMA_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -47,6 +45,8 @@
   "upkeep": 1
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_PACKMULE",
+  "civilopedia": "TXT_KEY_UNIT_PACK_LLAMA_PEDIA",
   "worth": 1,
   "xpValueAttack": 4,
   "xpValueDefense": 4,

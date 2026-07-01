@@ -1,7 +1,5 @@
 {
  "type": "UNIT_LION",
- "description": "TXT_KEY_UNIT_LION",
- "civilopedia": "TXT_KEY_CONCEPT_SUBDUED_ANIMALS_PEDIA",
  "withdrawal": {
   "unit": {
    "percent": 25
@@ -81,6 +79,8 @@
   ]
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_LION",
+  "civilopedia": "TXT_KEY_CONCEPT_SUBDUED_ANIMALS_PEDIA",
   "spawnOnly": true,
   "xpValueAttack": 9,
   "xpValueDefense": 6,

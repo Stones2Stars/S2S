@@ -1,8 +1,5 @@
 {
  "type": "TECH_BACTERIUM_ENGINEERING",
- "description": "TXT_KEY_TECH_BACTERIUM_ENGINEERING",
- "civilopedia": "TXT_KEY_TECH_BACTERIUM_ENGINEERING_PEDIA",
- "quote": "TXT_KEY_TECH_BACTERIUM_ENGINEERING_QUOTE",
  "enables": {
   "bonuses": [
    "BONUS_CELLULASE_CAPSULES"
@@ -67,6 +64,9 @@
   "soundMP": "AS2D_TECH_BACTERIUM_ENGINEERING"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_BACTERIUM_ENGINEERING",
+  "civilopedia": "TXT_KEY_TECH_BACTERIUM_ENGINEERING_PEDIA",
+  "quote": "TXT_KEY_TECH_BACTERIUM_ENGINEERING_QUOTE",
   "era": "C2C_ERA_INFORMATION",
   "worth": 48,
   "militaryWorth": 4,

@@ -1,6 +1,5 @@
 {
  "type": "PROMOTION_TIMID",
- "description": "TXT_KEY_PROMOTION_TIMID",
  "strength": {
   "unit": {
    "attack": {
@@ -20,6 +19,7 @@
   "sound": "AS2D_IF_LEVELUP"
  },
  "identity": {
+  "description": "TXT_KEY_PROMOTION_TIMID",
   "unitCombats": [
    "UNITCOMBAT_COMBATANT",
    "UNITCOMBAT_NAVAL_COMBATANT"

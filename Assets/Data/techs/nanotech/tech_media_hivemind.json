@@ -1,8 +1,5 @@
 {
  "type": "TECH_MEDIA_HIVEMIND",
- "description": "TXT_KEY_TECH_MEDIA_HIVEMIND",
- "civilopedia": "TXT_KEY_TECH_MEDIA_HIVEMIND_PEDIA",
- "quote": "TXT_KEY_TECH_MEDIA_HIVEMIND_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_MEME_GENERATOR",
@@ -68,6 +65,9 @@
   "soundMP": "AS2D_TECH_MEDIA_HIVEMIND"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_MEDIA_HIVEMIND",
+  "civilopedia": "TXT_KEY_TECH_MEDIA_HIVEMIND_PEDIA",
+  "quote": "TXT_KEY_TECH_MEDIA_HIVEMIND_QUOTE",
   "era": "C2C_ERA_NANOTECH",
   "worth": 48,
   "militaryWorth": 4,

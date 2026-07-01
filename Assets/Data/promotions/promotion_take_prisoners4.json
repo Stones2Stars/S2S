@@ -1,6 +1,5 @@
 {
  "type": "PROMOTION_TAKE_PRISONERS4",
- "description": "TXT_KEY_PROMOTION_TAKE_PRISONERS4",
  "capture": {
   "unit": {
    "probability": {
@@ -18,5 +17,8 @@
  },
  "sound": {
   "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_TAKE_PRISONERS4"
  }
 }

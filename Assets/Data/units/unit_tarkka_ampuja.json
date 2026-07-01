@@ -1,7 +1,5 @@
 {
  "type": "UNIT_TARKKA_AMPUJA",
- "description": "TXT_KEY_UNIT_TARKKA_AMPUJA",
- "civilopedia": "TXT_KEY_UNIT_TARKKA_AMPUJA_PEDIA",
  "obsoletedBy": {
   "techs": [
    "TECH_SUPERSTRONG_ALLOYS"
@@ -203,6 +201,8 @@
   ]
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_TARKKA_AMPUJA",
+  "civilopedia": "TXT_KEY_UNIT_TARKKA_AMPUJA_PEDIA",
   "worth": 8,
   "militaryWorth": 20,
   "xpValueAttack": 8,

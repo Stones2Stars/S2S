@@ -1,6 +1,5 @@
 {
  "type": "PROMOTION_ELECTROMAGNETIC_ARMOR2",
- "description": "TXT_KEY_PROMOTION_ELECTROMAGNETIC_ARMOR2",
  "movement": {
   "unit": {
    "moveDiscount": {
@@ -66,5 +65,8 @@
  },
  "sound": {
   "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_ELECTROMAGNETIC_ARMOR2"
  }
 }

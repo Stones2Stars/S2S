@@ -1,7 +1,5 @@
 {
  "type": "BONUS_METAMATERIALS",
- "description": "TXT_KEY_BONUS_METAMATERIALS",
- "civilopedia": "TXT_KEY_BONUS_METAMATERIALS_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_ALUMINUM_RECLAMATION_PLANT",
@@ -35,6 +33,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_METAMATERIALS",
+  "civilopedia": "TXT_KEY_BONUS_METAMATERIALS_PEDIA",
   "bonusClassType": "BONUSCLASS_MANUFACTURED"
  }
 }

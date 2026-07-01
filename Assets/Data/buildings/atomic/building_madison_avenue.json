@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_MADISON_AVENUE",
- "description": "TXT_KEY_BUILDING_MADISON_AVENUE",
- "civilopedia": "TXT_KEY_BUILDING_MADISON_AVENUE_PEDIA",
  "obsoletedBy": {
   "techs": [
    "TECH_ANDROIDS"
@@ -116,6 +114,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_MADISON_AVENUE",
+  "civilopedia": "TXT_KEY_BUILDING_MADISON_AVENUE_PEDIA",
   "commerceDoubleTime": {
    "culture": 1000
   },

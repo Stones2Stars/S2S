@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_INTERGALACTIC_GAMMA_RAY_BURST_PLANT",
- "description": "TXT_KEY_BUILDING_INTERGALACTIC_GAMMA_RAY_BURST_PLANT",
- "civilopedia": "TXT_KEY_BUILDING_INTERGALACTIC_GAMMA_RAY_BURST_PLANT_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -33,6 +31,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_INTERGALACTIC_GAMMA_RAY_BURST_PLANT",
+  "civilopedia": "TXT_KEY_BUILDING_INTERGALACTIC_GAMMA_RAY_BURST_PLANT_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

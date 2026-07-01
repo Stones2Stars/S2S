@@ -1,7 +1,5 @@
 {
  "type": "UNIT_SCYTHIAN_HORSE_ARCHER",
- "description": "TXT_KEY_UNIT_SCYTHIAN_HORSE_ARCHER",
- "civilopedia": "TXT_KEY_UNIT_SCYTHIAN_HORSE_ARCHER_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -141,6 +139,8 @@
   "upkeep": 1
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_SCYTHIAN_HORSE_ARCHER",
+  "civilopedia": "TXT_KEY_UNIT_SCYTHIAN_HORSE_ARCHER_PEDIA",
   "worth": 2,
   "militaryWorth": 15,
   "xpValueAttack": 6,

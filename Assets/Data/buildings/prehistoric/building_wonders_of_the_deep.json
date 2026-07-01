@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_WONDERS_OF_THE_DEEP",
- "description": "TXT_KEY_BUILDING_WONDERS_OF_THE_DEEP",
- "civilopedia": "TXT_KEY_BUILDING_WONDERS_OF_THE_DEEP_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_CENTER_FOR_CEPHALOPOD_STUDIES",
@@ -41,6 +39,8 @@
   "construct": "SND_AMB_HORSE_COBBLESTONES"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_WONDERS_OF_THE_DEEP",
+  "civilopedia": "TXT_KEY_BUILDING_WONDERS_OF_THE_DEEP_PEDIA",
   "notConstructible": true,
   "nukeImmune": true,
   "neverCapture": true,

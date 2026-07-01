@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_CRUISE_SHIP_PORT",
- "description": "TXT_KEY_BUILDING_CRUISE_SHIP_PORT",
- "civilopedia": "TXT_KEY_BUILDING_CRUISE_SHIP_PORT_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_TELEPORT_BOOTH"
@@ -99,6 +97,8 @@
   "construct": "AS2D_BUILD_LIGHTHOUSE"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_CRUISE_SHIP_PORT",
+  "civilopedia": "TXT_KEY_BUILDING_CRUISE_SHIP_PORT_PEDIA",
   "conquestProbability": 30,
   "advisor": "ADVISOR_GROWTH",
   "visibilityPriority": 1,

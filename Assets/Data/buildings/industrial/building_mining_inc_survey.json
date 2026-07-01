@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_MINING_INC_SURVEY",
- "description": "TXT_KEY_BUILDING_MINING_INC_SURVEY",
- "civilopedia": "TXT_KEY_BUILDING_CORPORATION_5_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -162,6 +160,8 @@
   "construct": "AS2D_BUILD_FACTORY"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_MINING_INC_SURVEY",
+  "civilopedia": "TXT_KEY_BUILDING_CORPORATION_5_PEDIA",
   "worth": 6,
   "militaryWorth": 2,
   "conquestProbability": 75,

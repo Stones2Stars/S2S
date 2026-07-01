@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_DAIRY_BARN",
- "description": "TXT_KEY_BUILDING_DAIRY_BARN",
- "civilopedia": "TXT_KEY_BUILDING_DAIRY_BARN_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_INDUSTRIAL_FARMS"
@@ -112,6 +110,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_DAIRY_BARN",
+  "civilopedia": "TXT_KEY_BUILDING_DAIRY_BARN_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

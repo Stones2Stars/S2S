@@ -1,8 +1,5 @@
 {
  "type": "TRAIT_GREEDY",
- "description": "TXT_KEY_TRAIT_GREEDY",
- "civilopedia": "TXT_KEY_TRAIT_GREEDY_PEDIA",
- "strategy": "TXT_KEY_TRAIT_GREEDY_STRATEGY",
  "excludes": [
   "TRAIT_FINANCIAL"
  ],
@@ -636,6 +633,9 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_TRAIT_GREEDY",
+  "civilopedia": "TXT_KEY_TRAIT_GREEDY_PEDIA",
+  "strategy": "TXT_KEY_TRAIT_GREEDY_STRATEGY",
   "negativeTrait": true
  }
 }

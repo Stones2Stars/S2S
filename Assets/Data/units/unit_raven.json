@@ -1,7 +1,5 @@
 {
  "type": "UNIT_RAVEN",
- "description": "TXT_KEY_UNIT_RAVEN",
- "civilopedia": "TXT_KEY_UNIT_RAVEN_PEDIA",
  "withdrawal": {
   "unit": {
    "percent": 60
@@ -36,6 +34,8 @@
   ]
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_RAVEN",
+  "civilopedia": "TXT_KEY_UNIT_RAVEN_PEDIA",
   "spawnOnly": true,
   "xpValueAttack": 1,
   "xpValueDefense": 1,

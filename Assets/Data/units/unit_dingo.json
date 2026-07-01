@@ -1,7 +1,5 @@
 {
  "type": "UNIT_DINGO",
- "description": "TXT_KEY_UNIT_DINGO",
- "civilopedia": "TXT_KEY_UNIT_DINGO_PEDIA",
  "skills": {
   "assassin": true,
   "blendIntoCity": true,
@@ -45,6 +43,8 @@
   ]
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_DINGO",
+  "civilopedia": "TXT_KEY_UNIT_DINGO_PEDIA",
   "spawnOnly": true,
   "xpValueAttack": 5,
   "xpValueDefense": 3,

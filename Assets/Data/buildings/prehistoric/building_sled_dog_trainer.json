@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_SLED_DOG_TRAINER",
- "description": "TXT_KEY_BUILDING_SLED_DOG_TRAINER",
- "civilopedia": "TXT_KEY_BUILDING_SLED_DOG_TRAINER_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -106,6 +104,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_SLED_DOG_TRAINER",
+  "civilopedia": "TXT_KEY_BUILDING_SLED_DOG_TRAINER_PEDIA",
   "enabledCivilizations": [
    "CIVILIZATION_NPC_NEANDERTHAL"
   ],

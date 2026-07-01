@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_DEEP_SPACE_BISHOP_RING",
- "description": "TXT_KEY_BUILDING_DEEP_SPACE_BISHOP_RING",
- "civilopedia": "TXT_KEY_BUILDING_DEEP_SPACE_BISHOP_RING_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_BRACEWELL_PROBES",
@@ -87,6 +85,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_DEEP_SPACE_BISHOP_RING",
+  "civilopedia": "TXT_KEY_BUILDING_DEEP_SPACE_BISHOP_RING_PEDIA",
   "workableRadius": 3,
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,

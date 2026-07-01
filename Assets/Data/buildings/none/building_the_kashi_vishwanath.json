@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_THE_KASHI_VISHWANATH",
- "description": "TXT_KEY_BUILDING_THE_KASHI_VISHWANATH",
- "civilopedia": "TXT_KEY_BUILDING_THE_KASHI_VISHWANATH_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -53,6 +51,8 @@
   "construct": "AS2D_BUILD_HINDU"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_THE_KASHI_VISHWANATH",
+  "civilopedia": "TXT_KEY_BUILDING_THE_KASHI_VISHWANATH_PEDIA",
   "commerceDoubleTime": {
    "culture": 1000
   },

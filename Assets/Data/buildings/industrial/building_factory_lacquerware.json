@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_FACTORY_LACQUERWARE",
- "description": "TXT_KEY_BUILDING_FACTORY_LACQUERWARE",
- "civilopedia": "TXT_KEY_BUILDING_FACTORY_LACQUERWARE_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_MANUFACTURING_DISTRICT"
@@ -98,6 +96,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_FACTORY_LACQUERWARE",
+  "civilopedia": "TXT_KEY_BUILDING_FACTORY_LACQUERWARE_PEDIA",
   "nukeImmune": true,
   "conquestProbability": 80,
   "advisor": "ADVISOR_ECONOMY",

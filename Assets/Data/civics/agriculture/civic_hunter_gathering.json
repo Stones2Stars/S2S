@@ -1,8 +1,5 @@
 {
  "type": "CIVIC_HUNTER_GATHERING",
- "description": "TXT_KEY_CIVIC_HUNTER_GATHERING",
- "civilopedia": "TXT_KEY_CIVIC_HUNTER_GATHERING_PEDIA",
- "strategy": "TXT_KEY_CIVIC_HUNTER_GATHERING_STRATEGY",
  "food": {
   "empire": {
    "percent": -5
@@ -67,6 +64,9 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_CIVIC_HUNTER_GATHERING",
+  "civilopedia": "TXT_KEY_CIVIC_HUNTER_GATHERING_PEDIA",
+  "strategy": "TXT_KEY_CIVIC_HUNTER_GATHERING_STRATEGY",
   "civicOption": "CIVICOPTION_AGRICULTURE"
  }
 }

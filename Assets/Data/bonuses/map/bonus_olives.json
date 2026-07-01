@@ -1,7 +1,5 @@
 {
  "type": "BONUS_OLIVES",
- "description": "TXT_KEY_BONUS_OLIVES",
- "civilopedia": "TXT_KEY_BONUS_OLIVES_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_CULTURE_IRAQI",
@@ -80,6 +78,8 @@
   ]
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_OLIVES",
+  "civilopedia": "TXT_KEY_BONUS_OLIVES_PEDIA",
   "bonusClassType": "BONUSCLASS_LUXURY"
  }
 }

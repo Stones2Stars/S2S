@@ -1,8 +1,5 @@
 {
  "type": "TECH_AXE_MAKING",
- "description": "TXT_KEY_TECH_AXE_MAKING",
- "civilopedia": "TXT_KEY_TECH_AXE_MAKING_PEDIA",
- "quote": "TXT_KEY_TECH_AXE_MAKING_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_CULTURE_IROQUOIS",
@@ -67,6 +64,9 @@
   "soundMP": "AS2D_TECH_AXE_MAKING"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_AXE_MAKING",
+  "civilopedia": "TXT_KEY_TECH_AXE_MAKING_PEDIA",
+  "quote": "TXT_KEY_TECH_AXE_MAKING_QUOTE",
   "era": "C2C_ERA_PREHISTORIC",
   "worth": 2,
   "militaryWorth": 1,

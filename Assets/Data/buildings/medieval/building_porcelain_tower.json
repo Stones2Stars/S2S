@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_PORCELAIN_TOWER",
- "description": "TXT_KEY_BUILDING_PORCELAIN_TOWER",
- "civilopedia": "TXT_KEY_BUILDING_PORCELAIN_TOWER_PEDIA",
  "obsoletedBy": {
   "techs": [
    "TECH_NATIONALISM"
@@ -99,6 +97,8 @@
   "construct": "AS2D_BUILD_PORCELAIN_TOWER"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_PORCELAIN_TOWER",
+  "civilopedia": "TXT_KEY_BUILDING_PORCELAIN_TOWER_PEDIA",
   "commerceDoubleTime": {
    "culture": 1000
   },

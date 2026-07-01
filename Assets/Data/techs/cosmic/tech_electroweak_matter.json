@@ -1,8 +1,5 @@
 {
  "type": "TECH_ELECTROWEAK_MATTER",
- "description": "TXT_KEY_TECH_ELECTROWEAK_MATTER",
- "civilopedia": "TXT_KEY_TECH_ELECTROWEAK_MATTER_PEDIA",
- "quote": "TXT_KEY_TECH_ELECTROWEAK_MATTER_QUOTE",
  "enables": {
   "bonuses": [
    "BONUS_MAGNETIC_MONOPOLES"
@@ -48,6 +45,9 @@
   "soundMP": "AS2D_TECH_GENERIC"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_ELECTROWEAK_MATTER",
+  "civilopedia": "TXT_KEY_TECH_ELECTROWEAK_MATTER_PEDIA",
+  "quote": "TXT_KEY_TECH_ELECTROWEAK_MATTER_QUOTE",
   "era": "C2C_ERA_COSMIC",
   "worth": 48,
   "tradeable": true,

@@ -1,8 +1,5 @@
 {
  "type": "TECH_FURNITURE_MAKING",
- "description": "TXT_KEY_TECH_FURNITURE_MAKING",
- "civilopedia": "TXT_KEY_TECH_FURNITURE_MAKING_PEDIA",
- "quote": "TXT_KEY_TECH_FURNITURE_MAKING_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_LUXURY_FURNITURE_WORKSHOP"
@@ -49,6 +46,9 @@
   "soundMP": "AS2D_TECH_FURNITURE_MAKING"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_FURNITURE_MAKING",
+  "civilopedia": "TXT_KEY_TECH_FURNITURE_MAKING_PEDIA",
+  "quote": "TXT_KEY_TECH_FURNITURE_MAKING_QUOTE",
   "era": "C2C_ERA_ANCIENT",
   "worth": 2,
   "tradeable": true,

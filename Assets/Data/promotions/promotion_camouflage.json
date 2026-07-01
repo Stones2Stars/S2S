@@ -1,6 +1,5 @@
 {
  "type": "PROMOTION_CAMOUFLAGE",
- "description": "TXT_KEY_PROMOTION_CAMOUFLAGE",
  "strength": {
   "unit": {
    "defense": {
@@ -27,6 +26,7 @@
   "sound": "AS2D_IF_LEVELUP"
  },
  "identity": {
+  "description": "TXT_KEY_PROMOTION_CAMOUFLAGE",
   "unitCombats": [
    "UNITCOMBAT_EXPLORER",
    "UNITCOMBAT_HUNTER",

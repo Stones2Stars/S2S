@@ -1,7 +1,5 @@
 {
  "type": "UNIT_WARRIORS_OF_THE_CLOUDS",
- "description": "TXT_KEY_UNIT_WARRIORS_OF_THE_CLOUDS",
- "civilopedia": "TXT_KEY_UNIT_WARRIORS_OF_THE_CLOUDS_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -120,6 +118,8 @@
   "upkeep": 1
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_WARRIORS_OF_THE_CLOUDS",
+  "civilopedia": "TXT_KEY_UNIT_WARRIORS_OF_THE_CLOUDS_PEDIA",
   "worth": 1,
   "militaryWorth": 5,
   "xpValueAttack": 4,

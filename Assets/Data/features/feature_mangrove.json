@@ -1,7 +1,5 @@
 {
  "type": "FEATURE_MANGROVE",
- "description": "TXT_KEY_FEATURE_MANGROVE",
- "civilopedia": "TXT_KEY_FEATURE_MANGROVE_PEDIA",
  "cultureDistance": {
   "plot": {
    "flat": 1
@@ -74,6 +72,8 @@
   "soundscape": "ASSS_OASIS_SELECT_AMB"
  },
  "identity": {
+  "description": "TXT_KEY_FEATURE_MANGROVE",
+  "civilopedia": "TXT_KEY_FEATURE_MANGROVE_PEDIA",
   "movementCost": 2,
   "popDestroys": -1,
   "noCity": true,

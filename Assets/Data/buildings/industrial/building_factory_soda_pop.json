@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_FACTORY_SODA_POP",
- "description": "TXT_KEY_BUILDING_FACTORY_SODA_POP",
- "civilopedia": "TXT_KEY_BUILDING_FACTORY_SODA_POP_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_FOOD_MANUFACTURING_DISTRICT"
@@ -172,6 +170,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_FACTORY_SODA_POP",
+  "civilopedia": "TXT_KEY_BUILDING_FACTORY_SODA_POP_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_CAO_DAI_TEMPLE",
- "description": "TXT_KEY_BUILDING_CAO_DAI_TEMPLE",
- "civilopedia": "TXT_KEY_BUILDING_CAO_DAI_TEMPLE_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -71,6 +69,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_CAO_DAI_TEMPLE",
+  "civilopedia": "TXT_KEY_BUILDING_CAO_DAI_TEMPLE_PEDIA",
   "neverCapture": true,
   "worth": 4,
   "specialBuildingType": "SPECIALBUILDING_TEMPLE",

@@ -1,6 +1,5 @@
 {
  "type": "UNITCOMBAT_ATTACHE",
- "description": "TXT_KEY_UNITCOMBAT_ATTACHE",
  "skills": {
   "cannotMergeSplit": true
  },
@@ -8,5 +7,8 @@
   "art": {
    "icon": "Art/Interface/Buttons/units/sparth/categories/attache.dds"
   }
+ },
+ "identity": {
+  "description": "TXT_KEY_UNITCOMBAT_ATTACHE"
  }
 }

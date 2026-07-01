@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_ORDINANCE_EFFECT_CARPOOL",
- "description": "TXT_KEY_BUILDING_ORDINANCE_EFFECT_CARPOOL",
- "civilopedia": "TXT_KEY_BUILDING_ORDINANCE_EFFECT_CARPOOL_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_TELEPORT_BOOTH"
@@ -47,6 +45,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_ORDINANCE_EFFECT_CARPOOL",
+  "civilopedia": "TXT_KEY_BUILDING_ORDINANCE_EFFECT_CARPOOL_PEDIA",
   "notConstructible": true,
   "nukeImmune": true,
   "neverCapture": true,

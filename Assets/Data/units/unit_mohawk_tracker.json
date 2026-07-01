@@ -1,7 +1,5 @@
 {
  "type": "UNIT_MOHAWK_TRACKER",
- "description": "TXT_KEY_UNIT_MOHAWK_TRACKER",
- "civilopedia": "TXT_KEY_UNIT_MOHAWK_TRACKER_PEDIA",
  "obsoletedBy": {
   "techs": [
    "TECH_SUPERSTRONG_ALLOYS"
@@ -202,6 +200,8 @@
   ]
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_MOHAWK_TRACKER",
+  "civilopedia": "TXT_KEY_UNIT_MOHAWK_TRACKER_PEDIA",
   "worth": 8,
   "militaryWorth": 20,
   "xpValueAttack": 8,

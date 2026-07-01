@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_CULTURE_BABYLONIAN",
- "description": "TXT_KEY_BUILDING_CULTURE_BABYLONIAN",
- "civilopedia": "TXT_KEY_BUILDING_CULTURE_BABYLONIAN_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -71,6 +69,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_CULTURE_BABYLONIAN",
+  "civilopedia": "TXT_KEY_BUILDING_CULTURE_BABYLONIAN_PEDIA",
   "nukeImmune": true,
   "noInstanceLimit": true,
   "conquestProbability": 100,

@@ -1,7 +1,5 @@
 {
  "type": "BONUS_GLASSWARE",
- "description": "TXT_KEY_BONUS_GLASSWARE",
- "civilopedia": "TXT_KEY_BONUS_GLASSWARE_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_ALCHEMISTS_LAB",
@@ -68,6 +66,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_GLASSWARE",
+  "civilopedia": "TXT_KEY_BONUS_GLASSWARE_PEDIA",
   "bonusClassType": "BONUSCLASS_MANUFACTURED"
  }
 }

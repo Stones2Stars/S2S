@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_CONVENTION_CENTRE",
- "description": "TXT_KEY_BUILDING_CONVENTION_CENTRE",
- "civilopedia": "TXT_KEY_BUILDING_CONVENTION_CENTRE_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_SCIENCE_SYMPOSIUM"
@@ -74,6 +72,8 @@
   "construct": "AS2D_BUILD_CONVENTION_CENTER"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_CONVENTION_CENTRE",
+  "civilopedia": "TXT_KEY_BUILDING_CONVENTION_CENTRE_PEDIA",
   "worth": 8,
   "conquestProbability": 75,
   "dcmAirbombMission": 2,

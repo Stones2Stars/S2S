@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_ASATRU_TEMPLE",
- "description": "TXT_KEY_BUILDING_ASATRU_TEMPLE",
- "civilopedia": "TXT_KEY_BUILDING_ASATRU_TEMPLE_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_ASATRU_CATHEDRAL",
@@ -117,6 +115,8 @@
   "construct": "AS2D_BUILD_NORDIC"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_ASATRU_TEMPLE",
+  "civilopedia": "TXT_KEY_BUILDING_ASATRU_TEMPLE_PEDIA",
   "neverCapture": true,
   "worth": 4,
   "specialBuildingType": "SPECIALBUILDING_TEMPLE",

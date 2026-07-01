@@ -1,8 +1,5 @@
 {
  "type": "TECH_ARTIFICIAL_PLANETS",
- "description": "TXT_KEY_TECH_ARTIFICIAL_PLANETS",
- "civilopedia": "TXT_KEY_TECH_ARTIFICIAL_PLANETS_PEDIA",
- "quote": "TXT_KEY_TECH_ARTIFICIAL_PLANETS_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_INTERSTELLAR_ARTIFICIAL_PLANET",
@@ -77,6 +74,9 @@
   "soundMP": "AS2D_TECH_ARTIFICIAL_PLANETS"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_ARTIFICIAL_PLANETS",
+  "civilopedia": "TXT_KEY_TECH_ARTIFICIAL_PLANETS_PEDIA",
+  "quote": "TXT_KEY_TECH_ARTIFICIAL_PLANETS_QUOTE",
   "era": "C2C_ERA_GALACTIC",
   "worth": 48,
   "militaryWorth": 4,

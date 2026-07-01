@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_NATIONAL_MEDICAL_DATABASE",
- "description": "TXT_KEY_BUILDING_NATIONAL_MEDICAL_DATABASE",
- "civilopedia": "TXT_KEY_BUILDING_NATIONAL_MEDICAL_DATABASE_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -73,6 +71,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_NATIONAL_MEDICAL_DATABASE",
+  "civilopedia": "TXT_KEY_BUILDING_NATIONAL_MEDICAL_DATABASE_PEDIA",
   "neverCapture": true,
   "greatPeopleUnitType": "UNIT_DOCTOR",
   "advisor": "ADVISOR_ECONOMY",

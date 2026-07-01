@@ -1,7 +1,5 @@
 {
  "type": "UNIT_WAR_WAGON",
- "description": "TXT_KEY_UNIT_WAR_WAGON",
- "civilopedia": "TXT_KEY_UNIT_WAR_WAGON_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -71,6 +69,8 @@
   "upkeep": 1
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_WAR_WAGON",
+  "civilopedia": "TXT_KEY_UNIT_WAR_WAGON_PEDIA",
   "worth": 1,
   "militaryWorth": 8,
   "xpValueAttack": 3,

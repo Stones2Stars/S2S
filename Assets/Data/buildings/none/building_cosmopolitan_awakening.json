@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_COSMOPOLITAN_AWAKENING",
- "description": "TXT_KEY_BUILDING_COSMOPOLITAN_AWAKENING",
- "civilopedia": "TXT_KEY_BUILDING_COSMOPOLITAN_AWAKENING_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -49,6 +47,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_COSMOPOLITAN_AWAKENING",
+  "civilopedia": "TXT_KEY_BUILDING_COSMOPOLITAN_AWAKENING_PEDIA",
   "specialBuildingType": "SPECIALBUILDING_PUNK_NANO",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [

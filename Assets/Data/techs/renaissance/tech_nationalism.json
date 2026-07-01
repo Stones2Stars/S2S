@@ -1,8 +1,5 @@
 {
  "type": "TECH_NATIONALISM",
- "description": "TXT_KEY_TECH_NATIONALISM",
- "civilopedia": "TXT_KEY_TECH_NATIONALISM_PEDIA",
- "quote": "TXT_KEY_TECH_NATIONALISM_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_ALAMO",
@@ -99,6 +96,9 @@
   "soundMP": "AS2D_TECH_MP_NATIONALISM"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_NATIONALISM",
+  "civilopedia": "TXT_KEY_TECH_NATIONALISM_PEDIA",
+  "quote": "TXT_KEY_TECH_NATIONALISM_QUOTE",
   "era": "C2C_ERA_RENAISSANCE",
   "worth": 32,
   "tradeable": true,

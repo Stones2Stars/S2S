@@ -1,6 +1,5 @@
 {
  "type": "BUILD_MERCURY_SOLAR_ARRAY",
- "description": "TXT_KEY_BUILD_MERCURY_SOLAR_ARRAY",
  "requires": {
   "build": {
    "all": [
@@ -28,5 +27,8 @@
   "art": {
    "entityEvent": "ENTITY_EVENT_BUILD"
   }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILD_MERCURY_SOLAR_ARRAY"
  }
 }

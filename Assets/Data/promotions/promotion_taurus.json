@@ -1,7 +1,5 @@
 {
  "type": "PROMOTION_TAURUS",
- "description": "TXT_KEY_PROMOTION_TAURUS",
- "help": "TXT_KEY_PROMOTION_ASTRO_HELP",
  "heal": {
   "unit": {
    "victoryAdjacent": {
@@ -21,6 +19,8 @@
   "sound": "AS2D_IF_LEVELUP"
  },
  "identity": {
+  "description": "TXT_KEY_PROMOTION_TAURUS",
+  "help": "TXT_KEY_PROMOTION_ASTRO_HELP",
   "notOnUnitCombats": [
    "UNITCOMBAT_PACIFIST"
   ],

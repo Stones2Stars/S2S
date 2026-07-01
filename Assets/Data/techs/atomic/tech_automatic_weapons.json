@@ -1,8 +1,5 @@
 {
  "type": "TECH_AUTOMATIC_WEAPONS",
- "description": "TXT_KEY_TECH_AUTOMATIC_WEAPONS",
- "civilopedia": "TXT_KEY_TECH_AUTOMATIC_WEAPONS_PEDIA",
- "quote": "TXT_KEY_TECH_AUTOMATIC_WEAPONS_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_BERLIN_WALL",
@@ -78,6 +75,9 @@
   "soundMP": "AS2D_TECH_AUTOMATIC_WEAPONS"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_AUTOMATIC_WEAPONS",
+  "civilopedia": "TXT_KEY_TECH_AUTOMATIC_WEAPONS_PEDIA",
+  "quote": "TXT_KEY_TECH_AUTOMATIC_WEAPONS_QUOTE",
   "era": "C2C_ERA_ATOMIC",
   "worth": 32,
   "tradeable": true,

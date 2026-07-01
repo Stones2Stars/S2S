@@ -1,8 +1,5 @@
 {
  "type": "BUILDING_PERGAMON_ALTAR",
- "description": "TXT_KEY_BUILDING_PERGAMON_ALTAR",
- "civilopedia": "TXT_KEY_BUILDING_PERGAMON_ALTAR_PEDIA",
- "help": "TXT_KEY_BUILDING_PERGAMON_ALTAR_HELP",
  "requires": {
   "build": {
    "all": [
@@ -77,6 +74,9 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_PERGAMON_ALTAR",
+  "civilopedia": "TXT_KEY_BUILDING_PERGAMON_ALTAR_PEDIA",
+  "help": "TXT_KEY_BUILDING_PERGAMON_ALTAR_HELP",
   "commerceDoubleTime": {
    "culture": 1000
   },

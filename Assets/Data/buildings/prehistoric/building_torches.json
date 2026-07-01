@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_TORCHES",
- "description": "TXT_KEY_BUILDING_TORCHES",
- "civilopedia": "TXT_KEY_BUILDING_TORCHES_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_OIL_LAMPS"
@@ -86,6 +84,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_TORCHES",
+  "civilopedia": "TXT_KEY_BUILDING_TORCHES_PEDIA",
   "enabledCivilizations": [
    "CIVILIZATION_NPC_NEANDERTHAL"
   ],

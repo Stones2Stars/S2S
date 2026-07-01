@@ -1,7 +1,5 @@
 {
  "type": "BONUS_BREAD",
- "description": "TXT_KEY_BONUS_BREAD",
- "civilopedia": "TXT_KEY_BONUS_BREAD_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_BURGER_JOINT",
@@ -14,6 +12,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_BREAD",
+  "civilopedia": "TXT_KEY_BONUS_BREAD_PEDIA",
   "bonusClassType": "BONUSCLASS_MANUFACTURED"
  }
 }

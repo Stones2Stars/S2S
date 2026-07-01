@@ -1,7 +1,5 @@
 {
  "type": "TERRAIN_MILKY_WAY",
- "description": "TXT_KEY_TERRAIN_MILKY_WAY",
- "civilopedia": "TXT_KEY_TERRAIN_MILKY_WAY_PEDIA",
  "commerce": {
   "plot": {
    "flat": 1
@@ -23,6 +21,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_TERRAIN_MILKY_WAY",
+  "civilopedia": "TXT_KEY_TERRAIN_MILKY_WAY_PEDIA",
   "found": true,
   "movementCost": 1,
   "mapCategories": [

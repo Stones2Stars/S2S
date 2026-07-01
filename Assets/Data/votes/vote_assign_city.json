@@ -1,6 +1,5 @@
 {
  "type": "VOTE_ASSIGN_CITY",
- "description": "TXT_KEY_VOTE_ASSIGN_CITY",
  "voteSource": [
   "DIPLOVOTE_POPE"
  ],
@@ -11,5 +10,8 @@
  },
  "effect": {
   "assignCity": true
+ },
+ "identity": {
+  "description": "TXT_KEY_VOTE_ASSIGN_CITY"
  }
 }

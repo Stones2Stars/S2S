@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_PALEONTOLOGY_LAB",
- "description": "TXT_KEY_BUILDING_PALEONTOLOGY_LAB",
- "civilopedia": "TXT_KEY_BUILDING_PALEONTOLOGY_LAB_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -102,6 +100,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_PALEONTOLOGY_LAB",
+  "civilopedia": "TXT_KEY_BUILDING_PALEONTOLOGY_LAB_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

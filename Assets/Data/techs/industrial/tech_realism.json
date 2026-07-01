@@ -1,8 +1,5 @@
 {
  "type": "TECH_REALISM",
- "description": "TXT_KEY_TECH_REALISM",
- "civilopedia": "TXT_KEY_TECH_REALISM_PEDIA",
- "quote": "TXT_KEY_TECH_REALISM_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_BAYREUTH_FESTSPIELHAUS",
@@ -60,6 +57,9 @@
   "soundMP": "AS2D_TECH_REALISM"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_REALISM",
+  "civilopedia": "TXT_KEY_TECH_REALISM_PEDIA",
+  "quote": "TXT_KEY_TECH_REALISM_QUOTE",
   "era": "C2C_ERA_INDUSTRIAL",
   "worth": 32,
   "militaryWorth": 6,

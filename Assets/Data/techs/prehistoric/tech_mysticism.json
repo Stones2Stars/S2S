@@ -1,8 +1,5 @@
 {
  "type": "TECH_MYSTICISM",
- "description": "TXT_KEY_TECH_MYSTICISM",
- "civilopedia": "TXT_KEY_TECH_MYSTICISM_PEDIA",
- "quote": "TXT_KEY_TECH_MYSTICISM_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_DIVINE_MONUMENT"
@@ -56,6 +53,9 @@
   "soundMP": "AS2D_TECH_MP_MYSTICISM"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_MYSTICISM",
+  "civilopedia": "TXT_KEY_TECH_MYSTICISM_PEDIA",
+  "quote": "TXT_KEY_TECH_MYSTICISM_QUOTE",
   "era": "C2C_ERA_PREHISTORIC",
   "worth": 8,
   "tradeable": true,

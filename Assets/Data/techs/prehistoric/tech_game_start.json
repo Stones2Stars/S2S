@@ -1,7 +1,5 @@
 {
   "type": "TECH_GAME_START",
-  "description": "TXT_KEY_TECH_GAME_START",
-  "civilopedia": "TXT_KEY_TECH_DUMMY_PEDIA",
   "enables": {
     "techs": [
       "TECH_CAVE_DWELLING",
@@ -38,6 +36,8 @@
     }
   },
   "identity": {
+    "description": "TXT_KEY_TECH_GAME_START",
+    "civilopedia": "TXT_KEY_TECH_DUMMY_PEDIA",
     "era": "C2C_ERA_PREHISTORIC",
     "disable": true
   }

@@ -1,12 +1,12 @@
 {
  "type": "UNITCOMBAT_CULTURE_INUIT",
- "description": "TXT_KEY_UNITCOMBAT_CULTURE_INUIT",
  "ui": {
   "art": {
    "icon": "Art/Interface/Buttons/units/sparth/categories/culture_inuit.dds"
   }
  },
  "identity": {
+  "description": "TXT_KEY_UNITCOMBAT_CULTURE_INUIT",
   "culture": "BONUS_INUIT"
  }
 }

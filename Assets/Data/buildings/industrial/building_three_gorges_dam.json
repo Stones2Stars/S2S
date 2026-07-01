@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_THREE_GORGES_DAM",
- "description": "TXT_KEY_BUILDING_THREE_GORGES_DAM",
- "civilopedia": "TXT_KEY_BUILDING_THREE_GORGES_DAM_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -90,6 +88,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_THREE_GORGES_DAM",
+  "civilopedia": "TXT_KEY_BUILDING_THREE_GORGES_DAM_PEDIA",
   "nukeImmune": true,
   "teamShare": true,
   "worth": 20,

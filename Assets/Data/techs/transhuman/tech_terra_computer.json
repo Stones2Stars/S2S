@@ -1,8 +1,5 @@
 {
  "type": "TECH_TERRA_COMPUTER",
- "description": "TXT_KEY_TECH_TERRA_COMPUTER",
- "civilopedia": "TXT_KEY_TECH_TERRA_COMPUTER_PEDIA",
- "quote": "TXT_KEY_TECH_TERRA_COMPUTER_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_NETWORK_NODE",
@@ -88,6 +85,9 @@
   "soundMP": "AS2D_TECH_TERRA_COMPUTER"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_TERRA_COMPUTER",
+  "civilopedia": "TXT_KEY_TECH_TERRA_COMPUTER_PEDIA",
+  "quote": "TXT_KEY_TECH_TERRA_COMPUTER_QUOTE",
   "era": "C2C_ERA_TRANSHUMAN",
   "worth": 48,
   "tradeable": true,

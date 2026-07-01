@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_TELEPORT_BOOTH",
- "description": "TXT_KEY_BUILDING_TELEPORT_BOOTH",
- "civilopedia": "TXT_KEY_BUILDING_TELEPORT_BOOTH_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_ANTIGRAV_VEHICLE_DEALERSHIP",
@@ -154,6 +152,8 @@
   "construct": "AS2D_BUILD_WALLS"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_TELEPORT_BOOTH",
+  "civilopedia": "TXT_KEY_BUILDING_TELEPORT_BOOTH_PEDIA",
   "worth": 4,
   "conquestProbability": 100,
   "advisor": "ADVISOR_ECONOMY",

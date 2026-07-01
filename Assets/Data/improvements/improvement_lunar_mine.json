@@ -1,7 +1,5 @@
 {
  "type": "IMPROVEMENT_LUNAR_MINE",
- "description": "TXT_KEY_IMPROVEMENT_LUNAR_MINE",
- "civilopedia": "TXT_KEY_IMPROVEMENT_LUNAR_MINE_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -102,6 +100,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_IMPROVEMENT_LUNAR_MINE",
+  "civilopedia": "TXT_KEY_IMPROVEMENT_LUNAR_MINE_PEDIA",
   "extraterrestrial": true,
   "pillageTo": "IMPROVEMENT_LUNAR_MINING_OUTPOST",
   "pillageGold": 200,

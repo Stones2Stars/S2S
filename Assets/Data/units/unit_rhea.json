@@ -1,7 +1,5 @@
 {
  "type": "UNIT_RHEA",
- "description": "TXT_KEY_UNIT_RHEA",
- "civilopedia": "TXT_KEY_CONCEPT_SUBDUED_ANIMALS_PEDIA",
  "withdrawal": {
   "unit": {
    "percent": 50
@@ -51,6 +49,8 @@
   ]
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_RHEA",
+  "civilopedia": "TXT_KEY_CONCEPT_SUBDUED_ANIMALS_PEDIA",
   "spawnOnly": true,
   "xpValueAttack": 1,
   "xpValueDefense": 1,

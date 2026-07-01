@@ -1,7 +1,5 @@
 {
  "type": "PROMOTIONLINE_BUILD_UP_CLEVERNESS",
- "description": "TXT_KEY_PROMOTIONLINE_BUILD_UP_CLEVERNESS",
- "help": "TXT_KEY_PROMOTIONLINE_BUILD_UP_CLEVERNESS_HELP",
  "buildUp": {
   "active": true
  },
@@ -11,6 +9,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_PROMOTIONLINE_BUILD_UP_CLEVERNESS",
+  "help": "TXT_KEY_PROMOTIONLINE_BUILD_UP_CLEVERNESS_HELP",
   "unitCombats": [
    "UNITCOMBAT_CRIMINAL",
    "UNITCOMBAT_PIRATE"

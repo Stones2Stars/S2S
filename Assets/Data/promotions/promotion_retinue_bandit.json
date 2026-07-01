@@ -1,6 +1,5 @@
 {
  "type": "PROMOTION_RETINUE_BANDIT",
- "description": "TXT_KEY_PROMOTION_RETINUE_BANDIT",
  "strength": {
   "unit": {
    "hillsAttack": {
@@ -83,6 +82,7 @@
   "sound": "AS2D_IF_GET_RETINUE"
  },
  "identity": {
+  "description": "TXT_KEY_PROMOTION_RETINUE_BANDIT",
   "unitCombats": [
    "UNITCOMBAT_HERO"
   ],

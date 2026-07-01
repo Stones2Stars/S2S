@@ -1,13 +1,13 @@
 {
  "type": "BONUS_COBALT_ORE",
- "description": "TXT_KEY_BONUS_COBALT_ORE",
- "civilopedia": "TXT_KEY_BONUS_COBALT_ORE_PEDIA",
  "world": {
   "art": {
    "icon": "ART_DEF_BONUS_COBALT_ORE"
   }
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_COBALT_ORE",
+  "civilopedia": "TXT_KEY_BONUS_COBALT_ORE_PEDIA",
   "bonusClassType": "BONUSCLASS_MANUFACTURED"
  }
 }

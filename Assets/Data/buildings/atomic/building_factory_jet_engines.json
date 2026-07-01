@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_FACTORY_JET_ENGINES",
- "description": "TXT_KEY_BUILDING_FACTORY_JET_ENGINES",
- "civilopedia": "TXT_KEY_BUILDING_FACTORY_JET_ENGINES_PEDIA",
  "enables": {
   "units": [
    "UNIT_ASTRONAUTIC_TECHNICIAN",
@@ -139,6 +137,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_FACTORY_JET_ENGINES",
+  "civilopedia": "TXT_KEY_BUILDING_FACTORY_JET_ENGINES_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

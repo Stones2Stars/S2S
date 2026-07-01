@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_SOCIABLE_ROBOTS",
- "description": "TXT_KEY_BUILDING_SOCIABLE_ROBOTS",
- "civilopedia": "TXT_KEY_BUILDING_SOCIABLE_ROBOTS_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_ANDROID_PARENTS"
@@ -79,6 +77,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_SOCIABLE_ROBOTS",
+  "civilopedia": "TXT_KEY_BUILDING_SOCIABLE_ROBOTS_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

@@ -1,7 +1,5 @@
 {
  "type": "BONUS_FIREARMS",
- "description": "TXT_KEY_BONUS_FIREARMS",
- "civilopedia": "TXT_KEY_BONUS_FIREARMS_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_AUTOMATED_FIRING_RANGE",
@@ -123,6 +121,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_FIREARMS",
+  "civilopedia": "TXT_KEY_BONUS_FIREARMS_PEDIA",
   "bonusClassType": "BONUSCLASS_MANUFACTURED"
  }
 }

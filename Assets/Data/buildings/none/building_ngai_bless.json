@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_NGAI_BLESS",
- "description": "TXT_KEY_BUILDING_NGAI_BLESS",
- "civilopedia": "TXT_KEY_BUILDING_NGAI_BLESS_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_NAITERU_KOB_BLESS",
@@ -87,6 +85,8 @@
   "construct": "AS2D_BUILD_CONFUCIAN"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_NGAI_BLESS",
+  "civilopedia": "TXT_KEY_BUILDING_NGAI_BLESS_PEDIA",
   "neverCapture": true,
   "worth": 4,
   "specialBuildingType": "SPECIALBUILDING_MONASTERY_II",

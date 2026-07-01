@@ -1,8 +1,5 @@
 {
  "type": "RELIGION_HELLENISM",
- "description": "TXT_KEY_TECH_HELLENISM",
- "civilopedia": "TXT_KEY_TECH_HELLENISM_PEDIA",
- "adjective": "TXT_KEY_TECH_HELLENISM_ADJECTIVE",
  "enables": {
   "buildings": [
    "BUILDING_HELLENIC_GYMNASIA",
@@ -87,6 +84,9 @@
   "sound": "AS2D_BUILD_OLYMP"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_HELLENISM",
+  "adjective": "TXT_KEY_TECH_HELLENISM_ADJECTIVE",
+  "civilopedia": "TXT_KEY_TECH_HELLENISM_PEDIA",
   "spreadFactor": 40
  }
 }

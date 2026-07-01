@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_UNIVERSAL_ECONOMY",
- "description": "TXT_KEY_BUILDING_UNIVERSAL_ECONOMY",
- "civilopedia": "TXT_KEY_BUILDING_UNIVERSAL_ECONOMY_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -46,6 +44,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_UNIVERSAL_ECONOMY",
+  "civilopedia": "TXT_KEY_BUILDING_UNIVERSAL_ECONOMY_PEDIA",
   "neverCapture": true,
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,

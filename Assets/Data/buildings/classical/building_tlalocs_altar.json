@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_TLALOCS_ALTAR",
- "description": "TXT_KEY_BUILDING_TLALOCS_ALTAR",
- "civilopedia": "TXT_KEY_BUILDING_TLALOCS_ALTAR_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -77,6 +75,8 @@
   "construct": "AS2D_BUILD_CEREMONIAL_ALTAR"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_TLALOCS_ALTAR",
+  "civilopedia": "TXT_KEY_BUILDING_TLALOCS_ALTAR_PEDIA",
   "worth": 5,
   "conquestProbability": 100,
   "dcmAirbombMission": 2,

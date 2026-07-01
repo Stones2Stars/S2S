@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_GRAVITY_TRAPS",
- "description": "TXT_KEY_BUILDING_GRAVITY_TRAPS",
- "civilopedia": "TXT_KEY_BUILDING_GRAVITY_TRAPS_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -79,6 +77,8 @@
   "construct": "AS2D_BUILD_NANOFACTORY"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_GRAVITY_TRAPS",
+  "civilopedia": "TXT_KEY_BUILDING_GRAVITY_TRAPS_PEDIA",
   "damageAllAttackers": true,
   "militaryWorth": 7,
   "advisor": "ADVISOR_MILITARY",

@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_ELECTRONICS_STORE",
- "description": "TXT_KEY_BUILDING_ELECTRONICS_STORE",
- "civilopedia": "TXT_KEY_BUILDING_ELECTRONICS_STORE_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_AUGMENTED_EQUIPMENT_CENTER"
@@ -158,6 +156,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_ELECTRONICS_STORE",
+  "civilopedia": "TXT_KEY_BUILDING_ELECTRONICS_STORE_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

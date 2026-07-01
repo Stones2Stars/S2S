@@ -1,8 +1,5 @@
 {
  "type": "TECH_OBSIDIAN_WEAPONS",
- "description": "TXT_KEY_TECH_OBSIDIAN_WEAPONS",
- "civilopedia": "TXT_KEY_TECH_OBSIDIAN_WEAPONS_PEDIA",
- "quote": "TXT_KEY_TECH_OBSIDIAN_WEAPONS_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_ANCIENT_WAY_OF_THE_WARRIOR",
@@ -83,6 +80,9 @@
   "soundMP": "AS2D_TECH_OBSIDIAN_WEAPONS"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_OBSIDIAN_WEAPONS",
+  "civilopedia": "TXT_KEY_TECH_OBSIDIAN_WEAPONS_PEDIA",
+  "quote": "TXT_KEY_TECH_OBSIDIAN_WEAPONS_QUOTE",
   "era": "C2C_ERA_PREHISTORIC",
   "worth": 2,
   "militaryWorth": 1,

@@ -1,4 +1,6 @@
 {
  "type": "CIVICOPTION_RULE",
- "description": "TXT_KEY_CIVICOPTION_RULE"
+ "identity": {
+  "description": "TXT_KEY_CIVICOPTION_RULE"
+ }
 }

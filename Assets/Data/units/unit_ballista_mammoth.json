@@ -1,7 +1,5 @@
 {
  "type": "UNIT_BALLISTA_MAMMOTH",
- "description": "TXT_KEY_UNIT_BALLISTA_MAMMOTH",
- "civilopedia": "TXT_KEY_UNIT_BALLISTA_MAMMOTH_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -89,6 +87,8 @@
   "production": 495
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_BALLISTA_MAMMOTH",
+  "civilopedia": "TXT_KEY_UNIT_BALLISTA_MAMMOTH_PEDIA",
   "worth": 2,
   "militaryWorth": 8,
   "xpValueAttack": 2,

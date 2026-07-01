@@ -1,12 +1,12 @@
 {
  "type": "UNITCOMBAT_CULTURE_BENIN",
- "description": "TXT_KEY_UNITCOMBAT_CULTURE_BENIN",
  "ui": {
   "art": {
    "icon": "Art/Interface/Buttons/units/sparth/categories/culture_benin.dds"
   }
  },
  "identity": {
+  "description": "TXT_KEY_UNITCOMBAT_CULTURE_BENIN",
   "culture": "BONUS_BENINESE"
  }
 }

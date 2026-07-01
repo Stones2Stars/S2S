@@ -1,12 +1,12 @@
 {
  "type": "UNITCOMBAT_CULTURE_THRACIAN",
- "description": "TXT_KEY_UNITCOMBAT_CULTURE_THRACIAN",
  "ui": {
   "art": {
    "icon": "Art/categories/culture_newcultures.dds"
   }
  },
  "identity": {
+  "description": "TXT_KEY_UNITCOMBAT_CULTURE_THRACIAN",
   "culture": "BONUS_THRACIAN"
  }
 }

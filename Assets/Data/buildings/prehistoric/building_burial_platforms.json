@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_BURIAL_PLATFORMS",
- "description": "TXT_KEY_BUILDING_BURIAL_PLATFORMS",
- "civilopedia": "TXT_KEY_BUILDING_BURIAL_PLATFORMS_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_FUNERARY_SERVICES"
@@ -129,6 +127,8 @@
   "construct": "AS2D_BUILD_WALLS"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_BURIAL_PLATFORMS",
+  "civilopedia": "TXT_KEY_BUILDING_BURIAL_PLATFORMS_PEDIA",
   "conquestProbability": 95,
   "advisor": "ADVISOR_GROWTH",
   "visibilityPriority": 1,

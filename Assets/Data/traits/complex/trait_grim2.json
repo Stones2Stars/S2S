@@ -1,8 +1,5 @@
 {
  "type": "TRAIT_GRIM2",
- "description": "TXT_KEY_TRAIT_GRIM2",
- "civilopedia": "TXT_KEY_TRAIT_GRIM2_PEDIA",
- "strategy": "TXT_KEY_TRAIT_GRIM_STRATEGY",
  "enables": {
   "traits": [
    "TRAIT_GRIM3"
@@ -165,6 +162,9 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_TRAIT_GRIM2",
+  "civilopedia": "TXT_KEY_TRAIT_GRIM2_PEDIA",
+  "strategy": "TXT_KEY_TRAIT_GRIM_STRATEGY",
   "negativeTrait": true
  }
 }

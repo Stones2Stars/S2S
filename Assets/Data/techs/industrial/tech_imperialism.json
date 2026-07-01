@@ -1,8 +1,5 @@
 {
  "type": "TECH_IMPERIALISM",
- "description": "TXT_KEY_TECH_IMPERIALISM",
- "civilopedia": "TXT_KEY_TECH_IMPERIALISM_PEDIA",
- "quote": "TXT_KEY_TECH_IMPERIALISM_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_CRYSTAL_PALACE",
@@ -62,6 +59,9 @@
   "soundMP": "AS2D_TECH_IMPERIALISM"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_IMPERIALISM",
+  "civilopedia": "TXT_KEY_TECH_IMPERIALISM_PEDIA",
+  "quote": "TXT_KEY_TECH_IMPERIALISM_QUOTE",
   "era": "C2C_ERA_INDUSTRIAL",
   "worth": 32,
   "tradeable": true,

@@ -1,7 +1,5 @@
 {
  "type": "UNIT_COBRA",
- "description": "TXT_KEY_UNIT_COBRA",
- "civilopedia": "TXT_KEY_UNIT_COBRA_PEDIA",
  "withdrawal": {
   "unit": {
    "percent": 70
@@ -44,6 +42,8 @@
   ]
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_COBRA",
+  "civilopedia": "TXT_KEY_UNIT_COBRA_PEDIA",
   "spawnOnly": true,
   "xpValueAttack": 4,
   "xpValueDefense": 3,

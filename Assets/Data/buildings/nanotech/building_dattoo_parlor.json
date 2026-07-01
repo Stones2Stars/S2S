@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_DATTOO_PARLOR",
- "description": "TXT_KEY_BUILDING_DATTOO_PARLOR",
- "civilopedia": "TXT_KEY_BUILDING_DATTOO_PARLOR_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_HIGH_TECH_CULTURAL_ENRICHMENT"
@@ -78,6 +76,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_DATTOO_PARLOR",
+  "civilopedia": "TXT_KEY_BUILDING_DATTOO_PARLOR_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

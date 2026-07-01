@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_HOUSING_HABITATION_PODS",
- "description": "TXT_KEY_BUILDING_HOUSING_HABITATION_PODS",
- "civilopedia": "TXT_KEY_BUILDING_HOUSING_HABITATION_PODS_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_HOUSING_COLONY_ARCOLOGY"
@@ -64,6 +62,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_HOUSING_HABITATION_PODS",
+  "civilopedia": "TXT_KEY_BUILDING_HOUSING_HABITATION_PODS_PEDIA",
   "notConstructible": true,
   "nukeImmune": true,
   "neverCapture": true,

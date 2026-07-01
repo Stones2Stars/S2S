@@ -1,7 +1,5 @@
 {
  "type": "TERRAIN_ASTEROID_SURFACE",
- "description": "TXT_KEY_TERRAIN_ASTEROID_SURFACE",
- "civilopedia": "TXT_KEY_TERRAIN_ASTEROID_SURFACE_PEDIA",
  "commerce": {
   "plot": {
    "flat": 2
@@ -31,6 +29,8 @@
   "soundscape": "ASSS_TUNDRA_SELECT_AMB"
  },
  "identity": {
+  "description": "TXT_KEY_TERRAIN_ASTEROID_SURFACE",
+  "civilopedia": "TXT_KEY_TERRAIN_ASTEROID_SURFACE_PEDIA",
   "found": true,
   "movementCost": 3,
   "mapCategories": [

@@ -1,7 +1,5 @@
 {
  "type": "BONUS_GRAPHENE",
- "description": "TXT_KEY_BONUS_GRAPHENE",
- "civilopedia": "TXT_KEY_BONUS_GRAPHENE_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_CARBYNE_FOUNDRY",
@@ -14,6 +12,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_GRAPHENE",
+  "civilopedia": "TXT_KEY_BONUS_GRAPHENE_PEDIA",
   "bonusClassType": "BONUSCLASS_MANUFACTURED"
  }
 }

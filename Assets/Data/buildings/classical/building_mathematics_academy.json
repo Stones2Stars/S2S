@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_MATHEMATICS_ACADEMY",
- "description": "TXT_KEY_BUILDING_MATHEMATICS_ACADEMY",
- "civilopedia": "TXT_KEY_BUILDING_MATHEMATICS_ACADEMY_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_MATHEMATICS_DEPARTMENT"
@@ -104,6 +102,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_MATHEMATICS_ACADEMY",
+  "civilopedia": "TXT_KEY_BUILDING_MATHEMATICS_ACADEMY_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

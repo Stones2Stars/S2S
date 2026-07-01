@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_EL_ESCORIAL",
- "description": "TXT_KEY_BUILDING_EL_ESCORIAL",
- "civilopedia": "TXT_KEY_BUILDING_EL_ESCORIAL_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -72,6 +70,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_EL_ESCORIAL",
+  "civilopedia": "TXT_KEY_BUILDING_EL_ESCORIAL_PEDIA",
   "commerceDoubleTime": {
    "culture": 1000
   },

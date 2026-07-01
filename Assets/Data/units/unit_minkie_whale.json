@@ -1,7 +1,5 @@
 {
  "type": "UNIT_MINKIE_WHALE",
- "description": "TXT_KEY_UNIT_MINKIE_WHALE",
- "civilopedia": "TXT_KEY_UNIT_MINKIE_WHALE_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -81,6 +79,8 @@
   ]
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_MINKIE_WHALE",
+  "civilopedia": "TXT_KEY_UNIT_MINKIE_WHALE_PEDIA",
   "spawnOnly": true,
   "xpValueAttack": 5,
   "xpValueDefense": 3,

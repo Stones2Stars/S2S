@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_HEMATITE_GATHERER",
- "description": "TXT_KEY_BUILDING_HEMATITE_GATHERER",
- "civilopedia": "TXT_KEY_BUILDING_HEMATITE_GATHERER_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_CAVE_PAINTINGS"
@@ -77,6 +75,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_HEMATITE_GATHERER",
+  "civilopedia": "TXT_KEY_BUILDING_HEMATITE_GATHERER_PEDIA",
   "enabledCivilizations": [
    "CIVILIZATION_NPC_NEANDERTHAL"
   ],

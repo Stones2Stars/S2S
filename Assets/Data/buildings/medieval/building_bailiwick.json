@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_BAILIWICK",
- "description": "TXT_KEY_BUILDING_BAILIWICK",
- "civilopedia": "TXT_KEY_BUILDING_BAILIWICK_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_SHERIFFS_OFFICE"
@@ -56,6 +54,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_BAILIWICK",
+  "civilopedia": "TXT_KEY_BUILDING_BAILIWICK_PEDIA",
   "militaryWorth": 5,
   "advisor": "ADVISOR_MILITARY",
   "visibilityPriority": 1,

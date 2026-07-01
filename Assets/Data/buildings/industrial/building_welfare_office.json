@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_WELFARE_OFFICE",
- "description": "TXT_KEY_BUILDING_WELFARE_OFFICE",
- "civilopedia": "TXT_KEY_BUILDING_WELFARE_OFFICE_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_CRIME_WELFARE_FRAUD"
@@ -82,6 +80,8 @@
   "construct": "AS2D_BUILD_MUSEUM"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_WELFARE_OFFICE",
+  "civilopedia": "TXT_KEY_BUILDING_WELFARE_OFFICE_PEDIA",
   "worth": 3,
   "advisor": "ADVISOR_GROWTH",
   "visibilityPriority": 1,

@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_BREEDING_PROGRAM_EMU",
- "description": "TXT_KEY_BUILDING_BREEDING_PROGRAM_EMU",
- "civilopedia": "TXT_KEY_BUILDING_BREEDING_PROGRAM_EMU_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_EMU_EGG_CARVER",
@@ -92,6 +90,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_BREEDING_PROGRAM_EMU",
+  "civilopedia": "TXT_KEY_BUILDING_BREEDING_PROGRAM_EMU_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

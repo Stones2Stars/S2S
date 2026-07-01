@@ -1,8 +1,5 @@
 {
  "type": "TECH_ORBITAL_MEGASTRUCTURES",
- "description": "TXT_KEY_TECH_ORBITAL_MEGASTRUCTURES",
- "civilopedia": "TXT_KEY_TECH_ORBITAL_MEGASTRUCTURES_PEDIA",
- "quote": "TXT_KEY_TECH_ORBITAL_MEGASTRUCTURES_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_CISLUNAR_ONEILL_CYLINDER",
@@ -73,6 +70,9 @@
   "soundMP": "AS2D_TECH_ORBITAL_MEGASTRUCTURES"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_ORBITAL_MEGASTRUCTURES",
+  "civilopedia": "TXT_KEY_TECH_ORBITAL_MEGASTRUCTURES_PEDIA",
+  "quote": "TXT_KEY_TECH_ORBITAL_MEGASTRUCTURES_QUOTE",
   "era": "C2C_ERA_TRANSHUMAN",
   "worth": 48,
   "militaryWorth": 4,

@@ -1,8 +1,5 @@
 {
  "type": "CIVIC_PRIMITIVE",
- "description": "TXT_KEY_CIVIC_PRIMITIVE",
- "civilopedia": "TXT_KEY_CIVIC_PRIMITIVE_PEDIA",
- "strategy": "TXT_KEY_CIVIC_PRIMITIVE_STRATEGY",
  "enables": {
   "buildings": [
    "BUILDING_EXILE_PRACTICES"
@@ -131,6 +128,9 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_CIVIC_PRIMITIVE",
+  "civilopedia": "TXT_KEY_CIVIC_PRIMITIVE_PEDIA",
+  "strategy": "TXT_KEY_CIVIC_PRIMITIVE_STRATEGY",
   "civicOption": "CIVICOPTION_SOCIETY"
  }
 }

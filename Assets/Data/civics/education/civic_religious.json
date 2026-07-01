@@ -1,8 +1,5 @@
 {
  "type": "CIVIC_RELIGIOUS",
- "description": "TXT_KEY_CIVIC_RELIGIOUS",
- "civilopedia": "TXT_KEY_CIVIC_RELIGIOUS_PEDIA",
- "strategy": "TXT_KEY_CIVIC_RELIGIOUS_STRATEGY",
  "enables": {
   "buildings": [
    "BUILDING_AUGUR",
@@ -185,6 +182,9 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_CIVIC_RELIGIOUS",
+  "civilopedia": "TXT_KEY_CIVIC_RELIGIOUS_PEDIA",
+  "strategy": "TXT_KEY_CIVIC_RELIGIOUS_STRATEGY",
   "civicOption": "CIVICOPTION_EDUCATION",
   "upkeepLevel": "UPKEEP_MEDIUM"
  }

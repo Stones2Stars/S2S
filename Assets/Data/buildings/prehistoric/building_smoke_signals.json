@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_SMOKE_SIGNALS",
- "description": "TXT_KEY_BUILDING_SMOKE_SIGNALS",
- "civilopedia": "TXT_KEY_BUILDING_SMOKE_SIGNALS_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_SEAL_MAKER"
@@ -76,6 +74,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_SMOKE_SIGNALS",
+  "civilopedia": "TXT_KEY_BUILDING_SMOKE_SIGNALS_PEDIA",
   "conquestProbability": 70,
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,

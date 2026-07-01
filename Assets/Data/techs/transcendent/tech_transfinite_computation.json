@@ -1,8 +1,5 @@
 {
  "type": "TECH_TRANSFINITE_COMPUTATION",
- "description": "TXT_KEY_TECH_TRANSFINITE_COMPUTATION",
- "civilopedia": "TXT_KEY_TECH_TRANSFINITE_COMPUTATION_PEDIA",
- "quote": "TXT_KEY_TECH_TRANSFINITE_COMPUTATION_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_HYPERCOMPUTRONIUM_STRUCTURES",
@@ -53,6 +50,9 @@
   "soundMP": "AS2D_TECH_GENERIC"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_TRANSFINITE_COMPUTATION",
+  "civilopedia": "TXT_KEY_TECH_TRANSFINITE_COMPUTATION_PEDIA",
+  "quote": "TXT_KEY_TECH_TRANSFINITE_COMPUTATION_QUOTE",
   "era": "C2C_ERA_TRANSCENDENT",
   "worth": 48,
   "tradeable": true,

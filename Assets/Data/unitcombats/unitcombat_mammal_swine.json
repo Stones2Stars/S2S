@@ -1,6 +1,5 @@
 {
  "type": "UNITCOMBAT_MAMMAL_SWINE",
- "description": "TXT_KEY_UNITCOMBAT_MAMMAL_SWINE",
  "withdrawal": {
   "unit": {
    "percent": 10
@@ -24,5 +23,8 @@
   "art": {
    "icon": "Art/Interface/Buttons/units/sparth/categories/mammal.dds"
   }
+ },
+ "identity": {
+  "description": "TXT_KEY_UNITCOMBAT_MAMMAL_SWINE"
  }
 }

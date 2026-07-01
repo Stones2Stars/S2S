@@ -1,8 +1,5 @@
 {
  "type": "CIVIC_WASTE_TO_ENERGY",
- "description": "TXT_KEY_CIVIC_WASTE_TO_ENERGY",
- "civilopedia": "TXT_KEY_CIVIC_WASTE_TO_ENERGY_PEDIA",
- "strategy": "TXT_KEY_CIVIC_WASTE_TO_ENERGY_STRATEGY",
  "enables": {
   "buildings": [
    "BUILDING_BACTERIUM_LANDFILL",
@@ -74,6 +71,9 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_CIVIC_WASTE_TO_ENERGY",
+  "civilopedia": "TXT_KEY_CIVIC_WASTE_TO_ENERGY_PEDIA",
+  "strategy": "TXT_KEY_CIVIC_WASTE_TO_ENERGY_STRATEGY",
   "civicOption": "CIVICOPTION_GARBAGE",
   "upkeepLevel": "UPKEEP_MEDIUM"
  }

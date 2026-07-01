@@ -1,7 +1,5 @@
 {
  "type": "PROMOTION_SNEAK",
- "description": "TXT_KEY_PROMOTION_SNEAK",
- "help": "TXT_KEY_PROMOTION_SNEAK_HELP",
  "capture": {
   "unit": {
    "probability": {
@@ -21,6 +19,8 @@
   "sound": "AS2D_IF_LEVELUP"
  },
  "identity": {
+  "description": "TXT_KEY_PROMOTION_SNEAK",
+  "help": "TXT_KEY_PROMOTION_SNEAK_HELP",
   "unitCombats": [
    "UNITCOMBAT_CRIMINAL",
    "UNITCOMBAT_STRIKE_TEAM"

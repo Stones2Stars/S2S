@@ -1,9 +1,5 @@
 {
  "type": "CIVILIZATION_ABORIGINES",
- "description": "TXT_KEY_CIVILIZATION_ABORIGINES",
- "shortDescription": "TXT_KEY_CIVILIZATION_ABORIGINES_SHORT",
- "adjective": "TXT_KEY_CIVILIZATION_ABORIGINES_ADJECTIVE",
- "civilopedia": "TXT_KEY_CIVILIZATION_ABORIGINES_PEDIA",
  "grants": {
   "buildings": [
    "BUILDING_PALACE",
@@ -32,10 +28,6 @@
    "TECH_GAME_START"
   ]
  },
- "policies": {
-  "playable": true,
-  "aiPlayable": true
- },
  "world": {
   "art": {
    "playerColor": "PLAYERCOLOR_ABORIGINES",
@@ -49,6 +41,12 @@
   "action": "AS3D_INCA_ORDER"
  },
  "identity": {
+  "description": "TXT_KEY_CIVILIZATION_ABORIGINES",
+  "shortDescription": "TXT_KEY_CIVILIZATION_ABORIGINES_SHORT",
+  "adjective": "TXT_KEY_CIVILIZATION_ABORIGINES_ADJECTIVE",
+  "civilopedia": "TXT_KEY_CIVILIZATION_ABORIGINES_PEDIA",
+  "playable": true,
+  "aiPlayable": true,
   "leaders": [
    "LEADER_YAGAN",
    "LEADER_YUNUPINGU"

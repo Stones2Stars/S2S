@@ -1,6 +1,5 @@
 {
  "type": "ROUTE_ASPATIAL_ROUTE",
- "description": "TXT_KEY_ROUTE_ASPATIAL_ROUTE",
  "food": {
   "plot": {
    "flat": 1
@@ -22,6 +21,7 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_ROUTE_ASPATIAL_ROUTE",
   "value": 6,
   "advancedStart": {
    "cost": 30

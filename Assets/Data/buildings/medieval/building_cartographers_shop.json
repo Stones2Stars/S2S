@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_CARTOGRAPHERS_SHOP",
- "description": "TXT_KEY_BUILDING_CARTOGRAPHERS_SHOP",
- "civilopedia": "TXT_KEY_BUILDING_CARTOGRAPHERS_SHOP_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_MODERN_CARTOGRAPHER"
@@ -96,6 +94,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_CARTOGRAPHERS_SHOP",
+  "civilopedia": "TXT_KEY_BUILDING_CARTOGRAPHERS_SHOP_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

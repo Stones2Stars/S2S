@@ -1,8 +1,5 @@
 {
  "type": "TECH_HINDUISM",
- "description": "TXT_KEY_TECH_HINDUISM",
- "civilopedia": "TXT_KEY_TECH_HINDUISM_PEDIA",
- "quote": "TXT_KEY_TECH_HINDUISM_QUOTE",
  "enables": {
   "religions": [
    "RELIGION_HINDUISM"
@@ -55,6 +52,9 @@
   "soundMP": "AS2D_TECH_REINCARNATION"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_HINDUISM",
+  "civilopedia": "TXT_KEY_TECH_HINDUISM_PEDIA",
+  "quote": "TXT_KEY_TECH_HINDUISM_QUOTE",
   "era": "C2C_ERA_ANCIENT",
   "worth": 8,
   "gridX": 31,

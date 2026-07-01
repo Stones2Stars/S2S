@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_CARHENGE",
- "description": "TXT_KEY_BUILDING_CARHENGE",
- "civilopedia": "TXT_KEY_BUILDING_CARHENGE_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -79,6 +77,8 @@
   "construct": "AS2D_BUILD_RECYCLING_CENTER"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_CARHENGE",
+  "civilopedia": "TXT_KEY_BUILDING_CARHENGE_PEDIA",
   "nukeImmune": true,
   "teamShare": true,
   "worth": 20,

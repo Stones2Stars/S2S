@@ -1,7 +1,5 @@
 {
  "type": "BONUS_WARAY",
- "description": "TXT_KEY_BONUS_WARAY",
- "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
  "enables": {
   "units": [
    "UNIT_NORBERTO_ROMUALDEZ",
@@ -14,6 +12,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_WARAY",
+  "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
   "bonusClassType": "BONUSCLASS_CULTURE"
  }
 }

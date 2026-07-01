@@ -1,7 +1,5 @@
 {
  "type": "IMPROVEMENT_RESOURCE_SETTLEMENT",
- "description": "TXT_KEY_IMPROVEMENT_RESOURCE_SETTLEMENT",
- "civilopedia": "TXT_KEY_IMPROVEMENT_RESOURCE_OUTPOSTS_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -44,6 +42,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_IMPROVEMENT_RESOURCE_SETTLEMENT",
+  "civilopedia": "TXT_KEY_IMPROVEMENT_RESOURCE_OUTPOSTS_PEDIA",
   "advancedStart": {
    "cost": 10
   },

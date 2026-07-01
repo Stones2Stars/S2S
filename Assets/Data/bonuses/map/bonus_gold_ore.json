@@ -1,7 +1,5 @@
 {
  "type": "BONUS_GOLD_ORE",
- "description": "TXT_KEY_BONUS_GOLD_ORE",
- "civilopedia": "TXT_KEY_BONUS_GOLD_ORE_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_CULTURE_ANGOLAN",
@@ -77,6 +75,8 @@
   ]
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_GOLD_ORE",
+  "civilopedia": "TXT_KEY_BONUS_GOLD_ORE_PEDIA",
   "bonusClassType": "BONUSCLASS_PRODUCTION"
  }
 }

@@ -1,7 +1,5 @@
 {
  "type": "UNIT_KALLAWAYA",
- "description": "TXT_KEY_UNIT_KALLAWAYA",
- "civilopedia": "TXT_KEY_UNIT_KALLAWAYA_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -97,6 +95,8 @@
   "hurryCostModifier": 25
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_KALLAWAYA",
+  "civilopedia": "TXT_KEY_UNIT_KALLAWAYA_PEDIA",
   "worth": 7,
   "militaryWorth": 12,
   "xpValueDefense": 2,

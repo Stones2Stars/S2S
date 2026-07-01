@@ -1,7 +1,5 @@
 {
  "type": "BONUS_FRUIT",
- "description": "TXT_KEY_BONUS_FRUIT",
- "civilopedia": "TXT_KEY_BONUS_FRUIT_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_BIOFUEL_REFINERY",
@@ -20,6 +18,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_FRUIT",
+  "civilopedia": "TXT_KEY_BONUS_FRUIT_PEDIA",
   "bonusClassType": "BONUSCLASS_MANUFACTURED"
  }
 }

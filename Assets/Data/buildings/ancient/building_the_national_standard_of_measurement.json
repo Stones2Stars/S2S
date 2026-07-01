@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_THE_NATIONAL_STANDARD_OF_MEASUREMENT",
- "description": "TXT_KEY_BUILDING_THE_NATIONAL_STANDARD_OF_MEASUREMENT",
- "civilopedia": "TXT_KEY_BUILDING_THE_NATIONAL_STANDARD_OF_MEASUREMENT_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -59,6 +57,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_THE_NATIONAL_STANDARD_OF_MEASUREMENT",
+  "civilopedia": "TXT_KEY_BUILDING_THE_NATIONAL_STANDARD_OF_MEASUREMENT_PEDIA",
   "notConstructible": true,
   "nukeImmune": true,
   "neverCapture": true,

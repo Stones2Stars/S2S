@@ -1,7 +1,5 @@
 {
  "type": "UNIT_CLONES",
- "description": "TXT_KEY_UNIT_CLONES",
- "civilopedia": "TXT_KEY_UNIT_CLONES_PEDIA",
  "obsoletedBy": {
   "techs": [
    "TECH_TRANSHUMAN_LIFESTYLE"
@@ -86,6 +84,8 @@
   "upkeep": 6
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_CLONES",
+  "civilopedia": "TXT_KEY_UNIT_CLONES_PEDIA",
   "worth": 1,
   "domain": "DOMAIN_LAND",
   "defaultUnitAI": "UNITAI_WORKER",

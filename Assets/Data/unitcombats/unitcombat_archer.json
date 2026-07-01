@@ -1,6 +1,5 @@
 {
  "type": "UNITCOMBAT_ARCHER",
- "description": "TXT_KEY_UNITCOMBAT_ARCHER",
  "capture": {
   "unit": {
    "probability": {
@@ -17,6 +16,7 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_UNITCOMBAT_ARCHER",
   "forMilitary": true
  }
 }

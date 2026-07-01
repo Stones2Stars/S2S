@@ -1,7 +1,5 @@
 {
  "type": "UNIT_ARWA_AL_SULAYHI",
- "description": "TXT_KEY_UNIT_ARWA_AL_SULAYHI",
- "civilopedia": "TXT_KEY_UNIT_ARWA_AL_SULAYHI_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -68,6 +66,8 @@
   "upkeep": 1
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_ARWA_AL_SULAYHI",
+  "civilopedia": "TXT_KEY_UNIT_ARWA_AL_SULAYHI_PEDIA",
   "worth": 6,
   "militaryWorth": 8,
   "xpValueAttack": 4,

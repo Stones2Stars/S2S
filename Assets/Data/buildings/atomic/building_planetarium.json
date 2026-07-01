@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_PLANETARIUM",
- "description": "TXT_KEY_BUILDING_PLANETARIUM",
- "civilopedia": "TXT_KEY_BUILDING_PLANETARIUM_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_ASTRONOMICAL_DATABASE"
@@ -115,6 +113,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_PLANETARIUM",
+  "civilopedia": "TXT_KEY_BUILDING_PLANETARIUM_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

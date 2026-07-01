@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_KNOWLEDGE_INHERITANCE",
- "description": "TXT_KEY_BUILDING_KNOWLEDGE_INHERITANCE",
- "civilopedia": "TXT_KEY_BUILDING_KNOWLEDGE_INHERITANCE_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_ELDER_COUNCIL"
@@ -73,6 +71,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_KNOWLEDGE_INHERITANCE",
+  "civilopedia": "TXT_KEY_BUILDING_KNOWLEDGE_INHERITANCE_PEDIA",
   "nukeImmune": true,
   "worth": 1,
   "conquestProbability": 15,

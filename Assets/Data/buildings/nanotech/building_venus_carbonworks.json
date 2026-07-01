@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_VENUS_CARBONWORKS",
- "description": "TXT_KEY_BUILDING_VENUS_CARBONWORKS",
- "civilopedia": "TXT_KEY_BUILDING_VENUS_CARBONWORKS_PEDIA",
  "enables": {
   "units": [
    "UNIT_VENUS_SETTLER",
@@ -52,6 +50,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_VENUS_CARBONWORKS",
+  "civilopedia": "TXT_KEY_BUILDING_VENUS_CARBONWORKS_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

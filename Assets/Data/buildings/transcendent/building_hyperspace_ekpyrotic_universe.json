@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_HYPERSPACE_EKPYROTIC_UNIVERSE",
- "description": "TXT_KEY_BUILDING_HYPERSPACE_EKPYROTIC_UNIVERSE",
- "civilopedia": "TXT_KEY_BUILDING_HYPERSPACE_EKPYROTIC_UNIVERSE_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_COSMIC_AC",
@@ -41,6 +39,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_HYPERSPACE_EKPYROTIC_UNIVERSE",
+  "civilopedia": "TXT_KEY_BUILDING_HYPERSPACE_EKPYROTIC_UNIVERSE_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

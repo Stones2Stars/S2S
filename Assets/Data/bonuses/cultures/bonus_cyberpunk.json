@@ -1,7 +1,5 @@
 {
  "type": "BONUS_CYBERPUNK",
- "description": "TXT_KEY_BONUS_CYBERPUNK",
- "civilopedia": "TXT_KEY_BONUS_CYBERPUNK_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_CYBER_INSECT_LAB",
@@ -17,6 +15,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_CYBERPUNK",
+  "civilopedia": "TXT_KEY_BONUS_CYBERPUNK_PEDIA",
   "bonusClassType": "BONUSCLASS_GENMODS"
  }
 }

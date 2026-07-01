@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_PIERCER",
- "description": "TXT_KEY_BUILDING_PIERCER",
- "civilopedia": "TXT_KEY_BUILDING_PIERCER_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_PIERCING_SHOP"
@@ -96,6 +94,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_PIERCER",
+  "civilopedia": "TXT_KEY_BUILDING_PIERCER_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

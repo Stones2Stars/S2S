@@ -1,12 +1,12 @@
 {
  "type": "PROMOTIONLINE_STING",
- "description": "TXT_KEY_PROMOTIONLINE_STING",
  "ui": {
   "art": {
    "icon": "art/Buttons/Promotions/Sting1Promotion.dds"
   }
  },
  "identity": {
+  "description": "TXT_KEY_PROMOTIONLINE_STING",
   "unitCombats": [
    "UNITCOMBAT_SIZE_LARGE",
    "UNITCOMBAT_SIZE_MEDIUM",

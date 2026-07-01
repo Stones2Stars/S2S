@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_BARBER_SHOP",
- "description": "TXT_KEY_BUILDING_BARBER_SHOP",
- "civilopedia": "TXT_KEY_BUILDING_BARBER_SHOP_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_HYPERMARKET"
@@ -109,6 +107,8 @@
   "construct": "AS2D_BUILD_BARBER"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_BARBER_SHOP",
+  "civilopedia": "TXT_KEY_BUILDING_BARBER_SHOP_PEDIA",
   "centerInCity": true,
   "worth": 2,
   "militaryWorth": 2,

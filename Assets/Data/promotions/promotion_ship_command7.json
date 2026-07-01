@@ -1,6 +1,5 @@
 {
  "type": "PROMOTION_SHIP_COMMAND7",
- "description": "TXT_KEY_PROMOTION_SHIP_COMMAND7",
  "upkeep": {
   "unit": {
    "modifier": {
@@ -20,6 +19,7 @@
   "sound": "AS2D_IF_LEVELUP"
  },
  "identity": {
+  "description": "TXT_KEY_PROMOTION_SHIP_COMMAND7",
   "controlPoints": 1
  }
 }

@@ -1,8 +1,5 @@
 {
  "type": "TECH_ION_PROPULSION",
- "description": "TXT_KEY_TECH_ION_PROPULSION",
- "civilopedia": "TXT_KEY_TECH_ION_PROPULSION_PEDIA",
- "quote": "TXT_KEY_TECH_ION_PROPULSION_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_DAWN",
@@ -61,6 +58,9 @@
   "soundMP": "AS2D_TECH_ION_PROPULSION"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_ION_PROPULSION",
+  "civilopedia": "TXT_KEY_TECH_ION_PROPULSION_PEDIA",
+  "quote": "TXT_KEY_TECH_ION_PROPULSION_QUOTE",
   "era": "C2C_ERA_INFORMATION",
   "worth": 48,
   "militaryWorth": 4,

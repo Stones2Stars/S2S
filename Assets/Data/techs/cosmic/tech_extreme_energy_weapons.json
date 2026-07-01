@@ -1,8 +1,5 @@
 {
  "type": "TECH_EXTREME_ENERGY_WEAPONS",
- "description": "TXT_KEY_TECH_EXTREME_ENERGY_WEAPONS",
- "civilopedia": "TXT_KEY_TECH_EXTREME_ENERGY_WEAPONS_PEDIA",
- "quote": "TXT_KEY_TECH_EXTREME_ENERGY_WEAPONS_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_INTERGALACTIC_GAMMA_RAY_BURST_CANNON",
@@ -58,6 +55,9 @@
   "soundMP": "AS2D_TECH_GENERIC"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_EXTREME_ENERGY_WEAPONS",
+  "civilopedia": "TXT_KEY_TECH_EXTREME_ENERGY_WEAPONS_PEDIA",
+  "quote": "TXT_KEY_TECH_EXTREME_ENERGY_WEAPONS_QUOTE",
   "era": "C2C_ERA_COSMIC",
   "worth": 48,
   "tradeable": true,

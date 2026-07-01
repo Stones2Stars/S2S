@@ -1,7 +1,5 @@
 {
  "type": "UNIT_HORNEDOWL",
- "description": "TXT_KEY_UNIT_HORNEDOWL",
- "civilopedia": "TXT_KEY_UNIT_HORNEDOWL_PEDIA",
  "withdrawal": {
   "unit": {
    "percent": 60
@@ -55,6 +53,8 @@
   ]
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_HORNEDOWL",
+  "civilopedia": "TXT_KEY_UNIT_HORNEDOWL_PEDIA",
   "spawnOnly": true,
   "xpValueAttack": 2,
   "xpValueDefense": 1,

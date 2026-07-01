@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_FACTORY_MICROWAVE_OVENS",
- "description": "TXT_KEY_BUILDING_FACTORY_MICROWAVE_OVENS",
- "civilopedia": "TXT_KEY_BUILDING_FACTORY_MICROWAVE_OVENS_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_ELECTRONICS_MANUFACTURING_DISTRICT"
@@ -94,6 +92,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_FACTORY_MICROWAVE_OVENS",
+  "civilopedia": "TXT_KEY_BUILDING_FACTORY_MICROWAVE_OVENS_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

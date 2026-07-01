@@ -1,6 +1,5 @@
 {
  "type": "PROMOTION_RETINUE_SPOUSE",
- "description": "TXT_KEY_PROMOTION_RETINUE_SPOUSE",
  "experience": {
   "unit": {
    "percent": 10
@@ -29,6 +28,7 @@
   "sound": "AS2D_IF_GET_RETINUE"
  },
  "identity": {
+  "description": "TXT_KEY_PROMOTION_RETINUE_SPOUSE",
   "unitCombats": [
    "UNITCOMBAT_HERO"
   ]

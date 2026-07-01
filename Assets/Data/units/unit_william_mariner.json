@@ -1,7 +1,5 @@
 {
  "type": "UNIT_WILLIAM_MARINER",
- "description": "TXT_KEY_UNIT_WILLIAM_MARINER",
- "civilopedia": "TXT_KEY_UNIT_WILLIAM_MARINER_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -54,6 +52,8 @@
   "upkeep": 1
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_WILLIAM_MARINER",
+  "civilopedia": "TXT_KEY_UNIT_WILLIAM_MARINER_PEDIA",
   "worth": 6,
   "militaryWorth": 8,
   "xpValueAttack": 4,

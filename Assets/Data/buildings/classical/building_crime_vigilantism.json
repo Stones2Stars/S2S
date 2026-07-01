@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_CRIME_VIGILANTISM",
- "description": "TXT_KEY_BUILDING_CRIME_VIGILANTISM",
- "civilopedia": "TXT_KEY_BUILDING_CRIME_VIGILANTISM_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -76,6 +74,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_CRIME_VIGILANTISM",
+  "civilopedia": "TXT_KEY_BUILDING_CRIME_VIGILANTISM_PEDIA",
   "notConstructible": true,
   "nukeImmune": true,
   "conquestProbability": 100,

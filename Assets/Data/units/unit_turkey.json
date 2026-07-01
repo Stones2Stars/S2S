@@ -1,7 +1,5 @@
 {
  "type": "UNIT_TURKEY",
- "description": "TXT_KEY_UNIT_TURKEY",
- "civilopedia": "TXT_KEY_UNIT_TURKEY_PEDIA",
  "skills": {
   "blendIntoCity": true,
   "onlyDefensive": true,
@@ -51,6 +49,8 @@
   ]
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_TURKEY",
+  "civilopedia": "TXT_KEY_UNIT_TURKEY_PEDIA",
   "spawnOnly": true,
   "xpValueAttack": 2,
   "xpValueDefense": 2,

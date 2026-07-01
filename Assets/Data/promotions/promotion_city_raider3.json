@@ -1,6 +1,5 @@
 {
  "type": "PROMOTION_CITY_RAIDER3",
- "description": "TXT_KEY_PROMOTION_CITYRAIDER3",
  "strength": {
   "unit": {
    "cityAttack": {
@@ -30,5 +29,8 @@
  },
  "sound": {
   "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_CITYRAIDER3"
  }
 }

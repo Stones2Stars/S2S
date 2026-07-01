@@ -1,8 +1,5 @@
 {
  "type": "TECH_SENTIENT_ENERGY_FIELDS",
- "description": "TXT_KEY_TECH_SENTIENT_ENERGY_FIELDS",
- "civilopedia": "TXT_KEY_TECH_SENTIENT_ENERGY_FIELDS_PEDIA",
- "quote": "TXT_KEY_TECH_SENTIENT_ENERGY_FIELDS_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_DISTANT_INTERDICTION_FIELD_GENERATOR",
@@ -53,6 +50,9 @@
   "soundMP": "AS2D_TECH_GENERIC"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_SENTIENT_ENERGY_FIELDS",
+  "civilopedia": "TXT_KEY_TECH_SENTIENT_ENERGY_FIELDS_PEDIA",
+  "quote": "TXT_KEY_TECH_SENTIENT_ENERGY_FIELDS_QUOTE",
   "era": "C2C_ERA_TRANSCENDENT",
   "worth": 48,
   "tradeable": true,

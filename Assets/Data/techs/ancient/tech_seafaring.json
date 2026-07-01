@@ -1,8 +1,5 @@
 {
  "type": "TECH_SEAFARING",
- "description": "TXT_KEY_TECH_SEAFARING",
- "civilopedia": "TXT_KEY_TECH_SEAFARING_PEDIA",
- "quote": "TXT_KEY_TECH_SEAFARING_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_CULTURE_ALGERIAN",
@@ -86,6 +83,9 @@
   "soundMP": "AS2D_TECH_SEAFARING"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_SEAFARING",
+  "civilopedia": "TXT_KEY_TECH_SEAFARING_PEDIA",
+  "quote": "TXT_KEY_TECH_SEAFARING_QUOTE",
   "era": "C2C_ERA_ANCIENT",
   "worth": 24,
   "militaryWorth": 2,

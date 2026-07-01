@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_TRILOBITE_BREEDER",
- "description": "TXT_KEY_BUILDING_TRILOBITE_BREEDER",
- "civilopedia": "TXT_KEY_BUILDING_TRILOBITE_BREEDER_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_PALEO_PARK"
@@ -48,6 +46,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_TRILOBITE_BREEDER",
+  "civilopedia": "TXT_KEY_BUILDING_TRILOBITE_BREEDER_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

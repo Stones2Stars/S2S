@@ -1,7 +1,5 @@
 {
  "type": "BONUS_HUMAN_MOD_NOVEL_SENSES",
- "description": "TXT_KEY_BONUS_HUMAN_MOD_NOVEL_SENSES",
- "civilopedia": "TXT_KEY_BONUS_HUMAN_MOD_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_HUMAN_MOD_GILLS",
@@ -18,6 +16,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_HUMAN_MOD_NOVEL_SENSES",
+  "civilopedia": "TXT_KEY_BONUS_HUMAN_MOD_PEDIA",
   "bonusClassType": "BONUSCLASS_GENMODS"
  }
 }

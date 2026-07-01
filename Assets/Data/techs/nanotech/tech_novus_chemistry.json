@@ -1,8 +1,5 @@
 {
  "type": "TECH_NOVUS_CHEMISTRY",
- "description": "TXT_KEY_TECH_NOVUS_CHEMISTRY",
- "civilopedia": "TXT_KEY_TECH_NOVUS_CHEMISTRY_PEDIA",
- "quote": "TXT_KEY_TECH_NOVUS_CHEMISTRY_QUOTE",
  "enables": {
   "bonuses": [
    "BONUS_NOVUS_CHEMICALS"
@@ -65,6 +62,9 @@
   "soundMP": "AS2D_TECH_NOVUS_CHEMISTRY"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_NOVUS_CHEMISTRY",
+  "civilopedia": "TXT_KEY_TECH_NOVUS_CHEMISTRY_PEDIA",
+  "quote": "TXT_KEY_TECH_NOVUS_CHEMISTRY_QUOTE",
   "era": "C2C_ERA_NANOTECH",
   "worth": 14,
   "tradeable": true,

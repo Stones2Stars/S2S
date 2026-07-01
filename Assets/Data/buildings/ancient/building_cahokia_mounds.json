@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_CAHOKIA_MOUNDS",
- "description": "TXT_KEY_BUILDING_CAHOKIA_MOUNDS",
- "civilopedia": "TXT_KEY_BUILDING_CAHOKIA_MOUNDS_PEDIA",
  "obsoletedBy": {
   "techs": [
    "TECH_THEOLOGY"
@@ -105,6 +103,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_CAHOKIA_MOUNDS",
+  "civilopedia": "TXT_KEY_BUILDING_CAHOKIA_MOUNDS_PEDIA",
   "commerceDoubleTime": {
    "culture": 1000
   },

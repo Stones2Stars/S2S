@@ -1,8 +1,5 @@
 {
  "type": "TRAIT_SCIENTIFIC",
- "description": "TXT_KEY_TRAIT_COMPLEX_SCIENTIFIC",
- "civilopedia": "TXT_KEY_TRAIT_COMPLEX_SCIENTIFIC_PEDIA",
- "strategy": "TXT_KEY_TRAIT_COMPLEX_SCIENTIFIC_STRATEGY",
  "excludes": [
   "TRAIT_TRADITIONAL"
  ],
@@ -671,6 +668,9 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_TRAIT_COMPLEX_SCIENTIFIC",
+  "civilopedia": "TXT_KEY_TRAIT_COMPLEX_SCIENTIFIC_PEDIA",
+  "strategy": "TXT_KEY_TRAIT_COMPLEX_SCIENTIFIC_STRATEGY",
   "impurePropertyManipulators": true
  }
 }

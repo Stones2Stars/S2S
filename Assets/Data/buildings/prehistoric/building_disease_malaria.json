@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_DISEASE_MALARIA",
- "description": "TXT_KEY_BUILDING_DISEASE_MALARIA",
- "civilopedia": "TXT_KEY_BUILDING_DISEASE_PEDIA",
  "obsoletedBy": {
   "techs": [
    "TECH_ENVIRONMENTAL_ECONOMICS"
@@ -73,6 +71,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_DISEASE_MALARIA",
+  "civilopedia": "TXT_KEY_BUILDING_DISEASE_PEDIA",
   "notConstructible": true,
   "nukeImmune": true,
   "conquestProbability": 100,

@@ -1,6 +1,5 @@
 {
  "type": "UNITCOMBAT_MOTILITY_PILOTING",
- "description": "TXT_KEY_UNITCOMBAT_MOTILITY_PILOTING",
  "withdrawal": {
   "unit": {
    "percent": 18
@@ -10,5 +9,8 @@
   "art": {
    "icon": "Art/Interface/Buttons/units/sparth/categories/mobility.dds"
   }
+ },
+ "identity": {
+  "description": "TXT_KEY_UNITCOMBAT_MOTILITY_PILOTING"
  }
 }

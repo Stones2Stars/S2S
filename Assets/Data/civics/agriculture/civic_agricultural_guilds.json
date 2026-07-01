@@ -1,8 +1,5 @@
 {
  "type": "CIVIC_AGRICULTURAL_GUILDS",
- "description": "TXT_KEY_CIVIC_AGRICULTURAL_GUILDS",
- "civilopedia": "TXT_KEY_CIVIC_AGRICULTURAL_GUILDS_PEDIA",
- "strategy": "TXT_KEY_CIVIC_AGRICULTURAL_GUILDS_STRATEGY",
  "enables": {
   "buildings": [
    "BUILDING_FARMERS_MARKET"
@@ -48,6 +45,9 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_CIVIC_AGRICULTURAL_GUILDS",
+  "civilopedia": "TXT_KEY_CIVIC_AGRICULTURAL_GUILDS_PEDIA",
+  "strategy": "TXT_KEY_CIVIC_AGRICULTURAL_GUILDS_STRATEGY",
   "civicOption": "CIVICOPTION_AGRICULTURE",
   "anarchyLength": 1,
   "upkeepLevel": "UPKEEP_MEDIUM"

@@ -1,6 +1,5 @@
 {
  "type": "PROMOTION_BUILD_UP_RESTFUL_RECOVERY4",
- "description": "TXT_KEY_PROMOTION_BUILD_UP_RESTFUL_RECOVERY4",
  "strength": {
   "unit": {
    "percent": -2
@@ -23,5 +22,8 @@
  },
  "sound": {
   "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_BUILD_UP_RESTFUL_RECOVERY4"
  }
 }

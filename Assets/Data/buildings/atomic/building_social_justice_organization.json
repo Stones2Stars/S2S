@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_SOCIAL_JUSTICE_ORGANIZATION",
- "description": "TXT_KEY_BUILDING_SOCIAL_JUSTICE_ORGANIZATION",
- "civilopedia": "TXT_KEY_BUILDING_SOCIAL_JUSTICE_ORGANIZATION_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -67,6 +65,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_SOCIAL_JUSTICE_ORGANIZATION",
+  "civilopedia": "TXT_KEY_BUILDING_SOCIAL_JUSTICE_ORGANIZATION_PEDIA",
   "worth": 3,
   "advisor": "ADVISOR_GROWTH",
   "visibilityPriority": 1,

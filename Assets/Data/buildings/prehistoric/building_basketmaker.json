@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_BASKETMAKER",
- "description": "TXT_KEY_BUILDING_BASKETMAKER",
- "civilopedia": "TXT_KEY_BUILDING_BASKETMAKER_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_BASKET_MAKERS_WORKSHOP"
@@ -139,6 +137,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_BASKETMAKER",
+  "civilopedia": "TXT_KEY_BUILDING_BASKETMAKER_PEDIA",
   "nukeImmune": true,
   "conquestProbability": 80,
   "advisor": "ADVISOR_ECONOMY",

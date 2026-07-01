@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_GLAZE_MAKER",
- "description": "TXT_KEY_BUILDING_GLAZE_MAKER",
- "civilopedia": "TXT_KEY_BUILDING_GLAZE_MAKER_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_RED_AND_BLACK_WARE_PAINTER"
@@ -89,6 +87,8 @@
   "construct": "AS2D_BUILD_GLASSMITH"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_GLAZE_MAKER",
+  "civilopedia": "TXT_KEY_BUILDING_GLAZE_MAKER_PEDIA",
   "worth": 4,
   "militaryWorth": 2,
   "conquestProbability": 75,

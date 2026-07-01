@@ -1,6 +1,5 @@
 {
  "type": "VOTE_UNIVERSAL_SUFFRAGE",
- "description": "TXT_KEY_VOTE_DEMOCRACY",
  "voteSource": [
   "DIPLOVOTE_UN"
  ],
@@ -12,5 +11,8 @@
   "forceCivics": [
    "CIVIC_DEMOCRACY"
   ]
+ },
+ "identity": {
+  "description": "TXT_KEY_VOTE_DEMOCRACY"
  }
 }

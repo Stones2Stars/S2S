@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_COASTAL_PRESERVE",
- "description": "TXT_KEY_BUILDING_COASTAL_PRESERVE",
- "civilopedia": "TXT_KEY_BUILDING_COASTAL_PRESERVE_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_SEA_TREE"
@@ -79,6 +77,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_COASTAL_PRESERVE",
+  "civilopedia": "TXT_KEY_BUILDING_COASTAL_PRESERVE_PEDIA",
   "worth": 3,
   "militaryWorth": 1,
   "advisor": "ADVISOR_GROWTH",

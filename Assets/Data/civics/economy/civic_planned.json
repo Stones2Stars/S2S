@@ -1,8 +1,5 @@
 {
  "type": "CIVIC_PLANNED",
- "description": "TXT_KEY_CIVIC_PLANNED",
- "civilopedia": "TXT_KEY_CIVIC_PLANNED_PEDIA",
- "strategy": "TXT_KEY_CIVIC_PLANNED_STRATEGY",
  "enables": {
   "buildings": [
    "BUILDING_CENTRAL_BANK",
@@ -120,6 +117,9 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_CIVIC_PLANNED",
+  "civilopedia": "TXT_KEY_CIVIC_PLANNED_PEDIA",
+  "strategy": "TXT_KEY_CIVIC_PLANNED_STRATEGY",
   "civicOption": "CIVICOPTION_ECONOMY",
   "anarchyLength": 2,
   "upkeepLevel": "UPKEEP_EXTREME"

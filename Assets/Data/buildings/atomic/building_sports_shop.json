@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_SPORTS_SHOP",
- "description": "TXT_KEY_BUILDING_SPORTS_SHOP",
- "civilopedia": "TXT_KEY_BUILDING_SPORTS_SHOP_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_HYPERMARKET"
@@ -124,6 +122,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_SPORTS_SHOP",
+  "civilopedia": "TXT_KEY_BUILDING_SPORTS_SHOP_PEDIA",
   "worth": 2,
   "advisor": "ADVISOR_CULTURE",
   "mapCategories": [

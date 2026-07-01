@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_SPEEDWAY",
- "description": "TXT_KEY_BUILDING_SPEEDWAY",
- "civilopedia": "TXT_KEY_BUILDING_SPEEDWAY_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_CIRCUS_MAXIMUS"
@@ -103,6 +101,8 @@
   "construct": "AS2D_BUILD_SPEEDWAY"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_SPEEDWAY",
+  "civilopedia": "TXT_KEY_BUILDING_SPEEDWAY_PEDIA",
   "worth": 8,
   "militaryWorth": 4,
   "advisor": "ADVISOR_GROWTH",

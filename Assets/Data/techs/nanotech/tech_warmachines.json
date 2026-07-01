@@ -1,8 +1,5 @@
 {
  "type": "TECH_WARMACHINES",
- "description": "TXT_KEY_TECH_WARMACHINES",
- "civilopedia": "TXT_KEY_TECH_WARMACHINES_PEDIA",
- "quote": "TXT_KEY_TECH_WARMACHINES_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_ADVANCED_FLOODWALL",
@@ -73,6 +70,9 @@
   "soundMP": "AS2D_TECH_WARMACHINES"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_WARMACHINES",
+  "civilopedia": "TXT_KEY_TECH_WARMACHINES_PEDIA",
+  "quote": "TXT_KEY_TECH_WARMACHINES_QUOTE",
   "era": "C2C_ERA_NANOTECH",
   "worth": 48,
   "militaryWorth": 5,

@@ -1,7 +1,5 @@
 {
  "type": "UNIT_DEEPSPACE_INFANTRY",
- "description": "TXT_KEY_UNIT_DEEPSPACE_INFANTRY",
- "civilopedia": "TXT_KEY_UNIT_DEEPSPACE_INFANTRY_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -45,6 +43,8 @@
   "hurryCostModifier": 10000
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_DEEPSPACE_INFANTRY",
+  "civilopedia": "TXT_KEY_UNIT_DEEPSPACE_INFANTRY_PEDIA",
   "worth": 5,
   "militaryWorth": 500,
   "xpValueAttack": 6,

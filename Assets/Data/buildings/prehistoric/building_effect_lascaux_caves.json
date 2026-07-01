@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_EFFECT_LASCAUX_CAVES",
- "description": "TXT_KEY_BUILDING_EFFECT_LASCAUX_CAVES",
- "civilopedia": "TXT_KEY_BUILDING_LASCAUX_PAINTS_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_FRESCO_MURAL"
@@ -59,6 +57,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_EFFECT_LASCAUX_CAVES",
+  "civilopedia": "TXT_KEY_BUILDING_LASCAUX_PAINTS_PEDIA",
   "notConstructible": true,
   "nukeImmune": true,
   "neverCapture": true,

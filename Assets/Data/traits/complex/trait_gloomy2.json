@@ -1,8 +1,5 @@
 {
  "type": "TRAIT_GLOOMY2",
- "description": "TXT_KEY_TRAIT_GLOOMY2",
- "civilopedia": "TXT_KEY_TRAIT_GLOOMY2_PEDIA",
- "strategy": "TXT_KEY_TRAIT_GLOOMY_STRATEGY",
  "enables": {
   "traits": [
    "TRAIT_GLOOMY3"
@@ -193,6 +190,9 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_TRAIT_GLOOMY2",
+  "civilopedia": "TXT_KEY_TRAIT_GLOOMY2_PEDIA",
+  "strategy": "TXT_KEY_TRAIT_GLOOMY_STRATEGY",
   "negativeTrait": true,
   "impurePropertyManipulators": true
  }

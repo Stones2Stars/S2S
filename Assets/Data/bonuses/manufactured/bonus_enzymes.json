@@ -1,7 +1,5 @@
 {
  "type": "BONUS_ENZYMES",
- "description": "TXT_KEY_BONUS_ENZYMES",
- "civilopedia": "TXT_KEY_BONUS_ENZYMES_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_BACTERIUM_BIOFORGE",
@@ -17,6 +15,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_ENZYMES",
+  "civilopedia": "TXT_KEY_BONUS_ENZYMES_PEDIA",
   "bonusClassType": "BONUSCLASS_MANUFACTURED"
  }
 }

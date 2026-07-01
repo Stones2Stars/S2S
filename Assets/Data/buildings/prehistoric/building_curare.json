@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_CURARE",
- "description": "TXT_KEY_BUILDING_CURARE",
- "civilopedia": "TXT_KEY_BUILDING_CURARE_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_RESOURCES_POISON"
@@ -74,6 +72,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_CURARE",
+  "civilopedia": "TXT_KEY_BUILDING_CURARE_PEDIA",
   "enabledCivilizations": [
    "CIVILIZATION_NPC_NEANDERTHAL"
   ],

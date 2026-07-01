@@ -1,8 +1,5 @@
 {
  "type": "TECH_UBIQUITOUS_COMPUTING",
- "description": "TXT_KEY_TECH_UBIQUITOUS_COMPUTING",
- "civilopedia": "TXT_KEY_TECH_UBIQUITOUS_COMPUTING_PEDIA",
- "quote": "TXT_KEY_TECH_UBIQUITOUS_COMPUTING_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_ARCTIC_DATA_CENTER",
@@ -66,6 +63,9 @@
   "soundMP": "AS2D_TECH_UBIQUITOUS_COMPUTING"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_UBIQUITOUS_COMPUTING",
+  "civilopedia": "TXT_KEY_TECH_UBIQUITOUS_COMPUTING_PEDIA",
+  "quote": "TXT_KEY_TECH_UBIQUITOUS_COMPUTING_QUOTE",
   "era": "C2C_ERA_NANOTECH",
   "worth": 14,
   "tradeable": true,

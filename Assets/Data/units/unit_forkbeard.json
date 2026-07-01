@@ -1,7 +1,5 @@
 {
  "type": "UNIT_FORKBEARD",
- "description": "TXT_KEY_UNIT_FORKBEARD",
- "civilopedia": "TXT_KEY_UNIT_FORKBEARD_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -56,6 +54,8 @@
   "upkeep": 1
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_FORKBEARD",
+  "civilopedia": "TXT_KEY_UNIT_FORKBEARD_PEDIA",
   "worth": 2,
   "militaryWorth": 3,
   "xpValueAttack": 4,

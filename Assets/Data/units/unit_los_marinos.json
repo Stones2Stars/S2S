@@ -1,7 +1,5 @@
 {
  "type": "UNIT_LOS_MARINOS",
- "description": "TXT_KEY_UNIT_LOS_MARINOS",
- "civilopedia": "TXT_KEY_UNIT_LOS_MARINOS_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -86,6 +84,8 @@
   "upkeep": 1
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_LOS_MARINOS",
+  "civilopedia": "TXT_KEY_UNIT_LOS_MARINOS_PEDIA",
   "worth": 5,
   "militaryWorth": 117,
   "xpValueAttack": 6,

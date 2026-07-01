@@ -1,6 +1,5 @@
 {
  "type": "PROMOTION_BACK_DOWN5",
- "description": "TXT_KEY_PROMOTION_BACK_DOWN5",
  "movement": {
   "unit": {
    "moves": {
@@ -23,5 +22,8 @@
  },
  "sound": {
   "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_BACK_DOWN5"
  }
 }

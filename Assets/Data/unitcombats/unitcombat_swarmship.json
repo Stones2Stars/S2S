@@ -1,6 +1,5 @@
 {
  "type": "UNITCOMBAT_SWARMSHIP",
- "description": "TXT_KEY_UNITCOMBAT_SWARMSHIP",
  "vision": {
   "visibilityIntensity": {
    "INVISIBLE_NAVAL_DISGUISE": 1
@@ -12,6 +11,7 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_UNITCOMBAT_SWARMSHIP",
   "forNavalMilitary": true
  }
 }

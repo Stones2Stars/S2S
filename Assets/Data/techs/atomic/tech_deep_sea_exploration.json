@@ -1,8 +1,5 @@
 {
  "type": "TECH_DEEP_SEA_EXPLORATION",
- "description": "TXT_KEY_TECH_DEEP_SEA_EXPLORATION",
- "civilopedia": "TXT_KEY_TECH_DEEP_SEA_EXPLORATION_PEDIA",
- "quote": "TXT_KEY_TECH_DEEP_SEA_EXPLORATION_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_DEEP_SEA_LAB",
@@ -69,6 +66,9 @@
   "soundMP": "AS2D_TECH_DEEP_SEA_EXPLORATION"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_DEEP_SEA_EXPLORATION",
+  "civilopedia": "TXT_KEY_TECH_DEEP_SEA_EXPLORATION_PEDIA",
+  "quote": "TXT_KEY_TECH_DEEP_SEA_EXPLORATION_QUOTE",
   "era": "C2C_ERA_ATOMIC",
   "worth": 48,
   "militaryWorth": 4,

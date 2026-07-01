@@ -1,7 +1,5 @@
 {
  "type": "UNIT_MASTER_SAILOR_IRON_FRIGATE",
- "description": "TXT_KEY_UNIT_IRON_MASTER_SAILOR_FRIGATE",
- "civilopedia": "TXT_KEY_UNIT_IRON_FRIGATE_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -80,6 +78,8 @@
   "upkeep": 2
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_IRON_MASTER_SAILOR_FRIGATE",
+  "civilopedia": "TXT_KEY_UNIT_IRON_FRIGATE_PEDIA",
   "spawnOnly": true,
   "worth": 2,
   "militaryWorth": 83,

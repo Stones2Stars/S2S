@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_PESTS_FLEAS",
- "description": "TXT_KEY_BUILDING_PESTS_FLEAS",
- "civilopedia": "TXT_KEY_BUILDING_PESTS_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_DISEASE_BUBONIC_PLAGUE"
@@ -69,6 +67,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_PESTS_FLEAS",
+  "civilopedia": "TXT_KEY_BUILDING_PESTS_PEDIA",
   "notConstructible": true,
   "nukeImmune": true,
   "autoBuild": true,

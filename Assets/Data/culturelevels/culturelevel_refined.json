@@ -1,6 +1,5 @@
 {
  "type": "CULTURELEVEL_REFINED",
- "description": "TXT_KEY_CULTURELEVEL_REFINED",
  "enables": {
   "buildings": [
    "BUILDING_CITY_COUNCIL"
@@ -19,6 +18,7 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_CULTURELEVEL_REFINED",
   "cityRadius": 2,
   "cultureThreshold": 2080
  }

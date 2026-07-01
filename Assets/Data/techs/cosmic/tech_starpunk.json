@@ -1,8 +1,5 @@
 {
  "type": "TECH_STARPUNK",
- "description": "TXT_KEY_TECH_STARPUNK",
- "civilopedia": "TXT_KEY_TECH_STARPUNK_PEDIA",
- "quote": "TXT_KEY_TECH_STARPUNK_QUOTE",
  "enables": {
   "bonuses": [
    "BONUS_STARPUNK"
@@ -46,6 +43,9 @@
   "soundMP": "AS2D_TECH_GENERIC"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_STARPUNK",
+  "civilopedia": "TXT_KEY_TECH_STARPUNK_PEDIA",
+  "quote": "TXT_KEY_TECH_STARPUNK_QUOTE",
   "era": "C2C_ERA_COSMIC",
   "worth": 48,
   "tradeable": true,

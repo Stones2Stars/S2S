@@ -1,4 +1,6 @@
 {
  "type": "CIVICOPTION_RELIGION",
- "description": "TXT_KEY_CIVICOPTION_RELIGION"
+ "identity": {
+  "description": "TXT_KEY_CIVICOPTION_RELIGION"
+ }
 }

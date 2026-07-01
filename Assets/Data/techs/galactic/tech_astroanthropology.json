@@ -1,8 +1,5 @@
 {
  "type": "TECH_ASTROANTHROPOLOGY",
- "description": "TXT_KEY_TECH_ASTROANTHROPOLOGY",
- "civilopedia": "TXT_KEY_TECH_ASTROANTHROPOLOGY_PEDIA",
- "quote": "TXT_KEY_TECH_ASTROANTHROPOLOGY_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_ALIEN_EMBASSY",
@@ -61,6 +58,9 @@
   "soundMP": "AS2D_TECH_ASTROANTHROPOLOGY"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_ASTROANTHROPOLOGY",
+  "civilopedia": "TXT_KEY_TECH_ASTROANTHROPOLOGY_PEDIA",
+  "quote": "TXT_KEY_TECH_ASTROANTHROPOLOGY_QUOTE",
   "era": "C2C_ERA_GALACTIC",
   "worth": 48,
   "militaryWorth": 4,

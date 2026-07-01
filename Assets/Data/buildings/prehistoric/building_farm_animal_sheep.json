@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_FARM_ANIMAL_SHEEP",
- "description": "TXT_KEY_BUILDING_FARM_ANIMAL_SHEEP",
- "civilopedia": "TXT_KEY_BUILDING_FARM_ANIMAL_SHEEP_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_DAIRY_BARN",
@@ -122,6 +120,8 @@
   "construct": "AS2D_BUILD_GRANARY"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_FARM_ANIMAL_SHEEP",
+  "civilopedia": "TXT_KEY_BUILDING_FARM_ANIMAL_SHEEP_PEDIA",
   "enabledCivilizations": [
    "CIVILIZATION_NPC_NEANDERTHAL"
   ],

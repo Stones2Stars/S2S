@@ -1,8 +1,5 @@
 {
  "type": "TRAIT_SEAFARING",
- "description": "TXT_KEY_TRAIT_COMPLEX_SEAFARING",
- "civilopedia": "TXT_KEY_TRAIT_COMPLEX_SEAFARING_PEDIA",
- "strategy": "TXT_KEY_TRAIT_COMPLEX_SEAFARING_STRATEGY",
  "food": {
   "empire": {
    "improvements": {
@@ -515,5 +512,10 @@
   "art": {
    "icon": "art/Buttons/Traits/TraitSeafaring.dds"
   }
+ },
+ "identity": {
+  "description": "TXT_KEY_TRAIT_COMPLEX_SEAFARING",
+  "civilopedia": "TXT_KEY_TRAIT_COMPLEX_SEAFARING_PEDIA",
+  "strategy": "TXT_KEY_TRAIT_COMPLEX_SEAFARING_STRATEGY"
  }
 }

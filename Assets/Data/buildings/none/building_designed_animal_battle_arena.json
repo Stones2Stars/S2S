@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_DESIGNED_ANIMAL_BATTLE_ARENA",
- "description": "TXT_KEY_BUILDING_DESIGNED_ANIMAL_BATTLE_ARENA",
- "civilopedia": "TXT_KEY_BUILDING_DESIGNED_ANIMAL_BATTLE_ARENA_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -68,6 +66,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_DESIGNED_ANIMAL_BATTLE_ARENA",
+  "civilopedia": "TXT_KEY_BUILDING_DESIGNED_ANIMAL_BATTLE_ARENA_PEDIA",
   "specialBuildingType": "SPECIALBUILDING_PUNK_BIO",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": "1.0",

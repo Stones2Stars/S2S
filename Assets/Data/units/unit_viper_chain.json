@@ -1,7 +1,5 @@
 {
  "type": "UNIT_VIPER_CHAIN",
- "description": "TXT_KEY_UNIT_VIPER_CHAIN",
- "civilopedia": "TXT_KEY_UNIT_VIPER_CHAIN_PEDIA",
  "withdrawal": {
   "unit": {
    "percent": 65
@@ -39,6 +37,8 @@
   ]
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_VIPER_CHAIN",
+  "civilopedia": "TXT_KEY_UNIT_VIPER_CHAIN_PEDIA",
   "spawnOnly": true,
   "xpValueAttack": 5,
   "xpValueDefense": 2,

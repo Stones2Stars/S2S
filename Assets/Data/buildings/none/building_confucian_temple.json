@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_CONFUCIAN_TEMPLE",
- "description": "TXT_KEY_BUILDING_CONFUCIAN_TEMPLE",
- "civilopedia": "TXT_KEY_BUILDING_CONFUCIAN_TEMPLE_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_CHANGDEOKGUNG",
@@ -112,6 +110,8 @@
   "construct": "AS2D_BUILD_CONFUCIAN"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_CONFUCIAN_TEMPLE",
+  "civilopedia": "TXT_KEY_BUILDING_CONFUCIAN_TEMPLE_PEDIA",
   "neverCapture": true,
   "worth": 4,
   "specialBuildingType": "SPECIALBUILDING_TEMPLE",

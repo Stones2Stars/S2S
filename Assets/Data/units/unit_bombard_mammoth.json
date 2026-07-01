@@ -1,7 +1,5 @@
 {
  "type": "UNIT_BOMBARD_MAMMOTH",
- "description": "TXT_KEY_UNIT_BOMBARD_MAMMOTH",
- "civilopedia": "TXT_KEY_UNIT_BALLISTA_MAMMOTH_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -96,6 +94,8 @@
   "production": 550
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_BOMBARD_MAMMOTH",
+  "civilopedia": "TXT_KEY_UNIT_BALLISTA_MAMMOTH_PEDIA",
   "worth": 2,
   "militaryWorth": 15,
   "xpValueAttack": 2,

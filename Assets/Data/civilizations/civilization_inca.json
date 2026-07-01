@@ -1,9 +1,5 @@
 {
  "type": "CIVILIZATION_INCA",
- "description": "TXT_KEY_CIVILIZATION_INCA",
- "shortDescription": "TXT_KEY_CIVILIZATION_INCA_SHORT",
- "adjective": "TXT_KEY_CIVILIZATION_INCA_ADJECTIVE",
- "civilopedia": "TXT_KEY_CIVILIZATION_INCA_PEDIA",
  "grants": {
   "buildings": [
    "BUILDING_PALACE",
@@ -32,10 +28,6 @@
    "TECH_GAME_START"
   ]
  },
- "policies": {
-  "playable": true,
-  "aiPlayable": true
- },
  "world": {
   "art": {
    "playerColor": "PLAYERCOLOR_DARK_YELLOW",
@@ -49,6 +41,12 @@
   "action": "AS3D_INCA_ORDER"
  },
  "identity": {
+  "description": "TXT_KEY_CIVILIZATION_INCA",
+  "shortDescription": "TXT_KEY_CIVILIZATION_INCA_SHORT",
+  "adjective": "TXT_KEY_CIVILIZATION_INCA_ADJECTIVE",
+  "civilopedia": "TXT_KEY_CIVILIZATION_INCA_PEDIA",
+  "playable": true,
+  "aiPlayable": true,
   "leaders": [
    "LEADER_HUAYNA_CAPAC",
    "LEADER_PACHACUTI"

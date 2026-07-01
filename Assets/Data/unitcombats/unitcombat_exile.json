@@ -1,6 +1,5 @@
 {
  "type": "UNITCOMBAT_EXILE",
- "description": "TXT_KEY_UNIT_EXILE",
  "firstStrike": {
   "unit": {
    "chance": {
@@ -17,5 +16,8 @@
   "art": {
    "icon": "Art/Interface/Buttons/Units/Categories/Exile.dds"
   }
+ },
+ "identity": {
+  "description": "TXT_KEY_UNIT_EXILE"
  }
 }

@@ -1,8 +1,5 @@
 {
  "type": "TECH_SERICULTURE",
- "description": "TXT_KEY_TECH_SERICULTURE",
- "civilopedia": "TXT_KEY_TECH_SERICULTURE_PEDIA",
- "quote": "TXT_KEY_TECH_SERICULTURE_QUOTE",
  "enables": {
   "bonuses": [
    "BONUS_SILK",
@@ -95,6 +92,9 @@
   "soundMP": "AS2D_TECH_SERICULTURE"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_SERICULTURE",
+  "civilopedia": "TXT_KEY_TECH_SERICULTURE_PEDIA",
+  "quote": "TXT_KEY_TECH_SERICULTURE_QUOTE",
   "era": "C2C_ERA_ANCIENT",
   "worth": 8,
   "tradeable": true,

@@ -1,8 +1,5 @@
 {
  "type": "TECH_ENDLESS_EXPLORATION",
- "description": "TXT_KEY_TECH_ENDLESS_EXPLORATION",
- "civilopedia": "TXT_KEY_TECH_ENDLESS_EXPLORATION_PEDIA",
- "quote": "TXT_KEY_TECH_ENDLESS_EXPLORATION_QUOTE",
  "enables": {
   "bonuses": [
    "BONUS_EXOTIC_LIFEFORMS"
@@ -63,6 +60,9 @@
   "soundMP": "AS2D_TECH_GENERIC"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_ENDLESS_EXPLORATION",
+  "civilopedia": "TXT_KEY_TECH_ENDLESS_EXPLORATION_PEDIA",
+  "quote": "TXT_KEY_TECH_ENDLESS_EXPLORATION_QUOTE",
   "era": "C2C_ERA_TRANSCENDENT",
   "worth": 48,
   "tradeable": true,

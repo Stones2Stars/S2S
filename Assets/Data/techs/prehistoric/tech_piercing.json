@@ -1,8 +1,5 @@
 {
  "type": "TECH_PIERCING",
- "description": "TXT_KEY_TECH_PIERCING",
- "civilopedia": "TXT_KEY_TECH_PIERCING_PEDIA",
- "quote": "TXT_KEY_TECH_PIERCING_QUOTE",
  "enables": {
   "promotionLines": [
    "PROMOTIONLINE_BUILD_UP_SET_FOR_CHARGE"
@@ -49,6 +46,9 @@
   "soundMP": "AS2D_TECH_PIERCING"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_PIERCING",
+  "civilopedia": "TXT_KEY_TECH_PIERCING_PEDIA",
+  "quote": "TXT_KEY_TECH_PIERCING_QUOTE",
   "era": "C2C_ERA_PREHISTORIC",
   "worth": 3,
   "militaryWorth": 3,

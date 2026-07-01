@@ -1,7 +1,5 @@
 {
  "type": "BONUS_GRAINS",
- "description": "TXT_KEY_BONUS_GRAINS",
- "civilopedia": "TXT_KEY_BONUS_GRAINS_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_BIOFUEL_REFINERY",
@@ -27,6 +25,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_GRAINS",
+  "civilopedia": "TXT_KEY_BONUS_GRAINS_PEDIA",
   "bonusClassType": "BONUSCLASS_MANUFACTURED"
  }
 }

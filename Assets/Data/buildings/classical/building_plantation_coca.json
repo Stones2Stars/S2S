@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_PLANTATION_COCA",
- "description": "TXT_KEY_BUILDING_PLANTATION_COCA",
- "civilopedia": "TXT_KEY_BUILDING_PLANTATION_COCA_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_RESOURCES_DRUGS"
@@ -76,6 +74,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_PLANTATION_COCA",
+  "civilopedia": "TXT_KEY_BUILDING_PLANTATION_COCA_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

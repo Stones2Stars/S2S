@@ -1,7 +1,5 @@
 {
  "type": "UNIT_MANCO_CAPAC",
- "description": "TXT_KEY_UNIT_MANCO_CAPAC",
- "civilopedia": "TXT_KEY_UNIT_MANCO_CAPAC_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -58,6 +56,8 @@
   "upkeep": 1
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_MANCO_CAPAC",
+  "civilopedia": "TXT_KEY_UNIT_MANCO_CAPAC_PEDIA",
   "worth": 6,
   "militaryWorth": 8,
   "xpValueAttack": 4,

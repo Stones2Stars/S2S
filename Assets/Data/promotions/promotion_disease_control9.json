@@ -1,6 +1,5 @@
 {
  "type": "PROMOTION_DISEASE_CONTROL9",
- "description": "TXT_KEY_PROMOTION_DISEASE_CONTROL9",
  "PROPERTY_DISEASE": {
   "city": {
    "flat": -18
@@ -26,6 +25,7 @@
   "sound": "AS2D_IF_LEVELUP"
  },
  "identity": {
+  "description": "TXT_KEY_PROMOTION_DISEASE_CONTROL9",
   "minEra": "C2C_ERA_NANOTECH"
  }
 }

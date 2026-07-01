@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_WATERMILL",
- "description": "TXT_KEY_BUILDING_WATERMILL",
- "civilopedia": "TXT_KEY_BUILDING_WATERMILL_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_RESOURCES_FLOUR",
@@ -122,6 +120,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_WATERMILL",
+  "civilopedia": "TXT_KEY_BUILDING_WATERMILL_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

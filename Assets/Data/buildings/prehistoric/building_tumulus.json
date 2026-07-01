@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_TUMULUS",
- "description": "TXT_KEY_BUILDING_TUMULUS",
- "civilopedia": "TXT_KEY_BUILDING_TUMULUS_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_CAHOKIA_MOUNDS",
@@ -71,6 +69,8 @@
   "construct": "AS2D_BUILD_BUDDHIST"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_TUMULUS",
+  "civilopedia": "TXT_KEY_BUILDING_TUMULUS_PEDIA",
   "enabledCivilizations": [
    "CIVILIZATION_NPC_NEANDERTHAL"
   ],

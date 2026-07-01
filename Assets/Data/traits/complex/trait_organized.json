@@ -1,8 +1,5 @@
 {
  "type": "TRAIT_ORGANIZED",
- "description": "TXT_KEY_TRAIT_COMPLEX_ORGANIZED",
- "civilopedia": "TXT_KEY_TRAIT_COMPLEX_ORGANIZED_PEDIA",
- "strategy": "TXT_KEY_TRAIT_COMPLEX_ORGANIZED_STRATEGY",
  "excludes": [
   "TRAIT_IMPULSIVE"
  ],
@@ -139,5 +136,10 @@
   "art": {
    "icon": "art/Buttons/Traits/TraitOrganized.dds"
   }
+ },
+ "identity": {
+  "description": "TXT_KEY_TRAIT_COMPLEX_ORGANIZED",
+  "civilopedia": "TXT_KEY_TRAIT_COMPLEX_ORGANIZED_PEDIA",
+  "strategy": "TXT_KEY_TRAIT_COMPLEX_ORGANIZED_STRATEGY"
  }
 }

@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_CAR_WASH",
- "description": "TXT_KEY_BUILDING_CAR_WASH",
- "civilopedia": "TXT_KEY_BUILDING_CAR_WASH_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_HYPERMARKET"
@@ -77,6 +75,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_CAR_WASH",
+  "civilopedia": "TXT_KEY_BUILDING_CAR_WASH_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

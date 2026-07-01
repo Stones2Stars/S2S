@@ -1,7 +1,5 @@
 {
  "type": "LEADER_PETER",
- "description": "TXT_KEY_LEADER_PETER",
- "civilopedia": "TXT_KEY_LEADER_PETER_PEDIA",
  "grants": {
   "traits": [
    "TRAIT_PHILOSOPHICAL",
@@ -314,5 +312,9 @@
    "C2C_ERA_TRANSCENDENT": "AS2D_DIPLO_WARDRUMS_LATE",
    "C2C_ERA_FUTURE": "AS2D_DIPLO_WARDRUMS_LATE"
   }
+ },
+ "identity": {
+  "description": "TXT_KEY_LEADER_PETER",
+  "civilopedia": "TXT_KEY_LEADER_PETER_PEDIA"
  }
 }

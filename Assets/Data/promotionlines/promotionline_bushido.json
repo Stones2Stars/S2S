@@ -1,12 +1,12 @@
 {
  "type": "PROMOTIONLINE_BUSHIDO",
- "description": "TXT_KEY_PROMOTIONLINE_BUSHIDO",
  "ui": {
   "art": {
    "icon": "Art/Interface/Buttons/Promotions/Bushido1.dds"
   }
  },
  "identity": {
+  "description": "TXT_KEY_PROMOTIONLINE_BUSHIDO",
   "unitCombats": [
    "UNITCOMBAT_ARCHER",
    "UNITCOMBAT_MELEE",

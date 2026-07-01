@@ -1,7 +1,5 @@
 {
  "type": "UNIT_V1",
- "description": "TXT_KEY_UNIT_V1",
- "civilopedia": "TXT_KEY_UNIT_V1_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -61,6 +59,8 @@
   "upkeep": 1
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_V1",
+  "civilopedia": "TXT_KEY_UNIT_V1_PEDIA",
   "worth": 3,
   "militaryWorth": 49,
   "xpValueDefense": 6,

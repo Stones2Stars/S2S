@@ -1,6 +1,5 @@
 {
  "type": "UNITCOMBAT_WEAPON_DIST_IMPROVED_LASER",
- "description": "TXT_KEY_UNITCOMBAT_WEAPON_DIST_IMPROVED_LASER",
  "skills": {
   "rBombardDirect": true
  },
@@ -10,6 +9,7 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_UNITCOMBAT_WEAPON_DIST_IMPROVED_LASER",
   "base": {
    "rangedBombardDamage": 100,
    "rangedBombardLimit": 75,

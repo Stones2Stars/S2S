@@ -1,8 +1,5 @@
 {
  "type": "TECH_SCIENTOLOGY",
- "description": "TXT_KEY_TECH_SCIENTOLOGY",
- "civilopedia": "TXT_KEY_TECH_SCIENTOLOGY_PEDIA",
- "quote": "TXT_KEY_TECH_SCIENTOLOGY_QUOTE",
  "enables": {
   "religions": [
    "RELIGION_SCIENTOLOGY"
@@ -51,6 +48,9 @@
   "soundMP": "AS2D_TECH_GENERIC"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_SCIENTOLOGY",
+  "civilopedia": "TXT_KEY_TECH_SCIENTOLOGY_PEDIA",
+  "quote": "TXT_KEY_TECH_SCIENTOLOGY_QUOTE",
   "era": "C2C_ERA_ATOMIC",
   "gridX": 77,
   "gridY": 7,

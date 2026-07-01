@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_DEEP_SPACE_ASCENDED_PLANET",
- "description": "TXT_KEY_BUILDING_DEEP_SPACE_ASCENDED_PLANET",
- "civilopedia": "TXT_KEY_BUILDING_DEEP_SPACE_ASCENDED_PLANET_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -79,6 +77,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_DEEP_SPACE_ASCENDED_PLANET",
+  "civilopedia": "TXT_KEY_BUILDING_DEEP_SPACE_ASCENDED_PLANET_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

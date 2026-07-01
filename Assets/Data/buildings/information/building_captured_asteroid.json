@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_CAPTURED_ASTEROID",
- "description": "TXT_KEY_BUILDING_CAPTURED_ASTEROID",
- "civilopedia": "TXT_KEY_BUILDING_CAPTURED_ASTEROID_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_ASTEROID_MINE"
@@ -46,6 +44,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_CAPTURED_ASTEROID",
+  "civilopedia": "TXT_KEY_BUILDING_CAPTURED_ASTEROID_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

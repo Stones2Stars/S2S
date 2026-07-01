@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_ULTIMATE_SOLDIERS_TRAINER",
- "description": "TXT_KEY_BUILDING_ULTIMATE_SOLDIERS_TRAINER",
- "civilopedia": "TXT_KEY_BUILDING_ULTIMATE_SOLDIERS_TRAINER_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -102,6 +100,8 @@
   "construct": "AS2D_BUILD_BANK"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_ULTIMATE_SOLDIERS_TRAINER",
+  "civilopedia": "TXT_KEY_BUILDING_ULTIMATE_SOLDIERS_TRAINER_PEDIA",
   "nukeImmune": true,
   "worth": 8,
   "conquestProbability": 100,

@@ -1,7 +1,5 @@
 {
  "type": "UNIT_MEDICINE_MAN",
- "description": "TXT_KEY_UNIT_MEDICINE_MAN",
- "civilopedia": "TXT_KEY_UNIT_MEDICINE_MAN_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -74,6 +72,8 @@
   "hurryCostModifier": 25
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_MEDICINE_MAN",
+  "civilopedia": "TXT_KEY_UNIT_MEDICINE_MAN_PEDIA",
   "worth": 4,
   "militaryWorth": 5,
   "xpValueDefense": 2,

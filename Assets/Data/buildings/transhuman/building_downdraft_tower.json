@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_DOWNDRAFT_TOWER",
- "description": "TXT_KEY_BUILDING_DOWNDRAFT_TOWER",
- "civilopedia": "TXT_KEY_BUILDING_DOWNDRAFT_TOWER_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_RENEWABLE_MEGACOMPLEX"
@@ -100,6 +98,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_DOWNDRAFT_TOWER",
+  "civilopedia": "TXT_KEY_BUILDING_DOWNDRAFT_TOWER_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

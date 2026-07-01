@@ -1,7 +1,5 @@
 {
  "type": "BONUS_GEMSTONE",
- "description": "TXT_KEY_BONUS_GEMSTONE",
- "civilopedia": "TXT_KEY_BONUS_GEMSTONE_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_GEMCUTTER"
@@ -18,6 +16,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_GEMSTONE",
+  "civilopedia": "TXT_KEY_BONUS_GEMSTONE_PEDIA",
   "bonusClassType": "BONUSCLASS_MANUFACTURED"
  }
 }

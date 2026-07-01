@@ -1,8 +1,5 @@
 {
  "type": "TECH_CRYSTALPUNK",
- "description": "TXT_KEY_TECH_CRYSTALPUNK",
- "civilopedia": "TXT_KEY_TECH_CRYSTALPUNK_PEDIA",
- "quote": "TXT_KEY_TECH_CRYSTALPUNK_QUOTE",
  "enables": {
   "bonuses": [
    "BONUS_CRYSTALPUNK"
@@ -46,6 +43,9 @@
   "soundMP": "AS2D_TECH_GENERIC"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_CRYSTALPUNK",
+  "civilopedia": "TXT_KEY_TECH_CRYSTALPUNK_PEDIA",
+  "quote": "TXT_KEY_TECH_CRYSTALPUNK_QUOTE",
   "era": "C2C_ERA_TRANSHUMAN",
   "worth": 48,
   "tradeable": true,

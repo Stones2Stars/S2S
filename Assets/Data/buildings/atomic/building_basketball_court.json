@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_BASKETBALL_COURT",
- "description": "TXT_KEY_BUILDING_BASKETBALL_COURT",
- "civilopedia": "TXT_KEY_BUILDING_BASKETBALL_COURT_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_ATHLETIC_MEGACOMPLEX"
@@ -87,6 +85,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_BASKETBALL_COURT",
+  "civilopedia": "TXT_KEY_BUILDING_BASKETBALL_COURT_PEDIA",
   "worth": 2,
   "advisor": "ADVISOR_MILITARY",
   "mapCategories": [

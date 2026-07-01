@@ -1,8 +1,5 @@
 {
  "type": "BUILDING_EMANCIPATION_PROCLAMATION",
- "description": "TXT_KEY_BUILDING_EMANCIPATION_PROCLAMATION",
- "civilopedia": "TXT_KEY_BUILDING_EMANCIPATION_PROCLAMATION_PEDIA",
- "help": "TXT_KEY_BUILDING_EMANCIPATION_PROCLAMATION_HELP",
  "requires": {
   "build": {
    "all": [
@@ -34,6 +31,9 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_EMANCIPATION_PROCLAMATION",
+  "civilopedia": "TXT_KEY_BUILDING_EMANCIPATION_PROCLAMATION_PEDIA",
+  "help": "TXT_KEY_BUILDING_EMANCIPATION_PROCLAMATION_HELP",
   "neverCapture": true,
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,

@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_SAFARI_HOTEL",
- "description": "TXT_KEY_BUILDING_SAFARI_HOTEL",
- "civilopedia": "TXT_KEY_BUILDING_SAFARI_HOTEL_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_TOURISM_MEGACOMPLEX"
@@ -81,6 +79,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_SAFARI_HOTEL",
+  "civilopedia": "TXT_KEY_BUILDING_SAFARI_HOTEL_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

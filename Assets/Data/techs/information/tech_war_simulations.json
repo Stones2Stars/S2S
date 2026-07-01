@@ -1,8 +1,5 @@
 {
  "type": "TECH_WAR_SIMULATIONS",
- "description": "TXT_KEY_TECH_WAR_SIMULATIONS",
- "civilopedia": "TXT_KEY_TECH_WAR_SIMULATIONS_PEDIA",
- "quote": "TXT_KEY_TECH_WAR_SIMULATIONS_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_COMBAT_SIMULATOR",
@@ -61,6 +58,9 @@
   "soundMP": "AS2D_TECH_WAR_SIMULATIONS"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_WAR_SIMULATIONS",
+  "civilopedia": "TXT_KEY_TECH_WAR_SIMULATIONS_PEDIA",
+  "quote": "TXT_KEY_TECH_WAR_SIMULATIONS_QUOTE",
   "era": "C2C_ERA_INFORMATION",
   "worth": 14,
   "tradeable": true,

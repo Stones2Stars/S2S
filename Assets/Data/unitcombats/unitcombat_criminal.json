@@ -1,6 +1,5 @@
 {
  "type": "UNITCOMBAT_CRIMINAL",
- "description": "TXT_KEY_UNITCOMBAT_CRIMINAL",
  "espionage": {
   "unit": {
    "insidiousness": {
@@ -124,6 +123,7 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_UNITCOMBAT_CRIMINAL",
   "forMilitary": true,
   "defaultStatuses": [
    "PROMOTION_REMOVE_STANDOUT_STATUS"

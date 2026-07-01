@@ -1,12 +1,12 @@
 {
  "type": "PROMOTIONLINE_GARRISON",
- "description": "TXT_KEY_PROMOTIONLINE_GARRISON",
  "ui": {
   "art": {
    "icon": ",Art/Interface/Buttons/Promotions/CityGarrison1.dds,Art/Interface/Buttons/Promotions_Atlas.dds,2,2"
   }
  },
  "identity": {
+  "description": "TXT_KEY_PROMOTIONLINE_GARRISON",
   "unitCombats": [
    "UNITCOMBAT_ARCHER",
    "UNITCOMBAT_GUN",

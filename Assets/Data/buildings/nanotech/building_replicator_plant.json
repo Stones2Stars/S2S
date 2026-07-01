@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_REPLICATOR_PLANT",
- "description": "TXT_KEY_BUILDING_REPLICATOR_PLANT",
- "civilopedia": "TXT_KEY_BUILDING_REPLICATOR_PLANT_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_MOLECULAR_ASSEMBLER"
@@ -93,6 +91,8 @@
   "construct": "AS2D_BUILD_NANOFACTORY"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_REPLICATOR_PLANT",
+  "civilopedia": "TXT_KEY_BUILDING_REPLICATOR_PLANT_PEDIA",
   "worth": 20,
   "militaryWorth": 25,
   "dcmAirbombMission": 3,

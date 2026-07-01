@@ -1,7 +1,5 @@
 {
  "type": "BONUS_BLENDER",
- "description": "TXT_KEY_BONUS_BLENDER",
- "civilopedia": "TXT_KEY_BONUS_BLENDER_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_APPLIANCE_STORE",
@@ -15,6 +13,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_BLENDER",
+  "civilopedia": "TXT_KEY_BONUS_BLENDER_PEDIA",
   "bonusClassType": "BONUSCLASS_MANUFACTURED"
  }
 }

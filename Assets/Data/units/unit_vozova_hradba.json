@@ -1,7 +1,5 @@
 {
  "type": "UNIT_VOZOVA_HRADBA",
- "description": "TXT_KEY_UNIT_VOZOVA_HRADBA",
- "civilopedia": "TXT_KEY_UNIT_VOZOVA_HRADBA_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -97,6 +95,8 @@
   "upkeep": 1
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_VOZOVA_HRADBA",
+  "civilopedia": "TXT_KEY_UNIT_VOZOVA_HRADBA_PEDIA",
   "worth": 1,
   "militaryWorth": 16,
   "xpValueAttack": 6,

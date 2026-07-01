@@ -1,8 +1,5 @@
 {
  "type": "TECH_NANOSHIELDING",
- "description": "TXT_KEY_TECH_NANOSHIELDING",
- "civilopedia": "TXT_KEY_TECH_NANOSHIELDING_PEDIA",
- "quote": "TXT_KEY_TECH_NANOSHIELDING_QUOTE",
  "enables": {
   "bonuses": [
    "BONUS_HUMAN_MOD_RADIATION_TOLERANCE"
@@ -58,6 +55,9 @@
   "soundMP": "AS2D_TECH_NANOSHIELDING"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_NANOSHIELDING",
+  "civilopedia": "TXT_KEY_TECH_NANOSHIELDING_PEDIA",
+  "quote": "TXT_KEY_TECH_NANOSHIELDING_QUOTE",
   "era": "C2C_ERA_TRANSHUMAN",
   "worth": 50,
   "militaryWorth": 10,

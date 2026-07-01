@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_PLASTIC_SURGERY_CLINIC",
- "description": "TXT_KEY_BUILDING_PLASTIC_SURGERY_CLINIC",
- "civilopedia": "TXT_KEY_BUILDING_PLASTIC_SURGERY_CLINIC_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_CHIMERA_SURGERY_CLINIC"
@@ -86,6 +84,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_PLASTIC_SURGERY_CLINIC",
+  "civilopedia": "TXT_KEY_BUILDING_PLASTIC_SURGERY_CLINIC_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

@@ -1,6 +1,5 @@
 {
  "type": "PROMOTION_SUPER_CAVITATION",
- "description": "TXT_KEY_PROMOTION_SUPER_CAVITATION",
  "movement": {
   "unit": {
    "moves": {
@@ -33,6 +32,7 @@
   "sound": "AS2D_IF_LEVELUP"
  },
  "identity": {
+  "description": "TXT_KEY_PROMOTION_SUPER_CAVITATION",
   "unitCombats": [
    "UNITCOMBAT_SUBMARINE"
   ]

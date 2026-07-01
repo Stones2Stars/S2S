@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_INTERSTELLAR_CULTURE_REBELLIOUS",
- "description": "TXT_KEY_BUILDING_INTERSTELLAR_CULTURE_REBELLIOUS",
- "civilopedia": "TXT_KEY_BUILDING_INTERSTELLAR_CULTURE_REBELLIOUS_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -52,6 +50,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_INTERSTELLAR_CULTURE_REBELLIOUS",
+  "civilopedia": "TXT_KEY_BUILDING_INTERSTELLAR_CULTURE_REBELLIOUS_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

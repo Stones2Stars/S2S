@@ -1,7 +1,5 @@
 {
  "type": "UNIT_DIGGER",
- "description": "TXT_KEY_UNIT_DIGGER",
- "civilopedia": "TXT_KEY_UNIT_DIGGER_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -88,6 +86,8 @@
   "upkeep": 1
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_DIGGER",
+  "civilopedia": "TXT_KEY_UNIT_DIGGER_PEDIA",
   "worth": 5,
   "militaryWorth": 18,
   "xpValueAttack": 4,

@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_PLANTATION_SAFFRON",
- "description": "TXT_KEY_BUILDING_PLANTATION_SAFFRON",
- "civilopedia": "TXT_KEY_BUILDING_PLANTATION_SAFFRON_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_DYE_MAKER",
@@ -84,6 +82,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_PLANTATION_SAFFRON",
+  "civilopedia": "TXT_KEY_BUILDING_PLANTATION_SAFFRON_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

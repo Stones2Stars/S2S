@@ -1,7 +1,5 @@
 {
  "type": "IMPROVEMENT_EARLY_MOUNTAIN_MINE",
- "description": "TXT_KEY_IMPROVEMENT_EARLY_MOUNTAIN_MINE",
- "civilopedia": "TXT_KEY_IMPROVEMENT_EARLY_MOUNTAIN_MINE_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -174,6 +172,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_IMPROVEMENT_EARLY_MOUNTAIN_MINE",
+  "civilopedia": "TXT_KEY_IMPROVEMENT_EARLY_MOUNTAIN_MINE_PEDIA",
   "advancedStart": {
    "cost": 24
   },

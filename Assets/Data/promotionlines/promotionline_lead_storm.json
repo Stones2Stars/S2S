@@ -1,12 +1,12 @@
 {
  "type": "PROMOTIONLINE_LEAD_STORM",
- "description": "TXT_KEY_PROMOTIONLINE_LEAD_STORM",
  "ui": {
   "art": {
    "icon": "art/Buttons/Promotions/LeadStorm1Promotion.dds"
   }
  },
  "identity": {
+  "description": "TXT_KEY_PROMOTIONLINE_LEAD_STORM",
   "unitCombats": [
    "UNITCOMBAT_WEAPON_DIST_RIFLE",
    "UNITCOMBAT_WEAPON_DIST_SEMI_AUTOMATIC",

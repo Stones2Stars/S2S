@@ -1,8 +1,5 @@
 {
  "type": "TECH_PLANETARY_TERRAFORMING",
- "description": "TXT_KEY_TECH_PLANETARY_TERRAFORMING",
- "civilopedia": "TXT_KEY_TECH_PLANETARY_TERRAFORMING_PEDIA",
- "quote": "TXT_KEY_TECH_PLANETARY_TERRAFORMING_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_EFFECT_TERRAFORMED_MARS",
@@ -74,6 +71,9 @@
   "soundMP": "AS2D_TECH_PLANETARY_TERRAFORMING"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_PLANETARY_TERRAFORMING",
+  "civilopedia": "TXT_KEY_TECH_PLANETARY_TERRAFORMING_PEDIA",
+  "quote": "TXT_KEY_TECH_PLANETARY_TERRAFORMING_QUOTE",
   "era": "C2C_ERA_GALACTIC",
   "worth": 48,
   "militaryWorth": 4,

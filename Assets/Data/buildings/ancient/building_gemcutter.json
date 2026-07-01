@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_GEMCUTTER",
- "description": "TXT_KEY_BUILDING_GEMCUTTER",
- "civilopedia": "TXT_KEY_BUILDING_GEMCUTTER_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_HYPERMARKET"
@@ -135,6 +133,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_GEMCUTTER",
+  "civilopedia": "TXT_KEY_BUILDING_GEMCUTTER_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

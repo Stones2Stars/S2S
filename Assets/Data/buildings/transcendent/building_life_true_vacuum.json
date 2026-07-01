@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_LIFE_TRUE_VACUUM",
- "description": "TXT_KEY_BUILDING_LIFE_TRUE_VACUUM",
- "civilopedia": "TXT_KEY_BUILDING_LIFE_TRUE_VACUUM_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -41,6 +39,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_LIFE_TRUE_VACUUM",
+  "civilopedia": "TXT_KEY_BUILDING_LIFE_TRUE_VACUUM_PEDIA",
   "neverCapture": true,
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,

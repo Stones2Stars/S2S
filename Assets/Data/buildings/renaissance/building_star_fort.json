@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_STAR_FORT",
- "description": "TXT_KEY_BUILDING_STAR_FORT",
- "civilopedia": "TXT_KEY_BUILDING_STAR_FORT_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_BALISTRARIA",
@@ -124,6 +122,8 @@
   "construct": "AS2D_BUILD_CASTLE"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_STAR_FORT",
+  "civilopedia": "TXT_KEY_BUILDING_STAR_FORT_PEDIA",
   "nukeImmune": true,
   "worth": 2,
   "militaryWorth": 4,

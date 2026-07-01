@@ -1,6 +1,5 @@
 {
  "type": "CULTURELEVEL_ELEGANT",
- "description": "TXT_KEY_CULTURELEVEL_ELEGANT",
  "enables": {
   "buildings": [
    "BUILDING_MARTIAN_GOVERNING_COUNCIL"
@@ -24,6 +23,7 @@
   ]
  },
  "identity": {
+  "description": "TXT_KEY_CULTURELEVEL_ELEGANT",
   "cityRadius": 2,
   "cultureThreshold": 4160
  }

@@ -1,7 +1,5 @@
 {
  "type": "UNIT_COSMIC_WORKER",
- "description": "TXT_KEY_UNIT_COSMIC_WORKER",
- "civilopedia": "TXT_KEY_UNIT_COSMIC_WORKER_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -79,6 +77,8 @@
   "hurryCostModifier": 10000
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_COSMIC_WORKER",
+  "civilopedia": "TXT_KEY_UNIT_COSMIC_WORKER_PEDIA",
   "worth": 1,
   "domain": "DOMAIN_LAND",
   "defaultUnitAI": "UNITAI_WORKER",

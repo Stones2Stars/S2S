@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_FACTORY_MEDICAL_TRICODERS",
- "description": "TXT_KEY_BUILDING_FACTORY_MEDICAL_TRICODERS",
- "civilopedia": "TXT_KEY_BUILDING_FACTORY_MEDICAL_TRICODERS_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_MEDICAL_MEGACOMPLEX"
@@ -79,6 +77,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_FACTORY_MEDICAL_TRICODERS",
+  "civilopedia": "TXT_KEY_BUILDING_FACTORY_MEDICAL_TRICODERS_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

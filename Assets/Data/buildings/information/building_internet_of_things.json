@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_INTERNET_OF_THINGS",
- "description": "TXT_KEY_BUILDING_INTERNET_OF_THINGS",
- "civilopedia": "TXT_KEY_BUILDING_INTERNET_OF_THINGS_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -54,6 +52,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_INTERNET_OF_THINGS",
+  "civilopedia": "TXT_KEY_BUILDING_INTERNET_OF_THINGS_PEDIA",
   "neverCapture": true,
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,

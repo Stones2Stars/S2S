@@ -1,7 +1,5 @@
 {
  "type": "UNIT_DECAREME",
- "description": "TXT_KEY_UNIT_DECAREME",
- "civilopedia": "TXT_KEY_UNIT_DECAREME_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -56,6 +54,8 @@
   "upkeep": 1
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_DECAREME",
+  "civilopedia": "TXT_KEY_UNIT_DECAREME_PEDIA",
   "worth": 1,
   "militaryWorth": 10,
   "xpValueAttack": 3,

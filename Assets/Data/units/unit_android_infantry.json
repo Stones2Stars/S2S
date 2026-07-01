@@ -1,7 +1,5 @@
 {
  "type": "UNIT_ANDROID_INFANTRY",
- "description": "TXT_KEY_UNIT_ANDROID_INFANTRY",
- "civilopedia": "TXT_KEY_UNIT_ANDROID_INFANTRY_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -74,6 +72,8 @@
   "upkeep": 11
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_ANDROID_INFANTRY",
+  "civilopedia": "TXT_KEY_UNIT_ANDROID_INFANTRY_PEDIA",
   "worth": 5,
   "militaryWorth": 700,
   "xpValueAttack": 3,

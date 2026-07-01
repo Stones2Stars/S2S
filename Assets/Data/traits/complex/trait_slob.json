@@ -1,8 +1,5 @@
 {
  "type": "TRAIT_SLOB",
- "description": "TXT_KEY_TRAIT_SLOB",
- "civilopedia": "TXT_KEY_TRAIT_SLOB_PEDIA",
- "strategy": "TXT_KEY_TRAIT_SLOB_STRATEGY",
  "excludes": [
   "TRAIT_NATURALIST"
  ],
@@ -174,6 +171,9 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_TRAIT_SLOB",
+  "civilopedia": "TXT_KEY_TRAIT_SLOB_PEDIA",
+  "strategy": "TXT_KEY_TRAIT_SLOB_STRATEGY",
   "negativeTrait": true
  }
 }

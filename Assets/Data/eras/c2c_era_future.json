@@ -1,7 +1,5 @@
 {
  "type": "C2C_ERA_FUTURE",
- "description": "TXT_KEY_ERA_FUTURE",
- "strategy": "TXT_KEY_ERA_FUTURE_STRATEGY",
  "costs": {
   "world": {
    "train": {
@@ -87,6 +85,8 @@
   "unitDefeat": "AS2D_LOSS_LATE"
  },
  "identity": {
+  "description": "TXT_KEY_ERA_FUTURE",
+  "strategy": "TXT_KEY_ERA_FUTURE_STRATEGY",
   "order": 14,
   "advancedStart": 4096000,
   "historicalStartYear": 6000,

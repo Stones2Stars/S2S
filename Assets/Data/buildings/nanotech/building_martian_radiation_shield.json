@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_MARTIAN_RADIATION_SHIELD",
- "description": "TXT_KEY_BUILDING_MARTIAN_RADIATION_SHIELD",
- "civilopedia": "TXT_KEY_BUILDING_MARTIAN_RADIATION_SHIELD_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_MARTIAN_BIOFACTORY",
@@ -55,6 +53,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_MARTIAN_RADIATION_SHIELD",
+  "civilopedia": "TXT_KEY_BUILDING_MARTIAN_RADIATION_SHIELD_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

@@ -1,7 +1,5 @@
 {
  "type": "UNIT_ZEBRA_CHARIOT",
- "description": "TXT_KEY_UNIT_ZEBRA_CHARIOT",
- "civilopedia": "TXT_KEY_UNIT_CHARIOT_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -87,6 +85,8 @@
   "production": 130
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_ZEBRA_CHARIOT",
+  "civilopedia": "TXT_KEY_UNIT_CHARIOT_PEDIA",
   "worth": 1,
   "militaryWorth": 4,
   "xpValueAttack": 6,

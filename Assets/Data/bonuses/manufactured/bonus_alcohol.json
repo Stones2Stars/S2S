@@ -1,7 +1,5 @@
 {
  "type": "BONUS_ALCOHOL",
- "description": "TXT_KEY_BONUS_ALCOHOL",
- "civilopedia": "TXT_KEY_BONUS_ALCOHOL_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_CRIME_DRUNK_DRIVING",
@@ -37,6 +35,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_ALCOHOL",
+  "civilopedia": "TXT_KEY_BONUS_ALCOHOL_PEDIA",
   "bonusClassType": "BONUSCLASS_MANUFACTURED"
  }
 }

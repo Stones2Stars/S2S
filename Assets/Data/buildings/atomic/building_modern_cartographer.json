@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_MODERN_CARTOGRAPHER",
- "description": "TXT_KEY_BUILDING_MODERN_CARTOGRAPHER",
- "civilopedia": "TXT_KEY_BUILDING_MODERN_CARTOGRAPHER_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_DIGITAL_GLOBE"
@@ -75,6 +73,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_MODERN_CARTOGRAPHER",
+  "civilopedia": "TXT_KEY_BUILDING_MODERN_CARTOGRAPHER_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

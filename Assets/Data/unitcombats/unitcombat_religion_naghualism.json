@@ -1,12 +1,12 @@
 {
  "type": "UNITCOMBAT_RELIGION_NAGHUALISM",
- "description": "TXT_KEY_UNITCOMBAT_RELIGION_NAGHUALISM",
  "ui": {
   "art": {
    "icon": "Art/Interface/Buttons/units/sparth/categories/religion_naghualism.dds"
   }
  },
  "identity": {
+  "description": "TXT_KEY_UNITCOMBAT_RELIGION_NAGHUALISM",
   "religion": "RELIGION_NAGHUALISM"
  }
 }

@@ -1,6 +1,5 @@
 {
  "type": "PROMOTION_INNOCENT_MERCHANTS1",
- "description": "TXT_KEY_PROMOTION_INNOCENT_MERCHANTS1",
  "vision": {
   "invisibilityIntensity": {
    "INVISIBLE_NAVAL_DISGUISE": 1
@@ -21,5 +20,8 @@
  },
  "sound": {
   "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_INNOCENT_MERCHANTS1"
  }
 }

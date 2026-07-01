@@ -1,12 +1,12 @@
 {
  "type": "UNITCOMBAT_ERA_MEDIEVAL",
- "description": "TXT_KEY_UNITCOMBAT_ERA_MEDIEVAL",
  "ui": {
   "art": {
    "icon": "Art/Interface/Buttons/units/sparth/categories/era_medieval.dds"
   }
  },
  "identity": {
+  "description": "TXT_KEY_UNITCOMBAT_ERA_MEDIEVAL",
   "era": "C2C_ERA_MEDIEVAL"
  }
 }

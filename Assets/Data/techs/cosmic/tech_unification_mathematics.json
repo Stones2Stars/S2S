@@ -1,8 +1,5 @@
 {
  "type": "TECH_UNIFICATION_MATHEMATICS",
- "description": "TXT_KEY_TECH_UNIFICATION_MATHEMATICS",
- "civilopedia": "TXT_KEY_TECH_UNIFICATION_MATHEMATICS_PEDIA",
- "quote": "TXT_KEY_TECH_UNIFICATION_MATHEMATICS_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_INTERGALACTIC_KOLMOGOROV_COMPRESSION",
@@ -49,6 +46,9 @@
   "soundMP": "AS2D_TECH_GENERIC"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_UNIFICATION_MATHEMATICS",
+  "civilopedia": "TXT_KEY_TECH_UNIFICATION_MATHEMATICS_PEDIA",
+  "quote": "TXT_KEY_TECH_UNIFICATION_MATHEMATICS_QUOTE",
   "era": "C2C_ERA_COSMIC",
   "worth": 48,
   "tradeable": true,

@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_CISLUNAR_SHIELDING",
- "description": "TXT_KEY_BUILDING_CISLUNAR_SHIELDING",
- "civilopedia": "TXT_KEY_BUILDING_CISLUNAR_SHIELDING_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_CISLUNAR_NUCLEAR_DAMPER"
@@ -45,6 +43,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_CISLUNAR_SHIELDING",
+  "civilopedia": "TXT_KEY_BUILDING_CISLUNAR_SHIELDING_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

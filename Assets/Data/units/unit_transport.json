@@ -1,7 +1,5 @@
 {
  "type": "UNIT_TRANSPORT",
- "description": "TXT_KEY_UNIT_TRANSPORT",
- "civilopedia": "TXT_KEY_UNIT_TRANSPORT_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -65,6 +63,8 @@
   "upkeep": 2
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_TRANSPORT",
+  "civilopedia": "TXT_KEY_UNIT_TRANSPORT_PEDIA",
   "worth": 4,
   "militaryWorth": 83,
   "xpValueAttack": 3,

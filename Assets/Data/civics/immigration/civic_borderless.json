@@ -1,8 +1,5 @@
 {
  "type": "CIVIC_BORDERLESS",
- "description": "TXT_KEY_CIVIC_BORDERLESS",
- "civilopedia": "TXT_KEY_CIVIC_BORDERLESS_PEDIA",
- "strategy": "TXT_KEY_CIVIC_BORDERLESS_STRATEGY",
  "PROPERTY_CRIME": {
   "city": {
    "flat": 4
@@ -47,6 +44,9 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_CIVIC_BORDERLESS",
+  "civilopedia": "TXT_KEY_CIVIC_BORDERLESS_PEDIA",
+  "strategy": "TXT_KEY_CIVIC_BORDERLESS_STRATEGY",
   "civicOption": "CIVICOPTION_IMMIGRATION"
  }
 }

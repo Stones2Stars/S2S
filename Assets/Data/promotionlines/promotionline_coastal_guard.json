@@ -1,12 +1,12 @@
 {
  "type": "PROMOTIONLINE_COASTAL_GUARD",
- "description": "TXT_KEY_PROMOTIONLINE_COASTAL_GUARD",
  "ui": {
   "art": {
    "icon": "Art/Interface/Buttons/Promotions/coastal_guard1.dds"
   }
  },
  "identity": {
+  "description": "TXT_KEY_PROMOTIONLINE_COASTAL_GUARD",
   "unitCombats": [
    "UNITCOMBAT_WOODEN_SHIPS",
    "UNITCOMBAT_STEAM_SHIPS",

@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_GENOTYPE_STUDIO",
- "description": "TXT_KEY_BUILDING_GENOTYPE_STUDIO",
- "civilopedia": "TXT_KEY_BUILDING_GENOTYPE_STUDIO_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_FARM_NANOBOT_CONTROL_CENTER",
@@ -68,6 +66,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_GENOTYPE_STUDIO",
+  "civilopedia": "TXT_KEY_BUILDING_GENOTYPE_STUDIO_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

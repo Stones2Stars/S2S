@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_COMPUTATIONAL_METAPHYSICS_CENTER",
- "description": "TXT_KEY_BUILDING_COMPUTATIONAL_METAPHYSICS_CENTER",
- "civilopedia": "TXT_KEY_BUILDING_COMPUTATIONAL_METAPHYSICS_CENTER_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_CENTER_FOR_THE_STUDY_OF_CIVILIZATION",
@@ -79,6 +77,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_COMPUTATIONAL_METAPHYSICS_CENTER",
+  "civilopedia": "TXT_KEY_BUILDING_COMPUTATIONAL_METAPHYSICS_CENTER_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

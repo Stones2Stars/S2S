@@ -1,8 +1,5 @@
 {
  "type": "TECH_STEALTH",
- "description": "TXT_KEY_TECH_STEALTH",
- "civilopedia": "TXT_KEY_TECH_STEALTH_PEDIA",
- "quote": "TXT_KEY_TECH_STEALTH_QUOTE",
  "enables": {
   "techs": [
    "TECH_UNMANNED_AIR_VEHICLES"
@@ -56,6 +53,9 @@
   "soundMP": "AS2D_TECH_MP_STEALTH"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_STEALTH",
+  "civilopedia": "TXT_KEY_TECH_STEALTH_PEDIA",
+  "quote": "TXT_KEY_TECH_STEALTH_QUOTE",
   "era": "C2C_ERA_INFORMATION",
   "worth": 48,
   "militaryWorth": 5,

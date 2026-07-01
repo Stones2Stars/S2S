@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_DANCE_HUT",
- "description": "TXT_KEY_BUILDING_DANCE_HUT",
- "civilopedia": "TXT_KEY_BUILDING_DANCE_HUT_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_BLOOD_DANCE",
@@ -107,6 +105,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_DANCE_HUT",
+  "civilopedia": "TXT_KEY_BUILDING_DANCE_HUT_PEDIA",
   "enabledCivilizations": [
    "CIVILIZATION_NPC_NEANDERTHAL"
   ],

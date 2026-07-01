@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_METAL_FOAM_FOUNDRY",
- "description": "TXT_KEY_BUILDING_METAL_FOAM_FOUNDRY",
- "civilopedia": "TXT_KEY_BUILDING_METAL_FOAM_FOUNDRY_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_PICOTECH_COMPLEX"
@@ -66,6 +64,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_METAL_FOAM_FOUNDRY",
+  "civilopedia": "TXT_KEY_BUILDING_METAL_FOAM_FOUNDRY_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

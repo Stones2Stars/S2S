@@ -1,7 +1,5 @@
 {
  "type": "UNIT_FLAIL_ELEPHANT",
- "description": "TXT_KEY_UNIT_FLAIL_ELEPHANT",
- "civilopedia": "TXT_KEY_UNIT_FLAIL_ELEPHANT_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -99,6 +97,8 @@
   "upkeep": 1
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_FLAIL_ELEPHANT",
+  "civilopedia": "TXT_KEY_UNIT_FLAIL_ELEPHANT_PEDIA",
   "worth": 2,
   "militaryWorth": 15,
   "xpValueAttack": 6,

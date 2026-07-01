@@ -1,6 +1,5 @@
 {
  "type": "PROMOTION_LEARNED_AGGRESSION",
- "description": "TXT_KEY_PROMOTION_LEARNED_AGGRESSION",
  "strength": {
   "unit": {
    "quality": {
@@ -30,6 +29,7 @@
   "sound": "AS2D_IF_LEVELUP"
  },
  "identity": {
+  "description": "TXT_KEY_PROMOTION_LEARNED_AGGRESSION",
   "replacesUnitCombat": "UNITCOMBAT_QUALITY_PATHETIC",
   "levelPrereq": 1,
   "notOnUnitCombats": [

@@ -1,9 +1,5 @@
 {
  "type": "CIVILIZATION_MALI",
- "description": "TXT_KEY_CIVILIZATION_MALI",
- "shortDescription": "TXT_KEY_CIVILIZATION_MALI_SHORT",
- "adjective": "TXT_KEY_CIVILIZATION_MALI_ADJECTIVE",
- "civilopedia": "TXT_KEY_CIVILIZATION_MALI_PEDIA",
  "grants": {
   "buildings": [
    "BUILDING_PALACE",
@@ -32,10 +28,6 @@
    "TECH_GAME_START"
   ]
  },
- "policies": {
-  "playable": true,
-  "aiPlayable": true
- },
  "world": {
   "art": {
    "playerColor": "PLAYERCOLOR_PEACH",
@@ -49,6 +41,12 @@
   "action": "AS3D_MALI_ORDER"
  },
  "identity": {
+  "description": "TXT_KEY_CIVILIZATION_MALI",
+  "shortDescription": "TXT_KEY_CIVILIZATION_MALI_SHORT",
+  "adjective": "TXT_KEY_CIVILIZATION_MALI_ADJECTIVE",
+  "civilopedia": "TXT_KEY_CIVILIZATION_MALI_PEDIA",
+  "playable": true,
+  "aiPlayable": true,
   "leaders": [
    "LEADER_MANSA_MUSA"
   ],

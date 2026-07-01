@@ -1,8 +1,5 @@
 {
  "type": "TECH_DECRYPTION_MACHINES",
- "description": "TXT_KEY_TECH_DECRYPTION_MACHINES",
- "civilopedia": "TXT_KEY_TECH_DECRYPTION_MACHINES_PEDIA",
- "quote": "TXT_KEY_TECH_DECRYPTION_MACHINES_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_CHURCH_TURING_THESIS",
@@ -47,6 +44,9 @@
   "soundMP": "AS2D_TECH_DECRYPTION_MACHINES"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_DECRYPTION_MACHINES",
+  "civilopedia": "TXT_KEY_TECH_DECRYPTION_MACHINES_PEDIA",
+  "quote": "TXT_KEY_TECH_DECRYPTION_MACHINES_QUOTE",
   "era": "C2C_ERA_ATOMIC",
   "worth": 48,
   "tradeable": true,

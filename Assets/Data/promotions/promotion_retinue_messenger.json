@@ -1,7 +1,5 @@
 {
  "type": "PROMOTION_RETINUE_MESSENGER",
- "description": "TXT_KEY_PROMOTION_RETINUE_MESSENGER",
- "help": "TXT_KEY_PROMOTION_RETINUE_MESSENGER_HELP",
  "firstStrike": {
   "unit": {
    "strikes": {
@@ -36,6 +34,8 @@
   "sound": "AS2D_IF_GET_RETINUE"
  },
  "identity": {
+  "description": "TXT_KEY_PROMOTION_RETINUE_MESSENGER",
+  "help": "TXT_KEY_PROMOTION_RETINUE_MESSENGER_HELP",
   "unitCombats": [
    "UNITCOMBAT_HERO"
   ]

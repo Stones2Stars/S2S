@@ -1,6 +1,5 @@
 {
  "type": "UNITCOMBAT_GROUP_BILLIONS",
- "description": "TXT_KEY_UNITCOMBAT_GROUP_BILLIONS",
  "experience": {
   "unit": {
    "percent": -120
@@ -39,6 +38,7 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_UNITCOMBAT_GROUP_BILLIONS",
   "base": {
    "group": 11
   }

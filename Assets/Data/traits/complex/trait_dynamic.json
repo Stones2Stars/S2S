@@ -1,8 +1,5 @@
 {
  "type": "TRAIT_DYNAMIC",
- "description": "TXT_KEY_TRAIT_DYNAMIC",
- "civilopedia": "TXT_KEY_TRAIT_DYNAMIC_PEDIA",
- "strategy": "TXT_KEY_TRAIT_DYNAMIC_STRATEGY",
  "excludes": [
   "TRAIT_STUBBORN"
  ],
@@ -493,5 +490,10 @@
   "art": {
    "icon": "art/Buttons/Traits/TraitDynamic.dds"
   }
+ },
+ "identity": {
+  "description": "TXT_KEY_TRAIT_DYNAMIC",
+  "civilopedia": "TXT_KEY_TRAIT_DYNAMIC_PEDIA",
+  "strategy": "TXT_KEY_TRAIT_DYNAMIC_STRATEGY"
  }
 }

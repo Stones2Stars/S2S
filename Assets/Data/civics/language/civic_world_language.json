@@ -1,8 +1,5 @@
 {
  "type": "CIVIC_WORLD_LANGUAGE",
- "description": "TXT_KEY_CIVIC_WORLD_LANGUAGE",
- "civilopedia": "TXT_KEY_CIVIC_WORLD_LANGUAGE_PEDIA",
- "strategy": "TXT_KEY_CIVIC_WORLD_LANGUAGE_STRATEGY",
  "gold": {
   "empire": {
    "percent": 7
@@ -59,6 +56,9 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_CIVIC_WORLD_LANGUAGE",
+  "civilopedia": "TXT_KEY_CIVIC_WORLD_LANGUAGE_PEDIA",
+  "strategy": "TXT_KEY_CIVIC_WORLD_LANGUAGE_STRATEGY",
   "civicOption": "CIVICOPTION_LANGUAGE",
   "upkeepLevel": "UPKEEP_HIGH"
  }

@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_CRYSTAL_PALACE",
- "description": "TXT_KEY_BUILDING_CRYSTAL_PALACE",
- "civilopedia": "TXT_KEY_BUILDING_CRYSTAL_PALACE_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -87,6 +85,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_CRYSTAL_PALACE",
+  "civilopedia": "TXT_KEY_BUILDING_CRYSTAL_PALACE_PEDIA",
   "commerceDoubleTime": {
    "culture": 1000
   },

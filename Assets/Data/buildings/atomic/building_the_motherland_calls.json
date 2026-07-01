@@ -1,8 +1,5 @@
 {
  "type": "BUILDING_THE_MOTHERLAND_CALLS",
- "description": "TXT_KEY_BUILDING_THE_MOTHERLAND_CALLS",
- "civilopedia": "TXT_KEY_BUILDING_THE_MOTHERLAND_CALLS_PEDIA",
- "help": "TXT_KEY_BUILDING_THE_MOTHERLAND_CALLS_HELP",
  "requires": {
   "build": {
    "all": [
@@ -63,6 +60,9 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_THE_MOTHERLAND_CALLS",
+  "civilopedia": "TXT_KEY_BUILDING_THE_MOTHERLAND_CALLS_PEDIA",
+  "help": "TXT_KEY_BUILDING_THE_MOTHERLAND_CALLS_HELP",
   "commerceDoubleTime": {
    "culture": 1000
   },

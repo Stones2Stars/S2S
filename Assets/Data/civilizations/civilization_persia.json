@@ -1,9 +1,5 @@
 {
  "type": "CIVILIZATION_PERSIA",
- "description": "TXT_KEY_CIVILIZATION_PERSIA",
- "shortDescription": "TXT_KEY_CIVILIZATION_PERSIA_SHORT",
- "adjective": "TXT_KEY_CIVILIZATION_PERSIA_ADJECTIVE",
- "civilopedia": "TXT_KEY_CIVILIZATION_PERSIA_PEDIA",
  "grants": {
   "buildings": [
    "BUILDING_PALACE",
@@ -32,10 +28,6 @@
    "TECH_GAME_START"
   ]
  },
- "policies": {
-  "playable": true,
-  "aiPlayable": true
- },
  "world": {
   "art": {
    "playerColor": "PLAYERCOLOR_CYAN",
@@ -49,6 +41,12 @@
   "action": "AS3D_PERSIA_ORDER"
  },
  "identity": {
+  "description": "TXT_KEY_CIVILIZATION_PERSIA",
+  "shortDescription": "TXT_KEY_CIVILIZATION_PERSIA_SHORT",
+  "adjective": "TXT_KEY_CIVILIZATION_PERSIA_ADJECTIVE",
+  "civilopedia": "TXT_KEY_CIVILIZATION_PERSIA_PEDIA",
+  "playable": true,
+  "aiPlayable": true,
   "leaders": [
    "LEADER_CYRUS",
    "LEADER_DARIUS"

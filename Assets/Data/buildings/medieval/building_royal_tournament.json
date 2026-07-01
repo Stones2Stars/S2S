@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_ROYAL_TOURNAMENT",
- "description": "TXT_KEY_BUILDING_ROYAL_TOURNAMENT",
- "civilopedia": "TXT_KEY_BUILDING_ROYAL_TOURNAMENT_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_CIRCUS_MAXIMUS"
@@ -120,6 +118,8 @@
   "construct": "AS2D_BUILD_COLOSSEUM"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_ROYAL_TOURNAMENT",
+  "civilopedia": "TXT_KEY_BUILDING_ROYAL_TOURNAMENT_PEDIA",
   "worth": 8,
   "advisor": "ADVISOR_MILITARY",
   "visibilityPriority": 1,

@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_FARM_ANIMAL_PIG",
- "description": "TXT_KEY_BUILDING_FARM_ANIMAL_PIG",
- "civilopedia": "TXT_KEY_BUILDING_FARM_ANIMAL_PIG_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_RESOURCES_CARCASS",
@@ -108,6 +106,8 @@
   "construct": "AS2D_BUILD_GRANARY"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_FARM_ANIMAL_PIG",
+  "civilopedia": "TXT_KEY_BUILDING_FARM_ANIMAL_PIG_PEDIA",
   "worth": 4,
   "militaryWorth": 2,
   "advisor": "ADVISOR_GROWTH",

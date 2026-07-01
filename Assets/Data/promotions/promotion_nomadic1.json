@@ -1,6 +1,5 @@
 {
  "type": "PROMOTION_NOMADIC1",
- "description": "TXT_KEY_PROMOTION_NOMADIC1",
  "movement": {
   "unit": {
    "moves": {
@@ -28,6 +27,7 @@
   "sound": "AS2D_IF_LEVELUP"
  },
  "identity": {
+  "description": "TXT_KEY_PROMOTION_NOMADIC1",
   "unitCombats": [
    "UNITCOMBAT_EXPLORER",
    "UNITCOMBAT_ANIMAL",

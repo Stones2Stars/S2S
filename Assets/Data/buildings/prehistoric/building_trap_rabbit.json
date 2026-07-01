@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_TRAP_RABBIT",
- "description": "TXT_KEY_BUILDING_TRAP_RABBIT",
- "civilopedia": "TXT_KEY_BUILDING_TRAP_RABBIT_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_RESOURCES_PELTS"
@@ -81,6 +79,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_TRAP_RABBIT",
+  "civilopedia": "TXT_KEY_BUILDING_TRAP_RABBIT_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_KUIPER_BELT_OUTPOST",
- "description": "TXT_KEY_BUILDING_KUIPER_BELT_OUTPOST",
- "civilopedia": "TXT_KEY_BUILDING_KUIPER_BELT_OUTPOST_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_KUIPER_BELT_FUSION_PLANT",
@@ -78,6 +76,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_KUIPER_BELT_OUTPOST",
+  "civilopedia": "TXT_KEY_BUILDING_KUIPER_BELT_OUTPOST_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

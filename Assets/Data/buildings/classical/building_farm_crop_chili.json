@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_FARM_CROP_CHILI",
- "description": "TXT_KEY_BUILDING_FARM_CROP_CHILI",
- "civilopedia": "TXT_KEY_BUILDING_FARM_CROP_CHILI_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_RESOURCES_SEASONING"
@@ -76,6 +74,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_FARM_CROP_CHILI",
+  "civilopedia": "TXT_KEY_BUILDING_FARM_CROP_CHILI_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

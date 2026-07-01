@@ -1,7 +1,5 @@
 {
  "type": "CORPORATION_BURGERWORLD",
- "description": "TXT_KEY_BUILDING_CORPORATION_BURGERWORLD",
- "civilopedia": "TXT_KEY_BUILDING_CORPORATION_BURGERWORLD_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_BURGERWORLD_RESTAURANT"
@@ -85,6 +83,8 @@
   "sound": "AS2D_BUILD_BANK"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_CORPORATION_BURGERWORLD",
+  "civilopedia": "TXT_KEY_BUILDING_CORPORATION_BURGERWORLD_PEDIA",
   "spreadFactor": 200,
   "spread": 100
  }

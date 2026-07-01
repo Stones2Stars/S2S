@@ -1,6 +1,5 @@
 {
  "type": "PROMOTION_WINTERBORN",
- "description": "TXT_KEY_PROMOTION_WINTERBORN",
  "strength": {
   "unit": {
    "terrain": {
@@ -46,5 +45,8 @@
  },
  "sound": {
   "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_WINTERBORN"
  }
 }

@@ -1,6 +1,5 @@
 {
  "type": "PROMOTION_GREAT_HUNTER",
- "description": "TXT_KEY_PROMOTION_GREAT_HUNTER",
  "firstStrike": {
   "unit": {
    "strikes": {
@@ -24,5 +23,8 @@
  },
  "sound": {
   "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_GREAT_HUNTER"
  }
 }

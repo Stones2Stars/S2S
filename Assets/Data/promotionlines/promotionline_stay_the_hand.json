@@ -1,12 +1,12 @@
 {
  "type": "PROMOTIONLINE_STAY_THE_HAND",
- "description": "TXT_KEY_PROMOTIONLINE_STAY_THE_HAND",
  "ui": {
   "art": {
    "icon": "Art/Buttons/Promotions/StayTheHandStatus.dds"
   }
  },
  "identity": {
+  "description": "TXT_KEY_PROMOTIONLINE_STAY_THE_HAND",
   "unitCombats": [
    "UNITCOMBAT_CRIMINAL",
    "UNITCOMBAT_STRIKE_TEAM",

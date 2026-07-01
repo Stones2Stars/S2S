@@ -1,7 +1,5 @@
 {
  "type": "LEADER_MENELIK",
- "description": "TXT_KEY_LEADER_MENELIK",
- "civilopedia": "TXT_KEY_LEADER_MENELIK_PEDIA",
  "grants": {
   "traits": [
    "TRAIT_PROTECTIVE",
@@ -301,5 +299,9 @@
    "C2C_ERA_TRANSCENDENT": "AS2D_DIPLO_WARDRUMS_LATE",
    "C2C_ERA_FUTURE": "AS2D_DIPLO_WARDRUMS_LATE"
   }
+ },
+ "identity": {
+  "description": "TXT_KEY_LEADER_MENELIK",
+  "civilopedia": "TXT_KEY_LEADER_MENELIK_PEDIA"
  }
 }

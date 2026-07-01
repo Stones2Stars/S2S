@@ -1,7 +1,5 @@
 {
  "type": "TRAIT_CREATIVE",
- "description": "TXT_KEY_TRAIT_CREATIVE",
- "civilopedia": "TXT_KEY_TRAIT_CREATIVE_PEDIA",
  "buildRate": {
   "empire": {
    "buildings": {
@@ -226,6 +224,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_TRAIT_CREATIVE",
+  "civilopedia": "TXT_KEY_TRAIT_CREATIVE_PEDIA",
   "shortDescription": "TXT_KEY_TRAIT_CREATIVE_SHORT"
  }
 }

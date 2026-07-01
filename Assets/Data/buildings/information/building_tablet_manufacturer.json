@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_TABLET_MANUFACTURER",
- "description": "TXT_KEY_BUILDING_TABLET_MANUFACTURER",
- "civilopedia": "TXT_KEY_BUILDING_TABLET_MANUFACTURER_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_HYPERMARKET"
@@ -83,6 +81,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_TABLET_MANUFACTURER",
+  "civilopedia": "TXT_KEY_BUILDING_TABLET_MANUFACTURER_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

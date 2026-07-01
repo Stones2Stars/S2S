@@ -1,7 +1,5 @@
 {
  "type": "UNIT_STORY_TELLER",
- "description": "TXT_KEY_UNIT_STORY_TELLER",
- "civilopedia": "TXT_KEY_UNIT_STORY_TELLER_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -84,6 +82,8 @@
   "upkeep": 1
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_STORY_TELLER",
+  "civilopedia": "TXT_KEY_UNIT_STORY_TELLER_PEDIA",
   "worth": 1,
   "domain": "DOMAIN_LAND",
   "defaultUnitAI": "UNITAI_PROPERTY_CONTROL",

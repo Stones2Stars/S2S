@@ -1,8 +1,5 @@
 {
  "type": "UNIT_CAPTIVE_NEANDERTHAL",
- "description": "TXT_KEY_UNIT_CAPTIVE_NEANDERTHAL",
- "civilopedia": "TXT_KEY_UNIT_CAPTIVE_MILITARY_PEDIA",
- "help": "TXT_KEY_UNIT_CAPTIVE_MILITARY_HELP",
  "skills": {
   "onlyDefensive": true,
   "militaryTrade": true
@@ -295,6 +292,9 @@
   "upkeep": 1
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_CAPTIVE_NEANDERTHAL",
+  "civilopedia": "TXT_KEY_UNIT_CAPTIVE_MILITARY_PEDIA",
+  "help": "TXT_KEY_UNIT_CAPTIVE_MILITARY_HELP",
   "spawnOnly": true,
   "worth": 1,
   "domain": "DOMAIN_LAND",

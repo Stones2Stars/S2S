@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_CAT_SHRINE",
- "description": "TXT_KEY_BUILDING_CAT_SHRINE",
- "civilopedia": "TXT_KEY_BUILDING_CAT_SHRINE_PEDIA",
  "obsoletedBy": {
   "techs": [
    "TECH_PALEONTOLOGY"
@@ -51,6 +49,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_CAT_SHRINE",
+  "civilopedia": "TXT_KEY_BUILDING_CAT_SHRINE_PEDIA",
   "advisor": "ADVISOR_RELIGION",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

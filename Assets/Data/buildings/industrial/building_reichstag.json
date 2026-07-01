@@ -1,8 +1,5 @@
 {
  "type": "BUILDING_REICHSTAG",
- "description": "TXT_KEY_BUILDING_REICHSTAG",
- "civilopedia": "TXT_KEY_BUILDING_REICHSTAG_PEDIA",
- "help": "TXT_KEY_BUILDING_REICHSTAG_HELP",
  "requires": {
   "build": {
    "all": [
@@ -82,6 +79,9 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_REICHSTAG",
+  "civilopedia": "TXT_KEY_BUILDING_REICHSTAG_PEDIA",
+  "help": "TXT_KEY_BUILDING_REICHSTAG_HELP",
   "commerceDoubleTime": {
    "culture": 1000
   },

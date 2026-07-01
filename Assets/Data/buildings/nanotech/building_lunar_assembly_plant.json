@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_LUNAR_ASSEMBLY_PLANT",
- "description": "TXT_KEY_BUILDING_LUNAR_ASSEMBLY_PLANT",
- "civilopedia": "TXT_KEY_BUILDING_LUNAR_ASSEMBLY_PLANT_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_LUNAR_DROID_FACTORY",
@@ -81,6 +79,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_LUNAR_ASSEMBLY_PLANT",
+  "civilopedia": "TXT_KEY_BUILDING_LUNAR_ASSEMBLY_PLANT_PEDIA",
   "conquestProbability": 70,
   "advisor": "ADVISOR_ECONOMY",
   "visibilityPriority": "1.0",

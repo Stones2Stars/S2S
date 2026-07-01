@@ -1,7 +1,5 @@
 {
  "type": "UNIT_HITECH_MARINE",
- "description": "TXT_KEY_UNIT_HITECH_MARINE",
- "civilopedia": "TXT_KEY_UNIT_HITECH_MARINE_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -78,6 +76,8 @@
   "upkeep": 4
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_HITECH_MARINE",
+  "civilopedia": "TXT_KEY_UNIT_HITECH_MARINE_PEDIA",
   "worth": 5,
   "militaryWorth": 117,
   "xpValueAttack": 3,

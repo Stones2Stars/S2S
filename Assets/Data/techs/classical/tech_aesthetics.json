@@ -1,8 +1,5 @@
 {
  "type": "TECH_AESTHETICS",
- "description": "TXT_KEY_TECH_AESTHETICS",
- "civilopedia": "TXT_KEY_TECH_AESTHETICS_PEDIA",
- "quote": "TXT_KEY_TECH_AESTHETICS_QUOTE",
  "enables": {
   "bonuses": [
    "BONUS_CARPETS",
@@ -98,6 +95,9 @@
   "soundMP": "AS2D_TECH_AESTHETICS"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_AESTHETICS",
+  "civilopedia": "TXT_KEY_TECH_AESTHETICS_PEDIA",
+  "quote": "TXT_KEY_TECH_AESTHETICS_QUOTE",
   "era": "C2C_ERA_CLASSICAL",
   "worth": 10,
   "tradeable": true,

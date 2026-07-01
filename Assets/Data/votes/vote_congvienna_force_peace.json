@@ -1,6 +1,5 @@
 {
  "type": "VOTE_CONGVIENNA_FORCE_PEACE",
- "description": "TXT_KEY_VOTE_CONGVIENNA_FORCE_PEACE",
  "voteSource": [
   "DIPLOVOTE_CVIENNA"
  ],
@@ -11,5 +10,8 @@
  },
  "effect": {
   "forcePeace": true
+ },
+ "identity": {
+  "description": "TXT_KEY_VOTE_CONGVIENNA_FORCE_PEACE"
  }
 }

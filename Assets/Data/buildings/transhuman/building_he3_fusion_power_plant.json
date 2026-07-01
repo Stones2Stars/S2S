@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_HE3_FUSION_POWER_PLANT",
- "description": "TXT_KEY_BUILDING_HE3_FUSION_POWER_PLANT",
- "civilopedia": "TXT_KEY_BUILDING_HE3_FUSION_POWER_PLANT_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_HIGH_ENERGY_LAB",
@@ -83,6 +81,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_HE3_FUSION_POWER_PLANT",
+  "civilopedia": "TXT_KEY_BUILDING_HE3_FUSION_POWER_PLANT_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

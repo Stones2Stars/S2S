@@ -1,8 +1,5 @@
 {
  "type": "TECH_PLANETARY_EXTRACTION",
- "description": "TXT_KEY_TECH_PLANETARY_EXTRACTION",
- "civilopedia": "TXT_KEY_TECH_PLANETARY_EXTRACTION_PEDIA",
- "quote": "TXT_KEY_TECH_PLANETARY_EXTRACTION_QUOTE",
  "enables": {
   "bonuses": [
    "BONUS_MARTIAN_BLUEBERRIES",
@@ -73,6 +70,9 @@
   "soundMP": "AS2D_TECH_PLANETARY_EXTRACTION"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_PLANETARY_EXTRACTION",
+  "civilopedia": "TXT_KEY_TECH_PLANETARY_EXTRACTION_PEDIA",
+  "quote": "TXT_KEY_TECH_PLANETARY_EXTRACTION_QUOTE",
   "era": "C2C_ERA_NANOTECH",
   "worth": 48,
   "militaryWorth": 4,

@@ -1,7 +1,5 @@
 {
  "type": "FEATURE_TAR_PIT",
- "description": "TXT_KEY_FEATURE_TAR_PIT",
- "civilopedia": "TXT_KEY_FEATURE_TAR_PIT_PEDIA",
  "production": {
   "plot": {
    "flat": 1
@@ -56,6 +54,8 @@
   ]
  },
  "identity": {
+  "description": "TXT_KEY_FEATURE_TAR_PIT",
+  "civilopedia": "TXT_KEY_FEATURE_TAR_PIT_PEDIA",
   "movementCost": 2,
   "appearance": 50,
   "requiresFlatlands": true,

@@ -1,8 +1,5 @@
 {
  "type": "TECH_SALT_PROCESSING",
- "description": "TXT_KEY_TECH_SALT_PROCESSING",
- "civilopedia": "TXT_KEY_TECH_SALT_PROCESSING_PEDIA",
- "quote": "TXT_KEY_TECH_SALT_PROCESSING_QUOTE",
  "enables": {
   "bonuses": [
    "BONUS_BORAX",
@@ -66,6 +63,9 @@
   "soundMP": "AS2D_TECH_SALT_PROCESSING"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_SALT_PROCESSING",
+  "civilopedia": "TXT_KEY_TECH_SALT_PROCESSING_PEDIA",
+  "quote": "TXT_KEY_TECH_SALT_PROCESSING_QUOTE",
   "era": "C2C_ERA_ANCIENT",
   "worth": 8,
   "tradeable": true,

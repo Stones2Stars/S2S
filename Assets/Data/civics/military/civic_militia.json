@@ -1,8 +1,5 @@
 {
  "type": "CIVIC_MILITIA",
- "description": "TXT_KEY_CIVIC_MILITIA",
- "civilopedia": "TXT_KEY_CIVIC_MILITIA_PEDIA",
- "strategy": "TXT_KEY_CIVIC_MILITIA_STRATEGY",
  "enables": {
   "buildings": [
    "BUILDING_CIVIC_MILITIA"
@@ -133,6 +130,9 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_CIVIC_MILITIA",
+  "civilopedia": "TXT_KEY_CIVIC_MILITIA_PEDIA",
+  "strategy": "TXT_KEY_CIVIC_MILITIA_STRATEGY",
   "civicOption": "CIVICOPTION_MILITARY"
  }
 }

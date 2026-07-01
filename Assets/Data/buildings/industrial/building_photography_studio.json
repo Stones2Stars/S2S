@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_PHOTOGRAPHY_STUDIO",
- "description": "TXT_KEY_BUILDING_PHOTOGRAPHY_STUDIO",
- "civilopedia": "TXT_KEY_BUILDING_PHOTOGRAPHY_STUDIO_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_HYPERMARKET"
@@ -82,6 +80,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_PHOTOGRAPHY_STUDIO",
+  "civilopedia": "TXT_KEY_BUILDING_PHOTOGRAPHY_STUDIO_PEDIA",
   "worth": 1,
   "conquestProbability": 100,
   "advisor": "ADVISOR_CULTURE",

@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_FACTORY_ANDROIDS",
- "description": "TXT_KEY_BUILDING_FACTORY_ANDROIDS",
- "civilopedia": "TXT_KEY_BUILDING_FACTORY_ANDROIDS_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_HUMANOID_DESIGNER"
@@ -107,6 +105,8 @@
   "construct": "AS2D_BUILD_FACTORY"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_FACTORY_ANDROIDS",
+  "civilopedia": "TXT_KEY_BUILDING_FACTORY_ANDROIDS_PEDIA",
   "worth": 10,
   "militaryWorth": 25,
   "conquestProbability": 75,

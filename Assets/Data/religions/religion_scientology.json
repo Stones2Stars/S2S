@@ -1,8 +1,5 @@
 {
  "type": "RELIGION_SCIENTOLOGY",
- "description": "TXT_KEY_TECH_SCIENTOLOGY",
- "civilopedia": "TXT_KEY_TECH_SCIENTOLOGY_PEDIA",
- "adjective": "TXT_KEY_TECH_SCIENTOLOGY_ADJECTIVE",
  "enables": {
   "buildings": [
    "BUILDING_SCIENTOLOGY_CATHEDRAL",
@@ -94,6 +91,9 @@
   "sound": "AS2D_BUILD_ZORO"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_SCIENTOLOGY",
+  "adjective": "TXT_KEY_TECH_SCIENTOLOGY_ADJECTIVE",
+  "civilopedia": "TXT_KEY_TECH_SCIENTOLOGY_PEDIA",
   "spreadFactor": 5
  }
 }

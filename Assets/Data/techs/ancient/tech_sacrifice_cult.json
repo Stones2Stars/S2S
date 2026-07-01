@@ -1,8 +1,5 @@
 {
  "type": "TECH_SACRIFICE_CULT",
- "description": "TXT_KEY_TECH_SACRIFICE_CULT",
- "civilopedia": "TXT_KEY_TECH_SACRIFICE_CULT_PEDIA",
- "quote": "TXT_KEY_TECH_SACRIFICE_CULT_QUOTE",
  "enables": {
   "bonuses": [
    "BONUS_SHANG_JADE_RITUAL_ITEMS"
@@ -84,6 +81,9 @@
   "soundMP": "AS2D_TECH_SACRIFICE_CULT"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_SACRIFICE_CULT",
+  "civilopedia": "TXT_KEY_TECH_SACRIFICE_CULT_PEDIA",
+  "quote": "TXT_KEY_TECH_SACRIFICE_CULT_QUOTE",
   "era": "C2C_ERA_ANCIENT",
   "worth": 8,
   "militaryWorth": 6,

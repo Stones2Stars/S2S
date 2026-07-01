@@ -1,7 +1,5 @@
 {
  "type": "UNIT_GREAT_ENGINEER",
- "description": "TXT_KEY_UNIT_GREAT_ENGINEER",
- "civilopedia": "TXT_KEY_CONCEPT_GREAT_PEOPLE_PEDIA",
  "skills": {
   "goldenAge": true
  },
@@ -81,6 +79,8 @@
   ]
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_GREAT_ENGINEER",
+  "civilopedia": "TXT_KEY_CONCEPT_GREAT_PEOPLE_PEDIA",
   "spawnOnly": true,
   "worth": 1,
   "domain": "DOMAIN_LAND",

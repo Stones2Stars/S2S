@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_HERD_DEER",
- "description": "TXT_KEY_BUILDING_HERD_DEER",
- "civilopedia": "TXT_KEY_BUILDING_HERD_DEER_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_ANIMAL_TRAINER_DEER",
@@ -56,6 +54,8 @@
   "construct": "SND_AMB_HORSE_COBBLESTONES"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_HERD_DEER",
+  "civilopedia": "TXT_KEY_BUILDING_HERD_DEER_PEDIA",
   "notConstructible": true,
   "worth": 3,
   "conquestProbability": 75,

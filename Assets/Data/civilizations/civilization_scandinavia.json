@@ -1,9 +1,5 @@
 {
  "type": "CIVILIZATION_SCANDINAVIA",
- "description": "TXT_KEY_CIVILIZATION_SCANDINAVIA",
- "shortDescription": "TXT_KEY_CIVILIZATION_SCANDINAVIA_SHORT",
- "adjective": "TXT_KEY_CIVILIZATION_SCANDINAVIA_ADJECTIVE",
- "civilopedia": "TXT_KEY_CIVILIZATION_SCANDINAVIA_PEDIA",
  "grants": {
   "buildings": [
    "BUILDING_PALACE",
@@ -32,10 +28,6 @@
    "TECH_GAME_START"
   ]
  },
- "policies": {
-  "playable": true,
-  "aiPlayable": true
- },
  "world": {
   "art": {
    "playerColor": "PLAYERCOLOR_LIGHT_PURPLE",
@@ -49,6 +41,12 @@
   "action": "AS3D_VIKING_ORDER"
  },
  "identity": {
+  "description": "TXT_KEY_CIVILIZATION_SCANDINAVIA",
+  "shortDescription": "TXT_KEY_CIVILIZATION_SCANDINAVIA_SHORT",
+  "adjective": "TXT_KEY_CIVILIZATION_SCANDINAVIA_ADJECTIVE",
+  "civilopedia": "TXT_KEY_CIVILIZATION_SCANDINAVIA_PEDIA",
+  "playable": true,
+  "aiPlayable": true,
   "leaders": [
    "LEADER_RAGNAR"
   ],

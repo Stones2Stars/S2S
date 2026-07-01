@@ -1,7 +1,5 @@
 {
  "type": "FEATURE_BAMBOO",
- "description": "TXT_KEY_FEATURE_BAMBOO",
- "civilopedia": "TXT_KEY_FEATURE_BAMBOO_PEDIA",
  "production": {
   "plot": {
    "flat": 2
@@ -59,6 +57,8 @@
   "soundscape": "ASSS_OASIS_SELECT_AMB"
  },
  "identity": {
+  "description": "TXT_KEY_FEATURE_BAMBOO",
+  "civilopedia": "TXT_KEY_FEATURE_BAMBOO_PEDIA",
   "movementCost": 1,
   "appearance": 500,
   "growth": 20,

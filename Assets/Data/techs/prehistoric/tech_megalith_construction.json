@@ -1,8 +1,5 @@
 {
  "type": "TECH_MEGALITH_CONSTRUCTION",
- "description": "TXT_KEY_TECH_MEGALITH_CONSTRUCTION",
- "civilopedia": "TXT_KEY_TECH_MEGALITH_CONSTRUCTION_PEDIA",
- "quote": "TXT_KEY_TECH_MEGALITH_CONSTRUCTION_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_CULTURE_RAPA_NUI",
@@ -83,6 +80,9 @@
   "soundMP": "AS2D_TECH_MEGALITH_CONSTRUCTION"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_MEGALITH_CONSTRUCTION",
+  "civilopedia": "TXT_KEY_TECH_MEGALITH_CONSTRUCTION_PEDIA",
+  "quote": "TXT_KEY_TECH_MEGALITH_CONSTRUCTION_QUOTE",
   "era": "C2C_ERA_PREHISTORIC",
   "worth": 4,
   "tradeable": true,

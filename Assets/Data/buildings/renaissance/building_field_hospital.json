@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_FIELD_HOSPITAL",
- "description": "TXT_KEY_BUILDING_FIELD_HOSPITAL",
- "civilopedia": "TXT_KEY_BUILDING_FIELD_HOSPITAL_PEDIA",
  "enables": {
   "units": [
    "UNIT_FIELD_VET"
@@ -93,6 +91,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_FIELD_HOSPITAL",
+  "civilopedia": "TXT_KEY_BUILDING_FIELD_HOSPITAL_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

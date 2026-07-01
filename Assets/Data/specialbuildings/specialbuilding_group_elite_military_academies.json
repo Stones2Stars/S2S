@@ -1,7 +1,9 @@
 {
  "type": "SPECIALBUILDING_GROUP_ELITE_MILITARY_ACADEMIES",
- "description": "TXT_KEY_SPECIALBUILDING_GROUP_ELITE_MILITARY_ACADEMIES",
  "allowed": {
   "empire": 1
+ },
+ "identity": {
+  "description": "TXT_KEY_SPECIALBUILDING_GROUP_ELITE_MILITARY_ACADEMIES"
  }
 }

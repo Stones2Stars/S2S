@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_HATTER",
- "description": "TXT_KEY_BUILDING_HATTER",
- "civilopedia": "TXT_KEY_BUILDING_HATTER_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_FACTORY_HATS"
@@ -123,6 +121,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_HATTER",
+  "civilopedia": "TXT_KEY_BUILDING_HATTER_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

@@ -1,8 +1,5 @@
 {
  "type": "TECH_MODERN_SEISMOLOGY",
- "description": "TXT_KEY_TECH_MODERN_SEISMOLOGY",
- "civilopedia": "TXT_KEY_TECH_MODERN_SEISMOLOGY_PEDIA",
- "quote": "TXT_KEY_TECH_MODERN_SEISMOLOGY_QUOTE",
  "enables": {
   "bonuses": [
    "BONUS_GEOTHERMAL_ENERGY",
@@ -68,6 +65,9 @@
   "soundMP": "AS2D_TECH_MODERN_SEISMOLOGY"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_MODERN_SEISMOLOGY",
+  "civilopedia": "TXT_KEY_TECH_MODERN_SEISMOLOGY_PEDIA",
+  "quote": "TXT_KEY_TECH_MODERN_SEISMOLOGY_QUOTE",
   "era": "C2C_ERA_ATOMIC",
   "worth": 48,
   "militaryWorth": 10,

@@ -1,7 +1,5 @@
 {
  "type": "UNIT_MAMMOTH",
- "description": "TXT_KEY_UNIT_MAMMOTH",
- "civilopedia": "TXT_KEY_CONCEPT_SUBDUED_ANIMALS_PEDIA",
  "collateral": {
   "unit": {
    "damage": {
@@ -84,6 +82,8 @@
   ]
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_MAMMOTH",
+  "civilopedia": "TXT_KEY_CONCEPT_SUBDUED_ANIMALS_PEDIA",
   "spawnOnly": true,
   "xpValueAttack": 14,
   "xpValueDefense": 10,

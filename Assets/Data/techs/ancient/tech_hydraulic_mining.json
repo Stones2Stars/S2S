@@ -1,8 +1,5 @@
 {
  "type": "TECH_HYDRAULIC_MINING",
- "description": "TXT_KEY_TECH_HYDRAULIC_MINING",
- "civilopedia": "TXT_KEY_TECH_HYDRAULIC_MINING_PEDIA",
- "quote": "TXT_KEY_TECH_HYDRAULIC_MINING_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_LAS_MEDULAS"
@@ -45,6 +42,9 @@
   "soundMP": "AS2D_TECH_HYDRAULIC_MINING"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_HYDRAULIC_MINING",
+  "civilopedia": "TXT_KEY_TECH_HYDRAULIC_MINING_PEDIA",
+  "quote": "TXT_KEY_TECH_HYDRAULIC_MINING_QUOTE",
   "era": "C2C_ERA_ANCIENT",
   "worth": 2,
   "tradeable": true,

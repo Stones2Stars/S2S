@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_LASER_TAG_ARENA",
- "description": "TXT_KEY_BUILDING_LASER_TAG_ARENA",
- "civilopedia": "TXT_KEY_BUILDING_LASER_TAG_ARENA_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_ATHLETIC_MEGACOMPLEX"
@@ -82,6 +80,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_LASER_TAG_ARENA",
+  "civilopedia": "TXT_KEY_BUILDING_LASER_TAG_ARENA_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

@@ -1,8 +1,5 @@
 {
  "type": "TRAIT_NAIVE1",
- "description": "TXT_KEY_TRAIT_NAIVE1",
- "civilopedia": "TXT_KEY_TRAIT_NAIVE1_PEDIA",
- "strategy": "TXT_KEY_TRAIT_NAIVE_STRATEGY",
  "enables": {
   "traits": [
    "TRAIT_NAIVE2"
@@ -340,6 +337,9 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_TRAIT_NAIVE1",
+  "civilopedia": "TXT_KEY_TRAIT_NAIVE1_PEDIA",
+  "strategy": "TXT_KEY_TRAIT_NAIVE_STRATEGY",
   "negativeTrait": true,
   "impurePropertyManipulators": true
  }

@@ -1,6 +1,5 @@
 {
  "type": "PROMOTION_PACK_HUNTER1",
- "description": "TXT_KEY_PROMOTION_PACK_HUNTER1",
  "strength": {
   "unit": {
    "percent": 5,
@@ -34,5 +33,8 @@
  },
  "sound": {
   "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_PACK_HUNTER1"
  }
 }

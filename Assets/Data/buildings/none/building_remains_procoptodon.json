@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_REMAINS_PROCOPTODON",
- "description": "TXT_KEY_BUILDING_REMAINS_PROCOPTODON",
- "civilopedia": "TXT_KEY_BUILDING_FOLKLORE_ANIMAL_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -63,6 +61,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_REMAINS_PROCOPTODON",
+  "civilopedia": "TXT_KEY_BUILDING_FOLKLORE_ANIMAL_PEDIA",
   "notConstructible": true,
   "nukeImmune": true,
   "worth": 1,

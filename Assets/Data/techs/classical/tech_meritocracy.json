@@ -1,8 +1,5 @@
 {
  "type": "TECH_MERITOCRACY",
- "description": "TXT_KEY_TECH_MERITOCRACY",
- "civilopedia": "TXT_KEY_TECH_MERITOCRACY_PEDIA",
- "quote": "TXT_KEY_TECH_MERITOCRACY_QUOTE",
  "enables": {
   "civics": [
    "CIVIC_MERITOCRACY"
@@ -60,6 +57,9 @@
   "soundMP": "AS2D_TECH_MERITOCRACY"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_MERITOCRACY",
+  "civilopedia": "TXT_KEY_TECH_MERITOCRACY_PEDIA",
+  "quote": "TXT_KEY_TECH_MERITOCRACY_QUOTE",
   "era": "C2C_ERA_CLASSICAL",
   "worth": 16,
   "tradeable": true,

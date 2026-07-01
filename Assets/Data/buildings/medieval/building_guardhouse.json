@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_GUARDHOUSE",
- "description": "TXT_KEY_BUILDING_GUARDHOUSE",
- "civilopedia": "TXT_KEY_BUILDING_GUARDHOUSE_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_SLAVE_COMPOUND_CRIME_PREVENTION"
@@ -141,6 +139,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_GUARDHOUSE",
+  "civilopedia": "TXT_KEY_BUILDING_GUARDHOUSE_PEDIA",
   "militaryWorth": 2,
   "advisor": "ADVISOR_MILITARY",
   "mapCategories": [

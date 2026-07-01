@@ -1,8 +1,5 @@
 {
  "type": "UNIT_F4_PHANTOM",
- "description": "TXT_KEY_UNIT_F4_PHANTOM",
- "civilopedia": "TXT_KEY_UNIT_F4_PHANTOM_PEDIA",
- "help": "TXT_KEY_UNIT_CARRIER_OPS_HELP",
  "requires": {
   "build": {
    "all": [
@@ -109,6 +106,9 @@
   "upkeep": 3
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_F4_PHANTOM",
+  "civilopedia": "TXT_KEY_UNIT_F4_PHANTOM_PEDIA",
+  "help": "TXT_KEY_UNIT_CARRIER_OPS_HELP",
   "worth": 4,
   "militaryWorth": 16,
   "xpValueAttack": 4,

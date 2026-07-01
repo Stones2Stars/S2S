@@ -1,9 +1,5 @@
 {
  "type": "CIVILIZATION_MAYA",
- "description": "TXT_KEY_CIVILIZATION_MAYA",
- "shortDescription": "TXT_KEY_CIVILIZATION_MAYA_SHORT",
- "adjective": "TXT_KEY_CIVILIZATION_MAYA_ADJECTIVE",
- "civilopedia": "TXT_KEY_CIVILIZATION_MAYA_PEDIA",
  "grants": {
   "buildings": [
    "BUILDING_PALACE",
@@ -32,10 +28,6 @@
    "TECH_GAME_START"
   ]
  },
- "policies": {
-  "playable": true,
-  "aiPlayable": true
- },
  "world": {
   "art": {
    "playerColor": "PLAYERCOLOR_MIDDLE_CYAN",
@@ -49,6 +41,12 @@
   "action": "AS3D_MAYA_ORDER"
  },
  "identity": {
+  "description": "TXT_KEY_CIVILIZATION_MAYA",
+  "shortDescription": "TXT_KEY_CIVILIZATION_MAYA_SHORT",
+  "adjective": "TXT_KEY_CIVILIZATION_MAYA_ADJECTIVE",
+  "civilopedia": "TXT_KEY_CIVILIZATION_MAYA_PEDIA",
+  "playable": true,
+  "aiPlayable": true,
   "leaders": [
    "LEADER_PACAL",
    "LEADER_SMOKE_JAGUAR"

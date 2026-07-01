@@ -1,12 +1,12 @@
 {
  "type": "UNITCOMBAT_CULTURE_HONGKONG",
- "description": "TXT_KEY_UNITCOMBAT_CULTURE_HONGKONG",
  "ui": {
   "art": {
    "icon": "Art/categories/culture_newcultures.dds"
   }
  },
  "identity": {
+  "description": "TXT_KEY_UNITCOMBAT_CULTURE_HONGKONG",
   "culture": "BONUS_HONGKONGER"
  }
 }

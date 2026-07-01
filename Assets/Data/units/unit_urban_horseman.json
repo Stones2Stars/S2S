@@ -1,7 +1,5 @@
 {
  "type": "UNIT_URBAN_HORSEMAN",
- "description": "TXT_KEY_UNIT_URBAN_HORSEMAN",
- "civilopedia": "TXT_KEY_UNIT_URBAN_HORSEMAN_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -99,6 +97,8 @@
   "upkeep": 1
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_URBAN_HORSEMAN",
+  "civilopedia": "TXT_KEY_UNIT_URBAN_HORSEMAN_PEDIA",
   "worth": 3,
   "militaryWorth": 18,
   "xpValueAttack": 3,

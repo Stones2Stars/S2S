@@ -1,7 +1,5 @@
 {
  "type": "UNIT_GATOR",
- "description": "TXT_KEY_UNIT_GATOR",
- "civilopedia": "TXT_KEY_UNIT_GATOR_PEDIA",
  "skills": {
   "assassin": true,
   "blendIntoCity": true,
@@ -52,6 +50,8 @@
   ]
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_GATOR",
+  "civilopedia": "TXT_KEY_UNIT_GATOR_PEDIA",
   "spawnOnly": true,
   "xpValueAttack": 9,
   "xpValueDefense": 6,

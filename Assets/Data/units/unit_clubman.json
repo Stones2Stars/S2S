@@ -1,7 +1,5 @@
 {
  "type": "UNIT_CLUBMAN",
- "description": "TXT_KEY_UNIT_CLUBMAN",
- "civilopedia": "TXT_KEY_UNIT_CLUBMAN_PEDIA",
  "obsoletedBy": {
   "techs": [
    "TECH_FLINTLOCK"
@@ -70,6 +68,8 @@
   "upkeep": 1
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_CLUBMAN",
+  "civilopedia": "TXT_KEY_UNIT_CLUBMAN_PEDIA",
   "worth": 1,
   "militaryWorth": 2,
   "xpValueAttack": 3,

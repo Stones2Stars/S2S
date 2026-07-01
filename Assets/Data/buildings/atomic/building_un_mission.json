@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_UN_MISSION",
- "description": "TXT_KEY_BUILDING_UN_MISSION",
- "civilopedia": "TXT_KEY_BUILDING_UN_MISSION_PEDIA",
  "enables": {
   "votes": [
    "FORCE_TEAM_ELIGIBLE"
@@ -71,6 +69,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_UN_MISSION",
+  "civilopedia": "TXT_KEY_BUILDING_UN_MISSION_PEDIA",
   "nukeImmune": true,
   "neverCapture": true,
   "worth": 10,

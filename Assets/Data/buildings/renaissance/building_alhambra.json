@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_ALHAMBRA",
- "description": "TXT_KEY_BUILDING_ALHAMBRA",
- "civilopedia": "TXT_KEY_BUILDING_ALHAMBRA_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_RELIC_ALHAMBRA"
@@ -121,6 +119,8 @@
   "construct": "AS2D_BUILD_ISLAMIC"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_ALHAMBRA",
+  "civilopedia": "TXT_KEY_BUILDING_ALHAMBRA_PEDIA",
   "commerceDoubleTime": {
    "culture": 300
   },

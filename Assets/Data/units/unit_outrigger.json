@@ -1,7 +1,5 @@
 {
  "type": "UNIT_OUTRIGGER",
- "description": "TXT_KEY_UNIT_OUTRIGGER",
- "civilopedia": "TXT_KEY_UNIT_OUTRIGGER_PEDIA",
  "obsoletedBy": {
   "techs": [
    "TECH_COMPASS"
@@ -67,6 +65,8 @@
   "upkeep": 1
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_OUTRIGGER",
+  "civilopedia": "TXT_KEY_UNIT_OUTRIGGER_PEDIA",
   "worth": 2,
   "militaryWorth": 3,
   "xpValueAttack": 2,

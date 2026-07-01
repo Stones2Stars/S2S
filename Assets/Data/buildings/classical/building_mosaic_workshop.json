@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_MOSAIC_WORKSHOP",
- "description": "TXT_KEY_BUILDING_MOSAIC_WORKSHOP",
- "civilopedia": "TXT_KEY_BUILDING_MOSAIC_WORKSHOP_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_PLAZA"
@@ -88,6 +86,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_MOSAIC_WORKSHOP",
+  "civilopedia": "TXT_KEY_BUILDING_MOSAIC_WORKSHOP_PEDIA",
   "conquestProbability": 70,
   "advisor": "ADVISOR_ECONOMY",
   "visibilityPriority": 1,

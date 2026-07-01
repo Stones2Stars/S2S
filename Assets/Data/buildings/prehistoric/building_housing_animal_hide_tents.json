@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_HOUSING_ANIMAL_HIDE_TENTS",
- "description": "TXT_KEY_BUILDING_HOUSING_ANIMAL_HIDE_TENTS",
- "civilopedia": "TXT_KEY_BUILDING_HOUSING_ANIMAL_HIDE_TENTS_PEDIA",
  "obsoletedBy": {
   "techs": [
    "TECH_SANITATION"
@@ -58,6 +56,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_HOUSING_ANIMAL_HIDE_TENTS",
+  "civilopedia": "TXT_KEY_BUILDING_HOUSING_ANIMAL_HIDE_TENTS_PEDIA",
   "notConstructible": true,
   "nukeImmune": true,
   "neverCapture": true,

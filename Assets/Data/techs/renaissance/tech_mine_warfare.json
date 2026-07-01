@@ -1,8 +1,5 @@
 {
  "type": "TECH_MINE_WARFARE",
- "description": "TXT_KEY_TECH_MINE_WARFARE",
- "civilopedia": "TXT_KEY_TECH_MINE_WARFARE_PEDIA",
- "quote": "TXT_KEY_TECH_MINE_WARFARE_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_LANDMINES"
@@ -51,6 +48,9 @@
   "soundMP": "AS2D_TECH_MINE_WARFARE"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_MINE_WARFARE",
+  "civilopedia": "TXT_KEY_TECH_MINE_WARFARE_PEDIA",
+  "quote": "TXT_KEY_TECH_MINE_WARFARE_QUOTE",
   "era": "C2C_ERA_RENAISSANCE",
   "worth": 32,
   "militaryWorth": 6,

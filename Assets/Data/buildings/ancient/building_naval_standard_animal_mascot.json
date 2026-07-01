@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_NAVAL_STANDARD_ANIMAL_MASCOT",
- "description": "TXT_KEY_BUILDING_NAVAL_STANDARD_ANIMAL_MASCOT",
- "civilopedia": "TXT_KEY_BUILDING_NAVAL_STANDARD_ANIMAL_MASCOT_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_TRADITION_NAVAL_MASCOT"
@@ -49,6 +47,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_NAVAL_STANDARD_ANIMAL_MASCOT",
+  "civilopedia": "TXT_KEY_BUILDING_NAVAL_STANDARD_ANIMAL_MASCOT_PEDIA",
   "worth": 2,
   "conquestProbability": 25,
   "advisor": "ADVISOR_MILITARY",

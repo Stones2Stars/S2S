@@ -1,8 +1,5 @@
 {
  "type": "BUILDING_LASCAUX_PAINTS",
- "description": "TXT_KEY_BUILDING_LASCAUX_PAINTS",
- "civilopedia": "TXT_KEY_BUILDING_LASCAUX_PAINTS_PEDIA",
- "help": "TXT_KEY_BUILDING_LASCAUX_CAVES_HELP",
  "obsoletedBy": {
   "techs": [
    "TECH_MASS_MEDIA"
@@ -96,6 +93,9 @@
   "construct": "AS2D_BUILD_STONEHENGE"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_LASCAUX_PAINTS",
+  "civilopedia": "TXT_KEY_BUILDING_LASCAUX_PAINTS_PEDIA",
+  "help": "TXT_KEY_BUILDING_LASCAUX_CAVES_HELP",
   "commerceDoubleTime": {
    "culture": 8000
   },

@@ -1,6 +1,5 @@
 {
  "type": "BUILD_ABATIS_THORN_HEDGE_KILL",
- "description": "TXT_KEY_BUILD_ABATIS_THORN_HEDGE_KILL",
  "requires": {
   "build": {
    "all": [
@@ -31,6 +30,7 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILD_ABATIS_THORN_HEDGE_KILL",
   "consumesUnit": true
  }
 }

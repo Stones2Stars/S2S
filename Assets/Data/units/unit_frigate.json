@@ -1,7 +1,5 @@
 {
  "type": "UNIT_FRIGATE",
- "description": "TXT_KEY_UNIT_FRIGATE",
- "civilopedia": "TXT_KEY_UNIT_FRIGATE_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -87,6 +85,8 @@
   "upkeep": 1
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_FRIGATE",
+  "civilopedia": "TXT_KEY_UNIT_FRIGATE_PEDIA",
   "worth": 2,
   "militaryWorth": 43,
   "xpValueAttack": 3,

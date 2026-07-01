@@ -1,13 +1,13 @@
 {
  "type": "BONUS_SPONGES",
- "description": "TXT_KEY_BONUS_SPONGES",
- "civilopedia": "TXT_KEY_BONUS_SPONGES_PEDIA",
  "world": {
   "art": {
    "icon": "ART_DEF_BONUS_SPONGES"
   }
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_SPONGES",
+  "civilopedia": "TXT_KEY_BONUS_SPONGES_PEDIA",
   "bonusClassType": "BONUSCLASS_MANUFACTURED"
  }
 }

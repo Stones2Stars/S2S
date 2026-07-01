@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_CULTURE_ARABIAN",
- "description": "TXT_KEY_BUILDING_CULTURE_ARABIAN",
- "civilopedia": "TXT_KEY_BUILDING_CULTURE_ARABIAN_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -80,6 +78,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_CULTURE_ARABIAN",
+  "civilopedia": "TXT_KEY_BUILDING_CULTURE_ARABIAN_PEDIA",
   "nukeImmune": true,
   "noInstanceLimit": true,
   "conquestProbability": 100,

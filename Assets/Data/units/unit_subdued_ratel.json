@@ -1,8 +1,5 @@
 {
  "type": "UNIT_SUBDUED_RATEL",
- "description": "TXT_KEY_UNIT_SUBDUED_RATEL",
- "civilopedia": "TXT_KEY_UNIT_RATEL_PEDIA",
- "help": "TXT_KEY_UNIT_SUBDUED_ANIMALS_HELP",
  "skills": {
   "onlyDefensive": true,
   "militaryTrade": true
@@ -141,6 +138,9 @@
   ]
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_SUBDUED_RATEL",
+  "civilopedia": "TXT_KEY_UNIT_RATEL_PEDIA",
+  "help": "TXT_KEY_UNIT_SUBDUED_ANIMALS_HELP",
   "spawnOnly": true,
   "worth": 1,
   "domain": "DOMAIN_LAND",

@@ -1,8 +1,5 @@
 {
  "type": "TECH_EXPLORATION",
- "description": "TXT_KEY_TECH_EXPLORATION",
- "civilopedia": "TXT_KEY_TECH_EXPLORATION_PEDIA",
- "quote": "TXT_KEY_TECH_EXPLORATION_QUOTE",
  "enables": {
   "promotions": [
    "PROMOTION_BUSHWHACK4"
@@ -58,6 +55,9 @@
   "soundMP": "AS2D_TECH_EXPLORATION"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_EXPLORATION",
+  "civilopedia": "TXT_KEY_TECH_EXPLORATION_PEDIA",
+  "quote": "TXT_KEY_TECH_EXPLORATION_QUOTE",
   "era": "C2C_ERA_ANCIENT",
   "worth": 2,
   "tradeable": true,

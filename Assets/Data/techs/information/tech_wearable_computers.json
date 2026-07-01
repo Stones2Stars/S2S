@@ -1,8 +1,5 @@
 {
  "type": "TECH_WEARABLE_COMPUTERS",
- "description": "TXT_KEY_TECH_WEARABLE_COMPUTERS",
- "civilopedia": "TXT_KEY_TECH_WEARABLE_COMPUTERS_PEDIA",
- "quote": "TXT_KEY_TECH_WEARABLE_COMPUTERS_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_QUANTIFIED_HEALTH_CENTER",
@@ -68,6 +65,9 @@
   "soundMP": "AS2D_TECH_WEARABLE_COMPUTERS"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_WEARABLE_COMPUTERS",
+  "civilopedia": "TXT_KEY_TECH_WEARABLE_COMPUTERS_PEDIA",
+  "quote": "TXT_KEY_TECH_WEARABLE_COMPUTERS_QUOTE",
   "era": "C2C_ERA_INFORMATION",
   "worth": 40,
   "militaryWorth": 10,

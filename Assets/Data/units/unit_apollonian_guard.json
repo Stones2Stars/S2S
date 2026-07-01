@@ -1,7 +1,5 @@
 {
  "type": "UNIT_APOLLONIAN_GUARD",
- "description": "TXT_KEY_UNIT_APOLLONIAN_GUARD",
- "civilopedia": "TXT_KEY_UNIT_APOLLONIAN_GUARD_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -126,6 +124,8 @@
   "upkeep": 1
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_APOLLONIAN_GUARD",
+  "civilopedia": "TXT_KEY_UNIT_APOLLONIAN_GUARD_PEDIA",
   "worth": 2,
   "militaryWorth": 6,
   "xpValueAttack": 6,

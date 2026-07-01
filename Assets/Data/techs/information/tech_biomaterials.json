@@ -1,8 +1,5 @@
 {
  "type": "TECH_BIOMATERIALS",
- "description": "TXT_KEY_TECH_BIOMATERIALS",
- "civilopedia": "TXT_KEY_TECH_BIOMATERIALS_PEDIA",
- "quote": "TXT_KEY_TECH_BIOMATERIALS_QUOTE",
  "enables": {
   "bonuses": [
    "BONUS_BIOFUEL",
@@ -75,6 +72,9 @@
   "soundMP": "AS2D_TECH_BIOMATERIALS"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_BIOMATERIALS",
+  "civilopedia": "TXT_KEY_TECH_BIOMATERIALS_PEDIA",
+  "quote": "TXT_KEY_TECH_BIOMATERIALS_QUOTE",
   "era": "C2C_ERA_INFORMATION",
   "worth": 48,
   "tradeable": true,

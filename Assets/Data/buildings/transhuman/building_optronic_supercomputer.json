@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_OPTRONIC_SUPERCOMPUTER",
- "description": "TXT_KEY_BUILDING_OPTRONIC_SUPERCOMPUTER",
- "civilopedia": "TXT_KEY_BUILDING_OPTRONIC_SUPERCOMPUTER_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_HUMAN_MOD_TRANSAPIENT",
@@ -89,6 +87,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_OPTRONIC_SUPERCOMPUTER",
+  "civilopedia": "TXT_KEY_BUILDING_OPTRONIC_SUPERCOMPUTER_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

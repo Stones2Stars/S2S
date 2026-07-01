@@ -1,4 +1,6 @@
 {
  "type": "SPECIALUNIT_FIGHTER",
- "description": "TXT_KEY_SPECIALUNIT_FIGHTER"
+ "identity": {
+  "description": "TXT_KEY_SPECIALUNIT_FIGHTER"
+ }
 }

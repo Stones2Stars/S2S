@@ -1,8 +1,5 @@
 {
  "type": "TECH_DRUG_TRADE",
- "description": "TXT_KEY_TECH_DRUG_TRADE",
- "civilopedia": "TXT_KEY_TECH_DRUG_TRADE_PEDIA",
- "quote": "TXT_KEY_TECH_DRUG_TRADE_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_CIGAR_ROLLERS_SHOP",
@@ -66,6 +63,9 @@
   "soundMP": "AS2D_TECH_DRUG_TRADE2"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_DRUG_TRADE",
+  "civilopedia": "TXT_KEY_TECH_DRUG_TRADE_PEDIA",
+  "quote": "TXT_KEY_TECH_DRUG_TRADE_QUOTE",
   "era": "C2C_ERA_CLASSICAL",
   "worth": 8,
   "tradeable": true,

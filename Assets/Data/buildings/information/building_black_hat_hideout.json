@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_BLACK_HAT_HIDEOUT",
- "description": "TXT_KEY_BUILDING_BLACK_HAT_HIDEOUT",
- "civilopedia": "TXT_KEY_BUILDING_BLACK_HAT_HIDEOUT_PEDIA",
  "enables": {
   "units": [
    "UNIT_HACKER"
@@ -101,6 +99,8 @@
   "construct": "AS2D_BUILD_EBANK"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_BLACK_HAT_HIDEOUT",
+  "civilopedia": "TXT_KEY_BUILDING_BLACK_HAT_HIDEOUT_PEDIA",
   "worth": 2,
   "conquestProbability": 75,
   "dcmAirbombMission": 2,

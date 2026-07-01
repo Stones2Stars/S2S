@@ -1,7 +1,5 @@
 {
  "type": "BONUS_COPPER_WIRES",
- "description": "TXT_KEY_BONUS_COPPER_WIRES",
- "civilopedia": "TXT_KEY_BONUS_COPPER_WIRES_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_BROADCAST_TOWER",
@@ -22,6 +20,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_COPPER_WIRES",
+  "civilopedia": "TXT_KEY_BONUS_COPPER_WIRES_PEDIA",
   "bonusClassType": "BONUSCLASS_MANUFACTURED"
  }
 }

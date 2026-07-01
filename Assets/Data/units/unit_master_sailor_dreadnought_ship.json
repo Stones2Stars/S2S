@@ -1,7 +1,5 @@
 {
  "type": "UNIT_MASTER_SAILOR_DREADNOUGHT_SHIP",
- "description": "TXT_KEY_UNIT_MASTER_SAILOR_DREADNOUGHT_SHIP",
- "civilopedia": "TXT_KEY_UNIT_DREADNOUGHT_SHIP_PEDIA",
  "obsoletedBy": {
   "techs": [
    "TECH_MECHANIZED_WARFARE"
@@ -70,6 +68,8 @@
   "upkeep": 2
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_MASTER_SAILOR_DREADNOUGHT_SHIP",
+  "civilopedia": "TXT_KEY_UNIT_DREADNOUGHT_SHIP_PEDIA",
   "spawnOnly": true,
   "worth": 4,
   "militaryWorth": 153,

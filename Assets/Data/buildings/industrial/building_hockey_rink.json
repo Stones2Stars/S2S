@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_HOCKEY_RINK",
- "description": "TXT_KEY_BUILDING_HOCKEY_RINK",
- "civilopedia": "TXT_KEY_BUILDING_HOCKEY_RINK_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_NATIONAL_NIGHT_OF_HOCKEY"
@@ -73,6 +71,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_HOCKEY_RINK",
+  "civilopedia": "TXT_KEY_BUILDING_HOCKEY_RINK_PEDIA",
   "worth": 2,
   "advisor": "ADVISOR_CULTURE",
   "mapCategories": [

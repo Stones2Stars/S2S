@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_FRIEDLANDER_SKYSHADE",
- "description": "TXT_KEY_BUILDING_FRIEDLANDER_SKYSHADE",
- "civilopedia": "TXT_KEY_BUILDING_FRIEDLANDER_SKYSHADE_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -52,6 +50,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_FRIEDLANDER_SKYSHADE",
+  "civilopedia": "TXT_KEY_BUILDING_FRIEDLANDER_SKYSHADE_PEDIA",
   "conquestProbability": 100,
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,

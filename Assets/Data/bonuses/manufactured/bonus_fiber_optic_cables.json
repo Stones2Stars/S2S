@@ -1,7 +1,5 @@
 {
  "type": "BONUS_FIBER_OPTIC_CABLES",
- "description": "TXT_KEY_BONUS_FIBER_OPTIC_CABLES",
- "civilopedia": "TXT_KEY_BONUS_FIBER_OPTIC_CABLES_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_BROADCAST_TOWER",
@@ -20,6 +18,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_FIBER_OPTIC_CABLES",
+  "civilopedia": "TXT_KEY_BONUS_FIBER_OPTIC_CABLES_PEDIA",
   "bonusClassType": "BONUSCLASS_MANUFACTURED"
  }
 }

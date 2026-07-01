@@ -1,7 +1,5 @@
 {
  "type": "BONUS_TANKS",
- "description": "TXT_KEY_BONUS_TANKS",
- "civilopedia": "TXT_KEY_BONUS_TANKS_PEDIA",
  "enables": {
   "units": [
    "UNIT_ARMOR_M60",
@@ -26,6 +24,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_TANKS",
+  "civilopedia": "TXT_KEY_BONUS_TANKS_PEDIA",
   "bonusClassType": "BONUSCLASS_MANUFACTURED"
  }
 }

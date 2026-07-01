@@ -1,9 +1,11 @@
 {
  "type": "SPECIALBUILDING_PUNK_CLOCK",
- "description": "TXT_KEY_SPECIALBUILDING_PUNK_CLOCK",
  "ui": {
   "art": {
    "icon": "Art/Interface/Buttons/TechTree/clockpunk.dds"
   }
+ },
+ "identity": {
+  "description": "TXT_KEY_SPECIALBUILDING_PUNK_CLOCK"
  }
 }

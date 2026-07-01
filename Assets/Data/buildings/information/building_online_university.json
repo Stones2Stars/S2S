@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_ONLINE_UNIVERSITY",
- "description": "TXT_KEY_BUILDING_ONLINE_UNIVERSITY",
- "civilopedia": "TXT_KEY_BUILDING_ONLINE_UNIVERSITY_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -72,6 +70,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_ONLINE_UNIVERSITY",
+  "civilopedia": "TXT_KEY_BUILDING_ONLINE_UNIVERSITY_PEDIA",
   "neverCapture": true,
   "advisor": "ADVISOR_SCIENCE",
   "mapCategories": [

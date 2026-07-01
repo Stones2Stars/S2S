@@ -1,8 +1,5 @@
 {
  "type": "TECH_QUANTUM_PHYSICS",
- "description": "TXT_KEY_TECH_QUANTUM_PHYSICS",
- "civilopedia": "TXT_KEY_TECH_QUANTUM_PHYSICS_PEDIA",
- "quote": "TXT_KEY_TECH_QUANTUM_PHYSICS_QUOTE",
  "enables": {
   "bonuses": [
    "BONUS_HEAVY_WATER",
@@ -59,6 +56,9 @@
   "soundMP": "AS2D_TECH_QUANTUM_PHYSICS"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_QUANTUM_PHYSICS",
+  "civilopedia": "TXT_KEY_TECH_QUANTUM_PHYSICS_PEDIA",
+  "quote": "TXT_KEY_TECH_QUANTUM_PHYSICS_QUOTE",
   "era": "C2C_ERA_ATOMIC",
   "worth": 40,
   "tradeable": true,

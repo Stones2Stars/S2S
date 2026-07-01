@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_GUILD_BLACKSMITHS",
- "description": "TXT_KEY_BUILDING_GUILD_BLACKSMITHS",
- "civilopedia": "TXT_KEY_BUILDING_GUILDS_PEDIA",
  "obsoletedBy": {
   "techs": [
    "TECH_GLOBALIZATION"
@@ -93,6 +91,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_GUILD_BLACKSMITHS",
+  "civilopedia": "TXT_KEY_BUILDING_GUILDS_PEDIA",
   "neverCapture": true,
   "greatPeopleUnitType": "UNIT_GREAT_ENGINEER",
   "specialBuildingType": "SPECIALBUILDING_GUILD",

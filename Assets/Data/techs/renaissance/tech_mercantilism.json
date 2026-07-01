@@ -1,8 +1,5 @@
 {
  "type": "TECH_MERCANTILISM",
- "description": "TXT_KEY_TECH_MERCANTILISM",
- "civilopedia": "TXT_KEY_TECH_MERCANTILISM_PEDIA",
- "quote": "TXT_KEY_TECH_MERCANTILISM_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_CENTRAL_BANK",
@@ -77,6 +74,9 @@
   "soundMP": "AS2D_TECH_MERCANTILISM"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_MERCANTILISM",
+  "civilopedia": "TXT_KEY_TECH_MERCANTILISM_PEDIA",
+  "quote": "TXT_KEY_TECH_MERCANTILISM_QUOTE",
   "era": "C2C_ERA_RENAISSANCE",
   "worth": 32,
   "militaryWorth": 4,

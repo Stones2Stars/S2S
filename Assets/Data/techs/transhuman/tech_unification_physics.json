@@ -1,8 +1,5 @@
 {
  "type": "TECH_UNIFICATION_PHYSICS",
- "description": "TXT_KEY_TECH_UNIFICATION_PHYSICS",
- "civilopedia": "TXT_KEY_TECH_UNIFICATION_PHYSICS_PEDIA",
- "quote": "TXT_KEY_TECH_UNIFICATION_PHYSICS_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_CISLUNAR_PARTICLE_ACCELERATOR",
@@ -69,6 +66,9 @@
   "soundMP": "AS2D_TECH_UNIFICATION_PHYSICS"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_UNIFICATION_PHYSICS",
+  "civilopedia": "TXT_KEY_TECH_UNIFICATION_PHYSICS_PEDIA",
+  "quote": "TXT_KEY_TECH_UNIFICATION_PHYSICS_QUOTE",
   "era": "C2C_ERA_TRANSHUMAN",
   "worth": 48,
   "militaryWorth": 4,

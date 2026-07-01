@@ -1,8 +1,5 @@
 {
  "type": "TECH_STRING_MANIPULATION",
- "description": "TXT_KEY_TECH_STRING_MANIPULATION",
- "civilopedia": "TXT_KEY_TECH_STRING_MANIPULATION_PEDIA",
- "quote": "TXT_KEY_TECH_STRING_MANIPULATION_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_INTERGALACTIC_PARTICLE_TRANSMUTATION",
@@ -66,6 +63,9 @@
   "soundMP": "AS2D_TECH_GENERIC"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_STRING_MANIPULATION",
+  "civilopedia": "TXT_KEY_TECH_STRING_MANIPULATION_PEDIA",
+  "quote": "TXT_KEY_TECH_STRING_MANIPULATION_QUOTE",
   "era": "C2C_ERA_TRANSCENDENT",
   "worth": 48,
   "tradeable": true,

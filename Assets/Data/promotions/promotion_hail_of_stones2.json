@@ -1,6 +1,5 @@
 {
  "type": "PROMOTION_HAIL_OF_STONES2",
- "description": "TXT_KEY_PROMOTION_HAIL_OF_STONES2",
  "bombard": {
   "unit": {
    "rate": {
@@ -29,6 +28,7 @@
   "sound": "AS2D_IF_LEVELUP"
  },
  "identity": {
+  "description": "TXT_KEY_PROMOTION_HAIL_OF_STONES2",
   "rBombardPrereq": true
  }
 }

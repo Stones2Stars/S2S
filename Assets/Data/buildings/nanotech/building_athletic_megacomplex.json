@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_ATHLETIC_MEGACOMPLEX",
- "description": "TXT_KEY_BUILDING_ATHLETIC_MEGACOMPLEX",
- "civilopedia": "TXT_KEY_BUILDING_ATHLETIC_MEGACOMPLEX_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_BATTLEMECH_ARENA",
@@ -139,6 +137,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_ATHLETIC_MEGACOMPLEX",
+  "civilopedia": "TXT_KEY_BUILDING_ATHLETIC_MEGACOMPLEX_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

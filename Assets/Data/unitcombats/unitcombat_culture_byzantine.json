@@ -1,12 +1,12 @@
 {
  "type": "UNITCOMBAT_CULTURE_BYZANTINE",
- "description": "TXT_KEY_UNITCOMBAT_CULTURE_BYZANTINE",
  "ui": {
   "art": {
    "icon": "Art/Interface/Buttons/units/sparth/categories/culture_byzantine.dds"
   }
  },
  "identity": {
+  "description": "TXT_KEY_UNITCOMBAT_CULTURE_BYZANTINE",
   "culture": "BONUS_BYZANTINE"
  }
 }

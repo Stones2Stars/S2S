@@ -1,8 +1,5 @@
 {
  "type": "TECH_CALLIGRAPHY",
- "description": "TXT_KEY_TECH_CALLIGRAPHY",
- "civilopedia": "TXT_KEY_TECH_CALLIGRAPHY_PEDIA",
- "quote": "TXT_KEY_TECH_CALLIGRAPHY_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_CALLIGRAPHY_SCHOOL"
@@ -63,6 +60,9 @@
   "soundMP": "AS2D_TECH_CALLIGRAPHY"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_CALLIGRAPHY",
+  "civilopedia": "TXT_KEY_TECH_CALLIGRAPHY_PEDIA",
+  "quote": "TXT_KEY_TECH_CALLIGRAPHY_QUOTE",
   "era": "C2C_ERA_CLASSICAL",
   "worth": 14,
   "tradeable": true,

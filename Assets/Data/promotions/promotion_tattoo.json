@@ -1,6 +1,5 @@
 {
  "type": "PROMOTION_TATTOO",
- "description": "TXT_KEY_PROMOTION_TATTOO",
  "strength": {
   "unit": {
    "percent": 5
@@ -15,6 +14,7 @@
   "sound": "AS2D_IF_LEVELUP"
  },
  "identity": {
+  "description": "TXT_KEY_PROMOTION_TATTOO",
   "unitCombats": [
    "UNITCOMBAT_RECON",
    "UNITCOMBAT_HUNTER",

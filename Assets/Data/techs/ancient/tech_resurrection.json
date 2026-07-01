@@ -1,8 +1,5 @@
 {
  "type": "TECH_RESURRECTION",
- "description": "TXT_KEY_TECH_RESURRECTION",
- "civilopedia": "TXT_KEY_TECH_RESURRECTION_PEDIA",
- "quote": "TXT_KEY_TECH_RESURRECTION_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_BELIEF_RESURRECTION",
@@ -59,6 +56,9 @@
   "soundMP": "AS2D_TECH_RESURRECTION"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_RESURRECTION",
+  "civilopedia": "TXT_KEY_TECH_RESURRECTION_PEDIA",
+  "quote": "TXT_KEY_TECH_RESURRECTION_QUOTE",
   "era": "C2C_ERA_ANCIENT",
   "worth": 16,
   "tradeable": true,

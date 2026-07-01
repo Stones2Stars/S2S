@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_DESALINATION_PLANT",
- "description": "TXT_KEY_BUILDING_DESALINATION_PLANT",
- "civilopedia": "TXT_KEY_BUILDING_DESALINATION_PLANT_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_RESOURCES_SALT"
@@ -80,6 +78,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_DESALINATION_PLANT",
+  "civilopedia": "TXT_KEY_BUILDING_DESALINATION_PLANT_PEDIA",
   "advisor": "ADVISOR_GROWTH",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

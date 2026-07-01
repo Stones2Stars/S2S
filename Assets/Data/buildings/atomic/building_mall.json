@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_MALL",
- "description": "TXT_KEY_BUILDING_MALL",
- "civilopedia": "TXT_KEY_BUILDING_MALL_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_E_CLOTHING_OUTFITTER",
@@ -469,6 +467,8 @@
   "construct": "AS2D_BUILD_MALL"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_MALL",
+  "civilopedia": "TXT_KEY_BUILDING_MALL_PEDIA",
   "worth": 8,
   "conquestProbability": 75,
   "dcmAirbombMission": 2,

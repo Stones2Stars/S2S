@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_COMMUNITY_GARDEN",
- "description": "TXT_KEY_BUILDING_COMMUNITY_GARDEN",
- "civilopedia": "TXT_KEY_BUILDING_COMMUNITY_GARDEN_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_ASSASSIN_BUG_SANCTUARY",
@@ -109,6 +107,8 @@
   "construct": "AS2D_BUILD_COMMUNITY_GARDEN"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_COMMUNITY_GARDEN",
+  "civilopedia": "TXT_KEY_BUILDING_COMMUNITY_GARDEN_PEDIA",
   "worth": 3,
   "militaryWorth": 1,
   "advisor": "ADVISOR_GROWTH",

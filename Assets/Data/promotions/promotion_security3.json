@@ -1,6 +1,5 @@
 {
  "type": "PROMOTION_SECURITY3",
- "description": "TXT_KEY_PROMOTION_SECURITY3",
  "air": {
   "unit": {
    "intercept": {
@@ -23,5 +22,8 @@
  },
  "sound": {
   "sound": "AS2D_PING"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_SECURITY3"
  }
 }

@@ -1,7 +1,5 @@
 {
  "type": "UNIT_WALLABY",
- "description": "TXT_KEY_UNIT_WALLABY",
- "civilopedia": "TXT_KEY_UNIT_WALLABY_PEDIA",
  "withdrawal": {
   "unit": {
    "percent": 35
@@ -51,6 +49,8 @@
   ]
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_WALLABY",
+  "civilopedia": "TXT_KEY_UNIT_WALLABY_PEDIA",
   "spawnOnly": true,
   "xpValueAttack": 3,
   "xpValueDefense": 2,

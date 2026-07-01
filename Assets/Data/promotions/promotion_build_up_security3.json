@@ -1,6 +1,5 @@
 {
  "type": "PROMOTION_BUILD_UP_SECURITY3",
- "description": "TXT_KEY_PROMOTION_BUILD_UP_SECURITY3",
  "air": {
   "unit": {
    "intercept": {
@@ -20,6 +19,7 @@
   "sound": "AS2D_IF_LEVELUP"
  },
  "identity": {
+  "description": "TXT_KEY_PROMOTION_BUILD_UP_SECURITY3",
   "minEra": "C2C_ERA_INDUSTRIAL"
  }
 }

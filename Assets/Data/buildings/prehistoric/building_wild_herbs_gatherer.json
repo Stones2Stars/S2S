@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_WILD_HERBS_GATHERER",
- "description": "TXT_KEY_BUILDING_WILD_HERBS_GATHERER",
- "civilopedia": "TXT_KEY_BUILDING_WILD_HERBS_GATHERER_PEDIA",
  "enables": {
   "units": [
    "UNIT_NEANDERTHAL_WISE_WOMAN",
@@ -70,6 +68,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_WILD_HERBS_GATHERER",
+  "civilopedia": "TXT_KEY_BUILDING_WILD_HERBS_GATHERER_PEDIA",
   "enabledCivilizations": [
    "CIVILIZATION_NPC_NEANDERTHAL"
   ],

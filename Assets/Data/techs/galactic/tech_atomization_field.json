@@ -1,8 +1,5 @@
 {
  "type": "TECH_ATOMIZATION_FIELD",
- "description": "TXT_KEY_TECH_ATOMIZATION_FIELD",
- "civilopedia": "TXT_KEY_TECH_ATOMIZATION_FIELD_PEDIA",
- "quote": "TXT_KEY_TECH_ATOMIZATION_FIELD_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_CISLUNAR_GARBAGE_ATOMIZER",
@@ -60,6 +57,9 @@
   "soundMP": "AS2D_TECH_ATOMIZATION_FIELD"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_ATOMIZATION_FIELD",
+  "civilopedia": "TXT_KEY_TECH_ATOMIZATION_FIELD_PEDIA",
+  "quote": "TXT_KEY_TECH_ATOMIZATION_FIELD_QUOTE",
   "era": "C2C_ERA_GALACTIC",
   "worth": 48,
   "militaryWorth": 4,

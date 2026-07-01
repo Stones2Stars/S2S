@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_GROVE_PISTACHIO",
- "description": "TXT_KEY_BUILDING_GROVE_PISTACHIO",
- "civilopedia": "TXT_KEY_BUILDING_GROVE_PISTACHIO_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_RESOURCES_NUTS"
@@ -71,6 +69,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_GROVE_PISTACHIO",
+  "civilopedia": "TXT_KEY_BUILDING_GROVE_PISTACHIO_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

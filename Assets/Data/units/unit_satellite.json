@@ -1,8 +1,5 @@
 {
  "type": "UNIT_SATELLITE",
- "description": "TXT_KEY_UNIT_SATELLITE",
- "civilopedia": "TXT_KEY_UNIT_SATELLITE_PEDIA",
- "help": "TXT_KEY_UNIT_SPACEUNIT_HELP",
  "requires": {
   "build": {
    "all": [
@@ -69,6 +66,9 @@
   "upkeep": 1
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_SATELLITE",
+  "civilopedia": "TXT_KEY_UNIT_SATELLITE_PEDIA",
+  "help": "TXT_KEY_UNIT_SPACEUNIT_HELP",
   "worth": 1,
   "domain": "DOMAIN_LAND",
   "defaultUnitAI": "UNITAI_WORKER",

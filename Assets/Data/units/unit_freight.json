@@ -1,7 +1,5 @@
 {
  "type": "UNIT_FREIGHT",
- "description": "TXT_KEY_UNIT_FREIGHT",
- "civilopedia": "TXT_KEY_CONCEPT_FREIGHT_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -63,6 +61,8 @@
   ]
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_FREIGHT",
+  "civilopedia": "TXT_KEY_CONCEPT_FREIGHT_PEDIA",
   "worth": 1,
   "animalCombat": 100,
   "domain": "DOMAIN_LAND",

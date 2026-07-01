@@ -1,7 +1,5 @@
 {
  "type": "CORPORATION_MALLWART",
- "description": "TXT_KEY_BUILDING_CORPORATION_MALLWART",
- "civilopedia": "TXT_KEY_BUILDING_CORPORATION_MALLWART_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_MALLWART_STORE"
@@ -73,6 +71,8 @@
   "sound": "AS2D_BUILD_BANK"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_CORPORATION_MALLWART",
+  "civilopedia": "TXT_KEY_BUILDING_CORPORATION_MALLWART_PEDIA",
   "spreadFactor": 200,
   "spread": 50
  }

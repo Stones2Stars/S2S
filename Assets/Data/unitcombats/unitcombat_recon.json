@@ -1,6 +1,5 @@
 {
  "type": "UNITCOMBAT_RECON",
- "description": "TXT_KEY_UNITCOMBAT_RECON",
  "strength": {
   "unit": {
    "damageModifier": {
@@ -35,6 +34,7 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_UNITCOMBAT_RECON",
   "forMilitary": true,
   "forNavalMilitary": true
  }

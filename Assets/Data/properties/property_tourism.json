@@ -1,6 +1,5 @@
 {
  "type": "PROPERTY_TOURISM",
- "description": "TXT_KEY_PROPERTY_TOURISM",
  "text": {
   "value": "TXT_KEY_PROPERTY_TOURISM_DISPLAY",
   "change": "TXT_KEY_PROPERTY_TOURISM_CHANGE",
@@ -32,6 +31,7 @@
   "scale": "city"
  },
  "identity": {
+  "description": "TXT_KEY_PROPERTY_TOURISM",
   "sourceDrain": true,
   "fontButtonIndex": 14
  }

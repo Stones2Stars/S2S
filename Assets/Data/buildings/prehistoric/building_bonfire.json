@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_BONFIRE",
- "description": "TXT_KEY_BUILDING_BONFIRE",
- "civilopedia": "TXT_KEY_BUILDING_BONFIRE_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_BLOOD_DANCE",
@@ -103,6 +101,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_BONFIRE",
+  "civilopedia": "TXT_KEY_BUILDING_BONFIRE_PEDIA",
   "advisor": "ADVISOR_GROWTH",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

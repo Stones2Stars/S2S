@@ -1,8 +1,5 @@
 {
  "type": "TECH_CANAANISM",
- "description": "TXT_KEY_TECH_CANAANISM",
- "civilopedia": "TXT_KEY_TECH_CANAANISM_PEDIA",
- "quote": "TXT_KEY_TECH_CANAANISM_QUOTE",
  "enables": {
   "religions": [
    "RELIGION_CANAANISM"
@@ -51,6 +48,9 @@
   "soundMP": "AS2D_TECH_GENERIC"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_CANAANISM",
+  "civilopedia": "TXT_KEY_TECH_CANAANISM_PEDIA",
+  "quote": "TXT_KEY_TECH_CANAANISM_QUOTE",
   "era": "C2C_ERA_ANCIENT",
   "worth": 8,
   "gridX": 30,

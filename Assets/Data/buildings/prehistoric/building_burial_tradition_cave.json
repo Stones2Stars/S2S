@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_BURIAL_TRADITION_CAVE",
- "description": "TXT_KEY_BUILDING_BURIAL_TRADITION_CAVE",
- "civilopedia": "TXT_KEY_BUILDING_BURIAL_TRADITION_CAVE_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_ANCIENT_EMBALMER",
@@ -71,6 +69,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_BURIAL_TRADITION_CAVE",
+  "civilopedia": "TXT_KEY_BUILDING_BURIAL_TRADITION_CAVE_PEDIA",
   "conquestProbability": 70,
   "advisor": "ADVISOR_SCIENCE",
   "mapCategories": [

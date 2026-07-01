@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_HERD_PIG",
- "description": "TXT_KEY_BUILDING_HERD_PIG",
- "civilopedia": "TXT_KEY_BUILDING_HERD_PIG_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_RESOURCES_CARCASS",
@@ -57,6 +55,8 @@
   "construct": "SND_AMB_HORSE_COBBLESTONES"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_HERD_PIG",
+  "civilopedia": "TXT_KEY_BUILDING_HERD_PIG_PEDIA",
   "notConstructible": true,
   "worth": 3,
   "conquestProbability": 75,

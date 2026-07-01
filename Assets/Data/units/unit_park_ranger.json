@@ -1,7 +1,5 @@
 {
  "type": "UNIT_PARK_RANGER",
- "description": "TXT_KEY_UNIT_PARK_RANGER",
- "civilopedia": "TXT_KEY_UNIT_PARK_RANGER_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -87,6 +85,8 @@
   "hurryCostModifier": 25
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_PARK_RANGER",
+  "civilopedia": "TXT_KEY_UNIT_PARK_RANGER_PEDIA",
   "worth": 6,
   "militaryWorth": 6,
   "domain": "DOMAIN_LAND",

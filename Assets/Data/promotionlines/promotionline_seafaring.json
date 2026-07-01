@@ -1,9 +1,11 @@
 {
  "type": "PROMOTIONLINE_SEAFARING",
- "description": "TXT_KEY_PROMOTIONLINE_SEAFARING",
  "ui": {
   "art": {
    "icon": "art/Buttons/Traits/TraitSeafaring.dds"
   }
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTIONLINE_SEAFARING"
  }
 }

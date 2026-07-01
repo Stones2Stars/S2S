@@ -1,8 +1,5 @@
 {
  "type": "CIVIC_WASTE_EXPORTATION",
- "description": "TXT_KEY_CIVIC_WASTE_EXPORTATION",
- "civilopedia": "TXT_KEY_CIVIC_WASTE_EXPORTATION_PEDIA",
- "strategy": "TXT_KEY_CIVIC_WASTE_EXPORTATION_STRATEGY",
  "enables": {
   "buildings": [
    "BUILDING_WASTE_EXPORTATION_OFFICE"
@@ -56,6 +53,9 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_CIVIC_WASTE_EXPORTATION",
+  "civilopedia": "TXT_KEY_CIVIC_WASTE_EXPORTATION_PEDIA",
+  "strategy": "TXT_KEY_CIVIC_WASTE_EXPORTATION_STRATEGY",
   "civicOption": "CIVICOPTION_GARBAGE",
   "upkeepLevel": "UPKEEP_MEDIUM"
  }

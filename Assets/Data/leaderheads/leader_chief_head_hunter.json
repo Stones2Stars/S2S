@@ -1,7 +1,5 @@
 {
  "type": "LEADER_CHIEF_HEAD_HUNTER",
- "description": "TXT_KEY_LEADER_CHIEF_HEAD_HUNTER",
- "civilopedia": "TXT_KEY_LEADER_CHIEF_HEAD_HUNTER_PEDIA",
  "grants": {
   "traits": [
    "TRAIT_SPIRITUAL",
@@ -302,5 +300,9 @@
    "C2C_ERA_TRANSCENDENT": null,
    "C2C_ERA_FUTURE": "AS2D_DIPLO_WARDRUMS_LATE"
   }
+ },
+ "identity": {
+  "description": "TXT_KEY_LEADER_CHIEF_HEAD_HUNTER",
+  "civilopedia": "TXT_KEY_LEADER_CHIEF_HEAD_HUNTER_PEDIA"
  }
 }

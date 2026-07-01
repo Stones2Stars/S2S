@@ -1,8 +1,5 @@
 {
  "type": "TECH_EVOLVED_CONSTRUCTION",
- "description": "TXT_KEY_TECH_EVOLVED_CONSTRUCTION",
- "civilopedia": "TXT_KEY_TECH_EVOLVED_CONSTRUCTION_PEDIA",
- "quote": "TXT_KEY_TECH_EVOLVED_CONSTRUCTION_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_CISLUNAR_BIONIC_CORE",
@@ -69,6 +66,9 @@
   "soundMP": "AS2D_TECH_EVOLVED_CONSTRUCTION"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_EVOLVED_CONSTRUCTION",
+  "civilopedia": "TXT_KEY_TECH_EVOLVED_CONSTRUCTION_PEDIA",
+  "quote": "TXT_KEY_TECH_EVOLVED_CONSTRUCTION_QUOTE",
   "era": "C2C_ERA_TRANSHUMAN",
   "worth": 48,
   "militaryWorth": 4,

@@ -1,9 +1,5 @@
 {
  "type": "CIVILIZATION_AUSTRALIA",
- "description": "TXT_KEY_CIVILIZATION_AUSTRALIA",
- "shortDescription": "TXT_KEY_CIVILIZATION_AUSTRALIA_SHORT",
- "adjective": "TXT_KEY_CIVILIZATION_AUSTRALIA_ADJECTIVE",
- "civilopedia": "TXT_KEY_CIVILIZATION_AUSTRALIA_PEDIA",
  "grants": {
   "buildings": [
    "BUILDING_PALACE",
@@ -32,10 +28,6 @@
    "TECH_GAME_START"
   ]
  },
- "policies": {
-  "playable": true,
-  "aiPlayable": true
- },
  "world": {
   "art": {
    "playerColor": "PLAYERCOLOR_AUSTRALIA",
@@ -49,6 +41,12 @@
   "action": "AS3D_ENGLAND_ORDER"
  },
  "identity": {
+  "description": "TXT_KEY_CIVILIZATION_AUSTRALIA",
+  "shortDescription": "TXT_KEY_CIVILIZATION_AUSTRALIA_SHORT",
+  "adjective": "TXT_KEY_CIVILIZATION_AUSTRALIA_ADJECTIVE",
+  "civilopedia": "TXT_KEY_CIVILIZATION_AUSTRALIA_PEDIA",
+  "playable": true,
+  "aiPlayable": true,
   "leaders": [
    "LEADER_CURTIN",
    "LEADER_MENZIES"

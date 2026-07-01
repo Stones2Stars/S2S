@@ -1,12 +1,12 @@
 {
  "type": "PROMOTIONLINE_LAND_WARRIOR",
- "description": "TXT_KEY_PROMOTIONLINE_LAND_WARRIOR",
  "ui": {
   "art": {
    "icon": ",Art/Interface/Buttons/Promotions/roadwar1.dds,Art/Interface/Buttons/FinalFrontier1_Atlas.dds,4,8"
   }
  },
  "identity": {
+  "description": "TXT_KEY_PROMOTIONLINE_LAND_WARRIOR",
   "unitCombats": [
    "UNITCOMBAT_SIEGE",
    "UNITCOMBAT_GUN",

@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_CHAMBER_OF_COMMERCE",
- "description": "TXT_KEY_BUILDING_CHAMBER_OF_COMMERCE",
- "civilopedia": "TXT_KEY_BUILDING_CHAMBER_OF_COMMERCE_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -69,6 +67,8 @@
   "construct": "AS2D_BUILD_BANK"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_CHAMBER_OF_COMMERCE",
+  "civilopedia": "TXT_KEY_BUILDING_CHAMBER_OF_COMMERCE_PEDIA",
   "worth": 3,
   "advisor": "ADVISOR_ECONOMY",
   "visibilityPriority": 1,

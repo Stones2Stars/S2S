@@ -1,7 +1,5 @@
 {
  "type": "BONUS_IVORY",
- "description": "TXT_KEY_BONUS_IVORY",
- "civilopedia": "TXT_KEY_BONUS_IVORY_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_BONEWORKER",
@@ -17,6 +15,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_IVORY",
+  "civilopedia": "TXT_KEY_BONUS_IVORY_PEDIA",
   "bonusClassType": "BONUSCLASS_MANUFACTURED"
  }
 }

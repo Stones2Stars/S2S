@@ -1,12 +1,12 @@
 {
  "type": "UNITCOMBAT_CULTURE_TUPI",
- "description": "TXT_KEY_UNITCOMBAT_CULTURE_TUPI",
  "ui": {
   "art": {
    "icon": "Art/Interface/Buttons/units/sparth/categories/culture_tupi.dds"
   }
  },
  "identity": {
+  "description": "TXT_KEY_UNITCOMBAT_CULTURE_TUPI",
   "culture": "BONUS_TUPI"
  }
 }

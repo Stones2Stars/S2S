@@ -1,8 +1,5 @@
 {
  "type": "TECH_TENGRIISM",
- "description": "TXT_KEY_TECH_TENGRIISM",
- "civilopedia": "TXT_KEY_TECH_TENGRIISM_PEDIA",
- "quote": "TXT_KEY_TECH_TENGRIISM_QUOTE",
  "enables": {
   "religions": [
    "RELIGION_TENGRIISM"
@@ -55,6 +52,9 @@
   "soundMP": "AS2D_TECH_GENERIC"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_TENGRIISM",
+  "civilopedia": "TXT_KEY_TECH_TENGRIISM_PEDIA",
+  "quote": "TXT_KEY_TECH_TENGRIISM_QUOTE",
   "era": "C2C_ERA_ANCIENT",
   "worth": 8,
   "gridX": 22,

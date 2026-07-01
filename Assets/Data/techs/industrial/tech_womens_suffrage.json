@@ -1,8 +1,5 @@
 {
  "type": "TECH_WOMENS_SUFFRAGE",
- "description": "TXT_KEY_TECH_WOMENS_SUFFRAGE",
- "civilopedia": "TXT_KEY_TECH_WOMENS_SUFFRAGE_PEDIA",
- "quote": "TXT_KEY_TECH_WOMENS_SUFFRAGE_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_CRIME_DOMESTIC_VIOLENCE",
@@ -58,6 +55,9 @@
   "soundMP": "AS2D_TECH_WOMENS_SUFFRAGE"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_WOMENS_SUFFRAGE",
+  "civilopedia": "TXT_KEY_TECH_WOMENS_SUFFRAGE_PEDIA",
+  "quote": "TXT_KEY_TECH_WOMENS_SUFFRAGE_QUOTE",
   "era": "C2C_ERA_INDUSTRIAL",
   "worth": 32,
   "militaryWorth": 6,

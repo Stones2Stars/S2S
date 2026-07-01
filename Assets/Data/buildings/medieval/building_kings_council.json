@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_KINGS_COUNCIL",
- "description": "TXT_KEY_BUILDING_KINGS_COUNCIL",
- "civilopedia": "TXT_KEY_BUILDING_KINGS_COUNCIL_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_CHANCELLORS_OFFICE",
@@ -70,6 +68,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_KINGS_COUNCIL",
+  "civilopedia": "TXT_KEY_BUILDING_KINGS_COUNCIL_PEDIA",
   "nukeImmune": true,
   "worth": 5,
   "conquestProbability": 100,

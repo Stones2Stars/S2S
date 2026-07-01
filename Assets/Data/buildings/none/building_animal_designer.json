@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_ANIMAL_DESIGNER",
- "description": "TXT_KEY_BUILDING_ANIMAL_DESIGNER",
- "civilopedia": "TXT_KEY_BUILDING_ANIMAL_DESIGNER_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_DESIGNED_ANIMAL_BATTLE_ARENA",
@@ -81,6 +79,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_ANIMAL_DESIGNER",
+  "civilopedia": "TXT_KEY_BUILDING_ANIMAL_DESIGNER_PEDIA",
   "specialBuildingType": "SPECIALBUILDING_PUNK_BIO",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": "1.0",

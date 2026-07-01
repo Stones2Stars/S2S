@@ -1,7 +1,5 @@
 {
  "type": "BONUS_FERTILIZERS",
- "description": "TXT_KEY_BONUS_FERTILIZERS",
- "civilopedia": "TXT_KEY_BONUS_FERTILIZERS_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_BIOMASS_POWER_PLANT",
@@ -25,6 +23,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_FERTILIZERS",
+  "civilopedia": "TXT_KEY_BONUS_FERTILIZERS_PEDIA",
   "bonusClassType": "BONUSCLASS_MANUFACTURED"
  }
 }

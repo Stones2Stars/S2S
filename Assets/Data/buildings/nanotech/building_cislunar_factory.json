@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_CISLUNAR_FACTORY",
- "description": "TXT_KEY_BUILDING_CISLUNAR_FACTORY",
- "civilopedia": "TXT_KEY_BUILDING_CISLUNAR_FACTORY_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_CISLUNAR_BIG_BANG_OBSERVATORY",
@@ -92,6 +90,8 @@
   "construct": "AS2D_BUILD_ORBITAL_FACTORY"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_CISLUNAR_FACTORY",
+  "civilopedia": "TXT_KEY_BUILDING_CISLUNAR_FACTORY_PEDIA",
   "nukeImmune": true,
   "neverCapture": true,
   "orbital": true,

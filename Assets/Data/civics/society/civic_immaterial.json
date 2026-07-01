@@ -1,8 +1,5 @@
 {
  "type": "CIVIC_IMMATERIAL",
- "description": "TXT_KEY_CIVIC_IMMATERIAL",
- "civilopedia": "TXT_KEY_CIVIC_IMMATERIAL_PEDIA",
- "strategy": "TXT_KEY_CIVIC_IMMATERIAL_STRATEGY",
  "food": {
   "empire": {
    "percent": 5
@@ -79,6 +76,9 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_CIVIC_IMMATERIAL",
+  "civilopedia": "TXT_KEY_CIVIC_IMMATERIAL_PEDIA",
+  "strategy": "TXT_KEY_CIVIC_IMMATERIAL_STRATEGY",
   "civicOption": "CIVICOPTION_SOCIETY",
   "anarchyLength": 2,
   "upkeepLevel": "UPKEEP_EXTREME"

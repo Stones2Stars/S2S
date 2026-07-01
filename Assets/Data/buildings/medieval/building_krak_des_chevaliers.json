@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_KRAK_DES_CHEVALIERS",
- "description": "TXT_KEY_BUILDING_KRAK_DES_CHEVALIERS",
- "civilopedia": "TXT_KEY_BUILDING_KRAK_DES_CHEVALIERS_PEDIA",
  "obsoletedBy": {
   "techs": [
    "TECH_NATIONALISM"
@@ -93,6 +91,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_KRAK_DES_CHEVALIERS",
+  "civilopedia": "TXT_KEY_BUILDING_KRAK_DES_CHEVALIERS_PEDIA",
   "commerceDoubleTime": {
    "culture": 1000
   },

@@ -1,7 +1,5 @@
 {
  "type": "UNIT_NILECROC",
- "description": "TXT_KEY_UNIT_NILECROC",
- "civilopedia": "TXT_KEY_UNIT_NILECROC_PEDIA",
  "skills": {
   "assassin": true,
   "blendIntoCity": true,
@@ -52,6 +50,8 @@
   ]
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_NILECROC",
+  "civilopedia": "TXT_KEY_UNIT_NILECROC_PEDIA",
   "spawnOnly": true,
   "xpValueAttack": 10,
   "xpValueDefense": 8,

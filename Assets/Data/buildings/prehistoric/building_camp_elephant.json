@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_CAMP_ELEPHANT",
- "description": "TXT_KEY_BUILDING_CAMP_ELEPHANT",
- "civilopedia": "TXT_KEY_BUILDING_CAMP_ELEPHANT_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_RESOURCES_CARCASS",
@@ -90,6 +88,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_CAMP_ELEPHANT",
+  "civilopedia": "TXT_KEY_BUILDING_CAMP_ELEPHANT_PEDIA",
   "enabledCivilizations": [
    "CIVILIZATION_NPC_NEANDERTHAL"
   ],

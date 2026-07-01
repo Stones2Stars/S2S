@@ -1,7 +1,5 @@
 {
  "type": "PROMOTIONLINE_BUILD_UP_ESCAPE_PLANS",
- "description": "TXT_KEY_PROMOTIONLINE_BUILD_UP_ESCAPE_PLANS",
- "help": "TXT_KEY_PROMOTIONLINE_BUILD_UP_ESCAPE_PLANS_HELP",
  "buildUp": {
   "active": true
  },
@@ -11,6 +9,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_PROMOTIONLINE_BUILD_UP_ESCAPE_PLANS",
+  "help": "TXT_KEY_PROMOTIONLINE_BUILD_UP_ESCAPE_PLANS_HELP",
   "unitCombats": [
    "UNITCOMBAT_SPEED_FAST"
   ],

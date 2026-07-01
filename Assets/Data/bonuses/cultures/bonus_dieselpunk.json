@@ -1,7 +1,5 @@
 {
  "type": "BONUS_DIESELPUNK",
- "description": "TXT_KEY_BONUS_DIESELPUNK",
- "civilopedia": "TXT_KEY_BONUS_DIESELPUNK_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_AERODROME",
@@ -29,6 +27,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_DIESELPUNK",
+  "civilopedia": "TXT_KEY_BONUS_DIESELPUNK_PEDIA",
   "bonusClassType": "BONUSCLASS_GENMODS"
  }
 }

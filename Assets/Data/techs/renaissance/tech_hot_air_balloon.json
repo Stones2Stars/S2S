@@ -1,8 +1,5 @@
 {
  "type": "TECH_HOT_AIR_BALLOON",
- "description": "TXT_KEY_TECH_HOT_AIR_BALLOON",
- "civilopedia": "TXT_KEY_TECH_HOT_AIR_BALLOON_PEDIA",
- "quote": "TXT_KEY_TECH_HOT_AIR_BALLOON_QUOTE",
  "enables": {
   "techs": [
    "TECH_BALLOON_WARFARE"
@@ -54,6 +51,9 @@
   "soundMP": "AS2D_TECH_HOT_AIR_BALLOON"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_HOT_AIR_BALLOON",
+  "civilopedia": "TXT_KEY_TECH_HOT_AIR_BALLOON_PEDIA",
+  "quote": "TXT_KEY_TECH_HOT_AIR_BALLOON_QUOTE",
   "era": "C2C_ERA_RENAISSANCE",
   "worth": 40,
   "militaryWorth": 2,

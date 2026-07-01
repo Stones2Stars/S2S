@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_INTERGALACTIC_TACHYON_DETECTOR",
- "description": "TXT_KEY_BUILDING_INTERGALACTIC_TACHYON_DETECTOR",
- "civilopedia": "TXT_KEY_BUILDING_INTERGALACTIC_TACHYON_DETECTOR_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_INTERGALACTIC_TACHYON_COMMUNICATION_CENTER"
@@ -43,6 +41,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_INTERGALACTIC_TACHYON_DETECTOR",
+  "civilopedia": "TXT_KEY_BUILDING_INTERGALACTIC_TACHYON_DETECTOR_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

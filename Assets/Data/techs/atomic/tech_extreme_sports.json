@@ -1,8 +1,5 @@
 {
  "type": "TECH_EXTREME_SPORTS",
- "description": "TXT_KEY_TECH_EXTREME_SPORTS",
- "civilopedia": "TXT_KEY_TECH_EXTREME_SPORTS_PEDIA",
- "quote": "TXT_KEY_TECH_EXTREME_SPORTS_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_BASE_JUMPING_SITE",
@@ -76,6 +73,9 @@
   "soundMP": "AS2D_TECH_EXTREME_SPORTS"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_EXTREME_SPORTS",
+  "civilopedia": "TXT_KEY_TECH_EXTREME_SPORTS_PEDIA",
+  "quote": "TXT_KEY_TECH_EXTREME_SPORTS_QUOTE",
   "era": "C2C_ERA_ATOMIC",
   "worth": 40,
   "militaryWorth": 2,

@@ -1,8 +1,5 @@
 {
  "type": "TECH_SHELTER_BUILDING",
- "description": "TXT_KEY_TECH_SHELTER_BUILDING",
- "civilopedia": "TXT_KEY_TECH_SHELTER_BUILDING_PEDIA",
- "quote": "TXT_KEY_TECH_SHELTER_BUILDING_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_BUTCHERY",
@@ -95,6 +92,9 @@
   "soundMP": "AS2D_TECH_SHELTER_BUILDING"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_SHELTER_BUILDING",
+  "civilopedia": "TXT_KEY_TECH_SHELTER_BUILDING_PEDIA",
+  "quote": "TXT_KEY_TECH_SHELTER_BUILDING_QUOTE",
   "era": "C2C_ERA_PREHISTORIC",
   "worth": 4,
   "tradeable": true,

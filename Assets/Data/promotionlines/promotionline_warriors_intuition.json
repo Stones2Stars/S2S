@@ -1,6 +1,5 @@
 {
  "type": "PROMOTIONLINE_WARRIORS_INTUITION",
- "description": "TXT_KEY_PROMOTIONLINE_WARRIORS_INTUITION",
  "loadPrune": {
   "onGameOptions": [
    "GAMEOPTION_COMBAT_HIDE_SEEK"
@@ -12,6 +11,7 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_PROMOTIONLINE_WARRIORS_INTUITION",
   "unitCombats": [
    "UNITCOMBAT_COMBATANT"
   ],

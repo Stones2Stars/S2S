@@ -1,7 +1,5 @@
 {
  "type": "TERRAIN_MARSH",
- "description": "TXT_KEY_TERRAIN_MARSH",
- "civilopedia": "TXT_KEY_TERRAIN_MARSH_PEDIA",
  "food": {
   "plot": {
    "flat": 1
@@ -148,6 +146,8 @@
   "soundscape": "ASSS_GRASSLAND_SELECT_AMB"
  },
  "identity": {
+  "description": "TXT_KEY_TERRAIN_MARSH",
+  "civilopedia": "TXT_KEY_TERRAIN_MARSH_PEDIA",
   "foundCoast": true,
   "foundFreshWater": true,
   "movementCost": 3,

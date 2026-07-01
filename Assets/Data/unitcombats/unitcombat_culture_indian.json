@@ -1,12 +1,12 @@
 {
  "type": "UNITCOMBAT_CULTURE_INDIAN",
- "description": "TXT_KEY_UNITCOMBAT_CULTURE_INDIAN",
  "ui": {
   "art": {
    "icon": "Art/Interface/Buttons/units/sparth/categories/culture_india.dds"
   }
  },
  "identity": {
+  "description": "TXT_KEY_UNITCOMBAT_CULTURE_INDIAN",
   "culture": "BONUS_INDIAN"
  }
 }

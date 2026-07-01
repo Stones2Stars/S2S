@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_TRANSAMERICA_TOWER",
- "description": "TXT_KEY_BUILDING_TRANSAMERICA_TOWER",
- "civilopedia": "TXT_KEY_BUILDING_TRANSAMERICA_TOWER_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -94,6 +92,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_TRANSAMERICA_TOWER",
+  "civilopedia": "TXT_KEY_BUILDING_TRANSAMERICA_TOWER_PEDIA",
   "nukeImmune": true,
   "teamShare": true,
   "worth": 20,

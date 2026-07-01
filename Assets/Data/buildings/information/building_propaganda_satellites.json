@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_PROPAGANDA_SATELLITES",
- "description": "TXT_KEY_BUILDING_PROPAGANDA_SATELLITES",
- "civilopedia": "TXT_KEY_BUILDING_PROPAGANDA_SATELLITES_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_CISLUNAR_MICROSATELLITE_CONSTELLATION"
@@ -87,6 +85,8 @@
   "construct": "AS2D_BUILD_SPACEWAY"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_PROPAGANDA_SATELLITES",
+  "civilopedia": "TXT_KEY_BUILDING_PROPAGANDA_SATELLITES_PEDIA",
   "orbital": true,
   "worth": 6,
   "advisor": "ADVISOR_GROWTH",

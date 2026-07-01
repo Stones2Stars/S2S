@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_NET_SALMON",
- "description": "TXT_KEY_BUILDING_NET_SALMON",
- "civilopedia": "TXT_KEY_BUILDING_NET_SALMON_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_RESOURCES_FISH"
@@ -91,6 +89,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_NET_SALMON",
+  "civilopedia": "TXT_KEY_BUILDING_NET_SALMON_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

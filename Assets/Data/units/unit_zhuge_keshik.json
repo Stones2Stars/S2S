@@ -1,7 +1,5 @@
 {
  "type": "UNIT_ZHUGE_KESHIK",
- "description": "TXT_KEY_UNIT_ZHUGE_KESHIK",
- "civilopedia": "TXT_KEY_UNIT_ZHUGE_KESHIK_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -142,6 +140,8 @@
   "upkeep": 1
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_ZHUGE_KESHIK",
+  "civilopedia": "TXT_KEY_UNIT_ZHUGE_KESHIK_PEDIA",
   "worth": 2,
   "militaryWorth": 8,
   "xpValueAttack": 6,

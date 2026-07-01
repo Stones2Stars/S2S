@@ -1,8 +1,5 @@
 {
  "type": "TECH_ASTRONOMY",
- "description": "TXT_KEY_TECH_ASTRONOMY",
- "civilopedia": "TXT_KEY_TECH_ASTRONOMY_PEDIA",
- "quote": "TXT_KEY_TECH_ASTRONOMY_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_COPERNICUS_OBSERVATORY",
@@ -71,6 +68,9 @@
   "soundMP": "AS2D_TECH_MP_ASTRONOMY"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_ASTRONOMY",
+  "civilopedia": "TXT_KEY_TECH_ASTRONOMY_PEDIA",
+  "quote": "TXT_KEY_TECH_ASTRONOMY_QUOTE",
   "era": "C2C_ERA_RENAISSANCE",
   "worth": 32,
   "militaryWorth": 4,

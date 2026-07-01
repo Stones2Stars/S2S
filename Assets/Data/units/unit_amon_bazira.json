@@ -1,7 +1,5 @@
 {
  "type": "UNIT_AMON_BAZIRA",
- "description": "TXT_KEY_UNIT_AMON_BAZIRA",
- "civilopedia": "TXT_KEY_UNIT_AMON_BAZIRA_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -62,6 +60,8 @@
   "upkeep": 1
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_AMON_BAZIRA",
+  "civilopedia": "TXT_KEY_UNIT_AMON_BAZIRA_PEDIA",
   "worth": 6,
   "militaryWorth": 8,
   "xpValueAttack": 4,

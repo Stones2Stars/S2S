@@ -1,8 +1,5 @@
 {
  "type": "TECH_CRIMINOLOGY",
- "description": "TXT_KEY_TECH_CRIMINOLOGY",
- "civilopedia": "TXT_KEY_TECH_CRIMINOLOGY_PEDIA",
- "quote": "TXT_KEY_TECH_CRIMINOLOGY_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_221B_BAKER_STREET",
@@ -82,6 +79,9 @@
   "soundMP": "AS2D_TECH_CRIMINOLOGY"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_CRIMINOLOGY",
+  "civilopedia": "TXT_KEY_TECH_CRIMINOLOGY_PEDIA",
+  "quote": "TXT_KEY_TECH_CRIMINOLOGY_QUOTE",
   "era": "C2C_ERA_INDUSTRIAL",
   "worth": 32,
   "militaryWorth": 6,

@@ -1,7 +1,5 @@
 {
  "type": "UNIT_ASHURBANIPAL",
- "description": "TXT_KEY_UNIT_ASHURBANIPAL",
- "civilopedia": "TXT_KEY_UNIT_ASHURBANIPAL_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -68,6 +66,8 @@
   "upkeep": 1
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_ASHURBANIPAL",
+  "civilopedia": "TXT_KEY_UNIT_ASHURBANIPAL_PEDIA",
   "worth": 6,
   "militaryWorth": 8,
   "xpValueAttack": 4,

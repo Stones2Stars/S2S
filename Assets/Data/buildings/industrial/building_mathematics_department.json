@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_MATHEMATICS_DEPARTMENT",
- "description": "TXT_KEY_BUILDING_MATHEMATICS_DEPARTMENT",
- "civilopedia": "TXT_KEY_BUILDING_MATHEMATICS_DEPARTMENT_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_ARXIV",
@@ -72,6 +70,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_MATHEMATICS_DEPARTMENT",
+  "civilopedia": "TXT_KEY_BUILDING_MATHEMATICS_DEPARTMENT_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

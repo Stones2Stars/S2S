@@ -1,7 +1,5 @@
 {
  "type": "UNIT_SCOUNDREL",
- "description": "TXT_KEY_UNIT_SCOUNDREL",
- "civilopedia": "TXT_KEY_CONCEPT_ESPIONAGE_PEDIA",
  "obsoletedBy": {
   "techs": [
    "TECH_LABOR_UNIONS"
@@ -190,6 +188,8 @@
   ]
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_SCOUNDREL",
+  "civilopedia": "TXT_KEY_CONCEPT_ESPIONAGE_PEDIA",
   "worth": 7,
   "militaryWorth": 15,
   "xpValueAttack": 8,

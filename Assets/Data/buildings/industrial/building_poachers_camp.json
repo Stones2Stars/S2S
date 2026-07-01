@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_POACHERS_CAMP",
- "description": "TXT_KEY_BUILDING_POACHERS_CAMP",
- "civilopedia": "TXT_KEY_BUILDING_POACHERS_CAMP_PEDIA",
  "obsoletedBy": {
   "techs": [
    "TECH_ECOLOGICAL_ENGINEERING"
@@ -89,6 +87,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_POACHERS_CAMP",
+  "civilopedia": "TXT_KEY_BUILDING_POACHERS_CAMP_PEDIA",
   "nukeImmune": true,
   "militaryWorth": 1,
   "advisor": "ADVISOR_ECONOMY",

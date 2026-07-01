@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_CANDY_SHOP",
- "description": "TXT_KEY_BUILDING_CANDY_SHOP",
- "civilopedia": "TXT_KEY_BUILDING_CANDY_SHOP_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_WONKA_CONFECTIONERIES_SHOP"
@@ -202,6 +200,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_CANDY_SHOP",
+  "civilopedia": "TXT_KEY_BUILDING_CANDY_SHOP_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

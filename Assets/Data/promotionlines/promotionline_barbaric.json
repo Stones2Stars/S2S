@@ -1,9 +1,11 @@
 {
  "type": "PROMOTIONLINE_BARBARIC",
- "description": "TXT_KEY_PROMOTIONLINE_BARBARIC",
  "ui": {
   "art": {
    "icon": "art/Buttons/Traits/TraitPolitician.dds"
   }
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTIONLINE_BARBARIC"
  }
 }

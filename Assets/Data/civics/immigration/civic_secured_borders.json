@@ -1,8 +1,5 @@
 {
  "type": "CIVIC_SECURED_BORDERS",
- "description": "TXT_KEY_CIVIC_SECURED_BORDERS",
- "civilopedia": "TXT_KEY_CIVIC_SECURED_BORDERS_PEDIA",
- "strategy": "TXT_KEY_CIVIC_SECURED_BORDERS_STRATEGY",
  "enables": {
   "buildings": [
    "BUILDING_CRIME_ILLEGAL_IMMIGRATION"
@@ -82,6 +79,9 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_CIVIC_SECURED_BORDERS",
+  "civilopedia": "TXT_KEY_CIVIC_SECURED_BORDERS_PEDIA",
+  "strategy": "TXT_KEY_CIVIC_SECURED_BORDERS_STRATEGY",
   "civicOption": "CIVICOPTION_IMMIGRATION",
   "upkeepLevel": "UPKEEP_HIGH"
  }

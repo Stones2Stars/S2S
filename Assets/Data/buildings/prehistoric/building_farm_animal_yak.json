@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_FARM_ANIMAL_YAK",
- "description": "TXT_KEY_BUILDING_FARM_ANIMAL_YAK",
- "civilopedia": "TXT_KEY_BUILDING_FARM_ANIMAL_YAK_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_DAIRY_BARN",
@@ -91,6 +89,8 @@
   "construct": "AS2D_BUILD_GRANARY"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_FARM_ANIMAL_YAK",
+  "civilopedia": "TXT_KEY_BUILDING_FARM_ANIMAL_YAK_PEDIA",
   "enabledCivilizations": [
    "CIVILIZATION_NPC_NEANDERTHAL"
   ],

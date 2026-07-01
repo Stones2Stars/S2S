@@ -1,8 +1,5 @@
 {
  "type": "TECH_ORCHARDS",
- "description": "TXT_KEY_TECH_ORCHARDS",
- "civilopedia": "TXT_KEY_TECH_ORCHARDS_PEDIA",
- "quote": "TXT_KEY_TECH_ORCHARDS_QUOTE",
  "enables": {
   "bonuses": [
    "BONUS_DRIED_FRUIT",
@@ -117,6 +114,9 @@
   "soundMP": "AS2D_TECH_ORCHADS"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_ORCHARDS",
+  "civilopedia": "TXT_KEY_TECH_ORCHARDS_PEDIA",
+  "quote": "TXT_KEY_TECH_ORCHARDS_QUOTE",
   "era": "C2C_ERA_ANCIENT",
   "worth": 8,
   "tradeable": true,

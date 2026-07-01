@@ -1,7 +1,5 @@
 {
  "type": "TRAIT_FANATICAL",
- "description": "TXT_KEY_TRAIT_FANATICAL",
- "civilopedia": "TXT_KEY_TRAIT_FANATICAL_PEDIA",
  "research": {
   "empire": {
    "percent": [
@@ -70,6 +68,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_TRAIT_FANATICAL",
+  "civilopedia": "TXT_KEY_TRAIT_FANATICAL_PEDIA",
   "shortDescription": "TXT_KEY_TRAIT_FANATICAL_SHORT",
   "negativeTrait": true
  }

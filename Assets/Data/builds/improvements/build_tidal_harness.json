@@ -1,6 +1,5 @@
 {
  "type": "BUILD_TIDAL_HARNESS",
- "description": "TXT_KEY_BUILD_TIDAL_HARNESS",
  "requires": {
   "build": {
    "all": [
@@ -89,5 +88,8 @@
   "art": {
    "entityEvent": "ENTITY_EVENT_BUILD"
   }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILD_TIDAL_HARNESS"
  }
 }

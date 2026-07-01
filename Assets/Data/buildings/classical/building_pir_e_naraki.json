@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_PIR_E_NARAKI",
- "description": "TXT_KEY_BUILDING_PIR_E_NARAKI",
- "civilopedia": "TXT_KEY_BUILDING_PIR_E_NARAKI_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -97,6 +95,8 @@
   "construct": "AS2D_BUILD_BUDDHIST"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_PIR_E_NARAKI",
+  "civilopedia": "TXT_KEY_BUILDING_PIR_E_NARAKI_PEDIA",
   "worth": 2,
   "conquestProbability": 100,
   "greatPeopleUnitType": "UNIT_PROPHET",

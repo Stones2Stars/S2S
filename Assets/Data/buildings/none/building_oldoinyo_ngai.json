@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_OLDOINYO_NGAI",
- "description": "TXT_KEY_BUILDING_OLDOINYO_NGAI",
- "civilopedia": "TXT_KEY_BUILDING_OLDOINYO_NGAI_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -48,6 +46,8 @@
   "construct": "AS2D_BUILD_CONFUCIAN"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_OLDOINYO_NGAI",
+  "civilopedia": "TXT_KEY_BUILDING_OLDOINYO_NGAI_PEDIA",
   "commerceDoubleTime": {
    "culture": 1000
   },

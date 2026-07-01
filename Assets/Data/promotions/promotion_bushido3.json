@@ -1,6 +1,5 @@
 {
  "type": "PROMOTION_BUSHIDO3",
- "description": "TXT_KEY_PROMOTION_BUSHIDO3",
  "upkeep": {
   "unit": {
    "upgradeDiscount": {
@@ -37,6 +36,7 @@
   "sound": "AS2D_IF_LEVELUP"
  },
  "identity": {
+  "description": "TXT_KEY_PROMOTION_BUSHIDO3",
   "stateReligionPrereq": "RELIGION_SHINTO"
  }
 }

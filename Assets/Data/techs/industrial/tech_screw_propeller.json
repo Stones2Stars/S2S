@@ -1,8 +1,5 @@
 {
  "type": "TECH_SCREW_PROPELLER",
- "description": "TXT_KEY_TECH_SCREW_PROPELLER",
- "civilopedia": "TXT_KEY_TECH_SCREW_PROPELLER_PEDIA",
- "quote": "TXT_KEY_TECH_SCREW_PROPELLER_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_HQ_SIDS_SUSHI_CO",
@@ -65,6 +62,9 @@
   "soundMP": "AS2D_TECH_SCREW_PROPELLER"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_SCREW_PROPELLER",
+  "civilopedia": "TXT_KEY_TECH_SCREW_PROPELLER_PEDIA",
+  "quote": "TXT_KEY_TECH_SCREW_PROPELLER_QUOTE",
   "era": "C2C_ERA_INDUSTRIAL",
   "worth": 40,
   "tradeable": true,

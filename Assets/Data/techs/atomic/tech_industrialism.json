@@ -1,8 +1,5 @@
 {
  "type": "TECH_INDUSTRIALISM",
- "description": "TXT_KEY_TECH_INDUSTRIALISM",
- "civilopedia": "TXT_KEY_TECH_INDUSTRIALISM_PEDIA",
- "quote": "TXT_KEY_TECH_INDUSTRIALISM_QUOTE",
  "enables": {
   "bonuses": [
    "BONUS_ALUMINUM_INGOTS",
@@ -112,6 +109,9 @@
   "soundMP": "AS2D_TECH_MP_INDUSTRIALISM"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_INDUSTRIALISM",
+  "civilopedia": "TXT_KEY_TECH_INDUSTRIALISM_PEDIA",
+  "quote": "TXT_KEY_TECH_INDUSTRIALISM_QUOTE",
   "era": "C2C_ERA_ATOMIC",
   "worth": 40,
   "militaryWorth": 10,

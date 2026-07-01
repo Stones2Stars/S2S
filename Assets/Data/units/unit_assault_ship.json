@@ -1,8 +1,5 @@
 {
  "type": "UNIT_ASSAULT_SHIP",
- "description": "TXT_KEY_UNIT_ASSAULT_SHIP",
- "civilopedia": "TXT_KEY_UNIT_ASSAULT_SHIP_PEDIA",
- "help": "TXT_KEY_UNIT_PIRATE_HELP",
  "requires": {
   "build": {
    "all": [
@@ -75,6 +72,9 @@
   "upkeep": 1
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_ASSAULT_SHIP",
+  "civilopedia": "TXT_KEY_UNIT_ASSAULT_SHIP_PEDIA",
+  "help": "TXT_KEY_UNIT_PIRATE_HELP",
   "worth": 2,
   "militaryWorth": 3,
   "xpValueAttack": 4,

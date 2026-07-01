@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_EFFECT_COSMIC_EXPANSION_POWER_PLANT",
- "description": "TXT_KEY_BUILDING_EFFECT_COSMIC_EXPANSION_POWER_PLANT",
- "civilopedia": "TXT_KEY_BUILDING_EFFECT_COSMIC_EXPANSION_POWER_PLANT_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -28,6 +26,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_EFFECT_COSMIC_EXPANSION_POWER_PLANT",
+  "civilopedia": "TXT_KEY_BUILDING_EFFECT_COSMIC_EXPANSION_POWER_PLANT_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

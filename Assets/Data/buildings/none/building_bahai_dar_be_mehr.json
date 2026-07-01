@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_BAHAI_DAR_BE_MEHR",
- "description": "TXT_KEY_BUILDING_BAHAI_DAR_BE_MEHR",
- "civilopedia": "TXT_KEY_BUILDING_BAHAI_DAR_BE_MEHR_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_LOTUS_TEMPLE"
@@ -107,6 +105,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_BAHAI_DAR_BE_MEHR",
+  "civilopedia": "TXT_KEY_BUILDING_BAHAI_DAR_BE_MEHR_PEDIA",
   "neverCapture": true,
   "worth": 6,
   "specialBuildingType": "SPECIALBUILDING_CATHEDRAL",

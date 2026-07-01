@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_NOVUS_REFINERY",
- "description": "TXT_KEY_BUILDING_NOVUS_REFINERY",
- "civilopedia": "TXT_KEY_BUILDING_NOVUS_REFINERY_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_PICOTECH_COMPLEX"
@@ -118,6 +116,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_NOVUS_REFINERY",
+  "civilopedia": "TXT_KEY_BUILDING_NOVUS_REFINERY_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

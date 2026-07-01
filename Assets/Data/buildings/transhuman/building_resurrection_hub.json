@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_RESURRECTION_HUB",
- "description": "TXT_KEY_BUILDING_RESURRECTION_HUB",
- "civilopedia": "TXT_KEY_BUILDING_RESURRECTION_HUB_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_DEATH_COMBAT_ARENA",
@@ -99,6 +97,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_RESURRECTION_HUB",
+  "civilopedia": "TXT_KEY_BUILDING_RESURRECTION_HUB_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

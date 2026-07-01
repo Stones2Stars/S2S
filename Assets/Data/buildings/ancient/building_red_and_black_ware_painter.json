@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_RED_AND_BLACK_WARE_PAINTER",
- "description": "TXT_KEY_BUILDING_RED_AND_BLACK_WARE_PAINTER",
- "civilopedia": "TXT_KEY_BUILDING_RED_AND_BLACK_WARE_PAINTER_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -95,6 +93,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_RED_AND_BLACK_WARE_PAINTER",
+  "civilopedia": "TXT_KEY_BUILDING_RED_AND_BLACK_WARE_PAINTER_PEDIA",
   "centerInCity": true,
   "worth": 10,
   "conquestProbability": 100,

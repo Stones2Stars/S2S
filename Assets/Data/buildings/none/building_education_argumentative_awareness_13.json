@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_EDUCATION_ARGUMENTATIVE_AWARENESS_13",
- "description": "TXT_KEY_BUILDING_EDUCATION_ARGUMENTATIVE_AWARENESS_13",
- "civilopedia": "TXT_KEY_BUILDING_EQ_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -34,6 +32,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_EDUCATION_ARGUMENTATIVE_AWARENESS_13",
+  "civilopedia": "TXT_KEY_BUILDING_EQ_PEDIA",
   "notConstructible": true,
   "nukeImmune": true,
   "neverCapture": true,

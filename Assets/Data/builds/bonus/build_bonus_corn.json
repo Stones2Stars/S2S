@@ -1,6 +1,5 @@
 {
  "type": "BUILD_BONUS_CORN",
- "description": "TXT_KEY_BUILD_BONUS_CORN",
  "produces": {
   "improvement": "IMPROVEMENT_BONUS_CORN"
  },
@@ -19,6 +18,7 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILD_BONUS_CORN",
   "consumesUnit": true
  }
 }

@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_LUMBER_GATHERER",
- "description": "TXT_KEY_BUILDING_LUMBER_GATHERER",
- "civilopedia": "TXT_KEY_BUILDING_LUMBER_GATHERER_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_BONFIRE",
@@ -78,6 +76,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_LUMBER_GATHERER",
+  "civilopedia": "TXT_KEY_BUILDING_LUMBER_GATHERER_PEDIA",
   "enabledCivilizations": [
    "CIVILIZATION_NPC_NEANDERTHAL"
   ],

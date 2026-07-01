@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_HOUSING_COLONY_ARCOLOGY",
- "description": "TXT_KEY_BUILDING_HOUSING_COLONY_ARCOLOGY",
- "civilopedia": "TXT_KEY_BUILDING_HOUSING_COLONY_ARCOLOGY_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_BED_N_BREAKFAST",
@@ -97,6 +95,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_HOUSING_COLONY_ARCOLOGY",
+  "civilopedia": "TXT_KEY_BUILDING_HOUSING_COLONY_ARCOLOGY_PEDIA",
   "sightRange": 1,
   "advisor": "ADVISOR_GROWTH",
   "mapCategories": [

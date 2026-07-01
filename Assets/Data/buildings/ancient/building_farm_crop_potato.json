@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_FARM_CROP_POTATO",
- "description": "TXT_KEY_BUILDING_FARM_CROP_POTATO",
- "civilopedia": "TXT_KEY_BUILDING_FARM_CROP_POTATO_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_RESOURCES_VEGETABLES"
@@ -65,6 +63,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_FARM_CROP_POTATO",
+  "civilopedia": "TXT_KEY_BUILDING_FARM_CROP_POTATO_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

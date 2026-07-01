@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_WILLOW_RUN",
- "description": "TXT_KEY_BUILDING_WILLOW_RUN",
- "civilopedia": "TXT_KEY_BUILDING_WILLOW_RUN_PEDIA",
  "obsoletedBy": {
   "techs": [
    "TECH_LUNAR_MANUFACTURING"
@@ -86,6 +84,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_WILLOW_RUN",
+  "civilopedia": "TXT_KEY_BUILDING_WILLOW_RUN_PEDIA",
   "nukeImmune": true,
   "worth": 10,
   "conquestProbability": 100,

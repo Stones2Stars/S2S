@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_VIROTHERAPY_CLINIC",
- "description": "TXT_KEY_BUILDING_VIROTHERAPY_CLINIC",
- "civilopedia": "TXT_KEY_BUILDING_VIROTHERAPY_CLINIC_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_BACTERIUM_BIOFORGE",
@@ -107,6 +105,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_VIROTHERAPY_CLINIC",
+  "civilopedia": "TXT_KEY_BUILDING_VIROTHERAPY_CLINIC_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

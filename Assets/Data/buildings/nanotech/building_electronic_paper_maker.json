@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_ELECTRONIC_PAPER_MAKER",
- "description": "TXT_KEY_BUILDING_ELECTRONIC_PAPER_MAKER",
- "civilopedia": "TXT_KEY_BUILDING_ELECTRONIC_PAPER_MAKER_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_GUILD_PRINTERS"
@@ -71,6 +69,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_ELECTRONIC_PAPER_MAKER",
+  "civilopedia": "TXT_KEY_BUILDING_ELECTRONIC_PAPER_MAKER_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

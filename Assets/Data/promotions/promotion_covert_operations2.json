@@ -1,6 +1,5 @@
 {
  "type": "PROMOTION_COVERT_OPERATIONS2",
- "description": "TXT_KEY_PROMOTION_COVERT_OPERATIONS2",
  "upkeep": {
   "unit": {
    "modifier": {
@@ -28,5 +27,8 @@
  },
  "sound": {
   "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_COVERT_OPERATIONS2"
  }
 }

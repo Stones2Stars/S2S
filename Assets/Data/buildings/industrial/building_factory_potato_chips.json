@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_FACTORY_POTATO_CHIPS",
- "description": "TXT_KEY_BUILDING_FACTORY_POTATO_CHIPS",
- "civilopedia": "TXT_KEY_BUILDING_FACTORY_POTATO_CHIPS_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_FOOD_MANUFACTURING_DISTRICT"
@@ -167,6 +165,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_FACTORY_POTATO_CHIPS",
+  "civilopedia": "TXT_KEY_BUILDING_FACTORY_POTATO_CHIPS_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

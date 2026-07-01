@@ -1,7 +1,5 @@
 {
  "type": "UNIT_DEERRIDER",
- "description": "TXT_KEY_UNIT_DEERRIDER",
- "civilopedia": "TXT_KEY_UNIT_DEERRIDER_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -148,6 +146,8 @@
   "production": 155
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_DEERRIDER",
+  "civilopedia": "TXT_KEY_UNIT_DEERRIDER_PEDIA",
   "worth": 2,
   "militaryWorth": 8,
   "xpValueAttack": 6,

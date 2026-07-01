@@ -1,7 +1,5 @@
 {
  "type": "UNIT_MAHSUD_ATTAN",
- "description": "TXT_KEY_UNIT_MAHSUD_ATTAN",
- "civilopedia": "TXT_KEY_UNIT_MAHSUD_ATTAN_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -124,6 +122,8 @@
   "upkeep": 1
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_MAHSUD_ATTAN",
+  "civilopedia": "TXT_KEY_UNIT_MAHSUD_ATTAN_PEDIA",
   "worth": 2,
   "militaryWorth": 16,
   "xpValueAttack": 6,

@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_CONTROL_CENTER",
- "description": "TXT_KEY_BUILDING_CONTROL_CENTER",
- "civilopedia": "TXT_KEY_BUILDING_CONTROL_CENTER_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_AMBULANCE_DRONE_CONTROL_CENTER",
@@ -79,6 +77,8 @@
   "construct": "AS2D_BUILD_CONTROL_TOWER"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_CONTROL_CENTER",
+  "civilopedia": "TXT_KEY_BUILDING_CONTROL_CENTER_PEDIA",
   "worth": 10,
   "militaryWorth": 10,
   "conquestProbability": 65,

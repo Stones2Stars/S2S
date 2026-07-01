@@ -1,8 +1,5 @@
 {
  "type": "UNIT_TALESOF_RAY_EAGLE",
- "description": "TXT_KEY_UNIT_TALESOF_RAY_EAGLE",
- "civilopedia": "TXT_KEY_UNIT_RAY_EAGLE_PEDIA",
- "help": "TXT_KEY_UNIT_SUBDUED_ANIMALS_HELP",
  "requires": {
   "build": {
    "all": [
@@ -22,6 +19,9 @@
   ]
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_TALESOF_RAY_EAGLE",
+  "civilopedia": "TXT_KEY_UNIT_RAY_EAGLE_PEDIA",
+  "help": "TXT_KEY_UNIT_SUBDUED_ANIMALS_HELP",
   "spawnOnly": true,
   "worth": 1,
   "domain": "DOMAIN_SEA",

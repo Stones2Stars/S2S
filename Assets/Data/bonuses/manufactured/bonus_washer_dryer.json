@@ -1,7 +1,5 @@
 {
  "type": "BONUS_WASHER_DRYER",
- "description": "TXT_KEY_BONUS_WASHER_DRYER",
- "civilopedia": "TXT_KEY_BONUS_WASHER_DRYER_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_APPLIANCE_STORE",
@@ -14,6 +12,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_WASHER_DRYER",
+  "civilopedia": "TXT_KEY_BONUS_WASHER_DRYER_PEDIA",
   "bonusClassType": "BONUSCLASS_MANUFACTURED"
  }
 }

@@ -1,6 +1,5 @@
 {
  "type": "PROPERTY_FLAMMABILITY",
- "description": "TXT_KEY_PROPERTY_FLAMMABILITY",
  "text": {
   "value": "TXT_KEY_PROPERTY_FLAMMABILITY_DISPLAY",
   "change": "TXT_KEY_PROPERTY_FLAMMABILITY_CHANGE",
@@ -13,6 +12,7 @@
   "scale": "city"
  },
  "identity": {
+  "description": "TXT_KEY_PROPERTY_FLAMMABILITY",
   "fontButtonIndex": 1
  }
 }

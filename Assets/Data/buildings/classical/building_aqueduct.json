@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_AQUEDUCT",
- "description": "TXT_KEY_BUILDING_AQUEDUCT",
- "civilopedia": "TXT_KEY_BUILDING_AQUEDUCT_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_BARAY",
@@ -124,6 +122,8 @@
   "construct": "AS2D_BUILD_AQUEDUCT"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_AQUEDUCT",
+  "civilopedia": "TXT_KEY_BUILDING_AQUEDUCT_PEDIA",
   "centerInCity": true,
   "providesFreshWater": true,
   "worth": 4,

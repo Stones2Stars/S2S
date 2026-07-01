@@ -1,7 +1,5 @@
 {
  "type": "UNIT_YOLNGU_MESSENGER",
- "description": "TXT_KEY_UNIT_YOLNGU_MESSENGER",
- "civilopedia": "TXT_KEY_UNIT_YOLNGU_MESSENGER_PEDIA",
  "obsoletedBy": {
   "techs": [
    "TECH_ENGINEERING"
@@ -227,6 +225,8 @@
   ]
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_YOLNGU_MESSENGER",
+  "civilopedia": "TXT_KEY_UNIT_YOLNGU_MESSENGER_PEDIA",
   "worth": 1,
   "domain": "DOMAIN_LAND",
   "defaultUnitAI": "UNITAI_MERCHANT",

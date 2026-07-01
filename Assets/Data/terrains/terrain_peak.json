@@ -1,7 +1,5 @@
 {
  "type": "TERRAIN_PEAK",
- "description": "TXT_KEY_TERRAIN_PEAK",
- "civilopedia": "TXT_KEY_TERRAIN_PEAK_PEDIA",
  "food": {
   "plot": {
    "flat": -2
@@ -44,6 +42,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_TERRAIN_PEAK",
+  "civilopedia": "TXT_KEY_TERRAIN_PEAK_PEDIA",
   "movementCost": 2
  }
 }

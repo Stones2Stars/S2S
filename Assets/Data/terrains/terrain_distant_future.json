@@ -1,7 +1,5 @@
 {
  "type": "TERRAIN_DISTANT_FUTURE",
- "description": "TXT_KEY_TERRAIN_DISTANT_FUTURE",
- "civilopedia": "TXT_KEY_TERRAIN_DISTANT_FUTURE_PEDIA",
  "commerce": {
   "plot": {
    "flat": 1
@@ -23,6 +21,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_TERRAIN_DISTANT_FUTURE",
+  "civilopedia": "TXT_KEY_TERRAIN_DISTANT_FUTURE_PEDIA",
   "found": true,
   "movementCost": 1,
   "mapCategories": [

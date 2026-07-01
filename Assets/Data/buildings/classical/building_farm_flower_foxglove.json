@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_FARM_FLOWER_FOXGLOVE",
- "description": "TXT_KEY_BUILDING_FARM_FLOWER_FOXGLOVE",
- "civilopedia": "TXT_KEY_BUILDING_FARM_FLOWER_FOXGLOVE_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_RESOURCES_FLOWERS"
@@ -71,6 +69,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_FARM_FLOWER_FOXGLOVE",
+  "civilopedia": "TXT_KEY_BUILDING_FARM_FLOWER_FOXGLOVE_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

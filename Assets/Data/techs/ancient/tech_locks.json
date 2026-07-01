@@ -1,8 +1,5 @@
 {
  "type": "TECH_LOCKS",
- "description": "TXT_KEY_TECH_LOCKS",
- "civilopedia": "TXT_KEY_TECH_LOCKS_PEDIA",
- "quote": "TXT_KEY_TECH_LOCKS_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_BURGLARS_HIDEOUT_UNSANCTIONED",
@@ -63,6 +60,9 @@
   "soundMP": "AS2D_TECH_LOCKS"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_LOCKS",
+  "civilopedia": "TXT_KEY_TECH_LOCKS_PEDIA",
+  "quote": "TXT_KEY_TECH_LOCKS_QUOTE",
   "era": "C2C_ERA_ANCIENT",
   "worth": 2,
   "tradeable": true,

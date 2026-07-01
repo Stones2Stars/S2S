@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_SPACE_COLONY_DEEP_SPACE",
- "description": "TXT_KEY_BUILDING_SPACE_COLONY_DEEP_SPACE",
- "civilopedia": "TXT_KEY_BUILDING_SPACE_COLONY_DEEP_SPACE_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_DEEP_SPACE_DOCKING_BAY",
@@ -48,6 +46,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_SPACE_COLONY_DEEP_SPACE",
+  "civilopedia": "TXT_KEY_BUILDING_SPACE_COLONY_DEEP_SPACE_PEDIA",
   "notConstructible": true,
   "autoBuild": true,
   "advisor": "ADVISOR_SCIENCE",

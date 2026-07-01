@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_RECYCLING_CENTER",
- "description": "TXT_KEY_BUILDING_RECYCLING_CENTER",
- "civilopedia": "TXT_KEY_BUILDING_RECYCLING_CENTER_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_ALUMINUM_RECLAMATION_PLANT",
@@ -86,6 +84,8 @@
   "construct": "AS2D_BUILD_RECYCLING_CENTER"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_RECYCLING_CENTER",
+  "civilopedia": "TXT_KEY_BUILDING_RECYCLING_CENTER_PEDIA",
   "worth": 6,
   "conquestProbability": 75,
   "dcmAirbombMission": 2,

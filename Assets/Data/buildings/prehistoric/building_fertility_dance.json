@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_FERTILITY_DANCE",
- "description": "TXT_KEY_BUILDING_FERTILITY_DANCE",
- "civilopedia": "TXT_KEY_BUILDING_FERTILITY_DANCE_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_FERTILITY_FESTIVAL"
@@ -56,6 +54,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_FERTILITY_DANCE",
+  "civilopedia": "TXT_KEY_BUILDING_FERTILITY_DANCE_PEDIA",
   "notConstructible": true,
   "nukeImmune": true,
   "worth": 1,

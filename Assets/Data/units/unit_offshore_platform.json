@@ -1,7 +1,5 @@
 {
  "type": "UNIT_OFFSHORE_PLATFORM",
- "description": "TXT_KEY_UNIT_OFFSHORE_PLATFORM",
- "civilopedia": "TXT_KEY_UNIT_OFFSHORE_PLATFORM_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -36,6 +34,8 @@
   "upkeep": 1
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_OFFSHORE_PLATFORM",
+  "civilopedia": "TXT_KEY_UNIT_OFFSHORE_PLATFORM_PEDIA",
   "worth": 1,
   "domain": "DOMAIN_SEA",
   "defaultUnitAI": "UNITAI_WORKER_SEA",

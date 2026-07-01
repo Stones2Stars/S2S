@@ -1,7 +1,5 @@
 {
  "type": "FEATURE_PLATY_SHARK_BAY",
- "description": "TXT_KEY_FEATURE_SHARK_BAY",
- "civilopedia": "TXT_KEY_FEATURE_SHARK_BAY_PEDIA",
  "defense": {
   "plot": {
    "amount": {
@@ -25,6 +23,8 @@
   "soundscape": "ASSS_OASIS_SELECT_AMB"
  },
  "identity": {
+  "description": "TXT_KEY_FEATURE_SHARK_BAY",
+  "civilopedia": "TXT_KEY_FEATURE_SHARK_BAY_PEDIA",
   "movementCost": 2,
   "noCity": true,
   "noImprovement": true,

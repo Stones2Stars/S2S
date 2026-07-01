@@ -1,8 +1,5 @@
 {
  "type": "TECH_SMITHING",
- "description": "TXT_KEY_TECH_SMITHING",
- "civilopedia": "TXT_KEY_TECH_SMITHING_PEDIA",
- "quote": "TXT_KEY_TECH_SMITHING_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_ARMOURER",
@@ -82,6 +79,9 @@
   "soundMP": "AS2D_TECH_SMITHING"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_SMITHING",
+  "civilopedia": "TXT_KEY_TECH_SMITHING_PEDIA",
+  "quote": "TXT_KEY_TECH_SMITHING_QUOTE",
   "era": "C2C_ERA_MEDIEVAL",
   "worth": 18,
   "militaryWorth": 12,

@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_CENTRAL_BREEDER_CAMEL",
- "description": "TXT_KEY_BUILDING_CENTRAL_BREEDER_CAMEL",
- "civilopedia": "TXT_KEY_BUILDING_CENTRAL_BREEDER_CAMEL_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_ANIMAL_TRAINER_CAMEL"
@@ -77,6 +75,8 @@
   "construct": "AS2D_BUILD_GRANARY"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_CENTRAL_BREEDER_CAMEL",
+  "civilopedia": "TXT_KEY_BUILDING_CENTRAL_BREEDER_CAMEL_PEDIA",
   "neverCapture": true,
   "worth": 4,
   "militaryWorth": 1,

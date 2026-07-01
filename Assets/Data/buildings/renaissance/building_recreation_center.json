@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_RECREATION_CENTER",
- "description": "TXT_KEY_BUILDING_RECREATION_CENTER",
- "civilopedia": "TXT_KEY_BUILDING_RECREATION_CENTER_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_ATHLETIC_MEGACOMPLEX"
@@ -81,6 +79,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_RECREATION_CENTER",
+  "civilopedia": "TXT_KEY_BUILDING_RECREATION_CENTER_PEDIA",
   "worth": 8,
   "militaryWorth": 4,
   "advisor": "ADVISOR_GROWTH",

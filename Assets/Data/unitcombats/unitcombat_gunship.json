@@ -1,6 +1,5 @@
 {
  "type": "UNITCOMBAT_GUNSHIP",
- "description": "TXT_KEY_UNITCOMBAT_GUNSHIP",
  "strength": {
   "unit": {
    "cityAttack": {
@@ -32,6 +31,7 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_UNITCOMBAT_GUNSHIP",
   "forMilitary": true
  }
 }

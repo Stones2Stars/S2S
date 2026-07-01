@@ -1,8 +1,5 @@
 {
  "type": "TECH_ASSEMBLY_LINE",
- "description": "TXT_KEY_TECH_ASSEMBLY_LINE",
- "civilopedia": "TXT_KEY_TECH_ASSEMBLY_LINE_PEDIA",
- "quote": "TXT_KEY_TECH_ASSEMBLY_LINE_QUOTE",
  "enables": {
   "bonuses": [
    "BONUS_NEWSPAPERS",
@@ -122,6 +119,9 @@
   "soundMP": "AS2D_TECH_MP_ASSEMBLINE"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_ASSEMBLY_LINE",
+  "civilopedia": "TXT_KEY_TECH_ASSEMBLY_LINE_PEDIA",
+  "quote": "TXT_KEY_TECH_ASSEMBLY_LINE_QUOTE",
   "era": "C2C_ERA_INDUSTRIAL",
   "worth": 21,
   "militaryWorth": 7,

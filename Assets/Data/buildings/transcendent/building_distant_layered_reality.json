@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_DISTANT_LAYERED_REALITY",
- "description": "TXT_KEY_BUILDING_DISTANT_LAYERED_REALITY",
- "civilopedia": "TXT_KEY_BUILDING_DISTANT_LAYERED_REALITY_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_DISTANT_DARK_WORLD",
@@ -53,6 +51,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_DISTANT_LAYERED_REALITY",
+  "civilopedia": "TXT_KEY_BUILDING_DISTANT_LAYERED_REALITY_PEDIA",
   "workableRadius": 3,
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,

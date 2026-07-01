@@ -1,9 +1,5 @@
 {
  "type": "CIVILIZATION_RUSSIA",
- "description": "TXT_KEY_CIVILIZATION_RUSSIA",
- "shortDescription": "TXT_KEY_CIVILIZATION_RUSSIA_SHORT",
- "adjective": "TXT_KEY_CIVILIZATION_RUSSIA_ADJECTIVE",
- "civilopedia": "TXT_KEY_CIVILIZATION_RUSSIA_PEDIA",
  "grants": {
   "buildings": [
    "BUILDING_PALACE",
@@ -32,10 +28,6 @@
    "TECH_GAME_START"
   ]
  },
- "policies": {
-  "playable": true,
-  "aiPlayable": true
- },
  "world": {
   "art": {
    "playerColor": "PLAYERCOLOR_DARK_RED",
@@ -49,6 +41,12 @@
   "action": "AS3D_RUSSIA_ORDER"
  },
  "identity": {
+  "description": "TXT_KEY_CIVILIZATION_RUSSIA",
+  "shortDescription": "TXT_KEY_CIVILIZATION_RUSSIA_SHORT",
+  "adjective": "TXT_KEY_CIVILIZATION_RUSSIA_ADJECTIVE",
+  "civilopedia": "TXT_KEY_CIVILIZATION_RUSSIA_PEDIA",
+  "playable": true,
+  "aiPlayable": true,
   "leaders": [
    "LEADER_PETER",
    "LEADER_CATHERINE",

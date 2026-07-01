@@ -1,8 +1,5 @@
 {
  "type": "TECH_NANOTECHNOLOGY",
- "description": "TXT_KEY_TECH_NANOTECHNOLOGY",
- "civilopedia": "TXT_KEY_TECH_NANOTECHNOLOGY_PEDIA",
- "quote": "TXT_KEY_TECH_NANOTECHNOLOGY_QUOTE",
  "enables": {
   "bonuses": [
    "BONUS_NANOTUBES"
@@ -55,6 +52,9 @@
   "soundMP": "AS2D_TECH_NANOTECHNOLOGY"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_NANOTECHNOLOGY",
+  "civilopedia": "TXT_KEY_TECH_NANOTECHNOLOGY_PEDIA",
+  "quote": "TXT_KEY_TECH_NANOTECHNOLOGY_QUOTE",
   "era": "C2C_ERA_INFORMATION",
   "worth": 48,
   "tradeable": true,

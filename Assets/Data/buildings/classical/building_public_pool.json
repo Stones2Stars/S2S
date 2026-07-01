@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_PUBLIC_POOL",
- "description": "TXT_KEY_BUILDING_PUBLIC_POOL",
- "civilopedia": "TXT_KEY_BUILDING_PUBLIC_POOL_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_ATHLETIC_MEGACOMPLEX"
@@ -76,6 +74,8 @@
   "construct": "AS2D_BUILD_PUBLIC_POOL"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_PUBLIC_POOL",
+  "civilopedia": "TXT_KEY_BUILDING_PUBLIC_POOL_PEDIA",
   "worth": 2,
   "advisor": "ADVISOR_MILITARY",
   "mapCategories": [

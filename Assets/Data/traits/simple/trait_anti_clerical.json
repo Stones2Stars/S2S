@@ -1,7 +1,5 @@
 {
  "type": "TRAIT_ANTI_CLERICAL",
- "description": "TXT_KEY_TRAIT_ANTI_CLERICAL",
- "civilopedia": "TXT_KEY_TRAIT_ANTI_CLERICAL_PEDIA",
  "production": {
   "empire": {
    "specialists": {
@@ -177,6 +175,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_TRAIT_ANTI_CLERICAL",
+  "civilopedia": "TXT_KEY_TRAIT_ANTI_CLERICAL_PEDIA",
   "shortDescription": "TXT_KEY_TRAIT_ANTI_CLERICAL_SHORT",
   "negativeTrait": true
  }

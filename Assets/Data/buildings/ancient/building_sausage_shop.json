@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_SAUSAGE_SHOP",
- "description": "TXT_KEY_BUILDING_SAUSAGE_SHOP",
- "civilopedia": "TXT_KEY_BUILDING_SAUSAGE_SHOP_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_FACTORY_SAUSAGE"
@@ -87,6 +85,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_SAUSAGE_SHOP",
+  "civilopedia": "TXT_KEY_BUILDING_SAUSAGE_SHOP_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

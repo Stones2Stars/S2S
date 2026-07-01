@@ -1,8 +1,5 @@
 {
  "type": "TECH_ANDROIDS",
- "description": "TXT_KEY_TECH_ANDROIDS",
- "civilopedia": "TXT_KEY_TECH_ANDROIDS_PEDIA",
- "quote": "TXT_KEY_TECH_ANDROIDS_QUOTE",
  "enables": {
   "bonuses": [
    "BONUS_ANDROIDS"
@@ -72,6 +69,9 @@
   "soundMP": "AS2D_TECH_ANDROIDS"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_ANDROIDS",
+  "civilopedia": "TXT_KEY_TECH_ANDROIDS_PEDIA",
+  "quote": "TXT_KEY_TECH_ANDROIDS_QUOTE",
   "era": "C2C_ERA_NANOTECH",
   "worth": 48,
   "tradeable": true,

@@ -1,7 +1,5 @@
 {
  "type": "UNIT_SAM_INFANTRY",
- "description": "TXT_KEY_UNIT_SAM_INFANTRY",
- "civilopedia": "TXT_KEY_UNIT_SAM_INFANTRY_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -80,6 +78,8 @@
   "upkeep": 1
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_SAM_INFANTRY",
+  "civilopedia": "TXT_KEY_UNIT_SAM_INFANTRY_PEDIA",
   "worth": 5,
   "militaryWorth": 178,
   "xpValueAttack": 2,

@@ -1,7 +1,5 @@
 {
  "type": "BONUS_MICROGENERATORS",
- "description": "TXT_KEY_BONUS_MICROGENERATORS",
- "civilopedia": "TXT_KEY_BONUS_MICROGENERATORS_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_BIOLUMINESCENT_BOUTIQUE",
@@ -15,6 +13,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_MICROGENERATORS",
+  "civilopedia": "TXT_KEY_BONUS_MICROGENERATORS_PEDIA",
   "bonusClassType": "BONUSCLASS_MANUFACTURED"
  }
 }

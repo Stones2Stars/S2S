@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_CHILDCARE_HUT",
- "description": "TXT_KEY_BUILDING_CHILDCARE_HUT",
- "civilopedia": "TXT_KEY_BUILDING_CHILDCARE_HUT_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_CHILD_LABOR_CREW"
@@ -90,6 +88,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_CHILDCARE_HUT",
+  "civilopedia": "TXT_KEY_BUILDING_CHILDCARE_HUT_PEDIA",
   "enabledCivilizations": [
    "CIVILIZATION_NPC_NEANDERTHAL"
   ],

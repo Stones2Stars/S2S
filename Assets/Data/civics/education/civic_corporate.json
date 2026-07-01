@@ -1,8 +1,5 @@
 {
  "type": "CIVIC_CORPORATE",
- "description": "TXT_KEY_CIVIC_CORPORATE",
- "civilopedia": "TXT_KEY_CIVIC_CORPORATE_PEDIA",
- "strategy": "TXT_KEY_CIVIC_CORPORATE_STRATEGY",
  "enables": {
   "buildings": [
    "BUILDING_LEARNING_CENTER"
@@ -61,6 +58,9 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_CIVIC_CORPORATE",
+  "civilopedia": "TXT_KEY_CIVIC_CORPORATE_PEDIA",
+  "strategy": "TXT_KEY_CIVIC_CORPORATE_STRATEGY",
   "civicOption": "CIVICOPTION_EDUCATION",
   "upkeepLevel": "UPKEEP_HIGH"
  }

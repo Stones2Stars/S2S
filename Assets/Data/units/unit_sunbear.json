@@ -1,7 +1,5 @@
 {
  "type": "UNIT_SUNBEAR",
- "description": "TXT_KEY_UNIT_SUNBEAR",
- "civilopedia": "TXT_KEY_UNIT_SUNBEAR_PEDIA",
  "skills": {
   "blendIntoCity": true
  },
@@ -44,6 +42,8 @@
   ]
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_SUNBEAR",
+  "civilopedia": "TXT_KEY_UNIT_SUNBEAR_PEDIA",
   "spawnOnly": true,
   "xpValueAttack": 6,
   "xpValueDefense": 4,

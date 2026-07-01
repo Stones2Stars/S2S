@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_COSMONAUT_TRAINING_CENTRE",
- "description": "TXT_KEY_BUILDING_COSMONAUT_TRAINING_CENTRE",
- "civilopedia": "TXT_KEY_BUILDING_COSMONAUT_TRAINING_CENTRE_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -67,6 +65,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_COSMONAUT_TRAINING_CENTRE",
+  "civilopedia": "TXT_KEY_BUILDING_COSMONAUT_TRAINING_CENTRE_PEDIA",
   "neverCapture": true,
   "worth": 10,
   "advisor": "ADVISOR_SCIENCE",

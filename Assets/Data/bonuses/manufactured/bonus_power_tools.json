@@ -1,7 +1,5 @@
 {
  "type": "BONUS_POWER_TOOLS",
- "description": "TXT_KEY_BONUS_POWER_TOOLS",
- "civilopedia": "TXT_KEY_BONUS_POWER_TOOLS_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_PLASTIC_RECLAMATION_PLANT"
@@ -17,6 +15,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_POWER_TOOLS",
+  "civilopedia": "TXT_KEY_BONUS_POWER_TOOLS_PEDIA",
   "bonusClassType": "BONUSCLASS_MANUFACTURED"
  }
 }

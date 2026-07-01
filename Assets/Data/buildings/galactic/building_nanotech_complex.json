@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_NANOTECH_COMPLEX",
- "description": "TXT_KEY_BUILDING_NANOTECH_COMPLEX",
- "civilopedia": "TXT_KEY_BUILDING_NANOTECH_COMPLEX_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_DELTA_ASSEMBLER",
@@ -111,6 +109,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_NANOTECH_COMPLEX",
+  "civilopedia": "TXT_KEY_BUILDING_NANOTECH_COMPLEX_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

@@ -51,6 +51,7 @@ import os
 from collections import OrderedDict
 
 import engine
+from curate_common import fold_text_to_identity
 from store import Store, REPO
 
 TEXT = OrderedDict([
@@ -157,6 +158,7 @@ def curate(typ, rec):
         identity["fontButtonIndex"] = int(fb)
     if identity:
         out["identity"] = identity
+    fold_text_to_identity(out)   # TEXT -> identity (json.md §7)
     return out
 
 

@@ -1,6 +1,5 @@
 {
  "type": "PROMOTION_HUNTING_SIGHT2",
- "description": "TXT_KEY_PROMOTION_HUNTING_SIGHT2",
  "firstStrike": {
   "unit": {
    "strikes": {
@@ -36,6 +35,7 @@
   "sound": "AS2D_IF_LEVELUP"
  },
  "identity": {
+  "description": "TXT_KEY_PROMOTION_HUNTING_SIGHT2",
   "unitCombats": [
    "UNITCOMBAT_HUNTER",
    "UNITCOMBAT_CANINE",

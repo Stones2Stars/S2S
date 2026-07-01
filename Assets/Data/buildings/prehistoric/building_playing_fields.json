@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_PLAYING_FIELDS",
- "description": "TXT_KEY_BUILDING_PLAYING_FIELDS",
- "civilopedia": "TXT_KEY_BUILDING_PLAYING_FIELDS_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_CAPTURE_THE_FLAG"
@@ -57,6 +55,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_PLAYING_FIELDS",
+  "civilopedia": "TXT_KEY_BUILDING_PLAYING_FIELDS_PEDIA",
   "enabledCivilizations": [
    "CIVILIZATION_NPC_NEANDERTHAL"
   ],

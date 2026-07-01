@@ -1,8 +1,5 @@
 {
  "type": "TECH_ORATORY",
- "description": "TXT_KEY_TECH_ORATORY",
- "civilopedia": "TXT_KEY_TECH_ORATORY_PEDIA",
- "quote": "TXT_KEY_TECH_ORATORY_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_CRIME_FALSE_ACCUSATIONS",
@@ -57,6 +54,9 @@
   "soundMP": "AS2D_TECH_ORATORY"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_ORATORY",
+  "civilopedia": "TXT_KEY_TECH_ORATORY_PEDIA",
+  "quote": "TXT_KEY_TECH_ORATORY_QUOTE",
   "era": "C2C_ERA_ANCIENT",
   "worth": 40,
   "tradeable": true,

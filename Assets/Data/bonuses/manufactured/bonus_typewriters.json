@@ -1,7 +1,5 @@
 {
  "type": "BONUS_TYPEWRITERS",
- "description": "TXT_KEY_BONUS_TYPEWRITERS",
- "civilopedia": "TXT_KEY_BONUS_TYPEWRITERS_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_COPPER_RECLAMATION_PLANT",
@@ -14,6 +12,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_TYPEWRITERS",
+  "civilopedia": "TXT_KEY_BONUS_TYPEWRITERS_PEDIA",
   "bonusClassType": "BONUSCLASS_MANUFACTURED"
  }
 }

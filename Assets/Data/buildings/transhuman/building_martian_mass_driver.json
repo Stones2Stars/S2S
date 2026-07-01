@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_MARTIAN_MASS_DRIVER",
- "description": "TXT_KEY_BUILDING_MARTIAN_MASS_DRIVER",
- "civilopedia": "TXT_KEY_BUILDING_MARTIAN_MASS_DRIVER_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -45,6 +43,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_MARTIAN_MASS_DRIVER",
+  "civilopedia": "TXT_KEY_BUILDING_MARTIAN_MASS_DRIVER_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_INTERGALACTIC_RINGED_GALAXY",
- "description": "TXT_KEY_BUILDING_INTERGALACTIC_RINGED_GALAXY",
- "civilopedia": "TXT_KEY_BUILDING_INTERGALACTIC_RINGED_GALAXY_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_LIFE_CHIRAL_FLEXIBLE"
@@ -49,6 +47,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_INTERGALACTIC_RINGED_GALAXY",
+  "civilopedia": "TXT_KEY_BUILDING_INTERGALACTIC_RINGED_GALAXY_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

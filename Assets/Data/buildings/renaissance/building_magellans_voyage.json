@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_MAGELLANS_VOYAGE",
- "description": "TXT_KEY_BUILDING_MAGELLANS_VOYAGE",
- "civilopedia": "TXT_KEY_BUILDING_MAGELLANS_VOYAGE_PEDIA",
  "obsoletedBy": {
   "techs": [
    "TECH_COMBUSTION"
@@ -102,6 +100,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_MAGELLANS_VOYAGE",
+  "civilopedia": "TXT_KEY_BUILDING_MAGELLANS_VOYAGE_PEDIA",
   "commerceDoubleTime": {
    "culture": 1000
   },

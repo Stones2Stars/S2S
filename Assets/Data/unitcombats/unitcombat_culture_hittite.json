@@ -1,12 +1,12 @@
 {
  "type": "UNITCOMBAT_CULTURE_HITTITE",
- "description": "TXT_KEY_UNITCOMBAT_CULTURE_HITTITE",
  "ui": {
   "art": {
    "icon": "Art/Interface/Buttons/units/sparth/categories/culture_hittites.dds"
   }
  },
  "identity": {
+  "description": "TXT_KEY_UNITCOMBAT_CULTURE_HITTITE",
   "culture": "BONUS_HITTITE"
  }
 }

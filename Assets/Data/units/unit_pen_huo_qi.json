@@ -1,7 +1,5 @@
 {
  "type": "UNIT_PEN_HUO_QI",
- "description": "TXT_KEY_UNIT_PEN_HUO_QI",
- "civilopedia": "TXT_KEY_UNIT_PEN_HUO_QI_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -108,6 +106,8 @@
   "upkeep": 3
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_PEN_HUO_QI",
+  "civilopedia": "TXT_KEY_UNIT_PEN_HUO_QI_PEDIA",
   "worth": 4,
   "militaryWorth": 105,
   "xpValueAttack": 6,

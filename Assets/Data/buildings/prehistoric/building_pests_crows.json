@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_PESTS_CROWS",
- "description": "TXT_KEY_BUILDING_PESTS_CROWS",
- "civilopedia": "TXT_KEY_BUILDING_PESTS_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_SCARECROWS"
@@ -76,6 +74,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_PESTS_CROWS",
+  "civilopedia": "TXT_KEY_BUILDING_PESTS_PEDIA",
   "notConstructible": true,
   "nukeImmune": true,
   "autoBuild": true,

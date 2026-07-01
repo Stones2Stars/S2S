@@ -1,7 +1,5 @@
 {
  "type": "FEATURE_SEA_GRASS",
- "description": "TXT_KEY_FEATURE_SEA_GRASS",
- "civilopedia": "TXT_KEY_FEATURE_SEA_GRASS_PEDIA",
  "food": {
   "plot": {
    "flat": 1
@@ -91,6 +89,8 @@
   ]
  },
  "identity": {
+  "description": "TXT_KEY_FEATURE_SEA_GRASS",
+  "civilopedia": "TXT_KEY_FEATURE_SEA_GRASS_PEDIA",
   "movementCost": 1,
   "appearance": 400,
   "growth": 15,

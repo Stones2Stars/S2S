@@ -1,7 +1,5 @@
 {
  "type": "TRAIT_CHARISMATIC1",
- "description": "TXT_KEY_TRAIT_CHARISMATIC0",
- "civilopedia": "TXT_KEY_TRAIT_CHARISMATIC_PEDIA",
  "enables": {
   "traits": [
    "TRAIT_CHARISMATIC2"
@@ -115,6 +113,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_TRAIT_CHARISMATIC0",
+  "civilopedia": "TXT_KEY_TRAIT_CHARISMATIC_PEDIA",
   "shortDescription": "TXT_KEY_TRAIT_CHARISMATIC_SHORT"
  }
 }

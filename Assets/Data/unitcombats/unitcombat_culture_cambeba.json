@@ -1,12 +1,12 @@
 {
  "type": "UNITCOMBAT_CULTURE_CAMBEBA",
- "description": "TXT_KEY_UNITCOMBAT_CULTURE_CAMBEBA",
  "ui": {
   "art": {
    "icon": "Art/categories/culture_newcultures.dds"
   }
  },
  "identity": {
+  "description": "TXT_KEY_UNITCOMBAT_CULTURE_CAMBEBA",
   "culture": "BONUS_CAMBEBA"
  }
 }

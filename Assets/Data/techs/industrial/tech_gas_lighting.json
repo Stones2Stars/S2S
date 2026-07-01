@@ -1,8 +1,5 @@
 {
  "type": "TECH_GAS_LIGHTING",
- "description": "TXT_KEY_TECH_GAS_LIGHTING",
- "civilopedia": "TXT_KEY_TECH_GAS_LIGHTING_PEDIA",
- "quote": "TXT_KEY_TECH_GAS_LIGHTING_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_GAS_LAMPS"
@@ -72,6 +69,9 @@
   "soundMP": "AS2D_TECH_GAS_LIGHTING"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_GAS_LIGHTING",
+  "civilopedia": "TXT_KEY_TECH_GAS_LIGHTING_PEDIA",
+  "quote": "TXT_KEY_TECH_GAS_LIGHTING_QUOTE",
   "era": "C2C_ERA_INDUSTRIAL",
   "worth": 32,
   "militaryWorth": 6,

@@ -1,6 +1,5 @@
 {
  "type": "UNITCOMBAT_ANIMAL_COMBAT_HERDING",
- "description": "TXT_KEY_UNITCOMBAT_ANIMAL_COMBAT_HERDING",
  "strength": {
   "unit": {
    "perVolumeMore": {
@@ -18,5 +17,8 @@
   "art": {
    "icon": "Art/Interface/Buttons/units/sparth/categories/nature_herding.dds"
   }
+ },
+ "identity": {
+  "description": "TXT_KEY_UNITCOMBAT_ANIMAL_COMBAT_HERDING"
  }
 }

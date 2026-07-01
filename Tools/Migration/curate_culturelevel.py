@@ -39,6 +39,7 @@ import os
 from collections import OrderedDict
 
 import engine
+from curate_common import fold_text_to_identity
 from store import Store, REPO
 
 # The per-speed culture scale IS GameSpeed.iSpeedPercent (verified identical to the XML SpeedThresholds, and the
@@ -138,6 +139,7 @@ def curate(typ, rec, store):
         identity["cultureThreshold"] = thr
     if identity:
         out["identity"] = identity
+    fold_text_to_identity(out)   # TEXT -> identity (json.md §7)
     return out
 
 

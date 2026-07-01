@@ -1,8 +1,5 @@
 {
  "type": "TECH_LEGALIZED_GAMBLING",
- "description": "TXT_KEY_TECH_LEGALIZED_GAMBLING",
- "civilopedia": "TXT_KEY_TECH_LEGALIZED_GAMBLING_PEDIA",
- "quote": "TXT_KEY_TECH_LEGALIZED_GAMBLING_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_CASINO",
@@ -61,6 +58,9 @@
   "soundMP": "AS2D_TECH_LEGALIZED_GAMBLING"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_LEGALIZED_GAMBLING",
+  "civilopedia": "TXT_KEY_TECH_LEGALIZED_GAMBLING_PEDIA",
+  "quote": "TXT_KEY_TECH_LEGALIZED_GAMBLING_QUOTE",
   "era": "C2C_ERA_ATOMIC",
   "worth": 48,
   "tradeable": true,

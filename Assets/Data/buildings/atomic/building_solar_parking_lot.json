@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_SOLAR_PARKING_LOT",
- "description": "TXT_KEY_BUILDING_SOLAR_PARKING_LOT",
- "civilopedia": "TXT_KEY_BUILDING_SOLAR_PARKING_LOT_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_RENEWABLE_MEGACOMPLEX"
@@ -75,6 +73,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_SOLAR_PARKING_LOT",
+  "civilopedia": "TXT_KEY_BUILDING_SOLAR_PARKING_LOT_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

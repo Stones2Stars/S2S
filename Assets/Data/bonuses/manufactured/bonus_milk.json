@@ -1,7 +1,5 @@
 {
  "type": "BONUS_MILK",
- "description": "TXT_KEY_BONUS_MILK",
- "civilopedia": "TXT_KEY_BONUS_MILK_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_CHEESE_SHOP",
@@ -17,6 +15,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_MILK",
+  "civilopedia": "TXT_KEY_BONUS_MILK_PEDIA",
   "bonusClassType": "BONUSCLASS_MANUFACTURED"
  }
 }

@@ -1,7 +1,5 @@
 {
  "type": "PROJECT_ENCYCLOPEDIA",
- "description": "TXT_KEY_PROJECT_ENCYCLOPEDIA",
- "civilopedia": "TXT_KEY_PROJECT_ENCYCLOPEDIA_PEDIA",
  "diplomacy": {
   "team": {
    "techShare": {
@@ -26,6 +24,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_PROJECT_ENCYCLOPEDIA",
+  "civilopedia": "TXT_KEY_PROJECT_ENCYCLOPEDIA_PEDIA",
   "mapCategories": [
    "MAPCATEGORY_EARTH"
   ],

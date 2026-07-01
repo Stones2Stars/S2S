@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_FARM_ANIMAL_ELEPHANT",
- "description": "TXT_KEY_BUILDING_FARM_ANIMAL_ELEPHANT",
- "civilopedia": "TXT_KEY_BUILDING_FARM_ANIMAL_ELEPHANT_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_ANIMAL_TRAINER_ELEPHANT",
@@ -93,6 +91,8 @@
   "construct": "AS2D_BUILD_GRANARY"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_FARM_ANIMAL_ELEPHANT",
+  "civilopedia": "TXT_KEY_BUILDING_FARM_ANIMAL_ELEPHANT_PEDIA",
   "enabledCivilizations": [
    "CIVILIZATION_NPC_NEANDERTHAL"
   ],

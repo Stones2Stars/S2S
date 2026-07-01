@@ -1,7 +1,5 @@
 {
  "type": "UNIT_PASDARAN",
- "description": "TXT_KEY_UNIT_PASDARAN",
- "civilopedia": "TXT_KEY_UNIT_PASDARAN_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -85,6 +83,8 @@
   "upkeep": 1
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_PASDARAN",
+  "civilopedia": "TXT_KEY_UNIT_PASDARAN_PEDIA",
   "worth": 5,
   "militaryWorth": 162,
   "xpValueAttack": 6,

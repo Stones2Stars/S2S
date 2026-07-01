@@ -1,7 +1,5 @@
 {
  "type": "BONUS_PIG",
- "description": "TXT_KEY_BONUS_PIG",
- "civilopedia": "TXT_KEY_BONUS_PIG_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_BREEDING_PROGRAM_BOAR",
@@ -79,6 +77,8 @@
   ]
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_PIG",
+  "civilopedia": "TXT_KEY_BONUS_PIG_PEDIA",
   "bonusClassType": "BONUSCLASS_LIVESTOCK"
  }
 }

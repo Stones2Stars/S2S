@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_CAMP_BISON",
- "description": "TXT_KEY_BUILDING_CAMP_BISON",
- "civilopedia": "TXT_KEY_BUILDING_CAMP_BISON_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_ANIMAL_TRAINER_BISON",
@@ -88,6 +86,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_CAMP_BISON",
+  "civilopedia": "TXT_KEY_BUILDING_CAMP_BISON_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

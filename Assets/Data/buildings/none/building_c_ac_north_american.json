@@ -1,8 +1,5 @@
 {
  "type": "BUILDING_C_AC_NORTH_AMERICAN",
- "description": "TXT_KEY_BUILDING_C_AC_NORTH_AMERICAN",
- "civilopedia": "TXT_KEY_BUILDING_C_AC_PEDIA",
- "help": "TXT_KEY_BUILDING_C_AC_HELP",
  "enables": {
   "buildings": [
    "BUILDING_CULTURE_ADENAN",
@@ -81,6 +78,9 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_C_AC_NORTH_AMERICAN",
+  "civilopedia": "TXT_KEY_BUILDING_C_AC_PEDIA",
+  "help": "TXT_KEY_BUILDING_C_AC_HELP",
   "notConstructible": true,
   "nukeImmune": true,
   "neverCapture": true,

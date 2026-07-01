@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_BREEDING_PROGRAM_WALRUS",
- "description": "TXT_KEY_BUILDING_BREEDING_PROGRAM_WALRUS",
- "civilopedia": "TXT_KEY_BUILDING_BREEDING_PROGRAM_WALRUS_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_RESOURCES_CARCASS",
@@ -96,6 +94,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_BREEDING_PROGRAM_WALRUS",
+  "civilopedia": "TXT_KEY_BUILDING_BREEDING_PROGRAM_WALRUS_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

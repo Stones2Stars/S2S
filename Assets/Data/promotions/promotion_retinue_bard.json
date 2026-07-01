@@ -1,6 +1,5 @@
 {
  "type": "PROMOTION_RETINUE_BARD",
- "description": "TXT_KEY_PROMOTION_RETINUE_BARD",
  "heal": {
   "unit": {
    "enemy": {
@@ -42,6 +41,7 @@
   "sound": "AS2D_IF_GET_RETINUE"
  },
  "identity": {
+  "description": "TXT_KEY_PROMOTION_RETINUE_BARD",
   "unitCombats": [
    "UNITCOMBAT_HERO"
   ]

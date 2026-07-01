@@ -1,7 +1,5 @@
 {
  "type": "UNIT_HEAVY_TARKHAN",
- "description": "TXT_KEY_UNIT_HEAVY_TARKHAN",
- "civilopedia": "TXT_KEY_UNIT_HEAVY_TARKHAN_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -124,6 +122,8 @@
   "upkeep": 1
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_HEAVY_TARKHAN",
+  "civilopedia": "TXT_KEY_UNIT_HEAVY_TARKHAN_PEDIA",
   "worth": 3,
   "militaryWorth": 13,
   "xpValueAttack": 6,

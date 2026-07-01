@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_CHEMICALS_DISTRICT",
- "description": "TXT_KEY_BUILDING_CHEMICALS_DISTRICT",
- "civilopedia": "TXT_KEY_BUILDING_CHEMICALS_DISTRICT_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_GENETICA_APPAREL_SHOP",
@@ -198,6 +196,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_CHEMICALS_DISTRICT",
+  "civilopedia": "TXT_KEY_BUILDING_CHEMICALS_DISTRICT_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

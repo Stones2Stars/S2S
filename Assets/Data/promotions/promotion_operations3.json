@@ -1,6 +1,5 @@
 {
  "type": "PROMOTION_OPERATIONS3",
- "description": "TXT_KEY_PROMOTION_OPERATIONS3",
  "heal": {
   "unit": {
    "neutral": {
@@ -20,6 +19,7 @@
   "sound": "AS2D_IF_LEVELUP"
  },
  "identity": {
+  "description": "TXT_KEY_PROMOTION_OPERATIONS3",
   "controlPoints": 5,
   "commandRange": 1
  }

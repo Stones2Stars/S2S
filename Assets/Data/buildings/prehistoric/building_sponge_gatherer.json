@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_SPONGE_GATHERER",
- "description": "TXT_KEY_BUILDING_SPONGE_GATHERER",
- "civilopedia": "TXT_KEY_BUILDING_SPONGE_GATHERER_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_SPONGE_FARM"
@@ -90,6 +88,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_SPONGE_GATHERER",
+  "civilopedia": "TXT_KEY_BUILDING_SPONGE_GATHERER_PEDIA",
   "nukeImmune": true,
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [

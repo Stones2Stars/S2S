@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_INTERSTELLAR_DEFENSIVE_PERIMETER",
- "description": "TXT_KEY_BUILDING_INTERSTELLAR_DEFENSIVE_PERIMETER",
- "civilopedia": "TXT_KEY_BUILDING_INTERSTELLAR_DEFENSIVE_PERIMETER_PEDIA",
  "enables": {
   "units": [
    "UNIT_INT_BATTLECRUISER"
@@ -53,6 +51,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_INTERSTELLAR_DEFENSIVE_PERIMETER",
+  "civilopedia": "TXT_KEY_BUILDING_INTERSTELLAR_DEFENSIVE_PERIMETER_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

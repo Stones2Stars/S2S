@@ -1,8 +1,5 @@
 {
  "type": "TECH_DADA",
- "description": "TXT_KEY_TECH_DADA",
- "civilopedia": "TXT_KEY_TECH_DADA_PEDIA",
- "quote": "TXT_KEY_TECH_DADA_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_CABARET_VOLTAIRE"
@@ -57,6 +54,9 @@
   "soundMP": "AS2D_TECH_DADA"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_DADA",
+  "civilopedia": "TXT_KEY_TECH_DADA_PEDIA",
+  "quote": "TXT_KEY_TECH_DADA_QUOTE",
   "era": "C2C_ERA_ATOMIC",
   "worth": 40,
   "tradeable": true,

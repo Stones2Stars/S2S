@@ -1,9 +1,11 @@
 {
  "type": "SPECIALBUILDING_PUNK_CYBER",
- "description": "TXT_KEY_SPECIALBUILDING_PUNK_CYBER",
  "ui": {
   "art": {
    "icon": "Art/Interface/Buttons/TechTree/cyberpunk.dds"
   }
+ },
+ "identity": {
+  "description": "TXT_KEY_SPECIALBUILDING_PUNK_CYBER"
  }
 }

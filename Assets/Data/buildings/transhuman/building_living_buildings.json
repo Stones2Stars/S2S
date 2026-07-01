@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_LIVING_BUILDINGS",
- "description": "TXT_KEY_BUILDING_LIVING_BUILDINGS",
- "civilopedia": "TXT_KEY_BUILDING_LIVING_BUILDINGS_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_SELF_AWARE_CITY"
@@ -60,6 +58,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_LIVING_BUILDINGS",
+  "civilopedia": "TXT_KEY_BUILDING_LIVING_BUILDINGS_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

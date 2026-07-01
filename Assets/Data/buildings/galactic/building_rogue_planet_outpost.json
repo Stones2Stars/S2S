@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_ROGUE_PLANET_OUTPOST",
- "description": "TXT_KEY_BUILDING_ROGUE_PLANET_OUTPOST",
- "civilopedia": "TXT_KEY_BUILDING_ROGUE_PLANET_OUTPOST_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_ROGUE_PLANET_BEACON",
@@ -68,6 +66,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_ROGUE_PLANET_OUTPOST",
+  "civilopedia": "TXT_KEY_BUILDING_ROGUE_PLANET_OUTPOST_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

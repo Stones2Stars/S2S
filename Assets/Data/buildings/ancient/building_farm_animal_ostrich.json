@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_FARM_ANIMAL_OSTRICH",
- "description": "TXT_KEY_BUILDING_FARM_ANIMAL_OSTRICH",
- "civilopedia": "TXT_KEY_BUILDING_FARM_ANIMAL_OSTRICH_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_INDUSTRIAL_FARMS"
@@ -67,6 +65,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_FARM_ANIMAL_OSTRICH",
+  "civilopedia": "TXT_KEY_BUILDING_FARM_ANIMAL_OSTRICH_PEDIA",
   "advisor": "ADVISOR_GROWTH",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

@@ -1,6 +1,5 @@
 {
  "type": "VOTE_DEFENSIVE_PACT_CV",
- "description": "TXT_KEY_VOTE_CONGVIENNA_DEFENSIVE_PACT",
  "voteSource": [
   "DIPLOVOTE_CVIENNA"
  ],
@@ -11,5 +10,8 @@
  },
  "effect": {
   "defensivePact": true
+ },
+ "identity": {
+  "description": "TXT_KEY_VOTE_CONGVIENNA_DEFENSIVE_PACT"
  }
 }

@@ -1,6 +1,5 @@
 {
  "type": "PROMOTION_MEEK",
- "description": "TXT_KEY_PROMOTION_MEEK",
  "strength": {
   "unit": {
    "cityAttack": {
@@ -29,6 +28,7 @@
   "sound": "AS2D_IF_LEVELUP"
  },
  "identity": {
+  "description": "TXT_KEY_PROMOTION_MEEK",
   "unitCombats": [
    "UNITCOMBAT_COMBATANT"
   ],

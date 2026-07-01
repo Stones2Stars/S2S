@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_MERCURY_COLONY",
- "description": "TXT_KEY_BUILDING_MERCURY_COLONY",
- "civilopedia": "TXT_KEY_BUILDING_MERCURY_COLONY_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_MERCURY_ANTIMATTER_FACTORY",
@@ -59,6 +57,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_MERCURY_COLONY",
+  "civilopedia": "TXT_KEY_BUILDING_MERCURY_COLONY_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

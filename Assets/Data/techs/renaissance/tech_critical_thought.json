@@ -1,8 +1,5 @@
 {
  "type": "TECH_CRITICAL_THOUGHT",
- "description": "TXT_KEY_TECH_CRITICAL_THOUGHT",
- "civilopedia": "TXT_KEY_TECH_CRITICAL_THOUGHT_PEDIA",
- "quote": "TXT_KEY_TECH_CRITICAL_THOUGHT_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_REVIVALIST_CHURCH"
@@ -60,6 +57,9 @@
   "soundMP": "AS2D_TECH_CRITICALTHOUGHT"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_CRITICAL_THOUGHT",
+  "civilopedia": "TXT_KEY_TECH_CRITICAL_THOUGHT_PEDIA",
+  "quote": "TXT_KEY_TECH_CRITICAL_THOUGHT_QUOTE",
   "era": "C2C_ERA_RENAISSANCE",
   "worth": 24,
   "tradeable": true,

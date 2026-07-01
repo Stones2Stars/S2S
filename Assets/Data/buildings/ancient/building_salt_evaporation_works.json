@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_SALT_EVAPORATION_WORKS",
- "description": "TXT_KEY_BUILDING_SALT_EVAPORATION_WORKS",
- "civilopedia": "TXT_KEY_BUILDING_SALT_EVAPORATION_WORKS_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_RESOURCES_SALT"
@@ -84,6 +82,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_SALT_EVAPORATION_WORKS",
+  "civilopedia": "TXT_KEY_BUILDING_SALT_EVAPORATION_WORKS_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

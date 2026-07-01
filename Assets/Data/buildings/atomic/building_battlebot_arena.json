@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_BATTLEBOT_ARENA",
- "description": "TXT_KEY_BUILDING_BATTLEBOT_ARENA",
- "civilopedia": "TXT_KEY_BUILDING_BATTLEBOT_ARENA_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_BATTLEMECH_ARENA"
@@ -85,6 +83,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_BATTLEBOT_ARENA",
+  "civilopedia": "TXT_KEY_BUILDING_BATTLEBOT_ARENA_PEDIA",
   "worth": 8,
   "militaryWorth": 4,
   "greatPeopleUnitType": "UNIT_SCIENTIST",

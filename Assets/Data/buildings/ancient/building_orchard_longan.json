@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_ORCHARD_LONGAN",
- "description": "TXT_KEY_BUILDING_ORCHARD_LONGAN",
- "civilopedia": "TXT_KEY_BUILDING_ORCHARD_LONGAN_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_RESOURCES_FRUIT"
@@ -72,6 +70,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_ORCHARD_LONGAN",
+  "civilopedia": "TXT_KEY_BUILDING_ORCHARD_LONGAN_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

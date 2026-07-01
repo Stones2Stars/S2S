@@ -1,12 +1,12 @@
 {
  "type": "UNITCOMBAT_CULTURE_BRAZILIAN",
- "description": "TXT_KEY_UNITCOMBAT_CULTURE_BRAZILIAN",
  "ui": {
   "art": {
    "icon": "Art/Interface/Buttons/units/sparth/categories/culture_brazilia.dds"
   }
  },
  "identity": {
+  "description": "TXT_KEY_UNITCOMBAT_CULTURE_BRAZILIAN",
   "culture": "BONUS_BRAZILIAN"
  }
 }

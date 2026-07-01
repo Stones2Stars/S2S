@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_MINE_POTASH",
- "description": "TXT_KEY_BUILDING_MINE_POTASH",
- "civilopedia": "TXT_KEY_BUILDING_MINE_POTASH_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_MODERN_EARTHWORKS"
@@ -81,6 +79,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_MINE_POTASH",
+  "civilopedia": "TXT_KEY_BUILDING_MINE_POTASH_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

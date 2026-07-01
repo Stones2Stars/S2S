@@ -1,6 +1,5 @@
 {
  "type": "BUILD_PATH",
- "description": "TXT_KEY_BUILD_PATH",
  "requires": {
   "build": {
    "all": [
@@ -109,5 +108,8 @@
   "art": {
    "entityEvent": "ENTITY_EVENT_SHOVEL"
   }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILD_PATH"
  }
 }

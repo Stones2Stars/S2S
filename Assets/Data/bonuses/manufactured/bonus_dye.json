@@ -1,7 +1,5 @@
 {
  "type": "BONUS_DYE",
- "description": "TXT_KEY_BONUS_DYE",
- "civilopedia": "TXT_KEY_BONUS_DYE_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_ANIMATION_STUDIO",
@@ -38,6 +36,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_DYE",
+  "civilopedia": "TXT_KEY_BONUS_DYE_PEDIA",
   "bonusClassType": "BONUSCLASS_MANUFACTURED"
  }
 }

@@ -1,6 +1,5 @@
 {
  "type": "PROMOTION_FLOWER_WAR",
- "description": "TXT_KEY_PROMOTION_FLOWER_WAR",
  "movement": {
   "unit": {
    "moveDiscount": {
@@ -64,6 +63,7 @@
   "sound": "AS2D_IF_LEVELUP"
  },
  "identity": {
+  "description": "TXT_KEY_PROMOTION_FLOWER_WAR",
   "stateReligionPrereq": "RELIGION_NAGHUALISM",
   "unitCombats": [
    "UNITCOMBAT_RECON",

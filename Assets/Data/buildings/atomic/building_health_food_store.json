@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_HEALTH_FOOD_STORE",
- "description": "TXT_KEY_BUILDING_HEALTH_FOOD_STORE",
- "civilopedia": "TXT_KEY_BUILDING_HEALTH_FOOD_STORE_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_HYPERMARKET"
@@ -126,6 +124,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_HEALTH_FOOD_STORE",
+  "civilopedia": "TXT_KEY_BUILDING_HEALTH_FOOD_STORE_PEDIA",
   "worth": 5,
   "dcmAirbombMission": 2,
   "advisor": "ADVISOR_ECONOMY",

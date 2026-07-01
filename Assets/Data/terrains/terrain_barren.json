@@ -1,7 +1,5 @@
 {
  "type": "TERRAIN_BARREN",
- "description": "TXT_KEY_TERRAIN_BARREN",
- "civilopedia": "TXT_KEY_TERRAIN_BARREN_PEDIA",
  "commerce": {
   "plot": {
    "flat": [
@@ -131,6 +129,8 @@
   "soundscape": "ASSS_PLAINS_SELECT_AMB"
  },
  "identity": {
+  "description": "TXT_KEY_TERRAIN_BARREN",
+  "civilopedia": "TXT_KEY_TERRAIN_BARREN_PEDIA",
   "found": true,
   "movementCost": 1,
   "mapCategories": [

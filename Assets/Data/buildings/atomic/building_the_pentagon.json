@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_THE_PENTAGON",
- "description": "TXT_KEY_BUILDING_THE_PENTAGON",
- "civilopedia": "TXT_KEY_BUILDING_THE_PENTAGON_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -71,6 +69,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_THE_PENTAGON",
+  "civilopedia": "TXT_KEY_BUILDING_THE_PENTAGON_PEDIA",
   "nukeImmune": true,
   "teamShare": true,
   "worth": 20,

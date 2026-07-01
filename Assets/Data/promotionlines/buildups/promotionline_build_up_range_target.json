@@ -1,7 +1,5 @@
 {
  "type": "PROMOTIONLINE_BUILD_UP_RANGE_TARGET",
- "description": "TXT_KEY_PROMOTIONLINE_BUILD_UP_RANGE_TARGET",
- "help": "TXT_KEY_PROMOTIONLINE_BUILD_UP_RANGE_TARGET_HELP",
  "buildUp": {
   "active": true
  },
@@ -11,6 +9,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_PROMOTIONLINE_BUILD_UP_RANGE_TARGET",
+  "help": "TXT_KEY_PROMOTIONLINE_BUILD_UP_RANGE_TARGET_HELP",
   "notOnDomains": [
    "DOMAIN_AIR"
   ],

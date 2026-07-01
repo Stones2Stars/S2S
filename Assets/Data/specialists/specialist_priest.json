@@ -1,7 +1,5 @@
 {
  "type": "SPECIALIST_PRIEST",
- "description": "TXT_KEY_SPECIALIST_PRIEST",
- "civilopedia": "TXT_KEY_CONCEPT_SPECIALISTS_PEDIA",
  "production": {
   "city": {
    "flat": 1
@@ -170,6 +168,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_SPECIALIST_PRIEST",
+  "civilopedia": "TXT_KEY_CONCEPT_SPECIALISTS_PEDIA",
   "visible": true,
   "categories": [
    "CATEGORY_ASSIGNABLE_SPECIALISTS",

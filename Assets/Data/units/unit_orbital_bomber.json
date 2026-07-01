@@ -1,7 +1,5 @@
 {
  "type": "UNIT_ORBITAL_BOMBER",
- "description": "TXT_KEY_UNIT_ORBITAL_BOMBER",
- "civilopedia": "TXT_KEY_UNIT_ORBITAL_BOMBER_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -97,6 +95,8 @@
   "upkeep": 16
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_ORBITAL_BOMBER",
+  "civilopedia": "TXT_KEY_UNIT_ORBITAL_BOMBER_PEDIA",
   "worth": 4,
   "militaryWorth": 980,
   "xpValueAttack": 6,

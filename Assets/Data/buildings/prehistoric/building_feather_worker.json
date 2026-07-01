@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_FEATHER_WORKER",
- "description": "TXT_KEY_BUILDING_FEATHER_WORKER",
- "civilopedia": "TXT_KEY_BUILDING_FEATHER_WORKER_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_RESOURCES_FEATHERS"
@@ -56,6 +54,8 @@
   "construct": "AS2D_BUILD_GRANARY"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_FEATHER_WORKER",
+  "civilopedia": "TXT_KEY_BUILDING_FEATHER_WORKER_PEDIA",
   "notConstructible": true,
   "worth": 1,
   "conquestProbability": 20,

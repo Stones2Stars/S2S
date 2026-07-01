@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_CASTLE",
- "description": "TXT_KEY_BUILDING_CASTLE",
- "civilopedia": "TXT_KEY_BUILDING_CASTLE_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_BALISTRARIA",
@@ -160,6 +158,8 @@
   "construct": "AS2D_BUILD_CASTLE"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_CASTLE",
+  "civilopedia": "TXT_KEY_BUILDING_CASTLE_PEDIA",
   "centerInCity": true,
   "worth": 2,
   "militaryWorth": 2,

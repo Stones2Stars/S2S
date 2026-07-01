@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_CRYSTAL_JEWELLER",
- "description": "TXT_KEY_BUILDING_CRYSTAL_JEWELLER",
- "civilopedia": "TXT_KEY_BUILDING_CRYSTAL_JEWELLER_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_ENERGIZED_CRYSTALS"
@@ -57,6 +55,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_CRYSTAL_JEWELLER",
+  "civilopedia": "TXT_KEY_BUILDING_CRYSTAL_JEWELLER_PEDIA",
   "specialBuildingType": "SPECIALBUILDING_PUNK_CRYSTAL",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,

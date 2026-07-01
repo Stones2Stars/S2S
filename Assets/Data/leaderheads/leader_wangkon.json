@@ -1,7 +1,5 @@
 {
  "type": "LEADER_WANGKON",
- "description": "TXT_KEY_LEADER_WANGKON",
- "civilopedia": "TXT_KEY_LEADER_WANG_KON_PEDIA",
  "grants": {
   "traits": [
    "TRAIT_DECEIVER",
@@ -310,5 +308,9 @@
    "C2C_ERA_TRANSCENDENT": "AS2D_DIPLO_WARDRUMS_LATE",
    "C2C_ERA_FUTURE": "AS2D_DIPLO_WARDRUMS_LATE"
   }
+ },
+ "identity": {
+  "description": "TXT_KEY_LEADER_WANGKON",
+  "civilopedia": "TXT_KEY_LEADER_WANG_KON_PEDIA"
  }
 }

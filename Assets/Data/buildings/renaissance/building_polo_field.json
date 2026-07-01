@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_POLO_FIELD",
- "description": "TXT_KEY_BUILDING_POLO_FIELD",
- "civilopedia": "TXT_KEY_BUILDING_POLO_FIELD_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_COUNTRY_CLUB"
@@ -76,6 +74,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_POLO_FIELD",
+  "civilopedia": "TXT_KEY_BUILDING_POLO_FIELD_PEDIA",
   "worth": 2,
   "advisor": "ADVISOR_CULTURE",
   "mapCategories": [

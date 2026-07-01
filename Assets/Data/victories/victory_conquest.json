@@ -1,6 +1,5 @@
 {
  "type": "VICTORY_CONQUEST",
- "description": "TXT_KEY_VICTORY_CONQUEST",
  "condition": {
   "conquest": true
  },
@@ -10,5 +9,8 @@
     "file": "ART_DEF_MOVIE_VICTORY_CONQUEST"
    }
   }
+ },
+ "identity": {
+  "description": "TXT_KEY_VICTORY_CONQUEST"
  }
 }

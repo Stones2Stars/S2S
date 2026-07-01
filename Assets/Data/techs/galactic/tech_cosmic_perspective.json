@@ -1,8 +1,5 @@
 {
  "type": "TECH_COSMIC_PERSPECTIVE",
- "description": "TXT_KEY_TECH_COSMIC_PERSPECTIVE",
- "civilopedia": "TXT_KEY_TECH_COSMIC_PERSPECTIVE_PEDIA",
- "quote": "TXT_KEY_TECH_COSMIC_PERSPECTIVE_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_10000_YEAR_CLOCK",
@@ -55,6 +52,9 @@
   "soundMP": "AS2D_TECH_GENERIC"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_COSMIC_PERSPECTIVE",
+  "civilopedia": "TXT_KEY_TECH_COSMIC_PERSPECTIVE_PEDIA",
+  "quote": "TXT_KEY_TECH_COSMIC_PERSPECTIVE_QUOTE",
   "era": "C2C_ERA_GALACTIC",
   "worth": 48,
   "tradeable": true,

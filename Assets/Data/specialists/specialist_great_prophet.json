@@ -1,7 +1,5 @@
 {
  "type": "SPECIALIST_GREAT_PROPHET",
- "description": "TXT_KEY_SPECIALIST_GREAT_PROPHET",
- "civilopedia": "TXT_KEY_CONCEPT_GREAT_PEOPLE_PEDIA",
  "production": {
   "city": {
    "flat": 2
@@ -52,6 +50,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_SPECIALIST_GREAT_PROPHET",
+  "civilopedia": "TXT_KEY_CONCEPT_GREAT_PEOPLE_PEDIA",
   "categories": [
    "CATEGORY_SPECIALIST_GROUP_RELIGIOUS"
   ]

@@ -1,8 +1,5 @@
 {
  "type": "TECH_CONFUCIANISM",
- "description": "TXT_KEY_TECH_CONFUCIANISM",
- "civilopedia": "TXT_KEY_TECH_CONFUCIANISM_PEDIA",
- "quote": "TXT_KEY_TECH_CONFUCIANISM_QUOTE",
  "enables": {
   "religions": [
    "RELIGION_CONFUCIANISM"
@@ -55,6 +52,9 @@
   "soundMP": "AS2D_TECH_CONFUCIANISM"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_CONFUCIANISM",
+  "civilopedia": "TXT_KEY_TECH_CONFUCIANISM_PEDIA",
+  "quote": "TXT_KEY_TECH_CONFUCIANISM_QUOTE",
   "era": "C2C_ERA_CLASSICAL",
   "worth": 8,
   "gridX": 37,

@@ -1,8 +1,5 @@
 {
  "type": "RELIGION_YORUBA",
- "description": "TXT_KEY_TECH_YORUBA",
- "civilopedia": "TXT_KEY_TECH_YORUBA_PEDIA",
- "adjective": "TXT_KEY_TECH_YORUBA_ADJECTIVE",
  "enables": {
   "buildings": [
    "BUILDING_PATTAKY_OF_OBATALA",
@@ -84,6 +81,9 @@
   "sound": "AS2D_BUILD_YORUBA"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_YORUBA",
+  "adjective": "TXT_KEY_TECH_YORUBA_ADJECTIVE",
+  "civilopedia": "TXT_KEY_TECH_YORUBA_PEDIA",
   "spreadFactor": 10
  }
 }

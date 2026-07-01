@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_MARTIAN_SPACEPORT",
- "description": "TXT_KEY_BUILDING_MARTIAN_SPACEPORT",
- "civilopedia": "TXT_KEY_BUILDING_MARTIAN_SPACEPORT_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_MARTIAN_AMMONIA_BOMBARDMENT",
@@ -43,6 +41,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_MARTIAN_SPACEPORT",
+  "civilopedia": "TXT_KEY_BUILDING_MARTIAN_SPACEPORT_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

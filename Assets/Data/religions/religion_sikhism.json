@@ -1,7 +1,5 @@
 {
  "type": "RELIGION_SIKHISM",
- "description": "TXT_KEY_TECH_SIKHISM",
- "civilopedia": "TXT_KEY_TECH_SIKHISM_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_SIKH_CATHEDRAL",
@@ -71,6 +69,8 @@
   "sound": "AS2D_BUILD_HINDU"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_SIKHISM",
+  "civilopedia": "TXT_KEY_TECH_SIKHISM_PEDIA",
   "spreadFactor": 16
  }
 }

@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_NGAI_NAROK_BLESS_SHEEP",
- "description": "TXT_KEY_BUILDING_NGAI_NAROK_BLESS_SHEEP",
- "civilopedia": "TXT_KEY_BUILDING_NGAI_NAROK_BLESS_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -85,6 +83,8 @@
   "construct": "AS2D_BUILD_CONFUCIAN"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_NGAI_NAROK_BLESS_SHEEP",
+  "civilopedia": "TXT_KEY_BUILDING_NGAI_NAROK_BLESS_PEDIA",
   "neverCapture": true,
   "specialBuildingType": "SPECIALBUILDING_TEMPLE",
   "religion": "RELIGION_NGAIISM",

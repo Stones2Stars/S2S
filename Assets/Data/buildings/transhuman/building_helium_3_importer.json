@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_HELIUM_3_IMPORTER",
- "description": "TXT_KEY_BUILDING_HELIUM_3_IMPORTER",
- "civilopedia": "TXT_KEY_BUILDING_HELIUM_3_IMPORTER_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_HE3_FUSION_POWER_PLANT"
@@ -40,6 +38,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_HELIUM_3_IMPORTER",
+  "civilopedia": "TXT_KEY_BUILDING_HELIUM_3_IMPORTER_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

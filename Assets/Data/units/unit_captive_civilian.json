@@ -1,8 +1,5 @@
 {
  "type": "UNIT_CAPTIVE_CIVILIAN",
- "description": "TXT_KEY_UNIT_CAPTIVE_CIVILIAN",
- "civilopedia": "TXT_KEY_UNIT_CAPTIVE_CIVILIAN_PEDIA",
- "help": "TXT_KEY_UNIT_CAPTIVE_CIVILIAN_HELP",
  "skills": {
   "onlyDefensive": true,
   "workerTrade": true
@@ -174,6 +171,9 @@
   "upkeep": 1
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_CAPTIVE_CIVILIAN",
+  "civilopedia": "TXT_KEY_UNIT_CAPTIVE_CIVILIAN_PEDIA",
+  "help": "TXT_KEY_UNIT_CAPTIVE_CIVILIAN_HELP",
   "spawnOnly": true,
   "worth": 1,
   "domain": "DOMAIN_LAND",

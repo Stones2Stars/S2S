@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_ARTIFICIAL_TREE_FARM",
- "description": "TXT_KEY_BUILDING_ARTIFICIAL_TREE_FARM",
- "civilopedia": "TXT_KEY_BUILDING_ARTIFICIAL_TREE_FARM_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_CHEMOSYNTHESIS_PLANT_FARM",
@@ -65,6 +63,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_ARTIFICIAL_TREE_FARM",
+  "civilopedia": "TXT_KEY_BUILDING_ARTIFICIAL_TREE_FARM_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

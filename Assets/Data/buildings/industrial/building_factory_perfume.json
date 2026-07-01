@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_FACTORY_PERFUME",
- "description": "TXT_KEY_BUILDING_FACTORY_PERFUME",
- "civilopedia": "TXT_KEY_BUILDING_FACTORY_PERFUME_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_CHEMICALS_DISTRICT"
@@ -91,6 +89,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_FACTORY_PERFUME",
+  "civilopedia": "TXT_KEY_BUILDING_FACTORY_PERFUME_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

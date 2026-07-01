@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_NATURE_ALTAR_RICE_GOD",
- "description": "TXT_KEY_BUILDING_NATURE_ALTAR_RICE_GOD",
- "civilopedia": "TXT_KEY_BUILDING_NATURE_ALTAR_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -66,6 +64,8 @@
   "construct": "AS2D_BUILD_DRUID"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_NATURE_ALTAR_RICE_GOD",
+  "civilopedia": "TXT_KEY_BUILDING_NATURE_ALTAR_PEDIA",
   "worth": 4,
   "advisor": "ADVISOR_RELIGION",
   "mapCategories": [

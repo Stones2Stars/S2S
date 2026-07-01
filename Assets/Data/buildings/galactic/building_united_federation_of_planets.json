@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_UNITED_FEDERATION_OF_PLANETS",
- "description": "TXT_KEY_BUILDING_UNITED_FEDERATION_OF_PLANETS",
- "civilopedia": "TXT_KEY_BUILDING_UNITED_FEDERATION_OF_PLANETS_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -49,6 +47,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_UNITED_FEDERATION_OF_PLANETS",
+  "civilopedia": "TXT_KEY_BUILDING_UNITED_FEDERATION_OF_PLANETS_PEDIA",
   "conquestProbability": 100,
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,

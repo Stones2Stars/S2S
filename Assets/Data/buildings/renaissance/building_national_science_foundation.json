@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_NATIONAL_SCIENCE_FOUNDATION",
- "description": "TXT_KEY_BUILDING_NATIONAL_SCIENCE_FOUNDATION",
- "civilopedia": "TXT_KEY_BUILDING_NATIONAL_SCIENCE_FOUNDATION_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -69,6 +67,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_NATIONAL_SCIENCE_FOUNDATION",
+  "civilopedia": "TXT_KEY_BUILDING_NATIONAL_SCIENCE_FOUNDATION_PEDIA",
   "neverCapture": true,
   "greatPeopleUnitType": "UNIT_SCIENTIST",
   "advisor": "ADVISOR_SCIENCE",

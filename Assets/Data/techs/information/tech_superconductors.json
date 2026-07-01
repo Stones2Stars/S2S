@@ -1,8 +1,5 @@
 {
  "type": "TECH_SUPERCONDUCTORS",
- "description": "TXT_KEY_TECH_SUPERCONDUCTORS",
- "civilopedia": "TXT_KEY_TECH_SUPERCONDUCTORS_PEDIA",
- "quote": "TXT_KEY_TECH_SUPERCONDUCTORS_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_FAST_BREEDER_REACTOR",
@@ -50,6 +47,9 @@
   "soundMP": "AS2D_TECH_MP_SUPERCONDUCTOR"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_SUPERCONDUCTORS",
+  "civilopedia": "TXT_KEY_TECH_SUPERCONDUCTORS_PEDIA",
+  "quote": "TXT_KEY_TECH_SUPERCONDUCTORS_QUOTE",
   "era": "C2C_ERA_INFORMATION",
   "worth": 48,
   "tradeable": true,

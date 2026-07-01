@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_LEONARDOS_WORKSHOP",
- "description": "TXT_KEY_BUILDING_LEONARDOS_WORKSHOP",
- "civilopedia": "TXT_KEY_BUILDING_LEONARDOS_WORKSHOP_PEDIA",
  "obsoletedBy": {
   "techs": [
    "TECH_THERMODYNAMICS"
@@ -83,6 +81,8 @@
   "construct": "AS2D_BUILD_UNIVERSITY"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_LEONARDOS_WORKSHOP",
+  "civilopedia": "TXT_KEY_BUILDING_LEONARDOS_WORKSHOP_PEDIA",
   "commerceDoubleTime": {
    "culture": 1000
   },

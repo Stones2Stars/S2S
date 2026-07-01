@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_PATENT_OFFICE",
- "description": "TXT_KEY_BUILDING_PATENT_OFFICE",
- "civilopedia": "TXT_KEY_BUILDING_PATENT_OFFICE_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -61,6 +59,8 @@
   "construct": "AS2D_BUILD_MARKETPLACE"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_PATENT_OFFICE",
+  "civilopedia": "TXT_KEY_BUILDING_PATENT_OFFICE_PEDIA",
   "worth": 8,
   "conquestProbability": 66,
   "advisor": "ADVISOR_ECONOMY",

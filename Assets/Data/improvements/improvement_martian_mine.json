@@ -1,7 +1,5 @@
 {
  "type": "IMPROVEMENT_MARTIAN_MINE",
- "description": "TXT_KEY_IMPROVEMENT_MARTIAN_MINE",
- "civilopedia": "TXT_KEY_IMPROVEMENT_MARTIAN_MINE_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -84,6 +82,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_IMPROVEMENT_MARTIAN_MINE",
+  "civilopedia": "TXT_KEY_IMPROVEMENT_MARTIAN_MINE_PEDIA",
   "extraterrestrial": true,
   "pillageGold": 200,
   "bonuses": {

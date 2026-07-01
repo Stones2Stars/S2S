@@ -1,7 +1,5 @@
 {
  "type": "BONUS_NANOGENERATORS",
- "description": "TXT_KEY_BONUS_NANOGENERATORS",
- "civilopedia": "TXT_KEY_BONUS_NANOGENERATORS_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_DATTOO_PARLOR",
@@ -18,6 +16,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_NANOGENERATORS",
+  "civilopedia": "TXT_KEY_BONUS_NANOGENERATORS_PEDIA",
   "bonusClassType": "BONUSCLASS_MANUFACTURED"
  }
 }

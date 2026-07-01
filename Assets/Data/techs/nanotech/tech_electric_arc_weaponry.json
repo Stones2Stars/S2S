@@ -1,8 +1,5 @@
 {
  "type": "TECH_ELECTRIC_ARC_WEAPONRY",
- "description": "TXT_KEY_TECH_ELECTRIC_ARC_WEAPONRY",
- "civilopedia": "TXT_KEY_TECH_ELECTRIC_ARC_WEAPONRY_PEDIA",
- "quote": "TXT_KEY_TECH_ELECTRIC_ARC_WEAPONRY_QUOTE",
  "enables": {
   "bonuses": [
    "BONUS_PLASMA_GENERATORS"
@@ -59,6 +56,9 @@
   "soundMP": "AS2D_TECH_ELECTRIC_ARC_WEAPONRY"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_ELECTRIC_ARC_WEAPONRY",
+  "civilopedia": "TXT_KEY_TECH_ELECTRIC_ARC_WEAPONRY_PEDIA",
+  "quote": "TXT_KEY_TECH_ELECTRIC_ARC_WEAPONRY_QUOTE",
   "era": "C2C_ERA_NANOTECH",
   "worth": 43,
   "militaryWorth": 5,

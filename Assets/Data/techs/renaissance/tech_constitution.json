@@ -1,8 +1,5 @@
 {
  "type": "TECH_CONSTITUTION",
- "description": "TXT_KEY_TECH_CONSTITUTION",
- "civilopedia": "TXT_KEY_TECH_CONSTITUTION_PEDIA",
- "quote": "TXT_KEY_TECH_CONSTITUTION_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_CRIME_PRISON_BREAKOUTS",
@@ -73,6 +70,9 @@
   "soundMP": "AS2D_TECH_CONSTITUTION"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_CONSTITUTION",
+  "civilopedia": "TXT_KEY_TECH_CONSTITUTION_PEDIA",
+  "quote": "TXT_KEY_TECH_CONSTITUTION_QUOTE",
   "era": "C2C_ERA_RENAISSANCE",
   "worth": 32,
   "tradeable": true,

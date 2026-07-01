@@ -1,7 +1,5 @@
 {
  "type": "TERRAIN_INFECTED_WATER",
- "description": "TXT_KEY_TERRAIN_INFECTED_WATER",
- "civilopedia": "TXT_KEY_TERRAIN_INFECTED_WATER_PEDIA",
  "food": {
   "plot": {
    "flat": -5
@@ -131,6 +129,8 @@
   "soundscape": "ASSS_COAST_SELECT_AMB"
  },
  "identity": {
+  "description": "TXT_KEY_TERRAIN_INFECTED_WATER",
+  "civilopedia": "TXT_KEY_TERRAIN_INFECTED_WATER_PEDIA",
   "distanceToLand": 1,
   "movementCost": 6
  }

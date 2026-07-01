@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_KHAN_TENGRI",
- "description": "TXT_KEY_BUILDING_KHAN_TENGRI",
- "civilopedia": "TXT_KEY_BUILDING_KHAN_TENGRI_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -41,6 +39,8 @@
   "construct": "AS2D_BUILD_SIBERIAN"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_KHAN_TENGRI",
+  "civilopedia": "TXT_KEY_BUILDING_KHAN_TENGRI_PEDIA",
   "commerceDoubleTime": {
    "culture": 1000
   },

@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_POLLUTION_BLACKENED_SKIES",
- "description": "TXT_KEY_BUILDING_POLLUTION_BLACKENED_SKIES",
- "civilopedia": "TXT_KEY_BUILDING_AIR_POLLUTION_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -74,6 +72,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_POLLUTION_BLACKENED_SKIES",
+  "civilopedia": "TXT_KEY_BUILDING_AIR_POLLUTION_PEDIA",
   "notConstructible": true,
   "nukeImmune": true,
   "conquestProbability": 100,

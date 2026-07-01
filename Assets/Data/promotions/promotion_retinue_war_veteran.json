@@ -1,6 +1,5 @@
 {
  "type": "PROMOTION_RETINUE_WAR_VETERAN",
- "description": "TXT_KEY_PROMOTION_RETINUE_WAR_VETERAN",
  "capture": {
   "unit": {
    "probability": {
@@ -39,6 +38,7 @@
   "sound": "AS2D_IF_GET_RETINUE"
  },
  "identity": {
+  "description": "TXT_KEY_PROMOTION_RETINUE_WAR_VETERAN",
   "unitCombats": [
    "UNITCOMBAT_HERO"
   ]

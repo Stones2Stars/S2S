@@ -1,8 +1,5 @@
 {
  "type": "TRAIT_CREATIVE",
- "description": "TXT_KEY_TRAIT_COMPLEX_CREATIVE",
- "civilopedia": "TXT_KEY_TRAIT_COMPLEX_CREATIVE_PEDIA",
- "strategy": "TXT_KEY_TRAIT_COMPLEX_CREATIVE_STRATEGY",
  "excludes": [
   "TRAIT_UNREFINED"
  ],
@@ -993,5 +990,10 @@
   "art": {
    "icon": "art/Buttons/Traits/TraitCreative.dds"
   }
+ },
+ "identity": {
+  "description": "TXT_KEY_TRAIT_COMPLEX_CREATIVE",
+  "civilopedia": "TXT_KEY_TRAIT_COMPLEX_CREATIVE_PEDIA",
+  "strategy": "TXT_KEY_TRAIT_COMPLEX_CREATIVE_STRATEGY"
  }
 }

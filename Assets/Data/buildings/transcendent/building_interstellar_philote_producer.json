@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_INTERSTELLAR_PHILOTE_PRODUCER",
- "description": "TXT_KEY_BUILDING_INTERSTELLAR_PHILOTE_PRODUCER",
- "civilopedia": "TXT_KEY_BUILDING_INTERSTELLAR_PHILOTE_PRODUCER_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_INTERSTELLAR_COSMIC_NODE"
@@ -56,6 +54,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_INTERSTELLAR_PHILOTE_PRODUCER",
+  "civilopedia": "TXT_KEY_BUILDING_INTERSTELLAR_PHILOTE_PRODUCER_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

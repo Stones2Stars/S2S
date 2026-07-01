@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_SMITH_IRON",
- "description": "TXT_KEY_BUILDING_SMITH_IRON",
- "civilopedia": "TXT_KEY_BUILDING_SMITH_IRON_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_ADVANCED_IRONWORKS"
@@ -98,6 +96,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_SMITH_IRON",
+  "civilopedia": "TXT_KEY_BUILDING_SMITH_IRON_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

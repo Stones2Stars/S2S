@@ -1,8 +1,5 @@
 {
  "type": "TECH_SPICE_TRADE",
- "description": "TXT_KEY_TECH_SPICE_TRADE",
- "civilopedia": "TXT_KEY_TECH_SPICE_TRADE_PEDIA",
- "quote": "TXT_KEY_TECH_SPICE_TRADE_QUOTE",
  "enables": {
   "bonuses": [
    "BONUS_CHOCOLATE",
@@ -106,6 +103,9 @@
   "soundMP": "AS2D_TECH_SPICE_TRADE"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_SPICE_TRADE",
+  "civilopedia": "TXT_KEY_TECH_SPICE_TRADE_PEDIA",
+  "quote": "TXT_KEY_TECH_SPICE_TRADE_QUOTE",
   "era": "C2C_ERA_CLASSICAL",
   "worth": 8,
   "tradeable": true,

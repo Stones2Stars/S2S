@@ -1,7 +1,5 @@
 {
  "type": "UNIT_CASSOWARY",
- "description": "TXT_KEY_UNIT_CASSOWARY",
- "civilopedia": "TXT_KEY_CONCEPT_SUBDUED_ANIMALS_PEDIA",
  "withdrawal": {
   "unit": {
    "percent": 5
@@ -51,6 +49,8 @@
   ]
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_CASSOWARY",
+  "civilopedia": "TXT_KEY_CONCEPT_SUBDUED_ANIMALS_PEDIA",
   "spawnOnly": true,
   "xpValueAttack": 7,
   "xpValueDefense": 4,

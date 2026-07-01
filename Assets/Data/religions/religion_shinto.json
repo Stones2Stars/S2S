@@ -1,8 +1,5 @@
 {
  "type": "RELIGION_SHINTO",
- "description": "TXT_KEY_TECH_SHINTO",
- "civilopedia": "TXT_KEY_TECH_SHINTO_PEDIA",
- "adjective": "TXT_KEY_TECH_SHINTO_ADJECTIVE",
  "enables": {
   "buildings": [
    "BUILDING_ITSUKUSHIMA_SHRINE",
@@ -85,6 +82,9 @@
   "sound": "AS2D_BUILD_SHINTO"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_SHINTO",
+  "adjective": "TXT_KEY_TECH_SHINTO_ADJECTIVE",
+  "civilopedia": "TXT_KEY_TECH_SHINTO_PEDIA",
   "spreadFactor": 20
  }
 }

@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_FACTORY_MARZIPAN",
- "description": "TXT_KEY_BUILDING_FACTORY_MARZIPAN",
- "civilopedia": "TXT_KEY_BUILDING_FACTORY_MARZIPAN_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_FOOD_MANUFACTURING_DISTRICT"
@@ -136,6 +134,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_FACTORY_MARZIPAN",
+  "civilopedia": "TXT_KEY_BUILDING_FACTORY_MARZIPAN_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

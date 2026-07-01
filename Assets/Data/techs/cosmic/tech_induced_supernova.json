@@ -1,8 +1,5 @@
 {
  "type": "TECH_INDUCED_SUPERNOVA",
- "description": "TXT_KEY_TECH_INDUCED_SUPERNOVA",
- "civilopedia": "TXT_KEY_TECH_INDUCED_SUPERNOVA_PEDIA",
- "quote": "TXT_KEY_TECH_INDUCED_SUPERNOVA_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_INTERSTELLAR_CAPTURED_NEUTRON_STARS",
@@ -63,6 +60,9 @@
   "soundMP": "AS2D_TECH_GENERIC"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_INDUCED_SUPERNOVA",
+  "civilopedia": "TXT_KEY_TECH_INDUCED_SUPERNOVA_PEDIA",
+  "quote": "TXT_KEY_TECH_INDUCED_SUPERNOVA_QUOTE",
   "era": "C2C_ERA_COSMIC",
   "worth": 48,
   "tradeable": true,

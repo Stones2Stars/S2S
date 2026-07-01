@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_CONFUCIAN_ACADEMY",
- "description": "TXT_KEY_BUILDING_CONFUCIAN_ACADEMY",
- "civilopedia": "TXT_KEY_BUILDING_CONFUCIAN_ACADEMY_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -121,6 +119,8 @@
   "construct": "AS2D_BUILD_CONFUCIAN"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_CONFUCIAN_ACADEMY",
+  "civilopedia": "TXT_KEY_BUILDING_CONFUCIAN_ACADEMY_PEDIA",
   "neverCapture": true,
   "worth": 6,
   "specialBuildingType": "SPECIALBUILDING_CATHEDRAL",

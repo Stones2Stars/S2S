@@ -1,6 +1,5 @@
 {
  "type": "PROMOTION_POWER_SOURCE_UPGRADE2",
- "description": "TXT_KEY_PROMOTION_POWER_SOURCE_UPGRADE2",
  "strength": {
   "unit": {
    "unitCombat": {
@@ -33,6 +32,7 @@
   "sound": "AS2D_IF_LEVELUP"
  },
  "identity": {
+  "description": "TXT_KEY_PROMOTION_POWER_SOURCE_UPGRADE2",
   "notOnDomains": [
    "DOMAIN_AIR",
    "DOMAIN_SEA"

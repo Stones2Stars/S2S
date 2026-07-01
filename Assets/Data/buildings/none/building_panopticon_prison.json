@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_PANOPTICON_PRISON",
- "description": "TXT_KEY_BUILDING_PANOPTICON_PRISON",
- "civilopedia": "TXT_KEY_BUILDING_PANOPTICON_PRISON_PEDIA",
  "obsoletedBy": {
   "techs": [
    "TECH_CRYONICS"
@@ -77,6 +75,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_PANOPTICON_PRISON",
+  "civilopedia": "TXT_KEY_BUILDING_PANOPTICON_PRISON_PEDIA",
   "worth": 5,
   "specialBuildingType": "SPECIALBUILDING_PUNK_STEAM",
   "advisor": "ADVISOR_MILITARY",

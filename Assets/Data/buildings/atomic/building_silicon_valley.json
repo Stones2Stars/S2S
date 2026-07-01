@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_SILICON_VALLEY",
- "description": "TXT_KEY_BUILDING_SILICON_VALLEY",
- "civilopedia": "TXT_KEY_BUILDING_SILICON_VALLEY_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -79,6 +77,8 @@
   "construct": "AS2D_BUILD_LABORATORY"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_SILICON_VALLEY",
+  "civilopedia": "TXT_KEY_BUILDING_SILICON_VALLEY_PEDIA",
   "nukeImmune": true,
   "teamShare": true,
   "worth": 20,

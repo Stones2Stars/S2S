@@ -1,13 +1,13 @@
 {
  "type": "BONUS_PENCILS",
- "description": "TXT_KEY_BONUS_PENCILS",
- "civilopedia": "TXT_KEY_BONUS_PENCILS_PEDIA",
  "world": {
   "art": {
    "icon": "ART_DEF_BONUS_PENCILS"
   }
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_PENCILS",
+  "civilopedia": "TXT_KEY_BONUS_PENCILS_PEDIA",
   "bonusClassType": "BONUSCLASS_MANUFACTURED"
  }
 }

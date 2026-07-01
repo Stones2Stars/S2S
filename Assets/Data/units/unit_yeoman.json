@@ -1,7 +1,5 @@
 {
  "type": "UNIT_YEOMAN",
- "description": "TXT_KEY_UNIT_YEOMAN",
- "civilopedia": "TXT_KEY_UNIT_YEOMAN_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -92,6 +90,8 @@
   "upkeep": 1
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_YEOMAN",
+  "civilopedia": "TXT_KEY_UNIT_YEOMAN_PEDIA",
   "worth": 2,
   "militaryWorth": 15,
   "xpValueAttack": 6,

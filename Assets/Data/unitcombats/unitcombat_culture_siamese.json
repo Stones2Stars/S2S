@@ -1,12 +1,12 @@
 {
  "type": "UNITCOMBAT_CULTURE_SIAMESE",
- "description": "TXT_KEY_UNITCOMBAT_CULTURE_SIAMESE",
  "ui": {
   "art": {
    "icon": "Art/Interface/Buttons/units/sparth/categories/culture_siam.dds"
   }
  },
  "identity": {
+  "description": "TXT_KEY_UNITCOMBAT_CULTURE_SIAMESE",
   "culture": "BONUS_SIAMESE"
  }
 }

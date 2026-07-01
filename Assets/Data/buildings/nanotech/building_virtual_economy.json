@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_VIRTUAL_ECONOMY",
- "description": "TXT_KEY_BUILDING_VIRTUAL_ECONOMY",
- "civilopedia": "TXT_KEY_BUILDING_VIRTUAL_ECONOMY_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_VIRTUAL_GOVERNANCE"
@@ -57,6 +55,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_VIRTUAL_ECONOMY",
+  "civilopedia": "TXT_KEY_BUILDING_VIRTUAL_ECONOMY_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

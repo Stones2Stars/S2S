@@ -1,7 +1,5 @@
 {
  "type": "BONUS_MONGOLIAN",
- "description": "TXT_KEY_BONUS_MONGOLIAN",
- "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
  "enables": {
   "units": [
    "UNIT_MONGOL_KESHIK",
@@ -15,6 +13,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_MONGOLIAN",
+  "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
   "bonusClassType": "BONUSCLASS_CULTURE"
  }
 }

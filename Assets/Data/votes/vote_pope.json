@@ -1,6 +1,5 @@
 {
  "type": "VOTE_POPE",
- "description": "TXT_KEY_VOTE_POPE",
  "voteSource": [
   "DIPLOVOTE_POPE"
  ],
@@ -9,5 +8,8 @@
   "minVoters": 3,
   "stateReligionPercent": 100
  },
- "role": "secretaryGeneral"
+ "role": "secretaryGeneral",
+ "identity": {
+  "description": "TXT_KEY_VOTE_POPE"
+ }
 }

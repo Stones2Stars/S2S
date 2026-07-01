@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_TRIUMPH_COLUMN",
- "description": "TXT_KEY_BUILDING_TRIUMPH_COLUMN",
- "civilopedia": "TXT_KEY_BUILDING_TRIUMPH_COLUMN_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -106,6 +104,8 @@
   "construct": "AS2D_BUILD_OBELISK"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_TRIUMPH_COLUMN",
+  "civilopedia": "TXT_KEY_BUILDING_TRIUMPH_COLUMN_PEDIA",
   "commerceDoubleTime": {
    "culture": 1000
   },

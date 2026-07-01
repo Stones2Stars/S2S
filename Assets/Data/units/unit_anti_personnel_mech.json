@@ -1,7 +1,5 @@
 {
  "type": "UNIT_ANTI_PERSONNEL_MECH",
- "description": "TXT_KEY_UNIT_ANTI_PERSONNEL_MECH",
- "civilopedia": "TXT_KEY_UNIT_ANTI_PERSONNEL_MECH_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -63,6 +61,8 @@
   "upkeep": 11
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_ANTI_PERSONNEL_MECH",
+  "civilopedia": "TXT_KEY_UNIT_ANTI_PERSONNEL_MECH_PEDIA",
   "worth": 5,
   "militaryWorth": 675,
   "xpValueAttack": 3,

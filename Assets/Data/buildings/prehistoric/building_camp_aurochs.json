@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_CAMP_AUROCHS",
- "description": "TXT_KEY_BUILDING_CAMP_AUROCHS",
- "civilopedia": "TXT_KEY_BUILDING_CAMP_AUROCHS_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_BULL_LEAPING",
@@ -64,6 +62,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_CAMP_AUROCHS",
+  "civilopedia": "TXT_KEY_BUILDING_CAMP_AUROCHS_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

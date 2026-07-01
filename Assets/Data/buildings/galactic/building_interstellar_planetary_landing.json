@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_INTERSTELLAR_PLANETARY_LANDING",
- "description": "TXT_KEY_BUILDING_INTERSTELLAR_PLANETARY_LANDING",
- "civilopedia": "TXT_KEY_BUILDING_INTERSTELLAR_PLANETARY_LANDING_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_INTERSTELLAR_AERIAL_CITY",
@@ -66,6 +64,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_INTERSTELLAR_PLANETARY_LANDING",
+  "civilopedia": "TXT_KEY_BUILDING_INTERSTELLAR_PLANETARY_LANDING_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

@@ -1,7 +1,5 @@
 {
  "type": "UNIT_RAJPUT",
- "description": "TXT_KEY_UNIT_RAJPUT",
- "civilopedia": "TXT_KEY_UNIT_RAJPUT_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -69,6 +67,8 @@
   "upkeep": 1
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_RAJPUT",
+  "civilopedia": "TXT_KEY_UNIT_RAJPUT_PEDIA",
   "worth": 2,
   "militaryWorth": 28,
   "xpValueAttack": 6,

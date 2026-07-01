@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_DEATH_CAP_MUSHROOM",
- "description": "TXT_KEY_BUILDING_DEATH_CAP_MUSHROOM",
- "civilopedia": "TXT_KEY_BUILDING_DEATH_CAP_MUSHROOM_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_RESOURCES_POISON"
@@ -85,6 +83,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_DEATH_CAP_MUSHROOM",
+  "civilopedia": "TXT_KEY_BUILDING_DEATH_CAP_MUSHROOM_PEDIA",
   "enabledCivilizations": [
    "CIVILIZATION_NPC_NEANDERTHAL"
   ],

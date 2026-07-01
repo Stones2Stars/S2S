@@ -1,7 +1,5 @@
 {
  "type": "UNIT_COYOTE_RUNNER",
- "description": "TXT_KEY_UNIT_COYOTE_RUNNER",
- "civilopedia": "TXT_KEY_UNIT_COYOTE_RUNNER_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -101,6 +99,8 @@
   "upkeep": 1
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_COYOTE_RUNNER",
+  "civilopedia": "TXT_KEY_UNIT_COYOTE_RUNNER_PEDIA",
   "worth": 3,
   "militaryWorth": 5,
   "xpValueAttack": 6,

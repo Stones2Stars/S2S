@@ -1,6 +1,5 @@
 {
  "type": "CULTURELEVEL_POOR",
- "description": "TXT_KEY_CULTURELEVEL_POOR",
  "allowed": {
   "worldWonders": 1,
   "teamWonders": 1,
@@ -18,6 +17,7 @@
   "onGameOption": "GAMEOPTION_CULTURE_1_CITY_TILE_FOUNDING"
  },
  "identity": {
+  "description": "TXT_KEY_CULTURELEVEL_POOR",
   "cityRadius": 2,
   "cultureThreshold": 0
  }

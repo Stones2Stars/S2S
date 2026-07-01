@@ -1,7 +1,5 @@
 {
  "type": "BONUS_NANOTUBES",
- "description": "TXT_KEY_BONUS_NANOTUBES",
- "civilopedia": "TXT_KEY_BONUS_NANOTUBES_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_AEROSPACE_COMPLEX",
@@ -73,6 +71,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_NANOTUBES",
+  "civilopedia": "TXT_KEY_BONUS_NANOTUBES_PEDIA",
   "bonusClassType": "BONUSCLASS_MANUFACTURED"
  }
 }

@@ -1,6 +1,5 @@
 {
  "type": "BUILD_BEACON_REEF",
- "description": "TXT_KEY_BUILD_BEACON_REEF",
  "requires": {
   "build": {
    "all": [
@@ -36,5 +35,8 @@
   "art": {
    "entityEvent": "ENTITY_EVENT_BUILD"
   }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILD_BEACON_REEF"
  }
 }

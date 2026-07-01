@@ -1,6 +1,5 @@
 {
  "type": "PROMOTION_REMOVE_SURPRISE_STATUS",
- "description": "TXT_KEY_PROMOTION_REMOVE_SURPRISE",
  "promotionLine": {
   "PROMOTIONLINE_SURPRISE": 1
  },
@@ -13,6 +12,7 @@
   "sound": "AS2D_IF_LEVELUP"
  },
  "identity": {
+  "description": "TXT_KEY_PROMOTION_REMOVE_SURPRISE",
   "status": true,
   "quick": true,
   "removeAfterSet": true

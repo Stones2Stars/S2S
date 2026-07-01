@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_BURIAL_TRADITION_FIRE",
- "description": "TXT_KEY_BUILDING_BURIAL_TRADITION_FIRE",
- "civilopedia": "TXT_KEY_BUILDING_BURIAL_TRADITION_FIRE_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_FUNERAL_PYRE",
@@ -66,6 +64,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_BURIAL_TRADITION_FIRE",
+  "civilopedia": "TXT_KEY_BUILDING_BURIAL_TRADITION_FIRE_PEDIA",
   "conquestProbability": 70,
   "advisor": "ADVISOR_SCIENCE",
   "mapCategories": [

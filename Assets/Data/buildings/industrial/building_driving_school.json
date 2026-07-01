@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_DRIVING_SCHOOL",
- "description": "TXT_KEY_BUILDING_DRIVING_SCHOOL",
- "civilopedia": "TXT_KEY_BUILDING_DRIVING_SCHOOL_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_HOLOGRAPHIC_SCHOOL"
@@ -75,6 +73,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_DRIVING_SCHOOL",
+  "civilopedia": "TXT_KEY_BUILDING_DRIVING_SCHOOL_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

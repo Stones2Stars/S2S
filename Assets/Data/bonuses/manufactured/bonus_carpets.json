@@ -1,13 +1,13 @@
 {
  "type": "BONUS_CARPETS",
- "description": "TXT_KEY_BONUS_CARPETS",
- "civilopedia": "TXT_KEY_BONUS_CARPETS_PEDIA",
  "world": {
   "art": {
    "icon": "ART_DEF_BONUS_CARPETS"
   }
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_CARPETS",
+  "civilopedia": "TXT_KEY_BONUS_CARPETS_PEDIA",
   "bonusClassType": "BONUSCLASS_MANUFACTURED"
  }
 }

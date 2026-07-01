@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_CULTURE_KONJO",
- "description": "TXT_KEY_BUILDING_CULTURE_KONJO",
- "civilopedia": "TXT_KEY_BUILDING_CULTURE_KONJO_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -56,6 +54,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_CULTURE_KONJO",
+  "civilopedia": "TXT_KEY_BUILDING_CULTURE_KONJO_PEDIA",
   "nukeImmune": true,
   "noInstanceLimit": true,
   "conquestProbability": 100,

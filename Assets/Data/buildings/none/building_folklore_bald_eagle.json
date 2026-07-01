@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_FOLKLORE_BALD_EAGLE",
- "description": "TXT_KEY_BUILDING_FOLKLORE_BALD_EAGLE",
- "civilopedia": "TXT_KEY_BUILDING_FOLKLORE_ANIMAL_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_FOLKLORE_T_BIRDS",
@@ -78,6 +76,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_FOLKLORE_BALD_EAGLE",
+  "civilopedia": "TXT_KEY_BUILDING_FOLKLORE_ANIMAL_PEDIA",
   "notConstructible": true,
   "nukeImmune": true,
   "neverCapture": true,

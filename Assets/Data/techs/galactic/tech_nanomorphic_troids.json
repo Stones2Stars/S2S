@@ -1,8 +1,5 @@
 {
  "type": "TECH_NANOMORPHIC_TROIDS",
- "description": "TXT_KEY_TECH_NANOMORPHIC_TROIDS",
- "civilopedia": "TXT_KEY_TECH_NANOMORPHIC_TROIDS_PEDIA",
- "quote": "TXT_KEY_TECH_NANOMORPHIC_TROIDS_QUOTE",
  "enables": {
   "bonuses": [
    "BONUS_HUMAN_MOD_NANOMORPHISM",
@@ -60,6 +57,9 @@
   "soundMP": "AS2D_TECH_NANOMORPHIC_TROIDS"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_NANOMORPHIC_TROIDS",
+  "civilopedia": "TXT_KEY_TECH_NANOMORPHIC_TROIDS_PEDIA",
+  "quote": "TXT_KEY_TECH_NANOMORPHIC_TROIDS_QUOTE",
   "era": "C2C_ERA_GALACTIC",
   "worth": 50,
   "militaryWorth": 10,

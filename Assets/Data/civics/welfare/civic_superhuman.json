@@ -1,8 +1,5 @@
 {
  "type": "CIVIC_SUPERHUMAN",
- "description": "TXT_KEY_CIVIC_SUPERHUMAN",
- "civilopedia": "TXT_KEY_CIVIC_SUPERHUMAN_PEDIA",
- "strategy": "TXT_KEY_CIVIC_SUPERHUMAN_STRATEGY",
  "enables": {
   "buildings": [
    "BUILDING_CRYOGENIC_PRISON",
@@ -62,6 +59,9 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_CIVIC_SUPERHUMAN",
+  "civilopedia": "TXT_KEY_CIVIC_SUPERHUMAN_PEDIA",
+  "strategy": "TXT_KEY_CIVIC_SUPERHUMAN_STRATEGY",
   "civicOption": "CIVICOPTION_WELFARE",
   "anarchyLength": 3,
   "upkeepLevel": "UPKEEP_LOW"

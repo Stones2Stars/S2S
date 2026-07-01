@@ -1,7 +1,5 @@
 {
  "type": "TERRAIN_TRENCH_TROPICAL",
- "description": "TXT_KEY_TERRAIN_TRENCH_TROPICAL",
- "civilopedia": "TXT_KEY_TERRAIN_TRENCH_PEDIA",
  "food": {
   "plot": {
    "flat": 1
@@ -126,6 +124,8 @@
   "soundscape": "ASSS_OCEAN_SELECT_AMB"
  },
  "identity": {
+  "description": "TXT_KEY_TERRAIN_TRENCH_TROPICAL",
+  "civilopedia": "TXT_KEY_TERRAIN_TRENCH_PEDIA",
   "distanceToLand": 3,
   "climateZoneType": "CLIMATE_ZONE_TROPICAL",
   "movementCost": 2,

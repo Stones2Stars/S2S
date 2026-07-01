@@ -1,12 +1,12 @@
 {
  "type": "PROMOTIONLINE_OFFENSIVE_PROTOCOLS",
- "description": "TXT_KEY_PROMOTIONLINE_OFFENSIVE_PROTOCOLS",
  "ui": {
   "art": {
    "icon": ",Art/Interface/Buttons/Promotions/antitank1.dds,Art/Interface/Buttons/Afterworld_Atlas.dds,5,3"
   }
  },
  "identity": {
+  "description": "TXT_KEY_PROMOTIONLINE_OFFENSIVE_PROTOCOLS",
   "unitCombats": [
    "UNITCOMBAT_ROBOT"
   ]

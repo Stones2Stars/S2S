@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_CATCHER_JUNGLEFOWL",
- "description": "TXT_KEY_BUILDING_CATCHER_JUNGLEFOWL",
- "civilopedia": "TXT_KEY_BUILDING_CATCHER_JUNGLEFOWL_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_RESOURCES_FEATHERS"
@@ -85,6 +83,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_CATCHER_JUNGLEFOWL",
+  "civilopedia": "TXT_KEY_BUILDING_CATCHER_JUNGLEFOWL_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_NATIONAL_WEATHER_SERVICE",
- "description": "TXT_KEY_BUILDING_NATIONAL_WEATHER_SERVICE",
- "civilopedia": "TXT_KEY_BUILDING_NATIONAL_WEATHER_SERVICE_PEDIA",
  "obsoletedBy": {
   "techs": [
    "TECH_WEATHER_CONTROL"
@@ -91,6 +89,8 @@
   "construct": "AS2D_BUILD_INTELLIGENCE_AGENCY"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_NATIONAL_WEATHER_SERVICE",
+  "civilopedia": "TXT_KEY_BUILDING_NATIONAL_WEATHER_SERVICE_PEDIA",
   "neverCapture": true,
   "worth": 8,
   "militaryWorth": 10,

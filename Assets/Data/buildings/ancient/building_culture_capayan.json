@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_CULTURE_CAPAYAN",
- "description": "TXT_KEY_BUILDING_CULTURE_CAPAYAN",
- "civilopedia": "TXT_KEY_BUILDING_CULTURE_CAPAYAN_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -53,6 +51,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_CULTURE_CAPAYAN",
+  "civilopedia": "TXT_KEY_BUILDING_CULTURE_CAPAYAN_PEDIA",
   "nukeImmune": true,
   "noInstanceLimit": true,
   "conquestProbability": 100,

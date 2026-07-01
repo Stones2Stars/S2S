@@ -1,8 +1,5 @@
 {
  "type": "TRAIT_REVOLUTIONARY",
- "description": "TXT_KEY_TRAIT_COMPLEX_REVOLUTIONARY",
- "civilopedia": "TXT_KEY_TRAIT_COMPLEX_REVOLUTIONARY_PEDIA",
- "strategy": "TXT_KEY_TRAIT_COMPLEX_REVOLUTIONARY_STRATEGY",
  "excludes": [
   "TRAIT_USURPER"
  ],
@@ -249,6 +246,9 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_TRAIT_COMPLEX_REVOLUTIONARY",
+  "civilopedia": "TXT_KEY_TRAIT_COMPLEX_REVOLUTIONARY_PEDIA",
+  "strategy": "TXT_KEY_TRAIT_COMPLEX_REVOLUTIONARY_STRATEGY",
   "impurePropertyManipulators": true
  }
 }

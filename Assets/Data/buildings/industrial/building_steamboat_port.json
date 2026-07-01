@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_STEAMBOAT_PORT",
- "description": "TXT_KEY_BUILDING_STEAMBOAT_PORT",
- "civilopedia": "TXT_KEY_BUILDING_STEAMBOAT_PORT_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_FERRY_TERMINAL"
@@ -99,6 +97,8 @@
   "construct": "AS2D_BUILD_RIVER_PORT"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_STEAMBOAT_PORT",
+  "civilopedia": "TXT_KEY_BUILDING_STEAMBOAT_PORT_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

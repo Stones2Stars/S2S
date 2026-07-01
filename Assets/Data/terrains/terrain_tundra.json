@@ -1,7 +1,5 @@
 {
  "type": "TERRAIN_TUNDRA",
- "description": "TXT_KEY_TERRAIN_TUNDRA",
- "civilopedia": "TXT_KEY_TERRAIN_TUNDRA_PEDIA",
  "commerce": {
   "plot": {
    "flat": [
@@ -131,6 +129,8 @@
   "soundscape": "ASSS_TUNDRA_SELECT_AMB"
  },
  "identity": {
+  "description": "TXT_KEY_TERRAIN_TUNDRA",
+  "civilopedia": "TXT_KEY_TERRAIN_TUNDRA_PEDIA",
   "found": true,
   "movementCost": 3,
   "mapCategories": [

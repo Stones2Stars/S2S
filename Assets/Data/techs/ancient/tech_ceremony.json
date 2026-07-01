@@ -1,8 +1,5 @@
 {
  "type": "TECH_CEREMONY",
- "description": "TXT_KEY_TECH_CEREMONY",
- "civilopedia": "TXT_KEY_TECH_CEREMONY_PEDIA",
- "quote": "TXT_KEY_TECH_CEREMONY_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_BRIDAL_SHOP",
@@ -54,6 +51,9 @@
   "soundMP": "AS2D_TECH_CEREMONY"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_CEREMONY",
+  "civilopedia": "TXT_KEY_TECH_CEREMONY_PEDIA",
+  "quote": "TXT_KEY_TECH_CEREMONY_QUOTE",
   "era": "C2C_ERA_ANCIENT",
   "worth": 2,
   "tradeable": true,

@@ -1,8 +1,5 @@
 {
  "type": "TECH_GENE_JURISPRUDENCE",
- "description": "TXT_KEY_TECH_GENE_JURISPRUDENCE",
- "civilopedia": "TXT_KEY_TECH_GENE_JURISPRUDENCE_PEDIA",
- "quote": "TXT_KEY_TECH_GENE_JURISPRUDENCE_QUOTE",
  "enables": {
   "bonuses": [
    "BONUS_HUMAN_MOD_DESIGNER_BABIES"
@@ -60,6 +57,9 @@
   "soundMP": "AS2D_TECH_GENE_JURISPRUDENCE"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_GENE_JURISPRUDENCE",
+  "civilopedia": "TXT_KEY_TECH_GENE_JURISPRUDENCE_PEDIA",
+  "quote": "TXT_KEY_TECH_GENE_JURISPRUDENCE_QUOTE",
   "era": "C2C_ERA_NANOTECH",
   "worth": 14,
   "tradeable": true,

@@ -1,7 +1,5 @@
 {
  "type": "UNIT_DRONE",
- "description": "TXT_KEY_UNIT_DRONE",
- "civilopedia": "TXT_KEY_UNIT_DRONE_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -70,6 +68,8 @@
   "upkeep": 11
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_DRONE",
+  "civilopedia": "TXT_KEY_UNIT_DRONE_PEDIA",
   "worth": 4,
   "militaryWorth": 10,
   "xpValueAttack": 6,

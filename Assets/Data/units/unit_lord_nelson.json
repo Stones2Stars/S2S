@@ -1,7 +1,5 @@
 {
  "type": "UNIT_LORD_NELSON",
- "description": "TXT_KEY_UNIT_LORD_NELSON",
- "civilopedia": "TXT_KEY_UNIT_LORD_NELSON_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -65,6 +63,8 @@
   "upkeep": 1
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_LORD_NELSON",
+  "civilopedia": "TXT_KEY_UNIT_LORD_NELSON_PEDIA",
   "worth": 6,
   "militaryWorth": 8,
   "xpValueAttack": 4,

@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_ULTIMATE_COMBAT_ARENA",
- "description": "TXT_KEY_BUILDING_ULTIMATE_COMBAT_ARENA",
- "civilopedia": "TXT_KEY_BUILDING_ULTIMATE_COMBAT_ARENA_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_MAGITEK_COMBAT_ARENA"
@@ -106,6 +104,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_ULTIMATE_COMBAT_ARENA",
+  "civilopedia": "TXT_KEY_BUILDING_ULTIMATE_COMBAT_ARENA_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

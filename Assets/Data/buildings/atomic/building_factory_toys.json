@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_FACTORY_TOYS",
- "description": "TXT_KEY_BUILDING_FACTORY_TOYS",
- "civilopedia": "TXT_KEY_BUILDING_FACTORY_TOYS_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_MANUFACTURING_DISTRICT"
@@ -86,6 +84,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_FACTORY_TOYS",
+  "civilopedia": "TXT_KEY_BUILDING_FACTORY_TOYS_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

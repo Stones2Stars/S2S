@@ -1,7 +1,5 @@
 {
  "type": "BONUS_EGYPTIAN",
- "description": "TXT_KEY_BONUS_EGYPTIAN",
- "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
  "enables": {
   "units": [
    "UNIT_EGYPT_WARCHARIOT",
@@ -15,6 +13,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_EGYPTIAN",
+  "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
   "bonusClassType": "BONUSCLASS_CULTURE"
  }
 }

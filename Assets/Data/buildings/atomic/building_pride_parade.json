@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_PRIDE_PARADE",
- "description": "TXT_KEY_BUILDING_PRIDE_PARADE",
- "civilopedia": "TXT_KEY_BUILDING_PRIDE_PARADE_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_HIGH_TECH_CULTURAL_ENRICHMENT"
@@ -53,6 +51,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_PRIDE_PARADE",
+  "civilopedia": "TXT_KEY_BUILDING_PRIDE_PARADE_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

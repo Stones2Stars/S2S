@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_REJUVENATION_TANK",
- "description": "TXT_KEY_BUILDING_REJUVENATION_TANK",
- "civilopedia": "TXT_KEY_BUILDING_REJUVENATION_TANK_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_CIRCADIAN_CHAMBER",
@@ -90,6 +88,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_REJUVENATION_TANK",
+  "civilopedia": "TXT_KEY_BUILDING_REJUVENATION_TANK_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

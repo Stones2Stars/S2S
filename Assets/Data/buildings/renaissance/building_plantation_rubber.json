@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_PLANTATION_RUBBER",
- "description": "TXT_KEY_BUILDING_PLANTATION_RUBBER",
- "civilopedia": "TXT_KEY_BUILDING_PLANTATION_RUBBER_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_AGROFOREST"
@@ -61,6 +59,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_PLANTATION_RUBBER",
+  "civilopedia": "TXT_KEY_BUILDING_PLANTATION_RUBBER_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

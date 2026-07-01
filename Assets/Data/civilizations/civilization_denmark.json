@@ -1,9 +1,5 @@
 {
  "type": "CIVILIZATION_DENMARK",
- "description": "TXT_KEY_CIVILIZATION_DENMARK",
- "shortDescription": "TXT_KEY_CIVILIZATION_DENMARK_SHORT",
- "adjective": "TXT_KEY_CIVILIZATION_DENMARK_ADJECTIVE",
- "civilopedia": "TXT_KEY_CIVILIZATION_DENMARK_PEDIA",
  "grants": {
   "buildings": [
    "BUILDING_PALACE",
@@ -32,10 +28,6 @@
    "TECH_GAME_START"
   ]
  },
- "policies": {
-  "playable": true,
-  "aiPlayable": true
- },
  "world": {
   "art": {
    "playerColor": "PLAYERCOLOR_DENMARK",
@@ -49,6 +41,12 @@
   "action": "AS3D_VIKING_ORDER"
  },
  "identity": {
+  "description": "TXT_KEY_CIVILIZATION_DENMARK",
+  "shortDescription": "TXT_KEY_CIVILIZATION_DENMARK_SHORT",
+  "adjective": "TXT_KEY_CIVILIZATION_DENMARK_ADJECTIVE",
+  "civilopedia": "TXT_KEY_CIVILIZATION_DENMARK_PEDIA",
+  "playable": true,
+  "aiPlayable": true,
   "leaders": [
    "LEADER_CANUTE",
    "LEADER_CHRISTIAN_IV",

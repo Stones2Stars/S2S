@@ -1,12 +1,12 @@
 {
  "type": "PROMOTIONLINE_RAPID_DEPLOYMENT",
- "description": "TXT_KEY_PROMOTIONLINE_RAPID_DEPLOYMENT",
  "ui": {
   "art": {
    "icon": ",Art/Interface/Buttons/Promotions/March.dds,Art/Interface/Buttons/Afterworld_Atlas.dds,3,8"
   }
  },
  "identity": {
+  "description": "TXT_KEY_PROMOTIONLINE_RAPID_DEPLOYMENT",
   "unitCombats": [
    "UNITCOMBAT_ROBOT",
    "UNITCOMBAT_ASSAULT_MECH",

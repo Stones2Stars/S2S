@@ -1,8 +1,5 @@
 {
  "type": "TECH_ORBITAL_ENGINEERING",
- "description": "TXT_KEY_TECH_ORBITAL_ENGINEERING",
- "civilopedia": "TXT_KEY_TECH_ORBITAL_ENGINEERING_PEDIA",
- "quote": "TXT_KEY_TECH_ORBITAL_ENGINEERING_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_CAPTURED_IO",
@@ -55,6 +52,9 @@
   "soundMP": "AS2D_TECH_GENERIC"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_ORBITAL_ENGINEERING",
+  "civilopedia": "TXT_KEY_TECH_ORBITAL_ENGINEERING_PEDIA",
+  "quote": "TXT_KEY_TECH_ORBITAL_ENGINEERING_QUOTE",
   "era": "C2C_ERA_GALACTIC",
   "worth": 48,
   "tradeable": true,

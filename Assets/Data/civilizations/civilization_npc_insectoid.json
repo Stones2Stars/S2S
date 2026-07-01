@@ -1,9 +1,5 @@
 {
  "type": "CIVILIZATION_NPC_INSECTOID",
- "description": "TXT_KEY_CIVILIZATION_NPC_INSECTOID",
- "shortDescription": "TXT_KEY_CIVILIZATION_NPC_INSECTOID_SHORT",
- "adjective": "TXT_KEY_CIVILIZATION_NPC_INSECTOID_ADJECTIVE",
- "civilopedia": "TXT_KEY_CIVILIZATION_NPC_INSECTOID_PEDIA",
  "grants": {
   "civics": [
    "CIVIC_ANARCHISM",
@@ -33,9 +29,6 @@
    }
   }
  },
- "policies": {
-  "stronglyRestricted": true
- },
  "world": {
   "art": {
    "playerColor": "PLAYERCOLOR_BLACK",
@@ -45,6 +38,12 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_CIVILIZATION_NPC_INSECTOID",
+  "shortDescription": "TXT_KEY_CIVILIZATION_NPC_INSECTOID_SHORT",
+  "adjective": "TXT_KEY_CIVILIZATION_NPC_INSECTOID_ADJECTIVE",
+  "civilopedia": "TXT_KEY_CIVILIZATION_NPC_INSECTOID_PEDIA",
+  "isNpc": true,
+  "stronglyRestricted": true,
   "leaders": [
    "LEADER_BARBARIAN"
   ]

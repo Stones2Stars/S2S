@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_FISHMONGER",
- "description": "TXT_KEY_BUILDING_FISHMONGER",
- "civilopedia": "TXT_KEY_BUILDING_FISHMONGER_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_GUILD_FISHMONGERS"
@@ -172,6 +170,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_FISHMONGER",
+  "civilopedia": "TXT_KEY_BUILDING_FISHMONGER_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

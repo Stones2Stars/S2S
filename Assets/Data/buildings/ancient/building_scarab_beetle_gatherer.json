@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_SCARAB_BEETLE_GATHERER",
- "description": "TXT_KEY_BUILDING_SCARAB_BEETLE_GATHERER",
- "civilopedia": "TXT_KEY_BUILDING_SCARAB_BEETLE_GATHERER_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_RESOURCES_BUGS",
@@ -85,6 +83,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_SCARAB_BEETLE_GATHERER",
+  "civilopedia": "TXT_KEY_BUILDING_SCARAB_BEETLE_GATHERER_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

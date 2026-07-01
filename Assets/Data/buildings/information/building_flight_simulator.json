@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_FLIGHT_SIMULATOR",
- "description": "TXT_KEY_BUILDING_FLIGHT_SIMULATOR",
- "civilopedia": "TXT_KEY_BUILDING_FLIGHT_SIMULATOR_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_HOLOGRAPHIC_FLIGHT_SIMULATOR"
@@ -82,6 +80,8 @@
   "construct": "AS2D_BUILD_BARRACKS"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_FLIGHT_SIMULATOR",
+  "civilopedia": "TXT_KEY_BUILDING_FLIGHT_SIMULATOR_PEDIA",
   "worth": 5,
   "militaryWorth": 6,
   "dcmAirbombMission": 2,

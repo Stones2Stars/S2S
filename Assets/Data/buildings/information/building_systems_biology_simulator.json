@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_SYSTEMS_BIOLOGY_SIMULATOR",
- "description": "TXT_KEY_BUILDING_SYSTEMS_BIOLOGY_SIMULATOR",
- "civilopedia": "TXT_KEY_BUILDING_SYSTEMS_BIOLOGY_SIMULATOR_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_3D_BODY_ATLAS"
@@ -72,6 +70,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_SYSTEMS_BIOLOGY_SIMULATOR",
+  "civilopedia": "TXT_KEY_BUILDING_SYSTEMS_BIOLOGY_SIMULATOR_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

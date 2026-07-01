@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_EL_CAMINO_DE_SANTIAGO",
- "description": "TXT_KEY_BUILDING_EL_CAMINO_DE_SANTIAGO",
- "civilopedia": "TXT_KEY_BUILDING_EL_CAMINO_DE_SANTIAGO_PEDIA",
  "obsoletedBy": {
   "techs": [
    "TECH_TELEPORTATION"
@@ -88,6 +86,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_EL_CAMINO_DE_SANTIAGO",
+  "civilopedia": "TXT_KEY_BUILDING_EL_CAMINO_DE_SANTIAGO_PEDIA",
   "commerceDoubleTime": {
    "culture": 1000
   },

@@ -1,7 +1,5 @@
 {
  "type": "CORPORATION_WONKA",
- "description": "TXT_KEY_BUILDING_CORPORATION_WONKA",
- "civilopedia": "TXT_KEY_BUILDING_CORPORATION_WONKA_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_WONKA_CONFECTIONERIES_SHOP"
@@ -97,6 +95,8 @@
   "sound": "AS2D_BUILD_BANK"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_CORPORATION_WONKA",
+  "civilopedia": "TXT_KEY_BUILDING_CORPORATION_WONKA_PEDIA",
   "spreadFactor": 200,
   "spread": 50
  }

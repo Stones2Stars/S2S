@@ -1,7 +1,5 @@
 {
  "type": "BONUS_STRAW",
- "description": "TXT_KEY_BONUS_STRAW",
- "civilopedia": "TXT_KEY_BONUS_STRAW_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_BASKETMAKER",
@@ -22,6 +20,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_STRAW",
+  "civilopedia": "TXT_KEY_BONUS_STRAW_PEDIA",
   "bonusClassType": "BONUSCLASS_MANUFACTURED"
  }
 }

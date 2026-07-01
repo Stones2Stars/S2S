@@ -1,6 +1,5 @@
 {
  "type": "VOTE_FREE_RELIGION",
- "description": "TXT_KEY_VOTE_SECULARISM",
  "voteSource": [
   "DIPLOVOTE_UN"
  ],
@@ -12,5 +11,8 @@
   "forceCivics": [
    "CIVIC_SECULARISM"
   ]
+ },
+ "identity": {
+  "description": "TXT_KEY_VOTE_SECULARISM"
  }
 }

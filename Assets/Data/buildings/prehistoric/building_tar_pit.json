@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_TAR_PIT",
- "description": "TXT_KEY_BUILDING_TAR_PIT",
- "civilopedia": "TXT_KEY_BUILDING_TAR_PIT_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_MODERN_EARTHWORKS"
@@ -73,6 +71,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_TAR_PIT",
+  "civilopedia": "TXT_KEY_BUILDING_TAR_PIT_PEDIA",
   "enabledCivilizations": [
    "CIVILIZATION_NPC_NEANDERTHAL"
   ],

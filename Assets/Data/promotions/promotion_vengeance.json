@@ -1,6 +1,5 @@
 {
  "type": "PROMOTION_VENGEANCE",
- "description": "TXT_KEY_PROMOTION_VENGEANCE",
  "strength": {
   "unit": {
    "cityAttack": {
@@ -24,6 +23,7 @@
   "sound": "AS2D_IF_LEVELUP"
  },
  "identity": {
+  "description": "TXT_KEY_PROMOTION_VENGEANCE",
   "stateReligionPrereq": "RELIGION_NGAIISM",
   "unitCombats": [
    "UNITCOMBAT_ANIMAL",

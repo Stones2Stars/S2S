@@ -1,8 +1,5 @@
 {
  "type": "TECH_INTERSTELLAR_TRADE",
- "description": "TXT_KEY_TECH_INTERSTELLAR_TRADE",
- "civilopedia": "TXT_KEY_TECH_INTERSTELLAR_TRADE_PEDIA",
- "quote": "TXT_KEY_TECH_INTERSTELLAR_TRADE_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_DEEP_SPACE_SOLAR_IMPORTER_EXPORTER",
@@ -76,6 +73,9 @@
   "soundMP": "AS2D_TECH_INTERSTELLAR_TRADE"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_INTERSTELLAR_TRADE",
+  "civilopedia": "TXT_KEY_TECH_INTERSTELLAR_TRADE_PEDIA",
+  "quote": "TXT_KEY_TECH_INTERSTELLAR_TRADE_QUOTE",
   "era": "C2C_ERA_GALACTIC",
   "worth": 48,
   "militaryWorth": 4,

@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_HOLODECK",
- "description": "TXT_KEY_BUILDING_HOLODECK",
- "civilopedia": "TXT_KEY_BUILDING_HOLODECK_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_HEALTHCARE_MEGACOMPLEX"
@@ -48,6 +46,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_HOLODECK",
+  "civilopedia": "TXT_KEY_BUILDING_HOLODECK_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

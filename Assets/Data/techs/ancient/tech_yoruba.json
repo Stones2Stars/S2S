@@ -1,8 +1,5 @@
 {
  "type": "TECH_YORUBA",
- "description": "TXT_KEY_TECH_YORUBA",
- "civilopedia": "TXT_KEY_TECH_YORUBA_PEDIA",
- "quote": "TXT_KEY_TECH_YORUBA_QUOTE",
  "enables": {
   "religions": [
    "RELIGION_YORUBA"
@@ -55,6 +52,9 @@
   "soundMP": "AS2D_TECH_GENERIC"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_YORUBA",
+  "civilopedia": "TXT_KEY_TECH_YORUBA_PEDIA",
+  "quote": "TXT_KEY_TECH_YORUBA_QUOTE",
   "era": "C2C_ERA_ANCIENT",
   "worth": 8,
   "gridX": 26,

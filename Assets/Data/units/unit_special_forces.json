@@ -1,7 +1,5 @@
 {
  "type": "UNIT_SPECIAL_FORCES",
- "description": "TXT_KEY_UNIT_SPECIAL_FORCES",
- "civilopedia": "TXT_KEY_UNIT_SPECIAL_FORCES_PEDIA",
  "obsoletedBy": {
   "techs": [
    "TECH_SUPERSTRONG_ALLOYS"
@@ -178,6 +176,8 @@
   "upkeep": 11
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_SPECIAL_FORCES",
+  "civilopedia": "TXT_KEY_UNIT_SPECIAL_FORCES_PEDIA",
   "worth": 15,
   "militaryWorth": 55,
   "xpValueAttack": 8,

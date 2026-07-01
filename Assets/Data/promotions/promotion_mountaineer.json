@@ -1,6 +1,5 @@
 {
  "type": "PROMOTION_MOUNTAINEER",
- "description": "TXT_KEY_PROMOTION_MOUNTAINEER",
  "skills": {
   "canMovePeaks": true
  },
@@ -13,6 +12,7 @@
   "sound": "AS2D_IF_LEVELUP"
  },
  "identity": {
+  "description": "TXT_KEY_PROMOTION_MOUNTAINEER",
   "unitCombats": [
    "UNITCOMBAT_RECON",
    "UNITCOMBAT_HUNTER",

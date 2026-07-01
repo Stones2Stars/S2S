@@ -1,8 +1,5 @@
 {
  "type": "TRAIT_PROLIFIC",
- "description": "TXT_KEY_TRAIT_PROLIFIC",
- "civilopedia": "TXT_KEY_TRAIT_PROLIFIC_PEDIA",
- "strategy": "TXT_KEY_TRAIT_PROLIFIC_STRATEGY",
  "excludes": [
   "TRAIT_GRIM"
  ],
@@ -115,5 +112,10 @@
   "art": {
    "icon": "art/Buttons/Traits/TraitProlific.dds"
   }
+ },
+ "identity": {
+  "description": "TXT_KEY_TRAIT_PROLIFIC",
+  "civilopedia": "TXT_KEY_TRAIT_PROLIFIC_PEDIA",
+  "strategy": "TXT_KEY_TRAIT_PROLIFIC_STRATEGY"
  }
 }

@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_JAIL",
- "description": "TXT_KEY_BUILDING_JAIL",
- "civilopedia": "TXT_KEY_BUILDING_JAIL_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_ALCATRAZ",
@@ -109,6 +107,8 @@
   "construct": "AS2D_BUILD_JAIL"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_JAIL",
+  "civilopedia": "TXT_KEY_BUILDING_JAIL_PEDIA",
   "worth": 1,
   "conquestProbability": 75,
   "dcmAirbombMission": 2,

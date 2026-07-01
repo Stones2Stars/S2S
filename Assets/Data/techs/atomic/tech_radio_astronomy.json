@@ -1,8 +1,5 @@
 {
  "type": "TECH_RADIO_ASTRONOMY",
- "description": "TXT_KEY_TECH_RADIO_ASTRONOMY",
- "civilopedia": "TXT_KEY_TECH_RADIO_ASTRONOMY_PEDIA",
- "quote": "TXT_KEY_TECH_RADIO_ASTRONOMY_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_RADIO_TELESCOPE",
@@ -53,6 +50,9 @@
   "soundMP": "AS2D_TECH_RADIO_ASTRONOMY"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_RADIO_ASTRONOMY",
+  "civilopedia": "TXT_KEY_TECH_RADIO_ASTRONOMY_PEDIA",
+  "quote": "TXT_KEY_TECH_RADIO_ASTRONOMY_QUOTE",
   "era": "C2C_ERA_ATOMIC",
   "worth": 32,
   "militaryWorth": 4,

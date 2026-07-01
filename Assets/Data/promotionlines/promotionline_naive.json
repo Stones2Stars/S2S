@@ -1,9 +1,11 @@
 {
  "type": "PROMOTIONLINE_NAIVE",
- "description": "TXT_KEY_PROMOTIONLINE_NAIVE",
  "ui": {
   "art": {
    "icon": "art/Buttons/Traits/TraitNaive.dds"
   }
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTIONLINE_NAIVE"
  }
 }

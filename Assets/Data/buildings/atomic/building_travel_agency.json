@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_TRAVEL_AGENCY",
- "description": "TXT_KEY_BUILDING_TRAVEL_AGENCY",
- "civilopedia": "TXT_KEY_BUILDING_TRAVEL_AGENCY_PEDIA",
  "obsoletedBy": {
   "techs": [
    "TECH_SPACE_TOURISM"
@@ -152,6 +150,8 @@
   "construct": "AS2D_BUILD_EARLY_AIRPORT"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_TRAVEL_AGENCY",
+  "civilopedia": "TXT_KEY_BUILDING_TRAVEL_AGENCY_PEDIA",
   "commerceDoubleTime": {
    "gold": 100
   },

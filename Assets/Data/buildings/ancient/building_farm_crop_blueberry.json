@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_FARM_CROP_BLUEBERRY",
- "description": "TXT_KEY_BUILDING_FARM_CROP_BLUEBERRY",
- "civilopedia": "TXT_KEY_BUILDING_FARM_CROP_BLUEBERRY_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_RESOURCES_BERRIES"
@@ -76,6 +74,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_FARM_CROP_BLUEBERRY",
+  "civilopedia": "TXT_KEY_BUILDING_FARM_CROP_BLUEBERRY_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

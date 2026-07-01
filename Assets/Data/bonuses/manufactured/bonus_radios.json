@@ -1,7 +1,5 @@
 {
  "type": "BONUS_RADIOS",
- "description": "TXT_KEY_BONUS_RADIOS",
- "civilopedia": "TXT_KEY_BONUS_RADIOS_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_COPPER_RECLAMATION_PLANT",
@@ -17,6 +15,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_RADIOS",
+  "civilopedia": "TXT_KEY_BONUS_RADIOS_PEDIA",
   "bonusClassType": "BONUSCLASS_MANUFACTURED"
  }
 }

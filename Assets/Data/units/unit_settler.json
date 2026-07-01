@@ -1,7 +1,5 @@
 {
  "type": "UNIT_SETTLER",
- "description": "TXT_KEY_UNIT_SETTLER",
- "civilopedia": "TXT_KEY_UNIT_SETTLER_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -115,6 +113,8 @@
   "upkeep": 4
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_SETTLER",
+  "civilopedia": "TXT_KEY_UNIT_SETTLER_PEDIA",
   "worth": 1,
   "domain": "DOMAIN_LAND",
   "defaultUnitAI": "UNITAI_SETTLE",

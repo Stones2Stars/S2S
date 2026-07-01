@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_INTERPLANETARY_RAIL",
- "description": "TXT_KEY_BUILDING_INTERPLANETARY_RAIL",
- "civilopedia": "TXT_KEY_BUILDING_INTERPLANETARY_RAIL_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -53,6 +51,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_INTERPLANETARY_RAIL",
+  "civilopedia": "TXT_KEY_BUILDING_INTERPLANETARY_RAIL_PEDIA",
   "neverCapture": true,
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,

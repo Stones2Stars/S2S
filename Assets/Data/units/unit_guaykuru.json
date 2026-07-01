@@ -1,7 +1,5 @@
 {
  "type": "UNIT_GUAYKURU",
- "description": "TXT_KEY_UNIT_GUAYKURU",
- "civilopedia": "TXT_KEY_UNIT_GUAYKURU_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -163,6 +161,8 @@
   "upkeep": 1
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_GUAYKURU",
+  "civilopedia": "TXT_KEY_UNIT_GUAYKURU_PEDIA",
   "worth": 4,
   "militaryWorth": 18,
   "xpValueAttack": 6,

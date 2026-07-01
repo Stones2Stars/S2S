@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_GEOTHERMAL_POWER_PLANT",
- "description": "TXT_KEY_BUILDING_GEOTHERMAL_POWER_PLANT",
- "civilopedia": "TXT_KEY_BUILDING_GEOTHERMAL_POWER_PLANT_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_ENHANCED_GEOTHERMAL_SYSTEM"
@@ -79,6 +77,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_GEOTHERMAL_POWER_PLANT",
+  "civilopedia": "TXT_KEY_BUILDING_GEOTHERMAL_POWER_PLANT_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

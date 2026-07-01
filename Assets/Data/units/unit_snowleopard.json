@@ -1,7 +1,5 @@
 {
  "type": "UNIT_SNOWLEOPARD",
- "description": "TXT_KEY_UNIT_SNOWLEOPARD",
- "civilopedia": "TXT_KEY_UNIT_SNOWLEOPARD_PEDIA",
  "withdrawal": {
   "unit": {
    "percent": 20
@@ -109,6 +107,8 @@
   ]
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_SNOWLEOPARD",
+  "civilopedia": "TXT_KEY_UNIT_SNOWLEOPARD_PEDIA",
   "spawnOnly": true,
   "xpValueAttack": 8,
   "xpValueDefense": 6,

@@ -1,12 +1,12 @@
 {
  "type": "UNITCOMBAT_CULTURE_QUERANDI",
- "description": "TXT_KEY_UNITCOMBAT_CULTURE_QUERANDI",
  "ui": {
   "art": {
    "icon": "Art/categories/culture_newcultures.dds"
   }
  },
  "identity": {
+  "description": "TXT_KEY_UNITCOMBAT_CULTURE_QUERANDI",
   "culture": "BONUS_QUERANDI"
  }
 }

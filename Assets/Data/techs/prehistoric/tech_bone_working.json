@@ -1,8 +1,5 @@
 {
  "type": "TECH_BONE_WORKING",
- "description": "TXT_KEY_TECH_BONE_WORKING",
- "civilopedia": "TXT_KEY_TECH_BONE_WORKING_PEDIA",
- "quote": "TXT_KEY_TECH_BONE_WORKING_QUOTE",
  "enables": {
   "bonuses": [
    "BONUS_FEATHERS",
@@ -63,6 +60,9 @@
   "soundMP": "AS2D_TECH_BONE_WORKING"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_BONE_WORKING",
+  "civilopedia": "TXT_KEY_TECH_BONE_WORKING_PEDIA",
+  "quote": "TXT_KEY_TECH_BONE_WORKING_QUOTE",
   "era": "C2C_ERA_PREHISTORIC",
   "worth": 2,
   "militaryWorth": 1,

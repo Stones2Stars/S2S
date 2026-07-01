@@ -1,8 +1,5 @@
 {
  "type": "TECH_RAPID_RECUPERATION",
- "description": "TXT_KEY_TECH_RAPID_RECUPERATION",
- "civilopedia": "TXT_KEY_TECH_RAPID_RECUPERATION_PEDIA",
- "quote": "TXT_KEY_TECH_RAPID_RECUPERATION_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_GESTATION_TANKS"
@@ -63,6 +60,9 @@
   "soundMP": "AS2D_TECH_RAPID_RECUPERATION"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_RAPID_RECUPERATION",
+  "civilopedia": "TXT_KEY_TECH_RAPID_RECUPERATION_PEDIA",
+  "quote": "TXT_KEY_TECH_RAPID_RECUPERATION_QUOTE",
   "era": "C2C_ERA_NANOTECH",
   "worth": 14,
   "tradeable": true,

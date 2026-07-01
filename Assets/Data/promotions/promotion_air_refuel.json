@@ -1,6 +1,5 @@
 {
  "type": "PROMOTION_AIR_REFUEL",
- "description": "TXT_KEY_PROMOTION_AIR_REFUEL",
  "strength": {
   "unit": {
    "percent": -15
@@ -22,6 +21,7 @@
   "sound": "AS2D_IF_LEVELUP"
  },
  "identity": {
+  "description": "TXT_KEY_PROMOTION_AIR_REFUEL",
   "unitCombats": [
    "UNITCOMBAT_JET_FIGHTERS",
    "UNITCOMBAT_BOMBERS",

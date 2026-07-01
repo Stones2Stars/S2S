@@ -1,8 +1,5 @@
 {
  "type": "TECH_EXPLOSIVES",
- "description": "TXT_KEY_TECH_EXPLOSIVES",
- "civilopedia": "TXT_KEY_TECH_EXPLOSIVES_PEDIA",
- "quote": "TXT_KEY_TECH_EXPLOSIVES_QUOTE",
  "enables": {
   "bonuses": [
    "BONUS_AMMUNITION"
@@ -107,6 +104,9 @@
   "soundMP": "AS2D_TECH_EXPLOSIVES"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_EXPLOSIVES",
+  "civilopedia": "TXT_KEY_TECH_EXPLOSIVES_PEDIA",
+  "quote": "TXT_KEY_TECH_EXPLOSIVES_QUOTE",
   "era": "C2C_ERA_RENAISSANCE",
   "worth": 32,
   "militaryWorth": 8,

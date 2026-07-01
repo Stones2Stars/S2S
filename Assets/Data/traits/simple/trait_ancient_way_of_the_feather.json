@@ -1,7 +1,5 @@
 {
  "type": "TRAIT_ANCIENT_WAY_OF_THE_FEATHER",
- "description": "TXT_KEY_TRAIT_ANCIENT_WAY_OF_THE_FEATHER",
- "civilopedia": "TXT_KEY_TRAIT_ANCIENT_WAY_OF_THE_FEATHER_PEDIA",
  "culture": {
   "empire": {
    "flat": 3
@@ -29,6 +27,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_TRAIT_ANCIENT_WAY_OF_THE_FEATHER",
+  "civilopedia": "TXT_KEY_TRAIT_ANCIENT_WAY_OF_THE_FEATHER_PEDIA",
   "shortDescription": "TXT_KEY_TRAIT_ANCIENT_WAY_OF_THE_FEATHER_SHORT",
   "civilizationTrait": true
  }

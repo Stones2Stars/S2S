@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_MINE_EMERALD",
- "description": "TXT_KEY_BUILDING_MINE_EMERALD",
- "civilopedia": "TXT_KEY_BUILDING_MINE_EMERALD_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_RESOURCES_GEMSTONE"
@@ -76,6 +74,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_MINE_EMERALD",
+  "civilopedia": "TXT_KEY_BUILDING_MINE_EMERALD_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

@@ -1,7 +1,5 @@
 {
  "type": "IMPROVEMENT_STONE_TOOLS_WORKSHOP",
- "description": "TXT_KEY_IMPROVEMENT_STONE_TOOLS_WORKSHOP",
- "civilopedia": "TXT_KEY_IMPROVEMENT_STONE_TOOLS_WORKSHOP_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -156,6 +154,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_IMPROVEMENT_STONE_TOOLS_WORKSHOP",
+  "civilopedia": "TXT_KEY_IMPROVEMENT_STONE_TOOLS_WORKSHOP_PEDIA",
   "advancedStart": {
    "cost": 24
   },

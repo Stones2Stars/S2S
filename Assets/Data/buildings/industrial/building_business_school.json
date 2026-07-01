@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_BUSINESS_SCHOOL",
- "description": "TXT_KEY_BUILDING_BUSINESS_SCHOOL",
- "civilopedia": "TXT_KEY_BUILDING_BUSINESS_SCHOOL_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -56,6 +54,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_BUSINESS_SCHOOL",
+  "civilopedia": "TXT_KEY_BUILDING_BUSINESS_SCHOOL_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

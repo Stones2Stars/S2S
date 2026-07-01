@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_WATER_POLO_POOL",
- "description": "TXT_KEY_BUILDING_WATER_POLO_POOL",
- "civilopedia": "TXT_KEY_BUILDING_WATER_POLO_POOL_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_ATHLETIC_MEGACOMPLEX"
@@ -59,6 +57,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_WATER_POLO_POOL",
+  "civilopedia": "TXT_KEY_BUILDING_WATER_POLO_POOL_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

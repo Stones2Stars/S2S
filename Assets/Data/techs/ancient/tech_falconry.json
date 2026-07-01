@@ -1,8 +1,5 @@
 {
  "type": "TECH_FALCONRY",
- "description": "TXT_KEY_TECH_FALCONRY",
- "civilopedia": "TXT_KEY_TECH_FALCONRY_PEDIA",
- "quote": "TXT_KEY_TECH_FALCONRY_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_FALCONER",
@@ -59,6 +56,9 @@
   "soundMP": "AS2D_TECH_FALCONRY"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_FALCONRY",
+  "civilopedia": "TXT_KEY_TECH_FALCONRY_PEDIA",
+  "quote": "TXT_KEY_TECH_FALCONRY_QUOTE",
   "era": "C2C_ERA_ANCIENT",
   "worth": 16,
   "tradeable": true,

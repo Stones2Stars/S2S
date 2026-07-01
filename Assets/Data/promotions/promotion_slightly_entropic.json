@@ -1,6 +1,5 @@
 {
  "type": "PROMOTION_SLIGHTLY_ENTROPIC",
- "description": "TXT_KEY_PROMOTION_SLIGHTLY_ENTROPIC",
  "strength": {
   "unit": {
    "quality": {
@@ -30,6 +29,7 @@
   "sound": "AS2D_IF_LEVELUP"
  },
  "identity": {
+  "description": "TXT_KEY_PROMOTION_SLIGHTLY_ENTROPIC",
   "replacesUnitCombat": "UNITCOMBAT_QUALITY_STANDARD",
   "notOnUnitCombats": [
    "UNITCOMBAT_PACIFIST",

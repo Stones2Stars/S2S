@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_HERD_ZEBRA",
- "description": "TXT_KEY_BUILDING_HERD_ZEBRA",
- "civilopedia": "TXT_KEY_BUILDING_HERD_ZEBRA_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_ANIMAL_TRAINER_ZEBRA"
@@ -51,6 +49,8 @@
   "construct": "SND_AMB_HORSE_COBBLESTONES"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_HERD_ZEBRA",
+  "civilopedia": "TXT_KEY_BUILDING_HERD_ZEBRA_PEDIA",
   "enabledCivilizations": [
    "CIVILIZATION_NPC_NEANDERTHAL"
   ],

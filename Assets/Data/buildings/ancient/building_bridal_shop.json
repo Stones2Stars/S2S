@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_BRIDAL_SHOP",
- "description": "TXT_KEY_BUILDING_BRIDAL_SHOP",
- "civilopedia": "TXT_KEY_BUILDING_BRIDAL_SHOP_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_MALL"
@@ -111,6 +109,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_BRIDAL_SHOP",
+  "civilopedia": "TXT_KEY_BUILDING_BRIDAL_SHOP_PEDIA",
   "conquestProbability": 70,
   "advisor": "ADVISOR_ECONOMY",
   "visibilityPriority": 1,

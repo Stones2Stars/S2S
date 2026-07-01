@@ -1,7 +1,5 @@
 {
  "type": "BONUS_SPACEPUNK",
- "description": "TXT_KEY_BONUS_SPACEPUNK",
- "civilopedia": "TXT_KEY_BONUS_SPACEPUNK_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_CENTER_FOR_THE_STUDY_OF_CIVILIZATION"
@@ -13,6 +11,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_SPACEPUNK",
+  "civilopedia": "TXT_KEY_BONUS_SPACEPUNK_PEDIA",
   "bonusClassType": "BONUSCLASS_GENMODS"
  }
 }

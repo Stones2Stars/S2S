@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_HOUSING_MID_CLASS_SKYPAD_APARTMENTS",
- "description": "TXT_KEY_BUILDING_HOUSING_MID_CLASS_SKYPAD_APARTMENTS",
- "civilopedia": "TXT_KEY_BUILDING_HOUSING_MID_CLASS_SKYPAD_APARTMENTS_PEDIA",
  "obsoletedBy": {
   "techs": [
    "TECH_COLONY_ARCOLOGY"
@@ -74,6 +72,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_HOUSING_MID_CLASS_SKYPAD_APARTMENTS",
+  "civilopedia": "TXT_KEY_BUILDING_HOUSING_MID_CLASS_SKYPAD_APARTMENTS_PEDIA",
   "notConstructible": true,
   "autoBuild": true,
   "specialBuildingType": "SPECIALBUILDING_PUNK_ATOM",

@@ -1,7 +1,5 @@
 {
  "type": "UNIT_BABYLON_BOWMAN",
- "description": "TXT_KEY_UNIT_BABYLON_BOWMAN",
- "civilopedia": "TXT_KEY_UNIT_BABYLON_BOWMAN_PEDIA",
  "obsoletedBy": {
   "techs": [
    "TECH_FLINTLOCK"
@@ -81,6 +79,8 @@
   "upkeep": 1
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_BABYLON_BOWMAN",
+  "civilopedia": "TXT_KEY_UNIT_BABYLON_BOWMAN_PEDIA",
   "worth": 1,
   "militaryWorth": 5,
   "xpValueAttack": 6,

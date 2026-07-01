@@ -1,8 +1,5 @@
 {
  "type": "TECH_IRRIGATION",
- "description": "TXT_KEY_TECH_IRRIGATION",
- "civilopedia": "TXT_KEY_TECH_IRRIGATION_PEDIA",
- "quote": "TXT_KEY_TECH_IRRIGATION_QUOTE",
  "enables": {
   "bonuses": [
    "BONUS_BERRIES"
@@ -82,6 +79,9 @@
   "soundMP": "AS2D_TECH_IRRIGATION"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_IRRIGATION",
+  "civilopedia": "TXT_KEY_TECH_IRRIGATION_PEDIA",
+  "quote": "TXT_KEY_TECH_IRRIGATION_QUOTE",
   "era": "C2C_ERA_ANCIENT",
   "worth": 24,
   "tradeable": true,

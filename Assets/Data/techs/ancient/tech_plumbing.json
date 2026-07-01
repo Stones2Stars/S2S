@@ -1,8 +1,5 @@
 {
  "type": "TECH_PLUMBING",
- "description": "TXT_KEY_TECH_PLUMBING",
- "civilopedia": "TXT_KEY_TECH_PLUMBING_PEDIA",
- "quote": "TXT_KEY_TECH_PLUMBING_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_DEPARTMENT_OF_WATER",
@@ -60,6 +57,9 @@
   "soundMP": "AS2D_TECH_PLUMBING"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_PLUMBING",
+  "civilopedia": "TXT_KEY_TECH_PLUMBING_PEDIA",
+  "quote": "TXT_KEY_TECH_PLUMBING_QUOTE",
   "era": "C2C_ERA_ANCIENT",
   "worth": 2,
   "tradeable": true,

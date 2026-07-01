@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_FACTORY_NANOGENERATORS",
- "description": "TXT_KEY_BUILDING_FACTORY_NANOGENERATORS",
- "civilopedia": "TXT_KEY_BUILDING_FACTORY_NANOGENERATORS_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_NANOTECH_COMPLEX"
@@ -116,6 +114,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_FACTORY_NANOGENERATORS",
+  "civilopedia": "TXT_KEY_BUILDING_FACTORY_NANOGENERATORS_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

@@ -1,8 +1,5 @@
 {
  "type": "TECH_STARGAZING",
- "description": "TXT_KEY_TECH_STARGAZING",
- "civilopedia": "TXT_KEY_TECH_STARGAZING_PEDIA",
- "quote": "TXT_KEY_TECH_STARGAZING_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_CHEOMSEONGDAE",
@@ -68,6 +65,9 @@
   "soundMP": "AS2D_TECH_STARGAZING"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_STARGAZING",
+  "civilopedia": "TXT_KEY_TECH_STARGAZING_PEDIA",
+  "quote": "TXT_KEY_TECH_STARGAZING_QUOTE",
   "era": "C2C_ERA_ANCIENT",
   "worth": 16,
   "tradeable": true,

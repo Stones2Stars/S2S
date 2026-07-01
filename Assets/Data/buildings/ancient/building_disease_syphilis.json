@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_DISEASE_SYPHILIS",
- "description": "TXT_KEY_BUILDING_DISEASE_SYPHILIS",
- "civilopedia": "TXT_KEY_BUILDING_DISEASE_PEDIA",
  "obsoletedBy": {
   "techs": [
    "TECH_HOMO_SUPERIOR"
@@ -67,6 +65,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_DISEASE_SYPHILIS",
+  "civilopedia": "TXT_KEY_BUILDING_DISEASE_PEDIA",
   "notConstructible": true,
   "nukeImmune": true,
   "conquestProbability": 100,

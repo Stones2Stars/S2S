@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_LUNA_RING",
- "description": "TXT_KEY_BUILDING_LUNA_RING",
- "civilopedia": "TXT_KEY_BUILDING_LUNA_RING_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -49,6 +47,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_LUNA_RING",
+  "civilopedia": "TXT_KEY_BUILDING_LUNA_RING_PEDIA",
   "conquestProbability": 100,
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,

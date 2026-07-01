@@ -1,7 +1,5 @@
 {
  "type": "BONUS_KAVA",
- "description": "TXT_KEY_BONUS_KAVA",
- "civilopedia": "TXT_KEY_BONUS_KAVA_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_CHILD_LABOR_CREW",
@@ -65,6 +63,8 @@
   ]
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_KAVA",
+  "civilopedia": "TXT_KEY_BONUS_KAVA_PEDIA",
   "bonusClassType": "BONUSCLASS_LUXURY"
  }
 }

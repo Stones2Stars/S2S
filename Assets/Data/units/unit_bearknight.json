@@ -1,7 +1,5 @@
 {
  "type": "UNIT_BEARKNIGHT",
- "description": "TXT_KEY_UNIT_BEARKNIGHT",
- "civilopedia": "TXT_KEY_UNIT_BEARKNIGHT_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -72,6 +70,8 @@
   "production": 375
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_BEARKNIGHT",
+  "civilopedia": "TXT_KEY_UNIT_BEARKNIGHT_PEDIA",
   "worth": 2,
   "militaryWorth": 3,
   "xpValueAttack": 4,

@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_GRAND_UNIFIED_ACCELERATOR",
- "description": "TXT_KEY_BUILDING_GRAND_UNIFIED_ACCELERATOR",
- "civilopedia": "TXT_KEY_BUILDING_GRAND_UNIFIED_ACCELERATOR_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -84,6 +82,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_GRAND_UNIFIED_ACCELERATOR",
+  "civilopedia": "TXT_KEY_BUILDING_GRAND_UNIFIED_ACCELERATOR_PEDIA",
   "conquestProbability": 100,
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,

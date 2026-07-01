@@ -1,7 +1,5 @@
 {
  "type": "UNIT_RAY_EAGLE",
- "description": "TXT_KEY_UNIT_RAY_EAGLE",
- "civilopedia": "TXT_KEY_UNIT_RAY_EAGLE_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -80,6 +78,8 @@
   ]
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_RAY_EAGLE",
+  "civilopedia": "TXT_KEY_UNIT_RAY_EAGLE_PEDIA",
   "spawnOnly": true,
   "xpValueAttack": 1,
   "xpValueDefense": 1,

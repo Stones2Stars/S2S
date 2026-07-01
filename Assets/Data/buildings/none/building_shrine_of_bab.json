@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_SHRINE_OF_BAB",
- "description": "TXT_KEY_BUILDING_SHRINE_OF_BAB",
- "civilopedia": "TXT_KEY_BUILDING_SHRINE_OF_BAB_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -50,6 +48,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_SHRINE_OF_BAB",
+  "civilopedia": "TXT_KEY_BUILDING_SHRINE_OF_BAB_PEDIA",
   "stateReligionCommerce": {
    "research": 1
   },

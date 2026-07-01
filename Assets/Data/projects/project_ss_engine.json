@@ -1,7 +1,5 @@
 {
  "type": "PROJECT_SS_ENGINE",
- "description": "TXT_KEY_PROJECT_SS_ENGINE",
- "civilopedia": "TXT_KEY_PROJECT_SS_ENGINE_PEDIA",
  "victory": {
   "thresholds": {
    "VICTORY_SPACE_RACE": 2
@@ -20,6 +18,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_PROJECT_SS_ENGINE",
+  "civilopedia": "TXT_KEY_PROJECT_SS_ENGINE_PEDIA",
   "mapCategories": [
    "MAPCATEGORY_EARTH"
   ],

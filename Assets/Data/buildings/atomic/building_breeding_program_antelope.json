@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_BREEDING_PROGRAM_ANTELOPE",
- "description": "TXT_KEY_BUILDING_BREEDING_PROGRAM_ANTELOPE",
- "civilopedia": "TXT_KEY_BUILDING_BREEDING_PROGRAM_ANTELOPE_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_RESOURCES_CARCASS"
@@ -91,6 +89,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_BREEDING_PROGRAM_ANTELOPE",
+  "civilopedia": "TXT_KEY_BUILDING_BREEDING_PROGRAM_ANTELOPE_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

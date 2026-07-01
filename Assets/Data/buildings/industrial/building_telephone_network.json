@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_TELEPHONE_NETWORK",
- "description": "TXT_KEY_BUILDING_TELEPHONE_NETWORK",
- "civilopedia": "TXT_KEY_BUILDING_TELEPHONE_NETWORK_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_AUTOMATED_SWITCHBOARD",
@@ -120,6 +118,8 @@
   "construct": "AS2D_BUILD_TELEPHONE_NETWORK"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_TELEPHONE_NETWORK",
+  "civilopedia": "TXT_KEY_BUILDING_TELEPHONE_NETWORK_PEDIA",
   "worth": 5,
   "militaryWorth": 10,
   "conquestProbability": 75,

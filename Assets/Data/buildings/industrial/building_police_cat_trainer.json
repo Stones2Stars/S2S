@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_POLICE_CAT_TRAINER",
- "description": "TXT_KEY_BUILDING_POLICE_CAT_TRAINER",
- "civilopedia": "TXT_KEY_BUILDING_POLICE_CAT_TRAINER_PEDIA",
  "enables": {
   "units": [
    "UNIT_POLICE_CAT"
@@ -57,6 +55,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_POLICE_CAT_TRAINER",
+  "civilopedia": "TXT_KEY_BUILDING_POLICE_CAT_TRAINER_PEDIA",
   "worth": 2,
   "specialBuildingType": "SPECIALBUILDING_PUNK_MEGAFAUNA",
   "advisor": "ADVISOR_ECONOMY",

@@ -1,8 +1,5 @@
 {
  "type": "TECH_CUISINE",
- "description": "TXT_KEY_TECH_CUISINE",
- "civilopedia": "TXT_KEY_TECH_CUISINE_PEDIA",
- "quote": "TXT_KEY_TECH_CUISINE_QUOTE",
  "enables": {
   "bonuses": [
    "BONUS_CHEESE",
@@ -54,6 +51,9 @@
   "soundMP": "AS2D_TECH_CUISINE"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_CUISINE",
+  "civilopedia": "TXT_KEY_TECH_CUISINE_PEDIA",
+  "quote": "TXT_KEY_TECH_CUISINE_QUOTE",
   "era": "C2C_ERA_ANCIENT",
   "worth": 2,
   "tradeable": true,

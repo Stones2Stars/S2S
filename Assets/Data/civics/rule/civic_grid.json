@@ -1,8 +1,5 @@
 {
  "type": "CIVIC_GRID",
- "description": "TXT_KEY_CIVIC_GRID",
- "civilopedia": "TXT_KEY_CIVIC_GRID_PEDIA",
- "strategy": "TXT_KEY_CIVIC_GRID_STRATEGY",
  "enables": {
   "buildings": [
    "BUILDING_EYE_IN_THE_SKY",
@@ -90,6 +87,9 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_CIVIC_GRID",
+  "civilopedia": "TXT_KEY_CIVIC_GRID_PEDIA",
+  "strategy": "TXT_KEY_CIVIC_GRID_STRATEGY",
   "civicOption": "CIVICOPTION_RULE",
   "anarchyLength": 2,
   "upkeepLevel": "UPKEEP_HIGH"

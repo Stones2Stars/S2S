@@ -1,7 +1,5 @@
 {
  "type": "UNIT_PLATYPUS",
- "description": "TXT_KEY_UNIT_PLATYPUS",
- "civilopedia": "TXT_KEY_UNIT_PLATYPUS_PEDIA",
  "withdrawal": {
   "unit": {
    "percent": 50
@@ -46,6 +44,8 @@
   ]
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_PLATYPUS",
+  "civilopedia": "TXT_KEY_UNIT_PLATYPUS_PEDIA",
   "spawnOnly": true,
   "xpValueAttack": 1,
   "xpValueDefense": 1,

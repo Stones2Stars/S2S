@@ -1,6 +1,5 @@
 {
  "type": "VOTE_RELIGIOUS_VICTORY",
- "description": "TXT_KEY_VOTE_RELIGIOUS_VICTORY",
  "voteSource": [
   "DIPLOVOTE_POPE"
  ],
@@ -9,5 +8,8 @@
   "minVoters": 3,
   "stateReligionPercent": 100
  },
- "role": "victory"
+ "role": "victory",
+ "identity": {
+  "description": "TXT_KEY_VOTE_RELIGIOUS_VICTORY"
+ }
 }

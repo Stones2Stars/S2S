@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_D_T_FUSION_POWER_PLANT",
- "description": "TXT_KEY_BUILDING_D_T_FUSION_POWER_PLANT",
- "civilopedia": "TXT_KEY_BUILDING_D_T_FUSION_POWER_PLANT_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_HIGH_ENERGY_LAB",
@@ -92,6 +90,8 @@
   "construct": "AS2D_BUILD_PLANTNUCLEAR"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_D_T_FUSION_POWER_PLANT",
+  "civilopedia": "TXT_KEY_BUILDING_D_T_FUSION_POWER_PLANT_PEDIA",
   "neverCapture": true,
   "dcmAirbombMission": 3,
   "specialBuildingType": "SPECIALBUILDING_D_T_FUSION_POWER_PLANT",

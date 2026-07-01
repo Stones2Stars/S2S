@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_BONEWORKER",
- "description": "TXT_KEY_BUILDING_BONEWORKER",
- "civilopedia": "TXT_KEY_BUILDING_BONEWORKER_PEDIA",
  "obsoletedBy": {
   "techs": [
    "TECH_CITY_PLANNING"
@@ -90,6 +88,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_BONEWORKER",
+  "civilopedia": "TXT_KEY_BUILDING_BONEWORKER_PEDIA",
   "enabledCivilizations": [
    "CIVILIZATION_NPC_NEANDERTHAL"
   ],

@@ -1,7 +1,5 @@
 {
  "type": "UNIT_ATOMIC",
- "description": "TXT_KEY_UNIT_ATOMIC",
- "civilopedia": "TXT_KEY_UNIT_TACTICAL_NUKE_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -42,6 +40,8 @@
   "upkeep": 6
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_ATOMIC",
+  "civilopedia": "TXT_KEY_UNIT_TACTICAL_NUKE_PEDIA",
   "worth": 5,
   "militaryWorth": 1000,
   "xpValueAttack": 6,

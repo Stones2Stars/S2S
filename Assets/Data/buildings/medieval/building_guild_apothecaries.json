@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_GUILD_APOTHECARIES",
- "description": "TXT_KEY_BUILDING_GUILD_APOTHECARIES",
- "civilopedia": "TXT_KEY_BUILDING_GUILDS_PEDIA",
  "obsoletedBy": {
   "techs": [
    "TECH_MODERN_HEALTH_CARE"
@@ -93,6 +91,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_GUILD_APOTHECARIES",
+  "civilopedia": "TXT_KEY_BUILDING_GUILDS_PEDIA",
   "neverCapture": true,
   "greatPeopleUnitType": "UNIT_DOCTOR",
   "specialBuildingType": "SPECIALBUILDING_GUILD",

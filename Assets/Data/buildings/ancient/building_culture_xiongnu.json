@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_CULTURE_XIONGNU",
- "description": "TXT_KEY_BUILDING_CULTURE_XIONGNU",
- "civilopedia": "TXT_KEY_BUILDING_CULTURE_XIONGNU_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -64,6 +62,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_CULTURE_XIONGNU",
+  "civilopedia": "TXT_KEY_BUILDING_CULTURE_XIONGNU_PEDIA",
   "nukeImmune": true,
   "noInstanceLimit": true,
   "conquestProbability": 100,

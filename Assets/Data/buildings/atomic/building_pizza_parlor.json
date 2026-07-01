@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_PIZZA_PARLOR",
- "description": "TXT_KEY_BUILDING_PIZZA_PARLOR",
- "civilopedia": "TXT_KEY_BUILDING_PIZZA_PARLOR_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_UNIVERSAL_RESTAURANT"
@@ -134,6 +132,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_PIZZA_PARLOR",
+  "civilopedia": "TXT_KEY_BUILDING_PIZZA_PARLOR_PEDIA",
   "conquestProbability": 70,
   "advisor": "ADVISOR_ECONOMY",
   "visibilityPriority": 1,

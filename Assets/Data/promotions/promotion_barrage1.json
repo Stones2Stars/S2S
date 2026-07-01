@@ -1,6 +1,5 @@
 {
  "type": "PROMOTION_BARRAGE1",
- "description": "TXT_KEY_PROMOTION_BARRAGE1",
  "collateral": {
   "unit": {
    "damage": {
@@ -20,6 +19,7 @@
   "sound": "AS2D_IF_LEVELUP"
  },
  "identity": {
+  "description": "TXT_KEY_PROMOTION_BARRAGE1",
   "unitCombats": [
    "UNITCOMBAT_SUBMARINE",
    "UNITCOMBAT_EARLY_BOMBERS",

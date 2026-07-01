@@ -1,7 +1,5 @@
 {
  "type": "TERRAIN_GALACTIC_CORE",
- "description": "TXT_KEY_TERRAIN_GALACTIC_CORE",
- "civilopedia": "TXT_KEY_TERRAIN_GALACTIC_CORE_PEDIA",
  "commerce": {
   "plot": {
    "flat": 2
@@ -23,6 +21,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_TERRAIN_GALACTIC_CORE",
+  "civilopedia": "TXT_KEY_TERRAIN_GALACTIC_CORE_PEDIA",
   "found": true,
   "movementCost": 1,
   "mapCategories": [

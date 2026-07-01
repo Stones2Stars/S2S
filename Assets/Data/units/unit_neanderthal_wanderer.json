@@ -1,7 +1,5 @@
 {
  "type": "UNIT_NEANDERTHAL_WANDERER",
- "description": "TXT_KEY_UNIT_NEANDERTHAL_WANDERER",
- "civilopedia": "TXT_KEY_UNIT_WANDERER_PEDIA",
  "obsoletedBy": {
   "techs": [
    "TECH_PERSISTENCE_HUNTING"
@@ -45,6 +43,8 @@
   "upkeep": 1
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_NEANDERTHAL_WANDERER",
+  "civilopedia": "TXT_KEY_UNIT_WANDERER_PEDIA",
   "worth": 2,
   "militaryWorth": 1,
   "xpValueAttack": 3,

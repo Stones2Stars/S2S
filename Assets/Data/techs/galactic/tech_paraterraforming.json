@@ -1,8 +1,5 @@
 {
  "type": "TECH_PARATERRAFORMING",
- "description": "TXT_KEY_TECH_PARATERRAFORMING",
- "civilopedia": "TXT_KEY_TECH_PARATERRAFORMING_PEDIA",
- "quote": "TXT_KEY_TECH_PARATERRAFORMING_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_ASTEROID_SHELL_FACTORY",
@@ -67,6 +64,9 @@
   "soundMP": "AS2D_TECH_GENERIC"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_PARATERRAFORMING",
+  "civilopedia": "TXT_KEY_TECH_PARATERRAFORMING_PEDIA",
+  "quote": "TXT_KEY_TECH_PARATERRAFORMING_QUOTE",
   "era": "C2C_ERA_GALACTIC",
   "worth": 48,
   "tradeable": true,

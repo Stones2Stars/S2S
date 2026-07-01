@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_FACTORY_NYLON",
- "description": "TXT_KEY_BUILDING_FACTORY_NYLON",
- "civilopedia": "TXT_KEY_BUILDING_FACTORY_NYLON_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_MATERIALS_CONGLOMERATE"
@@ -95,6 +93,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_FACTORY_NYLON",
+  "civilopedia": "TXT_KEY_BUILDING_FACTORY_NYLON_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

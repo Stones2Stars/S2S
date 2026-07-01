@@ -1,7 +1,5 @@
 {
  "type": "UNIT_MSNIPER",
- "description": "TXT_KEY_UNIT_MSNIPER",
- "civilopedia": "TXT_KEY_UNIT_SNIPER_PEDIA",
  "obsoletedBy": {
   "techs": [
    "TECH_SUPERSTRONG_ALLOYS"
@@ -176,6 +174,8 @@
   ]
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_MSNIPER",
+  "civilopedia": "TXT_KEY_UNIT_SNIPER_PEDIA",
   "worth": 12,
   "militaryWorth": 50,
   "xpValueAttack": 8,

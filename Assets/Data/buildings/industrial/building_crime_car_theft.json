@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_CRIME_CAR_THEFT",
- "description": "TXT_KEY_BUILDING_CRIME_CAR_THEFT",
- "civilopedia": "TXT_KEY_BUILDING_CRIME_CAR_THEFT_PEDIA",
  "obsoletedBy": {
   "techs": [
    "TECH_TELEPORTATION"
@@ -78,6 +76,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_CRIME_CAR_THEFT",
+  "civilopedia": "TXT_KEY_BUILDING_CRIME_CAR_THEFT_PEDIA",
   "notConstructible": true,
   "nukeImmune": true,
   "conquestProbability": 100,

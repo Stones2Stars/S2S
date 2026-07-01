@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_FERTILITY_FESTIVAL",
- "description": "TXT_KEY_BUILDING_FERTILITY_FESTIVAL",
- "civilopedia": "TXT_KEY_BUILDING_FERTILITY_FESTIVAL_PEDIA",
  "obsoletedBy": {
   "techs": [
    "TECH_WOMENS_SUFFRAGE"
@@ -75,6 +73,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_FERTILITY_FESTIVAL",
+  "civilopedia": "TXT_KEY_BUILDING_FERTILITY_FESTIVAL_PEDIA",
   "neverCapture": true,
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [

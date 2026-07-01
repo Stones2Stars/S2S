@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_GATE_OF_THE_SUN",
- "description": "TXT_KEY_BUILDING_GATE_OF_THE_SUN",
- "civilopedia": "TXT_KEY_BUILDING_GATE_OF_THE_SUN_PEDIA",
  "obsoletedBy": {
   "techs": [
    "TECH_CLOCKWORKS"
@@ -88,6 +86,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_GATE_OF_THE_SUN",
+  "civilopedia": "TXT_KEY_BUILDING_GATE_OF_THE_SUN_PEDIA",
   "centerInCity": true,
   "worth": 10,
   "conquestProbability": 100,

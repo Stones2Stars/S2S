@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_TITAN_BIOFACTORY",
- "description": "TXT_KEY_BUILDING_TITAN_BIOFACTORY",
- "civilopedia": "TXT_KEY_BUILDING_TITAN_BIOFACTORY_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_LIFE_AMMONIA_BASED",
@@ -51,6 +49,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_TITAN_BIOFACTORY",
+  "civilopedia": "TXT_KEY_BUILDING_TITAN_BIOFACTORY_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

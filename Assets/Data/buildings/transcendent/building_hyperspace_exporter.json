@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_HYPERSPACE_EXPORTER",
- "description": "TXT_KEY_BUILDING_HYPERSPACE_EXPORTER",
- "civilopedia": "TXT_KEY_BUILDING_HYPERSPACE_EXPORTER_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_HYPERSPACE_COMMERCIAL_CENTER"
@@ -65,6 +63,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_HYPERSPACE_EXPORTER",
+  "civilopedia": "TXT_KEY_BUILDING_HYPERSPACE_EXPORTER_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

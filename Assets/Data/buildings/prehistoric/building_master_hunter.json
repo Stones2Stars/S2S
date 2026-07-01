@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_MASTER_HUNTER",
- "description": "TXT_KEY_BUILDING_MASTER_HUNTER",
- "civilopedia": "TXT_KEY_BUILDING_MASTER_HUNTER_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_HAWKING_HUT",
@@ -224,6 +222,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_MASTER_HUNTER",
+  "civilopedia": "TXT_KEY_BUILDING_MASTER_HUNTER_PEDIA",
   "notConstructible": true,
   "worth": 1,
   "militaryWorth": 4,

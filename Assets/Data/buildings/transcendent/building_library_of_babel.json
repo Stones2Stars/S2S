@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_LIBRARY_OF_BABEL",
- "description": "TXT_KEY_BUILDING_LIBRARY_OF_BABEL",
- "civilopedia": "TXT_KEY_BUILDING_LIBRARY_OF_BABEL_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -54,6 +52,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_LIBRARY_OF_BABEL",
+  "civilopedia": "TXT_KEY_BUILDING_LIBRARY_OF_BABEL_PEDIA",
   "conquestProbability": 100,
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,

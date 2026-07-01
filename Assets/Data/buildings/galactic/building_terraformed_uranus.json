@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_TERRAFORMED_URANUS",
- "description": "TXT_KEY_BUILDING_TERRAFORMED_URANUS",
- "civilopedia": "TXT_KEY_BUILDING_TERRAFORMED_URANUS_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -58,6 +56,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_TERRAFORMED_URANUS",
+  "civilopedia": "TXT_KEY_BUILDING_TERRAFORMED_URANUS_PEDIA",
   "conquestProbability": 100,
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,

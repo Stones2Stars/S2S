@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_EFFECT_CISLUNAR_ECONOMY",
- "description": "TXT_KEY_BUILDING_EFFECT_CISLUNAR_ECONOMY",
- "civilopedia": "TXT_KEY_BUILDING_CISLUNAR_ECONOMY_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_CISLUNAR_ONEILL_CYLINDER",
@@ -29,6 +27,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_EFFECT_CISLUNAR_ECONOMY",
+  "civilopedia": "TXT_KEY_BUILDING_CISLUNAR_ECONOMY_PEDIA",
   "notConstructible": true,
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,

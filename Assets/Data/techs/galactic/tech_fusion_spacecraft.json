@@ -1,8 +1,5 @@
 {
  "type": "TECH_FUSION_SPACECRAFT",
- "description": "TXT_KEY_TECH_FUSION_SPACECRAFT",
- "civilopedia": "TXT_KEY_TECH_FUSION_SPACECRAFT_PEDIA",
- "quote": "TXT_KEY_TECH_FUSION_SPACECRAFT_QUOTE",
  "enables": {
   "bonuses": [
    "BONUS_PERSONAL_SPACECRAFT"
@@ -73,6 +70,9 @@
   "soundMP": "AS2D_TECH_FUSION_SPACECRAFT"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_FUSION_SPACECRAFT",
+  "civilopedia": "TXT_KEY_TECH_FUSION_SPACECRAFT_PEDIA",
+  "quote": "TXT_KEY_TECH_FUSION_SPACECRAFT_QUOTE",
   "era": "C2C_ERA_GALACTIC",
   "worth": 48,
   "militaryWorth": 4,

@@ -1,8 +1,5 @@
 {
  "type": "TECH_BIOLOGY",
- "description": "TXT_KEY_TECH_BIOLOGY",
- "civilopedia": "TXT_KEY_TECH_BIOLOGY_PEDIA",
- "quote": "TXT_KEY_TECH_BIOLOGY_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_BIOLOGY_LAB"
@@ -65,6 +62,9 @@
   "soundMP": "AS2D_TECH_MP_BIOLOGY"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_BIOLOGY",
+  "civilopedia": "TXT_KEY_TECH_BIOLOGY_PEDIA",
+  "quote": "TXT_KEY_TECH_BIOLOGY_QUOTE",
   "era": "C2C_ERA_RENAISSANCE",
   "worth": 40,
   "tradeable": true,

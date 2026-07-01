@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_HYDRAULIC_FRACTURING",
- "description": "TXT_KEY_BUILDING_HYDRAULIC_FRACTURING",
- "civilopedia": "TXT_KEY_BUILDING_HYDRAULIC_FRACTURING_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_ULTRAFUEL_REFINERY"
@@ -79,6 +77,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_HYDRAULIC_FRACTURING",
+  "civilopedia": "TXT_KEY_BUILDING_HYDRAULIC_FRACTURING_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

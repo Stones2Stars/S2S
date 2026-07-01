@@ -1,9 +1,5 @@
 {
  "type": "CIVILIZATION_PORTUGAL",
- "description": "TXT_KEY_CIVILIZATION_PORTUGAL",
- "shortDescription": "TXT_KEY_CIVILIZATION_PORTUGAL_SHORT",
- "adjective": "TXT_KEY_CIVILIZATION_PORTUGAL_ADJECTIVE",
- "civilopedia": "TXT_KEY_CIVILIZATION_PORTUGAL_PEDIA",
  "grants": {
   "buildings": [
    "BUILDING_PALACE",
@@ -32,10 +28,6 @@
    "TECH_GAME_START"
   ]
  },
- "policies": {
-  "playable": true,
-  "aiPlayable": true
- },
  "world": {
   "art": {
    "playerColor": "PLAYERCOLOR_DARK_DARK_GREEN",
@@ -49,6 +41,12 @@
   "action": "AS3D_PORTUGAL_ORDER"
  },
  "identity": {
+  "description": "TXT_KEY_CIVILIZATION_PORTUGAL",
+  "shortDescription": "TXT_KEY_CIVILIZATION_PORTUGAL_SHORT",
+  "adjective": "TXT_KEY_CIVILIZATION_PORTUGAL_ADJECTIVE",
+  "civilopedia": "TXT_KEY_CIVILIZATION_PORTUGAL_PEDIA",
+  "playable": true,
+  "aiPlayable": true,
   "leaders": [
    "LEADER_JOAO",
    "LEADER_AFONSO",

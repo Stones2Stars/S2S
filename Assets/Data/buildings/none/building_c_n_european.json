@@ -1,8 +1,5 @@
 {
  "type": "BUILDING_C_N_EUROPEAN",
- "description": "TXT_KEY_BUILDING_C_N_EUROPEAN",
- "civilopedia": "TXT_KEY_BUILDING_C_N_PEDIA",
- "help": "TXT_KEY_BUILDING_C_N_HELP",
  "requires": {
   "build": {
    "all": [
@@ -19,6 +16,9 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_C_N_EUROPEAN",
+  "civilopedia": "TXT_KEY_BUILDING_C_N_PEDIA",
+  "help": "TXT_KEY_BUILDING_C_N_HELP",
   "notConstructible": true,
   "nukeImmune": true,
   "neverCapture": true,

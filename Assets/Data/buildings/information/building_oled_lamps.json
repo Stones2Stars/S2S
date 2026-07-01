@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_OLED_LAMPS",
- "description": "TXT_KEY_BUILDING_OLED_LAMPS",
- "civilopedia": "TXT_KEY_BUILDING_OLED_LAMPS_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -59,6 +57,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_OLED_LAMPS",
+  "civilopedia": "TXT_KEY_BUILDING_OLED_LAMPS_PEDIA",
   "worth": 4,
   "conquestProbability": 100,
   "advisor": "ADVISOR_ECONOMY",

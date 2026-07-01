@@ -1,7 +1,5 @@
 {
  "type": "UNIT_NANITE_REPAIR_CLOUD",
- "description": "TXT_KEY_UNIT_NANITE_REPAIR_CLOUD",
- "civilopedia": "TXT_KEY_UNIT_NANITE_REPAIR_CLOUD_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -128,6 +126,8 @@
   "hurryCostModifier": 25
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_NANITE_REPAIR_CLOUD",
+  "civilopedia": "TXT_KEY_UNIT_NANITE_REPAIR_CLOUD_PEDIA",
   "worth": 24,
   "militaryWorth": 140,
   "xpValueDefense": 2,

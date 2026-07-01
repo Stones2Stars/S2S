@@ -1,7 +1,5 @@
 {
  "type": "BONUS_SERVICE_BOTS",
- "description": "TXT_KEY_BONUS_SERVICE_BOTS",
- "civilopedia": "TXT_KEY_BONUS_SERVICE_BOTS_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_ALUMINUM_RECLAMATION_PLANT",
@@ -33,6 +31,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_SERVICE_BOTS",
+  "civilopedia": "TXT_KEY_BONUS_SERVICE_BOTS_PEDIA",
   "bonusClassType": "BONUSCLASS_MANUFACTURED"
  }
 }

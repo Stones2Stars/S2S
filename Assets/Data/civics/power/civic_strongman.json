@@ -1,8 +1,5 @@
 {
  "type": "CIVIC_STRONGMAN",
- "description": "TXT_KEY_CIVIC_STRONGMAN",
- "civilopedia": "TXT_KEY_CIVIC_STRONGMAN_PEDIA",
- "strategy": "TXT_KEY_CIVIC_STRONGMAN_STRATEGY",
  "enables": {
   "buildings": [
    "BUILDING_ALPHA_FEMALE",
@@ -123,6 +120,9 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_CIVIC_STRONGMAN",
+  "civilopedia": "TXT_KEY_CIVIC_STRONGMAN_PEDIA",
+  "strategy": "TXT_KEY_CIVIC_STRONGMAN_STRATEGY",
   "civicOption": "CIVICOPTION_POWER"
  }
 }

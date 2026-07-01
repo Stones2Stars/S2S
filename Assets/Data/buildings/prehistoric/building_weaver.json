@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_WEAVER",
- "description": "TXT_KEY_BUILDING_WEAVER",
- "civilopedia": "TXT_KEY_BUILDING_WEAVER_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_FACTORY_CLOTH"
@@ -187,6 +185,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_WEAVER",
+  "civilopedia": "TXT_KEY_BUILDING_WEAVER_PEDIA",
   "enabledCivilizations": [
    "CIVILIZATION_NPC_NEANDERTHAL"
   ],

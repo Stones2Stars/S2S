@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_LIFE_C4_CROPS",
- "description": "TXT_KEY_BUILDING_LIFE_C4_CROPS",
- "civilopedia": "TXT_KEY_BUILDING_LIFE_C4_CROPS_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -44,6 +42,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_LIFE_C4_CROPS",
+  "civilopedia": "TXT_KEY_BUILDING_LIFE_C4_CROPS_PEDIA",
   "neverCapture": true,
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,

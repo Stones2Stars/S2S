@@ -1,6 +1,5 @@
 {
  "type": "PROMOTION_TARNISHED_SUPREMACY",
- "description": "TXT_KEY_PROMOTION_TARNISHED_SUPREMACY",
  "strength": {
   "unit": {
    "quality": {
@@ -30,6 +29,7 @@
   "sound": "AS2D_IF_LEVELUP"
  },
  "identity": {
+  "description": "TXT_KEY_PROMOTION_TARNISHED_SUPREMACY",
   "replacesUnitCombat": "UNITCOMBAT_QUALITY_EPIC",
   "notOnUnitCombats": [
    "UNITCOMBAT_PACIFIST",

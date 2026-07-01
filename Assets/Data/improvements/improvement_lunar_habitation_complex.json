@@ -1,7 +1,5 @@
 {
  "type": "IMPROVEMENT_LUNAR_HABITATION_COMPLEX",
- "description": "TXT_KEY_IMPROVEMENT_LUNAR_HABITATION_COMPLEX",
- "civilopedia": "TXT_KEY_IMPROVEMENT_LUNAR_HABITATION_COMPLEX_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -33,6 +31,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_IMPROVEMENT_LUNAR_HABITATION_COMPLEX",
+  "civilopedia": "TXT_KEY_IMPROVEMENT_LUNAR_HABITATION_COMPLEX_PEDIA",
   "extraterrestrial": true,
   "pillageTo": "IMPROVEMENT_LUNAR_OUTPOST",
   "pillageGold": 1000,

@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_EFFECT_MARS_CYCLER",
- "description": "TXT_KEY_BUILDING_EFFECT_MARS_CYCLER",
- "civilopedia": "TXT_KEY_BUILDING_EFFECT_MARS_CYCLER_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_MARTIAN_CYBERNETIC_CHLOROPLAST_IMPORTER",
@@ -48,6 +46,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_EFFECT_MARS_CYCLER",
+  "civilopedia": "TXT_KEY_BUILDING_EFFECT_MARS_CYCLER_PEDIA",
   "notConstructible": true,
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,

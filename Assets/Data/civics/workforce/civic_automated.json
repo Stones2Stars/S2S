@@ -1,8 +1,5 @@
 {
  "type": "CIVIC_AUTOMATED",
- "description": "TXT_KEY_CIVIC_AUTOMATED",
- "civilopedia": "TXT_KEY_CIVIC_AUTOMATED_PEDIA",
- "strategy": "TXT_KEY_CIVIC_AUTOMATED_STRATEGY",
  "enables": {
   "buildings": [
    "BUILDING_CIVIC_POST_SCARCITY"
@@ -83,6 +80,9 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_CIVIC_AUTOMATED",
+  "civilopedia": "TXT_KEY_CIVIC_AUTOMATED_PEDIA",
+  "strategy": "TXT_KEY_CIVIC_AUTOMATED_STRATEGY",
   "civicOption": "CIVICOPTION_WORKFORCE",
   "anarchyLength": 2,
   "upkeepLevel": "UPKEEP_MEDIUM"

@@ -1,13 +1,13 @@
 {
  "type": "BONUS_SEASONING",
- "description": "TXT_KEY_BONUS_SEASONING",
- "civilopedia": "TXT_KEY_BONUS_SEASONING_PEDIA",
  "world": {
   "art": {
    "icon": "ART_DEF_BONUS_SEASONING"
   }
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_SEASONING",
+  "civilopedia": "TXT_KEY_BONUS_SEASONING_PEDIA",
   "bonusClassType": "BONUSCLASS_MANUFACTURED"
  }
 }

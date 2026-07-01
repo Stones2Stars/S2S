@@ -1,8 +1,5 @@
 {
  "type": "TECH_VOLCANOLOGY",
- "description": "TXT_KEY_TECH_VOLCANOLOGY",
- "civilopedia": "TXT_KEY_TECH_VOLCANOLOGY_PEDIA",
- "quote": "TXT_KEY_TECH_VOLCANOLOGY_QUOTE",
  "enables": {
   "bonuses": [
    "BONUS_HYDROTHERMAL_VENT"
@@ -65,6 +62,9 @@
   "soundMP": "AS2D_TECH_VOLCANOLOGY"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_VOLCANOLOGY",
+  "civilopedia": "TXT_KEY_TECH_VOLCANOLOGY_PEDIA",
+  "quote": "TXT_KEY_TECH_VOLCANOLOGY_QUOTE",
   "era": "C2C_ERA_ATOMIC",
   "worth": 48,
   "militaryWorth": 10,

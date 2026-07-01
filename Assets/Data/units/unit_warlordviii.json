@@ -1,7 +1,5 @@
 {
  "type": "UNIT_WARLORDVIII",
- "description": "TXT_KEY_UNIT_WARLORDVIII",
- "civilopedia": "TXT_KEY_CONCEPT_GREAT_GENERALS_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -116,6 +114,8 @@
   "upkeep": 16
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_WARLORDVIII",
+  "civilopedia": "TXT_KEY_CONCEPT_GREAT_GENERALS_PEDIA",
   "worth": 15,
   "militaryWorth": 60,
   "xpValueAttack": 4,

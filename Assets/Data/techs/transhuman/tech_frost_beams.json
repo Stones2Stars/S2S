@@ -1,8 +1,5 @@
 {
  "type": "TECH_FROST_BEAMS",
- "description": "TXT_KEY_TECH_FROST_BEAMS",
- "civilopedia": "TXT_KEY_TECH_FROST_BEAMS_PEDIA",
- "quote": "TXT_KEY_TECH_FROST_BEAMS_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_ADVANCED_FIRE_SUPPRESSION",
@@ -47,6 +44,9 @@
   "soundMP": "AS2D_TECH_FROST_BEAMS"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_FROST_BEAMS",
+  "civilopedia": "TXT_KEY_TECH_FROST_BEAMS_PEDIA",
+  "quote": "TXT_KEY_TECH_FROST_BEAMS_QUOTE",
   "era": "C2C_ERA_TRANSHUMAN",
   "worth": 48,
   "militaryWorth": 6,

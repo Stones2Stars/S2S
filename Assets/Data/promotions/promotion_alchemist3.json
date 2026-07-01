@@ -1,6 +1,5 @@
 {
  "type": "PROMOTION_ALCHEMIST3",
- "description": "TXT_KEY_PROMOTION_ALCHEMIST3",
  "skills": {
   "amphib": true
  },
@@ -14,5 +13,8 @@
  },
  "sound": {
   "sound": "AS2D_PING"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_ALCHEMIST3"
  }
 }

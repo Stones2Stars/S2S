@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_INTERGALACTIC_LOGISTICS_CENTER",
- "description": "TXT_KEY_BUILDING_INTERGALACTIC_LOGISTICS_CENTER",
- "civilopedia": "TXT_KEY_BUILDING_INTERGALACTIC_LOGISTICS_CENTER_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_INTERGALACTIC_COMMERCIAL_DISTRICT"
@@ -56,6 +54,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_INTERGALACTIC_LOGISTICS_CENTER",
+  "civilopedia": "TXT_KEY_BUILDING_INTERGALACTIC_LOGISTICS_CENTER_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

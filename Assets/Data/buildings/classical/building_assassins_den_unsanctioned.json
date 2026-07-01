@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_ASSASSINS_DEN_UNSANCTIONED",
- "description": "TXT_KEY_BUILDING_ASSASSINS_DEN_UNSANCTIONED",
- "civilopedia": "TXT_KEY_BUILDING_ASSASSINS_DEN_PEDIA",
  "obsoletedBy": {
   "techs": [
    "TECH_MATCHLOCK"
@@ -76,6 +74,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_ASSASSINS_DEN_UNSANCTIONED",
+  "civilopedia": "TXT_KEY_BUILDING_ASSASSINS_DEN_PEDIA",
   "notConstructible": true,
   "nukeImmune": true,
   "militaryWorth": 1,

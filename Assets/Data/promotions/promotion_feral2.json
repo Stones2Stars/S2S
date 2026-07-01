@@ -1,6 +1,5 @@
 {
  "type": "PROMOTION_FERAL2",
- "description": "TXT_KEY_PROMOTION_FERAL2",
  "strength": {
   "unit": {
    "attack": {
@@ -27,5 +26,8 @@
  },
  "sound": {
   "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_FERAL2"
  }
 }

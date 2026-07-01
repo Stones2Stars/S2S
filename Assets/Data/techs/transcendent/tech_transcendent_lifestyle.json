@@ -1,8 +1,5 @@
 {
  "type": "TECH_TRANSCENDENT_LIFESTYLE",
- "description": "TXT_KEY_TECH_TRANSCENDENT_LIFESTYLE",
- "civilopedia": "TXT_KEY_TECH_TRANSCENDENT_LIFESTYLE_PEDIA",
- "quote": "TXT_KEY_TECH_TRANSCENDENT_LIFESTYLE_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_EDUCATION_MINDLESS",
@@ -96,6 +93,9 @@
   "soundMP": "AS2D_TECH_TRANSCENDENT_LIFESTYLE"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_TRANSCENDENT_LIFESTYLE",
+  "civilopedia": "TXT_KEY_TECH_TRANSCENDENT_LIFESTYLE_PEDIA",
+  "quote": "TXT_KEY_TECH_TRANSCENDENT_LIFESTYLE_QUOTE",
   "era": "C2C_ERA_TRANSCENDENT",
   "worth": 50,
   "militaryWorth": 5,

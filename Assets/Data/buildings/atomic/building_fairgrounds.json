@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_FAIRGROUNDS",
- "description": "TXT_KEY_BUILDING_FAIRGROUNDS",
- "civilopedia": "TXT_KEY_BUILDING_FAIRGROUNDS_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_BALLOON_RIDES"
@@ -165,6 +163,8 @@
   "construct": "AS2D_BUILD_FAIRGROUNDS"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_FAIRGROUNDS",
+  "civilopedia": "TXT_KEY_BUILDING_FAIRGROUNDS_PEDIA",
   "worth": 6,
   "militaryWorth": 3,
   "advisor": "ADVISOR_ECONOMY",

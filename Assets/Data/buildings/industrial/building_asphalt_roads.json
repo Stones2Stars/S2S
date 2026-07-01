@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_ASPHALT_ROADS",
- "description": "TXT_KEY_BUILDING_ASPHALT_ROADS",
- "civilopedia": "TXT_KEY_BUILDING_ASPHALT_ROADS_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_BAMBOO_BRIDGE",
@@ -125,6 +123,8 @@
   "construct": "AS2D_BUILD_WALLS"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_ASPHALT_ROADS",
+  "civilopedia": "TXT_KEY_BUILDING_ASPHALT_ROADS_PEDIA",
   "worth": 4,
   "conquestProbability": 100,
   "advisor": "ADVISOR_ECONOMY",

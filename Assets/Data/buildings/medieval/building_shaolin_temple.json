@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_SHAOLIN_TEMPLE",
- "description": "TXT_KEY_BUILDING_SHAOLIN_TEMPLE",
- "civilopedia": "TXT_KEY_BUILDING_SHAOLIN_TEMPLE_PEDIA",
  "enables": {
   "units": [
    "UNIT_SHAOLINMK"
@@ -70,6 +68,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_SHAOLIN_TEMPLE",
+  "civilopedia": "TXT_KEY_BUILDING_SHAOLIN_TEMPLE_PEDIA",
   "commerceDoubleTime": {
    "culture": 1000
   },

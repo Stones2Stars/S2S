@@ -1,7 +1,5 @@
 {
  "type": "IMPROVEMENT_WATERMILL",
- "description": "TXT_KEY_IMPROVEMENT_WATERMILL",
- "civilopedia": "TXT_KEY_IMPROVEMENT_WATERMILL_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -70,6 +68,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_IMPROVEMENT_WATERMILL",
+  "civilopedia": "TXT_KEY_IMPROVEMENT_WATERMILL_PEDIA",
   "advancedStart": {
    "cost": 48
   },

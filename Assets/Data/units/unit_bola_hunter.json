@@ -1,7 +1,5 @@
 {
  "type": "UNIT_BOLA_HUNTER",
- "description": "TXT_KEY_UNIT_BOLA_HUNTER",
- "civilopedia": "TXT_KEY_UNIT_BOLA_HUNTER_PEDIA",
  "obsoletedBy": {
   "techs": [
    "TECH_MATCHLOCK"
@@ -74,6 +72,8 @@
   "upkeep": 1
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_BOLA_HUNTER",
+  "civilopedia": "TXT_KEY_UNIT_BOLA_HUNTER_PEDIA",
   "worth": 2,
   "militaryWorth": 2,
   "xpValueAttack": 8,

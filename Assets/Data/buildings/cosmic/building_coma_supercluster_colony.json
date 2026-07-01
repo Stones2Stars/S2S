@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_COMA_SUPERCLUSTER_COLONY",
- "description": "TXT_KEY_BUILDING_COMA_SUPERCLUSTER_COLONY",
- "civilopedia": "TXT_KEY_BUILDING_COMA_SUPERCLUSTER_COLONY_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -61,6 +59,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_COMA_SUPERCLUSTER_COLONY",
+  "civilopedia": "TXT_KEY_BUILDING_COMA_SUPERCLUSTER_COLONY_PEDIA",
   "conquestProbability": 100,
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,

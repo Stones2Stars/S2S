@@ -34,7 +34,7 @@ from collections import OrderedDict
 
 import engine
 import boolexpr
-from curate_common import put_art, emit_art, FAMILY_ORDER, de_i, descale100
+from curate_common import put_art, emit_art, FAMILY_ORDER, de_i, descale100, fold_text_to_identity
 from store import Store, REPO
 
 # ---- scalar/percent modifier families: tag -> (family, scope, member|None, unit). Corrected scopes from the
@@ -1254,6 +1254,7 @@ def curate(typ, rec, store):
     emit_art(out, art_blocks)
     if identity:
         out["identity"] = identity
+    fold_text_to_identity(out)   # TEXT -> identity (json.md §7)
     return out
 
 
@@ -1282,6 +1283,7 @@ def curate_special(typ, rec, store):
     emit_art(out, art_blocks)
     if identity:
         out["identity"] = identity
+    fold_text_to_identity(out)   # TEXT -> identity (json.md §7) -- the special-building path too
     return out
 
 

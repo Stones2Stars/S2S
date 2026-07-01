@@ -1,7 +1,5 @@
 {
  "type": "UNIT_WALRUS",
- "description": "TXT_KEY_UNIT_WALRUS",
- "civilopedia": "TXT_KEY_UNIT_WALRUS_PEDIA",
  "skills": {
   "blendIntoCity": true,
   "onlyDefensive": true,
@@ -71,6 +69,8 @@
   ]
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_WALRUS",
+  "civilopedia": "TXT_KEY_UNIT_WALRUS_PEDIA",
   "spawnOnly": true,
   "xpValueAttack": 5,
   "xpValueDefense": 3,

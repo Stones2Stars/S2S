@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_CANNON_TURRET",
- "description": "TXT_KEY_BUILDING_CANNON_TURRET",
- "civilopedia": "TXT_KEY_BUILDING_CANNON_TURRET_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_IMPERIAL_FORTRESS"
@@ -87,6 +85,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_CANNON_TURRET",
+  "civilopedia": "TXT_KEY_BUILDING_CANNON_TURRET_PEDIA",
   "nukeImmune": true,
   "militaryWorth": 12,
   "conquestProbability": 100,

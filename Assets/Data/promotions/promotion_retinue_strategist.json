@@ -1,6 +1,5 @@
 {
  "type": "PROMOTION_RETINUE_STRATEGIST",
- "description": "TXT_KEY_PROMOTION_RETINUE_STRATEGIST",
  "strength": {
   "unit": {
    "percent": 5,
@@ -36,6 +35,7 @@
   "sound": "AS2D_IF_GET_RETINUE"
  },
  "identity": {
+  "description": "TXT_KEY_PROMOTION_RETINUE_STRATEGIST",
   "unitCombats": [
    "UNITCOMBAT_HERO"
   ]

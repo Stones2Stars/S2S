@@ -1,8 +1,5 @@
 {
  "type": "TECH_GENETICS",
- "description": "TXT_KEY_TECH_GENETICS",
- "civilopedia": "TXT_KEY_TECH_GENETICS_PEDIA",
- "quote": "TXT_KEY_TECH_GENETICS_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_CRIME_GENE_FORGERY",
@@ -62,6 +59,9 @@
   "soundMP": "AS2D_TECH_MP_GENETICS"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_GENETICS",
+  "civilopedia": "TXT_KEY_TECH_GENETICS_PEDIA",
+  "quote": "TXT_KEY_TECH_GENETICS_QUOTE",
   "era": "C2C_ERA_ATOMIC",
   "worth": 48,
   "tradeable": true,

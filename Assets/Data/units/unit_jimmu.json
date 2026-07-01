@@ -1,7 +1,5 @@
 {
  "type": "UNIT_JIMMU",
- "description": "TXT_KEY_UNIT_JIMMU",
- "civilopedia": "TXT_KEY_UNIT_JIMMU_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -55,6 +53,8 @@
   "upkeep": 1
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_JIMMU",
+  "civilopedia": "TXT_KEY_UNIT_JIMMU_PEDIA",
   "worth": 2,
   "militaryWorth": 3,
   "xpValueAttack": 4,

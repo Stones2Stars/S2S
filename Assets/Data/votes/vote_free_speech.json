@@ -1,6 +1,5 @@
 {
  "type": "VOTE_FREE_SPEECH",
- "description": "TXT_KEY_VOTE_LEGISLATURE",
  "voteSource": [
   "DIPLOVOTE_UN"
  ],
@@ -12,5 +11,8 @@
   "forceCivics": [
    "CIVIC_LEGISLATURE"
   ]
+ },
+ "identity": {
+  "description": "TXT_KEY_VOTE_LEGISLATURE"
  }
 }

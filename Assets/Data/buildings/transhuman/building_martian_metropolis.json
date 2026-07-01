@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_MARTIAN_METROPOLIS",
- "description": "TXT_KEY_BUILDING_MARTIAN_METROPOLIS",
- "civilopedia": "TXT_KEY_BUILDING_MARTIAN_METROPOLIS_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_MARTIAN_ECOSYSTEM",
@@ -97,6 +95,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_MARTIAN_METROPOLIS",
+  "civilopedia": "TXT_KEY_BUILDING_MARTIAN_METROPOLIS_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

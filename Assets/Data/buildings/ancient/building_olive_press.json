@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_OLIVE_PRESS",
- "description": "TXT_KEY_BUILDING_OLIVE_PRESS",
- "civilopedia": "TXT_KEY_BUILDING_OLIVE_PRESS_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_AGROFOREST"
@@ -85,6 +83,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_OLIVE_PRESS",
+  "civilopedia": "TXT_KEY_BUILDING_OLIVE_PRESS_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_MASK_CARVER",
- "description": "TXT_KEY_BUILDING_MASK_CARVER",
- "civilopedia": "TXT_KEY_BUILDING_MASK_CARVER_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_JADE_DEATH_MASK_CARVER"
@@ -106,6 +104,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_MASK_CARVER",
+  "civilopedia": "TXT_KEY_BUILDING_MASK_CARVER_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

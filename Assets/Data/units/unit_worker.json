@@ -1,7 +1,5 @@
 {
  "type": "UNIT_WORKER",
- "description": "TXT_KEY_UNIT_WORKER",
- "civilopedia": "TXT_KEY_UNIT_WORKER_PEDIA",
  "obsoletedBy": {
   "techs": [
    "TECH_NITROGLYCERIN"
@@ -127,6 +125,8 @@
   "upkeep": 2
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_WORKER",
+  "civilopedia": "TXT_KEY_UNIT_WORKER_PEDIA",
   "worth": 1,
   "domain": "DOMAIN_LAND",
   "defaultUnitAI": "UNITAI_WORKER",

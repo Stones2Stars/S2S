@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_INTERLACED_INTERSECTION",
- "description": "TXT_KEY_BUILDING_INTERLACED_INTERSECTION",
- "civilopedia": "TXT_KEY_BUILDING_INTERLACED_INTERSECTION_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_TELEPORT_BOOTH"
@@ -60,6 +58,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_INTERLACED_INTERSECTION",
+  "civilopedia": "TXT_KEY_BUILDING_INTERLACED_INTERSECTION_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

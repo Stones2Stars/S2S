@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_AERODROME",
- "description": "TXT_KEY_BUILDING_AERODROME",
- "civilopedia": "TXT_KEY_BUILDING_AERODROME_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_GRAND_AERODROME"
@@ -87,6 +85,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_AERODROME",
+  "civilopedia": "TXT_KEY_BUILDING_AERODROME_PEDIA",
   "airlift": 2,
   "airUnitCapacity": 6,
   "specialBuildingType": "SPECIALBUILDING_PUNK_DIESEL",

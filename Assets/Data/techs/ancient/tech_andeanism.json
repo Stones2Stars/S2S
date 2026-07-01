@@ -1,8 +1,5 @@
 {
  "type": "TECH_ANDEANISM",
- "description": "TXT_KEY_TECH_ANDEANISM",
- "civilopedia": "TXT_KEY_TECH_ANDEANISM_PEDIA",
- "quote": "TXT_KEY_TECH_ANDEANISM_QUOTE",
  "enables": {
   "religions": [
    "RELIGION_ANDEANISM"
@@ -55,6 +52,9 @@
   "soundMP": "AS2D_TECH_GENERIC"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_ANDEANISM",
+  "civilopedia": "TXT_KEY_TECH_ANDEANISM_PEDIA",
+  "quote": "TXT_KEY_TECH_ANDEANISM_QUOTE",
   "era": "C2C_ERA_ANCIENT",
   "worth": 8,
   "gridX": 28,

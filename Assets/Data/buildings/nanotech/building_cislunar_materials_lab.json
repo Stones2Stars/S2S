@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_CISLUNAR_MATERIALS_LAB",
- "description": "TXT_KEY_BUILDING_CISLUNAR_MATERIALS_LAB",
- "civilopedia": "TXT_KEY_BUILDING_CISLUNAR_MATERIALS_LAB_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_CISLUNAR_BIOFACTORY",
@@ -64,6 +62,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_CISLUNAR_MATERIALS_LAB",
+  "civilopedia": "TXT_KEY_BUILDING_CISLUNAR_MATERIALS_LAB_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

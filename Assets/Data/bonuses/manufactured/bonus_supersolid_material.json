@@ -1,7 +1,5 @@
 {
  "type": "BONUS_SUPERSOLID_MATERIAL",
- "description": "TXT_KEY_BONUS_SUPERSOLID_MATERIAL",
- "civilopedia": "TXT_KEY_BONUS_SUPERSOLID_MATERIAL_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_ALPHA_ASSEMBLER",
@@ -15,6 +13,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_SUPERSOLID_MATERIAL",
+  "civilopedia": "TXT_KEY_BONUS_SUPERSOLID_MATERIAL_PEDIA",
   "bonusClassType": "BONUSCLASS_MANUFACTURED"
  }
 }

@@ -1,8 +1,5 @@
 {
  "type": "UNIT_TALESOF_DUGONG",
- "description": "TXT_KEY_UNIT_TALESOF_DUGONG",
- "civilopedia": "TXT_KEY_CONCEPT_TALESOF_SEA_ANIMALS_PEDIA",
- "help": "TXT_KEY_UNIT_SUBDUED_ANIMALS_HELP",
  "requires": {
   "build": {
    "all": [
@@ -20,6 +17,9 @@
   ]
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_TALESOF_DUGONG",
+  "civilopedia": "TXT_KEY_CONCEPT_TALESOF_SEA_ANIMALS_PEDIA",
+  "help": "TXT_KEY_UNIT_SUBDUED_ANIMALS_HELP",
   "spawnOnly": true,
   "worth": 1,
   "domain": "DOMAIN_SEA",

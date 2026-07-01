@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_HQ_MINING_INC",
- "description": "TXT_KEY_BUILDING_HQ_MINING_INC",
- "civilopedia": "TXT_KEY_BUILDING_CORPORATION_5_PEDIA",
  "enables": {
   "corporations": [
    "CORPORATION_5"
@@ -56,6 +54,8 @@
   "construct": "AS2D_BUILD_BANK"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_HQ_MINING_INC",
+  "civilopedia": "TXT_KEY_BUILDING_CORPORATION_5_PEDIA",
   "commerceDoubleTime": {
    "culture": 1000
   },

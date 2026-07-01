@@ -1,7 +1,5 @@
 {
  "type": "UNIT_WARLORDII",
- "description": "TXT_KEY_UNIT_WARLORDII",
- "civilopedia": "TXT_KEY_CONCEPT_GREAT_GENERALS_PEDIA",
  "obsoletedBy": {
   "techs": [
    "TECH_LEADERSHIP"
@@ -142,6 +140,8 @@
   "upkeep": 4
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_WARLORDII",
+  "civilopedia": "TXT_KEY_CONCEPT_GREAT_GENERALS_PEDIA",
   "worth": 5,
   "militaryWorth": 15,
   "xpValueAttack": 1,

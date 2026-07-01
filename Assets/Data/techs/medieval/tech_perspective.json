@@ -1,8 +1,5 @@
 {
  "type": "TECH_PERSPECTIVE",
- "description": "TXT_KEY_TECH_PERSPECTIVE",
- "civilopedia": "TXT_KEY_TECH_PERSPECTIVE_PEDIA",
- "quote": "TXT_KEY_TECH_PERSPECTIVE_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_CASTLE_GARDEN",
@@ -62,6 +59,9 @@
   "soundMP": "AS2D_TECH_PERSPECTIVE"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_PERSPECTIVE",
+  "civilopedia": "TXT_KEY_TECH_PERSPECTIVE_PEDIA",
+  "quote": "TXT_KEY_TECH_PERSPECTIVE_QUOTE",
   "era": "C2C_ERA_MEDIEVAL",
   "worth": 24,
   "tradeable": true,

@@ -1,7 +1,5 @@
 {
  "type": "BONUS_SUGAR",
- "description": "TXT_KEY_BONUS_SUGAR",
- "civilopedia": "TXT_KEY_BONUS_SUGAR_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_BIOFUEL_REFINERY",
@@ -84,6 +82,8 @@
   ]
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_SUGAR",
+  "civilopedia": "TXT_KEY_BONUS_SUGAR_PEDIA",
   "bonusClassType": "BONUSCLASS_LUXURY"
  }
 }

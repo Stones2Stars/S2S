@@ -1,7 +1,5 @@
 {
  "type": "UNIT_MOUNTED_INFANTRY",
- "description": "TXT_KEY_UNIT_MOUNTED_INFANTRY",
- "civilopedia": "TXT_KEY_UNIT_MOUNTED_INFANTRY_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -109,6 +107,8 @@
   "upkeep": 1
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_MOUNTED_INFANTRY",
+  "civilopedia": "TXT_KEY_UNIT_MOUNTED_INFANTRY_PEDIA",
   "worth": 2,
   "militaryWorth": 7,
   "xpValueAttack": 2,

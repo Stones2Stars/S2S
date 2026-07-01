@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_MINE_SILVER",
- "description": "TXT_KEY_BUILDING_MINE_SILVER",
- "civilopedia": "TXT_KEY_BUILDING_MINE_SILVER_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_SMELTER_SILVER"
@@ -75,6 +73,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_MINE_SILVER",
+  "civilopedia": "TXT_KEY_BUILDING_MINE_SILVER_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

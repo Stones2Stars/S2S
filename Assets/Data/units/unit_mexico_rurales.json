@@ -1,7 +1,5 @@
 {
  "type": "UNIT_MEXICO_RURALES",
- "description": "TXT_KEY_UNIT_MEXICO_RURALES",
- "civilopedia": "TXT_KEY_UNIT_MEXICO_RURALES_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -121,6 +119,8 @@
   "upkeep": 1
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_MEXICO_RURALES",
+  "civilopedia": "TXT_KEY_UNIT_MEXICO_RURALES_PEDIA",
   "worth": 4,
   "militaryWorth": 9,
   "xpValueAttack": 4,

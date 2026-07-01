@@ -1,7 +1,5 @@
 {
  "type": "IMPROVEMENT_FOSSIL_DIG_SITE",
- "description": "TXT_KEY_IMPROVEMENT_FOSSIL_DIG_SITE",
- "civilopedia": "TXT_KEY_IMPROVEMENT_FOSSIL_DIG_SITE_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -52,6 +50,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_IMPROVEMENT_FOSSIL_DIG_SITE",
+  "civilopedia": "TXT_KEY_IMPROVEMENT_FOSSIL_DIG_SITE_PEDIA",
   "advancedStart": {
    "cost": 48
   },

@@ -1,8 +1,5 @@
 {
  "type": "TECH_SENTIENT_EARTH",
- "description": "TXT_KEY_TECH_SENTIENT_EARTH",
- "civilopedia": "TXT_KEY_TECH_SENTIENT_EARTH_PEDIA",
- "quote": "TXT_KEY_TECH_SENTIENT_EARTH_QUOTE",
  "enables": {
   "bonuses": [
    "BONUS_HUMAN_MOD_COLLECTIVE_CONSCIOUSNESS"
@@ -75,6 +72,9 @@
   "soundMP": "AS2D_TECH_SENTIENT_EARTH"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_SENTIENT_EARTH",
+  "civilopedia": "TXT_KEY_TECH_SENTIENT_EARTH_PEDIA",
+  "quote": "TXT_KEY_TECH_SENTIENT_EARTH_QUOTE",
   "era": "C2C_ERA_TRANSHUMAN",
   "worth": 48,
   "tradeable": true,

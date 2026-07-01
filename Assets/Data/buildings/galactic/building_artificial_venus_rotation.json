@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_ARTIFICIAL_VENUS_ROTATION",
- "description": "TXT_KEY_BUILDING_ARTIFICIAL_VENUS_ROTATION",
- "civilopedia": "TXT_KEY_BUILDING_ARTIFICIAL_VENUS_ROTATION_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -53,6 +51,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_ARTIFICIAL_VENUS_ROTATION",
+  "civilopedia": "TXT_KEY_BUILDING_ARTIFICIAL_VENUS_ROTATION_PEDIA",
   "conquestProbability": 100,
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,

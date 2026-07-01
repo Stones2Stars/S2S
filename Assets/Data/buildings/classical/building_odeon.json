@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_ODEON",
- "description": "TXT_KEY_BUILDING_ODEON",
- "civilopedia": "TXT_KEY_BUILDING_ODEON_PEDIA",
  "obsoletedBy": {
   "techs": [
    "TECH_REALISM"
@@ -64,6 +62,8 @@
   "construct": "AS2D_BUILD_COLOSSEUM"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_ODEON",
+  "civilopedia": "TXT_KEY_BUILDING_ODEON_PEDIA",
   "worth": 5,
   "dcmAirbombMission": 2,
   "advisor": "ADVISOR_ECONOMY",

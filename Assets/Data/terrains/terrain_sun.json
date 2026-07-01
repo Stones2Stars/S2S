@@ -1,7 +1,5 @@
 {
  "type": "TERRAIN_SUN",
- "description": "TXT_KEY_TERRAIN_SUN",
- "civilopedia": "TXT_KEY_TERRAIN_SUN_PEDIA",
  "commerce": {
   "plot": {
    "flat": 2
@@ -23,6 +21,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_TERRAIN_SUN",
+  "civilopedia": "TXT_KEY_TERRAIN_SUN_PEDIA",
   "impassable": true,
   "movementCost": 1,
   "mapCategories": [

@@ -1,8 +1,5 @@
 {
  "type": "TECH_LABOR_UNIONS",
- "description": "TXT_KEY_TECH_LABOR_UNIONS",
- "civilopedia": "TXT_KEY_TECH_LABOR_UNIONS_PEDIA",
- "quote": "TXT_KEY_TECH_LABOR_UNIONS_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_CRIME_CHILD_LABOR",
@@ -81,6 +78,9 @@
   "soundMP": "AS2D_TECH_LABOR_UNIONS"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_LABOR_UNIONS",
+  "civilopedia": "TXT_KEY_TECH_LABOR_UNIONS_PEDIA",
+  "quote": "TXT_KEY_TECH_LABOR_UNIONS_QUOTE",
   "era": "C2C_ERA_INDUSTRIAL",
   "worth": 32,
   "militaryWorth": 6,

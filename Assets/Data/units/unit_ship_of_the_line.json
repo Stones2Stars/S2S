@@ -1,7 +1,5 @@
 {
  "type": "UNIT_SHIP_OF_THE_LINE",
- "description": "TXT_KEY_UNIT_SHIP_OF_THE_LINE",
- "civilopedia": "TXT_KEY_UNIT_SHIP_OF_THE_LINE_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -102,6 +100,8 @@
   "upkeep": 1
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_SHIP_OF_THE_LINE",
+  "civilopedia": "TXT_KEY_UNIT_SHIP_OF_THE_LINE_PEDIA",
   "worth": 2,
   "militaryWorth": 90,
   "xpValueAttack": 3,

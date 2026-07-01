@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_SKYROAD_CONTROL_TOWER",
- "description": "TXT_KEY_BUILDING_SKYROAD_CONTROL_TOWER",
- "civilopedia": "TXT_KEY_BUILDING_SKYROAD_CONTROL_TOWER_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_AUTOMATED_HIGHWAY",
@@ -107,6 +105,8 @@
   "construct": "AS2D_BUILD_WALLS"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_SKYROAD_CONTROL_TOWER",
+  "civilopedia": "TXT_KEY_BUILDING_SKYROAD_CONTROL_TOWER_PEDIA",
   "worth": 4,
   "conquestProbability": 100,
   "advisor": "ADVISOR_ECONOMY",

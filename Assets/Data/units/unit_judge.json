@@ -1,7 +1,5 @@
 {
  "type": "UNIT_JUDGE",
- "description": "TXT_KEY_UNIT_JUDGE",
- "civilopedia": "TXT_KEY_UNIT_JUDGE_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -108,6 +106,8 @@
   ]
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_JUDGE",
+  "civilopedia": "TXT_KEY_UNIT_JUDGE_PEDIA",
   "worth": 1,
   "militaryWorth": 1,
   "domain": "DOMAIN_LAND",

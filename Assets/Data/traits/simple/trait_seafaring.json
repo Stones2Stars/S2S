@@ -1,7 +1,5 @@
 {
  "type": "TRAIT_SEAFARING",
- "description": "TXT_KEY_TRAIT_SEAFARING",
- "civilopedia": "TXT_KEY_TRAIT_SEAFARING_PEDIA",
  "buildRate": {
   "empire": {
    "buildings": {
@@ -199,6 +197,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_TRAIT_SEAFARING",
+  "civilopedia": "TXT_KEY_TRAIT_SEAFARING_PEDIA",
   "shortDescription": "TXT_KEY_TRAIT_SEAFARING_SHORT"
  }
 }

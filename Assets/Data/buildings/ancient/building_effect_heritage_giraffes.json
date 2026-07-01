@@ -1,8 +1,5 @@
 {
  "type": "BUILDING_EFFECT_HERITAGE_GIRAFFES",
- "description": "TXT_KEY_BUILDING_EFFECT_HERITAGE_GIRAFFES",
- "civilopedia": "TXT_KEY_BUILDING_ANIMAL_TRAINER_GIRAFFE_PEDIA",
- "help": "TXT_KEY_BUILDING_EFFECT_HERITAGE_GIRAFFES_HELP",
  "enables": {
   "buildings": [
    "BUILDING_MILITARY_STANDARD_GIRAFFE"
@@ -39,6 +36,9 @@
   "construct": "AS2D_BUILD_BARRACKS"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_EFFECT_HERITAGE_GIRAFFES",
+  "civilopedia": "TXT_KEY_BUILDING_ANIMAL_TRAINER_GIRAFFE_PEDIA",
+  "help": "TXT_KEY_BUILDING_EFFECT_HERITAGE_GIRAFFES_HELP",
   "notConstructible": true,
   "worth": 2,
   "conquestProbability": 100,

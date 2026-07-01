@@ -1,6 +1,5 @@
 {
  "type": "PROMOTION_ZEN",
- "description": "TXT_KEY_PROMOTION_ZEN",
  "capture": {
   "unit": {
    "probability": {
@@ -29,6 +28,7 @@
   "sound": "AS2D_IF_LEVELUP"
  },
  "identity": {
+  "description": "TXT_KEY_PROMOTION_ZEN",
   "stateReligionPrereq": "RELIGION_BUDDHISM",
   "unitCombats": [
    "UNITCOMBAT_RECON",

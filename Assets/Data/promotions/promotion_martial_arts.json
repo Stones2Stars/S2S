@@ -1,6 +1,5 @@
 {
  "type": "PROMOTION_MARTIAL_ARTS",
- "description": "TXT_KEY_PROMOTION_MARTIAL_ARTS1",
  "strength": {
   "unit": {
    "unitCombat": {
@@ -28,6 +27,7 @@
   "sound": "AS2D_IF_LEVELUP"
  },
  "identity": {
+  "description": "TXT_KEY_PROMOTION_MARTIAL_ARTS1",
   "stateReligionPrereq": "RELIGION_TAOISM",
   "notOnDomains": [
    "DOMAIN_SEA"

@@ -1,6 +1,5 @@
 {
  "type": "PROMOTION_GLOBAL_AWERENESS",
- "description": "TXT_KEY_PROMOTION_GLOBAL_AWERENESS",
  "firstStrike": {
   "unit": {
    "strikes": {
@@ -42,6 +41,7 @@
   "sound": "AS2D_IF_LEVELUP"
  },
  "identity": {
+  "description": "TXT_KEY_PROMOTION_GLOBAL_AWERENESS",
   "unitCombats": [
    "UNITCOMBAT_ASSAULT_MECH",
    "UNITCOMBAT_ROBOT"

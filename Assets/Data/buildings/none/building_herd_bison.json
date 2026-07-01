@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_HERD_BISON",
- "description": "TXT_KEY_BUILDING_HERD_BISON",
- "civilopedia": "TXT_KEY_BUILDING_HERD_BISON_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_ANIMAL_TRAINER_BISON",
@@ -59,6 +57,8 @@
   "construct": "SND_AMB_HORSE_COBBLESTONES"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_HERD_BISON",
+  "civilopedia": "TXT_KEY_BUILDING_HERD_BISON_PEDIA",
   "notConstructible": true,
   "worth": 3,
   "conquestProbability": 75,

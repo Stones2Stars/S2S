@@ -1,6 +1,5 @@
 {
  "type": "PROMOTION_INSPIRE9",
- "description": "TXT_KEY_PROMOTION_INSPIRE9",
  "revoltProtection": {
   "unit": {
    "percent": 10
@@ -18,6 +17,7 @@
   "sound": "AS2D_IF_LEVELUP"
  },
  "identity": {
+  "description": "TXT_KEY_PROMOTION_INSPIRE9",
   "celebrityHappy": 1
  }
 }

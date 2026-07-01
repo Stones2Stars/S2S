@@ -1,12 +1,12 @@
 {
  "type": "PROMOTIONLINE_SHIELDING",
- "description": "TXT_KEY_PROMOTIONLINE_SHIELDING",
  "ui": {
   "art": {
    "icon": ",Art/Interface/Buttons/Promotions/stalwart1.dds,Art/Interface/Buttons/Afterworld_Atlas.dds,1,2"
   }
  },
  "identity": {
+  "description": "TXT_KEY_PROMOTIONLINE_SHIELDING",
   "unitCombats": [
    "UNITCOMBAT_ROBOT",
    "UNITCOMBAT_HELICOPTER"

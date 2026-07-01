@@ -1,7 +1,5 @@
 {
  "type": "UNIT_P51_MUSTANG",
- "description": "TXT_KEY_UNIT_P51_MUSTANG",
- "civilopedia": "TXT_KEY_UNIT_P51_MUSTANG_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -71,6 +69,8 @@
   "upkeep": 2
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_P51_MUSTANG",
+  "civilopedia": "TXT_KEY_UNIT_P51_MUSTANG_PEDIA",
   "worth": 4,
   "militaryWorth": 12,
   "xpValueAttack": 4,

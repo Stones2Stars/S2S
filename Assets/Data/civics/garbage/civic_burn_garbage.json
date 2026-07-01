@@ -1,8 +1,5 @@
 {
  "type": "CIVIC_BURN_GARBAGE",
- "description": "TXT_KEY_CIVIC_BURN_GARBAGE",
- "civilopedia": "TXT_KEY_CIVIC_BURN_GARBAGE_PEDIA",
- "strategy": "TXT_KEY_CIVIC_BURN_GARBAGE_STRATEGY",
  "enables": {
   "buildings": [
    "BUILDING_CIVIC_BURN_TRASH"
@@ -36,6 +33,9 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_CIVIC_BURN_GARBAGE",
+  "civilopedia": "TXT_KEY_CIVIC_BURN_GARBAGE_PEDIA",
+  "strategy": "TXT_KEY_CIVIC_BURN_GARBAGE_STRATEGY",
   "civicOption": "CIVICOPTION_GARBAGE",
   "upkeepLevel": "UPKEEP_LOW"
  }

@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_HQ_ADVENTURE_TOURS",
- "description": "TXT_KEY_BUILDING_HQ_ADVENTURE_TOURS",
- "civilopedia": "TXT_KEY_BUILDING_CORPORATION_ADVENTURE_PEDIA",
  "enables": {
   "corporations": [
    "CORPORATION_ADVENTURE"
@@ -61,6 +59,8 @@
   "construct": "AS2D_BUILD_BANK"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_HQ_ADVENTURE_TOURS",
+  "civilopedia": "TXT_KEY_BUILDING_CORPORATION_ADVENTURE_PEDIA",
   "commerceDoubleTime": {
    "culture": 1000
   },

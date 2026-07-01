@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_AACHEN_CATHEDRAL",
- "description": "TXT_KEY_BUILDING_AACHEN_CATHEDRAL",
- "civilopedia": "TXT_KEY_BUILDING_AACHEN_CATHEDRAL_PEDIA",
  "obsoletedBy": {
   "techs": [
    "TECH_NATIONALISM"
@@ -76,6 +74,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_AACHEN_CATHEDRAL",
+  "civilopedia": "TXT_KEY_BUILDING_AACHEN_CATHEDRAL_PEDIA",
   "commerceDoubleTime": {
    "culture": 1000
   },

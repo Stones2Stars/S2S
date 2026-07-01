@@ -1,7 +1,5 @@
 {
  "type": "IMPROVEMENT_WINERY",
- "description": "TXT_KEY_IMPROVEMENT_WINERY",
- "civilopedia": "TXT_KEY_IMPROVEMENT_WINERY_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -91,6 +89,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_IMPROVEMENT_WINERY",
+  "civilopedia": "TXT_KEY_IMPROVEMENT_WINERY_PEDIA",
   "advancedStart": {
    "cost": 30
   },

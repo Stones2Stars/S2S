@@ -1,8 +1,5 @@
 {
  "type": "TECH_SAILING",
- "description": "TXT_KEY_TECH_SAILING",
- "civilopedia": "TXT_KEY_TECH_SAILING_PEDIA",
- "quote": "TXT_KEY_TECH_SAILING_QUOTE",
  "enables": {
   "bonuses": [
    "BONUS_SAILS"
@@ -109,6 +106,9 @@
   "soundMP": "AS2D_TECH_MP_SAILING"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_SAILING",
+  "civilopedia": "TXT_KEY_TECH_SAILING_PEDIA",
+  "quote": "TXT_KEY_TECH_SAILING_QUOTE",
   "era": "C2C_ERA_ANCIENT",
   "worth": 8,
   "militaryWorth": 2,

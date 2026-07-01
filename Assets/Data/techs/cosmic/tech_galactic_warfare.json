@@ -1,8 +1,5 @@
 {
  "type": "TECH_GALACTIC_WARFARE",
- "description": "TXT_KEY_TECH_GALACTIC_WARFARE",
- "civilopedia": "TXT_KEY_TECH_GALACTIC_WARFARE_PEDIA",
- "quote": "TXT_KEY_TECH_GALACTIC_WARFARE_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_INTERSTELLAR_NEBULA_REBEL_BASE"
@@ -54,6 +51,9 @@
   "soundMP": "AS2D_TECH_GENERIC"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_GALACTIC_WARFARE",
+  "civilopedia": "TXT_KEY_TECH_GALACTIC_WARFARE_PEDIA",
+  "quote": "TXT_KEY_TECH_GALACTIC_WARFARE_QUOTE",
   "era": "C2C_ERA_COSMIC",
   "worth": 48,
   "tradeable": true,

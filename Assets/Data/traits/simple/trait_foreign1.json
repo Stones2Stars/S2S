@@ -1,7 +1,5 @@
 {
  "type": "TRAIT_FOREIGN1",
- "description": "TXT_KEY_TRAIT_FOREIGN0",
- "civilopedia": "TXT_KEY_TRAIT_FOREIGN_PEDIA",
  "enables": {
   "traits": [
    "TRAIT_FOREIGN2"
@@ -98,6 +96,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_TRAIT_FOREIGN0",
+  "civilopedia": "TXT_KEY_TRAIT_FOREIGN_PEDIA",
   "shortDescription": "TXT_KEY_TRAIT_FOREIGN_SHORT",
   "negativeTrait": true,
   "impurePromotions": true

@@ -1,7 +1,5 @@
 {
  "type": "BONUS_DIAMOND_NANOTHREADS",
- "description": "TXT_KEY_BONUS_DIAMOND_NANOTHREADS",
- "civilopedia": "TXT_KEY_BONUS_DIAMOND_NANOTHREADS_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_MARTIAN_SKYHOOK",
@@ -14,6 +12,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_DIAMOND_NANOTHREADS",
+  "civilopedia": "TXT_KEY_BONUS_DIAMOND_NANOTHREADS_PEDIA",
   "bonusClassType": "BONUSCLASS_MANUFACTURED"
  }
 }

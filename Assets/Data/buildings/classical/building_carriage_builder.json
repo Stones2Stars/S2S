@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_CARRIAGE_BUILDER",
- "description": "TXT_KEY_BUILDING_CARRIAGE_BUILDER",
- "civilopedia": "TXT_KEY_BUILDING_CARRIAGE_BUILDER_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_AERIAL_BASKET_ROPEWAYS",
@@ -126,6 +124,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_CARRIAGE_BUILDER",
+  "civilopedia": "TXT_KEY_BUILDING_CARRIAGE_BUILDER_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

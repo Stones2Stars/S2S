@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_CULTURE_CZECH",
- "description": "TXT_KEY_BUILDING_CULTURE_CZECH",
- "civilopedia": "TXT_KEY_BUILDING_CULTURE_CZECH_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -53,6 +51,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_CULTURE_CZECH",
+  "civilopedia": "TXT_KEY_BUILDING_CULTURE_CZECH_PEDIA",
   "nukeImmune": true,
   "noInstanceLimit": true,
   "conquestProbability": 100,

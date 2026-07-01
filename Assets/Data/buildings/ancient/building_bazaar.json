@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_BAZAAR",
- "description": "TXT_KEY_BUILDING_BAZAAR",
- "civilopedia": "TXT_KEY_BUILDING_BAZAAR_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_GUILD_MERCHANTS",
@@ -165,6 +163,8 @@
   "construct": "AS2D_BUILD_MARKETPLACE"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_BAZAAR",
+  "civilopedia": "TXT_KEY_BUILDING_BAZAAR_PEDIA",
   "worth": 3,
   "conquestProbability": 75,
   "dcmAirbombMission": 2,

@@ -1,7 +1,5 @@
 {
  "type": "BONUS_MARTIAN_FRUIT",
- "description": "TXT_KEY_BONUS_MARTIAN_FRUIT",
- "civilopedia": "TXT_KEY_BONUS_MARTIAN_FRUIT_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_MARTIAN_MEGACITY"
@@ -13,6 +11,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_MARTIAN_FRUIT",
+  "civilopedia": "TXT_KEY_BONUS_MARTIAN_FRUIT_PEDIA",
   "bonusClassType": "BONUSCLASS_MANUFACTURED"
  }
 }

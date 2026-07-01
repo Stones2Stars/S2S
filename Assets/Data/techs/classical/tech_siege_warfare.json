@@ -1,8 +1,5 @@
 {
  "type": "TECH_SIEGE_WARFARE",
- "description": "TXT_KEY_TECH_SIEGE_WARFARE",
- "civilopedia": "TXT_KEY_TECH_SIEGE_WARFARE_PEDIA",
- "quote": "TXT_KEY_TECH_SIEGE_WARFARE_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_CITY_GATEHOUSE",
@@ -96,6 +93,9 @@
   "soundMP": "AS2D_TECH_SIEGE_WARFARE"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_SIEGE_WARFARE",
+  "civilopedia": "TXT_KEY_TECH_SIEGE_WARFARE_PEDIA",
+  "quote": "TXT_KEY_TECH_SIEGE_WARFARE_QUOTE",
   "era": "C2C_ERA_CLASSICAL",
   "worth": 16,
   "militaryWorth": 10,

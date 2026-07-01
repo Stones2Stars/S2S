@@ -1,8 +1,5 @@
 {
  "type": "TECH_PHOTON_THERMODYNAMICS",
- "description": "TXT_KEY_TECH_PHOTON_THERMODYNAMICS",
- "civilopedia": "TXT_KEY_TECH_PHOTON_THERMODYNAMICS_PEDIA",
- "quote": "TXT_KEY_TECH_PHOTON_THERMODYNAMICS_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_CISLUNAR_PHASED_ARRAY_OPTICS",
@@ -77,6 +74,9 @@
   "soundMP": "AS2D_TECH_PHOTON_THERMODYNAMICS"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_PHOTON_THERMODYNAMICS",
+  "civilopedia": "TXT_KEY_TECH_PHOTON_THERMODYNAMICS_PEDIA",
+  "quote": "TXT_KEY_TECH_PHOTON_THERMODYNAMICS_QUOTE",
   "era": "C2C_ERA_NANOTECH",
   "worth": 48,
   "militaryWorth": 4,

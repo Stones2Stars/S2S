@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_EUROPA_SF6_GENERATOR",
- "description": "TXT_KEY_BUILDING_EUROPA_SF6_GENERATOR",
- "civilopedia": "TXT_KEY_BUILDING_EUROPA_SF6_GENERATOR_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_TERRAFORMED_EUROPA"
@@ -42,6 +40,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_EUROPA_SF6_GENERATOR",
+  "civilopedia": "TXT_KEY_BUILDING_EUROPA_SF6_GENERATOR_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

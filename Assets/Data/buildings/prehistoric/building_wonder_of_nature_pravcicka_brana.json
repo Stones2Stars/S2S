@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_WONDER_OF_NATURE_PRAVCICKA_BRANA",
- "description": "TXT_KEY_BUILDING_WONDER_OF_NATURE_PRAVCICKA_BRANA",
- "civilopedia": "TXT_KEY_BUILDING_WONDER_OF_NATURE_PRAVCICKA_BRANA_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -106,6 +104,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_WONDER_OF_NATURE_PRAVCICKA_BRANA",
+  "civilopedia": "TXT_KEY_BUILDING_WONDER_OF_NATURE_PRAVCICKA_BRANA_PEDIA",
   "enabledCivilizations": [
    "CIVILIZATION_NPC_NEANDERTHAL"
   ],

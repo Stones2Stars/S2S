@@ -1,8 +1,5 @@
 {
  "type": "TECH_PHASING",
- "description": "TXT_KEY_TECH_PHASING",
- "civilopedia": "TXT_KEY_TECH_PHASING_PEDIA",
- "quote": "TXT_KEY_TECH_PHASING_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_INTERSTELLAR_COSMIC_BANISHMENT",
@@ -55,6 +52,9 @@
   "soundMP": "AS2D_TECH_PHASING"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_PHASING",
+  "civilopedia": "TXT_KEY_TECH_PHASING_PEDIA",
+  "quote": "TXT_KEY_TECH_PHASING_QUOTE",
   "era": "C2C_ERA_GALACTIC",
   "worth": 50,
   "militaryWorth": 10,

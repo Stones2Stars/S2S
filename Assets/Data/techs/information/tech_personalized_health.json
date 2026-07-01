@@ -1,8 +1,5 @@
 {
  "type": "TECH_PERSONALIZED_HEALTH",
- "description": "TXT_KEY_TECH_PERSONALIZED_HEALTH",
- "civilopedia": "TXT_KEY_TECH_PERSONALIZED_HEALTH_PEDIA",
- "quote": "TXT_KEY_TECH_PERSONALIZED_HEALTH_QUOTE",
  "enables": {
   "bonuses": [
    "BONUS_HYPOSPRAYS",
@@ -82,6 +79,9 @@
   "soundMP": "AS2D_TECH_PERSONALIZED_HEALTH"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_PERSONALIZED_HEALTH",
+  "civilopedia": "TXT_KEY_TECH_PERSONALIZED_HEALTH_PEDIA",
+  "quote": "TXT_KEY_TECH_PERSONALIZED_HEALTH_QUOTE",
   "era": "C2C_ERA_INFORMATION",
   "worth": 14,
   "tradeable": true,

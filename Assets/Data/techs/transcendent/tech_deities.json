@@ -1,8 +1,5 @@
 {
  "type": "TECH_DEITIES",
- "description": "TXT_KEY_TECH_DEITIES",
- "civilopedia": "TXT_KEY_TECH_DEITIES_PEDIA",
- "quote": "TXT_KEY_TECH_DEITIES_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_NATURE_GODDESS",
@@ -59,6 +56,9 @@
   "soundMP": "AS2D_TECH_GENERIC"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_DEITIES",
+  "civilopedia": "TXT_KEY_TECH_DEITIES_PEDIA",
+  "quote": "TXT_KEY_TECH_DEITIES_QUOTE",
   "era": "C2C_ERA_TRANSCENDENT",
   "worth": 48,
   "tradeable": true,

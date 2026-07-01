@@ -1,8 +1,5 @@
 {
  "type": "TECH_GARDENING",
- "description": "TXT_KEY_TECH_GARDENING",
- "civilopedia": "TXT_KEY_TECH_GARDENING_PEDIA",
- "quote": "TXT_KEY_TECH_GARDENING_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_ASSASSIN_BUG_SANCTUARY",
@@ -69,6 +66,9 @@
   "soundMP": "AS2D_TECH_GARDENING"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_GARDENING",
+  "civilopedia": "TXT_KEY_TECH_GARDENING_PEDIA",
+  "quote": "TXT_KEY_TECH_GARDENING_QUOTE",
   "era": "C2C_ERA_ANCIENT",
   "worth": 24,
   "tradeable": true,

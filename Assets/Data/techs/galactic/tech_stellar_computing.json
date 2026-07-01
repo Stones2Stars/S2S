@@ -1,8 +1,5 @@
 {
  "type": "TECH_STELLAR_COMPUTING",
- "description": "TXT_KEY_TECH_STELLAR_COMPUTING",
- "civilopedia": "TXT_KEY_TECH_STELLAR_COMPUTING_PEDIA",
- "quote": "TXT_KEY_TECH_STELLAR_COMPUTING_QUOTE",
  "enables": {
   "bonuses": [
    "BONUS_HUMAN_MOD_TRANSAPIENT"
@@ -59,6 +56,9 @@
   "soundMP": "AS2D_TECH_GENERIC"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_STELLAR_COMPUTING",
+  "civilopedia": "TXT_KEY_TECH_STELLAR_COMPUTING_PEDIA",
+  "quote": "TXT_KEY_TECH_STELLAR_COMPUTING_QUOTE",
   "era": "C2C_ERA_GALACTIC",
   "worth": 48,
   "tradeable": true,

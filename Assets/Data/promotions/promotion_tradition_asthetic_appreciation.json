@@ -1,6 +1,5 @@
 {
  "type": "PROMOTION_TRADITION_ASTHETIC_APPRECIATION",
- "description": "TXT_KEY_PROMOTION_TRADITION_ASTHETIC_APPRECIATION",
  "workRate": {
   "unit": {
    "terrain": {
@@ -77,6 +76,7 @@
   "sound": "AS2D_IF_LEVELUP"
  },
  "identity": {
+  "description": "TXT_KEY_PROMOTION_TRADITION_ASTHETIC_APPRECIATION",
   "unitCombats": [
    "UNITCOMBAT_COMBAT_WORKER",
    "UNITCOMBAT_WORKER"

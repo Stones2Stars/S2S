@@ -1,8 +1,5 @@
 {
  "type": "TECH_FRICTIONLESS_FLIGHT",
- "description": "TXT_KEY_TECH_FRICTIONLESS_FLIGHT",
- "civilopedia": "TXT_KEY_TECH_FRICTIONLESS_FLIGHT_PEDIA",
- "quote": "TXT_KEY_TECH_FRICTIONLESS_FLIGHT_QUOTE",
  "enables": {
   "bonuses": [
    "BONUS_SUPERSOLID_MATERIAL"
@@ -70,6 +67,9 @@
   "soundMP": "AS2D_TECH_FRICTIONLESS_FLIGHT"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_FRICTIONLESS_FLIGHT",
+  "civilopedia": "TXT_KEY_TECH_FRICTIONLESS_FLIGHT_PEDIA",
+  "quote": "TXT_KEY_TECH_FRICTIONLESS_FLIGHT_QUOTE",
   "era": "C2C_ERA_TRANSHUMAN",
   "worth": 50,
   "militaryWorth": 10,

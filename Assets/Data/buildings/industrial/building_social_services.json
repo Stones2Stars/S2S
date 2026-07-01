@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_SOCIAL_SERVICES",
- "description": "TXT_KEY_BUILDING_SOCIAL_SERVICES",
- "civilopedia": "TXT_KEY_BUILDING_SOCIAL_SERVICES_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -59,6 +57,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_SOCIAL_SERVICES",
+  "civilopedia": "TXT_KEY_BUILDING_SOCIAL_SERVICES_PEDIA",
   "worth": 3,
   "advisor": "ADVISOR_GROWTH",
   "visibilityPriority": 1,

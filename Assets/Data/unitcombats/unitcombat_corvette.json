@@ -1,6 +1,5 @@
 {
  "type": "UNITCOMBAT_CORVETTE",
- "description": "TXT_KEY_UNITCOMBAT_CORVETTE",
  "skills": {
   "terrainDoubleMove": {
    "TERRAIN_COAST_POLAR": true,
@@ -14,6 +13,7 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_UNITCOMBAT_CORVETTE",
   "forNavalMilitary": true
  }
 }

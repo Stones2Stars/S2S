@@ -1,8 +1,5 @@
 {
  "type": "CIVIC_CAPITALIST",
- "description": "TXT_KEY_CIVIC_CAPITALIST",
- "civilopedia": "TXT_KEY_CIVIC_CAPITALIST_PEDIA",
- "strategy": "TXT_KEY_CIVIC_CAPITALIST_STRATEGY",
  "food": {
   "empire": {
    "percent": 4,
@@ -103,6 +100,9 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_CIVIC_CAPITALIST",
+  "civilopedia": "TXT_KEY_CIVIC_CAPITALIST_PEDIA",
+  "strategy": "TXT_KEY_CIVIC_CAPITALIST_STRATEGY",
   "civicOption": "CIVICOPTION_WORKFORCE",
   "anarchyLength": 1,
   "upkeepLevel": "UPKEEP_MEDIUM"

@@ -1,7 +1,5 @@
 {
  "type": "UNIT_PATAGONIAN_ARCHER",
- "description": "TXT_KEY_UNIT_PATAGONIAN_ARCHER",
- "civilopedia": "TXT_KEY_UNIT_PATAGONIAN_ARCHER_PEDIA",
  "obsoletedBy": {
   "techs": [
    "TECH_FLINTLOCK"
@@ -81,6 +79,8 @@
   "upkeep": 1
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_PATAGONIAN_ARCHER",
+  "civilopedia": "TXT_KEY_UNIT_PATAGONIAN_ARCHER_PEDIA",
   "worth": 2,
   "militaryWorth": 15,
   "xpValueAttack": 6,

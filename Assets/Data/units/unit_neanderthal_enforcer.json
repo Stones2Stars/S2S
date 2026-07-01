@@ -1,7 +1,5 @@
 {
  "type": "UNIT_NEANDERTHAL_ENFORCER",
- "description": "TXT_KEY_UNIT_NEANDERTHAL_ENFORCER",
- "civilopedia": "TXT_KEY_UNIT_ENFORCERS_PEDIA",
  "obsoletedBy": {
   "techs": [
    "TECH_SEDENTARY_LIFESTYLE"
@@ -102,6 +100,8 @@
   "upkeep": 3
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_NEANDERTHAL_ENFORCER",
+  "civilopedia": "TXT_KEY_UNIT_ENFORCERS_PEDIA",
   "worth": 3,
   "militaryWorth": 4,
   "xpValueAttack": 1,

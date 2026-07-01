@@ -1,4 +1,6 @@
 {
  "type": "CIVICOPTION_ECONOMY",
- "description": "TXT_KEY_CIVICOPTION_ECONOMY"
+ "identity": {
+  "description": "TXT_KEY_CIVICOPTION_ECONOMY"
+ }
 }

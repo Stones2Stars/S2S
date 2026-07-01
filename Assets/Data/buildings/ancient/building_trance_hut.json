@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_TRANCE_HUT",
- "description": "TXT_KEY_BUILDING_TRANCE_HUT",
- "civilopedia": "TXT_KEY_BUILDING_TRANCE_HUT_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_ALTERNATIVE_MEDICINE"
@@ -102,6 +100,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_TRANCE_HUT",
+  "civilopedia": "TXT_KEY_BUILDING_TRANCE_HUT_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

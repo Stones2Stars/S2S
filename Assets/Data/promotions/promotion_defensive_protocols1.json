@@ -1,6 +1,5 @@
 {
  "type": "PROMOTION_DEFENSIVE_PROTOCOLS1",
- "description": "TXT_KEY_PROMOTION_DEFENSIVE_PROTOCOLS1",
  "withdrawal": {
   "unit": {
    "percent": 15
@@ -16,5 +15,8 @@
  },
  "sound": {
   "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_DEFENSIVE_PROTOCOLS1"
  }
 }

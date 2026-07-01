@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_QUANTUM_GRAVITY_SUPERCOMPUTER",
- "description": "TXT_KEY_BUILDING_QUANTUM_GRAVITY_SUPERCOMPUTER",
- "civilopedia": "TXT_KEY_BUILDING_QUANTUM_GRAVITY_SUPERCOMPUTER_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_ALEPH_ASSEMBLER",
@@ -73,6 +71,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_QUANTUM_GRAVITY_SUPERCOMPUTER",
+  "civilopedia": "TXT_KEY_BUILDING_QUANTUM_GRAVITY_SUPERCOMPUTER_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

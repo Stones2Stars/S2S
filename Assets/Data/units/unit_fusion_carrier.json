@@ -1,7 +1,5 @@
 {
  "type": "UNIT_FUSION_CARRIER",
- "description": "TXT_KEY_UNIT_FUSION_CARRIER",
- "civilopedia": "TXT_KEY_UNIT_FUSION_CARRIER_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -94,6 +92,8 @@
   "upkeep": 3
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_FUSION_CARRIER",
+  "civilopedia": "TXT_KEY_UNIT_FUSION_CARRIER_PEDIA",
   "worth": 4,
   "militaryWorth": 274,
   "xpValueAttack": 3,

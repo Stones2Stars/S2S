@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_E_CLOTHING_OUTFITTER",
- "description": "TXT_KEY_BUILDING_E_CLOTHING_OUTFITTER",
- "civilopedia": "TXT_KEY_BUILDING_E_CLOTHING_OUTFITTER_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_NANOTECH_CLOTHING_OUTFITTER"
@@ -55,6 +53,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_E_CLOTHING_OUTFITTER",
+  "civilopedia": "TXT_KEY_BUILDING_E_CLOTHING_OUTFITTER_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

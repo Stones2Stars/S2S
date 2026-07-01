@@ -1,8 +1,5 @@
 {
  "type": "TECH_CONSTRUCTION",
- "description": "TXT_KEY_TECH_CONSTRUCTION",
- "civilopedia": "TXT_KEY_TECH_CONSTRUCTION_PEDIA",
- "quote": "TXT_KEY_TECH_CONSTRUCTION_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_AKSHARDHAM",
@@ -92,6 +89,9 @@
   "soundMP": "AS2D_TECH_MP_CONSTRUCTION"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_CONSTRUCTION",
+  "civilopedia": "TXT_KEY_TECH_CONSTRUCTION_PEDIA",
+  "quote": "TXT_KEY_TECH_CONSTRUCTION_QUOTE",
   "era": "C2C_ERA_CLASSICAL",
   "worth": 16,
   "militaryWorth": 4,

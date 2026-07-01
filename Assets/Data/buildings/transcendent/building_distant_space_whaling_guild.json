@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_DISTANT_SPACE_WHALING_GUILD",
- "description": "TXT_KEY_BUILDING_DISTANT_SPACE_WHALING_GUILD",
- "civilopedia": "TXT_KEY_BUILDING_DISTANT_SPACE_WHALING_GUILD_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_LIFE_TRUE_VACUUM"
@@ -43,6 +41,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_DISTANT_SPACE_WHALING_GUILD",
+  "civilopedia": "TXT_KEY_BUILDING_DISTANT_SPACE_WHALING_GUILD_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

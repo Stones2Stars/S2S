@@ -1,7 +1,5 @@
 {
  "type": "FEATURE_PLATY_SUGARLOAF",
- "description": "TXT_KEY_FEATURE_SUGARLOAF",
- "civilopedia": "TXT_KEY_FEATURE_SUGARLOAF_PEDIA",
  "vision": {
   "plot": {
    "seeThrough": {
@@ -18,6 +16,8 @@
   "soundscape": "ASSS_OASIS_SELECT_AMB"
  },
  "identity": {
+  "description": "TXT_KEY_FEATURE_SUGARLOAF",
+  "civilopedia": "TXT_KEY_FEATURE_SUGARLOAF_PEDIA",
   "noCoast": true,
   "noCity": true,
   "noImprovement": true,

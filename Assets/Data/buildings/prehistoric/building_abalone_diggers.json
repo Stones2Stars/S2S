@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_ABALONE_DIGGERS",
- "description": "TXT_KEY_BUILDING_ABALONE_DIGGERS",
- "civilopedia": "TXT_KEY_BUILDING_ABALONE_DIGGERS_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_RESOURCES_SHELLFISH"
@@ -71,6 +69,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_ABALONE_DIGGERS",
+  "civilopedia": "TXT_KEY_BUILDING_ABALONE_DIGGERS_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

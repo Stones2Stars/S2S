@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_VENETIAN_ARSENAL",
- "description": "TXT_KEY_BUILDING_VENETIAN_ARSENAL",
- "civilopedia": "TXT_KEY_BUILDING_VENETIAN_ARSENAL_PEDIA",
  "obsoletedBy": {
   "techs": [
    "TECH_SCREW_PROPELLER"
@@ -100,6 +98,8 @@
   "construct": "AS2D_BUILD_DRYDOCK"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_VENETIAN_ARSENAL",
+  "civilopedia": "TXT_KEY_BUILDING_VENETIAN_ARSENAL_PEDIA",
   "nukeImmune": true,
   "worth": 13,
   "conquestProbability": 100,

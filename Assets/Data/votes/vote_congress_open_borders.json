@@ -1,6 +1,5 @@
 {
  "type": "VOTE_CONGRESS_OPEN_BORDERS",
- "description": "TXT_KEY_VOTE_CONGVIENNA_OPEN_BORDERS",
  "voteSource": [
   "DIPLOVOTE_CVIENNA"
  ],
@@ -10,5 +9,8 @@
  },
  "effect": {
   "openBorders": true
+ },
+ "identity": {
+  "description": "TXT_KEY_VOTE_CONGVIENNA_OPEN_BORDERS"
  }
 }

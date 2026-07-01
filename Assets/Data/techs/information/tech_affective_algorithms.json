@@ -1,8 +1,5 @@
 {
  "type": "TECH_AFFECTIVE_ALGORITHMS",
- "description": "TXT_KEY_TECH_AFFECTIVE_ALGORITHMS",
- "civilopedia": "TXT_KEY_TECH_AFFECTIVE_ALGORITHMS_PEDIA",
- "quote": "TXT_KEY_TECH_AFFECTIVE_ALGORITHMS_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_INTELLIGENT_PERSONAL_ASSISTANT",
@@ -65,6 +62,9 @@
   "soundMP": "AS2D_TECH_AFFECTIVE_ALGORITHMS"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_AFFECTIVE_ALGORITHMS",
+  "civilopedia": "TXT_KEY_TECH_AFFECTIVE_ALGORITHMS_PEDIA",
+  "quote": "TXT_KEY_TECH_AFFECTIVE_ALGORITHMS_QUOTE",
   "era": "C2C_ERA_INFORMATION",
   "worth": 14,
   "tradeable": true,

@@ -1,7 +1,5 @@
 {
  "type": "TERRAIN_LUNAR_RILLE",
- "description": "TXT_KEY_TERRAIN_LUNAR_RILLE",
- "civilopedia": "TXT_KEY_TERRAIN_LUNAR_RILLE_PEDIA",
  "commerce": {
   "plot": {
    "flat": 2
@@ -38,6 +36,8 @@
   "soundscape": "ASSS_TUNDRA_SELECT_AMB"
  },
  "identity": {
+  "description": "TXT_KEY_TERRAIN_LUNAR_RILLE",
+  "civilopedia": "TXT_KEY_TERRAIN_LUNAR_RILLE_PEDIA",
   "found": true,
   "movementCost": 3,
   "mapCategories": [

@@ -1,8 +1,5 @@
 {
  "type": "TECH_INTERCLUSTER_TRAVEL",
- "description": "TXT_KEY_TECH_INTERCLUSTER_TRAVEL",
- "civilopedia": "TXT_KEY_TECH_INTERCLUSTER_TRAVEL_PEDIA",
- "quote": "TXT_KEY_TECH_INTERCLUSTER_TRAVEL_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_CENTAURUS_SUPERCLUSTER_COLONY",
@@ -49,6 +46,9 @@
   "soundMP": "AS2D_TECH_GENERIC"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_INTERCLUSTER_TRAVEL",
+  "civilopedia": "TXT_KEY_TECH_INTERCLUSTER_TRAVEL_PEDIA",
+  "quote": "TXT_KEY_TECH_INTERCLUSTER_TRAVEL_QUOTE",
   "era": "C2C_ERA_COSMIC",
   "worth": 48,
   "tradeable": true,

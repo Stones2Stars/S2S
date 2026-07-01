@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_MATTER_DECOMPILER",
- "description": "TXT_KEY_BUILDING_MATTER_DECOMPILER",
- "civilopedia": "TXT_KEY_BUILDING_MATTER_DECOMPILER_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -60,6 +58,8 @@
   "construct": "AS2D_BUILD_INCUBATION_CENTER"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_MATTER_DECOMPILER",
+  "civilopedia": "TXT_KEY_BUILDING_MATTER_DECOMPILER_PEDIA",
   "worth": 15,
   "conquestProbability": 75,
   "dcmAirbombMission": 2,

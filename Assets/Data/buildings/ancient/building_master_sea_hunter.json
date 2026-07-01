@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_MASTER_SEA_HUNTER",
- "description": "TXT_KEY_BUILDING_MASTER_SEA_HUNTER",
- "civilopedia": "TXT_KEY_BUILDING_MASTER_SEA_HUNTER_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_TRADITION_SEA_HUNTING"
@@ -41,6 +39,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_MASTER_SEA_HUNTER",
+  "civilopedia": "TXT_KEY_BUILDING_MASTER_SEA_HUNTER_PEDIA",
   "notConstructible": true,
   "worth": 1,
   "militaryWorth": 4,

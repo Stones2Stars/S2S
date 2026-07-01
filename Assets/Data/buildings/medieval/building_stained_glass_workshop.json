@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_STAINED_GLASS_WORKSHOP",
- "description": "TXT_KEY_BUILDING_STAINED_GLASS_WORKSHOP",
- "civilopedia": "TXT_KEY_BUILDING_STAINED_GLASS_WORKSHOP_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_HIGH_TECH_CULTURAL_ENRICHMENT"
@@ -82,6 +80,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_STAINED_GLASS_WORKSHOP",
+  "civilopedia": "TXT_KEY_BUILDING_STAINED_GLASS_WORKSHOP_PEDIA",
   "conquestProbability": 70,
   "advisor": "ADVISOR_ECONOMY",
   "visibilityPriority": 1,

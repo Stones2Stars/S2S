@@ -1,7 +1,5 @@
 {
  "type": "BONUS_NANOBOTS",
- "description": "TXT_KEY_BONUS_NANOBOTS",
- "civilopedia": "TXT_KEY_BONUS_NANOBOTS_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_ANIMA_CHAMBER",
@@ -51,6 +49,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_NANOBOTS",
+  "civilopedia": "TXT_KEY_BONUS_NANOBOTS_PEDIA",
   "bonusClassType": "BONUSCLASS_MANUFACTURED"
  }
 }

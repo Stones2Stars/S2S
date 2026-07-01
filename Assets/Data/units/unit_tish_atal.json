@@ -1,7 +1,5 @@
 {
  "type": "UNIT_TISH_ATAL",
- "description": "TXT_KEY_UNIT_TISH_ATAL",
- "civilopedia": "TXT_KEY_UNIT_TISH_ATAL_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -55,6 +53,8 @@
   "upkeep": 1
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_TISH_ATAL",
+  "civilopedia": "TXT_KEY_UNIT_TISH_ATAL_PEDIA",
   "worth": 6,
   "militaryWorth": 8,
   "xpValueAttack": 4,

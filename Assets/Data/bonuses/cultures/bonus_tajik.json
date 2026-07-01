@@ -1,7 +1,5 @@
 {
  "type": "BONUS_TAJIK",
- "description": "TXT_KEY_BONUS_TAJIK",
- "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
  "enables": {
   "units": [
    "UNIT_BURHANUDDIN_RABBANI",
@@ -14,6 +12,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_TAJIK",
+  "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
   "bonusClassType": "BONUSCLASS_CULTURE"
  }
 }

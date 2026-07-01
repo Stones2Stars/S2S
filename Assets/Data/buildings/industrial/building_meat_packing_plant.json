@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_MEAT_PACKING_PLANT",
- "description": "TXT_KEY_BUILDING_MEAT_PACKING_PLANT",
- "civilopedia": "TXT_KEY_BUILDING_MEAT_PACKING_PLANT_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_GUILD_BUTCHERS",
@@ -139,6 +137,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_MEAT_PACKING_PLANT",
+  "civilopedia": "TXT_KEY_BUILDING_MEAT_PACKING_PLANT_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

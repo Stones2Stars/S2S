@@ -1,8 +1,5 @@
 {
  "type": "TECH_COMPUTER_NETWORKS",
- "description": "TXT_KEY_TECH_COMPUTER_NETWORKS",
- "civilopedia": "TXT_KEY_TECH_COMPUTER_NETWORKS_PEDIA",
- "quote": "TXT_KEY_TECH_COMPUTER_NETWORKS_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_COMPUTER_NETWORK",
@@ -56,6 +53,9 @@
   "soundMP": "AS2D_TECH_COMPUTER_NETWORKS"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_COMPUTER_NETWORKS",
+  "civilopedia": "TXT_KEY_TECH_COMPUTER_NETWORKS_PEDIA",
+  "quote": "TXT_KEY_TECH_COMPUTER_NETWORKS_QUOTE",
   "era": "C2C_ERA_ATOMIC",
   "worth": 48,
   "tradeable": true,

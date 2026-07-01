@@ -1,6 +1,5 @@
 {
  "type": "PROMOTION_ERODED_SUPERIORITY",
- "description": "TXT_KEY_PROMOTION_ERODED_SUPERIORITY",
  "strength": {
   "unit": {
    "quality": {
@@ -30,6 +29,7 @@
   "sound": "AS2D_IF_LEVELUP"
  },
  "identity": {
+  "description": "TXT_KEY_PROMOTION_ERODED_SUPERIORITY",
   "replacesUnitCombat": "UNITCOMBAT_QUALITY_ELITE",
   "notOnUnitCombats": [
    "UNITCOMBAT_PACIFIST",

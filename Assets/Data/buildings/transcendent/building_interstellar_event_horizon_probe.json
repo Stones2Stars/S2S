@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_INTERSTELLAR_EVENT_HORIZON_PROBE",
- "description": "TXT_KEY_BUILDING_INTERSTELLAR_EVENT_HORIZON_PROBE",
- "civilopedia": "TXT_KEY_BUILDING_INTERSTELLAR_EVENT_HORIZON_PROBE_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_INTERSTELLAR_BLACK_HOLE_INTERIOR_PLANET"
@@ -55,6 +53,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_INTERSTELLAR_EVENT_HORIZON_PROBE",
+  "civilopedia": "TXT_KEY_BUILDING_INTERSTELLAR_EVENT_HORIZON_PROBE_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

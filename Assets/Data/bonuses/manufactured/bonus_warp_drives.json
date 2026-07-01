@@ -1,7 +1,5 @@
 {
  "type": "BONUS_WARP_DRIVES",
- "description": "TXT_KEY_BONUS_WARP_DRIVES",
- "civilopedia": "TXT_KEY_BONUS_WARP_DRIVES_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_MILKY_WAY_CORE_TERAEARTH"
@@ -16,6 +14,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_WARP_DRIVES",
+  "civilopedia": "TXT_KEY_BONUS_WARP_DRIVES_PEDIA",
   "bonusClassType": "BONUSCLASS_MANUFACTURED"
  }
 }

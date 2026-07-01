@@ -1,6 +1,5 @@
 {
  "type": "PROMOTION_PROUD_PIRATE",
- "description": "TXT_KEY_PROMOTION_PROUD_PIRATE",
  "strength": {
   "unit": {
    "percent": 20
@@ -33,6 +32,7 @@
   "sound": "AS2D_IF_LEVELUP"
  },
  "identity": {
+  "description": "TXT_KEY_PROMOTION_PROUD_PIRATE",
   "unitCombats": [
    "UNITCOMBAT_PIRATE"
   ]

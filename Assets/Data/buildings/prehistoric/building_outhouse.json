@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_OUTHOUSE",
- "description": "TXT_KEY_BUILDING_OUTHOUSE",
- "civilopedia": "TXT_KEY_BUILDING_OUTHOUSE_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_GARDEROBE"
@@ -80,6 +78,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_OUTHOUSE",
+  "civilopedia": "TXT_KEY_BUILDING_OUTHOUSE_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

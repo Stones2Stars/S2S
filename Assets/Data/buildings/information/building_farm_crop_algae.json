@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_FARM_CROP_ALGAE",
- "description": "TXT_KEY_BUILDING_FARM_CROP_ALGAE",
- "civilopedia": "TXT_KEY_BUILDING_FARM_CROP_ALGAE_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_FARMSCRAPER_I"
@@ -71,6 +69,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_FARM_CROP_ALGAE",
+  "civilopedia": "TXT_KEY_BUILDING_FARM_CROP_ALGAE_PEDIA",
   "worth": 3,
   "militaryWorth": 1,
   "advisor": "ADVISOR_GROWTH",

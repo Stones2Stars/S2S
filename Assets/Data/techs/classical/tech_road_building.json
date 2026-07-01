@@ -1,8 +1,5 @@
 {
  "type": "TECH_ROAD_BUILDING",
- "description": "TXT_KEY_TECH_ROAD_BUILDING",
- "civilopedia": "TXT_KEY_TECH_ROAD_BUILDING_PEDIA",
- "quote": "TXT_KEY_TECH_ROAD_BUILDING_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_ROADS",
@@ -68,6 +65,9 @@
   "soundMP": "AS2D_TECH_ROAD_BUILDING"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_ROAD_BUILDING",
+  "civilopedia": "TXT_KEY_TECH_ROAD_BUILDING_PEDIA",
+  "quote": "TXT_KEY_TECH_ROAD_BUILDING_QUOTE",
   "era": "C2C_ERA_CLASSICAL",
   "worth": 16,
   "tradeable": true,

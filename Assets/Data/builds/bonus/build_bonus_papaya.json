@@ -1,6 +1,5 @@
 {
  "type": "BUILD_BONUS_PAPAYA",
- "description": "TXT_KEY_BUILD_BONUS_PAPAYA",
  "produces": {
   "improvement": "IMPROVEMENT_BONUS_PAPAYA"
  },
@@ -19,6 +18,7 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILD_BONUS_PAPAYA",
   "consumesUnit": true
  }
 }

@@ -1,6 +1,5 @@
 {
  "type": "PROMOTION_SEA_HUNTER2",
- "description": "TXT_KEY_PROMOTION_SEA_HUNTER2",
  "firstStrike": {
   "unit": {
    "strikes": {
@@ -35,6 +34,7 @@
   "sound": "AS2D_IF_LEVELUP"
  },
  "identity": {
+  "description": "TXT_KEY_PROMOTION_SEA_HUNTER2",
   "notOnDomains": [
    "DOMAIN_AIR",
    "DOMAIN_LAND"

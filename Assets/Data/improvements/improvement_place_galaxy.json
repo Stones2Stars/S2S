@@ -1,7 +1,5 @@
 {
  "type": "IMPROVEMENT_PLACE_GALAXY",
- "description": "TXT_KEY_BUILD_PLACE_GALAXY",
- "civilopedia": "TXT_KEY_IMPROVEMENT_LAND_WORKED_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -24,6 +22,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILD_PLACE_GALAXY",
+  "civilopedia": "TXT_KEY_IMPROVEMENT_LAND_WORKED_PEDIA",
   "extraterrestrial": true,
   "featureChanges": [
    "FEATURE_GALAXY"

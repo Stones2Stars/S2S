@@ -1,7 +1,5 @@
 {
  "type": "UNIT_PLUMED_ARCHER",
- "description": "TXT_KEY_UNIT_PLUMED_ARCHER",
- "civilopedia": "TXT_KEY_UNIT_PLUMED_ARCHER_PEDIA",
  "obsoletedBy": {
   "techs": [
    "TECH_FLINTLOCK"
@@ -79,6 +77,8 @@
   "upkeep": 1
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_PLUMED_ARCHER",
+  "civilopedia": "TXT_KEY_UNIT_PLUMED_ARCHER_PEDIA",
   "worth": 1,
   "militaryWorth": 4,
   "xpValueAttack": 6,

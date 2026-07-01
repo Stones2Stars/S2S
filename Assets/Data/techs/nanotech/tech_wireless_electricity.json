@@ -1,8 +1,5 @@
 {
  "type": "TECH_WIRELESS_ELECTRICITY",
- "description": "TXT_KEY_TECH_WIRELESS_ELECTRICITY",
- "civilopedia": "TXT_KEY_TECH_WIRELESS_ELECTRICITY_PEDIA",
- "quote": "TXT_KEY_TECH_WIRELESS_ELECTRICITY_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_ANTHROPOMORPHICS_LAB",
@@ -69,6 +66,9 @@
   "soundMP": "AS2D_TECH_WIRELESS_ELECTRICITY"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_WIRELESS_ELECTRICITY",
+  "civilopedia": "TXT_KEY_TECH_WIRELESS_ELECTRICITY_PEDIA",
+  "quote": "TXT_KEY_TECH_WIRELESS_ELECTRICITY_QUOTE",
   "era": "C2C_ERA_NANOTECH",
   "worth": 40,
   "militaryWorth": 10,

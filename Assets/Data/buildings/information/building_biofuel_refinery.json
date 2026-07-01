@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_BIOFUEL_REFINERY",
- "description": "TXT_KEY_BUILDING_BIOFUEL_REFINERY",
- "civilopedia": "TXT_KEY_BUILDING_BIOFUEL_REFINERY_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_ULTRAFUEL_REFINERY"
@@ -128,6 +126,8 @@
   "construct": "AS2D_BUILD_OIL_REFINERY"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_BIOFUEL_REFINERY",
+  "civilopedia": "TXT_KEY_BUILDING_BIOFUEL_REFINERY_PEDIA",
   "worth": 6,
   "militaryWorth": 30,
   "advisor": "ADVISOR_ECONOMY",

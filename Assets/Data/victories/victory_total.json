@@ -1,7 +1,5 @@
 {
  "type": "VICTORY_TOTAL",
- "description": "TXT_KEY_VICTORY_TOTAL",
- "civilopedia": "TXT_KEY_VICTORY_TOTAL_PEDIA",
  "condition": {
   "conquest": true,
   "totalVictory": true,
@@ -13,5 +11,9 @@
     "file": "ART_DEF_MOVIE_MASTERY_VICTORY"
    }
   }
+ },
+ "identity": {
+  "description": "TXT_KEY_VICTORY_TOTAL",
+  "civilopedia": "TXT_KEY_VICTORY_TOTAL_PEDIA"
  }
 }

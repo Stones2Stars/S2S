@@ -1,8 +1,5 @@
 {
  "type": "TECH_MILITARY_ROBOTICS",
- "description": "TXT_KEY_TECH_MILITARY_ROBOTICS",
- "civilopedia": "TXT_KEY_TECH_MILITARY_ROBOTICS_PEDIA",
- "quote": "TXT_KEY_TECH_MILITARY_ROBOTICS_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_AUTOMATED_DEFENSES",
@@ -77,6 +74,9 @@
   "soundMP": "AS2D_TECH_MILITARY_ROBOTICS"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_MILITARY_ROBOTICS",
+  "civilopedia": "TXT_KEY_TECH_MILITARY_ROBOTICS_PEDIA",
+  "quote": "TXT_KEY_TECH_MILITARY_ROBOTICS_QUOTE",
   "era": "C2C_ERA_INFORMATION",
   "worth": 48,
   "militaryWorth": 5,

@@ -1,7 +1,5 @@
 {
  "type": "TRAIT_ISOLATIONIST1",
- "description": "TXT_KEY_TRAIT_ISOLATIONIST0",
- "civilopedia": "TXT_KEY_TRAIT_ISOLATIONIST_PEDIA",
  "enables": {
   "traits": [
    "TRAIT_ISOLATIONIST2"
@@ -86,6 +84,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_TRAIT_ISOLATIONIST0",
+  "civilopedia": "TXT_KEY_TRAIT_ISOLATIONIST_PEDIA",
   "shortDescription": "TXT_KEY_TRAIT_ISOLATIONIST_SHORT",
   "negativeTrait": true
  }

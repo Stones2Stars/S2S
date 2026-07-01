@@ -1,8 +1,5 @@
 {
  "type": "TECH_JOURNALISM",
- "description": "TXT_KEY_TECH_JOURNALISM",
- "civilopedia": "TXT_KEY_TECH_JOURNALISM_PEDIA",
- "quote": "TXT_KEY_TECH_JOURNALISM_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_FACTORY_TYPEWRITERS",
@@ -52,6 +49,9 @@
   "soundMP": "AS2D_TECH_JOURNALISM"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_JOURNALISM",
+  "civilopedia": "TXT_KEY_TECH_JOURNALISM_PEDIA",
+  "quote": "TXT_KEY_TECH_JOURNALISM_QUOTE",
   "era": "C2C_ERA_INDUSTRIAL",
   "worth": 14,
   "tradeable": true,

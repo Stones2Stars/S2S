@@ -1,8 +1,5 @@
 {
  "type": "CIVIC_GARBAGE_ANYWHERE",
- "description": "TXT_KEY_CIVIC_GARBAGE_ANYWHERE",
- "civilopedia": "TXT_KEY_CIVIC_GARBAGE_ANYWHERE_PEDIA",
- "strategy": "TXT_KEY_CIVIC_GARBAGE_ANYWHERE_STRATEGY",
  "happiness": {
   "empire": {
    "flat": -1
@@ -72,6 +69,9 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_CIVIC_GARBAGE_ANYWHERE",
+  "civilopedia": "TXT_KEY_CIVIC_GARBAGE_ANYWHERE_PEDIA",
+  "strategy": "TXT_KEY_CIVIC_GARBAGE_ANYWHERE_STRATEGY",
   "civicOption": "CIVICOPTION_GARBAGE"
  }
 }

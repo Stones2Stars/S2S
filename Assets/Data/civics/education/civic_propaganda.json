@@ -1,8 +1,5 @@
 {
  "type": "CIVIC_PROPAGANDA",
- "description": "TXT_KEY_CIVIC_PROPAGANDA",
- "civilopedia": "TXT_KEY_CIVIC_PROPAGANDA_PEDIA",
- "strategy": "TXT_KEY_CIVIC_PROPAGANDA_STRATEGY",
  "enables": {
   "buildings": [
    "BUILDING_EYE_IN_THE_SKY",
@@ -106,6 +103,9 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_CIVIC_PROPAGANDA",
+  "civilopedia": "TXT_KEY_CIVIC_PROPAGANDA_PEDIA",
+  "strategy": "TXT_KEY_CIVIC_PROPAGANDA_STRATEGY",
   "civicOption": "CIVICOPTION_EDUCATION",
   "upkeepLevel": "UPKEEP_HIGH"
  }

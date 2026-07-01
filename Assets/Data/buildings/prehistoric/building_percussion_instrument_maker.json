@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_PERCUSSION_INSTRUMENT_MAKER",
- "description": "TXT_KEY_BUILDING_PERCUSSION_INSTRUMENT_MAKER",
- "civilopedia": "TXT_KEY_BUILDING_PERCUSSION_INSTRUMENT_MAKER_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_MUSIC_FACTORY"
@@ -100,6 +98,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_PERCUSSION_INSTRUMENT_MAKER",
+  "civilopedia": "TXT_KEY_BUILDING_PERCUSSION_INSTRUMENT_MAKER_PEDIA",
   "advisor": "ADVISOR_CULTURE",
   "freeStartEra": "C2C_ERA_ANCIENT",
   "mapCategories": [

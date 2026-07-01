@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_BAHAI_TEMPLE",
- "description": "TXT_KEY_BUILDING_BAHAI_TEMPLE",
- "civilopedia": "TXT_KEY_BUILDING_BAHAI_TEMPLE_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_BAHAI_DAR_BE_MEHR"
@@ -102,6 +100,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_BAHAI_TEMPLE",
+  "civilopedia": "TXT_KEY_BUILDING_BAHAI_TEMPLE_PEDIA",
   "neverCapture": true,
   "worth": 4,
   "specialBuildingType": "SPECIALBUILDING_TEMPLE",

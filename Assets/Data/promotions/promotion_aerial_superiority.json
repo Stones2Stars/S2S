@@ -1,6 +1,5 @@
 {
  "type": "PROMOTION_AERIAL_SUPERIORITY",
- "description": "TXT_KEY_PROMOTION_AERIAL_SUPERIORITY",
  "strength": {
   "unit": {
    "percent": 10
@@ -22,6 +21,7 @@
   "sound": "AS2D_IF_LEVELUP"
  },
  "identity": {
+  "description": "TXT_KEY_PROMOTION_AERIAL_SUPERIORITY",
   "unitCombats": [
    "UNITCOMBAT_EARLY_FIGHTERS",
    "UNITCOMBAT_EARLY_BOMBERS",

@@ -1,8 +1,5 @@
 {
  "type": "TECH_ABSTRACT_MATHEMATICS",
- "description": "TXT_KEY_TECH_ABSTRACT_MATHEMATICS",
- "civilopedia": "TXT_KEY_TECH_ABSTRACT_MATHEMATICS_PEDIA",
- "quote": "TXT_KEY_TECH_ABSTRACT_MATHEMATICS_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_FERMATS_LAST_THEOREM",
@@ -48,6 +45,9 @@
   "soundMP": "AS2D_TECH_GENERIC"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_ABSTRACT_MATHEMATICS",
+  "civilopedia": "TXT_KEY_TECH_ABSTRACT_MATHEMATICS_PEDIA",
+  "quote": "TXT_KEY_TECH_ABSTRACT_MATHEMATICS_QUOTE",
   "era": "C2C_ERA_ATOMIC",
   "worth": 40,
   "tradeable": true,

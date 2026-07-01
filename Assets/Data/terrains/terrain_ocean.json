@@ -1,7 +1,5 @@
 {
  "type": "TERRAIN_OCEAN",
- "description": "TXT_KEY_TERRAIN_OCEAN",
- "civilopedia": "TXT_KEY_TERRAIN_OCEAN_PEDIA",
  "food": {
   "plot": {
    "flat": 1
@@ -126,6 +124,8 @@
   "soundscape": "ASSS_OCEAN_SELECT_AMB"
  },
  "identity": {
+  "description": "TXT_KEY_TERRAIN_OCEAN",
+  "civilopedia": "TXT_KEY_TERRAIN_OCEAN_PEDIA",
   "distanceToLand": 3,
   "climateZoneType": "CLIMATE_ZONE_TEMPERATE",
   "movementCost": 2,

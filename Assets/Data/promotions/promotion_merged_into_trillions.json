@@ -1,6 +1,5 @@
 {
  "type": "PROMOTION_MERGED_INTO_TRILLIONS",
- "description": "TXT_KEY_PROMOTION_MERGED_INTO_TRILLIONS",
  "strength": {
   "unit": {
    "group": {
@@ -30,6 +29,7 @@
   "sound": "AS2D_IF_LEVELUP"
  },
  "identity": {
+  "description": "TXT_KEY_PROMOTION_MERGED_INTO_TRILLIONS",
   "replacesUnitCombat": "UNITCOMBAT_GROUP_BILLIONS",
   "forOffset": true
  }

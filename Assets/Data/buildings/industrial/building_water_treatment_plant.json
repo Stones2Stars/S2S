@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_WATER_TREATMENT_PLANT",
- "description": "TXT_KEY_BUILDING_WATER_TREATMENT_PLANT",
- "civilopedia": "TXT_KEY_BUILDING_WATER_TREATMENT_PLANT_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_CHEMOSYNTHESIS_PLANT_FARM",
@@ -76,6 +74,8 @@
   "construct": "AS2D_BUILD_WATER_TREATMENT"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_WATER_TREATMENT_PLANT",
+  "civilopedia": "TXT_KEY_BUILDING_WATER_TREATMENT_PLANT_PEDIA",
   "worth": 3,
   "conquestProbability": 33,
   "dcmAirbombMission": 2,

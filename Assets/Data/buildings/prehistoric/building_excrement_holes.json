@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_EXCREMENT_HOLES",
- "description": "TXT_KEY_BUILDING_EXCREMENT_HOLES",
- "civilopedia": "TXT_KEY_BUILDING_EXCREMENT_HOLES_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_OUTHOUSE"
@@ -64,6 +62,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_EXCREMENT_HOLES",
+  "civilopedia": "TXT_KEY_BUILDING_EXCREMENT_HOLES_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

@@ -1,12 +1,12 @@
 {
  "type": "UNITCOMBAT_CULTURE_MASAI",
- "description": "TXT_KEY_UNITCOMBAT_CULTURE_MASAI",
  "ui": {
   "art": {
    "icon": "Art/Interface/Buttons/units/sparth/categories/culture_masai.dds"
   }
  },
  "identity": {
+  "description": "TXT_KEY_UNITCOMBAT_CULTURE_MASAI",
   "culture": "BONUS_MASAI"
  }
 }

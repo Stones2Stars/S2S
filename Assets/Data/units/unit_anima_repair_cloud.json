@@ -1,7 +1,5 @@
 {
  "type": "UNIT_ANIMA_REPAIR_CLOUD",
- "description": "TXT_KEY_UNIT_ANIMA_REPAIR_CLOUD",
- "civilopedia": "TXT_KEY_UNIT_ANIMA_REPAIR_CLOUD_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -116,6 +114,8 @@
   "hurryCostModifier": 25
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_ANIMA_REPAIR_CLOUD",
+  "civilopedia": "TXT_KEY_UNIT_ANIMA_REPAIR_CLOUD_PEDIA",
   "worth": 27,
   "militaryWorth": 160,
   "xpValueDefense": 2,

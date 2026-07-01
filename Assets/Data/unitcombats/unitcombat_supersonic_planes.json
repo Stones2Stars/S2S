@@ -1,12 +1,12 @@
 {
  "type": "UNITCOMBAT_SUPERSONIC_PLANES",
- "description": "TXT_KEY_UNITCOMBAT_SUPERSONIC_PLANES",
  "ui": {
   "art": {
    "icon": "Art/Interface/Buttons/units/sparth/categories/super_sonic.dds"
   }
  },
  "identity": {
+  "description": "TXT_KEY_UNITCOMBAT_SUPERSONIC_PLANES",
   "forMilitary": true
  }
 }

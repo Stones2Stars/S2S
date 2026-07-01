@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_TOURIST_TRAP",
- "description": "TXT_KEY_BUILDING_TOURIST_TRAP",
- "civilopedia": "TXT_KEY_BUILDING_TOURIST_TRAP_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_TOURISM_MEGACOMPLEX"
@@ -65,6 +63,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_TOURIST_TRAP",
+  "civilopedia": "TXT_KEY_BUILDING_TOURIST_TRAP_PEDIA",
   "militaryWorth": 1,
   "conquestProbability": 30,
   "advisor": "ADVISOR_GROWTH",

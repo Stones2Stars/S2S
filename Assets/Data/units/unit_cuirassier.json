@@ -1,7 +1,5 @@
 {
  "type": "UNIT_CUIRASSIER",
- "description": "TXT_KEY_UNIT_CUIRASSIER",
- "civilopedia": "TXT_KEY_UNIT_CUIRASSIER_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -142,6 +140,8 @@
   "upkeep": 1
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_CUIRASSIER",
+  "civilopedia": "TXT_KEY_UNIT_CUIRASSIER_PEDIA",
   "worth": 4,
   "militaryWorth": 15,
   "xpValueAttack": 3,

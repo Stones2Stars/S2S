@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_AUCTION_HOUSE",
- "description": "TXT_KEY_BUILDING_AUCTION_HOUSE",
- "civilopedia": "TXT_KEY_BUILDING_AUCTION_HOUSE_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_BLOCKCHAIN_FINANCIAL_SERVICES"
@@ -65,6 +63,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_AUCTION_HOUSE",
+  "civilopedia": "TXT_KEY_BUILDING_AUCTION_HOUSE_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

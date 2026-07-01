@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_SCULPTOR_GROUP_COLONY",
- "description": "TXT_KEY_BUILDING_SCULPTOR_GROUP_COLONY",
- "civilopedia": "TXT_KEY_BUILDING_SCULPTOR_GROUP_COLONY_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -67,6 +65,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_SCULPTOR_GROUP_COLONY",
+  "civilopedia": "TXT_KEY_BUILDING_SCULPTOR_GROUP_COLONY_PEDIA",
   "conquestProbability": 100,
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,

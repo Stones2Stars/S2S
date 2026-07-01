@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_GRAND_VILLA",
- "description": "TXT_KEY_BUILDING_GRAND_VILLA",
- "civilopedia": "TXT_KEY_BUILDING_GRAND_VILLA_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -76,6 +74,8 @@
   "construct": "AS2D_BUILD_BROTHEL"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_GRAND_VILLA",
+  "civilopedia": "TXT_KEY_BUILDING_GRAND_VILLA_PEDIA",
   "worth": 3,
   "advisor": "ADVISOR_GROWTH",
   "visibilityPriority": 1,

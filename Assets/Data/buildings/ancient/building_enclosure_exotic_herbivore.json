@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_ENCLOSURE_EXOTIC_HERBIVORE",
- "description": "TXT_KEY_BUILDING_ENCLOSURE_EXOTIC_HERBIVORE",
- "civilopedia": "TXT_KEY_BUILDING_ENCLOSURE_EXOTIC_HERBIVORE_PEDIA",
  "enables": {
   "units": [
    "UNIT_TAMED_AARDVARK",
@@ -88,6 +86,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_ENCLOSURE_EXOTIC_HERBIVORE",
+  "civilopedia": "TXT_KEY_BUILDING_ENCLOSURE_EXOTIC_HERBIVORE_PEDIA",
   "worth": 2,
   "conquestProbability": 25,
   "advisor": "ADVISOR_CULTURE",

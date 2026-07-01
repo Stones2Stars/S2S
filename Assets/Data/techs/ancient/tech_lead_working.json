@@ -1,8 +1,5 @@
 {
  "type": "TECH_LEAD_WORKING",
- "description": "TXT_KEY_TECH_LEAD_WORKING",
- "civilopedia": "TXT_KEY_TECH_LEAD_WORKING_PEDIA",
- "quote": "TXT_KEY_TECH_LEAD_WORKING_QUOTE",
  "enables": {
   "bonuses": [
    "BONUS_CINNABAR_ORE",
@@ -62,6 +59,9 @@
   "soundMP": "AS2D_TECH_LEAD_WORKING"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_LEAD_WORKING",
+  "civilopedia": "TXT_KEY_TECH_LEAD_WORKING_PEDIA",
+  "quote": "TXT_KEY_TECH_LEAD_WORKING_QUOTE",
   "era": "C2C_ERA_ANCIENT",
   "worth": 8,
   "militaryWorth": 2,

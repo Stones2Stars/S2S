@@ -1,7 +1,5 @@
 {
  "type": "BONUS_CRYSTALPUNK",
- "description": "TXT_KEY_BONUS_CRYSTALPUNK",
- "civilopedia": "TXT_KEY_BONUS_CRYSTALPUNK_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_ANTARCTIC_SKYSCRAPER",
@@ -16,6 +14,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_CRYSTALPUNK",
+  "civilopedia": "TXT_KEY_BONUS_CRYSTALPUNK_PEDIA",
   "bonusClassType": "BONUSCLASS_GENMODS"
  }
 }

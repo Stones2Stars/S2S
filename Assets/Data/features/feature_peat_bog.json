@@ -1,7 +1,5 @@
 {
  "type": "FEATURE_PEAT_BOG",
- "description": "TXT_KEY_FEATURE_PEAT_BOG",
- "civilopedia": "TXT_KEY_FEATURE_PEAT_BOG_PEDIA",
  "food": {
   "plot": {
    "flat": -1
@@ -66,6 +64,8 @@
   ]
  },
  "identity": {
+  "description": "TXT_KEY_FEATURE_PEAT_BOG",
+  "civilopedia": "TXT_KEY_FEATURE_PEAT_BOG_PEDIA",
   "movementCost": 2,
   "appearance": 80,
   "popDestroys": -1,

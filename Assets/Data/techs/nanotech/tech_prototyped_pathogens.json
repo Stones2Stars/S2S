@@ -1,8 +1,5 @@
 {
  "type": "TECH_PROTOTYPED_PATHOGENS",
- "description": "TXT_KEY_TECH_PROTOTYPED_PATHOGENS",
- "civilopedia": "TXT_KEY_TECH_PROTOTYPED_PATHOGENS_PEDIA",
- "quote": "TXT_KEY_TECH_PROTOTYPED_PATHOGENS_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_ARTIFICIAL_REEF",
@@ -66,6 +63,9 @@
   "soundMP": "AS2D_TECH_PROTOTYPED_PATHOGENS"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_PROTOTYPED_PATHOGENS",
+  "civilopedia": "TXT_KEY_TECH_PROTOTYPED_PATHOGENS_PEDIA",
+  "quote": "TXT_KEY_TECH_PROTOTYPED_PATHOGENS_QUOTE",
   "era": "C2C_ERA_NANOTECH",
   "worth": 48,
   "militaryWorth": 4,

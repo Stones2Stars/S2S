@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_MARTIAN_FUSION_PLANT",
- "description": "TXT_KEY_BUILDING_MARTIAN_FUSION_PLANT",
- "civilopedia": "TXT_KEY_BUILDING_MARTIAN_FUSION_PLANT_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -45,6 +43,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_MARTIAN_FUSION_PLANT",
+  "civilopedia": "TXT_KEY_BUILDING_MARTIAN_FUSION_PLANT_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

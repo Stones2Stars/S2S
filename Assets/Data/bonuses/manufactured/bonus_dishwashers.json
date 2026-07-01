@@ -1,7 +1,5 @@
 {
  "type": "BONUS_DISHWASHERS",
- "description": "TXT_KEY_BONUS_DISHWASHERS",
- "civilopedia": "TXT_KEY_BONUS_DISHWASHERS_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_APPLIANCE_STORE"
@@ -13,6 +11,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_DISHWASHERS",
+  "civilopedia": "TXT_KEY_BONUS_DISHWASHERS_PEDIA",
   "bonusClassType": "BONUSCLASS_MANUFACTURED"
  }
 }

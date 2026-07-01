@@ -1,8 +1,5 @@
 {
  "type": "TECH_CURRENCY",
- "description": "TXT_KEY_TECH_CURRENCY",
- "civilopedia": "TXT_KEY_TECH_CURRENCY_PEDIA",
- "quote": "TXT_KEY_TECH_CURRENCY_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_AUCTION_HOUSE",
@@ -70,6 +67,9 @@
   "soundMP": "AS2D_TECH_MP_CURRENCY"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_CURRENCY",
+  "civilopedia": "TXT_KEY_TECH_CURRENCY_PEDIA",
+  "quote": "TXT_KEY_TECH_CURRENCY_QUOTE",
   "era": "C2C_ERA_CLASSICAL",
   "worth": 16,
   "tradeable": true,

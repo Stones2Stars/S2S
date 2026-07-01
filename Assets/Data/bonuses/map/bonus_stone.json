@@ -1,7 +1,5 @@
 {
  "type": "BONUS_STONE",
- "description": "TXT_KEY_BONUS_STONE",
- "civilopedia": "TXT_KEY_BONUS_STONE_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_AQUEDUCT",
@@ -149,6 +147,8 @@
   ]
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_STONE",
+  "civilopedia": "TXT_KEY_BONUS_STONE_PEDIA",
   "bonusClassType": "BONUSCLASS_STRATEGIC"
  }
 }

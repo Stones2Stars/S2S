@@ -1,7 +1,5 @@
 {
  "type": "UNIT_BOOMERANG_THROWER",
- "description": "TXT_KEY_UNIT_BOOMERANG_THROWER",
- "civilopedia": "TXT_KEY_UNIT_BOOMERANG_THROWER_PEDIA",
  "obsoletedBy": {
   "techs": [
    "TECH_FLINTLOCK"
@@ -130,6 +128,8 @@
   "upkeep": 1
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_BOOMERANG_THROWER",
+  "civilopedia": "TXT_KEY_UNIT_BOOMERANG_THROWER_PEDIA",
   "worth": 1,
   "militaryWorth": 3,
   "xpValueAttack": 3,

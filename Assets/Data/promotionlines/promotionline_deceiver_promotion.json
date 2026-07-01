@@ -1,12 +1,12 @@
 {
  "type": "PROMOTIONLINE_DECEIVER_PROMOTION",
- "description": "TXT_KEY_PROMOTIONLINE_DECEIVER_PROMOTION",
  "ui": {
   "art": {
    "icon": "art/Buttons/Promotions/PromotionDeceiver.dds"
   }
  },
  "identity": {
+  "description": "TXT_KEY_PROMOTIONLINE_DECEIVER_PROMOTION",
   "unitCombats": [
    "UNITCOMBAT_SPY"
   ]

@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_PLANTATION_POPPY",
- "description": "TXT_KEY_BUILDING_PLANTATION_POPPY",
- "civilopedia": "TXT_KEY_BUILDING_PLANTATION_POPPY_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_RESOURCES_DRUGS"
@@ -81,6 +79,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_PLANTATION_POPPY",
+  "civilopedia": "TXT_KEY_BUILDING_PLANTATION_POPPY_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

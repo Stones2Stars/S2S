@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_FARM_MECH_CONTROL_CENTER",
- "description": "TXT_KEY_BUILDING_FARM_MECH_CONTROL_CENTER",
- "civilopedia": "TXT_KEY_BUILDING_FARM_MECH_CONTROL_CENTER_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_FARM_NANOBOT_CONTROL_CENTER"
@@ -228,6 +226,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_FARM_MECH_CONTROL_CENTER",
+  "civilopedia": "TXT_KEY_BUILDING_FARM_MECH_CONTROL_CENTER_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

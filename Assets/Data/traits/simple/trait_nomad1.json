@@ -1,7 +1,5 @@
 {
  "type": "TRAIT_NOMAD1",
- "description": "TXT_KEY_TRAIT_NOMAD0",
- "civilopedia": "TXT_KEY_TRAIT_NOMAD_PEDIA",
  "enables": {
   "traits": [
    "TRAIT_NOMADIC2"
@@ -247,6 +245,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_TRAIT_NOMAD0",
+  "civilopedia": "TXT_KEY_TRAIT_NOMAD_PEDIA",
   "shortDescription": "TXT_KEY_TRAIT_NOMAD_SHORT",
   "impurePropertyManipulators": true
  }

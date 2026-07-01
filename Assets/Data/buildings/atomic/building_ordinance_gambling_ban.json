@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_ORDINANCE_GAMBLING_BAN",
- "description": "TXT_KEY_BUILDING_ORDINANCE_GAMBLING_BAN",
- "civilopedia": "TXT_KEY_BUILDING_ORDINANCE_GAMBLING_BAN_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -24,6 +22,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_ORDINANCE_GAMBLING_BAN",
+  "civilopedia": "TXT_KEY_BUILDING_ORDINANCE_GAMBLING_BAN_PEDIA",
   "notConstructible": true,
   "nukeImmune": true,
   "neverCapture": true,

@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_FACTORY_CARPETS",
- "description": "TXT_KEY_BUILDING_FACTORY_CARPETS",
- "civilopedia": "TXT_KEY_BUILDING_FACTORY_CARPETS_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_TEXTILE_MANUFACTURING_DISTRICT"
@@ -87,6 +85,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_FACTORY_CARPETS",
+  "civilopedia": "TXT_KEY_BUILDING_FACTORY_CARPETS_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

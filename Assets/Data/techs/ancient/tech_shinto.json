@@ -1,8 +1,5 @@
 {
  "type": "TECH_SHINTO",
- "description": "TXT_KEY_TECH_SHINTO",
- "civilopedia": "TXT_KEY_TECH_SHINTO_PEDIA",
- "quote": "TXT_KEY_TECH_SHINTO_QUOTE",
  "enables": {
   "religions": [
    "RELIGION_SHINTO"
@@ -58,6 +55,9 @@
   "soundMP": "AS2D_TECH_GENERIC"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_SHINTO",
+  "civilopedia": "TXT_KEY_TECH_SHINTO_PEDIA",
+  "quote": "TXT_KEY_TECH_SHINTO_QUOTE",
   "era": "C2C_ERA_ANCIENT",
   "worth": 8,
   "gridX": 28,

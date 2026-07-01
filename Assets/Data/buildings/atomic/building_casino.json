@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_CASINO",
- "description": "TXT_KEY_BUILDING_CASINO",
- "civilopedia": "TXT_KEY_BUILDING_CASINO_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_ANDROID_BROTHEL",
@@ -92,6 +90,8 @@
   "construct": "AS2D_BUILD_CASINO"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_CASINO",
+  "civilopedia": "TXT_KEY_BUILDING_CASINO_PEDIA",
   "worth": 7,
   "conquestProbability": 75,
   "dcmAirbombMission": 2,

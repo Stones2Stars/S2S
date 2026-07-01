@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_FARMERS_MARKET",
- "description": "TXT_KEY_BUILDING_FARMERS_MARKET",
- "civilopedia": "TXT_KEY_BUILDING_FARMERS_MARKET_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -142,6 +140,8 @@
   "construct": "AS2D_BUILD_GROCER"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_FARMERS_MARKET",
+  "civilopedia": "TXT_KEY_BUILDING_FARMERS_MARKET_PEDIA",
   "worth": 6,
   "militaryWorth": 3,
   "advisor": "ADVISOR_GROWTH",

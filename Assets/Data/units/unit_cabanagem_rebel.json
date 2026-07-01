@@ -1,7 +1,5 @@
 {
  "type": "UNIT_CABANAGEM_REBEL",
- "description": "TXT_KEY_UNIT_CABANAGEM_REBEL",
- "civilopedia": "TXT_KEY_UNIT_CABANAGEM_REBEL_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -134,6 +132,8 @@
   "upkeep": 1
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_CABANAGEM_REBEL",
+  "civilopedia": "TXT_KEY_UNIT_CABANAGEM_REBEL_PEDIA",
   "worth": 4,
   "militaryWorth": 43,
   "xpValueAttack": 6,

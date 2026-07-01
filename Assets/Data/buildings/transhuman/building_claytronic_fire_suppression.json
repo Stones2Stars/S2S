@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_CLAYTRONIC_FIRE_SUPPRESSION",
- "description": "TXT_KEY_BUILDING_CLAYTRONIC_FIRE_SUPPRESSION",
- "civilopedia": "TXT_KEY_BUILDING_CLAYTRONIC_FIRE_SUPPRESSION_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_ATOMIC_FIREPROOFING"
@@ -52,6 +50,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_CLAYTRONIC_FIRE_SUPPRESSION",
+  "civilopedia": "TXT_KEY_BUILDING_CLAYTRONIC_FIRE_SUPPRESSION_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

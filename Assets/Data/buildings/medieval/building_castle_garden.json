@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_CASTLE_GARDEN",
- "description": "TXT_KEY_BUILDING_CASTLE_GARDEN",
- "civilopedia": "TXT_KEY_BUILDING_CASTLE_GARDEN_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_CITY_PARK"
@@ -90,6 +88,8 @@
   "construct": "AS2D_BUILD_PARK"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_CASTLE_GARDEN",
+  "civilopedia": "TXT_KEY_BUILDING_CASTLE_GARDEN_PEDIA",
   "worth": 2,
   "militaryWorth": 2,
   "greatPeopleUnitType": "UNIT_ARTIST",

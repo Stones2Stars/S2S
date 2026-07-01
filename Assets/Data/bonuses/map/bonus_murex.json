@@ -1,7 +1,5 @@
 {
  "type": "BONUS_MUREX",
- "description": "TXT_KEY_BONUS_MUREX",
- "civilopedia": "TXT_KEY_BONUS_MUREX_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_ABALONE_DIGGERS",
@@ -51,6 +49,8 @@
   ]
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_MUREX",
+  "civilopedia": "TXT_KEY_BONUS_MUREX_PEDIA",
   "bonusClassType": "BONUSCLASS_LUXURY"
  }
 }

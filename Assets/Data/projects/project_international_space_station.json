@@ -1,7 +1,5 @@
 {
  "type": "PROJECT_INTERNATIONAL_SPACE_STATION",
- "description": "TXT_KEY_PROJECT_INTERNATIONAL_SPACE_STATION",
- "civilopedia": "TXT_KEY_PROJECT_INTERNATIONAL_SPACE_STATION_PEDIA",
  "buildRate": {
   "self": {
    "percent": [
@@ -31,6 +29,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_PROJECT_INTERNATIONAL_SPACE_STATION",
+  "civilopedia": "TXT_KEY_PROJECT_INTERNATIONAL_SPACE_STATION_PEDIA",
   "mapCategories": [
    "MAPCATEGORY_EARTH"
   ],

@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_ASTEROID_SHELL_WORLD",
- "description": "TXT_KEY_BUILDING_ASTEROID_SHELL_WORLD",
- "civilopedia": "TXT_KEY_BUILDING_ASTEROID_SHELL_WORLD_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_ASTEROID_SHELL_FACTORY",
@@ -59,6 +57,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_ASTEROID_SHELL_WORLD",
+  "civilopedia": "TXT_KEY_BUILDING_ASTEROID_SHELL_WORLD_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_HYPERSPACE_SIMULATED_UNIVERSE",
- "description": "TXT_KEY_BUILDING_HYPERSPACE_SIMULATED_UNIVERSE",
- "civilopedia": "TXT_KEY_BUILDING_HYPERSPACE_SIMULATED_UNIVERSE_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_HYPERSPACE_ALTERNATE_HISTORY_EXPLORATION",
@@ -87,6 +85,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_HYPERSPACE_SIMULATED_UNIVERSE",
+  "civilopedia": "TXT_KEY_BUILDING_HYPERSPACE_SIMULATED_UNIVERSE_PEDIA",
   "workableRadius": 3,
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,

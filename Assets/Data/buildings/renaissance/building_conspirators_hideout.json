@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_CONSPIRATORS_HIDEOUT",
- "description": "TXT_KEY_BUILDING_CONSPIRATORS_HIDEOUT",
- "civilopedia": "TXT_KEY_BUILDING_CONSPIRATORS_HIDEOUT_PEDIA",
  "enables": {
   "units": [
    "UNIT_HAJDUK",
@@ -124,6 +122,8 @@
   "construct": "AS2D_BUILD_COMMAND_BUNKER"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_CONSPIRATORS_HIDEOUT",
+  "civilopedia": "TXT_KEY_BUILDING_CONSPIRATORS_HIDEOUT_PEDIA",
   "worth": 2,
   "conquestProbability": 75,
   "dcmAirbombMission": 2,

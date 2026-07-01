@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_CITADEL",
- "description": "TXT_KEY_BUILDING_CITADEL",
- "civilopedia": "TXT_KEY_BUILDING_CITADEL_PEDIA",
  "obsoletedBy": {
   "techs": [
    "TECH_ARTILLERY"
@@ -111,6 +109,8 @@
   "construct": "AS2D_BUILD_CASTLE"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_CITADEL",
+  "civilopedia": "TXT_KEY_BUILDING_CITADEL_PEDIA",
   "centerInCity": true,
   "worth": 2,
   "militaryWorth": 3,

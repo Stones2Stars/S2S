@@ -1,7 +1,5 @@
 {
  "type": "BONUS_SODA_POP",
- "description": "TXT_KEY_BONUS_SODA_POP",
- "civilopedia": "TXT_KEY_BONUS_SODA_POP_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_ALUMINUM_RECLAMATION_PLANT",
@@ -16,6 +14,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_SODA_POP",
+  "civilopedia": "TXT_KEY_BONUS_SODA_POP_PEDIA",
   "bonusClassType": "BONUSCLASS_MANUFACTURED"
  }
 }

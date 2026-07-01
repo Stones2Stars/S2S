@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_MARS_SCIENCE_LABORATORY",
- "description": "TXT_KEY_BUILDING_MARS_SCIENCE_LABORATORY",
- "civilopedia": "TXT_KEY_BUILDING_MARS_SCIENCE_LABORATORY_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -60,6 +58,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_MARS_SCIENCE_LABORATORY",
+  "civilopedia": "TXT_KEY_BUILDING_MARS_SCIENCE_LABORATORY_PEDIA",
   "conquestProbability": 100,
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,

@@ -1,12 +1,12 @@
 {
  "type": "UNITCOMBAT_CULTURE_ABORIGINE",
- "description": "TXT_KEY_UNITCOMBAT_CULTURE_ABORIGINE",
  "ui": {
   "art": {
    "icon": "Art/Interface/Buttons/units/sparth/categories/culture_aborigine.dds"
   }
  },
  "identity": {
+  "description": "TXT_KEY_UNITCOMBAT_CULTURE_ABORIGINE",
   "culture": "BONUS_ABORIGINE"
  }
 }

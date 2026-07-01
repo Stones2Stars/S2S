@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_NANO_RESEARCH_DEPARTMENT",
- "description": "TXT_KEY_BUILDING_NANO_RESEARCH_DEPARTMENT",
- "civilopedia": "TXT_KEY_BUILDING_NANO_RESEARCH_DEPARTMENT_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_AEROGEL_FACTORY",
@@ -82,6 +80,8 @@
   "construct": "AS2D_BUILD_NANOFACTORY"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_NANO_RESEARCH_DEPARTMENT",
+  "civilopedia": "TXT_KEY_BUILDING_NANO_RESEARCH_DEPARTMENT_PEDIA",
   "worth": 12,
   "dcmAirbombMission": 2,
   "advisor": "ADVISOR_SCIENCE",

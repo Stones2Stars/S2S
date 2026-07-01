@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_ATHLETIC_FIELDS",
- "description": "TXT_KEY_BUILDING_ATHLETIC_FIELDS",
- "civilopedia": "TXT_KEY_BUILDING_ATHLETIC_FIELDS_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_CAPTURE_THE_FLAG"
@@ -45,6 +43,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_ATHLETIC_FIELDS",
+  "civilopedia": "TXT_KEY_BUILDING_ATHLETIC_FIELDS_PEDIA",
   "nukeImmune": true,
   "worth": 1,
   "conquestProbability": 100,

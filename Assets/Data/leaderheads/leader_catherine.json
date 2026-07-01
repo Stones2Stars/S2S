@@ -1,7 +1,5 @@
 {
  "type": "LEADER_CATHERINE",
- "description": "TXT_KEY_LEADER_CATHERINE",
- "civilopedia": "TXT_KEY_LEADER_CATHERINE_PEDIA",
  "grants": {
   "traits": [
    "TRAIT_CREATIVE",
@@ -307,5 +305,9 @@
    "C2C_ERA_TRANSCENDENT": "AS2D_DIPLO_WARDRUMS_LATE",
    "C2C_ERA_FUTURE": "AS2D_DIPLO_WARDRUMS_LATE"
   }
+ },
+ "identity": {
+  "description": "TXT_KEY_LEADER_CATHERINE",
+  "civilopedia": "TXT_KEY_LEADER_CATHERINE_PEDIA"
  }
 }

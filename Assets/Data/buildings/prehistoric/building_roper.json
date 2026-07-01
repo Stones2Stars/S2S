@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_ROPER",
- "description": "TXT_KEY_BUILDING_ROPER",
- "civilopedia": "TXT_KEY_BUILDING_ROPER_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_FACTORY_ROPE"
@@ -115,6 +113,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_ROPER",
+  "civilopedia": "TXT_KEY_BUILDING_ROPER_PEDIA",
   "enabledCivilizations": [
    "CIVILIZATION_NPC_NEANDERTHAL"
   ],

@@ -1,7 +1,5 @@
 {
  "type": "IMPROVEMENT_GRAPE_PICKING_CAMP",
- "description": "TXT_KEY_IMPROVEMENT_GRAPE_PICKING_CAMP",
- "civilopedia": "TXT_KEY_IMPROVEMENT_FRUIT_GATHERING_CAMP_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -55,6 +53,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_IMPROVEMENT_GRAPE_PICKING_CAMP",
+  "civilopedia": "TXT_KEY_IMPROVEMENT_FRUIT_GATHERING_CAMP_PEDIA",
   "upgradeTime": 10,
   "pillageGold": 20,
   "pillageTo": "IMPROVEMENT_GRAPE_GATHERING_CAMP",

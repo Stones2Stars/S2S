@@ -1,8 +1,5 @@
 {
  "type": "CIVIC_SOCIALIZED",
- "description": "TXT_KEY_CIVIC_SOCIALIZED",
- "civilopedia": "TXT_KEY_CIVIC_SOCIALIZED_PEDIA",
- "strategy": "TXT_KEY_CIVIC_SOCIALIZED_STRATEGY",
  "enables": {
   "buildings": [
    "BUILDING_CRIME_WELFARE_FRAUD",
@@ -146,6 +143,9 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_CIVIC_SOCIALIZED",
+  "civilopedia": "TXT_KEY_CIVIC_SOCIALIZED_PEDIA",
+  "strategy": "TXT_KEY_CIVIC_SOCIALIZED_STRATEGY",
   "civicOption": "CIVICOPTION_WELFARE",
   "anarchyLength": 2,
   "upkeepLevel": "UPKEEP_HIGH"

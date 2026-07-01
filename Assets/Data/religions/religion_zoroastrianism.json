@@ -1,8 +1,5 @@
 {
  "type": "RELIGION_ZOROASTRIANISM",
- "description": "TXT_KEY_TECH_ZOROASTRIANISM",
- "civilopedia": "TXT_KEY_TECH_ZOROASTRIANISM_PEDIA",
- "adjective": "TXT_KEY_TECH_ZOROASTRIANISM_ADJECTIVE",
  "enables": {
   "buildings": [
    "BUILDING_APADANA_PALACE",
@@ -84,6 +81,9 @@
   "sound": "AS2D_BUILD_ZORO"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_ZOROASTRIANISM",
+  "adjective": "TXT_KEY_TECH_ZOROASTRIANISM_ADJECTIVE",
+  "civilopedia": "TXT_KEY_TECH_ZOROASTRIANISM_PEDIA",
   "spreadFactor": 25
  }
 }

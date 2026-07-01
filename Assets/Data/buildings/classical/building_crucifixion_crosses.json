@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_CRUCIFIXION_CROSSES",
- "description": "TXT_KEY_BUILDING_CRUCIFIXION_CROSSES",
- "civilopedia": "TXT_KEY_BUILDING_CRUCIFIXION_CROSSES_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_GALLOWS"
@@ -85,6 +83,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_CRUCIFIXION_CROSSES",
+  "civilopedia": "TXT_KEY_BUILDING_CRUCIFIXION_CROSSES_PEDIA",
   "advisor": "ADVISOR_MILITARY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

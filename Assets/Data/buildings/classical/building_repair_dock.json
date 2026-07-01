@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_REPAIR_DOCK",
- "description": "TXT_KEY_BUILDING_REPAIR_DOCK",
- "civilopedia": "TXT_KEY_BUILDING_REPAIR_DOCK_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -44,6 +42,8 @@
   "construct": "AS2D_BUILD_HARBOR"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_REPAIR_DOCK",
+  "civilopedia": "TXT_KEY_BUILDING_REPAIR_DOCK_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

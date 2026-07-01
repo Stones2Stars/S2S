@@ -1,7 +1,5 @@
 {
  "type": "UNIT_CHROMIUM_GUNMAN",
- "description": "TXT_KEY_UNIT_CHROMIUM_GUNMAN",
- "civilopedia": "TXT_KEY_UNIT_CHROMIUM_GUNMAN_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -106,6 +104,8 @@
   "upkeep": 1
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_CHROMIUM_GUNMAN",
+  "civilopedia": "TXT_KEY_UNIT_CHROMIUM_GUNMAN_PEDIA",
   "worth": 5,
   "militaryWorth": 97,
   "xpValueAttack": 6,

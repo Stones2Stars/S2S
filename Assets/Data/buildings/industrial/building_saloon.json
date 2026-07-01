@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_SALOON",
- "description": "TXT_KEY_BUILDING_SALOON",
- "civilopedia": "TXT_KEY_BUILDING_SALOON_PEDIA",
  "enables": {
   "units": [
    "UNIT_GUNFIGHTER",
@@ -164,6 +162,8 @@
   "construct": "AS2D_BUILD_SALOON"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_SALOON",
+  "civilopedia": "TXT_KEY_BUILDING_SALOON_PEDIA",
   "worth": 2,
   "militaryWorth": 2,
   "conquestProbability": 100,

@@ -1,12 +1,12 @@
 {
  "type": "UNITCOMBAT_CULTURE_KHMER",
- "description": "TXT_KEY_UNITCOMBAT_CULTURE_KHMER",
  "ui": {
   "art": {
    "icon": "Art/Interface/Buttons/units/sparth/categories/culture_khmer.dds"
   }
  },
  "identity": {
+  "description": "TXT_KEY_UNITCOMBAT_CULTURE_KHMER",
   "culture": "BONUS_KHMER"
  }
 }

@@ -1,8 +1,5 @@
 {
  "type": "TRAIT_AGRICULTURAL",
- "description": "TXT_KEY_TRAIT_COMPLEX_AGRICULTURAL",
- "civilopedia": "TXT_KEY_TRAIT_COMPLEX_AGRICULTURAL_PEDIA",
- "strategy": "TXT_KEY_TRAIT_COMPLEX_AGRICULTURAL_STRATEGY",
  "excludes": [
   "TRAIT_GLUTTONOUS"
  ],
@@ -411,6 +408,9 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_TRAIT_COMPLEX_AGRICULTURAL",
+  "civilopedia": "TXT_KEY_TRAIT_COMPLEX_AGRICULTURAL_PEDIA",
+  "strategy": "TXT_KEY_TRAIT_COMPLEX_AGRICULTURAL_STRATEGY",
   "impurePropertyManipulators": true
  }
 }

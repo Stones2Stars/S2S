@@ -1,8 +1,5 @@
 {
  "type": "TECH_PETROGLYPHS",
- "description": "TXT_KEY_TECH_PETROGLYPHS",
- "civilopedia": "TXT_KEY_TECH_PETROGLYPHS_PEDIA",
- "quote": "TXT_KEY_TECH_PETROGLYPHS_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_CAVE_PAINTINGS",
@@ -59,6 +56,9 @@
   "soundMP": "AS2D_TECH_PETROGLYPHS"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_PETROGLYPHS",
+  "civilopedia": "TXT_KEY_TECH_PETROGLYPHS_PEDIA",
+  "quote": "TXT_KEY_TECH_PETROGLYPHS_QUOTE",
   "era": "C2C_ERA_PREHISTORIC",
   "worth": 2,
   "tradeable": true,

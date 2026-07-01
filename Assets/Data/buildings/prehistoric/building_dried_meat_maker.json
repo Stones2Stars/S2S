@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_DRIED_MEAT_MAKER",
- "description": "TXT_KEY_BUILDING_DRIED_MEAT_MAKER",
- "civilopedia": "TXT_KEY_BUILDING_DRIED_MEAT_MAKER_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_FOOD_MANUFACTURING_DISTRICT"
@@ -84,6 +82,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_DRIED_MEAT_MAKER",
+  "civilopedia": "TXT_KEY_BUILDING_DRIED_MEAT_MAKER_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

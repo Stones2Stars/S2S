@@ -1,7 +1,5 @@
 {
  "type": "FEATURE_PLATY_NGORONGORO_CRATER",
- "description": "TXT_KEY_FEATURE_NGORONGORO_CRATER",
- "civilopedia": "TXT_KEY_FEATURE_NGORONGORO_CRATER_PEDIA",
  "world": {
   "art": {
    "icon": "ART_DEF_FEATURE_NGORONGORO_CRATER"
@@ -11,6 +9,8 @@
   "soundscape": "ASSS_OASIS_SELECT_AMB"
  },
  "identity": {
+  "description": "TXT_KEY_FEATURE_NGORONGORO_CRATER",
+  "civilopedia": "TXT_KEY_FEATURE_NGORONGORO_CRATER_PEDIA",
   "addsFreshWater": true,
   "movementCost": 1,
   "requiresFlatlands": true,

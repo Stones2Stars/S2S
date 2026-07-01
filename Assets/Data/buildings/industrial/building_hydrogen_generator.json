@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_HYDROGEN_GENERATOR",
- "description": "TXT_KEY_BUILDING_HYDROGEN_GENERATOR",
- "civilopedia": "TXT_KEY_BUILDING_HYDROGEN_GENERATOR_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_ROCKET_FUEL_REFINERY"
@@ -80,6 +78,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_HYDROGEN_GENERATOR",
+  "civilopedia": "TXT_KEY_BUILDING_HYDROGEN_GENERATOR_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

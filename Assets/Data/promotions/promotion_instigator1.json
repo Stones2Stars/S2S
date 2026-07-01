@@ -1,6 +1,5 @@
 {
  "type": "PROMOTION_INSTIGATOR1",
- "description": "TXT_KEY_PROMOTION_INSTIGATOR1",
  "heal": {
   "unit": {
    "enemy": {
@@ -18,5 +17,8 @@
  },
  "sound": {
   "sound": "AS2D_PING"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_INSTIGATOR1"
  }
 }

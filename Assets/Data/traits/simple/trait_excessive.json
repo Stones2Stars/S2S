@@ -1,7 +1,5 @@
 {
  "type": "TRAIT_EXCESSIVE",
- "description": "TXT_KEY_TRAIT_EXCESSIVE",
- "civilopedia": "TXT_KEY_TRAIT_EXCESSIVE_PEDIA",
  "health": {
   "empire": {
    "flat": -1
@@ -64,6 +62,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_TRAIT_EXCESSIVE",
+  "civilopedia": "TXT_KEY_TRAIT_EXCESSIVE_PEDIA",
   "shortDescription": "TXT_KEY_TRAIT_EXCESSIVE_SHORT",
   "negativeTrait": true,
   "impurePromotions": true

@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_WATER_BURIALS",
- "description": "TXT_KEY_BUILDING_WATER_BURIALS",
- "civilopedia": "TXT_KEY_BUILDING_WATER_BURIALS_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_FUNERARY_SERVICES"
@@ -65,6 +63,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_WATER_BURIALS",
+  "civilopedia": "TXT_KEY_BUILDING_WATER_BURIALS_PEDIA",
   "conquestProbability": 95,
   "advisor": "ADVISOR_GROWTH",
   "visibilityPriority": 1,

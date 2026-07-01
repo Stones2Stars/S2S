@@ -1,7 +1,5 @@
 {
  "type": "UNIT_HACKER",
- "description": "TXT_KEY_UNIT_HACKER",
- "civilopedia": "TXT_KEY_UNIT_HACKER_PEDIA",
  "obsoletedBy": {
   "techs": [
    "TECH_COMPREHENSIVE_CYBERNETICS"
@@ -187,6 +185,8 @@
   "upkeep": 15
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_HACKER",
+  "civilopedia": "TXT_KEY_UNIT_HACKER_PEDIA",
   "worth": 15,
   "militaryWorth": 60,
   "xpValueAttack": 8,

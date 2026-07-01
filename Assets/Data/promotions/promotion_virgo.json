@@ -1,7 +1,5 @@
 {
  "type": "PROMOTION_VIRGO",
- "description": "TXT_KEY_PROMOTION_VIRGO",
- "help": "TXT_KEY_PROMOTION_ASTRO_HELP",
  "strength": {
   "unit": {
    "hillsDefense": {
@@ -18,6 +16,8 @@
   "sound": "AS2D_IF_LEVELUP"
  },
  "identity": {
+  "description": "TXT_KEY_PROMOTION_VIRGO",
+  "help": "TXT_KEY_PROMOTION_ASTRO_HELP",
   "notOnDomains": [
    "DOMAIN_AIR",
    "DOMAIN_SEA"

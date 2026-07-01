@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_ECOMEGATOWER",
- "description": "TXT_KEY_BUILDING_ECOMEGATOWER",
- "civilopedia": "TXT_KEY_BUILDING_ECOMEGATOWER_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -67,6 +65,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_ECOMEGATOWER",
+  "civilopedia": "TXT_KEY_BUILDING_ECOMEGATOWER_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

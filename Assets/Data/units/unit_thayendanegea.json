@@ -1,7 +1,5 @@
 {
  "type": "UNIT_THAYENDANEGEA",
- "description": "TXT_KEY_UNIT_THAYENDANEGEA",
- "civilopedia": "TXT_KEY_UNIT_THAYENDANEGEA_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -76,6 +74,8 @@
   "upkeep": 1
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_THAYENDANEGEA",
+  "civilopedia": "TXT_KEY_UNIT_THAYENDANEGEA_PEDIA",
   "worth": 6,
   "militaryWorth": 8,
   "xpValueAttack": 4,

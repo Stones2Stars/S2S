@@ -1,8 +1,5 @@
 {
  "type": "CIVIC_PLUTOCRACY",
- "description": "TXT_KEY_CIVIC_PLUTOCRACY",
- "civilopedia": "TXT_KEY_CIVIC_PLUTOCRACY_PEDIA",
- "strategy": "TXT_KEY_CIVIC_PLUTOCRACY_STRATEGY",
  "enables": {
   "hurries": [
    "HURRY_GOLD"
@@ -119,6 +116,9 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_CIVIC_PLUTOCRACY",
+  "civilopedia": "TXT_KEY_CIVIC_PLUTOCRACY_PEDIA",
+  "strategy": "TXT_KEY_CIVIC_PLUTOCRACY_STRATEGY",
   "civicOption": "CIVICOPTION_POWER",
   "anarchyLength": 1,
   "upkeepLevel": "UPKEEP_HIGH"

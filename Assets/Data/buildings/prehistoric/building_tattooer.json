@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_TATTOOER",
- "description": "TXT_KEY_BUILDING_TATTOOER",
- "civilopedia": "TXT_KEY_BUILDING_TATTOOER_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_BLOODHUNTRESSS_HUT"
@@ -98,6 +96,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_TATTOOER",
+  "civilopedia": "TXT_KEY_BUILDING_TATTOOER_PEDIA",
   "enabledCivilizations": [
    "CIVILIZATION_NPC_NEANDERTHAL"
   ],

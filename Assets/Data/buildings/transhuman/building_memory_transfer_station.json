@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_MEMORY_TRANSFER_STATION",
- "description": "TXT_KEY_BUILDING_MEMORY_TRANSFER_STATION",
- "civilopedia": "TXT_KEY_BUILDING_MEMORY_TRANSFER_STATION_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_INSTANT_EDUCATION_CENTER"
@@ -55,6 +53,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_MEMORY_TRANSFER_STATION",
+  "civilopedia": "TXT_KEY_BUILDING_MEMORY_TRANSFER_STATION_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

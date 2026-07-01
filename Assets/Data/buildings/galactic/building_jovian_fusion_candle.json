@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_JOVIAN_FUSION_CANDLE",
- "description": "TXT_KEY_BUILDING_JOVIAN_FUSION_CANDLE",
- "civilopedia": "TXT_KEY_BUILDING_JOVIAN_FUSION_CANDLE_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -59,6 +57,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_JOVIAN_FUSION_CANDLE",
+  "civilopedia": "TXT_KEY_BUILDING_JOVIAN_FUSION_CANDLE_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_HYDROPONICS_LAB",
- "description": "TXT_KEY_BUILDING_HYDROPONICS_LAB",
- "civilopedia": "TXT_KEY_BUILDING_HYDROPONICS_LAB_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_AEROPONICS_LAB",
@@ -103,6 +101,8 @@
   "construct": "AS2D_BUILD_HYDROPONICS"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_HYDROPONICS_LAB",
+  "civilopedia": "TXT_KEY_BUILDING_HYDROPONICS_LAB_PEDIA",
   "worth": 6,
   "militaryWorth": 3,
   "advisor": "ADVISOR_GROWTH",

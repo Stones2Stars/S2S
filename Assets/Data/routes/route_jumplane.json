@@ -1,6 +1,5 @@
 {
  "type": "ROUTE_JUMPLANE",
- "description": "TXT_KEY_ROUTE_JUMPLANE",
  "food": {
   "plot": {
    "flat": 1,
@@ -109,6 +108,7 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_ROUTE_JUMPLANE",
   "value": 11,
   "advancedStart": {
    "cost": 30

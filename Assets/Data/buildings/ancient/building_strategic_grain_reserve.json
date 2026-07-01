@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_STRATEGIC_GRAIN_RESERVE",
- "description": "TXT_KEY_BUILDING_STRATEGIC_GRAIN_RESERVE",
- "civilopedia": "TXT_KEY_BUILDING_STRATEGIC_GRAIN_RESERVE_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -107,6 +105,8 @@
   "construct": "AS2D_BUILD_GRANARY"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_STRATEGIC_GRAIN_RESERVE",
+  "civilopedia": "TXT_KEY_BUILDING_STRATEGIC_GRAIN_RESERVE_PEDIA",
   "commerceDoubleTime": {
    "culture": 1000
   },

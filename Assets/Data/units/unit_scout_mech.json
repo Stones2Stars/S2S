@@ -1,7 +1,5 @@
 {
  "type": "UNIT_SCOUT_MECH",
- "description": "TXT_KEY_UNIT_SCOUT_MECH",
- "civilopedia": "TXT_KEY_UNIT_SCOUT_MECH_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -61,6 +59,8 @@
   "upkeep": 6
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_SCOUT_MECH",
+  "civilopedia": "TXT_KEY_UNIT_SCOUT_MECH_PEDIA",
   "worth": 7,
   "militaryWorth": 795,
   "xpValueAttack": 3,

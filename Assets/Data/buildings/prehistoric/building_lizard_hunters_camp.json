@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_LIZARD_HUNTERS_CAMP",
- "description": "TXT_KEY_BUILDING_LIZARD_HUNTERS_CAMP",
- "civilopedia": "TXT_KEY_BUILDING_LIZARD_HUNTERS_CAMP_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_RESOURCES_LIZARDS"
@@ -85,6 +83,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_LIZARD_HUNTERS_CAMP",
+  "civilopedia": "TXT_KEY_BUILDING_LIZARD_HUNTERS_CAMP_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

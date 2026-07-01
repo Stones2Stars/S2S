@@ -1,7 +1,5 @@
 {
  "type": "BONUS_RESIN",
- "description": "TXT_KEY_BONUS_RESIN",
- "civilopedia": "TXT_KEY_BONUS_RESIN_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_CULTURE_CHECHEN",
@@ -72,6 +70,8 @@
   ]
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_RESIN",
+  "civilopedia": "TXT_KEY_BONUS_RESIN_PEDIA",
   "bonusClassType": "BONUSCLASS_PRODUCTION"
  }
 }

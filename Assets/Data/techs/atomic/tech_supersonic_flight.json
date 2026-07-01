@@ -1,8 +1,5 @@
 {
  "type": "TECH_SUPERSONIC_FLIGHT",
- "description": "TXT_KEY_TECH_SUPERSONIC_FLIGHT",
- "civilopedia": "TXT_KEY_TECH_SUPERSONIC_FLIGHT_PEDIA",
- "quote": "TXT_KEY_TECH_SUPERSONIC_FLIGHT_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_SPACE_NEEDLE"
@@ -57,6 +54,9 @@
   "soundMP": "AS2D_TECH_SUPERSONIC_FLIGHT"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_SUPERSONIC_FLIGHT",
+  "civilopedia": "TXT_KEY_TECH_SUPERSONIC_FLIGHT_PEDIA",
+  "quote": "TXT_KEY_TECH_SUPERSONIC_FLIGHT_QUOTE",
   "era": "C2C_ERA_ATOMIC",
   "worth": 48,
   "militaryWorth": 10,

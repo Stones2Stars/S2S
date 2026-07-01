@@ -1,8 +1,5 @@
 {
  "type": "TECH_SHARPENING",
- "description": "TXT_KEY_TECH_SHARPENING",
- "civilopedia": "TXT_KEY_TECH_SHARPENING_PEDIA",
- "quote": "TXT_KEY_TECH_SHARPENING_QUOTE",
  "enables": {
   "techs": [
    "TECH_BONE_WORKING",
@@ -53,6 +50,9 @@
   "soundMP": "AS2D_TECH_SHARPENING"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_SHARPENING",
+  "civilopedia": "TXT_KEY_TECH_SHARPENING_PEDIA",
+  "quote": "TXT_KEY_TECH_SHARPENING_QUOTE",
   "era": "C2C_ERA_PREHISTORIC",
   "worth": 2,
   "militaryWorth": 1,

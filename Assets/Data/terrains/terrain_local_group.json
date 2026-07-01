@@ -1,7 +1,5 @@
 {
  "type": "TERRAIN_LOCAL_GROUP",
- "description": "TXT_KEY_TERRAIN_LOCAL_GROUP",
- "civilopedia": "TXT_KEY_TERRAIN_LOCAL_GROUP_PEDIA",
  "commerce": {
   "plot": {
    "flat": 1
@@ -23,6 +21,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_TERRAIN_LOCAL_GROUP",
+  "civilopedia": "TXT_KEY_TERRAIN_LOCAL_GROUP_PEDIA",
   "found": true,
   "movementCost": 1,
   "mapCategories": [

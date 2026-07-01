@@ -1,7 +1,5 @@
 {
  "type": "BONUS_KEROSENE",
- "description": "TXT_KEY_BONUS_KEROSENE",
- "civilopedia": "TXT_KEY_BONUS_KEROSENE_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_OIL_LAMPS"
@@ -18,6 +16,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_KEROSENE",
+  "civilopedia": "TXT_KEY_BONUS_KEROSENE_PEDIA",
   "bonusClassType": "BONUSCLASS_MANUFACTURED"
  }
 }

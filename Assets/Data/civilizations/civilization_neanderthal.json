@@ -1,9 +1,5 @@
 {
  "type": "CIVILIZATION_NEANDERTHAL",
- "description": "TXT_KEY_CIVILIZATION_NEANDERTHAL",
- "shortDescription": "TXT_KEY_CIVILIZATION_NEANDERTHAL_SHORT",
- "adjective": "TXT_KEY_CIVILIZATION_NEANDERTHAL_ADJECTIVE",
- "civilopedia": "TXT_KEY_CIVILIZATION_NEANDERTHAL_PEDIA",
  "grants": {
   "buildings": [
    "BUILDING_PALACE",
@@ -34,10 +30,6 @@
    "TECH_GAME_START"
   ]
  },
- "policies": {
-  "playable": true,
-  "aiPlayable": true
- },
  "world": {
   "art": {
    "playerColor": "PLAYERCOLOR_NEANDERTHAL_EMPIRE",
@@ -51,6 +43,12 @@
   "action": "AS3D_NEAN_ORDER"
  },
  "identity": {
+  "description": "TXT_KEY_CIVILIZATION_NEANDERTHAL",
+  "shortDescription": "TXT_KEY_CIVILIZATION_NEANDERTHAL_SHORT",
+  "adjective": "TXT_KEY_CIVILIZATION_NEANDERTHAL_ADJECTIVE",
+  "civilopedia": "TXT_KEY_CIVILIZATION_NEANDERTHAL_PEDIA",
+  "playable": true,
+  "aiPlayable": true,
   "leaders": [
    "LEADER_WRUB"
   ],

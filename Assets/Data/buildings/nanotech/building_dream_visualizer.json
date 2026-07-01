@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_DREAM_VISUALIZER",
- "description": "TXT_KEY_BUILDING_DREAM_VISUALIZER",
- "civilopedia": "TXT_KEY_BUILDING_DREAM_VISUALIZER_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_DREAMTIME_MACHINE"
@@ -93,6 +91,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_DREAM_VISUALIZER",
+  "civilopedia": "TXT_KEY_BUILDING_DREAM_VISUALIZER_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

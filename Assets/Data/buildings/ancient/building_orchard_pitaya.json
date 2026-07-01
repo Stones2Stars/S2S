@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_ORCHARD_PITAYA",
- "description": "TXT_KEY_BUILDING_ORCHARD_PITAYA",
- "civilopedia": "TXT_KEY_BUILDING_ORCHARD_PITAYA_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_RESOURCES_FRUIT"
@@ -77,6 +75,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_ORCHARD_PITAYA",
+  "civilopedia": "TXT_KEY_BUILDING_ORCHARD_PITAYA_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

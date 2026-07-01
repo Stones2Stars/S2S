@@ -1,7 +1,5 @@
 {
  "type": "UNIT_TERN",
- "description": "TXT_KEY_UNIT_TERN",
- "civilopedia": "TXT_KEY_UNIT_TERN_PEDIA",
  "withdrawal": {
   "unit": {
    "percent": 65
@@ -36,6 +34,8 @@
   ]
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_TERN",
+  "civilopedia": "TXT_KEY_UNIT_TERN_PEDIA",
   "spawnOnly": true,
   "xpValueAttack": 1,
   "xpValueDefense": 1,

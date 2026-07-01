@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_WONDER_OF_NATURE_MT_FUJI",
- "description": "TXT_KEY_BUILDING_WONDER_OF_NATURE_MT_FUJI",
- "civilopedia": "TXT_KEY_BUILDING_WONDER_OF_NATURE_MT_FUJI_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -101,6 +99,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_WONDER_OF_NATURE_MT_FUJI",
+  "civilopedia": "TXT_KEY_BUILDING_WONDER_OF_NATURE_MT_FUJI_PEDIA",
   "enabledCivilizations": [
    "CIVILIZATION_NPC_NEANDERTHAL"
   ],

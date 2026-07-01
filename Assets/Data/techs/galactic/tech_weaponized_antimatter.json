@@ -1,8 +1,5 @@
 {
  "type": "TECH_WEAPONIZED_ANTIMATTER",
- "description": "TXT_KEY_TECH_WEAPONIZED_ANTIMATTER",
- "civilopedia": "TXT_KEY_TECH_WEAPONIZED_ANTIMATTER_PEDIA",
- "quote": "TXT_KEY_TECH_WEAPONIZED_ANTIMATTER_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_ANTI_MATTER_BATTERY",
@@ -59,6 +56,9 @@
   "soundMP": "AS2D_TECH_WEAPONIZED_ANTIMATTER"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_WEAPONIZED_ANTIMATTER",
+  "civilopedia": "TXT_KEY_TECH_WEAPONIZED_ANTIMATTER_PEDIA",
+  "quote": "TXT_KEY_TECH_WEAPONIZED_ANTIMATTER_QUOTE",
   "era": "C2C_ERA_GALACTIC",
   "worth": 48,
   "militaryWorth": 4,

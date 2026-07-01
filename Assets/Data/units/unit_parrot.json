@@ -1,7 +1,5 @@
 {
  "type": "UNIT_PARROT",
- "description": "TXT_KEY_UNIT_PARROT",
- "civilopedia": "TXT_KEY_UNIT_PARROT_PEDIA",
  "withdrawal": {
   "unit": {
    "percent": 55
@@ -56,6 +54,8 @@
   ]
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_PARROT",
+  "civilopedia": "TXT_KEY_UNIT_PARROT_PEDIA",
   "spawnOnly": true,
   "xpValueAttack": 1,
   "xpValueDefense": 1,

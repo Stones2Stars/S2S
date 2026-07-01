@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_ORDINANCE_SMOKE_DETECTOR",
- "description": "TXT_KEY_BUILDING_ORDINANCE_SMOKE_DETECTOR",
- "civilopedia": "TXT_KEY_BUILDING_ORDINANCE_SMOKE_DETECTOR_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -47,6 +45,8 @@
   "construct": "AS2D_BUILD_FIRE_BRIGADES"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_ORDINANCE_SMOKE_DETECTOR",
+  "civilopedia": "TXT_KEY_BUILDING_ORDINANCE_SMOKE_DETECTOR_PEDIA",
   "nukeImmune": true,
   "neverCapture": true,
   "worth": 10,

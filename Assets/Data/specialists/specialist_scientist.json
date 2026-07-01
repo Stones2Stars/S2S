@@ -1,7 +1,5 @@
 {
  "type": "SPECIALIST_SCIENTIST",
- "description": "TXT_KEY_SPECIALIST_SCIENTIST",
- "civilopedia": "TXT_KEY_CONCEPT_SPECIALISTS_PEDIA",
  "food": {
   "empire": {
    "flat": [
@@ -96,6 +94,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_SPECIALIST_SCIENTIST",
+  "civilopedia": "TXT_KEY_CONCEPT_SPECIALISTS_PEDIA",
   "visible": true,
   "categories": [
    "CATEGORY_ASSIGNABLE_SPECIALISTS",

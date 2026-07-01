@@ -1,7 +1,5 @@
 {
  "type": "UNIT_PEACOCK",
- "description": "TXT_KEY_UNIT_PEACOCK",
- "civilopedia": "TXT_KEY_UNIT_PEACOCK_PEDIA",
  "withdrawal": {
   "unit": {
    "percent": 20
@@ -56,6 +54,8 @@
   ]
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_PEACOCK",
+  "civilopedia": "TXT_KEY_UNIT_PEACOCK_PEDIA",
   "spawnOnly": true,
   "xpValueAttack": 2,
   "xpValueDefense": 1,

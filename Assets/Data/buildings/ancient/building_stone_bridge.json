@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_STONE_BRIDGE",
- "description": "TXT_KEY_BUILDING_STONE_BRIDGE",
- "civilopedia": "TXT_KEY_BUILDING_STONE_BRIDGE_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_BRICK_BRIDGE"
@@ -100,6 +98,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_STONE_BRIDGE",
+  "civilopedia": "TXT_KEY_BUILDING_STONE_BRIDGE_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

@@ -1,8 +1,5 @@
 {
  "type": "BUILDING_C_AC_ASIAN",
- "description": "TXT_KEY_BUILDING_C_AC_ASIAN",
- "civilopedia": "TXT_KEY_BUILDING_C_AC_PEDIA",
- "help": "TXT_KEY_BUILDING_C_AC_HELP",
  "enables": {
   "buildings": [
    "BUILDING_CULTURE_AINU",
@@ -85,6 +82,9 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_C_AC_ASIAN",
+  "civilopedia": "TXT_KEY_BUILDING_C_AC_PEDIA",
+  "help": "TXT_KEY_BUILDING_C_AC_HELP",
   "notConstructible": true,
   "nukeImmune": true,
   "neverCapture": true,

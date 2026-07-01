@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_CRIME_WEAPONS_TRAFFICKING",
- "description": "TXT_KEY_BUILDING_CRIME_WEAPONS_TRAFFICKING",
- "civilopedia": "TXT_KEY_BUILDING_CRIME_WEAPONS_TRAFFICKING_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -77,6 +75,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_CRIME_WEAPONS_TRAFFICKING",
+  "civilopedia": "TXT_KEY_BUILDING_CRIME_WEAPONS_TRAFFICKING_PEDIA",
   "notConstructible": true,
   "nukeImmune": true,
   "conquestProbability": 100,

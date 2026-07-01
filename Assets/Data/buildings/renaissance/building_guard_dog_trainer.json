@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_GUARD_DOG_TRAINER",
- "description": "TXT_KEY_BUILDING_GUARD_DOG_TRAINER",
- "civilopedia": "TXT_KEY_BUILDING_GUARD_DOG_TRAINER_PEDIA",
  "enables": {
   "units": [
    "UNIT_GUARDDOG"
@@ -60,6 +58,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_GUARD_DOG_TRAINER",
+  "civilopedia": "TXT_KEY_BUILDING_GUARD_DOG_TRAINER_PEDIA",
   "enabledCivilizations": [
    "CIVILIZATION_NPC_NEANDERTHAL"
   ],

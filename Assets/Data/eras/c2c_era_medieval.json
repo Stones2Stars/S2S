@@ -1,7 +1,5 @@
 {
  "type": "C2C_ERA_MEDIEVAL",
- "description": "TXT_KEY_ERA_MEDIEVAL",
- "strategy": "TXT_KEY_ERA_MEDIEVAL_STRATEGY",
  "costs": {
   "world": {
    "train": {
@@ -113,6 +111,8 @@
   "unitDefeat": "AS2D_LOSS_MIDDLE"
  },
  "identity": {
+  "description": "TXT_KEY_ERA_MEDIEVAL",
+  "strategy": "TXT_KEY_ERA_MEDIEVAL_STRATEGY",
   "order": 4,
   "advancedStart": 4000,
   "historicalStartYear": 450,

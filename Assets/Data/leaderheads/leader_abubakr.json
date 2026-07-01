@@ -1,7 +1,5 @@
 {
  "type": "LEADER_ABUBAKR",
- "description": "TXT_KEY_LEADER_ABUBAKR",
- "civilopedia": "TXT_KEY_LEADER_ABUBAKR_PEDIA",
  "grants": {
   "traits": [
    "TRAIT_SPIRITUAL",
@@ -300,5 +298,9 @@
    "C2C_ERA_TRANSCENDENT": "AS2D_DIPLO_WARDRUMS_LATE",
    "C2C_ERA_FUTURE": "AS2D_DIPLO_WARDRUMS_LATE"
   }
+ },
+ "identity": {
+  "description": "TXT_KEY_LEADER_ABUBAKR",
+  "civilopedia": "TXT_KEY_LEADER_ABUBAKR_PEDIA"
  }
 }

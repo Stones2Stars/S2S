@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_CIVIC_CASTE",
- "description": "TXT_KEY_BUILDING_CIVIC_CASTE",
- "civilopedia": "TXT_KEY_BUILDING_CIVIC_CASTE_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -24,6 +22,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_CIVIC_CASTE",
+  "civilopedia": "TXT_KEY_BUILDING_CIVIC_CASTE_PEDIA",
   "notConstructible": true,
   "nukeImmune": true,
   "neverCapture": true,

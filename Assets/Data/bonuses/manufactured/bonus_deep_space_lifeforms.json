@@ -1,13 +1,13 @@
 {
  "type": "BONUS_DEEP_SPACE_LIFEFORMS",
- "description": "TXT_KEY_BONUS_DEEP_SPACE_LIFEFORMS",
- "civilopedia": "TXT_KEY_BONUS_DEEP_SPACE_LIFEFORMS_PEDIA",
  "world": {
   "art": {
    "icon": "ART_DEF_BONUS_DEEP_SPACE_LIFEFORMS"
   }
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_DEEP_SPACE_LIFEFORMS",
+  "civilopedia": "TXT_KEY_BONUS_DEEP_SPACE_LIFEFORMS_PEDIA",
   "bonusClassType": "BONUSCLASS_MANUFACTURED"
  }
 }

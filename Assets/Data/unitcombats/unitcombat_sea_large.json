@@ -1,9 +1,11 @@
 {
  "type": "UNITCOMBAT_SEA_LARGE",
- "description": "TXT_KEY_UNITCOMBAT_SEA_LARGE",
  "ui": {
   "art": {
    "icon": "Art/Interface/Buttons/units/sparth/categories/fish.dds"
   }
+ },
+ "identity": {
+  "description": "TXT_KEY_UNITCOMBAT_SEA_LARGE"
  }
 }

@@ -1,6 +1,5 @@
 {
  "type": "VOTE_DEFENSIVE_PACT",
- "description": "TXT_KEY_VOTE_DEFENSIVE_PACT",
  "voteSource": [
   "DIPLOVOTE_POPE"
  ],
@@ -11,5 +10,8 @@
  },
  "effect": {
   "defensivePact": true
+ },
+ "identity": {
+  "description": "TXT_KEY_VOTE_DEFENSIVE_PACT"
  }
 }

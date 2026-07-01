@@ -1,4 +1,6 @@
 {
  "type": "CIVICOPTION_IMMIGRATION",
- "description": "TXT_KEY_CIVICOPTION_IMMIGRATION"
+ "identity": {
+  "description": "TXT_KEY_CIVICOPTION_IMMIGRATION"
+ }
 }

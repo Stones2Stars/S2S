@@ -1,8 +1,5 @@
 {
  "type": "RELIGION_VOODOO",
- "description": "TXT_KEY_TECH_VOODOO",
- "civilopedia": "TXT_KEY_TECH_VOODOO_PEDIA",
- "adjective": "TXT_KEY_TECH_VOODOO_ADJECTIVE",
  "enables": {
   "buildings": [
    "BUILDING_HELLSMOUTH_SANCTUARY",
@@ -93,6 +90,9 @@
   "sound": "AS2D_BUILD_VOODOO"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_VOODOO",
+  "adjective": "TXT_KEY_TECH_VOODOO_ADJECTIVE",
+  "civilopedia": "TXT_KEY_TECH_VOODOO_PEDIA",
   "spreadFactor": 1
  }
 }

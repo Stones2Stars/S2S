@@ -1,6 +1,5 @@
 {
  "type": "PROMOTION_TRANSPORT_MISSILES",
- "description": "TXT_KEY_PROMOTION_TRANSPORT_MISSILES",
  "strength": {
   "unit": {
    "percent": -5
@@ -30,6 +29,7 @@
   "sound": "AS2D_IF_LEVELUP"
  },
  "identity": {
+  "description": "TXT_KEY_PROMOTION_TRANSPORT_MISSILES",
   "domainCargoChange": "DOMAIN_AIR",
   "specialCargoChange": "SPECIALUNIT_MISSILE",
   "unitCombats": [

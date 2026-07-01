@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_NARAS_GIANT_BUDDHA",
- "description": "TXT_KEY_BUILDING_NARAS_GIANT_BUDDHA",
- "civilopedia": "TXT_KEY_BUILDING_NARAS_GIANT_BUDDHA_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -120,6 +118,8 @@
   "construct": "AS2D_BUILD_BUDDHIST"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_NARAS_GIANT_BUDDHA",
+  "civilopedia": "TXT_KEY_BUILDING_NARAS_GIANT_BUDDHA_PEDIA",
   "commerceDoubleTime": {
    "culture": 1000
   },

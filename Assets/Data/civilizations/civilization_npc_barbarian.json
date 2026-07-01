@@ -1,9 +1,5 @@
 {
  "type": "CIVILIZATION_NPC_BARBARIAN",
- "description": "TXT_KEY_CIVILIZATION_NPC_BARBARIAN",
- "shortDescription": "TXT_KEY_CIVILIZATION_NPC_BARBARIAN_SHORT",
- "adjective": "TXT_KEY_CIVILIZATION_NPC_BARBARIAN_ADJECTIVE",
- "civilopedia": "TXT_KEY_CIVILIZATION_NPC_BARBARIAN_PEDIA",
  "grants": {
   "civics": [
    "CIVIC_ANARCHISM",
@@ -42,6 +38,11 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_CIVILIZATION_NPC_BARBARIAN",
+  "shortDescription": "TXT_KEY_CIVILIZATION_NPC_BARBARIAN_SHORT",
+  "adjective": "TXT_KEY_CIVILIZATION_NPC_BARBARIAN_ADJECTIVE",
+  "civilopedia": "TXT_KEY_CIVILIZATION_NPC_BARBARIAN_PEDIA",
+  "isNpc": true,
   "leaders": [
    "LEADER_BARBARIAN"
   ],

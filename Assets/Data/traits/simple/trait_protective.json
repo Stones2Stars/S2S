@@ -1,7 +1,5 @@
 {
  "type": "TRAIT_PROTECTIVE",
- "description": "TXT_KEY_TRAIT_PROTECTIVE",
- "civilopedia": "TXT_KEY_TRAIT_PROTECTIVE_PEDIA",
  "buildRate": {
   "empire": {
    "buildings": {
@@ -225,6 +223,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_TRAIT_PROTECTIVE",
+  "civilopedia": "TXT_KEY_TRAIT_PROTECTIVE_PEDIA",
   "shortDescription": "TXT_KEY_TRAIT_PROTECTIVE_SHORT"
  }
 }

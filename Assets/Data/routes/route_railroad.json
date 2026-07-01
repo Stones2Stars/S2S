@@ -1,6 +1,5 @@
 {
  "type": "ROUTE_RAILROAD",
- "description": "TXT_KEY_ROUTE_RAILROAD",
  "production": {
   "plot": {
    "improvements": {
@@ -85,6 +84,7 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_ROUTE_RAILROAD",
   "value": 5,
   "advancedStart": {
    "cost": 18

@@ -1,7 +1,5 @@
 {
  "type": "UNIT_ORDER_OF_THE_DRAGON",
- "description": "TXT_KEY_UNIT_ORDER_OF_THE_DRAGON",
- "civilopedia": "TXT_KEY_UNIT_ORDER_OF_THE_DRAGON_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -73,6 +71,8 @@
   "upkeep": 1
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_ORDER_OF_THE_DRAGON",
+  "civilopedia": "TXT_KEY_UNIT_ORDER_OF_THE_DRAGON_PEDIA",
   "worth": 1,
   "militaryWorth": 3,
   "xpValueAttack": 4,

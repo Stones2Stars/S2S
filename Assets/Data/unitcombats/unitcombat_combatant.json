@@ -1,6 +1,5 @@
 {
  "type": "UNITCOMBAT_COMBATANT",
- "description": "TXT_KEY_UNITCOMBAT_COMBATANT",
  "capture": {
   "unit": {
    "resistance": {
@@ -24,6 +23,7 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_UNITCOMBAT_COMBATANT",
   "forMilitary": true,
   "defaultStatuses": [
    "PROMOTION_STANDOUT_STATUS",

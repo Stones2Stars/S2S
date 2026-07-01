@@ -1,6 +1,5 @@
 {
  "type": "BUILD_BONUS_SQUASH",
- "description": "TXT_KEY_BUILD_BONUS_SQUASH",
  "produces": {
   "improvement": "IMPROVEMENT_BONUS_SQUASH"
  },
@@ -19,6 +18,7 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILD_BONUS_SQUASH",
   "consumesUnit": true
  }
 }

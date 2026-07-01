@@ -1,8 +1,5 @@
 {
  "type": "CIVIC_FREE_CHURCH",
- "description": "TXT_KEY_CIVIC_FREE_CHURCH",
- "civilopedia": "TXT_KEY_CIVIC_FREE_CHURCH_PEDIA",
- "strategy": "TXT_KEY_CIVIC_FREE_CHURCH_STRATEGY",
  "enables": {
   "buildings": [
    "BUILDING_AUGUR",
@@ -118,6 +115,9 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_CIVIC_FREE_CHURCH",
+  "civilopedia": "TXT_KEY_CIVIC_FREE_CHURCH_PEDIA",
+  "strategy": "TXT_KEY_CIVIC_FREE_CHURCH_STRATEGY",
   "civicOption": "CIVICOPTION_RELIGION",
   "anarchyLength": 1,
   "upkeepLevel": "UPKEEP_LOW"

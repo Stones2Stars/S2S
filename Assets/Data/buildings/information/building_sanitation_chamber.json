@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_SANITATION_CHAMBER",
- "description": "TXT_KEY_BUILDING_SANITATION_CHAMBER",
- "civilopedia": "TXT_KEY_BUILDING_SANITATION_CHAMBER_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -78,6 +76,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_SANITATION_CHAMBER",
+  "civilopedia": "TXT_KEY_BUILDING_SANITATION_CHAMBER_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

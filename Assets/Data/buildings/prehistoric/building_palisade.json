@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_PALISADE",
- "description": "TXT_KEY_BUILDING_PALISADE",
- "civilopedia": "TXT_KEY_BUILDING_PALISADE_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_EARTH_WALL"
@@ -118,6 +116,8 @@
   "construct": "AS2D_BUILD_WALLS"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_PALISADE",
+  "civilopedia": "TXT_KEY_BUILDING_PALISADE_PEDIA",
   "enabledCivilizations": [
    "CIVILIZATION_NPC_NEANDERTHAL"
   ],

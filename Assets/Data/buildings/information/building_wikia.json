@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_WIKIA",
- "description": "TXT_KEY_BUILDING_WIKIA",
- "civilopedia": "TXT_KEY_BUILDING_WIKIA_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_WIKIPEDIA"
@@ -54,6 +52,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_WIKIA",
+  "civilopedia": "TXT_KEY_BUILDING_WIKIA_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

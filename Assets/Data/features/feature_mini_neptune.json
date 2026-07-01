@@ -1,7 +1,5 @@
 {
  "type": "FEATURE_MINI_NEPTUNE",
- "description": "TXT_KEY_FEATURE_MINI_NEPTUNE",
- "civilopedia": "TXT_KEY_FEATURE_MINI_NEPTUNE_PEDIA",
  "defense": {
   "plot": {
    "amount": {
@@ -25,6 +23,8 @@
   "soundscape": "ASSS_ASTEROIDS_SELECT_AMB"
  },
  "identity": {
+  "description": "TXT_KEY_FEATURE_MINI_NEPTUNE",
+  "civilopedia": "TXT_KEY_FEATURE_MINI_NEPTUNE_PEDIA",
   "popDestroys": -1,
   "movementCost": 2,
   "validTerrains": [

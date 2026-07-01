@@ -1,7 +1,5 @@
 {
  "type": "UNIT_CELTIC_GALLIC_WARRIOR",
- "description": "TXT_KEY_UNIT_CELTIC_GALLIC_WARRIOR",
- "civilopedia": "TXT_KEY_UNIT_CELTIC_WARRIOR_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -91,6 +89,8 @@
   "upkeep": 1
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_CELTIC_GALLIC_WARRIOR",
+  "civilopedia": "TXT_KEY_UNIT_CELTIC_WARRIOR_PEDIA",
   "worth": 2,
   "militaryWorth": 12,
   "xpValueAttack": 6,

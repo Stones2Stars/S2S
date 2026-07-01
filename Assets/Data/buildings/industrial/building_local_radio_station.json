@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_LOCAL_RADIO_STATION",
- "description": "TXT_KEY_BUILDING_LOCAL_RADIO_STATION",
- "civilopedia": "TXT_KEY_BUILDING_LOCAL_RADIO_STATION_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_INTERNET_RADIO_STATION"
@@ -115,6 +113,8 @@
   "construct": "AS2D_BUILD_BROADCASTTOWER"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_LOCAL_RADIO_STATION",
+  "civilopedia": "TXT_KEY_BUILDING_LOCAL_RADIO_STATION_PEDIA",
   "worth": 4,
   "conquestProbability": 35,
   "advisor": "ADVISOR_CULTURE",

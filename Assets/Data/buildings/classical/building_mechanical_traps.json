@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_MECHANICAL_TRAPS",
- "description": "TXT_KEY_BUILDING_MECHANICAL_TRAPS",
- "civilopedia": "TXT_KEY_BUILDING_MECHANICAL_TRAPS_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_LANDMINES"
@@ -103,6 +101,8 @@
   "construct": "AS2D_BUILD_FORGE"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_MECHANICAL_TRAPS",
+  "civilopedia": "TXT_KEY_BUILDING_MECHANICAL_TRAPS_PEDIA",
   "damageAttackingUnitCombats": [
    "UNITCOMBAT_ARCHER",
    "UNITCOMBAT_GUN",

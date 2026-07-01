@@ -1,6 +1,5 @@
 {
  "type": "UNITCOMBAT_RUFFIAN",
- "description": "TXT_KEY_UNITCOMBAT_RUFFIAN",
  "strength": {
   "unit": {
    "stealth": {
@@ -120,6 +119,7 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_UNITCOMBAT_RUFFIAN",
   "defaultStatuses": [
    "PROMOTION_REMOVE_STANDOUT_STATUS",
    "PROMOTION_SURPRISE_STATUS"

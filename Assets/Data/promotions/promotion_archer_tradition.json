@@ -1,6 +1,5 @@
 {
  "type": "PROMOTION_ARCHER_TRADITION",
- "description": "TXT_KEY_PROMOTION_ARCHER_TRADITION",
  "strength": {
   "unit": {
    "percent": 5
@@ -22,6 +21,7 @@
   "sound": "AS2D_IF_LEVELUP"
  },
  "identity": {
+  "description": "TXT_KEY_PROMOTION_ARCHER_TRADITION",
   "unitCombats": [
    "UNITCOMBAT_ARCHER"
   ]

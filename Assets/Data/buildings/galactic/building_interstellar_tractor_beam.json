@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_INTERSTELLAR_TRACTOR_BEAM",
- "description": "TXT_KEY_BUILDING_INTERSTELLAR_TRACTOR_BEAM",
- "civilopedia": "TXT_KEY_BUILDING_INTERSTELLAR_TRACTOR_BEAM_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_CENTERPOINT_STATION"
@@ -59,6 +57,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_INTERSTELLAR_TRACTOR_BEAM",
+  "civilopedia": "TXT_KEY_BUILDING_INTERSTELLAR_TRACTOR_BEAM_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

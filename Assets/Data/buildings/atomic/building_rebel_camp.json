@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_REBEL_CAMP",
- "description": "TXT_KEY_BUILDING_REBEL_CAMP",
- "civilopedia": "TXT_KEY_BUILDING_REBEL_CAMP_PEDIA",
  "enables": {
   "units": [
    "UNIT_GUERRILLA"
@@ -93,6 +91,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_REBEL_CAMP",
+  "civilopedia": "TXT_KEY_BUILDING_REBEL_CAMP_PEDIA",
   "nukeImmune": true,
   "militaryWorth": 1,
   "advisor": "ADVISOR_ECONOMY",

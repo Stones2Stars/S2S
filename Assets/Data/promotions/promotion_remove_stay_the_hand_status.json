@@ -1,6 +1,5 @@
 {
  "type": "PROMOTION_REMOVE_STAY_THE_HAND_STATUS",
- "description": "TXT_KEY_PROMOTION_REMOVE_STAY_THE_HAND",
  "promotionLine": {
   "PROMOTIONLINE_STAY_THE_HAND": 1
  },
@@ -13,6 +12,7 @@
   "sound": "AS2D_IF_LEVELUP"
  },
  "identity": {
+  "description": "TXT_KEY_PROMOTION_REMOVE_STAY_THE_HAND",
   "status": true,
   "quick": true,
   "removeAfterSet": true

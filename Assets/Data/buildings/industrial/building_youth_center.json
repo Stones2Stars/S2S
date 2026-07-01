@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_YOUTH_CENTER",
- "description": "TXT_KEY_BUILDING_YOUTH_CENTER",
- "civilopedia": "TXT_KEY_BUILDING_YOUTH_CENTER_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_HIGH_TECH_CULTURAL_ENRICHMENT"
@@ -73,6 +71,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_YOUTH_CENTER",
+  "civilopedia": "TXT_KEY_BUILDING_YOUTH_CENTER_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

@@ -1,12 +1,12 @@
 {
  "type": "UNITCOMBAT_CULTURE_CANTONESE",
- "description": "TXT_KEY_UNITCOMBAT_CULTURE_CANTONESE",
  "ui": {
   "art": {
    "icon": "Art/Interface/Buttons/units/sparth/categories/culture_cantonese.dds"
   }
  },
  "identity": {
+  "description": "TXT_KEY_UNITCOMBAT_CULTURE_CANTONESE",
   "culture": "BONUS_CANTONESE"
  }
 }

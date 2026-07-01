@@ -1,8 +1,5 @@
 {
  "type": "BUILDING_ZIZKOV_TELEVISION_TOWER",
- "description": "TXT_KEY_BUILDING_ZIZKOV_TELEVISION_TOWER",
- "civilopedia": "TXT_KEY_BUILDING_ZIZKOV_TELEVISION_TOWER_PEDIA",
- "help": "TXT_KEY_BUILDING_ZIZKOV_TELEVISION_TOWER_HELP",
  "requires": {
   "build": {
    "all": [
@@ -56,6 +53,9 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_ZIZKOV_TELEVISION_TOWER",
+  "civilopedia": "TXT_KEY_BUILDING_ZIZKOV_TELEVISION_TOWER_PEDIA",
+  "help": "TXT_KEY_BUILDING_ZIZKOV_TELEVISION_TOWER_HELP",
   "commerceDoubleTime": {
    "culture": 1000
   },

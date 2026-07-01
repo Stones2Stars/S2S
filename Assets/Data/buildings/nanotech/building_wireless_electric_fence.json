@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_WIRELESS_ELECTRIC_FENCE",
- "description": "TXT_KEY_BUILDING_WIRELESS_ELECTRIC_FENCE",
- "civilopedia": "TXT_KEY_BUILDING_WIRELESS_ELECTRIC_FENCE_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_ARCOLOGY_SHIELDING"
@@ -89,6 +87,8 @@
   "construct": "AS2D_BUILD_WALLS"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_WIRELESS_ELECTRIC_FENCE",
+  "civilopedia": "TXT_KEY_BUILDING_WIRELESS_ELECTRIC_FENCE_PEDIA",
   "centerInCity": true,
   "worth": 1,
   "militaryWorth": 4,

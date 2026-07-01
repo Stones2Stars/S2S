@@ -1,7 +1,5 @@
 {
  "type": "UNIT_MEDICAL_VET",
- "description": "TXT_KEY_UNIT_MEDICAL_VET",
- "civilopedia": "TXT_KEY_UNIT_MEDICAL_VET_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -81,6 +79,8 @@
   "hurryCostModifier": 25
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_MEDICAL_VET",
+  "civilopedia": "TXT_KEY_UNIT_MEDICAL_VET_PEDIA",
   "worth": 5,
   "militaryWorth": 10,
   "xpValueDefense": 2,

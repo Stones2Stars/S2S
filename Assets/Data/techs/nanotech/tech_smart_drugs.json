@@ -1,8 +1,5 @@
 {
  "type": "TECH_SMART_DRUGS",
- "description": "TXT_KEY_TECH_SMART_DRUGS",
- "civilopedia": "TXT_KEY_TECH_SMART_DRUGS_PEDIA",
- "quote": "TXT_KEY_TECH_SMART_DRUGS_QUOTE",
  "enables": {
   "bonuses": [
    "BONUS_SMART_MEDICINE"
@@ -60,6 +57,9 @@
   "soundMP": "AS2D_TECH_SMART_DRUGS"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_SMART_DRUGS",
+  "civilopedia": "TXT_KEY_TECH_SMART_DRUGS_PEDIA",
+  "quote": "TXT_KEY_TECH_SMART_DRUGS_QUOTE",
   "era": "C2C_ERA_NANOTECH",
   "worth": 48,
   "militaryWorth": 6,

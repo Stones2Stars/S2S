@@ -1,8 +1,5 @@
 {
  "type": "CIVIC_COMMUNAL",
- "description": "TXT_KEY_CIVIC_COMMUNAL",
- "civilopedia": "TXT_KEY_CIVIC_COMMUNAL_PEDIA",
- "strategy": "TXT_KEY_CIVIC_COMMUNAL_STRATEGY",
  "enables": {
   "buildings": [
    "BUILDING_CHILD_LABOR_CREW"
@@ -96,6 +93,9 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_CIVIC_COMMUNAL",
+  "civilopedia": "TXT_KEY_CIVIC_COMMUNAL_PEDIA",
+  "strategy": "TXT_KEY_CIVIC_COMMUNAL_STRATEGY",
   "civicOption": "CIVICOPTION_WORKFORCE",
   "upkeepLevel": "UPKEEP_LOW"
  }

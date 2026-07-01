@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_MEAT_INDUSTRY_CONGLOMERATE",
- "description": "TXT_KEY_BUILDING_MEAT_INDUSTRY_CONGLOMERATE",
- "civilopedia": "TXT_KEY_BUILDING_MEAT_INDUSTRY_CONGLOMERATE_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_ANIMAL_TRAINER_BISON",
@@ -318,6 +316,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_MEAT_INDUSTRY_CONGLOMERATE",
+  "civilopedia": "TXT_KEY_BUILDING_MEAT_INDUSTRY_CONGLOMERATE_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

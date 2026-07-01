@@ -1,7 +1,5 @@
 {
  "type": "IMPROVEMENT_COLONY_SOLAR_ARRAY",
- "description": "TXT_KEY_IMPROVEMENT_COLONY_SOLAR_ARRAY",
- "civilopedia": "TXT_KEY_IMPROVEMENT_SOLAR_PANEL_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -80,6 +78,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_IMPROVEMENT_COLONY_SOLAR_ARRAY",
+  "civilopedia": "TXT_KEY_IMPROVEMENT_SOLAR_PANEL_PEDIA",
   "extraterrestrial": true,
   "advancedStart": {
    "cost": -1

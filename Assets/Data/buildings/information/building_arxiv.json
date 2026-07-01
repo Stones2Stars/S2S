@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_ARXIV",
- "description": "TXT_KEY_BUILDING_ARXIV",
- "civilopedia": "TXT_KEY_BUILDING_ARXIV_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -46,6 +44,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_ARXIV",
+  "civilopedia": "TXT_KEY_BUILDING_ARXIV_PEDIA",
   "conquestProbability": 100,
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,

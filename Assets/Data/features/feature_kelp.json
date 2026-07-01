@@ -1,7 +1,5 @@
 {
  "type": "FEATURE_KELP",
- "description": "TXT_KEY_FEATURE_KELP",
- "civilopedia": "TXT_KEY_FEATURE_KELP_PEDIA",
  "food": {
   "plot": {
    "flat": 1
@@ -91,6 +89,8 @@
   ]
  },
  "identity": {
+  "description": "TXT_KEY_FEATURE_KELP",
+  "civilopedia": "TXT_KEY_FEATURE_KELP_PEDIA",
   "movementCost": 1,
   "appearance": 400,
   "growth": 15,

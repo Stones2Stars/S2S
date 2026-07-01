@@ -1,8 +1,5 @@
 {
  "type": "TECH_DECOMPACTIFIED_SPACE",
- "description": "TXT_KEY_TECH_DECOMPACTIFIED_SPACE",
- "civilopedia": "TXT_KEY_TECH_DECOMPACTIFIED_SPACE_PEDIA",
- "quote": "TXT_KEY_TECH_DECOMPACTIFIED_SPACE_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_EXTREME_FORCE_CONCENTRATOR",
@@ -51,6 +48,9 @@
   "soundMP": "AS2D_TECH_GENERIC"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_DECOMPACTIFIED_SPACE",
+  "civilopedia": "TXT_KEY_TECH_DECOMPACTIFIED_SPACE_PEDIA",
+  "quote": "TXT_KEY_TECH_DECOMPACTIFIED_SPACE_QUOTE",
   "era": "C2C_ERA_TRANSCENDENT",
   "worth": 48,
   "tradeable": true,

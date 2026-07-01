@@ -1,7 +1,5 @@
 {
  "type": "FEATURE_JUNGLE",
- "description": "TXT_KEY_FEATURE_JUNGLE",
- "civilopedia": "TXT_KEY_FEATURE_JUNGLE_PEDIA",
  "food": {
   "plot": {
    "flat": -1
@@ -107,6 +105,8 @@
   "growth": "AS2D_FEATUREGROWTH"
  },
  "identity": {
+  "description": "TXT_KEY_FEATURE_JUNGLE",
+  "civilopedia": "TXT_KEY_FEATURE_JUNGLE_PEDIA",
   "movementCost": 2,
   "growth": 10,
   "popDestroys": 3,

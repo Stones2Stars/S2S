@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_CARNIVAL_TRAINED_SEAL",
- "description": "TXT_KEY_BUILDING_CARNIVAL_TRAINED_SEAL",
- "civilopedia": "TXT_KEY_BUILDING_CARNIVAL_TRAINED_SEAL_PEDIA",
  "obsoletedBy": {
   "techs": [
    "TECH_ADVANCED_AVIATION"
@@ -45,6 +43,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_CARNIVAL_TRAINED_SEAL",
+  "civilopedia": "TXT_KEY_BUILDING_CARNIVAL_TRAINED_SEAL_PEDIA",
   "worth": 2,
   "conquestProbability": 25,
   "advisor": "ADVISOR_CULTURE",

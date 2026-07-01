@@ -1,7 +1,5 @@
 {
  "type": "FEATURE_FOREST_YOUNG",
- "description": "TXT_KEY_FEATURE_FOREST_YOUNG",
- "civilopedia": "TXT_KEY_FEATURE_FOREST_PEDIA",
  "production": {
   "plot": {
    "flat": 1
@@ -90,6 +88,8 @@
   "soundscape": "ASSS_FOREST_SELECT_AMB"
  },
  "identity": {
+  "description": "TXT_KEY_FEATURE_FOREST_YOUNG",
+  "civilopedia": "TXT_KEY_FEATURE_FOREST_PEDIA",
   "appearance": 400,
   "growth": 15,
   "popDestroys": 3,

@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_CULTURE_MIXTEC",
- "description": "TXT_KEY_BUILDING_CULTURE_MIXTEC",
- "civilopedia": "TXT_KEY_BUILDING_CULTURE_MIXTEC_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -52,6 +50,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_CULTURE_MIXTEC",
+  "civilopedia": "TXT_KEY_BUILDING_CULTURE_MIXTEC_PEDIA",
   "nukeImmune": true,
   "noInstanceLimit": true,
   "conquestProbability": 100,

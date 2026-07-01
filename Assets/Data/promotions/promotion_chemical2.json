@@ -1,6 +1,5 @@
 {
  "type": "PROMOTION_CHEMICAL2",
- "description": "TXT_KEY_PROMOTION_CHEMICAL2",
  "collateral": {
   "unit": {
    "damage": {
@@ -54,6 +53,7 @@
   "sound": "AS2D_IF_LEVELUP"
  },
  "identity": {
+  "description": "TXT_KEY_PROMOTION_CHEMICAL2",
   "unitCombats": [
    "UNITCOMBAT_GUN",
    "UNITCOMBAT_CLONES"

@@ -1,12 +1,12 @@
 {
  "type": "UNITCOMBAT_CULTURE_AVARS",
- "description": "TXT_KEY_UNITCOMBAT_CULTURE_AVARS",
  "ui": {
   "art": {
    "icon": "Art/categories/culture_newcultures.dds"
   }
  },
  "identity": {
+  "description": "TXT_KEY_UNITCOMBAT_CULTURE_AVARS",
   "culture": "BONUS_AVARIC"
  }
 }

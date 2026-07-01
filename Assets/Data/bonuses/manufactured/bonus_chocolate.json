@@ -1,7 +1,5 @@
 {
  "type": "BONUS_CHOCOLATE",
- "description": "TXT_KEY_BONUS_CHOCOLATE",
- "civilopedia": "TXT_KEY_BONUS_CHOCOLATE_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_FACTORY_NUTELLA"
@@ -13,6 +11,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_CHOCOLATE",
+  "civilopedia": "TXT_KEY_BONUS_CHOCOLATE_PEDIA",
   "bonusClassType": "BONUSCLASS_MANUFACTURED"
  }
 }

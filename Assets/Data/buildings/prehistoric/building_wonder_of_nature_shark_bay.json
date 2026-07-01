@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_WONDER_OF_NATURE_SHARK_BAY",
- "description": "TXT_KEY_BUILDING_WONDER_OF_NATURE_SHARK_BAY",
- "civilopedia": "TXT_KEY_BUILDING_WONDER_OF_NATURE_SHARK_BAY_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -121,6 +119,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_WONDER_OF_NATURE_SHARK_BAY",
+  "civilopedia": "TXT_KEY_BUILDING_WONDER_OF_NATURE_SHARK_BAY_PEDIA",
   "enabledCivilizations": [
    "CIVILIZATION_NPC_NEANDERTHAL"
   ],

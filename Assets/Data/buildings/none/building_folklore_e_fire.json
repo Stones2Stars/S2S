@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_FOLKLORE_E_FIRE",
- "description": "TXT_KEY_BUILDING_FOLKLORE_E_FIRE",
- "civilopedia": "TXT_KEY_BUILDING_FOLKLORE_ELEMENTAL_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_FOLKLORE_E_DRAGON",
@@ -100,6 +98,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_FOLKLORE_E_FIRE",
+  "civilopedia": "TXT_KEY_BUILDING_FOLKLORE_ELEMENTAL_PEDIA",
   "nukeImmune": true,
   "neverCapture": true,
   "forceNoPrereqScaling": true,

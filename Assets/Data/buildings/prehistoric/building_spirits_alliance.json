@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_SPIRITS_ALLIANCE",
- "description": "TXT_KEY_BUILDING_SPIRITS_ALLIANCE",
- "civilopedia": "TXT_KEY_BUILDING_SPIRITS_ALLIANCE_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_SPIRITS_LEGACY"
@@ -95,6 +93,8 @@
   "construct": "AS2D_BUILD_SHAMAN"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_SPIRITS_ALLIANCE",
+  "civilopedia": "TXT_KEY_BUILDING_SPIRITS_ALLIANCE_PEDIA",
   "neverCapture": true,
   "worth": 6,
   "specialBuildingType": "SPECIALBUILDING_CATHEDRAL_II",

@@ -1,8 +1,5 @@
 {
  "type": "TECH_PERSONAL_COMPUTERS",
- "description": "TXT_KEY_TECH_PERSONAL_COMPUTERS",
- "civilopedia": "TXT_KEY_TECH_PERSONAL_COMPUTERS_PEDIA",
- "quote": "TXT_KEY_TECH_PERSONAL_COMPUTERS_QUOTE",
  "enables": {
   "bonuses": [
    "BONUS_COMPUTERS",
@@ -77,6 +74,9 @@
   "soundMP": "AS2D_TECH_PERSONAL_COMPUTERS"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_PERSONAL_COMPUTERS",
+  "civilopedia": "TXT_KEY_TECH_PERSONAL_COMPUTERS_PEDIA",
+  "quote": "TXT_KEY_TECH_PERSONAL_COMPUTERS_QUOTE",
   "era": "C2C_ERA_ATOMIC",
   "worth": 48,
   "tradeable": true,

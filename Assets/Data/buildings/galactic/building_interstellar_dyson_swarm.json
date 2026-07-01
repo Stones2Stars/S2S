@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_INTERSTELLAR_DYSON_SWARM",
- "description": "TXT_KEY_BUILDING_INTERSTELLAR_DYSON_SWARM",
- "civilopedia": "TXT_KEY_BUILDING_INTERSTELLAR_DYSON_SWARM_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_INTERSTELLAR_BANKS_ORBITAL"
@@ -65,6 +63,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_INTERSTELLAR_DYSON_SWARM",
+  "civilopedia": "TXT_KEY_BUILDING_INTERSTELLAR_DYSON_SWARM_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

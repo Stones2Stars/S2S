@@ -1,8 +1,5 @@
 {
  "type": "TECH_VASSALAGE",
- "description": "TXT_KEY_TECH_VASSALAGE",
- "civilopedia": "TXT_KEY_TECH_VASSALAGE_PEDIA",
- "quote": "TXT_KEY_TECH_VASSALAGE_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_CULTURE_BENGALI",
@@ -74,6 +71,9 @@
   "soundMP": "AS2D_TECH_VASSALAGE"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_VASSALAGE",
+  "civilopedia": "TXT_KEY_TECH_VASSALAGE_PEDIA",
+  "quote": "TXT_KEY_TECH_VASSALAGE_QUOTE",
   "era": "C2C_ERA_MEDIEVAL",
   "worth": 16,
   "tradeable": true,

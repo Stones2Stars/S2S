@@ -1,8 +1,5 @@
 {
  "type": "TECH_MIND_UPLOADING",
- "description": "TXT_KEY_TECH_MIND_UPLOADING",
- "civilopedia": "TXT_KEY_TECH_MIND_UPLOADING_PEDIA",
- "quote": "TXT_KEY_TECH_MIND_UPLOADING_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_CRIME_ILLEGAL_BRAINWASHING",
@@ -73,6 +70,9 @@
   "soundMP": "AS2D_TECH_MIND_UPLOADING"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_MIND_UPLOADING",
+  "civilopedia": "TXT_KEY_TECH_MIND_UPLOADING_PEDIA",
+  "quote": "TXT_KEY_TECH_MIND_UPLOADING_QUOTE",
   "era": "C2C_ERA_TRANSHUMAN",
   "worth": 48,
   "tradeable": true,

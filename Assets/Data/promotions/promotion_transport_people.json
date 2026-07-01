@@ -1,6 +1,5 @@
 {
  "type": "PROMOTION_TRANSPORT_PEOPLE",
- "description": "TXT_KEY_PROMOTION_TRANSPORT_PEOPLE",
  "strength": {
   "unit": {
    "percent": -5
@@ -30,6 +29,7 @@
   "sound": "AS2D_IF_LEVELUP"
  },
  "identity": {
+  "description": "TXT_KEY_PROMOTION_TRANSPORT_PEOPLE",
   "domainCargoChange": "DOMAIN_LAND",
   "specialCargoChange": "SPECIALUNIT_PEOPLE",
   "unitCombats": [

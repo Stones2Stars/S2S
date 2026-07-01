@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_CAUSEWAY",
- "description": "TXT_KEY_BUILDING_CAUSEWAY",
- "civilopedia": "TXT_KEY_BUILDING_CAUSEWAY_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_CHAIN_BRIDGE"
@@ -114,6 +112,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_CAUSEWAY",
+  "civilopedia": "TXT_KEY_BUILDING_CAUSEWAY_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

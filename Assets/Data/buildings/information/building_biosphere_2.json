@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_BIOSPHERE_2",
- "description": "TXT_KEY_BUILDING_BIOSPHERE_2",
- "civilopedia": "TXT_KEY_BUILDING_BIOSPHERE_2_PEDIA",
  "obsoletedBy": {
   "techs": [
    "TECH_WEATHER_CONTROL"
@@ -68,6 +66,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_BIOSPHERE_2",
+  "civilopedia": "TXT_KEY_BUILDING_BIOSPHERE_2_PEDIA",
   "conquestProbability": 100,
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,

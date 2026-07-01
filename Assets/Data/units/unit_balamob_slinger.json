@@ -1,7 +1,5 @@
 {
  "type": "UNIT_BALAMOB_SLINGER",
- "description": "TXT_KEY_UNIT_BALAMOB_SLINGER",
- "civilopedia": "TXT_KEY_UNIT_BALAMOB_SLINGER_PEDIA",
  "obsoletedBy": {
   "techs": [
    "TECH_FLINTLOCK"
@@ -75,6 +73,8 @@
   "upkeep": 1
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_BALAMOB_SLINGER",
+  "civilopedia": "TXT_KEY_UNIT_BALAMOB_SLINGER_PEDIA",
   "worth": 2,
   "militaryWorth": 5,
   "xpValueAttack": 6,

@@ -1,7 +1,5 @@
 {
  "type": "UNIT_QSHIP",
- "description": "TXT_KEY_UNIT_QSHIP",
- "civilopedia": "TXT_KEY_UNIT_QSHIP_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -61,6 +59,8 @@
   "upkeep": 1
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_QSHIP",
+  "civilopedia": "TXT_KEY_UNIT_QSHIP_PEDIA",
   "worth": 3,
   "militaryWorth": 14,
   "xpValueAttack": 4,

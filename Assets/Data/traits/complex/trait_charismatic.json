@@ -1,8 +1,5 @@
 {
  "type": "TRAIT_CHARISMATIC",
- "description": "TXT_KEY_TRAIT_COMPLEX_CHARISMATIC",
- "civilopedia": "TXT_KEY_TRAIT_COMPLEX_CHARISMATIC_PEDIA",
- "strategy": "TXT_KEY_TRAIT_COMPLEX_CHARISMATIC_STRATEGY",
  "excludes": [
   "TRAIT_TEMPERAMENTAL"
  ],
@@ -109,5 +106,10 @@
   "art": {
    "icon": "art/Buttons/Traits/TraitCharismatic.dds"
   }
+ },
+ "identity": {
+  "description": "TXT_KEY_TRAIT_COMPLEX_CHARISMATIC",
+  "civilopedia": "TXT_KEY_TRAIT_COMPLEX_CHARISMATIC_PEDIA",
+  "strategy": "TXT_KEY_TRAIT_COMPLEX_CHARISMATIC_STRATEGY"
  }
 }

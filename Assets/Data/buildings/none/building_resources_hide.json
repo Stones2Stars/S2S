@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_RESOURCES_HIDE",
- "description": "TXT_KEY_BUILDING_RESOURCES_HIDE",
- "civilopedia": "TXT_KEY_BUILDING_RESOURCE_PROVIDER_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_INDUSTRIAL_FARMS"
@@ -44,6 +42,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_RESOURCES_HIDE",
+  "civilopedia": "TXT_KEY_BUILDING_RESOURCE_PROVIDER_PEDIA",
   "notConstructible": true,
   "autoBuild": true,
   "advisor": "ADVISOR_ECONOMY",

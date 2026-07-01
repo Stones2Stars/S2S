@@ -1,7 +1,5 @@
 {
  "type": "UNIT_TOUCAN",
- "description": "TXT_KEY_UNIT_TOUCAN",
- "civilopedia": "TXT_KEY_UNIT_TOUCAN_PEDIA",
  "withdrawal": {
   "unit": {
    "percent": 35
@@ -36,6 +34,8 @@
   ]
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_TOUCAN",
+  "civilopedia": "TXT_KEY_UNIT_TOUCAN_PEDIA",
   "spawnOnly": true,
   "xpValueAttack": 1,
   "xpValueDefense": 1,

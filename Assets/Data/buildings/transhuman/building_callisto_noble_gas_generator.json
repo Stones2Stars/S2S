@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_CALLISTO_NOBLE_GAS_GENERATOR",
- "description": "TXT_KEY_BUILDING_CALLISTO_NOBLE_GAS_GENERATOR",
- "civilopedia": "TXT_KEY_BUILDING_CALLISTO_NOBLE_GAS_GENERATOR_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_CALLISTO_FLOATING_CONTINENT",
@@ -44,6 +42,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_CALLISTO_NOBLE_GAS_GENERATOR",
+  "civilopedia": "TXT_KEY_BUILDING_CALLISTO_NOBLE_GAS_GENERATOR_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

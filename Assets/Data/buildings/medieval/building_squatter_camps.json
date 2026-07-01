@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_SQUATTER_CAMPS",
- "description": "TXT_KEY_BUILDING_SQUATTER_CAMPS",
- "civilopedia": "TXT_KEY_BUILDING_SQUATTER_CAMPS_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -68,6 +66,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_SQUATTER_CAMPS",
+  "civilopedia": "TXT_KEY_BUILDING_SQUATTER_CAMPS_PEDIA",
   "worth": 6,
   "conquestProbability": 100,
   "advisor": "ADVISOR_GROWTH",

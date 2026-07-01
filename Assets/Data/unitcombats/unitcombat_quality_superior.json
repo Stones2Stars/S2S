@@ -1,6 +1,5 @@
 {
  "type": "UNITCOMBAT_QUALITY_SUPERIOR",
- "description": "TXT_KEY_UNITCOMBAT_QUALITY_SUPERIOR",
  "experience": {
   "unit": {
    "percent": -15
@@ -35,6 +34,7 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_UNITCOMBAT_QUALITY_SUPERIOR",
   "base": {
    "quality": 6
   }

@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_TRAVOIS_MAKER",
- "description": "TXT_KEY_BUILDING_TRAVOIS_MAKER",
- "civilopedia": "TXT_KEY_BUILDING_TRAVOIS_MAKER_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_AERIAL_BASKET_ROPEWAYS"
@@ -108,6 +106,8 @@
   "construct": "AS2D_BUILD_SIEGE_WORKSHOP"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_TRAVOIS_MAKER",
+  "civilopedia": "TXT_KEY_BUILDING_TRAVOIS_MAKER_PEDIA",
   "enabledCivilizations": [
    "CIVILIZATION_NPC_NEANDERTHAL"
   ],

@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_LL_KILGII_GWAAY",
- "description": "TXT_KEY_BUILDING_LL_KILGII_GWAAY",
- "civilopedia": "TXT_KEY_BUILDING_LL_KILGII_GWAAY_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_RESOURCES_HIDE"
@@ -71,6 +69,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_LL_KILGII_GWAAY",
+  "civilopedia": "TXT_KEY_BUILDING_LL_KILGII_GWAAY_PEDIA",
   "centerInCity": true,
   "worth": 10,
   "conquestProbability": 100,

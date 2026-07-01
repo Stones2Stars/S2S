@@ -1,9 +1,11 @@
 {
  "type": "PROMOTIONLINE_UNREFINED",
- "description": "TXT_KEY_PROMOTIONLINE_UNREFINED",
  "ui": {
   "art": {
    "icon": "art/Buttons/Traits/TraitUnrefined.dds"
   }
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTIONLINE_UNREFINED"
  }
 }

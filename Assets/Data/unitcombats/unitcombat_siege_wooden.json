@@ -1,6 +1,5 @@
 {
  "type": "UNITCOMBAT_SIEGE_WOODEN",
- "description": "TXT_KEY_UNITCOMBAT_SIEGE_WOODEN",
  "capture": {
   "unit": {
    "probability": {
@@ -17,6 +16,7 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_UNITCOMBAT_SIEGE_WOODEN",
   "forMilitary": true
  }
 }

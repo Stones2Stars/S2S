@@ -1,7 +1,5 @@
 {
  "type": "TRAIT_EXPANSIVE",
- "description": "TXT_KEY_TRAIT_EXPANSIVE",
- "civilopedia": "TXT_KEY_TRAIT_EXPANSIVE_PEDIA",
  "buildRate": {
   "empire": {
    "buildings": {
@@ -158,6 +156,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_TRAIT_EXPANSIVE",
+  "civilopedia": "TXT_KEY_TRAIT_EXPANSIVE_PEDIA",
   "shortDescription": "TXT_KEY_TRAIT_EXPANSIVE_SHORT"
  }
 }

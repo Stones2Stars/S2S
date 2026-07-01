@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_CHARCOAL_BURNER",
- "description": "TXT_KEY_BUILDING_CHARCOAL_BURNER",
- "civilopedia": "TXT_KEY_BUILDING_CHARCOAL_BURNER_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_BLOOD_DANCE",
@@ -152,6 +150,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_CHARCOAL_BURNER",
+  "civilopedia": "TXT_KEY_BUILDING_CHARCOAL_BURNER_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

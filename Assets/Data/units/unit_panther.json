@@ -1,7 +1,5 @@
 {
  "type": "UNIT_PANTHER",
- "description": "TXT_KEY_UNIT_PANTHER",
- "civilopedia": "TXT_KEY_CONCEPT_SUBDUED_ANIMALS_PEDIA",
  "withdrawal": {
   "unit": {
    "percent": 40
@@ -49,6 +47,8 @@
   ]
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_PANTHER",
+  "civilopedia": "TXT_KEY_CONCEPT_SUBDUED_ANIMALS_PEDIA",
   "spawnOnly": true,
   "xpValueAttack": 9,
   "xpValueDefense": 7,

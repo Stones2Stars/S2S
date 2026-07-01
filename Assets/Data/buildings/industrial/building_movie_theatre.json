@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_MOVIE_THEATRE",
- "description": "TXT_KEY_BUILDING_MOVIE_THEATRE",
- "civilopedia": "TXT_KEY_BUILDING_MOVIE_THEATRE_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_ANIMATION_STUDIO",
@@ -140,6 +138,8 @@
   "construct": "AS2D_BUILD_MOVIE_THEATER"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_MOVIE_THEATRE",
+  "civilopedia": "TXT_KEY_BUILDING_MOVIE_THEATRE_PEDIA",
   "worth": 8,
   "conquestProbability": 75,
   "dcmAirbombMission": 2,

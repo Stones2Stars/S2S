@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_HEALERS_HUT",
- "description": "TXT_KEY_BUILDING_HEALERS_HUT",
- "civilopedia": "TXT_KEY_BUILDING_HEALERS_HUT_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_HEALING_CLAY",
@@ -120,6 +118,8 @@
   "construct": "AS2D_BUILD_HEALERSHUT"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_HEALERS_HUT",
+  "civilopedia": "TXT_KEY_BUILDING_HEALERS_HUT_PEDIA",
   "worth": 3,
   "conquestProbability": 75,
   "dcmAirbombMission": 2,

@@ -1,6 +1,5 @@
 {
  "type": "UNITCOMBAT_SEA_ANIMAL_TALE",
- "description": "TXT_KEY_UNITCOMBAT_SEA_ANIMAL_TALES",
  "upkeep": {
   "unit": {
    "extra": {
@@ -144,5 +143,8 @@
   "art": {
    "icon": "Art/Interface/Buttons/units/sparth/categories/fish.dds"
   }
+ },
+ "identity": {
+  "description": "TXT_KEY_UNITCOMBAT_SEA_ANIMAL_TALES"
  }
 }

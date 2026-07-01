@@ -1,12 +1,12 @@
 {
  "type": "PROMOTIONLINE_ROLLING_THUNDER",
- "description": "TXT_KEY_PROMOTIONLINE_ROLLING_THUNDER",
  "ui": {
   "art": {
    "icon": "art/Buttons/Promotions/RollingThunder1Promotion.dds"
   }
  },
  "identity": {
+  "description": "TXT_KEY_PROMOTIONLINE_ROLLING_THUNDER",
   "unitCombats": [
    "UNITCOMBAT_WEAPON_DIST_CANNONBALL",
    "UNITCOMBAT_WEAPON_DIST_HEAVY_RAILGUN",

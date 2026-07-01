@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_ZUSE_COMPUTER",
- "description": "TXT_KEY_BUILDING_ZUSE_COMPUTER",
- "civilopedia": "TXT_KEY_BUILDING_ZUSE_COMPUTER_PEDIA",
  "obsoletedBy": {
   "techs": [
    "TECH_COMMUNICATION_NETWORKS"
@@ -59,6 +57,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_ZUSE_COMPUTER",
+  "civilopedia": "TXT_KEY_BUILDING_ZUSE_COMPUTER_PEDIA",
   "specialBuildingType": "SPECIALBUILDING_PUNK_DIESEL",
   "advisor": "ADVISOR_ECONOMY",
   "visibilityPriority": "1.0",

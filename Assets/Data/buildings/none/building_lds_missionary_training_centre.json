@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_LDS_MISSIONARY_TRAINING_CENTRE",
- "description": "TXT_KEY_BUILDING_LDS_MISSIONARY_TRAINING_CENTRE",
- "civilopedia": "TXT_KEY_BUILDING_LDS_MISSIONARY_TRAINING_CENTRE_PEDIA",
  "enables": {
   "units": [
    "UNIT_MORMON_MISSIONARY"
@@ -70,6 +68,8 @@
   "construct": "AS2D_BUILD_MORMON"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_LDS_MISSIONARY_TRAINING_CENTRE",
+  "civilopedia": "TXT_KEY_BUILDING_LDS_MISSIONARY_TRAINING_CENTRE_PEDIA",
   "commerceDoubleTime": {
    "culture": 1000
   },

@@ -1,7 +1,5 @@
 {
  "type": "UNIT_MASTER_SAILOR_DECAREME",
- "description": "TXT_KEY_UNIT_MASTER_SAILOR_DECAREME",
- "civilopedia": "TXT_KEY_UNIT_DECAREME_PEDIA",
  "obsoletedBy": {
   "techs": [
    "TECH_RUDDER"
@@ -52,6 +50,8 @@
   "upkeep": 1
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_MASTER_SAILOR_DECAREME",
+  "civilopedia": "TXT_KEY_UNIT_DECAREME_PEDIA",
   "spawnOnly": true,
   "worth": 1,
   "militaryWorth": 10,

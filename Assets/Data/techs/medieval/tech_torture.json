@@ -1,8 +1,5 @@
 {
  "type": "TECH_TORTURE",
- "description": "TXT_KEY_TECH_TORTURE",
- "civilopedia": "TXT_KEY_TECH_TORTURE_PEDIA",
- "quote": "TXT_KEY_TECH_TORTURE_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_DUNGEON",
@@ -76,6 +73,9 @@
   "soundMP": "AS2D_TECH_TORTURE"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_TORTURE",
+  "civilopedia": "TXT_KEY_TECH_TORTURE_PEDIA",
+  "quote": "TXT_KEY_TECH_TORTURE_QUOTE",
   "era": "C2C_ERA_MEDIEVAL",
   "worth": 24,
   "tradeable": true,

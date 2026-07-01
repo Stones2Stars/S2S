@@ -1,7 +1,5 @@
 {
  "type": "TERRAIN_MARTIAN_ROCKY",
- "description": "TXT_KEY_TERRAIN_MARTIAN_ROCKY",
- "civilopedia": "TXT_KEY_TERRAIN_MARTIAN_ROCKY_PEDIA",
  "commerce": {
   "plot": {
    "flat": 2
@@ -33,6 +31,8 @@
   "soundscape": "ASSS_PLAINS_SELECT_AMB"
  },
  "identity": {
+  "description": "TXT_KEY_TERRAIN_MARTIAN_ROCKY",
+  "civilopedia": "TXT_KEY_TERRAIN_MARTIAN_ROCKY_PEDIA",
   "found": true,
   "movementCost": 2,
   "mapCategories": [

@@ -1,6 +1,5 @@
 {
  "type": "PROMOTION_AERIAL",
- "description": "TXT_KEY_PROMOTION_AERIAL",
  "withdrawal": {
   "unit": {
    "percent": 5
@@ -32,6 +31,7 @@
   "sound": "AS2D_IF_LEVELUP"
  },
  "identity": {
+  "description": "TXT_KEY_PROMOTION_AERIAL",
   "unitCombats": [
    "UNITCOMBAT_ARCHER",
    "UNITCOMBAT_THROWING",

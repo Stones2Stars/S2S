@@ -1,8 +1,5 @@
 {
  "type": "TECH_BRANE_CONSTRUCTION",
- "description": "TXT_KEY_TECH_BRANE_CONSTRUCTION",
- "civilopedia": "TXT_KEY_TECH_BRANE_CONSTRUCTION_PEDIA",
- "quote": "TXT_KEY_TECH_BRANE_CONSTRUCTION_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_DISTANT_BRANESPACE_FOOD_SOURCE",
@@ -62,6 +59,9 @@
   "soundMP": "AS2D_TECH_GENERIC"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_BRANE_CONSTRUCTION",
+  "civilopedia": "TXT_KEY_TECH_BRANE_CONSTRUCTION_PEDIA",
+  "quote": "TXT_KEY_TECH_BRANE_CONSTRUCTION_QUOTE",
   "era": "C2C_ERA_TRANSCENDENT",
   "worth": 48,
   "tradeable": true,

@@ -1,6 +1,5 @@
 {
  "type": "UNITCOMBAT_NAVAL_COMBATANT",
- "description": "TXT_KEY_UNITCOMBAT_NAVAL_COMBATANT",
  "vision": {
   "visibilityIntensity": {
    "INVISIBLE_SUBMARINE": 1
@@ -12,6 +11,7 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_UNITCOMBAT_NAVAL_COMBATANT",
   "forNavalMilitary": true,
   "ggPointsForUnits": [
    "UNIT_GREAT_ADMIRAL"

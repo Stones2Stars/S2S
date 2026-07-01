@@ -1,8 +1,5 @@
 {
  "type": "TECH_SOLAR_POWER",
- "description": "TXT_KEY_TECH_SOLAR_POWER",
- "civilopedia": "TXT_KEY_TECH_SOLAR_POWER_PEDIA",
- "quote": "TXT_KEY_TECH_SOLAR_POWER_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_SOLAR_HIGHWAY",
@@ -65,6 +62,9 @@
   "soundMP": "AS2D_TECH_SOLAR_POWER"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_SOLAR_POWER",
+  "civilopedia": "TXT_KEY_TECH_SOLAR_POWER_PEDIA",
+  "quote": "TXT_KEY_TECH_SOLAR_POWER_QUOTE",
   "era": "C2C_ERA_ATOMIC",
   "worth": 48,
   "militaryWorth": 4,

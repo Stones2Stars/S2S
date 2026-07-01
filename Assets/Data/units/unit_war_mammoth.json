@@ -1,7 +1,5 @@
 {
  "type": "UNIT_WAR_MAMMOTH",
- "description": "TXT_KEY_UNIT_WAR_MAMMOTH",
- "civilopedia": "TXT_KEY_UNIT_TRAINED_MAMMOTH_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -82,6 +80,8 @@
   "production": 475
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_WAR_MAMMOTH",
+  "civilopedia": "TXT_KEY_UNIT_TRAINED_MAMMOTH_PEDIA",
   "worth": 2,
   "militaryWorth": 15,
   "xpValueAttack": 2,

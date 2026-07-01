@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_3D_PRINTING_MILL",
- "description": "TXT_KEY_BUILDING_3D_PRINTING_MILL",
- "civilopedia": "TXT_KEY_BUILDING_3D_PRINTING_MILL_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_4D_PRINTING_STUDIO"
@@ -122,6 +120,8 @@
   "construct": "AS2D_BUILD_FACTORY"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_3D_PRINTING_MILL",
+  "civilopedia": "TXT_KEY_BUILDING_3D_PRINTING_MILL_PEDIA",
   "worth": 6,
   "militaryWorth": 2,
   "conquestProbability": 66,

@@ -1,7 +1,5 @@
 {
  "type": "UNIT_REDPANDA",
- "description": "TXT_KEY_UNIT_REDPANDA",
- "civilopedia": "TXT_KEY_UNIT_REDPANDA_PEDIA",
  "withdrawal": {
   "unit": {
    "percent": 15
@@ -46,6 +44,8 @@
   ]
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_REDPANDA",
+  "civilopedia": "TXT_KEY_UNIT_REDPANDA_PEDIA",
   "spawnOnly": true,
   "xpValueAttack": 2,
   "xpValueDefense": 1,

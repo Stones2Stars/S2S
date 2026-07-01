@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_TAR_REFINERY",
- "description": "TXT_KEY_BUILDING_TAR_REFINERY",
- "civilopedia": "TXT_KEY_BUILDING_TAR_REFINERY_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_ULTRAFUEL_REFINERY"
@@ -175,6 +173,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_TAR_REFINERY",
+  "civilopedia": "TXT_KEY_BUILDING_TAR_REFINERY_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

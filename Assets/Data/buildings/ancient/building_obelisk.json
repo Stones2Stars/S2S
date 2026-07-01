@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_OBELISK",
- "description": "TXT_KEY_BUILDING_OBELISK",
- "civilopedia": "TXT_KEY_BUILDING_OBELISK_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -85,6 +83,8 @@
   "construct": "AS2D_BUILD_OBELISK"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_OBELISK",
+  "civilopedia": "TXT_KEY_BUILDING_OBELISK_PEDIA",
   "neverCapture": true,
   "centerInCity": true,
   "worth": 3,

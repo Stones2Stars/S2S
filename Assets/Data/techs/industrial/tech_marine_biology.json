@@ -1,8 +1,5 @@
 {
  "type": "TECH_MARINE_BIOLOGY",
- "description": "TXT_KEY_TECH_MARINE_BIOLOGY",
- "civilopedia": "TXT_KEY_TECH_MARINE_BIOLOGY_PEDIA",
- "quote": "TXT_KEY_TECH_MARINE_BIOLOGY_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_AQUARIUM",
@@ -67,6 +64,9 @@
   "soundMP": "AS2D_TECH_MARINE_BIOLOGY"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_MARINE_BIOLOGY",
+  "civilopedia": "TXT_KEY_TECH_MARINE_BIOLOGY_PEDIA",
+  "quote": "TXT_KEY_TECH_MARINE_BIOLOGY_QUOTE",
   "era": "C2C_ERA_INDUSTRIAL",
   "worth": 40,
   "tradeable": true,

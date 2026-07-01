@@ -1,7 +1,5 @@
 {
  "type": "UNIT_NETHERLANDS_OOSTINDIEVAARDER",
- "description": "TXT_KEY_UNIT_NETHERLANDS_OOSTINDIEVAARDER",
- "civilopedia": "TXT_KEY_UNIT_NETHERLANDS_OOSTINDIEVAARDER_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -92,6 +90,8 @@
   "upkeep": 1
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_NETHERLANDS_OOSTINDIEVAARDER",
+  "civilopedia": "TXT_KEY_UNIT_NETHERLANDS_OOSTINDIEVAARDER_PEDIA",
   "worth": 2,
   "militaryWorth": 38,
   "xpValueAttack": 6,

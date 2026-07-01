@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_FIRE_ABATIS",
- "description": "TXT_KEY_BUILDING_FIRE_ABATIS",
- "civilopedia": "TXT_KEY_BUILDING_FIRE_ABATIS_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_BARBWIRE_FENCE"
@@ -104,6 +102,8 @@
   "construct": "AS2D_BUILD_WALLS"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_FIRE_ABATIS",
+  "civilopedia": "TXT_KEY_BUILDING_FIRE_ABATIS_PEDIA",
   "enabledCivilizations": [
    "CIVILIZATION_NPC_NEANDERTHAL"
   ],

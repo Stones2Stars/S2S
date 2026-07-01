@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_CHRAM",
- "description": "TXT_KEY_BUILDING_CHRAM",
- "civilopedia": "TXT_KEY_BUILDING_CHRAM_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -108,6 +106,8 @@
   "construct": "AS2D_BUILD_RODNOVERY"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_CHRAM",
+  "civilopedia": "TXT_KEY_BUILDING_CHRAM_PEDIA",
   "neverCapture": true,
   "worth": 6,
   "specialBuildingType": "SPECIALBUILDING_CATHEDRAL",

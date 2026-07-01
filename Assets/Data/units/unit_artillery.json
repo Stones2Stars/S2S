@@ -1,7 +1,5 @@
 {
  "type": "UNIT_ARTILLERY",
- "description": "TXT_KEY_UNIT_ARTILLERY",
- "civilopedia": "TXT_KEY_UNIT_ARTILLERY_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -87,6 +85,8 @@
   "upkeep": 1
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_ARTILLERY",
+  "civilopedia": "TXT_KEY_UNIT_ARTILLERY_PEDIA",
   "worth": 5,
   "militaryWorth": 62,
   "xpValueAttack": 6,

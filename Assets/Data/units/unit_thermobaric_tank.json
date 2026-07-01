@@ -1,7 +1,5 @@
 {
  "type": "UNIT_THERMOBARIC_TANK",
- "description": "TXT_KEY_UNIT_THERMOBARIC_TANK",
- "civilopedia": "TXT_KEY_UNIT_THERMOBARIC_TANK_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -101,6 +99,8 @@
   "upkeep": 11
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_THERMOBARIC_TANK",
+  "civilopedia": "TXT_KEY_UNIT_THERMOBARIC_TANK_PEDIA",
   "worth": 6,
   "militaryWorth": 620,
   "xpValueAttack": 3,

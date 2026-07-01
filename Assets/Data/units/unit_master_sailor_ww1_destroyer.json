@@ -1,7 +1,5 @@
 {
  "type": "UNIT_MASTER_SAILOR_WW1_DESTROYER",
- "description": "TXT_KEY_UNIT_MASTER_SAILOR_WW1_DESTROYER",
- "civilopedia": "TXT_KEY_UNIT_WW1_DESTROYER_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -95,6 +93,8 @@
   "upkeep": 2
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_MASTER_SAILOR_WW1_DESTROYER",
+  "civilopedia": "TXT_KEY_UNIT_WW1_DESTROYER_PEDIA",
   "spawnOnly": true,
   "worth": 4,
   "militaryWorth": 145,

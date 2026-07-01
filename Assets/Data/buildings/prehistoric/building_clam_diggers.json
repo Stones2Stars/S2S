@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_CLAM_DIGGERS",
- "description": "TXT_KEY_BUILDING_CLAM_DIGGERS",
- "civilopedia": "TXT_KEY_BUILDING_CLAM_DIGGERS_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_RESOURCES_SHELLFISH"
@@ -65,6 +63,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_CLAM_DIGGERS",
+  "civilopedia": "TXT_KEY_BUILDING_CLAM_DIGGERS_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

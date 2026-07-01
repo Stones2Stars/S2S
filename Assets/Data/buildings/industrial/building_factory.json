@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_FACTORY",
- "description": "TXT_KEY_BUILDING_FACTORY",
- "civilopedia": "TXT_KEY_BUILDING_FACTORY_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_3D_PRINTING_MILL",
@@ -285,6 +283,8 @@
   "construct": "AS2D_BUILD_FACTORY"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_FACTORY",
+  "civilopedia": "TXT_KEY_BUILDING_FACTORY_PEDIA",
   "worth": 6,
   "militaryWorth": 15,
   "conquestProbability": 75,

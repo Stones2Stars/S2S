@@ -1,8 +1,5 @@
 {
  "type": "TRAIT_IDEALISTIC",
- "description": "TXT_KEY_TRAIT_COMPLEX_IDEALISTIC",
- "civilopedia": "TXT_KEY_TRAIT_COMPLEX_IDEALISTIC_PEDIA",
- "strategy": "TXT_KEY_TRAIT_COMPLEX_IDEALISTIC_STRATEGY",
  "excludes": [
   "TRAIT_PRAGMATIC"
  ],
@@ -163,6 +160,9 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_TRAIT_COMPLEX_IDEALISTIC",
+  "civilopedia": "TXT_KEY_TRAIT_COMPLEX_IDEALISTIC_PEDIA",
+  "strategy": "TXT_KEY_TRAIT_COMPLEX_IDEALISTIC_STRATEGY",
   "negativeTrait": true
  }
 }

@@ -1,12 +1,12 @@
 {
  "type": "UNITCOMBAT_CULTURE_WELSH",
- "description": "TXT_KEY_UNITCOMBAT_CULTURE_WELSH",
  "ui": {
   "art": {
    "icon": "Art/Interface/Buttons/units/sparth/categories/culture_welsh.dds"
   }
  },
  "identity": {
+  "description": "TXT_KEY_UNITCOMBAT_CULTURE_WELSH",
   "culture": "BONUS_WELSH"
  }
 }

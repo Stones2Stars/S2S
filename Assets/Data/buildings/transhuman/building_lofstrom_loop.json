@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_LOFSTROM_LOOP",
- "description": "TXT_KEY_BUILDING_LOFSTROM_LOOP",
- "civilopedia": "TXT_KEY_BUILDING_LOFSTROM_LOOP_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_ORBITAL_RING"
@@ -54,6 +52,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_LOFSTROM_LOOP",
+  "civilopedia": "TXT_KEY_BUILDING_LOFSTROM_LOOP_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

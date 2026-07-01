@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_ANTIMATTER_INITIATED_FUSION_PLANT",
- "description": "TXT_KEY_BUILDING_ANTIMATTER_INITIATED_FUSION_PLANT",
- "civilopedia": "TXT_KEY_BUILDING_ANTIMATTER_INITIATED_FUSION_PLANT_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_HIGH_ENERGY_LAB",
@@ -79,6 +77,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_ANTIMATTER_INITIATED_FUSION_PLANT",
+  "civilopedia": "TXT_KEY_BUILDING_ANTIMATTER_INITIATED_FUSION_PLANT_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

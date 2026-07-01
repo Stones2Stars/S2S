@@ -1,8 +1,5 @@
 {
  "type": "TECH_COMPUTER_SCIENCE",
- "description": "TXT_KEY_TECH_COMPUTER_SCIENCE",
- "civilopedia": "TXT_KEY_TECH_COMPUTER_SCIENCE_PEDIA",
- "quote": "TXT_KEY_TECH_COMPUTER_SCIENCE_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_COMPUTER_SCIENCE_DEPARTMENT",
@@ -50,6 +47,9 @@
   "soundMP": "AS2D_TECH_GENERIC"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_COMPUTER_SCIENCE",
+  "civilopedia": "TXT_KEY_TECH_COMPUTER_SCIENCE_PEDIA",
+  "quote": "TXT_KEY_TECH_COMPUTER_SCIENCE_QUOTE",
   "era": "C2C_ERA_ATOMIC",
   "worth": 40,
   "tradeable": true,

@@ -1,7 +1,5 @@
 {
  "type": "UNIT_INUIT_HARPOONER",
- "description": "TXT_KEY_UNIT_INUIT_HARPOONER",
- "civilopedia": "TXT_KEY_UNIT_INUIT_HARPOONER_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -107,6 +105,8 @@
   "upkeep": 1
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_INUIT_HARPOONER",
+  "civilopedia": "TXT_KEY_UNIT_INUIT_HARPOONER_PEDIA",
   "worth": 2,
   "militaryWorth": 5,
   "xpValueAttack": 6,

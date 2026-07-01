@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_OBSIDIAN_GATHERER",
- "description": "TXT_KEY_BUILDING_OBSIDIAN_GATHERER",
- "civilopedia": "TXT_KEY_BUILDING_LAVA_ROCK_GATHERER_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_OBSIDIAN_QUARRY"
@@ -60,6 +58,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_OBSIDIAN_GATHERER",
+  "civilopedia": "TXT_KEY_BUILDING_LAVA_ROCK_GATHERER_PEDIA",
   "enabledCivilizations": [
    "CIVILIZATION_NPC_NEANDERTHAL"
   ],

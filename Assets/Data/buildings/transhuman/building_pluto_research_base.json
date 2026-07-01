@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_PLUTO_RESEARCH_BASE",
- "description": "TXT_KEY_BUILDING_PLUTO_RESEARCH_BASE",
- "civilopedia": "TXT_KEY_BUILDING_PLUTO_RESEARCH_BASE_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_TERRAFORMED_PLUTO"
@@ -67,6 +65,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_PLUTO_RESEARCH_BASE",
+  "civilopedia": "TXT_KEY_BUILDING_PLUTO_RESEARCH_BASE_PEDIA",
   "neverCapture": true,
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,

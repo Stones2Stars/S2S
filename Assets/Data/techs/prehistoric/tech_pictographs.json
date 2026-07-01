@@ -1,8 +1,5 @@
 {
  "type": "TECH_PICTOGRAPHS",
- "description": "TXT_KEY_TECH_PICTOGRAPHS",
- "civilopedia": "TXT_KEY_TECH_PICTOGRAPHS_PEDIA",
- "quote": "TXT_KEY_TECH_PICTOGRAPHS_QUOTE",
  "enables": {
   "bonuses": [
    "BONUS_CARVED_EMU_EGGS"
@@ -55,6 +52,9 @@
   "soundMP": "AS2D_TECH_PICTOGRAPHS"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_PICTOGRAPHS",
+  "civilopedia": "TXT_KEY_TECH_PICTOGRAPHS_PEDIA",
+  "quote": "TXT_KEY_TECH_PICTOGRAPHS_QUOTE",
   "era": "C2C_ERA_PREHISTORIC",
   "worth": 4,
   "tradeable": true,

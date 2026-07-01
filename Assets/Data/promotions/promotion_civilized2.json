@@ -1,6 +1,5 @@
 {
  "type": "PROMOTION_CIVILIZED2",
- "description": "TXT_KEY_PROMOTION_CIVILIZED2",
  "strength": {
   "unit": {
    "attack": {
@@ -26,6 +25,7 @@
   "sound": "AS2D_IF_LEVELUP"
  },
  "identity": {
+  "description": "TXT_KEY_PROMOTION_CIVILIZED2",
   "unitCombats": [
    "UNITCOMBAT_COMBATANT",
    "UNITCOMBAT_NAVAL_COMBATANT"

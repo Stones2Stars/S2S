@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_RIDING_SCHOOL",
- "description": "TXT_KEY_BUILDING_RIDING_SCHOOL",
- "civilopedia": "TXT_KEY_BUILDING_RIDING_SCHOOL_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_HOLOGRAPHIC_SCHOOL"
@@ -142,6 +140,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_RIDING_SCHOOL",
+  "civilopedia": "TXT_KEY_BUILDING_RIDING_SCHOOL_PEDIA",
   "enabledCivilizations": [
    "CIVILIZATION_NPC_NEANDERTHAL"
   ],

@@ -1,8 +1,5 @@
 {
  "type": "TRAIT_ISOLATIONIST",
- "description": "TXT_KEY_TRAIT_COMPLEX_ISOLATIONIST",
- "civilopedia": "TXT_KEY_TRAIT_COMPLEX_ISOLATIONIST_PEDIA",
- "strategy": "TXT_KEY_TRAIT_COMPLEX_ISOLATIONIST_STRATEGY",
  "excludes": [
   "TRAIT_NEGOTIATOR"
  ],
@@ -187,6 +184,9 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_TRAIT_COMPLEX_ISOLATIONIST",
+  "civilopedia": "TXT_KEY_TRAIT_COMPLEX_ISOLATIONIST_PEDIA",
+  "strategy": "TXT_KEY_TRAIT_COMPLEX_ISOLATIONIST_STRATEGY",
   "negativeTrait": true
  }
 }

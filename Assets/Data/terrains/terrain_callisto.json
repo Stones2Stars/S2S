@@ -1,7 +1,5 @@
 {
  "type": "TERRAIN_CALLISTO",
- "description": "TXT_KEY_TERRAIN_CALLISTO",
- "civilopedia": "TXT_KEY_TERRAIN_CALLISTO_PEDIA",
  "commerce": {
   "plot": {
    "flat": 2
@@ -23,6 +21,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_TERRAIN_CALLISTO",
+  "civilopedia": "TXT_KEY_TERRAIN_CALLISTO_PEDIA",
   "found": true,
   "movementCost": 1,
   "mapCategories": [

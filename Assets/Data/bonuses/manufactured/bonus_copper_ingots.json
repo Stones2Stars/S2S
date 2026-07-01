@@ -1,7 +1,5 @@
 {
  "type": "BONUS_COPPER_INGOTS",
- "description": "TXT_KEY_BONUS_COPPER_INGOTS",
- "civilopedia": "TXT_KEY_BONUS_INGOTS_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_SMELTER_BRASS",
@@ -15,6 +13,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_COPPER_INGOTS",
+  "civilopedia": "TXT_KEY_BONUS_INGOTS_PEDIA",
   "bonusClassType": "BONUSCLASS_MANUFACTURED"
  }
 }

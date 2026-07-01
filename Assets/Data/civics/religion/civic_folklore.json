@@ -1,8 +1,5 @@
 {
  "type": "CIVIC_FOLKLORE",
- "description": "TXT_KEY_CIVIC_FOLKLORE",
- "civilopedia": "TXT_KEY_CIVIC_FOLKLORE_PEDIA",
- "strategy": "TXT_KEY_CIVIC_FOLKLORE_STRATEGY",
  "enables": {
   "buildings": [
    "BUILDING_KIVA",
@@ -143,6 +140,9 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_CIVIC_FOLKLORE",
+  "civilopedia": "TXT_KEY_CIVIC_FOLKLORE_PEDIA",
+  "strategy": "TXT_KEY_CIVIC_FOLKLORE_STRATEGY",
   "civicOption": "CIVICOPTION_RELIGION"
  }
 }

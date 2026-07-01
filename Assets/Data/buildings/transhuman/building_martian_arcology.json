@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_MARTIAN_ARCOLOGY",
- "description": "TXT_KEY_BUILDING_MARTIAN_ARCOLOGY",
- "civilopedia": "TXT_KEY_BUILDING_MARTIAN_ARCOLOGY_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_MARTIAN_CLAYTRONIC_CITY",
@@ -88,6 +86,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_MARTIAN_ARCOLOGY",
+  "civilopedia": "TXT_KEY_BUILDING_MARTIAN_ARCOLOGY_PEDIA",
   "workableRadius": 3,
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,

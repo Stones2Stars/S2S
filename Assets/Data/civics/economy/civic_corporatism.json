@@ -1,8 +1,5 @@
 {
  "type": "CIVIC_CORPORATISM",
- "description": "TXT_KEY_CIVIC_CORPORATISM",
- "civilopedia": "TXT_KEY_CIVIC_CORPORATISM_PEDIA",
- "strategy": "TXT_KEY_CIVIC_CORPORATISM_STRATEGY",
  "enables": {
   "buildings": [
    "BUILDING_CENTRAL_BANK",
@@ -96,6 +93,9 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_CIVIC_CORPORATISM",
+  "civilopedia": "TXT_KEY_CIVIC_CORPORATISM_PEDIA",
+  "strategy": "TXT_KEY_CIVIC_CORPORATISM_STRATEGY",
   "civicOption": "CIVICOPTION_ECONOMY",
   "anarchyLength": 1,
   "upkeepLevel": "UPKEEP_MEDIUM"

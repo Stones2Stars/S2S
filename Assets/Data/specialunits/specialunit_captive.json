@@ -1,4 +1,6 @@
 {
  "type": "SPECIALUNIT_CAPTIVE",
- "description": "TXT_KEY_SPECIALUNIT_CAPTIVE"
+ "identity": {
+  "description": "TXT_KEY_SPECIALUNIT_CAPTIVE"
+ }
 }

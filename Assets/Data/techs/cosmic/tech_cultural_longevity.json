@@ -1,8 +1,5 @@
 {
  "type": "TECH_CULTURAL_LONGEVITY",
- "description": "TXT_KEY_TECH_CULTURAL_LONGEVITY",
- "civilopedia": "TXT_KEY_TECH_CULTURAL_LONGEVITY_PEDIA",
- "quote": "TXT_KEY_TECH_CULTURAL_LONGEVITY_QUOTE",
  "enables": {
   "bonuses": [
    "BONUS_ABANDONED_MEGASTRUCTURE"
@@ -60,6 +57,9 @@
   "soundMP": "AS2D_TECH_GENERIC"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_CULTURAL_LONGEVITY",
+  "civilopedia": "TXT_KEY_TECH_CULTURAL_LONGEVITY_PEDIA",
+  "quote": "TXT_KEY_TECH_CULTURAL_LONGEVITY_QUOTE",
   "era": "C2C_ERA_COSMIC",
   "worth": 48,
   "tradeable": true,

@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_BARK_GATHERER",
- "description": "TXT_KEY_BUILDING_BARK_GATHERER",
- "civilopedia": "TXT_KEY_BUILDING_BARK_GATHERER_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_LUMBER_MILL"
@@ -52,6 +50,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_BARK_GATHERER",
+  "civilopedia": "TXT_KEY_BUILDING_BARK_GATHERER_PEDIA",
   "enabledCivilizations": [
    "CIVILIZATION_NPC_NEANDERTHAL"
   ],

@@ -1,8 +1,5 @@
 {
  "type": "TECH_SUPERSONIC_RAILS",
- "description": "TXT_KEY_TECH_SUPERSONIC_RAILS",
- "civilopedia": "TXT_KEY_TECH_SUPERSONIC_RAILS_PEDIA",
- "quote": "TXT_KEY_TECH_SUPERSONIC_RAILS_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_CISLUNAR_TURBOLIFTS",
@@ -72,6 +69,9 @@
   "soundMP": "AS2D_TECH_SUPERSONIC_RAILS"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_SUPERSONIC_RAILS",
+  "civilopedia": "TXT_KEY_TECH_SUPERSONIC_RAILS_PEDIA",
+  "quote": "TXT_KEY_TECH_SUPERSONIC_RAILS_QUOTE",
   "era": "C2C_ERA_NANOTECH",
   "worth": 14,
   "tradeable": true,

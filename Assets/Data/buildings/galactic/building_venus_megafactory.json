@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_VENUS_MEGAFACTORY",
- "description": "TXT_KEY_BUILDING_VENUS_MEGAFACTORY",
- "civilopedia": "TXT_KEY_BUILDING_VENUS_MEGAFACTORY_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_TERAVERSE_PORTAL"
@@ -48,6 +46,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_VENUS_MEGAFACTORY",
+  "civilopedia": "TXT_KEY_BUILDING_VENUS_MEGAFACTORY_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

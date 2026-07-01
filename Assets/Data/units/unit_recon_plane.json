@@ -1,7 +1,5 @@
 {
  "type": "UNIT_RECON_PLANE",
- "description": "TXT_KEY_UNIT_RECON_PLANE",
- "civilopedia": "TXT_KEY_UNIT_RECON_PLANE_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -69,6 +67,8 @@
   "upkeep": 3
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_RECON_PLANE",
+  "civilopedia": "TXT_KEY_UNIT_RECON_PLANE_PEDIA",
   "worth": 4,
   "militaryWorth": 10,
   "xpValueAttack": 6,

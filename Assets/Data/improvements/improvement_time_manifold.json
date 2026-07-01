@@ -1,7 +1,5 @@
 {
  "type": "IMPROVEMENT_TIME_MANIFOLD",
- "description": "TXT_KEY_IMPROVEMENT_TIME_MANIFOLD",
- "civilopedia": "TXT_KEY_IMPROVEMENT_TIME_MANIFOLD_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -39,6 +37,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_IMPROVEMENT_TIME_MANIFOLD",
+  "civilopedia": "TXT_KEY_IMPROVEMENT_TIME_MANIFOLD_PEDIA",
   "extraterrestrial": true,
   "pillageGold": 200
  }

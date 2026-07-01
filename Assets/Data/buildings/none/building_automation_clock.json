@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_AUTOMATION_CLOCK",
- "description": "TXT_KEY_BUILDING_AUTOMATION_CLOCK",
- "civilopedia": "TXT_KEY_BUILDING_AUTOMATION_CLOCK_PEDIA",
  "obsoletedBy": {
   "techs": [
    "TECH_ASSEMBLY_LINE"
@@ -72,6 +70,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_AUTOMATION_CLOCK",
+  "civilopedia": "TXT_KEY_BUILDING_AUTOMATION_CLOCK_PEDIA",
   "worth": 2,
   "specialBuildingType": "SPECIALBUILDING_PUNK_CLOCK",
   "advisor": "ADVISOR_SCIENCE",

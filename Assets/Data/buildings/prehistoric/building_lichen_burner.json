@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_LICHEN_BURNER",
- "description": "TXT_KEY_BUILDING_LICHEN_BURNER",
- "civilopedia": "TXT_KEY_BUILDING_LICHEN_BURNER_PEDIA",
  "obsoletedBy": {
   "techs": [
    "TECH_CITY_PLANNING"
@@ -82,6 +80,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_LICHEN_BURNER",
+  "civilopedia": "TXT_KEY_BUILDING_LICHEN_BURNER_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_EMP_GRID",
- "description": "TXT_KEY_BUILDING_EMP_GRID",
- "civilopedia": "TXT_KEY_BUILDING_EMP_GRID_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_LUMINESCENT_SOLAR_CONCENTRATORS",
@@ -83,6 +81,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_EMP_GRID",
+  "civilopedia": "TXT_KEY_BUILDING_EMP_GRID_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

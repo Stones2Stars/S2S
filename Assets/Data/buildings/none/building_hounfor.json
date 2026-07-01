@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_HOUNFOR",
- "description": "TXT_KEY_BUILDING_HOUNFOR",
- "civilopedia": "TXT_KEY_BUILDING_HOUNFOR_PEDIA",
  "enables": {
   "units": [
    "UNIT_UNDEAD_WORKER",
@@ -101,6 +99,8 @@
   "construct": "AS2D_BUILD_VOODOO"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_HOUNFOR",
+  "civilopedia": "TXT_KEY_BUILDING_HOUNFOR_PEDIA",
   "neverCapture": true,
   "worth": 3,
   "specialBuildingType": "SPECIALBUILDING_MONASTERY",

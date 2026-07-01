@@ -1,7 +1,5 @@
 {
  "type": "UNIT_SIEGE_WAGON",
- "description": "TXT_KEY_UNIT_SIEGE_WAGON",
- "civilopedia": "TXT_KEY_UNIT_SIEGE_WAGON_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -71,6 +69,8 @@
   "upkeep": 1
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_SIEGE_WAGON",
+  "civilopedia": "TXT_KEY_UNIT_SIEGE_WAGON_PEDIA",
   "worth": 1,
   "militaryWorth": 16,
   "xpValueAttack": 3,

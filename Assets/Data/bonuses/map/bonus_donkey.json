@@ -1,7 +1,5 @@
 {
  "type": "BONUS_DONKEY",
- "description": "TXT_KEY_BONUS_DONKEY",
- "civilopedia": "TXT_KEY_BONUS_DONKEY_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_ANIMAL_TRAINER_DONKEY",
@@ -67,6 +65,8 @@
   ]
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_DONKEY",
+  "civilopedia": "TXT_KEY_BONUS_DONKEY_PEDIA",
   "bonusClassType": "BONUSCLASS_STRATEGIC"
  }
 }

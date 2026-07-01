@@ -1,8 +1,5 @@
 {
  "type": "TECH_PLANET_SCANNING",
- "description": "TXT_KEY_TECH_PLANET_SCANNING",
- "civilopedia": "TXT_KEY_TECH_PLANET_SCANNING_PEDIA",
- "quote": "TXT_KEY_TECH_PLANET_SCANNING_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_INTERSTELLAR_BIOMARKER_CATALOGUE",
@@ -55,6 +52,9 @@
   "soundMP": "AS2D_TECH_GENERIC"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_PLANET_SCANNING",
+  "civilopedia": "TXT_KEY_TECH_PLANET_SCANNING_PEDIA",
+  "quote": "TXT_KEY_TECH_PLANET_SCANNING_QUOTE",
   "era": "C2C_ERA_GALACTIC",
   "worth": 48,
   "tradeable": true,

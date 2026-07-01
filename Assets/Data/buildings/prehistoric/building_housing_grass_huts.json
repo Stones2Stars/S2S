@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_HOUSING_GRASS_HUTS",
- "description": "TXT_KEY_BUILDING_HOUSING_GRASS_HUTS",
- "civilopedia": "TXT_KEY_BUILDING_HOUSING_GRASS_HUTS_PEDIA",
  "obsoletedBy": {
   "techs": [
    "TECH_MASONRY"
@@ -57,6 +55,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_HOUSING_GRASS_HUTS",
+  "civilopedia": "TXT_KEY_BUILDING_HOUSING_GRASS_HUTS_PEDIA",
   "notConstructible": true,
   "nukeImmune": true,
   "neverCapture": true,

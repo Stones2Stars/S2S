@@ -1,8 +1,5 @@
 {
  "type": "TECH_MODERN_WARFARE",
- "description": "TXT_KEY_TECH_MODERN_WARFARE",
- "civilopedia": "TXT_KEY_TECH_MODERN_WARFARE_PEDIA",
- "quote": "TXT_KEY_TECH_MODERN_WARFARE_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_MILITARY_SURPLUS_STORE"
@@ -75,6 +72,9 @@
   "soundMP": "AS2D_TECH_MODERN_WARFARE"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_MODERN_WARFARE",
+  "civilopedia": "TXT_KEY_TECH_MODERN_WARFARE_PEDIA",
+  "quote": "TXT_KEY_TECH_MODERN_WARFARE_QUOTE",
   "era": "C2C_ERA_ATOMIC",
   "worth": 48,
   "militaryWorth": 5,

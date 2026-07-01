@@ -1,12 +1,12 @@
 {
  "type": "PROMOTIONLINE_CAUTIOUS",
- "description": "TXT_KEY_PROMOTIONLINE_CAUTIOUS",
  "ui": {
   "art": {
    "icon": "art/Buttons/Promotions/Cautious1Promotion.dds"
   }
  },
  "identity": {
+  "description": "TXT_KEY_PROMOTIONLINE_CAUTIOUS",
   "unitCombats": [
    "UNITCOMBAT_THROWING",
    "UNITCOMBAT_MOUNTED",

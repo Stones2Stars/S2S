@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_BED_N_BREAKFAST",
- "description": "TXT_KEY_BUILDING_BED_N_BREAKFAST",
- "civilopedia": "TXT_KEY_BUILDING_BED_N_BREAKFAST_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_TOURISM_MEGACOMPLEX"
@@ -68,6 +66,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_BED_N_BREAKFAST",
+  "civilopedia": "TXT_KEY_BUILDING_BED_N_BREAKFAST_PEDIA",
   "worth": 5,
   "conquestProbability": 75,
   "dcmAirbombMission": 2,

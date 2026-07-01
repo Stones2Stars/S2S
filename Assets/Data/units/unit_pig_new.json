@@ -1,7 +1,5 @@
 {
  "type": "UNIT_PIG_NEW",
- "description": "TXT_KEY_UNIT_PIG_NEW",
- "civilopedia": "TXT_KEY_UNIT_PIG_PEDIA",
  "withdrawal": {
   "unit": {
    "percent": 30
@@ -76,6 +74,8 @@
   ]
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_PIG_NEW",
+  "civilopedia": "TXT_KEY_UNIT_PIG_PEDIA",
   "spawnOnly": true,
   "xpValueAttack": 4,
   "xpValueDefense": 2,

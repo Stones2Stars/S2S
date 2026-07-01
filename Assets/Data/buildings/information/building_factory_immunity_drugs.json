@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_FACTORY_IMMUNITY_DRUGS",
- "description": "TXT_KEY_BUILDING_FACTORY_IMMUNITY_DRUGS",
- "civilopedia": "TXT_KEY_BUILDING_FACTORY_IMMUNITY_DRUGS_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_MEDICAL_MEGACOMPLEX"
@@ -71,6 +69,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_FACTORY_IMMUNITY_DRUGS",
+  "civilopedia": "TXT_KEY_BUILDING_FACTORY_IMMUNITY_DRUGS_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

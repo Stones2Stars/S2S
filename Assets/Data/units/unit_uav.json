@@ -1,7 +1,5 @@
 {
  "type": "UNIT_UAV",
- "description": "TXT_KEY_UNIT_UAV",
- "civilopedia": "TXT_KEY_UNIT_UAV_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -100,6 +98,8 @@
   "upkeep": 11
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_UAV",
+  "civilopedia": "TXT_KEY_UNIT_UAV_PEDIA",
   "worth": 4,
   "militaryWorth": 675,
   "xpValueAttack": 6,

@@ -1,8 +1,5 @@
 {
  "type": "TECH_ACOUSTIC_WEAPONRY",
- "description": "TXT_KEY_TECH_ACOUSTIC_WEAPONRY",
- "civilopedia": "TXT_KEY_TECH_ACOUSTIC_WEAPONRY_PEDIA",
- "quote": "TXT_KEY_TECH_ACOUSTIC_WEAPONRY_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_ACOUSTIC_CROWD_CONTROL",
@@ -53,6 +50,9 @@
   "soundMP": "AS2D_TECH_ACOUSTIC_WEAPONRY"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_ACOUSTIC_WEAPONRY",
+  "civilopedia": "TXT_KEY_TECH_ACOUSTIC_WEAPONRY_PEDIA",
+  "quote": "TXT_KEY_TECH_ACOUSTIC_WEAPONRY_QUOTE",
   "era": "C2C_ERA_NANOTECH",
   "worth": 43,
   "militaryWorth": 5,

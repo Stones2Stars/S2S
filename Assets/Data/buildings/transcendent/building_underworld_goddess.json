@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_UNDERWORLD_GODDESS",
- "description": "TXT_KEY_BUILDING_UNDERWORLD_GODDESS",
- "civilopedia": "TXT_KEY_BUILDING_UNDERWORLD_GODDESS_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_REALM_OF_TORMENT"
@@ -48,6 +46,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_UNDERWORLD_GODDESS",
+  "civilopedia": "TXT_KEY_BUILDING_UNDERWORLD_GODDESS_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

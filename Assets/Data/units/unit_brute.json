@@ -1,7 +1,5 @@
 {
  "type": "UNIT_BRUTE",
- "description": "TXT_KEY_UNIT_BRUTE",
- "civilopedia": "TXT_KEY_UNIT_BRUTE_PEDIA",
  "obsoletedBy": {
   "techs": [
    "TECH_FLINTLOCK"
@@ -56,6 +54,8 @@
   "upkeep": 1
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_BRUTE",
+  "civilopedia": "TXT_KEY_UNIT_BRUTE_PEDIA",
   "worth": 1,
   "militaryWorth": 1,
   "xpValueAttack": 3,

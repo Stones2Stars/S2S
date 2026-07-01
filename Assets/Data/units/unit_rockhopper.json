@@ -1,7 +1,5 @@
 {
  "type": "UNIT_ROCKHOPPER",
- "description": "TXT_KEY_UNIT_ROCKHOPPER",
- "civilopedia": "TXT_KEY_UNIT_ROCKHOPPER_PEDIA",
  "skills": {
   "blendIntoCity": true,
   "onlyDefensive": true,
@@ -41,6 +39,8 @@
   ]
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_ROCKHOPPER",
+  "civilopedia": "TXT_KEY_UNIT_ROCKHOPPER_PEDIA",
   "spawnOnly": true,
   "xpValueAttack": 1,
   "xpValueDefense": 1,

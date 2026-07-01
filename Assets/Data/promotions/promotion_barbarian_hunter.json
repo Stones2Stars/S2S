@@ -1,7 +1,5 @@
 {
  "type": "PROMOTION_BARBARIAN_HUNTER",
- "description": "TXT_KEY_PROMOTION_BARBARIAN_HUNTER",
- "help": "TXT_KEY_PROMOTION_BARBARIAN_HUNTER_HELP",
  "loadPrune": {
   "notOnGameOptions": [
    "GAMEOPTION_UNIT_INFINITE_XP"
@@ -16,6 +14,8 @@
   "sound": "AS2D_IF_LEVELUP"
  },
  "identity": {
+  "description": "TXT_KEY_PROMOTION_BARBARIAN_HUNTER",
+  "help": "TXT_KEY_PROMOTION_BARBARIAN_HUNTER_HELP",
   "unitCombats": [
    "UNITCOMBAT_HUNTER",
    "UNITCOMBAT_COMBATANT"

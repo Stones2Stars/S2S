@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_POLICE_BOX",
- "description": "TXT_KEY_BUILDING_POLICE_BOX",
- "civilopedia": "TXT_KEY_BUILDING_POLICE_BOX_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_POLICE_PRECINCT"
@@ -86,6 +84,8 @@
   "construct": "AS2D_BUILD_POLICE_STATION"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_POLICE_BOX",
+  "civilopedia": "TXT_KEY_BUILDING_POLICE_BOX_PEDIA",
   "worth": 1,
   "conquestProbability": 75,
   "dcmAirbombMission": 2,

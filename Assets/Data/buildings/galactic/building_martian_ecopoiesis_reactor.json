@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_MARTIAN_ECOPOIESIS_REACTOR",
- "description": "TXT_KEY_BUILDING_MARTIAN_ECOPOIESIS_REACTOR",
- "civilopedia": "TXT_KEY_BUILDING_MARTIAN_ECOPOIESIS_REACTOR_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -54,6 +52,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_MARTIAN_ECOPOIESIS_REACTOR",
+  "civilopedia": "TXT_KEY_BUILDING_MARTIAN_ECOPOIESIS_REACTOR_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_SHIPYARD",
- "description": "TXT_KEY_BUILDING_SHIPYARD",
- "civilopedia": "TXT_KEY_BUILDING_SHIPYARD_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_GRAND_MARINE_FESTIVAL",
@@ -87,6 +85,8 @@
   "construct": "AS2D_BUILD_DRYDOCK"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_SHIPYARD",
+  "civilopedia": "TXT_KEY_BUILDING_SHIPYARD_PEDIA",
   "worth": 1,
   "militaryWorth": 2,
   "conquestProbability": 75,

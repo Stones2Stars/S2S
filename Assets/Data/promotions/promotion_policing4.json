@@ -1,6 +1,5 @@
 {
  "type": "PROMOTION_POLICING4",
- "description": "TXT_KEY_PROMOTION_POLICING4",
  "espionage": {
   "unit": {
    "investigation": {
@@ -52,6 +51,7 @@
   "sound": "AS2D_IF_LEVELUP"
  },
  "identity": {
+  "description": "TXT_KEY_PROMOTION_POLICING4",
   "minEra": "C2C_ERA_MEDIEVAL"
  }
 }

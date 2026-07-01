@@ -1,8 +1,5 @@
 {
  "type": "TECH_MAGIC",
- "description": "TXT_KEY_TECH_MAGIC",
- "civilopedia": "TXT_KEY_TECH_MAGIC_PEDIA",
- "quote": "TXT_KEY_TECH_MAGIC_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_MAGIC_SHOP"
@@ -54,6 +51,9 @@
   "soundMP": "AS2D_TECH_MAGIC"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_MAGIC",
+  "civilopedia": "TXT_KEY_TECH_MAGIC_PEDIA",
+  "quote": "TXT_KEY_TECH_MAGIC_QUOTE",
   "era": "C2C_ERA_ANCIENT",
   "worth": 2,
   "tradeable": true,

@@ -1,8 +1,5 @@
 {
  "type": "TECH_JUDAISM",
- "description": "TXT_KEY_TECH_JUDAISM",
- "civilopedia": "TXT_KEY_TECH_JUDAISM_PEDIA",
- "quote": "TXT_KEY_TECH_JUDAISM_QUOTE",
  "enables": {
   "religions": [
    "RELIGION_JUDAISM"
@@ -55,6 +52,9 @@
   "soundMP": "AS2D_TECH_JUDAISM"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_JUDAISM",
+  "civilopedia": "TXT_KEY_TECH_JUDAISM_PEDIA",
+  "quote": "TXT_KEY_TECH_JUDAISM_QUOTE",
   "era": "C2C_ERA_ANCIENT",
   "worth": 8,
   "gridX": 31,

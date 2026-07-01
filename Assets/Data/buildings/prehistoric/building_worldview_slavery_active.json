@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_WORLDVIEW_SLAVERY_ACTIVE",
- "description": "TXT_KEY_BUILDING_WORLDVIEW_SLAVERY_ACTIVE",
- "civilopedia": "TXT_KEY_BUILDING_WORLDVIEW_SLAVERY_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_SLAVE_COMPOUND",
@@ -179,6 +177,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_WORLDVIEW_SLAVERY_ACTIVE",
+  "civilopedia": "TXT_KEY_BUILDING_WORLDVIEW_SLAVERY_PEDIA",
   "enabledCivilizations": [
    "CIVILIZATION_NPC_NEANDERTHAL"
   ],

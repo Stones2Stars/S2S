@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_HYPERSPACE_11_DIMENSIONAL_FACTORY",
- "description": "TXT_KEY_BUILDING_HYPERSPACE_11_DIMENSIONAL_FACTORY",
- "civilopedia": "TXT_KEY_BUILDING_HYPERSPACE_11_DIMENSIONAL_FACTORY_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_HYPERSPACE_TRANSFINITE_SUPERCOMPUTER",
@@ -45,6 +43,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_HYPERSPACE_11_DIMENSIONAL_FACTORY",
+  "civilopedia": "TXT_KEY_BUILDING_HYPERSPACE_11_DIMENSIONAL_FACTORY_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

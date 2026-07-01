@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_COMMUNICATION_TOWER",
- "description": "TXT_KEY_BUILDING_COMMUNICATION_TOWER",
- "civilopedia": "TXT_KEY_BUILDING_COMMUNICATION_TOWER_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_LOCAL_RADIO_STATION",
@@ -129,6 +127,8 @@
   "construct": "AS2D_BUILD_BROADCASTTOWER"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_COMMUNICATION_TOWER",
+  "civilopedia": "TXT_KEY_BUILDING_COMMUNICATION_TOWER_PEDIA",
   "worth": 10,
   "conquestProbability": 75,
   "dcmAirbombMission": 2,

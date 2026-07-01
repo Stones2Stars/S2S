@@ -1,8 +1,5 @@
 {
  "type": "TECH_WATER_SPORTS",
- "description": "TXT_KEY_TECH_WATER_SPORTS",
- "civilopedia": "TXT_KEY_TECH_WATER_SPORTS_PEDIA",
- "quote": "TXT_KEY_TECH_WATER_SPORTS_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_WATER_POLO_POOL",
@@ -55,6 +52,9 @@
   "soundMP": "AS2D_TECH_WATER_SPORTS"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_WATER_SPORTS",
+  "civilopedia": "TXT_KEY_TECH_WATER_SPORTS_PEDIA",
+  "quote": "TXT_KEY_TECH_WATER_SPORTS_QUOTE",
   "era": "C2C_ERA_INDUSTRIAL",
   "worth": 24,
   "tradeable": true,

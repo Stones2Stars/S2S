@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_INTERSTELLAR_METROPOLIS",
- "description": "TXT_KEY_BUILDING_INTERSTELLAR_METROPOLIS",
- "civilopedia": "TXT_KEY_BUILDING_INTERSTELLAR_METROPOLIS_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_INTERSTELLAR_ECUMENOPOLIS",
@@ -56,6 +54,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_INTERSTELLAR_METROPOLIS",
+  "civilopedia": "TXT_KEY_BUILDING_INTERSTELLAR_METROPOLIS_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

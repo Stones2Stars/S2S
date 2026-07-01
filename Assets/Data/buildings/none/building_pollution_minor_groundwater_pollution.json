@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_POLLUTION_MINOR_GROUNDWATER_POLLUTION",
- "description": "TXT_KEY_BUILDING_POLLUTION_MINOR_GROUNDWATER_POLLUTION",
- "civilopedia": "TXT_KEY_BUILDING_WATER_POLLUTION_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -63,6 +61,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_POLLUTION_MINOR_GROUNDWATER_POLLUTION",
+  "civilopedia": "TXT_KEY_BUILDING_WATER_POLLUTION_PEDIA",
   "notConstructible": true,
   "nukeImmune": true,
   "conquestProbability": 100,

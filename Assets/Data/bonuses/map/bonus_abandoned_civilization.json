@@ -1,7 +1,5 @@
 {
  "type": "BONUS_ABANDONED_CIVILIZATION",
- "description": "TXT_KEY_BONUS_ABANDONED_CIVILIZATION",
- "civilopedia": "TXT_KEY_BONUS_ABANDONED_CIVILIZATION_PEDIA",
  "commerce": {
   "plot": {
    "flat": 3
@@ -42,6 +40,8 @@
   "placementOrder": 9
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_ABANDONED_CIVILIZATION",
+  "civilopedia": "TXT_KEY_BONUS_ABANDONED_CIVILIZATION_PEDIA",
   "bonusClassType": "BONUSCLASS_MISC"
  }
 }

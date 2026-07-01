@@ -1,9 +1,5 @@
 {
  "type": "CIVILIZATION_SIAM",
- "description": "TXT_KEY_CIVILIZATION_SIAM",
- "shortDescription": "TXT_KEY_CIVILIZATION_SIAM_SHORT",
- "adjective": "TXT_KEY_CIVILIZATION_SIAM_ADJECTIVE",
- "civilopedia": "TXT_KEY_CIVILIZATION_SIAM_PEDIA",
  "grants": {
   "buildings": [
    "BUILDING_PALACE",
@@ -32,10 +28,6 @@
    "TECH_GAME_START"
   ]
  },
- "policies": {
-  "playable": true,
-  "aiPlayable": true
- },
  "world": {
   "art": {
    "playerColor": "PLAYERCOLOR_RED_BLUE",
@@ -49,6 +41,12 @@
   "action": "AS3D_KHMER_ORDER"
  },
  "identity": {
+  "description": "TXT_KEY_CIVILIZATION_SIAM",
+  "shortDescription": "TXT_KEY_CIVILIZATION_SIAM_SHORT",
+  "adjective": "TXT_KEY_CIVILIZATION_SIAM_ADJECTIVE",
+  "civilopedia": "TXT_KEY_CIVILIZATION_SIAM_PEDIA",
+  "playable": true,
+  "aiPlayable": true,
   "leaders": [
    "LEADER_RAMKHAM",
    "LEADER_MONGKUT"

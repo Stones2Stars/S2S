@@ -1,7 +1,5 @@
 {
  "type": "BONUS_ANDROIDS",
- "description": "TXT_KEY_BONUS_ANDROIDS",
- "civilopedia": "TXT_KEY_BONUS_ANDROIDS_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_ANDROID_BROTHEL",
@@ -24,6 +22,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_ANDROIDS",
+  "civilopedia": "TXT_KEY_BONUS_ANDROIDS_PEDIA",
   "bonusClassType": "BONUSCLASS_MANUFACTURED"
  }
 }

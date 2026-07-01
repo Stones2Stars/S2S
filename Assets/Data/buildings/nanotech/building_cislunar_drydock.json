@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_CISLUNAR_DRYDOCK",
- "description": "TXT_KEY_BUILDING_CISLUNAR_DRYDOCK",
- "civilopedia": "TXT_KEY_BUILDING_CISLUNAR_DRYDOCK_PEDIA",
  "enables": {
   "units": [
    "UNIT_CISLUNAR_INVADER"
@@ -83,6 +81,8 @@
   "construct": "AS2D_BUILD_DRYDOCK"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_CISLUNAR_DRYDOCK",
+  "civilopedia": "TXT_KEY_BUILDING_CISLUNAR_DRYDOCK_PEDIA",
   "worth": 1,
   "militaryWorth": 2,
   "conquestProbability": 75,

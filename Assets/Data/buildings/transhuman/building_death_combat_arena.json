@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_DEATH_COMBAT_ARENA",
- "description": "TXT_KEY_BUILDING_DEATH_COMBAT_ARENA",
- "civilopedia": "TXT_KEY_BUILDING_DEATH_COMBAT_ARENA_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -72,6 +70,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_DEATH_COMBAT_ARENA",
+  "civilopedia": "TXT_KEY_BUILDING_DEATH_COMBAT_ARENA_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

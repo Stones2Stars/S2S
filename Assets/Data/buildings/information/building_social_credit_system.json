@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_SOCIAL_CREDIT_SYSTEM",
- "description": "TXT_KEY_BUILDING_SOCIAL_CREDIT_SYSTEM",
- "civilopedia": "TXT_KEY_BUILDING_SOCIAL_CREDIT_SYSTEM_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -55,6 +53,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_SOCIAL_CREDIT_SYSTEM",
+  "civilopedia": "TXT_KEY_BUILDING_SOCIAL_CREDIT_SYSTEM_PEDIA",
   "neverCapture": true,
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,

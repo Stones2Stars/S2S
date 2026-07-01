@@ -1,8 +1,5 @@
 {
  "type": "TECH_EXECUTIONS",
- "description": "TXT_KEY_TECH_EXECUTIONS",
- "civilopedia": "TXT_KEY_TECH_EXECUTIONS_PEDIA",
- "quote": "TXT_KEY_TECH_EXECUTIONS_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_GALLOWS"
@@ -61,6 +58,9 @@
   "soundMP": "AS2D_TECH_EXECUTIONS"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_EXECUTIONS",
+  "civilopedia": "TXT_KEY_TECH_EXECUTIONS_PEDIA",
+  "quote": "TXT_KEY_TECH_EXECUTIONS_QUOTE",
   "era": "C2C_ERA_MEDIEVAL",
   "worth": 24,
   "tradeable": true,

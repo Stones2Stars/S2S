@@ -1,8 +1,5 @@
 {
  "type": "TECH_GUILDS",
- "description": "TXT_KEY_TECH_GUILDS",
- "civilopedia": "TXT_KEY_TECH_GUILDS_PEDIA",
- "quote": "TXT_KEY_TECH_GUILDS_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_APPRENTICE_WORKSHOP",
@@ -101,6 +98,9 @@
   "soundMP": "AS2D_TECH_MP_GUILDS"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_GUILDS",
+  "civilopedia": "TXT_KEY_TECH_GUILDS_PEDIA",
+  "quote": "TXT_KEY_TECH_GUILDS_QUOTE",
   "era": "C2C_ERA_MEDIEVAL",
   "worth": 24,
   "militaryWorth": 8,

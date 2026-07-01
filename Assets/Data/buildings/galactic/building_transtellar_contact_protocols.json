@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_TRANSTELLAR_CONTACT_PROTOCOLS",
- "description": "TXT_KEY_BUILDING_TRANSTELLAR_CONTACT_PROTOCOLS",
- "civilopedia": "TXT_KEY_BUILDING_TRANSTELLAR_CONTACT_PROTOCOLS_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -38,6 +36,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_TRANSTELLAR_CONTACT_PROTOCOLS",
+  "civilopedia": "TXT_KEY_BUILDING_TRANSTELLAR_CONTACT_PROTOCOLS_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

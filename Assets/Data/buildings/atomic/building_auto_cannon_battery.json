@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_AUTO_CANNON_BATTERY",
- "description": "TXT_KEY_BUILDING_AUTO_CANNON_BATTERY",
- "civilopedia": "TXT_KEY_BUILDING_AUTO_CANNON_BATTERY_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_SLAVE_COMPOUND_CRIME_PREVENTION"
@@ -122,6 +120,8 @@
   "construct": "AS2D_BUILD_COMMAND_BUNKER"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_AUTO_CANNON_BATTERY",
+  "civilopedia": "TXT_KEY_BUILDING_AUTO_CANNON_BATTERY_PEDIA",
   "worth": 8,
   "militaryWorth": 8,
   "sightRange": 2,

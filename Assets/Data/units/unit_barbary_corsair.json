@@ -1,8 +1,5 @@
 {
  "type": "UNIT_BARBARY_CORSAIR",
- "description": "TXT_KEY_UNIT_BARBARY_CORSAIR",
- "civilopedia": "TXT_KEY_UNIT_BARBARY_CORSAIR_PEDIA",
- "help": "TXT_KEY_UNIT_PIRATE_HELP",
  "requires": {
   "build": {
    "all": [
@@ -100,6 +97,9 @@
   "upkeep": 1
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_BARBARY_CORSAIR",
+  "civilopedia": "TXT_KEY_UNIT_BARBARY_CORSAIR_PEDIA",
+  "help": "TXT_KEY_UNIT_PIRATE_HELP",
   "worth": 4,
   "militaryWorth": 3,
   "xpValueAttack": 4,

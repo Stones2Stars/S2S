@@ -1,8 +1,5 @@
 {
  "type": "CIVIC_CONFEDERACY",
- "description": "TXT_KEY_CIVIC_CONFEDERACY",
- "civilopedia": "TXT_KEY_CIVIC_CONFEDERACY_PEDIA",
- "strategy": "TXT_KEY_CIVIC_CONFEDERACY_STRATEGY",
  "enables": {
   "buildings": [
    "BUILDING_CULTURE_CONFEDERATES"
@@ -185,6 +182,9 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_CIVIC_CONFEDERACY",
+  "civilopedia": "TXT_KEY_CIVIC_CONFEDERACY_PEDIA",
+  "strategy": "TXT_KEY_CIVIC_CONFEDERACY_STRATEGY",
   "civicOption": "CIVICOPTION_RULE",
   "anarchyLength": 1,
   "upkeepLevel": "UPKEEP_MEDIUM"

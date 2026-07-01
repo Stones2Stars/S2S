@@ -1,6 +1,5 @@
 {
  "type": "BUILD_WOODEN_PALISADE_KILL",
- "description": "TXT_KEY_BUILD_WOODEN_PALISADE_KILL",
  "requires": {
   "build": {
    "all": [
@@ -31,6 +30,7 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILD_WOODEN_PALISADE_KILL",
   "consumesUnit": true
  }
 }

@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_HERCULES_BEETLE_GATHERER",
- "description": "TXT_KEY_BUILDING_HERCULES_BEETLE_GATHERER",
- "civilopedia": "TXT_KEY_BUILDING_HERCULES_BEETLE_GATHERER_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_HERCULES_BEETLE_SANCTUARY",
@@ -85,6 +83,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_HERCULES_BEETLE_GATHERER",
+  "civilopedia": "TXT_KEY_BUILDING_HERCULES_BEETLE_GATHERER_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

@@ -1,8 +1,5 @@
 {
  "type": "UNIT_LAWYER",
- "description": "TXT_KEY_UNIT_LAWYER",
- "civilopedia": "TXT_KEY_CONCEPT_CORPORATIONS_PEDIA",
- "help": "TXT_KEY_UNIT_LAWYER_REMOVE_CORPORATIONS_HELP",
  "requires": {
   "build": {
    "all": [
@@ -97,6 +94,9 @@
   ]
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_LAWYER",
+  "civilopedia": "TXT_KEY_CONCEPT_CORPORATIONS_PEDIA",
+  "help": "TXT_KEY_UNIT_LAWYER_REMOVE_CORPORATIONS_HELP",
   "worth": 1,
   "domain": "DOMAIN_LAND",
   "defaultUnitAI": "UNITAI_MERCHANT",

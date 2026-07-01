@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_APIARY",
- "description": "TXT_KEY_BUILDING_APIARY",
- "civilopedia": "TXT_KEY_BUILDING_APIARY_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_BEE_BOMBS",
@@ -136,6 +134,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_APIARY",
+  "civilopedia": "TXT_KEY_BUILDING_APIARY_PEDIA",
   "conquestProbability": 60,
   "advisor": "ADVISOR_GROWTH",
   "visibilityPriority": 1,

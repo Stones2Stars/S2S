@@ -1,6 +1,5 @@
 {
  "type": "PROMOTION_SPHINX",
- "description": "TXT_KEY_PROMOTION_SPHINX",
  "upkeep": {
   "unit": {
    "upgradeDiscount": {
@@ -17,6 +16,7 @@
   "sound": "AS2D_IF_LEVELUP"
  },
  "identity": {
+  "description": "TXT_KEY_PROMOTION_SPHINX",
   "unitCombats": [
    "UNITCOMBAT_RECON",
    "UNITCOMBAT_ARCHER",

@@ -1,4 +1,6 @@
 {
  "type": "CIVICOPTION_LANGUAGE",
- "description": "TXT_KEY_CIVICOPTION_LANGUAGE"
+ "identity": {
+  "description": "TXT_KEY_CIVICOPTION_LANGUAGE"
+ }
 }

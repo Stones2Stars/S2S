@@ -1,6 +1,5 @@
 {
  "type": "BUILD_SEED_CAMP",
- "description": "TXT_KEY_BUILD_SEED_CAMP",
  "requires": {
   "build": {
    "all": [
@@ -28,5 +27,8 @@
   "art": {
    "entityEvent": "ENTITY_EVENT_BUILD"
   }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILD_SEED_CAMP"
  }
 }

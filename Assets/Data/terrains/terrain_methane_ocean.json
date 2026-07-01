@@ -1,7 +1,5 @@
 {
  "type": "TERRAIN_METHANE_OCEAN",
- "description": "TXT_KEY_TERRAIN_METHANE_OCEAN",
- "civilopedia": "TXT_KEY_TERRAIN_METHANE_OCEAN_PEDIA",
  "commerce": {
   "plot": {
    "flat": 2
@@ -23,6 +21,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_TERRAIN_METHANE_OCEAN",
+  "civilopedia": "TXT_KEY_TERRAIN_METHANE_OCEAN_PEDIA",
   "distanceToLand": 1,
   "movementCost": 1,
   "mapCategories": [

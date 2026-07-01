@@ -1,6 +1,5 @@
 {
  "type": "BUILD_HAMLET",
- "description": "TXT_KEY_BUILD_HAMLET",
  "requires": {
   "build": {
    "all": [
@@ -79,5 +78,8 @@
   "art": {
    "entityEvent": "ENTITY_EVENT_BUILD"
   }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILD_HAMLET"
  }
 }

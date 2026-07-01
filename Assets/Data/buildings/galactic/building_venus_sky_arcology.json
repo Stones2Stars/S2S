@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_VENUS_SKY_ARCOLOGY",
- "description": "TXT_KEY_BUILDING_VENUS_SKY_ARCOLOGY",
- "civilopedia": "TXT_KEY_BUILDING_VENUS_SKY_ARCOLOGY_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_ARTIFICIAL_VENUS_ROTATION"
@@ -63,6 +61,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_VENUS_SKY_ARCOLOGY",
+  "civilopedia": "TXT_KEY_BUILDING_VENUS_SKY_ARCOLOGY_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

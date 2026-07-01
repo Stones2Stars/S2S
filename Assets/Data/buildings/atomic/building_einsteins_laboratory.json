@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_EINSTEINS_LABORATORY",
- "description": "TXT_KEY_BUILDING_EINSTEINS_LABORATORY",
- "civilopedia": "TXT_KEY_BUILDING_EINSTEINS_LABORATORY_PEDIA",
  "obsoletedBy": {
   "techs": [
    "TECH_SUPERSTRING_THEORY"
@@ -96,6 +94,8 @@
   "construct": "AS2D_BUILD_UNIVERSITY"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_EINSTEINS_LABORATORY",
+  "civilopedia": "TXT_KEY_BUILDING_EINSTEINS_LABORATORY_PEDIA",
   "nukeImmune": true,
   "teamShare": true,
   "worth": 12,

@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_STONE_QUARRY",
- "description": "TXT_KEY_BUILDING_STONE_QUARRY",
- "civilopedia": "TXT_KEY_BUILDING_STONE_QUARRY_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_GRAND_EARTH_FESTIVAL"
@@ -72,6 +70,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_STONE_QUARRY",
+  "civilopedia": "TXT_KEY_BUILDING_STONE_QUARRY_PEDIA",
   "enabledCivilizations": [
    "CIVILIZATION_NPC_NEANDERTHAL"
   ],

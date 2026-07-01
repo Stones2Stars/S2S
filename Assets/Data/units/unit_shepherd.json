@@ -1,7 +1,5 @@
 {
  "type": "UNIT_SHEPHERD",
- "description": "TXT_KEY_UNIT_SHEPHERD",
- "civilopedia": "TXT_KEY_UNIT_SHEPHERD_PEDIA",
  "replacedBy": {
   "units": [
    "UNIT_NEANDERTHAL_SHEPHERD"
@@ -139,6 +137,8 @@
   "hurryCostModifier": 25
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_SHEPHERD",
+  "civilopedia": "TXT_KEY_UNIT_SHEPHERD_PEDIA",
   "worth": 2,
   "militaryWorth": 2,
   "xpValueDefense": 2,

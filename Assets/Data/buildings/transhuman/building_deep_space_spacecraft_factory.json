@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_DEEP_SPACE_SPACECRAFT_FACTORY",
- "description": "TXT_KEY_BUILDING_DEEP_SPACE_SPACECRAFT_FACTORY",
- "civilopedia": "TXT_KEY_BUILDING_DEEP_SPACE_SPACECRAFT_FACTORY_PEDIA",
  "enables": {
   "units": [
    "UNIT_ATTACKSHIP",
@@ -56,6 +54,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_DEEP_SPACE_SPACECRAFT_FACTORY",
+  "civilopedia": "TXT_KEY_BUILDING_DEEP_SPACE_SPACECRAFT_FACTORY_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

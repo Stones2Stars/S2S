@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_TEMPLE_OF_TOTH",
- "description": "TXT_KEY_BUILDING_TEMPLE_OF_TOTH",
- "civilopedia": "TXT_KEY_BUILDING_TEMPLE_OF_TOTH_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -134,6 +132,8 @@
   "construct": "AS2D_UNIT_BUILD_RA_MISSIONARY"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_TEMPLE_OF_TOTH",
+  "civilopedia": "TXT_KEY_BUILDING_TEMPLE_OF_TOTH_PEDIA",
   "commerceDoubleTime": {
    "culture": 1000
   },

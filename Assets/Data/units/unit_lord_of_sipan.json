@@ -1,7 +1,5 @@
 {
  "type": "UNIT_LORD_OF_SIPAN",
- "description": "TXT_KEY_UNIT_LORD_OF_SIPAN",
- "civilopedia": "TXT_KEY_UNIT_LORD_OF_SIPAN_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -52,6 +50,8 @@
   "upkeep": 1
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_LORD_OF_SIPAN",
+  "civilopedia": "TXT_KEY_UNIT_LORD_OF_SIPAN_PEDIA",
   "worth": 6,
   "militaryWorth": 8,
   "xpValueAttack": 4,

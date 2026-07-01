@@ -1,7 +1,5 @@
 {
  "type": "PROMOTION_MARAUDER",
- "description": "TXT_KEY_PROMOTION_MARAUDER",
- "help": "TXT_KEY_PROMOTION_MARAUDER_HELP",
  "capture": {
   "unit": {
    "probability": {
@@ -21,6 +19,8 @@
   "sound": "AS2D_IF_LEVELUP"
  },
  "identity": {
+  "description": "TXT_KEY_PROMOTION_MARAUDER",
+  "help": "TXT_KEY_PROMOTION_MARAUDER_HELP",
   "unitCombats": [
    "UNITCOMBAT_MOUNTED",
    "UNITCOMBAT_THROWING",

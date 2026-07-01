@@ -1,6 +1,5 @@
 {
  "type": "UNITCOMBAT_ADMINISTRATOR",
- "description": "TXT_KEY_UNITCOMBAT_ADMINISTRATOR",
  "revoltProtection": {
   "unit": {
    "percent": 2
@@ -13,5 +12,8 @@
   "art": {
    "icon": "Art/Interface/Buttons/units/sparth/categories/administrators.dds"
   }
+ },
+ "identity": {
+  "description": "TXT_KEY_UNITCOMBAT_ADMINISTRATOR"
  }
 }

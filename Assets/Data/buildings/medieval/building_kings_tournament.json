@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_KINGS_TOURNAMENT",
- "description": "TXT_KEY_BUILDING_KINGS_TOURNAMENT",
- "civilopedia": "TXT_KEY_BUILDING_KINGS_TOURNAMENT_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -136,6 +134,8 @@
   "construct": "AS2D_BUILD_COLOSSEUM"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_KINGS_TOURNAMENT",
+  "civilopedia": "TXT_KEY_BUILDING_KINGS_TOURNAMENT_PEDIA",
   "commerceDoubleTime": {
    "culture": 1000
   },

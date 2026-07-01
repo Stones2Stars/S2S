@@ -1,6 +1,5 @@
 {
  "type": "UNITCOMBAT_PACIFIST",
- "description": "TXT_KEY_UNITCOMBAT_PACIFIST",
  "skills": {
   "cannotMergeSplit": true
  },
@@ -8,5 +7,8 @@
   "art": {
    "icon": "Art/Interface/Buttons/Units/Categories/Pacifist.dds"
   }
+ },
+ "identity": {
+  "description": "TXT_KEY_UNITCOMBAT_PACIFIST"
  }
 }

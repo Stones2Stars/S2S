@@ -1,7 +1,5 @@
 {
  "type": "UNIT_NEANDERTHAL_HEALER",
- "description": "TXT_KEY_UNIT_NEANDERTHAL_HEALER",
- "civilopedia": "TXT_KEY_UNIT_HEALER_PEDIA",
  "obsoletedBy": {
   "techs": [
    "TECH_SEDENTARY_LIFESTYLE"
@@ -70,6 +68,8 @@
   "hurryCostModifier": 25
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_NEANDERTHAL_HEALER",
+  "civilopedia": "TXT_KEY_UNIT_HEALER_PEDIA",
   "worth": 3,
   "militaryWorth": 3,
   "xpValueDefense": 2,

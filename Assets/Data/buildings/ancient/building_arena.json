@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_ARENA",
- "description": "TXT_KEY_BUILDING_ARENA",
- "civilopedia": "TXT_KEY_BUILDING_ARENA_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_GLADIATORIAL_SCHOOL",
@@ -120,6 +118,8 @@
   "construct": "AS2D_BUILD_COLOSSEUM"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_ARENA",
+  "civilopedia": "TXT_KEY_BUILDING_ARENA_PEDIA",
   "worth": 4,
   "militaryWorth": 5,
   "conquestProbability": 75,

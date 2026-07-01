@@ -1,6 +1,5 @@
 {
  "type": "BUILD_TERRAFORM_MUDDY",
- "description": "TXT_KEY_BUILD_TERRAFORM_MUDDY",
  "requires": {
   "build": {
    "all": [
@@ -252,5 +251,8 @@
   "art": {
    "entityEvent": "ENTITY_EVENT_BUILD"
   }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILD_TERRAFORM_MUDDY"
  }
 }

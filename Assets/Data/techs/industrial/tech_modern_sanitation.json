@@ -1,8 +1,5 @@
 {
  "type": "TECH_MODERN_SANITATION",
- "description": "TXT_KEY_TECH_MODERN_SANITATION",
- "civilopedia": "TXT_KEY_TECH_MODERN_SANITATION_PEDIA",
- "quote": "TXT_KEY_TECH_MODERN_SANITATION_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_CRIME_LITTERING",
@@ -68,6 +65,9 @@
   "soundMP": "AS2D_TECH_MODERN_SANITATION"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_MODERN_SANITATION",
+  "civilopedia": "TXT_KEY_TECH_MODERN_SANITATION_PEDIA",
+  "quote": "TXT_KEY_TECH_MODERN_SANITATION_QUOTE",
   "era": "C2C_ERA_INDUSTRIAL",
   "worth": 40,
   "tradeable": true,

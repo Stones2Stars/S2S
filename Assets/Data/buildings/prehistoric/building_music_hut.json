@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_MUSIC_HUT",
- "description": "TXT_KEY_BUILDING_MUSIC_HUT",
- "civilopedia": "TXT_KEY_BUILDING_MUSIC_HUT_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_SLAVE_COMPOUND_ENTERTAINMENT"
@@ -109,6 +107,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_MUSIC_HUT",
+  "civilopedia": "TXT_KEY_BUILDING_MUSIC_HUT_PEDIA",
   "enabledCivilizations": [
    "CIVILIZATION_NPC_NEANDERTHAL"
   ],

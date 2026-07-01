@@ -1,8 +1,5 @@
 {
  "type": "TRAIT_WARMONGER",
- "description": "TXT_KEY_TRAIT_WARMONGER",
- "civilopedia": "TXT_KEY_TRAIT_WARMONGER_PEDIA",
- "strategy": "TXT_KEY_TRAIT_WARMONGER_STRATEGY",
  "excludes": [
   "TRAIT_PACIFIST"
  ],
@@ -118,6 +115,9 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_TRAIT_WARMONGER",
+  "civilopedia": "TXT_KEY_TRAIT_WARMONGER_PEDIA",
+  "strategy": "TXT_KEY_TRAIT_WARMONGER_STRATEGY",
   "impurePropertyManipulators": true
  }
 }

@@ -1,7 +1,5 @@
 {
  "type": "UNIT_OORT_CLOUD_REWARD",
- "description": "TXT_KEY_UNIT_OORT_CLOUD_REWARD",
- "civilopedia": "TXT_KEY_UNIT_OORT_CLOUD_REWARD_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -39,6 +37,8 @@
   "upkeep": 1
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_OORT_CLOUD_REWARD",
+  "civilopedia": "TXT_KEY_UNIT_OORT_CLOUD_REWARD_PEDIA",
   "spawnOnly": true,
   "worth": 1,
   "domain": "DOMAIN_LAND",

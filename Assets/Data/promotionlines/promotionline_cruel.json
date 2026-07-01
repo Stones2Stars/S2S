@@ -1,9 +1,11 @@
 {
  "type": "PROMOTIONLINE_CRUEL",
- "description": "TXT_KEY_PROMOTIONLINE_CRUEL",
  "ui": {
   "art": {
    "icon": "art/Buttons/Traits/TraitPolitician.dds"
   }
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTIONLINE_CRUEL"
  }
 }

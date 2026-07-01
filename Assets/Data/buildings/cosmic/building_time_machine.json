@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_TIME_MACHINE",
- "description": "TXT_KEY_BUILDING_TIME_MACHINE",
- "civilopedia": "TXT_KEY_BUILDING_TIME_MACHINE_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_HISTORY_REPAIR_CENTER",
@@ -61,6 +59,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_TIME_MACHINE",
+  "civilopedia": "TXT_KEY_BUILDING_TIME_MACHINE_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

@@ -1,7 +1,5 @@
 {
  "type": "BONUS_PARROTS",
- "description": "TXT_KEY_BONUS_PARROTS",
- "civilopedia": "TXT_KEY_BONUS_PARROTS_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_ASSASSIN_BUG_GATHERER",
@@ -75,6 +73,8 @@
   ]
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_PARROTS",
+  "civilopedia": "TXT_KEY_BONUS_PARROTS_PEDIA",
   "bonusClassType": "BONUSCLASS_LUXURY"
  }
 }

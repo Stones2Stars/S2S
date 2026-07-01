@@ -1,6 +1,5 @@
 {
  "type": "UNITCOMBAT_GROUP_COUNTLESS",
- "description": "TXT_KEY_UNITCOMBAT_GROUP_COUNTLESS",
  "experience": {
   "unit": {
    "percent": -160
@@ -39,6 +38,7 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_UNITCOMBAT_GROUP_COUNTLESS",
   "base": {
    "group": 13
   }

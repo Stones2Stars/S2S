@@ -1,12 +1,12 @@
 {
  "type": "PROMOTIONLINE_MARTIAL_ARTS",
- "description": "TXT_KEY_PROMOTIONLINE_MARTIAL_ARTS",
  "ui": {
   "art": {
    "icon": "art/Sports/Buttons/Martial_Arts1.dds"
   }
  },
  "identity": {
+  "description": "TXT_KEY_PROMOTIONLINE_MARTIAL_ARTS",
   "unitCombats": [
    "UNITCOMBAT_RECON",
    "UNITCOMBAT_MELEE"

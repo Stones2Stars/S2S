@@ -1,6 +1,5 @@
 {
  "type": "VOTE_OPEN_BORDERS",
- "description": "TXT_KEY_VOTE_OPEN_BORDERS",
  "voteSource": [
   "DIPLOVOTE_POPE"
  ],
@@ -11,5 +10,8 @@
  },
  "effect": {
   "openBorders": true
+ },
+ "identity": {
+  "description": "TXT_KEY_VOTE_OPEN_BORDERS"
  }
 }

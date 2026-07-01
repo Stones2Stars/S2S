@@ -1,7 +1,5 @@
 {
  "type": "IMPROVEMENT_SUN_SCOOP",
- "description": "TXT_KEY_IMPROVEMENT_SUN_SCOOP",
- "civilopedia": "TXT_KEY_IMPROVEMENT_SUN_SCOOP_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -36,6 +34,8 @@
   "uniqueRange": 2
  },
  "identity": {
+  "description": "TXT_KEY_IMPROVEMENT_SUN_SCOOP",
+  "civilopedia": "TXT_KEY_IMPROVEMENT_SUN_SCOOP_PEDIA",
   "extraterrestrial": true,
   "pillageGold": 200
  }

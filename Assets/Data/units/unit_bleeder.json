@@ -1,7 +1,5 @@
 {
  "type": "UNIT_BLEEDER",
- "description": "TXT_KEY_UNIT_BLEEDER",
- "civilopedia": "TXT_KEY_UNIT_BLEEDER_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -36,6 +34,8 @@
   "upkeep": 1
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_BLEEDER",
+  "civilopedia": "TXT_KEY_UNIT_BLEEDER_PEDIA",
   "worth": 5,
   "militaryWorth": 616,
   "xpValueAttack": 3,

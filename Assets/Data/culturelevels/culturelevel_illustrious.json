@@ -1,6 +1,5 @@
 {
  "type": "CULTURELEVEL_ILLUSTRIOUS",
- "description": "TXT_KEY_CULTURELEVEL_ILLUSTRIOUS",
  "allowed": {
   "worldWonders": 10,
   "teamWonders": 12,
@@ -14,6 +13,7 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_CULTURELEVEL_ILLUSTRIOUS",
   "cityRadius": 3,
   "cultureThreshold": 133120
  }

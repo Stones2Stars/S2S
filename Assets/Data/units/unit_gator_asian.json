@@ -1,7 +1,5 @@
 {
  "type": "UNIT_GATOR_ASIAN",
- "description": "TXT_KEY_UNIT_GATOR_ASIAN",
- "civilopedia": "TXT_KEY_UNIT_GATOR_ASIAN_PEDIA",
  "skills": {
   "assassin": true,
   "blendIntoCity": true,
@@ -52,6 +50,8 @@
   ]
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_GATOR_ASIAN",
+  "civilopedia": "TXT_KEY_UNIT_GATOR_ASIAN_PEDIA",
   "spawnOnly": true,
   "xpValueAttack": 7,
   "xpValueDefense": 5,

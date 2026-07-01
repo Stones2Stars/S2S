@@ -1,6 +1,5 @@
 {
  "type": "PROMOTION_STREET_FIGHTER3",
- "description": "TXT_KEY_PROMOTION_STREET_FIGHTER3",
  "strength": {
   "unit": {
    "cityAttack": {
@@ -31,5 +30,8 @@
  },
  "sound": {
   "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_STREET_FIGHTER3"
  }
 }

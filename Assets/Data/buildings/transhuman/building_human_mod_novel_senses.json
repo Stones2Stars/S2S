@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_HUMAN_MOD_NOVEL_SENSES",
- "description": "TXT_KEY_BUILDING_HUMAN_MOD_NOVEL_SENSES",
- "civilopedia": "TXT_KEY_BUILDING_HUMAN_MOD_NOVEL_SENSES_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -44,6 +42,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_HUMAN_MOD_NOVEL_SENSES",
+  "civilopedia": "TXT_KEY_BUILDING_HUMAN_MOD_NOVEL_SENSES_PEDIA",
   "neverCapture": true,
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,

@@ -1,8 +1,5 @@
 {
  "type": "TECH_ANTIMATTER_ROCKETS",
- "description": "TXT_KEY_TECH_ANTIMATTER_ROCKETS",
- "civilopedia": "TXT_KEY_TECH_ANTIMATTER_ROCKETS_PEDIA",
- "quote": "TXT_KEY_TECH_ANTIMATTER_ROCKETS_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_INTERSTELLAR_PAIR_PRODUCTION_PLANT",
@@ -70,6 +67,9 @@
   "soundMP": "AS2D_TECH_ANTIMATTER_ROCKETS"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_ANTIMATTER_ROCKETS",
+  "civilopedia": "TXT_KEY_TECH_ANTIMATTER_ROCKETS_PEDIA",
+  "quote": "TXT_KEY_TECH_ANTIMATTER_ROCKETS_QUOTE",
   "era": "C2C_ERA_GALACTIC",
   "worth": 48,
   "militaryWorth": 4,

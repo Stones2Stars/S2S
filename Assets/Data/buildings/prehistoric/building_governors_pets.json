@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_GOVERNORS_PETS",
- "description": "TXT_KEY_BUILDING_GOVERNORS_PETS",
- "civilopedia": "TXT_KEY_BUILDING_GOVERNORS_PETS_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_GOVERNORS_MENAGERIE"
@@ -45,6 +43,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_GOVERNORS_PETS",
+  "civilopedia": "TXT_KEY_BUILDING_GOVERNORS_PETS_PEDIA",
   "enabledCivilizations": [
    "CIVILIZATION_NPC_NEANDERTHAL"
   ],

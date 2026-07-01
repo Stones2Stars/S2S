@@ -1,8 +1,5 @@
 {
  "type": "CIVIC_ONLINE",
- "description": "TXT_KEY_CIVIC_ONLINE",
- "civilopedia": "TXT_KEY_CIVIC_ONLINE_PEDIA",
- "strategy": "TXT_KEY_CIVIC_ONLINE_STRATEGY",
  "enables": {
   "buildings": [
    "BUILDING_ONLINE_UNIVERSITY"
@@ -62,6 +59,9 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_CIVIC_ONLINE",
+  "civilopedia": "TXT_KEY_CIVIC_ONLINE_PEDIA",
+  "strategy": "TXT_KEY_CIVIC_ONLINE_STRATEGY",
   "civicOption": "CIVICOPTION_EDUCATION",
   "upkeepLevel": "UPKEEP_MEDIUM"
  }

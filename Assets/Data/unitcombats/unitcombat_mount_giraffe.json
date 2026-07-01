@@ -1,6 +1,5 @@
 {
  "type": "UNITCOMBAT_MOUNT_GIRAFFE",
- "description": "TXT_KEY_UNITCOMBAT_MOUNT_GIRAFFE",
  "capture": {
   "unit": {
    "resistance": {
@@ -12,5 +11,8 @@
   "art": {
    "icon": "Art/Interface/Buttons/units/sparth/categories/mount_giraffe.dds"
   }
+ },
+ "identity": {
+  "description": "TXT_KEY_UNITCOMBAT_MOUNT_GIRAFFE"
  }
 }

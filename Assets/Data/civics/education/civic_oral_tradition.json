@@ -1,8 +1,5 @@
 {
  "type": "CIVIC_ORAL_TRADITION",
- "description": "TXT_KEY_CIVIC_ORAL_TRADITION",
- "civilopedia": "TXT_KEY_CIVIC_ORAL_TRADITION_PEDIA",
- "strategy": "TXT_KEY_CIVIC_ORAL_TRADITION_STRATEGY",
  "enables": {
   "buildings": [
    "BUILDING_CREATION_MYTH"
@@ -83,6 +80,9 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_CIVIC_ORAL_TRADITION",
+  "civilopedia": "TXT_KEY_CIVIC_ORAL_TRADITION_PEDIA",
+  "strategy": "TXT_KEY_CIVIC_ORAL_TRADITION_STRATEGY",
   "civicOption": "CIVICOPTION_EDUCATION"
  }
 }

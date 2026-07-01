@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_ANT_CATCHER",
- "description": "TXT_KEY_BUILDING_ANT_CATCHER",
- "civilopedia": "TXT_KEY_BUILDING_ANT_CATCHER_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_RESOURCES_BUGS"
@@ -90,6 +88,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_ANT_CATCHER",
+  "civilopedia": "TXT_KEY_BUILDING_ANT_CATCHER_PEDIA",
   "enabledCivilizations": [
    "CIVILIZATION_NPC_NEANDERTHAL"
   ],

@@ -1,7 +1,5 @@
 {
  "type": "UNIT_TIGERCLAW",
- "description": "TXT_KEY_UNIT_TIGERCLAW",
- "civilopedia": "TXT_KEY_UNIT_TIGERCLAW_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -110,6 +108,8 @@
   "upkeep": 1
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_TIGERCLAW",
+  "civilopedia": "TXT_KEY_UNIT_TIGERCLAW_PEDIA",
   "worth": 2,
   "militaryWorth": 20,
   "xpValueAttack": 6,

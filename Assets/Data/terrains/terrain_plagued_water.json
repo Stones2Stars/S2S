@@ -1,7 +1,5 @@
 {
  "type": "TERRAIN_PLAGUED_WATER",
- "description": "TXT_KEY_TERRAIN_PLAGUED_WATER",
- "civilopedia": "TXT_KEY_TERRAIN_PLAGUED_WATER_PEDIA",
  "food": {
   "plot": {
    "flat": -10
@@ -131,6 +129,8 @@
   "soundscape": "ASSS_OCEAN_SELECT_AMB"
  },
  "identity": {
+  "description": "TXT_KEY_TERRAIN_PLAGUED_WATER",
+  "civilopedia": "TXT_KEY_TERRAIN_PLAGUED_WATER_PEDIA",
   "distanceToLand": 1,
   "movementCost": 20
  }

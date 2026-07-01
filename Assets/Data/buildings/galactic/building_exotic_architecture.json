@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_EXOTIC_ARCHITECTURE",
- "description": "TXT_KEY_BUILDING_EXOTIC_ARCHITECTURE",
- "civilopedia": "TXT_KEY_BUILDING_EXOTIC_ARCHITECTURE_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_SHAPESHIFTING_ARCHITECTURE",
@@ -59,6 +57,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_EXOTIC_ARCHITECTURE",
+  "civilopedia": "TXT_KEY_BUILDING_EXOTIC_ARCHITECTURE_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

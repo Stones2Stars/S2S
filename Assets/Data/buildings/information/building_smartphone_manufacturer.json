@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_SMARTPHONE_MANUFACTURER",
- "description": "TXT_KEY_BUILDING_SMARTPHONE_MANUFACTURER",
- "civilopedia": "TXT_KEY_BUILDING_SMARTPHONE_MANUFACTURER_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_HYPERMARKET"
@@ -79,6 +77,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_SMARTPHONE_MANUFACTURER",
+  "civilopedia": "TXT_KEY_BUILDING_SMARTPHONE_MANUFACTURER_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

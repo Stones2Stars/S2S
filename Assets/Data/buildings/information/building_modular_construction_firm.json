@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_MODULAR_CONSTRUCTION_FIRM",
- "description": "TXT_KEY_BUILDING_MODULAR_CONSTRUCTION_FIRM",
- "civilopedia": "TXT_KEY_BUILDING_MODULAR_CONSTRUCTION_FIRM_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_SELF_CONSTRUCTION_FIRM"
@@ -77,6 +75,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_MODULAR_CONSTRUCTION_FIRM",
+  "civilopedia": "TXT_KEY_BUILDING_MODULAR_CONSTRUCTION_FIRM_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

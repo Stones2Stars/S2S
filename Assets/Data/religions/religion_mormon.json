@@ -1,7 +1,5 @@
 {
  "type": "RELIGION_MORMON",
- "description": "TXT_KEY_TECH_MORMON",
- "civilopedia": "TXT_KEY_TECH_MORMON_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_LDS_MEETINGHOUSE",
@@ -78,6 +76,8 @@
   "sound": "AS2D_BUILD_JEWISH"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_MORMON",
+  "civilopedia": "TXT_KEY_TECH_MORMON_PEDIA",
   "spreadFactor": 15
  }
 }

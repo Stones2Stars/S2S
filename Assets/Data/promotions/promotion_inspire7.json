@@ -1,6 +1,5 @@
 {
  "type": "PROMOTION_INSPIRE7",
- "description": "TXT_KEY_PROMOTION_INSPIRE7",
  "revoltProtection": {
   "unit": {
    "percent": 10
@@ -16,5 +15,8 @@
  },
  "sound": {
   "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_INSPIRE7"
  }
 }

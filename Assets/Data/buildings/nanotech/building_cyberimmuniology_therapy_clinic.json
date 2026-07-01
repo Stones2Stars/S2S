@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_CYBERIMMUNIOLOGY_THERAPY_CLINIC",
- "description": "TXT_KEY_BUILDING_CYBERIMMUNIOLOGY_THERAPY_CLINIC",
- "civilopedia": "TXT_KEY_BUILDING_CYBERIMMUNIOLOGY_THERAPY_CLINIC_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -79,6 +77,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_CYBERIMMUNIOLOGY_THERAPY_CLINIC",
+  "civilopedia": "TXT_KEY_BUILDING_CYBERIMMUNIOLOGY_THERAPY_CLINIC_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

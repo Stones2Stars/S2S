@@ -1,9 +1,11 @@
 {
  "type": "UNITCOMBAT_ANIMAL_COMBAT_SCRATCH",
- "description": "TXT_KEY_UNITCOMBAT_ANIMAL_COMBAT_SCRATCH",
  "ui": {
   "art": {
    "icon": "Art/Interface/Buttons/units/sparth/categories/nature_scratch.dds"
   }
+ },
+ "identity": {
+  "description": "TXT_KEY_UNITCOMBAT_ANIMAL_COMBAT_SCRATCH"
  }
 }

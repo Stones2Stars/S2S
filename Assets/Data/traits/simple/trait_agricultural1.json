@@ -1,7 +1,5 @@
 {
  "type": "TRAIT_AGRICULTURAL1",
- "description": "TXT_KEY_TRAIT_AGRICULTURAL0",
- "civilopedia": "TXT_KEY_TRAIT_AGRICULTURAL_PEDIA",
  "enables": {
   "traits": [
    "TRAIT_AGRICULTURAL2"
@@ -190,6 +188,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_TRAIT_AGRICULTURAL0",
+  "civilopedia": "TXT_KEY_TRAIT_AGRICULTURAL_PEDIA",
   "shortDescription": "TXT_KEY_TRAIT_AGRICULTURAL_SHORT"
  }
 }

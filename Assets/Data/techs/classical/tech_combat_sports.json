@@ -1,8 +1,5 @@
 {
  "type": "TECH_COMBAT_SPORTS",
- "description": "TXT_KEY_TECH_COMBAT_SPORTS",
- "civilopedia": "TXT_KEY_TECH_COMBAT_SPORTS_PEDIA",
- "quote": "TXT_KEY_TECH_COMBAT_SPORTS_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_BALL_COURT",
@@ -59,6 +56,9 @@
   "soundMP": "AS2D_TECH_COMBAT_SPORTS"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_COMBAT_SPORTS",
+  "civilopedia": "TXT_KEY_TECH_COMBAT_SPORTS_PEDIA",
+  "quote": "TXT_KEY_TECH_COMBAT_SPORTS_QUOTE",
   "era": "C2C_ERA_CLASSICAL",
   "worth": 16,
   "tradeable": true,

@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_INTERSTELLAR_BLACK_HOLE_COLONY",
- "description": "TXT_KEY_BUILDING_INTERSTELLAR_BLACK_HOLE_COLONY",
- "civilopedia": "TXT_KEY_BUILDING_INTERSTELLAR_BLACK_HOLE_COLONY_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_CYGNUS_X_1_COLONY",
@@ -65,6 +63,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_INTERSTELLAR_BLACK_HOLE_COLONY",
+  "civilopedia": "TXT_KEY_BUILDING_INTERSTELLAR_BLACK_HOLE_COLONY_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

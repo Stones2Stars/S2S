@@ -1,8 +1,5 @@
 {
  "type": "TECH_TRIBALISM",
- "description": "TXT_KEY_TECH_TRIBALISM",
- "civilopedia": "TXT_KEY_TECH_TRIBALISM_PEDIA",
- "quote": "TXT_KEY_TECH_TRIBALISM_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_DISEASE_MALARIA",
@@ -77,6 +74,9 @@
   "soundMP": "AS2D_TECH_TRIBALISM"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_TRIBALISM",
+  "civilopedia": "TXT_KEY_TECH_TRIBALISM_PEDIA",
+  "quote": "TXT_KEY_TECH_TRIBALISM_QUOTE",
   "era": "C2C_ERA_PREHISTORIC",
   "worth": 4,
   "militaryWorth": 2,

@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_221B_BAKER_STREET",
- "description": "TXT_KEY_BUILDING_221B_BAKER_STREET",
- "civilopedia": "TXT_KEY_BUILDING_221B_BAKER_STREET_PEDIA",
  "obsoletedBy": {
   "techs": [
    "TECH_HOMO_SUPERIOR"
@@ -81,6 +79,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_221B_BAKER_STREET",
+  "civilopedia": "TXT_KEY_BUILDING_221B_BAKER_STREET_PEDIA",
   "commerceDoubleTime": {
    "culture": 1000
   },

@@ -1,7 +1,5 @@
 {
  "type": "UNIT_SENTINEL",
- "description": "TXT_KEY_UNIT_SENTINEL",
- "civilopedia": "TXT_KEY_UNIT_SENTINEL_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -151,6 +149,8 @@
   "upkeep": 16
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_SENTINEL",
+  "civilopedia": "TXT_KEY_UNIT_SENTINEL_PEDIA",
   "worth": 24,
   "militaryWorth": 90,
   "xpValueAttack": 3,

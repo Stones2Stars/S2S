@@ -1,8 +1,5 @@
 {
  "type": "TECH_FLINT_KNAPPING",
- "description": "TXT_KEY_TECH_FLINT_KNAPPING",
- "civilopedia": "TXT_KEY_TECH_FLINT_KNAPPING_PEDIA",
- "quote": "TXT_KEY_TECH_FLINT_KNAPPING_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_FLINT_KNAPPER"
@@ -53,6 +50,9 @@
   "soundMP": "AS2D_TECH_FLINT_KNAPPING"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_FLINT_KNAPPING",
+  "civilopedia": "TXT_KEY_TECH_FLINT_KNAPPING_PEDIA",
+  "quote": "TXT_KEY_TECH_FLINT_KNAPPING_QUOTE",
   "era": "C2C_ERA_PREHISTORIC",
   "worth": 2,
   "tradeable": true,

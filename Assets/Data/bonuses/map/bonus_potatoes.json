@@ -1,7 +1,5 @@
 {
  "type": "BONUS_POTATOES",
- "description": "TXT_KEY_BONUS_POTATOES",
- "civilopedia": "TXT_KEY_BONUS_POTATOES_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_CULTURE_INCAN",
@@ -80,6 +78,8 @@
   ]
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_POTATOES",
+  "civilopedia": "TXT_KEY_BONUS_POTATOES_PEDIA",
   "bonusClassType": "BONUSCLASS_CROP"
  }
 }

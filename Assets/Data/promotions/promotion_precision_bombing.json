@@ -1,6 +1,5 @@
 {
  "type": "PROMOTION_PRECISION_BOMBING",
- "description": "TXT_KEY_PROMOTION_PRECISION_BOMBING",
  "bombard": {
   "unit": {
    "rate": {
@@ -51,6 +50,7 @@
   "sound": "AS2D_IF_LEVELUP"
  },
  "identity": {
+  "description": "TXT_KEY_PROMOTION_PRECISION_BOMBING",
   "unitCombats": [
    "UNITCOMBAT_EARLY_BOMBERS",
    "UNITCOMBAT_BOMBERS",

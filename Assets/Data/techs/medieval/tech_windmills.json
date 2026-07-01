@@ -1,8 +1,5 @@
 {
  "type": "TECH_WINDMILLS",
- "description": "TXT_KEY_TECH_WINDMILLS",
- "civilopedia": "TXT_KEY_TECH_WINDMILLS_PEDIA",
- "quote": "TXT_KEY_TECH_WINDMILLS_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_WINDMILL"
@@ -57,6 +54,9 @@
   "soundMP": "AS2D_TECH_WINDMILLS"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_WINDMILLS",
+  "civilopedia": "TXT_KEY_TECH_WINDMILLS_PEDIA",
+  "quote": "TXT_KEY_TECH_WINDMILLS_QUOTE",
   "era": "C2C_ERA_MEDIEVAL",
   "worth": 24,
   "militaryWorth": 8,

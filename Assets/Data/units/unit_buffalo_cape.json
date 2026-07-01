@@ -1,7 +1,5 @@
 {
  "type": "UNIT_BUFFALO_CAPE",
- "description": "TXT_KEY_UNIT_BUFFALO_CAPE",
- "civilopedia": "TXT_KEY_UNIT_BUFFALO_CAPE_PEDIA",
  "skills": {
   "blendIntoCity": true
  },
@@ -44,6 +42,8 @@
   ]
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_BUFFALO_CAPE",
+  "civilopedia": "TXT_KEY_UNIT_BUFFALO_CAPE_PEDIA",
   "spawnOnly": true,
   "xpValueAttack": 7,
   "xpValueDefense": 4,

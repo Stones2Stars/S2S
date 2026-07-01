@@ -1,8 +1,5 @@
 {
  "type": "CIVIC_MARXIST",
- "description": "TXT_KEY_CIVIC_MARXIST",
- "civilopedia": "TXT_KEY_CIVIC_MARXIST_PEDIA",
- "strategy": "TXT_KEY_CIVIC_MARXIST_STRATEGY",
  "enables": {
   "buildings": [
    "BUILDING_EYE_IN_THE_SKY",
@@ -181,6 +178,9 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_CIVIC_MARXIST",
+  "civilopedia": "TXT_KEY_CIVIC_MARXIST_PEDIA",
+  "strategy": "TXT_KEY_CIVIC_MARXIST_STRATEGY",
   "civicOption": "CIVICOPTION_SOCIETY",
   "anarchyLength": 2,
   "upkeepLevel": "UPKEEP_MEDIUM"

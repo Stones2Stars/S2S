@@ -1,7 +1,5 @@
 {
  "type": "BONUS_MICROWAVE_OVENS",
- "description": "TXT_KEY_BONUS_MICROWAVE_OVENS",
- "civilopedia": "TXT_KEY_BONUS_MICROWAVE_OVENS_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_APPLIANCE_STORE",
@@ -15,6 +13,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_MICROWAVE_OVENS",
+  "civilopedia": "TXT_KEY_BONUS_MICROWAVE_OVENS_PEDIA",
   "bonusClassType": "BONUSCLASS_MANUFACTURED"
  }
 }

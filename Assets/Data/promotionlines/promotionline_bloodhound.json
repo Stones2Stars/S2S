@@ -1,12 +1,12 @@
 {
  "type": "PROMOTIONLINE_BLOODHOUND",
- "description": "TXT_KEY_PROMOTIONLINE_BLOODHOUND",
  "ui": {
   "art": {
    "icon": "Art/Interface/Buttons/Promotions/bloodhound1.dds"
   }
  },
  "identity": {
+  "description": "TXT_KEY_PROMOTIONLINE_BLOODHOUND",
   "unitCombats": [
    "UNITCOMBAT_CANINE"
   ]

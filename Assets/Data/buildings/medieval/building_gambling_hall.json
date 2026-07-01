@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_GAMBLING_HALL",
- "description": "TXT_KEY_BUILDING_GAMBLING_HALL",
- "civilopedia": "TXT_KEY_BUILDING_GAMBLING_HALL_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_CASINO"
@@ -81,6 +79,8 @@
   "construct": "AS2D_BUILD_TOLLHOUSE"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_GAMBLING_HALL",
+  "civilopedia": "TXT_KEY_BUILDING_GAMBLING_HALL_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "visibilityPriority": 1,
   "mapCategories": [

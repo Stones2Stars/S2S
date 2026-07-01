@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_GAMBLING_DEN",
- "description": "TXT_KEY_BUILDING_GAMBLING_DEN",
- "civilopedia": "TXT_KEY_BUILDING_GAMBLING_DEN_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_GAMBLING_HALL"
@@ -66,6 +64,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_GAMBLING_DEN",
+  "civilopedia": "TXT_KEY_BUILDING_GAMBLING_DEN_PEDIA",
   "worth": 2,
   "conquestProbability": 100,
   "advisor": "ADVISOR_ECONOMY",

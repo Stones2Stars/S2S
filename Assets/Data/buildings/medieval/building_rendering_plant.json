@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_RENDERING_PLANT",
- "description": "TXT_KEY_BUILDING_RENDERING_PLANT",
- "civilopedia": "TXT_KEY_BUILDING_RENDERING_PLANT_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_RESOURCES_LARD"
@@ -147,6 +145,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_RENDERING_PLANT",
+  "civilopedia": "TXT_KEY_BUILDING_RENDERING_PLANT_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

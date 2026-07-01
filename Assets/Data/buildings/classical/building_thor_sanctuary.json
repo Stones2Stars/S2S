@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_THOR_SANCTUARY",
- "description": "TXT_KEY_BUILDING_THOR_SANCTUARY",
- "civilopedia": "TXT_KEY_BUILDING_THOR_SANCTUARY_PEDIA",
  "obsoletedBy": {
   "techs": [
    "TECH_HUMANISM"
@@ -114,6 +112,8 @@
   "construct": "AS2D_BUILD_NORDIC"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_THOR_SANCTUARY",
+  "civilopedia": "TXT_KEY_BUILDING_THOR_SANCTUARY_PEDIA",
   "commerceDoubleTime": {
    "culture": 1000
   },

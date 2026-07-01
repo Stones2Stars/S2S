@@ -1,8 +1,5 @@
 {
  "type": "TECH_GYROCOMPASS",
- "description": "TXT_KEY_TECH_GYROCOMPASS",
- "civilopedia": "TXT_KEY_TECH_GYROCOMPASS_PEDIA",
- "quote": "TXT_KEY_TECH_GYROCOMPASS_QUOTE",
  "enables": {
   "techs": [
    "TECH_ENCRYPTION_MACHINES",
@@ -59,6 +56,9 @@
   "soundMP": "AS2D_TECH_GENERIC"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_GYROCOMPASS",
+  "civilopedia": "TXT_KEY_TECH_GYROCOMPASS_PEDIA",
+  "quote": "TXT_KEY_TECH_GYROCOMPASS_QUOTE",
   "era": "C2C_ERA_INDUSTRIAL",
   "worth": 40,
   "tradeable": true,

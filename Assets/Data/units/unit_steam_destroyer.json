@@ -1,7 +1,5 @@
 {
  "type": "UNIT_STEAM_DESTROYER",
- "description": "TXT_KEY_UNIT_STEAM_DESTROYER",
- "civilopedia": "TXT_KEY_UNIT_DESTROYER_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -84,6 +82,8 @@
   "upkeep": 2
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_STEAM_DESTROYER",
+  "civilopedia": "TXT_KEY_UNIT_DESTROYER_PEDIA",
   "worth": 4,
   "militaryWorth": 105,
   "xpValueAttack": 3,

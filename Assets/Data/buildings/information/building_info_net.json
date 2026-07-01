@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_INFO_NET",
- "description": "TXT_KEY_BUILDING_INFO_NET",
- "civilopedia": "TXT_KEY_BUILDING_INFO_NET_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -69,6 +67,8 @@
   "construct": "AS2D_BUILD_INFO_NET"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_INFO_NET",
+  "civilopedia": "TXT_KEY_BUILDING_INFO_NET_PEDIA",
   "worth": 6,
   "conquestProbability": 75,
   "advisor": "ADVISOR_SCIENCE",

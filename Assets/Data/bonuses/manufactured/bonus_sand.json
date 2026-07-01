@@ -1,7 +1,5 @@
 {
  "type": "BONUS_SAND",
- "description": "TXT_KEY_BONUS_SAND",
- "civilopedia": "TXT_KEY_BONUS_SAND_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_CEMENT_MILL",
@@ -20,6 +18,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_SAND",
+  "civilopedia": "TXT_KEY_BONUS_SAND_PEDIA",
   "bonusClassType": "BONUSCLASS_MANUFACTURED"
  }
 }

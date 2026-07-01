@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_WHALERS_DOCK",
- "description": "TXT_KEY_BUILDING_WHALERS_DOCK",
- "civilopedia": "TXT_KEY_BUILDING_WHALERS_DOCK_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_RESOURCES_CARCASS",
@@ -68,6 +66,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_WHALERS_DOCK",
+  "civilopedia": "TXT_KEY_BUILDING_WHALERS_DOCK_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

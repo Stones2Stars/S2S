@@ -1,6 +1,5 @@
 {
  "type": "PROPERTY_WATER_POLLUTION",
- "description": "TXT_KEY_PROPERTY_WATER_POLLUTION",
  "text": {
   "value": "TXT_KEY_PROPERTY_WATER_POLLUTION_DISPLAY",
   "change": "TXT_KEY_PROPERTY_WATER_POLLUTION_CHANGE",
@@ -47,6 +46,7 @@
   "trainReluctance": 10
  },
  "identity": {
+  "description": "TXT_KEY_PROPERTY_WATER_POLLUTION",
   "sourceDrain": true,
   "fontButtonIndex": 2
  }

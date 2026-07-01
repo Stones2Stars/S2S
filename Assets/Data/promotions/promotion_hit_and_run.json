@@ -1,6 +1,5 @@
 {
  "type": "PROMOTION_HIT_AND_RUN",
- "description": "TXT_KEY_PROMOTION_HIT_AND_RUN",
  "movement": {
   "unit": {
    "moveDiscount": {
@@ -32,6 +31,7 @@
   "sound": "AS2D_IF_LEVELUP"
  },
  "identity": {
+  "description": "TXT_KEY_PROMOTION_HIT_AND_RUN",
   "unitCombats": [
    "UNITCOMBAT_EXPLORER"
   ],

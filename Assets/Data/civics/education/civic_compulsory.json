@@ -1,8 +1,5 @@
 {
  "type": "CIVIC_COMPULSORY",
- "description": "TXT_KEY_CIVIC_COMPULSORY",
- "civilopedia": "TXT_KEY_CIVIC_COMPULSORY_PEDIA",
- "strategy": "TXT_KEY_CIVIC_COMPULSORY_STRATEGY",
  "food": {
   "empire": {
    "percent": 5
@@ -91,6 +88,9 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_CIVIC_COMPULSORY",
+  "civilopedia": "TXT_KEY_CIVIC_COMPULSORY_PEDIA",
+  "strategy": "TXT_KEY_CIVIC_COMPULSORY_STRATEGY",
   "civicOption": "CIVICOPTION_EDUCATION",
   "upkeepLevel": "UPKEEP_HIGH"
  }

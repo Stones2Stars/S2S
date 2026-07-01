@@ -1,7 +1,5 @@
 {
  "type": "BONUS_ENGLISH",
- "description": "TXT_KEY_BONUS_ENGLISH",
- "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
  "enables": {
   "units": [
    "UNIT_ENGLISH_REDCOAT",
@@ -16,6 +14,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_ENGLISH",
+  "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
   "bonusClassType": "BONUSCLASS_CULTURE"
  }
 }

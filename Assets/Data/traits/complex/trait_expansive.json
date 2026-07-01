@@ -1,8 +1,5 @@
 {
  "type": "TRAIT_EXPANSIVE",
- "description": "TXT_KEY_TRAIT_COMPLEX_EXPANSIVE",
- "civilopedia": "TXT_KEY_TRAIT_COMPLEX_EXPANSIVE_PEDIA",
- "strategy": "TXT_KEY_TRAIT_COMPLEX_EXPANSIVE_STRATEGY",
  "excludes": [
   "TRAIT_MINIMALIST"
  ],
@@ -132,5 +129,10 @@
   "art": {
    "icon": "art/Buttons/Traits/TraitExpansive.dds"
   }
+ },
+ "identity": {
+  "description": "TXT_KEY_TRAIT_COMPLEX_EXPANSIVE",
+  "civilopedia": "TXT_KEY_TRAIT_COMPLEX_EXPANSIVE_PEDIA",
+  "strategy": "TXT_KEY_TRAIT_COMPLEX_EXPANSIVE_STRATEGY"
  }
 }

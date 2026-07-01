@@ -1,7 +1,5 @@
 {
  "type": "BONUS_IRON_WARES",
- "description": "TXT_KEY_BONUS_IRON_WARES",
- "civilopedia": "TXT_KEY_BONUS_WARES_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_AMMUNITIONS_WORKSHOP",
@@ -244,6 +242,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_IRON_WARES",
+  "civilopedia": "TXT_KEY_BONUS_WARES_PEDIA",
   "bonusClassType": "BONUSCLASS_MANUFACTURED"
  }
 }

@@ -1,6 +1,5 @@
 {
  "type": "PROMOTION_CROWS_NEST3",
- "description": "TXT_KEY_PROMOTION_CROWS_NEST3",
  "vision": {
   "visibilityIntensity": {
    "INVISIBLE_NAVAL_DISGUISE": 1,
@@ -22,5 +21,8 @@
  },
  "sound": {
   "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_CROWS_NEST3"
  }
 }

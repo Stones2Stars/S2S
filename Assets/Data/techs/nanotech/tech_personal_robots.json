@@ -1,8 +1,5 @@
 {
  "type": "TECH_PERSONAL_ROBOTS",
- "description": "TXT_KEY_TECH_PERSONAL_ROBOTS",
- "civilopedia": "TXT_KEY_TECH_PERSONAL_ROBOTS_PEDIA",
- "quote": "TXT_KEY_TECH_PERSONAL_ROBOTS_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_ANDROID_BROTHEL",
@@ -71,6 +68,9 @@
   "soundMP": "AS2D_TECH_PERSONAL_ROBOTS"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_PERSONAL_ROBOTS",
+  "civilopedia": "TXT_KEY_TECH_PERSONAL_ROBOTS_PEDIA",
+  "quote": "TXT_KEY_TECH_PERSONAL_ROBOTS_QUOTE",
   "era": "C2C_ERA_NANOTECH",
   "worth": 48,
   "tradeable": true,

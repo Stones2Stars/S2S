@@ -1,7 +1,5 @@
 {
  "type": "PROJECT_INTERNATIONAL_MONETARY_FUND",
- "description": "TXT_KEY_PROJECT_INTERNATIONAL_MONETARY_FUND",
- "civilopedia": "TXT_KEY_PROJECT_INTERNATIONAL_MONETARY_FUND_PEDIA",
  "buildRate": {
   "self": {
    "percent": [
@@ -28,6 +26,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_PROJECT_INTERNATIONAL_MONETARY_FUND",
+  "civilopedia": "TXT_KEY_PROJECT_INTERNATIONAL_MONETARY_FUND_PEDIA",
   "mapCategories": [
    "MAPCATEGORY_EARTH"
   ],

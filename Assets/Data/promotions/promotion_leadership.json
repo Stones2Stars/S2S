@@ -1,6 +1,5 @@
 {
  "type": "PROMOTION_LEADERSHIP",
- "description": "TXT_KEY_PROMOTION_LEADERSHIP",
  "experience": {
   "unit": {
    "percent": 100
@@ -25,6 +24,7 @@
   "sound": "AS2D_IF_LEVELUP"
  },
  "identity": {
+  "description": "TXT_KEY_PROMOTION_LEADERSHIP",
   "unitCombats": [
    "UNITCOMBAT_RECON",
    "UNITCOMBAT_HUNTER",

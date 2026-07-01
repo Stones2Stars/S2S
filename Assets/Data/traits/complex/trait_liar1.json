@@ -1,8 +1,5 @@
 {
  "type": "TRAIT_LIAR1",
- "description": "TXT_KEY_TRAIT_LIAR1",
- "civilopedia": "TXT_KEY_TRAIT_LIAR1_PEDIA",
- "strategy": "TXT_KEY_TRAIT_LIAR_STRATEGY",
  "enables": {
   "traits": [
    "TRAIT_LIAR2"
@@ -168,6 +165,9 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_TRAIT_LIAR1",
+  "civilopedia": "TXT_KEY_TRAIT_LIAR1_PEDIA",
+  "strategy": "TXT_KEY_TRAIT_LIAR_STRATEGY",
   "negativeTrait": true
  }
 }

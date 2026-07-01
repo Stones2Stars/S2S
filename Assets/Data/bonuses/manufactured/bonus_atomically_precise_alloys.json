@@ -1,7 +1,5 @@
 {
  "type": "BONUS_ATOMICALLY_PRECISE_ALLOYS",
- "description": "TXT_KEY_BONUS_ATOMICALLY_PRECISE_ALLOYS",
- "civilopedia": "TXT_KEY_BONUS_ATOMICALLY_PRECISE_ALLOYS_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_ATOMIC_FIREPROOFING",
@@ -14,6 +12,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_ATOMICALLY_PRECISE_ALLOYS",
+  "civilopedia": "TXT_KEY_BONUS_ATOMICALLY_PRECISE_ALLOYS_PEDIA",
   "bonusClassType": "BONUSCLASS_MANUFACTURED"
  }
 }

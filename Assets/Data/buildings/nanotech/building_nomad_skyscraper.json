@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_NOMAD_SKYSCRAPER",
- "description": "TXT_KEY_BUILDING_NOMAD_SKYSCRAPER",
- "civilopedia": "TXT_KEY_BUILDING_NOMAD_SKYSCRAPER_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -49,6 +47,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_NOMAD_SKYSCRAPER",
+  "civilopedia": "TXT_KEY_BUILDING_NOMAD_SKYSCRAPER_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

@@ -234,16 +234,26 @@ KEYED = {
     "SpecialistCommerceChanges":          (None,             "empire", "specialists",    "flat",    COMMERCES),
 }
 
-# --- boolean policy/capability flags -> policies.{name}: true. ---
+# --- boolean policy flags -> policies.{name}: true. PURE empire STATES only (json.md §9): a policy is a state a civic/
+# trait enacts, NEVER an effect/parameterized rule. (nonStateReligionCommerce is a Free-Church permission STATE -- it
+# stays; the FreeSpecialistPer* keys are EFFECTS -> FREE_SPEC_PER_WONDER below, not here.) ---
 POLICIES = {
     "bNonStateReligionCommerce": "nonStateReligionCommerce", "bUpgradeAnywhere": "upgradeAnywhere",
     "bMilitaryFoodProduction": "militaryFoodProduction", "bAllowsInquisitions": "allowInquisitions",
     "bCitiesStartwithStateReligion": "citiesStartWithStateReligion", "bDraftsOnCityCapture": "draftsOnCityCapture",
-    "bFreeSpecialistperWorldWonder": "freeSpecialistPerWorldWonder",
-    "bFreeSpecialistperNationalWonder": "freeSpecialistPerNationalWonder",
-    "bFreeSpecialistperTeamProject": "freeSpecialistPerTeamProject", "bExtraGoody": "extraGoody",
+    "bExtraGoody": "extraGoody",
     "bAllReligionsActive": "allReligionsActive", "bBansNonStateReligions": "bansNonStateReligions",
     "bFreedomFighter": "freedomFighter",
+}
+# --- FreeSpecialistPer{Wonder,Project}: EFFECTS, not policies (owner 2026-07-01) -> a `freeSpecialists` MODIFIER scaled
+# per wonder count (CvCity:5764: +1 free specialist of any type per world/national/team wonder in each city). Emitted as
+# freeSpecialists.empire.any list entries {value:1, per:{type:<WONDER_TOKEN>, scope:city}} -- the ordinary §3.7 per-count
+# scaler. The count tokens are WORLD_WONDER / NATIONAL_WONDER / TEAM_WONDER -- the existing engine terms (json.md §3.1
+# count registry, UPPER_SNAKE like POPULATION/ERA; pedia display names can be aligned later). Coexists with iFreeSpecialist. ---
+FREE_SPEC_PER_WONDER = {
+    "bFreeSpecialistperWorldWonder":    "WORLD_WONDER",
+    "bFreeSpecialistperNationalWonder": "NATIONAL_WONDER",
+    "bFreeSpecialistperTeamProject":    "TEAM_WONDER",
 }
 # --- boolean flags -> identity (intrinsic "what am I", not a player-state policy). ---
 IDENTITY_FLAGS = {
@@ -389,6 +399,7 @@ def curate(typ, rec, store):
     excludes, load_on, load_not, succession = [], [], [], {}
     gp_unit, gp_change = None, None
     bonus_happy = OrderedDict()
+    free_spec_wonder = []            # FreeSpecialistPer* -> freeSpecialists.empire.any per-wonder deposits (below)
     leftover = []
     for c in rec:
         tag, t = c.tag, engine.text(c)
@@ -459,6 +470,11 @@ def curate(typ, rec, store):
         elif tag in POLICIES:
             if t in ("1", "true", "True"):
                 policies[POLICIES[tag]] = True
+        elif tag in FREE_SPEC_PER_WONDER:                 # EFFECT (not a policy) -> a freeSpecialists per-wonder modifier
+            if t in ("1", "true", "True"):
+                free_spec_wonder.append(OrderedDict([
+                    ("value", 1),
+                    ("per", OrderedDict([("type", FREE_SPEC_PER_WONDER[tag]), ("scope", "city")]))]))
         elif tag in IDENTITY_FLAGS:
             if t in ("1", "true", "True"):
                 identity[IDENTITY_FLAGS[tag]] = True
@@ -534,6 +550,16 @@ def curate(typ, rec, store):
                                         ("enabled", OrderedDict([("type", b), ("scope", "empire"), ("min", 1)]))]))
         node["flat"] = entries
 
+    # FreeSpecialistPer* -> freeSpecialists.empire.any per-wonder deposits (owner 2026-07-01; EFFECTS, not policies).
+    # +1 free specialist of ANY type per world/national/team wonder in each city (CvCity:5764). Coexists in the `any`
+    # leaf with a bare iFreeSpecialist count (merged into a list, json §3.9).
+    if free_spec_wonder:
+        node = fam.setdefault("freeSpecialists", {}).setdefault("empire", {})
+        existing = node.get("any")
+        entries = (existing if isinstance(existing, list) else [existing]) if existing is not None else []
+        entries.extend(free_spec_wonder)
+        node["any"] = entries
+
     out = OrderedDict()
     out["type"] = typ
     for k in ("description", "civilopedia", "help", "strategy"):
@@ -575,6 +601,7 @@ def curate(typ, rec, store):
     cc.emit_art(out, art_blocks)
     if identity:
         out["identity"] = identity
+    cc.fold_text_to_identity(out)   # TEXT -> identity (json.md §7)
     return out, leftover
 
 

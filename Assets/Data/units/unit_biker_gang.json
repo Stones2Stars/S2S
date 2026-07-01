@@ -1,7 +1,5 @@
 {
  "type": "UNIT_BIKER_GANG",
- "description": "TXT_KEY_UNIT_BIKER_GANG",
- "civilopedia": "TXT_KEY_UNIT_BIKER_GANG_PEDIA",
  "obsoletedBy": {
   "techs": [
    "TECH_COMPREHENSIVE_CYBERNETICS"
@@ -175,6 +173,8 @@
   "upkeep": 12
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_BIKER_GANG",
+  "civilopedia": "TXT_KEY_UNIT_BIKER_GANG_PEDIA",
   "worth": 12,
   "militaryWorth": 45,
   "xpValueAttack": 8,

@@ -1,7 +1,5 @@
 {
  "type": "BONUS_SALT",
- "description": "TXT_KEY_BONUS_SALT",
- "civilopedia": "TXT_KEY_BONUS_SALT_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_ANCIENT_EMBALMER",
@@ -68,6 +66,8 @@
   ]
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_SALT",
+  "civilopedia": "TXT_KEY_BONUS_SALT_PEDIA",
   "bonusClassType": "BONUSCLASS_PRODUCTION"
  }
 }

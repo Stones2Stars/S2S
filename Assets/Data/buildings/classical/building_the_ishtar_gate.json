@@ -1,8 +1,5 @@
 {
  "type": "BUILDING_THE_ISHTAR_GATE",
- "description": "TXT_KEY_BUILDING_THE_ISHTAR_GATE",
- "civilopedia": "TXT_KEY_BUILDING_THE_ISHTAR_GATE_PEDIA",
- "help": "TXT_KEY_BUILDING_THE_ISHTAR_GATE_HELP",
  "obsoletedBy": {
   "techs": [
    "TECH_RIFLING"
@@ -116,6 +113,9 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_THE_ISHTAR_GATE",
+  "civilopedia": "TXT_KEY_BUILDING_THE_ISHTAR_GATE_PEDIA",
+  "help": "TXT_KEY_BUILDING_THE_ISHTAR_GATE_HELP",
   "stateReligionCommerce": {
    "espionage": 1
   },

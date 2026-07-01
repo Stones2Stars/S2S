@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_BREEDING_PROGRAM_MUSKOX",
- "description": "TXT_KEY_BUILDING_BREEDING_PROGRAM_MUSKOX",
- "civilopedia": "TXT_KEY_BUILDING_BREEDING_PROGRAM_MUSKOX_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_ANIMAL_TRAINER_BISON",
@@ -118,6 +116,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_BREEDING_PROGRAM_MUSKOX",
+  "civilopedia": "TXT_KEY_BUILDING_BREEDING_PROGRAM_MUSKOX_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

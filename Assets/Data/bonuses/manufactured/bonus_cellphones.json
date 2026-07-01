@@ -1,7 +1,5 @@
 {
  "type": "BONUS_CELLPHONES",
- "description": "TXT_KEY_BONUS_CELLPHONES",
- "civilopedia": "TXT_KEY_BONUS_CELLPHONES_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_CELLPHONE_STORE",
@@ -21,6 +19,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_CELLPHONES",
+  "civilopedia": "TXT_KEY_BONUS_CELLPHONES_PEDIA",
   "bonusClassType": "BONUSCLASS_MANUFACTURED"
  }
 }

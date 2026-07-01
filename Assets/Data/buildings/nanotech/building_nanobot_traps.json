@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_NANOBOT_TRAPS",
- "description": "TXT_KEY_BUILDING_NANOBOT_TRAPS",
- "civilopedia": "TXT_KEY_BUILDING_NANOBOT_TRAPS_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_GRAVITY_TRAPS"
@@ -90,6 +88,8 @@
   "construct": "AS2D_BUILD_NANOFACTORY"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_NANOBOT_TRAPS",
+  "civilopedia": "TXT_KEY_BUILDING_NANOBOT_TRAPS_PEDIA",
   "damageAllAttackers": true,
   "militaryWorth": 8,
   "advisor": "ADVISOR_MILITARY",

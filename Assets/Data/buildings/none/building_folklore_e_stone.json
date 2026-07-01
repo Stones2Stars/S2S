@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_FOLKLORE_E_STONE",
- "description": "TXT_KEY_BUILDING_FOLKLORE_E_STONE",
- "civilopedia": "TXT_KEY_BUILDING_FOLKLORE_ELEMENTAL_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_FOLKLORE_E_CORAL_REEF",
@@ -93,6 +91,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_FOLKLORE_E_STONE",
+  "civilopedia": "TXT_KEY_BUILDING_FOLKLORE_ELEMENTAL_PEDIA",
   "nukeImmune": true,
   "neverCapture": true,
   "specialBuildingType": "SPECIALBUILDING_FOLKLORE_EXPLORATION",

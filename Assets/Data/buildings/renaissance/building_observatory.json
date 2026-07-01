@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_OBSERVATORY",
- "description": "TXT_KEY_BUILDING_OBSERVATORY",
- "civilopedia": "TXT_KEY_BUILDING_OBSERVATORY_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_ALMAGEST",
@@ -164,6 +162,8 @@
   "construct": "AS2D_BUILD_OBSERVATORY"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_OBSERVATORY",
+  "civilopedia": "TXT_KEY_BUILDING_OBSERVATORY_PEDIA",
   "worth": 5,
   "conquestProbability": 75,
   "dcmAirbombMission": 2,

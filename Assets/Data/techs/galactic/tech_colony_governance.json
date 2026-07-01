@@ -1,8 +1,5 @@
 {
  "type": "TECH_COLONY_GOVERNANCE",
- "description": "TXT_KEY_TECH_COLONY_GOVERNANCE",
- "civilopedia": "TXT_KEY_TECH_COLONY_GOVERNANCE_PEDIA",
- "quote": "TXT_KEY_TECH_COLONY_GOVERNANCE_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_INTERSTELLAR_DESIGNER_CASTE_MISSION_CONTROL",
@@ -55,6 +52,9 @@
   "soundMP": "AS2D_TECH_GENERIC"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_COLONY_GOVERNANCE",
+  "civilopedia": "TXT_KEY_TECH_COLONY_GOVERNANCE_PEDIA",
+  "quote": "TXT_KEY_TECH_COLONY_GOVERNANCE_QUOTE",
   "era": "C2C_ERA_GALACTIC",
   "worth": 48,
   "tradeable": true,

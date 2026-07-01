@@ -1,6 +1,5 @@
 {
  "type": "PROMOTION_ACE",
- "description": "TXT_KEY_PROMOTION_ACE",
  "experience": {
   "unit": {
    "percent": 15
@@ -27,6 +26,7 @@
   "sound": "AS2D_IF_LEVELUP"
  },
  "identity": {
+  "description": "TXT_KEY_PROMOTION_ACE",
   "unitCombats": [
    "UNITCOMBAT_EARLY_FIGHTERS",
    "UNITCOMBAT_EARLY_BOMBERS",

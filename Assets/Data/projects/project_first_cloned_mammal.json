@@ -1,7 +1,5 @@
 {
  "type": "PROJECT_FIRST_CLONED_MAMMAL",
- "description": "TXT_KEY_PROJECT_FIRST_CLONED_MAMMAL",
- "civilopedia": "TXT_KEY_PROJECT_FIRST_CLONED_MAMMAL_PEDIA",
  "buildRate": {
   "self": {
    "percent": [
@@ -28,6 +26,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_PROJECT_FIRST_CLONED_MAMMAL",
+  "civilopedia": "TXT_KEY_PROJECT_FIRST_CLONED_MAMMAL_PEDIA",
   "mapCategories": [
    "MAPCATEGORY_EARTH"
   ],

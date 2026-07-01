@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_INTERSTELLAR_NETWORK_NODE",
- "description": "TXT_KEY_BUILDING_INTERSTELLAR_NETWORK_NODE",
- "civilopedia": "TXT_KEY_BUILDING_INTERSTELLAR_NETWORK_NODE_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_INTERSTELLAR_COSMIC_NODE"
@@ -59,6 +57,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_INTERSTELLAR_NETWORK_NODE",
+  "civilopedia": "TXT_KEY_BUILDING_INTERSTELLAR_NETWORK_NODE_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

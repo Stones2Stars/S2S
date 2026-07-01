@@ -1,8 +1,5 @@
 {
  "type": "TECH_BINARY_SEMIOTICS",
- "description": "TXT_KEY_TECH_BINARY_SEMIOTICS",
- "civilopedia": "TXT_KEY_TECH_BINARY_SEMIOTICS_PEDIA",
- "quote": "TXT_KEY_TECH_BINARY_SEMIOTICS_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_AI_GAME_DESIGNER",
@@ -61,6 +58,9 @@
   "soundMP": "AS2D_TECH_BINARY_SEMIOTICS"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_BINARY_SEMIOTICS",
+  "civilopedia": "TXT_KEY_TECH_BINARY_SEMIOTICS_PEDIA",
+  "quote": "TXT_KEY_TECH_BINARY_SEMIOTICS_QUOTE",
   "era": "C2C_ERA_TRANSHUMAN",
   "worth": 48,
   "militaryWorth": 4,

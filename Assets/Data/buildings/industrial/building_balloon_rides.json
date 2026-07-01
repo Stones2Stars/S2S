@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_BALLOON_RIDES",
- "description": "TXT_KEY_BUILDING_BALLOON_RIDES",
- "civilopedia": "TXT_KEY_BUILDING_BALLOON_RIDES_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_BALLOON_FESTIVAL"
@@ -90,6 +88,8 @@
   "construct": "AS2D_BUILD_MARKETPLACE"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_BALLOON_RIDES",
+  "civilopedia": "TXT_KEY_BUILDING_BALLOON_RIDES_PEDIA",
   "worth": 2,
   "conquestProbability": 25,
   "advisor": "ADVISOR_MILITARY",

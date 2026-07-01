@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_HYPERSPACE_TRANSFINITE_SUPERCOMPUTER",
- "description": "TXT_KEY_BUILDING_HYPERSPACE_TRANSFINITE_SUPERCOMPUTER",
- "civilopedia": "TXT_KEY_BUILDING_HYPERSPACE_TRANSFINITE_SUPERCOMPUTER_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -39,6 +37,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_HYPERSPACE_TRANSFINITE_SUPERCOMPUTER",
+  "civilopedia": "TXT_KEY_BUILDING_HYPERSPACE_TRANSFINITE_SUPERCOMPUTER_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

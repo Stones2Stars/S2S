@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_BROTHEL",
- "description": "TXT_KEY_BUILDING_BROTHEL",
- "civilopedia": "TXT_KEY_BUILDING_BROTHEL_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_GENTLEMANS_CLUB"
@@ -142,6 +140,8 @@
   "construct": "AS2D_BUILD_BROTHEL"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_BROTHEL",
+  "civilopedia": "TXT_KEY_BUILDING_BROTHEL_PEDIA",
   "worth": 4,
   "conquestProbability": 75,
   "dcmAirbombMission": 2,

@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_LIQUOR_STORE",
- "description": "TXT_KEY_BUILDING_LIQUOR_STORE",
- "civilopedia": "TXT_KEY_BUILDING_LIQUOR_STORE_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_HYPERMARKET"
@@ -105,6 +103,8 @@
   "construct": "AS2D_BUILD_BANK"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_LIQUOR_STORE",
+  "civilopedia": "TXT_KEY_BUILDING_LIQUOR_STORE_PEDIA",
   "conquestProbability": 30,
   "advisor": "ADVISOR_ECONOMY",
   "visibilityPriority": 1,

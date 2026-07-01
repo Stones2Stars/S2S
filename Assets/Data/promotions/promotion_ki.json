@@ -1,6 +1,5 @@
 {
  "type": "PROMOTION_KI",
- "description": "TXT_KEY_PROMOTION_KI",
  "skills": {
   "immuneToFirstStrikes": true
  },
@@ -13,6 +12,7 @@
   "sound": "AS2D_IF_LEVELUP"
  },
  "identity": {
+  "description": "TXT_KEY_PROMOTION_KI",
   "stateReligionPrereq": "RELIGION_MESOPOTAMISM",
   "unitCombats": [
    "UNITCOMBAT_RECON",

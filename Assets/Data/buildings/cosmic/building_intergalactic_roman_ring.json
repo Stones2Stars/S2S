@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_INTERGALACTIC_ROMAN_RING",
- "description": "TXT_KEY_BUILDING_INTERGALACTIC_ROMAN_RING",
- "civilopedia": "TXT_KEY_BUILDING_INTERGALACTIC_ROMAN_RING_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_INTERGALACTIC_GRAZER",
@@ -45,6 +43,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_INTERGALACTIC_ROMAN_RING",
+  "civilopedia": "TXT_KEY_BUILDING_INTERGALACTIC_ROMAN_RING_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

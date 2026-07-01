@@ -1,7 +1,5 @@
 {
  "type": "UNIT_QHATUQ",
- "description": "TXT_KEY_UNIT_QHATUQ",
- "civilopedia": "TXT_KEY_UNIT_QHATUQ_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -75,6 +73,8 @@
   "upkeep": 1
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_QHATUQ",
+  "civilopedia": "TXT_KEY_UNIT_QHATUQ_PEDIA",
   "worth": 1,
   "xpValueAttack": 6,
   "xpValueDefense": 3,

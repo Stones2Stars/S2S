@@ -1,8 +1,5 @@
 {
  "type": "UNIT_TAMED_SNAKE",
- "description": "TXT_KEY_UNIT_TAMED_SNAKE",
- "civilopedia": "TXT_KEY_UNIT_TAMED_SNAKE_PEDIA",
- "help": "TXT_KEY_UNIT_TAMED_ANIMALS_HELP",
  "requires": {
   "build": {
    "all": [
@@ -57,6 +54,9 @@
   "production": 133
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_TAMED_SNAKE",
+  "civilopedia": "TXT_KEY_UNIT_TAMED_SNAKE_PEDIA",
+  "help": "TXT_KEY_UNIT_TAMED_ANIMALS_HELP",
   "xpValueAttack": 2,
   "xpValueDefense": 1,
   "domain": "DOMAIN_LAND",

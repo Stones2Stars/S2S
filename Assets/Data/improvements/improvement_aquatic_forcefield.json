@@ -1,7 +1,5 @@
 {
  "type": "IMPROVEMENT_AQUATIC_FORCEFIELD",
- "description": "TXT_KEY_IMPROVEMENT_AQUATIC_FORCEFIELD",
- "civilopedia": "TXT_KEY_IMPROVEMENT_AQUATIC_FORCEFIELD_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -68,6 +66,8 @@
   "uniqueRange": 2
  },
  "identity": {
+  "description": "TXT_KEY_IMPROVEMENT_AQUATIC_FORCEFIELD",
+  "civilopedia": "TXT_KEY_IMPROVEMENT_AQUATIC_FORCEFIELD_PEDIA",
   "actsAsCity": true,
   "advancedStart": {
    "cost": 60

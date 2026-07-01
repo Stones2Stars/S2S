@@ -1,6 +1,5 @@
 {
  "type": "UNITCOMBAT_ANIMAL_COMBAT_HIDING",
- "description": "TXT_KEY_UNITCOMBAT_ANIMAL_COMBAT_HIDING",
  "withdrawal": {
   "unit": {
    "percent": 10
@@ -18,5 +17,8 @@
   "art": {
    "icon": "Art/Interface/Buttons/units/sparth/categories/nature_hiding.dds"
   }
+ },
+ "identity": {
+  "description": "TXT_KEY_UNITCOMBAT_ANIMAL_COMBAT_HIDING"
  }
 }

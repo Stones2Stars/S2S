@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_AON_CENTER",
- "description": "TXT_KEY_BUILDING_AON_CENTER",
- "civilopedia": "TXT_KEY_BUILDING_AON_CENTER_PEDIA",
  "obsoletedBy": {
   "techs": [
    "TECH_TELEPORTATION"
@@ -94,6 +92,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_AON_CENTER",
+  "civilopedia": "TXT_KEY_BUILDING_AON_CENTER_PEDIA",
   "nukeImmune": true,
   "teamShare": true,
   "worth": 20,

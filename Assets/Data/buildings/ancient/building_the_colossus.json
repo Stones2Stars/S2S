@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_THE_COLOSSUS",
- "description": "TXT_KEY_BUILDING_THE_COLOSSUS",
- "civilopedia": "TXT_KEY_BUILDING_THE_COLOSSUS_PEDIA",
  "obsoletedBy": {
   "techs": [
    "TECH_ASTRONOMY"
@@ -113,6 +111,8 @@
   "construct": "AS2D_BUILD_COLOSSUS"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_THE_COLOSSUS",
+  "civilopedia": "TXT_KEY_BUILDING_THE_COLOSSUS_PEDIA",
   "commerceDoubleTime": {
    "culture": 1000
   },

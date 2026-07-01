@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_CULTURE_PARTHIAN",
- "description": "TXT_KEY_BUILDING_CULTURE_PARTHIAN",
- "civilopedia": "TXT_KEY_BUILDING_CULTURE_PARTHIAN_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -52,6 +50,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_CULTURE_PARTHIAN",
+  "civilopedia": "TXT_KEY_BUILDING_CULTURE_PARTHIAN_PEDIA",
   "nukeImmune": true,
   "noInstanceLimit": true,
   "conquestProbability": 100,

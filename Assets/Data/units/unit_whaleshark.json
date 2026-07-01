@@ -1,7 +1,5 @@
 {
  "type": "UNIT_WHALESHARK",
- "description": "TXT_KEY_UNIT_WHALESHARK",
- "civilopedia": "TXT_KEY_UNIT_WHALESHARK_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -77,6 +75,8 @@
   ]
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_WHALESHARK",
+  "civilopedia": "TXT_KEY_UNIT_WHALESHARK_PEDIA",
   "spawnOnly": true,
   "xpValueAttack": 10,
   "xpValueDefense": 8,

@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_CENTER_FOR_WHALE_STUDIES",
- "description": "TXT_KEY_BUILDING_CENTER_FOR_WHALE_STUDIES",
- "civilopedia": "TXT_KEY_BUILDING_CENTER_FOR_WHALE_STUDIES_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -55,6 +53,8 @@
   "construct": "AS2D_BUILD_GRANARY"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_CENTER_FOR_WHALE_STUDIES",
+  "civilopedia": "TXT_KEY_BUILDING_CENTER_FOR_WHALE_STUDIES_PEDIA",
   "worth": 3,
   "advisor": "ADVISOR_SCIENCE",
   "mapCategories": [

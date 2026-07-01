@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_HOUSING_HOGANS",
- "description": "TXT_KEY_BUILDING_HOUSING_HOGANS",
- "civilopedia": "TXT_KEY_BUILDING_HOUSING_HOGANS_PEDIA",
  "obsoletedBy": {
   "techs": [
    "TECH_SURVEYING"
@@ -73,6 +71,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_HOUSING_HOGANS",
+  "civilopedia": "TXT_KEY_BUILDING_HOUSING_HOGANS_PEDIA",
   "notConstructible": true,
   "nukeImmune": true,
   "neverCapture": true,

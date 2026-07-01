@@ -1,8 +1,5 @@
 {
  "type": "CIVIC_LANDFILLS",
- "description": "TXT_KEY_CIVIC_LANDFILLS",
- "civilopedia": "TXT_KEY_CIVIC_LANDFILLS_PEDIA",
- "strategy": "TXT_KEY_CIVIC_LANDFILLS_STRATEGY",
  "enables": {
   "buildings": [
    "BUILDING_BACTERIUM_LANDFILL",
@@ -48,6 +45,9 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_CIVIC_LANDFILLS",
+  "civilopedia": "TXT_KEY_CIVIC_LANDFILLS_PEDIA",
+  "strategy": "TXT_KEY_CIVIC_LANDFILLS_STRATEGY",
   "civicOption": "CIVICOPTION_GARBAGE",
   "upkeepLevel": "UPKEEP_MEDIUM"
  }

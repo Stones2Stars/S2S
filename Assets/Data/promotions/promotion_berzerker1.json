@@ -1,6 +1,5 @@
 {
  "type": "PROMOTION_BERZERKER1",
- "description": "TXT_KEY_PROMOTION_BERZERKER1",
  "strength": {
   "unit": {
    "percent": -5,
@@ -31,6 +30,7 @@
   "sound": "AS2D_IF_LEVELUP"
  },
  "identity": {
+  "description": "TXT_KEY_PROMOTION_BERZERKER1",
   "unitCombats": [
    "UNITCOMBAT_ANIMAL"
   ]

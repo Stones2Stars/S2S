@@ -1,7 +1,5 @@
 {
  "type": "SPECIALIST_GREAT_ARTIST",
- "description": "TXT_KEY_SPECIALIST_GREAT_ARTIST",
- "civilopedia": "TXT_KEY_CONCEPT_GREAT_PEOPLE_PEDIA",
  "commerce": {
   "empire": {
    "flat": [
@@ -45,6 +43,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_SPECIALIST_GREAT_ARTIST",
+  "civilopedia": "TXT_KEY_CONCEPT_GREAT_PEOPLE_PEDIA",
   "categories": [
    "CATEGORY_SPECIALIST_GROUP_CULTURAL"
   ]

@@ -1,7 +1,5 @@
 {
  "type": "UNIT_WOLF",
- "description": "TXT_KEY_UNIT_WOLF",
- "civilopedia": "TXT_KEY_UNIT_WOLF_PEDIA",
  "withdrawal": {
   "unit": {
    "percent": 30
@@ -49,6 +47,8 @@
   ]
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_WOLF",
+  "civilopedia": "TXT_KEY_UNIT_WOLF_PEDIA",
   "spawnOnly": true,
   "xpValueAttack": 6,
   "xpValueDefense": 3,

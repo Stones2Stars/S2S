@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_HQ_EAST_WEST_TRADERS",
- "description": "TXT_KEY_BUILDING_HQ_EAST_WEST_TRADERS",
- "civilopedia": "TXT_KEY_BUILDING_CORPORATION_EWTRADE_PEDIA",
  "enables": {
   "corporations": [
    "CORPORATION_EWTRADE"
@@ -61,6 +59,8 @@
   "construct": "AS2D_BUILD_BANK"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_HQ_EAST_WEST_TRADERS",
+  "civilopedia": "TXT_KEY_BUILDING_CORPORATION_EWTRADE_PEDIA",
   "commerceDoubleTime": {
    "culture": 1000
   },

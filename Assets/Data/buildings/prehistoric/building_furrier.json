@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_FURRIER",
- "description": "TXT_KEY_BUILDING_FURRIER",
- "civilopedia": "TXT_KEY_BUILDING_FURRIER_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_HUNTING_DOG_TRAINER"
@@ -94,6 +92,8 @@
   "construct": "AS2D_BUILD_TANNERY"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_FURRIER",
+  "civilopedia": "TXT_KEY_BUILDING_FURRIER_PEDIA",
   "nukeImmune": true,
   "conquestProbability": 80,
   "advisor": "ADVISOR_ECONOMY",

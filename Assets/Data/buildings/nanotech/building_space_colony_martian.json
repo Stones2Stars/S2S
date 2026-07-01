@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_SPACE_COLONY_MARTIAN",
- "description": "TXT_KEY_BUILDING_SPACE_COLONY_MARTIAN",
- "civilopedia": "TXT_KEY_BUILDING_SPACE_COLONY_MARTIAN_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_MARTIAN_BROADBAND",
@@ -77,6 +75,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_SPACE_COLONY_MARTIAN",
+  "civilopedia": "TXT_KEY_BUILDING_SPACE_COLONY_MARTIAN_PEDIA",
   "notConstructible": true,
   "autoBuild": true,
   "advisor": "ADVISOR_SCIENCE",

@@ -1,8 +1,5 @@
 {
  "type": "TECH_RADAR",
- "description": "TXT_KEY_TECH_RADAR",
- "civilopedia": "TXT_KEY_TECH_RADAR_PEDIA",
- "quote": "TXT_KEY_TECH_RADAR_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_RADAR_STATION"
@@ -72,6 +69,9 @@
   "soundMP": "AS2D_TECH_RADAR"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_RADAR",
+  "civilopedia": "TXT_KEY_TECH_RADAR_PEDIA",
+  "quote": "TXT_KEY_TECH_RADAR_QUOTE",
   "era": "C2C_ERA_ATOMIC",
   "worth": 48,
   "militaryWorth": 4,

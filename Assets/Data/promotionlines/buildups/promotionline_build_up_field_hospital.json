@@ -1,7 +1,5 @@
 {
  "type": "PROMOTIONLINE_BUILD_UP_FIELD_HOSPITAL",
- "description": "TXT_KEY_PROMOTIONLINE_BUILD_UP_FIELD_HOSPITAL",
- "help": "TXT_KEY_PROMOTIONLINE_BUILD_UP_FIELD_HOSPITAL_HELP",
  "buildUp": {
   "active": true
  },
@@ -11,6 +9,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_PROMOTIONLINE_BUILD_UP_FIELD_HOSPITAL",
+  "help": "TXT_KEY_PROMOTIONLINE_BUILD_UP_FIELD_HOSPITAL_HELP",
   "unitCombats": [
    "UNITCOMBAT_HEALS_PEOPLE"
   ],

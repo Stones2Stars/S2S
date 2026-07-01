@@ -1,12 +1,12 @@
 {
  "type": "UNITCOMBAT_CULTURE_CHECHENIAN",
- "description": "TXT_KEY_UNITCOMBAT_CULTURE_CHECHENIAN",
  "ui": {
   "art": {
    "icon": "Art/categories/culture_newcultures.dds"
   }
  },
  "identity": {
+  "description": "TXT_KEY_UNITCOMBAT_CULTURE_CHECHENIAN",
   "culture": "BONUS_CHECHEN"
  }
 }

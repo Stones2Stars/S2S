@@ -1,9 +1,11 @@
 {
  "type": "SPECIALBUILDING_PUNK_STEAM",
- "description": "TXT_KEY_SPECIALBUILDING_PUNK_STEAM",
  "ui": {
   "art": {
    "icon": "Art/Interface/Buttons/TechTree/steampunk.dds"
   }
+ },
+ "identity": {
+  "description": "TXT_KEY_SPECIALBUILDING_PUNK_STEAM"
  }
 }

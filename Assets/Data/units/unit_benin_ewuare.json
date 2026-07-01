@@ -1,7 +1,5 @@
 {
  "type": "UNIT_BENIN_EWUARE",
- "description": "TXT_KEY_UNIT_BENIN_EWUARE",
- "civilopedia": "TXT_KEY_UNIT_EWUARE_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -51,6 +49,8 @@
   "upkeep": 1
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_BENIN_EWUARE",
+  "civilopedia": "TXT_KEY_UNIT_EWUARE_PEDIA",
   "worth": 6,
   "militaryWorth": 8,
   "xpValueAttack": 4,

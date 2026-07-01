@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_HOUSING_PENTHOUSE_SUITES",
- "description": "TXT_KEY_BUILDING_HOUSING_PENTHOUSE_SUITES",
- "civilopedia": "TXT_KEY_BUILDING_HOUSING_PENTHOUSE_SUITES_PEDIA",
  "obsoletedBy": {
   "techs": [
    "TECH_COLONY_ARCOLOGY"
@@ -70,6 +68,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_HOUSING_PENTHOUSE_SUITES",
+  "civilopedia": "TXT_KEY_BUILDING_HOUSING_PENTHOUSE_SUITES_PEDIA",
   "notConstructible": true,
   "nukeImmune": true,
   "neverCapture": true,

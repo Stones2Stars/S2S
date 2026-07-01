@@ -1,7 +1,5 @@
 {
  "type": "UNIT_NEANDERTHAL_OBSIDIAN_SWORDSMAN",
- "description": "TXT_KEY_UNIT_NEANDERTHAL_OBSIDIAN_SWORDSMAN",
- "civilopedia": "TXT_KEY_UNIT_OBSIDIAN_SWORDSMAN_PEDIA",
  "obsoletedBy": {
   "techs": [
    "TECH_SEDENTARY_LIFESTYLE"
@@ -74,6 +72,8 @@
   "upkeep": 1
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_NEANDERTHAL_OBSIDIAN_SWORDSMAN",
+  "civilopedia": "TXT_KEY_UNIT_OBSIDIAN_SWORDSMAN_PEDIA",
   "worth": 2,
   "militaryWorth": 12,
   "xpValueAttack": 3,

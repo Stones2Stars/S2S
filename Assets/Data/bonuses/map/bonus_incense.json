@@ -1,7 +1,5 @@
 {
  "type": "BONUS_INCENSE",
- "description": "TXT_KEY_BONUS_INCENSE",
- "civilopedia": "TXT_KEY_BONUS_INCENSE_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_ANCIENT_EMBALMER",
@@ -67,6 +65,8 @@
   ]
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_INCENSE",
+  "civilopedia": "TXT_KEY_BONUS_INCENSE_PEDIA",
   "bonusClassType": "BONUSCLASS_LUXURY"
  }
 }

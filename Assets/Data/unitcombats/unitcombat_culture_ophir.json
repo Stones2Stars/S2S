@@ -1,12 +1,12 @@
 {
  "type": "UNITCOMBAT_CULTURE_OPHIR",
- "description": "TXT_KEY_UNITCOMBAT_CULTURE_OPHIR",
  "ui": {
   "art": {
    "icon": "Art/categories/culture_newcultures.dds"
   }
  },
  "identity": {
+  "description": "TXT_KEY_UNITCOMBAT_CULTURE_OPHIR",
   "culture": "BONUS_OPHIR"
  }
 }

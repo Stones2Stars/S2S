@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_ANIMAL_TRAINER_CAMEL",
- "description": "TXT_KEY_BUILDING_ANIMAL_TRAINER_CAMEL",
- "civilopedia": "TXT_KEY_BUILDING_ANIMAL_TRAINER_CAMEL_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_ANIMAL_TAMER_COMPLEX",
@@ -89,6 +87,8 @@
   "construct": "AS2D_BUILD_GRANARY"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_ANIMAL_TRAINER_CAMEL",
+  "civilopedia": "TXT_KEY_BUILDING_ANIMAL_TRAINER_CAMEL_PEDIA",
   "worth": 4,
   "militaryWorth": 6,
   "advisor": "ADVISOR_ECONOMY",

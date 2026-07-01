@@ -1,7 +1,5 @@
 {
  "type": "TRAIT_ORGANIZED1",
- "description": "TXT_KEY_TRAIT_ORGANIZED0",
- "civilopedia": "TXT_KEY_TRAIT_ORGANIZED_PEDIA",
  "enables": {
   "traits": [
    "TRAIT_ORGANIZED2"
@@ -149,6 +147,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_TRAIT_ORGANIZED0",
+  "civilopedia": "TXT_KEY_TRAIT_ORGANIZED_PEDIA",
   "shortDescription": "TXT_KEY_TRAIT_ORGANIZED_SHORT"
  }
 }

@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_INTERSTELLAR_BLACK_HOLE_COMPUTER",
- "description": "TXT_KEY_BUILDING_INTERSTELLAR_BLACK_HOLE_COMPUTER",
- "civilopedia": "TXT_KEY_BUILDING_INTERSTELLAR_BLACK_HOLE_COMPUTER_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_INTERSTELLAR_ETERNAL_INTELLIGENCE"
@@ -50,6 +48,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_INTERSTELLAR_BLACK_HOLE_COMPUTER",
+  "civilopedia": "TXT_KEY_BUILDING_INTERSTELLAR_BLACK_HOLE_COMPUTER_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

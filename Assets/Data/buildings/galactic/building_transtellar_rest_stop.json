@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_TRANSTELLAR_REST_STOP",
- "description": "TXT_KEY_BUILDING_TRANSTELLAR_REST_STOP",
- "civilopedia": "TXT_KEY_BUILDING_TRANSTELLAR_REST_STOP_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_TRANSTELLAR_CUSTOMS_CENTER"
@@ -52,6 +50,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_TRANSTELLAR_REST_STOP",
+  "civilopedia": "TXT_KEY_BUILDING_TRANSTELLAR_REST_STOP_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

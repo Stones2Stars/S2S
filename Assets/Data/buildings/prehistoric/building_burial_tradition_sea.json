@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_BURIAL_TRADITION_SEA",
- "description": "TXT_KEY_BUILDING_BURIAL_TRADITION_SEA",
- "civilopedia": "TXT_KEY_BUILDING_BURIAL_TRADITION_SEA_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_ANCIENT_EMBALMER",
@@ -67,6 +65,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_BURIAL_TRADITION_SEA",
+  "civilopedia": "TXT_KEY_BUILDING_BURIAL_TRADITION_SEA_PEDIA",
   "conquestProbability": 70,
   "advisor": "ADVISOR_SCIENCE",
   "mapCategories": [

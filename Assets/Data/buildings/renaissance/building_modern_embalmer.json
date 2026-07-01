@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_MODERN_EMBALMER",
- "description": "TXT_KEY_BUILDING_MODERN_EMBALMER",
- "civilopedia": "TXT_KEY_BUILDING_MODERN_EMBALMER_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_FUNERARY_SERVICES"
@@ -85,6 +83,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_MODERN_EMBALMER",
+  "civilopedia": "TXT_KEY_BUILDING_MODERN_EMBALMER_PEDIA",
   "advisor": "ADVISOR_CULTURE",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

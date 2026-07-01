@@ -1,7 +1,5 @@
 {
  "type": "BONUS_FLINT",
- "description": "TXT_KEY_BONUS_FLINT",
- "civilopedia": "TXT_KEY_BONUS_FLINT_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_FLINT_KNAPPER",
@@ -16,6 +14,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_FLINT",
+  "civilopedia": "TXT_KEY_BONUS_FLINT_PEDIA",
   "bonusClassType": "BONUSCLASS_MANUFACTURED"
  }
 }

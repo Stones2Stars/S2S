@@ -1,8 +1,5 @@
 {
  "type": "TECH_NGAIISM",
- "description": "TXT_KEY_TECH_NGAIISM",
- "civilopedia": "TXT_KEY_TECH_NGAIISM_PEDIA",
- "quote": "TXT_KEY_TECH_NGAIISM_QUOTE",
  "enables": {
   "religions": [
    "RELIGION_NGAIISM"
@@ -55,6 +52,9 @@
   "soundMP": "AS2D_TECH_GENERIC"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_NGAIISM",
+  "civilopedia": "TXT_KEY_TECH_NGAIISM_PEDIA",
+  "quote": "TXT_KEY_TECH_NGAIISM_QUOTE",
   "era": "C2C_ERA_ANCIENT",
   "worth": 8,
   "gridX": 28,

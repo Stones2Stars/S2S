@@ -1,8 +1,5 @@
 {
  "type": "UNIT_SOLAR_WORKER",
- "description": "TXT_KEY_UNIT_SOLAR_WORKER",
- "civilopedia": "TXT_KEY_UNIT_WORKER_PEDIA",
- "help": "TXT_KEY_UNIT_SOLAR_WORKER_HELP",
  "requires": {
   "build": {
    "all": [
@@ -30,6 +27,9 @@
   "hurryCostModifier": 10000
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_SOLAR_WORKER",
+  "civilopedia": "TXT_KEY_UNIT_WORKER_PEDIA",
+  "help": "TXT_KEY_UNIT_SOLAR_WORKER_HELP",
   "worth": 1,
   "domain": "DOMAIN_LAND",
   "defaultUnitAI": "UNITAI_WORKER",

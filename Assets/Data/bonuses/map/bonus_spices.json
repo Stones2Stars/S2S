@@ -1,7 +1,5 @@
 {
  "type": "BONUS_SPICES",
- "description": "TXT_KEY_BONUS_SPICES",
- "civilopedia": "TXT_KEY_BONUS_SPICES_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_CATCHER_PEACOCK",
@@ -93,6 +91,8 @@
   ]
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_SPICES",
+  "civilopedia": "TXT_KEY_BONUS_SPICES_PEDIA",
   "bonusClassType": "BONUSCLASS_LUXURY"
  }
 }

@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_EFFECT_ACHIEVEMENT_SAFETY",
- "description": "TXT_KEY_BUILDING_EFFECT_ACHIEVEMENT_SAFETY",
- "civilopedia": "TXT_KEY_BUILDING_EFFECT_ACHIEVEMENT_SAFETY_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -34,6 +32,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_EFFECT_ACHIEVEMENT_SAFETY",
+  "civilopedia": "TXT_KEY_BUILDING_EFFECT_ACHIEVEMENT_SAFETY_PEDIA",
   "notConstructible": true,
   "nukeImmune": true,
   "neverCapture": true,

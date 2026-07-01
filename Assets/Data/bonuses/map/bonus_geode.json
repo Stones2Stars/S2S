@@ -1,7 +1,5 @@
 {
  "type": "BONUS_GEODE",
- "description": "TXT_KEY_BONUS_GEODE",
- "civilopedia": "TXT_KEY_BONUS_GEODE_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_MINE_GEODE"
@@ -79,6 +77,8 @@
   ]
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_GEODE",
+  "civilopedia": "TXT_KEY_BONUS_GEODE_PEDIA",
   "bonusClassType": "BONUSCLASS_LUXURY"
  }
 }

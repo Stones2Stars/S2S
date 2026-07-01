@@ -1,6 +1,5 @@
 {
  "type": "PROMOTION_MIGHT10",
- "description": "TXT_KEY_PROMOTION_MIGHT10",
  "upkeep": {
   "unit": {
    "modifier": {
@@ -25,6 +24,7 @@
   "sound": "AS2D_IF_LEVELUP"
  },
  "identity": {
+  "description": "TXT_KEY_PROMOTION_MIGHT10",
   "levelPrereq": 21,
   "unitCombats": [
    "UNITCOMBAT_QUALITY_ELITE",

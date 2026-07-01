@@ -1,8 +1,5 @@
 {
  "type": "TECH_TRACKING",
- "description": "TXT_KEY_TECH_TRACKING",
- "civilopedia": "TXT_KEY_TECH_TRACKING_PEDIA",
- "quote": "TXT_KEY_TECH_TRACKING_QUOTE",
  "enables": {
   "bonuses": [
    "BONUS_LIZARDS"
@@ -125,6 +122,9 @@
   "soundMP": "AS2D_TECH_MP_HUNTING"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_TRACKING",
+  "civilopedia": "TXT_KEY_TECH_TRACKING_PEDIA",
+  "quote": "TXT_KEY_TECH_TRACKING_QUOTE",
   "era": "C2C_ERA_PREHISTORIC",
   "worth": 8,
   "militaryWorth": 2,

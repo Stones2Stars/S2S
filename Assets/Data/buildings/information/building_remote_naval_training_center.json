@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_REMOTE_NAVAL_TRAINING_CENTER",
- "description": "TXT_KEY_BUILDING_REMOTE_NAVAL_TRAINING_CENTER",
- "civilopedia": "TXT_KEY_BUILDING_REMOTE_NAVAL_TRAINING_CENTER_PEDIA",
  "enables": {
   "units": [
    "UNIT_UNMANNED_DESTROYER",
@@ -69,6 +67,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_REMOTE_NAVAL_TRAINING_CENTER",
+  "civilopedia": "TXT_KEY_BUILDING_REMOTE_NAVAL_TRAINING_CENTER_PEDIA",
   "advisor": "ADVISOR_MILITARY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

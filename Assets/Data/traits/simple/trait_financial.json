@@ -1,7 +1,5 @@
 {
  "type": "TRAIT_FINANCIAL",
- "description": "TXT_KEY_TRAIT_FINANCIAL",
- "civilopedia": "TXT_KEY_TRAIT_FINANCIAL_PEDIA",
  "buildRate": {
   "empire": {
    "buildings": {
@@ -117,6 +115,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_TRAIT_FINANCIAL",
+  "civilopedia": "TXT_KEY_TRAIT_FINANCIAL_PEDIA",
   "shortDescription": "TXT_KEY_TRAIT_FINANCIAL_SHORT"
  }
 }

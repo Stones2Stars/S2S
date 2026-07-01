@@ -1,7 +1,5 @@
 {
  "type": "UNIT_STEPPE_RIDER",
- "description": "TXT_KEY_UNIT_STEPPE_RIDER",
- "civilopedia": "TXT_KEY_UNIT_STEPPE_RIDER_PEDIA",
  "obsoletedBy": {
   "techs": [
    "TECH_DEPUTIZATION"
@@ -138,6 +136,8 @@
   "upkeep": 5
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_STEPPE_RIDER",
+  "civilopedia": "TXT_KEY_UNIT_STEPPE_RIDER_PEDIA",
   "worth": 2,
   "militaryWorth": 8,
   "xpValueAttack": 6,

@@ -1,8 +1,5 @@
 {
  "type": "TECH_NAVAL_CANNON",
- "description": "TXT_KEY_TECH_NAVAL_CANNON",
- "civilopedia": "TXT_KEY_TECH_NAVAL_CANNON_PEDIA",
- "quote": "TXT_KEY_TECH_NAVAL_CANNON_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_CULTURE_DUTCH",
@@ -69,6 +66,9 @@
   "soundMP": "AS2D_TECH_NAVAL_CANNON"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_NAVAL_CANNON",
+  "civilopedia": "TXT_KEY_TECH_NAVAL_CANNON_PEDIA",
+  "quote": "TXT_KEY_TECH_NAVAL_CANNON_QUOTE",
   "era": "C2C_ERA_RENAISSANCE",
   "worth": 32,
   "militaryWorth": 12,

@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_GIVERNY",
- "description": "TXT_KEY_BUILDING_GIVERNY",
- "civilopedia": "TXT_KEY_BUILDING_GIVERNY_PEDIA",
  "obsoletedBy": {
   "techs": [
    "TECH_HYDROPONICS"
@@ -85,6 +83,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_GIVERNY",
+  "civilopedia": "TXT_KEY_BUILDING_GIVERNY_PEDIA",
   "commerceDoubleTime": {
    "culture": 1000
   },

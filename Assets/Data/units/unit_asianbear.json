@@ -1,7 +1,5 @@
 {
  "type": "UNIT_ASIANBEAR",
- "description": "TXT_KEY_UNIT_ASIANBEAR",
- "civilopedia": "TXT_KEY_UNIT_ASIANBEAR_PEDIA",
  "skills": {
   "blendIntoCity": true,
   "onlyDefensive": true,
@@ -46,6 +44,8 @@
   ]
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_ASIANBEAR",
+  "civilopedia": "TXT_KEY_UNIT_ASIANBEAR_PEDIA",
   "spawnOnly": true,
   "xpValueAttack": 9,
   "xpValueDefense": 6,

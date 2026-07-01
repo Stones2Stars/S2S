@@ -1,7 +1,5 @@
 {
  "type": "CORPORATION_ULTSOLDIER",
- "description": "TXT_KEY_BUILDING_CORPORATION_ULTSOLDIER",
- "civilopedia": "TXT_KEY_BUILDING_CORPORATION_ULTSOLDIER_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_ULTIMATE_SOLDIERS_TRAINER"
@@ -109,6 +107,8 @@
   "sound": "AS2D_BUILD_BANK"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_CORPORATION_ULTSOLDIER",
+  "civilopedia": "TXT_KEY_BUILDING_CORPORATION_ULTSOLDIER_PEDIA",
   "spreadFactor": 200,
   "spread": 50
  }

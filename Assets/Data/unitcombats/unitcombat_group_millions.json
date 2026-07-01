@@ -1,6 +1,5 @@
 {
  "type": "UNITCOMBAT_GROUP_MILLIONS",
- "description": "TXT_KEY_UNITCOMBAT_GROUP_MILLIONS",
  "experience": {
   "unit": {
    "percent": -100
@@ -39,6 +38,7 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_UNITCOMBAT_GROUP_MILLIONS",
   "base": {
    "group": 10
   }

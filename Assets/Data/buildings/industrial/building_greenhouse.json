@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_GREENHOUSE",
- "description": "TXT_KEY_BUILDING_GREENHOUSE",
- "civilopedia": "TXT_KEY_BUILDING_GREENHOUSE_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_AGRICULTURAL_EXTENSION",
@@ -539,6 +537,8 @@
   "construct": "AS2D_BUILD_GREENHOUSE"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_GREENHOUSE",
+  "civilopedia": "TXT_KEY_BUILDING_GREENHOUSE_PEDIA",
   "worth": 6,
   "militaryWorth": 3,
   "advisor": "ADVISOR_GROWTH",

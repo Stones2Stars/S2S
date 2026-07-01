@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_VOYAGE_TO_ANDROMEDA",
- "description": "TXT_KEY_BUILDING_VOYAGE_TO_ANDROMEDA",
- "civilopedia": "TXT_KEY_BUILDING_VOYAGE_TO_ANDROMEDA_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -38,6 +36,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_VOYAGE_TO_ANDROMEDA",
+  "civilopedia": "TXT_KEY_BUILDING_VOYAGE_TO_ANDROMEDA_PEDIA",
   "conquestProbability": 100,
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,

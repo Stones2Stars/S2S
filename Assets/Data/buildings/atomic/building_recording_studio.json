@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_RECORDING_STUDIO",
- "description": "TXT_KEY_BUILDING_RECORDING_STUDIO",
- "civilopedia": "TXT_KEY_BUILDING_RECORDING_STUDIO_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_CAPITOL_RECORDS_TOWER"
@@ -77,6 +75,8 @@
   "construct": "AS2D_BUILD_BROADCASTTOWER"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_RECORDING_STUDIO",
+  "civilopedia": "TXT_KEY_BUILDING_RECORDING_STUDIO_PEDIA",
   "worth": 10,
   "militaryWorth": 10,
   "advisor": "ADVISOR_CULTURE",

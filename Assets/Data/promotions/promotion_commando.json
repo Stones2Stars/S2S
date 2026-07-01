@@ -1,6 +1,5 @@
 {
  "type": "PROMOTION_COMMANDO",
- "description": "TXT_KEY_PROMOTION_COMMANDO",
  "skills": {
   "enemyRoute": true
  },
@@ -13,6 +12,7 @@
   "sound": "AS2D_IF_LEVELUP"
  },
  "identity": {
+  "description": "TXT_KEY_PROMOTION_COMMANDO",
   "unitCombats": [
    "UNITCOMBAT_ANIMAL",
    "UNITCOMBAT_RECON",

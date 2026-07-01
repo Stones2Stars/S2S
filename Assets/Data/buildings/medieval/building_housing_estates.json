@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_HOUSING_ESTATES",
- "description": "TXT_KEY_BUILDING_HOUSING_ESTATES",
- "civilopedia": "TXT_KEY_BUILDING_HOUSING_ESTATES_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_LUXURY_FURNITURE_WORKSHOP",
@@ -83,6 +81,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_HOUSING_ESTATES",
+  "civilopedia": "TXT_KEY_BUILDING_HOUSING_ESTATES_PEDIA",
   "notConstructible": true,
   "nukeImmune": true,
   "neverCapture": true,

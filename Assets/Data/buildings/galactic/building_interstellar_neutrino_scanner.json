@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_INTERSTELLAR_NEUTRINO_SCANNER",
- "description": "TXT_KEY_BUILDING_INTERSTELLAR_NEUTRINO_SCANNER",
- "civilopedia": "TXT_KEY_BUILDING_INTERSTELLAR_NEUTRINO_SCANNER_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_INTERSTELLAR_DARK_LIGHT_BEACON"
@@ -51,6 +49,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_INTERSTELLAR_NEUTRINO_SCANNER",
+  "civilopedia": "TXT_KEY_BUILDING_INTERSTELLAR_NEUTRINO_SCANNER_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_STRAW_GATHERER",
- "description": "TXT_KEY_BUILDING_STRAW_GATHERER",
- "civilopedia": "TXT_KEY_BUILDING_STRAW_GATHERER_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_AGROFOREST"
@@ -75,6 +73,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_STRAW_GATHERER",
+  "civilopedia": "TXT_KEY_BUILDING_STRAW_GATHERER_PEDIA",
   "enabledCivilizations": [
    "CIVILIZATION_NPC_NEANDERTHAL"
   ],

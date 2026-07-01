@@ -1,8 +1,5 @@
 {
  "type": "TECH_HYDROELECTRICITY",
- "description": "TXT_KEY_TECH_HYDROELECTRICITY",
- "civilopedia": "TXT_KEY_TECH_HYDROELECTRICITY_PEDIA",
- "quote": "TXT_KEY_TECH_HYDROELECTRICITY_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_HYDRO_PLANT",
@@ -59,6 +56,9 @@
   "soundMP": "AS2D_TECH_HYDROELECTRICITY"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_HYDROELECTRICITY",
+  "civilopedia": "TXT_KEY_TECH_HYDROELECTRICITY_PEDIA",
+  "quote": "TXT_KEY_TECH_HYDROELECTRICITY_QUOTE",
   "era": "C2C_ERA_INDUSTRIAL",
   "worth": 40,
   "tradeable": true,

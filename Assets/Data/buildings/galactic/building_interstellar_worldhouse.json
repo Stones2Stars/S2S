@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_INTERSTELLAR_WORLDHOUSE",
- "description": "TXT_KEY_BUILDING_INTERSTELLAR_WORLDHOUSE",
- "civilopedia": "TXT_KEY_BUILDING_INTERSTELLAR_WORLDHOUSE_PEDIA",
  "enables": {
   "units": [
    "UNIT_BACTERIA_SWARM"
@@ -51,6 +49,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_INTERSTELLAR_WORLDHOUSE",
+  "civilopedia": "TXT_KEY_BUILDING_INTERSTELLAR_WORLDHOUSE_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

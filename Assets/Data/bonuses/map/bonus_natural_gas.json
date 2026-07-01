@@ -1,7 +1,5 @@
 {
  "type": "BONUS_NATURAL_GAS",
- "description": "TXT_KEY_BONUS_NATURAL_GAS",
- "civilopedia": "TXT_KEY_BONUS_NATURAL_GAS_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_CULTURE_JORDANIAN",
@@ -73,6 +71,8 @@
   ]
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_NATURAL_GAS",
+  "civilopedia": "TXT_KEY_BONUS_NATURAL_GAS_PEDIA",
   "bonusClassType": "BONUSCLASS_STRATEGIC"
  }
 }

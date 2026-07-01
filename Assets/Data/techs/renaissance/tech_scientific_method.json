@@ -1,8 +1,5 @@
 {
  "type": "TECH_SCIENTIFIC_METHOD",
- "description": "TXT_KEY_TECH_SCIENTIFIC_METHOD",
- "civilopedia": "TXT_KEY_TECH_SCIENTIFIC_METHOD_PEDIA",
- "quote": "TXT_KEY_TECH_SCIENTIFIC_METHOD_QUOTE",
  "enables": {
   "bonuses": [
    "BONUS_NATURAL_GAS",
@@ -76,6 +73,9 @@
   "soundMP": "AS2D_TECH_MP_SCIMETHOD"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_SCIENTIFIC_METHOD",
+  "civilopedia": "TXT_KEY_TECH_SCIENTIFIC_METHOD_PEDIA",
+  "quote": "TXT_KEY_TECH_SCIENTIFIC_METHOD_QUOTE",
   "era": "C2C_ERA_RENAISSANCE",
   "worth": 20,
   "tradeable": true,

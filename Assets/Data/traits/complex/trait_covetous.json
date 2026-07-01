@@ -1,8 +1,5 @@
 {
  "type": "TRAIT_COVETOUS",
- "description": "TXT_KEY_TRAIT_COVETOUS",
- "civilopedia": "TXT_KEY_TRAIT_COVETOUS_PEDIA",
- "strategy": "TXT_KEY_TRAIT_COVETOUS_STRATEGY",
  "excludes": [
   "TRAIT_PROGRESSIST"
  ],
@@ -145,6 +142,9 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_TRAIT_COVETOUS",
+  "civilopedia": "TXT_KEY_TRAIT_COVETOUS_PEDIA",
+  "strategy": "TXT_KEY_TRAIT_COVETOUS_STRATEGY",
   "negativeTrait": true,
   "minAnarchy": 2
  }

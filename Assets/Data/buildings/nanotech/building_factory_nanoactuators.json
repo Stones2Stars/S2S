@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_FACTORY_NANOACTUATORS",
- "description": "TXT_KEY_BUILDING_FACTORY_NANOACTUATORS",
- "civilopedia": "TXT_KEY_BUILDING_FACTORY_NANOACTUATORS_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_NANOTECH_COMPLEX"
@@ -90,6 +88,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_FACTORY_NANOACTUATORS",
+  "civilopedia": "TXT_KEY_BUILDING_FACTORY_NANOACTUATORS_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

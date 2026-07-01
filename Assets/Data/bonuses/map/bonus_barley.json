@@ -1,7 +1,5 @@
 {
  "type": "BONUS_BARLEY",
- "description": "TXT_KEY_BONUS_BARLEY",
- "civilopedia": "TXT_KEY_BONUS_BARLEY_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_BARLEY_GATHERER",
@@ -66,6 +64,8 @@
   ]
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_BARLEY",
+  "civilopedia": "TXT_KEY_BONUS_BARLEY_PEDIA",
   "bonusClassType": "BONUSCLASS_CROP"
  }
 }

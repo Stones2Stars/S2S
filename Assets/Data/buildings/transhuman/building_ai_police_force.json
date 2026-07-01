@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_AI_POLICE_FORCE",
- "description": "TXT_KEY_BUILDING_AI_POLICE_FORCE",
- "civilopedia": "TXT_KEY_BUILDING_AI_POLICE_FORCE_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_DE_MAT_POLICE_FORCE",
@@ -69,6 +67,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_AI_POLICE_FORCE",
+  "civilopedia": "TXT_KEY_BUILDING_AI_POLICE_FORCE_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

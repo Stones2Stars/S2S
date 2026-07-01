@@ -1,8 +1,5 @@
 {
  "type": "TECH_WILDLIFE_CONSERVATION",
- "description": "TXT_KEY_TECH_WILDLIFE_CONSERVATION",
- "civilopedia": "TXT_KEY_TECH_WILDLIFE_CONSERVATION_PEDIA",
- "quote": "TXT_KEY_TECH_WILDLIFE_CONSERVATION_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_ACHIEVEMENT_ENVIRONMENTAL",
@@ -77,6 +74,9 @@
   "soundMP": "AS2D_TECH_WILDLIFE_CONSERVATION"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_WILDLIFE_CONSERVATION",
+  "civilopedia": "TXT_KEY_TECH_WILDLIFE_CONSERVATION_PEDIA",
+  "quote": "TXT_KEY_TECH_WILDLIFE_CONSERVATION_QUOTE",
   "era": "C2C_ERA_INDUSTRIAL",
   "worth": 14,
   "tradeable": true,

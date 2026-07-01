@@ -1,8 +1,5 @@
 {
  "type": "TECH_FIRE_SUPPRESSION",
- "description": "TXT_KEY_TECH_FIRE_SUPPRESSION",
- "civilopedia": "TXT_KEY_TECH_FIRE_SUPPRESSION_PEDIA",
- "quote": "TXT_KEY_TECH_FIRE_SUPPRESSION_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_FIRE_DOCK"
@@ -61,6 +58,9 @@
   "soundMP": "AS2D_TECH_FIRE_SUPPRESSION"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_FIRE_SUPPRESSION",
+  "civilopedia": "TXT_KEY_TECH_FIRE_SUPPRESSION_PEDIA",
+  "quote": "TXT_KEY_TECH_FIRE_SUPPRESSION_QUOTE",
   "era": "C2C_ERA_ATOMIC",
   "worth": 48,
   "militaryWorth": 1,

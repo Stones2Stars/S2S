@@ -1,8 +1,5 @@
 {
  "type": "TECH_DIRECT_MERCHANDISING",
- "description": "TXT_KEY_TECH_DIRECT_MERCHANDISING",
- "civilopedia": "TXT_KEY_TECH_DIRECT_MERCHANDISING_PEDIA",
- "quote": "TXT_KEY_TECH_DIRECT_MERCHANDISING_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_BLOCKCHAIN_AUTHENTICATION",
@@ -67,6 +64,9 @@
   "soundMP": "AS2D_TECH_DIRECT_MERCHANDISING"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_DIRECT_MERCHANDISING",
+  "civilopedia": "TXT_KEY_TECH_DIRECT_MERCHANDISING_PEDIA",
+  "quote": "TXT_KEY_TECH_DIRECT_MERCHANDISING_QUOTE",
   "era": "C2C_ERA_INFORMATION",
   "worth": 14,
   "tradeable": true,

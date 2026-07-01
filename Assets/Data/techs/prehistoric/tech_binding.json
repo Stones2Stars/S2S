@@ -1,8 +1,5 @@
 {
  "type": "TECH_BINDING",
- "description": "TXT_KEY_TECH_BINDING",
- "civilopedia": "TXT_KEY_TECH_BINDING_PEDIA",
- "quote": "TXT_KEY_TECH_BINDING_QUOTE",
  "enables": {
   "bonuses": [
    "BONUS_ROPE",
@@ -74,6 +71,9 @@
   "soundMP": "AS2D_TECH_BINDING"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_BINDING",
+  "civilopedia": "TXT_KEY_TECH_BINDING_PEDIA",
+  "quote": "TXT_KEY_TECH_BINDING_QUOTE",
   "era": "C2C_ERA_PREHISTORIC",
   "worth": 8,
   "militaryWorth": 3,

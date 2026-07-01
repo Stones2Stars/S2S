@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_HUMAN_MOD_HEAT_TOLERANCE",
- "description": "TXT_KEY_BUILDING_HUMAN_MOD_HEAT_TOLERANCE",
- "civilopedia": "TXT_KEY_BUILDING_HUMAN_MOD_HEAT_TOLERANCE_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -48,6 +46,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_HUMAN_MOD_HEAT_TOLERANCE",
+  "civilopedia": "TXT_KEY_BUILDING_HUMAN_MOD_HEAT_TOLERANCE_PEDIA",
   "neverCapture": true,
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,

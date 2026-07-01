@@ -1,7 +1,5 @@
 {
  "type": "BONUS_DRUGS",
- "description": "TXT_KEY_BONUS_DRUGS",
- "civilopedia": "TXT_KEY_BONUS_DRUGS_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_CRIME_DRUGS",
@@ -27,6 +25,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_DRUGS",
+  "civilopedia": "TXT_KEY_BONUS_DRUGS_PEDIA",
   "bonusClassType": "BONUSCLASS_MANUFACTURED"
  }
 }

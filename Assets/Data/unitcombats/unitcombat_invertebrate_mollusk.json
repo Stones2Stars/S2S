@@ -1,6 +1,5 @@
 {
  "type": "UNITCOMBAT_INVERTEBRATE_MOLLUSK",
- "description": "TXT_KEY_UNITCOMBAT_INVERTEBRATE_MOLLUSK",
  "withdrawal": {
   "unit": {
    "percent": 15
@@ -10,5 +9,8 @@
   "art": {
    "icon": "Art/Interface/Buttons/units/sparth/categories/invertebrate.dds"
   }
+ },
+ "identity": {
+  "description": "TXT_KEY_UNITCOMBAT_INVERTEBRATE_MOLLUSK"
  }
 }

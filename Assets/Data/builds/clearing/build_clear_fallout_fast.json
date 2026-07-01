@@ -1,6 +1,5 @@
 {
  "type": "BUILD_CLEAR_FALLOUT_FAST",
- "description": "TXT_KEY_BUILD_CLEAR_FALLOUT_FAST",
  "requires": {
   "build": {
    "all": [
@@ -34,5 +33,8 @@
   "art": {
    "entityEvent": "ENTITY_EVENT_IRRIGATE"
   }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILD_CLEAR_FALLOUT_FAST"
  }
 }

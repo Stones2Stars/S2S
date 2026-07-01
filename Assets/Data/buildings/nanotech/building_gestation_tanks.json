@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_GESTATION_TANKS",
- "description": "TXT_KEY_BUILDING_GESTATION_TANKS",
- "civilopedia": "TXT_KEY_BUILDING_GESTATION_TANKS_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_RESURRECTION_HUB"
@@ -87,6 +85,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_GESTATION_TANKS",
+  "civilopedia": "TXT_KEY_BUILDING_GESTATION_TANKS_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

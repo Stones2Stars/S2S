@@ -1,8 +1,5 @@
 {
  "type": "TRAIT_NATURALIST",
- "description": "TXT_KEY_TRAIT_NATURALIST",
- "civilopedia": "TXT_KEY_TRAIT_NATURALIST_PEDIA",
- "strategy": "TXT_KEY_TRAIT_NATURALIST_STRATEGY",
  "excludes": [
   "TRAIT_SLOB"
  ],
@@ -299,5 +296,10 @@
   "art": {
    "icon": "art/Buttons/Traits/TraitNaturalist.dds"
   }
+ },
+ "identity": {
+  "description": "TXT_KEY_TRAIT_NATURALIST",
+  "civilopedia": "TXT_KEY_TRAIT_NATURALIST_PEDIA",
+  "strategy": "TXT_KEY_TRAIT_NATURALIST_STRATEGY"
  }
 }

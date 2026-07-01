@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_CULTURE_SAFAVID",
- "description": "TXT_KEY_BUILDING_CULTURE_SAFAVID",
- "civilopedia": "TXT_KEY_BUILDING_CULTURE_SAFAVID_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -53,6 +51,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_CULTURE_SAFAVID",
+  "civilopedia": "TXT_KEY_BUILDING_CULTURE_SAFAVID_PEDIA",
   "nukeImmune": true,
   "noInstanceLimit": true,
   "conquestProbability": 100,

@@ -1,8 +1,5 @@
 {
  "type": "TECH_ASTROLABE",
- "description": "TXT_KEY_TECH_ASTROLABE",
- "civilopedia": "TXT_KEY_TECH_ASTROLABE_PEDIA",
- "quote": "TXT_KEY_TECH_ASTROLABE_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_CULTURE_ZANZIBARI",
@@ -76,6 +73,9 @@
   "soundMP": "AS2D_TECH_ASTROLABE"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_ASTROLABE",
+  "civilopedia": "TXT_KEY_TECH_ASTROLABE_PEDIA",
+  "quote": "TXT_KEY_TECH_ASTROLABE_QUOTE",
   "era": "C2C_ERA_RENAISSANCE",
   "worth": 32,
   "militaryWorth": 4,

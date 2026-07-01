@@ -1,7 +1,9 @@
 {
  "type": "SPECIALBUILDING_GROUP_DELUXE_WINERIES",
- "description": "TXT_KEY_SPECIALBUILDING_GROUP_DELUXE_WINERIES",
  "allowed": {
   "empire": 1
+ },
+ "identity": {
+  "description": "TXT_KEY_SPECIALBUILDING_GROUP_DELUXE_WINERIES"
  }
 }

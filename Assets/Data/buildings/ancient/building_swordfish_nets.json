@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_SWORDFISH_NETS",
- "description": "TXT_KEY_BUILDING_SWORDFISH_NETS",
- "civilopedia": "TXT_KEY_BUILDING_SWORDFISH_NETS_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_RESOURCES_FISH"
@@ -76,6 +74,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_SWORDFISH_NETS",
+  "civilopedia": "TXT_KEY_BUILDING_SWORDFISH_NETS_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

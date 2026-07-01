@@ -1,7 +1,5 @@
 {
  "type": "UNIT_BARBARYAPE",
- "description": "TXT_KEY_UNIT_BARBARYAPE",
- "civilopedia": "TXT_KEY_UNIT_BARBARYAPE_PEDIA",
  "skills": {
   "blendIntoCity": true
  },
@@ -39,6 +37,8 @@
   ]
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_BARBARYAPE",
+  "civilopedia": "TXT_KEY_UNIT_BARBARYAPE_PEDIA",
   "spawnOnly": true,
   "xpValueAttack": 4,
   "xpValueDefense": 2,

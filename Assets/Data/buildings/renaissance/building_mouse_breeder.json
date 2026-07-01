@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_MOUSE_BREEDER",
- "description": "TXT_KEY_BUILDING_MOUSE_BREEDER",
- "civilopedia": "TXT_KEY_BUILDING_MOUSE_BREEDER_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_MEAT_INDUSTRY_CONGLOMERATE"
@@ -66,6 +64,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_MOUSE_BREEDER",
+  "civilopedia": "TXT_KEY_BUILDING_MOUSE_BREEDER_PEDIA",
   "worth": 4,
   "militaryWorth": 2,
   "advisor": "ADVISOR_GROWTH",

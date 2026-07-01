@@ -1,7 +1,5 @@
 {
  "type": "UNIT_DESERT_TARANTULA",
- "description": "TXT_KEY_UNIT_DESERT_TARANTULA",
- "civilopedia": "TXT_KEY_UNIT_TARANTULA_PEDIA",
  "skills": {
   "blendIntoCity": true,
   "onlyDefensive": true,
@@ -29,6 +27,8 @@
   ]
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_DESERT_TARANTULA",
+  "civilopedia": "TXT_KEY_UNIT_TARANTULA_PEDIA",
   "spawnOnly": true,
   "xpValueAttack": 1,
   "xpValueDefense": 1,

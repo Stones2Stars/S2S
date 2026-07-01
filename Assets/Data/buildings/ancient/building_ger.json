@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_GER",
- "description": "TXT_KEY_BUILDING_GER",
- "civilopedia": "TXT_KEY_BUILDING_GER_PEDIA",
  "obsoletedBy": {
   "techs": [
    "TECH_CITY_PLANNING"
@@ -80,6 +78,8 @@
   "construct": "AS2D_BUILD_STABLE"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_GER",
+  "civilopedia": "TXT_KEY_BUILDING_GER_PEDIA",
   "worth": 2,
   "militaryWorth": 4,
   "dcmAirbombMission": 2,

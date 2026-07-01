@@ -1,7 +1,5 @@
 {
  "type": "BONUS_REEDS",
- "description": "TXT_KEY_BONUS_REEDS",
- "civilopedia": "TXT_KEY_BONUS_REEDS_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_BASKETMAKER",
@@ -22,6 +20,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_REEDS",
+  "civilopedia": "TXT_KEY_BONUS_REEDS_PEDIA",
   "bonusClassType": "BONUSCLASS_MANUFACTURED"
  }
 }

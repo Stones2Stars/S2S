@@ -1,8 +1,5 @@
 {
  "type": "TRAIT_UNSANITARY2",
- "description": "TXT_KEY_TRAIT_UNSANITARY2",
- "civilopedia": "TXT_KEY_TRAIT_UNSANITARY2_PEDIA",
- "strategy": "TXT_KEY_TRAIT_UNSANITARY_STRATEGY",
  "excludes": [
   "TRAIT_MEDICAL1"
  ],
@@ -309,6 +306,9 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_TRAIT_UNSANITARY2",
+  "civilopedia": "TXT_KEY_TRAIT_UNSANITARY2_PEDIA",
+  "strategy": "TXT_KEY_TRAIT_UNSANITARY_STRATEGY",
   "negativeTrait": true
  }
 }

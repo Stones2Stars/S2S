@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_VENUS_PROJECT",
- "description": "TXT_KEY_BUILDING_VENUS_PROJECT",
- "civilopedia": "TXT_KEY_BUILDING_VENUS_PROJECT_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -54,6 +52,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_VENUS_PROJECT",
+  "civilopedia": "TXT_KEY_BUILDING_VENUS_PROJECT_PEDIA",
   "conquestProbability": 100,
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,

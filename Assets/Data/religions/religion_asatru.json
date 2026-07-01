@@ -1,8 +1,5 @@
 {
  "type": "RELIGION_ASATRU",
- "description": "TXT_KEY_TECH_ASATRU",
- "civilopedia": "TXT_KEY_TECH_ASATRU_PEDIA",
- "adjective": "TXT_KEY_TECH_ASATRU_ADJECTIVE",
  "enables": {
   "buildings": [
    "BUILDING_ASATRU_CATHEDRAL",
@@ -84,6 +81,9 @@
   "sound": "AS2D_BUILD_NORDIC"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_ASATRU",
+  "adjective": "TXT_KEY_TECH_ASATRU_ADJECTIVE",
+  "civilopedia": "TXT_KEY_TECH_ASATRU_PEDIA",
   "spreadFactor": 20
  }
 }

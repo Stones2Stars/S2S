@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_SHIPWRIGHT",
- "description": "TXT_KEY_BUILDING_SHIPWRIGHT",
- "civilopedia": "TXT_KEY_BUILDING_SHIPWRIGHT_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_BOATYARD",
@@ -133,6 +131,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_SHIPWRIGHT",
+  "civilopedia": "TXT_KEY_BUILDING_SHIPWRIGHT_PEDIA",
   "enabledCivilizations": [
    "CIVILIZATION_NPC_NEANDERTHAL"
   ],

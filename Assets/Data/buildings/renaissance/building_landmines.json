@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_LANDMINES",
- "description": "TXT_KEY_BUILDING_LANDMINES",
- "civilopedia": "TXT_KEY_BUILDING_LANDMINES_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_BOOBY_TRAPS"
@@ -117,6 +115,8 @@
   "construct": "AS2D_BUILD_FLAK_TOWER"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_LANDMINES",
+  "civilopedia": "TXT_KEY_BUILDING_LANDMINES_PEDIA",
   "damageAttackingUnitCombats": [
    "UNITCOMBAT_ARCHER",
    "UNITCOMBAT_ASSAULT_MECH",

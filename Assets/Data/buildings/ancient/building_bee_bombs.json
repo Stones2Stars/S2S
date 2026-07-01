@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_BEE_BOMBS",
- "description": "TXT_KEY_BUILDING_BEE_BOMBS",
- "civilopedia": "TXT_KEY_BUILDING_BEE_BOMBS_PEDIA",
  "obsoletedBy": {
   "techs": [
    "TECH_EXPLOSIVES"
@@ -64,6 +62,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_BEE_BOMBS",
+  "civilopedia": "TXT_KEY_BUILDING_BEE_BOMBS_PEDIA",
   "centerInCity": true,
   "worth": 1,
   "militaryWorth": 2,

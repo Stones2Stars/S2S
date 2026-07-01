@@ -1,6 +1,5 @@
 {
  "type": "UNITCOMBAT_WEAPON_DIST_SEMI_AUTOMATIC",
- "description": "TXT_KEY_UNITCOMBAT_WEAPON_DIST_SEMI_AUTOMATIC",
  "skills": {
   "rBombardDirect": true
  },
@@ -10,6 +9,7 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_UNITCOMBAT_WEAPON_DIST_SEMI_AUTOMATIC",
   "base": {
    "rangedBombardDamage": 60,
    "rangedBombardLimit": 50,

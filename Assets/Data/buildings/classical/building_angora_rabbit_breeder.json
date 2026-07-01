@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_ANGORA_RABBIT_BREEDER",
- "description": "TXT_KEY_BUILDING_ANGORA_RABBIT_BREEDER",
- "civilopedia": "TXT_KEY_BUILDING_ANGORA_RABBIT_BREEDER_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_SHEARING_BARN"
@@ -67,6 +65,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_ANGORA_RABBIT_BREEDER",
+  "civilopedia": "TXT_KEY_BUILDING_ANGORA_RABBIT_BREEDER_PEDIA",
   "worth": 4,
   "militaryWorth": 2,
   "advisor": "ADVISOR_GROWTH",

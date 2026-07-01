@@ -1,7 +1,5 @@
 {
  "type": "UNIT_HEALER",
- "description": "TXT_KEY_UNIT_HEALER",
- "civilopedia": "TXT_KEY_UNIT_HEALER_PEDIA",
  "replacedBy": {
   "units": [
    "UNIT_NEANDERTHAL_HEALER"
@@ -66,6 +64,8 @@
   "hurryCostModifier": 25
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_HEALER",
+  "civilopedia": "TXT_KEY_UNIT_HEALER_PEDIA",
   "worth": 3,
   "militaryWorth": 3,
   "xpValueDefense": 2,

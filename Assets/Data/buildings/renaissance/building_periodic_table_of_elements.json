@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_PERIODIC_TABLE_OF_ELEMENTS",
- "description": "TXT_KEY_BUILDING_PERIODIC_TABLE_OF_ELEMENTS",
- "civilopedia": "TXT_KEY_BUILDING_PERIODIC_TABLE_OF_ELEMENTS_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -61,6 +59,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_PERIODIC_TABLE_OF_ELEMENTS",
+  "civilopedia": "TXT_KEY_BUILDING_PERIODIC_TABLE_OF_ELEMENTS_PEDIA",
   "conquestProbability": 100,
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,

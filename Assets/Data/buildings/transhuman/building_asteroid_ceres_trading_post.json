@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_ASTEROID_CERES_TRADING_POST",
- "description": "TXT_KEY_BUILDING_ASTEROID_CERES_TRADING_POST",
- "civilopedia": "TXT_KEY_BUILDING_ASTEROID_CERES_TRADING_POST_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_TERRAFORMED_CERES"
@@ -54,6 +52,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_ASTEROID_CERES_TRADING_POST",
+  "civilopedia": "TXT_KEY_BUILDING_ASTEROID_CERES_TRADING_POST_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

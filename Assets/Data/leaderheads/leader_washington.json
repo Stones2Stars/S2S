@@ -1,7 +1,5 @@
 {
  "type": "LEADER_WASHINGTON",
- "description": "TXT_KEY_LEADER_WASHINGTON",
- "civilopedia": "TXT_KEY_LEADER_WASHINGTON_PEDIA",
  "grants": {
   "traits": [
    "TRAIT_PROTECTIVE",
@@ -310,5 +308,9 @@
    "C2C_ERA_TRANSCENDENT": "AS2D_DIPLO_WARDRUMS_LATE",
    "C2C_ERA_FUTURE": "AS2D_DIPLO_WARDRUMS_LATE"
   }
+ },
+ "identity": {
+  "description": "TXT_KEY_LEADER_WASHINGTON",
+  "civilopedia": "TXT_KEY_LEADER_WASHINGTON_PEDIA"
  }
 }

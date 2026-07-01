@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_HAWKING_HUT",
- "description": "TXT_KEY_BUILDING_HAWKING_HUT",
- "civilopedia": "TXT_KEY_BUILDING_HAWKING_HUT_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_FALCONRY_SCHOOL"
@@ -50,6 +48,8 @@
   "construct": "AS2D_BUILD_GRANARY"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_HAWKING_HUT",
+  "civilopedia": "TXT_KEY_BUILDING_HAWKING_HUT_PEDIA",
   "worth": 1,
   "advisor": "ADVISOR_GROWTH",
   "freeStartEra": "C2C_ERA_CLASSICAL",

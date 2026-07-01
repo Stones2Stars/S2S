@@ -1,8 +1,5 @@
 {
  "type": "TECH_TRAP_FISHING",
- "description": "TXT_KEY_TECH_TRAP_FISHING",
- "civilopedia": "TXT_KEY_TECH_TRAP_FISHING_PEDIA",
- "quote": "TXT_KEY_TECH_TRAP_FISHING_QUOTE",
  "enables": {
   "bonuses": [
    "BONUS_CLAM",
@@ -77,6 +74,9 @@
   "soundMP": "AS2D_TECH_TRAP_FISHING"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_TRAP_FISHING",
+  "civilopedia": "TXT_KEY_TECH_TRAP_FISHING_PEDIA",
+  "quote": "TXT_KEY_TECH_TRAP_FISHING_QUOTE",
   "era": "C2C_ERA_PREHISTORIC",
   "worth": 4,
   "tradeable": true,

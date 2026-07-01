@@ -1,8 +1,5 @@
 {
  "type": "TECH_ABYSS_COLONIZATION",
- "description": "TXT_KEY_TECH_ABYSS_COLONIZATION",
- "civilopedia": "TXT_KEY_TECH_ABYSS_COLONIZATION_PEDIA",
- "quote": "TXT_KEY_TECH_ABYSS_COLONIZATION_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_BLITZBALL_ARENA",
@@ -87,6 +84,9 @@
   "soundMP": "AS2D_TECH_ABYSS_COLONIZATION"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_ABYSS_COLONIZATION",
+  "civilopedia": "TXT_KEY_TECH_ABYSS_COLONIZATION_PEDIA",
+  "quote": "TXT_KEY_TECH_ABYSS_COLONIZATION_QUOTE",
   "era": "C2C_ERA_TRANSHUMAN",
   "worth": 48,
   "militaryWorth": 4,

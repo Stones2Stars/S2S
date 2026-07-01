@@ -1,6 +1,5 @@
 {
  "type": "UNITCOMBAT_ROBOT",
- "description": "TXT_KEY_UNITCOMBAT_ROBOT",
  "capture": {
   "unit": {
    "resistance": {
@@ -19,6 +18,7 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_UNITCOMBAT_ROBOT",
   "forMilitary": true
  }
 }

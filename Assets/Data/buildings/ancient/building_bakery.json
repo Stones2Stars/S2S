@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_BAKERY",
- "description": "TXT_KEY_BUILDING_BAKERY",
- "civilopedia": "TXT_KEY_BUILDING_BAKERY_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_CONFECTIONERS_WORKSHOP",
@@ -146,6 +144,8 @@
   "construct": "AS2D_BUILD_GRANARY"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_BAKERY",
+  "civilopedia": "TXT_KEY_BUILDING_BAKERY_PEDIA",
   "worth": 3,
   "conquestProbability": 75,
   "dcmAirbombMission": 2,

@@ -1,6 +1,5 @@
 {
  "type": "PROMOTION_CITY_RAIDER2",
- "description": "TXT_KEY_PROMOTION_CITYRAIDER2",
  "strength": {
   "unit": {
    "cityAttack": {
@@ -27,6 +26,7 @@
   "sound": "AS2D_IF_LEVELUP"
  },
  "identity": {
+  "description": "TXT_KEY_PROMOTION_CITYRAIDER2",
   "unitCombats": [
    "UNITCOMBAT_MOUNTED",
    "UNITCOMBAT_WHEELED",

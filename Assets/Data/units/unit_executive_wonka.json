@@ -1,7 +1,5 @@
 {
  "type": "UNIT_EXECUTIVE_WONKA",
- "description": "TXT_KEY_UNIT_EXECUTIVE_WONKA",
- "civilopedia": "TXT_KEY_CONCEPT_CORPORATIONS_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -32,6 +30,8 @@
   "upkeep": 1
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_EXECUTIVE_WONKA",
+  "civilopedia": "TXT_KEY_CONCEPT_CORPORATIONS_PEDIA",
   "worth": 1,
   "domain": "DOMAIN_LAND",
   "defaultUnitAI": "UNITAI_MISSIONARY",

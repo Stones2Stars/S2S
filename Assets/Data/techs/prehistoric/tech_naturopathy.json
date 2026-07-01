@@ -1,8 +1,5 @@
 {
  "type": "TECH_NATUROPATHY",
- "description": "TXT_KEY_TECH_NATUROPATHY",
- "civilopedia": "TXT_KEY_TECH_NATUROPATHY_PEDIA",
- "quote": "TXT_KEY_TECH_NATUROPATHY_QUOTE",
  "enables": {
   "bonuses": [
    "BONUS_ALMONDS",
@@ -89,6 +86,9 @@
   "soundMP": "AS2D_TECH_NATUROPATHY"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_NATUROPATHY",
+  "civilopedia": "TXT_KEY_TECH_NATUROPATHY_PEDIA",
+  "quote": "TXT_KEY_TECH_NATUROPATHY_QUOTE",
   "era": "C2C_ERA_PREHISTORIC",
   "worth": 8,
   "tradeable": true,

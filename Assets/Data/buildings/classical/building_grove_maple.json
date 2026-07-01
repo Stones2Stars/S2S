@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_GROVE_MAPLE",
- "description": "TXT_KEY_BUILDING_GROVE_MAPLE",
- "civilopedia": "TXT_KEY_BUILDING_GROVE_MAPLE_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_RESOURCES_SEASONING"
@@ -77,6 +75,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_GROVE_MAPLE",
+  "civilopedia": "TXT_KEY_BUILDING_GROVE_MAPLE_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

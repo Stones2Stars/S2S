@@ -1,7 +1,5 @@
 {
  "type": "TERRAIN_TRITON",
- "description": "TXT_KEY_TERRAIN_TRITON",
- "civilopedia": "TXT_KEY_TERRAIN_TRITON_PEDIA",
  "commerce": {
   "plot": {
    "flat": 2
@@ -23,6 +21,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_TERRAIN_TRITON",
+  "civilopedia": "TXT_KEY_TERRAIN_TRITON_PEDIA",
   "found": true,
   "movementCost": 1,
   "mapCategories": [

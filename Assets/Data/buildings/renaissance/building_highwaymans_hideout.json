@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_HIGHWAYMANS_HIDEOUT",
- "description": "TXT_KEY_BUILDING_HIGHWAYMANS_HIDEOUT",
- "civilopedia": "TXT_KEY_BUILDING_HIGHWAYMANS_HIDEOUT_PEDIA",
  "enables": {
   "units": [
    "UNIT_HIGHWAYMAN",
@@ -132,6 +130,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_HIGHWAYMANS_HIDEOUT",
+  "civilopedia": "TXT_KEY_BUILDING_HIGHWAYMANS_HIDEOUT_PEDIA",
   "nukeImmune": true,
   "worth": 2,
   "militaryWorth": 4,

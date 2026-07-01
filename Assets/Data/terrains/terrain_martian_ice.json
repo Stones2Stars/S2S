@@ -1,7 +1,5 @@
 {
  "type": "TERRAIN_MARTIAN_ICE",
- "description": "TXT_KEY_TERRAIN_MARTIAN_ICE",
- "civilopedia": "TXT_KEY_TERRAIN_MARTIAN_ICE_PEDIA",
  "commerce": {
   "plot": {
    "flat": 2
@@ -31,6 +29,8 @@
   "soundscape": "ASSS_TUNDRA_SELECT_AMB"
  },
  "identity": {
+  "description": "TXT_KEY_TERRAIN_MARTIAN_ICE",
+  "civilopedia": "TXT_KEY_TERRAIN_MARTIAN_ICE_PEDIA",
   "foundCoast": true,
   "foundFreshWater": true,
   "movementCost": 4,

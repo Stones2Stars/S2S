@@ -1,7 +1,5 @@
 {
  "type": "IMPROVEMENT_SPIRITUAL_REALM",
- "description": "TXT_KEY_IMPROVEMENT_SPIRITUAL_REALM",
- "civilopedia": "TXT_KEY_IMPROVEMENT_SPIRITUAL_REALM_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -50,6 +48,8 @@
   "uniqueRange": 2
  },
  "identity": {
+  "description": "TXT_KEY_IMPROVEMENT_SPIRITUAL_REALM",
+  "civilopedia": "TXT_KEY_IMPROVEMENT_SPIRITUAL_REALM_PEDIA",
   "extraterrestrial": true,
   "pillageGold": 200
  }

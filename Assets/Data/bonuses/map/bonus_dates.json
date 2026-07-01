@@ -1,7 +1,5 @@
 {
  "type": "BONUS_DATES",
- "description": "TXT_KEY_BONUS_DATES",
- "civilopedia": "TXT_KEY_BONUS_DATES_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_CULTURE_ZANZIBARI",
@@ -64,6 +62,8 @@
   ]
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_DATES",
+  "civilopedia": "TXT_KEY_BONUS_DATES_PEDIA",
   "bonusClassType": "BONUSCLASS_CROP"
  }
 }

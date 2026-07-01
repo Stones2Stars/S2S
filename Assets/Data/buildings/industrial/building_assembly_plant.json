@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_ASSEMBLY_PLANT",
- "description": "TXT_KEY_BUILDING_ASSEMBLY_PLANT",
- "civilopedia": "TXT_KEY_BUILDING_ASSEMBLY_PLANT_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_ADVANCED_COPPERWORKS",
@@ -110,6 +108,8 @@
   "construct": "AS2D_BUILD_FACTORY"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_ASSEMBLY_PLANT",
+  "civilopedia": "TXT_KEY_BUILDING_ASSEMBLY_PLANT_PEDIA",
   "worth": 6,
   "militaryWorth": 15,
   "conquestProbability": 75,

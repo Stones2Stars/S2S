@@ -1,8 +1,5 @@
 {
  "type": "TECH_BINARY_PSYCHOKINESIS",
- "description": "TXT_KEY_TECH_BINARY_PSYCHOKINESIS",
- "civilopedia": "TXT_KEY_TECH_BINARY_PSYCHOKINESIS_PEDIA",
- "quote": "TXT_KEY_TECH_BINARY_PSYCHOKINESIS_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_SIMULATED_WORLD_MANIFESTATION",
@@ -71,6 +68,9 @@
   "soundMP": "AS2D_TECH_BINARY_PSYCHOKINESIS"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_BINARY_PSYCHOKINESIS",
+  "civilopedia": "TXT_KEY_TECH_BINARY_PSYCHOKINESIS_PEDIA",
+  "quote": "TXT_KEY_TECH_BINARY_PSYCHOKINESIS_QUOTE",
   "era": "C2C_ERA_TRANSHUMAN",
   "worth": 48,
   "militaryWorth": 4,

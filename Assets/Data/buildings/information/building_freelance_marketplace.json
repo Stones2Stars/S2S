@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_FREELANCE_MARKETPLACE",
- "description": "TXT_KEY_BUILDING_FREELANCE_MARKETPLACE",
- "civilopedia": "TXT_KEY_BUILDING_FREELANCE_MARKETPLACE_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -51,6 +49,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_FREELANCE_MARKETPLACE",
+  "civilopedia": "TXT_KEY_BUILDING_FREELANCE_MARKETPLACE_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

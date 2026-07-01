@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_VETERINARIAN",
- "description": "TXT_KEY_BUILDING_VETERINARIAN",
- "civilopedia": "TXT_KEY_BUILDING_VETERINARIAN_PEDIA",
  "enables": {
   "units": [
    "UNIT_MEDICAL_VET",
@@ -119,6 +117,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_VETERINARIAN",
+  "civilopedia": "TXT_KEY_BUILDING_VETERINARIAN_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

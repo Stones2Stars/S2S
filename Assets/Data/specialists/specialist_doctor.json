@@ -1,7 +1,5 @@
 {
  "type": "SPECIALIST_DOCTOR",
- "description": "TXT_KEY_SPECIALIST_DOCTOR",
- "civilopedia": "TXT_KEY_CONCEPT_SPECIALIST_DOCTOR_PEDIA",
  "research": {
   "city": {
    "flat": 1
@@ -38,6 +36,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_SPECIALIST_DOCTOR",
+  "civilopedia": "TXT_KEY_CONCEPT_SPECIALIST_DOCTOR_PEDIA",
   "visible": true,
   "categories": [
    "CATEGORY_ASSIGNABLE_SPECIALISTS",

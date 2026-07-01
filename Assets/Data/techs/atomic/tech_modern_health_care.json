@@ -1,8 +1,5 @@
 {
  "type": "TECH_MODERN_HEALTH_CARE",
- "description": "TXT_KEY_TECH_MODERN_HEALTH_CARE",
- "civilopedia": "TXT_KEY_TECH_MODERN_HEALTH_CARE_PEDIA",
- "quote": "TXT_KEY_TECH_MODERN_HEALTH_CARE_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_CENTERS_FOR_DISEASE_CONTROL",
@@ -67,6 +64,9 @@
   "soundMP": "AS2D_TECH_MODERN_HEALTH_CARE"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_MODERN_HEALTH_CARE",
+  "civilopedia": "TXT_KEY_TECH_MODERN_HEALTH_CARE_PEDIA",
+  "quote": "TXT_KEY_TECH_MODERN_HEALTH_CARE_QUOTE",
   "era": "C2C_ERA_ATOMIC",
   "worth": 40,
   "tradeable": true,

@@ -1,7 +1,5 @@
 {
  "type": "BONUS_SOAP",
- "description": "TXT_KEY_BONUS_SOAP",
- "civilopedia": "TXT_KEY_BONUS_SOAP_PEDIA",
  "enables": {
   "units": [
    "UNIT_APOTHECARY",
@@ -18,6 +16,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_SOAP",
+  "civilopedia": "TXT_KEY_BONUS_SOAP_PEDIA",
   "bonusClassType": "BONUSCLASS_MANUFACTURED"
  }
 }

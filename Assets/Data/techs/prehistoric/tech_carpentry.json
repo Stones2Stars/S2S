@@ -1,8 +1,5 @@
 {
  "type": "TECH_CARPENTRY",
- "description": "TXT_KEY_TECH_CARPENTRY",
- "civilopedia": "TXT_KEY_TECH_CARPENTRY_PEDIA",
- "quote": "TXT_KEY_TECH_CARPENTRY_QUOTE",
  "enables": {
   "bonuses": [
    "BONUS_FURNITURE"
@@ -75,6 +72,9 @@
   "soundMP": "AS2D_TECH_CARPENTRY"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_CARPENTRY",
+  "civilopedia": "TXT_KEY_TECH_CARPENTRY_PEDIA",
+  "quote": "TXT_KEY_TECH_CARPENTRY_QUOTE",
   "era": "C2C_ERA_PREHISTORIC",
   "worth": 2,
   "tradeable": true,

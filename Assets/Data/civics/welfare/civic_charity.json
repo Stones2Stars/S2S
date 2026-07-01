@@ -1,8 +1,5 @@
 {
  "type": "CIVIC_CHARITY",
- "description": "TXT_KEY_CIVIC_CHARITY",
- "civilopedia": "TXT_KEY_CIVIC_CHARITY_PEDIA",
- "strategy": "TXT_KEY_CIVIC_CHARITY_STRATEGY",
  "enables": {
   "buildings": [
    "BUILDING_PLAGUE_HOSPITAL"
@@ -102,6 +99,9 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_CIVIC_CHARITY",
+  "civilopedia": "TXT_KEY_CIVIC_CHARITY_PEDIA",
+  "strategy": "TXT_KEY_CIVIC_CHARITY_STRATEGY",
   "civicOption": "CIVICOPTION_WELFARE"
  }
 }

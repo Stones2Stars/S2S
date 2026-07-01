@@ -1,8 +1,5 @@
 {
  "type": "TRAIT_SPIRITUAL",
- "description": "TXT_KEY_TRAIT_COMPLEX_SPIRITUAL",
- "civilopedia": "TXT_KEY_TRAIT_COMPLEX_SPIRITUAL_PEDIA",
- "strategy": "TXT_KEY_TRAIT_COMPLEX_SPIRITUAL_STRATEGY",
  "excludes": [
   "TRAIT_ANTI_CLERICAL",
   "TRAIT_FANATICAL",
@@ -400,5 +397,10 @@
   "art": {
    "icon": "art/Buttons/Traits/TraitSpiritual.dds"
   }
+ },
+ "identity": {
+  "description": "TXT_KEY_TRAIT_COMPLEX_SPIRITUAL",
+  "civilopedia": "TXT_KEY_TRAIT_COMPLEX_SPIRITUAL_PEDIA",
+  "strategy": "TXT_KEY_TRAIT_COMPLEX_SPIRITUAL_STRATEGY"
  }
 }

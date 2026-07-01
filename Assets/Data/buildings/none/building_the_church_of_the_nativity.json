@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_THE_CHURCH_OF_THE_NATIVITY",
- "description": "TXT_KEY_BUILDING_THE_CHURCH_OF_THE_NATIVITY",
- "civilopedia": "TXT_KEY_BUILDING_THE_CHURCH_OF_THE_NATIVITY_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -53,6 +51,8 @@
   "construct": "AS2D_BUILD_CHRISTIAN"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_THE_CHURCH_OF_THE_NATIVITY",
+  "civilopedia": "TXT_KEY_BUILDING_THE_CHURCH_OF_THE_NATIVITY_PEDIA",
   "commerceDoubleTime": {
    "culture": 1000
   },

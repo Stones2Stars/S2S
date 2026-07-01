@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_SPACE_COLONY_DISTANT",
- "description": "TXT_KEY_BUILDING_SPACE_COLONY_DISTANT",
- "civilopedia": "TXT_KEY_BUILDING_SPACE_COLONY_DISTANT_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_DISTANT_SPACE_WHALING_GUILD"
@@ -39,6 +37,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_SPACE_COLONY_DISTANT",
+  "civilopedia": "TXT_KEY_BUILDING_SPACE_COLONY_DISTANT_PEDIA",
   "notConstructible": true,
   "autoBuild": true,
   "advisor": "ADVISOR_SCIENCE",

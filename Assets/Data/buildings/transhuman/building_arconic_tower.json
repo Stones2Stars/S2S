@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_ARCONIC_TOWER",
- "description": "TXT_KEY_BUILDING_ARCONIC_TOWER",
- "civilopedia": "TXT_KEY_BUILDING_ARCONIC_TOWER_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -68,6 +66,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_ARCONIC_TOWER",
+  "civilopedia": "TXT_KEY_BUILDING_ARCONIC_TOWER_PEDIA",
   "conquestProbability": 100,
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,

@@ -1,7 +1,5 @@
 {
  "type": "UNIT_MORMON_MISSIONARY",
- "description": "TXT_KEY_UNIT_MORMON_MISSIONARY",
- "civilopedia": "TXT_KEY_TECH_MORMON_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -25,6 +23,8 @@
   "production": 110
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_MORMON_MISSIONARY",
+  "civilopedia": "TXT_KEY_TECH_MORMON_PEDIA",
   "worth": 1,
   "domain": "DOMAIN_LAND",
   "defaultUnitAI": "UNITAI_MISSIONARY",

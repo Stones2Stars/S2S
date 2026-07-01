@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_COMPUTRONIUM_MAKER",
- "description": "TXT_KEY_BUILDING_COMPUTRONIUM_MAKER",
- "civilopedia": "TXT_KEY_BUILDING_COMPUTRONIUM_MAKER_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_MATERIALIZATION_COMPLEX"
@@ -66,6 +64,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_COMPUTRONIUM_MAKER",
+  "civilopedia": "TXT_KEY_BUILDING_COMPUTRONIUM_MAKER_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_INTERSTELLAR_STARPORT",
- "description": "TXT_KEY_BUILDING_INTERSTELLAR_STARPORT",
- "civilopedia": "TXT_KEY_BUILDING_INTERSTELLAR_STARPORT_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_INTERSTELLAR_GALACTIC_PORT",
@@ -74,6 +72,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_INTERSTELLAR_STARPORT",
+  "civilopedia": "TXT_KEY_BUILDING_INTERSTELLAR_STARPORT_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

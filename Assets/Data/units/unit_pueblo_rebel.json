@@ -1,7 +1,5 @@
 {
  "type": "UNIT_PUEBLO_REBEL",
- "description": "TXT_KEY_UNIT_PUEBLO_REBEL",
- "civilopedia": "TXT_KEY_UNIT_PUEBLO_REBEL_PEDIA",
  "obsoletedBy": {
   "techs": [
    "TECH_LASER"
@@ -205,6 +203,8 @@
   ]
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_PUEBLO_REBEL",
+  "civilopedia": "TXT_KEY_UNIT_PUEBLO_REBEL_PEDIA",
   "worth": 7,
   "militaryWorth": 15,
   "xpValueAttack": 8,

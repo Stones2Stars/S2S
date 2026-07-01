@@ -1,6 +1,5 @@
 {
  "type": "BUILD_DYSON_SPHERE",
- "description": "TXT_KEY_BUILD_DYSON_SPHERE",
  "requires": {
   "build": {
    "all": [
@@ -28,5 +27,8 @@
   "art": {
    "entityEvent": "ENTITY_EVENT_BUILD"
   }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILD_DYSON_SPHERE"
  }
 }

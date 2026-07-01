@@ -1,7 +1,5 @@
 {
  "type": "UNIT_MASTER_SAILOR_OUTRIGGER",
- "description": "TXT_KEY_UNIT_MASTER_SAILOR_OUTRIGGER",
- "civilopedia": "TXT_KEY_UNIT_OUTRIGGER_PEDIA",
  "obsoletedBy": {
   "techs": [
    "TECH_COMPASS"
@@ -57,6 +55,8 @@
   "upkeep": 1
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_MASTER_SAILOR_OUTRIGGER",
+  "civilopedia": "TXT_KEY_UNIT_OUTRIGGER_PEDIA",
   "spawnOnly": true,
   "worth": 2,
   "militaryWorth": 3,

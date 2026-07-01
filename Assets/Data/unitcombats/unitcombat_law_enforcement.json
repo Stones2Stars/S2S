@@ -1,6 +1,5 @@
 {
  "type": "UNITCOMBAT_LAW_ENFORCEMENT",
- "description": "TXT_KEY_UNITCOMBAT_LAW_ENFORCEMENT",
  "espionage": {
   "unit": {
    "investigation": {
@@ -70,6 +69,7 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_UNITCOMBAT_LAW_ENFORCEMENT",
   "forMilitary": true,
   "defaultStatuses": [
    "PROMOTION_STANDOUT_STATUS",

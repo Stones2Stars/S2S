@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_FOUNDATION",
- "description": "TXT_KEY_BUILDING_FOUNDATION",
- "civilopedia": "TXT_KEY_BUILDING_FOUNDATION_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -88,6 +86,8 @@
   "construct": "AS2D_BUILD_BANK"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_FOUNDATION",
+  "civilopedia": "TXT_KEY_BUILDING_FOUNDATION_PEDIA",
   "worth": 3,
   "advisor": "ADVISOR_GROWTH",
   "visibilityPriority": 1,

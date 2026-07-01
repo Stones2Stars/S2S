@@ -1,7 +1,5 @@
 {
  "type": "UNIT_BAND",
- "description": "TXT_KEY_UNIT_BAND",
- "civilopedia": "TXT_KEY_UNIT_BAND_PEDIA",
  "obsoletedBy": {
   "techs": [
    "TECH_TRIBALISM"
@@ -122,6 +120,8 @@
   ]
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_BAND",
+  "civilopedia": "TXT_KEY_UNIT_BAND_PEDIA",
   "domain": "DOMAIN_LAND",
   "defaultUnitAI": "UNITAI_SETTLE",
   "formationType": "FORMATION_TYPE_SETTLER",

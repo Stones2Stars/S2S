@@ -1,6 +1,5 @@
 {
  "type": "PROMOTION_INFLUENCE_OF_THE_SUN",
- "description": "TXT_KEY_PROMOTION_INFLUENCE_OF_THE_SUN",
  "experience": {
   "unit": {
    "percent": 20
@@ -20,6 +19,7 @@
   "sound": "AS2D_IF_LEVELUP"
  },
  "identity": {
+  "description": "TXT_KEY_PROMOTION_INFLUENCE_OF_THE_SUN",
   "unitCombats": [
    "UNITCOMBAT_MELEE"
   ]

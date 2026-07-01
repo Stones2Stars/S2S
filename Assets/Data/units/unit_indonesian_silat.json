@@ -1,7 +1,5 @@
 {
  "type": "UNIT_INDONESIAN_SILAT",
- "description": "TXT_KEY_UNIT_INDONESIAN_SILAT",
- "civilopedia": "TXT_KEY_UNIT_SILAT_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -84,6 +82,8 @@
   "upkeep": 1
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_INDONESIAN_SILAT",
+  "civilopedia": "TXT_KEY_UNIT_SILAT_PEDIA",
   "worth": 3,
   "militaryWorth": 10,
   "xpValueAttack": 6,

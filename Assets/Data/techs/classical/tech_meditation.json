@@ -1,8 +1,5 @@
 {
  "type": "TECH_MEDITATION",
- "description": "TXT_KEY_TECH_MEDITATION",
- "civilopedia": "TXT_KEY_TECH_MEDITATION_PEDIA",
- "quote": "TXT_KEY_TECH_MEDITATION_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_CULTURE_ALACALUFE",
@@ -81,6 +78,9 @@
   "soundMP": "AS2D_TECH_MP_MEDITATION"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_MEDITATION",
+  "civilopedia": "TXT_KEY_TECH_MEDITATION_PEDIA",
+  "quote": "TXT_KEY_TECH_MEDITATION_QUOTE",
   "era": "C2C_ERA_CLASSICAL",
   "worth": 8,
   "tradeable": true,

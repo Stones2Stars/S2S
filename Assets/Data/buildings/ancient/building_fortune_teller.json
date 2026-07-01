@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_FORTUNE_TELLER",
- "description": "TXT_KEY_BUILDING_FORTUNE_TELLER",
- "civilopedia": "TXT_KEY_BUILDING_FORTUNE_TELLER_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_PSYCHIC_ADVISOR"
@@ -66,6 +64,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_FORTUNE_TELLER",
+  "civilopedia": "TXT_KEY_BUILDING_FORTUNE_TELLER_PEDIA",
   "advisor": "ADVISOR_CULTURE",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

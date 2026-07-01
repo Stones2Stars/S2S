@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_STABLE",
- "description": "TXT_KEY_BUILDING_STABLE",
- "civilopedia": "TXT_KEY_BUILDING_STABLE_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_ANIMAL_RACE_TRACK",
@@ -113,6 +111,8 @@
   "construct": "AS2D_BUILD_STABLE"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_STABLE",
+  "civilopedia": "TXT_KEY_BUILDING_STABLE_PEDIA",
   "enabledCivilizations": [
    "CIVILIZATION_NPC_NEANDERTHAL"
   ],

@@ -1,7 +1,5 @@
 {
  "type": "UNIT_TRIBAL_GUARDIAN",
- "description": "TXT_KEY_UNIT_TRIBAL_GUARDIAN",
- "civilopedia": "TXT_KEY_UNIT_TRIBAL_GUARDIAN_PEDIA",
  "obsoletedBy": {
   "techs": [
    "TECH_SEDENTARY_LIFESTYLE"
@@ -52,6 +50,8 @@
   "upkeep": 3
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_TRIBAL_GUARDIAN",
+  "civilopedia": "TXT_KEY_UNIT_TRIBAL_GUARDIAN_PEDIA",
   "worth": 1,
   "militaryWorth": 3,
   "xpValueAttack": 1,

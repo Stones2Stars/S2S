@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_EDINBURGH_CASTLE",
- "description": "TXT_KEY_BUILDING_EDINBURGH_CASTLE",
- "civilopedia": "TXT_KEY_BUILDING_EDINBURGH_CASTLE_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_RELIC_EDINBURGH_CASTLE"
@@ -111,6 +109,8 @@
   "construct": "AS2D_BUILD_CASTLE"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_EDINBURGH_CASTLE",
+  "civilopedia": "TXT_KEY_BUILDING_EDINBURGH_CASTLE_PEDIA",
   "commerceDoubleTime": {
    "culture": 100
   },

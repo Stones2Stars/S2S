@@ -1,6 +1,5 @@
 {
  "type": "UNITCOMBAT_WEAPON_DIST_ION",
- "description": "TXT_KEY_UNITCOMBAT_WEAPON_DIST_ION",
  "skills": {
   "rBombardDirect": true
  },
@@ -10,6 +9,7 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_UNITCOMBAT_WEAPON_DIST_ION",
   "base": {
    "rangedBombardDamage": 125,
    "rangedBombardLimit": 150,

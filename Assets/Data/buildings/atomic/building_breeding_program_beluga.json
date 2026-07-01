@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_BREEDING_PROGRAM_BELUGA",
- "description": "TXT_KEY_BUILDING_BREEDING_PROGRAM_BELUGA",
- "civilopedia": "TXT_KEY_BUILDING_BREEDING_PROGRAM_BELUGA_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_RESOURCES_PELTS"
@@ -101,6 +99,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_BREEDING_PROGRAM_BELUGA",
+  "civilopedia": "TXT_KEY_BUILDING_BREEDING_PROGRAM_BELUGA_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

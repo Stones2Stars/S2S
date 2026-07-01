@@ -1,7 +1,5 @@
 {
  "type": "BONUS_COAL",
- "description": "TXT_KEY_BONUS_COAL",
- "civilopedia": "TXT_KEY_BONUS_COAL_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_COAL_FIRED_DYNAMO",
@@ -88,6 +86,8 @@
   ]
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_COAL",
+  "civilopedia": "TXT_KEY_BONUS_COAL_PEDIA",
   "bonusClassType": "BONUSCLASS_STRATEGIC"
  }
 }

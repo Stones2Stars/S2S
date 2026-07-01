@@ -1,7 +1,5 @@
 {
  "type": "UNIT_BEAR",
- "description": "TXT_KEY_UNIT_BROWN_BEAR",
- "civilopedia": "TXT_KEY_UNIT_BROWN_BEAR_PEDIA",
  "skills": {
   "assassin": true,
   "blendIntoCity": true,
@@ -51,6 +49,8 @@
   ]
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_BROWN_BEAR",
+  "civilopedia": "TXT_KEY_UNIT_BROWN_BEAR_PEDIA",
   "spawnOnly": true,
   "xpValueAttack": 10,
   "xpValueDefense": 7,

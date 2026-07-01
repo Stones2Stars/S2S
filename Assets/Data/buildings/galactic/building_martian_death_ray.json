@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_MARTIAN_DEATH_RAY",
- "description": "TXT_KEY_BUILDING_MARTIAN_DEATH_RAY",
- "civilopedia": "TXT_KEY_BUILDING_MARTIAN_DEATH_RAY_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -45,6 +43,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_MARTIAN_DEATH_RAY",
+  "civilopedia": "TXT_KEY_BUILDING_MARTIAN_DEATH_RAY_PEDIA",
   "sightRange": 1,
   "dcmAirbombMission": 2,
   "advisor": "ADVISOR_SCIENCE",

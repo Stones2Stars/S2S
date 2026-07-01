@@ -1,7 +1,5 @@
 {
  "type": "UNIT_HAIDA_WAR_CANOE",
- "description": "TXT_KEY_UNIT_HAIDA_WAR_CANOE",
- "civilopedia": "TXT_KEY_UNIT_HAIDA_WAR_CANOE_PEDIA",
  "obsoletedBy": {
   "techs": [
    "TECH_OPTICS"
@@ -84,6 +82,8 @@
   "upkeep": 1
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_HAIDA_WAR_CANOE",
+  "civilopedia": "TXT_KEY_UNIT_HAIDA_WAR_CANOE_PEDIA",
   "worth": 1,
   "militaryWorth": 3,
   "xpValueAttack": 4,

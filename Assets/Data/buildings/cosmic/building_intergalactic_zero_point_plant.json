@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_INTERGALACTIC_ZERO_POINT_PLANT",
- "description": "TXT_KEY_BUILDING_INTERGALACTIC_ZERO_POINT_PLANT",
- "civilopedia": "TXT_KEY_BUILDING_INTERGALACTIC_ZERO_POINT_PLANT_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_INTERGALACTIC_ULTRA_HIGH_PRESSURE_FORGE",
@@ -39,6 +37,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_INTERGALACTIC_ZERO_POINT_PLANT",
+  "civilopedia": "TXT_KEY_BUILDING_INTERGALACTIC_ZERO_POINT_PLANT_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

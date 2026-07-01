@@ -1,7 +1,5 @@
 {
  "type": "BONUS_FILIPINO",
- "description": "TXT_KEY_BONUS_FILIPINO",
- "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
  "enables": {
   "units": [
    "UNIT_KRISS_WARRIOR",
@@ -14,6 +12,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_FILIPINO",
+  "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
   "bonusClassType": "BONUSCLASS_CULTURE"
  }
 }

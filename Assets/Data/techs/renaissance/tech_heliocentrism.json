@@ -1,8 +1,5 @@
 {
  "type": "TECH_HELIOCENTRISM",
- "description": "TXT_KEY_TECH_HELIOCENTRISM",
- "civilopedia": "TXT_KEY_TECH_HELIOCENTRISM_PEDIA",
- "quote": "TXT_KEY_TECH_HELIOCENTRISM_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_RUDOLPHINE"
@@ -60,6 +57,9 @@
   "soundMP": "AS2D_TECH_HELIOCENTRISM"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_HELIOCENTRISM",
+  "civilopedia": "TXT_KEY_TECH_HELIOCENTRISM_PEDIA",
+  "quote": "TXT_KEY_TECH_HELIOCENTRISM_QUOTE",
   "era": "C2C_ERA_RENAISSANCE",
   "worth": 20,
   "militaryWorth": 2,

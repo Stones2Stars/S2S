@@ -1,7 +1,5 @@
 {
  "type": "BONUS_WHALE",
- "description": "TXT_KEY_BONUS_WHALE",
- "civilopedia": "TXT_KEY_BONUS_WHALE_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_BREEDING_PROGRAM_BELUGA",
@@ -81,6 +79,8 @@
   ]
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_WHALE",
+  "civilopedia": "TXT_KEY_BONUS_WHALE_PEDIA",
   "bonusClassType": "BONUSCLASS_SEAFOOD"
  }
 }

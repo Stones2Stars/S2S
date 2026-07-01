@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_BREEDING_PROGRAM_MAMMOTH",
- "description": "TXT_KEY_BUILDING_BREEDING_PROGRAM_MAMMOTH",
- "civilopedia": "TXT_KEY_BUILDING_BREEDING_PROGRAM_MAMMOTH_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_ANIMAL_TRAINER_MAMMOTH",
@@ -92,6 +90,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_BREEDING_PROGRAM_MAMMOTH",
+  "civilopedia": "TXT_KEY_BUILDING_BREEDING_PROGRAM_MAMMOTH_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

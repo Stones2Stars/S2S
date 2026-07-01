@@ -1,6 +1,5 @@
 {
  "type": "PROPERTY_DISEASE",
- "description": "TXT_KEY_PROPERTY_DISEASE",
  "text": {
   "value": "TXT_KEY_PROPERTY_DISEASE_DISPLAY",
   "change": "TXT_KEY_PROPERTY_DISEASE_CHANGE",
@@ -50,6 +49,7 @@
   "scale": "city"
  },
  "identity": {
+  "description": "TXT_KEY_PROPERTY_DISEASE",
   "sourceDrain": true,
   "oaType": true,
   "fontButtonIndex": 4

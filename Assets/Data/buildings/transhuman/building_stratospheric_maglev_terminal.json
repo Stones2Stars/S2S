@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_STRATOSPHERIC_MAGLEV_TERMINAL",
- "description": "TXT_KEY_BUILDING_STRATOSPHERIC_MAGLEV_TERMINAL",
- "civilopedia": "TXT_KEY_BUILDING_STRATOSPHERIC_MAGLEV_TERMINAL_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -49,6 +47,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_STRATOSPHERIC_MAGLEV_TERMINAL",
+  "civilopedia": "TXT_KEY_BUILDING_STRATOSPHERIC_MAGLEV_TERMINAL_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

@@ -1,8 +1,5 @@
 {
  "type": "TECH_GEOMETRY",
- "description": "TXT_KEY_TECH_GEOMETRY",
- "civilopedia": "TXT_KEY_TECH_GEOMETRY_PEDIA",
- "quote": "TXT_KEY_TECH_GEOMETRY_QUOTE",
  "enables": {
   "techs": [
    "TECH_CALENDAR",
@@ -62,6 +59,9 @@
   "soundMP": "AS2D_TECH_GEOMETRY"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_GEOMETRY",
+  "civilopedia": "TXT_KEY_TECH_GEOMETRY_PEDIA",
+  "quote": "TXT_KEY_TECH_GEOMETRY_QUOTE",
   "era": "C2C_ERA_CLASSICAL",
   "worth": 16,
   "militaryWorth": 6,

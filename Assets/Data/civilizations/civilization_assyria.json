@@ -1,9 +1,5 @@
 {
  "type": "CIVILIZATION_ASSYRIA",
- "description": "TXT_KEY_CIVILIZATION_ASSYRIA",
- "shortDescription": "TXT_KEY_CIVILIZATION_ASSYRIA_SHORT",
- "adjective": "TXT_KEY_CIVILIZATION_ASSYRIA_ADJECTIVE",
- "civilopedia": "TXT_KEY_CIVILIZATION_ASSYRIA_PEDIA",
  "grants": {
   "buildings": [
    "BUILDING_PALACE",
@@ -32,10 +28,6 @@
    "TECH_GAME_START"
   ]
  },
- "policies": {
-  "playable": true,
-  "aiPlayable": true
- },
  "world": {
   "art": {
    "playerColor": "PLAYERCOLOR_ASSYRIA",
@@ -49,6 +41,12 @@
   "action": "AS3D_BABYLON_ORDER"
  },
  "identity": {
+  "description": "TXT_KEY_CIVILIZATION_ASSYRIA",
+  "shortDescription": "TXT_KEY_CIVILIZATION_ASSYRIA_SHORT",
+  "adjective": "TXT_KEY_CIVILIZATION_ASSYRIA_ADJECTIVE",
+  "civilopedia": "TXT_KEY_CIVILIZATION_ASSYRIA_PEDIA",
+  "playable": true,
+  "aiPlayable": true,
   "leaders": [
    "LEADER_ASHUR",
    "LEADER_SENNACHERIB"

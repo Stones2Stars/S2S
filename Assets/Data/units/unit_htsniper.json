@@ -1,7 +1,5 @@
 {
  "type": "UNIT_HTSNIPER",
- "description": "TXT_KEY_UNIT_HTSNIPER",
- "civilopedia": "TXT_KEY_UNIT_HTSNIPER_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -153,6 +151,8 @@
   ]
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_HTSNIPER",
+  "civilopedia": "TXT_KEY_UNIT_HTSNIPER_PEDIA",
   "worth": 20,
   "militaryWorth": 75,
   "xpValueAttack": 8,

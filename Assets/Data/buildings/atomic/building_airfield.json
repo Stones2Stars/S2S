@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_AIRFIELD",
- "description": "TXT_KEY_BUILDING_AIRFIELD",
- "civilopedia": "TXT_KEY_BUILDING_AIRFIELD_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_BALLOON_RIDES",
@@ -104,6 +102,8 @@
   "construct": "AS2D_BUILD_AIRFIELD"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_AIRFIELD",
+  "civilopedia": "TXT_KEY_BUILDING_AIRFIELD_PEDIA",
   "worth": 8,
   "militaryWorth": 4,
   "advisor": "ADVISOR_MILITARY",

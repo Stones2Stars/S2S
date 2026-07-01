@@ -1,7 +1,5 @@
 {
  "type": "UNIT_ROME_PRAETORIAN",
- "description": "TXT_KEY_UNIT_ROME_PRAETORIAN",
- "civilopedia": "TXT_KEY_UNIT_ROME_PRAETORIAN_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -80,6 +78,8 @@
   "upkeep": 1
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_ROME_PRAETORIAN",
+  "civilopedia": "TXT_KEY_UNIT_ROME_PRAETORIAN_PEDIA",
   "worth": 2,
   "militaryWorth": 13,
   "xpValueAttack": 6,

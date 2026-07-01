@@ -1,6 +1,5 @@
 {
  "type": "UNITCOMBAT_WEAPON_DIST_HANDHELD_RAILGUN",
- "description": "TXT_KEY_UNITCOMBAT_WEAPON_DIST_HANDHELD_RAILGUN",
  "skills": {
   "rBombardDirect": true
  },
@@ -10,6 +9,7 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_UNITCOMBAT_WEAPON_DIST_HANDHELD_RAILGUN",
   "base": {
    "rangedBombardDamage": 90,
    "rangedBombardLimit": 70,

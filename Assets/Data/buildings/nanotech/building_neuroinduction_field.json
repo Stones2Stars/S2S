@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_NEUROINDUCTION_FIELD",
- "description": "TXT_KEY_BUILDING_NEUROINDUCTION_FIELD",
- "civilopedia": "TXT_KEY_BUILDING_NEUROINDUCTION_FIELD_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_HEALTHCARE_MEGACOMPLEX"
@@ -63,6 +61,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_NEUROINDUCTION_FIELD",
+  "civilopedia": "TXT_KEY_BUILDING_NEUROINDUCTION_FIELD_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

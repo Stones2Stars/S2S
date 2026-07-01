@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_MISSION_TO_CALLISTO",
- "description": "TXT_KEY_BUILDING_MISSION_TO_CALLISTO",
- "civilopedia": "TXT_KEY_BUILDING_MISSION_TO_CALLISTO_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -60,6 +58,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_MISSION_TO_CALLISTO",
+  "civilopedia": "TXT_KEY_BUILDING_MISSION_TO_CALLISTO_PEDIA",
   "conquestProbability": 100,
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,

@@ -1,7 +1,5 @@
 {
  "type": "BONUS_ORGANIC_VOLATILES",
- "description": "TXT_KEY_BONUS_ORGANIC_VOLATILES",
- "civilopedia": "TXT_KEY_BONUS_ORGANIC_VOLATILES_PEDIA",
  "food": {
   "plot": {
    "flat": 3
@@ -42,6 +40,8 @@
   "placementOrder": 9
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_ORGANIC_VOLATILES",
+  "civilopedia": "TXT_KEY_BONUS_ORGANIC_VOLATILES_PEDIA",
   "bonusClassType": "BONUSCLASS_MISC"
  }
 }

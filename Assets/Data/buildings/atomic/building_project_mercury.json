@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_PROJECT_MERCURY",
- "description": "TXT_KEY_BUILDING_PROJECT_MERCURY",
- "civilopedia": "TXT_KEY_BUILDING_PROJECT_MERCURY_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -48,6 +46,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_PROJECT_MERCURY",
+  "civilopedia": "TXT_KEY_BUILDING_PROJECT_MERCURY_PEDIA",
   "conquestProbability": 100,
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,

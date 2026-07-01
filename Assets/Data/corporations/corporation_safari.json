@@ -1,7 +1,5 @@
 {
  "type": "CORPORATION_SAFARI",
- "description": "TXT_KEY_BUILDING_CORPORATION_SAFARI",
- "civilopedia": "TXT_KEY_BUILDING_CORPORATION_SAFARI_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_SAFARI_HUNTERS_GUIDE"
@@ -116,6 +114,8 @@
   "sound": "AS2D_BUILD_BANK"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_CORPORATION_SAFARI",
+  "civilopedia": "TXT_KEY_BUILDING_CORPORATION_SAFARI_PEDIA",
   "spreadFactor": 200,
   "spread": 50
  }

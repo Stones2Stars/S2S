@@ -1,8 +1,5 @@
 {
  "type": "RELIGION_ANDEANISM",
- "description": "TXT_KEY_TECH_ANDEANISM",
- "civilopedia": "TXT_KEY_TECH_ANDEANISM_PEDIA",
- "adjective": "TXT_KEY_TECH_ANDEANISM_ADJECTIVE",
  "enables": {
   "buildings": [
    "BUILDING_ANDEAN_CATHEDRAL",
@@ -103,6 +100,9 @@
   "sound": "AS2D_BUILD_ANDEAN"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_ANDEANISM",
+  "adjective": "TXT_KEY_TECH_ANDEANISM_ADJECTIVE",
+  "civilopedia": "TXT_KEY_TECH_ANDEANISM_PEDIA",
   "spreadFactor": 20
  }
 }

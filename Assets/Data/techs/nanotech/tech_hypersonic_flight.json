@@ -1,8 +1,5 @@
 {
  "type": "TECH_HYPERSONIC_FLIGHT",
- "description": "TXT_KEY_TECH_HYPERSONIC_FLIGHT",
- "civilopedia": "TXT_KEY_TECH_HYPERSONIC_FLIGHT_PEDIA",
- "quote": "TXT_KEY_TECH_HYPERSONIC_FLIGHT_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_HYPERSONIC_TERMINAL",
@@ -63,6 +60,9 @@
   "soundMP": "AS2D_TECH_HYPERSONIC_FLIGHT"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_HYPERSONIC_FLIGHT",
+  "civilopedia": "TXT_KEY_TECH_HYPERSONIC_FLIGHT_PEDIA",
+  "quote": "TXT_KEY_TECH_HYPERSONIC_FLIGHT_QUOTE",
   "era": "C2C_ERA_NANOTECH",
   "worth": 48,
   "militaryWorth": 5,

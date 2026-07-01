@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_PC_PEDRA_FURADA",
- "description": "TXT_KEY_BUILDING_PC_PEDRA_FURADA",
- "civilopedia": "TXT_KEY_BUILDING_PC_PEDRA_FURADA_PEDIA",
  "obsoletedBy": {
   "techs": [
    "TECH_SEDENTARY_LIFESTYLE"
@@ -89,6 +87,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_PC_PEDRA_FURADA",
+  "civilopedia": "TXT_KEY_BUILDING_PC_PEDRA_FURADA_PEDIA",
   "centerInCity": true,
   "worth": 10,
   "conquestProbability": 100,

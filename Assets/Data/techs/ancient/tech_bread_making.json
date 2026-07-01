@@ -1,8 +1,5 @@
 {
  "type": "TECH_BREAD_MAKING",
- "description": "TXT_KEY_TECH_BREAD_MAKING",
- "civilopedia": "TXT_KEY_TECH_BREAD_MAKING_PEDIA",
- "quote": "TXT_KEY_TECH_BREAD_MAKING_QUOTE",
  "enables": {
   "bonuses": [
    "BONUS_BREAD"
@@ -48,6 +45,9 @@
   "soundMP": "AS2D_TECH_BREAD_MAKING"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_BREAD_MAKING",
+  "civilopedia": "TXT_KEY_TECH_BREAD_MAKING_PEDIA",
+  "quote": "TXT_KEY_TECH_BREAD_MAKING_QUOTE",
   "era": "C2C_ERA_ANCIENT",
   "worth": 2,
   "tradeable": true,

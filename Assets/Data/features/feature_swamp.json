@@ -1,7 +1,5 @@
 {
  "type": "FEATURE_SWAMP",
- "description": "TXT_KEY_FEATURE_SWAMP",
- "civilopedia": "TXT_KEY_FEATURE_SWAMP_PEDIA",
  "food": {
   "plot": {
    "flat": -1
@@ -73,6 +71,8 @@
   ]
  },
  "identity": {
+  "description": "TXT_KEY_FEATURE_SWAMP",
+  "civilopedia": "TXT_KEY_FEATURE_SWAMP_PEDIA",
   "movementCost": 3,
   "appearance": 200,
   "popDestroys": 6,

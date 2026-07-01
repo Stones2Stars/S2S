@@ -1,6 +1,5 @@
 {
  "type": "PROMOTION_WIDE_BEAM1",
- "description": "TXT_KEY_PROMOTION_WIDE_BEAM1",
  "bombard": {
   "unit": {
    "rangedDamage": {
@@ -26,6 +25,7 @@
   "sound": "AS2D_IF_LEVELUP"
  },
  "identity": {
+  "description": "TXT_KEY_PROMOTION_WIDE_BEAM1",
   "rBombardPrereq": true
  }
 }

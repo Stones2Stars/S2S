@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_HQ_WONKA_CONFECTIONERIES",
- "description": "TXT_KEY_BUILDING_HQ_WONKA_CONFECTIONERIES",
- "civilopedia": "TXT_KEY_BUILDING_CORPORATION_WONKA_PEDIA",
  "enables": {
   "corporations": [
    "CORPORATION_WONKA"
@@ -56,6 +54,8 @@
   "construct": "AS2D_BUILD_BANK"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_HQ_WONKA_CONFECTIONERIES",
+  "civilopedia": "TXT_KEY_BUILDING_CORPORATION_WONKA_PEDIA",
   "commerceDoubleTime": {
    "culture": 1000
   },

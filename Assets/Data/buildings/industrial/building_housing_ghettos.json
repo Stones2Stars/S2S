@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_HOUSING_GHETTOS",
- "description": "TXT_KEY_BUILDING_HOUSING_GHETTOS",
- "civilopedia": "TXT_KEY_BUILDING_HOUSING_GHETTOS_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_KIVA"
@@ -65,6 +63,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_HOUSING_GHETTOS",
+  "civilopedia": "TXT_KEY_BUILDING_HOUSING_GHETTOS_PEDIA",
   "notConstructible": true,
   "nukeImmune": true,
   "neverCapture": true,

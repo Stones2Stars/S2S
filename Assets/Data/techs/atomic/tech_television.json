@@ -1,8 +1,5 @@
 {
  "type": "TECH_TELEVISION",
- "description": "TXT_KEY_TECH_TELEVISION",
- "civilopedia": "TXT_KEY_TECH_TELEVISION_PEDIA",
- "quote": "TXT_KEY_TECH_TELEVISION_QUOTE",
  "enables": {
   "bonuses": [
    "BONUS_TELEVISIONS"
@@ -69,6 +66,9 @@
   "soundMP": "AS2D_TECH_TELEVISION"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_TELEVISION",
+  "civilopedia": "TXT_KEY_TECH_TELEVISION_PEDIA",
+  "quote": "TXT_KEY_TECH_TELEVISION_QUOTE",
   "era": "C2C_ERA_ATOMIC",
   "worth": 48,
   "tradeable": true,

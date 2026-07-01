@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_PC_CAVE_OF_ALTAMIRA",
- "description": "TXT_KEY_BUILDING_PC_CAVE_OF_ALTAMIRA",
- "civilopedia": "TXT_KEY_BUILDING_PC_CAVE_OF_ALTAMIRA_PEDIA",
  "obsoletedBy": {
   "techs": [
    "TECH_SEDENTARY_LIFESTYLE"
@@ -69,6 +67,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_PC_CAVE_OF_ALTAMIRA",
+  "civilopedia": "TXT_KEY_BUILDING_PC_CAVE_OF_ALTAMIRA_PEDIA",
   "centerInCity": true,
   "worth": 10,
   "conquestProbability": 100,

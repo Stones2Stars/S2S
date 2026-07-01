@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_ALTAR_FOR_HUMAN_SACRIFICE",
- "description": "TXT_KEY_BUILDING_ALTAR_FOR_HUMAN_SACRIFICE",
- "civilopedia": "TXT_KEY_BUILDING_ALTAR_FOR_HUMAN_SACRIFICE_PEDIA",
  "obsoletedBy": {
   "techs": [
    "TECH_HUMANISM"
@@ -86,6 +84,8 @@
   "construct": "AS2D_BUILD_CEREMONIAL_ALTAR"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_ALTAR_FOR_HUMAN_SACRIFICE",
+  "civilopedia": "TXT_KEY_BUILDING_ALTAR_FOR_HUMAN_SACRIFICE_PEDIA",
   "neverCapture": true,
   "worth": 4,
   "advisor": "ADVISOR_RELIGION",

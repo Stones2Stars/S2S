@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_CORMORANT_TRAINER",
- "description": "TXT_KEY_BUILDING_CORMORANT_TRAINER",
- "civilopedia": "TXT_KEY_BUILDING_CORMORANT_TRAINER_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_RESOURCES_FEATHERS"
@@ -107,6 +105,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_CORMORANT_TRAINER",
+  "civilopedia": "TXT_KEY_BUILDING_CORMORANT_TRAINER_PEDIA",
   "worth": 4,
   "militaryWorth": 2,
   "advisor": "ADVISOR_ECONOMY",

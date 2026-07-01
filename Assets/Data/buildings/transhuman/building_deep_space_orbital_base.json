@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_DEEP_SPACE_ORBITAL_BASE",
- "description": "TXT_KEY_BUILDING_DEEP_SPACE_ORBITAL_BASE",
- "civilopedia": "TXT_KEY_BUILDING_DEEP_SPACE_ORBITAL_BASE_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_ASTEROID_SHELL_WORLD",
@@ -110,6 +108,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_DEEP_SPACE_ORBITAL_BASE",
+  "civilopedia": "TXT_KEY_BUILDING_DEEP_SPACE_ORBITAL_BASE_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

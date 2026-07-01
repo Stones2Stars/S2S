@@ -1,7 +1,5 @@
 {
  "type": "TRAIT_FANATICAL1",
- "description": "TXT_KEY_TRAIT_FANATICAL0",
- "civilopedia": "TXT_KEY_TRAIT_FANATICAL_PEDIA",
  "enables": {
   "traits": [
    "TRAIT_ZEALOUS2"
@@ -76,6 +74,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_TRAIT_FANATICAL0",
+  "civilopedia": "TXT_KEY_TRAIT_FANATICAL_PEDIA",
   "shortDescription": "TXT_KEY_TRAIT_FANATICAL_SHORT",
   "negativeTrait": true
  }

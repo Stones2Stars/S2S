@@ -1,7 +1,5 @@
 {
  "type": "UNIT_ORGAN_GUN",
- "description": "TXT_KEY_UNIT_ORGAN_GUN",
- "civilopedia": "TXT_KEY_UNIT_ORGAN_GUN_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -72,6 +70,8 @@
   "upkeep": 1
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_ORGAN_GUN",
+  "civilopedia": "TXT_KEY_UNIT_ORGAN_GUN_PEDIA",
   "worth": 3,
   "militaryWorth": 37,
   "xpValueAttack": 6,

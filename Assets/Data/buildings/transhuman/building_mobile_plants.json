@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_MOBILE_PLANTS",
- "description": "TXT_KEY_BUILDING_MOBILE_PLANTS",
- "civilopedia": "TXT_KEY_BUILDING_MOBILE_PLANTS_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -54,6 +52,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_MOBILE_PLANTS",
+  "civilopedia": "TXT_KEY_BUILDING_MOBILE_PLANTS_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

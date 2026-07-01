@@ -1,6 +1,5 @@
 {
  "type": "UNITCOMBAT_HOVERCRAFT",
- "description": "TXT_KEY_UNITCOMBAT_HOVERCRAFT",
  "capture": {
   "unit": {
    "probability": {
@@ -20,6 +19,7 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_UNITCOMBAT_HOVERCRAFT",
   "forMilitary": true
  }
 }

@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_BREEDING_PROGRAM_SEAL",
- "description": "TXT_KEY_BUILDING_BREEDING_PROGRAM_SEAL",
- "civilopedia": "TXT_KEY_BUILDING_BREEDING_PROGRAM_SEAL_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_RESOURCES_PELTS"
@@ -95,6 +93,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_BREEDING_PROGRAM_SEAL",
+  "civilopedia": "TXT_KEY_BUILDING_BREEDING_PROGRAM_SEAL_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

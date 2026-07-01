@@ -1,12 +1,12 @@
 {
  "type": "UNITCOMBAT_CULTURE_CYBERPUNK",
- "description": "TXT_KEY_UNITCOMBAT_CULTURE_CYBERPUNK",
  "ui": {
   "art": {
    "icon": "Art/Interface/Buttons/units/sparth/categories/culture_cyberpunk.dds"
   }
  },
  "identity": {
+  "description": "TXT_KEY_UNITCOMBAT_CULTURE_CYBERPUNK",
   "culture": "BONUS_CYBERPUNK"
  }
 }

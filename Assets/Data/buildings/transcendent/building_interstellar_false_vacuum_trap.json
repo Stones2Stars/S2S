@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_INTERSTELLAR_FALSE_VACUUM_TRAP",
- "description": "TXT_KEY_BUILDING_INTERSTELLAR_FALSE_VACUUM_TRAP",
- "civilopedia": "TXT_KEY_BUILDING_INTERSTELLAR_FALSE_VACUUM_TRAP_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -63,6 +61,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_INTERSTELLAR_FALSE_VACUUM_TRAP",
+  "civilopedia": "TXT_KEY_BUILDING_INTERSTELLAR_FALSE_VACUUM_TRAP_PEDIA",
   "damageAllAttackers": true,
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,

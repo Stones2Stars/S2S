@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_TABLET_MAKER",
- "description": "TXT_KEY_BUILDING_TABLET_MAKER",
- "civilopedia": "TXT_KEY_BUILDING_TABLET_MAKER_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_LIBRARY_OF_NINEVEH"
@@ -111,6 +109,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_TABLET_MAKER",
+  "civilopedia": "TXT_KEY_BUILDING_TABLET_MAKER_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

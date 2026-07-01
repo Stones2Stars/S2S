@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_MOVIE_STUDIO",
- "description": "TXT_KEY_BUILDING_MOVIE_STUDIO",
- "civilopedia": "TXT_KEY_BUILDING_MOVIE_STUDIO_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_ANIMAL_ACTOR_STUDIO",
@@ -81,6 +79,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_MOVIE_STUDIO",
+  "civilopedia": "TXT_KEY_BUILDING_MOVIE_STUDIO_PEDIA",
   "neverCapture": true,
   "greatPeopleUnitType": "UNIT_ARTIST",
   "advisor": "ADVISOR_ECONOMY",

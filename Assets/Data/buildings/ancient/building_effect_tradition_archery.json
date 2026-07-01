@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_EFFECT_TRADITION_ARCHERY",
- "description": "TXT_KEY_BUILDING_EFFECT_TRADITION_ARCHERY",
- "civilopedia": "TXT_KEY_BUILDING_EFFECT_TRADITION_ARCHERY_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_ARCHERY_RANGE",
@@ -40,6 +38,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_EFFECT_TRADITION_ARCHERY",
+  "civilopedia": "TXT_KEY_BUILDING_EFFECT_TRADITION_ARCHERY_PEDIA",
   "notConstructible": true,
   "nukeImmune": true,
   "neverCapture": true,

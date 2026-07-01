@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_TOWN_WATCH",
- "description": "TXT_KEY_BUILDING_TOWN_WATCH",
- "civilopedia": "TXT_KEY_BUILDING_TOWN_WATCH_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_SLAVE_COMPOUND_CRIME_PREVENTION"
@@ -108,6 +106,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_TOWN_WATCH",
+  "civilopedia": "TXT_KEY_BUILDING_TOWN_WATCH_PEDIA",
   "nukeImmune": true,
   "militaryWorth": 2,
   "advisor": "ADVISOR_MILITARY",

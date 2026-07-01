@@ -1,7 +1,5 @@
 {
  "type": "BONUS_SHANG",
- "description": "TXT_KEY_BONUS_SHANG",
- "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_SHANG_JADE_CARVER"
@@ -16,6 +14,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_SHANG",
+  "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
   "bonusClassType": "BONUSCLASS_CULTURE"
  }
 }

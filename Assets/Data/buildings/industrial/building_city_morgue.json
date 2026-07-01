@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_CITY_MORGUE",
- "description": "TXT_KEY_BUILDING_CITY_MORGUE",
- "civilopedia": "TXT_KEY_BUILDING_CITY_MORGUE_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_HIGH_TECH_CULTURAL_ENRICHMENT"
@@ -77,6 +75,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_CITY_MORGUE",
+  "civilopedia": "TXT_KEY_BUILDING_CITY_MORGUE_PEDIA",
   "conquestProbability": 95,
   "advisor": "ADVISOR_GROWTH",
   "visibilityPriority": 1,

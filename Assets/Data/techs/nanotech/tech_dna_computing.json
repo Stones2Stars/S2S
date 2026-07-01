@@ -1,8 +1,5 @@
 {
  "type": "TECH_DNA_COMPUTING",
- "description": "TXT_KEY_TECH_DNA_COMPUTING",
- "civilopedia": "TXT_KEY_TECH_DNA_COMPUTING_PEDIA",
- "quote": "TXT_KEY_TECH_DNA_COMPUTING_QUOTE",
  "enables": {
   "promotions": [
    "PROMOTION_RECOVER_TECH5"
@@ -67,6 +64,9 @@
   "soundMP": "AS2D_TECH_DNA_COMPUTING"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_DNA_COMPUTING",
+  "civilopedia": "TXT_KEY_TECH_DNA_COMPUTING_PEDIA",
+  "quote": "TXT_KEY_TECH_DNA_COMPUTING_QUOTE",
   "era": "C2C_ERA_NANOTECH",
   "worth": 48,
   "militaryWorth": 6,

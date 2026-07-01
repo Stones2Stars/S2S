@@ -1,7 +1,5 @@
 {
  "type": "BONUS_LEVITATION_GENERATORS",
- "description": "TXT_KEY_BONUS_LEVITATION_GENERATORS",
- "civilopedia": "TXT_KEY_BONUS_LEVITATION_GENERATORS_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_NEUROINDUCTION_FIELD"
@@ -16,6 +14,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_LEVITATION_GENERATORS",
+  "civilopedia": "TXT_KEY_BONUS_LEVITATION_GENERATORS_PEDIA",
   "bonusClassType": "BONUSCLASS_MANUFACTURED"
  }
 }

@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_AI_SINGLETON",
- "description": "TXT_KEY_BUILDING_AI_SINGLETON",
- "civilopedia": "TXT_KEY_BUILDING_AI_SINGLETON_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -47,6 +45,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_AI_SINGLETON",
+  "civilopedia": "TXT_KEY_BUILDING_AI_SINGLETON_PEDIA",
   "conquestProbability": 100,
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,

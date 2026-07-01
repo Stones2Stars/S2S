@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_BOATYARD",
- "description": "TXT_KEY_BUILDING_BOATYARD",
- "civilopedia": "TXT_KEY_BUILDING_BOATYARD_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_MARINA"
@@ -91,6 +89,8 @@
   "construct": "AS2D_BUILD_PORT"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_BOATYARD",
+  "civilopedia": "TXT_KEY_BUILDING_BOATYARD_PEDIA",
   "enabledCivilizations": [
    "CIVILIZATION_NPC_NEANDERTHAL"
   ],

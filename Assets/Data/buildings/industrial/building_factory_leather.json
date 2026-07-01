@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_FACTORY_LEATHER",
- "description": "TXT_KEY_BUILDING_FACTORY_LEATHER",
- "civilopedia": "TXT_KEY_BUILDING_FACTORY_LEATHER_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_BAMBOO_ARMOURER"
@@ -138,6 +136,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_FACTORY_LEATHER",
+  "civilopedia": "TXT_KEY_BUILDING_FACTORY_LEATHER_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

@@ -1,8 +1,5 @@
 {
  "type": "TECH_BRAIN_MACHINE_INTERFACE",
- "description": "TXT_KEY_TECH_BRAIN_MACHINE_INTERFACE",
- "civilopedia": "TXT_KEY_TECH_BRAIN_MACHINE_INTERFACE_PEDIA",
- "quote": "TXT_KEY_TECH_BRAIN_MACHINE_INTERFACE_QUOTE",
  "enables": {
   "bonuses": [
    "BONUS_NEUROIMPLANTS"
@@ -65,6 +62,9 @@
   "soundMP": "AS2D_TECH_BRAIN_MACHINE_INTERFACE"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_BRAIN_MACHINE_INTERFACE",
+  "civilopedia": "TXT_KEY_TECH_BRAIN_MACHINE_INTERFACE_PEDIA",
+  "quote": "TXT_KEY_TECH_BRAIN_MACHINE_INTERFACE_QUOTE",
   "era": "C2C_ERA_INFORMATION",
   "worth": 48,
   "tradeable": true,

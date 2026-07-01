@@ -1,6 +1,5 @@
 {
  "type": "BUILD_BREAK_ICE",
- "description": "TXT_KEY_BUILD_BREAK_ICE",
  "requires": {
   "build": {
    "all": [
@@ -35,5 +34,8 @@
   "art": {
    "entityEvent": "ENTITY_EVENT_BUILD"
   }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILD_BREAK_ICE"
  }
 }

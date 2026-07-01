@@ -1,12 +1,12 @@
 {
  "type": "UNITCOMBAT_CULTURE_PANAMAN",
- "description": "TXT_KEY_UNITCOMBAT_CULTURE_PANAMAN",
  "ui": {
   "art": {
    "icon": "Art/categories/culture_newcultures.dds"
   }
  },
  "identity": {
+  "description": "TXT_KEY_UNITCOMBAT_CULTURE_PANAMAN",
   "culture": "BONUS_PANAMAN"
  }
 }

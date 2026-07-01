@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_SHALE_PLANT",
- "description": "TXT_KEY_BUILDING_SHALE_PLANT",
- "civilopedia": "TXT_KEY_BUILDING_SHALE_PLANT_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_RESOURCES_PETROLEUM_PRODUCTS"
@@ -92,6 +90,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_SHALE_PLANT",
+  "civilopedia": "TXT_KEY_BUILDING_SHALE_PLANT_PEDIA",
   "conquestProbability": 75,
   "dcmAirbombMission": 3,
   "advisor": "ADVISOR_ECONOMY",

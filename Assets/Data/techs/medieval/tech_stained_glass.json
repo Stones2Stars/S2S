@@ -1,8 +1,5 @@
 {
  "type": "TECH_STAINED_GLASS",
- "description": "TXT_KEY_TECH_STAINED_GLASS",
- "civilopedia": "TXT_KEY_TECH_STAINED_GLASS_PEDIA",
- "quote": "TXT_KEY_TECH_STAINED_GLASS_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_GUILD_GLASSBLOWERS",
@@ -55,6 +52,9 @@
   "soundMP": "AS2D_TECH_STAINEDGLASS"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_STAINED_GLASS",
+  "civilopedia": "TXT_KEY_TECH_STAINED_GLASS_PEDIA",
+  "quote": "TXT_KEY_TECH_STAINED_GLASS_QUOTE",
   "era": "C2C_ERA_MEDIEVAL",
   "worth": 24,
   "tradeable": true,

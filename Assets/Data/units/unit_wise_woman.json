@@ -1,7 +1,5 @@
 {
  "type": "UNIT_WISE_WOMAN",
- "description": "TXT_KEY_UNIT_WISE_WOMAN",
- "civilopedia": "TXT_KEY_UNIT_WISE_WOMAN_PEDIA",
  "replacedBy": {
   "units": [
    "UNIT_NEANDERTHAL_WISE_WOMAN",
@@ -60,6 +58,8 @@
   "hurryCostModifier": 25
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_WISE_WOMAN",
+  "civilopedia": "TXT_KEY_UNIT_WISE_WOMAN_PEDIA",
   "worth": 2,
   "militaryWorth": 1,
   "xpValueDefense": 2,

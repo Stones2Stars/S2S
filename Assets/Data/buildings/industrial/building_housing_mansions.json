@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_HOUSING_MANSIONS",
- "description": "TXT_KEY_BUILDING_HOUSING_MANSIONS",
- "civilopedia": "TXT_KEY_BUILDING_HOUSING_MANSIONS_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_DRUGLORDS_MANSON",
@@ -71,6 +69,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_HOUSING_MANSIONS",
+  "civilopedia": "TXT_KEY_BUILDING_HOUSING_MANSIONS_PEDIA",
   "notConstructible": true,
   "nukeImmune": true,
   "neverCapture": true,

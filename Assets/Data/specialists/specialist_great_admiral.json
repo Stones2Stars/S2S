@@ -1,7 +1,5 @@
 {
  "type": "SPECIALIST_GREAT_ADMIRAL",
- "description": "TXT_KEY_SPECIALIST_GREAT_ADMIRAL",
- "civilopedia": "TXT_KEY_CONCEPT_GREAT_ADMIRALS_PEDIA",
  "commerce": {
   "city": {
    "flat": 2
@@ -41,6 +39,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_SPECIALIST_GREAT_ADMIRAL",
+  "civilopedia": "TXT_KEY_CONCEPT_GREAT_ADMIRALS_PEDIA",
   "categories": [
    "CATEGORY_SPECIALIST_GROUP_MILITARY"
   ]

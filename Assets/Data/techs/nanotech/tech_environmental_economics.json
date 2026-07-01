@@ -1,8 +1,5 @@
 {
  "type": "TECH_ENVIRONMENTAL_ECONOMICS",
- "description": "TXT_KEY_TECH_ENVIRONMENTAL_ECONOMICS",
- "civilopedia": "TXT_KEY_TECH_ENVIRONMENTAL_ECONOMICS_PEDIA",
- "quote": "TXT_KEY_TECH_ENVIRONMENTAL_ECONOMICS_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_AGROFOREST",
@@ -62,6 +59,9 @@
   "soundMP": "AS2D_TECH_ENVIRONMENTALISM"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_ENVIRONMENTAL_ECONOMICS",
+  "civilopedia": "TXT_KEY_TECH_ENVIRONMENTAL_ECONOMICS_PEDIA",
+  "quote": "TXT_KEY_TECH_ENVIRONMENTAL_ECONOMICS_QUOTE",
   "era": "C2C_ERA_NANOTECH",
   "worth": 48,
   "tradeable": true,

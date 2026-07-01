@@ -1,7 +1,5 @@
 {
  "type": "CORPORATION_ADVENTURE",
- "description": "TXT_KEY_BUILDING_CORPORATION_ADVENTURE",
- "civilopedia": "TXT_KEY_BUILDING_CORPORATION_ADVENTURE_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_ADVENTURE_TOURS_FRANCHISE"
@@ -85,6 +83,8 @@
   "sound": "AS2D_BUILD_BANK"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_CORPORATION_ADVENTURE",
+  "civilopedia": "TXT_KEY_BUILDING_CORPORATION_ADVENTURE_PEDIA",
   "spreadFactor": 200,
   "spread": 30
  }

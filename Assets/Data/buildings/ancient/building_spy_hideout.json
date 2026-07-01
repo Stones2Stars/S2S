@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_SPY_HIDEOUT",
- "description": "TXT_KEY_BUILDING_SPY_HIDEOUT",
- "civilopedia": "TXT_KEY_BUILDING_SPY_HIDEOUT_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_SPY_SAFE_HOUSE"
@@ -68,6 +66,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_SPY_HIDEOUT",
+  "civilopedia": "TXT_KEY_BUILDING_SPY_HIDEOUT_PEDIA",
   "worth": 8,
   "militaryWorth": 8,
   "advisor": "ADVISOR_MILITARY",

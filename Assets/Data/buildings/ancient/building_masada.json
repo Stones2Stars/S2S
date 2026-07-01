@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_MASADA",
- "description": "TXT_KEY_BUILDING_MASADA",
- "civilopedia": "TXT_KEY_BUILDING_MASADA_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -118,6 +116,8 @@
   "construct": "AS2D_BUILD_JEWISH"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_MASADA",
+  "civilopedia": "TXT_KEY_BUILDING_MASADA_PEDIA",
   "commerceDoubleTime": {
    "research": 1000,
    "culture": 1000

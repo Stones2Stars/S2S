@@ -1,7 +1,5 @@
 {
  "type": "UNIT_DRUID_MISSIONARY",
- "description": "TXT_KEY_UNIT_DRUID_MISSIONARY",
- "civilopedia": "TXT_KEY_UNIT_DRUID_MISSIONARY_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -18,6 +16,8 @@
   "production": 110
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_DRUID_MISSIONARY",
+  "civilopedia": "TXT_KEY_UNIT_DRUID_MISSIONARY_PEDIA",
   "worth": 1,
   "domain": "DOMAIN_LAND",
   "defaultUnitAI": "UNITAI_MISSIONARY",

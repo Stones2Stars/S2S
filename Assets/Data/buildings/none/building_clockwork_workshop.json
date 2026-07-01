@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_CLOCKWORK_WORKSHOP",
- "description": "TXT_KEY_BUILDING_CLOCKWORK_WORKSHOP",
- "civilopedia": "TXT_KEY_BUILDING_CLOCKWORK_WORKSHOP_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_ORNITHOPTER_AERIE"
@@ -113,6 +111,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_CLOCKWORK_WORKSHOP",
+  "civilopedia": "TXT_KEY_BUILDING_CLOCKWORK_WORKSHOP_PEDIA",
   "worth": 2,
   "specialBuildingType": "SPECIALBUILDING_PUNK_CLOCK",
   "advisor": "ADVISOR_SCIENCE",

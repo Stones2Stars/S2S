@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_SPACE_STATION_TOURS",
- "description": "TXT_KEY_BUILDING_SPACE_STATION_TOURS",
- "civilopedia": "TXT_KEY_BUILDING_SPACE_STATION_TOURS_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -38,6 +36,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_SPACE_STATION_TOURS",
+  "civilopedia": "TXT_KEY_BUILDING_SPACE_STATION_TOURS_PEDIA",
   "greatPeopleUnitType": "UNIT_MERCHANT",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,

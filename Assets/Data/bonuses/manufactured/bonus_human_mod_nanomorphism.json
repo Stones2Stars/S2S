@@ -1,7 +1,5 @@
 {
  "type": "BONUS_HUMAN_MOD_NANOMORPHISM",
- "description": "TXT_KEY_BONUS_HUMAN_MOD_NANOMORPHISM",
- "civilopedia": "TXT_KEY_BONUS_HUMAN_MOD_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_HUMAN_MOD_INFORMATION_BASED"
@@ -13,6 +11,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_HUMAN_MOD_NANOMORPHISM",
+  "civilopedia": "TXT_KEY_BONUS_HUMAN_MOD_PEDIA",
   "bonusClassType": "BONUSCLASS_GENMODS"
  }
 }

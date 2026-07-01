@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_PORTRAIT_PAINTER",
- "description": "TXT_KEY_BUILDING_PORTRAIT_PAINTER",
- "civilopedia": "TXT_KEY_BUILDING_PORTRAIT_PAINTER_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_PHOTOGRAPHY_STUDIO"
@@ -78,6 +76,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_PORTRAIT_PAINTER",
+  "civilopedia": "TXT_KEY_BUILDING_PORTRAIT_PAINTER_PEDIA",
   "worth": 1,
   "conquestProbability": 100,
   "advisor": "ADVISOR_CULTURE",

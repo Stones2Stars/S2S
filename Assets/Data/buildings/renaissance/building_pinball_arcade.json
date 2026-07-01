@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_PINBALL_ARCADE",
- "description": "TXT_KEY_BUILDING_PINBALL_ARCADE",
- "civilopedia": "TXT_KEY_BUILDING_PINBALL_ARCADE_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_VIDEO_GAME_ARCADE"
@@ -76,6 +74,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_PINBALL_ARCADE",
+  "civilopedia": "TXT_KEY_BUILDING_PINBALL_ARCADE_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

@@ -1,6 +1,5 @@
 {
  "type": "PROMOTION_HUNTING_SIGHT1",
- "description": "TXT_KEY_PROMOTION_HUNTING_SIGHT",
  "firstStrike": {
   "unit": {
    "chance": {
@@ -36,6 +35,7 @@
   "sound": "AS2D_IF_LEVELUP"
  },
  "identity": {
+  "description": "TXT_KEY_PROMOTION_HUNTING_SIGHT",
   "unitCombats": [
    "UNITCOMBAT_COMBATANT",
    "UNITCOMBAT_EXPLORER",

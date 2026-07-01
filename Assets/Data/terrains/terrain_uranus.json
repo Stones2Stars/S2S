@@ -1,7 +1,5 @@
 {
  "type": "TERRAIN_URANUS",
- "description": "TXT_KEY_TERRAIN_URANUS",
- "civilopedia": "TXT_KEY_TERRAIN_URANUS_PEDIA",
  "commerce": {
   "plot": {
    "flat": 2
@@ -26,6 +24,8 @@
   "soundscape": "ASSS_TUNDRA_SELECT_AMB"
  },
  "identity": {
+  "description": "TXT_KEY_TERRAIN_URANUS",
+  "civilopedia": "TXT_KEY_TERRAIN_URANUS_PEDIA",
   "movementCost": 3,
   "found": true,
   "mapCategories": [

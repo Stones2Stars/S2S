@@ -1,7 +1,5 @@
 {
  "type": "TRAIT_IMPERIALIST",
- "description": "TXT_KEY_TRAIT_IMPERIALIST",
- "civilopedia": "TXT_KEY_TRAIT_IMPERIALIST_PEDIA",
  "buildRate": {
   "empire": {
    "buildings": {
@@ -99,6 +97,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_TRAIT_IMPERIALIST",
+  "civilopedia": "TXT_KEY_TRAIT_IMPERIALIST_PEDIA",
   "shortDescription": "TXT_KEY_TRAIT_IMPERIALIST_SHORT"
  }
 }

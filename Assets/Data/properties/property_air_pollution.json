@@ -1,6 +1,5 @@
 {
  "type": "PROPERTY_AIR_POLLUTION",
- "description": "TXT_KEY_PROPERTY_AIR_POLLUTION",
  "text": {
   "value": "TXT_KEY_PROPERTY_AIR_POLLUTION_DISPLAY",
   "change": "TXT_KEY_PROPERTY_AIR_POLLUTION_CHANGE",
@@ -47,6 +46,7 @@
   "trainReluctance": 10
  },
  "identity": {
+  "description": "TXT_KEY_PROPERTY_AIR_POLLUTION",
   "sourceDrain": true,
   "fontButtonIndex": 3
  }

@@ -1,8 +1,5 @@
 {
  "type": "TECH_SIMPLE_WOOD_WORKING",
- "description": "TXT_KEY_TECH_SIMPLE_WOOD_WORKING",
- "civilopedia": "TXT_KEY_TECH_SIMPLE_WOOD_WORKING_PEDIA",
- "quote": "TXT_KEY_TECH_SIMPLE_WOOD_WORKING_QUOTE",
  "enables": {
   "bonuses": [
    "BONUS_LACQUERWARE",
@@ -74,6 +71,9 @@
   "soundMP": "AS2D_TECH_SIMPLE_WOOD_WORKING"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_SIMPLE_WOOD_WORKING",
+  "civilopedia": "TXT_KEY_TECH_SIMPLE_WOOD_WORKING_PEDIA",
+  "quote": "TXT_KEY_TECH_SIMPLE_WOOD_WORKING_QUOTE",
   "era": "C2C_ERA_PREHISTORIC",
   "worth": 2,
   "militaryWorth": 1,

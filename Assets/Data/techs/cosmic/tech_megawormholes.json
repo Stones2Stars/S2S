@@ -1,8 +1,5 @@
 {
  "type": "TECH_MEGAWORMHOLES",
- "description": "TXT_KEY_TECH_MEGAWORMHOLES",
- "civilopedia": "TXT_KEY_TECH_MEGAWORMHOLES_PEDIA",
- "quote": "TXT_KEY_TECH_MEGAWORMHOLES_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_INTERGALACTIC_GRAZER",
@@ -56,6 +53,9 @@
   "soundMP": "AS2D_TECH_GENERIC"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_MEGAWORMHOLES",
+  "civilopedia": "TXT_KEY_TECH_MEGAWORMHOLES_PEDIA",
+  "quote": "TXT_KEY_TECH_MEGAWORMHOLES_QUOTE",
   "era": "C2C_ERA_COSMIC",
   "worth": 48,
   "tradeable": true,

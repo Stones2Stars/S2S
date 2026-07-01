@@ -1,8 +1,5 @@
 {
  "type": "TECH_FEUDALISM",
- "description": "TXT_KEY_TECH_FEUDALISM",
- "civilopedia": "TXT_KEY_TECH_FEUDALISM_PEDIA",
- "quote": "TXT_KEY_TECH_FEUDALISM_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_CASTLE_KEEP",
@@ -114,6 +111,9 @@
   "soundMP": "AS2D_TECH_MP_FEUDALISM"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_FEUDALISM",
+  "civilopedia": "TXT_KEY_TECH_FEUDALISM_PEDIA",
+  "quote": "TXT_KEY_TECH_FEUDALISM_QUOTE",
   "era": "C2C_ERA_MEDIEVAL",
   "worth": 24,
   "tradeable": true,

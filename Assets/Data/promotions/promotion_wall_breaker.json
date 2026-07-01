@@ -1,6 +1,5 @@
 {
  "type": "PROMOTION_WALL_BREAKER",
- "description": "TXT_KEY_PROMOTION_WALL_BREAKER",
  "strength": {
   "unit": {
    "cityAttack": {
@@ -31,6 +30,7 @@
   "sound": "AS2D_IF_LEVELUP"
  },
  "identity": {
+  "description": "TXT_KEY_PROMOTION_WALL_BREAKER",
   "unitCombats": [
    "UNITCOMBAT_SIEGE",
    "UNITCOMBAT_WOODEN_SHIPS",

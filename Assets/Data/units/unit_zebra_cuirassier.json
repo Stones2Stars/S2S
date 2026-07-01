@@ -1,7 +1,5 @@
 {
  "type": "UNIT_ZEBRA_CUIRASSIER",
- "description": "TXT_KEY_UNIT_ZEBRA_CUIRASSIER",
- "civilopedia": "TXT_KEY_UNIT_CUIRASSIER_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -160,6 +158,8 @@
   "production": 475
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_ZEBRA_CUIRASSIER",
+  "civilopedia": "TXT_KEY_UNIT_CUIRASSIER_PEDIA",
   "worth": 4,
   "militaryWorth": 21,
   "xpValueAttack": 6,

@@ -1,12 +1,12 @@
 {
  "type": "UNITCOMBAT_CULTURE_ROMAN",
- "description": "TXT_KEY_UNITCOMBAT_CULTURE_ROMAN",
  "ui": {
   "art": {
    "icon": "Art/Interface/Buttons/units/sparth/categories/culture_rome.dds"
   }
  },
  "identity": {
+  "description": "TXT_KEY_UNITCOMBAT_CULTURE_ROMAN",
   "culture": "BONUS_ROMAN"
  }
 }

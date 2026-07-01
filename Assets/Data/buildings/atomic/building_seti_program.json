@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_SETI_PROGRAM",
- "description": "TXT_KEY_BUILDING_SETI_PROGRAM",
- "civilopedia": "TXT_KEY_BUILDING_SETI_PROGRAM_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -103,6 +101,8 @@
   "construct": "AS2D_BUILD_GREATLIBRARY"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_SETI_PROGRAM",
+  "civilopedia": "TXT_KEY_BUILDING_SETI_PROGRAM_PEDIA",
   "commerceDoubleTime": {
    "research": 100
   },

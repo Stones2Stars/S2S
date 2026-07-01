@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_BUTCHERY",
- "description": "TXT_KEY_BUILDING_BUTCHERY",
- "civilopedia": "TXT_KEY_BUILDING_BUTCHERY_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_GUILD_BUTCHERS",
@@ -222,6 +220,8 @@
   "construct": "AS2D_BUILD_BUTCHERY"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_BUTCHERY",
+  "civilopedia": "TXT_KEY_BUILDING_BUTCHERY_PEDIA",
   "worth": 4,
   "conquestProbability": 75,
   "dcmAirbombMission": 2,

@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_CRIME_RIOTING",
- "description": "TXT_KEY_BUILDING_CRIME_RIOTING",
- "civilopedia": "TXT_KEY_BUILDING_CRIME_RIOTING_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -101,6 +99,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_CRIME_RIOTING",
+  "civilopedia": "TXT_KEY_BUILDING_CRIME_RIOTING_PEDIA",
   "notConstructible": true,
   "nukeImmune": true,
   "conquestProbability": 100,

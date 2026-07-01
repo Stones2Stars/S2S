@@ -1,7 +1,5 @@
 {
  "type": "UNIT_KOOKABURRA",
- "description": "TXT_KEY_UNIT_KOOKABURRA",
- "civilopedia": "TXT_KEY_UNIT_KOOKABURRA_PEDIA",
  "withdrawal": {
   "unit": {
    "percent": 65
@@ -42,6 +40,8 @@
   ]
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_KOOKABURRA",
+  "civilopedia": "TXT_KEY_UNIT_KOOKABURRA_PEDIA",
   "spawnOnly": true,
   "xpValueAttack": 1,
   "xpValueDefense": 1,

@@ -1,7 +1,5 @@
 {
  "type": "UNIT_KOALA",
- "description": "TXT_KEY_UNIT_KOALA",
- "civilopedia": "TXT_KEY_UNIT_KOALA_PEDIA",
  "withdrawal": {
   "unit": {
    "percent": 10
@@ -51,6 +49,8 @@
   ]
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_KOALA",
+  "civilopedia": "TXT_KEY_UNIT_KOALA_PEDIA",
   "spawnOnly": true,
   "xpValueAttack": 1,
   "xpValueDefense": 1,

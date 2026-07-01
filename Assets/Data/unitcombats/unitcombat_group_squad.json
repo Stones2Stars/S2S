@@ -1,6 +1,5 @@
 {
  "type": "UNITCOMBAT_GROUP_SQUAD",
- "description": "TXT_KEY_UNITCOMBAT_GROUP_SQUAD",
  "experience": {
   "unit": {
    "percent": 40
@@ -29,6 +28,7 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_UNITCOMBAT_GROUP_SQUAD",
   "base": {
    "group": 3
   }

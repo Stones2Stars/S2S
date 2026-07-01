@@ -1,7 +1,5 @@
 {
  "type": "UNIT_RAZORBILL",
- "description": "TXT_KEY_UNIT_RAZORBILL",
- "civilopedia": "TXT_KEY_UNIT_RAZORBILL_PEDIA",
  "withdrawal": {
   "unit": {
    "percent": 70
@@ -36,6 +34,8 @@
   ]
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_RAZORBILL",
+  "civilopedia": "TXT_KEY_UNIT_RAZORBILL_PEDIA",
   "spawnOnly": true,
   "xpValueAttack": 1,
   "xpValueDefense": 1,

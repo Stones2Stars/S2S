@@ -1,7 +1,5 @@
 {
  "type": "C2C_ERA_PREHISTORIC",
- "description": "TXT_KEY_ERA_PREHISTORIC",
- "strategy": "TXT_KEY_ERA_PREHISTORIC_STRATEGY",
  "costs": {
   "world": {
    "train": {
@@ -84,6 +82,8 @@
   "unitDefeat": "AS2D_LOSS_EARLY"
  },
  "identity": {
+  "description": "TXT_KEY_ERA_PREHISTORIC",
+  "strategy": "TXT_KEY_ERA_PREHISTORIC_STRATEGY",
   "order": 1,
   "advancedStart": 500,
   "historicalStartYear": -200000,

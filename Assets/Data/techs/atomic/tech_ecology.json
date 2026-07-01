@@ -1,8 +1,5 @@
 {
  "type": "TECH_ECOLOGY",
- "description": "TXT_KEY_TECH_ECOLOGY",
- "civilopedia": "TXT_KEY_TECH_ECOLOGY_PEDIA",
- "quote": "TXT_KEY_TECH_ECOLOGY_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_BREEDING_PROGRAM_ANTELOPE",
@@ -131,6 +128,9 @@
   "soundMP": "AS2D_TECH_MP_ECOLOGY"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_ECOLOGY",
+  "civilopedia": "TXT_KEY_TECH_ECOLOGY_PEDIA",
+  "quote": "TXT_KEY_TECH_ECOLOGY_QUOTE",
   "era": "C2C_ERA_ATOMIC",
   "worth": 48,
   "tradeable": true,

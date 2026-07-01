@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_TELECOURSE_STUDIO",
- "description": "TXT_KEY_BUILDING_TELECOURSE_STUDIO",
- "civilopedia": "TXT_KEY_BUILDING_TELECOURSE_STUDIO_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_HIGH_TECH_CULTURAL_ENRICHMENT"
@@ -68,6 +66,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_TELECOURSE_STUDIO",
+  "civilopedia": "TXT_KEY_BUILDING_TELECOURSE_STUDIO_PEDIA",
   "advisor": "ADVISOR_CULTURE",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

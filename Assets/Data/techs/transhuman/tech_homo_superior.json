@@ -1,8 +1,5 @@
 {
  "type": "TECH_HOMO_SUPERIOR",
- "description": "TXT_KEY_TECH_HOMO_SUPERIOR",
- "civilopedia": "TXT_KEY_TECH_HOMO_SUPERIOR_PEDIA",
- "quote": "TXT_KEY_TECH_HOMO_SUPERIOR_QUOTE",
  "enables": {
   "civics": [
    "CIVIC_SUPERHUMAN"
@@ -70,6 +67,9 @@
   "soundMP": "AS2D_TECH_HOMO_SUPERIOR"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_HOMO_SUPERIOR",
+  "civilopedia": "TXT_KEY_TECH_HOMO_SUPERIOR_PEDIA",
+  "quote": "TXT_KEY_TECH_HOMO_SUPERIOR_QUOTE",
   "era": "C2C_ERA_TRANSHUMAN",
   "worth": 48,
   "militaryWorth": 6,

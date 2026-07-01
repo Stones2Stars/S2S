@@ -1,12 +1,12 @@
 {
  "type": "UNITCOMBAT_CULTURE_MAORI",
- "description": "TXT_KEY_UNITCOMBAT_CULTURE_MAORI",
  "ui": {
   "art": {
    "icon": "Art/Interface/Buttons/units/sparth/categories/culture_maori.dds"
   }
  },
  "identity": {
+  "description": "TXT_KEY_UNITCOMBAT_CULTURE_MAORI",
   "culture": "BONUS_MAORI"
  }
 }

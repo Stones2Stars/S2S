@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_HQ_MALLWART",
- "description": "TXT_KEY_BUILDING_HQ_MALLWART",
- "civilopedia": "TXT_KEY_BUILDING_CORPORATION_MALLWART_PEDIA",
  "enables": {
   "corporations": [
    "CORPORATION_MALLWART"
@@ -61,6 +59,8 @@
   "construct": "AS2D_BUILD_BANK"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_HQ_MALLWART",
+  "civilopedia": "TXT_KEY_BUILDING_CORPORATION_MALLWART_PEDIA",
   "commerceDoubleTime": {
    "culture": 1000
   },

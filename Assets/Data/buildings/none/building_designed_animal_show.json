@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_DESIGNED_ANIMAL_SHOW",
- "description": "TXT_KEY_BUILDING_DESIGNED_ANIMAL_SHOW",
- "civilopedia": "TXT_KEY_BUILDING_DESIGNED_ANIMAL_SHOW_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -83,6 +81,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_DESIGNED_ANIMAL_SHOW",
+  "civilopedia": "TXT_KEY_BUILDING_DESIGNED_ANIMAL_SHOW_PEDIA",
   "neverCapture": true,
   "specialBuildingType": "SPECIALBUILDING_PUNK_BIO",
   "advisor": "ADVISOR_SCIENCE",

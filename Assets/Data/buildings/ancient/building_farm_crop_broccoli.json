@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_FARM_CROP_BROCCOLI",
- "description": "TXT_KEY_BUILDING_FARM_CROP_BROCCOLI",
- "civilopedia": "TXT_KEY_BUILDING_FARM_CROP_BROCCOLI_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_RESOURCES_VEGETABLES"
@@ -76,6 +74,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_FARM_CROP_BROCCOLI",
+  "civilopedia": "TXT_KEY_BUILDING_FARM_CROP_BROCCOLI_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

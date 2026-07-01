@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_MODERN_EARTHWORKS",
- "description": "TXT_KEY_BUILDING_MODERN_EARTHWORKS",
- "civilopedia": "TXT_KEY_BUILDING_MODERN_EARTHWORKS_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_AUTONOMOUS_MINE",
@@ -80,6 +78,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_MODERN_EARTHWORKS",
+  "civilopedia": "TXT_KEY_BUILDING_MODERN_EARTHWORKS_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

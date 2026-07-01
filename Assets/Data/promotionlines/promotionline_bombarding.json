@@ -1,12 +1,12 @@
 {
  "type": "PROMOTIONLINE_BOMBARDING",
- "description": "TXT_KEY_PROMOTIONLINE_BOMBARDING",
  "ui": {
   "art": {
    "icon": "Art/Interface/Buttons/Promotions/bombarding1.dds"
   }
  },
  "identity": {
+  "description": "TXT_KEY_PROMOTIONLINE_BOMBARDING",
   "unitCombats": [
    "UNITCOMBAT_WOODEN_SHIPS",
    "UNITCOMBAT_STEAM_SHIPS",

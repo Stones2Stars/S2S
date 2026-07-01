@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_CHINAMPA",
- "description": "TXT_KEY_BUILDING_CHINAMPA",
- "civilopedia": "TXT_KEY_BUILDING_CHINAMPA_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_GREAT_CHINAMPA"
@@ -64,6 +62,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_CHINAMPA",
+  "civilopedia": "TXT_KEY_BUILDING_CHINAMPA_PEDIA",
   "advisor": "ADVISOR_GROWTH",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

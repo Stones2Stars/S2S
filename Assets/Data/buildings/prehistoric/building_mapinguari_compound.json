@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_MAPINGUARI_COMPOUND",
- "description": "TXT_KEY_BUILDING_MAPINGUARI_COMPOUND",
- "civilopedia": "TXT_KEY_BUILDING_MAPINGUARI_COMPOUND_PEDIA",
  "enables": {
   "units": [
    "UNIT_MAPINGUARI",
@@ -38,6 +36,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_MAPINGUARI_COMPOUND",
+  "civilopedia": "TXT_KEY_BUILDING_MAPINGUARI_COMPOUND_PEDIA",
   "notConstructible": true,
   "worth": 2,
   "militaryWorth": 2,

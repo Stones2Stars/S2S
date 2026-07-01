@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_MODERN_WATERWORKS",
- "description": "TXT_KEY_BUILDING_MODERN_WATERWORKS",
- "civilopedia": "TXT_KEY_BUILDING_MODERN_WATERWORKS_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_BARAY",
@@ -77,6 +75,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_MODERN_WATERWORKS",
+  "civilopedia": "TXT_KEY_BUILDING_MODERN_WATERWORKS_PEDIA",
   "providesFreshWater": true,
   "advisor": "ADVISOR_GROWTH",
   "mapCategories": [

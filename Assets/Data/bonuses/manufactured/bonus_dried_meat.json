@@ -1,13 +1,13 @@
 {
  "type": "BONUS_DRIED_MEAT",
- "description": "TXT_KEY_BONUS_DRIED_MEAT",
- "civilopedia": "TXT_KEY_BONUS_DRIED_MEAT_PEDIA",
  "world": {
   "art": {
    "icon": "ART_DEF_BONUS_DRIED_MEAT"
   }
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_DRIED_MEAT",
+  "civilopedia": "TXT_KEY_BONUS_DRIED_MEAT_PEDIA",
   "bonusClassType": "BONUSCLASS_MANUFACTURED"
  }
 }

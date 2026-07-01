@@ -1,8 +1,5 @@
 {
  "type": "TECH_REFRIGERATION",
- "description": "TXT_KEY_TECH_REFRIGERATION",
- "civilopedia": "TXT_KEY_TECH_REFRIGERATION_PEDIA",
- "quote": "TXT_KEY_TECH_REFRIGERATION_QUOTE",
  "enables": {
   "bonuses": [
    "BONUS_ICE_CREAM",
@@ -91,6 +88,9 @@
   "soundMP": "AS2D_TECH_MP_REFRIGERATION"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_REFRIGERATION",
+  "civilopedia": "TXT_KEY_TECH_REFRIGERATION_PEDIA",
+  "quote": "TXT_KEY_TECH_REFRIGERATION_QUOTE",
   "era": "C2C_ERA_INDUSTRIAL",
   "worth": 48,
   "tradeable": true,

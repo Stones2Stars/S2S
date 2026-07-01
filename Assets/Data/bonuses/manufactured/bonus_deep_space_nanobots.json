@@ -1,13 +1,13 @@
 {
  "type": "BONUS_DEEP_SPACE_NANOBOTS",
- "description": "TXT_KEY_BONUS_DEEP_SPACE_NANOBOTS",
- "civilopedia": "TXT_KEY_BONUS_DEEP_SPACE_NANOBOTS_PEDIA",
  "world": {
   "art": {
    "icon": "ART_DEF_BONUS_DEEP_SPACE_NANOBOTS"
   }
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_DEEP_SPACE_NANOBOTS",
+  "civilopedia": "TXT_KEY_BONUS_DEEP_SPACE_NANOBOTS_PEDIA",
   "bonusClassType": "BONUSCLASS_MANUFACTURED"
  }
 }

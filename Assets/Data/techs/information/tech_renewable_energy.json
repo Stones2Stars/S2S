@@ -1,8 +1,5 @@
 {
  "type": "TECH_RENEWABLE_ENERGY",
- "description": "TXT_KEY_TECH_RENEWABLE_ENERGY",
- "civilopedia": "TXT_KEY_TECH_RENEWABLE_ENERGY_PEDIA",
- "quote": "TXT_KEY_TECH_RENEWABLE_ENERGY_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_ARCOSANTI",
@@ -53,6 +50,9 @@
   "soundMP": "AS2D_TECH_GENERIC"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_RENEWABLE_ENERGY",
+  "civilopedia": "TXT_KEY_TECH_RENEWABLE_ENERGY_PEDIA",
+  "quote": "TXT_KEY_TECH_RENEWABLE_ENERGY_QUOTE",
   "era": "C2C_ERA_INFORMATION",
   "worth": 48,
   "tradeable": true,

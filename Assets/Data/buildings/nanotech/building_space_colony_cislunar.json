@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_SPACE_COLONY_CISLUNAR",
- "description": "TXT_KEY_BUILDING_SPACE_COLONY_CISLUNAR",
- "civilopedia": "TXT_KEY_BUILDING_SPACE_COLONY_CISLUNAR_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_CISLUNAR_CONTROL_SYSTEM",
@@ -72,6 +70,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_SPACE_COLONY_CISLUNAR",
+  "civilopedia": "TXT_KEY_BUILDING_SPACE_COLONY_CISLUNAR_PEDIA",
   "notConstructible": true,
   "autoBuild": true,
   "advisor": "ADVISOR_SCIENCE",

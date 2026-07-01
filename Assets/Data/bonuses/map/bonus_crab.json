@@ -1,7 +1,5 @@
 {
  "type": "BONUS_CRAB",
- "description": "TXT_KEY_BONUS_CRAB",
- "civilopedia": "TXT_KEY_BONUS_CRAB_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_CULTURE_CHIMU",
@@ -56,6 +54,8 @@
   ]
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_CRAB",
+  "civilopedia": "TXT_KEY_BONUS_CRAB_PEDIA",
   "bonusClassType": "BONUSCLASS_SEAFOOD"
  }
 }

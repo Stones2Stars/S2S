@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_SPEARPOINT_BURIAL",
- "description": "TXT_KEY_BUILDING_SPEARPOINT_BURIAL",
- "civilopedia": "TXT_KEY_BUILDING_SPEARPOINT_BURIAL_PEDIA",
  "obsoletedBy": {
   "techs": [
    "TECH_CITY_PLANNING"
@@ -70,6 +68,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_SPEARPOINT_BURIAL",
+  "civilopedia": "TXT_KEY_BUILDING_SPEARPOINT_BURIAL_PEDIA",
   "applyFreePromotionOnMove": true,
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [

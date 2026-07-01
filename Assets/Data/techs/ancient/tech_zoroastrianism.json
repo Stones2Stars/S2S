@@ -1,8 +1,5 @@
 {
  "type": "TECH_ZOROASTRIANISM",
- "description": "TXT_KEY_TECH_ZOROASTRIANISM",
- "civilopedia": "TXT_KEY_TECH_ZOROASTRIANISM_PEDIA",
- "quote": "TXT_KEY_TECH_ZOROASTRIANISM_QUOTE",
  "enables": {
   "religions": [
    "RELIGION_ZOROASTRIANISM"
@@ -55,6 +52,9 @@
   "soundMP": "AS2D_TECH_ZOROASTRIANISM"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_ZOROASTRIANISM",
+  "civilopedia": "TXT_KEY_TECH_ZOROASTRIANISM_PEDIA",
+  "quote": "TXT_KEY_TECH_ZOROASTRIANISM_QUOTE",
   "era": "C2C_ERA_ANCIENT",
   "worth": 8,
   "gridX": 30,

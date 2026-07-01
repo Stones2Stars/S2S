@@ -1,8 +1,5 @@
 {
  "type": "TECH_MEGAFAUNA_DOMESTICATION",
- "description": "TXT_KEY_TECH_MEGAFAUNA_DOMESTICATION",
- "civilopedia": "TXT_KEY_TECH_MEGAFAUNA_DOMESTICATION_PEDIA",
- "quote": "TXT_KEY_TECH_MEGAFAUNA_DOMESTICATION_QUOTE",
  "enables": {
   "specialBuildings": [
    "SPECIALBUILDING_PUNK_MEGAFAUNA"
@@ -76,6 +73,9 @@
   "soundMP": "AS2D_TECH_MEGAFAUNA_DOMESTICATION"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_MEGAFAUNA_DOMESTICATION",
+  "civilopedia": "TXT_KEY_TECH_MEGAFAUNA_DOMESTICATION_PEDIA",
+  "quote": "TXT_KEY_TECH_MEGAFAUNA_DOMESTICATION_QUOTE",
   "era": "C2C_ERA_ANCIENT",
   "worth": 4,
   "militaryWorth": 1,

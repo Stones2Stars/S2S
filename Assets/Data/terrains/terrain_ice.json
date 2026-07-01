@@ -1,7 +1,5 @@
 {
  "type": "TERRAIN_ICE",
- "description": "TXT_KEY_TERRAIN_ICE",
- "civilopedia": "TXT_KEY_TERRAIN_ICE_PEDIA",
  "commerce": {
   "plot": {
    "flat": [
@@ -131,6 +129,8 @@
   "soundscape": "ASSS_TUNDRA_SELECT_AMB"
  },
  "identity": {
+  "description": "TXT_KEY_TERRAIN_ICE",
+  "civilopedia": "TXT_KEY_TERRAIN_ICE_PEDIA",
   "foundCoast": true,
   "foundFreshWater": true,
   "movementCost": 4,

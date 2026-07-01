@@ -1,7 +1,5 @@
 {
  "type": "BONUS_AMBER",
- "description": "TXT_KEY_BONUS_AMBER",
- "civilopedia": "TXT_KEY_BONUS_AMBER_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_AMBER_GATHERER",
@@ -76,6 +74,8 @@
   ]
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_AMBER",
+  "civilopedia": "TXT_KEY_BONUS_AMBER_PEDIA",
   "bonusClassType": "BONUSCLASS_LUXURY"
  }
 }

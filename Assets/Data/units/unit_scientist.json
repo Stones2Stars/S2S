@@ -1,7 +1,5 @@
 {
  "type": "UNIT_SCIENTIST",
- "description": "TXT_KEY_UNIT_SCIENTIST",
- "civilopedia": "TXT_KEY_CONCEPT_GREAT_PEOPLE_PEDIA",
  "skills": {
   "goldenAge": true
  },
@@ -74,6 +72,8 @@
   ]
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_SCIENTIST",
+  "civilopedia": "TXT_KEY_CONCEPT_GREAT_PEOPLE_PEDIA",
   "spawnOnly": true,
   "worth": 1,
   "domain": "DOMAIN_LAND",

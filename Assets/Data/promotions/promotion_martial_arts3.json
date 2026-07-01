@@ -1,6 +1,5 @@
 {
  "type": "PROMOTION_MARTIAL_ARTS3",
- "description": "TXT_KEY_PROMOTION_MARTIAL_ARTS3",
  "firstStrike": {
   "unit": {
    "strikes": {
@@ -45,6 +44,7 @@
   "sound": "AS2D_IF_LEVELUP"
  },
  "identity": {
+  "description": "TXT_KEY_PROMOTION_MARTIAL_ARTS3",
   "notOnDomains": [
    "DOMAIN_SEA"
   ]

@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_BIONIC_EYE_IMPLANT",
- "description": "TXT_KEY_BUILDING_BIONIC_EYE_IMPLANT",
- "civilopedia": "TXT_KEY_BUILDING_BIONIC_EYE_IMPLANT_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_HEALTHCARE_MEGACOMPLEX"
@@ -65,6 +63,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_BIONIC_EYE_IMPLANT",
+  "civilopedia": "TXT_KEY_BUILDING_BIONIC_EYE_IMPLANT_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

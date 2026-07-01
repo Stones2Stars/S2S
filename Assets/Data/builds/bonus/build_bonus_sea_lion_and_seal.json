@@ -1,6 +1,5 @@
 {
  "type": "BUILD_BONUS_SEA_LION_AND_SEAL",
- "description": "TXT_KEY_BUILD_BONUS_SEA_LION_AND_SEAL",
  "produces": {
   "improvement": "IMPROVEMENT_BONUS_SEA_LION_AND_SEAL"
  },
@@ -19,6 +18,7 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILD_BONUS_SEA_LION_AND_SEAL",
   "consumesUnit": true
  }
 }

@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_CULTURE_POLISH",
- "description": "TXT_KEY_BUILDING_CULTURE_POLISH",
- "civilopedia": "TXT_KEY_BUILDING_CULTURE_POLISH_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -61,6 +59,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_CULTURE_POLISH",
+  "civilopedia": "TXT_KEY_BUILDING_CULTURE_POLISH_PEDIA",
   "nukeImmune": true,
   "noInstanceLimit": true,
   "conquestProbability": 100,

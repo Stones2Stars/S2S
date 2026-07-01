@@ -1,7 +1,5 @@
 {
  "type": "UNIT_SIYU_WARRIOR",
- "description": "TXT_KEY_UNIT_SIYU_WARRIOR",
- "civilopedia": "TXT_KEY_UNIT_SIYU_WARRIOR_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -86,6 +84,8 @@
   "upkeep": 1
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_SIYU_WARRIOR",
+  "civilopedia": "TXT_KEY_UNIT_SIYU_WARRIOR_PEDIA",
   "worth": 4,
   "militaryWorth": 69,
   "xpValueAttack": 6,

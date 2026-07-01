@@ -1,8 +1,5 @@
 {
  "type": "CIVIC_MONARCHY",
- "description": "TXT_KEY_CIVIC_MONARCHY",
- "civilopedia": "TXT_KEY_CIVIC_MONARCHY_PEDIA",
- "strategy": "TXT_KEY_CIVIC_MONARCHY_STRATEGY",
  "enables": {
   "buildings": [
    "BUILDING_CHANCELLORS_OFFICE",
@@ -344,6 +341,9 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_CIVIC_MONARCHY",
+  "civilopedia": "TXT_KEY_CIVIC_MONARCHY_PEDIA",
+  "strategy": "TXT_KEY_CIVIC_MONARCHY_STRATEGY",
   "civicOption": "CIVICOPTION_GOVERNMENT",
   "anarchyLength": 1,
   "upkeepLevel": "UPKEEP_MEDIUM",

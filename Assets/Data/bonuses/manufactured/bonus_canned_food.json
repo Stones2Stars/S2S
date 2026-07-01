@@ -1,7 +1,5 @@
 {
  "type": "BONUS_CANNED_FOOD",
- "description": "TXT_KEY_BONUS_CANNED_FOOD",
- "civilopedia": "TXT_KEY_BONUS_CANNED_FOOD_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_ALUMINUM_RECLAMATION_PLANT",
@@ -15,6 +13,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_CANNED_FOOD",
+  "civilopedia": "TXT_KEY_BONUS_CANNED_FOOD_PEDIA",
   "bonusClassType": "BONUSCLASS_MANUFACTURED"
  }
 }

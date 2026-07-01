@@ -1,6 +1,5 @@
 {
  "type": "UNITCOMBAT_BALLOON",
- "description": "TXT_KEY_UNITCOMBAT_BALLOON",
  "capture": {
   "unit": {
    "probability": {
@@ -26,6 +25,7 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_UNITCOMBAT_BALLOON",
   "forMilitary": true
  }
 }

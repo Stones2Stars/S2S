@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_CAVE_PAINTINGS",
- "description": "TXT_KEY_BUILDING_CAVE_PAINTINGS",
- "civilopedia": "TXT_KEY_BUILDING_CAVE_PAINTINGS_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_LASCAUX_PAINTS"
@@ -102,6 +100,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_CAVE_PAINTINGS",
+  "civilopedia": "TXT_KEY_BUILDING_CAVE_PAINTINGS_PEDIA",
   "neverCapture": true,
   "centerInCity": true,
   "worth": 2,

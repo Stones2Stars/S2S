@@ -1,8 +1,5 @@
 {
  "type": "TECH_REACTIONLESS_DRIVE",
- "description": "TXT_KEY_TECH_REACTIONLESS_DRIVE",
- "civilopedia": "TXT_KEY_TECH_REACTIONLESS_DRIVE_PEDIA",
- "quote": "TXT_KEY_TECH_REACTIONLESS_DRIVE_QUOTE",
  "enables": {
   "bonuses": [
    "BONUS_PERSONAL_STARCRAFT"
@@ -58,6 +55,9 @@
   "soundMP": "AS2D_TECH_GENERIC"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_REACTIONLESS_DRIVE",
+  "civilopedia": "TXT_KEY_TECH_REACTIONLESS_DRIVE_PEDIA",
+  "quote": "TXT_KEY_TECH_REACTIONLESS_DRIVE_QUOTE",
   "era": "C2C_ERA_COSMIC",
   "worth": 48,
   "tradeable": true,

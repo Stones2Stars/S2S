@@ -1,8 +1,5 @@
 {
  "type": "TECH_COILGUN",
- "description": "TXT_KEY_TECH_COILGUN",
- "civilopedia": "TXT_KEY_TECH_COILGUN_PEDIA",
- "quote": "TXT_KEY_TECH_COILGUN_QUOTE",
  "enables": {
   "techs": [
    "TECH_JOVIAN_EXPLORATION"
@@ -50,6 +47,9 @@
   "soundMP": "AS2D_TECH_COILGUN"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_COILGUN",
+  "civilopedia": "TXT_KEY_TECH_COILGUN_PEDIA",
+  "quote": "TXT_KEY_TECH_COILGUN_QUOTE",
   "era": "C2C_ERA_INFORMATION",
   "worth": 14,
   "tradeable": true,

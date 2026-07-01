@@ -1,7 +1,5 @@
 {
  "type": "UNIT_POISON_NUKE",
- "description": "TXT_KEY_UNIT_POISON_NUKE",
- "civilopedia": "TXT_KEY_UNIT_POISON_NUKE_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -40,6 +38,8 @@
   "upkeep": 11
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_POISON_NUKE",
+  "civilopedia": "TXT_KEY_UNIT_POISON_NUKE_PEDIA",
   "worth": 4,
   "militaryWorth": 40,
   "xpValueDefense": 4,

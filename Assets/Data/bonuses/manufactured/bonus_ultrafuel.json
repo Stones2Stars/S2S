@@ -1,7 +1,5 @@
 {
  "type": "BONUS_ULTRAFUEL",
- "description": "TXT_KEY_BONUS_ULTRAFUEL",
- "civilopedia": "TXT_KEY_BONUS_ULTRAFUEL_PEDIA",
  "ai": {
   "behaviour": {
    "tradeModifier": 5,
@@ -14,6 +12,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_ULTRAFUEL",
+  "civilopedia": "TXT_KEY_BONUS_ULTRAFUEL_PEDIA",
   "bonusClassType": "BONUSCLASS_MANUFACTURED"
  }
 }

@@ -1,7 +1,5 @@
 {
  "type": "PROMOTION_LEO",
- "description": "TXT_KEY_PROMOTION_LEO",
- "help": "TXT_KEY_PROMOTION_ASTRO_HELP",
  "strength": {
   "unit": {
    "percent": 10
@@ -16,6 +14,8 @@
   "sound": "AS2D_IF_LEVELUP"
  },
  "identity": {
+  "description": "TXT_KEY_PROMOTION_LEO",
+  "help": "TXT_KEY_PROMOTION_ASTRO_HELP",
   "notOnUnitCombats": [
    "UNITCOMBAT_PACIFIST"
   ],

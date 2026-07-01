@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_ONLINE_GENEALOGY_CENTER",
- "description": "TXT_KEY_BUILDING_ONLINE_GENEALOGY_CENTER",
- "civilopedia": "TXT_KEY_BUILDING_ONLINE_GENEALOGY_CENTER_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_HIGH_TECH_CULTURAL_ENRICHMENT"
@@ -66,6 +64,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_ONLINE_GENEALOGY_CENTER",
+  "civilopedia": "TXT_KEY_BUILDING_ONLINE_GENEALOGY_CENTER_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

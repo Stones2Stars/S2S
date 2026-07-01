@@ -1,8 +1,5 @@
 {
  "type": "CIVIC_WASTE_TO_SEA",
- "description": "TXT_KEY_CIVIC_WASTE_TO_SEA",
- "civilopedia": "TXT_KEY_CIVIC_WASTE_TO_SEA_PEDIA",
- "strategy": "TXT_KEY_CIVIC_WASTE_TO_SEA_STRATEGY",
  "enables": {
   "buildings": [
    "BUILDING_GARBAGE_DOCK"
@@ -41,6 +38,9 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_CIVIC_WASTE_TO_SEA",
+  "civilopedia": "TXT_KEY_CIVIC_WASTE_TO_SEA_PEDIA",
+  "strategy": "TXT_KEY_CIVIC_WASTE_TO_SEA_STRATEGY",
   "civicOption": "CIVICOPTION_GARBAGE",
   "upkeepLevel": "UPKEEP_MEDIUM"
  }

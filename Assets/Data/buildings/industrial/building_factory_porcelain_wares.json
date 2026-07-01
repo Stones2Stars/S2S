@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_FACTORY_PORCELAIN_WARES",
- "description": "TXT_KEY_BUILDING_FACTORY_PORCELAIN_WARES",
- "civilopedia": "TXT_KEY_BUILDING_FACTORY_PORCELAIN_WARES_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_MING_VASE_WORKSHOP"
@@ -110,6 +108,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_FACTORY_PORCELAIN_WARES",
+  "civilopedia": "TXT_KEY_BUILDING_FACTORY_PORCELAIN_WARES_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

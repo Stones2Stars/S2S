@@ -1,8 +1,5 @@
 {
  "type": "TECH_CHOPPING",
- "description": "TXT_KEY_TECH_CHOPPING",
- "civilopedia": "TXT_KEY_TECH_CHOPPING_PEDIA",
- "quote": "TXT_KEY_TECH_CHOPPING_QUOTE",
  "enables": {
   "promotions": [
    "PROMOTION_SHOCK2"
@@ -54,6 +51,9 @@
   "soundMP": "AS2D_TECH_CHOPPING"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_CHOPPING",
+  "civilopedia": "TXT_KEY_TECH_CHOPPING_PEDIA",
+  "quote": "TXT_KEY_TECH_CHOPPING_QUOTE",
   "era": "C2C_ERA_PREHISTORIC",
   "worth": 8,
   "militaryWorth": 1,

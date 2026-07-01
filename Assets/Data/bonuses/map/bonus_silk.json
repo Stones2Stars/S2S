@@ -1,7 +1,5 @@
 {
  "type": "BONUS_SILK",
- "description": "TXT_KEY_BONUS_SILK",
- "civilopedia": "TXT_KEY_BONUS_SILK_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_ASSASSIN_BUG_GATHERER",
@@ -91,6 +89,8 @@
   ]
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_SILK",
+  "civilopedia": "TXT_KEY_BONUS_SILK_PEDIA",
   "bonusClassType": "BONUSCLASS_LUXURY"
  }
 }

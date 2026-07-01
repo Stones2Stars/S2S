@@ -1,7 +1,5 @@
 {
  "type": "LEADER_CANUTE",
- "description": "TXT_KEY_LEADER_CANUTE",
- "civilopedia": "TXT_KEY_LEADER_CANUTE_PEDIA",
  "grants": {
   "traits": [
    "TRAIT_SPIRITUAL",
@@ -308,5 +306,9 @@
    "C2C_ERA_TRANSCENDENT": "AS2D_DIPLO_WARDRUMS_LATE",
    "C2C_ERA_FUTURE": "AS2D_DIPLO_WARDRUMS_LATE"
   }
+ },
+ "identity": {
+  "description": "TXT_KEY_LEADER_CANUTE",
+  "civilopedia": "TXT_KEY_LEADER_CANUTE_PEDIA"
  }
 }

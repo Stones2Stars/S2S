@@ -1,7 +1,5 @@
 {
  "type": "IMPROVEMENT_TOWN",
- "description": "TXT_KEY_IMPROVEMENT_TOWN",
- "civilopedia": "TXT_KEY_IMPROVEMENT_TOWN_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -75,6 +73,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_IMPROVEMENT_TOWN",
+  "civilopedia": "TXT_KEY_IMPROVEMENT_TOWN_PEDIA",
   "advancedStart": {
    "cost": -1
   },

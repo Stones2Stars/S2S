@@ -1,6 +1,5 @@
 {
  "type": "PROMOTION_BUILD_UP_TEACH1",
- "description": "TXT_KEY_PROMOTION_BUILD_UP_TEACH1",
  "PROPERTY_EDUCATION": {
   "city": {
    "flat": 1
@@ -16,5 +15,8 @@
  },
  "sound": {
   "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_BUILD_UP_TEACH1"
  }
 }

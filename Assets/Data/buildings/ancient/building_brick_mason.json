@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_BRICK_MASON",
- "description": "TXT_KEY_BUILDING_BRICK_MASON",
- "civilopedia": "TXT_KEY_BUILDING_BRICK_MASON_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_GUILD_MASONS"
@@ -86,6 +84,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_BRICK_MASON",
+  "civilopedia": "TXT_KEY_BUILDING_BRICK_MASON_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

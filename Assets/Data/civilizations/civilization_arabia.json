@@ -1,9 +1,5 @@
 {
  "type": "CIVILIZATION_ARABIA",
- "description": "TXT_KEY_CIVILIZATION_ARABIA",
- "shortDescription": "TXT_KEY_CIVILIZATION_ARABIA_SHORT",
- "adjective": "TXT_KEY_CIVILIZATION_ARABIA_ADJECTIVE",
- "civilopedia": "TXT_KEY_CIVILIZATION_ARABIA_PEDIA",
  "grants": {
   "buildings": [
    "BUILDING_PALACE",
@@ -32,10 +28,6 @@
    "TECH_GAME_START"
   ]
  },
- "policies": {
-  "playable": true,
-  "aiPlayable": true
- },
  "world": {
   "art": {
    "playerColor": "PLAYERCOLOR_LIGHT_GREEN",
@@ -49,6 +41,12 @@
   "action": "AS3D_ARABIA_ORDER"
  },
  "identity": {
+  "description": "TXT_KEY_CIVILIZATION_ARABIA",
+  "shortDescription": "TXT_KEY_CIVILIZATION_ARABIA_SHORT",
+  "adjective": "TXT_KEY_CIVILIZATION_ARABIA_ADJECTIVE",
+  "civilopedia": "TXT_KEY_CIVILIZATION_ARABIA_PEDIA",
+  "playable": true,
+  "aiPlayable": true,
   "leaders": [
    "LEADER_SALADIN",
    "LEADER_ABUBAKR",

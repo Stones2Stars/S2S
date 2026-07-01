@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_MUIDERSLOT_CASTLE",
- "description": "TXT_KEY_BUILDING_MUIDERSLOT_CASTLE",
- "civilopedia": "TXT_KEY_BUILDING_MUIDERSLOT_CASTLE_PEDIA",
  "obsoletedBy": {
   "techs": [
    "TECH_NATIONALISM"
@@ -98,6 +96,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_MUIDERSLOT_CASTLE",
+  "civilopedia": "TXT_KEY_BUILDING_MUIDERSLOT_CASTLE_PEDIA",
   "centerInCity": true,
   "worth": 10,
   "conquestProbability": 100,

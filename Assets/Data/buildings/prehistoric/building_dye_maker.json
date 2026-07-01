@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_DYE_MAKER",
- "description": "TXT_KEY_BUILDING_DYE_MAKER",
- "civilopedia": "TXT_KEY_BUILDING_DYE_MAKER_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_FACTORY_DYE"
@@ -110,6 +108,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_DYE_MAKER",
+  "civilopedia": "TXT_KEY_BUILDING_DYE_MAKER_PEDIA",
   "enabledCivilizations": [
    "CIVILIZATION_NPC_NEANDERTHAL"
   ],

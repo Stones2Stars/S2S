@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_SAINT_MARKS_BASILICA",
- "description": "TXT_KEY_BUILDING_SAINT_MARKS_BASILICA",
- "civilopedia": "TXT_KEY_BUILDING_SAINT_MARKS_BASILICA_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -147,6 +145,8 @@
   "construct": "AS2D_BUILD_CHRISTIAN"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_SAINT_MARKS_BASILICA",
+  "civilopedia": "TXT_KEY_BUILDING_SAINT_MARKS_BASILICA_PEDIA",
   "commerceDoubleTime": {
    "culture": 1000
   },

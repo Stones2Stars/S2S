@@ -1,7 +1,5 @@
 {
  "type": "BONUS_WATER_BOTTLES",
- "description": "TXT_KEY_BONUS_WATER_BOTTLES",
- "civilopedia": "TXT_KEY_BONUS_WATER_BOTTLES_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_GALACTIC_CANTINA",
@@ -15,6 +13,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_WATER_BOTTLES",
+  "civilopedia": "TXT_KEY_BONUS_WATER_BOTTLES_PEDIA",
   "bonusClassType": "BONUSCLASS_MANUFACTURED"
  }
 }

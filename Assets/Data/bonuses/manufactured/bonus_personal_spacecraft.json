@@ -1,7 +1,5 @@
 {
  "type": "BONUS_PERSONAL_SPACECRAFT",
- "description": "TXT_KEY_BONUS_PERSONAL_SPACECRAFT",
- "civilopedia": "TXT_KEY_BONUS_PERSONAL_SPACECRAFT_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_OMEGA_ASSEMBLER"
@@ -13,6 +11,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_PERSONAL_SPACECRAFT",
+  "civilopedia": "TXT_KEY_BONUS_PERSONAL_SPACECRAFT_PEDIA",
   "bonusClassType": "BONUSCLASS_MANUFACTURED"
  }
 }

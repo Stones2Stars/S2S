@@ -1,6 +1,5 @@
 {
  "type": "BUILD_BONUS_OPIUM",
- "description": "TXT_KEY_BUILD_BONUS_OPIUM",
  "produces": {
   "improvement": "IMPROVEMENT_BONUS_OPIUM"
  },
@@ -19,6 +18,7 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILD_BONUS_OPIUM",
   "consumesUnit": true
  }
 }

@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_TRANSTELLAR_ARTIFICIAL_GAS_GIANT",
- "description": "TXT_KEY_BUILDING_TRANSTELLAR_ARTIFICIAL_GAS_GIANT",
- "civilopedia": "TXT_KEY_BUILDING_TRANSTELLAR_ARTIFICIAL_GAS_GIANT_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_TRANSTELLAR_ARTIFICIAL_BROWN_DWARF",
@@ -49,6 +47,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_TRANSTELLAR_ARTIFICIAL_GAS_GIANT",
+  "civilopedia": "TXT_KEY_BUILDING_TRANSTELLAR_ARTIFICIAL_GAS_GIANT_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

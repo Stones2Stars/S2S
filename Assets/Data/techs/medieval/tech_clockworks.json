@@ -1,8 +1,5 @@
 {
  "type": "TECH_CLOCKWORKS",
- "description": "TXT_KEY_TECH_CLOCKWORKS",
- "civilopedia": "TXT_KEY_TECH_CLOCKWORKS_PEDIA",
- "quote": "TXT_KEY_TECH_CLOCKWORKS_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_BIG_BEN",
@@ -60,6 +57,9 @@
   "soundMP": "AS2D_TECH_CLOCKWORKS"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_CLOCKWORKS",
+  "civilopedia": "TXT_KEY_TECH_CLOCKWORKS_PEDIA",
+  "quote": "TXT_KEY_TECH_CLOCKWORKS_QUOTE",
   "era": "C2C_ERA_MEDIEVAL",
   "worth": 24,
   "militaryWorth": 8,

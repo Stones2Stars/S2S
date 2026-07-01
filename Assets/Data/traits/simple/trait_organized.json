@@ -1,7 +1,5 @@
 {
  "type": "TRAIT_ORGANIZED",
- "description": "TXT_KEY_TRAIT_ORGANIZED",
- "civilopedia": "TXT_KEY_TRAIT_ORGANIZED_PEDIA",
  "buildRate": {
   "empire": {
    "buildings": {
@@ -137,6 +135,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_TRAIT_ORGANIZED",
+  "civilopedia": "TXT_KEY_TRAIT_ORGANIZED_PEDIA",
   "shortDescription": "TXT_KEY_TRAIT_ORGANIZED_SHORT"
  }
 }

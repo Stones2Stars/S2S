@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_FOLKLORE_E_VOLCANO",
- "description": "TXT_KEY_BUILDING_FOLKLORE_E_VOLCANO",
- "civilopedia": "TXT_KEY_BUILDING_FOLKLORE_E_LANDFORM_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -93,6 +91,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_FOLKLORE_E_VOLCANO",
+  "civilopedia": "TXT_KEY_BUILDING_FOLKLORE_E_LANDFORM_PEDIA",
   "nukeImmune": true,
   "neverCapture": true,
   "forceNoPrereqScaling": true,

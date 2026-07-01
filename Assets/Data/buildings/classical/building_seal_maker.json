@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_SEAL_MAKER",
- "description": "TXT_KEY_BUILDING_SEAL_MAKER",
- "civilopedia": "TXT_KEY_BUILDING_SEAL_MAKER_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_HYPERMARKET"
@@ -91,6 +89,8 @@
   "construct": "AS2D_BUILD_LIBRARY"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_SEAL_MAKER",
+  "civilopedia": "TXT_KEY_BUILDING_SEAL_MAKER_PEDIA",
   "worth": 2,
   "advisor": "ADVISOR_CULTURE",
   "freeStartEra": "C2C_ERA_ANCIENT",

@@ -1,7 +1,5 @@
 {
  "type": "BONUS_CHEMICALS",
- "description": "TXT_KEY_BONUS_CHEMICALS",
- "civilopedia": "TXT_KEY_BONUS_CHEMICALS_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_BEAUTY_SALON",
@@ -57,6 +55,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_CHEMICALS",
+  "civilopedia": "TXT_KEY_BONUS_CHEMICALS_PEDIA",
   "bonusClassType": "BONUSCLASS_MANUFACTURED"
  }
 }

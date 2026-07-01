@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_FARM_CROP_LICORICE",
- "description": "TXT_KEY_BUILDING_FARM_CROP_LICORICE",
- "civilopedia": "TXT_KEY_BUILDING_FARM_CROP_LICORICE_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_RESOURCES_SEASONING"
@@ -76,6 +74,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_FARM_CROP_LICORICE",
+  "civilopedia": "TXT_KEY_BUILDING_FARM_CROP_LICORICE_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

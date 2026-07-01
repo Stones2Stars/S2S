@@ -1,8 +1,5 @@
 {
  "type": "TECH_MECHANIZED_WARFARE",
- "description": "TXT_KEY_TECH_MECHANIZED_WARFARE",
- "civilopedia": "TXT_KEY_TECH_MECHANIZED_WARFARE_PEDIA",
- "quote": "TXT_KEY_TECH_MECHANIZED_WARFARE_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_AUTOMATED_FIRING_RANGE"
@@ -84,6 +81,9 @@
   "soundMP": "AS2D_TECH_MECHANIZED_WARFARE"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_MECHANIZED_WARFARE",
+  "civilopedia": "TXT_KEY_TECH_MECHANIZED_WARFARE_PEDIA",
+  "quote": "TXT_KEY_TECH_MECHANIZED_WARFARE_QUOTE",
   "era": "C2C_ERA_ATOMIC",
   "worth": 32,
   "tradeable": true,

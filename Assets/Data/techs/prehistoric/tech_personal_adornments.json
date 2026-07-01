@@ -1,8 +1,5 @@
 {
  "type": "TECH_PERSONAL_ADORNMENTS",
- "description": "TXT_KEY_TECH_PERSONAL_ADORNMENTS",
- "civilopedia": "TXT_KEY_TECH_PERSONAL_ADORNMENTS_PEDIA",
- "quote": "TXT_KEY_TECH_PERSONAL_ADORNMENTS_QUOTE",
  "enables": {
   "bonuses": [
    "BONUS_HATS",
@@ -73,6 +70,9 @@
   "soundMP": "AS2D_TECH_PERSONAL_ADORNMENT"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_PERSONAL_ADORNMENTS",
+  "civilopedia": "TXT_KEY_TECH_PERSONAL_ADORNMENTS_PEDIA",
+  "quote": "TXT_KEY_TECH_PERSONAL_ADORNMENTS_QUOTE",
   "era": "C2C_ERA_PREHISTORIC",
   "worth": 10,
   "militaryWorth": 1,

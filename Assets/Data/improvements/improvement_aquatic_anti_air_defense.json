@@ -1,8 +1,5 @@
 {
  "type": "IMPROVEMENT_AQUATIC_ANTI_AIR_DEFENSE",
- "description": "TXT_KEY_IMPROVEMENT_AQUATIC_ANTI_AIR_DEFENSE",
- "civilopedia": "TXT_KEY_IMPROVEMENT_AQUATIC_ANTI_AIR_DEFENSE_PEDIA",
- "help": "TXT_KEY_IMPROVEMENT_AQUATIC_ANTI_AIR_DEFENSE_HELP",
  "requires": {
   "build": {
    "all": [
@@ -56,6 +53,9 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_IMPROVEMENT_AQUATIC_ANTI_AIR_DEFENSE",
+  "civilopedia": "TXT_KEY_IMPROVEMENT_AQUATIC_ANTI_AIR_DEFENSE_PEDIA",
+  "help": "TXT_KEY_IMPROVEMENT_AQUATIC_ANTI_AIR_DEFENSE_HELP",
   "advancedStart": {
    "cost": 60
   },

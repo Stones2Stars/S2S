@@ -1,7 +1,5 @@
 {
  "type": "UNIT_MODERN_PARATROOPER",
- "description": "TXT_KEY_UNIT_MODERN_PARATROOPER",
- "civilopedia": "TXT_KEY_UNIT_PARATROOPER_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -65,6 +63,8 @@
   "upkeep": 1
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_MODERN_PARATROOPER",
+  "civilopedia": "TXT_KEY_UNIT_PARATROOPER_PEDIA",
   "worth": 5,
   "militaryWorth": 196,
   "xpValueAttack": 5,

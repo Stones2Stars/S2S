@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_INTERSTELLAR_COSMIC_BANISHMENT",
- "description": "TXT_KEY_BUILDING_INTERSTELLAR_COSMIC_BANISHMENT",
- "civilopedia": "TXT_KEY_BUILDING_INTERSTELLAR_COSMIC_BANISHMENT_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -45,6 +43,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_INTERSTELLAR_COSMIC_BANISHMENT",
+  "civilopedia": "TXT_KEY_BUILDING_INTERSTELLAR_COSMIC_BANISHMENT_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

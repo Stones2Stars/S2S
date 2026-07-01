@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_VALLEY_OF_THE_KINGS",
- "description": "TXT_KEY_BUILDING_VALLEY_OF_THE_KINGS",
- "civilopedia": "TXT_KEY_BUILDING_VALLEY_OF_THE_KINGS_PEDIA",
  "obsoletedBy": {
   "techs": [
    "TECH_ARCHITECTURE"
@@ -76,6 +74,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_VALLEY_OF_THE_KINGS",
+  "civilopedia": "TXT_KEY_BUILDING_VALLEY_OF_THE_KINGS_PEDIA",
   "notConstructible": true,
   "nukeImmune": true,
   "neverCapture": true,

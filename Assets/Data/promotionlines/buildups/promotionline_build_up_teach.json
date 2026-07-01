@@ -1,7 +1,5 @@
 {
  "type": "PROMOTIONLINE_BUILD_UP_TEACH",
- "description": "TXT_KEY_PROMOTIONLINE_BUILD_UP_TEACH",
- "help": "TXT_KEY_PROMOTIONLINE_BUILD_UP_TEACH_HELP",
  "buildUp": {
   "active": true
  },
@@ -11,6 +9,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_PROMOTIONLINE_BUILD_UP_TEACH",
+  "help": "TXT_KEY_PROMOTIONLINE_BUILD_UP_TEACH_HELP",
   "unitCombats": [
    "UNITCOMBAT_ENTERTAINER"
   ],

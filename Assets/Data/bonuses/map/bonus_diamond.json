@@ -1,7 +1,5 @@
 {
  "type": "BONUS_DIAMOND",
- "description": "TXT_KEY_BONUS_DIAMOND",
- "civilopedia": "TXT_KEY_BONUS_DIAMOND_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_CULTURE_JUTE",
@@ -61,6 +59,8 @@
   ]
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_DIAMOND",
+  "civilopedia": "TXT_KEY_BONUS_DIAMOND_PEDIA",
   "bonusClassType": "BONUSCLASS_LUXURY"
  }
 }

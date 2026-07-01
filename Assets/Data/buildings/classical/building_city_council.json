@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_CITY_COUNCIL",
- "description": "TXT_KEY_BUILDING_CITY_COUNCIL",
- "civilopedia": "TXT_KEY_BUILDING_CITY_COUNCIL_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_ANDEAN_CATHEDRAL",
@@ -130,6 +128,8 @@
   "construct": "AS2D_BUILD_COURTHOUSE"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_CITY_COUNCIL",
+  "civilopedia": "TXT_KEY_BUILDING_CITY_COUNCIL_PEDIA",
   "centerInCity": true,
   "worth": 4,
   "militaryWorth": 5,

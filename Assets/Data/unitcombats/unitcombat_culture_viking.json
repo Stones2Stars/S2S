@@ -1,12 +1,12 @@
 {
  "type": "UNITCOMBAT_CULTURE_VIKING",
- "description": "TXT_KEY_UNITCOMBAT_CULTURE_VIKING",
  "ui": {
   "art": {
    "icon": "Art/Interface/Buttons/units/sparth/categories/culture_viking.dds"
   }
  },
  "identity": {
+  "description": "TXT_KEY_UNITCOMBAT_CULTURE_VIKING",
   "culture": "BONUS_VIKING"
  }
 }

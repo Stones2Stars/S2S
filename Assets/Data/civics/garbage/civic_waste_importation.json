@@ -1,8 +1,5 @@
 {
  "type": "CIVIC_WASTE_IMPORTATION",
- "description": "TXT_KEY_CIVIC_WASTE_IMPORTATION",
- "civilopedia": "TXT_KEY_CIVIC_WASTE_IMPORTATION_PEDIA",
- "strategy": "TXT_KEY_CIVIC_WASTE_IMPORTATION_STRATEGY",
  "enables": {
   "buildings": [
    "BUILDING_BACTERIUM_LANDFILL",
@@ -93,6 +90,9 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_CIVIC_WASTE_IMPORTATION",
+  "civilopedia": "TXT_KEY_CIVIC_WASTE_IMPORTATION_PEDIA",
+  "strategy": "TXT_KEY_CIVIC_WASTE_IMPORTATION_STRATEGY",
   "civicOption": "CIVICOPTION_GARBAGE",
   "upkeepLevel": "UPKEEP_MEDIUM"
  }

@@ -1,12 +1,12 @@
 {
  "type": "PROMOTIONLINE_WETLAND",
- "description": "TXT_KEY_PROMOTIONLINE_WETLAND",
  "ui": {
   "art": {
    "icon": "art/Tweaks/art/wetlandcombat1.dds"
   }
  },
  "identity": {
+  "description": "TXT_KEY_PROMOTIONLINE_WETLAND",
   "unitCombats": [
    "UNITCOMBAT_COMBATANT",
    "UNITCOMBAT_CRIMINAL",

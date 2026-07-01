@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_WORLD_WIDE_FUND_FOR_NATURE",
- "description": "TXT_KEY_BUILDING_WORLD_WIDE_FUND_FOR_NATURE",
- "civilopedia": "TXT_KEY_BUILDING_WORLD_WIDE_FUND_FOR_NATURE_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -89,6 +87,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_WORLD_WIDE_FUND_FOR_NATURE",
+  "civilopedia": "TXT_KEY_BUILDING_WORLD_WIDE_FUND_FOR_NATURE_PEDIA",
   "centerInCity": true,
   "worth": 10,
   "conquestProbability": 100,

@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_PHENOTYPE_STUDIO",
- "description": "TXT_KEY_BUILDING_PHENOTYPE_STUDIO",
- "civilopedia": "TXT_KEY_BUILDING_PHENOTYPE_STUDIO_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_BACTERIUM_BIOFORGE",
@@ -78,6 +76,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_PHENOTYPE_STUDIO",
+  "civilopedia": "TXT_KEY_BUILDING_PHENOTYPE_STUDIO_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

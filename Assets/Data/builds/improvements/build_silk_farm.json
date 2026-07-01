@@ -1,6 +1,5 @@
 {
  "type": "BUILD_SILK_FARM",
- "description": "TXT_KEY_BUILD_SILK_FARM",
  "requires": {
   "build": {
    "all": [
@@ -119,5 +118,8 @@
   "art": {
    "entityEvent": "ENTITY_EVENT_BUILD"
   }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILD_SILK_FARM"
  }
 }

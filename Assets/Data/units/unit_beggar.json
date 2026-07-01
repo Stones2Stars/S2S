@@ -1,7 +1,5 @@
 {
  "type": "UNIT_BEGGAR",
- "description": "TXT_KEY_UNIT_BEGGAR",
- "civilopedia": "TXT_KEY_UNIT_BEGGAR_PEDIA",
  "obsoletedBy": {
   "techs": [
    "TECH_MATCHLOCK"
@@ -162,6 +160,8 @@
   ]
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_BEGGAR",
+  "civilopedia": "TXT_KEY_UNIT_BEGGAR_PEDIA",
   "worth": 4,
   "militaryWorth": 6,
   "xpValueAttack": 8,

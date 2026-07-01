@@ -1,12 +1,12 @@
 {
  "type": "PROMOTIONLINE_SLEUTH",
- "description": "TXT_KEY_PROMOTIONLINE_SLEUTH",
  "ui": {
   "art": {
    "icon": "Art/Buttons/Promotions/Sleuth1Promotion.dds"
   }
  },
  "identity": {
+  "description": "TXT_KEY_PROMOTIONLINE_SLEUTH",
   "unitCombats": [
    "UNITCOMBAT_LAW_ENFORCEMENT"
   ],

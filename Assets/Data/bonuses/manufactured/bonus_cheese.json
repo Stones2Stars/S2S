@@ -1,7 +1,5 @@
 {
  "type": "BONUS_CHEESE",
- "description": "TXT_KEY_BONUS_CHEESE",
- "civilopedia": "TXT_KEY_BONUS_CHEESE_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_PESTS_RATS",
@@ -16,6 +14,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_CHEESE",
+  "civilopedia": "TXT_KEY_BONUS_CHEESE_PEDIA",
   "bonusClassType": "BONUSCLASS_MANUFACTURED"
  }
 }

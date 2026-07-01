@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_CEMENT_BARRIER",
- "description": "TXT_KEY_BUILDING_CEMENT_BARRIER",
- "civilopedia": "TXT_KEY_BUILDING_CEMENT_BARRIER_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_BLARNEY_CASTLE",
@@ -111,6 +109,8 @@
   "construct": "AS2D_BUILD_WALLS"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_CEMENT_BARRIER",
+  "civilopedia": "TXT_KEY_BUILDING_CEMENT_BARRIER_PEDIA",
   "centerInCity": true,
   "worth": 1,
   "militaryWorth": 2,

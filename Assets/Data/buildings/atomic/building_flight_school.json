@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_FLIGHT_SCHOOL",
- "description": "TXT_KEY_BUILDING_FLIGHT_SCHOOL",
- "civilopedia": "TXT_KEY_BUILDING_FLIGHT_SCHOOL_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_HOLOGRAPHIC_SCHOOL"
@@ -84,6 +82,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_FLIGHT_SCHOOL",
+  "civilopedia": "TXT_KEY_BUILDING_FLIGHT_SCHOOL_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

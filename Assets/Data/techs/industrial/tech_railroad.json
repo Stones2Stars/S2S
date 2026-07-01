@@ -1,8 +1,5 @@
 {
  "type": "TECH_RAILROAD",
- "description": "TXT_KEY_TECH_RAILROAD",
- "civilopedia": "TXT_KEY_TECH_RAILROAD_PEDIA",
- "quote": "TXT_KEY_TECH_RAILROAD_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_CULTURE_CALIFORNIAN",
@@ -86,6 +83,9 @@
   "soundMP": "AS2D_TECH_MP_RAILROAD"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_RAILROAD",
+  "civilopedia": "TXT_KEY_TECH_RAILROAD_PEDIA",
+  "quote": "TXT_KEY_TECH_RAILROAD_QUOTE",
   "era": "C2C_ERA_INDUSTRIAL",
   "worth": 40,
   "tradeable": true,

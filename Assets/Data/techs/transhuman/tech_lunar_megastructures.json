@@ -1,8 +1,5 @@
 {
  "type": "TECH_LUNAR_MEGASTRUCTURES",
- "description": "TXT_KEY_TECH_LUNAR_MEGASTRUCTURES",
- "civilopedia": "TXT_KEY_TECH_LUNAR_MEGASTRUCTURES_PEDIA",
- "quote": "TXT_KEY_TECH_LUNAR_MEGASTRUCTURES_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_EFFECT_LUNA_RING",
@@ -72,6 +69,9 @@
   "soundMP": "AS2D_TECH_LUNAR_MEGASTRUCTURES"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_LUNAR_MEGASTRUCTURES",
+  "civilopedia": "TXT_KEY_TECH_LUNAR_MEGASTRUCTURES_PEDIA",
+  "quote": "TXT_KEY_TECH_LUNAR_MEGASTRUCTURES_QUOTE",
   "era": "C2C_ERA_TRANSHUMAN",
   "worth": 48,
   "militaryWorth": 4,

@@ -1,8 +1,5 @@
 {
  "type": "TECH_ADVANCED_SEEDSHIPS",
- "description": "TXT_KEY_TECH_ADVANCED_SEEDSHIPS",
- "civilopedia": "TXT_KEY_TECH_ADVANCED_SEEDSHIPS_PEDIA",
- "quote": "TXT_KEY_TECH_ADVANCED_SEEDSHIPS_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_INTERSTELLAR_IMMIGRATION_OFFICE",
@@ -72,6 +69,9 @@
   "soundMP": "AS2D_TECH_ADVANCED_SEEDSHIPS"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_ADVANCED_SEEDSHIPS",
+  "civilopedia": "TXT_KEY_TECH_ADVANCED_SEEDSHIPS_PEDIA",
+  "quote": "TXT_KEY_TECH_ADVANCED_SEEDSHIPS_QUOTE",
   "era": "C2C_ERA_GALACTIC",
   "worth": 48,
   "militaryWorth": 4,

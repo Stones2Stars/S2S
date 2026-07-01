@@ -1,12 +1,12 @@
 {
  "type": "ROUTE_PATH",
- "description": "TXT_KEY_ROUTE_PATH",
  "ui": {
   "art": {
    "icon": "Art/Interface/Buttons/Builds/dirt.dds"
   }
  },
  "identity": {
+  "description": "TXT_KEY_ROUTE_PATH",
   "value": 2,
   "advancedStart": {
    "cost": 6

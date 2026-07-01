@@ -1,6 +1,5 @@
 {
  "type": "PROMOTION_MUJAHID",
- "description": "TXT_KEY_PROMOTION_MUJAHID",
  "strength": {
   "unit": {
    "percent": 15,
@@ -28,6 +27,7 @@
   "sound": "AS2D_IF_LEVELUP"
  },
  "identity": {
+  "description": "TXT_KEY_PROMOTION_MUJAHID",
   "stateReligionPrereq": "RELIGION_ISLAM",
   "unitCombats": [
    "UNITCOMBAT_RECON",

@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_HIGH_TECH_CULTURAL_ENRICHMENT",
- "description": "TXT_KEY_BUILDING_HIGH_TECH_CULTURAL_ENRICHMENT",
- "civilopedia": "TXT_KEY_BUILDING_HIGH_TECH_CULTURAL_ENRICHMENT_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_BLOODHUNTRESSS_HUT",
@@ -612,6 +610,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_HIGH_TECH_CULTURAL_ENRICHMENT",
+  "civilopedia": "TXT_KEY_BUILDING_HIGH_TECH_CULTURAL_ENRICHMENT_PEDIA",
   "applyFreePromotionOnMove": true,
   "greatPeopleUnitType": "UNIT_PROPHET",
   "advisor": "ADVISOR_CULTURE",

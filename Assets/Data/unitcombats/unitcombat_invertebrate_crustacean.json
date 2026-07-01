@@ -1,6 +1,5 @@
 {
  "type": "UNITCOMBAT_INVERTEBRATE_CRUSTACEAN",
- "description": "TXT_KEY_UNITCOMBAT_INVERTEBRATE_CRUSTACEAN",
  "withdrawal": {
   "unit": {
    "percent": 10
@@ -10,5 +9,8 @@
   "art": {
    "icon": "Art/Interface/Buttons/units/sparth/categories/invertebrate.dds"
   }
+ },
+ "identity": {
+  "description": "TXT_KEY_UNITCOMBAT_INVERTEBRATE_CRUSTACEAN"
  }
 }

@@ -1,8 +1,5 @@
 {
  "type": "CIVIC_SOCIETAL_MOLDING",
- "description": "TXT_KEY_CIVIC_SOCIETAL_MOLDING",
- "civilopedia": "TXT_KEY_CIVIC_SOCIETAL_MOLDING_PEDIA",
- "strategy": "TXT_KEY_CIVIC_SOCIETAL_MOLDING_STRATEGY",
  "enables": {
   "buildings": [
    "BUILDING_INTERSTELLAR_TIME_ABYSS"
@@ -49,6 +46,9 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_CIVIC_SOCIETAL_MOLDING",
+  "civilopedia": "TXT_KEY_CIVIC_SOCIETAL_MOLDING_PEDIA",
+  "strategy": "TXT_KEY_CIVIC_SOCIETAL_MOLDING_STRATEGY",
   "civicOption": "CIVICOPTION_RULE",
   "anarchyLength": 4,
   "upkeepLevel": "UPKEEP_HIGH"

@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_EXPERIMENTAL_QUANTUM_COMPUTER",
- "description": "TXT_KEY_BUILDING_EXPERIMENTAL_QUANTUM_COMPUTER",
- "civilopedia": "TXT_KEY_BUILDING_EXPERIMENTAL_QUANTUM_COMPUTER_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_QUANTUM_SUPERCOMPUTER"
@@ -70,6 +68,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_EXPERIMENTAL_QUANTUM_COMPUTER",
+  "civilopedia": "TXT_KEY_BUILDING_EXPERIMENTAL_QUANTUM_COMPUTER_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

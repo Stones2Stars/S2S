@@ -1,7 +1,5 @@
 {
  "type": "UNIT_GAZELLE",
- "description": "TXT_KEY_UNIT_GAZELLE",
- "civilopedia": "TXT_KEY_UNIT_GAZELLE_PEDIA",
  "withdrawal": {
   "unit": {
    "percent": 55
@@ -51,6 +49,8 @@
   ]
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_GAZELLE",
+  "civilopedia": "TXT_KEY_UNIT_GAZELLE_PEDIA",
   "spawnOnly": true,
   "xpValueAttack": 4,
   "xpValueDefense": 2,

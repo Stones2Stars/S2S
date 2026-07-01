@@ -1,8 +1,5 @@
 {
  "type": "TECH_GEOCENTRISM",
- "description": "TXT_KEY_TECH_GEOCENTRISM",
- "civilopedia": "TXT_KEY_TECH_GEOCENTRISM_PEDIA",
- "quote": "TXT_KEY_TECH_GEOCENTRISM_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_ALMAGEST"
@@ -61,6 +58,9 @@
   "soundMP": "AS2D_TECH_GEOCENTRISM"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_GEOCENTRISM",
+  "civilopedia": "TXT_KEY_TECH_GEOCENTRISM_PEDIA",
+  "quote": "TXT_KEY_TECH_GEOCENTRISM_QUOTE",
   "era": "C2C_ERA_CLASSICAL",
   "worth": 20,
   "militaryWorth": 2,

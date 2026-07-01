@@ -1,7 +1,5 @@
 {
  "type": "BONUS_DUTCH",
- "description": "TXT_KEY_BONUS_DUTCH",
- "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_DUTCH_DIKE"
@@ -18,6 +16,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_DUTCH",
+  "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
   "bonusClassType": "BONUSCLASS_CULTURE"
  }
 }

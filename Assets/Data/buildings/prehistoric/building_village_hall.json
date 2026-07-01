@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_VILLAGE_HALL",
- "description": "TXT_KEY_BUILDING_VILLAGE_HALL",
- "civilopedia": "TXT_KEY_BUILDING_VILLAGE_HALL_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_TOWN_HALL"
@@ -95,6 +93,8 @@
   "construct": "AS2D_BUILD_COURTHOUSE"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_VILLAGE_HALL",
+  "civilopedia": "TXT_KEY_BUILDING_VILLAGE_HALL_PEDIA",
   "enabledCivilizations": [
    "CIVILIZATION_NPC_NEANDERTHAL"
   ],

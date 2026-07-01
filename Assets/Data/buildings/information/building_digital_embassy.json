@@ -1,8 +1,5 @@
 {
  "type": "BUILDING_DIGITAL_EMBASSY",
- "description": "TXT_KEY_BUILDING_DIGITAL_EMBASSY",
- "civilopedia": "TXT_KEY_BUILDING_DIGITAL_EMBASSY_PEDIA",
- "help": "TXT_KEY_BUILDING_DIGITAL_EMBASSY_HELP",
  "requires": {
   "build": {
    "all": [
@@ -41,6 +38,9 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_DIGITAL_EMBASSY",
+  "civilopedia": "TXT_KEY_BUILDING_DIGITAL_EMBASSY_PEDIA",
+  "help": "TXT_KEY_BUILDING_DIGITAL_EMBASSY_HELP",
   "neverCapture": true,
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,

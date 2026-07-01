@@ -1,8 +1,5 @@
 {
  "type": "TECH_METEOROLOGY",
- "description": "TXT_KEY_TECH_METEOROLOGY",
- "civilopedia": "TXT_KEY_TECH_METEOROLOGY_PEDIA",
- "quote": "TXT_KEY_TECH_METEOROLOGY_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_METEOROLOGY_LAB",
@@ -43,6 +40,9 @@
   "soundMP": "AS2D_TECH_METEOROLOGY"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_METEOROLOGY",
+  "civilopedia": "TXT_KEY_TECH_METEOROLOGY_PEDIA",
+  "quote": "TXT_KEY_TECH_METEOROLOGY_QUOTE",
   "era": "C2C_ERA_INDUSTRIAL",
   "worth": 40,
   "militaryWorth": 2,

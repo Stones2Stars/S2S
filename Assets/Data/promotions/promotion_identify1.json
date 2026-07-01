@@ -1,6 +1,5 @@
 {
  "type": "PROMOTION_IDENTIFY1",
- "description": "TXT_KEY_PROMOTION_IDENTIFY1",
  "espionage": {
   "unit": {
    "investigation": {
@@ -28,5 +27,8 @@
  },
  "sound": {
   "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_IDENTIFY1"
  }
 }

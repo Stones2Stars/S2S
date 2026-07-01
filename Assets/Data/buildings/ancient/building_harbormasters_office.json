@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_HARBORMASTERS_OFFICE",
- "description": "TXT_KEY_BUILDING_HARBORMASTERS_OFFICE",
- "civilopedia": "TXT_KEY_BUILDING_HARBORMASTERS_OFFICE_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_COAST_GUARD_STATION",
@@ -78,6 +76,8 @@
   "construct": "AS2D_BUILD_HARBOR"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_HARBORMASTERS_OFFICE",
+  "civilopedia": "TXT_KEY_BUILDING_HARBORMASTERS_OFFICE_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

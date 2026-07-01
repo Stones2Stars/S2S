@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_ELDER_COUNCIL",
- "description": "TXT_KEY_BUILDING_ELDER_COUNCIL",
- "civilopedia": "TXT_KEY_BUILDING_ELDER_COUNCIL_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_LYCEUM"
@@ -86,6 +84,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_ELDER_COUNCIL",
+  "civilopedia": "TXT_KEY_BUILDING_ELDER_COUNCIL_PEDIA",
   "nukeImmune": true,
   "neverCapture": true,
   "worth": 1,

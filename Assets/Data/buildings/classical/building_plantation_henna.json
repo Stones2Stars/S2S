@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_PLANTATION_HENNA",
- "description": "TXT_KEY_BUILDING_PLANTATION_HENNA",
- "civilopedia": "TXT_KEY_BUILDING_PLANTATION_HENNA_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_DYE_MAKER",
@@ -73,6 +71,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_PLANTATION_HENNA",
+  "civilopedia": "TXT_KEY_BUILDING_PLANTATION_HENNA_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

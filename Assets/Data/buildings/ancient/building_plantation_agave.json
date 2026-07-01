@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_PLANTATION_AGAVE",
- "description": "TXT_KEY_BUILDING_PLANTATION_AGAVE",
- "civilopedia": "TXT_KEY_BUILDING_PLANTATION_AGAVE_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_FOOD_MANUFACTURING_DISTRICT"
@@ -71,6 +69,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_PLANTATION_AGAVE",
+  "civilopedia": "TXT_KEY_BUILDING_PLANTATION_AGAVE_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

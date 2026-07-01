@@ -1,7 +1,5 @@
 {
  "type": "BONUS_MARTIAN_MANUFACTURED_GOODS",
- "description": "TXT_KEY_BONUS_MARTIAN_MANUFACTURED_GOODS",
- "civilopedia": "TXT_KEY_BONUS_MARTIAN_MANUFACTURED_GOODS_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_MARTIAN_BIOFACTORY",
@@ -15,6 +13,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_MARTIAN_MANUFACTURED_GOODS",
+  "civilopedia": "TXT_KEY_BONUS_MARTIAN_MANUFACTURED_GOODS_PEDIA",
   "bonusClassType": "BONUSCLASS_MANUFACTURED"
  }
 }

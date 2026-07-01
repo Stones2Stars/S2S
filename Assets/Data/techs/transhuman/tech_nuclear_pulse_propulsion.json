@@ -1,8 +1,5 @@
 {
  "type": "TECH_NUCLEAR_PULSE_PROPULSION",
- "description": "TXT_KEY_TECH_NUCLEAR_PULSE_PROPULSION",
- "civilopedia": "TXT_KEY_TECH_NUCLEAR_PULSE_PROPULSION_PEDIA",
- "quote": "TXT_KEY_TECH_NUCLEAR_PULSE_PROPULSION_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_DEEP_SPACE_FUSION_CORE",
@@ -72,6 +69,9 @@
   "soundMP": "AS2D_TECH_NUCLEARPHYSICS"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_NUCLEAR_PULSE_PROPULSION",
+  "civilopedia": "TXT_KEY_TECH_NUCLEAR_PULSE_PROPULSION_PEDIA",
+  "quote": "TXT_KEY_TECH_NUCLEAR_PULSE_PROPULSION_QUOTE",
   "era": "C2C_ERA_TRANSHUMAN",
   "worth": 48,
   "militaryWorth": 4,

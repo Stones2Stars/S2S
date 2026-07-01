@@ -1,7 +1,5 @@
 {
  "type": "UNIT_ORNITHOPTER",
- "description": "TXT_KEY_UNIT_ORNITHOPTER",
- "civilopedia": "TXT_KEY_UNIT_ORNITHOPTER_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -79,6 +77,8 @@
   "production": 380
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_ORNITHOPTER",
+  "civilopedia": "TXT_KEY_UNIT_ORNITHOPTER_PEDIA",
   "worth": 3,
   "militaryWorth": 49,
   "xpValueAttack": 6,

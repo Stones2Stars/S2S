@@ -1,8 +1,5 @@
 {
  "type": "TRAIT_HUNTER_GATHERER2",
- "description": "TXT_KEY_TRAIT_COMPLEX_HUNTER_GATHERER2",
- "civilopedia": "TXT_KEY_TRAIT_COMPLEX_HUNTER_GATHERER2_PEDIA",
- "strategy": "TXT_KEY_TRAIT_COMPLEX_HUNTER_GATHERER_STRATEGY",
  "enables": {
   "traits": [
    "TRAIT_HUNTER_GATHERER3"
@@ -163,6 +160,9 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_TRAIT_COMPLEX_HUNTER_GATHERER2",
+  "civilopedia": "TXT_KEY_TRAIT_COMPLEX_HUNTER_GATHERER2_PEDIA",
+  "strategy": "TXT_KEY_TRAIT_COMPLEX_HUNTER_GATHERER_STRATEGY",
   "negativeTrait": true,
   "impurePropertyManipulators": true
  }

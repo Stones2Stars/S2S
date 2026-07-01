@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_CHEMISTRY_LAB",
- "description": "TXT_KEY_BUILDING_CHEMISTRY_LAB",
- "civilopedia": "TXT_KEY_BUILDING_CHEMISTRY_LAB_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_FACTORY_ELECTROACTIVE_POLYMERS",
@@ -119,6 +117,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_CHEMISTRY_LAB",
+  "civilopedia": "TXT_KEY_BUILDING_CHEMISTRY_LAB_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

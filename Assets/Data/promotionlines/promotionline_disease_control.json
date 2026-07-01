@@ -1,12 +1,12 @@
 {
  "type": "PROMOTIONLINE_DISEASE_CONTROL",
- "description": "TXT_KEY_PROMOTIONLINE_DISEASE_CONTROL",
  "ui": {
   "art": {
    "icon": "art/Buttons/Promotions/DiseaseControlPromotion1.dds"
   }
  },
  "identity": {
+  "description": "TXT_KEY_PROMOTIONLINE_DISEASE_CONTROL",
   "unitCombats": [
    "UNITCOMBAT_HEALTH_CARE"
   ]

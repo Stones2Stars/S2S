@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_EMU_EGG_CARVER",
- "description": "TXT_KEY_BUILDING_EMU_EGG_CARVER",
- "civilopedia": "TXT_KEY_BUILDING_EMU_EGG_CARVER_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -73,6 +71,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_EMU_EGG_CARVER",
+  "civilopedia": "TXT_KEY_BUILDING_EMU_EGG_CARVER_PEDIA",
   "centerInCity": true,
   "worth": 10,
   "conquestProbability": 100,

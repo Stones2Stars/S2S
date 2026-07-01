@@ -1,8 +1,5 @@
 {
  "type": "TECH_MODERN_ART",
- "description": "TXT_KEY_TECH_MODERN_ART",
- "civilopedia": "TXT_KEY_TECH_MODERN_ART_PEDIA",
- "quote": "TXT_KEY_TECH_MODERN_ART_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_BAUHAUS_SCHOOL",
@@ -68,6 +65,9 @@
   "soundMP": "AS2D_TECH_FINEARTS"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_MODERN_ART",
+  "civilopedia": "TXT_KEY_TECH_MODERN_ART_PEDIA",
+  "quote": "TXT_KEY_TECH_MODERN_ART_QUOTE",
   "era": "C2C_ERA_ATOMIC",
   "worth": 40,
   "militaryWorth": 10,

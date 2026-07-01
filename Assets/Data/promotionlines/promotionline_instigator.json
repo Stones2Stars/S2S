@@ -1,12 +1,12 @@
 {
  "type": "PROMOTIONLINE_INSTIGATOR",
- "description": "TXT_KEY_PROMOTIONLINE_INSTIGATOR",
  "ui": {
   "art": {
    "icon": "Art/Interface/Buttons/Promotions/Instigator1.dds"
   }
  },
  "identity": {
+  "description": "TXT_KEY_PROMOTIONLINE_INSTIGATOR",
   "unitCombats": [
    "UNITCOMBAT_SPY"
   ]

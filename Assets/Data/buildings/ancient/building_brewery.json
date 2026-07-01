@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_BREWERY",
- "description": "TXT_KEY_BUILDING_BREWERY",
- "civilopedia": "TXT_KEY_BUILDING_BREWERY_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_RESOURCES_ALCOHOL"
@@ -124,6 +122,8 @@
   "construct": "AS2D_BUILD_BREWERY"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_BREWERY",
+  "civilopedia": "TXT_KEY_BUILDING_BREWERY_PEDIA",
   "worth": 3,
   "dcmAirbombMission": 2,
   "advisor": "ADVISOR_ECONOMY",

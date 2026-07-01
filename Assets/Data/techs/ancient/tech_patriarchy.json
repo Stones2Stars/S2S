@@ -1,8 +1,5 @@
 {
  "type": "TECH_PATRIARCHY",
- "description": "TXT_KEY_TECH_PATRIARCHY",
- "civilopedia": "TXT_KEY_TECH_PATRIARCHY_PEDIA",
- "quote": "TXT_KEY_TECH_PATRIARCHY_QUOTE",
  "enables": {
   "civics": [
    "CIVIC_PATRIARCHY"
@@ -45,6 +42,9 @@
   "soundMP": "AS2D_TECH_PATRIARCHY"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_PATRIARCHY",
+  "civilopedia": "TXT_KEY_TECH_PATRIARCHY_PEDIA",
+  "quote": "TXT_KEY_TECH_PATRIARCHY_QUOTE",
   "era": "C2C_ERA_ANCIENT",
   "worth": 2,
   "tradeable": true,

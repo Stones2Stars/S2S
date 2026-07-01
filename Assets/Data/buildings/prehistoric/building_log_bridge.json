@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_LOG_BRIDGE",
- "description": "TXT_KEY_BUILDING_LOG_BRIDGE",
- "civilopedia": "TXT_KEY_BUILDING_LOG_BRIDGE_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_BAMBOO_BRIDGE"
@@ -111,6 +109,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_LOG_BRIDGE",
+  "civilopedia": "TXT_KEY_BUILDING_LOG_BRIDGE_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

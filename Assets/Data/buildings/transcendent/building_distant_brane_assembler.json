@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_DISTANT_BRANE_ASSEMBLER",
- "description": "TXT_KEY_BUILDING_DISTANT_BRANE_ASSEMBLER",
- "civilopedia": "TXT_KEY_BUILDING_DISTANT_BRANE_ASSEMBLER_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_DISTANT_BRANE_COLLISION",
@@ -49,6 +47,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_DISTANT_BRANE_ASSEMBLER",
+  "civilopedia": "TXT_KEY_BUILDING_DISTANT_BRANE_ASSEMBLER_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_CASTLE_DRAWBRIDGE",
- "description": "TXT_KEY_BUILDING_CASTLE_DRAWBRIDGE",
- "civilopedia": "TXT_KEY_BUILDING_CASTLE_DRAWBRIDGE_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_IMPERIAL_FORTRESS"
@@ -79,6 +77,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_CASTLE_DRAWBRIDGE",
+  "civilopedia": "TXT_KEY_BUILDING_CASTLE_DRAWBRIDGE_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

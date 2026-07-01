@@ -1,7 +1,5 @@
 {
  "type": "IMPROVEMENT_PASTURE",
- "description": "TXT_KEY_IMPROVEMENT_PASTURE",
- "civilopedia": "TXT_KEY_IMPROVEMENT_PASTURE_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -197,6 +195,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_IMPROVEMENT_PASTURE",
+  "civilopedia": "TXT_KEY_IMPROVEMENT_PASTURE_PEDIA",
   "advancedStart": {
    "cost": 24
   },

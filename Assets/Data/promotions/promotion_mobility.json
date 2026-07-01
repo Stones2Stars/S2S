@@ -1,6 +1,5 @@
 {
  "type": "PROMOTION_MOBILITY",
- "description": "TXT_KEY_PROMOTION_MOBILITY",
  "movement": {
   "unit": {
    "moveDiscount": {
@@ -17,6 +16,7 @@
   "sound": "AS2D_IF_LEVELUP"
  },
  "identity": {
+  "description": "TXT_KEY_PROMOTION_MOBILITY",
   "unitCombats": [
    "UNITCOMBAT_EXPLORER",
    "UNITCOMBAT_THROWING",

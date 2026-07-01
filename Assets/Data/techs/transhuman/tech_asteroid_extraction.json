@@ -1,8 +1,5 @@
 {
  "type": "TECH_ASTEROID_EXTRACTION",
- "description": "TXT_KEY_TECH_ASTEROID_EXTRACTION",
- "civilopedia": "TXT_KEY_TECH_ASTEROID_EXTRACTION_PEDIA",
- "quote": "TXT_KEY_TECH_ASTEROID_EXTRACTION_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_ASTEROID_INTERIOR_CITY",
@@ -76,6 +73,9 @@
   "soundMP": "AS2D_TECH_GENERIC"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_ASTEROID_EXTRACTION",
+  "civilopedia": "TXT_KEY_TECH_ASTEROID_EXTRACTION_PEDIA",
+  "quote": "TXT_KEY_TECH_ASTEROID_EXTRACTION_QUOTE",
   "era": "C2C_ERA_TRANSHUMAN",
   "worth": 48,
   "militaryWorth": 4,

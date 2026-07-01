@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_DRYDOCK",
- "description": "TXT_KEY_BUILDING_DRYDOCK",
- "civilopedia": "TXT_KEY_BUILDING_DRYDOCK_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_GRAND_MARINE_FESTIVAL",
@@ -111,6 +109,8 @@
   "construct": "AS2D_BUILD_DRYDOCK"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_DRYDOCK",
+  "civilopedia": "TXT_KEY_BUILDING_DRYDOCK_PEDIA",
   "worth": 1,
   "militaryWorth": 2,
   "conquestProbability": 75,

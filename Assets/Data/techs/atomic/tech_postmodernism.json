@@ -1,8 +1,5 @@
 {
  "type": "TECH_POSTMODERNISM",
- "description": "TXT_KEY_TECH_POSTMODERNISM",
- "civilopedia": "TXT_KEY_TECH_POSTMODERNISM_PEDIA",
- "quote": "TXT_KEY_TECH_POSTMODERNISM_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_ENVIRONMENTAL_ART_STUDIO",
@@ -59,6 +56,9 @@
   "soundMP": "AS2D_TECH_GENERIC"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_POSTMODERNISM",
+  "civilopedia": "TXT_KEY_TECH_POSTMODERNISM_PEDIA",
+  "quote": "TXT_KEY_TECH_POSTMODERNISM_QUOTE",
   "era": "C2C_ERA_ATOMIC",
   "worth": 40,
   "tradeable": true,

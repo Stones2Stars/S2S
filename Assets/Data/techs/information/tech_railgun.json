@@ -1,8 +1,5 @@
 {
  "type": "TECH_RAILGUN",
- "description": "TXT_KEY_TECH_RAILGUN",
- "civilopedia": "TXT_KEY_TECH_RAILGUN_PEDIA",
- "quote": "TXT_KEY_TECH_RAILGUN_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_RAILGUN_BATTERY"
@@ -62,6 +59,9 @@
   "soundMP": "AS2D_TECH_RAILGUN"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_RAILGUN",
+  "civilopedia": "TXT_KEY_TECH_RAILGUN_PEDIA",
+  "quote": "TXT_KEY_TECH_RAILGUN_QUOTE",
   "era": "C2C_ERA_INFORMATION",
   "worth": 52,
   "militaryWorth": 5,

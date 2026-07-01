@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_HOMING_PIGEON_COOP",
- "description": "TXT_KEY_BUILDING_HOMING_PIGEON_COOP",
- "civilopedia": "TXT_KEY_BUILDING_HOMING_PIGEON_COOP_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_RESOURCES_FEATHERS"
@@ -109,6 +107,8 @@
   "construct": "AS2D_BUILD_GRANARY"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_HOMING_PIGEON_COOP",
+  "civilopedia": "TXT_KEY_BUILDING_HOMING_PIGEON_COOP_PEDIA",
   "worth": 4,
   "militaryWorth": 2,
   "advisor": "ADVISOR_GROWTH",

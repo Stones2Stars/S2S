@@ -1,7 +1,5 @@
 {
  "type": "FEATURE_PLATY_AUYANTEPUI",
- "description": "TXT_KEY_FEATURE_AUYANTEPUI",
- "civilopedia": "TXT_KEY_FEATURE_AUYANTEPUI_PEDIA",
  "world": {
   "art": {
    "icon": "ART_DEF_FEATURE_AUYANTEPUI"
@@ -11,6 +9,8 @@
   "soundscape": "ASSS_JUNGLE_SELECT_AMB"
  },
  "identity": {
+  "description": "TXT_KEY_FEATURE_AUYANTEPUI",
+  "civilopedia": "TXT_KEY_FEATURE_AUYANTEPUI_PEDIA",
   "noCoast": true,
   "requiresFlatlands": true,
   "noCity": true,

@@ -1,7 +1,5 @@
 {
  "type": "UNIT_CAMEL_KNIGHT",
- "description": "TXT_KEY_UNIT_CAMEL_KNIGHT",
- "civilopedia": "TXT_KEY_UNIT_CAMEL_RIDER_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -92,6 +90,8 @@
   "upkeep": 1
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_CAMEL_KNIGHT",
+  "civilopedia": "TXT_KEY_UNIT_CAMEL_RIDER_PEDIA",
   "worth": 3,
   "militaryWorth": 22,
   "xpValueAttack": 3,

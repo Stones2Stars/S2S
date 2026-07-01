@@ -1,8 +1,5 @@
 {
  "type": "TECH_NOOGENESIS",
- "description": "TXT_KEY_TECH_NOOGENESIS",
- "civilopedia": "TXT_KEY_TECH_NOOGENESIS_PEDIA",
- "quote": "TXT_KEY_TECH_NOOGENESIS_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_INTERGALACTIC_HERO_ACADEMY",
@@ -56,6 +53,9 @@
   "soundMP": "AS2D_TECH_GENERIC"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_NOOGENESIS",
+  "civilopedia": "TXT_KEY_TECH_NOOGENESIS_PEDIA",
+  "quote": "TXT_KEY_TECH_NOOGENESIS_QUOTE",
   "era": "C2C_ERA_COSMIC",
   "worth": 48,
   "tradeable": true,

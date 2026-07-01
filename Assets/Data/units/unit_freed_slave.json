@@ -1,8 +1,5 @@
 {
  "type": "UNIT_FREED_SLAVE",
- "description": "TXT_KEY_UNIT_FREED_SLAVE",
- "civilopedia": "TXT_KEY_UNIT_FREED_SLAVE_PEDIA",
- "help": "TXT_KEY_UNIT_FREED_SLAVE_HELP",
  "requires": {
   "build": {
    "dormant": {
@@ -44,6 +41,9 @@
   "upkeep": 1
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_FREED_SLAVE",
+  "civilopedia": "TXT_KEY_UNIT_FREED_SLAVE_PEDIA",
+  "help": "TXT_KEY_UNIT_FREED_SLAVE_HELP",
   "spawnOnly": true,
   "worth": 1,
   "domain": "DOMAIN_LAND",

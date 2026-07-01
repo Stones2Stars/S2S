@@ -1,8 +1,5 @@
 {
  "type": "TECH_CAMELID_DOMESTICATION",
- "description": "TXT_KEY_TECH_CAMELID_DOMESTICATION",
- "civilopedia": "TXT_KEY_TECH_CAMELID_DOMESTICATION_PEDIA",
- "quote": "TXT_KEY_TECH_CAMELID_DOMESTICATION_QUOTE",
  "enables": {
   "bonuses": [
    "BONUS_CAMEL",
@@ -80,6 +77,9 @@
   "soundMP": "AS2D_TECH_CAMELID_DOMESTICATION"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_CAMELID_DOMESTICATION",
+  "civilopedia": "TXT_KEY_TECH_CAMELID_DOMESTICATION_PEDIA",
+  "quote": "TXT_KEY_TECH_CAMELID_DOMESTICATION_QUOTE",
   "era": "C2C_ERA_ANCIENT",
   "worth": 6,
   "militaryWorth": 1,

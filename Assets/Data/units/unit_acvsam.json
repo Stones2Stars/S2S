@@ -1,7 +1,5 @@
 {
  "type": "UNIT_ACVSAM",
- "description": "TXT_KEY_UNIT_ACVSAM",
- "civilopedia": "TXT_KEY_UNIT_ACVSAM_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -105,6 +103,8 @@
   "upkeep": 4
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_ACVSAM",
+  "civilopedia": "TXT_KEY_UNIT_ACVSAM_PEDIA",
   "worth": 6,
   "militaryWorth": 400,
   "xpValueAttack": 3,

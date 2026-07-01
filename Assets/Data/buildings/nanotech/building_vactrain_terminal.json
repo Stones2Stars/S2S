@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_VACTRAIN_TERMINAL",
- "description": "TXT_KEY_BUILDING_VACTRAIN_TERMINAL",
- "civilopedia": "TXT_KEY_BUILDING_VACTRAIN_TERMINAL_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_CHUO_SHINKANSEN",
@@ -65,6 +63,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_VACTRAIN_TERMINAL",
+  "civilopedia": "TXT_KEY_BUILDING_VACTRAIN_TERMINAL_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

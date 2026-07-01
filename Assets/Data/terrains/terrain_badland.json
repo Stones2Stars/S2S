@@ -1,7 +1,5 @@
 {
  "type": "TERRAIN_BADLAND",
- "description": "TXT_KEY_TERRAIN_BADLAND",
- "civilopedia": "TXT_KEY_TERRAIN_ROCKY_PEDIA",
  "production": {
   "plot": {
    "flat": 1
@@ -136,6 +134,8 @@
   "soundscape": "ASSS_PLAINS_SELECT_AMB"
  },
  "identity": {
+  "description": "TXT_KEY_TERRAIN_BADLAND",
+  "civilopedia": "TXT_KEY_TERRAIN_ROCKY_PEDIA",
   "found": true,
   "movementCost": 2,
   "mapCategories": [

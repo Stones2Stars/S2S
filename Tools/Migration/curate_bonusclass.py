@@ -24,6 +24,7 @@ import os
 from collections import OrderedDict
 
 import engine
+from curate_common import fold_text_to_identity
 from store import Store, REPO
 
 
@@ -32,6 +33,7 @@ def curate(typ, rec):
     ur = engine.text(rec.find("iUniqueRange"))
     if engine.is_int(ur) and int(ur) != 0:          # 0 = no map-gen spacing constraint -> dropped (faithful)
         out["mapGeneration"] = {"uniqueRange": int(ur)}
+    fold_text_to_identity(out)   # TEXT -> identity (json.md §7)
     return out
 
 

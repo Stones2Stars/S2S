@@ -1,8 +1,5 @@
 {
  "type": "UNIT_OIL_TANKER",
- "description": "TXT_KEY_UNIT_OIL_TANKER",
- "civilopedia": "TXT_KEY_UNIT_OIL_TANKER_PEDIA",
- "help": "TXT_KEY_UNIT_MERCHANT_SHIP_HELP",
  "requires": {
   "build": {
    "all": [
@@ -80,6 +77,9 @@
   ]
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_OIL_TANKER",
+  "civilopedia": "TXT_KEY_UNIT_OIL_TANKER_PEDIA",
+  "help": "TXT_KEY_UNIT_MERCHANT_SHIP_HELP",
   "worth": 2,
   "minAreaSize": 10,
   "domain": "DOMAIN_SEA",

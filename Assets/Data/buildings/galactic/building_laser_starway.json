@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_LASER_STARWAY",
- "description": "TXT_KEY_BUILDING_LASER_STARWAY",
- "civilopedia": "TXT_KEY_BUILDING_LASER_STARWAY_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -61,6 +59,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_LASER_STARWAY",
+  "civilopedia": "TXT_KEY_BUILDING_LASER_STARWAY_PEDIA",
   "neverCapture": true,
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,

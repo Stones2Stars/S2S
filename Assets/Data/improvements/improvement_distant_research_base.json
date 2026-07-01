@@ -1,7 +1,5 @@
 {
  "type": "IMPROVEMENT_DISTANT_RESEARCH_BASE",
- "description": "TXT_KEY_IMPROVEMENT_DISTANT_RESEARCH_BASE",
- "civilopedia": "TXT_KEY_IMPROVEMENT_DISTANT_RESEARCH_BASE_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -69,6 +67,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_IMPROVEMENT_DISTANT_RESEARCH_BASE",
+  "civilopedia": "TXT_KEY_IMPROVEMENT_DISTANT_RESEARCH_BASE_PEDIA",
   "extraterrestrial": true,
   "pillageGold": 200,
   "bonuses": {

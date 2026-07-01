@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_DISTANT_BIG_BANG_PROBE",
- "description": "TXT_KEY_BUILDING_DISTANT_BIG_BANG_PROBE",
- "civilopedia": "TXT_KEY_BUILDING_DISTANT_BIG_BANG_PROBE_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_DISTANT_BIG_BANG_POWER_PLANT",
@@ -48,6 +46,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_DISTANT_BIG_BANG_PROBE",
+  "civilopedia": "TXT_KEY_BUILDING_DISTANT_BIG_BANG_PROBE_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

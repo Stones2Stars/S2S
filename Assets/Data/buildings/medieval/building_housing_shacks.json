@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_HOUSING_SHACKS",
- "description": "TXT_KEY_BUILDING_HOUSING_SHACKS",
- "civilopedia": "TXT_KEY_BUILDING_HOUSING_SHACKS_PEDIA",
  "obsoletedBy": {
   "techs": [
    "TECH_RAPID_PROTOTYPING"
@@ -60,6 +58,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_HOUSING_SHACKS",
+  "civilopedia": "TXT_KEY_BUILDING_HOUSING_SHACKS_PEDIA",
   "notConstructible": true,
   "nukeImmune": true,
   "neverCapture": true,

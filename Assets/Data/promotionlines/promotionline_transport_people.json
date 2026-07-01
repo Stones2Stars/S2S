@@ -1,12 +1,12 @@
 {
  "type": "PROMOTIONLINE_TRANSPORT_PEOPLE",
- "description": "TXT_KEY_PROMOTIONLINE_TRANSPORT_PEOPLE",
  "ui": {
   "art": {
    "icon": "art/Buttons/Promotions/TransportPeople.dds"
   }
  },
  "identity": {
+  "description": "TXT_KEY_PROMOTIONLINE_TRANSPORT_PEOPLE",
   "unitCombats": [
    "UNITCOMBAT_PROMOTED_TRANSPORT_PEOPLE"
   ],

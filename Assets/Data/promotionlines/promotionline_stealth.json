@@ -1,12 +1,12 @@
 {
  "type": "PROMOTIONLINE_STEALTH",
- "description": "TXT_KEY_PROMOTIONLINE_STEALTH",
  "ui": {
   "art": {
    "icon": ",Art/Interface/Buttons/Promotions/roadwar1.dds,Art/Interface/Buttons/FinalFrontier1_Atlas.dds,4,11"
   }
  },
  "identity": {
+  "description": "TXT_KEY_PROMOTIONLINE_STEALTH",
   "unitCombats": [
    "UNITCOMBAT_SIEGE",
    "UNITCOMBAT_GUN",

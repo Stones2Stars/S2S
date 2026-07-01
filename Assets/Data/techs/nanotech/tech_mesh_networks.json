@@ -1,8 +1,5 @@
 {
  "type": "TECH_MESH_NETWORKS",
- "description": "TXT_KEY_TECH_MESH_NETWORKS",
- "civilopedia": "TXT_KEY_TECH_MESH_NETWORKS_PEDIA",
- "quote": "TXT_KEY_TECH_MESH_NETWORKS_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_ADVANCED_QUALITY_CONTROL",
@@ -63,6 +60,9 @@
   "soundMP": "AS2D_TECH_MESH_NETWORKS"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_MESH_NETWORKS",
+  "civilopedia": "TXT_KEY_TECH_MESH_NETWORKS_PEDIA",
+  "quote": "TXT_KEY_TECH_MESH_NETWORKS_QUOTE",
   "era": "C2C_ERA_NANOTECH",
   "worth": 40,
   "militaryWorth": 10,

@@ -1,7 +1,5 @@
 {
  "type": "BONUS_BONE",
- "description": "TXT_KEY_BONUS_BONE",
- "civilopedia": "TXT_KEY_BONUS_BONE_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_BEADMAKERS_WORKSHOP",
@@ -26,6 +24,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_BONE",
+  "civilopedia": "TXT_KEY_BONUS_BONE_PEDIA",
   "bonusClassType": "BONUSCLASS_MANUFACTURED"
  }
 }

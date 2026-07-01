@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_LIFE_SILICON_BASED",
- "description": "TXT_KEY_BUILDING_LIFE_SILICON_BASED",
- "civilopedia": "TXT_KEY_BUILDING_LIFE_SILICON_BASED_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -76,6 +74,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_LIFE_SILICON_BASED",
+  "civilopedia": "TXT_KEY_BUILDING_LIFE_SILICON_BASED_PEDIA",
   "neverCapture": true,
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,

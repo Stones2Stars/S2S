@@ -1,7 +1,5 @@
 {
  "type": "SPECIALIST_SPY",
- "description": "TXT_KEY_UNIT_SPY",
- "civilopedia": "TXT_KEY_CONCEPT_GREAT_SPY_PEDIA",
  "research": {
   "city": {
    "flat": 1
@@ -42,6 +40,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_SPY",
+  "civilopedia": "TXT_KEY_CONCEPT_GREAT_SPY_PEDIA",
   "visible": true,
   "categories": [
    "CATEGORY_ASSIGNABLE_SPECIALISTS",

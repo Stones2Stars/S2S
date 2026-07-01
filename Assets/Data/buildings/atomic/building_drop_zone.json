@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_DROP_ZONE",
- "description": "TXT_KEY_BUILDING_DROP_ZONE",
- "civilopedia": "TXT_KEY_BUILDING_DROP_ZONE_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_ATHLETIC_MEGACOMPLEX"
@@ -86,6 +84,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_DROP_ZONE",
+  "civilopedia": "TXT_KEY_BUILDING_DROP_ZONE_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

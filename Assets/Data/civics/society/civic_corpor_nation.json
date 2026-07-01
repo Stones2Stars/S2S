@@ -1,8 +1,5 @@
 {
  "type": "CIVIC_CORPOR_NATION",
- "description": "TXT_KEY_CIVIC_CORPOR_NATION",
- "civilopedia": "TXT_KEY_CIVIC_CORPOR_NATION_PEDIA",
- "strategy": "TXT_KEY_CIVIC_CORPOR_NATION_STRATEGY",
  "enables": {
   "buildings": [
    "BUILDING_MEGACORPORATE_HEADQUARTERS"
@@ -159,6 +156,9 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_CIVIC_CORPOR_NATION",
+  "civilopedia": "TXT_KEY_CIVIC_CORPOR_NATION_PEDIA",
+  "strategy": "TXT_KEY_CIVIC_CORPOR_NATION_STRATEGY",
   "civicOption": "CIVICOPTION_SOCIETY",
   "anarchyLength": 2,
   "upkeepLevel": "UPKEEP_HIGH"

@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_ALTERNATIVE_MEDICINE",
- "description": "TXT_KEY_BUILDING_ALTERNATIVE_MEDICINE",
- "civilopedia": "TXT_KEY_BUILDING_ALTERNATIVE_MEDICINE_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_GOBEKLI_TEPE"
@@ -125,6 +123,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_ALTERNATIVE_MEDICINE",
+  "civilopedia": "TXT_KEY_BUILDING_ALTERNATIVE_MEDICINE_PEDIA",
   "advisor": "ADVISOR_CULTURE",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

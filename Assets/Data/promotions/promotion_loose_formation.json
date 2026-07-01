@@ -1,6 +1,5 @@
 {
  "type": "PROMOTION_LOOSE_FORMATION",
- "description": "TXT_KEY_PROMOTION_LOOSE_FORMATION",
  "withdrawal": {
   "unit": {
    "percent": 5
@@ -37,6 +36,7 @@
   "sound": "AS2D_IF_LEVELUP"
  },
  "identity": {
+  "description": "TXT_KEY_PROMOTION_LOOSE_FORMATION",
   "unitCombats": [
    "UNITCOMBAT_EXPLORER"
   ],

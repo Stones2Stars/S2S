@@ -1,7 +1,5 @@
 {
  "type": "IMPROVEMENT_FISHING_BOATS",
- "description": "TXT_KEY_IMPROVEMENT_FISHING_BOATS",
- "civilopedia": "TXT_KEY_IMPROVEMENT_FISHING_BOATS_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -160,6 +158,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_IMPROVEMENT_FISHING_BOATS",
+  "civilopedia": "TXT_KEY_IMPROVEMENT_FISHING_BOATS_PEDIA",
   "advancedStart": {
    "cost": 30
   },

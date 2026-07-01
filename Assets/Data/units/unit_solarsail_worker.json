@@ -1,8 +1,5 @@
 {
  "type": "UNIT_SOLARSAIL_WORKER",
- "description": "TXT_KEY_UNIT_SOLARSAIL_WORKER",
- "civilopedia": "TXT_KEY_UNIT_SOLARSAIL_WORKER_PEDIA",
- "help": "TXT_KEY_UNIT_SPACEUNIT_HELP",
  "requires": {
   "build": {
    "all": [
@@ -62,6 +59,9 @@
   "upkeep": 1
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_SOLARSAIL_WORKER",
+  "civilopedia": "TXT_KEY_UNIT_SOLARSAIL_WORKER_PEDIA",
+  "help": "TXT_KEY_UNIT_SPACEUNIT_HELP",
   "worth": 1,
   "domain": "DOMAIN_LAND",
   "defaultUnitAI": "UNITAI_WORKER",

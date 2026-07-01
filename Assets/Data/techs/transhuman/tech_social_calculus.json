@@ -1,8 +1,5 @@
 {
  "type": "TECH_SOCIAL_CALCULUS",
- "description": "TXT_KEY_TECH_SOCIAL_CALCULUS",
- "civilopedia": "TXT_KEY_TECH_SOCIAL_CALCULUS_PEDIA",
- "quote": "TXT_KEY_TECH_SOCIAL_CALCULUS_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_CISLUNAR_SOCIAL_ENGINEERING",
@@ -66,6 +63,9 @@
   "soundMP": "AS2D_TECH_SOCIAL_CALCULUS"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_SOCIAL_CALCULUS",
+  "civilopedia": "TXT_KEY_TECH_SOCIAL_CALCULUS_PEDIA",
+  "quote": "TXT_KEY_TECH_SOCIAL_CALCULUS_QUOTE",
   "era": "C2C_ERA_TRANSHUMAN",
   "worth": 48,
   "militaryWorth": 4,

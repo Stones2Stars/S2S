@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_BULL_LEAPING",
- "description": "TXT_KEY_BUILDING_BULL_LEAPING",
- "civilopedia": "TXT_KEY_BUILDING_BULL_LEAPING_PEDIA",
  "obsoletedBy": {
   "techs": [
    "TECH_COMBAT_SPORTS"
@@ -113,6 +111,8 @@
   "construct": "AS2D_BUILD_WALLS"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_BULL_LEAPING",
+  "civilopedia": "TXT_KEY_BUILDING_BULL_LEAPING_PEDIA",
   "neverCapture": true,
   "worth": 1,
   "militaryWorth": 2,

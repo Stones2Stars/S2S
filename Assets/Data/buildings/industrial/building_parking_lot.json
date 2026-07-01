@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_PARKING_LOT",
- "description": "TXT_KEY_BUILDING_PARKING_LOT",
- "civilopedia": "TXT_KEY_BUILDING_PARKING_LOT_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_PARKING_GARAGE",
@@ -84,6 +82,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_PARKING_LOT",
+  "civilopedia": "TXT_KEY_BUILDING_PARKING_LOT_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

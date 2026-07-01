@@ -1,10 +1,12 @@
 {
  "type": "PROMOTION_GUARDIAN_TRIBAL",
- "description": "TXT_KEY_PROMOTION_GUARDIAN_TRIBAL",
- "help": "TXT_KEY_PROMOTION_GUARDIAN_TRIBAL_HELP",
  "ui": {
   "art": {
    "icon": "Art/Interface/Buttons/Units/sparth/tribal_guardian.dds"
   }
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_GUARDIAN_TRIBAL",
+  "help": "TXT_KEY_PROMOTION_GUARDIAN_TRIBAL_HELP"
  }
 }

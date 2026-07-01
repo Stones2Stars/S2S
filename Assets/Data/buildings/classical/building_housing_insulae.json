@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_HOUSING_INSULAE",
- "description": "TXT_KEY_BUILDING_HOUSING_INSULAE",
- "civilopedia": "TXT_KEY_BUILDING_HOUSING_INSULAE_PEDIA",
  "obsoletedBy": {
   "techs": [
    "TECH_TELEPHONE"
@@ -71,6 +69,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_HOUSING_INSULAE",
+  "civilopedia": "TXT_KEY_BUILDING_HOUSING_INSULAE_PEDIA",
   "notConstructible": true,
   "nukeImmune": true,
   "neverCapture": true,

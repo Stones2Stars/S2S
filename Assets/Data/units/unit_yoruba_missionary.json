@@ -1,7 +1,5 @@
 {
  "type": "UNIT_YORUBA_MISSIONARY",
- "description": "TXT_KEY_UNIT_YORUBA_MISSIONARY",
- "civilopedia": "TXT_KEY_TECH_YORUBA_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -18,6 +16,8 @@
   "production": 110
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_YORUBA_MISSIONARY",
+  "civilopedia": "TXT_KEY_TECH_YORUBA_PEDIA",
   "worth": 1,
   "domain": "DOMAIN_LAND",
   "defaultUnitAI": "UNITAI_MISSIONARY",

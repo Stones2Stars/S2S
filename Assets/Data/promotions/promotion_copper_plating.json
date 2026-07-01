@@ -1,6 +1,5 @@
 {
  "type": "PROMOTION_COPPER_PLATING",
- "description": "TXT_KEY_PROMOTION_COPPER_PLATING",
  "strength": {
   "unit": {
    "unitCombat": {
@@ -20,5 +19,8 @@
  },
  "sound": {
   "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_COPPER_PLATING"
  }
 }

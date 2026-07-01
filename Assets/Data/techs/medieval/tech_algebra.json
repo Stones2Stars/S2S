@@ -1,8 +1,5 @@
 {
  "type": "TECH_ALGEBRA",
- "description": "TXT_KEY_TECH_ALGEBRA",
- "civilopedia": "TXT_KEY_TECH_ALGEBRA_PEDIA",
- "quote": "TXT_KEY_TECH_ALGEBRA_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_GREAT_MOSQUE_OF_DJENNE"
@@ -52,6 +49,9 @@
   "soundMP": "AS2D_TECH_ALGEBRA"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_ALGEBRA",
+  "civilopedia": "TXT_KEY_TECH_ALGEBRA_PEDIA",
+  "quote": "TXT_KEY_TECH_ALGEBRA_QUOTE",
   "era": "C2C_ERA_MEDIEVAL",
   "worth": 32,
   "tradeable": true,

@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_SHRINE",
- "description": "TXT_KEY_BUILDING_SHRINE",
- "civilopedia": "TXT_KEY_BUILDING_SHRINE_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -191,6 +189,8 @@
   "construct": "AS2D_BUILD_ORACLE"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_SHRINE",
+  "civilopedia": "TXT_KEY_BUILDING_SHRINE_PEDIA",
   "worth": 1,
   "advisor": "ADVISOR_ECONOMY",
   "visibilityPriority": 1,

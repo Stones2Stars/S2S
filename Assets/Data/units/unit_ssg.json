@@ -1,7 +1,5 @@
 {
  "type": "UNIT_SSG",
- "description": "TXT_KEY_UNIT_SSG",
- "civilopedia": "TXT_KEY_UNIT_SSG_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -180,6 +178,8 @@
   "upkeep": 11
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_SSG",
+  "civilopedia": "TXT_KEY_UNIT_SSG_PEDIA",
   "worth": 15,
   "militaryWorth": 55,
   "xpValueAttack": 8,

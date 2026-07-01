@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_LUMBER_CAMP",
- "description": "TXT_KEY_BUILDING_LUMBER_CAMP",
- "civilopedia": "TXT_KEY_BUILDING_LUMBER_CAMP_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_BONFIRE",
@@ -91,6 +89,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_LUMBER_CAMP",
+  "civilopedia": "TXT_KEY_BUILDING_LUMBER_CAMP_PEDIA",
   "enabledCivilizations": [
    "CIVILIZATION_NPC_NEANDERTHAL"
   ],

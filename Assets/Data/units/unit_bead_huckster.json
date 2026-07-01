@@ -1,7 +1,5 @@
 {
  "type": "UNIT_BEAD_HUCKSTER",
- "description": "TXT_KEY_UNIT_BEAD_HUCKSTER",
- "civilopedia": "TXT_KEY_UNIT_BEAD_HUCKSTER_PEDIA",
  "obsoletedBy": {
   "techs": [
    "TECH_ENGINEERING"
@@ -98,6 +96,8 @@
   ]
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_BEAD_HUCKSTER",
+  "civilopedia": "TXT_KEY_UNIT_BEAD_HUCKSTER_PEDIA",
   "worth": 1,
   "animalCombat": 100,
   "domain": "DOMAIN_LAND",

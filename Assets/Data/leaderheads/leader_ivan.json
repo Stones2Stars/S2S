@@ -1,7 +1,5 @@
 {
  "type": "LEADER_IVAN",
- "description": "TXT_KEY_LEADER_IVAN",
- "civilopedia": "TXT_KEY_LEADER_IVAN_PEDIA",
  "grants": {
   "traits": [
    "TRAIT_AGGRESSIVE",
@@ -302,5 +300,9 @@
    "C2C_ERA_TRANSCENDENT": "AS2D_DIPLO_WARDRUMS_LATE",
    "C2C_ERA_FUTURE": "AS2D_DIPLO_WARDRUMS_LATE"
   }
+ },
+ "identity": {
+  "description": "TXT_KEY_LEADER_IVAN",
+  "civilopedia": "TXT_KEY_LEADER_IVAN_PEDIA"
  }
 }

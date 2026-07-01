@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_WORKHOUSE",
- "description": "TXT_KEY_BUILDING_WORKHOUSE",
- "civilopedia": "TXT_KEY_BUILDING_WORKHOUSE_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -90,6 +88,8 @@
   "construct": "AS2D_BUILD_SIEGE_WORKSHOP"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_WORKHOUSE",
+  "civilopedia": "TXT_KEY_BUILDING_WORKHOUSE_PEDIA",
   "worth": 3,
   "advisor": "ADVISOR_ECONOMY",
   "visibilityPriority": 1,

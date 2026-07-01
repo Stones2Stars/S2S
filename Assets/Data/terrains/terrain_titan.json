@@ -1,7 +1,5 @@
 {
  "type": "TERRAIN_TITAN",
- "description": "TXT_KEY_TERRAIN_TITAN",
- "civilopedia": "TXT_KEY_TERRAIN_TITAN_PEDIA",
  "commerce": {
   "plot": {
    "flat": 2
@@ -23,6 +21,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_TERRAIN_TITAN",
+  "civilopedia": "TXT_KEY_TERRAIN_TITAN_PEDIA",
   "found": true,
   "movementCost": 1,
   "mapCategories": [

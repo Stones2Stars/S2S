@@ -1,8 +1,5 @@
 {
  "type": "TECH_MICROBIOLOGY",
- "description": "TXT_KEY_TECH_MICROBIOLOGY",
- "civilopedia": "TXT_KEY_TECH_MICROBIOLOGY_PEDIA",
- "quote": "TXT_KEY_TECH_MICROBIOLOGY_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_MICROBIOLOGY_LAB"
@@ -55,6 +52,9 @@
   "soundMP": "AS2D_TECH_MICROBIOLOGY"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_MICROBIOLOGY",
+  "civilopedia": "TXT_KEY_TECH_MICROBIOLOGY_PEDIA",
+  "quote": "TXT_KEY_TECH_MICROBIOLOGY_QUOTE",
   "era": "C2C_ERA_RENAISSANCE",
   "worth": 40,
   "tradeable": true,

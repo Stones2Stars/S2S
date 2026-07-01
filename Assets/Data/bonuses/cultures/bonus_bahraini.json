@@ -1,7 +1,5 @@
 {
  "type": "BONUS_BAHRAINI",
- "description": "TXT_KEY_BONUS_BAHRAINI",
- "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
  "enables": {
   "units": [
    "UNIT_AL_KHALIFA",
@@ -14,6 +12,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_BAHRAINI",
+  "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
   "bonusClassType": "BONUSCLASS_CULTURE"
  }
 }

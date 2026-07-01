@@ -1,8 +1,5 @@
 {
  "type": "TECH_ROBOTICS",
- "description": "TXT_KEY_TECH_ROBOTICS",
- "civilopedia": "TXT_KEY_TECH_ROBOTICS_PEDIA",
- "quote": "TXT_KEY_TECH_ROBOTICS_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_BATTLEBOT_ARENA",
@@ -61,6 +58,9 @@
   "soundMP": "AS2D_TECH_MP_ROBOTICS"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_ROBOTICS",
+  "civilopedia": "TXT_KEY_TECH_ROBOTICS_PEDIA",
+  "quote": "TXT_KEY_TECH_ROBOTICS_QUOTE",
   "era": "C2C_ERA_ATOMIC",
   "worth": 48,
   "tradeable": true,

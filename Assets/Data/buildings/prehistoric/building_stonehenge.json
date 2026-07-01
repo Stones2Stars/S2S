@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_STONEHENGE",
- "description": "TXT_KEY_BUILDING_STONEHENGE",
- "civilopedia": "TXT_KEY_BUILDING_STONEHENGE_PEDIA",
  "obsoletedBy": {
   "techs": [
    "TECH_MODERN_SANITATION"
@@ -79,6 +77,8 @@
   "construct": "AS2D_BUILD_STONEHENGE"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_STONEHENGE",
+  "civilopedia": "TXT_KEY_BUILDING_STONEHENGE_PEDIA",
   "commerceDoubleTime": {
    "culture": 1000
   },

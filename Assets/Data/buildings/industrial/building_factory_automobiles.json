@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_FACTORY_AUTOMOBILES",
- "description": "TXT_KEY_BUILDING_FACTORY_AUTOMOBILES",
- "civilopedia": "TXT_KEY_BUILDING_FACTORY_AUTOMOBILES_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_AERIAL_BASKET_ROPEWAYS",
@@ -129,6 +127,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_FACTORY_AUTOMOBILES",
+  "civilopedia": "TXT_KEY_BUILDING_FACTORY_AUTOMOBILES_PEDIA",
   "militaryWorth": 10,
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [

@@ -1,6 +1,5 @@
 {
  "type": "PROMOTION_TORPEDOES",
- "description": "TXT_KEY_PROMOTION_TORPEDOES",
  "air": {
   "unit": {
    "range": {
@@ -44,6 +43,7 @@
   "sound": "AS2D_IF_LEVELUP"
  },
  "identity": {
+  "description": "TXT_KEY_PROMOTION_TORPEDOES",
   "unitCombats": [
    "UNITCOMBAT_EARLY_FIGHTERS",
    "UNITCOMBAT_JET_FIGHTERS",

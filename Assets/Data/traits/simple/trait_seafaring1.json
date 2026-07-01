@@ -1,7 +1,5 @@
 {
  "type": "TRAIT_SEAFARING1",
- "description": "TXT_KEY_TRAIT_SEAFARING0",
- "civilopedia": "TXT_KEY_TRAIT_SEAFARING_PEDIA",
  "enables": {
   "traits": [
    "TRAIT_SEAFARING2"
@@ -205,6 +203,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_TRAIT_SEAFARING0",
+  "civilopedia": "TXT_KEY_TRAIT_SEAFARING_PEDIA",
   "shortDescription": "TXT_KEY_TRAIT_SEAFARING_SHORT"
  }
 }

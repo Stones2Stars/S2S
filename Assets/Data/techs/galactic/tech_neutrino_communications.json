@@ -1,8 +1,5 @@
 {
  "type": "TECH_NEUTRINO_COMMUNICATIONS",
- "description": "TXT_KEY_TECH_NEUTRINO_COMMUNICATIONS",
- "civilopedia": "TXT_KEY_TECH_NEUTRINO_COMMUNICATIONS_PEDIA",
- "quote": "TXT_KEY_TECH_NEUTRINO_COMMUNICATIONS_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_INTERSTELLAR_NEUTRINO_BEACON",
@@ -57,6 +54,9 @@
   "soundMP": "AS2D_TECH_GENERIC"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_NEUTRINO_COMMUNICATIONS",
+  "civilopedia": "TXT_KEY_TECH_NEUTRINO_COMMUNICATIONS_PEDIA",
+  "quote": "TXT_KEY_TECH_NEUTRINO_COMMUNICATIONS_QUOTE",
   "era": "C2C_ERA_GALACTIC",
   "worth": 48,
   "tradeable": true,

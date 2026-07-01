@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_FARM_CROP_CHIVES",
- "description": "TXT_KEY_BUILDING_FARM_CROP_CHIVES",
- "civilopedia": "TXT_KEY_BUILDING_FARM_CROP_CHIVES_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_RESOURCES_SEASONING"
@@ -81,6 +79,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_FARM_CROP_CHIVES",
+  "civilopedia": "TXT_KEY_BUILDING_FARM_CROP_CHIVES_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

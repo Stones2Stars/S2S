@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_NEST_THIEF",
- "description": "TXT_KEY_BUILDING_NEST_THIEF",
- "civilopedia": "TXT_KEY_BUILDING_NEST_THIEF_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_RESOURCES_EGGS"
@@ -81,6 +79,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_NEST_THIEF",
+  "civilopedia": "TXT_KEY_BUILDING_NEST_THIEF_PEDIA",
   "nukeImmune": true,
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [

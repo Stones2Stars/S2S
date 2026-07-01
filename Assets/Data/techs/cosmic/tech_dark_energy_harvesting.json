@@ -1,8 +1,5 @@
 {
  "type": "TECH_DARK_ENERGY_HARVESTING",
- "description": "TXT_KEY_TECH_DARK_ENERGY_HARVESTING",
- "civilopedia": "TXT_KEY_TECH_DARK_ENERGY_HARVESTING_PEDIA",
- "quote": "TXT_KEY_TECH_DARK_ENERGY_HARVESTING_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_INTERGALACTIC_BIRCH_PLANET",
@@ -63,6 +60,9 @@
   "soundMP": "AS2D_TECH_GENERIC"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_DARK_ENERGY_HARVESTING",
+  "civilopedia": "TXT_KEY_TECH_DARK_ENERGY_HARVESTING_PEDIA",
+  "quote": "TXT_KEY_TECH_DARK_ENERGY_HARVESTING_QUOTE",
   "era": "C2C_ERA_COSMIC",
   "worth": 48,
   "tradeable": true,

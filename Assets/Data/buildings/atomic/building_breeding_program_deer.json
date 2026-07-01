@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_BREEDING_PROGRAM_DEER",
- "description": "TXT_KEY_BUILDING_BREEDING_PROGRAM_DEER",
- "civilopedia": "TXT_KEY_BUILDING_BREEDING_PROGRAM_DEER_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_ANIMAL_TRAINER_DEER",
@@ -91,6 +89,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_BREEDING_PROGRAM_DEER",
+  "civilopedia": "TXT_KEY_BUILDING_BREEDING_PROGRAM_DEER_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_VISION_QUEST",
- "description": "TXT_KEY_BUILDING_VISION_QUEST",
- "civilopedia": "TXT_KEY_BUILDING_VISION_QUEST_PEDIA",
  "obsoletedBy": {
   "techs": [
    "TECH_CITY_PLANNING"
@@ -49,6 +47,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_VISION_QUEST",
+  "civilopedia": "TXT_KEY_BUILDING_VISION_QUEST_PEDIA",
   "conquestProbability": 70,
   "advisor": "ADVISOR_CULTURE",
   "visibilityPriority": 1,

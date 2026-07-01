@@ -1,8 +1,5 @@
 {
  "type": "TECH_CLIMATE_MODELS",
- "description": "TXT_KEY_TECH_CLIMATE_MODELS",
- "civilopedia": "TXT_KEY_TECH_CLIMATE_MODELS_PEDIA",
- "quote": "TXT_KEY_TECH_CLIMATE_MODELS_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_AMUNDSEN_SCOTT_SOUTH_POLE_STATION",
@@ -55,6 +52,9 @@
   "soundMP": "AS2D_TECH_CLIMATE_MODELS"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_CLIMATE_MODELS",
+  "civilopedia": "TXT_KEY_TECH_CLIMATE_MODELS_PEDIA",
+  "quote": "TXT_KEY_TECH_CLIMATE_MODELS_QUOTE",
   "era": "C2C_ERA_ATOMIC",
   "worth": 48,
   "militaryWorth": 2,

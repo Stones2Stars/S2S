@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_ATMOSPHERIC_WATER_GENERATOR",
- "description": "TXT_KEY_BUILDING_ATMOSPHERIC_WATER_GENERATOR",
- "civilopedia": "TXT_KEY_BUILDING_ATMOSPHERIC_WATER_GENERATOR_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_GREEN_DESERT",
@@ -67,6 +65,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_ATMOSPHERIC_WATER_GENERATOR",
+  "civilopedia": "TXT_KEY_BUILDING_ATMOSPHERIC_WATER_GENERATOR_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

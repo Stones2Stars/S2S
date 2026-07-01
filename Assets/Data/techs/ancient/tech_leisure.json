@@ -1,8 +1,5 @@
 {
  "type": "TECH_LEISURE",
- "description": "TXT_KEY_TECH_LEISURE",
- "civilopedia": "TXT_KEY_TECH_LEISURE_PEDIA",
- "quote": "TXT_KEY_TECH_LEISURE_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_PAVILION"
@@ -56,6 +53,9 @@
   "soundMP": "AS2D_TECH_LEISURE"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_LEISURE",
+  "civilopedia": "TXT_KEY_TECH_LEISURE_PEDIA",
+  "quote": "TXT_KEY_TECH_LEISURE_QUOTE",
   "era": "C2C_ERA_ANCIENT",
   "worth": 2,
   "tradeable": true,

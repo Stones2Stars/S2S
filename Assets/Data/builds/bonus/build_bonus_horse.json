@@ -1,6 +1,5 @@
 {
  "type": "BUILD_BONUS_HORSE",
- "description": "TXT_KEY_BUILD_BONUS_HORSE",
  "produces": {
   "improvement": "IMPROVEMENT_BONUS_HORSE"
  },
@@ -19,6 +18,7 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILD_BONUS_HORSE",
   "consumesUnit": true
  }
 }

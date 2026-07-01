@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_MODERN_MILL",
- "description": "TXT_KEY_BUILDING_MODERN_MILL",
- "civilopedia": "TXT_KEY_BUILDING_MODERN_MILL_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_WANG_ZHENS_WORKSHOP"
@@ -130,6 +128,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_MODERN_MILL",
+  "civilopedia": "TXT_KEY_BUILDING_MODERN_MILL_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

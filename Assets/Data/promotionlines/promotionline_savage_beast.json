@@ -1,12 +1,12 @@
 {
  "type": "PROMOTIONLINE_SAVAGE_BEAST",
- "description": "TXT_KEY_PROMOTIONLINE_SAVAGE_BEAST",
  "ui": {
   "art": {
    "icon": "art/Buttons/Promotions/SavageBeast1Promotion.dds"
   }
  },
  "identity": {
+  "description": "TXT_KEY_PROMOTIONLINE_SAVAGE_BEAST",
   "unitCombats": [
    "UNITCOMBAT_ANIMAL"
   ],

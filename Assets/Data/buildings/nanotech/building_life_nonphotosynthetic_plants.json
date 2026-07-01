@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_LIFE_NONPHOTOSYNTHETIC_PLANTS",
- "description": "TXT_KEY_BUILDING_LIFE_NONPHOTOSYNTHETIC_PLANTS",
- "civilopedia": "TXT_KEY_BUILDING_LIFE_NONPHOTOSYNTHETIC_PLANTS_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -46,6 +44,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_LIFE_NONPHOTOSYNTHETIC_PLANTS",
+  "civilopedia": "TXT_KEY_BUILDING_LIFE_NONPHOTOSYNTHETIC_PLANTS_PEDIA",
   "neverCapture": true,
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,

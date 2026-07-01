@@ -1,7 +1,5 @@
 {
  "type": "FEATURE_REEF",
- "description": "TXT_KEY_FEATURE_REEF",
- "civilopedia": "TXT_KEY_FEATURE_REEF_PEDIA",
  "food": {
   "plot": {
    "flat": -1
@@ -122,6 +120,8 @@
   ]
  },
  "identity": {
+  "description": "TXT_KEY_FEATURE_REEF",
+  "civilopedia": "TXT_KEY_FEATURE_REEF_PEDIA",
   "movementCost": 5,
   "appearance": 400,
   "nukeImmune": true,

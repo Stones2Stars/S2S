@@ -1,6 +1,5 @@
 {
  "type": "BUILD_BONUS_APPLE",
- "description": "TXT_KEY_BUILD_BONUS_APPLE",
  "produces": {
   "improvement": "IMPROVEMENT_BONUS_APPLE"
  },
@@ -19,6 +18,7 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILD_BONUS_APPLE",
   "consumesUnit": true
  }
 }

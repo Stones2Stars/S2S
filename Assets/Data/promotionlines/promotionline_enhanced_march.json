@@ -1,12 +1,12 @@
 {
  "type": "PROMOTIONLINE_ENHANCED_MARCH",
- "description": "TXT_KEY_PROMOTIONLINE_ENHANCED_MARCH",
  "ui": {
   "art": {
    "icon": "Art/Buttons/Promotions/ForcedMarchStatus.dds"
   }
  },
  "identity": {
+  "description": "TXT_KEY_PROMOTIONLINE_ENHANCED_MARCH",
   "unitCombats": [
    "UNITCOMBAT_MOTILITY_FOOT",
    "UNITCOMBAT_MOTILITY_RIDING",

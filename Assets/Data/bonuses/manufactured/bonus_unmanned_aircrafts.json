@@ -1,7 +1,5 @@
 {
  "type": "BONUS_UNMANNED_AIRCRAFTS",
- "description": "TXT_KEY_BONUS_UNMANNED_AIRCRAFTS",
- "civilopedia": "TXT_KEY_BONUS_UNMANNED_AIRCRAFTS_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_ALUMINUM_RECLAMATION_PLANT",
@@ -20,6 +18,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_UNMANNED_AIRCRAFTS",
+  "civilopedia": "TXT_KEY_BONUS_UNMANNED_AIRCRAFTS_PEDIA",
   "bonusClassType": "BONUSCLASS_MANUFACTURED"
  }
 }

@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_SCAPA_FLOW",
- "description": "TXT_KEY_BUILDING_SCAPA_FLOW",
- "civilopedia": "TXT_KEY_BUILDING_SCAPA_FLOW_PEDIA",
  "obsoletedBy": {
   "techs": [
    "TECH_FUSION"
@@ -110,6 +108,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_SCAPA_FLOW",
+  "civilopedia": "TXT_KEY_BUILDING_SCAPA_FLOW_PEDIA",
   "commerceDoubleTime": {
    "culture": 1000
   },

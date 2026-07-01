@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_EAST_INDIA_COMPANY",
- "description": "TXT_KEY_BUILDING_EAST_INDIA_COMPANY",
- "civilopedia": "TXT_KEY_BUILDING_EAST_INDIA_COMPANY_PEDIA",
  "obsoletedBy": {
   "techs": [
    "TECH_LOGISTICS"
@@ -79,6 +77,8 @@
   "construct": "AS2D_BUILD_COLOSSUS"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_EAST_INDIA_COMPANY",
+  "civilopedia": "TXT_KEY_BUILDING_EAST_INDIA_COMPANY_PEDIA",
   "nukeImmune": true,
   "teamShare": true,
   "worth": 14,

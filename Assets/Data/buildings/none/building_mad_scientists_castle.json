@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_MAD_SCIENTISTS_CASTLE",
- "description": "TXT_KEY_BUILDING_MAD_SCIENTISTS_CASTLE",
- "civilopedia": "TXT_KEY_BUILDING_MAD_SCIENTISTS_CASTLE_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -121,6 +119,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_MAD_SCIENTISTS_CASTLE",
+  "civilopedia": "TXT_KEY_BUILDING_MAD_SCIENTISTS_CASTLE_PEDIA",
   "worth": 5,
   "specialBuildingType": "SPECIALBUILDING_PUNK_STEAM",
   "advisor": "ADVISOR_SCIENCE",

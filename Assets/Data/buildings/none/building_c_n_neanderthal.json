@@ -1,8 +1,5 @@
 {
  "type": "BUILDING_C_N_NEANDERTHAL",
- "description": "TXT_KEY_BUILDING_C_N_NEANDERTHAL",
- "civilopedia": "TXT_KEY_BUILDING_C_N_PEDIA",
- "help": "TXT_KEY_BUILDING_C_N_HELP",
  "obsoletedBy": {
   "techs": [
    "TECH_SEDENTARY_LIFESTYLE"
@@ -29,6 +26,9 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_C_N_NEANDERTHAL",
+  "civilopedia": "TXT_KEY_BUILDING_C_N_PEDIA",
+  "help": "TXT_KEY_BUILDING_C_N_HELP",
   "enabledCivilizations": [
    "CIVILIZATION_NPC_NEANDERTHAL"
   ],

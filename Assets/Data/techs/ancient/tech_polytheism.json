@@ -1,8 +1,5 @@
 {
  "type": "TECH_POLYTHEISM",
- "description": "TXT_KEY_TECH_POLYTHEISM",
- "civilopedia": "TXT_KEY_TECH_POLYTHEISM_PEDIA",
- "quote": "TXT_KEY_TECH_POLYTHEISM_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_CULTURE_EGYPTIAN",
@@ -74,6 +71,9 @@
   "soundMP": "AS2D_TECH_MP_POLYTHEISM"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_POLYTHEISM",
+  "civilopedia": "TXT_KEY_TECH_POLYTHEISM_PEDIA",
+  "quote": "TXT_KEY_TECH_POLYTHEISM_QUOTE",
   "era": "C2C_ERA_ANCIENT",
   "worth": 8,
   "tradeable": true,

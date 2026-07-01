@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_POLITICAL_AWAKENING",
- "description": "TXT_KEY_BUILDING_POLITICAL_AWAKENING",
- "civilopedia": "TXT_KEY_BUILDING_POLITICAL_AWAKENING_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -58,6 +56,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_POLITICAL_AWAKENING",
+  "civilopedia": "TXT_KEY_BUILDING_POLITICAL_AWAKENING_PEDIA",
   "specialBuildingType": "SPECIALBUILDING_PUNK_NANO",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [

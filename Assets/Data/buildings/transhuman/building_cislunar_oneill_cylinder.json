@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_CISLUNAR_ONEILL_CYLINDER",
- "description": "TXT_KEY_BUILDING_CISLUNAR_ONEILL_CYLINDER",
- "civilopedia": "TXT_KEY_BUILDING_CISLUNAR_ONEILL_CYLINDER_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_CISLUNAR_ANTIMATTER_HARVESTER",
@@ -62,6 +60,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_CISLUNAR_ONEILL_CYLINDER",
+  "civilopedia": "TXT_KEY_BUILDING_CISLUNAR_ONEILL_CYLINDER_PEDIA",
   "workableRadius": 3,
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,

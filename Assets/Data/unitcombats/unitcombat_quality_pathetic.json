@@ -1,6 +1,5 @@
 {
  "type": "UNITCOMBAT_QUALITY_PATHETIC",
- "description": "TXT_KEY_UNITCOMBAT_QUALITY_PATHETIC",
  "experience": {
   "unit": {
    "percent": 60
@@ -35,6 +34,7 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_UNITCOMBAT_QUALITY_PATHETIC",
   "base": {
    "quality": 1
   }

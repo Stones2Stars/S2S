@@ -1,7 +1,5 @@
 {
  "type": "UNIT_CHILEAN_CORVETTE",
- "description": "TXT_KEY_UNIT_CHILEAN_CORVETTE",
- "civilopedia": "TXT_KEY_UNIT_CHILEAN_CORVETTE_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -128,6 +126,8 @@
   "upkeep": 1
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_CHILEAN_CORVETTE",
+  "civilopedia": "TXT_KEY_UNIT_CHILEAN_CORVETTE_PEDIA",
   "worth": 2,
   "militaryWorth": 90,
   "xpValueAttack": 6,

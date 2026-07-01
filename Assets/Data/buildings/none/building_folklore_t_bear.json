@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_FOLKLORE_T_BEAR",
- "description": "TXT_KEY_BUILDING_FOLKLORE_T_BEAR",
- "civilopedia": "TXT_KEY_BUILDING_FOLKLORE_ANIMAL_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_CARNIVAL_DANCING_BEAR",
@@ -105,6 +103,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_FOLKLORE_T_BEAR",
+  "civilopedia": "TXT_KEY_BUILDING_FOLKLORE_ANIMAL_PEDIA",
   "nukeImmune": true,
   "neverCapture": true,
   "specialBuildingType": "SPECIALBUILDING_FOLKLORE_TAXONOMY",

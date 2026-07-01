@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_TRAFFIC_SIGNALS",
- "description": "TXT_KEY_BUILDING_TRAFFIC_SIGNALS",
- "civilopedia": "TXT_KEY_BUILDING_TRAFFIC_SIGNALS_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_TRAFFIC_CAMERAS"
@@ -92,6 +90,8 @@
   "construct": "AS2D_BUILD_WALLS"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_TRAFFIC_SIGNALS",
+  "civilopedia": "TXT_KEY_BUILDING_TRAFFIC_SIGNALS_PEDIA",
   "worth": 4,
   "conquestProbability": 100,
   "advisor": "ADVISOR_ECONOMY",

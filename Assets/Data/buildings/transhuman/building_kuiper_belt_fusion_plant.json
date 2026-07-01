@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_KUIPER_BELT_FUSION_PLANT",
- "description": "TXT_KEY_BUILDING_KUIPER_BELT_FUSION_PLANT",
- "civilopedia": "TXT_KEY_BUILDING_KUIPER_BELT_FUSION_PLANT_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_KUIPER_BELT_ENZMANN_STARSHIP",
@@ -44,6 +42,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_KUIPER_BELT_FUSION_PLANT",
+  "civilopedia": "TXT_KEY_BUILDING_KUIPER_BELT_FUSION_PLANT_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_SINGAPORE_FLYER",
- "description": "TXT_KEY_BUILDING_SINGAPORE_FLYER",
- "civilopedia": "TXT_KEY_BUILDING_SINGAPORE_FLYER_PEDIA",
  "obsoletedBy": {
   "techs": [
    "TECH_MEGASTRUCTURE_ENGINEERING"
@@ -90,6 +88,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_SINGAPORE_FLYER",
+  "civilopedia": "TXT_KEY_BUILDING_SINGAPORE_FLYER_PEDIA",
   "centerInCity": true,
   "worth": 10,
   "conquestProbability": 100,

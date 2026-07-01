@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_TRADITION_ARCHERY",
- "description": "TXT_KEY_BUILDING_TRADITION_ARCHERY",
- "civilopedia": "TXT_KEY_BUILDING_TRADITION_ARCHERY_PEDIA",
  "obsoletedBy": {
   "techs": [
    "TECH_MILITARY_TRADITION"
@@ -45,6 +43,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_TRADITION_ARCHERY",
+  "civilopedia": "TXT_KEY_BUILDING_TRADITION_ARCHERY_PEDIA",
   "commerceDoubleTime": {
    "culture": 1000
   },

@@ -1,7 +1,5 @@
 {
  "type": "UNIT_NEANDERTHAL_SLINGER",
- "description": "TXT_KEY_UNIT_NEANDERTHAL_SLINGER",
- "civilopedia": "TXT_KEY_UNIT_SLINGER_PEDIA",
  "obsoletedBy": {
   "techs": [
    "TECH_SEDENTARY_LIFESTYLE"
@@ -86,6 +84,8 @@
   "upkeep": 1
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_NEANDERTHAL_SLINGER",
+  "civilopedia": "TXT_KEY_UNIT_SLINGER_PEDIA",
   "worth": 2,
   "militaryWorth": 2,
   "xpValueAttack": 2,

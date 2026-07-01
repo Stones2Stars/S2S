@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_UNIVERSAL_CHURCH",
- "description": "TXT_KEY_BUILDING_UNIVERSAL_CHURCH",
- "civilopedia": "TXT_KEY_BUILDING_UNIVERSAL_CHURCH_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -75,6 +73,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_UNIVERSAL_CHURCH",
+  "civilopedia": "TXT_KEY_BUILDING_UNIVERSAL_CHURCH_PEDIA",
   "worth": 5,
   "advisor": "ADVISOR_CULTURE",
   "visibilityPriority": 1,

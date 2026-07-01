@@ -1,8 +1,5 @@
 {
  "type": "TECH_ATOMIC_LIFESTYLE",
- "description": "TXT_KEY_TECH_ATOMIC_LIFESTYLE",
- "civilopedia": "TXT_KEY_TECH_ATOMIC_LIFESTYLE_PEDIA",
- "quote": "TXT_KEY_TECH_ATOMIC_LIFESTYLE_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_EDUCATION_DIMWITTED",
@@ -94,6 +91,9 @@
   "soundMP": "AS2D_TECH_ATOMIC_LIFESTYLE"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_ATOMIC_LIFESTYLE",
+  "civilopedia": "TXT_KEY_TECH_ATOMIC_LIFESTYLE_PEDIA",
+  "quote": "TXT_KEY_TECH_ATOMIC_LIFESTYLE_QUOTE",
   "era": "C2C_ERA_ATOMIC",
   "worth": 40,
   "militaryWorth": 10,

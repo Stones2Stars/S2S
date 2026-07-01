@@ -1,8 +1,5 @@
 {
  "type": "TECH_SOLAR_ORDNANCE",
- "description": "TXT_KEY_TECH_SOLAR_ORDNANCE",
- "civilopedia": "TXT_KEY_TECH_SOLAR_ORDNANCE_PEDIA",
- "quote": "TXT_KEY_TECH_SOLAR_ORDNANCE_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_DEEP_SPACE_FOCUSED_SUNLIGHT_PLANT",
@@ -73,6 +70,9 @@
   "soundMP": "AS2D_TECH_SOLAR_ORDNANCE"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_SOLAR_ORDNANCE",
+  "civilopedia": "TXT_KEY_TECH_SOLAR_ORDNANCE_PEDIA",
+  "quote": "TXT_KEY_TECH_SOLAR_ORDNANCE_QUOTE",
   "era": "C2C_ERA_TRANSHUMAN",
   "worth": 48,
   "militaryWorth": 4,

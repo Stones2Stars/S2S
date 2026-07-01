@@ -1,6 +1,5 @@
 {
  "type": "PROMOTION_FOREST_WORKER2",
- "description": "TXT_KEY_PROMOTION_FOREST_WORKER2",
  "workRate": {
   "unit": {
    "feature": {
@@ -32,5 +31,8 @@
  },
  "sound": {
   "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_FOREST_WORKER2"
  }
 }

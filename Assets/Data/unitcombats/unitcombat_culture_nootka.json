@@ -1,12 +1,12 @@
 {
  "type": "UNITCOMBAT_CULTURE_NOOTKA",
- "description": "TXT_KEY_UNITCOMBAT_CULTURE_NOOTKA",
  "ui": {
   "art": {
    "icon": "Art/Interface/Buttons/units/sparth/categories/culture_nootka.dds"
   }
  },
  "identity": {
+  "description": "TXT_KEY_UNITCOMBAT_CULTURE_NOOTKA",
   "culture": "BONUS_NOOTKA"
  }
 }

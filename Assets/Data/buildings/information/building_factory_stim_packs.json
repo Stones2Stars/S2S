@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_FACTORY_STIM_PACKS",
- "description": "TXT_KEY_BUILDING_FACTORY_STIM_PACKS",
- "civilopedia": "TXT_KEY_BUILDING_FACTORY_STIM_PACKS_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_MEDICAL_MEGACOMPLEX"
@@ -82,6 +80,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_FACTORY_STIM_PACKS",
+  "civilopedia": "TXT_KEY_BUILDING_FACTORY_STIM_PACKS_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_TRANSTELLAR_FUSION_MEGACOMPLEX",
- "description": "TXT_KEY_BUILDING_TRANSTELLAR_FUSION_MEGACOMPLEX",
- "civilopedia": "TXT_KEY_BUILDING_TRANSTELLAR_FUSION_MEGACOMPLEX_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_TRANSTELLAR_ARTIFICIAL_ROCKY_PLANET",
@@ -39,6 +37,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_TRANSTELLAR_FUSION_MEGACOMPLEX",
+  "civilopedia": "TXT_KEY_BUILDING_TRANSTELLAR_FUSION_MEGACOMPLEX_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

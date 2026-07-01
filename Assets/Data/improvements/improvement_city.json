@@ -1,7 +1,5 @@
 {
  "type": "IMPROVEMENT_CITY",
- "description": "TXT_WORD_CITY",
- "civilopedia": "TXT_KEY_IMPROVEMENT_CITY_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -18,6 +16,8 @@
   }
  },
  "identity": {
+  "description": "TXT_WORD_CITY",
+  "civilopedia": "TXT_KEY_IMPROVEMENT_CITY_PEDIA",
   "actsAsCity": true,
   "graphicalOnly": true
  }

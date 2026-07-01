@@ -1,8 +1,5 @@
 {
  "type": "CIVIC_SINGLE_PARTY",
- "description": "TXT_KEY_CIVIC_SINGLE_PARTY",
- "civilopedia": "TXT_KEY_CIVIC_SINGLE_PARTY_PEDIA",
- "strategy": "TXT_KEY_CIVIC_SINGLE_PARTY_STRATEGY",
  "enables": {
   "buildings": [
    "BUILDING_EYE_IN_THE_SKY",
@@ -112,6 +109,9 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_CIVIC_SINGLE_PARTY",
+  "civilopedia": "TXT_KEY_CIVIC_SINGLE_PARTY_PEDIA",
+  "strategy": "TXT_KEY_CIVIC_SINGLE_PARTY_STRATEGY",
   "civicOption": "CIVICOPTION_POWER",
   "anarchyLength": 1,
   "upkeepLevel": "UPKEEP_HIGH"

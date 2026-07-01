@@ -1,7 +1,5 @@
 {
  "type": "BONUS_PEARLS",
- "description": "TXT_KEY_BONUS_PEARLS",
- "civilopedia": "TXT_KEY_BONUS_PEARLS_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_ABALONE_DIGGERS",
@@ -68,6 +66,8 @@
   ]
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_PEARLS",
+  "civilopedia": "TXT_KEY_BONUS_PEARLS_PEDIA",
   "bonusClassType": "BONUSCLASS_LUXURY"
  }
 }

@@ -1,8 +1,5 @@
 {
  "type": "TECH_CHIVALRY",
- "description": "TXT_KEY_TECH_CHIVALRY",
- "civilopedia": "TXT_KEY_TECH_CHIVALRY_PEDIA",
- "quote": "TXT_KEY_TECH_CHIVALRY_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_BLARNEY_CASTLE",
@@ -82,6 +79,9 @@
   "soundMP": "AS2D_TECH_CHIVALRY"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_CHIVALRY",
+  "civilopedia": "TXT_KEY_TECH_CHIVALRY_PEDIA",
+  "quote": "TXT_KEY_TECH_CHIVALRY_QUOTE",
   "era": "C2C_ERA_MEDIEVAL",
   "worth": 20,
   "militaryWorth": 10,

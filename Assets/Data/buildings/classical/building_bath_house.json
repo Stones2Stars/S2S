@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_BATH_HOUSE",
- "description": "TXT_KEY_BUILDING_BATH_HOUSE",
- "civilopedia": "TXT_KEY_BUILDING_BATH_HOUSE_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -123,6 +121,8 @@
   "construct": "AS2D_BUILD_BATH_HOUSE"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_BATH_HOUSE",
+  "civilopedia": "TXT_KEY_BUILDING_BATH_HOUSE_PEDIA",
   "worth": 4,
   "conquestProbability": 75,
   "dcmAirbombMission": 2,

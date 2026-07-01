@@ -1,8 +1,5 @@
 {
  "type": "TECH_3D_PROJECTIONS",
- "description": "TXT_KEY_TECH_3D_PROJECTIONS",
- "civilopedia": "TXT_KEY_TECH_3D_PROJECTIONS_PEDIA",
- "quote": "TXT_KEY_TECH_3D_PROJECTIONS_QUOTE",
  "enables": {
   "bonuses": [
    "BONUS_QUANTONIUM_CRYSTALS"
@@ -54,6 +51,9 @@
   "soundMP": "AS2D_TECH_GENERIC"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_3D_PROJECTIONS",
+  "civilopedia": "TXT_KEY_TECH_3D_PROJECTIONS_PEDIA",
+  "quote": "TXT_KEY_TECH_3D_PROJECTIONS_QUOTE",
   "era": "C2C_ERA_TRANSCENDENT",
   "worth": 48,
   "tradeable": true,

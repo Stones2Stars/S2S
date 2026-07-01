@@ -1,8 +1,5 @@
 {
  "type": "TECH_BANKING",
- "description": "TXT_KEY_TECH_BANKING",
- "civilopedia": "TXT_KEY_TECH_BANKING_PEDIA",
- "quote": "TXT_KEY_TECH_BANKING_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_BANK",
@@ -62,6 +59,9 @@
   "soundMP": "AS2D_TECH_MP_BANKING"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_BANKING",
+  "civilopedia": "TXT_KEY_TECH_BANKING_PEDIA",
+  "quote": "TXT_KEY_TECH_BANKING_QUOTE",
   "era": "C2C_ERA_MEDIEVAL",
   "worth": 24,
   "tradeable": true,

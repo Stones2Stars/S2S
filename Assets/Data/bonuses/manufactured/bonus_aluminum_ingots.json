@@ -1,7 +1,5 @@
 {
  "type": "BONUS_ALUMINUM_INGOTS",
- "description": "TXT_KEY_BONUS_ALUMINUM_INGOTS",
- "civilopedia": "TXT_KEY_BONUS_INGOTS_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_METAMATERIAL_FOUNDRY",
@@ -19,6 +17,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_ALUMINUM_INGOTS",
+  "civilopedia": "TXT_KEY_BONUS_INGOTS_PEDIA",
   "bonusClassType": "BONUSCLASS_MANUFACTURED"
  }
 }

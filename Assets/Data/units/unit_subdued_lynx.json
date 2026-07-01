@@ -1,8 +1,5 @@
 {
  "type": "UNIT_SUBDUED_LYNX",
- "description": "TXT_KEY_UNIT_SUBDUED_LYNX",
- "civilopedia": "TXT_KEY_UNIT_LYNX_PEDIA",
- "help": "TXT_KEY_UNIT_SUBDUED_ANIMALS_HELP",
  "skills": {
   "onlyDefensive": true,
   "militaryTrade": true
@@ -149,6 +146,9 @@
   ]
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_SUBDUED_LYNX",
+  "civilopedia": "TXT_KEY_UNIT_LYNX_PEDIA",
+  "help": "TXT_KEY_UNIT_SUBDUED_ANIMALS_HELP",
   "spawnOnly": true,
   "worth": 1,
   "domain": "DOMAIN_LAND",

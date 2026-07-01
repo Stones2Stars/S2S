@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_PUBLIC_TRANSPORTATION",
- "description": "TXT_KEY_BUILDING_PUBLIC_TRANSPORTATION",
- "civilopedia": "TXT_KEY_BUILDING_PUBLIC_TRANSPORTATION_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_PERSONAL_RAPID_TRAIN"
@@ -101,6 +99,8 @@
   "construct": "AS2D_BUILD_PUBLIC_TRANSPORTATION"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_PUBLIC_TRANSPORTATION",
+  "civilopedia": "TXT_KEY_BUILDING_PUBLIC_TRANSPORTATION_PEDIA",
   "worth": 5,
   "dcmAirbombMission": 2,
   "advisor": "ADVISOR_GROWTH",

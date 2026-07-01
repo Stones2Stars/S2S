@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_FARM_ANIMAL_DONKEY",
- "description": "TXT_KEY_BUILDING_FARM_ANIMAL_DONKEY",
- "civilopedia": "TXT_KEY_BUILDING_FARM_ANIMAL_DONKEY_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_ANIMAL_TRAINER_DONKEY",
@@ -83,6 +81,8 @@
   "construct": "AS2D_BUILD_GRANARY"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_FARM_ANIMAL_DONKEY",
+  "civilopedia": "TXT_KEY_BUILDING_FARM_ANIMAL_DONKEY_PEDIA",
   "enabledCivilizations": [
    "CIVILIZATION_NPC_NEANDERTHAL"
   ],

@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_HOUSING_MUD_HUTS",
- "description": "TXT_KEY_BUILDING_HOUSING_MUD_HUTS",
- "civilopedia": "TXT_KEY_BUILDING_HOUSING_MUD_HUTS_PEDIA",
  "obsoletedBy": {
   "techs": [
    "TECH_SURVEYING"
@@ -68,6 +66,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_HOUSING_MUD_HUTS",
+  "civilopedia": "TXT_KEY_BUILDING_HOUSING_MUD_HUTS_PEDIA",
   "notConstructible": true,
   "nukeImmune": true,
   "neverCapture": true,

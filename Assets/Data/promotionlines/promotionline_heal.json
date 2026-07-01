@@ -1,12 +1,12 @@
 {
  "type": "PROMOTIONLINE_HEAL",
- "description": "TXT_KEY_PROMOTIONLINE_HEAL",
  "ui": {
   "art": {
    "icon": "Art/Buttons/Promotions/Heal1Promotion.dds"
   }
  },
  "identity": {
+  "description": "TXT_KEY_PROMOTIONLINE_HEAL",
   "unitCombats": [
    "UNITCOMBAT_HEALS_ALL"
   ],

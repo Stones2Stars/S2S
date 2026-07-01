@@ -1,12 +1,12 @@
 {
  "type": "PROMOTIONLINE_BOTTLENECK",
- "description": "TXT_KEY_PROMOTIONLINE_BOTTLENECK",
  "ui": {
   "art": {
    "icon": "art/Buttons/Promotions/Bottleneck1Promotion.dds"
   }
  },
  "identity": {
+  "description": "TXT_KEY_PROMOTIONLINE_BOTTLENECK",
   "unitCombats": [
    "UNITCOMBAT_GROUP_BATTALION",
    "UNITCOMBAT_GROUP_COMPANY",

@@ -1,7 +1,5 @@
 {
  "type": "TRAIT_AGGRESSIVE1",
- "description": "TXT_KEY_TRAIT_AGGRESSIVE0",
- "civilopedia": "TXT_KEY_TRAIT_AGGRESSIVE_PEDIA",
  "enables": {
   "traits": [
    "TRAIT_AGGRESSIVE2"
@@ -152,6 +150,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_TRAIT_AGGRESSIVE0",
+  "civilopedia": "TXT_KEY_TRAIT_AGGRESSIVE_PEDIA",
   "shortDescription": "TXT_KEY_TRAIT_AGGRESSIVE_SHORT",
   "impurePropertyManipulators": true
  }

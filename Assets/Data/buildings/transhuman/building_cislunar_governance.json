@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_CISLUNAR_GOVERNANCE",
- "description": "TXT_KEY_BUILDING_CISLUNAR_GOVERNANCE",
- "civilopedia": "TXT_KEY_BUILDING_CISLUNAR_GOVERNANCE_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_CISLUNAR_ONEILL_CYLINDER",
@@ -99,6 +97,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_CISLUNAR_GOVERNANCE",
+  "civilopedia": "TXT_KEY_BUILDING_CISLUNAR_GOVERNANCE_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

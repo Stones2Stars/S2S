@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_ALMAGEST",
- "description": "TXT_KEY_BUILDING_ALMAGEST",
- "civilopedia": "TXT_KEY_BUILDING_ALMAGEST_PEDIA",
  "obsoletedBy": {
   "techs": [
    "TECH_HELIOCENTRISM"
@@ -65,6 +63,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_ALMAGEST",
+  "civilopedia": "TXT_KEY_BUILDING_ALMAGEST_PEDIA",
   "conquestProbability": 100,
   "greatPeopleUnitType": "UNIT_SCIENTIST",
   "advisor": "ADVISOR_SCIENCE",

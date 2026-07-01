@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_SMELTER_COPPER",
- "description": "TXT_KEY_BUILDING_SMELTER_COPPER",
- "civilopedia": "TXT_KEY_BUILDING_SMELTER_COPPER_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_RESOURCES_COPPER_INGOTS"
@@ -83,6 +81,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_SMELTER_COPPER",
+  "civilopedia": "TXT_KEY_BUILDING_SMELTER_COPPER_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

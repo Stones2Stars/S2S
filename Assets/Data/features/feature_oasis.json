@@ -1,7 +1,5 @@
 {
  "type": "FEATURE_OASIS",
- "description": "TXT_KEY_FEATURE_OASIS",
- "civilopedia": "TXT_KEY_FEATURE_OASIS_PEDIA",
  "food": {
   "plot": {
    "flat": 3
@@ -42,6 +40,8 @@
   "soundscape": "ASSS_OASIS_SELECT_AMB"
  },
  "identity": {
+  "description": "TXT_KEY_FEATURE_OASIS",
+  "civilopedia": "TXT_KEY_FEATURE_OASIS_PEDIA",
   "appearance": 1000,
   "popDestroys": -1,
   "noCoast": true,

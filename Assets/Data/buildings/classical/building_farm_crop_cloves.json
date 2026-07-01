@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_FARM_CROP_CLOVES",
- "description": "TXT_KEY_BUILDING_FARM_CROP_CLOVES",
- "civilopedia": "TXT_KEY_BUILDING_FARM_CROP_CLOVES_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_RESOURCES_SEASONING"
@@ -81,6 +79,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_FARM_CROP_CLOVES",
+  "civilopedia": "TXT_KEY_BUILDING_FARM_CROP_CLOVES_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

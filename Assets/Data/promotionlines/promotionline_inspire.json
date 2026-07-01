@@ -1,12 +1,12 @@
 {
  "type": "PROMOTIONLINE_INSPIRE",
- "description": "TXT_KEY_PROMOTIONLINE_INSPIRE",
  "ui": {
   "art": {
    "icon": "Art/Buttons/Promotions/Inspire1Promotion.dds"
   }
  },
  "identity": {
+  "description": "TXT_KEY_PROMOTIONLINE_INSPIRE",
   "unitCombats": [
    "UNITCOMBAT_ENTERTAINER"
   ],

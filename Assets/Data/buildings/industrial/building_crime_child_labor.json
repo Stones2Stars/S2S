@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_CRIME_CHILD_LABOR",
- "description": "TXT_KEY_BUILDING_CRIME_CHILD_LABOR",
- "civilopedia": "TXT_KEY_BUILDING_CRIME_CHILD_LABOR_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -74,6 +72,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_CRIME_CHILD_LABOR",
+  "civilopedia": "TXT_KEY_BUILDING_CRIME_CHILD_LABOR_PEDIA",
   "notConstructible": true,
   "nukeImmune": true,
   "conquestProbability": 100,

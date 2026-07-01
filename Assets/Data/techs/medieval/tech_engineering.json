@@ -1,8 +1,5 @@
 {
  "type": "TECH_ENGINEERING",
- "description": "TXT_KEY_TECH_ENGINEERING",
- "civilopedia": "TXT_KEY_TECH_ENGINEERING_PEDIA",
- "quote": "TXT_KEY_TECH_ENGINEERING_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_BALLISTA_TURRET",
@@ -125,6 +122,9 @@
   "soundMP": "AS2D_TECH_MP_ENGINEERING"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_ENGINEERING",
+  "civilopedia": "TXT_KEY_TECH_ENGINEERING_PEDIA",
+  "quote": "TXT_KEY_TECH_ENGINEERING_QUOTE",
   "era": "C2C_ERA_MEDIEVAL",
   "worth": 24,
   "tradeable": true,

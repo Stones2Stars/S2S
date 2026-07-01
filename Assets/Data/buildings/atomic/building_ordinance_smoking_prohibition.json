@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_ORDINANCE_SMOKING_PROHIBITION",
- "description": "TXT_KEY_BUILDING_ORDINANCE_SMOKING_PROHIBITION",
- "civilopedia": "TXT_KEY_BUILDING_ORDINANCE_SMOKING_PROHIBITION_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -34,6 +32,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_ORDINANCE_SMOKING_PROHIBITION",
+  "civilopedia": "TXT_KEY_BUILDING_ORDINANCE_SMOKING_PROHIBITION_PEDIA",
   "notConstructible": true,
   "nukeImmune": true,
   "neverCapture": true,

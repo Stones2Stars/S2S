@@ -1,7 +1,5 @@
 {
  "type": "UNIT_TASIUS",
- "description": "TXT_KEY_UNIT_TASIUS",
- "civilopedia": "TXT_KEY_UNIT_TASIUS_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -55,6 +53,8 @@
   "upkeep": 1
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_TASIUS",
+  "civilopedia": "TXT_KEY_UNIT_TASIUS_PEDIA",
   "worth": 2,
   "militaryWorth": 3,
   "xpValueAttack": 4,

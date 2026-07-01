@@ -1,6 +1,5 @@
 {
  "type": "BUILD_SUBMERGED_TOWN",
- "description": "TXT_KEY_BUILD_SUBMERGED_TOWN",
  "requires": {
   "build": {
    "all": [
@@ -122,6 +121,7 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILD_SUBMERGED_TOWN",
   "consumesUnit": true
  }
 }

@@ -1,7 +1,5 @@
 {
  "type": "UNIT_FUSION_TRANSPORT",
- "description": "TXT_KEY_UNIT_FUSION_TRANSPORT",
- "civilopedia": "TXT_KEY_UNIT_FUSION_TRANSPORT_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -71,6 +69,8 @@
   "upkeep": 3
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_FUSION_TRANSPORT",
+  "civilopedia": "TXT_KEY_UNIT_FUSION_TRANSPORT_PEDIA",
   "worth": 4,
   "militaryWorth": 205,
   "xpValueAttack": 3,

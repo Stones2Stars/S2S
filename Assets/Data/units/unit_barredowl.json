@@ -1,7 +1,5 @@
 {
  "type": "UNIT_BARREDOWL",
- "description": "TXT_KEY_UNIT_BARREDOWL",
- "civilopedia": "TXT_KEY_UNIT_BARREDOWL_PEDIA",
  "withdrawal": {
   "unit": {
    "percent": 55
@@ -55,6 +53,8 @@
   ]
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_BARREDOWL",
+  "civilopedia": "TXT_KEY_UNIT_BARREDOWL_PEDIA",
   "spawnOnly": true,
   "xpValueAttack": 2,
   "xpValueDefense": 1,

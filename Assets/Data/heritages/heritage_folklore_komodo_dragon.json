@@ -1,7 +1,5 @@
 {
  "type": "HERITAGE_FOLKLORE_KOMODO_DRAGON",
- "description": "TXT_KEY_HERITAGE_FOLKLORE_KOMODO_DRAGON",
- "civilopedia": "TXT_KEY_BUILDING_FOLKLORE_ANIMAL_PEDIA",
  "enables": {
   "heritages": [
    "HERITAGE_TAXON_SQUAMATA"
@@ -95,6 +93,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_HERITAGE_FOLKLORE_KOMODO_DRAGON",
+  "civilopedia": "TXT_KEY_BUILDING_FOLKLORE_ANIMAL_PEDIA",
   "needsLanguage": true
  }
 }

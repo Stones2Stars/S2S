@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_EVOLUTION_SIMULATOR",
- "description": "TXT_KEY_BUILDING_EVOLUTION_SIMULATOR",
- "civilopedia": "TXT_KEY_BUILDING_EVOLUTION_SIMULATOR_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_EVOLUTIONARY_ALGORITHMS",
@@ -96,6 +94,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_EVOLUTION_SIMULATOR",
+  "civilopedia": "TXT_KEY_BUILDING_EVOLUTION_SIMULATOR_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

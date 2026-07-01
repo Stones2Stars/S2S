@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_SPACE_COLONY_MILKY_WAY",
- "description": "TXT_KEY_BUILDING_SPACE_COLONY_MILKY_WAY",
- "civilopedia": "TXT_KEY_BUILDING_SPACE_COLONY_MILKY_WAY_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_INTERSTELLAR_ADMINISTRATION_CENTER",
@@ -81,6 +79,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_SPACE_COLONY_MILKY_WAY",
+  "civilopedia": "TXT_KEY_BUILDING_SPACE_COLONY_MILKY_WAY_PEDIA",
   "notConstructible": true,
   "autoBuild": true,
   "advisor": "ADVISOR_SCIENCE",

@@ -1,7 +1,5 @@
 {
  "type": "UNIT_PRIEST_KING",
- "description": "TXT_KEY_UNIT_PRIEST_KING",
- "civilopedia": "TXT_KEY_UNIT_PRIEST_KING_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -55,6 +53,8 @@
   "upkeep": 1
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_PRIEST_KING",
+  "civilopedia": "TXT_KEY_UNIT_PRIEST_KING_PEDIA",
   "worth": 2,
   "militaryWorth": 3,
   "xpValueAttack": 4,

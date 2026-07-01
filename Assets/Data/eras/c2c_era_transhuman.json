@@ -1,7 +1,5 @@
 {
  "type": "C2C_ERA_TRANSHUMAN",
- "description": "TXT_KEY_ERA_TRANSHUMAN",
- "strategy": "TXT_KEY_ERA_TRANSHUMAN_STRATEGY",
  "costs": {
   "world": {
    "train": {
@@ -89,6 +87,8 @@
   "unitDefeat": "AS2D_LOSS_LATE"
  },
  "identity": {
+  "description": "TXT_KEY_ERA_TRANSHUMAN",
+  "strategy": "TXT_KEY_ERA_TRANSHUMAN_STRATEGY",
   "order": 10,
   "advancedStart": 256000,
   "historicalStartYear": 2150,

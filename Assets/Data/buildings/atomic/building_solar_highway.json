@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_SOLAR_HIGHWAY",
- "description": "TXT_KEY_BUILDING_SOLAR_HIGHWAY",
- "civilopedia": "TXT_KEY_BUILDING_SOLAR_HIGHWAY_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_RENEWABLE_MEGACOMPLEX"
@@ -76,6 +74,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_SOLAR_HIGHWAY",
+  "civilopedia": "TXT_KEY_BUILDING_SOLAR_HIGHWAY_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

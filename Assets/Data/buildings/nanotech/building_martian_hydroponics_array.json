@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_MARTIAN_HYDROPONICS_ARRAY",
- "description": "TXT_KEY_BUILDING_MARTIAN_HYDROPONICS_ARRAY",
- "civilopedia": "TXT_KEY_BUILDING_MARTIAN_HYDROPONICS_ARRAY_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_MARTIAN_HYDROPONICS_COMPLEX"
@@ -57,6 +55,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_MARTIAN_HYDROPONICS_ARRAY",
+  "civilopedia": "TXT_KEY_BUILDING_MARTIAN_HYDROPONICS_ARRAY_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

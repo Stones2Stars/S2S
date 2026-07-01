@@ -1,8 +1,5 @@
 {
  "type": "TECH_WOODWORKING",
- "description": "TXT_KEY_TECH_WOODWORKING",
- "civilopedia": "TXT_KEY_TECH_WOODWORKING_PEDIA",
- "quote": "TXT_KEY_TECH_WOODWORKING_QUOTE",
  "enables": {
   "bonuses": [
    "BONUS_PRIME_TIMBER"
@@ -66,6 +63,9 @@
   "soundMP": "AS2D_TECH_WOODWORKING"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_WOODWORKING",
+  "civilopedia": "TXT_KEY_TECH_WOODWORKING_PEDIA",
+  "quote": "TXT_KEY_TECH_WOODWORKING_QUOTE",
   "era": "C2C_ERA_PREHISTORIC",
   "worth": 8,
   "militaryWorth": 2,

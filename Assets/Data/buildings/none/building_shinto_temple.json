@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_SHINTO_TEMPLE",
- "description": "TXT_KEY_BUILDING_SHINTO_TEMPLE",
- "civilopedia": "TXT_KEY_BUILDING_SHINTO_TEMPLE_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_NATIONAL_BELIEF_KARMA",
@@ -108,6 +106,8 @@
   "construct": "SND_BUILD_SHINTO"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_SHINTO_TEMPLE",
+  "civilopedia": "TXT_KEY_BUILDING_SHINTO_TEMPLE_PEDIA",
   "neverCapture": true,
   "worth": 4,
   "specialBuildingType": "SPECIALBUILDING_TEMPLE",

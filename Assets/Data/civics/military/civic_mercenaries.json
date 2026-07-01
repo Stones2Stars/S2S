@@ -1,8 +1,5 @@
 {
  "type": "CIVIC_MERCENARIES",
- "description": "TXT_KEY_CIVIC_MERCENARIES",
- "civilopedia": "TXT_KEY_CIVIC_MERCENARIES_PEDIA",
- "strategy": "TXT_KEY_CIVIC_MERCENARIES_STRATEGY",
  "enables": {
   "buildings": [
    "BUILDING_CIVIC_MERCENARIES"
@@ -74,6 +71,9 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_CIVIC_MERCENARIES",
+  "civilopedia": "TXT_KEY_CIVIC_MERCENARIES_PEDIA",
+  "strategy": "TXT_KEY_CIVIC_MERCENARIES_STRATEGY",
   "civicOption": "CIVICOPTION_MILITARY",
   "upkeepLevel": "UPKEEP_LOW"
  }

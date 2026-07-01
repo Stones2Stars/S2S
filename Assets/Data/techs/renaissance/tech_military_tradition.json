@@ -1,8 +1,5 @@
 {
  "type": "TECH_MILITARY_TRADITION",
- "description": "TXT_KEY_TECH_MILITARY_TRADITION",
- "civilopedia": "TXT_KEY_TECH_MILITARY_TRADITION_PEDIA",
- "quote": "TXT_KEY_TECH_MILITARY_TRADITION_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_BRANDENBURG_GATE",
@@ -90,6 +87,9 @@
   "soundMP": "AS2D_TECH_MP_MILITARY_TRADITION"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_MILITARY_TRADITION",
+  "civilopedia": "TXT_KEY_TECH_MILITARY_TRADITION_PEDIA",
+  "quote": "TXT_KEY_TECH_MILITARY_TRADITION_QUOTE",
   "era": "C2C_ERA_RENAISSANCE",
   "worth": 32,
   "tradeable": true,

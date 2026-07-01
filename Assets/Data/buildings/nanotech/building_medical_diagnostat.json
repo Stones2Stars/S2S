@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_MEDICAL_DIAGNOSTAT",
- "description": "TXT_KEY_BUILDING_MEDICAL_DIAGNOSTAT",
- "civilopedia": "TXT_KEY_BUILDING_MEDICAL_DIAGNOSTAT_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_ANIMA_CHAMBER",
@@ -93,6 +91,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_MEDICAL_DIAGNOSTAT",
+  "civilopedia": "TXT_KEY_BUILDING_MEDICAL_DIAGNOSTAT_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

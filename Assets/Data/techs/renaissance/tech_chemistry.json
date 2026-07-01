@@ -1,8 +1,5 @@
 {
  "type": "TECH_CHEMISTRY",
- "description": "TXT_KEY_TECH_CHEMISTRY",
- "civilopedia": "TXT_KEY_TECH_CHEMISTRY_PEDIA",
- "quote": "TXT_KEY_TECH_CHEMISTRY_QUOTE",
  "enables": {
   "bonuses": [
    "BONUS_CHEMICALS",
@@ -80,6 +77,9 @@
   "soundMP": "AS2D_TECH_MP_CHEMISTRY"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_CHEMISTRY",
+  "civilopedia": "TXT_KEY_TECH_CHEMISTRY_PEDIA",
+  "quote": "TXT_KEY_TECH_CHEMISTRY_QUOTE",
   "era": "C2C_ERA_RENAISSANCE",
   "worth": 32,
   "militaryWorth": 6,

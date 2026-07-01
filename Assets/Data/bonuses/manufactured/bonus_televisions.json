@@ -1,7 +1,5 @@
 {
  "type": "BONUS_TELEVISIONS",
- "description": "TXT_KEY_BONUS_TELEVISIONS",
- "civilopedia": "TXT_KEY_BONUS_TELEVISIONS_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_COPPER_RECLAMATION_PLANT",
@@ -21,6 +19,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_TELEVISIONS",
+  "civilopedia": "TXT_KEY_BONUS_TELEVISIONS_PEDIA",
   "bonusClassType": "BONUSCLASS_MANUFACTURED"
  }
 }

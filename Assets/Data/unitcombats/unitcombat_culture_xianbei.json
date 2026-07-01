@@ -1,12 +1,12 @@
 {
  "type": "UNITCOMBAT_CULTURE_XIANBEI",
- "description": "TXT_KEY_UNITCOMBAT_CULTURE_XIANBEI",
  "ui": {
   "art": {
    "icon": "Art/categories/culture_newcultures.dds"
   }
  },
  "identity": {
+  "description": "TXT_KEY_UNITCOMBAT_CULTURE_XIANBEI",
   "culture": "BONUS_XIANBEI"
  }
 }

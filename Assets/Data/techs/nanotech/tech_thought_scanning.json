@@ -1,8 +1,5 @@
 {
  "type": "TECH_THOUGHT_SCANNING",
- "description": "TXT_KEY_TECH_THOUGHT_SCANNING",
- "civilopedia": "TXT_KEY_TECH_THOUGHT_SCANNING_PEDIA",
- "quote": "TXT_KEY_TECH_THOUGHT_SCANNING_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_BIOMORPHICS_LAB",
@@ -60,6 +57,9 @@
   "soundMP": "AS2D_TECH_THOUGHT_SCANNING"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_THOUGHT_SCANNING",
+  "civilopedia": "TXT_KEY_TECH_THOUGHT_SCANNING_PEDIA",
+  "quote": "TXT_KEY_TECH_THOUGHT_SCANNING_QUOTE",
   "era": "C2C_ERA_NANOTECH",
   "worth": 48,
   "tradeable": true,

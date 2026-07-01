@@ -1,8 +1,5 @@
 {
  "type": "BUILDING_NATIONAL_MINT",
- "description": "TXT_KEY_BUILDING_NATIONAL_MINT",
- "civilopedia": "TXT_KEY_BUILDING_NATIONAL_MINT_PEDIA",
- "help": "TXT_KEY_BUILDING_NATIONAL_MINT_HELP",
  "requires": {
   "build": {
    "all": [
@@ -145,6 +142,9 @@
   "construct": "AS2D_BUILD_BANK"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_NATIONAL_MINT",
+  "civilopedia": "TXT_KEY_BUILDING_NATIONAL_MINT_PEDIA",
+  "help": "TXT_KEY_BUILDING_NATIONAL_MINT_HELP",
   "neverCapture": true,
   "worth": 8,
   "militaryWorth": 2,

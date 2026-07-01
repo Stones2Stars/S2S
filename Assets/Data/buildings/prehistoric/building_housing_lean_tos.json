@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_HOUSING_LEAN_TOS",
- "description": "TXT_KEY_BUILDING_HOUSING_LEAN_TOS",
- "civilopedia": "TXT_KEY_BUILDING_HOUSING_LEAN_TOS_PEDIA",
  "obsoletedBy": {
   "techs": [
    "TECH_SANITATION"
@@ -47,6 +45,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_HOUSING_LEAN_TOS",
+  "civilopedia": "TXT_KEY_BUILDING_HOUSING_LEAN_TOS_PEDIA",
   "notConstructible": true,
   "nukeImmune": true,
   "neverCapture": true,

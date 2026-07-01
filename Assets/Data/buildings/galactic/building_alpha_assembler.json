@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_ALPHA_ASSEMBLER",
- "description": "TXT_KEY_BUILDING_ALPHA_ASSEMBLER",
- "civilopedia": "TXT_KEY_BUILDING_ALPHA_ASSEMBLER_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_COMPUTRONIUM_MAKER",
@@ -81,6 +79,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_ALPHA_ASSEMBLER",
+  "civilopedia": "TXT_KEY_BUILDING_ALPHA_ASSEMBLER_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

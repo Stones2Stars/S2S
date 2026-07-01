@@ -1,7 +1,5 @@
 {
  "type": "TERRAIN_GREEN_MARS",
- "description": "TXT_KEY_TERRAIN_GREEN_MARS",
- "civilopedia": "TXT_KEY_TERRAIN_GREEN_MARS_PEDIA",
  "food": {
   "plot": {
    "flat": 1
@@ -36,6 +34,8 @@
   "soundscape": "ASSS_TUNDRA_SELECT_AMB"
  },
  "identity": {
+  "description": "TXT_KEY_TERRAIN_GREEN_MARS",
+  "civilopedia": "TXT_KEY_TERRAIN_GREEN_MARS_PEDIA",
   "found": true,
   "movementCost": 3,
   "mapCategories": [

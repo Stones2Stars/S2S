@@ -1,8 +1,5 @@
 {
  "type": "TECH_MOSAIC_WORKING",
- "description": "TXT_KEY_TECH_MOSAIC_WORKING",
- "civilopedia": "TXT_KEY_TECH_MOSAIC_WORKING_PEDIA",
- "quote": "TXT_KEY_TECH_MOSAIC_WORKING_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_MOSAIC_WORKSHOP",
@@ -53,6 +50,9 @@
   "soundMP": "AS2D_TECH_MOSAIC_WORKING"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_MOSAIC_WORKING",
+  "civilopedia": "TXT_KEY_TECH_MOSAIC_WORKING_PEDIA",
+  "quote": "TXT_KEY_TECH_MOSAIC_WORKING_QUOTE",
   "era": "C2C_ERA_CLASSICAL",
   "worth": 10,
   "tradeable": true,

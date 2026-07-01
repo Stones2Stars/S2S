@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_SPIRITUAL_AWAKENING",
- "description": "TXT_KEY_BUILDING_SPIRITUAL_AWAKENING",
- "civilopedia": "TXT_KEY_BUILDING_SPIRITUAL_AWAKENING_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -39,6 +37,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_SPIRITUAL_AWAKENING",
+  "civilopedia": "TXT_KEY_BUILDING_SPIRITUAL_AWAKENING_PEDIA",
   "specialBuildingType": "SPECIALBUILDING_PUNK_NANO",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [

@@ -1,12 +1,12 @@
 {
  "type": "PROMOTIONLINE_WANTED",
- "description": "TXT_KEY_PROMOTIONLINE_WANTED",
  "ui": {
   "art": {
    "icon": "Art/Buttons/Promotions/Wanted1Promotion.dds"
   }
  },
  "identity": {
+  "description": "TXT_KEY_PROMOTIONLINE_WANTED",
   "unitCombats": [
    "UNITCOMBAT_CRIMINAL",
    "UNITCOMBAT_PIRATE"

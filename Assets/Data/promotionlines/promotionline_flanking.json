@@ -1,12 +1,12 @@
 {
  "type": "PROMOTIONLINE_FLANKING",
- "description": "TXT_KEY_PROMOTIONLINE_FLANKING",
  "ui": {
   "art": {
    "icon": ",Art/Interface/Buttons/Promotions/Flanking1.dds,Art/Interface/Buttons/Promotions_Atlas.dds,6,3"
   }
  },
  "identity": {
+  "description": "TXT_KEY_PROMOTIONLINE_FLANKING",
   "unitCombats": [
    "UNITCOMBAT_MOUNTED",
    "UNITCOMBAT_WHEELED",

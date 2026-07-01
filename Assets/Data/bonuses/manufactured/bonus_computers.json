@@ -1,7 +1,5 @@
 {
  "type": "BONUS_COMPUTERS",
- "description": "TXT_KEY_BONUS_COMPUTERS",
- "civilopedia": "TXT_KEY_BONUS_COMPUTERS_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_3D_BODY_ATLAS",
@@ -112,6 +110,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_COMPUTERS",
+  "civilopedia": "TXT_KEY_BONUS_COMPUTERS_PEDIA",
   "bonusClassType": "BONUSCLASS_MANUFACTURED"
  }
 }

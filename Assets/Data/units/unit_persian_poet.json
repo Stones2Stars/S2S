@@ -1,7 +1,5 @@
 {
  "type": "UNIT_PERSIAN_POET",
- "description": "TXT_KEY_UNIT_PERSIAN_POET",
- "civilopedia": "TXT_KEY_UNIT_PERSIAN_POET_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -107,6 +105,8 @@
   "upkeep": 3
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_PERSIAN_POET",
+  "civilopedia": "TXT_KEY_UNIT_PERSIAN_POET_PEDIA",
   "worth": 3,
   "domain": "DOMAIN_LAND",
   "defaultUnitAI": "UNITAI_PROPERTY_CONTROL",

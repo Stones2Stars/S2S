@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_FASHION_HOUSE_STORE",
- "description": "TXT_KEY_BUILDING_FASHION_HOUSE_STORE",
- "civilopedia": "TXT_KEY_BUILDING_FASHION_HOUSE_STORE_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -106,6 +104,8 @@
   "construct": "AS2D_BUILD_FACTORY"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_FASHION_HOUSE_STORE",
+  "civilopedia": "TXT_KEY_BUILDING_FASHION_HOUSE_STORE_PEDIA",
   "worth": 6,
   "militaryWorth": 2,
   "conquestProbability": 75,

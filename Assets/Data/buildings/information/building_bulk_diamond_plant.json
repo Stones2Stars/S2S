@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_BULK_DIAMOND_PLANT",
- "description": "TXT_KEY_BUILDING_BULK_DIAMOND_PLANT",
- "civilopedia": "TXT_KEY_BUILDING_BULK_DIAMOND_PLANT_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_PICOTECH_COMPLEX"
@@ -65,6 +63,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_BULK_DIAMOND_PLANT",
+  "civilopedia": "TXT_KEY_BUILDING_BULK_DIAMOND_PLANT_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

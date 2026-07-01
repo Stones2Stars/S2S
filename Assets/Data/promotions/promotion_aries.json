@@ -1,7 +1,5 @@
 {
  "type": "PROMOTION_ARIES",
- "description": "TXT_KEY_PROMOTION_ARIES",
- "help": "TXT_KEY_PROMOTION_ASTRO_HELP",
  "firstStrike": {
   "unit": {
    "chance": {
@@ -18,6 +16,8 @@
   "sound": "AS2D_IF_LEVELUP"
  },
  "identity": {
+  "description": "TXT_KEY_PROMOTION_ARIES",
+  "help": "TXT_KEY_PROMOTION_ASTRO_HELP",
   "notOnUnitCombats": [
    "UNITCOMBAT_PACIFIST"
   ],

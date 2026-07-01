@@ -1,8 +1,5 @@
 {
  "type": "UNIT_SUBDUED_BABIRUSA",
- "description": "TXT_KEY_UNIT_SUBDUED_BABIRUSA",
- "civilopedia": "TXT_KEY_UNIT_BABIRUSA_PEDIA",
- "help": "TXT_KEY_UNIT_SUBDUED_ANIMALS_HELP",
  "skills": {
   "onlyDefensive": true,
   "militaryTrade": true
@@ -152,6 +149,9 @@
   ]
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_SUBDUED_BABIRUSA",
+  "civilopedia": "TXT_KEY_UNIT_BABIRUSA_PEDIA",
+  "help": "TXT_KEY_UNIT_SUBDUED_ANIMALS_HELP",
   "spawnOnly": true,
   "domain": "DOMAIN_LAND",
   "defaultUnitAI": "UNITAI_SUBDUED_ANIMAL",

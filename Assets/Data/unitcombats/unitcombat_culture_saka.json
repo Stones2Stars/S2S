@@ -1,12 +1,12 @@
 {
  "type": "UNITCOMBAT_CULTURE_SAKA",
- "description": "TXT_KEY_UNITCOMBAT_CULTURE_SAKA",
  "ui": {
   "art": {
    "icon": "Art/categories/culture_newcultures.dds"
   }
  },
  "identity": {
+  "description": "TXT_KEY_UNITCOMBAT_CULTURE_SAKA",
   "culture": "BONUS_SAKA"
  }
 }

@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_NET_FLOUNDER",
- "description": "TXT_KEY_BUILDING_NET_FLOUNDER",
- "civilopedia": "TXT_KEY_BUILDING_NET_FLOUNDER_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_RESOURCES_FISH"
@@ -75,6 +73,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_NET_FLOUNDER",
+  "civilopedia": "TXT_KEY_BUILDING_NET_FLOUNDER_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_GENETICA_SALON",
- "description": "TXT_KEY_BUILDING_GENETICA_SALON",
- "civilopedia": "TXT_KEY_BUILDING_GENETICA_SALON_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_HIGH_TECH_CULTURAL_ENRICHMENT"
@@ -62,6 +60,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_GENETICA_SALON",
+  "civilopedia": "TXT_KEY_BUILDING_GENETICA_SALON_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

@@ -1,7 +1,5 @@
 {
  "type": "UNIT_PLASMA_THROWER",
- "description": "TXT_KEY_UNIT_PLASMA_THROWER",
- "civilopedia": "TXT_KEY_UNIT_PLASMA_THROWER_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -83,6 +81,8 @@
   "upkeep": 1
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_PLASMA_THROWER",
+  "civilopedia": "TXT_KEY_UNIT_PLASMA_THROWER_PEDIA",
   "worth": 4,
   "militaryWorth": 105,
   "xpValueAttack": 3,

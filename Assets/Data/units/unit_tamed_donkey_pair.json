@@ -1,8 +1,5 @@
 {
  "type": "UNIT_TAMED_DONKEY_PAIR",
- "description": "TXT_KEY_UNIT_TAMED_DONKEY_PAIR",
- "civilopedia": "TXT_KEY_UNIT_TAMED_ANIMAL_PEDIA",
- "help": "TXT_KEY_UNIT_TAMED_ANIMALS_HELP",
  "obsoletedBy": {
   "techs": [
    "TECH_SPECIALIZATION"
@@ -111,6 +108,9 @@
   "production": 100
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_TAMED_DONKEY_PAIR",
+  "civilopedia": "TXT_KEY_UNIT_TAMED_ANIMAL_PEDIA",
+  "help": "TXT_KEY_UNIT_TAMED_ANIMALS_HELP",
   "domain": "DOMAIN_LAND",
   "defaultUnitAI": "UNITAI_SUBDUED_ANIMAL",
   "formationType": "FORMATION_TYPE_ANIMAL",

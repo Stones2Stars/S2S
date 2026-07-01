@@ -33,7 +33,7 @@ from collections import OrderedDict
 
 import engine
 import boolexpr
-from curate_common import put_art, emit_art, FAMILY_ORDER, de_i
+from curate_common import put_art, emit_art, FAMILY_ORDER, de_i, fold_text_to_identity
 from store import Store, REPO
 
 # ---- identity.base: the create-unit FOUNDATION (§0.6) ----
@@ -798,6 +798,7 @@ def curate(typ, rec, store):
     emit_art(out, art_blocks)
     if identity:
         out["identity"] = identity
+    fold_text_to_identity(out)   # TEXT -> identity (json.md §7)
     return out
 
 
@@ -814,6 +815,7 @@ def curate_special_unit(typ, rec, store):
             identity[key] = True
     if identity:
         out["identity"] = identity
+    fold_text_to_identity(out)   # TEXT -> identity (json.md §7) -- the special-unit path too
     return out
 
 

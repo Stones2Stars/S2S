@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_FOOD_PROCESSING_PLANT",
- "description": "TXT_KEY_BUILDING_FOOD_PROCESSING_PLANT",
- "civilopedia": "TXT_KEY_BUILDING_FOOD_PROCESSING_PLANT_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -69,6 +67,8 @@
   "construct": "AS2D_BUILD_FOOD_PROCESSING_PLANT"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_FOOD_PROCESSING_PLANT",
+  "civilopedia": "TXT_KEY_BUILDING_FOOD_PROCESSING_PLANT_PEDIA",
   "worth": 6,
   "militaryWorth": 2,
   "conquestProbability": 75,

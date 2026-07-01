@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_ANIMAL_SNARE_TRAPS",
- "description": "TXT_KEY_BUILDING_ANIMAL_SNARE_TRAPS",
- "civilopedia": "TXT_KEY_BUILDING_ANIMAL_SNARE_TRAPS_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_SKINNER",
@@ -129,6 +127,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_ANIMAL_SNARE_TRAPS",
+  "civilopedia": "TXT_KEY_BUILDING_ANIMAL_SNARE_TRAPS_PEDIA",
   "enabledCivilizations": [
    "CIVILIZATION_NPC_NEANDERTHAL"
   ],

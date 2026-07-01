@@ -1,6 +1,5 @@
 {
  "type": "PROMOTION_LOGISTICS2",
- "description": "TXT_KEY_PROMOTION_LOGISTICS2",
  "movement": {
   "unit": {
    "moveDiscount": {
@@ -21,5 +20,8 @@
  },
  "sound": {
   "sound": "AS2D_PING"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_LOGISTICS2"
  }
 }

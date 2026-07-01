@@ -1,7 +1,5 @@
 {
  "type": "BONUS_SHOCKWAVE_ENGINES",
- "description": "TXT_KEY_BONUS_SHOCKWAVE_ENGINES",
- "civilopedia": "TXT_KEY_BONUS_SHOCKWAVE_ENGINES_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_FACTORY_LEVITATION_GENERATORS",
@@ -18,6 +16,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_SHOCKWAVE_ENGINES",
+  "civilopedia": "TXT_KEY_BONUS_SHOCKWAVE_ENGINES_PEDIA",
   "bonusClassType": "BONUSCLASS_MANUFACTURED"
  }
 }

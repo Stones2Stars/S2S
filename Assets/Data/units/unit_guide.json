@@ -1,7 +1,5 @@
 {
  "type": "UNIT_GUIDE",
- "description": "TXT_KEY_UNIT_GUIDE",
- "civilopedia": "TXT_KEY_UNIT_GUIDE_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -35,6 +33,8 @@
   "upkeep": 1
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_GUIDE",
+  "civilopedia": "TXT_KEY_UNIT_GUIDE_PEDIA",
   "worth": 1,
   "xpValueAttack": 4,
   "xpValueDefense": 4,

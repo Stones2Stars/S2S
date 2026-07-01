@@ -1,6 +1,5 @@
 {
  "type": "PROMOTION_ORDER_OF_ORMAZD",
- "description": "TXT_KEY_PROMOTION_ORDER_OF_ORMAZD",
  "strength": {
   "unit": {
    "cityAttack": {
@@ -20,6 +19,7 @@
   "sound": "AS2D_IF_LEVELUP"
  },
  "identity": {
+  "description": "TXT_KEY_PROMOTION_ORDER_OF_ORMAZD",
   "stateReligionPrereq": "RELIGION_ZOROASTRIANISM",
   "unitCombats": [
    "UNITCOMBAT_RECON",

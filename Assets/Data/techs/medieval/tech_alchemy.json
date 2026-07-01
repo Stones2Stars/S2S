@@ -1,8 +1,5 @@
 {
  "type": "TECH_ALCHEMY",
- "description": "TXT_KEY_TECH_ALCHEMY",
- "civilopedia": "TXT_KEY_TECH_ALCHEMY_PEDIA",
- "quote": "TXT_KEY_TECH_ALCHEMY_QUOTE",
  "enables": {
   "bonuses": [
    "BONUS_KEROSENE",
@@ -85,6 +82,9 @@
   "soundMP": "AS2D_TECH_ALCHEMYASTROLOGY"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_ALCHEMY",
+  "civilopedia": "TXT_KEY_TECH_ALCHEMY_PEDIA",
+  "quote": "TXT_KEY_TECH_ALCHEMY_QUOTE",
   "era": "C2C_ERA_MEDIEVAL",
   "worth": 24,
   "militaryWorth": 6,

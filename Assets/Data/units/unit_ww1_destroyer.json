@@ -1,7 +1,5 @@
 {
  "type": "UNIT_WW1_DESTROYER",
- "description": "TXT_KEY_UNIT_WW1_DESTROYER",
- "civilopedia": "TXT_KEY_UNIT_WW1_DESTROYER_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -89,6 +87,8 @@
   "upkeep": 2
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_WW1_DESTROYER",
+  "civilopedia": "TXT_KEY_UNIT_WW1_DESTROYER_PEDIA",
   "worth": 4,
   "militaryWorth": 145,
   "xpValueAttack": 3,

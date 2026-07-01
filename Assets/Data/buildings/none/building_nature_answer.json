@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_NATURE_ANSWER",
- "description": "TXT_KEY_BUILDING_NATURE_ANSWER",
- "civilopedia": "TXT_KEY_BUILDING_NATURE_ANSWER_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -53,6 +51,8 @@
   "construct": "AS2D_BUILD_DRUID"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_NATURE_ANSWER",
+  "civilopedia": "TXT_KEY_BUILDING_NATURE_ANSWER_PEDIA",
   "commerceDoubleTime": {
    "culture": 1000
   },

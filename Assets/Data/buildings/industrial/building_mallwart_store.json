@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_MALLWART_STORE",
- "description": "TXT_KEY_BUILDING_MALLWART_STORE",
- "civilopedia": "TXT_KEY_BUILDING_MALLWART_STORE_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -107,6 +105,8 @@
   "construct": "AS2D_BUILD_BANK"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_MALLWART_STORE",
+  "civilopedia": "TXT_KEY_BUILDING_MALLWART_STORE_PEDIA",
   "nukeImmune": true,
   "worth": 8,
   "conquestProbability": 100,

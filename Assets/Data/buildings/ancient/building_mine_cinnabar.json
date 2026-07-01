@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_MINE_CINNABAR",
- "description": "TXT_KEY_BUILDING_MINE_CINNABAR",
- "civilopedia": "TXT_KEY_BUILDING_MINE_CINNABAR_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_MODERN_EARTHWORKS"
@@ -86,6 +84,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_MINE_CINNABAR",
+  "civilopedia": "TXT_KEY_BUILDING_MINE_CINNABAR_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

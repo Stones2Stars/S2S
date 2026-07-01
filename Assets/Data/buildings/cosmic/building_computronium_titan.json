@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_COMPUTRONIUM_TITAN",
- "description": "TXT_KEY_BUILDING_COMPUTRONIUM_TITAN",
- "civilopedia": "TXT_KEY_BUILDING_COMPUTRONIUM_TITAN_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -44,6 +42,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_COMPUTRONIUM_TITAN",
+  "civilopedia": "TXT_KEY_BUILDING_COMPUTRONIUM_TITAN_PEDIA",
   "conquestProbability": 100,
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,

@@ -1,8 +1,5 @@
 {
  "type": "UNIT_TAMED_SLOTHBEAR",
- "description": "TXT_KEY_UNIT_TAMED_SLOTHBEAR",
- "civilopedia": "TXT_KEY_UNIT_SLOTHBEAR_PEDIA",
- "help": "TXT_KEY_UNIT_TAMED_ANIMALS_HELP",
  "requires": {
   "build": {
    "all": [
@@ -52,6 +49,9 @@
   "production": 133
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_TAMED_SLOTHBEAR",
+  "civilopedia": "TXT_KEY_UNIT_SLOTHBEAR_PEDIA",
+  "help": "TXT_KEY_UNIT_TAMED_ANIMALS_HELP",
   "xpValueAttack": 6,
   "xpValueDefense": 3,
   "domain": "DOMAIN_LAND",

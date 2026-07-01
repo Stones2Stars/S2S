@@ -1,7 +1,5 @@
 {
  "type": "UNIT_JOAN_OF_ARC",
- "description": "TXT_KEY_UNIT_JOAN_OF_ARC",
- "civilopedia": "TXT_KEY_UNIT_JOAN_OF_ARC_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -47,6 +45,8 @@
   "upkeep": 1
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_JOAN_OF_ARC",
+  "civilopedia": "TXT_KEY_UNIT_JOAN_OF_ARC_PEDIA",
   "worth": 6,
   "militaryWorth": 8,
   "xpValueAttack": 4,

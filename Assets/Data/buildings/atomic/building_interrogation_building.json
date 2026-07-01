@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_INTERROGATION_BUILDING",
- "description": "TXT_KEY_BUILDING_INTERROGATION_BUILDING",
- "civilopedia": "TXT_KEY_BUILDING_INTERROGATION_BUILDING_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -114,6 +112,8 @@
   "construct": "AS2D_BUILD_JAIL"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_INTERROGATION_BUILDING",
+  "civilopedia": "TXT_KEY_BUILDING_INTERROGATION_BUILDING_PEDIA",
   "worth": 2,
   "militaryWorth": 1,
   "dcmAirbombMission": 2,

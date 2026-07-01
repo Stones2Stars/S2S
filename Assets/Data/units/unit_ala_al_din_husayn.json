@@ -1,7 +1,5 @@
 {
  "type": "UNIT_ALA_AL_DIN_HUSAYN",
- "description": "TXT_KEY_UNIT_ALA_AL_DIN_HUSAYN",
- "civilopedia": "TXT_KEY_UNIT_ALA_AL_DIN_HUSAYN_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -54,6 +52,8 @@
   "upkeep": 1
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_ALA_AL_DIN_HUSAYN",
+  "civilopedia": "TXT_KEY_UNIT_ALA_AL_DIN_HUSAYN_PEDIA",
   "worth": 6,
   "militaryWorth": 8,
   "xpValueAttack": 4,

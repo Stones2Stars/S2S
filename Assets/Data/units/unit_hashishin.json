@@ -1,7 +1,5 @@
 {
  "type": "UNIT_HASHISHIN",
- "description": "TXT_KEY_UNIT_HASHISHIN",
- "civilopedia": "TXT_KEY_UNIT_HASHISHIN_PEDIA",
  "obsoletedBy": {
   "techs": [
    "TECH_MILITARY_SCIENCE"
@@ -170,6 +168,8 @@
   ]
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_HASHISHIN",
+  "civilopedia": "TXT_KEY_UNIT_HASHISHIN_PEDIA",
   "worth": 7,
   "militaryWorth": 11,
   "xpValueAttack": 8,

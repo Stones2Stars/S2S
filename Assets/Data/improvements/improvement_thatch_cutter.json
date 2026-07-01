@@ -1,7 +1,5 @@
 {
  "type": "IMPROVEMENT_THATCH_CUTTER",
- "description": "TXT_KEY_IMPROVEMENT_THATCH_CUTTER",
- "civilopedia": "TXT_KEY_IMPROVEMENT_THATCH_CUTTER_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -94,6 +92,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_IMPROVEMENT_THATCH_CUTTER",
+  "civilopedia": "TXT_KEY_IMPROVEMENT_THATCH_CUTTER_PEDIA",
   "pillageTo": "IMPROVEMENT_SEED_CAMP",
   "pillageGold": 8
  }

@@ -1,7 +1,5 @@
 {
  "type": "TERRAIN_SCRUB",
- "description": "TXT_KEY_TERRAIN_SCRUB",
- "civilopedia": "TXT_KEY_TERRAIN_SCRUB_PEDIA",
  "food": {
   "plot": {
    "flat": 1
@@ -136,6 +134,8 @@
   "soundscape": "ASSS_DESERT_SELECT_AMB"
  },
  "identity": {
+  "description": "TXT_KEY_TERRAIN_SCRUB",
+  "civilopedia": "TXT_KEY_TERRAIN_SCRUB_PEDIA",
   "found": true,
   "movementCost": 1,
   "mapCategories": [

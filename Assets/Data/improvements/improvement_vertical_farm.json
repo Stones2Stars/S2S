@@ -1,7 +1,5 @@
 {
  "type": "IMPROVEMENT_VERTICAL_FARM",
- "description": "TXT_KEY_IMPROVEMENT_VERTICAL_FARM",
- "civilopedia": "TXT_KEY_IMPROVEMENT_FARM_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -702,6 +700,8 @@
   "goodyRange": 1
  },
  "identity": {
+  "description": "TXT_KEY_IMPROVEMENT_VERTICAL_FARM",
+  "civilopedia": "TXT_KEY_IMPROVEMENT_FARM_PEDIA",
   "pillageTo": "IMPROVEMENT_FARM",
   "carriesIrrigation": true,
   "advancedStart": {

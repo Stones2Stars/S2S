@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_MAPINGUARI_CHANGING_OF_THE_GUARD_CEREMONY",
- "description": "TXT_KEY_BUILDING_MAPINGUARI_CHANGING_OF_THE_GUARD_CEREMONY",
- "civilopedia": "TXT_KEY_BUILDING_MAPINGUARI_CHANGING_OF_THE_GUARD_CEREMONY_PEDIA",
  "enables": {
   "units": [
    "UNIT_MAPINGUARI",
@@ -48,6 +46,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_MAPINGUARI_CHANGING_OF_THE_GUARD_CEREMONY",
+  "civilopedia": "TXT_KEY_BUILDING_MAPINGUARI_CHANGING_OF_THE_GUARD_CEREMONY_PEDIA",
   "notConstructible": true,
   "autoBuild": true,
   "worth": 2,

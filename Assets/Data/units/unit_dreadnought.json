@@ -1,7 +1,5 @@
 {
  "type": "UNIT_DREADNOUGHT",
- "description": "TXT_KEY_UNIT_DREADNOUGHT",
- "civilopedia": "TXT_KEY_UNIT_DREADNOUGHT_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -81,6 +79,8 @@
   "upkeep": 151
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_DREADNOUGHT",
+  "civilopedia": "TXT_KEY_UNIT_DREADNOUGHT_PEDIA",
   "worth": 8,
   "militaryWorth": 1240,
   "xpValueAttack": 3,

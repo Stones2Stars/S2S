@@ -1,7 +1,5 @@
 {
  "type": "UNIT_MEDEVAC_DROPSHIP",
- "description": "TXT_KEY_UNIT_MEDEVAC_DROPSHIP",
- "civilopedia": "TXT_KEY_UNIT_MEDIC_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -126,6 +124,8 @@
   "hurryCostModifier": 25
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_MEDEVAC_DROPSHIP",
+  "civilopedia": "TXT_KEY_UNIT_MEDIC_PEDIA",
   "worth": 21,
   "militaryWorth": 80,
   "xpValueDefense": 2,

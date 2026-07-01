@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_LOCKSMITH",
- "description": "TXT_KEY_BUILDING_LOCKSMITH",
- "civilopedia": "TXT_KEY_BUILDING_LOCKSMITH_PEDIA",
  "enables": {
   "units": [
    "UNIT_BEGGAR",
@@ -105,6 +103,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_LOCKSMITH",
+  "civilopedia": "TXT_KEY_BUILDING_LOCKSMITH_PEDIA",
   "conquestProbability": 70,
   "advisor": "ADVISOR_ECONOMY",
   "visibilityPriority": 1,

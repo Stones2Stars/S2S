@@ -1,8 +1,5 @@
 {
  "type": "TECH_GENE_MANIPULATION",
- "description": "TXT_KEY_TECH_GENE_MANIPULATION",
- "civilopedia": "TXT_KEY_TECH_GENE_MANIPULATION_PEDIA",
- "quote": "TXT_KEY_TECH_GENE_MANIPULATION_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_GENE_FARMING_LAB"
@@ -74,6 +71,9 @@
   "soundMP": "AS2D_TECH_GENE_MANIPULATION"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_GENE_MANIPULATION",
+  "civilopedia": "TXT_KEY_TECH_GENE_MANIPULATION_PEDIA",
+  "quote": "TXT_KEY_TECH_GENE_MANIPULATION_QUOTE",
   "era": "C2C_ERA_INFORMATION",
   "worth": 48,
   "tradeable": true,

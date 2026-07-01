@@ -1,6 +1,5 @@
 {
  "type": "VOTE_WELFARE",
- "description": "TXT_KEY_VOTE_SOCIALIZED",
  "voteSource": [
   "DIPLOVOTE_UN"
  ],
@@ -12,5 +11,8 @@
   "forceCivics": [
    "CIVIC_SOCIALIZED"
   ]
+ },
+ "identity": {
+  "description": "TXT_KEY_VOTE_SOCIALIZED"
  }
 }

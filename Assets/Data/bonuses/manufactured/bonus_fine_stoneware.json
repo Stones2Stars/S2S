@@ -1,7 +1,5 @@
 {
  "type": "BONUS_FINE_STONEWARE",
- "description": "TXT_KEY_BONUS_FINE_STONEWARE",
- "civilopedia": "TXT_KEY_BONUS_FINE_STONEWARE_PEDIA",
  "happiness": {
   "empire": {
    "flat": 1
@@ -13,6 +11,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_FINE_STONEWARE",
+  "civilopedia": "TXT_KEY_BONUS_FINE_STONEWARE_PEDIA",
   "bonusClassType": "BONUSCLASS_WONDER"
  }
 }

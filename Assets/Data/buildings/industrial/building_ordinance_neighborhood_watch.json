@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_ORDINANCE_NEIGHBORHOOD_WATCH",
- "description": "TXT_KEY_BUILDING_ORDINANCE_NEIGHBORHOOD_WATCH",
- "civilopedia": "TXT_KEY_BUILDING_ORDINANCE_NEIGHBORHOOD_WATCH_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -46,6 +44,8 @@
   "construct": "AS2D_BUILD_POLICE_STATION"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_ORDINANCE_NEIGHBORHOOD_WATCH",
+  "civilopedia": "TXT_KEY_BUILDING_ORDINANCE_NEIGHBORHOOD_WATCH_PEDIA",
   "nukeImmune": true,
   "neverCapture": true,
   "worth": 1,

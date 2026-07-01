@@ -1,7 +1,5 @@
 {
  "type": "UNIT_SEALION_LAND",
- "description": "TXT_KEY_UNIT_SEALION",
- "civilopedia": "TXT_KEY_UNIT_SEALION_PEDIA",
  "skills": {
   "blendIntoCity": true,
   "onlyDefensive": true,
@@ -71,6 +69,8 @@
   ]
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_SEALION",
+  "civilopedia": "TXT_KEY_UNIT_SEALION_PEDIA",
   "spawnOnly": true,
   "xpValueAttack": 5,
   "xpValueDefense": 3,

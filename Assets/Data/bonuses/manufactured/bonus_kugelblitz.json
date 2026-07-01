@@ -1,7 +1,5 @@
 {
  "type": "BONUS_KUGELBLITZ",
- "description": "TXT_KEY_BONUS_KUGELBLITZ",
- "civilopedia": "TXT_KEY_BONUS_KUGELBLITZ_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_INTERSTELLAR_KUGELBLITZ_POWER_PLANT",
@@ -14,6 +12,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_KUGELBLITZ",
+  "civilopedia": "TXT_KEY_BONUS_KUGELBLITZ_PEDIA",
   "bonusClassType": "BONUSCLASS_MANUFACTURED"
  }
 }

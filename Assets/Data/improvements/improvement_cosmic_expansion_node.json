@@ -1,7 +1,5 @@
 {
  "type": "IMPROVEMENT_COSMIC_EXPANSION_NODE",
- "description": "TXT_KEY_IMPROVEMENT_COSMIC_EXPANSION_NODE",
- "civilopedia": "TXT_KEY_IMPROVEMENT_COSMIC_EXPANSION_NODE_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -33,6 +31,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_IMPROVEMENT_COSMIC_EXPANSION_NODE",
+  "civilopedia": "TXT_KEY_IMPROVEMENT_COSMIC_EXPANSION_NODE_PEDIA",
   "extraterrestrial": true,
   "pillageGold": 200
  }

@@ -1,7 +1,5 @@
 {
  "type": "UNIT_NEANDERTHAL",
- "description": "TXT_KEY_UNIT_NEANDERTHAL",
- "civilopedia": "TXT_KEY_UNIT_NEANDERTHAL_PEDIA",
  "obsoletedBy": {
   "techs": [
    "TECH_SEDENTARY_LIFESTYLE"
@@ -45,6 +43,8 @@
   "upkeep": 1
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_NEANDERTHAL",
+  "civilopedia": "TXT_KEY_UNIT_NEANDERTHAL_PEDIA",
   "worth": 1,
   "militaryWorth": 3,
   "xpValueAttack": 5,

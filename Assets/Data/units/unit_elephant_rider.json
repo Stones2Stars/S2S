@@ -1,7 +1,5 @@
 {
  "type": "UNIT_ELEPHANT_RIDER",
- "description": "TXT_KEY_UNIT_ELEPHANT_RIDER",
- "civilopedia": "TXT_KEY_UNIT_ELEPHANT_RIDER_PEDIA",
  "replacedBy": {
   "units": [
    "UNIT_NEANDERTHAL_ELEPHANT_RIDER"
@@ -103,6 +101,8 @@
   "upkeep": 1
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_ELEPHANT_RIDER",
+  "civilopedia": "TXT_KEY_UNIT_ELEPHANT_RIDER_PEDIA",
   "worth": 2,
   "militaryWorth": 8,
   "xpValueAttack": 3,

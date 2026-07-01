@@ -1,8 +1,5 @@
 {
  "type": "CIVIC_BIOLOGICAL_CASTES",
- "description": "TXT_KEY_CIVIC_BIOLOGICAL_CASTES",
- "civilopedia": "TXT_KEY_CIVIC_BIOLOGICAL_CASTES_PEDIA",
- "strategy": "TXT_KEY_CIVIC_BIOLOGICAL_CASTES_STRATEGY",
  "food": {
   "empire": {
    "percent": 5,
@@ -136,6 +133,9 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_CIVIC_BIOLOGICAL_CASTES",
+  "civilopedia": "TXT_KEY_CIVIC_BIOLOGICAL_CASTES_PEDIA",
+  "strategy": "TXT_KEY_CIVIC_BIOLOGICAL_CASTES_STRATEGY",
   "civicOption": "CIVICOPTION_SOCIETY",
   "anarchyLength": 1,
   "upkeepLevel": "UPKEEP_HIGH"

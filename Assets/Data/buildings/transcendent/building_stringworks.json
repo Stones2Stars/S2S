@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_STRINGWORKS",
- "description": "TXT_KEY_BUILDING_STRINGWORKS",
- "civilopedia": "TXT_KEY_BUILDING_STRINGWORKS_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_POCKET_UNIVERSE_HOTEL",
@@ -87,6 +85,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_STRINGWORKS",
+  "civilopedia": "TXT_KEY_BUILDING_STRINGWORKS_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

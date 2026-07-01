@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_MANUFACTURING_PLANT",
- "description": "TXT_KEY_BUILDING_MANUFACTURING_PLANT",
- "civilopedia": "TXT_KEY_BUILDING_MANUFACTURING_PLANT_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_CARBON_FIBER_PLANT",
@@ -103,6 +101,8 @@
   "construct": "AS2D_BUILD_MANUFACTURING_PLANT"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_MANUFACTURING_PLANT",
+  "civilopedia": "TXT_KEY_BUILDING_MANUFACTURING_PLANT_PEDIA",
   "worth": 6,
   "militaryWorth": 20,
   "conquestProbability": 75,

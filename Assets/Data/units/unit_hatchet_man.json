@@ -1,7 +1,5 @@
 {
  "type": "UNIT_HATCHET_MAN",
- "description": "TXT_KEY_UNIT_HATCHET_MAN",
- "civilopedia": "TXT_KEY_UNIT_APOCALYPSE_URBAN_CROSSBOWMAN_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -42,6 +40,8 @@
   "upkeep": 1
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_HATCHET_MAN",
+  "civilopedia": "TXT_KEY_UNIT_APOCALYPSE_URBAN_CROSSBOWMAN_PEDIA",
   "worth": 2,
   "militaryWorth": 8,
   "xpValueAttack": 6,

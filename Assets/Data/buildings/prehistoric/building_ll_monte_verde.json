@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_LL_MONTE_VERDE",
- "description": "TXT_KEY_BUILDING_LL_MONTE_VERDE",
- "civilopedia": "TXT_KEY_BUILDING_LL_MONTE_VERDE_PEDIA",
  "obsoletedBy": {
   "techs": [
    "TECH_COPPER_WORKING"
@@ -65,6 +63,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_LL_MONTE_VERDE",
+  "civilopedia": "TXT_KEY_BUILDING_LL_MONTE_VERDE_PEDIA",
   "centerInCity": true,
   "worth": 10,
   "conquestProbability": 100,

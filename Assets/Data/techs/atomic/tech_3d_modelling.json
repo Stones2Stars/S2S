@@ -1,8 +1,5 @@
 {
  "type": "TECH_3D_MODELLING",
- "description": "TXT_KEY_TECH_3D_MODELLING",
- "civilopedia": "TXT_KEY_TECH_3D_MODELLING_PEDIA",
- "quote": "TXT_KEY_TECH_3D_MODELLING_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_CAD_STUDIO",
@@ -49,6 +46,9 @@
   "soundMP": "AS2D_TECH_3D_MODELLING"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_3D_MODELLING",
+  "civilopedia": "TXT_KEY_TECH_3D_MODELLING_PEDIA",
+  "quote": "TXT_KEY_TECH_3D_MODELLING_QUOTE",
   "era": "C2C_ERA_ATOMIC",
   "worth": 48,
   "tradeable": true,

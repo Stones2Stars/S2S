@@ -1,6 +1,5 @@
 {
  "type": "PROMOTION_IMPERIAL_GUARD",
- "description": "TXT_KEY_PROMOTION_IMPERIAL_GUARD",
  "upkeep": {
   "unit": {
    "upgradeDiscount": {
@@ -29,5 +28,8 @@
  },
  "sound": {
   "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_IMPERIAL_GUARD"
  }
 }

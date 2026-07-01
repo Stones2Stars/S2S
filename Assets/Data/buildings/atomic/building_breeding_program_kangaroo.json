@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_BREEDING_PROGRAM_KANGAROO",
- "description": "TXT_KEY_BUILDING_BREEDING_PROGRAM_KANGAROO",
- "civilopedia": "TXT_KEY_BUILDING_BREEDING_PROGRAM_KANGAROO_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_RESOURCES_CARCASS"
@@ -85,6 +83,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_BREEDING_PROGRAM_KANGAROO",
+  "civilopedia": "TXT_KEY_BUILDING_BREEDING_PROGRAM_KANGAROO_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

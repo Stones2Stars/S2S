@@ -1,7 +1,5 @@
 {
  "type": "UNIT_TURTLE_SHIP",
- "description": "TXT_KEY_UNIT_TURTLE_SHIP",
- "civilopedia": "TXT_KEY_UNIT_TURTLE_SHIP_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -87,6 +85,8 @@
   "upkeep": 1
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_TURTLE_SHIP",
+  "civilopedia": "TXT_KEY_UNIT_TURTLE_SHIP_PEDIA",
   "worth": 1,
   "militaryWorth": 4,
   "xpValueAttack": 6,

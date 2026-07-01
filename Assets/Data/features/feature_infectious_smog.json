@@ -1,7 +1,5 @@
 {
  "type": "FEATURE_INFECTIOUS_SMOG",
- "description": "TXT_KEY_FEATURE_INFECTIOUS_SMOG",
- "civilopedia": "TXT_KEY_FEATURE_INFECTIOUS_SMOG_PEDIA",
  "food": {
   "plot": {
    "flat": -10
@@ -33,6 +31,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_FEATURE_INFECTIOUS_SMOG",
+  "civilopedia": "TXT_KEY_FEATURE_INFECTIOUS_SMOG_PEDIA",
   "movementCost": 1,
   "disappearance": 350,
   "spread": 500,

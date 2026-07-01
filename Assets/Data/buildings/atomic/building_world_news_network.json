@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_WORLD_NEWS_NETWORK",
- "description": "TXT_KEY_BUILDING_WORLD_NEWS_NETWORK",
- "civilopedia": "TXT_KEY_BUILDING_WORLD_NEWS_NETWORK_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_WALK_OF_FAME"
@@ -91,6 +89,8 @@
   "construct": "AS2D_BUILD_UNIVERSITY"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_WORLD_NEWS_NETWORK",
+  "civilopedia": "TXT_KEY_BUILDING_WORLD_NEWS_NETWORK_PEDIA",
   "commerceDoubleTime": {
    "culture": 100
   },

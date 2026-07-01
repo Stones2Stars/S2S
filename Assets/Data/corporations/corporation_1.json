@@ -1,7 +1,5 @@
 {
  "type": "CORPORATION_1",
- "description": "TXT_KEY_BUILDING_CORPORATION_1",
- "civilopedia": "TXT_KEY_BUILDING_CORPORATION_1_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_CEREAL_MILLS_FACTORY"
@@ -71,6 +69,8 @@
   "sound": "AS2D_BUILD_BANK"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_CORPORATION_1",
+  "civilopedia": "TXT_KEY_BUILDING_CORPORATION_1_PEDIA",
   "spreadFactor": 200,
   "spread": 60
  }

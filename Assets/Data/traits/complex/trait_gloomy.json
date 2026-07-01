@@ -1,8 +1,5 @@
 {
  "type": "TRAIT_GLOOMY",
- "description": "TXT_KEY_TRAIT_GLOOMY",
- "civilopedia": "TXT_KEY_TRAIT_GLOOMY_PEDIA",
- "strategy": "TXT_KEY_TRAIT_GLOOMY_STRATEGY",
  "excludes": [
   "TRAIT_GLORIOUS"
  ],
@@ -197,6 +194,9 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_TRAIT_GLOOMY",
+  "civilopedia": "TXT_KEY_TRAIT_GLOOMY_PEDIA",
+  "strategy": "TXT_KEY_TRAIT_GLOOMY_STRATEGY",
   "negativeTrait": true,
   "impurePropertyManipulators": true
  }

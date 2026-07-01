@@ -1,7 +1,5 @@
 {
  "type": "UNIT_WAPITI",
- "description": "TXT_KEY_UNIT_WAPITI",
- "civilopedia": "TXT_KEY_UNIT_WAPITI_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -69,6 +67,8 @@
   "upkeep": 1
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_WAPITI",
+  "civilopedia": "TXT_KEY_UNIT_WAPITI_PEDIA",
   "worth": 1,
   "xpValueAttack": 6,
   "xpValueDefense": 3,

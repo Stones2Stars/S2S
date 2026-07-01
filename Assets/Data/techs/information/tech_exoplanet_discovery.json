@@ -1,8 +1,5 @@
 {
  "type": "TECH_EXOPLANET_DISCOVERY",
- "description": "TXT_KEY_TECH_EXOPLANET_DISCOVERY",
- "civilopedia": "TXT_KEY_TECH_EXOPLANET_DISCOVERY_PEDIA",
- "quote": "TXT_KEY_TECH_EXOPLANET_DISCOVERY_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_ASTRONOMICAL_DATABASE",
@@ -57,6 +54,9 @@
   "soundMP": "AS2D_TECH_EXOPLANET_DISCOVERY"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_EXOPLANET_DISCOVERY",
+  "civilopedia": "TXT_KEY_TECH_EXOPLANET_DISCOVERY_PEDIA",
+  "quote": "TXT_KEY_TECH_EXOPLANET_DISCOVERY_QUOTE",
   "era": "C2C_ERA_INFORMATION",
   "worth": 14,
   "tradeable": true,

@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_CURE_FOR_ALZHEIMERS",
- "description": "TXT_KEY_BUILDING_CURE_FOR_ALZHEIMERS",
- "civilopedia": "TXT_KEY_BUILDING_CURE_FOR_ALZHEIMERS_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -63,6 +61,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_CURE_FOR_ALZHEIMERS",
+  "civilopedia": "TXT_KEY_BUILDING_CURE_FOR_ALZHEIMERS_PEDIA",
   "conquestProbability": 100,
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,

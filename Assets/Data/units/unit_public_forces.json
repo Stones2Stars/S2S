@@ -1,7 +1,5 @@
 {
  "type": "UNIT_PUBLIC_FORCES",
- "description": "TXT_KEY_UNIT_PUBLIC_FORCES",
- "civilopedia": "TXT_KEY_UNIT_PUBLIC_FORCES_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -183,6 +181,8 @@
   "upkeep": 9
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_PUBLIC_FORCES",
+  "civilopedia": "TXT_KEY_UNIT_PUBLIC_FORCES_PEDIA",
   "worth": 10,
   "militaryWorth": 30,
   "xpValueAttack": 6,

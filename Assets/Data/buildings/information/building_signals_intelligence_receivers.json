@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_SIGNALS_INTELLIGENCE_RECEIVERS",
- "description": "TXT_KEY_BUILDING_SIGNALS_INTELLIGENCE_RECEIVERS",
- "civilopedia": "TXT_KEY_BUILDING_SIGNALS_INTELLIGENCE_RECEIVERS_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -86,6 +84,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_SIGNALS_INTELLIGENCE_RECEIVERS",
+  "civilopedia": "TXT_KEY_BUILDING_SIGNALS_INTELLIGENCE_RECEIVERS_PEDIA",
   "advisor": "ADVISOR_MILITARY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

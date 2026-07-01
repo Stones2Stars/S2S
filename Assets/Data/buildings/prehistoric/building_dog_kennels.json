@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_DOG_KENNELS",
- "description": "TXT_KEY_BUILDING_DOG_KENNELS",
- "civilopedia": "TXT_KEY_BUILDING_DOG_KENNELS_PEDIA",
  "enables": {
   "units": [
    "UNIT_TAMED_WOLF",
@@ -70,6 +68,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_DOG_KENNELS",
+  "civilopedia": "TXT_KEY_BUILDING_DOG_KENNELS_PEDIA",
   "enabledCivilizations": [
    "CIVILIZATION_NPC_NEANDERTHAL"
   ],

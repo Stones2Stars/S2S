@@ -1,7 +1,5 @@
 {
  "type": "FEATURE_PLATY_VICTORIA_FALLS",
- "description": "TXT_KEY_FEATURE_VICTORIA_FALLS",
- "civilopedia": "TXT_KEY_FEATURE_VICTORIA_FALLS_PEDIA",
  "vision": {
   "plot": {
    "seeThrough": {
@@ -18,6 +16,8 @@
   "soundscape": "ASSS_OASIS_SELECT_AMB"
  },
  "identity": {
+  "description": "TXT_KEY_FEATURE_VICTORIA_FALLS",
+  "civilopedia": "TXT_KEY_FEATURE_VICTORIA_FALLS_PEDIA",
   "movementCost": 1,
   "noRiver": true,
   "requiresFlatlands": true,

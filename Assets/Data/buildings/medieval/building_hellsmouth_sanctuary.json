@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_HELLSMOUTH_SANCTUARY",
- "description": "TXT_KEY_BUILDING_HELLSMOUTH_SANCTUARY",
- "civilopedia": "TXT_KEY_BUILDING_HELLSMOUTH_SANCTUARY_PEDIA",
  "enables": {
   "units": [
    "UNIT_HELLSMOUTH_DOG"
@@ -102,6 +100,8 @@
   "construct": "AS2D_BUILD_VOODOO"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_HELLSMOUTH_SANCTUARY",
+  "civilopedia": "TXT_KEY_BUILDING_HELLSMOUTH_SANCTUARY_PEDIA",
   "commerceDoubleTime": {
    "culture": 1000
   },

@@ -1,7 +1,5 @@
 {
  "type": "BONUS_FINNISH",
- "description": "TXT_KEY_BONUS_FINNISH",
- "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
  "enables": {
   "units": [
    "UNIT_TARKKA_AMPUJA",
@@ -14,6 +12,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_FINNISH",
+  "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
   "bonusClassType": "BONUSCLASS_CULTURE"
  }
 }

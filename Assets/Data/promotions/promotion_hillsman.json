@@ -1,6 +1,5 @@
 {
  "type": "PROMOTION_HILLSMAN",
- "description": "TXT_KEY_PROMOTION_HILLSMAN",
  "skills": {
   "hillsDoubleMove": true,
   "terrainDoubleMove": {
@@ -16,6 +15,7 @@
   "sound": "AS2D_IF_LEVELUP"
  },
  "identity": {
+  "description": "TXT_KEY_PROMOTION_HILLSMAN",
   "unitCombats": [
    "UNITCOMBAT_RECON",
    "UNITCOMBAT_HUNTER",

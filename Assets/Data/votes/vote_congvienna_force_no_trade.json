@@ -1,6 +1,5 @@
 {
  "type": "VOTE_CONGVIENNA_FORCE_NO_TRADE",
- "description": "TXT_KEY_VOTE_CONGVIENNA_FORCE_NO_TRADE",
  "voteSource": [
   "DIPLOVOTE_CVIENNA"
  ],
@@ -11,5 +10,8 @@
  },
  "effect": {
   "forceNoTrade": true
+ },
+ "identity": {
+  "description": "TXT_KEY_VOTE_CONGVIENNA_FORCE_NO_TRADE"
  }
 }

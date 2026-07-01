@@ -1,8 +1,5 @@
 {
  "type": "TECH_PRINTING_PRESS",
- "description": "TXT_KEY_TECH_PRINTING_PRESS",
- "civilopedia": "TXT_KEY_TECH_PRINTING_PRESS_PEDIA",
- "quote": "TXT_KEY_TECH_PRINTING_PRESS_QUOTE",
  "enables": {
   "bonuses": [
    "BONUS_BOOKS"
@@ -69,6 +66,9 @@
   "soundMP": "AS2D_TECH_MP_PRINTPRESS"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_PRINTING_PRESS",
+  "civilopedia": "TXT_KEY_TECH_PRINTING_PRESS_PEDIA",
+  "quote": "TXT_KEY_TECH_PRINTING_PRESS_QUOTE",
   "era": "C2C_ERA_RENAISSANCE",
   "worth": 32,
   "tradeable": true,

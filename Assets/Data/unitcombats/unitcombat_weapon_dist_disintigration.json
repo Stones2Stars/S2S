@@ -1,6 +1,5 @@
 {
  "type": "UNITCOMBAT_WEAPON_DIST_DISINTIGRATION",
- "description": "TXT_KEY_UNITCOMBAT_WEAPON_DIST_DISINTIGRATION",
  "skills": {
   "rBombardDirect": true
  },
@@ -10,6 +9,7 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_UNITCOMBAT_WEAPON_DIST_DISINTIGRATION",
   "base": {
    "rangedBombardDamage": 150,
    "rangedBombardLimit": 200,

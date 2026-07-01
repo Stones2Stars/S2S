@@ -1,7 +1,5 @@
 {
  "type": "BONUS_FURNITURE",
- "description": "TXT_KEY_BONUS_FURNITURE",
- "civilopedia": "TXT_KEY_BONUS_FURNITURE_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_ANDEAN_MONASTERY",
@@ -45,6 +43,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_FURNITURE",
+  "civilopedia": "TXT_KEY_BONUS_FURNITURE_PEDIA",
   "bonusClassType": "BONUSCLASS_MANUFACTURED"
  }
 }

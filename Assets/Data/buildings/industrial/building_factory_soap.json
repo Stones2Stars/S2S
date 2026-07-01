@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_FACTORY_SOAP",
- "description": "TXT_KEY_BUILDING_FACTORY_SOAP",
- "civilopedia": "TXT_KEY_BUILDING_FACTORY_SOAP_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_CHEMICALS_DISTRICT"
@@ -125,6 +123,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_FACTORY_SOAP",
+  "civilopedia": "TXT_KEY_BUILDING_FACTORY_SOAP_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

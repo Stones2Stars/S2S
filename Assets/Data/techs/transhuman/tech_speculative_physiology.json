@@ -1,8 +1,5 @@
 {
  "type": "TECH_SPECULATIVE_PHYSIOLOGY",
- "description": "TXT_KEY_TECH_SPECULATIVE_PHYSIOLOGY",
- "civilopedia": "TXT_KEY_TECH_SPECULATIVE_PHYSIOLOGY_PEDIA",
- "quote": "TXT_KEY_TECH_SPECULATIVE_PHYSIOLOGY_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_EUROPA_ECOSYSTEM",
@@ -66,6 +63,9 @@
   "soundMP": "AS2D_TECH_SPECULATIVE_PHYSIOLOGY"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_SPECULATIVE_PHYSIOLOGY",
+  "civilopedia": "TXT_KEY_TECH_SPECULATIVE_PHYSIOLOGY_PEDIA",
+  "quote": "TXT_KEY_TECH_SPECULATIVE_PHYSIOLOGY_QUOTE",
   "era": "C2C_ERA_TRANSHUMAN",
   "worth": 48,
   "militaryWorth": 4,

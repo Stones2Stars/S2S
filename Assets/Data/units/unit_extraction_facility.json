@@ -1,7 +1,5 @@
 {
  "type": "UNIT_EXTRACTION_FACILITY",
- "description": "TXT_KEY_UNIT_EXTRACTION_FACILITY",
- "civilopedia": "TXT_KEY_UNIT_EXTRACTION_FACILITY_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -50,6 +48,8 @@
   "upkeep": 1
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_EXTRACTION_FACILITY",
+  "civilopedia": "TXT_KEY_UNIT_EXTRACTION_FACILITY_PEDIA",
   "worth": 1,
   "domain": "DOMAIN_SEA",
   "defaultUnitAI": "UNITAI_WORKER_SEA",

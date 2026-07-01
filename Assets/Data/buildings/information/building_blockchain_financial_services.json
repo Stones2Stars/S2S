@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_BLOCKCHAIN_FINANCIAL_SERVICES",
- "description": "TXT_KEY_BUILDING_BLOCKCHAIN_FINANCIAL_SERVICES",
- "civilopedia": "TXT_KEY_BUILDING_BLOCKCHAIN_FINANCIAL_SERVICES_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_TRANSAMERICA_TOWER"
@@ -52,6 +50,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_BLOCKCHAIN_FINANCIAL_SERVICES",
+  "civilopedia": "TXT_KEY_BUILDING_BLOCKCHAIN_FINANCIAL_SERVICES_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

@@ -1,6 +1,5 @@
 {
  "type": "BUILD_FACTORY",
- "description": "TXT_KEY_BUILD_FACTORY",
  "requires": {
   "build": {
    "all": [
@@ -279,5 +278,8 @@
   "art": {
    "entityEvent": "ENTITY_EVENT_BUILD"
   }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILD_FACTORY"
  }
 }

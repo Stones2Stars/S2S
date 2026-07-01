@@ -1,8 +1,5 @@
 {
  "type": "CIVIC_FAST",
- "description": "TXT_KEY_CIVIC_FAST",
- "civilopedia": "TXT_KEY_CIVIC_FAST_PEDIA",
- "strategy": "TXT_KEY_CIVIC_FAST_STRATEGY",
  "gold": {
   "empire": {
    "percent": 2
@@ -24,6 +21,9 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_CIVIC_FAST",
+  "civilopedia": "TXT_KEY_CIVIC_FAST_PEDIA",
+  "strategy": "TXT_KEY_CIVIC_FAST_STRATEGY",
   "civicOption": "CIVICOPTION_EDUCATION",
   "upkeepLevel": "UPKEEP_EXTREME"
  }

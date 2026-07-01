@@ -1,8 +1,5 @@
 {
  "type": "TECH_ARCHETYPAL_VECTOR_SPACES",
- "description": "TXT_KEY_TECH_ARCHETYPAL_VECTOR_SPACES",
- "civilopedia": "TXT_KEY_TECH_ARCHETYPAL_VECTOR_SPACES_PEDIA",
- "quote": "TXT_KEY_TECH_ARCHETYPAL_VECTOR_SPACES_QUOTE",
  "enables": {
   "bonuses": [
    "BONUS_HUMAN_MOD_METAPHYSICAL"
@@ -56,6 +53,9 @@
   "soundMP": "AS2D_TECH_GENERIC"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_ARCHETYPAL_VECTOR_SPACES",
+  "civilopedia": "TXT_KEY_TECH_ARCHETYPAL_VECTOR_SPACES_PEDIA",
+  "quote": "TXT_KEY_TECH_ARCHETYPAL_VECTOR_SPACES_QUOTE",
   "era": "C2C_ERA_TRANSCENDENT",
   "worth": 48,
   "tradeable": true,

@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_MILITARY_STANDARD_ANIMAL_MASCOT",
- "description": "TXT_KEY_BUILDING_MILITARY_STANDARD_ANIMAL_MASCOT",
- "civilopedia": "TXT_KEY_BUILDING_MILITARY_STANDARD_ANIMAL_MASCOT_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_MILITARY_STANDARD_BEARS",
@@ -53,6 +51,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_MILITARY_STANDARD_ANIMAL_MASCOT",
+  "civilopedia": "TXT_KEY_BUILDING_MILITARY_STANDARD_ANIMAL_MASCOT_PEDIA",
   "notConstructible": true,
   "worth": 1,
   "conquestProbability": 25,

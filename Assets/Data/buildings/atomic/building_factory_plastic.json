@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_FACTORY_PLASTIC",
- "description": "TXT_KEY_BUILDING_FACTORY_PLASTIC",
- "civilopedia": "TXT_KEY_BUILDING_FACTORY_PLASTIC_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_RESOURCES_PLASTIC"
@@ -106,6 +104,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_FACTORY_PLASTIC",
+  "civilopedia": "TXT_KEY_BUILDING_FACTORY_PLASTIC_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

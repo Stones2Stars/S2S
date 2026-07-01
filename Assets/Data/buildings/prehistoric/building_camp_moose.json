@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_CAMP_MOOSE",
- "description": "TXT_KEY_BUILDING_CAMP_MOOSE",
- "civilopedia": "TXT_KEY_BUILDING_CAMP_MOOSE_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_RESOURCES_CARCASS"
@@ -89,6 +87,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_CAMP_MOOSE",
+  "civilopedia": "TXT_KEY_BUILDING_CAMP_MOOSE_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

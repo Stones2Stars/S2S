@@ -1,7 +1,5 @@
 {
  "type": "UNIT_TRACKER",
- "description": "TXT_KEY_UNIT_TRACKER",
- "civilopedia": "TXT_KEY_UNIT_HUNTER_PEDIA",
  "obsoletedBy": {
   "techs": [
    "TECH_HUNTING"
@@ -84,6 +82,8 @@
   "upkeep": 1
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_TRACKER",
+  "civilopedia": "TXT_KEY_UNIT_HUNTER_PEDIA",
   "worth": 2,
   "militaryWorth": 2,
   "xpValueAttack": 2,

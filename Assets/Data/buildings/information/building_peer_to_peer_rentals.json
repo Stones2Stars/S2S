@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_PEER_TO_PEER_RENTALS",
- "description": "TXT_KEY_BUILDING_PEER_TO_PEER_RENTALS",
- "civilopedia": "TXT_KEY_BUILDING_PEER_TO_PEER_RENTALS_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_NOMAD_SKYSCRAPER"
@@ -61,6 +59,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_PEER_TO_PEER_RENTALS",
+  "civilopedia": "TXT_KEY_BUILDING_PEER_TO_PEER_RENTALS_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

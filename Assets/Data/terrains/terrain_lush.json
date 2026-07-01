@@ -1,7 +1,5 @@
 {
  "type": "TERRAIN_LUSH",
- "description": "TXT_KEY_TERRAIN_LUSH",
- "civilopedia": "TXT_KEY_TERRAIN_LUSH_PEDIA",
  "food": {
   "plot": {
    "flat": 3
@@ -126,6 +124,8 @@
   "soundscape": "ASSS_GRASSLAND_SELECT_AMB"
  },
  "identity": {
+  "description": "TXT_KEY_TERRAIN_LUSH",
+  "civilopedia": "TXT_KEY_TERRAIN_LUSH_PEDIA",
   "found": true,
   "movementCost": 1,
   "mapCategories": [

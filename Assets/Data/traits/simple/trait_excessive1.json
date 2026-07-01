@@ -1,7 +1,5 @@
 {
  "type": "TRAIT_EXCESSIVE1",
- "description": "TXT_KEY_TRAIT_EXCESSIVE0",
- "civilopedia": "TXT_KEY_TRAIT_EXCESSIVE_PEDIA",
  "enables": {
   "traits": [
    "TRAIT_EXCESSIVE2"
@@ -75,6 +73,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_TRAIT_EXCESSIVE0",
+  "civilopedia": "TXT_KEY_TRAIT_EXCESSIVE_PEDIA",
   "shortDescription": "TXT_KEY_TRAIT_EXCESSIVE_SHORT",
   "negativeTrait": true,
   "impurePromotions": true

@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_FACTORY_CELLPHONES",
- "description": "TXT_KEY_BUILDING_FACTORY_CELLPHONES",
- "civilopedia": "TXT_KEY_BUILDING_FACTORY_CELLPHONES_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_SMARTPHONE_MANUFACTURER",
@@ -88,6 +86,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_FACTORY_CELLPHONES",
+  "civilopedia": "TXT_KEY_BUILDING_FACTORY_CELLPHONES_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

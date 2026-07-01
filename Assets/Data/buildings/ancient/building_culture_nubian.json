@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_CULTURE_NUBIAN",
- "description": "TXT_KEY_BUILDING_CULTURE_NUBIAN",
- "civilopedia": "TXT_KEY_BUILDING_CULTURE_NUBIAN_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -52,6 +50,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_CULTURE_NUBIAN",
+  "civilopedia": "TXT_KEY_BUILDING_CULTURE_NUBIAN_PEDIA",
   "nukeImmune": true,
   "noInstanceLimit": true,
   "conquestProbability": 100,

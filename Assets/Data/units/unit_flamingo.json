@@ -1,7 +1,5 @@
 {
  "type": "UNIT_FLAMINGO",
- "description": "TXT_KEY_UNIT_FLAMINGO",
- "civilopedia": "TXT_KEY_UNIT_FLAMINGO_PEDIA",
  "withdrawal": {
   "unit": {
    "percent": 40
@@ -41,6 +39,8 @@
   ]
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_FLAMINGO",
+  "civilopedia": "TXT_KEY_UNIT_FLAMINGO_PEDIA",
   "spawnOnly": true,
   "xpValueAttack": 2,
   "xpValueDefense": 1,

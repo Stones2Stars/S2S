@@ -1,8 +1,5 @@
 {
  "type": "TECH_EQUINE_DOMESTICATION",
- "description": "TXT_KEY_TECH_EQUINE_DOMESTICATION",
- "civilopedia": "TXT_KEY_TECH_EQUINE_DOMESTICATION_PEDIA",
- "quote": "TXT_KEY_TECH_EQUINE_DOMESTICATION_QUOTE",
  "enables": {
   "bonuses": [
    "BONUS_DONKEY",
@@ -76,6 +73,9 @@
   "soundMP": "AS2D_TECH_EQUINE_DOMESTICATION"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_EQUINE_DOMESTICATION",
+  "civilopedia": "TXT_KEY_TECH_EQUINE_DOMESTICATION_PEDIA",
+  "quote": "TXT_KEY_TECH_EQUINE_DOMESTICATION_QUOTE",
   "era": "C2C_ERA_ANCIENT",
   "worth": 8,
   "militaryWorth": 2,

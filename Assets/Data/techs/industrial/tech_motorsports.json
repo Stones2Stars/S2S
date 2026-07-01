@@ -1,8 +1,5 @@
 {
  "type": "TECH_MOTORSPORTS",
- "description": "TXT_KEY_TECH_MOTORSPORTS",
- "civilopedia": "TXT_KEY_TECH_MOTORSPORTS_PEDIA",
- "quote": "TXT_KEY_TECH_MOTORSPORTS_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_BONNEVILLE_SPEEDWAY",
@@ -53,6 +50,9 @@
   "soundMP": "AS2D_TECH_MOTORSPORTS"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_MOTORSPORTS",
+  "civilopedia": "TXT_KEY_TECH_MOTORSPORTS_PEDIA",
+  "quote": "TXT_KEY_TECH_MOTORSPORTS_QUOTE",
   "era": "C2C_ERA_INDUSTRIAL",
   "worth": 48,
   "militaryWorth": 4,

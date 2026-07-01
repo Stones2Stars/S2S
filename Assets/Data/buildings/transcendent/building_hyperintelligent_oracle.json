@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_HYPERINTELLIGENT_ORACLE",
- "description": "TXT_KEY_BUILDING_HYPERINTELLIGENT_ORACLE",
- "civilopedia": "TXT_KEY_BUILDING_HYPERINTELLIGENT_ORACLE_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_TRANSFINITE_ORACLE"
@@ -47,6 +45,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_HYPERINTELLIGENT_ORACLE",
+  "civilopedia": "TXT_KEY_BUILDING_HYPERINTELLIGENT_ORACLE_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

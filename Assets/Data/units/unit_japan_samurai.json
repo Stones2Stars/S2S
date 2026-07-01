@@ -1,7 +1,5 @@
 {
  "type": "UNIT_JAPAN_SAMURAI",
- "description": "TXT_KEY_UNIT_JAPAN_SAMURAI",
- "civilopedia": "TXT_KEY_UNIT_JAPAN_SAMURAI_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -78,6 +76,8 @@
   "upkeep": 1
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_JAPAN_SAMURAI",
+  "civilopedia": "TXT_KEY_UNIT_JAPAN_SAMURAI_PEDIA",
   "worth": 3,
   "militaryWorth": 22,
   "xpValueAttack": 6,

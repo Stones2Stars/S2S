@@ -1,6 +1,5 @@
 {
  "type": "PROMOTION_PARALYTIC_PERSONALITY",
- "description": "TXT_KEY_PROMOTION_PARALYTIC_PERSONALITY",
  "strength": {
   "unit": {
    "quality": {
@@ -30,6 +29,7 @@
   "sound": "AS2D_IF_LEVELUP"
  },
  "identity": {
+  "description": "TXT_KEY_PROMOTION_PARALYTIC_PERSONALITY",
   "replacesUnitCombat": "UNITCOMBAT_QUALITY_POOR",
   "notOnUnitCombats": [
    "UNITCOMBAT_PACIFIST",

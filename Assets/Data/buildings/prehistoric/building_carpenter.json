@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_CARPENTER",
- "description": "TXT_KEY_BUILDING_CARPENTER",
- "civilopedia": "TXT_KEY_BUILDING_CARPENTER_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_COOPER",
@@ -90,6 +88,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_CARPENTER",
+  "civilopedia": "TXT_KEY_BUILDING_CARPENTER_PEDIA",
   "enabledCivilizations": [
    "CIVILIZATION_NPC_NEANDERTHAL"
   ],

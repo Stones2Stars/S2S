@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_MARTIAN_MAGNETIC_FIELD_GENERATOR",
- "description": "TXT_KEY_BUILDING_MARTIAN_MAGNETIC_FIELD_GENERATOR",
- "civilopedia": "TXT_KEY_BUILDING_MARTIAN_MAGNETIC_FIELD_GENERATOR_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -40,6 +38,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_MARTIAN_MAGNETIC_FIELD_GENERATOR",
+  "civilopedia": "TXT_KEY_BUILDING_MARTIAN_MAGNETIC_FIELD_GENERATOR_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

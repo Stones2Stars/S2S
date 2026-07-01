@@ -1,7 +1,5 @@
 {
  "type": "UNIT_LLAMA_RIDER",
- "description": "TXT_KEY_UNIT_LLAMA_RIDER",
- "civilopedia": "TXT_KEY_UNIT_LLAMA_RIDER_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -138,6 +136,8 @@
   "production": 125
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_LLAMA_RIDER",
+  "civilopedia": "TXT_KEY_UNIT_LLAMA_RIDER_PEDIA",
   "worth": 2,
   "militaryWorth": 8,
   "xpValueAttack": 6,

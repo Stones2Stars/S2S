@@ -1,8 +1,5 @@
 {
  "type": "TRAIT_STRATEGIST",
- "description": "TXT_KEY_TRAIT_STRATEGIST",
- "civilopedia": "TXT_KEY_TRAIT_STRATEGIST_PEDIA",
- "strategy": "TXT_KEY_TRAIT_STRATEGIST_STRATEGY",
  "excludes": [
   "TRAIT_CARELESS"
  ],
@@ -410,5 +407,10 @@
   "art": {
    "icon": "art/Buttons/Traits/TraitStrategist.dds"
   }
+ },
+ "identity": {
+  "description": "TXT_KEY_TRAIT_STRATEGIST",
+  "civilopedia": "TXT_KEY_TRAIT_STRATEGIST_PEDIA",
+  "strategy": "TXT_KEY_TRAIT_STRATEGIST_STRATEGY"
  }
 }

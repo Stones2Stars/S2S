@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_TEMPLE_OF_KI",
- "description": "TXT_KEY_BUILDING_TEMPLE_OF_KI",
- "civilopedia": "TXT_KEY_BUILDING_TEMPLE_OF_KI_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_TEMPLE_OF_KI_CORN",
@@ -101,6 +99,8 @@
   "construct": "AS2D_BUILD_MESOPOTAMIAN"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_TEMPLE_OF_KI",
+  "civilopedia": "TXT_KEY_BUILDING_TEMPLE_OF_KI_PEDIA",
   "neverCapture": true,
   "worth": 4,
   "greatPeopleUnitType": "UNIT_PROPHET",

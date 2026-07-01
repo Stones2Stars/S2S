@@ -1,8 +1,5 @@
 {
  "type": "TECH_WEATHER_LORE",
- "description": "TXT_KEY_TECH_WEATHER_LORE",
- "civilopedia": "TXT_KEY_TECH_WEATHER_LORE_PEDIA",
- "quote": "TXT_KEY_TECH_WEATHER_LORE_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_WEATHER_VANES"
@@ -53,6 +50,9 @@
   "soundMP": "AS2D_TECH_WEATHER_LORE"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_WEATHER_LORE",
+  "civilopedia": "TXT_KEY_TECH_WEATHER_LORE_PEDIA",
+  "quote": "TXT_KEY_TECH_WEATHER_LORE_QUOTE",
   "era": "C2C_ERA_CLASSICAL",
   "worth": 20,
   "militaryWorth": 2,

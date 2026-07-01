@@ -1,12 +1,12 @@
 {
  "type": "PROMOTIONLINE_DECEPTION",
- "description": "TXT_KEY_PROMOTIONLINE_DECEPTION",
  "ui": {
   "art": {
    "icon": "Art/Interface/Buttons/Promotions/Deception1.dds"
   }
  },
  "identity": {
+  "description": "TXT_KEY_PROMOTIONLINE_DECEPTION",
   "unitCombats": [
    "UNITCOMBAT_SPY"
   ]

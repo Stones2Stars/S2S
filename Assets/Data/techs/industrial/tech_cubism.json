@@ -1,8 +1,5 @@
 {
  "type": "TECH_CUBISM",
- "description": "TXT_KEY_TECH_CUBISM",
- "civilopedia": "TXT_KEY_TECH_CUBISM_PEDIA",
- "quote": "TXT_KEY_TECH_CUBISM_QUOTE",
  "enables": {
   "techs": [
    "TECH_MODERN_ART"
@@ -49,6 +46,9 @@
   "soundMP": "AS2D_TECH_CUBISM"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_CUBISM",
+  "civilopedia": "TXT_KEY_TECH_CUBISM_PEDIA",
+  "quote": "TXT_KEY_TECH_CUBISM_QUOTE",
   "era": "C2C_ERA_INDUSTRIAL",
   "worth": 21,
   "militaryWorth": 7,

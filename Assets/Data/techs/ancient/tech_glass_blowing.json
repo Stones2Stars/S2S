@@ -1,8 +1,5 @@
 {
  "type": "TECH_GLASS_BLOWING",
- "description": "TXT_KEY_TECH_GLASS_BLOWING",
- "civilopedia": "TXT_KEY_TECH_GLASS_BLOWING_PEDIA",
- "quote": "TXT_KEY_TECH_GLASS_BLOWING_QUOTE",
  "enables": {
   "bonuses": [
    "BONUS_GLASSWARE",
@@ -60,6 +57,9 @@
   "soundMP": "AS2D_TECH_GLASS_BLOWING"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_GLASS_BLOWING",
+  "civilopedia": "TXT_KEY_TECH_GLASS_BLOWING_PEDIA",
+  "quote": "TXT_KEY_TECH_GLASS_BLOWING_QUOTE",
   "era": "C2C_ERA_ANCIENT",
   "worth": 15,
   "militaryWorth": 5,

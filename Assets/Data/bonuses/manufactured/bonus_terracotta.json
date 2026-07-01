@@ -1,7 +1,5 @@
 {
  "type": "BONUS_TERRACOTTA",
- "description": "TXT_KEY_BONUS_TERRACOTTA",
- "civilopedia": "TXT_KEY_BONUS_TERRACOTTA_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_NONSUCH_PALACE"
@@ -13,6 +11,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_TERRACOTTA",
+  "civilopedia": "TXT_KEY_BONUS_TERRACOTTA_PEDIA",
   "bonusClassType": "BONUSCLASS_MANUFACTURED"
  }
 }

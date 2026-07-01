@@ -1,7 +1,5 @@
 {
  "type": "UNIT_ANCIENT_ROCKETEER",
- "description": "TXT_KEY_UNIT_ANCIENT_ROCKETEER",
- "civilopedia": "TXT_KEY_UNIT_ANCIENT_ROCKETEER_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -83,6 +81,8 @@
   "upkeep": 1
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_ANCIENT_ROCKETEER",
+  "civilopedia": "TXT_KEY_UNIT_ANCIENT_ROCKETEER_PEDIA",
   "worth": 2,
   "militaryWorth": 17,
   "xpValueAttack": 3,

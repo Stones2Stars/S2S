@@ -1,6 +1,5 @@
 {
  "type": "BUILD_FORTIFIED_CAVE_KILL",
- "description": "TXT_KEY_BUILD_FORTIFIED_CAVE_KILL",
  "requires": {
   "build": {
    "all": [
@@ -31,6 +30,7 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILD_FORTIFIED_CAVE_KILL",
   "consumesUnit": true
  }
 }

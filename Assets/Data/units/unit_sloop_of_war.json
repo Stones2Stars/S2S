@@ -1,7 +1,5 @@
 {
  "type": "UNIT_SLOOP_OF_WAR",
- "description": "TXT_KEY_UNIT_SLOOP_OF_WAR",
- "civilopedia": "TXT_KEY_UNIT_SLOOP_OF_WAR_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -67,6 +65,8 @@
   "upkeep": 1
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_SLOOP_OF_WAR",
+  "civilopedia": "TXT_KEY_UNIT_SLOOP_OF_WAR_PEDIA",
   "worth": 3,
   "militaryWorth": 10,
   "xpValueAttack": 4,

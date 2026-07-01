@@ -1,7 +1,5 @@
 {
  "type": "TRAIT_POPULIST1",
- "description": "TXT_KEY_TRAIT_POPULIST0",
- "civilopedia": "TXT_KEY_TRAIT_POPULIST_PEDIA",
  "enables": {
   "traits": [
    "TRAIT_POPULIST2"
@@ -86,6 +84,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_TRAIT_POPULIST0",
+  "civilopedia": "TXT_KEY_TRAIT_POPULIST_PEDIA",
   "shortDescription": "TXT_KEY_TRAIT_POPULIST_SHORT",
   "negativeTrait": true
  }

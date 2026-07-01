@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_INTERGALACTIC_GALAXY_SCAN",
- "description": "TXT_KEY_BUILDING_INTERGALACTIC_GALAXY_SCAN",
- "civilopedia": "TXT_KEY_BUILDING_INTERGALACTIC_GALAXY_SCAN_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_INTERGALACTIC_CONSCIOUS_GALAXY"
@@ -48,6 +46,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_INTERGALACTIC_GALAXY_SCAN",
+  "civilopedia": "TXT_KEY_BUILDING_INTERGALACTIC_GALAXY_SCAN_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

@@ -1,7 +1,5 @@
 {
  "type": "UNIT_TLAXCALTEC_WARRIOR",
- "description": "TXT_KEY_UNIT_TLAXCALTEC_WARRIOR",
- "civilopedia": "TXT_KEY_UNIT_TLAXCALTEC_WARRIOR_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -93,6 +91,8 @@
   "upkeep": 1
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_TLAXCALTEC_WARRIOR",
+  "civilopedia": "TXT_KEY_UNIT_TLAXCALTEC_WARRIOR_PEDIA",
   "worth": 2,
   "militaryWorth": 7,
   "xpValueAttack": 6,

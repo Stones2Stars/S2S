@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_FESTIVAL",
- "description": "TXT_KEY_BUILDING_FESTIVAL",
- "civilopedia": "TXT_KEY_BUILDING_FESTIVAL_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -139,6 +137,8 @@
   "construct": "AS2D_BUILD_FESTIVAL"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_FESTIVAL",
+  "civilopedia": "TXT_KEY_BUILDING_FESTIVAL_PEDIA",
   "worth": 3,
   "advisor": "ADVISOR_CULTURE",
   "visibilityPriority": 1,

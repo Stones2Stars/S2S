@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_MYSTICS_HUT",
- "description": "TXT_KEY_BUILDING_MYSTICS_HUT",
- "civilopedia": "TXT_KEY_BUILDING_MYSTICS_HUT_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -69,6 +67,8 @@
   "construct": "AS2D_BUILD_CEREMONIAL_ALTAR"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_MYSTICS_HUT",
+  "civilopedia": "TXT_KEY_BUILDING_MYSTICS_HUT_PEDIA",
   "worth": 3,
   "advisor": "ADVISOR_CULTURE",
   "visibilityPriority": 1,

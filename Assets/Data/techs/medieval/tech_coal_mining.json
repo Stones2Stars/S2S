@@ -1,8 +1,5 @@
 {
  "type": "TECH_COAL_MINING",
- "description": "TXT_KEY_TECH_COAL_MINING",
- "civilopedia": "TXT_KEY_TECH_COAL_MINING_PEDIA",
- "quote": "TXT_KEY_TECH_COAL_MINING_QUOTE",
  "enables": {
   "bonuses": [
    "BONUS_COAL"
@@ -60,6 +57,9 @@
   "soundMP": "AS2D_TECH_COAL_MINING"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_COAL_MINING",
+  "civilopedia": "TXT_KEY_TECH_COAL_MINING_PEDIA",
+  "quote": "TXT_KEY_TECH_COAL_MINING_QUOTE",
   "era": "C2C_ERA_MEDIEVAL",
   "worth": 24,
   "militaryWorth": 10,

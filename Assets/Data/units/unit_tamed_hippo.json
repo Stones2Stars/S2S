@@ -1,8 +1,5 @@
 {
  "type": "UNIT_TAMED_HIPPO",
- "description": "TXT_KEY_UNIT_TAMED_HIPPO",
- "civilopedia": "TXT_KEY_UNIT_TAMED_ANIMAL_PEDIA",
- "help": "TXT_KEY_UNIT_TAMED_ANIMALS_HELP",
  "requires": {
   "build": {
    "all": [
@@ -51,6 +48,9 @@
   "production": 140
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_TAMED_HIPPO",
+  "civilopedia": "TXT_KEY_UNIT_TAMED_ANIMAL_PEDIA",
+  "help": "TXT_KEY_UNIT_TAMED_ANIMALS_HELP",
   "xpValueAttack": 6,
   "xpValueDefense": 3,
   "domain": "DOMAIN_LAND",

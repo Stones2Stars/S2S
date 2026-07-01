@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_ROGUE_PLANET_SUPPLY_DEPOT",
- "description": "TXT_KEY_BUILDING_ROGUE_PLANET_SUPPLY_DEPOT",
- "civilopedia": "TXT_KEY_BUILDING_ROGUE_PLANET_SUPPLY_DEPOT_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -60,6 +58,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_ROGUE_PLANET_SUPPLY_DEPOT",
+  "civilopedia": "TXT_KEY_BUILDING_ROGUE_PLANET_SUPPLY_DEPOT_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

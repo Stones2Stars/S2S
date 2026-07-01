@@ -1,9 +1,11 @@
 {
  "type": "PROMOTIONLINE_AGGRESSIVE",
- "description": "TXT_KEY_PROMOTIONLINE_AGGRESSIVE",
  "ui": {
   "art": {
    "icon": "art/Buttons/Traits/TraitAggressive.dds"
   }
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTIONLINE_AGGRESSIVE"
  }
 }

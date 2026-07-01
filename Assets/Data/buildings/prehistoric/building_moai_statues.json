@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_MOAI_STATUES",
- "description": "TXT_KEY_BUILDING_MOAI_STATUES",
- "civilopedia": "TXT_KEY_BUILDING_MOAI_STATUES_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -89,6 +87,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_MOAI_STATUES",
+  "civilopedia": "TXT_KEY_BUILDING_MOAI_STATUES_PEDIA",
   "commerceDoubleTime": {
    "culture": 1000
   },

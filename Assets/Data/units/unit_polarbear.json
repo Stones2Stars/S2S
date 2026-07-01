@@ -1,7 +1,5 @@
 {
  "type": "UNIT_POLARBEAR",
- "description": "TXT_KEY_UNIT_POLARBEAR",
- "civilopedia": "TXT_KEY_UNIT_POLAR_BEAR_PEDIA",
  "strength": {
   "unit": {
    "terrain": {
@@ -111,6 +109,8 @@
   ]
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_POLARBEAR",
+  "civilopedia": "TXT_KEY_UNIT_POLAR_BEAR_PEDIA",
   "spawnOnly": true,
   "xpValueAttack": 12,
   "xpValueDefense": 10,

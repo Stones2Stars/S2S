@@ -1,6 +1,5 @@
 {
  "type": "UNITCOMBAT_SIZE_HUGE",
- "description": "TXT_KEY_UNITCOMBAT_SIZE_HUGE",
  "strength": {
   "unit": {
    "damageModifier": {
@@ -31,6 +30,7 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_UNITCOMBAT_SIZE_HUGE",
   "base": {
    "size": 7
   }

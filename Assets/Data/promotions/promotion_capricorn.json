@@ -1,7 +1,5 @@
 {
  "type": "PROMOTION_CAPRICORN",
- "description": "TXT_KEY_PROMOTION_CAPRICORN",
- "help": "TXT_KEY_PROMOTION_ASTRO_HELP",
  "skills": {
   "amphib": true,
   "river": true
@@ -15,6 +13,8 @@
   "sound": "AS2D_IF_LEVELUP"
  },
  "identity": {
+  "description": "TXT_KEY_PROMOTION_CAPRICORN",
+  "help": "TXT_KEY_PROMOTION_ASTRO_HELP",
   "notOnDomains": [
    "DOMAIN_AIR",
    "DOMAIN_SEA"

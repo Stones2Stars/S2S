@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_RETIREMENT_HOME",
- "description": "TXT_KEY_BUILDING_RETIREMENT_HOME",
- "civilopedia": "TXT_KEY_BUILDING_RETIREMENT_HOME_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_HIGH_TECH_CULTURAL_ENRICHMENT"
@@ -86,6 +84,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_RETIREMENT_HOME",
+  "civilopedia": "TXT_KEY_BUILDING_RETIREMENT_HOME_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

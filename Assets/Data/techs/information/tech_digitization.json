@@ -1,8 +1,5 @@
 {
  "type": "TECH_DIGITIZATION",
- "description": "TXT_KEY_TECH_DIGITIZATION",
- "civilopedia": "TXT_KEY_TECH_DIGITIZATION_PEDIA",
- "quote": "TXT_KEY_TECH_DIGITIZATION_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_BLACKNET",
@@ -58,6 +55,9 @@
   "soundMP": "AS2D_TECH_DIGITIZATION"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_DIGITIZATION",
+  "civilopedia": "TXT_KEY_TECH_DIGITIZATION_PEDIA",
+  "quote": "TXT_KEY_TECH_DIGITIZATION_QUOTE",
   "era": "C2C_ERA_INFORMATION",
   "worth": 14,
   "tradeable": true,

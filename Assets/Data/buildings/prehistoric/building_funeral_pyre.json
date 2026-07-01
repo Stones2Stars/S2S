@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_FUNERAL_PYRE",
- "description": "TXT_KEY_BUILDING_FUNERAL_PYRE",
- "civilopedia": "TXT_KEY_BUILDING_FUNERAL_PYRE_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_CHIEFS_FUNERAL_PYRE"
@@ -98,6 +96,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_FUNERAL_PYRE",
+  "civilopedia": "TXT_KEY_BUILDING_FUNERAL_PYRE_PEDIA",
   "conquestProbability": 95,
   "advisor": "ADVISOR_GROWTH",
   "visibilityPriority": 1,

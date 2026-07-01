@@ -1,7 +1,5 @@
 {
  "type": "UNIT_GARAMANTES",
- "description": "TXT_KEY_UNIT_GARAMANTES",
- "civilopedia": "TXT_KEY_UNIT_GARAMANTES_PEDIA",
  "obsoletedBy": {
   "techs": [
    "TECH_DEPUTIZATION"
@@ -138,6 +136,8 @@
   "upkeep": 5
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_GARAMANTES",
+  "civilopedia": "TXT_KEY_UNIT_GARAMANTES_PEDIA",
   "worth": 2,
   "militaryWorth": 8,
   "xpValueAttack": 6,

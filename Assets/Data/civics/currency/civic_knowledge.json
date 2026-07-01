@@ -1,8 +1,5 @@
 {
  "type": "CIVIC_KNOWLEDGE",
- "description": "TXT_KEY_CIVIC_KNOWLEDGE",
- "civilopedia": "TXT_KEY_CIVIC_KNOWLEDGE_PEDIA",
- "strategy": "TXT_KEY_CIVIC_KNOWLEDGE_STRATEGY",
  "enables": {
   "hurries": [
    "HURRY_GOLD"
@@ -96,6 +93,9 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_CIVIC_KNOWLEDGE",
+  "civilopedia": "TXT_KEY_CIVIC_KNOWLEDGE_PEDIA",
+  "strategy": "TXT_KEY_CIVIC_KNOWLEDGE_STRATEGY",
   "civicOption": "CIVICOPTION_CURRENCY",
   "anarchyLength": 4,
   "upkeepLevel": "UPKEEP_EXTREME"

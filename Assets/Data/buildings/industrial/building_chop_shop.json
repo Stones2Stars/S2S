@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_CHOP_SHOP",
- "description": "TXT_KEY_BUILDING_CHOP_SHOP",
- "civilopedia": "TXT_KEY_BUILDING_CHOP_SHOP_PEDIA",
  "obsoletedBy": {
   "techs": [
    "TECH_SKYROADS"
@@ -95,6 +93,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_CHOP_SHOP",
+  "civilopedia": "TXT_KEY_BUILDING_CHOP_SHOP_PEDIA",
   "nukeImmune": true,
   "militaryWorth": 1,
   "advisor": "ADVISOR_ECONOMY",

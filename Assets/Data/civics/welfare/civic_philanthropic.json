@@ -1,8 +1,5 @@
 {
  "type": "CIVIC_PHILANTHROPIC",
- "description": "TXT_KEY_CIVIC_PHILANTHROPIC",
- "civilopedia": "TXT_KEY_CIVIC_PHILANTHROPIC_PEDIA",
- "strategy": "TXT_KEY_CIVIC_PHILANTHROPIC_STRATEGY",
  "enables": {
   "buildings": [
    "BUILDING_FOUNDATION"
@@ -139,6 +136,9 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_CIVIC_PHILANTHROPIC",
+  "civilopedia": "TXT_KEY_CIVIC_PHILANTHROPIC_PEDIA",
+  "strategy": "TXT_KEY_CIVIC_PHILANTHROPIC_STRATEGY",
   "civicOption": "CIVICOPTION_WELFARE",
   "upkeepLevel": "UPKEEP_LOW"
  }

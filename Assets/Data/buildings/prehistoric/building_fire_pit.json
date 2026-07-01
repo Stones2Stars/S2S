@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_FIRE_PIT",
- "description": "TXT_KEY_BUILDING_FIRE_PIT",
- "civilopedia": "TXT_KEY_BUILDING_FIRE_PIT_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_BLOOD_DANCE",
@@ -86,6 +84,8 @@
   "construct": "AS2D_BUILD_TOTEM"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_FIRE_PIT",
+  "civilopedia": "TXT_KEY_BUILDING_FIRE_PIT_PEDIA",
   "conquestProbability": 100,
   "advisor": "ADVISOR_CULTURE",
   "visibilityPriority": 1,

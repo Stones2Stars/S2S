@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_CLAYTRONIC_TOWER",
- "description": "TXT_KEY_BUILDING_CLAYTRONIC_TOWER",
- "civilopedia": "TXT_KEY_BUILDING_CLAYTRONIC_TOWER_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_CLAYTRONIC_CITY"
@@ -48,6 +46,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_CLAYTRONIC_TOWER",
+  "civilopedia": "TXT_KEY_BUILDING_CLAYTRONIC_TOWER_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

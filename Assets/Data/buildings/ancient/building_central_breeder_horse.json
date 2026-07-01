@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_CENTRAL_BREEDER_HORSE",
- "description": "TXT_KEY_BUILDING_CENTRAL_BREEDER_HORSE",
- "civilopedia": "TXT_KEY_BUILDING_CENTRAL_BREEDER_HORSE_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_ANIMAL_TRAINER_HORSE"
@@ -86,6 +84,8 @@
   "construct": "AS2D_BUILD_GRANARY"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_CENTRAL_BREEDER_HORSE",
+  "civilopedia": "TXT_KEY_BUILDING_CENTRAL_BREEDER_HORSE_PEDIA",
   "neverCapture": true,
   "worth": 4,
   "militaryWorth": 6,

@@ -1,6 +1,5 @@
 {
  "type": "PROPERTY_EDUCATION",
- "description": "TXT_KEY_PROPERTY_EDUCATION",
  "text": {
   "value": "TXT_KEY_PROPERTY_EDUCATION_DISPLAY",
   "change": "TXT_KEY_PROPERTY_EDUCATION_CHANGE",
@@ -93,6 +92,7 @@
   "trainReluctance": 3
  },
  "identity": {
+  "description": "TXT_KEY_PROPERTY_EDUCATION",
   "sourceDrain": true,
   "fontButtonIndex": 12
  }

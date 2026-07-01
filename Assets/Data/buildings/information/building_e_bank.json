@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_E_BANK",
- "description": "TXT_KEY_BUILDING_E_BANK",
- "civilopedia": "TXT_KEY_BUILDING_E_BANK_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_E_STOCK_MARKET"
@@ -50,6 +48,8 @@
   "construct": "AS2D_BUILD_EBANK"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_E_BANK",
+  "civilopedia": "TXT_KEY_BUILDING_E_BANK_PEDIA",
   "worth": 5,
   "advisor": "ADVISOR_ECONOMY",
   "visibilityPriority": 1,

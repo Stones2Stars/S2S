@@ -1,7 +1,5 @@
 {
  "type": "IMPROVEMENT_GEOTHERMAL_FACTORY",
- "description": "TXT_KEY_IMPROVEMENT_GEOTHERMAL_FACTORY",
- "civilopedia": "TXT_KEY_IMPROVEMENT_GEOTHERMAL_FACTORY_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -62,6 +60,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_IMPROVEMENT_GEOTHERMAL_FACTORY",
+  "civilopedia": "TXT_KEY_IMPROVEMENT_GEOTHERMAL_FACTORY_PEDIA",
   "advancedStart": {
    "cost": 50
   },

@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_INTERGALACTIC_RESEARCH_BASE",
- "description": "TXT_KEY_BUILDING_INTERGALACTIC_RESEARCH_BASE",
- "civilopedia": "TXT_KEY_BUILDING_INTERGALACTIC_RESEARCH_BASE_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_INTERGALACTIC_GRAVITON_COMMUNICATION_CENTER",
@@ -40,6 +38,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_INTERGALACTIC_RESEARCH_BASE",
+  "civilopedia": "TXT_KEY_BUILDING_INTERGALACTIC_RESEARCH_BASE_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

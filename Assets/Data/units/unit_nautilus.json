@@ -1,7 +1,5 @@
 {
  "type": "UNIT_NAUTILUS",
- "description": "TXT_KEY_UNIT_NAUTILUS",
- "civilopedia": "TXT_KEY_UNIT_NAUTILUS_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -112,6 +110,8 @@
   "upkeep": 1
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_NAUTILUS",
+  "civilopedia": "TXT_KEY_UNIT_NAUTILUS_PEDIA",
   "worth": 4,
   "militaryWorth": 102,
   "xpValueAttack": 6,

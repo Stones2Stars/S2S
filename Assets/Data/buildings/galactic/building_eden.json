@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_EDEN",
- "description": "TXT_KEY_BUILDING_EDEN",
- "civilopedia": "TXT_KEY_BUILDING_EDEN_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -83,6 +81,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_EDEN",
+  "civilopedia": "TXT_KEY_BUILDING_EDEN_PEDIA",
   "conquestProbability": 100,
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,

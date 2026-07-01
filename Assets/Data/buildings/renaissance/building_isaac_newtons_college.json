@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_ISAAC_NEWTONS_COLLEGE",
- "description": "TXT_KEY_BUILDING_ISAAC_NEWTONS_COLLEGE",
- "civilopedia": "TXT_KEY_BUILDING_ISAAC_NEWTONS_COLLEGE_PEDIA",
  "obsoletedBy": {
   "techs": [
    "TECH_QUANTUM_PHYSICS"
@@ -96,6 +94,8 @@
   "construct": "AS2D_BUILD_UNIVERSITY"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_ISAAC_NEWTONS_COLLEGE",
+  "civilopedia": "TXT_KEY_BUILDING_ISAAC_NEWTONS_COLLEGE_PEDIA",
   "nukeImmune": true,
   "teamShare": true,
   "worth": 14,

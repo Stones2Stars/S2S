@@ -1,7 +1,5 @@
 {
  "type": "TRAIT_POLITICIAN",
- "description": "TXT_KEY_TRAIT_POLITICIAN",
- "civilopedia": "TXT_KEY_TRAIT_POLITICIAN_PEDIA",
  "buildRate": {
   "empire": {
    "buildings": {
@@ -118,6 +116,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_TRAIT_POLITICIAN",
+  "civilopedia": "TXT_KEY_TRAIT_POLITICIAN_PEDIA",
   "shortDescription": "TXT_KEY_TRAIT_POLITICIAN_SHORT"
  }
 }

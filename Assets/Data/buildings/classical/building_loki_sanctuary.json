@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_LOKI_SANCTUARY",
- "description": "TXT_KEY_BUILDING_LOKI_SANCTUARY",
- "civilopedia": "TXT_KEY_BUILDING_LOKI_SANCTUARY_PEDIA",
  "enables": {
   "units": [
    "UNIT_LOKI"
@@ -127,6 +125,8 @@
   "construct": "AS2D_BUILD_NORDIC"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_LOKI_SANCTUARY",
+  "civilopedia": "TXT_KEY_BUILDING_LOKI_SANCTUARY_PEDIA",
   "commerceDoubleTime": {
    "culture": 1000
   },

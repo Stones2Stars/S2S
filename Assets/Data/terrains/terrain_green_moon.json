@@ -1,7 +1,5 @@
 {
  "type": "TERRAIN_GREEN_MOON",
- "description": "TXT_KEY_TERRAIN_GREEN_MOON",
- "civilopedia": "TXT_KEY_TERRAIN_GREEN_MOON_PEDIA",
  "food": {
   "plot": {
    "flat": 1
@@ -36,6 +34,8 @@
   "soundscape": "ASSS_TUNDRA_SELECT_AMB"
  },
  "identity": {
+  "description": "TXT_KEY_TERRAIN_GREEN_MOON",
+  "civilopedia": "TXT_KEY_TERRAIN_GREEN_MOON_PEDIA",
   "found": true,
   "movementCost": 3,
   "mapCategories": [

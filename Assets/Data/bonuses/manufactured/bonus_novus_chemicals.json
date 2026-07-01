@@ -1,7 +1,5 @@
 {
  "type": "BONUS_NOVUS_CHEMICALS",
- "description": "TXT_KEY_BONUS_NOVUS_CHEMICALS",
- "civilopedia": "TXT_KEY_BONUS_NOVUS_CHEMICALS_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_ATMOSPHERIC_WATER_GENERATOR",
@@ -21,6 +19,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_NOVUS_CHEMICALS",
+  "civilopedia": "TXT_KEY_BONUS_NOVUS_CHEMICALS_PEDIA",
   "bonusClassType": "BONUSCLASS_MANUFACTURED"
  }
 }

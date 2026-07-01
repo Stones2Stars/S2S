@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_LUNAR_WATER_EXTRACTION_FACILITY",
- "description": "TXT_KEY_BUILDING_LUNAR_WATER_EXTRACTION_FACILITY",
- "civilopedia": "TXT_KEY_BUILDING_LUNAR_WATER_EXTRACTION_FACILITY_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_LUNAR_BUG_FARM",
@@ -58,6 +56,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_LUNAR_WATER_EXTRACTION_FACILITY",
+  "civilopedia": "TXT_KEY_BUILDING_LUNAR_WATER_EXTRACTION_FACILITY_PEDIA",
   "providesFreshWater": true,
   "conquestProbability": 100,
   "advisor": "ADVISOR_GROWTH",

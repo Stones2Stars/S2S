@@ -1,8 +1,5 @@
 {
  "type": "TECH_DYSTOPIA_PATHOGENS",
- "description": "TXT_KEY_TECH_DYSTOPIA_PATHOGENS",
- "civilopedia": "TXT_KEY_TECH_DYSTOPIA_PATHOGENS_PEDIA",
- "quote": "TXT_KEY_TECH_DYSTOPIA_PATHOGENS_QUOTE",
  "enables": {
   "bonuses": [
    "BONUS_MARTIAN_ALGAE"
@@ -73,6 +70,9 @@
   "soundMP": "AS2D_TECH_DYSTOPIA_PATHOGENS"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_DYSTOPIA_PATHOGENS",
+  "civilopedia": "TXT_KEY_TECH_DYSTOPIA_PATHOGENS_PEDIA",
+  "quote": "TXT_KEY_TECH_DYSTOPIA_PATHOGENS_QUOTE",
   "era": "C2C_ERA_NANOTECH",
   "worth": 48,
   "militaryWorth": 4,

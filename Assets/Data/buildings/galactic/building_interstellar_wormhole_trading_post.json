@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_INTERSTELLAR_WORMHOLE_TRADING_POST",
- "description": "TXT_KEY_BUILDING_INTERSTELLAR_WORMHOLE_TRADING_POST",
- "civilopedia": "TXT_KEY_BUILDING_INTERSTELLAR_WORMHOLE_TRADING_POST_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_GALACTIC_CORE_BASE",
@@ -74,6 +72,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_INTERSTELLAR_WORMHOLE_TRADING_POST",
+  "civilopedia": "TXT_KEY_BUILDING_INTERSTELLAR_WORMHOLE_TRADING_POST_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

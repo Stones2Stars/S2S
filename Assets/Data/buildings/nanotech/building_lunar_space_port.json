@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_LUNAR_SPACE_PORT",
- "description": "TXT_KEY_BUILDING_LUNAR_SPACE_PORT",
- "civilopedia": "TXT_KEY_BUILDING_LUNAR_SPACE_PORT_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_LUNAR_COMETARY_BOMBARDMENT",
@@ -99,6 +97,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_LUNAR_SPACE_PORT",
+  "civilopedia": "TXT_KEY_BUILDING_LUNAR_SPACE_PORT_PEDIA",
   "conquestProbability": 70,
   "advisor": "ADVISOR_ECONOMY",
   "visibilityPriority": "1.0",

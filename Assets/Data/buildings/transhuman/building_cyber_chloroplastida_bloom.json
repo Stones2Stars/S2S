@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_CYBER_CHLOROPLASTIDA_BLOOM",
- "description": "TXT_KEY_BUILDING_CYBER_CHLOROPLASTIDA_BLOOM",
- "civilopedia": "TXT_KEY_BUILDING_CYBER_CHLOROPLASTIDA_BLOOM_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -56,6 +54,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_CYBER_CHLOROPLASTIDA_BLOOM",
+  "civilopedia": "TXT_KEY_BUILDING_CYBER_CHLOROPLASTIDA_BLOOM_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

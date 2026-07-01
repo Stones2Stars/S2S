@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_SEWER_SYSTEM",
- "description": "TXT_KEY_BUILDING_SEWER_SYSTEM",
- "civilopedia": "TXT_KEY_BUILDING_SEWER_SYSTEM_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_GARDEROBE",
@@ -142,6 +140,8 @@
   "construct": "AS2D_BUILD_SEWER"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_SEWER_SYSTEM",
+  "civilopedia": "TXT_KEY_BUILDING_SEWER_SYSTEM_PEDIA",
   "worth": 3,
   "conquestProbability": 100,
   "advisor": "ADVISOR_SCIENCE",

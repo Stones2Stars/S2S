@@ -1,8 +1,5 @@
 {
  "type": "TECH_MENSIOKINESIS",
- "description": "TXT_KEY_TECH_MENSIOKINESIS",
- "civilopedia": "TXT_KEY_TECH_MENSIOKINESIS_PEDIA",
- "quote": "TXT_KEY_TECH_MENSIOKINESIS_QUOTE",
  "enables": {
   "bonuses": [
    "BONUS_CHAOS_WANDS"
@@ -59,6 +56,9 @@
   "soundMP": "AS2D_TECH_GENERIC"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_MENSIOKINESIS",
+  "civilopedia": "TXT_KEY_TECH_MENSIOKINESIS_PEDIA",
+  "quote": "TXT_KEY_TECH_MENSIOKINESIS_QUOTE",
   "era": "C2C_ERA_COSMIC",
   "worth": 48,
   "tradeable": true,

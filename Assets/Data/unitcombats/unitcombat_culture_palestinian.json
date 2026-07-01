@@ -1,12 +1,12 @@
 {
  "type": "UNITCOMBAT_CULTURE_PALESTINIAN",
- "description": "TXT_KEY_UNITCOMBAT_CULTURE_PALESTINIAN",
  "ui": {
   "art": {
    "icon": "Art/categories/culture_newcultures.dds"
   }
  },
  "identity": {
+  "description": "TXT_KEY_UNITCOMBAT_CULTURE_PALESTINIAN",
   "culture": "BONUS_PALESTINIAN"
  }
 }

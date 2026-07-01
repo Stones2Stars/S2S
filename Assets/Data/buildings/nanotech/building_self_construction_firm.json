@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_SELF_CONSTRUCTION_FIRM",
- "description": "TXT_KEY_BUILDING_SELF_CONSTRUCTION_FIRM",
- "civilopedia": "TXT_KEY_BUILDING_SELF_CONSTRUCTION_FIRM_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_NEOM"
@@ -91,6 +89,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_SELF_CONSTRUCTION_FIRM",
+  "civilopedia": "TXT_KEY_BUILDING_SELF_CONSTRUCTION_FIRM_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

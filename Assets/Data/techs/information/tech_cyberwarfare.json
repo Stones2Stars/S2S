@@ -1,8 +1,5 @@
 {
  "type": "TECH_CYBERWARFARE",
- "description": "TXT_KEY_TECH_CYBERWARFARE",
- "civilopedia": "TXT_KEY_TECH_CYBERWARFARE_PEDIA",
- "quote": "TXT_KEY_TECH_CYBERWARFARE_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_COMPUTER_SECURITY_OFFICE",
@@ -74,6 +71,9 @@
   "soundMP": "AS2D_TECH_CYBERWARFARE"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_CYBERWARFARE",
+  "civilopedia": "TXT_KEY_TECH_CYBERWARFARE_PEDIA",
+  "quote": "TXT_KEY_TECH_CYBERWARFARE_QUOTE",
   "era": "C2C_ERA_INFORMATION",
   "worth": 14,
   "tradeable": true,

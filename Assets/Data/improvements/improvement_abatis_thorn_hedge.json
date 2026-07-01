@@ -1,7 +1,5 @@
 {
  "type": "IMPROVEMENT_ABATIS_THORN_HEDGE",
- "description": "TXT_KEY_IMPROVEMENT_ABATIS_THORN_HEDGE",
- "civilopedia": "TXT_KEY_IMPROVEMENT_FORT_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -54,6 +52,8 @@
   "uniqueRange": 2
  },
  "identity": {
+  "description": "TXT_KEY_IMPROVEMENT_ABATIS_THORN_HEDGE",
+  "civilopedia": "TXT_KEY_IMPROVEMENT_FORT_PEDIA",
   "actsAsCity": true,
   "advancedStart": {
    "cost": 10

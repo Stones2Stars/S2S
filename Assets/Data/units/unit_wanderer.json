@@ -1,7 +1,5 @@
 {
  "type": "UNIT_WANDERER",
- "description": "TXT_KEY_UNIT_WANDERER",
- "civilopedia": "TXT_KEY_UNIT_WANDERER_PEDIA",
  "obsoletedBy": {
   "techs": [
    "TECH_TRAILS"
@@ -49,6 +47,8 @@
   "upkeep": 1
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_WANDERER",
+  "civilopedia": "TXT_KEY_UNIT_WANDERER_PEDIA",
   "worth": 2,
   "militaryWorth": 1,
   "xpValueAttack": 4,

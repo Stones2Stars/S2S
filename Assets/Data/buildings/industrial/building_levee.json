@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_LEVEE",
- "description": "TXT_KEY_BUILDING_LEVEE",
- "civilopedia": "TXT_KEY_BUILDING_LEVEE_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_RIVER_ADMINISTRATION"
@@ -67,6 +65,8 @@
   "construct": "AS2D_BUILD_AQUEDUCT"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_LEVEE",
+  "civilopedia": "TXT_KEY_BUILDING_LEVEE_PEDIA",
   "worth": 2,
   "militaryWorth": 2,
   "conquestProbability": 75,

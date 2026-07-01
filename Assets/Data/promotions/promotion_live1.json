@@ -1,7 +1,5 @@
 {
  "type": "PROMOTION_LIVE1",
- "description": "TXT_KEY_PROMOTION_LIVE1",
- "help": "TXT_KEY_PROMOTION_LIVE1_HELP",
  "promotionLine": {
   "PROMOTIONLINE_LIVE": 1
  },
@@ -12,5 +10,9 @@
  },
  "sound": {
   "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_LIVE1",
+  "help": "TXT_KEY_PROMOTION_LIVE1_HELP"
  }
 }

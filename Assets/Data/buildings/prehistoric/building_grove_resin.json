@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_GROVE_RESIN",
- "description": "TXT_KEY_BUILDING_GROVE_RESIN",
- "civilopedia": "TXT_KEY_BUILDING_GROVE_RESIN_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_AGROFOREST"
@@ -65,6 +63,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_GROVE_RESIN",
+  "civilopedia": "TXT_KEY_BUILDING_GROVE_RESIN_PEDIA",
   "enabledCivilizations": [
    "CIVILIZATION_NPC_NEANDERTHAL"
   ],

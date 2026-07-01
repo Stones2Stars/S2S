@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_MEGATOWER",
- "description": "TXT_KEY_BUILDING_MEGATOWER",
- "civilopedia": "TXT_KEY_BUILDING_MEGATOWER_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_AEROPOLIS_2001",
@@ -107,6 +105,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_MEGATOWER",
+  "civilopedia": "TXT_KEY_BUILDING_MEGATOWER_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

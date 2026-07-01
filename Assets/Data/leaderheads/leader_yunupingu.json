@@ -1,7 +1,5 @@
 {
  "type": "LEADER_YUNUPINGU",
- "description": "TXT_KEY_LEADER_YUNUPINGU",
- "civilopedia": "TXT_KEY_LEADER_YUNUPINGU_PEDIA",
  "grants": {
   "traits": [
    "TRAIT_POLITICIAN",
@@ -298,5 +296,9 @@
    "C2C_ERA_TRANSCENDENT": "AS2D_DIPLO_WARDRUMS_LATE",
    "C2C_ERA_FUTURE": "AS2D_DIPLO_WARDRUMS_LATE"
   }
+ },
+ "identity": {
+  "description": "TXT_KEY_LEADER_YUNUPINGU",
+  "civilopedia": "TXT_KEY_LEADER_YUNUPINGU_PEDIA"
  }
 }

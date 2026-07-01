@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_GREAT_HOLMEGAARD_HUNT",
- "description": "TXT_KEY_BUILDING_GREAT_HOLMEGAARD_HUNT",
- "civilopedia": "TXT_KEY_BUILDING_GREAT_HOLMEGAARD_HUNT_PEDIA",
  "obsoletedBy": {
   "techs": [
    "TECH_RIFLING"
@@ -87,6 +85,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_GREAT_HOLMEGAARD_HUNT",
+  "civilopedia": "TXT_KEY_BUILDING_GREAT_HOLMEGAARD_HUNT_PEDIA",
   "neverCapture": true,
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [

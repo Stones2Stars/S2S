@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_CENTRAL_BANK",
- "description": "TXT_KEY_BUILDING_CENTRAL_BANK",
- "civilopedia": "TXT_KEY_BUILDING_CENTRAL_BANK_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -98,6 +96,8 @@
   "construct": "AS2D_BUILD_BANK"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_CENTRAL_BANK",
+  "civilopedia": "TXT_KEY_BUILDING_CENTRAL_BANK_PEDIA",
   "commerceDoubleTime": {
    "gold": 200
   },

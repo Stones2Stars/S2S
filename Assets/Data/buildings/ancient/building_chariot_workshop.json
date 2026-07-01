@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_CHARIOT_WORKSHOP",
- "description": "TXT_KEY_BUILDING_CHARIOT_WORKSHOP",
- "civilopedia": "TXT_KEY_BUILDING_CHARIOT_WORKSHOP_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_HIPPODROME"
@@ -81,6 +79,8 @@
   "construct": "AS2D_BUILD_GRANARY"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_CHARIOT_WORKSHOP",
+  "civilopedia": "TXT_KEY_BUILDING_CHARIOT_WORKSHOP_PEDIA",
   "worth": 4,
   "militaryWorth": 6,
   "advisor": "ADVISOR_ECONOMY",

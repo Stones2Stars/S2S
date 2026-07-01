@@ -1,6 +1,5 @@
 {
  "type": "ROUTE_MAGLEV",
- "description": "TXT_KEY_ROUTE_MAGLEV",
  "food": {
   "plot": {
    "improvements": {
@@ -104,6 +103,7 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_ROUTE_MAGLEV",
   "value": 8,
   "advancedStart": {
    "cost": 24

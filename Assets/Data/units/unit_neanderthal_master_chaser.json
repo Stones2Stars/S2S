@@ -1,7 +1,5 @@
 {
  "type": "UNIT_NEANDERTHAL_MASTER_CHASER",
- "description": "TXT_KEY_UNIT_NEANDERTHAL_MASTER_CHASER",
- "civilopedia": "TXT_KEY_UNIT_MASTER_HUNTER_PEDIA",
  "obsoletedBy": {
   "techs": [
    "TECH_TRACKING"
@@ -71,6 +69,8 @@
   "upkeep": 1
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_NEANDERTHAL_MASTER_CHASER",
+  "civilopedia": "TXT_KEY_UNIT_MASTER_HUNTER_PEDIA",
   "spawnOnly": true,
   "worth": 1,
   "militaryWorth": 1,

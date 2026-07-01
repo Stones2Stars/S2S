@@ -1,7 +1,5 @@
 {
  "type": "UNIT_F111_AARDVARK",
- "description": "TXT_KEY_UNIT_F111_AARDVARK",
- "civilopedia": "TXT_KEY_UNIT_F111_AARDVARK_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -85,6 +83,8 @@
   "upkeep": 4
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_F111_AARDVARK",
+  "civilopedia": "TXT_KEY_UNIT_F111_AARDVARK_PEDIA",
   "worth": 4,
   "militaryWorth": 16,
   "xpValueAttack": 6,

@@ -1,8 +1,5 @@
 {
  "type": "TECH_FREE_ARTISTRY",
- "description": "TXT_KEY_TECH_FREE_ARTISTRY",
- "civilopedia": "TXT_KEY_TECH_FREE_ARTISTRY_PEDIA",
- "quote": "TXT_KEY_TECH_FREE_ARTISTRY_QUOTE",
  "enables": {
   "bonuses": [
    "BONUS_MING_VASE"
@@ -69,6 +66,9 @@
   "soundMP": "AS2D_TECH_FREE_ARTISTRY"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_FREE_ARTISTRY",
+  "civilopedia": "TXT_KEY_TECH_FREE_ARTISTRY_PEDIA",
+  "quote": "TXT_KEY_TECH_FREE_ARTISTRY_QUOTE",
   "era": "C2C_ERA_RENAISSANCE",
   "worth": 32,
   "tradeable": true,

@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_GRANARY",
- "description": "TXT_KEY_BUILDING_GRANARY",
- "civilopedia": "TXT_KEY_BUILDING_GRANARY_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_APOTHECARY_SHOP",
@@ -191,6 +189,8 @@
   "construct": "AS2D_BUILD_GRANARY"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_GRANARY",
+  "civilopedia": "TXT_KEY_BUILDING_GRANARY_PEDIA",
   "worth": 3,
   "conquestProbability": 75,
   "dcmAirbombMission": 2,

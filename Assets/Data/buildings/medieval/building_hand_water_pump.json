@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_HAND_WATER_PUMP",
- "description": "TXT_KEY_BUILDING_HAND_WATER_PUMP",
- "civilopedia": "TXT_KEY_BUILDING_HAND_WATER_PUMP_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_WIND_WATER_PUMP"
@@ -96,6 +94,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_HAND_WATER_PUMP",
+  "civilopedia": "TXT_KEY_BUILDING_HAND_WATER_PUMP_PEDIA",
   "advisor": "ADVISOR_GROWTH",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

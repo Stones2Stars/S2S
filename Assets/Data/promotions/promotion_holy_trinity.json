@@ -1,6 +1,5 @@
 {
  "type": "PROMOTION_HOLY_TRINITY",
- "description": "TXT_KEY_PROMOTION_HOLY_TRINITY",
  "experience": {
   "unit": {
    "percent": 25
@@ -25,6 +24,7 @@
   "sound": "AS2D_IF_LEVELUP"
  },
  "identity": {
+  "description": "TXT_KEY_PROMOTION_HOLY_TRINITY",
   "stateReligionPrereq": "RELIGION_HINDUISM",
   "unitCombats": [
    "UNITCOMBAT_RECON",

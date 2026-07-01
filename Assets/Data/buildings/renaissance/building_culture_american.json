@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_CULTURE_AMERICAN",
- "description": "TXT_KEY_BUILDING_CULTURE_AMERICAN",
- "civilopedia": "TXT_KEY_BUILDING_CULTURE_AMERICAN_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -204,6 +202,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_CULTURE_AMERICAN",
+  "civilopedia": "TXT_KEY_BUILDING_CULTURE_AMERICAN_PEDIA",
   "nukeImmune": true,
   "noInstanceLimit": true,
   "conquestProbability": 100,

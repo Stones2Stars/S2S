@@ -1,7 +1,5 @@
 {
  "type": "BONUS_FINE_CLAY",
- "description": "TXT_KEY_BONUS_FINE_CLAY",
- "civilopedia": "TXT_KEY_BONUS_FINE_CLAY_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_BEADMAKERS_WORKSHOP",
@@ -87,6 +85,8 @@
   ]
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_FINE_CLAY",
+  "civilopedia": "TXT_KEY_BONUS_FINE_CLAY_PEDIA",
   "bonusClassType": "BONUSCLASS_PRODUCTION"
  }
 }

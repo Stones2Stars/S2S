@@ -1,7 +1,5 @@
 {
  "type": "UNIT_TARKAN",
- "description": "TXT_KEY_UNIT_TARKAN",
- "civilopedia": "TXT_KEY_UNIT_TARKAN_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -137,6 +135,8 @@
   "upkeep": 1
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_TARKAN",
+  "civilopedia": "TXT_KEY_UNIT_TARKAN_PEDIA",
   "worth": 2,
   "militaryWorth": 15,
   "xpValueAttack": 6,

@@ -1,8 +1,5 @@
 {
  "type": "TECH_MYTHOLOGICAL_BESTIARY",
- "description": "TXT_KEY_TECH_MYTHOLOGICAL_BESTIARY",
- "civilopedia": "TXT_KEY_TECH_MYTHOLOGICAL_BESTIARY_PEDIA",
- "quote": "TXT_KEY_TECH_MYTHOLOGICAL_BESTIARY_QUOTE",
  "enables": {
   "bonuses": [
    "BONUS_HIERACOSPHINX",
@@ -82,6 +79,9 @@
   "soundMP": "AS2D_TECH_MYTHOLOGICAL_BESTIARY"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_MYTHOLOGICAL_BESTIARY",
+  "civilopedia": "TXT_KEY_TECH_MYTHOLOGICAL_BESTIARY_PEDIA",
+  "quote": "TXT_KEY_TECH_MYTHOLOGICAL_BESTIARY_QUOTE",
   "era": "C2C_ERA_TRANSHUMAN",
   "worth": 48,
   "militaryWorth": 4,

@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_PATTAKY_OF_OLOFIN",
- "description": "TXT_KEY_BUILDING_PATTAKY_OF_OLOFIN",
- "civilopedia": "TXT_KEY_BUILDING_PATTAKY_OF_OLOFIN_PEDIA",
  "enables": {
   "units": [
    "UNIT_YORUBA_MISSIONARY"
@@ -79,6 +77,8 @@
   "construct": "AS2D_BUILD_CHRISTIAN"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_PATTAKY_OF_OLOFIN",
+  "civilopedia": "TXT_KEY_BUILDING_PATTAKY_OF_OLOFIN_PEDIA",
   "nukeImmune": true,
   "worth": 8,
   "conquestProbability": 100,

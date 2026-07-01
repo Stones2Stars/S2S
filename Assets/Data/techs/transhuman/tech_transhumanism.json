@@ -1,8 +1,5 @@
 {
  "type": "TECH_TRANSHUMANISM",
- "description": "TXT_KEY_TECH_TRANSHUMANISM",
- "civilopedia": "TXT_KEY_TECH_TRANSHUMANISM_PEDIA",
- "quote": "TXT_KEY_TECH_TRANSHUMANISM_QUOTE",
  "enables": {
   "bonuses": [
    "BONUS_HUMAN_MOD_INDEFINITE_LIFESPAN",
@@ -72,6 +69,9 @@
   "soundMP": "AS2D_TECH_TRANSHUMANISM"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_TRANSHUMANISM",
+  "civilopedia": "TXT_KEY_TECH_TRANSHUMANISM_PEDIA",
+  "quote": "TXT_KEY_TECH_TRANSHUMANISM_QUOTE",
   "era": "C2C_ERA_TRANSHUMAN",
   "worth": 48,
   "militaryWorth": 4,

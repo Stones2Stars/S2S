@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_BELIEF_KARMA",
- "description": "TXT_KEY_BUILDING_BELIEF_KARMA",
- "civilopedia": "TXT_KEY_BUILDING_BELIEF_KARMA_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -34,6 +32,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_BELIEF_KARMA",
+  "civilopedia": "TXT_KEY_BUILDING_BELIEF_KARMA_PEDIA",
   "notConstructible": true,
   "nukeImmune": true,
   "neverCapture": true,

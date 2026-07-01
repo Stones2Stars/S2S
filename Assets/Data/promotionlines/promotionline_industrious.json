@@ -1,9 +1,11 @@
 {
  "type": "PROMOTIONLINE_INDUSTRIOUS",
- "description": "TXT_KEY_PROMOTIONLINE_INDUSTRIOUS",
  "ui": {
   "art": {
    "icon": "art/Buttons/Traits/TraitIndustrious.dds"
   }
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTIONLINE_INDUSTRIOUS"
  }
 }

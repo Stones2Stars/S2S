@@ -1,12 +1,12 @@
 {
  "type": "UNITCOMBAT_CULTURE_XIA",
- "description": "TXT_KEY_UNITCOMBAT_CULTURE_XIA",
  "ui": {
   "art": {
    "icon": "Art/categories/culture_newcultures.dds"
   }
  },
  "identity": {
+  "description": "TXT_KEY_UNITCOMBAT_CULTURE_XIA",
   "culture": "BONUS_XIA"
  }
 }

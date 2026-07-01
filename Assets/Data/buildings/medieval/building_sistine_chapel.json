@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_SISTINE_CHAPEL",
- "description": "TXT_KEY_BUILDING_SISTINE_CHAPEL",
- "civilopedia": "TXT_KEY_BUILDING_SISTINE_CHAPEL_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -86,6 +84,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_SISTINE_CHAPEL",
+  "civilopedia": "TXT_KEY_BUILDING_SISTINE_CHAPEL_PEDIA",
   "stateReligionCommerce": {
    "culture": 5
   },

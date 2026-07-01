@@ -1,8 +1,5 @@
 {
  "type": "CIVIC_BOURGEOIS",
- "description": "TXT_KEY_CIVIC_BOURGEOIS",
- "civilopedia": "TXT_KEY_CIVIC_BOURGEOIS_PEDIA",
- "strategy": "TXT_KEY_CIVIC_BOURGEOIS_STRATEGY",
  "enables": {
   "buildings": [
    "BUILDING_ART_PATRONAGE",
@@ -277,6 +274,9 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_CIVIC_BOURGEOIS",
+  "civilopedia": "TXT_KEY_CIVIC_BOURGEOIS_PEDIA",
+  "strategy": "TXT_KEY_CIVIC_BOURGEOIS_STRATEGY",
   "civicOption": "CIVICOPTION_SOCIETY",
   "anarchyLength": 1,
   "upkeepLevel": "UPKEEP_MEDIUM"

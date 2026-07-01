@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_TRADING_POST",
- "description": "TXT_KEY_BUILDING_TRADING_POST",
- "civilopedia": "TXT_KEY_BUILDING_TRADING_POST_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_ALCHEMISTS_LAB",
@@ -308,6 +306,8 @@
   "construct": "AS2D_BUILD_LIGHTHOUSE"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_TRADING_POST",
+  "civilopedia": "TXT_KEY_BUILDING_TRADING_POST_PEDIA",
   "worth": 3,
   "militaryWorth": 1,
   "conquestProbability": 75,

@@ -1,7 +1,5 @@
 {
  "type": "UNIT_AKSUM_MERCHANTS",
- "description": "TXT_KEY_UNIT_AKSUM_MERCHANTS",
- "civilopedia": "TXT_KEY_UNIT_AKSUM_MERCHANTS_PEDIA",
  "obsoletedBy": {
   "techs": [
    "TECH_MOTORIZED_TRANSPORTATION"
@@ -93,6 +91,8 @@
   "upkeep": 1
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_AKSUM_MERCHANTS",
+  "civilopedia": "TXT_KEY_UNIT_AKSUM_MERCHANTS_PEDIA",
   "worth": 1,
   "domain": "DOMAIN_LAND",
   "defaultUnitAI": "UNITAI_MERCHANT",

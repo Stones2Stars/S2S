@@ -1,7 +1,5 @@
 {
  "type": "BONUS_JAPANESE",
- "description": "TXT_KEY_BONUS_JAPANESE",
- "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
  "enables": {
   "units": [
    "UNIT_HIDEYOSHI",
@@ -15,6 +13,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_JAPANESE",
+  "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
   "bonusClassType": "BONUSCLASS_CULTURE"
  }
 }

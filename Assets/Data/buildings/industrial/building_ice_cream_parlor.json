@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_ICE_CREAM_PARLOR",
- "description": "TXT_KEY_BUILDING_ICE_CREAM_PARLOR",
- "civilopedia": "TXT_KEY_BUILDING_ICE_CREAM_PARLOR_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_FOOD_MANUFACTURING_DISTRICT"
@@ -190,6 +188,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_ICE_CREAM_PARLOR",
+  "civilopedia": "TXT_KEY_BUILDING_ICE_CREAM_PARLOR_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

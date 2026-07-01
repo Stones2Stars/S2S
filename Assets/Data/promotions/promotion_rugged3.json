@@ -1,6 +1,5 @@
 {
  "type": "PROMOTION_RUGGED3",
- "description": "TXT_KEY_PROMOTION_RUGGED3",
  "strength": {
   "unit": {
    "terrain": {
@@ -68,6 +67,7 @@
   "sound": "AS2D_IF_LEVELUP"
  },
  "identity": {
+  "description": "TXT_KEY_PROMOTION_RUGGED3",
   "notOnDomains": [
    "DOMAIN_AIR",
    "DOMAIN_SEA"

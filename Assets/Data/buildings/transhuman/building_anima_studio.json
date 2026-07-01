@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_ANIMA_STUDIO",
- "description": "TXT_KEY_BUILDING_ANIMA_STUDIO",
- "civilopedia": "TXT_KEY_BUILDING_ANIMA_STUDIO_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_ANIMA_GAMING_LEAGUE",
@@ -84,6 +82,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_ANIMA_STUDIO",
+  "civilopedia": "TXT_KEY_BUILDING_ANIMA_STUDIO_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

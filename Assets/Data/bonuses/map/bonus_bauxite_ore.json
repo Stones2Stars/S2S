@@ -1,7 +1,5 @@
 {
  "type": "BONUS_BAUXITE_ORE",
- "description": "TXT_KEY_BONUS_BAUXITE_ORE",
- "civilopedia": "TXT_KEY_BONUS_BAUXITE_ORE_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_LUNAR_ALUMINIUM_PROCESSING_FACILITY",
@@ -70,6 +68,8 @@
   ]
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_BAUXITE_ORE",
+  "civilopedia": "TXT_KEY_BONUS_BAUXITE_ORE_PEDIA",
   "bonusClassType": "BONUSCLASS_STRATEGIC"
  }
 }

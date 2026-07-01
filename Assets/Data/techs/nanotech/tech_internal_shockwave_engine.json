@@ -1,8 +1,5 @@
 {
  "type": "TECH_INTERNAL_SHOCKWAVE_ENGINE",
- "description": "TXT_KEY_TECH_INTERNAL_SHOCKWAVE_ENGINE",
- "civilopedia": "TXT_KEY_TECH_INTERNAL_SHOCKWAVE_ENGINE_PEDIA",
- "quote": "TXT_KEY_TECH_INTERNAL_SHOCKWAVE_ENGINE_QUOTE",
  "enables": {
   "bonuses": [
    "BONUS_SHOCKWAVE_ENGINES"
@@ -67,6 +64,9 @@
   "soundMP": "AS2D_TECH_INTERNAL_SHOCKWAVE_ENGINE"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_INTERNAL_SHOCKWAVE_ENGINE",
+  "civilopedia": "TXT_KEY_TECH_INTERNAL_SHOCKWAVE_ENGINE_PEDIA",
+  "quote": "TXT_KEY_TECH_INTERNAL_SHOCKWAVE_ENGINE_QUOTE",
   "era": "C2C_ERA_NANOTECH",
   "worth": 14,
   "tradeable": true,

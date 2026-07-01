@@ -1,8 +1,5 @@
 {
  "type": "TECH_DRYING",
- "description": "TXT_KEY_TECH_DRYING",
- "civilopedia": "TXT_KEY_TECH_DRYING_PEDIA",
- "quote": "TXT_KEY_TECH_DRYING_QUOTE",
  "enables": {
   "bonuses": [
    "BONUS_DRIED_MEAT"
@@ -59,6 +56,9 @@
   "soundMP": "AS2D_TECH_DRYING"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_DRYING",
+  "civilopedia": "TXT_KEY_TECH_DRYING_PEDIA",
+  "quote": "TXT_KEY_TECH_DRYING_QUOTE",
   "era": "C2C_ERA_PREHISTORIC",
   "worth": 8,
   "tradeable": true,

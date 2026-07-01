@@ -1,7 +1,5 @@
 {
  "type": "FEATURE_FLOOD_PLAINS",
- "description": "TXT_KEY_FEATURE_FLOOD_PLAINS",
- "civilopedia": "TXT_KEY_FEATURE_FLOOD_PLAINS_PEDIA",
  "food": {
   "plot": {
    "flat": [
@@ -60,6 +58,8 @@
   ]
  },
  "identity": {
+  "description": "TXT_KEY_FEATURE_FLOOD_PLAINS",
+  "civilopedia": "TXT_KEY_FEATURE_FLOOD_PLAINS_PEDIA",
   "appearance": 4000,
   "popDestroys": 6,
   "requiresFlatlands": true,

@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_PIR_E_SABZ",
- "description": "TXT_KEY_BUILDING_PIR_E_SABZ",
- "civilopedia": "TXT_KEY_BUILDING_PIR_E_SABZ_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -56,6 +54,8 @@
   "construct": "AS2D_BUILD_ISLAMIC"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_PIR_E_SABZ",
+  "civilopedia": "TXT_KEY_BUILDING_PIR_E_SABZ_PEDIA",
   "commerceDoubleTime": {
    "culture": 1000
   },

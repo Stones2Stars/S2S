@@ -1,7 +1,5 @@
 {
  "type": "BONUS_RAW_FISH",
- "description": "TXT_KEY_BONUS_RAW_FISH",
- "civilopedia": "TXT_KEY_BONUS_RAW_FISH_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_CAT_BREEDER",
@@ -19,6 +17,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_RAW_FISH",
+  "civilopedia": "TXT_KEY_BONUS_RAW_FISH_PEDIA",
   "bonusClassType": "BONUSCLASS_MANUFACTURED"
  }
 }

@@ -1,7 +1,5 @@
 {
  "type": "TERRAIN_MARTIAN_DUNES",
- "description": "TXT_KEY_TERRAIN_MARTIAN_DUNES",
- "civilopedia": "TXT_KEY_TERRAIN_MARTIAN_DUNES_PEDIA",
  "commerce": {
   "plot": {
    "flat": 2
@@ -31,6 +29,8 @@
   "soundscape": "ASSS_DESERT_SELECT_AMB"
  },
  "identity": {
+  "description": "TXT_KEY_TERRAIN_MARTIAN_DUNES",
+  "civilopedia": "TXT_KEY_TERRAIN_MARTIAN_DUNES_PEDIA",
   "foundCoast": true,
   "foundFreshWater": true,
   "movementCost": 4,

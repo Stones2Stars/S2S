@@ -1,6 +1,5 @@
 {
  "type": "PROMOTION_GENTLEMEN",
- "description": "TXT_KEY_PROMOTION_GENTLEMEN",
  "strength": {
   "unit": {
    "cityAttack": {
@@ -70,6 +69,7 @@
   "sound": "AS2D_IF_LEVELUP"
  },
  "identity": {
+  "description": "TXT_KEY_PROMOTION_GENTLEMEN",
   "stateReligionPrereq": "RELIGION_CONFUCIANISM",
   "unitCombats": [
    "UNITCOMBAT_RECON",

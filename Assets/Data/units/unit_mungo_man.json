@@ -1,7 +1,5 @@
 {
  "type": "UNIT_MUNGO_MAN",
- "description": "TXT_KEY_UNIT_MUNGO_MAN",
- "civilopedia": "TXT_KEY_UNIT_MUNGO_MAN_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -55,6 +53,8 @@
   "upkeep": 1
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_MUNGO_MAN",
+  "civilopedia": "TXT_KEY_UNIT_MUNGO_MAN_PEDIA",
   "worth": 2,
   "militaryWorth": 3,
   "xpValueAttack": 4,

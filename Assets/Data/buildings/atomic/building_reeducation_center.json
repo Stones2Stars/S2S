@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_REEDUCATION_CENTER",
- "description": "TXT_KEY_BUILDING_REEDUCATION_CENTER",
- "civilopedia": "TXT_KEY_BUILDING_REEDUCATION_CENTER_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_CYBERNETIC_PRISON"
@@ -89,6 +87,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_REEDUCATION_CENTER",
+  "civilopedia": "TXT_KEY_BUILDING_REEDUCATION_CENTER_PEDIA",
   "worth": 4,
   "advisor": "ADVISOR_MILITARY",
   "visibilityPriority": 1,

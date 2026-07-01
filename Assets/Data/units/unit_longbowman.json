@@ -1,7 +1,5 @@
 {
  "type": "UNIT_LONGBOWMAN",
- "description": "TXT_KEY_UNIT_LONGBOWMAN",
- "civilopedia": "TXT_KEY_UNIT_LONGBOWMAN_PEDIA",
  "obsoletedBy": {
   "techs": [
    "TECH_FLINTLOCK"
@@ -55,6 +53,8 @@
   "upkeep": 1
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_LONGBOWMAN",
+  "civilopedia": "TXT_KEY_UNIT_LONGBOWMAN_PEDIA",
   "worth": 2,
   "militaryWorth": 15,
   "xpValueAttack": 1,

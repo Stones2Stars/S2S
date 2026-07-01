@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_HOMELAND_SECURITY_AGENCY",
- "description": "TXT_KEY_BUILDING_HOMELAND_SECURITY_AGENCY",
- "civilopedia": "TXT_KEY_BUILDING_HOMELAND_SECURITY_AGENCY_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -81,6 +79,8 @@
   "construct": "AS2D_BUILD_BARRACKS"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_HOMELAND_SECURITY_AGENCY",
+  "civilopedia": "TXT_KEY_BUILDING_HOMELAND_SECURITY_AGENCY_PEDIA",
   "nukeImmune": true,
   "neverCapture": true,
   "worth": 5,

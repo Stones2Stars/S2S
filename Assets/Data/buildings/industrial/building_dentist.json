@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_DENTIST",
- "description": "TXT_KEY_BUILDING_DENTIST",
- "civilopedia": "TXT_KEY_BUILDING_DENTIST_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_HEALTHCARE_MEGACOMPLEX"
@@ -114,6 +112,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_DENTIST",
+  "civilopedia": "TXT_KEY_BUILDING_DENTIST_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

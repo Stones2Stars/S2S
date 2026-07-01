@@ -1,6 +1,5 @@
 {
  "type": "PROMOTION_RAD_SHELLS",
- "description": "TXT_KEY_PROMOTION_RADIOACTIVE_SHELLS",
  "collateral": {
   "unit": {
    "damage": {
@@ -33,6 +32,7 @@
   "sound": "AS2D_IF_LEVELUP"
  },
  "identity": {
+  "description": "TXT_KEY_PROMOTION_RADIOACTIVE_SHELLS",
   "unitCombats": [
    "UNITCOMBAT_SIEGE",
    "UNITCOMBAT_TRACKED",

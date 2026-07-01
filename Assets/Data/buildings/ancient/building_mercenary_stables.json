@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_MERCENARY_STABLES",
- "description": "TXT_KEY_BUILDING_MERCENARY_STABLES",
- "civilopedia": "TXT_KEY_BUILDING_MERCENARY_STABLES_PEDIA",
  "enables": {
   "units": [
    "UNIT_BANDIT_RIDER",
@@ -93,6 +91,8 @@
   "construct": "AS2D_BUILD_GRANARY"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_MERCENARY_STABLES",
+  "civilopedia": "TXT_KEY_BUILDING_MERCENARY_STABLES_PEDIA",
   "worth": 4,
   "militaryWorth": 6,
   "advisor": "ADVISOR_MILITARY",

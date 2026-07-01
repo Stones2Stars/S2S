@@ -1,6 +1,5 @@
 {
  "type": "PROMOTIONLINE_CLOUT",
- "description": "TXT_KEY_PROMOTIONLINE_CLOUT",
  "loadPrune": {
   "onGameOptions": [
    "GAMEOPTION_COMBAT_HIDE_SEEK"
@@ -12,6 +11,7 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_PROMOTIONLINE_CLOUT",
   "unitCombats": [
    "UNITCOMBAT_LAW_ENFORCEMENT",
    "UNITCOMBAT_SPY",

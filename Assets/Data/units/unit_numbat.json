@@ -1,7 +1,5 @@
 {
  "type": "UNIT_NUMBAT",
- "description": "TXT_KEY_UNIT_NUMBAT",
- "civilopedia": "TXT_KEY_CONCEPT_SUBDUED_ANIMALS_PEDIA",
  "withdrawal": {
   "unit": {
    "percent": 10
@@ -34,6 +32,8 @@
   ]
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_NUMBAT",
+  "civilopedia": "TXT_KEY_CONCEPT_SUBDUED_ANIMALS_PEDIA",
   "spawnOnly": true,
   "xpValueAttack": 1,
   "xpValueDefense": 1,

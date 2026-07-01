@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_EXECUTIONER",
- "description": "TXT_KEY_BUILDING_EXECUTIONER",
- "civilopedia": "TXT_KEY_BUILDING_EXECUTIONER_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_JAIL"
@@ -56,6 +54,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_EXECUTIONER",
+  "civilopedia": "TXT_KEY_BUILDING_EXECUTIONER_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

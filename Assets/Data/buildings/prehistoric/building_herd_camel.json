@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_HERD_CAMEL",
- "description": "TXT_KEY_BUILDING_HERD_CAMEL",
- "civilopedia": "TXT_KEY_BUILDING_HERD_CAMEL_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_ANIMAL_TRAINER_CAMEL",
@@ -62,6 +60,8 @@
   "construct": "SND_AMB_CAMEL_COBBLESTONES"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_HERD_CAMEL",
+  "civilopedia": "TXT_KEY_BUILDING_HERD_CAMEL_PEDIA",
   "notConstructible": true,
   "worth": 3,
   "conquestProbability": 75,

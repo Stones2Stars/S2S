@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_AUTO_REPAIR_SHOP",
- "description": "TXT_KEY_BUILDING_AUTO_REPAIR_SHOP",
- "civilopedia": "TXT_KEY_BUILDING_AUTO_REPAIR_SHOP_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_MOTORCYCLE_CLUB"
@@ -101,6 +99,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_AUTO_REPAIR_SHOP",
+  "civilopedia": "TXT_KEY_BUILDING_AUTO_REPAIR_SHOP_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

@@ -1,7 +1,5 @@
 {
  "type": "FEATURE_PLATY_PRAVCICKA_BRANA",
- "description": "TXT_KEY_FEATURE_PRAVCICKA_BRANA",
- "civilopedia": "TXT_KEY_FEATURE_PRAVCICKA_BRANA_PEDIA",
  "defense": {
   "plot": {
    "amount": {
@@ -25,6 +23,8 @@
   "soundscape": "ASSS_OASIS_SELECT_AMB"
  },
  "identity": {
+  "description": "TXT_KEY_FEATURE_PRAVCICKA_BRANA",
+  "civilopedia": "TXT_KEY_FEATURE_PRAVCICKA_BRANA_PEDIA",
   "movementCost": 2,
   "requiresFlatlands": true,
   "noCity": true,

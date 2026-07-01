@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_PLANTATION_NUTMEG",
- "description": "TXT_KEY_BUILDING_PLANTATION_NUTMEG",
- "civilopedia": "TXT_KEY_BUILDING_PLANTATION_NUTMEG_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_RESOURCES_SEASONING"
@@ -82,6 +80,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_PLANTATION_NUTMEG",
+  "civilopedia": "TXT_KEY_BUILDING_PLANTATION_NUTMEG_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

@@ -1,7 +1,5 @@
 {
  "type": "UNIT_STONE_THROWER",
- "description": "TXT_KEY_UNIT_STONE_THROWER",
- "civilopedia": "TXT_KEY_UNIT_STONE_THROWER_PEDIA",
  "obsoletedBy": {
   "techs": [
    "TECH_BINDING"
@@ -113,6 +111,8 @@
   "upkeep": 1
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_STONE_THROWER",
+  "civilopedia": "TXT_KEY_UNIT_STONE_THROWER_PEDIA",
   "worth": 1,
   "militaryWorth": 1,
   "xpValueAttack": 2,

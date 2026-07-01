@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_CULTURE_ISRAELI",
- "description": "TXT_KEY_BUILDING_CULTURE_ISRAELI",
- "civilopedia": "TXT_KEY_BUILDING_CULTURE_ISRAELI_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -68,6 +66,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_CULTURE_ISRAELI",
+  "civilopedia": "TXT_KEY_BUILDING_CULTURE_ISRAELI_PEDIA",
   "nukeImmune": true,
   "noInstanceLimit": true,
   "conquestProbability": 100,

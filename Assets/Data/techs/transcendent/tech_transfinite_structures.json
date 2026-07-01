@@ -1,8 +1,5 @@
 {
  "type": "TECH_TRANSFINITE_STRUCTURES",
- "description": "TXT_KEY_TECH_TRANSFINITE_STRUCTURES",
- "civilopedia": "TXT_KEY_TECH_TRANSFINITE_STRUCTURES_PEDIA",
- "quote": "TXT_KEY_TECH_TRANSFINITE_STRUCTURES_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_DISTANT_FRACTAL_CITY",
@@ -56,6 +53,9 @@
   "soundMP": "AS2D_TECH_GENERIC"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_TRANSFINITE_STRUCTURES",
+  "civilopedia": "TXT_KEY_TECH_TRANSFINITE_STRUCTURES_PEDIA",
+  "quote": "TXT_KEY_TECH_TRANSFINITE_STRUCTURES_QUOTE",
   "era": "C2C_ERA_TRANSCENDENT",
   "worth": 48,
   "tradeable": true,

@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_TOURISM_LEVEL_4",
- "description": "TXT_KEY_BUILDING_TOURISM_LEVEL_4",
- "civilopedia": "TXT_KEY_BUILDING_TOURISM_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -64,6 +62,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_TOURISM_LEVEL_4",
+  "civilopedia": "TXT_KEY_BUILDING_TOURISM_PEDIA",
   "notConstructible": true,
   "nukeImmune": true,
   "conquestProbability": 100,

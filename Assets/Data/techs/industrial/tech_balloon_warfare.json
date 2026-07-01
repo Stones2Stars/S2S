@@ -1,8 +1,5 @@
 {
  "type": "TECH_BALLOON_WARFARE",
- "description": "TXT_KEY_TECH_BALLOON_WARFARE",
- "civilopedia": "TXT_KEY_TECH_BALLOON_WARFARE_PEDIA",
- "quote": "TXT_KEY_TECH_BALLOON_WARFARE_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_BALLOON_RIDES"
@@ -56,6 +53,9 @@
   "soundMP": "AS2D_TECH_BALLOON_WARFARE"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_BALLOON_WARFARE",
+  "civilopedia": "TXT_KEY_TECH_BALLOON_WARFARE_PEDIA",
+  "quote": "TXT_KEY_TECH_BALLOON_WARFARE_QUOTE",
   "era": "C2C_ERA_INDUSTRIAL",
   "worth": 20,
   "tradeable": true,

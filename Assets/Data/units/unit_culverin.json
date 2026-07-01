@@ -1,7 +1,5 @@
 {
  "type": "UNIT_CULVERIN",
- "description": "TXT_KEY_UNIT_CULVERIN",
- "civilopedia": "TXT_KEY_UNIT_CULVERIN_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -77,6 +75,8 @@
   "upkeep": 1
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_CULVERIN",
+  "civilopedia": "TXT_KEY_UNIT_CULVERIN_PEDIA",
   "worth": 3,
   "militaryWorth": 37,
   "xpValueAttack": 6,

@@ -1,7 +1,5 @@
 {
  "type": "UNIT_BALEARIC_SLINGERS",
- "description": "TXT_KEY_UNIT_BALEARIC_SLINGERS",
- "civilopedia": "TXT_KEY_UNIT_BALEARIC_SLINGERS_PEDIA",
  "obsoletedBy": {
   "techs": [
    "TECH_FLINTLOCK"
@@ -82,6 +80,8 @@
   "upkeep": 1
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_BALEARIC_SLINGERS",
+  "civilopedia": "TXT_KEY_UNIT_BALEARIC_SLINGERS_PEDIA",
   "worth": 2,
   "militaryWorth": 5,
   "xpValueAttack": 6,

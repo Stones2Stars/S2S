@@ -1,8 +1,5 @@
 {
  "type": "UNIT_MASTER_SAILOR_UBOAT",
- "description": "TXT_KEY_UNIT_MASTER_SAILOR_UBOAT",
- "civilopedia": "TXT_KEY_UNIT_UBOAT_PEDIA",
- "help": "TXT_KEY_UNIT_PIRATE_HELP",
  "requires": {
   "build": {
    "all": [
@@ -94,6 +91,9 @@
   "upkeep": 1
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_MASTER_SAILOR_UBOAT",
+  "civilopedia": "TXT_KEY_UNIT_UBOAT_PEDIA",
+  "help": "TXT_KEY_UNIT_PIRATE_HELP",
   "spawnOnly": true,
   "worth": 4,
   "militaryWorth": 28,

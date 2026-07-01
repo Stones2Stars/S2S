@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_HOUSING_SHANTY_TOWN",
- "description": "TXT_KEY_BUILDING_HOUSING_SHANTY_TOWN",
- "civilopedia": "TXT_KEY_BUILDING_HOUSING_SHANTY_TOWN_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_KIVA"
@@ -75,6 +73,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_HOUSING_SHANTY_TOWN",
+  "civilopedia": "TXT_KEY_BUILDING_HOUSING_SHANTY_TOWN_PEDIA",
   "notConstructible": true,
   "nukeImmune": true,
   "neverCapture": true,

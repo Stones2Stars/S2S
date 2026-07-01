@@ -1,6 +1,5 @@
 {
  "type": "BUILD_STAR_SCOOP",
- "description": "TXT_KEY_BUILD_STAR_SCOOP",
  "requires": {
   "build": {
    "all": [
@@ -28,5 +27,8 @@
   "art": {
    "entityEvent": "ENTITY_EVENT_BUILD"
   }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILD_STAR_SCOOP"
  }
 }

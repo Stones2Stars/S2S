@@ -1,6 +1,5 @@
 {
  "type": "PROMOTIONLINE_HUNTING_SIGHT",
- "description": "TXT_KEY_PROMOTIONLINE_HUNTING_SIGHT",
  "loadPrune": {
   "onGameOptions": [
    "GAMEOPTION_COMBAT_HIDE_SEEK",
@@ -11,5 +10,8 @@
   "art": {
    "icon": ",Art/Interface/Buttons/Promotions/Sentry.dds,Art/Interface/Buttons/FinalFrontier1_Atlas.dds,4,10"
   }
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTIONLINE_HUNTING_SIGHT"
  }
 }

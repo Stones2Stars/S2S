@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_BRAHMIN_LIBRARY",
- "description": "TXT_KEY_BUILDING_BRAHMIN_LIBRARY",
- "civilopedia": "TXT_KEY_BUILDING_BRAHMIN_LIBRARY_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -78,6 +76,8 @@
   "construct": "AS2D_BUILD_LIBRARY"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_BRAHMIN_LIBRARY",
+  "civilopedia": "TXT_KEY_BUILDING_BRAHMIN_LIBRARY_PEDIA",
   "worth": 3,
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,

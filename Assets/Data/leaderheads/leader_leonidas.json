@@ -1,7 +1,5 @@
 {
  "type": "LEADER_LEONIDAS",
- "description": "TXT_KEY_LEADER_LEONIDAS",
- "civilopedia": "TXT_KEY_LEADER_LEONIDAS_PEDIA",
  "grants": {
   "traits": [
    "TRAIT_AGRICULTURAL",
@@ -303,5 +301,9 @@
    "C2C_ERA_TRANSCENDENT": "AS2D_DIPLO_WARDRUMS_LATE",
    "C2C_ERA_FUTURE": "AS2D_DIPLO_WARDRUMS_LATE"
   }
+ },
+ "identity": {
+  "description": "TXT_KEY_LEADER_LEONIDAS",
+  "civilopedia": "TXT_KEY_LEADER_LEONIDAS_PEDIA"
  }
 }

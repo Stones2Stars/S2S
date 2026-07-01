@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_PLANTATION_COCOA",
- "description": "TXT_KEY_BUILDING_PLANTATION_COCOA",
- "civilopedia": "TXT_KEY_BUILDING_PLANTATION_COCOA_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_FOOD_MANUFACTURING_DISTRICT"
@@ -76,6 +74,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_PLANTATION_COCOA",
+  "civilopedia": "TXT_KEY_BUILDING_PLANTATION_COCOA_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

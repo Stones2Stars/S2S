@@ -1,7 +1,5 @@
 {
  "type": "UNIT_NEANDERTHAL_WAR_CANOE",
- "description": "TXT_KEY_UNIT_NEANDERTHAL_WAR_CANOE",
- "civilopedia": "TXT_KEY_UNIT_WAR_CANOE_PEDIA",
  "obsoletedBy": {
   "techs": [
    "TECH_SEDENTARY_LIFESTYLE"
@@ -62,6 +60,8 @@
   "upkeep": 1
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_NEANDERTHAL_WAR_CANOE",
+  "civilopedia": "TXT_KEY_UNIT_WAR_CANOE_PEDIA",
   "worth": 1,
   "militaryWorth": 4,
   "xpValueAttack": 2,

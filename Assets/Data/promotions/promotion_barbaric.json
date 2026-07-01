@@ -1,6 +1,5 @@
 {
  "type": "PROMOTION_BARBARIC",
- "description": "TXT_KEY_PROMOTION_BARBARIC",
  "strength": {
   "unit": {
    "attack": {
@@ -23,6 +22,7 @@
   "sound": "AS2D_IF_LEVELUP"
  },
  "identity": {
+  "description": "TXT_KEY_PROMOTION_BARBARIC",
   "unitCombats": [
    "UNITCOMBAT_COMBATANT",
    "UNITCOMBAT_NAVAL_COMBATANT"

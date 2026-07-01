@@ -1,7 +1,5 @@
 {
  "type": "BONUS_PAPYRUS",
- "description": "TXT_KEY_BONUS_PAPYRUS",
- "civilopedia": "TXT_KEY_BONUS_PAPYRUS_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_CULTURE_NUBIAN",
@@ -57,6 +55,8 @@
   ]
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_PAPYRUS",
+  "civilopedia": "TXT_KEY_BONUS_PAPYRUS_PEDIA",
   "bonusClassType": "BONUSCLASS_PRODUCTION"
  }
 }

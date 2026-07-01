@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_STARTRAM",
- "description": "TXT_KEY_BUILDING_STARTRAM",
- "civilopedia": "TXT_KEY_BUILDING_STARTRAM_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -44,6 +42,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_STARTRAM",
+  "civilopedia": "TXT_KEY_BUILDING_STARTRAM_PEDIA",
   "conquestProbability": 100,
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,

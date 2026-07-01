@@ -1,6 +1,5 @@
 {
  "type": "PROMOTION_LOW_ALTITUDE",
- "description": "TXT_KEY_PROMOTION_LOW_ALTITUDE",
  "strength": {
   "unit": {
    "percent": -15,
@@ -49,6 +48,7 @@
   "sound": "AS2D_IF_LEVELUP"
  },
  "identity": {
+  "description": "TXT_KEY_PROMOTION_LOW_ALTITUDE",
   "unitCombats": [
    "UNITCOMBAT_EARLY_FIGHTERS",
    "UNITCOMBAT_JET_FIGHTERS",

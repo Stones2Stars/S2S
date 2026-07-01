@@ -1,7 +1,5 @@
 {
  "type": "UNIT_JOMON_HUNTING_DOGS",
- "description": "TXT_KEY_UNIT_JOMON_HUNTING_DOGS",
- "civilopedia": "TXT_KEY_UNIT_JOMON_HUNTING_DOGS_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -80,6 +78,8 @@
   "upkeep": 1
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_JOMON_HUNTING_DOGS",
+  "civilopedia": "TXT_KEY_UNIT_JOMON_HUNTING_DOGS_PEDIA",
   "worth": 3,
   "militaryWorth": 3,
   "xpValueAttack": 6,

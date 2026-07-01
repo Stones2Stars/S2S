@@ -1,12 +1,12 @@
 {
  "type": "PROMOTIONLINE_TACTICS",
- "description": "TXT_KEY_PROMOTIONLINE_TACTICS",
  "ui": {
   "art": {
    "icon": "Art/Interface/Buttons/promotions/tactics1.dds"
   }
  },
  "identity": {
+  "description": "TXT_KEY_PROMOTIONLINE_TACTICS",
   "unitCombats": [
    "UNITCOMBAT_COMMANDER"
   ]

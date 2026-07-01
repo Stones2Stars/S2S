@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_SHWEDAGON_PAYA",
- "description": "TXT_KEY_BUILDING_SHWEDAGON_PAYA",
- "civilopedia": "TXT_KEY_BUILDING_SHWEDAGON_PAYA_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -96,6 +94,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_SHWEDAGON_PAYA",
+  "civilopedia": "TXT_KEY_BUILDING_SHWEDAGON_PAYA_PEDIA",
   "commerceDoubleTime": {
    "culture": 1000
   },

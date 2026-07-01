@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_PRIME_DIRECTIVE",
- "description": "TXT_KEY_BUILDING_PRIME_DIRECTIVE",
- "civilopedia": "TXT_KEY_BUILDING_PRIME_DIRECTIVE_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -33,6 +31,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_PRIME_DIRECTIVE",
+  "civilopedia": "TXT_KEY_BUILDING_PRIME_DIRECTIVE_PEDIA",
   "neverCapture": true,
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,

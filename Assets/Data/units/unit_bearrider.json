@@ -1,7 +1,5 @@
 {
  "type": "UNIT_BEARRIDER",
- "description": "TXT_KEY_UNIT_BEARRIDER",
- "civilopedia": "TXT_KEY_UNIT_BEARRIDER_PEDIA",
  "obsoletedBy": {
   "techs": [
    "TECH_ARMORED_CAVALRY"
@@ -107,6 +105,8 @@
   "production": 169
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_BEARRIDER",
+  "civilopedia": "TXT_KEY_UNIT_BEARRIDER_PEDIA",
   "worth": 2,
   "militaryWorth": 3,
   "xpValueAttack": 4,

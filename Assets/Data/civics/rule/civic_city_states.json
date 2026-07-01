@@ -1,8 +1,5 @@
 {
  "type": "CIVIC_CITY_STATES",
- "description": "TXT_KEY_CIVIC_CITY_STATES",
- "civilopedia": "TXT_KEY_CIVIC_CITY_STATES_PEDIA",
- "strategy": "TXT_KEY_CIVIC_CITY_STATES_STRATEGY",
  "enables": {
   "buildings": [
    "BUILDING_SEASTEAD"
@@ -147,6 +144,9 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_CIVIC_CITY_STATES",
+  "civilopedia": "TXT_KEY_CIVIC_CITY_STATES_PEDIA",
+  "strategy": "TXT_KEY_CIVIC_CITY_STATES_STRATEGY",
   "civicOption": "CIVICOPTION_RULE",
   "anarchyLength": 1,
   "upkeepLevel": "UPKEEP_LOW"

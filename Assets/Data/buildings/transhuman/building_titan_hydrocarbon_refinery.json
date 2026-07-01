@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_TITAN_HYDROCARBON_REFINERY",
- "description": "TXT_KEY_BUILDING_TITAN_HYDROCARBON_REFINERY",
- "civilopedia": "TXT_KEY_BUILDING_TITAN_HYDROCARBON_REFINERY_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_TITAN_NITROGEN_EXPORTER",
@@ -45,6 +43,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_TITAN_HYDROCARBON_REFINERY",
+  "civilopedia": "TXT_KEY_BUILDING_TITAN_HYDROCARBON_REFINERY_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

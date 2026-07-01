@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_CARPET_MAKER",
- "description": "TXT_KEY_BUILDING_CARPET_MAKER",
- "civilopedia": "TXT_KEY_BUILDING_CARPET_MAKER_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_FACTORY_CARPETS"
@@ -94,6 +92,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_CARPET_MAKER",
+  "civilopedia": "TXT_KEY_BUILDING_CARPET_MAKER_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

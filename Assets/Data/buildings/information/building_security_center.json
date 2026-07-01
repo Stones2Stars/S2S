@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_SECURITY_CENTER",
- "description": "TXT_KEY_BUILDING_SECURITY_CENTER",
- "civilopedia": "TXT_KEY_BUILDING_SECURITY_CENTER_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_INFRASOUND_DEFENSES",
@@ -93,6 +91,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_SECURITY_CENTER",
+  "civilopedia": "TXT_KEY_BUILDING_SECURITY_CENTER_PEDIA",
   "worth": 10,
   "militaryWorth": 50,
   "conquestProbability": 75,

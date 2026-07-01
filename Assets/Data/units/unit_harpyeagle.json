@@ -1,7 +1,5 @@
 {
  "type": "UNIT_HARPYEAGLE",
- "description": "TXT_KEY_UNIT_HARPYEAGLE",
- "civilopedia": "TXT_KEY_UNIT_HARPYEAGLE_PEDIA",
  "withdrawal": {
   "unit": {
    "percent": 50
@@ -60,6 +58,8 @@
   ]
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_HARPYEAGLE",
+  "civilopedia": "TXT_KEY_UNIT_HARPYEAGLE_PEDIA",
   "spawnOnly": true,
   "xpValueAttack": 1,
   "xpValueDefense": 1,

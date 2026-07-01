@@ -1,7 +1,5 @@
 {
  "type": "UNIT_HEZBOLLAH",
- "description": "TXT_KEY_UNIT_HEZBOLLAH",
- "civilopedia": "TXT_KEY_UNIT_HEZBOLLAH_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -168,6 +166,8 @@
   "upkeep": 13
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_HEZBOLLAH",
+  "civilopedia": "TXT_KEY_UNIT_HEZBOLLAH_PEDIA",
   "worth": 13,
   "militaryWorth": 52,
   "xpValueAttack": 8,

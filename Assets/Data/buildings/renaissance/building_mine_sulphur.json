@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_MINE_SULPHUR",
- "description": "TXT_KEY_BUILDING_MINE_SULPHUR",
- "civilopedia": "TXT_KEY_BUILDING_MINE_SULPHUR_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_DYE_MAKER",
@@ -76,6 +74,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_MINE_SULPHUR",
+  "civilopedia": "TXT_KEY_BUILDING_MINE_SULPHUR_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

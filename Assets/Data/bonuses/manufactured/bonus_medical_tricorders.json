@@ -1,7 +1,5 @@
 {
  "type": "BONUS_MEDICAL_TRICORDERS",
- "description": "TXT_KEY_BONUS_MEDICAL_TRICORDERS",
- "civilopedia": "TXT_KEY_BONUS_MEDICAL_TRICORDERS_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_AUTODOCTOR"
@@ -18,6 +16,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_MEDICAL_TRICORDERS",
+  "civilopedia": "TXT_KEY_BONUS_MEDICAL_TRICORDERS_PEDIA",
   "bonusClassType": "BONUSCLASS_MANUFACTURED"
  }
 }

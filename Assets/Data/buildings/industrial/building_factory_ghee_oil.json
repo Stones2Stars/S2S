@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_FACTORY_GHEE_OIL",
- "description": "TXT_KEY_BUILDING_FACTORY_GHEE_OIL",
- "civilopedia": "TXT_KEY_BUILDING_FACTORY_GHEE_OIL_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_MEAT_INDUSTRY_CONGLOMERATE"
@@ -91,6 +89,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_FACTORY_GHEE_OIL",
+  "civilopedia": "TXT_KEY_BUILDING_FACTORY_GHEE_OIL_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

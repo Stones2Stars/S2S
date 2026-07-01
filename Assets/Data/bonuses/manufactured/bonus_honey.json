@@ -1,7 +1,5 @@
 {
  "type": "BONUS_HONEY",
- "description": "TXT_KEY_BONUS_HONEY",
- "civilopedia": "TXT_KEY_BONUS_HONEY_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_CANDY_SHOP",
@@ -15,6 +13,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_HONEY",
+  "civilopedia": "TXT_KEY_BONUS_HONEY_PEDIA",
   "bonusClassType": "BONUSCLASS_MANUFACTURED"
  }
 }

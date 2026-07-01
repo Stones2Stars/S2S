@@ -1,8 +1,5 @@
 {
  "type": "TECH_PHYSICS",
- "description": "TXT_KEY_TECH_PHYSICS",
- "civilopedia": "TXT_KEY_TECH_PHYSICS_PEDIA",
- "quote": "TXT_KEY_TECH_PHYSICS_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_CHAIN_BRIDGE",
@@ -60,6 +57,9 @@
   "soundMP": "AS2D_TECH_MP_PHYSICS"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_PHYSICS",
+  "civilopedia": "TXT_KEY_TECH_PHYSICS_PEDIA",
+  "quote": "TXT_KEY_TECH_PHYSICS_QUOTE",
   "era": "C2C_ERA_RENAISSANCE",
   "worth": 40,
   "tradeable": true,

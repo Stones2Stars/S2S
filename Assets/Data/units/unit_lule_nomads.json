@@ -1,7 +1,5 @@
 {
  "type": "UNIT_LULE_NOMADS",
- "description": "TXT_KEY_UNIT_LULE_NOMADS",
- "civilopedia": "TXT_KEY_UNIT_LULE_NOMADS_PEDIA",
  "obsoletedBy": {
   "techs": [
    "TECH_MOTORIZED_TRANSPORTATION"
@@ -128,6 +126,8 @@
   "upkeep": 1
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_LULE_NOMADS",
+  "civilopedia": "TXT_KEY_UNIT_LULE_NOMADS_PEDIA",
   "worth": 1,
   "domain": "DOMAIN_LAND",
   "defaultUnitAI": "UNITAI_WORKER",

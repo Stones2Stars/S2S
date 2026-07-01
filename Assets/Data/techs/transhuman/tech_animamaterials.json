@@ -1,8 +1,5 @@
 {
  "type": "TECH_ANIMAMATERIALS",
- "description": "TXT_KEY_TECH_ANIMAMATERIALS",
- "civilopedia": "TXT_KEY_TECH_ANIMAMATERIALS_PEDIA",
- "quote": "TXT_KEY_TECH_ANIMAMATERIALS_QUOTE",
  "enables": {
   "bonuses": [
    "BONUS_CLAYTRONIC_ATOMS",
@@ -77,6 +74,9 @@
   "soundMP": "AS2D_TECH_ANIMAMATERIALS"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_ANIMAMATERIALS",
+  "civilopedia": "TXT_KEY_TECH_ANIMAMATERIALS_PEDIA",
+  "quote": "TXT_KEY_TECH_ANIMAMATERIALS_QUOTE",
   "era": "C2C_ERA_TRANSHUMAN",
   "worth": 48,
   "militaryWorth": 4,

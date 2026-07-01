@@ -1,6 +1,5 @@
 {
  "type": "PROMOTION_CROOKED3",
- "description": "TXT_KEY_PROMOTION_CROOKED3",
  "espionage": {
   "unit": {
    "insidiousness": {
@@ -33,6 +32,7 @@
   "sound": "AS2D_IF_LEVELUP"
  },
  "identity": {
+  "description": "TXT_KEY_PROMOTION_CROOKED3",
   "unitCombats": [
    "UNITCOMBAT_CRIMINAL"
   ]

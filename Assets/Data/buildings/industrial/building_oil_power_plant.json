@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_OIL_POWER_PLANT",
- "description": "TXT_KEY_BUILDING_OIL_POWER_PLANT",
- "civilopedia": "TXT_KEY_BUILDING_OIL_POWER_PLANT_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_METHANE_POWER_PLANT"
@@ -84,6 +82,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_OIL_POWER_PLANT",
+  "civilopedia": "TXT_KEY_BUILDING_OIL_POWER_PLANT_PEDIA",
   "conquestProbability": 75,
   "dcmAirbombMission": 3,
   "advisor": "ADVISOR_ECONOMY",

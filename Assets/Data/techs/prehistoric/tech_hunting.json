@@ -1,8 +1,5 @@
 {
  "type": "TECH_HUNTING",
- "description": "TXT_KEY_TECH_HUNTING",
- "civilopedia": "TXT_KEY_TECH_HUNTING_PEDIA",
- "quote": "TXT_KEY_TECH_HUNTING_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_ANCIENT_WAY_OF_THE_WILD",
@@ -72,6 +69,9 @@
   "soundMP": "AS2D_TECH_HUNTING"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_HUNTING",
+  "civilopedia": "TXT_KEY_TECH_HUNTING_PEDIA",
+  "quote": "TXT_KEY_TECH_HUNTING_QUOTE",
   "era": "C2C_ERA_PREHISTORIC",
   "worth": 4,
   "tradeable": true,

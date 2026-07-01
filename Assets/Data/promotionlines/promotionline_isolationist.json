@@ -1,9 +1,11 @@
 {
  "type": "PROMOTIONLINE_ISOLATIONIST",
- "description": "TXT_KEY_PROMOTIONLINE_ISOLATIONIST",
  "ui": {
   "art": {
    "icon": "art/Buttons/Traits/TraitPolitician.dds"
   }
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTIONLINE_ISOLATIONIST"
  }
 }

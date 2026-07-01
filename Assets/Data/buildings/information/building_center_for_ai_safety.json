@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_CENTER_FOR_AI_SAFETY",
- "description": "TXT_KEY_BUILDING_CENTER_FOR_AI_SAFETY",
- "civilopedia": "TXT_KEY_BUILDING_CENTER_FOR_AI_SAFETY_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -58,6 +56,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_CENTER_FOR_AI_SAFETY",
+  "civilopedia": "TXT_KEY_BUILDING_CENTER_FOR_AI_SAFETY_PEDIA",
   "neverCapture": true,
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,

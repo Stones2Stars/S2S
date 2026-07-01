@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_SCARECROWS",
- "description": "TXT_KEY_BUILDING_SCARECROWS",
- "civilopedia": "TXT_KEY_BUILDING_SCARECROWS_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_FARMSCRAPER_I"
@@ -72,6 +70,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_SCARECROWS",
+  "civilopedia": "TXT_KEY_BUILDING_SCARECROWS_PEDIA",
   "conquestProbability": 70,
   "advisor": "ADVISOR_CULTURE",
   "visibilityPriority": 1,

@@ -1,6 +1,5 @@
 {
  "type": "PROMOTION_WETLAND3",
- "description": "TXT_KEY_PROMOTION_WETLAND3",
  "strength": {
   "unit": {
    "terrain": {
@@ -50,6 +49,7 @@
   "sound": "AS2D_IF_LEVELUP"
  },
  "identity": {
+  "description": "TXT_KEY_PROMOTION_WETLAND3",
   "notOnDomains": [
    "DOMAIN_AIR",
    "DOMAIN_SEA"

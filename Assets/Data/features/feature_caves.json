@@ -1,7 +1,5 @@
 {
  "type": "FEATURE_CAVES",
- "description": "TXT_KEY_FEATURE_CAVES",
- "civilopedia": "TXT_KEY_FEATURE_CAVES_PEDIA",
  "cultureDistance": {
   "plot": {
    "flat": -2
@@ -37,6 +35,8 @@
   "soundscape": "ASSS_PEAK_SELECT_AMB"
  },
  "identity": {
+  "description": "TXT_KEY_FEATURE_CAVES",
+  "civilopedia": "TXT_KEY_FEATURE_CAVES_PEDIA",
   "appearance": 500,
   "noAdjacent": true,
   "popDestroys": -1,

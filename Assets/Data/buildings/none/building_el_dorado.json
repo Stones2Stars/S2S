@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_EL_DORADO",
- "description": "TXT_KEY_BUILDING_EL_DORADO",
- "civilopedia": "TXT_KEY_BUILDING_EL_DORADO_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -111,6 +109,8 @@
   "construct": "AS2D_BUILD_ANDEAN"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_EL_DORADO",
+  "civilopedia": "TXT_KEY_BUILDING_EL_DORADO_PEDIA",
   "commerceDoubleTime": {
    "culture": 1000
   },

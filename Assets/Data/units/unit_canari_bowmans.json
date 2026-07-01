@@ -1,7 +1,5 @@
 {
  "type": "UNIT_CANARI_BOWMANS",
- "description": "TXT_KEY_UNIT_CANARI_BOWMANS",
- "civilopedia": "TXT_KEY_UNIT_CANARI_BOWMANS_PEDIA",
  "obsoletedBy": {
   "techs": [
    "TECH_FLINTLOCK"
@@ -81,6 +79,8 @@
   "upkeep": 1
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_CANARI_BOWMANS",
+  "civilopedia": "TXT_KEY_UNIT_CANARI_BOWMANS_PEDIA",
   "worth": 2,
   "militaryWorth": 15,
   "xpValueAttack": 6,

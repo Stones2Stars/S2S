@@ -1,7 +1,5 @@
 {
  "type": "UNIT_CATAMARAN",
- "description": "TXT_KEY_UNIT_CATAMARAN",
- "civilopedia": "TXT_KEY_UNIT_CATAMARAN_PEDIA",
  "obsoletedBy": {
   "techs": [
    "TECH_COMPASS"
@@ -86,6 +84,8 @@
   "upkeep": 1
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_CATAMARAN",
+  "civilopedia": "TXT_KEY_UNIT_CATAMARAN_PEDIA",
   "worth": 1,
   "militaryWorth": 3,
   "xpValueAttack": 2,

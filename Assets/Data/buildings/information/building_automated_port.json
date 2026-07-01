@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_AUTOMATED_PORT",
- "description": "TXT_KEY_BUILDING_AUTOMATED_PORT",
- "civilopedia": "TXT_KEY_BUILDING_AUTOMATED_PORT_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -47,6 +45,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_AUTOMATED_PORT",
+  "civilopedia": "TXT_KEY_BUILDING_AUTOMATED_PORT_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

@@ -1,8 +1,5 @@
 {
  "type": "TECH_INFORMATION_LIFESTYLE",
- "description": "TXT_KEY_TECH_INFORMATION_LIFESTYLE",
- "civilopedia": "TXT_KEY_TECH_INFORMATION_LIFESTYLE_PEDIA",
- "quote": "TXT_KEY_TECH_INFORMATION_LIFESTYLE_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_EDUCATION_COSMOPOLITAN",
@@ -178,6 +175,9 @@
   "soundMP": "AS2D_TECH_INFORMATION_LIFESTYLE"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_INFORMATION_LIFESTYLE",
+  "civilopedia": "TXT_KEY_TECH_INFORMATION_LIFESTYLE_PEDIA",
+  "quote": "TXT_KEY_TECH_INFORMATION_LIFESTYLE_QUOTE",
   "era": "C2C_ERA_INFORMATION",
   "worth": 48,
   "militaryWorth": 4,

@@ -1,7 +1,5 @@
 {
  "type": "IMPROVEMENT_HYBRID_FOREST",
- "description": "TXT_KEY_IMPROVEMENT_HYBRID_FOREST",
- "civilopedia": "TXT_KEY_IMPROVEMENT_HYBRID_FOREST_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -137,6 +135,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_IMPROVEMENT_HYBRID_FOREST",
+  "civilopedia": "TXT_KEY_IMPROVEMENT_HYBRID_FOREST_PEDIA",
   "advancedStart": {
    "cost": 120
   },

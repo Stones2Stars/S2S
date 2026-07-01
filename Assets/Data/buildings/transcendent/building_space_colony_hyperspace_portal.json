@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_SPACE_COLONY_HYPERSPACE_PORTAL",
- "description": "TXT_KEY_BUILDING_SPACE_COLONY_HYPERSPACE_PORTAL",
- "civilopedia": "TXT_KEY_BUILDING_SPACE_COLONY_HYPERSPACE_PORTAL_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_HYPERCITY",
@@ -40,6 +38,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_SPACE_COLONY_HYPERSPACE_PORTAL",
+  "civilopedia": "TXT_KEY_BUILDING_SPACE_COLONY_HYPERSPACE_PORTAL_PEDIA",
   "notConstructible": true,
   "autoBuild": true,
   "advisor": "ADVISOR_SCIENCE",

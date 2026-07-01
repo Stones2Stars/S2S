@@ -1,8 +1,5 @@
 {
  "type": "TECH_COMPUTRONIUM_UNIVERSE",
- "description": "TXT_KEY_TECH_COMPUTRONIUM_UNIVERSE",
- "civilopedia": "TXT_KEY_TECH_COMPUTRONIUM_UNIVERSE_PEDIA",
- "quote": "TXT_KEY_TECH_COMPUTRONIUM_UNIVERSE_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_COMPUTRONIUM_TITAN",
@@ -57,6 +54,9 @@
   "soundMP": "AS2D_TECH_GENERIC"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_COMPUTRONIUM_UNIVERSE",
+  "civilopedia": "TXT_KEY_TECH_COMPUTRONIUM_UNIVERSE_PEDIA",
+  "quote": "TXT_KEY_TECH_COMPUTRONIUM_UNIVERSE_QUOTE",
   "era": "C2C_ERA_COSMIC",
   "worth": 48,
   "tradeable": true,

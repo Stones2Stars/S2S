@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_MINE_GRAPHITE",
- "description": "TXT_KEY_BUILDING_MINE_GRAPHITE",
- "civilopedia": "TXT_KEY_BUILDING_MINE_GRAPHITE_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_CORE_MINE"
@@ -81,6 +79,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_MINE_GRAPHITE",
+  "civilopedia": "TXT_KEY_BUILDING_MINE_GRAPHITE_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_SERVANTS_QUARTERS",
- "description": "TXT_KEY_BUILDING_SERVANTS_QUARTERS",
- "civilopedia": "TXT_KEY_BUILDING_SERVANTS_QUARTERS_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_GUILD_SERVANTS"
@@ -76,6 +74,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_SERVANTS_QUARTERS",
+  "civilopedia": "TXT_KEY_BUILDING_SERVANTS_QUARTERS_PEDIA",
   "advisor": "ADVISOR_CULTURE",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

@@ -1,8 +1,5 @@
 {
  "type": "TECH_DRAMA",
- "description": "TXT_KEY_TECH_DRAMA",
- "civilopedia": "TXT_KEY_TECH_DRAMA_PEDIA",
- "quote": "TXT_KEY_TECH_DRAMA_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_COSTUME_SHOP",
@@ -55,6 +52,9 @@
   "soundMP": "AS2D_TECH_MP_DRAMA"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_DRAMA",
+  "civilopedia": "TXT_KEY_TECH_DRAMA_PEDIA",
+  "quote": "TXT_KEY_TECH_DRAMA_QUOTE",
   "era": "C2C_ERA_CLASSICAL",
   "worth": 16,
   "tradeable": true,

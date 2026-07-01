@@ -1,8 +1,5 @@
 {
  "type": "TECH_FERMENTATION",
- "description": "TXT_KEY_TECH_FERMENTATION",
- "civilopedia": "TXT_KEY_TECH_FERMENTATION_PEDIA",
- "quote": "TXT_KEY_TECH_FERMENTATION_QUOTE",
  "enables": {
   "bonuses": [
    "BONUS_ALCOHOL",
@@ -85,6 +82,9 @@
   "soundMP": "AS2D_TECH_FERMENTATION"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_FERMENTATION",
+  "civilopedia": "TXT_KEY_TECH_FERMENTATION_PEDIA",
+  "quote": "TXT_KEY_TECH_FERMENTATION_QUOTE",
   "era": "C2C_ERA_ANCIENT",
   "worth": 8,
   "tradeable": true,

@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_BARRICADES",
- "description": "TXT_KEY_BUILDING_BARRICADES",
- "civilopedia": "TXT_KEY_BUILDING_BARRICADES_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_BLARNEY_CASTLE",
@@ -103,6 +101,8 @@
   "construct": "AS2D_BUILD_WALLS"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_BARRICADES",
+  "civilopedia": "TXT_KEY_BUILDING_BARRICADES_PEDIA",
   "worth": 1,
   "militaryWorth": 2,
   "dcmAirbombMission": 2,

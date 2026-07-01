@@ -1,8 +1,5 @@
 {
  "type": "TECH_QUANTUM_RAMJET",
- "description": "TXT_KEY_TECH_QUANTUM_RAMJET",
- "civilopedia": "TXT_KEY_TECH_QUANTUM_RAMJET_PEDIA",
- "quote": "TXT_KEY_TECH_QUANTUM_RAMJET_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_CISLUNAR_QUANTUM_THRUSTERS",
@@ -61,6 +58,9 @@
   "soundMP": "AS2D_TECH_GENERIC"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_QUANTUM_RAMJET",
+  "civilopedia": "TXT_KEY_TECH_QUANTUM_RAMJET_PEDIA",
+  "quote": "TXT_KEY_TECH_QUANTUM_RAMJET_QUOTE",
   "era": "C2C_ERA_COSMIC",
   "worth": 48,
   "tradeable": true,

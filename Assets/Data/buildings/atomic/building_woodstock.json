@@ -1,8 +1,5 @@
 {
  "type": "BUILDING_WOODSTOCK",
- "description": "TXT_KEY_BUILDING_WOODSTOCK",
- "civilopedia": "TXT_KEY_BUILDING_WOODSTOCK_PEDIA",
- "help": "TXT_KEY_BUILDING_WOODSTOCK_HELP",
  "requires": {
   "build": {
    "all": [
@@ -91,6 +88,9 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_WOODSTOCK",
+  "civilopedia": "TXT_KEY_BUILDING_WOODSTOCK_PEDIA",
+  "help": "TXT_KEY_BUILDING_WOODSTOCK_HELP",
   "commerceDoubleTime": {
    "culture": 1000
   },

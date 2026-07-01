@@ -1,8 +1,5 @@
 {
  "type": "TECH_DROIDS",
- "description": "TXT_KEY_TECH_DROIDS",
- "civilopedia": "TXT_KEY_TECH_DROIDS_PEDIA",
- "quote": "TXT_KEY_TECH_DROIDS_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_ARTIFICIAL_INTELLIGENCE_CORE"
@@ -63,6 +60,9 @@
   "soundMP": "AS2D_TECH_DROIDS"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_DROIDS",
+  "civilopedia": "TXT_KEY_TECH_DROIDS_PEDIA",
+  "quote": "TXT_KEY_TECH_DROIDS_QUOTE",
   "era": "C2C_ERA_NANOTECH",
   "worth": 48,
   "militaryWorth": 6,

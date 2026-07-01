@@ -1,6 +1,5 @@
 {
  "type": "PROMOTION_BUILD_UP_DISEASE_CONTROL3",
- "description": "TXT_KEY_PROMOTION_BUILD_UP_DISEASE_CONTROL3",
  "PROPERTY_DISEASE": {
   "city": {
    "flat": -3
@@ -21,6 +20,7 @@
   "sound": "AS2D_IF_LEVELUP"
  },
  "identity": {
+  "description": "TXT_KEY_PROMOTION_BUILD_UP_DISEASE_CONTROL3",
   "minEra": "C2C_ERA_CLASSICAL"
  }
 }

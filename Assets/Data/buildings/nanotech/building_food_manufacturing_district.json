@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_FOOD_MANUFACTURING_DISTRICT",
- "description": "TXT_KEY_BUILDING_FOOD_MANUFACTURING_DISTRICT",
- "civilopedia": "TXT_KEY_BUILDING_FOOD_MANUFACTURING_DISTRICT_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_BEE_BOMBS",
@@ -412,6 +410,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_FOOD_MANUFACTURING_DISTRICT",
+  "civilopedia": "TXT_KEY_BUILDING_FOOD_MANUFACTURING_DISTRICT_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

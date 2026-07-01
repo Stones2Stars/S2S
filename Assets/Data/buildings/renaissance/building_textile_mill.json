@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_TEXTILE_MILL",
- "description": "TXT_KEY_BUILDING_TEXTILE_MILL",
- "civilopedia": "TXT_KEY_BUILDING_TEXTILE_MILL_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_GUILD_DRAPERS",
@@ -116,6 +114,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_TEXTILE_MILL",
+  "civilopedia": "TXT_KEY_BUILDING_TEXTILE_MILL_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

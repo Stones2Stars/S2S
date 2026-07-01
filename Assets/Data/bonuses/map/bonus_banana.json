@@ -1,7 +1,5 @@
 {
  "type": "BONUS_BANANA",
- "description": "TXT_KEY_BONUS_BANANA",
- "civilopedia": "TXT_KEY_BONUS_BANANA_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_CATCHER_JUNGLEFOWL",
@@ -79,6 +77,8 @@
   ]
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_BANANA",
+  "civilopedia": "TXT_KEY_BONUS_BANANA_PEDIA",
   "bonusClassType": "BONUSCLASS_CROP"
  }
 }

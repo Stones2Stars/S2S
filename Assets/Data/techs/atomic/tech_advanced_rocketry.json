@@ -1,8 +1,5 @@
 {
  "type": "TECH_ADVANCED_ROCKETRY",
- "description": "TXT_KEY_TECH_ADVANCED_ROCKETRY",
- "civilopedia": "TXT_KEY_TECH_ADVANCED_ROCKETRY_PEDIA",
- "quote": "TXT_KEY_TECH_ADVANCED_ROCKETRY_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_EFFECT_LAUNCH_SITE",
@@ -71,6 +68,9 @@
   "soundMP": "AS2D_TECH_ADVANCED_ROCKETRY"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_ADVANCED_ROCKETRY",
+  "civilopedia": "TXT_KEY_TECH_ADVANCED_ROCKETRY_PEDIA",
+  "quote": "TXT_KEY_TECH_ADVANCED_ROCKETRY_QUOTE",
   "era": "C2C_ERA_ATOMIC",
   "worth": 48,
   "militaryWorth": 10,

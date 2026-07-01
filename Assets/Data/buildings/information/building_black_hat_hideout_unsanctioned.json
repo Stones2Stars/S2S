@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_BLACK_HAT_HIDEOUT_UNSANCTIONED",
- "description": "TXT_KEY_BUILDING_BLACK_HAT_HIDEOUT_UNSANCTIONED",
- "civilopedia": "TXT_KEY_BUILDING_BLACK_HAT_HIDEOUT_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -71,6 +69,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_BLACK_HAT_HIDEOUT_UNSANCTIONED",
+  "civilopedia": "TXT_KEY_BUILDING_BLACK_HAT_HIDEOUT_PEDIA",
   "notConstructible": true,
   "nukeImmune": true,
   "conquestProbability": 100,

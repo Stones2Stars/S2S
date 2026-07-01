@@ -1,7 +1,5 @@
 {
  "type": "TERRAIN_LUNAR_REGOLITH",
- "description": "TXT_KEY_TERRAIN_LUNAR_REGOLITH",
- "civilopedia": "TXT_KEY_TERRAIN_LUNAR_REGOLITH_PEDIA",
  "commerce": {
   "plot": {
    "flat": 2
@@ -31,6 +29,8 @@
   "soundscape": "ASSS_TUNDRA_SELECT_AMB"
  },
  "identity": {
+  "description": "TXT_KEY_TERRAIN_LUNAR_REGOLITH",
+  "civilopedia": "TXT_KEY_TERRAIN_LUNAR_REGOLITH_PEDIA",
   "found": true,
   "movementCost": 1,
   "mapCategories": [

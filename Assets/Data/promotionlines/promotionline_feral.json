@@ -1,12 +1,12 @@
 {
  "type": "PROMOTIONLINE_FERAL",
- "description": "TXT_KEY_PROMOTIONLINE_FERAL",
  "ui": {
   "art": {
    "icon": "Art/Interface/Buttons/Promotions/Feral1.dds"
   }
  },
  "identity": {
+  "description": "TXT_KEY_PROMOTIONLINE_FERAL",
   "unitCombats": [
    "UNITCOMBAT_WILD"
   ],

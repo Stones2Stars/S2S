@@ -1,8 +1,5 @@
 {
  "type": "TECH_MARINE_ARCHITECTURE",
- "description": "TXT_KEY_TECH_MARINE_ARCHITECTURE",
- "civilopedia": "TXT_KEY_TECH_MARINE_ARCHITECTURE_PEDIA",
- "quote": "TXT_KEY_TECH_MARINE_ARCHITECTURE_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_ENERGY_ISLAND",
@@ -74,6 +71,9 @@
   "soundMP": "AS2D_TECH_MARINE_ARCHITECTURE"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_MARINE_ARCHITECTURE",
+  "civilopedia": "TXT_KEY_TECH_MARINE_ARCHITECTURE_PEDIA",
+  "quote": "TXT_KEY_TECH_MARINE_ARCHITECTURE_QUOTE",
   "era": "C2C_ERA_INFORMATION",
   "worth": 14,
   "tradeable": true,

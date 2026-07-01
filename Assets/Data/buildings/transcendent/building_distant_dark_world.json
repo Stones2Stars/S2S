@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_DISTANT_DARK_WORLD",
- "description": "TXT_KEY_BUILDING_DISTANT_DARK_WORLD",
- "civilopedia": "TXT_KEY_BUILDING_DISTANT_DARK_WORLD_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -48,6 +46,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_DISTANT_DARK_WORLD",
+  "civilopedia": "TXT_KEY_BUILDING_DISTANT_DARK_WORLD_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

@@ -1,7 +1,5 @@
 {
  "type": "SPECIALIST_GREAT_HUNTER",
- "description": "TXT_KEY_SPECIALIST_GREAT_HUNTER",
- "civilopedia": "TXT_KEY_SPECIALIST_GREAT_HUNTER_PEDIA",
  "food": {
   "city": {
    "flat": 4
@@ -28,6 +26,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_SPECIALIST_GREAT_HUNTER",
+  "civilopedia": "TXT_KEY_SPECIALIST_GREAT_HUNTER_PEDIA",
   "categories": [
    "CATEGORY_SPECIALIST_GROUP_MILITARY"
   ]

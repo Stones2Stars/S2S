@@ -1,7 +1,5 @@
 {
  "type": "UNIT_WORKCAMEL",
- "description": "TXT_KEY_UNIT_WORKCAMEL",
- "civilopedia": "TXT_KEY_UNIT_WORKER_PEDIA",
  "obsoletedBy": {
   "techs": [
    "TECH_LOGISTICS"
@@ -113,6 +111,8 @@
   "upkeep": 3
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_WORKCAMEL",
+  "civilopedia": "TXT_KEY_UNIT_WORKER_PEDIA",
   "worth": 1,
   "domain": "DOMAIN_LAND",
   "defaultUnitAI": "UNITAI_WORKER",

@@ -1,7 +1,5 @@
 {
  "type": "FEATURE_CORAL_REEF",
- "description": "TXT_KEY_FEATURE_CORAL_REEF",
- "civilopedia": "TXT_KEY_FEATURE_CORAL_REEF_PEDIA",
  "commerce": {
   "plot": {
    "flat": 2
@@ -28,6 +26,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_FEATURE_CORAL_REEF",
+  "civilopedia": "TXT_KEY_FEATURE_CORAL_REEF_PEDIA",
   "movementCost": 4,
   "appearance": 500,
   "growth": 5,

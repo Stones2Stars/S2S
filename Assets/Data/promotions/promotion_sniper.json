@@ -1,6 +1,5 @@
 {
  "type": "PROMOTION_SNIPER",
- "description": "TXT_KEY_PROMOTION_SNIPER",
  "movement": {
   "unit": {
    "moveDiscount": {
@@ -38,6 +37,7 @@
   "sound": "AS2D_IF_LEVELUP"
  },
  "identity": {
+  "description": "TXT_KEY_PROMOTION_SNIPER",
   "unitCombats": [
    "UNITCOMBAT_GUN",
    "UNITCOMBAT_HITECH",

@@ -1,7 +1,5 @@
 {
  "type": "UNIT_GELADA",
- "description": "TXT_KEY_UNIT_GELADA",
- "civilopedia": "TXT_KEY_UNIT_GELADA_PEDIA",
  "withdrawal": {
   "unit": {
    "percent": 25
@@ -51,6 +49,8 @@
   ]
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_GELADA",
+  "civilopedia": "TXT_KEY_UNIT_GELADA_PEDIA",
   "spawnOnly": true,
   "xpValueAttack": 5,
   "xpValueDefense": 3,

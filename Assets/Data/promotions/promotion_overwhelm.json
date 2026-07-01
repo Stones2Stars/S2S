@@ -1,6 +1,5 @@
 {
  "type": "PROMOTION_OVERWHELM",
- "description": "TXT_KEY_PROMOTION_OVERWHELM",
  "strength": {
   "unit": {
    "percent": 10
@@ -32,6 +31,7 @@
   "sound": "AS2D_IF_LEVELUP"
  },
  "identity": {
+  "description": "TXT_KEY_PROMOTION_OVERWHELM",
   "unitCombats": [
    "UNITCOMBAT_RECON",
    "UNITCOMBAT_ARCHER",

@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_LOOKOUT_POST",
- "description": "TXT_KEY_BUILDING_LOOKOUT_POST",
- "civilopedia": "TXT_KEY_BUILDING_LOOKOUT_POST_PEDIA",
  "enables": {
   "units": [
    "UNIT_NEANDERTHAL_WATCHER",
@@ -98,6 +96,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_LOOKOUT_POST",
+  "civilopedia": "TXT_KEY_BUILDING_LOOKOUT_POST_PEDIA",
   "nukeImmune": true,
   "militaryWorth": 2,
   "advisor": "ADVISOR_MILITARY",

@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_HEALING_CLAY",
- "description": "TXT_KEY_BUILDING_HEALING_CLAY",
- "civilopedia": "TXT_KEY_BUILDING_HEALING_CLAY_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_ALTERNATIVE_MEDICINE"
@@ -70,6 +68,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_HEALING_CLAY",
+  "civilopedia": "TXT_KEY_BUILDING_HEALING_CLAY_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

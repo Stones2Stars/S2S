@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_INDIGO_GATHERER",
- "description": "TXT_KEY_BUILDING_INDIGO_GATHERER",
- "civilopedia": "TXT_KEY_BUILDING_INDIGO_GATHERER_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_DYE_MAKER"
@@ -60,6 +58,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_INDIGO_GATHERER",
+  "civilopedia": "TXT_KEY_BUILDING_INDIGO_GATHERER_PEDIA",
   "nukeImmune": true,
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [

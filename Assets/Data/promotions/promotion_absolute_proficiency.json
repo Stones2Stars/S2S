@@ -1,6 +1,5 @@
 {
  "type": "PROMOTION_ABSOLUTE_PROFICIENCY",
- "description": "TXT_KEY_PROMOTION_ABSOLUTE_PROFICIENCY",
  "strength": {
   "unit": {
    "quality": {
@@ -30,6 +29,7 @@
   "sound": "AS2D_IF_LEVELUP"
  },
  "identity": {
+  "description": "TXT_KEY_PROMOTION_ABSOLUTE_PROFICIENCY",
   "replacesUnitCombat": "UNITCOMBAT_QUALITY_STANDARD",
   "levelPrereq": 6,
   "notOnUnitCombats": [

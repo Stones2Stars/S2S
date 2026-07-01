@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_EDUCATION_MASTERMIND",
- "description": "TXT_KEY_BUILDING_EDUCATION_MASTERMIND",
- "civilopedia": "TXT_KEY_BUILDING_EQ_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -97,6 +95,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_EDUCATION_MASTERMIND",
+  "civilopedia": "TXT_KEY_BUILDING_EQ_PEDIA",
   "notConstructible": true,
   "nukeImmune": true,
   "conquestProbability": 100,

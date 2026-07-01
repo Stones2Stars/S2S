@@ -1,12 +1,12 @@
 {
  "type": "UNITCOMBAT_CULTURE_BURMESE",
- "description": "TXT_KEY_UNITCOMBAT_CULTURE_BURMESE",
  "ui": {
   "art": {
    "icon": "Art/Interface/Buttons/units/sparth/categories/culture_burma.dds"
   }
  },
  "identity": {
+  "description": "TXT_KEY_UNITCOMBAT_CULTURE_BURMESE",
   "culture": "BONUS_BURMESE"
  }
 }

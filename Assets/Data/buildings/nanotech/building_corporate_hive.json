@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_CORPORATE_HIVE",
- "description": "TXT_KEY_BUILDING_CORPORATE_HIVE",
- "civilopedia": "TXT_KEY_BUILDING_CORPORATE_HIVE_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -38,6 +36,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_CORPORATE_HIVE",
+  "civilopedia": "TXT_KEY_BUILDING_CORPORATE_HIVE_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

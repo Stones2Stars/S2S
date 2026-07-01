@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_FERRY_TERMINAL",
- "description": "TXT_KEY_BUILDING_FERRY_TERMINAL",
- "civilopedia": "TXT_KEY_BUILDING_FERRY_TERMINAL_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_RIVER_ADMINISTRATION"
@@ -98,6 +96,8 @@
   "construct": "AS2D_BUILD_RIVER_PORT"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_FERRY_TERMINAL",
+  "civilopedia": "TXT_KEY_BUILDING_FERRY_TERMINAL_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

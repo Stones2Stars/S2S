@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_FACTORY_TELEVISIONS",
- "description": "TXT_KEY_BUILDING_FACTORY_TELEVISIONS",
- "civilopedia": "TXT_KEY_BUILDING_FACTORY_TELEVISIONS_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_ELECTRONICS_MANUFACTURING_DISTRICT"
@@ -103,6 +101,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_FACTORY_TELEVISIONS",
+  "civilopedia": "TXT_KEY_BUILDING_FACTORY_TELEVISIONS_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

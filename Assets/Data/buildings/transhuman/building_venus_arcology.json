@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_VENUS_ARCOLOGY",
- "description": "TXT_KEY_BUILDING_VENUS_ARCOLOGY",
- "civilopedia": "TXT_KEY_BUILDING_VENUS_ARCOLOGY_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_CAPTURED_IO",
@@ -75,6 +73,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_VENUS_ARCOLOGY",
+  "civilopedia": "TXT_KEY_BUILDING_VENUS_ARCOLOGY_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

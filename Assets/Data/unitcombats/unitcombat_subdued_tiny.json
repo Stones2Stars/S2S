@@ -1,6 +1,5 @@
 {
  "type": "UNITCOMBAT_SUBDUED_TINY",
- "description": "TXT_KEY_UNITCOMBAT_SUBDUED",
  "upkeep": {
   "unit": {
    "extra": {
@@ -144,5 +143,8 @@
   "art": {
    "icon": "Art/Interface/Buttons/units/sparth/categories/subdued.dds"
   }
+ },
+ "identity": {
+  "description": "TXT_KEY_UNITCOMBAT_SUBDUED"
  }
 }

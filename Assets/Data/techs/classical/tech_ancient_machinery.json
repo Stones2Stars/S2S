@@ -1,8 +1,5 @@
 {
  "type": "TECH_ANCIENT_MACHINERY",
- "description": "TXT_KEY_TECH_ANCIENT_MACHINERY",
- "civilopedia": "TXT_KEY_TECH_ANCIENT_MACHINERY_PEDIA",
- "quote": "TXT_KEY_TECH_ANCIENT_MACHINERY_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_ASTROLOGICAL_INFLUENCE_OF_GEMINI",
@@ -75,6 +72,9 @@
   "soundMP": "AS2D_TECH_ANCIENT_MACHINERY"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_ANCIENT_MACHINERY",
+  "civilopedia": "TXT_KEY_TECH_ANCIENT_MACHINERY_PEDIA",
+  "quote": "TXT_KEY_TECH_ANCIENT_MACHINERY_QUOTE",
   "era": "C2C_ERA_CLASSICAL",
   "worth": 2,
   "tradeable": true,

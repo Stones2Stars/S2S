@@ -1,7 +1,5 @@
 {
  "type": "UNIT_AMERICAN_NAVY_SEAL",
- "description": "TXT_KEY_UNIT_AMERICAN_NAVY_SEAL",
- "civilopedia": "TXT_KEY_UNIT_AMERICAN_NAVY_SEAL_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -95,6 +93,8 @@
   "upkeep": 1
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_AMERICAN_NAVY_SEAL",
+  "civilopedia": "TXT_KEY_UNIT_AMERICAN_NAVY_SEAL_PEDIA",
   "worth": 5,
   "militaryWorth": 125,
   "xpValueAttack": 6,

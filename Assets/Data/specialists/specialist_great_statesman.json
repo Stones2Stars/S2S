@@ -1,7 +1,5 @@
 {
  "type": "SPECIALIST_GREAT_STATESMAN",
- "description": "TXT_KEY_UNIT_GREAT_STATESMAN",
- "civilopedia": "TXT_KEY_CONCEPT_GREAT_STATESMAN_PEDIA",
  "food": {
   "city": {
    "flat": 1
@@ -56,6 +54,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_GREAT_STATESMAN",
+  "civilopedia": "TXT_KEY_CONCEPT_GREAT_STATESMAN_PEDIA",
   "categories": [
    "CATEGORY_SPECIALIST_GROUP_POLITICAL"
   ]

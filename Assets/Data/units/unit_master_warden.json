@@ -1,7 +1,5 @@
 {
  "type": "UNIT_MASTER_WARDEN",
- "description": "TXT_KEY_UNIT_MASTER_WARDEN",
- "civilopedia": "TXT_KEY_UNIT_MASTER_HUNTER_PEDIA",
  "obsoletedBy": {
   "techs": [
    "TECH_MATCHLOCK"
@@ -59,6 +57,8 @@
   "upkeep": 1
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_MASTER_WARDEN",
+  "civilopedia": "TXT_KEY_UNIT_MASTER_HUNTER_PEDIA",
   "spawnOnly": true,
   "worth": 6,
   "militaryWorth": 11,

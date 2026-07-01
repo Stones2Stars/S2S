@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_MINING_MECH_CONTROL_CENTER",
- "description": "TXT_KEY_BUILDING_MINING_MECH_CONTROL_CENTER",
- "civilopedia": "TXT_KEY_BUILDING_MINING_MECH_CONTROL_CENTER_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_MINING_NANOBOT_CONTROL_CENTER"
@@ -276,6 +274,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_MINING_MECH_CONTROL_CENTER",
+  "civilopedia": "TXT_KEY_BUILDING_MINING_MECH_CONTROL_CENTER_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

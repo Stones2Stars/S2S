@@ -1,12 +1,12 @@
 {
  "type": "PROMOTIONLINE_AIR_TO_AIR",
- "description": "TXT_KEY_PROMOTIONLINE_AIR_TO_AIR",
  "ui": {
   "art": {
    "icon": ",Art/Interface/Buttons/Promotions/jetplane.dds,Art/RoM_Promotions_atlas.dds,1,2"
   }
  },
  "identity": {
+  "description": "TXT_KEY_PROMOTIONLINE_AIR_TO_AIR",
   "unitCombats": [
    "UNITCOMBAT_JET_FIGHTERS",
    "UNITCOMBAT_SUPERSONIC_PLANES",

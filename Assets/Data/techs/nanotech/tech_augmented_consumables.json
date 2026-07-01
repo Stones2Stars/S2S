@@ -1,8 +1,5 @@
 {
  "type": "TECH_AUGMENTED_CONSUMABLES",
- "description": "TXT_KEY_TECH_AUGMENTED_CONSUMABLES",
- "civilopedia": "TXT_KEY_TECH_AUGMENTED_CONSUMABLES_PEDIA",
- "quote": "TXT_KEY_TECH_AUGMENTED_CONSUMABLES_QUOTE",
  "enables": {
   "bonuses": [
    "BONUS_ORGANIC_COMPUTERS",
@@ -72,6 +69,9 @@
   "soundMP": "AS2D_TECH_AUGMENTED_CONSUMABLES"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_AUGMENTED_CONSUMABLES",
+  "civilopedia": "TXT_KEY_TECH_AUGMENTED_CONSUMABLES_PEDIA",
+  "quote": "TXT_KEY_TECH_AUGMENTED_CONSUMABLES_QUOTE",
   "era": "C2C_ERA_NANOTECH",
   "worth": 48,
   "militaryWorth": 4,

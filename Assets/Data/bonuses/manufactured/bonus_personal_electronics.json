@@ -1,7 +1,5 @@
 {
  "type": "BONUS_PERSONAL_ELECTRONICS",
- "description": "TXT_KEY_BONUS_PERSONAL_ELECTRONICS",
- "civilopedia": "TXT_KEY_BONUS_PERSONAL_ELECTRONICS_PEDIA",
  "enables": {
   "units": [
    "UNIT_SOFTWARE_DEVELOPER"
@@ -13,6 +11,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_PERSONAL_ELECTRONICS",
+  "civilopedia": "TXT_KEY_BONUS_PERSONAL_ELECTRONICS_PEDIA",
   "bonusClassType": "BONUSCLASS_MANUFACTURED"
  }
 }

@@ -1,8 +1,5 @@
 {
  "type": "TECH_MEDIEVAL_LIFESTYLE",
- "description": "TXT_KEY_TECH_MEDIEVAL_LIFESTYLE",
- "civilopedia": "TXT_KEY_TECH_MEDIEVAL_LIFESTYLE_PEDIA",
- "quote": "TXT_KEY_TECH_MEDIEVAL_LIFESTYLE_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_EDUCATION_ABSURD",
@@ -90,6 +87,9 @@
   "soundMP": "AS2D_TECH_MEDIEVAL_LIFESTYLE"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_MEDIEVAL_LIFESTYLE",
+  "civilopedia": "TXT_KEY_TECH_MEDIEVAL_LIFESTYLE_PEDIA",
+  "quote": "TXT_KEY_TECH_MEDIEVAL_LIFESTYLE_QUOTE",
   "era": "C2C_ERA_MEDIEVAL",
   "worth": 24,
   "tradeable": true,

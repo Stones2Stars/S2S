@@ -1,7 +1,5 @@
 {
  "type": "BONUS_MARTIAN_BLUEBERRIES",
- "description": "TXT_KEY_BONUS_MARTIAN_BLUEBERRIES",
- "civilopedia": "TXT_KEY_BONUS_MARTIAN_BLUEBERRIES_PEDIA",
  "production": {
   "plot": {
    "flat": 3
@@ -37,6 +35,8 @@
   "placementOrder": 9
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_MARTIAN_BLUEBERRIES",
+  "civilopedia": "TXT_KEY_BONUS_MARTIAN_BLUEBERRIES_PEDIA",
   "bonusClassType": "BONUSCLASS_PRODUCTION"
  }
 }

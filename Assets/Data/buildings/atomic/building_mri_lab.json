@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_MRI_LAB",
- "description": "TXT_KEY_BUILDING_MRI_LAB",
- "civilopedia": "TXT_KEY_BUILDING_MRI_LAB_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_HEALTHCARE_MEGACOMPLEX"
@@ -78,6 +76,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_MRI_LAB",
+  "civilopedia": "TXT_KEY_BUILDING_MRI_LAB_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

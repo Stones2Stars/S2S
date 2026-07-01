@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_SPACE_COLONY_TRANSTELLAR",
- "description": "TXT_KEY_BUILDING_SPACE_COLONY_TRANSTELLAR",
- "civilopedia": "TXT_KEY_BUILDING_SPACE_COLONY_TRANSTELLAR_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_PROJECT_ICARUS",
@@ -62,6 +60,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_SPACE_COLONY_TRANSTELLAR",
+  "civilopedia": "TXT_KEY_BUILDING_SPACE_COLONY_TRANSTELLAR_PEDIA",
   "notConstructible": true,
   "autoBuild": true,
   "advisor": "ADVISOR_SCIENCE",

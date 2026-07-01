@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_BOSSABALL_COURT",
- "description": "TXT_KEY_BUILDING_BOSSABALL_COURT",
- "civilopedia": "TXT_KEY_BUILDING_BOSSABALL_COURT_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_ATHLETIC_MEGACOMPLEX"
@@ -57,6 +55,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_BOSSABALL_COURT",
+  "civilopedia": "TXT_KEY_BUILDING_BOSSABALL_COURT_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

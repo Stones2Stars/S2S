@@ -1,7 +1,5 @@
 {
  "type": "UNIT_MULTIVERSE_REWARD",
- "description": "TXT_KEY_UNIT_MULTIVERSE_REWARD",
- "civilopedia": "TXT_KEY_UNIT_MULTIVERSE_REWARD_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -39,6 +37,8 @@
   "upkeep": 1
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_MULTIVERSE_REWARD",
+  "civilopedia": "TXT_KEY_UNIT_MULTIVERSE_REWARD_PEDIA",
   "spawnOnly": true,
   "worth": 1,
   "domain": "DOMAIN_LAND",

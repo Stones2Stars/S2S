@@ -1,7 +1,5 @@
 {
  "type": "UNIT_WARDOG",
- "description": "TXT_KEY_UNIT_WARDOG",
- "civilopedia": "TXT_KEY_UNIT_WARDOG_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -92,6 +90,8 @@
   "upkeep": 1
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_WARDOG",
+  "civilopedia": "TXT_KEY_UNIT_WARDOG_PEDIA",
   "worth": 5,
   "militaryWorth": 6,
   "xpValueAttack": 3,

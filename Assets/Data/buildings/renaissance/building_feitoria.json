@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_FEITORIA",
- "description": "TXT_KEY_BUILDING_FEITORIA",
- "civilopedia": "TXT_KEY_BUILDING_FEITORIA_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -99,6 +97,8 @@
   "construct": "AS2D_BUILD_BANK"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_FEITORIA",
+  "civilopedia": "TXT_KEY_BUILDING_FEITORIA_PEDIA",
   "worth": 4,
   "conquestProbability": 100,
   "dcmAirbombMission": 2,

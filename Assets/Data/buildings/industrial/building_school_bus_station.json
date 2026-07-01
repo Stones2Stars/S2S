@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_SCHOOL_BUS_STATION",
- "description": "TXT_KEY_BUILDING_SCHOOL_BUS_STATION",
- "civilopedia": "TXT_KEY_BUILDING_SCHOOL_BUS_STATION_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_HOLOGRAPHIC_SCHOOL"
@@ -90,6 +88,8 @@
   "construct": "AS2D_BUILD_SCHOOL"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_SCHOOL_BUS_STATION",
+  "civilopedia": "TXT_KEY_BUILDING_SCHOOL_BUS_STATION_PEDIA",
   "worth": 3,
   "conquestProbability": 33,
   "dcmAirbombMission": 2,

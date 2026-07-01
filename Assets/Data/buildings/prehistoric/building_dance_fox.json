@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_DANCE_FOX",
- "description": "TXT_KEY_BUILDING_DANCE_FOX",
- "civilopedia": "TXT_KEY_BUILDING_DANCE_FOX_PEDIA",
  "obsoletedBy": {
   "techs": [
    "TECH_MIND_UPLOADING"
@@ -74,6 +72,8 @@
   "construct": "AS2D_BUILD_BARRACKS"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_DANCE_FOX",
+  "civilopedia": "TXT_KEY_BUILDING_DANCE_FOX_PEDIA",
   "worth": 1,
   "militaryWorth": 1,
   "greatPeopleUnitType": "UNIT_ARTIST",

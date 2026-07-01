@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_CISLUNAR_ION_CANNON",
- "description": "TXT_KEY_BUILDING_CISLUNAR_ION_CANNON",
- "civilopedia": "TXT_KEY_BUILDING_CISLUNAR_ION_CANNON_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_CISLUNAR_DILATON_GENERATOR",
@@ -49,6 +47,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_CISLUNAR_ION_CANNON",
+  "civilopedia": "TXT_KEY_BUILDING_CISLUNAR_ION_CANNON_PEDIA",
   "sightRange": 1,
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,

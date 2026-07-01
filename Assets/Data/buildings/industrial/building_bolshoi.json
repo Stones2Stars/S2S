@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_BOLSHOI",
- "description": "TXT_KEY_BUILDING_BOLSHOI",
- "civilopedia": "TXT_KEY_BUILDING_BOLSHOI_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -76,6 +74,8 @@
   "construct": "AS2D_BUILD_BOLSHOI"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_BOLSHOI",
+  "civilopedia": "TXT_KEY_BUILDING_BOLSHOI_PEDIA",
   "commerceDoubleTime": {
    "culture": 1000
   },

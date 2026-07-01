@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_BASE_JUMPING_SITE",
- "description": "TXT_KEY_BUILDING_BASE_JUMPING_SITE",
- "civilopedia": "TXT_KEY_BUILDING_BASE_JUMPING_SITE_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_ATHLETIC_MEGACOMPLEX"
@@ -70,6 +68,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_BASE_JUMPING_SITE",
+  "civilopedia": "TXT_KEY_BUILDING_BASE_JUMPING_SITE_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

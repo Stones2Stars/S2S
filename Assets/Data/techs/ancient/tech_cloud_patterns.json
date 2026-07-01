@@ -1,8 +1,5 @@
 {
  "type": "TECH_CLOUD_PATTERNS",
- "description": "TXT_KEY_TECH_CLOUD_PATTERNS",
- "civilopedia": "TXT_KEY_TECH_CLOUD_PATTERNS_PEDIA",
- "quote": "TXT_KEY_TECH_CLOUD_PATTERNS_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_CLOUD_OBSERVERS_HUT"
@@ -45,6 +42,9 @@
   "soundMP": "AS2D_TECH_CLOUD_PATTERNS"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_CLOUD_PATTERNS",
+  "civilopedia": "TXT_KEY_TECH_CLOUD_PATTERNS_PEDIA",
+  "quote": "TXT_KEY_TECH_CLOUD_PATTERNS_QUOTE",
   "era": "C2C_ERA_ANCIENT",
   "worth": 16,
   "militaryWorth": 4,

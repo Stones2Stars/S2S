@@ -1,7 +1,5 @@
 {
  "type": "BONUS_BIOFUEL",
- "description": "TXT_KEY_BONUS_BIOFUEL",
- "civilopedia": "TXT_KEY_BONUS_BIOFUEL_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_AUTOMOBILE_DEALERSHIP",
@@ -76,6 +74,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_BIOFUEL",
+  "civilopedia": "TXT_KEY_BONUS_BIOFUEL_PEDIA",
   "bonusClassType": "BONUSCLASS_MANUFACTURED"
  }
 }

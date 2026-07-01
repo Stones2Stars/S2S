@@ -1,8 +1,5 @@
 {
  "type": "TECH_COAST_GUARD",
- "description": "TXT_KEY_TECH_COAST_GUARD",
- "civilopedia": "TXT_KEY_TECH_COAST_GUARD_PEDIA",
- "quote": "TXT_KEY_TECH_COAST_GUARD_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_COAST_GUARD_STATION",
@@ -63,6 +60,9 @@
   "soundMP": "AS2D_TECH_COAST_GUARD"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_COAST_GUARD",
+  "civilopedia": "TXT_KEY_TECH_COAST_GUARD_PEDIA",
+  "quote": "TXT_KEY_TECH_COAST_GUARD_QUOTE",
   "era": "C2C_ERA_ATOMIC",
   "worth": 40,
   "militaryWorth": 10,

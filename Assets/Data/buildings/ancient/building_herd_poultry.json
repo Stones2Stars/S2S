@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_HERD_POULTRY",
- "description": "TXT_KEY_BUILDING_HERD_POULTRY",
- "civilopedia": "TXT_KEY_BUILDING_HERD_POULTRY_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_FLOCKS_OF_DUCK",
@@ -67,6 +65,8 @@
   "construct": "SND_AMB_HORSE_COBBLESTONES"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_HERD_POULTRY",
+  "civilopedia": "TXT_KEY_BUILDING_HERD_POULTRY_PEDIA",
   "worth": 3,
   "conquestProbability": 75,
   "advisor": "ADVISOR_GROWTH",

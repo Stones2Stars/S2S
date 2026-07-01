@@ -1,6 +1,5 @@
 {
  "type": "PROMOTION_EXPERIENCED_ARTIST",
- "description": "TXT_KEY_PROMOTION_EXPERIENCED_ARTIST",
  "upkeep": {
   "unit": {
    "upgradeDiscount": {
@@ -17,6 +16,7 @@
   "sound": "AS2D_IF_LEVELUP"
  },
  "identity": {
+  "description": "TXT_KEY_PROMOTION_EXPERIENCED_ARTIST",
   "unitCombats": [
    "UNITCOMBAT_ENTERTAINER"
   ]

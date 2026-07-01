@@ -1,7 +1,5 @@
 {
  "type": "RELIGION_NAGHUALISM",
- "description": "TXT_KEY_TECH_NAGHUALISM",
- "civilopedia": "TXT_KEY_TECH_NAGHUALISM_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_BALL_COURT",
@@ -83,6 +81,8 @@
   "sound": "AS2D_BUILD_TOLTEC"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_NAGHUALISM",
+  "civilopedia": "TXT_KEY_TECH_NAGHUALISM_PEDIA",
   "spreadFactor": 45
  }
 }

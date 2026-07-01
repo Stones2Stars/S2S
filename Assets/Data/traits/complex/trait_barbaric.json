@@ -1,8 +1,5 @@
 {
  "type": "TRAIT_BARBARIC",
- "description": "TXT_KEY_TRAIT_COMPLEX_BARBARIC",
- "civilopedia": "TXT_KEY_TRAIT_COMPLEX_BARBARIC_PEDIA",
- "strategy": "TXT_KEY_TRAIT_COMPLEX_BARBARIC_STRATEGY",
  "excludes": [
   "TRAIT_CIVILIZED"
  ],
@@ -168,6 +165,9 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_TRAIT_COMPLEX_BARBARIC",
+  "civilopedia": "TXT_KEY_TRAIT_COMPLEX_BARBARIC_PEDIA",
+  "strategy": "TXT_KEY_TRAIT_COMPLEX_BARBARIC_STRATEGY",
   "negativeTrait": true,
   "impurePromotions": true,
   "minAnarchy": 3

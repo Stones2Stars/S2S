@@ -1,8 +1,5 @@
 {
  "type": "CIVIC_ANTIRELIGION",
- "description": "TXT_KEY_CIVIC_ANTIRELIGION",
- "civilopedia": "TXT_KEY_CIVIC_ANTIRELIGION_PEDIA",
- "strategy": "TXT_KEY_CIVIC_ANTIRELIGION_STRATEGY",
  "enables": {
   "buildings": [
    "BUILDING_CHURCH_OF_THE_STATE"
@@ -114,6 +111,9 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_CIVIC_ANTIRELIGION",
+  "civilopedia": "TXT_KEY_CIVIC_ANTIRELIGION_PEDIA",
+  "strategy": "TXT_KEY_CIVIC_ANTIRELIGION_STRATEGY",
   "civicOption": "CIVICOPTION_RELIGION",
   "anarchyLength": 2,
   "upkeepLevel": "UPKEEP_HIGH"

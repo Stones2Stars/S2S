@@ -1,7 +1,5 @@
 {
  "type": "UNIT_SUPPLY_TRAIN",
- "description": "TXT_KEY_UNIT_SUPPLY_TRAIN",
- "civilopedia": "TXT_KEY_CONCEPT_TRADE_CARAVAN_PEDIA",
  "obsoletedBy": {
   "techs": [
    "TECH_MOTORIZED_TRANSPORTATION"
@@ -74,6 +72,8 @@
   "upkeep": 1
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_SUPPLY_TRAIN",
+  "civilopedia": "TXT_KEY_CONCEPT_TRADE_CARAVAN_PEDIA",
   "worth": 1,
   "animalCombat": 100,
   "domain": "DOMAIN_LAND",

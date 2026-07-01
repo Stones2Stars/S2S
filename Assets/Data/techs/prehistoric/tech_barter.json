@@ -1,8 +1,5 @@
 {
  "type": "TECH_BARTER",
- "description": "TXT_KEY_TECH_BARTER",
- "civilopedia": "TXT_KEY_TECH_BARTER_PEDIA",
- "quote": "TXT_KEY_TECH_BARTER_QUOTE",
  "enables": {
   "bonuses": [
    "BONUS_AMBER",
@@ -81,6 +78,9 @@
   "soundMP": "AS2D_TECH_BARTER"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_BARTER",
+  "civilopedia": "TXT_KEY_TECH_BARTER_PEDIA",
+  "quote": "TXT_KEY_TECH_BARTER_QUOTE",
   "era": "C2C_ERA_PREHISTORIC",
   "worth": 8,
   "militaryWorth": 2,

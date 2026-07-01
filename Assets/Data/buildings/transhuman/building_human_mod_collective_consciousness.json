@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_HUMAN_MOD_COLLECTIVE_CONSCIOUSNESS",
- "description": "TXT_KEY_BUILDING_HUMAN_MOD_COLLECTIVE_CONSCIOUSNESS",
- "civilopedia": "TXT_KEY_BUILDING_HUMAN_MOD_COLLECTIVE_CONSCIOUSNESS_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -46,6 +44,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_HUMAN_MOD_COLLECTIVE_CONSCIOUSNESS",
+  "civilopedia": "TXT_KEY_BUILDING_HUMAN_MOD_COLLECTIVE_CONSCIOUSNESS_PEDIA",
   "neverCapture": true,
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,

@@ -1,7 +1,5 @@
 {
  "type": "UNIT_LEIDANG",
- "description": "TXT_KEY_UNIT_LEIDANG",
- "civilopedia": "TXT_KEY_UNIT_LEIDANG_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -72,6 +70,8 @@
   "upkeep": 1
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_LEIDANG",
+  "civilopedia": "TXT_KEY_UNIT_LEIDANG_PEDIA",
   "worth": 1,
   "militaryWorth": 3,
   "xpValueAttack": 4,

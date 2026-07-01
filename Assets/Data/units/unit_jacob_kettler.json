@@ -1,7 +1,5 @@
 {
  "type": "UNIT_JACOB_KETTLER",
- "description": "TXT_KEY_UNIT_JACOB_KETTLER",
- "civilopedia": "TXT_KEY_UNIT_JACOB_KETTLER_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -53,6 +51,8 @@
   "upkeep": 1
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_JACOB_KETTLER",
+  "civilopedia": "TXT_KEY_UNIT_JACOB_KETTLER_PEDIA",
   "worth": 6,
   "militaryWorth": 8,
   "xpValueAttack": 4,

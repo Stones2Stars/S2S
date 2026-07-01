@@ -1,6 +1,5 @@
 {
  "type": "PROMOTION_SENSORS",
- "description": "TXT_KEY_PROMOTION_SENSORS",
  "strength": {
   "unit": {
    "percent": 10,
@@ -92,6 +91,7 @@
   "sound": "AS2D_IF_LEVELUP"
  },
  "identity": {
+  "description": "TXT_KEY_PROMOTION_SENSORS",
   "unitCombats": [
    "UNITCOMBAT_STEAM_SHIPS",
    "UNITCOMBAT_DIESEL_SHIPS",

@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_ALCATRAZ",
- "description": "TXT_KEY_BUILDING_ALCATRAZ",
- "civilopedia": "TXT_KEY_BUILDING_ALCATRAZ_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_CRIME_PRISON_BREAKOUTS"
@@ -98,6 +96,8 @@
   "construct": "AS2D_BUILD_MAX_PRISON"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_ALCATRAZ",
+  "civilopedia": "TXT_KEY_BUILDING_ALCATRAZ_PEDIA",
   "nukeImmune": true,
   "worth": 10,
   "conquestProbability": 100,

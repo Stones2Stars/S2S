@@ -1,6 +1,5 @@
 {
  "type": "UNITCOMBAT_ROCKET_LAUNCHER",
- "description": "TXT_KEY_UNITCOMBAT_ROCKET_LAUNCHER",
  "capture": {
   "unit": {
    "probability": {
@@ -17,6 +16,7 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_UNITCOMBAT_ROCKET_LAUNCHER",
   "forMilitary": true
  }
 }

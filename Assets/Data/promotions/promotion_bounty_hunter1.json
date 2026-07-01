@@ -1,6 +1,5 @@
 {
  "type": "PROMOTION_BOUNTY_HUNTER1",
- "description": "TXT_KEY_PROMOTION_BOUNTY_HUNTER1",
  "cargo": {
   "unit": {
    "space": {
@@ -28,6 +27,7 @@
   "sound": "AS2D_IF_LEVELUP"
  },
  "identity": {
+  "description": "TXT_KEY_PROMOTION_BOUNTY_HUNTER1",
   "domainCargoChange": "DOMAIN_LAND",
   "specialCargoChange": "SPECIALUNIT_CAPTIVE"
  }

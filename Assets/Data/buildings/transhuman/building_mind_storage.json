@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_MIND_STORAGE",
- "description": "TXT_KEY_BUILDING_MIND_STORAGE",
- "civilopedia": "TXT_KEY_BUILDING_MIND_STORAGE_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -69,6 +67,8 @@
   "construct": "AS2D_BUILD_MIND_STORAGE"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_MIND_STORAGE",
+  "civilopedia": "TXT_KEY_BUILDING_MIND_STORAGE_PEDIA",
   "neverCapture": true,
   "centerInCity": true,
   "worth": 10,

@@ -1,8 +1,5 @@
 {
  "type": "TECH_ASATRU",
- "description": "TXT_KEY_TECH_ASATRU",
- "civilopedia": "TXT_KEY_TECH_ASATRU_PEDIA",
- "quote": "TXT_KEY_TECH_ASATRU_QUOTE",
  "enables": {
   "religions": [
    "RELIGION_ASATRU"
@@ -51,6 +48,9 @@
   "soundMP": "AS2D_TECH_GENERIC"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_ASATRU",
+  "civilopedia": "TXT_KEY_TECH_ASATRU_PEDIA",
+  "quote": "TXT_KEY_TECH_ASATRU_QUOTE",
   "era": "C2C_ERA_MEDIEVAL",
   "worth": 8,
   "gridX": 42,

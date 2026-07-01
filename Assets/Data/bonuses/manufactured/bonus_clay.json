@@ -1,7 +1,5 @@
 {
  "type": "BONUS_CLAY",
- "description": "TXT_KEY_BONUS_CLAY",
- "civilopedia": "TXT_KEY_BONUS_CLAY_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_BRICK_MASON",
@@ -21,6 +19,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_CLAY",
+  "civilopedia": "TXT_KEY_BONUS_CLAY_PEDIA",
   "bonusClassType": "BONUSCLASS_MANUFACTURED"
  }
 }

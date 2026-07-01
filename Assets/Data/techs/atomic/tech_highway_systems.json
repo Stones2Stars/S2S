@@ -1,8 +1,5 @@
 {
  "type": "TECH_HIGHWAY_SYSTEMS",
- "description": "TXT_KEY_TECH_HIGHWAY_SYSTEMS",
- "civilopedia": "TXT_KEY_TECH_HIGHWAY_SYSTEMS_PEDIA",
- "quote": "TXT_KEY_TECH_HIGHWAY_SYSTEMS_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_EXPRESSWAY",
@@ -66,6 +63,9 @@
   "soundMP": "AS2D_TECH_HIGHWAY_SYSTEMS"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_HIGHWAY_SYSTEMS",
+  "civilopedia": "TXT_KEY_TECH_HIGHWAY_SYSTEMS_PEDIA",
+  "quote": "TXT_KEY_TECH_HIGHWAY_SYSTEMS_QUOTE",
   "era": "C2C_ERA_ATOMIC",
   "worth": 48,
   "militaryWorth": 4,

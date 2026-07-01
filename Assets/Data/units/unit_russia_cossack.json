@@ -1,7 +1,5 @@
 {
  "type": "UNIT_RUSSIA_COSSACK",
- "description": "TXT_KEY_UNIT_RUSSIA_COSSACK",
- "civilopedia": "TXT_KEY_UNIT_RUSSIA_COSSACK_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -176,6 +174,8 @@
   "upkeep": 1
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_RUSSIA_COSSACK",
+  "civilopedia": "TXT_KEY_UNIT_RUSSIA_COSSACK_PEDIA",
   "worth": 4,
   "militaryWorth": 75,
   "xpValueAttack": 6,

@@ -1,8 +1,5 @@
 {
  "type": "UNIT_MONK",
- "description": "TXT_KEY_UNIT_MONK",
- "civilopedia": "TXT_KEY_UNIT_MONK_PEDIA",
- "help": "TXT_KEY_UNIT_MONK_HELP",
  "requires": {
   "build": {
    "all": [
@@ -79,6 +76,9 @@
   "upkeep": 3
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_MONK",
+  "civilopedia": "TXT_KEY_UNIT_MONK_PEDIA",
+  "help": "TXT_KEY_UNIT_MONK_HELP",
   "worth": 5,
   "militaryWorth": 9,
   "xpValueAttack": 4,

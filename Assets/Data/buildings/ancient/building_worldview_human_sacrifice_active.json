@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_WORLDVIEW_HUMAN_SACRIFICE_ACTIVE",
- "description": "TXT_KEY_BUILDING_WORLDVIEW_HUMAN_SACRIFICE_ACTIVE",
- "civilopedia": "TXT_KEY_BUILDING_WORLDVIEW_HUMAN_SACRIFICE_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_ALTAR_FOR_HUMAN_SACRIFICE"
@@ -29,6 +27,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_WORLDVIEW_HUMAN_SACRIFICE_ACTIVE",
+  "civilopedia": "TXT_KEY_BUILDING_WORLDVIEW_HUMAN_SACRIFICE_PEDIA",
   "notConstructible": true,
   "nukeImmune": true,
   "neverCapture": true,

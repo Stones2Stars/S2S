@@ -1,7 +1,5 @@
 {
  "type": "TRAIT_SCIENTIFIC",
- "description": "TXT_KEY_TRAIT_SCIENTIFIC",
- "civilopedia": "TXT_KEY_TRAIT_SCIENTIFIC_PEDIA",
  "buildRate": {
   "empire": {
    "buildings": {
@@ -93,6 +91,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_TRAIT_SCIENTIFIC",
+  "civilopedia": "TXT_KEY_TRAIT_SCIENTIFIC_PEDIA",
   "shortDescription": "TXT_KEY_TRAIT_SCIENTIFIC_SHORT"
  }
 }

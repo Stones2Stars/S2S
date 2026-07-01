@@ -1,8 +1,5 @@
 {
  "type": "TECH_NOMADISM",
- "description": "TXT_KEY_TECH_NOMADISM",
- "civilopedia": "TXT_KEY_TECH_NOMADISM_PEDIA",
- "quote": "TXT_KEY_TECH_NOMADISM_QUOTE",
  "enables": {
   "promotions": [
    "PROMOTION_GUERILLA2",
@@ -45,6 +42,9 @@
   "soundMP": "AS2D_TECH_NOMADISM"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_NOMADISM",
+  "civilopedia": "TXT_KEY_TECH_NOMADISM_PEDIA",
+  "quote": "TXT_KEY_TECH_NOMADISM_QUOTE",
   "era": "C2C_ERA_PREHISTORIC",
   "worth": 2,
   "tradeable": true,

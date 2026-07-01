@@ -1,8 +1,5 @@
 {
  "type": "TECH_SURVEYING",
- "description": "TXT_KEY_TECH_SURVEYING",
- "civilopedia": "TXT_KEY_TECH_SURVEYING_PEDIA",
- "quote": "TXT_KEY_TECH_SURVEYING_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_CRIME_TRESPASSING",
@@ -72,6 +69,9 @@
   "soundMP": "AS2D_TECH_SURVEYING"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_SURVEYING",
+  "civilopedia": "TXT_KEY_TECH_SURVEYING_PEDIA",
+  "quote": "TXT_KEY_TECH_SURVEYING_QUOTE",
   "era": "C2C_ERA_MEDIEVAL",
   "worth": 24,
   "tradeable": true,

@@ -1,7 +1,5 @@
 {
  "type": "IMPROVEMENT_HYDRO_DAM",
- "description": "TXT_KEY_IMPROVEMENT_HYDRO_DAM",
- "civilopedia": "TXT_KEY_IMPROVEMENT_HYDRO_DAM_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -56,6 +54,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_IMPROVEMENT_HYDRO_DAM",
+  "civilopedia": "TXT_KEY_IMPROVEMENT_HYDRO_DAM_PEDIA",
   "pillageTo": "IMPROVEMENT_WATERMILL",
   "advancedStart": {
    "cost": 64

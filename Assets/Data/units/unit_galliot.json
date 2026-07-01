@@ -1,8 +1,5 @@
 {
  "type": "UNIT_GALLIOT",
- "description": "TXT_KEY_UNIT_GALLIOT",
- "civilopedia": "TXT_KEY_UNIT_GALLIOT_PEDIA",
- "help": "TXT_KEY_UNIT_MERCHANT_SHIP_HELP",
  "obsoletedBy": {
   "techs": [
    "TECH_ASTROLABE"
@@ -85,6 +82,9 @@
   ]
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_GALLIOT",
+  "civilopedia": "TXT_KEY_UNIT_GALLIOT_PEDIA",
+  "help": "TXT_KEY_UNIT_MERCHANT_SHIP_HELP",
   "worth": 1,
   "minAreaSize": 10,
   "domain": "DOMAIN_SEA",

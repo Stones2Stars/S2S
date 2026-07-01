@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_SMELTER_STEEL",
- "description": "TXT_KEY_BUILDING_SMELTER_STEEL",
- "civilopedia": "TXT_KEY_BUILDING_SMELTER_STEEL_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_EIFFEL_TOWER",
@@ -101,6 +99,8 @@
   "construct": "AS2D_BUILD_IRONWORKS"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_SMELTER_STEEL",
+  "civilopedia": "TXT_KEY_BUILDING_SMELTER_STEEL_PEDIA",
   "worth": 8,
   "militaryWorth": 15,
   "conquestProbability": 75,

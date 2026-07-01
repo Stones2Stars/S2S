@@ -1,8 +1,5 @@
 {
  "type": "TECH_LASER",
- "description": "TXT_KEY_TECH_LASER",
- "civilopedia": "TXT_KEY_TECH_LASER_PEDIA",
- "quote": "TXT_KEY_TECH_LASER_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_ACCELERATOR",
@@ -70,6 +67,9 @@
   "soundMP": "AS2D_TECH_LASER"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_LASER",
+  "civilopedia": "TXT_KEY_TECH_LASER_PEDIA",
+  "quote": "TXT_KEY_TECH_LASER_QUOTE",
   "era": "C2C_ERA_ATOMIC",
   "worth": 48,
   "militaryWorth": 10,

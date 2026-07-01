@@ -1,7 +1,5 @@
 {
  "type": "BONUS_WOOD",
- "description": "TXT_KEY_BONUS_WOOD",
- "civilopedia": "TXT_KEY_BONUS_WOOD_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_ABATIS",
@@ -134,6 +132,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_WOOD",
+  "civilopedia": "TXT_KEY_BONUS_WOOD_PEDIA",
   "bonusClassType": "BONUSCLASS_MANUFACTURED"
  }
 }

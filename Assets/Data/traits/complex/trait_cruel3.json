@@ -1,8 +1,5 @@
 {
  "type": "TRAIT_CRUEL3",
- "description": "TXT_KEY_TRAIT_COMPLEX_CRUEL3",
- "civilopedia": "TXT_KEY_TRAIT_COMPLEX_CRUEL3_PEDIA",
- "strategy": "TXT_KEY_TRAIT_COMPLEX_CRUEL_STRATEGY",
  "excludes": [
   "TRAIT_HUMANITARIAN1"
  ],
@@ -190,6 +187,9 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_TRAIT_COMPLEX_CRUEL3",
+  "civilopedia": "TXT_KEY_TRAIT_COMPLEX_CRUEL3_PEDIA",
+  "strategy": "TXT_KEY_TRAIT_COMPLEX_CRUEL_STRATEGY",
   "negativeTrait": true
  }
 }

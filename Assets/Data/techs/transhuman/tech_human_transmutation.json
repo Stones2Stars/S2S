@@ -1,8 +1,5 @@
 {
  "type": "TECH_HUMAN_TRANSMUTATION",
- "description": "TXT_KEY_TECH_HUMAN_TRANSMUTATION",
- "civilopedia": "TXT_KEY_TECH_HUMAN_TRANSMUTATION_PEDIA",
- "quote": "TXT_KEY_TECH_HUMAN_TRANSMUTATION_QUOTE",
  "enables": {
   "bonuses": [
    "BONUS_HUMAN_MOD_GILLS",
@@ -77,6 +74,9 @@
   "soundMP": "AS2D_TECH_HUMAN_TRANSMUTATION"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_HUMAN_TRANSMUTATION",
+  "civilopedia": "TXT_KEY_TECH_HUMAN_TRANSMUTATION_PEDIA",
+  "quote": "TXT_KEY_TECH_HUMAN_TRANSMUTATION_QUOTE",
   "era": "C2C_ERA_TRANSHUMAN",
   "worth": 48,
   "militaryWorth": 4,

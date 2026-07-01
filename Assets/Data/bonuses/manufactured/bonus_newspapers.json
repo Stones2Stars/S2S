@@ -1,7 +1,5 @@
 {
  "type": "BONUS_NEWSPAPERS",
- "description": "TXT_KEY_BONUS_NEWSPAPERS",
- "civilopedia": "TXT_KEY_BONUS_NEWSPAPERS_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_NEWS_STAND",
@@ -14,6 +12,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_NEWSPAPERS",
+  "civilopedia": "TXT_KEY_BONUS_NEWSPAPERS_PEDIA",
   "bonusClassType": "BONUSCLASS_MANUFACTURED"
  }
 }

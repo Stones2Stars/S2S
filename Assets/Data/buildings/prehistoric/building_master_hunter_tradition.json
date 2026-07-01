@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_MASTER_HUNTER_TRADITION",
- "description": "TXT_KEY_BUILDING_MASTER_HUNTER_TRADITION",
- "civilopedia": "TXT_KEY_BUILDING_MASTER_HUNTER_TRADITION_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_GREAT_HOLMEGAARD_HUNT",
@@ -222,6 +220,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_MASTER_HUNTER_TRADITION",
+  "civilopedia": "TXT_KEY_BUILDING_MASTER_HUNTER_TRADITION_PEDIA",
   "notConstructible": true,
   "applyFreePromotionOnMove": true,
   "worth": 1,

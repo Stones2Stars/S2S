@@ -1,7 +1,5 @@
 {
  "type": "UNIT_CROW",
- "description": "TXT_KEY_UNIT_CROW",
- "civilopedia": "TXT_KEY_UNIT_CROW_PEDIA",
  "withdrawal": {
   "unit": {
    "percent": 60
@@ -36,6 +34,8 @@
   ]
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_CROW",
+  "civilopedia": "TXT_KEY_UNIT_CROW_PEDIA",
   "spawnOnly": true,
   "xpValueAttack": 2,
   "xpValueDefense": 1,

@@ -1,7 +1,5 @@
 {
  "type": "UNIT_CARANTANIAN_MERCENARY",
- "description": "TXT_KEY_UNIT_CARANTANIAN_MERCENARY",
- "civilopedia": "TXT_KEY_UNIT_CARANTANIAN_MERCENARY_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -73,6 +71,8 @@
   "upkeep": 1
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_CARANTANIAN_MERCENARY",
+  "civilopedia": "TXT_KEY_UNIT_CARANTANIAN_MERCENARY_PEDIA",
   "worth": 3,
   "militaryWorth": 9,
   "xpValueAttack": 6,

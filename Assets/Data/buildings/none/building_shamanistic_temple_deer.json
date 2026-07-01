@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_SHAMANISTIC_TEMPLE_DEER",
- "description": "TXT_KEY_BUILDING_SHAMANISTIC_TEMPLE_DEER",
- "civilopedia": "TXT_KEY_BUILDING_SHAMANISTIC_TEMPLE_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -66,6 +64,8 @@
   "construct": "AS2D_BUILD_SHAMAN"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_SHAMANISTIC_TEMPLE_DEER",
+  "civilopedia": "TXT_KEY_BUILDING_SHAMANISTIC_TEMPLE_PEDIA",
   "worth": 4,
   "advisor": "ADVISOR_RELIGION",
   "mapCategories": [

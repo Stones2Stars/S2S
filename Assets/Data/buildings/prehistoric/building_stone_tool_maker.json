@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_STONE_TOOL_MAKER",
- "description": "TXT_KEY_BUILDING_STONE_TOOL_MAKER",
- "civilopedia": "TXT_KEY_BUILDING_STONE_TOOL_MAKER_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_FLINT_KNAPPER"
@@ -206,6 +204,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_STONE_TOOL_MAKER",
+  "civilopedia": "TXT_KEY_BUILDING_STONE_TOOL_MAKER_PEDIA",
   "enabledCivilizations": [
    "CIVILIZATION_NPC_NEANDERTHAL"
   ],

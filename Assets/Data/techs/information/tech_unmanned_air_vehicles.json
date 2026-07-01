@@ -1,8 +1,5 @@
 {
  "type": "TECH_UNMANNED_AIR_VEHICLES",
- "description": "TXT_KEY_TECH_UNMANNED_AIR_VEHICLES",
- "civilopedia": "TXT_KEY_TECH_UNMANNED_AIR_VEHICLES_PEDIA",
- "quote": "TXT_KEY_TECH_UNMANNED_AIR_VEHICLES_QUOTE",
  "enables": {
   "bonuses": [
    "BONUS_UNMANNED_AIRCRAFTS"
@@ -56,6 +53,9 @@
   "soundMP": "AS2D_TECH_UNMANNED_AIR_VEHICLES"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_UNMANNED_AIR_VEHICLES",
+  "civilopedia": "TXT_KEY_TECH_UNMANNED_AIR_VEHICLES_PEDIA",
+  "quote": "TXT_KEY_TECH_UNMANNED_AIR_VEHICLES_QUOTE",
   "era": "C2C_ERA_INFORMATION",
   "worth": 48,
   "militaryWorth": 5,

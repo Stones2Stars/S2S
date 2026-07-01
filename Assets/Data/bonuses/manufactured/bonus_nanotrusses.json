@@ -1,7 +1,5 @@
 {
  "type": "BONUS_NANOTRUSSES",
- "description": "TXT_KEY_BONUS_NANOTRUSSES",
- "civilopedia": "TXT_KEY_BONUS_NANOTRUSSES_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_PLYMOUTH_ARCOLOGY"
@@ -13,6 +11,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_NANOTRUSSES",
+  "civilopedia": "TXT_KEY_BONUS_NANOTRUSSES_PEDIA",
   "bonusClassType": "BONUSCLASS_MANUFACTURED"
  }
 }

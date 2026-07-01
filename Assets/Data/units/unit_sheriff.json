@@ -1,7 +1,5 @@
 {
  "type": "UNIT_SHERIFF",
- "description": "TXT_KEY_UNIT_SHERIFF",
- "civilopedia": "TXT_KEY_UNIT_SHERIFF_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -139,6 +137,8 @@
   "upkeep": 7
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_SHERIFF",
+  "civilopedia": "TXT_KEY_UNIT_SHERIFF_PEDIA",
   "worth": 8,
   "militaryWorth": 20,
   "xpValueAttack": 3,

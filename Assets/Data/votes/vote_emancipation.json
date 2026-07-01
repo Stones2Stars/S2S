@@ -1,6 +1,5 @@
 {
  "type": "VOTE_EMANCIPATION",
- "description": "TXT_KEY_VOTE_EGALITARIAN",
  "voteSource": [
   "DIPLOVOTE_UN"
  ],
@@ -12,5 +11,8 @@
   "forceCivics": [
    "CIVIC_EGALITARIAN"
   ]
+ },
+ "identity": {
+  "description": "TXT_KEY_VOTE_EGALITARIAN"
  }
 }

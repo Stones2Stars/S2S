@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_SHELL_WORKERS_HUT",
- "description": "TXT_KEY_BUILDING_SHELL_WORKERS_HUT",
- "civilopedia": "TXT_KEY_BUILDING_SHELL_WORKERS_HUT_PEDIA",
  "obsoletedBy": {
   "techs": [
    "TECH_PLASTICS"
@@ -51,6 +49,8 @@
   "construct": "AS2D_BUILD_GRANARY"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_SHELL_WORKERS_HUT",
+  "civilopedia": "TXT_KEY_BUILDING_SHELL_WORKERS_HUT_PEDIA",
   "worth": 1,
   "advisor": "ADVISOR_ECONOMY",
   "freeStartEra": "C2C_ERA_CLASSICAL",

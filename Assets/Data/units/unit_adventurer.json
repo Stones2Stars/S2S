@@ -1,7 +1,5 @@
 {
  "type": "UNIT_ADVENTURER",
- "description": "TXT_KEY_UNIT_ADVENTURER",
- "civilopedia": "TXT_KEY_UNIT_ADVENTURER_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -49,6 +47,8 @@
   "upkeep": 1
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_ADVENTURER",
+  "civilopedia": "TXT_KEY_UNIT_ADVENTURER_PEDIA",
   "worth": 1,
   "xpValueAttack": 4,
   "xpValueDefense": 4,

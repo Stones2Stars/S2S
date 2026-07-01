@@ -1,8 +1,5 @@
 {
  "type": "TECH_BUDDHISM",
- "description": "TXT_KEY_TECH_BUDDHISM",
- "civilopedia": "TXT_KEY_TECH_BUDDHISM_PEDIA",
- "quote": "TXT_KEY_TECH_BUDDHISM_QUOTE",
  "enables": {
   "religions": [
    "RELIGION_BUDDHISM"
@@ -55,6 +52,9 @@
   "soundMP": "AS2D_TECH_BUDDHISM"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_BUDDHISM",
+  "civilopedia": "TXT_KEY_TECH_BUDDHISM_PEDIA",
+  "quote": "TXT_KEY_TECH_BUDDHISM_QUOTE",
   "era": "C2C_ERA_CLASSICAL",
   "worth": 8,
   "gridX": 34,

@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_SMITH_ALUMINUM",
- "description": "TXT_KEY_BUILDING_SMITH_ALUMINUM",
- "civilopedia": "TXT_KEY_BUILDING_SMITH_ALUMINUM_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_METALS_MEGACOMPLEX"
@@ -87,6 +85,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_SMITH_ALUMINUM",
+  "civilopedia": "TXT_KEY_BUILDING_SMITH_ALUMINUM_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

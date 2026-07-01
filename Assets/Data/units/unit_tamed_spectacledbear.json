@@ -1,8 +1,5 @@
 {
  "type": "UNIT_TAMED_SPECTACLEDBEAR",
- "description": "TXT_KEY_UNIT_TAMED_SPECTACLEDBEAR",
- "civilopedia": "TXT_KEY_UNIT_SPECTACLEDBEAR_PEDIA",
- "help": "TXT_KEY_UNIT_TAMED_ANIMALS_HELP",
  "requires": {
   "build": {
    "all": [
@@ -51,6 +48,9 @@
   "production": 133
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_TAMED_SPECTACLEDBEAR",
+  "civilopedia": "TXT_KEY_UNIT_SPECTACLEDBEAR_PEDIA",
+  "help": "TXT_KEY_UNIT_TAMED_ANIMALS_HELP",
   "worth": 1,
   "militaryWorth": 6,
   "xpValueAttack": 6,

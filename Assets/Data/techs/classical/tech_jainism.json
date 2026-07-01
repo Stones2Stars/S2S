@@ -1,8 +1,5 @@
 {
  "type": "TECH_JAINISM",
- "description": "TXT_KEY_TECH_JAINISM",
- "civilopedia": "TXT_KEY_TECH_JAINISM_PEDIA",
- "quote": "TXT_KEY_TECH_JAINISM_QUOTE",
  "enables": {
   "religions": [
    "RELIGION_JAINISM"
@@ -55,6 +52,9 @@
   "soundMP": "AS2D_TECH_GENERIC"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_JAINISM",
+  "civilopedia": "TXT_KEY_TECH_JAINISM_PEDIA",
+  "quote": "TXT_KEY_TECH_JAINISM_QUOTE",
   "era": "C2C_ERA_CLASSICAL",
   "worth": 8,
   "gridX": 39,

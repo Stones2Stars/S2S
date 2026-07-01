@@ -1,8 +1,5 @@
 {
  "type": "TECH_TELEGRAPH",
- "description": "TXT_KEY_TECH_TELEGRAPH",
- "civilopedia": "TXT_KEY_TECH_TELEGRAPH_PEDIA",
- "quote": "TXT_KEY_TECH_TELEGRAPH_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_MAIL_ORDER_CATALOGUE",
@@ -54,6 +51,9 @@
   "soundMP": "AS2D_TECH_TELEGRAPH"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_TELEGRAPH",
+  "civilopedia": "TXT_KEY_TECH_TELEGRAPH_PEDIA",
+  "quote": "TXT_KEY_TECH_TELEGRAPH_QUOTE",
   "era": "C2C_ERA_INDUSTRIAL",
   "worth": 48,
   "militaryWorth": 4,

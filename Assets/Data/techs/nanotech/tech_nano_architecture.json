@@ -1,8 +1,5 @@
 {
  "type": "TECH_NANO_ARCHITECTURE",
- "description": "TXT_KEY_TECH_NANO_ARCHITECTURE",
- "civilopedia": "TXT_KEY_TECH_NANO_ARCHITECTURE_PEDIA",
- "quote": "TXT_KEY_TECH_NANO_ARCHITECTURE_QUOTE",
  "enables": {
   "bonuses": [
    "BONUS_NANOTRUSSES",
@@ -90,6 +87,9 @@
   "soundMP": "AS2D_TECH_GENERIC"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_NANO_ARCHITECTURE",
+  "civilopedia": "TXT_KEY_TECH_NANO_ARCHITECTURE_PEDIA",
+  "quote": "TXT_KEY_TECH_NANO_ARCHITECTURE_QUOTE",
   "era": "C2C_ERA_NANOTECH",
   "worth": 48,
   "tradeable": true,

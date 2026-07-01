@@ -1,6 +1,5 @@
 {
  "type": "VOTE_NO_NUKES",
- "description": "TXT_KEY_VOTE_NO_NUKES",
  "voteSource": [
   "DIPLOVOTE_UN"
  ],
@@ -10,5 +9,8 @@
  },
  "effect": {
   "noNukes": true
+ },
+ "identity": {
+  "description": "TXT_KEY_VOTE_NO_NUKES"
  }
 }

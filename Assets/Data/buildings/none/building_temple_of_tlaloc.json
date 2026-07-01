@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_TEMPLE_OF_TLALOC",
- "description": "TXT_KEY_BUILDING_TEMPLE_OF_TLALOC",
- "civilopedia": "TXT_KEY_BUILDING_TEMPLE_OF_TLALOC_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_TLALOCS_ALTAR"
@@ -126,6 +124,8 @@
   "construct": "AS2D_BUILD_BUDDHIST"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_TEMPLE_OF_TLALOC",
+  "civilopedia": "TXT_KEY_BUILDING_TEMPLE_OF_TLALOC_PEDIA",
   "neverCapture": true,
   "worth": 6,
   "specialBuildingType": "SPECIALBUILDING_PANTHEON",

@@ -1,8 +1,5 @@
 {
  "type": "TECH_THEORY_OF_RELATIVITY",
- "description": "TXT_KEY_TECH_THEORY_OF_RELATIVITY",
- "civilopedia": "TXT_KEY_TECH_THEORY_OF_RELATIVITY_PEDIA",
- "quote": "TXT_KEY_TECH_THEORY_OF_RELATIVITY_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_EINSTEINS_LABORATORY"
@@ -49,6 +46,9 @@
   "soundMP": "AS2D_TECH_THEORY_OF_RELATIVITY"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_THEORY_OF_RELATIVITY",
+  "civilopedia": "TXT_KEY_TECH_THEORY_OF_RELATIVITY_PEDIA",
+  "quote": "TXT_KEY_TECH_THEORY_OF_RELATIVITY_QUOTE",
   "era": "C2C_ERA_ATOMIC",
   "worth": 30,
   "tradeable": true,

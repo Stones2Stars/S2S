@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_POLICE_DRONE_CONTROL_CENTER",
- "description": "TXT_KEY_BUILDING_POLICE_DRONE_CONTROL_CENTER",
- "civilopedia": "TXT_KEY_BUILDING_POLICE_DRONE_CONTROL_CENTER_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_AI_POLICE_FORCE"
@@ -64,6 +62,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_POLICE_DRONE_CONTROL_CENTER",
+  "civilopedia": "TXT_KEY_BUILDING_POLICE_DRONE_CONTROL_CENTER_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

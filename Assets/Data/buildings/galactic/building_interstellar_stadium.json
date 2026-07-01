@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_INTERSTELLAR_STADIUM",
- "description": "TXT_KEY_BUILDING_INTERSTELLAR_STADIUM",
- "civilopedia": "TXT_KEY_BUILDING_INTERSTELLAR_STADIUM_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_INTERSTELLAR_OLYMPICS"
@@ -56,6 +54,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_INTERSTELLAR_STADIUM",
+  "civilopedia": "TXT_KEY_BUILDING_INTERSTELLAR_STADIUM_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

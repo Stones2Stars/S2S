@@ -1,7 +1,5 @@
 {
  "type": "BONUS_SCULPTURES",
- "description": "TXT_KEY_BONUS_SCULPTURES",
- "civilopedia": "TXT_KEY_BONUS_SCULPTURES_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_GATE_OF_THE_SUN",
@@ -27,6 +25,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_SCULPTURES",
+  "civilopedia": "TXT_KEY_BONUS_SCULPTURES_PEDIA",
   "bonusClassType": "BONUSCLASS_MANUFACTURED"
  }
 }

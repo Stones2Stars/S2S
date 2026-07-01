@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_NET_SNAPPER",
- "description": "TXT_KEY_BUILDING_NET_SNAPPER",
- "civilopedia": "TXT_KEY_BUILDING_NET_SNAPPER_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_RESOURCES_FISH"
@@ -75,6 +73,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_NET_SNAPPER",
+  "civilopedia": "TXT_KEY_BUILDING_NET_SNAPPER_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

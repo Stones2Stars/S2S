@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_PONT_DU_GARD",
- "description": "TXT_KEY_BUILDING_PONT_DU_GARD",
- "civilopedia": "TXT_KEY_BUILDING_PONT_DU_GARD_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -78,6 +76,8 @@
   "construct": "AS2D_BUILD_AQUEDUCT"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_PONT_DU_GARD",
+  "civilopedia": "TXT_KEY_BUILDING_PONT_DU_GARD_PEDIA",
   "commerceDoubleTime": {
    "culture": 1000
   },

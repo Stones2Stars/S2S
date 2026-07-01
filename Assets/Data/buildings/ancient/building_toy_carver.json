@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_TOY_CARVER",
- "description": "TXT_KEY_BUILDING_TOY_CARVER",
- "civilopedia": "TXT_KEY_BUILDING_TOY_CARVER_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_TOY_MAKER"
@@ -66,6 +64,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_TOY_CARVER",
+  "civilopedia": "TXT_KEY_BUILDING_TOY_CARVER_PEDIA",
   "worth": 2,
   "conquestProbability": 100,
   "advisor": "ADVISOR_GROWTH",

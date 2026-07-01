@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_NOTRE_DAME",
- "description": "TXT_KEY_BUILDING_NOTRE_DAME",
- "civilopedia": "TXT_KEY_BUILDING_NOTRE_DAME_PEDIA",
  "obsoletedBy": {
   "techs": [
    "TECH_MEGASTRUCTURE_ENGINEERING"
@@ -96,6 +94,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_NOTRE_DAME",
+  "civilopedia": "TXT_KEY_BUILDING_NOTRE_DAME_PEDIA",
   "commerceDoubleTime": {
    "culture": 1000
   },

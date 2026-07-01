@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_MARS_CYCLER",
- "description": "TXT_KEY_BUILDING_MARS_CYCLER",
- "civilopedia": "TXT_KEY_BUILDING_MARS_CYCLER_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -39,6 +37,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_MARS_CYCLER",
+  "civilopedia": "TXT_KEY_BUILDING_MARS_CYCLER_PEDIA",
   "neverCapture": true,
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,

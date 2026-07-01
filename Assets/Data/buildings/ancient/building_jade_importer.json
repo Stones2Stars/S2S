@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_JADE_IMPORTER",
- "description": "TXT_KEY_BUILDING_JADE_IMPORTER",
- "civilopedia": "TXT_KEY_BUILDING_JADE_MERCHANT_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_JADE_DEATH_MASK_CARVER",
@@ -81,6 +79,8 @@
   "construct": "AS2D_BUILD_MARKETPLACE"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_JADE_IMPORTER",
+  "civilopedia": "TXT_KEY_BUILDING_JADE_MERCHANT_PEDIA",
   "worth": 3,
   "militaryWorth": 3,
   "advisor": "ADVISOR_ECONOMY",

@@ -1,8 +1,5 @@
 {
  "type": "TECH_MARTIAL_ARTS",
- "description": "TXT_KEY_TECH_MARTIAL_ARTS",
- "civilopedia": "TXT_KEY_TECH_MARTIAL_ARTS_PEDIA",
- "quote": "TXT_KEY_TECH_MARTIAL_ARTS_QUOTE",
  "enables": {
   "bonuses": [
    "BONUS_HAWAIIAN_SURFBOARDS"
@@ -68,6 +65,9 @@
   "soundMP": "AS2D_TECH_MARTIAL_ARTS"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_MARTIAL_ARTS",
+  "civilopedia": "TXT_KEY_TECH_MARTIAL_ARTS_PEDIA",
+  "quote": "TXT_KEY_TECH_MARTIAL_ARTS_QUOTE",
   "era": "C2C_ERA_MEDIEVAL",
   "worth": 24,
   "militaryWorth": 10,

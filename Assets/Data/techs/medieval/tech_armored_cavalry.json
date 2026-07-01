@@ -1,8 +1,5 @@
 {
  "type": "TECH_ARMORED_CAVALRY",
- "description": "TXT_KEY_TECH_ARMORED_CAVALRY",
- "civilopedia": "TXT_KEY_TECH_ARMORED_CAVALRY_PEDIA",
- "quote": "TXT_KEY_TECH_ARMORED_CAVALRY_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_CULTURE_ARABIAN",
@@ -102,6 +99,9 @@
   "soundMP": "AS2D_TECH_ARMORED_CAVALRY"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_ARMORED_CAVALRY",
+  "civilopedia": "TXT_KEY_TECH_ARMORED_CAVALRY_PEDIA",
+  "quote": "TXT_KEY_TECH_ARMORED_CAVALRY_QUOTE",
   "era": "C2C_ERA_MEDIEVAL",
   "worth": 20,
   "militaryWorth": 10,

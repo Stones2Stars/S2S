@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_QUANZHEN_SCHOOL",
- "description": "TXT_KEY_BUILDING_QUANZHEN_SCHOOL",
- "civilopedia": "TXT_KEY_BUILDING_QUANZHEN_SCHOOL_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -136,6 +134,8 @@
   "construct": "AS2D_BUILD_TAOIST"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_QUANZHEN_SCHOOL",
+  "civilopedia": "TXT_KEY_BUILDING_QUANZHEN_SCHOOL_PEDIA",
   "commerceDoubleTime": {
    "culture": 1000
   },

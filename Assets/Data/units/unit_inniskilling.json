@@ -1,7 +1,5 @@
 {
  "type": "UNIT_INNISKILLING",
- "description": "TXT_KEY_UNIT_INNISKILLING",
- "civilopedia": "TXT_KEY_UNIT_INNISKILLING_PEDIA",
  "obsoletedBy": {
   "techs": [
    "TECH_SUPERSTRONG_ALLOYS"
@@ -198,6 +196,8 @@
   ]
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_INNISKILLING",
+  "civilopedia": "TXT_KEY_UNIT_INNISKILLING_PEDIA",
   "worth": 9,
   "militaryWorth": 25,
   "xpValueAttack": 8,

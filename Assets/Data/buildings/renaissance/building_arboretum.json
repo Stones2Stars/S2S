@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_ARBORETUM",
- "description": "TXT_KEY_BUILDING_ARBORETUM",
- "civilopedia": "TXT_KEY_BUILDING_ARBORETUM_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_BOTANICAL_GARDENS"
@@ -101,6 +99,8 @@
   "construct": "AS2D_BUILD_ARBORETUM"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_ARBORETUM",
+  "civilopedia": "TXT_KEY_BUILDING_ARBORETUM_PEDIA",
   "worth": 6,
   "militaryWorth": 3,
   "advisor": "ADVISOR_GROWTH",

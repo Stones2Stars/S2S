@@ -1,7 +1,5 @@
 {
  "type": "BONUS_BASKETS",
- "description": "TXT_KEY_BONUS_BASKETS",
- "civilopedia": "TXT_KEY_BONUS_BASKETS_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_AERIAL_BASKET_ROPEWAYS",
@@ -15,6 +13,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_BASKETS",
+  "civilopedia": "TXT_KEY_BONUS_BASKETS_PEDIA",
   "bonusClassType": "BONUSCLASS_MANUFACTURED"
  }
 }

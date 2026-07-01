@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_AI_SURVEILLANCE",
- "description": "TXT_KEY_BUILDING_AI_SURVEILLANCE",
- "civilopedia": "TXT_KEY_BUILDING_AI_SURVEILLANCE_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -105,6 +103,8 @@
   "construct": "AS2D_BUILD_COMMAND_BUNKER"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_AI_SURVEILLANCE",
+  "civilopedia": "TXT_KEY_BUILDING_AI_SURVEILLANCE_PEDIA",
   "worth": 6,
   "dcmAirbombMission": 3,
   "advisor": "ADVISOR_ECONOMY",

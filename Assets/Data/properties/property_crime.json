@@ -1,6 +1,5 @@
 {
  "type": "PROPERTY_CRIME",
- "description": "TXT_KEY_PROPERTY_CRIME",
  "text": {
   "value": "TXT_KEY_PROPERTY_CRIME_DISPLAY",
   "change": "TXT_KEY_PROPERTY_CRIME_CHANGE",
@@ -112,6 +111,7 @@
   "scale": "city"
  },
  "identity": {
+  "description": "TXT_KEY_PROPERTY_CRIME",
   "sourceDrain": true,
   "fontButtonIndex": 0
  }

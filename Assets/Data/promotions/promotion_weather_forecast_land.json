@@ -1,6 +1,5 @@
 {
  "type": "PROMOTION_WEATHER_FORECAST_LAND",
- "description": "TXT_KEY_PROMOTION_WEATHER_FORECAST_LAND",
  "movement": {
   "unit": {
    "moves": {
@@ -58,6 +57,7 @@
   "sound": "AS2D_IF_LEVELUP"
  },
  "identity": {
+  "description": "TXT_KEY_PROMOTION_WEATHER_FORECAST_LAND",
   "unitCombats": [
    "UNITCOMBAT_RECON",
    "UNITCOMBAT_ARCHER",

@@ -1,8 +1,5 @@
 {
  "type": "RELIGION_BAHAI",
- "description": "TXT_KEY_TECH_BAHAI",
- "civilopedia": "TXT_KEY_TECH_BAHAI_PEDIA",
- "adjective": "TXT_KEY_TECH_BAHAI_ADJECTIVE",
  "enables": {
   "buildings": [
    "BUILDING_BAHAI_DAR_BE_MEHR",
@@ -82,6 +79,9 @@
   "sound": "AS2D_BUILD_ZORO"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_BAHAI",
+  "adjective": "TXT_KEY_TECH_BAHAI_ADJECTIVE",
+  "civilopedia": "TXT_KEY_TECH_BAHAI_PEDIA",
   "spreadFactor": 5
  }
 }

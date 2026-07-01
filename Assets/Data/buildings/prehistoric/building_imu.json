@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_IMU",
- "description": "TXT_KEY_BUILDING_IMU",
- "civilopedia": "TXT_KEY_BUILDING_IMU_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_BLOOD_DANCE",
@@ -127,6 +125,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_IMU",
+  "civilopedia": "TXT_KEY_BUILDING_IMU_PEDIA",
   "advisor": "ADVISOR_GROWTH",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

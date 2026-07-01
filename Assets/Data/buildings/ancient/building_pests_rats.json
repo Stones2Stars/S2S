@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_PESTS_RATS",
- "description": "TXT_KEY_BUILDING_PESTS_RATS",
- "civilopedia": "TXT_KEY_BUILDING_PESTS_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_RAT_CATCHER"
@@ -97,6 +95,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_PESTS_RATS",
+  "civilopedia": "TXT_KEY_BUILDING_PESTS_PEDIA",
   "notConstructible": true,
   "nukeImmune": true,
   "autoBuild": true,

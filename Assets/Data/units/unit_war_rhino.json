@@ -1,7 +1,5 @@
 {
  "type": "UNIT_WAR_RHINO",
- "description": "TXT_KEY_UNIT_WAR_RHINO",
- "civilopedia": "TXT_KEY_UNIT_WAR_RHINO_PEDIA",
  "obsoletedBy": {
   "techs": [
    "TECH_IRON_WORKING"
@@ -73,6 +71,8 @@
   "production": 138
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_WAR_RHINO",
+  "civilopedia": "TXT_KEY_UNIT_WAR_RHINO_PEDIA",
   "worth": 1,
   "militaryWorth": 1,
   "xpValueAttack": 4,

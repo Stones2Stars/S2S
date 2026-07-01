@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_ALCHEMISTS_LAB",
- "description": "TXT_KEY_BUILDING_ALCHEMISTS_LAB",
- "civilopedia": "TXT_KEY_BUILDING_ALCHEMISTS_LAB_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_RESOURCES_POISON"
@@ -108,6 +106,8 @@
   "construct": "AS2D_BUILD_ALCHEMIST_LAB"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_ALCHEMISTS_LAB",
+  "civilopedia": "TXT_KEY_BUILDING_ALCHEMISTS_LAB_PEDIA",
   "neverCapture": true,
   "worth": 4,
   "dcmAirbombMission": 2,

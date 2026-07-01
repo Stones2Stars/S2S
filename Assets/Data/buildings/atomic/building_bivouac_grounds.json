@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_BIVOUAC_GROUNDS",
- "description": "TXT_KEY_BUILDING_BIVOUAC_GROUNDS",
- "civilopedia": "TXT_KEY_BUILDING_BIVOUAC_GROUNDS_PEDIA",
  "enables": {
   "units": [
    "UNIT_SPECIAL_FORCES",
@@ -79,6 +77,8 @@
   "construct": "AS2D_BUILD_BARRACKS"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_BIVOUAC_GROUNDS",
+  "civilopedia": "TXT_KEY_BUILDING_BIVOUAC_GROUNDS_PEDIA",
   "worth": 5,
   "militaryWorth": 15,
   "dcmAirbombMission": 2,

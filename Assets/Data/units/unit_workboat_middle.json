@@ -1,7 +1,5 @@
 {
  "type": "UNIT_WORKBOAT_MIDDLE",
- "description": "TXT_KEY_UNIT_WORKBOAT_MIDDLE",
- "civilopedia": "TXT_KEY_UNIT_WORKBOAT_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -50,6 +48,8 @@
   "upkeep": 3
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_WORKBOAT_MIDDLE",
+  "civilopedia": "TXT_KEY_UNIT_WORKBOAT_PEDIA",
   "worth": 1,
   "domain": "DOMAIN_SEA",
   "defaultUnitAI": "UNITAI_WORKER_SEA",

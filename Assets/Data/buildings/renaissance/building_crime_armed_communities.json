@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_CRIME_ARMED_COMMUNITIES",
- "description": "TXT_KEY_BUILDING_CRIME_ARMED_COMMUNITIES",
- "civilopedia": "TXT_KEY_BUILDING_CRIME_ARMED_COMMUNITIES_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -75,6 +73,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_CRIME_ARMED_COMMUNITIES",
+  "civilopedia": "TXT_KEY_BUILDING_CRIME_ARMED_COMMUNITIES_PEDIA",
   "notConstructible": true,
   "nukeImmune": true,
   "conquestProbability": 100,

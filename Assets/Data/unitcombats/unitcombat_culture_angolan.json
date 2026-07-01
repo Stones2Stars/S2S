@@ -1,12 +1,12 @@
 {
  "type": "UNITCOMBAT_CULTURE_ANGOLAN",
- "description": "TXT_KEY_UNITCOMBAT_CULTURE_ANGOLAN",
  "ui": {
   "art": {
    "icon": "Art/categories/culture_newcultures.dds"
   }
  },
  "identity": {
+  "description": "TXT_KEY_UNITCOMBAT_CULTURE_ANGOLAN",
   "culture": "BONUS_ANGOLAN"
  }
 }

@@ -1,8 +1,5 @@
 {
  "type": "UNIT_FIGHTER",
- "description": "TXT_KEY_UNIT_FIGHTER",
- "civilopedia": "TXT_KEY_UNIT_FIGHTER_PEDIA",
- "help": "TXT_KEY_UNIT_CARRIER_OPS_HELP",
  "requires": {
   "build": {
    "all": [
@@ -92,6 +89,9 @@
   "upkeep": 2
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_FIGHTER",
+  "civilopedia": "TXT_KEY_UNIT_FIGHTER_PEDIA",
+  "help": "TXT_KEY_UNIT_CARRIER_OPS_HELP",
   "worth": 3,
   "militaryWorth": 76,
   "xpValueAttack": 6,

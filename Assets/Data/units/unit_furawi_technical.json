@@ -1,7 +1,5 @@
 {
  "type": "UNIT_FURAWI_TECHNICAL",
- "description": "TXT_KEY_UNIT_FURAWI_TECHNICAL",
- "civilopedia": "TXT_KEY_UNIT_FURAWI_TECHNICAL_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -113,6 +111,8 @@
   "upkeep": 2
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_FURAWI_TECHNICAL",
+  "civilopedia": "TXT_KEY_UNIT_FURAWI_TECHNICAL_PEDIA",
   "worth": 5,
   "militaryWorth": 183,
   "xpValueAttack": 6,

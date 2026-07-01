@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_PEARL_HARBOR",
- "description": "TXT_KEY_BUILDING_PEARL_HARBOR",
- "civilopedia": "TXT_KEY_BUILDING_PEARL_HARBOR_PEDIA",
  "obsoletedBy": {
   "techs": [
    "TECH_FUSION"
@@ -93,6 +91,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_PEARL_HARBOR",
+  "civilopedia": "TXT_KEY_BUILDING_PEARL_HARBOR_PEDIA",
   "commerceDoubleTime": {
    "culture": 1000
   },

@@ -1,7 +1,5 @@
 {
  "type": "UNIT_HITECH_HOVERCRAFT",
- "description": "TXT_KEY_UNIT_HITECH_HOVERCRAFT",
- "civilopedia": "TXT_KEY_UNIT_HITECH_HOVERCRAFT_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -94,6 +92,8 @@
   "upkeep": 6
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_HITECH_HOVERCRAFT",
+  "civilopedia": "TXT_KEY_UNIT_HITECH_HOVERCRAFT_PEDIA",
   "worth": 5,
   "militaryWorth": 161,
   "xpValueAttack": 3,

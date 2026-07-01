@@ -1,7 +1,5 @@
 {
  "type": "BONUS_BISON",
- "description": "TXT_KEY_BONUS_BISON",
- "civilopedia": "TXT_KEY_BONUS_BISON_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_ANIMAL_TRAINER_BISON",
@@ -74,6 +72,8 @@
   ]
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_BISON",
+  "civilopedia": "TXT_KEY_BONUS_BISON_PEDIA",
   "bonusClassType": "BONUSCLASS_LIVESTOCK"
  }
 }

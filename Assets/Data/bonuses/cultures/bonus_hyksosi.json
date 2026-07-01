@@ -1,7 +1,5 @@
 {
  "type": "BONUS_HYKSOSI",
- "description": "TXT_KEY_BONUS_HYKSOSI",
- "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
  "enables": {
   "units": [
    "UNIT_HYKSOSI_CHARIOT",
@@ -14,6 +12,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_HYKSOSI",
+  "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
   "bonusClassType": "BONUSCLASS_CULTURE"
  }
 }

@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_PIERCING_SHOP",
- "description": "TXT_KEY_BUILDING_PIERCING_SHOP",
- "civilopedia": "TXT_KEY_BUILDING_PIERCING_SHOP_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_DATTOO_PARLOR"
@@ -91,6 +89,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_PIERCING_SHOP",
+  "civilopedia": "TXT_KEY_BUILDING_PIERCING_SHOP_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

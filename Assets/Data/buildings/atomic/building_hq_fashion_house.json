@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_HQ_FASHION_HOUSE",
- "description": "TXT_KEY_BUILDING_HQ_FASHION_HOUSE",
- "civilopedia": "TXT_KEY_BUILDING_HQ_FASHION_HOUSE_PEDIA",
  "enables": {
   "corporations": [
    "CORPORATION_FASHION"
@@ -56,6 +54,8 @@
   "construct": "AS2D_BUILD_BANK"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_HQ_FASHION_HOUSE",
+  "civilopedia": "TXT_KEY_BUILDING_HQ_FASHION_HOUSE_PEDIA",
   "commerceDoubleTime": {
    "culture": 1000
   },

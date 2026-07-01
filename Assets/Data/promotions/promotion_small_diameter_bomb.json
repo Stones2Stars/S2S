@@ -1,6 +1,5 @@
 {
  "type": "PROMOTION_SMALL_DIAMETER_BOMB",
- "description": "TXT_KEY_PROMOTION_SMALL_DIAMETER_BOMB",
  "strength": {
   "unit": {
    "percent": 50
@@ -22,6 +21,7 @@
   "sound": "AS2D_IF_LEVELUP"
  },
  "identity": {
+  "description": "TXT_KEY_PROMOTION_SMALL_DIAMETER_BOMB",
   "unitCombats": [
    "UNITCOMBAT_MISSILE"
   ]

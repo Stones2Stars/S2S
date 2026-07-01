@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_AQUARIUM",
- "description": "TXT_KEY_BUILDING_AQUARIUM",
- "civilopedia": "TXT_KEY_BUILDING_AQUARIUM_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_BREEDING_PROGRAM_BELUGA",
@@ -196,6 +194,8 @@
   "construct": "AS2D_BUILD_AQUARIUM"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_AQUARIUM",
+  "civilopedia": "TXT_KEY_BUILDING_AQUARIUM_PEDIA",
   "centerInCity": true,
   "worth": 8,
   "militaryWorth": 4,

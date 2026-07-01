@@ -1,7 +1,5 @@
 {
  "type": "LEADER_CHURCHILL",
- "description": "TXT_KEY_LEADER_CHURCHILL",
- "civilopedia": "TXT_KEY_LEADER_WINSTON_CHURCHILL_PEDIA",
  "grants": {
   "traits": [
    "TRAIT_CHARISMATIC",
@@ -306,5 +304,9 @@
    "C2C_ERA_TRANSCENDENT": "AS2D_DIPLO_WARDRUMS_LATE",
    "C2C_ERA_FUTURE": "AS2D_DIPLO_WARDRUMS_LATE"
   }
+ },
+ "identity": {
+  "description": "TXT_KEY_LEADER_CHURCHILL",
+  "civilopedia": "TXT_KEY_LEADER_WINSTON_CHURCHILL_PEDIA"
  }
 }

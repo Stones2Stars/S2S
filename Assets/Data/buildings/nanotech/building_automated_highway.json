@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_AUTOMATED_HIGHWAY",
- "description": "TXT_KEY_BUILDING_AUTOMATED_HIGHWAY",
- "civilopedia": "TXT_KEY_BUILDING_AUTOMATED_HIGHWAY_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_INTERLACED_INTERSECTION",
@@ -77,6 +75,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_AUTOMATED_HIGHWAY",
+  "civilopedia": "TXT_KEY_BUILDING_AUTOMATED_HIGHWAY_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

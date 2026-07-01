@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_FOLKLORE_WALRUS",
- "description": "TXT_KEY_BUILDING_FOLKLORE_WALRUS",
- "civilopedia": "TXT_KEY_BUILDING_FOLKLORE_ANIMAL_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_CARNIVAL_TRAINED_SEAL",
@@ -78,6 +76,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_FOLKLORE_WALRUS",
+  "civilopedia": "TXT_KEY_BUILDING_FOLKLORE_ANIMAL_PEDIA",
   "notConstructible": true,
   "nukeImmune": true,
   "neverCapture": true,

@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_DISTANT_BLAZAR_FACTORY",
- "description": "TXT_KEY_BUILDING_DISTANT_BLAZAR_FACTORY",
- "civilopedia": "TXT_KEY_BUILDING_DISTANT_BLAZAR_FACTORY_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_DISTANT_ARTIFICIAL_SUPERMASSIVE_BLACK_HOLE",
@@ -55,6 +53,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_DISTANT_BLAZAR_FACTORY",
+  "civilopedia": "TXT_KEY_BUILDING_DISTANT_BLAZAR_FACTORY_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

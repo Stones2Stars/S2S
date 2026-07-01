@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_QUANTIFIED_HEALTH_CENTER",
- "description": "TXT_KEY_BUILDING_QUANTIFIED_HEALTH_CENTER",
- "civilopedia": "TXT_KEY_BUILDING_QUANTIFIED_HEALTH_CENTER_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_HEALTHCARE_MEGACOMPLEX"
@@ -70,6 +68,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_QUANTIFIED_HEALTH_CENTER",
+  "civilopedia": "TXT_KEY_BUILDING_QUANTIFIED_HEALTH_CENTER_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

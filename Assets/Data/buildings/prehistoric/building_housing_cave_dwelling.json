@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_HOUSING_CAVE_DWELLING",
- "description": "TXT_KEY_BUILDING_HOUSING_CAVE_DWELLING",
- "civilopedia": "TXT_KEY_BUILDING_HOUSING_CAVE_DWELLING_PEDIA",
  "obsoletedBy": {
   "techs": [
    "TECH_SANITATION"
@@ -56,6 +54,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_HOUSING_CAVE_DWELLING",
+  "civilopedia": "TXT_KEY_BUILDING_HOUSING_CAVE_DWELLING_PEDIA",
   "notConstructible": true,
   "nukeImmune": true,
   "neverCapture": true,

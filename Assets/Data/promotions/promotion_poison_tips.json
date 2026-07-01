@@ -1,6 +1,5 @@
 {
  "type": "PROMOTION_POISON_TIPS",
- "description": "TXT_KEY_PROMOTION_POISON_TIPS",
  "capture": {
   "unit": {
    "probability": {
@@ -44,6 +43,7 @@
   "sound": "AS2D_IF_LEVELUP"
  },
  "identity": {
+  "description": "TXT_KEY_PROMOTION_POISON_TIPS",
   "unitCombats": [
    "UNITCOMBAT_ARCHER",
    "UNITCOMBAT_MELEE",

@@ -1,12 +1,12 @@
 {
  "type": "PROMOTION_CULTURE_SOUTH_AMERICAN",
- "description": "TXT_KEY_PROMOTION_CULTURE_SOUTH_AMERICAN",
  "ui": {
   "art": {
    "icon": "art/Embassy/art/culturesamerican.dds"
   }
  },
  "identity": {
+  "description": "TXT_KEY_PROMOTION_CULTURE_SOUTH_AMERICAN",
   "unitCombats": [
    "UNITCOMBAT_SETTLER"
   ]

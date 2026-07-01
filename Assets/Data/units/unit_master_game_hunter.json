@@ -1,7 +1,5 @@
 {
  "type": "UNIT_MASTER_GAME_HUNTER",
- "description": "TXT_KEY_UNIT_MASTER_GAME_HUNTER",
- "civilopedia": "TXT_KEY_UNIT_MASTER_HUNTER_PEDIA",
  "obsoletedBy": {
   "techs": [
    "TECH_RIFLING"
@@ -59,6 +57,8 @@
   "upkeep": 1
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_MASTER_GAME_HUNTER",
+  "civilopedia": "TXT_KEY_UNIT_MASTER_HUNTER_PEDIA",
   "spawnOnly": true,
   "worth": 8,
   "militaryWorth": 16,

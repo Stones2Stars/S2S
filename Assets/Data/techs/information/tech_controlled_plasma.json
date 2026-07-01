@@ -1,8 +1,5 @@
 {
  "type": "TECH_CONTROLLED_PLASMA",
- "description": "TXT_KEY_TECH_CONTROLLED_PLASMA",
- "civilopedia": "TXT_KEY_TECH_CONTROLLED_PLASMA_PEDIA",
- "quote": "TXT_KEY_TECH_CONTROLLED_PLASMA_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_PLASMA_ARC_RECYCLING"
@@ -63,6 +60,9 @@
   "soundMP": "AS2D_TECH_CONTROLLED_PLASMA"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_CONTROLLED_PLASMA",
+  "civilopedia": "TXT_KEY_TECH_CONTROLLED_PLASMA_PEDIA",
+  "quote": "TXT_KEY_TECH_CONTROLLED_PLASMA_QUOTE",
   "era": "C2C_ERA_INFORMATION",
   "worth": 48,
   "tradeable": true,

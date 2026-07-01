@@ -1,6 +1,5 @@
 {
  "type": "ROUTE_PLANETARY_MAGLEV",
- "description": "TXT_KEY_ROUTE_PLANETARY_MAGLEV",
  "food": {
   "plot": {
    "flat": 1
@@ -22,6 +21,7 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_ROUTE_PLANETARY_MAGLEV",
   "value": 2,
   "advancedStart": {
    "cost": 30

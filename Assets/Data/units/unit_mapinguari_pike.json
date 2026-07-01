@@ -1,7 +1,5 @@
 {
  "type": "UNIT_MAPINGUARI_PIKE",
- "description": "TXT_KEY_UNIT_MAPINGUARI_PIKE",
- "civilopedia": "TXT_KEY_UNIT_MAPINGUARI_PEDIA",
  "obsoletedBy": {
   "techs": [
    "TECH_GUNPOWDER"
@@ -75,6 +73,8 @@
   "upkeep": 25
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_MAPINGUARI_PIKE",
+  "civilopedia": "TXT_KEY_UNIT_MAPINGUARI_PEDIA",
   "worth": 5,
   "militaryWorth": 8,
   "xpValueAttack": 2,

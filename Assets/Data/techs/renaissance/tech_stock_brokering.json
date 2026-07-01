@@ -1,8 +1,5 @@
 {
  "type": "TECH_STOCK_BROKERING",
- "description": "TXT_KEY_TECH_STOCK_BROKERING",
- "civilopedia": "TXT_KEY_TECH_STOCK_BROKERING_PEDIA",
- "quote": "TXT_KEY_TECH_STOCK_BROKERING_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_ACCOUNTING_FIRM",
@@ -73,6 +70,9 @@
   "soundMP": "AS2D_TECH_STOCK_BROKERING"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_STOCK_BROKERING",
+  "civilopedia": "TXT_KEY_TECH_STOCK_BROKERING_PEDIA",
+  "quote": "TXT_KEY_TECH_STOCK_BROKERING_QUOTE",
   "era": "C2C_ERA_RENAISSANCE",
   "worth": 32,
   "tradeable": true,

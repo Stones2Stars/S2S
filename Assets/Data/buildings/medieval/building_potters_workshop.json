@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_POTTERS_WORKSHOP",
- "description": "TXT_KEY_BUILDING_POTTERS_WORKSHOP",
- "civilopedia": "TXT_KEY_BUILDING_POTTERS_WORKSHOP_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_GUILD_POTTERS",
@@ -131,6 +129,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_POTTERS_WORKSHOP",
+  "civilopedia": "TXT_KEY_BUILDING_POTTERS_WORKSHOP_PEDIA",
   "conquestProbability": 70,
   "advisor": "ADVISOR_ECONOMY",
   "visibilityPriority": 1,

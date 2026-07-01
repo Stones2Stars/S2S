@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_AKSHARDHAM",
- "description": "TXT_KEY_BUILDING_AKSHARDHAM",
- "civilopedia": "TXT_KEY_BUILDING_AKSHARDHAM_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -132,6 +130,8 @@
   "construct": "AS2D_BUILD_HINDU"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_AKSHARDHAM",
+  "civilopedia": "TXT_KEY_BUILDING_AKSHARDHAM_PEDIA",
   "commerceDoubleTime": {
    "culture": 1000
   },

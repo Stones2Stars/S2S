@@ -1,8 +1,5 @@
 {
  "type": "CIVIC_CERTIFIED",
- "description": "TXT_KEY_CIVIC_CERTIFIED",
- "civilopedia": "TXT_KEY_CIVIC_CERTIFIED_PEDIA",
- "strategy": "TXT_KEY_CIVIC_CERTIFIED_STRATEGY",
  "enables": {
   "hurries": [
    "HURRY_GOLD"
@@ -119,6 +116,9 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_CIVIC_CERTIFIED",
+  "civilopedia": "TXT_KEY_CIVIC_CERTIFIED_PEDIA",
+  "strategy": "TXT_KEY_CIVIC_CERTIFIED_STRATEGY",
   "civicOption": "CIVICOPTION_CURRENCY",
   "anarchyLength": 1,
   "upkeepLevel": "UPKEEP_LOW"

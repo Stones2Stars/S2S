@@ -1,8 +1,5 @@
 {
  "type": "TECH_TEAM_SPORTS",
- "description": "TXT_KEY_TECH_TEAM_SPORTS",
- "civilopedia": "TXT_KEY_TECH_TEAM_SPORTS_PEDIA",
- "quote": "TXT_KEY_TECH_TEAM_SPORTS_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_CRICKET_FIELD",
@@ -65,6 +62,9 @@
   "soundMP": "AS2D_TECH_TEAM_SPORTS"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_TEAM_SPORTS",
+  "civilopedia": "TXT_KEY_TECH_TEAM_SPORTS_PEDIA",
+  "quote": "TXT_KEY_TECH_TEAM_SPORTS_QUOTE",
   "era": "C2C_ERA_RENAISSANCE",
   "worth": 32,
   "militaryWorth": 4,

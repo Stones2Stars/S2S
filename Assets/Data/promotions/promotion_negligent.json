@@ -1,6 +1,5 @@
 {
  "type": "PROMOTION_NEGLIGENT",
- "description": "TXT_KEY_PROMOTION_NEGLIGENT",
  "strength": {
   "unit": {
    "cityDefense": {
@@ -24,6 +23,7 @@
   "sound": "AS2D_IF_LEVELUP"
  },
  "identity": {
+  "description": "TXT_KEY_PROMOTION_NEGLIGENT",
   "unitCombats": [
    "UNITCOMBAT_COMBATANT"
   ],

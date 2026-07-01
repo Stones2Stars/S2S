@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_SPY_TRAINING_FACILITY",
- "description": "TXT_KEY_BUILDING_SPY_TRAINING_FACILITY",
- "civilopedia": "TXT_KEY_BUILDING_SPY_TRAINING_FACILITY_PEDIA",
  "enables": {
   "units": [
    "UNIT_SLEEPER"
@@ -87,6 +85,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_SPY_TRAINING_FACILITY",
+  "civilopedia": "TXT_KEY_BUILDING_SPY_TRAINING_FACILITY_PEDIA",
   "neverCapture": true,
   "worth": 8,
   "militaryWorth": 8,

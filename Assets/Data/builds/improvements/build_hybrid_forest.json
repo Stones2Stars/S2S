@@ -1,6 +1,5 @@
 {
  "type": "BUILD_HYBRID_FOREST",
- "description": "TXT_KEY_BUILD_HYBRID_FOREST",
  "requires": {
   "build": {
    "all": [
@@ -30,5 +29,8 @@
   "art": {
    "entityEvent": "ENTITY_EVENT_IRRIGATE"
   }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILD_HYBRID_FOREST"
  }
 }

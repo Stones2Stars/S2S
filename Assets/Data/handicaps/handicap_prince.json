@@ -1,7 +1,5 @@
 {
  "type": "HANDICAP_PRINCE",
- "description": "TXT_KEY_HANDICAP_PRINCE",
- "help": "TXT_KEY_HANDICAP_PRINCE_HELP",
  "maintenance": {
   "empire": {
    "colony": {
@@ -224,6 +222,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_HANDICAP_PRINCE",
+  "help": "TXT_KEY_HANDICAP_PRINCE_HELP",
   "advancedStart": {
    "pointsMod": 100,
    "aiPercent": 120

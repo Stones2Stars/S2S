@@ -1,6 +1,5 @@
 {
  "type": "PROMOTION_BERZERKER2",
- "description": "TXT_KEY_PROMOTION_BERZERKER2",
  "strength": {
   "unit": {
    "percent": -5,
@@ -29,5 +28,8 @@
  },
  "sound": {
   "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_BERZERKER2"
  }
 }

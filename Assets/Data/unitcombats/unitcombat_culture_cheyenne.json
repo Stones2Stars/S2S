@@ -1,12 +1,12 @@
 {
  "type": "UNITCOMBAT_CULTURE_CHEYENNE",
- "description": "TXT_KEY_UNITCOMBAT_CULTURE_CHEYENNE",
  "ui": {
   "art": {
    "icon": "Art/Interface/Buttons/units/sparth/categories/culture_cheyenne.dds"
   }
  },
  "identity": {
+  "description": "TXT_KEY_UNITCOMBAT_CULTURE_CHEYENNE",
   "culture": "BONUS_CHEYENNE"
  }
 }

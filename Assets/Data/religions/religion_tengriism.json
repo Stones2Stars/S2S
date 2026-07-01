@@ -1,8 +1,5 @@
 {
  "type": "RELIGION_TENGRIISM",
- "description": "TXT_KEY_TECH_TENGRIISM",
- "civilopedia": "TXT_KEY_TECH_TENGRIISM_PEDIA",
- "adjective": "TXT_KEY_TECH_TENGRIISM_ADJECTIVE",
  "enables": {
   "buildings": [
    "BUILDING_EJE_SONG",
@@ -86,6 +83,9 @@
   "sound": "AS2D_BUILD_SIBERIAN"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_TENGRIISM",
+  "adjective": "TXT_KEY_TECH_TENGRIISM_ADJECTIVE",
+  "civilopedia": "TXT_KEY_TECH_TENGRIISM_PEDIA",
   "spreadFactor": 10
  }
 }

@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_GREAT_CHINAMPA",
- "description": "TXT_KEY_BUILDING_GREAT_CHINAMPA",
- "civilopedia": "TXT_KEY_BUILDING_GREAT_CHINAMPA_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_FARMSCRAPER_I"
@@ -65,6 +63,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_GREAT_CHINAMPA",
+  "civilopedia": "TXT_KEY_BUILDING_GREAT_CHINAMPA_PEDIA",
   "advisor": "ADVISOR_GROWTH",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

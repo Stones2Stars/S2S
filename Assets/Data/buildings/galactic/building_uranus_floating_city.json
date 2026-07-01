@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_URANUS_FLOATING_CITY",
- "description": "TXT_KEY_BUILDING_URANUS_FLOATING_CITY",
- "civilopedia": "TXT_KEY_BUILDING_URANUS_FLOATING_CITY_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_TERRAFORMED_URANUS"
@@ -72,6 +70,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_URANUS_FLOATING_CITY",
+  "civilopedia": "TXT_KEY_BUILDING_URANUS_FLOATING_CITY_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

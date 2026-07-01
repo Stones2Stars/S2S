@@ -1,7 +1,5 @@
 {
  "type": "UNIT_TRENCH_MACHINE_GUN",
- "description": "TXT_KEY_UNIT_TRENCH_MACHINE_GUN",
- "civilopedia": "TXT_KEY_UNIT_TRENCH_MACHINE_GUN_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -77,6 +75,8 @@
   "upkeep": 1
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_TRENCH_MACHINE_GUN",
+  "civilopedia": "TXT_KEY_UNIT_TRENCH_MACHINE_GUN_PEDIA",
   "worth": 4,
   "militaryWorth": 83,
   "xpValueAttack": 6,

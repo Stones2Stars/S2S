@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_HARBOR",
- "description": "TXT_KEY_BUILDING_HARBOR",
- "civilopedia": "TXT_KEY_BUILDING_HARBOR_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_GARBAGE_DOCK",
@@ -141,6 +139,8 @@
   "construct": "AS2D_BUILD_HARBOR"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_HARBOR",
+  "civilopedia": "TXT_KEY_BUILDING_HARBOR_PEDIA",
   "worth": 4,
   "conquestProbability": 100,
   "dcmAirbombMission": 2,

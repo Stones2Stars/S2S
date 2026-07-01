@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_HQ_SAFARI_HUNTERS",
- "description": "TXT_KEY_BUILDING_HQ_SAFARI_HUNTERS",
- "civilopedia": "TXT_KEY_BUILDING_CORPORATION_SAFARI_PEDIA",
  "enables": {
   "corporations": [
    "CORPORATION_SAFARI"
@@ -56,6 +54,8 @@
   "construct": "AS2D_BUILD_BANK"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_HQ_SAFARI_HUNTERS",
+  "civilopedia": "TXT_KEY_BUILDING_CORPORATION_SAFARI_PEDIA",
   "corporationHQ": "CORPORATION_SAFARI",
   "notConstructible": true,
   "nukeImmune": true,

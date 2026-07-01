@@ -1,7 +1,5 @@
 {
  "type": "BONUS_COCOA",
- "description": "TXT_KEY_BONUS_COCOA",
- "civilopedia": "TXT_KEY_BONUS_COCOA_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_CATCHER_QUETZAL",
@@ -63,6 +61,8 @@
   ]
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_COCOA",
+  "civilopedia": "TXT_KEY_BONUS_COCOA_PEDIA",
   "bonusClassType": "BONUSCLASS_LUXURY"
  }
 }

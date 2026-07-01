@@ -1,8 +1,5 @@
 {
  "type": "TECH_CONTROLLED_INFLATION",
- "description": "TXT_KEY_TECH_CONTROLLED_INFLATION",
- "civilopedia": "TXT_KEY_TECH_CONTROLLED_INFLATION_PEDIA",
- "quote": "TXT_KEY_TECH_CONTROLLED_INFLATION_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_DISTANT_BUBBLE_TRANSFER_STATION",
@@ -58,6 +55,9 @@
   "soundMP": "AS2D_TECH_GENERIC"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_CONTROLLED_INFLATION",
+  "civilopedia": "TXT_KEY_TECH_CONTROLLED_INFLATION_PEDIA",
+  "quote": "TXT_KEY_TECH_CONTROLLED_INFLATION_QUOTE",
   "era": "C2C_ERA_TRANSCENDENT",
   "worth": 48,
   "tradeable": true,

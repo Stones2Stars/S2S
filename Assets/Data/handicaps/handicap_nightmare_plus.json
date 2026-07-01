@@ -1,7 +1,5 @@
 {
  "type": "HANDICAP_NIGHTMARE_PLUS",
- "description": "TXT_KEY_HANDICAP_NIGHTMARE_PLUS",
- "help": "TXT_KEY_HANDICAP_NIGHTMARE_PLUS_HELP",
  "maintenance": {
   "empire": {
    "colony": {
@@ -221,6 +219,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_HANDICAP_NIGHTMARE_PLUS",
+  "help": "TXT_KEY_HANDICAP_NIGHTMARE_PLUS_HELP",
   "advancedStart": {
    "pointsMod": 100,
    "aiPercent": 240

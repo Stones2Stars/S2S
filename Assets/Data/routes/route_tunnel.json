@@ -1,6 +1,5 @@
 {
  "type": "ROUTE_TUNNEL",
- "description": "TXT_KEY_ROUTE_TUNNEL",
  "production": {
   "plot": {
    "improvements": {
@@ -29,6 +28,7 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_ROUTE_TUNNEL",
   "value": 1,
   "advancedStart": {
    "cost": 20

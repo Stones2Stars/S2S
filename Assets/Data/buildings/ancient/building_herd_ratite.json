@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_HERD_RATITE",
- "description": "TXT_KEY_BUILDING_HERD_RATITE",
- "civilopedia": "TXT_KEY_BUILDING_HERD_RATITE_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_RESOURCES_CARCASS",
@@ -54,6 +52,8 @@
   "construct": "SND_AMB_HORSE_COBBLESTONES"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_HERD_RATITE",
+  "civilopedia": "TXT_KEY_BUILDING_HERD_RATITE_PEDIA",
   "notConstructible": true,
   "worth": 3,
   "conquestProbability": 75,

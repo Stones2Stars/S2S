@@ -1,7 +1,5 @@
 {
  "type": "UNIT_PYGMY_WARRIOR",
- "description": "TXT_KEY_UNIT_PYGMY_WARRIOR",
- "civilopedia": "TXT_KEY_UNIT_PYGMY_WARRIOR_PEDIA",
  "obsoletedBy": {
   "techs": [
    "TECH_FLINTLOCK"
@@ -99,6 +97,8 @@
   "upkeep": 1
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_PYGMY_WARRIOR",
+  "civilopedia": "TXT_KEY_UNIT_PYGMY_WARRIOR_PEDIA",
   "worth": 2,
   "militaryWorth": 8,
   "xpValueAttack": 6,

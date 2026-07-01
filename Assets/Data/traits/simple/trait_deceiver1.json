@@ -1,7 +1,5 @@
 {
  "type": "TRAIT_DECEIVER1",
- "description": "TXT_KEY_TRAIT_DECEIVER0",
- "civilopedia": "TXT_KEY_TRAIT_DECEIVER_PEDIA",
  "enables": {
   "traits": [
    "TRAIT_DECEIVER2"
@@ -133,6 +131,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_TRAIT_DECEIVER0",
+  "civilopedia": "TXT_KEY_TRAIT_DECEIVER_PEDIA",
   "shortDescription": "TXT_KEY_TRAIT_DECEIVER_SHORT"
  }
 }

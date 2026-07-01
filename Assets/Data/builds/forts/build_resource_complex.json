@@ -1,6 +1,5 @@
 {
  "type": "BUILD_RESOURCE_COMPLEX",
- "description": "TXT_KEY_BUILD_WOODEN_PALISADE",
  "requires": {
   "build": {
    "all": [
@@ -29,5 +28,8 @@
   "art": {
    "entityEvent": "ENTITY_EVENT_BUILD"
   }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILD_WOODEN_PALISADE"
  }
 }

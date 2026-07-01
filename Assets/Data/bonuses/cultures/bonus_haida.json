@@ -1,7 +1,5 @@
 {
  "type": "BONUS_HAIDA",
- "description": "TXT_KEY_BONUS_HAIDA",
- "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
  "enables": {
   "units": [
    "UNIT_HAIDA_WAR_CANOE"
@@ -13,6 +11,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_HAIDA",
+  "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
   "bonusClassType": "BONUSCLASS_CULTURE"
  }
 }

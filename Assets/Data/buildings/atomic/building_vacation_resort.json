@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_VACATION_RESORT",
- "description": "TXT_KEY_BUILDING_VACATION_RESORT",
- "civilopedia": "TXT_KEY_BUILDING_VACATION_RESORT_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_TOURISM_MEGACOMPLEX"
@@ -79,6 +77,8 @@
   "construct": "AS2D_BUILD_VACATION_RESORT"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_VACATION_RESORT",
+  "civilopedia": "TXT_KEY_BUILDING_VACATION_RESORT_PEDIA",
   "worth": 4,
   "conquestProbability": 25,
   "dcmAirbombMission": 2,

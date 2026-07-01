@@ -1,6 +1,5 @@
 {
  "type": "BUILD_FISHING_BOATS",
- "description": "TXT_KEY_BUILD_FISHING_BOATS",
  "requires": {
   "build": {
    "all": [
@@ -39,6 +38,7 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILD_FISHING_BOATS",
   "consumesUnit": true
  }
 }

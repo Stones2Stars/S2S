@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_SMITH_BRONZE",
- "description": "TXT_KEY_BUILDING_SMITH_BRONZE",
- "civilopedia": "TXT_KEY_BUILDING_SMITH_BRONZE_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_METALS_MEGACOMPLEX"
@@ -102,6 +100,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_SMITH_BRONZE",
+  "civilopedia": "TXT_KEY_BUILDING_SMITH_BRONZE_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

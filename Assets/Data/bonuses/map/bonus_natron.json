@@ -1,7 +1,5 @@
 {
  "type": "BONUS_NATRON",
- "description": "TXT_KEY_BONUS_NATRON",
- "civilopedia": "TXT_KEY_BONUS_NATRON_PEDIA",
  "commerce": {
   "plot": {
    "flat": 4
@@ -45,6 +43,8 @@
   ]
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_NATRON",
+  "civilopedia": "TXT_KEY_BONUS_NATRON_PEDIA",
   "bonusClassType": "BONUSCLASS_PRODUCTION"
  }
 }

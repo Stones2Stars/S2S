@@ -1,8 +1,5 @@
 {
  "type": "TECH_CROP_ROTATION",
- "description": "TXT_KEY_TECH_CROP_ROTATION",
- "civilopedia": "TXT_KEY_TECH_CROP_ROTATION_PEDIA",
- "quote": "TXT_KEY_TECH_CROP_ROTATION_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_PASTA_MAKERS_SHOP"
@@ -52,6 +49,9 @@
   "soundMP": "AS2D_TECH_CROP_ROTATION"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_CROP_ROTATION",
+  "civilopedia": "TXT_KEY_TECH_CROP_ROTATION_PEDIA",
+  "quote": "TXT_KEY_TECH_CROP_ROTATION_QUOTE",
   "era": "C2C_ERA_MEDIEVAL",
   "worth": 24,
   "tradeable": true,

@@ -1,7 +1,5 @@
 {
  "type": "UNIT_SWAT_TEAM",
- "description": "TXT_KEY_UNIT_SWAT_TEAM",
- "civilopedia": "TXT_KEY_UNIT_SWAT_TEAM_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -153,6 +151,8 @@
   "upkeep": 13
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_SWAT_TEAM",
+  "civilopedia": "TXT_KEY_UNIT_SWAT_TEAM_PEDIA",
   "worth": 10,
   "militaryWorth": 30,
   "xpValueAttack": 3,

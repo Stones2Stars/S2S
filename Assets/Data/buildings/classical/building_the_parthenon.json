@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_THE_PARTHENON",
- "description": "TXT_KEY_BUILDING_THE_PARTHENON",
- "civilopedia": "TXT_KEY_BUILDING_THE_PARTHENON_PEDIA",
  "obsoletedBy": {
   "techs": [
    "TECH_SCIENTIFIC_METHOD"
@@ -101,6 +99,8 @@
   "construct": "AS2D_BUILD_PARTHENON"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_THE_PARTHENON",
+  "civilopedia": "TXT_KEY_BUILDING_THE_PARTHENON_PEDIA",
   "stateReligionCommerce": {
    "research": 1,
    "culture": 1

@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_WALL_STREET",
- "description": "TXT_KEY_BUILDING_WALL_STREET",
- "civilopedia": "TXT_KEY_BUILDING_WALL_STREET_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -80,6 +78,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_WALL_STREET",
+  "civilopedia": "TXT_KEY_BUILDING_WALL_STREET_PEDIA",
   "worth": 8,
   "conquestProbability": 100,
   "greatPeopleUnitType": "UNIT_MERCHANT",

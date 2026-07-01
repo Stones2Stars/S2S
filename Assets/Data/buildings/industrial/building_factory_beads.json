@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_FACTORY_BEADS",
- "description": "TXT_KEY_BUILDING_FACTORY_BEADS",
- "civilopedia": "TXT_KEY_BUILDING_FACTORY_BEADS_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_HARAPPAN_FAKE_GEMS"
@@ -181,6 +179,8 @@
   "construct": "AS2D_BUILD_JEWELLERY"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_FACTORY_BEADS",
+  "civilopedia": "TXT_KEY_BUILDING_FACTORY_BEADS_PEDIA",
   "nukeImmune": true,
   "conquestProbability": 80,
   "advisor": "ADVISOR_ECONOMY",

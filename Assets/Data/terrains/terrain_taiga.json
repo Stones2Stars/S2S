@@ -1,7 +1,5 @@
 {
  "type": "TERRAIN_TAIGA",
- "description": "TXT_KEY_TERRAIN_TAIGA",
- "civilopedia": "TXT_KEY_TERRAIN_TAIGA_PEDIA",
  "food": {
   "plot": {
    "flat": 1
@@ -136,6 +134,8 @@
   "soundscape": "ASSS_TUNDRA_SELECT_AMB"
  },
  "identity": {
+  "description": "TXT_KEY_TERRAIN_TAIGA",
+  "civilopedia": "TXT_KEY_TERRAIN_TAIGA_PEDIA",
   "found": true,
   "movementCost": 2,
   "mapCategories": [

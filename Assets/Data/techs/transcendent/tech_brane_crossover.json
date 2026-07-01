@@ -1,8 +1,5 @@
 {
  "type": "TECH_BRANE_CROSSOVER",
- "description": "TXT_KEY_TECH_BRANE_CROSSOVER",
- "civilopedia": "TXT_KEY_TECH_BRANE_CROSSOVER_PEDIA",
- "quote": "TXT_KEY_TECH_BRANE_CROSSOVER_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_DISTANT_BRANE_COLLISION",
@@ -56,6 +53,9 @@
   "soundMP": "AS2D_TECH_GENERIC"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_BRANE_CROSSOVER",
+  "civilopedia": "TXT_KEY_TECH_BRANE_CROSSOVER_PEDIA",
+  "quote": "TXT_KEY_TECH_BRANE_CROSSOVER_QUOTE",
   "era": "C2C_ERA_TRANSCENDENT",
   "worth": 48,
   "tradeable": true,

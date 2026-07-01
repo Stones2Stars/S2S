@@ -1,9 +1,11 @@
 {
  "type": "SPECIALBUILDING_PUNK_BIO",
- "description": "TXT_KEY_SPECIALBUILDING_PUNK_BIO",
  "ui": {
   "art": {
    "icon": "Art/Interface/Buttons/TechTree/biopunk.dds"
   }
+ },
+ "identity": {
+  "description": "TXT_KEY_SPECIALBUILDING_PUNK_BIO"
  }
 }

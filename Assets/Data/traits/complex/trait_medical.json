@@ -1,8 +1,5 @@
 {
  "type": "TRAIT_MEDICAL",
- "description": "TXT_KEY_TRAIT_MEDICAL",
- "civilopedia": "TXT_KEY_TRAIT_MEDICAL_PEDIA",
- "strategy": "TXT_KEY_TRAIT_MEDICAL_STRATEGY",
  "excludes": [
   "TRAIT_UNSANITARY"
  ],
@@ -629,5 +626,10 @@
   "art": {
    "icon": "art/Buttons/Traits/TraitMedical.dds"
   }
+ },
+ "identity": {
+  "description": "TXT_KEY_TRAIT_MEDICAL",
+  "civilopedia": "TXT_KEY_TRAIT_MEDICAL_PEDIA",
+  "strategy": "TXT_KEY_TRAIT_MEDICAL_STRATEGY"
  }
 }

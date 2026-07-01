@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_ROCK_N_ROLL",
- "description": "TXT_KEY_BUILDING_ROCK_N_ROLL",
- "civilopedia": "TXT_KEY_BUILDING_ROCK_N_ROLL_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_WALK_OF_FAME"
@@ -70,6 +68,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_ROCK_N_ROLL",
+  "civilopedia": "TXT_KEY_BUILDING_ROCK_N_ROLL_PEDIA",
   "nukeImmune": true,
   "teamShare": true,
   "worth": 18,

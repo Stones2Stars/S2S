@@ -1,7 +1,5 @@
 {
  "type": "FEATURE_FALLOUT",
- "description": "TXT_KEY_FEATURE_FALLOUT",
- "civilopedia": "TXT_KEY_FEATURE_FALLOUT_PEDIA",
  "food": {
   "plot": {
    "flat": -5
@@ -33,6 +31,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_FEATURE_FALLOUT",
+  "civilopedia": "TXT_KEY_FEATURE_FALLOUT_PEDIA",
   "movementCost": 1,
   "disappearance": 800,
   "growth": 60,

@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_SALON",
- "description": "TXT_KEY_BUILDING_SALON",
- "civilopedia": "TXT_KEY_BUILDING_SALON_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -81,6 +79,8 @@
   "construct": "AS2D_BUILD_OBSERVATORY"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_SALON",
+  "civilopedia": "TXT_KEY_BUILDING_SALON_PEDIA",
   "worth": 5,
   "conquestProbability": 100,
   "dcmAirbombMission": 2,

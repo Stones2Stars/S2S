@@ -1,8 +1,5 @@
 {
  "type": "TECH_BARBED_WIRE",
- "description": "TXT_KEY_TECH_BARBED_WIRE",
- "civilopedia": "TXT_KEY_TECH_BARBED_WIRE_PEDIA",
- "quote": "TXT_KEY_TECH_BARBED_WIRE_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_BARBWIRE_FENCE"
@@ -56,6 +53,9 @@
   "soundMP": "AS2D_TECH_BARBED_WIRE"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_BARBED_WIRE",
+  "civilopedia": "TXT_KEY_TECH_BARBED_WIRE_PEDIA",
+  "quote": "TXT_KEY_TECH_BARBED_WIRE_QUOTE",
   "era": "C2C_ERA_INDUSTRIAL",
   "worth": 40,
   "militaryWorth": 4,

@@ -1,8 +1,5 @@
 {
  "type": "TECH_DUELING",
- "description": "TXT_KEY_TECH_DUELING",
- "civilopedia": "TXT_KEY_TECH_DUELING_PEDIA",
- "quote": "TXT_KEY_TECH_DUELING_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_BOXING_RING",
@@ -60,6 +57,9 @@
   "soundMP": "AS2D_TECH_DUELING"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_DUELING",
+  "civilopedia": "TXT_KEY_TECH_DUELING_PEDIA",
+  "quote": "TXT_KEY_TECH_DUELING_QUOTE",
   "era": "C2C_ERA_RENAISSANCE",
   "worth": 32,
   "militaryWorth": 8,

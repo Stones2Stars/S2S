@@ -1,7 +1,5 @@
 {
  "type": "UNIT_CAMEL_CAVALRY",
- "description": "TXT_KEY_UNIT_CAMEL_CAVALRY",
- "civilopedia": "TXT_KEY_UNIT_CAMEL_CAVALRY_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -97,6 +95,8 @@
   "upkeep": 1
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_CAMEL_CAVALRY",
+  "civilopedia": "TXT_KEY_UNIT_CAMEL_CAVALRY_PEDIA",
   "worth": 4,
   "militaryWorth": 72,
   "xpValueAttack": 3,

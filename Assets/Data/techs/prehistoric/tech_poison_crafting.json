@@ -1,8 +1,5 @@
 {
  "type": "TECH_POISON_CRAFTING",
- "description": "TXT_KEY_TECH_POISON_CRAFTING",
- "civilopedia": "TXT_KEY_TECH_POISON_CRAFTING_PEDIA",
- "quote": "TXT_KEY_TECH_POISON_CRAFTING_QUOTE",
  "enables": {
   "bonuses": [
    "BONUS_POISON"
@@ -65,6 +62,9 @@
   "soundMP": "AS2D_TECH_POISON_CRAFTING"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_POISON_CRAFTING",
+  "civilopedia": "TXT_KEY_TECH_POISON_CRAFTING_PEDIA",
+  "quote": "TXT_KEY_TECH_POISON_CRAFTING_QUOTE",
   "era": "C2C_ERA_PREHISTORIC",
   "worth": 15,
   "tradeable": true,

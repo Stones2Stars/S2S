@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_VENUS_SURFACE_SCOOP",
- "description": "TXT_KEY_BUILDING_VENUS_SURFACE_SCOOP",
- "civilopedia": "TXT_KEY_BUILDING_VENUS_SURFACE_SCOOP_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -43,6 +41,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_VENUS_SURFACE_SCOOP",
+  "civilopedia": "TXT_KEY_BUILDING_VENUS_SURFACE_SCOOP_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

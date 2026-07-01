@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_BUDDHIST_TEMPLE",
- "description": "TXT_KEY_BUILDING_BUDDHIST_TEMPLE",
- "civilopedia": "TXT_KEY_BUILDING_BUDDHIST_TEMPLE_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_BUDDHIST_STUPA",
@@ -113,6 +111,8 @@
   "construct": "AS2D_BUILD_BUDDHIST"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_BUDDHIST_TEMPLE",
+  "civilopedia": "TXT_KEY_BUILDING_BUDDHIST_TEMPLE_PEDIA",
   "neverCapture": true,
   "worth": 4,
   "specialBuildingType": "SPECIALBUILDING_TEMPLE",

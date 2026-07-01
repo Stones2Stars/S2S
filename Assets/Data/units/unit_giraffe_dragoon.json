@@ -1,7 +1,5 @@
 {
  "type": "UNIT_GIRAFFE_DRAGOON",
- "description": "TXT_KEY_UNIT_GIRAFFE_DRAGOON",
- "civilopedia": "TXT_KEY_UNIT_GIRAFFE_ARCHER_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -121,6 +119,8 @@
   "production": 455
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_GIRAFFE_DRAGOON",
+  "civilopedia": "TXT_KEY_UNIT_GIRAFFE_ARCHER_PEDIA",
   "worth": 2,
   "militaryWorth": 16,
   "xpValueAttack": 6,

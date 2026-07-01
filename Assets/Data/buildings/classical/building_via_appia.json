@@ -1,8 +1,5 @@
 {
  "type": "BUILDING_VIA_APPIA",
- "description": "TXT_KEY_BUILDING_VIA_APPIA",
- "civilopedia": "TXT_KEY_BUILDING_VIA_APPIA_PEDIA",
- "help": "TXT_KEY_BUILDING_VIA_APPIA_HELP",
  "obsoletedBy": {
   "techs": [
    "TECH_RAILROAD"
@@ -86,6 +83,9 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_VIA_APPIA",
+  "civilopedia": "TXT_KEY_BUILDING_VIA_APPIA_PEDIA",
+  "help": "TXT_KEY_BUILDING_VIA_APPIA_HELP",
   "commerceDoubleTime": {
    "culture": 1000
   },

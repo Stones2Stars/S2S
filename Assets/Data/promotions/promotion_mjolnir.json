@@ -1,6 +1,5 @@
 {
  "type": "PROMOTION_MJOLNIR",
- "description": "TXT_KEY_PROMOTION_MJOLNIR",
  "experience": {
   "unit": {
    "percent": 15
@@ -27,6 +26,7 @@
   "sound": "AS2D_IF_LEVELUP"
  },
  "identity": {
+  "description": "TXT_KEY_PROMOTION_MJOLNIR",
   "stateReligionPrereq": "RELIGION_ASATRU",
   "unitCombats": [
    "UNITCOMBAT_MELEE",

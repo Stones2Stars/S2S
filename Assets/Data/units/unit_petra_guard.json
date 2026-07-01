@@ -1,7 +1,5 @@
 {
  "type": "UNIT_PETRA_GUARD",
- "description": "TXT_KEY_UNIT_PETRA_GUARD",
- "civilopedia": "TXT_KEY_UNIT_PETRA_GUARD_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -159,6 +157,8 @@
   "upkeep": 6
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_PETRA_GUARD",
+  "civilopedia": "TXT_KEY_UNIT_PETRA_GUARD_PEDIA",
   "worth": 6,
   "militaryWorth": 11,
   "xpValueAttack": 6,

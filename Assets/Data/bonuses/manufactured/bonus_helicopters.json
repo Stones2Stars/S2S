@@ -1,7 +1,5 @@
 {
  "type": "BONUS_HELICOPTERS",
- "description": "TXT_KEY_BONUS_HELICOPTERS",
- "civilopedia": "TXT_KEY_BONUS_HELICOPTERS_PEDIA",
  "enables": {
   "units": [
    "UNIT_AH64_GUNSHIP",
@@ -22,6 +20,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_HELICOPTERS",
+  "civilopedia": "TXT_KEY_BONUS_HELICOPTERS_PEDIA",
   "bonusClassType": "BONUSCLASS_MANUFACTURED"
  }
 }

@@ -1,7 +1,5 @@
 {
  "type": "UNIT_GRIZZLY",
- "description": "TXT_KEY_UNIT_GRIZZLY",
- "civilopedia": "TXT_KEY_UNIT_GRIZZLY_PEDIA",
  "skills": {
   "blendIntoCity": true
  },
@@ -44,6 +42,8 @@
   ]
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_GRIZZLY",
+  "civilopedia": "TXT_KEY_UNIT_GRIZZLY_PEDIA",
   "spawnOnly": true,
   "xpValueAttack": 10,
   "xpValueDefense": 6,

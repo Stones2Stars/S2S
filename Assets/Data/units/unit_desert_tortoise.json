@@ -1,7 +1,5 @@
 {
  "type": "UNIT_DESERT_TORTOISE",
- "description": "TXT_KEY_UNIT_DESERT_TORTOISE",
- "civilopedia": "TXT_KEY_UNIT_DESERT_TORTOISE_PEDIA",
  "skills": {
   "blendIntoCity": true,
   "onlyDefensive": true,
@@ -41,6 +39,8 @@
   ]
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_DESERT_TORTOISE",
+  "civilopedia": "TXT_KEY_UNIT_DESERT_TORTOISE_PEDIA",
   "spawnOnly": true,
   "xpValueAttack": 1,
   "xpValueDefense": 1,

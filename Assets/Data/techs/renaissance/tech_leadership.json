@@ -1,8 +1,5 @@
 {
  "type": "TECH_LEADERSHIP",
- "description": "TXT_KEY_TECH_LEADERSHIP",
- "civilopedia": "TXT_KEY_TECH_LEADERSHIP_PEDIA",
- "quote": "TXT_KEY_TECH_LEADERSHIP_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_CULTURE_ARGENTINIAN",
@@ -77,6 +74,9 @@
   "soundMP": "AS2D_TECH_LEADERSHIP"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_LEADERSHIP",
+  "civilopedia": "TXT_KEY_TECH_LEADERSHIP_PEDIA",
+  "quote": "TXT_KEY_TECH_LEADERSHIP_QUOTE",
   "era": "C2C_ERA_RENAISSANCE",
   "worth": 32,
   "tradeable": true,

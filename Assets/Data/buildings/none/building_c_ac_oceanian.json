@@ -1,8 +1,5 @@
 {
  "type": "BUILDING_C_AC_OCEANIAN",
- "description": "TXT_KEY_BUILDING_C_AC_OCEANIAN",
- "civilopedia": "TXT_KEY_BUILDING_C_AC_PEDIA",
- "help": "TXT_KEY_BUILDING_C_AC_HELP",
  "enables": {
   "buildings": [
    "BUILDING_CULTURE_ABORIGINE",
@@ -59,6 +56,9 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_C_AC_OCEANIAN",
+  "civilopedia": "TXT_KEY_BUILDING_C_AC_PEDIA",
+  "help": "TXT_KEY_BUILDING_C_AC_HELP",
   "notConstructible": true,
   "nukeImmune": true,
   "neverCapture": true,

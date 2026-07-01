@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_CULTURE_GERMAN",
- "description": "TXT_KEY_BUILDING_CULTURE_GERMAN",
- "civilopedia": "TXT_KEY_BUILDING_CULTURE_GERMAN_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -102,6 +100,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_CULTURE_GERMAN",
+  "civilopedia": "TXT_KEY_BUILDING_CULTURE_GERMAN_PEDIA",
   "nukeImmune": true,
   "noInstanceLimit": true,
   "conquestProbability": 100,

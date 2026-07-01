@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_NANITE_LAB",
- "description": "TXT_KEY_BUILDING_NANITE_LAB",
- "civilopedia": "TXT_KEY_BUILDING_NANITE_LAB_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_NANOFACTORY"
@@ -63,6 +61,8 @@
   "construct": "AS2D_BUILD_NANOFACTORY"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_NANITE_LAB",
+  "civilopedia": "TXT_KEY_BUILDING_NANITE_LAB_PEDIA",
   "worth": 20,
   "militaryWorth": 25,
   "dcmAirbombMission": 3,

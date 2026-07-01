@@ -1,9 +1,11 @@
 {
  "type": "UNITCOMBAT_DISASSEMBLY",
- "description": "TXT_KEY_UNITCOMBAT_DISASSEMBLY",
  "ui": {
   "art": {
    "icon": "Art/Interface/Buttons/units/sparth/categories/disassembly.dds"
   }
+ },
+ "identity": {
+  "description": "TXT_KEY_UNITCOMBAT_DISASSEMBLY"
  }
 }

@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_DRAFT_OFFICE",
- "description": "TXT_KEY_BUILDING_DRAFT_OFFICE",
- "civilopedia": "TXT_KEY_BUILDING_DRAFT_OFFICE_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -62,6 +60,8 @@
   "construct": "AS2D_BUILD_BARRACKS"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_DRAFT_OFFICE",
+  "civilopedia": "TXT_KEY_BUILDING_DRAFT_OFFICE_PEDIA",
   "worth": 8,
   "militaryWorth": 8,
   "advisor": "ADVISOR_MILITARY",

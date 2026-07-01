@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_BROADWAY",
- "description": "TXT_KEY_BUILDING_BROADWAY",
- "civilopedia": "TXT_KEY_BUILDING_BROADWAY_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_WALK_OF_FAME"
@@ -78,6 +76,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_BROADWAY",
+  "civilopedia": "TXT_KEY_BUILDING_BROADWAY_PEDIA",
   "nukeImmune": true,
   "teamShare": true,
   "worth": 18,

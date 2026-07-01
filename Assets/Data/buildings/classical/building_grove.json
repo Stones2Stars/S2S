@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_GROVE",
- "description": "TXT_KEY_BUILDING_GROVE",
- "civilopedia": "TXT_KEY_BUILDING_GROVE_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_CASTLE_GARDEN"
@@ -84,6 +82,8 @@
   "construct": "AS2D_BUILD_PARK"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_GROVE",
+  "civilopedia": "TXT_KEY_BUILDING_GROVE_PEDIA",
   "worth": 2,
   "militaryWorth": 2,
   "greatPeopleUnitType": "UNIT_ARTIST",

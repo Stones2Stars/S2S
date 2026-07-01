@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_PETTING_ZOO",
- "description": "TXT_KEY_BUILDING_PETTING_ZOO",
- "civilopedia": "TXT_KEY_BUILDING_PETTING_ZOO_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -128,6 +126,8 @@
   "construct": "AS2D_BUILD_ZOO"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_PETTING_ZOO",
+  "civilopedia": "TXT_KEY_BUILDING_PETTING_ZOO_PEDIA",
   "centerInCity": true,
   "worth": 6,
   "militaryWorth": 3,

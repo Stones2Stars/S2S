@@ -1,8 +1,5 @@
 {
  "type": "BUILDING_C_AD_NEANDERTHAL",
- "description": "TXT_KEY_BUILDING_C_AD_NEANDERTHAL",
- "civilopedia": "TXT_KEY_BUILDING_C_AD_PEDIA",
- "help": "TXT_KEY_BUILDING_C_AD_HELP",
  "obsoletedBy": {
   "techs": [
    "TECH_SEDENTARY_LIFESTYLE"
@@ -39,6 +36,9 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_C_AD_NEANDERTHAL",
+  "civilopedia": "TXT_KEY_BUILDING_C_AD_PEDIA",
+  "help": "TXT_KEY_BUILDING_C_AD_HELP",
   "notConstructible": true,
   "nukeImmune": true,
   "neverCapture": true,

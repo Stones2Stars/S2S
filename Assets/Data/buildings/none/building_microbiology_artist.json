@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_MICROBIOLOGY_ARTIST",
- "description": "TXT_KEY_BUILDING_MICROBIOLOGY_ARTIST",
- "civilopedia": "TXT_KEY_BUILDING_MICROBIOLOGY_ARTIST_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -69,6 +67,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_MICROBIOLOGY_ARTIST",
+  "civilopedia": "TXT_KEY_BUILDING_MICROBIOLOGY_ARTIST_PEDIA",
   "specialBuildingType": "SPECIALBUILDING_PUNK_BIO",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": "1.0",

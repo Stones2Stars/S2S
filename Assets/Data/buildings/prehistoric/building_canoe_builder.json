@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_CANOE_BUILDER",
- "description": "TXT_KEY_BUILDING_CANOE_BUILDER",
- "civilopedia": "TXT_KEY_BUILDING_CANOE_BUILDER_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_BOATYARD"
@@ -119,6 +117,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_CANOE_BUILDER",
+  "civilopedia": "TXT_KEY_BUILDING_CANOE_BUILDER_PEDIA",
   "enabledCivilizations": [
    "CIVILIZATION_NPC_NEANDERTHAL"
   ],

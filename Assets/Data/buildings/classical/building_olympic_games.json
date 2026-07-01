@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_OLYMPIC_GAMES",
- "description": "TXT_KEY_BUILDING_OLYMPIC_GAMES",
- "civilopedia": "TXT_KEY_BUILDING_OLYMPIC_GAMES_PEDIA",
  "obsoletedBy": {
   "techs": [
    "TECH_MODERN_SPORTS"
@@ -96,6 +94,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_OLYMPIC_GAMES",
+  "civilopedia": "TXT_KEY_BUILDING_OLYMPIC_GAMES_PEDIA",
   "worth": 20,
   "militaryWorth": 4,
   "conquestProbability": 100,

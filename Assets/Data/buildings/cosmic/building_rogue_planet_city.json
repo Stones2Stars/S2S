@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_ROGUE_PLANET_CITY",
- "description": "TXT_KEY_BUILDING_ROGUE_PLANET_CITY",
- "civilopedia": "TXT_KEY_BUILDING_ROGUE_PLANET_CITY_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -55,6 +53,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_ROGUE_PLANET_CITY",
+  "civilopedia": "TXT_KEY_BUILDING_ROGUE_PLANET_CITY_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

@@ -1,12 +1,12 @@
 {
  "type": "UNITCOMBAT_CULTURE_APACHE",
- "description": "TXT_KEY_UNITCOMBAT_CULTURE_APACHE",
  "ui": {
   "art": {
    "icon": "Art/Interface/Buttons/units/sparth/categories/culture_apache.dds"
   }
  },
  "identity": {
+  "description": "TXT_KEY_UNITCOMBAT_CULTURE_APACHE",
   "culture": "BONUS_APACHE"
  }
 }

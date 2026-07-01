@@ -1,8 +1,5 @@
 {
  "type": "TECH_COOPERATION",
- "description": "TXT_KEY_TECH_COOPERATION",
- "civilopedia": "TXT_KEY_TECH_COOPERATION_PEDIA",
- "quote": "TXT_KEY_TECH_COOPERATION_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_CHILDCARE_HUT",
@@ -73,6 +70,9 @@
   "soundMP": "AS2D_TECH_COOPERATION"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_COOPERATION",
+  "civilopedia": "TXT_KEY_TECH_COOPERATION_PEDIA",
+  "quote": "TXT_KEY_TECH_COOPERATION_QUOTE",
   "era": "C2C_ERA_PREHISTORIC",
   "worth": 4,
   "tradeable": true,

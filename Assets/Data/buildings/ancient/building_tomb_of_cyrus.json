@@ -1,8 +1,5 @@
 {
  "type": "BUILDING_TOMB_OF_CYRUS",
- "description": "TXT_KEY_BUILDING_TOMB_OF_CYRUS",
- "civilopedia": "TXT_KEY_BUILDING_TOMB_OF_CYRUS_PEDIA",
- "help": "TXT_KEY_BUILDING_TOMB_OF_CYRUS_HELP",
  "requires": {
   "build": {
    "all": [
@@ -75,6 +72,9 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_TOMB_OF_CYRUS",
+  "civilopedia": "TXT_KEY_BUILDING_TOMB_OF_CYRUS_PEDIA",
+  "help": "TXT_KEY_BUILDING_TOMB_OF_CYRUS_HELP",
   "commerceDoubleTime": {
    "culture": 1000
   },

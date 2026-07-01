@@ -1,6 +1,5 @@
 {
  "type": "PROMOTION_REINFORCED_STRUCTURE",
- "description": "TXT_KEY_PROMOTION_REINFORCED_STRUCTURE",
  "strength": {
   "unit": {
    "cityAttack": {
@@ -27,6 +26,7 @@
   "sound": "AS2D_IF_LEVELUP"
  },
  "identity": {
+  "description": "TXT_KEY_PROMOTION_REINFORCED_STRUCTURE",
   "unitCombats": [
    "UNITCOMBAT_ROBOT",
    "UNITCOMBAT_ASSAULT_MECH"

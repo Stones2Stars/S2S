@@ -1,7 +1,5 @@
 {
  "type": "BONUS_CALCULATORS",
- "description": "TXT_KEY_BONUS_CALCULATORS",
- "civilopedia": "TXT_KEY_BONUS_CALCULATORS_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_ELECTRONICS_STORE"
@@ -13,6 +11,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_CALCULATORS",
+  "civilopedia": "TXT_KEY_BONUS_CALCULATORS_PEDIA",
   "bonusClassType": "BONUSCLASS_MANUFACTURED"
  }
 }

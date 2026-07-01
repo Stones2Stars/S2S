@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_WOMENS_SUFFRAGE",
- "description": "TXT_KEY_BUILDING_WOMENS_SUFFRAGE",
- "civilopedia": "TXT_KEY_BUILDING_WOMENS_SUFFRAGE_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -58,6 +56,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_WOMENS_SUFFRAGE",
+  "civilopedia": "TXT_KEY_BUILDING_WOMENS_SUFFRAGE_PEDIA",
   "nukeImmune": true,
   "teamShare": true,
   "worth": 15,

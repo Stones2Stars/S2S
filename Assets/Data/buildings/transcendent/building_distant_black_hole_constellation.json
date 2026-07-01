@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_DISTANT_BLACK_HOLE_CONSTELLATION",
- "description": "TXT_KEY_BUILDING_DISTANT_BLACK_HOLE_CONSTELLATION",
- "civilopedia": "TXT_KEY_BUILDING_DISTANT_BLACK_HOLE_CONSTELLATION_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_DISTANT_BIOPHILIC_SUBUNIVERSE"
@@ -43,6 +41,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_DISTANT_BLACK_HOLE_CONSTELLATION",
+  "civilopedia": "TXT_KEY_BUILDING_DISTANT_BLACK_HOLE_CONSTELLATION_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

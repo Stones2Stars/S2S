@@ -1,6 +1,5 @@
 {
  "type": "UNITCOMBAT_SPEED_SLOW",
- "description": "TXT_KEY_UNITCOMBAT_SPEED_SLOW",
  "withdrawal": {
   "unit": {
    "percent": -5
@@ -20,5 +19,8 @@
   "art": {
    "icon": "Art/Interface/Buttons/units/sparth/categories/speed_slow.dds"
   }
+ },
+ "identity": {
+  "description": "TXT_KEY_UNITCOMBAT_SPEED_SLOW"
  }
 }

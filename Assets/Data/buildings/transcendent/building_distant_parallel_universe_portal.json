@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_DISTANT_PARALLEL_UNIVERSE_PORTAL",
- "description": "TXT_KEY_BUILDING_DISTANT_PARALLEL_UNIVERSE_PORTAL",
- "civilopedia": "TXT_KEY_BUILDING_DISTANT_PARALLEL_UNIVERSE_PORTAL_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_DISTANT_FRACTAL_CITY"
@@ -49,6 +47,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_DISTANT_PARALLEL_UNIVERSE_PORTAL",
+  "civilopedia": "TXT_KEY_BUILDING_DISTANT_PARALLEL_UNIVERSE_PORTAL_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

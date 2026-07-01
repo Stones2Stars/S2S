@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_ASSASSINS_DEN",
- "description": "TXT_KEY_BUILDING_ASSASSINS_DEN",
- "civilopedia": "TXT_KEY_BUILDING_ASSASSINS_DEN_PEDIA",
  "enables": {
   "units": [
    "UNIT_ASSASSIN"
@@ -110,6 +108,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_ASSASSINS_DEN",
+  "civilopedia": "TXT_KEY_BUILDING_ASSASSINS_DEN_PEDIA",
   "nukeImmune": true,
   "militaryWorth": 1,
   "advisor": "ADVISOR_ECONOMY",

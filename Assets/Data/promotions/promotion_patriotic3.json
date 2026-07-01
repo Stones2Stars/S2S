@@ -1,6 +1,5 @@
 {
  "type": "PROMOTION_PATRIOTIC3",
- "description": "TXT_KEY_PROMOTION_PATRIOTIC3",
  "strength": {
   "unit": {
    "percent": 20,
@@ -71,5 +70,8 @@
  },
  "sound": {
   "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_PATRIOTIC3"
  }
 }

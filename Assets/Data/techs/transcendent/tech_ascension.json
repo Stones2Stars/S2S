@@ -1,8 +1,5 @@
 {
  "type": "TECH_ASCENSION",
- "description": "TXT_KEY_TECH_ASCENSION",
- "civilopedia": "TXT_KEY_TECH_ASCENSION_PEDIA",
- "quote": "TXT_KEY_TECH_ASCENSION_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_ASCENSION_GATE",
@@ -60,6 +57,9 @@
   "soundMP": "AS2D_TECH_ASCENSION"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_ASCENSION",
+  "civilopedia": "TXT_KEY_TECH_ASCENSION_PEDIA",
+  "quote": "TXT_KEY_TECH_ASCENSION_QUOTE",
   "era": "C2C_ERA_TRANSCENDENT",
   "worth": 48,
   "militaryWorth": 4,

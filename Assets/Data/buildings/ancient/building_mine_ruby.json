@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_MINE_RUBY",
- "description": "TXT_KEY_BUILDING_MINE_RUBY",
- "civilopedia": "TXT_KEY_BUILDING_MINE_RUBY_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_RESOURCES_GEMSTONE"
@@ -70,6 +68,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_MINE_RUBY",
+  "civilopedia": "TXT_KEY_BUILDING_MINE_RUBY_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

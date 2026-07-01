@@ -1,8 +1,5 @@
 {
  "type": "TECH_ELECTRONICS",
- "description": "TXT_KEY_TECH_ELECTRONICS",
- "civilopedia": "TXT_KEY_TECH_ELECTRONICS_PEDIA",
- "quote": "TXT_KEY_TECH_ELECTRONICS_QUOTE",
  "enables": {
   "bonuses": [
    "BONUS_BLENDER",
@@ -105,6 +102,9 @@
   "soundMP": "AS2D_TECH_ELECTRONICS"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_ELECTRONICS",
+  "civilopedia": "TXT_KEY_TECH_ELECTRONICS_PEDIA",
+  "quote": "TXT_KEY_TECH_ELECTRONICS_QUOTE",
   "era": "C2C_ERA_ATOMIC",
   "worth": 48,
   "militaryWorth": 4,

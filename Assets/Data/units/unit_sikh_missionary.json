@@ -1,7 +1,5 @@
 {
  "type": "UNIT_SIKH_MISSIONARY",
- "description": "TXT_KEY_UNIT_SIKH_MISSIONARY",
- "civilopedia": "TXT_KEY_UNIT_SIKH_MISSIONARY_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -23,6 +21,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_SIKH_MISSIONARY",
+  "civilopedia": "TXT_KEY_UNIT_SIKH_MISSIONARY_PEDIA",
   "worth": 1,
   "domain": "DOMAIN_LAND",
   "defaultUnitAI": "UNITAI_MISSIONARY",

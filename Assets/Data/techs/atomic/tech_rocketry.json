@@ -1,8 +1,5 @@
 {
  "type": "TECH_ROCKETRY",
- "description": "TXT_KEY_TECH_ROCKETRY",
- "civilopedia": "TXT_KEY_TECH_ROCKETRY_PEDIA",
- "quote": "TXT_KEY_TECH_ROCKETRY_QUOTE",
  "enables": {
   "bonuses": [
    "BONUS_ROCKET_FUEL"
@@ -69,6 +66,9 @@
   "soundMP": "AS2D_TECH_MP_ROCKETRY"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_ROCKETRY",
+  "civilopedia": "TXT_KEY_TECH_ROCKETRY_PEDIA",
+  "quote": "TXT_KEY_TECH_ROCKETRY_QUOTE",
   "era": "C2C_ERA_ATOMIC",
   "worth": 40,
   "militaryWorth": 10,

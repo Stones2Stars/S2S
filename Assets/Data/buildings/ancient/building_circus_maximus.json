@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_CIRCUS_MAXIMUS",
- "description": "TXT_KEY_BUILDING_CIRCUS_MAXIMUS",
- "civilopedia": "TXT_KEY_BUILDING_CIRCUS_MAXIMUS_PEDIA",
  "obsoletedBy": {
   "techs": [
    "TECH_TOURNAMENTS"
@@ -133,6 +131,8 @@
   "construct": "AS2D_BUILD_CIRCUS_MAXIMUS"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_CIRCUS_MAXIMUS",
+  "civilopedia": "TXT_KEY_BUILDING_CIRCUS_MAXIMUS_PEDIA",
   "commerceDoubleTime": {
    "culture": 1000
   },

@@ -1,7 +1,5 @@
 {
  "type": "BONUS_BEAVERS",
- "description": "TXT_KEY_BONUS_BEAVERS",
- "civilopedia": "TXT_KEY_BONUS_BEAVERS_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_BREEDING_PROGRAM_BEAVER",
@@ -86,6 +84,8 @@
   ]
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_BEAVERS",
+  "civilopedia": "TXT_KEY_BONUS_BEAVERS_PEDIA",
   "bonusClassType": "BONUSCLASS_PRODUCTION"
  }
 }

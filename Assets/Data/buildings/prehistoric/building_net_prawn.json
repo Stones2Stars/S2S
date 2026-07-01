@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_NET_PRAWN",
- "description": "TXT_KEY_BUILDING_NET_PRAWN",
- "civilopedia": "TXT_KEY_BUILDING_NET_PRAWN_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_RESOURCES_SHELLFISH"
@@ -77,6 +75,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_NET_PRAWN",
+  "civilopedia": "TXT_KEY_BUILDING_NET_PRAWN_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

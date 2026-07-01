@@ -1,7 +1,5 @@
 {
  "type": "UNIT_ZENU_GOLDSMITHS",
- "description": "TXT_KEY_UNIT_ZENU_GOLDSMITHS",
- "civilopedia": "TXT_KEY_UNIT_ZENU_GOLDSMITHS_PEDIA",
  "obsoletedBy": {
   "techs": [
    "TECH_MOTORIZED_TRANSPORTATION"
@@ -93,6 +91,8 @@
   "upkeep": 1
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_ZENU_GOLDSMITHS",
+  "civilopedia": "TXT_KEY_UNIT_ZENU_GOLDSMITHS_PEDIA",
   "worth": 1,
   "domain": "DOMAIN_LAND",
   "defaultUnitAI": "UNITAI_MERCHANT",

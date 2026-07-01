@@ -1,8 +1,5 @@
 {
  "type": "UNIT_TALESOF_MACKEREL",
- "description": "TXT_KEY_UNIT_TALESOF_MACKEREL",
- "civilopedia": "TXT_KEY_UNIT_MACKEREL_PEDIA",
- "help": "TXT_KEY_UNIT_SUBDUED_ANIMALS_HELP",
  "requires": {
   "build": {
    "all": [
@@ -21,6 +18,9 @@
   ]
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_TALESOF_MACKEREL",
+  "civilopedia": "TXT_KEY_UNIT_MACKEREL_PEDIA",
+  "help": "TXT_KEY_UNIT_SUBDUED_ANIMALS_HELP",
   "spawnOnly": true,
   "domain": "DOMAIN_SEA",
   "defaultUnitAI": "UNITAI_SUBDUED_ANIMAL",

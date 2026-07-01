@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_PICOTECH_COMPLEX",
- "description": "TXT_KEY_BUILDING_PICOTECH_COMPLEX",
- "civilopedia": "TXT_KEY_BUILDING_PICOTECH_COMPLEX_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_FACTORY_NANOACTUATORS",
@@ -151,6 +149,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_PICOTECH_COMPLEX",
+  "civilopedia": "TXT_KEY_BUILDING_PICOTECH_COMPLEX_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

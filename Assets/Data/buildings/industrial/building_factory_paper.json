@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_FACTORY_PAPER",
- "description": "TXT_KEY_BUILDING_FACTORY_PAPER",
- "civilopedia": "TXT_KEY_BUILDING_FACTORY_PAPER_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_GUILD_PRINTERS",
@@ -83,6 +81,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_FACTORY_PAPER",
+  "civilopedia": "TXT_KEY_BUILDING_FACTORY_PAPER_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

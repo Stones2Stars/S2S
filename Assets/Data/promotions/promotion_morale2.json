@@ -1,6 +1,5 @@
 {
  "type": "PROMOTION_MORALE2",
- "description": "TXT_KEY_PROMOTION_MORALE2",
  "upkeep": {
   "unit": {
    "modifier": {
@@ -35,5 +34,8 @@
  },
  "sound": {
   "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_MORALE2"
  }
 }

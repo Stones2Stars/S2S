@@ -1,12 +1,12 @@
 {
  "type": "PROMOTIONLINE_NAIVE_PROMOTION",
- "description": "TXT_KEY_PROMOTIONLINE_NAIVE_PROMOTION",
  "ui": {
   "art": {
    "icon": "art/Buttons/Promotions/PromotionNaive.dds"
   }
  },
  "identity": {
+  "description": "TXT_KEY_PROMOTIONLINE_NAIVE_PROMOTION",
   "unitCombats": [
    "UNITCOMBAT_SPY"
   ]

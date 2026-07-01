@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_METROPOLITAN_ADMINISTRATION",
- "description": "TXT_KEY_BUILDING_METROPOLITAN_ADMINISTRATION",
- "civilopedia": "TXT_KEY_BUILDING_METROPOLITAN_ADMINISTRATION_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_ANDEAN_CATHEDRAL",
@@ -132,6 +130,8 @@
   "construct": "AS2D_BUILD_COURTHOUSE"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_METROPOLITAN_ADMINISTRATION",
+  "civilopedia": "TXT_KEY_BUILDING_METROPOLITAN_ADMINISTRATION_PEDIA",
   "centerInCity": true,
   "worth": 4,
   "militaryWorth": 5,

@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_SPELUNKING_CAVES",
- "description": "TXT_KEY_BUILDING_SPELUNKING_CAVES",
- "civilopedia": "TXT_KEY_BUILDING_SPELUNKING_CAVES_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_TOURISM_MEGACOMPLEX"
@@ -62,6 +60,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_SPELUNKING_CAVES",
+  "civilopedia": "TXT_KEY_BUILDING_SPELUNKING_CAVES_PEDIA",
   "militaryWorth": 1,
   "conquestProbability": 30,
   "advisor": "ADVISOR_GROWTH",

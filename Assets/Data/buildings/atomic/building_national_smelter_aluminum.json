@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_NATIONAL_SMELTER_ALUMINUM",
- "description": "TXT_KEY_BUILDING_NATIONAL_SMELTER_ALUMINUM",
- "civilopedia": "TXT_KEY_BUILDING_NATIONAL_SMELTER_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_RESOURCES_ALUMINUM_INGOTS"
@@ -85,6 +83,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_NATIONAL_SMELTER_ALUMINUM",
+  "civilopedia": "TXT_KEY_BUILDING_NATIONAL_SMELTER_PEDIA",
   "neverCapture": true,
   "worth": 6,
   "militaryWorth": 1,

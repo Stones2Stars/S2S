@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_OBSIDIAN_QUARRY",
- "description": "TXT_KEY_BUILDING_OBSIDIAN_QUARRY",
- "civilopedia": "TXT_KEY_BUILDING_OBSIDIAN_QUARRY_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_MODERN_EARTHWORKS"
@@ -67,6 +65,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_OBSIDIAN_QUARRY",
+  "civilopedia": "TXT_KEY_BUILDING_OBSIDIAN_QUARRY_PEDIA",
   "enabledCivilizations": [
    "CIVILIZATION_NPC_NEANDERTHAL"
   ],

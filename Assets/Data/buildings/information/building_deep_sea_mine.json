@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_DEEP_SEA_MINE",
- "description": "TXT_KEY_BUILDING_DEEP_SEA_MINE",
- "civilopedia": "TXT_KEY_BUILDING_DEEP_SEA_MINE_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_OCEAN_ADMINISTRATION"
@@ -66,6 +64,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_DEEP_SEA_MINE",
+  "civilopedia": "TXT_KEY_BUILDING_DEEP_SEA_MINE_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

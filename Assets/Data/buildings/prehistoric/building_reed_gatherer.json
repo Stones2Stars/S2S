@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_REED_GATHERER",
- "description": "TXT_KEY_BUILDING_REED_GATHERER",
- "civilopedia": "TXT_KEY_BUILDING_REED_GATHERER_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_AGROFOREST"
@@ -60,6 +58,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_REED_GATHERER",
+  "civilopedia": "TXT_KEY_BUILDING_REED_GATHERER_PEDIA",
   "enabledCivilizations": [
    "CIVILIZATION_NPC_NEANDERTHAL"
   ],

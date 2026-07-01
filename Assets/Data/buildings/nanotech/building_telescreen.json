@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_TELESCREEN",
- "description": "TXT_KEY_BUILDING_TELESCREEN",
- "civilopedia": "TXT_KEY_BUILDING_TELESCREEN_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -46,6 +44,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_TELESCREEN",
+  "civilopedia": "TXT_KEY_BUILDING_TELESCREEN_PEDIA",
   "conquestProbability": 70,
   "advisor": "ADVISOR_SCIENCE",
   "mapCategories": [

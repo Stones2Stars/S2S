@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_MODELING_AGENCY",
- "description": "TXT_KEY_BUILDING_MODELING_AGENCY",
- "civilopedia": "TXT_KEY_BUILDING_MODELING_AGENCY_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_HIGH_TECH_CULTURAL_ENRICHMENT"
@@ -66,6 +64,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_MODELING_AGENCY",
+  "civilopedia": "TXT_KEY_BUILDING_MODELING_AGENCY_PEDIA",
   "advisor": "ADVISOR_CULTURE",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

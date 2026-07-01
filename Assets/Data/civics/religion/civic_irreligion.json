@@ -1,8 +1,5 @@
 {
  "type": "CIVIC_IRRELIGION",
- "description": "TXT_KEY_CIVIC_IRRELIGION",
- "civilopedia": "TXT_KEY_CIVIC_IRRELIGION_PEDIA",
- "strategy": "TXT_KEY_CIVIC_IRRELIGION_STRATEGY",
  "production": {
   "empire": {
    "percent": -1
@@ -98,6 +95,9 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_CIVIC_IRRELIGION",
+  "civilopedia": "TXT_KEY_CIVIC_IRRELIGION_PEDIA",
+  "strategy": "TXT_KEY_CIVIC_IRRELIGION_STRATEGY",
   "civicOption": "CIVICOPTION_RELIGION"
  }
 }

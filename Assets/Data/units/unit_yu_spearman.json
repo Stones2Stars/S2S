@@ -1,7 +1,5 @@
 {
  "type": "UNIT_YU_SPEARMAN",
- "description": "TXT_KEY_UNIT_YU_SPEARMAN",
- "civilopedia": "TXT_KEY_UNIT_YU_SPEARMAN_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -117,6 +115,8 @@
   "upkeep": 1
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_YU_SPEARMAN",
+  "civilopedia": "TXT_KEY_UNIT_YU_SPEARMAN_PEDIA",
   "worth": 2,
   "militaryWorth": 5,
   "xpValueAttack": 6,

@@ -1,6 +1,5 @@
 {
  "type": "PROMOTION_CHARGE",
- "description": "TXT_KEY_PROMOTION_CHARGE",
  "strength": {
   "unit": {
    "unitCombat": {
@@ -22,6 +21,7 @@
   "sound": "AS2D_IF_LEVELUP"
  },
  "identity": {
+  "description": "TXT_KEY_PROMOTION_CHARGE",
   "unitCombats": [
    "UNITCOMBAT_MELEE",
    "UNITCOMBAT_THROWING",

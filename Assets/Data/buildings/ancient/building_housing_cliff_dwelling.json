@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_HOUSING_CLIFF_DWELLING",
- "description": "TXT_KEY_BUILDING_HOUSING_CLIFF_DWELLING",
- "civilopedia": "TXT_KEY_BUILDING_HOUSING_CLIFF_DWELLING_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_KIVA",
@@ -69,6 +67,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_HOUSING_CLIFF_DWELLING",
+  "civilopedia": "TXT_KEY_BUILDING_HOUSING_CLIFF_DWELLING_PEDIA",
   "notConstructible": true,
   "nukeImmune": true,
   "neverCapture": true,

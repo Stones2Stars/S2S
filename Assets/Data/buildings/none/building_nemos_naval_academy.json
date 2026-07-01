@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_NEMOS_NAVAL_ACADEMY",
- "description": "TXT_KEY_BUILDING_NEMOS_NAVAL_ACADEMY",
- "civilopedia": "TXT_KEY_BUILDING_NEMOS_NAVAL_ACADEMY_PEDIA",
  "enables": {
   "units": [
    "UNIT_NAUTILUS"
@@ -92,6 +90,8 @@
   "construct": "AS2D_BUILD_NAVAL_ACADEMY"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_NEMOS_NAVAL_ACADEMY",
+  "civilopedia": "TXT_KEY_BUILDING_NEMOS_NAVAL_ACADEMY_PEDIA",
   "nukeImmune": true,
   "worth": 6,
   "militaryWorth": 6,

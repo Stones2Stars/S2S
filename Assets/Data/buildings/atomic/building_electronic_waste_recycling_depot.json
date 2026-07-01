@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_ELECTRONIC_WASTE_RECYCLING_DEPOT",
- "description": "TXT_KEY_BUILDING_ELECTRONIC_WASTE_RECYCLING_DEPOT",
- "civilopedia": "TXT_KEY_BUILDING_ELECTRONIC_WASTE_RECYCLING_DEPOT_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -115,6 +113,8 @@
   "construct": "AS2D_BUILD_FACTORY"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_ELECTRONIC_WASTE_RECYCLING_DEPOT",
+  "civilopedia": "TXT_KEY_BUILDING_ELECTRONIC_WASTE_RECYCLING_DEPOT_PEDIA",
   "worth": 6,
   "dcmAirbombMission": 3,
   "advisor": "ADVISOR_ECONOMY",

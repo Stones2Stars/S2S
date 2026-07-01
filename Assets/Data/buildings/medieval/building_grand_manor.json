@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_GRAND_MANOR",
- "description": "TXT_KEY_BUILDING_GRAND_MANOR",
- "civilopedia": "TXT_KEY_BUILDING_GRAND_MANOR_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_NONSUCH_PALACE",
@@ -87,6 +85,8 @@
   "construct": "AS2D_BUILD_MANOR"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_GRAND_MANOR",
+  "civilopedia": "TXT_KEY_BUILDING_GRAND_MANOR_PEDIA",
   "worth": 4,
   "militaryWorth": 5,
   "advisor": "ADVISOR_ECONOMY",

@@ -1,8 +1,5 @@
 {
  "type": "TECH_BOTANY",
- "description": "TXT_KEY_TECH_BOTANY",
- "civilopedia": "TXT_KEY_TECH_BOTANY_PEDIA",
- "quote": "TXT_KEY_TECH_BOTANY_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_ARBORETUM",
@@ -60,6 +57,9 @@
   "soundMP": "AS2D_TECH_BOTANY"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_BOTANY",
+  "civilopedia": "TXT_KEY_TECH_BOTANY_PEDIA",
+  "quote": "TXT_KEY_TECH_BOTANY_QUOTE",
   "era": "C2C_ERA_RENAISSANCE",
   "worth": 14,
   "tradeable": true,

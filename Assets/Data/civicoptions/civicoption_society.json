@@ -1,4 +1,6 @@
 {
  "type": "CIVICOPTION_SOCIETY",
- "description": "TXT_KEY_CIVICOPTION_SOCIETY"
+ "identity": {
+  "description": "TXT_KEY_CIVICOPTION_SOCIETY"
+ }
 }

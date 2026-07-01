@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_EPSILON_ASSEMBLER",
- "description": "TXT_KEY_BUILDING_EPSILON_ASSEMBLER",
- "civilopedia": "TXT_KEY_BUILDING_EPSILON_ASSEMBLER_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_BULK_DIAMOND_PLANT",
@@ -98,6 +96,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_EPSILON_ASSEMBLER",
+  "civilopedia": "TXT_KEY_BUILDING_EPSILON_ASSEMBLER_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

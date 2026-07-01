@@ -1,8 +1,5 @@
 {
  "type": "TECH_REFINING",
- "description": "TXT_KEY_TECH_REFINING",
- "civilopedia": "TXT_KEY_TECH_REFINING_PEDIA",
- "quote": "TXT_KEY_TECH_REFINING_QUOTE",
  "enables": {
   "bonuses": [
    "BONUS_NATURAL_GAS",
@@ -80,6 +77,9 @@
   "soundMP": "AS2D_TECH_REFINING"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_REFINING",
+  "civilopedia": "TXT_KEY_TECH_REFINING_PEDIA",
+  "quote": "TXT_KEY_TECH_REFINING_QUOTE",
   "era": "C2C_ERA_INDUSTRIAL",
   "worth": 32,
   "militaryWorth": 6,

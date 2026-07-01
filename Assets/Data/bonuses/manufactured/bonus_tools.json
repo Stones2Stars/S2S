@@ -1,7 +1,5 @@
 {
  "type": "BONUS_TOOLS",
- "description": "TXT_KEY_BONUS_TOOLS",
- "civilopedia": "TXT_KEY_BONUS_TOOLS_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_WANG_ZHENS_WORKSHOP"
@@ -17,6 +15,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_TOOLS",
+  "civilopedia": "TXT_KEY_BONUS_TOOLS_PEDIA",
   "bonusClassType": "BONUSCLASS_MANUFACTURED"
  }
 }

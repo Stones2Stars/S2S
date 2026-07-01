@@ -1,8 +1,5 @@
 {
  "type": "TECH_JOVIAN_EXPLORATION",
- "description": "TXT_KEY_TECH_JOVIAN_EXPLORATION",
- "civilopedia": "TXT_KEY_TECH_JOVIAN_EXPLORATION_PEDIA",
- "quote": "TXT_KEY_TECH_JOVIAN_EXPLORATION_QUOTE",
  "enables": {
   "bonuses": [
    "BONUS_EXTRATERRESTRIAL_MICROBES"
@@ -72,6 +69,9 @@
   "soundMP": "AS2D_TECH_JOVIAN_EXPLORATION"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_JOVIAN_EXPLORATION",
+  "civilopedia": "TXT_KEY_TECH_JOVIAN_EXPLORATION_PEDIA",
+  "quote": "TXT_KEY_TECH_JOVIAN_EXPLORATION_QUOTE",
   "era": "C2C_ERA_INFORMATION",
   "worth": 14,
   "tradeable": true,

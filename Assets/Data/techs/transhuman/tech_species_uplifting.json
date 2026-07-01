@@ -1,8 +1,5 @@
 {
  "type": "TECH_SPECIES_UPLIFTING",
- "description": "TXT_KEY_TECH_SPECIES_UPLIFTING",
- "civilopedia": "TXT_KEY_TECH_SPECIES_UPLIFTING_PEDIA",
- "quote": "TXT_KEY_TECH_SPECIES_UPLIFTING_QUOTE",
  "enables": {
   "bonuses": [
    "BONUS_CETACEA_SAPIENS"
@@ -67,6 +64,9 @@
   "soundMP": "AS2D_TECH_SPECIES_UPLIFTING"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_SPECIES_UPLIFTING",
+  "civilopedia": "TXT_KEY_TECH_SPECIES_UPLIFTING_PEDIA",
+  "quote": "TXT_KEY_TECH_SPECIES_UPLIFTING_QUOTE",
   "era": "C2C_ERA_TRANSHUMAN",
   "worth": 48,
   "militaryWorth": 4,

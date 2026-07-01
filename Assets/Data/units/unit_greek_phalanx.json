@@ -1,7 +1,5 @@
 {
  "type": "UNIT_GREEK_PHALANX",
- "description": "TXT_KEY_UNIT_GREEK_PHALANX",
- "civilopedia": "TXT_KEY_UNIT_GREEK_PHALANX_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -126,6 +124,8 @@
   "upkeep": 1
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_GREEK_PHALANX",
+  "civilopedia": "TXT_KEY_UNIT_GREEK_PHALANX_PEDIA",
   "worth": 2,
   "militaryWorth": 8,
   "xpValueAttack": 6,

@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_FACTORY_PHARMACEUTICALS",
- "description": "TXT_KEY_BUILDING_FACTORY_PHARMACEUTICALS",
- "civilopedia": "TXT_KEY_BUILDING_FACTORY_PHARMACEUTICALS_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_CHEMICALS_DISTRICT"
@@ -81,6 +79,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_FACTORY_PHARMACEUTICALS",
+  "civilopedia": "TXT_KEY_BUILDING_FACTORY_PHARMACEUTICALS_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

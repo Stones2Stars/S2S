@@ -1,7 +1,5 @@
 {
  "type": "TRAIT_AGGRESSIVE",
- "description": "TXT_KEY_TRAIT_AGGRESSIVE",
- "civilopedia": "TXT_KEY_TRAIT_AGGRESSIVE_PEDIA",
  "buildRate": {
   "empire": {
    "buildings": {
@@ -162,6 +160,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_TRAIT_AGGRESSIVE",
+  "civilopedia": "TXT_KEY_TRAIT_AGGRESSIVE_PEDIA",
   "shortDescription": "TXT_KEY_TRAIT_AGGRESSIVE_SHORT",
   "impurePropertyManipulators": true
  }

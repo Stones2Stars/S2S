@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_CRIME_PUBLIC_INTOXICATION",
- "description": "TXT_KEY_BUILDING_CRIME_PUBLIC_INTOXICATION",
- "civilopedia": "TXT_KEY_BUILDING_CRIME_PUBLIC_INTOXICATION_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -61,6 +59,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_CRIME_PUBLIC_INTOXICATION",
+  "civilopedia": "TXT_KEY_BUILDING_CRIME_PUBLIC_INTOXICATION_PEDIA",
   "notConstructible": true,
   "nukeImmune": true,
   "conquestProbability": 100,

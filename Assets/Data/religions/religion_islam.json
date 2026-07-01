@@ -1,8 +1,5 @@
 {
  "type": "RELIGION_ISLAM",
- "description": "TXT_KEY_TECH_ISLAM",
- "civilopedia": "TXT_KEY_TECH_ISLAM_PEDIA",
- "adjective": "TXT_KEY_TECH_ISLAM_ADJECTIVE",
  "enables": {
   "buildings": [
    "BUILDING_ALHAMBRA",
@@ -117,6 +114,9 @@
   "sound": "AS2D_BUILD_ISLAMIC"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_ISLAM",
+  "adjective": "TXT_KEY_TECH_ISLAM_ADJECTIVE",
+  "civilopedia": "TXT_KEY_TECH_ISLAM_PEDIA",
   "spreadFactor": 60
  }
 }

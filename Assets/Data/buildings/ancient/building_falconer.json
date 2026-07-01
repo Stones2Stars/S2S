@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_FALCONER",
- "description": "TXT_KEY_BUILDING_FALCONER",
- "civilopedia": "TXT_KEY_BUILDING_FALCONER_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_RESOURCES_FEATHERS"
@@ -92,6 +90,8 @@
   "construct": "AS2D_BUILD_GRANARY"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_FALCONER",
+  "civilopedia": "TXT_KEY_BUILDING_FALCONER_PEDIA",
   "worth": 4,
   "militaryWorth": 2,
   "advisor": "ADVISOR_GROWTH",

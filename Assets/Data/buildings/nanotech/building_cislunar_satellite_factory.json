@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_CISLUNAR_SATELLITE_FACTORY",
- "description": "TXT_KEY_BUILDING_CISLUNAR_SATELLITE_FACTORY",
- "civilopedia": "TXT_KEY_BUILDING_CISLUNAR_SATELLITE_FACTORY_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_CISLUNAR_BIG_BANG_OBSERVATORY"
@@ -42,6 +40,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_CISLUNAR_SATELLITE_FACTORY",
+  "civilopedia": "TXT_KEY_BUILDING_CISLUNAR_SATELLITE_FACTORY_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

@@ -1,7 +1,5 @@
 {
  "type": "FEATURE_PLATY_GREAT_BARRIER",
- "description": "TXT_KEY_FEATURE_GREAT_BARRIER",
- "civilopedia": "TXT_KEY_FEATURE_GREAT_BARRIER_PEDIA",
  "food": {
   "plot": {
    "flat": 1
@@ -43,6 +41,8 @@
   "soundscape": "ASSS_OASIS_SELECT_AMB"
  },
  "identity": {
+  "description": "TXT_KEY_FEATURE_GREAT_BARRIER",
+  "civilopedia": "TXT_KEY_FEATURE_GREAT_BARRIER_PEDIA",
   "movementCost": 5,
   "noCity": true,
   "nukeImmune": true,

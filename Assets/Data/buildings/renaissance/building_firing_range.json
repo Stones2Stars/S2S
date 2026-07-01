@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_FIRING_RANGE",
- "description": "TXT_KEY_BUILDING_FIRING_RANGE",
- "civilopedia": "TXT_KEY_BUILDING_FIRING_RANGE_PEDIA",
  "enables": {
   "units": [
    "UNIT_MOCOVI_TRACKER",
@@ -97,6 +95,8 @@
   "construct": "AS2D_BUILD_BARRACKS"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_FIRING_RANGE",
+  "civilopedia": "TXT_KEY_BUILDING_FIRING_RANGE_PEDIA",
   "worth": 3,
   "militaryWorth": 5,
   "dcmAirbombMission": 2,

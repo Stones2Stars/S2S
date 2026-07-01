@@ -1,7 +1,5 @@
 {
  "type": "BONUS_HENNA",
- "description": "TXT_KEY_BONUS_HENNA",
- "civilopedia": "TXT_KEY_BONUS_HENNA_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_CULTURE_BASHKIR",
@@ -64,6 +62,8 @@
   ]
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_HENNA",
+  "civilopedia": "TXT_KEY_BONUS_HENNA_PEDIA",
   "bonusClassType": "BONUSCLASS_LUXURY"
  }
 }

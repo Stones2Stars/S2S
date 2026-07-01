@@ -1,7 +1,5 @@
 {
  "type": "HERITAGE_TAXON_SERPENTES",
- "description": "TXT_KEY_HERITAGE_TAXON_SERPENTES",
- "civilopedia": "TXT_KEY_HERITAGE_TAXON_SERPENTES_PEDIA",
  "enables": {
   "heritages": [
    "HERITAGE_TAXON_REPTILIA",
@@ -108,5 +106,9 @@
   "art": {
    "icon": "Art/Interface/Buttons/Buildings/totem_snake.dds"
   }
+ },
+ "identity": {
+  "description": "TXT_KEY_HERITAGE_TAXON_SERPENTES",
+  "civilopedia": "TXT_KEY_HERITAGE_TAXON_SERPENTES_PEDIA"
  }
 }

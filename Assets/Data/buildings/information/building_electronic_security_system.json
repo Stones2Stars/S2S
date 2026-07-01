@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_ELECTRONIC_SECURITY_SYSTEM",
- "description": "TXT_KEY_BUILDING_ELECTRONIC_SECURITY_SYSTEM",
- "civilopedia": "TXT_KEY_BUILDING_ELECTRONIC_SECURITY_SYSTEM_PEDIA",
  "enables": {
   "units": [
    "UNIT_BEGGAR",
@@ -94,6 +92,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_ELECTRONIC_SECURITY_SYSTEM",
+  "civilopedia": "TXT_KEY_BUILDING_ELECTRONIC_SECURITY_SYSTEM_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

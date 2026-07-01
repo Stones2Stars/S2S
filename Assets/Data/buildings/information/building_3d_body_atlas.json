@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_3D_BODY_ATLAS",
- "description": "TXT_KEY_BUILDING_3D_BODY_ATLAS",
- "civilopedia": "TXT_KEY_BUILDING_3D_BODY_ATLAS_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_FACTORY_HYPOSPRAYS",
@@ -77,6 +75,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_3D_BODY_ATLAS",
+  "civilopedia": "TXT_KEY_BUILDING_3D_BODY_ATLAS_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

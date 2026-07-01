@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_APPLIED_SOCIOLOGY_LAB",
- "description": "TXT_KEY_BUILDING_APPLIED_SOCIOLOGY_LAB",
- "civilopedia": "TXT_KEY_BUILDING_APPLIED_SOCIOLOGY_LAB_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_CENTER_FOR_AI_SAFETY",
@@ -88,6 +86,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_APPLIED_SOCIOLOGY_LAB",
+  "civilopedia": "TXT_KEY_BUILDING_APPLIED_SOCIOLOGY_LAB_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

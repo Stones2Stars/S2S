@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_FACTORY_TRANSISTORS",
- "description": "TXT_KEY_BUILDING_FACTORY_TRANSISTORS",
- "civilopedia": "TXT_KEY_BUILDING_FACTORY_TRANSISTORS_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_ELECTRONICS_MANUFACTURING_DISTRICT"
@@ -77,6 +75,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_FACTORY_TRANSISTORS",
+  "civilopedia": "TXT_KEY_BUILDING_FACTORY_TRANSISTORS_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_SUNDIAL",
- "description": "TXT_KEY_BUILDING_SUNDIAL",
- "civilopedia": "TXT_KEY_BUILDING_SUNDIAL_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_GATE_OF_THE_SUN"
@@ -92,6 +90,8 @@
   "construct": "AS2D_BUILD_STONEHENGE"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_SUNDIAL",
+  "civilopedia": "TXT_KEY_BUILDING_SUNDIAL_PEDIA",
   "nukeImmune": true,
   "conquestProbability": 80,
   "advisor": "ADVISOR_ECONOMY",

@@ -16,8 +16,10 @@ pre-base ArtDefineTag merge) → a bespoke curator. Verdicts (light-four-classif
   TECH_GAME_START rides ON TOP for all civs, prepended in curate() below.
 - `spawnRate.empire.{general,npcPeace}.percent` ← iSpawnRateModifier / iSpawnRateNPCPeaceModifier — the ONE
   cascade modifier (PERCENT, (100+mod)/100; CvGame:6359/6363). Barb/NPC civs only.
-- `policies` (booleans): `playable` / `aiPlayable` (can a human/AI pick this civ) + `stronglyRestricted` (NPC
-  build-lockdown, CvCity:2205/2547).
+- `identity` (civ meta, owner 2026-07-01 -- NOT `policies`; a policy is a pure empire STATE, json.md §9): `isNpc`
+  (derived from the CIVILIZATION_NPC_* type convention -- no engine flag for the full NPC set), `playable` / `aiPlayable`
+  (selectability, load-only), `stronglyRestricted` (the NPC build-lockdown, CvCity:2205/2547 -- a DEFERRED enabler input
+  parked here so no context is lost). These describe WHAT/WHO the civ is, so they live in identity, not a policy block.
 - `disables.techs` — per-civ research ban (canEverResearch=false while active, CvPlayer:8266). Modeled as a v0.3
   `disables` (a reversible ban), NOT a permanent removal to re-home (owner 2026-06-15: there is no CURRENT in-game
   logic to reverse a tech disable — so today it is effectively permanent — BUT nothing stops us adding reversal
@@ -66,7 +68,12 @@ GRANTS = OrderedDict([      # container tag -> (child tag, grant key)
     ("InitialCivics", ("CivicType", "civics")),
 ])
 SPAWN = OrderedDict([("iSpawnRateModifier", "general"), ("iSpawnRateNPCPeaceModifier", "npcPeace")])
-POLICIES = OrderedDict([("bPlayable", "playable"), ("bAIPlayable", "aiPlayable"),
+# Civ META booleans -> the `identity` block (owner 2026-07-01), NOT a `policies` block. These describe WHAT/WHO the civ
+# IS (selectability + an NPC build-lockdown), not a pure empire STATE a civic/trait enacts (a `policy`, json.md §9), so
+# they leave the ambiguous `policies` word entirely -- keeping `policies` = one meaning. `playable`/`aiPlayable` are
+# load-only meta; `stronglyRestricted` is a DEFERRED enabler input (the NPC build-lockdown pairs with EnabledCivilization
+# -> a `requires` gate when NPC civs are wired, out of scope now) -- parked in identity so no context is lost.
+CIV_META = OrderedDict([("bPlayable", "playable"), ("bAIPlayable", "aiPlayable"),
                         ("bStronglyRestricted", "stronglyRestricted")])
 # art/audio tags -> ui/world/sound via the canonical curate_common.ART_BLOCK:
 #   DefaultPlayerColor->world.art.playerColor, ArtDefineTag->world.art.icon, ArtStyleType->world.art.style,
@@ -75,7 +82,7 @@ ART = ("DefaultPlayerColor", "ArtDefineTag", "ArtStyleType", "UnitArtStyleType",
        "CivilizationSelectionSound", "CivilizationActionSound")
 # every tag we knowingly handle — anything else gets flagged (leftover check)
 KNOWN = ({"Type", "Cities", "Leaders", "DisableTechs", "DerivativeCiv"} | set(TEXT) | set(GRANTS)
-         | set(SPAWN) | set(POLICIES) | set(ART))
+         | set(SPAWN) | set(CIV_META) | set(ART))
 
 
 def _list(rec, container, child):
@@ -113,12 +120,6 @@ def curate(typ, rec):
             spawn[member] = {"percent": int(v)}
     if spawn:
         out["spawnRate"] = {"empire": spawn}
-    policies = OrderedDict()
-    for tag, key in POLICIES.items():
-        if engine.text(rec.find(tag)) in ("1", "true", "True"):
-            policies[key] = True
-    if policies:
-        out["policies"] = policies
     dt = _list(rec, "DisableTechs", "DisableTech")
     if dt:
         out["disables"] = {"techs": dt}   # `disables` OBJECT, symmetric with `grants` — extensible to other kinds later
@@ -127,6 +128,16 @@ def curate(typ, rec):
         cc.put_art(art_blocks, tag, engine.text(rec.find(tag)))   # -> ui/world/sound via ART_BLOCK (+ drop empty/NONE)
     cc.emit_art(out, art_blocks)
     identity = OrderedDict()
+    # isNpc: WHAT this civ IS -- an NPC civ (barbarian/animal/neanderthal). No CvCivilizationInfo flag exists for the
+    # full NPC set (only the BARBARIAN_CIVILIZATION define names one), so it derives from the CIVILIZATION_NPC_* type
+    # convention the mod uses (npc_barbarian/beast/insectoid/neanderthal/predator/prey; the playable neanderthal has no
+    # NPC_ prefix). Descriptive identity (owner 2026-07-01). ⏳ NPC-civ handling proper is a deferred, out-of-scope pass.
+    if typ.startswith("CIVILIZATION_NPC_"):
+        identity["isNpc"] = True
+    # civ meta booleans (selectability + the deferred NPC build-lockdown) -- moved off the retired civ `policies` block.
+    for tag, key in CIV_META.items():
+        if engine.text(rec.find(tag)) in ("1", "true", "True"):
+            identity[key] = True
     leaders = _list(rec, "Leaders", "Leader")
     if leaders:
         identity["leaders"] = leaders
@@ -142,6 +153,7 @@ def curate(typ, rec):
         identity["derivativeCiv"] = dc
     if identity:
         out["identity"] = identity
+    cc.fold_text_to_identity(out)   # TEXT -> identity (json.md §7)
     return out
 
 
@@ -159,8 +171,9 @@ def main():
                 leftovers.setdefault(c.tag, 0)
                 leftovers[c.tag] += 1
     has = lambda k: sum(1 for o in results.values() if k in o)
-    print("CivilizationInfo curated: %d  | grants: %d  spawnRate: %d  policies: %d  disables: %d"
-          % (len(results), has("grants"), has("spawnRate"), has("policies"), has("disables")))
+    npc = sum(1 for o in results.values() if o.get("identity", {}).get("isNpc"))
+    print("CivilizationInfo curated: %d  | grants: %d  spawnRate: %d  identity: %d  isNpc: %d  disables: %d"
+          % (len(results), has("grants"), has("spawnRate"), has("identity"), npc, has("disables")))
     if leftovers:
         print("  !! UNHANDLED tags (review): %s" % ", ".join("%s×%d" % (t, n) for t, n in sorted(leftovers.items())))
     else:

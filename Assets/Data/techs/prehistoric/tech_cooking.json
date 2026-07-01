@@ -1,8 +1,5 @@
 {
  "type": "TECH_COOKING",
- "description": "TXT_KEY_TECH_COOKING",
- "civilopedia": "TXT_KEY_TECH_COOKING_PEDIA",
- "quote": "TXT_KEY_TECH_COOKING_QUOTE",
  "enables": {
   "bonuses": [
    "BONUS_LARD",
@@ -58,6 +55,9 @@
   "soundMP": "AS2D_TECH_COOKING"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_COOKING",
+  "civilopedia": "TXT_KEY_TECH_COOKING_PEDIA",
+  "quote": "TXT_KEY_TECH_COOKING_QUOTE",
   "era": "C2C_ERA_PREHISTORIC",
   "worth": 2,
   "tradeable": true,

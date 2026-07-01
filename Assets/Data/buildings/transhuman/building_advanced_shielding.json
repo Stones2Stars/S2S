@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_ADVANCED_SHIELDING",
- "description": "TXT_KEY_BUILDING_ADVANCED_SHIELDING",
- "civilopedia": "TXT_KEY_BUILDING_ADVANCED_SHIELDING_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_FRIEDLANDER_SKYSHADE",
@@ -84,6 +82,8 @@
   "construct": "AS2D_BUILD_ADVANCED_SHIELDING"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_ADVANCED_SHIELDING",
+  "civilopedia": "TXT_KEY_BUILDING_ADVANCED_SHIELDING_PEDIA",
   "nukeImmune": true,
   "worth": 2,
   "militaryWorth": 5,

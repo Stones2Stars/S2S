@@ -1,7 +1,5 @@
 {
  "type": "HERITAGE_FOLKLORE_TAPIR_BAIRDS",
- "description": "TXT_KEY_HERITAGE_FOLKLORE_TAPIR_BAIRDS",
- "civilopedia": "TXT_KEY_BUILDING_FOLKLORE_ANIMAL_PEDIA",
  "enables": {
   "heritages": [
    "HERITAGE_TAXON_SUIDAE",
@@ -96,6 +94,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_HERITAGE_FOLKLORE_TAPIR_BAIRDS",
+  "civilopedia": "TXT_KEY_BUILDING_FOLKLORE_ANIMAL_PEDIA",
   "needsLanguage": true
  }
 }

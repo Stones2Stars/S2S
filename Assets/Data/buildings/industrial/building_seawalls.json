@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_SEAWALLS",
- "description": "TXT_KEY_BUILDING_SEAWALLS",
- "civilopedia": "TXT_KEY_BUILDING_SEAWALLS_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_ADVANCED_FLOODWALL"
@@ -68,6 +66,8 @@
   "construct": "AS2D_BUILD_HARBOR"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_SEAWALLS",
+  "civilopedia": "TXT_KEY_BUILDING_SEAWALLS_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

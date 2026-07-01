@@ -1,7 +1,5 @@
 {
  "type": "UNIT_STREET_GANG",
- "description": "TXT_KEY_UNIT_STREET_GANG",
- "civilopedia": "TXT_KEY_UNIT_STREET_GANG_PEDIA",
  "obsoletedBy": {
   "techs": [
    "TECH_COMPREHENSIVE_CYBERNETICS"
@@ -178,6 +176,8 @@
   "upkeep": 13
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_STREET_GANG",
+  "civilopedia": "TXT_KEY_UNIT_STREET_GANG_PEDIA",
   "worth": 13,
   "militaryWorth": 52,
   "xpValueAttack": 8,

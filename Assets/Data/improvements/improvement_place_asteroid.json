@@ -1,7 +1,5 @@
 {
  "type": "IMPROVEMENT_PLACE_ASTEROID",
- "description": "TXT_KEY_BUILD_PLACE_ASTEROID",
- "civilopedia": "TXT_KEY_IMPROVEMENT_LAND_WORKED_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -26,6 +24,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILD_PLACE_ASTEROID",
+  "civilopedia": "TXT_KEY_IMPROVEMENT_LAND_WORKED_PEDIA",
   "extraterrestrial": true,
   "featureChanges": [
    "FEATURE_ASTEROIDS"

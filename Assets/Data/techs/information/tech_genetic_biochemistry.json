@@ -1,8 +1,5 @@
 {
  "type": "TECH_GENETIC_BIOCHEMISTRY",
- "description": "TXT_KEY_TECH_GENETIC_BIOCHEMISTRY",
- "civilopedia": "TXT_KEY_TECH_GENETIC_BIOCHEMISTRY_PEDIA",
- "quote": "TXT_KEY_TECH_GENETIC_BIOCHEMISTRY_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_FERTILITY_CLINIC",
@@ -61,6 +58,9 @@
   "soundMP": "AS2D_TECH_GENETIC_BIOCHEMISTRY"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_GENETIC_BIOCHEMISTRY",
+  "civilopedia": "TXT_KEY_TECH_GENETIC_BIOCHEMISTRY_PEDIA",
+  "quote": "TXT_KEY_TECH_GENETIC_BIOCHEMISTRY_QUOTE",
   "era": "C2C_ERA_INFORMATION",
   "worth": 14,
   "tradeable": true,

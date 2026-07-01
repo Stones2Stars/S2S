@@ -1,9 +1,11 @@
 {
  "type": "SPECIALBUILDING_MONASTERY",
- "description": "TXT_KEY_SPECIALBUILDING_MONASTERY",
  "ui": {
   "art": {
    "icon": "Art/Interface/Buttons/Buildings/Monastery_Hindu.dds"
   }
+ },
+ "identity": {
+  "description": "TXT_KEY_SPECIALBUILDING_MONASTERY"
  }
 }

@@ -1,7 +1,5 @@
 {
  "type": "UNIT_MASTER_SAILOR_FUSION_CARRIER",
- "description": "TXT_KEY_UNIT_MASTER_SAILOR_FUSION_CARRIER",
- "civilopedia": "TXT_KEY_UNIT_FUSION_CARRIER_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -100,6 +98,8 @@
   "upkeep": 3
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_MASTER_SAILOR_FUSION_CARRIER",
+  "civilopedia": "TXT_KEY_UNIT_FUSION_CARRIER_PEDIA",
   "spawnOnly": true,
   "worth": 4,
   "militaryWorth": 274,

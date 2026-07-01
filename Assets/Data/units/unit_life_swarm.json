@@ -1,7 +1,5 @@
 {
  "type": "UNIT_LIFE_SWARM",
- "description": "TXT_KEY_UNIT_LIFE_SWARM",
- "civilopedia": "TXT_KEY_UNIT_LIFE_SWARM_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -32,6 +30,8 @@
   "hurryCostModifier": 10000
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_LIFE_SWARM",
+  "civilopedia": "TXT_KEY_UNIT_LIFE_SWARM_PEDIA",
   "worth": 1,
   "domain": "DOMAIN_LAND",
   "defaultUnitAI": "UNITAI_WORKER",

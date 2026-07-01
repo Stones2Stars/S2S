@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_SMELTER_GOLD",
- "description": "TXT_KEY_BUILDING_SMELTER_GOLD",
- "civilopedia": "TXT_KEY_BUILDING_SMELTER_GOLD_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_RESOURCES_GOLD_INGOTS"
@@ -87,6 +85,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_SMELTER_GOLD",
+  "civilopedia": "TXT_KEY_BUILDING_SMELTER_GOLD_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

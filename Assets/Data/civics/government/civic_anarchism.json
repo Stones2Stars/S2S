@@ -1,8 +1,5 @@
 {
  "type": "CIVIC_ANARCHISM",
- "description": "TXT_KEY_CIVIC_ANARCHISM",
- "civilopedia": "TXT_KEY_CIVIC_ANARCHISM_PEDIA",
- "strategy": "TXT_KEY_CIVIC_ANARCHISM_STRATEGY",
  "enables": {
   "buildings": [
    "BUILDING_BLOODHUNTRESSS_HUT",
@@ -107,6 +104,9 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_CIVIC_ANARCHISM",
+  "civilopedia": "TXT_KEY_CIVIC_ANARCHISM_PEDIA",
+  "strategy": "TXT_KEY_CIVIC_ANARCHISM_STRATEGY",
   "civicOption": "CIVICOPTION_GOVERNMENT",
   "weLoveTheKing": "TXT_KEY_CIVIC_WE_LOVE_ANARCHY"
  }

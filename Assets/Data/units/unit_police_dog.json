@@ -1,7 +1,5 @@
 {
  "type": "UNIT_POLICE_DOG",
- "description": "TXT_KEY_UNIT_POLICE_DOG",
- "civilopedia": "TXT_KEY_UNIT_POLICE_DOG_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -90,6 +88,8 @@
   "upkeep": 3
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_POLICE_DOG",
+  "civilopedia": "TXT_KEY_UNIT_POLICE_DOG_PEDIA",
   "worth": 8,
   "militaryWorth": 20,
   "xpValueAttack": 3,

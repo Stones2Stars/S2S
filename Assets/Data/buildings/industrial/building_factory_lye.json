@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_FACTORY_LYE",
- "description": "TXT_KEY_BUILDING_FACTORY_LYE",
- "civilopedia": "TXT_KEY_BUILDING_FACTORY_LYE_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_CHEMICALS_DISTRICT"
@@ -101,6 +99,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_FACTORY_LYE",
+  "civilopedia": "TXT_KEY_BUILDING_FACTORY_LYE_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_INTERSTELLAR_SHKADOV_THRUSTER",
- "description": "TXT_KEY_BUILDING_INTERSTELLAR_SHKADOV_THRUSTER",
- "civilopedia": "TXT_KEY_BUILDING_INTERSTELLAR_SHKADOV_THRUSTER_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_ARTIFICIAL_CONSTELLATION",
@@ -50,6 +48,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_INTERSTELLAR_SHKADOV_THRUSTER",
+  "civilopedia": "TXT_KEY_BUILDING_INTERSTELLAR_SHKADOV_THRUSTER_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

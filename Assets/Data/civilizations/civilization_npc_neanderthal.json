@@ -1,9 +1,5 @@
 {
  "type": "CIVILIZATION_NPC_NEANDERTHAL",
- "description": "TXT_KEY_CIVILIZATION_NPC_NEANDERTHAL",
- "shortDescription": "TXT_KEY_CIVILIZATION_NPC_NEANDERTHAL_SHORT",
- "adjective": "TXT_KEY_CIVILIZATION_NPC_NEANDERTHAL_ADJECTIVE",
- "civilopedia": "TXT_KEY_CIVILIZATION_NPC_NEANDERTHAL_PEDIA",
  "grants": {
   "techs": [
    "TECH_GAME_START",
@@ -43,9 +39,6 @@
    }
   }
  },
- "policies": {
-  "stronglyRestricted": true
- },
  "disables": {
   "techs": [
    "TECH_SEDENTARY_LIFESTYLE"
@@ -60,6 +53,12 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_CIVILIZATION_NPC_NEANDERTHAL",
+  "shortDescription": "TXT_KEY_CIVILIZATION_NPC_NEANDERTHAL_SHORT",
+  "adjective": "TXT_KEY_CIVILIZATION_NPC_NEANDERTHAL_ADJECTIVE",
+  "civilopedia": "TXT_KEY_CIVILIZATION_NPC_NEANDERTHAL_PEDIA",
+  "isNpc": true,
+  "stronglyRestricted": true,
   "leaders": [
    "LEADER_NEANDERTHAL"
   ],

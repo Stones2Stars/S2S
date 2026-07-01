@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_THEREMIN_FACTORY",
- "description": "TXT_KEY_BUILDING_THEREMIN_FACTORY",
- "civilopedia": "TXT_KEY_BUILDING_THEREMIN_FACTORY_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_ELECTRONICS_MANUFACTURING_DISTRICT"
@@ -85,6 +83,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_THEREMIN_FACTORY",
+  "civilopedia": "TXT_KEY_BUILDING_THEREMIN_FACTORY_PEDIA",
   "specialBuildingType": "SPECIALBUILDING_PUNK_DIESEL",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [

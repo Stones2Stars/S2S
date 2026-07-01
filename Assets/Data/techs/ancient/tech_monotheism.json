@@ -1,8 +1,5 @@
 {
  "type": "TECH_MONOTHEISM",
- "description": "TXT_KEY_TECH_MONOTHEISM",
- "civilopedia": "TXT_KEY_TECH_MONOTHEISM_PEDIA",
- "quote": "TXT_KEY_TECH_MONOTHEISM_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_CULTURE_ISRAELI",
@@ -63,6 +60,9 @@
   "soundMP": "AS2D_TECH_MP_MONOTHEISM"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_MONOTHEISM",
+  "civilopedia": "TXT_KEY_TECH_MONOTHEISM_PEDIA",
+  "quote": "TXT_KEY_TECH_MONOTHEISM_QUOTE",
   "era": "C2C_ERA_ANCIENT",
   "worth": 8,
   "tradeable": true,

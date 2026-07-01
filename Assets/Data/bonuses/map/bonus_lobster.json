@@ -1,7 +1,5 @@
 {
  "type": "BONUS_LOBSTER",
- "description": "TXT_KEY_BONUS_LOBSTER",
- "civilopedia": "TXT_KEY_BONUS_LOBSTER_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_CENTIPEDE_GATHERER",
@@ -63,6 +61,8 @@
   ]
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_LOBSTER",
+  "civilopedia": "TXT_KEY_BONUS_LOBSTER_PEDIA",
   "bonusClassType": "BONUSCLASS_SEAFOOD"
  }
 }

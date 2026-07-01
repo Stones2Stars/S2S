@@ -1,7 +1,5 @@
 {
  "type": "BONUS_RAW_MEAT",
- "description": "TXT_KEY_BONUS_RAW_MEAT",
- "civilopedia": "TXT_KEY_BONUS_RAW_MEAT_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_BURGER_JOINT",
@@ -23,6 +21,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_RAW_MEAT",
+  "civilopedia": "TXT_KEY_BONUS_RAW_MEAT_PEDIA",
   "bonusClassType": "BONUSCLASS_MANUFACTURED"
  }
 }

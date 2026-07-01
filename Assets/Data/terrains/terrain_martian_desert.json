@@ -1,7 +1,5 @@
 {
  "type": "TERRAIN_MARTIAN_DESERT",
- "description": "TXT_KEY_TERRAIN_MARTIAN_DESERT",
- "civilopedia": "TXT_KEY_TERRAIN_MARTIAN_DESERT_PEDIA",
  "commerce": {
   "plot": {
    "flat": 2
@@ -38,6 +36,8 @@
   "soundscape": "ASSS_DESERT_SELECT_AMB"
  },
  "identity": {
+  "description": "TXT_KEY_TERRAIN_MARTIAN_DESERT",
+  "civilopedia": "TXT_KEY_TERRAIN_MARTIAN_DESERT_PEDIA",
   "foundCoast": true,
   "foundFreshWater": true,
   "movementCost": 3,

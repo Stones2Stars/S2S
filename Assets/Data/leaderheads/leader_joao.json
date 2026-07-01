@@ -1,7 +1,5 @@
 {
  "type": "LEADER_JOAO",
- "description": "TXT_KEY_LEADER_JOAO",
- "civilopedia": "TXT_KEY_LEADER_JOAO_PEDIA",
  "grants": {
   "traits": [
    "TRAIT_IMPERIALIST",
@@ -311,5 +309,9 @@
    "C2C_ERA_TRANSCENDENT": "AS2D_DIPLO_WARDRUMS_LATE",
    "C2C_ERA_FUTURE": "AS2D_DIPLO_WARDRUMS_LATE"
   }
+ },
+ "identity": {
+  "description": "TXT_KEY_LEADER_JOAO",
+  "civilopedia": "TXT_KEY_LEADER_JOAO_PEDIA"
  }
 }

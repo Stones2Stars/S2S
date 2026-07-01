@@ -1,7 +1,5 @@
 {
  "type": "BONUS_QUANTUM_DOTS",
- "description": "TXT_KEY_BONUS_QUANTUM_DOTS",
- "civilopedia": "TXT_KEY_BONUS_QUANTUM_DOTS_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_LUMINESCENT_SOLAR_CONCENTRATORS",
@@ -16,6 +14,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_QUANTUM_DOTS",
+  "civilopedia": "TXT_KEY_BONUS_QUANTUM_DOTS_PEDIA",
   "bonusClassType": "BONUSCLASS_MANUFACTURED"
  }
 }

@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_POLICE_ACADEMY",
- "description": "TXT_KEY_BUILDING_POLICE_ACADEMY",
- "civilopedia": "TXT_KEY_BUILDING_POLICE_ACADEMY_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_ORDINANCE_NEIGHBORHOOD_WATCH",
@@ -114,6 +112,8 @@
   "construct": "AS2D_BUILD_POLICE_STATION"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_POLICE_ACADEMY",
+  "civilopedia": "TXT_KEY_BUILDING_POLICE_ACADEMY_PEDIA",
   "neverCapture": true,
   "worth": 1,
   "dcmAirbombMission": 2,

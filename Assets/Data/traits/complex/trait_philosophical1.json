@@ -1,8 +1,5 @@
 {
  "type": "TRAIT_PHILOSOPHICAL1",
- "description": "TXT_KEY_TRAIT_COMPLEX_PHILOSOPHICAL1",
- "civilopedia": "TXT_KEY_TRAIT_COMPLEX_PHILOSOPHICAL1_PEDIA",
- "strategy": "TXT_KEY_TRAIT_COMPLEX_PHILOSOPHICAL_STRATEGY",
  "excludes": [
   "TRAIT_POPULIST1"
  ],
@@ -64,6 +61,19 @@
    "percent": 50
   }
  },
+ "freeSpecialists": {
+  "empire": {
+   "any": [
+    {
+     "value": 1,
+     "per": {
+      "type": "NATIONAL_WONDER",
+      "scope": "city"
+     }
+    }
+   ]
+  }
+ },
  "upkeep": {
   "empire": {
    "civic": {
@@ -96,9 +106,6 @@
     }
    }
   }
- },
- "policies": {
-  "freeSpecialistPerNationalWonder": true
  },
  "succession": {
   "promotionLine": "PROMOTIONLINE_PHILOSOPHICAL",
@@ -138,6 +145,9 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_TRAIT_COMPLEX_PHILOSOPHICAL1",
+  "civilopedia": "TXT_KEY_TRAIT_COMPLEX_PHILOSOPHICAL1_PEDIA",
+  "strategy": "TXT_KEY_TRAIT_COMPLEX_PHILOSOPHICAL_STRATEGY",
   "impurePropertyManipulators": true
  }
 }

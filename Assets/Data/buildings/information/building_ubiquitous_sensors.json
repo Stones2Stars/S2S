@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_UBIQUITOUS_SENSORS",
- "description": "TXT_KEY_BUILDING_UBIQUITOUS_SENSORS",
- "civilopedia": "TXT_KEY_BUILDING_UBIQUITOUS_SENSORS_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_MAGLEV_ELEVATORS"
@@ -60,6 +58,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_UBIQUITOUS_SENSORS",
+  "civilopedia": "TXT_KEY_BUILDING_UBIQUITOUS_SENSORS_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

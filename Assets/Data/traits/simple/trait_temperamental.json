@@ -1,7 +1,5 @@
 {
  "type": "TRAIT_TEMPERAMENTAL",
- "description": "TXT_KEY_TRAIT_TEMPERAMENTAL",
- "civilopedia": "TXT_KEY_TRAIT_TEMPERAMENTAL_PEDIA",
  "buildRate": {
   "empire": {
    "military": {
@@ -67,6 +65,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_TRAIT_TEMPERAMENTAL",
+  "civilopedia": "TXT_KEY_TRAIT_TEMPERAMENTAL_PEDIA",
   "shortDescription": "TXT_KEY_TRAIT_TEMPERAMENTAL_SHORT",
   "negativeTrait": true
  }

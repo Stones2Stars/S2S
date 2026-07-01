@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_ANIMAL_TRAINER_GIRAFFE",
- "description": "TXT_KEY_BUILDING_ANIMAL_TRAINER_GIRAFFE",
- "civilopedia": "TXT_KEY_BUILDING_ANIMAL_TRAINER_GIRAFFE_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_HERITAGE_GIRAFFE",
@@ -81,6 +79,8 @@
   "construct": "AS2D_BUILD_GRANARY"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_ANIMAL_TRAINER_GIRAFFE",
+  "civilopedia": "TXT_KEY_BUILDING_ANIMAL_TRAINER_GIRAFFE_PEDIA",
   "worth": 4,
   "militaryWorth": 2,
   "conquestProbability": 100,

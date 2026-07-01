@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_CENTERS_FOR_DISEASE_CONTROL",
- "description": "TXT_KEY_BUILDING_CENTERS_FOR_DISEASE_CONTROL",
- "civilopedia": "TXT_KEY_BUILDING_CENTERS_FOR_DISEASE_CONTROL_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -90,6 +88,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_CENTERS_FOR_DISEASE_CONTROL",
+  "civilopedia": "TXT_KEY_BUILDING_CENTERS_FOR_DISEASE_CONTROL_PEDIA",
   "neverCapture": true,
   "worth": 8,
   "greatPeopleUnitType": "UNIT_SCIENTIST",

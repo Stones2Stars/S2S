@@ -1,7 +1,5 @@
 {
  "type": "UNIT_TUCANO_MERCHANT",
- "description": "TXT_KEY_UNIT_TUCANO_MERCHANT",
- "civilopedia": "TXT_KEY_UNIT_TUCANO_MERCHANT_PEDIA",
  "obsoletedBy": {
   "techs": [
    "TECH_ENGINEERING"
@@ -247,6 +245,8 @@
   ]
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_TUCANO_MERCHANT",
+  "civilopedia": "TXT_KEY_UNIT_TUCANO_MERCHANT_PEDIA",
   "worth": 1,
   "domain": "DOMAIN_LAND",
   "defaultUnitAI": "UNITAI_MERCHANT",

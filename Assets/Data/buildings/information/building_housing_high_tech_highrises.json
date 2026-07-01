@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_HOUSING_HIGH_TECH_HIGHRISES",
- "description": "TXT_KEY_BUILDING_HOUSING_HIGH_TECH_HIGHRISES",
- "civilopedia": "TXT_KEY_BUILDING_HOUSING_HIGH_TECH_HIGHRISES_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_KIVA",
@@ -71,6 +69,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_HOUSING_HIGH_TECH_HIGHRISES",
+  "civilopedia": "TXT_KEY_BUILDING_HOUSING_HIGH_TECH_HIGHRISES_PEDIA",
   "notConstructible": true,
   "nukeImmune": true,
   "neverCapture": true,

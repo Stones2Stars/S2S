@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_EFFECT_EMANCIPATION_PROCLAMATION",
- "description": "TXT_KEY_BUILDING_EFFECT_EMANCIPATION_PROCLAMATION",
- "civilopedia": "TXT_KEY_BUILDING_EFFECT_EMANCIPATION_PROCLAMATION_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -73,6 +71,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_EFFECT_EMANCIPATION_PROCLAMATION",
+  "civilopedia": "TXT_KEY_BUILDING_EFFECT_EMANCIPATION_PROCLAMATION_PEDIA",
   "notConstructible": true,
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,

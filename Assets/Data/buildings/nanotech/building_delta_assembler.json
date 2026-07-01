@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_DELTA_ASSEMBLER",
- "description": "TXT_KEY_BUILDING_DELTA_ASSEMBLER",
- "civilopedia": "TXT_KEY_BUILDING_DELTA_ASSEMBLER_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_CARBYNE_FOUNDRY",
@@ -107,6 +105,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_DELTA_ASSEMBLER",
+  "civilopedia": "TXT_KEY_BUILDING_DELTA_ASSEMBLER_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

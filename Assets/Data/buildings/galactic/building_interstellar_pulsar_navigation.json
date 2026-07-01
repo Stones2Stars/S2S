@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_INTERSTELLAR_PULSAR_NAVIGATION",
- "description": "TXT_KEY_BUILDING_INTERSTELLAR_PULSAR_NAVIGATION",
- "civilopedia": "TXT_KEY_BUILDING_INTERSTELLAR_PULSAR_NAVIGATION_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_TRANSTELLAR_LASER_HIGHWAY_RELAY"
@@ -50,6 +48,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_INTERSTELLAR_PULSAR_NAVIGATION",
+  "civilopedia": "TXT_KEY_BUILDING_INTERSTELLAR_PULSAR_NAVIGATION_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

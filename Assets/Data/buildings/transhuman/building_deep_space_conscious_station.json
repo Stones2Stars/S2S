@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_DEEP_SPACE_CONSCIOUS_STATION",
- "description": "TXT_KEY_BUILDING_DEEP_SPACE_CONSCIOUS_STATION",
- "civilopedia": "TXT_KEY_BUILDING_DEEP_SPACE_CONSCIOUS_STATION_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_EDEN"
@@ -53,6 +51,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_DEEP_SPACE_CONSCIOUS_STATION",
+  "civilopedia": "TXT_KEY_BUILDING_DEEP_SPACE_CONSCIOUS_STATION_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

@@ -1,6 +1,5 @@
 {
  "type": "VOTE_ENVIRONMENTALISM",
- "description": "TXT_KEY_VOTE_GREEN",
  "voteSource": [
   "DIPLOVOTE_UN"
  ],
@@ -12,5 +11,8 @@
   "forceCivics": [
    "CIVIC_GREEN"
   ]
+ },
+ "identity": {
+  "description": "TXT_KEY_VOTE_GREEN"
  }
 }

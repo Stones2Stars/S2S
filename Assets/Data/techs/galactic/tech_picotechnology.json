@@ -1,8 +1,5 @@
 {
  "type": "TECH_PICOTECHNOLOGY",
- "description": "TXT_KEY_TECH_PICOTECHNOLOGY",
- "civilopedia": "TXT_KEY_TECH_PICOTECHNOLOGY_PEDIA",
- "quote": "TXT_KEY_TECH_PICOTECHNOLOGY_QUOTE",
  "enables": {
   "bonuses": [
    "BONUS_COMPUTRONIUM"
@@ -57,6 +54,9 @@
   "soundMP": "AS2D_TECH_GENERIC"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_PICOTECHNOLOGY",
+  "civilopedia": "TXT_KEY_TECH_PICOTECHNOLOGY_PEDIA",
+  "quote": "TXT_KEY_TECH_PICOTECHNOLOGY_QUOTE",
   "era": "C2C_ERA_GALACTIC",
   "worth": 48,
   "tradeable": true,

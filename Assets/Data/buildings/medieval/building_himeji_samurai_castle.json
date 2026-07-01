@@ -1,8 +1,5 @@
 {
  "type": "BUILDING_HIMEJI_SAMURAI_CASTLE",
- "description": "TXT_KEY_BUILDING_HIMEJI_SAMURAI_CASTLE",
- "civilopedia": "TXT_KEY_BUILDING_HIMEJI_SAMURAI_CASTLE_PEDIA",
- "help": "TXT_KEY_BUILDING_HIMEJI_SAMURAI_CASTLE_HELP",
  "obsoletedBy": {
   "techs": [
    "TECH_MANUFACTURING"
@@ -84,6 +81,9 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_HIMEJI_SAMURAI_CASTLE",
+  "civilopedia": "TXT_KEY_BUILDING_HIMEJI_SAMURAI_CASTLE_PEDIA",
+  "help": "TXT_KEY_BUILDING_HIMEJI_SAMURAI_CASTLE_HELP",
   "commerceDoubleTime": {
    "culture": 1000
   },

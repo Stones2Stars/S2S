@@ -1,6 +1,5 @@
 {
  "type": "PROMOTION_SONAR",
- "description": "TXT_KEY_PROMOTION_SONAR",
  "strength": {
   "unit": {
    "unitCombat": {
@@ -19,6 +18,7 @@
   "sound": "AS2D_IF_LEVELUP"
  },
  "identity": {
+  "description": "TXT_KEY_PROMOTION_SONAR",
   "unitCombats": [
    "UNITCOMBAT_STEAM_SHIPS",
    "UNITCOMBAT_DIESEL_SHIPS",

@@ -1,8 +1,5 @@
 {
  "type": "TECH_ACOUSTOPHORESIS",
- "description": "TXT_KEY_TECH_ACOUSTOPHORESIS",
- "civilopedia": "TXT_KEY_TECH_ACOUSTOPHORESIS_PEDIA",
- "quote": "TXT_KEY_TECH_ACOUSTOPHORESIS_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_ACOUSTIC_CONSTRUCTION_FIRM",
@@ -63,6 +60,9 @@
   "soundMP": "AS2D_TECH_ACOUSTOPHORESIS"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_ACOUSTOPHORESIS",
+  "civilopedia": "TXT_KEY_TECH_ACOUSTOPHORESIS_PEDIA",
+  "quote": "TXT_KEY_TECH_ACOUSTOPHORESIS_QUOTE",
   "era": "C2C_ERA_NANOTECH",
   "worth": 43,
   "militaryWorth": 5,

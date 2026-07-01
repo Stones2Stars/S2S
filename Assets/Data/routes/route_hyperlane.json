@@ -1,6 +1,5 @@
 {
  "type": "ROUTE_HYPERLANE",
- "description": "TXT_KEY_ROUTE_HYPERLANE",
  "food": {
   "plot": {
    "flat": 1
@@ -22,6 +21,7 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_ROUTE_HYPERLANE",
   "value": 5,
   "advancedStart": {
    "cost": 30

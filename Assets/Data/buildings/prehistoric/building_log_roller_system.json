@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_LOG_ROLLER_SYSTEM",
- "description": "TXT_KEY_BUILDING_LOG_ROLLER_SYSTEM",
- "civilopedia": "TXT_KEY_BUILDING_LOG_ROLLER_SYSTEM_PEDIA",
  "obsoletedBy": {
   "techs": [
    "TECH_ENGINEERING"
@@ -123,6 +121,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_LOG_ROLLER_SYSTEM",
+  "civilopedia": "TXT_KEY_BUILDING_LOG_ROLLER_SYSTEM_PEDIA",
   "neverCapture": true,
   "worth": 2,
   "advisor": "ADVISOR_ECONOMY",

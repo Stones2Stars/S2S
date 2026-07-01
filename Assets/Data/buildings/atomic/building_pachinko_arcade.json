@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_PACHINKO_ARCADE",
- "description": "TXT_KEY_BUILDING_PACHINKO_ARCADE",
- "civilopedia": "TXT_KEY_BUILDING_PACHINKO_ARCADE_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_HIGH_TECH_CULTURAL_ENRICHMENT"
@@ -71,6 +69,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_PACHINKO_ARCADE",
+  "civilopedia": "TXT_KEY_BUILDING_PACHINKO_ARCADE_PEDIA",
   "advisor": "ADVISOR_CULTURE",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

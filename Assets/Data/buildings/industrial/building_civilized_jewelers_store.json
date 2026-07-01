@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_CIVILIZED_JEWELERS_STORE",
- "description": "TXT_KEY_BUILDING_CIVILIZED_JEWELERS_STORE",
- "civilopedia": "TXT_KEY_BUILDING_CORPORATION_7_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -113,6 +111,8 @@
   "construct": "AS2D_BUILD_JEWELLERS_STORE"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_CIVILIZED_JEWELERS_STORE",
+  "civilopedia": "TXT_KEY_BUILDING_CORPORATION_7_PEDIA",
   "worth": 6,
   "militaryWorth": 2,
   "conquestProbability": 75,

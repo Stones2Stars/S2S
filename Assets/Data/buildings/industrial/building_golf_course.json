@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_GOLF_COURSE",
- "description": "TXT_KEY_BUILDING_GOLF_COURSE",
- "civilopedia": "TXT_KEY_BUILDING_GOLF_COURSE_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_COUNTRY_CLUB"
@@ -70,6 +68,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_GOLF_COURSE",
+  "civilopedia": "TXT_KEY_BUILDING_GOLF_COURSE_PEDIA",
   "worth": 2,
   "advisor": "ADVISOR_CULTURE",
   "mapCategories": [

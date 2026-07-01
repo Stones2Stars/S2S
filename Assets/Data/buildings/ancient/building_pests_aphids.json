@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_PESTS_APHIDS",
- "description": "TXT_KEY_BUILDING_PESTS_APHIDS",
- "civilopedia": "TXT_KEY_BUILDING_PESTS_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_LADYBUG_SANCTUARY"
@@ -78,6 +76,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_PESTS_APHIDS",
+  "civilopedia": "TXT_KEY_BUILDING_PESTS_PEDIA",
   "notConstructible": true,
   "nukeImmune": true,
   "autoBuild": true,

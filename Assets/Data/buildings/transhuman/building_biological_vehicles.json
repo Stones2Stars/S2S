@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_BIOLOGICAL_VEHICLES",
- "description": "TXT_KEY_BUILDING_BIOLOGICAL_VEHICLES",
- "civilopedia": "TXT_KEY_BUILDING_BIOLOGICAL_VEHICLES_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_TELEPORT_BOOTH"
@@ -63,6 +61,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_BIOLOGICAL_VEHICLES",
+  "civilopedia": "TXT_KEY_BUILDING_BIOLOGICAL_VEHICLES_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

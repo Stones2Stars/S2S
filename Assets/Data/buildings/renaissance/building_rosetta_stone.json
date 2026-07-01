@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_ROSETTA_STONE",
- "description": "TXT_KEY_BUILDING_ROSETTA_STONE",
- "civilopedia": "TXT_KEY_BUILDING_ROSETTA_STONE_PEDIA",
  "obsoletedBy": {
   "techs": [
    "TECH_UNIVERSAL_TRANSLATOR"
@@ -90,6 +88,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_ROSETTA_STONE",
+  "civilopedia": "TXT_KEY_BUILDING_ROSETTA_STONE_PEDIA",
   "commerceDoubleTime": {
    "culture": 1000
   },

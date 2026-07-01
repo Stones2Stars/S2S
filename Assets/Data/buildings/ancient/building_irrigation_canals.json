@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_IRRIGATION_CANALS",
- "description": "TXT_KEY_BUILDING_IRRIGATION_CANALS",
- "civilopedia": "TXT_KEY_BUILDING_IRRIGATION_CANALS_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_NORIA"
@@ -82,6 +80,8 @@
   "construct": "AS2D_BUILD_AQUEDUCT"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_IRRIGATION_CANALS",
+  "civilopedia": "TXT_KEY_BUILDING_IRRIGATION_CANALS_PEDIA",
   "worth": 3,
   "conquestProbability": 90,
   "dcmAirbombMission": 2,

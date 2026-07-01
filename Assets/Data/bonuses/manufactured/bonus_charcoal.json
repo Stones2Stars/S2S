@@ -1,7 +1,5 @@
 {
  "type": "BONUS_CHARCOAL",
- "description": "TXT_KEY_BONUS_CHARCOAL",
- "civilopedia": "TXT_KEY_BONUS_CHARCOAL_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_ARMOURER",
@@ -17,6 +15,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_CHARCOAL",
+  "civilopedia": "TXT_KEY_BONUS_CHARCOAL_PEDIA",
   "bonusClassType": "BONUSCLASS_MANUFACTURED"
  }
 }

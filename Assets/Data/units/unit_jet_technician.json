@@ -1,7 +1,5 @@
 {
  "type": "UNIT_JET_TECHNICIAN",
- "description": "TXT_KEY_UNIT_JET_TECHNICIAN",
- "civilopedia": "TXT_KEY_UNIT_JET_TECHNICIAN_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -75,6 +73,8 @@
   "hurryCostModifier": 25
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_JET_TECHNICIAN",
+  "civilopedia": "TXT_KEY_UNIT_JET_TECHNICIAN_PEDIA",
   "worth": 10,
   "militaryWorth": 20,
   "xpValueDefense": 2,

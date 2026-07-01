@@ -1,6 +1,5 @@
 {
  "type": "PROMOTION_IMPROVISE1",
- "description": "TXT_KEY_PROMOTION_IMPROVISE1",
  "upkeep": {
   "unit": {
    "upgradeDiscount": {
@@ -18,5 +17,8 @@
  },
  "sound": {
   "sound": "AS2D_PING"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_IMPROVISE1"
  }
 }

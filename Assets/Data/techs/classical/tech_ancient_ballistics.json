@@ -1,8 +1,5 @@
 {
  "type": "TECH_ANCIENT_BALLISTICS",
- "description": "TXT_KEY_TECH_ANCIENT_BALLISTICS",
- "civilopedia": "TXT_KEY_TECH_ANCIENT_BALLISTICS_PEDIA",
- "quote": "TXT_KEY_TECH_ANCIENT_BALLISTICS_QUOTE",
  "enables": {
   "bonuses": [
    "BONUS_SULPHUR"
@@ -75,6 +72,9 @@
   "soundMP": "AS2D_TECH_ANCIENT_BALLISTICS"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_ANCIENT_BALLISTICS",
+  "civilopedia": "TXT_KEY_TECH_ANCIENT_BALLISTICS_PEDIA",
+  "quote": "TXT_KEY_TECH_ANCIENT_BALLISTICS_QUOTE",
   "era": "C2C_ERA_CLASSICAL",
   "worth": 16,
   "militaryWorth": 10,

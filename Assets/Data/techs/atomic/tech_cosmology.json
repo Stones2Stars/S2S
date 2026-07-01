@@ -1,8 +1,5 @@
 {
  "type": "TECH_COSMOLOGY",
- "description": "TXT_KEY_TECH_COSMOLOGY",
- "civilopedia": "TXT_KEY_TECH_COSMOLOGY_PEDIA",
- "quote": "TXT_KEY_TECH_COSMOLOGY_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_PLANETARIUM"
@@ -48,6 +45,9 @@
   "soundMP": "AS2D_TECH_COSMOLOGY"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_COSMOLOGY",
+  "civilopedia": "TXT_KEY_TECH_COSMOLOGY_PEDIA",
+  "quote": "TXT_KEY_TECH_COSMOLOGY_QUOTE",
   "era": "C2C_ERA_ATOMIC",
   "worth": 30,
   "tradeable": true,

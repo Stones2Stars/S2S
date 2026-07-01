@@ -1,7 +1,5 @@
 {
  "type": "UNIT_DARTFROG",
- "description": "TXT_KEY_UNIT_DARTFROG",
- "civilopedia": "TXT_KEY_UNIT_DARTFROG_PEDIA",
  "skills": {
   "blendIntoCity": true,
   "onlyDefensive": true,
@@ -31,6 +29,8 @@
   ]
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_DARTFROG",
+  "civilopedia": "TXT_KEY_UNIT_DARTFROG_PEDIA",
   "spawnOnly": true,
   "xpValueAttack": 1,
   "xpValueDefense": 1,

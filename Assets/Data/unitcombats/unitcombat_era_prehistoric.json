@@ -1,12 +1,12 @@
 {
  "type": "UNITCOMBAT_ERA_PREHISTORIC",
- "description": "TXT_KEY_UNITCOMBAT_ERA_PREHISTORIC",
  "ui": {
   "art": {
    "icon": "Art/Interface/Buttons/units/sparth/categories/era_prehistoric.dds"
   }
  },
  "identity": {
+  "description": "TXT_KEY_UNITCOMBAT_ERA_PREHISTORIC",
   "era": "C2C_ERA_PREHISTORIC"
  }
 }

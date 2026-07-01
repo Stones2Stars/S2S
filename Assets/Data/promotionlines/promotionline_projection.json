@@ -1,12 +1,12 @@
 {
  "type": "PROMOTIONLINE_PROJECTION",
- "description": "TXT_KEY_PROMOTIONLINE_PROJECTION",
  "ui": {
   "art": {
    "icon": "Art/Interface/Buttons/Promotions/Projection1.dds"
   }
  },
  "identity": {
+  "description": "TXT_KEY_PROMOTIONLINE_PROJECTION",
   "unitCombats": [
    "UNITCOMBAT_NUCLEAR_SHIPS"
   ]

@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_SALT_QUARRY",
- "description": "TXT_KEY_BUILDING_SALT_QUARRY",
- "civilopedia": "TXT_KEY_BUILDING_SALT_QUARRY_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_MATERIALS_CONGLOMERATE"
@@ -68,6 +66,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_SALT_QUARRY",
+  "civilopedia": "TXT_KEY_BUILDING_SALT_QUARRY_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

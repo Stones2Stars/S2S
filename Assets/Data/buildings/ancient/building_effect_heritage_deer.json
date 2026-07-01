@@ -1,8 +1,5 @@
 {
  "type": "BUILDING_EFFECT_HERITAGE_DEER",
- "description": "TXT_KEY_BUILDING_EFFECT_HERITAGE_DEER",
- "civilopedia": "TXT_KEY_BUILDING_ANIMAL_TRAINER_DEER_PEDIA",
- "help": "TXT_KEY_BUILDING_EFFECT_HERITAGE_DEER_HELP",
  "enables": {
   "buildings": [
    "BUILDING_MILITARY_STANDARD_DEER"
@@ -34,6 +31,9 @@
   "construct": "AS2D_BUILD_BARRACKS"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_EFFECT_HERITAGE_DEER",
+  "civilopedia": "TXT_KEY_BUILDING_ANIMAL_TRAINER_DEER_PEDIA",
+  "help": "TXT_KEY_BUILDING_EFFECT_HERITAGE_DEER_HELP",
   "notConstructible": true,
   "neverCapture": true,
   "worth": 2,

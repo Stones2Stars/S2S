@@ -1,7 +1,5 @@
 {
  "type": "TERRAIN_LUNAR_MARE",
- "description": "TXT_KEY_TERRAIN_LUNAR_MARE",
- "civilopedia": "TXT_KEY_TERRAIN_LUNAR_MARE_PEDIA",
  "commerce": {
   "plot": {
    "flat": 2
@@ -33,6 +31,8 @@
   "soundscape": "ASSS_PLAINS_SELECT_AMB"
  },
  "identity": {
+  "description": "TXT_KEY_TERRAIN_LUNAR_MARE",
+  "civilopedia": "TXT_KEY_TERRAIN_LUNAR_MARE_PEDIA",
   "found": true,
   "movementCost": 1,
   "mapCategories": [

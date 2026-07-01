@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_NET_CRAB",
- "description": "TXT_KEY_BUILDING_NET_CRAB",
- "civilopedia": "TXT_KEY_BUILDING_NET_CRAB_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_RESOURCES_SHELLFISH"
@@ -71,6 +69,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_NET_CRAB",
+  "civilopedia": "TXT_KEY_BUILDING_NET_CRAB_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

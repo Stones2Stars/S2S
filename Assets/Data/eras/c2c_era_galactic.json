@@ -1,7 +1,5 @@
 {
  "type": "C2C_ERA_GALACTIC",
- "description": "TXT_KEY_ERA_GALACTIC",
- "strategy": "TXT_KEY_ERA_GALACTIC_STRATEGY",
  "costs": {
   "world": {
    "train": {
@@ -85,6 +83,8 @@
   "unitDefeat": "AS2D_LOSS_LATE"
  },
  "identity": {
+  "description": "TXT_KEY_ERA_GALACTIC",
+  "strategy": "TXT_KEY_ERA_GALACTIC_STRATEGY",
   "order": 11,
   "advancedStart": 512000,
   "historicalStartYear": 2300,

@@ -1,8 +1,5 @@
 {
  "type": "CIVIC_NATIVE_LANGUAGE",
- "description": "TXT_KEY_CIVIC_NATIVE_LANGUAGE",
- "civilopedia": "TXT_KEY_CIVIC_NATIVE_LANGUAGE_PEDIA",
- "strategy": "TXT_KEY_CIVIC_NATIVE_LANGUAGE_STRATEGY",
  "enables": {
   "buildings": [
    "BUILDING_COMMUNITY_DISCUSSIONS"
@@ -77,6 +74,9 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_CIVIC_NATIVE_LANGUAGE",
+  "civilopedia": "TXT_KEY_CIVIC_NATIVE_LANGUAGE_PEDIA",
+  "strategy": "TXT_KEY_CIVIC_NATIVE_LANGUAGE_STRATEGY",
   "civicOption": "CIVICOPTION_LANGUAGE"
  }
 }

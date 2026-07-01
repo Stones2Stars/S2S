@@ -1,9 +1,5 @@
 {
  "type": "CIVILIZATION_ETHIOPIA",
- "description": "TXT_KEY_CIVILIZATION_ETHIOPIA",
- "shortDescription": "TXT_KEY_CIVILIZATION_ETHIOPIA_SHORT",
- "adjective": "TXT_KEY_CIVILIZATION_ETHIOPIA_ADJECTIVE",
- "civilopedia": "TXT_KEY_CIVILIZATION_ETHIOPIA_PEDIA",
  "grants": {
   "buildings": [
    "BUILDING_PALACE",
@@ -32,10 +28,6 @@
    "TECH_GAME_START"
   ]
  },
- "policies": {
-  "playable": true,
-  "aiPlayable": true
- },
  "world": {
   "art": {
    "playerColor": "PLAYERCOLOR_MIDDLE_GREEN",
@@ -49,6 +41,12 @@
   "action": "AS3D_ETHIOPIA_ORDER"
  },
  "identity": {
+  "description": "TXT_KEY_CIVILIZATION_ETHIOPIA",
+  "shortDescription": "TXT_KEY_CIVILIZATION_ETHIOPIA_SHORT",
+  "adjective": "TXT_KEY_CIVILIZATION_ETHIOPIA_ADJECTIVE",
+  "civilopedia": "TXT_KEY_CIVILIZATION_ETHIOPIA_PEDIA",
+  "playable": true,
+  "aiPlayable": true,
   "leaders": [
    "LEADER_ZARA_YAQOB",
    "LEADER_MENELIK",

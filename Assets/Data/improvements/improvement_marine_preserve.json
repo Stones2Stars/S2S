@@ -1,7 +1,5 @@
 {
  "type": "IMPROVEMENT_MARINE_PRESERVE",
- "description": "TXT_KEY_IMPROVEMENT_MARINE_PRESERVE",
- "civilopedia": "TXT_KEY_IMPROVEMENT_MARINE_PRESERVE_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -35,6 +33,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_IMPROVEMENT_MARINE_PRESERVE",
+  "civilopedia": "TXT_KEY_IMPROVEMENT_MARINE_PRESERVE_PEDIA",
   "advancedStart": {
    "cost": 48
   }

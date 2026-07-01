@@ -1,7 +1,5 @@
 {
  "type": "BONUS_PHARMACEUTICALS",
- "description": "TXT_KEY_BONUS_PHARMACEUTICALS",
- "civilopedia": "TXT_KEY_BONUS_PHARMACEUTICALS_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_PHARMACY",
@@ -24,6 +22,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_PHARMACEUTICALS",
+  "civilopedia": "TXT_KEY_BONUS_PHARMACEUTICALS_PEDIA",
   "bonusClassType": "BONUSCLASS_MANUFACTURED"
  }
 }

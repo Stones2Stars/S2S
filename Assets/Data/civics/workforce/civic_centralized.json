@@ -1,8 +1,5 @@
 {
  "type": "CIVIC_CENTRALIZED",
- "description": "TXT_KEY_CIVIC_CENTRALIZED",
- "civilopedia": "TXT_KEY_CIVIC_CENTRALIZED_PEDIA",
- "strategy": "TXT_KEY_CIVIC_CENTRALIZED_STRATEGY",
  "food": {
   "empire": {
    "percent": 1,
@@ -73,6 +70,9 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_CIVIC_CENTRALIZED",
+  "civilopedia": "TXT_KEY_CIVIC_CENTRALIZED_PEDIA",
+  "strategy": "TXT_KEY_CIVIC_CENTRALIZED_STRATEGY",
   "civicOption": "CIVICOPTION_WORKFORCE",
   "anarchyLength": 1,
   "upkeepLevel": "UPKEEP_HIGH"

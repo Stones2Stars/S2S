@@ -1,6 +1,5 @@
 {
  "type": "PROMOTION_WOODSMAN1",
- "description": "TXT_KEY_PROMOTION_WOODSMAN1",
  "strength": {
   "unit": {
    "feature": {
@@ -72,6 +71,7 @@
   "sound": "AS2D_IF_LEVELUP"
  },
  "identity": {
+  "description": "TXT_KEY_PROMOTION_WOODSMAN1",
   "unitCombats": [
    "UNITCOMBAT_ARCHER"
   ]

@@ -1,8 +1,5 @@
 {
  "type": "TECH_SPACE_STATIONS",
- "description": "TXT_KEY_TECH_SPACE_STATIONS",
- "civilopedia": "TXT_KEY_TECH_SPACE_STATIONS_PEDIA",
- "quote": "TXT_KEY_TECH_SPACE_STATIONS_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_MIR",
@@ -74,6 +71,9 @@
   "soundMP": "AS2D_TECH_SPACE_STATIONS"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_SPACE_STATIONS",
+  "civilopedia": "TXT_KEY_TECH_SPACE_STATIONS_PEDIA",
+  "quote": "TXT_KEY_TECH_SPACE_STATIONS_QUOTE",
   "era": "C2C_ERA_ATOMIC",
   "worth": 48,
   "militaryWorth": 4,

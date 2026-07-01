@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_TRITON_HEAT_RING",
- "description": "TXT_KEY_BUILDING_TRITON_HEAT_RING",
- "civilopedia": "TXT_KEY_BUILDING_TRITON_HEAT_RING_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_TERRAFORMED_TRITON",
@@ -43,6 +41,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_TRITON_HEAT_RING",
+  "civilopedia": "TXT_KEY_BUILDING_TRITON_HEAT_RING_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

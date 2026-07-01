@@ -1,8 +1,5 @@
 {
  "type": "TECH_BIOLOGICAL_WARFARE",
- "description": "TXT_KEY_TECH_BIOLOGICAL_WARFARE",
- "civilopedia": "TXT_KEY_TECH_BIOLOGICAL_WARFARE_PEDIA",
- "quote": "TXT_KEY_TECH_BIOLOGICAL_WARFARE_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_BIOLOGICAL_WARFARE_LAB",
@@ -65,6 +62,9 @@
   "soundMP": "AS2D_TECH_BIOLOGICAL_WARFARE"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_BIOLOGICAL_WARFARE",
+  "civilopedia": "TXT_KEY_TECH_BIOLOGICAL_WARFARE_PEDIA",
+  "quote": "TXT_KEY_TECH_BIOLOGICAL_WARFARE_QUOTE",
   "era": "C2C_ERA_ATOMIC",
   "worth": 40,
   "tradeable": true,

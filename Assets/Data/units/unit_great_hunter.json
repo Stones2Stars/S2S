@@ -1,7 +1,5 @@
 {
  "type": "UNIT_GREAT_HUNTER",
- "description": "TXT_KEY_UNIT_GREAT_HUNTER",
- "civilopedia": "TXT_KEY_UNIT_GREAT_HUNTER_PEDIA",
  "requires": {
   "build": {
    "dormant": {
@@ -86,6 +84,8 @@
   ]
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_GREAT_HUNTER",
+  "civilopedia": "TXT_KEY_UNIT_GREAT_HUNTER_PEDIA",
   "spawnOnly": true,
   "worth": 1,
   "domain": "DOMAIN_LAND",

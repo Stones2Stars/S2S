@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_PIRATES_COVE",
- "description": "TXT_KEY_BUILDING_PIRATES_COVE",
- "civilopedia": "TXT_KEY_BUILDING_PIRATES_COVE_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -140,6 +138,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_PIRATES_COVE",
+  "civilopedia": "TXT_KEY_BUILDING_PIRATES_COVE_PEDIA",
   "nukeImmune": true,
   "militaryWorth": 1,
   "advisor": "ADVISOR_ECONOMY",

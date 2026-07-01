@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_MICROBIOLOGY_LAB",
- "description": "TXT_KEY_BUILDING_MICROBIOLOGY_LAB",
- "civilopedia": "TXT_KEY_BUILDING_MICROBIOLOGY_LAB_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_MICROBIOLOGY_ARTIST",
@@ -111,6 +109,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_MICROBIOLOGY_LAB",
+  "civilopedia": "TXT_KEY_BUILDING_MICROBIOLOGY_LAB_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

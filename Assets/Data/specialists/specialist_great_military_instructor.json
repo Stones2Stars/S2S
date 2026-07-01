@@ -1,7 +1,5 @@
 {
  "type": "SPECIALIST_GREAT_MILITARY_INSTRUCTOR",
- "description": "TXT_KEY_SPECIALIST_GREAT_MILITARY_INSTRUCTOR",
- "civilopedia": "TXT_KEY_CONCEPT_GREAT_GENERALS_PEDIA",
  "gold": {
   "city": {
    "flat": -1
@@ -36,6 +34,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_SPECIALIST_GREAT_MILITARY_INSTRUCTOR",
+  "civilopedia": "TXT_KEY_CONCEPT_GREAT_GENERALS_PEDIA",
   "categories": [
    "CATEGORY_SPECIALIST_GROUP_MILITARY"
   ]

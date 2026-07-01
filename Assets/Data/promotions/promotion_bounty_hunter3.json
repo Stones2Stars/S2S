@@ -1,6 +1,5 @@
 {
  "type": "PROMOTION_BOUNTY_HUNTER3",
- "description": "TXT_KEY_PROMOTION_BOUNTY_HUNTER3",
  "cargo": {
   "unit": {
    "space": {
@@ -21,5 +20,8 @@
  },
  "sound": {
   "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_BOUNTY_HUNTER3"
  }
 }

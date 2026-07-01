@@ -1,6 +1,5 @@
 {
  "type": "SPECIALBUILDING_GROUP_ASTROLOGICAL_INFLUENCES",
- "description": "TXT_KEY_SPECIALBUILDING_GROUP_ASTROLOGICAL_INFLUENCES",
  "allowed": {
   "empire": 1
  },
@@ -8,5 +7,8 @@
   "art": {
    "icon": "Art/Interface/Buttons/Buildings/BeachResort.dds"
   }
+ },
+ "identity": {
+  "description": "TXT_KEY_SPECIALBUILDING_GROUP_ASTROLOGICAL_INFLUENCES"
  }
 }

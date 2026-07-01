@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_GREAT_MOSQUE_OF_DJENNE",
- "description": "TXT_KEY_BUILDING_GREAT_MOSQUE_OF_DJENNE",
- "civilopedia": "TXT_KEY_BUILDING_GREAT_MOSQUE_OF_DJENNE_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -221,6 +219,8 @@
   "construct": "AS2D_BUILD_ISLAMIC"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_GREAT_MOSQUE_OF_DJENNE",
+  "civilopedia": "TXT_KEY_BUILDING_GREAT_MOSQUE_OF_DJENNE_PEDIA",
   "commerceDoubleTime": {
    "culture": 1000
   },

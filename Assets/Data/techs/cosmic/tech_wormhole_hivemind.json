@@ -1,8 +1,5 @@
 {
  "type": "TECH_WORMHOLE_HIVEMIND",
- "description": "TXT_KEY_TECH_WORMHOLE_HIVEMIND",
- "civilopedia": "TXT_KEY_TECH_WORMHOLE_HIVEMIND_PEDIA",
- "quote": "TXT_KEY_TECH_WORMHOLE_HIVEMIND_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_INTERGALACTIC_CLUSTER_BRAIN",
@@ -57,6 +54,9 @@
   "soundMP": "AS2D_TECH_GENERIC"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_WORMHOLE_HIVEMIND",
+  "civilopedia": "TXT_KEY_TECH_WORMHOLE_HIVEMIND_PEDIA",
+  "quote": "TXT_KEY_TECH_WORMHOLE_HIVEMIND_QUOTE",
   "era": "C2C_ERA_COSMIC",
   "worth": 48,
   "tradeable": true,

@@ -1,7 +1,5 @@
 {
  "type": "BONUS_DIGITIZED_MEMBRANES",
- "description": "TXT_KEY_BONUS_DIGITIZED_MEMBRANES",
- "civilopedia": "TXT_KEY_BONUS_DIGITIZED_MEMBRANES_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_MEDICAL_DIAGNOSTAT"
@@ -13,6 +11,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_DIGITIZED_MEMBRANES",
+  "civilopedia": "TXT_KEY_BONUS_DIGITIZED_MEMBRANES_PEDIA",
   "bonusClassType": "BONUSCLASS_MANUFACTURED"
  }
 }

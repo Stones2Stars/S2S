@@ -1,6 +1,5 @@
 {
  "type": "PROMOTION_MERGED_INTO_FORCES",
- "description": "TXT_KEY_PROMOTION_MERGED_INTO_FORCES",
  "strength": {
   "unit": {
    "group": {
@@ -30,6 +29,7 @@
   "sound": "AS2D_IF_LEVELUP"
  },
  "identity": {
+  "description": "TXT_KEY_PROMOTION_MERGED_INTO_FORCES",
   "replacesUnitCombat": "UNITCOMBAT_GROUP_BATTALION",
   "forOffset": true
  }

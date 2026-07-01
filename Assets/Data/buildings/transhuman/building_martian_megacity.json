@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_MARTIAN_MEGACITY",
- "description": "TXT_KEY_BUILDING_MARTIAN_MEGACITY",
- "civilopedia": "TXT_KEY_BUILDING_MARTIAN_MEGACITY_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_MARTIAN_ALBEDO_REDUCTION",
@@ -93,6 +91,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_MARTIAN_MEGACITY",
+  "civilopedia": "TXT_KEY_BUILDING_MARTIAN_MEGACITY_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

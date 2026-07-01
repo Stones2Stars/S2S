@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_HOUSING_HOLO_SUITES",
- "description": "TXT_KEY_BUILDING_HOUSING_HOLO_SUITES",
- "civilopedia": "TXT_KEY_BUILDING_HOUSING_HOLO_SUITES_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_HOUSING_COLONY_ARCOLOGY"
@@ -72,6 +70,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_HOUSING_HOLO_SUITES",
+  "civilopedia": "TXT_KEY_BUILDING_HOUSING_HOLO_SUITES_PEDIA",
   "notConstructible": true,
   "nukeImmune": true,
   "neverCapture": true,

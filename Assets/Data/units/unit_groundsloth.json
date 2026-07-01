@@ -1,7 +1,5 @@
 {
  "type": "UNIT_GROUNDSLOTH",
- "description": "TXT_KEY_UNIT_GROUNDSLOTH",
- "civilopedia": "TXT_KEY_UNIT_GROUNDSLOTH_PEDIA",
  "skills": {
   "blendIntoCity": true,
   "onlyDefensive": true,
@@ -46,6 +44,8 @@
   ]
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_GROUNDSLOTH",
+  "civilopedia": "TXT_KEY_UNIT_GROUNDSLOTH_PEDIA",
   "spawnOnly": true,
   "xpValueAttack": 11,
   "xpValueDefense": 9,

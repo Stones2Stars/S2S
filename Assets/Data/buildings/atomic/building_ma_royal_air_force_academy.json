@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_MA_ROYAL_AIR_FORCE_ACADEMY",
- "description": "TXT_KEY_BUILDING_MA_ROYAL_AIR_FORCE_ACADEMY",
- "civilopedia": "TXT_KEY_BUILDING_MA_ROYAL_AIR_FORCE_ACADEMY_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -86,6 +84,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_MA_ROYAL_AIR_FORCE_ACADEMY",
+  "civilopedia": "TXT_KEY_BUILDING_MA_ROYAL_AIR_FORCE_ACADEMY_PEDIA",
   "worth": 8,
   "militaryWorth": 8,
   "conquestProbability": 100,

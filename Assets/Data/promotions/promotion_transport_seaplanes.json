@@ -1,6 +1,5 @@
 {
  "type": "PROMOTION_TRANSPORT_SEAPLANES",
- "description": "TXT_KEY_PROMOTION_TRANSPORT_SEAPLANES",
  "strength": {
   "unit": {
    "percent": -10
@@ -30,6 +29,7 @@
   "sound": "AS2D_IF_LEVELUP"
  },
  "identity": {
+  "description": "TXT_KEY_PROMOTION_TRANSPORT_SEAPLANES",
   "domainCargoChange": "DOMAIN_AIR",
   "specialCargoChange": "SPECIALUNIT_SEAPLANE",
   "smNotSpecialCargoChange": "SPECIALUNIT_MISSILE",

@@ -1,6 +1,5 @@
 {
  "type": "PROMOTION_BETTER_SKILL",
- "description": "TXT_KEY_PROMOTION_BETTER_SKILL",
  "strength": {
   "unit": {
    "quality": {
@@ -30,6 +29,7 @@
   "sound": "AS2D_IF_LEVELUP"
  },
  "identity": {
+  "description": "TXT_KEY_PROMOTION_BETTER_SKILL",
   "replacesUnitCombat": "UNITCOMBAT_QUALITY_POOR",
   "levelPrereq": 3,
   "notOnUnitCombats": [

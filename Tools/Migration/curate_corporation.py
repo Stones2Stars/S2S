@@ -176,6 +176,7 @@ def curate(typ, rec, store):
     cc.emit_art(out, art_blocks)
     if identity:
         out["identity"] = identity
+    cc.fold_text_to_identity(out)   # TEXT -> identity (json.md §7)
     return out, leftover
 
 

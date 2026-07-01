@@ -1,7 +1,5 @@
 {
  "type": "BONUS_HYPOSPRAYS",
- "description": "TXT_KEY_BONUS_HYPOSPRAYS",
- "civilopedia": "TXT_KEY_BONUS_HYPOSPRAYS_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_FACTORY_STIM_PACKS"
@@ -18,6 +16,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_HYPOSPRAYS",
+  "civilopedia": "TXT_KEY_BONUS_HYPOSPRAYS_PEDIA",
   "bonusClassType": "BONUSCLASS_MANUFACTURED"
  }
 }

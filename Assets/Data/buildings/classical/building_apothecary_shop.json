@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_APOTHECARY_SHOP",
- "description": "TXT_KEY_BUILDING_APOTHECARY_SHOP",
- "civilopedia": "TXT_KEY_BUILDING_APOTHECARY_SHOP_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_GUILD_APOTHECARIES",
@@ -140,6 +138,8 @@
   "construct": "AS2D_BUILD_GRANARY"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_APOTHECARY_SHOP",
+  "civilopedia": "TXT_KEY_BUILDING_APOTHECARY_SHOP_PEDIA",
   "worth": 3,
   "conquestProbability": 75,
   "advisor": "ADVISOR_GROWTH",

@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_TEMPLE_OF_ISIS",
- "description": "TXT_KEY_BUILDING_TEMPLE_OF_ISIS",
- "civilopedia": "TXT_KEY_BUILDING_TEMPLE_OF_ISIS_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -121,6 +119,8 @@
   "construct": "AS2D_BUILD_BUDDHIST"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_TEMPLE_OF_ISIS",
+  "civilopedia": "TXT_KEY_BUILDING_TEMPLE_OF_ISIS_PEDIA",
   "commerceDoubleTime": {
    "culture": 1000
   },

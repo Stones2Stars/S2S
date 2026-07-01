@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_WAR_DANCE",
- "description": "TXT_KEY_BUILDING_WAR_DANCE",
- "civilopedia": "TXT_KEY_BUILDING_WAR_DANCE_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_DANCE_HAKA"
@@ -53,6 +51,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_WAR_DANCE",
+  "civilopedia": "TXT_KEY_BUILDING_WAR_DANCE_PEDIA",
   "notConstructible": true,
   "nukeImmune": true,
   "worth": 1,

@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_LIFE_SULFURIC_ACID",
- "description": "TXT_KEY_BUILDING_LIFE_SULFURIC_ACID",
- "civilopedia": "TXT_KEY_BUILDING_LIFE_SULFURIC_ACID_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_VENUS_BIOTIC_ATMOSPHERE"
@@ -54,6 +52,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_LIFE_SULFURIC_ACID",
+  "civilopedia": "TXT_KEY_BUILDING_LIFE_SULFURIC_ACID_PEDIA",
   "neverCapture": true,
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,

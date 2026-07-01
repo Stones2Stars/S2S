@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_STEAM_CRANE",
- "description": "TXT_KEY_BUILDING_STEAM_CRANE",
- "civilopedia": "TXT_KEY_BUILDING_STEAM_CRANE_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_MODERN_CRANE"
@@ -114,6 +112,8 @@
   "construct": "AS2D_BUILD_WALLS"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_STEAM_CRANE",
+  "civilopedia": "TXT_KEY_BUILDING_STEAM_CRANE_PEDIA",
   "nukeImmune": true,
   "conquestProbability": 70,
   "advisor": "ADVISOR_ECONOMY",

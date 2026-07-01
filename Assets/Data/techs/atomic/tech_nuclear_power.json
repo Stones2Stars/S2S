@@ -1,8 +1,5 @@
 {
  "type": "TECH_NUCLEAR_POWER",
- "description": "TXT_KEY_TECH_NUCLEAR_POWER",
- "civilopedia": "TXT_KEY_TECH_NUCLEAR_POWER_PEDIA",
- "quote": "TXT_KEY_TECH_NUCLEAR_POWER_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_NUCLEAR_PLANT",
@@ -60,6 +57,9 @@
   "soundMP": "AS2D_TECH_NUCLEAR_POWER"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_NUCLEAR_POWER",
+  "civilopedia": "TXT_KEY_TECH_NUCLEAR_POWER_PEDIA",
+  "quote": "TXT_KEY_TECH_NUCLEAR_POWER_QUOTE",
   "era": "C2C_ERA_ATOMIC",
   "worth": 48,
   "militaryWorth": 8,

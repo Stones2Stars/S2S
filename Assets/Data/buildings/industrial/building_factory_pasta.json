@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_FACTORY_PASTA",
- "description": "TXT_KEY_BUILDING_FACTORY_PASTA",
- "civilopedia": "TXT_KEY_BUILDING_FACTORY_PASTA_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_FOOD_MANUFACTURING_DISTRICT"
@@ -99,6 +97,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_FACTORY_PASTA",
+  "civilopedia": "TXT_KEY_BUILDING_FACTORY_PASTA_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

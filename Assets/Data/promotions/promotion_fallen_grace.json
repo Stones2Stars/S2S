@@ -1,6 +1,5 @@
 {
  "type": "PROMOTION_FALLEN_GRACE",
- "description": "TXT_KEY_PROMOTION_FALLEN_GRACE",
  "strength": {
   "unit": {
    "quality": {
@@ -30,6 +29,7 @@
   "sound": "AS2D_IF_LEVELUP"
  },
  "identity": {
+  "description": "TXT_KEY_PROMOTION_FALLEN_GRACE",
   "replacesUnitCombat": "UNITCOMBAT_QUALITY_DIVINE",
   "notOnUnitCombats": [
    "UNITCOMBAT_PACIFIST",

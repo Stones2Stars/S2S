@@ -1,8 +1,5 @@
 {
  "type": "TECH_NANOGENERATORS",
- "description": "TXT_KEY_TECH_NANOGENERATORS",
- "civilopedia": "TXT_KEY_TECH_NANOGENERATORS_PEDIA",
- "quote": "TXT_KEY_TECH_NANOGENERATORS_QUOTE",
  "enables": {
   "bonuses": [
    "BONUS_NANOGENERATORS"
@@ -62,6 +59,9 @@
   "soundMP": "AS2D_TECH_NANOGENERATORS"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_NANOGENERATORS",
+  "civilopedia": "TXT_KEY_TECH_NANOGENERATORS_PEDIA",
+  "quote": "TXT_KEY_TECH_NANOGENERATORS_QUOTE",
   "era": "C2C_ERA_NANOTECH",
   "worth": 14,
   "tradeable": true,

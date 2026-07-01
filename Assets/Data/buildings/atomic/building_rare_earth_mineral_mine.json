@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_RARE_EARTH_MINERAL_MINE",
- "description": "TXT_KEY_BUILDING_RARE_EARTH_MINERAL_MINE",
- "civilopedia": "TXT_KEY_BUILDING_RARE_EARTH_MINERAL_MINE_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_CORE_MINE"
@@ -89,6 +87,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_RARE_EARTH_MINERAL_MINE",
+  "civilopedia": "TXT_KEY_BUILDING_RARE_EARTH_MINERAL_MINE_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

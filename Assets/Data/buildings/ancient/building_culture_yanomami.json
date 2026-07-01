@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_CULTURE_YANOMAMI",
- "description": "TXT_KEY_BUILDING_CULTURE_YANOMAMI",
- "civilopedia": "TXT_KEY_BUILDING_CULTURE_YANOMAMI_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -52,6 +50,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_CULTURE_YANOMAMI",
+  "civilopedia": "TXT_KEY_BUILDING_CULTURE_YANOMAMI_PEDIA",
   "nukeImmune": true,
   "noInstanceLimit": true,
   "conquestProbability": 100,

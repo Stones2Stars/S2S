@@ -1,9 +1,11 @@
 {
  "type": "PROMOTIONLINE_FOREIGN",
- "description": "TXT_KEY_PROMOTIONLINE_FOREIGN",
  "ui": {
   "art": {
    "icon": "art/Buttons/Traits/TraitPolitician.dds"
   }
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTIONLINE_FOREIGN"
  }
 }

@@ -1,6 +1,5 @@
 {
  "type": "PROMOTION_FREEDOM_FIGHTER",
- "description": "TXT_KEY_PROMOTION_FREEDOM_FIGHTER",
  "skills": {
   "barbCoExist": true
  },
@@ -11,5 +10,8 @@
  },
  "sound": {
   "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_FREEDOM_FIGHTER"
  }
 }

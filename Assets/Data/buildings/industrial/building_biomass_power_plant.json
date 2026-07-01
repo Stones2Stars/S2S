@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_BIOMASS_POWER_PLANT",
- "description": "TXT_KEY_BUILDING_BIOMASS_POWER_PLANT",
- "civilopedia": "TXT_KEY_BUILDING_BIOMASS_POWER_PLANT_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_BIOFUEL_POWER_PLANT"
@@ -80,6 +78,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_BIOMASS_POWER_PLANT",
+  "civilopedia": "TXT_KEY_BUILDING_BIOMASS_POWER_PLANT_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

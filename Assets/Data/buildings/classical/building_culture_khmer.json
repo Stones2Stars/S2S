@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_CULTURE_KHMER",
- "description": "TXT_KEY_BUILDING_CULTURE_KHMER",
- "civilopedia": "TXT_KEY_BUILDING_CULTURE_KHMER_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -68,6 +66,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_CULTURE_KHMER",
+  "civilopedia": "TXT_KEY_BUILDING_CULTURE_KHMER_PEDIA",
   "nukeImmune": true,
   "noInstanceLimit": true,
   "conquestProbability": 100,

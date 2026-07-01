@@ -1,7 +1,5 @@
 {
  "type": "UNIT_BATTLECRUISER",
- "description": "TXT_KEY_UNIT_BATTLECRUISER",
- "civilopedia": "TXT_KEY_UNIT_BATTLECRUISER_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -80,6 +78,8 @@
   "upkeep": 2
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_BATTLECRUISER",
+  "civilopedia": "TXT_KEY_UNIT_BATTLECRUISER_PEDIA",
   "worth": 4,
   "militaryWorth": 153,
   "xpValueAttack": 3,

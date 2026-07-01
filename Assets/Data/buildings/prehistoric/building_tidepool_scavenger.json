@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_TIDEPOOL_SCAVENGER",
- "description": "TXT_KEY_BUILDING_TIDEPOOL_SCAVENGER",
- "civilopedia": "TXT_KEY_BUILDING_TIDEPOOL_SCAVENGER_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_FISHERMANS_HUT"
@@ -65,6 +63,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_TIDEPOOL_SCAVENGER",
+  "civilopedia": "TXT_KEY_BUILDING_TIDEPOOL_SCAVENGER_PEDIA",
   "nukeImmune": true,
   "advisor": "ADVISOR_GROWTH",
   "mapCategories": [

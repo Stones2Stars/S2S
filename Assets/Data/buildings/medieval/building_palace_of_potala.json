@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_PALACE_OF_POTALA",
- "description": "TXT_KEY_BUILDING_PALACE_OF_POTALA",
- "civilopedia": "TXT_KEY_BUILDING_PALACE_OF_POTALA_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -122,6 +120,8 @@
   "construct": "AS2D_BUILD_BUDDHIST"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_PALACE_OF_POTALA",
+  "civilopedia": "TXT_KEY_BUILDING_PALACE_OF_POTALA_PEDIA",
   "commerceDoubleTime": {
    "culture": 1000
   },

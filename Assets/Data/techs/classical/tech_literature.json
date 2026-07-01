@@ -1,8 +1,5 @@
 {
  "type": "TECH_LITERATURE",
- "description": "TXT_KEY_TECH_LITERATURE",
- "civilopedia": "TXT_KEY_TECH_LITERATURE_PEDIA",
- "quote": "TXT_KEY_TECH_LITERATURE_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_ACADEMY",
@@ -88,6 +85,9 @@
   "soundMP": "AS2D_TECH_MP_LITERATURE"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_LITERATURE",
+  "civilopedia": "TXT_KEY_TECH_LITERATURE_PEDIA",
+  "quote": "TXT_KEY_TECH_LITERATURE_QUOTE",
   "era": "C2C_ERA_CLASSICAL",
   "worth": 16,
   "tradeable": true,

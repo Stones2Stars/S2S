@@ -1,8 +1,5 @@
 {
  "type": "TRAIT_MEGALOMANIAC",
- "description": "TXT_KEY_TRAIT_COMPLEX_MEGALOMANIAC",
- "civilopedia": "TXT_KEY_TRAIT_COMPLEX_MEGALOMANIAC_PEDIA",
- "strategy": "TXT_KEY_TRAIT_COMPLEX_MEGALOMANIAC_STRATEGY",
  "excludes": [
   "TRAIT_HUMBLE"
  ],
@@ -145,6 +142,9 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_TRAIT_COMPLEX_MEGALOMANIAC",
+  "civilopedia": "TXT_KEY_TRAIT_COMPLEX_MEGALOMANIAC_PEDIA",
+  "strategy": "TXT_KEY_TRAIT_COMPLEX_MEGALOMANIAC_STRATEGY",
   "negativeTrait": true
  }
 }

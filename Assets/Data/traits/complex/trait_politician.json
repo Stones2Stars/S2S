@@ -1,8 +1,5 @@
 {
  "type": "TRAIT_POLITICIAN",
- "description": "TXT_KEY_TRAIT_COMPLEX_POLITICIAN",
- "civilopedia": "TXT_KEY_TRAIT_COMPLEX_POLITICIAN_PEDIA",
- "strategy": "TXT_KEY_TRAIT_COMPLEX_POLITICIAN_STRATEGY",
  "excludes": [
   "TRAIT_FOREIGN"
  ],
@@ -236,6 +233,9 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_TRAIT_COMPLEX_POLITICIAN",
+  "civilopedia": "TXT_KEY_TRAIT_COMPLEX_POLITICIAN_PEDIA",
+  "strategy": "TXT_KEY_TRAIT_COMPLEX_POLITICIAN_STRATEGY",
   "impurePropertyManipulators": true
  }
 }

@@ -1,6 +1,5 @@
 {
  "type": "PROMOTION_WEATHER_FORECAST_NAVAL",
- "description": "TXT_KEY_PROMOTION_WEATHER_FORECAST_NAVAL",
  "movement": {
   "unit": {
    "moves": {
@@ -53,6 +52,7 @@
   "sound": "AS2D_IF_LEVELUP"
  },
  "identity": {
+  "description": "TXT_KEY_PROMOTION_WEATHER_FORECAST_NAVAL",
   "unitCombats": [
    "UNITCOMBAT_WOODEN_SHIPS",
    "UNITCOMBAT_STEAM_SHIPS",

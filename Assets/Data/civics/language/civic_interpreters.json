@@ -1,8 +1,5 @@
 {
  "type": "CIVIC_INTERPRETERS",
- "description": "TXT_KEY_CIVIC_INTERPRETERS",
- "civilopedia": "TXT_KEY_CIVIC_INTERPRETERS_PEDIA",
- "strategy": "TXT_KEY_CIVIC_INTERPRETERS_STRATEGY",
  "gold": {
   "empire": {
    "percent": [
@@ -93,6 +90,9 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_CIVIC_INTERPRETERS",
+  "civilopedia": "TXT_KEY_CIVIC_INTERPRETERS_PEDIA",
+  "strategy": "TXT_KEY_CIVIC_INTERPRETERS_STRATEGY",
   "civicOption": "CIVICOPTION_LANGUAGE",
   "upkeepLevel": "UPKEEP_LOW"
  }

@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_ROAD_SIGNS",
- "description": "TXT_KEY_BUILDING_ROAD_SIGNS",
- "civilopedia": "TXT_KEY_BUILDING_ROAD_SIGNS_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_TELEPORT_BOOTH"
@@ -81,6 +79,8 @@
   "construct": "AS2D_BUILD_WALLS"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_ROAD_SIGNS",
+  "civilopedia": "TXT_KEY_BUILDING_ROAD_SIGNS_PEDIA",
   "worth": 4,
   "conquestProbability": 100,
   "advisor": "ADVISOR_ECONOMY",

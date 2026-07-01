@@ -1,12 +1,12 @@
 {
  "type": "PROMOTIONLINE_MEEK_PROMOTION",
- "description": "TXT_KEY_PROMOTIONLINE_MEEK_PROMOTION",
  "ui": {
   "art": {
    "icon": "art/Buttons/Promotions/PromotionMeek.dds"
   }
  },
  "identity": {
+  "description": "TXT_KEY_PROMOTIONLINE_MEEK_PROMOTION",
   "unitCombats": [
    "UNITCOMBAT_COMBATANT"
   ],

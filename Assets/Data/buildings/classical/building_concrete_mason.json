@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_CONCRETE_MASON",
- "description": "TXT_KEY_BUILDING_CONCRETE_MASON",
- "civilopedia": "TXT_KEY_BUILDING_CONCRETE_MASON_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_WATERPROOF_CEMENT_MAKER"
@@ -82,6 +80,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_CONCRETE_MASON",
+  "civilopedia": "TXT_KEY_BUILDING_CONCRETE_MASON_PEDIA",
   "conquestProbability": 70,
   "advisor": "ADVISOR_ECONOMY",
   "visibilityPriority": 1,

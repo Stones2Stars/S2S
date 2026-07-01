@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_GARBAGE_DOCK",
- "description": "TXT_KEY_BUILDING_GARBAGE_DOCK",
- "civilopedia": "TXT_KEY_BUILDING_GARBAGE_DOCK_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -76,6 +74,8 @@
   "construct": "AS2D_BUILD_GARBAGE_DUMP"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_GARBAGE_DOCK",
+  "civilopedia": "TXT_KEY_BUILDING_GARBAGE_DOCK_PEDIA",
   "worth": 2,
   "militaryWorth": 2,
   "conquestProbability": 100,

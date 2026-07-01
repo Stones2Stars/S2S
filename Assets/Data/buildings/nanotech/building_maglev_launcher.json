@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_MAGLEV_LAUNCHER",
- "description": "TXT_KEY_BUILDING_MAGLEV_LAUNCHER",
- "civilopedia": "TXT_KEY_BUILDING_MAGLEV_LAUNCHER_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_LOFSTROM_LOOP",
@@ -60,6 +58,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_MAGLEV_LAUNCHER",
+  "civilopedia": "TXT_KEY_BUILDING_MAGLEV_LAUNCHER_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

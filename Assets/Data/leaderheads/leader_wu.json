@@ -1,7 +1,5 @@
 {
  "type": "LEADER_WU",
- "description": "TXT_KEY_LEADER_WU",
- "civilopedia": "TXT_KEY_LEADER_WU_PEDIA",
  "grants": {
   "traits": [
    "TRAIT_ORGANIZED",
@@ -304,5 +302,9 @@
    "C2C_ERA_TRANSCENDENT": "AS2D_DIPLO_WARDRUMS_LATE",
    "C2C_ERA_FUTURE": "AS2D_DIPLO_WARDRUMS_LATE"
   }
+ },
+ "identity": {
+  "description": "TXT_KEY_LEADER_WU",
+  "civilopedia": "TXT_KEY_LEADER_WU_PEDIA"
  }
 }

@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_LIGHTS_OUT_MANUFACTURING",
- "description": "TXT_KEY_BUILDING_LIGHTS_OUT_MANUFACTURING",
- "civilopedia": "TXT_KEY_BUILDING_LIGHTS_OUT_MANUFACTURING_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -65,6 +63,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_LIGHTS_OUT_MANUFACTURING",
+  "civilopedia": "TXT_KEY_BUILDING_LIGHTS_OUT_MANUFACTURING_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

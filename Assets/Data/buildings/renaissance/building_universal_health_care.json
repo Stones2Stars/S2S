@@ -1,8 +1,5 @@
 {
  "type": "BUILDING_UNIVERSAL_HEALTH_CARE",
- "description": "TXT_KEY_BUILDING_UNIVERSAL_HEALTH_CARE",
- "civilopedia": "TXT_KEY_BUILDING_UNIVERSAL_HEALTH_CARE_PEDIA",
- "help": "TXT_KEY_BUILDING_UNIVERSAL_HEALTH_CARE_HELP",
  "requires": {
   "build": {
    "all": [
@@ -50,6 +47,9 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_UNIVERSAL_HEALTH_CARE",
+  "civilopedia": "TXT_KEY_BUILDING_UNIVERSAL_HEALTH_CARE_PEDIA",
+  "help": "TXT_KEY_BUILDING_UNIVERSAL_HEALTH_CARE_HELP",
   "notConstructible": true,
   "nukeImmune": true,
   "neverCapture": true,

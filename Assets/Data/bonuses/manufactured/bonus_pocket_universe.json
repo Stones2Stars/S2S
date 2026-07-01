@@ -1,7 +1,5 @@
 {
  "type": "BONUS_POCKET_UNIVERSE",
- "description": "TXT_KEY_BONUS_POCKET_UNIVERSE",
- "civilopedia": "TXT_KEY_BONUS_POCKET_UNIVERSE_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_POCKET_UNIVERSE_HOTEL",
@@ -14,6 +12,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_POCKET_UNIVERSE",
+  "civilopedia": "TXT_KEY_BONUS_POCKET_UNIVERSE_PEDIA",
   "bonusClassType": "BONUSCLASS_MANUFACTURED"
  }
 }

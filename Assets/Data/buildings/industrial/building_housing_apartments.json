@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_HOUSING_APARTMENTS",
- "description": "TXT_KEY_BUILDING_HOUSING_APARTMENTS",
- "civilopedia": "TXT_KEY_BUILDING_HOUSING_APARTMENTS_PEDIA",
  "obsoletedBy": {
   "techs": [
    "TECH_COLONY_ARCOLOGY"
@@ -61,6 +59,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_HOUSING_APARTMENTS",
+  "civilopedia": "TXT_KEY_BUILDING_HOUSING_APARTMENTS_PEDIA",
   "notConstructible": true,
   "nukeImmune": true,
   "neverCapture": true,

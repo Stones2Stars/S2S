@@ -1,8 +1,5 @@
 {
  "type": "TECH_VIRTUAL_REALITY",
- "description": "TXT_KEY_TECH_VIRTUAL_REALITY",
- "civilopedia": "TXT_KEY_TECH_VIRTUAL_REALITY_PEDIA",
- "quote": "TXT_KEY_TECH_VIRTUAL_REALITY_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_DIGITAL_GLOBE",
@@ -56,6 +53,9 @@
   "soundMP": "AS2D_TECH_VIRTUAL_REALITY"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_VIRTUAL_REALITY",
+  "civilopedia": "TXT_KEY_TECH_VIRTUAL_REALITY_PEDIA",
+  "quote": "TXT_KEY_TECH_VIRTUAL_REALITY_QUOTE",
   "era": "C2C_ERA_INFORMATION",
   "worth": 48,
   "tradeable": true,

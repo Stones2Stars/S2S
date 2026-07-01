@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_NAVAL_YARD",
- "description": "TXT_KEY_BUILDING_NAVAL_YARD",
- "civilopedia": "TXT_KEY_BUILDING_NAVAL_YARD_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_GRAND_MARINE_FESTIVAL",
@@ -96,6 +94,8 @@
   "construct": "AS2D_BUILD_DRYDOCK_NEW"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_NAVAL_YARD",
+  "civilopedia": "TXT_KEY_BUILDING_NAVAL_YARD_PEDIA",
   "worth": 2,
   "militaryWorth": 4,
   "conquestProbability": 75,

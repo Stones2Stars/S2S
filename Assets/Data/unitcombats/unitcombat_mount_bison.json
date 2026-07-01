@@ -1,9 +1,11 @@
 {
  "type": "UNITCOMBAT_MOUNT_BISON",
- "description": "TXT_KEY_UNITCOMBAT_MOUNT_BISON",
  "ui": {
   "art": {
    "icon": "Art/Interface/Buttons/units/sparth/categories/mount_bison.dds"
   }
+ },
+ "identity": {
+  "description": "TXT_KEY_UNITCOMBAT_MOUNT_BISON"
  }
 }

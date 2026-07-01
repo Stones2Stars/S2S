@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_MAXIMUM_SECURITY_PRISON",
- "description": "TXT_KEY_BUILDING_MAXIMUM_SECURITY_PRISON",
- "civilopedia": "TXT_KEY_BUILDING_MAXIMUM_SECURITY_PRISON_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_CRIME_PRISON_BREAKOUTS"
@@ -109,6 +107,8 @@
   "construct": "AS2D_BUILD_MAX_PRISON"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_MAXIMUM_SECURITY_PRISON",
+  "civilopedia": "TXT_KEY_BUILDING_MAXIMUM_SECURITY_PRISON_PEDIA",
   "neverCapture": true,
   "worth": 4,
   "militaryWorth": 6,

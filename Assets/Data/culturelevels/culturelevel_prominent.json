@@ -1,6 +1,5 @@
 {
  "type": "CULTURELEVEL_PROMINENT",
- "description": "TXT_KEY_CULTURELEVEL_PROMINENT",
  "allowed": {
   "worldWonders": 3,
   "teamWonders": 3,
@@ -19,6 +18,7 @@
   ]
  },
  "identity": {
+  "description": "TXT_KEY_CULTURELEVEL_PROMINENT",
   "cityRadius": 2,
   "cultureThreshold": 1040
  }

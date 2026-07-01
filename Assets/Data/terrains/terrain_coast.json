@@ -1,7 +1,5 @@
 {
  "type": "TERRAIN_COAST",
- "description": "TXT_KEY_TERRAIN_COAST",
- "civilopedia": "TXT_KEY_TERRAIN_COAST_PEDIA",
  "food": {
   "plot": {
    "flat": 2
@@ -133,6 +131,8 @@
   "soundscape": "ASSS_COAST_SELECT_AMB"
  },
  "identity": {
+  "description": "TXT_KEY_TERRAIN_COAST",
+  "civilopedia": "TXT_KEY_TERRAIN_COAST_PEDIA",
   "distanceToLand": 1,
   "climateZoneType": "CLIMATE_ZONE_TEMPERATE",
   "movementCost": 2,

@@ -1,7 +1,7 @@
 {
  "type": "SPECIALBUILDING_SPACE_LABORATORY",
- "description": "TXT_KEY_SPECIALBUILDING_SPACE_LABORATORY",
  "identity": {
+  "description": "TXT_KEY_SPECIALBUILDING_SPACE_LABORATORY",
   "valid": false
  }
 }

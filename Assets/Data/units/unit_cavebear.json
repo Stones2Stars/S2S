@@ -1,7 +1,5 @@
 {
  "type": "UNIT_CAVEBEAR",
- "description": "TXT_KEY_UNIT_CAVE_BEAR",
- "civilopedia": "TXT_KEY_UNIT_CAVE_BEAR_PEDIA",
  "skills": {
   "blendIntoCity": true
  },
@@ -44,6 +42,8 @@
   ]
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_CAVE_BEAR",
+  "civilopedia": "TXT_KEY_UNIT_CAVE_BEAR_PEDIA",
   "spawnOnly": true,
   "xpValueAttack": 10,
   "xpValueDefense": 7,

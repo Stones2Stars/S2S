@@ -1,7 +1,5 @@
 {
  "type": "BONUS_JADE",
- "description": "TXT_KEY_BONUS_JADE",
- "civilopedia": "TXT_KEY_BONUS_JADE_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_CULTURE_LIANGZHU",
@@ -77,6 +75,8 @@
   ]
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_JADE",
+  "civilopedia": "TXT_KEY_BONUS_JADE_PEDIA",
   "bonusClassType": "BONUSCLASS_PRODUCTION"
  }
 }

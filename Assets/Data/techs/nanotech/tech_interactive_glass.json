@@ -1,8 +1,5 @@
 {
  "type": "TECH_INTERACTIVE_GLASS",
- "description": "TXT_KEY_TECH_INTERACTIVE_GLASS",
- "civilopedia": "TXT_KEY_TECH_INTERACTIVE_GLASS_PEDIA",
- "quote": "TXT_KEY_TECH_INTERACTIVE_GLASS_QUOTE",
  "enables": {
   "bonuses": [
    "BONUS_DIGITIZED_MEMBRANES"
@@ -59,6 +56,9 @@
   "soundMP": "AS2D_TECH_INTERACTIVE_GLASS"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_INTERACTIVE_GLASS",
+  "civilopedia": "TXT_KEY_TECH_INTERACTIVE_GLASS_PEDIA",
+  "quote": "TXT_KEY_TECH_INTERACTIVE_GLASS_QUOTE",
   "era": "C2C_ERA_NANOTECH",
   "worth": 14,
   "tradeable": true,

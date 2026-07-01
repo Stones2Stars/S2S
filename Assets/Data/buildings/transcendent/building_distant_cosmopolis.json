@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_DISTANT_COSMOPOLIS",
- "description": "TXT_KEY_BUILDING_DISTANT_COSMOPOLIS",
- "civilopedia": "TXT_KEY_BUILDING_DISTANT_COSMOPOLIS_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_DISTANT_FUTURE_CITY",
@@ -56,6 +54,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_DISTANT_COSMOPOLIS",
+  "civilopedia": "TXT_KEY_BUILDING_DISTANT_COSMOPOLIS_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

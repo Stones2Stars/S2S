@@ -1,7 +1,5 @@
 {
  "type": "UNIT_SPY",
- "description": "TXT_KEY_UNIT_SPY",
- "civilopedia": "TXT_KEY_CONCEPT_ESPIONAGE_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -45,6 +43,8 @@
   ]
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_SPY",
+  "civilopedia": "TXT_KEY_CONCEPT_ESPIONAGE_PEDIA",
   "worth": 1,
   "domain": "DOMAIN_LAND",
   "defaultUnitAI": "UNITAI_SPY",

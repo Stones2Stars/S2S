@@ -1,9 +1,11 @@
 {
  "type": "PROMOTIONLINE_ORGANIZED",
- "description": "TXT_KEY_PROMOTIONLINE_ORGANIZED",
  "ui": {
   "art": {
    "icon": "art/Buttons/Traits/TraitOrganized.dds"
   }
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTIONLINE_ORGANIZED"
  }
 }

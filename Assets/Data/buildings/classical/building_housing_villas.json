@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_HOUSING_VILLAS",
- "description": "TXT_KEY_BUILDING_HOUSING_VILLAS",
- "civilopedia": "TXT_KEY_BUILDING_HOUSING_VILLAS_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_LUXURY_FURNITURE_WORKSHOP",
@@ -79,6 +77,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_HOUSING_VILLAS",
+  "civilopedia": "TXT_KEY_BUILDING_HOUSING_VILLAS_PEDIA",
   "notConstructible": true,
   "nukeImmune": true,
   "neverCapture": true,

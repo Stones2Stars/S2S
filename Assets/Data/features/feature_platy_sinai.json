@@ -1,7 +1,5 @@
 {
  "type": "FEATURE_PLATY_SINAI",
- "description": "TXT_KEY_FEATURE_SINAI",
- "civilopedia": "TXT_KEY_FEATURE_SINAI_PEDIA",
  "vision": {
   "plot": {
    "seeThrough": {
@@ -18,6 +16,8 @@
   "soundscape": "ASSS_OASIS_SELECT_AMB"
  },
  "identity": {
+  "description": "TXT_KEY_FEATURE_SINAI",
+  "civilopedia": "TXT_KEY_FEATURE_SINAI_PEDIA",
   "requiresFlatlands": true,
   "noCity": true,
   "noImprovement": true,

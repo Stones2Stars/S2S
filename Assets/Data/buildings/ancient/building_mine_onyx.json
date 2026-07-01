@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_MINE_ONYX",
- "description": "TXT_KEY_BUILDING_MINE_ONYX",
- "civilopedia": "TXT_KEY_BUILDING_MINE_ONYX_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_RESOURCES_GEMSTONE"
@@ -76,6 +74,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_MINE_ONYX",
+  "civilopedia": "TXT_KEY_BUILDING_MINE_ONYX_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

@@ -1,8 +1,5 @@
 {
  "type": "UNIT_CARGO_SHIP",
- "description": "TXT_KEY_UNIT_CARGO_SHIP",
- "civilopedia": "TXT_KEY_UNIT_CARGO_SHIP_PEDIA",
- "help": "TXT_KEY_UNIT_MERCHANT_SHIP_HELP",
  "requires": {
   "build": {
    "all": [
@@ -61,6 +58,9 @@
   ]
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_CARGO_SHIP",
+  "civilopedia": "TXT_KEY_UNIT_CARGO_SHIP_PEDIA",
+  "help": "TXT_KEY_UNIT_MERCHANT_SHIP_HELP",
   "worth": 2,
   "minAreaSize": 10,
   "domain": "DOMAIN_SEA",

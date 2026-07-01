@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_INTERNET_RADIO_STATION",
- "description": "TXT_KEY_BUILDING_INTERNET_RADIO_STATION",
- "civilopedia": "TXT_KEY_BUILDING_INTERNET_RADIO_STATION_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_HIGH_TECH_CULTURAL_ENRICHMENT"
@@ -73,6 +71,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_INTERNET_RADIO_STATION",
+  "civilopedia": "TXT_KEY_BUILDING_INTERNET_RADIO_STATION_PEDIA",
   "advisor": "ADVISOR_CULTURE",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

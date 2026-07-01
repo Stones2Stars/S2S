@@ -1,12 +1,12 @@
 {
  "type": "UNITCOMBAT_ERA_FUTURE",
- "description": "TXT_KEY_UNITCOMBAT_ERA_FUTURE",
  "ui": {
   "art": {
    "icon": "Art/Interface/Buttons/units/sparth/categories/era_future.dds"
   }
  },
  "identity": {
+  "description": "TXT_KEY_UNITCOMBAT_ERA_FUTURE",
   "era": "C2C_ERA_FUTURE"
  }
 }

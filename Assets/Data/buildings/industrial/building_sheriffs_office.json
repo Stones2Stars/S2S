@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_SHERIFFS_OFFICE",
- "description": "TXT_KEY_BUILDING_SHERIFFS_OFFICE",
- "civilopedia": "TXT_KEY_BUILDING_SHERIFFS_OFFICE_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_SLAVE_COMPOUND_CRIME_PREVENTION"
@@ -133,6 +131,8 @@
   "construct": "AS2D_BUILD_POLICE_STATION"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_SHERIFFS_OFFICE",
+  "civilopedia": "TXT_KEY_BUILDING_SHERIFFS_OFFICE_PEDIA",
   "worth": 1,
   "conquestProbability": 75,
   "dcmAirbombMission": 2,

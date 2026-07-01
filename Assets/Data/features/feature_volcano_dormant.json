@@ -1,7 +1,5 @@
 {
  "type": "FEATURE_VOLCANO_DORMANT",
- "description": "TXT_KEY_FEATURE_VOLCANO_DORMANT",
- "civilopedia": "TXT_KEY_FEATURE_VOLCANO_PEDIA",
  "cultureDistance": {
   "plot": {
    "flat": 1
@@ -47,6 +45,8 @@
   "soundscape": "ASSS_OASIS_SELECT_AMB"
  },
  "identity": {
+  "description": "TXT_KEY_FEATURE_VOLCANO_DORMANT",
+  "civilopedia": "TXT_KEY_FEATURE_VOLCANO_PEDIA",
   "appearance": 300,
   "requiresFlatlands": true,
   "noCity": true,

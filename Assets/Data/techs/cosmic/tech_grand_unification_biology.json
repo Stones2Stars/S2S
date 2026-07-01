@@ -1,8 +1,5 @@
 {
  "type": "TECH_GRAND_UNIFICATION_BIOLOGY",
- "description": "TXT_KEY_TECH_GRAND_UNIFICATION_BIOLOGY",
- "civilopedia": "TXT_KEY_TECH_GRAND_UNIFICATION_BIOLOGY_PEDIA",
- "quote": "TXT_KEY_TECH_GRAND_UNIFICATION_BIOLOGY_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_INTERGALACTIC_QUASAR_ECOSYSTEM",
@@ -63,6 +60,9 @@
   "soundMP": "AS2D_TECH_GENERIC"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_GRAND_UNIFICATION_BIOLOGY",
+  "civilopedia": "TXT_KEY_TECH_GRAND_UNIFICATION_BIOLOGY_PEDIA",
+  "quote": "TXT_KEY_TECH_GRAND_UNIFICATION_BIOLOGY_QUOTE",
   "era": "C2C_ERA_COSMIC",
   "worth": 48,
   "tradeable": true,

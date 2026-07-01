@@ -1,8 +1,5 @@
 {
  "type": "TRAIT_MEEK",
- "description": "TXT_KEY_TRAIT_MEEK",
- "civilopedia": "TXT_KEY_TRAIT_MEEK_PEDIA",
- "strategy": "TXT_KEY_TRAIT_MEEK_STRATEGY",
  "excludes": [
   "TRAIT_IMPERIALIST"
  ],
@@ -323,6 +320,9 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_TRAIT_MEEK",
+  "civilopedia": "TXT_KEY_TRAIT_MEEK_PEDIA",
+  "strategy": "TXT_KEY_TRAIT_MEEK_STRATEGY",
   "negativeTrait": true,
   "impurePropertyManipulators": true
  }

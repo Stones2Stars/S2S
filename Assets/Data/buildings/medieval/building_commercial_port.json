@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_COMMERCIAL_PORT",
- "description": "TXT_KEY_BUILDING_COMMERCIAL_PORT",
- "civilopedia": "TXT_KEY_BUILDING_COMMERCIAL_PORT_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_ELLIS_ISLAND",
@@ -207,6 +205,8 @@
   "construct": "AS2D_BUILD_COMMERCIAL_PORT"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_COMMERCIAL_PORT",
+  "civilopedia": "TXT_KEY_BUILDING_COMMERCIAL_PORT_PEDIA",
   "worth": 4,
   "conquestProbability": 100,
   "dcmAirbombMission": 2,

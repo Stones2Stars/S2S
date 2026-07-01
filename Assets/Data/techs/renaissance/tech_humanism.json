@@ -1,8 +1,5 @@
 {
  "type": "TECH_HUMANISM",
- "description": "TXT_KEY_TECH_HUMANISM",
- "civilopedia": "TXT_KEY_TECH_HUMANISM_PEDIA",
- "quote": "TXT_KEY_TECH_HUMANISM_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_CULTURE_UZBEK",
@@ -70,6 +67,9 @@
   "soundMP": "AS2D_TECH_HUMANISM"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_HUMANISM",
+  "civilopedia": "TXT_KEY_TECH_HUMANISM_PEDIA",
+  "quote": "TXT_KEY_TECH_HUMANISM_QUOTE",
   "era": "C2C_ERA_RENAISSANCE",
   "worth": 32,
   "tradeable": true,

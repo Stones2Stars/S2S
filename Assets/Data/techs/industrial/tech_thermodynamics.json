@@ -1,8 +1,5 @@
 {
  "type": "TECH_THERMODYNAMICS",
- "description": "TXT_KEY_TECH_THERMODYNAMICS",
- "civilopedia": "TXT_KEY_TECH_THERMODYNAMICS_PEDIA",
- "quote": "TXT_KEY_TECH_THERMODYNAMICS_QUOTE",
  "enables": {
   "bonuses": [
    "BONUS_HYDROGEN"
@@ -62,6 +59,9 @@
   "soundMP": "AS2D_TECH_THERMODYNAMICS"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_THERMODYNAMICS",
+  "civilopedia": "TXT_KEY_TECH_THERMODYNAMICS_PEDIA",
+  "quote": "TXT_KEY_TECH_THERMODYNAMICS_QUOTE",
   "era": "C2C_ERA_INDUSTRIAL",
   "worth": 20,
   "tradeable": true,

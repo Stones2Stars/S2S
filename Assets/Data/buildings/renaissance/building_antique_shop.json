@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_ANTIQUE_SHOP",
- "description": "TXT_KEY_BUILDING_ANTIQUE_SHOP",
- "civilopedia": "TXT_KEY_BUILDING_ANTIQUE_SHOP_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_FLINT_KNAPPER",
@@ -284,6 +282,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_ANTIQUE_SHOP",
+  "civilopedia": "TXT_KEY_BUILDING_ANTIQUE_SHOP_PEDIA",
   "conquestProbability": 70,
   "advisor": "ADVISOR_ECONOMY",
   "visibilityPriority": 1,

@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_HOUSING_YURTS",
- "description": "TXT_KEY_BUILDING_HOUSING_YURTS",
- "civilopedia": "TXT_KEY_BUILDING_HOUSING_YURTS_PEDIA",
  "obsoletedBy": {
   "techs": [
    "TECH_SURVEYING"
@@ -88,6 +86,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_HOUSING_YURTS",
+  "civilopedia": "TXT_KEY_BUILDING_HOUSING_YURTS_PEDIA",
   "notConstructible": true,
   "nukeImmune": true,
   "neverCapture": true,

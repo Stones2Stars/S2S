@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_POWER_LINES",
- "description": "TXT_KEY_BUILDING_POWER_LINES",
- "civilopedia": "TXT_KEY_BUILDING_POWER_LINES_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_BIOFUEL_POWER_PLANT",
@@ -111,6 +109,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_POWER_LINES",
+  "civilopedia": "TXT_KEY_BUILDING_POWER_LINES_PEDIA",
   "advisor": "ADVISOR_GROWTH",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

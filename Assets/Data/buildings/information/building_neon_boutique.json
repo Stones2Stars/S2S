@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_NEON_BOUTIQUE",
- "description": "TXT_KEY_BUILDING_NEON_BOUTIQUE",
- "civilopedia": "TXT_KEY_BUILDING_NEON_BOUTIQUE_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_BIOLUMINESCENT_BOUTIQUE"
@@ -105,6 +103,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_NEON_BOUTIQUE",
+  "civilopedia": "TXT_KEY_BUILDING_NEON_BOUTIQUE_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_REMAINS_HAASTS_EAGLE",
- "description": "TXT_KEY_BUILDING_REMAINS_HAASTS_EAGLE",
- "civilopedia": "TXT_KEY_BUILDING_FOLKLORE_ANIMAL_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -57,6 +55,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_REMAINS_HAASTS_EAGLE",
+  "civilopedia": "TXT_KEY_BUILDING_FOLKLORE_ANIMAL_PEDIA",
   "notConstructible": true,
   "nukeImmune": true,
   "worth": 1,

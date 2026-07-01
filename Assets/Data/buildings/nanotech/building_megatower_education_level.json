@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_MEGATOWER_EDUCATION_LEVEL",
- "description": "TXT_KEY_BUILDING_MEGATOWER_EDUCATION_LEVEL",
- "civilopedia": "TXT_KEY_BUILDING_MEGATOWER_EDUCATION_LEVEL_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_HOLOGRAPHIC_SCHOOL"
@@ -91,6 +89,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_MEGATOWER_EDUCATION_LEVEL",
+  "civilopedia": "TXT_KEY_BUILDING_MEGATOWER_EDUCATION_LEVEL_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

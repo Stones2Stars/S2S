@@ -1,9 +1,11 @@
 {
  "type": "UNITCOMBAT_ASSISTED_BUFFALO",
- "description": "TXT_KEY_UNITCOMBAT_ASSISTED_BUFFALO",
  "ui": {
   "art": {
    "icon": "Art/Interface/Buttons/units/sparth/categories/assisted_by_buffalo.dds"
   }
+ },
+ "identity": {
+  "description": "TXT_KEY_UNITCOMBAT_ASSISTED_BUFFALO"
  }
 }

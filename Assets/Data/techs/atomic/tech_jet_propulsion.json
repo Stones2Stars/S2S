@@ -1,8 +1,5 @@
 {
  "type": "TECH_JET_PROPULSION",
- "description": "TXT_KEY_TECH_JET_PROPULSION",
- "civilopedia": "TXT_KEY_TECH_JET_PROPULSION_PEDIA",
- "quote": "TXT_KEY_TECH_JET_PROPULSION_QUOTE",
  "enables": {
   "bonuses": [
    "BONUS_JET_ENGINES"
@@ -76,6 +73,9 @@
   "soundMP": "AS2D_TECH_JET_PROPULSION"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_JET_PROPULSION",
+  "civilopedia": "TXT_KEY_TECH_JET_PROPULSION_PEDIA",
+  "quote": "TXT_KEY_TECH_JET_PROPULSION_QUOTE",
   "era": "C2C_ERA_ATOMIC",
   "worth": 48,
   "militaryWorth": 10,

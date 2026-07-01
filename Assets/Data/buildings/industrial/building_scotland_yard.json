@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_SCOTLAND_YARD",
- "description": "TXT_KEY_BUILDING_SCOTLAND_YARD",
- "civilopedia": "TXT_KEY_BUILDING_SCOTLAND_YARD_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_221B_BAKER_STREET"
@@ -69,6 +67,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_SCOTLAND_YARD",
+  "civilopedia": "TXT_KEY_BUILDING_SCOTLAND_YARD_PEDIA",
   "notConstructible": true,
   "nukeImmune": true,
   "neverCapture": true,

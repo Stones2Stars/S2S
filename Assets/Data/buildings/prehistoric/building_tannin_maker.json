@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_TANNIN_MAKER",
- "description": "TXT_KEY_BUILDING_TANNIN_MAKER",
- "civilopedia": "TXT_KEY_BUILDING_TANNIN_MAKER_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_FACTORY_TANNIN"
@@ -96,6 +94,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_TANNIN_MAKER",
+  "civilopedia": "TXT_KEY_BUILDING_TANNIN_MAKER_PEDIA",
   "enabledCivilizations": [
    "CIVILIZATION_NPC_NEANDERTHAL"
   ],

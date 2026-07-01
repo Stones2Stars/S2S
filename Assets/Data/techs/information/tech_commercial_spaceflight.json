@@ -1,8 +1,5 @@
 {
  "type": "TECH_COMMERCIAL_SPACEFLIGHT",
- "description": "TXT_KEY_TECH_COMMERCIAL_SPACEFLIGHT",
- "civilopedia": "TXT_KEY_TECH_COMMERCIAL_SPACEFLIGHT_PEDIA",
- "quote": "TXT_KEY_TECH_COMMERCIAL_SPACEFLIGHT_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_COMMERCIAL_SPACEPORT",
@@ -66,6 +63,9 @@
   "soundMP": "AS2D_TECH_COMMERCIAL_SPACEFLIGHT"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_COMMERCIAL_SPACEFLIGHT",
+  "civilopedia": "TXT_KEY_TECH_COMMERCIAL_SPACEFLIGHT_PEDIA",
+  "quote": "TXT_KEY_TECH_COMMERCIAL_SPACEFLIGHT_QUOTE",
   "era": "C2C_ERA_INFORMATION",
   "worth": 14,
   "tradeable": true,

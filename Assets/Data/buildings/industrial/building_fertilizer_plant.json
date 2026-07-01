@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_FERTILIZER_PLANT",
- "description": "TXT_KEY_BUILDING_FERTILIZER_PLANT",
- "civilopedia": "TXT_KEY_BUILDING_FERTILIZER_PLANT_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_MATERIALS_CONGLOMERATE"
@@ -112,6 +110,8 @@
   "construct": "AS2D_BUILD_OIL_REFINERY"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_FERTILIZER_PLANT",
+  "civilopedia": "TXT_KEY_BUILDING_FERTILIZER_PLANT_PEDIA",
   "worth": 6,
   "militaryWorth": 20,
   "dcmAirbombMission": 3,

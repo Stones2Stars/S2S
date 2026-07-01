@@ -1,7 +1,5 @@
 {
  "type": "UNIT_VICEROY",
- "description": "TXT_KEY_UNIT_VICEROY",
- "civilopedia": "TXT_KEY_UNIT_VICEROY_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -20,6 +18,8 @@
   "upkeep": 1
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_VICEROY",
+  "civilopedia": "TXT_KEY_UNIT_VICEROY_PEDIA",
   "worth": 1,
   "leaderExperience": 20,
   "domain": "DOMAIN_LAND",

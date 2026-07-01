@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_POLICE_PRECINCT",
- "description": "TXT_KEY_BUILDING_POLICE_PRECINCT",
- "civilopedia": "TXT_KEY_BUILDING_POLICE_PRECINCT_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_221B_BAKER_STREET",
@@ -169,6 +167,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_POLICE_PRECINCT",
+  "civilopedia": "TXT_KEY_BUILDING_POLICE_PRECINCT_PEDIA",
   "militaryWorth": 2,
   "dcmAirbombMission": 2,
   "advisor": "ADVISOR_MILITARY",

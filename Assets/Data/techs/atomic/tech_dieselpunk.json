@@ -1,8 +1,5 @@
 {
  "type": "TECH_DIESELPUNK",
- "description": "TXT_KEY_TECH_DIESELPUNK",
- "civilopedia": "TXT_KEY_TECH_DIESELPUNK_PEDIA",
- "quote": "TXT_KEY_TECH_DIESELPUNK_QUOTE",
  "enables": {
   "bonuses": [
    "BONUS_DIESELPUNK"
@@ -71,6 +68,9 @@
   "soundMP": "AS2D_TECH_GENERIC"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_DIESELPUNK",
+  "civilopedia": "TXT_KEY_TECH_DIESELPUNK_PEDIA",
+  "quote": "TXT_KEY_TECH_DIESELPUNK_QUOTE",
   "era": "C2C_ERA_ATOMIC",
   "worth": 40,
   "militaryWorth": 6,

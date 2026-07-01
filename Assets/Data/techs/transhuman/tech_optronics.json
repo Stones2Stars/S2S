@@ -1,8 +1,5 @@
 {
  "type": "TECH_OPTRONICS",
- "description": "TXT_KEY_TECH_OPTRONICS",
- "civilopedia": "TXT_KEY_TECH_OPTRONICS_PEDIA",
- "quote": "TXT_KEY_TECH_OPTRONICS_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_EXABIT_BROADBAND",
@@ -59,6 +56,9 @@
   "soundMP": "AS2D_TECH_OPTRONICS"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_OPTRONICS",
+  "civilopedia": "TXT_KEY_TECH_OPTRONICS_PEDIA",
+  "quote": "TXT_KEY_TECH_OPTRONICS_QUOTE",
   "era": "C2C_ERA_TRANSHUMAN",
   "worth": 48,
   "tradeable": true,

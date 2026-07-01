@@ -1,8 +1,5 @@
 {
  "type": "TECH_PHYSICAL_CHEMISTRY",
- "description": "TXT_KEY_TECH_PHYSICAL_CHEMISTRY",
- "civilopedia": "TXT_KEY_TECH_PHYSICAL_CHEMISTRY_PEDIA",
- "quote": "TXT_KEY_TECH_PHYSICAL_CHEMISTRY_QUOTE",
  "enables": {
   "bonuses": [
    "BONUS_FIBERGLASS"
@@ -55,6 +52,9 @@
   "soundMP": "AS2D_TECH_PHYSICAL_CHEMISTRY"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_PHYSICAL_CHEMISTRY",
+  "civilopedia": "TXT_KEY_TECH_PHYSICAL_CHEMISTRY_PEDIA",
+  "quote": "TXT_KEY_TECH_PHYSICAL_CHEMISTRY_QUOTE",
   "era": "C2C_ERA_ATOMIC",
   "worth": 48,
   "tradeable": true,

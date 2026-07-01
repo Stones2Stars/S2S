@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_HOLLYWOOD",
- "description": "TXT_KEY_BUILDING_HOLLYWOOD",
- "civilopedia": "TXT_KEY_BUILDING_HOLLYWOOD_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_WALK_OF_FAME"
@@ -78,6 +76,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_HOLLYWOOD",
+  "civilopedia": "TXT_KEY_BUILDING_HOLLYWOOD_PEDIA",
   "nukeImmune": true,
   "teamShare": true,
   "worth": 18,

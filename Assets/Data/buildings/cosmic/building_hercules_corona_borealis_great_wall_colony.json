@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_HERCULES_CORONA_BOREALIS_GREAT_WALL_COLONY",
- "description": "TXT_KEY_BUILDING_HERCULES_CORONA_BOREALIS_GREAT_WALL_COLONY",
- "civilopedia": "TXT_KEY_BUILDING_HERCULES_CORONA_BOREALIS_GREAT_WALL_COLONY_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -61,6 +59,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_HERCULES_CORONA_BOREALIS_GREAT_WALL_COLONY",
+  "civilopedia": "TXT_KEY_BUILDING_HERCULES_CORONA_BOREALIS_GREAT_WALL_COLONY_PEDIA",
   "conquestProbability": 100,
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,

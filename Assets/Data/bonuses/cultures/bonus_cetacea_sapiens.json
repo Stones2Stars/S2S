@@ -1,7 +1,5 @@
 {
  "type": "BONUS_CETACEA_SAPIENS",
- "description": "TXT_KEY_BONUS_CETACEA_SAPIENS",
- "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_DOLPHIN_COMMUNICATION_CENTER"
@@ -16,6 +14,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_CETACEA_SAPIENS",
+  "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
   "bonusClassType": "BONUSCLASS_GENMODS"
  }
 }

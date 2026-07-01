@@ -1,6 +1,5 @@
 {
  "type": "UNITCOMBAT_SIZE_MICROSCOPIC",
- "description": "TXT_KEY_UNITCOMBAT_SIZE_MICROSCOPIC",
  "strength": {
   "unit": {
    "damageModifier": {
@@ -33,6 +32,7 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_UNITCOMBAT_SIZE_MICROSCOPIC",
   "base": {
    "size": 0
   }

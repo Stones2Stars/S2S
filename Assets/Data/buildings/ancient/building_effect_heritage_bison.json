@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_EFFECT_HERITAGE_BISON",
- "description": "TXT_KEY_BUILDING_EFFECT_HERITAGE_BISON",
- "civilopedia": "TXT_KEY_BUILDING_ANIMAL_TRAINER_BISON_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_MILITARY_STANDARD_BISON"
@@ -31,6 +29,8 @@
   "construct": "AS2D_BUILD_BARRACKS"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_EFFECT_HERITAGE_BISON",
+  "civilopedia": "TXT_KEY_BUILDING_ANIMAL_TRAINER_BISON_PEDIA",
   "notConstructible": true,
   "worth": 2,
   "conquestProbability": 100,

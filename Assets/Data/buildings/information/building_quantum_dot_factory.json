@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_QUANTUM_DOT_FACTORY",
- "description": "TXT_KEY_BUILDING_QUANTUM_DOT_FACTORY",
- "civilopedia": "TXT_KEY_BUILDING_QUANTUM_DOT_FACTORY_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_PICOTECH_COMPLEX"
@@ -64,6 +62,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_QUANTUM_DOT_FACTORY",
+  "civilopedia": "TXT_KEY_BUILDING_QUANTUM_DOT_FACTORY_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

@@ -1,7 +1,5 @@
 {
  "type": "UNIT_STALKERS",
- "description": "TXT_KEY_UNIT_STALKERS",
- "civilopedia": "TXT_KEY_UNIT_STALKERS_PEDIA",
  "obsoletedBy": {
   "techs": [
    "TECH_MATCHLOCK"
@@ -130,6 +128,8 @@
   "upkeep": 4
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_STALKERS",
+  "civilopedia": "TXT_KEY_UNIT_STALKERS_PEDIA",
   "worth": 4,
   "militaryWorth": 6,
   "xpValueAttack": 8,

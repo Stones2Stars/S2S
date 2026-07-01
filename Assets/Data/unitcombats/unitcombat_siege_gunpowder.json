@@ -1,6 +1,5 @@
 {
  "type": "UNITCOMBAT_SIEGE_GUNPOWDER",
- "description": "TXT_KEY_UNITCOMBAT_SIEGE_GUNPOWDER",
  "capture": {
   "unit": {
    "probability": {
@@ -17,6 +16,7 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_UNITCOMBAT_SIEGE_GUNPOWDER",
   "forMilitary": true
  }
 }

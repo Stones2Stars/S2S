@@ -1,8 +1,5 @@
 {
  "type": "TECH_MUSICAL_NOTATION",
- "description": "TXT_KEY_TECH_MUSICAL_NOTATION",
- "civilopedia": "TXT_KEY_TECH_MUSICAL_NOTATION_PEDIA",
- "quote": "TXT_KEY_TECH_MUSICAL_NOTATION_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_BALLROOM",
@@ -73,6 +70,9 @@
   "soundMP": "AS2D_TECH_MP_MUSIC"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_MUSICAL_NOTATION",
+  "civilopedia": "TXT_KEY_TECH_MUSICAL_NOTATION_PEDIA",
+  "quote": "TXT_KEY_TECH_MUSICAL_NOTATION_QUOTE",
   "era": "C2C_ERA_CLASSICAL",
   "worth": 24,
   "tradeable": true,

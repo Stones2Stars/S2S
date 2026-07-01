@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_ANCIENT_VETERINARIAN",
- "description": "TXT_KEY_BUILDING_ANCIENT_VETERINARIAN",
- "civilopedia": "TXT_KEY_BUILDING_ANCIENT_VETERINARIAN_PEDIA",
  "enables": {
   "units": [
    "UNIT_VET"
@@ -81,6 +79,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_ANCIENT_VETERINARIAN",
+  "civilopedia": "TXT_KEY_BUILDING_ANCIENT_VETERINARIAN_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

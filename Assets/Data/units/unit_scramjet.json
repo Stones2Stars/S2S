@@ -1,7 +1,5 @@
 {
  "type": "UNIT_SCRAMJET",
- "description": "TXT_KEY_UNIT_SCRAMJET",
- "civilopedia": "TXT_KEY_UNIT_SCRAMJET_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -87,6 +85,8 @@
   "upkeep": 16
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_SCRAMJET",
+  "civilopedia": "TXT_KEY_UNIT_SCRAMJET_PEDIA",
   "worth": 4,
   "militaryWorth": 560,
   "xpValueAttack": 6,

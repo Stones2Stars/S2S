@@ -1,7 +1,5 @@
 {
  "type": "FEATURE_REEF_BEACON",
- "description": "TXT_KEY_FEATURE_REEF_BEACON",
- "civilopedia": "TXT_KEY_FEATURE_REEF_PEDIA",
  "commerce": {
   "plot": {
    "flat": 1
@@ -122,6 +120,8 @@
   ]
  },
  "identity": {
+  "description": "TXT_KEY_FEATURE_REEF_BEACON",
+  "civilopedia": "TXT_KEY_FEATURE_REEF_PEDIA",
   "movementCost": 2,
   "appearance": -1,
   "validTerrains": [

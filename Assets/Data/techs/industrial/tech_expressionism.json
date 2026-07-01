@@ -1,8 +1,5 @@
 {
  "type": "TECH_EXPRESSIONISM",
- "description": "TXT_KEY_TECH_EXPRESSIONISM",
- "civilopedia": "TXT_KEY_TECH_EXPRESSIONISM_PEDIA",
- "quote": "TXT_KEY_TECH_EXPRESSIONISM_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_CHILEHAUS"
@@ -52,6 +49,9 @@
   "soundMP": "AS2D_TECH_EXPRESSIONISM"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_EXPRESSIONISM",
+  "civilopedia": "TXT_KEY_TECH_EXPRESSIONISM_PEDIA",
+  "quote": "TXT_KEY_TECH_EXPRESSIONISM_QUOTE",
   "era": "C2C_ERA_INDUSTRIAL",
   "worth": 21,
   "militaryWorth": 7,

@@ -1,7 +1,5 @@
 {
  "type": "IMPROVEMENT_QUARRY",
- "description": "TXT_KEY_IMPROVEMENT_QUARRY",
- "civilopedia": "TXT_KEY_IMPROVEMENT_QUARRY_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -219,6 +217,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_IMPROVEMENT_QUARRY",
+  "civilopedia": "TXT_KEY_IMPROVEMENT_QUARRY_PEDIA",
   "advancedStart": {
    "cost": 36
   },

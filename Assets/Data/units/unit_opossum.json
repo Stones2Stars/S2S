@@ -1,7 +1,5 @@
 {
  "type": "UNIT_OPOSSUM",
- "description": "TXT_KEY_UNIT_OPOSSUM",
- "civilopedia": "TXT_KEY_UNIT_OPOSSUM_PEDIA",
  "withdrawal": {
   "unit": {
    "percent": 30
@@ -36,6 +34,8 @@
   ]
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_OPOSSUM",
+  "civilopedia": "TXT_KEY_UNIT_OPOSSUM_PEDIA",
   "spawnOnly": true,
   "xpValueAttack": 1,
   "xpValueDefense": 1,

@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_ENCLOSURE_WALRUS",
- "description": "TXT_KEY_BUILDING_ENCLOSURE_WALRUS",
- "civilopedia": "TXT_KEY_BUILDING_WILD_ANIMAL_CAGE_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -52,6 +50,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_ENCLOSURE_WALRUS",
+  "civilopedia": "TXT_KEY_BUILDING_WILD_ANIMAL_CAGE_PEDIA",
   "worth": 2,
   "conquestProbability": 25,
   "advisor": "ADVISOR_CULTURE",

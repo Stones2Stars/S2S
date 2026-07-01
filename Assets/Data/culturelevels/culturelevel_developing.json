@@ -1,6 +1,5 @@
 {
  "type": "CULTURELEVEL_DEVELOPING",
- "description": "TXT_KEY_CULTURELEVEL_DEVELOPING",
  "enables": {
   "buildings": [
    "BUILDING_TOWN_HALL"
@@ -19,6 +18,7 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_CULTURELEVEL_DEVELOPING",
   "cityRadius": 2,
   "cultureThreshold": 520
  }

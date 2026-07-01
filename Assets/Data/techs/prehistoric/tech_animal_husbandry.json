@@ -1,8 +1,5 @@
 {
  "type": "TECH_ANIMAL_HUSBANDRY",
- "description": "TXT_KEY_TECH_ANIMAL_HUSBANDRY",
- "civilopedia": "TXT_KEY_TECH_ANIMAL_HUSBANDRY_PEDIA",
- "quote": "TXT_KEY_TECH_ANIMAL_HUSBANDRY_QUOTE",
  "enables": {
   "bonuses": [
    "BONUS_COW",
@@ -94,6 +91,9 @@
   "soundMP": "AS2D_TECH_MP_ANIMALHUSB"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_ANIMAL_HUSBANDRY",
+  "civilopedia": "TXT_KEY_TECH_ANIMAL_HUSBANDRY_PEDIA",
+  "quote": "TXT_KEY_TECH_ANIMAL_HUSBANDRY_QUOTE",
   "era": "C2C_ERA_PREHISTORIC",
   "worth": 10,
   "tradeable": true,

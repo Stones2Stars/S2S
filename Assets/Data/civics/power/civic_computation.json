@@ -1,8 +1,5 @@
 {
  "type": "CIVIC_COMPUTATION",
- "description": "TXT_KEY_CIVIC_COMPUTATION",
- "civilopedia": "TXT_KEY_CIVIC_COMPUTATION_PEDIA",
- "strategy": "TXT_KEY_CIVIC_COMPUTATION_STRATEGY",
  "production": {
   "empire": {
    "percent": 10
@@ -84,6 +81,9 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_CIVIC_COMPUTATION",
+  "civilopedia": "TXT_KEY_CIVIC_COMPUTATION_PEDIA",
+  "strategy": "TXT_KEY_CIVIC_COMPUTATION_STRATEGY",
   "civicOption": "CIVICOPTION_POWER",
   "anarchyLength": 3,
   "upkeepLevel": "UPKEEP_EXTREME"

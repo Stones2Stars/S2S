@@ -1,7 +1,5 @@
 {
  "type": "C2C_ERA_INFORMATION",
- "description": "TXT_KEY_ERA_INFORMATION",
- "strategy": "TXT_KEY_ERA_INFORMATION_STRATEGY",
  "costs": {
   "world": {
    "train": {
@@ -96,6 +94,8 @@
   "unitDefeat": "AS2D_LOSS_LATE"
  },
  "identity": {
+  "description": "TXT_KEY_ERA_INFORMATION",
+  "strategy": "TXT_KEY_ERA_INFORMATION_STRATEGY",
   "order": 8,
   "advancedStart": 64000,
   "historicalStartYear": 1990,

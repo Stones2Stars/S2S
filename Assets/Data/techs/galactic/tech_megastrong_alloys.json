@@ -1,8 +1,5 @@
 {
  "type": "TECH_MEGASTRONG_ALLOYS",
- "description": "TXT_KEY_TECH_MEGASTRONG_ALLOYS",
- "civilopedia": "TXT_KEY_TECH_MEGASTRONG_ALLOYS_PEDIA",
- "quote": "TXT_KEY_TECH_MEGASTRONG_ALLOYS_QUOTE",
  "enables": {
   "bonuses": [
    "BONUS_MEGASTRONG_ALLOYS"
@@ -62,6 +59,9 @@
   "soundMP": "AS2D_TECH_GENERIC"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_MEGASTRONG_ALLOYS",
+  "civilopedia": "TXT_KEY_TECH_MEGASTRONG_ALLOYS_PEDIA",
+  "quote": "TXT_KEY_TECH_MEGASTRONG_ALLOYS_QUOTE",
   "era": "C2C_ERA_GALACTIC",
   "worth": 48,
   "tradeable": true,

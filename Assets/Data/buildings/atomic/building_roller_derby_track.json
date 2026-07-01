@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_ROLLER_DERBY_TRACK",
- "description": "TXT_KEY_BUILDING_ROLLER_DERBY_TRACK",
- "civilopedia": "TXT_KEY_BUILDING_ROLLER_DERBY_TRACK_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_ATHLETIC_MEGACOMPLEX"
@@ -72,6 +70,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_ROLLER_DERBY_TRACK",
+  "civilopedia": "TXT_KEY_BUILDING_ROLLER_DERBY_TRACK_PEDIA",
   "worth": 2,
   "advisor": "ADVISOR_CULTURE",
   "mapCategories": [

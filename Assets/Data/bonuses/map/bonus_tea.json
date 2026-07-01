@@ -1,7 +1,5 @@
 {
  "type": "BONUS_TEA",
- "description": "TXT_KEY_BONUS_TEA",
- "civilopedia": "TXT_KEY_BONUS_TEA_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_CAFE",
@@ -84,6 +82,8 @@
   ]
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_TEA",
+  "civilopedia": "TXT_KEY_BONUS_TEA_PEDIA",
   "bonusClassType": "BONUSCLASS_LUXURY"
  }
 }

@@ -1,7 +1,5 @@
 {
  "type": "UNIT_MOUND_GUARDIAN",
- "description": "TXT_KEY_UNIT_MOUND_GUARDIAN",
- "civilopedia": "TXT_KEY_UNIT_MOUND_GUARDIAN_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -117,6 +115,8 @@
   "upkeep": 1
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_MOUND_GUARDIAN",
+  "civilopedia": "TXT_KEY_UNIT_MOUND_GUARDIAN_PEDIA",
   "worth": 1,
   "militaryWorth": 5,
   "xpValueAttack": 6,

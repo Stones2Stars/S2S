@@ -1,8 +1,5 @@
 {
  "type": "TECH_ACNP_PROPULSION",
- "description": "TXT_KEY_TECH_ACNP_PROPULSION",
- "civilopedia": "TXT_KEY_TECH_ACNP_PROPULSION_PEDIA",
- "quote": "TXT_KEY_TECH_ACNP_PROPULSION_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_ANTIMATTER_IMPORTER",
@@ -68,6 +65,9 @@
   "soundMP": "AS2D_TECH_ACNP_PROPULSION"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_ACNP_PROPULSION",
+  "civilopedia": "TXT_KEY_TECH_ACNP_PROPULSION_PEDIA",
+  "quote": "TXT_KEY_TECH_ACNP_PROPULSION_QUOTE",
   "era": "C2C_ERA_GALACTIC",
   "worth": 48,
   "militaryWorth": 4,

@@ -1,6 +1,5 @@
 {
  "type": "PROMOTIONLINE_CROWS_NEST",
- "description": "TXT_KEY_PROMOTIONLINE_CROWS_NEST",
  "loadPrune": {
   "onGameOptions": [
    "GAMEOPTION_COMBAT_HIDE_SEEK"
@@ -12,6 +11,7 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_PROMOTIONLINE_CROWS_NEST",
   "unitCombats": [
    "UNITCOMBAT_EXPLORER",
    "UNITCOMBAT_NAVAL_COMBATANT",

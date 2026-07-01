@@ -1,8 +1,5 @@
 {
  "type": "TECH_BICYCLES",
- "description": "TXT_KEY_TECH_BICYCLES",
- "civilopedia": "TXT_KEY_TECH_BICYCLES_PEDIA",
- "quote": "TXT_KEY_TECH_BICYCLES_QUOTE",
  "enables": {
   "bonuses": [
    "BONUS_BICYCLES"
@@ -58,6 +55,9 @@
   "soundMP": "AS2D_TECH_BICYCLES"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_BICYCLES",
+  "civilopedia": "TXT_KEY_TECH_BICYCLES_PEDIA",
+  "quote": "TXT_KEY_TECH_BICYCLES_QUOTE",
   "era": "C2C_ERA_INDUSTRIAL",
   "worth": 32,
   "tradeable": true,

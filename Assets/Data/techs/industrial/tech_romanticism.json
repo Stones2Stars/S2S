@@ -1,8 +1,5 @@
 {
  "type": "TECH_ROMANTICISM",
- "description": "TXT_KEY_TECH_ROMANTICISM",
- "civilopedia": "TXT_KEY_TECH_ROMANTICISM_PEDIA",
- "quote": "TXT_KEY_TECH_ROMANTICISM_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_IMPERIAL_FORTRESS",
@@ -54,6 +51,9 @@
   "soundMP": "AS2D_TECH_ROMANTICISM"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_ROMANTICISM",
+  "civilopedia": "TXT_KEY_TECH_ROMANTICISM_PEDIA",
+  "quote": "TXT_KEY_TECH_ROMANTICISM_QUOTE",
   "era": "C2C_ERA_INDUSTRIAL",
   "worth": 40,
   "militaryWorth": 2,

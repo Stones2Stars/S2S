@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_CARBYNE_FOUNDRY",
- "description": "TXT_KEY_BUILDING_CARBYNE_FOUNDRY",
- "civilopedia": "TXT_KEY_BUILDING_CARBYNE_FOUNDRY_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_PICOTECH_COMPLEX"
@@ -78,6 +76,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_CARBYNE_FOUNDRY",
+  "civilopedia": "TXT_KEY_BUILDING_CARBYNE_FOUNDRY_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

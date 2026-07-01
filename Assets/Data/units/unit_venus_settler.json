@@ -1,7 +1,5 @@
 {
  "type": "UNIT_VENUS_SETTLER",
- "description": "TXT_KEY_UNIT_VENUS_SETTLER",
- "civilopedia": "TXT_KEY_UNIT_SETTLER_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -108,6 +106,8 @@
   "hurryCostModifier": 10000
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_VENUS_SETTLER",
+  "civilopedia": "TXT_KEY_UNIT_SETTLER_PEDIA",
   "worth": 1,
   "domain": "DOMAIN_LAND",
   "defaultUnitAI": "UNITAI_SETTLE",

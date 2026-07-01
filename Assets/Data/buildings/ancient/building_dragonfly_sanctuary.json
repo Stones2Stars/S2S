@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_DRAGONFLY_SANCTUARY",
- "description": "TXT_KEY_BUILDING_DRAGONFLY_SANCTUARY",
- "civilopedia": "TXT_KEY_BUILDING_DRAGONFLY_SANCTUARY_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_RESOURCES_BUGS"
@@ -97,6 +95,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_DRAGONFLY_SANCTUARY",
+  "civilopedia": "TXT_KEY_BUILDING_DRAGONFLY_SANCTUARY_PEDIA",
   "advisor": "ADVISOR_CULTURE",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

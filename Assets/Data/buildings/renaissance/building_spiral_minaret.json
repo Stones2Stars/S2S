@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_SPIRAL_MINARET",
- "description": "TXT_KEY_BUILDING_SPIRAL_MINARET",
- "civilopedia": "TXT_KEY_BUILDING_SPIRAL_MINARET_PEDIA",
  "obsoletedBy": {
   "techs": [
    "TECH_PERSONAL_COMPUTERS"
@@ -86,6 +84,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_SPIRAL_MINARET",
+  "civilopedia": "TXT_KEY_BUILDING_SPIRAL_MINARET_PEDIA",
   "stateReligionCommerce": {
    "gold": 2
   },

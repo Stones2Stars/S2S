@@ -1,7 +1,5 @@
 {
  "type": "FEATURE_REEF_LIGHTHOUSE",
- "description": "TXT_KEY_FEATURE_REEF_LIGHTHOUSE",
- "civilopedia": "TXT_KEY_FEATURE_REEF_PEDIA",
  "production": {
   "plot": {
    "flat": 1
@@ -122,6 +120,8 @@
   ]
  },
  "identity": {
+  "description": "TXT_KEY_FEATURE_REEF_LIGHTHOUSE",
+  "civilopedia": "TXT_KEY_FEATURE_REEF_PEDIA",
   "movementCost": 1,
   "appearance": -1,
   "validTerrains": [

@@ -1,8 +1,5 @@
 {
  "type": "CIVIC_OMNISCIENCE",
- "description": "TXT_KEY_CIVIC_OMNISCIENCE",
- "civilopedia": "TXT_KEY_CIVIC_OMNISCIENCE_PEDIA",
- "strategy": "TXT_KEY_CIVIC_OMNISCIENCE_STRATEGY",
  "food": {
   "empire": {
    "percent": 5
@@ -53,6 +50,9 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_CIVIC_OMNISCIENCE",
+  "civilopedia": "TXT_KEY_CIVIC_OMNISCIENCE_PEDIA",
+  "strategy": "TXT_KEY_CIVIC_OMNISCIENCE_STRATEGY",
   "civicOption": "CIVICOPTION_EDUCATION",
   "upkeepLevel": "UPKEEP_EXTREME"
  }

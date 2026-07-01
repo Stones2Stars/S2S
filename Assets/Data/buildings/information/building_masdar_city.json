@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_MASDAR_CITY",
- "description": "TXT_KEY_BUILDING_MASDAR_CITY",
- "civilopedia": "TXT_KEY_BUILDING_MASDAR_CITY_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -54,6 +52,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_MASDAR_CITY",
+  "civilopedia": "TXT_KEY_BUILDING_MASDAR_CITY_PEDIA",
   "conquestProbability": 100,
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,

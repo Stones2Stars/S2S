@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_MING_VASE_WORKSHOP",
- "description": "TXT_KEY_BUILDING_MING_VASE_WORKSHOP",
- "civilopedia": "TXT_KEY_BUILDING_MING_VASE_WORKSHOP_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -107,6 +105,8 @@
   "construct": "AS2D_BUILD_GLASSMITH"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_MING_VASE_WORKSHOP",
+  "civilopedia": "TXT_KEY_BUILDING_MING_VASE_WORKSHOP_PEDIA",
   "worth": 4,
   "militaryWorth": 2,
   "conquestProbability": 100,

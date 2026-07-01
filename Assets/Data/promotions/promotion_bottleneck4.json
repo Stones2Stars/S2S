@@ -1,6 +1,5 @@
 {
  "type": "PROMOTION_BOTTLENECK4",
- "description": "TXT_KEY_PROMOTION_BOTTLENECK4",
  "strength": {
   "unit": {
    "perVolumeMore": {
@@ -23,5 +22,8 @@
  },
  "sound": {
   "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_BOTTLENECK4"
  }
 }

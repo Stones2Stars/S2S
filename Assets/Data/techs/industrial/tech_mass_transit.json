@@ -1,8 +1,5 @@
 {
  "type": "TECH_MASS_TRANSIT",
- "description": "TXT_KEY_TECH_MASS_TRANSIT",
- "civilopedia": "TXT_KEY_TECH_MASS_TRANSIT_PEDIA",
- "quote": "TXT_KEY_TECH_MASS_TRANSIT_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_BUS_STATION",
@@ -58,6 +55,9 @@
   "soundMP": "AS2D_TECH_MASS_TRANSIT"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_MASS_TRANSIT",
+  "civilopedia": "TXT_KEY_TECH_MASS_TRANSIT_PEDIA",
+  "quote": "TXT_KEY_TECH_MASS_TRANSIT_QUOTE",
   "era": "C2C_ERA_INDUSTRIAL",
   "worth": 32,
   "tradeable": true,

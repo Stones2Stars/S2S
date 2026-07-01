@@ -1,8 +1,5 @@
 {
  "type": "RELIGION_JUDAISM",
- "description": "TXT_KEY_TECH_JUDAISM",
- "civilopedia": "TXT_KEY_TECH_JUDAISM_PEDIA",
- "adjective": "TXT_KEY_TECH_JUDAISM_ADJECTIVE",
  "enables": {
   "buildings": [
    "BUILDING_ARK_OF_THE_COVENANT",
@@ -99,6 +96,9 @@
   "sound": "AS2D_BUILD_JEWISH"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_JUDAISM",
+  "adjective": "TXT_KEY_TECH_JUDAISM_ADJECTIVE",
+  "civilopedia": "TXT_KEY_TECH_JUDAISM_PEDIA",
   "spreadFactor": 30
  }
 }

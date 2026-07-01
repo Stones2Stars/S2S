@@ -1,8 +1,5 @@
 {
  "type": "TECH_WHOLE_BRAIN_EMULATION",
- "description": "TXT_KEY_TECH_WHOLE_BRAIN_EMULATION",
- "civilopedia": "TXT_KEY_TECH_WHOLE_BRAIN_EMULATION_PEDIA",
- "quote": "TXT_KEY_TECH_WHOLE_BRAIN_EMULATION_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_BEHAVIOR_PREDICTION",
@@ -67,6 +64,9 @@
   "soundMP": "AS2D_TECH_WHOLE_BRAIN_EMULATION"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_WHOLE_BRAIN_EMULATION",
+  "civilopedia": "TXT_KEY_TECH_WHOLE_BRAIN_EMULATION_PEDIA",
+  "quote": "TXT_KEY_TECH_WHOLE_BRAIN_EMULATION_QUOTE",
   "era": "C2C_ERA_TRANSHUMAN",
   "worth": 48,
   "militaryWorth": 4,

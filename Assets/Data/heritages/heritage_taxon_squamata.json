@@ -1,7 +1,5 @@
 {
  "type": "HERITAGE_TAXON_SQUAMATA",
- "description": "TXT_KEY_HERITAGE_TAXON_SQUAMATA",
- "civilopedia": "TXT_KEY_HERITAGE_TAXON_SQUAMATA_PEDIA",
  "enables": {
   "heritages": [
    "HERITAGE_TAXON_REPTILIA"
@@ -107,5 +105,9 @@
   "art": {
    "icon": "Art/Interface/Buttons/Buildings/totem_reptile.dds"
   }
+ },
+ "identity": {
+  "description": "TXT_KEY_HERITAGE_TAXON_SQUAMATA",
+  "civilopedia": "TXT_KEY_HERITAGE_TAXON_SQUAMATA_PEDIA"
  }
 }

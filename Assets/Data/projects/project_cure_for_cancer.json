@@ -1,7 +1,5 @@
 {
  "type": "PROJECT_CURE_FOR_CANCER",
- "description": "TXT_KEY_BUILDING_CANCER",
- "civilopedia": "TXT_KEY_BUILDING_CANCER_PEDIA",
  "happiness": {
   "empire": {
    "flat": 1
@@ -27,6 +25,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_CANCER",
+  "civilopedia": "TXT_KEY_BUILDING_CANCER_PEDIA",
   "mapCategories": [
    "MAPCATEGORY_EARTH"
   ],

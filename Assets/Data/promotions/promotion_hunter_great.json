@@ -1,6 +1,5 @@
 {
  "type": "PROMOTION_HUNTER_GREAT",
- "description": "TXT_KEY_PROMOTION_HUNTER_GREAT",
  "strength": {
   "unit": {
    "percent": -5,
@@ -31,5 +30,8 @@
  },
  "sound": {
   "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_HUNTER_GREAT"
  }
 }

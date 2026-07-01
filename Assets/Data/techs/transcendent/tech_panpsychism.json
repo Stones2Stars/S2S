@@ -1,8 +1,5 @@
 {
  "type": "TECH_PANPSYCHISM",
- "description": "TXT_KEY_TECH_PANPSYCHISM",
- "civilopedia": "TXT_KEY_TECH_PANPSYCHISM_PEDIA",
- "quote": "TXT_KEY_TECH_PANPSYCHISM_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_INTERGALACTIC_GALAXY_SCAN",
@@ -59,6 +56,9 @@
   "soundMP": "AS2D_TECH_GENERIC"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_PANPSYCHISM",
+  "civilopedia": "TXT_KEY_TECH_PANPSYCHISM_PEDIA",
+  "quote": "TXT_KEY_TECH_PANPSYCHISM_QUOTE",
   "era": "C2C_ERA_TRANSCENDENT",
   "worth": 48,
   "tradeable": true,

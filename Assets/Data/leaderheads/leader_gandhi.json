@@ -1,7 +1,5 @@
 {
  "type": "LEADER_GANDHI",
- "description": "TXT_KEY_LEADER_GANDHI",
- "civilopedia": "TXT_KEY_LEADER_GANDHI_PEDIA",
  "grants": {
   "traits": [
    "TRAIT_HUMANITARIAN",
@@ -289,5 +287,9 @@
    "C2C_ERA_TRANSCENDENT": "AS2D_DIPLO_WARDRUMS_LATE",
    "C2C_ERA_FUTURE": "AS2D_DIPLO_WARDRUMS_LATE"
   }
+ },
+ "identity": {
+  "description": "TXT_KEY_LEADER_GANDHI",
+  "civilopedia": "TXT_KEY_LEADER_GANDHI_PEDIA"
  }
 }

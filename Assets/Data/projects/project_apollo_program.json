@@ -1,7 +1,5 @@
 {
  "type": "PROJECT_APOLLO_PROGRAM",
- "description": "TXT_KEY_PROJECT_APOLLO_PROGRAM",
- "civilopedia": "TXT_KEY_PROJECT_APOLLO_PROGRAM_PEDIA",
  "enables": {
   "projects": [
    "PROJECT_SS_CASING",
@@ -36,6 +34,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_PROJECT_APOLLO_PROGRAM",
+  "civilopedia": "TXT_KEY_PROJECT_APOLLO_PROGRAM_PEDIA",
   "mapCategories": [
    "MAPCATEGORY_EARTH"
   ],

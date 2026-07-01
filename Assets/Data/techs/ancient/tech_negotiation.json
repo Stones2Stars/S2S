@@ -1,8 +1,5 @@
 {
  "type": "TECH_NEGOTIATION",
- "description": "TXT_KEY_TECH_NEGOTIATION",
- "civilopedia": "TXT_KEY_TECH_NEGOTIATION_PEDIA",
- "quote": "TXT_KEY_TECH_NEGOTIATION_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_NEGOTIATORS_HUT"
@@ -48,6 +45,9 @@
   "soundMP": "AS2D_TECH_NEGOTIATION"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_NEGOTIATION",
+  "civilopedia": "TXT_KEY_TECH_NEGOTIATION_PEDIA",
+  "quote": "TXT_KEY_TECH_NEGOTIATION_QUOTE",
   "era": "C2C_ERA_ANCIENT",
   "worth": 20,
   "tradeable": true,

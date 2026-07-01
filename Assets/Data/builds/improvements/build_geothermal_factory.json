@@ -1,6 +1,5 @@
 {
  "type": "BUILD_GEOTHERMAL_FACTORY",
- "description": "TXT_KEY_BUILD_GEOTHERMAL_FACTORY",
  "requires": {
   "build": {
    "all": [
@@ -29,5 +28,8 @@
   "art": {
    "entityEvent": "ENTITY_EVENT_MINE"
   }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILD_GEOTHERMAL_FACTORY"
  }
 }

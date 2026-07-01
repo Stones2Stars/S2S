@@ -1,8 +1,5 @@
 {
  "type": "UNIT_TAMED_DUCK",
- "description": "TXT_KEY_UNIT_TAMED_DUCK",
- "civilopedia": "TXT_KEY_UNIT_TAMED_ANIMAL_PEDIA",
- "help": "TXT_KEY_UNIT_TAMED_ANIMALS_HELP",
  "requires": {
   "build": {
    "all": [
@@ -53,6 +50,9 @@
   "production": 133
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_TAMED_DUCK",
+  "civilopedia": "TXT_KEY_UNIT_TAMED_ANIMAL_PEDIA",
+  "help": "TXT_KEY_UNIT_TAMED_ANIMALS_HELP",
   "worth": 1,
   "militaryWorth": 1,
   "xpValueAttack": 2,

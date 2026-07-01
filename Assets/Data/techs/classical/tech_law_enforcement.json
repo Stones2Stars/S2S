@@ -1,8 +1,5 @@
 {
  "type": "TECH_LAW_ENFORCEMENT",
- "description": "TXT_KEY_TECH_LAW_ENFORCEMENT",
- "civilopedia": "TXT_KEY_TECH_LAW_ENFORCEMENT_PEDIA",
- "quote": "TXT_KEY_TECH_LAW_ENFORCEMENT_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_ASTROLOGICAL_INFLUENCE_OF_ARIES",
@@ -69,6 +66,9 @@
   "soundMP": "AS2D_TECH_LAW_ENFORCEMENT"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_LAW_ENFORCEMENT",
+  "civilopedia": "TXT_KEY_TECH_LAW_ENFORCEMENT_PEDIA",
+  "quote": "TXT_KEY_TECH_LAW_ENFORCEMENT_QUOTE",
   "era": "C2C_ERA_CLASSICAL",
   "worth": 16,
   "militaryWorth": 4,

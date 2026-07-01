@@ -1,8 +1,5 @@
 {
  "type": "TECH_PLASTIC_ELECTRONICS",
- "description": "TXT_KEY_TECH_PLASTIC_ELECTRONICS",
- "civilopedia": "TXT_KEY_TECH_PLASTIC_ELECTRONICS_PEDIA",
- "quote": "TXT_KEY_TECH_PLASTIC_ELECTRONICS_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_ELECTRONIC_PAPER_MAKER",
@@ -54,6 +51,9 @@
   "soundMP": "AS2D_TECH_PLASTIC_ELECTRONICS"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_PLASTIC_ELECTRONICS",
+  "civilopedia": "TXT_KEY_TECH_PLASTIC_ELECTRONICS_PEDIA",
+  "quote": "TXT_KEY_TECH_PLASTIC_ELECTRONICS_QUOTE",
   "era": "C2C_ERA_NANOTECH",
   "worth": 40,
   "militaryWorth": 10,

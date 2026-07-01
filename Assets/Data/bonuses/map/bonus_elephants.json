@@ -1,7 +1,5 @@
 {
  "type": "BONUS_ELEPHANTS",
- "description": "TXT_KEY_BONUS_ELEPHANTS",
- "civilopedia": "TXT_KEY_BONUS_ELEPHANTS_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_ANIMAL_TRAINER_ELEPHANT",
@@ -107,6 +105,8 @@
   ]
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_ELEPHANTS",
+  "civilopedia": "TXT_KEY_BONUS_ELEPHANTS_PEDIA",
   "bonusClassType": "BONUSCLASS_STRATEGIC"
  }
 }

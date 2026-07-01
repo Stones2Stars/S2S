@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_EUROPEAN_EXTREMELY_LARGE_TELESCOPE",
- "description": "TXT_KEY_BUILDING_EUROPEAN_EXTREMELY_LARGE_TELESCOPE",
- "civilopedia": "TXT_KEY_BUILDING_EUROPEAN_EXTREMELY_LARGE_TELESCOPE_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -58,6 +56,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_EUROPEAN_EXTREMELY_LARGE_TELESCOPE",
+  "civilopedia": "TXT_KEY_BUILDING_EUROPEAN_EXTREMELY_LARGE_TELESCOPE_PEDIA",
   "conquestProbability": 100,
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,

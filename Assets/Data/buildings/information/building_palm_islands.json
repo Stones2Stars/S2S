@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_PALM_ISLANDS",
- "description": "TXT_KEY_BUILDING_PALM_ISLANDS",
- "civilopedia": "TXT_KEY_BUILDING_PALM_ISLANDS_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -70,6 +68,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_PALM_ISLANDS",
+  "civilopedia": "TXT_KEY_BUILDING_PALM_ISLANDS_PEDIA",
   "conquestProbability": 100,
   "greatPeopleUnitType": "UNIT_MERCHANT",
   "advisor": "ADVISOR_SCIENCE",

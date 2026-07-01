@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_HQ_MOBBY_MEATS_INTERNATIONAL",
- "description": "TXT_KEY_BUILDING_HQ_MOBBY_MEATS_INTERNATIONAL",
- "civilopedia": "TXT_KEY_BUILDING_CORPORATION_MOBBY_PEDIA",
  "enables": {
   "corporations": [
    "CORPORATION_MOBBY"
@@ -56,6 +54,8 @@
   "construct": "AS2D_BUILD_BANK"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_HQ_MOBBY_MEATS_INTERNATIONAL",
+  "civilopedia": "TXT_KEY_BUILDING_CORPORATION_MOBBY_PEDIA",
   "commerceDoubleTime": {
    "culture": 1000
   },

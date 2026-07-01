@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_ART_GALLERY",
- "description": "TXT_KEY_BUILDING_ART_GALLERY",
- "civilopedia": "TXT_KEY_BUILDING_ART_GALLERY_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_DIGITAL_ART_MUSEUM",
@@ -126,6 +124,8 @@
   "construct": "AS2D_BUILD_ART_GALLERY"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_ART_GALLERY",
+  "civilopedia": "TXT_KEY_BUILDING_ART_GALLERY_PEDIA",
   "worth": 5,
   "militaryWorth": 2,
   "greatPeopleUnitType": "UNIT_ARTIST",

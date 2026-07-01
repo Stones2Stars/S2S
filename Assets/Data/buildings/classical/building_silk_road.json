@@ -1,8 +1,5 @@
 {
  "type": "BUILDING_SILK_ROAD",
- "description": "TXT_KEY_BUILDING_SILK_ROAD",
- "civilopedia": "TXT_KEY_BUILDING_SILK_ROAD_PEDIA",
- "help": "TXT_KEY_BUILDING_SILK_ROAD_HELP",
  "obsoletedBy": {
   "techs": [
    "TECH_MERCANTILISM"
@@ -123,6 +120,9 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_SILK_ROAD",
+  "civilopedia": "TXT_KEY_BUILDING_SILK_ROAD_PEDIA",
+  "help": "TXT_KEY_BUILDING_SILK_ROAD_HELP",
   "commerceDoubleTime": {
    "culture": 1000
   },

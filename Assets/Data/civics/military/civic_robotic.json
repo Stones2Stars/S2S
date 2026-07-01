@@ -1,8 +1,5 @@
 {
  "type": "CIVIC_ROBOTIC",
- "description": "TXT_KEY_CIVIC_ROBOTIC",
- "civilopedia": "TXT_KEY_CIVIC_ROBOTIC_PEDIA",
- "strategy": "TXT_KEY_CIVIC_ROBOTIC_STRATEGY",
  "enables": {
   "buildings": [
    "BUILDING_AUTOMATED_DEFENSES"
@@ -103,6 +100,9 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_CIVIC_ROBOTIC",
+  "civilopedia": "TXT_KEY_CIVIC_ROBOTIC_PEDIA",
+  "strategy": "TXT_KEY_CIVIC_ROBOTIC_STRATEGY",
   "civicOption": "CIVICOPTION_MILITARY",
   "anarchyLength": 1,
   "upkeepLevel": "UPKEEP_HIGH"

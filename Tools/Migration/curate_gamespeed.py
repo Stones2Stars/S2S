@@ -34,6 +34,7 @@ import os
 from collections import OrderedDict
 
 import engine
+from curate_common import fold_text_to_identity
 from store import Store, REPO
 
 
@@ -50,6 +51,7 @@ def curate(typ, rec):
     uys = engine.text(rec.find("iUnitYieldScalePercent"))
     if engine.is_int(uys) and int(uys) != 0:
         out["missionYieldMultiplier"] = {"world": {"percent": int(uys)}}
+    fold_text_to_identity(out)   # TEXT -> identity (json.md §7)
     return out
 
 

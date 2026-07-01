@@ -1,7 +1,5 @@
 {
  "type": "UNIT_CANOE",
- "description": "TXT_KEY_UNIT_CANOE",
- "civilopedia": "TXT_KEY_UNIT_CANOE_PEDIA",
  "obsoletedBy": {
   "techs": [
    "TECH_OPTICS"
@@ -74,6 +72,8 @@
   "upkeep": 1
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_CANOE",
+  "civilopedia": "TXT_KEY_UNIT_CANOE_PEDIA",
   "worth": 3,
   "militaryWorth": 2,
   "xpValueAttack": 2,

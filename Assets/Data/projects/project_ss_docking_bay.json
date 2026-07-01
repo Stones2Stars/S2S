@@ -1,7 +1,5 @@
 {
  "type": "PROJECT_SS_DOCKING_BAY",
- "description": "TXT_KEY_PROJECT_SS_DOCKING_BAY",
- "civilopedia": "TXT_KEY_PROJECT_SS_DOCKING_BAY_PEDIA",
  "buildRate": {
   "self": {
    "percent": [
@@ -30,6 +28,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_PROJECT_SS_DOCKING_BAY",
+  "civilopedia": "TXT_KEY_PROJECT_SS_DOCKING_BAY_PEDIA",
   "mapCategories": [
    "MAPCATEGORY_EARTH"
   ],

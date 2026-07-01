@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_SIEGE_WEAPONS_WORKSHOP",
- "description": "TXT_KEY_BUILDING_SIEGE_WEAPONS_WORKSHOP",
- "civilopedia": "TXT_KEY_BUILDING_SIEGE_WEAPONS_WORKSHOP_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_BALLISTA_TURRET"
@@ -92,6 +90,8 @@
   "construct": "AS2D_BUILD_SIEGE_WORKSHOP"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_SIEGE_WEAPONS_WORKSHOP",
+  "civilopedia": "TXT_KEY_BUILDING_SIEGE_WEAPONS_WORKSHOP_PEDIA",
   "worth": 2,
   "militaryWorth": 3,
   "dcmAirbombMission": 2,

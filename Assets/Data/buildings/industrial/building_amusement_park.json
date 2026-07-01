@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_AMUSEMENT_PARK",
- "description": "TXT_KEY_BUILDING_AMUSEMENT_PARK",
- "civilopedia": "TXT_KEY_BUILDING_AMUSEMENT_PARK_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_ANIMATRONICS_WORKSHOP",
@@ -85,6 +83,8 @@
   "construct": "AS2D_BUILD_AMUSEMENT_PARK"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_AMUSEMENT_PARK",
+  "civilopedia": "TXT_KEY_BUILDING_AMUSEMENT_PARK_PEDIA",
   "worth": 8,
   "conquestProbability": 75,
   "advisor": "ADVISOR_CULTURE",

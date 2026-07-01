@@ -1,7 +1,5 @@
 {
  "type": "UNIT_BIG_BERTHA",
- "description": "TXT_KEY_UNIT_BIG_BERTHA",
- "civilopedia": "TXT_KEY_UNIT_BIG_BERTHA_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -99,6 +97,8 @@
   "upkeep": 1
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_BIG_BERTHA",
+  "civilopedia": "TXT_KEY_UNIT_BIG_BERTHA_PEDIA",
   "worth": 5,
   "militaryWorth": 62,
   "xpValueAttack": 6,

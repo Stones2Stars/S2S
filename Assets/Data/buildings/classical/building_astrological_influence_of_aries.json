@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_ASTROLOGICAL_INFLUENCE_OF_ARIES",
- "description": "TXT_KEY_BUILDING_ASTROLOGICAL_INFLUENCE_OF_ARIES",
- "civilopedia": "TXT_KEY_BUILDING_ASTROLOGICAL_INFLUENCE_OF_ARIES_PEDIA",
  "obsoletedBy": {
   "techs": [
    "TECH_MEDIEVAL_LIFESTYLE"
@@ -68,6 +66,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_ASTROLOGICAL_INFLUENCE_OF_ARIES",
+  "civilopedia": "TXT_KEY_BUILDING_ASTROLOGICAL_INFLUENCE_OF_ARIES_PEDIA",
   "worth": 3,
   "militaryWorth": 5,
   "conquestProbability": 100,

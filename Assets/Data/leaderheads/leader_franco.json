@@ -1,7 +1,5 @@
 {
  "type": "LEADER_FRANCO",
- "description": "TXT_KEY_LEADER_FRANCO",
- "civilopedia": "TXT_KEY_LEADER_FRANCO_PEDIA",
  "grants": {
   "traits": [
    "TRAIT_DECEIVER",
@@ -304,5 +302,9 @@
    "C2C_ERA_TRANSCENDENT": "AS2D_DIPLO_WARDRUMS_LATE",
    "C2C_ERA_FUTURE": "AS2D_DIPLO_WARDRUMS_LATE"
   }
+ },
+ "identity": {
+  "description": "TXT_KEY_LEADER_FRANCO",
+  "civilopedia": "TXT_KEY_LEADER_FRANCO_PEDIA"
  }
 }

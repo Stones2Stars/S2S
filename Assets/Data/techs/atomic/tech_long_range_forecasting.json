@@ -1,8 +1,5 @@
 {
  "type": "TECH_LONG_RANGE_FORECASTING",
- "description": "TXT_KEY_TECH_LONG_RANGE_FORECASTING",
- "civilopedia": "TXT_KEY_TECH_LONG_RANGE_FORECASTING_PEDIA",
- "quote": "TXT_KEY_TECH_LONG_RANGE_FORECASTING_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_WEATHER_STATION"
@@ -54,6 +51,9 @@
   "soundMP": "AS2D_TECH_LONG_RANGE_FORECASTING"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_LONG_RANGE_FORECASTING",
+  "civilopedia": "TXT_KEY_TECH_LONG_RANGE_FORECASTING_PEDIA",
+  "quote": "TXT_KEY_TECH_LONG_RANGE_FORECASTING_QUOTE",
   "era": "C2C_ERA_ATOMIC",
   "worth": 40,
   "tradeable": true,

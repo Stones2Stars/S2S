@@ -1,8 +1,5 @@
 {
  "type": "BUILDING_MARCO_POLOS_EMBASSY",
- "description": "TXT_KEY_BUILDING_MARCO_POLOS_EMBASSY",
- "civilopedia": "TXT_KEY_BUILDING_MARCO_POLOS_EMBASSY_PEDIA",
- "help": "TXT_KEY_BUILDING_MARCO_POLOS_EMBASSY_HELP",
  "obsoletedBy": {
   "techs": [
    "TECH_COMMUNISM"
@@ -78,6 +75,9 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_MARCO_POLOS_EMBASSY",
+  "civilopedia": "TXT_KEY_BUILDING_MARCO_POLOS_EMBASSY_PEDIA",
+  "help": "TXT_KEY_BUILDING_MARCO_POLOS_EMBASSY_HELP",
   "commerceDoubleTime": {
    "culture": 1000
   },

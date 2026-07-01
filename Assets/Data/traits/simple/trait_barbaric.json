@@ -1,7 +1,5 @@
 {
  "type": "TRAIT_BARBARIC",
- "description": "TXT_KEY_TRAIT_BARBARIC",
- "civilopedia": "TXT_KEY_TRAIT_BARBARIC_PEDIA",
  "buildRate": {
   "empire": {
    "military": {
@@ -95,6 +93,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_TRAIT_BARBARIC",
+  "civilopedia": "TXT_KEY_TRAIT_BARBARIC_PEDIA",
   "shortDescription": "TXT_KEY_TRAIT_BARBARIC_SHORT",
   "negativeTrait": true,
   "impurePromotions": true

@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_MARTIAN_FACTORY",
- "description": "TXT_KEY_BUILDING_MARTIAN_FACTORY",
- "civilopedia": "TXT_KEY_BUILDING_MARTIAN_FACTORY_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_MARTIAN_BIOFACTORY",
@@ -70,6 +68,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_MARTIAN_FACTORY",
+  "civilopedia": "TXT_KEY_BUILDING_MARTIAN_FACTORY_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

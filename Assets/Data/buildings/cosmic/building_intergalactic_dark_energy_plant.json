@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_INTERGALACTIC_DARK_ENERGY_PLANT",
- "description": "TXT_KEY_BUILDING_INTERGALACTIC_DARK_ENERGY_PLANT",
- "civilopedia": "TXT_KEY_BUILDING_INTERGALACTIC_DARK_ENERGY_PLANT_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_INTERGALACTIC_DARK_MATTER_CITY"
@@ -46,6 +44,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_INTERGALACTIC_DARK_ENERGY_PLANT",
+  "civilopedia": "TXT_KEY_BUILDING_INTERGALACTIC_DARK_ENERGY_PLANT_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

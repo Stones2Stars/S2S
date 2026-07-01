@@ -1,6 +1,5 @@
 {
  "type": "PROMOTION_HILL_WORKER2",
- "description": "TXT_KEY_PROMOTION_HILL_WORKER2",
  "workRate": {
   "unit": {
    "hills": {
@@ -23,5 +22,8 @@
  },
  "sound": {
   "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_HILL_WORKER2"
  }
 }

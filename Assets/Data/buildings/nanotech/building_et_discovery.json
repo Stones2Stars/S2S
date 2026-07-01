@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_ET_DISCOVERY",
- "description": "TXT_KEY_BUILDING_ET_DISCOVERY",
- "civilopedia": "TXT_KEY_BUILDING_ET_DISCOVERY_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -96,6 +94,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_ET_DISCOVERY",
+  "civilopedia": "TXT_KEY_BUILDING_ET_DISCOVERY_PEDIA",
   "conquestProbability": 100,
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,

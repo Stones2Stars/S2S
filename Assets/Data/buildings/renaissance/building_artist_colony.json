@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_ARTIST_COLONY",
- "description": "TXT_KEY_BUILDING_ARTIST_COLONY",
- "civilopedia": "TXT_KEY_BUILDING_ARTIST_COLONY_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_EU_JAGIELLONIAN_UNIVERSITY",
@@ -68,6 +66,8 @@
   "construct": "AS2D_BUILD_LIBRARY"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_ARTIST_COLONY",
+  "civilopedia": "TXT_KEY_BUILDING_ARTIST_COLONY_PEDIA",
   "worth": 6,
   "conquestProbability": 75,
   "dcmAirbombMission": 2,

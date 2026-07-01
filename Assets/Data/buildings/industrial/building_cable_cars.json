@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_CABLE_CARS",
- "description": "TXT_KEY_BUILDING_CABLE_CARS",
- "civilopedia": "TXT_KEY_BUILDING_CABLE_CARS_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_PUBLIC_TRANSPORTATION"
@@ -71,6 +69,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_CABLE_CARS",
+  "civilopedia": "TXT_KEY_BUILDING_CABLE_CARS_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

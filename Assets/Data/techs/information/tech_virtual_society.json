@@ -1,8 +1,5 @@
 {
  "type": "TECH_VIRTUAL_SOCIETY",
- "description": "TXT_KEY_TECH_VIRTUAL_SOCIETY",
- "civilopedia": "TXT_KEY_TECH_VIRTUAL_SOCIETY_PEDIA",
- "quote": "TXT_KEY_TECH_VIRTUAL_SOCIETY_QUOTE",
  "enables": {
   "bonuses": [
    "BONUS_HUMAN_MOD_DIGITAL_IDENTITY"
@@ -72,6 +69,9 @@
   "soundMP": "AS2D_TECH_VIRTUAL_SOCIETY"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_VIRTUAL_SOCIETY",
+  "civilopedia": "TXT_KEY_TECH_VIRTUAL_SOCIETY_PEDIA",
+  "quote": "TXT_KEY_TECH_VIRTUAL_SOCIETY_QUOTE",
   "era": "C2C_ERA_INFORMATION",
   "worth": 14,
   "tradeable": true,

@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_PRAYING_MANTIS_GATHERER",
- "description": "TXT_KEY_BUILDING_PRAYING_MANTIS_GATHERER",
- "civilopedia": "TXT_KEY_BUILDING_PRAYING_MANTIS_GATHERER_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_PRAYING_MANTIS_SANCTUARY",
@@ -85,6 +83,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_PRAYING_MANTIS_GATHERER",
+  "civilopedia": "TXT_KEY_BUILDING_PRAYING_MANTIS_GATHERER_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

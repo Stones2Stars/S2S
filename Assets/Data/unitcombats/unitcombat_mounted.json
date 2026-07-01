@@ -1,6 +1,5 @@
 {
  "type": "UNITCOMBAT_MOUNTED",
- "description": "TXT_KEY_UNITCOMBAT_MOUNTED",
  "capture": {
   "unit": {
    "probability": {
@@ -26,6 +25,7 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_UNITCOMBAT_MOUNTED",
   "forMilitary": true
  }
 }

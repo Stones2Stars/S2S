@@ -1,7 +1,5 @@
 {
  "type": "UNIT_BADGER",
- "description": "TXT_KEY_UNIT_BADGER",
- "civilopedia": "TXT_KEY_UNIT_BADGER_PEDIA",
  "skills": {
   "blendIntoCity": true,
   "onlyDefensive": true,
@@ -46,6 +44,8 @@
   ]
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_BADGER",
+  "civilopedia": "TXT_KEY_UNIT_BADGER_PEDIA",
   "spawnOnly": true,
   "xpValueAttack": 3,
   "xpValueDefense": 1,

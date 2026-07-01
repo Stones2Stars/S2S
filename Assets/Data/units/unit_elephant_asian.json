@@ -1,7 +1,5 @@
 {
  "type": "UNIT_ELEPHANT_ASIAN",
- "description": "TXT_KEY_UNIT_ELEPHANT_ASIAN",
- "civilopedia": "TXT_KEY_UNIT_ELEPHANT_PEDIA",
  "skills": {
   "blendIntoCity": true,
   "onlyDefensive": true,
@@ -71,6 +69,8 @@
   ]
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_ELEPHANT_ASIAN",
+  "civilopedia": "TXT_KEY_UNIT_ELEPHANT_PEDIA",
   "spawnOnly": true,
   "xpValueAttack": 11,
   "xpValueDefense": 8,

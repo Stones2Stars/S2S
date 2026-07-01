@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_DISTANT_HYPERPORT",
- "description": "TXT_KEY_BUILDING_DISTANT_HYPERPORT",
- "civilopedia": "TXT_KEY_BUILDING_DISTANT_HYPERPORT_PEDIA",
  "enables": {
   "units": [
    "UNIT_HYPERSHIP"
@@ -43,6 +41,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_DISTANT_HYPERPORT",
+  "civilopedia": "TXT_KEY_BUILDING_DISTANT_HYPERPORT_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

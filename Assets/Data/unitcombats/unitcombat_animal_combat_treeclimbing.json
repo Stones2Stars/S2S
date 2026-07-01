@@ -1,6 +1,5 @@
 {
  "type": "UNITCOMBAT_ANIMAL_COMBAT_TREECLIMBING",
- "description": "TXT_KEY_UNITCOMBAT_ANIMAL_COMBAT_TREECLIMBING",
  "vision": {
   "invisibleFeature": [
    {
@@ -19,5 +18,8 @@
   "art": {
    "icon": "Art/Interface/Buttons/units/sparth/categories/nature_tree_climbing.dds"
   }
+ },
+ "identity": {
+  "description": "TXT_KEY_UNITCOMBAT_ANIMAL_COMBAT_TREECLIMBING"
  }
 }

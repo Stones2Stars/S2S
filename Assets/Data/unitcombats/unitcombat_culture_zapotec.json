@@ -1,12 +1,12 @@
 {
  "type": "UNITCOMBAT_CULTURE_ZAPOTEC",
- "description": "TXT_KEY_UNITCOMBAT_CULTURE_ZAPOTEC",
  "ui": {
   "art": {
    "icon": "Art/Interface/Buttons/units/sparth/categories/culture_zapotec.dds"
   }
  },
  "identity": {
+  "description": "TXT_KEY_UNITCOMBAT_CULTURE_ZAPOTEC",
   "culture": "BONUS_ZAPOTEC"
  }
 }

@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_CYBER_INSECT_LAB",
- "description": "TXT_KEY_BUILDING_CYBER_INSECT_LAB",
- "civilopedia": "TXT_KEY_BUILDING_CYBER_INSECT_LAB_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_INSECT_MANIPULATION_LAB"
@@ -58,6 +56,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_CYBER_INSECT_LAB",
+  "civilopedia": "TXT_KEY_BUILDING_CYBER_INSECT_LAB_PEDIA",
   "specialBuildingType": "SPECIALBUILDING_PUNK_CYBER",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": "1.0",

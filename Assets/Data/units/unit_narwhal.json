@@ -1,7 +1,5 @@
 {
  "type": "UNIT_NARWHAL",
- "description": "TXT_KEY_UNIT_NARWHAL",
- "civilopedia": "TXT_KEY_UNIT_NARWHAL_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -86,6 +84,8 @@
   ]
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_NARWHAL",
+  "civilopedia": "TXT_KEY_UNIT_NARWHAL_PEDIA",
   "spawnOnly": true,
   "xpValueAttack": 7,
   "xpValueDefense": 4,

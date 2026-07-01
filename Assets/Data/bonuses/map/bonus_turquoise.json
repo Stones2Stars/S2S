@@ -1,7 +1,5 @@
 {
  "type": "BONUS_TURQUOISE",
- "description": "TXT_KEY_BONUS_TURQUOISE",
- "civilopedia": "TXT_KEY_BONUS_TURQUOISE_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_CULTURE_ANASAZI",
@@ -63,6 +61,8 @@
   ]
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_TURQUOISE",
+  "civilopedia": "TXT_KEY_BONUS_TURQUOISE_PEDIA",
   "bonusClassType": "BONUSCLASS_LUXURY"
  }
 }

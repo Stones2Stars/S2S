@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_J_S_BACHS_CATHEDRAL",
- "description": "TXT_KEY_BUILDING_J_S_BACHS_CATHEDRAL",
- "civilopedia": "TXT_KEY_BUILDING_J_S_BACHS_CATHEDRAL_PEDIA",
  "obsoletedBy": {
   "techs": [
    "TECH_AUTOMATIC_WEAPONS"
@@ -119,6 +117,8 @@
   "construct": "AS2D_BUILD_CHRISTIAN"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_J_S_BACHS_CATHEDRAL",
+  "civilopedia": "TXT_KEY_BUILDING_J_S_BACHS_CATHEDRAL_PEDIA",
   "commerceDoubleTime": {
    "culture": 1000
   },

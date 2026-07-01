@@ -1,8 +1,5 @@
 {
  "type": "CIVIC_CURRENCY_LESS",
- "description": "TXT_KEY_CIVIC_CURRENCY_LESS",
- "civilopedia": "TXT_KEY_CIVIC_CURRENCY_LESS_PEDIA",
- "strategy": "TXT_KEY_CIVIC_CURRENCY_LESS_STRATEGY",
  "gold": {
   "empire": {
    "percent": [
@@ -98,6 +95,9 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_CIVIC_CURRENCY_LESS",
+  "civilopedia": "TXT_KEY_CIVIC_CURRENCY_LESS_PEDIA",
+  "strategy": "TXT_KEY_CIVIC_CURRENCY_LESS_STRATEGY",
   "civicOption": "CIVICOPTION_CURRENCY"
  }
 }

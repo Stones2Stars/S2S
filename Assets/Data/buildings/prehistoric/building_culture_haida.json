@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_CULTURE_HAIDA",
- "description": "TXT_KEY_BUILDING_CULTURE_HAIDA",
- "civilopedia": "TXT_KEY_BUILDING_CULTURE_HAIDA_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -73,6 +71,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_CULTURE_HAIDA",
+  "civilopedia": "TXT_KEY_BUILDING_CULTURE_HAIDA_PEDIA",
   "nukeImmune": true,
   "noInstanceLimit": true,
   "conquestProbability": 100,

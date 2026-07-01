@@ -1,7 +1,5 @@
 {
  "type": "UNIT_MATNU",
- "description": "TXT_KEY_UNIT_MATNU",
- "civilopedia": "TXT_KEY_UNIT_MATNU_PEDIA",
  "obsoletedBy": {
   "techs": [
    "TECH_FLINTLOCK"
@@ -79,6 +77,8 @@
   "upkeep": 1
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_MATNU",
+  "civilopedia": "TXT_KEY_UNIT_MATNU_PEDIA",
   "worth": 1,
   "militaryWorth": 4,
   "xpValueAttack": 6,

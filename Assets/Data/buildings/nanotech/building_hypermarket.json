@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_HYPERMARKET",
- "description": "TXT_KEY_BUILDING_HYPERMARKET",
- "civilopedia": "TXT_KEY_BUILDING_HYPERMARKET_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_AUGMENTED_EQUIPMENT_CENTER",
@@ -1005,6 +1003,8 @@
   "construct": "AS2D_BUILD_HYPERMARKET"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_HYPERMARKET",
+  "civilopedia": "TXT_KEY_BUILDING_HYPERMARKET_PEDIA",
   "worth": 6,
   "conquestProbability": 75,
   "dcmAirbombMission": 2,

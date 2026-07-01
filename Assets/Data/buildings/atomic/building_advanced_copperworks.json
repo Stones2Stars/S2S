@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_ADVANCED_COPPERWORKS",
- "description": "TXT_KEY_BUILDING_ADVANCED_COPPERWORKS",
- "civilopedia": "TXT_KEY_BUILDING_ADVANCED_COPPERWORKS_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_RESOURCES_COPPER_INGOTS"
@@ -92,6 +90,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_ADVANCED_COPPERWORKS",
+  "civilopedia": "TXT_KEY_BUILDING_ADVANCED_COPPERWORKS_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

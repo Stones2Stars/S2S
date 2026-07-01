@@ -1,8 +1,5 @@
 {
  "type": "TECH_ARTIFICIAL_STARS",
- "description": "TXT_KEY_TECH_ARTIFICIAL_STARS",
- "civilopedia": "TXT_KEY_TECH_ARTIFICIAL_STARS_PEDIA",
- "quote": "TXT_KEY_TECH_ARTIFICIAL_STARS_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_DEEP_SPACE_COLD_FUSION",
@@ -67,6 +64,9 @@
   "soundMP": "AS2D_TECH_ARTIFICIAL_STARS"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_ARTIFICIAL_STARS",
+  "civilopedia": "TXT_KEY_TECH_ARTIFICIAL_STARS_PEDIA",
+  "quote": "TXT_KEY_TECH_ARTIFICIAL_STARS_QUOTE",
   "era": "C2C_ERA_GALACTIC",
   "worth": 48,
   "militaryWorth": 4,

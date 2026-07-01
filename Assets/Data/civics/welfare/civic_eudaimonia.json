@@ -1,8 +1,5 @@
 {
  "type": "CIVIC_EUDAIMONIA",
- "description": "TXT_KEY_CIVIC_EUDAIMONIA",
- "civilopedia": "TXT_KEY_CIVIC_EUDAIMONIA_PEDIA",
- "strategy": "TXT_KEY_CIVIC_EUDAIMONIA_STRATEGY",
  "food": {
   "empire": {
    "percent": 5
@@ -69,6 +66,9 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_CIVIC_EUDAIMONIA",
+  "civilopedia": "TXT_KEY_CIVIC_EUDAIMONIA_PEDIA",
+  "strategy": "TXT_KEY_CIVIC_EUDAIMONIA_STRATEGY",
   "civicOption": "CIVICOPTION_WELFARE",
   "upkeepLevel": "UPKEEP_EXTREME"
  }

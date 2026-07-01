@@ -1,8 +1,5 @@
 {
  "type": "TECH_ADVANCED_METALLURGY",
- "description": "TXT_KEY_TECH_ADVANCED_METALLURGY",
- "civilopedia": "TXT_KEY_TECH_ADVANCED_METALLURGY_PEDIA",
- "quote": "TXT_KEY_TECH_ADVANCED_METALLURGY_QUOTE",
  "enables": {
   "bonuses": [
    "BONUS_TITANIUM_INGOTS",
@@ -76,6 +73,9 @@
   "soundMP": "AS2D_TECH_ADVANCED_METALLURGY2"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_ADVANCED_METALLURGY",
+  "civilopedia": "TXT_KEY_TECH_ADVANCED_METALLURGY_PEDIA",
+  "quote": "TXT_KEY_TECH_ADVANCED_METALLURGY_QUOTE",
   "era": "C2C_ERA_ATOMIC",
   "worth": 40,
   "militaryWorth": 10,

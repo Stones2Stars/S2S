@@ -1,8 +1,5 @@
 {
  "type": "TECH_REGENERATIVE_MEDICINE",
- "description": "TXT_KEY_TECH_REGENERATIVE_MEDICINE",
- "civilopedia": "TXT_KEY_TECH_REGENERATIVE_MEDICINE_PEDIA",
- "quote": "TXT_KEY_TECH_REGENERATIVE_MEDICINE_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_CIRCADIAN_CHAMBER",
@@ -67,6 +64,9 @@
   "soundMP": "AS2D_TECH_REGENERATIVE_MEDICINE"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_REGENERATIVE_MEDICINE",
+  "civilopedia": "TXT_KEY_TECH_REGENERATIVE_MEDICINE_PEDIA",
+  "quote": "TXT_KEY_TECH_REGENERATIVE_MEDICINE_QUOTE",
   "era": "C2C_ERA_NANOTECH",
   "worth": 48,
   "militaryWorth": 6,

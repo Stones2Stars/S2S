@@ -1,7 +1,5 @@
 {
  "type": "UNIT_CUTTHROAT",
- "description": "TXT_KEY_UNIT_CUTTHROAT",
- "civilopedia": "TXT_KEY_CONCEPT_ESPIONAGE_PEDIA",
  "obsoletedBy": {
   "techs": [
    "TECH_RIFLING"
@@ -178,6 +176,8 @@
   ]
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_CUTTHROAT",
+  "civilopedia": "TXT_KEY_CONCEPT_ESPIONAGE_PEDIA",
   "worth": 6,
   "militaryWorth": 11,
   "xpValueAttack": 8,

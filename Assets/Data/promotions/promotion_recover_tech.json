@@ -1,6 +1,5 @@
 {
  "type": "PROMOTION_RECOVER_TECH",
- "description": "TXT_KEY_PROMOTION_RECOVER_TECH",
  "heal": {
   "unit": {
    "support": {
@@ -27,6 +26,7 @@
   "sound": "AS2D_IF_LEVELUP"
  },
  "identity": {
+  "description": "TXT_KEY_PROMOTION_RECOVER_TECH",
   "levelPrereq": 5,
   "unitCombats": [
    "UNITCOMBAT_SPECIES_HUMAN",

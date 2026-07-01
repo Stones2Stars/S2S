@@ -1,6 +1,5 @@
 {
  "type": "PROMOTION_ENKI",
- "description": "TXT_KEY_PROMOTION_ENKI",
  "withdrawal": {
   "unit": {
    "percent": 15
@@ -32,6 +31,7 @@
   "sound": "AS2D_IF_LEVELUP"
  },
  "identity": {
+  "description": "TXT_KEY_PROMOTION_ENKI",
   "stateReligionPrereq": "RELIGION_MESOPOTAMISM",
   "unitCombats": [
    "UNITCOMBAT_WOODEN_SHIPS"

@@ -1,12 +1,12 @@
 {
  "type": "PROMOTIONLINE_STALL",
- "description": "TXT_KEY_PROMOTIONLINE_STALL",
  "ui": {
   "art": {
    "icon": "art/Buttons/Promotions/Stall1Promotion.dds"
   }
  },
  "identity": {
+  "description": "TXT_KEY_PROMOTIONLINE_STALL",
   "unitCombats": [
    "UNITCOMBAT_THROWING",
    "UNITCOMBAT_MOUNTED",

@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_MINE_GEODE",
- "description": "TXT_KEY_BUILDING_MINE_GEODE",
- "civilopedia": "TXT_KEY_BUILDING_MINE_GEODE_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_RESOURCES_GEMSTONE"
@@ -70,6 +68,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_MINE_GEODE",
+  "civilopedia": "TXT_KEY_BUILDING_MINE_GEODE_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_WINDMILL",
- "description": "TXT_KEY_BUILDING_WINDMILL",
- "civilopedia": "TXT_KEY_BUILDING_WINDMILL_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_RESOURCES_FLOUR"
@@ -124,6 +122,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_WINDMILL",
+  "civilopedia": "TXT_KEY_BUILDING_WINDMILL_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

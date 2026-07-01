@@ -1,7 +1,5 @@
 {
  "type": "UNIT_BANDIT_FOOTPAD",
- "description": "TXT_KEY_UNIT_BANDIT_FOOTPAD",
- "civilopedia": "TXT_KEY_UNIT_BANDIT_FOOTPAD_PEDIA",
  "obsoletedBy": {
   "techs": [
    "TECH_RIFLING"
@@ -140,6 +138,8 @@
   "upkeep": 5
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_BANDIT_FOOTPAD",
+  "civilopedia": "TXT_KEY_UNIT_BANDIT_FOOTPAD_PEDIA",
   "worth": 2,
   "militaryWorth": 7,
   "xpValueAttack": 3,

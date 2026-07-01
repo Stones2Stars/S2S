@@ -1,7 +1,5 @@
 {
  "type": "UNIT_ALUNA_SHAMAN",
- "description": "TXT_KEY_UNIT_ALUNA_SHAMAN",
- "civilopedia": "TXT_KEY_UNIT_ALUNA_SHAMAN_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -103,6 +101,8 @@
   "upkeep": 4
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_ALUNA_SHAMAN",
+  "civilopedia": "TXT_KEY_UNIT_ALUNA_SHAMAN_PEDIA",
   "worth": 5,
   "domain": "DOMAIN_LAND",
   "defaultUnitAI": "UNITAI_PROPERTY_CONTROL",

@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_SLAUGHTERHOUSE",
- "description": "TXT_KEY_BUILDING_SLAUGHTERHOUSE",
- "civilopedia": "TXT_KEY_BUILDING_SLAUGHTERHOUSE_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_BUTCHERY",
@@ -100,6 +98,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_SLAUGHTERHOUSE",
+  "civilopedia": "TXT_KEY_BUILDING_SLAUGHTERHOUSE_PEDIA",
   "enabledCivilizations": [
    "CIVILIZATION_NPC_NEANDERTHAL"
   ],

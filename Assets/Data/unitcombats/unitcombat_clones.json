@@ -1,6 +1,5 @@
 {
  "type": "UNITCOMBAT_CLONES",
- "description": "TXT_KEY_UNITCOMBAT_CLONES",
  "capture": {
   "unit": {
    "probability": {
@@ -17,6 +16,7 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_UNITCOMBAT_CLONES",
   "forMilitary": true
  }
 }

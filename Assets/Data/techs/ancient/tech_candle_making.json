@@ -1,8 +1,5 @@
 {
  "type": "TECH_CANDLE_MAKING",
- "description": "TXT_KEY_TECH_CANDLE_MAKING",
- "civilopedia": "TXT_KEY_TECH_CANDLE_MAKING_PEDIA",
- "quote": "TXT_KEY_TECH_CANDLE_MAKING_QUOTE",
  "enables": {
   "bonuses": [
    "BONUS_CANDLES"
@@ -67,6 +64,9 @@
   "soundMP": "AS2D_TECH_CANDLE_MAKING"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_CANDLE_MAKING",
+  "civilopedia": "TXT_KEY_TECH_CANDLE_MAKING_PEDIA",
+  "quote": "TXT_KEY_TECH_CANDLE_MAKING_QUOTE",
   "era": "C2C_ERA_ANCIENT",
   "worth": 8,
   "tradeable": true,

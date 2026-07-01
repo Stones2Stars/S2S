@@ -1,7 +1,5 @@
 {
  "type": "UNIT_WORKER_INDUSTRIAL",
- "description": "TXT_KEY_UNIT_WORKER_INDUSTRIAL",
- "civilopedia": "TXT_KEY_UNIT_WORKER_PEDIA",
  "obsoletedBy": {
   "techs": [
    "TECH_MAINSTREAM_CLONING"
@@ -108,6 +106,8 @@
   "upkeep": 4
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_WORKER_INDUSTRIAL",
+  "civilopedia": "TXT_KEY_UNIT_WORKER_PEDIA",
   "worth": 1,
   "domain": "DOMAIN_LAND",
   "defaultUnitAI": "UNITAI_WORKER",

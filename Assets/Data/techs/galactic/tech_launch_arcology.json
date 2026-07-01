@@ -1,8 +1,5 @@
 {
  "type": "TECH_LAUNCH_ARCOLOGY",
- "description": "TXT_KEY_TECH_LAUNCH_ARCOLOGY",
- "civilopedia": "TXT_KEY_TECH_LAUNCH_ARCOLOGY_PEDIA",
- "quote": "TXT_KEY_TECH_LAUNCH_ARCOLOGY_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_ELYSIUM",
@@ -62,6 +59,9 @@
   "soundMP": "AS2D_TECH_LAUNCH_ARCOLOGY"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_LAUNCH_ARCOLOGY",
+  "civilopedia": "TXT_KEY_TECH_LAUNCH_ARCOLOGY_PEDIA",
+  "quote": "TXT_KEY_TECH_LAUNCH_ARCOLOGY_QUOTE",
   "era": "C2C_ERA_GALACTIC",
   "worth": 48,
   "militaryWorth": 4,

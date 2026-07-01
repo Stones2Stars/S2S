@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_TUMEN_AMUGULANG_PALACE",
- "description": "TXT_KEY_BUILDING_TUMEN_AMUGULANG_PALACE",
- "civilopedia": "TXT_KEY_BUILDING_TUMEN_AMUGULANG_PALACE_PEDIA",
  "obsoletedBy": {
   "techs": [
    "TECH_VIRTUAL_SOCIETY"
@@ -96,6 +94,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_TUMEN_AMUGULANG_PALACE",
+  "civilopedia": "TXT_KEY_BUILDING_TUMEN_AMUGULANG_PALACE_PEDIA",
   "centerInCity": true,
   "worth": 10,
   "conquestProbability": 100,

@@ -1,13 +1,13 @@
 {
  "type": "BONUS_SOYLENT_GREEN",
- "description": "TXT_KEY_BONUS_SOYLENT_GREEN",
- "civilopedia": "TXT_KEY_BONUS_SOYLENT_GREEN_PEDIA",
  "world": {
   "art": {
    "icon": "ART_DEF_BONUS_SOYLENT_GREEN"
   }
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_SOYLENT_GREEN",
+  "civilopedia": "TXT_KEY_BONUS_SOYLENT_GREEN_PEDIA",
   "bonusClassType": "BONUSCLASS_MANUFACTURED"
  }
 }

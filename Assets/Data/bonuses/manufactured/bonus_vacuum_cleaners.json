@@ -1,7 +1,5 @@
 {
  "type": "BONUS_VACUUM_CLEANERS",
- "description": "TXT_KEY_BONUS_VACUUM_CLEANERS",
- "civilopedia": "TXT_KEY_BONUS_VACUUM_CLEANERS_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_APPLIANCE_STORE",
@@ -14,6 +12,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_VACUUM_CLEANERS",
+  "civilopedia": "TXT_KEY_BONUS_VACUUM_CLEANERS_PEDIA",
   "bonusClassType": "BONUSCLASS_MANUFACTURED"
  }
 }

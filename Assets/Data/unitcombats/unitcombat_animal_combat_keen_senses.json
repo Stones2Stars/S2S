@@ -1,6 +1,5 @@
 {
  "type": "UNITCOMBAT_ANIMAL_COMBAT_KEEN_SENSES",
- "description": "TXT_KEY_UNITCOMBAT_ANIMAL_COMBAT_KEEN_SENSES",
  "vision": {
   "visibilityIntensity": {
    "INVISIBLE_SIZE": 2,
@@ -11,5 +10,8 @@
   "art": {
    "icon": "Art/Interface/Buttons/units/sparth/categories/nature_keen_senses.dds"
   }
+ },
+ "identity": {
+  "description": "TXT_KEY_UNITCOMBAT_ANIMAL_COMBAT_KEEN_SENSES"
  }
 }

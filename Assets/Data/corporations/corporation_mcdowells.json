@@ -1,7 +1,5 @@
 {
  "type": "CORPORATION_MCDOWELLS",
- "description": "TXT_KEY_BUILDING_CORPORATION_MCDOWELLS",
- "civilopedia": "TXT_KEY_BUILDING_CORPORATION_MCDOWELLS_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_BIG_MCDOWELLS_RESTAURANT"
@@ -87,6 +85,8 @@
   "sound": "AS2D_BUILD_BANK"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_CORPORATION_MCDOWELLS",
+  "civilopedia": "TXT_KEY_BUILDING_CORPORATION_MCDOWELLS_PEDIA",
   "spreadFactor": 200,
   "spread": 50
  }

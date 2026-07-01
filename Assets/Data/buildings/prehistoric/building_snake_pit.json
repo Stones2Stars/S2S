@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_SNAKE_PIT",
- "description": "TXT_KEY_BUILDING_SNAKE_PIT",
- "civilopedia": "TXT_KEY_BUILDING_SNAKE_PIT_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_RESOURCES_POISON"
@@ -46,6 +44,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_SNAKE_PIT",
+  "civilopedia": "TXT_KEY_BUILDING_SNAKE_PIT_PEDIA",
   "enabledCivilizations": [
    "CIVILIZATION_NPC_NEANDERTHAL"
   ],

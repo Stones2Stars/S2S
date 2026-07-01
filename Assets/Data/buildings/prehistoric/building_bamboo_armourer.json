@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_BAMBOO_ARMOURER",
- "description": "TXT_KEY_BUILDING_BAMBOO_ARMOURER",
- "civilopedia": "TXT_KEY_BUILDING_BAMBOO_ARMOURER_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_ARMOURER"
@@ -63,6 +61,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_BAMBOO_ARMOURER",
+  "civilopedia": "TXT_KEY_BUILDING_BAMBOO_ARMOURER_PEDIA",
   "enabledCivilizations": [
    "CIVILIZATION_NPC_NEANDERTHAL"
   ],

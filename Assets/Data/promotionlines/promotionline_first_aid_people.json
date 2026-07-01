@@ -1,12 +1,12 @@
 {
  "type": "PROMOTIONLINE_FIRST_AID_PEOPLE",
- "description": "TXT_KEY_PROMOTIONLINE_FIRST_AID_PEOPLE",
  "ui": {
   "art": {
    "icon": "Art/Buttons/Promotions/HealPeoplePromotion.dds"
   }
  },
  "identity": {
+  "description": "TXT_KEY_PROMOTIONLINE_FIRST_AID_PEOPLE",
   "unitCombats": [
    "UNITCOMBAT_HEALS_PEOPLE"
   ],

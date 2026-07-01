@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_ENERGIZED_CRYSTALS",
- "description": "TXT_KEY_BUILDING_ENERGIZED_CRYSTALS",
- "civilopedia": "TXT_KEY_BUILDING_ENERGIZED_CRYSTALS_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -57,6 +55,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_ENERGIZED_CRYSTALS",
+  "civilopedia": "TXT_KEY_BUILDING_ENERGIZED_CRYSTALS_PEDIA",
   "specialBuildingType": "SPECIALBUILDING_PUNK_CRYSTAL",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,

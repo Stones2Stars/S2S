@@ -1,7 +1,5 @@
 {
  "type": "TERRAIN_PERMAFROST",
- "description": "TXT_KEY_TERRAIN_PERMAFROST",
- "civilopedia": "TXT_KEY_TERRAIN_PERMAFROST_PEDIA",
  "commerce": {
   "plot": {
    "flat": [
@@ -131,6 +129,8 @@
   "soundscape": "ASSS_TUNDRA_SELECT_AMB"
  },
  "identity": {
+  "description": "TXT_KEY_TERRAIN_PERMAFROST",
+  "civilopedia": "TXT_KEY_TERRAIN_PERMAFROST_PEDIA",
   "mapCategories": [
    "MAPCATEGORY_EARTH"
   ],

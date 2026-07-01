@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_AUGMENTED_SPORTS_ARENA",
- "description": "TXT_KEY_BUILDING_AUGMENTED_SPORTS_ARENA",
- "civilopedia": "TXT_KEY_BUILDING_AUGMENTED_SPORTS_ARENA_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_HIGH_TECH_CULTURAL_ENRICHMENT"
@@ -97,6 +95,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_AUGMENTED_SPORTS_ARENA",
+  "civilopedia": "TXT_KEY_BUILDING_AUGMENTED_SPORTS_ARENA_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

@@ -1,7 +1,5 @@
 {
  "type": "UNIT_AUTOMATONS",
- "description": "TXT_KEY_UNIT_AUTOMATONS",
- "civilopedia": "TXT_KEY_UNIT_AUTOMATONS_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -46,6 +44,8 @@
   "upkeep": 4
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_AUTOMATONS",
+  "civilopedia": "TXT_KEY_UNIT_AUTOMATONS_PEDIA",
   "worth": 5,
   "militaryWorth": 250,
   "xpValueAttack": 1,

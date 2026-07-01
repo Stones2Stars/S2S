@@ -1,7 +1,5 @@
 {
  "type": "PROJECT_THEORY_OF_EVOLUTION",
- "description": "TXT_KEY_BUILDING_THEORY_OF_EVOLUTION",
- "civilopedia": "TXT_KEY_BUILDING_THEORY_OF_EVOLUTION_PEDIA",
  "happiness": {
   "empire": {
    "flat": 1
@@ -31,6 +29,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_THEORY_OF_EVOLUTION",
+  "civilopedia": "TXT_KEY_BUILDING_THEORY_OF_EVOLUTION_PEDIA",
   "mapCategories": [
    "MAPCATEGORY_EARTH"
   ],

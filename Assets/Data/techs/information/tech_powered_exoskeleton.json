@@ -1,8 +1,5 @@
 {
  "type": "TECH_POWERED_EXOSKELETON",
- "description": "TXT_KEY_TECH_POWERED_EXOSKELETON",
- "civilopedia": "TXT_KEY_TECH_POWERED_EXOSKELETON_PEDIA",
- "quote": "TXT_KEY_TECH_POWERED_EXOSKELETON_QUOTE",
  "enables": {
   "bonuses": [
    "BONUS_EXOSKELETONS",
@@ -68,6 +65,9 @@
   "soundMP": "AS2D_TECH_POWERED_EXOSKELETON"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_POWERED_EXOSKELETON",
+  "civilopedia": "TXT_KEY_TECH_POWERED_EXOSKELETON_PEDIA",
+  "quote": "TXT_KEY_TECH_POWERED_EXOSKELETON_QUOTE",
   "era": "C2C_ERA_INFORMATION",
   "worth": 48,
   "tradeable": true,

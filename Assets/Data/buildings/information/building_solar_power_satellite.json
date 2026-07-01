@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_SOLAR_POWER_SATELLITE",
- "description": "TXT_KEY_BUILDING_SOLAR_POWER_SATELLITE",
- "civilopedia": "TXT_KEY_BUILDING_SOLAR_POWER_SATELLITE_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_MICROWAVE_POWER_PLANT"
@@ -60,6 +58,8 @@
   "construct": "AS2D_BUILD_SPACEWAY"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_SOLAR_POWER_SATELLITE",
+  "civilopedia": "TXT_KEY_BUILDING_SOLAR_POWER_SATELLITE_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_DEBTORS_PRISON",
- "description": "TXT_KEY_BUILDING_DEBTORS_PRISON",
- "civilopedia": "TXT_KEY_BUILDING_DEBTORS_PRISON_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_JAIL"
@@ -88,6 +86,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_DEBTORS_PRISON",
+  "civilopedia": "TXT_KEY_BUILDING_DEBTORS_PRISON_PEDIA",
   "advisor": "ADVISOR_MILITARY",
   "visibilityPriority": 1,
   "mapCategories": [

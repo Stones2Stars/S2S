@@ -1,8 +1,5 @@
 {
  "type": "TECH_CONGLOMERATES",
- "description": "TXT_KEY_TECH_CONGLOMERATES",
- "civilopedia": "TXT_KEY_TECH_CONGLOMERATES_PEDIA",
- "quote": "TXT_KEY_TECH_CONGLOMERATES_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_BANK_OF_CHINA_TOWER",
@@ -74,6 +71,9 @@
   "soundMP": "AS2D_TECH_CONGLOMERATES"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_CONGLOMERATES",
+  "civilopedia": "TXT_KEY_TECH_CONGLOMERATES_PEDIA",
+  "quote": "TXT_KEY_TECH_CONGLOMERATES_QUOTE",
   "era": "C2C_ERA_ATOMIC",
   "worth": 40,
   "militaryWorth": 10,

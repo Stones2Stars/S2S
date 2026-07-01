@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_STREET_CLEANER",
- "description": "TXT_KEY_BUILDING_STREET_CLEANER",
- "civilopedia": "TXT_KEY_BUILDING_STREET_CLEANER_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -61,6 +59,8 @@
   "construct": "AS2D_BUILD_GARBAGE_DUMP"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_STREET_CLEANER",
+  "civilopedia": "TXT_KEY_BUILDING_STREET_CLEANER_PEDIA",
   "worth": 2,
   "militaryWorth": 2,
   "conquestProbability": 75,

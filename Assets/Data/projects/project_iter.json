@@ -1,7 +1,5 @@
 {
  "type": "PROJECT_ITER",
- "description": "TXT_KEY_PROJECT_ITER",
- "civilopedia": "TXT_KEY_PROJECT_ITER_PEDIA",
  "grants": {
   "grantsSpecialBuilding": "SPECIALBUILDING_D_T_FUSION_POWER_PLANT"
  },
@@ -17,6 +15,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_PROJECT_ITER",
+  "civilopedia": "TXT_KEY_PROJECT_ITER_PEDIA",
   "mapCategories": [
    "MAPCATEGORY_EARTH"
   ],

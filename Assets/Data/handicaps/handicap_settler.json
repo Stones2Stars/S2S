@@ -1,7 +1,5 @@
 {
  "type": "HANDICAP_SETTLER",
- "description": "TXT_KEY_HANDICAP_SETTLER",
- "help": "TXT_KEY_HANDICAP_SETTLER_HELP",
  "maintenance": {
   "empire": {
    "colony": {
@@ -202,6 +200,8 @@
   "startingWorkerUnits": 1
  },
  "identity": {
+  "description": "TXT_KEY_HANDICAP_SETTLER",
+  "help": "TXT_KEY_HANDICAP_SETTLER_HELP",
   "advancedStart": {
    "pointsMod": 160,
    "aiPercent": 100

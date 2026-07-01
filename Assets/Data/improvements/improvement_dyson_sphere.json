@@ -1,7 +1,5 @@
 {
  "type": "IMPROVEMENT_DYSON_SPHERE",
- "description": "TXT_KEY_IMPROVEMENT_DYSON_SPHERE",
- "civilopedia": "TXT_KEY_IMPROVEMENT_DYSON_SPHERE_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -60,6 +58,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_IMPROVEMENT_DYSON_SPHERE",
+  "civilopedia": "TXT_KEY_IMPROVEMENT_DYSON_SPHERE_PEDIA",
   "extraterrestrial": true,
   "pillageGold": 200
  }

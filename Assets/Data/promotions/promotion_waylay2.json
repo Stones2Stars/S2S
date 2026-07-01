@@ -1,6 +1,5 @@
 {
  "type": "PROMOTION_WAYLAY2",
- "description": "TXT_KEY_PROMOTION_WAYLAY2",
  "strength": {
   "unit": {
    "stealth": {
@@ -28,6 +27,7 @@
   "sound": "AS2D_IF_LEVELUP"
  },
  "identity": {
+  "description": "TXT_KEY_PROMOTION_WAYLAY2",
   "unitCombats": [
    "UNITCOMBAT_COMBATANT"
   ],

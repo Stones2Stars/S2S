@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_FACTORY_REPLACEMENT_ORGANS",
- "description": "TXT_KEY_BUILDING_FACTORY_REPLACEMENT_ORGANS",
- "civilopedia": "TXT_KEY_BUILDING_FACTORY_REPLACEMENT_ORGANS_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_MEDICAL_MEGACOMPLEX"
@@ -72,6 +70,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_FACTORY_REPLACEMENT_ORGANS",
+  "civilopedia": "TXT_KEY_BUILDING_FACTORY_REPLACEMENT_ORGANS_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

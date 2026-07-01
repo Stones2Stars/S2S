@@ -1,8 +1,5 @@
 {
  "type": "TECH_ANTIMATTER_PRODUCTION",
- "description": "TXT_KEY_TECH_ANTIMATTER_PRODUCTION",
- "civilopedia": "TXT_KEY_TECH_ANTIMATTER_PRODUCTION_PEDIA",
- "quote": "TXT_KEY_TECH_ANTIMATTER_PRODUCTION_QUOTE",
  "enables": {
   "bonuses": [
    "BONUS_ANTIMATTER"
@@ -56,6 +53,9 @@
   "soundMP": "AS2D_TECH_GENERIC"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_ANTIMATTER_PRODUCTION",
+  "civilopedia": "TXT_KEY_TECH_ANTIMATTER_PRODUCTION_PEDIA",
+  "quote": "TXT_KEY_TECH_ANTIMATTER_PRODUCTION_QUOTE",
   "era": "C2C_ERA_GALACTIC",
   "worth": 48,
   "tradeable": true,

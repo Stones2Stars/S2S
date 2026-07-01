@@ -1,8 +1,5 @@
 {
  "type": "TECH_ANTI_AGING_MEDICINE",
- "description": "TXT_KEY_TECH_ANTI_AGING_MEDICINE",
- "civilopedia": "TXT_KEY_TECH_ANTI_AGING_MEDICINE_PEDIA",
- "quote": "TXT_KEY_TECH_ANTI_AGING_MEDICINE_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_CELL_REPAIR_CENTER",
@@ -59,6 +56,9 @@
   "soundMP": "AS2D_TECH_ANTI_AGING_MEDICINE"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_ANTI_AGING_MEDICINE",
+  "civilopedia": "TXT_KEY_TECH_ANTI_AGING_MEDICINE_PEDIA",
+  "quote": "TXT_KEY_TECH_ANTI_AGING_MEDICINE_QUOTE",
   "era": "C2C_ERA_NANOTECH",
   "worth": 48,
   "militaryWorth": 6,

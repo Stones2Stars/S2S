@@ -1,8 +1,5 @@
 {
  "type": "TECH_GUIDED_WEAPONS",
- "description": "TXT_KEY_TECH_GUIDED_WEAPONS",
- "civilopedia": "TXT_KEY_TECH_GUIDED_WEAPONS_PEDIA",
- "quote": "TXT_KEY_TECH_GUIDED_WEAPONS_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_ANTI_MISSILE_BATTERIES"
@@ -75,6 +72,9 @@
   "soundMP": "AS2D_TECH_GUIDED_WEAPONS"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_GUIDED_WEAPONS",
+  "civilopedia": "TXT_KEY_TECH_GUIDED_WEAPONS_PEDIA",
+  "quote": "TXT_KEY_TECH_GUIDED_WEAPONS_QUOTE",
   "era": "C2C_ERA_ATOMIC",
   "worth": 48,
   "militaryWorth": 10,

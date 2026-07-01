@@ -1,8 +1,5 @@
 {
  "type": "TRAIT_STUBBORN",
- "description": "TXT_KEY_TRAIT_STUBBORN",
- "civilopedia": "TXT_KEY_TRAIT_STUBBORN_PEDIA",
- "strategy": "TXT_KEY_TRAIT_STUBBORN_STRATEGY",
  "excludes": [
   "TRAIT_DYNAMIC"
  ],
@@ -492,6 +489,9 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_TRAIT_STUBBORN",
+  "civilopedia": "TXT_KEY_TRAIT_STUBBORN_PEDIA",
+  "strategy": "TXT_KEY_TRAIT_STUBBORN_STRATEGY",
   "negativeTrait": true
  }
 }

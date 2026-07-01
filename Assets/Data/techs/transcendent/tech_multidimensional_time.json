@@ -1,8 +1,5 @@
 {
  "type": "TECH_MULTIDIMENSIONAL_TIME",
- "description": "TXT_KEY_TECH_MULTIDIMENSIONAL_TIME",
- "civilopedia": "TXT_KEY_TECH_MULTIDIMENSIONAL_TIME_PEDIA",
- "quote": "TXT_KEY_TECH_MULTIDIMENSIONAL_TIME_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_HYPERSPACE_NONCAUSAL_ENGINEERING_FIRM",
@@ -57,6 +54,9 @@
   "soundMP": "AS2D_TECH_GENERIC"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_MULTIDIMENSIONAL_TIME",
+  "civilopedia": "TXT_KEY_TECH_MULTIDIMENSIONAL_TIME_PEDIA",
+  "quote": "TXT_KEY_TECH_MULTIDIMENSIONAL_TIME_QUOTE",
   "era": "C2C_ERA_TRANSCENDENT",
   "worth": 48,
   "tradeable": true,

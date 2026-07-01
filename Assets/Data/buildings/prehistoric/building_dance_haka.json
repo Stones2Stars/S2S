@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_DANCE_HAKA",
- "description": "TXT_KEY_BUILDING_DANCE_HAKA",
- "civilopedia": "TXT_KEY_BUILDING_DANCE_HAKA_PEDIA",
  "obsoletedBy": {
   "techs": [
    "TECH_MILITARY_SCIENCE"
@@ -110,6 +108,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_DANCE_HAKA",
+  "civilopedia": "TXT_KEY_BUILDING_DANCE_HAKA_PEDIA",
   "nukeImmune": true,
   "advisor": "ADVISOR_CULTURE",
   "mapCategories": [

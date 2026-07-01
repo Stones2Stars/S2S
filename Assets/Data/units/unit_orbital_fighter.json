@@ -1,7 +1,5 @@
 {
  "type": "UNIT_ORBITAL_FIGHTER",
- "description": "TXT_KEY_UNIT_ORBITAL_FIGHTER",
- "civilopedia": "TXT_KEY_UNIT_ORBITAL_FIGHTER_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -77,6 +75,8 @@
   "upkeep": 21
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_ORBITAL_FIGHTER",
+  "civilopedia": "TXT_KEY_UNIT_ORBITAL_FIGHTER_PEDIA",
   "worth": 4,
   "militaryWorth": 855,
   "xpValueAttack": 6,

@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_EXILE_PRACTICES",
- "description": "TXT_KEY_BUILDING_EXILE_PRACTICES",
- "civilopedia": "TXT_KEY_BUILDING_EXILE_PRACTICES_PEDIA",
  "enables": {
   "units": [
    "UNIT_EXILE"
@@ -70,6 +68,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_EXILE_PRACTICES",
+  "civilopedia": "TXT_KEY_BUILDING_EXILE_PRACTICES_PEDIA",
   "nukeImmune": true,
   "militaryWorth": 1,
   "advisor": "ADVISOR_MILITARY",

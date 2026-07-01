@@ -1,8 +1,5 @@
 {
  "type": "BUILDING_C_L_ASIAN",
- "description": "TXT_KEY_BUILDING_C_L_ASIAN",
- "civilopedia": "TXT_KEY_BUILDING_C_L_PEDIA",
- "help": "TXT_KEY_BUILDING_C_L_HELP",
  "enables": {
   "buildings": [
    "BUILDING_ACUPUNCTURISTS_SHOP",
@@ -166,6 +163,9 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_C_L_ASIAN",
+  "civilopedia": "TXT_KEY_BUILDING_C_L_PEDIA",
+  "help": "TXT_KEY_BUILDING_C_L_HELP",
   "nukeImmune": true,
   "conquestProbability": 85,
   "mapCategories": [

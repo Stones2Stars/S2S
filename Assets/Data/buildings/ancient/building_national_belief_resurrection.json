@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_NATIONAL_BELIEF_RESURRECTION",
- "description": "TXT_KEY_BUILDING_NATIONAL_BELIEF_RESURRECTION",
- "civilopedia": "TXT_KEY_BUILDING_NATIONAL_BELIEF_RESURRECTION_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -36,6 +34,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_NATIONAL_BELIEF_RESURRECTION",
+  "civilopedia": "TXT_KEY_BUILDING_NATIONAL_BELIEF_RESURRECTION_PEDIA",
   "notConstructible": true,
   "nukeImmune": true,
   "neverCapture": true,

@@ -1,8 +1,5 @@
 {
  "type": "TECH_FUNDAMENTALISM",
- "description": "TXT_KEY_TECH_FUNDAMENTALISM",
- "civilopedia": "TXT_KEY_TECH_FUNDAMENTALISM_PEDIA",
- "quote": "TXT_KEY_TECH_FUNDAMENTALISM_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_ALAMUT",
@@ -78,6 +75,9 @@
   "soundMP": "AS2D_TECH_FUNDAMENTALISM"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_FUNDAMENTALISM",
+  "civilopedia": "TXT_KEY_TECH_FUNDAMENTALISM_PEDIA",
+  "quote": "TXT_KEY_TECH_FUNDAMENTALISM_QUOTE",
   "era": "C2C_ERA_MEDIEVAL",
   "worth": 24,
   "tradeable": true,

@@ -1,12 +1,12 @@
 {
  "type": "UNITCOMBAT_WEAPON_DIST_SLING",
- "description": "TXT_KEY_UNITCOMBAT_WEAPON_DIST_SLING",
  "ui": {
   "art": {
    "icon": "Art/Interface/Buttons/units/sparth/categories/wields_distance.dds"
   }
  },
  "identity": {
+  "description": "TXT_KEY_UNITCOMBAT_WEAPON_DIST_SLING",
   "base": {
    "rangedBombardDamage": 15,
    "rangedBombardLimit": 10,

@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_BURJ_KHALIFA",
- "description": "TXT_KEY_BUILDING_BURJ_KHALIFA",
- "civilopedia": "TXT_KEY_BUILDING_BURJ_KHALIFA_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -105,6 +103,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_BURJ_KHALIFA",
+  "civilopedia": "TXT_KEY_BUILDING_BURJ_KHALIFA_PEDIA",
   "nukeImmune": true,
   "teamShare": true,
   "worth": 20,

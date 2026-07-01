@@ -1,6 +1,5 @@
 {
  "type": "PROMOTION_SLAVE_MASTER3",
- "description": "TXT_KEY_PROMOTION_SLAVE_MASTER3",
  "upkeep": {
   "unit": {
    "modifier": {
@@ -25,5 +24,8 @@
  },
  "sound": {
   "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_SLAVE_MASTER3"
  }
 }

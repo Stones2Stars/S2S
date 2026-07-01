@@ -1,7 +1,5 @@
 {
  "type": "TERRAIN_OUTER_SOLAR_SYSTEM",
- "description": "TXT_KEY_TERRAIN_OUTER_SOLAR_SYSTEM",
- "civilopedia": "TXT_KEY_TERRAIN_OUTER_SOLAR_SYSTEM_PEDIA",
  "commerce": {
   "plot": {
    "flat": 1
@@ -23,6 +21,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_TERRAIN_OUTER_SOLAR_SYSTEM",
+  "civilopedia": "TXT_KEY_TERRAIN_OUTER_SOLAR_SYSTEM_PEDIA",
   "found": true,
   "movementCost": 1,
   "mapCategories": [

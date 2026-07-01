@@ -1,6 +1,5 @@
 {
  "type": "PROCESS_CULTURE",
- "description": "TXT_KEY_PROCESS_CULTURE",
  "culture": {
   "city": {
    "percent": 50
@@ -10,5 +9,8 @@
   "art": {
    "icon": "Art/Interface/Buttons/Process/ProcessCulture.dds"
   }
+ },
+ "identity": {
+  "description": "TXT_KEY_PROCESS_CULTURE"
  }
 }

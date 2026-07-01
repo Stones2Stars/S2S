@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_INTERSTELLAR_CHRONOTON_CANNONS",
- "description": "TXT_KEY_BUILDING_INTERSTELLAR_CHRONOTON_CANNONS",
- "civilopedia": "TXT_KEY_BUILDING_INTERSTELLAR_CHRONOTON_CANNONS_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -60,6 +58,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_INTERSTELLAR_CHRONOTON_CANNONS",
+  "civilopedia": "TXT_KEY_BUILDING_INTERSTELLAR_CHRONOTON_CANNONS_PEDIA",
   "sightRange": 1,
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,

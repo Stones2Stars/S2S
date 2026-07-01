@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_SPICE_VOYAGE",
- "description": "TXT_KEY_BUILDING_SPICE_VOYAGE",
- "civilopedia": "TXT_KEY_BUILDING_SPICE_VOYAGE_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_RESOURCES_SEASONING"
@@ -61,6 +59,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_SPICE_VOYAGE",
+  "civilopedia": "TXT_KEY_BUILDING_SPICE_VOYAGE_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

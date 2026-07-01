@@ -1,7 +1,5 @@
 {
  "type": "BONUS_SMART_MEDICINE",
- "description": "TXT_KEY_BONUS_SMART_MEDICINE",
- "civilopedia": "TXT_KEY_BONUS_SMART_MEDICINE_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_MEDICAL_DIAGNOSTAT",
@@ -27,6 +25,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_SMART_MEDICINE",
+  "civilopedia": "TXT_KEY_BONUS_SMART_MEDICINE_PEDIA",
   "bonusClassType": "BONUSCLASS_MANUFACTURED"
  }
 }

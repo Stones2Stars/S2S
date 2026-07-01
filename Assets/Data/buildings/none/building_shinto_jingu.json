@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_SHINTO_JINGU",
- "description": "TXT_KEY_BUILDING_SHINTO_JINGU",
- "civilopedia": "TXT_KEY_BUILDING_SHINTO_JINGU_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -126,6 +124,8 @@
   "construct": "SND_BUILD_SHINTO"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_SHINTO_JINGU",
+  "civilopedia": "TXT_KEY_BUILDING_SHINTO_JINGU_PEDIA",
   "neverCapture": true,
   "worth": 6,
   "specialBuildingType": "SPECIALBUILDING_CATHEDRAL",

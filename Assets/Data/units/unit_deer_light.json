@@ -1,7 +1,5 @@
 {
  "type": "UNIT_DEER_LIGHT",
- "description": "TXT_KEY_UNIT_DEER_LIGHT",
- "civilopedia": "TXT_KEY_UNIT_DEER_LIGHT_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -142,6 +140,8 @@
   "production": 425
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_DEER_LIGHT",
+  "civilopedia": "TXT_KEY_UNIT_DEER_LIGHT_PEDIA",
   "worth": 2,
   "militaryWorth": 8,
   "xpValueAttack": 1,

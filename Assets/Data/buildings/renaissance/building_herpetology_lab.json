@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_HERPETOLOGY_LAB",
- "description": "TXT_KEY_BUILDING_HERPETOLOGY_LAB",
- "civilopedia": "TXT_KEY_BUILDING_HERPETOLOGY_LAB_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -103,6 +101,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_HERPETOLOGY_LAB",
+  "civilopedia": "TXT_KEY_BUILDING_HERPETOLOGY_LAB_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

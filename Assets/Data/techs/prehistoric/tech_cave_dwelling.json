@@ -1,8 +1,5 @@
 {
  "type": "TECH_CAVE_DWELLING",
- "description": "TXT_KEY_TECH_CAVE_DWELLING",
- "civilopedia": "TXT_KEY_TECH_CAVE_DWELLING_PEDIA",
- "quote": "TXT_KEY_TECH_CAVE_DWELLING_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_CAVE_SHELTER",
@@ -50,6 +47,9 @@
   "soundMP": "AS2D_TECH_CAVE_DWELLING"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_CAVE_DWELLING",
+  "civilopedia": "TXT_KEY_TECH_CAVE_DWELLING_PEDIA",
+  "quote": "TXT_KEY_TECH_CAVE_DWELLING_QUOTE",
   "era": "C2C_ERA_PREHISTORIC",
   "worth": 2,
   "tradeable": true,

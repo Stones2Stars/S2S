@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_INTERSTELLAR_DARK_MATTER_REACTOR",
- "description": "TXT_KEY_BUILDING_INTERSTELLAR_DARK_MATTER_REACTOR",
- "civilopedia": "TXT_KEY_BUILDING_INTERSTELLAR_DARK_MATTER_REACTOR_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_INTERSTELLAR_FALSE_VACUUM_TRAP",
@@ -53,6 +51,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_INTERSTELLAR_DARK_MATTER_REACTOR",
+  "civilopedia": "TXT_KEY_BUILDING_INTERSTELLAR_DARK_MATTER_REACTOR_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

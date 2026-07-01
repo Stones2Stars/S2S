@@ -1,8 +1,5 @@
 {
  "type": "TECH_GASTRONOMY",
- "description": "TXT_KEY_TECH_GASTRONOMY",
- "civilopedia": "TXT_KEY_TECH_GASTRONOMY_PEDIA",
- "quote": "TXT_KEY_TECH_GASTRONOMY_QUOTE",
  "enables": {
   "bonuses": [
    "BONUS_ENERGY_DRINK"
@@ -61,6 +58,9 @@
   "soundMP": "AS2D_TECH_GASTRONOMY"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_GASTRONOMY",
+  "civilopedia": "TXT_KEY_TECH_GASTRONOMY_PEDIA",
+  "quote": "TXT_KEY_TECH_GASTRONOMY_QUOTE",
   "era": "C2C_ERA_ATOMIC",
   "worth": 48,
   "militaryWorth": 4,

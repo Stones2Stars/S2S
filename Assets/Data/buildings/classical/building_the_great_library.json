@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_THE_GREAT_LIBRARY",
- "description": "TXT_KEY_BUILDING_THE_GREAT_LIBRARY",
- "civilopedia": "TXT_KEY_BUILDING_THE_GREAT_LIBRARY_PEDIA",
  "obsoletedBy": {
   "techs": [
    "TECH_SCIENTIFIC_METHOD"
@@ -110,6 +108,8 @@
   "construct": "AS2D_BUILD_GREATLIBRARY"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_THE_GREAT_LIBRARY",
+  "civilopedia": "TXT_KEY_BUILDING_THE_GREAT_LIBRARY_PEDIA",
   "commerceDoubleTime": {
    "culture": 1000
   },

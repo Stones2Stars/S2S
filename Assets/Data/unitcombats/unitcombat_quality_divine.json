@@ -1,6 +1,5 @@
 {
  "type": "UNITCOMBAT_QUALITY_DIVINE",
- "description": "TXT_KEY_UNITCOMBAT_QUALITY_DIVINE",
  "experience": {
   "unit": {
    "percent": -75
@@ -32,6 +31,7 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_UNITCOMBAT_QUALITY_DIVINE",
   "base": {
    "quality": 10
   }

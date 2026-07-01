@@ -1,6 +1,5 @@
 {
  "type": "ROUTE_PAVED_ROAD",
- "description": "TXT_KEY_ROUTE_PAVED_ROAD",
  "production": {
   "plot": {
    "improvements": {
@@ -49,6 +48,7 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_ROUTE_PAVED_ROAD",
   "value": 4,
   "advancedStart": {
    "cost": 8

@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_TRITON_COLONY",
- "description": "TXT_KEY_BUILDING_TRITON_COLONY",
- "civilopedia": "TXT_KEY_BUILDING_TRITON_COLONY_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_TRITON_GEOTHERMAL_POWER_PLANT"
@@ -52,6 +50,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_TRITON_COLONY",
+  "civilopedia": "TXT_KEY_BUILDING_TRITON_COLONY_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

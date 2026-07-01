@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_SIKH_GURDWARA",
- "description": "TXT_KEY_BUILDING_SIKH_GURDWARA",
- "civilopedia": "TXT_KEY_BUILDING_SIKH_GURDWARA_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_NATIONAL_BELIEF_KARMA",
@@ -134,6 +132,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_SIKH_GURDWARA",
+  "civilopedia": "TXT_KEY_BUILDING_SIKH_GURDWARA_PEDIA",
   "neverCapture": true,
   "worth": 4,
   "specialBuildingType": "SPECIALBUILDING_MONASTERY_II",

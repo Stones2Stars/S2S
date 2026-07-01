@@ -1,9 +1,11 @@
 {
  "type": "PROMOTIONLINE_AGRICULTURAL",
- "description": "TXT_KEY_PROMOTIONLINE_AGRICULTURAL",
  "ui": {
   "art": {
    "icon": "art/Buttons/Traits/TraitAggricultural.dds"
   }
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTIONLINE_AGRICULTURAL"
  }
 }

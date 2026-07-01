@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_CAMP_EMU",
- "description": "TXT_KEY_BUILDING_CAMP_EMU",
- "civilopedia": "TXT_KEY_BUILDING_CAMP_EMU_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_EMU_EGG_CARVER",
@@ -91,6 +89,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_CAMP_EMU",
+  "civilopedia": "TXT_KEY_BUILDING_CAMP_EMU_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

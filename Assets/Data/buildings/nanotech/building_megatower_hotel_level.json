@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_MEGATOWER_HOTEL_LEVEL",
- "description": "TXT_KEY_BUILDING_MEGATOWER_HOTEL_LEVEL",
- "civilopedia": "TXT_KEY_BUILDING_MEGATOWER_HOTEL_LEVEL_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_AERIAL_HOTEL"
@@ -73,6 +71,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_MEGATOWER_HOTEL_LEVEL",
+  "civilopedia": "TXT_KEY_BUILDING_MEGATOWER_HOTEL_LEVEL_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

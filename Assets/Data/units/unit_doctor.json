@@ -1,7 +1,5 @@
 {
  "type": "UNIT_DOCTOR",
- "description": "TXT_KEY_UNIT_DOCTOR",
- "civilopedia": "TXT_KEY_CONCEPT_GREAT_DOCTOR_PEDIA",
  "skills": {
   "goldenAge": true
  },
@@ -72,6 +70,8 @@
   ]
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_DOCTOR",
+  "civilopedia": "TXT_KEY_CONCEPT_GREAT_DOCTOR_PEDIA",
   "spawnOnly": true,
   "worth": 1,
   "domain": "DOMAIN_LAND",

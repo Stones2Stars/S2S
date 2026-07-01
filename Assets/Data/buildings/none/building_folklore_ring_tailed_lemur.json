@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_FOLKLORE_RING_TAILED_LEMUR",
- "description": "TXT_KEY_BUILDING_FOLKLORE_RING_TAILED_LEMUR",
- "civilopedia": "TXT_KEY_BUILDING_FOLKLORE_ANIMAL_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_FOLKLORE_T_OLD_MAN_OF_THE_FOREST"
@@ -77,6 +75,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_FOLKLORE_RING_TAILED_LEMUR",
+  "civilopedia": "TXT_KEY_BUILDING_FOLKLORE_ANIMAL_PEDIA",
   "notConstructible": true,
   "nukeImmune": true,
   "neverCapture": true,

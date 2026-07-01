@@ -1,6 +1,5 @@
 {
  "type": "UNITCOMBAT_EXPLORER",
- "description": "TXT_KEY_UNITCOMBAT_EXPLORER",
  "strength": {
   "unit": {
    "damageModifier": {
@@ -34,6 +33,7 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_UNITCOMBAT_EXPLORER",
   "ggPointsForUnits": [
    "UNIT_GREAT_HUNTER"
   ]

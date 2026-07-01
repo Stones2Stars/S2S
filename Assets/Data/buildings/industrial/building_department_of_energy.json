@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_DEPARTMENT_OF_ENERGY",
- "description": "TXT_KEY_BUILDING_DEPARTMENT_OF_ENERGY",
- "civilopedia": "TXT_KEY_BUILDING_DEPARTMENT_OF_ENERGY_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_ORDINANCE_CLEAN_AIR_ACT"
@@ -63,6 +61,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_DEPARTMENT_OF_ENERGY",
+  "civilopedia": "TXT_KEY_BUILDING_DEPARTMENT_OF_ENERGY_PEDIA",
   "neverCapture": true,
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [

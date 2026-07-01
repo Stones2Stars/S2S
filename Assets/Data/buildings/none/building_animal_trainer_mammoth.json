@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_ANIMAL_TRAINER_MAMMOTH",
- "description": "TXT_KEY_BUILDING_ANIMAL_TRAINER_MAMMOTH",
- "civilopedia": "TXT_KEY_BUILDING_ANIMAL_TRAINER_MAMMOTH_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_HERITAGE_MAMMOTH"
@@ -89,6 +87,8 @@
   "construct": "AS2D_BUILD_GRANARY"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_ANIMAL_TRAINER_MAMMOTH",
+  "civilopedia": "TXT_KEY_BUILDING_ANIMAL_TRAINER_MAMMOTH_PEDIA",
   "worth": 4,
   "militaryWorth": 2,
   "conquestProbability": 100,

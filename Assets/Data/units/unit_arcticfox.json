@@ -1,7 +1,5 @@
 {
  "type": "UNIT_ARCTICFOX",
- "description": "TXT_KEY_UNIT_ARCTICFOX",
- "civilopedia": "TXT_KEY_UNIT_ARCTICFOX_PEDIA",
  "skills": {
   "assassin": true,
   "blendIntoCity": true,
@@ -72,6 +70,8 @@
   ]
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_ARCTICFOX",
+  "civilopedia": "TXT_KEY_UNIT_ARCTICFOX_PEDIA",
   "spawnOnly": true,
   "xpValueAttack": 3,
   "xpValueDefense": 2,

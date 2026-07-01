@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_FARNSWORTH_ELECTRONICS_LAB",
- "description": "TXT_KEY_BUILDING_FARNSWORTH_ELECTRONICS_LAB",
- "civilopedia": "TXT_KEY_BUILDING_FARNSWORTH_ELECTRONICS_LAB_PEDIA",
  "obsoletedBy": {
   "techs": [
    "TECH_CLOUD_COMPUTING"
@@ -67,6 +65,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_FARNSWORTH_ELECTRONICS_LAB",
+  "civilopedia": "TXT_KEY_BUILDING_FARNSWORTH_ELECTRONICS_LAB_PEDIA",
   "specialBuildingType": "SPECIALBUILDING_PUNK_DIESEL",
   "advisor": "ADVISOR_SCIENCE",
   "mapCategories": [

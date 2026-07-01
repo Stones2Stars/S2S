@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_GLOBE_THEATRE",
- "description": "TXT_KEY_BUILDING_GLOBE_THEATRE",
- "civilopedia": "TXT_KEY_BUILDING_GLOBE_THEATRE_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -91,6 +89,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_GLOBE_THEATRE",
+  "civilopedia": "TXT_KEY_BUILDING_GLOBE_THEATRE_PEDIA",
   "commerceDoubleTime": {
    "culture": 1000
   },

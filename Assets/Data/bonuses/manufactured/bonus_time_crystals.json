@@ -1,7 +1,5 @@
 {
  "type": "BONUS_TIME_CRYSTALS",
- "description": "TXT_KEY_BONUS_TIME_CRYSTALS",
- "civilopedia": "TXT_KEY_BONUS_TIME_CRYSTALS_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_INTERGALACTIC_AESTIVATION_CENTER",
@@ -14,6 +12,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_TIME_CRYSTALS",
+  "civilopedia": "TXT_KEY_BONUS_TIME_CRYSTALS_PEDIA",
   "bonusClassType": "BONUSCLASS_MANUFACTURED"
  }
 }

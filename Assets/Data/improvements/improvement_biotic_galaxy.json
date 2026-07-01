@@ -1,7 +1,5 @@
 {
  "type": "IMPROVEMENT_BIOTIC_GALAXY",
- "description": "TXT_KEY_IMPROVEMENT_BIOTIC_GALAXY",
- "civilopedia": "TXT_KEY_IMPROVEMENT_BIOTIC_GALAXY_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -81,6 +79,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_IMPROVEMENT_BIOTIC_GALAXY",
+  "civilopedia": "TXT_KEY_IMPROVEMENT_BIOTIC_GALAXY_PEDIA",
   "extraterrestrial": true,
   "pillageGold": 200
  }

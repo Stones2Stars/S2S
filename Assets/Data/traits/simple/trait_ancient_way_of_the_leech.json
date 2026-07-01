@@ -1,7 +1,5 @@
 {
  "type": "TRAIT_ANCIENT_WAY_OF_THE_LEECH",
- "description": "TXT_KEY_TRAIT_ANCIENT_WAY_OF_THE_LEECH",
- "civilopedia": "TXT_KEY_TRAIT_ANCIENT_WAY_OF_THE_LEECH_PEDIA",
  "culture": {
   "empire": {
    "flat": 3
@@ -29,6 +27,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_TRAIT_ANCIENT_WAY_OF_THE_LEECH",
+  "civilopedia": "TXT_KEY_TRAIT_ANCIENT_WAY_OF_THE_LEECH_PEDIA",
   "shortDescription": "TXT_KEY_TRAIT_ANCIENT_WAY_OF_THE_LEECH_SHORT",
   "civilizationTrait": true
  }

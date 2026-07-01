@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_FOLKLORE_T_RAPTORS",
- "description": "TXT_KEY_BUILDING_FOLKLORE_T_RAPTORS",
- "civilopedia": "TXT_KEY_BUILDING_FOLKLORE_ANIMAL_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_HAWKING_HUT"
@@ -101,6 +99,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_FOLKLORE_T_RAPTORS",
+  "civilopedia": "TXT_KEY_BUILDING_FOLKLORE_ANIMAL_PEDIA",
   "nukeImmune": true,
   "neverCapture": true,
   "specialBuildingType": "SPECIALBUILDING_FOLKLORE_TAXONOMY",

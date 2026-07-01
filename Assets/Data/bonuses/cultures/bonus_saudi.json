@@ -1,7 +1,5 @@
 {
  "type": "BONUS_SAUDI",
- "description": "TXT_KEY_BONUS_SAUDI",
- "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
  "enables": {
   "units": [
    "UNIT_MUHAMMAD_BIN_SAUD",
@@ -14,6 +12,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_SAUDI",
+  "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
   "bonusClassType": "BONUSCLASS_CULTURE"
  }
 }

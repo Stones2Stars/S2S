@@ -1,7 +1,5 @@
 {
  "type": "UNIT_NAVAJO_RIFLEMAN",
- "description": "TXT_KEY_UNIT_NAVAJO_RIFLEMAN",
- "civilopedia": "TXT_KEY_UNIT_NAVAJO_RIFLEMAN_PEDIA",
  "obsoletedBy": {
   "techs": [
    "TECH_SUPERSTRONG_ALLOYS"
@@ -163,6 +161,8 @@
   "upkeep": 6
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_NAVAJO_RIFLEMAN",
+  "civilopedia": "TXT_KEY_UNIT_NAVAJO_RIFLEMAN_PEDIA",
   "worth": 8,
   "militaryWorth": 26,
   "xpValueAttack": 8,

@@ -1,6 +1,5 @@
 {
  "type": "ROUTE_MEGAWORMHOLE",
- "description": "TXT_KEY_ROUTE_MEGAWORMHOLE",
  "food": {
   "plot": {
    "flat": 1
@@ -22,6 +21,7 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_ROUTE_MEGAWORMHOLE",
   "value": 4,
   "advancedStart": {
    "cost": 30

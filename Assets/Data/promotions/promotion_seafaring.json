@@ -1,6 +1,5 @@
 {
  "type": "PROMOTION_SEAFARING",
- "description": "TXT_KEY_PROMOTION_SEAFARING",
  "movement": {
   "unit": {
    "moves": {
@@ -27,6 +26,7 @@
   "sound": "AS2D_IF_LEVELUP"
  },
  "identity": {
+  "description": "TXT_KEY_PROMOTION_SEAFARING",
   "unitCombats": [
    "UNITCOMBAT_WOODEN_SHIPS",
    "UNITCOMBAT_STEAM_SHIPS",

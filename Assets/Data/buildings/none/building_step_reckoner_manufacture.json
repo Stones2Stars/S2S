@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_STEP_RECKONER_MANUFACTURE",
- "description": "TXT_KEY_BUILDING_STEP_RECKONER_MANUFACTURE",
- "civilopedia": "TXT_KEY_BUILDING_STEP_RECKONER_MANUFACTURE_PEDIA",
  "obsoletedBy": {
   "techs": [
    "TECH_PERSONAL_COMPUTERS"
@@ -66,6 +64,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_STEP_RECKONER_MANUFACTURE",
+  "civilopedia": "TXT_KEY_BUILDING_STEP_RECKONER_MANUFACTURE_PEDIA",
   "worth": 2,
   "specialBuildingType": "SPECIALBUILDING_PUNK_CLOCK",
   "advisor": "ADVISOR_SCIENCE",

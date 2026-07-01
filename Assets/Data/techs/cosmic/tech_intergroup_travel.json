@@ -1,8 +1,5 @@
 {
  "type": "TECH_INTERGROUP_TRAVEL",
- "description": "TXT_KEY_TECH_INTERGROUP_TRAVEL",
- "civilopedia": "TXT_KEY_TECH_INTERGROUP_TRAVEL_PEDIA",
- "quote": "TXT_KEY_TECH_INTERGROUP_TRAVEL_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_ERIDANUS_CLUSTER_COLONY",
@@ -54,6 +51,9 @@
   "soundMP": "AS2D_TECH_GENERIC"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_INTERGROUP_TRAVEL",
+  "civilopedia": "TXT_KEY_TECH_INTERGROUP_TRAVEL_PEDIA",
+  "quote": "TXT_KEY_TECH_INTERGROUP_TRAVEL_QUOTE",
   "era": "C2C_ERA_COSMIC",
   "worth": 48,
   "tradeable": true,

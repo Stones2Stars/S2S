@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_CULTURE_ZULU",
- "description": "TXT_KEY_BUILDING_CULTURE_ZULU",
- "civilopedia": "TXT_KEY_BUILDING_CULTURE_ZULU_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -65,6 +63,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_CULTURE_ZULU",
+  "civilopedia": "TXT_KEY_BUILDING_CULTURE_ZULU_PEDIA",
   "nukeImmune": true,
   "noInstanceLimit": true,
   "conquestProbability": 100,

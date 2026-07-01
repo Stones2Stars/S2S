@@ -1,7 +1,5 @@
 {
  "type": "TRAIT_PROGRESSIST1",
- "description": "TXT_KEY_TRAIT_PROGRESSIST0",
- "civilopedia": "TXT_KEY_TRAIT_PROGRESSIST_PEDIA",
  "enables": {
   "traits": [
    "TRAIT_INNOVATIVE2"
@@ -145,6 +143,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_TRAIT_PROGRESSIST0",
+  "civilopedia": "TXT_KEY_TRAIT_PROGRESSIST_PEDIA",
   "shortDescription": "TXT_KEY_TRAIT_PROGRESSIST_SHORT"
  }
 }

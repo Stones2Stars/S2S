@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_TRUSS_BRIDGE",
- "description": "TXT_KEY_BUILDING_TRUSS_BRIDGE",
- "civilopedia": "TXT_KEY_BUILDING_TRUSS_BRIDGE_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_SMALL_STEEL_ARCH_BRIDGE"
@@ -106,6 +104,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_TRUSS_BRIDGE",
+  "civilopedia": "TXT_KEY_BUILDING_TRUSS_BRIDGE_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

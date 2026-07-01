@@ -1,7 +1,5 @@
 {
  "type": "UNIT_LOON",
- "description": "TXT_KEY_UNIT_LOON",
- "civilopedia": "TXT_KEY_UNIT_LOON_PEDIA",
  "withdrawal": {
   "unit": {
    "percent": 70
@@ -46,6 +44,8 @@
   ]
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_LOON",
+  "civilopedia": "TXT_KEY_UNIT_LOON_PEDIA",
   "spawnOnly": true,
   "xpValueAttack": 1,
   "xpValueDefense": 1,

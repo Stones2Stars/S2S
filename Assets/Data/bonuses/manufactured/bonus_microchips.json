@@ -1,7 +1,5 @@
 {
  "type": "BONUS_MICROCHIPS",
- "description": "TXT_KEY_BONUS_MICROCHIPS",
- "civilopedia": "TXT_KEY_BONUS_MICROCHIPS_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_COPPER_RECLAMATION_PLANT",
@@ -49,6 +47,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_MICROCHIPS",
+  "civilopedia": "TXT_KEY_BONUS_MICROCHIPS_PEDIA",
   "bonusClassType": "BONUSCLASS_MANUFACTURED"
  }
 }

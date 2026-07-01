@@ -1,8 +1,5 @@
 {
  "type": "TECH_CONSUMERISM",
- "description": "TXT_KEY_TECH_CONSUMERISM",
- "civilopedia": "TXT_KEY_TECH_CONSUMERISM_PEDIA",
- "quote": "TXT_KEY_TECH_CONSUMERISM_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_APPLIANCE_STORE",
@@ -65,6 +62,9 @@
   "soundMP": "AS2D_TECH_CONSUMERISM"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_CONSUMERISM",
+  "civilopedia": "TXT_KEY_TECH_CONSUMERISM_PEDIA",
+  "quote": "TXT_KEY_TECH_CONSUMERISM_QUOTE",
   "era": "C2C_ERA_ATOMIC",
   "worth": 14,
   "tradeable": true,

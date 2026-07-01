@@ -1,7 +1,5 @@
 {
  "type": "UNIT_GUANACO",
- "description": "TXT_KEY_UNIT_GUANACO",
- "civilopedia": "TXT_KEY_UNIT_GUANACO_PEDIA",
  "withdrawal": {
   "unit": {
    "percent": 15
@@ -76,6 +74,8 @@
   ]
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_GUANACO",
+  "civilopedia": "TXT_KEY_UNIT_GUANACO_PEDIA",
   "spawnOnly": true,
   "xpValueAttack": 3,
   "xpValueDefense": 2,

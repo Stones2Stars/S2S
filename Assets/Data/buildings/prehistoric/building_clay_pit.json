@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_CLAY_PIT",
- "description": "TXT_KEY_BUILDING_CLAY_PIT",
- "civilopedia": "TXT_KEY_BUILDING_CLAY_PIT_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_CAVE_PAINTINGS"
@@ -75,6 +73,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_CLAY_PIT",
+  "civilopedia": "TXT_KEY_BUILDING_CLAY_PIT_PEDIA",
   "enabledCivilizations": [
    "CIVILIZATION_NPC_NEANDERTHAL"
   ],

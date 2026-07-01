@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_MORSE_CODE",
- "description": "TXT_KEY_BUILDING_MORSE_CODE",
- "civilopedia": "TXT_KEY_BUILDING_MORSE_CODE_PEDIA",
  "obsoletedBy": {
   "techs": [
    "TECH_DIRECT_MERCHANDISING"
@@ -61,6 +59,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_MORSE_CODE",
+  "civilopedia": "TXT_KEY_BUILDING_MORSE_CODE_PEDIA",
   "conquestProbability": 100,
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,

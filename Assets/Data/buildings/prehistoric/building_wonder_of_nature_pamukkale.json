@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_WONDER_OF_NATURE_PAMUKKALE",
- "description": "TXT_KEY_BUILDING_WONDER_OF_NATURE_PAMUKKALE",
- "civilopedia": "TXT_KEY_BUILDING_WONDER_OF_NATURE_PAMUKKALE_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_RESOURCES_FLINT"
@@ -116,6 +114,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_WONDER_OF_NATURE_PAMUKKALE",
+  "civilopedia": "TXT_KEY_BUILDING_WONDER_OF_NATURE_PAMUKKALE_PEDIA",
   "enabledCivilizations": [
    "CIVILIZATION_NPC_NEANDERTHAL"
   ],

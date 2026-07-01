@@ -1,8 +1,5 @@
 {
  "type": "TECH_THEOLOGY",
- "description": "TXT_KEY_TECH_THEOLOGY",
- "civilopedia": "TXT_KEY_TECH_THEOLOGY_PEDIA",
- "quote": "TXT_KEY_TECH_THEOLOGY_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_CHURCH_SCHOOL",
@@ -90,6 +87,9 @@
   "soundMP": "AS2D_TECH_MP_THEOLOGY"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_THEOLOGY",
+  "civilopedia": "TXT_KEY_TECH_THEOLOGY_PEDIA",
+  "quote": "TXT_KEY_TECH_THEOLOGY_QUOTE",
   "era": "C2C_ERA_MEDIEVAL",
   "worth": 24,
   "tradeable": true,

@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_CISLUNAR_ORGANIC_COLONY",
- "description": "TXT_KEY_BUILDING_CISLUNAR_ORGANIC_COLONY",
- "civilopedia": "TXT_KEY_BUILDING_CISLUNAR_ORGANIC_COLONY_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_CISLUNAR_BIONIC_CORE"
@@ -64,6 +62,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_CISLUNAR_ORGANIC_COLONY",
+  "civilopedia": "TXT_KEY_BUILDING_CISLUNAR_ORGANIC_COLONY_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

@@ -1,8 +1,5 @@
 {
  "type": "UNIT_CRUSADER",
- "description": "TXT_KEY_UNIT_CRUSADER",
- "civilopedia": "TXT_KEY_UNIT_CRUSADER_PEDIA",
- "help": "TXT_KEY_UNIT_CRUSADER_HELP",
  "obsoletedBy": {
   "techs": [
    "TECH_FLINTLOCK"
@@ -49,6 +46,9 @@
   "upkeep": 1
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_CRUSADER",
+  "civilopedia": "TXT_KEY_UNIT_CRUSADER_PEDIA",
+  "help": "TXT_KEY_UNIT_CRUSADER_HELP",
   "spawnOnly": true,
   "worth": 3,
   "militaryWorth": 34,

@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_FARMSCRAPER_II",
- "description": "TXT_KEY_BUILDING_FARMSCRAPER_II",
- "civilopedia": "TXT_KEY_BUILDING_FARMSCRAPER_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_FARMSCRAPER_III",
@@ -212,6 +210,8 @@
   "construct": "AS2D_BUILD_VERTICAL_FARM"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_FARMSCRAPER_II",
+  "civilopedia": "TXT_KEY_BUILDING_FARMSCRAPER_PEDIA",
   "worth": 6,
   "conquestProbability": 75,
   "dcmAirbombMission": 2,

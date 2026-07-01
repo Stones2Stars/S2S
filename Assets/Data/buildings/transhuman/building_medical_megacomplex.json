@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_MEDICAL_MEGACOMPLEX",
- "description": "TXT_KEY_BUILDING_MEDICAL_MEGACOMPLEX",
- "civilopedia": "TXT_KEY_BUILDING_MEDICAL_MEGACOMPLEX_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_NANOMORPHIC_REPLICATOR"
@@ -100,6 +98,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_MEDICAL_MEGACOMPLEX",
+  "civilopedia": "TXT_KEY_BUILDING_MEDICAL_MEGACOMPLEX_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

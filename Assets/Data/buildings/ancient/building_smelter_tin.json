@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_SMELTER_TIN",
- "description": "TXT_KEY_BUILDING_SMELTER_TIN",
- "civilopedia": "TXT_KEY_BUILDING_SMELTER_TIN_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_RESOURCES_TIN_INGOTS"
@@ -87,6 +85,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_SMELTER_TIN",
+  "civilopedia": "TXT_KEY_BUILDING_SMELTER_TIN_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

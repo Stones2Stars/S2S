@@ -1,8 +1,5 @@
 {
  "type": "BUILDING_ROUTE_66_TERMINUS",
- "description": "TXT_KEY_BUILDING_ROUTE_66_TERMINUS",
- "civilopedia": "TXT_KEY_BUILDING_ROUTE_66_PEDIA",
- "help": "TXT_KEY_BUILDING_ROUTE_66_TERMINUS_HELP",
  "obsoletedBy": {
   "techs": [
    "TECH_SKYROADS"
@@ -33,6 +30,9 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_ROUTE_66_TERMINUS",
+  "civilopedia": "TXT_KEY_BUILDING_ROUTE_66_PEDIA",
+  "help": "TXT_KEY_BUILDING_ROUTE_66_TERMINUS_HELP",
   "notConstructible": true,
   "nukeImmune": true,
   "worth": 10,

@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_MODERN_OFFICES",
- "description": "TXT_KEY_BUILDING_MODERN_OFFICES",
- "civilopedia": "TXT_KEY_BUILDING_MODERN_OFFICES_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_ADVENTURE_TOURS_FRANCHISE",
@@ -153,6 +151,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_MODERN_OFFICES",
+  "civilopedia": "TXT_KEY_BUILDING_MODERN_OFFICES_PEDIA",
   "conquestProbability": 70,
   "advisor": "ADVISOR_ECONOMY",
   "visibilityPriority": 1,

@@ -1,7 +1,5 @@
 {
  "type": "UNIT_SEAEAGLE",
- "description": "TXT_KEY_UNIT_SEAEAGLE",
- "civilopedia": "TXT_KEY_UNIT_SEAEAGLE_PEDIA",
  "withdrawal": {
   "unit": {
    "percent": 50
@@ -52,6 +50,8 @@
   ]
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_SEAEAGLE",
+  "civilopedia": "TXT_KEY_UNIT_SEAEAGLE_PEDIA",
   "spawnOnly": true,
   "xpValueAttack": 1,
   "xpValueDefense": 1,

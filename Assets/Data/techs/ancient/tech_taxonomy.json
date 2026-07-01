@@ -1,8 +1,5 @@
 {
  "type": "TECH_TAXONOMY",
- "description": "TXT_KEY_TECH_TAXONOMY",
- "civilopedia": "TXT_KEY_TECH_TAXONOMY_PEDIA",
- "quote": "TXT_KEY_TECH_TAXONOMY_QUOTE",
  "enables": {
   "heritages": [
    "HERITAGE_TAXON_AMPHIBIA",
@@ -79,6 +76,9 @@
   "soundMP": "AS2D_TECH_TAXONOMY"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_TAXONOMY",
+  "civilopedia": "TXT_KEY_TECH_TAXONOMY_PEDIA",
+  "quote": "TXT_KEY_TECH_TAXONOMY_QUOTE",
   "era": "C2C_ERA_ANCIENT",
   "worth": 2,
   "tradeable": true,

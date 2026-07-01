@@ -1,7 +1,5 @@
 {
  "type": "BONUS_PUMPKIN",
- "description": "TXT_KEY_BONUS_PUMPKIN",
- "civilopedia": "TXT_KEY_BONUS_PUMPKIN_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_CULTURE_CHEROKEE",
@@ -62,6 +60,8 @@
   ]
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_PUMPKIN",
+  "civilopedia": "TXT_KEY_BONUS_PUMPKIN_PEDIA",
   "bonusClassType": "BONUSCLASS_CROP"
  }
 }

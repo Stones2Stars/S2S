@@ -1,8 +1,5 @@
 {
  "type": "TECH_SCRIPTURES",
- "description": "TXT_KEY_TECH_SCRIPTURES",
- "civilopedia": "TXT_KEY_TECH_SCRIPTURES_PEDIA",
- "quote": "TXT_KEY_TECH_SCRIPTURES_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_GRAVEYARD",
@@ -60,6 +57,9 @@
   "soundMP": "AS2D_TECH_SCRIPTURES"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_SCRIPTURES",
+  "civilopedia": "TXT_KEY_TECH_SCRIPTURES_PEDIA",
+  "quote": "TXT_KEY_TECH_SCRIPTURES_QUOTE",
   "era": "C2C_ERA_ANCIENT",
   "worth": 8,
   "tradeable": true,

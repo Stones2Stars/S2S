@@ -1,7 +1,5 @@
 {
  "type": "BONUS_FOSSIL_BEDS",
- "description": "TXT_KEY_BONUS_FOSSIL_BEDS",
- "civilopedia": "TXT_KEY_BONUS_FOSSIL_BEDS_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_DIG_SITE_AMMONITE_FOSSILS",
@@ -70,6 +68,8 @@
   ]
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_FOSSIL_BEDS",
+  "civilopedia": "TXT_KEY_BONUS_FOSSIL_BEDS_PEDIA",
   "bonusClassType": "BONUSCLASS_MISC"
  }
 }

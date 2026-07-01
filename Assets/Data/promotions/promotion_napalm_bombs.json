@@ -1,6 +1,5 @@
 {
  "type": "PROMOTION_NAPALM_BOMBS",
- "description": "TXT_KEY_PROMOTION_NAPALM_BOMBS",
  "strength": {
   "unit": {
    "percent": -10,
@@ -52,6 +51,7 @@
   "sound": "AS2D_IF_LEVELUP"
  },
  "identity": {
+  "description": "TXT_KEY_PROMOTION_NAPALM_BOMBS",
   "unitCombats": [
    "UNITCOMBAT_EARLY_BOMBERS",
    "UNITCOMBAT_BOMBERS",

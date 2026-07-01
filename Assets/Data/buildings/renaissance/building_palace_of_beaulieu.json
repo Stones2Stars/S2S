@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_PALACE_OF_BEAULIEU",
- "description": "TXT_KEY_BUILDING_PALACE_OF_BEAULIEU",
- "civilopedia": "TXT_KEY_BUILDING_PALACE_OF_BEAULIEU_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -89,6 +87,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_PALACE_OF_BEAULIEU",
+  "civilopedia": "TXT_KEY_BUILDING_PALACE_OF_BEAULIEU_PEDIA",
   "centerInCity": true,
   "worth": 10,
   "conquestProbability": 100,

@@ -1,7 +1,5 @@
 {
  "type": "HERITAGE_TAXON_MARSUPIALIA",
- "description": "TXT_KEY_HERITAGE_TAXON_MARSUPIALIA",
- "civilopedia": "TXT_KEY_BUILDING_FOLKLORE_ANIMAL_PEDIA",
  "research": {
   "empire": {
    "flat": [
@@ -102,5 +100,9 @@
   "art": {
    "icon": "Art/Interface/Buttons/Buildings/totem_koala.dds"
   }
+ },
+ "identity": {
+  "description": "TXT_KEY_HERITAGE_TAXON_MARSUPIALIA",
+  "civilopedia": "TXT_KEY_BUILDING_FOLKLORE_ANIMAL_PEDIA"
  }
 }

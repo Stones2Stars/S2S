@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_HYPERSPACE_INFLATON_FIELD",
- "description": "TXT_KEY_BUILDING_HYPERSPACE_INFLATON_FIELD",
- "civilopedia": "TXT_KEY_BUILDING_HYPERSPACE_INFLATON_FIELD_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_FAIRYLAND",
@@ -54,6 +52,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_HYPERSPACE_INFLATON_FIELD",
+  "civilopedia": "TXT_KEY_BUILDING_HYPERSPACE_INFLATON_FIELD_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

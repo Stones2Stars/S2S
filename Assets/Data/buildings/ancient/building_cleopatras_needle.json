@@ -1,8 +1,5 @@
 {
  "type": "BUILDING_CLEOPATRAS_NEEDLE",
- "description": "TXT_KEY_BUILDING_CLEOPATRAS_NEEDLE",
- "civilopedia": "TXT_KEY_BUILDING_CLEOPATRAS_NEEDLE_PEDIA",
- "help": "TXT_KEY_BUILDING_CLEOPATRAS_NEEDLE_HELP",
  "requires": {
   "build": {
    "all": [
@@ -83,6 +80,9 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_CLEOPATRAS_NEEDLE",
+  "civilopedia": "TXT_KEY_BUILDING_CLEOPATRAS_NEEDLE_PEDIA",
+  "help": "TXT_KEY_BUILDING_CLEOPATRAS_NEEDLE_HELP",
   "nukeImmune": true,
   "worth": 10,
   "conquestProbability": 100,

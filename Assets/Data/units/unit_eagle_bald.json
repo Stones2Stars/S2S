@@ -1,7 +1,5 @@
 {
  "type": "UNIT_EAGLE_BALD",
- "description": "TXT_KEY_UNIT_EAGLE_BALD",
- "civilopedia": "TXT_KEY_UNIT_EAGLE_BALD_PEDIA",
  "withdrawal": {
   "unit": {
    "percent": 45
@@ -42,6 +40,8 @@
   ]
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_EAGLE_BALD",
+  "civilopedia": "TXT_KEY_UNIT_EAGLE_BALD_PEDIA",
   "spawnOnly": true,
   "xpValueAttack": 2,
   "xpValueDefense": 1,

@@ -1,6 +1,5 @@
 {
  "type": "PROMOTION_EMERGING_COMPETENCE",
- "description": "TXT_KEY_PROMOTION_EMERGING_COMPETENCE",
  "strength": {
   "unit": {
    "quality": {
@@ -30,6 +29,7 @@
   "sound": "AS2D_IF_LEVELUP"
  },
  "identity": {
+  "description": "TXT_KEY_PROMOTION_EMERGING_COMPETENCE",
   "replacesUnitCombat": "UNITCOMBAT_QUALITY_INFERIOR",
   "levelPrereq": 2,
   "notOnUnitCombats": [

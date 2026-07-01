@@ -1,8 +1,5 @@
 {
  "type": "TECH_GEARS",
- "description": "TXT_KEY_TECH_GEARS",
- "civilopedia": "TXT_KEY_TECH_GEARS_PEDIA",
- "quote": "TXT_KEY_TECH_GEARS_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_ANTIKYTHERA_MECHANISM"
@@ -54,6 +51,9 @@
   "soundMP": "AS2D_TECH_GEARS"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_GEARS",
+  "civilopedia": "TXT_KEY_TECH_GEARS_PEDIA",
+  "quote": "TXT_KEY_TECH_GEARS_QUOTE",
   "era": "C2C_ERA_ANCIENT",
   "worth": 2,
   "tradeable": true,

@@ -1,7 +1,5 @@
 {
  "type": "IMPROVEMENT_JUNGLE_CAMP",
- "description": "TXT_KEY_IMPROVEMENT_JUNGLE_CAMP",
- "civilopedia": "TXT_KEY_IMPROVEMENT_JUNGLE_CAMP_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -81,6 +79,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_IMPROVEMENT_JUNGLE_CAMP",
+  "civilopedia": "TXT_KEY_IMPROVEMENT_JUNGLE_CAMP_PEDIA",
   "pillageTo": "IMPROVEMENT_SEED_CAMP",
   "advancedStart": {
    "cost": 24

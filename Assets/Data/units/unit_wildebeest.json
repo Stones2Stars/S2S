@@ -1,7 +1,5 @@
 {
  "type": "UNIT_WILDEBEEST",
- "description": "TXT_KEY_UNIT_WILDEBEEST",
- "civilopedia": "TXT_KEY_UNIT_WILDEBEEST_PEDIA",
  "withdrawal": {
   "unit": {
    "percent": 30
@@ -51,6 +49,8 @@
   ]
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_WILDEBEEST",
+  "civilopedia": "TXT_KEY_UNIT_WILDEBEEST_PEDIA",
   "spawnOnly": true,
   "xpValueAttack": 6,
   "xpValueDefense": 4,

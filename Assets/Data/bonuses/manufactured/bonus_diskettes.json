@@ -1,7 +1,5 @@
 {
  "type": "BONUS_DISKETTES",
- "description": "TXT_KEY_BONUS_DISKETTES",
- "civilopedia": "TXT_KEY_BONUS_DISKETTES_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_BELL_LABS"
@@ -18,6 +16,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_DISKETTES",
+  "civilopedia": "TXT_KEY_BONUS_DISKETTES_PEDIA",
   "bonusClassType": "BONUSCLASS_MANUFACTURED"
  }
 }

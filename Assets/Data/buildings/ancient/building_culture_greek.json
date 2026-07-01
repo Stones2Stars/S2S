@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_CULTURE_GREEK",
- "description": "TXT_KEY_BUILDING_CULTURE_GREEK",
- "civilopedia": "TXT_KEY_BUILDING_CULTURE_GREEK_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -94,6 +92,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_CULTURE_GREEK",
+  "civilopedia": "TXT_KEY_BUILDING_CULTURE_GREEK_PEDIA",
   "nukeImmune": true,
   "noInstanceLimit": true,
   "conquestProbability": 100,

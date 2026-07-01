@@ -1,7 +1,5 @@
 {
  "type": "UNIT_JAEGER",
- "description": "TXT_KEY_UNIT_JAEGER",
- "civilopedia": "TXT_KEY_UNIT_JAEGER_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -79,6 +77,8 @@
   "upkeep": 1
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_JAEGER",
+  "civilopedia": "TXT_KEY_UNIT_JAEGER_PEDIA",
   "worth": 4,
   "militaryWorth": 69,
   "xpValueAttack": 6,

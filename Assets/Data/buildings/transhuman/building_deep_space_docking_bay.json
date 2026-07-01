@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_DEEP_SPACE_DOCKING_BAY",
- "description": "TXT_KEY_BUILDING_DEEP_SPACE_DOCKING_BAY",
- "civilopedia": "TXT_KEY_BUILDING_DEEP_SPACE_DOCKING_BAY_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_DEEP_SPACE_HOTEL",
@@ -59,6 +57,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_DEEP_SPACE_DOCKING_BAY",
+  "civilopedia": "TXT_KEY_BUILDING_DEEP_SPACE_DOCKING_BAY_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

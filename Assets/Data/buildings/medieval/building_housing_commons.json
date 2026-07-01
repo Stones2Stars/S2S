@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_HOUSING_COMMONS",
- "description": "TXT_KEY_BUILDING_HOUSING_COMMONS",
- "civilopedia": "TXT_KEY_BUILDING_HOUSING_COMMONS_PEDIA",
  "obsoletedBy": {
   "techs": [
    "TECH_RAPID_PROTOTYPING"
@@ -75,6 +73,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_HOUSING_COMMONS",
+  "civilopedia": "TXT_KEY_BUILDING_HOUSING_COMMONS_PEDIA",
   "notConstructible": true,
   "nukeImmune": true,
   "neverCapture": true,

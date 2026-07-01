@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_CRIME_PRISON_BREAKOUTS",
- "description": "TXT_KEY_BUILDING_CRIME_PRISON_BREAKOUTS",
- "civilopedia": "TXT_KEY_BUILDING_CRIME_PRISON_BREAKOUTS_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -78,6 +76,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_CRIME_PRISON_BREAKOUTS",
+  "civilopedia": "TXT_KEY_BUILDING_CRIME_PRISON_BREAKOUTS_PEDIA",
   "notConstructible": true,
   "nukeImmune": true,
   "conquestProbability": 100,

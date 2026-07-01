@@ -1,8 +1,5 @@
 {
  "type": "TECH_FIRE_MAKING",
- "description": "TXT_KEY_TECH_FIRE_MAKING",
- "civilopedia": "TXT_KEY_TECH_FIRE_MAKING_PEDIA",
- "quote": "TXT_KEY_TECH_FIRE_MAKING_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_BONFIRE",
@@ -66,6 +63,9 @@
   "soundMP": "AS2D_TECH_FIRE_MAKING"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_FIRE_MAKING",
+  "civilopedia": "TXT_KEY_TECH_FIRE_MAKING_PEDIA",
+  "quote": "TXT_KEY_TECH_FIRE_MAKING_QUOTE",
   "era": "C2C_ERA_PREHISTORIC",
   "worth": 8,
   "tradeable": true,

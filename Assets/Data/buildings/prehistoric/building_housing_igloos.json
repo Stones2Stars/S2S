@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_HOUSING_IGLOOS",
- "description": "TXT_KEY_BUILDING_HOUSING_IGLOOS",
- "civilopedia": "TXT_KEY_BUILDING_HOUSING_IGLOOS_PEDIA",
  "obsoletedBy": {
   "techs": [
    "TECH_RAPID_PROTOTYPING"
@@ -63,6 +61,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_HOUSING_IGLOOS",
+  "civilopedia": "TXT_KEY_BUILDING_HOUSING_IGLOOS_PEDIA",
   "notConstructible": true,
   "nukeImmune": true,
   "neverCapture": true,

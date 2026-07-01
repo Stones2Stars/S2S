@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_SCUBA_DIVING_SITE",
- "description": "TXT_KEY_BUILDING_SCUBA_DIVING_SITE",
- "civilopedia": "TXT_KEY_BUILDING_SCUBA_DIVING_SITE_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_TOURISM_MEGACOMPLEX"
@@ -59,6 +57,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_SCUBA_DIVING_SITE",
+  "civilopedia": "TXT_KEY_BUILDING_SCUBA_DIVING_SITE_PEDIA",
   "militaryWorth": 1,
   "conquestProbability": 30,
   "advisor": "ADVISOR_GROWTH",

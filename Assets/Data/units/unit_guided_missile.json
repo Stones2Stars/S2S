@@ -1,7 +1,5 @@
 {
  "type": "UNIT_GUIDED_MISSILE",
- "description": "TXT_KEY_UNIT_GUIDED_MISSILE",
- "civilopedia": "TXT_KEY_UNIT_GUIDED_MISSILE_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -66,6 +64,8 @@
   "upkeep": 1
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_GUIDED_MISSILE",
+  "civilopedia": "TXT_KEY_UNIT_GUIDED_MISSILE_PEDIA",
   "worth": 3,
   "militaryWorth": 162,
   "xpValueDefense": 6,

@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_OIL_DERRICK",
- "description": "TXT_KEY_BUILDING_OIL_DERRICK",
- "civilopedia": "TXT_KEY_BUILDING_OIL_DERRICK_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_ULTRAFUEL_REFINERY"
@@ -101,6 +99,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_OIL_DERRICK",
+  "civilopedia": "TXT_KEY_BUILDING_OIL_DERRICK_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

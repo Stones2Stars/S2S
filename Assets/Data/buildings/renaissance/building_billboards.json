@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_BILLBOARDS",
- "description": "TXT_KEY_BUILDING_BILLBOARDS",
- "civilopedia": "TXT_KEY_BUILDING_BILLBOARDS_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -64,6 +62,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_BILLBOARDS",
+  "civilopedia": "TXT_KEY_BUILDING_BILLBOARDS_PEDIA",
   "conquestProbability": 70,
   "advisor": "ADVISOR_ECONOMY",
   "visibilityPriority": 1,

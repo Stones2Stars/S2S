@@ -1,8 +1,5 @@
 {
  "type": "TECH_MILITARY_TRAINING",
- "description": "TXT_KEY_TECH_MILITARY_TRAINING",
- "civilopedia": "TXT_KEY_TECH_MILITARY_TRAINING_PEDIA",
- "quote": "TXT_KEY_TECH_MILITARY_TRAINING_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_ANIMAL_TRAINER_ELEPHANT",
@@ -94,6 +91,9 @@
   "soundMP": "AS2D_TECH_MILITARY_TRAINING"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_MILITARY_TRAINING",
+  "civilopedia": "TXT_KEY_TECH_MILITARY_TRAINING_PEDIA",
+  "quote": "TXT_KEY_TECH_MILITARY_TRAINING_QUOTE",
   "era": "C2C_ERA_CLASSICAL",
   "worth": 10,
   "militaryWorth": 10,

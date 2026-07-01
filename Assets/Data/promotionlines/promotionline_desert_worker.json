@@ -1,12 +1,12 @@
 {
  "type": "PROMOTIONLINE_DESERT_WORKER",
- "description": "TXT_KEY_PROMOTIONLINE_DESERT_WORKER",
  "ui": {
   "art": {
    "icon": "Art/Interface/Buttons/Promotions/workerdesert1.dds"
   }
  },
  "identity": {
+  "description": "TXT_KEY_PROMOTIONLINE_DESERT_WORKER",
   "unitCombats": [
    "UNITCOMBAT_WORKER",
    "UNITCOMBAT_COMBAT_WORKER"

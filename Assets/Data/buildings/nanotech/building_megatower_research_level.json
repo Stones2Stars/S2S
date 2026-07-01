@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_MEGATOWER_RESEARCH_LEVEL",
- "description": "TXT_KEY_BUILDING_MEGATOWER_RESEARCH_LEVEL",
- "civilopedia": "TXT_KEY_BUILDING_MEGATOWER_RESEARCH_LEVEL_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_EXOTIC_MATTER_LAB"
@@ -106,6 +104,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_MEGATOWER_RESEARCH_LEVEL",
+  "civilopedia": "TXT_KEY_BUILDING_MEGATOWER_RESEARCH_LEVEL_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

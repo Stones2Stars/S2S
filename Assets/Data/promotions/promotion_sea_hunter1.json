@@ -1,6 +1,5 @@
 {
  "type": "PROMOTION_SEA_HUNTER1",
- "description": "TXT_KEY_PROMOTION_SEA_HUNTER1",
  "firstStrike": {
   "unit": {
    "chance": {
@@ -32,6 +31,7 @@
   "sound": "AS2D_IF_LEVELUP"
  },
  "identity": {
+  "description": "TXT_KEY_PROMOTION_SEA_HUNTER1",
   "notOnDomains": [
    "DOMAIN_AIR",
    "DOMAIN_LAND"

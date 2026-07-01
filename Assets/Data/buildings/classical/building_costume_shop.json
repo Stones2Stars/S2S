@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_COSTUME_SHOP",
- "description": "TXT_KEY_BUILDING_COSTUME_SHOP",
- "civilopedia": "TXT_KEY_BUILDING_COSTUME_SHOP_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_MALL"
@@ -120,6 +118,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_COSTUME_SHOP",
+  "civilopedia": "TXT_KEY_BUILDING_COSTUME_SHOP_PEDIA",
   "conquestProbability": 70,
   "advisor": "ADVISOR_ECONOMY",
   "visibilityPriority": 1,

@@ -1,7 +1,5 @@
 {
  "type": "UNIT_GUARDCAT",
- "description": "TXT_KEY_UNIT_GUARDCAT",
- "civilopedia": "TXT_KEY_UNIT_WARCAT_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -147,6 +145,8 @@
   "upkeep": 5
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_GUARDCAT",
+  "civilopedia": "TXT_KEY_UNIT_WARCAT_PEDIA",
   "worth": 7,
   "militaryWorth": 18,
   "xpValueAttack": 8,

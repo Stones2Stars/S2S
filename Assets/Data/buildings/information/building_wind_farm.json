@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_WIND_FARM",
- "description": "TXT_KEY_BUILDING_WIND_FARM",
- "civilopedia": "TXT_KEY_BUILDING_WIND_FARM_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_MEGATOWER_WIND_POWER_CROWN_SECTION"
@@ -78,6 +76,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_WIND_FARM",
+  "civilopedia": "TXT_KEY_BUILDING_WIND_FARM_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

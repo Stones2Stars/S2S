@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_CANNABIS_GROW_OPERATION",
- "description": "TXT_KEY_BUILDING_CANNABIS_GROW_OPERATION",
- "civilopedia": "TXT_KEY_BUILDING_CANNABIS_GROW_OPERATION_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_RESOURCES_DRUGS"
@@ -66,6 +64,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_CANNABIS_GROW_OPERATION",
+  "civilopedia": "TXT_KEY_BUILDING_CANNABIS_GROW_OPERATION_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

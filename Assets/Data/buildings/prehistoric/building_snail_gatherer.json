@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_SNAIL_GATHERER",
- "description": "TXT_KEY_BUILDING_SNAIL_GATHERER",
- "civilopedia": "TXT_KEY_BUILDING_SNAIL_GATHERER_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_RESOURCES_BUGS"
@@ -87,6 +85,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_SNAIL_GATHERER",
+  "civilopedia": "TXT_KEY_BUILDING_SNAIL_GATHERER_PEDIA",
   "nukeImmune": true,
   "advisor": "ADVISOR_GROWTH",
   "mapCategories": [

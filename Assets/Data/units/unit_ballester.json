@@ -1,7 +1,5 @@
 {
  "type": "UNIT_BALLESTER",
- "description": "TXT_KEY_UNIT_BALLESTER",
- "civilopedia": "TXT_KEY_UNIT_BALLESTER_PEDIA",
  "obsoletedBy": {
   "techs": [
    "TECH_FLINTLOCK"
@@ -73,6 +71,8 @@
   "upkeep": 1
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_BALLESTER",
+  "civilopedia": "TXT_KEY_UNIT_BALLESTER_PEDIA",
   "worth": 2,
   "militaryWorth": 17,
   "xpValueAttack": 6,

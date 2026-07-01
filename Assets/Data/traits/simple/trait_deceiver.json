@@ -1,7 +1,5 @@
 {
  "type": "TRAIT_DECEIVER",
- "description": "TXT_KEY_TRAIT_DECEIVER",
- "civilopedia": "TXT_KEY_TRAIT_DECEIVER_PEDIA",
  "buildRate": {
   "empire": {
    "buildings": {
@@ -127,6 +125,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_TRAIT_DECEIVER",
+  "civilopedia": "TXT_KEY_TRAIT_DECEIVER_PEDIA",
   "shortDescription": "TXT_KEY_TRAIT_DECEIVER_SHORT"
  }
 }

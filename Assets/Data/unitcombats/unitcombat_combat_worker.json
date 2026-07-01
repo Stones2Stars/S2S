@@ -1,6 +1,5 @@
 {
  "type": "UNITCOMBAT_COMBAT_WORKER",
- "description": "TXT_KEY_UNITCOMBAT_COMBAT_WORKER",
  "skills": {
   "cannotMergeSplit": true
  },
@@ -10,6 +9,7 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_UNITCOMBAT_COMBAT_WORKER",
   "forMilitary": true
  }
 }

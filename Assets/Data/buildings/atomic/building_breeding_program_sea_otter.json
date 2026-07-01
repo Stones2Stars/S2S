@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_BREEDING_PROGRAM_SEA_OTTER",
- "description": "TXT_KEY_BUILDING_BREEDING_PROGRAM_SEA_OTTER",
- "civilopedia": "TXT_KEY_BUILDING_BREEDING_PROGRAM_SEA_OTTER_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_RESOURCES_PELTS"
@@ -92,6 +90,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_BREEDING_PROGRAM_SEA_OTTER",
+  "civilopedia": "TXT_KEY_BUILDING_BREEDING_PROGRAM_SEA_OTTER_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

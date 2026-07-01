@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_TRANSTELLAR_DYSON_SPHERE",
- "description": "TXT_KEY_BUILDING_TRANSTELLAR_DYSON_SPHERE",
- "civilopedia": "TXT_KEY_BUILDING_TRANSTELLAR_DYSON_SPHERE_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_TRANSTELLAR_PORTAL_PLANET"
@@ -38,6 +36,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_TRANSTELLAR_DYSON_SPHERE",
+  "civilopedia": "TXT_KEY_BUILDING_TRANSTELLAR_DYSON_SPHERE_PEDIA",
   "workableRadius": 3,
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,

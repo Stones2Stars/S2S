@@ -1,6 +1,5 @@
 {
  "type": "BUILD_TERRAFORM_BRANESPACE",
- "description": "TXT_KEY_BUILD_TERRAFORM_BRANESPACE",
  "requires": {
   "build": {
    "all": [
@@ -30,5 +29,8 @@
   "art": {
    "entityEvent": "ENTITY_EVENT_BUILD"
   }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILD_TERRAFORM_BRANESPACE"
  }
 }

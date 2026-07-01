@@ -68,7 +68,7 @@ import os
 from collections import OrderedDict
 
 import engine
-from curate_common import de_i
+from curate_common import de_i, fold_text_to_identity
 from store import Store, REPO
 
 # tag -> (family, scope, member, unit, audience). member=None => single-concept family. audience "ai" => AI override.
@@ -212,6 +212,7 @@ def curate(typ, rec):
         out["grants"] = grants
     if identity:
         out["identity"] = identity
+    fold_text_to_identity(out)   # TEXT -> identity (json.md §7)
     return out, leftover
 
 

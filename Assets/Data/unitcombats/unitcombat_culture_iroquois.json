@@ -1,12 +1,12 @@
 {
  "type": "UNITCOMBAT_CULTURE_IROQUOIS",
- "description": "TXT_KEY_UNITCOMBAT_CULTURE_IROQUOIS",
  "ui": {
   "art": {
    "icon": "Art/Interface/Buttons/units/sparth/categories/culture_iroquois.dds"
   }
  },
  "identity": {
+  "description": "TXT_KEY_UNITCOMBAT_CULTURE_IROQUOIS",
   "culture": "BONUS_IROQUOIS"
  }
 }

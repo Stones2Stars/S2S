@@ -1,12 +1,12 @@
 {
  "type": "UNITCOMBAT_CULTURE_CANADIAN",
- "description": "TXT_KEY_UNITCOMBAT_CULTURE_CANADIAN",
  "ui": {
   "art": {
    "icon": "Art/Interface/Buttons/units/sparth/categories/culture_canada.dds"
   }
  },
  "identity": {
+  "description": "TXT_KEY_UNITCOMBAT_CULTURE_CANADIAN",
   "culture": "BONUS_CANADIAN"
  }
 }

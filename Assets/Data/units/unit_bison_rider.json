@@ -1,7 +1,5 @@
 {
  "type": "UNIT_BISON_RIDER",
- "description": "TXT_KEY_UNIT_BISON_RIDER",
- "civilopedia": "TXT_KEY_UNIT_BISON_RIDER_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -129,6 +127,8 @@
   "production": 169
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_BISON_RIDER",
+  "civilopedia": "TXT_KEY_UNIT_BISON_RIDER_PEDIA",
   "worth": 3,
   "militaryWorth": 6,
   "xpValueAttack": 4,

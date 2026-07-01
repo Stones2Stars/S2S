@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_FACTORY_VACUUM",
- "description": "TXT_KEY_BUILDING_FACTORY_VACUUM",
- "civilopedia": "TXT_KEY_BUILDING_FACTORY_VACUUM_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_ELECTRONICS_MANUFACTURING_DISTRICT"
@@ -82,6 +80,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_FACTORY_VACUUM",
+  "civilopedia": "TXT_KEY_BUILDING_FACTORY_VACUUM_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

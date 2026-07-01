@@ -1,6 +1,5 @@
 {
  "type": "PROMOTION_BUILD_UP_CLEVERNESS3",
- "description": "TXT_KEY_PROMOTION_BUILD_UP_CLEVERNESS3",
  "espionage": {
   "unit": {
    "insidiousness": {
@@ -18,5 +17,8 @@
  },
  "sound": {
   "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_BUILD_UP_CLEVERNESS3"
  }
 }

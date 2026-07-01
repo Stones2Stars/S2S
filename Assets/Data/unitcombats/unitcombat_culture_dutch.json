@@ -1,12 +1,12 @@
 {
  "type": "UNITCOMBAT_CULTURE_DUTCH",
- "description": "TXT_KEY_UNITCOMBAT_CULTURE_DUTCH",
  "ui": {
   "art": {
    "icon": "Art/Interface/Buttons/units/sparth/categories/culture_dutch.dds"
   }
  },
  "identity": {
+  "description": "TXT_KEY_UNITCOMBAT_CULTURE_DUTCH",
   "culture": "BONUS_DUTCH"
  }
 }

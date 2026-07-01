@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_HOUSING_ANIMAL_BURROW",
- "description": "TXT_KEY_BUILDING_HOUSING_ANIMAL_BURROW",
- "civilopedia": "TXT_KEY_BUILDING_HOUSING_ANIMAL_BURROW_PEDIA",
  "obsoletedBy": {
   "techs": [
    "TECH_BARK_WORKING"
@@ -41,6 +39,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_HOUSING_ANIMAL_BURROW",
+  "civilopedia": "TXT_KEY_BUILDING_HOUSING_ANIMAL_BURROW_PEDIA",
   "notConstructible": true,
   "nukeImmune": true,
   "neverCapture": true,

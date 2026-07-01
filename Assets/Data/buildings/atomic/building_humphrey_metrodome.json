@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_HUMPHREY_METRODOME",
- "description": "TXT_KEY_BUILDING_HUMPHREY_METRODOME",
- "civilopedia": "TXT_KEY_BUILDING_HUMPHREY_METRODOME_PEDIA",
  "obsoletedBy": {
   "techs": [
    "TECH_NANOTROIDS"
@@ -76,6 +74,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_HUMPHREY_METRODOME",
+  "civilopedia": "TXT_KEY_BUILDING_HUMPHREY_METRODOME_PEDIA",
   "worth": 5,
   "militaryWorth": 4,
   "conquestProbability": 100,

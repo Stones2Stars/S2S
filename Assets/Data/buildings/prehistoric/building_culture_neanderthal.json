@@ -1,8 +1,5 @@
 {
  "type": "BUILDING_CULTURE_NEANDERTHAL",
- "description": "TXT_KEY_BUILDING_CULTURE_NEANDERTHAL",
- "civilopedia": "TXT_KEY_BUILDING_CULTURE_NEANDERTHAL_PEDIA",
- "help": "TXT_KEY_BUILDING_CULTURE_NEANDERTHAL_HELP",
  "obsoletedBy": {
   "techs": [
    "TECH_SEDENTARY_LIFESTYLE"
@@ -120,6 +117,9 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_CULTURE_NEANDERTHAL",
+  "civilopedia": "TXT_KEY_BUILDING_CULTURE_NEANDERTHAL_PEDIA",
+  "help": "TXT_KEY_BUILDING_CULTURE_NEANDERTHAL_HELP",
   "nukeImmune": true,
   "noInstanceLimit": true,
   "conquestProbability": 100,

@@ -1,8 +1,5 @@
 {
  "type": "TECH_IMMORTALITY",
- "description": "TXT_KEY_TECH_IMMORTALITY",
- "civilopedia": "TXT_KEY_TECH_IMMORTALITY_PEDIA",
- "quote": "TXT_KEY_TECH_IMMORTALITY_QUOTE",
  "enables": {
   "bonuses": [
    "BONUS_HUMAN_MOD_IMMORTAL",
@@ -62,6 +59,9 @@
   "soundMP": "AS2D_TECH_GENERIC"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_IMMORTALITY",
+  "civilopedia": "TXT_KEY_TECH_IMMORTALITY_PEDIA",
+  "quote": "TXT_KEY_TECH_IMMORTALITY_QUOTE",
   "era": "C2C_ERA_COSMIC",
   "worth": 48,
   "tradeable": true,

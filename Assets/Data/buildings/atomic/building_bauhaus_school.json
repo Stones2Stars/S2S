@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_BAUHAUS_SCHOOL",
- "description": "TXT_KEY_BUILDING_BAUHAUS_SCHOOL",
- "civilopedia": "TXT_KEY_BUILDING_BAUHAUS_SCHOOL_PEDIA",
  "obsoletedBy": {
   "techs": [
    "TECH_METAMATERIALS"
@@ -76,6 +74,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_BAUHAUS_SCHOOL",
+  "civilopedia": "TXT_KEY_BUILDING_BAUHAUS_SCHOOL_PEDIA",
   "commerceDoubleTime": {
    "culture": 1000
   },

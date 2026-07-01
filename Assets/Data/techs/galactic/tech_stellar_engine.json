@@ -1,8 +1,5 @@
 {
  "type": "TECH_STELLAR_ENGINE",
- "description": "TXT_KEY_TECH_STELLAR_ENGINE",
- "civilopedia": "TXT_KEY_TECH_STELLAR_ENGINE_PEDIA",
- "quote": "TXT_KEY_TECH_STELLAR_ENGINE_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_ARTIFICIAL_CONSTELLATION",
@@ -57,6 +54,9 @@
   "soundMP": "AS2D_TECH_GENERIC"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_STELLAR_ENGINE",
+  "civilopedia": "TXT_KEY_TECH_STELLAR_ENGINE_PEDIA",
+  "quote": "TXT_KEY_TECH_STELLAR_ENGINE_QUOTE",
   "era": "C2C_ERA_GALACTIC",
   "worth": 48,
   "tradeable": true,

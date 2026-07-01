@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_UTILITY_FOG",
- "description": "TXT_KEY_BUILDING_UTILITY_FOG",
- "civilopedia": "TXT_KEY_BUILDING_UTILITY_FOG_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_MATTER_DECOMPILER",
@@ -79,6 +77,8 @@
   "construct": "AS2D_BUILD_NANOFACTORY"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_UTILITY_FOG",
+  "civilopedia": "TXT_KEY_BUILDING_UTILITY_FOG_PEDIA",
   "worth": 12,
   "militaryWorth": 50,
   "conquestProbability": 100,

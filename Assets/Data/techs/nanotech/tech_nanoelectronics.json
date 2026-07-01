@@ -1,8 +1,5 @@
 {
  "type": "TECH_NANOELECTRONICS",
- "description": "TXT_KEY_TECH_NANOELECTRONICS",
- "civilopedia": "TXT_KEY_TECH_NANOELECTRONICS_PEDIA",
- "quote": "TXT_KEY_TECH_NANOELECTRONICS_QUOTE",
  "enables": {
   "bonuses": [
    "BONUS_NANOACTUATORS",
@@ -67,6 +64,9 @@
   "soundMP": "AS2D_TECH_NANOELECTRONICS"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_NANOELECTRONICS",
+  "civilopedia": "TXT_KEY_TECH_NANOELECTRONICS_PEDIA",
+  "quote": "TXT_KEY_TECH_NANOELECTRONICS_QUOTE",
   "era": "C2C_ERA_NANOTECH",
   "worth": 48,
   "tradeable": true,

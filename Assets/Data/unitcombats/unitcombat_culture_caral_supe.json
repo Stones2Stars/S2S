@@ -1,12 +1,12 @@
 {
  "type": "UNITCOMBAT_CULTURE_CARAL_SUPE",
- "description": "TXT_KEY_UNITCOMBAT_CULTURE_CARAL_SUPE",
  "ui": {
   "art": {
    "icon": "Art/categories/culture_newcultures.dds"
   }
  },
  "identity": {
+  "description": "TXT_KEY_UNITCOMBAT_CULTURE_CARAL_SUPE",
   "culture": "BONUS_CARAL_SUPE"
  }
 }

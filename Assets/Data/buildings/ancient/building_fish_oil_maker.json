@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_FISH_OIL_MAKER",
- "description": "TXT_KEY_BUILDING_FISH_OIL_MAKER",
- "civilopedia": "TXT_KEY_BUILDING_FISH_OIL_MAKER_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_INDUSTRIAL_FARMS"
@@ -115,6 +113,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_FISH_OIL_MAKER",
+  "civilopedia": "TXT_KEY_BUILDING_FISH_OIL_MAKER_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

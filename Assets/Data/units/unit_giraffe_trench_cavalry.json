@@ -1,7 +1,5 @@
 {
  "type": "UNIT_GIRAFFE_TRENCH_CAVALRY",
- "description": "TXT_KEY_UNIT_GIRAFFE_TRENCH_CAVALRY",
- "civilopedia": "TXT_KEY_UNIT_GIRAFFE_ARCHER_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -168,6 +166,8 @@
   "production": 950
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_GIRAFFE_TRENCH_CAVALRY",
+  "civilopedia": "TXT_KEY_UNIT_GIRAFFE_ARCHER_PEDIA",
   "worth": 4,
   "militaryWorth": 33,
   "xpValueAttack": 6,

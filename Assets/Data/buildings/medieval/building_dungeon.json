@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_DUNGEON",
- "description": "TXT_KEY_BUILDING_DUNGEON",
- "civilopedia": "TXT_KEY_BUILDING_DUNGEON_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_TORTURE_CHAMBER"
@@ -72,6 +70,8 @@
   "construct": "AS2D_BUILD_JAIL"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_DUNGEON",
+  "civilopedia": "TXT_KEY_BUILDING_DUNGEON_PEDIA",
   "worth": 4,
   "militaryWorth": 4,
   "advisor": "ADVISOR_MILITARY",

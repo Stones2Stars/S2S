@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_INCUBATION_CENTER",
- "description": "TXT_KEY_BUILDING_INCUBATION_CENTER",
- "civilopedia": "TXT_KEY_BUILDING_INCUBATION_CENTER_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_HEALTHCARE_MEGACOMPLEX"
@@ -65,6 +63,8 @@
   "construct": "AS2D_BUILD_INCUBATION_CENTER"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_INCUBATION_CENTER",
+  "civilopedia": "TXT_KEY_BUILDING_INCUBATION_CENTER_PEDIA",
   "worth": 10,
   "conquestProbability": 75,
   "dcmAirbombMission": 2,

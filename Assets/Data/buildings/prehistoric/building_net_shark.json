@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_NET_SHARK",
- "description": "TXT_KEY_BUILDING_NET_SHARK",
- "civilopedia": "TXT_KEY_BUILDING_NET_SHARK_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_RESOURCES_FISH"
@@ -76,6 +74,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_NET_SHARK",
+  "civilopedia": "TXT_KEY_BUILDING_NET_SHARK_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

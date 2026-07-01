@@ -1,7 +1,5 @@
 {
  "type": "UNIT_PO_NGBE",
- "description": "TXT_KEY_UNIT_PO_NGBE",
- "civilopedia": "TXT_KEY_UNIT_PO_NGBE_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -69,6 +67,8 @@
   "upkeep": 1
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_PO_NGBE",
+  "civilopedia": "TXT_KEY_UNIT_PO_NGBE_PEDIA",
   "worth": 2,
   "militaryWorth": 3,
   "xpValueAttack": 4,

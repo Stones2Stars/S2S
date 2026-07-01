@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_HOLOGRAPHIC_COMBAT_SIMULATOR",
- "description": "TXT_KEY_BUILDING_HOLOGRAPHIC_COMBAT_SIMULATOR",
- "civilopedia": "TXT_KEY_BUILDING_HOLOGRAPHIC_COMBAT_SIMULATOR_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -85,6 +83,8 @@
   "construct": "AS2D_BUILD_BARRACKS"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_HOLOGRAPHIC_COMBAT_SIMULATOR",
+  "civilopedia": "TXT_KEY_BUILDING_HOLOGRAPHIC_COMBAT_SIMULATOR_PEDIA",
   "worth": 5,
   "militaryWorth": 6,
   "dcmAirbombMission": 2,

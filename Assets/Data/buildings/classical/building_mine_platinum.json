@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_MINE_PLATINUM",
- "description": "TXT_KEY_BUILDING_MINE_PLATINUM",
- "civilopedia": "TXT_KEY_BUILDING_MINE_PLATINUM_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_SMELTER_PLATINUM"
@@ -70,6 +68,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_MINE_PLATINUM",
+  "civilopedia": "TXT_KEY_BUILDING_MINE_PLATINUM_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

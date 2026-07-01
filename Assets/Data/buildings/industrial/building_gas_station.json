@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_GAS_STATION",
- "description": "TXT_KEY_BUILDING_GAS_STATION",
- "civilopedia": "TXT_KEY_BUILDING_GAS_STATION_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_AON_CENTER"
@@ -87,6 +85,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_GAS_STATION",
+  "civilopedia": "TXT_KEY_BUILDING_GAS_STATION_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

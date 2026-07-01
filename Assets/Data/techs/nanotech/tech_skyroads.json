@@ -1,8 +1,5 @@
 {
  "type": "TECH_SKYROADS",
- "description": "TXT_KEY_TECH_SKYROADS",
- "civilopedia": "TXT_KEY_TECH_SKYROADS_PEDIA",
- "quote": "TXT_KEY_TECH_SKYROADS_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_ROOFTOP_FLYING_CAR_PORT",
@@ -76,6 +73,9 @@
   "soundMP": "AS2D_TECH_SKYROADS"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_SKYROADS",
+  "civilopedia": "TXT_KEY_TECH_SKYROADS_PEDIA",
+  "quote": "TXT_KEY_TECH_SKYROADS_QUOTE",
   "era": "C2C_ERA_NANOTECH",
   "worth": 48,
   "militaryWorth": 5,

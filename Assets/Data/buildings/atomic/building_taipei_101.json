@@ -1,8 +1,5 @@
 {
  "type": "BUILDING_TAIPEI_101",
- "description": "TXT_KEY_BUILDING_TAIPEI_101",
- "civilopedia": "TXT_KEY_BUILDING_TAIPEI_101_PEDIA",
- "help": "TXT_KEY_BUILDING_TAIPEI_101_HELP",
  "requires": {
   "build": {
    "all": [
@@ -76,6 +73,9 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_TAIPEI_101",
+  "civilopedia": "TXT_KEY_BUILDING_TAIPEI_101_PEDIA",
+  "help": "TXT_KEY_BUILDING_TAIPEI_101_HELP",
   "nukeImmune": true,
   "worth": 15,
   "conquestProbability": 100,

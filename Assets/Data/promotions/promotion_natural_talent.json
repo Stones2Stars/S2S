@@ -1,6 +1,5 @@
 {
  "type": "PROMOTION_NATURAL_TALENT",
- "description": "TXT_KEY_PROMOTION_NATURAL_TALENT",
  "strength": {
   "unit": {
    "quality": {
@@ -30,6 +29,7 @@
   "sound": "AS2D_IF_LEVELUP"
  },
  "identity": {
+  "description": "TXT_KEY_PROMOTION_NATURAL_TALENT",
   "replacesUnitCombat": "UNITCOMBAT_QUALITY_MEDIOCRE",
   "levelPrereq": 4,
   "notOnUnitCombats": [

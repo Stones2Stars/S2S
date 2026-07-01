@@ -1,7 +1,5 @@
 {
  "type": "CORPORATION_6",
- "description": "TXT_KEY_BUILDING_CORPORATION_6",
- "civilopedia": "TXT_KEY_BUILDING_CORPORATION_6_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_ALUMINUM_CO_RESEARCH_AND_DEVELOPMENT"
@@ -70,6 +68,8 @@
   "sound": "AS2D_BUILD_BANK"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_CORPORATION_6",
+  "civilopedia": "TXT_KEY_BUILDING_CORPORATION_6_PEDIA",
   "spreadFactor": 200,
   "spread": 60
  }

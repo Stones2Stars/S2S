@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_ACCELERATOR",
- "description": "TXT_KEY_BUILDING_ACCELERATOR",
- "civilopedia": "TXT_KEY_BUILDING_ACCELERATOR_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_CERN_ACCELERATOR"
@@ -80,6 +78,8 @@
   "construct": "AS2D_BUILD_ACCELERATOR"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_ACCELERATOR",
+  "civilopedia": "TXT_KEY_BUILDING_ACCELERATOR_PEDIA",
   "worth": 6,
   "conquestProbability": 75,
   "dcmAirbombMission": 2,

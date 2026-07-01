@@ -1,6 +1,5 @@
 {
  "type": "PROMOTION_BUILD_UP_BLEND_INTO_CROWD1",
- "description": "TXT_KEY_PROMOTION_BUILD_UP_BLEND_INTO_CROWD1",
  "vision": {
   "invisibleImprovement": [
    {
@@ -50,5 +49,8 @@
  },
  "sound": {
   "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_BUILD_UP_BLEND_INTO_CROWD1"
  }
 }

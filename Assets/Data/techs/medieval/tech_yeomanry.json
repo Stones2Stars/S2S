@@ -1,8 +1,5 @@
 {
  "type": "TECH_YEOMANRY",
- "description": "TXT_KEY_TECH_YEOMANRY",
- "civilopedia": "TXT_KEY_TECH_YEOMANRY_PEDIA",
- "quote": "TXT_KEY_TECH_YEOMANRY_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_ARCHERY_RANGE",
@@ -72,6 +69,9 @@
   "soundMP": "AS2D_TECH_YEOMANRY"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_YEOMANRY",
+  "civilopedia": "TXT_KEY_TECH_YEOMANRY_PEDIA",
+  "quote": "TXT_KEY_TECH_YEOMANRY_QUOTE",
   "era": "C2C_ERA_MEDIEVAL",
   "worth": 16,
   "tradeable": true,

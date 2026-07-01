@@ -1,8 +1,5 @@
 {
  "type": "TECH_CLONING",
- "description": "TXT_KEY_TECH_CLONING",
- "civilopedia": "TXT_KEY_TECH_CLONING_PEDIA",
- "quote": "TXT_KEY_TECH_CLONING_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_CLONING_LABORATORY",
@@ -52,6 +49,9 @@
   "soundMP": "AS2D_TECH_CLONING"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_CLONING",
+  "civilopedia": "TXT_KEY_TECH_CLONING_PEDIA",
+  "quote": "TXT_KEY_TECH_CLONING_QUOTE",
   "era": "C2C_ERA_INFORMATION",
   "worth": 48,
   "militaryWorth": 6,

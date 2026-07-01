@@ -1,6 +1,5 @@
 {
  "type": "BUILD_BONUS_SPICES",
- "description": "TXT_KEY_BUILD_BONUS_SPICES",
  "produces": {
   "improvement": "IMPROVEMENT_BONUS_SPICES"
  },
@@ -19,6 +18,7 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILD_BONUS_SPICES",
   "consumesUnit": true
  }
 }

@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_WIG_SHOP",
- "description": "TXT_KEY_BUILDING_WIG_SHOP",
- "civilopedia": "TXT_KEY_BUILDING_WIG_SHOP_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_MALL"
@@ -64,6 +62,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_WIG_SHOP",
+  "civilopedia": "TXT_KEY_BUILDING_WIG_SHOP_PEDIA",
   "conquestProbability": 70,
   "advisor": "ADVISOR_ECONOMY",
   "visibilityPriority": 1,

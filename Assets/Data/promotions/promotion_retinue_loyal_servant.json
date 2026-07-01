@@ -1,6 +1,5 @@
 {
  "type": "PROMOTION_RETINUE_LOYAL_SERVANT",
- "description": "TXT_KEY_PROMOTION_RETINUE_LOYAL_SERVANT",
  "movement": {
   "unit": {
    "moves": {
@@ -29,6 +28,7 @@
   "sound": "AS2D_IF_GET_RETINUE"
  },
  "identity": {
+  "description": "TXT_KEY_PROMOTION_RETINUE_LOYAL_SERVANT",
   "unitCombats": [
    "UNITCOMBAT_HERO"
   ]

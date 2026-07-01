@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_CANNON_FORGE",
- "description": "TXT_KEY_BUILDING_CANNON_FORGE",
- "civilopedia": "TXT_KEY_BUILDING_CANNON_FORGE_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_BOMBARD_TOWER",
@@ -106,6 +104,8 @@
   "construct": "AS2D_BUILD_FORGE"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_CANNON_FORGE",
+  "civilopedia": "TXT_KEY_BUILDING_CANNON_FORGE_PEDIA",
   "worth": 4,
   "militaryWorth": 3,
   "conquestProbability": 75,

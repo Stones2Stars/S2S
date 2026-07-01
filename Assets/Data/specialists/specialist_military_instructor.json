@@ -1,7 +1,5 @@
 {
  "type": "SPECIALIST_MILITARY_INSTRUCTOR",
- "description": "TXT_KEY_SPECIALIST_MILITARY_INSTRUCTOR",
- "civilopedia": "TXT_KEY_CONCEPT_GREAT_GENERALS_PEDIA",
  "experience": {
   "city": {
    "unitCombats": {
@@ -18,6 +16,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_SPECIALIST_MILITARY_INSTRUCTOR",
+  "civilopedia": "TXT_KEY_CONCEPT_GREAT_GENERALS_PEDIA",
   "categories": [
    "CATEGORY_SPECIALIST_GROUP_MILITARY"
   ]

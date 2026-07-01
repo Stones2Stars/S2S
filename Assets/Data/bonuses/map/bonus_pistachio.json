@@ -1,7 +1,5 @@
 {
  "type": "BONUS_PISTACHIO",
- "description": "TXT_KEY_BONUS_PISTACHIO",
- "civilopedia": "TXT_KEY_BONUS_PISTACHIO_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_CATCHER_COCKATOO",
@@ -64,6 +62,8 @@
   ]
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_PISTACHIO",
+  "civilopedia": "TXT_KEY_BONUS_PISTACHIO_PEDIA",
   "bonusClassType": "BONUSCLASS_CROP"
  }
 }

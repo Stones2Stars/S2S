@@ -1,6 +1,5 @@
 {
  "type": "BUILD_BONUS_COFFEE",
- "description": "TXT_KEY_BUILD_BONUS_COFFEE",
  "produces": {
   "improvement": "IMPROVEMENT_BONUS_COFFEE"
  },
@@ -19,6 +18,7 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILD_BONUS_COFFEE",
   "consumesUnit": true
  }
 }

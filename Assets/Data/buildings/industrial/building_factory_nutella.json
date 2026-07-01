@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_FACTORY_NUTELLA",
- "description": "TXT_KEY_BUILDING_FACTORY_NUTELLA",
- "civilopedia": "TXT_KEY_BUILDING_FACTORY_NUTELLA_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_FOOD_MANUFACTURING_DISTRICT"
@@ -98,6 +96,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_FACTORY_NUTELLA",
+  "civilopedia": "TXT_KEY_BUILDING_FACTORY_NUTELLA_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

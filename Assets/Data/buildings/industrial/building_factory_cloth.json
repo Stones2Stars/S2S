@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_FACTORY_CLOTH",
- "description": "TXT_KEY_BUILDING_FACTORY_CLOTH",
- "civilopedia": "TXT_KEY_BUILDING_FACTORY_CLOTH_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_TEXTILE_MANUFACTURING_DISTRICT"
@@ -153,6 +151,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_FACTORY_CLOTH",
+  "civilopedia": "TXT_KEY_BUILDING_FACTORY_CLOTH_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

@@ -1,7 +1,5 @@
 {
  "type": "UNIT_CHEROKEE_RIFLEMAN",
- "description": "TXT_KEY_UNIT_CHEROKEE_RIFLEMAN",
- "civilopedia": "TXT_KEY_UNIT_CHEROKEE_RIFLEMAN_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -113,6 +111,8 @@
   "upkeep": 1
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_CHEROKEE_RIFLEMAN",
+  "civilopedia": "TXT_KEY_UNIT_CHEROKEE_RIFLEMAN_PEDIA",
   "worth": 3,
   "militaryWorth": 49,
   "xpValueAttack": 6,

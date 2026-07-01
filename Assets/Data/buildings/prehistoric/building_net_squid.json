@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_NET_SQUID",
- "description": "TXT_KEY_BUILDING_NET_SQUID",
- "civilopedia": "TXT_KEY_BUILDING_NET_SQUID_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_RESOURCES_SHELLFISH"
@@ -75,6 +73,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_NET_SQUID",
+  "civilopedia": "TXT_KEY_BUILDING_NET_SQUID_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

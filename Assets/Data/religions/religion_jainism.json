@@ -1,7 +1,5 @@
 {
  "type": "RELIGION_JAINISM",
- "description": "TXT_KEY_TECH_JAINISM",
- "civilopedia": "TXT_KEY_TECH_JAINISM_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_JAIN_CATHEDRAL",
@@ -52,6 +50,8 @@
   "sound": "AS2D_BUILD_HINDU"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_JAINISM",
+  "civilopedia": "TXT_KEY_TECH_JAINISM_PEDIA",
   "spreadFactor": 100
  }
 }

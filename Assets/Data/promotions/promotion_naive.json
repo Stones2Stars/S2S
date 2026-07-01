@@ -1,6 +1,5 @@
 {
  "type": "PROMOTION_NAIVE",
- "description": "TXT_KEY_PROMOTION_NAIVE",
  "withdrawal": {
   "unit": {
    "percent": -20
@@ -22,6 +21,7 @@
   "sound": "AS2D_PING"
  },
  "identity": {
+  "description": "TXT_KEY_PROMOTION_NAIVE",
   "unitCombats": [
    "UNITCOMBAT_SPY"
   ]

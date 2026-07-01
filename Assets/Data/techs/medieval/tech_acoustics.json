@@ -1,8 +1,5 @@
 {
  "type": "TECH_ACOUSTICS",
- "description": "TXT_KEY_TECH_ACOUSTICS",
- "civilopedia": "TXT_KEY_TECH_ACOUSTICS_PEDIA",
- "quote": "TXT_KEY_TECH_ACOUSTICS_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_J_S_BACHS_CATHEDRAL",
@@ -50,6 +47,9 @@
   "soundMP": "AS2D_TECH_ACOUSTICS"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_ACOUSTICS",
+  "civilopedia": "TXT_KEY_TECH_ACOUSTICS_PEDIA",
+  "quote": "TXT_KEY_TECH_ACOUSTICS_QUOTE",
   "era": "C2C_ERA_MEDIEVAL",
   "worth": 32,
   "tradeable": true,

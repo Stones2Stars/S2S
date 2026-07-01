@@ -1,6 +1,5 @@
 {
  "type": "PROMOTION_ADMIRAL_STAFF8",
- "description": "TXT_KEY_PROMOTION_ADMIRAL_STAFF8",
  "upkeep": {
   "unit": {
    "modifier": {
@@ -23,5 +22,8 @@
  },
  "sound": {
   "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_ADMIRAL_STAFF8"
  }
 }

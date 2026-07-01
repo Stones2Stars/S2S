@@ -1,8 +1,5 @@
 {
  "type": "UNIT_SUBDUED_PIG_NEW",
- "description": "TXT_KEY_UNIT_SUBDUED_PIG_NEW",
- "civilopedia": "TXT_KEY_UNIT_PIG_PEDIA",
- "help": "TXT_KEY_UNIT_SUBDUED_ANIMALS_HELP",
  "skills": {
   "onlyDefensive": true,
   "militaryTrade": true
@@ -53,6 +50,9 @@
   ]
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_SUBDUED_PIG_NEW",
+  "civilopedia": "TXT_KEY_UNIT_PIG_PEDIA",
+  "help": "TXT_KEY_UNIT_SUBDUED_ANIMALS_HELP",
   "spawnOnly": true,
   "worth": 1,
   "domain": "DOMAIN_LAND",

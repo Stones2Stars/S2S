@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_RANGER_STATION",
- "description": "TXT_KEY_BUILDING_RANGER_STATION",
- "civilopedia": "TXT_KEY_BUILDING_RANGER_STATION_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_CAMP_GROUNDS",
@@ -89,6 +87,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_RANGER_STATION",
+  "civilopedia": "TXT_KEY_BUILDING_RANGER_STATION_PEDIA",
   "militaryWorth": 1,
   "conquestProbability": 30,
   "advisor": "ADVISOR_GROWTH",

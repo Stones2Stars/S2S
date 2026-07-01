@@ -1,8 +1,5 @@
 {
  "type": "TECH_INDUSTRIAL_ECOLOGY",
- "description": "TXT_KEY_TECH_INDUSTRIAL_ECOLOGY",
- "civilopedia": "TXT_KEY_TECH_INDUSTRIAL_ECOLOGY_PEDIA",
- "quote": "TXT_KEY_TECH_INDUSTRIAL_ECOLOGY_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_AQUAPONICS_TANKS",
@@ -71,6 +68,9 @@
   "soundMP": "AS2D_TECH_GENERIC"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_INDUSTRIAL_ECOLOGY",
+  "civilopedia": "TXT_KEY_TECH_INDUSTRIAL_ECOLOGY_PEDIA",
+  "quote": "TXT_KEY_TECH_INDUSTRIAL_ECOLOGY_QUOTE",
   "era": "C2C_ERA_INFORMATION",
   "worth": 40,
   "tradeable": true,

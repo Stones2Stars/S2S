@@ -1,8 +1,5 @@
 {
  "type": "TECH_MACROVERSE_TRAVERSAL",
- "description": "TXT_KEY_TECH_MACROVERSE_TRAVERSAL",
- "civilopedia": "TXT_KEY_TECH_MACROVERSE_TRAVERSAL_PEDIA",
- "quote": "TXT_KEY_TECH_MACROVERSE_TRAVERSAL_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_EXAVERSE_PORTAL",
@@ -62,6 +59,9 @@
   "soundMP": "AS2D_TECH_GENERIC"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_MACROVERSE_TRAVERSAL",
+  "civilopedia": "TXT_KEY_TECH_MACROVERSE_TRAVERSAL_PEDIA",
+  "quote": "TXT_KEY_TECH_MACROVERSE_TRAVERSAL_QUOTE",
   "era": "C2C_ERA_TRANSCENDENT",
   "worth": 48,
   "tradeable": true,

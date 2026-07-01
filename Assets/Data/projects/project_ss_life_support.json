@@ -1,7 +1,5 @@
 {
  "type": "PROJECT_SS_LIFE_SUPPORT",
- "description": "TXT_KEY_PROJECT_SS_LIFE_SUPPORT",
- "civilopedia": "TXT_KEY_PROJECT_SS_LIFE_SUPPORT_PEDIA",
  "buildRate": {
   "self": {
    "percent": [
@@ -30,6 +28,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_PROJECT_SS_LIFE_SUPPORT",
+  "civilopedia": "TXT_KEY_PROJECT_SS_LIFE_SUPPORT_PEDIA",
   "mapCategories": [
    "MAPCATEGORY_EARTH"
   ],

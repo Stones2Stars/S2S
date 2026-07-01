@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_INTERGALACTIC_GALACTIC_GROUP_COLONY",
- "description": "TXT_KEY_BUILDING_INTERGALACTIC_GALACTIC_GROUP_COLONY",
- "civilopedia": "TXT_KEY_BUILDING_INTERGALACTIC_GALACTIC_GROUP_COLONY_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_ERIDANUS_CLUSTER_COLONY",
@@ -72,6 +70,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_INTERGALACTIC_GALACTIC_GROUP_COLONY",
+  "civilopedia": "TXT_KEY_BUILDING_INTERGALACTIC_GALACTIC_GROUP_COLONY_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

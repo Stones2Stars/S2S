@@ -1,8 +1,5 @@
 {
  "type": "TECH_TRAILS",
- "description": "TXT_KEY_TECH_TRAILS",
- "civilopedia": "TXT_KEY_TECH_TRAILS_PEDIA",
- "quote": "TXT_KEY_TECH_TRAILS_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_TRAILS"
@@ -79,6 +76,9 @@
   "soundMP": "AS2D_TECH_TRAILS"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_TRAILS",
+  "civilopedia": "TXT_KEY_TECH_TRAILS_PEDIA",
+  "quote": "TXT_KEY_TECH_TRAILS_QUOTE",
   "era": "C2C_ERA_PREHISTORIC",
   "worth": 8,
   "tradeable": true,

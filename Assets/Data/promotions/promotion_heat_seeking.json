@@ -1,6 +1,5 @@
 {
  "type": "PROMOTION_HEAT_SEEKING",
- "description": "TXT_KEY_PROMOTION_HEAT_SEEKING",
  "strength": {
   "unit": {
    "unitCombat": {
@@ -34,6 +33,7 @@
   "sound": "AS2D_IF_LEVELUP"
  },
  "identity": {
+  "description": "TXT_KEY_PROMOTION_HEAT_SEEKING",
   "unitCombats": [
    "UNITCOMBAT_MISSILE"
   ]

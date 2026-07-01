@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_SENTRY_POST",
- "description": "TXT_KEY_BUILDING_SENTRY_POST",
- "civilopedia": "TXT_KEY_BUILDING_SENTRY_POST_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_SLAVE_COMPOUND_CRIME_PREVENTION"
@@ -102,6 +100,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_SENTRY_POST",
+  "civilopedia": "TXT_KEY_BUILDING_SENTRY_POST_PEDIA",
   "enabledCivilizations": [
    "CIVILIZATION_NPC_NEANDERTHAL"
   ],

@@ -1,7 +1,5 @@
 {
  "type": "UNIT_CARIB_BLOWGUNNER",
- "description": "TXT_KEY_UNIT_CARIB_BLOWGUNNER",
- "civilopedia": "TXT_KEY_UNIT_CARIB_BLOWGUNNER_PEDIA",
  "obsoletedBy": {
   "techs": [
    "TECH_FLINTLOCK"
@@ -115,6 +113,8 @@
   "upkeep": 1
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_CARIB_BLOWGUNNER",
+  "civilopedia": "TXT_KEY_UNIT_CARIB_BLOWGUNNER_PEDIA",
   "worth": 2,
   "militaryWorth": 8,
   "xpValueAttack": 6,

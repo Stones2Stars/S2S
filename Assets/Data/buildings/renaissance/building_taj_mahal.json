@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_TAJ_MAHAL",
- "description": "TXT_KEY_BUILDING_TAJ_MAHAL",
- "civilopedia": "TXT_KEY_BUILDING_TAJ_MAHAL_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -79,6 +77,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_TAJ_MAHAL",
+  "civilopedia": "TXT_KEY_BUILDING_TAJ_MAHAL_PEDIA",
   "commerceDoubleTime": {
    "culture": 1000
   },

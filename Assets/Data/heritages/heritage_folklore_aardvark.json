@@ -1,7 +1,5 @@
 {
  "type": "HERITAGE_FOLKLORE_AARDVARK",
- "description": "TXT_KEY_HERITAGE_FOLKLORE_AARDVARK",
- "civilopedia": "TXT_KEY_BUILDING_FOLKLORE_ANIMAL_PEDIA",
  "research": {
   "empire": {
    "flat": [
@@ -90,6 +88,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_HERITAGE_FOLKLORE_AARDVARK",
+  "civilopedia": "TXT_KEY_BUILDING_FOLKLORE_ANIMAL_PEDIA",
   "needsLanguage": true
  }
 }

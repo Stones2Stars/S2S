@@ -1,6 +1,5 @@
 {
  "type": "BUILD_BONUS_DATES",
- "description": "TXT_KEY_BUILD_BONUS_DATES",
  "produces": {
   "improvement": "IMPROVEMENT_BONUS_DATES"
  },
@@ -19,6 +18,7 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILD_BONUS_DATES",
   "consumesUnit": true
  }
 }

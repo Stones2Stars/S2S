@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_GUNSMITH",
- "description": "TXT_KEY_BUILDING_GUNSMITH",
- "civilopedia": "TXT_KEY_BUILDING_GUNSMITH_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_SHOOTING_CLUB"
@@ -99,6 +97,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_GUNSMITH",
+  "civilopedia": "TXT_KEY_BUILDING_GUNSMITH_PEDIA",
   "conquestProbability": 70,
   "advisor": "ADVISOR_ECONOMY",
   "visibilityPriority": 1,

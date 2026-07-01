@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_EXTREME_FORCE_CONCENTRATOR",
- "description": "TXT_KEY_BUILDING_EXTREME_FORCE_CONCENTRATOR",
- "civilopedia": "TXT_KEY_BUILDING_EXTREME_FORCE_CONCENTRATOR_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_POCKET_UNIVERSE_MAKER"
@@ -48,6 +46,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_EXTREME_FORCE_CONCENTRATOR",
+  "civilopedia": "TXT_KEY_BUILDING_EXTREME_FORCE_CONCENTRATOR_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

@@ -1,6 +1,5 @@
 {
  "type": "UNITCOMBAT_DESTROYER",
- "description": "TXT_KEY_UNITCOMBAT_DESTROYER",
  "skills": {
   "terrainDoubleMove": {
    "TERRAIN_OCEAN_POLAR": true,
@@ -19,6 +18,7 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_UNITCOMBAT_DESTROYER",
   "forNavalMilitary": true
  }
 }

@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_ALUMINUM_CO_RESEARCH_AND_DEVELOPMENT",
- "description": "TXT_KEY_BUILDING_ALUMINUM_CO_RESEARCH_AND_DEVELOPMENT",
- "civilopedia": "TXT_KEY_BUILDING_CORPORATION_6_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -91,6 +89,8 @@
   "construct": "AS2D_BUILD_FACTORY"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_ALUMINUM_CO_RESEARCH_AND_DEVELOPMENT",
+  "civilopedia": "TXT_KEY_BUILDING_CORPORATION_6_PEDIA",
   "worth": 6,
   "militaryWorth": 2,
   "conquestProbability": 75,

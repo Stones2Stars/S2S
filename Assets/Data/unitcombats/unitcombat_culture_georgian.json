@@ -1,12 +1,12 @@
 {
  "type": "UNITCOMBAT_CULTURE_GEORGIAN",
- "description": "TXT_KEY_UNITCOMBAT_CULTURE_GEORGIAN",
  "ui": {
   "art": {
    "icon": "Art/categories/culture_newcultures.dds"
   }
  },
  "identity": {
+  "description": "TXT_KEY_UNITCOMBAT_CULTURE_GEORGIAN",
   "culture": "BONUS_GEORGIAN"
  }
 }

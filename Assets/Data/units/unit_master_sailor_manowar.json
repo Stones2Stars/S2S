@@ -1,7 +1,5 @@
 {
  "type": "UNIT_MASTER_SAILOR_MANOWAR",
- "description": "TXT_KEY_UNIT_MASTER_SAILOR_MANOWAR",
- "civilopedia": "TXT_KEY_UNIT_MANOWAR_PEDIA",
  "obsoletedBy": {
   "techs": [
    "TECH_COMBUSTION"
@@ -78,6 +76,8 @@
   "upkeep": 1
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_MASTER_SAILOR_MANOWAR",
+  "civilopedia": "TXT_KEY_UNIT_MANOWAR_PEDIA",
   "spawnOnly": true,
   "worth": 2,
   "militaryWorth": 62,

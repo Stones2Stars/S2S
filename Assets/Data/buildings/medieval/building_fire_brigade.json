@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_FIRE_BRIGADE",
- "description": "TXT_KEY_BUILDING_FIRE_BRIGADE",
- "civilopedia": "TXT_KEY_BUILDING_FIRE_BRIGADE_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_FIRE_STATION"
@@ -81,6 +79,8 @@
   "construct": "AS2D_BUILD_FIRE_BRIGADES"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_FIRE_BRIGADE",
+  "civilopedia": "TXT_KEY_BUILDING_FIRE_BRIGADE_PEDIA",
   "worth": 10,
   "militaryWorth": 2,
   "conquestProbability": 25,

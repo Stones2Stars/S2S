@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_INTERGALACTIC_CHRONOTON_GENERATOR",
- "description": "TXT_KEY_BUILDING_INTERGALACTIC_CHRONOTON_GENERATOR",
- "civilopedia": "TXT_KEY_BUILDING_INTERGALACTIC_CHRONOTON_GENERATOR_PEDIA",
  "enables": {
   "units": [
    "UNIT_CHRONOFORM_SHIP"
@@ -48,6 +46,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_INTERGALACTIC_CHRONOTON_GENERATOR",
+  "civilopedia": "TXT_KEY_BUILDING_INTERGALACTIC_CHRONOTON_GENERATOR_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

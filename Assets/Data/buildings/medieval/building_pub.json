@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_PUB",
- "description": "TXT_KEY_BUILDING_PUB",
- "civilopedia": "TXT_KEY_BUILDING_PUB_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_GUILD_VICTUALLERS"
@@ -94,6 +92,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_PUB",
+  "civilopedia": "TXT_KEY_BUILDING_PUB_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

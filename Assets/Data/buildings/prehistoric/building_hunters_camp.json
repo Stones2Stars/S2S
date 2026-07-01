@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_HUNTERS_CAMP",
- "description": "TXT_KEY_BUILDING_HUNTERS_CAMP",
- "civilopedia": "TXT_KEY_BUILDING_HUNTERS_CAMP_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_BIRD_CALLER",
@@ -102,6 +100,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_HUNTERS_CAMP",
+  "civilopedia": "TXT_KEY_BUILDING_HUNTERS_CAMP_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

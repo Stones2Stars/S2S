@@ -1,8 +1,5 @@
 {
  "type": "TECH_DIVINE_RIGHT",
- "description": "TXT_KEY_TECH_DIVINE_RIGHT",
- "civilopedia": "TXT_KEY_TECH_DIVINE_RIGHT_PEDIA",
- "quote": "TXT_KEY_TECH_DIVINE_RIGHT_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_ALHAMBRA",
@@ -85,6 +82,9 @@
   "soundMP": "AS2D_TECH_MP_DIVINE_RIGHT"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_DIVINE_RIGHT",
+  "civilopedia": "TXT_KEY_TECH_DIVINE_RIGHT_PEDIA",
+  "quote": "TXT_KEY_TECH_DIVINE_RIGHT_QUOTE",
   "era": "C2C_ERA_RENAISSANCE",
   "worth": 24,
   "tradeable": true,

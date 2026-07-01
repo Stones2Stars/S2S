@@ -1,7 +1,5 @@
 {
  "type": "BONUS_POISON",
- "description": "TXT_KEY_BONUS_POISON",
- "civilopedia": "TXT_KEY_BONUS_POISON_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_POISON_CRAFTER"
@@ -13,6 +11,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_POISON",
+  "civilopedia": "TXT_KEY_BONUS_POISON_PEDIA",
   "bonusClassType": "BONUSCLASS_MANUFACTURED"
  }
 }

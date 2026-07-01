@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_SHOPPING_DISTRICT",
- "description": "TXT_KEY_BUILDING_SHOPPING_DISTRICT",
- "civilopedia": "TXT_KEY_BUILDING_SHOPPING_DISTRICT_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_ALCHEMISTS_LAB",
@@ -332,6 +330,8 @@
   "construct": "AS2D_BUILD_GROCER"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_SHOPPING_DISTRICT",
+  "civilopedia": "TXT_KEY_BUILDING_SHOPPING_DISTRICT_PEDIA",
   "worth": 6,
   "conquestProbability": 33,
   "dcmAirbombMission": 2,

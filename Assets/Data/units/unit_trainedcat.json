@@ -1,7 +1,5 @@
 {
  "type": "UNIT_TRAINEDCAT",
- "description": "TXT_KEY_UNIT_TRAINEDCAT",
- "civilopedia": "TXT_KEY_UNIT_WARCAT_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -106,6 +104,8 @@
   "upkeep": 3
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_TRAINEDCAT",
+  "civilopedia": "TXT_KEY_UNIT_WARCAT_PEDIA",
   "worth": 4,
   "militaryWorth": 6,
   "xpValueAttack": 8,

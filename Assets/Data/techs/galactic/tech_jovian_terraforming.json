@@ -1,8 +1,5 @@
 {
  "type": "TECH_JOVIAN_TERRAFORMING",
- "description": "TXT_KEY_TECH_JOVIAN_TERRAFORMING",
- "civilopedia": "TXT_KEY_TECH_JOVIAN_TERRAFORMING_PEDIA",
- "quote": "TXT_KEY_TECH_JOVIAN_TERRAFORMING_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_INTERSTELLAR_GAS_GIANT_SURFACE_SHELL",
@@ -63,6 +60,9 @@
   "soundMP": "AS2D_TECH_GENERIC"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_JOVIAN_TERRAFORMING",
+  "civilopedia": "TXT_KEY_TECH_JOVIAN_TERRAFORMING_PEDIA",
+  "quote": "TXT_KEY_TECH_JOVIAN_TERRAFORMING_QUOTE",
   "era": "C2C_ERA_GALACTIC",
   "worth": 40,
   "tradeable": true,

@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_INTERSTELLAR_SPHEREWORLD",
- "description": "TXT_KEY_BUILDING_INTERSTELLAR_SPHEREWORLD",
- "civilopedia": "TXT_KEY_BUILDING_INTERSTELLAR_SPHEREWORLD_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_INTERSTELLAR_ASCENDED_STAR_SYSTEM",
@@ -61,6 +59,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_INTERSTELLAR_SPHEREWORLD",
+  "civilopedia": "TXT_KEY_BUILDING_INTERSTELLAR_SPHEREWORLD_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_MA_WEST_POINT",
- "description": "TXT_KEY_BUILDING_MA_WEST_POINT",
- "civilopedia": "TXT_KEY_BUILDING_MA_WEST_POINT_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -89,6 +87,8 @@
   "construct": "AS2D_BUILD_WESTPOINT"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_MA_WEST_POINT",
+  "civilopedia": "TXT_KEY_BUILDING_MA_WEST_POINT_PEDIA",
   "worth": 8,
   "militaryWorth": 8,
   "conquestProbability": 100,

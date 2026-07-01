@@ -1,12 +1,12 @@
 {
  "type": "UNITCOMBAT_CULTURE_SAFFARID",
- "description": "TXT_KEY_UNITCOMBAT_CULTURE_SAFFARID",
  "ui": {
   "art": {
    "icon": "Art/categories/culture_newcultures.dds"
   }
  },
  "identity": {
+  "description": "TXT_KEY_UNITCOMBAT_CULTURE_SAFFARID",
   "culture": "BONUS_SAFFARID"
  }
 }

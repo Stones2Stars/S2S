@@ -1,8 +1,5 @@
 {
  "type": "CIVIC_SURVIVAL",
- "description": "TXT_KEY_CIVIC_SURVIVAL",
- "civilopedia": "TXT_KEY_CIVIC_SURVIVAL_PEDIA",
- "strategy": "TXT_KEY_CIVIC_SURVIVAL_STRATEGY",
  "happiness": {
   "empire": {
    "perMilitaryUnit": {
@@ -98,6 +95,9 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_CIVIC_SURVIVAL",
+  "civilopedia": "TXT_KEY_CIVIC_SURVIVAL_PEDIA",
+  "strategy": "TXT_KEY_CIVIC_SURVIVAL_STRATEGY",
   "civicOption": "CIVICOPTION_WELFARE"
  }
 }

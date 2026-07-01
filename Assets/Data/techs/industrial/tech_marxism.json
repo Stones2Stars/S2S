@@ -1,8 +1,5 @@
 {
  "type": "TECH_MARXISM",
- "description": "TXT_KEY_TECH_MARXISM",
- "civilopedia": "TXT_KEY_TECH_MARXISM_PEDIA",
- "quote": "TXT_KEY_TECH_MARXISM_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_SOCIAL_SERVICES"
@@ -62,6 +59,9 @@
   "soundMP": "AS2D_TECH_MARXISM"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_MARXISM",
+  "civilopedia": "TXT_KEY_TECH_MARXISM_PEDIA",
+  "quote": "TXT_KEY_TECH_MARXISM_QUOTE",
   "era": "C2C_ERA_INDUSTRIAL",
   "worth": 32,
   "militaryWorth": 6,

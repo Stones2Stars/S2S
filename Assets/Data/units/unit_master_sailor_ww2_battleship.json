@@ -1,7 +1,5 @@
 {
  "type": "UNIT_MASTER_SAILOR_WW2_BATTLESHIP",
- "description": "TXT_KEY_UNIT_MASTER_SAILOR_WW2_BATTLESHIP",
- "civilopedia": "TXT_KEY_UNIT_WW2_BATTLESHIP_PEDIA",
  "obsoletedBy": {
   "techs": [
    "TECH_SEMICONDUCTORS"
@@ -95,6 +93,8 @@
   "upkeep": 2
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_MASTER_SAILOR_WW2_BATTLESHIP",
+  "civilopedia": "TXT_KEY_UNIT_WW2_BATTLESHIP_PEDIA",
   "spawnOnly": true,
   "worth": 4,
   "militaryWorth": 205,

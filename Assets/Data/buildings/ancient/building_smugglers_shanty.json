@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_SMUGGLERS_SHANTY",
- "description": "TXT_KEY_BUILDING_SMUGGLERS_SHANTY",
- "civilopedia": "TXT_KEY_BUILDING_SMUGGLERS_SHANTY_PEDIA",
  "enables": {
   "units": [
    "UNIT_BARBARY_CORSAIR",
@@ -183,6 +181,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_SMUGGLERS_SHANTY",
+  "civilopedia": "TXT_KEY_BUILDING_SMUGGLERS_SHANTY_PEDIA",
   "nukeImmune": true,
   "militaryWorth": 1,
   "advisor": "ADVISOR_ECONOMY",

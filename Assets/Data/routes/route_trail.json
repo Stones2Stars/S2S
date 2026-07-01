@@ -1,12 +1,12 @@
 {
  "type": "ROUTE_TRAIL",
- "description": "TXT_KEY_ROUTE_TRAIL",
  "ui": {
   "art": {
    "icon": "Art/Interface/Buttons/Builds/path.dds"
   }
  },
  "identity": {
+  "description": "TXT_KEY_ROUTE_TRAIL",
   "value": 1,
   "advancedStart": {
    "cost": 5

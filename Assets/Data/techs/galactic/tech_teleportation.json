@@ -1,8 +1,5 @@
 {
  "type": "TECH_TELEPORTATION",
- "description": "TXT_KEY_TECH_TELEPORTATION",
- "civilopedia": "TXT_KEY_TECH_TELEPORTATION_PEDIA",
- "quote": "TXT_KEY_TECH_TELEPORTATION_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_TELEPORT_BOOTH",
@@ -62,6 +59,9 @@
   "soundMP": "AS2D_TECH_TELEPORTATION"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_TELEPORTATION",
+  "civilopedia": "TXT_KEY_TECH_TELEPORTATION_PEDIA",
+  "quote": "TXT_KEY_TECH_TELEPORTATION_QUOTE",
   "era": "C2C_ERA_GALACTIC",
   "worth": 48,
   "tradeable": true,

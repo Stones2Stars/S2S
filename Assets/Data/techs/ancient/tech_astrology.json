@@ -1,8 +1,5 @@
 {
  "type": "TECH_ASTROLOGY",
- "description": "TXT_KEY_TECH_ASTROLOGY",
- "civilopedia": "TXT_KEY_TECH_ASTROLOGY_PEDIA",
- "quote": "TXT_KEY_TECH_ASTROLOGY_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_ASTROLOGICAL_INFLUENCE_OF_AQUARIUS",
@@ -68,6 +65,9 @@
   "soundMP": "AS2D_TECH_ASTROLOGY"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_ASTROLOGY",
+  "civilopedia": "TXT_KEY_TECH_ASTROLOGY_PEDIA",
+  "quote": "TXT_KEY_TECH_ASTROLOGY_QUOTE",
   "era": "C2C_ERA_ANCIENT",
   "worth": 16,
   "tradeable": true,

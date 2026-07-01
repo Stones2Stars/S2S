@@ -1,6 +1,5 @@
 {
  "type": "PROMOTION_ACCURACY",
- "description": "TXT_KEY_PROMOTION_ACCURACY",
  "bombard": {
   "unit": {
    "rate": {
@@ -20,6 +19,7 @@
   "sound": "AS2D_IF_LEVELUP"
  },
  "identity": {
+  "description": "TXT_KEY_PROMOTION_ACCURACY",
   "unitCombats": [
    "UNITCOMBAT_EARLY_BOMBERS",
    "UNITCOMBAT_BOMBERS",

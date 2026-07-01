@@ -1,7 +1,5 @@
 {
  "type": "UNIT_PAPUAN_CANNIBAL",
- "description": "TXT_KEY_UNIT_PAPUAN_CANNIBAL",
- "civilopedia": "TXT_KEY_UNIT_PAPUAN_CANNIBAL_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -67,6 +65,8 @@
   "upkeep": 1
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_PAPUAN_CANNIBAL",
+  "civilopedia": "TXT_KEY_UNIT_PAPUAN_CANNIBAL_PEDIA",
   "worth": 1,
   "militaryWorth": 1,
   "xpValueAttack": 6,

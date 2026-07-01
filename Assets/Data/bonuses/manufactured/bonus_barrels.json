@@ -1,7 +1,5 @@
 {
  "type": "BONUS_BARRELS",
- "description": "TXT_KEY_BONUS_BARRELS",
- "civilopedia": "TXT_KEY_BONUS_BARRELS_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_BREWERY",
@@ -21,6 +19,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_BARRELS",
+  "civilopedia": "TXT_KEY_BONUS_BARRELS_PEDIA",
   "bonusClassType": "BONUSCLASS_MANUFACTURED"
  }
 }

@@ -1,6 +1,5 @@
 {
  "type": "UNITCOMBAT_CIVILIAN",
- "description": "TXT_KEY_UNITCOMBAT_CIVILIAN",
  "capture": {
   "unit": {
    "probability": {
@@ -24,5 +23,8 @@
   "art": {
    "icon": "Art/Interface/Buttons/units/sparth/categories/civilians.dds"
   }
+ },
+ "identity": {
+  "description": "TXT_KEY_UNITCOMBAT_CIVILIAN"
  }
 }

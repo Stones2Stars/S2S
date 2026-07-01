@@ -1,9 +1,11 @@
 {
  "type": "PROMOTIONLINE_GLUTTONOUS",
- "description": "TXT_KEY_PROMOTIONLINE_GLUTTONOUS",
  "ui": {
   "art": {
    "icon": "art/Buttons/Traits/TraitGluttonous.dds"
   }
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTIONLINE_GLUTTONOUS"
  }
 }

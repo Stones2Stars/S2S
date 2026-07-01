@@ -67,7 +67,10 @@ modifier targets — **not separate shapes.** Learn them once.
   `TEAM`, `UNIT_LEVEL`, `AREA_SIZE`, **`ERA`** (the player's current era as a plain **counter 1…X** — the era
   sequence; eras are ordered data defined in `Assets/Data/eras/`), **`TARGET_NUM_CITIES`** (the world-size's
   expected city count — `CvWorldInfo.getTargetNumCities`, e.g. 2/3/4/6/8/11/14/18 per world size; a runtime-resolved
-  world constant, used as a `max:` in ranked selection §3.3), … (an engine-resolved, extensible registry).
+  world constant, used as a `max:` in ranked selection §3.3), **`WORLD_WONDER`** / **`NATIONAL_WONDER`** /
+  **`TEAM_WONDER`** (the count of wonders of that category in the scope — `city` = `CvCity::getNum{World,National,Team}Wonders`;
+  the existing engine terms, pedia display names TBD; used as a `per` count-scaler, e.g. a trait's free-specialist-per-
+  wonder), … (an engine-resolved, extensible registry).
 - **`SELF`** — "this entity's own type," resolved per-entity. Used only in a `per` count-scaler ("per how many of
   me exist"). It is **not** used in `requires` — a "one of me" cap is [`allowed`](#44-allowed--caps), not a
   condition.
@@ -561,6 +564,9 @@ Empire-agnostic self-description. Read directly — never summed or cascaded.
   `adjective`, `shortDescription`) + intrinsic flags/values (radii, classifications, capability bools, base stats).
   Two buildability flags: `notConstructible` (excluded from the player production queue; placed by another system)
   and `autoBuild` (auto-placed in every city where `requires.build` holds); `autoBuild ⊂ notConstructible`.
+  **Civilization selectability** lives here too: `playable` / `aiPlayable` (can a human / the AI pick this civ) —
+  **load-only metadata, no gameplay relevance** (animals/barbarians/neanderthals are technically civilizations), so
+  it is intrinsic self-description, not a `policy` (owner ruling 2026-07-01).
 - **`cost`** — what it costs to make (`production`, and cost sub-fields).
 - **`ui`** — interface art/sound (icons, buttons, movies) · **`world`** — on-map 3D art · **`sound`** — audio assets.
 - **`ai`** — AI-only metadata (flavours, weights, personality); never affects rules, only AI behaviour.
@@ -601,7 +607,20 @@ Full glossaries: [skills.md](skills.md) · [tags.md](tags.md) · [state.md](stat
 Data read by a specific system, not the cascade. Use only when the entity needs it:
 
 - **`loadPrune`** — `{ onGameOptions, notOnGameOptions }`: drop this entity at load under given game options.
-- **`policies`** — civ meta (`playable`, `aiPlayable`) **or** player-state law toggles (per entity).
+- **`policies`** — **pure empire STATES** an entity enacts: named declarative on/off conditions of the whole
+  civilization (`noForeignTrade`, `noCorporations`, `allReligionsBanned`, `fixedBorders`, `noNonStateReligionSpread`,
+  …). Granted by a **civic** (adopted — active while the civic is in force) or a **trait** (permanent while the trait
+  is held) — one meaning, two grantors, exactly parallel to a tech granting a [capability](capabilities.md). **A policy
+  is a PURE STATE, never a parameterized/targeted rule (owner ruling 2026-07-01):** `allReligionsBanned` ✓;
+  `onlyAllowedToBuildReligion: X` ✗ — a *targeted* restriction that carries a WHAT is an [enabler](enabler.md) concern
+  (`enables`/`disables`/`requires`), not a policy. This is the group-unambiguity discipline (each group name = exactly
+  one meaning; cf. empire `capabilities` vs unit `skills` vs `tags`). *(NOT here: civilization selectability
+  `playable`/`aiPlayable` → `identity` §7, load-only; the NPC `stronglyRestricted` build-lockdown is a `requires.build`
+  civ-membership gate paired with `EnabledCivilization`, folded into the enabler when civilizations are wired — not a
+  policy. ⏳ Some legacy trait keys under `policies` are EFFECTS not states: `freeSpecialistPer{World,National,Team}Wonder`
+  add free specialists scaled by wonder count (CvCity:5764) → reclassify to a `freeSpecialists` modifier family.
+  (NB `nonStateReligionCommerce` was *suspected* an effect but is VERIFIED a pure STATE — a Free-Church permission that
+  non-state religions' `stateReligionCommerce` applies — so it correctly STAYS a policy.)*
 - **`succession`** — `{ upgradesTo, promotionLine, priority }` (manual upgrade / promotion-line link).
 - **`excludes`** — same-tier mutual exclusion (conflicting traits).
 - **`produces`** — a Build's outcome FKs (what laying it creates).

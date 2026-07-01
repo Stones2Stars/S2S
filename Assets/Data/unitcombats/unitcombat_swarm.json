@@ -1,6 +1,5 @@
 {
  "type": "UNITCOMBAT_SWARM",
- "description": "TXT_KEY_UNITCOMBAT_SWARM",
  "capture": {
   "unit": {
    "probability": {
@@ -15,5 +14,8 @@
   "art": {
    "icon": "Art/Interface/Buttons/units/sparth/categories/swarm.dds"
   }
+ },
+ "identity": {
+  "description": "TXT_KEY_UNITCOMBAT_SWARM"
  }
 }

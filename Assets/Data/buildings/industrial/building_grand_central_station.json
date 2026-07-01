@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_GRAND_CENTRAL_STATION",
- "description": "TXT_KEY_BUILDING_GRAND_CENTRAL_STATION",
- "civilopedia": "TXT_KEY_BUILDING_GRAND_CENTRAL_STATION_PEDIA",
  "obsoletedBy": {
   "techs": [
    "TECH_MAGNETIC_LEVITATION"
@@ -79,6 +77,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_GRAND_CENTRAL_STATION",
+  "civilopedia": "TXT_KEY_BUILDING_GRAND_CENTRAL_STATION_PEDIA",
   "neverCapture": true,
   "greatPeopleUnitType": "UNIT_GREAT_ENGINEER",
   "advisor": "ADVISOR_ECONOMY",

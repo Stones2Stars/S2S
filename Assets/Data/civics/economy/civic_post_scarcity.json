@@ -1,8 +1,5 @@
 {
  "type": "CIVIC_POST_SCARCITY",
- "description": "TXT_KEY_CIVIC_POST_SCARCITY",
- "civilopedia": "TXT_KEY_CIVIC_POST_SCARCITY_PEDIA",
- "strategy": "TXT_KEY_CIVIC_POST_SCARCITY_STRATEGY",
  "enables": {
   "hurries": [
    "HURRY_GOLD"
@@ -92,6 +89,9 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_CIVIC_POST_SCARCITY",
+  "civilopedia": "TXT_KEY_CIVIC_POST_SCARCITY_PEDIA",
+  "strategy": "TXT_KEY_CIVIC_POST_SCARCITY_STRATEGY",
   "civicOption": "CIVICOPTION_ECONOMY",
   "anarchyLength": 2,
   "upkeepLevel": "UPKEEP_HIGH"

@@ -1,6 +1,5 @@
 {
  "type": "PROMOTION_HIDE_IN_SHADOWS2",
- "description": "TXT_KEY_PROMOTION_HIDE_IN_SHADOWS2",
  "vision": {
   "invisibilityIntensity": {
    "INVISIBLE_CAMOUFLAGE": 1
@@ -21,5 +20,8 @@
  },
  "sound": {
   "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_HIDE_IN_SHADOWS2"
  }
 }

@@ -1,6 +1,5 @@
 {
  "type": "UNITCOMBAT_SUBMARINE",
- "description": "TXT_KEY_UNITCOMBAT_SUBMARINE",
  "skills": {
   "terrainDoubleMove": {
    "TERRAIN_OCEAN_POLAR": true,
@@ -25,6 +24,7 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_UNITCOMBAT_SUBMARINE",
   "forNavalMilitary": true
  }
 }

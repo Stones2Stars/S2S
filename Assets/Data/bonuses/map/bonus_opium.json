@@ -1,7 +1,5 @@
 {
  "type": "BONUS_OPIUM",
- "description": "TXT_KEY_BONUS_OPIUM",
- "civilopedia": "TXT_KEY_BONUS_OPIUM_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_CULTURE_FATIMID",
@@ -57,6 +55,8 @@
   ]
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_OPIUM",
+  "civilopedia": "TXT_KEY_BONUS_OPIUM_PEDIA",
   "bonusClassType": "BONUSCLASS_LUXURY"
  }
 }

@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_DRY_CLEANER",
- "description": "TXT_KEY_BUILDING_DRY_CLEANER",
- "civilopedia": "TXT_KEY_BUILDING_DRY_CLEANER_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_HYPERMARKET"
@@ -82,6 +80,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_DRY_CLEANER",
+  "civilopedia": "TXT_KEY_BUILDING_DRY_CLEANER_PEDIA",
   "conquestProbability": 70,
   "advisor": "ADVISOR_ECONOMY",
   "visibilityPriority": 1,

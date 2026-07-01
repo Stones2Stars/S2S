@@ -1,7 +1,5 @@
 {
  "type": "PROMOTION_PISCES",
- "description": "TXT_KEY_PROMOTION_PISCES",
- "help": "TXT_KEY_PROMOTION_ASTRO_HELP",
  "skills": {
   "oneUp": true
  },
@@ -14,6 +12,8 @@
   "sound": "AS2D_IF_LEVELUP"
  },
  "identity": {
+  "description": "TXT_KEY_PROMOTION_PISCES",
+  "help": "TXT_KEY_PROMOTION_ASTRO_HELP",
   "starsign": true
  }
 }

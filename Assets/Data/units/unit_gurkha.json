@@ -1,7 +1,5 @@
 {
  "type": "UNIT_GURKHA",
- "description": "TXT_KEY_UNIT_GURKHA",
- "civilopedia": "TXT_KEY_UNIT_GURKHA_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -91,6 +89,8 @@
   "upkeep": 1
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_GURKHA",
+  "civilopedia": "TXT_KEY_UNIT_GURKHA_PEDIA",
   "worth": 3,
   "militaryWorth": 49,
   "xpValueAttack": 6,

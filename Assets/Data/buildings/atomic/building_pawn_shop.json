@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_PAWN_SHOP",
- "description": "TXT_KEY_BUILDING_PAWN_SHOP",
- "civilopedia": "TXT_KEY_BUILDING_PAWN_SHOP_PEDIA",
  "enables": {
   "units": [
    "UNIT_ROBBER"
@@ -96,6 +94,8 @@
   "construct": "AS2D_BUILD_MARKETPLACE"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_PAWN_SHOP",
+  "civilopedia": "TXT_KEY_BUILDING_PAWN_SHOP_PEDIA",
   "worth": 2,
   "conquestProbability": 75,
   "dcmAirbombMission": 2,

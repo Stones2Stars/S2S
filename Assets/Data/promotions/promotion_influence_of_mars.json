@@ -1,6 +1,5 @@
 {
  "type": "PROMOTION_INFLUENCE_OF_MARS",
- "description": "TXT_KEY_PROMOTION_INFLUENCE_OF_MARS",
  "strength": {
   "unit": {
    "percent": 10
@@ -23,6 +22,7 @@
   "sound": "AS2D_IF_LEVELUP"
  },
  "identity": {
+  "description": "TXT_KEY_PROMOTION_INFLUENCE_OF_MARS",
   "unitCombats": [
    "UNITCOMBAT_LAW_ENFORCEMENT"
   ]

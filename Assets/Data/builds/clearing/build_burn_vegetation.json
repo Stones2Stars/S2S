@@ -1,6 +1,5 @@
 {
  "type": "BUILD_BURN_VEGETATION",
- "description": "TXT_KEY_BUILD_BURN_VEGETATION",
  "requires": {
   "build": {
    "all": [
@@ -80,5 +79,8 @@
   "art": {
    "entityEvent": "ENTITY_EVENT_CHOP"
   }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILD_BURN_VEGETATION"
  }
 }

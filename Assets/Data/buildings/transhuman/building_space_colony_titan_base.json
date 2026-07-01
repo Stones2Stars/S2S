@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_SPACE_COLONY_TITAN_BASE",
- "description": "TXT_KEY_BUILDING_SPACE_COLONY_TITAN_BASE",
- "civilopedia": "TXT_KEY_BUILDING_SPACE_COLONY_TITAN_BASE_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_TITAN_AIRPORT",
@@ -54,6 +52,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_SPACE_COLONY_TITAN_BASE",
+  "civilopedia": "TXT_KEY_BUILDING_SPACE_COLONY_TITAN_BASE_PEDIA",
   "notConstructible": true,
   "autoBuild": true,
   "advisor": "ADVISOR_SCIENCE",

@@ -1,6 +1,5 @@
 {
  "type": "PROMOTION_SAND_DEVIL",
- "description": "TXT_KEY_PROMOTION_SAND_DEVIL",
  "strength": {
   "unit": {
    "terrain": {
@@ -30,5 +29,8 @@
  },
  "sound": {
   "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_SAND_DEVIL"
  }
 }

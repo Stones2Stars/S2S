@@ -1,7 +1,5 @@
 {
  "type": "UNIT_WOLVERINE",
- "description": "TXT_KEY_UNIT_WOLVERINE",
- "civilopedia": "TXT_KEY_UNIT_WOLVERINE_PEDIA",
  "skills": {
   "assassin": true,
   "blendIntoCity": true,
@@ -53,6 +51,8 @@
   ]
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_WOLVERINE",
+  "civilopedia": "TXT_KEY_UNIT_WOLVERINE_PEDIA",
   "spawnOnly": true,
   "xpValueAttack": 6,
   "xpValueDefense": 4,

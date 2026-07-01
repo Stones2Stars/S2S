@@ -1,8 +1,5 @@
 {
  "type": "TECH_MAGNETIC_SAILS",
- "description": "TXT_KEY_TECH_MAGNETIC_SAILS",
- "civilopedia": "TXT_KEY_TECH_MAGNETIC_SAILS_PEDIA",
- "quote": "TXT_KEY_TECH_MAGNETIC_SAILS_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_SEDNA_PROBE"
@@ -69,6 +66,9 @@
   "soundMP": "AS2D_TECH_MAGNETIC_SAILS"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_MAGNETIC_SAILS",
+  "civilopedia": "TXT_KEY_TECH_MAGNETIC_SAILS_PEDIA",
+  "quote": "TXT_KEY_TECH_MAGNETIC_SAILS_QUOTE",
   "era": "C2C_ERA_NANOTECH",
   "worth": 48,
   "militaryWorth": 4,

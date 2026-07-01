@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_ORPHANAGE",
- "description": "TXT_KEY_BUILDING_ORPHANAGE",
- "civilopedia": "TXT_KEY_BUILDING_ORPHANAGE_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_HIGH_TECH_CULTURAL_ENRICHMENT"
@@ -58,6 +56,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_ORPHANAGE",
+  "civilopedia": "TXT_KEY_BUILDING_ORPHANAGE_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

@@ -1,7 +1,5 @@
 {
  "type": "PROMOTION_WANTED",
- "description": "TXT_KEY_PROMOTION_WANTED",
- "help": "TXT_KEY_PROMOTION_WANTED_HELP",
  "skills": {
   "upgradeAnywhere": true,
   "assassin": true
@@ -29,6 +27,8 @@
   "sound": "AS2D_IF_LEVELUP"
  },
  "identity": {
+  "description": "TXT_KEY_PROMOTION_WANTED",
+  "help": "TXT_KEY_PROMOTION_WANTED_HELP",
   "negatesInvisibility": [
    "INVISIBLE_CAMOUFLAGE",
    "INVISIBLE_INVISIBLE"

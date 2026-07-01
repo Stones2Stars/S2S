@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_LICHEN_GATHERER",
- "description": "TXT_KEY_BUILDING_LICHEN_GATHERER",
- "civilopedia": "TXT_KEY_BUILDING_LICHEN_GATHERER_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_LICHEN_BURNER"
@@ -55,6 +53,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_LICHEN_GATHERER",
+  "civilopedia": "TXT_KEY_BUILDING_LICHEN_GATHERER_PEDIA",
   "enabledCivilizations": [
    "CIVILIZATION_NPC_NEANDERTHAL"
   ],

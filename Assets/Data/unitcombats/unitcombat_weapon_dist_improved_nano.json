@@ -1,9 +1,11 @@
 {
  "type": "UNITCOMBAT_WEAPON_DIST_IMPROVED_NANO",
- "description": "TXT_KEY_UNITCOMBAT_WEAPON_DIST_IMPROVED_NANO",
  "ui": {
   "art": {
    "icon": "Art/Interface/Buttons/units/sparth/categories/wields_distance.dds"
   }
+ },
+ "identity": {
+  "description": "TXT_KEY_UNITCOMBAT_WEAPON_DIST_IMPROVED_NANO"
  }
 }

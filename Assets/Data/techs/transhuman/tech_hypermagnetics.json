@@ -1,8 +1,5 @@
 {
  "type": "TECH_HYPERMAGNETICS",
- "description": "TXT_KEY_TECH_HYPERMAGNETICS",
- "civilopedia": "TXT_KEY_TECH_HYPERMAGNETICS_PEDIA",
- "quote": "TXT_KEY_TECH_HYPERMAGNETICS_QUOTE",
  "enables": {
   "bonuses": [
    "BONUS_PLASTEEL"
@@ -74,6 +71,9 @@
   "soundMP": "AS2D_TECH_HYPERMAGNETICS"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_HYPERMAGNETICS",
+  "civilopedia": "TXT_KEY_TECH_HYPERMAGNETICS_PEDIA",
+  "quote": "TXT_KEY_TECH_HYPERMAGNETICS_QUOTE",
   "era": "C2C_ERA_TRANSHUMAN",
   "worth": 48,
   "militaryWorth": 4,

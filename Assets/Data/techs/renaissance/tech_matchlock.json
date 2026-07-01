@@ -1,8 +1,5 @@
 {
  "type": "TECH_MATCHLOCK",
- "description": "TXT_KEY_TECH_MATCHLOCK",
- "civilopedia": "TXT_KEY_TECH_MATCHLOCK_PEDIA",
- "quote": "TXT_KEY_TECH_MATCHLOCK_QUOTE",
  "enables": {
   "bonuses": [
    "BONUS_FIREARMS"
@@ -113,6 +110,9 @@
   "soundMP": "AS2D_TECH_MATCHLOCK"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_MATCHLOCK",
+  "civilopedia": "TXT_KEY_TECH_MATCHLOCK_PEDIA",
+  "quote": "TXT_KEY_TECH_MATCHLOCK_QUOTE",
   "era": "C2C_ERA_RENAISSANCE",
   "worth": 32,
   "militaryWorth": 12,

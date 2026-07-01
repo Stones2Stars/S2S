@@ -1,6 +1,5 @@
 {
  "type": "PROMOTION_CARAVAN_SEA_MOVEMENT_II",
- "description": "TXT_KEY_CARAVAN_SEA_MOVEMENT_II",
  "movement": {
   "unit": {
    "moves": {
@@ -18,5 +17,8 @@
  },
  "sound": {
   "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_CARAVAN_SEA_MOVEMENT_II"
  }
 }

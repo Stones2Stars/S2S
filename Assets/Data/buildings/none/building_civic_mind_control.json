@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_CIVIC_MIND_CONTROL",
- "description": "TXT_KEY_BUILDING_CIVIC_MIND_CONTROL",
- "civilopedia": "TXT_KEY_BUILDING_CIVIC_MIND_CONTROL_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -24,6 +22,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_CIVIC_MIND_CONTROL",
+  "civilopedia": "TXT_KEY_BUILDING_CIVIC_MIND_CONTROL_PEDIA",
   "notConstructible": true,
   "nukeImmune": true,
   "neverCapture": true,

@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_UNESCO_HERITAGE_SITE",
- "description": "TXT_KEY_BUILDING_UNESCO_HERITAGE_SITE",
- "civilopedia": "TXT_KEY_BUILDING_UNESCO_HERITAGE_SITE_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_HIGH_TECH_CULTURAL_ENRICHMENT"
@@ -91,6 +89,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_UNESCO_HERITAGE_SITE",
+  "civilopedia": "TXT_KEY_BUILDING_UNESCO_HERITAGE_SITE_PEDIA",
   "worth": 2,
   "conquestProbability": 30,
   "advisor": "ADVISOR_GROWTH",

@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_JOVIAN_ANTIMATTER_HARVESTER",
- "description": "TXT_KEY_BUILDING_JOVIAN_ANTIMATTER_HARVESTER",
- "civilopedia": "TXT_KEY_BUILDING_JOVIAN_ANTIMATTER_HARVESTER_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_TERRAFORMED_JUPITER"
@@ -69,6 +67,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_JOVIAN_ANTIMATTER_HARVESTER",
+  "civilopedia": "TXT_KEY_BUILDING_JOVIAN_ANTIMATTER_HARVESTER_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

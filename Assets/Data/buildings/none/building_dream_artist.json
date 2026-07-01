@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_DREAM_ARTIST",
- "description": "TXT_KEY_BUILDING_DREAM_ARTIST",
- "civilopedia": "TXT_KEY_BUILDING_DREAM_ARTIST_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -63,6 +61,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_DREAM_ARTIST",
+  "civilopedia": "TXT_KEY_BUILDING_DREAM_ARTIST_PEDIA",
   "specialBuildingType": "SPECIALBUILDING_PUNK_CYBER",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": "1.0",

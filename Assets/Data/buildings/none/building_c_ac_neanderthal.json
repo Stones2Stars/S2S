@@ -1,8 +1,5 @@
 {
  "type": "BUILDING_C_AC_NEANDERTHAL",
- "description": "TXT_KEY_BUILDING_C_AC_NEANDERTHAL",
- "civilopedia": "TXT_KEY_BUILDING_C_AC_PEDIA",
- "help": "TXT_KEY_BUILDING_C_AC_HELP",
  "enables": {
   "buildings": [
    "BUILDING_C_L_NEANDERTHAL"
@@ -73,6 +70,9 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_C_AC_NEANDERTHAL",
+  "civilopedia": "TXT_KEY_BUILDING_C_AC_PEDIA",
+  "help": "TXT_KEY_BUILDING_C_AC_HELP",
   "enabledCivilizations": [
    "CIVILIZATION_NPC_NEANDERTHAL"
   ],

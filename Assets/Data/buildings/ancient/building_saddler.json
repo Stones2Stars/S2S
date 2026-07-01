@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_SADDLER",
- "description": "TXT_KEY_BUILDING_SADDLER",
- "civilopedia": "TXT_KEY_BUILDING_SADDLER_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_MANUFACTURING_DISTRICT"
@@ -71,6 +69,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_SADDLER",
+  "civilopedia": "TXT_KEY_BUILDING_SADDLER_PEDIA",
   "enabledCivilizations": [
    "CIVILIZATION_NPC_NEANDERTHAL"
   ],

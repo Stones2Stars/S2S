@@ -1,7 +1,5 @@
 {
  "type": "BONUS_GEOTHERMAL_ENERGY",
- "description": "TXT_KEY_BONUS_GEOTHERMAL_ENERGY",
- "civilopedia": "TXT_KEY_BONUS_GEOTHERMAL_ENERGY_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_ENHANCED_GEOTHERMAL_SYSTEM",
@@ -63,6 +61,8 @@
   ]
  },
  "identity": {
+  "description": "TXT_KEY_BONUS_GEOTHERMAL_ENERGY",
+  "civilopedia": "TXT_KEY_BONUS_GEOTHERMAL_ENERGY_PEDIA",
   "bonusClassType": "BONUSCLASS_PRODUCTION"
  }
 }

@@ -1,12 +1,12 @@
 {
  "type": "PROMOTIONLINE_SHOCK",
- "description": "TXT_KEY_PROMOTIONLINE_SHOCK",
  "ui": {
   "art": {
    "icon": ",Art/Interface/Buttons/Promotions/Shock.dds,Art/Interface/Buttons/Promotions_Atlas.dds,4,5"
   }
  },
  "identity": {
+  "description": "TXT_KEY_PROMOTIONLINE_SHOCK",
   "unitCombats": [
    "UNITCOMBAT_THROWING",
    "UNITCOMBAT_MELEE",

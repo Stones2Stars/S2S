@@ -1,8 +1,5 @@
 {
  "type": "TRAIT_CARELESS",
- "description": "TXT_KEY_TRAIT_CARELESS",
- "civilopedia": "TXT_KEY_TRAIT_CARELESS_PEDIA",
- "strategy": "TXT_KEY_TRAIT_CARELESS_STRATEGY",
  "excludes": [
   "TRAIT_STRATEGIST"
  ],
@@ -408,6 +405,9 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_TRAIT_CARELESS",
+  "civilopedia": "TXT_KEY_TRAIT_CARELESS_PEDIA",
+  "strategy": "TXT_KEY_TRAIT_CARELESS_STRATEGY",
   "negativeTrait": true
  }
 }

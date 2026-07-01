@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_AMBER_GATHERER",
- "description": "TXT_KEY_BUILDING_AMBER_GATHERER",
- "civilopedia": "TXT_KEY_BUILDING_AMBER_GATHERER_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_RESOURCES_GEMSTONE"
@@ -65,6 +63,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_AMBER_GATHERER",
+  "civilopedia": "TXT_KEY_BUILDING_AMBER_GATHERER_PEDIA",
   "nukeImmune": true,
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [

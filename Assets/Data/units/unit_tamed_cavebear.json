@@ -1,8 +1,5 @@
 {
  "type": "UNIT_TAMED_CAVEBEAR",
- "description": "TXT_KEY_UNIT_TAMED_CAVE_BEAR",
- "civilopedia": "TXT_KEY_UNIT_CAVE_BEAR_PEDIA",
- "help": "TXT_KEY_UNIT_TAMED_ANIMALS_HELP",
  "requires": {
   "build": {
    "all": [
@@ -52,6 +49,9 @@
   "production": 133
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_TAMED_CAVE_BEAR",
+  "civilopedia": "TXT_KEY_UNIT_CAVE_BEAR_PEDIA",
+  "help": "TXT_KEY_UNIT_TAMED_ANIMALS_HELP",
   "xpValueAttack": 6,
   "xpValueDefense": 3,
   "domain": "DOMAIN_LAND",

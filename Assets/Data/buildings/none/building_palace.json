@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_PALACE",
- "description": "TXT_KEY_BUILDING_PALACE",
- "civilopedia": "TXT_KEY_BUILDING_PALACE_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_BALLROOM",
@@ -184,6 +182,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_PALACE",
+  "civilopedia": "TXT_KEY_BUILDING_PALACE_PEDIA",
   "nukeImmune": true,
   "neverCapture": true,
   "governmentCenter": true,

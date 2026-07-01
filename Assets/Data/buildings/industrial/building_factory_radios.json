@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_FACTORY_RADIOS",
- "description": "TXT_KEY_BUILDING_FACTORY_RADIOS",
- "civilopedia": "TXT_KEY_BUILDING_FACTORY_RADIOS_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_ELECTRONICS_MANUFACTURING_DISTRICT"
@@ -96,6 +94,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_FACTORY_RADIOS",
+  "civilopedia": "TXT_KEY_BUILDING_FACTORY_RADIOS_PEDIA",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

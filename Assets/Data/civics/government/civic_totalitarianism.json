@@ -1,8 +1,5 @@
 {
  "type": "CIVIC_TOTALITARIANISM",
- "description": "TXT_KEY_CIVIC_TOTALITARIANISM",
- "civilopedia": "TXT_KEY_CIVIC_TOTALITARIANISM_PEDIA",
- "strategy": "TXT_KEY_CIVIC_TOTALITARIANISM_STRATEGY",
  "enables": {
   "buildings": [
    "BUILDING_CHECKPOINT",
@@ -222,6 +219,9 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_CIVIC_TOTALITARIANISM",
+  "civilopedia": "TXT_KEY_CIVIC_TOTALITARIANISM_PEDIA",
+  "strategy": "TXT_KEY_CIVIC_TOTALITARIANISM_STRATEGY",
   "civicOption": "CIVICOPTION_GOVERNMENT",
   "anarchyLength": 1,
   "upkeepLevel": "UPKEEP_HIGH",

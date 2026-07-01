@@ -1,9 +1,11 @@
 {
  "type": "UNITCOMBAT_ASSISTED_MAMMOTH",
- "description": "TXT_KEY_UNITCOMBAT_ASSISTED_MAMMOTH",
  "ui": {
   "art": {
    "icon": "Art/Interface/Buttons/units/sparth/categories/assisted_by_mammoth.dds"
   }
+ },
+ "identity": {
+  "description": "TXT_KEY_UNITCOMBAT_ASSISTED_MAMMOTH"
  }
 }

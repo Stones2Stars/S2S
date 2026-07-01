@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_KNIGHTS_STABLE",
- "description": "TXT_KEY_BUILDING_KNIGHTS_STABLE",
- "civilopedia": "TXT_KEY_BUILDING_KNIGHTS_STABLE_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_ANIMAL_RACE_TRACK",
@@ -108,6 +106,8 @@
   "construct": "AS2D_BUILD_KNIGHT_STABLE"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_KNIGHTS_STABLE",
+  "civilopedia": "TXT_KEY_BUILDING_KNIGHTS_STABLE_PEDIA",
   "worth": 2,
   "militaryWorth": 3,
   "dcmAirbombMission": 2,

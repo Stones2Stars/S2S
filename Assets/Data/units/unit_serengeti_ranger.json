@@ -1,7 +1,5 @@
 {
  "type": "UNIT_SERENGETI_RANGER",
- "description": "TXT_KEY_UNIT_SERENGETI_RANGER",
- "civilopedia": "TXT_KEY_UNIT_SERENGETI_RANGER_PEDIA",
  "requires": {
   "build": {
    "all": [
@@ -111,6 +109,8 @@
   "hurryCostModifier": 25
  },
  "identity": {
+  "description": "TXT_KEY_UNIT_SERENGETI_RANGER",
+  "civilopedia": "TXT_KEY_UNIT_SERENGETI_RANGER_PEDIA",
   "worth": 6,
   "militaryWorth": 6,
   "domain": "DOMAIN_LAND",

@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_TAXPERSON",
- "description": "TXT_KEY_BUILDING_TAXPERSON",
- "civilopedia": "TXT_KEY_BUILDING_TAXPERSON_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_OFFICIUM"
@@ -83,6 +81,8 @@
   "construct": "AS2D_BUILD_LIBRARY"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_TAXPERSON",
+  "civilopedia": "TXT_KEY_BUILDING_TAXPERSON_PEDIA",
   "worth": 2,
   "advisor": "ADVISOR_CULTURE",
   "mapCategories": [

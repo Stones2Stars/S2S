@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_STEM_CELL_LAB",
- "description": "TXT_KEY_BUILDING_STEM_CELL_LAB",
- "civilopedia": "TXT_KEY_BUILDING_STEM_CELL_LAB_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_FERTILITY_CLINIC",
@@ -113,6 +111,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_STEM_CELL_LAB",
+  "civilopedia": "TXT_KEY_BUILDING_STEM_CELL_LAB_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

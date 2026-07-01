@@ -1,6 +1,5 @@
 {
  "type": "BUILD_SATELLITE_STATION",
- "description": "TXT_KEY_BUILD_SATELLITE_STATION",
  "requires": {
   "build": {
    "all": [
@@ -28,5 +27,8 @@
   "art": {
    "entityEvent": "ENTITY_EVENT_BUILD"
   }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILD_SATELLITE_STATION"
  }
 }

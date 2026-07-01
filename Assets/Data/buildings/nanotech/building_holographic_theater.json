@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_HOLOGRAPHIC_THEATER",
- "description": "TXT_KEY_BUILDING_HOLOGRAPHIC_THEATER",
- "civilopedia": "TXT_KEY_BUILDING_HOLOGRAPHIC_THEATER_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_HIGH_TECH_CULTURAL_ENRICHMENT"
@@ -101,6 +99,8 @@
   "construct": "AS2D_BUILD_BROADCASTTOWER"
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_HOLOGRAPHIC_THEATER",
+  "civilopedia": "TXT_KEY_BUILDING_HOLOGRAPHIC_THEATER_PEDIA",
   "worth": 8,
   "conquestProbability": 75,
   "dcmAirbombMission": 2,

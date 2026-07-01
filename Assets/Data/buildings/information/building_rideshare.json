@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_RIDESHARE",
- "description": "TXT_KEY_BUILDING_RIDESHARE",
- "civilopedia": "TXT_KEY_BUILDING_RIDESHARE_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_AUTOMATED_TAXI_SERVICE"
@@ -49,6 +47,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_RIDESHARE",
+  "civilopedia": "TXT_KEY_BUILDING_RIDESHARE_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

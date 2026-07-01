@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_PALACE_WALLS",
- "description": "TXT_KEY_BUILDING_PALACE_WALLS",
- "civilopedia": "TXT_KEY_BUILDING_PALACE_WALLS_PEDIA",
  "obsoletedBy": {
   "buildings": [
    "BUILDING_IMPERIAL_FORTRESS"
@@ -90,6 +88,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_PALACE_WALLS",
+  "civilopedia": "TXT_KEY_BUILDING_PALACE_WALLS_PEDIA",
   "advisor": "ADVISOR_MILITARY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

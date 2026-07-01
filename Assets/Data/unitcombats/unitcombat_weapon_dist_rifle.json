@@ -1,6 +1,5 @@
 {
  "type": "UNITCOMBAT_WEAPON_DIST_RIFLE",
- "description": "TXT_KEY_UNITCOMBAT_WEAPON_DIST_RIFLE",
  "skills": {
   "rBombardDirect": true
  },
@@ -10,6 +9,7 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_UNITCOMBAT_WEAPON_DIST_RIFLE",
   "base": {
    "rangedBombardDamage": 50,
    "rangedBombardLimit": 40,

@@ -1,6 +1,5 @@
 {
  "type": "UNITCOMBAT_IDEA",
- "description": "TXT_KEY_UNITCOMBAT_IDEA",
  "skills": {
   "cannotMergeSplit": true,
   "alwaysInvisible": true
@@ -9,5 +8,8 @@
   "art": {
    "icon": "Art/Interface/Buttons/units/sparth/categories/idea.dds"
   }
+ },
+ "identity": {
+  "description": "TXT_KEY_UNITCOMBAT_IDEA"
  }
 }

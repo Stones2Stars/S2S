@@ -1,8 +1,5 @@
 {
  "type": "TECH_ANIMATION",
- "description": "TXT_KEY_TECH_ANIMATION",
- "civilopedia": "TXT_KEY_TECH_ANIMATION_PEDIA",
- "quote": "TXT_KEY_TECH_ANIMATION_QUOTE",
  "enables": {
   "buildings": [
    "BUILDING_ANIMATION_STUDIO",
@@ -55,6 +52,9 @@
   "soundMP": "AS2D_TECH_ANIMATION"
  },
  "identity": {
+  "description": "TXT_KEY_TECH_ANIMATION",
+  "civilopedia": "TXT_KEY_TECH_ANIMATION_PEDIA",
+  "quote": "TXT_KEY_TECH_ANIMATION_QUOTE",
   "era": "C2C_ERA_INDUSTRIAL",
   "worth": 48,
   "militaryWorth": 4,

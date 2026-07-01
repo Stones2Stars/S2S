@@ -1,7 +1,5 @@
 {
  "type": "BUILDING_CHRONOPOLIS",
- "description": "TXT_KEY_BUILDING_CHRONOPOLIS",
- "civilopedia": "TXT_KEY_BUILDING_CHRONOPOLIS_PEDIA",
  "enables": {
   "buildings": [
    "BUILDING_UTOPIA"
@@ -121,6 +119,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_BUILDING_CHRONOPOLIS",
+  "civilopedia": "TXT_KEY_BUILDING_CHRONOPOLIS_PEDIA",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

@@ -1,7 +1,5 @@
 {
  "type": "TRAIT_TEMPERAMENTAL1",
- "description": "TXT_KEY_TRAIT_TEMPERAMENTAL0",
- "civilopedia": "TXT_KEY_TRAIT_TEMPERAMENTAL_PEDIA",
  "enables": {
   "traits": [
    "TRAIT_TEMPERAMENTAL2",
@@ -75,6 +73,8 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_TRAIT_TEMPERAMENTAL0",
+  "civilopedia": "TXT_KEY_TRAIT_TEMPERAMENTAL_PEDIA",
   "shortDescription": "TXT_KEY_TRAIT_TEMPERAMENTAL_SHORT",
   "negativeTrait": true
  }

@@ -1,6 +1,5 @@
 {
  "type": "BUILD_INTERSTELLAR_COLONY",
- "description": "TXT_KEY_BUILD_INTERSTELLAR_COLONY",
  "requires": {
   "build": {
    "all": [
@@ -28,5 +27,8 @@
   "art": {
    "entityEvent": "ENTITY_EVENT_BUILD"
   }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILD_INTERSTELLAR_COLONY"
  }
 }

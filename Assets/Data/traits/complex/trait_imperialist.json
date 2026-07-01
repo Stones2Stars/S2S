@@ -1,8 +1,5 @@
 {
  "type": "TRAIT_IMPERIALIST",
- "description": "TXT_KEY_TRAIT_COMPLEX_IMPERIALIST",
- "civilopedia": "TXT_KEY_TRAIT_COMPLEX_IMPERIALIST_PEDIA",
- "strategy": "TXT_KEY_TRAIT_COMPLEX_IMPERIALIST_STRATEGY",
  "excludes": [
   "TRAIT_MEEK"
  ],
@@ -343,6 +340,9 @@
   }
  },
  "identity": {
+  "description": "TXT_KEY_TRAIT_COMPLEX_IMPERIALIST",
+  "civilopedia": "TXT_KEY_TRAIT_COMPLEX_IMPERIALIST_PEDIA",
+  "strategy": "TXT_KEY_TRAIT_COMPLEX_IMPERIALIST_STRATEGY",
   "impurePropertyManipulators": true
  }
 }
