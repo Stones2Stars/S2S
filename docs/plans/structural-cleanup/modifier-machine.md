@@ -126,8 +126,16 @@ authoritative until the shadow is clean, then are cut (atomic, with the cutover)
      — needs the `IS_CAPITAL` predicate on a civic/trait `empire.percent` (a currently-deferred predicate); **(ii)** a
      **player-tier production↔commerce ~5 swap** (cascade slightly high on commerce / low on production, every city) —
      one mis-channeled source, to pin with PER-SOURCE attribution.
-   - **1c (next) — drive to parity:** add per-civic/per-trait attribution to pin issue (ii); add the `IS_CAPITAL`
-     predicate for (i); fold in the still-deferred sources (PURE_TRAITS filter, civic building-keyed percent, projects).
+   - **1c ✅ DONE (2026-07-01) — the calc PORT is complete.** A code-to-code completeness audit vs StoneBase confirmed
+     all §1 packages + the assembler + the entire §2 commerce stage are faithfully ported. The "deferred residuals"
+     were mostly already ported — **`IS_CAPITAL`** (evaluator `CASC_PRED_IS_CAPITAL`) + **PURE_TRAITS** (`sumTrait`
+     sign-filter) — the ⏳ comments were STALE. Only two terms were genuinely missing, now added: civic **building-keyed
+     percent** (`MMKernel::buildingKeyedSourcePercent`, both stacks) + **projects** `empire.percent` (team-owned,
+     `InfoRepo<CvProjectInfo>`, commerce-impacting). Plus the `minPosThreshold` per-deposit-MIN port bug is fixed
+     (was per-source sum). **All §5 increments (2-4: AFTER/BASE/assembler/commerce) are built AND wired in the holistic
+     shadow** (`cvCascadeModifierShadow` diffs `YieldRate::yieldRate100` vs `getYieldRate100` + `CommerceCalc::
+     commerceRate100` vs `getCommerceRateTimes100`, decomposed). Live shadow-parity is DEFERRED (owner 2026-07-01:
+     everything in first, ONE holistic parity pass at the end) — the per-source parity-chase (ii) rides that.
 2. **The AFTER tier** — building flat yields (×100, the truncation gotcha). Shadow vs `getExtraYield100`.
 3. **The BASE tier** — plot package (worked-plot isolated base, calc-map §10.1) + specialists + trade + free-city +
    golden-age. The largest piece (the plot calc).
