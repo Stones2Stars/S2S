@@ -34,6 +34,7 @@
 #include "UI/CityOutputHistory.h"
 #include "Repos/BuildingsRepo.h"
 #include "Repos/BuildsRepo.h"
+#include "CvCascadeReadJson.h"   // #430: map the curated JSON -> InfoRepo at load (doPostLoadCaching, with the XML)
 #include <time.h>
 #include <sstream>
 
@@ -3230,6 +3231,13 @@ void cvInternalGlobals::doPostLoadCaching()
 	buildConstructibilityEnablerIndex();
 
 	buildInvisibleSeerIndex();
+
+	// #430 cascade: map the curated Assets/Data JSON into the per-type InfoRepo at the SAME load point as the XML
+	// infos -- every info + the type registry (getInfoTypeForString) is now loaded, and the mod asset path is
+	// available (the XML was just loaded from it). This is the data-feed the modifier/enabler machines read, so
+	// loading the game with the XML always populates it (and parity can be measured -- validation.md). Static data,
+	// built once here -- not per game-load. The MAP is unconditional; its [READJSON/*] survey rides the event spine.
+	cascadeLoadJson();
 }
 
 const std::vector<BuildingTypes>& cvInternalGlobals::getBuildingsEnabledBy(BuildingTypes eEnabler) const

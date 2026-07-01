@@ -1,7 +1,26 @@
-# `readJson` — the BoolExpr-routed data-feed reader (build plan)
+# `readJson` — the data-feed reader (build plan)
 
-> The first #430 build item after the StoneBase dry-calc validation (`CvGame.cpp:5822`: *"redesigned properly — JSON
-> parsed through BoolExpr — after the dry-calc (StoneBase) validation"*). It is the **data-feed prerequisite**: the
+> ⛔ **SUPERSEDED FRAMING — the conditionals are a PORT of StoneBase's typed `Condition` model, NOT `BoolExpr` (owner
+> ruling 2026-06-30; see [cascade-engine-430.md §2b](cascade-engine-430.md)).** This doc was written "BoolExpr-routed";
+> that was a DETOUR. The condition vocabulary + predicate evaluation are a faithful C++ port of StoneBase's
+> `Domain/Conditions/Condition.cs` + `Domain/Conditions/ConditionParser.cs` + `CascadingEnabler/ConditionEvaluator.cs` →
+> `Cascade/CvCascadeCondition.{h,cpp}` (model) + `Cascade/CvCascadeConditionParse.{h,cpp}` (the ONE human→data boundary)
+> + `Cascade/CvCascadeConditionEval.{h,cpp}` (the live-engine walk). "the logic works because of StoneBase, we just port
+> the C# code."
+>
+> **✅ DONE — the port is WIRED into the shadow (2026-06-30).** `readJson` now parses every conditional (`requires.build`/
+> `operate` + each deposit's `enabled`/`disabled`) through `cascadeParseCondition` into a **typed `CvCascadeCondition`
+> tree** (NOT `BoolExpr`); `CvJsonInfo` carries `CvCascadeCondition*`; and the shadow gates (`en_requiresMet`,
+> `mm_applies`) evaluate via `cascadeEvalCondition` against the live engine. The whole `BoolExpr` translator
+> (`rj_translate`/`rj_fold`/`rj_translateClause`/the GOM/Tag/IntExpr leaves) and `CvCascadeCountExpr` are DELETED — the
+> count leaf folded into the evaluator's `ev_countOf`. The `BoolExpr` mechanics described below are the deleted earlier
+> design (kept only as the increment history); the §5.2.c "design fork" is RESOLVED = StoneBase's evaluator, now ported.
+> **Still shadow-only** — the cascade computes its verdict and diffs vs the live engine; no legacy mechanism is altered.
+> *Follow-on (with the cascade-machine port):* `requires.operate.dormant` is parsed-but-ignored here (faithful to
+> StoneBase — it is NOT folded into the operate condition); its `DormantTriggers` extraction + the GENERATE dormancy pass
+> land with the machine port.
+
+> The first #428/#430 build item after the StoneBase dry-calc validation (`CvGame.cpp:5822`). It is the **data-feed prerequisite**: the
 > modifier + enabler machines consume the new-vocabulary structures `readJson` produces, so **nothing below it
 > computes until it exists** (the tally is the one exception — it rolls up raw counts and needs no JSON, so it is the
 > cheap parallel first-shadow; see [`cascade-engine-430.md`](cascade-engine-430.md) §7).
@@ -124,43 +143,34 @@ add real handling per `json.md` §5 (grants: lists, numeric pulses, `foundBuildi
    engine registry doesn't carry as primary entries: `TECH_GAME_START` (the synthetic
    cascade start node, validation.md), `CULTURELEVEL_ALT_POOR` (a `replacedBy` alternate Info, json.md §9), and
    `PROMOTION_COMPLEX_AGGRESSIVE` (a `COMPLEX_` option-selected variant). Next increments populate the fresh record.
-2. **The conditional translator** ✅ **DONE (+ gap survey)** — `rj_translate` maps a JSON condition onto the engine
-   `BoolExpr` tree: `all`/`any`/`noneOf`→`And`/`Or`/`Not` (binary, left-folded); type atom / type-param predicate →
-   `BoolExprHas(GOM,id)` (GOM by infotype prefix); relief/water/city predicate → `BoolExprIs(TAG)`; membership
-   `{terrain|feature|bonus:[…]}` → `Or` of `Has`; `!X` → `Not`. Proven live via `buildDisplayString` renders; the bulk
-   of leaves map cleanly. The unmapped leaves are SURVEYED (`[READJSON/cond-gap]`), in **5 buckets** that drive the
-   next increments: **(a)** count/value thresholds (`POPULATION`/`CITY`/`TEAM` + count thresholds + `PROPERTY_*`
-   bands) → `BoolExprGreaterEqual`+`IntExpr`,
-   the counts reading the **tally** → **increment 3**; **(b)** plot predicates with no `TagTypes`
-   (`HAS_RIVER`/`HAS_IRRIGATION`/`HAS_FEATURE`/`HAS_COAST{minArea}`/`latitude`/`natureYield`) → extend `TagTypes`;
-   **(c)** city/player state (`HAS_POWER`/`STATE_RELIGION`/`STATE_RELIGION_IN_CITY`) → new leaf / predicate-eval;
-   **(d)** type-kinds with no GOM (`CULTURELEVEL_*`, `MAPCATEGORY_*` (space, not-fleshed), `VICTORY_*`); **(e)**
-   structural: the `dormant` clause (handle as `requires.operate.dormant`, enabler.md §3, not a leaf). Unmapped leaves
-   stand in as a `true` constant for the SURVEY ONLY (json.md: an unknown predicate is ignored) — a placeholder, not
-   the design.
-   - **Gap-closing (2.a) ✅** — bucket **(a)** value/band atoms: `PROPERTY_*` → `IntExprProperty` and `POPULATION`/
-     `HEALTH`/`HAPPINESS` → `IntExprAttribute`, each compared `≥min` (`BoolExprGreaterEqual`) / `≤max`
-     (`Not(BoolExprGreater)`) / both (`And`); via the existing engine `IntExpr` leaves. Removes the `PROPERTY_*` +
-     `POPULATION` gaps.
-   - **Gap-closing (2.b) ✅** — the **cross-city TALLY-backed count**: a fresh `IntExprCascadeCount` leaf reads
-     `cascadeTally()` for the evaluated object's owner (`CvGameObjectPlayer::getPlayer()`, a new accessor) — `≥N`-of-a-
-     building/unit-type → `BoolExprGreaterEqual`/`Not(Greater)` over the tally count. **Verified live: the building/unit
-     count thresholds now map via the tally leaf** (the residual are non-tally-domain counts). EMPIRE scope; team/world
-     rollup, city-local, the `CITY`/`TEAM` tokens, and non-building/unit domains remain follow-ons. NOT yet evaluated
-     in a live gate (the enabler is later) — the probe builds + renders it.
-   - **Gap-closing (2.e) ✅** — the structural **`dormant`** clause (`requires.operate.dormant: X`, enabler.md §3 /
-     json.md §4.3): "go dormant WHILE X present" → the clause contributes `AND NOT(trigger)`. `rj_translateClause`
-     peels `dormant` (it is NOT a predicate — it was being mis-surveyed as one), folds `Not(translate(trigger))`, and
-     handles it as a sibling of `all`/`any`, the sole key, or a tree (the unit `requires.build.dormant.all`).
-     **Verified live: the `dormant` gap is gone and its trigger leaves now map.**
-   - **Remaining gaps are by design, NOT readJson's to close** (re-grounded against json.md §3.5 + enabler.md §3.1):
-     an unknown predicate is **ignored, never false** (so an unmapped leaf is spec-correct), and predicate EVALUATION
-     belongs to the **enabler** machine (it evaluates conditions against the `CvGameObject` target), not readJson's
-     translation. Buckets **(b)** plot relief/adjacency (`HAS_RIVER`/`HAS_IRRIGATION`/`HAS_FEATURE`/`HAS_COAST{minArea}`)
-     + **(d)** `MAPCATEGORY_*` are **spec-flagged in-flight** (json.md line 212 — "not yet fully fleshed out,
-     space-map-related"); **(c)** city/player-state (`HAS_POWER`/`STATE_RELIGION`/…) + `CULTURELEVEL_*`/`VICTORY_*` +
-     `CITY`/`TEAM`/`latitude`/`natureYield` are predicate-evaluator work that lands with the enabler. Do NOT extend
-     `TagTypes` speculatively for these.
+2. **The conditional port** ✅ **DONE (wired into the shadow, 2026-06-30)** — a faithful C++ port of StoneBase's typed
+   `Condition` model, replacing the deleted `BoolExpr` translator (which was the DETOUR). Three files:
+   - **`CvCascadeCondition.{h,cpp}`** (model = `Condition.cs`): a C++03 tagged struct — `kind` ∈
+     {GROUP, PRESENCE, PREDICATE}; GROUP holds `all`/`anyOf`/`noneOf` child vectors + `enabled`/`disabled`; PRESENCE
+     holds `type`/`scope`/`min`/`max`/`connection`/`vicinity` (+ the parse-resolved engine `id`); PREDICATE holds
+     `predKind`/`param`. Noncopyable, owns its children (dtor recurses).
+   - **`CvCascadeConditionParse.{h,cpp}`** (`ConditionParser.cs`): `cascadeParseCondition(picojson::value)` — the ONE
+     human→data boundary. Normalizes every convenience (bare type-string → `PresenceAtom` w/ implied scope; bare/`!`-
+     prefixed predicate; atom object; membership sugar `{terrain|feature|bonus:[…]}` → an `anyOf`; numeric
+     `{latitude}`/`{existedFor}`/`{HAS_COAST:{minArea}}`; single-key `{HAS_BONUS:X}`/…) and FK-resolves each type/param
+     via `GC.getInfoTypeForString`. `readJson` calls it for `requires.build`/`operate` + each deposit's
+     `enabled`/`disabled`; after this the cascade sees only typed nodes.
+   - **`CvCascadeConditionEval.{h,cpp}`** (`ConditionEvaluator.cs`): `cascadeEvalCondition(cond, ctx, flags)` walks the
+     tree against the **live engine** (`CvCity`/`CvPlayer`/`CvTeam`/`CvPlot`/`CvUnit` via a `CvCascadeEvalCtx`) where
+     the C# reads its `EvalState` snapshot — the ONLY substantive porting decision. It implements the full
+     `EvalPresence`/`Present`/`CountOf`/`EvalPredicate` surface: type-prefix presence dispatch, the vicinity
+     discriminator (owned/neutral/foreign/connected/worked), `ev_countOf` (POPULATION/CITY/TEAM/AREA_SIZE/ERA/
+     religion-levels + the **empire/team tally** count for BUILDING_/UNIT_ — this is where the deleted
+     `CvCascadeCountExpr` count leaf folded to), and the predicate switch (`IS_CAPITAL`/`HAS_POWER`/`STATE_RELIGION`/
+     `IS_HOLY_CITY`/`HAS_RIVER`/`latitude`/…). An unknown predicate is `CASC_PRED_UNKNOWN` → **IGNORED (true)**, never
+     false (json §3.5). The two flag readings: enabler `requires.build` is **strict** (`STATE_RELIGION` must match);
+     the modifier is **lenient**.
+
+   So the increment-2 "5-bucket gap survey" (count/value thresholds, plot predicates, city/player state, no-GOM kinds,
+   the `dormant` clause) is **moot** — the typed evaluator has no "unmapped leaf": predicates the `BoolExpr` translator
+   stubbed to a `true` constant (`IS_CAPITAL`/`HAS_POWER`/`STATE_RELIGION`/vicinity/counts) are now **actually
+   evaluated** against the live engine. *In-flight by spec, not a port gap:* `MAPCATEGORY_*` + the space-map plot
+   filters (`HAS_COAST{minArea}` etc.) stay ignored where json.md §3.5 flags them not-yet-fleshed.
 3. **Modifier families** ✅ **DONE (+ survey)** — `rj_walkModNode`/`rj_parseMag` parse a modifier-family key into a
    GENERIC deposit-address tree (mirroring StoneBase's `ModifierFamilyParser`: scope/target/member/entity-key are
    opaque child nodes; only the fixed magnitude `Units` set — `flat`/`percent`/`multiplier`/`postMultiplier`/

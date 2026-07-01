@@ -88,6 +88,12 @@ enum SpineDomainTag
 	SD_ESPIONAGE,  // [ESP] espionage (CvPlayerAI)
 	SD_CONTRACT,   // [CTB] contract broker (CvContractBroker)
 	SD_ENGINE,     // [ENG] engine integrity (CvPlot)
+	// #430 cascade diagnostic domains (per-emitter, one file -- all tee to Cascade.log). Each self-registers in its
+	// own .cpp (spineRegisterDomain); the [TAG] sub-area lives in the per-domain prefix fn ([READJSON/*], [ENABLER/*],
+	// [MODIFIER/*]). Diagnostic lines (EVENTKIND_DIAGNOSTIC) -- the shadow/survey trace, never the synced tally.
+	SD_READJSON,   // [READJSON] the JSON->InfoRepo load survey (CvCascadeReadJson)
+	SD_ENABLER,    // [ENABLER] the "can I?" gate shadow (CvCascadeEnabler)
+	SD_MODIFIER,   // [MODIFIER] the "how much?" percent-stack shadow (CvCascadeModifierMath)
 	NUM_SPINE_DOMAINS
 };
 

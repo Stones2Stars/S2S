@@ -211,10 +211,10 @@ output diff before/after. Tracked here; pick it up as its own pass.
 
 ## 5. Medium holes (fold into the campaign or the fix-now list)
 
-- **Dormancy shadow uncached per-turn JSON IO** — `cascadeDormancyShadow` calls the uncached
-  `cascadeReadJsonAvailability` (ifstream + `FindFirstFile` dir scan) per distinct built building per turn when
-  `gPlayerLogLevel>=1`; on a mature save that's hundreds of file reads/turn. Add a cross-turn parse cache.
-  (Cost is nil when logging is off.)
+- ~~**Dormancy shadow uncached per-turn JSON IO**~~ — ⚠ **OBSOLETE (resolved by the rebuild):** `cascadeDormancyShadow`
+  + `cascadeReadJsonAvailability` were part of the **PURGED prototype** (cascade-engine-430.md "PROTOTYPE PURGED") and no
+  longer exist. readJson now parses + maps **once at LOAD** (`onFinalInitialized`) into the per-type `InfoRepo`, not via a
+  per-turn per-building dir scan — so the hundreds-of-reads/turn hazard is structurally gone.
 - **CTB mixed-gate `/events` blind spot** — the `[CTB/work/intransit]` block is gated on `gUnitLogLevel>2`
   while every other CTB gate is `gPlayerLogLevel`, and its `%S` line stays legacy-only → a permanent `/events`
   blind spot. Align the gate + shadow the line (needs a runtime-string story; ties into the unrecoverable-line

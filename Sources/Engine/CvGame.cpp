@@ -11,7 +11,6 @@
 #include "CvCity.h"
 #include "UI/CvEventReporter.h"
 #include "CvEventSpine.h"
-#include "CvCascadeReadJson.h"
 #include "CvCascadeModifierMath.h"
 #include "CvCascadeEnabler.h"
 #include "AI/CvGameAI.h"
@@ -624,11 +623,10 @@ void CvGame::onFinalInitialized(const bool bNewGame)
 	}
 
 	// #430 cascade LOAD-TIME setup. Register the spine consumers (logging) at the poor-man's-DI composition root; the
-	// tally is NOT seeded -- it READS the object-owned counts on demand (CvCascadeTally.h). Then map the curated JSON
-	// to the cascade's STATIC info data at LOAD (readJson; moved here from doTurn) so that simply LOADING a save
-	// establishes + verifies it -- readJson is static data, only the live shadows need a turn (validation.md cadence).
+	// tally is NOT seeded -- it READS the object-owned counts on demand (CvCascadeTally.h). The JSON->InfoRepo map is
+	// NOT here -- it runs WITH the XML at cvInternalGlobals::doPostLoadCaching (cascadeLoadJson), so the cascade's
+	// static data is populated once, at the same load point as the XML, regardless of logging (validation.md cadence).
 	cascadeRegisterConsumers();
-	cascadeReadJsonProbe();
 
 	OutputDebugString("onFinalInitialized: End\n");
 }
@@ -5834,13 +5832,15 @@ void CvGame::doTurn()
 	// static info data at LOAD (onFinalInitialized), not here -- loading a save verifies it (validation.md cadence).
 	//
 	// #430 MODIFIER machine increment 1 -- the percent stack shadow: diff the cascade's per-channel max(0,100+Σ%)
-	// (read off the mapped CvJsonInfo in the InfoRepo) vs legacy getBaseYieldRateModifier. A LIVE shadow of a to-be-replaced part,
-	// so it stays here (an end turn drives it). Self-guarding + gated; no behaviour change.
+	// (read off the mapped CvJsonInfo in the InfoRepo) vs legacy getBaseYieldRateModifier. A LIVE shadow of a
+	// to-be-replaced part, so it stays here (an end turn drives it). Gated by gPlayerLogLevel, emits EVERY turn (for
+	// iterative validation); no behaviour change.
 	cvCascadeModifierShadow();
 
-	// #430 ENABLER machine FIRST CUT -- the "can I?" gate: GENERATE the canConstruct/canTrain frontier from the InfoRepo
-	// enables edges over HAVE, GATE by requires + allowed, and shadow each verdict vs the live engine. A LIVE shadow of
-	// the to-be-replaced gates, in the AI's per-turn path. Self-guarding + gated; no behaviour change.
+	// #430 ENABLER machine -- the "can I?" gate, StoneBase CascadingEnabler ported (tech/building/unit per-domain
+	// cascades; civics/projects/processes/promotions/builds/hurries on the generic gate): GATE each verdict vs the live
+	// engine. A LIVE shadow of the to-be-replaced gates, in the AI's per-turn path. Gated by gPlayerLogLevel, emits
+	// EVERY turn (for iterative validation); no behaviour change.
 	cvCascadeEnablerShadow();
 
 	//	Turn-boundary accounting for the frame-driven span the doTurn tree does not cover:
