@@ -87,7 +87,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_CORPORATION_MCDOWELLS",
   "civilopedia": "TXT_KEY_BUILDING_CORPORATION_MCDOWELLS_PEDIA",
-  "spreadFactor": 200,
-  "spread": 50
+  "competingSpreadCostPercent": 200,
+  "spreadFactor": 50
  }
 }

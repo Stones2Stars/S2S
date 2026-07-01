@@ -15,13 +15,21 @@ from store import REPO
 # a modifier HOME, so a tech-conditioned effect stays KEEP-ON-SOURCE (`enabled:{tech}`) on the entity that owns it:
 #   building yield/commerce/happiness/health -> curate_building COND_KEYED (keep-on-building, enabled);
 #   improvement yield -> curate_improvement post_process; specialist happiness/health -> curate_specialist (self).
-# Two rows REMAIN, both FLAGGED for follow-up (still inverted onto the tech meanwhile -- harmless, unconsumed):
+# route TechMovementChanges: RELOCATED to the ROUTE (owner ruling 2026-07-01) — curate_route.post_process now homes
+#   it as a tech-gated `movement.plot.flat` deposit (the route owns its move cost, json §6.2; the tech is the
+#   `enabled` conditioner). REMOVED from here to avoid double-homing the delta.
+# One row REMAINS, FLAGGED for follow-up (still inverted onto the tech meanwhile -- harmless, unconsumed):
 #   - building TechSpecialistChanges (freeSpecialists keyed by specialist): a keyed+tech-`enabled` combo the
 #     keep-on-building machinery doesn't express yet -> belongs on the building (COND_KEYED follow-up).
-#   - route TechMovementChanges: belongs in the `moveCost` family on the route, deferred to the movement subsystem (§6.6).
-TECH_BOOSTS = [
-    ("RouteInfo",       "TechMovementChanges",   "routes",       "movement",        None,             "flat",    "team"),                  # FLAG: -> moveCost on the route (movement subsystem, §6.6)
-]
+TECH_BOOSTS = []
+
+# FreeSpecialistCounts -> freeSpecialists.team.{SPECIALIST_X}: N (owner ruling 2026-07-01; carried in the
+# mapping's `channels` with scope:"team"). TEAM scope because a tech grant is team-wide (modifier.md §6
+# "Specialist counts"; CvTeam holds the free-specialist accumulator, read into cities at CvCity.cpp:14277).
+# ⚠ CARRIED FAITHFULLY BUT INERT — the tech free-specialist WRITE-PATH is UNWIRED: no CvTeam::processTech ever
+# calls changeFreeSpecialistCount for a tech's FreeSpecialistCounts (only building/civic/unit/event/era-advance
+# do). The ONLY reader is AI valuation (CvPlayerAI.cpp:4776). So this is DEAD DATA — a despair-log candidate.
+# (Base XML: exactly ONE tech carries it — SPECIALIST_MERCHANT:1.)
 
 GRANTS = {"FirstFreeUnit": "firstFreeUnit", "FirstFreeProphet": "firstFreeProphet", "iFirstFreeTechs": "freeTechs"}
 

@@ -85,7 +85,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_CORPORATION_ADVENTURE",
   "civilopedia": "TXT_KEY_BUILDING_CORPORATION_ADVENTURE_PEDIA",
-  "spreadFactor": 200,
-  "spread": 30
+  "competingSpreadCostPercent": 200,
+  "spreadFactor": 30
  }
 }

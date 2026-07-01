@@ -101,6 +101,19 @@
    }
   }
  },
+ "movement": {
+  "plot": {
+   "flat": [
+    {
+     "value": -4,
+     "enabled": {
+      "type": "TECH_SKYROADS",
+      "scope": "team"
+     }
+    }
+   ]
+  }
+ },
  "ui": {
   "art": {
    "icon": "art/interface/buttons/improvements/hyperloop.dds"

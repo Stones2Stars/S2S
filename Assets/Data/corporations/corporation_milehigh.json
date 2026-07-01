@@ -107,7 +107,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_CORPORATION_MILEHIGH",
   "civilopedia": "TXT_KEY_BUILDING_CORPORATION_MILEHIGH_PEDIA",
-  "spreadFactor": 200,
-  "spread": 50
+  "competingSpreadCostPercent": 200,
+  "spreadFactor": 50
  }
 }

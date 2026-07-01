@@ -17,9 +17,14 @@ Other modifiers (all city scope unless noted): iMaintenance -> maintenance.city.
 -bonus maintenance rate); iHealth/iHappiness -> health/happiness flat; iFreeXP -> experience flat;
 iMilitaryProductionModifier -> production.city.military.percent.
 
-Spread mechanic: iSpread (influence->spread %), iSpreadFactor (spread-unit cost scaling) -> identity config;
-iSpreadCost -> a `cost` section ({spread: N}) — an intrinsic base GOLD cost to spread the corp, NOT the
-GameSpeed/Era costs-MULTIPLIER family (overriding the classification, which conflated `cost` with `costs`).
+Spread mechanic (owner ruling 2026-07-01 — propensity-name ALIGNMENT with religion + a misnomer FIX):
+- iSpread -> identity.spreadFactor: the "how readily I spread" scalar, the concept-parallel of religion's
+  identity.spreadFactor (owner "reuse religion"). Output key renamed spread -> spreadFactor.
+- iSpreadFactor -> identity.competingSpreadCostPercent: the LEGACY name is a MISNOMER — its real meaning is a
+  cost-inflation % on a COMPETING corp's spread (CvUnit.cpp:8687), not a spread factor. Renamed to say so.
+  (No key collision: iSpread now owns `spreadFactor`, iSpreadFactor moves OFF it to `competingSpreadCostPercent`.)
+- iSpreadCost -> a `cost` section ({spread: N}) — an intrinsic base GOLD cost to spread the corp, NOT the
+  GameSpeed/Era costs-MULTIPLIER family (overriding the classification, which conflated `cost` with `costs`).
 
 Enabler chain: TechPrereq / PrereqBonuses / PrereqBuildings dropped (store inverts to tech/bonus/building
 .enables.corporations). The corp's own `enables.buildings` is derived from BuildingInfo.PrereqCorporation (a
@@ -70,8 +75,15 @@ HQ_COMMERCE = "HeadquarterCommerces"
 TEXT = {"Description": "description", "Civilopedia": "civilopedia"}
 # art tags -> ui/world/sound via the canonical curate_common.ART_BLOCK.
 ART = {"Button", "MovieFile", "MovieSound", "Sound", "iTGAIndex"}
-IDENTITY = {"iSpread": "spread", "iSpreadFactor": "spreadFactor", "Categories": "categories",
-            "CompetingCorporations": "competingCorporations"}
+# owner 2026-07-01: iSpread -> spreadFactor (reuse religion's propensity name); iSpreadFactor ->
+# competingSpreadCostPercent (its real meaning per CvUnit.cpp:8687 — a % cost-inflation on a COMPETING corp's
+# spread, so `spreadFactor` was a misnomer). Both still land in `identity`; no key collision (see docstring).
+IDENTITY = {"iSpread": "spreadFactor", "iSpreadFactor": "competingSpreadCostPercent", "Categories": "categories"}
+# CompetingCorporations -> top-level `excludes` list (owner ruling 2026-07-01, REVERSED from the earlier
+# identity-parking): corp<->corp mutual exclusion IS the json §9 same-tier `excludes` model
+# ("excludes": ["CORPORATION_X", ...]). Empty in the shipped base XML (no corp carries it), so no shipped corp
+# emits `excludes` today — this migrates the MAPPING so future data lands in `excludes`, not identity.
+EXCLUDES = "CompetingCorporations"
 GRANTS = {"BonusProduced": "bonusProduced", "FreeUnit": "freeUnit"}
 DROP = {"TechPrereq", "PrereqBonuses", "PrereqBuildings"}
 FAMILY_ORDER = ["food", "production", "commerce", "gold", "research", "culture", "espionage",
@@ -118,8 +130,22 @@ def _apply_family(fam, spec, c, typ, per_bonus):
             _put_entry(fam, family, scope, member, unit, _entry(int(t), typ, per))
 
 
+def _excludes(node):
+    """CompetingCorporations -> a list of CORPORATION_* this corp mutually excludes (json §9 same-tier
+    `excludes`). Shape: CompetingCorporation{CorporationType, bCompeting}; include the type where bCompeting is
+    true (engine CvCorporationInfo::isCompetingCorporation; the CvGame check is symmetric)."""
+    out = []
+    for e in node.findall("CompetingCorporation"):
+        ct = engine.text(e.find("CorporationType"))
+        comp = engine.text(e.find("bCompeting"))
+        if ct and ct != "NONE" and comp in ("1", "true", "True"):
+            out.append(ct)
+    return out
+
+
 def curate(typ, rec, store):
     text, fam, art_blocks, identity, grants, cost, leftover = {}, {}, {}, {}, {}, {}, []
+    excludes = []
     prereq_bonuses = [b for b in (engine.text(x) for x in rec.findall("PrereqBonuses/BonusType"))
                       if b and b != "NONE"]
     per_bonus = OrderedDict([("anyOf", prereq_bonuses), ("scope", "city")]) if prereq_bonuses else None
@@ -138,6 +164,8 @@ def curate(typ, rec, store):
         elif tag == "iSpreadCost":
             if engine.is_int(t) and int(t) != 0:
                 cost["spread"] = int(t)
+        elif tag == EXCLUDES:                                  # -> top-level `excludes` (json §9, owner 2026-07-01)
+            excludes.extend(_excludes(c))
         elif tag in GRANTS:
             v = engine.text(c)
             if v and v != "NONE":
@@ -163,6 +191,8 @@ def curate(typ, rec, store):
     enables = store.enabled_by(typ)
     if enables:
         out["enables"] = OrderedDict((k, enables[k]) for k in sorted(enables))
+    if excludes:
+        out["excludes"] = excludes
     for family in FAMILY_ORDER:
         if family in fam:
             out[family] = fam[family]

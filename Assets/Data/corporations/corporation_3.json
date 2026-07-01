@@ -74,7 +74,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_CORPORATION_3",
   "civilopedia": "TXT_KEY_BUILDING_CORPORATION_3_PEDIA",
-  "spreadFactor": 200,
-  "spread": 60
+  "competingSpreadCostPercent": 200,
+  "spreadFactor": 60
  }
 }

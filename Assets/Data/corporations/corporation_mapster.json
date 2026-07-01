@@ -74,6 +74,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_CORPORATION_MAPSTER",
   "civilopedia": "TXT_KEY_BUILDING_CORPORATION_MAPSTER_PEDIA",
-  "spreadFactor": 200
+  "competingSpreadCostPercent": 200
  }
 }

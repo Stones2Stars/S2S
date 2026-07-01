@@ -34,15 +34,6 @@
    ]
   }
  },
- "movement": {
-  "team": {
-   "routes": {
-    "ROUTE_VACTRAIN": {
-     "flat": -4
-    }
-   }
-  }
- },
  "cost": {
   "research": 46107
  },

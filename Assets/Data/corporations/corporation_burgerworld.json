@@ -85,7 +85,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_CORPORATION_BURGERWORLD",
   "civilopedia": "TXT_KEY_BUILDING_CORPORATION_BURGERWORLD_PEDIA",
-  "spreadFactor": 200,
-  "spread": 100
+  "competingSpreadCostPercent": 200,
+  "spreadFactor": 100
  }
 }

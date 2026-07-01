@@ -86,7 +86,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_CORPORATION_MOONBEAN",
   "civilopedia": "TXT_KEY_BUILDING_HQ_MOONBEAN_COFFEE_PEDIA",
-  "spreadFactor": 200,
-  "spread": 100
+  "competingSpreadCostPercent": 200,
+  "spreadFactor": 100
  }
 }

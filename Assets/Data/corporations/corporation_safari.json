@@ -116,7 +116,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_CORPORATION_SAFARI",
   "civilopedia": "TXT_KEY_BUILDING_CORPORATION_SAFARI_PEDIA",
-  "spreadFactor": 200,
-  "spread": 50
+  "competingSpreadCostPercent": 200,
+  "spreadFactor": 50
  }
 }

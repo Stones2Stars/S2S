@@ -73,7 +73,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_CORPORATION_FASHION",
   "civilopedia": "TXT_KEY_BUILDING_CORPORATION_FASHION_PEDIA",
-  "spreadFactor": 200,
-  "spread": 50
+  "competingSpreadCostPercent": 200,
+  "spreadFactor": 50
  }
 }

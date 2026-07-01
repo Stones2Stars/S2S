@@ -102,7 +102,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_CORPORATION_EWTRADE",
   "civilopedia": "TXT_KEY_BUILDING_CORPORATION_EWTRADE_PEDIA",
-  "spreadFactor": 200,
-  "spread": 50
+  "competingSpreadCostPercent": 200,
+  "spreadFactor": 50
  }
 }

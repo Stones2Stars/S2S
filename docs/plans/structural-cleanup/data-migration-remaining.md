@@ -83,7 +83,13 @@ The whitelist completeness sweep found exactly two, both now ruled and landed:
 - **era**: `bNoGoodies`/`bNoBarbUnits`/`bNoBarbCities` → `identity` (live world-gen gates, no destination model; safe
   only because currently all-zero).
 - **tech**: `TechMovementChanges`/`TechSpecialistChanges` inverted onto tech where no consumer reads (non-functional).
-- **corporation**: `iSpread`/`iSpreadFactor`/`CompetingCorporations` → `identity`.
+- **corporation** (owner rulings 2026-07-01): `iSpread`→`identity.spreadFactor` (concept-parallel to religion's
+  spread), `iSpreadFactor`→`identity.competingSpreadCostPercent` (fix the misnomer — it's a competing-corp spread-cost
+  inflation, `CvUnit.cpp:8687`), `iSpreadCost`→`cost.spread`, `CompetingCorporations`→**`excludes`** (json §9 same-tier
+  mutual exclusion; empty in base XML, so the MAPPING migrates but shipped output is unchanged) — all executing.
+  **NB: the corporation SYSTEM deserves a principle-level rework later** (owner 2026-07-01: "don't like how corporations
+  work in principle") — that is POST-migration ([DEC-mirror-then-redesign]: migrate faithfully now, redesign the corp
+  model after); the corp-HQ revenue (`HeadquarterCommerces`) rides that rework.
 - **improvement**: `iAirBombDefense`/`iFeatureGrowth`/`iCultureRange`/per-bonus `depletionRand` → `identity`.
 - **project**: `AnyonePrereqProject` dropped, per-edge `iNeeded` count lost.
 - **unit**: `iCargo` → **`cargo.space.flat`** (+ `DomainCargo`→`cargo.space.{unit:IS_<domain>}`, modifier §6) —
@@ -104,8 +110,13 @@ The whitelist completeness sweep found exactly two, both now ruled and landed:
   (`curate_unitcombat.py` emits no tags yet).
 - **`stronglyRestricted`** (NPC build-lockdown) → a `requires.build` civ-membership gate (paired with
   `EnabledCivilization`) — deferred until **NPC civilizations are wired**.
-- **Property pulses** (legacy `properties` array → `grants.repeatable{on,relation,distance}`) — BLOCKED on the
-  **#429 spatial rework** (`engine.property_source_v3` currently *raises* on `RELATION_NEAR`).
+- **Property pulses = repeatable grants (owner ruling 2026-07-01) — DATA is DO-NOW, NOT #429-blocked.** A per-turn
+  `PROPERTY_*` pulse an entity emits → a `grants.repeatable` entry carrying its spatial intent
+  (`{ PROPERTY_X: N, interval, on, relation, distance }`, json §5). Capturing the pulse + spatial fields is pure DATA
+  and is unblocked. Work: a shared **property-source cleaner** — fix `engine.property_source_v3` to EMIT spatial
+  sources as `grants.repeatable` instead of *raising* on `RELATION_NEAR`, and route the improvement/feature/building
+  property arrays through it (replacing the verbatim `properties` parking). **#429 is ONLY the ENGINE
+  spatial-distribution** that later reads `on`/`relation`/`distance` — a separate consumer, not a data blocker.
 - **Corp HQ revenue** (`HeadquarterCommerces`) → the corp-rework pass.
 - **`ranked-target-selection`** (`max:`/`orderedBy`) — design locked, impl pending; blocks retiring `largestCity`
   (so `curate_civic.py`/`curate_trait.py` still emit `iLargestCityHappiness`). See `../parked/ranked-target-selection.md`.

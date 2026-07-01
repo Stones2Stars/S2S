@@ -13,7 +13,7 @@
     "iTradeMissionModifier": {"scope": "player", "channel": "tradeMission", "kind": "percent"},
     "iCorporationRevenueModifier": {"scope": "player", "channel": "corporationRevenue", "kind": "percent"},
     "iCorporationMaintenanceModifier": {"scope": "player", "channel": "corporationMaintenance", "kind": "percent"},
-    "FreeSpecialistCounts": {"scope": "player", "channel": "freeSpecialists", "kind": "flat", "targetType": "specialists"},
+    "FreeSpecialistCounts": {"scope": "team", "channel": "freeSpecialists", "kind": "flat", "targetType": "specialists"},
     "DomainExtraMoves": {"scope": "player", "channel": "domainMoves", "kind": "flat"},
     "TerrainTrades": {"scope": "team", "channel": "terrainTrades", "kind": "enabler"},
     "CommerceFlexible": {"scope": "player", "channel": "commerceFlexible", "kind": "enabler"},
