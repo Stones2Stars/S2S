@@ -45,6 +45,17 @@ engine's actual output**. Our calculator is the test; the engine is the oracle.
 > modders — deliberately **diverge from C2C**, with StoneBase guarding spec-compliance. So: mirror the engine to get
 > here; thereafter the spec leads.
 >
+> **⛔ Data migration is NEVER deferred — un-migrated data is the #1 priority (owner ruling 2026-07-01,
+> `DEC-data-first`).** The strict complement of mirror-then-redesign: you defer *redesign*, you **never** defer *data
+> migration*. ANY known curator/JSON item that is not yet updated — a legacy field not converted, a reclassification
+> not applied, a legacy shape still emitted — is the single highest-priority task, handled **BEFORE** any downstream
+> cascade / shadow / observability / parity work. **Why:** a deferred data item forces every downstream consumer to
+> **ASSUME** its eventual shape, and an assumption in this codebase is the kraken's shortcut ([DEC-no-guessing],
+> [DEC-kraken]) — *"deferring data migration is a recipe for endless fuckery and more assumption."* So the migration
+> order is fixed: **finish the data (curators + JSON) first, then build the machines on solid, known data.** A
+> curator-pending item outranks any machine/shadow task in the queue. Ledgered as
+> [`DEC-data-first`](../architecture/decisions.md#dec-data-first).
+>
 > **Parity is the COMPLETENESS test (owner 2026-06-28) — which RAISES the bar, it does not lower it.** *"The true
 > reason for parity matching is to make sure that cascade evaluates everything legacy does, and parity overall is the
 > best way to ensure that."* Parity is the *instrument* that proves the cascade gathers every source the legacy engine

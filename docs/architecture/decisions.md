@@ -188,3 +188,11 @@ modifier delegate to it and feed it facts, never re-evaluate. Calculators mirror
 file-`static`-hidden calc is a DRY hazard: the next consumer can't reach it, so it reimplements it — the C2C
 "N-evaluators-of-one-thing" disease. The legacy shadow is the ONLY sanctioned duplication (scheduled to die at the
 atomic cutover). **Home:** [patterns.md § DRY](patterns.md).
+
+### DEC-data-first
+
+Data migration (curators + JSON) is NEVER deferred: any known un-migrated field / reclassification / still-emitted
+legacy shape is the #1 priority, handled BEFORE any downstream cascade / shadow / observability / parity work — a
+deferred data item forces downstream consumers to ASSUME its eventual shape (the kraken's shortcut). The strict
+complement of [DEC-mirror-then-redesign](#dec-mirror-then-redesign) (defer redesign, never data). **Home:**
+[validation.md](../specs/validation.md).
