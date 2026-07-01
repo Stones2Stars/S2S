@@ -9,7 +9,11 @@
  },
  "ai": {
   "weight": -50,
-  "scale": "city"
+  "scale": "city",
+  "operationalRange": {
+   "min": 0,
+   "max": 1000
+  }
  },
  "identity": {
   "description": "TXT_KEY_PROPERTY_FLAMMABILITY",

@@ -59,8 +59,9 @@ BASE_SPEED = "GAMESPEED_NORMAL"
 # nationalWonders + the reserved totalWonders); city scope is implicit (a culture level is per-city). The new
 # canDoStuff gate enforces it (a category building drops from the city frontier when its count hits the allowance)
 # and owns ignoring it under NO_WONDER_LIMIT / CHALLENGE_ONE_CITY (engine, never the parser). `iMaxNationalWondersOCC`
-# is DROPPED: OCC forces wonder limits off in-engine; any OCC-specific limit belongs in the game-option's own
-# definition (out of #428 scope), never on every CultureLevel. enabler-spec §5/§13.7.
+# is DROPPED: One City Challenge is NOT feasible in this mod (owner 2026-07-01), so its per-level DOUBLED national
+# cap (the OCC override at CvCity.cpp:2172 — NB: OCC swaps to a higher number, it does not turn limits off) is out
+# of scope and intentionally not carried. enabler-spec §5/§13.7.
 WONDER_CAPS = OrderedDict([
     ("iMaxWorldWonders", "worldWonders"), ("iMaxTeamWonders", "teamWonders"),
     ("iMaxNationalWonders", "nationalWonders"),

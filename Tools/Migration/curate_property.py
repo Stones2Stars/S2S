@@ -25,8 +25,10 @@ DEFINITION, and it participates in BOTH cascades. Owner decomposition (2026-06-1
   = `city`. (FIRST PASS — the auto-build trigger + requires-band wiring firm up in the second pass / #430.)
 - `targetLevel` (+ `TargetLevelbyEraTypes`) — a GENUINE ISOLATED field, OUTSIDE enabler/modifier (owner): the
   equilibrium the decay pulls toward. Kept top-level as `targetLevel`.
-- AI: `iAIWeight`/`AIScaleType`/`iTrainReluctance` -> `ai`. Display texts -> `text`; FontButtonIndex -> identity.
-- DROPPED -> #429 (the obsolete LEAKING mechanic, owner): `iOperationalRangeMin/Max`, every `PropertyPropagator`
+- AI: `iAIWeight`/`AIScaleType`/`iTrainReluctance` + `iOperationalRangeMin/Max` (the AI value-normalization band
+  read by `CvCityAI` decision-scoring — owner 2026-07-01: AI-only, not the #429 propagation mechanic) -> `ai`.
+  Display texts -> `text`; FontButtonIndex -> identity.
+- DROPPED -> #429 (the obsolete LEAKING mechanic, owner): every `PropertyPropagator`
   (DIFFUSE, incl. plot->city SAME_PLOT — the unit->city emission re-homes as a containment deposit on the
   unit/building at their passes), and `ChangePropagators`.
 - `bSourceDrain` / `bOAType` -> identity (property-system behaviour flags; do NOT cleanly fit enabler/modifier —
@@ -146,6 +148,15 @@ def curate(typ, rec):
     tr = engine.text(rec.find("iTrainReluctance"))
     if engine.is_int(tr) and int(tr) != 0:
         ai["trainReluctance"] = int(tr)
+    omin = engine.text(rec.find("iOperationalRangeMin"))   # AI value-normalization band (CvCityAI decision-scoring);
+    omax = engine.text(rec.find("iOperationalRangeMax"))   # AI-only -> ai bucket (owner 2026-07-01), NOT #429/dropped.
+    orange = OrderedDict()
+    if engine.is_int(omin):
+        orange["min"] = int(omin)
+    if engine.is_int(omax):
+        orange["max"] = int(omax)
+    if orange:
+        ai["operationalRange"] = orange
     if ai:
         out["ai"] = ai
     identity = OrderedDict()                                 # property-system flags (pending rework) + display

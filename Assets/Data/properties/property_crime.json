@@ -108,7 +108,11 @@
  "targetLevel": 0,
  "ai": {
   "weight": -150,
-  "scale": "city"
+  "scale": "city",
+  "operationalRange": {
+   "min": -3000,
+   "max": 3000
+  }
  },
  "identity": {
   "description": "TXT_KEY_PROPERTY_CRIME",

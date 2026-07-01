@@ -43,7 +43,11 @@
  "ai": {
   "weight": -50,
   "scale": "city",
-  "trainReluctance": 10
+  "trainReluctance": 10,
+  "operationalRange": {
+   "min": -2000,
+   "max": 3000
+  }
  },
  "identity": {
   "description": "TXT_KEY_PROPERTY_AIR_POLLUTION",

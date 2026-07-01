@@ -46,7 +46,11 @@
  "targetLevel": 0,
  "ai": {
   "weight": -150,
-  "scale": "city"
+  "scale": "city",
+  "operationalRange": {
+   "min": -1000,
+   "max": 1000
+  }
  },
  "identity": {
   "description": "TXT_KEY_PROPERTY_DISEASE",

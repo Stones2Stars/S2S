@@ -28,7 +28,11 @@
  },
  "ai": {
   "weight": 1,
-  "scale": "city"
+  "scale": "city",
+  "operationalRange": {
+   "min": 0,
+   "max": 10000
+  }
  },
  "identity": {
   "description": "TXT_KEY_PROPERTY_TOURISM",

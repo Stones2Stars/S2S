@@ -89,7 +89,11 @@
  "ai": {
   "weight": 50,
   "scale": "city",
-  "trainReluctance": 3
+  "trainReluctance": 3,
+  "operationalRange": {
+   "min": -2000000,
+   "max": 2000000
+  }
  },
  "identity": {
   "description": "TXT_KEY_PROPERTY_EDUCATION",

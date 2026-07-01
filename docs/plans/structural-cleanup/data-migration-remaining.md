@@ -31,6 +31,10 @@ So the "hidden data" question is closed: the only un-migrated data is the enumer
   preserved. 1352 units regenerated. Commit `b9c2804c0`.
 - **`BUILDING_PALACE`** dropped from ~48 civilizations' `grants.buildings` — redundant with the settler's
   `foundBuildings` (json §5). Commit `b9c2804c0`.
+- **`iOperationalRange{Min,Max}`** (property) → the **`ai` block** (`ai.operationalRange:{min,max}`) — AI-only
+  decision-scoring band (`CvCityAI`), NOT the #429 propagation drop (owner 2026-07-01). 7 property JSONs regenerated.
+- **`iMaxNationalWondersOCC`** (culturelevel) → justified **DROP** — One City Challenge is not feasible in this mod
+  (owner 2026-07-01); the mislabeled curator rationale ("OCC forces limits off") corrected (comment-only, no data change).
 - **Already-verified DONE** (curator code confirms): `bSpy`→`spy` tag · `freeSpecialistPer*Wonder`→`freeSpecialists`
   · `EraCommerceChanges`→ERA-threshold flats · corp `iMaintenance` de-scale · `GlobalBuildingExtraCommerces`→
   `empire.buildings.{B}.flat` · trait `nonStateReligionCommerce` stays a policy.
@@ -42,12 +46,11 @@ So the "hidden data" question is closed: the only un-migrated data is the enumer
 These are real gameplay values the curators **parked in `identity` or dropped** on a re-verify claim. Each needs an
 owner call before a curator edit — per [DEC-no-guessing] the agent must not decide "dead" or invent a home.
 
-### Confirmed real losses (completeness sweep, verified against live C++)
+### Confirmed real losses — RESOLVED (owner 2026-07-01, see Tier 1)
 
-| # | Field (curator) | Live C++ ground truth | Proposed home |
-|---|---|---|---|
-| D1 | **`iMaxNationalWondersOCC`** (`curate_culturelevel`) | `CvCity.cpp:2172` `getMaxNumWonders`: under `GAMEOPTION_CHALLENGE_ONE_CITY` swaps the national cap to a **doubled** value (2× across all 19 levels). Curator rationale "OCC forces limits off" is FALSE. | an OCC variant in the `allowed` category-cap block (json §4.4) — a per-game-option override of `nationalWonders`. Needs the shape agreed. |
-| D2 | **`iOperationalRange{Min,Max}`** (`curate_property`) | `CvCityAI.cpp:14789-14817,14962` — live per-turn AI: normalizes a property value into this band to score decisions. Mis-swept into the `#429` drop (it's the AI value band, NOT propagation). | carry as a per-property `operationalRange:{min,max}` (sibling to `targetLevel`), OR confirm the AI band is deliberately retired with #429. C++ says it is **not** dead. |
+The whitelist completeness sweep found exactly two, both now ruled and landed:
+- **`iMaxNationalWondersOCC`** → DROP (OCC not feasible in this mod).
+- **`iOperationalRange{Min,Max}`** → `ai.operationalRange:{min,max}` (AI-only).
 
 ### Real data parked in `identity` / dropped (from the curator-code audit — need is-it-live + home)
 
