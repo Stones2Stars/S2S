@@ -5,13 +5,13 @@
    "percent": 5
   }
  },
- "promotionLine": {
-  "PROMOTIONLINE_CAUTIOUS": 1
- },
- "grants": {
+ "skills": {
   "unitCombats": [
    "UNITCOMBAT_PROMOTED_CAUTIOUS"
   ]
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_CAUTIOUS": 1
  },
  "ui": {
   "art": {

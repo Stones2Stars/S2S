@@ -1,5 +1,16 @@
 {
  "type": "UNIT_PARK_RANGER",
+ "builds": [
+  "BUILD_FOREST_PRESERVE",
+  "BUILD_TREEFARM",
+  "BUILD_WILDLIFE_SANCTUARY",
+  "BUILD_PLANT_JUNGLE",
+  "BUILD_YOUNG_FOREST",
+  "BUILD_PLANT_BAMBOO",
+  "BUILD_PLANT_SAVANNA",
+  "BUILD_GROW_FOREST",
+  "BUILD_NATURE_PRESERVE"
+ ],
  "requires": {
   "build": {
    "all": [
@@ -60,19 +71,6 @@
  "tags": {
   "worker": true,
   "civilian": true
- },
- "grants": {
-  "builds": [
-   "BUILD_FOREST_PRESERVE",
-   "BUILD_TREEFARM",
-   "BUILD_WILDLIFE_SANCTUARY",
-   "BUILD_PLANT_JUNGLE",
-   "BUILD_YOUNG_FOREST",
-   "BUILD_PLANT_BAMBOO",
-   "BUILD_PLANT_SAVANNA",
-   "BUILD_GROW_FOREST",
-   "BUILD_NATURE_PRESERVE"
-  ]
  },
  "succession": {
   "upgradesTo": [

@@ -424,6 +424,17 @@ declare the number. Enforcement reads the [tally](tally.md) count.
 
 One-shot or recurring things an entity hands out (not per-turn modifiers).
 
+> **Classification pass (owner 2026-07-01) — `grants` was a grab-bag; the survey found 34 keys, ~half off-grammar.**
+> `grants` is now ONLY genuine provisions handed out on a trigger. **Re-homed OUT:** unit `buildings` (MISSION_CONSTRUCT) /
+> `greatPersonAction` / `goldenAge` → **`missions`** (§8, deferred); `builds` → the **`builds`** block (§8); `greatPeople`
+> → `tags`/mission (settled in the missions pass); promotion `unitCombats`/`removesUnitCombats` → **`skills`**; project
+> `grantsSpecialBuilding` → **`enables.specialBuildings`** (flips SpecialBuildingValid — unlocks, hands out nothing); corp
+> `bonusProduced` → **`provides.bonuses`** (continuous supply, §5a); building `holyCity` → **`requires.build`** (a
+> read-only "only in RELIGION_X's holy city" gate — `canConstruct`, `CvCity.cpp:2728`; the holy city is set by religion
+> FOUNDING, never a building); building `traits` → **`enables.traits`** (held-trait, §8). **`freePromotions`** (building-
+> list + trait-dict) folds into **`repeatable`**. And a **mission carries its `grants`** as its outcome (§8), so `grants`
+> is both an entity-level handout and a mission's outcome payload.
+
 ```jsonc
 "grants": {
   "techs": ["TECH_POTTERY"], "units": ["UNIT_WARRIOR"],   // entity lists
@@ -606,6 +617,26 @@ Plain booleans, like `skills`/`capabilities`, and again the section name carries
 its `capabilities` are what it *hands to the empire* (provided) — the opposite direction. So a building's
 `nukeImmune` is an `attribute` (the building holds it), but its `setCultureRate` is a `capability` (the building
 provides the slider to the empire).
+
+**Two further unit blocks (owner 2026-07-01, the grants-classification pass §5):**
+- **`builds`** — the unit's per-type **`BUILD_*` repertoire** (which worker-builds it can perform), owned **per unit-type**
+  (tech gates *which builds are unlocked* — via `enables.builds` / the BUILD's own prereq; `builds` is *which THIS unit
+  can do*; NOT "all workers, tech-gated"), promotion-augmentable. Wired as an **intrinsic key** (the readJson base skips
+  it; `CvJsonUnitInfo` parses it). Same shared-vocabulary word as `enables.builds` — a `BUILD_*` list either way; the
+  enclosing section gives the relationship (`enables.builds` = "unlocks these," unit `builds` = "can perform these").
+- **`missions`** ⏳ *(model forming — migration DEFERRED to a dedicated pass)* — the actions a unit **performs**, each
+  producing an **outcome**; **a mission carries its `grants`** — the outcome (what lands) IS the mission's grant payload.
+  Unifies the hardcoded mission-abilities (MISSION_CONSTRUCT/DISCOVER/GOLDEN_AGE — mis-filed today as `grants.buildings` /
+  `greatPersonAction` / `goldenAge`) AND the un-migrated **`CvOutcome`** system (`CvUnitInfo` `KillOutcomes` +
+  `m_aOutcomeMissions` — data-driven MISSION→outcome-list with cost/conditions/kill; *"outcome system (no wrapper)"*).
+  The distinction from `skills`: a **skill** is a standing/permanent property; a **mission** is an action (often
+  consuming the unit). `grants` is therefore BOTH an entity-level handout AND a mission's outcome payload.
+
+A **building's** `grants.traits` (a whole trait conferred on the **OWNER** empire *while the building is active*, reverting
+on loss — `owner.setHasTrait`, civ-traits only, `CvCity.cpp:4614`) is the same grantor-**provides** / empire-**holds**
+pattern as `capabilities` — but the held thing is a full **trait** (effect-bundle), not a boolean ability. So it re-homes to
+**`enables.traits`** (the building contributes trait T to the empire's active-trait HAVE, which the modifier already reads),
+NOT `grants` (it is held-while-active, not a one-shot handout).
 
 ```jsonc
 "skills": { "amphibious": true, "blitz": true },   // UNIT, mutable

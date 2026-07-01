@@ -12,6 +12,7 @@
 
 #include "CvJsonInfo.h"
 #include <set>
+#include <vector>
 
 class CvJsonUnitInfo : public CvJsonInfo
 {
@@ -20,6 +21,7 @@ public:
 	bool spawnOnly, unlimitedException;
 	std::set<std::string> skills;   // §8 mutable abilities (blitz/amphib/…) -- the unit type's base skill set
 	std::set<std::string> tags;     // §8 immutable type membership (military/gunpowder/…) -- accounting, no behaviour
+	std::vector<int> builds;        // top-level `builds`: the unit type's build REPERTOIRE (resolved BUILD_* ids)
 	virtual void mapFrom(const picojson::value& entity);
 };
 

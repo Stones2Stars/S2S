@@ -1,5 +1,8 @@
 {
  "type": "UNIT_OFFSHORE_PLATFORM",
+ "builds": [
+  "BUILD_OFFSHORE_PLATFORM"
+ ],
  "requires": {
   "build": {
    "all": [
@@ -21,11 +24,6 @@
  "tags": {
   "worker": true,
   "civilian": true
- },
- "grants": {
-  "builds": [
-   "BUILD_OFFSHORE_PLATFORM"
-  ]
  },
  "cost": {
   "production": 1000,

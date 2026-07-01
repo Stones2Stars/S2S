@@ -207,8 +207,11 @@ VISION_STRUCTS = {  # tag -> (key, [child tags in order]) ; eInvisible + eTerrai
     "VisibleImprovementRangeChanges": ("visibleImprovementRange", ["InvisibleType", "ImprovementType", "iIntensity"]),
 }
 # grants: things the promotion confers on the unit (simple lists / scalar).
-GRANT_LIST = {"SubCombatChangeTypes": "unitCombats", "RemovesUnitCombatTypes": "removesUnitCombats",
-              "FreetoUnitCombats": "freeToUnitCombats", "AddsBuildTypes": "builds"}
+GRANT_LIST = {"FreetoUnitCombats": "freeToUnitCombats", "AddsBuildTypes": "builds"}
+# skills: unitcombat membership the promotion mutates on the unit (setHasUnitCombat on acquire/lose) — a SKILL
+# (mutable ability), not a grant (owner 2026-07-01). Emitted as UNITCOMBAT_* lists under the skills block,
+# alongside the per-type-keyed skills (targets/collateralImmune) which are also UNITCOMBAT_* lists (skills.md §1).
+SKILL_UNITCOMBAT_LIST = {"SubCombatChangeTypes": "unitCombats", "RemovesUnitCombatTypes": "removesUnitCombats"}
 # identity (parked): availability/plot/state gates (deferred to the unit-plane enabling pass) + config flags.
 ID_SCALAR = {"iControlPoints": "controlPoints", "iCommandRange": "commandRange",
              "LayerAnimationPath": "layerAnimationPath", "RenamesUnitTo": "renamesUnitTo",
@@ -359,6 +362,13 @@ def curate(typ, rec, store):
         if node is not None:
             for k in _simple_list(node):
                 caps.setdefault(name, OrderedDict())[k] = True
+    # unitcombat membership the promotion adds/strips -> a SKILL (mutable ability), emitted as UNITCOMBAT_* lists.
+    for tag, name in SKILL_UNITCOMBAT_LIST.items():
+        node = rec.find(tag)
+        if node is not None:
+            lst = _simple_list(node)
+            if lst:
+                caps[name] = lst
     # celebrity: iCelebrityHappy is NUMERIC (a per-unit city-happiness amount), so it can't ride CAP_BOOL; the
     # AMOUNT is DROPPED (owner 2026-07-01: "not a random field on a unit") -> a boolean skill when non-zero.
     # CvCity is fixed POST-MIGRATION to scan for celebrity-skilled units and award the happiness itself.
@@ -521,7 +531,7 @@ def main():
     n = len(results)
     # COVERAGE CHECK (verify = nothing silently dropped): report XML tags handled by NO table/special-case.
     handled = (set(STRENGTH) | set(FAMILIES) | set(VS_KEYED) | set(CAP_BOOL) | set(CAP_PAIR)
-               | set(CAP_COUNT) | set(CAP_LIST) | set(VISION_PAIRS) | set(VISION_STRUCTS)
+               | set(CAP_COUNT) | set(CAP_LIST) | set(SKILL_UNITCOMBAT_LIST) | set(VISION_PAIRS) | set(VISION_STRUCTS)
                | set(GRANT_LIST) | set(ID_SCALAR) | set(ID_LIST) | set(ID_BOOL) | DROP
                | {"PropertyManipulators", "HealUnitCombatChangeTypes", "NegatesInvisibilityTypes",
                   "SetSpecialUnit", "OnGameOptions", "NotOnGameOptions", "iCommandType",

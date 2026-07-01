@@ -4,6 +4,9 @@
   "build": {
    "all": [
     {
+     "IS_HOLY_CITY": "RELIGION_NGAIISM"
+    },
+    {
      "type": "MAPCATEGORY_EARTH",
      "scope": "plot"
     }
@@ -26,9 +29,6 @@
     "flat": 1
    }
   }
- },
- "grants": {
-  "holyCity": "RELIGION_NGAIISM"
  },
  "shrine": "RELIGION_NGAIISM",
  "attributes": {

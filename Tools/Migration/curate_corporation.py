@@ -28,8 +28,9 @@ Spread mechanic (owner ruling 2026-07-01 — propensity-name ALIGNMENT with reli
 
 Enabler chain: TechPrereq / PrereqBonuses / PrereqBuildings dropped (store inverts to tech/bonus/building
 .enables.corporations). The corp's own `enables.buildings` is derived from BuildingInfo.PrereqCorporation (a
-building gated by the active corp). BonusProduced -> grants (free resource in corp cities). Categories /
-CompetingCorporations (corp<->corp exclusion) -> identity (none in base XML).
+building gated by the active corp). BonusProduced -> provides.bonuses (owner 2026-07-01): while the corp is
+present+active it CONTINUOUSLY supplies that BONUS_ to corp cities — a §5a continuous in-vicinity supply, NOT a
+one-shot `grants` handout. Categories / CompetingCorporations (corp<->corp exclusion) -> identity (none in base XML).
 
 DEFERRED to the heavy-phase Building/Unit curation (these are SOURCE-side edges other entities declare, not the
 corp's authored data): BuildingInfo.FoundsCorporation (the HQ-founding building), UnitInfo.CorporationSpreads
@@ -84,7 +85,7 @@ IDENTITY = {"iSpread": "spreadFactor", "iSpreadFactor": "competingSpreadCostPerc
 # ("excludes": ["CORPORATION_X", ...]). Empty in the shipped base XML (no corp carries it), so no shipped corp
 # emits `excludes` today — this migrates the MAPPING so future data lands in `excludes`, not identity.
 EXCLUDES = "CompetingCorporations"
-GRANTS = {"BonusProduced": "bonusProduced", "FreeUnit": "freeUnit"}
+GRANTS = {"FreeUnit": "freeUnit"}
 DROP = {"TechPrereq", "PrereqBonuses", "PrereqBuildings"}
 FAMILY_ORDER = ["food", "production", "commerce", "gold", "research", "culture", "espionage",
                 "health", "happiness", "experience", "maintenance"]
@@ -146,6 +147,7 @@ def _excludes(node):
 def curate(typ, rec, store):
     text, fam, art_blocks, identity, grants, cost, leftover = {}, {}, {}, {}, {}, {}, []
     excludes = []
+    provides_bonuses = []   # BonusProduced -> provides.bonuses (§5a continuous in-vicinity supply while active)
     prereq_bonuses = [b for b in (engine.text(x) for x in rec.findall("PrereqBonuses/BonusType"))
                       if b and b != "NONE"]
     per_bonus = OrderedDict([("anyOf", prereq_bonuses), ("scope", "city")]) if prereq_bonuses else None
@@ -166,6 +168,9 @@ def curate(typ, rec, store):
                 cost["spread"] = int(t)
         elif tag == EXCLUDES:                                  # -> top-level `excludes` (json §9, owner 2026-07-01)
             excludes.extend(_excludes(c))
+        elif tag == "BonusProduced":                           # -> provides.bonuses (§5a continuous supply, owner 2026-07-01)
+            if t and t != "NONE":
+                provides_bonuses.append(t)
         elif tag in GRANTS:
             v = engine.text(c)
             if v and v != "NONE":
@@ -201,6 +206,8 @@ def curate(typ, rec, store):
             out[family] = fam[family]
     if grants:
         out["grants"] = grants
+    if provides_bonuses:
+        out["provides"] = OrderedDict([("bonuses", provides_bonuses)])
     if cost:
         out["cost"] = cost
     cc.emit_art(out, art_blocks)

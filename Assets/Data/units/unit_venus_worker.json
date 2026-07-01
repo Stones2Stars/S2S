@@ -1,5 +1,11 @@
 {
  "type": "UNIT_VENUS_WORKER",
+ "builds": [
+  "BUILD_PLANETARY_MAGLEV",
+  "BUILD_VENUS_SURFACE_MINE",
+  "BUILD_COLONY_SOLAR_ARRAY",
+  "BUILD_VENUS_AERIAL_FARM"
+ ],
  "requires": {
   "build": {
    "all": [
@@ -14,14 +20,6 @@
  "tags": {
   "worker": true,
   "civilian": true
- },
- "grants": {
-  "builds": [
-   "BUILD_PLANETARY_MAGLEV",
-   "BUILD_VENUS_SURFACE_MINE",
-   "BUILD_COLONY_SOLAR_ARRAY",
-   "BUILD_VENUS_AERIAL_FARM"
-  ]
  },
  "cost": {
   "production": 1500,

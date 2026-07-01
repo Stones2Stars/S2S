@@ -4,6 +4,9 @@
   "build": {
    "all": [
     {
+     "IS_HOLY_CITY": "RELIGION_YORUBA"
+    },
+    {
      "type": "MAPCATEGORY_EARTH",
      "scope": "plot"
     }
@@ -31,9 +34,6 @@
     "flat": 2
    }
   }
- },
- "grants": {
-  "holyCity": "RELIGION_YORUBA"
  },
  "shrine": "RELIGION_YORUBA",
  "attributes": {

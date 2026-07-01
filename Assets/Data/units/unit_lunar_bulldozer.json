@@ -1,5 +1,12 @@
 {
  "type": "UNIT_LUNAR_BULLDOZER",
+ "builds": [
+  "BUILD_LUNAR_PATH",
+  "BUILD_PLANETARY_MAGLEV",
+  "BUILD_LUNAR_MINING_OUTPOST",
+  "BUILD_COLONY_EXTRACTION_FACILITY",
+  "BUILD_LUNAR_MINE"
+ ],
  "requires": {
   "build": {
    "all": [
@@ -13,15 +20,6 @@
  "tags": {
   "worker": true,
   "civilian": true
- },
- "grants": {
-  "builds": [
-   "BUILD_LUNAR_PATH",
-   "BUILD_PLANETARY_MAGLEV",
-   "BUILD_LUNAR_MINING_OUTPOST",
-   "BUILD_COLONY_EXTRACTION_FACILITY",
-   "BUILD_LUNAR_MINE"
-  ]
  },
  "cost": {
   "production": 1700,

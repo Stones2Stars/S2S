@@ -581,17 +581,24 @@ def pass2(typ, rec, store, fams, grants, repeatable, identity, enables, capabili
                     g["adjacentHeal"] = adj
                 repeatable.append(g)
     # --- one-shot grants / pulses --- (ExtraFreeBonuses is NOT a one-shot grant: it's a continuous while-active
-    # bonus supply -> provides.bonuses, handled in curate(). FreeTraitTypes stays a grant.)
-    for tag, key in (("FreeTraitTypes", "traits"),):
-        lst = _typelist(rec, tag)
-        if lst:
-            grants[key] = lst
+    # bonus supply -> provides.bonuses, handled in curate().)
+    # FreeTraitTypes -> enables.traits (owner ruling 2026-07-01, json §5/§8): a whole civ-trait conferred on the
+    # OWNER empire *while the building is active*, reverting on loss (owner.setHasTrait, CvCity.cpp:4614) -- the same
+    # grantor-PROVIDES / empire-HOLDS pattern as capabilities, but the held thing is a full trait (effect-bundle), so
+    # it is held-while-active, NOT a one-shot handout. Merged into the enables dict as the `traits` bucket, uniform
+    # with the FoundsCorporation/Hurrys enables-from-XML below (rj_walkEnableEdge resolves it generically ->
+    # edges["enables.traits"] = [TRAIT_ ids]). Was previously mis-homed as grants["traits"].
+    ftraits = _typelist(rec, "FreeTraitTypes")
+    if ftraits:
+        enables.setdefault("traits", []).extend(ftraits)
     st = _txt(rec, "FreeSpecialTech")
     if st:
         grants.setdefault("techs", []).append(st)
-    hc = _txt(rec, "HolyCity")
-    if hc:
-        grants["holyCity"] = hc
+    # HolyCity -> requires.build (owner ruling 2026-07-01, json §5): a read-only "only in RELIGION_X's holy city"
+    # BUILD gate -- canConstruct returns false unless the city is already that religion's holy city (CvCity.cpp:2728);
+    # it hands out NOTHING (the holy city is set by religion FOUNDING, never by a building). So it is a build GATE, not
+    # a grant. Authored in requires_building() as an {IS_HOLY_CITY: RELIGION_X} parameterized predicate (json §3.5,
+    # carried by cp_parseObject IS_HOLY_CITY, CvCascadeConditionParse.cpp:199). Was previously mis-homed as grants["holyCity"].
     ft = _int(rec, "iFreeTechs")
     if ft:
         grants["freeTechs"] = ft
@@ -975,6 +982,16 @@ def requires_building(rec, store):
     sr = _txt(rec, "StateReligion")
     if sr:
         build_all.append(OrderedDict([("STATE_RELIGION", sr)]))
+    # HolyCity -> requires.build (owner ruling 2026-07-01, json §5): the building may be constructed ONLY in
+    # RELIGION_X's holy city -- canConstruct returns false unless isHolyCity(religion) (CvCity.cpp:2728). A pure
+    # buildability GATE (hands out nothing; the holy city is set by religion FOUNDING), so it belongs on build, not
+    # grants. Authored as the {IS_HOLY_CITY: RELIGION_X} parameterized predicate (json §3.5), AND-combined into
+    # build_all with every other build condition (parity with the STATE_RELIGION build gate above). The parser carries
+    # it cleanly: cp_parseObject IS_HOLY_CITY -> CASC_PRED_IS_HOLY_CITY with the religion FK-resolved
+    # (CvCascadeConditionParse.cpp:199); enabler evaluation of the predicate is a KNOWN follow-up.
+    hc = _txt(rec, "HolyCity")
+    if hc:
+        build_all.append(OrderedDict([("IS_HOLY_CITY", hc)]))
     # PrereqReligion / PrereqCorporation are the building's reversible MEANS (a religion can leave via inquisition,
     # a corp can be lost) and the engine DOES disable a built building when they go (CvCity.cpp applyReligionModifiers
     # ~14999 / applyCorporationModifiers ~15198 set isDisabledBuilding) -> author on operate (dormancy, forward check).

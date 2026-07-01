@@ -1,5 +1,10 @@
 {
  "type": "PROJECT_INTERNATIONAL_MONETARY_FUND",
+ "enables": {
+  "specialBuildings": [
+   "SPECIALBUILDING_WORLD_BANK"
+  ]
+ },
  "buildRate": {
   "self": {
    "percent": [
@@ -13,9 +18,6 @@
     }
    ]
   }
- },
- "grants": {
-  "grantsSpecialBuilding": "SPECIALBUILDING_WORLD_BANK"
  },
  "cost": {
   "create": 9440

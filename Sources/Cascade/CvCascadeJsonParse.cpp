@@ -54,7 +54,7 @@ static const char* CJK_INTRINSIC_KEYS[] = {
 	"type", "text", "description", "help", "civilopedia", "message", "quote", "strategy", "adjective", "shortDescription",
 	"cost", "ui", "world", "sound", "identity", "ai",
 	"loadPrune", "policies", "succession", "excludes", "produces", "condition", "effect",
-	"vision", "outcomes", "mapGeneration", "replacedBy", "capabilities", "skills", "tags", "state", "attributes",
+	"vision", "outcomes", "mapGeneration", "replacedBy", "capabilities", "skills", "tags", "state", "attributes", "builds",
 	"promotionLine", "buildUp", "shrine", "headquarters", "worldGen", "properties", "voteSource", "threshold", "role", "victory",
 	"targetLevel", "conversion", "cityFounding", "unitCapability", 0
 };

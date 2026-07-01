@@ -6,17 +6,15 @@
   }
  },
  "skills": {
-  "hiddenNationality": true
+  "hiddenNationality": true,
+  "unitCombats": [
+   "UNITCOMBAT_PIRATE"
+  ]
  },
  "vision": {
   "invisibilityIntensity": {
    "INVISIBLE_NAVAL_DISGUISE": -1
   }
- },
- "grants": {
-  "unitCombats": [
-   "UNITCOMBAT_PIRATE"
-  ]
  },
  "loadPrune": {
   "onGameOptions": [

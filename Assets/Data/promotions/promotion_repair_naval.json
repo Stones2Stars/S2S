@@ -12,7 +12,7 @@
    }
   }
  },
- "grants": {
+ "skills": {
   "unitCombats": [
    "UNITCOMBAT_HEALS_NAVAL"
   ]

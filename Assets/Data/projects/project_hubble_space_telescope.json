@@ -1,5 +1,10 @@
 {
  "type": "PROJECT_HUBBLE_SPACE_TELESCOPE",
+ "enables": {
+  "specialBuildings": [
+   "SPECIALBUILDING_DEEP_SPACE_RESEARCH_INSTITUTE"
+  ]
+ },
  "buildRate": {
   "self": {
    "percent": [
@@ -13,9 +18,6 @@
     }
    ]
   }
- },
- "grants": {
-  "grantsSpecialBuilding": "SPECIALBUILDING_DEEP_SPACE_RESEARCH_INSTITUTE"
  },
  "cost": {
   "create": 11800

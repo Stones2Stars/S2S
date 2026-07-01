@@ -1,5 +1,8 @@
 {
  "type": "UNIT_SUBMERGED_TOWN_PLATFORM",
+ "builds": [
+  "BUILD_SUBMERGED_TOWN"
+ ],
  "requires": {
   "build": {
    "all": [
@@ -35,11 +38,6 @@
  "tags": {
   "worker": true,
   "civilian": true
- },
- "grants": {
-  "builds": [
-   "BUILD_SUBMERGED_TOWN"
-  ]
  },
  "cost": {
   "production": 2292,

@@ -1,5 +1,8 @@
 {
  "type": "UNIT_SOLAR_WORKER",
+ "builds": [
+  "BUILD_SOLAR_TRAJECTORY"
+ ],
  "requires": {
   "build": {
    "all": [
@@ -15,11 +18,6 @@
  "tags": {
   "worker": true,
   "civilian": true
- },
- "grants": {
-  "builds": [
-   "BUILD_SOLAR_TRAJECTORY"
-  ]
  },
  "cost": {
   "production": 2000,

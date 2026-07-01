@@ -1,5 +1,13 @@
 {
  "type": "UNIT_WORKBOAT",
+ "builds": [
+  "BUILD_WHALING_BOATS",
+  "BUILD_FISHING_BOATS",
+  "BUILD_HARVEST_KELP_KILL",
+  "BUILD_BEACON_CORAL",
+  "BUILD_BEACON_REEF",
+  "BUILD_BEACON_GREAT_BARRIER_REEF"
+ ],
  "replacedBy": {
   "units": [
    "UNIT_NEANDERTHAL_WORKBOAT"
@@ -25,16 +33,6 @@
  "tags": {
   "worker": true,
   "civilian": true
- },
- "grants": {
-  "builds": [
-   "BUILD_WHALING_BOATS",
-   "BUILD_FISHING_BOATS",
-   "BUILD_HARVEST_KELP_KILL",
-   "BUILD_BEACON_CORAL",
-   "BUILD_BEACON_REEF",
-   "BUILD_BEACON_GREAT_BARRIER_REEF"
-  ]
  },
  "succession": {
   "upgradesTo": [

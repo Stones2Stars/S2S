@@ -1,5 +1,10 @@
 {
  "type": "BUILDING_ASTROLOGICAL_INFLUENCE_OF_CANCER",
+ "enables": {
+  "traits": [
+   "TRAIT_ASTROLOGICAL_INFLUENCE_OF_CANCER"
+  ]
+ },
  "obsoletedBy": {
   "techs": [
    "TECH_MEDIEVAL_LIFESTYLE"
@@ -36,11 +41,6 @@
   "city": {
    "flat": -5
   }
- },
- "grants": {
-  "traits": [
-   "TRAIT_ASTROLOGICAL_INFLUENCE_OF_CANCER"
-  ]
  },
  "cost": {
   "production": 864,

@@ -15,6 +15,18 @@ void CvJsonUnitInfo::mapFrom(const picojson::value& entity)
 	picojson::object::const_iterator it;
 	if ((it = o.find("skills")) != o.end()) cascadeJsonBoolSet(it->second, skills);
 	if ((it = o.find("tags")) != o.end())   cascadeJsonBoolSet(it->second, tags);
+	// top-level `builds` (the unit type's build REPERTOIRE): a flat array of BUILD_* strings -> resolved ids. The base
+	// classifier tags this CJK_INTRINSIC (skips it), so the unit subclass owns the parse. (NOT `enables.builds`.)
+	if ((it = o.find("builds")) != o.end() && it->second.is<picojson::array>())
+	{
+		const picojson::array& a = it->second.get<picojson::array>();
+		for (size_t i = 0; i < a.size(); ++i)
+		{
+			if (!a[i].is<std::string>()) continue;
+			const int bid = cascadeJsonResolveId(a[i].get<std::string>());
+			if (bid >= 0) builds.push_back(bid);
+		}
+	}
 	// spawnOnly lives in `identity` (StoneBase SpawnOnly = IdentityFlag(d.Identity,"spawnOnly")); unlimitedException lives
 	// in `skills` (StoneBase UnlimitedException = IdentityFlag(d.Skills,"unlimitedException")) -- NOT top-level (a bare
 	// o.find() found NEITHER: verified 525 spawnOnly:true all in identity, 26 unlimitedException:true all in skills).

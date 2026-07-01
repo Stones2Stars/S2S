@@ -56,8 +56,10 @@
    }
   }
  },
- "grants": {
-  "bonusProduced": "BONUS_PETROLEUM_PRODUCTS"
+ "provides": {
+  "bonuses": [
+   "BONUS_PETROLEUM_PRODUCTS"
+  ]
  },
  "cost": {
   "spread": 50

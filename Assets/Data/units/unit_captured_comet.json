@@ -1,5 +1,8 @@
 {
  "type": "UNIT_CAPTURED_COMET",
+ "builds": [
+  "BUILD_PLACE_ASTEROID"
+ ],
  "requires": {
   "build": {
    "all": [
@@ -18,9 +21,6 @@
   "civilian": true
  },
  "grants": {
-  "builds": [
-   "BUILD_PLACE_ASTEROID"
-  ],
   "buildings": [
    "BUILDING_CAPTURED_ASTEROID",
    "BUILDING_MARTIAN_AMMONIA_BOMBARDMENT",

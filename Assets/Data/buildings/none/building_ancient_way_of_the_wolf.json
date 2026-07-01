@@ -1,5 +1,10 @@
 {
  "type": "BUILDING_ANCIENT_WAY_OF_THE_WOLF",
+ "enables": {
+  "traits": [
+   "TRAIT_ANCIENT_WAY_OF_THE_WOLF"
+  ]
+ },
  "obsoletedBy": {
   "techs": [
    "TECH_CLASSICAL_LIFESTYLE"
@@ -32,11 +37,6 @@
   "city": {
    "flat": 3
   }
- },
- "grants": {
-  "traits": [
-   "TRAIT_ANCIENT_WAY_OF_THE_WOLF"
-  ]
  },
  "cost": {
   "production": 444,

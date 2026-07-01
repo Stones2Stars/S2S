@@ -1,5 +1,10 @@
 {
  "type": "PROJECT_INTERNATIONAL_SPACE_STATION",
+ "enables": {
+  "specialBuildings": [
+   "SPECIALBUILDING_SPACE_LABORATORY"
+  ]
+ },
  "buildRate": {
   "self": {
    "percent": [
@@ -13,9 +18,6 @@
     }
    ]
   }
- },
- "grants": {
-  "grantsSpecialBuilding": "SPECIALBUILDING_SPACE_LABORATORY"
  },
  "cost": {
   "create": 13480

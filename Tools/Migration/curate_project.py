@@ -30,7 +30,10 @@ Modeling calls made this pass (light-batch-classification.json + the C++):
   set-based enables index; a count>1 would need a count-bearing edge. AnyonePrereqProject -> DROP (unused in
   current data; if ever set it needs its own store edge). VictoryPrereq -> identity.launchesVictory (the victory
   this project's creation LAUNCHES — not a build prereq; the reverse 'launchedBy' is a cold-path derived edge).
-- EveryoneSpecialUnit/EveryoneSpecialBuilding -> grants (one-shot makeSpecial*Valid on completion).
+- EveryoneSpecialUnit -> grants (one-shot makeSpecialUnitValid on completion).
+- EveryoneSpecialBuilding -> enables.specialBuildings (owner 2026-07-01): completion flips the game-wide
+  SpecialBuildingValid flag (CvGame::makeSpecialBuildingValid) — it UNLOCKS constructibility, hands out no
+  instance, so it is an `enables` edge (the specialBuildings enables bucket, json.md §4.1), NOT a grant.
 
 Family/member names for nukeInterception (combat) and techShare (diplomacy) are PROVISIONAL (owner: nail down
 later); techShare sits with handicap's diplomacy.noTechTrade/techTradeKnown tech-diffusion members.
@@ -65,7 +68,7 @@ FAMILIES = {
 }
 # CommerceModifiers: SPLIT per-identifier commerce families (gold/research/culture/espionage), empire/percent.
 SPLIT_COMMERCE = {"CommerceModifiers": ("empire", "percent")}
-GRANTS = {"EveryoneSpecialUnit": "grantsSpecialUnit", "EveryoneSpecialBuilding": "grantsSpecialBuilding"}
+GRANTS = {"EveryoneSpecialUnit": "grantsSpecialUnit"}
 TEXT = {"Description": "description", "Civilopedia": "civilopedia"}
 # art tags -> ui/world/sound via ART_BLOCK (CreateSound -> sound.onCompletion; MovieDefineTag -> ui.art.movie.defineTag).
 ART = {"Button", "MovieDefineTag", "CreateSound"}
@@ -107,6 +110,7 @@ def _keyed_ints(node):
 
 def curate(typ, rec, store):
     text, fam, grants, art_blocks, identity, victory, cost, requires, leftover = {}, {}, {}, {}, {}, {}, {}, {}, []
+    enables_special = []   # EveryoneSpecialBuilding -> enables.specialBuildings (unlocks constructibility)
     for c in rec:
         tag, t = c.tag, engine.text(c)
         if tag == "Type" or tag in DROP:
@@ -139,6 +143,10 @@ def curate(typ, rec, store):
         elif tag in VICTORY_SCALAR:
             if engine.is_int(t) and int(t) != 0:
                 victory[VICTORY_SCALAR[tag]] = int(t)
+        elif tag == "EveryoneSpecialBuilding":
+            # completion UNLOCKS constructibility (CvGame::makeSpecialBuildingValid) -> enables edge, not a grant.
+            if t and t != "NONE":
+                enables_special.append(t)
         elif tag in GRANTS:
             v = int(t) if engine.is_int(t) else (t or None)
             if v not in (None, "", "NONE"):
@@ -166,7 +174,9 @@ def curate(typ, rec, store):
     for k in ("description", "civilopedia"):
         if k in text:
             out[k] = text[k]
-    enables = store.enabled_by(typ)                        # project -> project (PrereqProjects; Apollo -> SS_* parts)
+    enables = dict(store.enabled_by(typ))                  # project -> project (PrereqProjects; Apollo -> SS_* parts)
+    if enables_special:                                    # completion unlocks these SPECIALBUILDING_* for construction
+        enables["specialBuildings"] = enables_special
     if enables:
         out["enables"] = OrderedDict((k, enables[k]) for k in sorted(enables))
     if requires:

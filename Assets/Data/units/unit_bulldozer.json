@@ -1,5 +1,17 @@
 {
  "type": "UNIT_BULLDOZER",
+ "builds": [
+  "BUILD_BURN_VEGETATION",
+  "BUILD_PATH",
+  "BUILD_REMOVE_VEGETATION",
+  "BUILD_DRAIN_SWAMP",
+  "BUILD_ROAD",
+  "BUILD_REMOVE_ROCK_FORMATION",
+  "BUILD_SCRUB_FALLOUT",
+  "BUILD_CLEAR_FALLOUT_FAST",
+  "BUILD_RECLAIM_LAND",
+  "BUILD_SANITIZE"
+ ],
  "obsoletedBy": {
   "techs": [
    "TECH_MAINSTREAM_CLONING"
@@ -44,20 +56,6 @@
  "tags": {
   "worker": true,
   "civilian": true
- },
- "grants": {
-  "builds": [
-   "BUILD_BURN_VEGETATION",
-   "BUILD_PATH",
-   "BUILD_REMOVE_VEGETATION",
-   "BUILD_DRAIN_SWAMP",
-   "BUILD_ROAD",
-   "BUILD_REMOVE_ROCK_FORMATION",
-   "BUILD_SCRUB_FALLOUT",
-   "BUILD_CLEAR_FALLOUT_FAST",
-   "BUILD_RECLAIM_LAND",
-   "BUILD_SANITIZE"
-  ]
  },
  "succession": {
   "upgradesTo": [

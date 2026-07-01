@@ -1,5 +1,10 @@
 {
  "type": "PROJECT_FIRST_CLONED_MAMMAL",
+ "enables": {
+  "specialBuildings": [
+   "SPECIALBUILDING_CLONING_LABORATORY"
+  ]
+ },
  "buildRate": {
   "self": {
    "percent": [
@@ -13,9 +18,6 @@
     }
    ]
   }
- },
- "grants": {
-  "grantsSpecialBuilding": "SPECIALBUILDING_CLONING_LABORATORY"
  },
  "cost": {
   "create": 15400

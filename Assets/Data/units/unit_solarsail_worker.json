@@ -1,5 +1,12 @@
 {
  "type": "UNIT_SOLARSAIL_WORKER",
+ "builds": [
+  "BUILD_SPACE_SOLAR_ARRAY",
+  "BUILD_ASTEROID_MINE",
+  "BUILD_SOLAR_CONCENTRATOR",
+  "BUILD_CISLUNAR_BASE",
+  "BUILD_SOLAR_SYSTEM_BASE"
+ ],
  "requires": {
   "build": {
    "all": [
@@ -43,15 +50,6 @@
      }
     ]
    }
-  ]
- },
- "grants": {
-  "builds": [
-   "BUILD_SPACE_SOLAR_ARRAY",
-   "BUILD_ASTEROID_MINE",
-   "BUILD_SOLAR_CONCENTRATOR",
-   "BUILD_CISLUNAR_BASE",
-   "BUILD_SOLAR_SYSTEM_BASE"
   ]
  },
  "cost": {

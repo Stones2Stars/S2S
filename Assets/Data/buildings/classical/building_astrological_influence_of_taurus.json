@@ -1,5 +1,10 @@
 {
  "type": "BUILDING_ASTROLOGICAL_INFLUENCE_OF_TAURUS",
+ "enables": {
+  "traits": [
+   "TRAIT_ASTROLOGICAL_INFLUENCE_OF_TAURUS"
+  ]
+ },
  "obsoletedBy": {
   "techs": [
    "TECH_MEDIEVAL_LIFESTYLE"
@@ -36,11 +41,6 @@
   "city": {
    "flat": 3
   }
- },
- "grants": {
-  "traits": [
-   "TRAIT_ASTROLOGICAL_INFLUENCE_OF_TAURUS"
-  ]
  },
  "cost": {
   "production": 900,

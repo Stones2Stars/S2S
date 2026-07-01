@@ -68,8 +68,10 @@
    }
   }
  },
- "grants": {
-  "bonusProduced": "BONUS_HEMP"
+ "provides": {
+  "bonuses": [
+   "BONUS_HEMP"
+  ]
  },
  "cost": {
   "spread": 50

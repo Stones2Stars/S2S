@@ -23,15 +23,13 @@
  },
  "skills": {
   "defenseOnly": true,
-  "noInvisibility": true
- },
- "promotionLine": {
-  "PROMOTIONLINE_ARMED_GUARD": 1
- },
- "grants": {
+  "noInvisibility": true,
   "unitCombats": [
    "UNITCOMBAT_PROMOTED_ARMED_GUARD"
   ]
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_ARMED_GUARD": 1
  },
  "ui": {
   "art": {

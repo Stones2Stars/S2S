@@ -1,5 +1,10 @@
 {
  "type": "UNIT_HEAVY_ROCKET",
+ "builds": [
+  "BUILD_SPACE_STATION_LV1",
+  "BUILD_SPACE_STATION_LV2",
+  "BUILD_SPACE_STATION_LV3"
+ ],
  "requires": {
   "build": {
    "all": [
@@ -75,13 +80,6 @@
      }
     ]
    }
-  ]
- },
- "grants": {
-  "builds": [
-   "BUILD_SPACE_STATION_LV1",
-   "BUILD_SPACE_STATION_LV2",
-   "BUILD_SPACE_STATION_LV3"
   ]
  },
  "cost": {

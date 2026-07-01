@@ -1,5 +1,10 @@
 {
  "type": "BUILDING_ANCIENT_WAY_OF_THE_WAVES",
+ "enables": {
+  "traits": [
+   "TRAIT_ANCIENT_WAY_OF_THE_WAVES"
+  ]
+ },
  "obsoletedBy": {
   "techs": [
    "TECH_CLASSICAL_LIFESTYLE"
@@ -29,11 +34,6 @@
   "city": {
    "flat": 3
   }
- },
- "grants": {
-  "traits": [
-   "TRAIT_ANCIENT_WAY_OF_THE_WAVES"
-  ]
  },
  "cost": {
   "production": 444,

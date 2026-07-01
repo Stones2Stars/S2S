@@ -1,7 +1,9 @@
 {
  "type": "PROJECT_ITER",
- "grants": {
-  "grantsSpecialBuilding": "SPECIALBUILDING_D_T_FUSION_POWER_PLANT"
+ "enables": {
+  "specialBuildings": [
+   "SPECIALBUILDING_D_T_FUSION_POWER_PLANT"
+  ]
  },
  "cost": {
   "create": 18440

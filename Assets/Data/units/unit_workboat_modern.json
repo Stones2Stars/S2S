@@ -1,5 +1,19 @@
 {
  "type": "UNIT_WORKBOAT_MODERN",
+ "builds": [
+  "BUILD_FISHING_BOATS",
+  "BUILD_HARVEST_KELP",
+  "BUILD_LIGHTHOUSE_CORAL",
+  "BUILD_LIGHTHOUSE_REEF",
+  "BUILD_LIGHTHOUSE_GREAT_BARRIER_REEF",
+  "BUILD_WHALING_SHIPS",
+  "BUILD_BREAK_ICE_KILL",
+  "BUILD_TUNNEL",
+  "BUILD_MARINE_PRESERVE",
+  "BUILD_SEA_MILL",
+  "BUILD_TIDAL_HARNESS",
+  "BUILD_SANITIZE_WATER"
+ ],
  "requires": {
   "build": {
    "all": [
@@ -22,22 +36,6 @@
  "tags": {
   "worker": true,
   "civilian": true
- },
- "grants": {
-  "builds": [
-   "BUILD_FISHING_BOATS",
-   "BUILD_HARVEST_KELP",
-   "BUILD_LIGHTHOUSE_CORAL",
-   "BUILD_LIGHTHOUSE_REEF",
-   "BUILD_LIGHTHOUSE_GREAT_BARRIER_REEF",
-   "BUILD_WHALING_SHIPS",
-   "BUILD_BREAK_ICE_KILL",
-   "BUILD_TUNNEL",
-   "BUILD_MARINE_PRESERVE",
-   "BUILD_SEA_MILL",
-   "BUILD_TIDAL_HARNESS",
-   "BUILD_SANITIZE_WATER"
-  ]
  },
  "succession": {
   "upgradesTo": [

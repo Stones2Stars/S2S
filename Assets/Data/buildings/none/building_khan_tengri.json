@@ -4,6 +4,9 @@
   "build": {
    "all": [
     {
+     "IS_HOLY_CITY": "RELIGION_TENGRIISM"
+    },
+    {
      "type": "MAPCATEGORY_EARTH",
      "scope": "plot"
     }
@@ -19,9 +22,6 @@
   "city": {
    "flat": 1
   }
- },
- "grants": {
-  "holyCity": "RELIGION_TENGRIISM"
  },
  "shrine": "RELIGION_TENGRIISM",
  "attributes": {

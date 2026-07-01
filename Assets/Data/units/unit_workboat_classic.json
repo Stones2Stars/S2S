@@ -1,5 +1,16 @@
 {
  "type": "UNIT_WORKBOAT_CLASSIC",
+ "builds": [
+  "BUILD_WHALING_BOATS",
+  "BUILD_FISHING_BOATS",
+  "BUILD_BEACON_CORAL",
+  "BUILD_BEACON_REEF",
+  "BUILD_BEACON_GREAT_BARRIER_REEF",
+  "BUILD_LIGHTHOUSE_CORAL",
+  "BUILD_LIGHTHOUSE_REEF",
+  "BUILD_LIGHTHOUSE_GREAT_BARRIER_REEF",
+  "BUILD_HARVEST_KELP"
+ ],
  "requires": {
   "build": {
    "all": [
@@ -21,19 +32,6 @@
  "tags": {
   "worker": true,
   "civilian": true
- },
- "grants": {
-  "builds": [
-   "BUILD_WHALING_BOATS",
-   "BUILD_FISHING_BOATS",
-   "BUILD_BEACON_CORAL",
-   "BUILD_BEACON_REEF",
-   "BUILD_BEACON_GREAT_BARRIER_REEF",
-   "BUILD_LIGHTHOUSE_CORAL",
-   "BUILD_LIGHTHOUSE_REEF",
-   "BUILD_LIGHTHOUSE_GREAT_BARRIER_REEF",
-   "BUILD_HARVEST_KELP"
-  ]
  },
  "succession": {
   "upgradesTo": [

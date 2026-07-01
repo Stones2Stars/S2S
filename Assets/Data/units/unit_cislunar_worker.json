@@ -1,5 +1,8 @@
 {
  "type": "UNIT_CISLUNAR_WORKER",
+ "builds": [
+  "BUILD_ORBITAL_TRAJECTORY"
+ ],
  "requires": {
   "build": {
    "all": [
@@ -14,11 +17,6 @@
  "tags": {
   "worker": true,
   "civilian": true
- },
- "grants": {
-  "builds": [
-   "BUILD_ORBITAL_TRAJECTORY"
-  ]
  },
  "cost": {
   "production": 1000,

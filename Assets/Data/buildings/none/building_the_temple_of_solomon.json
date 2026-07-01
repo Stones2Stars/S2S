@@ -4,6 +4,9 @@
   "build": {
    "all": [
     {
+     "IS_HOLY_CITY": "RELIGION_JUDAISM"
+    },
+    {
      "type": "MAPCATEGORY_EARTH",
      "scope": "plot"
     }
@@ -36,9 +39,6 @@
   "city": {
    "SPECIALIST_PRIEST": 3
   }
- },
- "grants": {
-  "holyCity": "RELIGION_JUDAISM"
  },
  "shrine": "RELIGION_JUDAISM",
  "attributes": {

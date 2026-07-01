@@ -4,6 +4,9 @@
   "build": {
    "all": [
     {
+     "IS_HOLY_CITY": "RELIGION_CONFUCIANISM"
+    },
+    {
      "type": "MAPCATEGORY_EARTH",
      "scope": "plot"
     }
@@ -33,7 +36,6 @@
   }
  },
  "grants": {
-  "holyCity": "RELIGION_CONFUCIANISM",
   "freePromotions": [
    "PROMOTION_MORALE"
   ]

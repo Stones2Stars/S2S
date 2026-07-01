@@ -4,6 +4,9 @@
   "build": {
    "all": [
     {
+     "IS_HOLY_CITY": "RELIGION_HELLENISM"
+    },
+    {
      "type": "MAPCATEGORY_EARTH",
      "scope": "plot"
     }
@@ -38,9 +41,6 @@
   "city": {
    "SPECIALIST_PRIEST": 3
   }
- },
- "grants": {
-  "holyCity": "RELIGION_HELLENISM"
  },
  "shrine": "RELIGION_HELLENISM",
  "attributes": {

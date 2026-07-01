@@ -24,7 +24,8 @@ So the "hidden data" question is closed: the only un-migrated data is the enumer
 > every entity has been ruled and migrated (buildings, leaderhead, corp/route/tech, property-pulses, improvement,
 > project, era, handicap, promotion/celebrity, unit-cargo). What remains is only the **BLOCKED/deferred** tier below
 > (prerequisite-gated: state/paralyze, unitcombat→tags, NPC civs, corp-system rework, ranked-target, leaderhead trait
-> remap) + the **post-migration engine follow-ups** (e.g. the celebrity-skill CvCity scan). Per [DEC-data-first] the
+> remap, the unit **`missions`**/`CvOutcome` migration [grants-pass discovery]) + the **post-migration engine follow-ups**
+> (e.g. the celebrity-skill CvCity scan, the enabler `IS_HOLY_CITY` eval + `enables.traits`→HAVE from the grants pass). Per [DEC-data-first] the
 > data foundation is now complete — the machine backlog can proceed on solid data.
 
 ---
@@ -45,6 +46,23 @@ So the "hidden data" question is closed: the only un-migrated data is the enumer
 - **Already-verified DONE** (curator code confirms): `bSpy`→`spy` tag · `freeSpecialistPer*Wonder`→`freeSpecialists`
   · `EraCommerceChanges`→ERA-threshold flats · corp `iMaintenance` de-scale · `GlobalBuildingExtraCommerces`→
   `empire.buildings.{B}.flat` · trait `nonStateReligionCommerce` stays a policy.
+- **`grants` classification pass (2026-07-01)** — the survey found `grants` was a **34-key grab-bag** (~half off-grammar).
+  Re-homed the mis-classified keys to their real blocks: promotion `unitCombats`/`removesUnitCombats`→**skills**; project
+  `grantsSpecialBuilding`→**`enables.specialBuildings`** (flips SpecialBuildingValid — unlocks, hands out nothing); corp
+  `bonusProduced`→**`provides.bonuses`** (continuous supply §5a); unit `builds`→a dedicated **`builds`** block (readJson
+  `CJK_INTRINSIC_KEYS` + `CvJsonUnitInfo` parse); building `holyCity`→**`requires.build`** (`IS_HOLY_CITY` predicate, a
+  build gate not a setter — verified `CvCity.cpp:2728`) + `traits`→**`enables.traits`** (held-trait — `owner.setHasTrait`
+  while active); `freePromotions`→**`repeatable`**. All 0-stale, new-home counts == originals; json.md §5/§8 updated;
+  Assert green. **Consumer-wiring follow-ups** (not data, deferred): the enabler's `IS_HOLY_CITY` eval + the
+  `enables.traits`→empire-active-trait HAVE contribution.
+- **⏳ DEFERRED (grants-pass discovery) — unit `missions` + the `CvOutcome` system.** The grants pass found the unit
+  *activated-mission* keys — `buildings` (MISSION_CONSTRUCT), `greatPersonAction`, `goldenAge` — are **missions**, NOT
+  grants (a `skill` is a permanent property; a **mission** is an action producing an OUTCOME, often consuming the unit),
+  and the engine's **`CvOutcome`** system (`CvUnitInfo` `KillOutcomes` + `m_aOutcomeMissions` — *"outcome system (no
+  wrapper)"*) is **entirely un-migrated**. Owner ruling: a **`missions`** block (json §8) unifies the hardcoded mission-
+  abilities AND CvOutcome, and **a mission carries its `grants`** as its outcome payload. These keys STAY in `grants`
+  untouched for now; a dedicated **missions pass** migrates them + CvOutcome. `greatPeople` (join-eligibility) settles in
+  that pass (`tag` vs mission).
 
 ---
 

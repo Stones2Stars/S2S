@@ -10,13 +10,13 @@
    }
   }
  },
- "promotionLine": {
-  "PROMOTIONLINE_BOUNTY_HUNTER": 1
- },
- "grants": {
+ "skills": {
   "unitCombats": [
    "UNITCOMBAT_PROMOTED_TRANSPORT_CAPTIVES"
   ]
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_BOUNTY_HUNTER": 1
  },
  "ui": {
   "art": {

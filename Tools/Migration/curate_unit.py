@@ -138,9 +138,11 @@ TAG_BY_UNITAI = {
 CRIMINAL_COMBAT = "UNITCOMBAT_CRIMINAL"
 
 # ---- grants (one-shot, lists) ----
-GRANT_LIST = {"FreePromotions": "promotions", "GreatPeoples": "greatPeople", "Builds": "builds",
+GRANT_LIST = {"FreePromotions": "promotions", "GreatPeoples": "greatPeople",
               "GroupSpawnUnitCombatTypes": "groupSpawn", "ReligionSpreads": "religionSpreads",
               "CorporationSpreads": "corporationSpreads", "Buildings": "buildings"}
+# `builds` (owner ruling): the per-unit-type list of BUILD_* a unit can PERFORM is NOT a one-shot grant/provision
+# handed out -- it is the unit's build REPERTOIRE. So it lives in its OWN top-level `builds` block, not under grants.
 # ---- cost ----
 COST = {"iCost": "production", "iBaseUpkeep": "upkeep", "iHurryCostModifier": "hurryCostModifier",
         "iInstanceCostModifier": None}  # iInstanceCostModifier -> costs.empire.perInstance per:{SELF} (special)
@@ -664,6 +666,10 @@ def curate(typ, rec, store):
         lst = _typelist(rec, tag)
         if lst:
             grants[key] = lst
+    # --- builds (the unit's per-type build REPERTOIRE -> top-level `builds`, NOT a grant; owner ruling) ---
+    blds = _typelist(rec, "Builds")
+    if blds:
+        out["builds"] = blds
     if _bool(rec, "bGoldenAge"):
         grants["goldenAge"] = True
     # --- settler-grants-buildings: a FOUNDER (bFound) seeds its new city with the NewCityFree set (+ Palace),
@@ -821,7 +827,7 @@ def curate_special_unit(typ, rec, store):
 HANDLED = (set(BASE) | set(UNIT_FAMILIES) | set(CAP_BOOL) | set(CAP_COUNT) | set(DCM_AIRBOMB) | set(GRANT_LIST)
            | set(COST) | set(ID_SCALAR) | set(ID_LIST) | set(TEXT) | set(ART) | REQUIRES_TAGS | STORE_TAGS
            | PASS2_TAGS | {"Type", "Combat", "Flavors", "iAIWeight", "iInstanceCostModifier", "bGoldenAge",
-                           "DefaultUnitAI", "UnitMeshGroups", "FreePromotions",
+                           "DefaultUnitAI", "UnitMeshGroups", "FreePromotions", "Builds",
                            "bSpy",   # dropped: redundant with the 'spy' tag (every bSpy unit is UNITAI_SPY); spy isn't a skill (owner 2026-06-23)
                            # reclassified to IS_MILITARY (json §3.5) -- military-ness is the `military` tag, not a skill
                            # (bMilitarySupport's IS_MILITARY tag-signal read at ~656 stays intact -- only its skill emit is dropped)

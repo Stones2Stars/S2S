@@ -52,8 +52,10 @@
    }
   }
  },
- "grants": {
-  "bonusProduced": "BONUS_ALUMINUM_INGOTS"
+ "provides": {
+  "bonuses": [
+   "BONUS_ALUMINUM_INGOTS"
+  ]
  },
  "cost": {
   "spread": 50

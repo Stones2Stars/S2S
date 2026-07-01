@@ -4,6 +4,9 @@
   "build": {
    "all": [
     {
+     "IS_HOLY_CITY": "RELIGION_ANDEANISM"
+    },
+    {
      "type": "MAPCATEGORY_EARTH",
      "scope": "plot"
     }
@@ -36,9 +39,6 @@
     "flat": 1
    }
   }
- },
- "grants": {
-  "holyCity": "RELIGION_ANDEANISM"
  },
  "shrine": "RELIGION_ANDEANISM",
  "attributes": {

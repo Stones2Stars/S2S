@@ -1,5 +1,8 @@
 {
  "type": "UNIT_EXTRACTION_FACILITY",
+ "builds": [
+  "BUILD_EXTRACTION_FACILITY"
+ ],
  "requires": {
   "build": {
    "all": [
@@ -35,11 +38,6 @@
  "tags": {
   "worker": true,
   "civilian": true
- },
- "grants": {
-  "builds": [
-   "BUILD_EXTRACTION_FACILITY"
-  ]
  },
  "cost": {
   "production": 4000,
