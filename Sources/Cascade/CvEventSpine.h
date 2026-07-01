@@ -180,7 +180,9 @@ enum CascadeDomainEvent
 	CASCADE_EVT_BUILDING_COUNT = 1,  // iType = BuildingTypes, iA = new empire count, iB = delta, iC = PlayerTypes -- a counted-domain event
 	CASCADE_EVT_UNIT_COUNT     = 2,  // iType = UnitTypes,     iA = new empire count, iB = delta, iC = PlayerTypes
 	CASCADE_EVT_NAME_CHANGE    = 3,  // iType = NameChangeKind, iA = owner player, iB = entity id (= owner for PLAYER/CIV), iC = 0
-	CASCADE_EVT_TECH_ACQUIRED  = 4   // iType = TechTypes, iA = 1 (first-discoverer), iC = discovering player -- the tech-grant trigger
+	CASCADE_EVT_TECH_ACQUIRED  = 4,  // iType = TechTypes, iA = 1 (first-discoverer), iC = discovering player -- the tech-grant trigger
+	CASCADE_EVT_RELIGION_FOUNDED = 5,// iType = ReligionTypes, iC = founding player -- the religion-founder grant trigger
+	CASCADE_EVT_CIVIC_ADOPTED  = 6   // iType = CivicTypes, iC = adopting player -- the civic grant trigger (revolution pulse)
 };
 
 //	Which entity's display name changed (the iType of a CASCADE_EVT_NAME_CHANGE event). The logging consumer resolves the

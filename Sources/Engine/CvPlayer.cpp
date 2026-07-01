@@ -8837,6 +8837,10 @@ void CvPlayer::foundReligion(ReligionTypes eReligion, ReligionTypes eSlotReligio
 		// Found religion
 		GC.getGame().setHolyCity(eReligion, pBestCity, true);
 
+		// #430 cascade: religion founded here -> emit the DOMAIN trigger so the grants machine resolves the founder
+		// grants (numFreeUnits / freeUnit). Synced/deterministic.
+		eventSpine().emit(CvCascadeEvent(EVENTKIND_DOMAIN, CASCADE_EVT_RELIGION_FOUNDED, (int)eReligion, 0, 0, (int)getID()));
+
 		if (bAward && GC.getReligionInfo(eSlotReligion).getNumFreeUnits() > 0)
 		{
 			const UnitTypes eFreeUnit = (UnitTypes)GC.getReligionInfo(eReligion).getFreeUnit();
@@ -14309,6 +14313,12 @@ void CvPlayer::setCivics(CivicOptionTypes eIndex, CivicTypes eNewValue)
 		if (getCivics(eIndex) != NO_CIVIC)
 		{
 			processCivics(getCivics(eIndex), 1);
+		}
+
+		// #430 cascade: a civic newly adopted -> emit the DOMAIN trigger for the grants machine (revolution pulse etc.).
+		if (eNewValue != NO_CIVIC)
+		{
+			eventSpine().emit(CvCascadeEvent(EVENTKIND_DOMAIN, CASCADE_EVT_CIVIC_ADOPTED, (int)eNewValue, 0, 0, (int)getID()));
 		}
 
 		// Afforess - Check Buildings, Clear Caches

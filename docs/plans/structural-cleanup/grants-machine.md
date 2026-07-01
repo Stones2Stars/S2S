@@ -56,9 +56,12 @@ parity (owner: no live parity until everything is in).
    - **3a ✅ DONE — tech first-discover** (`CASCADE_EVT_TECH_ACQUIRED`): emitted from `CvTeam::setHasTech` inside the
      `bFirst && countKnownTechNumTeams==1` block (the exact site where `firstFreeUnit`/`firstFreeProphet`/`freeTechs`
      fire), carrying the tech + discovering player. The machine resolves them → `[GRANTS/tech]`.
-   - **3b (remaining triggers):** religion-founded, civic-adopted, city-founded (`foundBuildings`), civ-start /
-     game-start (era/handicap civ grants), and the **per-turn recurring** scan (`repeatable` spawn/heal + `freePromotions`
-     — not a state-change event but a turn-cycle hook).
+   - **3b ✅ (religion + civic done)** — `CASCADE_EVT_RELIGION_FOUNDED` (`CvPlayer` at `setHolyCity`, the founder-grant
+     site → `numFreeUnits`/`freeUnit` → `[GRANTS/religion]`) and `CASCADE_EVT_CIVIC_ADOPTED` (`CvPlayer::setCivics`, a
+     newly-adopted non-NPC civic → `revolution` pulse → `[GRANTS/civic]`).
+   - **3c (remaining triggers):** city-founded (`foundBuildings` apply-timing; the settler's foundBuildings already
+     resolve on unit-created), civ-start / game-start (era/handicap/civ grants at player init), and the **per-turn
+     recurring** scan (`repeatable` spawn/heal + `freePromotions` — a turn-cycle hook, not a state-change event).
 4. **The true diff-vs-legacy shadow** — grants are event-driven side-effects; the shadow compares the cascade's resolved
    grant-set against what legacy applied (hooking the legacy apply-sites above), per channel. Un-run until everything is in.
 5. **Apply + cutover** — replace the legacy grant application; the grants machine applies. Atomic with the cascade cutover.

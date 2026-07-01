@@ -13,20 +13,23 @@
 #include "CvBuildingInfo.h"        // InfoRepo<CvBuildingInfo>
 #include "CvUnitInfo.h"            // InfoRepo<CvUnitInfo>
 #include "CvTechInfo.h"           // InfoRepo<CvTechInfo> (tech first-discover grants)
+#include "Infos/CvReligionInfo.h" // InfoRepo<CvReligionInfo> (religion founder grants)
+#include "Infos/CvCivicInfo.h"    // InfoRepo<CvCivicInfo> (civic revolution grant)
 #include "AI/BetterBTSAI.h"        // gPlayerLogLevel -- the slice-1 observe gate
 #include <map>
 #include <string>
 #include <vector>
 
 // ===================== [GRANTS] spine domain (logging.md §4: logging is a spine CONSUMER) =====================
-enum GrEvt { GRE_BUILDING = 1, GRE_UNIT, GRE_TECH };
+enum GrEvt { GRE_BUILDING = 1, GRE_UNIT, GRE_TECH, GRE_RELIGION, GRE_CIVIC };
 enum GrFld
 {
-	GF_PLAYER = 1, GF_BUILDING, GF_UNIT, GF_TECH,
+	GF_PLAYER = 1, GF_BUILDING, GF_UNIT, GF_TECH, GF_RELIGION, GF_CIVIC,
 	GF_PROMOTIONS, GF_FOUNDBUILDINGS,                        // unit genuine grants
 	GF_REPEATABLE, GF_FREEPROMOS, GF_FREETECHS,              // building genuine grants
 	GF_GOLDENAGE, GF_POPULATION,                             // building flag + scoped-pulse grants (increment 2)
-	GF_FIRSTUNIT, GF_FIRSTPROPHET                            // tech first-discover grants (increment 3)
+	GF_FIRSTUNIT, GF_FIRSTPROPHET,                           // tech first-discover grants (increment 3a)
+	GF_NUMFREEUNITS, GF_FREEUNIT, GF_REVOLUTION              // religion + civic grants (increment 3b)
 };
 static const char* gr_prefix(int evt)
 {
@@ -35,6 +38,8 @@ static const char* gr_prefix(int evt)
 	case GRE_BUILDING: return "[GRANTS/building]";
 	case GRE_UNIT:     return "[GRANTS/unit]";
 	case GRE_TECH:     return "[GRANTS/tech]";
+	case GRE_RELIGION: return "[GRANTS/religion]";
+	case GRE_CIVIC:    return "[GRANTS/civic]";
 	default:           return "[GRANTS]";
 	}
 }
@@ -47,8 +52,13 @@ static const char* gr_field(int tag, SpineFieldType* peType)
 	case GF_BUILDING:       *peType = SFT_BUILDING; return "building";
 	case GF_UNIT:           *peType = SFT_UNIT;     return "unit";
 	case GF_TECH:           *peType = SFT_TECH;     return "tech";
+	case GF_RELIGION:       *peType = SFT_RELIGION; return "religion";
+	case GF_CIVIC:          *peType = SFT_CIVIC;    return "civic";
 	case GF_FIRSTUNIT:      *peType = SFT_UNIT;     return "firstFreeUnit";
 	case GF_FIRSTPROPHET:   *peType = SFT_UNIT;     return "firstFreeProphet";
+	case GF_FREEUNIT:       *peType = SFT_UNIT;     return "freeUnit";
+	case GF_NUMFREEUNITS:   return "numFreeUnits";
+	case GF_REVOLUTION:     return "revolution";
 	case GF_PROMOTIONS:     return "promotions";
 	case GF_FOUNDBUILDINGS: return "foundBuildings";
 	case GF_REPEATABLE:     return "repeatable";
@@ -138,6 +148,28 @@ static void gr_resolveTech(int iTech, int iPlayer)
 		.addI(GF_FIRSTUNIT, iFirstUnit).addI(GF_FIRSTPROPHET, iFirstProphet).addI(GF_FREETECHS, nFreeTechs));
 }
 
+static void gr_resolveReligion(int iReligion, int iPlayer)
+{
+	const CvJsonInfo* j = InfoRepo<CvReligionInfo>::get().get(iReligion);
+	if (j == NULL) return;
+	const int nNumFree  = gr_pulse(j, "numFreeUnits");   // count of founder units
+	const int iFreeUnit = gr_firstId(j, "freeUnit");      // the founder unit type
+	if (nNumFree == 0 && iFreeUnit < 0) return;
+	eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_GRANTS, GRE_RELIGION, 1)
+		.addI(GF_PLAYER, iPlayer).addI(GF_RELIGION, iReligion)
+		.addI(GF_NUMFREEUNITS, nNumFree).addI(GF_FREEUNIT, iFreeUnit));
+}
+
+static void gr_resolveCivic(int iCivic, int iPlayer)
+{
+	const CvJsonInfo* j = InfoRepo<CvCivicInfo>::get().get(iCivic);
+	if (j == NULL) return;
+	const int nRev = gr_pulse(j, "revolution");   // rev-index pulse on adopt (signed; Python-applied in legacy)
+	if (nRev == 0) return;
+	eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_GRANTS, GRE_CIVIC, 1)
+		.addI(GF_PLAYER, iPlayer).addI(GF_CIVIC, iCivic).addI(GF_REVOLUTION, nRev));
+}
+
 void CvCascadeGrants::onEvent(const CvCascadeEvent& e)
 {
 	// Observe-only (un-run shadow) -- free when logging is off. The DOMAIN interest-guard already dispatched us.
@@ -147,6 +179,8 @@ void CvCascadeGrants::onEvent(const CvCascadeEvent& e)
 	case CASCADE_EVT_BUILDING_COUNT: if (e.iB > 0) gr_resolveBuilding(e.iType, e.iC); break;  // iB = delta; only on ADD (built)
 	case CASCADE_EVT_UNIT_COUNT:     if (e.iB > 0) gr_resolveUnit(e.iType, e.iC);     break;  // only on ADD (created)
 	case CASCADE_EVT_TECH_ACQUIRED:  gr_resolveTech(e.iType, e.iC);                   break;  // first-discover only (iC = discoverer)
+	case CASCADE_EVT_RELIGION_FOUNDED: gr_resolveReligion(e.iType, e.iC);            break;  // iC = founding player
+	case CASCADE_EVT_CIVIC_ADOPTED:  gr_resolveCivic(e.iType, e.iC);                 break;  // iC = adopting player
 	}
 }
 
