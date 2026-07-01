@@ -73,8 +73,9 @@ ART = {"Button", "MovieDefineTag", "CreateSound"}
 IDENTITY = {"iMaxGlobalInstances": "maxGlobalInstances", "iMaxTeamInstances": "maxTeamInstances",
             "VictoryPrereq": "launchesVictory", "MapCategoryTypes": "mapCategories", "Categories": "categories"}
 # dead structure (no consumer) + derived enabler/prereq edges (store-inverted) -> never authored.
+# (AnyonePrereqProject is NOT dropped -- it maps to a requires.build world-scope atom, handled below.)
 DROP = {"YieldModifiers", "bTechShareWithHalfCivs",
-        "TechPrereq", "AnyonePrereqProject", "PrereqProjects"}
+        "TechPrereq", "PrereqProjects"}
 # the per-victory launch cluster -> a non-cascade `victory` section.
 VICTORY_KEYED = {"VictoryThresholds": "thresholds", "VictoryMinThresholds": "minThresholds"}
 VICTORY_SCALAR = {"iVictoryDelayPercent": "delayPercent", "iSuccessRate": "successRate"}
@@ -105,7 +106,7 @@ def _keyed_ints(node):
 
 
 def curate(typ, rec, store):
-    text, fam, grants, art_blocks, identity, victory, cost, leftover = {}, {}, {}, {}, {}, {}, {}, []
+    text, fam, grants, art_blocks, identity, victory, cost, requires, leftover = {}, {}, {}, {}, {}, {}, {}, {}, []
     for c in rec:
         tag, t = c.tag, engine.text(c)
         if tag == "Type" or tag in DROP:
@@ -142,6 +143,11 @@ def curate(typ, rec, store):
             v = int(t) if engine.is_int(t) else (t or None)
             if v not in (None, "", "NONE"):
                 grants[GRANTS[tag]] = v
+        elif tag == "AnyonePrereqProject":
+            # a SINGLE project that must be built by ANY player -> a world-scope presence prereq (owner 2026-07-01;
+            # CvPlayer.cpp:6868 blocks when getProjectCreatedCount(project)==0). NOT the `any` combinator (one project).
+            if t and t != "NONE":
+                requires["build"] = OrderedDict([("type", t), ("scope", "world")])
         elif tag in ART:
             cc.put_art(art_blocks, tag, engine.generic(c))   # -> ui/world/sound via ART_BLOCK
         elif tag in IDENTITY:
@@ -163,6 +169,8 @@ def curate(typ, rec, store):
     enables = store.enabled_by(typ)                        # project -> project (PrereqProjects; Apollo -> SS_* parts)
     if enables:
         out["enables"] = OrderedDict((k, enables[k]) for k in sorted(enables))
+    if requires:
+        out["requires"] = requires
     for family in FAMILY_ORDER:
         if family in fam:
             out[family] = fam[family]

@@ -96,7 +96,11 @@ The whitelist completeness sweep found exactly two, both now ruled and landed:
   systems (feature-regrowth / culture-seed / depletion), NOT cascade modifiers, so identity is the correct home.
   (`cultureRange` verified: the real culture-spread was nuked ~4yr ago — `pushCultureFromImprovement` is now only a
   cosmetic 1-culture placement seed, `CvPlot.cpp:4062`; the field is a live-but-vestigial remnant.)
-- **project**: `AnyonePrereqProject` dropped, per-edge `iNeeded` count lost.
+- **project — DONE (owner ruling 2026-07-01):** `AnyonePrereqProject` → **`requires.build: {type, scope:"world"}`** —
+  a single project that ANY player must have built (world-scope presence, `CvPlayer.cpp:6868` blocks when world
+  `getProjectCreatedCount==0`; NOT the `.any` combinator — it's one project). Empty in base XML → mapping migrated,
+  0 output change. `PrereqProjects` (the ALL case) already modeled via store→`enables` inversion; per-edge `iNeeded`
+  is all-`1` today (a `count>1` would need a count-bearing edge — flagged, not lost).
 - **unit**: `iCargo` → **`cargo.space.flat`** (+ `DomainCargo`→`cargo.space.{unit:IS_<domain>}`, modifier §6) —
   owner-RULED 2026-07-01, **DO-NOW** (currently UNHANDLED on 90 units). `EnabledCivilizationTypes` is **NOT** the
   unique-unit system (that's UnitClass/CivilizationInfo) — the train gate fires ONLY under
