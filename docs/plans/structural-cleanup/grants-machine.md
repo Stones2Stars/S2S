@@ -39,9 +39,14 @@ parity (owner: no live parity until everything is in).
    **today** (building-built `CASCADE_EVT_BUILDING_COUNT` delta>0, unit-created `CASCADE_EVT_UNIT_COUNT` delta>0):
    building genuine grants (`repeatable`/`freePromotions`/`freeTechs`) + unit genuine grants (`promotions`/
    `foundBuildings`). Emits `[GRANTS/building]` / `[GRANTS/unit]` (gated). Assert green.
-2. **The richer grant MAPPING** — `rj_walkGrants` (readJson) today **skips bool grants** (`goldenAge`) + **dict grants**
-   (`population {city|empire:N}`) and **drops the `repeatable` structure** (interval / chance / the property-pulse
-   `on`/`relation`/`distance`). Extend the mapping to a structured grant representation so the full grant set is resolvable.
+2. **The richer grant MAPPING**
+   - **2a ✅ DONE** — `rj_walkGrants` now captures the **bool grants** (`goldenAge` → `CvJsonInfo::grantFlags`) and the
+     **scoped-pulse dict grants** (`population {city|empire:N}` → `grantScopedPulses`, ×100); object-valued dicts (the
+     deferred mission-key `greatPersonAction`) are correctly skipped (no number leaves). The machine's `[GRANTS/building]`
+     now surfaces `goldenAge` + `population` (pulses shown ÷100 = human count). No JSON regen — pure readJson enrichment.
+   - **2b (next)** — the **`repeatable` STRUCTURE** is still dropped: only the resolved id is kept, not the `interval` /
+     `chance` (`per`) / heal / unitCombat / count, nor the property-pulse `on`/`relation`/`distance` (#429). Needs a
+     structured grant representation (expression-aware) — the prerequisite for actually *applying* a repeatable.
 3. **The remaining DOMAIN triggers** — the spine emits only building/unit-count + name-change today. Add the events the
    inventory needs: per-turn (recurring `repeatable`/`freePromotions`), tech first-discover, civ-start, religion-founded,
    civic-adopted, city-founded (`foundBuildings`), game-start (era/handicap). Each is a new synced `DOMAIN` event.

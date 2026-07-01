@@ -22,8 +22,9 @@ enum GrEvt { GRE_BUILDING = 1, GRE_UNIT };
 enum GrFld
 {
 	GF_PLAYER = 1, GF_BUILDING, GF_UNIT,
-	GF_PROMOTIONS, GF_FOUNDBUILDINGS,          // unit genuine grants
-	GF_REPEATABLE, GF_FREEPROMOS, GF_FREETECHS  // building genuine grants
+	GF_PROMOTIONS, GF_FOUNDBUILDINGS,                        // unit genuine grants
+	GF_REPEATABLE, GF_FREEPROMOS, GF_FREETECHS,              // building genuine grants
+	GF_GOLDENAGE, GF_POPULATION                              // building flag + scoped-pulse grants (increment 2)
 };
 static const char* gr_prefix(int evt)
 {
@@ -47,6 +48,8 @@ static const char* gr_field(int tag, SpineFieldType* peType)
 	case GF_REPEATABLE:     return "repeatable";
 	case GF_FREEPROMOS:     return "freePromotions";
 	case GF_FREETECHS:      return "freeTechs";
+	case GF_GOLDENAGE:      return "goldenAge";
+	case GF_POPULATION:     return "population";
 	default:                return NULL;
 	}
 }
@@ -64,10 +67,22 @@ static int gr_listCount(const CvJsonInfo* j, const char* szBucket)
 	std::map<std::string, std::vector<int> >::const_iterator it = j->grantLists.find(szBucket);
 	return (it != j->grantLists.end()) ? (int)it->second.size() : 0;
 }
-static int gr_pulse(const CvJsonInfo* j, const char* szChannel)
+static int gr_pulse(const CvJsonInfo* j, const char* szChannel)   // pulses are stored ×100 -> /100 to the human count/amount
 {
 	std::map<std::string, int>::const_iterator it = j->grantPulses.find(szChannel);
-	return (it != j->grantPulses.end()) ? it->second : 0;
+	return (it != j->grantPulses.end()) ? it->second / 100 : 0;
+}
+static int gr_flag(const CvJsonInfo* j, const char* szFlag)   // a bool grant present? (goldenAge)
+{
+	return j->grantFlags.count(szFlag) ? 1 : 0;
+}
+static int gr_scopedPulseSum(const CvJsonInfo* j, const char* szChannel)   // sum a scoped pulse over its scopes (×100 -> /100)
+{
+	std::map<std::string, std::map<std::string, int> >::const_iterator it = j->grantScopedPulses.find(szChannel);
+	if (it == j->grantScopedPulses.end()) return 0;
+	int iSum = 0;
+	for (std::map<std::string, int>::const_iterator si = it->second.begin(); si != it->second.end(); ++si) iSum += si->second;
+	return iSum / 100;
 }
 
 static void gr_resolveBuilding(int iBuilding, int iPlayer)
@@ -77,10 +92,13 @@ static void gr_resolveBuilding(int iBuilding, int iPlayer)
 	const int nRepeat    = gr_listCount(j, "repeatable");       // per-turn spawn/heal (recurring)
 	const int nFreePromo = gr_listCount(j, "freePromotions");   // end-turn promotions to units in the city (recurring)
 	const int nFreeTech  = gr_pulse(j, "freeTechs");            // one-shot on first build
-	if (nRepeat == 0 && nFreePromo == 0 && nFreeTech == 0) return;
+	const int nGoldenAge = gr_flag(j, "goldenAge");            // one-shot golden age (bool grant, increment 2)
+	const int nPop       = gr_scopedPulseSum(j, "population");  // one-shot population boost (scoped pulse, increment 2)
+	if (nRepeat == 0 && nFreePromo == 0 && nFreeTech == 0 && nGoldenAge == 0 && nPop == 0) return;
 	eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_GRANTS, GRE_BUILDING, 1)
 		.addI(GF_PLAYER, iPlayer).addI(GF_BUILDING, iBuilding)
-		.addI(GF_REPEATABLE, nRepeat).addI(GF_FREEPROMOS, nFreePromo).addI(GF_FREETECHS, nFreeTech));
+		.addI(GF_REPEATABLE, nRepeat).addI(GF_FREEPROMOS, nFreePromo).addI(GF_FREETECHS, nFreeTech)
+		.addI(GF_GOLDENAGE, nGoldenAge).addI(GF_POPULATION, nPop));
 }
 
 static void gr_resolveUnit(int iUnit, int iPlayer)

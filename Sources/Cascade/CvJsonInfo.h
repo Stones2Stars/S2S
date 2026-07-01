@@ -25,6 +25,7 @@
 #include <string>
 #include <vector>
 #include <map>
+#include <set>
 
 namespace picojson { class value; }   // mapFrom's input -- full definition only in the .cpp (via the PCH umbrella)
 
@@ -82,6 +83,10 @@ public:
 	// --- Provisions (grants, §5) ---
 	std::map<std::string, std::vector<int> > grantLists;   // "<bucket>" -> [resolved ids] (techs/units/foundBuildings/...)
 	std::map<std::string, int> grantPulses;                // numeric pulse channel -> value (×100 at leaf)
+	std::set<std::string> grantFlags;                      // bool grants ("goldenAge": true) -- a flag handed out on the trigger
+	std::map<std::string, std::map<std::string, int> > grantScopedPulses;  // "<channel>" -> "<scope>" -> value (×100), e.g.
+	                                                       // population {city|empire:N}. Object-VALUED dicts (deferred
+	                                                       // mission-keys like greatPersonAction) are NOT captured here.
 
 	// NB the CLASSIFICATION blocks are NOT on the base -- each lives on the ONE type that owns it (group-unambiguity,
 	// owner 2026-07-01): empire `capabilities` -> CvJsonTechInfo (§8); unit `skills`/`tags` -> CvJsonUnitInfo (§8);

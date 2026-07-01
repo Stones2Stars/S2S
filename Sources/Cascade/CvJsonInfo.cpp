@@ -31,6 +31,8 @@ void CvJsonInfo::clear()
 	dormantTriggers.clear();
 	grantLists.clear();
 	grantPulses.clear();
+	grantFlags.clear();
+	grantScopedPulses.clear();
 }
 
 // The synthetic TECH_GAME_START root (see the header): a single process-static CvJsonInfo, off the InfoRepo (it has no
@@ -201,7 +203,14 @@ static void rj_walkGrants(CvJsonInfo* pData, const picojson::value& v)
 			const int rid = cascadeJsonResolveId(val.get<std::string>());
 			if (rid >= 0) pData->grantLists[k].push_back(rid);
 		}
-		// bool (a flag grant) / object (a structured grant) carry no ids to resolve here -- their own systems read them.
+		else if (val.is<bool>()) { if (val.get<bool>()) pData->grantFlags.insert(k); }            // flag grant (goldenAge: true)
+		else if (val.is<picojson::object>())   // scoped-pulse grant (population {scope:N}). Object-VALUED dicts (the deferred
+		{                                       // mission-key greatPersonAction {trade:{base,mult}}) have no number leaves -> skipped.
+			const picojson::object& po = val.get<picojson::object>();
+			for (picojson::object::const_iterator pi = po.begin(); pi != po.end(); ++pi)
+				if (pi->second.is<double>()) pData->grantScopedPulses[k][pi->first] = cascadeJsonX100(pi->second.get<double>());
+		}
+		// (the repeatable interval/chance + property-pulse on/relation/distance structure is still dropped -- increment 2b.)
 	}
 }
 
