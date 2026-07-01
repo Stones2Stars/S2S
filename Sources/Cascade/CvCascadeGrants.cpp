@@ -15,13 +15,17 @@
 #include "CvTechInfo.h"           // InfoRepo<CvTechInfo> (tech first-discover grants)
 #include "Infos/CvReligionInfo.h" // InfoRepo<CvReligionInfo> (religion founder grants)
 #include "Infos/CvCivicInfo.h"    // InfoRepo<CvCivicInfo> (civic revolution grant)
+#include "Infos/CvCivilizationInfo.h" // InfoRepo<CvCivilizationInfo> (game-start civ grants)
+#include "Infos/CvEraInfo.h"      // InfoRepo<CvEraInfo> (game-start era grants)
+#include "Infos/CvHandicapInfo.h" // InfoRepo<CvHandicapInfo> (game-start handicap grants)
+#include "AI/CvPlayerAI.h"        // GET_PLAYER -- the player's civ/era/handicap for the game-start resolve
 #include "AI/BetterBTSAI.h"        // gPlayerLogLevel -- the slice-1 observe gate
 #include <map>
 #include <string>
 #include <vector>
 
 // ===================== [GRANTS] spine domain (logging.md §4: logging is a spine CONSUMER) =====================
-enum GrEvt { GRE_BUILDING = 1, GRE_UNIT, GRE_TECH, GRE_RELIGION, GRE_CIVIC };
+enum GrEvt { GRE_BUILDING = 1, GRE_UNIT, GRE_TECH, GRE_RELIGION, GRE_CIVIC, GRE_GAMESTART };
 enum GrFld
 {
 	GF_PLAYER = 1, GF_BUILDING, GF_UNIT, GF_TECH, GF_RELIGION, GF_CIVIC,
@@ -29,7 +33,8 @@ enum GrFld
 	GF_REPEATABLE, GF_FREEPROMOS, GF_FREETECHS,              // building genuine grants
 	GF_GOLDENAGE, GF_POPULATION,                             // building flag + scoped-pulse grants (increment 2)
 	GF_FIRSTUNIT, GF_FIRSTPROPHET,                           // tech first-discover grants (increment 3a)
-	GF_NUMFREEUNITS, GF_FREEUNIT, GF_REVOLUTION              // religion + civic grants (increment 3b)
+	GF_NUMFREEUNITS, GF_FREEUNIT, GF_REVOLUTION,             // religion + civic grants (increment 3b)
+	GF_CIVICS, GF_TECHS, GF_BUILDINGS, GF_STARTINGGOLD       // game-start civ + era/handicap grants (increment 3c)
 };
 static const char* gr_prefix(int evt)
 {
@@ -40,6 +45,7 @@ static const char* gr_prefix(int evt)
 	case GRE_TECH:     return "[GRANTS/tech]";
 	case GRE_RELIGION: return "[GRANTS/religion]";
 	case GRE_CIVIC:    return "[GRANTS/civic]";
+	case GRE_GAMESTART: return "[GRANTS/gameStart]";
 	default:           return "[GRANTS]";
 	}
 }
@@ -59,6 +65,10 @@ static const char* gr_field(int tag, SpineFieldType* peType)
 	case GF_FREEUNIT:       *peType = SFT_UNIT;     return "freeUnit";
 	case GF_NUMFREEUNITS:   return "numFreeUnits";
 	case GF_REVOLUTION:     return "revolution";
+	case GF_CIVICS:         return "civics";
+	case GF_TECHS:          return "techs";
+	case GF_BUILDINGS:      return "buildings";
+	case GF_STARTINGGOLD:   return "startingGold";
 	case GF_PROMOTIONS:     return "promotions";
 	case GF_FOUNDBUILDINGS: return "foundBuildings";
 	case GF_REPEATABLE:     return "repeatable";
@@ -170,6 +180,24 @@ static void gr_resolveCivic(int iCivic, int iPlayer)
 		.addI(GF_PLAYER, iPlayer).addI(GF_CIVIC, iCivic).addI(GF_REVOLUTION, nRev));
 }
 
+// Game start: resolve the player's game-start grants off its civilization (civics/techs/buildings), era + handicap
+// (startingGold). The apply is spread across legacy init points; the cascade resolves the whole set at ONE trigger.
+static void gr_resolvePlayerInit(int iPlayer)
+{
+	const CvPlayer& p = GET_PLAYER((PlayerTypes)iPlayer);
+	const CvJsonInfo* jc = InfoRepo<CvCivilizationInfo>::get().get(p.getCivilizationType());
+	const CvJsonInfo* je = InfoRepo<CvEraInfo>::get().get(p.getCurrentEra());
+	const CvJsonInfo* jh = InfoRepo<CvHandicapInfo>::get().get(p.getHandicapType());
+	const int nCivics = (jc != NULL) ? gr_listCount(jc, "civics")    : 0;
+	const int nTechs  = (jc != NULL) ? gr_listCount(jc, "techs")     : 0;
+	const int nBuild  = (jc != NULL) ? gr_listCount(jc, "buildings") : 0;
+	const int nGold   = ((je != NULL) ? gr_pulse(je, "startingGold") : 0) + ((jh != NULL) ? gr_pulse(jh, "startingGold") : 0);
+	if (nCivics == 0 && nTechs == 0 && nBuild == 0 && nGold == 0) return;
+	eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_GRANTS, GRE_GAMESTART, 1)
+		.addI(GF_PLAYER, iPlayer).addI(GF_CIVICS, nCivics).addI(GF_TECHS, nTechs)
+		.addI(GF_BUILDINGS, nBuild).addI(GF_STARTINGGOLD, nGold));
+}
+
 void CvCascadeGrants::onEvent(const CvCascadeEvent& e)
 {
 	// Observe-only (un-run shadow) -- free when logging is off. The DOMAIN interest-guard already dispatched us.
@@ -181,6 +209,7 @@ void CvCascadeGrants::onEvent(const CvCascadeEvent& e)
 	case CASCADE_EVT_TECH_ACQUIRED:  gr_resolveTech(e.iType, e.iC);                   break;  // first-discover only (iC = discoverer)
 	case CASCADE_EVT_RELIGION_FOUNDED: gr_resolveReligion(e.iType, e.iC);            break;  // iC = founding player
 	case CASCADE_EVT_CIVIC_ADOPTED:  gr_resolveCivic(e.iType, e.iC);                 break;  // iC = adopting player
+	case CASCADE_EVT_PLAYER_INIT:    gr_resolvePlayerInit(e.iC);                     break;  // iC = player (game start)
 	}
 }
 

@@ -59,9 +59,13 @@ parity (owner: no live parity until everything is in).
    - **3b ✅ (religion + civic done)** — `CASCADE_EVT_RELIGION_FOUNDED` (`CvPlayer` at `setHolyCity`, the founder-grant
      site → `numFreeUnits`/`freeUnit` → `[GRANTS/religion]`) and `CASCADE_EVT_CIVIC_ADOPTED` (`CvPlayer::setCivics`, a
      newly-adopted non-NPC civic → `revolution` pulse → `[GRANTS/civic]`).
-   - **3c (remaining triggers):** city-founded (`foundBuildings` apply-timing; the settler's foundBuildings already
-     resolve on unit-created), civ-start / game-start (era/handicap/civ grants at player init), and the **per-turn
-     recurring** scan (`repeatable` spawn/heal + `freePromotions` — a turn-cycle hook, not a state-change event).
+   - **3c ✅ (game-start done)** — `CASCADE_EVT_PLAYER_INIT` (`CvPlayer::initFreeUnits`, where the player's civ/era/
+     handicap are set): the machine resolves the whole game-start set at ONE trigger — civilization `civics`/`techs`/
+     `buildings` + era/handicap `startingGold` → `[GRANTS/gameStart]` (the legacy apply is spread across init sites;
+     the cascade resolves it in one place off `InfoRepo<CvCivilizationInfo>`/`<CvEraInfo>`/`<CvHandicapInfo>`).
+   - **All the clean event triggers are now wired** (building/unit/tech/religion/civic/game-start). What remains is NOT
+     a resolution trigger: city-founded is minor (`foundBuildings` already resolve on unit-created), and the **per-turn
+     recurring** apply (`repeatable` spawn/heal + `freePromotions`) belongs to increment 5 (the cutover apply-loop).
 4. **The true diff-vs-legacy shadow** — grants are event-driven side-effects; the shadow compares the cascade's resolved
    grant-set against what legacy applied (hooking the legacy apply-sites above), per channel. Un-run until everything is in.
 5. **Apply + cutover** — replace the legacy grant application; the grants machine applies. Atomic with the cascade cutover.

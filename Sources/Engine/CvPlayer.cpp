@@ -1879,6 +1879,10 @@ void CvPlayer::initFreeUnits()
 	PROFILE_EXTRA_FUNC();
 	if (getStartingPlot() == NULL) return;
 
+	// #430 cascade: player game start -> emit the DOMAIN trigger so the grants machine resolves this player's game-start
+	// grants (civilization civics/techs/buildings + era/handicap starting*). The player's civ/era/handicap are set here.
+	eventSpine().emit(CvCascadeEvent(EVENTKIND_DOMAIN, CASCADE_EVT_PLAYER_INIT, (int)getID(), 0, 0, (int)getID()));
+
 	if (GC.getGame().isOption(GAMEOPTION_CORE_CUSTOM_START))
 	{
 		int iPoints = GC.getGame().getNumAdvancedStartPoints();
