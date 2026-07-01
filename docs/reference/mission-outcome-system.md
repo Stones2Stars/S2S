@@ -1,11 +1,20 @@
 # The mission / outcome system (`CvOutcome`) — reference + `missions`-migration map
 
 > How the engine's unit **action → outcome** subsystem behaves today, mapped in full (2026-07-01). It is
-> **un-wrappered** (`CvUnitInfo.cpp:2569` — *"outcome system (no wrapper)"*) and slated to become the cascade
-> **`missions`** block ([json.md](../specs/json.md) §8, **migration DEFERRED**). This doc grounds that future pass —
-> the load-bearing structure + the design questions the `missions` model must answer. Owner ruling (2026-07-01):
-> *"there needs to be a `missions` list; a mission, when we move that into json later, will have `grants`"* — i.e. a
-> **mission carries its `grants` as its outcome payload**, and the migration is its own dedicated pass.
+> **un-wrappered** (`CvUnitInfo.cpp:2569` — *"outcome system (no wrapper)"*).
+>
+> **⛔ Owner ruling (2026-07-01) — the outcome model is NOT ported; missions are a CLEAN POST-MIGRATION pass.** The
+> CvOutcome outcomes/payloads **stay in the old XML** and **legacy keeps applying them** (too gnarly to be worth
+> porting; the whole subsystem — like the random-events system — is isolated enough to leave for a clean pass *after*
+> the #430 migration). When missions are eventually done, the cascade `missions` block is just a **LIST of which
+> missions a unit can use** (the outcome-mission references + the hardcoded mission-abilities) — **no payload
+> migration**, no probabilistic/expression/`grants`-as-outcome model. The earlier full-port sketch (the "7 design
+> questions" below) is **SCRAPPED** — kept only as a record of what NOT to do. This doc stays the behaviour reference
+> for that future clean pass. **Scope decided for that pass (owner 2026-07-01):** the `missions` array lists **BOTH**
+> the data-driven outcome-missions (`<Actions>`) **and** the hardcoded mission-abilities; the `greatPersonAction`
+> `base`/`multiplier` **magnitudes are LEFT as-is** (whether they end up used is TBD). Until the pass runs, **the four
+> deferred grants keys** (`buildings`/`greatPersonAction`/`goldenAge`/`greatPeople`, magnitudes and all) stay in
+> `grants` untouched (the grants machine already ignores them).
 
 ## The three objects (the payload does NOT live where you'd expect)
 
@@ -85,7 +94,12 @@ discover/hurry/trade/greatWork/hurryFood, `goldenAge`→golden age (and `greatPe
 - **Curator: NONE.** `curate_unit.py` lists `KillOutcomes`/`Actions` in its pass-2 **DEFERRED** set and passes them
   through `engine.generic()` verbatim under an `outcomes` key — faithfully copied, not migrated.
 
-## Design questions the `missions` block must answer (owner-gated — the deferred pass)
+## ~~Design questions the `missions` block must answer~~ (SCRAPPED — outcomes are not ported; see the ruling up top)
+
+> These questions only mattered for a *full CvOutcome port* (probabilistic outcome-lists, expression fields, payload
+> migration). Per the owner ruling above, that port is NOT happening — the outcomes stay in XML, and the future
+> `missions` block just LISTS which missions a unit can use. Retained below only as a record of the complexity that
+> justified NOT porting it.
 
 1. **Probabilistic, mutually-exclusive lists with tier-replacement** — roll one of N weighted, minus superseded.
    `grants` today is deterministic apply-all; missions need a "roll one, weighted, minus `ReplaceOutcomes`" semantic.

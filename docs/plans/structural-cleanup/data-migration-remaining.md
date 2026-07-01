@@ -64,13 +64,14 @@ So the "hidden data" question is closed: the only un-migrated data is the enumer
   grants (a `skill` is a permanent property; a **mission** is an action producing an OUTCOME, often consuming the unit),
   and the engine's **`CvOutcome`** system (`CvUnitInfo` `KillOutcomes` + `m_aOutcomeMissions` — *"outcome system (no
   wrapper)"*) is **entirely un-migrated**. Owner ruling: a **`missions`** block (json §8) unifies the hardcoded mission-
-  abilities AND CvOutcome, and **a mission carries its `grants`** as its outcome payload. These keys STAY in `grants`
-  untouched for now; a dedicated **missions pass** migrates them + CvOutcome. `greatPeople` (join-eligibility) settles in
-  that pass (`tag` vs mission). **⚠ It is a MAJOR subsystem migration, not a key-move** — `CvOutcome` is a rich
-  probabilistic system (100 gate-only `OutcomeInfo` types + per-carrier effect payloads + `IntExpr`/`BoolExpr` trees +
-  weighted one-of-N rolls with tier-replacement + dual carriers unit×unitcombat) plus 18+ parallel hardcoded
-  mission-abilities. The **full map + the 7 open design questions** (owner-design-gated) are captured in
-  [`../../reference/mission-outcome-system.md`](../../reference/mission-outcome-system.md).
+  abilities AND CvOutcome. **Owner ruling (updated 2026-07-01): the CvOutcome outcome model is NOT ported** — the
+  outcomes stay in the OLD XML and legacy keeps applying them (too gnarly to port); the whole subsystem, **like the
+  random-events system**, is **isolated enough to leave for a CLEAN PASS AFTER #430**. When it runs, the `missions`
+  block just **LISTS which missions a unit can use** — BOTH the data-driven outcome-missions (`<Actions>`) and the
+  hardcoded mission-abilities (`greatPeople` included); the `greatPersonAction` `base`/`multiplier` magnitudes are
+  **left as-is** (used-or-not TBD). Until the pass runs, the four deferred keys stay in `grants` untouched (the grants
+  machine ignores them). Behaviour reference: [`../../reference/mission-outcome-system.md`](../../reference/mission-outcome-system.md)
+  — the earlier "7-question full-port" design there is **SCRAPPED**.
 
 ---
 
