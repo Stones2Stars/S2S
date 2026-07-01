@@ -70,6 +70,13 @@
    ]
   }
  },
+ "defense": {
+  "plot": {
+   "air": {
+    "flat": 5
+   }
+  }
+ },
  "world": {
   "art": {
    "icon": "ART_DEF_IMPROVEMENT_PLANTATION"
@@ -81,7 +88,6 @@
   "advancedStart": {
    "cost": 30
   },
-  "airBombDefense": 5,
   "pillageGold": 10,
   "upgradeTime": 10,
   "upgradesTo": "IMPROVEMENT_VERTICAL_FARM",

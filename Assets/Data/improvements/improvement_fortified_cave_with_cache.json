@@ -22,6 +22,9 @@
  },
  "defense": {
   "plot": {
+   "air": {
+    "flat": 90
+   },
    "amount": {
     "percent": 25
    }
@@ -43,7 +46,6 @@
    "cost": 10
   },
   "upgradeTime": 10,
-  "airBombDefense": 90,
   "outsideBorders": true,
   "militaryStructure": true,
   "pillageTo": "IMPROVEMENT_FORTIFIED_CAVE",

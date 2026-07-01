@@ -201,6 +201,13 @@
    ]
   }
  },
+ "defense": {
+  "plot": {
+   "air": {
+    "flat": 10
+   }
+  }
+ },
  "grants": {
   "repeatable": [
    {
@@ -224,7 +231,6 @@
    "cost": 36
   },
   "upgradeTime": 40,
-  "airBombDefense": 10,
   "pillageGold": 30,
   "pillageTo": "IMPROVEMENT_EARLY_QUARRY",
   "upgradesTo": "IMPROVEMENT_CORE_MINE",

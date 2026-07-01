@@ -20,6 +20,13 @@
    ]
   }
  },
+ "defense": {
+  "plot": {
+   "air": {
+    "flat": -1
+   }
+  }
+ },
  "world": {
   "art": {
    "icon": "ART_DEF_IMPROVEMENT_PLANT_JUNGLE"
@@ -31,7 +38,6 @@
   "advancedStart": {
    "cost": -1
   },
-  "airBombDefense": -1,
   "placesFeature": true,
   "graphicalOnly": true
  }

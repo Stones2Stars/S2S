@@ -54,6 +54,13 @@
    ]
   }
  },
+ "defense": {
+  "plot": {
+   "air": {
+    "flat": 5
+   }
+  }
+ },
  "world": {
   "art": {
    "icon": "ART_DEF_IMPROVEMENT_GEOTHERMAL_FACTORY"
@@ -65,7 +72,6 @@
   "advancedStart": {
    "cost": 50
   },
-  "airBombDefense": 5,
   "pillageGold": 10,
   "bonuses": {
    "BONUS_GEOTHERMAL_ENERGY": {

@@ -70,6 +70,13 @@
    ]
   }
  },
+ "defense": {
+  "plot": {
+   "air": {
+    "flat": 5
+   }
+  }
+ },
  "world": {
   "art": {
    "icon": "ART_DEF_IMPROVEMENT_MODERN_WINDMILL"
@@ -82,7 +89,6 @@
   "advancedStart": {
    "cost": 80
   },
-  "airBombDefense": 5,
   "pillageGold": 30
  }
 }

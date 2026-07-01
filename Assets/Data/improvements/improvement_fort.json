@@ -38,6 +38,9 @@
  },
  "defense": {
   "plot": {
+   "air": {
+    "flat": 20
+   },
    "amount": {
     "percent": 50
    }
@@ -66,7 +69,6 @@
    "cost": 60
   },
   "upgradeTime": 10,
-  "airBombDefense": 20,
   "outsideBorders": true,
   "militaryStructure": true,
   "pillageTo": "IMPROVEMENT_WOODEN_PALISADE",

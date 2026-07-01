@@ -182,6 +182,13 @@
    ]
   }
  },
+ "defense": {
+  "plot": {
+   "air": {
+    "flat": 5
+   }
+  }
+ },
  "world": {
   "art": {
    "icon": "ART_DEF_IMPROVEMENT_HUNTING_CAMP"
@@ -194,7 +201,6 @@
    "cost": 24
   },
   "upgradeTime": 10,
-  "airBombDefense": 5,
   "pillageGold": 15,
   "pillageTo": "IMPROVEMENT_SCAVENGING_CAMP",
   "upgradesTo": "IMPROVEMENT_HUNTING_PRESERVE",

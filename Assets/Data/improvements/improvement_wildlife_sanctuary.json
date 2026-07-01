@@ -138,6 +138,13 @@
    ]
   }
  },
+ "defense": {
+  "plot": {
+   "air": {
+    "flat": 5
+   }
+  }
+ },
  "world": {
   "art": {
    "icon": "ART_DEF_IMPROVEMENT_HUNTING_CAMP"
@@ -149,7 +156,6 @@
   "advancedStart": {
    "cost": 24
   },
-  "airBombDefense": 5,
   "pillageGold": 25,
   "pillageTo": "IMPROVEMENT_HUNTING_PRESERVE",
   "bonuses": {

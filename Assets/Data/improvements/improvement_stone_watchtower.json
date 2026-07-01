@@ -38,6 +38,9 @@
  },
  "defense": {
   "plot": {
+   "air": {
+    "flat": 5
+   },
    "amount": {
     "percent": 10
    }
@@ -68,7 +71,6 @@
    "cost": 40
   },
   "upgradeTime": 10,
-  "airBombDefense": 5,
   "outsideBorders": true,
   "militaryStructure": true,
   "pillageTo": "IMPROVEMENT_WOODEN_WATCHTOWER",

@@ -22,6 +22,9 @@
  },
  "defense": {
   "plot": {
+   "air": {
+    "flat": 50
+   },
    "amount": {
     "percent": 15
    }
@@ -43,7 +46,6 @@
    "cost": 10
   },
   "upgradeTime": 10,
-  "airBombDefense": 50,
   "outsideBorders": true,
   "militaryStructure": true,
   "upgradesTo": "IMPROVEMENT_FORTIFIED_CAVE_WITH_CACHE",

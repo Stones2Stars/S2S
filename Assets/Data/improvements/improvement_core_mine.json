@@ -353,6 +353,13 @@
    ]
   }
  },
+ "defense": {
+  "plot": {
+   "air": {
+    "flat": 10
+   }
+  }
+ },
  "grants": {
   "repeatable": [
    {
@@ -376,7 +383,6 @@
   "advancedStart": {
    "cost": 64
   },
-  "airBombDefense": 10,
   "pillageGold": 100,
   "bonuses": {
    "BONUS_BAUXITE_ORE": {

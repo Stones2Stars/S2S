@@ -83,6 +83,13 @@
    ]
   }
  },
+ "defense": {
+  "plot": {
+   "air": {
+    "flat": 5
+   }
+  }
+ },
  "grants": {
   "repeatable": [
    {
@@ -105,7 +112,6 @@
   "advancedStart": {
    "cost": -1
   },
-  "airBombDefense": 5,
   "pillageGold": 150,
   "pillageTo": "IMPROVEMENT_FACTORY"
  }

@@ -48,6 +48,13 @@
    ]
   }
  },
+ "defense": {
+  "plot": {
+   "air": {
+    "flat": 5
+   }
+  }
+ },
  "world": {
   "art": {
    "icon": "ART_DEF_IMPROVEMENT_WHALING_BOATS"
@@ -60,7 +67,6 @@
    "cost": 30
   },
   "upgradeTime": 5,
-  "airBombDefense": 5,
   "pillageGold": 15,
   "upgradesTo": "IMPROVEMENT_WHALING_SHIPS",
   "bonuses": {

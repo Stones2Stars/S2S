@@ -38,6 +38,9 @@
  },
  "defense": {
   "plot": {
+   "air": {
+    "flat": 40
+   },
    "amount": {
     "percent": 75
    }
@@ -69,7 +72,6 @@
    "cost": 60
   },
   "upgradeTime": 10,
-  "airBombDefense": 40,
   "outsideBorders": true,
   "militaryStructure": true,
   "pillageTo": "IMPROVEMENT_FORT",

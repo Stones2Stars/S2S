@@ -152,6 +152,13 @@
    ]
   }
  },
+ "defense": {
+  "plot": {
+   "air": {
+    "flat": 5
+   }
+  }
+ },
  "world": {
   "art": {
    "icon": "ART_DEF_IMPROVEMENT_FISHING_BOATS"
@@ -163,7 +170,6 @@
   "advancedStart": {
    "cost": 30
   },
-  "airBombDefense": 5,
   "pillageGold": 5,
   "bonuses": {
    "BONUS_CLAM": {

@@ -67,6 +67,13 @@
    "flat": 20
   }
  },
+ "defense": {
+  "plot": {
+   "air": {
+    "flat": 5
+   }
+  }
+ },
  "world": {
   "art": {
    "icon": "ART_DEF_IMPROVEMENT_TOWN"
@@ -79,7 +86,6 @@
    "cost": -1
   },
   "upgradeTime": 40,
-  "airBombDefense": 5,
   "pillageGold": 100,
   "cultureRange": 1,
   "pillageTo": "IMPROVEMENT_VILLAGE",

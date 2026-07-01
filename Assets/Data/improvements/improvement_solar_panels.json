@@ -83,6 +83,13 @@
    ]
   }
  },
+ "defense": {
+  "plot": {
+   "air": {
+    "flat": 5
+   }
+  }
+ },
  "world": {
   "art": {
    "icon": "ART_DEF_IMPROVEMENT_SOLAR_PANELS"
@@ -94,7 +101,6 @@
   "advancedStart": {
    "cost": 35
   },
-  "airBombDefense": 5,
   "pillageGold": 10
  }
 }

@@ -53,6 +53,13 @@
    "flat": 5
   }
  },
+ "defense": {
+  "plot": {
+   "air": {
+    "flat": 5
+   }
+  }
+ },
  "world": {
   "art": {
    "icon": "ART_DEF_IMPROVEMENT_HAMLET"
@@ -65,7 +72,6 @@
    "cost": -1
   },
   "upgradeTime": 20,
-  "airBombDefense": 5,
   "pillageGold": 60,
   "pillageTo": "IMPROVEMENT_COTTAGE",
   "upgradesTo": "IMPROVEMENT_VILLAGE"

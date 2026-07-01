@@ -15,6 +15,13 @@
    ]
   }
  },
+ "defense": {
+  "plot": {
+   "air": {
+    "flat": -1
+   }
+  }
+ },
  "world": {
   "art": {
    "icon": "ART_DEF_IMPROVEMENT_TERRAFORM_TUNDRA"
@@ -26,7 +33,6 @@
   "advancedStart": {
    "cost": -1
   },
-  "airBombDefense": -1,
   "placesTerrain": true,
   "graphicalOnly": true
  }

@@ -38,6 +38,9 @@
  },
  "defense": {
   "plot": {
+   "air": {
+    "flat": 60
+   },
    "amount": {
     "percent": 100
    }
@@ -69,7 +72,6 @@
   "advancedStart": {
    "cost": 80
   },
-  "airBombDefense": 60,
   "outsideBorders": true,
   "militaryStructure": true,
   "cultureRange": 2,

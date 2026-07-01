@@ -75,6 +75,13 @@
    ]
   }
  },
+ "defense": {
+  "plot": {
+   "air": {
+    "flat": 5
+   }
+  }
+ },
  "world": {
   "art": {
    "icon": "ART_DEF_IMPROVEMENT_SUBMERGED_TOWN"
@@ -86,7 +93,6 @@
   "advancedStart": {
    "cost": 60
   },
-  "airBombDefense": 5,
   "pillageGold": 25
  }
 }

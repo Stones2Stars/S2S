@@ -13,6 +13,13 @@
    ]
   }
  },
+ "defense": {
+  "plot": {
+   "air": {
+    "flat": -1
+   }
+  }
+ },
  "world": {
   "art": {
    "icon": "ART_DEF_IMPROVEMENT_GOODY_ISLAND"
@@ -31,7 +38,6 @@
   "civilopedia": "TXT_KEY_IMPROVEMENT_GOODY_ISLAND_PEDIA",
   "advancedStart": {
    "cost": -1
-  },
-  "airBombDefense": -1
+  }
  }
 }

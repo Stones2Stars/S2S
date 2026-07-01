@@ -96,6 +96,13 @@
    "flat": 40
   }
  },
+ "defense": {
+  "plot": {
+   "air": {
+    "flat": 5
+   }
+  }
+ },
  "world": {
   "art": {
    "icon": "ART_DEF_IMPROVEMENT_TOWN"
@@ -107,7 +114,6 @@
   "advancedStart": {
    "cost": -1
   },
-  "airBombDefense": 5,
   "pillageGold": 120,
   "cultureRange": 2,
   "pillageTo": "IMPROVEMENT_TOWN"

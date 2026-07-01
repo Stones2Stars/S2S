@@ -62,6 +62,13 @@
    ]
   }
  },
+ "defense": {
+  "plot": {
+   "air": {
+    "flat": 5
+   }
+  }
+ },
  "grants": {
   "repeatable": [
    {
@@ -85,7 +92,6 @@
    "cost": -1
   },
   "upgradeTime": 35,
-  "airBombDefense": 5,
   "pillageGold": 100,
   "pillageTo": "IMPROVEMENT_WORKSHOP",
   "upgradesTo": "IMPROVEMENT_MANUFACTURING_COMPLEX"

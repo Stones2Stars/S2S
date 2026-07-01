@@ -302,6 +302,13 @@
    ]
   }
  },
+ "defense": {
+  "plot": {
+   "air": {
+    "flat": 25
+   }
+  }
+ },
  "grants": {
   "repeatable": [
    {
@@ -324,7 +331,6 @@
   "advancedStart": {
    "cost": 50
   },
-  "airBombDefense": 25,
   "pillageGold": 10,
   "pillageTo": "IMPROVEMENT_EARLY_MOUNTAIN_MINE",
   "bonuses": {

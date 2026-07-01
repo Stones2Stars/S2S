@@ -38,6 +38,9 @@
  },
  "defense": {
   "plot": {
+   "air": {
+    "flat": 5
+   },
    "amount": {
     "percent": 15
    }
@@ -59,7 +62,6 @@
    "cost": 10
   },
   "upgradeTime": 10,
-  "airBombDefense": 5,
   "outsideBorders": true,
   "militaryStructure": true,
   "pillageTo": "IMPROVEMENT_ABATIS_THORN_HEDGE",

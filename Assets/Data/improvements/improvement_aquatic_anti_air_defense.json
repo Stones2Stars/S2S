@@ -44,6 +44,9 @@
   "plot": {
    "amount": {
     "percent": 10
+   },
+   "air": {
+    "flat": 50
    }
   }
  },
@@ -59,7 +62,6 @@
   "advancedStart": {
    "cost": 60
   },
-  "airBombDefense": 50,
   "outsideBorders": true,
   "militaryStructure": true,
   "bombardable": true

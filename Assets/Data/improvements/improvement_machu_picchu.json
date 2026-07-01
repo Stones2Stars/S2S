@@ -31,6 +31,13 @@
    "flat": 6
   }
  },
+ "defense": {
+  "plot": {
+   "air": {
+    "flat": -1
+   }
+  }
+ },
  "world": {
   "art": {
    "icon": "ART_DEF_IMPROVEMENT_MACHU_PICCHU"
@@ -41,7 +48,6 @@
   "civilopedia": "TXT_KEY_BUILDING_MACHU_PICCHU_PEDIA",
   "advancedStart": {
    "cost": -1
-  },
-  "airBombDefense": -1
+  }
  }
 }

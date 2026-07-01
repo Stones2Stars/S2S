@@ -119,6 +119,13 @@
    ]
   }
  },
+ "defense": {
+  "plot": {
+   "air": {
+    "flat": 5
+   }
+  }
+ },
  "grants": {
   "repeatable": [
    {
@@ -142,7 +149,6 @@
    "cost": 120
   },
   "featureGrowth": 64,
-  "airBombDefense": 5,
   "pillageGold": 25,
   "pillageTo": "IMPROVEMENT_TREEFARM",
   "bonuses": {

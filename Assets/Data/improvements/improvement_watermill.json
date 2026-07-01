@@ -62,6 +62,13 @@
    ]
   }
  },
+ "defense": {
+  "plot": {
+   "air": {
+    "flat": 5
+   }
+  }
+ },
  "world": {
   "art": {
    "icon": "ART_DEF_IMPROVEMENT_WATERMILL"
@@ -74,7 +81,6 @@
    "cost": 48
   },
   "upgradeTime": 15,
-  "airBombDefense": 5,
   "pillageGold": 20,
   "upgradesTo": "IMPROVEMENT_HYDRO_DAM"
  }

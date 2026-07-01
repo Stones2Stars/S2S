@@ -58,7 +58,9 @@ YieldChanges). RouteYieldChanges -> stays folded onto the ROUTE (curate_route:46
 improvements it upgrades (owner 2026-06-20), the one human-governance inversion that's correct.
 DROPPED: iHealthPercent -> drop, BALANCE-CUT as a source from improvements (capability kept globally). Categories /
 root iDepletionRand / Button (no improvement button — it lives on the worker Build) / MapCategoryTypes (0/266) -> drop.
-RNG: iAirBombDefense / iFeatureGrowth -> identity. PropertyManipulators -> grants.repeatable (json.md §5; owner
+iAirBombDefense -> defense.plot.air.flat (owner 2026-07-01; the air-bomb defense magnitude). RNG: iFeatureGrowth /
+iCultureRange -> identity (intrinsic improvement mechanics read by their OWN CvPlot systems -- feature-regrowth /
+culture-seed vestige -- NOT cascade modifiers; owner 2026-07-01 "leave them in identity"). PropertyManipulators -> grants.repeatable (json.md §5; owner
 2026-07-01): the RELATION_NEAR pollution pulse becomes a per-turn spatial property grant (#429 reads its target).
 
 EXE-link: 3 DllExport (isGoody, isRequiresRiverSide, getArtInfo) -> bGoody + bRequiresRiverSide EXE-constrained.
@@ -77,6 +79,7 @@ from store import REPO
 IMP_FAMILIES = {
     "YieldChanges":      {"channel": "yield",   "scope": "plot", "kind": "flat", "valueKeys": engine.YIELDS},
     "iDefenseModifier":  {"channel": "defense",  "scope": "plot", "kind": "percent", "member": "amount"},
+    "iAirBombDefense":   {"channel": "defense",  "scope": "plot", "kind": "flat", "member": "air"},    # air-bomb defense magnitude (rolled, CvUnit.cpp:7127); owner 2026-07-01
     "iCulture":          {"channel": "culture",  "scope": "plot", "kind": "flat"},
     "iVisibilityChange": {"channel": "vision",   "scope": "plot", "kind": "flat", "member": "visibilityRange"},
     "iSeeFrom":          {"channel": "vision",   "scope": "plot", "kind": "flat", "member": "seeFrom"},

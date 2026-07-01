@@ -38,6 +38,9 @@
  },
  "defense": {
   "plot": {
+   "air": {
+    "flat": 10
+   },
    "amount": {
     "percent": 15
    }
@@ -68,7 +71,6 @@
    "cost": 400
   },
   "upgradeTime": 15,
-  "airBombDefense": 10,
   "outsideBorders": true,
   "militaryStructure": true,
   "pillageTo": "IMPROVEMENT_STONE_WATCHTOWER",

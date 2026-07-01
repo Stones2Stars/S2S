@@ -38,6 +38,13 @@
    ]
   }
  },
+ "defense": {
+  "plot": {
+   "air": {
+    "flat": 20
+   }
+  }
+ },
  "grants": {
   "repeatable": [
    {
@@ -60,7 +67,6 @@
   "advancedStart": {
    "cost": 48
   },
-  "featureGrowth": 64,
-  "airBombDefense": 20
+  "featureGrowth": 64
  }
 }

@@ -110,6 +110,13 @@
    ]
   }
  },
+ "defense": {
+  "plot": {
+   "air": {
+    "flat": 5
+   }
+  }
+ },
  "world": {
   "art": {
    "icon": "ART_DEF_IMPROVEMENT_WHALING_BOATS"
@@ -122,7 +129,6 @@
   "advancedStart": {
    "cost": 30
   },
-  "airBombDefense": 5,
   "pillageGold": 25,
   "bonuses": {
    "BONUS_WHALE": {

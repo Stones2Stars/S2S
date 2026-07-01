@@ -1,5 +1,12 @@
 {
  "type": "IMPROVEMENT_WATER_WORKED",
+ "defense": {
+  "plot": {
+   "air": {
+    "flat": -1
+   }
+  }
+ },
  "world": {
   "art": {
    "icon": "ART_DEF_IMPROVEMENT_WATER_WORKED"
@@ -11,7 +18,6 @@
   "advancedStart": {
    "cost": -1
   },
-  "airBombDefense": -1,
   "graphicalOnly": true
  }
 }

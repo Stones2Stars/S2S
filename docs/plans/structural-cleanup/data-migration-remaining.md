@@ -90,9 +90,12 @@ The whitelist completeness sweep found exactly two, both now ruled and landed:
   **NB: the corporation SYSTEM deserves a principle-level rework later** (owner 2026-07-01: "don't like how corporations
   work in principle") — that is POST-migration ([DEC-mirror-then-redesign]: migrate faithfully now, redesign the corp
   model after); the corp-HQ revenue (`HeadquarterCommerces`) rides that rework.
-- **improvement** (owner ruling 2026-07-01): `iAirBombDefense` → **`defense.air`** (the `defense` family, `air` member).
-  ⏳ still to rule: `iFeatureGrowth`, `iCultureRange`, per-bonus `depletionRand`. (Improvement-field edits BATCH after
-  the property-pulse cleaner, which is concurrently editing `curate_improvement.py`.)
+- **improvement — DONE (owner rulings 2026-07-01):** `iAirBombDefense` → **`defense.plot.air.flat`** (101 improvements;
+  the air-bomb defense magnitude, `CvUnit.cpp:7127`). `iFeatureGrowth` / `iCultureRange` / per-bonus `depletionRand` →
+  **STAY in `identity`** (owner: "leave them in identity") — improvement-INTRINSIC mechanics read by their own `CvPlot`
+  systems (feature-regrowth / culture-seed / depletion), NOT cascade modifiers, so identity is the correct home.
+  (`cultureRange` verified: the real culture-spread was nuked ~4yr ago — `pushCultureFromImprovement` is now only a
+  cosmetic 1-culture placement seed, `CvPlot.cpp:4062`; the field is a live-but-vestigial remnant.)
 - **project**: `AnyonePrereqProject` dropped, per-edge `iNeeded` count lost.
 - **unit**: `iCargo` → **`cargo.space.flat`** (+ `DomainCargo`→`cargo.space.{unit:IS_<domain>}`, modifier §6) —
   owner-RULED 2026-07-01, **DO-NOW** (currently UNHANDLED on 90 units). `EnabledCivilizationTypes` is **NOT** the

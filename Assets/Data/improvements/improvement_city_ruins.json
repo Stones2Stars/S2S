@@ -2,6 +2,9 @@
  "type": "IMPROVEMENT_CITY_RUINS",
  "defense": {
   "plot": {
+   "air": {
+    "flat": 10
+   },
    "amount": {
     "percent": 15
    }
@@ -18,7 +21,6 @@
   "advancedStart": {
    "cost": -1
   },
-  "airBombDefense": 10,
   "graphicalOnly": true
  }
 }

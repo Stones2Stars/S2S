@@ -42,6 +42,13 @@
    ]
   }
  },
+ "defense": {
+  "plot": {
+   "air": {
+    "flat": 5
+   }
+  }
+ },
  "world": {
   "art": {
    "icon": "ART_DEF_IMPROVEMENT_COLONY_HABITAT_MEDIUM"
@@ -55,7 +62,6 @@
    "cost": -1
   },
   "upgradeTime": 20,
-  "airBombDefense": 5,
   "pillageGold": 15,
   "pillageTo": "IMPROVEMENT_COLONY_HABITAT_SMALL",
   "upgradesTo": "IMPROVEMENT_COLONY_HABITAT_LARGE"

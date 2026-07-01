@@ -105,6 +105,13 @@
    ]
   }
  },
+ "defense": {
+  "plot": {
+   "air": {
+    "flat": 10
+   }
+  }
+ },
  "grants": {
   "repeatable": [
    {
@@ -128,7 +135,6 @@
   "advancedStart": {
    "cost": 60
   },
-  "airBombDefense": 10,
   "pillageGold": 75,
   "bonuses": {
    "BONUS_FOSSIL_BEDS": {

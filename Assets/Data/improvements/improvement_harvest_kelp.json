@@ -53,6 +53,13 @@
    ]
   }
  },
+ "defense": {
+  "plot": {
+   "air": {
+    "flat": 5
+   }
+  }
+ },
  "world": {
   "art": {
    "icon": "ART_DEF_IMPROVEMENT_HARVEST_KELP"
@@ -64,7 +71,6 @@
   "advancedStart": {
    "cost": 30
   },
-  "airBombDefense": 5,
   "pillageGold": 5
  }
 }

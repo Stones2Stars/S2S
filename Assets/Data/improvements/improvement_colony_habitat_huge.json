@@ -89,6 +89,13 @@
    ]
   }
  },
+ "defense": {
+  "plot": {
+   "air": {
+    "flat": 5
+   }
+  }
+ },
  "world": {
   "art": {
    "icon": "ART_DEF_IMPROVEMENT_COLONY_HABITAT_HUGE"
@@ -101,7 +108,6 @@
   "advancedStart": {
    "cost": -1
   },
-  "airBombDefense": 5,
   "pillageGold": 25,
   "pillageTo": "IMPROVEMENT_COLONY_HABITAT_LARGE"
  }

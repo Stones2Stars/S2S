@@ -259,6 +259,13 @@
    ]
   }
  },
+ "defense": {
+  "plot": {
+   "air": {
+    "flat": 5
+   }
+  }
+ },
  "grants": {
   "repeatable": [
    {
@@ -283,7 +290,6 @@
    "cost": 30
   },
   "upgradeTime": 15,
-  "airBombDefense": 5,
   "pillageGold": 50,
   "pillageTo": "IMPROVEMENT_PLANT_PICKING_CAMP",
   "upgradesTo": "IMPROVEMENT_VERTICAL_FARM",

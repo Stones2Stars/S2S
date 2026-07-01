@@ -189,6 +189,13 @@
    ]
   }
  },
+ "defense": {
+  "plot": {
+   "air": {
+    "flat": 5
+   }
+  }
+ },
  "world": {
   "art": {
    "icon": "ART_DEF_IMPROVEMENT_PASTURE"
@@ -201,7 +208,6 @@
    "cost": 24
   },
   "upgradeTime": 10,
-  "airBombDefense": 5,
   "pillageGold": 15,
   "pillageTo": "IMPROVEMENT_NOMADIC_HERD",
   "upgradesTo": "IMPROVEMENT_VERTICAL_FARM",
