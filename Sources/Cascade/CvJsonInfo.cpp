@@ -33,6 +33,7 @@ void CvJsonInfo::clear()
 	grantPulses.clear();
 	grantFlags.clear();
 	grantScopedPulses.clear();
+	grantRepeatables.clear();
 }
 
 // The synthetic TECH_GAME_START root (see the header): a single process-static CvJsonInfo, off the InfoRepo (it has no
@@ -153,9 +154,60 @@ static void rj_walkAllowed(CvJsonInfo* pData, const picojson::value& v)
 		if (it->second.is<double>()) pData->allowed[it->first] = (int)it->second.get<double>();
 }
 
+// `interval`: "perTurn" (or unrecognized) -> 1 turn; { perTurn: N } -> N turns.
+static int rj_interval(const picojson::value& v)
+{
+	if (v.is<picojson::object>())
+	{
+		const picojson::object& o = v.get<picojson::object>();
+		picojson::object::const_iterator it = o.find("perTurn");
+		if (it != o.end() && it->second.is<double>()) return (int)it->second.get<double>();
+	}
+	return 1;
+}
+// `chance`: { per: <type-string> } -> the scaler type id (e.g. PROPERTY_CRIME); -1 = unconditional / unrecognized.
+static int rj_chancePer(const picojson::value& v)
+{
+	const picojson::object& o = v.get<picojson::object>();
+	picojson::object::const_iterator it = o.find("per");
+	if (it != o.end() && it->second.is<std::string>()) return cascadeJsonResolveId(it->second.get<std::string>());
+	return -1;
+}
+// A structured `grants.repeatable` array (json.md §5): parse each entry into a CvCascadeGrantRepeatable -- the payload
+// (unit spawn / unitCombat heal / PROPERTY_* pulse), the interval, the chance-per scaler, and the #429 spatial fields.
+static void rj_parseRepeatable(CvJsonInfo* pData, const picojson::array& a)
+{
+	for (size_t i = 0; i < a.size(); ++i)
+	{
+		if (!a[i].is<picojson::object>()) continue;
+		const picojson::object& eo = a[i].get<picojson::object>();
+		CvCascadeGrantRepeatable r;
+		for (picojson::object::const_iterator it = eo.begin(); it != eo.end(); ++it)
+		{
+			const std::string& key = it->first;
+			const picojson::value& v = it->second;
+			if (key == "unit"       && v.is<std::string>()) r.unitId = cascadeJsonResolveId(v.get<std::string>());
+			else if (key == "unitCombat" && v.is<std::string>()) r.unitCombatId = cascadeJsonResolveId(v.get<std::string>());
+			else if (key == "heal") { if (v.is<std::string>()) r.healFull = true; else if (v.is<double>()) r.heal = cascadeJsonX100(v.get<double>()); }
+			else if (key == "count"    && v.is<double>())   r.count = (int)v.get<double>();
+			else if (key == "interval")                     r.intervalTurns = rj_interval(v);
+			else if (key == "chance"   && v.is<picojson::object>()) r.chancePerId = rj_chancePer(v);
+			else if (key == "on"       && v.is<std::string>()) r.on = v.get<std::string>();
+			else if (key == "relation" && v.is<std::string>()) r.relation = v.get<std::string>();
+			else if (key == "distance" && v.is<double>())   r.distance = (int)v.get<double>();
+			else if (v.is<double>())   // a PROPERTY_* : amount leaf -- the property-pulse payload (key IS the property type)
+			{
+				const int pid = cascadeJsonResolveId(key);
+				if (pid >= 0) { r.propertyId = pid; r.propertyAmount = cascadeJsonX100(v.get<double>()); }
+			}
+		}
+		pData->grantRepeatables.push_back(r);
+	}
+}
+
 // `grants` (json.md §5): GENERIC by value-shape -- array-of-strings = an id LIST; array-of-objects = entry list
-// (foundBuildings/repeatable/property-pulse, resolve its single id field); number = a numeric pulse; bare string = a
-// single-id grant; bool = a flag; object = a structured grant. NOTHING is "unknown."
+// (`repeatable` -> the structured parse above; foundBuildings/... -> resolve its single id field); number = a numeric
+// pulse; bare string = a single-id grant; bool = a flag; scoped-object = a scoped pulse. NOTHING is "unknown."
 static void rj_walkGrants(CvJsonInfo* pData, const picojson::value& v)
 {
 	if (!v.is<picojson::object>()) return;
@@ -178,7 +230,8 @@ static void rj_walkGrants(CvJsonInfo* pData, const picojson::value& v)
 					if (rid >= 0) pData->grantLists[k].push_back(rid);
 				}
 			}
-			else                                            // array of entry-objects (foundBuildings/repeatable/property-pulse)
+			else if (k == "repeatable") rj_parseRepeatable(pData, a);   // structured capture (increment 2b): spawn/heal/property-pulse
+			else                                            // other array of entry-objects (foundBuildings/...): resolve the single id field
 			{
 				for (size_t i = 0; i < a.size(); ++i)
 				{

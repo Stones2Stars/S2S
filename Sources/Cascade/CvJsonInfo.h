@@ -47,6 +47,27 @@ struct CvCascadeDeposit
 	CvCascadeDeposit() : value100(0), enabled(NULL), disabled(NULL), hasPer(false) {}
 };
 
+// A structured `grants.repeatable` entry (json.md §5): a recurring provision fired each `interval` -- a spawned unit,
+// a per-turn heal, or a per-turn PROPERTY_* source (the #429 spatial pulse). Exactly one payload kind is set; the
+// generic id-only capture (grantLists["repeatable"]) missed the heal + property entries entirely. Magnitudes ×100.
+struct CvCascadeGrantRepeatable
+{
+	int unitId;          // spawn: the UNIT_ id (-1 = not a spawn)
+	int unitCombatId;    // heal: the UNITCOMBAT_ class healed (-1 = not a heal-by-combat)
+	int propertyId;      // property-pulse: the PROPERTY_ id (-1 = not a property source)
+	int propertyAmount;  // property-pulse: signed per-turn amount (×100)
+	int heal;            // heal amount (×100); healFull overrides
+	bool healFull;       // heal: "full"
+	int count;           // entry count (default 1)
+	int intervalTurns;   // interval: "perTurn" -> 1; { perTurn: N } -> N
+	int chancePerId;     // chance: { per: <type> } -> the scaler type id (-1 = unconditional)
+	int distance;        // #429 spatial: radius (0 = none)
+	std::string on;      // #429 spatial: the GameObject target ("plot", ...)
+	std::string relation;// #429 spatial: "near", ...
+	CvCascadeGrantRepeatable() : unitId(-1), unitCombatId(-1), propertyId(-1), propertyAmount(0), heal(0),
+		healFull(false), count(1), intervalTurns(1), chancePerId(-1), distance(0) {}
+};
+
 class CvJsonInfo
 {
 public:
@@ -87,6 +108,7 @@ public:
 	std::map<std::string, std::map<std::string, int> > grantScopedPulses;  // "<channel>" -> "<scope>" -> value (×100), e.g.
 	                                                       // population {city|empire:N}. Object-VALUED dicts (deferred
 	                                                       // mission-keys like greatPersonAction) are NOT captured here.
+	std::vector<CvCascadeGrantRepeatable> grantRepeatables;   // structured `repeatable` entries (spawn / heal / property-pulse)
 
 	// NB the CLASSIFICATION blocks are NOT on the base -- each lives on the ONE type that owns it (group-unambiguity,
 	// owner 2026-07-01): empire `capabilities` -> CvJsonTechInfo (§8); unit `skills`/`tags` -> CvJsonUnitInfo (§8);

@@ -89,7 +89,7 @@ static void gr_resolveBuilding(int iBuilding, int iPlayer)
 {
 	const CvJsonInfo* j = InfoRepo<CvBuildingInfo>::get().get(iBuilding);
 	if (j == NULL) return;
-	const int nRepeat    = gr_listCount(j, "repeatable");       // per-turn spawn/heal (recurring)
+	const int nRepeat    = (int)j->grantRepeatables.size();    // per-turn spawn/heal (recurring) -- the structured set (2b)
 	const int nFreePromo = gr_listCount(j, "freePromotions");   // end-turn promotions to units in the city (recurring)
 	const int nFreeTech  = gr_pulse(j, "freeTechs");            // one-shot on first build
 	const int nGoldenAge = gr_flag(j, "goldenAge");            // one-shot golden age (bool grant, increment 2)

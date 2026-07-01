@@ -44,9 +44,13 @@ parity (owner: no live parity until everything is in).
      **scoped-pulse dict grants** (`population {city|empire:N}` → `grantScopedPulses`, ×100); object-valued dicts (the
      deferred mission-key `greatPersonAction`) are correctly skipped (no number leaves). The machine's `[GRANTS/building]`
      now surfaces `goldenAge` + `population` (pulses shown ÷100 = human count). No JSON regen — pure readJson enrichment.
-   - **2b (next)** — the **`repeatable` STRUCTURE** is still dropped: only the resolved id is kept, not the `interval` /
-     `chance` (`per`) / heal / unitCombat / count, nor the property-pulse `on`/`relation`/`distance` (#429). Needs a
-     structured grant representation (expression-aware) — the prerequisite for actually *applying* a repeatable.
+   - **2b ✅ DONE** — the **`repeatable` STRUCTURE** is now captured: `rj_parseRepeatable` fills
+     `CvJsonInfo::grantRepeatables` (a `CvCascadeGrantRepeatable` per entry) with the payload (unit spawn / unitCombat
+     heal / PROPERTY_* pulse), `interval`, the `chance:{per}` scaler id, and the #429 spatial `on`/`relation`/`distance`.
+     This fixed a real gap — the old generic id-only capture missed the **149 heal + 49 property** entries entirely (only
+     the 26 `{unit}` spawns resolved). `[GRANTS/building]` `repeatable` now counts the full structured set. Pure readJson.
+     *(Deferred: `heal:"full"` + property-amount ×100 vs raw is followed for consistency; the enabler/#429 consumers
+     that ACT on these — the per-turn spawn/heal apply + the spatial property distribution — are increments 3/5.)*
 3. **The remaining DOMAIN triggers** — the spine emits only building/unit-count + name-change today. Add the events the
    inventory needs: per-turn (recurring `repeatable`/`freePromotions`), tech first-discover, civ-start, religion-founded,
    civic-adopted, city-founded (`foundBuildings`), game-start (era/handicap). Each is a new synced `DOMAIN` event.
