@@ -8,6 +8,23 @@
       "TECH_NOMADISM",
       "TECH_LANGUAGE"
     ],
+    "civics": [
+      "CIVIC_ANARCHISM",
+      "CIVIC_BORDERLESS",
+      "CIVIC_COMMUNALISM",
+      "CIVIC_CURRENCY_LESS",
+      "CIVIC_GARBAGE_ANYWHERE",
+      "CIVIC_HUNTER_GATHERING",
+      "CIVIC_IGNORANCE",
+      "CIVIC_IRRELIGION",
+      "CIVIC_MILITIA",
+      "CIVIC_NONVERBAL",
+      "CIVIC_OBEDIENCE",
+      "CIVIC_PRIMITIVE",
+      "CIVIC_STRONGMAN",
+      "CIVIC_SURVIVAL",
+      "CIVIC_UNORGANIZED"
+    ],
     "units": [
       "UNIT_BRUTE"
     ],
