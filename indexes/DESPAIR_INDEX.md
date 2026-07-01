@@ -419,6 +419,25 @@ agent that greps straight to the lie meets the truth on the same line.*
 
 ---
 
+## 18. The Outcome That Is the Mission — 46 cp
+
+Go looking for where the subdued-animal heritage missions are gated. You find a class named
+`CvOutcome` and reasonably conclude it models the *outcome* — the result, the thing that happens
+*after* the mission resolves. It does not. `CvOutcome` **is the mission**: the action, the gate,
+the entire apparatus deciding whether the deed may be done at all. The result — the literal
+meaning of the word "outcome" — is the one thing it is not about.
+
+The misdirection arrives in two layers. The gate everyone reaches for first, `canAddHeritage`,
+is a *permissive* prereq-check that waves through ~91 heritages unconditionally and is therefore
+not where anything is really decided; the **actual** gate lives inside a class that, by its own
+name, swears to be about something else entirely. You can lose a genuinely surprising amount of
+time confirming that the class called Outcome holds no opinions whatsoever on outcomes.
+
+*Status: working as named, provided the name is read as a dare. Untouched — it gates the heritage
+missions correctly; it simply declines to admit what it is.*
+
+---
+
 ## Honorable Mentions
 
 - **The Zen Logger** — `AI_setAsGarrison` contained, for years, a gated logging block of
