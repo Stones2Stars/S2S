@@ -461,10 +461,7 @@ curated-set model as part of this migration. The current mechanism (mapped 2026-
    **⏳ PARITY-CHASE notes (2026-07-02 shadow run):** ✅ canCreate/canResearch/canDoCivics/canHurry/canFoundReligion
    clean (the canCreate fix = project `allowed:{world/team}` caps, a Gate-1 data find — were parked in identity).
    Three OPEN finds the instruments cannot re-derive: **(a)** the enabler diff's `who=` renders BLANK for the
-   city-scope gates (an emit bug — fix before chasing per-city diffs); **(b)** canTrain refusals include ANIMALS
-   that legacy genuinely trains in real cities (C2C subdued-animal buildings make some trainable) — collides with
-   the blanket `identity.spawnOnly` never-trainable exclude: a MODEL question for the owner (conditional
-   trainability of spawnOnly units); **(c)** canMaintain refuses all 5 processes for REAL civs holding the
+   city-scope gates (an emit bug — fix before chasing per-city diffs); **(b)** ~~the spawnOnly model question~~ RESOLVED (owner pushback 2026-07-02, verified): spawnOnly was cleared correctly (== productionCost==-1); the divergence was the SHADOW ORACLE passing bIgnoreCost=true, which disables legacy's `!bIgnoreCost && productionCost==-1` gate — the exact spawnOnly semantic. Oracle flags fixed to false on canTrain + canConstruct; **(c)** canMaintain refuses all 5 processes for REAL civs holding the
    enabling techs (NPC pollution ruled out — counts identical after the NPC skip) — trace where GENERATE loses
    `enables.processes` (data verified present on 12 techs) or the gate drops them; NB PROCESS_IDLE has NO tech
    enabler, so the generic enables-frontier structurally under-offers it (the PALACE lesson — processes may need

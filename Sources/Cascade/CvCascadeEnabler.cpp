@@ -253,12 +253,12 @@ void cvCascadeEnablerShadow()
 			const wchar_t* szWho = pCity->getName().GetCString();
 			for (int b = 0; b < nB; ++b)
 			{
-				++gConstruct.chk; bool c = avB.count(b) != 0, l = pCity->canConstruct((BuildingTypes)b, false, false, true);
+				++gConstruct.chk; bool c = avB.count(b) != 0, l = pCity->canConstruct((BuildingTypes)b, false, false, false);   // bIgnoreCost=FALSE (2026-07-02): true disabled the productionCost==-1 gate == the spawnOnly/notConstructible semantic the cascade models
 				if (c != l) { ++gConstruct.div; en_emitDiff(szWho, "canConstruct", GC.getBuildingInfo((BuildingTypes)b).getType(), c, l, gConstruct.shown); }
 			}
 			for (int u = 0; u < nU; ++u)
 			{
-				++gTrain.chk; bool c = avU.count(u) != 0, l = pCity->canTrain((UnitTypes)u, false, false, true);
+				++gTrain.chk; bool c = avU.count(u) != 0, l = pCity->canTrain((UnitTypes)u, false, false, false);   // ditto -- the oracle must apply the real gate
 				if (c != l) { ++gTrain.div; en_emitDiff(szWho, "canTrain", GC.getUnitInfo((UnitTypes)u).getType(), c, l, gTrain.shown); }
 			}
 			for (int pr = 0; pr < nP; ++pr)
