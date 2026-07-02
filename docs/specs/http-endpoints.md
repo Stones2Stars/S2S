@@ -123,7 +123,9 @@ Shape: **`/state/<slice>`** for game-wide lists, **`/state/<entity>/...`** for e
     civics, commerce sliders, anarchy/rebel flags, city/building/unit counts — **no computed rates**. (The
     *computed* economy — gold/science/upkeep/inflation — is verified separately on `/computed/players`; the raw
     state lives here so the calculator has its inputs without reading the engine's answer.)
-  - `/state/world` — active game options, era ordering, per-team diplomacy state, the raw game-define scalars
+  - world facts (active game options, era ordering, per-team diplomacy, raw game-define scalars) live in the
+    `world` section of **`/state/all`** — ⚠ there is NO standalone `/state/world` route (doc/impl drift corrected
+    2026-07-02; a dedicated slice can be added if a consumer wants it without the full dump)
 - **city scope** (`{owner,id,name,x,y}` on every city; see *City identity* above)
   - `/state/cities` · `/state/cities?player=N` — every city's raw substrate + out-of-scope inputs:
     - **buildings** present (+ the dormant subset), production queue, building ages/time-built
@@ -185,6 +187,13 @@ the external dry-calc + logging, not here).
 - **counts** — `/computed/tally?type=BUILDING_X|UNIT_X&player=N`: the engine count at world/team/empire scope.
 - **diagnostics** — `/computed/whyNot?type=UNIT_X&player=N[&city=M]` (the canTrain decision inputs) ·
   `/computed/game` (turn / game-over / winner / victory countdowns — the autoplay terminal signal).
+- **classification-parity oracles (2026-07-02, owner: "test parity via the http server, call them directly")** —
+  `/computed/teamFlags?player=N`: the engine team/player capability flags by CANONICAL name (+ the
+  `canTrade`/`canTradeOn`/`canWorkOn` blocks) — the capabilities-parity oracle; ·
+  `/computed/unitSkills?player=N`: per-unit EFFECTIVE skill booleans (the composite getters, unit+promotion+
+  unitcombat folded) — the skills-parity oracle. The cascade side of both is derived OFFLINE from `/state` + the
+  `Assets/Data` JSONs (the validation.md external-dry-calc leg); the composition rules a deriver must fold are in
+  [skills.md](skills.md) §3b and [capabilities.md](capabilities.md).
 
 > Unit combat/movement decomposition is **deliberately not exposed yet** — those channels aren't in drycalc's
 > current focus (yields/modifiers + buildability). Raw unit membership lives on `/state/units`; the computed

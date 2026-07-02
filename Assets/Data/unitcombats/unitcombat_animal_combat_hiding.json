@@ -6,7 +6,7 @@
   }
  },
  "skills": {
-  "stealthDefense": true
+  "stealthDefense": false
  },
  "vision": {
   "invisibilityIntensity": {

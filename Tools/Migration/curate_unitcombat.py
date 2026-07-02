@@ -130,8 +130,9 @@ def curate(typ, rec, store):
         if engine.text(rec.find(tag)) in ("1", "true", "True"):
             caps[name] = grant
     for tag, name in dict(CAP_COUNT, **CAP_COUNT_X).items():
-        if _int(rec, tag):
-            caps[name] = True
+        v = _int(rec, tag)
+        if v:
+            caps[name] = v > 0   # sign-aware: negative = REVOKE (see curate_promotion -- the WANTED find)
     for tag, name in CAP_LIST.items():
         node = rec.find(tag)
         if node is not None:

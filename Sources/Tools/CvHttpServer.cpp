@@ -3019,6 +3019,120 @@ namespace
 			o["availableBuilds"] = picojson::value(a);
 			return CvString(picojson::value(o).serialize().c_str());
 		}
+		// ---- /computed/teamFlags -- the ENGINE team/player capability flags, keyed by the CANONICAL capability
+		// names (capabilities.md glossary + the canTrade/canTradeOn/canWorkOn blocks). The capabilities-PARITY
+		// oracle (owner 2026-07-02: "test parity via the http server, call them directly"): the external dry-calc
+		// derives the cascade's set from /state/techs + the tech JSON blocks and diffs against THIS. Engine-only
+		// (no cascade values here -- the /computed rule). hasWholeMapRevealed is a one-shot reveal with no
+		// persistent flag (unqueriable); dcmAirBomb1/2 ride the DCM removal (#446) -- both deliberately absent.
+		if (strcmp(szAction, "teamFlags") == 0)
+		{
+			const CvTeam& kFTeam = GET_TEAM(kPlayer.getTeam());
+			picojson::value::object f;
+			f["canFoundOnPeaks"]       = picojson::value(kFTeam.isCanFoundOnPeaks());
+			f["canPassPeaks"]          = picojson::value(kFTeam.isCanPassPeaks());
+			f["canMoveFastOnPeaks"]    = picojson::value(kFTeam.isMoveFastPeaks());
+			f["canFarmDesert"]         = picojson::value(kFTeam.isCanFarmDesert());
+			f["canSpreadIrrigation"]   = picojson::value(kFTeam.isIrrigation());
+			f["canIgnoreIrrigation"]   = picojson::value(kFTeam.isIgnoreIrrigation());
+			f["canBuildBridges"]       = picojson::value(kFTeam.isBridgeBuilding());
+			f["hasRiverTrade"]         = picojson::value(kFTeam.isRiverTrade());
+			f["canRebaseAnywhere"]     = picojson::value(kFTeam.isRebaseAnywhere());
+			f["canSeeFurtherFromWater"]= picojson::value(kFTeam.isExtraWaterSeeFrom());
+			f["hasCenteredMap"]        = picojson::value(kFTeam.isMapCentering());
+			f["hasLanguage"]           = picojson::value(kPlayer.m_bHasLanguage);
+			f["canSetScienceRate"]     = picojson::value(kPlayer.isCommerceFlexible(COMMERCE_RESEARCH));
+			f["canSetCultureRate"]     = picojson::value(kPlayer.isCommerceFlexible(COMMERCE_CULTURE));
+			f["canSetEspionageRate"]   = picojson::value(kPlayer.isCommerceFlexible(COMMERCE_ESPIONAGE));
+			o["capabilities"] = picojson::value(f);
+			picojson::value::object tr;
+			tr["techs"]             = picojson::value(kFTeam.isTechTrading());
+			tr["gold"]              = picojson::value(kFTeam.isGoldTrading());
+			tr["maps"]              = picojson::value(kFTeam.isMapTrading());
+			tr["openBorders"]       = picojson::value(kFTeam.isOpenBordersTrading());
+			tr["rightOfPassage"]    = picojson::value(kFTeam.isLimitedBordersTrading());
+			tr["defensivePact"]     = picojson::value(kFTeam.isDefensivePactTrading());
+			tr["permanentAlliance"] = picojson::value(kFTeam.isPermanentAllianceTrading());
+			tr["vassals"]           = picojson::value(kFTeam.isVassalStateTrading());
+			tr["embassy"]           = picojson::value(kFTeam.isEmbassyTrading());
+			o["canTrade"] = picojson::value(tr);
+			picojson::value::array tt;
+			for (int iTe = 0; iTe < GC.getNumTerrainInfos(); ++iTe)
+				if (kFTeam.isTerrainTrade((TerrainTypes)iTe))
+					tt.push_back(picojson::value(std::string(GC.getTerrainInfo((TerrainTypes)iTe).getType())));
+			picojson::value::object cto;
+			cto["terrains"] = picojson::value(tt);
+			o["canTradeOn"] = picojson::value(cto);
+			picojson::value::object wo;
+			wo["water"] = picojson::value(kFTeam.isWaterWork());   // peaks/ocean/space: indirect / semi-modelled (capabilities.md)
+			o["canWorkOn"] = picojson::value(wo);
+			return CvString(picojson::value(o).serialize().c_str());
+		}
+		// ---- /computed/unitSkills -- per-unit EFFECTIVE skill booleans: the engine COMPOSITE getters (unit-info
+		// flag + promotion counts folded, e.g. isBlitz()). The skills-PARITY oracle (owner 2026-07-02: "ensure a
+		// unit that had blitz -- from unit OR promotion -- still has it"): the dry-calc derives each unit's set
+		// from /state/units promotions + the unit/promotion JSON `skills` blocks and diffs against THIS. Keys are
+		// the canonical skills.md names; only skills with a clean composite getter are emitted (movement-calc
+		// internals like flatMovementCost/ignoreTerrainCost and action-forms like sabotage/stealPlans have no
+		// flag getter -- absent, not zero).
+		if (strcmp(szAction, "unitSkills") == 0)
+		{
+			picojson::value::array units;
+			int iLoopU;
+			for (const CvUnit* pU = kPlayer.firstUnit(&iLoopU); pU != NULL; pU = kPlayer.nextUnit(&iLoopU))
+			{
+				picojson::value::object u;
+				u["id"]   = picojson::value((double)pU->getID());
+				u["type"] = picojson::value(std::string(GC.getUnitInfo(pU->getUnitType()).getType()));
+				picojson::value::object s;
+				s["blitz"]                = picojson::value(pU->isBlitz());
+				s["amphib"]               = picojson::value(pU->isAmphib());
+				s["river"]                = picojson::value(pU->isRiver());
+				s["enemyRoute"]           = picojson::value(pU->isEnemyRoute());
+				s["alwaysHeal"]           = picojson::value(pU->isAlwaysHeal());
+				s["hillsDoubleMove"]      = picojson::value(pU->isHillsDoubleMove());
+				s["immuneToFirstStrikes"] = picojson::value(pU->immuneToFirstStrikes());
+				s["blendIntoCity"]        = picojson::value(pU->isBlendIntoCity());
+				s["canMoveImpassable"]    = picojson::value(pU->canMoveImpassable());
+				s["canMoveAllTerrain"]    = picojson::value(pU->canMoveAllTerrain());
+				s["noDefensiveBonus"]     = picojson::value(pU->noDefensiveBonus());
+				s["nukeImmune"]           = picojson::value(pU->isNukeImmune());
+				s["suicide"]              = picojson::value(pU->isSuicide());
+				s["hiddenNationality"]    = picojson::value(pU->isHiddenNationality());
+				s["noCapture"]            = picojson::value(pU->isNoCapture());
+				s["rivalTerritory"]       = picojson::value(pU->isRivalTerritory());
+				s["onlyDefensive"]        = picojson::value(pU->isOnlyDefensive());
+				s["investigate"]          = picojson::value(pU->isInvestigate());
+				s["counterSpy"]           = picojson::value(pU->isCounterSpy());
+				s["found"]                = picojson::value(pU->isFound());
+				s["goldenAge"]            = picojson::value(pU->isGoldenAge());
+				s["noBadGoodies"]         = picojson::value(pU->isNoBadGoodies());
+				s["canPassPeaks"]         = picojson::value(pU->isCanMovePeaks());
+				s["canLeadThroughPeaks"]  = picojson::value(pU->isCanLeadThroughPeaks());
+				s["zoneOfControl"]        = picojson::value(pU->isZoneOfControl());
+				s["renderBelowWater"]     = picojson::value(pU->isRenderBelowWater());
+				s["assassin"]             = picojson::value(pU->isAssassin());
+				s["excile"]               = picojson::value(pU->isExcile());
+				s["passage"]              = picojson::value(pU->isPassage());
+				s["upgradeAnywhere"]      = picojson::value(pU->isUpgradeAnywhere());
+				s["defensiveVictoryMove"] = picojson::value(pU->isDefensiveVictoryMove());
+				s["freeDrop"]             = picojson::value(pU->isFreeDrop());
+				s["offensiveVictoryMove"] = picojson::value(pU->isOffensiveVictoryMove());
+				s["pillageEspionage"]     = picojson::value(pU->isPillageEspionage());
+				s["pillageMarauder"]      = picojson::value(pU->isPillageMarauder());
+				s["pillageOnMove"]        = picojson::value(pU->isPillageOnMove());
+				s["pillageOnVictory"]     = picojson::value(pU->isPillageOnVictory());
+				s["pillageResearch"]      = picojson::value(pU->isPillageResearch());
+				s["ignoreBuildingDefense"]= picojson::value(pU->ignoreBuildingDefense());
+				s["alwaysInvisible"]      = picojson::value(pU->alwaysInvisible());
+				s["stampede"]             = picojson::value(pU->mayStampede());
+				s["onslaught"]            = picojson::value(pU->mayOnslaught());
+				u["skills"] = picojson::value(s);
+				units.push_back(picojson::value(u));
+			}
+			o["units"] = picojson::value(units);
+			return CvString(picojson::value(o).serialize().c_str());
+		}
 
 		const int iIdx = GC.getInfoTypeForString(szType, true);
 		if (iIdx < 0)
@@ -3253,6 +3367,8 @@ namespace
 			{ "/computed/availableBuilds", "availableBuilds","engine build-unlock set for the player" },
 			{ "/computed/tally",           "tally",          "engine counts (type=BUILDING_X|UNIT_X)" },
 			{ "/computed/whyNot",          "whyNot",         "canTrain decision inputs (type=UNIT_X)" },
+			{ "/computed/teamFlags",       "teamFlags",      "engine capability flags by canonical name (+canTrade/canTradeOn/canWorkOn) — the capabilities-parity oracle" },
+			{ "/computed/unitSkills",      "unitSkills",     "per-unit EFFECTIVE skill booleans (unit+promotion composite getters) — the skills-parity oracle" },
 			{ "/computed/game",            "game",           "turn / game-over / winner / victory countdowns" },
 		};
 		const int iNumRoutes = (int)(sizeof(ROUTES) / sizeof(ROUTES[0]));

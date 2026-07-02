@@ -14,7 +14,7 @@
  },
  "skills": {
   "animalIgnoresBorders": true,
-  "defenseOnly": true
+  "defenseOnly": false
  },
  "promotionLine": {
   "PROMOTIONLINE_FERAL": 2

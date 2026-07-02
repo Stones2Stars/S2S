@@ -1,7 +1,7 @@
 {
  "type": "PROMOTION_FREEDOM_FIGHTER",
  "skills": {
-  "barbCoExist": true
+  "barbCoExist": false
  },
  "ui": {
   "art": {

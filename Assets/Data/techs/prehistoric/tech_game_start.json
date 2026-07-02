@@ -34,7 +34,8 @@
     "promotions": []
   },
   "capabilities": {
-    "canSetScienceRate": true
+    "canSetScienceRate": true,
+    "canSetEspionageRate": true
   },
   "ui": {
     "art": {

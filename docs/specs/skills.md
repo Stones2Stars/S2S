@@ -187,6 +187,32 @@ change, expected to show in the shadow, not a bug.)
 
 ---
 
+## 3b. ✅ VERIFIED — the effective-skill parity run (2026-07-02) + the composition rules
+
+Owner method: **direct HTTP parity** — `/computed/unitSkills` (the engine's per-unit COMPOSITE getters —
+`isBlitz()` etc., unit-info + promotion + unitcombat counts folded) diffed against the offline derivation
+(unit JSON `skills` ∪ combat-class JSON `skills` ∪ held promotions' JSON `skills`). **365,474 effective-skill
+facts → 5 residual, all attributed** (3 = the kamikaze composition below on units holding FIRE_SHIP-class promos;
+2 = a SERIALIZED stale ability count whose source promo/class is gone — the accepted dropped-event-state class).
+Static sweeps: building `attributes` 2,266 XML facts EXACT; unit/promotion/unitcombat skill blocks **0 LOST**.
+
+**The derivation rules a consumer must know (engine compositions that survive as CODE, not data):**
+- a unit's combat classes = **`identity.base.combatClass` (the PRIMARY — XML `Combat`) + `identity.combatClasses`
+  (the subs) + promotion-granted (`skills.unitCombats`) − promotion-removed**; every class's `skills` contribute
+  (the engine applies a ~30-field unitcombat ability battery, `CvUnit.cpp:18400-18474`). Missing the PRIMARY was
+  the sniper-immunity find (UNITCOMBAT_STRIKE_TEAM).
+- **`fliesToMove` ⇒ `amphib` + `river` + `canMoveImpassable`** (`CvUnit.cpp:12830/14949/14965` fold
+  `canFliesToMove()`).
+- **`kamikaze ≠ 0 ⇒ suicide`** (`isSuicide` folds `getKamikazePercent()` — a modifier-family magnitude driving a
+  skill-plane composite).
+- **`defenseOnly` (the stackable count) feeds `onlyDefensive`** (the composite) — two names, one verdict.
+- **`noCapture` folds a RUNTIME rule** (`!canAttack()` ⇒ uncapturable, `CvUnit.cpp:11031`) — the data half is the
+  flag+count only.
+- **Negative count-abilities are REVOKES** (`iAssassinChange=-1` on PROMOTION_WANTED takes assassin away) — the
+  curators now emit `false` (the CAP_PAIR revoke shape); collapsing every nonzero to `true` silently inverted
+  revokes (the THUG-as-assassin find). ⚠ Bool-collapse still cannot express count ARITHMETIC (a −1 cancelling one
+  of two +1s); no live case exists — revisit if one appears.
+
 ## 4. Grant / revoke
 
 A few skills are authored as **add/remove pairs** — `true` grants, `false` revokes (a promotion can take an

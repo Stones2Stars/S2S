@@ -1,8 +1,8 @@
 {
  "type": "UNITCOMBAT_RECKLESS_ANIMAL",
  "skills": {
-  "animalIgnoresBorders": true,
-  "defenseOnly": true
+  "animalIgnoresBorders": false,
+  "defenseOnly": false
  },
  "loadPrune": {
   "onGameOptions": [

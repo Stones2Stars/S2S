@@ -8,11 +8,11 @@
   }
  },
  "skills": {
-  "excile": true,
-  "barbCoExist": true,
-  "blendIntoCity": true,
-  "assassin": true,
-  "stealthDefense": true,
+  "excile": false,
+  "barbCoExist": false,
+  "blendIntoCity": false,
+  "assassin": false,
+  "stealthDefense": false,
   "defenseOnly": true
  },
  "promotionLine": {

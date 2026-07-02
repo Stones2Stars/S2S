@@ -169,6 +169,23 @@ Sibling of skills.md.
   scenarios (with DCM active, `canAirBombAt` branches to DCM target logic, `CvUnit.cpp:7123/7186`). Names are
   mod-heritage numbering — pin the 1-vs-2 semantic from the target-filter code before renaming.
 
+## ✅ VERIFIED — the full-surface parity run (2026-07-02)
+
+Owner method: **direct HTTP parity** — `/computed/teamFlags` (the engine flags by canonical name +
+`canTrade`/`canTradeOn`/`canWorkOn`) diffed against the offline derived-on-query union (held techs' JSON blocks +
+`TECH_GAME_START`), per player. **Result: 0 diverging** across every capability, the whole `canTrade` family, the
+per-terrain `canTradeOn` set, and `canWorkOn.water`. Grounded finds captured:
+
+- **`canSetScienceRate` + `canSetEspionageRate` are UNIVERSAL defaults** — `CIV4CommerceInfo.xml` marks research
+  and espionage `bFlexiblePercent=1` (a system global, no grantor); their data home is `TECH_GAME_START`'s
+  `capabilities` (both now there). Culture stays tech-gated (TECH_DRAMA); gold has no slider.
+- **`canTrade.vassals` / `canTrade.permanentAlliance` compose GAME OPTIONS engine-side** (`CvTeam.cpp:3262/3279`:
+  the flag getter = capability ∧ `GAMEOPTION_ENABLE_PERMANENT_ALLIANCES` / ¬`GAMEOPTION_NO_VASSAL_STATES`). The
+  capability DATA is the unlock; the option gate stays an engine-side composition at the consumer (like era-scaling
+  on `allowed` caps). Any parity harness must fold the options.
+- `isCommerceFlexible` additionally gates espionage on met-civs and everything on founded-first-city — runtime UI
+  conditions, not capability data.
+
 ## Open
 - ~~**`dcmAirBomb1/2` renames**~~ — **MOOT: DCM air bombing is slated for whole-system REMOVAL** (owner 2026-07-02;
   audit: effectively off by default, human-only, not load-bearing — see

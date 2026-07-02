@@ -358,7 +358,10 @@ def curate(typ, rec, store):
     for tag, name in CAP_COUNT.items():
         v = _int(rec, tag)
         if v:
-            caps[name] = True
+            # SIGN-AWARE (2026-07-02, the PROMOTION_WANTED find): a NEGATIVE count-ability is a REVOKE
+            # (iAssassinChange=-1 takes assassin AWAY) -- emit false, the CAP_PAIR revoke shape. Collapsing
+            # every nonzero to true silently inverted the revokes (THUG read as an assassin).
+            caps[name] = v > 0
     for tag, name in CAP_LIST.items():
         node = rec.find(tag)
         if node is not None:

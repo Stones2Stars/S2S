@@ -13,7 +13,7 @@
   }
  },
  "skills": {
-  "animalIgnoresBorders": true,
+  "animalIgnoresBorders": false,
   "stealthDefense": true
  },
  "promotionLine": {

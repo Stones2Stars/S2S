@@ -1,8 +1,8 @@
 {
  "type": "PROMOTION_WANTED3_HS",
  "skills": {
-  "upgradeAnywhere": true,
-  "assassin": true
+  "upgradeAnywhere": false,
+  "assassin": false
  },
  "vision": {
   "invisibilityIntensity": {
