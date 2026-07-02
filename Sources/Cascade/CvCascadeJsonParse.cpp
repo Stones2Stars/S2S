@@ -56,7 +56,9 @@ static const char* CJK_INTRINSIC_KEYS[] = {
 	"loadPrune", "policies", "succession", "excludes", "produces", "condition", "effect",
 	"vision", "outcomes", "mapGeneration", "replacedBy", "capabilities", "skills", "tags", "state", "attributes", "builds",
 	"promotionLine", "buildUp", "shrine", "headquarters", "worldGen", "properties", "voteSource", "threshold", "role", "victory",
-	"targetLevel", "conversion", "cityFounding", "unitCapability", 0
+	"targetLevel", "conversion", "cityFounding", "unitCapability",
+	"canTrade", "canTradeOn", "canWorkOn",   // tech bespoke blocks (owner 2026-07-02, json.md §2 / capabilities.md)
+	0
 };
 
 bool cascadeJsonInList(const char** list, const std::string& key)

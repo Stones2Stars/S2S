@@ -87,9 +87,9 @@
    ]
   }
  },
- "capabilities": {
-  "embassyTrading": true,
-  "techTrading": true
+ "canTrade": {
+  "embassy": true,
+  "techs": true
  },
  "grants": {
   "freeTechs": 1

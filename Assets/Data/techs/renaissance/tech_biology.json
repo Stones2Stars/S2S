@@ -33,7 +33,7 @@
   }
  },
  "capabilities": {
-  "ignoreIrrigation": true
+  "canIgnoreIrrigation": true
  },
  "cost": {
   "research": 3484

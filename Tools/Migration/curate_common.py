@@ -281,7 +281,7 @@ def apply_channel(families, spec, c, enabler_block=None):
     scope = "empire" if scope == "player" else ("world" if scope == "game" else scope)
     family, kind = spec.get("channel"), spec.get("kind", "flat")
     keys = spec.get("valueKeys")
-    if family and family.endswith("PerPopulation"):
+    if isinstance(family, str) and family.endswith("PerPopulation"):
         family = family[:-len("PerPopulation")]
         kind = "percentPerPopulation" if kind == "percent" else "perPopulation"
     # Keyed-by-Type CONTAINER (e.g. FreeSpecialistCounts: each entry = <SpecialistType> + <iFreeSpecialistCount>).
@@ -305,10 +305,36 @@ def apply_channel(families, spec, c, enabler_block=None):
     if kind == "enabler":
         if engine.text(c) not in ("1", "true", "True"):
             return
-        if enabler_block:                          # owner 2026-06-29: a tech enabler is an empire CAPABILITY (it
-            families.setdefault(enabler_block, {})[family] = True   # unlocks), a civic enabler a POLICY — not a
-            return                                 # scoped modifier family. Route to the capabilities/policies block.
+        # Per-channel `block` override (owner rulings 2026-07-02): a bespoke root block (`canTrade`/`canTradeOn`/
+        # `canWorkOn`) instead of the entity default (capabilities/policies). `channel` may be a LIST — ONE legacy
+        # flag emitting SEVERAL keys (bOpenBordersTrading -> openBorders + rightOfPassage; bWaterWork -> water +
+        # ocean): the legacy coupling lives in DATA, never a hardcoded engine implication (capabilities.md).
+        blk = spec.get("block") or enabler_block
+        if blk:
+            for nm in (family if isinstance(family, list) else [family]):
+                families.setdefault(blk, {})[nm] = True
+            return
         val = True
+    elif kind == "refList":
+        # Container of FK refs -> block.channel: [ids] (owner ruling 2026-07-02: TerrainTrades -> the root
+        # `canTradeOn` block with REAL TERRAIN_ refs, capabilities.md — previously fell through the scalar-only
+        # enabler check and emitted NOTHING, a Gate-1 data gap).
+        blk = spec.get("block") or enabler_block
+        ids = [engine.text(x) for x in c if engine.text(x) and engine.text(x) != "NONE"]
+        if ids and blk:
+            families.setdefault(blk, {})[family] = ids
+        return
+    elif kind == "flexArray":
+        # Positional bool array -> discrete per-index capability keys (owner ruling 2026-07-01: commerceFlexible ->
+        # canSet<X>Rate booleans; the positional array previously emitted NOTHING). `channelByIndex` maps the
+        # array position (stringified CommerceTypes index) to its key; unmapped positions (gold: no slider) skip.
+        blk = spec.get("block") or enabler_block
+        by_index = spec.get("channelByIndex", {})
+        for i, x in enumerate(list(c)):
+            nm = by_index.get(str(i))
+            if nm and blk and engine.text(x) in ("1", "true", "True"):
+                families.setdefault(blk, {})[nm] = True
+        return
     elif keys:
         val = engine.named_array(c, keys)
         if not val:

@@ -673,9 +673,10 @@ def pass2(typ, rec, store, fams, grants, repeatable, identity, enables, capabili
     # --- CommerceFlexibles -> the building's `capabilities` block, PROVIDED to the empire (owner ruling 2026-07-01,
     # json §8): which commerce SLIDERS this building unlocks (CvPlayer::changeCommerceFlexibleCount on build ->
     # isCommerceFlexible gates slider-setting). Positional per-commerce array (engine.COMMERCES order). Emitted as
-    # discrete `setXRate` bools, uniform with tech/civic capabilities. COMMERCE_GOLD has no slider -> flagged/skipped
+    # discrete `canSet<X>Rate` bools (canonical names, owner 2026-07-02 -- the name says what it does), uniform with
+    # tech/civic capabilities. COMMERCE_GOLD has no slider -> flagged/skipped
     # (never present in data; ⚑ FLAG if it ever appears). ---
-    COMMERCE_SLIDER_CAP = {"research": "setScienceRate", "culture": "setCultureRate", "espionage": "setEspionageRate"}
+    COMMERCE_SLIDER_CAP = {"research": "canSetScienceRate", "culture": "canSetCultureRate", "espionage": "canSetEspionageRate"}
     cfn = rec.find("CommerceFlexibles")
     if cfn is not None:
         for i, c in enumerate(list(cfn)):

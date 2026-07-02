@@ -35,8 +35,8 @@
    ]
   }
  },
- "capabilities": {
-  "vassalTrading": true
+ "canTrade": {
+  "vassals": true
  },
  "cost": {
   "research": 1132

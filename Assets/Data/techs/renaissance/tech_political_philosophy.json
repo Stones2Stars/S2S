@@ -44,8 +44,8 @@
    ]
   }
  },
- "capabilities": {
-  "defensivePactTrading": true
+ "canTrade": {
+  "defensivePact": true
  },
  "cost": {
   "research": 2528

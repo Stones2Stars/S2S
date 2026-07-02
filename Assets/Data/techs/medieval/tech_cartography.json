@@ -19,8 +19,8 @@
    ]
   }
  },
- "capabilities": {
-  "mapTrading": true
+ "canTrade": {
+  "maps": true
  },
  "cost": {
   "research": 1688

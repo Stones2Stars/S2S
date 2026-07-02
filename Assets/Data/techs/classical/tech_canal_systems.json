@@ -77,7 +77,7 @@
   }
  },
  "capabilities": {
-  "irrigation": true
+  "canSpreadIrrigation": true
  },
  "cost": {
   "research": 679

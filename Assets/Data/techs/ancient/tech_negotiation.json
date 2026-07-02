@@ -18,8 +18,9 @@
    ]
   }
  },
- "capabilities": {
-  "openBordersTrading": true
+ "canTrade": {
+  "openBorders": true,
+  "rightOfPassage": true
  },
  "cost": {
   "research": 144

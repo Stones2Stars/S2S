@@ -48,7 +48,7 @@
   }
  },
  "capabilities": {
-  "language": true
+  "hasLanguage": true
  },
  "cost": {
   "research": 3

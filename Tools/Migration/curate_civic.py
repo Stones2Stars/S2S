@@ -166,6 +166,12 @@ POLICIES = {
     "bNoLandmarkAnger": "noLandmarkAnger", "bCommunism": "communism", "bCanDoElection": "canDoElection",
     "bUpgradeAnywhere": "upgradeAnywhere", "bNoNonStateReligionSpread": "noNonStateReligionSpread",
     "bAllowInquisitions": "allowInquisitions", "bDisallowInquisitions": "disallowInquisitions",
+    # Gate-1 data gap closed (code-cut-map audit + owner 2026-07-02): the civic grantor half of the signed
+    # AllReligionsActiveCount pair + FreedomFighterCount (CvPlayer::processCivics :18143/:18245-46). The TRAIT
+    # curator already emits all three; json.md §9: both grantors must emit. ZERO civics carry these flags in
+    # shipped data today (base+modules) -- a zero-delta mapping migration.
+    "bAllReligionsActive": "allReligionsActive", "bBansNonStateReligions": "bansNonStateReligions",
+    "bFreedomFighter": "freedomFighter",
 }
 # --- capability LIST fields -> enables.{key}; each entry is <XType> + a bool value-element. ---
 ENABLE_LISTS = {"SpecialistValids": "specialists", "Hurrys": "hurries", "SpecialBuildingNotRequireds": "specialBuildingsWaived"}

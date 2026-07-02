@@ -56,7 +56,7 @@
   }
  },
  "capabilities": {
-  "desertFarming": true
+  "canFarmDesert": true
  },
  "cost": {
   "research": 7008

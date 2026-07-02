@@ -42,8 +42,8 @@
    ]
   }
  },
- "capabilities": {
-  "permanentAllianceTrading": true
+ "canTrade": {
+  "permanentAlliance": true
  },
  "grants": {
   "firstFreeUnit": "UNIT_GREAT_SPY"

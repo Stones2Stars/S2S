@@ -25,7 +25,7 @@
   }
  },
  "capabilities": {
-  "rebaseAnywhere": true
+  "canRebaseAnywhere": true
  },
  "cost": {
   "research": 13181

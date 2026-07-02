@@ -47,8 +47,9 @@
    ]
   }
  },
- "capabilities": {
-  "waterWork": true
+ "canWorkOn": {
+  "water": true,
+  "ocean": true
  },
  "cost": {
   "research": 17

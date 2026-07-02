@@ -73,6 +73,17 @@
    ]
   }
  },
+ "canTradeOn": {
+  "terrains": [
+   "TERRAIN_COAST",
+   "TERRAIN_COAST_POLAR",
+   "TERRAIN_COAST_TROPICAL",
+   "TERRAIN_COAST_DEEP",
+   "TERRAIN_COAST_DEEP_POLAR",
+   "TERRAIN_COAST_DEEP_TROPICAL",
+   "TERRAIN_LAKE"
+  ]
+ },
  "cost": {
   "research": 110
  },

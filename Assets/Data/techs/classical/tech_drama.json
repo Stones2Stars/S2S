@@ -22,6 +22,9 @@
    ]
   }
  },
+ "capabilities": {
+  "canSetCultureRate": true
+ },
  "cost": {
   "research": 824
  },

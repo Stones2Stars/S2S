@@ -51,7 +51,7 @@
   }
  },
  "capabilities": {
-  "bridgeBuilding": true
+  "canBuildBridges": true
  },
  "cost": {
   "research": 554

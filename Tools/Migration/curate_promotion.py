@@ -161,7 +161,9 @@ CAP_BOOL = {
     "bFreeDrop": "freeDrop", "bOffensiveVictoryMove": "offensiveVictoryMove", "bOneUp": "oneUp",
     "bPillageEspionage": "pillageEspionage", "bPillageMarauder": "pillageMarauder",
     "bPillageOnMove": "pillageOnMove", "bPillageOnVictory": "pillageOnVictory",
-    "bPillageResearch": "pillageResearch", "bCanMovePeaks": "canMovePeaks",
+    # canPassPeaks (was canMovePeaks): dual-plane same-name ruling (owner 2026-07-02, capabilities.md) -- the
+    # promotion grants the unit SKILL; TECH_MOUNTAINEERING grants the empire CAPABILITY under the SAME name.
+    "bPillageResearch": "pillageResearch", "bCanMovePeaks": "canPassPeaks",
     "bCanLeadThroughPeaks": "canLeadThroughPeaks", "bZoneOfControl": "zoneOfControl",
     "bOnslaughtChange": "onslaught", "bParalyze": "paralyze", "bNoSelfHeal": "noSelfHeal",
 }

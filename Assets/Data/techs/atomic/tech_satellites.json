@@ -35,7 +35,7 @@
   }
  },
  "capabilities": {
-  "mapVisible": true
+  "hasWholeMapRevealed": true
  },
  "cost": {
   "research": 13724

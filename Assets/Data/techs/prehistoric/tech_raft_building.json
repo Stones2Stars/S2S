@@ -33,8 +33,13 @@
    ]
   }
  },
+ "canTradeOn": {
+  "terrains": [
+   "TERRAIN_LAKE_SHORE"
+  ]
+ },
  "capabilities": {
-  "riverTrade": true
+  "hasRiverTrade": true
  },
  "cost": {
   "research": 20

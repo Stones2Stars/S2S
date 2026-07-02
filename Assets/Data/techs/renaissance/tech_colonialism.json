@@ -32,7 +32,7 @@
   }
  },
  "capabilities": {
-  "moveFastPeaks": true
+  "canMoveFastOnPeaks": true
  },
  "cost": {
   "research": 2701

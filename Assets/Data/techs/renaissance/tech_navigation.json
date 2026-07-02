@@ -35,6 +35,16 @@
    ]
   }
  },
+ "canTradeOn": {
+  "terrains": [
+   "TERRAIN_OCEAN",
+   "TERRAIN_OCEAN_POLAR",
+   "TERRAIN_OCEAN_TROPICAL",
+   "TERRAIN_TRENCH",
+   "TERRAIN_TRENCH_POLAR",
+   "TERRAIN_TRENCH_TROPICAL"
+  ]
+ },
  "cost": {
   "research": 2701
  },

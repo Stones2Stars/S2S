@@ -37,8 +37,8 @@
    ]
   }
  },
- "capabilities": {
-  "goldTrading": true
+ "canTrade": {
+  "gold": true
  },
  "cost": {
   "research": 499
