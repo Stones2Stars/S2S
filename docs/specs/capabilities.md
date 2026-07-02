@@ -186,16 +186,22 @@ per-terrain `canTradeOn` set, and `canWorkOn.water`. Grounded finds captured:
 - `isCommerceFlexible` additionally gates espionage on met-civs and everything on founded-first-city — runtime UI
   conditions, not capability data.
 
-## ✅ WIRED — FLIP-WITH-NET is the LANDED state (2026-07-02; the counter cut itself is REVERTED, twice-bitten)
+## ✅ CUT LANDED — Gate-3 wire #1 complete (2026-07-02, third pass)
 
-**The 22 CvTeam capability getters RUN ON the cascade** (commit `b3db3c911`): each returns the
-`CascadeCapabilities` verdict (per-team cached union, O(1) precomputed flags + per-terrain bit vector,
-invalidated at `setHasTech`/`reset`), with the NPC guard + game-option compositions preserved as engine
-composition in the getters, and the legacy counters alive as the `[CAPSHADOW]` diff net — clean through live
-turns at **5.85M calls / 0 diverging**. `en_empireHasCapability` should fold into `CascadeCapabilities` (ONE union).
+**The 22 CvTeam capability getters RUN ON the cascade and the 21 legacy counters are DELETED** (commit
+`b1cf1edb7`), proven by a recorded live turn: state loads whole through the named skips, the trade network holds
+across the boundary (stack at its accepted residue), every cut-gate at 0, and the fastest turn pace of the
+campaign. The pieces: `CascadeCapabilities` (per-team cached union, O(1) precomputed flags + per-terrain bit
+vector, invalidated at `setHasTech`/`reset`); NPC guard + game-option compositions preserved in the getters;
+`processTech` keeps the side effects — `updateYield` (peaks), the improvement-validity cache round
+(farming/irrigation/water-work), and the trade-NETWORK recompute (`updatePlotGroups` + `MarkBridgesDirty`) the
+deleted changers carried; serialization retired via **named `WRAPPER_SKIP_ELEMENT`s** (the save doc's
+IGNORE-by-field-name mechanism) with the fields ledgered in **`savemigration.txt`** (repo root — the conversion-
+step list). `en_empireHasCapability` should still fold into `CascadeCapabilities` (ONE union). The `[CAPSHADOW]`
+machinery stays as the net for the pending flips (`isMapCentering`, the commerce sliders, building attributes,
+`hasLanguage`).
 
-**The counter DELETION was attempted and REVERTED (commit `26c8743ee` → revert `6a072c8c9`) on two findings that
-now BIND any future serialized-member cut:**
+**The road here — two reverted attempts whose findings BIND any future serialized-member cut:**
 1. **⛔ Deleting `WRAPPER_READ` entries DESYNCED the save load** — the testsave's counter tags were not skipped
    softly; every read after the first orphaned tag landed wrong and GUTTED the loaded state (no techs, no
    buildable lists; the "every city can't find anything to build" grind). The `cascade-engine-430.md` §5 claim
