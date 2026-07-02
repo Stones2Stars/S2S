@@ -186,19 +186,32 @@ per-terrain `canTradeOn` set, and `canWorkOn.water`. Grounded finds captured:
 - `isCommerceFlexible` additionally gates espionage on met-civs and everything on founded-first-city — runtime UI
   conditions, not capability data.
 
-## ✅ WIRED & LANDED — Gate-3 wire #1 (2026-07-02, attempt 2)
+## ✅ WIRED — FLIP-WITH-NET is the LANDED state (2026-07-02; the counter cut itself is REVERTED, twice-bitten)
 
-**The 22 CvTeam capability getters RUN ON the cascade and the 21 legacy counters are DELETED** (commit
-`26c8743ee`), landed the disciplined way after the reverted first attempt (below): **(1) in-body shadow** —
-legacy authoritative, `[CAPSHADOW]` diff at real call moments → clean at **5.49M calls / 0** (load path + full
-turn, all teams) once the `isNPC()` guard was restored as engine composition; **(2) flip-with-net** — cascade
-authoritative, counters alive as the net → clean through **two live turns (5.85M calls / 0**, every cut-gate 0,
-normal pace); **(3) the counters cut** (side effects preserved: `updateYield` on canPassPeaks, the improvement-
-validity cache round on farming/irrigation/waterWork; NPC guard + game-option compositions stay in the getters;
-CyTeam count API honestly stubbed). Query surface: `CascadeCapabilities` (per-team cached union, O(1) precomputed
-flags + per-terrain bit vector, invalidated at `setHasTech`/`reset`). The `[CAPSHADOW]` machinery STAYS as the
-net for the pending flips (`isMapCentering`, the commerce sliders, building attributes, `hasLanguage`) — and
-`en_empireHasCapability` should fold into `CascadeCapabilities` so there is ONE union.
+**The 22 CvTeam capability getters RUN ON the cascade** (commit `b3db3c911`): each returns the
+`CascadeCapabilities` verdict (per-team cached union, O(1) precomputed flags + per-terrain bit vector,
+invalidated at `setHasTech`/`reset`), with the NPC guard + game-option compositions preserved as engine
+composition in the getters, and the legacy counters alive as the `[CAPSHADOW]` diff net — clean through live
+turns at **5.85M calls / 0 diverging**. `en_empireHasCapability` should fold into `CascadeCapabilities` (ONE union).
+
+**The counter DELETION was attempted and REVERTED (commit `26c8743ee` → revert `6a072c8c9`) on two findings that
+now BIND any future serialized-member cut:**
+1. **⛔ Deleting `WRAPPER_READ` entries DESYNCED the save load** — the testsave's counter tags were not skipped
+   softly; every read after the first orphaned tag landed wrong and GUTTED the loaded state (no techs, no
+   buildable lists; the "every city can't find anything to build" grind). The `cascade-engine-430.md` §5 claim
+   "removing a serialized member is soft" is **WRONG as stated for this path** — verify
+   `CvTaggedSaveFormatWrapper`'s actual unknown-tag semantics before ANY serialization-touching cut. The correct
+   retirement is **two-stage**: (a) drop the `WRAPPER_WRITE` + keep a read-into-discard so old saves still parse;
+   (b) delete the read a save-generation later.
+2. **⛔ The deleted CHANGERS carried side effects the applies audit missed**: `changeTerrainTradeCount` /
+   `changeRiverTradeCount` call **`updatePlotGroups()`** per team player (the trade-network recompute!) and
+   `changeBridgeBuildingCount` marks bridges dirty. Post-cut, `setHasTech` must still fire those when a tech
+   carries the relevant flags — without them the network goes progressively stale (this, WITH the NPC guard,
+   fully explains the first flip's breakage). Audit EVERY deleted function's body for side effects, not just the
+   apply sites.
+
+The `[CAPSHADOW]` machinery stays as the net for the pending flips (`isMapCentering`, the commerce sliders,
+building attributes, `hasLanguage`).
 
 ## ⚠ THE FIRST FLIP ATTEMPT — REVERTED; the wiring lesson (2026-07-02)
 
