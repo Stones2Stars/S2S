@@ -29,6 +29,7 @@
 #include "UI/CvViewport.h"
 #include "Infrastructure/CvDLLInterfaceIFaceBase.h"
 #include "Cascade/CvEventSpine.h" // #430 logging consolidation: route [CIT] through the spine (shadow, CvCity side)
+#include "Cascade/CvCascadeGetterShadow.h" // #430 getter-contract instrumentation (cutover.md rulings 2026-07-02)
 #include "AI/CvCityLogTags.h" // [CIT] tag enums (shared with CvCityAI.cpp -- defined once, see header)
 #include "Infrastructure/CvDLLUtilityIFaceBase.h"
 #include "CvTraitInfo.h"
@@ -11206,9 +11207,14 @@ int CvCity::getYieldRate100(const YieldTypes eYield) const
 	// Specialist yields receive the city yield modifier exactly like worked tiles (#317);
 	// the remaining extra bucket (corporations, per-building yield changes, flat building
 	// yields, per-pop yields) stays unmodified.
-	return std::min(CITY_MAX_YIELD_RATE,std::max(100,
+	const int iRate = std::min(CITY_MAX_YIELD_RATE,std::max(100,
 		(getBaseYieldRate(eYield) + getSpecialistYieldTotal(eYield)) * getBaseYieldRateModifier(eYield)
 		+ 100 * getExtraYield(eYield)));
+	// #430 getter-contract shadow (cutover.md rulings 2026-07-02): cascade-vs-legacy at the real call moment,
+	// once per (city,channel) per turn; a single gated int compare when logging is off. The body flips to the
+	// cascade at clean parity; consumers never rewire.
+	cascadeGetterShadowYield(this, eYield, iRate);
+	return iRate;
 }
 
 int CvCity::getPlotYield(YieldTypes eIndex)	const
@@ -11932,7 +11938,10 @@ int CvCity::getCommerceRateTimes100(CommerceTypes eIndex) const
 	// real state (slider-order-dependent). Recompute fresh via getCommerceRateAtSliderPercent, which handles isDisorder,
 	// runs the full combine, AND refreshes m_aiCommerceRate on its own dirty path. Order-independent. (Perf: a
 	// correctly-dirtied cache is the follow-up.)
-	return getCommerceRateAtSliderPercent(eIndex, GET_PLAYER(getOwner()).getCommercePercent(eIndex));
+	const int iRate = getCommerceRateAtSliderPercent(eIndex, GET_PLAYER(getOwner()).getCommercePercent(eIndex));
+	// #430 getter-contract shadow (cutover.md rulings 2026-07-02) -- see getYieldRate100.
+	cascadeGetterShadowCommerce(this, eIndex, iRate);
+	return iRate;
 }
 
 

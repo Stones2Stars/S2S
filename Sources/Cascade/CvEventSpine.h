@@ -95,6 +95,7 @@ enum SpineDomainTag
 	SD_ENABLER,    // [ENABLER] the "can I?" gate shadow (CvCascadeEnabler)
 	SD_MODIFIER,   // [MODIFIER] the "how much?" percent-stack shadow (CvCascadeModifierMath)
 	SD_GRANTS,     // [GRANTS] the "provisions" consumer (CvCascadeGrants) -- resolves an entity's genuine grants on a DOMAIN event
+	SD_GETTER,     // [GETTER] the getter-contract instrumentation (CvCascadeGetterShadow) -- in-body cascadeValue diff at the real call moment
 	NUM_SPINE_DOMAINS
 };
 
