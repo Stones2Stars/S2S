@@ -1,5 +1,8 @@
 {
  "type": "PROJECT_HUMAN_GENOME_PROJECT",
+ "allowed": {
+  "world": 1
+ },
  "health": {
   "empire": {
    "flat": 1
@@ -26,7 +29,6 @@
   "civilopedia": "TXT_KEY_BUILDING_HUMAN_GENOME_PROJECT_PEDIA",
   "mapCategories": [
    "MAPCATEGORY_EARTH"
-  ],
-  "maxGlobalInstances": 1
+  ]
  }
 }

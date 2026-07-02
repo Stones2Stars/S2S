@@ -1,5 +1,8 @@
 {
  "type": "PROJECT_SS_LIFE_SUPPORT",
+ "allowed": {
+  "team": 1
+ },
  "buildRate": {
   "self": {
    "percent": [
@@ -34,7 +37,6 @@
    "MAPCATEGORY_EARTH"
   ],
   "launchesVictory": "VICTORY_SPACE_RACE",
-  "maxTeamInstances": 1,
   "spaceship": true
  }
 }

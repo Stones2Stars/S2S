@@ -1,5 +1,8 @@
 {
  "type": "PROJECT_THE_INTERNET",
+ "allowed": {
+  "world": 1
+ },
  "buildRate": {
   "self": {
    "percent": [
@@ -53,7 +56,6 @@
   "civilopedia": "TXT_KEY_PROJECT_THE_INTERNET_PEDIA",
   "mapCategories": [
    "MAPCATEGORY_EARTH"
-  ],
-  "maxGlobalInstances": 1
+  ]
  }
 }

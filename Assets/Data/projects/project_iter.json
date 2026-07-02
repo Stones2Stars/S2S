@@ -5,6 +5,9 @@
    "SPECIALBUILDING_D_T_FUSION_POWER_PLANT"
   ]
  },
+ "allowed": {
+  "team": 1
+ },
  "cost": {
   "create": 18440
  },
@@ -21,7 +24,6 @@
   "civilopedia": "TXT_KEY_PROJECT_ITER_PEDIA",
   "mapCategories": [
    "MAPCATEGORY_EARTH"
-  ],
-  "maxTeamInstances": 1
+  ]
  }
 }

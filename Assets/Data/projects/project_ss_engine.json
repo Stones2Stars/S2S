@@ -1,5 +1,8 @@
 {
  "type": "PROJECT_SS_ENGINE",
+ "allowed": {
+  "team": 2
+ },
  "victory": {
   "thresholds": {
    "VICTORY_SPACE_RACE": 2
@@ -24,7 +27,6 @@
    "MAPCATEGORY_EARTH"
   ],
   "launchesVictory": "VICTORY_SPACE_RACE",
-  "maxTeamInstances": 2,
   "spaceship": true
  }
 }

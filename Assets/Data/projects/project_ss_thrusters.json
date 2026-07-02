@@ -1,5 +1,8 @@
 {
  "type": "PROJECT_SS_THRUSTERS",
+ "allowed": {
+  "team": 5
+ },
  "buildRate": {
   "self": {
    "percent": [
@@ -38,7 +41,6 @@
    "MAPCATEGORY_EARTH"
   ],
   "launchesVictory": "VICTORY_SPACE_RACE",
-  "maxTeamInstances": 5,
   "spaceship": true
  }
 }

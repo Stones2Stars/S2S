@@ -1,5 +1,8 @@
 {
  "type": "PROJECT_ENCYCLOPEDIA",
+ "allowed": {
+  "world": 1
+ },
  "diplomacy": {
   "team": {
    "techShare": {
@@ -28,7 +31,6 @@
   "civilopedia": "TXT_KEY_PROJECT_ENCYCLOPEDIA_PEDIA",
   "mapCategories": [
    "MAPCATEGORY_EARTH"
-  ],
-  "maxGlobalInstances": 1
+  ]
  }
 }

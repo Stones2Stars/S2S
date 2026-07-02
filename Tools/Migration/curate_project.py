@@ -73,8 +73,7 @@ TEXT = {"Description": "description", "Civilopedia": "civilopedia"}
 # art tags -> ui/world/sound via ART_BLOCK (CreateSound -> sound.onCompletion; MovieDefineTag -> ui.art.movie.defineTag).
 ART = {"Button", "MovieDefineTag", "CreateSound"}
 # intrinsic identity, with clean names. iCost handled separately (own `cost` section).
-IDENTITY = {"iMaxGlobalInstances": "maxGlobalInstances", "iMaxTeamInstances": "maxTeamInstances",
-            "VictoryPrereq": "launchesVictory", "MapCategoryTypes": "mapCategories", "Categories": "categories"}
+IDENTITY = {"VictoryPrereq": "launchesVictory", "MapCategoryTypes": "mapCategories", "Categories": "categories"}
 # dead structure (no consumer) + derived enabler/prereq edges (store-inverted) -> never authored.
 # (AnyonePrereqProject is NOT dropped -- it maps to a requires.build world-scope atom, handled below.)
 DROP = {"YieldModifiers", "bTechShareWithHalfCivs",
@@ -110,6 +109,7 @@ def _keyed_ints(node):
 
 def curate(typ, rec, store):
     text, fam, grants, art_blocks, identity, victory, cost, requires, leftover = {}, {}, {}, {}, {}, {}, {}, {}, []
+    allowed = OrderedDict()
     enables_special = []   # EveryoneSpecialBuilding -> enables.specialBuildings (unlocks constructibility)
     for c in rec:
         tag, t = c.tag, engine.text(c)
@@ -151,6 +151,14 @@ def curate(typ, rec, store):
             v = int(t) if engine.is_int(t) else (t or None)
             if v not in (None, "", "NONE"):
                 grants[GRANTS[tag]] = v
+        elif tag == "iMaxGlobalInstances":
+            # -> allowed:{world:N} (enabler-spec §5; Gate-1 find 2026-07-02: parked in identity, canCreate over-offered
+            # already-built world projects). -1 = unlimited -> omitted.
+            if engine.is_int(t) and int(t) > 0:
+                allowed["world"] = int(t)
+        elif tag == "iMaxTeamInstances":
+            if engine.is_int(t) and int(t) > 0:
+                allowed["team"] = int(t)
         elif tag == "AnyonePrereqProject":
             # a SINGLE project that must be built by ANY player -> a world-scope presence prereq (owner 2026-07-01;
             # CvPlayer.cpp:6868 blocks when getProjectCreatedCount(project)==0). NOT the `any` combinator (one project).
@@ -181,6 +189,8 @@ def curate(typ, rec, store):
         out["enables"] = OrderedDict((k, enables[k]) for k in sorted(enables))
     if requires:
         out["requires"] = requires
+    if allowed:
+        out["allowed"] = allowed
     for family in FAMILY_ORDER:
         if family in fam:
             out[family] = fam[family]

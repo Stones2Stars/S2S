@@ -1,5 +1,8 @@
 {
  "type": "PROJECT_CURE_FOR_CANCER",
+ "allowed": {
+  "world": 1
+ },
  "happiness": {
   "empire": {
    "flat": 1
@@ -29,7 +32,6 @@
   "civilopedia": "TXT_KEY_BUILDING_CANCER_PEDIA",
   "mapCategories": [
    "MAPCATEGORY_EARTH"
-  ],
-  "maxGlobalInstances": 1
+  ]
  }
 }

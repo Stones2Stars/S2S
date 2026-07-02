@@ -1,5 +1,8 @@
 {
  "type": "PROJECT_EDEN_PROJECT",
+ "allowed": {
+  "world": 1
+ },
  "cost": {
   "create": 55240
  },
@@ -16,7 +19,6 @@
   "civilopedia": "TXT_KEY_PROJECT_EDEN_PROJECT_PEDIA",
   "mapCategories": [
    "MAPCATEGORY_EARTH"
-  ],
-  "maxGlobalInstances": 1
+  ]
  }
 }

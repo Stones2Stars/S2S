@@ -1,5 +1,8 @@
 {
  "type": "PROJECT_LONGEVITY",
+ "allowed": {
+  "world": 1
+ },
  "happiness": {
   "empire": {
    "flat": 1
@@ -44,7 +47,6 @@
   "civilopedia": "TXT_KEY_BUILDING_LONGEVITY_PEDIA",
   "mapCategories": [
    "MAPCATEGORY_EARTH"
-  ],
-  "maxGlobalInstances": 1
+  ]
  }
 }

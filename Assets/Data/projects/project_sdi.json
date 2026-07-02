@@ -1,5 +1,8 @@
 {
  "type": "PROJECT_SDI",
+ "allowed": {
+  "team": 1
+ },
  "buildRate": {
   "self": {
    "percent": [
@@ -47,7 +50,6 @@
   "civilopedia": "TXT_KEY_PROJECT_SDI_PEDIA",
   "mapCategories": [
    "MAPCATEGORY_EARTH"
-  ],
-  "maxTeamInstances": 1
+  ]
  }
 }

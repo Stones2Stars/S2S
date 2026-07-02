@@ -1,5 +1,8 @@
 {
  "type": "PROJECT_AA_MISSILE_DEFENSES",
+ "allowed": {
+  "team": 1
+ },
  "buildRate": {
   "self": {
    "percent": [
@@ -44,7 +47,6 @@
   "civilopedia": "TXT_KEY_PROJECT_MISSILE_DEFENCE_PEDIA",
   "mapCategories": [
    "MAPCATEGORY_EARTH"
-  ],
-  "maxTeamInstances": 1
+  ]
  }
 }

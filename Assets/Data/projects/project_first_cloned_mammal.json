@@ -5,6 +5,9 @@
    "SPECIALBUILDING_CLONING_LABORATORY"
   ]
  },
+ "allowed": {
+  "world": 1
+ },
  "buildRate": {
   "self": {
    "percent": [
@@ -32,7 +35,6 @@
   "civilopedia": "TXT_KEY_PROJECT_FIRST_CLONED_MAMMAL_PEDIA",
   "mapCategories": [
    "MAPCATEGORY_EARTH"
-  ],
-  "maxGlobalInstances": 1
+  ]
  }
 }

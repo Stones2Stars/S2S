@@ -5,6 +5,9 @@
    "SPECIALBUILDING_SPACE_LABORATORY"
   ]
  },
+ "allowed": {
+  "team": 1
+ },
  "buildRate": {
   "self": {
    "percent": [
@@ -35,7 +38,6 @@
   "civilopedia": "TXT_KEY_PROJECT_INTERNATIONAL_SPACE_STATION_PEDIA",
   "mapCategories": [
    "MAPCATEGORY_EARTH"
-  ],
-  "maxTeamInstances": 1
+  ]
  }
 }

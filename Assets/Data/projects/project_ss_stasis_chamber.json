@@ -1,5 +1,8 @@
 {
  "type": "PROJECT_SS_STASIS_CHAMBER",
+ "allowed": {
+  "team": 1
+ },
  "victory": {
   "thresholds": {
    "VICTORY_SPACE_RACE": 1
@@ -20,7 +23,6 @@
    "MAPCATEGORY_EARTH"
   ],
   "launchesVictory": "VICTORY_SPACE_RACE",
-  "maxTeamInstances": 1,
   "spaceship": true
  }
 }

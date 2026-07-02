@@ -5,6 +5,9 @@
    "SPECIALBUILDING_DEEP_SPACE_RESEARCH_INSTITUTE"
   ]
  },
+ "allowed": {
+  "world": 1
+ },
  "buildRate": {
   "self": {
    "percent": [
@@ -35,7 +38,6 @@
   "civilopedia": "TXT_KEY_PROJECT_HUBBLE_SPACE_TELESCOPE_PEDIA",
   "mapCategories": [
    "MAPCATEGORY_EARTH"
-  ],
-  "maxGlobalInstances": 1
+  ]
  }
 }
