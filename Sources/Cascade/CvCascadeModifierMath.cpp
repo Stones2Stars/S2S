@@ -208,7 +208,7 @@ void cvCascadeModifierShadow()
 				// §1 RATE shadow: the full assembled rate vs legacy getYieldRate100 -- the HOLISTIC modifier diff (the
 				// real verification, modifier-machine §0: judged after the WHOLE calc is in, port-fidelity vs StoneBase).
 				CvCascadeEvalCtx rec;
-				rec.city = pCity; rec.player = &player; rec.team = &GET_TEAM(player.getTeam());
+				rec.city = pCity; rec.plot = pCity->plot(); rec.player = &player; rec.team = &GET_TEAM(player.getTeam());
 				std::set<int> recActiveB, recProvB;   // cascade-COMPUTED active set + in-vicinity provides (dormancy derived from operate, not the engine)
 				EnablerKernel::computeCityBuildingFacts(pCity, rec, recActiveB, recProvB);
 				rec.activeBuildings = &recActiveB; rec.vicinityProvidedBonuses = &recProvB;
@@ -292,7 +292,7 @@ void cvCascadeModifierShadow()
 		{
 			++iCityN;
 			CvCascadeEvalCtx cec;
-			cec.city = pCity; cec.player = &player; cec.team = &GET_TEAM(player.getTeam());
+			cec.city = pCity; cec.plot = pCity->plot(); cec.player = &player; cec.team = &GET_TEAM(player.getTeam());
 			std::set<int> cecActiveB, cecProvB;   // cascade-COMPUTED active set + in-vicinity provides (dormancy derived from operate) -- alive for the whole city's calc
 			EnablerKernel::computeCityBuildingFacts(pCity, cec, cecActiveB, cecProvB);
 			cec.activeBuildings = &cecActiveB; cec.vicinityProvidedBonuses = &cecProvB;

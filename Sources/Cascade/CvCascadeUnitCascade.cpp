@@ -74,7 +74,7 @@ void UnitCascade::trainable(const CvCity* pCity, const CvPlayer& kPlayer, const 
 {
 	std::set<int> waived;
 	BuildingCascade::augmentWaived(kPlayer, kTeam, waived);   // SAME AugmentState waiver the building cascade uses (shared evaluator)
-	CvCascadeEvalCtx ec; ec.city = pCity; ec.player = &kPlayer; ec.team = &kTeam; ec.waivedPrereqBuildings = &waived;
+	CvCascadeEvalCtx ec; ec.city = pCity; ec.plot = pCity->plot(); ec.player = &kPlayer; ec.team = &kTeam; ec.waivedPrereqBuildings = &waived;
 	// The two per-city building facts (active set + in-vicinity `provides` supply, json §5a): a herd/tamed-animal
 	// building that provides e.g. HORSE ⇒ HORSE in-vicinity, so a horse unit's `requires` {BONUS, connection:vicinity}
 	// trains. Computed from the cascade, NOT the engine's hasVicinityBonus (DEC-calc-zero-ride-in).

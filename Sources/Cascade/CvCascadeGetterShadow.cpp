@@ -100,7 +100,7 @@ static void gs_check(const CvCity* pCity, int iPlane, int iChannel, int iLegacy1
 	s_bInShadow = true;
 	const CvPlayer& player = GET_PLAYER(pCity->getOwner());
 	CvCascadeEvalCtx ctx;
-	ctx.city = pCity; ctx.player = &player; ctx.team = &GET_TEAM(player.getTeam());
+	ctx.city = pCity; ctx.plot = pCity->plot(); ctx.player = &player; ctx.team = &GET_TEAM(player.getTeam());
 	std::set<int> activeB, provB;   // cascade-COMPUTED active buildings + vicinity provides (never the engine's dormancy verdict)
 	EnablerKernel::computeCityBuildingFacts(pCity, ctx, activeB, provB);
 	ctx.activeBuildings = &activeB; ctx.vicinityProvidedBonuses = &provB;

@@ -112,7 +112,7 @@ long CommerceCalc::buildingKeyed(const std::string& channel, const CvCity* pCity
 long CommerceCalc::shrine(const std::string& channel, const CvCity* pCity)
 {
 	CvCascadeEvalCtx ec;   // local eval ctx (this package takes no ec) -- compute the active set for the presence test
-	ec.city = pCity; ec.player = &GET_PLAYER(pCity->getOwner()); ec.team = &GET_TEAM(GET_PLAYER(pCity->getOwner()).getTeam());
+	ec.city = pCity; ec.plot = pCity->plot(); ec.player = &GET_PLAYER(pCity->getOwner()); ec.team = &GET_TEAM(GET_PLAYER(pCity->getOwner()).getTeam());
 	std::set<int> activeB, provB; EnablerKernel::computeCityBuildingFacts(pCity, ec, activeB, provB);
 	ec.activeBuildings = &activeB; ec.vicinityProvidedBonuses = &provB;
 	long sum = 0;
@@ -164,7 +164,7 @@ long CommerceCalc::stateReligion(const std::string& channel, const CvCity* pCity
 	const ReligionTypes eState = player.getStateReligion();
 	if (eState == NO_RELIGION) return 0;
 	CvCascadeEvalCtx ec;   // local eval ctx (this package takes no ec) -- compute the active set for the match test
-	ec.city = pCity; ec.player = &player; ec.team = &GET_TEAM(player.getTeam());
+	ec.city = pCity; ec.plot = pCity->plot(); ec.player = &player; ec.team = &GET_TEAM(player.getTeam());
 	std::set<int> activeB, provB; EnablerKernel::computeCityBuildingFacts(pCity, ec, activeB, provB);
 	ec.activeBuildings = &activeB; ec.vicinityProvidedBonuses = &provB;
 	const int nB = GC.getNumBuildingInfos();

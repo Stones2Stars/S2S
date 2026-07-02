@@ -30,7 +30,7 @@ int PercentStack::percentStack(const std::string& channel, const CvCity* pCity, 
 	PerfAccumTimer perfT(CascadePerf::pctStackMs);
 	const CvPlayer& player = GET_PLAYER(pCity->getOwner());
 	CvCascadeEvalCtx ec;                               // the live-engine eval target for the deposit conditions
-	ec.city = pCity; ec.player = &player; ec.team = &GET_TEAM(player.getTeam());
+	ec.city = pCity; ec.plot = pCity->plot(); ec.player = &player; ec.team = &GET_TEAM(player.getTeam());
 	std::set<int> activeB, provB;                      // cascade-COMPUTED active set + in-vicinity provides (dormancy derived from operate, not the engine)
 	EnablerKernel::computeCityBuildingFacts(pCity, ec, activeB, provB);
 	ec.activeBuildings = &activeB; ec.vicinityProvidedBonuses = &provB;

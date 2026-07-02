@@ -101,7 +101,7 @@ void BuildingCascade::buildable(const CvCity* pCity, const CvPlayer& kPlayer, co
 {
 	std::set<int> waived;
 	augmentWaived(kPlayer, kTeam, waived);
-	CvCascadeEvalCtx ec; ec.city = pCity; ec.player = &kPlayer; ec.team = &kTeam; ec.waivedPrereqBuildings = &waived;
+	CvCascadeEvalCtx ec; ec.city = pCity; ec.plot = pCity->plot(); ec.player = &kPlayer; ec.team = &kTeam; ec.waivedPrereqBuildings = &waived;
 	// The two per-city building facts (active set + in-vicinity `provides` supply, json §5a) so a requires with an
 	// ACTIVE-building or vicinity-provided BONUS predicate resolves from the cascade, not the engine (DEC-calc-zero-ride-in).
 	std::set<int> activeB, provB; EnablerKernel::computeCityBuildingFacts(pCity, ec, activeB, provB);
