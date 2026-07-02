@@ -25,20 +25,24 @@
 #include "AI/CvTeamAI.h"              // GET_TEAM -- the eval ctx's team
 #include "CvCascadeConditionEval.h"   // CvCascadeEvalCtx
 #include "CvCascadeEnablerKernel.h"   // EnablerKernel::computeCityBuildingFacts -- the cascade-computed active-building set + vicinity provides
+#include "CvJsonInfo.h"               // the mapped info (requiresOperate/dormantTriggers) -- the dorm-attribution diagnostic
+#include "Repos/InfoRepo.h"           // InfoRepo<CvBuildingInfo> -- ditto
 #include "CvEventSpine.h"             // the #430 dispatch spine -- the shadow diff rides it (SD_MODIFIER), NOT direct gDLL->logMsg
 #include <set>
+#include <string>
 
 // ===================== [MODIFIER] spine domain (logging.md §4: logging is a spine CONSUMER) =====================
 // The percent-stack shadow's diff + summary emit EVENTKIND_DIAGNOSTIC events through the event spine (NOT direct
 // gDLL->logMsg) -- the CvCascadeLogConsumer renders the raw typed fields + tees to /events, gated by level.
 // Per-emitter domain (SD_MODIFIER), one file (Cascade.log).
-enum MdEvt { MDE_DIFF = 1, MDE_SHADOW, MDE_RATE };
+enum MdEvt { MDE_DIFF = 1, MDE_SHADOW, MDE_RATE, MDE_DORM };
 enum MdFld
 {
 	MDF_WHO = 1, MDF_CHANNEL, MDF_CASC, MDF_BC, MDF_BA, MDF_BE, MDF_CIV, MDF_TR,   // diff: cascade buckets
 	MDF_LEG, MDF_BLD, MDF_BON, MDF_POW, MDF_EVT, MDF_PLY, MDF_CAP,                 // diff: legacy sub-terms
 	MDF_CHECKED, MDF_DIVERGING,                                                     // summary
-	MDF_RATEC, MDF_RATEL                                                            // §1 rate diff: cascade vs legacy ×100
+	MDF_RATEC, MDF_RATEL,                                                           // §1 rate diff: cascade vs legacy ×100
+	MDF_PRESENT, MDF_ACTIVE, MDF_DORMOP, MDF_DORMTRIG, MDF_ENGDISABLED, MDF_SAMPLE  // dorm attribution (MDE_DORM)
 };
 static const char* mm_prefix(int evt)
 {
@@ -47,6 +51,7 @@ static const char* mm_prefix(int evt)
 	case MDE_DIFF:   return "[MODIFIER/diff]";
 	case MDE_SHADOW: return "[MODIFIER/shadow]";
 	case MDE_RATE:   return "[MODIFIER/rate]";
+	case MDE_DORM:   return "[MODIFIER/dorm]";
 	default:         return "[MODIFIER]";
 	}
 }
@@ -74,6 +79,12 @@ static const char* mm_field(int tag, SpineFieldType* peType)
 	case MDF_DIVERGING: return "diverging";
 	case MDF_RATEC:     return "casc100";
 	case MDF_RATEL:     return "leg100";
+	case MDF_PRESENT:     return "present";
+	case MDF_ACTIVE:      return "active";
+	case MDF_DORMOP:      return "dormOperate";
+	case MDF_DORMTRIG:    return "dormTrigger";
+	case MDF_ENGDISABLED: return "engDisabled";
+	case MDF_SAMPLE:      *peType = SFT_STR; return "sample";
 	default:            return NULL;
 	}
 }
@@ -142,6 +153,45 @@ void cvCascadeModifierShadow()
 				std::set<int> recActiveB, recProvB;   // cascade-COMPUTED active set + in-vicinity provides (dormancy derived from operate, not the engine)
 				EnablerKernel::computeCityBuildingFacts(pCity, rec, recActiveB, recProvB);
 				rec.activeBuildings = &recActiveB; rec.vicinityProvidedBonuses = &recProvB;
+
+				// [MODIFIER/dorm] -- DORMANCY ATTRIBUTION (2026-07-02, the Orwell bar: emit before hypothesising).
+				// Re-derives each present building's cascade dorm verdict WITH its cause (operate-failed vs
+				// trigger-dormed) and diffs against the engine's disabled verdict at the comparison boundary.
+				// One line per sampled city (y==0 only, so once not thrice); samples list DISAGREEING buildings.
+				if (y == 0)
+				{
+					CvCascadeEvalCtx recOp = rec; recOp.activeBuildings = NULL;   // mirror computeCityBuildingFacts' operate ctx
+					CvCascadeEvalFlags dormFlags;
+					int nPresent = 0, nDormOp = 0, nDormTrig = 0, nEngDisabled = 0;
+					std::string sSample;
+					for (int b = 0; b < GC.getNumBuildingInfos(); ++b)
+					{
+						if (!pCity->hasBuilding((BuildingTypes)b)) continue;
+						++nPresent;
+						const CvJsonInfo* jb = InfoRepo<CvBuildingInfo>::get().get(b);
+						bool bDormOp = (jb != NULL && jb->requiresOperate != NULL && !cascadeEvalCondition(jb->requiresOperate, recOp, dormFlags));
+						bool bDormTrig = false;
+						if (!bDormOp && jb != NULL)
+							for (size_t i = 0; i < jb->dormantTriggers.size(); ++i)
+								if (pCity->hasBuilding((BuildingTypes)jb->dormantTriggers[i])) { bDormTrig = true; break; }
+						if (bDormOp) ++nDormOp;
+						if (bDormTrig) ++nDormTrig;
+						const bool bEngActive = pCity->isActiveBuilding((BuildingTypes)b);
+						if (!bEngActive) ++nEngDisabled;
+						const bool bCascActive = !bDormOp && !bDormTrig;
+						if (bCascActive != bEngActive && sSample.size() < 360)   // DISAGREEMENTS only, capped
+						{
+							if (!sSample.empty()) sSample += "|";
+							sSample += GC.getBuildingInfo((BuildingTypes)b).getType();
+							sSample += bCascActive ? ":engOnlyDorm" : (bDormOp ? ":cascDormOperate" : ":cascDormTrigger");
+						}
+					}
+					eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_MODIFIER, MDE_DORM, 1)
+						.addWStr(MDF_WHO, pCity->getName().GetCString())
+						.addI(MDF_PRESENT, nPresent).addI(MDF_ACTIVE, (int)recActiveB.size())
+						.addI(MDF_DORMOP, nDormOp).addI(MDF_DORMTRIG, nDormTrig).addI(MDF_ENGDISABLED, nEngDisabled)
+						.addStr(MDF_SAMPLE, sSample.c_str()));
+				}
 				const long cascRate = YieldRate::yieldRate100(aszChannel[y], eY, pCity, rec);
 				const int legRate = pCity->getYieldRate100(eY);
 				if (cascRate != (long)legRate)
