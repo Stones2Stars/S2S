@@ -64,11 +64,17 @@ mapping: [`code-cut-map.md`](code-cut-map.md) §Rulings addendum):
       logging the cascade's answer against the legacy return **at the real call moment** — the shadow rides the
       actual consumer calls (per validation.md's end-turn discipline). Gate + aggregate like the existing
       `[ENABLER/shadow]` pattern (per-turn diverging/checked counts, capped samples) — these getters are hot paths.
-      **✅ LIVE (2026-07-02) for the modifier pair** — `CvCity::getYieldRate100` + `getCommerceRateTimes100` via
-      `Cascade/CvCascadeGetterShadow.{h,cpp}` (`[GETTER/diff]` + per-turn `[GETTER/shadow]` summary, `SD_GETTER`):
-      once per (city,channel) per turn at the first real call (full-city coverage, memoized), reentrancy-guarded,
-      compute-capped (1024/turn), a single gated int compare when logging is off. Extend the same hooks per getter
-      as its cascade counterpart lands.
+      **✅ LIVE (2026-07-02) for the modifier pair**, then **⚡ FLIPPED the same day (owner: "lets flip … to see
+      what happens"; perf churn accepted — "we are in essence calculating twice"; the test-save loop makes failure
+      free):** `CvCity::getYieldRate100` + `getCommerceRateTimes100` now RETURN the cascade value in a running
+      game via **`Cascade/CvCascadeRateService`** (`CascadeRates` — the ONE event-invalidated rate memo: per-city
+      version bumped by that city's building/pop/specialist/worked-plot mutators, a global epoch on
+      tech/civic/golden-age, a commerce epoch on slider moves, turn-stamped self-heal; facts evict alongside).
+      The legacy expressions stay in-body as `get*100Legacy()` — the `[GETTER]` net oracle (now a plain compare,
+      no compute cap) + the one-commit rollback; the doTurn `[MODIFIER]` shadow oracles re-pointed to the Legacy
+      siblings. The LOAD path stays legacy (flip arms at final-init). ⚠ The commerce oracle chain reads the
+      flipped yield getter, so the commerce net isolates the commerce-STAGE divergence only. Invalidation is
+      coarse v1 — the armed net MEASURES residual staleness as attributable diff lines.
    2. **Flip** — at clean parity the getter BODY returns the cascade value; the legacy accumulator behind it is
       deleted. **Consumers are never rewired** (this IS the answer to the getYieldRate100-vs-its-consumers
       question: rewire the body, not the call sites).
