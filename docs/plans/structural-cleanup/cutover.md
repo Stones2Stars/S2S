@@ -72,6 +72,19 @@ mapping: [`code-cut-map.md`](code-cut-map.md) §Rulings addendum):
    2. **Flip** — at clean parity the getter BODY returns the cascade value; the legacy accumulator behind it is
       deleted. **Consumers are never rewired** (this IS the answer to the getYieldRate100-vs-its-consumers
       question: rewire the body, not the call sites).
+      **⚡ FLIP ATTEMPT #1 (2026-07-02, commit `71b977e27` → REVERTED `899705ec6`) — the finding that gates the
+      real flip: the §1 ACCUMULATOR SUBSTRATE must be built first.** The modifier pair was flipped with a full
+      net (a `CascadeRates` service: event-invalidated memo — per-city version + tech/civic/GA epochs + slider
+      commerce-epoch + turn-stamp self-heal; legacy kept in-body as `get*100Legacy()` oracles; load path legacy).
+      Values were RIGHT (pre-turn city reads sane), but the turn ran **25+ minutes**: what is in C++ is the
+      StoneBase **parity CALCULATOR** (a from-scratch source re-walk, ~25ms/compute), not modifier.md §1's
+      standing accumulator machine ("the target … never re-walks the sources"). Under AI churn every
+      invalidation (techs ×11 players, slider moves, citizen juggling) degenerated to whole-city re-walks, and
+      the UI reads rates **every frame** (`game.update.accum` alone burned 209s). A cache over a calculator
+      cannot fix this — **the pre-flip increment is the §1 substrate**: standing slots per (city, channel);
+      the event spine's domain events apply THAT source's deposit/withdraw deltas; a bounded per-turn pass
+      re-checks conditioned deposits (§3 dormancy); the getter reads the slot O(1). The revert restored the
+      shadow-era instrument; the flip returns when the substrate exists.
    3. **Self-containment dissolves at the contract level** — the cascade reading a sibling getter (`hasTrait`,
       `isPower`, `isGovernmentCenter`, …) is legitimate because each getter is itself cascade-backed after its
       flip. Getters over genuinely RAW saved state (`isGoldenAge`, `isDisorder`, trait membership, occupation/
