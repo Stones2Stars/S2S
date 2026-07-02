@@ -49,6 +49,29 @@ int YieldBasePackages::basePlot(const std::string& channel, YieldTypes eY, const
 	const int lessThreshold  = MMKernel::minPosThreshold("lessYieldThreshold", channel, player, ec);
 	const int nB = GC.getNumBuildingInfos();
 
+	// PER-CHANNEL BUILDING-CANDIDATE CACHE (perf 2026-07-02, the plotcalc hunt): the per-plot loop below used to
+	// walk ALL ~5202 buildings PER WORKED PLOT (x3 keyed-deposit walks each) -- the measured ~164ms per rate
+	// compute and ~430k condition evals per turn. Which buildings carry ANY deposit for this channel is STATIC
+	// data (readJson-mapped once per process), so the candidate list is computed once per channel and the plot
+	// loop walks candidates only. Over-approximate on purpose (any deposit prefixed "<channel>." qualifies) --
+	// correctness-identical, since non-matching deposits contribute 0 through the keyed walks anyway.
+	static std::map<std::string, std::vector<int> > s_chanCands;   // function-local static in a .cpp (NOT header-inline)
+	std::map<std::string, std::vector<int> >::iterator ccIt = s_chanCands.find(channel);
+	if (ccIt == s_chanCands.end())
+	{
+		std::vector<int> cands;
+		const std::string pfx = channel + ".";
+		for (int b = 0; b < nB; ++b)
+		{
+			const CvJsonInfo* db = InfoRepo<CvBuildingInfo>::get().get(b);
+			if (db == NULL) continue;
+			for (size_t di = 0; di < db->deposits.size(); ++di)
+				if (db->deposits[di].address.compare(0, pfx.size(), pfx) == 0) { cands.push_back(b); break; }
+		}
+		ccIt = s_chanCands.insert(std::make_pair(channel, cands)).first;
+	}
+	const std::vector<int>& chanCands = ccIt->second;
+
 	int total = 0;
 	for (int iI = 0; iI < NUM_CITY_PLOTS; ++iI)
 	{
@@ -101,8 +124,9 @@ int YieldBasePackages::basePlot(const std::string& channel, YieldTypes eY, const
 		// keyed building/civic/trait deposits, split by engine application stage (CITY-scope keyed lands in the running
 		// pre-improvement yield; EMPIRE-scope rolls down; the improvement-keyed empire part moves inside the floor).
 		int keyedCity = 0, keyedEmpire = 0, improvementKeyedEmpire = 0, plotsTarget = 0;
-		for (int b = 0; b < nB; ++b)
+		for (size_t ci = 0; ci < chanCands.size(); ++ci)   // channel-relevant buildings only (see the candidate cache above)
 		{
+			const int b = chanCands[ci];
 			const BuildingTypes eB = (BuildingTypes)b;
 			const bool active = cascadeIsBuildingActive((int)eB, ec);
 			const bool owned = player.getBuildingCount(eB) > 0;
