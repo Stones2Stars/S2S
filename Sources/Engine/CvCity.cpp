@@ -29,8 +29,7 @@
 #include "UI/CvViewport.h"
 #include "Infrastructure/CvDLLInterfaceIFaceBase.h"
 #include "Cascade/CvEventSpine.h" // #430 logging consolidation: route [CIT] through the spine (shadow, CvCity side)
-#include "Cascade/CvCascadeGetterShadow.h" // #430 getter-contract NET (cutover.md rulings 2026-07-02; flipped 2026-07-02)
-#include "Cascade/CvCascadeRateService.h"  // #430 CascadeRates -- the flipped getters' authoritative rate source
+#include "Cascade/CvCascadeGetterShadow.h" // #430 getter-contract instrumentation (cutover.md rulings 2026-07-02)
 #include "AI/CvCityLogTags.h" // [CIT] tag enums (shared with CvCityAI.cpp -- defined once, see header)
 #include "Infrastructure/CvDLLUtilityIFaceBase.h"
 #include "CvTraitInfo.h"
@@ -4528,7 +4527,6 @@ void CvCity::processBuilding(const BuildingTypes eBuilding, const int iChange, c
 {
 	PROFILE_FUNC();
 	FAssert(iChange == 1 || iChange == -1);
-	CascadeRates::invalidateCity(this);   // #430 flipped-getter freshness: building set changed -> rates + facts stale
 
 	// Toffer - Sanity control
 	if (iChange == -1)
@@ -6899,7 +6897,6 @@ void CvCity::setPopulation(int iNewValue, bool bNormal)
 		return;
 	}
 	m_iPopulation = iNewValue;
-	CascadeRates::invalidateCity(this);   // #430 flipped-getter freshness: population feeds per-pop terms + operate conditions
 
 	FASSERT_NOT_NEGATIVE(iNewValue);
 
@@ -11204,31 +11201,20 @@ int CvCity::getYieldRate(const YieldTypes eYield) const
 	return getYieldRate100(eYield) / 100;
 }
 
-int CvCity::getYieldRate100Legacy(const YieldTypes eYield) const
-{
-	// Specialist yields receive the city yield modifier exactly like worked tiles (#317);
-	// the remaining extra bucket (corporations, per-building yield changes, flat building
-	// yields, per-pop yields) stays unmodified.
-	return std::min(CITY_MAX_YIELD_RATE,std::max(100,
-		(getBaseYieldRate(eYield) + getSpecialistYieldTotal(eYield)) * getBaseYieldRateModifier(eYield)
-		+ 100 * getExtraYield(eYield)));
-}
-
 int CvCity::getYieldRate100(const YieldTypes eYield) const
 {
 	PROFILE_FUNC();
-	const int iLegacy = getYieldRate100Legacy(eYield);
-	// #430 FLIP-WITH-NET (owner 2026-07-02, "lets flip ... to see what happens"): in a running game the CASCADE
-	// rate is authoritative (CascadeRates -- the event-invalidated memo over the §1 assembler); the legacy
-	// expression above stays as the [GETTER] net oracle + the one-commit rollback. The LOAD path stays legacy
-	// (cascade computes during load recalcs dragged loading hard -- the flip arms at final-init).
-	if (!GC.getGame().isFinalInitialized())
-	{
-		return iLegacy;
-	}
-	const long lCascade = CascadeRates::yieldRate100(this, eYield);
-	cascadeGetterNetYield(this, eYield, lCascade, iLegacy);
-	return (int)lCascade;
+	// Specialist yields receive the city yield modifier exactly like worked tiles (#317);
+	// the remaining extra bucket (corporations, per-building yield changes, flat building
+	// yields, per-pop yields) stays unmodified.
+	const int iRate = std::min(CITY_MAX_YIELD_RATE,std::max(100,
+		(getBaseYieldRate(eYield) + getSpecialistYieldTotal(eYield)) * getBaseYieldRateModifier(eYield)
+		+ 100 * getExtraYield(eYield)));
+	// #430 getter-contract shadow (cutover.md rulings 2026-07-02): cascade-vs-legacy at the real call moment,
+	// once per (city,channel) per turn; a single gated int compare when logging is off. The body flips to the
+	// cascade at clean parity; consumers never rewire.
+	cascadeGetterShadowYield(this, eYield, iRate);
+	return iRate;
 }
 
 int CvCity::getPlotYield(YieldTypes eIndex)	const
@@ -11942,30 +11928,20 @@ int CvCity::getCommerceRate(CommerceTypes eIndex) const
 	return getCommerceRateTimes100(eIndex) / 100;
 }
 
-int CvCity::getCommerceRateTimes100Legacy(CommerceTypes eIndex) const
-{
-	FASSERT_BOUNDS(0, NUM_COMMERCE_TYPES, eIndex);
-	// RECOMPUTE-ON-READ from the CURRENT slider (deterministic; owner ruling 2026-06-28 caching pattern, same as
-	// getBuildingCommerce100/getSpecialistCommerce): getCommerceRateAtSliderPercent handles isDisorder, runs the
-	// full combine, AND refreshes m_aiCommerceRate on its own dirty path. Order-independent.
-	// ⚠ Post-flip this ORACLE chain reads the FLIPPED yield getter (getCommerceFromPercent -> getYieldRate100),
-	// so the commerce [GETTER] net isolates the COMMERCE-stage divergence only -- the yield stage nets on its own leg.
-	return getCommerceRateAtSliderPercent(eIndex, GET_PLAYER(getOwner()).getCommercePercent(eIndex));
-}
-
 int CvCity::getCommerceRateTimes100(CommerceTypes eIndex) const
 {
 	PROFILE_FUNC();
 	FASSERT_BOUNDS(0, NUM_COMMERCE_TYPES, eIndex);
-	const int iLegacy = getCommerceRateTimes100Legacy(eIndex);
-	// #430 FLIP-WITH-NET (owner 2026-07-02) -- see getYieldRate100.
-	if (!GC.getGame().isFinalInitialized())
-	{
-		return iLegacy;
-	}
-	const long lCascade = CascadeRates::commerceRate100(this, eIndex);
-	cascadeGetterNetCommerce(this, eIndex, lCascade, iLegacy);
-	return (int)lCascade;
+	// RECOMPUTE-ON-READ from the CURRENT slider (deterministic; owner ruling 2026-06-28 caching pattern, same as
+	// getBuildingCommerce100/getSpecialistCommerce). The cached m_aiCommerceRate went stale when the slider
+	// (getCommercePercent) / yield / modifier changed without setCommerceDirty firing -> the returned rate lagged the
+	// real state (slider-order-dependent). Recompute fresh via getCommerceRateAtSliderPercent, which handles isDisorder,
+	// runs the full combine, AND refreshes m_aiCommerceRate on its own dirty path. Order-independent. (Perf: a
+	// correctly-dirtied cache is the follow-up.)
+	const int iRate = getCommerceRateAtSliderPercent(eIndex, GET_PLAYER(getOwner()).getCommercePercent(eIndex));
+	// #430 getter-contract shadow (cutover.md rulings 2026-07-02) -- see getYieldRate100.
+	cascadeGetterShadowCommerce(this, eIndex, iRate);
+	return iRate;
 }
 
 
@@ -14085,7 +14061,6 @@ void CvCity::setSpecialistCount(SpecialistTypes eIndex, int iNewValue)
 	{
 		m_paiSpecialistCount[eIndex] = iNewValue;
 		FASSERT_NOT_NEGATIVE(getSpecialistCount(eIndex));
-		CascadeRates::invalidateCityRates(this);   // #430 flipped-getter freshness: specialist terms feed the rate
 
 		changeSpecialistPopulation(iNewValue - iOldValue);
 		processSpecialist(eIndex, (iNewValue - iOldValue));
@@ -14522,7 +14497,6 @@ void CvCity::setWorkingPlot(int iIndex, bool bNewValue)
 	if (isWorkingPlot(iIndex) != bNewValue)
 	{
 		m_pabWorkingPlot[iIndex] = bNewValue;
-		CascadeRates::invalidateCityRates(this);   // #430 flipped-getter freshness: worked plots feed the base package
 
 		processWorkingPlot(iIndex, bNewValue ? 1 : -1);
 		if (bNewValue)

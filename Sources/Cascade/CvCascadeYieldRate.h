@@ -22,9 +22,11 @@ public:
 	// All §1 BASE/AFTER terms now ported (PlotPackage + Specialist + trade + free-city + golden-age + building-flat); the
 	// combine + clamp mirror StoneBase YieldRate.cs (the verified-final order). The holistic shadow (vs getYieldRate100)
 	// follows; per StoneBase strategy (modifier-machine §0) parity is judged AFTER the whole calc is in.
-	// RAW compute -- no memo here: CascadeRates (the flipped-getter service) owns the ONE event-invalidated
-	// rate memo (2026-07-02; a second turn-scoped memo under it would serve stale).
 	static long yieldRate100(const std::string& channel, YieldTypes eY, const CvCity* pCity, const CvCascadeEvalCtx& ec);
+	// Drop the turn-scoped rate memo (perf 2026-07-02). The doTurn SHADOW calls this first so its comparison is
+	// temporally consistent -- the memo may hold values frozen from EARLY-turn calls (the getter instrument), and
+	// comparing those against END-of-turn legacy read as false divergences (memo skew).
+	static void memoClear();
 };
 
 #endif // CV_CASCADE_YIELD_RATE_H

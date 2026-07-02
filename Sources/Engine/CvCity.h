@@ -838,8 +838,7 @@ public:
 	int getPlotYield(YieldTypes eIndex) const;
 	int getBaseYieldRateModifier(YieldTypes eIndex, int iExtra = 0) const;
 	int getYieldRate(const YieldTypes eYield) const;
-	int getYieldRate100(const YieldTypes eYield) const;         // FLIPPED (#430): returns the CASCADE rate in a running game
-	int getYieldRate100Legacy(const YieldTypes eYield) const;   // the legacy accumulator expression -- the [GETTER] net oracle
+	int getYieldRate100(const YieldTypes eYield) const;
 	void changePlotYield(YieldTypes eIndex, int iChange);
 
 	// Toffer - ToDo - Change all extra yields to be cached with two decimal accuracy.
@@ -902,8 +901,7 @@ public:
 	void updateSpecialistCommerce();
 
 	int getCommerceRate(CommerceTypes eIndex) const;
-	int getCommerceRateTimes100(CommerceTypes eIndex) const;         // FLIPPED (#430): returns the CASCADE rate in a running game
-	int getCommerceRateTimes100Legacy(CommerceTypes eIndex) const;   // the legacy chain -- the [GETTER] net oracle (commerce stage)
+	int getCommerceRateTimes100(CommerceTypes eIndex) const;
 	int getCommerceFromPercent(CommerceTypes eIndex) const;
 	int getBaseCommerceRate(CommerceTypes eIndex) const;
 	int getBaseCommerceRateTimes100(CommerceTypes eIndex) const;

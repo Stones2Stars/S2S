@@ -133,10 +133,11 @@ void cvCascadeModifierShadow()
 	// turn during iterative validation (the one-shot needed a save reload to re-arm). Free when gPlayerLogLevel<1.
 	if (gPlayerLogLevel < 1) return;
 	mm_registerDomain();
-	// ANTI-MEMO-SKEW (2026-07-02): drop the turn-scoped facts memo so the sweep's condition evals see END-of-turn
-	// state. (The rate memo moved to CascadeRates and is event-invalidated -- no skew to clear; this sweep computes
-	// YieldRate raw anyway.)
-	EnablerKernel::factsMemoClear();
+	// ANTI-MEMO-SKEW (2026-07-02): the turn memos may hold values frozen from EARLY-turn calls (the getter
+	// instrument); comparing those against END-of-turn legacy showed as false divergences. Recompute fresh for
+	// the shadow sweep -- still memoized WITHIN the sweep.
+	YieldRate::memoClear();
+	EnablerKernel::factsMemoClear();   // self-register SD_MODIFIER on the spine (idempotent) before the first emit
 	CascadeCapabilities::shadowFlush();   // #430 wiring step 1: flush the in-body capability-getter shadow (per turn)
 
 	// [MODIFIER/repo] -- BUILDING REPO CENSUS (2026-07-02, the Orwell bar): decisive on the one-cause hypothesis
@@ -269,7 +270,7 @@ void cvCascadeModifierShadow()
 						.addStr(MDF_SAMPLE, sSample.c_str()));
 				}
 				const long cascRate = YieldRate::yieldRate100(aszChannel[y], eY, pCity, rec);
-				const int legRate = pCity->getYieldRate100Legacy(eY);   // post-flip: the getter returns CASCADE; the Legacy sibling is the oracle
+				const int legRate = pCity->getYieldRate100(eY);
 				if (cascRate != (long)legRate)
 				{
 					++iRateDiverging;
@@ -322,7 +323,7 @@ void cvCascadeModifierShadow()
 				++iCChecked;
 				const CommerceTypes eC = (CommerceTypes)cc;
 				const long cascC = CommerceCalc::commerceRate100(CommerceCalc::channel(cc), eC, pCity, cec, yc100, prate);
-				const int legC = pCity->getCommerceRateTimes100Legacy(eC);   // post-flip: the Legacy sibling is the oracle (see the yield leg)
+				const int legC = pCity->getCommerceRateTimes100(eC);
 				if (cascC != (long)legC)
 				{
 					++iCDiverging;

@@ -2,21 +2,29 @@
 #ifndef CV_CASCADE_GETTER_SHADOW_H
 #define CV_CASCADE_GETTER_SHADOW_H
 
-//	CvCascadeGetterShadow -- the #430 GETTER-CONTRACT net (cutover.md §Owner rulings 2026-07-02, item 5).
+//	CvCascadeGetterShadow -- the #430 GETTER-CONTRACT instrumentation (cutover.md §Owner rulings 2026-07-02, item 5).
 //
-//	FLIPPED (2026-07-02, owner: "lets flip ... to see what happens"): CvCity::getYieldRate100 /
-//	getCommerceRateTimes100 now RETURN the cascade value (CascadeRates) in a running game, with the legacy
-//	expression kept in-body as the oracle. This module is the NET: the flipped getter hands in BOTH values and
-//	this counts/samples the diff -- no compute happens here anymore (the old instrument computed the cascade
-//	side itself, capped per turn; the flip made the cascade value the return, so the net is a plain compare).
+//	The getters are the stable CONTRACTS the cut goes through: each legacy getter the cascade replaces gets an
+//	event-spine "cascadeValue" diff INSIDE the body -- the cascade's answer vs the value the getter is about to
+//	return, AT THE REAL CALL MOMENT (validation.md: shadowed in the AI's real per-turn calls). At clean parity the
+//	getter BODY flips to return the cascade value and the legacy accumulator behind it is deleted; consumers are
+//	never rewired.
 //
-//	Discipline: gated on gPlayerLogLevel (free when logging is off); ONE count per (city, plane, channel) per
-//	turn; per-turn [GETTER/shadow] checked/diverging summary + capped [GETTER/diff] samples, flushed lazily on
-//	the first call of the next turn.
+//	Discipline (these getters are hot paths):
+//	 - gated on gPlayerLogLevel (a single int compare when logging is off);
+//	 - ONE compare per (city, plane, channel) per turn -- the first real call wins, later calls memo out. Full-city
+//	   coverage (unlike the doTurn shadow's per-player sample), bounded by a per-turn compute cap;
+//	 - reentrancy-guarded: a cascade-internal read of an instrumented getter never recurses into a compare;
+//	 - per-turn [GETTER/shadow] checked/diverging summary + capped [GETTER/diff] samples, flushed lazily on the
+//	   first call of the next turn (no engine doTurn hook needed).
+//
+//	Instrumented today: CvCity::getYieldRate100 (plane 0, YieldTypes) + CvCity::getCommerceRateTimes100 (plane 1,
+//	CommerceTypes). Extend per getter as its cascade counterpart lands (int params so this header stays
+//	dependency-free; C++03 cannot forward-declare enums).
 
 class CvCity;
 
-void cascadeGetterNetYield(const CvCity* pCity, int iYield, long lCascade, int iLegacy100);
-void cascadeGetterNetCommerce(const CvCity* pCity, int iCommerce, long lCascade, int iLegacy100);
+void cascadeGetterShadowYield(const CvCity* pCity, int iYield, int iLegacy100);
+void cascadeGetterShadowCommerce(const CvCity* pCity, int iCommerce, int iLegacy100);
 
 #endif // CV_CASCADE_GETTER_SHADOW_H

@@ -1,16 +1,22 @@
 //
-//	CvCascadeGetterShadow -- the #430 getter-contract NET (see the header). The [GETTER] spine domain:
-//	the flipped getter's cascade-vs-legacy diff, counted once per (city, plane, channel) per turn.
+//	CvCascadeGetterShadow -- the #430 GETTER-CONTRACT instrumentation (see the header). The [GETTER] spine domain:
+//	the in-getter cascade-vs-legacy diff at the real call moment, once per (city, plane, channel) per turn.
 //
 
 #include "CvGameCoreDLL.h"
 #include "CvCascadeGetterShadow.h"
-#include "CvCascadeCommerceCalc.h"     // CommerceCalc::channel(eC) -- the diff-sample channel name
+#include "CvCascadeYieldRate.h"        // YieldRate::yieldRate100
+#include "CvCascadeCommerceCalc.h"     // CommerceCalc::commerceRate100 + channel(eC)
+#include "CvCascadeConditionEval.h"    // CvCascadeEvalCtx
+#include "CvCascadeEnablerKernel.h"    // EnablerKernel::computeCityBuildingFacts -- the cascade-computed active set
 #include "CvEventSpine.h"
 #include "AI/BetterBTSAI.h"            // gPlayerLogLevel
 #include "Defines/CvGlobals.h"
 #include "Engine/CvGame.h"
 #include "Engine/CvCity.h"
+#include "Engine/CvPlayer.h"
+#include "AI/CvPlayerAI.h"             // GET_PLAYER
+#include "AI/CvTeamAI.h"               // GET_TEAM
 #include <set>
 #include <utility>
 
@@ -49,12 +55,17 @@ static void gs_registerDomain()
 }
 
 // ===================== per-turn state =====================
-// ONE count per (city, plane, channel) per turn: the memo key is ((owner,cityId), plane*8+channel). Counters roll
+// ONE compare per (city, plane, channel) per turn: the memo key is ((owner,cityId), plane*8+channel). Counters roll
 // up into the [GETTER/shadow] summary, flushed lazily when the first call of the NEXT turn arrives (no doTurn hook).
 typedef std::pair<std::pair<int, int>, int> GsKey;
 static std::set<GsKey> s_done;
 static int s_iTurn = -1;
 static int s_iChecked = 0, s_iDiverging = 0, s_iShown = 0;
+static bool s_bInShadow = false;   // reentrancy guard: a cascade-internal read of an instrumented getter must not recurse
+
+// Per-turn compute cap: the cascade rate is an on-demand full recompute (no accumulator substrate yet), so an
+// uncapped late-game sweep (hundreds of cities x 7 channels) would drag a logged turn. First N call moments win.
+static const int GS_MAX_COMPUTES_PER_TURN = 256;   // 1024 -> 256 (2026-07-02): real repos made each compute heavy
 
 static void gs_rollTurn()
 {
@@ -70,15 +81,46 @@ static void gs_rollTurn()
 	s_iTurn = iTurn;
 }
 
-static void gs_net(const CvCity* pCity, int iPlane, int iChannel, const char* szChannel, long lCascade, int iLegacy100)
+static void gs_check(const CvCity* pCity, int iPlane, int iChannel, int iLegacy100)
 {
-	if (gPlayerLogLevel < 1 || pCity == NULL) return;
+	if (gPlayerLogLevel < 1 || pCity == NULL || s_bInShadow) return;
+	// LOAD GATE (2026-07-02): the load path recomputes every city's yields/commerce repeatedly, and with the repos
+	// populated each instrumented compute does real condition evaluation -- that dragged map loading hard. The
+	// getter contract shadow is about REAL consumer calls in a RUNNING game (validation.md end-turn discipline),
+	// so it stays silent until the game is fully initialized.
+	if (!GC.getGame().isFinalInitialized()) return;
 	gs_registerDomain();
 	gs_rollTurn();
+	if (s_iChecked >= GS_MAX_COMPUTES_PER_TURN) return;
 
 	const GsKey key(std::make_pair((int)pCity->getOwner(), pCity->getID()), iPlane * 8 + iChannel);
-	if (!s_done.insert(key).second) return;   // already counted at an earlier real call this turn
+	if (!s_done.insert(key).second) return;   // already compared at an earlier real call this turn
 	++s_iChecked;
+
+	s_bInShadow = true;
+	const CvPlayer& player = GET_PLAYER(pCity->getOwner());
+	CvCascadeEvalCtx ctx;
+	ctx.city = pCity; ctx.plot = pCity->plot(); ctx.player = &player; ctx.team = &GET_TEAM(player.getTeam());
+	std::set<int> activeB, provB;   // cascade-COMPUTED active buildings + vicinity provides (never the engine's dormancy verdict)
+	EnablerKernel::computeCityBuildingFacts(pCity, ctx, activeB, provB);
+	ctx.activeBuildings = &activeB; ctx.vicinityProvidedBonuses = &provB;
+
+	static const char* aszYield[NUM_YIELD_TYPES] = { "food", "production", "commerce" };
+	const char* szChannel;
+	long lCascade;
+	if (iPlane == 0)
+	{
+		szChannel = aszYield[iChannel];
+		lCascade = YieldRate::yieldRate100(szChannel, (YieldTypes)iChannel, pCity, ctx);
+	}
+	else
+	{
+		szChannel = CommerceCalc::channel(iChannel);
+		const long yc100 = YieldRate::yieldRate100("commerce", YIELD_COMMERCE, pCity, ctx);
+		const long prate = YieldRate::yieldRate100("production", YIELD_PRODUCTION, pCity, ctx) / 100;
+		lCascade = CommerceCalc::commerceRate100(szChannel, (CommerceTypes)iChannel, pCity, ctx, yc100, prate);
+	}
+	s_bInShadow = false;
 
 	if (lCascade != (long)iLegacy100)
 	{
@@ -93,15 +135,14 @@ static void gs_net(const CvCity* pCity, int iPlane, int iChannel, const char* sz
 	}
 }
 
-void cascadeGetterNetYield(const CvCity* pCity, int iYield, long lCascade, int iLegacy100)
+void cascadeGetterShadowYield(const CvCity* pCity, int iYield, int iLegacy100)
 {
 	if (iYield < 0 || iYield >= NUM_YIELD_TYPES) return;
-	static const char* aszYield[NUM_YIELD_TYPES] = { "food", "production", "commerce" };
-	gs_net(pCity, 0, iYield, aszYield[iYield], lCascade, iLegacy100);
+	gs_check(pCity, 0, iYield, iLegacy100);
 }
 
-void cascadeGetterNetCommerce(const CvCity* pCity, int iCommerce, long lCascade, int iLegacy100)
+void cascadeGetterShadowCommerce(const CvCity* pCity, int iCommerce, int iLegacy100)
 {
 	if (iCommerce < 0 || iCommerce >= NUM_COMMERCE_TYPES) return;
-	gs_net(pCity, 1, iCommerce, CommerceCalc::channel(iCommerce), lCascade, iLegacy100);
+	gs_check(pCity, 1, iCommerce, iLegacy100);
 }

@@ -200,7 +200,6 @@ static std::map<int, FactsPair> s_memo;   // the turn-scoped facts memo (key: ow
 static int s_iMemoTurn = -1;
 
 void EnablerKernel::factsMemoClear() { s_memo.clear(); }
-void EnablerKernel::factsMemoEvict(int iOwner, int iCityId) { s_memo.erase(iOwner * 100000 + iCityId); }
 
 void EnablerKernel::computeCityBuildingFacts(const CvCity* pCity, const CvCascadeEvalCtx& ec, std::set<int>& activeOut, std::set<int>& providedOut)
 {

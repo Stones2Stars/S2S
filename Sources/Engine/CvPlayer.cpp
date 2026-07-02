@@ -14,7 +14,6 @@
 #include "AI/CvContractBroker.h"
 #include "CvEventSpine.h"   // #430 cascade spine -- first real DOMAIN emit at changeBuildingCount
 #include "Cascade/CvCascadeCapabilities.h"   // #430 Gate-3: the commerce-slider capability flip (isCommerceFlexible)
-#include "Cascade/CvCascadeRateService.h"    // #430 flipped-getter freshness: slider/civic/golden-age invalidation hooks
 #include "CvDeal.h"
 #include "UI/CvDiploParameters.h"
 #include "UI/CvEventReporter.h"
@@ -9411,8 +9410,6 @@ void CvPlayer::changeGoldenAgeTurns(int iChange)
 
 		if (bWasGoldenAge != isGoldenAge())
 		{
-			CascadeRates::invalidateAll();   // #430 flipped-getter freshness: golden age is a global BASE term
-
 			if (!bWasGoldenAge)
 			{
 				changeAnarchyTurns(-getAnarchyTurns());
@@ -12975,8 +12972,6 @@ void CvPlayer::setCommercePercent(CommerceTypes eIndex, int iNewValue)
 
 	if (iOldValue != m_aiCommercePercent[eIndex])
 	{
-		CascadeRates::invalidateCommerce();   // #430 flipped-getter freshness: the slider feeds the commerce split
-
 		int iTotalCommercePercent = 0;
 
 		for (int iI = 0; iI < NUM_COMMERCE_TYPES; iI++)
@@ -14289,7 +14284,6 @@ void CvPlayer::setCivics(CivicOptionTypes eIndex, CivicTypes eNewValue)
 	if (eOldCivic != eNewValue)
 	{
 		m_paeCivics[eIndex] = eNewValue;
-		CascadeRates::invalidateAll();   // #430 flipped-getter freshness: civics feed percent deposits + operate conditions
 		if (isNPC()) return;
 
 		if (eOldCivic != NO_CIVIC)
