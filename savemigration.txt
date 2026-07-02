@@ -1,0 +1,42 @@
+|###################################################################|
+| SAVE MIGRATION LEDGER — retired serialized fields                 |
+|###################################################################|
+| Every serialized field DELETED from the DLL is listed here, so a  |
+| conversion step can match it against existing saves. While the    |
+| field is listed, its read site carries a named                    |
+| WRAPPER_SKIP_ELEMENT (the IGNORE-by-field-name mechanism) so old  |
+| saves that still carry the tag load cleanly; new saves stop       |
+| writing it. At the next save-compat break these skips (and this   |
+| list's entries) can be flushed together.                          |
+|                                                                   |
+| ⛔ NEVER delete a WRAPPER_READ outright — a save carrying the tag |
+| DESYNCS the whole downstream read (proven 2026-07-02: gutted tech |
+| lists + buildingless cities). Read → skip, write → gone, always.  |
+|-------------------------------------------------------------------|
+
+========================
+2026-07-02 — #430 capability cut (CvTeam): the empire-capability counters retired;
+the getters derive from CascadeCapabilities (the cascade union). Skips live in CvTeam::read.
+
+CvTeam::m_iExtraWaterSeeFromCount        (int)
+CvTeam::m_iMapTradingCount               (int)
+CvTeam::m_iTechTradingCount              (int)
+CvTeam::m_iGoldTradingCount              (int)
+CvTeam::m_iCanPassPeaksCount             (int)
+CvTeam::m_iMoveFastPeaksCount            (int)
+CvTeam::m_iCanFoundOnPeaksCount          (int)
+CvTeam::m_iRebaseAnywhereCount           (int)
+CvTeam::m_iEmbassyTradingCount           (int)
+CvTeam::m_iLimitedBordersTradingCount    (int)
+CvTeam::m_iCanFarmDesertCount            (int)
+CvTeam::m_iOpenBordersTradingCount       (int)
+CvTeam::m_iDefensivePactTradingCount     (int)
+CvTeam::m_iPermanentAllianceTradingCount (int)
+CvTeam::m_iVassalTradingCount            (int)
+CvTeam::m_iBridgeBuildingCount           (int)
+CvTeam::m_iIrrigationCount               (int)
+CvTeam::m_iIgnoreIrrigationCount         (int)
+CvTeam::m_iWaterWorkCount                (int)
+CvTeam::m_iRiverTradeCount               (int)
+CvTeam::m_paiTerrainTradeCount           (int class-array, REMAPPED_CLASS_TYPE_TERRAINS)
+========================

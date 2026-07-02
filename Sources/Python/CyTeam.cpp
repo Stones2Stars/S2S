@@ -276,7 +276,8 @@ void CyTeam::changeForceTeamVoteEligibilityCount(int /*VoteSourceTypes*/ eVoteSo
 
 int CyTeam::getExtraWaterSeeFromCount() const
 {
-	return m_pTeam->getExtraWaterSeeFromCount();
+	// #430 Gate-3: the count is GONE (derived capability) -- report the flag as 0/1 for legacy Python readers.
+	return m_pTeam->isExtraWaterSeeFrom() ? 1 : 0;
 }
 
 bool CyTeam::isExtraWaterSeeFrom() const
@@ -284,14 +285,15 @@ bool CyTeam::isExtraWaterSeeFrom() const
 	return m_pTeam->isExtraWaterSeeFrom();
 }
 
-void CyTeam::changeExtraWaterSeeFromCount(int iChange)
+void CyTeam::changeExtraWaterSeeFromCount(int /*iChange*/)
 {
-	m_pTeam->changeExtraWaterSeeFromCount(iChange);
+	// #430 Gate-3: DEAD poke -- the ability is DERIVED from held techs (CascadeCapabilities); grant/remove the tech instead.
 }
 
 int CyTeam::getMapTradingCount() const
 {
-	return m_pTeam->getMapTradingCount();
+	// #430 Gate-3: the count is GONE (derived capability) -- report the flag as 0/1 for legacy Python readers.
+	return m_pTeam->isMapTrading() ? 1 : 0;
 }
 
 bool CyTeam::isMapTrading() const
@@ -299,14 +301,15 @@ bool CyTeam::isMapTrading() const
 	return m_pTeam->isMapTrading();
 }
 
-void CyTeam::changeMapTradingCount(int iChange)
+void CyTeam::changeMapTradingCount(int /*iChange*/)
 {
-	m_pTeam->changeMapTradingCount(iChange);
+	// #430 Gate-3: DEAD poke -- the ability is DERIVED from held techs (CascadeCapabilities); grant/remove the tech instead.
 }
 
 int CyTeam::getTechTradingCount() const
 {
-	return m_pTeam->getTechTradingCount();
+	// #430 Gate-3: the count is GONE (derived capability) -- report the flag as 0/1 for legacy Python readers.
+	return m_pTeam->isTechTrading() ? 1 : 0;
 }
 
 bool CyTeam::isTechTrading() const
@@ -314,14 +317,15 @@ bool CyTeam::isTechTrading() const
 	return m_pTeam->isTechTrading();
 }
 
-void CyTeam::changeTechTradingCount(int iChange)
+void CyTeam::changeTechTradingCount(int /*iChange*/)
 {
-	m_pTeam->changeTechTradingCount(iChange);
+	// #430 Gate-3: DEAD poke -- the ability is DERIVED from held techs (CascadeCapabilities); grant/remove the tech instead.
 }
 
 int CyTeam::getGoldTradingCount() const
 {
-	return m_pTeam->getGoldTradingCount();
+	// #430 Gate-3: the count is GONE (derived capability) -- report the flag as 0/1 for legacy Python readers.
+	return m_pTeam->isGoldTrading() ? 1 : 0;
 }
 
 bool CyTeam::isGoldTrading() const
@@ -329,14 +333,15 @@ bool CyTeam::isGoldTrading() const
 	return m_pTeam->isGoldTrading();
 }
 
-void CyTeam::changeGoldTradingCount(int iChange)
+void CyTeam::changeGoldTradingCount(int /*iChange*/)
 {
-	m_pTeam->changeGoldTradingCount(iChange);
+	// #430 Gate-3: DEAD poke -- the ability is DERIVED from held techs (CascadeCapabilities); grant/remove the tech instead.
 }
 
 int CyTeam::getOpenBordersTradingCount() const
 {
-	return m_pTeam->getOpenBordersTradingCount();
+	// #430 Gate-3: the count is GONE (derived capability) -- report the flag as 0/1 for legacy Python readers.
+	return m_pTeam->isOpenBordersTrading() ? 1 : 0;
 }
 
 bool CyTeam::isOpenBordersTrading() const
@@ -344,14 +349,15 @@ bool CyTeam::isOpenBordersTrading() const
 	return m_pTeam->isOpenBordersTrading();
 }
 
-void CyTeam::changeOpenBordersTradingCount(int iChange)
+void CyTeam::changeOpenBordersTradingCount(int /*iChange*/)
 {
-	m_pTeam->changeOpenBordersTradingCount(iChange);
+	// #430 Gate-3: DEAD poke -- the ability is DERIVED from held techs (CascadeCapabilities); grant/remove the tech instead.
 }
 
 int CyTeam::getDefensivePactTradingCount() const
 {
-	return m_pTeam->getDefensivePactTradingCount();
+	// #430 Gate-3: the count is GONE (derived capability) -- report the flag as 0/1 for legacy Python readers.
+	return m_pTeam->isDefensivePactTrading() ? 1 : 0;
 }
 
 bool CyTeam::isDefensivePactTrading() const
@@ -359,14 +365,15 @@ bool CyTeam::isDefensivePactTrading() const
 	return m_pTeam->isDefensivePactTrading();
 }
 
-void CyTeam::changeDefensivePactTradingCount(int iChange)
+void CyTeam::changeDefensivePactTradingCount(int /*iChange*/)
 {
-	m_pTeam->changeDefensivePactTradingCount(iChange);
+	// #430 Gate-3: DEAD poke -- the ability is DERIVED from held techs (CascadeCapabilities); grant/remove the tech instead.
 }
 
 int CyTeam::getPermanentAllianceTradingCount() const
 {
-	return m_pTeam->getPermanentAllianceTradingCount();
+	// #430 Gate-3: the count is GONE (derived capability) -- report the flag as 0/1 for legacy Python readers.
+	return m_pTeam->isPermanentAllianceTrading() ? 1 : 0;
 }
 
 bool CyTeam::isPermanentAllianceTrading() const
@@ -374,14 +381,15 @@ bool CyTeam::isPermanentAllianceTrading() const
 	return m_pTeam->isPermanentAllianceTrading();
 }
 
-void CyTeam::changePermanentAllianceTradingCount(int iChange)
+void CyTeam::changePermanentAllianceTradingCount(int /*iChange*/)
 {
-	m_pTeam->changePermanentAllianceTradingCount(iChange);
+	// #430 Gate-3: DEAD poke -- the ability is DERIVED from held techs (CascadeCapabilities); grant/remove the tech instead.
 }
 
 int CyTeam::getVassalTradingCount() const
 {
-	return m_pTeam->getVassalTradingCount();
+	// #430 Gate-3: the count is GONE (derived capability) -- report the flag as 0/1 for legacy Python readers.
+	return m_pTeam->isVassalStateTrading() ? 1 : 0;
 }
 
 bool CyTeam::isVassalStateTrading() const
@@ -389,14 +397,15 @@ bool CyTeam::isVassalStateTrading() const
 	return m_pTeam->isVassalStateTrading();
 }
 
-void CyTeam::changeVassalTradingCount(int iChange)
+void CyTeam::changeVassalTradingCount(int /*iChange*/)
 {
-	m_pTeam->changeVassalTradingCount(iChange);
+	// #430 Gate-3: DEAD poke -- the ability is DERIVED from held techs (CascadeCapabilities); grant/remove the tech instead.
 }
 
 int CyTeam::getBridgeBuildingCount() const
 {
-	return m_pTeam->getBridgeBuildingCount();
+	// #430 Gate-3: the count is GONE (derived capability) -- report the flag as 0/1 for legacy Python readers.
+	return m_pTeam->isBridgeBuilding() ? 1 : 0;
 }
 
 bool CyTeam::isBridgeBuilding() const
@@ -404,14 +413,15 @@ bool CyTeam::isBridgeBuilding() const
 	return m_pTeam->isBridgeBuilding();
 }
 
-void CyTeam::changeBridgeBuildingCount(int iChange)
+void CyTeam::changeBridgeBuildingCount(int /*iChange*/)
 {
-	m_pTeam->changeBridgeBuildingCount(iChange);
+	// #430 Gate-3: DEAD poke -- the ability is DERIVED from held techs (CascadeCapabilities); grant/remove the tech instead.
 }
 
 int CyTeam::getIrrigationCount() const
 {
-	return m_pTeam->getIrrigationCount();
+	// #430 Gate-3: the count is GONE (derived capability) -- report the flag as 0/1 for legacy Python readers.
+	return m_pTeam->isIrrigation() ? 1 : 0;
 }
 
 bool CyTeam::isIrrigation() const
@@ -419,14 +429,15 @@ bool CyTeam::isIrrigation() const
 	return m_pTeam->isIrrigation();
 }
 
-void CyTeam::changeIrrigationCount(int iChange)
+void CyTeam::changeIrrigationCount(int /*iChange*/)
 {
-	m_pTeam->changeIrrigationCount(iChange);
+	// #430 Gate-3: DEAD poke -- the ability is DERIVED from held techs (CascadeCapabilities); grant/remove the tech instead.
 }
 
 int CyTeam::getIgnoreIrrigationCount() const
 {
-	return m_pTeam->getIgnoreIrrigationCount();
+	// #430 Gate-3: the count is GONE (derived capability) -- report the flag as 0/1 for legacy Python readers.
+	return m_pTeam->isIgnoreIrrigation() ? 1 : 0;
 }
 
 bool CyTeam::isIgnoreIrrigation() const
@@ -434,14 +445,15 @@ bool CyTeam::isIgnoreIrrigation() const
 	return m_pTeam->isIgnoreIrrigation();
 }
 
-void CyTeam::changeIgnoreIrrigationCount(int iChange)
+void CyTeam::changeIgnoreIrrigationCount(int /*iChange*/)
 {
-	m_pTeam->changeIgnoreIrrigationCount(iChange);
+	// #430 Gate-3: DEAD poke -- the ability is DERIVED from held techs (CascadeCapabilities); grant/remove the tech instead.
 }
 
 int CyTeam::getWaterWorkCount() const
 {
-	return m_pTeam->getWaterWorkCount();
+	// #430 Gate-3: the count is GONE (derived capability) -- report the flag as 0/1 for legacy Python readers.
+	return m_pTeam->isWaterWork() ? 1 : 0;
 }
 
 bool CyTeam::isWaterWork() const
@@ -449,9 +461,9 @@ bool CyTeam::isWaterWork() const
 	return m_pTeam->isWaterWork();
 }
 
-void CyTeam::changeWaterWorkCount(int iChange)
+void CyTeam::changeWaterWorkCount(int /*iChange*/)
 {
-	m_pTeam->changeWaterWorkCount(iChange);
+	// #430 Gate-3: DEAD poke -- the ability is DERIVED from held techs (CascadeCapabilities); grant/remove the tech instead.
 }
 
 int CyTeam::getVassalPower() const
