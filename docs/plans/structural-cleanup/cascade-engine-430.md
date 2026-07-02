@@ -328,9 +328,12 @@ count itself (`getBuildingCount` = `m_paiBuildingCount` `:7329`, `getUnitCount`,
   Derived/accumulator state serializes nothing (recomputed on load). **⛔ "Removing a serialized member is soft"
   is NOT reliably true (proven 2026-07-02):** deleting the CvTeam capability counters' `WRAPPER_READ` entries
   DESYNCED loading a save that carried the tags — the whole downstream state read wrong (empty tech lists,
-  gutted cities). Retire serialized members in TWO STAGES: drop the `WRAPPER_WRITE` + keep a read-into-discard
-  first; delete the read a save-generation later — and verify the wrapper's actual unknown-tag semantics before
-  relying on any skip.
+  gutted cities). Root cause (grounded): `Expect()` treats any mismatch as "code ahead of stream" and never
+  consumes the unexpected element (`CvTaggedSaveFormatWrapper.cpp:3830`), so a stale tag stalls every later read
+  in the object at its default. Retire serialized members in TWO STAGES: drop the `WRAPPER_WRITE` + replace the
+  read with a **named `WRAPPER_SKIP_ELEMENT(wrapper, "ClassName", memberName, SAVE_VALUE_ANY)`** (drains the tag
+  on old saves, no-ops on new) + ledger the field in `savemigration.txt`; flush skips + ledger at the next
+  save-compat break. Full mechanism: [engine.md](../../reference/engine.md) §Save/load.
 - **OOS / lockstep determinism** — integer math only; synced Soren RNG. `readJson` **will convert** readable→`int×100`
   ONCE at load (deterministic). No runtime float. Canonical: [DEC-fixedpoint-x100](../../architecture/decisions.md#dec-fixedpoint-x100).
 - **Toolchain** — C++03, 32-bit/x86, vendored VC7.1, Python 2.4, Boost 1.32/1.55, raw Win32 (no `std::thread`/C++11+).

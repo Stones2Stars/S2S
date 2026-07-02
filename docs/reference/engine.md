@@ -15,16 +15,28 @@ across the process boundary — **not** style choices: **C++03, 32-bit, Python 2
 - **PCH footgun:** never `using namespace boost*` — a bare `bind`/`function` can silently resolve to `boost::`
   through the PCH (bit `CvHttpServer`). The cascade event-spine deliberately names no Boost type.
 
-## Save / load — name-keyed, soft by construction
+## Save / load — name-keyed, soft for ADDS only
 
 Format is **name-keyed, not positional** — `(id, type-code, value)` tuples; no save-version number; compatibility
 resolves dynamically by name.
-- **Adding** a field defaults cleanly (read no-op); **removing** one is drained by the skip loop. Both SOFT.
+- **Adding** a field is SOFT (old save, new code): the new read mismatches the stream's next element, no-ops, and
+  keeps its default — `Expect()` returns false and leaves the stream untouched
+  (`Sources/Infrastructure/CvTaggedSaveFormatWrapper.cpp:3830`).
+- **⛔ Removing a field's read is NOT soft — there is NO automatic drain of a stale tag (proven live 2026-07-02).**
+  `Expect()` treats *any* mismatch as "the code is ahead of the stream" and never consumes the unexpected element,
+  so an orphaned tag in an old save makes **every subsequent read in that object** mismatch against it and silently
+  default — the load guts wholesale (the live failure: empty tech lists, buildingless cities). Retirement is
+  **two-stage**: (a) delete the `WRAPPER_WRITE` and replace the read with a **named
+  `WRAPPER_SKIP_ELEMENT(wrapper, "ClassName", memberName, SAVE_VALUE_ANY)`** — it Expects that exact tag and drains
+  it on old saves, and safely no-ops on newer saves that lack it — and ledger the field in **`savemigration.txt`**
+  (repo root, the conversion-step list); (b) flush the skips + ledger entries together at the next save-compat
+  break.
 - **Enum/Type drift** is name-remapped on load (`getInfoTypeForString`); XML reorder/insert is free. A removed Type
   is SOFT only if its read site uses `WRAPPER_READ_CLASS_ENUM_ALLOW_MISSING` (else HARD: message box + throw).
-- **The four genuinely HARD save-breaks:** (1) a same-tag field whose *meaning* changed (silent wrong load); (2) a
+- **The genuinely HARD save-breaks:** (1) a same-tag field whose *meaning* changed (silent wrong load); (2) a
   deleted Type read without `_ALLOW_MISSING`; (3) a legacy raw enum-indexed int array that shrinks; (4) a type-code
-  change under a reused name. *Hardening path:* flip a Type's read site to `_ALLOW_MISSING`, then delete.
+  change under a reused name; (5) a deleted field read without its named `WRAPPER_SKIP_ELEMENT` (the stale-tag
+  desync above). *Hardening path:* flip a Type's read site to `_ALLOW_MISSING`, then delete.
 - **Derived data serializes nothing** — `reset()` + mark-dirty-on-load is the pattern; the cascade [tally](../specs/tally.md) never serializes.
 
 ## Pathfinding — two systems
