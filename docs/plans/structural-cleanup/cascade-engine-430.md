@@ -457,7 +457,19 @@ curated-set model as part of this migration. The current mechanism (mapped 2026-
    (`[ENABLER/shadow] cap:canFoundOnPeaks`). ⏳ **`canFound` DEFERRED (owner ruling 2026-06-30)** — its capability half is
    done (above); the remainder is the founding **RULE** (nearby-city distance, area, water/peak validity), whose engine
    logic is *"a bit all over the place"* + not cleanly spec'd — a look-at-later gate, not modelled now.
-   (`found`/`foundCoast`/`foundFreshWater` are unit `skills`, a separate axis.) ⏳ **Then PARITY** — run the shadow, attribute
+   (`found`/`foundCoast`/`foundFreshWater` are unit `skills`, a separate axis.)
+   **⏳ PARITY-CHASE notes (2026-07-02 shadow run):** ✅ canCreate/canResearch/canDoCivics/canHurry/canFoundReligion
+   clean (the canCreate fix = project `allowed:{world/team}` caps, a Gate-1 data find — were parked in identity).
+   Three OPEN finds the instruments cannot re-derive: **(a)** the enabler diff's `who=` renders BLANK for the
+   city-scope gates (an emit bug — fix before chasing per-city diffs); **(b)** canTrain refusals include ANIMALS
+   that legacy genuinely trains in real cities (C2C subdued-animal buildings make some trainable) — collides with
+   the blanket `identity.spawnOnly` never-trainable exclude: a MODEL question for the owner (conditional
+   trainability of spawnOnly units); **(c)** canMaintain refuses all 5 processes for REAL civs holding the
+   enabling techs (NPC pollution ruled out — counts identical after the NPC skip) — trace where GENERATE loses
+   `enables.processes` (data verified present on 12 techs) or the gate drops them; NB PROCESS_IDLE has NO tech
+   enabler, so the generic enables-frontier structurally under-offers it (the PALACE lesson — processes may need
+   the whole-domain frontier like the ported cascades).
+   ⏳ **Then PARITY** — run the shadow, attribute
    the diffs, close the gaps (remaining HAVE sources, CultureLevel category caps, requires-vs-enabler-active-state) across
    all gates **in one go** (owner ruling 2026-06-30: set the machine up to spec first, verify the pieces together).
    **Build EARLY, a CO-REQUISITE with the
