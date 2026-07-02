@@ -478,9 +478,16 @@ curated-set model as part of this migration. The current mechanism (mapped 2026-
    never freeze the stale verdicts into the cascade. (Per-building dry-calcs proved data+eval EXACT on the
    engine-active set — the residue is legacy state, not cascade logic.)
    **(g)** SHADOW SCOPING (2026-07-02): canBuild diffs UNLOCK-half vs UNLOCK-half (the oracle mirrors CvPlayer::canBuild's disabled/obsoleteTech/techPrereq block; the plot-validity half survives cutover — diffing vs full CvPlot::canBuild compared two different questions), and canAcquirePromotion rides `isPromotionValid(pr, bFree=true)` (the bespoke unit-state half — qualified/disqualified unitcombats, game options, unit-state caps) on BOTH sides, isolating the diff to the tech/enables frontier the cascade owns; the qualified-combat DATA is parked in `identity.unitCombats` pending its Gate-3 model. Tails attributed: promotions — the no-qualified-CC "event-injection-only" clause (`bValid=bFree`) is mirrored in the shadow (with the free-promotion carve-out); the PALACE lesson applied (a no-enabler promo is always-unlocked — the enables-frontier under-offered COMBAT1-5). canBuild — the residual is builds whose `requires.build` carry PLOT-scope atoms (BONUS_RAPA_NUI-on-plot class): the cascade correctly refuses on the sampled plot while the unlock-half oracle doesn't ask the plot question — both sides right at their own scope, attributed shadow-scoping noise on a non-cut gate.
-   ⏳ **Then PARITY** — run the shadow, attribute
-   the diffs, close the gaps (remaining HAVE sources, CultureLevel category caps, requires-vs-enabler-active-state) across
-   all gates **in one go** (owner ruling 2026-06-30: set the machine up to spec first, verify the pieces together).
+   ✅ **PARITY REACHED — the enabler plane (2026-07-02).** The Gate-2 shadow campaign drove EVERY §4-demolition
+   gate to diverging=0, stable across consecutive turns: canConstruct / canTrain / canCreate / canMaintain /
+   canResearch / canDoCivics / canHurry / canFoundReligion / cap:canFoundOnPeaks — plus canAcquirePromotion
+   (whole-domain via the PALACE whitelist + the event-only mirror). The one non-zero gate is canBuild's small
+   attributed residual (the plot-scope-atoms scoping class, note (g)) on a NON-cut gate. The modifier percent
+   stack's residual decomposes ENTIRELY into the accepted classes — stale dropped-event state (note (f2)) + the
+   deferred PESTS property bands — with per-building dry-calcs proving data+eval exact on the engine-active set;
+   the getter/rate residuals ride the same accepted classes (incl. the event-granted per-building commerce, the
+   documented honest divergence). Numbers live in the run (DEC-no-parity-results-in-docs); the classes and their
+   dispositions are the durable record above.
    **Build EARLY, a CO-REQUISITE with the
    modifier (owner ruling 2026-06-30), not a later step.** Without the enabler the cascade does not know **what is
    ACTIVE** — which bonuses are connected/available, which buildings are non-dormant — and the modifier's conditions
