@@ -51,9 +51,6 @@ public:
 	// allowed cap gate: current tally count vs each scope cap (world/team/empire).
 	static bool allowedOk(const CvJsonInfo* j, int iId, const CvPlayer& kPlayer, bool bUnit, const std::string& bucket = "");
 
-	// EMPIRE CAPABILITY query (json.md §8): union over the team's held techs' mapped CvJsonTechInfo.capabilities.
-	static bool empireHasCapability(const CvTeam& kTeam, const std::string& cap);
-
 	// canFoundReligion -- a PLAYER-WIDE state predicate reproduced from game state (CvPlayer::canFoundReligion).
 	static bool canFoundReligion(const CvPlayer& kPlayer);
 

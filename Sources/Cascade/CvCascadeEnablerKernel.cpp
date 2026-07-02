@@ -10,7 +10,6 @@
 #include "AI/BetterBTSAI.h"          // PerfAccumTimer
 #include "CvCascadeEnablerKernel.h"
 #include "CvJsonInfo.h"
-#include "CvJsonTechInfo.h"           // CvJsonTechInfo -- capabilities now live here (off the base), techs the only grantor
 #include "Repos/InfoRepo.h"
 #include "CvCascadeTally.h"
 #include "AI/CvPlayerAI.h"            // GET_PLAYER
@@ -155,27 +154,8 @@ bool EnablerKernel::allowedOk(const CvJsonInfo* j, int iId, const CvPlayer& kPla
 	return true;
 }
 
-// EMPIRE CAPABILITY query (json.md §8): does the team have <cap>? Capabilities are TECH-granted (e.g. canFoundOnPeaks
-// from TECH_ALGEBRA; civics grant `policies`, a separate axis), so it is the union over the team's held techs' mapped
-// CvJsonInfo.capabilities. This is the "now queryable" completion of the capabilities map -- the canFound/canBuild gates
-// and the team-ability systems read it. (NB capability != policy: capabilities are tech/empire abilities.)
-bool EnablerKernel::empireHasCapability(const CvTeam& kTeam, const std::string& cap)
-{
-	// The synthetic TECH_GAME_START root is held by EVERY civ (the universal start node; grants.techs on every
-	// civilization), so its capabilities are universally active -- union it FIRST (2026-07-02: it was never unioned,
-	// so its canSetScienceRate was silently unqueryable; the static IS a CvJsonTechInfo since the same-day crash fix).
-	const CvJsonTechInfo& startNode = static_cast<const CvJsonTechInfo&>(cascadeStartNode());
-	if (startNode.capabilities.count(cap) != 0) return true;
-	for (int t = 0; t < GC.getNumTechInfos(); ++t)
-	{
-		if (!kTeam.isHasTech((TechTypes)t)) continue;
-		// InfoRepo<CvTechInfo> always creates a CvJsonTechInfo (JsonPayload) -- the down-cast is safe. capabilities is a
-		// CvJsonTechInfo field now (moved off the base; group-unambiguity: techs are the only capability grantor).
-		const CvJsonTechInfo* j = static_cast<const CvJsonTechInfo*>(InfoRepo<CvTechInfo>::get().get(t));
-		if (j != NULL && j->capabilities.count(cap) != 0) return true;
-	}
-	return false;
-}
+// (The empire-capability query lives in CascadeCapabilities -- the ONE derived-on-query union, cached per team;
+// the kernel's former techs-only duplicate was folded into it 2026-07-02, capabilities.md.)
 
 // canFoundReligion -- a PLAYER-WIDE state predicate (CvPlayer::canFoundReligion): NOT a JSON frontier, reproduced from
 // game state so the cascade owns the gate (it is what enables/AI-reads the religion-founding action). >=1 city, not

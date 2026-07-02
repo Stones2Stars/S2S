@@ -204,7 +204,7 @@ void cvCascadeEnablerShadow()
 	const int nT = GC.getNumTechInfos(), nC = GC.getNumCivicInfos(), nPromo = GC.getNumPromotionInfos();
 	const int nBld = GC.getNumBuildInfos();
 	const int nHur = GC.getNumHurryInfos();
-	EnGate gConstruct, gTrain, gCreate, gMaintain, gResearch, gCivics, gPromote, gBuild, gCapPeaks;
+	EnGate gConstruct, gTrain, gCreate, gMaintain, gResearch, gCivics, gPromote, gBuild;
 	EnGate gHurry, gFoundRel;
 	int iCities = 0, iPlayers = 0, iUnits = 0, iPlots = 0;
 
@@ -217,14 +217,9 @@ void cvCascadeEnablerShadow()
 		if (!kPlayer.isAlive() || kPlayer.isNPC()) continue;
 		const CvTeam& kTeam = GET_TEAM(kPlayer.getTeam());
 
-		// ---- CAPABILITY shadow: the mapped+queried capability vs the engine team flag (clean parity, no founding
-		// rule). canFoundOnPeaks (TECH_ALGEBRA) vs CvTeam::isCanFoundOnPeaks -- verifies the §8 capabilities map+query.
-		{
-			++gCapPeaks.chk;
-			const bool c = EnablerKernel::empireHasCapability(kTeam, "canFoundOnPeaks");
-			const bool l = kTeam.isCanFoundOnPeaks();
-			if (c != l) { ++gCapPeaks.div; en_emitDiff(kPlayer.getName(), "cap:canFoundOnPeaks", "", c, l, gCapPeaks.shown); }
-		}
+		// (The former cap:canFoundOnPeaks shadow is GONE (2026-07-02): its oracle -- the legacy CvTeam counter --
+		// was deleted in the Gate-3 capability cut, and the flipped getter now IS CascadeCapabilities, so the diff
+		// had become cascade-vs-cascade. The capability plane's live net is [CAPSHADOW] in CvCascadeCapabilities.)
 
 		// ---- PLAYER-scope gates (canResearch / canDoCivics): one GENERATE/GATE per player ----
 		if (iPlayers < 4)
@@ -411,6 +406,5 @@ void cvCascadeEnablerShadow()
 	EN_GATE_EMIT("canBuild", gBuild);
 	EN_GATE_EMIT("canHurry", gHurry);
 	EN_GATE_EMIT("canFoundReligion", gFoundRel);
-	EN_GATE_EMIT("cap:canFoundOnPeaks", gCapPeaks);
 #undef EN_GATE_EMIT
 }

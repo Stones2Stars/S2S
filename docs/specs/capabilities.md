@@ -197,7 +197,10 @@ vector, invalidated at `setHasTech`/`reset`); NPC guard + game-option compositio
 (farming/irrigation/water-work), and the trade-NETWORK recompute (`updatePlotGroups` + `MarkBridgesDirty`) the
 deleted changers carried; serialization retired via **named `WRAPPER_SKIP_ELEMENT`s** (the save doc's
 IGNORE-by-field-name mechanism) with the fields ledgered in **`savemigration.txt`** (repo root — the conversion-
-step list). `en_empireHasCapability` should still fold into `CascadeCapabilities` (ONE union). The `[CAPSHADOW]`
+step list). ✅ **ONE union (folded 2026-07-02):** the enabler kernel's techs-only duplicate
+(`EnablerKernel::empireHasCapability`) is DELETED — `CascadeCapabilities` is the sole derived-on-query union.
+Its only consumer was the enabler's `cap:canFoundOnPeaks` shadow, itself deleted as tautological post-cut (its
+oracle — the legacy counter — is gone; the flipped getter IS the cascade). The `[CAPSHADOW]`
 machinery stays as the net for the pending flips (`isMapCentering`, the commerce sliders, building attributes,
 `hasLanguage`).
 
@@ -207,8 +210,10 @@ machinery stays as the net for the pending flips (`isMapCentering`, the commerce
    buildable lists; the "every city can't find anything to build" grind). The `cascade-engine-430.md` §5 claim
    "removing a serialized member is soft" is **WRONG as stated for this path** — verify
    `CvTaggedSaveFormatWrapper`'s actual unknown-tag semantics before ANY serialization-touching cut. The correct
-   retirement is **two-stage**: (a) drop the `WRAPPER_WRITE` + keep a read-into-discard so old saves still parse;
-   (b) delete the read a save-generation later.
+   retirement is **two-stage**: (a) drop the `WRAPPER_WRITE` + replace the read with a named
+   `WRAPPER_SKIP_ELEMENT` (drains the stale tag on old saves; no-ops on new) + ledger the field in
+   `savemigration.txt`; (b) flush skips + ledger together at the next save-compat break. Grounded mechanism
+   (`Expect()` never consumes an unexpected element): [engine.md](../reference/engine.md) §Save/load.
 2. **⛔ The deleted CHANGERS carried side effects the applies audit missed**: `changeTerrainTradeCount` /
    `changeRiverTradeCount` call **`updatePlotGroups()`** per team player (the trade-network recompute!) and
    `changeBridgeBuildingCount` marks bridges dirty. Post-cut, `setHasTech` must still fire those when a tech
