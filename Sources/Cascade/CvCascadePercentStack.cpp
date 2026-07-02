@@ -5,6 +5,8 @@
 //
 
 #include "CvGameCoreDLL.h"
+#include "CvCascadePerfCount.h"   // per-turn call counters + stopwatches (owner 2026-07-02: repeat-calc hunt)
+#include "AI/BetterBTSAI.h"          // PerfAccumTimer
 #include "CvCascadePercentStack.h"
 #include "CvCascadeMMKernel.h"
 #include "CvJsonInfo.h"                // CvJsonInfo + CvCascadeDeposit
@@ -24,6 +26,8 @@
 // empire buildings (empire), adopted civics (empire), and the player's active traits (empire). Fills the breakdown.
 int PercentStack::percentStack(const std::string& channel, const CvCity* pCity, MMBreak& bk)
 {
+	++CascadePerf::pctStack;
+	PerfAccumTimer perfT(CascadePerf::pctStackMs);
 	const CvPlayer& player = GET_PLAYER(pCity->getOwner());
 	CvCascadeEvalCtx ec;                               // the live-engine eval target for the deposit conditions
 	ec.city = pCity; ec.player = &player; ec.team = &GET_TEAM(player.getTeam());

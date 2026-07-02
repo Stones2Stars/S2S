@@ -5,6 +5,8 @@
 //
 
 #include "CvGameCoreDLL.h"
+#include "CvCascadePerfCount.h"   // per-turn call counters + stopwatches (owner 2026-07-02: repeat-calc hunt)
+#include "AI/BetterBTSAI.h"          // PerfAccumTimer
 #include "CvCascadeConditionEval.h"
 #include "CvCascadeTally.h"
 #include "AI/CvPlayerAI.h"          // GET_PLAYER
@@ -289,6 +291,7 @@ bool cascadeIsBuildingActive(int eBuilding, const CvCascadeEvalCtx& ec)
 
 bool cascadeEvalCondition(const CvCascadeCondition* c, const CvCascadeEvalCtx& ctx, const CvCascadeEvalFlags& flags)
 {
+	++CascadePerf::condEval;
 	if (c == NULL) return true;                                  // vacuously true
 	if (c->kind == CASC_COND_PRESENCE) return ev_evalPresence(ctx, flags, c);
 	if (c->kind == CASC_COND_PREDICATE) return ev_evalPredicate(ctx, flags, c);

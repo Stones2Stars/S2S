@@ -5,6 +5,8 @@
 //
 
 #include "CvGameCoreDLL.h"
+#include "CvCascadePerfCount.h"   // per-turn call counters + stopwatches (owner 2026-07-02: repeat-calc hunt)
+#include "AI/BetterBTSAI.h"          // PerfAccumTimer
 #include "CvCascadeYieldRate.h"
 #include "CvCascadeYieldBasePackages.h"
 #include "CvCascadeBuildingPackage.h"
@@ -18,6 +20,8 @@
 // follows; per StoneBase strategy (modifier-machine §0) parity is judged AFTER the whole calc is in.
 long YieldRate::yieldRate100(const std::string& channel, YieldTypes eY, const CvCity* pCity, const CvCascadeEvalCtx& ec)
 {
+	++CascadePerf::yieldRate;
+	PerfAccumTimer perfT(CascadePerf::yieldRateMs);
 	const long basePlot   = YieldBasePackages::basePlot(channel, eY, pCity, ec);
 	const int  trade      = YieldBasePackages::tradeRoute(eY, pCity);
 	const int  freeCity   = YieldBasePackages::freeCity(channel, *ec.player, ec);

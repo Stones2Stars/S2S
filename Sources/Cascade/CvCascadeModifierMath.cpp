@@ -37,7 +37,7 @@
 // The percent-stack shadow's diff + summary emit EVENTKIND_DIAGNOSTIC events through the event spine (NOT direct
 // gDLL->logMsg) -- the CvCascadeLogConsumer renders the raw typed fields + tees to /events, gated by level.
 // Per-emitter domain (SD_MODIFIER), one file (Cascade.log).
-enum MdEvt { MDE_DIFF = 1, MDE_SHADOW, MDE_RATE, MDE_DORM, MDE_REPO };
+enum MdEvt { MDE_DIFF = 1, MDE_SHADOW, MDE_RATE, MDE_DORM, MDE_REPO, MDE_PERF };
 enum MdFld
 {
 	MDF_WHO = 1, MDF_CHANNEL, MDF_CASC, MDF_BC, MDF_BA, MDF_BE, MDF_CIV, MDF_TR,   // diff: cascade buckets
@@ -47,7 +47,9 @@ enum MdFld
 	MDF_PRESENT, MDF_ACTIVE, MDF_DORMOP, MDF_DORMTRIG, MDF_ENGDISABLED, MDF_SAMPLE, // dorm attribution (MDE_DORM)
 	MDF_TOTAL, MDF_MAPPED, MDF_WDEPOSITS, MDF_WOPERATE, MDF_WTRIGGERS,              // repo census (MDE_REPO)
 	MDF_FILES2, MDF_ENTITIES2,                                                      // the stashed load-probe stats
-	MDF_SPECC, MDF_SPECL                                                            // specialist sub-terms (rate diff)
+	MDF_SPECC, MDF_SPECL,                                                           // specialist sub-terms (rate diff)
+	MDF_FACTS, MDF_FACTSHIT, MDF_YRN, MDF_PSN, MDF_CRN, MDF_CEN,                    // perf: call counts
+	MDF_FACTSMS, MDF_YRMS, MDF_PSMS, MDF_CRMS                                       // perf: stopwatch ms (x10 int)
 };
 static const char* mm_prefix(int evt)
 {
@@ -58,6 +60,7 @@ static const char* mm_prefix(int evt)
 	case MDE_RATE:   return "[MODIFIER/rate]";
 	case MDE_DORM:   return "[MODIFIER/dorm]";
 	case MDE_REPO:   return "[MODIFIER/repo]";
+	case MDE_PERF:   return "[MODIFIER/perf]";
 	default:         return "[MODIFIER]";
 	}
 }
@@ -100,6 +103,16 @@ static const char* mm_field(int tag, SpineFieldType* peType)
 	case MDF_ENTITIES2:   return "probeEntities";
 	case MDF_SPECC:       return "specCasc";
 	case MDF_SPECL:       return "specLeg";
+	case MDF_FACTS:       return "facts";
+	case MDF_FACTSHIT:    return "factsMemoHit";
+	case MDF_YRN:         return "yieldRate";
+	case MDF_PSN:         return "pctStack";
+	case MDF_CRN:         return "commerceRate";
+	case MDF_CEN:         return "condEval";
+	case MDF_FACTSMS:     return "factsMsX10";
+	case MDF_YRMS:        return "yieldRateMsX10";
+	case MDF_PSMS:        return "pctStackMsX10";
+	case MDF_CRMS:        return "commerceRateMsX10";
 	default:            return NULL;
 	}
 }
@@ -304,4 +317,15 @@ void cvCascadeModifierShadow()
 	}
 	eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_MODIFIER, MDE_RATE, 1)
 		.addI(MDF_CHECKED, iCChecked).addI(MDF_DIVERGING, iCDiverging));
+
+	// [MODIFIER/perf] -- the repeat-calc hunt (owner 2026-07-02: chase the needless repeat calcs BEFORE parity).
+	// Whole-turn call counts + our stopwatch accumulators (PerfAccumTimer; ms x10 as ints -- the spine carries ints).
+	// Counts cover EVERYTHING since the last flush (the full turn incl. the enabler sweep + getter instrument).
+	eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_MODIFIER, MDE_PERF, 1)
+		.addI(MDF_FACTS, CascadePerf::facts).addI(MDF_FACTSHIT, CascadePerf::factsMemoHit)
+		.addI(MDF_YRN, CascadePerf::yieldRate).addI(MDF_PSN, CascadePerf::pctStack)
+		.addI(MDF_CRN, CascadePerf::commerceRate).addI(MDF_CEN, CascadePerf::condEval)
+		.addI(MDF_FACTSMS, (int)(CascadePerf::factsMs * 10.0)).addI(MDF_YRMS, (int)(CascadePerf::yieldRateMs * 10.0))
+		.addI(MDF_PSMS, (int)(CascadePerf::pctStackMs * 10.0)).addI(MDF_CRMS, (int)(CascadePerf::commerceRateMs * 10.0)));
+	CascadePerf::reset();
 }

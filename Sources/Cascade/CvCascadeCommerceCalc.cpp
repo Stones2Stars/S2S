@@ -5,6 +5,8 @@
 //
 
 #include "CvGameCoreDLL.h"
+#include "CvCascadePerfCount.h"   // per-turn call counters + stopwatches (owner 2026-07-02: repeat-calc hunt)
+#include "AI/BetterBTSAI.h"          // PerfAccumTimer
 #include "CvCascadeCommerceCalc.h"
 #include "CvCascadeMMKernel.h"
 #include "CvCascadePercentStack.h"     // MMBreak + PercentStack
@@ -273,6 +275,8 @@ int CommerceCalc::corporation(const std::string& channel, const CvCity* pCity, c
 long CommerceCalc::commerceRate100(const std::string& channel, CommerceTypes eC, const CvCity* pCity, const CvCascadeEvalCtx& ec,
 	long yieldCommerce100, long prodRate)
 {
+	++CascadePerf::commerceRate;
+	PerfAccumTimer perfT(CascadePerf::commerceRateMs);
 	const CvPlayer& player = *ec.player;
 	const long CAP = CITY_MAX_YIELD_RATE;        // the engine #defines (CvCity.h:25-26), NOT GlobalDefines -- getDefineINT returns 0!
 	const long CAP100 = CITY_MAX_YIELD_RATE100;

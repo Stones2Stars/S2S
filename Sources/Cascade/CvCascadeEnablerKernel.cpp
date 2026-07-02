@@ -6,6 +6,8 @@
 //
 
 #include "CvGameCoreDLL.h"
+#include "CvCascadePerfCount.h"   // per-turn call counters + stopwatches (owner 2026-07-02: repeat-calc hunt)
+#include "AI/BetterBTSAI.h"          // PerfAccumTimer
 #include "CvCascadeEnablerKernel.h"
 #include "CvJsonInfo.h"
 #include "CvJsonTechInfo.h"           // CvJsonTechInfo -- capabilities now live here (off the base), techs the only grantor
@@ -201,6 +203,8 @@ void EnablerKernel::gateSet(const std::string& bucket, const EnBucketSets& cand,
 void EnablerKernel::computeCityBuildingFacts(const CvCity* pCity, const CvCascadeEvalCtx& ec, std::set<int>& activeOut, std::set<int>& providedOut)
 {
 	if (pCity == NULL) return;
+	++CascadePerf::facts;
+	PerfAccumTimer perfT(CascadePerf::factsMs);
 	// TURN-SCOPED MEMO (perf, 2026-07-02): this is a full O(nBuildings) scan with a real operate-condition eval per
 	// present building, and every cascade compute (percent stack, commerce ctxs, the getter instrument, the gates)
 	// rebuilds it -- once the repos actually populated (the InfoRepo singleton fix) that latent cost made a logged
@@ -215,7 +219,7 @@ void EnablerKernel::computeCityBuildingFacts(const CvCity* pCity, const CvCascad
 	if (iTurn != s_iMemoTurn) { s_memo.clear(); s_iMemoTurn = iTurn; }
 	const int iKey = ((int)pCity->getOwner()) * 100000 + pCity->getID();
 	std::map<int, FactsPair>::const_iterator mit = s_memo.find(iKey);
-	if (mit != s_memo.end()) { activeOut = mit->second.first; providedOut = mit->second.second; return; }
+	if (mit != s_memo.end()) { ++CascadePerf::factsMemoHit; activeOut = mit->second.first; providedOut = mit->second.second; return; }
 	CvCascadeEvalCtx ecOp = ec;
 	ecOp.activeBuildings = NULL;   // break recursion: operate's own BUILDING_ atoms resolve via raw presence
 	CvCascadeEvalFlags flags;      // default flags
