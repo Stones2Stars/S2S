@@ -468,7 +468,7 @@ curated-set model as part of this migration. The current mechanism (mapped 2026-
    enabling techs (NPC pollution ruled out — counts identical after the NPC skip) — trace where GENERATE loses
    `enables.processes` (data verified present on 12 techs) or the gate drops them; NB PROCESS_IDLE has NO tech
    enabler, so the generic enables-frontier structurally under-offers it (the PALACE lesson — processes may need
-   the whole-domain frontier like the ported cascades).
+   the whole-domain frontier like the ported cascades). **(d)** verify the multi-queue exclude matches the legacy oracle flag semantics on canConstruct (owner 2026-07-02: queue-driven variation otherwise reads as noise). **(e)** the city-scope ctx.plot fix (2026-07-02) cleared the coastal/freshwater refusal class; the canConstruct/canTrain bulk remaining is per-type chase work.
    ⏳ **Then PARITY** — run the shadow, attribute
    the diffs, close the gaps (remaining HAVE sources, CultureLevel category caps, requires-vs-enabler-active-state) across
    all gates **in one go** (owner ruling 2026-06-30: set the machine up to spec first, verify the pieces together).
