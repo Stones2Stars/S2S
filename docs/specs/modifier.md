@@ -324,6 +324,10 @@ No bespoke host↔cargo family is needed. The full unit-stat family vocabulary
 - `free` lives ON TOP of `allowed` (independent). Normally a modifier leaf is `<scope>.<unit>` (e.g. a bare
   number or `.flat`); specialist counts instead use a **count-by-type** leaf (the `SPECIALIST_*` type — or `any`
   — IS the key, its value the count) — the one sanctioned exception, chosen for legibility.
+- **freeSpecialists are MODIFIERS, never grants (owner ruling 2026-07-02).** A free specialist is alive **only as
+  long as its source is** — building present / civic adopted / trait active — the continuous-deposit shape, not a
+  handed-out provision. Every legacy `changeFreeSpecialistCount` apply (civic/trait/building) classifies to THIS
+  family; none belongs to the grants machine.
 
 ---
 

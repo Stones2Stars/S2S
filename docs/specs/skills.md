@@ -55,7 +55,7 @@ Owner-ruled or curator-grounded with a clear meaning.
 | `canLeadThroughPeaks` | can lead a stack through peak tiles |
 | `canMoveAllTerrain` | can move through any terrain |
 | `canMoveImpassable` | can move through impassable terrain |
-| `canMovePeaks` | can move through peak tiles |
+| `canPassPeaks` | can move through peak tiles (renamed from legacy `bCanMovePeaks` / prior `canMovePeaks` — owner ruling 2026-07-02: **dual-plane, same name as the empire capability**; a promotion grants the unit skill, `TECH_MOUNTAINEERING` grants it empire-wide as `capabilities.canPassPeaks`; effective check = skill ∪ capability, see [capabilities.md](capabilities.md)) |
 | `cannotMergeSplit` | cannot merge with / split from other units |
 | `enemyRoute` | can use enemy (rival) roads |
 | `excile` | an investigation / criminal **ability** (legacy spelling, from `iExcileChange`) — distinct from the `exile` *unit* in the criminal-type tags ([tags.md](tags.md)) |

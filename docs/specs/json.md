@@ -47,7 +47,7 @@ of them.
 | **Effects** | every **modifier family** key (`food`, `production`, `happiness`, …, one per `PROPERTY_*`) | per-turn magnitudes this deposits onto targets |
 | **Intrinsic** ("what am I") | `identity` (incl. all TEXT) · `cost` · `ui` · `world` · `sound` · `ai` | empire-agnostic self-description, art, audio, AI metadata |
 | **Classification** | `skills` (UNIT, mutable abilities) · `tags` (UNIT, immutable type membership) · `state` (UNIT, transient) · `attributes` (BUILDING, held city-scope intrinsics) · `capabilities` (TEAM, grantor-provided) | §8 — the classification model; scope carried by the section name |
-| **Auxiliary / bespoke** | `loadPrune` · `policies` · `succession` · `excludes` · `produces` · `condition` · `effect` · `vision` · `outcomes` · `mapGeneration` · `replacedBy` · `promotionLine` · `buildUp` · `shrine` · `headquarters` · `properties` · `voteSource` · `threshold` · `role` · `victory` · `targetLevel` · `conversion` · `cityFounding` · `unitCapability` | data read by their own systems, not the cascade |
+| **Auxiliary / bespoke** | `loadPrune` · `policies` · `succession` · `excludes` · `produces` · `condition` · `effect` · `vision` · `outcomes` · `mapGeneration` · `replacedBy` · `promotionLine` · `buildUp` · `shrine` · `headquarters` · `properties` · `voteSource` · `threshold` · `role` · `victory` · `targetLevel` · `conversion` · `cityFounding` · `unitCapability` · `canTrade` (tech → the trade-table/deal system: tradeable items + agreements — `techs`/`openBorders`/`rightOfPassage`/`embassy`/`bonuses`/…, owner 2026-07-02) · `canTradeOn` (tech → trade-route system; terrain refs, owner 2026-07-02) · `canWorkOn` (tech → the city `canWork` gate; workable plot classes — `water`/`peaks`/…, owner 2026-07-02) — all three [capabilities.md](capabilities.md) | data read by their own systems, not the cascade |
 
 `type` (the entity's own id, e.g. `"BUILDING_FORGE"`) and the TEXT fields are present where relevant.
 
@@ -608,7 +608,11 @@ and the commerce sliders `setScienceRate`/`setCultureRate`/`setEspionageRate`). 
 grantor-PROVIDED** — a **tech**, a **civic**, or a **building** *provides* one, and the empire then *holds* it. A
 grantor **provides**, never **holds**; a capability appears in a grantor's `capabilities` block to mean "I hand this
 to the empire." (This is exactly parallel to a tech granting an ability — the same block, three grantor kinds.) The
-**section name carries the scope**, so the engine never guesses.
+**section name carries the scope**, so the engine never guesses. **Behaviourally nothing is *granted* (owner ruling
+2026-07-02):** the empire's active set is **derived on query** — an enabler-style union over the currently-live
+sources (the enabler's HAVE axis); "provides" is the data direction, not an apply event, so a capability lapses with
+its last live source — headroom only: in practice no capability is ever disabled today (owner 2026-07-02). See
+[capabilities.md](capabilities.md).
 
 A **building** additionally has its own **`attributes`** block — the building's **HELD**, immutable, **city-scope**
 intrinsic capabilities: `nukeImmune`, `zoneOfControl`, `governmentCenter`, `providesFreshWater`, `borderObstacle`, …

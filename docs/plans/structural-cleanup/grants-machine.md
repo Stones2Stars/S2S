@@ -16,7 +16,13 @@
 | building `repeatable` (spawn/heal) | per-turn | `CvCity::doPropertyUnitSpawn` / `doUnitFullHeal` | recurring |
 | building `freePromotions` | end-turn | `assignPromotionsFromBuildingChecked` | recurring |
 | building `freeTechs` / `population` / `goldenAge` | first build | `CvCity` `bFirst` block (:14803/:14724/:14764) | one-shot |
-| trait `freePromotions`(dict) / `goldenAgeOnBirthOfGreatPerson` / `eraAdvanceFreeSpecialist` | unit-init / GP-birth / era-advance | `CvPlayer` trait paths | recurring/pulse |
+| trait `freePromotions`(dict) / `goldenAgeOnBirthOfGreatPerson` / ~~`eraAdvanceFreeSpecialist`~~ | unit-init / GP-birth / ~~era-advance~~ | `CvPlayer` trait paths | recurring/pulse |
+
+> **⚖ freeSpecialists reclassified OUT of grants (owner ruling 2026-07-02):** a free specialist is alive only as
+> long as its source is (building/civic/trait active) — the continuous **modifier** shape
+> ([modifier.md](../../specs/modifier.md) §Specialist counts), so the freeSpecialist-shaped entries (incl. the trait
+> `eraAdvanceFreeSpecialist` row above) belong to the modifier plane's `freeSpecialists` family, not this machine.
+> Pin the exact legacy lifetime semantics of the era-advance path against the modifier family when that channel is built.
 | civic `revolution` | civic switch | RevolutionDCM **Python** (no DLL apply) | one-shot pulse |
 | civ `civics` / `techs` / `buildings` | game start / first city | `CvPlayer` init / `CvCity::init` | game-start |
 | tech `firstFreeUnit` / `firstFreeProphet` / `freeTechs` | first to discover | `CvTeam::setHasTech` (5452+) | one-shot on-discover |

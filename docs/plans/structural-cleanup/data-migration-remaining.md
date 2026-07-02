@@ -34,6 +34,59 @@ So the "hidden data" question is closed: the only un-migrated data is the enumer
 
 ---
 
+## ✅ Tier 0 — NEW curator gaps (code-cut-map audit 2026-07-02) — EXECUTED 2026-07-02
+
+The cut-map audit falsified the "data foundation is complete" attestation on three counts — each a confirmed
+curator emission gap (proof in [code-cut-map.md](code-cut-map.md), Pass-2 classification-split lens). **All items
+below EXECUTED + regenerated 2026-07-02** (curators + `TechInfo.json` + `apply_channel` block/refList/flexArray
+support + `CJK_INTRINSIC_KEYS` recognition; regen delta: 25 techs, 2 promotions, 0 civics/buildings — the civic
+triple and building sliders are zero-data today, mapping-migrated). Kept for the audit trail:
+
+- **`curate_civic.py` policies triple** — emit `policies.allReligionsActive` / `bansNonStateReligions` /
+  `freedomFighter` (the trait curator emits all three, `curate_trait.py:245-246`; the civic grantor emits none —
+  the civic-side counter contributions vanish at the `processCivics` cut).
+- **`terrainTrades` → the root `canTradeOn` block** (owner ruling 2026-07-02, capabilities.md — named `canTradeOn`
+  to not confuse it with trading resources; NOT capability booleans, which would be per-key hardcoded gates with 0
+  modularity): the tech carries `canTradeOn: { terrains: [TERRAIN_…] }` with real FK-resolved terrain refs; the
+  trade-route system queries the derived union over live sources. The per-terrain list currently falls through
+  `engine.py`'s scalar-only enabler path and emits NOTHING (4 techs of live data:
+  raft-building/sailing/seafaring/navigation). The COMMON baseline terrains (always tradable from game start) are
+  homed on `TECH_GAME_START`'s `canTradeOn` block (owner 2026-07-02) — same union mechanic, no engine special-case;
+  ground the baseline membership against the legacy trade-network behaviour at curator time. `riverTrade` is
+  semantically distinct and RULED a capability (owner 2026-07-02: river as a trade ROAD — a conduit, not a tradable
+  tile): it stays the bare bool it already is, outside `canTradeOn` (capabilities.md).
+- **`waterWork` → the `canWorkOn` block** (owner rulings 2026-07-02, capabilities.md): coarse plot classes —
+  `water`/`ocean`/`peaks`/`space`, no terrain lists (if explicit terrains are ever needed, rework THEN).
+  Curator-time traces required, do not assume the single-flag model: the ocean/deepOcean requirement the owner
+  half-remembers was not found in `canWork` this pass; peaks ride TECH_MOUNTAINEERING (indirect, via
+  impassability); space is semi-modelled/future. `bWaterWork` (TECH_TRAP_FISHING) is the one direct work gate.
+- **The `-Trading` capability family → the root `canTrade` block** (owner ruling 2026-07-02, capabilities.md —
+  "what may appear on your trade table"): re-home the emitted flat keys (`techTrading`→`canTrade.techs`,
+  `goldTrading`→`gold`, `mapTrading`→`maps`, `embassyTrading`→`embassy`, `defensivePactTrading`→`defensivePact`,
+  `vassalTrading`→`vassals`, `permanentAllianceTrading`→`permanentAlliance`) and emit BOTH
+  `canTrade.openBorders` + `canTrade.rightOfPassage` from the single legacy `isOpenBordersTrading` flag. The
+  block is open-ended (owner: `bonuses`, `freeTradeAgreement`, "and so on"); the deal system queries it
+  generically. Flat capabilities keep only the non-trading abilities.
+- **The capability CANONICAL-NAME pass** (owner ruling 2026-07-02, capabilities.md — clear semantics,
+  `can<Verb><Object>`/`has<Thing>`): rename the emitted keys per the canonical table (`moveFastPeaks`→
+  `canMoveFastOnPeaks`, `desertFarming`→`canFarmDesert`, `irrigation`→`canSpreadIrrigation`, `ignoreIrrigation`→
+  `canIgnoreIrrigation`, `bridgeBuilding`→`canBuildBridges`, `riverTrade`→`hasRiverTrade`, `rebaseAnywhere`→
+  `canRebaseAnywhere`, `extraWaterSeeFrom`→`canSeeFurtherFromWater`, `mapCentering`→`hasCenteredMap`,
+  `mapVisible`→`hasWholeMapRevealed`, `language`→`hasLanguage`, `setScienceRate`/`setCultureRate`/
+  `setEspionageRate`→`canSet<X>Rate`). Touch points: `TechInfo.json` channel names, `curate_building.py`
+  COMMERCE_SLIDER_CAP, `tech_game_start.json` (hand-carries `setScienceRate`), and the C++ query strings
+  (`en_empireHasCapability` callers — `canFoundOnPeaks`/`canPassPeaks` are unchanged, the shadow survives).
+  `dcmAirBomb1/2` are NOT renamed — DCM air bombing is slated for whole-system removal (owner 2026-07-02,
+  structural-cleanup.md Tier 2); drop the two channels from `TechInfo.json:42-43` in that pass.
+- **`canMovePeaks` skill → rename `canPassPeaks`** (owner ruling 2026-07-02, capabilities.md/skills.md — dual-plane
+  same-name: promotion-granted unit skill ∪ TECH_MOUNTAINEERING empire capability): rename the emit in
+  `curate_promotion.py` (+ the unit-combat sibling flag if emitted) and regen. `canLeadThroughPeaks` stays distinct.
+- **`commerceFlexible` tech-side** — same scalar-only fall-through; expand the per-commerce array to the ruled
+  discrete keys (`setCultureRate`/…, owner 2026-07-01). One live case: `TECH_DRAMA` → culture slider.
+  (`TechInfo.json`'s bare `commerceFlexible` mapping is stale vs the ruling.) Building-side keys are emitted but
+  unparsed/unqueried — that half is the `CvJsonBuildingInfo` parse + `en_empireHasCapability` HAVE-widening
+  (code work, capabilities.md ruling 2026-07-02), not a curator item.
+
 ## Tier 1 — DONE (committed)
 
 - **Trap family** (11 tags) → `DROP` in `curate_promotion.py` — dead mechanic (traps removed). Zero data delta (no

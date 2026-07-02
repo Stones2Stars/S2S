@@ -146,6 +146,29 @@ after XML/Python changes.
 
 ### Tier 2 — audit required
 
+- **DCM air bombing — audit COMPLETE (2026-07-02), REMOVAL SLATED (owner: "rather have it gone, unless it's
+  load-bearing" — it is not).** The map: **effectively OFF for every default install** — `GlobalDefinesAlt.xml`
+  ships `DCM_AIR_BOMBING=1` but the RevDCM BUG option (default **False**) overwrites the define at init
+  (`RevDCM.py setXMLOptionsfromIniFile`, the split-brain pseudo-option); **human-only** — ZERO AI callers of
+  `MISSION_AIRBOMB1-5` (the AI never flies them even when on); and the `!isDCM_AIR_BOMBING()` branches in the
+  vanilla `airBombAt` path can silently change strike rules if the define flips (the "can't strike this city"
+  reports). **Removal surface (delete whole, ACO-style):** C++ `canAirBomb1At..5At`/`airBomb1..5` +
+  `CvSelectionGroup` dispatch (`:2779-2795`) + the `!DCM` branches (keep the vanilla path) + the
+  `getDCMAirBombTech1/2` O(techs) rescans (`CvUnit.cpp:22493/22684`); hardcoded enums `MISSION_AIRBOMB1-5` +
+  `INTERFACEMODE_AIRBOMB1-5` (+ their `CyEnumsInterface` exports) — **save handling (verified 2026-07-02, owner-ruled route): missions are a REMAPPED save class** —
+  `REMAPPED_CLASS_TYPE_MISSIONS` writes a name mapping table into every save, and
+  `WRAPPER_READ_CLASS_ENUM_ALLOW_MISSING` ("the ignore thing") drops names that no longer resolve — `m_eSleepType`
+  already rides it (`CvUnit.cpp:19935`). Nothing dcmAirBomb-specific is saved. The ONE bypass: the mission queue
+  serializes `MissionData` as raw bytes (`CLinkList<MissionData>::Write`, `LinkedList.h:386`) so its
+  `eMissionType` int skips the remap — route it through the class-enum remap (or validate queues on load) in the
+  removal PR, then the five mid-enum slots (`CvEnums.h:1693`) drop with **NO save break**; XML: 15 `MISSION_AIRBOMB*` MissionInfos refs, **29 air units'** `bDCMAirBomb1-5`
+  flags (CIV4UnitInfos + U_Air), 2 techs' `bDCMAirBombTech1/2`; the BUG option + `RevDCM.py` handler +
+  `GlobalDefinesAlt` define + `TXT_KEY_BUG_OPT_REVDCM__DCM_AIR_BOMBING_*` keys; curator: drop the `dcmAirBomb1/2`
+  channels (`TechInfo.json:42-43`) — which also resolves the capabilities.md rename-pending Open item. Caveat:
+  a player who had manually enabled the checkbox loses 5 human-only missions — accepted. **Vanilla
+  `MISSION_AIRBOMB` stays.** *(Contrast: the `CvOutcome` mission system audited the same day is LOAD-BEARING —
+  194 wild animals' KillOutcomes / subdue-hunt / 237 tamed-animal Actions / folklore heritages — and stays
+  until its ground-up rework per the 2026-07-01 ruling.)*
 - **ACO BUG-options surface — already REMOVED (2026-06-09)** (the only Tier-2 item actioned). The dead ACO
   options screen, its config XML, ~21 `TXT_KEY_BUG_OPT_ACO__*` keys, the `ACO_*` GlobalDefine block, and the
   Civilopedia concept were deleted once the preview became a pure `computeCombatPreview` renderer. **KEEP**

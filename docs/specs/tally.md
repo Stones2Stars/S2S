@@ -104,6 +104,13 @@ just: the object-side accessor it reads + its type-prefix routing + the roll-up*
 maintenance, rebuild scan, or shadow id (those were the duplicate-store model's burden). Where an object lacks the
 aggregate, give the object the accessor (it "cares about itself"). City/plot reads go direct to the live object regardless.
 
+**No new domain just to replace a same-shaped engine count (owner ruling 2026-07-02).** The engine objects already
+carried most of the tally functionality, and the deliberate design is to READ those object-owned counts, never rip
+them up to replace with the same thing. Concretely: `CvPlayer::countNumBuildings` (the cities-having, ≤1/city
+semantic) and `CvTeam::getHasReligionCount`/`getHasCorporationCount` are **KEEP** — engine-owned; a tally accessor
+over them is added only when a cascade consumer actually needs one (they are NOT cutover gaps — see
+[code-cut-map.md](../plans/structural-cleanup/code-cut-map.md) §Rulings addendum).
+
 The tally's `specialist` count domain (counting specialists, e.g. for `per:specialist` scaling) is DISTINCT from
 [modifier](modifier.md) §6's `freeSpecialists`/`allowedSpecialists` (which GRANT / CAP specialists — a deposit,
 not a count). No conflict — different mechanisms.

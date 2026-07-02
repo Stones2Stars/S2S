@@ -12,9 +12,18 @@ Each legacy mechanism cuts over **separately**, gated by its **own** verificatio
 switch": the modifier, the enabler, the grants, and the classification consumption each cut when *their* verification
 is clean. This is deliberate — a monolithic cut is un-verifiable, and the pieces are largely independent.
 
-## ⭐ The immediate next step — the comprehensive CODE-CUT MAP (a pure audit)
+## ⭐ The master artifact — the comprehensive CODE-CUT MAP (a pure audit) — ✅ PRODUCED
 
-**The next work session is a PURE AUDIT: find EVERY place in the code that must cut over to the cascade, and produce a
+> **✅ Built 2026-07-02 → [`code-cut-map.md`](code-cut-map.md)** (two-pass, adversarial, per
+> [DEC-all-means-all](../../architecture/decisions.md#dec-all-means-all)): 13 channels × finder+critic, then a fresh
+> Pass-2 re-derivation + cross-cutting completeness/StoneBase critics. ~445 grounded cut-sites; the StoneBase
+> crosscheck came back PASS (every StoneBase-modelled source has a cut site). It surfaced the genuine Gate-1 gaps —
+> the GP-rate BASE economy, building line-of-sight→city vision, `processBonus` health/happiness + commerce-happiness
+> accumulators, tally cities-having / religion-corp count semantics, the civic-side policy data gaps (freedomFighter /
+> allReligionsActive / bansNonStateReligions), and the property-engine deferral — that must each gain a cascade home
+> (or an explicit BLOCKED row) **before their cut**. Work the gates below FROM that map.
+
+**This was a PURE AUDIT: find EVERY place in the code that must cut over to the cascade, and produce a
 comprehensive "code-cut map"** (owner ruling 2026-07-01). This map is the **master artifact** of the cutover — every
 gate below is executed FROM it. It enumerates:
 
@@ -29,6 +38,49 @@ cut site* — a StoneBase source with NO cut site is exactly the game-breaking g
 adversarial** ([DEC-all-means-all](../../architecture/decisions.md#dec-all-means-all)) — fan out per subsystem, assume
 incompleteness, prove coverage; a self-certified "done" is not enough. Output: a `code-cut-map` doc, the line-item cut
 plan the actual cutover then works down.
+
+## ⚖ Owner rulings 2026-07-02 — resolving the code-cut-map's gap list
+
+The map's Gate-1 gaps + load-bearing unresolved questions were put to the owner; ruled as follows (full row-level
+mapping: [`code-cut-map.md`](code-cut-map.md) §Rulings addendum):
+
+1. **The unported modifier channels are ALL PRE-CUTOVER** — health, happiness, defense, maintenance, buildRate
+   (item-cost), GP-rate, and the trade-route scalars each get their calc machine built, shadowed, and cut *within*
+   #430; none is deferred past the cutover. They follow the standing machine pipeline
+   ([validation.md](../../specs/validation.md)): spec → StoneBase parity → C++ port → in-DLL shadow → cut.
+2. **GP-rate BASE economy + building `lineOfSight` → CASCADE HOME** — the Pass-2 whole-subsystem finds
+   (`m_iBaseGreatPeopleRate`/`GreatPeopleUnitRate`/`Progress`; `m_iLineOfSight`) are modelled in the cascade
+   (pre-cutover), not BLOCKED-deferred. Mechanism per the spec work when their channel is built.
+3. **Capabilities (grantor breadth + parameterized grants)** — ⏳ a **dedicated walkthrough, pending** (owner:
+   gaps here were expected). Until ruled, the capability rows stay BLOCKED; nothing cuts.
+4. **Self-containment classifications** (hasTrait / isGoldenAge / isDisorder / isPower / isGovernmentCenter /
+   isActiveCorporation / corporationRevenueModifier) — ⏳ a **dedicated walkthrough, pending**. No read is
+   reclassified until then (the corporationRevenue derive-from-tech fix stands regardless — it is a
+   StoneBase-fidelity item, not a classification call).
+5. **⚖ THE GETTER-CONTRACT CUT STRATEGY (owner ruling 2026-07-02)** — resolves BOTH the entry-point question and
+   the self-containment classification wholesale. **The getters are fine — they are the stable CONTRACTS.** The
+   cut goes *through* the getters, one by one:
+   1. **Instrument** — each legacy getter the cascade replaces gets an event-spine emit INSIDE the body ("cascadeValue"),
+      logging the cascade's answer against the legacy return **at the real call moment** — the shadow rides the
+      actual consumer calls (per validation.md's end-turn discipline). Gate + aggregate like the existing
+      `[ENABLER/shadow]` pattern (per-turn diverging/checked counts, capped samples) — these getters are hot paths.
+   2. **Flip** — at clean parity the getter BODY returns the cascade value; the legacy accumulator behind it is
+      deleted. **Consumers are never rewired** (this IS the answer to the getYieldRate100-vs-its-consumers
+      question: rewire the body, not the call sites).
+   3. **Self-containment dissolves at the contract level** — the cascade reading a sibling getter (`hasTrait`,
+      `isPower`, `isGovernmentCenter`, …) is legitimate because each getter is itself cascade-backed after its
+      flip. Getters over genuinely RAW saved state (`isGoldenAge`, `isDisorder`, trait membership, occupation/
+      anarchy timers) never flip — their maintainers aren't being deleted. **Flip in dependency order** (leaf
+      state first) so no flipped getter ever reads a dead legacy value.
+6. **The tally count "gaps" are KEEP, not gaps** — the engine objects already carried most of the tally
+   functionality, and the deliberate design was to **read those object-owned counts, not rip them up to replace
+   with the same thing**. So `countNumBuildings` (cities-having), `CvTeam::getHasReligionCount` /
+   `getHasCorporationCount` stay engine-owned; the tally exposes an accessor over them if/when a cascade consumer
+   needs one. Their Gate-1 rows reclassify verify→KEEP.
+7. **freeSpecialists are MODIFIERS, never grants** — a free specialist is alive **only as long as its source is**
+   (building present / civic adopted / trait active), i.e. the continuous modifier shape
+   ([modifier.md](../../specs/modifier.md) §Specialist counts), resolving the map's unresolved #75. The
+   grants-inventory freeSpecialist-shaped rows reclassify to the modifier plane.
 
 ## Gate 1 — StoneBase-completeness *(the PRIMARY, critical, game-breaking gate — owner 2026-07-01)*
 
@@ -97,7 +149,7 @@ large, breadth-first rewiring ("a lot of places") and can proceed **in parallel*
 
 ## Sequencing
 
-0. **The code-cut map** (pure audit — the next session) — the master artifact; everything below executes from it.
+0. **The code-cut map** ✅ ([`code-cut-map.md`](code-cut-map.md), built 2026-07-02) — the master artifact; everything below executes from it. Its Gate-1 gap list + BLOCKED tail is the pre-cut worklist.
 1. **StoneBase-completeness** (Gate 1) — the final adversarial sweep; confirm nothing StoneBase mapped is missing. THE gate.
 2. **Shadow-parity** (Gate 2, secondary) — drive each machine to `diverging=0`; cut its legacy as it goes clean.
 3. **Classification consumption** (Gate 3) — in parallel; the long pole.

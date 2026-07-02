@@ -10,6 +10,11 @@
 > the curators do the *verification*; these docs are the *deletion plan*, never a result set.
 
 ## Contents
+- **cutover.md** — the cutover roadmap: the gates (StoneBase-completeness / shadow-parity / classification consumption),
+  the prerequisites, and the sequencing from shadow to `main`.
+- **code-cut-map.md** — ✅ the master **CODE-CUT MAP** (built 2026-07-02, two-pass adversarial): every legacy
+  mechanism/consumer → cascade replacement → cut action, grounded in `file:line`. The line-item plan the cutover works
+  down + the Gate-1 completeness proof (Gate-1 gaps, Gate-3 worklist, BLOCKED tail, divergences with proof).
 - **structural-cleanup.md** — the source-level deletion plan (which `Cv*` files / functions go).
 - **legacy-value-calc-map.md** — the per-calc destroy map: every legacy per-turn value calc traced to its getter +
   components (what the cascade reproduces, then deletes).
