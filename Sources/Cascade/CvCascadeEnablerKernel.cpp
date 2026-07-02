@@ -242,26 +242,44 @@ void EnablerKernel::computeCityBuildingFacts(const CvCity* pCity, const CvCascad
 	ecOp.activeBuildings = NULL;   // break recursion: operate's own BUILDING_ atoms resolve via raw presence
 	CvCascadeEvalFlags flags;      // default flags
 	const int nB = GC.getNumBuildingInfos();
-	for (int b = 0; b < nB; ++b)
+	// ⛔ FIXPOINT (2026-07-02, the Athens −15 stack find): the active set and the vicinity supply are MUTUALLY
+	// dependent — an operate condition may consume a bonus another ACTIVE building `provides` (json §5a), so a
+	// single pass evaluates those consumers against an incomplete supply and dorms them wrongly (per-building
+	// dry-calc proved the data exact; the whole bC under-count was ~14 buildings dormed by a NULL/partial provB).
+	// StoneBase never faced this: its AugmentState reads the ENGINE's dormant set (the "StoneBase cheated on
+	// dormancy" the owner flagged); the self-contained cascade must solve the fixpoint itself. LEAST fixpoint:
+	// start with an EMPTY supply, iterate active→provides until stable (bounded; provides only ever ADD, so
+	// convergence is fast — typically 2 scans).
+	std::set<int> prov;
+	ecOp.vicinityProvidedBonuses = &prov;
+	for (int iter = 0; iter < 5; ++iter)
 	{
-		if (!pCity->hasBuilding((BuildingTypes)b)) continue;   // not present (raw input -- the un-dormancy-gated presence)
-		const CvJsonInfo* j = InfoRepo<CvBuildingInfo>::get().get(b);
-		// operate fails -> dormant.
-		if (j != NULL && j->requiresOperate != NULL && !cascadeEvalCondition(j->requiresOperate, ecOp, flags)) continue;
-		// a dormant-trigger successor is present -> dormant.
-		bool dormant = false;
-		if (j != NULL)
-			for (size_t i = 0; i < j->dormantTriggers.size(); ++i)
-				if (pCity->hasBuilding((BuildingTypes)j->dormantTriggers[i])) { dormant = true; break; }
-		if (dormant) continue;
-		activeOut.insert(b);   // active
-		// This ACTIVE building's `provides.bonuses` supply those bonuses IN-VICINITY (json §5a).
-		if (j != NULL)
+		activeOut.clear();
+		std::set<int> provNext;
+		for (int b = 0; b < nB; ++b)
 		{
-			std::map<std::string, std::vector<int> >::const_iterator pit = j->edges.find("provides.bonuses");
-			if (pit != j->edges.end())
-				for (size_t i = 0; i < pit->second.size(); ++i) providedOut.insert(pit->second[i]);
+			if (!pCity->hasBuilding((BuildingTypes)b)) continue;   // not present (raw input -- the un-dormancy-gated presence)
+			const CvJsonInfo* j = InfoRepo<CvBuildingInfo>::get().get(b);
+			// operate fails -> dormant.
+			if (j != NULL && j->requiresOperate != NULL && !cascadeEvalCondition(j->requiresOperate, ecOp, flags)) continue;
+			// a dormant-trigger successor is present -> dormant.
+			bool dormant = false;
+			if (j != NULL)
+				for (size_t i = 0; i < j->dormantTriggers.size(); ++i)
+					if (pCity->hasBuilding((BuildingTypes)j->dormantTriggers[i])) { dormant = true; break; }
+			if (dormant) continue;
+			activeOut.insert(b);   // active (under the CURRENT supply estimate)
+			// This ACTIVE building's `provides.bonuses` supply those bonuses IN-VICINITY (json §5a).
+			if (j != NULL)
+			{
+				std::map<std::string, std::vector<int> >::const_iterator pit = j->edges.find("provides.bonuses");
+				if (pit != j->edges.end())
+					for (size_t i = 0; i < pit->second.size(); ++i) provNext.insert(pit->second[i]);
+			}
 		}
+		if (provNext == prov) break;   // supply stable -> the active set is the fixpoint
+		prov.swap(provNext);
 	}
+	providedOut = prov;
 	s_memo[iKey] = FactsPair(activeOut, providedOut);   // store for this turn's remaining computes on this city
 }

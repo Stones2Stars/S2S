@@ -152,7 +152,15 @@ static void en_shadowPromotions(const CvPlayer& kPlayer, const CvTeam& kTeam, in
 		for (int pr = 0; pr < nPromo; ++pr)
 		{
 			++g.chk;
-			const bool bCasc = promoCand.count(pr) != 0 && EnablerKernel::requiresMet(InfoRepo<CvPromotionInfo>::get().get(pr), ec);
+			// ⛔ SCOPE (2026-07-02): the cascade owns the TECH/enables frontier half only. isPromotionValid's bespoke
+			// unit-state rules (qualified/disqualified unitcombat lists, game options, spy/pillage/commander/blend/
+			// intercept caps) are engine LOGIC that survives cutover (their DATA moves to JSON at Gate 3 — parked in
+			// identity.unitCombats today, unmodeled by the frontier). isPromotionValid(pr, bFree=true) applies exactly
+			// that bespoke half (bFree skips ONLY the tech + promotion-line tech gates, CvUnit.cpp:17947) — riding it
+			// on BOTH sides isolates the diff to the frontier half (the 4,729-diff noise was the unmodeled half).
+			const bool bCasc = promoCand.count(pr) != 0
+				&& EnablerKernel::requiresMet(InfoRepo<CvPromotionInfo>::get().get(pr), ec)
+				&& pUnit->isPromotionValid((PromotionTypes)pr, true);
 			const bool bLeg = pUnit->isPromotionValid((PromotionTypes)pr);
 			if (bCasc != bLeg) { ++g.div; en_emitDiff(szWho, "canAcquirePromotion", GC.getPromotionInfo((PromotionTypes)pr).getType(), bCasc, bLeg, g.shown); }
 		}
@@ -329,17 +337,30 @@ void cvCascadeEnablerShadow()
 		pec.plot = pPlot; pec.player = &kOwner; pec.team = &kOTeam;
 		CvCascadeEvalFlags bflags; bflags.strictStateReligionForBuild = true;
 		// BuildCascade (StoneBase): the FRONTIER is ALL builds (not the enables-frontier), gated by requires.build.
+		// ⛔ SCOPE (2026-07-02): the cascade owns ONLY the UNLOCK half — the plot-validity half (CvPlot::canBuild:
+		// canHaveImprovement, feature removal, route placement, water) STAYS ENGINE at cutover (enabler.md: "builds
+		// stay the per-plot canBuild gate; the cascade subsumes the unlock set"). So the shadow diffs UNLOCK vs
+		// UNLOCK: the oracle mirrors CvPlayer::canBuild's unlock block (disabled + obsoleteTech + techPrereq;
+		// CvPlayer.cpp:7529-7551) — diffing against the FULL CvPlot::canBuild compared two different questions
+		// (the 2,083-diff noise: every not-yet-plot-valid build read as an over-offer). The plot-conditional
+		// feature/terrain TECH gates (getFeatureTech / TerrainStructs) live in produces.* data, not requires —
+		// they are Gate-3 wiring for the surviving engine gate, outside this frontier.
 		std::set<int> availBld;
 		for (int b = 0; b < nBld; ++b)
 		{
 			const CvJsonInfo* j = InfoRepo<CvBuildInfo>::get().get(b);
+			if (EnablerKernel::obsoletedByHeldTech(j, kOTeam)) continue;
 			if (j == NULL || j->requiresBuild == NULL || cascadeEvalCondition(j->requiresBuild, pec, bflags)) availBld.insert(b);
 		}
 		const wchar_t* szWho = kOwner.getName();
 		for (int b = 0; b < nBld; ++b)
 		{
-			++gBuild.chk; bool c = availBld.count(b) != 0, l = pPlot->canBuild((BuildTypes)b, eOwner);
-			if (c != l) { ++gBuild.div; en_emitDiff(szWho, "canBuild", GC.getBuildInfo((BuildTypes)b).getType(), c, l, gBuild.shown); }
+			const CvBuildInfo& kBuild = GC.getBuildInfo((BuildTypes)b);
+			const bool l = !kBuild.isDisabled()
+				&& !(kBuild.getObsoleteTech() != NO_TECH && kOTeam.isHasTech(kBuild.getObsoleteTech()))
+				&& (kBuild.getTechPrereq() == NO_TECH || kOTeam.isHasTech((TechTypes)kBuild.getTechPrereq()));
+			++gBuild.chk; const bool c = availBld.count(b) != 0;
+			if (c != l) { ++gBuild.div; en_emitDiff(szWho, "canBuild", kBuild.getType(), c, l, gBuild.shown); }
 		}
 	}
 

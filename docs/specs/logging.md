@@ -70,6 +70,13 @@ The two reliable live reads:
   no gate. The most reliable read — when in doubt about a value, hit the endpoint.
 - **`/events` SSE stream** — the gated `[TAG]` lines, live. The per-turn shadow lines burst at the **top of
   `doTurn`**, so you must **connect *before* the turn ticks** (connect-then-end-turn).
+  - **⚠ Capture with an AUTO-RECONNECT loop, not a fixed-window curl (2026-07-02).** `CvGame::doTurn` fires at the
+    END of the inter-turn processing, which on a logged late-game turn can run **many minutes** — a fixed
+    `curl -m 600` dies before the burst and the reconnect gap loses it (this dropped two verification turns).
+    Capture with `while true; do curl -sN -m 3600 …/events >> capture.log; sleep 1; done` and grep the growing file.
+  - **A force-killed game may lose the tail** — `taskkill /F` can drop OS-buffered log/burst lines written moments
+    earlier. Post-mortem `Cascade.log` reads (legitimate once the process is dead) are only trustworthy for data
+    older than the kill by a few seconds.
 
 > **Delegate bulk reads to the cheap `data-reader` sub-agent.** A sweep dump is tens of KB; pulling it raw into
 > an expensive (orchestrator) context burns budget for nothing. The reader curls/greps, aggregates, and returns a
