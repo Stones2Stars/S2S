@@ -3154,9 +3154,9 @@ int CvTeam::getExtraWaterSeeFromCount() const
 
 bool CvTeam::isExtraWaterSeeFrom() const
 {
-	const bool bLegacy = m_iExtraWaterSeeFromCount > 0;
-	CascadeCapabilities::shadow(getID(), CCF_EXTRA_WATER_SEE_FROM, bLegacy);   // #430 wiring step 1: in-body shadow, legacy authoritative
-	return bLegacy;
+	// #430 FLIP-WITH-NET (2026-07-02): the CASCADE verdict is authoritative; the legacy counter stays
+	// maintained one more cycle as the in-body [CAPSHADOW] diff net, then it is deleted.
+	return CascadeCapabilities::shadow(getID(), CCF_EXTRA_WATER_SEE_FROM, m_iExtraWaterSeeFromCount > 0);
 }
 
 void CvTeam::changeExtraWaterSeeFromCount(int iChange)
@@ -3180,9 +3180,9 @@ int CvTeam::getMapTradingCount() const
 
 bool CvTeam::isMapTrading()	const
 {
-	const bool bLegacy = m_iMapTradingCount > 0;
-	CascadeCapabilities::shadow(getID(), CCF_TRADE_MAPS, bLegacy);   // #430 wiring step 1: in-body shadow, legacy authoritative
-	return bLegacy;
+	// #430 FLIP-WITH-NET (2026-07-02): the CASCADE verdict is authoritative; the legacy counter stays
+	// maintained one more cycle as the in-body [CAPSHADOW] diff net, then it is deleted.
+	return CascadeCapabilities::shadow(getID(), CCF_TRADE_MAPS, m_iMapTradingCount > 0);
 }
 
 void CvTeam::changeMapTradingCount(int iChange)
@@ -3199,9 +3199,9 @@ int CvTeam::getTechTradingCount() const
 
 bool CvTeam::isTechTrading() const
 {
-	const bool bLegacy = m_iTechTradingCount > 0;
-	CascadeCapabilities::shadow(getID(), CCF_TRADE_TECHS, bLegacy);   // #430 wiring step 1: in-body shadow, legacy authoritative
-	return bLegacy;
+	// #430 FLIP-WITH-NET (2026-07-02): the CASCADE verdict is authoritative; the legacy counter stays
+	// maintained one more cycle as the in-body [CAPSHADOW] diff net, then it is deleted.
+	return CascadeCapabilities::shadow(getID(), CCF_TRADE_TECHS, m_iTechTradingCount > 0);
 }
 
 void CvTeam::changeTechTradingCount(int iChange)
@@ -3218,9 +3218,9 @@ int CvTeam::getGoldTradingCount() const
 
 bool CvTeam::isGoldTrading() const
 {
-	const bool bLegacy = m_iGoldTradingCount > 0;
-	CascadeCapabilities::shadow(getID(), CCF_TRADE_GOLD, bLegacy);   // #430 wiring step 1: in-body shadow, legacy authoritative
-	return bLegacy;
+	// #430 FLIP-WITH-NET (2026-07-02): the CASCADE verdict is authoritative; the legacy counter stays
+	// maintained one more cycle as the in-body [CAPSHADOW] diff net, then it is deleted.
+	return CascadeCapabilities::shadow(getID(), CCF_TRADE_GOLD, m_iGoldTradingCount > 0);
 }
 
 void CvTeam::changeGoldTradingCount(int iChange)
@@ -3237,9 +3237,9 @@ int CvTeam::getOpenBordersTradingCount() const
 
 bool CvTeam::isOpenBordersTrading() const
 {
-	const bool bLegacy = m_iOpenBordersTradingCount > 0;
-	CascadeCapabilities::shadow(getID(), CCF_TRADE_OPEN_BORDERS, bLegacy);   // #430 wiring step 1: in-body shadow, legacy authoritative
-	return bLegacy;
+	// #430 FLIP-WITH-NET (2026-07-02): the CASCADE verdict is authoritative; the legacy counter stays
+	// maintained one more cycle as the in-body [CAPSHADOW] diff net, then it is deleted.
+	return CascadeCapabilities::shadow(getID(), CCF_TRADE_OPEN_BORDERS, m_iOpenBordersTradingCount > 0);
 }
 
 void CvTeam::changeOpenBordersTradingCount(int iChange)
@@ -3256,9 +3256,9 @@ int CvTeam::getDefensivePactTradingCount() const
 
 bool CvTeam::isDefensivePactTrading() const
 {
-	const bool bLegacy = m_iDefensivePactTradingCount > 0;
-	CascadeCapabilities::shadow(getID(), CCF_TRADE_DEFENSIVE_PACT, bLegacy);   // #430 wiring step 1: in-body shadow, legacy authoritative
-	return bLegacy;
+	// #430 FLIP-WITH-NET (2026-07-02): the CASCADE verdict is authoritative; the legacy counter stays
+	// maintained one more cycle as the in-body [CAPSHADOW] diff net, then it is deleted.
+	return CascadeCapabilities::shadow(getID(), CCF_TRADE_DEFENSIVE_PACT, m_iDefensivePactTradingCount > 0);
 }
 
 void CvTeam::changeDefensivePactTradingCount(int iChange)
@@ -3275,9 +3275,9 @@ int CvTeam::getPermanentAllianceTradingCount() const
 
 bool CvTeam::isPermanentAllianceTrading() const
 {
-	const bool bLegacyRaw = m_iPermanentAllianceTradingCount > 0;
-	CascadeCapabilities::shadow(getID(), CCF_TRADE_PERMANENT_ALLIANCE, bLegacyRaw);   // #430 wiring step 1: in-body shadow, legacy authoritative
-	return GC.getGame().isOption(GAMEOPTION_ENABLE_PERMANENT_ALLIANCES) && bLegacyRaw;
+	// #430 FLIP-WITH-NET: cascade authoritative on the raw half; the game-option composes in the getter.
+	const bool bCasc = CascadeCapabilities::shadow(getID(), CCF_TRADE_PERMANENT_ALLIANCE, m_iPermanentAllianceTradingCount > 0);
+	return GC.getGame().isOption(GAMEOPTION_ENABLE_PERMANENT_ALLIANCES) && bCasc;
 }
 
 void CvTeam::changePermanentAllianceTradingCount(int iChange)
@@ -3294,9 +3294,9 @@ int CvTeam::getVassalTradingCount() const
 
 bool CvTeam::isVassalStateTrading() const
 {
-	const bool bLegacyRaw = m_iVassalTradingCount > 0;
-	CascadeCapabilities::shadow(getID(), CCF_TRADE_VASSALS, bLegacyRaw);   // #430 wiring step 1: in-body shadow, legacy authoritative
-	return !GC.getGame().isOption(GAMEOPTION_NO_VASSAL_STATES) && bLegacyRaw;
+	// #430 FLIP-WITH-NET: cascade authoritative on the raw half; the game-option composes in the getter.
+	const bool bCasc = CascadeCapabilities::shadow(getID(), CCF_TRADE_VASSALS, m_iVassalTradingCount > 0);
+	return !GC.getGame().isOption(GAMEOPTION_NO_VASSAL_STATES) && bCasc;
 }
 
 void CvTeam::changeVassalTradingCount(int iChange)
@@ -3313,9 +3313,9 @@ int CvTeam::getBridgeBuildingCount() const
 
 bool CvTeam::isBridgeBuilding()	const
 {
-	const bool bLegacy = m_iBridgeBuildingCount > 0;
-	CascadeCapabilities::shadow(getID(), CCF_BRIDGE_BUILDING, bLegacy);   // #430 wiring step 1: in-body shadow, legacy authoritative
-	return bLegacy;
+	// #430 FLIP-WITH-NET (2026-07-02): the CASCADE verdict is authoritative; the legacy counter stays
+	// maintained one more cycle as the in-body [CAPSHADOW] diff net, then it is deleted.
+	return CascadeCapabilities::shadow(getID(), CCF_BRIDGE_BUILDING, m_iBridgeBuildingCount > 0);
 }
 
 void CvTeam::changeBridgeBuildingCount(int iChange)
@@ -3340,9 +3340,9 @@ int CvTeam::getIrrigationCount() const
 
 bool CvTeam::isIrrigation() const
 {
-	const bool bLegacy = m_iIrrigationCount > 0;
-	CascadeCapabilities::shadow(getID(), CCF_SPREAD_IRRIGATION, bLegacy);   // #430 wiring step 1: in-body shadow, legacy authoritative
-	return bLegacy;
+	// #430 FLIP-WITH-NET (2026-07-02): the CASCADE verdict is authoritative; the legacy counter stays
+	// maintained one more cycle as the in-body [CAPSHADOW] diff net, then it is deleted.
+	return CascadeCapabilities::shadow(getID(), CCF_SPREAD_IRRIGATION, m_iIrrigationCount > 0);
 }
 
 void CvTeam::changeIrrigationCount(int iChange)
@@ -3364,9 +3364,9 @@ int CvTeam::getIgnoreIrrigationCount() const
 
 bool CvTeam::isIgnoreIrrigation() const
 {
-	const bool bLegacy = m_iIgnoreIrrigationCount > 0;
-	CascadeCapabilities::shadow(getID(), CCF_IGNORE_IRRIGATION, bLegacy);   // #430 wiring step 1: in-body shadow, legacy authoritative
-	return bLegacy;
+	// #430 FLIP-WITH-NET (2026-07-02): the CASCADE verdict is authoritative; the legacy counter stays
+	// maintained one more cycle as the in-body [CAPSHADOW] diff net, then it is deleted.
+	return CascadeCapabilities::shadow(getID(), CCF_IGNORE_IRRIGATION, m_iIgnoreIrrigationCount > 0);
 }
 
 void CvTeam::changeIgnoreIrrigationCount(int iChange)
@@ -3383,9 +3383,9 @@ int CvTeam::getWaterWorkCount() const
 
 bool CvTeam::isWaterWork() const
 {
-	const bool bLegacy = m_iWaterWorkCount > 0;
-	CascadeCapabilities::shadow(getID(), CCF_WORK_WATER, bLegacy);   // #430 wiring step 1: in-body shadow, legacy authoritative
-	return bLegacy;
+	// #430 FLIP-WITH-NET (2026-07-02): the CASCADE verdict is authoritative; the legacy counter stays
+	// maintained one more cycle as the in-body [CAPSHADOW] diff net, then it is deleted.
+	return CascadeCapabilities::shadow(getID(), CCF_WORK_WATER, m_iWaterWorkCount > 0);
 }
 
 void CvTeam::changeWaterWorkCount(int iChange)
@@ -4842,9 +4842,9 @@ bool CvTeam::isTerrainTrade(TerrainTypes eIndex) const
 	{
 		return false;
 	}
-	const bool bLegacy = getTerrainTradeCount(eIndex) > 0;
-	CascadeCapabilities::shadowTerrain(getID(), eIndex, bLegacy);   // #430 wiring step 1: in-body shadow, legacy authoritative
-	return bLegacy;
+	// #430 FLIP-WITH-NET (2026-07-02): the CASCADE verdict is authoritative (the NPC guard above is engine
+	// composition and survives); the legacy counter stays maintained one more cycle as the diff net.
+	return CascadeCapabilities::shadowTerrain(getID(), eIndex, getTerrainTradeCount(eIndex) > 0);
 }
 
 
@@ -4877,9 +4877,9 @@ int CvTeam::getRiverTradeCount() const
 
 bool CvTeam::isRiverTrade() const
 {
-	const bool bLegacy = (getRiverTradeCount() > 0);
-	CascadeCapabilities::shadow(getID(), CCF_RIVER_TRADE, bLegacy);   // #430 wiring step 1: in-body shadow, legacy authoritative
-	return bLegacy;
+	// #430 FLIP-WITH-NET (2026-07-02): the CASCADE verdict is authoritative; the legacy counter stays
+	// maintained one more cycle as the in-body [CAPSHADOW] diff net, then it is deleted.
+	return CascadeCapabilities::shadow(getID(), CCF_RIVER_TRADE, getRiverTradeCount() > 0);
 }
 
 
@@ -6938,9 +6938,9 @@ bool CvTeam::hasLaunched() const
 
 bool CvTeam::isCanPassPeaks() const
 {
-	const bool bLegacy = (getCanPassPeaksCount() > 0);
-	CascadeCapabilities::shadow(getID(), CCF_CAN_PASS_PEAKS, bLegacy);   // #430 wiring step 1: in-body shadow, legacy authoritative
-	return bLegacy;
+	// #430 FLIP-WITH-NET (2026-07-02): the CASCADE verdict is authoritative; the legacy counter stays
+	// maintained one more cycle as the in-body [CAPSHADOW] diff net, then it is deleted.
+	return CascadeCapabilities::shadow(getID(), CCF_CAN_PASS_PEAKS, (getCanPassPeaksCount() > 0));
 }
 
 int CvTeam::getCanPassPeaksCount() const
@@ -6956,9 +6956,9 @@ void CvTeam::changeCanPassPeaksCount(int iChange)
 
 bool CvTeam::isMoveFastPeaks() const
 {
-	const bool bLegacy = (getMoveFastPeaksCount() > 0);
-	CascadeCapabilities::shadow(getID(), CCF_MOVE_FAST_PEAKS, bLegacy);   // #430 wiring step 1: in-body shadow, legacy authoritative
-	return bLegacy;
+	// #430 FLIP-WITH-NET (2026-07-02): the CASCADE verdict is authoritative; the legacy counter stays
+	// maintained one more cycle as the in-body [CAPSHADOW] diff net, then it is deleted.
+	return CascadeCapabilities::shadow(getID(), CCF_MOVE_FAST_PEAKS, (getMoveFastPeaksCount() > 0));
 }
 
 int CvTeam::getMoveFastPeaksCount() const
@@ -6974,9 +6974,9 @@ void CvTeam::changeMoveFastPeaksCount(int iChange)
 
 bool CvTeam::isCanFoundOnPeaks() const
 {
-	const bool bLegacy = (getCanFoundOnPeaksCount() > 0);
-	CascadeCapabilities::shadow(getID(), CCF_CAN_FOUND_ON_PEAKS, bLegacy);   // #430 wiring step 1: in-body shadow, legacy authoritative
-	return bLegacy;
+	// #430 FLIP-WITH-NET (2026-07-02): the CASCADE verdict is authoritative; the legacy counter stays
+	// maintained one more cycle as the in-body [CAPSHADOW] diff net, then it is deleted.
+	return CascadeCapabilities::shadow(getID(), CCF_CAN_FOUND_ON_PEAKS, (getCanFoundOnPeaksCount() > 0));
 }
 
 int CvTeam::getCanFoundOnPeaksCount() const
@@ -6997,9 +6997,9 @@ int CvTeam::getRebaseAnywhereCount() const
 
 bool CvTeam::isRebaseAnywhere() const
 {
-	const bool bLegacy = m_iRebaseAnywhereCount > 0;
-	CascadeCapabilities::shadow(getID(), CCF_REBASE_ANYWHERE, bLegacy);   // #430 wiring step 1: in-body shadow, legacy authoritative
-	return bLegacy;
+	// #430 FLIP-WITH-NET (2026-07-02): the CASCADE verdict is authoritative; the legacy counter stays
+	// maintained one more cycle as the in-body [CAPSHADOW] diff net, then it is deleted.
+	return CascadeCapabilities::shadow(getID(), CCF_REBASE_ANYWHERE, m_iRebaseAnywhereCount > 0);
 }
 
 void CvTeam::changeRebaseAnywhereCount(int iChange)
@@ -7031,9 +7031,9 @@ int CvTeam::getCanFarmDesertCount() const
 
 bool CvTeam::isCanFarmDesert() const
 {
-	const bool bLegacy = (getCanFarmDesertCount() > 0);
-	CascadeCapabilities::shadow(getID(), CCF_CAN_FARM_DESERT, bLegacy);   // #430 wiring step 1: in-body shadow, legacy authoritative
-	return bLegacy;
+	// #430 FLIP-WITH-NET (2026-07-02): the CASCADE verdict is authoritative; the legacy counter stays
+	// maintained one more cycle as the in-body [CAPSHADOW] diff net, then it is deleted.
+	return CascadeCapabilities::shadow(getID(), CCF_CAN_FARM_DESERT, (getCanFarmDesertCount() > 0));
 }
 
 void CvTeam::changeCanFarmDesertCount(int iChange)
@@ -7049,9 +7049,9 @@ int CvTeam::getLimitedBordersTradingCount() const
 
 bool CvTeam::isLimitedBordersTrading() const
 {
-	const bool bLegacy = (getLimitedBordersTradingCount() > 0);
-	CascadeCapabilities::shadow(getID(), CCF_TRADE_RIGHT_OF_PASSAGE, bLegacy);   // #430 wiring step 1: in-body shadow, legacy authoritative
-	return bLegacy;
+	// #430 FLIP-WITH-NET (2026-07-02): the CASCADE verdict is authoritative; the legacy counter stays
+	// maintained one more cycle as the in-body [CAPSHADOW] diff net, then it is deleted.
+	return CascadeCapabilities::shadow(getID(), CCF_TRADE_RIGHT_OF_PASSAGE, (getLimitedBordersTradingCount() > 0));
 }
 
 void CvTeam::changeLimitedBordersTradingCount(int iChange)
@@ -7175,9 +7175,9 @@ int CvTeam::getEmbassyTradingCount() const
 
 bool CvTeam::isEmbassyTrading() const
 {
-	const bool bLegacy = (getEmbassyTradingCount() > 0);
-	CascadeCapabilities::shadow(getID(), CCF_TRADE_EMBASSY, bLegacy);   // #430 wiring step 1: in-body shadow, legacy authoritative
-	return bLegacy;
+	// #430 FLIP-WITH-NET (2026-07-02): the CASCADE verdict is authoritative; the legacy counter stays
+	// maintained one more cycle as the in-body [CAPSHADOW] diff net, then it is deleted.
+	return CascadeCapabilities::shadow(getID(), CCF_TRADE_EMBASSY, (getEmbassyTradingCount() > 0));
 }
 
 void CvTeam::changeEmbassyTradingCount(int iChange)

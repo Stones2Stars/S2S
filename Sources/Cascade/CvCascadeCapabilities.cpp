@@ -192,31 +192,39 @@ static const char* cs_flagName(int f)
 	return "?";
 }
 
-void CascadeCapabilities::shadow(TeamTypes eTeam, CascadeCapFlag eFlag, bool bLegacy)
+bool CascadeCapabilities::shadow(TeamTypes eTeam, CascadeCapFlag eFlag, bool bLegacy)
 {
-	if (gPlayerLogLevel < 1 || eTeam < 0 || eTeam >= MAX_TEAMS) return;
-	if (!s_csInit) cs_reset();
-	const bool bCasc = flag(eTeam, eFlag);
-	++s_csChecked;
-	if (bCasc != bLegacy)
+	if (eTeam < 0 || eTeam >= MAX_TEAMS) return bLegacy;   // out-of-range: fall back to the caller's own verdict
+	const bool bCasc = flag(eTeam, eFlag);                 // AUTHORITATIVE post-flip (the return value)
+	if (gPlayerLogLevel >= 1)                              // the diff NET (tally gated; free in normal play)
 	{
-		++s_csDiverging;
-		if (s_csDivCount[eTeam][eFlag]++ == 0) s_csDivCasc[eTeam][eFlag] = bCasc;
+		if (!s_csInit) cs_reset();
+		++s_csChecked;
+		if (bCasc != bLegacy)
+		{
+			++s_csDiverging;
+			if (s_csDivCount[eTeam][eFlag]++ == 0) s_csDivCasc[eTeam][eFlag] = bCasc;
+		}
 	}
+	return bCasc;
 }
 
-void CascadeCapabilities::shadowTerrain(TeamTypes eTeam, TerrainTypes eT, bool bLegacy)
+bool CascadeCapabilities::shadowTerrain(TeamTypes eTeam, TerrainTypes eT, bool bLegacy)
 {
-	if (gPlayerLogLevel < 1 || eTeam < 0 || eTeam >= MAX_TEAMS || eT < 0) return;
-	if (!s_csInit) cs_reset();
-	const bool bCasc = canTradeOnTerrain(eTeam, eT);
-	++s_csChecked;
-	if (bCasc != bLegacy)
+	if (eTeam < 0 || eTeam >= MAX_TEAMS || eT < 0) return bLegacy;
+	const bool bCasc = canTradeOnTerrain(eTeam, eT);       // AUTHORITATIVE post-flip (the return value)
+	if (gPlayerLogLevel >= 1)
 	{
-		++s_csDiverging;
-		++s_csTerrDiv[eTeam];
-		if (s_csTerrSample[eTeam] < 0) s_csTerrSample[eTeam] = (int)eT;
+		if (!s_csInit) cs_reset();
+		++s_csChecked;
+		if (bCasc != bLegacy)
+		{
+			++s_csDiverging;
+			++s_csTerrDiv[eTeam];
+			if (s_csTerrSample[eTeam] < 0) s_csTerrSample[eTeam] = (int)eT;
+		}
 	}
+	return bCasc;
 }
 
 void CascadeCapabilities::shadowFlush()

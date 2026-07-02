@@ -54,14 +54,13 @@ public:
 	static void invalidate(TeamTypes eTeam);   // call on ANY HAVE change (setHasTech; future grantor kinds likewise)
 	static void invalidateAll();               // game (re)load / team reset
 
-	// ---- the IN-BODY getter shadow (wiring step 1 — the step the reverted first flip skipped, 2026-07-02).
-	// Each legacy getter keeps returning its COUNTER (authoritative) and reports the verdict here at the REAL
-	// call moment; the cascade verdict is compared per call, per-(team,flag) diverging counts + samples flush
-	// per turn as [CAPSHADOW] spine lines. This runs through real turns (trade-network recomputes, NPC teams,
-	// load paths — everything offline parity never touched) and NAMES the divergence the first flip shipped
-	// blind. The getters flip only when this is clean. Gated by gPlayerLogLevel (free in normal play).
-	static void shadow(TeamTypes eTeam, CascadeCapFlag eFlag, bool bLegacy);
-	static void shadowTerrain(TeamTypes eTeam, TerrainTypes eT, bool bLegacy);
+	// ---- the IN-BODY getter shadow, now FLIP-WITH-NET (2026-07-02; step 1 ran clean at 5.49M calls / 0
+	// diverging incl. the load path + a full turn). Each getter passes its LEGACY counter verdict in and returns
+	// the CASCADE verdict (authoritative post-flip); the diff net stays armed — per-(team,flag) diverging counts
+	// flush per turn as [CAPSHADOW] spine lines — until the counters are deleted the cycle after a clean net.
+	// Diff tallying is gPlayerLogLevel-gated; the cascade verdict is computed regardless (it IS the return).
+	static bool shadow(TeamTypes eTeam, CascadeCapFlag eFlag, bool bLegacy);
+	static bool shadowTerrain(TeamTypes eTeam, TerrainTypes eT, bool bLegacy);
 	static void shadowFlush();   // per-turn (called from the modifier shadow's doTurn site)
 };
 
