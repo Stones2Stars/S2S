@@ -371,12 +371,15 @@ curated-set model as part of this migration. The current mechanism (mapped 2026-
    The [MODIFIER/perf] census (counters + PerfAccumTimer stopwatches, flushed per turn) drove this so far:
    yieldRate100 was 444 calls × ~164ms ≈ 73s/turn; the turn-scoped memos (facts: 91% hit; rate: halved to ~37s)
    bought back the REPEAT calls. The residual is the PER-CALL ~164ms, and the sub-costs measured so far bound it:
-   percentStack ≈ 6ms and commerceRate ≈ 7ms per call, so the bulk sits in the BASE packages — **`basePlot`
-   (per-plot scans with per-plot condition evals + vicinity walks) is the prime suspect; add per-package
-   stopwatches inside yieldRate100 next** (basePlot/buildingFlat/specialist split), then fix the convicted
-   package. The deposit-vector index (§3) stays a refinement but is demoted as the perf lever (per-entity deposit
-   vectors are small; the multiplier is entity-count × sums, not the vector walk). ⚠ Both memos are
-   SHADOW-PHASE-ONLY (stale on mid-turn building changes) — event-invalidate before any consumer cut.
+   percentStack ≈ 6ms and commerceRate ≈ 7ms per call, so the bulk sits in the BASE packages — **`basePlot` was CONVICTED and fixed**: it
+   walked ALL ~5202 buildings PER WORKED PLOT (×3 keyed-deposit walks) — the per-channel building-CANDIDATE cache
+   (which buildings carry any deposit for a channel is static readJson data) cut the per-call cost ~164ms → ~50ms
+   (turn total 73s → ~12s, with the memos). **ANTI-MEMO-SKEW**: the doTurn shadow clears the turn memos at its top
+   (`YieldRate::memoClear` + `EnablerKernel::factsMemoClear`) — memo values frozen from early-turn calls vs
+   end-of-turn legacy read as false divergences until it did. Next perf levers if wanted: the per-plot civic/trait
+   loops + the substrate walks (same candidate-cache pattern). The deposit-vector index (§3) stays a refinement
+   but is demoted as the lever. ⚠ All memos are SHADOW-PHASE-ONLY (stale on mid-turn building changes) —
+   event-invalidate before any consumer cut.
 2. **Tally** ✅ **DONE — reworked to a READ-ONLY accessor (owner ruling 2026-06-30)** (buildings + units). It READS the
    object-owned counts (`CvPlayer::getBuildingCount`/`getUnitCount`) and rolls UP the spine (empire/team/world) — no
    store, no `IEventConsumer`, no `rebuild`/`onEvent`/`shadowDiff` (a count shadow was tautological — the duplicate-store
