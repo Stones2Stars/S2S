@@ -186,6 +186,21 @@ per-terrain `canTradeOn` set, and `canWorkOn.water`. Grounded finds captured:
 - `isCommerceFlexible` additionally gates espionage on met-civs and everything on founded-first-city — runtime UI
   conditions, not capability data.
 
+## ✅ WIRED — the first Gate-3 cut (2026-07-02)
+
+**22 CvTeam capability getters now RUN ON the cascade** (the getter-contract flip; consumers untouched): the 10
+flat capabilities, the 9 `canTrade` flags, `isTerrainTrade` (per-terrain `canTradeOn` membership), `isWaterWork`.
+The 21 legacy event-maintained counters + their `processTech` applies + serialization are **DELETED** (soft
+save-compat; the apply-side SIDE EFFECTS survive — `updateYield` on canPassPeaks, the improvement-validity cache
+round on farming/irrigation/waterWork). Query surface: **`CascadeCapabilities`**
+(`Sources/Cascade/CvCascadeCapabilities.{h,cpp}`) — the derived-on-query union (held techs + `TECH_GAME_START`),
+per-team cached, invalidated at `CvTeam::setHasTech` + `reset`. The option compositions stay in the getters
+(vassals/permanentAlliance). CyTeam's `get/change*Count` are honest stubs (the WorldBuilder team-screen pokes are
+dead — grant the tech instead). NOT yet flipped: `isMapCentering` (a latch with building grantors), the
+commerce-slider player-side (`isCommerceFlexible` mixes a CommerceInfo global + building counts), `hasLanguage`
+(a CvPlayer event flag). `en_empireHasCapability` (the enabler's own union) still reads techs-only — fold it into
+`CascadeCapabilities` next so there is ONE union.
+
 ## Open
 - ~~**`dcmAirBomb1/2` renames**~~ — **MOOT: DCM air bombing is slated for whole-system REMOVAL** (owner 2026-07-02;
   audit: effectively off by default, human-only, not load-bearing — see
