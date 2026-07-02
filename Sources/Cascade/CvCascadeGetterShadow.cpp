@@ -65,7 +65,7 @@ static bool s_bInShadow = false;   // reentrancy guard: a cascade-internal read 
 
 // Per-turn compute cap: the cascade rate is an on-demand full recompute (no accumulator substrate yet), so an
 // uncapped late-game sweep (hundreds of cities x 7 channels) would drag a logged turn. First N call moments win.
-static const int GS_MAX_COMPUTES_PER_TURN = 1024;
+static const int GS_MAX_COMPUTES_PER_TURN = 256;   // 1024 -> 256 (2026-07-02): real repos made each compute heavy
 
 static void gs_rollTurn()
 {

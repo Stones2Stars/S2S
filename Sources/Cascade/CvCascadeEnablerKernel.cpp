@@ -201,6 +201,21 @@ void EnablerKernel::gateSet(const std::string& bucket, const EnBucketSets& cand,
 void EnablerKernel::computeCityBuildingFacts(const CvCity* pCity, const CvCascadeEvalCtx& ec, std::set<int>& activeOut, std::set<int>& providedOut)
 {
 	if (pCity == NULL) return;
+	// TURN-SCOPED MEMO (perf, 2026-07-02): this is a full O(nBuildings) scan with a real operate-condition eval per
+	// present building, and every cascade compute (percent stack, commerce ctxs, the getter instrument, the gates)
+	// rebuilds it -- once the repos actually populated (the InfoRepo singleton fix) that latent cost made a logged
+	// turn drag hard. The facts are stable within a turn for shadow/diagnostic purposes, so memo per (city, turn).
+	// ⛔ SHADOW-PHASE ONLY correctness: a mid-turn building change goes stale until the next turn -- fine while the
+	// legacy engine stays authoritative; MUST become event-invalidated (building-count DOMAIN events) before any
+	// consumer cut relies on these facts live.
+	typedef std::pair<std::set<int>, std::set<int> > FactsPair;
+	static std::map<int, FactsPair> s_memo;   // key: owner*100000 + city id
+	static int s_iMemoTurn = -1;
+	const int iTurn = GC.getGame().getGameTurn();
+	if (iTurn != s_iMemoTurn) { s_memo.clear(); s_iMemoTurn = iTurn; }
+	const int iKey = ((int)pCity->getOwner()) * 100000 + pCity->getID();
+	std::map<int, FactsPair>::const_iterator mit = s_memo.find(iKey);
+	if (mit != s_memo.end()) { activeOut = mit->second.first; providedOut = mit->second.second; return; }
 	CvCascadeEvalCtx ecOp = ec;
 	ecOp.activeBuildings = NULL;   // break recursion: operate's own BUILDING_ atoms resolve via raw presence
 	CvCascadeEvalFlags flags;      // default flags
@@ -226,4 +241,5 @@ void EnablerKernel::computeCityBuildingFacts(const CvCity* pCity, const CvCascad
 				for (size_t i = 0; i < pit->second.size(); ++i) providedOut.insert(pit->second[i]);
 		}
 	}
+	s_memo[iKey] = FactsPair(activeOut, providedOut);   // store for this turn's remaining computes on this city
 }
