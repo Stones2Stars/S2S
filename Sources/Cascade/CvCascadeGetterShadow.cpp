@@ -84,6 +84,11 @@ static void gs_rollTurn()
 static void gs_check(const CvCity* pCity, int iPlane, int iChannel, int iLegacy100)
 {
 	if (gPlayerLogLevel < 1 || pCity == NULL || s_bInShadow) return;
+	// LOAD GATE (2026-07-02): the load path recomputes every city's yields/commerce repeatedly, and with the repos
+	// populated each instrumented compute does real condition evaluation -- that dragged map loading hard. The
+	// getter contract shadow is about REAL consumer calls in a RUNNING game (validation.md end-turn discipline),
+	// so it stays silent until the game is fully initialized.
+	if (!GC.getGame().isFinalInitialized()) return;
 	gs_registerDomain();
 	gs_rollTurn();
 	if (s_iChecked >= GS_MAX_COMPUTES_PER_TURN) return;
