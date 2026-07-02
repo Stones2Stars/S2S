@@ -30,6 +30,8 @@
 #include "Infrastructure/CvDLLInterfaceIFaceBase.h"
 #include "Cascade/CvEventSpine.h" // #430 logging consolidation: route [CIT] through the spine (shadow, CvCity side)
 #include "Cascade/CvCascadeGetterShadow.h" // #430 getter-contract instrumentation (cutover.md rulings 2026-07-02)
+#include "Cascade/CvCascadeAccumulator.h"  // #430 the modifier scope accumulator -- DOMAIN dirty hooks (modifier-substrate.md)
+#include "Cascade/CvCascadeEnablerKernel.h" // factsMemoEvict -- the building hook evicts this city's facts
 #include "AI/CvCityLogTags.h" // [CIT] tag enums (shared with CvCityAI.cpp -- defined once, see header)
 #include "Infrastructure/CvDLLUtilityIFaceBase.h"
 #include "CvTraitInfo.h"
@@ -4527,6 +4529,9 @@ void CvCity::processBuilding(const BuildingTypes eBuilding, const int iChange, c
 {
 	PROFILE_FUNC();
 	FAssert(iChange == 1 || iChange == -1);
+	// #430 accumulator freshness: the building set changed -> the deposit-bearing components + this city's facts are stale
+	CascadeAccumulator::dirtyCity(this, ACCD_PCT | ACCD_SPEC | ACCD_EXTRA);
+	EnablerKernel::factsMemoEvict((int)getOwner(), getID());
 
 	// Toffer - Sanity control
 	if (iChange == -1)
@@ -6897,6 +6902,7 @@ void CvCity::setPopulation(int iNewValue, bool bNormal)
 		return;
 	}
 	m_iPopulation = iNewValue;
+	CascadeAccumulator::dirtyCity(this, ACCD_EXTRA);   // #430: population feeds the perPop term
 
 	FASSERT_NOT_NEGATIVE(iNewValue);
 
@@ -14061,6 +14067,7 @@ void CvCity::setSpecialistCount(SpecialistTypes eIndex, int iNewValue)
 	{
 		m_paiSpecialistCount[eIndex] = iNewValue;
 		FASSERT_NOT_NEGATIVE(getSpecialistCount(eIndex));
+		CascadeAccumulator::dirtyCity(this, ACCD_SPEC);   // #430: the specialist component's input
 
 		changeSpecialistPopulation(iNewValue - iOldValue);
 		processSpecialist(eIndex, (iNewValue - iOldValue));
@@ -14497,6 +14504,7 @@ void CvCity::setWorkingPlot(int iIndex, bool bNewValue)
 	if (isWorkingPlot(iIndex) != bNewValue)
 	{
 		m_pabWorkingPlot[iIndex] = bNewValue;
+		CascadeAccumulator::dirtyCity(this, ACCD_PLOTS);   // #430: the worked-plot component's input
 
 		processWorkingPlot(iIndex, bNewValue ? 1 : -1);
 		if (bNewValue)

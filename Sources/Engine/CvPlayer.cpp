@@ -14,6 +14,7 @@
 #include "AI/CvContractBroker.h"
 #include "CvEventSpine.h"   // #430 cascade spine -- first real DOMAIN emit at changeBuildingCount
 #include "Cascade/CvCascadeCapabilities.h"   // #430 Gate-3: the commerce-slider capability flip (isCommerceFlexible)
+#include "Cascade/CvCascadeAccumulator.h"    // #430 the modifier scope accumulator -- civic/golden-age epoch bumps
 #include "CvDeal.h"
 #include "UI/CvDiploParameters.h"
 #include "UI/CvEventReporter.h"
@@ -9410,6 +9411,7 @@ void CvPlayer::changeGoldenAgeTurns(int iChange)
 
 		if (bWasGoldenAge != isGoldenAge())
 		{
+			CascadeAccumulator::bumpEpoch();   // #430 accumulator: golden age is an empire-flat input + a condition
 			if (!bWasGoldenAge)
 			{
 				changeAnarchyTurns(-getAnarchyTurns());
@@ -14284,6 +14286,7 @@ void CvPlayer::setCivics(CivicOptionTypes eIndex, CivicTypes eNewValue)
 	if (eOldCivic != eNewValue)
 	{
 		m_paeCivics[eIndex] = eNewValue;
+		CascadeAccumulator::bumpEpoch();   // #430 accumulator: civic deposits/conditions -> global re-check
 		if (isNPC()) return;
 
 		if (eOldCivic != NO_CIVIC)

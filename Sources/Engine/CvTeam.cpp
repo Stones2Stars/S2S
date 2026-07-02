@@ -6,6 +6,7 @@
 #include "CvGameCoreDLL.h"
 #include "CvEventSpine.h"   // #430: emit the tech first-discover DOMAIN event (the grants trigger)
 #include "CvCascadeCapabilities.h"   // #430 Gate-3 wiring step 1: the in-body capability shadow + cache invalidation
+#include "CvCascadeAccumulator.h"    // #430 the modifier scope accumulator -- setHasTech bumps the global epoch
 #include "CvArea.h"
 #include "CvBuildingInfo.h"
 #include "CvBonusInfo.h"
@@ -4943,6 +4944,7 @@ void CvTeam::setHasTech(TechTypes eTech, bool bNewValue, PlayerTypes ePlayer, bo
 
 	m_pabHasTech[eTech] = bNewValue;
 	CascadeCapabilities::invalidate(getID());   // the derived capability union is f(held techs) -- the ONE mutation point
+	CascadeAccumulator::bumpEpoch();            // #430 accumulator: tech deposits/conditions -> global re-check
 
 	for (int iI = 0; iI < GC.getMap().numPlots(); iI++)
 	{

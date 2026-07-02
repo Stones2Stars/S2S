@@ -16,6 +16,7 @@
 #include "CvCascadeModifierMath.h"
 #include "CvCascadePercentStack.h"     // MMBreak + PercentStack::percentStack
 #include "CvCascadeYieldRate.h"        // YieldRate::yieldRate100
+#include "CvCascadeAccumulator.h"      // the modifier scope accumulator -- the [SLOT] shadow's subject
 #include "CvCascadeYieldBasePackages.h" // YieldBasePackages::specialist -- the accepted-diff decomposition (rate diff)
 #include "CvCascadeCommerceCalc.h"     // CommerceCalc::commerceRate100 + the commerce channel table
 #include "AI/BetterBTSAI.h"            // gPlayerLogLevel + streamLogTee
@@ -29,6 +30,8 @@
 #include "CvCascadeCapabilities.h"    // CascadeCapabilities::shadowFlush -- the in-body capability-getter shadow
 #include "CvJsonInfo.h"               // the mapped info (requiresOperate/dormantTriggers) -- the dorm-attribution diagnostic
 #include "Repos/InfoRepo.h"           // InfoRepo<CvBuildingInfo> -- ditto
+#include "Infos/CvBuildingInfo.h"     // GC.getBuildingInfo().getType() (dorm sample) -- was a latent unity-batch ride-along
+#include "CvCascadePerfCount.h"       // CascadePerf -- the [MODIFIER/perf] census (ditto)
 #include "CvCascadeReadJson.h"        // cascadeReadJsonStats -- re-surface the dark load-time probe stats
 #include "CvCascadeJsonParse.h"       // cascadeJsonUnresolvedIds -- re-surface the dark load-time FK misses
 #include "CvEventSpine.h"             // the #430 dispatch spine -- the shadow diff rides it (SD_MODIFIER), NOT direct gDLL->logMsg
@@ -39,7 +42,7 @@
 // The percent-stack shadow's diff + summary emit EVENTKIND_DIAGNOSTIC events through the event spine (NOT direct
 // gDLL->logMsg) -- the CvCascadeLogConsumer renders the raw typed fields + tees to /events, gated by level.
 // Per-emitter domain (SD_MODIFIER), one file (Cascade.log).
-enum MdEvt { MDE_DIFF = 1, MDE_SHADOW, MDE_RATE, MDE_DORM, MDE_REPO, MDE_PERF };
+enum MdEvt { MDE_DIFF = 1, MDE_SHADOW, MDE_RATE, MDE_DORM, MDE_REPO, MDE_PERF, MDE_SLOT };
 enum MdFld
 {
 	MDF_WHO = 1, MDF_CHANNEL, MDF_CASC, MDF_BC, MDF_BA, MDF_BE, MDF_CIV, MDF_TR,   // diff: cascade buckets
@@ -64,6 +67,7 @@ static const char* mm_prefix(int evt)
 	case MDE_DORM:   return "[MODIFIER/dorm]";
 	case MDE_REPO:   return "[MODIFIER/repo]";
 	case MDE_PERF:   return "[MODIFIER/perf]";
+	case MDE_SLOT:   return "[MODIFIER/slot]";
 	default:         return "[MODIFIER]";
 	}
 }
@@ -181,6 +185,7 @@ void cvCascadeModifierShadow()
 	const char* aszChannel[NUM_YIELD_TYPES] = { "food", "production", "commerce" };   // indexed by the YieldTypes enum
 	int iChecked = 0, iDiverging = 0, iShown = 0;
 	int iRateDiverging = 0, iRateShown = 0;   // the §1 holistic rate diff (YieldRate::yieldRate100 vs getYieldRate100)
+	int iSlotChecked = 0, iSlotDiverging = 0, iSlotShown = 0;   // the ACCUMULATOR vs its calculator oracle ([SLOT])
 	// Sample ACROSS EMPIRES (a per-player city cap, NOT a global one): traits/civics/religion are player-level, so
 	// 1-empire sampling is "a recipe for disaster" (owner ruling 2026-06-30) -- it misses every other civ's divergence.
 	const int MM_CITIES_PER_PLAYER = 2;
@@ -271,6 +276,23 @@ void cvCascadeModifierShadow()
 				}
 				const long cascRate = YieldRate::yieldRate100(aszChannel[y], eY, pCity, rec);
 				const int legRate = pCity->getYieldRate100(eY);
+				// [SLOT] -- the ACCUMULATOR (modifier-substrate.md) vs the fresh CALCULATOR (its oracle): a
+				// divergence names a dirty-mapping hole (an event the coarse hooks missed this turn).
+				{
+					++iSlotChecked;
+					const long slotRate = CascadeAccumulator::yieldRate100(pCity, eY);
+					if (slotRate != cascRate)
+					{
+						++iSlotDiverging;
+						if (iSlotShown < 40)
+						{
+							eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_MODIFIER, MDE_SLOT, 1)
+								.addWStr(MDF_WHO, pCity->getName().GetCString()).addStr(MDF_CHANNEL, aszChannel[y])
+								.addI(MDF_RATEC, (int)slotRate).addI(MDF_RATEL, (int)cascRate));
+							++iSlotShown;
+						}
+					}
+				}
 				if (cascRate != (long)legRate)
 				{
 					++iRateDiverging;
@@ -296,6 +318,8 @@ void cvCascadeModifierShadow()
 		.addI(MDF_CHECKED, iChecked).addI(MDF_DIVERGING, iDiverging));
 	eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_MODIFIER, MDE_RATE, 1)
 		.addI(MDF_CHECKED, iChecked).addI(MDF_DIVERGING, iRateDiverging));
+	eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_MODIFIER, MDE_SLOT, 1)
+		.addI(MDF_CHECKED, iSlotChecked).addI(MDF_DIVERGING, iSlotDiverging));
 
 	// §2 COMMERCE rate shadow: the assembled per-type commerce rate vs legacy getCommerceRateTimes100 (gold/research/
 	// culture/espionage; channel = the commerce-type string). Separate loop -- the §2 packages ride §1. ⚠ PERF: each call

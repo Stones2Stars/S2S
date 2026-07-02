@@ -11,6 +11,7 @@ int CascadePerf::yieldRate = 0;
 int CascadePerf::pctStack = 0;
 int CascadePerf::commerceRate = 0;
 int CascadePerf::condEval = 0;
+int CascadePerf::accRefresh = 0;
 
 double CascadePerf::factsMs = 0.0;
 double CascadePerf::yieldRateMs = 0.0;
@@ -19,6 +20,6 @@ double CascadePerf::commerceRateMs = 0.0;
 
 void CascadePerf::reset()
 {
-	facts = 0; factsMemoHit = 0; yieldRate = 0; pctStack = 0; commerceRate = 0; condEval = 0;
+	facts = 0; factsMemoHit = 0; yieldRate = 0; pctStack = 0; commerceRate = 0; condEval = 0; accRefresh = 0;
 	factsMs = 0.0; yieldRateMs = 0.0; pctStackMs = 0.0; commerceRateMs = 0.0;
 }

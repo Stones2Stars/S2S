@@ -65,8 +65,10 @@ public:
 	// `provides.bonuses` -- the BONUS ids that building supply makes present IN-VICINITY (json §5a). Feeds
 	// CvCascadeEvalCtx::activeBuildings (read by cascadeIsBuildingActive) + ::vicinityProvidedBonuses (read by ev_vicinityHas).
 	static void computeCityBuildingFacts(const CvCity* pCity, const CvCascadeEvalCtx& ec, std::set<int>& activeOut, std::set<int>& providedOut);
-	// Drop the turn-scoped facts memo (see YieldRate::memoClear -- the shadow's anti-memo-skew reset).
+	// Drop the turn-scoped facts memo wholesale (the doTurn shadow's anti-memo-skew reset)...
 	static void factsMemoClear();
+	// ...or evict ONE city's facts (the accumulator's building hook -- that city's active set changed).
+	static void factsMemoEvict(int iOwner, int iCityId);
 };
 
 #endif // CV_CASCADE_ENABLER_KERNEL_H
