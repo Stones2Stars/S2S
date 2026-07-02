@@ -255,6 +255,17 @@ static void rj_clearAllRepos()
 // start node / complex repo own it and outlive this call -- so the census reads it straight back).
 struct RjEntity { std::string type; int typeId; CvJsonInfo* data; };
 
+// Probe-stat stash (set=true stores; set=false reads). Lets a post-load emitter surface what the DARK load-time
+// burst saw: how many files the dataDir scan found + how many entities parsed, and the dataDir string itself.
+const std::string& cascadeReadJsonStats(bool bSet, int& iFiles, int& iEntities, const std::string& sDir)
+{
+	static int s_files = -1, s_entities = -1;   // -1 = the probe never ran
+	static std::string s_dir;
+	if (bSet) { s_files = iFiles; s_entities = iEntities; s_dir = sDir; }
+	else { iFiles = s_files; iEntities = s_entities; }
+	return s_dir;
+}
+
 void cascadeLoadJson()
 {
 	// ONE-SHOT per process: the static JSON->InfoRepo map is built ONCE, at the SAME load point as the XML infos
@@ -321,6 +332,11 @@ void cascadeLoadJson()
 			else if (c == CJK_FLAG) flagKinds.insert(it->first);
 		}
 	}
+
+	// STASH the probe stats for post-load re-emission (the load-time burst is dark: gPlayerLogLevel is 0 here, so
+	// the log consumer drops these lines -- the [MODIFIER/repo] census re-emits them per turn where logging is live).
+	int iStashFiles = (int)files.size(), iStashEntities = iEntities;
+	cascadeReadJsonStats(true, iStashFiles, iStashEntities, dataDir);
 
 	eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_READJSON, RJE_DIR, 1).addStr(RJF_DIR, dataDir.c_str()));
 	eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_READJSON, RJE_PROBE, 1)

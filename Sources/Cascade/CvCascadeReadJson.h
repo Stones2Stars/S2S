@@ -17,4 +17,11 @@
 //	consumer). So loading the game with the XML always populates the cascade's static data-feed for the machines.
 void cascadeLoadJson();
 
+#include <string>
+//	The probe-stat stash (set=true stores at map time; set=false reads): what the DARK load-time [READJSON] burst
+//	saw -- file count found under dataDir, entities parsed, and the dataDir string (the return). gPlayerLogLevel is 0
+//	during doPostLoadCaching so the load-time census never reaches the log; a per-turn emitter (the [MODIFIER/repo]
+//	census) re-surfaces these where logging is live. iFiles/iEntities are -1 if the probe never ran.
+const std::string& cascadeReadJsonStats(bool bSet, int& iFiles, int& iEntities, const std::string& sDir);
+
 #endif // CV_CASCADE_READJSON_H

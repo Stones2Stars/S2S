@@ -27,6 +27,7 @@
 #include "CvCascadeEnablerKernel.h"   // EnablerKernel::computeCityBuildingFacts -- the cascade-computed active-building set + vicinity provides
 #include "CvJsonInfo.h"               // the mapped info (requiresOperate/dormantTriggers) -- the dorm-attribution diagnostic
 #include "Repos/InfoRepo.h"           // InfoRepo<CvBuildingInfo> -- ditto
+#include "CvCascadeReadJson.h"        // cascadeReadJsonStats -- re-surface the dark load-time probe stats
 #include "CvEventSpine.h"             // the #430 dispatch spine -- the shadow diff rides it (SD_MODIFIER), NOT direct gDLL->logMsg
 #include <set>
 #include <string>
@@ -43,7 +44,8 @@ enum MdFld
 	MDF_CHECKED, MDF_DIVERGING,                                                     // summary
 	MDF_RATEC, MDF_RATEL,                                                           // §1 rate diff: cascade vs legacy ×100
 	MDF_PRESENT, MDF_ACTIVE, MDF_DORMOP, MDF_DORMTRIG, MDF_ENGDISABLED, MDF_SAMPLE, // dorm attribution (MDE_DORM)
-	MDF_TOTAL, MDF_MAPPED, MDF_WDEPOSITS, MDF_WOPERATE, MDF_WTRIGGERS               // repo census (MDE_REPO)
+	MDF_TOTAL, MDF_MAPPED, MDF_WDEPOSITS, MDF_WOPERATE, MDF_WTRIGGERS,              // repo census (MDE_REPO)
+	MDF_FILES2, MDF_ENTITIES2                                                       // the stashed load-probe stats
 };
 static const char* mm_prefix(int evt)
 {
@@ -92,6 +94,8 @@ static const char* mm_field(int tag, SpineFieldType* peType)
 	case MDF_WDEPOSITS:   return "withDeposits";
 	case MDF_WOPERATE:    return "withOperate";
 	case MDF_WTRIGGERS:   return "withTriggers";
+	case MDF_FILES2:      return "probeFiles";
+	case MDF_ENTITIES2:   return "probeEntities";
 	default:            return NULL;
 	}
 }
@@ -123,9 +127,15 @@ void cvCascadeModifierShadow()
 			if (d->requiresOperate != NULL) ++nOp;
 			if (!d->dormantTriggers.empty()) ++nTrig;
 		}
+		// + the stashed probe stats: what the dark load-time [READJSON] burst saw (files found / entities parsed /
+		// the dataDir). files>0 with mapped=0 convicts a post-map clear or a duplicate-singleton read; files<=0
+		// convicts the dataDir scan (path shown verbatim in `sample`). -1 = the probe never ran.
+		int iFiles = 0, iEnt = 0;
+		const std::string& sDir = cascadeReadJsonStats(false, iFiles, iEnt, std::string());
 		eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_MODIFIER, MDE_REPO, 1)
 			.addI(MDF_TOTAL, nTot).addI(MDF_MAPPED, nMapped).addI(MDF_WDEPOSITS, nDep)
-			.addI(MDF_WOPERATE, nOp).addI(MDF_WTRIGGERS, nTrig));
+			.addI(MDF_WOPERATE, nOp).addI(MDF_WTRIGGERS, nTrig)
+			.addI(MDF_FILES2, iFiles).addI(MDF_ENTITIES2, iEnt).addStr(MDF_SAMPLE, sDir.c_str()));
 	}
 
 	const char* aszChannel[NUM_YIELD_TYPES] = { "food", "production", "commerce" };   // indexed by the YieldTypes enum
