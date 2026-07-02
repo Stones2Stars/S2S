@@ -127,7 +127,12 @@ void cvCascadeModifierShadow()
 	// Emit EVERY end-turn (gated by gPlayerLogLevel) -- NOT a one-shot, so the modifier diff is re-capturable each
 	// turn during iterative validation (the one-shot needed a save reload to re-arm). Free when gPlayerLogLevel<1.
 	if (gPlayerLogLevel < 1) return;
-	mm_registerDomain();   // self-register SD_MODIFIER on the spine (idempotent) before the first emit
+	mm_registerDomain();
+	// ANTI-MEMO-SKEW (2026-07-02): the turn memos may hold values frozen from EARLY-turn calls (the getter
+	// instrument); comparing those against END-of-turn legacy showed as false divergences. Recompute fresh for
+	// the shadow sweep -- still memoized WITHIN the sweep.
+	YieldRate::memoClear();
+	EnablerKernel::factsMemoClear();   // self-register SD_MODIFIER on the spine (idempotent) before the first emit
 
 	// [MODIFIER/repo] -- BUILDING REPO CENSUS (2026-07-02, the Orwell bar): decisive on the one-cause hypothesis
 	// (repo unmapped => d==NULL everywhere => bC=0 AND zero dorms). The load-time [READJSON] burst is currently

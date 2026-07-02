@@ -200,6 +200,12 @@ void EnablerKernel::gateSet(const std::string& bucket, const EnBucketSets& cand,
 // computed from JSON, not the engine. `ecOp` = a COPY of ec with activeBuildings=NULL so a BUILDING_ predicate INSIDE an
 // operate condition resolves via raw presence -- this breaks any recursion (operate conditions reference resources/
 // civics in practice, not building-active).
+typedef std::pair<std::set<int>, std::set<int> > FactsPair;
+static std::map<int, FactsPair> s_memo;   // the turn-scoped facts memo (key: owner*100000 + city id)
+static int s_iMemoTurn = -1;
+
+void EnablerKernel::factsMemoClear() { s_memo.clear(); }
+
 void EnablerKernel::computeCityBuildingFacts(const CvCity* pCity, const CvCascadeEvalCtx& ec, std::set<int>& activeOut, std::set<int>& providedOut)
 {
 	if (pCity == NULL) return;
@@ -212,9 +218,6 @@ void EnablerKernel::computeCityBuildingFacts(const CvCity* pCity, const CvCascad
 	// ⛔ SHADOW-PHASE ONLY correctness: a mid-turn building change goes stale until the next turn -- fine while the
 	// legacy engine stays authoritative; MUST become event-invalidated (building-count DOMAIN events) before any
 	// consumer cut relies on these facts live.
-	typedef std::pair<std::set<int>, std::set<int> > FactsPair;
-	static std::map<int, FactsPair> s_memo;   // key: owner*100000 + city id
-	static int s_iMemoTurn = -1;
 	const int iTurn = GC.getGame().getGameTurn();
 	if (iTurn != s_iMemoTurn) { s_memo.clear(); s_iMemoTurn = iTurn; }
 	const int iKey = ((int)pCity->getOwner()) * 100000 + pCity->getID();

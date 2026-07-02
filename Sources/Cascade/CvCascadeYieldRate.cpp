@@ -19,6 +19,12 @@
 // All §1 BASE/AFTER terms now ported (PlotPackage + Specialist + trade + free-city + golden-age + building-flat); the
 // combine + clamp mirror StoneBase YieldRate.cs (the verified-final order). The holistic shadow (vs getYieldRate100)
 // follows; per StoneBase strategy (modifier-machine §0) parity is judged AFTER the whole calc is in.
+typedef std::map<int, long> RateMemo;
+static RateMemo s_memo;          // the turn-scoped rate memo (file-static: memoClear() drops it)
+static int s_iMemoTurn = -1;
+
+void YieldRate::memoClear() { s_memo.clear(); }
+
 long YieldRate::yieldRate100(const std::string& channel, YieldTypes eY, const CvCity* pCity, const CvCascadeEvalCtx& ec)
 {
 	++CascadePerf::yieldRate;
@@ -28,9 +34,6 @@ long YieldRate::yieldRate100(const std::string& channel, YieldTypes eY, const Cv
 	// re-derives the same commerce/production rates per city). Same shadow-phase-only caveat as the facts memo:
 	// a mid-turn building change goes stale until the next turn -- fine while legacy stays authoritative; MUST be
 	// event-invalidated before any consumer cut. Keyed (city, eY): the channel<->eY mapping is 1:1 on this plane.
-	typedef std::map<int, long> RateMemo;
-	static RateMemo s_memo;
-	static int s_iMemoTurn = -1;
 	int iKey = -1;
 	if (pCity != NULL)
 	{
