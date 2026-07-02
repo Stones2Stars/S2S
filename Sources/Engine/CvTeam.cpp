@@ -5,7 +5,6 @@
 
 #include "CvGameCoreDLL.h"
 #include "CvEventSpine.h"   // #430: emit the tech first-discover DOMAIN event (the grants trigger)
-#include "CvCascadeCapabilities.h"   // #430 Gate-3: the flipped capability getters + the cache invalidation
 #include "CvArea.h"
 #include "CvBuildingInfo.h"
 #include "CvBonusInfo.h"
@@ -66,6 +65,7 @@ m_Properties(this)
 	m_paiObsoleteBuildingCount = NULL;
 	m_paiResearchProgress = NULL;
 	m_paiTechCount = NULL;
+	m_paiTerrainTradeCount = NULL;
 	m_aiVictoryCountdown = NULL;
 	m_aiForceTeamVoteEligibilityCount = NULL;
 
@@ -170,6 +170,7 @@ void CvTeam::uninit()
 	SAFE_DELETE_ARRAY(m_paiObsoleteBuildingCount);
 	SAFE_DELETE_ARRAY(m_paiResearchProgress);
 	SAFE_DELETE_ARRAY(m_paiTechCount);
+	SAFE_DELETE_ARRAY(m_paiTerrainTradeCount);
 	SAFE_DELETE_ARRAY(m_aiVictoryCountdown);
 	SAFE_DELETE_ARRAY(m_aiForceTeamVoteEligibilityCount);
 	SAFE_DELETE_ARRAY(m_pabHasTech);
@@ -188,7 +189,6 @@ void CvTeam::reset(TeamTypes eID, bool bConstructorCall)
 	int iI, iJ;
 
 	m_dataRepository.reset();
-	CascadeCapabilities::invalidate(eID);   // fresh team identity -> drop the cached capability union
 
 	//--------------------------------
 	// Uninit class
@@ -201,14 +201,34 @@ void CvTeam::reset(TeamTypes eID, bool bConstructorCall)
 	m_iTotalPopulation = 0;
 	m_iTotalLand = 0;
 	m_iNukeInterception = 0;
+	m_iExtraWaterSeeFromCount = 0;
+	m_iMapTradingCount = 0;
+	m_iTechTradingCount = 0;
+	m_iGoldTradingCount = 0;
+	m_iCanPassPeaksCount = 0;
+	m_iMoveFastPeaksCount = 0;
+	m_iCanFoundOnPeaksCount = 0;
+	m_iRebaseAnywhereCount = 0;
 	m_iForeignTradeModifier = 0;
 	m_iTradeModifier = 0;
 	m_iTradeMissionModifier = 0;
 	m_iCorporationRevenueModifier = 0;
 	m_iCorporationMaintenanceModifier = 0;
+	m_iEmbassyTradingCount = 0;
+	m_iLimitedBordersTradingCount = 0;
+	m_iCanFarmDesertCount = 0;
+	m_iOpenBordersTradingCount = 0;
+	m_iDefensivePactTradingCount = 0;
+	m_iPermanentAllianceTradingCount = 0;
+	m_iVassalTradingCount = 0;
+	m_iBridgeBuildingCount = 0;
+	m_iIrrigationCount = 0;
+	m_iIgnoreIrrigationCount = 0;
+	m_iWaterWorkCount = 0;
 	m_iVassalPower = 0;
 	m_iMasterPower = 0;
 	m_iEnemyWarWearinessModifier = 0;
+	m_iRiverTradeCount = 0;
 	m_iEspionagePointsEver = 0;
 	m_iLastRoundOfValidImprovementCacheUpdate = 0;
 
@@ -324,6 +344,12 @@ void CvTeam::reset(TeamTypes eID, bool bConstructorCall)
 			m_paiTechCount[iI] = 0;
 		}
 
+		FAssertMsg(m_paiTerrainTradeCount == NULL, "about to leak memory, CvTeam::m_paiTerrainTradeCount");
+		m_paiTerrainTradeCount = new int[GC.getNumTerrainInfos()];
+		for (iI = 0; iI < GC.getNumTerrainInfos(); iI++)
+		{
+			m_paiTerrainTradeCount[iI] = 0;
+		}
 
 		FAssertMsg(m_aiVictoryCountdown == NULL, "about to leak memory, CvTeam::m_aiVictoryCountdown");
 		m_aiVictoryCountdown = new int[GC.getNumVictoryInfos()];
@@ -3119,67 +3145,234 @@ void CvTeam::changeForceTeamVoteEligibilityCount(VoteSourceTypes eVoteSource, in
 }
 
 
+int CvTeam::getExtraWaterSeeFromCount() const
+{
+	return m_iExtraWaterSeeFromCount;
+}
+
 bool CvTeam::isExtraWaterSeeFrom() const
 {
-	return CascadeCapabilities::capability(getID(), "canSeeFurtherFromWater");
+	return m_iExtraWaterSeeFromCount > 0;
+}
+
+void CvTeam::changeExtraWaterSeeFromCount(int iChange)
+{
+	if (iChange != 0)
+	{
+		GC.getMap().updateSight(false);
+
+		m_iExtraWaterSeeFromCount += iChange;
+		FASSERT_NOT_NEGATIVE(m_iExtraWaterSeeFromCount);
+
+		GC.getMap().updateSight(true);
+	}
+}
+
+
+int CvTeam::getMapTradingCount() const
+{
+	return m_iMapTradingCount;
 }
 
 bool CvTeam::isMapTrading()	const
 {
-	return CascadeCapabilities::canTradeItem(getID(), "maps");
+	return m_iMapTradingCount > 0;
+}
+
+void CvTeam::changeMapTradingCount(int iChange)
+{
+	m_iMapTradingCount += iChange;
+	FASSERT_NOT_NEGATIVE(m_iMapTradingCount);
+}
+
+
+int CvTeam::getTechTradingCount() const
+{
+	return m_iTechTradingCount;
 }
 
 bool CvTeam::isTechTrading() const
 {
-	return CascadeCapabilities::canTradeItem(getID(), "techs");
+	return m_iTechTradingCount > 0;
+}
+
+void CvTeam::changeTechTradingCount(int iChange)
+{
+	m_iTechTradingCount += iChange;
+	FASSERT_NOT_NEGATIVE(m_iTechTradingCount);
+}
+
+
+int CvTeam::getGoldTradingCount() const
+{
+	return m_iGoldTradingCount;
 }
 
 bool CvTeam::isGoldTrading() const
 {
-	return CascadeCapabilities::canTradeItem(getID(), "gold");
+	return m_iGoldTradingCount > 0;
+}
+
+void CvTeam::changeGoldTradingCount(int iChange)
+{
+	m_iGoldTradingCount += iChange;
+	FASSERT_NOT_NEGATIVE(m_iGoldTradingCount);
+}
+
+
+int CvTeam::getOpenBordersTradingCount() const
+{
+	return m_iOpenBordersTradingCount;
 }
 
 bool CvTeam::isOpenBordersTrading() const
 {
-	return CascadeCapabilities::canTradeItem(getID(), "openBorders");
+	return m_iOpenBordersTradingCount > 0;
+}
+
+void CvTeam::changeOpenBordersTradingCount(int iChange)
+{
+	m_iOpenBordersTradingCount += iChange;
+	FASSERT_NOT_NEGATIVE(m_iOpenBordersTradingCount);
+}
+
+
+int CvTeam::getDefensivePactTradingCount() const
+{
+	return m_iDefensivePactTradingCount;
 }
 
 bool CvTeam::isDefensivePactTrading() const
 {
-	return CascadeCapabilities::canTradeItem(getID(), "defensivePact");
+	return m_iDefensivePactTradingCount > 0;
+}
+
+void CvTeam::changeDefensivePactTradingCount(int iChange)
+{
+	m_iDefensivePactTradingCount += iChange;
+	FASSERT_NOT_NEGATIVE(m_iDefensivePactTradingCount);
+}
+
+
+int CvTeam::getPermanentAllianceTradingCount() const
+{
+	return m_iPermanentAllianceTradingCount;
 }
 
 bool CvTeam::isPermanentAllianceTrading() const
 {
-	return GC.getGame().isOption(GAMEOPTION_ENABLE_PERMANENT_ALLIANCES)
-		&& CascadeCapabilities::canTradeItem(getID(), "permanentAlliance");
+	return GC.getGame().isOption(GAMEOPTION_ENABLE_PERMANENT_ALLIANCES) && m_iPermanentAllianceTradingCount > 0;
+}
+
+void CvTeam::changePermanentAllianceTradingCount(int iChange)
+{
+	m_iPermanentAllianceTradingCount += iChange;
+	FASSERT_NOT_NEGATIVE(m_iPermanentAllianceTradingCount);
+}
+
+
+int CvTeam::getVassalTradingCount() const
+{
+	return m_iVassalTradingCount;
 }
 
 bool CvTeam::isVassalStateTrading() const
 {
-	return !GC.getGame().isOption(GAMEOPTION_NO_VASSAL_STATES)
-		&& CascadeCapabilities::canTradeItem(getID(), "vassals");
+	return !GC.getGame().isOption(GAMEOPTION_NO_VASSAL_STATES) && m_iVassalTradingCount > 0;
+}
+
+void CvTeam::changeVassalTradingCount(int iChange)
+{
+	m_iVassalTradingCount += iChange;
+	FASSERT_NOT_NEGATIVE(m_iVassalTradingCount);
+}
+
+
+int CvTeam::getBridgeBuildingCount() const
+{
+	return m_iBridgeBuildingCount;
 }
 
 bool CvTeam::isBridgeBuilding()	const
 {
-	return CascadeCapabilities::capability(getID(), "canBuildBridges");
+	return m_iBridgeBuildingCount > 0;
+}
+
+void CvTeam::changeBridgeBuildingCount(int iChange)
+{
+	if (iChange != 0)
+	{
+		m_iBridgeBuildingCount += iChange;
+		FASSERT_NOT_NEGATIVE(m_iBridgeBuildingCount);
+
+		if (GC.IsGraphicsInitialized())
+		{
+			gDLL->getEngineIFace()->MarkBridgesDirty();
+		}
+	}
+}
+
+
+int CvTeam::getIrrigationCount() const
+{
+	return m_iIrrigationCount;
 }
 
 bool CvTeam::isIrrigation() const
 {
-	return CascadeCapabilities::capability(getID(), "canSpreadIrrigation");
+	return m_iIrrigationCount > 0;
+}
+
+void CvTeam::changeIrrigationCount(int iChange)
+{
+	if (iChange != 0)
+	{
+		m_iIrrigationCount += iChange;
+		FASSERT_NOT_NEGATIVE(m_iIrrigationCount);
+
+		GC.getMap().updateIrrigated();
+	}
+}
+
+
+int CvTeam::getIgnoreIrrigationCount() const
+{
+	return m_iIgnoreIrrigationCount;
 }
 
 bool CvTeam::isIgnoreIrrigation() const
 {
-	return CascadeCapabilities::capability(getID(), "canIgnoreIrrigation");
+	return m_iIgnoreIrrigationCount > 0;
+}
+
+void CvTeam::changeIgnoreIrrigationCount(int iChange)
+{
+	m_iIgnoreIrrigationCount += iChange;
+	FASSERT_NOT_NEGATIVE(m_iIgnoreIrrigationCount);
+}
+
+
+int CvTeam::getWaterWorkCount() const
+{
+	return m_iWaterWorkCount;
 }
 
 bool CvTeam::isWaterWork() const
 {
-	return CascadeCapabilities::canWorkOn(getID(), "water");
+	return m_iWaterWorkCount > 0;
 }
+
+void CvTeam::changeWaterWorkCount(int iChange)
+{
+	if (iChange != 0)
+	{
+		m_iWaterWorkCount += iChange;
+		FASSERT_NOT_NEGATIVE(m_iWaterWorkCount);
+
+		AI_makeAssignWorkDirty();
+	}
+}
+
 
 int CvTeam::getVassalPower() const
 {
@@ -4607,15 +4800,72 @@ int CvTeam::getBestKnownTechScorePercent() const
 }
 
 
+int CvTeam::getTerrainTradeCount(TerrainTypes eIndex) const
+{
+	FASSERT_BOUNDS(0, GC.getNumTerrainInfos(), eIndex);
+	return m_paiTerrainTradeCount[eIndex];
+}
+
+
 bool CvTeam::isTerrainTrade(TerrainTypes eIndex) const
 {
-	return CascadeCapabilities::canTradeOnTerrain(getID(), eIndex);
+	if (isNPC())
+	{
+		return false;
+	}
+	return (getTerrainTradeCount(eIndex) > 0);
+}
+
+
+void CvTeam::changeTerrainTradeCount(TerrainTypes eIndex, int iChange)
+{
+	PROFILE_EXTRA_FUNC();
+	FASSERT_BOUNDS(0, GC.getNumTerrainInfos(), eIndex);
+
+	if (iChange != 0)
+	{
+		m_paiTerrainTradeCount[eIndex] += iChange;
+		FASSERT_NOT_NEGATIVE(getTerrainTradeCount(eIndex));
+
+		for (int iI = 0; iI < MAX_PLAYERS; iI++)
+		{
+			if (GET_PLAYER((PlayerTypes)iI).isAliveAndTeam(getID()))
+			{
+				GET_PLAYER((PlayerTypes)iI).updatePlotGroups();
+			}
+		}
+	}
+}
+
+
+int CvTeam::getRiverTradeCount() const
+{
+	return m_iRiverTradeCount;
 }
 
 
 bool CvTeam::isRiverTrade() const
 {
-	return CascadeCapabilities::capability(getID(), "hasRiverTrade");
+	return (getRiverTradeCount() > 0);
+}
+
+
+void CvTeam::changeRiverTradeCount(int iChange)
+{
+	PROFILE_EXTRA_FUNC();
+	if (iChange != 0)
+	{
+		m_iRiverTradeCount += iChange;
+		FASSERT_NOT_NEGATIVE(getRiverTradeCount());
+
+		for (int iI = 0; iI < MAX_PLAYERS; iI++)
+		{
+			if (GET_PLAYER((PlayerTypes)iI).isAliveAndTeam(getID()))
+			{
+				GET_PLAYER((PlayerTypes)iI).updatePlotGroups();
+			}
+		}
+	}
 }
 
 
@@ -4957,7 +5207,6 @@ void CvTeam::setHasTech(TechTypes eTech, bool bNewValue, PlayerTypes ePlayer, bo
 	}
 
 	m_pabHasTech[eTech] = bNewValue;
-	CascadeCapabilities::invalidate(getID());   // the derived capability union is f(held techs) -- the ONE mutation point
 
 	for (int iI = 0; iI < GC.getMap().numPlots(); iI++)
 	{
@@ -5660,22 +5909,51 @@ void CvTeam::processTech(TechTypes eTech, int iChange, bool bAnnounce)
 	PROFILE_FUNC();
 	const CvTechInfo& tech = GC.getTechInfo(eTech);
 
+	if (tech.isExtraWaterSeeFrom())
+	{
+		changeExtraWaterSeeFromCount(iChange);
+	}
+
 	if (iChange > 0 && tech.isMapCentering())
 	{
 		setMapCentering(true);
 	}
 
+	if (tech.isMapTrading())
+	{
+		changeMapTradingCount(iChange);
+	}
+
 	if (tech.isCanPassPeaks())
 	{
-		// #430 Gate-3: the capability itself is derived (CascadeCapabilities); only the SIDE EFFECT remains --
+		changeCanPassPeaksCount(iChange);
 		//	Koshling - makes peaks workable which chnages the yield calculation
 		updateYield();
 	}
+	if (tech.isMoveFastPeaks())
+	{
+		changeMoveFastPeaksCount(iChange);
+	}
+	if (tech.isCanFoundOnPeaks())
+	{
+		changeCanFoundOnPeaksCount(iChange);
+	}
+
 	if (iChange > 0)
 	{
 		ObsoletePromotions(eTech);
 		ObsoleteCorporations(eTech);
 		GC.getGame().makeTechDiscovered(eTech);
+	}
+
+	if (tech.isEmbassyTrading())
+	{
+		changeEmbassyTradingCount(iChange);
+	}
+
+	if (tech.isRebaseAnywhere())
+	{
+		changeRebaseAnywhereCount(iChange);
 	}
 
 	if (tech.getGlobalTradeModifier() != 0)
@@ -5703,10 +5981,63 @@ void CvTeam::processTech(TechTypes eTech, int iChange, bool bAnnounce)
 		changeCorporationMaintenanceModifier(tech.getCorporationMaintenanceModifier() * iChange);
 	}
 
-	// #430 Gate-3: the capabilities themselves are derived (CascadeCapabilities); only the SIDE EFFECT remains --
-	// an improvement-validity cache round whenever a farming/irrigation/water-work ability arrives or leaves.
-	if (tech.isEnablesDesertFarming() || tech.isIrrigation() || tech.isIgnoreIrrigation() || tech.isWaterWork())
+	if (tech.isEnablesDesertFarming())
 	{
+		changeCanFarmDesertCount(iChange);
+		setLastRoundOfValidImprovementCacheUpdate();
+	}
+
+	if (tech.isTechTrading())
+	{
+		changeTechTradingCount(iChange);
+	}
+
+	if (tech.isGoldTrading())
+	{
+		changeGoldTradingCount(iChange);
+	}
+
+	if (tech.isOpenBordersTrading())
+	{
+		changeOpenBordersTradingCount(iChange);
+		changeLimitedBordersTradingCount(iChange);
+	}
+
+	if (tech.isDefensivePactTrading())
+	{
+		changeDefensivePactTradingCount(iChange);
+	}
+
+	if (tech.isPermanentAllianceTrading())
+	{
+		changePermanentAllianceTradingCount(iChange);
+	}
+
+	if (tech.isVassalStateTrading())
+	{
+		changeVassalTradingCount(iChange);
+	}
+
+	if (tech.isBridgeBuilding())
+	{
+		changeBridgeBuildingCount(iChange);
+	}
+
+	if (tech.isIrrigation())
+	{
+		changeIrrigationCount(iChange);
+		setLastRoundOfValidImprovementCacheUpdate();
+	}
+
+	if (tech.isIgnoreIrrigation())
+	{
+		changeIgnoreIrrigationCount(iChange);
+		setLastRoundOfValidImprovementCacheUpdate();
+	}
+
+	if (tech.isWaterWork())
+	{
+		changeWaterWorkCount(iChange);
 		setLastRoundOfValidImprovementCacheUpdate();
 	}
 
@@ -5726,6 +6057,19 @@ void CvTeam::processTech(TechTypes eTech, int iChange, bool bAnnounce)
 		{
 			changeCommerceFlexibleCount(((CommerceTypes)iI), iChange);
 		}
+	}
+
+	for (int iI = 0; iI < GC.getNumTerrainInfos(); iI++)
+	{
+		if (tech.isTerrainTrade(iI))
+		{
+			changeTerrainTradeCount(((TerrainTypes)iI), iChange);
+		}
+	}
+
+	if (tech.isRiverTrade())
+	{
+		changeRiverTradeCount(iChange);
 	}
 
 	for (int iI = 0; iI < GC.getNumBuildingInfos(); iI++)
@@ -6155,9 +6499,22 @@ void CvTeam::read(FDataStreamBase* pStream)
 	WRAPPER_READ(wrapper, "CvTeam", &m_iTotalPopulation);
 	WRAPPER_READ(wrapper, "CvTeam", &m_iTotalLand);
 	WRAPPER_READ(wrapper, "CvTeam", &m_iNukeInterception);
+	WRAPPER_READ(wrapper, "CvTeam", &m_iExtraWaterSeeFromCount);
+	WRAPPER_READ(wrapper, "CvTeam", &m_iMapTradingCount);
+	WRAPPER_READ(wrapper, "CvTeam", &m_iTechTradingCount);
+	WRAPPER_READ(wrapper, "CvTeam", &m_iGoldTradingCount);
+	WRAPPER_READ(wrapper, "CvTeam", &m_iOpenBordersTradingCount);
+	WRAPPER_READ(wrapper, "CvTeam", &m_iDefensivePactTradingCount);
+	WRAPPER_READ(wrapper, "CvTeam", &m_iPermanentAllianceTradingCount);
+	WRAPPER_READ(wrapper, "CvTeam", &m_iVassalTradingCount);
+	WRAPPER_READ(wrapper, "CvTeam", &m_iBridgeBuildingCount);
+	WRAPPER_READ(wrapper, "CvTeam", &m_iIrrigationCount);
+	WRAPPER_READ(wrapper, "CvTeam", &m_iIgnoreIrrigationCount);
+	WRAPPER_READ(wrapper, "CvTeam", &m_iWaterWorkCount);
 	WRAPPER_READ(wrapper, "CvTeam", &m_iVassalPower);
 	WRAPPER_READ(wrapper, "CvTeam", &m_iMasterPower);
 	WRAPPER_READ(wrapper, "CvTeam", &m_iEnemyWarWearinessModifier);
+	WRAPPER_READ(wrapper, "CvTeam", &m_iRiverTradeCount);
 	WRAPPER_READ(wrapper, "CvTeam", &m_iEspionagePointsEver);
 
 	WRAPPER_READ(wrapper, "CvTeam", &m_bMapCentering);
@@ -6224,6 +6581,7 @@ void CvTeam::read(FDataStreamBase* pStream)
 	WRAPPER_READ_CLASS_ARRAY(wrapper, "CvTeam", REMAPPED_CLASS_TYPE_BUILDINGS, GC.getNumBuildingInfos(), m_paiObsoleteBuildingCount);
 	WRAPPER_READ_CLASS_ARRAY(wrapper, "CvTeam", REMAPPED_CLASS_TYPE_TECHS, GC.getNumTechInfos(), m_paiResearchProgress);
 	WRAPPER_READ_CLASS_ARRAY(wrapper, "CvTeam", REMAPPED_CLASS_TYPE_TECHS, GC.getNumTechInfos(), m_paiTechCount);
+	WRAPPER_READ_CLASS_ARRAY(wrapper, "CvTeam", REMAPPED_CLASS_TYPE_TERRAINS, GC.getNumTerrainInfos(), m_paiTerrainTradeCount);
 	WRAPPER_READ_CLASS_ARRAY(wrapper, "CvTeam", REMAPPED_CLASS_TYPE_VICTORIES, GC.getNumVictoryInfos(), m_aiVictoryCountdown);
 	WRAPPER_READ_CLASS_ARRAY(wrapper, "CvTeam", REMAPPED_CLASS_TYPE_TECHS, GC.getNumTechInfos(), m_pabHasTech);
 
@@ -6288,8 +6646,15 @@ void CvTeam::read(FDataStreamBase* pStream)
 		WRAPPER_READ_CLASS_ENUM(wrapper, "CvTeam", REMAPPED_CLASS_TYPE_BONUSES, (int*)&eBonus);
 		m_aeRevealedBonuses.push_back(eBonus);
 	}
+	WRAPPER_READ(wrapper, "CvTeam", &m_iCanPassPeaksCount);
+	WRAPPER_READ(wrapper, "CvTeam", &m_iMoveFastPeaksCount);
+	WRAPPER_READ(wrapper, "CvTeam", &m_iCanFoundOnPeaksCount);
+	WRAPPER_READ(wrapper, "CvTeam", &m_iEmbassyTradingCount);
 
+	WRAPPER_READ(wrapper, "CvTeam", &m_iLimitedBordersTradingCount);
+	WRAPPER_READ(wrapper, "CvTeam", &m_iCanFarmDesertCount);
 
+	WRAPPER_READ(wrapper, "CvTeam", &m_iRebaseAnywhereCount);
 	WRAPPER_READ(wrapper, "CvTeam", &m_iForeignTradeModifier);
 	WRAPPER_READ(wrapper, "CvTeam", &m_iTradeModifier);
 	WRAPPER_READ(wrapper, "CvTeam", &m_iTradeMissionModifier);
@@ -6342,9 +6707,22 @@ void CvTeam::write(FDataStreamBase* pStream)
 	WRAPPER_WRITE(wrapper, "CvTeam", m_iTotalPopulation);
 	WRAPPER_WRITE(wrapper, "CvTeam", m_iTotalLand);
 	WRAPPER_WRITE(wrapper, "CvTeam", m_iNukeInterception);
+	WRAPPER_WRITE(wrapper, "CvTeam", m_iExtraWaterSeeFromCount);
+	WRAPPER_WRITE(wrapper, "CvTeam", m_iMapTradingCount);
+	WRAPPER_WRITE(wrapper, "CvTeam", m_iTechTradingCount);
+	WRAPPER_WRITE(wrapper, "CvTeam", m_iGoldTradingCount);
+	WRAPPER_WRITE(wrapper, "CvTeam", m_iOpenBordersTradingCount);
+	WRAPPER_WRITE(wrapper, "CvTeam", m_iDefensivePactTradingCount);
+	WRAPPER_WRITE(wrapper, "CvTeam", m_iPermanentAllianceTradingCount);
+	WRAPPER_WRITE(wrapper, "CvTeam", m_iVassalTradingCount);
+	WRAPPER_WRITE(wrapper, "CvTeam", m_iBridgeBuildingCount);
+	WRAPPER_WRITE(wrapper, "CvTeam", m_iIrrigationCount);
+	WRAPPER_WRITE(wrapper, "CvTeam", m_iIgnoreIrrigationCount);
+	WRAPPER_WRITE(wrapper, "CvTeam", m_iWaterWorkCount);
 	WRAPPER_WRITE(wrapper, "CvTeam", m_iVassalPower);
 	WRAPPER_WRITE(wrapper, "CvTeam", m_iMasterPower);
 	WRAPPER_WRITE(wrapper, "CvTeam", m_iEnemyWarWearinessModifier);
+	WRAPPER_WRITE(wrapper, "CvTeam", m_iRiverTradeCount);
 	WRAPPER_WRITE(wrapper, "CvTeam", m_iEspionagePointsEver);
 	WRAPPER_WRITE(wrapper, "CvTeam", m_bMapCentering);
 	WRAPPER_WRITE(wrapper, "CvTeam", m_bCapitulated);
@@ -6398,6 +6776,7 @@ void CvTeam::write(FDataStreamBase* pStream)
 	WRAPPER_WRITE_CLASS_ARRAY(wrapper, "CvTeam", REMAPPED_CLASS_TYPE_BUILDINGS, GC.getNumBuildingInfos(), m_paiObsoleteBuildingCount);
 	WRAPPER_WRITE_CLASS_ARRAY(wrapper, "CvTeam", REMAPPED_CLASS_TYPE_TECHS, GC.getNumTechInfos(), m_paiResearchProgress);
 	WRAPPER_WRITE_CLASS_ARRAY(wrapper, "CvTeam", REMAPPED_CLASS_TYPE_TECHS, GC.getNumTechInfos(), m_paiTechCount);
+	WRAPPER_WRITE_CLASS_ARRAY(wrapper, "CvTeam", REMAPPED_CLASS_TYPE_TERRAINS, GC.getNumTerrainInfos(), m_paiTerrainTradeCount);
 	WRAPPER_WRITE_CLASS_ARRAY(wrapper, "CvTeam", REMAPPED_CLASS_TYPE_VICTORIES, GC.getNumVictoryInfos(), m_aiVictoryCountdown);
 	WRAPPER_WRITE_CLASS_ARRAY(wrapper, "CvTeam", REMAPPED_CLASS_TYPE_TECHS, GC.getNumTechInfos(), m_pabHasTech);
 
@@ -6432,8 +6811,15 @@ void CvTeam::write(FDataStreamBase* pStream)
 		WRAPPER_WRITE_CLASS_ENUM_DECORATED(wrapper, "CvTeam", REMAPPED_CLASS_TYPE_BONUSES, eBonus, "eBonus");
 	}
 
+	WRAPPER_WRITE(wrapper, "CvTeam", m_iCanPassPeaksCount);
+	WRAPPER_WRITE(wrapper, "CvTeam", m_iMoveFastPeaksCount);
+	WRAPPER_WRITE(wrapper, "CvTeam", m_iCanFoundOnPeaksCount);
+	WRAPPER_WRITE(wrapper, "CvTeam", m_iEmbassyTradingCount);
 
+	WRAPPER_WRITE(wrapper, "CvTeam", m_iLimitedBordersTradingCount);
+	WRAPPER_WRITE(wrapper, "CvTeam", m_iCanFarmDesertCount);
 
+	WRAPPER_WRITE(wrapper, "CvTeam", m_iRebaseAnywhereCount);
 	WRAPPER_WRITE(wrapper, "CvTeam", m_iForeignTradeModifier);
 	WRAPPER_WRITE(wrapper, "CvTeam", m_iTradeModifier);
 	WRAPPER_WRITE(wrapper, "CvTeam", m_iTradeMissionModifier);
@@ -6518,23 +6904,67 @@ bool CvTeam::hasLaunched() const
 
 bool CvTeam::isCanPassPeaks() const
 {
-	return CascadeCapabilities::capability(getID(), "canPassPeaks");
+	return (getCanPassPeaksCount() > 0);
+}
+
+int CvTeam::getCanPassPeaksCount() const
+{
+	return m_iCanPassPeaksCount;
+}
+
+void CvTeam::changeCanPassPeaksCount(int iChange)
+{
+	m_iCanPassPeaksCount += iChange;
+	FASSERT_NOT_NEGATIVE(getCanPassPeaksCount());
 }
 
 bool CvTeam::isMoveFastPeaks() const
 {
-	return CascadeCapabilities::capability(getID(), "canMoveFastOnPeaks");
+	return (getMoveFastPeaksCount() > 0);
+}
+
+int CvTeam::getMoveFastPeaksCount() const
+{
+	return m_iMoveFastPeaksCount;
+}
+
+void CvTeam::changeMoveFastPeaksCount(int iChange)
+{
+	m_iMoveFastPeaksCount += iChange;
+	FASSERT_NOT_NEGATIVE(getMoveFastPeaksCount());
 }
 
 bool CvTeam::isCanFoundOnPeaks() const
 {
-	return CascadeCapabilities::capability(getID(), "canFoundOnPeaks");
+	return (getCanFoundOnPeaksCount() > 0);
+}
+
+int CvTeam::getCanFoundOnPeaksCount() const
+{
+	return m_iCanFoundOnPeaksCount;
+}
+
+void CvTeam::changeCanFoundOnPeaksCount(int iChange)
+{
+	m_iCanFoundOnPeaksCount += iChange;
+	FASSERT_NOT_NEGATIVE(getCanFoundOnPeaksCount());
+}
+
+int CvTeam::getRebaseAnywhereCount() const
+{
+	return m_iRebaseAnywhereCount;
 }
 
 bool CvTeam::isRebaseAnywhere() const
 {
-	return CascadeCapabilities::capability(getID(), "canRebaseAnywhere");
+	return m_iRebaseAnywhereCount > 0;
 }
+
+void CvTeam::changeRebaseAnywhereCount(int iChange)
+{
+	m_iRebaseAnywhereCount += iChange;
+}
+
 
 void CvTeam::AI_setAssignWorkDirtyInEveryPlayerCityWithActiveBuilding(BuildingTypes eBuilding)
 {
@@ -6552,14 +6982,36 @@ void CvTeam::AI_setAssignWorkDirtyInEveryPlayerCityWithActiveBuilding(BuildingTy
 }
 
 
+int CvTeam::getCanFarmDesertCount() const
+{
+	return m_iCanFarmDesertCount;
+}
+
 bool CvTeam::isCanFarmDesert() const
 {
-	return CascadeCapabilities::capability(getID(), "canFarmDesert");
+	return (getCanFarmDesertCount() > 0);
+}
+
+void CvTeam::changeCanFarmDesertCount(int iChange)
+{
+	m_iCanFarmDesertCount += iChange;
+	FASSERT_NOT_NEGATIVE(getCanFarmDesertCount());
+}
+
+int CvTeam::getLimitedBordersTradingCount() const
+{
+	return m_iLimitedBordersTradingCount;
 }
 
 bool CvTeam::isLimitedBordersTrading() const
 {
-	return CascadeCapabilities::canTradeItem(getID(), "rightOfPassage");
+	return (getLimitedBordersTradingCount() > 0);
+}
+
+void CvTeam::changeLimitedBordersTradingCount(int iChange)
+{
+	m_iLimitedBordersTradingCount += iChange;
+	FASSERT_NOT_NEGATIVE(getLimitedBordersTradingCount());
 }
 
 void CvTeam::signLimitedBorders(TeamTypes eTeam)
@@ -6670,9 +7122,22 @@ void CvTeam::setHasEmbassy(TeamTypes eIndex, bool bNewValue)
 	}
 }
 
+int CvTeam::getEmbassyTradingCount() const
+{
+	return m_iEmbassyTradingCount;
+}
+
 bool CvTeam::isEmbassyTrading() const
 {
-	return CascadeCapabilities::canTradeItem(getID(), "embassy");
+	return (getEmbassyTradingCount() > 0);
+}
+
+void CvTeam::changeEmbassyTradingCount(int iChange)
+{
+	if (iChange != 0)
+	{
+		m_iEmbassyTradingCount += iChange;
+	}
 }
 
 void CvTeam::ObsoletePromotions(TechTypes eObsoleteTech)
@@ -7225,14 +7690,29 @@ void CvTeam::recalculateModifiers()
 	}
 
 	//	Clear team level info (from techs)
+	m_iExtraWaterSeeFromCount = 0;
+	m_iCanPassPeaksCount = 0;
+	m_iMoveFastPeaksCount = 0;
+	m_iCanFoundOnPeaksCount = 0;
+	m_iRebaseAnywhereCount = 0;
 	m_iForeignTradeModifier = 0;
 	m_iTradeModifier = 0;
 	m_iTradeMissionModifier = 0;
 	m_iCorporationRevenueModifier = 0;
 	m_iCorporationMaintenanceModifier = 0;
+	m_iCanFarmDesertCount = 0;
+	m_iOpenBordersTradingCount = 0;
+	m_iDefensivePactTradingCount = 0;
+	m_iPermanentAllianceTradingCount = 0;
+	m_iVassalTradingCount = 0;
+	m_iBridgeBuildingCount = 0;
+	m_iIrrigationCount = 0;
+	m_iIgnoreIrrigationCount = 0;
+	m_iWaterWorkCount = 0;
 	m_iVassalPower = 0;
 	m_iMasterPower = 0;
 	m_iEnemyWarWearinessModifier = 0;
+	m_iRiverTradeCount = 0;
 	m_iNukeInterception = 0;
 
 	for (int iI = 0; iI < GC.getNumImprovementInfos(); iI++)
