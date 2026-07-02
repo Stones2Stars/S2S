@@ -40,3 +40,12 @@ CvTeam::m_iWaterWorkCount                (int)
 CvTeam::m_iRiverTradeCount               (int)
 CvTeam::m_paiTerrainTradeCount           (int class-array, REMAPPED_CLASS_TYPE_TERRAINS)
 ========================
+
+========================
+2026-07-02 — #430 capability cut, flip wave #2 (commerce sliders + hasLanguage): the sliders and the
+needLanguage heritage gate derive from CascadeCapabilities. Skips live in CvTeam::read / CvPlayer::read.
+
+CvTeam::m_aiCommerceFlexibleCount        (int array, NUM_COMMERCE_TYPES)
+CvPlayer::m_aiCommerceFlexibleCount      (int array, NUM_COMMERCE_TYPES)
+CvPlayer::m_bHasLanguage                 (bool)
+========================

@@ -279,9 +279,7 @@ public:
 	bool isTechShare(int iIndex) const;
 	void changeTechShareCount(int iIndex, int iChange);
 
-	int getCommerceFlexibleCount(CommerceTypes eIndex) const;
-	bool isCommerceFlexible(CommerceTypes eIndex) const;
-	void changeCommerceFlexibleCount(CommerceTypes eIndex, int iChange);
+	bool isCommerceFlexible(CommerceTypes eIndex) const;   // cascade-backed (#430): CascadeCapabilities CCF_SET_*_RATE
 
 	int getExtraMoves(DomainTypes eIndex) const;
 	void changeExtraMoves(DomainTypes eIndex, int iChange);
@@ -525,7 +523,6 @@ protected:
 	int* m_aiStolenVisibilityTimer;
 	int* m_aiWarWearinessTimes100;
 	int* m_aiTechShareCount;
-	int* m_aiCommerceFlexibleCount;
 	int* m_aiExtraMoves;
 	int* m_aiForceTeamVoteEligibilityCount;
 	int* m_paiRouteChange;

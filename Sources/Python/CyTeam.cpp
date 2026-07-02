@@ -521,9 +521,11 @@ void CyTeam::changeWarWeariness(int /*TeamTypes*/ eIndex, int iChange)
 	m_pTeam->changeWarWeariness((TeamTypes)eIndex, iChange);
 }
 
+// The commerce-flexible counter is CUT (#430, capabilities.md): the sliders derive from CascadeCapabilities.
+// The count getter answers boolean-as-count; the changer is a documented dead poke (grant the tech instead).
 int CyTeam::getCommerceFlexibleCount(int /*CommerceTypes*/ eIndex) const
 {
-	return m_pTeam->getCommerceFlexibleCount((CommerceTypes)eIndex);
+	return m_pTeam->isCommerceFlexible((CommerceTypes)eIndex) ? 1 : 0;
 }
 
 bool CyTeam::isCommerceFlexible(int /*CommerceTypes*/ eIndex) const
@@ -533,7 +535,7 @@ bool CyTeam::isCommerceFlexible(int /*CommerceTypes*/ eIndex) const
 
 void CyTeam::changeCommerceFlexibleCount(int /*CommerceTypes*/ eIndex, int iChange)
 {
-	m_pTeam->changeCommerceFlexibleCount((CommerceTypes)eIndex, iChange);
+	// dead poke -- the counter it changed no longer exists; slider unlocks are capability data now
 }
 
 int CyTeam::getExtraMoves(int /*DomainTypes*/ eIndex) const

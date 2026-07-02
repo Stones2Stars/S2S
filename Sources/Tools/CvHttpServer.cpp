@@ -22,6 +22,7 @@
 #include "AI/CvTeamAI.h"
 #include "Engine/CvUnit.h"
 #include "CvUnitCombatInfo.h" // /computed/cities/yields heal-per-unitcombat decomposition (getUnitCombatInfo().getType())
+#include "Cascade/CvCascadeCapabilities.h" // /computed/teamFlags hasLanguage (the legacy latch is cut, #430)
 // NB no Cascade headers: this surface serves RAW state (/state) and the ENGINE's own answers (/computed)
 // only -- the cascade-vs-legacy shadow comparison was retired (the cutover is validated by the external
 // dry-calc + logging). See docs/specs/http-endpoints.md.
@@ -3040,7 +3041,7 @@ namespace
 			f["canRebaseAnywhere"]     = picojson::value(kFTeam.isRebaseAnywhere());
 			f["canSeeFurtherFromWater"]= picojson::value(kFTeam.isExtraWaterSeeFrom());
 			f["hasCenteredMap"]        = picojson::value(kFTeam.isMapCentering());
-			f["hasLanguage"]           = picojson::value(kPlayer.m_bHasLanguage);
+			f["hasLanguage"]           = picojson::value(CascadeCapabilities::flag(kPlayer.getTeam(), CCF_HAS_LANGUAGE));
 			f["canSetScienceRate"]     = picojson::value(kPlayer.isCommerceFlexible(COMMERCE_RESEARCH));
 			f["canSetCultureRate"]     = picojson::value(kPlayer.isCommerceFlexible(COMMERCE_CULTURE));
 			f["canSetEspionageRate"]   = picojson::value(kPlayer.isCommerceFlexible(COMMERCE_ESPIONAGE));

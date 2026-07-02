@@ -948,9 +948,7 @@ public:
 	int getSpecialistExtraCommerce(CommerceTypes eIndex) const;
 	void changeSpecialistExtraCommerce(CommerceTypes eIndex, int iChange);
 
-	int getCommerceFlexibleCount(CommerceTypes eIndex) const;
-	bool isCommerceFlexible(CommerceTypes eIndex) const;
-	void changeCommerceFlexibleCount(CommerceTypes eIndex, int iChange);
+	bool isCommerceFlexible(CommerceTypes eIndex) const;   // cascade-backed (#430): runtime gates + the team getter
 
 	int getGoldPerTurnByPlayer(PlayerTypes eIndex) const;
 	void changeGoldPerTurnByPlayer(PlayerTypes eIndex, int iChange);
@@ -1503,7 +1501,6 @@ public:
 
 
 	bool m_bChoosingReligion;
-	bool m_bHasLanguage;
 
 	int getBuildingCount(BuildingTypes eBuilding, bool bUpgrades) const;
 
@@ -1986,7 +1983,6 @@ protected:
 	int* m_aiStateReligionBuildingCommerce;
 	int* m_aiSpecialistExtraCommerce;
 	int* m_aiSpecialistExtraYield;
-	int* m_aiCommerceFlexibleCount;
 	int* m_aiGoldPerTurnByPlayer;
 	int* m_aiEspionageSpendingWeightAgainstTeam;
 

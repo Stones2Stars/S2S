@@ -238,12 +238,16 @@ building attributes, `hasLanguage`).
   (`tech_language.json` `capabilities.hasLanguage`). The legacy per-player latch (`CvPlayer::m_bHasLanguage`,
   processTech-set, serialized) stays alive as the oracle. Team-scope capability vs per-player latch is
   equivalent (every team player processes the tech); a player switching teams derives *more* correctly.
-- **Stage B (after a clean `[CAPSHADOW]` turn):** delete both `m_aiCommerceFlexibleCount` arrays (player +
-  team; named `WRAPPER_SKIP_ELEMENT`s + `savemigration.txt`), the processTech/processBuilding applies, the
-  `m_bHasLanguage` latch (same retirement), and stub the CyTeam commerce-flexible surface. Audit the deleted
-  changers' bodies first (binding rule 2) — `changeCommerceFlexibleCount` carries a
-  `setCommercePercent(eIndex, 0)` on flexibility LOSS (fires only on tech unapply during recalc; capabilities
-  never lapse in practice, but note it at cut time).
+- ✅ **Stage B LANDED (2026-07-02)** — the net ran clean the same day (`[CAPSHADOW] checked=210,917
+  diverging=0` through a full real turn), then the cut: both `m_aiCommerceFlexibleCount` arrays (player +
+  team) and the `m_bHasLanguage` latch deleted, serialization retired via named `WRAPPER_SKIP_ELEMENT`s +
+  `savemigration.txt`; the processTech/processBuilding applies gone. Side-effect audit (binding rule 2):
+  the team changer's slider-UI refresh (PercentButtons/GameData dirty bits for the active team) survives in
+  `CvTeam::processTech`; the player changer's `setCommercePercent(0)`-on-loss was unreachable (data-dead
+  apply always passed 0). Layering: `CvTeam::isCommerceFlexible` is the cascade query (holds the
+  commerce→`CCF_SET_*_RATE` map); `CvPlayer::isCommerceFlexible` = runtime gates ∧ the team getter. CyTeam
+  count-getter answers boolean-as-count; the changer is a documented dead poke (the WorldBuilder toggle rides
+  it — grant the tech instead). `/computed/teamFlags` `hasLanguage` now reads the cascade flag.
 - **`isMapCentering` stays PARKED** — it needs the building-grantor half of the union (no curated building
   emits capabilities yet) and has a real latch-vs-derived divergence when a granting building is LOST (legacy
   latches; a derived union would lapse). It flips when the building-HAVE union is built — likely alongside the

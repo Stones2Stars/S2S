@@ -39,7 +39,6 @@ m_Properties(this)
 	m_aiStolenVisibilityTimer = new int[MAX_TEAMS];
 	m_aiWarWearinessTimes100 = new int[MAX_TEAMS];
 	m_aiTechShareCount = new int[MAX_TEAMS];
-	m_aiCommerceFlexibleCount = new int[NUM_COMMERCE_TYPES];
 	m_aiExtraMoves = new int[NUM_DOMAIN_TYPES];
 
 	m_aiEspionagePointsAgainstTeam = new int[MAX_TEAMS];
@@ -91,7 +90,6 @@ CvTeam::~CvTeam()
 	SAFE_DELETE_ARRAY(m_aiStolenVisibilityTimer);
 	SAFE_DELETE_ARRAY(m_aiWarWearinessTimes100);
 	SAFE_DELETE_ARRAY(m_aiTechShareCount);
-	SAFE_DELETE_ARRAY(m_aiCommerceFlexibleCount);
 	SAFE_DELETE_ARRAY(m_aiExtraMoves);
 	SAFE_DELETE_ARRAY(m_aiEspionagePointsAgainstTeam);
 	SAFE_DELETE_ARRAY(m_aiCounterespionageTurnsLeftAgainstTeam);
@@ -257,11 +255,6 @@ void CvTeam::reset(TeamTypes eID, bool bConstructorCall)
 			kLoopTeam.m_abForcePeace[getID()] = false;
 			kLoopTeam.m_abVassal[getID()] = false;
 		}
-	}
-
-	for (iI = 0; iI < NUM_COMMERCE_TYPES; iI++)
-	{
-		m_aiCommerceFlexibleCount[iI] = 0;
 	}
 
 	for (iI = 0; iI < NUM_DOMAIN_TYPES; iI++)
@@ -3384,31 +3377,19 @@ void CvTeam::changeTechShareCount(int iIndex, int iChange)
 }
 
 
-int CvTeam::getCommerceFlexibleCount(CommerceTypes eIndex) const
-{
-	FASSERT_BOUNDS(0, NUM_COMMERCE_TYPES, eIndex);
-	return m_aiCommerceFlexibleCount[eIndex];
-}
-
+// CUT (#430 Gate-3, capabilities.md flip wave #2): the slider unlock derives from CascadeCapabilities --
+// research/espionage ride TECH_GAME_START (the legacy CommerceInfo bFlexiblePercent globals, re-homed),
+// culture rides TECH_DRAMA, gold has no slider. The tech-fed counter + its changer are deleted; the changer's
+// UI-refresh side effect lives on in processTech.
 bool CvTeam::isCommerceFlexible(CommerceTypes eIndex) const
 {
-	return getCommerceFlexibleCount(eIndex) > 0;
-}
-
-void CvTeam::changeCommerceFlexibleCount(CommerceTypes eIndex, int iChange)
-{
 	FASSERT_BOUNDS(0, NUM_COMMERCE_TYPES, eIndex);
-
-	if (iChange != 0)
+	switch (eIndex)
 	{
-		m_aiCommerceFlexibleCount[eIndex] += iChange;
-		FASSERT_NOT_NEGATIVE(m_aiCommerceFlexibleCount[eIndex]);
-
-		if (getID() == GC.getGame().getActiveTeam())
-		{
-			gDLL->getInterfaceIFace()->setDirty(PercentButtons_DIRTY_BIT, true);
-			gDLL->getInterfaceIFace()->setDirty(GameData_DIRTY_BIT, true);
-		}
+	case COMMERCE_RESEARCH:  return CascadeCapabilities::flag(getID(), CCF_SET_SCIENCE_RATE);
+	case COMMERCE_CULTURE:   return CascadeCapabilities::flag(getID(), CCF_SET_CULTURE_RATE);
+	case COMMERCE_ESPIONAGE: return CascadeCapabilities::flag(getID(), CCF_SET_ESPIONAGE_RATE);
+	default: return false;   // COMMERCE_GOLD: no slider in engine or data
 	}
 }
 
@@ -5755,11 +5736,19 @@ void CvTeam::processTech(TechTypes eTech, int iChange, bool bAnnounce)
 		changeExtraMoves(((DomainTypes)iI), (tech.getDomainExtraMoves(iI) * iChange));
 	}
 
-	for (int iI = 0; iI < NUM_COMMERCE_TYPES; iI++)
+	// The commerce-flexible counters are CUT (#430): the sliders derive from CascadeCapabilities. The deleted
+	// changer's side effect survives: refresh the slider UI when a slider-unlocking tech arrives for the
+	// active team.
+	if (getID() == GC.getGame().getActiveTeam())
 	{
-		if (tech.isCommerceFlexible(iI))
+		for (int iI = 0; iI < NUM_COMMERCE_TYPES; iI++)
 		{
-			changeCommerceFlexibleCount(((CommerceTypes)iI), iChange);
+			if (tech.isCommerceFlexible(iI))
+			{
+				gDLL->getInterfaceIFace()->setDirty(PercentButtons_DIRTY_BIT, true);
+				gDLL->getInterfaceIFace()->setDirty(GameData_DIRTY_BIT, true);
+				break;
+			}
 		}
 	}
 
@@ -6228,7 +6217,7 @@ void CvTeam::read(FDataStreamBase* pStream)
 	WRAPPER_READ_ARRAY(wrapper, "CvTeam", MAX_TEAMS, m_aiEspionagePointsAgainstTeam);
 	WRAPPER_READ_ARRAY(wrapper, "CvTeam", MAX_TEAMS, m_aiCounterespionageTurnsLeftAgainstTeam);
 	WRAPPER_READ_ARRAY(wrapper, "CvTeam", MAX_TEAMS, m_aiCounterespionageModAgainstTeam);
-	WRAPPER_READ_ARRAY(wrapper, "CvTeam", NUM_COMMERCE_TYPES, m_aiCommerceFlexibleCount);
+	WRAPPER_SKIP_ELEMENT(wrapper, "CvTeam", m_aiCommerceFlexibleCount, SAVE_VALUE_ANY);   // retired 2026-07-02 (#430 capability cut) -- savemigration.txt
 	WRAPPER_READ_ARRAY(wrapper, "CvTeam", NUM_DOMAIN_TYPES, m_aiExtraMoves);
 	WRAPPER_READ_CLASS_ARRAY(wrapper, "CvTeam", REMAPPED_CLASS_TYPE_VOTE_SOURCES, GC.getNumVoteSourceInfos(), m_aiForceTeamVoteEligibilityCount);
 	WRAPPER_READ_ARRAY(wrapper, "CvTeam", MAX_TEAMS, m_abHasMet);
@@ -6424,7 +6413,6 @@ void CvTeam::write(FDataStreamBase* pStream)
 	WRAPPER_WRITE_ARRAY(wrapper, "CvTeam", MAX_TEAMS, m_aiEspionagePointsAgainstTeam);
 	WRAPPER_WRITE_ARRAY(wrapper, "CvTeam", MAX_TEAMS, m_aiCounterespionageTurnsLeftAgainstTeam);
 	WRAPPER_WRITE_ARRAY(wrapper, "CvTeam", MAX_TEAMS, m_aiCounterespionageModAgainstTeam);
-	WRAPPER_WRITE_ARRAY(wrapper, "CvTeam", NUM_COMMERCE_TYPES, m_aiCommerceFlexibleCount);
 	WRAPPER_WRITE_ARRAY(wrapper, "CvTeam", NUM_DOMAIN_TYPES, m_aiExtraMoves);
 	WRAPPER_WRITE_CLASS_ARRAY(wrapper, "CvTeam", REMAPPED_CLASS_TYPE_VOTE_SOURCES, GC.getNumVoteSourceInfos(), m_aiForceTeamVoteEligibilityCount);
 	WRAPPER_WRITE_ARRAY(wrapper, "CvTeam", MAX_TEAMS, m_abHasMet);

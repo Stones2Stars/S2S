@@ -176,7 +176,6 @@ m_cachedBonusCount(NULL)
 	m_aiStateReligionBuildingCommerce = new int[NUM_COMMERCE_TYPES];
 	m_aiSpecialistExtraCommerce = new int[NUM_COMMERCE_TYPES];
 	m_aiSpecialistExtraYield = new int[NUM_YIELD_TYPES];
-	m_aiCommerceFlexibleCount = new int[NUM_COMMERCE_TYPES];
 	m_aiGoldPerTurnByPlayer = new int[MAX_PLAYERS];
 	m_aiEspionageSpendingWeightAgainstTeam = new int[MAX_TEAMS];
 
@@ -219,8 +218,6 @@ m_cachedBonusCount(NULL)
 	m_ppiBonusCommerceModifier = NULL;
 	m_aiLandmarkYield = new int[NUM_YIELD_TYPES];
 	m_aiModderOptions = new int[NUM_MODDEROPTION_TYPES];
-
-	m_bHasLanguage = false;
 
 	//TB Traits begin
 	m_paiImprovementUpgradeRateModifierSpecific = NULL;
@@ -315,7 +312,6 @@ CvPlayer::~CvPlayer()
 	SAFE_DELETE_ARRAY(m_aiStateReligionBuildingCommerce);
 	SAFE_DELETE_ARRAY(m_aiSpecialistExtraCommerce);
 	SAFE_DELETE_ARRAY(m_aiSpecialistExtraYield);
-	SAFE_DELETE_ARRAY(m_aiCommerceFlexibleCount);
 	SAFE_DELETE_ARRAY(m_aiGoldPerTurnByPlayer);
 	SAFE_DELETE_ARRAY(m_aiEspionageSpendingWeightAgainstTeam);
 	SAFE_DELETE_ARRAY(m_abFeatAccomplished);
@@ -1086,7 +1082,6 @@ void CvPlayer::reset(PlayerTypes eID, bool bConstructorCall)
 		m_aiCapitalCommerceRateModifier[iI] = 0;
 		m_aiStateReligionBuildingCommerce[iI] = 0;
 		m_aiSpecialistExtraCommerce[iI] = 0;
-		m_aiCommerceFlexibleCount[iI] = 0;
 		m_aiGoldenAgeCommerce[iI] = 0;
 	}
 
@@ -7476,7 +7471,8 @@ void CvPlayer::processBuilding(BuildingTypes eBuilding, int iChange, CvArea* pAr
 		changeCommerceRateModifierfromBuildings(((CommerceTypes)iI), (kBuilding.getGlobalCommerceModifier(iI) * iChange));
 		changeSpecialistExtraCommerce(((CommerceTypes)iI), (kBuilding.getSpecialistExtraCommerce(iI) * iChange));
 		changeStateReligionBuildingCommerce(((CommerceTypes)iI), (kBuilding.getStateReligionCommerce(iI) * iChange));
-		changeCommerceFlexibleCount(((CommerceTypes)iI), (kBuilding.isCommerceFlexible(iI)) ? iChange : 0);
+		// (the CommerceFlexible apply is CUT (#430): the counter was DATA-DEAD -- no building carries
+		// CommerceFlexibles -- and the sliders derive from CascadeCapabilities)
 	}
 
 	foreach_(const BuildingModifier2& pair, kBuilding.getBuildingHappinessChanges())
@@ -13197,12 +13193,6 @@ void CvPlayer::changeSpecialistExtraCommerce(CommerceTypes eIndex, int iChange)
 }
 
 
-int CvPlayer::getCommerceFlexibleCount(CommerceTypes eIndex) const
-{
-	return m_aiCommerceFlexibleCount[eIndex];
-}
-
-
 bool CvPlayer::isCommerceFlexible(CommerceTypes eIndex) const
 {
 	FASSERT_BOUNDS(0, NUM_COMMERCE_TYPES, eIndex);
@@ -13214,45 +13204,12 @@ bool CvPlayer::isCommerceFlexible(CommerceTypes eIndex) const
 	{
 		return false;
 	}
-	// FLIP-WITH-NET (#430 Gate-3, capabilities.md): the slider unlock is the cascade capability --
-	// research/espionage ride TECH_GAME_START (the legacy CommerceInfo bFlexiblePercent globals, re-homed),
-	// culture rides TECH_DRAMA. The legacy sources (the CommerceInfo global + the data-dead building-fed player
-	// counter + the tech-fed team counter) stay alive as the [CAPSHADOW] oracle until this cut's stage B.
-	CascadeCapFlag eFlag;
-	switch (eIndex)
-	{
-	case COMMERCE_RESEARCH:  eFlag = CCF_SET_SCIENCE_RATE;   break;
-	case COMMERCE_CULTURE:   eFlag = CCF_SET_CULTURE_RATE;   break;
-	case COMMERCE_ESPIONAGE: eFlag = CCF_SET_ESPIONAGE_RATE; break;
-	default: return false;   // COMMERCE_GOLD: no slider in engine (bFlexiblePercent=0) or data (no key)
-	}
-	const bool bLegacy = GC.getCommerceInfo(eIndex).isFlexiblePercent()
-		|| getCommerceFlexibleCount(eIndex) > 0
-		|| GET_TEAM(getTeam()).isCommerceFlexible(eIndex);
-	return CascadeCapabilities::shadow(getTeam(), eFlag, bLegacy);
-}
-
-
-void CvPlayer::changeCommerceFlexibleCount(CommerceTypes eIndex, int iChange)
-{
-	FASSERT_BOUNDS(0, NUM_COMMERCE_TYPES, eIndex);
-
-	if (iChange != 0)
-	{
-		m_aiCommerceFlexibleCount[eIndex] += iChange;
-		FASSERT_NOT_NEGATIVE(getCommerceFlexibleCount(eIndex));
-
-		if (!isCommerceFlexible(eIndex))
-		{
-			setCommercePercent(eIndex, 0);
-		}
-
-		if (getID() == GC.getGame().getActivePlayer())
-		{
-			gDLL->getInterfaceIFace()->setDirty(PercentButtons_DIRTY_BIT, true);
-			gDLL->getInterfaceIFace()->setDirty(GameData_DIRTY_BIT, true);
-		}
-	}
+	// CUT (#430 Gate-3, capabilities.md flip wave #2): the slider unlock derives from CascadeCapabilities via
+	// the team getter (research/espionage ride TECH_GAME_START; culture rides TECH_DRAMA; gold has no slider).
+	// The legacy sources are gone: the CommerceInfo bFlexiblePercent globals were re-homed as data, the
+	// building-fed player counter was DATA-DEAD (no building carries CommerceFlexibles), and the tech-fed team
+	// counter was retired (savemigration.txt).
+	return GET_TEAM(getTeam()).isCommerceFlexible(eIndex);
 }
 
 
@@ -18491,7 +18448,7 @@ void CvPlayer::read(FDataStreamBase* pStream)
 		WRAPPER_READ_ARRAY(wrapper, "CvPlayer", NUM_COMMERCE_TYPES, m_aiCapitalCommerceRateModifier);
 		WRAPPER_READ_ARRAY(wrapper, "CvPlayer", NUM_COMMERCE_TYPES, m_aiStateReligionBuildingCommerce);
 		WRAPPER_READ_ARRAY(wrapper, "CvPlayer", NUM_COMMERCE_TYPES, m_aiSpecialistExtraCommerce);
-		WRAPPER_READ_ARRAY(wrapper, "CvPlayer", NUM_COMMERCE_TYPES, m_aiCommerceFlexibleCount);
+		WRAPPER_SKIP_ELEMENT(wrapper, "CvPlayer", m_aiCommerceFlexibleCount, SAVE_VALUE_ANY);   // retired 2026-07-02 (#430 capability cut) -- savemigration.txt
 		WRAPPER_READ_ARRAY(wrapper, "CvPlayer", MAX_PLAYERS, m_aiGoldPerTurnByPlayer);
 		WRAPPER_READ_ARRAY(wrapper, "CvPlayer", MAX_TEAMS, m_aiEspionageSpendingWeightAgainstTeam);
 
@@ -19623,7 +19580,7 @@ void CvPlayer::read(FDataStreamBase* pStream)
 			}
 		}
 		WRAPPER_READ_ARRAY(wrapper, "CvPlayer", NUM_COMMERCE_TYPES, m_extraCommerce);
-		WRAPPER_READ(wrapper, "CvPlayer", &m_bHasLanguage);
+		WRAPPER_SKIP_ELEMENT(wrapper, "CvPlayer", m_bHasLanguage, SAVE_VALUE_ANY);   // retired 2026-07-02 (#430 capability cut) -- savemigration.txt
 		// Read Vector
 		{
 			uint iSize = 0;
@@ -19867,7 +19824,6 @@ void CvPlayer::write(FDataStreamBase* pStream)
 		WRAPPER_WRITE_ARRAY(wrapper, "CvPlayer", NUM_COMMERCE_TYPES, m_aiCapitalCommerceRateModifier);
 		WRAPPER_WRITE_ARRAY(wrapper, "CvPlayer", NUM_COMMERCE_TYPES, m_aiStateReligionBuildingCommerce);
 		WRAPPER_WRITE_ARRAY(wrapper, "CvPlayer", NUM_COMMERCE_TYPES, m_aiSpecialistExtraCommerce);
-		WRAPPER_WRITE_ARRAY(wrapper, "CvPlayer", NUM_COMMERCE_TYPES, m_aiCommerceFlexibleCount);
 		WRAPPER_WRITE_ARRAY(wrapper, "CvPlayer", MAX_PLAYERS, m_aiGoldPerTurnByPlayer);
 		WRAPPER_WRITE_ARRAY(wrapper, "CvPlayer", MAX_TEAMS, m_aiEspionageSpendingWeightAgainstTeam);
 		WRAPPER_WRITE_ARRAY(wrapper, "CvPlayer", NUM_FEAT_TYPES, m_abFeatAccomplished);
@@ -20463,7 +20419,6 @@ void CvPlayer::write(FDataStreamBase* pStream)
 			}
 		}
 		WRAPPER_WRITE_ARRAY(wrapper, "CvPlayer", NUM_COMMERCE_TYPES, m_extraCommerce);
-		WRAPPER_WRITE(wrapper, "CvPlayer", m_bHasLanguage);
 		// Write Vector
 		{
 			uint iSize = m_commandFieldPlots.size();
@@ -28282,8 +28237,6 @@ void CvPlayer::clearModifierTotals()
 	m_iExtraNonStateReligionSpreadModifier = 0;
 	m_iNationalGreatPeopleRate = 0;
 
-	m_bHasLanguage = false;
-
 	m_iBaseMergeSelection = FFreeList::INVALID_INDEX;
 	m_iFirstMergeSelection = FFreeList::INVALID_INDEX;
 	m_iSecondMergeSelection = FFreeList::INVALID_INDEX;
@@ -28460,7 +28413,6 @@ void CvPlayer::clearModifierTotals()
 		m_aiCapitalCommerceRateModifier[iI] = 0;
 		m_aiStateReligionBuildingCommerce[iI] = 0;
 		m_aiSpecialistExtraCommerce[iI] = 0;
-		m_aiCommerceFlexibleCount[iI] = 0;
 		m_aiGoldenAgeCommerce[iI] = 0;
 	}
 
@@ -30958,10 +30910,7 @@ void CvPlayer::processTech(const TechTypes eTech, const int iChange)
 	changeTechScore(getScoreValueOfTech(eTech) * iChange);
 	changeTechInflation(tech.getInflationModifier() * iChange);
 
-	if (tech.isLanguage())
-	{
-		m_bHasLanguage = true;
-	}
+	// (the hasLanguage latch is CUT (#430): the needLanguage gate derives from CascadeCapabilities)
 
 	for (int i = 0; i < NUM_COMMERCE_TYPES; i++)
 	{
@@ -30986,10 +30935,9 @@ bool CvPlayer::canAddHeritage(const HeritageTypes eType, const bool bTestVisible
 	}
 	const CvHeritageInfo& heritage = GC.getHeritageInfo(eType);
 
-	// FLIP-WITH-NET (#430 Gate-3, capabilities.md): hasLanguage is the cascade capability (TECH_LANGUAGE's
-	// `capabilities.hasLanguage`). The legacy per-player latch (m_bHasLanguage, processTech-set, serialized)
-	// stays alive as the [CAPSHADOW] oracle until this cut's stage B.
-	if (heritage.needLanguage() && !CascadeCapabilities::shadow(getTeam(), CCF_HAS_LANGUAGE, m_bHasLanguage))
+	// CUT (#430 Gate-3, capabilities.md flip wave #2): hasLanguage is the cascade capability (TECH_LANGUAGE's
+	// `capabilities.hasLanguage`); the legacy per-player latch was retired (savemigration.txt).
+	if (heritage.needLanguage() && !CascadeCapabilities::flag(getTeam(), CCF_HAS_LANGUAGE))
 	{
 		return false;
 	}
