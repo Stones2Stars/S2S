@@ -35,14 +35,15 @@
 // The percent-stack shadow's diff + summary emit EVENTKIND_DIAGNOSTIC events through the event spine (NOT direct
 // gDLL->logMsg) -- the CvCascadeLogConsumer renders the raw typed fields + tees to /events, gated by level.
 // Per-emitter domain (SD_MODIFIER), one file (Cascade.log).
-enum MdEvt { MDE_DIFF = 1, MDE_SHADOW, MDE_RATE, MDE_DORM };
+enum MdEvt { MDE_DIFF = 1, MDE_SHADOW, MDE_RATE, MDE_DORM, MDE_REPO };
 enum MdFld
 {
 	MDF_WHO = 1, MDF_CHANNEL, MDF_CASC, MDF_BC, MDF_BA, MDF_BE, MDF_CIV, MDF_TR,   // diff: cascade buckets
 	MDF_LEG, MDF_BLD, MDF_BON, MDF_POW, MDF_EVT, MDF_PLY, MDF_CAP,                 // diff: legacy sub-terms
 	MDF_CHECKED, MDF_DIVERGING,                                                     // summary
 	MDF_RATEC, MDF_RATEL,                                                           // §1 rate diff: cascade vs legacy ×100
-	MDF_PRESENT, MDF_ACTIVE, MDF_DORMOP, MDF_DORMTRIG, MDF_ENGDISABLED, MDF_SAMPLE  // dorm attribution (MDE_DORM)
+	MDF_PRESENT, MDF_ACTIVE, MDF_DORMOP, MDF_DORMTRIG, MDF_ENGDISABLED, MDF_SAMPLE, // dorm attribution (MDE_DORM)
+	MDF_TOTAL, MDF_MAPPED, MDF_WDEPOSITS, MDF_WOPERATE, MDF_WTRIGGERS               // repo census (MDE_REPO)
 };
 static const char* mm_prefix(int evt)
 {
@@ -52,6 +53,7 @@ static const char* mm_prefix(int evt)
 	case MDE_SHADOW: return "[MODIFIER/shadow]";
 	case MDE_RATE:   return "[MODIFIER/rate]";
 	case MDE_DORM:   return "[MODIFIER/dorm]";
+	case MDE_REPO:   return "[MODIFIER/repo]";
 	default:         return "[MODIFIER]";
 	}
 }
@@ -85,6 +87,11 @@ static const char* mm_field(int tag, SpineFieldType* peType)
 	case MDF_DORMTRIG:    return "dormTrigger";
 	case MDF_ENGDISABLED: return "engDisabled";
 	case MDF_SAMPLE:      *peType = SFT_STR; return "sample";
+	case MDF_TOTAL:       return "total";
+	case MDF_MAPPED:      return "mapped";
+	case MDF_WDEPOSITS:   return "withDeposits";
+	case MDF_WOPERATE:    return "withOperate";
+	case MDF_WTRIGGERS:   return "withTriggers";
 	default:            return NULL;
 	}
 }
@@ -100,6 +107,26 @@ void cvCascadeModifierShadow()
 	// turn during iterative validation (the one-shot needed a save reload to re-arm). Free when gPlayerLogLevel<1.
 	if (gPlayerLogLevel < 1) return;
 	mm_registerDomain();   // self-register SD_MODIFIER on the spine (idempotent) before the first emit
+
+	// [MODIFIER/repo] -- BUILDING REPO CENSUS (2026-07-02, the Orwell bar): decisive on the one-cause hypothesis
+	// (repo unmapped => d==NULL everywhere => bC=0 AND zero dorms). The load-time [READJSON] burst is currently
+	// dark (gPlayerLogLevel is 0 during doPostLoadCaching), so the census re-emits per turn where logging is live.
+	{
+		int nMapped = 0, nDep = 0, nOp = 0, nTrig = 0;
+		const int nTot = GC.getNumBuildingInfos();
+		for (int b = 0; b < nTot; ++b)
+		{
+			const CvJsonInfo* d = InfoRepo<CvBuildingInfo>::get().get(b);
+			if (d == NULL) continue;
+			++nMapped;
+			if (!d->deposits.empty()) ++nDep;
+			if (d->requiresOperate != NULL) ++nOp;
+			if (!d->dormantTriggers.empty()) ++nTrig;
+		}
+		eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_MODIFIER, MDE_REPO, 1)
+			.addI(MDF_TOTAL, nTot).addI(MDF_MAPPED, nMapped).addI(MDF_WDEPOSITS, nDep)
+			.addI(MDF_WOPERATE, nOp).addI(MDF_WTRIGGERS, nTrig));
+	}
 
 	const char* aszChannel[NUM_YIELD_TYPES] = { "food", "production", "commerce" };   // indexed by the YieldTypes enum
 	int iChecked = 0, iDiverging = 0, iShown = 0;
