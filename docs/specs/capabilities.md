@@ -248,6 +248,12 @@ building attributes, `hasLanguage`).
   commerce→`CCF_SET_*_RATE` map); `CvPlayer::isCommerceFlexible` = runtime gates ∧ the team getter. CyTeam
   count-getter answers boolean-as-count; the changer is a documented dead poke (the WorldBuilder toggle rides
   it — grant the tech instead). `/computed/teamFlags` `hasLanguage` now reads the cascade flag.
+- ✅ **Stage-B proof turn recorded (2026-07-02):** the save loads WHOLE through the three new named skips
+  (26 cities, full building inventories, all flags healthy), and a full turn ran with every enabler gate at
+  its sealed baseline (canResearch/canDoCivics/canAcquirePromotion/canHurry/canFoundReligion 0; canBuild 36
+  accepted) and the modifier stack at its accepted 9. **No `CascadeCapabilities::shadow()` callers remain** —
+  the whole capability plane is `flag()`-direct; the `[CAPSHADOW]` machinery is dormant-but-kept as the net
+  for the remaining flips (`isMapCentering`, building attributes).
 - **`isMapCentering` stays PARKED** — it needs the building-grantor half of the union (no curated building
   emits capabilities yet) and has a real latch-vs-derived divergence when a granting building is LOST (legacy
   latches; a derived union would lapse). It flips when the building-HAVE union is built — likely alongside the
