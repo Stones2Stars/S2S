@@ -12,6 +12,7 @@
 #include "CvCascadeBuildingPackage.h"
 #include "CvCascadePercentStack.h"    // MMBreak + PercentStack
 #include "Engine/CvCity.h"            // CITY_MAX_YIELD_RATE (the engine #define)
+#include "AI/CvGameAI.h"              // GC.getGame() (returns CvGameAI&) -- the turn-scoped rate memo
 
 // The §1 YIELD-RATE ASSEMBLER (YieldRate.cs / modifier.md §2a, calc-map §1.2):
 //   rate100 = min(CAP, max(100, (Σ BASE + specialist) × max(0,modifier) + 100·⌊AFTER100/100⌋))
@@ -22,6 +23,24 @@ long YieldRate::yieldRate100(const std::string& channel, YieldTypes eY, const Cv
 {
 	++CascadePerf::yieldRate;
 	PerfAccumTimer perfT(CascadePerf::yieldRateMs);
+	// TURN-SCOPED MEMO (perf census 2026-07-02: 444 calls x ~164ms = 73s/turn, mostly RE-computes of the same
+	// (city, channel) -- the getter instrument re-derives what the shadow already computed; every commerce check
+	// re-derives the same commerce/production rates per city). Same shadow-phase-only caveat as the facts memo:
+	// a mid-turn building change goes stale until the next turn -- fine while legacy stays authoritative; MUST be
+	// event-invalidated before any consumer cut. Keyed (city, eY): the channel<->eY mapping is 1:1 on this plane.
+	typedef std::map<int, long> RateMemo;
+	static RateMemo s_memo;
+	static int s_iMemoTurn = -1;
+	int iKey = -1;
+	if (pCity != NULL)
+	{
+		const int iTurn = GC.getGame().getGameTurn();
+		if (iTurn != s_iMemoTurn) { s_memo.clear(); s_iMemoTurn = iTurn; }
+		iKey = (((int)pCity->getOwner()) * 100000 + pCity->getID()) * 4 + (int)eY;
+		RateMemo::const_iterator mit = s_memo.find(iKey);
+		if (mit != s_memo.end()) return mit->second;
+	}
+
 	const long basePlot   = YieldBasePackages::basePlot(channel, eY, pCity, ec);
 	const int  trade      = YieldBasePackages::tradeRoute(eY, pCity);
 	const int  freeCity   = YieldBasePackages::freeCity(channel, *ec.player, ec);
@@ -35,5 +54,6 @@ long YieldRate::yieldRate100(const std::string& channel, YieldTypes eY, const Cv
 	long combine = (baseSum + specialist) * (long)modifier + 100L * (after100 / 100);
 	if (combine < 100) combine = 100;
 	if (combine > CITY_MAX_YIELD_RATE) combine = CITY_MAX_YIELD_RATE;   // the engine #define (CvCity.h:25), NOT a GlobalDefine
+	if (iKey != -1) s_memo[iKey] = combine;
 	return combine;
 }
