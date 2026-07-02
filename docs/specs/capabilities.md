@@ -186,6 +186,20 @@ per-terrain `canTradeOn` set, and `canWorkOn.water`. Grounded finds captured:
 - `isCommerceFlexible` additionally gates espionage on met-civs and everything on founded-first-city — runtime UI
   conditions, not capability data.
 
+## ✅ WIRED & LANDED — Gate-3 wire #1 (2026-07-02, attempt 2)
+
+**The 22 CvTeam capability getters RUN ON the cascade and the 21 legacy counters are DELETED** (commit
+`26c8743ee`), landed the disciplined way after the reverted first attempt (below): **(1) in-body shadow** —
+legacy authoritative, `[CAPSHADOW]` diff at real call moments → clean at **5.49M calls / 0** (load path + full
+turn, all teams) once the `isNPC()` guard was restored as engine composition; **(2) flip-with-net** — cascade
+authoritative, counters alive as the net → clean through **two live turns (5.85M calls / 0**, every cut-gate 0,
+normal pace); **(3) the counters cut** (side effects preserved: `updateYield` on canPassPeaks, the improvement-
+validity cache round on farming/irrigation/waterWork; NPC guard + game-option compositions stay in the getters;
+CyTeam count API honestly stubbed). Query surface: `CascadeCapabilities` (per-team cached union, O(1) precomputed
+flags + per-terrain bit vector, invalidated at `setHasTech`/`reset`). The `[CAPSHADOW]` machinery STAYS as the
+net for the pending flips (`isMapCentering`, the commerce sliders, building attributes, `hasLanguage`) — and
+`en_empireHasCapability` should fold into `CascadeCapabilities` so there is ONE union.
+
 ## ⚠ THE FIRST FLIP ATTEMPT — REVERTED; the wiring lesson (2026-07-02)
 
 A full Gate-3 cut was landed and **REVERTED the same day** (commits `eccbb8e9d`+`d93d7d834`, reverts
