@@ -83,8 +83,18 @@ mapping: [`code-cut-map.md`](code-cut-map.md) §Rulings addendum):
       the UI reads rates **every frame** (`game.update.accum` alone burned 209s). A cache over a calculator
       cannot fix this — **the pre-flip increment is the §1 substrate**: standing slots per (city, channel);
       the event spine's domain events apply THAT source's deposit/withdraw deltas; a bounded per-turn pass
-      re-checks conditioned deposits (§3 dormancy); the getter reads the slot O(1). The revert restored the
+      re-checks conditioned deposits (§3 dormancy); the getter reads the slot O(1). **The authoring/runtime
+      split (owner 2026-07-02): the JSON stays HUMAN-shaped (source-centric — each entity declares what it
+      deposits), and the LOAD step programmatically compiles it into the top-down routing** — so runtime flow is
+      pure deposit-DOWN into slots, and no read ever walks back up to the sources. The revert restored the
       shadow-era instrument; the flip returns when the substrate exists.
+      **⚖ The retro finding (owner 2026-07-02): the top-down deposit design "has clearly been lost during
+      drycalc and implementation."** Each step was locally correct — StoneBase HAD to full-calc (an offline
+      drycalc cannot hold continuous game state; that is exactly why the spec exists), and the C++ port's goal
+      was StoneBase parity, so it ported the calculator 1:1 — but the §1 machine itself was never built, and
+      the calculator quietly became the de-facto implementation. Consequence for the plan: the substrate build
+      is **the actual implementation of the modifier machine as specced**, not a perf optimization; the
+      calculator is thereby demoted to its true role — the verification ORACLE the shadows compare against.
    3. **Self-containment dissolves at the contract level** — the cascade reading a sibling getter (`hasTrait`,
       `isPower`, `isGovernmentCenter`, …) is legitimate because each getter is itself cascade-backed after its
       flip. Getters over genuinely RAW saved state (`isGoldenAge`, `isDisorder`, trait membership, occupation/
