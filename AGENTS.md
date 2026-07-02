@@ -435,10 +435,14 @@ re-sweep, try another) is the anti-pattern this rule kills: build the complete m
   in-game playtest (the user runs `FinalRelease` + `rebuild deploy`), not just a green
   Assert build. A merged or committed change does nothing in a running game until the DLL
   is rebuilt and deployed.
-- **Runtime-verification division of labor:** the agent builds + deploys the DLL and reads
-  the logs; **the owner launches the game**, ensures logging is enabled, and confirms the
-  game is loading — agents must not start/kill the game themselves (a headless launch
-  spawns a console window the agent cannot manage). Verify via
+- **Runtime-verification division of labor — AMENDED (owner ruling 2026-07-02): with PER-SESSION owner permission,
+  an agent may kill/rebuild/start the game via `agentstart.bat`.** The permission is granted per session, never
+  standing — absent it, the old rule holds (the owner launches; agents never start/kill the game). The mechanism is
+  ONLY the repo-root `agentstart.bat` (paths from the gitignored `.env`: BTS dir, mod name, test save): it closes
+  any running game and relaunches the mod loading the configured save, skipping the dev DLL's boot-time rebuild by
+  default (pass `bootcheck` to allow it) — unattended-safe; ad-hoc headless launches outside it remain banned
+  (unmanageable console windows). The agent flow: build + `deploy` → run `agentstart.bat` → poll
+  `http://127.0.0.1:7227/` until up → verify via the endpoints. Verify via
   `Documents/My Games/Beyond The Sword/Logs/`: `XmlLoad.log` per-category counts, no
   `Xml_MissingTypes.log`, no new `Asserts.log` entries. Known pre-existing assert families
   on mature saves (filter, already filed): `CvContractBroker::makeContract` NULL pJoinUnit
