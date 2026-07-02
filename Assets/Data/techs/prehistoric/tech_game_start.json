@@ -26,6 +26,9 @@
     "units": [
       "UNIT_BRUTE"
     ],
+    "processes": [
+      "PROCESS_IDLE"
+    ],
     "builds": [],
     "improvements": [],
     "promotions": []

@@ -12,5 +12,10 @@
  },
  "identity": {
   "description": "TXT_KEY_PROCESS_LESSER_CULTURE"
+ },
+ "obsoletedBy": {
+  "techs": [
+   "TECH_LITERATURE"
+  ]
  }
 }

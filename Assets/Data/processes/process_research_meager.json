@@ -12,5 +12,11 @@
  },
  "identity": {
   "description": "TXT_KEY_PROCESS_MEAGER_RESEARCH"
+ },
+ "obsoletedBy": {
+  "techs": [
+   "TECH_WRITING",
+   "TECH_ALPHABET"
+  ]
  }
 }

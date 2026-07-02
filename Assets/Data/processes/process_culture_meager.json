@@ -12,5 +12,11 @@
  },
  "identity": {
   "description": "TXT_KEY_PROCESS_MEAGER_CULTURE"
+ },
+ "obsoletedBy": {
+  "techs": [
+   "TECH_HERITAGE",
+   "TECH_LITERATURE"
+  ]
  }
 }

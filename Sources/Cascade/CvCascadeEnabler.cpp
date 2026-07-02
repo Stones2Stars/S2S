@@ -58,21 +58,23 @@
 // CvCascadeLogConsumer renders the raw typed fields + tees to /events, gated by level. Per-emitter domain (SD_ENABLER),
 // one file (Cascade.log). The per-turn summary is split into one COUNTS event + one per-gate SHADOW event (the field cap
 // is 16; a single ~24-field line doesn't fit -- event-spine.md drop/redo).
-enum EnEvt { ENE_DIFF = 1, ENE_SHADOW, ENE_COUNTS };
+enum EnEvt { ENE_DIFF = 1, ENE_SHADOW, ENE_COUNTS, ENE_PROCDIAG };
 enum EnFld
 {
 	ENF_WHO = 1, ENF_GATE, ENF_TYPE, ENF_CASC, ENF_LEG,   // diff
 	ENF_CITIES, ENF_PLAYERS, ENF_UNITS, ENF_PLOTS,        // counts
-	ENF_DIV, ENF_CHK                                       // per-gate summary
+	ENF_DIV, ENF_CHK,                                      // per-gate summary
+	ENF_CAND, ENF_AVAIL, ENF_EDGES, ENF_RESOLVE, ENF_HASTECH   // procdiag (the canMaintain chain decomposition)
 };
 static const char* en_prefix(int evt)
 {
 	switch (evt)
 	{
-	case ENE_DIFF:   return "[ENABLER/diff]";
-	case ENE_SHADOW: return "[ENABLER/shadow]";
-	case ENE_COUNTS: return "[ENABLER/shadow]";
-	default:         return "[ENABLER]";
+	case ENE_DIFF:     return "[ENABLER/diff]";
+	case ENE_SHADOW:   return "[ENABLER/shadow]";
+	case ENE_COUNTS:   return "[ENABLER/shadow]";
+	case ENE_PROCDIAG: return "[ENABLER/procdiag]";
+	default:           return "[ENABLER]";
 	}
 }
 static const char* en_field(int tag, SpineFieldType* peType)
@@ -91,6 +93,11 @@ static const char* en_field(int tag, SpineFieldType* peType)
 	case ENF_PLOTS:   return "plots";
 	case ENF_DIV:     return "diverging";
 	case ENF_CHK:     return "checked";
+	case ENF_CAND:    return "cand";
+	case ENF_AVAIL:   return "avail";
+	case ENF_EDGES:   return "curEdges";
+	case ENF_RESOLVE: return "wealthId";
+	case ENF_HASTECH: return "hasCurrency";
 	default:          return NULL;
 	}
 }
@@ -138,7 +145,10 @@ static void en_shadowPromotions(const CvPlayer& kPlayer, const CvTeam& kTeam, in
 
 		CvCascadeEvalCtx ec;
 		ec.unit = pUnit; ec.player = &kPlayer; ec.team = &kTeam; ec.plot = pUnit->plot();
-		const wchar_t* szWho = pUnit->getName().GetCString();
+		// HOLD the name: CvUnit::getName() returns a CvWString BY VALUE -- keeping only .GetCString() dangles into a
+		// destroyed temporary (the blank-who= emit bug, 2026-07-02; CvCity::getName() has the same shape below).
+		const CvWString sWho = pUnit->getName();
+		const wchar_t* szWho = sWho.GetCString();
 		for (int pr = 0; pr < nPromo; ++pr)
 		{
 			++g.chk;
@@ -250,7 +260,35 @@ void cvCascadeEnablerShadow()
 			UnitCascade::trainable(pCity, kPlayer, kTeam, avU);       // UnitCascade port (generate-then-gate)
 			EnablerKernel::gateSet("projects",  candC, cec, kPlayer, kTeam, false, avPr);
 			EnablerKernel::gateSet("processes", candC, cec, kPlayer, kTeam, false, avProc);
-			const wchar_t* szWho = pCity->getName().GetCString();
+			// [ENABLER/procdiag] -- the canMaintain chain decomposition (map, don't guess): the frontier came out
+			// EMPTY while the tech JSONs verifiably carry enables.processes. One emit (first city) pins WHICH link
+			// breaks: wealthId<0 = FK resolve; curEdges=0 = the readJson map lost the edge; cand=0 = GENERATE;
+			// avail=0 with cand>0 = the gate. Remove once canMaintain reaches parity.
+			if (iCities == 1)
+			{
+				const int iWealthId = GC.getInfoTypeForString("PROCESS_WEALTH", true);
+				const int iCurrency = GC.getInfoTypeForString("TECH_CURRENCY", true);
+				int iCurEdges = -1;
+				if (iCurrency >= 0)
+				{
+					const CvJsonInfo* jt = InfoRepo<CvTechInfo>::get().get(iCurrency);
+					if (jt != NULL)
+					{
+						std::map<std::string, std::vector<int> >::const_iterator eit = jt->edges.find("enables.processes");
+						iCurEdges = (eit == jt->edges.end()) ? 0 : (int)eit->second.size();
+					}
+				}
+				EnBucketSets::const_iterator pcit = candC.find("processes");
+				eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_ENABLER, ENE_PROCDIAG, 1)
+					.addI(ENF_CAND, pcit == candC.end() ? -1 : (int)pcit->second.size())
+					.addI(ENF_AVAIL, (int)avProc.size())
+					.addI(ENF_EDGES, iCurEdges)
+					.addI(ENF_RESOLVE, iWealthId)
+					.addI(ENF_HASTECH, iCurrency >= 0 && kTeam.isHasTech((TechTypes)iCurrency) ? 1 : 0));
+			}
+			// HOLD the name: CvCity::getName() returns a CvWString BY VALUE (the blank-who= emit bug -- see above).
+			const CvWString sWho = pCity->getName();
+			const wchar_t* szWho = sWho.GetCString();
 			for (int b = 0; b < nB; ++b)
 			{
 				++gConstruct.chk; bool c = avB.count(b) != 0, l = pCity->canConstruct((BuildingTypes)b, false, false, false);   // bIgnoreCost=FALSE (2026-07-02): true disabled the productionCost==-1 gate == the spawnOnly/notConstructible semantic the cascade models

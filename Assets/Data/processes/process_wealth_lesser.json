@@ -12,5 +12,10 @@
  },
  "identity": {
   "description": "TXT_KEY_PROCESS_LESSER_WEALTH"
+ },
+ "obsoletedBy": {
+  "techs": [
+   "TECH_CURRENCY"
+  ]
  }
 }

@@ -29,6 +29,7 @@
 #include "CvJsonInfo.h"               // the mapped info (requiresOperate/dormantTriggers) -- the dorm-attribution diagnostic
 #include "Repos/InfoRepo.h"           // InfoRepo<CvBuildingInfo> -- ditto
 #include "CvCascadeReadJson.h"        // cascadeReadJsonStats -- re-surface the dark load-time probe stats
+#include "CvCascadeJsonParse.h"       // cascadeJsonUnresolvedIds -- re-surface the dark load-time FK misses
 #include "CvEventSpine.h"             // the #430 dispatch spine -- the shadow diff rides it (SD_MODIFIER), NOT direct gDLL->logMsg
 #include <set>
 #include <string>
@@ -49,7 +50,8 @@ enum MdFld
 	MDF_FILES2, MDF_ENTITIES2,                                                      // the stashed load-probe stats
 	MDF_SPECC, MDF_SPECL,                                                           // specialist sub-terms (rate diff)
 	MDF_FACTS, MDF_FACTSHIT, MDF_YRN, MDF_PSN, MDF_CRN, MDF_CEN,                    // perf: call counts
-	MDF_FACTSMS, MDF_YRMS, MDF_PSMS, MDF_CRMS                                       // perf: stopwatch ms (x10 int)
+	MDF_FACTSMS, MDF_YRMS, MDF_PSMS, MDF_CRMS,                                      // perf: stopwatch ms (x10 int)
+	MDF_UNRES, MDF_UNRESIDS                                                         // load-time FK misses, re-surfaced live
 };
 static const char* mm_prefix(int evt)
 {
@@ -113,6 +115,8 @@ static const char* mm_field(int tag, SpineFieldType* peType)
 	case MDF_YRMS:        return "yieldRateMsX10";
 	case MDF_PSMS:        return "pctStackMsX10";
 	case MDF_CRMS:        return "commerceRateMsX10";
+	case MDF_UNRES:       return "unresolvedFks";
+	case MDF_UNRESIDS:    *peType = SFT_STR; return "unresolvedSample";
 	default:            return NULL;
 	}
 }
@@ -154,10 +158,22 @@ void cvCascadeModifierShadow()
 		// convicts the dataDir scan (path shown verbatim in `sample`). -1 = the probe never ran.
 		int iFiles = 0, iEnt = 0;
 		const std::string& sDir = cascadeReadJsonStats(false, iFiles, iEnt, std::string());
+		// The load-time FK-unresolved set, re-surfaced LIVE (the [READJSON/unresolved-fk] burst is dark at load --
+		// exactly how the pre-menu-map bug hid: every PROCESS_ edge silently dropped with the misses visible only
+		// in the window nobody can read). unresolvedFks>0 after a clean load is ALWAYS a bug: a data typo or a
+		// map-before-registration ordering hole.
+		const std::set<std::string>& unres = cascadeJsonUnresolvedIds();
+		std::string sUnres;
+		for (std::set<std::string>::const_iterator uit = unres.begin(); uit != unres.end() && sUnres.size() < 96; ++uit)
+		{
+			if (!sUnres.empty()) sUnres += ",";
+			sUnres += *uit;
+		}
 		eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_MODIFIER, MDE_REPO, 1)
 			.addI(MDF_TOTAL, nTot).addI(MDF_MAPPED, nMapped).addI(MDF_WDEPOSITS, nDep)
 			.addI(MDF_WOPERATE, nOp).addI(MDF_WTRIGGERS, nTrig)
-			.addI(MDF_FILES2, iFiles).addI(MDF_ENTITIES2, iEnt).addStr(MDF_SAMPLE, sDir.c_str()));
+			.addI(MDF_FILES2, iFiles).addI(MDF_ENTITIES2, iEnt).addStr(MDF_SAMPLE, sDir.c_str())
+			.addI(MDF_UNRES, (int)unres.size()).addStr(MDF_UNRESIDS, sUnres.c_str()));
 	}
 
 	const char* aszChannel[NUM_YIELD_TYPES] = { "food", "production", "commerce" };   // indexed by the YieldTypes enum

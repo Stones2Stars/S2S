@@ -362,8 +362,11 @@ curated-set model as part of this migration. The current mechanism (mapped 2026-
    parses each `requires`/`enabled`/`disabled` into a typed **`CvCascadeCondition`** tree (NOT `BoolExpr`), evaluated by
    `cascadeEvalCondition` against the live engine in the shadow gates; the `BoolExpr` translator + `CvCascadeCountExpr`
    are DELETED (the count folded into the evaluator's tally read). ✅ **readJson is STATIC-DATA-ONLY** — it no longer
-   includes `CvCity`/`CvPlayer`/the tally (§3 boundary). ✅ **readJson now maps at LOAD** (`onFinalInitialized`, moved off `doTurn`) — loading a save
-   verifies it (validation.md cadence). ✅ The synthetic **`TECH_GAME_START`** root (the XML-less no-tech-prereq node — a
+   includes `CvCity`/`CvPlayer`/the tally (§3 boundary). ✅ **readJson now maps at LOAD** (the end of `LoadPostMenuGlobals` — the LAST XML stage; moved off `doTurn`, then off
+   `onFinalInitialized`→`doPostLoadCaching`, and finally 2026-07-02 off `doPostLoadCaching` too: that fires PRE-MENU,
+   before processes/votes/espionage/spawns register, so their FK edges silently dropped — the canMaintain
+   empty-frontier bug; the live `[MODIFIER/repo]` census now re-emits `unresolvedFks` so a map-before-registration
+   hole can never hide in the dark load burst again) — loading a save verifies it (validation.md cadence). ✅ The synthetic **`TECH_GAME_START`** root (the XML-less no-tech-prereq node — a
    non-resolver with no engine id) is homed in **`cascadeStartNode()`** (off the InfoRepo) so its `enables` survive the
    map (json.md §5 / readjson.md §5.1). ⛔ **NOT yet mapped: the classification blocks** (`skills`/`tags`/`state`,
    json.md §8 — `capabilities` **IS** mapped, see the enabler item below) — currently recognized + skipped. See the

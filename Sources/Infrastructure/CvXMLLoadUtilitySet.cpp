@@ -24,6 +24,7 @@
 #include "CvXMLLoadUtility.h"
 #include "CvXMLLoadUtilityModTools.h"
 #include "CvXMLLoadUtilitySetMod.h"
+#include "CvCascadeReadJson.h"   // cascadeLoadJson -- the #430 JSON->InfoRepo map, run after the LAST post-menu XML load
 #include "Repos/BuildingsRepo.h"
 #include "Repos/BuildsRepo.h"
 #include "Tools/FVariableSystem.h"
@@ -1052,6 +1053,13 @@ bool CvXMLLoadUtility::LoadPostMenuGlobals()
 
 	BuildingsRepo::get().rebuild();
 	BuildsRepo::get().rebuild();
+
+	// #430 cascade: map the curated Assets/Data JSON into the per-type InfoRepo. This MUST run after the LAST
+	// LoadGlobalClassInfo of the post-menu stage: doPostLoadCaching (the previous home) fires pre-menu, BEFORE
+	// processes/votes/espionage-missions/spawns are registered, so every FK edge referencing those types silently
+	// dropped (the canMaintain empty-frontier bug, 2026-07-02). Here EVERY info type is in getInfoTypeForString.
+	// Static data, built once; the [READJSON/*] survey rides the event spine.
+	cascadeLoadJson();
 
 	OutputDebugString("Loading PostMenu Infos: End\n");
 

@@ -3232,12 +3232,11 @@ void cvInternalGlobals::doPostLoadCaching()
 
 	buildInvisibleSeerIndex();
 
-	// #430 cascade: map the curated Assets/Data JSON into the per-type InfoRepo at the SAME load point as the XML
-	// infos -- every info + the type registry (getInfoTypeForString) is now loaded, and the mod asset path is
-	// available (the XML was just loaded from it). This is the data-feed the modifier/enabler machines read, so
-	// loading the game with the XML always populates it (and parity can be measured -- validation.md). Static data,
-	// built once here -- not per game-load. The MAP is unconditional; its [READJSON/*] survey rides the event spine.
-	cascadeLoadJson();
+	// #430 cascade: the JSON->InfoRepo map does NOT run here. doPostLoadCaching fires at the end of
+	// LoadPreMenuGlobals, BEFORE the post-menu XML stage -- so PROCESS_/VOTE_/ESPIONAGE_/SPAWN_ ids were not yet in
+	// the type registry and every FK edge referencing them silently dropped into the unresolved set (the canMaintain
+	// empty-frontier bug, 2026-07-02: every tech's enables.processes vanished). The map now runs at the end of
+	// LoadPostMenuGlobals (CvXMLLoadUtilitySet.cpp), when EVERY info type is registered.
 }
 
 const std::vector<BuildingTypes>& cvInternalGlobals::getBuildingsEnabledBy(BuildingTypes eEnabler) const

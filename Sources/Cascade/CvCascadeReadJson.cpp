@@ -268,9 +268,11 @@ const std::string& cascadeReadJsonStats(bool bSet, int& iFiles, int& iEntities, 
 
 void cascadeLoadJson()
 {
-	// ONE-SHOT per process: the static JSON->InfoRepo map is built ONCE, at the SAME load point as the XML infos
-	// (cvInternalGlobals::doPostLoadCaching). UNCONDITIONAL: it must NOT depend on gPlayerLogLevel (cold this early) --
-	// the [READJSON/*] census rides the event spine (SD_READJSON; the CvCascadeLogConsumer gates it per level).
+	// ONE-SHOT per process: the static JSON->InfoRepo map is built ONCE, at the END of LoadPostMenuGlobals -- the
+	// LAST XML load stage, so EVERY info type is in the registry. ⛔ NOT doPostLoadCaching (the previous home): that
+	// fires pre-menu, BEFORE processes/votes/espionage-missions/spawns register, so their FK edges silently dropped
+	// (the canMaintain empty-frontier bug, 2026-07-02). UNCONDITIONAL: it must NOT depend on gPlayerLogLevel (cold
+	// this early) -- the [READJSON/*] census rides the event spine (SD_READJSON; the log consumer gates per level).
 	static bool s_done = false;
 	if (s_done) return;
 	s_done = true;

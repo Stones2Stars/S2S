@@ -12,5 +12,11 @@
  },
  "identity": {
   "description": "TXT_KEY_PROCESS_SPY_MEAGER"
+ },
+ "obsoletedBy": {
+  "techs": [
+   "TECH_ORATORY",
+   "TECH_DIPLOMACY"
+  ]
  }
 }

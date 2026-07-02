@@ -521,7 +521,8 @@ def main(cfg, boosts_config, out_dir, post_process=None):
     n = len(result)
     has = lambda k: sum(1 for (o, _) in result.values() if k in o)
     STRUCT = {"type", "description", "civilopedia", "help", "quote", "strategy", "enables", "obsoletes",
-              "replaces", "disables", "requires", "allowed", "grants", "cost", "ai", "ui", "world", "sound", "mapGeneration", "identity"}
+              "replaces", "disables", "obsoletedBy", "provides", "requires", "allowed", "grants", "cost", "ai",
+              "ui", "world", "sound", "mapGeneration", "identity"}
     fams = lambda o: [k for k in o if k not in STRUCT]
     print("%s curated: %d" % (cfg.entity, n))
     for k in ("enables", "obsoletes", "replaces", "disables", "requires", "grants", "ai"):
