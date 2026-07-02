@@ -367,8 +367,16 @@ curated-set model as part of this migration. The current mechanism (mapped 2026-
    non-resolver with no engine id) is homed in **`cascadeStartNode()`** (off the InfoRepo) so its `enables` survive the
    map (json.md §5 / readjson.md §5.1). ⛔ **NOT yet mapped: the classification blocks** (`skills`/`tags`/`state`,
    json.md §8 — `capabilities` **IS** mapped, see the enabler item below) — currently recognized + skipped. See the
-   classification-wiring item below. ⏳ **NEXT (refinement):** index `CvJsonInfo` internally (vs the current flat deposit
-   vector), §3.
+   classification-wiring item below. ⏳ **NEXT (refinement) + THE SHADOW-PERF HUNT (owner 2026-07-02 "chase the needless repeat calcs BEFORE parity").**
+   The [MODIFIER/perf] census (counters + PerfAccumTimer stopwatches, flushed per turn) drove this so far:
+   yieldRate100 was 444 calls × ~164ms ≈ 73s/turn; the turn-scoped memos (facts: 91% hit; rate: halved to ~37s)
+   bought back the REPEAT calls. The residual is the PER-CALL ~164ms, and the sub-costs measured so far bound it:
+   percentStack ≈ 6ms and commerceRate ≈ 7ms per call, so the bulk sits in the BASE packages — **`basePlot`
+   (per-plot scans with per-plot condition evals + vicinity walks) is the prime suspect; add per-package
+   stopwatches inside yieldRate100 next** (basePlot/buildingFlat/specialist split), then fix the convicted
+   package. The deposit-vector index (§3) stays a refinement but is demoted as the perf lever (per-entity deposit
+   vectors are small; the multiplier is entity-count × sums, not the vector walk). ⚠ Both memos are
+   SHADOW-PHASE-ONLY (stale on mid-turn building changes) — event-invalidate before any consumer cut.
 2. **Tally** ✅ **DONE — reworked to a READ-ONLY accessor (owner ruling 2026-06-30)** (buildings + units). It READS the
    object-owned counts (`CvPlayer::getBuildingCount`/`getUnitCount`) and rolls UP the spine (empire/team/world) — no
    store, no `IEventConsumer`, no `rebuild`/`onEvent`/`shadowDiff` (a count shadow was tautological — the duplicate-store
