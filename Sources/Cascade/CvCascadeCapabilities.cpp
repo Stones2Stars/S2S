@@ -49,6 +49,9 @@ static const CcapKeyRow CCAP_KEYS[] =
 	{ CCF_TRADE_DEFENSIVE_PACT, 1, "defensivePact" }, { CCF_TRADE_PERMANENT_ALLIANCE, 1, "permanentAlliance" },
 	{ CCF_TRADE_VASSALS, 1, "vassals" }, { CCF_TRADE_EMBASSY, 1, "embassy" },
 	{ CCF_WORK_WATER, 2, "water" },
+	{ CCF_SET_SCIENCE_RATE, 0, "canSetScienceRate" }, { CCF_SET_CULTURE_RATE, 0, "canSetCultureRate" },
+	{ CCF_SET_ESPIONAGE_RATE, 0, "canSetEspionageRate" },
+	{ CCF_HAS_LANGUAGE, 0, "hasLanguage" },
 };
 
 static void ccap_union(const CvJsonTechInfo* j, CascadeCapCache& c)

@@ -224,6 +224,31 @@ machinery stays as the net for the pending flips (`isMapCentering`, the commerce
 The `[CAPSHADOW]` machinery stays as the net for the pending flips (`isMapCentering`, the commerce sliders,
 building attributes, `hasLanguage`).
 
+## 🔄 Flip wave #2 — the commerce sliders + hasLanguage FLIPPED-WITH-NET (2026-07-02; stage B pending)
+
+- **The commerce sliders** — `CvPlayer::isCommerceFlexible` body flipped: the runtime gates stay in the getter
+  (no slider before the first city; espionage needs a met rival — engine-side composition, like the game-option
+  folds), then the verdict is the capability (`CCF_SET_SCIENCE_RATE`/`CCF_SET_CULTURE_RATE`/
+  `CCF_SET_ESPIONAGE_RATE`; gold returns false — no slider in engine or data). Grounded census: the legacy
+  source disjunction was CommerceInfo global (`bFlexiblePercent` — research=1, espionage=1, gold/culture=0)
+  ∨ the **building-fed player counter `CvPlayer::m_aiCommerceFlexibleCount` (DATA-DEAD — no building in XML
+  carries `CommerceFlexibles`)** ∨ the tech-fed team counter `CvTeam::m_aiCommerceFlexibleCount` (exactly ONE
+  tech in XML: TECH_DRAMA, culture). All stay alive as the `[CAPSHADOW]` oracle.
+- **`hasLanguage`** — the `canAddHeritage` `needLanguage` gate flipped to `CCF_HAS_LANGUAGE`
+  (`tech_language.json` `capabilities.hasLanguage`). The legacy per-player latch (`CvPlayer::m_bHasLanguage`,
+  processTech-set, serialized) stays alive as the oracle. Team-scope capability vs per-player latch is
+  equivalent (every team player processes the tech); a player switching teams derives *more* correctly.
+- **Stage B (after a clean `[CAPSHADOW]` turn):** delete both `m_aiCommerceFlexibleCount` arrays (player +
+  team; named `WRAPPER_SKIP_ELEMENT`s + `savemigration.txt`), the processTech/processBuilding applies, the
+  `m_bHasLanguage` latch (same retirement), and stub the CyTeam commerce-flexible surface. Audit the deleted
+  changers' bodies first (binding rule 2) — `changeCommerceFlexibleCount` carries a
+  `setCommercePercent(eIndex, 0)` on flexibility LOSS (fires only on tech unapply during recalc; capabilities
+  never lapse in practice, but note it at cut time).
+- **`isMapCentering` stays PARKED** — it needs the building-grantor half of the union (no curated building
+  emits capabilities yet) and has a real latch-vs-derived divergence when a granting building is LOST (legacy
+  latches; a derived union would lapse). It flips when the building-HAVE union is built — likely alongside the
+  building `attributes` lane, which needs the same active-buildings query.
+
 ## ⚠ THE FIRST FLIP ATTEMPT — REVERTED; the wiring lesson (2026-07-02)
 
 A full Gate-3 cut was landed and **REVERTED the same day** (commits `eccbb8e9d`+`d93d7d834`, reverts

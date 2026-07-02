@@ -13,6 +13,7 @@
 #include "AI/CvCityAI.h"
 #include "AI/CvContractBroker.h"
 #include "CvEventSpine.h"   // #430 cascade spine -- first real DOMAIN emit at changeBuildingCount
+#include "Cascade/CvCascadeCapabilities.h"   // #430 Gate-3: the commerce-slider capability flip (isCommerceFlexible)
 #include "CvDeal.h"
 #include "UI/CvDiploParameters.h"
 #include "UI/CvEventReporter.h"
@@ -13206,11 +13207,29 @@ bool CvPlayer::isCommerceFlexible(CommerceTypes eIndex) const
 {
 	FASSERT_BOUNDS(0, NUM_COMMERCE_TYPES, eIndex);
 
+	// Runtime gates -- engine-side composition, NOT capability data (capabilities.md): no slider before the
+	// first city; the espionage slider additionally needs a met rival. These stay in the getter, like the
+	// game-option folds on the trade getters.
 	if (!isFoundedFirstCity() || eIndex == COMMERCE_ESPIONAGE && 0 == GET_TEAM(getTeam()).getHasMetCivCount(true))
 	{
 		return false;
 	}
-	return GC.getCommerceInfo(eIndex).isFlexiblePercent() || getCommerceFlexibleCount(eIndex) > 0 || GET_TEAM(getTeam()).isCommerceFlexible(eIndex);
+	// FLIP-WITH-NET (#430 Gate-3, capabilities.md): the slider unlock is the cascade capability --
+	// research/espionage ride TECH_GAME_START (the legacy CommerceInfo bFlexiblePercent globals, re-homed),
+	// culture rides TECH_DRAMA. The legacy sources (the CommerceInfo global + the data-dead building-fed player
+	// counter + the tech-fed team counter) stay alive as the [CAPSHADOW] oracle until this cut's stage B.
+	CascadeCapFlag eFlag;
+	switch (eIndex)
+	{
+	case COMMERCE_RESEARCH:  eFlag = CCF_SET_SCIENCE_RATE;   break;
+	case COMMERCE_CULTURE:   eFlag = CCF_SET_CULTURE_RATE;   break;
+	case COMMERCE_ESPIONAGE: eFlag = CCF_SET_ESPIONAGE_RATE; break;
+	default: return false;   // COMMERCE_GOLD: no slider in engine (bFlexiblePercent=0) or data (no key)
+	}
+	const bool bLegacy = GC.getCommerceInfo(eIndex).isFlexiblePercent()
+		|| getCommerceFlexibleCount(eIndex) > 0
+		|| GET_TEAM(getTeam()).isCommerceFlexible(eIndex);
+	return CascadeCapabilities::shadow(getTeam(), eFlag, bLegacy);
 }
 
 
@@ -30967,7 +30986,10 @@ bool CvPlayer::canAddHeritage(const HeritageTypes eType, const bool bTestVisible
 	}
 	const CvHeritageInfo& heritage = GC.getHeritageInfo(eType);
 
-	if (heritage.needLanguage() && !m_bHasLanguage)
+	// FLIP-WITH-NET (#430 Gate-3, capabilities.md): hasLanguage is the cascade capability (TECH_LANGUAGE's
+	// `capabilities.hasLanguage`). The legacy per-player latch (m_bHasLanguage, processTech-set, serialized)
+	// stays alive as the [CAPSHADOW] oracle until this cut's stage B.
+	if (heritage.needLanguage() && !CascadeCapabilities::shadow(getTeam(), CCF_HAS_LANGUAGE, m_bHasLanguage))
 	{
 		return false;
 	}
