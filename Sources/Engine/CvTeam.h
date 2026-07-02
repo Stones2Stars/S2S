@@ -162,17 +162,29 @@ public:
 	bool isForceTeamVoteEligible(VoteSourceTypes eVoteSource) const;
 	void changeForceTeamVoteEligibilityCount(VoteSourceTypes eVoteSource, int iChange);
 
+	int getExtraWaterSeeFromCount() const;
 	bool isExtraWaterSeeFrom() const;
+	void changeExtraWaterSeeFromCount(int iChange);
 
+	int getMapTradingCount() const;
 	bool isMapTrading() const;
+	void changeMapTradingCount(int iChange);
 
+	int getCanPassPeaksCount() const;
 	bool isCanPassPeaks() const;
+	void changeCanPassPeaksCount(int iChange);
 
+	int getMoveFastPeaksCount() const;
 	bool isMoveFastPeaks() const;
+	void changeMoveFastPeaksCount(int iChange);
 
+	int getCanFoundOnPeaksCount() const;
 	bool isCanFoundOnPeaks() const;
+	void changeCanFoundOnPeaksCount(int iChange);
 
+	int getRebaseAnywhereCount() const;
 	bool isRebaseAnywhere() const;
+	void changeRebaseAnywhereCount(int iChange);
 
 	int getTradeModifier() const;
 	void changeTradeModifier(int iChange);
@@ -194,7 +206,9 @@ public:
 	void ObsoletePromotions(TechTypes eObsoleteTech);
 	void ObsoleteCorporations(TechTypes eObsoleteTech);
 
+	int getEmbassyTradingCount() const;
 	bool isEmbassyTrading() const;
+	void changeEmbassyTradingCount(int iChange);
 
 	bool isHasEmbassy(TeamTypes eIndex) const;
 	void setHasEmbassy(TeamTypes eIndex, bool bNewValue);
@@ -203,9 +217,13 @@ public:
 	int getBuildingSpecialistChange(BuildingTypes eIndex1, SpecialistTypes eIndex2) const;
 	void changeBuildingSpecialistChange(BuildingTypes eIndex1, SpecialistTypes eIndex2, int iChange);
 
+	int getLimitedBordersTradingCount() const;
 	bool isLimitedBordersTrading() const;
+	void changeLimitedBordersTradingCount(int iChange);
 
+	int getCanFarmDesertCount() const;
 	bool isCanFarmDesert() const;
+	void changeCanFarmDesertCount(int iChange);
 
 	void signLimitedBorders(TeamTypes eTeam);
 	bool canSignOpenBorders(TeamTypes eTeam) const;
@@ -229,25 +247,45 @@ public:
 
 	void AI_setAssignWorkDirtyInEveryPlayerCityWithActiveBuilding(BuildingTypes eBuilding);
 
+	int getTechTradingCount() const;
 	bool isTechTrading() const;
+	void changeTechTradingCount(int iChange);
 
+	int getGoldTradingCount() const;
 	bool isGoldTrading() const;
+	void changeGoldTradingCount(int iChange);
 
+	int getOpenBordersTradingCount() const;
 	bool isOpenBordersTrading() const;
+	void changeOpenBordersTradingCount(int iChange);
 
+	int getDefensivePactTradingCount() const;
 	bool isDefensivePactTrading() const;
+	void changeDefensivePactTradingCount(int iChange);
 
+	int getPermanentAllianceTradingCount() const;
 	bool isPermanentAllianceTrading() const;
+	void changePermanentAllianceTradingCount(int iChange);
 
+	int getVassalTradingCount() const;
 	bool isVassalStateTrading() const;
+	void changeVassalTradingCount(int iChange);
 
+	int getBridgeBuildingCount() const;
 	bool isBridgeBuilding() const;
+	void changeBridgeBuildingCount(int iChange);
 
+	int getIrrigationCount() const;
 	bool isIrrigation() const;
+	void changeIrrigationCount(int iChange);
 
+	int getIgnoreIrrigationCount() const;
 	bool isIgnoreIrrigation() const;
+	void changeIgnoreIrrigationCount(int iChange);
 
+	int getWaterWorkCount() const;
 	bool isWaterWork() const;
+	void changeWaterWorkCount(int iChange);
 
 	int getVassalPower() const;
 	void setVassalPower(int iPower);
@@ -351,9 +389,13 @@ public:
 	int getTechCount(TechTypes eIndex) const;
 	int getBestKnownTechScorePercent() const;
 
+	int getTerrainTradeCount(TerrainTypes eIndex) const;
 	bool isTerrainTrade(TerrainTypes eIndex) const;
+	void changeTerrainTradeCount(TerrainTypes eIndex, int iChange);
 
+	int getRiverTradeCount() const;
 	bool isRiverTrade() const;
+	void changeRiverTradeCount(int iChange);
 
 	bool isHasTech(TechTypes eIndex) const;
 	void setHasTech(TechTypes eIndex, bool bNewValue, PlayerTypes ePlayer, bool bFirst, bool bAnnounce);
