@@ -28,8 +28,8 @@ struct AccCityState
 	long aSpec[NUM_YIELD_TYPES];      // specialist totals (human units; own sub-stack inside)
 	long aExtra100[NUM_YIELD_TYPES];  // building flats + perPop (×100)
 	long aEmpFlat[NUM_YIELD_TYPES];   // free-city + golden-age trait flats (human units)
-	int iDirty; int iEpoch; int iTurn;
-	AccCityState() : iDirty(ACCD_ALL), iEpoch(-1), iTurn(-1)
+	int iDirty; int iEpoch;
+	AccCityState() : iDirty(ACCD_ALL), iEpoch(-1)
 	{
 		for (int i = 0; i < NUM_YIELD_TYPES; ++i) { aPct[i] = 100; aPlots[i] = 0; aSpec[i] = 0; aExtra100[i] = 0; aEmpFlat[i] = 0; }
 	}
@@ -58,15 +58,15 @@ static const char* acc_channel(int y)
 }
 
 // Recompute the DIRTY components only (the calculator packages are the single-source recompute functions).
-// The turn roll + the epoch mark everything dirty -- the §3 dormancy re-check cadence AND the self-heal for
-// any mutation the coarse hooks miss (the [SLOT] shadow measures that residual).
+// ⚠ SHADOW PHASE: deliberately NO turn-roll self-heal -- the slots carry PURELY hook-and-epoch-maintained
+// state across turns, so the [SLOT] shadow genuinely measures dirty-hook coverage (a turn-roll full-dirty made
+// the sweep recompute everything fresh next to its oracle -- a tautological 0, caught 2026-07-02). The flip
+// (increment C) re-adds a bounded conditioned-deposit re-check cadence per §3 once the hook map is proven.
 static void acc_refresh(const CvCity* pCity, AccCityState& st)
 {
-	const int iTurn = GC.getGame().getGameTurn();
-	if (st.iTurn != iTurn || st.iEpoch != s_iEpoch)
+	if (st.iEpoch != s_iEpoch)
 	{
 		st.iDirty = ACCD_ALL;
-		st.iTurn = iTurn;
 		st.iEpoch = s_iEpoch;
 	}
 	if (st.iDirty == 0) return;
