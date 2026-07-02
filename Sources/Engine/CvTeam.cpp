@@ -3121,64 +3121,64 @@ void CvTeam::changeForceTeamVoteEligibilityCount(VoteSourceTypes eVoteSource, in
 
 bool CvTeam::isExtraWaterSeeFrom() const
 {
-	return CascadeCapabilities::capability(getID(), "canSeeFurtherFromWater");
+	return CascadeCapabilities::flag(getID(), CCF_EXTRA_WATER_SEE_FROM);
 }
 
 bool CvTeam::isMapTrading()	const
 {
-	return CascadeCapabilities::canTradeItem(getID(), "maps");
+	return CascadeCapabilities::flag(getID(), CCF_TRADE_MAPS);
 }
 
 bool CvTeam::isTechTrading() const
 {
-	return CascadeCapabilities::canTradeItem(getID(), "techs");
+	return CascadeCapabilities::flag(getID(), CCF_TRADE_TECHS);
 }
 
 bool CvTeam::isGoldTrading() const
 {
-	return CascadeCapabilities::canTradeItem(getID(), "gold");
+	return CascadeCapabilities::flag(getID(), CCF_TRADE_GOLD);
 }
 
 bool CvTeam::isOpenBordersTrading() const
 {
-	return CascadeCapabilities::canTradeItem(getID(), "openBorders");
+	return CascadeCapabilities::flag(getID(), CCF_TRADE_OPEN_BORDERS);
 }
 
 bool CvTeam::isDefensivePactTrading() const
 {
-	return CascadeCapabilities::canTradeItem(getID(), "defensivePact");
+	return CascadeCapabilities::flag(getID(), CCF_TRADE_DEFENSIVE_PACT);
 }
 
 bool CvTeam::isPermanentAllianceTrading() const
 {
 	return GC.getGame().isOption(GAMEOPTION_ENABLE_PERMANENT_ALLIANCES)
-		&& CascadeCapabilities::canTradeItem(getID(), "permanentAlliance");
+		&& CascadeCapabilities::flag(getID(), CCF_TRADE_PERMANENT_ALLIANCE);
 }
 
 bool CvTeam::isVassalStateTrading() const
 {
 	return !GC.getGame().isOption(GAMEOPTION_NO_VASSAL_STATES)
-		&& CascadeCapabilities::canTradeItem(getID(), "vassals");
+		&& CascadeCapabilities::flag(getID(), CCF_TRADE_VASSALS);
 }
 
 bool CvTeam::isBridgeBuilding()	const
 {
-	return CascadeCapabilities::capability(getID(), "canBuildBridges");
+	return CascadeCapabilities::flag(getID(), CCF_BRIDGE_BUILDING);
 }
 
 bool CvTeam::isIrrigation() const
 {
-	return CascadeCapabilities::capability(getID(), "canSpreadIrrigation");
+	return CascadeCapabilities::flag(getID(), CCF_SPREAD_IRRIGATION);
 }
 
 bool CvTeam::isIgnoreIrrigation() const
 {
-	return CascadeCapabilities::capability(getID(), "canIgnoreIrrigation");
+	return CascadeCapabilities::flag(getID(), CCF_IGNORE_IRRIGATION);
 }
 
 bool CvTeam::isWaterWork() const
 {
-	return CascadeCapabilities::canWorkOn(getID(), "water");
+	return CascadeCapabilities::flag(getID(), CCF_WORK_WATER);
 }
 
 int CvTeam::getVassalPower() const
@@ -4615,7 +4615,7 @@ bool CvTeam::isTerrainTrade(TerrainTypes eIndex) const
 
 bool CvTeam::isRiverTrade() const
 {
-	return CascadeCapabilities::capability(getID(), "hasRiverTrade");
+	return CascadeCapabilities::flag(getID(), CCF_RIVER_TRADE);
 }
 
 
@@ -6518,22 +6518,22 @@ bool CvTeam::hasLaunched() const
 
 bool CvTeam::isCanPassPeaks() const
 {
-	return CascadeCapabilities::capability(getID(), "canPassPeaks");
+	return CascadeCapabilities::flag(getID(), CCF_CAN_PASS_PEAKS);
 }
 
 bool CvTeam::isMoveFastPeaks() const
 {
-	return CascadeCapabilities::capability(getID(), "canMoveFastOnPeaks");
+	return CascadeCapabilities::flag(getID(), CCF_MOVE_FAST_PEAKS);
 }
 
 bool CvTeam::isCanFoundOnPeaks() const
 {
-	return CascadeCapabilities::capability(getID(), "canFoundOnPeaks");
+	return CascadeCapabilities::flag(getID(), CCF_CAN_FOUND_ON_PEAKS);
 }
 
 bool CvTeam::isRebaseAnywhere() const
 {
-	return CascadeCapabilities::capability(getID(), "canRebaseAnywhere");
+	return CascadeCapabilities::flag(getID(), CCF_REBASE_ANYWHERE);
 }
 
 void CvTeam::AI_setAssignWorkDirtyInEveryPlayerCityWithActiveBuilding(BuildingTypes eBuilding)
@@ -6554,12 +6554,12 @@ void CvTeam::AI_setAssignWorkDirtyInEveryPlayerCityWithActiveBuilding(BuildingTy
 
 bool CvTeam::isCanFarmDesert() const
 {
-	return CascadeCapabilities::capability(getID(), "canFarmDesert");
+	return CascadeCapabilities::flag(getID(), CCF_CAN_FARM_DESERT);
 }
 
 bool CvTeam::isLimitedBordersTrading() const
 {
-	return CascadeCapabilities::canTradeItem(getID(), "rightOfPassage");
+	return CascadeCapabilities::flag(getID(), CCF_TRADE_RIGHT_OF_PASSAGE);
 }
 
 void CvTeam::signLimitedBorders(TeamTypes eTeam)
@@ -6672,7 +6672,7 @@ void CvTeam::setHasEmbassy(TeamTypes eIndex, bool bNewValue)
 
 bool CvTeam::isEmbassyTrading() const
 {
-	return CascadeCapabilities::canTradeItem(getID(), "embassy");
+	return CascadeCapabilities::flag(getID(), CCF_TRADE_EMBASSY);
 }
 
 void CvTeam::ObsoletePromotions(TechTypes eObsoleteTech)

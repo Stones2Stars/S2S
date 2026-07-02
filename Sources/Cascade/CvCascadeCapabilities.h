@@ -27,13 +27,29 @@
 
 #include "Defines/CvEnums.h"
 
+// The HOT-PATH flag ids (2026-07-02 perf find: the flipped getters ride the PATHFINDER -- isCanPassPeaks via
+// CvPlot::isImpassable -- and per-plot worker/city loops; a per-call std::string construction there 4x'd the
+// turn). The cache precomputes these as a plain bool array at rebuild; flag() is an O(1) read, as cheap as the
+// legacy counter. The string-keyed queries below remain for COLD callers (enabler gates, endpoints, modders).
+enum CascadeCapFlag
+{
+	CCF_CAN_PASS_PEAKS = 0, CCF_MOVE_FAST_PEAKS, CCF_CAN_FOUND_ON_PEAKS, CCF_CAN_FARM_DESERT,
+	CCF_SPREAD_IRRIGATION, CCF_IGNORE_IRRIGATION, CCF_BRIDGE_BUILDING, CCF_RIVER_TRADE,
+	CCF_REBASE_ANYWHERE, CCF_EXTRA_WATER_SEE_FROM,
+	CCF_TRADE_TECHS, CCF_TRADE_GOLD, CCF_TRADE_MAPS, CCF_TRADE_OPEN_BORDERS, CCF_TRADE_RIGHT_OF_PASSAGE,
+	CCF_TRADE_DEFENSIVE_PACT, CCF_TRADE_PERMANENT_ALLIANCE, CCF_TRADE_VASSALS, CCF_TRADE_EMBASSY,
+	CCF_WORK_WATER,
+	CCF_COUNT
+};
+
 class CascadeCapabilities
 {
 public:
-	static bool capability(TeamTypes eTeam, const char* szKey);       // the flat `capabilities` block
-	static bool canTradeItem(TeamTypes eTeam, const char* szKey);     // the `canTrade` block
-	static bool canTradeOnTerrain(TeamTypes eTeam, TerrainTypes eT);  // the `canTradeOn.terrains` set
-	static bool canWorkOn(TeamTypes eTeam, const char* szKey);        // the `canWorkOn` block
+	static bool flag(TeamTypes eTeam, CascadeCapFlag eFlag);          // O(1) hot-path read (precomputed at rebuild)
+	static bool capability(TeamTypes eTeam, const char* szKey);       // the flat `capabilities` block (cold callers)
+	static bool canTradeItem(TeamTypes eTeam, const char* szKey);     // the `canTrade` block (cold callers)
+	static bool canTradeOnTerrain(TeamTypes eTeam, TerrainTypes eT);  // O(1) hot-path read (per-terrain bit vector)
+	static bool canWorkOn(TeamTypes eTeam, const char* szKey);        // the `canWorkOn` block (cold callers)
 
 	static void invalidate(TeamTypes eTeam);   // call on ANY HAVE change (setHasTech; future grantor kinds likewise)
 	static void invalidateAll();               // game (re)load / team reset
