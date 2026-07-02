@@ -246,6 +246,9 @@ static void rj_clearAllRepos()
 #undef X
 	InfoRepo<CvComplexTraitTag>::get().clear();   // the complex trait set's own repo (off the RJ_REPO_TYPES dispatch)
 	cascadeStartNode().clear();                   // the synthetic TECH_GAME_START root lives off the InfoRepo
+	// The start node IS a CvJsonTechInfo (crash fix 2026-07-02) and base clear() is non-virtual -- clear the
+	// tech-side extension too so a re-probe never carries stale capabilities.
+	static_cast<CvJsonTechInfo&>(cascadeStartNode()).capabilities.clear();
 }
 
 // One walked entity: its type string, engine id, and the CvJsonInfo it mapped into (a stable pointer -- the InfoRepo /

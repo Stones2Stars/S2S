@@ -144,6 +144,11 @@ bool EnablerKernel::allowedOk(const CvJsonInfo* j, int iId, const CvPlayer& kPla
 // and the team-ability systems read it. (NB capability != policy: capabilities are tech/empire abilities.)
 bool EnablerKernel::empireHasCapability(const CvTeam& kTeam, const std::string& cap)
 {
+	// The synthetic TECH_GAME_START root is held by EVERY civ (the universal start node; grants.techs on every
+	// civilization), so its capabilities are universally active -- union it FIRST (2026-07-02: it was never unioned,
+	// so its canSetScienceRate was silently unqueryable; the static IS a CvJsonTechInfo since the same-day crash fix).
+	const CvJsonTechInfo& startNode = static_cast<const CvJsonTechInfo&>(cascadeStartNode());
+	if (startNode.capabilities.count(cap) != 0) return true;
 	for (int t = 0; t < GC.getNumTechInfos(); ++t)
 	{
 		if (!kTeam.isHasTech((TechTypes)t)) continue;

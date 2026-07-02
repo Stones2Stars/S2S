@@ -8,6 +8,7 @@
 
 #include "CvGameCoreDLL.h"              // PCH umbrella -- picojson
 #include "CvJsonInfo.h"
+#include "CvJsonTechInfo.h"             // the start node's REAL type (crash fix 2026-07-02, see cascadeStartNode)
 #include "CvCascadeJsonParse.h"         // the shared leaf primitives (cascadeJsonX100 / ...ResolveId)
 #include "CvCascadeConditionParse.h"    // cascadeParseCondition -- curated JSON -> typed CvCascadeCondition tree
 
@@ -36,11 +37,17 @@ void CvJsonInfo::clear()
 	grantRepeatables.clear();
 }
 
-// The synthetic TECH_GAME_START root (see the header): a single process-static CvJsonInfo, off the InfoRepo (it has no
+// The synthetic TECH_GAME_START root (see the header): a single process-static, off the InfoRepo (it has no
 // engine id). readJson maps TECH_GAME_START's enables into it; the enabler seeds GENERATE from it for every player.
+// ⛔ The static MUST be a CvJsonTechInfo (crash fix 2026-07-02): the start node IS a tech -- the capability survey
+// (CvCascadeReadJson :378) and every TECH_* consumer down-cast to CvJsonTechInfo, and a base-typed object made that
+// an out-of-object read of `capabilities` (latent UB, benign only while the overread bytes happened to look like an
+// empty set; the 2026-07-02 static-layout reshuffle turned it into the msvcp71 string::compare load crash). As a
+// CvJsonTechInfo the virtual mapFrom also finally PARSES the start node's capabilities block (canSetScienceRate),
+// which the base-typed node silently skipped.
 CvJsonInfo& cascadeStartNode()
 {
-	static CvJsonInfo s_startNode;
+	static CvJsonTechInfo s_startNode;
 	return s_startNode;
 }
 
