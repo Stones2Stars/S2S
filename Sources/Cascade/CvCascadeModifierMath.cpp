@@ -26,6 +26,7 @@
 #include "AI/CvTeamAI.h"              // GET_TEAM -- the eval ctx's team
 #include "CvCascadeConditionEval.h"   // CvCascadeEvalCtx
 #include "CvCascadeEnablerKernel.h"   // EnablerKernel::computeCityBuildingFacts -- the cascade-computed active-building set + vicinity provides
+#include "CvCascadeCapabilities.h"    // CascadeCapabilities::shadowFlush -- the in-body capability-getter shadow
 #include "CvJsonInfo.h"               // the mapped info (requiresOperate/dormantTriggers) -- the dorm-attribution diagnostic
 #include "Repos/InfoRepo.h"           // InfoRepo<CvBuildingInfo> -- ditto
 #include "CvCascadeReadJson.h"        // cascadeReadJsonStats -- re-surface the dark load-time probe stats
@@ -137,6 +138,7 @@ void cvCascadeModifierShadow()
 	// the shadow sweep -- still memoized WITHIN the sweep.
 	YieldRate::memoClear();
 	EnablerKernel::factsMemoClear();   // self-register SD_MODIFIER on the spine (idempotent) before the first emit
+	CascadeCapabilities::shadowFlush();   // #430 wiring step 1: flush the in-body capability-getter shadow (per turn)
 
 	// [MODIFIER/repo] -- BUILDING REPO CENSUS (2026-07-02, the Orwell bar): decisive on the one-cause hypothesis
 	// (repo unmapped => d==NULL everywhere => bC=0 AND zero dorms). The load-time [READJSON] burst is currently

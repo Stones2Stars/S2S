@@ -5,6 +5,7 @@
 
 #include "CvGameCoreDLL.h"
 #include "CvEventSpine.h"   // #430: emit the tech first-discover DOMAIN event (the grants trigger)
+#include "CvCascadeCapabilities.h"   // #430 Gate-3 wiring step 1: the in-body capability shadow + cache invalidation
 #include "CvArea.h"
 #include "CvBuildingInfo.h"
 #include "CvBonusInfo.h"
@@ -189,6 +190,7 @@ void CvTeam::reset(TeamTypes eID, bool bConstructorCall)
 	int iI, iJ;
 
 	m_dataRepository.reset();
+	CascadeCapabilities::invalidate(eID);   // fresh team identity -> drop the cached capability union
 
 	//--------------------------------
 	// Uninit class
@@ -3152,7 +3154,9 @@ int CvTeam::getExtraWaterSeeFromCount() const
 
 bool CvTeam::isExtraWaterSeeFrom() const
 {
-	return m_iExtraWaterSeeFromCount > 0;
+	const bool bLegacy = m_iExtraWaterSeeFromCount > 0;
+	CascadeCapabilities::shadow(getID(), CCF_EXTRA_WATER_SEE_FROM, bLegacy);   // #430 wiring step 1: in-body shadow, legacy authoritative
+	return bLegacy;
 }
 
 void CvTeam::changeExtraWaterSeeFromCount(int iChange)
@@ -3176,7 +3180,9 @@ int CvTeam::getMapTradingCount() const
 
 bool CvTeam::isMapTrading()	const
 {
-	return m_iMapTradingCount > 0;
+	const bool bLegacy = m_iMapTradingCount > 0;
+	CascadeCapabilities::shadow(getID(), CCF_TRADE_MAPS, bLegacy);   // #430 wiring step 1: in-body shadow, legacy authoritative
+	return bLegacy;
 }
 
 void CvTeam::changeMapTradingCount(int iChange)
@@ -3193,7 +3199,9 @@ int CvTeam::getTechTradingCount() const
 
 bool CvTeam::isTechTrading() const
 {
-	return m_iTechTradingCount > 0;
+	const bool bLegacy = m_iTechTradingCount > 0;
+	CascadeCapabilities::shadow(getID(), CCF_TRADE_TECHS, bLegacy);   // #430 wiring step 1: in-body shadow, legacy authoritative
+	return bLegacy;
 }
 
 void CvTeam::changeTechTradingCount(int iChange)
@@ -3210,7 +3218,9 @@ int CvTeam::getGoldTradingCount() const
 
 bool CvTeam::isGoldTrading() const
 {
-	return m_iGoldTradingCount > 0;
+	const bool bLegacy = m_iGoldTradingCount > 0;
+	CascadeCapabilities::shadow(getID(), CCF_TRADE_GOLD, bLegacy);   // #430 wiring step 1: in-body shadow, legacy authoritative
+	return bLegacy;
 }
 
 void CvTeam::changeGoldTradingCount(int iChange)
@@ -3227,7 +3237,9 @@ int CvTeam::getOpenBordersTradingCount() const
 
 bool CvTeam::isOpenBordersTrading() const
 {
-	return m_iOpenBordersTradingCount > 0;
+	const bool bLegacy = m_iOpenBordersTradingCount > 0;
+	CascadeCapabilities::shadow(getID(), CCF_TRADE_OPEN_BORDERS, bLegacy);   // #430 wiring step 1: in-body shadow, legacy authoritative
+	return bLegacy;
 }
 
 void CvTeam::changeOpenBordersTradingCount(int iChange)
@@ -3244,7 +3256,9 @@ int CvTeam::getDefensivePactTradingCount() const
 
 bool CvTeam::isDefensivePactTrading() const
 {
-	return m_iDefensivePactTradingCount > 0;
+	const bool bLegacy = m_iDefensivePactTradingCount > 0;
+	CascadeCapabilities::shadow(getID(), CCF_TRADE_DEFENSIVE_PACT, bLegacy);   // #430 wiring step 1: in-body shadow, legacy authoritative
+	return bLegacy;
 }
 
 void CvTeam::changeDefensivePactTradingCount(int iChange)
@@ -3261,7 +3275,9 @@ int CvTeam::getPermanentAllianceTradingCount() const
 
 bool CvTeam::isPermanentAllianceTrading() const
 {
-	return GC.getGame().isOption(GAMEOPTION_ENABLE_PERMANENT_ALLIANCES) && m_iPermanentAllianceTradingCount > 0;
+	const bool bLegacyRaw = m_iPermanentAllianceTradingCount > 0;
+	CascadeCapabilities::shadow(getID(), CCF_TRADE_PERMANENT_ALLIANCE, bLegacyRaw);   // #430 wiring step 1: in-body shadow, legacy authoritative
+	return GC.getGame().isOption(GAMEOPTION_ENABLE_PERMANENT_ALLIANCES) && bLegacyRaw;
 }
 
 void CvTeam::changePermanentAllianceTradingCount(int iChange)
@@ -3278,7 +3294,9 @@ int CvTeam::getVassalTradingCount() const
 
 bool CvTeam::isVassalStateTrading() const
 {
-	return !GC.getGame().isOption(GAMEOPTION_NO_VASSAL_STATES) && m_iVassalTradingCount > 0;
+	const bool bLegacyRaw = m_iVassalTradingCount > 0;
+	CascadeCapabilities::shadow(getID(), CCF_TRADE_VASSALS, bLegacyRaw);   // #430 wiring step 1: in-body shadow, legacy authoritative
+	return !GC.getGame().isOption(GAMEOPTION_NO_VASSAL_STATES) && bLegacyRaw;
 }
 
 void CvTeam::changeVassalTradingCount(int iChange)
@@ -3295,7 +3313,9 @@ int CvTeam::getBridgeBuildingCount() const
 
 bool CvTeam::isBridgeBuilding()	const
 {
-	return m_iBridgeBuildingCount > 0;
+	const bool bLegacy = m_iBridgeBuildingCount > 0;
+	CascadeCapabilities::shadow(getID(), CCF_BRIDGE_BUILDING, bLegacy);   // #430 wiring step 1: in-body shadow, legacy authoritative
+	return bLegacy;
 }
 
 void CvTeam::changeBridgeBuildingCount(int iChange)
@@ -3320,7 +3340,9 @@ int CvTeam::getIrrigationCount() const
 
 bool CvTeam::isIrrigation() const
 {
-	return m_iIrrigationCount > 0;
+	const bool bLegacy = m_iIrrigationCount > 0;
+	CascadeCapabilities::shadow(getID(), CCF_SPREAD_IRRIGATION, bLegacy);   // #430 wiring step 1: in-body shadow, legacy authoritative
+	return bLegacy;
 }
 
 void CvTeam::changeIrrigationCount(int iChange)
@@ -3342,7 +3364,9 @@ int CvTeam::getIgnoreIrrigationCount() const
 
 bool CvTeam::isIgnoreIrrigation() const
 {
-	return m_iIgnoreIrrigationCount > 0;
+	const bool bLegacy = m_iIgnoreIrrigationCount > 0;
+	CascadeCapabilities::shadow(getID(), CCF_IGNORE_IRRIGATION, bLegacy);   // #430 wiring step 1: in-body shadow, legacy authoritative
+	return bLegacy;
 }
 
 void CvTeam::changeIgnoreIrrigationCount(int iChange)
@@ -3359,7 +3383,9 @@ int CvTeam::getWaterWorkCount() const
 
 bool CvTeam::isWaterWork() const
 {
-	return m_iWaterWorkCount > 0;
+	const bool bLegacy = m_iWaterWorkCount > 0;
+	CascadeCapabilities::shadow(getID(), CCF_WORK_WATER, bLegacy);   // #430 wiring step 1: in-body shadow, legacy authoritative
+	return bLegacy;
 }
 
 void CvTeam::changeWaterWorkCount(int iChange)
@@ -4809,11 +4835,16 @@ int CvTeam::getTerrainTradeCount(TerrainTypes eIndex) const
 
 bool CvTeam::isTerrainTrade(TerrainTypes eIndex) const
 {
+	// ⛔ NPC teams NEVER terrain-trade -- this guard is ENGINE COMPOSITION that survives any flip (the reverted
+	// first flip DROPPED it, handing barb/NPC teams tech-derived water trade and rewiring the global trade
+	// network: the prime root-cause candidate for the 2026-07-02 breakage; the shadow below will confirm).
 	if (isNPC())
 	{
 		return false;
 	}
-	return (getTerrainTradeCount(eIndex) > 0);
+	const bool bLegacy = getTerrainTradeCount(eIndex) > 0;
+	CascadeCapabilities::shadowTerrain(getID(), eIndex, bLegacy);   // #430 wiring step 1: in-body shadow, legacy authoritative
+	return bLegacy;
 }
 
 
@@ -4846,7 +4877,9 @@ int CvTeam::getRiverTradeCount() const
 
 bool CvTeam::isRiverTrade() const
 {
-	return (getRiverTradeCount() > 0);
+	const bool bLegacy = (getRiverTradeCount() > 0);
+	CascadeCapabilities::shadow(getID(), CCF_RIVER_TRADE, bLegacy);   // #430 wiring step 1: in-body shadow, legacy authoritative
+	return bLegacy;
 }
 
 
@@ -5207,6 +5240,7 @@ void CvTeam::setHasTech(TechTypes eTech, bool bNewValue, PlayerTypes ePlayer, bo
 	}
 
 	m_pabHasTech[eTech] = bNewValue;
+	CascadeCapabilities::invalidate(getID());   // the derived capability union is f(held techs) -- the ONE mutation point
 
 	for (int iI = 0; iI < GC.getMap().numPlots(); iI++)
 	{
@@ -6904,7 +6938,9 @@ bool CvTeam::hasLaunched() const
 
 bool CvTeam::isCanPassPeaks() const
 {
-	return (getCanPassPeaksCount() > 0);
+	const bool bLegacy = (getCanPassPeaksCount() > 0);
+	CascadeCapabilities::shadow(getID(), CCF_CAN_PASS_PEAKS, bLegacy);   // #430 wiring step 1: in-body shadow, legacy authoritative
+	return bLegacy;
 }
 
 int CvTeam::getCanPassPeaksCount() const
@@ -6920,7 +6956,9 @@ void CvTeam::changeCanPassPeaksCount(int iChange)
 
 bool CvTeam::isMoveFastPeaks() const
 {
-	return (getMoveFastPeaksCount() > 0);
+	const bool bLegacy = (getMoveFastPeaksCount() > 0);
+	CascadeCapabilities::shadow(getID(), CCF_MOVE_FAST_PEAKS, bLegacy);   // #430 wiring step 1: in-body shadow, legacy authoritative
+	return bLegacy;
 }
 
 int CvTeam::getMoveFastPeaksCount() const
@@ -6936,7 +6974,9 @@ void CvTeam::changeMoveFastPeaksCount(int iChange)
 
 bool CvTeam::isCanFoundOnPeaks() const
 {
-	return (getCanFoundOnPeaksCount() > 0);
+	const bool bLegacy = (getCanFoundOnPeaksCount() > 0);
+	CascadeCapabilities::shadow(getID(), CCF_CAN_FOUND_ON_PEAKS, bLegacy);   // #430 wiring step 1: in-body shadow, legacy authoritative
+	return bLegacy;
 }
 
 int CvTeam::getCanFoundOnPeaksCount() const
@@ -6957,7 +6997,9 @@ int CvTeam::getRebaseAnywhereCount() const
 
 bool CvTeam::isRebaseAnywhere() const
 {
-	return m_iRebaseAnywhereCount > 0;
+	const bool bLegacy = m_iRebaseAnywhereCount > 0;
+	CascadeCapabilities::shadow(getID(), CCF_REBASE_ANYWHERE, bLegacy);   // #430 wiring step 1: in-body shadow, legacy authoritative
+	return bLegacy;
 }
 
 void CvTeam::changeRebaseAnywhereCount(int iChange)
@@ -6989,7 +7031,9 @@ int CvTeam::getCanFarmDesertCount() const
 
 bool CvTeam::isCanFarmDesert() const
 {
-	return (getCanFarmDesertCount() > 0);
+	const bool bLegacy = (getCanFarmDesertCount() > 0);
+	CascadeCapabilities::shadow(getID(), CCF_CAN_FARM_DESERT, bLegacy);   // #430 wiring step 1: in-body shadow, legacy authoritative
+	return bLegacy;
 }
 
 void CvTeam::changeCanFarmDesertCount(int iChange)
@@ -7005,7 +7049,9 @@ int CvTeam::getLimitedBordersTradingCount() const
 
 bool CvTeam::isLimitedBordersTrading() const
 {
-	return (getLimitedBordersTradingCount() > 0);
+	const bool bLegacy = (getLimitedBordersTradingCount() > 0);
+	CascadeCapabilities::shadow(getID(), CCF_TRADE_RIGHT_OF_PASSAGE, bLegacy);   // #430 wiring step 1: in-body shadow, legacy authoritative
+	return bLegacy;
 }
 
 void CvTeam::changeLimitedBordersTradingCount(int iChange)
@@ -7129,7 +7175,9 @@ int CvTeam::getEmbassyTradingCount() const
 
 bool CvTeam::isEmbassyTrading() const
 {
-	return (getEmbassyTradingCount() > 0);
+	const bool bLegacy = (getEmbassyTradingCount() > 0);
+	CascadeCapabilities::shadow(getID(), CCF_TRADE_EMBASSY, bLegacy);   // #430 wiring step 1: in-body shadow, legacy authoritative
+	return bLegacy;
 }
 
 void CvTeam::changeEmbassyTradingCount(int iChange)
