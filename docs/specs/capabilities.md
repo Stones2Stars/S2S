@@ -186,20 +186,25 @@ per-terrain `canTradeOn` set, and `canWorkOn.water`. Grounded finds captured:
 - `isCommerceFlexible` additionally gates espionage on met-civs and everything on founded-first-city — runtime UI
   conditions, not capability data.
 
-## ✅ WIRED — the first Gate-3 cut (2026-07-02)
+## ⚠ THE FIRST FLIP ATTEMPT — REVERTED; the wiring lesson (2026-07-02)
 
-**22 CvTeam capability getters now RUN ON the cascade** (the getter-contract flip; consumers untouched): the 10
-flat capabilities, the 9 `canTrade` flags, `isTerrainTrade` (per-terrain `canTradeOn` membership), `isWaterWork`.
-The 21 legacy event-maintained counters + their `processTech` applies + serialization are **DELETED** (soft
-save-compat; the apply-side SIDE EFFECTS survive — `updateYield` on canPassPeaks, the improvement-validity cache
-round on farming/irrigation/waterWork). Query surface: **`CascadeCapabilities`**
-(`Sources/Cascade/CvCascadeCapabilities.{h,cpp}`) — the derived-on-query union (held techs + `TECH_GAME_START`),
-per-team cached, invalidated at `CvTeam::setHasTech` + `reset`. The option compositions stay in the getters
-(vassals/permanentAlliance). CyTeam's `get/change*Count` are honest stubs (the WorldBuilder team-screen pokes are
-dead — grant the tech instead). NOT yet flipped: `isMapCentering` (a latch with building grantors), the
-commerce-slider player-side (`isCommerceFlexible` mixes a CommerceInfo global + building counts), `hasLanguage`
-(a CvPlayer event flag). `en_empireHasCapability` (the enabler's own union) still reads techs-only — fold it into
-`CascadeCapabilities` next so there is ONE union.
+A full Gate-3 cut was landed and **REVERTED the same day** (commits `eccbb8e9d`+`d93d7d834`, reverts
+`304645b9c`+`f6fdc5ef6`): all 22 CvTeam capability getters flipped to a `CascadeCapabilities` derived-on-query
+union (per-team cached, `setHasTech`-invalidated, O(1) precomputed hot-path flags), the 21 legacy counters
+deleted. Offline parity was 0-diverging pre-flip — **and the first real turn broke the TRADE NETWORK in-game**:
+the connectivity getters (`isTerrainTrade`/`isRiverTrade`/`isBridgeBuilding`) feed plot-group computation, cities
+lost bonus connections, and the ENGINE mass-dormed bonus-gated buildings (a sampled city's engine-disabled count
+doubled). Root cause NOT yet mapped (candidates: NPC/barb teams the offline parity never sampled; a load-order
+read before tech deserialization; tech seeding that bypassed `processTech` so legacy counters ≠ f(held techs)
+for some team).
+
+**The binding lesson: for getters feeding DERIVED ENGINE STATE (plot groups, trade network, caches), the offline
+parity leg is NECESSARY but NOT SUFFICIENT.** The getter-contract strategy's step 1 — the IN-BODY instrument
+(cascade-vs-legacy diffed at the real call moment, through real turns) — is mandatory before any flip; it was
+skipped here. Re-wire plan: keep the legacy counters, add the in-body `[GETTER]`-style shadow to the 22 getters,
+run turns until clean (which also NAMES the root cause above), THEN flip. The `CascadeCapabilities` design
+(union + cache + O(1) flags + option-composition-in-getter + side-effects-survive) is validated and comes back
+as-is at that point.
 
 ## Open
 - ~~**`dcmAirBomb1/2` renames**~~ — **MOOT: DCM air bombing is slated for whole-system REMOVAL** (owner 2026-07-02;
