@@ -16,6 +16,7 @@
 #include "CvCascadeModifierMath.h"
 #include "CvCascadePercentStack.h"     // MMBreak + PercentStack::percentStack
 #include "CvCascadeYieldRate.h"        // YieldRate::yieldRate100
+#include "CvCascadeYieldBasePackages.h" // YieldBasePackages::specialist -- the accepted-diff decomposition (rate diff)
 #include "CvCascadeCommerceCalc.h"     // CommerceCalc::commerceRate100 + the commerce channel table
 #include "AI/BetterBTSAI.h"            // gPlayerLogLevel + streamLogTee
 #include "Defines/CvGlobals.h"
@@ -45,7 +46,8 @@ enum MdFld
 	MDF_RATEC, MDF_RATEL,                                                           // §1 rate diff: cascade vs legacy ×100
 	MDF_PRESENT, MDF_ACTIVE, MDF_DORMOP, MDF_DORMTRIG, MDF_ENGDISABLED, MDF_SAMPLE, // dorm attribution (MDE_DORM)
 	MDF_TOTAL, MDF_MAPPED, MDF_WDEPOSITS, MDF_WOPERATE, MDF_WTRIGGERS,              // repo census (MDE_REPO)
-	MDF_FILES2, MDF_ENTITIES2                                                       // the stashed load-probe stats
+	MDF_FILES2, MDF_ENTITIES2,                                                      // the stashed load-probe stats
+	MDF_SPECC, MDF_SPECL                                                            // specialist sub-terms (rate diff)
 };
 static const char* mm_prefix(int evt)
 {
@@ -96,6 +98,8 @@ static const char* mm_field(int tag, SpineFieldType* peType)
 	case MDF_WTRIGGERS:   return "withTriggers";
 	case MDF_FILES2:      return "probeFiles";
 	case MDF_ENTITIES2:   return "probeEntities";
+	case MDF_SPECC:       return "specCasc";
+	case MDF_SPECL:       return "specLeg";
 	default:            return NULL;
 	}
 }
@@ -236,9 +240,16 @@ void cvCascadeModifierShadow()
 					++iRateDiverging;
 					if (iRateShown < 40)
 					{
+						// Specialist sub-terms on BOTH sides (owner 2026-07-02): the specialist-bucket move (building
+						// free-specialists ride the specialist BASE, validation.md's accepted diff) must be NAILED per
+						// divergence — the intentional component quantified exactly, never assumed to cover the whole
+						// delta. specCasc = the cascade SpecialistPackage; specLeg = legacy's specialist yield term.
+						const int specCasc = YieldBasePackages::specialist(aszChannel[y], pCity, rec);
+						const int specLeg = pCity->getSpecialistYieldTotal(eY);
 						eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_MODIFIER, MDE_RATE, 1)
 							.addWStr(MDF_WHO, pCity->getName().GetCString()).addStr(MDF_CHANNEL, aszChannel[y])
-							.addI(MDF_RATEC, (int)cascRate).addI(MDF_RATEL, legRate));
+							.addI(MDF_RATEC, (int)cascRate).addI(MDF_RATEL, legRate)
+							.addI(MDF_SPECC, specCasc).addI(MDF_SPECL, specLeg));
 						++iRateShown;
 					}
 				}
