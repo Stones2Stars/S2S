@@ -169,7 +169,10 @@ void cvCascadeEnablerShadow()
 	for (int p = 0; p < MAX_PLAYERS && iCities < 8; ++p)
 	{
 		const CvPlayer& kPlayer = GET_PLAYER((PlayerTypes)p);
-		if (!kPlayer.isAlive()) continue;
+		// NPC players are SKIPPED (2026-07-02): the NPC build-lockdown domain (stronglyRestricted) is BLOCKED/deferred
+		// by ruling, so sampling NPC cities polluted the gate diffs with a domain we deliberately don't model yet
+		// (the blank-who canTrain/canMaintain refusal storms). Real civs only.
+		if (!kPlayer.isAlive() || kPlayer.isNPC()) continue;
 		const CvTeam& kTeam = GET_TEAM(kPlayer.getTeam());
 
 		// ---- CAPABILITY shadow: the mapped+queried capability vs the engine team flag (clean parity, no founding
@@ -280,7 +283,7 @@ void cvCascadeEnablerShadow()
 		const CvPlot* pPlot = GC.getMap().plotByIndex(ip);
 		if (pPlot == NULL || pPlot->isCity()) continue;
 		const PlayerTypes eOwner = pPlot->getOwner();
-		if (eOwner == NO_PLAYER || !GET_PLAYER(eOwner).isAlive()) continue;
+		if (eOwner == NO_PLAYER || !GET_PLAYER(eOwner).isAlive() || GET_PLAYER(eOwner).isNPC()) continue;
 		++iPlots;
 		const CvPlayer& kOwner = GET_PLAYER(eOwner);
 		const CvTeam& kOTeam = GET_TEAM(kOwner.getTeam());

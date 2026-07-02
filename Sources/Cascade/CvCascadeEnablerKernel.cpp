@@ -122,9 +122,24 @@ bool EnablerKernel::requiresMet(const CvJsonInfo* j, const CvCascadeEvalCtx& ec)
 	return true;
 }
 
-bool EnablerKernel::allowedOk(const CvJsonInfo* j, int iId, const CvPlayer& kPlayer, bool bUnit)
+bool EnablerKernel::allowedOk(const CvJsonInfo* j, int iId, const CvPlayer& kPlayer, bool bUnit, const std::string& bucket)
 {
 	if (j == NULL) return true;
+	// PROJECTS (parity find 2026-07-02): the tally has NO project domain, so the cap check read buildingCount(projectId)
+	// = 0 and every already-built world project stayed offered (canCreate casc=1 leg=0 on ENCYCLOPEDIA/IMF/EVOLUTION).
+	// Projects read the engine-owned counts (the tally read-not-store philosophy): world = created-ever, team = held.
+	if (bucket == "projects")
+	{
+		for (std::map<std::string, int>::const_iterator it = j->allowed.begin(); it != j->allowed.end(); ++it)
+		{
+			int iCount = -1;
+			if (it->first == "world")      iCount = GC.getGame().getProjectCreatedCount((ProjectTypes)iId);
+			else if (it->first == "team")  iCount = GET_TEAM(kPlayer.getTeam()).getProjectCount((ProjectTypes)iId);
+			else if (it->first == "empire") iCount = GET_TEAM(kPlayer.getTeam()).getProjectCount((ProjectTypes)iId);
+			if (iCount >= 0 && iCount >= it->second) return false;
+		}
+		return true;
+	}
 	for (std::map<std::string, int>::const_iterator it = j->allowed.begin(); it != j->allowed.end(); ++it)
 	{
 		const std::string& k = it->first;
@@ -188,7 +203,7 @@ void EnablerKernel::gateSet(const std::string& bucket, const EnBucketSets& cand,
 	{
 		const CvJsonInfo* j = jsonFor(bucket, *it);
 		if (obsoletedByHeldTech(j, kTeam)) continue;
-		if (requiresMet(j, ec) && allowedOk(j, *it, kPlayer, bUnit)) avail.insert(*it);
+		if (requiresMet(j, ec) && allowedOk(j, *it, kPlayer, bUnit, bucket)) avail.insert(*it);
 	}
 }
 
