@@ -217,7 +217,12 @@ The whitelist completeness sweep found exactly two, both now ruled and landed:
 - **`mechanized`/`gunpowder`/`mounted` tags** — derived from unitcombats in the post-migration **unitcombat→tag pass**
   (`curate_unitcombat.py` emits no tags yet).
 - **`stronglyRestricted`** (NPC build-lockdown) → a `requires.build` civ-membership gate (paired with
-  `EnabledCivilization`) — deferred until **NPC civilizations are wired**.
+  `EnabledCivilization`) — deferred until **NPC civilizations are wired**. **⚖ NOT a flip/cutover constraint
+  (owner ruling 2026-07-02):** losing the NPC lockdown during the enabler flip is **accepted** — *"I truly don't
+  care about NPC barbarians or neanderthals being locked down or not… it's something to solve post migration, we
+  may after all want to do it in a better manner anyway."* The enabler gates may flip without preserving the
+  `isNPC() && isStronglyRestricted()` clause; the NPC build restriction gets re-solved (possibly redesigned)
+  post-migration.
 - **Property pulses = repeatable grants (owner ruling 2026-07-01) — DATA is DO-NOW, NOT #429-blocked.** A per-turn
   `PROPERTY_*` pulse an entity emits → a `grants.repeatable` entry carrying its spatial intent
   (`{ PROPERTY_X: N, interval, on, relation, distance }`, json §5). Capturing the pulse + spatial fields is pure DATA
