@@ -142,6 +142,18 @@ static void en_shadowPromotions(const CvPlayer& kPlayer, const CvTeam& kTeam, in
 		std::set<int>& promoCand = cand["promotions"];
 		const std::set<int>& promoRem = rem["promotions"];
 		for (std::set<int>::const_iterator it = promoRem.begin(); it != promoRem.end(); ++it) promoCand.erase(*it);
+		// THE PALACE LESSON for promotions (2026-07-02): most combat promos (COMBAT1-5, LEADER, …) have NO tech
+		// prereq, so no tech's enables.promotions ever generates them — the enables-frontier structurally
+		// under-offers them (the canAcquirePromotion refusal bulk). A promo rooted in NO tech edge anywhere is
+		// ALWAYS-unlocked; only enabler-rooted promos are tech-locked. Derived once from the static readJson data.
+		static std::set<int> s_enablerRooted;
+		static bool s_rootedBuilt = false;
+		if (!s_rootedBuilt)
+		{
+			for (int t = 0; t < GC.getNumTechInfos(); ++t)
+				EnablerKernel::addEdge(InfoRepo<CvTechInfo>::get().get(t), "enables.promotions", s_enablerRooted);
+			s_rootedBuilt = true;
+		}
 
 		CvCascadeEvalCtx ec;
 		ec.unit = pUnit; ec.player = &kPlayer; ec.team = &kTeam; ec.plot = pUnit->plot();
@@ -158,7 +170,19 @@ static void en_shadowPromotions(const CvPlayer& kPlayer, const CvTeam& kTeam, in
 			// identity.unitCombats today, unmodeled by the frontier). isPromotionValid(pr, bFree=true) applies exactly
 			// that bespoke half (bFree skips ONLY the tech + promotion-line tech gates, CvUnit.cpp:17947) — riding it
 			// on BOTH sides isolates the diff to the frontier half (the 4,729-diff noise was the unmodeled half).
-			const bool bCasc = promoCand.count(pr) != 0
+			const bool bUnlocked = promoCand.count(pr) != 0
+				|| (s_enablerRooted.count(pr) == 0 && promoRem.count(pr) == 0);   // no-enabler promo = always-unlocked (unless obsoleted)
+			// EVENT-INJECTION-ONLY mirror (2026-07-02): a promo with NO qualified-unitcombat list (and not
+			// forOffset/zeroesXP) is refused by legacy unless FREE (`bValid = bFree` -- CvUnit.cpp:17977: "no CC
+			// prereq = only assigned by event or special injection"). The bFree=true bespoke ride passes exactly
+			// that clause, so mirror it here (with legacy's free-promotion carve-out) -- the WINTERBORN/SAND_DEVIL
+			// affinity-promo over-offer tail.
+			const CvPromotionInfo& kPromo = GC.getPromotionInfo((PromotionTypes)pr);
+			const bool bEventOnly = kPromo.getNumQualifiedUnitCombatTypes() == 0
+				&& !kPromo.isForOffset() && !kPromo.isZeroesXP()
+				&& !pUnit->getUnitInfo().getFreePromotions(pr)
+				&& !kPlayer.isFreePromotion(pUnit->getUnitType(), (PromotionTypes)pr);
+			const bool bCasc = bUnlocked && !bEventOnly
 				&& EnablerKernel::requiresMet(InfoRepo<CvPromotionInfo>::get().get(pr), ec)
 				&& pUnit->isPromotionValid((PromotionTypes)pr, true);
 			const bool bLeg = pUnit->isPromotionValid((PromotionTypes)pr);
@@ -345,9 +369,18 @@ void cvCascadeEnablerShadow()
 		// (the 2,083-diff noise: every not-yet-plot-valid build read as an over-offer). The plot-conditional
 		// feature/terrain TECH gates (getFeatureTech / TerrainStructs) live in produces.* data, not requires —
 		// they are Gate-3 wiring for the surviving engine gate, outside this frontier.
+		// Source-side obsolescence: a build's XML ObsoleteTech is store-inverted to the TECH's `obsoletes.builds`
+		// edge (curate_build) — collect the removal set over the owner's held techs (the whole-domain frontier
+		// bypasses generate(), so the rem subtraction must happen here; missing it over-offered the whole
+		// TRAIL/PATH/PAVED_ROAD obsolete-route class).
+		std::set<int> remBld;
+		for (int t = 0; t < GC.getNumTechInfos(); ++t)
+			if (kOTeam.isHasTech((TechTypes)t))
+				EnablerKernel::addEdge(InfoRepo<CvTechInfo>::get().get(t), "obsoletes.builds", remBld);
 		std::set<int> availBld;
 		for (int b = 0; b < nBld; ++b)
 		{
+			if (remBld.count(b) != 0) continue;
 			const CvJsonInfo* j = InfoRepo<CvBuildInfo>::get().get(b);
 			if (EnablerKernel::obsoletedByHeldTech(j, kOTeam)) continue;
 			if (j == NULL || j->requiresBuild == NULL || cascadeEvalCondition(j->requiresBuild, pec, bflags)) availBld.insert(b);
