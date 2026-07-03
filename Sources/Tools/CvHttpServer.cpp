@@ -2,6 +2,8 @@
 #include "CvHttpServer.h"
 #include "CvBuildingInfo.h"
 #include "Engine/CvPropertySource.h" // property-source completeness oracle: getSource()->getProperty()
+#include "Engine/CvPropertyManipulators.h" // the property CONSTANT-source recompute (the property channel's net)
+#include "Cascade/CvCascadeProperty.h"     // the §430 property channel's per-city sourced numbers
 #include "CvBonusInfo.h" // bonus-name resolution in the /diagnostic/whyNot trace
 #include "CvImprovementInfo.h" // cityInput loadout: worked-plot improvement type
 #include "CvTraitInfo.h" // cityInput loadout: player trait list
@@ -1747,6 +1749,37 @@ namespace
 				o["cascUnhappy"] = picojson::value((double)wv.iUnhappy);
 				o["cascGoodHealth"] = picojson::value((double)wv.iGood);
 				o["cascBadHealth"] = picojson::value((double)wv.iBad);
+				// ---- the PROPERTY channel's per-city numbers: the cascade's sourced flat + decay percent vs the
+				// engine's stored value + a CONSTANT-source recompute (buildings' manipulators + city-plot units)
+				// -- the channel's first attributable net; the #429 spatial pulses are out of scope ----
+				{
+					picojson::object props;
+					for (int iWbP = 0; iWbP < GC.getNumPropertyInfos(); ++iWbP)
+					{
+						picojson::object pe;
+						pe["cascFlat"] = picojson::value((double)CascadeProperty::citySourceFlat(iWbP, pCity, wbec));
+						pe["cascDecayPct"] = picojson::value((double)CascadeProperty::cityDecayPercent(iWbP));
+						pe["engineValue"] = picojson::value((double)pCity->getProperties()->getValueByProperty((PropertyTypes)iWbP));
+						int iWbEngRe = 0;
+						foreach_(const BuildingTypes eWbBt, pCity->getHasBuildings())
+						{
+							if (pCity->isReligiouslyLimitedBuilding(eWbBt) || pCity->isDisabledBuilding(eWbBt)) continue;
+							const CvPropertyManipulators* pWbMan = GC.getBuildingInfo(eWbBt).getPropertyManipulators();
+							if (pWbMan == NULL) continue;
+							for (int iWbS = 0; iWbS < pWbMan->getNumSources(); ++iWbS)
+							{
+								const CvPropertySource* pWbSrc = pWbMan->getSource(iWbS);
+								if (pWbSrc->getProperty() != (PropertyTypes)iWbP
+									|| pWbSrc->getType() != PROPERTYSOURCE_CONSTANT) continue;
+								iWbEngRe += static_cast<const CvPropertySourceConstant*>(pWbSrc)
+									->getAmountPerTurn(pCity->getGameObject());
+							}
+						}
+						pe["engineConstantRecompute"] = picojson::value((double)iWbEngRe);
+						props[GC.getPropertyInfo((PropertyTypes)iWbP).getType()] = picojson::value(pe);
+					}
+					o["properties"] = picojson::value(props);
+				}
 			}
 			// ---- gate flags + constants ----
 			o["isNoUnhappiness"] = picojson::value(pCity->isNoUnhappiness());

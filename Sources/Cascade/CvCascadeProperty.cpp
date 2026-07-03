@@ -1,0 +1,93 @@
+//
+//	CascadeProperty -- the #430 property channel (see the header). The per-city per-property sourced numbers
+//	from the curated deposits; the engine keeps the integration (decay/targetLevel/solver ordering).
+//
+
+#include "CvGameCoreDLL.h"
+#include "CvCascadeProperty.h"
+#include "CvCascadeMMKernel.h"
+#include "CvCascadeDepositIndex.h"
+#include "CvJsonInfo.h"
+#include "Repos/InfoRepo.h"
+#include "Defines/CvGlobals.h"
+#include "Engine/CvCity.h"
+#include "Engine/CvPlot.h"
+#include "Engine/CvUnit.h"
+#include "Infos/CvBuildingInfo.h"
+#include "Infos/CvUnitInfo.h"
+#include "Infos/CvPropertyInfo.h"
+
+// The interned family segment for a property type (the family IS the PROPERTY_* string), or -1 (never authored).
+static int prop_famId(int eProp)
+{
+	if (eProp < 0 || eProp >= GC.getNumPropertyInfos()) return -1;
+	return DepositIndex::lookupSegment(GC.getPropertyInfo((PropertyTypes)eProp).getType());
+}
+
+int CascadeProperty::citySourceFlat(int eProp, const CvCity* pCity, const CvCascadeEvalCtx& ec)
+{
+	const int famId = prop_famId(eProp);
+	if (famId < 0 || pCity == NULL) return 0;
+	const int scopeCity = DepositIndex::lookupSegment("city");
+	const int unitFlat = DepositIndex::lookupSegment("flat");
+	int iSum = 0;
+
+	// -- ACTIVE buildings' city flats (constant per-turn sources + the curator-folded construction bag) --
+	const int nB = GC.getNumBuildingInfos();
+	for (int b = 0; b < nB; ++b)
+	{
+		if (!cascadeIsBuildingActive(b, ec)) continue;
+		const CvJsonInfo* d = InfoRepo<CvBuildingInfo>::get().get(b);
+		if (d == NULL) continue;
+		for (size_t i = 0; i < d->deposits.size(); ++i)
+		{
+			const CvCascadeDeposit& dep = d->deposits[i];
+			if (dep.seg[0] != famId || dep.seg[1] != scopeCity || dep.nSeg != 2 || dep.unitId != unitFlat) continue;
+			if (MMKernel::applies(dep.enabled, dep.disabled, ec)) iSum += dep.value100 / 100;
+		}
+	}
+
+	// -- units on the CITY PLOT (the SAME_PLOT emission: a criminal's crime lands on the city it stands in) --
+	{
+		const CvPlot* p = pCity->plot();
+		foreach_(const CvUnit* pUnit, p->units())
+		{
+			const CvJsonInfo* d = InfoRepo<CvUnitInfo>::get().get(pUnit->getUnitType());
+			if (d == NULL) continue;
+			for (size_t i = 0; i < d->deposits.size(); ++i)
+			{
+				const CvCascadeDeposit& dep = d->deposits[i];
+				if (dep.seg[0] != famId || dep.seg[1] != scopeCity || dep.nSeg != 2 || dep.unitId != unitFlat) continue;
+				if (MMKernel::applies(dep.enabled, dep.disabled, ec)) iSum += dep.value100 / 100;
+			}
+		}
+	}
+
+	// -- the property's OWN self-deposits (the ATTRIBUTE source: flat per POPULATION etc.) --
+	{
+		const CvJsonInfo* d = InfoRepo<CvPropertyInfo>::get().get(eProp);
+		if (d != NULL)
+		{
+			for (size_t i = 0; i < d->deposits.size(); ++i)
+			{
+				const CvCascadeDeposit& dep = d->deposits[i];
+				if (dep.seg[0] != famId || dep.seg[1] != scopeCity || dep.nSeg != 2 || dep.unitId != unitFlat) continue;
+				if (!MMKernel::applies(dep.enabled, dep.disabled, ec)) continue;
+				int v = dep.value100 / 100;
+				// the per count-scaler (the legacy ATTRIBUTE_CONSTANT: ×population is the only authored form today)
+				if (dep.hasPer) v *= pCity->getPopulation();
+				iSum += v;
+			}
+		}
+	}
+	return iSum;
+}
+
+int CascadeProperty::cityDecayPercent(int eProp)
+{
+	const int famId = prop_famId(eProp);
+	if (famId < 0) return 0;
+	const CvJsonInfo* d = InfoRepo<CvPropertyInfo>::get().get(eProp);
+	if (d == NULL) return 0;
+	return MMKernel::sumUnconditioned(d, std::string(GC.getPropertyInfo((PropertyTypes)eProp).getType()) + ".city", "percent");
+}

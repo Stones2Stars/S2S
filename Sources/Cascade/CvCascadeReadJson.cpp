@@ -44,6 +44,7 @@
 #include "Infos/CvCultureLevelInfo.h"
 #include "Infos/CvUnitCombatInfo.h"
 #include "Infos/CvBuildInfo.h"
+#include "Infos/CvPropertyInfo.h"
 #include <fstream>
 #include <sstream>
 #include <vector>
@@ -225,7 +226,8 @@ static void rj_find(const std::string& dir, std::vector<std::string>& out)
 	X("PROCESS_",       CvProcessInfo)        \
 	X("HERITAGE_",      CvHeritageInfo)       \
 	X("CULTURELEVEL_",  CvCultureLevelInfo)   \
-	X("BUILD_",         CvBuildInfo)
+	X("BUILD_",         CvBuildInfo)          \
+	X("PROPERTY_",      CvPropertyInfo)
 
 // get-or-create the entity's CvJsonInfo (the reader calls mapFrom on it); NULL for non-cascade types.
 static CvJsonInfo* rj_jsonEdit(const std::string& t, int id)

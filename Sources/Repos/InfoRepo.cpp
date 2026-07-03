@@ -18,7 +18,7 @@
 class CvCivicOptionInfo; class CvPromotionLineInfo; class CvCultureLevelInfo; class CvSpecialistInfo;
 class CvBonusInfo; class CvImprovementInfo; class CvFeatureInfo; class CvTerrainInfo; class CvRouteInfo;
 class CvProjectInfo; class CvProcessInfo; class CvHeritageInfo; class CvBuildInfo; class CvCivilizationInfo;
-class CvEraInfo; class CvHandicapInfo; class CvSpecialBuildingInfo;
+class CvEraInfo; class CvHandicapInfo; class CvSpecialBuildingInfo; class CvPropertyInfo;
 
 #define CASCADE_INFOREPO_DEFINE(TAG) \
 	template <> InfoRepo<TAG>& InfoRepo<TAG>::get() \
@@ -50,6 +50,7 @@ CASCADE_INFOREPO_DEFINE(CvProcessInfo)
 CASCADE_INFOREPO_DEFINE(CvHeritageInfo)
 CASCADE_INFOREPO_DEFINE(CvCultureLevelInfo)
 CASCADE_INFOREPO_DEFINE(CvBuildInfo)
+CASCADE_INFOREPO_DEFINE(CvPropertyInfo)
 // ... + the off-table repos (complex traits + the grep-found extras).
 CASCADE_INFOREPO_DEFINE(CvComplexTraitTag)
 CASCADE_INFOREPO_DEFINE(CvCivilizationInfo)
