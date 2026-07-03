@@ -27,6 +27,9 @@ public:
 	static int defenseAmount(const CvCity* pCity, const CvCascadeEvalCtx& ec);
 	// maintenance: the effective modifier percent stack (city + empire + area scopes; building/civic/trait).
 	static int maintenanceModifier(const CvCity* pCity, const CvCascadeEvalCtx& ec);
+	// tradeRoutes: the COUNT sources (§9.5) -- this city's extra + the player-wide global + the coastal
+	// half (× this city being coastal). The game base + the max clamp are live config at the combine.
+	static int tradeRouteCount(const CvCity* pCity, const CvCascadeEvalCtx& ec);
 };
 
 #endif // CV_CASCADE_SCALAR_CHANNELS_H

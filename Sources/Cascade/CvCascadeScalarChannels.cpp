@@ -131,6 +131,42 @@ int CascadeScalarChannels::defenseAmount(const CvCity* pCity, const CvCascadeEva
 	return sc_buildings("defense.city.amount", "percent", pCity, ec);
 }
 
+int CascadeScalarChannels::tradeRouteCount(const CvCity* pCity, const CvCascadeEvalCtx& ec)
+{
+	const CvPlayer& owner = GET_PLAYER(pCity->getOwner());
+	int iCount = 0;
+	// this city's extra routes (building city flats)
+	iCount += sc_buildings("tradeRoutes.city", "flat", pCity, ec);
+	// the player-wide global routes (any city's buildings' empire flats + civics/traits)
+	iCount += sc_playerBuildings("tradeRoutes.empire", "flat", owner, ec.team);
+	iCount += sc_civicsTraits("tradeRoutes.empire", "flat", owner, ec);
+	// TECHS feed the player routes too (processTech :30911)
+	{
+		const CvTeam& team = GET_TEAM(owner.getTeam());
+		for (int i = 0; i < GC.getNumTechInfos(); ++i)
+		{
+			if (!team.isHasTech((TechTypes)i)) continue;
+			const CvJsonInfo* d = InfoRepo<CvTechInfo>::get().get(i);
+			if (d != NULL) iCount += MMKernel::sumUnit(d, "tradeRoutes.empire", "flat", ec);
+		}
+	}
+	// WORLD routes: ANY player's active world-wonder grants EVERY player (:7410) -- tradeRoutes.world flats
+	// summed over all living players' active sets
+	for (int p = 0; p < MAX_PC_PLAYERS; ++p)
+	{
+		const CvPlayer& kP = GET_PLAYER((PlayerTypes)p);
+		if (!kP.isAlive()) continue;
+		iCount += sc_playerBuildings("tradeRoutes.world", "flat", kP, &GET_TEAM(kP.getTeam()));
+	}
+	// the coastal half pays only in coastal cities
+	if (pCity->isCoastal(GC.getWorldInfo(GC.getMap().getWorldSize()).getOceanMinAreaSize()))
+	{
+		iCount += sc_playerBuildings("tradeRoutes.empire.coastal", "flat", owner, ec.team);
+		iCount += sc_civicsTraits("tradeRoutes.empire.coastal", "flat", owner, ec);
+	}
+	return iCount;
+}
+
 int CascadeScalarChannels::maintenanceModifier(const CvCity* pCity, const CvCascadeEvalCtx& ec)
 {
 	const CvPlayer& owner = GET_PLAYER(pCity->getOwner());

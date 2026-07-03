@@ -1863,6 +1863,16 @@ namespace
 					sc["maintAreaLeg"] = picojson::value((double)pCity->area()->getTotalAreaMaintenanceModifier(pCity->getOwner()));
 					sc["maintConnLeg"] = picojson::value((double)((pCity->isConnectedToCapital() && !pCity->isCapital())
 						? const_cast<CvPlayer&>(kWbOwner).getConnectedCityMaintenanceModifier() : 0));
+					// tradeRoutes: the cascade COUNT sources vs the legacy realized count (game base + max are config)
+					sc["tradeRoutesCasc"] = picojson::value((double)CascadeScalarChannels::tradeRouteCount(pCity, wbec));
+					sc["tradeRoutesLeg"] = picojson::value((double)pCity->getTradeRoutes());
+					sc["tradeRoutesGameBase"] = picojson::value((double)GC.getGame().getTradeRoutes());
+					sc["tradeRoutesInitial"] = picojson::value((double)GC.getINITIAL_TRADE_ROUTES());   // the :28712 config put-back
+					// the legacy PARTS (attribute, don't guess)
+					sc["tradeRoutesPlayerLeg"] = picojson::value((double)kWbOwner.getTradeRoutes());
+					sc["tradeRoutesCityExtraLeg"] = picojson::value((double)pCity->getExtraTradeRoutes());
+					sc["tradeRoutesCoastalLeg"] = picojson::value((double)kWbOwner.getCoastalTradeRoutes());
+					sc["tradeRoutesMax"] = picojson::value((double)pCity->getMaxTradeRoutes());
 					o["scalars"] = picojson::value(sc);
 				}
 			}
