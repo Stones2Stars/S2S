@@ -733,6 +733,24 @@ namespace
 			// (state present ? state : nonState) per city religion
 			wb["stateReligionHappinessPlayer"] = picojson::value((double)kWbOwner.getStateReligionHappiness());
 			wb["nonStateReligionHappinessPlayer"] = picojson::value((double)kWbOwner.getNonStateReligionHappiness());
+			// the EVENT-granted per-building wellbeing ledgers (m_aBuildingHappy/HealthChange, the
+			// BuildingCommerceChange siblings): one-shot event state, un-derivable — folded into the engine's
+			// buildingGood/Bad accumulators per active building, emitted sign-split as inputs.
+			{
+				int iWbEvHappyGood = 0, iWbEvHappyBad = 0, iWbEvHealthGood = 0, iWbEvHealthBad = 0;
+				foreach_(const BuildingTypes eWbBt, pCity->getHasBuildings())
+				{
+					if (!pCity->hasFullyActiveBuilding(eWbBt)) continue;
+					const int iWbHap = pCity->getBuildingHappyChange(eWbBt);
+					if (iWbHap >= 0) iWbEvHappyGood += iWbHap; else iWbEvHappyBad += iWbHap;
+					const int iWbHea = pCity->getBuildingHealthChange(eWbBt);
+					if (iWbHea >= 0) iWbEvHealthGood += iWbHea; else iWbEvHealthBad += iWbHea;
+				}
+				wb["buildingHappyChangeGood"] = picojson::value((double)iWbEvHappyGood);
+				wb["buildingHappyChangeBad"] = picojson::value((double)iWbEvHappyBad);
+				wb["buildingHealthChangeGood"] = picojson::value((double)iWbEvHealthGood);
+				wb["buildingHealthChangeBad"] = picojson::value((double)iWbEvHealthBad);
+			}
 			wb["revSuccessHappiness"] = picojson::value((double)pCity->getRevSuccessHappiness());
 			wb["happinessTimer"] = picojson::value((double)pCity->getHappinessTimer());
 			wb["celebrityHappiness"] = picojson::value((double)pCity->getCelebrityHappiness());   // unit-scan (input until the celebrity skill port)
