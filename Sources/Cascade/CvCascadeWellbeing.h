@@ -20,11 +20,15 @@ class CvCity;
 
 struct CascadeWellbeingVerdicts
 {
-	int iHappy;      // happyLevel
-	int iUnhappy;    // unhappyLevel
-	int iGood;       // goodHealth
-	int iBad;        // badHealth
-	CascadeWellbeingVerdicts() : iHappy(0), iUnhappy(0), iGood(0), iBad(0) {}
+	// ⚠ MILITARY-FREE verdicts (owner ruling 2026-07-03): the unit-count happiness NEVER enters the cached
+	// computation -- it rides ALONE on top at read time (perUnit × the live O(1) engine counter), so unit
+	// moves invalidate nothing. iMilPerUnit is the epoch-stable civic/trait per-military-unit VALUE.
+	int iHappy;      // happyLevel WITHOUT the military term
+	int iUnhappy;    // unhappyLevel WITHOUT the military term
+	int iGood;       // goodHealth (no military term exists)
+	int iBad;        // badHealth (no military term exists)
+	int iMilPerUnit; // Σ civic/trait perMilitaryUnit values (× the live count at read)
+	CascadeWellbeingVerdicts() : iHappy(0), iUnhappy(0), iGood(0), iBad(0), iMilPerUnit(0) {}
 };
 
 class CascadeWellbeing

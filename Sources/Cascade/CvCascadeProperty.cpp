@@ -47,21 +47,7 @@ int CascadeProperty::citySourceFlat(int eProp, const CvCity* pCity, const CvCasc
 		}
 	}
 
-	// -- units on the CITY PLOT (the SAME_PLOT emission: a criminal's crime lands on the city it stands in) --
-	{
-		const CvPlot* p = pCity->plot();
-		foreach_(const CvUnit* pUnit, p->units())
-		{
-			const CvJsonInfo* d = InfoRepo<CvUnitInfo>::get().get(pUnit->getUnitType());
-			if (d == NULL) continue;
-			for (size_t i = 0; i < d->deposits.size(); ++i)
-			{
-				const CvCascadeDeposit& dep = d->deposits[i];
-				if (dep.seg[0] != famId || dep.seg[1] != scopeCity || dep.nSeg != 2 || dep.unitId != unitFlat) continue;
-				if (MMKernel::applies(dep.enabled, dep.disabled, ec)) iSum += dep.value100 / 100;
-			}
-		}
-	}
+	// ⛔ NO unit walk here (owner ruling 2026-07-03: traveling unit modifiers ride on top -- cityUnitFlat)
 
 	// -- the property's OWN self-deposits (the ATTRIBUTE source: flat per POPULATION etc.) --
 	{
@@ -78,6 +64,28 @@ int CascadeProperty::citySourceFlat(int eProp, const CvCity* pCity, const CvCasc
 				if (dep.hasPer) v *= pCity->getPopulation();
 				iSum += v;
 			}
+		}
+	}
+	return iSum;
+}
+
+int CascadeProperty::cityUnitFlat(int eProp, const CvCity* pCity, const CvCascadeEvalCtx& ec)
+{
+	const int famId = prop_famId(eProp);
+	if (famId < 0 || pCity == NULL) return 0;
+	const int scopeCity = DepositIndex::lookupSegment("city");
+	const int unitFlat = DepositIndex::lookupSegment("flat");
+	int iSum = 0;
+	// the SAME_PLOT emission (a criminal's crime lands on the city it stands in) -- LIVE, on top, never cached
+	foreach_(const CvUnit* pUnit, pCity->plot()->units())
+	{
+		const CvJsonInfo* d = InfoRepo<CvUnitInfo>::get().get(pUnit->getUnitType());
+		if (d == NULL) continue;
+		for (size_t i = 0; i < d->deposits.size(); ++i)
+		{
+			const CvCascadeDeposit& dep = d->deposits[i];
+			if (dep.seg[0] != famId || dep.seg[1] != scopeCity || dep.nSeg != 2 || dep.unitId != unitFlat) continue;
+			if (MMKernel::applies(dep.enabled, dep.disabled, ec)) iSum += dep.value100 / 100;
 		}
 	}
 	return iSum;

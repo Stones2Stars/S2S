@@ -196,3 +196,11 @@ legacy shape is the #1 priority, handled BEFORE any downstream cascade / shadow 
 deferred data item forces downstream consumers to ASSUME its eventual shape (the kraken's shortcut). The strict
 complement of [DEC-mirror-then-redesign](#dec-mirror-then-redesign) (defer redesign, never data). **Home:**
 [validation.md](../specs/validation.md).
+
+### DEC-unit-modifiers-on-top
+
+A modifier that TRAVELS with a unit (unit-sourced happiness, anger, property emission, any unit-carried channel
+value) is NEVER part of a cached cascade computation: computed LIVE at read, added ON TOP as a FLAT term, after
+and outside every percentage modification. Unit movement therefore never dirties any cache, and the traveling
+value never enters a percent stack. (Owner "executive decision" 2026-07-03, made after per-move cache
+invalidation measurably collapsed unit automation.) **Home:** [modifier.md](../specs/modifier.md) §2b.

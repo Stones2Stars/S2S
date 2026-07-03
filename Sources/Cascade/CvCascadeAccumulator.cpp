@@ -117,6 +117,7 @@ void CascadeAccumulator::refreshComponents(const CvCity* pCity, int iMask)
 	{
 		const CascadeWellbeingVerdicts wv = CascadeWellbeing::compute(pCity, ec);
 		st.aWb[0] = wv.iHappy; st.aWb[1] = wv.iUnhappy; st.aWb[2] = wv.iGood; st.aWb[3] = wv.iBad;
+		st.iWbMilPerUnit = wv.iMilPerUnit;
 	}
 	// The commerce-side PLUGIN NUMBERS -- per channel, each package standing alone (owner 2026-07-03); the
 	// combine (slider split, disorder, percent apply) happens at READ time over these + the live yield slots.
@@ -143,7 +144,14 @@ int CascadeAccumulator::wellbeing(const CvCity* pCity, int iVerdict)
 {
 	if (pCity == NULL || iVerdict < 0 || iVerdict > 3) return 0;
 	acc_ensure(pCity, ACCD_WB);
-	return pCity->m_cascadeRateSlots.aWb[iVerdict];
+	const CascadeRateSlots& st = pCity->m_cascadeRateSlots;
+	if (iVerdict >= 2) return st.aWb[iVerdict];   // health has no military term
+	// the MILITARY term rides ALONE on top (owner ruling 2026-07-03): the epoch-stable perUnit value × the
+	// LIVE O(1) engine counter -- always current, never invalidates any cache.
+	const int iMil = st.iWbMilPerUnit * pCity->getMilitaryHappinessUnits();
+	return iVerdict == 0
+		? std::max(0, st.aWb[0] + std::max(0, iMil))
+		: std::max(0, st.aWb[1] - std::min(0, iMil));
 }
 
 long CascadeAccumulator::commerceRate100(const CvCity* pCity, CommerceTypes eC)

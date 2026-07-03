@@ -501,28 +501,35 @@ void cvCascadeModifierShadow()
 			{
 				++iWbChecked;
 				const CascadeWellbeingVerdicts wv = CascadeWellbeing::compute(pCity, cec);
-				// [SLOT]-style net: the standing ACCD_WB slots vs this fresh compute (their oracle) -- a diff is
-				// a dirty-mapping hole (named, attributable); freshness must prove out BEFORE any getter flip.
-				if (CascadeAccumulator::wellbeing(pCity, 0) != wv.iHappy
-					|| CascadeAccumulator::wellbeing(pCity, 1) != wv.iUnhappy
-					|| CascadeAccumulator::wellbeing(pCity, 2) != wv.iGood
-					|| CascadeAccumulator::wellbeing(pCity, 3) != wv.iBad)
+				// [SLOT]-style net: the standing ACCD_WB slots vs this fresh compute (their oracle) -- MILITARY-FREE
+				// on both sides (the military term rides alone on top, owner ruling 2026-07-03; a slot diff is a
+				// dirty-mapping hole in the hooked components only).
 				{
-					++iWbSlotDiverging;
+					const CascadeRateSlots& wbst = pCity->m_cascadeRateSlots;
+					if (wbst.aWb[0] != wv.iHappy || wbst.aWb[1] != wv.iUnhappy
+						|| wbst.aWb[2] != wv.iGood || wbst.aWb[3] != wv.iBad
+						|| wbst.iWbMilPerUnit != wv.iMilPerUnit)
+					{
+						++iWbSlotDiverging;
+					}
 				}
-				const int iLegHappy = pCity->happyLevel();
-				const int iLegUnhappy = pCity->unhappyLevel();
-				const int iLegGood = pCity->goodHealth();
-				const int iLegBad = pCity->badHealth();
-				if (wv.iHappy != iLegHappy || wv.iUnhappy != iLegUnhappy || wv.iGood != iLegGood || wv.iBad != iLegBad)
+				// the REALIZED cascade verdicts (slot + the live military fold -- what the FLIPPED getters return)
+				// vs the LEGACY siblings (post-flip the plain getters ARE the cascade; Legacy is the net oracle)
+				const int iCascHappy = CascadeAccumulator::wellbeing(pCity, 0);
+				const int iCascUnhappy = CascadeAccumulator::wellbeing(pCity, 1);
+				const int iLegHappy = pCity->happyLevelLegacy();
+				const int iLegUnhappy = pCity->unhappyLevelLegacy();
+				const int iLegGood = pCity->goodHealthLegacy();
+				const int iLegBad = pCity->badHealthLegacy();
+				if (iCascHappy != iLegHappy || iCascUnhappy != iLegUnhappy || wv.iGood != iLegGood || wv.iBad != iLegBad)
 				{
 					++iWbDiverging;
 					if (iWbShown < 40)
 					{
 						eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_MODIFIER, MDE_WELLBEING, 1)
 							.addWStr(MDF_WHO, pCity->getName().GetCString())
-							.addI(MDF_HAP_C, wv.iHappy).addI(MDF_HAP_L, iLegHappy)
-							.addI(MDF_UNH_C, wv.iUnhappy).addI(MDF_UNH_L, iLegUnhappy)
+							.addI(MDF_HAP_C, iCascHappy).addI(MDF_HAP_L, iLegHappy)
+							.addI(MDF_UNH_C, iCascUnhappy).addI(MDF_UNH_L, iLegUnhappy)
 							.addI(MDF_GOOD_C, wv.iGood).addI(MDF_GOOD_L, iLegGood)
 							.addI(MDF_BAD_C, wv.iBad).addI(MDF_BAD_L, iLegBad));
 						++iWbShown;

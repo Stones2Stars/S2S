@@ -47,7 +47,8 @@ struct CascadeRateSlots
 	long aCSpec100[NUM_COMMERCE_TYPES]; // commerce specialist terms (×100) -- the hot commerce-side plugin
 	long aCBase100[NUM_COMMERCE_TYPES]; // commerce baseExtra (religion/corp/GA/building block/playerExtra, ×100)
 	long aCPct[NUM_COMMERCE_TYPES];     // commerce percent stacks (max(0, 100 + Σ))
-	int aWb[4];                         // the §2b wellbeing verdicts: happy / unhappy / goodHealth / badHealth
+	int aWb[4];                         // the §2b wellbeing verdicts (MILITARY-FREE): happy / unhappy / goodHealth / badHealth
+	int iWbMilPerUnit;                  // the epoch-stable per-military-unit happiness VALUE (×live count at read -- rides on top, never invalidates)
 	int iEpoch;                         // combined global+owner epoch stamp
 	int iTurn;                          // the §3 turn-roll re-check stamp
 	CvDerivedCacheSet<CvCity> set;      // the dirty protocol (bind in CvCity's ctor)
@@ -56,6 +57,7 @@ struct CascadeRateSlots
 		for (int i = 0; i < NUM_YIELD_TYPES; ++i) { aPct[i] = 100; aSpec[i] = 0; aExtra100[i] = 0; aEmpFlat[i] = 0; }
 		for (int c = 0; c < NUM_COMMERCE_TYPES; ++c) { aCSpec100[c] = 0; aCBase100[c] = 0; aCPct[c] = 100; }
 		for (int w = 0; w < 4; ++w) aWb[w] = 0;
+		iWbMilPerUnit = 0;
 	}
 };
 

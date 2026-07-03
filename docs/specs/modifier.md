@@ -182,6 +182,16 @@ clamp(unhappy − happy, 0, pop)`. The channel oracle is **`/computed/cities/wel
 `badHealth` adds `min(0, extraBuildingBadHealth)` **twice** (once inside `totalBadBuildingHealth`, once
 directly); and the anger percents scale by `pop/PERCENT_ANGER_DIVISOR` with truncating integer division.
 
+**⛔ TRAVELING UNIT MODIFIERS RIDE ON TOP (owner ruling 2026-07-03, GENERAL — all channels).** A modifier that
+TRAVELS with a unit (unit-sourced happiness, anger, property emission, and any future unit-carried channel
+value) is **never part of a cached cascade computation**: it is computed LIVE at read and **added on top as a
+FLAT term, after and outside every percentage modification**. Two structural consequences: (1) unit movement
+never dirties any cache — the cached sums are unit-free by construction; (2) the traveling value is a plain
+flat addition to the realized number, never an input to a percent stack. The implementation shape: the cache
+stores the unit-free number (+ any epoch-stable per-unit multiplier, e.g. the civic perMilitaryUnit VALUE);
+the read folds `perUnit × liveCount` / the live unit walk on top (an O(1)-ish live engine read).
+Ledgered as [DEC-unit-modifiers-on-top](../architecture/decisions.md#dec-unit-modifiers-on-top).
+
 **UNIT-driven wellbeing is END-TURN cadence (owner ruling 2026-07-03).** The military/unit-count happiness
 term recomputes **once per turn** (the substrate's turn-roll), NEVER per unit move — a per-move dirty hook made
 every post-move rate read pay the wellbeing walk (a measured unit-automation collapse) and is banned. The

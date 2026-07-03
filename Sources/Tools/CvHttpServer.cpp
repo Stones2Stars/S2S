@@ -1729,12 +1729,13 @@ namespace
 			o["globalId"] = picojson::value(std::string(CvString::format("%02d-%d", pCity->getOwner(), iCityId).GetCString()));
 			o["cityName"] = picojson::value(std::string(narrowToAscii(pCity->getName()).GetCString()));
 			o["population"] = picojson::value((double)pCity->getPopulation());
-			// ---- realized (the verdicts a parity sweep diffs against) ----
-			o["happyLevel"] = picojson::value((double)pCity->happyLevel());
-			o["unhappyLevel"] = picojson::value((double)pCity->unhappyLevel());
+			// ---- realized: POST-FLIP the plain getters ARE the cascade -- the parity fields read the LEGACY
+			// net oracles (the getYieldRate100Legacy pattern) ----
+			o["happyLevel"] = picojson::value((double)pCity->happyLevelLegacy());
+			o["unhappyLevel"] = picojson::value((double)pCity->unhappyLevelLegacy());
 			o["angryPopulation"] = picojson::value((double)pCity->angryPopulation());
-			o["goodHealth"] = picojson::value((double)pCity->goodHealth());
-			o["badHealth"] = picojson::value((double)pCity->badHealth());
+			o["goodHealth"] = picojson::value((double)pCity->goodHealthLegacy());
+			o["badHealth"] = picojson::value((double)pCity->badHealthLegacy());
 			o["healthRate"] = picojson::value((double)pCity->healthRate());
 			// ---- the C++ CASCADE port's verdicts (CascadeWellbeing::compute -- the §2b channel), emitted beside
 			// the legacy four so the port verifies on-demand (no turn-play needed); the accepted classes
@@ -1744,11 +1745,11 @@ namespace
 				wbec.city = pCity; wbec.plot = pCity->plot(); wbec.player = &kWbOwner;
 				wbec.team = &GET_TEAM(kWbOwner.getTeam());
 				EnablerKernel::wireFacts(pCity, wbec);
-				const CascadeWellbeingVerdicts wv = CascadeWellbeing::compute(pCity, wbec);
-				o["cascHappy"] = picojson::value((double)wv.iHappy);
-				o["cascUnhappy"] = picojson::value((double)wv.iUnhappy);
-				o["cascGoodHealth"] = picojson::value((double)wv.iGood);
-				o["cascBadHealth"] = picojson::value((double)wv.iBad);
+				// the REALIZED cascade verdicts (slot + the live military-on-top fold = the flipped getters' values)
+				o["cascHappy"] = picojson::value((double)CascadeAccumulator::wellbeing(pCity, 0));
+				o["cascUnhappy"] = picojson::value((double)CascadeAccumulator::wellbeing(pCity, 1));
+				o["cascGoodHealth"] = picojson::value((double)CascadeAccumulator::wellbeing(pCity, 2));
+				o["cascBadHealth"] = picojson::value((double)CascadeAccumulator::wellbeing(pCity, 3));
 				// ---- the PROPERTY channel's per-city numbers: the cascade's sourced flat + decay percent vs the
 				// engine's stored value + a CONSTANT-source recompute (buildings' manipulators + city-plot units)
 				// -- the channel's first attributable net; the #429 spatial pulses are out of scope ----
@@ -1757,7 +1758,10 @@ namespace
 					for (int iWbP = 0; iWbP < GC.getNumPropertyInfos(); ++iWbP)
 					{
 						picojson::object pe;
+						// cascFlat = the CACHEABLE static sum; cascUnitFlat = the TRAVELING unit part, live on top
+						// (DEC-unit-modifiers-on-top: never cached, never percent-modified)
 						pe["cascFlat"] = picojson::value((double)CascadeProperty::citySourceFlat(iWbP, pCity, wbec));
+						pe["cascUnitFlat"] = picojson::value((double)CascadeProperty::cityUnitFlat(iWbP, pCity, wbec));
 						pe["cascDecayPct"] = picojson::value((double)CascadeProperty::cityDecayPercent(iWbP));
 						pe["engineValue"] = picojson::value((double)pCity->getProperties()->getValueByProperty((PropertyTypes)iWbP));
 						// the engine-side PART recompute: cascFlat should equal Σ(these parts) -- each gap names its class

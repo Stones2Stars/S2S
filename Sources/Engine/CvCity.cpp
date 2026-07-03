@@ -5623,7 +5623,31 @@ int CvCity::getCelebrityHappiness() const
 // ! TheLadiesOgre
 
 
+// ==== the #430 WELLBEING FLIP (owner-gated; slot freshness proven live at casc100=0): the four verdicts read
+// the CASCADE slots (CascadeAccumulator ACCD_WB, end-turn cadence) with the MILITARY term folded LIVE on top
+// (owner ruling 2026-07-03: unit happiness rides alone, never cached, never invalidating). The Legacy siblings
+// stay in-body as the shadow net oracle (the getYieldRate100 flip pattern). What-if paths (iExtra/bNoAngry)
+// stay legacy -- the slot holds the default-call verdicts only. ====
+int CvCity::happyLevel() const
+{
+	return CascadeAccumulator::wellbeing(this, 0);
+}
 int CvCity::unhappyLevel(int iExtra) const
+{
+	if (iExtra != 0) return unhappyLevelLegacy(iExtra);   // what-if evaluation -- not slotted
+	return CascadeAccumulator::wellbeing(this, 1);
+}
+int CvCity::goodHealth() const
+{
+	return CascadeAccumulator::wellbeing(this, 2);
+}
+int CvCity::badHealth(bool bNoAngry, int iExtra) const
+{
+	if (bNoAngry || iExtra != 0) return badHealthLegacy(bNoAngry, iExtra);   // what-if -- not slotted
+	return CascadeAccumulator::wellbeing(this, 3);
+}
+
+int CvCity::unhappyLevelLegacy(int iExtra) const
 {
 	PROFILE_FUNC();
 
@@ -5706,7 +5730,7 @@ int CvCity::unhappyLevel(int iExtra) const
 }
 
 
-int CvCity::happyLevel() const
+int CvCity::happyLevelLegacy() const
 {
 	PROFILE_FUNC();
 
@@ -5848,7 +5872,7 @@ int CvCity::totalBadBuildingHealth() const
 }
 
 
-int CvCity::goodHealth() const
+int CvCity::goodHealthLegacy() const
 {
 	PROFILE_FUNC();
 	const CvPlayer& owner = GET_PLAYER(getOwner());
@@ -5875,7 +5899,7 @@ int CvCity::goodHealth() const
 }
 
 
-int CvCity::badHealth(bool bNoAngry, int iExtra) const
+int CvCity::badHealthLegacy(bool bNoAngry, int iExtra) const
 {
 	PROFILE_FUNC();
 	const CvPlayer& owner = GET_PLAYER(getOwner());

@@ -349,6 +349,11 @@ public:
 
 	int unhappyLevel(int iExtra = 0) const;
 	int happyLevel() const;
+	// the pre-flip legacy bodies -- the #430 wellbeing shadow's net oracle (the getYieldRate100Legacy pattern)
+	int unhappyLevelLegacy(int iExtra = 0) const;
+	int happyLevelLegacy() const;
+	int goodHealthLegacy() const;
+	int badHealthLegacy(bool bNoAngry = false, int iExtra = 0) const;
 	int angryPopulation(int iExtra = 0) const;
 
 	int visiblePopulation() const;

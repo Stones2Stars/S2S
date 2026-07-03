@@ -22,8 +22,13 @@ class CvCity;
 class CascadeProperty
 {
 public:
-	// The city's per-turn FLAT source sum for property eProp (curated deposits, current state).
+	// The city's per-turn FLAT source sum for property eProp -- the CACHEABLE (static) part only: active
+	// buildings + the property's own self-deposits. ⛔ NO unit-sourced values in here (owner ruling
+	// 2026-07-03: unit modifiers that TRAVEL are never part of a cached cascade calc -- they ride on top).
 	static int citySourceFlat(int eProp, const CvCity* pCity, const CvCascadeEvalCtx& ec);
+	// The TRAVELING part: city-plot unit emissions (a criminal's crime), computed LIVE at read, added on
+	// top of the cached sum -- unit moves never invalidate anything.
+	static int cityUnitFlat(int eProp, const CvCity* pCity, const CvCascadeEvalCtx& ec);
 	// The property's own DECAY percent at city scope (the toward-targetLevel rate -- engine dynamics apply it).
 	static int cityDecayPercent(int eProp);
 };
