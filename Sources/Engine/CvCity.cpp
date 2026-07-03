@@ -8451,6 +8451,7 @@ void CvCity::changeMilitaryHappinessUnits(int iChange)
 		FASSERT_NOT_NEGATIVE(getMilitaryHappinessUnits());
 
 		AI_setAssignWorkDirty(true);
+		CascadeAccumulator::dirtyCity(this, ACCD_WB);   // #430: the military count feeds the wellbeing perMilitaryUnit term
 	}
 }
 
