@@ -174,8 +174,11 @@ public:
   its event feeds — the realized exemplar is `CascadeAccumulator`'s `AccDirty` bits over the §2a packages
   ([modifier-substrate.md](../plans/structural-cleanup/modifier-substrate.md)). When `CvDerivedCache` is built,
   it grows this per-component form (the single-flag form stays for leaf caches like the plot yield).
-- **LOAD-TIME RECOMPUTE IS AN EASY TRADE.** *"I don't mind having longer initial save-load time, and have every
-  cache recalculated on save load — it's turn times that people notice; trading longer save-load for shorter
-  turn times is an easy trade."* So: every derived cache recomputes on load (dirty-on-construct already gives
-  this), eager warm-up at load-end is acceptable where it helps first-turn latency, and no design should ever
-  serialize a derived value to save load time.
+- **LOAD-TIME RECOMPUTE IS AN EASY TRADE — EAGER WARM-UP IS THE GENERAL POLICY.** *"I don't mind having longer
+  initial save-load time, and have every cache recalculated on save load — it's turn times that people notice;
+  trading longer save-load for shorter turn times is an easy trade"*; strengthened same day: *"I am happy to
+  add even MINUTES to load time in order to have caches eagerly built on load in general."* So: every derived
+  cache recomputes on load (dirty-on-construct gives correctness), **and gets eagerly WARMED at load-end as the
+  default** — the realized site is `CvGame::onFinalInitialized`'s cache warm-up block (every plot's yield cache
+  — worker AI relies on them — + every city's accumulator slots); new derived caches join that block. No design
+  ever serializes a derived value to save load time.

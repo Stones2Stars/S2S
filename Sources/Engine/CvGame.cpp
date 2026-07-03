@@ -628,6 +628,27 @@ void CvGame::onFinalInitialized(const bool bNewGame)
 	// static data is populated once, at the same load point as the XML, regardless of logging (validation.md cadence).
 	cascadeRegisterConsumers();
 
+	// #430 EAGER CACHE WARM-UP (owner ruling 2026-07-03: "hide that cost in game load" -- a longer load for
+	// better perceived turn time is an easy trade). Build every plot's yield cache NOW (worker AI relies on
+	// them) + every city's accumulator slots, so turn 1 runs warm instead of paying the lazy first-fill.
+	{
+		PROFILE("CvGame::onFinalInitialized.cacheWarmup");
+		for (int iI = 0; iI < GC.getMap().numPlots(); iI++)
+		{
+			GC.getMap().plotByIndex(iI)->getYield(YIELD_FOOD);   // ONE read builds the whole per-plot cache
+		}
+		for (int iI = 0; iI < MAX_PLAYERS; iI++)
+		{
+			CvPlayer& kWarmP = GET_PLAYER((PlayerTypes)iI);
+			if (!kWarmP.isAlive()) continue;
+			foreach_(CvCity* pWarmCity, kWarmP.cities())
+			{
+				for (int y = 0; y < NUM_YIELD_TYPES; ++y) pWarmCity->getYieldRate100((YieldTypes)y);
+				for (int c = 0; c < NUM_COMMERCE_TYPES; ++c) pWarmCity->getCommerceRateTimes100((CommerceTypes)c);
+			}
+		}
+	}
+
 	OutputDebugString("onFinalInitialized: End\n");
 }
 

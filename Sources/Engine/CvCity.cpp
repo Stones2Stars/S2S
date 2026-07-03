@@ -15233,6 +15233,10 @@ void CvCity::setHasReligion(ReligionTypes eIndex, bool bNewValue, bool bAnnounce
 		}
 
 		m_pabHasReligion[eIndex] = bNewValue;
+		// #430 accumulator: religion presence feeds the commerce baseExtra (religion/shrine/state-religion terms)
+		// + operate conditions -> the deposit-bearing plugins + this city's facts are stale
+		CascadeAccumulator::dirtyCity(this, ACCD_PCT | ACCD_CBASE | ACCD_CPCT);
+		EnablerKernel::factsMemoEvict((int)getOwner(), getID());
 
 		for (int iVoteSource = 0; iVoteSource < GC.getNumVoteSourceInfos(); ++iVoteSource)
 		{
@@ -15434,6 +15438,10 @@ void CvCity::setHasCorporation(CorporationTypes eIndex, bool bNewValue, bool bAn
 
 	if (isHasCorporation(eIndex) != bNewValue)
 	{
+		// #430 accumulator: corporation presence feeds the commerce baseExtra (corporation/corp-HQ terms)
+		// + operate conditions -> the deposit-bearing plugins + this city's facts are stale
+		CascadeAccumulator::dirtyCity(this, ACCD_PCT | ACCD_CBASE | ACCD_CPCT);
+		EnablerKernel::factsMemoEvict((int)getOwner(), getID());
 		if (bNewValue)
 		{
 			bool bReplacedHeadquarters = false;
