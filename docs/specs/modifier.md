@@ -182,6 +182,21 @@ clamp(unhappy − happy, 0, pop)`. The channel oracle is **`/computed/cities/wel
 `badHealth` adds `min(0, extraBuildingBadHealth)` **twice** (once inside `totalBadBuildingHealth`, once
 directly); and the anger percents scale by `pop/PERCENT_ANGER_DIVISOR` with truncating integer division.
 
+**The STORED-ACCUMULATOR DRIFT class (owner ruling 2026-07-03 + measured).** The legacy wellbeing terms are
+INCREMENTAL SERIALIZED accumulators (`m_iBonusGood/BadHappiness`, `m_iBuildingGood/BadHappiness`,
+`m_paiStateReligionHappiness`, `m_iExtraBuilding*FromTech`, …) — event-sourced numbers that carry decades of
+save history. **The old cache model folded event-type grants DIRECTLY into these caches** (there is no separate
+event-yield data — the per-building `m_aBuildingHappy/HealthChange` ledgers measure ZERO on the reference
+save), so a stored value that disagrees with its current-state recompute is **DRIFT (history pollution), never
+event state to preserve**. The oracle emits a `*Recomputed` twin beside each incremental accumulator
+(bonus/building/stateReligion, happiness + health; the `extraBuilding`/`feature`/`religion` city accumulators
+self-heal via the engine's `update*()` rebuilders and need no twin). Parity discipline: a verdict diff equal to
+`Σ(stored − recomputed)` is **engine-wrong / cascade-right** — attributed-accepted (the same class as the
+improvement-yield phantoms), repaired wholesale at the cutover when the slots recompute from data. Measured on
+the reference save: the stored `bonusGoodHappiness` carries +1..+7 phantom drift in 61 of 185 diverging cities
+(the cascade matches the engine's own recompute in all 185); drift+balance-cut adjustment reconciles
+`badHealth` to 104/182 exact zeros (median 0) and `goodHealth` to median 1.
+
 ---
 
 ## 3. Conditioning — re-evaluated every recompute (the dormancy model)
