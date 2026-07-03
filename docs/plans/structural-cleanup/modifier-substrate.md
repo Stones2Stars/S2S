@@ -132,6 +132,17 @@ attributable diff lines (never silent).
   segments (family × scope × target per source) are the ready generator of the data-derived event→cache
   routing (state-repositories.md end-state — the hand-wired hook masks' replacement, a follow-up).
 
+- **D — the WELLBEING channel (§2b) — ✅ PORTED calculator-first (2026-07-03).** `Cascade/CvCascadeWellbeing.{h,cpp}`:
+  the four realized health/happiness verdicts from the deposits + raw-state inputs, transcribed from the
+  StoneBase assembler that reached attributed parity (the classified fold, the member walks, the extra-part
+  subtraction, the four engine bodies term-substituted). Verification: the `[MODIFIER/wellbeing]` shadow inside
+  the modifier harness's city loop + `cascHappy/cascUnhappy/cascGoodHealth/cascBadHealth` on
+  `/computed/cities/wellbeing` (on-demand diff, no turn-play). Measured on the reference save: unhappy
+  exact-to-±1, happy +1..+3, goodHealth 0..−5, badHealth −9..−28 — the documented accepted residue (the
+  improvement BALANCE-CUT + the stored-accumulator DRIFT, modifier.md §2b). **Queued:** the slot storage
+  (an `ACCD_WB` component — the per-player area/empire building rollup moves out of the per-call walk), the
+  getter flip, and the residue's per-term drift attribution riding the oracle's `*Recomputed` twins.
+
 ## Explicitly NOT this build
 
 - The tally stays a read-only accessor (NOT a spine consumer) — unchanged.
