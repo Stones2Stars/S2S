@@ -14525,7 +14525,7 @@ void CvCity::setWorkingPlot(int iIndex, bool bNewValue)
 	if (isWorkingPlot(iIndex) != bNewValue)
 	{
 		m_pabWorkingPlot[iIndex] = bNewValue;
-		CascadeAccumulator::dirtyCity(this, ACCD_PLOTS);   // #430: the worked-plot component's input
+		// (#430 accumulator: NO hook -- the worked-plot base is PULLED live from the plot cache at combine)
 
 		processWorkingPlot(iIndex, bNewValue ? 1 : -1);
 		if (bNewValue)

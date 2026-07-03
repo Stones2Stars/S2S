@@ -53,7 +53,7 @@ enum MdFld
 	MDF_TOTAL, MDF_MAPPED, MDF_WDEPOSITS, MDF_WOPERATE, MDF_WTRIGGERS,              // repo census (MDE_REPO)
 	MDF_FILES2, MDF_ENTITIES2,                                                      // the stashed load-probe stats
 	MDF_SPECC, MDF_SPECL,                                                           // specialist sub-terms (rate diff)
-	MDF_FACTS, MDF_FACTSHIT, MDF_YRN, MDF_PSN, MDF_CRN, MDF_CEN,                    // perf: call counts
+	MDF_FACTS, MDF_FACTSHIT, MDF_YRN, MDF_PSN, MDF_CRN, MDF_CEN, MDF_ACCN,          // perf: call counts (+accumulator refreshes)
 	MDF_FACTSMS, MDF_YRMS, MDF_PSMS, MDF_CRMS,                                      // perf: stopwatch ms (x10 int)
 	MDF_UNRES, MDF_UNRESIDS                                                         // load-time FK misses, re-surfaced live
 };
@@ -116,6 +116,7 @@ static const char* mm_field(int tag, SpineFieldType* peType)
 	case MDF_PSN:         return "pctStack";
 	case MDF_CRN:         return "commerceRate";
 	case MDF_CEN:         return "condEval";
+	case MDF_ACCN:        return "accRefresh";
 	case MDF_FACTSMS:     return "factsMsX10";
 	case MDF_YRMS:        return "yieldRateMsX10";
 	case MDF_PSMS:        return "pctStackMsX10";
@@ -389,6 +390,7 @@ void cvCascadeModifierShadow()
 		.addI(MDF_FACTS, CascadePerf::facts).addI(MDF_FACTSHIT, CascadePerf::factsMemoHit)
 		.addI(MDF_YRN, CascadePerf::yieldRate).addI(MDF_PSN, CascadePerf::pctStack)
 		.addI(MDF_CRN, CascadePerf::commerceRate).addI(MDF_CEN, CascadePerf::condEval)
+		.addI(MDF_ACCN, CascadePerf::accRefresh)
 		.addI(MDF_FACTSMS, (int)(CascadePerf::factsMs * 10.0)).addI(MDF_YRMS, (int)(CascadePerf::yieldRateMs * 10.0))
 		.addI(MDF_PSMS, (int)(CascadePerf::pctStackMs * 10.0)).addI(MDF_CRMS, (int)(CascadePerf::commerceRateMs * 10.0)));
 	CascadePerf::reset();

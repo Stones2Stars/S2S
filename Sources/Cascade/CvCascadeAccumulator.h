@@ -26,17 +26,20 @@ class CvCity;
 // value that plugs into the combine; only the package whose inputs changed recomputes -- "the rest of the pipe
 // stays the same". The channels are independent (culture never impacts gold); the SLIDER only re-splits the
 // base commerce yield and is read LIVE at combine -- a slider move invalidates NOTHING.
+// NB no PLOTS component: the worked-plot base is PULLED live from the engine's plot-yield cache
+// (CvCity::getPlotYield -- Σ worked plots × O(1) clean CvPlot caches, state-repositories.md's pull model;
+// owner 2026-07-03: "pure base yield calcs ... should be a cached number" -- it already IS, at the source).
+// Worker/juggle churn therefore costs the accumulator NOTHING; the plot cache's own dirty triggers govern it.
 enum AccDirty
 {
 	ACCD_PCT     = 1,    // yield percent stacks (building/civic/trait/project deposits)
-	ACCD_PLOTS   = 2,    // the worked-plot base packages
 	ACCD_SPEC    = 4,    // yield specialist totals
 	ACCD_EXTRA   = 8,    // yield building flats + perPopulation
 	ACCD_EMPFLAT = 16,   // free-city + golden-age trait flats (epoch-volatile only; no city hook)
 	ACCD_CSPEC   = 32,   // commerce specialist terms (hot: specialist churn touches ONLY this on the commerce side)
 	ACCD_CBASE   = 64,   // commerce baseExtra (religion/corporation/goldenAge/building block/playerExtra)
 	ACCD_CPCT    = 128,  // commerce percent stacks
-	ACCD_ALL     = 255
+	ACCD_ALL     = 253
 };
 
 class CascadeAccumulator

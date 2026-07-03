@@ -25,7 +25,6 @@
 struct AccCityState
 {
 	long aPct[NUM_YIELD_TYPES];       // stored modifier = max(0, 100 + Σpercent) -- the whole §2a stack
-	long aPlots[NUM_YIELD_TYPES];     // Σ worked plots' isolated base packages (human units)
 	long aSpec[NUM_YIELD_TYPES];      // specialist totals (human units; own sub-stack inside)
 	long aExtra100[NUM_YIELD_TYPES];  // building flats + perPop (×100)
 	long aEmpFlat[NUM_YIELD_TYPES];   // free-city + golden-age trait flats (human units)
@@ -35,7 +34,7 @@ struct AccCityState
 	int iDirty; int iEpoch; int iTurn;
 	AccCityState() : iDirty(ACCD_ALL), iEpoch(-1), iTurn(-1)
 	{
-		for (int i = 0; i < NUM_YIELD_TYPES; ++i) { aPct[i] = 100; aPlots[i] = 0; aSpec[i] = 0; aExtra100[i] = 0; aEmpFlat[i] = 0; }
+		for (int i = 0; i < NUM_YIELD_TYPES; ++i) { aPct[i] = 100; aSpec[i] = 0; aExtra100[i] = 0; aEmpFlat[i] = 0; }
 		for (int c = 0; c < NUM_COMMERCE_TYPES; ++c) { aCSpec100[c] = 0; aCBase100[c] = 0; aCPct[c] = 100; }
 	}
 };
@@ -65,12 +64,16 @@ static const char* acc_channel(int y)
 	return a[y];
 }
 
-// The §2a combine over the standing components + the ONE live INPUT (the trade-route yield) -- EXACTLY
-// YieldRate::yieldRate100's expression. The yield components must be clean (acc_refresh ran) before calling.
+// The §2a combine over the standing components + the LIVE inputs -- EXACTLY YieldRate::yieldRate100's
+// expression. LIVE at combine: the trade-route yield (an O(1) engine accumulator) and the WORKED-PLOT BASE
+// (CvCity::getPlotYield -- Σ worked plots × O(1) clean CvPlot caches, the state-repositories.md pull model;
+// its own dirty triggers govern freshness, so worker/juggle churn costs the accumulator nothing).
+// The yield components must be clean (acc_refresh ran) before calling.
 static long acc_combine(const AccCityState& st, const CvCity* pCity, YieldTypes eY)
 {
+	const int plots = pCity->getPlotYield(eY);
 	const int trade = YieldBasePackages::tradeRoute(eY, pCity);
-	long combine = (st.aPlots[eY] + trade + st.aEmpFlat[eY] + st.aSpec[eY]) * st.aPct[eY]
+	long combine = (plots + trade + st.aEmpFlat[eY] + st.aSpec[eY]) * st.aPct[eY]
 	             + 100L * (st.aExtra100[eY] / 100);
 	if (combine < 100) combine = 100;
 	if (combine > CITY_MAX_YIELD_RATE) combine = CITY_MAX_YIELD_RATE;
@@ -105,10 +108,8 @@ static void acc_refresh(const CvCity* pCity, AccCityState& st)
 
 	for (int y = 0; y < NUM_YIELD_TYPES; ++y)
 	{
-		const YieldTypes eY = (YieldTypes)y;
 		const std::string ch = acc_channel(y);
 		if (st.iDirty & ACCD_PCT)     { MMBreak bk; st.aPct[y] = PercentStack::percentStack(ch, pCity, bk); }
-		if (st.iDirty & ACCD_PLOTS)   st.aPlots[y] = YieldBasePackages::basePlot(ch, eY, pCity, ec);
 		if (st.iDirty & ACCD_SPEC)    st.aSpec[y] = YieldBasePackages::specialist(ch, pCity, ec);
 		if (st.iDirty & ACCD_EXTRA)   st.aExtra100[y] = BuildingPackage::buildingFlat(ch, pCity, ec);
 		if (st.iDirty & ACCD_EMPFLAT) st.aEmpFlat[y] = YieldBasePackages::freeCity(ch, player, ec)

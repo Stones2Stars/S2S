@@ -152,3 +152,17 @@ public:
 - **Apply to** (at build time): migrate the hand-rolled **plot-yield** cache onto it; convert the **specialist-commerce**
   and **specialist-yield** recompute-on-read getters onto it; then the future **commerce / health** city caches — one
   pattern everywhere. This is the concrete form of the unified `dataChanged` trigger named in "The direction" above.
+
+## ⚖ Refinements (owner rulings 2026-07-03, from the modifier-substrate build)
+
+- **PARTIAL DIRTYING.** The one-flag `CvDerivedCache` shape needs a component-granular variant: a cache whose
+  value composes from several isolated **plugin numbers** (each package a standing value; "the rest of the pipe
+  stays the same") carries a **dirty BITMASK, one bit per component**, and a trigger marks only the components
+  its event feeds — the realized exemplar is `CascadeAccumulator`'s `AccDirty` bits over the §2a packages
+  ([modifier-substrate.md](../plans/structural-cleanup/modifier-substrate.md)). When `CvDerivedCache` is built,
+  it grows this per-component form (the single-flag form stays for leaf caches like the plot yield).
+- **LOAD-TIME RECOMPUTE IS AN EASY TRADE.** *"I don't mind having longer initial save-load time, and have every
+  cache recalculated on save load — it's turn times that people notice; trading longer save-load for shorter
+  turn times is an easy trade."* So: every derived cache recomputes on load (dirty-on-construct already gives
+  this), eager warm-up at load-end is acceptable where it helps first-turn latency, and no design should ever
+  serialize a derived value to save load time.
