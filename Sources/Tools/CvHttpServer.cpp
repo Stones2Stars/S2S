@@ -701,6 +701,11 @@ namespace
 			wb["tempHappy"] = picojson::value((double)GC.getTEMP_HAPPY());
 			wb["handicapHappy"] = picojson::value((double)GC.getHandicapInfo(pCity->getHandicapType()).getHappyBonus());   // handicap config pair (inputs)
 			wb["handicapHealth"] = picojson::value((double)GC.getHandicapInfo(pCity->getHandicapType()).getHealthBonus());
+			// the EVENT-GRANTED extras (one-shot state, un-derivable -- the m_aiExtraYield sibling class): raw saved accumulators
+			wb["extraHappinessCity"] = picojson::value((double)pCity->getExtraHappiness());
+			wb["extraHappinessPlayer"] = picojson::value((double)kWbOwner.getExtraHappiness());
+			wb["extraHealthCity"] = picojson::value((double)pCity->getExtraHealth());
+			wb["extraHealthPlayer"] = picojson::value((double)kWbOwner.getExtraHealth());
 			wb["revSuccessHappiness"] = picojson::value((double)pCity->getRevSuccessHappiness());
 			wb["happinessTimer"] = picojson::value((double)pCity->getHappinessTimer());
 			wb["celebrityHappiness"] = picojson::value((double)pCity->getCelebrityHappiness());   // unit-scan (input until the celebrity skill port)
