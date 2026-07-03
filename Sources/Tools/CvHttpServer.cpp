@@ -1863,6 +1863,16 @@ namespace
 					sc["maintAreaLeg"] = picojson::value((double)pCity->area()->getTotalAreaMaintenanceModifier(pCity->getOwner()));
 					sc["maintConnLeg"] = picojson::value((double)((pCity->isConnectedToCapital() && !pCity->isCapital())
 						? const_cast<CvPlayer&>(kWbOwner).getConnectedCityMaintenanceModifier() : 0));
+					// buildRate: the HEAD-ORDER item's production modifier, cascade vs legacy (skip orderless cities)
+					{
+						bool bWbHasOrder = false;
+						const int iWbBr = CascadeScalarChannels::productionModifier(pCity, wbec, bWbHasOrder);
+						if (bWbHasOrder)
+						{
+							sc["buildRateCasc"] = picojson::value((double)iWbBr);
+							sc["buildRateLeg"] = picojson::value((double)pCity->getProductionModifier());
+						}
+					}
 					// tradeRoutes: the cascade COUNT sources vs the legacy realized count (game base + max are config)
 					sc["tradeRoutesCasc"] = picojson::value((double)CascadeScalarChannels::tradeRouteCount(pCity, wbec));
 					sc["tradeRoutesLeg"] = picojson::value((double)pCity->getTradeRoutes());

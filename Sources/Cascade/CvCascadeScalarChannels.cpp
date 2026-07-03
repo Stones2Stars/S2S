@@ -7,6 +7,7 @@
 #include "CvGameCoreDLL.h"
 #include "CvCascadeScalarChannels.h"
 #include "CvCascadeMMKernel.h"
+#include "CvCascadeDepositIndex.h"
 #include "CvCascadeEnablerKernel.h"   // cityFacts -- the player-wide maintenance walk
 #include "CvCascadeCityFacts.h"
 #include "CvJsonInfo.h"
@@ -20,6 +21,9 @@
 #include "Infos/CvCivicInfo.h"
 #include "Infos/CvTechInfo.h"
 #include "Infos/CvSpecialistInfo.h"
+#include "Infos/CvUnitInfo.h"
+#include "Infos/CvUnitCombatInfo.h"
+#include "Infos/CvProjectInfo.h"
 
 // Σ a unit over the city's ACTIVE buildings at an address (the shared building-source walk).
 static int sc_buildings(const std::string& addr, const char* unit, const CvCity* pCity, const CvCascadeEvalCtx& ec)
@@ -165,6 +169,123 @@ int CascadeScalarChannels::tradeRouteCount(const CvCity* pCity, const CvCascadeE
 		iCount += sc_civicsTraits("tradeRoutes.empire.coastal", "flat", owner, ec);
 	}
 	return iCount;
+}
+
+// Σ a KEYED buildRate member over this city's active buildings (city scope) + all the player's cities'
+// active buildings (empire scope) + civics + traits: buildRate.{city|empire}.{member}.{KEY}.percent.
+static int sc_buildRateKeyed(const char* szMember, const char* szKey, const CvCity* pCity, const CvCascadeEvalCtx& ec)
+{
+	const int chanId = DepositIndex::lookupSegment("buildRate");
+	const int memberId = DepositIndex::lookupSegment(szMember);
+	const int keyId = DepositIndex::lookupSegment(szKey);
+	if (chanId < 0 || memberId < 0 || keyId < 0) return 0;
+	const int cityId = DepositIndex::lookupSegment("city");
+	const int empireId = DepositIndex::lookupSegment("empire");
+	const CvPlayer& owner = GET_PLAYER(pCity->getOwner());
+	int iSum = 0;
+	// this city's buildings: the CITY-scope keyed member
+	const int nB = GC.getNumBuildingInfos();
+	for (int b = 0; b < nB; ++b)
+	{
+		if (!cascadeIsBuildingActive(b, ec)) continue;
+		const CvJsonInfo* d = InfoRepo<CvBuildingInfo>::get().get(b);
+		if (d != NULL) iSum += MMKernel::sumKeyed4F(d, chanId, cityId, memberId, keyId, ec, false);
+	}
+	// the player-wide EMPIRE-scope keyed member (any city's building feeds the player accumulator)
+	{
+		int iLoop;
+		for (const CvCity* pc = owner.firstCity(&iLoop); pc != NULL; pc = owner.nextCity(&iLoop))
+		{
+			const CascadeCityFacts& facts = EnablerKernel::cityFacts(pc);
+			CvCascadeEvalCtx pec;
+			pec.city = pc; pec.plot = pc->plot(); pec.player = &owner; pec.team = ec.team;
+			pec.activeBuildings = &facts.active; pec.vicinityProvidedBonuses = &facts.provided;
+			for (std::set<int>::const_iterator it = facts.active.begin(); it != facts.active.end(); ++it)
+			{
+				const CvJsonInfo* d = InfoRepo<CvBuildingInfo>::get().get(*it);
+				if (d != NULL) iSum += MMKernel::sumKeyed4F(d, chanId, empireId, memberId, keyId, pec, false);
+			}
+		}
+	}
+	// civics + traits (empire scope)
+	for (int i = 0; i < GC.getNumCivicOptionInfos(); ++i)
+	{
+		const CivicTypes eCivic = owner.getCivics((CivicOptionTypes)i);
+		if (eCivic == NO_CIVIC) continue;
+		const CvJsonInfo* d = InfoRepo<CvCivicInfo>::get().get(eCivic);
+		if (d != NULL) iSum += MMKernel::sumKeyed4F(d, chanId, empireId, memberId, keyId, ec, false);
+	}
+	for (int i = 0; i < GC.getNumTraitInfos(); ++i)
+	{
+		if (!owner.hasTrait((TraitTypes)i)) continue;
+		const CvJsonTraitInfo* d = MMKernel::traitData(i);
+		if (d != NULL) iSum += MMKernel::sumKeyed4F(d, chanId, empireId, memberId, keyId, ec, false);
+	}
+	return iSum;
+}
+
+// A flat buildRate MEMBER (military/space) over city buildings + player-wide + civics/traits.
+static int sc_buildRateMember(const char* szMember, const CvCity* pCity, const CvCascadeEvalCtx& ec)
+{
+	const CvPlayer& owner = GET_PLAYER(pCity->getOwner());
+	const std::string cityAddr = std::string("buildRate.city.") + szMember;
+	const std::string empAddr = std::string("buildRate.empire.") + szMember;
+	int iSum = sc_buildings(cityAddr, "percent", pCity, ec);
+	iSum += sc_playerBuildings(empAddr, "percent", owner, ec.team);
+	iSum += sc_civicsTraits(empAddr, "percent", owner, ec);
+	return iSum;
+}
+
+int CascadeScalarChannels::productionModifier(const CvCity* pCity, const CvCascadeEvalCtx& ec, bool& bHasOrder)
+{
+	const CvPlayer& owner = GET_PLAYER(pCity->getOwner());
+	const bool bSrInCity = owner.getStateReligion() != NO_RELIGION && pCity->isHasReligion(owner.getStateReligion());
+	const UnitTypes eUnit = pCity->getProductionUnit();
+	const BuildingTypes eB = pCity->getProductionBuilding();
+	const ProjectTypes ePr = pCity->getProductionProject();
+	bHasOrder = true;
+	int iMod = 0;
+	if (eUnit != NO_UNIT)
+	{
+		const CvUnitInfo& unit = GC.getUnitInfo(eUnit);
+		// the target's OWN bonus-gated mods (BonusProductionModifiers -> buildRate.self, conditions gate on hasBonus)
+		const CvJsonInfo* d = InfoRepo<CvUnitInfo>::get().get(eUnit);
+		if (d != NULL) iMod += MMKernel::sumUnit(d, "buildRate.self", "percent", ec);
+		// the keyed source mods (the engine skips non-type mods under isNoNonTypeProdMods)
+		iMod += sc_buildRateKeyed("units", unit.getType(), pCity, ec);
+		if (!unit.isNoNonTypeProdMods())
+		{
+			iMod += sc_buildRateKeyed("domains", GC.getDomainInfo(unit.getDomainType()).getType(), pCity, ec);
+			if (unit.getUnitCombatType() != NO_UNITCOMBAT)
+				iMod += sc_buildRateKeyed("unitCombats", GC.getUnitCombatInfo((UnitCombatTypes)unit.getUnitCombatType()).getType(), pCity, ec);
+			foreach_(const UnitCombatTypes eSub, unit.getSubCombatTypes())
+				iMod += sc_buildRateKeyed("unitCombats", GC.getUnitCombatInfo(eSub).getType(), pCity, ec);
+			if (unit.isMilitaryProduction())
+				iMod += sc_buildRateMember("military", pCity, ec);
+			if (bSrInCity)
+				iMod += sc_civicsTraits("stateReligion.empire.unitProduction", "percent", owner, ec);
+		}
+	}
+	else if (eB != NO_BUILDING)
+	{
+		const CvJsonInfo* d = InfoRepo<CvBuildingInfo>::get().get(eB);
+		if (d != NULL) iMod += MMKernel::sumUnit(d, "buildRate.self", "percent", ec);
+		iMod += sc_buildRateKeyed("buildings", GC.getBuildingInfo(eB).getType(), pCity, ec);
+		if (bSrInCity)
+			iMod += sc_civicsTraits("stateReligion.empire.buildingProduction", "percent", owner, ec);
+	}
+	else if (ePr != NO_PROJECT)
+	{
+		const CvJsonInfo* d = InfoRepo<CvProjectInfo>::get().get(ePr);
+		if (d != NULL) iMod += MMKernel::sumUnit(d, "buildRate.self", "percent", ec);
+		if (GC.getProjectInfo(ePr).isSpaceship())
+			iMod += sc_buildRateMember("space", pCity, ec);
+	}
+	else
+	{
+		bHasOrder = false;
+	}
+	return iMod;
 }
 
 int CascadeScalarChannels::maintenanceModifier(const CvCity* pCity, const CvCascadeEvalCtx& ec)

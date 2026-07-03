@@ -30,6 +30,11 @@ public:
 	// tradeRoutes: the COUNT sources (§9.5) -- this city's extra + the player-wide global + the coastal
 	// half (× this city being coastal). The game base + the max clamp are live config at the combine.
 	static int tradeRouteCount(const CvCity* pCity, const CvCascadeEvalCtx& ec);
+	// buildRate (§9.5): the summed signed-% production modifier for the city's HEAD ORDER item (unit/building/
+	// project) -- the target's own bonus-gated buildRate.self + the keyed source mods (units/unitCombats/
+	// domains/buildings members, city + empire scopes) + military/space members + the SR grouped family.
+	// Returns 0 with no order (bHasOrder=false).
+	static int productionModifier(const CvCity* pCity, const CvCascadeEvalCtx& ec, bool& bHasOrder);
 };
 
 #endif // CV_CASCADE_SCALAR_CHANNELS_H
