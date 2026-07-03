@@ -110,23 +110,42 @@ static bool wb_pureKeep(bool bPure, bool bNegativeTrait, int v)
 
 // ===================== the walks =====================
 
-// The BUILDING city-scope walk over the ACTIVE set: classified flat fold + the perPopulation pool.
-static void wb_buildings(int famId, const CvCity* pCity, const CvCascadeEvalCtx& ec, WbTerms& t)
+// ONE building pass for BOTH wellbeing families + the commerce-happiness pools (was three separate
+// 5202-info loops -- the wbCompute attribution's biggest cut): per ACTIVE building, per deposit, dispatch on
+// the family segment. Classified flat folds + the perPopulation pools + the event ledgers + commerce pers.
+static void wb_buildingsAll(int famHappy, int famHealth, int famCH, const CvCity* pCity,
+	const CvCascadeEvalCtx& ec, WbTerms& tHap, WbTerms& tHea, int aiCommercePer[NUM_COMMERCE_TYPES])
 {
 	const int scopeCity = DepositIndex::lookupSegment("city");
 	const int unitFlat = DepositIndex::lookupSegment("flat");
 	const int unitPerPop = DepositIndex::lookupSegment("perPopulation");
+	int aiChSeg[NUM_COMMERCE_TYPES];
+	{
+		static const char* aszC[NUM_COMMERCE_TYPES] = { "gold", "research", "culture", "espionage" };
+		for (int c = 0; c < NUM_COMMERCE_TYPES; ++c) aiChSeg[c] = DepositIndex::lookupSegment(aszC[c]);
+	}
 	const int nB = GC.getNumBuildingInfos();
 	for (int b = 0; b < nB; ++b)
 	{
 		if (!cascadeIsBuildingActive(b, ec)) continue;
 		const CvJsonInfo* d = InfoRepo<CvBuildingInfo>::get().get(b);
 		if (d == NULL) continue;
-		int iBaseNet = 0;
+		int iBaseNetHap = 0, iBaseNetHea = 0;
 		for (size_t i = 0; i < d->deposits.size(); ++i)
 		{
 			const CvCascadeDeposit& dep = d->deposits[i];
-			if (dep.seg[0] != famId || dep.seg[1] != scopeCity || dep.nSeg != 2) continue;
+			if (dep.seg[1] != scopeCity) continue;
+			// commerce-happiness: "commerceHappiness.city.<channel>" flat -> the per-channel pool
+			if (dep.seg[0] == famCH && dep.nSeg == 3 && dep.unitId == unitFlat)
+			{
+				for (int c = 0; c < NUM_COMMERCE_TYPES; ++c)
+					if (dep.seg[2] == aiChSeg[c] && MMKernel::applies(dep.enabled, dep.disabled, ec))
+						{ aiCommercePer[c] += dep.value100 / 100; break; }
+				continue;
+			}
+			const bool bHap = dep.seg[0] == famHappy;
+			if ((!bHap && dep.seg[0] != famHealth) || dep.nSeg != 2) continue;
+			WbTerms& t = bHap ? tHap : tHea;
 			if (dep.unitId == unitPerPop)
 			{
 				if (MMKernel::applies(dep.enabled, dep.disabled, ec)) t.iPpPct += dep.value100 / 100;
@@ -140,15 +159,16 @@ static void wb_buildings(int famId, const CvCity* pCity, const CvCascadeEvalCtx&
 			case WB_BONUS_GATED:    t.bonus.fold(v); break;
 			case WB_TECH_GATED:     t.iTechGatedNet += v; break;
 			case WB_STATE_RELIGION: t.iSrNet += v; break;
-			default:                iBaseNet += v; break;
+			default:                (bHap ? iBaseNetHap : iBaseNetHea) += v; break;
 			}
 		}
-		t.bld.fold(iBaseNet);
-		// the EVENT-granted per-building ledger rides the same accumulators (measured zero save-wide -- the old
-		// cache model folded event grants into the accumulators directly; folded for engine fidelity)
-		const int iLedger = (famId == DepositIndex::lookupSegment("happiness"))
-			? pCity->getBuildingHappyChange((BuildingTypes)b) : pCity->getBuildingHealthChange((BuildingTypes)b);
-		if (iLedger != 0) t.bld.fold(iLedger);
+		tHap.bld.fold(iBaseNetHap);
+		tHea.bld.fold(iBaseNetHea);
+		// the EVENT-granted per-building ledgers ride the same accumulators (measured zero save-wide)
+		const int iLedgerHap = pCity->getBuildingHappyChange((BuildingTypes)b);
+		if (iLedgerHap != 0) tHap.bld.fold(iLedgerHap);
+		const int iLedgerHea = pCity->getBuildingHealthChange((BuildingTypes)b);
+		if (iLedgerHea != 0) tHea.bld.fold(iLedgerHea);
 	}
 }
 
@@ -306,8 +326,8 @@ static void wb_gather(const char* szFam, const CvCity* pCity, const CvCascadeEva
 	const CvPlayer& owner = GET_PLAYER(pCity->getOwner());
 	const CvTeam& team = GET_TEAM(owner.getTeam());
 
-	// -- buildings (city scope, classified) + the player-wide area/empire rollups --
-	wb_buildings(famId, pCity, ec, t);
+	// -- the player-wide area/empire rollups (the CITY building pass runs ONCE for both families in
+	// -- compute() via wb_buildingsAll -- not here) --
 	wb_playerBuildings(famId, pCity, t);
 
 	// -- the shared member-walk inputs --
@@ -423,6 +443,10 @@ CascadeWellbeingVerdicts CascadeWellbeing::compute(const CvCity* pCity, const Cv
 	const int iPop = pCity->getPopulation();
 
 	WbTerms hap, hea;
+	int aiCommercePer[NUM_COMMERCE_TYPES] = { 0, 0, 0, 0 };
+	// ONE building pass serves both families + the commerce-happiness pools (the wbCompute cost cut)
+	wb_buildingsAll(DepositIndex::lookupSegment("happiness"), DepositIndex::lookupSegment("health"),
+		DepositIndex::lookupSegment("commerceHappiness"), pCity, ec, hap, hea, aiCommercePer);
 	wb_gather("happiness", pCity, ec, hap);
 	wb_gather("health", pCity, ec, hea);
 
@@ -443,28 +467,11 @@ CascadeWellbeingVerdicts CascadeWellbeing::compute(const CvCity* pCity, const Cv
 			if (pCity->isHasReligion((ReligionTypes)i))
 				religion.fold((ReligionTypes)i == eState ? iStateAcc : iNonStateAcc);
 	}
-	// COMMERCE happiness: per commerce type the building-fed per × slider% /100, truncating per type, NET
+	// COMMERCE happiness: per commerce type the building-fed per (pooled by the ONE building pass) × the
+	// slider% /100, truncating per type, NET
 	int iCommerceHappy = 0;
-	{
-		const int famCH = DepositIndex::lookupSegment("commerceHappiness");
-		if (famCH >= 0)
-		{
-			static const char* aszC[NUM_COMMERCE_TYPES] = { "gold", "research", "culture", "espionage" };
-			for (int c = 0; c < NUM_COMMERCE_TYPES; ++c)
-			{
-				const std::string addr = std::string("commerceHappiness.city.") + aszC[c];
-				int iPer = 0;
-				const int nB = GC.getNumBuildingInfos();
-				for (int b = 0; b < nB; ++b)
-				{
-					if (!cascadeIsBuildingActive(b, ec)) continue;
-					const CvJsonInfo* d = InfoRepo<CvBuildingInfo>::get().get(b);
-					if (d != NULL) iPer += MMKernel::sumUnit(d, addr, "flat", ec);
-				}
-				iCommerceHappy += iPer * owner.getCommercePercent((CommerceTypes)c) / 100;
-			}
-		}
-	}
+	for (int c = 0; c < NUM_COMMERCE_TYPES; ++c)
+		iCommerceHappy += aiCommercePer[c] * owner.getCommercePercent((CommerceTypes)c) / 100;
 	// the EXTRA nets: stored inputs − the engine trait/tech parts + the cascade's computed nets
 	const int iExtraHappy = pCity->getExtraHappiness() + owner.getExtraHappiness()
 		- iTraitHappyPart - iTechHappyPart + hap.iTraitNet + hap.iTechNet;
