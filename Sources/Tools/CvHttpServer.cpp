@@ -4,6 +4,7 @@
 #include "Engine/CvPropertySource.h" // property-source completeness oracle: getSource()->getProperty()
 #include "Engine/CvPropertyManipulators.h" // the property CONSTANT-source recompute (the property channel's net)
 #include "Cascade/CvCascadeProperty.h"     // the §430 property channel's per-city sourced numbers
+#include "Cascade/CvCascadeScalarChannels.h" // the city scalar channels' nets (GP-rate/defense/maintenance)
 #include "CvBonusInfo.h" // bonus-name resolution in the /diagnostic/whyNot trace
 #include "CvImprovementInfo.h" // cityInput loadout: worked-plot improvement type
 #include "CvTraitInfo.h" // cityInput loadout: player trait list
@@ -1823,6 +1824,20 @@ namespace
 						props[GC.getPropertyInfo((PropertyTypes)iWbP).getType()] = picojson::value(pe);
 					}
 					o["properties"] = picojson::value(props);
+				}
+				// ---- the SCALAR channels' nets (greatPeopleRate / defense / maintenance -- calc-map §4/§5/§9.5):
+				// cascade sums vs the legacy accumulators, the open-the-net step of each channel ----
+				{
+					picojson::object sc;
+					sc["gpBaseCasc"] = picojson::value((double)CascadeScalarChannels::gpRateBase(pCity, wbec));
+					sc["gpBaseLeg"] = picojson::value((double)(pCity->getBaseGreatPeopleRate() - kWbOwner.getNationalGreatPeopleRate()));
+					sc["gpModCasc"] = picojson::value((double)CascadeScalarChannels::gpRateModifier(pCity, wbec));
+					sc["gpModLeg"] = picojson::value((double)pCity->getTotalGreatPeopleRateModifier());
+					sc["defenseCasc"] = picojson::value((double)CascadeScalarChannels::defenseAmount(pCity, wbec));
+					sc["defenseLeg"] = picojson::value((double)pCity->getBuildingDefense());
+					sc["maintModCasc"] = picojson::value((double)CascadeScalarChannels::maintenanceModifier(pCity, wbec));
+					sc["maintModLeg"] = picojson::value((double)pCity->getEffectiveMaintenanceModifier());
+					o["scalars"] = picojson::value(sc);
 				}
 			}
 			// ---- gate flags + constants ----
