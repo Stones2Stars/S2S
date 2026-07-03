@@ -693,6 +693,14 @@ namespace
 			wb["vassalHappy"] = picojson::value((double)pCity->getVassalHappiness());
 			wb["vassalUnhappy"] = picojson::value((double)pCity->getVassalUnhappiness());
 			wb["militaryUnits"] = picojson::value((double)pCity->getMilitaryHappinessUnits());   // the stationed-military COUNT (the per-unit value is civic data)
+			// the ranked-cities scaler operands (json §3.3 TARGET_NUM_CITIES -- previously unemitted, the "inert
+			// until a /state scalar" note): the world-size target city count + THIS city's population rank
+			wb["targetNumCities"] = picojson::value((double)GC.getWorldInfo(GC.getMap().getWorldSize()).getTargetNumCities());
+			wb["populationRank"] = picojson::value((double)pCity->findPopulationRank());
+			wb["percentAngerDivisor"] = picojson::value((double)GC.getPERCENT_ANGER_DIVISOR());   // world config constants (inputs)
+			wb["tempHappy"] = picojson::value((double)GC.getTEMP_HAPPY());
+			wb["handicapHappy"] = picojson::value((double)GC.getHandicapInfo(pCity->getHandicapType()).getHappyBonus());   // handicap config pair (inputs)
+			wb["handicapHealth"] = picojson::value((double)GC.getHandicapInfo(pCity->getHandicapType()).getHealthBonus());
 			wb["revSuccessHappiness"] = picojson::value((double)pCity->getRevSuccessHappiness());
 			wb["happinessTimer"] = picojson::value((double)pCity->getHappinessTimer());
 			wb["celebrityHappiness"] = picojson::value((double)pCity->getCelebrityHappiness());   // unit-scan (input until the celebrity skill port)
