@@ -692,6 +692,7 @@ namespace
 			wb["cityOverLimitUnhappy"] = picojson::value((double)(kWbOwner.getCityOverLimitUnhappy() * iWbOver));
 			wb["vassalHappy"] = picojson::value((double)pCity->getVassalHappiness());
 			wb["vassalUnhappy"] = picojson::value((double)pCity->getVassalUnhappiness());
+			wb["militaryUnits"] = picojson::value((double)pCity->getMilitaryHappinessUnits());   // the stationed-military COUNT (the per-unit value is civic data)
 			wb["revSuccessHappiness"] = picojson::value((double)pCity->getRevSuccessHappiness());
 			wb["happinessTimer"] = picojson::value((double)pCity->getHappinessTimer());
 			wb["celebrityHappiness"] = picojson::value((double)pCity->getCelebrityHappiness());   // unit-scan (input until the celebrity skill port)
