@@ -174,6 +174,13 @@ public:
   its event feeds — the realized exemplar is `CascadeAccumulator`'s `AccDirty` bits over the §2a packages
   ([modifier-substrate.md](../plans/structural-cleanup/modifier-substrate.md)). When `CvDerivedCache` is built,
   it grows this per-component form (the single-flag form stays for leaf caches like the plot yield).
+- **THE TURN-BOUNDARY PRINCIPLE WILL SIMPLIFY CACHING (owner 2026-07-03).** The
+  [AI build-queue-parity intent](../plans/parked/ai-build-queue-parity.md) rules that decision INPUTS are
+  turn-boundary state — *"this principle should also help us simplify caching for us now."* Consequence: once
+  that rework lands, the turn-roll refresh IS the complete freshness contract for decision reads, and the
+  mid-turn dirty-hook web shrinks to the realized-output paths (which already run at each player's slice start,
+  on fresh slots). **Until then the hooks stay** — today's AI still reads mid-turn, and the flipped getters must
+  match what legacy's always-fresh accumulators would have answered (parity discipline).
 - **LOAD-TIME RECOMPUTE IS AN EASY TRADE — EAGER WARM-UP IS THE GENERAL POLICY.** *"I don't mind having longer
   initial save-load time, and have every cache recalculated on save load — it's turn times that people notice;
   trading longer save-load for shorter turn times is an easy trade"*; strengthened same day: *"I am happy to
