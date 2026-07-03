@@ -147,3 +147,14 @@ Scopes: `world`/`team`/`empire`/`area`/`city`/`plot`. Examples a curator produce
   AND (enabler-spec §3 / §13.8 — "the rare `TechTypes` multi-tech building/unit rides the same
   fix"). Only **techs themselves** carry OR-techs (`requires.build.any`); units/buildings are
   AND-only.
+
+## Interpreter path (the Windows Python Install Manager footgun)
+
+The `py` / `python` App Execution Aliases BREAK at random (the install manager re-shims them; 2026-07-03 an
+agent session lost them mid-day). The REAL interpreter is stable at
+`%LocalAppData%\Python\bin\python.exe` (the install manager's actual location) — call it directly when the
+aliases are dead:
+
+```
+%LocalAppData%\Python\bin\python.exe Tools\Migration\curate_building.py --write
+```

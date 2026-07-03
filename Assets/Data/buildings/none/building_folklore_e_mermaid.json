@@ -68,10 +68,16 @@
  },
  "PROPERTY_EDUCATION": {
   "city": {
-   "flat": {
-    "value": 1,
-    "enabled": "TECH_LITERATURE"
-   }
+   "flat": [
+    {
+     "value": 1,
+     "enabled": "TECH_WRITING"
+    },
+    {
+     "value": 1,
+     "enabled": "TECH_LITERATURE"
+    }
+   ]
   }
  },
  "cost": {

@@ -68,10 +68,16 @@
  },
  "PROPERTY_EDUCATION": {
   "city": {
-   "flat": {
-    "value": 1,
-    "enabled": "TECH_BIOLOGY"
-   }
+   "flat": [
+    {
+     "value": 1,
+     "enabled": "TECH_EDUCATION"
+    },
+    {
+     "value": 1,
+     "enabled": "TECH_BIOLOGY"
+    }
+   ]
   }
  },
  "cost": {

@@ -45,10 +45,13 @@
  },
  "PROPERTY_EDUCATION": {
   "city": {
-   "flat": {
-    "value": -2,
-    "enabled": "TECH_LITERATURE"
-   }
+   "flat": [
+    2,
+    {
+     "value": -2,
+     "enabled": "TECH_LITERATURE"
+    }
+   ]
   }
  },
  "attributes": {

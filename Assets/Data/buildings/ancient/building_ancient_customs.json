@@ -211,10 +211,13 @@
  },
  "PROPERTY_EDUCATION": {
   "city": {
-   "flat": {
-    "value": -1,
-    "enabled": "TECH_LITERATURE"
-   }
+   "flat": [
+    1,
+    {
+     "value": -1,
+     "enabled": "TECH_LITERATURE"
+    }
+   ]
   }
  },
  "cost": {
