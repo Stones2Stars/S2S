@@ -13924,27 +13924,9 @@ void CvUnit::setXY(int iX, int iY, bool bGroup, bool bUpdate, bool bShow, bool b
 			pOldCity->noteUnitMoved(this);
 		}
 
-		{
-			CvCity* pWorkingCity = pOldPlot->getWorkingCity();
-
-			if (pWorkingCity && canSiege(pWorkingCity->getTeam()))
-			{
-				pWorkingCity->AI_setAssignWorkDirty(true);
-			}
-
-			if (pOldPlot->isWater())
-			{
-				foreach_(const CvPlot* pLoopPlot, pOldPlot->adjacent() | filtered(CvPlot::fn::isWater()))
-				{
-					pWorkingCity = pLoopPlot->getWorkingCity();
-
-					if (pWorkingCity && canSiege(pWorkingCity->getTeam()))
-					{
-						pWorkingCity->AI_setAssignWorkDirty(true);
-					}
-				}
-			}
-		}
+		// #430 (DEC-unit-modifiers-on-top, "full stop"): the siege-blockade governor invalidation on EVERY
+		// enemy unit stepping off a worked plot is CUT -- unit movement cannot invalidate cache; the governor
+		// re-optimizes at its own end-turn cadence and resolves blockades there.
 
 		if (pOldPlot->isActiveVisible(true))
 		{

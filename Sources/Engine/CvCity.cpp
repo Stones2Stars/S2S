@@ -1266,6 +1266,10 @@ void CvCity::doTurn()
 	PROFILE("CvCity::doTurn()");
 	PERF_SCOPE("city.doTurn", getOwner());
 
+	// #430 (DEC-unit-modifiers-on-top): the unit-sourced property memo refreshes at END-TURN cadence --
+	// unit movement never clears it (noteUnitMoved is a no-op; the per-move clear was an automation storm).
+	m_unitSourcedPropertyCache.clear();
+
 	// [CIT/proplevel] -- per-city property snapshot at the start of each turn (crime/disease/
 	// education/...), so property TRENDS are trackable from the log over turns -- hard to eyeball
 	// in-game. One line per active property: val = current level, change = per-turn drift.
@@ -8474,10 +8478,11 @@ void CvCity::changeMilitaryHappinessUnits(int iChange)
 		m_iMilitaryHappinessUnits += iChange;
 		FASSERT_NOT_NEGATIVE(getMilitaryHappinessUnits());
 
-		AI_setAssignWorkDirty(true);
-		// #430: deliberately NO ACCD_WB dirty here (owner ruling 2026-07-03: unit-driven happiness is calced at
-		// END TURN only) -- the turn-roll markAllDirty IS that cadence; per-move dirtying made unit automation
-		// pay wellbeing recomputes and is banned.
+		// #430 (DEC-unit-modifiers-on-top): NO invalidation of ANY kind here. The legacy AI_setAssignWorkDirty
+		// fired a full governor re-optimization on EVERY unit entering/leaving EVERY city -- the
+		// invalidate-and-recalculate-everything storm on unit automation. Unit-carried happiness now rides
+		// LIVE on top of the cached verdicts (perUnit x this counter at read), so a garrison change needs no
+		// recalc; the governor re-optimizes at its own end-turn cadence regardless.
 	}
 }
 
@@ -23155,12 +23160,14 @@ static bool unitHasCityOrPlotPropertySources(const CvUnit* pUnit)
 	return bHasSources;
 }
 
-void CvCity::noteUnitMoved(const CvUnit* pUnit) const
+void CvCity::noteUnitMoved(const CvUnit*) const
 {
-	if (unitHasCityOrPlotPropertySources(pUnit))
-	{
-		m_unitSourcedPropertyCache.clear();
-	}
+	// #430 (DEC-unit-modifiers-on-top, owner "full stop" ruling 2026-07-03): UNIT MOVEMENT CANNOT INVALIDATE
+	// CACHE. The legacy per-move clear of m_unitSourcedPropertyCache made every property-carrying unit move
+	// (criminals, law enforcement -- constant traffic) wipe the memo on BOTH cities, so the property-control
+	// AI's valuation loops recomputed it endlessly during automation. The cache now refreshes at the END-TURN
+	// cadence (doTurn clears it); unit-sourced property is turn-grain for AI valuation, live-on-top in the
+	// cascade's realized reads.
 }
 
 void sumCitySources(const CvPropertyManipulators* pMani, const CvCity* pCity, int* iSum, PropertyTypes eProperty)
