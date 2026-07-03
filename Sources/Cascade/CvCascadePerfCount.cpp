@@ -12,11 +12,13 @@ int CascadePerf::pctStack = 0;
 int CascadePerf::commerceRate = 0;
 int CascadePerf::condEval = 0;
 int CascadePerf::accRefresh = 0;
+int CascadePerf::wbCompute = 0;
 
 double CascadePerf::factsMs = 0.0;
 double CascadePerf::yieldRateMs = 0.0;
 double CascadePerf::pctStackMs = 0.0;
 double CascadePerf::commerceRateMs = 0.0;
+double CascadePerf::wbComputeMs = 0.0;
 
 void CascadePerf::reset()
 {

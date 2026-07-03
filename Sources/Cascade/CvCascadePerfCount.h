@@ -18,11 +18,13 @@ struct CascadePerf
 	static int commerceRate;  // CommerceCalc::commerceRate100 computes
 	static int condEval;      // cascadeEvalCondition leaf evaluations
 	static int accRefresh;    // CascadeAccumulator component-refresh passes (dirty-triggered recomputes)
+	static int wbCompute;     // CascadeWellbeing::compute runs (the §2b channel -- automation-cost attribution)
 
 	static double factsMs;        // stopwatch accumulators (PerfAccumTimer targets)
 	static double yieldRateMs;
 	static double pctStackMs;
 	static double commerceRateMs;
+	static double wbComputeMs;
 
 	static void reset();
 };

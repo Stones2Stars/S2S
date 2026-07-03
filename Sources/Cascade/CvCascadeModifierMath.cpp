@@ -71,7 +71,8 @@ enum MdFld
 	MDF_PX, MDF_PY,                                                                 // [SLOT/plotdiff]: the diverging plot's coords (pair = plotS/plotC re-used per plot)
 	MDF_ACC_P, MDF_ACC_T, MDF_ACC_C,                                                // [SLOT/plotdiff]: the engine's SERIALIZED improvement-yield accumulators (player/team/city) for the plot's improvement
 	MDF_HAP_C, MDF_HAP_L, MDF_UNH_C, MDF_UNH_L,                                     // [MODIFIER/wellbeing]: the four verdict pairs (cascade vs legacy)
-	MDF_GOOD_C, MDF_GOOD_L, MDF_BAD_C, MDF_BAD_L
+	MDF_GOOD_C, MDF_GOOD_L, MDF_BAD_C, MDF_BAD_L,
+	MDF_WBN, MDF_WBMS                                                               // perf: wellbeing computes + ms×10
 };
 static const char* mm_prefix(int evt)
 {
@@ -172,6 +173,8 @@ static const char* mm_field(int tag, SpineFieldType* peType)
 	case MDF_GOOD_L:      return "goodL";
 	case MDF_BAD_C:       return "badC";
 	case MDF_BAD_L:       return "badL";
+	case MDF_WBN:         return "wbN";
+	case MDF_WBMS:        return "wbMsX10";
 	default:            return NULL;
 	}
 }
@@ -557,6 +560,7 @@ void cvCascadeModifierShadow()
 		.addI(MDF_CRN, CascadePerf::commerceRate).addI(MDF_CEN, CascadePerf::condEval)
 		.addI(MDF_ACCN, CascadePerf::accRefresh)
 		.addI(MDF_FACTSMS, (int)(CascadePerf::factsMs * 10.0)).addI(MDF_YRMS, (int)(CascadePerf::yieldRateMs * 10.0))
-		.addI(MDF_PSMS, (int)(CascadePerf::pctStackMs * 10.0)).addI(MDF_CRMS, (int)(CascadePerf::commerceRateMs * 10.0)));
+		.addI(MDF_PSMS, (int)(CascadePerf::pctStackMs * 10.0)).addI(MDF_CRMS, (int)(CascadePerf::commerceRateMs * 10.0))
+		.addI(MDF_WBN, CascadePerf::wbCompute).addI(MDF_WBMS, (int)(CascadePerf::wbComputeMs * 10.0)));
 	CascadePerf::reset();
 }

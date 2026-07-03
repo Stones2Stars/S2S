@@ -18,6 +18,8 @@
 #include "CvCascadeDepositIndex.h"
 #include "CvCascadeEnablerKernel.h"
 #include "CvCascadeAccumulator.h"   // epochFor -- the per-player rollup cache stamp
+#include "CvCascadePerfCount.h"      // the wbCompute counter/timer (automation-cost attribution)
+#include "AI/BetterBTSAI.h"          // PerfAccumTimer
 #include "CvCascadeCondition.h"
 #include "CvJsonInfo.h"
 #include "CvJsonTraitInfo.h"
@@ -414,6 +416,8 @@ static void wb_extraParts(const CvPlayer& owner, int& iTraitHappy, int& iTechHap
 CascadeWellbeingVerdicts CascadeWellbeing::compute(const CvCity* pCity, const CvCascadeEvalCtx& ec)
 {
 	PROFILE_FUNC();
+	++CascadePerf::wbCompute;
+	PerfAccumTimer perfT(CascadePerf::wbComputeMs);
 	CascadeWellbeingVerdicts out;
 	const CvPlayer& owner = GET_PLAYER(pCity->getOwner());
 	const int iPop = pCity->getPopulation();

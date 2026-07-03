@@ -6937,7 +6937,7 @@ void CvCity::setPopulation(int iNewValue, bool bNormal)
 		return;
 	}
 	m_iPopulation = iNewValue;
-	CascadeAccumulator::dirtyCity(this, ACCD_EXTRA | ACCD_CBASE | ACCD_WB);   // #430: population feeds the perPop terms (yield + commerce) + the wellbeing pop terms
+	CascadeAccumulator::dirtyCity(this, ACCD_EXTRA | ACCD_CBASE);   // #430: perPop terms; WB deliberately NOT dirtied (end-turn cadence -- pop churn is automation-frequency)
 
 	FASSERT_NOT_NEGATIVE(iNewValue);
 
@@ -14137,7 +14137,7 @@ void CvCity::setSpecialistCount(SpecialistTypes eIndex, int iNewValue)
 	{
 		m_paiSpecialistCount[eIndex] = iNewValue;
 		FASSERT_NOT_NEGATIVE(getSpecialistCount(eIndex));
-		CascadeAccumulator::dirtyCity(this, ACCD_SPEC | ACCD_CSPEC | ACCD_WB);   // #430: the specialist plugins' input (yield + commerce + wellbeing)
+		CascadeAccumulator::dirtyCity(this, ACCD_SPEC | ACCD_CSPEC);   // #430: specialist plugins; WB deliberately NOT dirtied (end-turn cadence -- governor churn is automation-frequency)
 
 		changeSpecialistPopulation(iNewValue - iOldValue);
 		processSpecialist(eIndex, (iNewValue - iOldValue));
