@@ -1796,9 +1796,40 @@ namespace
 							const int iWbV = GC.getBuildingInfo(eWbBt).getBonusHappinessChanges().getValue((BonusTypes)iWbB);
 							if (iWbV >= 0) iWbBonusGoodRe += iWbV; else iWbBonusBadRe += iWbV;
 						}
+						// the TRAIT per-bonus loop (processBonus :4479, same iterate-and-break shape) — per held trait
+						for (int iWbT = 0; iWbT < GC.getNumTraitInfos(); ++iWbT)
+						{
+							if (!kWbOwner.hasTrait((TraitTypes)iWbT)) continue;
+							int iWbTv = 0;
+							foreach_(const BonusModifier& kWbPair, GC.getTraitInfo((TraitTypes)iWbT).getBonusHappinessChanges())
+							{
+								if (kWbPair.first == (BonusTypes)iWbB) { iWbTv = kWbPair.second; break; }
+							}
+							if (iWbTv >= 0) iWbBonusGoodRe += iWbTv; else iWbBonusBadRe += iWbTv;
+						}
 					}
 					h["bonusGoodRecomputed"] = picojson::value((double)iWbBonusGoodRe);
 					h["bonusBadRecomputed"] = picojson::value((double)iWbBonusBadRe);
+				}
+				// buildingGood/Bad + stateReligion RECOMPUTED (the remaining incremental city accumulators:
+				// processBuilding's per-building sign-split of getHappiness() + the event ledger; the state-religion
+				// keyed feed :4692) — the drift meters' twins.
+				{
+					int iWbBldGoodRe = 0, iWbBldBadRe = 0, iWbSRRe = 0;
+					const ReligionTypes eWbState = kWbOwner.getStateReligion();
+					foreach_(const BuildingTypes eWbBt, pCity->getHasBuildings())
+					{
+						if (pCity->isReligiouslyLimitedBuilding(eWbBt) || pCity->isDisabledBuilding(eWbBt)) continue;
+						const CvBuildingInfo& kWbB = GC.getBuildingInfo(eWbBt);
+						if (kWbB.getHappiness() > 0) iWbBldGoodRe += kWbB.getHappiness(); else iWbBldBadRe += kWbB.getHappiness();
+						const int iWbLedger = pCity->getBuildingHappyChange(eWbBt);
+						if (iWbLedger > 0) iWbBldGoodRe += iWbLedger; else iWbBldBadRe += iWbLedger;
+						if (eWbState != NO_RELIGION && kWbB.getReligionType() == eWbState)
+							iWbSRRe += kWbB.getStateReligionHappiness();
+					}
+					h["buildingGoodRecomputed"] = picojson::value((double)iWbBldGoodRe);
+					h["buildingBadRecomputed"] = picojson::value((double)iWbBldBadRe);
+					h["stateReligionRecomputed"] = picojson::value((double)iWbSRRe);
 				}
 				h["commerce"] = picojson::value((double)pCity->getCommerceHappiness());
 				h["areaBuilding"] = picojson::value((double)pCity->area()->getBuildingHappiness(pCity->getOwner()));
@@ -1863,6 +1894,20 @@ namespace
 					}
 					hl["bonusGoodRecomputed"] = picojson::value((double)iWbBonusGoodHRe);
 					hl["bonusBadRecomputed"] = picojson::value((double)iWbBonusBadHRe);
+				}
+				// the buildingGood/BadHealth recomputed twins (processBuilding's sign-split of getHealth() + ledger)
+				{
+					int iWbBldGoodHRe = 0, iWbBldBadHRe = 0;
+					foreach_(const BuildingTypes eWbBt, pCity->getHasBuildings())
+					{
+						if (pCity->isReligiouslyLimitedBuilding(eWbBt) || pCity->isDisabledBuilding(eWbBt)) continue;
+						const CvBuildingInfo& kWbB = GC.getBuildingInfo(eWbBt);
+						if (kWbB.getHealth() > 0) iWbBldGoodHRe += kWbB.getHealth(); else iWbBldBadHRe += kWbB.getHealth();
+						const int iWbLedger = pCity->getBuildingHealthChange(eWbBt);
+						if (iWbLedger > 0) iWbBldGoodHRe += iWbLedger; else iWbBldBadHRe += iWbLedger;
+					}
+					hl["buildingGoodRecomputed"] = picojson::value((double)iWbBldGoodHRe);
+					hl["buildingBadRecomputed"] = picojson::value((double)iWbBldBadHRe);
 				}
 				// the building health composites + their parts (totalGood/BadBuildingHealth, CvCity.cpp:5827/5837)
 				hl["totalGoodBuilding"] = picojson::value((double)pCity->totalGoodBuildingHealth());
