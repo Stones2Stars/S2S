@@ -21,6 +21,8 @@ public:
 	// and the MODIFIER percent stack (city + empire percents incl. state-religion/golden-age-gated entries).
 	static int gpRateBase(const CvCity* pCity, const CvCascadeEvalCtx& ec);
 	static int gpRateModifier(const CvCity* pCity, const CvCascadeEvalCtx& ec);
+	// the gpMod parts for attribution (building city+empire / civic+trait city+empire / the SR term)
+	static void gpModParts(const CvCity* pCity, const CvCascadeEvalCtx& ec, int& iBld, int& iCivTrait, int& iSr);
 	// defense: the building city amount stack (legacy m_iBuildingDefense).
 	static int defenseAmount(const CvCity* pCity, const CvCascadeEvalCtx& ec);
 	// maintenance: the effective modifier percent stack (city + empire + area scopes; building/civic/trait).

@@ -35,6 +35,26 @@ static int sc_buildings(const std::string& addr, const char* unit, const CvCity*
 	return iSum;
 }
 
+// Σ a unit over ALL the player's cities' ACTIVE buildings at an address (the player-accumulator semantic:
+// an empire-scope building deposit feeds the player from ANY city).
+static int sc_playerBuildings(const std::string& addr, const char* unit, const CvPlayer& owner, const CvTeam* pTeam)
+{
+	int iSum = 0, iLoop;
+	for (const CvCity* pc = owner.firstCity(&iLoop); pc != NULL; pc = owner.nextCity(&iLoop))
+	{
+		const CascadeCityFacts& facts = EnablerKernel::cityFacts(pc);
+		CvCascadeEvalCtx pec;
+		pec.city = pc; pec.plot = pc->plot(); pec.player = &owner; pec.team = pTeam;
+		pec.activeBuildings = &facts.active; pec.vicinityProvidedBonuses = &facts.provided;
+		for (std::set<int>::const_iterator it = facts.active.begin(); it != facts.active.end(); ++it)
+		{
+			const CvJsonInfo* d = InfoRepo<CvBuildingInfo>::get().get(*it);
+			if (d != NULL) iSum += MMKernel::sumUnit(d, addr, unit, pec);
+		}
+	}
+	return iSum;
+}
+
 // Σ a unit over the player's adopted civics + held traits (pure-filtered) at an address.
 static int sc_civicsTraits(const std::string& addr, const char* unit, const CvPlayer& owner, const CvCascadeEvalCtx& ec)
 {
@@ -75,7 +95,7 @@ int CascadeScalarChannels::gpRateModifier(const CvCity* pCity, const CvCascadeEv
 	// the §9.5 / :7153 stack: 100 + city + player percents...
 	int iMod = 100;
 	iMod += sc_buildings("greatPeopleRate.city", "percent", pCity, ec);
-	iMod += sc_buildings("greatPeopleRate.empire", "percent", pCity, ec);
+	iMod += sc_playerBuildings("greatPeopleRate.empire", "percent", owner, ec.team);   // GLOBAL GP mods feed the player from ANY city
 	iMod += sc_civicsTraits("greatPeopleRate.city", "percent", owner, ec);
 	iMod += sc_civicsTraits("greatPeopleRate.empire", "percent", owner, ec);
 	// ...+ the STATE-RELIGION grouped family (civic stateReligion.empire.greatPeopleRate) while the state
@@ -89,6 +109,19 @@ int CascadeScalarChannels::gpRateModifier(const CvCity* pCity, const CvCascadeEv
 	if (owner.isGoldenAge())
 		iMod += GC.getGOLDEN_AGE_GREAT_PEOPLE_MODIFIER();
 	return std::max(0, iMod);
+}
+
+void CascadeScalarChannels::gpModParts(const CvCity* pCity, const CvCascadeEvalCtx& ec, int& iBld, int& iCivTrait, int& iSr)
+{
+	const CvPlayer& owner = GET_PLAYER(pCity->getOwner());
+	iBld = sc_buildings("greatPeopleRate.city", "percent", pCity, ec);
+	iCivTrait = sc_playerBuildings("greatPeopleRate.empire", "percent", owner, ec.team);   // seeded with the player-wide building half
+	iCivTrait += sc_civicsTraits("greatPeopleRate.city", "percent", owner, ec)
+	           + sc_civicsTraits("greatPeopleRate.empire", "percent", owner, ec);
+	iSr = 0;
+	const ReligionTypes eState = owner.getStateReligion();
+	if (eState != NO_RELIGION && pCity->isHasReligion(eState))
+		iSr = sc_civicsTraits("stateReligion.empire.greatPeopleRate", "percent", owner, ec);
 }
 
 int CascadeScalarChannels::defenseAmount(const CvCity* pCity, const CvCascadeEvalCtx& ec)

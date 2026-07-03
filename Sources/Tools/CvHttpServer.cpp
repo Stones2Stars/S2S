@@ -1833,9 +1833,16 @@ namespace
 					sc["gpBaseLeg"] = picojson::value((double)(pCity->getBaseGreatPeopleRate() - kWbOwner.getNationalGreatPeopleRate()));
 					sc["gpModCasc"] = picojson::value((double)CascadeScalarChannels::gpRateModifier(pCity, wbec));
 					sc["gpModLeg"] = picojson::value((double)pCity->getTotalGreatPeopleRateModifier());
-					// the gpMod legacy PARTS (attribute, don't guess)
+					// the gpMod legacy PARTS + the cascade-side split (attribute, don't guess)
 					sc["gpModCityLeg"] = picojson::value((double)pCity->getGreatPeopleRateModifier());
 					sc["gpModPlayerLeg"] = picojson::value((double)kWbOwner.getGreatPeopleRateModifier());
+					{
+						int iWbGpBld, iWbGpCivTrait, iWbGpSr;
+						CascadeScalarChannels::gpModParts(pCity, wbec, iWbGpBld, iWbGpCivTrait, iWbGpSr);
+						sc["gpModBldCasc"] = picojson::value((double)iWbGpBld);
+						sc["gpModCivTraitCasc"] = picojson::value((double)iWbGpCivTrait);
+						sc["gpModSrCasc"] = picojson::value((double)iWbGpSr);
+					}
 					sc["defenseCasc"] = picojson::value((double)CascadeScalarChannels::defenseAmount(pCity, wbec));
 					sc["defenseLeg"] = picojson::value((double)pCity->getBuildingDefense());
 					// the defense DRIFT meter: the stored m_iBuildingDefense vs a current-state recompute
