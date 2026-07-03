@@ -148,13 +148,22 @@ clamp(unhappy − happy, 0, pop)`. The channel oracle is **`/computed/cities/wel
 **The TARGET/INPUT split (the tradeYield precedent, [validation](validation.md) input rules):**
 
 - **DEPOSIT-COMPUTED (the cascade's targets)** — everything a live source's `health`/`happiness` family deposits
-  produce: **buildings** (city `flat` + the area/empire-scope rollups + extra-building "event buildings"),
-  **civics**, **traits** (the player extra), **features/bonuses** (city-radius substrate; the `…Good/…Bad`
-  engine pairs are ONE signed deposit each), **religions** (present/state gated), **specialists** (their /100
-  latent scale is the curator's ×100 de-scale — the engine `…/100` at use), **improvements** (ditto),
-  **corporations**, **techs** (`extraTechHealth/HappinessTotal`), **projects/world/civilization/handicap**
-  (empire-scope flats), **military units** (`happiness.empire.cities.{unit: IS_MILITARY}` §3.7) and
-  **celebrity** (the `skills.celebrity` unit scan — happy-only).
+  produce: **buildings** (city `flat`/`perPopulation` + the area/empire-scope rollups + conditioned entries incl.
+  `HAS_STATE_RELIGION`-gated), **civics** (empire flats + the keyed/heterogeneous members: `buildings.{B}`,
+  `features.{F}`, `nonStateReligion`, `perMilitaryUnit`, the ranked `cities` scaler), **traits** (same member
+  vocabulary), **features** (`health.plot.percent` — summed over radius plots, ÷100 — the fallout class),
+  **bonuses** (empire flats, presence-gated), **specialists** (city flats; the fractional values are the
+  curator's ÷100 de-scale of the legacy latent-×100 — the engine `…/100` at use), **corporations**
+  (`HAS_CORPORATION`-conditioned city flats), **techs**/**projects** (empire — projects also the lone `world`
+  scope)/**handicaps** (empire flats), and **military units** (`happiness.empire.cities.{unit: IS_MILITARY}`
+  §3.7). **Religion happiness has NO religion-side data** (verified: legacy religion info carries none) — the
+  state/non-state religion terms derive from CIVIC/TRAIT/BUILDING configs × religion presence.
+  ⚖ **Improvement health is a BALANCE-CUT (curator ruling, `curate_improvement.py`):** legacy `iHealthPercent`
+  is deliberately dropped from the data, so the engine's `improvementGood/Bad` term is an **intentional
+  divergence** — attributed via the oracle's `improvementGood100/Bad100` fields, shown, never chased
+  ([validation](validation.md) intentional-model-change class); the term dies at the channel's legacy cut.
+  **Celebrity happiness** is an INPUT until the `skills.celebrity` unit-scan port (the ⏳ post-migration CvCity
+  scan, data-migration-remaining.md).
 - **RAW-STATE INPUTS (folded, never derived)** — the runtime timers/counters no deposit produces: the **anger
   percents** (overcrowding = f(pop), noMilitary, foreign-culture, enemy-religion, hurry/conscript/defy/
   revRequest timers, war-weariness, revIndex, civic anger%), the **espionage counters**, **event anger**
