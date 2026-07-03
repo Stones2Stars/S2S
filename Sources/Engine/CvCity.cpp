@@ -56,6 +56,7 @@ CvCity::CvCity()
 	m_outputHistory()
 {
 	m_dataRepository.init(this);
+	m_cascadeRateSlots.set.bind(this, &CvCity::cascadeRefreshRates);   // #430: the rate-slot cache (all-dirty from birth)
 	m_aiRiverPlotYield = new int[NUM_YIELD_TYPES];
 	m_aiBaseYieldRate = new int[NUM_YIELD_TYPES];
 	m_aiExtraYield = new int[NUM_YIELD_TYPES];
@@ -476,6 +477,10 @@ void CvCity::reset(int iID, PlayerTypes eOwner, int iX, int iY, bool bConstructo
 {
 	PROFILE_EXTRA_FUNC();
 	m_dataRepository.reset();
+	// #430: a reused city object starts with a stale rate cache (fresh identity -> full recompute on first read)
+	m_cascadeRateSlots.set.markAllDirty();
+	m_cascadeRateSlots.iEpoch = -1;
+	m_cascadeRateSlots.iTurn = -1;
 
 	//--------------------------------
 	// Uninit class
@@ -11205,6 +11210,12 @@ int CvCity::getBaseYieldRateModifier(YieldTypes eIndex, int iExtra) const
 int CvCity::getYieldRate(const YieldTypes eYield) const
 {
 	return getYieldRate100(eYield) / 100;
+}
+
+// The CvDerivedCacheSet refresh delegate: the cascade math stays module-side; the city carries only the state.
+void CvCity::cascadeRefreshRates(int iMask) const
+{
+	CascadeAccumulator::refreshComponents(this, iMask);
 }
 
 int CvCity::getYieldRate100Legacy(const YieldTypes eYield) const

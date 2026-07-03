@@ -12,6 +12,7 @@
 #include "UI/CvBuildingList.h"
 #include "UI/CvUnitList.h"
 #include "CvDerivedData.h"
+#include "Cascade/CvCascadeAccumulator.h"   // CascadeRateSlots -- the #430 modifier-substrate city cache (m_cascadeRateSlots)
 #include "UI/CityOutputHistory.h"
 #include "CvGameObject.h"
 
@@ -1825,6 +1826,14 @@ protected:
 	CvProperties m_Properties;
 	CvBuildingList m_BuildingList;
 	CvUnitList m_UnitList;
+
+public:
+	// #430 modifier-substrate: the standing rate slots -- a MUTABLE derived cache (never serialized; the same
+	// idiom as the CvPlot yield cache), CvDerivedCacheSet-driven. Public by the shadow-phase convention; the
+	// CascadeAccumulator module is the query surface.
+	mutable CascadeRateSlots m_cascadeRateSlots;
+	void cascadeRefreshRates(int iMask) const;   // the CacheSet's refresh delegate -> CascadeAccumulator::refreshComponents
+protected:
 
 	std::vector<IDInfo> m_paTradeCities;
 

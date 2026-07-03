@@ -135,8 +135,11 @@ bypass — the fresh sum runs only on recompute (change-then-read), never per re
 > plot's `!area()` early-return used to leave stale values behind a clean flag); **(3) NONCOPYABLE** (a copied
 > cache keeps the ORIGINAL owner's pointer — dangling-owner footgun); **(4) `data()` pointers stay valid but
 > values mutate — never cache across state changes; game-thread only; (5) fixed compile-time N** (a
-> runtime-sized domain needs a vector variant when first needed). Remaining migrations (specialist getters,
-> building-commerce, the accumulator onto the Set form + CvCity membership) are follow-ups.
+> runtime-sized domain needs a vector variant when first needed). **The accumulator converged onto the Set form
+> the same day**: `CascadeRateSlots` is a mutable `CvCity` member (`m_cascadeRateSlots`, bound in the ctor,
+> stale-marked in `reset()`; the side map + per-read lookup deleted; the cascade math stays module-side behind
+> the one `cascadeRefreshRates` delegate — the pattern every remaining modifier channel now reuses). Remaining
+> migrations (specialist getters, building-commerce) are follow-ups.
 
 **Chosen mechanism — a templated value-holder with the recompute injected as a member-function-pointer** (the one part
 that genuinely needs owner state stays owner-side; everything else — storage, dirty flag, pull-on-read, trigger — is the
