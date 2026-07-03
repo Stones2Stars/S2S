@@ -39,7 +39,9 @@ struct AccCityState
 	}
 };
 static std::map<int, AccCityState> s_city;   // cid -> standing components
-static int s_iEpoch = 0;                     // bumped by player/team-level events
+static int s_iEpoch = 0;                     // the GLOBAL fallback epoch (game reset / non-player-attributable)
+static int s_aiPlayerEpoch[MAX_PLAYERS];     // per-player epochs (building count / civics / GA / team techs) --
+                                             // zero-initialized statics; a city checks GLOBAL + ITS OWNER's only
 
 static int acc_cid(const CvCity* pCity) { return ((int)pCity->getOwner()) * 100000 + pCity->getID(); }
 
@@ -56,6 +58,11 @@ void CascadeAccumulator::dirtyCity(const CvCity* pCity, int iMask)
 void CascadeAccumulator::bumpEpoch()
 {
 	++s_iEpoch;
+}
+
+void CascadeAccumulator::bumpPlayerEpoch(PlayerTypes ePlayer)
+{
+	if (ePlayer >= 0 && ePlayer < MAX_PLAYERS) ++s_aiPlayerEpoch[ePlayer];
 }
 
 static const char* acc_channel(int y)
@@ -89,10 +96,12 @@ static long acc_combine(const AccCityState& st, const CvCity* pCity, YieldTypes 
 static void acc_refresh(const CvCity* pCity, AccCityState& st)
 {
 	const int iTurn = GC.getGame().getGameTurn();
-	if (st.iEpoch != s_iEpoch || st.iTurn != iTurn)
+	// combined epoch = global + THIS OWNER's (both only ever increment -- the sum is monotonic, no collisions)
+	const int iEpoch = s_iEpoch + s_aiPlayerEpoch[(int)pCity->getOwner()];
+	if (st.iEpoch != iEpoch || st.iTurn != iTurn)
 	{
 		st.iDirty = ACCD_ALL;
-		st.iEpoch = s_iEpoch;
+		st.iEpoch = iEpoch;
 		st.iTurn = iTurn;
 	}
 	if (st.iDirty == 0) return;

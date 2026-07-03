@@ -52,7 +52,12 @@ public:
 
 	// DOMAIN dirty hooks (modifier-substrate.md): a mutation in THIS city marks the affected components.
 	static void dirtyCity(const CvCity* pCity, int iMask);
-	// Player/team-level events (tech / civic / trait / golden-age / project): everything re-checks on next read.
+	// PLAYER-level events (this player's building COUNT changed / civics / golden age / techs via the team):
+	// all of THAT player's cities re-check on next read -- empire-scope deposits reach every sibling city
+	// (the owner-named hole: the AI evaluates its next build "live" right after a completion), and scoping the
+	// epoch per player kills the cross-player invalidation storm the global epoch caused.
+	static void bumpPlayerEpoch(PlayerTypes ePlayer);
+	// The global fallback (game reset / anything not player-attributable): everything re-checks.
 	static void bumpEpoch();
 };
 

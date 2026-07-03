@@ -4944,7 +4944,14 @@ void CvTeam::setHasTech(TechTypes eTech, bool bNewValue, PlayerTypes ePlayer, bo
 
 	m_pabHasTech[eTech] = bNewValue;
 	CascadeCapabilities::invalidate(getID());   // the derived capability union is f(held techs) -- the ONE mutation point
-	CascadeAccumulator::bumpEpoch();            // #430 accumulator: tech deposits/conditions -> global re-check
+	// #430 accumulator: tech deposits/conditions -- re-check for THIS team's players only (per-player epochs)
+	for (int iAccP = 0; iAccP < MAX_PLAYERS; iAccP++)
+	{
+		if (GET_PLAYER((PlayerTypes)iAccP).isAliveAndTeam(getID()))
+		{
+			CascadeAccumulator::bumpPlayerEpoch((PlayerTypes)iAccP);
+		}
+	}
 
 	for (int iI = 0; iI < GC.getMap().numPlots(); iI++)
 	{

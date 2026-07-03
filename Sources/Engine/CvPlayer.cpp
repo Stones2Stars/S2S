@@ -9411,7 +9411,7 @@ void CvPlayer::changeGoldenAgeTurns(int iChange)
 
 		if (bWasGoldenAge != isGoldenAge())
 		{
-			CascadeAccumulator::bumpEpoch();   // #430 accumulator: golden age is an empire-flat input + a condition
+			CascadeAccumulator::bumpPlayerEpoch(getID());   // #430 accumulator: golden age is an empire-flat input + a condition
 			if (!bWasGoldenAge)
 			{
 				changeAnarchyTurns(-getAnarchyTurns());
@@ -13723,6 +13723,10 @@ void CvPlayer::changeBuildingCount(BuildingTypes eIndex, int iChange)
 	// counter the tally will replace. DOMAIN = synced state change (tally-eligible). No-op until consumers register.
 	eventSpine().emit(CvCascadeEvent(EVENTKIND_DOMAIN, CASCADE_EVT_BUILDING_COUNT, (int)eIndex, getBuildingCount(eIndex), iChange, (int)getID()));
 
+	// #430 accumulator: the EMPIRE building count feeds empire-scope deposits in EVERY sibling city (the
+	// owner-named "live next-build evaluation" staleness) -> bump THIS player's epoch, nobody else's
+	CascadeAccumulator::bumpPlayerEpoch(getID());
+
 	clearCanConstructCache(eIndex, true);
 }
 
@@ -14287,7 +14291,7 @@ void CvPlayer::setCivics(CivicOptionTypes eIndex, CivicTypes eNewValue)
 	if (eOldCivic != eNewValue)
 	{
 		m_paeCivics[eIndex] = eNewValue;
-		CascadeAccumulator::bumpEpoch();   // #430 accumulator: civic deposits/conditions -> global re-check
+		CascadeAccumulator::bumpPlayerEpoch(getID());   // #430 accumulator: civic deposits/conditions -> this player's cities re-check
 		if (isNPC()) return;
 
 		if (eOldCivic != NO_CIVIC)
