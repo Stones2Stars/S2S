@@ -42,6 +42,7 @@
 #include "CvCascadeReadJson.h"        // cascadeReadJsonStats -- re-surface the dark load-time probe stats
 #include "CvCascadeJsonParse.h"       // cascadeJsonUnresolvedIds -- re-surface the dark load-time FK misses
 #include "CvEventSpine.h"             // the #430 dispatch spine -- the shadow diff rides it (SD_MODIFIER), NOT direct gDLL->logMsg
+#include "CvCascadeWellbeing.h"       // the §2b wellbeing channel -- its shadow rides this harness's city loop
 #include <set>
 #include <string>
 
@@ -49,7 +50,7 @@
 // The percent-stack shadow's diff + summary emit EVENTKIND_DIAGNOSTIC events through the event spine (NOT direct
 // gDLL->logMsg) -- the CvCascadeLogConsumer renders the raw typed fields + tees to /events, gated by level.
 // Per-emitter domain (SD_MODIFIER), one file (Cascade.log).
-enum MdEvt { MDE_DIFF = 1, MDE_SHADOW, MDE_RATE, MDE_DORM, MDE_REPO, MDE_PERF, MDE_SLOT, MDE_PLOTDIFF };
+enum MdEvt { MDE_DIFF = 1, MDE_SHADOW, MDE_RATE, MDE_DORM, MDE_REPO, MDE_PERF, MDE_SLOT, MDE_PLOTDIFF, MDE_WELLBEING };
 enum MdFld
 {
 	MDF_WHO = 1, MDF_CHANNEL, MDF_CASC, MDF_BC, MDF_BA, MDF_BE, MDF_CIV, MDF_TR,   // diff: cascade buckets
@@ -68,7 +69,9 @@ enum MdFld
 	MDF_YC_S, MDF_YC_C, MDF_CSPEC_S, MDF_CSPEC_C, MDF_CBASE_S, MDF_CBASE_C,        // [SLOT] commerce-leg component pairs
 	MDF_CPCT_S, MDF_CPCT_C,
 	MDF_PX, MDF_PY,                                                                 // [SLOT/plotdiff]: the diverging plot's coords (pair = plotS/plotC re-used per plot)
-	MDF_ACC_P, MDF_ACC_T, MDF_ACC_C                                                 // [SLOT/plotdiff]: the engine's SERIALIZED improvement-yield accumulators (player/team/city) for the plot's improvement
+	MDF_ACC_P, MDF_ACC_T, MDF_ACC_C,                                                // [SLOT/plotdiff]: the engine's SERIALIZED improvement-yield accumulators (player/team/city) for the plot's improvement
+	MDF_HAP_C, MDF_HAP_L, MDF_UNH_C, MDF_UNH_L,                                     // [MODIFIER/wellbeing]: the four verdict pairs (cascade vs legacy)
+	MDF_GOOD_C, MDF_GOOD_L, MDF_BAD_C, MDF_BAD_L
 };
 static const char* mm_prefix(int evt)
 {
@@ -82,6 +85,7 @@ static const char* mm_prefix(int evt)
 	case MDE_PERF:   return "[MODIFIER/perf]";
 	case MDE_SLOT:   return "[MODIFIER/slot]";
 	case MDE_PLOTDIFF: return "[MODIFIER/plotdiff]";
+	case MDE_WELLBEING: return "[MODIFIER/wellbeing]";
 	default:         return "[MODIFIER]";
 	}
 }
@@ -160,6 +164,14 @@ static const char* mm_field(int tag, SpineFieldType* peType)
 	case MDF_ACC_P:       return "accPlayer";
 	case MDF_ACC_T:       return "accTeam";
 	case MDF_ACC_C:       return "accCity";
+	case MDF_HAP_C:       return "happyC";
+	case MDF_HAP_L:       return "happyL";
+	case MDF_UNH_C:       return "unhappyC";
+	case MDF_UNH_L:       return "unhappyL";
+	case MDF_GOOD_C:      return "goodC";
+	case MDF_GOOD_L:      return "goodL";
+	case MDF_BAD_C:       return "badC";
+	case MDF_BAD_L:       return "badL";
 	default:            return NULL;
 	}
 }
@@ -418,6 +430,7 @@ void cvCascadeModifierShadow()
 	// culture/espionage; channel = the commerce-type string). Separate loop -- the §2 packages ride §1. ⚠ PERF: each call
 	// recomputes the §1 commerce+production rate, so the cap is modest; memoize per city if the turn drags.
 	int iCChecked = 0, iCDiverging = 0, iCShown = 0;
+	int iWbChecked = 0, iWbDiverging = 0, iWbShown = 0;
 	for (int p = 0; p < MAX_PLAYERS; ++p)
 	{
 		const CvPlayer& player = GET_PLAYER((PlayerTypes)p);
@@ -482,10 +495,37 @@ void cvCascadeModifierShadow()
 					}
 				}
 			}
+			// [MODIFIER/wellbeing] -- the §2b channel's four verdicts vs the legacy engine (the SAME wired ctx).
+			// The two documented accepted classes (improvement BALANCE-CUT + stored-accumulator DRIFT, modifier.md
+			// §2b) show as standing attributed residue; anything beyond them is a port bug.
+			{
+				++iWbChecked;
+				const CascadeWellbeingVerdicts wv = CascadeWellbeing::compute(pCity, cec);
+				const int iLegHappy = pCity->happyLevel();
+				const int iLegUnhappy = pCity->unhappyLevel();
+				const int iLegGood = pCity->goodHealth();
+				const int iLegBad = pCity->badHealth();
+				if (wv.iHappy != iLegHappy || wv.iUnhappy != iLegUnhappy || wv.iGood != iLegGood || wv.iBad != iLegBad)
+				{
+					++iWbDiverging;
+					if (iWbShown < 40)
+					{
+						eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_MODIFIER, MDE_WELLBEING, 1)
+							.addWStr(MDF_WHO, pCity->getName().GetCString())
+							.addI(MDF_HAP_C, wv.iHappy).addI(MDF_HAP_L, iLegHappy)
+							.addI(MDF_UNH_C, wv.iUnhappy).addI(MDF_UNH_L, iLegUnhappy)
+							.addI(MDF_GOOD_C, wv.iGood).addI(MDF_GOOD_L, iLegGood)
+							.addI(MDF_BAD_C, wv.iBad).addI(MDF_BAD_L, iLegBad));
+						++iWbShown;
+					}
+				}
+			}
 		}
 	}
 	eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_MODIFIER, MDE_RATE, 1)
 		.addI(MDF_CHECKED, iCChecked).addI(MDF_DIVERGING, iCDiverging));
+	eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_MODIFIER, MDE_WELLBEING, 1)
+		.addI(MDF_CHECKED, iWbChecked).addI(MDF_DIVERGING, iWbDiverging));
 	// the [SLOT] summary covers BOTH legs (yield + commerce) -- emitted once, after both loops
 	eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_MODIFIER, MDE_SLOT, 1)
 		.addI(MDF_CHECKED, iSlotChecked).addI(MDF_DIVERGING, iSlotDiverging));

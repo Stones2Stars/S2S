@@ -23,6 +23,8 @@
 #include "Engine/CvUnit.h"
 #include "CvUnitCombatInfo.h" // /computed/cities/yields heal-per-unitcombat decomposition (getUnitCombatInfo().getType())
 #include "Cascade/CvCascadeCapabilities.h" // /computed/teamFlags hasLanguage (the legacy latch is cut, #430)
+#include "Cascade/CvCascadeWellbeing.h"    // the §2b wellbeing port's verdicts on /computed/cities/wellbeing
+#include "Cascade/CvCascadeEnablerKernel.h" // wireFacts for the wellbeing eval ctx
 // NB no Cascade headers: this surface serves RAW state (/state) and the ENGINE's own answers (/computed)
 // only -- the cascade-vs-legacy shadow comparison was retired (the cutover is validated by the external
 // dry-calc + logging). See docs/specs/http-endpoints.md.
@@ -1732,6 +1734,20 @@ namespace
 			o["goodHealth"] = picojson::value((double)pCity->goodHealth());
 			o["badHealth"] = picojson::value((double)pCity->badHealth());
 			o["healthRate"] = picojson::value((double)pCity->healthRate());
+			// ---- the C++ CASCADE port's verdicts (CascadeWellbeing::compute -- the §2b channel), emitted beside
+			// the legacy four so the port verifies on-demand (no turn-play needed); the accepted classes
+			// (improvement BALANCE-CUT + stored-accumulator DRIFT) are the expected residue ----
+			{
+				CvCascadeEvalCtx wbec;
+				wbec.city = pCity; wbec.plot = pCity->plot(); wbec.player = &kWbOwner;
+				wbec.team = &GET_TEAM(kWbOwner.getTeam());
+				EnablerKernel::wireFacts(pCity, wbec);
+				const CascadeWellbeingVerdicts wv = CascadeWellbeing::compute(pCity, wbec);
+				o["cascHappy"] = picojson::value((double)wv.iHappy);
+				o["cascUnhappy"] = picojson::value((double)wv.iUnhappy);
+				o["cascGoodHealth"] = picojson::value((double)wv.iGood);
+				o["cascBadHealth"] = picojson::value((double)wv.iBad);
+			}
 			// ---- gate flags + constants ----
 			o["isNoUnhappiness"] = picojson::value(pCity->isNoUnhappiness());
 			o["isNoCapitalUnhappiness"] = picojson::value(pCity->isCapital() && kWbOwner.isNoCapitalUnhappiness());
