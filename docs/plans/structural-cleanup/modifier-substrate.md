@@ -139,9 +139,13 @@ attributable diff lines (never silent).
   the modifier harness's city loop + `cascHappy/cascUnhappy/cascGoodHealth/cascBadHealth` on
   `/computed/cities/wellbeing` (on-demand diff, no turn-play). Measured on the reference save: unhappy
   exact-to-±1, happy +1..+3, goodHealth 0..−5, badHealth −9..−28 — the documented accepted residue (the
-  improvement BALANCE-CUT + the stored-accumulator DRIFT, modifier.md §2b). **Queued:** the slot storage
-  (an `ACCD_WB` component — the per-player area/empire building rollup moves out of the per-call walk), the
-  getter flip, and the residue's per-term drift attribution riding the oracle's `*Recomputed` twins.
+  improvement BALANCE-CUT + the stored-accumulator DRIFT, modifier.md §2b). **The `ACCD_WB` slot LANDED in the
+  same pass:** `aWb[4]` standing verdicts on the rate slots, all five existing CvCity dirty sites gained
+  `ACCD_WB` (building/population/specialist/religion/corporation; epoch + turn roll cover the rest), and the
+  shadow nets the slots against its fresh compute (the `slotDiverging` summary field). **Queued:** the
+  freshness proof over real played turns (slotDiverging must read 0), THEN the getter flip
+  (happyLevel/unhappyLevel/goodHealth/badHealth return the slots, legacy in-body as the net); the residue's
+  per-term drift attribution rides the oracle's `*Recomputed` twins.
 
 ## Explicitly NOT this build
 
