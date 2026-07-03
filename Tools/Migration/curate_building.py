@@ -280,6 +280,9 @@ COND_KEYED = {
     "TechCommerceModifiers":       (None, "city", engine.COMMERCES, "percent", "tech"),
     "TechHappinessChanges":        ("happiness", "city", None, "flat", "tech"),
     "TechHealthChanges":           ("health", "city", None, "flat", "tech"),
+    # PRESENCE-gated (verified 2026-07-03: processBonus fires ONLY on the has<->hasn't TRANSITION --
+    # processNumBonusChange gates on bOldHasBonus != bNewHasBonus -- so the enabled:{min:1} threshold IS the
+    # faithful model; a x-count reading of processBonus' iChange was tried and falsified, 5x overshoot).
     "BonusHealthChanges":          ("health", "city", None, "flat", "bonus"),
     "BonusHappinessChanges":       ("happiness", "city", None, "flat", "bonus"),
     "BonusYieldChanges":           (None, "city", engine.YIELDS, "flat", "bonus"),
