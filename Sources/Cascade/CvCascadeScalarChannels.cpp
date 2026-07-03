@@ -7,6 +7,8 @@
 #include "CvGameCoreDLL.h"
 #include "CvCascadeScalarChannels.h"
 #include "CvCascadeMMKernel.h"
+#include "CvCascadeEnablerKernel.h"   // cityFacts -- the player-wide maintenance walk
+#include "CvCascadeCityFacts.h"
 #include "CvJsonInfo.h"
 #include "CvJsonTraitInfo.h"
 #include "Repos/InfoRepo.h"
@@ -68,13 +70,22 @@ int CascadeScalarChannels::gpRateBase(const CvCity* pCity, const CvCascadeEvalCt
 int CascadeScalarChannels::gpRateModifier(const CvCity* pCity, const CvCascadeEvalCtx& ec)
 {
 	const CvPlayer& owner = GET_PLAYER(pCity->getOwner());
-	// the §9.5 stack: 100 + city + empire percents (buildings + civics + traits; the state-religion /
-	// golden-age entries carry their conditions in the data and gate through the evaluator)
+	// the §9.5 / :7153 stack: 100 + city + player percents...
 	int iMod = 100;
 	iMod += sc_buildings("greatPeopleRate.city", "percent", pCity, ec);
 	iMod += sc_buildings("greatPeopleRate.empire", "percent", pCity, ec);
 	iMod += sc_civicsTraits("greatPeopleRate.city", "percent", owner, ec);
 	iMod += sc_civicsTraits("greatPeopleRate.empire", "percent", owner, ec);
+	// ...+ the STATE-RELIGION grouped family (civic stateReligion.empire.greatPeopleRate) while the state
+	// religion is PRESENT IN THIS CITY (:7160)...
+	{
+		const ReligionTypes eState = owner.getStateReligion();
+		if (eState != NO_RELIGION && pCity->isHasReligion(eState))
+			iMod += sc_civicsTraits("stateReligion.empire.greatPeopleRate", "percent", owner, ec);
+	}
+	// ...+ the golden-age modifier -- a GLOBAL DEFINE, a config input (not data)
+	if (owner.isGoldenAge())
+		iMod += GC.getGOLDEN_AGE_GREAT_PEOPLE_MODIFIER();
 	return std::max(0, iMod);
 }
 
@@ -88,14 +99,34 @@ int CascadeScalarChannels::defenseAmount(const CvCity* pCity, const CvCascadeEva
 int CascadeScalarChannels::maintenanceModifier(const CvCity* pCity, const CvCascadeEvalCtx& ec)
 {
 	const CvPlayer& owner = GET_PLAYER(pCity->getOwner());
-	// the effective-modifier stack (§5): city + empire scopes over buildings + civics + traits (the area
-	// members ride the same walks -- area-scope deposits are rare and evaluated per city)
+	// the effective-modifier stack (:getEffectiveMaintenanceModifier): THIS city's + the player's + the AREA
+	// total + connected-to-capital. The player/area/connectedCity halves are PLAYER-WIDE building accumulators
+	// (any city's active building feeds them), so those walk ALL the player's cities' active sets.
 	int iMod = 0;
 	iMod += sc_buildings("maintenance.city", "percent", pCity, ec);
-	iMod += sc_buildings("maintenance.empire", "percent", pCity, ec);
-	iMod += sc_buildings("maintenance.area", "percent", pCity, ec);
 	iMod += sc_civicsTraits("maintenance.city", "percent", owner, ec);
 	iMod += sc_civicsTraits("maintenance.empire", "percent", owner, ec);
 	iMod += sc_civicsTraits("maintenance.area", "percent", owner, ec);
+	{
+		const bool bConnected = pCity->isConnectedToCapital() && !pCity->isCapital();
+		int iLoop;
+		for (const CvCity* pc = owner.firstCity(&iLoop); pc != NULL; pc = owner.nextCity(&iLoop))
+		{
+			const CascadeCityFacts& facts = EnablerKernel::cityFacts(pc);
+			CvCascadeEvalCtx pec;
+			pec.city = pc; pec.plot = pc->plot(); pec.player = &owner; pec.team = ec.team;
+			pec.activeBuildings = &facts.active; pec.vicinityProvidedBonuses = &facts.provided;
+			const bool bSameArea = pc->area() == pCity->area();
+			for (std::set<int>::const_iterator it = facts.active.begin(); it != facts.active.end(); ++it)
+			{
+				const CvJsonInfo* d = InfoRepo<CvBuildingInfo>::get().get(*it);
+				if (d == NULL) continue;
+				iMod += MMKernel::sumUnit(d, "maintenance.empire", "percent", pec);
+				if (bSameArea) iMod += MMKernel::sumUnit(d, "maintenance.area", "percent", pec);
+				else iMod += MMKernel::sumUnit(d, "maintenance.area.otherArea", "percent", pec);
+				if (bConnected) iMod += MMKernel::sumUnit(d, "maintenance.empire.connectedCity", "percent", pec);
+			}
+		}
+	}
 	return iMod;
 }
