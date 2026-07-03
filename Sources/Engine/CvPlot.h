@@ -6,6 +6,7 @@
 // CvPlot.h
 
 #include "Infrastructure/LinkedList.h"
+#include "Infrastructure/CvDerivedCache.h"
 #include "Tools/copy_iterator.h"
 #include "CvGameObject.h"
 #include "CvProperties.h"
@@ -753,8 +754,8 @@ public:
 
 	void setExtraYield(YieldTypes eYield, short iExtraYield);
 	short* getYield() const;
-	void updateYield();              // the TRIGGER: marks the yield cache dirty (+ AI/symbol notify); does NOT recompute
-	void recomputeYield() const;    // the actual fresh yield sum -- run lazily by getYield when m_bYieldDirty is set
+	void updateYield();                          // the TRIGGER: marks the yield cache dirty (+ AI/symbol notify); does NOT recompute
+	void recomputeYieldInto(short* aiOut) const; // the actual fresh yield sum -- run lazily by the CvDerivedCache when dirty
 	int calculateYield(YieldTypes eIndex, bool bDisplay = false) const;
 	DllExport int getYield(YieldTypes eIndex) const;
 	int getExtraYield(YieldTypes eIndex) const { return m_aExtraYield[eIndex]; }  // stored per-plot extra yield (game event/effect state; calculateYield addend)
@@ -1018,8 +1019,8 @@ protected:
 	// Super Forts end
 
 	short* m_baseYields;
-	short* m_aiYield;                // recompute-only yield cache (NOT serialized) -- the single source for a plot's yield
-	mutable bool m_bYieldDirty;      // NOT serialized: defaults dirty on construct/load so getYield recomputes from current state, never stale-from-save
+	CvDerivedCache<CvPlot, short, NUM_YIELD_TYPES> m_yieldCache;   // the recompute-only yield cache (NOT serialized) --
+	                                                               // the single PULL source for a plot's yield (state-repositories.md)
 	bst::array<short, NUM_YIELD_TYPES> m_aExtraYield;
 	std::vector<std::pair<PlayerTypes,int> > m_aiCulture;
 	std::vector<PlotTeamVisibilityIntensity> m_aPlotTeamVisibilityIntensity;

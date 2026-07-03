@@ -116,8 +116,8 @@ CvPlot::CvPlot()
 	}
 
 	m_baseYields = new short[NUM_YIELD_TYPES]();
-	m_aiYield = new short[NUM_YIELD_TYPES]();
-	m_bYieldDirty = true;   // recompute-only cache: dirty on construct AND load (never serialized) -> first read recomputes
+	// the yield cache: CvDerivedCache (state-repositories.md) -- dirty on construct AND load (never serialized)
+	m_yieldCache.bind(this, &CvPlot::recomputeYieldInto);
 
 	// Plot danger cache
 	m_borderDangerCache = new bool[MAX_TEAMS];
@@ -193,7 +193,6 @@ CvPlot::~CvPlot()
 	uninit();
 
 	SAFE_DELETE_ARRAY(m_baseYields);
-	SAFE_DELETE_ARRAY(m_aiYield);
 	SAFE_DELETE_ARRAY(m_borderDangerCache);
 }
 
@@ -8143,15 +8142,13 @@ void CvPlot::setExtraYield(YieldTypes eYield, short iExtraYield)
 
 short* CvPlot::getYield() const
 {
-	if (m_bYieldDirty) recomputeYield();
-	return m_aiYield;
+	return m_yieldCache.data();
 }
 
 int CvPlot::getYield(YieldTypes eIndex) const
 {
 	FASSERT_BOUNDS(0, NUM_YIELD_TYPES, eIndex);
-	if (m_bYieldDirty) recomputeYield();
-	return m_aiYield[eIndex];
+	return m_yieldCache.get(eIndex);
 }
 
 void CvPlot::updateYield()
@@ -8162,9 +8159,9 @@ void CvPlot::updateYield()
 
 	// TRIGGER ONLY (owner ruling 2026-06-27): flag the yield cache dirty; the fresh sum runs lazily in getYield. We no
 	// longer recompute eagerly here, and we no longer PUSH a delta into the working city -- the city PULLs Σ getYield
-	// (the plot cache is the single source of a plot's yield). m_aiYield + m_bYieldDirty are never serialized, so a
-	// loaded game is dirty-by-default and recomputes from current state -- never stale-from-save.
-	m_bYieldDirty = true;
+	// (the plot cache is the single source of a plot's yield). The cache is never serialized, so a loaded game is
+	// dirty-by-default and recomputes from current state -- never stale-from-save.
+	m_yieldCache.markDirty();
 
 	CvCity* pWorkingCity = getWorkingCity();
 	if (pWorkingCity != NULL)
@@ -8175,11 +8172,11 @@ void CvPlot::updateYield()
 	updateSymbols();
 }
 
-// The actual fresh yield sum -- run lazily by getYield when m_bYieldDirty is set (so the expensive sum happens once per
-// change-then-read, not per change and never per read). const: it writes only the recompute-only cache + the flag.
-void CvPlot::recomputeYield() const
+// The actual fresh yield sum -- run lazily by the CvDerivedCache when dirty (so the expensive sum happens once per
+// change-then-read, not per change and never per read). const: it writes only the cache's out-array.
+void CvPlot::recomputeYieldInto(short* aiOut) const
 {
-	if (!area()) { m_bYieldDirty = false; return; }
+	if (!area()) { for (int i = 0; i < NUM_YIELD_TYPES; ++i) aiOut[i] = 0; return; }
 
 	// The building->improvement keyed buff is summed FRESH over the working city's ACTIVE buildings (the squirrelBanana
 	// treatment for the keyed channel) instead of read from the stale getImprovementYieldChange cache, which the
@@ -8211,9 +8208,8 @@ void CvPlot::recomputeYield() const
 			iY -= pWC->getImprovementYieldChange(eImp, (YieldTypes)i);   // drop the stale cache contribution
 			iY += aiFreshImp[i];                                         // add the fresh active-buildings sum
 		}
-		m_aiYield[i] = (short)(iY < 0 ? 0 : iY);
+		aiOut[i] = (short)(iY < 0 ? 0 : iY);
 	}
-	m_bYieldDirty = false;
 }
 
 

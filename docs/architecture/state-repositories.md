@@ -124,6 +124,19 @@ bypass — the fresh sum runs only on recompute (change-then-read), never per re
 > recompute-on-read getters for specialist commerce/yield, are each the same shape written by hand). **It is NOT built
 > now** — it is captured here so it is ready when we **build the shadow and do the final migration**; the current
 > recompute-on-read getters stand in until then (correct, just the per-read-cost workaround §"Why this is the right fix").
+>
+> **✅ BUILT (2026-07-03, the substrate/final-migration moment this spec named):**
+> `Sources/Infrastructure/CvDerivedCache.h` — BOTH forms (the single-flag `CvDerivedCache<TOwner,T,N>` below +
+> the partial-dirty `CvDerivedCacheSet<TOwner>` per the 2026-07-03 ruling). The **plot-yield cache is migrated
+> onto it** (the exemplar — `CvPlot::m_yieldCache`, `recomputeYield()`→`recomputeYieldInto(short*)`). Spec holes
+> found at build time and PLUGGED (owner: "find holes and plug them"), now contract rules in the header:
+> **(1) clear-dirty BEFORE recompute** (the spec's clear-after recursed on read-back and lost mid-recompute
+> dirties); **(2) the recompute must fully define its output every call** (zero-fill on can't-compute — the
+> plot's `!area()` early-return used to leave stale values behind a clean flag); **(3) NONCOPYABLE** (a copied
+> cache keeps the ORIGINAL owner's pointer — dangling-owner footgun); **(4) `data()` pointers stay valid but
+> values mutate — never cache across state changes; game-thread only; (5) fixed compile-time N** (a
+> runtime-sized domain needs a vector variant when first needed). Remaining migrations (specialist getters,
+> building-commerce, the accumulator onto the Set form + CvCity membership) are follow-ups.
 
 **Chosen mechanism — a templated value-holder with the recompute injected as a member-function-pointer** (the one part
 that genuinely needs owner state stays owner-side; everything else — storage, dirty flag, pull-on-read, trigger — is the
