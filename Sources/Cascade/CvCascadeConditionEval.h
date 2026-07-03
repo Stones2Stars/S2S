@@ -35,13 +35,13 @@ struct CvCascadeEvalCtx
 	// the cascade's AugmentState and pointed-to here; NULL = no waivers (the evaluator stays decoupled from InfoRepo).
 	const std::set<int>* waivedPrereqBuildings;
 	// The cascade-COMPUTED ACTIVE (present ∧ operate-holds ∧ ¬dormant-trigger) building ids for `city`; filled by
-	// EnablerKernel::computeCityBuildingFacts. The evaluator READS it (stays decoupled from InfoRepo). Dormancy is 100%
+	// EnablerKernel::recomputeCityFactsInto (the standing cityFacts cache). The evaluator READS it (stays decoupled from InfoRepo). Dormancy is 100%
 	// governed by operate enablers -- DERIVED here, NEVER read from the engine active-building/`/state` (DEC-calc-zero-ride-in).
 	// NULL = fall back to raw presence (hasBuilding).
 	const std::set<int>* activeBuildings;
 	// The BONUS ids supplied IN-VICINITY by this city's ACTIVE buildings' `provides.bonuses` (json §5a): an active
 	// building that provides X (e.g. a tamed-animal building supplying HORSE) ⇒ X is in vicinity. Filled by the enabler
-	// (EnablerKernel::computeCityBuildingFacts, in the SAME pass as activeBuildings); the evaluator READS it (stays
+	// (EnablerKernel::recomputeCityFactsInto, in the SAME pass as activeBuildings -- the standing cityFacts cache); the evaluator READS it (stays
 	// decoupled from InfoRepo). Computed from JSON, NEVER read from the engine's hasVicinityBonus. NULL = none.
 	const std::set<int>* vicinityProvidedBonuses;
 	CvCascadeEvalCtx() : city(NULL), player(NULL), team(NULL), plot(NULL), unit(NULL), waivedPrereqBuildings(NULL), activeBuildings(NULL), vicinityProvidedBonuses(NULL) {}

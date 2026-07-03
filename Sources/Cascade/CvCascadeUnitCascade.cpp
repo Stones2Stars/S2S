@@ -78,8 +78,7 @@ void UnitCascade::trainable(const CvCity* pCity, const CvPlayer& kPlayer, const 
 	// The two per-city building facts (active set + in-vicinity `provides` supply, json §5a): a herd/tamed-animal
 	// building that provides e.g. HORSE ⇒ HORSE in-vicinity, so a horse unit's `requires` {BONUS, connection:vicinity}
 	// trains. Computed from the cascade, NOT the engine's hasVicinityBonus (DEC-calc-zero-ride-in).
-	std::set<int> activeB, provB; EnablerKernel::computeCityBuildingFacts(pCity, ec, activeB, provB);
-	ec.activeBuildings = &activeB; ec.vicinityProvidedBonuses = &provB;
+	EnablerKernel::wireFacts(pCity, ec);
 	CvCascadeEvalFlags flags; flags.strictStateReligionForBuild = true;
 	const bool noNationalLimit = GC.getGame().isOption(GAMEOPTION_NO_NATIONAL_UNIT_LIMIT);
 	const int nU = GC.getNumUnitInfos();

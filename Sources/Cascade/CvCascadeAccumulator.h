@@ -73,6 +73,10 @@ public:
 	// The global fallback (game reset / anything not player-attributable): everything re-checks.
 	static void bumpEpoch();
 
+	// The combined global+owner epoch stamp a per-city derived cache compares against (the acc_ensure semantic,
+	// exposed single-source -- the facts cache stamps with the SAME epoch, so tech/civic/GA events re-check both).
+	static int epochFor(PlayerTypes ePlayer);
+
 	// The masked component recompute -- CvCity::cascadeRefreshRates delegates here (the CvDerivedCacheSet's
 	// refresh target). Writes the city's m_cascadeRateSlots arrays from CURRENT state.
 	static void refreshComponents(const CvCity* pCity, int iMask);

@@ -27,7 +27,7 @@
 #include "AI/CvPlayerAI.h"             // GET_PLAYER
 #include "AI/CvTeamAI.h"              // GET_TEAM -- the eval ctx's team
 #include "CvCascadeConditionEval.h"   // CvCascadeEvalCtx
-#include "CvCascadeEnablerKernel.h"   // EnablerKernel::computeCityBuildingFacts -- the cascade-computed active-building set + vicinity provides
+#include "CvCascadeEnablerKernel.h"   // EnablerKernel::wireFacts -- the standing cascade building-facts cache
 #include "CvCascadeCapabilities.h"    // CascadeCapabilities::shadowFlush -- the in-body capability-getter shadow
 #include "CvJsonInfo.h"               // the mapped info (requiresOperate/dormantTriggers) -- the dorm-attribution diagnostic
 #include "Repos/InfoRepo.h"           // InfoRepo<CvBuildingInfo> -- ditto
@@ -178,8 +178,7 @@ void cvCascadeModifierShadow()
 	// ANTI-MEMO-SKEW (2026-07-02): the turn memos may hold values frozen from EARLY-turn calls (the getter
 	// instrument); comparing those against END-of-turn legacy showed as false divergences. Recompute fresh for
 	// the shadow sweep -- still memoized WITHIN the sweep.
-	YieldRate::memoClear();
-	EnablerKernel::factsMemoClear();   // self-register SD_MODIFIER on the spine (idempotent) before the first emit
+	YieldRate::memoClear();   // the calculator-oracle's turn memo only -- the FACTS are a standing event-correct cache now (no anti-skew reset needed)
 	CascadeCapabilities::shadowFlush();   // #430 wiring step 1: flush the in-body capability-getter shadow (per turn)
 
 	// [MODIFIER/repo] -- BUILDING REPO CENSUS (2026-07-02, the Orwell bar): decisive on the one-cause hypothesis
@@ -271,9 +270,7 @@ void cvCascadeModifierShadow()
 				// real verification, modifier-machine §0: judged after the WHOLE calc is in, port-fidelity vs StoneBase).
 				CvCascadeEvalCtx rec;
 				rec.city = pCity; rec.plot = pCity->plot(); rec.player = &player; rec.team = &GET_TEAM(player.getTeam());
-				std::set<int> recActiveB, recProvB;   // cascade-COMPUTED active set + in-vicinity provides (dormancy derived from operate, not the engine)
-				EnablerKernel::computeCityBuildingFacts(pCity, rec, recActiveB, recProvB);
-				rec.activeBuildings = &recActiveB; rec.vicinityProvidedBonuses = &recProvB;
+				EnablerKernel::wireFacts(pCity, rec);   // the STANDING cascade facts (active set + vicinity provides)
 
 				// [MODIFIER/dorm] -- DORMANCY ATTRIBUTION (2026-07-02, the Orwell bar: emit before hypothesising).
 				// Re-derives each present building's cascade dorm verdict WITH its cause (operate-failed vs
@@ -281,7 +278,7 @@ void cvCascadeModifierShadow()
 				// One line per sampled city (y==0 only, so once not thrice); samples list DISAGREEING buildings.
 				if (y == 0)
 				{
-					CvCascadeEvalCtx recOp = rec; recOp.activeBuildings = NULL;   // mirror computeCityBuildingFacts' operate ctx
+					CvCascadeEvalCtx recOp = rec; recOp.activeBuildings = NULL;   // mirror recomputeCityFactsInto's operate ctx
 					CvCascadeEvalFlags dormFlags;
 					int nPresent = 0, nDormOp = 0, nDormTrig = 0, nEngDisabled = 0;
 					std::string sSample;
@@ -309,7 +306,7 @@ void cvCascadeModifierShadow()
 					}
 					eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_MODIFIER, MDE_DORM, 1)
 						.addWStr(MDF_WHO, pCity->getName().GetCString())
-						.addI(MDF_PRESENT, nPresent).addI(MDF_ACTIVE, (int)recActiveB.size())
+						.addI(MDF_PRESENT, nPresent).addI(MDF_ACTIVE, rec.activeBuildings != NULL ? (int)rec.activeBuildings->size() : 0)
 						.addI(MDF_DORMOP, nDormOp).addI(MDF_DORMTRIG, nDormTrig).addI(MDF_ENGDISABLED, nEngDisabled)
 						.addStr(MDF_SAMPLE, sSample.c_str()));
 				}
@@ -431,9 +428,7 @@ void cvCascadeModifierShadow()
 			++iCityN;
 			CvCascadeEvalCtx cec;
 			cec.city = pCity; cec.plot = pCity->plot(); cec.player = &player; cec.team = &GET_TEAM(player.getTeam());
-			std::set<int> cecActiveB, cecProvB;   // cascade-COMPUTED active set + in-vicinity provides (dormancy derived from operate) -- alive for the whole city's calc
-			EnablerKernel::computeCityBuildingFacts(pCity, cec, cecActiveB, cecProvB);
-			cec.activeBuildings = &cecActiveB; cec.vicinityProvidedBonuses = &cecProvB;
+			EnablerKernel::wireFacts(pCity, cec);   // the STANDING cascade facts -- alive for the whole city's calc
 			// Precompute the §1 commerce-yield + production-rate ONCE per city (the 4 commerce types share them) -- this is
 			// the big perf fix (was 8 redundant full §1 rate computes per city; now 2).
 			const long yc100 = YieldRate::yieldRate100("commerce", YIELD_COMMERCE, pCity, cec);

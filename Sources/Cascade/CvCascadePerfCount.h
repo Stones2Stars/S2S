@@ -11,8 +11,8 @@
 
 struct CascadePerf
 {
-	static int facts;         // computeCityBuildingFacts entries
-	static int factsMemoHit;  // ... of which served by the turn memo
+	static int facts;         // facts RECOMPUTES (recomputeCityFactsInto runs)
+	static int factsMemoHit;  // facts READS served by the standing cache (cityFacts calls)
 	static int yieldRate;     // YieldRate::yieldRate100 computes
 	static int pctStack;      // PercentStack::percentStack computes
 	static int commerceRate;  // CommerceCalc::commerceRate100 computes

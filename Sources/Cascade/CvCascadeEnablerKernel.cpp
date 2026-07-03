@@ -19,6 +19,7 @@
 #include "Engine/CvPlayer.h"
 #include "Engine/CvTeam.h"
 #include "CvCascadeConditionEval.h"   // cascadeEvalCondition -- the StoneBase-ported typed-condition evaluator (was BoolExpr)
+#include "CvCascadeAccumulator.h"     // CascadeAccumulator::epochFor -- the shared epoch the facts cache stamps with
 #include "Infos/CvBuildingInfo.h"
 #include "Infos/CvUnitInfo.h"
 #include "Infos/CvTechInfo.h"
@@ -195,31 +196,18 @@ void EnablerKernel::gateSet(const std::string& bucket, const EnBucketSets& cand,
 // computed from JSON, not the engine. `ecOp` = a COPY of ec with activeBuildings=NULL so a BUILDING_ predicate INSIDE an
 // operate condition resolves via raw presence -- this breaks any recursion (operate conditions reference resources/
 // civics in practice, not building-active).
-typedef std::pair<std::set<int>, std::set<int> > FactsPair;
-static std::map<int, FactsPair> s_memo;   // the turn-scoped facts memo (key: owner*100000 + city id)
-static int s_iMemoTurn = -1;
-
-void EnablerKernel::factsMemoClear() { s_memo.clear(); }
-void EnablerKernel::factsMemoEvict(int iOwner, int iCityId) { s_memo.erase(iOwner * 100000 + iCityId); }
-
-void EnablerKernel::computeCityBuildingFacts(const CvCity* pCity, const CvCascadeEvalCtx& ec, std::set<int>& activeOut, std::set<int>& providedOut)
+void EnablerKernel::recomputeCityFactsInto(const CvCity* pCity, std::set<int>& activeOut, std::set<int>& providedOut)
 {
+	// The PURE fixpoint recompute -- the standing cache's refresh target (CvCity::cascadeRefreshFacts). Contract
+	// rule 2 (CvDerivedCache.h): FULLY define the output every call.
+	activeOut.clear();
+	providedOut.clear();
 	if (pCity == NULL) return;
 	++CascadePerf::facts;
 	PerfAccumTimer perfT(CascadePerf::factsMs);
-	// TURN-SCOPED MEMO (perf, 2026-07-02): this is a full O(nBuildings) scan with a real operate-condition eval per
-	// present building, and every cascade compute (percent stack, commerce ctxs, the getter instrument, the gates)
-	// rebuilds it -- once the repos actually populated (the InfoRepo singleton fix) that latent cost made a logged
-	// turn drag hard. The facts are stable within a turn for shadow/diagnostic purposes, so memo per (city, turn).
-	// ⛔ SHADOW-PHASE ONLY correctness: a mid-turn building change goes stale until the next turn -- fine while the
-	// legacy engine stays authoritative; MUST become event-invalidated (building-count DOMAIN events) before any
-	// consumer cut relies on these facts live.
-	const int iTurn = GC.getGame().getGameTurn();
-	if (iTurn != s_iMemoTurn) { s_memo.clear(); s_iMemoTurn = iTurn; }
-	const int iKey = ((int)pCity->getOwner()) * 100000 + pCity->getID();
-	std::map<int, FactsPair>::const_iterator mit = s_memo.find(iKey);
-	if (mit != s_memo.end()) { ++CascadePerf::factsMemoHit; activeOut = mit->second.first; providedOut = mit->second.second; return; }
-	CvCascadeEvalCtx ecOp = ec;
+	const CvPlayer& kOwner = GET_PLAYER(pCity->getOwner());
+	CvCascadeEvalCtx ecOp;
+	ecOp.city = pCity; ecOp.plot = pCity->plot(); ecOp.player = &kOwner; ecOp.team = &GET_TEAM(kOwner.getTeam());
 	ecOp.activeBuildings = NULL;   // break recursion: operate's own BUILDING_ atoms resolve via raw presence
 	CvCascadeEvalFlags flags;      // default flags
 	const int nB = GC.getNumBuildingInfos();
@@ -262,5 +250,32 @@ void EnablerKernel::computeCityBuildingFacts(const CvCity* pCity, const CvCascad
 		prov.swap(provNext);
 	}
 	providedOut = prov;
-	s_memo[iKey] = FactsPair(activeOut, providedOut);   // store for this turn's remaining computes on this city
+}
+
+const CascadeCityFacts& EnablerKernel::cityFacts(const CvCity* pCity)
+{
+	// The standing per-city facts: freshness = the event dirty marks (building/religion/corp flips in CvCity)
+	// + the SHARED accumulator epoch (tech/civic/GA -- the same player-level events that re-check the rate
+	// slots also re-check the facts, since operate conditions read them) + the turn-roll self-heal (the
+	// unhooked classes: bonus-network/trade flips affecting operate conditions surface here, same cadence as
+	// the slots). Mirrors acc_ensure.
+	CascadeCityFacts& f = pCity->m_cascadeFacts;
+	const int iTurn = GC.getGame().getGameTurn();
+	const int iEpoch = CascadeAccumulator::epochFor(pCity->getOwner());
+	if (f.iEpoch != iEpoch || f.iTurn != iTurn)
+	{
+		f.iEpoch = iEpoch;
+		f.iTurn = iTurn;
+		f.set.markAllDirty();
+	}
+	f.set.ensure();
+	++CascadePerf::factsMemoHit;   // a standing-cache read (the census' "served without a recompute" counter)
+	return f;
+}
+
+void EnablerKernel::wireFacts(const CvCity* pCity, CvCascadeEvalCtx& ec)
+{
+	const CascadeCityFacts& f = cityFacts(pCity);
+	ec.activeBuildings = &f.active;
+	ec.vicinityProvidedBonuses = &f.provided;
 }

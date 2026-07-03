@@ -146,8 +146,18 @@ bypass — the fresh sum runs only on recompute (change-then-read), never per re
 > runtime-sized domain needs a vector variant when first needed). **The accumulator converged onto the Set form
 > the same day**: `CascadeRateSlots` is a mutable `CvCity` member (`m_cascadeRateSlots`, bound in the ctor,
 > stale-marked in `reset()`; the side map + per-read lookup deleted; the cascade math stays module-side behind
-> the one `cascadeRefreshRates` delegate — the pattern every remaining modifier channel now reuses). Remaining
-> migrations (specialist getters, building-commerce) are follow-ups.
+> the one `cascadeRefreshRates` delegate — the pattern every remaining modifier channel now reuses).
+> **✅ The FACTS converged the same day (2026-07-03):** the per-city cascade building facts (active set +
+> vicinity provides, the operate/provides fixpoint) are a standing `CvCity::m_cascadeFacts` member on the same
+> `CvDerivedCacheSet` idiom — event-invalidated (building/religion/corp flips), stamped with the SHARED
+> accumulator epoch (tech/civic/GA re-check both), turn-roll self-heal — replacing the turn-scoped facts memo
+> whose "shadow-phase-only, must be event-invalidated before any consumer cut" caveat is thereby CLOSED. All
+> consumers read the standing sets via `EnablerKernel::cityFacts`/`wireFacts` (no per-call set copies; the
+> shrine/state-religion private fixpoint rebuilds gone). Deliberately NOT converged: the legacy CvCity
+> hand-rolled dirty caches (`m_aiCommerceRate`, `m_aiBuildingCommerce100`, squirrelBanana) — they are §4
+> demolition fodder at the modifier cut; polishing them is backwards investment. Remaining live follow-ups:
+> the specialist getters + the player building-commerce ledger (awaits the vector variant / the ONE
+> invalidation mechanism at the turn-end rebuild).
 
 **Chosen mechanism — a templated value-holder with the recompute injected as a member-function-pointer** (the one part
 that genuinely needs owner state stays owner-side; everything else — storage, dirty flag, pull-on-read, trigger — is the

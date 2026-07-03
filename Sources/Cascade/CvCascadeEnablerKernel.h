@@ -13,6 +13,7 @@
 //
 
 #include "CvCascadeConditionEval.h"   // CvCascadeEvalCtx / CvCascadeEvalFlags -- the eval target for requires conditions
+#include "CvCascadeCityFacts.h"       // CascadeCityFacts -- the standing per-city building-facts cache
 #include <map>
 #include <set>
 #include <string>
@@ -58,17 +59,22 @@ public:
 	static void gateSet(const std::string& bucket, const EnBucketSets& cand, const CvCascadeEvalCtx& ec,
 		const CvPlayer& kPlayer, const CvTeam& kTeam, bool bUnit, std::set<int>& avail);
 
-	// COMPUTE the two per-city building facts in ONE pass. `activeOut` = the ACTIVE (present ∧ operate-holds ∧
-	// ¬dormant-trigger) building ids for pCity. DORMANCY is DERIVED from `requires.operate` + its dormant triggers (the
-	// successor buildings whose presence dorms this) -- never the engine active-building/`/state` (DEC-calc-zero-ride-in;
-	// dormancy is 100% governed by operate enablers). `providedOut` = the union of every ACTIVE building's
-	// `provides.bonuses` -- the BONUS ids that building supply makes present IN-VICINITY (json §5a). Feeds
-	// CvCascadeEvalCtx::activeBuildings (read by cascadeIsBuildingActive) + ::vicinityProvidedBonuses (read by ev_vicinityHas).
-	static void computeCityBuildingFacts(const CvCity* pCity, const CvCascadeEvalCtx& ec, std::set<int>& activeOut, std::set<int>& providedOut);
-	// Drop the turn-scoped facts memo wholesale (the doTurn shadow's anti-memo-skew reset)...
-	static void factsMemoClear();
-	// ...or evict ONE city's facts (the accumulator's building hook -- that city's active set changed).
-	static void factsMemoEvict(int iOwner, int iCityId);
+	// The PURE facts recompute: the two per-city building facts in ONE fixpoint pass. `activeOut` = the ACTIVE
+	// (present ∧ operate-holds ∧ ¬dormant-trigger) building ids for pCity. DORMANCY is DERIVED from
+	// `requires.operate` + its dormant triggers (the successor buildings whose presence dorms this) -- never the
+	// engine active-building/`/state` (DEC-calc-zero-ride-in; dormancy is 100% governed by operate enablers).
+	// `providedOut` = the union of every ACTIVE building's `provides.bonuses` -- the BONUS ids building supply
+	// makes present IN-VICINITY (json §5a). This is CvCity::cascadeRefreshFacts' recompute target -- consumers
+	// never call it directly; they read the STANDING cache via cityFacts()/wireFacts() below.
+	static void recomputeCityFactsInto(const CvCity* pCity, std::set<int>& activeOut, std::set<int>& providedOut);
+
+	// The STANDING per-city facts (CvCity::m_cascadeFacts, CvCascadeCityFacts.h) -- ensures freshness (event
+	// dirty + the shared accumulator epoch + the turn-roll self-heal) and returns the cache. Replaces the
+	// turn-scoped memo: the facts are EVENT-CORRECT, so the old "shadow-phase-only" caveat is closed.
+	static const CascadeCityFacts& cityFacts(const CvCity* pCity);
+	// Convenience: ensure + point ec.activeBuildings / ec.vicinityProvidedBonuses at the standing sets
+	// (feeds cascadeIsBuildingActive + ev_vicinityHas; no per-call set copies).
+	static void wireFacts(const CvCity* pCity, CvCascadeEvalCtx& ec);
 };
 
 #endif // CV_CASCADE_ENABLER_KERNEL_H

@@ -12,7 +12,7 @@
 #include "CvCascadePercentStack.h"
 #include "CvCascadeCommerceCalc.h"    // baseExtra100 + channel + the CombineSplit kernel
 #include "CvCascadeConditionEval.h"   // CvCascadeEvalCtx
-#include "CvCascadeEnablerKernel.h"   // computeCityBuildingFacts (memoized; evicted by the building hook)
+#include "CvCascadeEnablerKernel.h"   // EnablerKernel::wireFacts -- the standing per-city building-facts cache
 #include "Defines/CvGlobals.h"
 #include "AI/CvGameAI.h"              // GC.getGame()
 #include "Engine/CvCity.h"            // CITY_MAX_YIELD_RATE + m_cascadeRateSlots
@@ -43,6 +43,11 @@ void CascadeAccumulator::bumpPlayerEpoch(PlayerTypes ePlayer)
 	if (ePlayer >= 0 && ePlayer < MAX_PLAYERS) ++s_aiPlayerEpoch[ePlayer];
 }
 
+int CascadeAccumulator::epochFor(PlayerTypes ePlayer)
+{
+	return s_iEpoch + (ePlayer >= 0 && ePlayer < MAX_PLAYERS ? s_aiPlayerEpoch[ePlayer] : 0);   // both monotonic -- the sum never collides
+}
+
 static const char* acc_channel(int y)
 {
 	static const char* a[NUM_YIELD_TYPES] = { "food", "production", "commerce" };
@@ -70,7 +75,7 @@ static void acc_ensure(const CvCity* pCity)
 {
 	CascadeRateSlots& st = pCity->m_cascadeRateSlots;
 	const int iTurn = GC.getGame().getGameTurn();
-	const int iEpoch = s_iEpoch + s_aiPlayerEpoch[(int)pCity->getOwner()];   // both monotonic -- the sum never collides
+	const int iEpoch = CascadeAccumulator::epochFor(pCity->getOwner());
 	if (st.iEpoch != iEpoch || st.iTurn != iTurn)
 	{
 		st.iEpoch = iEpoch;
@@ -86,13 +91,12 @@ void CascadeAccumulator::refreshComponents(const CvCity* pCity, int iMask)
 	++CascadePerf::accRefresh;
 	CascadeRateSlots& st = pCity->m_cascadeRateSlots;
 
-	// ONE ctx + facts pass serves every dirty component (facts are memoized; the building hook evicts them)
+	// ONE ctx serves every dirty component; the facts are the STANDING per-city cache (event-invalidated,
+	// same epoch/turn protocol as these slots -- EnablerKernel::cityFacts).
 	const CvPlayer& player = GET_PLAYER(pCity->getOwner());
 	CvCascadeEvalCtx ec;
 	ec.city = pCity; ec.plot = pCity->plot(); ec.player = &player; ec.team = &GET_TEAM(player.getTeam());
-	std::set<int> activeB, provB;
-	EnablerKernel::computeCityBuildingFacts(pCity, ec, activeB, provB);
-	ec.activeBuildings = &activeB; ec.vicinityProvidedBonuses = &provB;
+	EnablerKernel::wireFacts(pCity, ec);
 
 	for (int y = 0; y < NUM_YIELD_TYPES; ++y)
 	{

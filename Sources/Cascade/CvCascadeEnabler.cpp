@@ -280,8 +280,7 @@ void cvCascadeEnablerShadow()
 			cec.city = pCity; cec.plot = pCity->plot(); cec.player = &kPlayer; cec.team = &kTeam;   // plot = the CITY plot (2026-07-02 fix: bare HAS_COAST / HAS_FRESHWATER take the plot branch; a NULL plot failed them all)
 			// The two per-city building facts (active set + in-vicinity `provides` supply, json §5a) for the projects/
 			// processes gateSet requires-eval -- computed from the cascade, not the engine (DEC-calc-zero-ride-in).
-			std::set<int> cecActiveB, cecProvB; EnablerKernel::computeCityBuildingFacts(pCity, cec, cecActiveB, cecProvB);
-			cec.activeBuildings = &cecActiveB; cec.vicinityProvidedBonuses = &cecProvB;
+			EnablerKernel::wireFacts(pCity, cec);
 			std::set<int> avB, avU, avPr, avProc;
 			BuildingCascade::buildable(pCity, kPlayer, kTeam, avB);   // BuildingCascade port (all-buildings frontier)
 			UnitCascade::trainable(pCity, kPlayer, kTeam, avU);       // UnitCascade port (generate-then-gate)

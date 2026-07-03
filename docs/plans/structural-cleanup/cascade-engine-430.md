@@ -392,8 +392,10 @@ curated-set model as part of this migration. The current mechanism (mapped 2026-
    the COMPILED DEPOSIT INDEX (`Cascade/CvCascadeDepositIndex.{h,cpp}`: push-time strings→ints interning, compiled
    segments + FK-resolved target id per deposit, int matchers in MMKernel, per-channel candidate prefilters; the
    flat vector stays, the per-access string walk is gone — measured modifier calc ~25s → <1s/turn on a bit-identical
-   same-turn replay; modifier-substrate.md). ⚠ All memos are SHADOW-PHASE-ONLY (stale on mid-turn building changes) —
-   event-invalidate before any consumer cut.
+   same-turn replay; modifier-substrate.md). ⚠ Memo status (2026-07-03): the FACTS memo is GONE — replaced by the standing event-invalidated
+   `CvCity::m_cascadeFacts` cache (state-repositories.md; the "event-invalidate before any consumer cut"
+   prerequisite is CLOSED for the facts). The YieldRate turn memo remains and is ORACLE-ONLY (the calculator
+   is the [SLOT]/[GETTER] verification oracle, never a consumer — it dies with the shadow at the cut).
 2. **Tally** ✅ **DONE — reworked to a READ-ONLY accessor (owner ruling 2026-06-30)** (buildings + units). It READS the
    object-owned counts (`CvPlayer::getBuildingCount`/`getUnitCount`) and rolls UP the spine (empire/team/world) — no
    store, no `IEventConsumer`, no `rebuild`/`onEvent`/`shadowDiff` (a count shadow was tautological — the duplicate-store

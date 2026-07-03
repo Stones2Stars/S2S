@@ -26,7 +26,7 @@
 #include "Infos/CvWorldInfo.h"        // getCorporationMaintenancePercent (the §2 corporation package)
 #include "AI/CvPlayerAI.h"             // GET_PLAYER
 #include "AI/CvTeamAI.h"              // GET_TEAM
-#include "CvCascadeEnablerKernel.h"    // EnablerKernel::computeCityBuildingFacts (shrine/stateReligion build their own ctx)
+#include "CvCascadeEnablerKernel.h"    // EnablerKernel::wireFacts (shrine/stateReligion build their own ctx over the standing facts)
 #include "CvCascadeDepositIndex.h"     // DepositIndex -- the compiled deposit index (buildingKeyed matches ints)
 #include <map>
 #include <set>
@@ -115,10 +115,9 @@ long CommerceCalc::buildingKeyed(const std::string& channel, const CvCity* pCity
 // `shrine` + building `identity.shrine` intrinsic blocks (a cleanliness follow-up, not a correctness gap).
 long CommerceCalc::shrine(const std::string& channel, const CvCity* pCity)
 {
-	CvCascadeEvalCtx ec;   // local eval ctx (this package takes no ec) -- compute the active set for the presence test
+	CvCascadeEvalCtx ec;   // local eval ctx (this package takes no ec) -- the standing facts serve the presence test
 	ec.city = pCity; ec.plot = pCity->plot(); ec.player = &GET_PLAYER(pCity->getOwner()); ec.team = &GET_TEAM(GET_PLAYER(pCity->getOwner()).getTeam());
-	std::set<int> activeB, provB; EnablerKernel::computeCityBuildingFacts(pCity, ec, activeB, provB);
-	ec.activeBuildings = &activeB; ec.vicinityProvidedBonuses = &provB;
+	EnablerKernel::wireFacts(pCity, ec);
 	long sum = 0;
 	const int nB = GC.getNumBuildingInfos();
 	for (int b = 0; b < nB; ++b)
@@ -167,10 +166,9 @@ long CommerceCalc::stateReligion(const std::string& channel, const CvCity* pCity
 	const CvPlayer& player = GET_PLAYER(pCity->getOwner());
 	const ReligionTypes eState = player.getStateReligion();
 	if (eState == NO_RELIGION) return 0;
-	CvCascadeEvalCtx ec;   // local eval ctx (this package takes no ec) -- compute the active set for the match test
+	CvCascadeEvalCtx ec;   // local eval ctx (this package takes no ec) -- the standing facts serve the match test
 	ec.city = pCity; ec.plot = pCity->plot(); ec.player = &player; ec.team = &GET_TEAM(player.getTeam());
-	std::set<int> activeB, provB; EnablerKernel::computeCityBuildingFacts(pCity, ec, activeB, provB);
-	ec.activeBuildings = &activeB; ec.vicinityProvidedBonuses = &provB;
+	EnablerKernel::wireFacts(pCity, ec);
 	const int nB = GC.getNumBuildingInfos();
 	int pool = 0;
 	for (int b = 0; b < nB; ++b)

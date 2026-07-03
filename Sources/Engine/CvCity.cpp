@@ -31,7 +31,7 @@
 #include "Cascade/CvEventSpine.h" // #430 logging consolidation: route [CIT] through the spine (shadow, CvCity side)
 #include "Cascade/CvCascadeGetterShadow.h" // #430 getter-contract instrumentation (cutover.md rulings 2026-07-02)
 #include "Cascade/CvCascadeAccumulator.h"  // #430 the modifier scope accumulator -- DOMAIN dirty hooks (modifier-substrate.md)
-#include "Cascade/CvCascadeEnablerKernel.h" // factsMemoEvict -- the building hook evicts this city's facts
+#include "Cascade/CvCascadeEnablerKernel.h" // EnablerKernel::recomputeCityFactsInto -- the facts cache's refresh delegate target
 #include "AI/CvCityLogTags.h" // [CIT] tag enums (shared with CvCityAI.cpp -- defined once, see header)
 #include "Infrastructure/CvDLLUtilityIFaceBase.h"
 #include "CvTraitInfo.h"
@@ -57,6 +57,7 @@ CvCity::CvCity()
 {
 	m_dataRepository.init(this);
 	m_cascadeRateSlots.set.bind(this, &CvCity::cascadeRefreshRates);   // #430: the rate-slot cache (all-dirty from birth)
+	m_cascadeFacts.set.bind(this, &CvCity::cascadeRefreshFacts);       // #430: the standing building-facts cache (ditto)
 	m_aiRiverPlotYield = new int[NUM_YIELD_TYPES];
 	m_aiBaseYieldRate = new int[NUM_YIELD_TYPES];
 	m_aiExtraYield = new int[NUM_YIELD_TYPES];
@@ -477,10 +478,15 @@ void CvCity::reset(int iID, PlayerTypes eOwner, int iX, int iY, bool bConstructo
 {
 	PROFILE_EXTRA_FUNC();
 	m_dataRepository.reset();
-	// #430: a reused city object starts with a stale rate cache (fresh identity -> full recompute on first read)
+	// #430: a reused city object starts with stale cascade caches (fresh identity -> full recompute on first read)
 	m_cascadeRateSlots.set.markAllDirty();
 	m_cascadeRateSlots.iEpoch = -1;
 	m_cascadeRateSlots.iTurn = -1;
+	m_cascadeFacts.set.markAllDirty();
+	m_cascadeFacts.active.clear();
+	m_cascadeFacts.provided.clear();
+	m_cascadeFacts.iEpoch = -1;
+	m_cascadeFacts.iTurn = -1;
 
 	//--------------------------------
 	// Uninit class
@@ -4536,7 +4542,7 @@ void CvCity::processBuilding(const BuildingTypes eBuilding, const int iChange, c
 	FAssert(iChange == 1 || iChange == -1);
 	// #430 accumulator freshness: the building set changed -> every deposit-bearing plugin + this city's facts are stale
 	CascadeAccumulator::dirtyCity(this, ACCD_PCT | ACCD_SPEC | ACCD_EXTRA | ACCD_CSPEC | ACCD_CBASE | ACCD_CPCT);
-	EnablerKernel::factsMemoEvict((int)getOwner(), getID());
+	m_cascadeFacts.set.markAllDirty();
 
 	// Toffer - Sanity control
 	if (iChange == -1)
@@ -11218,6 +11224,11 @@ void CvCity::cascadeRefreshRates(int iMask) const
 	CascadeAccumulator::refreshComponents(this, iMask);
 }
 
+void CvCity::cascadeRefreshFacts(int) const
+{
+	EnablerKernel::recomputeCityFactsInto(this, m_cascadeFacts.active, m_cascadeFacts.provided);
+}
+
 int CvCity::getYieldRate100Legacy(const YieldTypes eYield) const
 {
 	// Specialist yields receive the city yield modifier exactly like worked tiles (#317);
@@ -15247,7 +15258,7 @@ void CvCity::setHasReligion(ReligionTypes eIndex, bool bNewValue, bool bAnnounce
 		// #430 accumulator: religion presence feeds the commerce baseExtra (religion/shrine/state-religion terms)
 		// + operate conditions -> the deposit-bearing plugins + this city's facts are stale
 		CascadeAccumulator::dirtyCity(this, ACCD_PCT | ACCD_CBASE | ACCD_CPCT);
-		EnablerKernel::factsMemoEvict((int)getOwner(), getID());
+		m_cascadeFacts.set.markAllDirty();
 
 		for (int iVoteSource = 0; iVoteSource < GC.getNumVoteSourceInfos(); ++iVoteSource)
 		{
@@ -15452,7 +15463,7 @@ void CvCity::setHasCorporation(CorporationTypes eIndex, bool bNewValue, bool bAn
 		// #430 accumulator: corporation presence feeds the commerce baseExtra (corporation/corp-HQ terms)
 		// + operate conditions -> the deposit-bearing plugins + this city's facts are stale
 		CascadeAccumulator::dirtyCity(this, ACCD_PCT | ACCD_CBASE | ACCD_CPCT);
-		EnablerKernel::factsMemoEvict((int)getOwner(), getID());
+		m_cascadeFacts.set.markAllDirty();
 		if (bNewValue)
 		{
 			bool bReplacedHeadquarters = false;

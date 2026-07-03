@@ -20,7 +20,7 @@
 #include "AI/CvPlayerAI.h"             // GET_PLAYER
 #include "AI/CvTeamAI.h"              // GET_TEAM
 #include "CvCascadeConditionEval.h"    // CvCascadeEvalCtx + cascadeIsBuildingActive
-#include "CvCascadeEnablerKernel.h"    // EnablerKernel::computeCityBuildingFacts (the cascade-computed active set + vicinity provides)
+#include "CvCascadeEnablerKernel.h"    // EnablerKernel::wireFacts (the standing cascade active set + vicinity provides)
 #include "CvCascadeDepositIndex.h"     // DepositIndex -- the compiled deposit index (the candidate prefilter)
 #include <map>
 #include <vector>
@@ -66,9 +66,7 @@ int PercentStack::percentStack(const std::string& channel, const CvCity* pCity, 
 	const CvPlayer& player = GET_PLAYER(pCity->getOwner());
 	CvCascadeEvalCtx ec;                               // the live-engine eval target for the deposit conditions
 	ec.city = pCity; ec.plot = pCity->plot(); ec.player = &player; ec.team = &GET_TEAM(player.getTeam());
-	std::set<int> activeB, provB;                      // cascade-COMPUTED active set + in-vicinity provides (dormancy derived from operate, not the engine)
-	EnablerKernel::computeCityBuildingFacts(pCity, ec, activeB, provB);
-	ec.activeBuildings = &activeB; ec.vicinityProvidedBonuses = &provB;
+	EnablerKernel::wireFacts(pCity, ec);               // the STANDING cascade facts (active set + vicinity provides)
 	const std::string wantCity = channel + ".city";
 	const std::string wantArea = channel + ".area";
 	const std::string wantEmpire = channel + ".empire";
