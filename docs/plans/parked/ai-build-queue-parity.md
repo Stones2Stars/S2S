@@ -20,6 +20,11 @@ inside the production cycle serve the turn-boundary SNAPSHOT (no mid-cycle fresh
 accumulate invisibly), and ONE recalc runs at cycle end, priming the next boundary. That inverts today's
 dirty-on-mutation/lazy-refresh model into snapshot-then-recalc — the cache becomes the fairness mechanism
 itself, not just a perf device.
+**Save-safety constraint (owner):** *"this is only possible with a serialized cache (which we don't want) or a
+full cache build on load (acceptable)"* — the cycle-end snapshot is load-bearing across turns, so a load must
+reproduce it; with serialization ruled out ([DEC-derived-never-trusted](../../architecture/decisions.md#dec-derived-never-trusted)),
+the **eager full cache build at load-end** (already the general policy, state-repositories.md) is the
+correctness PREREQUISITE of this model, not just a perf trade.
 
 **The governing principle (owner, same day):** *"we should not allow AI to calculate next build based on just
 getting a new building mid-processing, because humans do not get to do that either — they have already gotten
