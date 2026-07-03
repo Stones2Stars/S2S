@@ -651,6 +651,58 @@ namespace
 			}
 		c["properties"] = picojson::value(props);
 
+		// WELLBEING raw-state INPUTS (modifier.md §2b): the runtime timers/counters/flags the health+happiness calc
+		// FOLDS but never derives (the tradeYield precedent -- out-of-scope engine state served as fixed inputs).
+		// ⛔ NO deposit-computed target rides here (building/civic/trait/feature/bonus/religion/... health+happiness
+		// are drycalc TARGETS -- they live on /computed/cities/wellbeing, the oracle side).
+		{
+			const CvPlayer& kWbOwner = GET_PLAYER(pCity->getOwner());
+			picojson::value::object wb;
+			picojson::value::object ang;
+			ang["overcrowding"] = picojson::value((double)pCity->getOvercrowdingPercentAnger());
+			ang["noMilitary"] = picojson::value((double)pCity->getNoMilitaryPercentAnger());
+			ang["culture"] = picojson::value((double)pCity->getCulturePercentAnger());
+			ang["religion"] = picojson::value((double)pCity->getReligionPercentAnger());
+			ang["hurry"] = picojson::value((double)pCity->getHurryPercentAnger());
+			ang["conscript"] = picojson::value((double)pCity->getConscriptPercentAnger());
+			ang["defyResolution"] = picojson::value((double)pCity->getDefyResolutionPercentAnger());
+			ang["warWeariness"] = picojson::value((double)pCity->getWarWearinessPercentAnger());
+			ang["revRequest"] = picojson::value((double)pCity->getRevRequestPercentAnger());
+			ang["revIndex"] = picojson::value((double)pCity->getRevIndexPercentAnger());
+			int iWbCivicAnger = 0;
+			for (int iWbI = 0; iWbI < GC.getNumCivicInfos(); iWbI++)
+				iWbCivicAnger += kWbOwner.getCivicPercentAnger((CivicTypes)iWbI);
+			ang["civic"] = picojson::value((double)iWbCivicAnger);
+			wb["angerPercents"] = picojson::value(ang);
+			wb["espionageHappiness"] = picojson::value((double)pCity->getEspionageHappinessCounter());
+			wb["espionageHealth"] = picojson::value((double)pCity->getEspionageHealthCounter());
+			wb["eventAnger"] = picojson::value((double)pCity->getEventAnger());
+			wb["taxRate"] = picojson::value((double)kWbOwner.calculateTaxRateUnhappiness());
+			int iWbForeign = kWbOwner.getForeignUnhappyPercent();
+			if (iWbForeign != 0)
+			{
+				iWbForeign = 100 / iWbForeign;
+				iWbForeign = (100 - pCity->plot()->calculateCulturePercent(pCity->getOwner())) * iWbForeign / 100;
+			}
+			wb["foreignAnger"] = picojson::value((double)std::max(0, iWbForeign));
+			wb["landmarkAnger"] = picojson::value((double)pCity->getLandmarkAnger());
+			wb["landmarkHappy"] = picojson::value((double)kWbOwner.getLandmarkHappiness());
+			wb["noLandmarkAnger"] = picojson::value(kWbOwner.isNoLandmarkAnger());
+			const int iWbOver = kWbOwner.getCityLimit() > 0 ? std::max(0, kWbOwner.getNumCities() - kWbOwner.getCityLimit()) : 0;
+			wb["cityOverLimitUnhappy"] = picojson::value((double)(kWbOwner.getCityOverLimitUnhappy() * iWbOver));
+			wb["vassalHappy"] = picojson::value((double)pCity->getVassalHappiness());
+			wb["vassalUnhappy"] = picojson::value((double)pCity->getVassalUnhappiness());
+			wb["revSuccessHappiness"] = picojson::value((double)pCity->getRevSuccessHappiness());
+			wb["happinessTimer"] = picojson::value((double)pCity->getHappinessTimer());
+			wb["celebrityHappiness"] = picojson::value((double)pCity->getCelebrityHappiness());   // unit-scan (input until the celebrity skill port)
+			wb["isNoUnhappiness"] = picojson::value(pCity->isNoUnhappiness());
+			wb["isNoCapitalUnhappiness"] = picojson::value(pCity->isCapital() && kWbOwner.isNoCapitalUnhappiness());
+			wb["isNoUnhealthyPopulation"] = picojson::value(pCity->isNoUnhealthyPopulation());
+			wb["isBuildingOnlyHealthy"] = picojson::value(pCity->isBuildingOnlyHealthy());
+			wb["freshWaterGoodHealth"] = picojson::value((double)pCity->getFreshWaterGoodHealth());   // plot-adjacency fact (fresh-water access)
+			c["wellbeingInputs"] = picojson::value(wb);
+		}
+
 		// plots -- the worked-tile substrate (raw contents + worked flag; no yields)
 		picojson::value::array plots;
 		for (int pi = 0; pi < pCity->getNumCityPlots(); ++pi)

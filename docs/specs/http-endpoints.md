@@ -134,6 +134,10 @@ Shape: **`/state/<slice>`** for game-wide lists, **`/state/<entity>/...`** for e
       water, coast, city-center, worked flag, stored extra-yield state
     - bonuses (hasBonus / vicinity / counts), corporations (present + active), religions (+ holy-city),
       properties (current values), culture level, connectivity (connected-to-capital, distance-from-capital)
+    - **wellbeingInputs** — the health/happiness RAW-STATE input vector ([modifier.md §2b](modifier.md)): the
+      named anger percents, espionage/event/tax/foreign/landmark/over-limit/vassal terms, the gate flags, and
+      fresh-water access — the runtime state the wellbeing calc FOLDS but never derives (the tradeYield
+      precedent). ⛔ no deposit-computed wellbeing target rides here (those are `/computed/cities/wellbeing`)
     - **free XP** the city confers on a newly-built unit
     - **trade routes** — the engine-picked partner cities `{owner,id}` **and the yield those routes give**
       (out-of-scope for drycalc to derive; an input)
