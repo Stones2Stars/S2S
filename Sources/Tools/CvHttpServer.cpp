@@ -728,6 +728,11 @@ namespace
 				wb["extraHappinessTechPart"] = picojson::value((double)iWbTechHappy);
 				wb["extraHealthTechPart"] = picojson::value((double)iWbTechHealth);
 			}
+			// the PLAYER religion-happiness accumulators (civic/trait/building-fed; INPUTS per the tradeYield
+			// mixed-accumulator precedent until their feeder map is proven) — the per-religion terms derive as
+			// (state present ? state : nonState) per city religion
+			wb["stateReligionHappinessPlayer"] = picojson::value((double)kWbOwner.getStateReligionHappiness());
+			wb["nonStateReligionHappinessPlayer"] = picojson::value((double)kWbOwner.getNonStateReligionHappiness());
 			wb["revSuccessHappiness"] = picojson::value((double)pCity->getRevSuccessHappiness());
 			wb["happinessTimer"] = picojson::value((double)pCity->getHappinessTimer());
 			wb["celebrityHappiness"] = picojson::value((double)pCity->getCelebrityHappiness());   // unit-scan (input until the celebrity skill port)
@@ -1753,6 +1758,30 @@ namespace
 				h["bonusBad"] = picojson::value((double)pCity->getBonusBadHappiness());
 				h["religionGood"] = picojson::value((double)pCity->getReligionGoodHappiness());
 				h["religionBad"] = picojson::value((double)pCity->getReligionBadHappiness());
+				// the PLAYER religion-happiness accumulators feeding the per-religion terms (attribution: which half diverges)
+				h["stateReligionHappinessPlayer"] = picojson::value((double)kWbOwner.getStateReligionHappiness());
+				h["nonStateReligionHappinessPlayer"] = picojson::value((double)kWbOwner.getNonStateReligionHappiness());
+				// bonusGood/Bad RECOMPUTED from current state (the exact processBonus shape: per PRESENT bonus, own
+				// happiness + active-building BonusHappinessChanges, sign-split per contribution) — diffing the stored
+				// m_iBonusGood/BadHappiness against this exposes STALE-SERIALIZED-ACCUMULATOR drift (the tech-wellbeing
+				// / improvement-yield species) without touching the stored values.
+				{
+					int iWbBonusGoodRe = 0, iWbBonusBadRe = 0;
+					for (int iWbB = 0; iWbB < GC.getNumBonusInfos(); ++iWbB)
+					{
+						if (!pCity->hasBonus((BonusTypes)iWbB)) continue;
+						const int iWbOwn = GC.getBonusInfo((BonusTypes)iWbB).getHappiness();
+						if (iWbOwn >= 0) iWbBonusGoodRe += iWbOwn; else iWbBonusBadRe += iWbOwn;
+						foreach_(const BuildingTypes eWbBt, pCity->getHasBuildings())
+						{
+							if (pCity->isReligiouslyLimitedBuilding(eWbBt) || pCity->isDisabledBuilding(eWbBt)) continue;
+							const int iWbV = GC.getBuildingInfo(eWbBt).getBonusHappinessChanges().getValue((BonusTypes)iWbB);
+							if (iWbV >= 0) iWbBonusGoodRe += iWbV; else iWbBonusBadRe += iWbV;
+						}
+					}
+					h["bonusGoodRecomputed"] = picojson::value((double)iWbBonusGoodRe);
+					h["bonusBadRecomputed"] = picojson::value((double)iWbBonusBadRe);
+				}
 				h["commerce"] = picojson::value((double)pCity->getCommerceHappiness());
 				h["areaBuilding"] = picojson::value((double)pCity->area()->getBuildingHappiness(pCity->getOwner()));
 				h["playerBuilding"] = picojson::value((double)kWbOwner.getBuildingHappiness());
@@ -1799,6 +1828,24 @@ namespace
 				hl["featureBad"] = picojson::value((double)pCity->getFeatureBadHealth());
 				hl["bonusGood"] = picojson::value((double)pCity->getBonusGoodHealth());
 				hl["bonusBad"] = picojson::value((double)pCity->getBonusBadHealth());
+				// the health twin of the happiness bonus RECOMPUTE (stale-serialized-accumulator attribution)
+				{
+					int iWbBonusGoodHRe = 0, iWbBonusBadHRe = 0;
+					for (int iWbB = 0; iWbB < GC.getNumBonusInfos(); ++iWbB)
+					{
+						if (!pCity->hasBonus((BonusTypes)iWbB)) continue;
+						const int iWbOwn = GC.getBonusInfo((BonusTypes)iWbB).getHealth();
+						if (iWbOwn >= 0) iWbBonusGoodHRe += iWbOwn; else iWbBonusBadHRe += iWbOwn;
+						foreach_(const BuildingTypes eWbBt, pCity->getHasBuildings())
+						{
+							if (pCity->isReligiouslyLimitedBuilding(eWbBt) || pCity->isDisabledBuilding(eWbBt)) continue;
+							const int iWbV = GC.getBuildingInfo(eWbBt).getBonusHealthChanges().getValue((BonusTypes)iWbB);
+							if (iWbV >= 0) iWbBonusGoodHRe += iWbV; else iWbBonusBadHRe += iWbV;
+						}
+					}
+					hl["bonusGoodRecomputed"] = picojson::value((double)iWbBonusGoodHRe);
+					hl["bonusBadRecomputed"] = picojson::value((double)iWbBonusBadHRe);
+				}
 				// the building health composites + their parts (totalGood/BadBuildingHealth, CvCity.cpp:5827/5837)
 				hl["totalGoodBuilding"] = picojson::value((double)pCity->totalGoodBuildingHealth());
 				hl["totalBadBuilding"] = picojson::value((double)pCity->totalBadBuildingHealth());
