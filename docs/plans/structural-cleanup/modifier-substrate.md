@@ -69,6 +69,12 @@ attributable diff lines (never silent).
 
 - **A — yield plane** (food/production/commerce): the slot store + dirty hooks + `[SLOT]` shadow. Getters stay
   legacy (unflipped) — the substrate proves its freshness event-driven before it is load-bearing.
+  **✅ VERIFIED (2026-07-03, live):** with the turn-roll self-heal deliberately OFF (an initial version had it
+  on — that made the sweep recompute everything next to its own oracle, a tautological 0, caught and fixed),
+  the slots carried purely hook-and-epoch-maintained state through a full real turn and read
+  `[MODIFIER/slot] checked=66 diverging=0` against the fresh calculator. The coarse hook map covered every
+  mutation that moved a sampled value; the known unhooked classes (bonus-network / religion condition flips)
+  stay watched — they surface as named diffs when they fire.
 - **B — commerce plane** (gold/research/culture/espionage): C_PCT rides the same PCT machinery; C_BASEEXTRA +
   the building-commerce block as components; slider live at combine.
 - **C — the flip**: `getYieldRate100`/`getCommerceRateTimes100` bodies return the accumulator (legacy stays
