@@ -184,6 +184,12 @@ public:
   save-safety rides the eager load-end build (below). Pairs with the
   [AI build-queue-parity model](../plans/parked/ai-build-queue-parity.md) — the snapshot IS the fairness
   mechanism; this end-state lands WITH that rework (today's lazy-refresh + hooks stay until then, parity).
+  **The event→cache routing is DERIVED FROM THE DATA, never hand-wired (owner):** *"we define in the events
+  what cache it impacts — we already know this, because we specify scopes and targets, and what yields or
+  modifiers they hit, on everything."* A DOMAIN event carries its SOURCE; the source's compiled deposits
+  (the load-time strings→ints index, [modifier-substrate.md](../plans/structural-cleanup/modifier-substrate.md))
+  name exactly the channels × scopes × targets it touches — the dirty flags fall out of the deposit addresses.
+  Today's hand-coded hook masks are the interim shape of that derivation.
 - **THE TURN-BOUNDARY PRINCIPLE WILL SIMPLIFY CACHING (owner 2026-07-03).** The
   [AI build-queue-parity intent](../plans/parked/ai-build-queue-parity.md) rules that decision INPUTS are
   turn-boundary state — *"this principle should also help us simplify caching for us now."* Consequence: once
