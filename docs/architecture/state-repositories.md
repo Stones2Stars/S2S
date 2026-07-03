@@ -174,6 +174,16 @@ public:
   its event feeds — the realized exemplar is `CascadeAccumulator`'s `AccDirty` bits over the §2a packages
   ([modifier-substrate.md](../plans/structural-cleanup/modifier-substrate.md)). When `CvDerivedCache` is built,
   it grows this per-component form (the single-flag form stays for leaf caches like the plot yield).
+- **THE TARGET END-STATE — flags all turn, ONE unified rebuild at turn end (owner 2026-07-03).** The whole
+  model in one line: *"if things have not changed, cache is not stale; if it has, rebuild."* Mechanism: *"we can
+  set a 'things changed for me' flag on every cache based on events, then we unify all cache rebuild at the end
+  of any turn."* Events are pure flag-sets (the DOMAIN-event → markDirty pattern, no mid-turn recompute); reads
+  serve the standing snapshot all turn; ONE batched rebuild pass at turn end sweeps every flagged cache **in
+  dependency order** (plot caches → city components → player aggregates), priming the next cycle. Consequences:
+  no lazy-refresh reentrancy, no mid-turn freshness questions, rebuild cost becomes one measurable phase, and
+  save-safety rides the eager load-end build (below). Pairs with the
+  [AI build-queue-parity model](../plans/parked/ai-build-queue-parity.md) — the snapshot IS the fairness
+  mechanism; this end-state lands WITH that rework (today's lazy-refresh + hooks stay until then, parity).
 - **THE TURN-BOUNDARY PRINCIPLE WILL SIMPLIFY CACHING (owner 2026-07-03).** The
   [AI build-queue-parity intent](../plans/parked/ai-build-queue-parity.md) rules that decision INPUTS are
   turn-boundary state — *"this principle should also help us simplify caching for us now."* Consequence: once
