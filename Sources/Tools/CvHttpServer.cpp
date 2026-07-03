@@ -701,11 +701,33 @@ namespace
 			wb["tempHappy"] = picojson::value((double)GC.getTEMP_HAPPY());
 			wb["handicapHappy"] = picojson::value((double)GC.getHandicapInfo(pCity->getHandicapType()).getHappyBonus());   // handicap config pair (inputs)
 			wb["handicapHealth"] = picojson::value((double)GC.getHandicapInfo(pCity->getHandicapType()).getHealthBonus());
-			// the EVENT-GRANTED extras (one-shot state, un-derivable -- the m_aiExtraYield sibling class): raw saved accumulators
+			// the EXTRA accumulators (one-shot-ish saved state): raw stored values PLUS the engine-reconstructed
+			// DERIVABLE parts -- the player accumulator is a MIX (events + Python-granted "unattributed" + trait
+			// happiness [processTrait :28459] + tech happiness/health [processTech :30912-13]); emitting the parts
+			// the way the ENGINE feeds them (the swapped trait info, the team tech set) lets a consumer subtract
+			// exactly and fold only the event/Python REMAINDER as the un-derivable input (the mixed-accumulator
+			// doctrine; blind consumer-side subtraction of CURATED values was tried and regressed -- rounds 10-11).
 			wb["extraHappinessCity"] = picojson::value((double)pCity->getExtraHappiness());
 			wb["extraHappinessPlayer"] = picojson::value((double)kWbOwner.getExtraHappiness());
 			wb["extraHealthCity"] = picojson::value((double)pCity->getExtraHealth());
 			wb["extraHealthPlayer"] = picojson::value((double)kWbOwner.getExtraHealth());
+			{
+				int iWbTraitHappy = 0;
+				for (int iWbT = 0; iWbT < GC.getNumTraitInfos(); ++iWbT)
+					if (kWbOwner.hasTrait((TraitTypes)iWbT))
+						iWbTraitHappy += GC.getTraitInfo((TraitTypes)iWbT).getHappiness();
+				int iWbTechHappy = 0, iWbTechHealth = 0;
+				const CvTeam& kWbTeam = GET_TEAM(kWbOwner.getTeam());
+				for (int iWbTe = 0; iWbTe < GC.getNumTechInfos(); ++iWbTe)
+					if (kWbTeam.isHasTech((TechTypes)iWbTe))
+					{
+						iWbTechHappy += GC.getTechInfo((TechTypes)iWbTe).getHappiness();
+						iWbTechHealth += GC.getTechInfo((TechTypes)iWbTe).getHealth();
+					}
+				wb["extraHappinessTraitPart"] = picojson::value((double)iWbTraitHappy);
+				wb["extraHappinessTechPart"] = picojson::value((double)iWbTechHappy);
+				wb["extraHealthTechPart"] = picojson::value((double)iWbTechHealth);
+			}
 			wb["revSuccessHappiness"] = picojson::value((double)pCity->getRevSuccessHappiness());
 			wb["happinessTimer"] = picojson::value((double)pCity->getHappinessTimer());
 			wb["celebrityHappiness"] = picojson::value((double)pCity->getCelebrityHappiness());   // unit-scan (input until the celebrity skill port)
