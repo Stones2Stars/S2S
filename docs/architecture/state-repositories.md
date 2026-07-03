@@ -30,6 +30,14 @@ The tell is **squirrelBanana** (`CvCity::getBuildingExtraYield100`) and the reve
 bypass: both **recompute every read**. That is not a design choice — it is a *workaround for a cache nobody can trust*
 because there is no reliable refresh. Correct, but it pays the full cost on the hot path.
 
+> **Live-proven per-plot (2026-07-03):** the `[MODIFIER/plotdiff]` probe (modifier-substrate.md Verification §1)
+> emits the three serialized improvement-yield accumulators (`accPlayer`/`accTeam`/`accCity`) per diverging worked
+> plot and reconciles them against the full writer census — `accCity` (this doc's broken city cache) AND
+> occasionally `accPlayer` hold values **no live data source can produce** (phantom yields from unreachable
+> history), per-plot, bit-exact. The disease is not city-cache-only; the player-level incremental accumulator
+> shares it. Recompute-from-source is the cure for both (the cascade's derivation already computes the correct
+> value — the cutover repairs these leaks).
+
 ## The model
 
 > **domain object mutates → flips a dirty flag → the derived value recomputes lazily on next read → consumers up the

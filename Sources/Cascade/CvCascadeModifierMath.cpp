@@ -18,6 +18,7 @@
 #include "CvCascadeYieldRate.h"        // YieldRate::yieldRate100
 #include "CvCascadeAccumulator.h"      // the modifier scope accumulator -- the [SLOT] shadow's subject
 #include "CvCascadeYieldBasePackages.h" // YieldBasePackages::specialist -- the accepted-diff decomposition (rate diff)
+#include "CvCascadeBuildingPackage.h"  // BuildingPackage::buildingFlat -- the [SLOT] EXTRA-component fresh pair
 #include "CvCascadeCommerceCalc.h"     // CommerceCalc::commerceRate100 + the commerce channel table
 #include "AI/BetterBTSAI.h"            // gPlayerLogLevel + streamLogTee
 #include "Defines/CvGlobals.h"
@@ -31,6 +32,12 @@
 #include "CvJsonInfo.h"               // the mapped info (requiresOperate/dormantTriggers) -- the dorm-attribution diagnostic
 #include "Repos/InfoRepo.h"           // InfoRepo<CvBuildingInfo> -- ditto
 #include "Infos/CvBuildingInfo.h"     // GC.getBuildingInfo().getType() (dorm sample) -- was a latent unity-batch ride-along
+#include "Engine/CvPlot.h"            // per-plot [SLOT/plot] probe: getYield + the substrate type reads
+#include "Infos/CvTerrainInfo.h"      // .getType() strings for the per-plot attribution sample
+#include "Infos/CvFeatureInfo.h"
+#include "Infos/CvImprovementInfo.h"
+#include "Infos/CvRouteInfo.h"
+#include "Infos/CvBonusInfo.h"
 #include "CvCascadePerfCount.h"       // CascadePerf -- the [MODIFIER/perf] census (ditto)
 #include "CvCascadeReadJson.h"        // cascadeReadJsonStats -- re-surface the dark load-time probe stats
 #include "CvCascadeJsonParse.h"       // cascadeJsonUnresolvedIds -- re-surface the dark load-time FK misses
@@ -42,7 +49,7 @@
 // The percent-stack shadow's diff + summary emit EVENTKIND_DIAGNOSTIC events through the event spine (NOT direct
 // gDLL->logMsg) -- the CvCascadeLogConsumer renders the raw typed fields + tees to /events, gated by level.
 // Per-emitter domain (SD_MODIFIER), one file (Cascade.log).
-enum MdEvt { MDE_DIFF = 1, MDE_SHADOW, MDE_RATE, MDE_DORM, MDE_REPO, MDE_PERF, MDE_SLOT };
+enum MdEvt { MDE_DIFF = 1, MDE_SHADOW, MDE_RATE, MDE_DORM, MDE_REPO, MDE_PERF, MDE_SLOT, MDE_PLOTDIFF };
 enum MdFld
 {
 	MDF_WHO = 1, MDF_CHANNEL, MDF_CASC, MDF_BC, MDF_BA, MDF_BE, MDF_CIV, MDF_TR,   // diff: cascade buckets
@@ -55,7 +62,13 @@ enum MdFld
 	MDF_SPECC, MDF_SPECL,                                                           // specialist sub-terms (rate diff)
 	MDF_FACTS, MDF_FACTSHIT, MDF_YRN, MDF_PSN, MDF_CRN, MDF_CEN, MDF_ACCN,          // perf: call counts (+accumulator refreshes)
 	MDF_FACTSMS, MDF_YRMS, MDF_PSMS, MDF_CRMS,                                      // perf: stopwatch ms (x10 int)
-	MDF_UNRES, MDF_UNRESIDS                                                         // load-time FK misses, re-surfaced live
+	MDF_UNRES, MDF_UNRESIDS,                                                        // load-time FK misses, re-surfaced live
+	MDF_PLOT_S, MDF_PLOT_C, MDF_EMP_S, MDF_EMP_C, MDF_SPEC_S, MDF_SPEC_C,          // [SLOT] yield-leg component pairs (slot vs fresh calc)
+	MDF_EXTRA_S, MDF_EXTRA_C, MDF_PCT_S, MDF_PCT_C,
+	MDF_YC_S, MDF_YC_C, MDF_CSPEC_S, MDF_CSPEC_C, MDF_CBASE_S, MDF_CBASE_C,        // [SLOT] commerce-leg component pairs
+	MDF_CPCT_S, MDF_CPCT_C,
+	MDF_PX, MDF_PY,                                                                 // [SLOT/plotdiff]: the diverging plot's coords (pair = plotS/plotC re-used per plot)
+	MDF_ACC_P, MDF_ACC_T, MDF_ACC_C                                                 // [SLOT/plotdiff]: the engine's SERIALIZED improvement-yield accumulators (player/team/city) for the plot's improvement
 };
 static const char* mm_prefix(int evt)
 {
@@ -68,6 +81,7 @@ static const char* mm_prefix(int evt)
 	case MDE_REPO:   return "[MODIFIER/repo]";
 	case MDE_PERF:   return "[MODIFIER/perf]";
 	case MDE_SLOT:   return "[MODIFIER/slot]";
+	case MDE_PLOTDIFF: return "[MODIFIER/plotdiff]";
 	default:         return "[MODIFIER]";
 	}
 }
@@ -123,6 +137,29 @@ static const char* mm_field(int tag, SpineFieldType* peType)
 	case MDF_CRMS:        return "commerceRateMsX10";
 	case MDF_UNRES:       return "unresolvedFks";
 	case MDF_UNRESIDS:    *peType = SFT_STR; return "unresolvedSample";
+	case MDF_PLOT_S:      return "plotS";
+	case MDF_PLOT_C:      return "plotC";
+	case MDF_EMP_S:       return "empS";
+	case MDF_EMP_C:       return "empC";
+	case MDF_SPEC_S:      return "specS";
+	case MDF_SPEC_C:      return "specC";
+	case MDF_EXTRA_S:     return "extraS";
+	case MDF_EXTRA_C:     return "extraC";
+	case MDF_PCT_S:       return "pctS";
+	case MDF_PCT_C:       return "pctC";
+	case MDF_YC_S:        return "ycS";
+	case MDF_YC_C:        return "ycC";
+	case MDF_CSPEC_S:     return "cspecS";
+	case MDF_CSPEC_C:     return "cspecC";
+	case MDF_CBASE_S:     return "cbaseS";
+	case MDF_CBASE_C:     return "cbaseC";
+	case MDF_CPCT_S:      return "cpctS";
+	case MDF_CPCT_C:      return "cpctC";
+	case MDF_PX:          return "x";
+	case MDF_PY:          return "y";
+	case MDF_ACC_P:       return "accPlayer";
+	case MDF_ACC_T:       return "accTeam";
+	case MDF_ACC_C:       return "accCity";
 	default:            return NULL;
 	}
 }
@@ -187,6 +224,7 @@ void cvCascadeModifierShadow()
 	int iChecked = 0, iDiverging = 0, iShown = 0;
 	int iRateDiverging = 0, iRateShown = 0;   // the §1 holistic rate diff (YieldRate::yieldRate100 vs getYieldRate100)
 	int iSlotChecked = 0, iSlotDiverging = 0, iSlotShown = 0;   // the ACCUMULATOR vs its calculator oracle ([SLOT])
+	int iPlotDiffShown = 0;   // the per-plot attribution probe ([MODIFIER/plotdiff]) -- its own cap
 	// Sample ACROSS EMPIRES (a per-player city cap, NOT a global one): traits/civics/religion are player-level, so
 	// 1-empire sampling is "a recipe for disaster" (owner ruling 2026-06-30) -- it misses every other civ's divergence.
 	const int MM_CITIES_PER_PLAYER = 2;
@@ -287,10 +325,69 @@ void cvCascadeModifierShadow()
 						++iSlotDiverging;
 						if (iSlotShown < 40)
 						{
+							// COMPONENT-DECOMPOSED pairs (modifier-substrate.md next-attribution): each standing slot
+							// vs its fresh calculator package on the same ctx, so the diverging component NAMES itself
+							// (a stale slot = a dirty-mapping hole in that component's hooks). Slot side = the standing
+							// state acc_ensure just served; calc side = the fresh package. plots is the live CvPlot-cache
+							// pull vs the basePlot package -- the one term the two sides source differently by design.
+							const CascadeRateSlots& st = pCity->m_cascadeRateSlots;
+							MMBreak bkS;
+							const int plotS = pCity->getPlotYield(eY);
+							const int plotC = (int)YieldBasePackages::basePlot(aszChannel[y], eY, pCity, rec);
 							eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_MODIFIER, MDE_SLOT, 1)
 								.addWStr(MDF_WHO, pCity->getName().GetCString()).addStr(MDF_CHANNEL, aszChannel[y])
-								.addI(MDF_RATEC, (int)slotRate).addI(MDF_RATEL, (int)cascRate));
+								.addI(MDF_RATEC, (int)slotRate).addI(MDF_RATEL, (int)cascRate)
+								.addI(MDF_PLOT_S, plotS).addI(MDF_PLOT_C, plotC)
+								.addI(MDF_EMP_S, (int)st.aEmpFlat[y])
+								.addI(MDF_EMP_C, YieldBasePackages::freeCity(aszChannel[y], player, rec) + YieldBasePackages::goldenAge(aszChannel[y], player, rec))
+								.addI(MDF_SPEC_S, (int)st.aSpec[y])
+								.addI(MDF_SPEC_C, YieldBasePackages::specialist(aszChannel[y], pCity, rec))
+								.addI(MDF_EXTRA_S, (int)st.aExtra100[y])
+								.addI(MDF_EXTRA_C, (int)BuildingPackage::buildingFlat(aszChannel[y], pCity, rec))
+								.addI(MDF_PCT_S, (int)st.aPct[y])
+								.addI(MDF_PCT_C, PercentStack::percentStack(aszChannel[y], pCity, bkS)));
 							++iSlotShown;
+
+							// [MODIFIER/plotdiff] -- the NEXT attribution level when the plot pair diverges: per worked
+							// plot, the engine's CvPlot cache value vs the SAME per-plot package basePlot sums
+							// (basePlotOne, single-source). The substrate sample string names the source class
+							// (terrain/feature/improvement/route/bonus/centre) without a follow-up sweep.
+							if (plotS != plotC)
+							{
+								for (int iPI = 0; iPI < NUM_CITY_PLOTS && iPlotDiffShown < 24; ++iPI)
+								{
+									const CvPlot* pp = pCity->getCityIndexPlot(iPI);
+									if (pp == NULL || !pCity->isWorkingPlot(pp)) continue;
+									const int ppS = pp->getYield(eY);
+									const int ppC = YieldBasePackages::basePlotOne(aszChannel[y], eY, pCity, pp, rec);
+									if (ppS == ppC) continue;
+									std::string sPlot;
+									if (pp->getTerrainType() != NO_TERRAIN)         sPlot += GC.getTerrainInfo(pp->getTerrainType()).getType();
+									if (pp->getFeatureType() != NO_FEATURE)       { sPlot += "|"; sPlot += GC.getFeatureInfo(pp->getFeatureType()).getType(); }
+									if (pp->getImprovementType() != NO_IMPROVEMENT) { sPlot += "|"; sPlot += GC.getImprovementInfo(pp->getImprovementType()).getType(); }
+									if (pp->getRouteType() != NO_ROUTE)           { sPlot += "|"; sPlot += GC.getRouteInfo(pp->getRouteType()).getType(); }
+									if (pp->getBonusType(player.getTeam()) != NO_BONUS) { sPlot += "|"; sPlot += GC.getBonusInfo(pp->getBonusType(player.getTeam())).getType(); }
+									if (pp == pCity->plot())                        sPlot += "|CENTRE";
+									// The engine's SERIALIZED improvement-yield accumulators for this plot's improvement --
+									// player (civic/trait/building-global writers), team (tech/Python-event writers), city
+									// (building city-scope writer). A value here with NO live data source backing it is the
+									// history-polluted-accumulator class named by the numbers, not asserted.
+									int accP = 0, accT = 0, accC = 0;
+									if (pp->getImprovementType() != NO_IMPROVEMENT)
+									{
+										accP = player.getImprovementYieldChange(pp->getImprovementType(), eY);
+										accT = GET_TEAM(player.getTeam()).getImprovementYieldChange(pp->getImprovementType(), eY);
+										accC = pCity->getImprovementYieldChange(pp->getImprovementType(), eY);
+									}
+									eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_MODIFIER, MDE_PLOTDIFF, 1)
+										.addWStr(MDF_WHO, pCity->getName().GetCString()).addStr(MDF_CHANNEL, aszChannel[y])
+										.addI(MDF_PX, pp->getX()).addI(MDF_PY, pp->getY())
+										.addI(MDF_PLOT_S, ppS).addI(MDF_PLOT_C, ppC)
+										.addI(MDF_ACC_P, accP).addI(MDF_ACC_T, accT).addI(MDF_ACC_C, accC)
+										.addStr(MDF_SAMPLE, sPlot.c_str()));
+									++iPlotDiffShown;
+								}
+							}
 						}
 					}
 				}
@@ -356,9 +453,24 @@ void cvCascadeModifierShadow()
 						++iSlotDiverging;
 						if (iSlotShown < 40)
 						{
+							// COMPONENT-DECOMPOSED pairs (commerce leg): the standing plugin numbers vs their fresh
+							// packages on the same ctx + the shared commerce-YIELD input (ycS = the slot combine the
+							// accumulator's splitter consumed; ycC = the fresh calculator's -- a ycS/ycC diff means
+							// the divergence lives in the YIELD slots, not the commerce plugins). Slider/disorder
+							// are read live on both sides, so they can never be the diverging term.
+							const CascadeRateSlots& st = pCity->m_cascadeRateSlots;
+							MMBreak bkS;
 							eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_MODIFIER, MDE_SLOT, 1)
 								.addWStr(MDF_WHO, pCity->getName().GetCString()).addStr(MDF_CHANNEL, CommerceCalc::channel(cc))
-								.addI(MDF_RATEC, (int)slotC).addI(MDF_RATEL, (int)cascC));
+								.addI(MDF_RATEC, (int)slotC).addI(MDF_RATEL, (int)cascC)
+								.addI(MDF_YC_S, (int)CascadeAccumulator::yieldRate100(pCity, YIELD_COMMERCE))
+								.addI(MDF_YC_C, (int)yc100)
+								.addI(MDF_CSPEC_S, (int)st.aCSpec100[cc])
+								.addI(MDF_CSPEC_C, (int)(100L * YieldBasePackages::specialist(CommerceCalc::channel(cc), pCity, cec)))
+								.addI(MDF_CBASE_S, (int)st.aCBase100[cc])
+								.addI(MDF_CBASE_C, (int)CommerceCalc::baseExtra100(CommerceCalc::channel(cc), pCity, cec))
+								.addI(MDF_CPCT_S, (int)st.aCPct[cc])
+								.addI(MDF_CPCT_C, PercentStack::percentStack(CommerceCalc::channel(cc), pCity, bkS)));
 							++iSlotShown;
 						}
 					}

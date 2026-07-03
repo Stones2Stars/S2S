@@ -62,6 +62,31 @@ attributable diff lines (never silent).
 
 1. **`[SLOT]` shadow** (increment A, pre-flip): per turn, sampled cities × channels — the accumulator's combine
    vs the CALCULATOR's fresh full compute. Divergence = a dirty-mapping hole (a named, attributable miss).
+   **Component-decomposed since 2026-07-03:** every `[MODIFIER/slot]` diff line carries per-component
+   slot-vs-calc pairs — yield leg `plotS/C` (live CvPlot-cache pull vs the basePlot package — the one term the
+   two sides source differently by design) + `empS/C` + `specS/C` + `extraS/C` + `pctS/C`; commerce leg
+   `ycS/C` (the shared commerce-YIELD input — a diff here means the divergence lives in the yield slots, not
+   the commerce plugins) + `cspecS/C` + `cbaseS/C` + `cpctS/C` — so the diverging component names itself
+   (slider/disorder are live at combine on both sides and can never be the diverging term).
+   **Plus the per-plot probe:** a diverging `plotS/C` pair triggers `[MODIFIER/plotdiff]` lines — per worked
+   plot, the engine's CvPlot value vs the SAME per-plot package basePlot sums (`basePlotOne`, single-source),
+   with the plot's substrate string (terrain/feature/improvement/route/bonus/centre) AND the engine's three
+   serialized improvement-yield accumulators (`accPlayer`/`accTeam`/`accCity`) for the plot's improvement.
+   **✅ THE ATTRIBUTION CLOSED (2026-07-03, live) — the standing `[SLOT]` residue decomposes into exactly two
+   named classes, both reconciling bit-exact through the combine arithmetic:**
+   - **The plot-pair class (the yield bulk + the systematic commerce-channel residue, e.g. the Seoul research
+     case = a +2 plot-commerce delta × slider × modifier):** the engine's SERIALIZED improvement-yield
+     accumulators hold values with **no live data source** — a full writer census (civic/trait/building
+     ImprovementYieldChanges in XML *and* JSON, improvement TechYieldChanges, Python events) accounts for
+     every data-backed contribution, which the cascade mirrors and cancels; the un-backed remainder (chiefly
+     `accCity` — the state-repositories.md broken city cache — plus occasional `accPlayer` residue) IS the
+     divergence, per-plot, exactly. This is the accepted **stale-engine-state class (cutover.md note f2)**
+     riding the accumulator's live `getPlotYield` pull: the ENGINE side is wrong (phantom yields from
+     unreachable history), the calculator's derivation is right, and the cutover repairs it. NOT a slot
+     dirty-mapping hole — no substrate action needed.
+   - **The `cbase` class (small commerce residues):** the standing C_BASEEXTRA slot lagging a fresh mid-turn
+     mutation the hooks don't carry (the watched bonus-network / religion condition-flip class) — self-heals
+     at the turn roll, surfaces as named `cbaseS/C` pairs when it fires.
 2. **The `[GETTER]` in-body net** (at flip time): accumulator vs the legacy in-body expression — the standing
    accepted-class residue plus anything new.
 
@@ -92,10 +117,10 @@ attributable diff lines (never silent).
   every city's slots); (5) **per-player epochs** for tech/civic/GA (the cross-player invalidation storm
   killed) — but the `changeBuildingCount` bump REVERTED on measurement (5x regression: completions are the
   highest-frequency player event; sibling-empire freshness belongs to the ruled turn-end unified rebuild).
-  **Steady state:** pctStack ~4.6k calls/~25s, accRefresh ~10k, turn feel at baseline; `[SLOT]` residue ~31
-  tiny diffs (incl. the SYSTEMATIC Seoul research +1049, four identical sightings) — the named next
-  attribution: extend the `[SLOT]` diff sample with per-component slot-vs-calc pairs so the diverging
-  component names itself. `[GETTER]` ~360-430/1295 = the legacy repair map, standing.
+  **Steady state:** pctStack ~4.6k calls/~25s, accRefresh ~10k, turn feel at baseline. The `[SLOT]` residue
+  is ✅ **FULLY ATTRIBUTED** via the component-decomposed diff + the per-plot probe (see Verification §1):
+  the stale-serialized-accumulator class (engine-side phantom, cutover repairs) + the watched unhooked
+  `cbase` class (turn-roll self-heals). `[GETTER]` = the legacy repair map, standing.
 
 ## Explicitly NOT this build
 

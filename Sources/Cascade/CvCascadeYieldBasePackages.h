@@ -15,6 +15,7 @@
 
 class CvCity;
 class CvPlayer;
+class CvPlot;
 
 class YieldBasePackages
 {
@@ -27,6 +28,11 @@ public:
 	// max(0,·); a CITY-CENTRE plot gets the min-city floor instead of improvement/route. (Traits use the option-gated active
 	// set + PURE_TRAITS sign filter; the per-plot m_aExtraYield is event-granted, not derivable -> 0, audit-only per calc-map.)
 	static int basePlot(const std::string& channel, YieldTypes eY, const CvCity* pCity, CvCascadeEvalCtx ec);
+
+	// The [SLOT] per-plot attribution probe: ONE worked plot's isolated base package through the SAME body
+	// basePlot sums (single-source law -- never a re-derivation). Diagnostic-only: the per-city ctx is rebuilt
+	// per call, so keep it off hot paths (capped shadow emits only).
+	static int basePlotOne(const std::string& channel, YieldTypes eY, const CvCity* pCity, const CvPlot* p, CvCascadeEvalCtx ec);
 
 	// BASE: trade-route yield (TradeRoutePackage) -- the ONE allowed live-yield INPUT (the cascade folds it in, never
 	// derives it; owner ruling 2026-06-28). Read from the live engine, x1.

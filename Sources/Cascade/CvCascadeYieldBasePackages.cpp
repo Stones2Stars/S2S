@@ -26,41 +26,31 @@
 #include "Infos/CvSpecialistInfo.h"   // InfoRepo<CvSpecialistInfo> + GC.getSpecialistInfo (the §1 specialist package)
 #include "AI/CvPlayerAI.h"             // GET_PLAYER
 
-// BASE: worked-plot yields (PlotPackage / calc-map §10.1) -- Σ over the city's WORKED plots of each plot's ONE isolated
-// base package, RE-DERIVED from the substrate JSON + keyed building/civic/trait deposits (NOT the engine's computed
-// getPlotYield -- the cascade computes it). Mirrors CvPlot::calculateYield order (Explore-verified 2026-06-30): nature
-// (max0 of relief+terrain+feature+bonus) + centre + plots-target + keyed-CITY = the pre-improvement running yield; the
-// extra/less + golden-age thresholds test on it; then the improvement addend (floored at -nature) + route-own-flat,
-// max(0,·); a CITY-CENTRE plot gets the min-city floor instead of improvement/route. (Traits use the option-gated active
-// set + PURE_TRAITS sign filter; the per-plot m_aExtraYield is event-granted, not derivable -> 0, audit-only per calc-map.)
-int YieldBasePackages::basePlot(const std::string& channel, YieldTypes eY, const CvCity* pCity, CvCascadeEvalCtx ec)
+// The per-CITY precomputed constants for the per-plot package -- shared by basePlot's sum and the basePlotOne
+// diagnostic probe (single-source law: ONE per-plot body, two entry points).
+struct BpCityCtx
 {
-	const CvPlayer& player = *ec.player;
-	const TeamTypes eTeam = player.getTeam();
-	const CvYieldInfo& yi = GC.getYieldInfo(eY);
-	const int peakChange = yi.getPeakChange(), hillsChange = yi.getHillsChange();
-	const int cityChange = yi.getCityChange(), popDivisor = yi.getPopulationChangeDivisor();
-	const int gaYield = yi.getGoldenAgeYield(), gaThreshold = yi.getGoldenAgeYieldThreshold();
-	const int minCity = yi.getMinCity();
-	const int extraYield = GC.getDefineINT("EXTRA_YIELD");
-	const bool bGolden = player.isGoldenAge();
-	const int pop = pCity->getPopulation();
-	const int extraThreshold = MMKernel::minPosThreshold("extraYieldThreshold", channel, player, ec);
-	const int lessThreshold  = MMKernel::minPosThreshold("lessYieldThreshold", channel, player, ec);
-	const int nB = GC.getNumBuildingInfos();
+	int peakChange, hillsChange, cityChange, popDivisor, gaYield, gaThreshold, minCity, extraYield, pop;
+	int extraThreshold, lessThreshold;
+	bool bGolden;
+	const std::vector<int>* chanCands;
+};
 
-	// PER-CHANNEL BUILDING-CANDIDATE CACHE (perf 2026-07-02, the plotcalc hunt): the per-plot loop below used to
-	// walk ALL ~5202 buildings PER WORKED PLOT (x3 keyed-deposit walks each) -- the measured ~164ms per rate
-	// compute and ~430k condition evals per turn. Which buildings carry ANY deposit for this channel is STATIC
-	// data (readJson-mapped once per process), so the candidate list is computed once per channel and the plot
-	// loop walks candidates only. Over-approximate on purpose (any deposit prefixed "<channel>." qualifies) --
-	// correctness-identical, since non-matching deposits contribute 0 through the keyed walks anyway.
+// PER-CHANNEL BUILDING-CANDIDATE CACHE (perf 2026-07-02, the plotcalc hunt): the per-plot loop below used to
+// walk ALL ~5202 buildings PER WORKED PLOT (x3 keyed-deposit walks each) -- the measured ~164ms per rate
+// compute and ~430k condition evals per turn. Which buildings carry ANY deposit for this channel is STATIC
+// data (readJson-mapped once per process), so the candidate list is computed once per channel and the plot
+// loop walks candidates only. Over-approximate on purpose (any deposit prefixed "<channel>." qualifies) --
+// correctness-identical, since non-matching deposits contribute 0 through the keyed walks anyway.
+static const std::vector<int>& bp_channelCands(const std::string& channel)
+{
 	static std::map<std::string, std::vector<int> > s_chanCands;   // function-local static in a .cpp (NOT header-inline)
 	std::map<std::string, std::vector<int> >::iterator ccIt = s_chanCands.find(channel);
 	if (ccIt == s_chanCands.end())
 	{
 		std::vector<int> cands;
 		const std::string pfx = channel + ".";
+		const int nB = GC.getNumBuildingInfos();
 		for (int b = 0; b < nB; ++b)
 		{
 			const CvJsonInfo* db = InfoRepo<CvBuildingInfo>::get().get(b);
@@ -70,13 +60,35 @@ int YieldBasePackages::basePlot(const std::string& channel, YieldTypes eY, const
 		}
 		ccIt = s_chanCands.insert(std::make_pair(channel, cands)).first;
 	}
-	const std::vector<int>& chanCands = ccIt->second;
+	return ccIt->second;
+}
 
-	int total = 0;
-	for (int iI = 0; iI < NUM_CITY_PLOTS; ++iI)
+static BpCityCtx bp_cityCtx(const std::string& channel, YieldTypes eY, const CvCity* pCity, const CvCascadeEvalCtx& ec)
+{
+	const CvPlayer& player = *ec.player;
+	const CvYieldInfo& yi = GC.getYieldInfo(eY);
+	BpCityCtx cx;
+	cx.peakChange = yi.getPeakChange(); cx.hillsChange = yi.getHillsChange();
+	cx.cityChange = yi.getCityChange(); cx.popDivisor = yi.getPopulationChangeDivisor();
+	cx.gaYield = yi.getGoldenAgeYield(); cx.gaThreshold = yi.getGoldenAgeYieldThreshold();
+	cx.minCity = yi.getMinCity();
+	cx.extraYield = GC.getDefineINT("EXTRA_YIELD");
+	cx.bGolden = player.isGoldenAge();
+	cx.pop = pCity->getPopulation();
+	cx.extraThreshold = MMKernel::minPosThreshold("extraYieldThreshold", channel, player, ec);
+	cx.lessThreshold  = MMKernel::minPosThreshold("lessYieldThreshold", channel, player, ec);
+	cx.chanCands = &bp_channelCands(channel);
+	return cx;
+}
+
+// ONE worked plot's isolated base package (the loop body of basePlot -- extracted verbatim so the [SLOT]
+// per-plot attribution probe reads the SAME code path, never a re-derivation).
+static int bp_plotTotal(const BpCityCtx& cx, const std::string& channel, const CvCity* pCity, const CvPlot* p, CvCascadeEvalCtx& ec)
+{
+	const CvPlayer& player = *ec.player;
+	const TeamTypes eTeam = player.getTeam();
+	const std::vector<int>& chanCands = *cx.chanCands;
 	{
-		const CvPlot* p = pCity->getCityIndexPlot(iI);
-		if (p == NULL || !pCity->isWorkingPlot(p)) continue;
 		ec.plot = p;
 		const bool isCenter = (p == pCity->plot());
 
@@ -99,7 +111,7 @@ int YieldBasePackages::basePlot(const std::string& channel, YieldTypes eY, const
 
 		// nature = max(0, relief + terrain + feature + bonus own-plot yields), re-derived from the substrate JSON.
 		const PlotTypes ePlot = p->getPlotType();
-		const int plotTypeBase = (ePlot == PLOT_PEAK) ? peakChange : (ePlot == PLOT_HILLS) ? hillsChange : 0;
+		const int plotTypeBase = (ePlot == PLOT_PEAK) ? cx.peakChange : (ePlot == PLOT_HILLS) ? cx.hillsChange : 0;
 		int natureRaw = plotTypeBase;
 		if (p->getTerrainType() != NO_TERRAIN) natureRaw += MMKernel::substratePlotYield(channel, InfoRepo<CvTerrainInfo>::get().get(p->getTerrainType()), p, eTeam, directImp, ec);
 		if (p->getFeatureType() != NO_FEATURE) natureRaw += MMKernel::substratePlotYield(channel, InfoRepo<CvFeatureInfo>::get().get(p->getFeatureType()), p, eTeam, directImp, ec);
@@ -169,23 +181,50 @@ int YieldBasePackages::basePlot(const std::string& channel, YieldTypes eY, const
 		int centre = 0;
 		if (isCenter)
 		{
-			centre += cityChange;
-			if (popDivisor != 0) centre += pop / popDivisor;
+			centre += cx.cityChange;
+			if (cx.popDivisor != 0) centre += cx.pop / cx.popDivisor;
 		}
 
 		const int running = nature + centre + plotsTarget + keyedCity;   // m_aExtraYield (event-granted) -> 0
 		int threshold = 0;
-		if (extraThreshold > 0 && running >= extraThreshold) threshold += extraYield;
-		if (lessThreshold  > 0 && running >= lessThreshold)  threshold -= extraYield;
-		const int goldenAge = (bGolden && (running + threshold) >= gaThreshold) ? gaYield : 0;
+		if (cx.extraThreshold > 0 && running >= cx.extraThreshold) threshold += cx.extraYield;
+		if (cx.lessThreshold  > 0 && running >= cx.lessThreshold)  threshold -= cx.extraYield;
+		const int goldenAge = (cx.bGolden && (running + threshold) >= cx.gaThreshold) ? cx.gaYield : 0;
 
 		const int improvementAddend = std::max(-nature, improvementYield + improvementKeyedEmpire + routeImpKeyed);
 		const int keyedEmpireRest = keyedEmpire - improvementKeyedEmpire;
 		int plotTotal = std::max(0, running + keyedEmpireRest + threshold + goldenAge + improvementAddend + routeOwnFlat);
-		if (isCenter) plotTotal = std::max(plotTotal, minCity);
-		total += plotTotal;
+		if (isCenter) plotTotal = std::max(plotTotal, cx.minCity);
+		return plotTotal;
+	}
+}
+
+// BASE: worked-plot yields (PlotPackage / calc-map §10.1) -- Σ over the city's WORKED plots of each plot's ONE isolated
+// base package, RE-DERIVED from the substrate JSON + keyed building/civic/trait deposits (NOT the engine's computed
+// getPlotYield -- the cascade computes it). Mirrors CvPlot::calculateYield order (Explore-verified 2026-06-30): nature
+// (max0 of relief+terrain+feature+bonus) + centre + plots-target + keyed-CITY = the pre-improvement running yield; the
+// extra/less + golden-age thresholds test on it; then the improvement addend (floored at -nature) + route-own-flat,
+// max(0,·); a CITY-CENTRE plot gets the min-city floor instead of improvement/route. (Traits use the option-gated active
+// set + PURE_TRAITS sign filter; the per-plot m_aExtraYield is event-granted, not derivable -> 0, audit-only per calc-map.)
+int YieldBasePackages::basePlot(const std::string& channel, YieldTypes eY, const CvCity* pCity, CvCascadeEvalCtx ec)
+{
+	const BpCityCtx cx = bp_cityCtx(channel, eY, pCity, ec);
+	int total = 0;
+	for (int iI = 0; iI < NUM_CITY_PLOTS; ++iI)
+	{
+		const CvPlot* p = pCity->getCityIndexPlot(iI);
+		if (p == NULL || !pCity->isWorkingPlot(p)) continue;
+		total += bp_plotTotal(cx, channel, pCity, p, ec);
 	}
 	return total;
+}
+
+// The [SLOT] per-plot attribution probe: ONE plot's package through the SAME bp_plotTotal body basePlot sums
+// (never a re-derivation). Diagnostic-only -- the per-city ctx is rebuilt per call, so keep it off hot paths.
+int YieldBasePackages::basePlotOne(const std::string& channel, YieldTypes eY, const CvCity* pCity, const CvPlot* p, CvCascadeEvalCtx ec)
+{
+	const BpCityCtx cx = bp_cityCtx(channel, eY, pCity, ec);
+	return bp_plotTotal(cx, channel, pCity, p, ec);
 }
 
 // BASE: trade-route yield (TradeRoutePackage) -- the ONE allowed live-yield INPUT (the cascade folds it in, never
