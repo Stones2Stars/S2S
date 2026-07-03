@@ -81,6 +81,21 @@ attributable diff lines (never silent).
   in-body as the net oracle, per cutover.md ruling 5 / flip attempt #1's binding lessons). Measure the proof
   turn; the perf follow-up (compiling the deposit addresses string→int at load, per-plot package caches) lands
   only if the measured numbers demand it.
+  **✅ LANDED (2026-07-03, live through many measured turns).** The road there, each step measured and ruled:
+  (1) the first flip ran ~2x slow — the census convicted the single assembled C_RATE chaining every juggle
+  move into the whole commerce assembler (pctStack 45.9k + commerceRate 42.9k calls ≈ 9.3min) → the
+  **plugin-number decomposition** (owner ruling: every package a standing number; channels independent; the
+  slider LIVE at combine, zero invalidation); (2) worker-AI plot evals → the **plots PULL** (the stored PLOTS
+  component deleted; `getPlotYield` — the CvPlot cache, per state-repositories' pull model — read live at
+  combine; worker churn costs nothing); (3) `CvDerivedCache` **BUILT** (both forms; plot cache migrated;
+  spec holes plugged); (4) the **eager load-end warm-up** (owner: hide the cost in load; every plot cache +
+  every city's slots); (5) **per-player epochs** for tech/civic/GA (the cross-player invalidation storm
+  killed) — but the `changeBuildingCount` bump REVERTED on measurement (5x regression: completions are the
+  highest-frequency player event; sibling-empire freshness belongs to the ruled turn-end unified rebuild).
+  **Steady state:** pctStack ~4.6k calls/~25s, accRefresh ~10k, turn feel at baseline; `[SLOT]` residue ~31
+  tiny diffs (incl. the SYSTEMATIC Seoul research +1049, four identical sightings) — the named next
+  attribution: extend the `[SLOT]` diff sample with per-component slot-vs-calc pairs so the diverging
+  component names itself. `[GETTER]` ~360-430/1295 = the legacy repair map, standing.
 
 ## Explicitly NOT this build
 

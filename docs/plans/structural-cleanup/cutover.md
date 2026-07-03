@@ -88,6 +88,11 @@ mapping: [`code-cut-map.md`](code-cut-map.md) §Rulings addendum):
       deposits), and the LOAD step programmatically compiles it into the top-down routing** — so runtime flow is
       pure deposit-DOWN into slots, and no read ever walks back up to the sources. The revert restored the
       shadow-era instrument; the flip returns when the substrate exists.
+      **⚡ THE SUBSTRATE WAS BUILT AND THE FLIP LANDED THE NEXT DAY (2026-07-03)** —
+      [modifier-substrate.md](modifier-substrate.md): the §1 accumulator (plugin-number components, per-player
+      epochs, plots pulled from the CvPlot cache, `CvDerivedCache` built, eager load-end warm-up), getters
+      flipped with the `[GETTER]` net + the `[SLOT]` accumulator-vs-calculator net both standing, turn feel at
+      baseline. The modifier pair now RUNS ON the cascade in a live game.
       **⚖ The retro finding (owner 2026-07-02): the top-down deposit design "has clearly been lost during
       drycalc and implementation."** Each step was locally correct — StoneBase HAD to full-calc (an offline
       drycalc cannot hold continuous game state; that is exactly why the spec exists), and the C++ port's goal
