@@ -14,6 +14,13 @@ queue is set before the turn resolves; overflow carries). The intent: the AI pla
 mechanism** the human uses, production **overflow** carries the same way, and the mid-turn re-decision privilege
 disappears.
 
+**The target processing model (owner, same day):** *"build processing then uses the CACHE, until all buildings
+it can has been produced — and then the cache gets recalced in expectation of the next cycle."* I.e. reads
+inside the production cycle serve the turn-boundary SNAPSHOT (no mid-cycle freshness at all — mutations
+accumulate invisibly), and ONE recalc runs at cycle end, priming the next boundary. That inverts today's
+dirty-on-mutation/lazy-refresh model into snapshot-then-recalc — the cache becomes the fairness mechanism
+itself, not just a perf device.
+
 **The governing principle (owner, same day):** *"we should not allow AI to calculate next build based on just
 getting a new building mid-processing, because humans do not get to do that either — they have already gotten
 the dump at that point."* Decision INPUTS are turn-boundary state; mid-processing mutations are invisible to
