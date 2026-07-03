@@ -176,6 +176,14 @@ the external dry-calc + logging, not here).
   **with its full per-source decomposition** (base/specialist/plot/trade/building/bonus/civic/… flat + percent
   terms, and the commerce split) — the modifier-impact ground-truth the calculator reconciles against. Also
   carries **`maxTradeRoutes`** (drycalc computes the route capacity, so it is a target verified here).
+- **wellbeing** — `/computed/cities/wellbeing?player=N&city=M`: the city's health + happiness ORACLE — the
+  realized levels (`happyLevel`/`unhappyLevel`/`angryPopulation`/`goodHealth`/`badHealth`/`healthRate`) **with
+  the FULL per-source decomposition**: the named anger percents (overcrowding/noMilitary/culture/religion/
+  hurry/conscript/defyResolution/warWeariness/revRequest/revIndex/Σcivic), every shared signed happiness source
+  (emitted RAW once — the happy side takes `max(0,·)`, the unhappy side `−min(0,·)`), every health source (the
+  `…100` fields are ÷100 at use), and the gate flags (`isNoUnhappiness`/`isNoUnhealthyPopulation`/
+  `isBuildingOnlyHealthy`/…). Closes the calc-map §12 happiness emit gaps — the health/happiness channel's
+  parity ground-truth.
 - **economy** — `/computed/players[?player=N]`: the empire-scope engine calc whole — gold/science per turn,
   upkeep/inflation/maintenance decomposition, demographics, wellbeing (kept intact with its named inputs; the raw
   player facts are independently on `/state/players`).

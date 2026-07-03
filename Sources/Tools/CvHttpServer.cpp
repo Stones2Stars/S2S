@@ -1596,6 +1596,153 @@ namespace
 			return CvString(picojson::value(o).serialize().c_str());
 		}
 
+		// CITY-WELLBEING -- the HEALTH + HAPPINESS oracle: the FULL per-source decomposition of goodHealth/badHealth
+		// (CvCity.cpp:5851/5878) + happyLevel/unhappyLevel (:5709/:5626), one field per NAMED legacy term (THE
+		// NO-GUESSING RULE: emit the complete legacy decomposition so a channel divergence attributes to a named
+		// source). Shared signed sources (commerce/largestCity/...) are emitted RAW once -- happyLevel takes their
+		// max(0,·), unhappyLevel their -min(0,·); the consumer applies the same split. Closes the calc-map §12
+		// happiness gap list (anger% sources, gate flags, celebrity/vassal/tax/event/foreign/landmark/overLimit).
+		if (strcmp(szAction, "cityWellbeing") == 0)
+		{
+			o["city"] = picojson::value((double)iCityId);
+			if (pCity == NULL)
+			{
+				o["error"] = picojson::value(std::string("no city"));
+				return CvString(picojson::value(o).serialize().c_str());
+			}
+			const CvPlayer& kWbOwner = GET_PLAYER(pCity->getOwner());
+			o["globalId"] = picojson::value(std::string(CvString::format("%02d-%d", pCity->getOwner(), iCityId).GetCString()));
+			o["cityName"] = picojson::value(std::string(narrowToAscii(pCity->getName()).GetCString()));
+			o["population"] = picojson::value((double)pCity->getPopulation());
+			// ---- realized (the verdicts a parity sweep diffs against) ----
+			o["happyLevel"] = picojson::value((double)pCity->happyLevel());
+			o["unhappyLevel"] = picojson::value((double)pCity->unhappyLevel());
+			o["angryPopulation"] = picojson::value((double)pCity->angryPopulation());
+			o["goodHealth"] = picojson::value((double)pCity->goodHealth());
+			o["badHealth"] = picojson::value((double)pCity->badHealth());
+			o["healthRate"] = picojson::value((double)pCity->healthRate());
+			// ---- gate flags + constants ----
+			o["isNoUnhappiness"] = picojson::value(pCity->isNoUnhappiness());
+			o["isNoCapitalUnhappiness"] = picojson::value(pCity->isCapital() && kWbOwner.isNoCapitalUnhappiness());
+			o["isNoUnhealthyPopulation"] = picojson::value(pCity->isNoUnhealthyPopulation());
+			o["isBuildingOnlyHealthy"] = picojson::value(pCity->isBuildingOnlyHealthy());
+			o["percentAngerDivisor"] = picojson::value((double)GC.getPERCENT_ANGER_DIVISOR());
+			o["tempHappy"] = picojson::value((double)GC.getTEMP_HAPPY());
+			o["happinessTimer"] = picojson::value((double)pCity->getHappinessTimer());
+			// ---- the anger PERCENTS (unhappyLevel's pop-scaled block, each named) ----
+			{
+				picojson::object ang;
+				ang["overcrowding"] = picojson::value((double)pCity->getOvercrowdingPercentAnger());
+				ang["noMilitary"] = picojson::value((double)pCity->getNoMilitaryPercentAnger());
+				ang["culture"] = picojson::value((double)pCity->getCulturePercentAnger());
+				ang["religion"] = picojson::value((double)pCity->getReligionPercentAnger());
+				ang["hurry"] = picojson::value((double)pCity->getHurryPercentAnger());
+				ang["conscript"] = picojson::value((double)pCity->getConscriptPercentAnger());
+				ang["defyResolution"] = picojson::value((double)pCity->getDefyResolutionPercentAnger());
+				ang["warWeariness"] = picojson::value((double)pCity->getWarWearinessPercentAnger());
+				ang["revRequest"] = picojson::value((double)pCity->getRevRequestPercentAnger());
+				ang["revIndex"] = picojson::value((double)pCity->getRevIndexPercentAnger());
+				int iCivicAnger = 0;
+				for (int iWbI = 0; iWbI < GC.getNumCivicInfos(); iWbI++)
+					iCivicAnger += kWbOwner.getCivicPercentAnger((CivicTypes)iWbI);
+				ang["civic"] = picojson::value((double)iCivicAnger);
+				o["angerPercents"] = picojson::value(ang);
+			}
+			// ---- the SHARED signed happiness sources (raw; happy side max(0), unhappy side -min(0)) ----
+			{
+				picojson::object h;
+				h["revSuccess"] = picojson::value((double)pCity->getRevSuccessHappiness());        // happy-only
+				h["largestCity"] = picojson::value((double)pCity->getLargestCityHappiness());
+				h["military"] = picojson::value((double)pCity->getMilitaryHappiness());
+				h["stateReligion"] = picojson::value((double)pCity->getCurrentStateReligionHappiness());
+				h["buildingGood"] = picojson::value((double)pCity->getBuildingGoodHappiness());     // happy-only
+				h["buildingBad"] = picojson::value((double)pCity->getBuildingBadHappiness());       // unhappy-only
+				h["extraBuildingGood"] = picojson::value((double)pCity->getExtraBuildingGoodHappiness());
+				h["extraBuildingBad"] = picojson::value((double)pCity->getExtraBuildingBadHappiness());
+				h["featureGood"] = picojson::value((double)pCity->getFeatureGoodHappiness());
+				h["featureBad"] = picojson::value((double)pCity->getFeatureBadHappiness());
+				h["bonusGood"] = picojson::value((double)pCity->getBonusGoodHappiness());
+				h["bonusBad"] = picojson::value((double)pCity->getBonusBadHappiness());
+				h["religionGood"] = picojson::value((double)pCity->getReligionGoodHappiness());
+				h["religionBad"] = picojson::value((double)pCity->getReligionBadHappiness());
+				h["commerce"] = picojson::value((double)pCity->getCommerceHappiness());
+				h["areaBuilding"] = picojson::value((double)pCity->area()->getBuildingHappiness(pCity->getOwner()));
+				h["playerBuilding"] = picojson::value((double)kWbOwner.getBuildingHappiness());
+				h["extra"] = picojson::value((double)(pCity->getExtraHappiness() + kWbOwner.getExtraHappiness()));
+				h["handicap"] = picojson::value((double)GC.getHandicapInfo(pCity->getHandicapType()).getHappyBonus());
+				h["vassalHappy"] = picojson::value((double)pCity->getVassalHappiness());            // happy-only
+				h["vassalUnhappy"] = picojson::value((double)pCity->getVassalUnhappiness());        // unhappy-only
+				h["civic"] = picojson::value((double)pCity->getCivicHappiness());
+				h["specialistHappy100"] = picojson::value((double)pCity->getSpecialistHappiness());   // /100 at use
+				h["specialistUnhappy100"] = picojson::value((double)pCity->getSpecialistUnhappiness());
+				h["world"] = picojson::value((double)kWbOwner.getWorldHappiness());
+				h["project"] = picojson::value((double)kWbOwner.getProjectHappiness());
+				h["corporation"] = picojson::value((double)pCity->calculateCorporationHappiness());
+				h["celebrity"] = picojson::value((double)pCity->getCelebrityHappiness());           // happy-only (unit-derived)
+				h["tech"] = picojson::value((double)pCity->getExtraTechHappinessTotal());
+				h["espionage"] = picojson::value((double)pCity->getEspionageHappinessCounter());    // unhappy-only
+				h["taxRate"] = picojson::value((double)kWbOwner.calculateTaxRateUnhappiness());     // unhappy-only
+				h["eventAnger"] = picojson::value((double)pCity->getEventAnger());                  // unhappy-only
+				// foreign anger: the realized inverse-percent term (unhappy-only; 0 when foreignUnhappyPercent==0)
+				int iWbForeign = kWbOwner.getForeignUnhappyPercent();
+				if (iWbForeign != 0)
+				{
+					iWbForeign = 100 / iWbForeign;
+					iWbForeign = (100 - pCity->plot()->calculateCulturePercent(pCity->getOwner())) * iWbForeign / 100;
+				}
+				h["foreignAnger"] = picojson::value((double)std::max(0, iWbForeign));
+				// landmark pair (GAMEOPTION_MAP_PERSONALIZED-gated at use; emitted raw + the gate separately)
+				h["landmarkAnger"] = picojson::value((double)pCity->getLandmarkAnger());
+				h["landmarkHappy"] = picojson::value((double)kWbOwner.getLandmarkHappiness());
+				h["mapPersonalized"] = picojson::value(GC.getGame().isOption(GAMEOPTION_MAP_PERSONALIZED));
+				h["noLandmarkAnger"] = picojson::value(kWbOwner.isNoLandmarkAnger());
+				// city-over-limit (unhappy-only): limit/perCity raw + the realized product
+				const int iWbOver = kWbOwner.getCityLimit() > 0 ? std::max(0, kWbOwner.getNumCities() - kWbOwner.getCityLimit()) : 0;
+				h["cityLimit"] = picojson::value((double)kWbOwner.getCityLimit());
+				h["cityOverLimitUnhappyPer"] = picojson::value((double)kWbOwner.getCityOverLimitUnhappy());
+				h["cityOverLimitUnhappy"] = picojson::value((double)(kWbOwner.getCityOverLimitUnhappy() * iWbOver));
+				o["happinessSources"] = picojson::value(h);
+			}
+			// ---- the HEALTH sources (raw signed; goodHealth takes max(0,·), badHealth min(0,·) per term) ----
+			{
+				picojson::object hl;
+				hl["freshWater"] = picojson::value((double)pCity->getFreshWaterGoodHealth());       // good-only
+				hl["featureGood"] = picojson::value((double)pCity->getFeatureGoodHealth());
+				hl["featureBad"] = picojson::value((double)pCity->getFeatureBadHealth());
+				hl["bonusGood"] = picojson::value((double)pCity->getBonusGoodHealth());
+				hl["bonusBad"] = picojson::value((double)pCity->getBonusBadHealth());
+				// the building health composites + their parts (totalGood/BadBuildingHealth, CvCity.cpp:5827/5837)
+				hl["totalGoodBuilding"] = picojson::value((double)pCity->totalGoodBuildingHealth());
+				hl["totalBadBuilding"] = picojson::value((double)pCity->totalBadBuildingHealth());
+				hl["buildingGood"] = picojson::value((double)pCity->getBuildingGoodHealth());
+				hl["buildingBad"] = picojson::value((double)pCity->getBuildingBadHealth());
+				hl["areaBuildingGood"] = picojson::value((double)pCity->area()->getBuildingGoodHealth(pCity->getOwner()));
+				hl["areaBuildingBad"] = picojson::value((double)pCity->area()->getBuildingBadHealth(pCity->getOwner()));
+				hl["playerBuildingGood"] = picojson::value((double)kWbOwner.getBuildingGoodHealth());
+				hl["playerBuildingBad"] = picojson::value((double)kWbOwner.getBuildingBadHealth());
+				hl["extraBuildingGood"] = picojson::value((double)pCity->getExtraBuildingGoodHealth());
+				hl["extraBuildingBad"] = picojson::value((double)pCity->getExtraBuildingBadHealth());   // NB legacy adds this INSIDE totalBadBuilding AND again in badHealth -- emitted once, the consumer mirrors both adds
+				hl["populationHealth"] = picojson::value((double)pCity->calculatePopulationHealth());
+				hl["extraCity"] = picojson::value((double)pCity->getExtraHealth());
+				hl["handicap"] = picojson::value((double)GC.getHandicapInfo(pCity->getHandicapType()).getHealthBonus());
+				hl["improvementGood100"] = picojson::value((double)pCity->getImprovementGoodHealth());  // /100 at use
+				hl["improvementBad100"] = picojson::value((double)pCity->getImprovementBadHealth());
+				hl["specialistGood100"] = picojson::value((double)pCity->getSpecialistGoodHealth());
+				hl["specialistBad100"] = picojson::value((double)pCity->getSpecialistBadHealth());
+				hl["corporation"] = picojson::value((double)pCity->calculateCorporationHealth());
+				hl["tech"] = picojson::value((double)pCity->getExtraTechHealthTotal());
+				hl["playerExtra"] = picojson::value((double)kWbOwner.getExtraHealth());
+				hl["civic"] = picojson::value((double)kWbOwner.getCivicHealth());
+				hl["civilization"] = picojson::value((double)kWbOwner.getCivilizationHealth());
+				hl["world"] = picojson::value((double)kWbOwner.getWorldHealth());
+				hl["project"] = picojson::value((double)kWbOwner.getProjectHealth());
+				hl["espionage"] = picojson::value((double)pCity->getEspionageHealthCounter());       // bad-only
+				hl["unhealthyPopulation"] = picojson::value((double)pCity->unhealthyPopulation());
+				o["healthSources"] = picojson::value(hl);
+			}
+			return CvString(picojson::value(o).serialize().c_str());
+		}
+
 		// CITY-INPUT (owner 2026-06-19; calc-emulator-spec.md §5) -- the LIVE game-dump that feeds the external calc
 		// emulator: a real city's full city-yields INPUT VECTOR + the live LEGACY and CASCADE outputs, so the offline
 		// emulator can (a) reproduce getYieldRate100 EXACTLY from these terms -- the fidelity credential that licenses
@@ -3354,6 +3501,7 @@ namespace
 			{ "/state/plots",   "statePlots",   "every map plot by global index: contents/facts + workingCity link (no yields)" },
 			{ "/state/units",   "stateUnits",   "raw unit facts (type/ai/pos/group/damage/level/promotions)" },
 			{ "/computed/cities/yields",   "cityInput",      "getYieldRate100 per channel + full per-source decomposition" },
+			{ "/computed/cities/wellbeing","cityWellbeing",  "health + happiness: realized levels + the FULL per-source decomposition (anger percents, signed sources, gate flags)" },
 			{ "/computed/cities/buildable","cityBuildable",  "the engine's canConstruct TRUE-set for the city (the buildable oracle)" },
 			{ "/computed/cities/trainable","cityTrainable",  "the engine's canTrain TRUE-set for the city (the trainable oracle)" },
 			{ "/computed/players",         "playerInput",    "empire economy: gold/science/upkeep/inflation/demographics" },
