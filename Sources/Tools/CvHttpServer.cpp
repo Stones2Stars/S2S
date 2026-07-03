@@ -1833,8 +1833,21 @@ namespace
 					sc["gpBaseLeg"] = picojson::value((double)(pCity->getBaseGreatPeopleRate() - kWbOwner.getNationalGreatPeopleRate()));
 					sc["gpModCasc"] = picojson::value((double)CascadeScalarChannels::gpRateModifier(pCity, wbec));
 					sc["gpModLeg"] = picojson::value((double)pCity->getTotalGreatPeopleRateModifier());
+					// the gpMod legacy PARTS (attribute, don't guess)
+					sc["gpModCityLeg"] = picojson::value((double)pCity->getGreatPeopleRateModifier());
+					sc["gpModPlayerLeg"] = picojson::value((double)kWbOwner.getGreatPeopleRateModifier());
 					sc["defenseCasc"] = picojson::value((double)CascadeScalarChannels::defenseAmount(pCity, wbec));
 					sc["defenseLeg"] = picojson::value((double)pCity->getBuildingDefense());
+					// the defense DRIFT meter: the stored m_iBuildingDefense vs a current-state recompute
+					{
+						int iWbDefRe = 0;
+						foreach_(const BuildingTypes eWbBt, pCity->getHasBuildings())
+						{
+							if (pCity->isReligiouslyLimitedBuilding(eWbBt) || pCity->isDisabledBuilding(eWbBt)) continue;
+							iWbDefRe += GC.getBuildingInfo(eWbBt).getDefenseModifier();
+						}
+						sc["defenseLegRecompute"] = picojson::value((double)iWbDefRe);
+					}
 					sc["maintModCasc"] = picojson::value((double)CascadeScalarChannels::maintenanceModifier(pCity, wbec));
 					sc["maintModLeg"] = picojson::value((double)pCity->getEffectiveMaintenanceModifier());
 					// the legacy PARTS (the getEffectiveMaintenanceModifier decomposition -- attribute, don't guess)
