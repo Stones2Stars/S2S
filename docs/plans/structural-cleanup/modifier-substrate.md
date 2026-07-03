@@ -153,9 +153,12 @@ attributable diff lines (never silent).
   player-accumulator semantic); **defense EXACT vs the engine's own current-state recompute** (the stored
   `m_iBuildingDefense` carries +60 phantom at one probe — the DRIFT class, 4th family); **maintenance EXACT on
   every data-backed part** (the stored AREA accumulator is pure phantom — ZERO buildings author area
-  maintenance in the whole XML). The PROPERTY channel (increment same-day): 4/7 exact, unit emissions split
-  per [DEC-unit-modifiers-on-top]. **Queued:** slot storage + flips for these channels; the property
-  CRIME/DISEASE/EDUCATION probes; buildRate/tradeRoutes; the unit plane (needs the `unitInput` endpoint).
+  maintenance in the whole XML). The PROPERTY channel closed same-day at **7/7 EXACT** (the plot-half unit
+  diffusion + per-scaled building sources + a REAL curator data-loss fix: the multi-source same-property merge
+  overwrote plain values -- restored via entry lists + regen). **tradeRoutes** opened + attributed: cityExtra
+  EXACT; the player remainder is the VOTE class (:7971 -- un-derivable game state, the extraHappiness
+  mixed-accumulator treatment). **Queued:** slot storage + flips for the attributed channels; buildRate (the
+  one unopened city channel -- item-keyed); the unit plane (needs the `unitInput` endpoint, calc-map §12).
 
 ## Explicitly NOT this build
 
