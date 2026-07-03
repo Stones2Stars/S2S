@@ -21,6 +21,41 @@
 #include "AI/CvTeamAI.h"              // GET_TEAM
 #include "CvCascadeConditionEval.h"    // CvCascadeEvalCtx + cascadeIsBuildingActive
 #include "CvCascadeEnablerKernel.h"    // EnablerKernel::computeCityBuildingFacts (the cascade-computed active set + vicinity provides)
+#include "CvCascadeDepositIndex.h"     // DepositIndex -- the compiled deposit index (the candidate prefilter)
+#include <map>
+#include <vector>
+
+// PER-CHANNEL PERCENT-CANDIDATE CACHE (the compiled-deposit-index increment): which building ids carry ANY
+// scope-wide percent deposit for this channel at city/area/empire is STATIC readJson data -- computed once per
+// channel by ONE scan of the building repo (compiled-int matches), so the stack walks candidates instead of all
+// ~5202 building infos per call (the modifier-substrate.md "deep perf lever"). Same one-shot-readJson caveat as
+// the basePlot candidate cache.
+static const std::vector<int>& ps_channelCands(int chanId, int segCity, int segArea, int segEmpire, int segPercent)
+{
+	static std::map<int, std::vector<int> > s_cands;
+	std::map<int, std::vector<int> >::iterator it = s_cands.find(chanId);
+	if (it == s_cands.end())
+	{
+		std::vector<int> cands;
+		const int nB = GC.getNumBuildingInfos();
+		if (chanId >= 0)
+			for (int b = 0; b < nB; ++b)
+			{
+				const CvJsonInfo* d = InfoRepo<CvBuildingInfo>::get().get(b);
+				if (d == NULL) continue;
+				for (size_t i = 0; i < d->deposits.size(); ++i)
+				{
+					const CvCascadeDeposit& dep = d->deposits[i];
+					if (dep.unitId != segPercent || dep.nSeg != 2 || dep.seg[0] != chanId) continue;
+					if (dep.seg[1] != segCity && dep.seg[1] != segArea && dep.seg[1] != segEmpire) continue;
+					cands.push_back(b);
+					break;
+				}
+			}
+		it = s_cands.insert(std::make_pair(chanId, cands)).first;
+	}
+	return it->second;
+}
 
 // The percent stack for one channel at one city: max(0, 100 + Σ percent) over active city buildings (city+area),
 // empire buildings (empire), adopted civics (empire), and the player's active traits (empire). Fills the breakdown.
@@ -38,10 +73,13 @@ int PercentStack::percentStack(const std::string& channel, const CvCity* pCity, 
 	const std::string wantArea = channel + ".area";
 	const std::string wantEmpire = channel + ".empire";
 
-	const int nB = GC.getNumBuildingInfos();
-	for (int b = 0; b < nB; ++b)
+	// candidates only (see ps_channelCands): a building with NO scope-wide percent deposit in this channel sums 0
+	const std::vector<int>& cands = ps_channelCands(DepositIndex::lookupSegment(channel),
+		DepositIndex::lookupSegment("city"), DepositIndex::lookupSegment("area"),
+		DepositIndex::lookupSegment("empire"), DepositIndex::lookupSegment("percent"));
+	for (size_t ci = 0; ci < cands.size(); ++ci)
 	{
-		const BuildingTypes eB = (BuildingTypes)b;
+		const BuildingTypes eB = (BuildingTypes)cands[ci];
 		const bool active = cascadeIsBuildingActive((int)eB, ec); // non-dormant, in this city (cascade-computed)
 		const bool owned = player.getBuildingCount(eB) > 0;       // anywhere in the empire
 		if (!active && !owned) continue;

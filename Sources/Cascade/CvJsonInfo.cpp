@@ -11,6 +11,7 @@
 #include "CvJsonTechInfo.h"             // the start node's REAL type (crash fix 2026-07-02, see cascadeStartNode)
 #include "CvCascadeJsonParse.h"         // the shared leaf primitives (cascadeJsonX100 / ...ResolveId)
 #include "CvCascadeConditionParse.h"    // cascadeParseCondition -- curated JSON -> typed CvCascadeCondition tree
+#include "CvCascadeDepositIndex.h"      // DepositIndex::compile -- the push-time strings->ints compile
 
 CvJsonInfo::~CvJsonInfo()
 {
@@ -111,6 +112,7 @@ static void rj_parseMag(CvJsonInfo* pData, const std::string& unit, const picojs
 	CvCascadeDeposit d;
 	d.address = path; d.unit = unit; d.value100 = value100;
 	d.enabled = en; d.disabled = dis; d.hasPer = perScaled; d.perAnyOf = perAnyOf;
+	DepositIndex::compile(d);   // the load-time strings->ints compile (hot paths match ints, never strings)
 	pData->deposits.push_back(d);
 }
 
@@ -121,6 +123,7 @@ static void rj_walkModNode(CvJsonInfo* pData, const std::string& path, const pic
 	if (v.is<double>())   // a bare count leaf
 	{
 		CvCascadeDeposit d; d.address = path; d.unit = "count"; d.value100 = cascadeJsonX100(v.get<double>());
+		DepositIndex::compile(d);
 		pData->deposits.push_back(d);
 		return;
 	}

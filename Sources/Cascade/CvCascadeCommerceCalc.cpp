@@ -27,6 +27,7 @@
 #include "AI/CvPlayerAI.h"             // GET_PLAYER
 #include "AI/CvTeamAI.h"              // GET_TEAM
 #include "CvCascadeEnablerKernel.h"    // EnablerKernel::computeCityBuildingFacts (shrine/stateReligion build their own ctx)
+#include "CvCascadeDepositIndex.h"     // DepositIndex -- the compiled deposit index (buildingKeyed matches ints)
 #include <map>
 #include <set>
 
@@ -74,11 +75,18 @@ long CommerceCalc::playerExtra(const std::string& channel, const CvPlayer& playe
 // buildings G of count(G) × G's {ch}.empire.buildings.{B}.flat). Pure deposits (no readJson gap). ×100.
 long CommerceCalc::buildingKeyed(const std::string& channel, const CvCity* pCity, const CvCascadeEvalCtx& ec)
 {
+	// Compiled-index matching (the deposit-index increment): the grantor scan matches ints, and the ledger keys
+	// on the deposit's FK-resolved target id -- no string build/compare anywhere on this path.
+	const int chanId = DepositIndex::lookupSegment(channel);
+	if (chanId < 0) return 0;
+	const int segEmpire = DepositIndex::lookupSegment("empire");
+	const int segBuildings = DepositIndex::lookupSegment("buildings");
+	const int segFlat = DepositIndex::lookupSegment("flat");
+	if (segEmpire < 0 || segBuildings < 0 || segFlat < 0) return 0;
 	const CvPlayer& player = *ec.player;
-	const std::string prefix = channel + ".empire.buildings.";
 	const int nB = GC.getNumBuildingInfos();
-	// Ledger keyed by TARGET building type-string: Σ_G count(G) × G's {ch}.empire.buildings.{B}.flat (×100).
-	std::map<std::string, long> ledger;
+	// Ledger keyed by TARGET building id: Σ_G count(G) × G's {ch}.empire.buildings.{B}.flat (×100).
+	std::map<int, long> ledger;
 	for (int g = 0; g < nB; ++g)
 	{
 		const int cnt = player.getBuildingCount((BuildingTypes)g);
@@ -88,20 +96,16 @@ long CommerceCalc::buildingKeyed(const std::string& channel, const CvCity* pCity
 		for (size_t i = 0; i < dg->deposits.size(); ++i)
 		{
 			const CvCascadeDeposit& dep = dg->deposits[i];
-			if (dep.unit != "flat" || dep.address.size() <= prefix.size()) continue;
-			if (dep.address.compare(0, prefix.size(), prefix) != 0) continue;
+			if (dep.unitId != segFlat || dep.nSeg != 4) continue;
+			if (dep.seg[0] != chanId || dep.seg[1] != segEmpire || dep.seg[2] != segBuildings) continue;
+			if (dep.targetFk < 0) continue;
 			if (!MMKernel::applies(dep.enabled, dep.disabled, ec)) continue;
-			ledger[dep.address.substr(prefix.size())] += (long)cnt * dep.value100;   // target = BUILDING_X after the prefix
+			ledger[dep.targetFk] += (long)cnt * dep.value100;
 		}
 	}
-	if (ledger.empty()) return 0;
 	long sum = 0;
-	for (int b = 0; b < nB; ++b)
-	{
-		if (!cascadeIsBuildingActive(b, ec)) continue;
-		const std::map<std::string, long>::const_iterator it = ledger.find(GC.getBuildingInfo((BuildingTypes)b).getType());
-		if (it != ledger.end()) sum += it->second;
-	}
+	for (std::map<int, long>::const_iterator it = ledger.begin(); it != ledger.end(); ++it)
+		if (cascadeIsBuildingActive(it->first, ec)) sum += it->second;
 	return sum;
 }
 

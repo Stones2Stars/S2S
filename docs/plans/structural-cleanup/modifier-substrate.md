@@ -117,10 +117,20 @@ attributable diff lines (never silent).
   every city's slots); (5) **per-player epochs** for tech/civic/GA (the cross-player invalidation storm
   killed) — but the `changeBuildingCount` bump REVERTED on measurement (5x regression: completions are the
   highest-frequency player event; sibling-empire freshness belongs to the ruled turn-end unified rebuild).
-  **Steady state:** pctStack ~4.6k calls/~25s, accRefresh ~10k, turn feel at baseline. The `[SLOT]` residue
+  **Steady state:** pctStack ~4.6k calls, accRefresh ~10k, turn feel at baseline. The `[SLOT]` residue
   is ✅ **FULLY ATTRIBUTED** via the component-decomposed diff + the per-plot probe (see Verification §1):
   the stale-serialized-accumulator class (engine-side phantom, cutover repairs) + the watched unhooked
   `cbase` class (turn-roll self-heals). `[GETTER]` = the legacy repair map, standing.
+  **✅ THE COMPILED DEPOSIT INDEX LANDED (2026-07-03)** — the named perf follow-up, built as
+  `Cascade/CvCascadeDepositIndex.{h,cpp}`: every deposit's address/unit is interned to ints at readJson
+  push-time (append-only interner; the dotted segments + a FK-resolved target id ride each deposit), the
+  MMKernel matchers compare ints (a never-authored query address answers 0 without touching a deposit), the
+  percent stack walks a compiled per-channel candidate list instead of all ~5202 building infos, and the two
+  buildings-keyed walks (civic percent + empire commerce) invert onto targetFk ledgers. Verified live on the
+  same-turn reload: every call/divergence counter BIT-IDENTICAL to the pre-index turn (matching changed, math
+  provably didn't); measured modifier calc ~25s → **well under 1s/turn** (pctStack ~70x). The compiled
+  segments (family × scope × target per source) are the ready generator of the data-derived event→cache
+  routing (state-repositories.md end-state — the hand-wired hook masks' replacement, a follow-up).
 
 ## Explicitly NOT this build
 

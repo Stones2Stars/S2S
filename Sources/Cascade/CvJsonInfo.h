@@ -44,7 +44,22 @@ struct CvCascadeDeposit
 	CvCascadeCondition* disabled;  // NULL = never-suppressed
 	bool hasPer;            // a per count-scaler is present (resolved by the modifier machine)
 	std::vector<int> perAnyOf;   // per:{anyOf:[...]} resolved type ids (e.g. the corp CommercesProduced prereq-bonus scaler)
-	CvCascadeDeposit() : value100(0), enabled(NULL), disabled(NULL), hasPer(false) {}
+
+	// --- COMPILED ints (DepositIndex::compile at readJson push-time; the strings above stay for diagnostics) ---
+	// The load-time strings->ints compile (modifier-substrate.md): hot-path matchers compare these, never the
+	// strings. The segments also generate the data-derived event->cache routing (state-repositories.md end-state).
+	enum { CASC_DEP_SEGS = 4 };
+	int addressId;              // whole-address identity (interned) — an exact-address match is ONE int compare
+	int unitId;                 // interned unit segment
+	int seg[CASC_DEP_SEGS];     // interned dotted segments (family, scope, s3, s4); -1 where absent
+	int nSeg;                   // total segment count (seg[] holds the first CASC_DEP_SEGS)
+	int targetFk;               // engine info id of the LAST segment when it is a resolvable INFOTYPE key (else -1)
+
+	CvCascadeDeposit() : value100(0), enabled(NULL), disabled(NULL), hasPer(false),
+		addressId(-1), unitId(-1), nSeg(0), targetFk(-1)
+	{
+		for (int i = 0; i < CASC_DEP_SEGS; ++i) seg[i] = -1;
+	}
 };
 
 // A structured `grants.repeatable` entry (json.md §5): a recurring provision fired each `interval` -- a spawned unit,

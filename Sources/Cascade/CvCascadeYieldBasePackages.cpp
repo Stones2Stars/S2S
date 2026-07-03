@@ -25,6 +25,7 @@
 #include "Infos/CvTraitInfo.h"
 #include "Infos/CvSpecialistInfo.h"   // InfoRepo<CvSpecialistInfo> + GC.getSpecialistInfo (the §1 specialist package)
 #include "AI/CvPlayerAI.h"             // GET_PLAYER
+#include "CvCascadeDepositIndex.h"     // DepositIndex -- the compiled deposit index (segment ids for the keyed walks)
 
 // The per-CITY precomputed constants for the per-plot package -- shared by basePlot's sum and the basePlotOne
 // diagnostic probe (single-source law: ONE per-plot body, two entry points).
@@ -33,6 +34,7 @@ struct BpCityCtx
 	int peakChange, hillsChange, cityChange, popDivisor, gaYield, gaThreshold, minCity, extraYield, pop;
 	int extraThreshold, lessThreshold;
 	bool bGolden;
+	int chanId, scopeCity, scopeEmpire;   // compiled deposit-index ids (DepositIndex; -1 = never authored)
 	const std::vector<int>* chanCands;
 };
 
@@ -40,25 +42,25 @@ struct BpCityCtx
 // walk ALL ~5202 buildings PER WORKED PLOT (x3 keyed-deposit walks each) -- the measured ~164ms per rate
 // compute and ~430k condition evals per turn. Which buildings carry ANY deposit for this channel is STATIC
 // data (readJson-mapped once per process), so the candidate list is computed once per channel and the plot
-// loop walks candidates only. Over-approximate on purpose (any deposit prefixed "<channel>." qualifies) --
-// correctness-identical, since non-matching deposits contribute 0 through the keyed walks anyway.
-static const std::vector<int>& bp_channelCands(const std::string& channel)
+// loop walks candidates only. Over-approximate on purpose (any deposit whose FIRST compiled segment is the
+// channel qualifies) -- correctness-identical, since non-matching deposits contribute 0 through the keyed walks.
+static const std::vector<int>& bp_channelCands(int chanId)
 {
-	static std::map<std::string, std::vector<int> > s_chanCands;   // function-local static in a .cpp (NOT header-inline)
-	std::map<std::string, std::vector<int> >::iterator ccIt = s_chanCands.find(channel);
+	static std::map<int, std::vector<int> > s_chanCands;   // function-local static in a .cpp (NOT header-inline)
+	std::map<int, std::vector<int> >::iterator ccIt = s_chanCands.find(chanId);
 	if (ccIt == s_chanCands.end())
 	{
 		std::vector<int> cands;
-		const std::string pfx = channel + ".";
 		const int nB = GC.getNumBuildingInfos();
-		for (int b = 0; b < nB; ++b)
-		{
-			const CvJsonInfo* db = InfoRepo<CvBuildingInfo>::get().get(b);
-			if (db == NULL) continue;
-			for (size_t di = 0; di < db->deposits.size(); ++di)
-				if (db->deposits[di].address.compare(0, pfx.size(), pfx) == 0) { cands.push_back(b); break; }
-		}
-		ccIt = s_chanCands.insert(std::make_pair(channel, cands)).first;
+		if (chanId >= 0)
+			for (int b = 0; b < nB; ++b)
+			{
+				const CvJsonInfo* db = InfoRepo<CvBuildingInfo>::get().get(b);
+				if (db == NULL) continue;
+				for (size_t di = 0; di < db->deposits.size(); ++di)
+					if (db->deposits[di].seg[0] == chanId) { cands.push_back(b); break; }
+			}
+		ccIt = s_chanCands.insert(std::make_pair(chanId, cands)).first;
 	}
 	return ccIt->second;
 }
@@ -77,7 +79,10 @@ static BpCityCtx bp_cityCtx(const std::string& channel, YieldTypes eY, const CvC
 	cx.pop = pCity->getPopulation();
 	cx.extraThreshold = MMKernel::minPosThreshold("extraYieldThreshold", channel, player, ec);
 	cx.lessThreshold  = MMKernel::minPosThreshold("lessYieldThreshold", channel, player, ec);
-	cx.chanCands = &bp_channelCands(channel);
+	cx.chanId = DepositIndex::lookupSegment(channel);
+	cx.scopeCity = DepositIndex::lookupSegment("city");
+	cx.scopeEmpire = DepositIndex::lookupSegment("empire");
+	cx.chanCands = &bp_channelCands(cx.chanId);
 	return cx;
 }
 
@@ -94,17 +99,18 @@ static int bp_plotTotal(const BpCityCtx& cx, const std::string& channel, const C
 
 		// directImp = just the plot's improvement; buildingImp = + its upgrade-ancestors (a yield keyed to LUMBERMILL
 		// also lands on a worked TREEFARM -- a BUILDING source walks the chain; civic/trait/substrate read direct only).
-		std::vector<std::string> directImp, buildingImp;
+		// Keys are compiled deposit-index SEGMENT ids (a -1 = that improvement was never authored as a key -> skip).
+		std::vector<int> directImp, buildingImp;
 		if (p->getImprovementType() != NO_IMPROVEMENT)
 		{
-			const std::string imp0 = GC.getImprovementInfo(p->getImprovementType()).getType();
-			directImp.push_back(imp0);
-			buildingImp.push_back(imp0);
+			const int imp0 = DepositIndex::segIdForImprovement(p->getImprovementType());
+			if (imp0 >= 0) { directImp.push_back(imp0); buildingImp.push_back(imp0); }
 			ImprovementTypes up = GC.getImprovementInfo(p->getImprovementType()).getImprovementUpgrade();
 			int guard = 0;
 			while (up != NO_IMPROVEMENT && guard++ < 32)
 			{
-				buildingImp.push_back(GC.getImprovementInfo(up).getType());
+				const int upSeg = DepositIndex::segIdForImprovement(up);
+				if (upSeg >= 0) buildingImp.push_back(upSeg);
 				up = GC.getImprovementInfo(up).getImprovementUpgrade();
 			}
 		}
@@ -113,13 +119,13 @@ static int bp_plotTotal(const BpCityCtx& cx, const std::string& channel, const C
 		const PlotTypes ePlot = p->getPlotType();
 		const int plotTypeBase = (ePlot == PLOT_PEAK) ? cx.peakChange : (ePlot == PLOT_HILLS) ? cx.hillsChange : 0;
 		int natureRaw = plotTypeBase;
-		if (p->getTerrainType() != NO_TERRAIN) natureRaw += MMKernel::substratePlotYield(channel, InfoRepo<CvTerrainInfo>::get().get(p->getTerrainType()), p, eTeam, directImp, ec);
-		if (p->getFeatureType() != NO_FEATURE) natureRaw += MMKernel::substratePlotYield(channel, InfoRepo<CvFeatureInfo>::get().get(p->getFeatureType()), p, eTeam, directImp, ec);
-		if (p->getBonusType(eTeam) != NO_BONUS) natureRaw += MMKernel::substratePlotYield(channel, InfoRepo<CvBonusInfo>::get().get(p->getBonusType(eTeam)), p, eTeam, directImp, ec);
+		if (p->getTerrainType() != NO_TERRAIN) natureRaw += MMKernel::substratePlotYield(cx.chanId, InfoRepo<CvTerrainInfo>::get().get(p->getTerrainType()), p, eTeam, directImp, ec);
+		if (p->getFeatureType() != NO_FEATURE) natureRaw += MMKernel::substratePlotYield(cx.chanId, InfoRepo<CvFeatureInfo>::get().get(p->getFeatureType()), p, eTeam, directImp, ec);
+		if (p->getBonusType(eTeam) != NO_BONUS) natureRaw += MMKernel::substratePlotYield(cx.chanId, InfoRepo<CvBonusInfo>::get().get(p->getBonusType(eTeam)), p, eTeam, directImp, ec);
 		const int nature = std::max(0, natureRaw);
 
 		const int improvementYield = (p->getImprovementType() != NO_IMPROVEMENT)
-			? MMKernel::substratePlotYield(channel, InfoRepo<CvImprovementInfo>::get().get(p->getImprovementType()), p, eTeam, directImp, ec) : 0;
+			? MMKernel::substratePlotYield(cx.chanId, InfoRepo<CvImprovementInfo>::get().get(p->getImprovementType()), p, eTeam, directImp, ec) : 0;
 		// route: own plot.flat (stays OUTSIDE the floor) + improvement-keyed (moves INSIDE the floor). Split per StoneBase.
 		int routeYield = 0, routeImpKeyed = 0;
 		if (p->getRouteType() != NO_ROUTE)
@@ -127,8 +133,9 @@ static int bp_plotTotal(const BpCityCtx& cx, const std::string& channel, const C
 			const CvJsonInfo* dr = InfoRepo<CvRouteInfo>::get().get(p->getRouteType());
 			if (dr != NULL)
 			{
-				routeYield = MMKernel::substratePlotYield(channel, dr, p, eTeam, directImp, ec);
-				routeImpKeyed = MMKernel::keyedImprovementOnly(channel, dr, "plot", directImp, ec, true);
+				const int scopePlot = DepositIndex::lookupSegment("plot");
+				routeYield = MMKernel::substratePlotYield(cx.chanId, dr, p, eTeam, directImp, ec);
+				routeImpKeyed = MMKernel::keyedImprovementOnly(cx.chanId, dr, scopePlot, directImp, ec, true);
 			}
 		}
 		const int routeOwnFlat = routeYield - routeImpKeyed;
@@ -147,14 +154,14 @@ static int bp_plotTotal(const BpCityCtx& cx, const std::string& channel, const C
 			if (db == NULL) continue;
 			if (active)
 			{
-				keyedCity   += MMKernel::keyedPlotYield(channel, db, "city", p, eTeam, buildingImp, ec, false);
-				plotsTarget += MMKernel::plotsTargetYield(channel, db, "city", ec);
+				keyedCity   += MMKernel::keyedPlotYield(cx.chanId, db, cx.scopeCity, p, eTeam, buildingImp, ec, false);
+				plotsTarget += MMKernel::plotsTargetYield(cx.chanId, db, cx.scopeCity, ec);
 			}
 			if (owned)
 			{
-				keyedEmpire            += MMKernel::keyedPlotYield(channel, db, "empire", p, eTeam, buildingImp, ec, false);
-				improvementKeyedEmpire += MMKernel::keyedImprovementOnly(channel, db, "empire", buildingImp, ec, false);
-				plotsTarget            += MMKernel::plotsTargetYield(channel, db, "empire", ec);
+				keyedEmpire            += MMKernel::keyedPlotYield(cx.chanId, db, cx.scopeEmpire, p, eTeam, buildingImp, ec, false);
+				improvementKeyedEmpire += MMKernel::keyedImprovementOnly(cx.chanId, db, cx.scopeEmpire, buildingImp, ec, false);
+				plotsTarget            += MMKernel::plotsTargetYield(cx.chanId, db, cx.scopeEmpire, ec);
 			}
 		}
 		for (int co = 0; co < GC.getNumCivicOptionInfos(); ++co)
@@ -163,9 +170,9 @@ static int bp_plotTotal(const BpCityCtx& cx, const std::string& channel, const C
 			if (c == NO_CIVIC) continue;
 			const CvJsonInfo* dc = InfoRepo<CvCivicInfo>::get().get((int)c);
 			if (dc == NULL) continue;
-			keyedEmpire            += MMKernel::keyedPlotYield(channel, dc, "empire", p, eTeam, directImp, ec, false);
-			improvementKeyedEmpire += MMKernel::keyedImprovementOnly(channel, dc, "empire", directImp, ec, false);
-			plotsTarget            += MMKernel::plotsTargetYield(channel, dc, "empire", ec);
+			keyedEmpire            += MMKernel::keyedPlotYield(cx.chanId, dc, cx.scopeEmpire, p, eTeam, directImp, ec, false);
+			improvementKeyedEmpire += MMKernel::keyedImprovementOnly(cx.chanId, dc, cx.scopeEmpire, directImp, ec, false);
+			plotsTarget            += MMKernel::plotsTargetYield(cx.chanId, dc, cx.scopeEmpire, ec);
 		}
 		for (int t = 0; t < GC.getNumTraitInfos(); ++t)
 		{
@@ -173,9 +180,9 @@ static int bp_plotTotal(const BpCityCtx& cx, const std::string& channel, const C
 			const CvJsonTraitInfo* dt = MMKernel::traitData(t);
 			if (dt == NULL) continue;
 			const int sgn = GC.getGame().isOption(GAMEOPTION_LEADER_PURE_TRAITS) ? (dt->negativeTrait ? -1 : 1) : 0;   // PURE_TRAITS sign for this trait's keyed deposits
-			keyedEmpire            += MMKernel::keyedPlotYield(channel, dt, "empire", p, eTeam, directImp, ec, false, sgn);
-			improvementKeyedEmpire += MMKernel::keyedImprovementOnly(channel, dt, "empire", directImp, ec, false, sgn);
-			plotsTarget            += MMKernel::plotsTargetYield(channel, dt, "empire", ec, sgn);
+			keyedEmpire            += MMKernel::keyedPlotYield(cx.chanId, dt, cx.scopeEmpire, p, eTeam, directImp, ec, false, sgn);
+			improvementKeyedEmpire += MMKernel::keyedImprovementOnly(cx.chanId, dt, cx.scopeEmpire, directImp, ec, false, sgn);
+			plotsTarget            += MMKernel::plotsTargetYield(cx.chanId, dt, cx.scopeEmpire, ec, sgn);
 		}
 
 		int centre = 0;

@@ -200,7 +200,10 @@ public:
   modifiers they hit, on everything."* A DOMAIN event carries its SOURCE; the source's compiled deposits
   (the load-time strings→ints index, [modifier-substrate.md](../plans/structural-cleanup/modifier-substrate.md))
   name exactly the channels × scopes × targets it touches — the dirty flags fall out of the deposit addresses.
-  Today's hand-coded hook masks are the interim shape of that derivation.
+  Today's hand-coded hook masks are the interim shape of that derivation. **The index EXISTS as of 2026-07-03**
+  (`Cascade/CvCascadeDepositIndex.{h,cpp}`: per-deposit interned segments — family/scope/member/target — plus a
+  FK-resolved target id, compiled at readJson push-time); deriving the routing masks from it is the remaining
+  half, landing with the turn-end unified rebuild.
 - **THE TURN-BOUNDARY PRINCIPLE WILL SIMPLIFY CACHING (owner 2026-07-03).** The
   [AI build-queue-parity intent](../plans/parked/ai-build-queue-parity.md) rules that decision INPUTS are
   turn-boundary state — *"this principle should also help us simplify caching for us now."* Consequence: once

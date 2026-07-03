@@ -56,33 +56,31 @@ public:
 	static int sumTrait(const CvJsonTraitInfo* d, const std::string& wantAddress, const char* unit, const CvCascadeEvalCtx& ec);
 	static long sumTrait100(const CvJsonTraitInfo* d, const std::string& wantAddress, const char* unit, const CvCascadeEvalCtx& ec);
 
-	// Σ a source's flat deposits at an address with EXPLICIT plot-eval flags (bonusFromPlot: a bare {HAS_BONUS:X} reads THIS
-	// plot -- the engine's per-plot improvement bonus-yield, ModifierMath.PlotEval). The caller sets ec.plot per worked plot.
-	// pureSign (StoneBase PureFilter): 0 = no filter; +1 = a POSITIVE trait under PURE_TRAITS (keep only non-negative values);
-	// -1 = a NEGATIVE trait (keep only non-positive). Threaded through the keyed helpers (default 0 = non-trait sources unchanged).
-	static int sumFlatF(const CvJsonInfo* d, const std::string& wantAddress, const CvCascadeEvalCtx& ec, bool bonusFromPlot, int pureSign = 0);
+	// ---- the KEYED plot helpers run on the COMPILED deposit index (DepositIndex): callers pass INTERNED segment
+	// ---- ids (chanId = DepositIndex::lookupSegment(channel); scopeId likewise; impKeyIds via segIdForImprovement).
+	// ---- A negative id means "never authored anywhere" and sums 0 without touching a deposit.
 
-	// KeyedMember: Σ a source's flat keyed by a named target -- "<channel>.<scope>.<member>.<KEY>.flat". ModifierMath.KeyedMember.
-	static int keyedMember(const std::string& channel, const CvJsonInfo* d, const char* scope, const char* member,
-		const std::string& key, const CvCascadeEvalCtx& ec, bool bonusFromPlot, int pureSign = 0);
+	// KeyedMember by compiled segments: Σ a source's flat at "<chan>.<scope>.<member>.<KEY>" (ModifierMath.KeyedMember).
+	static int sumKeyed4F(const CvJsonInfo* d, int chanId, int scopeId, int memberId, int keyId,
+		const CvCascadeEvalCtx& ec, bool bonusFromPlot, int pureSign = 0);
 
 	// KeyedPlotYield: Σ a source's flat keyed by THIS plot's improvement(s)/terrain/feature/bonus at a scope (the engine's
-	// improvementYieldChange / terrainYieldChange / per-plot-bonus addends). impKeys = the plot's improvement + its
-	// upgrade-ancestors (a building source) or just the direct improvement (civic/trait/substrate).
-	static int keyedPlotYield(const std::string& channel, const CvJsonInfo* d, const char* scope, const CvPlot* p,
-		TeamTypes eTeam, const std::vector<std::string>& impKeys, const CvCascadeEvalCtx& ec, bool bonusFromPlot, int pureSign = 0);
+	// improvementYieldChange / terrainYieldChange / per-plot-bonus addends). impKeyIds = the plot's improvement + its
+	// upgrade-ancestors (a building source) or just the direct improvement (civic/trait/substrate), as interned segment ids.
+	static int keyedPlotYield(int chanId, const CvJsonInfo* d, int scopeId, const CvPlot* p,
+		TeamTypes eTeam, const std::vector<int>& impKeyIds, const CvCascadeEvalCtx& ec, bool bonusFromPlot, int pureSign = 0);
 
 	// Just the IMPROVEMENT-keyed part of the above (the engine's impPlayer/impTeam accumulator inside the clamped improvement addend).
-	static int keyedImprovementOnly(const std::string& channel, const CvJsonInfo* d, const char* scope,
-		const std::vector<std::string>& impKeys, const CvCascadeEvalCtx& ec, bool bonusFromPlot, int pureSign = 0);
+	static int keyedImprovementOnly(int chanId, const CvJsonInfo* d, int scopeId,
+		const std::vector<int>& impKeyIds, const CvCascadeEvalCtx& ec, bool bonusFromPlot, int pureSign = 0);
 
 	// PlotsTargetYield: Σ a source's plots-TARGET flat that applies to THIS plot (the predicate evaluated against the plot).
-	static int plotsTargetYield(const std::string& channel, const CvJsonInfo* d, const char* scope, const CvCascadeEvalCtx& ec, int pureSign = 0);
+	static int plotsTargetYield(int chanId, const CvJsonInfo* d, int scopeId, const CvCascadeEvalCtx& ec, int pureSign = 0);
 
 	// One plot-substrate entity's own plot.flat + its plot-keyed yield (a route folds the improvement's RouteYieldChanges),
 	// PlotEval (bonusFromPlot). StoneBase SubstratePlotYield. NULL info -> 0.
-	static int substratePlotYield(const std::string& channel, const CvJsonInfo* d, const CvPlot* p, TeamTypes eTeam,
-		const std::vector<std::string>& directImpKeys, const CvCascadeEvalCtx& ec);
+	static int substratePlotYield(int chanId, const CvJsonInfo* d, const CvPlot* p, TeamTypes eTeam,
+		const std::vector<int>& directImpKeyIds, const CvCascadeEvalCtx& ec);
 
 	// The player's effective extra/less-yield threshold for a channel: MIN over the POSITIVE per-DEPOSIT magnitudes of
 	// {thresholdFamily}.empire.{channel}.flat across the player's active traits + civics (StoneBase MinPositiveThreshold --

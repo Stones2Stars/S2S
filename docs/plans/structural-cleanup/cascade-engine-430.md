@@ -388,8 +388,11 @@ curated-set model as part of this migration. The current mechanism (mapped 2026-
    (turn total 73s → ~12s, with the memos). **ANTI-MEMO-SKEW**: the doTurn shadow clears the turn memos at its top
    (`YieldRate::memoClear` + `EnablerKernel::factsMemoClear`) — memo values frozen from early-turn calls vs
    end-of-turn legacy read as false divergences until it did. Next perf levers if wanted: the per-plot civic/trait
-   loops + the substrate walks (same candidate-cache pattern). The deposit-vector index (§3) stays a refinement
-   but is demoted as the lever. ⚠ All memos are SHADOW-PHASE-ONLY (stale on mid-turn building changes) —
+   loops + the substrate walks (same candidate-cache pattern). ✅ **The deposit index (§3) LANDED 2026-07-03** as
+   the COMPILED DEPOSIT INDEX (`Cascade/CvCascadeDepositIndex.{h,cpp}`: push-time strings→ints interning, compiled
+   segments + FK-resolved target id per deposit, int matchers in MMKernel, per-channel candidate prefilters; the
+   flat vector stays, the per-access string walk is gone — measured modifier calc ~25s → <1s/turn on a bit-identical
+   same-turn replay; modifier-substrate.md). ⚠ All memos are SHADOW-PHASE-ONLY (stale on mid-turn building changes) —
    event-invalidate before any consumer cut.
 2. **Tally** ✅ **DONE — reworked to a READ-ONLY accessor (owner ruling 2026-06-30)** (buildings + units). It READS the
    object-owned counts (`CvPlayer::getBuildingCount`/`getUnitCount`) and rolls UP the spine (empire/team/world) — no
