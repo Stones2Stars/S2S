@@ -22,15 +22,21 @@
 class CvCity;
 
 // Per-city component dirty bits (modifier-substrate.md event->dirty mapping).
+// Every package is a PLUGIN NUMBER (owner ruling 2026-07-03): each isolated per-channel package is a standing
+// value that plugs into the combine; only the package whose inputs changed recomputes -- "the rest of the pipe
+// stays the same". The channels are independent (culture never impacts gold); the SLIDER only re-splits the
+// base commerce yield and is read LIVE at combine -- a slider move invalidates NOTHING.
 enum AccDirty
 {
-	ACCD_PCT     = 1,    // the percent stack (building/civic/trait/project deposits)
+	ACCD_PCT     = 1,    // yield percent stacks (building/civic/trait/project deposits)
 	ACCD_PLOTS   = 2,    // the worked-plot base packages
-	ACCD_SPEC    = 4,    // specialist totals
-	ACCD_EXTRA   = 8,    // building flats + perPopulation
+	ACCD_SPEC    = 4,    // yield specialist totals
+	ACCD_EXTRA   = 8,    // yield building flats + perPopulation
 	ACCD_EMPFLAT = 16,   // free-city + golden-age trait flats (epoch-volatile only; no city hook)
-	ACCD_CRATE   = 32,   // the §2 commerce rates (auto-ORed by dirtyCity: commerce RIDES the yield components)
-	ACCD_ALL     = 63
+	ACCD_CSPEC   = 32,   // commerce specialist terms (hot: specialist churn touches ONLY this on the commerce side)
+	ACCD_CBASE   = 64,   // commerce baseExtra (religion/corporation/goldenAge/building block/playerExtra)
+	ACCD_CPCT    = 128,  // commerce percent stacks
+	ACCD_ALL     = 255
 };
 
 class CascadeAccumulator
@@ -38,16 +44,13 @@ class CascadeAccumulator
 public:
 	// The §2a combine from standing components -- O(1) when clean; recomputes only dirty components.
 	static long yieldRate100(const CvCity* pCity, YieldTypes eY);
-	// The §2 commerce rate from the standing C_RATE component (slider folded at ITS recompute -- see the slider hook).
+	// The §2 CombineSplit over the standing plugin numbers + the LIVE slider/disorder -- O(1) when clean.
 	static long commerceRate100(const CvCity* pCity, CommerceTypes eC);
 
 	// DOMAIN dirty hooks (modifier-substrate.md): a mutation in THIS city marks the affected components.
-	// The yields->commerce dependency is encoded HERE (any yield-feeding bit auto-ORs ACCD_CRATE), never at hook sites.
 	static void dirtyCity(const CvCity* pCity, int iMask);
 	// Player/team-level events (tech / civic / trait / golden-age / project): everything re-checks on next read.
 	static void bumpEpoch();
-	// The slider moved: the player's cities' C_RATE components are stale (the slider folds at recompute).
-	static void dirtyPlayerCommerce(PlayerTypes ePlayer);
 };
 
 #endif // CV_CASCADE_ACCUMULATOR_H

@@ -4529,8 +4529,8 @@ void CvCity::processBuilding(const BuildingTypes eBuilding, const int iChange, c
 {
 	PROFILE_FUNC();
 	FAssert(iChange == 1 || iChange == -1);
-	// #430 accumulator freshness: the building set changed -> the deposit-bearing components + this city's facts are stale
-	CascadeAccumulator::dirtyCity(this, ACCD_PCT | ACCD_SPEC | ACCD_EXTRA);
+	// #430 accumulator freshness: the building set changed -> every deposit-bearing plugin + this city's facts are stale
+	CascadeAccumulator::dirtyCity(this, ACCD_PCT | ACCD_SPEC | ACCD_EXTRA | ACCD_CSPEC | ACCD_CBASE | ACCD_CPCT);
 	EnablerKernel::factsMemoEvict((int)getOwner(), getID());
 
 	// Toffer - Sanity control
@@ -6902,7 +6902,7 @@ void CvCity::setPopulation(int iNewValue, bool bNormal)
 		return;
 	}
 	m_iPopulation = iNewValue;
-	CascadeAccumulator::dirtyCity(this, ACCD_EXTRA);   // #430: population feeds the perPop term
+	CascadeAccumulator::dirtyCity(this, ACCD_EXTRA | ACCD_CBASE);   // #430: population feeds the perPop terms (yield + commerce)
 
 	FASSERT_NOT_NEGATIVE(iNewValue);
 
@@ -14088,7 +14088,7 @@ void CvCity::setSpecialistCount(SpecialistTypes eIndex, int iNewValue)
 	{
 		m_paiSpecialistCount[eIndex] = iNewValue;
 		FASSERT_NOT_NEGATIVE(getSpecialistCount(eIndex));
-		CascadeAccumulator::dirtyCity(this, ACCD_SPEC);   // #430: the specialist component's input
+		CascadeAccumulator::dirtyCity(this, ACCD_SPEC | ACCD_CSPEC);   // #430: the specialist plugins' input (yield + commerce)
 
 		changeSpecialistPopulation(iNewValue - iOldValue);
 		processSpecialist(eIndex, (iNewValue - iOldValue));

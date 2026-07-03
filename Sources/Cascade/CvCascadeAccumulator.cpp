@@ -29,12 +29,14 @@ struct AccCityState
 	long aSpec[NUM_YIELD_TYPES];      // specialist totals (human units; own sub-stack inside)
 	long aExtra100[NUM_YIELD_TYPES];  // building flats + perPop (×100)
 	long aEmpFlat[NUM_YIELD_TYPES];   // free-city + golden-age trait flats (human units)
-	long aCRate[NUM_COMMERCE_TYPES];  // the assembled §2 commerce rates (×100; slider folded at recompute)
+	long aCSpec100[NUM_COMMERCE_TYPES]; // commerce specialist terms (×100) -- the hot commerce-side plugin
+	long aCBase100[NUM_COMMERCE_TYPES]; // commerce baseExtra (religion/corp/GA/building block/playerExtra, ×100)
+	long aCPct[NUM_COMMERCE_TYPES];     // commerce percent stacks (max(0, 100 + Σ))
 	int iDirty; int iEpoch; int iTurn;
 	AccCityState() : iDirty(ACCD_ALL), iEpoch(-1), iTurn(-1)
 	{
 		for (int i = 0; i < NUM_YIELD_TYPES; ++i) { aPct[i] = 100; aPlots[i] = 0; aSpec[i] = 0; aExtra100[i] = 0; aEmpFlat[i] = 0; }
-		for (int c = 0; c < NUM_COMMERCE_TYPES; ++c) aCRate[c] = 0;
+		for (int c = 0; c < NUM_COMMERCE_TYPES; ++c) { aCSpec100[c] = 0; aCBase100[c] = 0; aCPct[c] = 100; }
 	}
 };
 static std::map<int, AccCityState> s_city;   // cid -> standing components
@@ -45,18 +47,11 @@ static int acc_cid(const CvCity* pCity) { return ((int)pCity->getOwner()) * 1000
 void CascadeAccumulator::dirtyCity(const CvCity* pCity, int iMask)
 {
 	if (pCity == NULL) return;
-	// commerce RIDES the yield components (§2 splits the modified commerce yield) -- the dependency lives HERE
-	if (iMask & (ACCD_PCT | ACCD_PLOTS | ACCD_SPEC | ACCD_EXTRA | ACCD_EMPFLAT)) iMask |= ACCD_CRATE;
+	// NO cross-component chaining: the commerce combine pulls the commerce YIELD fresh from the yield slots at
+	// read time, so a yield-side change never recomputes a commerce package ("the rest of the pipe stays the
+	// same" -- owner 2026-07-03). The slider is live at combine -- no hook exists for it at all.
 	const std::map<int, AccCityState>::iterator it = s_city.find(acc_cid(pCity));
 	if (it != s_city.end()) it->second.iDirty |= iMask;   // absent = first read computes everything anyway
-}
-
-void CascadeAccumulator::dirtyPlayerCommerce(PlayerTypes ePlayer)
-{
-	// the slider folds into C_RATE at ITS recompute -- a slider move stales only that player's commerce slots
-	const int lo = ((int)ePlayer) * 100000, hi = lo + 100000;
-	for (std::map<int, AccCityState>::iterator it = s_city.lower_bound(lo); it != s_city.end() && it->first < hi; ++it)
-		it->second.iDirty |= ACCD_CRATE;
 }
 
 void CascadeAccumulator::bumpEpoch()
@@ -119,14 +114,17 @@ static void acc_refresh(const CvCity* pCity, AccCityState& st)
 		if (st.iDirty & ACCD_EMPFLAT) st.aEmpFlat[y] = YieldBasePackages::freeCity(ch, player, ec)
 		                                             + YieldBasePackages::goldenAge(ch, player, ec);
 	}
-	// C_RATE LAST -- it rides the (now clean) yield components (§2 splits the modified commerce yield);
-	// the slider folds in HERE (the setCommercePercent hook stales it).
-	if (st.iDirty & ACCD_CRATE)
+	// The commerce-side PLUGIN NUMBERS -- per channel, each package standing alone (owner 2026-07-03); the
+	// combine (slider split, disorder, percent apply) happens at READ time over these + the live yield slots.
+	if (st.iDirty & (ACCD_CSPEC | ACCD_CBASE | ACCD_CPCT))
 	{
-		const long yc100 = acc_combine(st, pCity, YIELD_COMMERCE);
-		const long prate = acc_combine(st, pCity, YIELD_PRODUCTION) / 100;
 		for (int c = 0; c < NUM_COMMERCE_TYPES; ++c)
-			st.aCRate[c] = CommerceCalc::commerceRate100(CommerceCalc::channel(c), (CommerceTypes)c, pCity, ec, yc100, prate);
+		{
+			const std::string ch = CommerceCalc::channel(c);
+			if (st.iDirty & ACCD_CSPEC) st.aCSpec100[c] = 100L * YieldBasePackages::specialist(ch, pCity, ec);
+			if (st.iDirty & ACCD_CBASE) st.aCBase100[c] = CommerceCalc::baseExtra100(ch, pCity, ec);
+			if (st.iDirty & ACCD_CPCT)  { MMBreak bk; st.aCPct[c] = PercentStack::percentStack(ch, pCity, bk); }
+		}
 	}
 	st.iDirty = 0;
 }
@@ -144,5 +142,9 @@ long CascadeAccumulator::commerceRate100(const CvCity* pCity, CommerceTypes eC)
 	if (pCity == NULL || eC < 0 || eC >= NUM_COMMERCE_TYPES) return 0;
 	AccCityState& st = s_city[acc_cid(pCity)];
 	acc_refresh(pCity, st);
-	return st.aCRate[eC];
+	// the §2 CombineSplit kernel (single-sourced in CommerceCalc) over the plugin numbers: the commerce YIELD
+	// comes fresh from the yield slots; slider + disorder are read live inside the kernel.
+	const long yc100 = acc_combine(st, pCity, YIELD_COMMERCE);
+	const long prate = acc_combine(st, pCity, YIELD_PRODUCTION) / 100;
+	return CommerceCalc::combineSplit(eC, pCity, yc100, prate, st.aCSpec100[eC] + st.aCBase100[eC], (int)st.aCPct[eC]);
 }

@@ -64,7 +64,19 @@ public:
 	// team-revenue-modified, ceil(÷100). Returns human (the §2 bucket ×100s it). ⏳ INTERIM config read.
 	static int corporation(const std::string& channel, const CvCity* pCity, const CvCascadeEvalCtx& ec);
 
-	// The §2 COMMERCE-SPLIT ASSEMBLER + CombineSplit kernel (CommerceSplit.cs). channel = the commerce-type string (eC index).
+	// The §2 HALF-2 baseExtra100 SUM -- every BASE package (specialist/religion/corporation/goldenAge/
+	// building-commerce block/playerExtra) as ONE plugin number (owner 2026-07-03: isolate the packages; the
+	// accumulator stores this standing, the assembler below derives it fresh).
+	static long baseExtra100(const std::string& channel, const CvCity* pCity, const CvCascadeEvalCtx& ec);
+
+	// The CombineSplit KERNEL (CvCity:11969-11996, bit-exact): slider split of the commerce yield + the capped
+	// baseExtra, × the commerce percent stack, + Process (0, TODO), clamps/sentinels; disorder -> 0. The slider
+	// + disorder are read LIVE here -- they need no invalidation anywhere. Single-sourced: the calculator's
+	// assembler AND the accumulator's read-time combine both call THIS.
+	static long combineSplit(CommerceTypes eC, const CvCity* pCity, long yieldCommerce100, long prodRate,
+		long lBaseExtra100, int iTotalModifier);
+
+	// The §2 COMMERCE-SPLIT ASSEMBLER (CommerceSplit.cs) = combineSplit over fresh baseExtra100 + percentStack.
 	static long commerceRate100(const std::string& channel, CommerceTypes eC, const CvCity* pCity, const CvCascadeEvalCtx& ec,
 		long yieldCommerce100, long prodRate);
 };

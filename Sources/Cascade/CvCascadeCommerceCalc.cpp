@@ -271,24 +271,13 @@ int CommerceCalc::corporation(const std::string& channel, const CvCity* pCity, c
 	return total;
 }
 
-// The §2 COMMERCE-SPLIT ASSEMBLER + CombineSplit kernel (CommerceSplit.cs). channel = the commerce-type string (eC index).
-long CommerceCalc::commerceRate100(const std::string& channel, CommerceTypes eC, const CvCity* pCity, const CvCascadeEvalCtx& ec,
-	long yieldCommerce100, long prodRate)
+// The §2 HALF-2 baseExtra100 SUM (owner 2026-07-03: isolate the packages -- ONE plugin number). The reused §1
+// packages are channel-agnostic (called with the commerce-type channel string).
+long CommerceCalc::baseExtra100(const std::string& channel, const CvCity* pCity, const CvCascadeEvalCtx& ec)
 {
-	++CascadePerf::commerceRate;
-	PerfAccumTimer perfT(CascadePerf::commerceRateMs);
+	// NB: the SPECIALIST term is NOT in here -- it is its own plugin number (specialist churn is hot; the
+	// callers compose 100×specialist + this). Owner 2026-07-03: isolate the packages.
 	const CvPlayer& player = *ec.player;
-	const long CAP = CITY_MAX_YIELD_RATE;        // the engine #defines (CvCity.h:25-26), NOT GlobalDefines -- getDefineINT returns 0!
-	const long CAP100 = CITY_MAX_YIELD_RATE100;
-
-	// HALF 1: the base commerce yield (§1 commerce-yield WITH modifiers) split by the channel slider. yieldCommerce100 +
-	// prodRate are precomputed ONCE per city by the caller (the 4 commerce types share them -- avoids 8× redundant §1 computes).
-	const int slider = player.getCommercePercent(eC);
-	const long splitBase = std::min(CAP100, yieldCommerce100) * slider / 100;
-
-	// HALF 2: the baseExtra100 free-additions (all BASE, × the commerce percent stack). The reused §1 packages are
-	// channel-agnostic (called with the commerce-type channel string).
-	const int specialist = YieldBasePackages::specialist(channel, pCity, ec);
 	const int religion = CommerceCalc::religion(channel, pCity, ec);
 	const int goldenAge = YieldBasePackages::goldenAge(channel, player, ec);
 	const long buildingOwn100 = BuildingPackage::buildingFlat(channel, pCity, ec);
@@ -300,21 +289,40 @@ long CommerceCalc::commerceRate100(const std::string& channel, CommerceTypes eC,
 	const long double100 = CommerceCalc::doubleExtra(channel, pCity, ec);
 	const long buildingCommerce100 = buildingOwn100 + buildingKeyed100 + shrine100 + corpHQ100 + stateRel100 + double100;
 	const int corporation = CommerceCalc::corporation(channel, pCity, ec);   // separate base bucket (its own ceil ÷100, ×100 here)
-	const long baseExtra100 = 100L * specialist + 100L * religion + 100L * corporation + 100L * goldenAge + buildingCommerce100 + playerExtra100;
+	return 100L * religion + 100L * corporation + 100L * goldenAge + buildingCommerce100 + playerExtra100;
+}
 
-	MMBreak bk;
-	const int totalModifier = PercentStack::percentStack(channel, pCity, bk);   // the commerce percent stack (getTotalCommerceRateModifier)
-	const int prodToCommerce = 0;                                    // Process (the lone AFTER) -- pluggable static slot (TODO)
-
+// The CombineSplit KERNEL (CvCity:11969-11996), bit-exact integer math. Slider + disorder read LIVE -- they
+// need no invalidation anywhere (the accumulator's read-time combine relies on that).
+long CommerceCalc::combineSplit(CommerceTypes eC, const CvCity* pCity, long yieldCommerce100, long prodRate,
+	long lBaseExtra100, int iTotalModifier)
+{
+	const long CAP = CITY_MAX_YIELD_RATE;        // the engine #defines (CvCity.h:25-26), NOT GlobalDefines -- getDefineINT returns 0!
+	const long CAP100 = CITY_MAX_YIELD_RATE100;
 	if (pCity->isDisorder()) return 0;   // civil disorder forces realized commerce to 0 before any combine
-	// CombineSplit kernel (CvCity:11969-11996), bit-exact integer math.
-	long iRate = splitBase + std::min(CAP100, baseExtra100);
+	const int slider = GET_PLAYER(pCity->getOwner()).getCommercePercent(eC);
+	const long splitBase = std::min(CAP100, yieldCommerce100) * slider / 100;
+	const int prodToCommerce = 0;        // Process (the lone AFTER) -- pluggable static slot (TODO)
+	long iRate = splitBase + std::min(CAP100, lBaseExtra100);
 	if (iRate < CAP)
 	{
-		if (totalModifier != 0) iRate = (iRate > 0) ? iRate * (long)totalModifier / 100 : iRate * 100 / totalModifier;
+		if (iTotalModifier != 0) iRate = (iRate > 0) ? iRate * (long)iTotalModifier / 100 : iRate * 100 / iTotalModifier;
 		iRate += prodRate * prodToCommerce;
 	}
-	if (iRate < 0 && (channel == "culture" || channel == "research")) return 0;
+	if (iRate < 0 && (eC == COMMERCE_CULTURE || eC == COMMERCE_RESEARCH)) return 0;
 	if (iRate < MIN_TOL_FALSE_ACCUMULATE) return CAP;   // the very-negative sentinel (CvPlayer.h:49)
 	return std::min(CAP, iRate);
+}
+
+// The §2 COMMERCE-SPLIT ASSEMBLER (CommerceSplit.cs) = the kernel over FRESH packages (the calculator/oracle path).
+long CommerceCalc::commerceRate100(const std::string& channel, CommerceTypes eC, const CvCity* pCity, const CvCascadeEvalCtx& ec,
+	long yieldCommerce100, long prodRate)
+{
+	++CascadePerf::commerceRate;
+	PerfAccumTimer perfT(CascadePerf::commerceRateMs);
+	const long lBaseExtra = 100L * YieldBasePackages::specialist(channel, pCity, ec)
+	                      + CommerceCalc::baseExtra100(channel, pCity, ec);
+	MMBreak bk;
+	const int totalModifier = PercentStack::percentStack(channel, pCity, bk);   // the commerce percent stack (getTotalCommerceRateModifier)
+	return combineSplit(eC, pCity, yieldCommerce100, prodRate, lBaseExtra, totalModifier);
 }
