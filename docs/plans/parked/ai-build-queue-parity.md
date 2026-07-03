@@ -14,6 +14,12 @@ queue is set before the turn resolves; overflow carries). The intent: the AI pla
 mechanism** the human uses, production **overflow** carries the same way, and the mid-turn re-decision privilege
 disappears.
 
+**The governing principle (owner, same day):** *"we should not allow AI to calculate next build based on just
+getting a new building mid-processing, because humans do not get to do that either — they have already gotten
+the dump at that point."* Decision INPUTS are turn-boundary state; mid-processing mutations are invisible to
+deciders until the next boundary. (This generalizes past production choice — any AI decision that reads
+freshly-mutated mid-phase state holds an information privilege no human has.)
+
 Side benefits observed while building the modifier substrate (2026-07-03): the live re-decision is also a
 significant read-storm driver (each completion triggers immediate sibling-city rate evaluations — the
 `[SLOT]`-measured staleness windows and a chunk of the AI's turn cost). Queue-following AI = fewer, batchable
