@@ -14,9 +14,11 @@
 #include "Repos/InfoRepo.h"
 #include "Defines/CvGlobals.h"
 #include "Engine/CvPlayer.h"
+#include "Engine/CvTeam.h"
 #include "Engine/CvCity.h"
 #include "Infos/CvBuildingInfo.h"
 #include "Infos/CvCivicInfo.h"
+#include "Infos/CvTechInfo.h"
 #include "Infos/CvSpecialistInfo.h"
 
 // Σ a unit over the city's ACTIVE buildings at an address (the shared building-source walk).
@@ -107,6 +109,16 @@ int CascadeScalarChannels::maintenanceModifier(const CvCity* pCity, const CvCasc
 	iMod += sc_civicsTraits("maintenance.city", "percent", owner, ec);
 	iMod += sc_civicsTraits("maintenance.empire", "percent", owner, ec);
 	iMod += sc_civicsTraits("maintenance.area", "percent", owner, ec);
+	// TECHS feed the player maintenance modifier too (processTech CvPlayer:30916)
+	{
+		const CvTeam& team = GET_TEAM(owner.getTeam());
+		for (int i = 0; i < GC.getNumTechInfos(); ++i)
+		{
+			if (!team.isHasTech((TechTypes)i)) continue;
+			const CvJsonInfo* d = InfoRepo<CvTechInfo>::get().get(i);
+			if (d != NULL) iMod += MMKernel::sumUnit(d, "maintenance.empire", "percent", ec);
+		}
+	}
 	{
 		const bool bConnected = pCity->isConnectedToCapital() && !pCity->isCapital();
 		int iLoop;

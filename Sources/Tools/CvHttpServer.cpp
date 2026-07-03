@@ -1837,6 +1837,12 @@ namespace
 					sc["defenseLeg"] = picojson::value((double)pCity->getBuildingDefense());
 					sc["maintModCasc"] = picojson::value((double)CascadeScalarChannels::maintenanceModifier(pCity, wbec));
 					sc["maintModLeg"] = picojson::value((double)pCity->getEffectiveMaintenanceModifier());
+					// the legacy PARTS (the getEffectiveMaintenanceModifier decomposition -- attribute, don't guess)
+					sc["maintCityLeg"] = picojson::value((double)pCity->getMaintenanceModifier());
+					sc["maintPlayerLeg"] = picojson::value((double)const_cast<CvPlayer&>(kWbOwner).getMaintenanceModifier());
+					sc["maintAreaLeg"] = picojson::value((double)pCity->area()->getTotalAreaMaintenanceModifier(pCity->getOwner()));
+					sc["maintConnLeg"] = picojson::value((double)((pCity->isConnectedToCapital() && !pCity->isCapital())
+						? const_cast<CvPlayer&>(kWbOwner).getConnectedCityMaintenanceModifier() : 0));
 					o["scalars"] = picojson::value(sc);
 				}
 			}
