@@ -135,6 +135,46 @@ by the unified percent total, with the building FLATs bolted on **after** — ne
 
 ---
 
+## 2b. The WELLBEING channels — health + happiness (signed-split, the §2a sibling)
+
+The city's **health** and **happiness** levels are the §2 combine applied with the **`polarity: signed-split`**
+family metadata (§2): every source deposits ONE signed value; the **good/happy side sums `max(0, source)`**, the
+**bad/unhappy side sums `−min(0, source)`** — the same source feeds both accumulators, split by sign at combine
+(the engine's exact shape: `happyLevel`/`unhappyLevel` `CvCity.cpp:5709/5626`, `goodHealth`/`badHealth`
+`:5851/:5878`). The realized verdicts: `healthRate = min(0, good − bad)`; `angryPopulation =
+clamp(unhappy − happy, 0, pop)`. The channel oracle is **`/computed/cities/wellbeing`**
+([http-endpoints](http-endpoints.md)) — one field per named engine term.
+
+**The TARGET/INPUT split (the tradeYield precedent, [validation](validation.md) input rules):**
+
+- **DEPOSIT-COMPUTED (the cascade's targets)** — everything a live source's `health`/`happiness` family deposits
+  produce: **buildings** (city `flat` + the area/empire-scope rollups + extra-building "event buildings"),
+  **civics**, **traits** (the player extra), **features/bonuses** (city-radius substrate; the `…Good/…Bad`
+  engine pairs are ONE signed deposit each), **religions** (present/state gated), **specialists** (their /100
+  latent scale is the curator's ×100 de-scale — the engine `…/100` at use), **improvements** (ditto),
+  **corporations**, **techs** (`extraTechHealth/HappinessTotal`), **projects/world/civilization/handicap**
+  (empire-scope flats), **military units** (`happiness.empire.cities.{unit: IS_MILITARY}` §3.7) and
+  **celebrity** (the `skills.celebrity` unit scan — happy-only).
+- **RAW-STATE INPUTS (folded, never derived)** — the runtime timers/counters no deposit produces: the **anger
+  percents** (overcrowding = f(pop), noMilitary, foreign-culture, enemy-religion, hurry/conscript/defy/
+  revRequest timers, war-weariness, revIndex, civic anger%), the **espionage counters**, **event anger**
+  (one-shot event state), **tax-rate unhappiness**, **foreign-culture anger**, **landmark anger** (option-gated),
+  **city-over-limit**, and **vassal** terms. These are saved/derived-from-saved state (legitimate inputs per the
+  [http-endpoints](http-endpoints.md) hard rule) — the calc folds them at the level combine exactly where the
+  engine does.
+- **GATE FLAGS** — `isNoUnhappiness` / `isNoCapitalUnhappiness` / `isNoUnhealthyPopulation` /
+  `isBuildingOnlyHealthy` zero their side wholesale; building `attributes` (json §8) carry them
+  post-classification-wiring; until then they are read as state.
+- **`unhealthyPopulation`** (= `max(0, pop − angryPop)` unless flagged) enters the BAD side as the engine's
+  population term — a state-derived input (it reads the happiness verdict; the calc computes it from its own
+  happiness result, never reads the engine's).
+
+⚠ Two engine quirks the calc mirrors verbatim (never "fixes" — [DEC-mirror-then-redesign]):
+`badHealth` adds `min(0, extraBuildingBadHealth)` **twice** (once inside `totalBadBuildingHealth`, once
+directly); and the anger percents scale by `pop/PERCENT_ANGER_DIVISOR` with truncating integer division.
+
+---
+
 ## 3. Conditioning — re-evaluated every recompute (the dormancy model)
 
 A deposit may carry `enabled` / `disabled` / `per` ([json](json.md) §3.7, §3.9). A deposit's condition uses the
