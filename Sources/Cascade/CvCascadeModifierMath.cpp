@@ -275,7 +275,7 @@ void cvCascadeModifierShadow()
 						.addStr(MDF_SAMPLE, sSample.c_str()));
 				}
 				const long cascRate = YieldRate::yieldRate100(aszChannel[y], eY, pCity, rec);
-				const int legRate = pCity->getYieldRate100(eY);
+				const int legRate = pCity->getYieldRate100Legacy(eY);   // post-flip: the getter returns the SLOT; the Legacy sibling is the oracle
 				// [SLOT] -- the ACCUMULATOR (modifier-substrate.md) vs the fresh CALCULATOR (its oracle): a
 				// divergence names a dirty-mapping hole (an event the coarse hooks missed this turn).
 				{
@@ -345,7 +345,7 @@ void cvCascadeModifierShadow()
 				++iCChecked;
 				const CommerceTypes eC = (CommerceTypes)cc;
 				const long cascC = CommerceCalc::commerceRate100(CommerceCalc::channel(cc), eC, pCity, cec, yc100, prate);
-				const int legC = pCity->getCommerceRateTimes100(eC);
+				const int legC = pCity->getCommerceRateTimes100Legacy(eC);   // post-flip: the Legacy sibling is the oracle (see the yield leg)
 				// [SLOT] commerce leg -- the accumulator's C_RATE vs the fresh calculator (its oracle)
 				{
 					++iSlotChecked;

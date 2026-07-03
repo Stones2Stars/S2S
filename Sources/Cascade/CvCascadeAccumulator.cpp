@@ -30,8 +30,8 @@ struct AccCityState
 	long aExtra100[NUM_YIELD_TYPES];  // building flats + perPop (×100)
 	long aEmpFlat[NUM_YIELD_TYPES];   // free-city + golden-age trait flats (human units)
 	long aCRate[NUM_COMMERCE_TYPES];  // the assembled §2 commerce rates (×100; slider folded at recompute)
-	int iDirty; int iEpoch;
-	AccCityState() : iDirty(ACCD_ALL), iEpoch(-1)
+	int iDirty; int iEpoch; int iTurn;
+	AccCityState() : iDirty(ACCD_ALL), iEpoch(-1), iTurn(-1)
 	{
 		for (int i = 0; i < NUM_YIELD_TYPES; ++i) { aPct[i] = 100; aPlots[i] = 0; aSpec[i] = 0; aExtra100[i] = 0; aEmpFlat[i] = 0; }
 		for (int c = 0; c < NUM_COMMERCE_TYPES; ++c) aCRate[c] = 0;
@@ -83,16 +83,19 @@ static long acc_combine(const AccCityState& st, const CvCity* pCity, YieldTypes 
 }
 
 // Recompute the DIRTY components only (the calculator packages are the single-source recompute functions).
-// ⚠ SHADOW PHASE: deliberately NO turn-roll self-heal -- the slots carry PURELY hook-and-epoch-maintained
-// state across turns, so the [SLOT] shadow genuinely measures dirty-hook coverage (a turn-roll full-dirty made
-// the sweep recompute everything fresh next to its oracle -- a tautological 0, caught 2026-07-02). The flip
-// (increment C) re-adds a bounded conditioned-deposit re-check cadence per §3 once the hook map is proven.
+// FLIP PHASE (increment C): the turn roll RETURNS as the §3 re-check cadence -- with real consumers reading
+// all turn, it fires at the turn's FIRST read (a genuine once-per-turn conditioned-deposit re-check + the
+// self-heal for unhooked inputs: trade drift, religion spread, doubleTime year-crossings), and the end-of-turn
+// [SLOT] sweep still measures MID-turn hook coverage non-tautologically. (The shadow phase deliberately ran
+// WITHOUT it, proving the hook map on purely event-maintained state: [SLOT] 66/0 then 154/0, 2026-07-03.)
 static void acc_refresh(const CvCity* pCity, AccCityState& st)
 {
-	if (st.iEpoch != s_iEpoch)
+	const int iTurn = GC.getGame().getGameTurn();
+	if (st.iEpoch != s_iEpoch || st.iTurn != iTurn)
 	{
 		st.iDirty = ACCD_ALL;
 		st.iEpoch = s_iEpoch;
+		st.iTurn = iTurn;
 	}
 	if (st.iDirty == 0) return;
 	++CascadePerf::accRefresh;

@@ -11207,20 +11207,31 @@ int CvCity::getYieldRate(const YieldTypes eYield) const
 	return getYieldRate100(eYield) / 100;
 }
 
-int CvCity::getYieldRate100(const YieldTypes eYield) const
+int CvCity::getYieldRate100Legacy(const YieldTypes eYield) const
 {
-	PROFILE_FUNC();
 	// Specialist yields receive the city yield modifier exactly like worked tiles (#317);
 	// the remaining extra bucket (corporations, per-building yield changes, flat building
 	// yields, per-pop yields) stays unmodified.
-	const int iRate = std::min(CITY_MAX_YIELD_RATE,std::max(100,
+	return std::min(CITY_MAX_YIELD_RATE,std::max(100,
 		(getBaseYieldRate(eYield) + getSpecialistYieldTotal(eYield)) * getBaseYieldRateModifier(eYield)
 		+ 100 * getExtraYield(eYield)));
-	// #430 getter-contract shadow (cutover.md rulings 2026-07-02): cascade-vs-legacy at the real call moment,
-	// once per (city,channel) per turn; a single gated int compare when logging is off. The body flips to the
-	// cascade at clean parity; consumers never rewire.
-	cascadeGetterShadowYield(this, eYield, iRate);
-	return iRate;
+}
+
+int CvCity::getYieldRate100(const YieldTypes eYield) const
+{
+	PROFILE_FUNC();
+	const int iLegacy = getYieldRate100Legacy(eYield);
+	// #430 FLIP (increment C, modifier-substrate.md): in a running game the ACCUMULATOR is authoritative --
+	// standing §2a component slots, event-driven freshness, O(1) clean reads (the machine as specced, proven
+	// [SLOT] 154/0 on purely hook-maintained state). The legacy expression above stays as the [GETTER] net
+	// oracle + the one-commit rollback; the LOAD path stays legacy (the flip arms at final-init).
+	if (!GC.getGame().isFinalInitialized())
+	{
+		return iLegacy;
+	}
+	const long lSlot = CascadeAccumulator::yieldRate100(this, eYield);
+	cascadeGetterShadowYield(this, eYield, iLegacy, (int)lSlot);
+	return (int)lSlot;
 }
 
 int CvCity::getPlotYield(YieldTypes eIndex)	const
@@ -11934,20 +11945,30 @@ int CvCity::getCommerceRate(CommerceTypes eIndex) const
 	return getCommerceRateTimes100(eIndex) / 100;
 }
 
+int CvCity::getCommerceRateTimes100Legacy(CommerceTypes eIndex) const
+{
+	FASSERT_BOUNDS(0, NUM_COMMERCE_TYPES, eIndex);
+	// RECOMPUTE-ON-READ from the CURRENT slider (deterministic; owner ruling 2026-06-28 caching pattern):
+	// getCommerceRateAtSliderPercent handles isDisorder, runs the full combine, AND refreshes m_aiCommerceRate
+	// on its own dirty path. ⚠ Post-flip this ORACLE chain reads the FLIPPED yield getter
+	// (getCommerceFromPercent -> getYieldRate100), so the commerce [GETTER] net isolates the COMMERCE-stage
+	// divergence only -- the yield stage nets on its own leg.
+	return getCommerceRateAtSliderPercent(eIndex, GET_PLAYER(getOwner()).getCommercePercent(eIndex));
+}
+
 int CvCity::getCommerceRateTimes100(CommerceTypes eIndex) const
 {
 	PROFILE_FUNC();
 	FASSERT_BOUNDS(0, NUM_COMMERCE_TYPES, eIndex);
-	// RECOMPUTE-ON-READ from the CURRENT slider (deterministic; owner ruling 2026-06-28 caching pattern, same as
-	// getBuildingCommerce100/getSpecialistCommerce). The cached m_aiCommerceRate went stale when the slider
-	// (getCommercePercent) / yield / modifier changed without setCommerceDirty firing -> the returned rate lagged the
-	// real state (slider-order-dependent). Recompute fresh via getCommerceRateAtSliderPercent, which handles isDisorder,
-	// runs the full combine, AND refreshes m_aiCommerceRate on its own dirty path. Order-independent. (Perf: a
-	// correctly-dirtied cache is the follow-up.)
-	const int iRate = getCommerceRateAtSliderPercent(eIndex, GET_PLAYER(getOwner()).getCommercePercent(eIndex));
-	// #430 getter-contract shadow (cutover.md rulings 2026-07-02) -- see getYieldRate100.
-	cascadeGetterShadowCommerce(this, eIndex, iRate);
-	return iRate;
+	const int iLegacy = getCommerceRateTimes100Legacy(eIndex);
+	// #430 FLIP (increment C, modifier-substrate.md) -- see getYieldRate100.
+	if (!GC.getGame().isFinalInitialized())
+	{
+		return iLegacy;
+	}
+	const long lSlot = CascadeAccumulator::commerceRate100(this, eIndex);
+	cascadeGetterShadowCommerce(this, eIndex, iLegacy, (int)lSlot);
+	return (int)lSlot;
 }
 
 
