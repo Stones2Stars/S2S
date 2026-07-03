@@ -4541,7 +4541,7 @@ void CvCity::processBuilding(const BuildingTypes eBuilding, const int iChange, c
 	PROFILE_FUNC();
 	FAssert(iChange == 1 || iChange == -1);
 	// #430 accumulator freshness: the building set changed -> every deposit-bearing plugin + this city's facts are stale
-	CascadeAccumulator::dirtyCity(this, ACCD_PCT | ACCD_SPEC | ACCD_EXTRA | ACCD_CSPEC | ACCD_CBASE | ACCD_CPCT);
+	CascadeAccumulator::dirtyCity(this, ACCD_PCT | ACCD_SPEC | ACCD_EXTRA | ACCD_CSPEC | ACCD_CBASE | ACCD_CPCT | ACCD_WB);
 	m_cascadeFacts.set.markAllDirty();
 
 	// Toffer - Sanity control
@@ -6913,7 +6913,7 @@ void CvCity::setPopulation(int iNewValue, bool bNormal)
 		return;
 	}
 	m_iPopulation = iNewValue;
-	CascadeAccumulator::dirtyCity(this, ACCD_EXTRA | ACCD_CBASE);   // #430: population feeds the perPop terms (yield + commerce)
+	CascadeAccumulator::dirtyCity(this, ACCD_EXTRA | ACCD_CBASE | ACCD_WB);   // #430: population feeds the perPop terms (yield + commerce) + the wellbeing pop terms
 
 	FASSERT_NOT_NEGATIVE(iNewValue);
 
@@ -14110,7 +14110,7 @@ void CvCity::setSpecialistCount(SpecialistTypes eIndex, int iNewValue)
 	{
 		m_paiSpecialistCount[eIndex] = iNewValue;
 		FASSERT_NOT_NEGATIVE(getSpecialistCount(eIndex));
-		CascadeAccumulator::dirtyCity(this, ACCD_SPEC | ACCD_CSPEC);   // #430: the specialist plugins' input (yield + commerce)
+		CascadeAccumulator::dirtyCity(this, ACCD_SPEC | ACCD_CSPEC | ACCD_WB);   // #430: the specialist plugins' input (yield + commerce + wellbeing)
 
 		changeSpecialistPopulation(iNewValue - iOldValue);
 		processSpecialist(eIndex, (iNewValue - iOldValue));
@@ -15257,7 +15257,7 @@ void CvCity::setHasReligion(ReligionTypes eIndex, bool bNewValue, bool bAnnounce
 		m_pabHasReligion[eIndex] = bNewValue;
 		// #430 accumulator: religion presence feeds the commerce baseExtra (religion/shrine/state-religion terms)
 		// + operate conditions -> the deposit-bearing plugins + this city's facts are stale
-		CascadeAccumulator::dirtyCity(this, ACCD_PCT | ACCD_CBASE | ACCD_CPCT);
+		CascadeAccumulator::dirtyCity(this, ACCD_PCT | ACCD_CBASE | ACCD_CPCT | ACCD_WB);
 		m_cascadeFacts.set.markAllDirty();
 
 		for (int iVoteSource = 0; iVoteSource < GC.getNumVoteSourceInfos(); ++iVoteSource)
@@ -15462,7 +15462,7 @@ void CvCity::setHasCorporation(CorporationTypes eIndex, bool bNewValue, bool bAn
 	{
 		// #430 accumulator: corporation presence feeds the commerce baseExtra (corporation/corp-HQ terms)
 		// + operate conditions -> the deposit-bearing plugins + this city's facts are stale
-		CascadeAccumulator::dirtyCity(this, ACCD_PCT | ACCD_CBASE | ACCD_CPCT);
+		CascadeAccumulator::dirtyCity(this, ACCD_PCT | ACCD_CBASE | ACCD_CPCT | ACCD_WB);
 		m_cascadeFacts.set.markAllDirty();
 		if (bNewValue)
 		{

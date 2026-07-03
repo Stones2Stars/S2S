@@ -13,6 +13,7 @@
 #include "CvCascadeCommerceCalc.h"    // baseExtra100 + channel + the CombineSplit kernel
 #include "CvCascadeConditionEval.h"   // CvCascadeEvalCtx
 #include "CvCascadeEnablerKernel.h"   // EnablerKernel::wireFacts -- the standing per-city building-facts cache
+#include "CvCascadeWellbeing.h"       // the §2b wellbeing verdict component (ACCD_WB)
 #include "Defines/CvGlobals.h"
 #include "AI/CvGameAI.h"              // GC.getGame()
 #include "Engine/CvCity.h"            // CITY_MAX_YIELD_RATE + m_cascadeRateSlots
@@ -107,6 +108,13 @@ void CascadeAccumulator::refreshComponents(const CvCity* pCity, int iMask)
 		if (iMask & ACCD_EMPFLAT) st.aEmpFlat[y] = YieldBasePackages::freeCity(ch, player, ec)
 		                                         + YieldBasePackages::goldenAge(ch, player, ec);
 	}
+	// The §2b WELLBEING verdicts -- one component, all four verdicts together (no plot walks; cheap relative to
+	// its dirty cadence: building events + population/specialist churn + the epoch + the turn roll).
+	if (iMask & ACCD_WB)
+	{
+		const CascadeWellbeingVerdicts wv = CascadeWellbeing::compute(pCity, ec);
+		st.aWb[0] = wv.iHappy; st.aWb[1] = wv.iUnhappy; st.aWb[2] = wv.iGood; st.aWb[3] = wv.iBad;
+	}
 	// The commerce-side PLUGIN NUMBERS -- per channel, each package standing alone (owner 2026-07-03); the
 	// combine (slider split, disorder, percent apply) happens at READ time over these + the live yield slots.
 	if (iMask & (ACCD_CSPEC | ACCD_CBASE | ACCD_CPCT))
@@ -126,6 +134,13 @@ long CascadeAccumulator::yieldRate100(const CvCity* pCity, YieldTypes eY)
 	if (pCity == NULL || eY < 0 || eY >= NUM_YIELD_TYPES) return 0;
 	acc_ensure(pCity);
 	return acc_combine(pCity->m_cascadeRateSlots, pCity, eY);
+}
+
+int CascadeAccumulator::wellbeing(const CvCity* pCity, int iVerdict)
+{
+	if (pCity == NULL || iVerdict < 0 || iVerdict > 3) return 0;
+	acc_ensure(pCity);
+	return pCity->m_cascadeRateSlots.aWb[iVerdict];
 }
 
 long CascadeAccumulator::commerceRate100(const CvCity* pCity, CommerceTypes eC)

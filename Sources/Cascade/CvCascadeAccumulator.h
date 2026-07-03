@@ -32,7 +32,8 @@ enum AccDirty
 	ACCD_CSPEC   = 32,   // commerce specialist terms (hot: specialist churn touches ONLY this on the commerce side)
 	ACCD_CBASE   = 64,   // commerce baseExtra (religion/corporation/goldenAge/building block/playerExtra)
 	ACCD_CPCT    = 128,  // commerce percent stacks
-	ACCD_ALL     = 253
+	ACCD_WB      = 256,  // the §2b wellbeing verdicts (happy/unhappy/goodHealth/badHealth -- CascadeWellbeing)
+	ACCD_ALL     = 509
 };
 
 // The per-city standing slots -- a MUTABLE CACHE member on CvCity (never serialized; rebuilt on load via the
@@ -46,6 +47,7 @@ struct CascadeRateSlots
 	long aCSpec100[NUM_COMMERCE_TYPES]; // commerce specialist terms (×100) -- the hot commerce-side plugin
 	long aCBase100[NUM_COMMERCE_TYPES]; // commerce baseExtra (religion/corp/GA/building block/playerExtra, ×100)
 	long aCPct[NUM_COMMERCE_TYPES];     // commerce percent stacks (max(0, 100 + Σ))
+	int aWb[4];                         // the §2b wellbeing verdicts: happy / unhappy / goodHealth / badHealth
 	int iEpoch;                         // combined global+owner epoch stamp
 	int iTurn;                          // the §3 turn-roll re-check stamp
 	CvDerivedCacheSet<CvCity> set;      // the dirty protocol (bind in CvCity's ctor)
@@ -53,6 +55,7 @@ struct CascadeRateSlots
 	{
 		for (int i = 0; i < NUM_YIELD_TYPES; ++i) { aPct[i] = 100; aSpec[i] = 0; aExtra100[i] = 0; aEmpFlat[i] = 0; }
 		for (int c = 0; c < NUM_COMMERCE_TYPES; ++c) { aCSpec100[c] = 0; aCBase100[c] = 0; aCPct[c] = 100; }
+		for (int w = 0; w < 4; ++w) aWb[w] = 0;
 	}
 };
 
@@ -63,6 +66,8 @@ public:
 	static long yieldRate100(const CvCity* pCity, YieldTypes eY);
 	// The §2 CombineSplit over the standing plugin numbers + the LIVE slider/disorder -- O(1) when clean.
 	static long commerceRate100(const CvCity* pCity, CommerceTypes eC);
+	// The §2b wellbeing verdict slot (0=happy 1=unhappy 2=goodHealth 3=badHealth) -- O(1) when clean.
+	static int wellbeing(const CvCity* pCity, int iVerdict);
 
 	// DOMAIN dirty hooks (modifier-substrate.md): a mutation in THIS city marks the affected components.
 	static void dirtyCity(const CvCity* pCity, int iMask);

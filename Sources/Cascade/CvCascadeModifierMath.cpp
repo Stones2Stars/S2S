@@ -430,7 +430,7 @@ void cvCascadeModifierShadow()
 	// culture/espionage; channel = the commerce-type string). Separate loop -- the §2 packages ride §1. ⚠ PERF: each call
 	// recomputes the §1 commerce+production rate, so the cap is modest; memoize per city if the turn drags.
 	int iCChecked = 0, iCDiverging = 0, iCShown = 0;
-	int iWbChecked = 0, iWbDiverging = 0, iWbShown = 0;
+	int iWbChecked = 0, iWbDiverging = 0, iWbShown = 0, iWbSlotDiverging = 0;
 	for (int p = 0; p < MAX_PLAYERS; ++p)
 	{
 		const CvPlayer& player = GET_PLAYER((PlayerTypes)p);
@@ -501,6 +501,15 @@ void cvCascadeModifierShadow()
 			{
 				++iWbChecked;
 				const CascadeWellbeingVerdicts wv = CascadeWellbeing::compute(pCity, cec);
+				// [SLOT]-style net: the standing ACCD_WB slots vs this fresh compute (their oracle) -- a diff is
+				// a dirty-mapping hole (named, attributable); freshness must prove out BEFORE any getter flip.
+				if (CascadeAccumulator::wellbeing(pCity, 0) != wv.iHappy
+					|| CascadeAccumulator::wellbeing(pCity, 1) != wv.iUnhappy
+					|| CascadeAccumulator::wellbeing(pCity, 2) != wv.iGood
+					|| CascadeAccumulator::wellbeing(pCity, 3) != wv.iBad)
+				{
+					++iWbSlotDiverging;
+				}
 				const int iLegHappy = pCity->happyLevel();
 				const int iLegUnhappy = pCity->unhappyLevel();
 				const int iLegGood = pCity->goodHealth();
@@ -524,8 +533,10 @@ void cvCascadeModifierShadow()
 	}
 	eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_MODIFIER, MDE_RATE, 1)
 		.addI(MDF_CHECKED, iCChecked).addI(MDF_DIVERGING, iCDiverging));
+	// the wellbeing summary: diverging = calc vs LEGACY (the accepted-class residue); slotDiverging (the RATEC
+	// field) = the ACCD_WB slots vs the fresh calc (dirty-mapping holes -- must be 0 before the getter flip).
 	eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_MODIFIER, MDE_WELLBEING, 1)
-		.addI(MDF_CHECKED, iWbChecked).addI(MDF_DIVERGING, iWbDiverging));
+		.addI(MDF_CHECKED, iWbChecked).addI(MDF_DIVERGING, iWbDiverging).addI(MDF_RATEC, iWbSlotDiverging));
 	// the [SLOT] summary covers BOTH legs (yield + commerce) -- emitted once, after both loops
 	eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_MODIFIER, MDE_SLOT, 1)
 		.addI(MDF_CHECKED, iSlotChecked).addI(MDF_DIVERGING, iSlotDiverging));
